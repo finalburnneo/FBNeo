@@ -203,7 +203,8 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 
 	nM6800CyclesTotal = 0;
 	M6800CPUContext[num].nCpuType = type;
-	
+
+	M6800Open(num);
 	if (type == CPU_TYPE_M6800) {
 		m6800_init();
 
@@ -234,7 +235,7 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 		CpuCheatRegister(num, &NSC8105Config);
 	}
 
-	m6800_get_context(&M6800CPUContext[num].reg);
+	M6800Close();
 
 	return 0;
 }

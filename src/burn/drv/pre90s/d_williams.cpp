@@ -1,8 +1,8 @@
-// FB Alpha Williams Games driver module
+\// FB Alpha Williams Games driver module
 // Based on MAME driver by Aaron Giles
 
 // Works:
-//  Defender - some clones broken w/diff. loading file sizes.
+//  Defender
 //  Stargate
 //  Joust
 //  Robotron 2084
@@ -13,8 +13,9 @@
 //  Splat
 //  Alien Area - no sound (there is none)
 //  Sinistar
-//  Blaster - sometimes crap at top of screen (need to index the control -7?)
+//  Blaster
 
+// todo / tofix:
 //  Speed Ball - inputs
 //  Lottofun - memory protect sw. error
 
@@ -57,6 +58,7 @@ static INT32 blitter_clip_address = ~0;
 static INT32 blitter_remap_index = 0;
 
 static UINT8 blaster_video_control = 0;
+static INT32 blaster_color0 = 0;
 
 static UINT8 cocktail = 0;
 static UINT8 bankselect = 0;
@@ -616,7 +618,7 @@ static void williams_blitter_write(INT32 offset, UINT8 data)
 		estimated_clocks_at_4MHz = 4 + 2 * (accesses + 3);
 	}
 	
-//	m_maincpu->adjust_icount(-((estimated_clocks_at_4MHz + 3) / 4)); // iq_132!!!!!!!!!!!!!!!
+//	m6809_eat_cycles(-((estimated_clocks_at_4MHz + 3) / 4));
 }
 
 static void defender_bank_write(UINT16 address, UINT8 data)
@@ -1035,6 +1037,7 @@ static void pia2_sound_irq(INT32 state)
 {
 	if (state)
 		M6800SetIRQLine(M6800_IRQ_LINE, CPU_IRQSTATUS_HOLD);
+	// blaster 2nd soundcpu doesn't like this @ boot
 	//M6800SetIRQLine(M6800_IRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
@@ -1139,6 +1142,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	port_select = 0;
 	rom_bank = 0;
 	blaster_video_control = 0;
+	blaster_color0 = 0;
 
 	dac_lastin_r = 0;
 	dac_lastout_r = 0;
@@ -1163,7 +1167,7 @@ static INT32 MemIndex()
 	DrvColPROM			= Next; Next += 0x001000;
 
 	Palette				= (UINT32*)Next; Next += 0x0100 * sizeof(UINT32);
-	DrvPalette			= (UINT32*)Next; Next += 0x0011 * sizeof(UINT32);
+	DrvPalette			= (UINT32*)Next; Next += (0x0010 + 0x0100) * sizeof(UINT32);
 
 	DrvNVRAM			= Next; Next += 0x000400;
 
@@ -1431,6 +1435,7 @@ static void DrvPaletteInit()
 		UINT8 b = ((bit1 * 560 + bit0 * 330) * 255) / 890;
 
 		Palette[i] = BurnHighCol(r,g,b,0);
+		DrvPalette[i + 0x10] = Palette[i];
 	}
 }
 
@@ -1462,23 +1467,23 @@ static void draw_bitmap(INT32 starty, INT32 endy)
 
 static void blaster_draw_bitmap(INT32 starty, INT32 endy)
 {
-	INT32 color0 = 0;
-	UINT8 *palette_control = DrvVidRAM + 0xbb00;
-	UINT8 *scanline_control = DrvVidRAM + 0xbc00;
-	
+	const UINT8 YOFFS = 7;
+	UINT8 *palette_control = DrvVidRAM + 0xbb00 + YOFFS;
+	UINT8 *scanline_control = DrvVidRAM + 0xbc00 + YOFFS;
+
 	if (starty == 0 || !(blaster_video_control & 1))
-		color0 = palette_control[0] ^ 0xff;
+		blaster_color0 = 0x10 + (palette_control[0 - YOFFS] ^ 0xff);
 
 	for (INT32 y = starty; y < endy; y++)
 	{
 		INT32 erase_behind = blaster_video_control & scanline_control[y] & 2;
-		UINT8 *source = DrvVidRAM + y + 7;
+		UINT8 *source = DrvVidRAM + y + YOFFS;
 		UINT16 *dest = pTransDraw + (y * nScreenWidth);
 
 		if (y >= 240) return;
 
 		if (blaster_video_control & scanline_control[y] & 1)
-			color0 = palette_control[y] ^ 0xff;
+			blaster_color0 = 0x10 + (palette_control[y] ^ 0xff);
 
 		for (INT32 x = 0; x < nScreenWidth; x += 2)
 		{
@@ -1487,8 +1492,8 @@ static void blaster_draw_bitmap(INT32 starty, INT32 endy)
 			if (erase_behind)
 				source[(x/2) * 256] = 0;
 
-			dest[x+0] = (pix & 0xf0) ? (pix >> 4) : color0;
-			dest[x+1] = (pix & 0x0f) ? (pix & 0x0f) : color0;
+			dest[x+0] = (pix & 0xf0) ? (pix >> 4) : blaster_color0;
+			dest[x+1] = (pix & 0x0f) ? (pix & 0x0f) : blaster_color0;
 		}
 	}
 }
@@ -1699,6 +1704,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(vram_select);
 		SCAN_VAR(rom_bank);
 		SCAN_VAR(blaster_video_control);
+		SCAN_VAR(blaster_color0);
 
 		SCAN_VAR(nExtraCycles);
 	}
@@ -2145,7 +2151,7 @@ struct BurnDriver BurnDrvAttackf = {
 	"attackf", "defender", NULL, NULL, "1980",
 	"Attack (Defender bootleg)\0", NULL, "bootleg (Famare SA)", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, attackfRomInfo, attackfRomName, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -3288,7 +3294,7 @@ struct BurnDriver BurnDrvBlaster = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, blasterRomInfo, blasterRomName, NULL, NULL, BlasterInputInfo, NULL,
-	BlasterInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x10,
+	BlasterInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x110,
 	292, 240, 4, 3
 };
 

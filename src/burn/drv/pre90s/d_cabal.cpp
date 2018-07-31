@@ -564,7 +564,7 @@ static void draw_tx_layer()
 		INT32 sx = (offs & 0x1f) * 8;
 		INT32 sy = (offs / 0x20) * 8;
 
-		INT32 code  = ram[offs] & 0x1ff;
+		INT32 code  = ram[offs] & 0x3ff;
 		INT32 color = ram[offs] >> 10;
 
 		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 3, 0, DrvGfxROM0);
@@ -623,9 +623,11 @@ static INT32 DrvDraw()
 		DrvRecalcPalette();
 	}
 
-	draw_bg_layer();
-	draw_sprites();
-	draw_tx_layer();
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_bg_layer();
+	if (nSpriteEnable & 1) draw_sprites();
+	if (nBurnLayer & 2) draw_tx_layer();
 
 	BurnTransferCopy(DrvPalette);
 

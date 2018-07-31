@@ -51,7 +51,7 @@ inline static INT32 M6809TotalCycles()
 	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809TotalCycles called without init\n"));
 #endif
 
-	return nM6809CyclesTotal;
+	return nM6809CyclesTotal + m6809_get_segmentcycles();
 }
 
 inline static INT32 M6809Idle(INT32 cycles)

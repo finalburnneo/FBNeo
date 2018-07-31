@@ -85,6 +85,8 @@ void m6803_init();
 void m6801_init();
 void nsc8105_init();
 
+int m6800_get_segmentcycles();
+
 void m6800_reset(void);
 int m6800_get_pc();
 void m6800_get_context(void *dst);
@@ -138,7 +140,7 @@ unsigned char m6803_internal_registers_r(unsigned short offset);
 #define M6802_WAI					M6800_WAI
 #define M6802_IRQ_LINE				M6800_IRQ_LINE
 
-extern void m6802_get_info(UINT32 state, cpuinfo *info);
+//extern void m6802_get_info(UINT32 state, cpuinfo *info);
 #endif
 
 /****************************************************************************

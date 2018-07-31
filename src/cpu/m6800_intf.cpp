@@ -12,7 +12,7 @@ static M6800Ext *M6800CPUContext = NULL;
 static INT32 nM6800CyclesDone[MAX_CPU];
 INT32 nM6800CyclesTotal;
 
-cpu_core_config M6800Config =
+cpu_core_config M6800Config =  // M6802, M6808
 {
 	M6800Open,
 	M6800Close,
@@ -44,7 +44,7 @@ cpu_core_config HD63701Config =
 	0
 };
 
-cpu_core_config M6803Config =
+cpu_core_config M6803Config =  // M6801, M6803
 {
 	M6800Open,
 	M6800Close,

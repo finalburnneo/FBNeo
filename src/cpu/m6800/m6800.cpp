@@ -124,6 +124,7 @@ static m6800_Regs m6800;
 
 /* public globals */
 #define m6800_ICount	m6800.m6800_ICount
+static int m6800_segmentcycles;
 
 /* point of next timer event */
 #define timer_next		m6800.timer_next
@@ -583,7 +584,7 @@ static void m6800_exit(void)
 void m6800_get_context(void *dst)
 {
 	if( dst )
-		memmove(dst, (void *)&m6800, sizeof(m6800_Regs)); //*(m6800_Regs*)dst = m6800;
+		*(m6800_Regs*)dst = m6800;
 }
 
 
@@ -593,7 +594,7 @@ void m6800_get_context(void *dst)
 void m6800_set_context(void *src)
 {
 	if( src )
-		memmove((void *)&m6800, src, sizeof(m6800_Regs)); //m6800 = *(m6800_Regs*)src;
+		m6800 = *(m6800_Regs*)src;
 	//CHANGE_PC();
 	//CHECK_IRQ_LINES(); /* HJB 990417 */
 }
@@ -648,12 +649,19 @@ void m6800_set_irq_line(int irqline, int state)
 	}
 }
 
+int m6800_get_segmentcycles()
+{
+	return m6800_segmentcycles - m6800_ICount;
+}
+
 /****************************************************************************
  * Execute cycles CPU cycles. Return number of cycles really executed
  ****************************************************************************/
 int m6800_execute(int cycles)
 {
 	UINT8 ireg;
+
+	m6800_segmentcycles = cycles;
 	m6800_ICount = cycles;
 	CHECK_IRQ_LINES();
 
@@ -682,7 +690,11 @@ int m6800_execute(int cycles)
 	INCREMENT_COUNTER(m6800.extra_cycles);
 	m6800.extra_cycles = 0;
 
-	return cycles - m6800_ICount;
+	cycles = cycles - m6800_ICount;
+
+	m6800_segmentcycles = m6800_ICount = 0;
+
+	return cycles;
 }
 
 /****************************************************************************
@@ -734,6 +746,8 @@ void m6803_init()
 int m6803_execute(int cycles)
 {
 	UINT8 ireg;
+
+	m6800_segmentcycles = cycles;
 	m6800_ICount = cycles;
 
 	CLEANUP_conters;
@@ -761,7 +775,11 @@ int m6803_execute(int cycles)
 	INCREMENT_COUNTER(m6803.extra_cycles);
 	m6803.extra_cycles = 0;
 
-	return cycles - m6800_ICount;
+	cycles = cycles - m6800_ICount;
+
+	m6800_segmentcycles = m6800_ICount = 0;
+
+	return cycles;
 }
 #endif
 
@@ -810,6 +828,8 @@ void hd63701_init()
 int hd63701_execute(int cycles)
 {
 	UINT8 ireg;
+
+	m6800_segmentcycles = cycles;
 	m6800_ICount = cycles;
 
 	CLEANUP_conters;
@@ -836,7 +856,11 @@ int hd63701_execute(int cycles)
 	INCREMENT_COUNTER(hd63701.extra_cycles);
 	hd63701.extra_cycles = 0;
 
-	return cycles - m6800_ICount;
+	cycles = cycles - m6800_ICount;
+
+	m6800_segmentcycles = m6800_ICount = 0;
+
+	return cycles;
 }
 
 /*
@@ -883,6 +907,8 @@ void nsc8105_init()
 int nsc8105_execute(int cycles)
 {
 	UINT8 ireg;
+
+	m6800_segmentcycles = cycles;
 	m6800_ICount = cycles;
 
 	CLEANUP_conters;
@@ -909,7 +935,11 @@ int nsc8105_execute(int cycles)
 	INCREMENT_COUNTER(nsc8105.extra_cycles);
 	nsc8105.extra_cycles = 0;
 
-	return cycles - m6800_ICount;
+	cycles = cycles - m6800_ICount;
+
+	m6800_segmentcycles = m6800_ICount = 0;
+
+	return cycles;
 }
 #endif
 

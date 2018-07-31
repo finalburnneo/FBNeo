@@ -156,7 +156,7 @@ inline static INT32 M6800TotalCycles()
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800TotalCycles called without init\n"));
 #endif
 
-	return nM6800CyclesTotal;
+	return nM6800CyclesTotal + m6800_get_segmentcycles();
 }
 #define HD63701TotalCycles		M6800TotalCycles
 #define M6803TotalCycles		M6800TotalCycles

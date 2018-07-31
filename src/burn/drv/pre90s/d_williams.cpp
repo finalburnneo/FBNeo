@@ -2,10 +2,10 @@
 // Based on MAME driver by Aaron Giles
 
 // Works:
-//  Defender
+//  Defender - some clones broken w/diff. loading file sizes.
 //  Stargate
 //  Joust
-//  Robotron 2084 - missing boot-up sound
+//  Robotron 2084
 //  Bubbles
 //  Colony 7
 //  Mayday
@@ -13,10 +13,7 @@
 //  Splat
 //  Alien Area - no sound (there is none)
 //  Sinistar
-//  Blaster - missing boot-up sound
-//            sometimes misses sound command?
-//			  sometimes crap at top of screen
-
+//  Blaster - sometimes crap at top of screen (need to index the control -7?)
 
 //  Speed Ball - inputs
 //  Lottofun - memory protect sw. error
@@ -52,6 +49,8 @@ static UINT32 *Palette;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nExtraCycles[3];
+
 static UINT8 blitter_xor = 0;
 static INT32 blitter_window_enable = 0;
 static INT32 blitter_clip_address = ~0;
@@ -85,6 +84,7 @@ static INT32 mayday = 0;
 static INT32 splat = 0;
 static INT32 blaster = 0;
 static INT32 uses_hc55516 = 0;
+static INT32 uses_colprom = 0;
 
 // dc-blocking filter for DAC
 static INT16 dac_lastin_r;
@@ -96,6 +96,8 @@ static INT16 dac_lastout_l;
 static INT32 lastline;
 static void (*pStartDraw)() = NULL;
 static void (*pDrawScanline)() = NULL;
+
+static INT32 nCyclesDone[3];
 
 static struct BurnInputInfo DefenderInputList[] = {
 	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -965,10 +967,21 @@ static UINT8 pia0_49way_in_a(UINT16 )
 	return (translate49[x >> 4] << 4) | translate49[y >> 4];
 }
 
+static void sync_sound(INT32 num)
+{
+	INT32 cyc = (INT32)(((double)((double)M6809TotalCycles() * 894886) / 1000000)+0.5);
+	INT32 todo = cyc - M6800TotalCycles();
+	//bprintf(0, _T("m6809 cyc: %d  m6800 cyc: %d.    cyc: %d  todo %d.\n"), M6809TotalCycles(), M6800TotalCycles(), cyc, todo);
+	// Adding in a couple cycles to prevent lost soundcommands.  This is OK since we lose a few cycles/frame due to division & rounding loss.
+	if (todo < 1) todo = 15;
+	nCyclesDone[num + 1] += M6800Run(todo + 10);
+}
+
 static void pia1_out_b(UINT16 , UINT8 data)
 {
 	if (!blaster) { // defender, williams HW
 		M6800Open(0);
+		sync_sound(0);
 		data |= 0xc0;
 		pia_set_input_b(2, data);
 		pia_set_input_cb1(2, (data == 0xff) ? 0 : 1);
@@ -978,11 +991,15 @@ static void pia1_out_b(UINT16 , UINT8 data)
 		UINT8 r_data = (data >> 1 & 0x40) | (data & 0x3f) | 0x80;
 
 		M6800Open(0);
+		//bprintf(0, _T("0) "));
+		sync_sound(0);
 		pia_set_input_b(2, l_data);
 		pia_set_input_cb1(2, (l_data == 0xff) ? 0 : 1);
 		M6800Close();
 
 		M6800Open(1);
+		//bprintf(0, _T("1) "));
+		sync_sound(1);
 		pia_set_input_b(4, r_data);
 		pia_set_input_cb1(4, (r_data == 0xff) ? 0 : 1);
 		M6800Close();
@@ -1018,7 +1035,7 @@ static void pia2_sound_irq(INT32 state)
 {
 	if (state)
 		M6800SetIRQLine(M6800_IRQ_LINE, CPU_IRQSTATUS_HOLD);
-		//M6800SetIRQLine(M6800_IRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	//M6800SetIRQLine(M6800_IRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static pia6821_interface pia_0 = {
@@ -1128,6 +1145,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	dac_lastin_l = 0;
 	dac_lastout_l = 0;
 
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
+
 	return 0;
 }
 
@@ -1219,6 +1238,7 @@ static INT32 DrvRomLoad(INT32 type) // 1-defender, 2-mysticm, 3-tshoot, 4-sinist
 		if ((ri.nType & 7) == 4) {
 			if (BurnLoadRom(cLoad, i, 1)) return 1;
 			cLoad += ri.nLen;
+			uses_colprom = 1;
 			continue;
 		}
 
@@ -1239,7 +1259,7 @@ static void blitter_init(INT32 blitter_config, UINT8 *prom)
 {
 	static UINT8 dummy_table[16] = { STEP16(0,1) };
 
-	if (splat) prom = NULL;
+	if (prom) bprintf(0, _T(" ** Using DrvColPROM.\n"));
 
 	blitter_window_enable = 0;
 	blitter_xor = (blitter_config == 1) ? 4 : 0;
@@ -1348,7 +1368,7 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 	}
 
 	blitter_clip_address = blitter_clip_addr;
-	blitter_init(blitter_config, (blitter_config > 1) ? DrvColPROM : NULL);
+	blitter_init(blitter_config, (uses_colprom) ? DrvColPROM : NULL);
 	
 	GenericTilesInit();
 
@@ -1381,6 +1401,7 @@ static INT32 DrvExit()
 	blaster = 0;
 
 	uses_hc55516 = 0;
+	uses_colprom = 0;
 
 	pStartDraw = NULL;
 	pDrawScanline = NULL;
@@ -1547,7 +1568,7 @@ static INT32 BlasterDraw()
 static void dcfilter_dac()
 {
 	for (INT32 i = 0; i < nBurnSoundLen; i++) {
-		INT16 r = pBurnSoundOut[i*2+0]; // dac is mono, ignore 'l'.
+		INT16 r = pBurnSoundOut[i*2+0];
 		INT16 l = pBurnSoundOut[i*2+1];
 
 		INT16 outr = r - dac_lastin_r + 0.995 * dac_lastout_r;
@@ -1593,7 +1614,8 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 1000000 / 60, 894886 / 60, 894886 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	//INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
+	nCyclesDone[0] = nExtraCycles[0]; nCyclesDone[1] = nExtraCycles[1]; nCyclesDone[2] = nExtraCycles[2];
 
 	M6809Open(0);
 
@@ -1634,6 +1656,10 @@ static INT32 DrvFrame()
 	}
 
 	M6809Close();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 	
 	if (pBurnDraw) {
 		if (pStartDraw)
@@ -1673,6 +1699,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(vram_select);
 		SCAN_VAR(rom_bank);
 		SCAN_VAR(blaster_video_control);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_NVRAM) {

@@ -845,12 +845,9 @@ static UINT8 williams_main_read(UINT16 address)
 		return DrvPalRAM[address & 0xf];
 	}
 
-	if (address == 0xc900) return 0; // NOP
-	if (address == 0xc940) return 0; // NOP
-	//if (address == 0xc000) return 0; // NOP (sinistar)?
+	if ((address & 0xff00) == 0xc900) return 0; // NOP
 
 	bprintf (0, _T("MR: %4.4x\n"), address);
-
 
 	return 0;
 }
@@ -1035,10 +1032,12 @@ static void pia1_main_irq(INT32 state)
 
 static void pia2_sound_irq(INT32 state)
 {
-	if (state)
-		M6800SetIRQLine(M6800_IRQ_LINE, CPU_IRQSTATUS_HOLD);
-	// blaster 2nd soundcpu doesn't like this @ boot
-	//M6800SetIRQLine(M6800_IRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	M6800SetIRQLine(M6800_IRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
+static void pia4_sound_irq(INT32 state)
+{
+	M6800SetIRQLine(M6800_IRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static pia6821_interface pia_0 = {
@@ -1076,11 +1075,11 @@ static pia6821_interface pia_2 = {
 	pia2_sound_irq, pia2_sound_irq
 };
 
-static pia6821_interface pia_2_2 = { // blaster 2nd soundchip
+static pia6821_interface pia_4 = { // blaster 2nd soundchip
 	NULL, NULL,
 	NULL, NULL, NULL, NULL,
 	pia2_out_b2, NULL, NULL, NULL,
-	pia2_sound_irq, pia2_sound_irq
+	pia4_sound_irq, pia4_sound_irq
 };
 
 static pia6821_interface pia_2_sinistar = {
@@ -1363,7 +1362,7 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 		pia_config(1, 0, &pia_1);
 		pia_config(2, 0, &pia_2);
 		pia_config(3, 0, &pia_3);
-		pia_config(4, 0, &pia_2_2); // 2nd soundboard
+		pia_config(4, 0, &pia_4); // 2nd soundboard
 
 		DACSetRoute(0, 0.35, BURN_SND_ROUTE_LEFT);
 
@@ -1694,6 +1693,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		M6809Scan(nAction);
 		M6800Scan(nAction);
+
+		pia_scan(nAction, pnMin);
 
 		DACScan(nAction, pnMin);
 		if (uses_hc55516)

@@ -124,7 +124,6 @@ static m6800_Regs m6800;
 
 /* public globals */
 #define m6800_ICount	m6800.m6800_ICount
-static int m6800_segmentcycles;
 
 /* point of next timer event */
 #define timer_next		m6800.timer_next
@@ -651,7 +650,7 @@ void m6800_set_irq_line(int irqline, int state)
 
 int m6800_get_segmentcycles()
 {
-	return m6800_segmentcycles - m6800_ICount;
+	return m6800.segmentcycles - m6800_ICount;
 }
 
 /****************************************************************************
@@ -661,7 +660,7 @@ int m6800_execute(int cycles)
 {
 	UINT8 ireg;
 
-	m6800_segmentcycles = cycles;
+	m6800.segmentcycles = cycles;
 	m6800_ICount = cycles;
 	CHECK_IRQ_LINES();
 
@@ -692,7 +691,7 @@ int m6800_execute(int cycles)
 
 	cycles = cycles - m6800_ICount;
 
-	m6800_segmentcycles = m6800_ICount = 0;
+	m6800.segmentcycles = m6800_ICount = 0;
 
 	return cycles;
 }
@@ -747,7 +746,7 @@ int m6803_execute(int cycles)
 {
 	UINT8 ireg;
 
-	m6800_segmentcycles = cycles;
+	m6800.segmentcycles = cycles;
 	m6800_ICount = cycles;
 
 	CLEANUP_conters;
@@ -777,7 +776,7 @@ int m6803_execute(int cycles)
 
 	cycles = cycles - m6800_ICount;
 
-	m6800_segmentcycles = m6800_ICount = 0;
+	m6800.segmentcycles = m6800_ICount = 0;
 
 	return cycles;
 }
@@ -829,7 +828,7 @@ int hd63701_execute(int cycles)
 {
 	UINT8 ireg;
 
-	m6800_segmentcycles = cycles;
+	m6800.segmentcycles = cycles;
 	m6800_ICount = cycles;
 
 	CLEANUP_conters;
@@ -858,7 +857,7 @@ int hd63701_execute(int cycles)
 
 	cycles = cycles - m6800_ICount;
 
-	m6800_segmentcycles = m6800_ICount = 0;
+	m6800.segmentcycles = m6800_ICount = 0;
 
 	return cycles;
 }
@@ -908,7 +907,7 @@ int nsc8105_execute(int cycles)
 {
 	UINT8 ireg;
 
-	m6800_segmentcycles = cycles;
+	m6800.segmentcycles = cycles;
 	m6800_ICount = cycles;
 
 	CLEANUP_conters;
@@ -937,7 +936,7 @@ int nsc8105_execute(int cycles)
 
 	cycles = cycles - m6800_ICount;
 
-	m6800_segmentcycles = m6800_ICount = 0;
+	m6800.segmentcycles = m6800_ICount = 0;
 
 	return cycles;
 }
@@ -1035,8 +1034,6 @@ unsigned char m6803_internal_registers_r(unsigned short offset)
 
 void m6803_internal_registers_w(unsigned short offset, unsigned char data)
 {
-	static int latch09;
-
 	switch (offset)
 	{
 		case 0x00:
@@ -1128,13 +1125,13 @@ void m6803_internal_registers_w(unsigned short offset, unsigned char data)
 //logerror("CPU #%d PC %04x: TCSR = %02x\n",cpu_getactivecpu(),activecpu_get_pc(),data);
 			break;
 		case 0x09:
-			latch09 = data & 0xff;	/* 6301 only */
+			m6800.latch09 = data & 0xff;	/* 6301 only */
 			CT  = 0xfff8;
 			TOH = CTH;
 			MODIFIED_counters;
 			break;
 		case 0x0a:	/* 6301 only */
-			CT = (latch09 << 8) | (data & 0xff);
+			CT = (m6800.latch09 << 8) | (data & 0xff);
 			TOH = CTH;
 			MODIFIED_counters;
 			break;

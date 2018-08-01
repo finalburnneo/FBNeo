@@ -48,6 +48,8 @@ typedef struct
 	PAIR	counter;		/* free running counter */
 	PAIR	output_compare;	/* output compare       */
 	UINT16	input_capture;	/* input capture        */
+	INT32   latch09;
+	INT32   segmentcycles;
 
 	PAIR	timer_over;
 

@@ -11,6 +11,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stddef.h>
 #include "burnint.h"
 #include "6821pia.h"
 
@@ -29,7 +30,6 @@
 
 struct pia6821
 {
-	const struct pia6821_interface *intf;
 	UINT8 addr;
 
 	UINT8 in_a;
@@ -54,6 +54,8 @@ struct pia6821
 	UINT8 irq_b2;
 	UINT8 irq_b_state;
 	UINT8 in_set; // which input ports are set
+
+	const struct pia6821_interface *intf;
 };
 
 
@@ -97,99 +99,13 @@ static const UINT8 swizzle_address[4] = { 0, 2, 1, 3 };
 
 
 /******************* stave state *******************/
-#if 0
-static void update_6821_interrupts(struct pia6821 *p);
 
-static void pia_postload(int which)
+void pia_scan(INT32 nAction, INT32 *)
 {
-	struct pia6821 *p = pia + which;
-	update_6821_interrupts(p);
-	if (p->intf->out_a_func && p->ddr_a) p->intf->out_a_func(0, p->out_a & p->ddr_a);
-	if (p->intf->out_b_func && p->ddr_b) p->intf->out_b_func(0, p->out_b & p->ddr_b);
-	if (p->intf->out_ca2_func) p->intf->out_ca2_func(0, p->out_ca2);
-	if (p->intf->out_cb2_func) p->intf->out_cb2_func(0, p->out_cb2);
-}
-
-static void pia_postload_0(void)
-{
-	pia_postload(0);
-}
-
-static void pia_postload_1(void)
-{
-	pia_postload(1);
-}
-
-static void pia_postload_2(void)
-{
-	pia_postload(2);
-}
-
-static void pia_postload_3(void)
-{
-	pia_postload(3);
-}
-
-static void pia_postload_4(void)
-{
-	pia_postload(4);
-}
-
-static void pia_postload_5(void)
-{
-	pia_postload(5);
-}
-
-static void pia_postload_6(void)
-{
-	pia_postload(6);
-}
-
-static void pia_postload_7(void)
-{
-	pia_postload(7);
-}
-
-static void (*pia_postload_funcs[MAX_PIA])(void) =
-{
-	pia_postload_0,
-	pia_postload_1,
-	pia_postload_2,
-	pia_postload_3,
-	pia_postload_4,
-	pia_postload_5,
-	pia_postload_6,
-	pia_postload_7
-};
-
-void pia_init(int count)
-{
-	int i;
-	for (i = 0; i < count; i++)
-	{
-		state_save_register_UINT8("6821pia", i, "in_a",		&pia[i].in_a, 1);
-		state_save_register_UINT8("6821pia", i, "in_ca1",	&pia[i].in_ca1, 1);
-		state_save_register_UINT8("6821pia", i, "in_ca2",	&pia[i].in_ca2, 1);
-		state_save_register_UINT8("6821pia", i, "out_a",	&pia[i].out_a, 1);
-		state_save_register_UINT8("6821pia", i, "out_ca2",	&pia[i].out_ca2, 1);
-		state_save_register_UINT8("6821pia", i, "ddr_a",	&pia[i].ddr_a, 1);
-		state_save_register_UINT8("6821pia", i, "ctl_a",	&pia[i].ctl_a, 1);
-		state_save_register_UINT8("6821pia", i, "irq_a1",	&pia[i].irq_a1, 1);
-		state_save_register_UINT8("6821pia", i, "irq_a2",	&pia[i].irq_a2, 1);
-		state_save_register_UINT8("6821pia", i, "in_b",		&pia[i].in_b, 1);
-		state_save_register_UINT8("6821pia", i, "in_cb1",	&pia[i].in_cb1, 1);
-		state_save_register_UINT8("6821pia", i, "in_cb2",	&pia[i].in_cb2, 1);
-		state_save_register_UINT8("6821pia", i, "out_b",	&pia[i].out_b, 1);
-		state_save_register_UINT8("6821pia", i, "out_cb2",	&pia[i].out_cb2, 1);
-		state_save_register_UINT8("6821pia", i, "ddr_b",	&pia[i].ddr_b, 1);
-		state_save_register_UINT8("6821pia", i, "ctl_b",	&pia[i].ctl_b, 1);
-		state_save_register_UINT8("6821pia", i, "irq_b1",	&pia[i].irq_b1, 1);
-		state_save_register_UINT8("6821pia", i, "irq_b2",	&pia[i].irq_b2, 1);
-		state_save_register_UINT8("6821pia", i, "in_set",	&pia[i].in_set, 1);
-		state_save_register_func_postload(pia_postload_funcs[i]);
+	for (INT32 i = 0; i < MAX_PIA; i++) {
+		ScanVar(&pia[i], STRUCT_SIZE_HELPER(struct pia6821, in_set), "pia-6821 chip");
 	}
 }
-#endif
 
 /******************* un-configuration *******************/
 

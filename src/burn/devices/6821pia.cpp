@@ -15,8 +15,6 @@
 #include "burnint.h"
 #include "6821pia.h"
 
-#define FPTR uintptr_t
-
 #define VERBOSE 0
 
 #if VERBOSE
@@ -132,18 +130,6 @@ void pia_config(int which, int addressing, const struct pia6821_interface *intf)
 	// Ports A,CA1,CA2 default to 1
 	// Ports B,CB1,CB2 are three-state and undefined (set to 0)
 	pia[which].in_a = pia[which].in_ca1 = pia[which].in_ca2 = 0xff;
-	if ((intf->in_a_func) && ((FPTR)(intf->in_a_func) <= 0x100))
-		{ pia[which].in_a = ((FPTR)(intf->in_a_func) - 1); pia[which].in_set |= PIA_IN_SET_A; }
-	if ((intf->in_b_func) && ((FPTR)(intf->in_b_func) <= 0x100))
-		{ pia[which].in_b = ((FPTR)(intf->in_b_func) - 1); pia[which].in_set |= PIA_IN_SET_B; }
-	if ((intf->in_ca1_func) && ((FPTR)(intf->in_ca1_func) <= 0x100))
-		{ pia[which].in_ca1 = ((FPTR)(intf->in_ca1_func) - 1); pia[which].in_set |= PIA_IN_SET_CA1; }
-	if ((intf->in_ca2_func) && ((FPTR)(intf->in_ca2_func) <= 0x100))
-		{ pia[which].in_ca2 = ((FPTR)(intf->in_ca2_func) - 1); pia[which].in_set |= PIA_IN_SET_CA2; }
-	if ((intf->in_cb1_func) && ((FPTR)(intf->in_cb1_func) <= 0x100))
-		{ pia[which].in_cb1 = ((FPTR)(intf->in_cb1_func) - 1); pia[which].in_set |= PIA_IN_SET_CB1; }
-	if ((intf->in_cb2_func) && ((FPTR)(intf->in_cb2_func) <= 0x100))
-		{ pia[which].in_cb2 = ((FPTR)(intf->in_cb2_func) - 1); pia[which].in_set |= PIA_IN_SET_CB2; }
 }
 
 
@@ -234,7 +220,7 @@ int pia_read(int which, int offset)
 			if (OUTPUT_SELECTED(p->ctl_a))
 			{
 				/* update the input */
-				if ((FPTR)(p->intf->in_a_func) > 0x100)
+				if (p->intf->in_a_func)
 					p->in_a = p->intf->in_a_func(0);
 #ifdef MAME_DEBUG
 				else if ((p->ddr_a ^ 0xff) && !(p->in_set & PIA_IN_SET_A)) {
@@ -285,7 +271,7 @@ int pia_read(int which, int offset)
 			if (OUTPUT_SELECTED(p->ctl_b))
 			{
 				/* update the input */
-				if ((FPTR)(p->intf->in_b_func) > 0x100)
+				if (p->intf->in_b_func)
 					p->in_b = p->intf->in_b_func(0);
 #ifdef MAME_DEBUG
 				else if ((p->ddr_b ^ 0xff) && !(p->in_set & PIA_IN_SET_B)) {
@@ -331,7 +317,7 @@ int pia_read(int which, int offset)
 		case PIA_CTLA:
 
 			/* Update CA1 & CA2 if callback exists, these in turn may update IRQ's */
-			if ((FPTR)(p->intf->in_ca1_func) > 0x100)
+			if (p->intf->in_ca1_func)
 				pia_set_input_ca1(which, p->intf->in_ca1_func(0));
 #ifdef MAME_DEBUG
 			else if (!(p->in_set & PIA_IN_SET_CA1)) {
@@ -339,7 +325,7 @@ int pia_read(int which, int offset)
 				p->in_set |= PIA_IN_SET_CA1; // disable logging
 			}
 #endif // MAME_DEBUG
-			if ((FPTR)(p->intf->in_ca2_func) > 0x100)
+			if (p->intf->in_ca2_func)
 				pia_set_input_ca2(which, p->intf->in_ca2_func(0));
 #ifdef MAME_DEBUG
 			else if (C2_INPUT(p->ctl_a) && !(p->in_set & PIA_IN_SET_CA2)) {
@@ -362,7 +348,7 @@ int pia_read(int which, int offset)
 		case PIA_CTLB:
 
 			/* Update CB1 & CB2 if callback exists, these in turn may update IRQ's */
-			if ((FPTR)(p->intf->in_cb1_func) > 0x100)
+			if (p->intf->in_cb1_func)
 				pia_set_input_cb1(which, p->intf->in_cb1_func(0));
 #ifdef MAME_DEBUG
 			else if (!(p->in_set & PIA_IN_SET_CB1)) {
@@ -370,7 +356,7 @@ int pia_read(int which, int offset)
 				p->in_set |= PIA_IN_SET_CB1; // disable logging
 			}
 #endif // MAME_DEBUG
-			if ((FPTR)(p->intf->in_cb2_func) > 0x100)
+			if (p->intf->in_cb2_func)
 				pia_set_input_cb2(which, p->intf->in_cb2_func(0));
 #ifdef MAME_DEBUG
 			else if (C2_INPUT(p->ctl_b) && !(p->in_set & PIA_IN_SET_CB2)) {

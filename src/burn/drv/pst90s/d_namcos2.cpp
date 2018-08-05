@@ -4630,36 +4630,36 @@ struct BurnDriver BurnDrvValkyrie = {
 // Rolling Thunder 2
 
 static struct BurnRomInfo rthun2RomDesc[] = {
-	{ "mpr0.bin",		0x20000, 0xe09a3549, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
-	{ "mpr1.bin",		0x20000, 0x09573bff, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "rts2_mpr0.bin",		0x20000, 0xe09a3549, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "rts2_mpr1.bin",		0x20000, 0x09573bff, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "spr0.bin",		0x10000, 0x54c22ac5, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "spr1.bin",		0x10000, 0x060eb393, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "rts2_spr0.bin",		0x10000, 0x54c22ac5, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "rts2_spr1.bin",		0x10000, 0x060eb393, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "snd0.bin",		0x20000, 0x55b7562a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
-	{ "snd1.bin",		0x20000, 0x00445a4f, 0x03 | BRF_PRG | BRF_ESS }, //  5
+	{ "rst1_snd0.bin",		0x20000, 0x55b7562a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "rst1_snd1.bin",		0x20000, 0x00445a4f, 0x03 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
-	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
+	{ "sys2mcpu.bin",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
+	{ "sys2c65c.bin",		0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "obj0.bin",		0x80000, 0xe5cb82c1, 0x05 | BRF_GRA },           //  8 Sprites
-	{ "obj1.bin",		0x80000, 0x19ebe9fd, 0x05 | BRF_GRA },           //  9
-	{ "obj2.bin",		0x80000, 0x455c4a2f, 0x05 | BRF_GRA },           // 10
-	{ "obj3.bin",		0x80000, 0xfdcae8a9, 0x05 | BRF_GRA },           // 11
+	{ "rst1_obj0.bin",		0x80000, 0xe5cb82c1, 0x05 | BRF_GRA },           //  8 Sprites
+	{ "rst1_obj1.bin",		0x80000, 0x19ebe9fd, 0x05 | BRF_GRA },           //  9
+	{ "rst1_obj2.bin",		0x80000, 0x455c4a2f, 0x05 | BRF_GRA },           // 10
+	{ "rst1_obj3.bin",		0x80000, 0xfdcae8a9, 0x05 | BRF_GRA },           // 11
 
-	{ "chr0.bin",		0x80000, 0x6f0e9a68, 0x06 | BRF_GRA },           // 12 Layer Tiles
-	{ "chr1.bin",		0x80000, 0x15e44adc, 0x06 | BRF_GRA },           // 13
+	{ "rst1_chr0.bin",		0x80000, 0x6f0e9a68, 0x06 | BRF_GRA },           // 12 Layer Tiles
+	{ "rst1_chr1.bin",		0x80000, 0x15e44adc, 0x06 | BRF_GRA },           // 13
 
-	{ "roz0.bin",		0x80000, 0x482d0554, 0x07 | BRF_GRA },           // 14 Roz Layer Tiles
+	{ "rst1_roz0.bin",		0x80000, 0x482d0554, 0x07 | BRF_GRA },           // 14 Roz Layer Tiles
 
-	{ "shape.bin",		0x80000, 0xcf58fbbe, 0x08 | BRF_GRA },           // 15 Layer Tiles Mask Data
+	{ "shape.bin",			0x80000, 0xcf58fbbe, 0x08 | BRF_GRA },           // 15 Layer Tiles Mask Data
 
-	{ "data0.bin",		0x20000, 0x0baf44ee, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
-	{ "data1.bin",		0x20000, 0x58a8daac, 0x09 | BRF_PRG | BRF_ESS }, // 17
-	{ "data2.bin",		0x20000, 0x8e850a2a, 0x09 | BRF_PRG | BRF_ESS }, // 18
+	{ "rst1_data0.bin",		0x20000, 0x0baf44ee, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
+	{ "rst1_data1.bin",		0x20000, 0x58a8daac, 0x09 | BRF_PRG | BRF_ESS }, // 17
+	{ "rst1_data2.bin",		0x20000, 0x8e850a2a, 0x09 | BRF_PRG | BRF_ESS }, // 18
 
-	{ "voi1.bin",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
-	{ "voi2.bin",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
+	{ "rst1_voi1.bin",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
+	{ "rst1_voi2.bin",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
 };
 STD_ROM_PICK(rthun2)
 STD_ROM_FN(rthun2)
@@ -4707,36 +4707,36 @@ struct BurnDriver BurnDrvRthun2 = {
 // Rolling Thunder 2 (Japan)
 
 static struct BurnRomInfo rthun2jRomDesc[] = {
-	{ "mpr0j.bin",		0x20000, 0x2563b9ee, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
-	{ "mpr1j.bin",		0x20000, 0x14c4c564, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "rst1_mpr0.bin",		0x20000, 0x2563b9ee, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "rst1_mpr1.bin",		0x20000, 0x14c4c564, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "spr0j.bin",		0x10000, 0xf8ef5150, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "spr1j.bin",		0x10000, 0x52ed3a48, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "rst1_spr0j.bin",		0x10000, 0xf8ef5150, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "rst1_spr1j.bin",		0x10000, 0x52ed3a48, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "snd0.bin",		0x20000, 0x55b7562a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
-	{ "snd1.bin",		0x20000, 0x00445a4f, 0x03 | BRF_PRG | BRF_ESS }, //  5
+	{ "rst1_snd0.bin",		0x20000, 0x55b7562a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "rst1_snd1.bin",		0x20000, 0x00445a4f, 0x03 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "obj0.bin",		0x80000, 0xe5cb82c1, 0x05 | BRF_GRA },           //  8 Sprites
-	{ "obj1.bin",		0x80000, 0x19ebe9fd, 0x05 | BRF_GRA },           //  9
-	{ "obj2.bin",		0x80000, 0x455c4a2f, 0x05 | BRF_GRA },           // 10
-	{ "obj3.bin",		0x80000, 0xfdcae8a9, 0x05 | BRF_GRA },           // 11
+	{ "rst1_obj0.bin",		0x80000, 0xe5cb82c1, 0x05 | BRF_GRA },           //  8 Sprites
+	{ "rst1_obj1.bin",		0x80000, 0x19ebe9fd, 0x05 | BRF_GRA },           //  9
+	{ "rst1_obj2.bin",		0x80000, 0x455c4a2f, 0x05 | BRF_GRA },           // 10
+	{ "rst1_obj3.bin",		0x80000, 0xfdcae8a9, 0x05 | BRF_GRA },           // 11
 
-	{ "chr0.bin",		0x80000, 0x6f0e9a68, 0x06 | BRF_GRA },           // 12 Layer Tiles
-	{ "chr1.bin",		0x80000, 0x15e44adc, 0x06 | BRF_GRA },           // 13
+	{ "rst1_chr0.bin",		0x80000, 0x6f0e9a68, 0x06 | BRF_GRA },           // 12 Layer Tiles
+	{ "rst1_chr1.bin",		0x80000, 0x15e44adc, 0x06 | BRF_GRA },           // 13
 
 	{ "roz0.bin",		0x80000, 0x482d0554, 0x07 | BRF_GRA },           // 14 Roz Layer Tiles
 
 	{ "shape.bin",		0x80000, 0xcf58fbbe, 0x08 | BRF_GRA },           // 15 Layer Tiles Mask Data
 
-	{ "data0.bin",		0x20000, 0x0baf44ee, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
-	{ "data1.bin",		0x20000, 0x58a8daac, 0x09 | BRF_PRG | BRF_ESS }, // 17
-	{ "data2.bin",		0x20000, 0x8e850a2a, 0x09 | BRF_PRG | BRF_ESS }, // 18
+	{ "rst1_data0.bin",		0x20000, 0x0baf44ee, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
+	{ "rst1_data1.bin",		0x20000, 0x58a8daac, 0x09 | BRF_PRG | BRF_ESS }, // 17
+	{ "rst1_data2.bin",		0x20000, 0x8e850a2a, 0x09 | BRF_PRG | BRF_ESS }, // 18
 
-	{ "voi1.bin",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
-	{ "voi2.bin",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
+	{ "rst1_voi1.bin",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
+	{ "rst1_voi2.bin",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
 };
 
 STD_ROM_PICK(rthun2j)

@@ -9311,7 +9311,7 @@ struct BurnDriver BurnDrvVandykeb = {
 };
 
 
-// Hacha Mecha Fighter (19th Sep. 1991)
+// Hacha Mecha Fighter (19th Sep. 1991, protected, set 1)
 
 static struct BurnRomInfo hachamfRomDesc[] = {
 	{ "7.93",			0x020000, 0x9d847c31, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -9386,10 +9386,43 @@ static INT32 HachamfInit()
 
 struct BurnDriver BurnDrvHachamf = {
 	"hachamf", NULL, "nmk004", NULL, "1991",
-	"Hacha Mecha Fighter (19th Sep. 1991)\0", "Use the unprotected bootleg, instead!", "NMK", "NMK16",
+	"Hacha Mecha Fighter (19th Sep. 1991, protected, set 1)\0", "Use the unprotected bootleg, instead!", "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, hachamfRomInfo, hachamfRomName, NULL, NULL, CommonInputInfo, HachamfDIPInfo,
+	HachamfInit, NMK004Exit, NMK004Frame, HachamfDraw, DrvScan, NULL, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Hacha Mecha Fighter (19th Sep. 1991, protected, set 2)
+
+static struct BurnRomInfo hachamfaRomDesc[] = {
+	{ "7.ic93",			0x020000, 0xf437e52b, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "6.ic94",			0x020000, 0x60d340d0, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "1.70",			0x010000, 0x9e6f48fc, 2 | BRF_PRG | BRF_ESS }, //  2 NMK004 data
+
+	{ "5.95",			0x020000, 0x29fb04a2, 3 | BRF_GRA },           //  3 Characters
+
+	{ "91076-4.101",	0x100000, 0xdf9653a4, 4 | BRF_GRA },           //  4 Tiles
+
+	{ "91076-8.57",		0x100000, 0x7fd0f556, 5 | BRF_GRA },           //  5 Sprites
+
+	{ "91076-2.46",		0x080000, 0x3f1e67f2, 6 | BRF_SND },           //  6 OKI1 Samples
+
+	{ "91076-3.45",		0x080000, 0xb25ed93b, 7 | BRF_SND },           //  7 OKI2 Samples
+};
+
+STDROMPICKEXT(hachamfa, hachamfa, nmk004)
+STD_ROM_FN(hachamfa)
+
+struct BurnDriver BurnDrvHachamfa = {
+	"hachamfa", "hachamf", "nmk004", NULL, "1991",
+	"Hacha Mecha Fighter (19th Sep. 1991, protected, set 2)\0", "Use the unprotected bootleg, instead!", "NMK", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	NULL, hachamfaRomInfo, hachamfaRomName, NULL, NULL, CommonInputInfo, HachamfDIPInfo,
 	HachamfInit, NMK004Exit, NMK004Frame, HachamfDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };

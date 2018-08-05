@@ -8071,16 +8071,16 @@ static struct BurnRomInfo countrycRomDesc[] = {
 
 	{ "cc1.1f",		0x10000, 0x863f1624, 3 | BRF_ESS | BRF_PRG }, //  6 Z80 #2 Code
 
-	{ "cc1pr.5f",		0x00400, 0x7da9ce33, 14 | BRF_GRA },	      //  7 Color Data
-	{ "cc2pr.5g",		0x00400, 0x982e4f46, 14 | BRF_GRA },	      //  8
-	{ "cc3pr.5h",		0x00400, 0x47f2b83d, 14 | BRF_GRA },	      //  9
+	{ "cc1pr.5f",	0x00400, 0x7da9ce33, 14 | BRF_GRA },	      //  7 Color Data
+	{ "cc2pr.5g",	0x00400, 0x982e4f46, 14 | BRF_GRA },	      //  8
+	{ "cc3pr.5h",	0x00400, 0x47f2b83d, 14 | BRF_GRA },	      //  9
 
-	{ "cc11.1e",		0x04000, 0xce927ac7, 4 | BRF_GRA },	      // 10 Text Characters
+	{ "cc11.1e",	0x04000, 0xce927ac7, 4 | BRF_GRA },	      // 10 Text Characters
 
-	{ "cc13.2d",		0x04000, 0xef86c388, 6 | BRF_GRA },	      // 11 Background Characters
-	{ "cc12.2c",		0x04000, 0xd7d55a36, 6 | BRF_GRA },	      // 12
+	{ "cc13.2d",	0x04000, 0xef86c388, 6 | BRF_GRA },	      // 11 Background Characters
+	{ "cc12.2c",	0x04000, 0xd7d55a36, 6 | BRF_GRA },	      // 12
 
-	{ "cc10.7h",		0x08000, 0x90091667, 9 | BRF_GRA },	      // 13 Sprites
+	{ "cc10.7h",	0x08000, 0x90091667, 9 | BRF_GRA },	      // 13 Sprites
 	{ "cc9.7g",		0x08000, 0x56249142, 9 | BRF_GRA },	      // 14
 	{ "cc8.7e",		0x08000, 0x55943065, 9 | BRF_GRA },	      // 15
 };
@@ -8102,33 +8102,33 @@ struct BurnDriver BurnDrvCountryc = {
 // Ikari Warriors (US JAMMA)
 
 static struct BurnRomInfo ikariRomDesc[] = {
-	{ "1.rom",		0x10000, 0x52a8b2dd, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "1.rom",			0x10000, 0x52a8b2dd, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
 
-	{ "2.rom",		0x10000, 0x45364d55, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 Code
+	{ "2.rom",			0x10000, 0x45364d55, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 Code
 
-	{ "3.rom",		0x10000, 0x56a26699, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 Code
+	{ "3.rom",			0x10000, 0x56a26699, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 Code
 
 	{ "7122er.prm",		0x00400, 0xb9bf2c2c, 14 | BRF_GRA },	      //  3 Color Data
 	{ "7122eg.prm",		0x00400, 0x0703a770, 14 | BRF_GRA },	      //  4
 	{ "7122eb.prm",		0x00400, 0x0a11cdde, 14 | BRF_GRA },	      //  5
 
-	{ "7.rom",		0x04000, 0xa7eb4917, 4 | BRF_GRA },	      //  6 Text Characters
+	{ "7.rom",			0x04000, 0xa7eb4917, 4 | BRF_GRA },	      	  //  6 Text Characters
 
-	{ "17.rom",		0x08000, 0xe0dba976, 6 | BRF_GRA },           //  7 Background Characters
-	{ "18.rom",		0x08000, 0x24947d5f, 6 | BRF_GRA },           //  8
-	{ "19.rom",		0x08000, 0x9ee59e91, 6 | BRF_GRA },           //  9
-	{ "20.rom",		0x08000, 0x5da7ec1a, 6 | BRF_GRA },           // 10
+	{ "17.rom",			0x08000, 0xe0dba976, 6 | BRF_GRA },           //  7 Background Characters
+	{ "18.rom",			0x08000, 0x24947d5f, 6 | BRF_GRA },           //  8
+	{ "19.rom",			0x08000, 0x9ee59e91, 6 | BRF_GRA },           //  9
+	{ "20.rom",			0x08000, 0x5da7ec1a, 6 | BRF_GRA },           // 10
 
-	{ "8.rom",		0x08000, 0x9827c14a, 9 | BRF_GRA },           // 11 16x16 Sprites
-	{ "9.rom",		0x08000, 0x545c790c, 9 | BRF_GRA },           // 12
-	{ "10.rom",		0x08000, 0xec9ba07e, 9 | BRF_GRA },           // 13
+	{ "8.rom",			0x08000, 0x9827c14a, 9 | BRF_GRA },           // 11 16x16 Sprites
+	{ "9.rom",			0x08000, 0x545c790c, 9 | BRF_GRA },           // 12
+	{ "10.rom",			0x08000, 0xec9ba07e, 9 | BRF_GRA },           // 13
 
-	{ "11.rom",		0x08000, 0x5c75ea8f, 10 | BRF_GRA },          // 14 32x32 Sprites
-	{ "14.rom",		0x08000, 0x3293fde4, 10 | BRF_GRA },          // 15
-	{ "12.rom",		0x08000, 0x95138498, 10 | BRF_GRA },          // 16
-	{ "15.rom",		0x08000, 0x65a61c99, 10 | BRF_GRA },          // 17
-	{ "13.rom",		0x08000, 0x315383d7, 10 | BRF_GRA },          // 18
-	{ "16.rom",		0x08000, 0xe9b03e07, 10 | BRF_GRA },          // 19
+	{ "11.rom",			0x08000, 0x5c75ea8f, 10 | BRF_GRA },          // 14 32x32 Sprites
+	{ "14.rom",			0x08000, 0x3293fde4, 10 | BRF_GRA },          // 15
+	{ "12.rom",			0x08000, 0x95138498, 10 | BRF_GRA },          // 16
+	{ "15.rom",			0x08000, 0x65a61c99, 10 | BRF_GRA },          // 17
+	{ "13.rom",			0x08000, 0x315383d7, 10 | BRF_GRA },          // 18
+	{ "16.rom",			0x08000, 0xe9b03e07, 10 | BRF_GRA },          // 19
 };
 
 STD_ROM_PICK(ikari)
@@ -8145,39 +8145,44 @@ struct BurnDriver BurnDrvIkari = {
 };
 
 
-// Ikari Warriors (US)
+// Ikari Warriors (US, set 1)
 
 static struct BurnRomInfo ikariaRomDesc[] = {
-	{ "p1.bin",		0x04000, 0xad0e440e, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "p2.bin",		0x08000, 0xb585e931, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "p1.bin",			0x04000, 0xad0e440e, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "p2.bin",			0x08000, 0xb585e931, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "p3",			0x04000, 0x8a9bd1f0, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
-	{ "p4",			0x08000, 0xf4101cb4, 2 | BRF_ESS | BRF_PRG }, //  3
+	{ "p3",				0x04000, 0x8a9bd1f0, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
+	{ "p4",				0x08000, 0xf4101cb4, 2 | BRF_ESS | BRF_PRG }, //  3
 
-	{ "ik5",		0x04000, 0x863448fa, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
-	{ "ik6",		0x08000, 0x9b16aa57, 3 | BRF_ESS | BRF_PRG }, //  5
+	{ "ik5",			0x04000, 0x863448fa, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
+	{ "ik6",			0x08000, 0x9b16aa57, 3 | BRF_ESS | BRF_PRG }, //  5
 
 	{ "7122er.prm",		0x00400, 0xb9bf2c2c, 14 | BRF_GRA },	      //  6 Color Data
 	{ "7122eg.prm",		0x00400, 0x0703a770, 14 | BRF_GRA },	      //  7
 	{ "7122eb.prm",		0x00400, 0x0a11cdde, 14 | BRF_GRA },	      //  8
 
-	{ "7.rom",		0x04000, 0xa7eb4917, 4 | BRF_GRA },	      //  9 Text Characters
+	{ "7.rom",			0x04000, 0xa7eb4917, 4 | BRF_GRA },	      	  //  9 Text Characters
 
-	{ "17.rom",		0x08000, 0xe0dba976, 6 | BRF_GRA },	      // 10 Background Tiles
-	{ "18.rom",		0x08000, 0x24947d5f, 6 | BRF_GRA },	      // 11
-	{ "19.rom",		0x08000, 0x9ee59e91, 6 | BRF_GRA },	      // 12
-	{ "20.rom",		0x08000, 0x5da7ec1a, 6 | BRF_GRA },	      // 13
+	{ "17.rom",			0x08000, 0xe0dba976, 6 | BRF_GRA },	          // 10 Background Tiles
+	{ "18.rom",			0x08000, 0x24947d5f, 6 | BRF_GRA },	          // 11
+	{ "19.rom",			0x08000, 0x9ee59e91, 6 | BRF_GRA },	          // 12
+	{ "20.rom",			0x08000, 0x5da7ec1a, 6 | BRF_GRA },	          // 13
 
-	{ "8.rom",		0x08000, 0x9827c14a, 9 | BRF_GRA },	      // 14 16x16 Sprite Tiles
-	{ "9.rom",		0x08000, 0x545c790c, 9 | BRF_GRA },	      // 15
-	{ "10.rom",		0x08000, 0xec9ba07e, 9 | BRF_GRA },	      // 16
+	{ "8.rom",			0x08000, 0x9827c14a, 9 | BRF_GRA },	      	  // 14 16x16 Sprite Tiles
+	{ "9.rom",			0x08000, 0x545c790c, 9 | BRF_GRA },	      	  // 15
+	{ "10.rom",			0x08000, 0xec9ba07e, 9 | BRF_GRA },	      	  // 16
 
-	{ "11.rom",		0x08000, 0x5c75ea8f, 10 | BRF_GRA },	      // 17 32x32 Sprite Tiles
-	{ "14.rom",		0x08000, 0x3293fde4, 10 | BRF_GRA },	      // 18
-	{ "12.rom",		0x08000, 0x95138498, 10 | BRF_GRA },	      // 19
-	{ "15.rom",		0x08000, 0x65a61c99, 10 | BRF_GRA },	      // 20
-	{ "13.rom",		0x08000, 0x315383d7, 10 | BRF_GRA },	      // 21
-	{ "16.rom",		0x08000, 0xe9b03e07, 10 | BRF_GRA },	      // 22
+	{ "11.rom",			0x08000, 0x5c75ea8f, 10 | BRF_GRA },	      // 17 32x32 Sprite Tiles
+	{ "14.rom",			0x08000, 0x3293fde4, 10 | BRF_GRA },	      // 18
+	{ "12.rom",			0x08000, 0x95138498, 10 | BRF_GRA },	      // 19
+	{ "15.rom",			0x08000, 0x65a61c99, 10 | BRF_GRA },	      // 20
+	{ "13.rom",			0x08000, 0x315383d7, 10 | BRF_GRA },	      // 21
+	{ "16.rom",			0x08000, 0xe9b03e07, 10 | BRF_GRA },	      // 22
+	
+	{ "ampal16r6a-a5004.1",	0x0104, 0xa2e9a162, 0 | BRF_OPT },        // 23 plds
+	{ "pal20l8a-a5004.2",	0x0144, 0x28f2c404, 0 | BRF_OPT },        // 24
+	{ "ampal16l8a-a5004.3",	0x0104, 0x540351f2, 0 | BRF_OPT },        // 25
+	{ "ampal16l8a-a5004.4",	0x0104, 0x540351f2, 0 | BRF_OPT },        // 26
 };
 
 STD_ROM_PICK(ikaria)
@@ -8185,10 +8190,64 @@ STD_ROM_FN(ikaria)
 
 struct BurnDriver BurnDrvIkaria = {
 	"ikaria", "ikari", NULL, NULL, "1986",
-	"Ikari Warriors (US)\0", NULL, "SNK", "Miscellaneous",
+	"Ikari Warriors (US, set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikariaRomInfo, ikariaRomName, NULL, NULL, IkariaInputInfo, IkariDIPInfo,
+	IkariaInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
+	216, 288, 3, 4
+};
+
+
+// Ikari Warriors (US, set 2)
+
+static struct BurnRomInfo ikaria2RomDesc[] = {
+	{ "p1.14",			0x04000, 0x9605f856, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "p2.bin",			0x08000, 0xb585e931, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "p3",				0x04000, 0x8a9bd1f0, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
+	{ "p4",				0x08000, 0xf4101cb4, 2 | BRF_ESS | BRF_PRG }, //  3
+
+	{ "ik5",			0x04000, 0x863448fa, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
+	{ "ik6",			0x08000, 0x9b16aa57, 3 | BRF_ESS | BRF_PRG }, //  5
+
+	{ "7122er.prm",		0x00400, 0xb9bf2c2c, 14 | BRF_GRA },	      //  6 Color Data
+	{ "7122eg.prm",		0x00400, 0x0703a770, 14 | BRF_GRA },	      //  7
+	{ "7122eb.prm",		0x00400, 0x0a11cdde, 14 | BRF_GRA },	      //  8
+
+	{ "7.rom",			0x04000, 0xa7eb4917, 4 | BRF_GRA },	      	  //  9 Text Characters
+
+	{ "17.rom",			0x08000, 0xe0dba976, 6 | BRF_GRA },	          // 10 Background Tiles
+	{ "18.rom",			0x08000, 0x24947d5f, 6 | BRF_GRA },	          // 11
+	{ "19.rom",			0x08000, 0x9ee59e91, 6 | BRF_GRA },	          // 12
+	{ "20.rom",			0x08000, 0x5da7ec1a, 6 | BRF_GRA },	          // 13
+
+	{ "8.rom",			0x08000, 0x9827c14a, 9 | BRF_GRA },	      	  // 14 16x16 Sprite Tiles
+	{ "9.rom",			0x08000, 0x545c790c, 9 | BRF_GRA },	      	  // 15
+	{ "10.rom",			0x08000, 0xec9ba07e, 9 | BRF_GRA },	      	  // 16
+
+	{ "11.rom",			0x08000, 0x5c75ea8f, 10 | BRF_GRA },	      // 17 32x32 Sprite Tiles
+	{ "14.rom",			0x08000, 0x3293fde4, 10 | BRF_GRA },	      // 18
+	{ "12.rom",			0x08000, 0x95138498, 10 | BRF_GRA },	      // 19
+	{ "15.rom",			0x08000, 0x65a61c99, 10 | BRF_GRA },	      // 20
+	{ "13.rom",			0x08000, 0x315383d7, 10 | BRF_GRA },	      // 21
+	{ "16.rom",			0x08000, 0xe9b03e07, 10 | BRF_GRA },	      // 22
+	
+	{ "ampal16r6a-a5004.1",	0x0104, 0xa2e9a162, 0 | BRF_OPT },        // 23 plds
+	{ "pal20l8a-a5004.2",	0x0144, 0x28f2c404, 0 | BRF_OPT },        // 24
+	{ "ampal16l8a-a5004.3",	0x0104, 0x540351f2, 0 | BRF_OPT },        // 25
+	{ "ampal16l8a-a5004.4",	0x0104, 0x540351f2, 0 | BRF_OPT },        // 26
+};
+
+STD_ROM_PICK(ikaria2)
+STD_ROM_FN(ikaria2)
+
+struct BurnDriver BurnDrvIkaria2 = {
+	"ikaria2", "ikari", NULL, NULL, "1986",
+	"Ikari Warriors (US, set 2)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	NULL, ikaria2RomInfo, ikaria2RomName, NULL, NULL, IkariaInputInfo, IkariDIPInfo,
 	IkariaInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4
 };

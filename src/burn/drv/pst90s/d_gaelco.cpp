@@ -281,6 +281,60 @@ static struct BurnDIPInfo BiomtoyDIPList[]=
 
 STDDIPINFO(Biomtoy)
 
+static struct BurnDIPInfo BiomtoycDIPList[]=
+{
+	{0x11, 0xff, 0xff, 0xff, NULL				},
+	{0x12, 0xff, 0xff, 0xfb, NULL				},
+
+	{0   , 0xfe, 0   ,    11, "Coin B"			},
+	{0x11, 0x01, 0x0f, 0x0e, "4 Coins 1 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0a, "3 Coins 2 Credits"		},
+	{0x11, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0x0f, 0x07, "1 Coin  2 Credits"		},
+	{0x11, 0x01, 0x0f, 0x06, "2 Coins 3 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0b, "1 Coin  3 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0d, "1 Coin  5 Credits"		},
+	{0x11, 0x01, 0x0f, 0x08, "Free Play (if Coin A too)"	},
+	{0x11, 0x01, 0x0f, 0x0c, "Free Play (if Coin A too)"	},
+	{0x11, 0x01, 0x0f, 0x00, "Free Play (if Coin A too)"	},
+
+	{0   , 0xfe, 0   ,    11, "Coin A"			},
+	{0x11, 0x01, 0xf0, 0xe0, "4 Coins 1 Credits"		},
+	{0x11, 0x01, 0xf0, 0xa0, "3 Coins 2 Credits"		},
+	{0x11, 0x01, 0xf0, 0x90, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0xf0, 0x70, "1 Coin  2 Credits"		},
+	{0x11, 0x01, 0xf0, 0x60, "2 Coins 3 Credits"		},
+	{0x11, 0x01, 0xf0, 0xb0, "1 Coin  3 Credits"		},
+	{0x11, 0x01, 0xf0, 0xd0, "1 Coin  5 Credits"		},
+	{0x11, 0x01, 0xf0, 0x80, "Free Play (if Coin B too)"	},
+	{0x11, 0x01, 0xf0, 0xc0, "Free Play (if Coin B too)"	},
+	{0x11, 0x01, 0xf0, 0x00, "Free Play (if Coin B too)"	},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x12, 0x01, 0x01, 0x01, "Off"				},
+	{0x12, 0x01, 0x01, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x12, 0x01, 0x08, 0x00, "Off"				},
+	{0x12, 0x01, 0x08, 0x08, "On"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x12, 0x01, 0x30, 0x20, "0"				},
+	{0x12, 0x01, 0x30, 0x10, "1"				},
+	{0x12, 0x01, 0x30, 0x30, "2"				},
+	{0x12, 0x01, 0x30, 0x00, "3"				},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x12, 0x01, 0xc0, 0x40, "Easy"				},
+	{0x12, 0x01, 0xc0, 0xc0, "Normal"			},
+	{0x12, 0x01, 0xc0, 0x80, "Hard"				},
+	{0x12, 0x01, 0xc0, 0x00, "Hardest"			},
+};
+
+STDDIPINFO(Biomtoyc)
+
 static struct BurnDIPInfo BioplaycDIPList[]=
 {
 	{0x11, 0xff, 0xff, 0xff, NULL				},
@@ -1298,8 +1352,8 @@ struct BurnDriver BurnDrvManiacsp = {
 /* PCB - REF.922804/2 */
 
 static struct BurnRomInfo biomtoyRomDesc[] = {
-	{ "d18",		0x80000, 0x4569ce64, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "d16",		0x80000, 0x739449bd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "18.d18",		0x80000, 0x4569ce64, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "16.d16",		0x80000, 0x739449bd, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "h6",			0x80000, 0x9416a729, 2 | BRF_GRA },           //  2 Tiles and Sprites
 	{ "j6",			0x80000, 0xe923728b, 2 | BRF_GRA },           //  3
@@ -1332,20 +1386,20 @@ struct BurnDriver BurnDrvBiomtoy = {
 /* PCB - REF.922804/2 */
 
 static struct BurnRomInfo biomtoyaRomDesc[] = {
-	{ "biomtoya.d18",	0x80000, 0x39b6cdbd, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "biomtoya.d16",	0x80000, 0xab340671, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "18.d18",		0x80000, 0x39b6cdbd, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "16.d16",		0x80000, 0xab340671, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "h6",				0x80000, 0x9416a729, 2 | BRF_GRA },           //  2 Tiles and Sprites
-	{ "j6",				0x80000, 0xe923728b, 2 | BRF_GRA },           //  3
-	{ "h7",				0x80000, 0x9c984d7b, 2 | BRF_GRA },           //  4
-	{ "j7",				0x80000, 0x0e18fac2, 2 | BRF_GRA },           //  5
-	{ "h9",				0x80000, 0x8c1f6718, 2 | BRF_GRA },           //  6
-	{ "j9",				0x80000, 0x1c93f050, 2 | BRF_GRA },           //  7
-	{ "h10",			0x80000, 0xaca1702b, 2 | BRF_GRA },           //  8
-	{ "j10",			0x80000, 0x8e3e96cc, 2 | BRF_GRA },           //  9
+	{ "h6",			0x80000, 0x9416a729, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "j6",			0x80000, 0xe923728b, 2 | BRF_GRA },           //  3
+	{ "h7",			0x80000, 0x9c984d7b, 2 | BRF_GRA },           //  4
+	{ "j7",			0x80000, 0x0e18fac2, 2 | BRF_GRA },           //  5
+	{ "h9",			0x80000, 0x8c1f6718, 2 | BRF_GRA },           //  6
+	{ "j9",			0x80000, 0x1c93f050, 2 | BRF_GRA },           //  7
+	{ "h10",		0x80000, 0xaca1702b, 2 | BRF_GRA },           //  8
+	{ "j10",		0x80000, 0x8e3e96cc, 2 | BRF_GRA },           //  9
 
-	{ "c1",				0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
-	{ "c3",				0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+	{ "c1",			0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
+	{ "c3",			0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
 };
 
 STD_ROM_PICK(biomtoya)
@@ -1366,20 +1420,20 @@ struct BurnDriver BurnDrvBiomtoya = {
 /* PCB - REF.922804/2 */
 
 static struct BurnRomInfo biomtoybRomDesc[] = {
-	{ "18.d18",			0x80000, 0x2dfadee3, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "16.d16",			0x80000, 0xb35e3ca6, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "18.d18",		0x80000, 0x2dfadee3, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "16.d16",		0x80000, 0xb35e3ca6, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "h6",				0x80000, 0x9416a729, 2 | BRF_GRA },           //  2 Tiles and Sprites
-	{ "j6",				0x80000, 0xe923728b, 2 | BRF_GRA },           //  3
-	{ "h7",				0x80000, 0x9c984d7b, 2 | BRF_GRA },           //  4
-	{ "j7",				0x80000, 0x0e18fac2, 2 | BRF_GRA },           //  5
-	{ "h9",				0x80000, 0x8c1f6718, 2 | BRF_GRA },           //  6
-	{ "j9",				0x80000, 0x1c93f050, 2 | BRF_GRA },           //  7
-	{ "h10",			0x80000, 0xaca1702b, 2 | BRF_GRA },           //  8
-	{ "j10",			0x80000, 0x8e3e96cc, 2 | BRF_GRA },           //  9
+	{ "h6",			0x80000, 0x9416a729, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "j6",			0x80000, 0xe923728b, 2 | BRF_GRA },           //  3
+	{ "h7",			0x80000, 0x9c984d7b, 2 | BRF_GRA },           //  4
+	{ "j7",			0x80000, 0x0e18fac2, 2 | BRF_GRA },           //  5
+	{ "h9",			0x80000, 0x8c1f6718, 2 | BRF_GRA },           //  6
+	{ "j9",			0x80000, 0x1c93f050, 2 | BRF_GRA },           //  7
+	{ "h10",		0x80000, 0xaca1702b, 2 | BRF_GRA },           //  8
+	{ "j10",		0x80000, 0x8e3e96cc, 2 | BRF_GRA },           //  9
 
-	{ "c1",				0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
-	{ "c3",				0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+	{ "c1",			0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
+	{ "c3",			0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
 };
 
 STD_ROM_PICK(biomtoyb)
@@ -1396,12 +1450,12 @@ struct BurnDriver BurnDrvBiomtoyb = {
 };
 
 
-// Bioplaything Cop (Ver. 1.0.1823, prototype)
-/* PCB - REF.922804/2??  -  Spanish version */
+// Biomechanical Toy (Ver. 1.0.1870)
+/* PCB - REF.922804/1 & REF.922804/2 */
 
-static struct BurnRomInfo bioplaycRomDesc[] = {
-	{ "t.d18",			0x80000, 0xec518c6c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "t.d16",			0x80000, 0xde4b031d, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo biomtoycRomDesc[] = {
+	{ "18.d18",				0x80000, 0x05ad7d30, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "16.d16",				0x80000, 0xa288e73f, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "toy-high-3.h6",		0x80000, 0xab19a1ce, 2 | BRF_GRA },           //  2 Tiles and Sprites
 	{ "toy-low-3.j6",		0x80000, 0x927f5cd7, 2 | BRF_GRA },           //  3
@@ -1412,8 +1466,43 @@ static struct BurnRomInfo bioplaycRomDesc[] = {
 	{ "toy-high-0.h10",		0x80000, 0x5bee6df7, 2 | BRF_GRA },           //  8
 	{ "toy-low-0.j10",		0x80000, 0x26c49ca2, 2 | BRF_GRA },           //  9
 
-	{ "c1",				0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
-	{ "c3",				0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+	{ "c1",					0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
+	{ "c3",					0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+};
+
+STD_ROM_PICK(biomtoyc)
+STD_ROM_FN(biomtoyc)
+
+struct BurnDriver BurnDrvBiomtoyc = {
+	"biomtoyc", "biomtoy", NULL, NULL, "1995",
+	"Biomechanical Toy (Ver. 1.0.1870)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	NULL, biomtoycRomInfo, biomtoycRomName, NULL, NULL, DrvInputInfo, BiomtoycDIPInfo,
+	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Bioplaything Cop (Ver. 1.0.1823, prototype)
+/* PCB - REF.922804/2??  -  Spanish version */
+
+static struct BurnRomInfo bioplaycRomDesc[] = {
+	// copyright based on Ver. 1.0.1870
+	{ "t.d18",				0x80000, 0xec518c6c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "t.d16",				0x80000, 0xde4b031d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "toy-high-3.h6",		0x80000, 0xab19a1ce, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "toy-low-3.j6",		0x80000, 0x927f5cd7, 2 | BRF_GRA },           //  3
+	{ "toy-high-2.h7",		0x80000, 0xfd975d89, 2 | BRF_GRA },           //  4
+	{ "toy-low-2.j7",		0x80000, 0x6cbf9937, 2 | BRF_GRA },           //  5
+	{ "toy-high-1.h9",		0x80000, 0x09de4799, 2 | BRF_GRA },           //  6
+	{ "toy-low-1.j9",		0x80000, 0x57922c41, 2 | BRF_GRA },           //  7
+	{ "toy-high-0.h10",		0x80000, 0x5bee6df7, 2 | BRF_GRA },           //  8
+	{ "toy-low-0.j10",		0x80000, 0x26c49ca2, 2 | BRF_GRA },           //  9
+
+	{ "c1",					0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
+	{ "c3",					0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
 };
 
 STD_ROM_PICK(bioplayc)

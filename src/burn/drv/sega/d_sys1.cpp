@@ -2892,26 +2892,26 @@ STD_ROM_PICK(Teddybbobl)
 STD_ROM_FN(Teddybbobl)
 
 static struct BurnRomInfo tokisensRomDesc[] = {
-	{ "epr10961.90",        0x8000, 0x1466b61d, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
-	{ "epr10962.91",        0x8000, 0xa8479f91, BRF_ESS | BRF_PRG }, //  1
-	{ "epr10963.92",        0x8000, 0xb7193b39, BRF_ESS | BRF_PRG }, //  2
+	{ "epr-10961.90",        0x8000, 0x1466b61d, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "epr-10962.91",        0x8000, 0xa8479f91, BRF_ESS | BRF_PRG }, //  1
+	{ "epr-10963.92",        0x8000, 0xb7193b39, BRF_ESS | BRF_PRG }, //  2
 
-	{ "epr10967.126",       0x8000, 0x97966bf2, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+	{ "epr-10967.126",       0x8000, 0x97966bf2, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
 
-	{ "epr10964.4",         0x8000, 0x9013b85c, BRF_GRA }, //  4 Tiles
-	{ "epr10965.5",         0x8000, 0xe4755cc6, BRF_GRA }, //  5
-	{ "epr10966.6",         0x8000, 0x5bbfbdcc, BRF_GRA }, //  6
+	{ "epr-10964.4",         0x8000, 0x9013b85c, BRF_GRA }, //  4 Tiles
+	{ "epr-10965.5",         0x8000, 0xe4755cc6, BRF_GRA }, //  5
+	{ "epr-10966.6",         0x8000, 0x5bbfbdcc, BRF_GRA }, //  6
 
-	{ "epr10958.87",        0x8000, 0xfc2bcbd7, BRF_GRA }, //  7 Sprites
-	{ "epr10957.86",        0x8000, 0x4ec56860, BRF_GRA }, //  8
-	{ "epr10960.89",        0x8000, 0x880e0d44, BRF_GRA }, //  9
-	{ "epr10959.88",        0x8000, 0x4deda48f, BRF_GRA }, // 10
+	{ "epr-10958.87",        0x8000, 0xfc2bcbd7, BRF_GRA }, //  7 Sprites
+	{ "epr-10957.86",        0x8000, 0x4ec56860, BRF_GRA }, //  8
+	{ "epr-10960.89",        0x8000, 0x880e0d44, BRF_GRA }, //  9
+	{ "epr-10959.88",        0x8000, 0x4deda48f, BRF_GRA }, // 10
 
-	{ "bprom.20",           0x0100, 0x8eee0f72, BRF_GRA }, // 11 Palette
-	{ "bprom.14",           0x0100, 0x3e7babd7, BRF_GRA }, // 12
-	{ "bprom.8",            0x0100, 0x371c44a6, BRF_GRA }, // 13
+	{ "pri10956.ic20",       0x0100, 0x8eee0f72, BRF_GRA }, // 11 Palette
+	{ "pri10955.ic14",       0x0100, 0x3e7babd7, BRF_GRA }, // 12
+	{ "pri10954.ic8",        0x0100, 0x371c44a6, BRF_GRA }, // 13
 
-	{ "bprom.28",           0x0100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
+	{ "pr-5317.ic28",        0x0100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
 };
  
 STD_ROM_PICK(tokisens)

@@ -473,7 +473,7 @@ static struct BurnRomInfo CtribeRomDesc[] = {
 STD_ROM_PICK(Ctribe)
 STD_ROM_FN(Ctribe)
 
-static struct BurnRomInfo Ctribe1RomDesc[] = {
+static struct BurnRomInfo CtribeuaRomDesc[] = {
 	{ "1_28a16-2.ic26",0x20000, 0xf00f8443, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "1_28a15-2.ic25",0x20000, 0xdd70079f, BRF_ESS | BRF_PRG }, //	 1
 	{ "28j17-0.104",   0x10000, 0x8c2c6dbd, BRF_ESS | BRF_PRG }, //	 2
@@ -500,10 +500,10 @@ static struct BurnRomInfo Ctribe1RomDesc[] = {
 	{ "28.ic44",       0x00100, 0x964329ef, BRF_GRA },	     //  18	PROM
 };
 
-STD_ROM_PICK(Ctribe1)
-STD_ROM_FN(Ctribe1)
+STD_ROM_PICK(Ctribeua)
+STD_ROM_FN(Ctribeua)
 
-static struct BurnRomInfo CtribeoRomDesc[] = {
+static struct BurnRomInfo Ctribeu1RomDesc[] = {
 	// only main program code differs from ctribe1 set
 	{ "28a16-1.ic26",  0x20000, 0xd108f36f, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "28a15-1.ic25",  0x20000, 0x3f5693a3, BRF_ESS | BRF_PRG }, //	 1
@@ -531,12 +531,12 @@ static struct BurnRomInfo CtribeoRomDesc[] = {
 	{ "28.ic44",       0x00100, 0x964329ef, BRF_GRA },	     //  18	PROM
 };
 
-STD_ROM_PICK(Ctribeo)
-STD_ROM_FN(Ctribeo)
+STD_ROM_PICK(Ctribeu1)
+STD_ROM_FN(Ctribeu1)
 
 static struct BurnRomInfo CtribejRomDesc[] = {
-	{ "28j16-02.26",   0x20000, 0x658b8568, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "28j15-12.25",   0x20000, 0x50aac7e7, BRF_ESS | BRF_PRG }, //	 1
+	{ "28j16-2.ic26",   0x20000, 0x658b8568, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "28j15-2.ic25",   0x20000, 0x50aac7e7, BRF_ESS | BRF_PRG }, //	 1
 	{ "28j17-0.104",   0x10000, 0x8c2c6dbd, BRF_ESS | BRF_PRG }, //	 2
 	
 	{ "28j10-0.89",    0x08000, 0x4346de13, BRF_ESS | BRF_PRG }, //  3	Z80 Program 
@@ -2102,7 +2102,7 @@ struct BurnDriver BurnDrvDdrago3b = {
 
 struct BurnDriver BurnDrvCtribe = {
 	"ctribe", NULL, NULL, NULL, "1990",
-	"The Combatribes (US)\0", NULL, "Technos Japan", "Miscellaneous",
+	"The Combatribes (US, rev 2, set 1)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, CtribeRomInfo, CtribeRomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
@@ -2110,22 +2110,22 @@ struct BurnDriver BurnDrvCtribe = {
 	NULL, 0x600, 320, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvCtribe1 = {
-	"ctribe1", "ctribe", NULL, NULL, "1990",
-	"The Combatribes (US set 1?)\0", NULL, "Technos Japan", "Miscellaneous",
+struct BurnDriver BurnDrvCtribeua = {
+	"ctribeua", "ctribe", NULL, NULL, "1990",
+	"The Combatribes (US, rev 2, set 2)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, Ctribe1RomInfo, Ctribe1RomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
+	NULL, CtribeuaRomInfo, CtribeuaRomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
 	CtribeInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvCtribeo = {
-	"ctribeo", "ctribe", NULL, NULL, "1990",
-	"The Combatribes (US , older)\0", NULL, "Technos Japan", "Miscellaneous",
+struct BurnDriver BurnDrvCtribeu1 = {
+	"ctribeu1", "ctribe", NULL, NULL, "1990",
+	"The Combatribes (US , rev 1)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, CtribeoRomInfo, CtribeoRomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
+	NULL, Ctribeu1RomInfo, Ctribeu1RomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
 	CtribeInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };

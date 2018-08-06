@@ -2973,7 +2973,7 @@ struct BurnDriver BurnDrvSpdball = {
 	"spdball", NULL, NULL, NULL, "1985",
 	"Speed Ball - Contest at Neonworld (prototype)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, spdballRomInfo, spdballRomName, NULL, NULL, SpdballInputInfo, NULL,
 	SpdballInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -3234,7 +3234,7 @@ struct BurnDriver BurnDrvLottofun = {
 	"lottofun", NULL, NULL, NULL, "1987",
 	"Lotto Fun\0", NULL, "H.A.R. Management", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, lottofunRomInfo, lottofunRomName, NULL, NULL, LottofunInputInfo, NULL,
 	LottofunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3

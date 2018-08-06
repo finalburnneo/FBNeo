@@ -242,8 +242,16 @@ int m6502_releaseslice()
 	return 0;
 }
 
+static int segmentcycles = 0;
+
+int m6502_get_segmentcycles()
+{
+	return segmentcycles - m6502_ICount;
+}
+
 int m6502_execute(int cycles)
 {
+	segmentcycles = cycles;
 	m6502_ICount = cycles;
 
 	change_pc(PCD);
@@ -294,11 +302,16 @@ int m6502_execute(int cycles)
 
 	} while (m6502_ICount > 0);
 
-	return cycles - m6502_ICount;
+	cycles = cycles - m6502_ICount;
+
+	segmentcycles = m6502_ICount = 0;
+
+	return cycles;
 }
 
 int decocpu7_execute(int cycles)
 {
+	segmentcycles = cycles;
 	m6502_ICount = cycles;
 
 	change_pc(PCD);
@@ -356,7 +369,11 @@ int decocpu7_execute(int cycles)
 
 	} while (m6502_ICount > 0);
 
-	return cycles - m6502_ICount;
+	cycles = cycles - m6502_ICount;
+
+	segmentcycles = m6502_ICount = 0;
+
+	return cycles;
 }
 
 void m6502_set_irq_line(int irqline, int state)
@@ -540,6 +557,7 @@ M6502_INLINE void m65c02_take_irq(void)
 
 int m65c02_execute(int cycles)
 {
+	segmentcycles = cycles;
 	m6502_ICount = cycles;
 
 	change_pc(PCD);
@@ -582,7 +600,11 @@ int m65c02_execute(int cycles)
 
 	} while (m6502_ICount > 0);
 
-	return cycles - m6502_ICount;
+	cycles = cycles - m6502_ICount;
+
+	segmentcycles = m6502_ICount = 0;
+
+	return cycles;
 }
 
 void m65c02_set_irq_line(int irqline, int state)
@@ -719,6 +741,7 @@ void deco16_set_irq_line(int irqline, int state)
 
 int deco16_execute(int cycles)
 {
+	segmentcycles = cycles;
 	m6502_ICount = cycles;
 
 	change_pc(PCD);
@@ -760,7 +783,11 @@ int deco16_execute(int cycles)
 
 	} while (m6502_ICount > 0);
 
-	return cycles - m6502_ICount;
+	cycles = cycles - m6502_ICount;
+
+	segmentcycles = m6502_ICount = 0;
+
+	return cycles;
 }
 
 #endif

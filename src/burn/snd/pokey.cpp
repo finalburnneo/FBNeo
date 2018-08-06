@@ -193,7 +193,7 @@ struct POKEYregisters {
 	void *timer[3]; 		/* timers for channel 1,2 and 4 events */
     INT64 rtimer;          /* timer for calculating the random offset */
 	void *ptimer[8];		/* pot timers */
-	UINT8 potgo_timer[8]; // dink
+	UINT32 potgo_timer[8]; // dink
 	int (*pot_r[8])(int offs);
 	int (*allpot_r)(int offs);
 	int (*serin_r)(int offs);
@@ -611,9 +611,28 @@ void PokeyPotCallback(int chip, int potnum, int (*pot_cb)(int offs))
 	p->pot_r[potnum] = pot_cb;
 }
 
+// cycle timing stuff for pot routines
+static INT32 (*pCPUTotalCycles)() = NULL;
+
+static INT32 DefaultTotalCycles()
+{
+	static int sillyctr = 0;
+
+	sillyctr += 92;
+
+	return sillyctr;
+}
+
+void PokeySetTotalCyclesCB(INT32 (*pCPUCyclesCB)())
+{
+	pCPUTotalCycles = pCPUCyclesCB;
+}
+
 int PokeyInit(int clock, int num, double vol, int addtostream)
 {
 	int chip, sample_rate;
+
+	PokeySetTotalCyclesCB(DefaultTotalCycles);
 
 	memset(&intf, 0, sizeof(intf));
 	sample_rate = nBurnSoundRate;
@@ -840,17 +859,16 @@ static void pokey_potgo(int chip)
 		{
 			int r = (*p->pot_r[pot])(pot);
 			//bprintf(0, L"pokey #%X pot_r(%X) returned %X\n", chip, pot, r);
-			LOG((errorlog, "POKEY #%d pot_r(%d) returned $%02x\n", chip, pot, r));
+			//bprintf(0, L"POKEY #%d pot_r(%d) returned $%02x @ cycles %d\n", chip, pot, r, pCPUTotalCycles());
 			if( r != -1 )
 			{
 				if (r > 228)
                     r = 228;
                 /* final value */
                 p->POTx[pot] = r;
-
-				p->potgo_timer[pot] = 1;
-
-				//	p->ALLPOT &= ~(1 << pot);	// "all done"? can't happen right away
+				p->potgo_timer[pot] = pCPUTotalCycles();
+				if (r == 0)
+					p->ALLPOT &= ~(1 << pot);	// "all done"? can't happen right away
 
 			}
 		}
@@ -873,11 +891,8 @@ int pokey_register_r(int chip, int offs)
 
 	{
 		for (pot = 0; pot < 8; pot++) { // simple hacky timer impl. -dink
-			if (p->potgo_timer[pot]) {
-				p->potgo_timer[pot]--;
-				if (p->potgo_timer[pot] == 0) {
-					p->ALLPOT &= ~(1 << pot);
-				}
+			if (pCPUTotalCycles() - p->potgo_timer[pot] >= 192) {
+				p->ALLPOT &= ~(1 << pot);
 			}
 		}
 
@@ -904,12 +919,12 @@ int pokey_register_r(int chip, int offs)
 			{
 				data = 0xff;
 				data = (UINT8)(/*timer_timeelapsed(p->ptimer[pot])*/1234 / AD_TIME);
-				LOG((errorlog,"POKEY #%d read POT%d (interpolated) $%02x\n", chip, pot, data));
+				//bprintf(0, L"POKEY #%d read POT%d (interpolated) $%02x\n", chip, pot, data);
             }
 			else
 			{
 				data = p->POTx[pot];
-				LOG((errorlog,"POKEY #%d read POT%d (final value)  $%02x\n", chip, pot, data));
+				//bprintf(0, L"POKEY #%d read POT%d (final value)  $%02x\n", chip, pot, data);
 			}
 		}
 
@@ -923,17 +938,17 @@ int pokey_register_r(int chip, int offs)
     	if( (p->SKCTL & SK_RESET) == 0)
     	{
     		data = 0;
-			LOG((errorlog,"POKEY #%d ALLPOT internal $%02x (reset)\n", chip, data));
+			//bprintf(0, L"POKEY #%d ALLPOT internal $%02x (reset)\n", chip, data);
 		}
 		else if( p->allpot_r )
 		{
 			data = (*p->allpot_r)(offs);
-			LOG((errorlog,"POKEY #%d ALLPOT callback $%02x\n", chip, data));
+			//bprintf(0, L"POKEY #%d ALLPOT callback $%02x\n", chip, data);
 		}
 		else
 		{
 			data = p->ALLPOT;
-			LOG((errorlog,"POKEY #%d ALLPOT internal $%02x\n", chip, data));
+			//bprintf(0, L"POKEY #%d ALLPOT internal $%02x  cycles %d\n", chip, data, pCPUTotalCycles());
 		}
 		break;
 

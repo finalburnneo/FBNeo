@@ -101,6 +101,8 @@ struct POKEYinterface {
 int PokeyInit (int clock, int num, double vol, int addtostream);
 void PokeyExit (void);
 
+void PokeySetTotalCyclesCB(INT32 (*pCPUCyclesCB)()); // see pre90s/d_tempest.cpp
+
 void pokey_update(int num, INT16 *buffer, int length);
 
 void pokey_scan(INT32 nAction, INT32* pnMin);

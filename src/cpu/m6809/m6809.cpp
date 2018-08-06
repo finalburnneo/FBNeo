@@ -521,6 +521,11 @@ UINT16 m6809_get_pc()
 	return m6809.pc.w.l;
 }
 
+UINT16 m6809_get_prev_pc()
+{
+	return m6809.ppc.w.l;
+}
+
 /* execute instructions on this CPU until icount expires */
 int m6809_execute(int cycles)	/* NS 970908 */
 {

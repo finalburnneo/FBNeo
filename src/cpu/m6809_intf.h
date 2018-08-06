@@ -43,6 +43,7 @@ void M6809SetReadOpHandler(UINT8 (*pHandler)(UINT16));
 void M6809SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6809Scan(INT32 nAction);
 UINT16 M6809GetPC();
+UINT16 M6809GetPrevPC();
 
 
 inline static INT32 M6809TotalCycles()

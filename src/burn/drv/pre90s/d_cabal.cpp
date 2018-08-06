@@ -548,6 +548,8 @@ static void draw_bg_layer()
 		INT32 sx = (offs & 0xf) * 16;
 		INT32 sy = offs & 0xf0;
 
+		sy -= 16;
+
 		INT32 code  = ram[offs] & 0xfff;
 		INT32 color = ram[offs] >> 12;
 
@@ -563,6 +565,8 @@ static void draw_tx_layer()
 	{
 		INT32 sx = (offs & 0x1f) * 8;
 		INT32 sy = (offs / 0x20) * 8;
+
+		sy -= 16;
 
 		INT32 code  = ram[offs] & 0x3ff;
 		INT32 color = ram[offs] >> 10;
@@ -591,6 +595,7 @@ static void draw_sprites()
 			int flipy       = 0;
 
 			if (sx > 256) sx -= 512;
+			sy -= 16;
 
 			if (flipscreen)
 			{
@@ -803,7 +808,7 @@ struct BurnDriver BurnDrvCabal = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalRomInfo, cabalRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	CabalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
-	256, 256, 4, 3
+	256, 224, 4, 3
 };
 
 
@@ -844,7 +849,7 @@ struct BurnDriver BurnDrvCabala = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalaRomInfo, cabalaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	CabalaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
-	256, 256, 4, 3
+	256, 224, 4, 3
 };
 
 
@@ -885,7 +890,7 @@ struct BurnDriver BurnDrvCabaluk = {
 	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalukRomInfo, cabalukRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	CabalukInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
-	256, 256, 4, 3
+	256, 224, 4, 3
 };
 
 
@@ -940,7 +945,7 @@ struct BurnDriver BurnDrvCabalukj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalukjRomInfo, cabalukjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	CabalukjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
-	256, 256, 4, 3
+	256, 224, 4, 3
 };
 
 
@@ -984,7 +989,7 @@ struct BurnDriver BurnDrvCabalus = {
 	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalusRomInfo, cabalusRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	CabalusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
-	256, 256, 4, 3
+	256, 224, 4, 3
 };
 
 
@@ -1028,5 +1033,5 @@ struct BurnDriver BurnDrvCabalus2 = {
 	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalus2RomInfo, cabalus2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	Cabalus2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
-	256, 256, 4, 3
+	256, 224, 4, 3
 };

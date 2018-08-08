@@ -279,7 +279,7 @@ static INT32 dvg_generate_vector_list(void)
 		if (opcode <= DLABS)
 		{
 			(void)dvg_mnem;
-			VGLOG((0, L"%s ", dvg_mnem[opcode]));
+			VGLOG((0, L"%S ", dvg_mnem[opcode]));
 			VGLOG((0, L"%4x  ", secondwd));
 		}
 
@@ -982,7 +982,7 @@ WRITE16_HANDLER( avgdvg_reset_word_w )
  *
  ************************************/
 
-INT32 avgdvg_init(INT32 vector_type, INT32 xsize, INT32 ysize)
+INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin, INT32 ysize)
 {
 	INT32 i;
 
@@ -1025,8 +1025,8 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsize, INT32 ysize)
 	busy = 0;
 
 	/* compute the min/max values */
-	xmin = 0;
-	ymin = 0;
+	xmin = xsizemin;
+	ymin = ysizemin;
 	xmax = xsize;
 	ymax = ysize;
 	width = xmax - xmin;
@@ -1037,7 +1037,7 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsize, INT32 ysize)
 	ycenter = ((ymax + ymin) / 2) << 16;
 
 	/* initialize to no avg flipping */
-   // flip_x = flip_y = 0;
+	flip_x = flip_y = 0;
 
 	/* Tempest and Quantum have X and Y swapped */
 	if ((vector_type == USE_AVG_TEMPEST) ||
@@ -1046,23 +1046,26 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsize, INT32 ysize)
 	else
 		swap_xy = 0;
 
+	for (INT32 j = 0; j < 32; j++)
+		colorram[j] = j;
+
 	return 0;
 }
 
-void avg_tempest_start(UINT8 *prom, UINT8 *vectram, UINT8 *colram)
+void avg_tempest_start(UINT8 *vectram)
 {
 	vectorram = vectram;
 	vectorram_size = 0x1000;
 	//extern int counter;
-	avgdvg_init(USE_AVG_TEMPEST, 580-68+0x3c, 570-68);
-
-	for (INT32 i = 0; i < 32; i++)
-		colorram[i] = i;
-
+	avgdvg_init(USE_AVG_TEMPEST, 0, 580-68+0x3c, 0, 570-68);
 }
 
-void dvg_asteroids_start(UINT8 *prom, UINT8 *vectram)
+void dvg_asteroids_start(UINT8 *vectram)
 {
+	vectorram = vectram;
+	vectorram_size = 0x1000;
+
+	avgdvg_init(USE_DVG, 522, 1566, 394, 1182);
 }
 
 // save for later stuff:
@@ -1150,7 +1153,7 @@ PALETTE_INIT( avg_multi )
 {
 	int i;
 	for (i = 0; i < 32; i++)
-		colorram[i] = i; VECTOR_COLOR111(i);
+		colorram[i] = VECTOR_COLOR111(i);
 }
 
 

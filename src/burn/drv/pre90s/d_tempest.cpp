@@ -3,6 +3,7 @@
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
+#include "burn_gun.h"
 #include "mathbox.h"
 #include "vector.h"
 #include "avgdvg.h"
@@ -30,6 +31,9 @@ static UINT8 DrvReset;
 
 static UINT8 DrvDial[2] =   { 0, 0 };
 
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+
 static UINT8 player = 0;
 static INT32 avgletsgo = 0;
 
@@ -40,6 +44,7 @@ static UINT8 earom_offset;
 static UINT8 earom_data;
 static UINT8 earom[EAROM_SIZE];
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TempestInputList[] = {
 	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 start"	},
@@ -47,6 +52,7 @@ static struct BurnInputInfo TempestInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4f+ 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 2"	},
+	A("P1 Spinner",     BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
 
 	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 start"	},
@@ -54,6 +60,7 @@ static struct BurnInputInfo TempestInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4f+ 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4f+ 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4f+ 5,	"p2 fire 2"	},
+	A("P2 Spinner",     BIT_ANALOG_REL, &DrvAnalogPort1,"p2 x-axis"),
 
 	{"Reset",		        BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Diagnostic Step",		BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
@@ -64,86 +71,88 @@ static struct BurnInputInfo TempestInputList[] = {
 	{"Dip D",		        BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 	{"Dip E",		        BIT_DIPSWITCH,	DrvDips + 4,	"dip"		},
 };
-
+#undef A
 STDINPUTINFO(Tempest)
+
+#define DIPOFFS 0x11
 
 static struct BurnDIPInfo TempestDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x10, NULL				    },
-	{0x10, 0xff, 0xff, 0x07, NULL				    },
-	{0x11, 0xff, 0xff, 0x00, NULL				    },
-	{0x12, 0xff, 0xff, 0x00, NULL				    },
-	{0x13, 0xff, 0xff, 0x10, NULL				    },
+	{DIPOFFS + 0x00, 0xff, 0xff, 0x10, NULL				    },
+	{DIPOFFS + 0x01, 0xff, 0xff, 0x07, NULL				    },
+	{DIPOFFS + 0x02, 0xff, 0xff, 0x00, NULL				    },
+	{DIPOFFS + 0x03, 0xff, 0xff, 0x00, NULL				    },
+	{DIPOFFS + 0x04, 0xff, 0xff, 0x10, NULL				    },
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			    },
-	{0x0f, 0x01, 0x10, 0x10, "Upright"			    },
-	{0x0f, 0x01, 0x10, 0x00, "Cocktail"			    },
+	{0             , 0xfe, 0   ,    2, "Cabinet"			    },
+	{DIPOFFS + 0x00, 0x01, 0x10, 0x10, "Upright"			    },
+	{DIPOFFS + 0x00, 0x01, 0x10, 0x00, "Cocktail"			    },
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x10, 0x01, 0x03, 0x02, "Easy"				    },
-	{0x10, 0x01, 0x03, 0x03, "Medium1"			    },
-	{0x10, 0x01, 0x03, 0x00, "Medium2"			    },
-	{0x10, 0x01, 0x03, 0x01, "Hard"				}   ,
+	{0             , 0xfe, 0   ,    4, "Difficulty"			},
+	{DIPOFFS + 0x01, 0x01, 0x03, 0x02, "Easy"				    },
+	{DIPOFFS + 0x01, 0x01, 0x03, 0x03, "Medium1"			    },
+	{DIPOFFS + 0x01, 0x01, 0x03, 0x00, "Medium2"			    },
+	{DIPOFFS + 0x01, 0x01, 0x03, 0x01, "Hard"				}   ,
 
-	{0   , 0xfe, 0   ,    2, "Rating"			    },
-	{0x10, 0x01, 0x04, 0x04, "1, 3, 5, 7, 9"		},
-	{0x10, 0x01, 0x04, 0x00, "tied to high score"	},
+	{0             , 0xfe, 0   ,    2, "Rating"			    },
+	{DIPOFFS + 0x01, 0x01, 0x04, 0x04, "1, 3, 5, 7, 9"		},
+	{DIPOFFS + 0x01, 0x01, 0x04, 0x00, "tied to high score"	},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"			    },
-	{0x11, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x03, 0x03, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x03, 0x02, "Free Play"			},
+	{0             , 0xfe, 0   ,    4, "Coinage"			    },
+	{DIPOFFS + 0x02, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
+	{DIPOFFS + 0x02, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
+	{DIPOFFS + 0x02, 0x01, 0x03, 0x03, "1 Coin  2 Credits"	},
+	{DIPOFFS + 0x02, 0x01, 0x03, 0x02, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    4, "Right Coin"			},
-	{0x11, 0x01, 0x0c, 0x00, "*1"				    },
-	{0x11, 0x01, 0x0c, 0x04, "*4"				    },
-	{0x11, 0x01, 0x0c, 0x08, "*5"				    },
-	{0x11, 0x01, 0x0c, 0x0c, "*6"				    },
+	{0             , 0xfe, 0   ,    4, "Right Coin"			},
+	{DIPOFFS + 0x02, 0x01, 0x0c, 0x00, "*1"				    },
+	{DIPOFFS + 0x02, 0x01, 0x0c, 0x04, "*4"				    },
+	{DIPOFFS + 0x02, 0x01, 0x0c, 0x08, "*5"				    },
+	{DIPOFFS + 0x02, 0x01, 0x0c, 0x0c, "*6"				    },
 
-	{0   , 0xfe, 0   ,    2, "Left Coin"			},
-	{0x11, 0x01, 0x10, 0x00, "*1"				    },
-	{0x11, 0x01, 0x10, 0x10, "*2"				    },
+	{0             , 0xfe, 0   ,    2, "Left Coin"			},
+	{DIPOFFS + 0x02, 0x01, 0x10, 0x00, "*1"				    },
+	{DIPOFFS + 0x02, 0x01, 0x10, 0x10, "*2"				    },
 
-	{0   , 0xfe, 0   ,    8, "Bonus Coins"			},
-	{0x11, 0x01, 0xe0, 0x00, "None"				    },
-	{0x11, 0x01, 0xe0, 0x80, "1 each 5"			    },
-	{0x11, 0x01, 0xe0, 0x40, "1 each 4 (+Demo)"		},
-	{0x11, 0x01, 0xe0, 0xa0, "1 each 3"			    },
-	{0x11, 0x01, 0xe0, 0x60, "2 each 4 (+Demo)"		},
-	{0x11, 0x01, 0xe0, 0x20, "1 each 2"			    },
-	{0x11, 0x01, 0xe0, 0xc0, "Freeze Mode"			},
-	{0x11, 0x01, 0xe0, 0xe0, "Freeze Mode"			},
+	{0             , 0xfe, 0   ,    8, "Bonus Coins"			},
+	{DIPOFFS + 0x02, 0x01, 0xe0, 0x00, "None"				    },
+	{DIPOFFS + 0x02, 0x01, 0xe0, 0x80, "1 each 5"			    },
+	{DIPOFFS + 0x02, 0x01, 0xe0, 0x40, "1 each 4 (+Demo)"		},
+	{DIPOFFS + 0x02, 0x01, 0xe0, 0xa0, "1 each 3"			    },
+	{DIPOFFS + 0x02, 0x01, 0xe0, 0x60, "2 each 4 (+Demo)"		},
+	{DIPOFFS + 0x02, 0x01, 0xe0, 0x20, "1 each 2"			    },
+	{DIPOFFS + 0x02, 0x01, 0xe0, 0xc0, "Freeze Mode"			},
+	{DIPOFFS + 0x02, 0x01, 0xe0, 0xe0, "Freeze Mode"			},
 
-	{0   , 0xfe, 0   ,    2, "Minimum"			    },
-	{0x12, 0x01, 0x01, 0x00, "1 Credit"			    },
-	{0x12, 0x01, 0x01, 0x01, "2 Credit"			    },
+	{0             , 0xfe, 0   ,    2, "Minimum"			    },
+	{DIPOFFS + 0x03, 0x01, 0x01, 0x00, "1 Credit"			    },
+	{DIPOFFS + 0x03, 0x01, 0x01, 0x01, "2 Credit"			    },
 
-	{0   , 0xfe, 0   ,    4, "Language"			    },
-	{0x12, 0x01, 0x06, 0x00, "English"			    },
-	{0x12, 0x01, 0x06, 0x02, "French"			    },
-	{0x12, 0x01, 0x06, 0x04, "German"			    },
-	{0x12, 0x01, 0x06, 0x06, "Spanish"			    },
+	{0             , 0xfe, 0   ,    4, "Language"			    },
+	{DIPOFFS + 0x03, 0x01, 0x06, 0x00, "English"			    },
+	{DIPOFFS + 0x03, 0x01, 0x06, 0x02, "French"			    },
+	{DIPOFFS + 0x03, 0x01, 0x06, 0x04, "German"			    },
+	{DIPOFFS + 0x03, 0x01, 0x06, 0x06, "Spanish"			    },
 
-	{0   , 0xfe, 0   ,    8, "Bonus Life"			},
-	{0x12, 0x01, 0x38, 0x08, "10000"			    },
-	{0x12, 0x01, 0x38, 0x00, "20000"			    },
-	{0x12, 0x01, 0x38, 0x10, "30000"			    },
-	{0x12, 0x01, 0x38, 0x18, "40000"			    },
-	{0x12, 0x01, 0x38, 0x20, "50000"			    },
-	{0x12, 0x01, 0x38, 0x28, "60000"			    },
-	{0x12, 0x01, 0x38, 0x30, "70000"			    },
-	{0x12, 0x01, 0x38, 0x38, "None"				    },
+	{0             , 0xfe, 0   ,    8, "Bonus Life"			},
+	{DIPOFFS + 0x03, 0x01, 0x38, 0x08, "10000"			    },
+	{DIPOFFS + 0x03, 0x01, 0x38, 0x00, "20000"			    },
+	{DIPOFFS + 0x03, 0x01, 0x38, 0x10, "30000"			    },
+	{DIPOFFS + 0x03, 0x01, 0x38, 0x18, "40000"			    },
+	{DIPOFFS + 0x03, 0x01, 0x38, 0x20, "50000"			    },
+	{DIPOFFS + 0x03, 0x01, 0x38, 0x28, "60000"			    },
+	{DIPOFFS + 0x03, 0x01, 0x38, 0x30, "70000"			    },
+	{DIPOFFS + 0x03, 0x01, 0x38, 0x38, "None"				    },
 
-	{0   , 0xfe, 0   ,    4, "Lives"			    },
-	{0x12, 0x01, 0xc0, 0xc0, "2"				    },
-	{0x12, 0x01, 0xc0, 0x00, "3"				    },
-	{0x12, 0x01, 0xc0, 0x40, "4"				    },
-	{0x12, 0x01, 0xc0, 0x80, "5"				    },
+	{0             , 0xfe, 0   ,    4, "Lives"			    },
+	{DIPOFFS + 0x03, 0x01, 0xc0, 0xc0, "2"				    },
+	{DIPOFFS + 0x03, 0x01, 0xc0, 0x00, "3"				    },
+	{DIPOFFS + 0x03, 0x01, 0xc0, 0x40, "4"				    },
+	{DIPOFFS + 0x03, 0x01, 0xc0, 0x80, "5"				    },
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x13, 0x01, 0x10, 0x10, "Off"  		        },
-	{0x13, 0x01, 0x10, 0x00, "On"   	            },
+	{0             , 0xfe, 0   ,    2, "Service Mode"			},
+	{DIPOFFS + 0x04, 0x01, 0x10, 0x10, "Off"  		        },
+	{DIPOFFS + 0x04, 0x01, 0x10, 0x00, "On"   	            },
 };
 
 STDDIPINFO(Tempest)
@@ -396,9 +405,11 @@ static INT32 DrvInit()
 
 	vector_init();
 
-	avg_tempest_start(DrvAVGPROM, DrvVecRAM, DrvColRAM);
+	avg_tempest_start(DrvVecRAM);
 
 	memset(&earom, 0, sizeof(earom)); // don't put this in DrvDoReset()
+
+	BurnPaddleInit(2, false);
 
 	DrvDoReset(1);
 
@@ -413,6 +424,8 @@ static INT32 DrvExit()
 	M6502Exit();
 
 	small_roms = 0;
+
+	BurnPaddleExit();
 
 	BurnFree(AllMem);
 
@@ -438,7 +451,7 @@ static void DrvPaletteInit()
 			g = (g * j) / 255;
 			b = (b * j) / 255;
 
-			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b;
+			DrvPalette[i * 256 + j] = BurnHighCol(r, g, b, 0);
 		}
 	}
 }
@@ -452,6 +465,18 @@ static INT32 DrvDraw()
 	draw_vector(DrvPalette);
 
 	return 0;
+}
+
+static INT32 DIAL_INC[2] = { 0, 0 };
+
+static void update_dial()
+{ // half of the dial value added at the beginning of the frame, half in the middle of the frame.
+	if (DrvJoy4f[0]) DrvDial[0] += DIAL_INC[0] / 2;
+	if (DrvJoy4f[1]) DrvDial[0] -= DIAL_INC[0] / 2;
+	if (DrvJoy4f[2]) DrvDial[1] += DIAL_INC[1] / 2;
+	if (DrvJoy4f[3]) DrvDial[1] -= DIAL_INC[1] / 2;
+
+	DrvInputs[1] = (DrvDips[0] & 0x10) | (DrvDial[player] & 0x0f);
 }
 
 static INT32 DrvFrame()
@@ -472,12 +497,25 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-        #define DIAL_INC 4
-		if (DrvJoy4f[0]) DrvDial[0] += DIAL_INC;
-		if (DrvJoy4f[1]) DrvDial[0] -= DIAL_INC;
-		if (DrvJoy4f[2]) DrvDial[1] += DIAL_INC;
-		if (DrvJoy4f[3]) DrvDial[1] -= DIAL_INC;
+		DIAL_INC[0] = 4; // default velocity
+		DIAL_INC[1] = 4;
 
+		BurnPaddleMakeInputs(0, DrvAnalogPort0, DrvAnalogPort1);
+
+		BurnDialINF dial = BurnPaddleReturnA(0);
+		if (dial.Backward) DrvJoy4f[0] = 1;
+		if (dial.Forward)  DrvJoy4f[1] = 1;
+		DIAL_INC[0] += dial.Velocity;
+
+		dial = BurnPaddleReturnB(0);
+		if (dial.Backward) DrvJoy4f[2] = 1;
+		if (dial.Forward)  DrvJoy4f[3] = 1;
+		DIAL_INC[1] += dial.Velocity;
+
+		update_dial();
+
+		//bprintf(0, _T("0: gunx %X  DIAL_INC %X\n"), BurnGunX[0], DIAL_INC[0]);
+		//bprintf(0, _T("1: gunx %X  DIAL_INC %X\n"), BurnGunY[0], DIAL_INC[1]);
 		DrvInputs[0] = (DrvInputs[0] & 0x2f) | (DrvDips[4] & 0x10); // service mode
 
 		DrvInputs[1] = (DrvDips[0] & 0x10) | (DrvDial[player] & 0x0f);
@@ -494,6 +532,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone += M6502Run(nTotalCycles / nInterleave);
+		if (i == 9) update_dial();
 		if ((i % 5) == 4) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
 	M6502Close();
@@ -525,9 +564,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = DrvVecRAM;
+		ba.nLen	  = 0x1000;
+		ba.szName = "Vector Ram";
+		BurnAcb(&ba);
+
 		M6502Scan(nAction);
 
 		pokey_scan(nAction, pnMin);
+
+		BurnPaddleScan();
 
 		SCAN_VAR(earom_offset);
 		SCAN_VAR(earom_data);

@@ -14,6 +14,9 @@ static INT32 nBurnGunMaxY = 0;
 INT32 BurnGunX[MAX_GUNS];
 INT32 BurnGunY[MAX_GUNS];
 
+struct GunWrap { INT32 xmin; INT32 xmax; INT32 ymin; INT32 ymax; };
+static GunWrap BurnGunWrapInf[MAX_GUNS]; // Paddle/Dial use
+
 #define a 0,
 #define b 1,
 
@@ -86,6 +89,105 @@ UINT8 BurnGunReturnY(INT32 num)
 	return (UINT8)temp;
 }
 
+// Paddle/Dial stuff
+static INT32 PaddleLastA[MAX_GUNS];
+static INT32 PaddleLastB[MAX_GUNS];
+
+BurnDialINF BurnPaddleReturnA(INT32 num)
+{
+#if defined FBA_DEBUG
+	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnPaddleReturnA called without init\n"));
+	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnPaddleReturnA called with invalid player %x\n"), num);
+#endif
+
+	BurnDialINF dial = { 0, 0, 0 };
+
+	if (num > MAX_GUNS - 1) return dial;
+
+	INT32 PaddleA = ((BurnGunX[num] >> 8) / 0x10) & 0xff;
+
+	if (PaddleA < PaddleLastA[num]) {
+		dial.Velocity = (PaddleLastA[num] - PaddleA);
+		dial.Backward = 1;
+	}
+	else if (PaddleA > PaddleLastA[num]) {
+		dial.Velocity = (PaddleA - PaddleLastA[num]);
+		dial.Forward = 1;
+	}
+
+	PaddleLastA[num] = PaddleA;
+
+	return dial;
+}
+
+BurnDialINF BurnPaddleReturnB(INT32 num)
+{
+#if defined FBA_DEBUG
+	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnPaddleReturnB called without init\n"));
+	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnPaddleReturnB called with invalid player %x\n"), num);
+#endif
+
+	BurnDialINF dial = { 0, 0, 0 };
+
+	if (num > MAX_GUNS - 1) return dial;
+
+	INT32 PaddleB = ((BurnGunY[num] >> 8) / 0x10) & 0xff;
+
+	if (PaddleB < PaddleLastB[num]) {
+		dial.Velocity = (PaddleLastB[num] - PaddleB);
+		dial.Backward = 1;
+	}
+	else if (PaddleB > PaddleLastB[num]) {
+		dial.Velocity = (PaddleB - PaddleLastB[num]);
+		dial.Forward = 1;
+	}
+
+	PaddleLastB[num] = PaddleB;
+
+	return dial;
+}
+
+void BurnPaddleSetWrap(INT32 num, INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax)
+{
+	BurnGunWrapInf[num].xmin = xmin * 0x10; BurnGunWrapInf[num].xmax = xmax * 0x10;
+	BurnGunWrapInf[num].ymin = ymin * 0x10; BurnGunWrapInf[num].ymax = ymax * 0x10;
+}
+
+void BurnPaddleMakeInputs(INT32 num, INT16 x, INT16 y)
+{
+#if defined FBA_DEBUG
+	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunMakeInputs called without init\n"));
+	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunMakeInputs called with invalid player %x\n"), num);
+#endif
+
+	if (num > MAX_GUNS - 1) return;
+	
+	if (y == 1 || y == -1) y = 0;
+	if (x == 1 || x == -1) x = 0; // prevent walking crosshair
+
+	BurnGunX[num] += x;
+	BurnGunY[num] += y;
+
+	// Wrapping (for dial/paddle use)
+	if (BurnGunWrapInf[num].xmin != -1)
+		if (BurnGunX[num] < BurnGunWrapInf[num].xmin * 0x100) {
+			BurnGunX[num] = BurnGunWrapInf[num].xmax * 0x100;
+		}
+	if (BurnGunWrapInf[num].xmax != -1)
+		if (BurnGunX[num] > BurnGunWrapInf[num].xmax * 0x100) {
+			BurnGunX[num] = BurnGunWrapInf[num].xmin * 0x100;
+		}
+
+	if (BurnGunWrapInf[num].ymin != -1)
+		if (BurnGunY[num] <= BurnGunWrapInf[num].ymin * 0x100) {
+			BurnGunY[num] = BurnGunWrapInf[num].ymax * 0x100;
+		}
+	if (BurnGunWrapInf[num].ymax != -1)
+		if (BurnGunY[num] >= BurnGunWrapInf[num].ymax * 0x100) {
+			BurnGunY[num] = BurnGunWrapInf[num].ymin * 0x100;
+		}
+}
+
 void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 {
 #if defined FBA_DEBUG
@@ -98,11 +200,12 @@ void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 	const INT32 MinX = -8 * 0x100;
 	const INT32 MinY = -8 * 0x100;
 
-	if (y == 1 || y == -1 || x == 1 || x == -1) return; // prevent walking crosshair
+	if (y == 1 || y == -1) y = 0;
+	if (x == 1 || x == -1) x = 0; // prevent walking crosshair
 
 	BurnGunX[num] += x;
 	BurnGunY[num] += y;
-	
+
 	if (BurnGunX[num] < MinX) BurnGunX[num] = MinX;
 	if (BurnGunX[num] > MinX + nBurnGunMaxX * 0x100) BurnGunX[num] = MinX + nBurnGunMaxX * 0x100;
 	if (BurnGunY[num] < MinY) BurnGunY[num] = MinY;
@@ -111,7 +214,7 @@ void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 	for (INT32 i = 0; i < nBurnGunNumPlayers; i++)
 		GunTargetUpdate(i);
 }
-	
+
 void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 {
 	Debug_BurnGunInitted = 1;
@@ -129,6 +232,8 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 	for (INT32 i = 0; i < MAX_GUNS; i++) {
 		BurnGunX[i] = ((nBurnGunMaxX >> 1) - 7) << 8;
 		BurnGunY[i] = ((nBurnGunMaxY >> 1) - 8) << 8;
+
+		BurnPaddleSetWrap(i, 0, 0xf00, 0, 0xf00); // Paddle/dial stuff
 	}
 }
 

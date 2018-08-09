@@ -17,6 +17,28 @@ static INT32 vector_cnt;
 static UINT32 *pBitmap = NULL;
 static UINT32 *pPalette = NULL;
 
+static float vector_scaleX = 1.00;
+static float vector_scaleY = 1.00;
+static INT32 vector_offsetX = 0;
+static INT32 vector_offsetY = 0;
+
+void vector_set_offsets(INT32 x, INT32 y)
+{
+	vector_offsetX = x;
+	vector_offsetY = y;
+}
+
+void vector_set_scale(INT32 x, INT32 y)
+{
+	if (x == 0 || x == -1)
+		vector_scaleX = 1.00;
+	if (y == 0 || y == -1)
+		vector_scaleY = 1.00;
+
+	vector_scaleX = (float)nScreenWidth / x;
+	vector_scaleY = (float)nScreenHeight / y;
+}
+
 void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
 {
 	vector_ptr->x = x >> 16;
@@ -28,6 +50,29 @@ void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
 	if (vector_cnt > (TABLE_SIZE - 2)) return;
 	vector_ptr++;
 	vector_ptr->color = -1; // mark it as the last one to save some cycles later...
+}
+
+static void vector_draw_pixel(INT32 x, INT32 y, INT32 pixel)
+{
+	INT32 coords = y * nScreenWidth + x;
+
+	UINT32 d = pBitmap[coords];
+
+	if (d) { // if something is there, mix it.
+		INT32 r = ((d >> 16) & 0xff) + ((pixel >> 16) & 0xff);
+		INT32 g = ((d >>  8) & 0xff) + ((pixel >>  8) & 0xff);
+		INT32 b = (d & 0xff) + (pixel & 0xff);
+		if (b > 0xff) b = 0xff; // clamp
+		if (r > 0xff) r = 0xff; // clamp
+		if (g > 0xff) g = 0xff; // clamp
+
+		pBitmap[coords] = (r << 16) | (g << 8) | b;
+	}
+	else
+	{
+		pBitmap[y * nScreenWidth + x] = pixel;
+	}
+
 }
 
 static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT32 intensity)
@@ -47,24 +92,7 @@ static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT3
 	while (1)
 	{
 		if (x0 >= 0 && x0 < nScreenWidth && y0 >= 0 && y0 < nScreenHeight) {
-			INT32 coords = y0 * nScreenWidth + x0;
-	
-			UINT32 d = pBitmap[coords];
-
-			if (d) { // is this actually how it works?
-				INT32 r = ((d >> 16) & 0xff) + ((p >> 16) & 0xff);
-				INT32 g = ((d >>  8) & 0xff) + ((p >>  8) & 0xff);
-				INT32 b = (d & 0xff) + (p & 0xff);
-				if (b > 0xff) b = 0xff; // clamp
-				if (r > 0xff) r = 0xff; // clamp
-				if (g > 0xff) g = 0xff; // clamp
-	
-				pBitmap[coords] = (r << 16) | (g << 8) | b;
-			}
-			else
-			{
-				pBitmap[y0 * nScreenWidth + x0] = p;
-			}
+			vector_draw_pixel(x0, y0, p);
 		}
 
 		if (x0 == x1 && y0 == y1) break;
@@ -83,14 +111,14 @@ void draw_vector(UINT32 *palette)
 	INT32 prev_x = 0, prev_y = 0;
 
 	memset (pBitmap, 0, nScreenWidth * nScreenHeight * sizeof(INT32));
-	pPalette = palette;
+	pBurnDrvPalette = pPalette = palette;
 
 	for (INT32 i = 0; i < vector_cnt && i < TABLE_SIZE; i++, ptr++)
 	{
 		if (ptr->color == -1) break;
 
-		INT32 curr_y = ptr->y;
-		INT32 curr_x = ptr->x;
+		INT32 curr_y = (ptr->y + vector_offsetY) * vector_scaleY;
+		INT32 curr_x = (ptr->x + vector_offsetX) * vector_scaleX;
 
 		if (ptr->intensity != 0) { // intensity 0 means turn off the beam...
 			lineSimple(curr_x, curr_y, prev_x, prev_y, ptr->color, ptr->intensity);
@@ -132,6 +160,9 @@ void vector_init()
 	vector_table = (struct vector_line*)BurnMalloc(TABLE_SIZE * sizeof(vector_line));
 
 	memset (vector_table, 0, TABLE_SIZE * sizeof(vector_line));
+
+	vector_set_scale(-1, -1); // default 1x
+	vector_set_offsets(0, 0);
 
 	vector_reset();
 }

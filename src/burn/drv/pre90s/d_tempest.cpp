@@ -8,6 +8,7 @@
 #include "vector.h"
 #include "avgdvg.h"
 #include "pokey.h"
+#include "watchdog.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -260,6 +261,7 @@ static void tempest_write(UINT16 address, UINT8 data)
 
 		case 0x5000:
 			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+			BurnWatchdogRead();
 		return;
 
 		case 0x5800:
@@ -285,6 +287,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6502Open(0);
 	M6502Reset();
 	M6502Close();
+
+	BurnWatchdogReset();
 
 	mathbox_reset();
 	vector_reset();
@@ -383,6 +387,8 @@ static INT32 DrvInit()
 	M6502SetReadHandler(tempest_read);
 	M6502Close();
 
+	BurnWatchdogInit(DrvDoReset, 180);
+
 	PokeyInit(12096000/8, 2, 2.40, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyPotCallback(0, 0, port1_read);
@@ -404,6 +410,7 @@ static INT32 DrvInit()
 	PokeyPotCallback(1, 7, port2_read);
 
 	vector_init();
+	vector_set_scale(580, 570);
 
 	avg_tempest_start(DrvVecRAM);
 
@@ -451,7 +458,7 @@ static void DrvPaletteInit()
 			g = (g * j) / 255;
 			b = (b * j) / 255;
 
-			DrvPalette[i * 256 + j] = BurnHighCol(r, g, b, 0);
+			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b; // must be 32bit palette! -dink (see vector.cpp)
 		}
 	}
 }
@@ -484,6 +491,8 @@ static INT32 DrvFrame()
 	if (DrvReset) {
 		DrvDoReset(1);
 	}
+
+	BurnWatchdogUpdate();
 
 	{
 		if (player) { // player2
@@ -572,6 +581,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		M6502Scan(nAction);
 
+		BurnWatchdogScan(nAction);
+
 		pokey_scan(nAction, pnMin);
 
 		BurnPaddleScan();
@@ -624,7 +635,7 @@ struct BurnDriver BurnDrvTempest = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tempestRomInfo, tempestRomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	502, 512, 3, 4
+	300, 400, 3, 4
 };
 
 
@@ -660,7 +671,7 @@ struct BurnDriver BurnDrvTempest1r = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tempest1rRomInfo, tempest1rRomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	502, 512, 3, 4
+	300, 400, 3, 4
 };
 
 static INT32 DrvInitSmall()
@@ -708,7 +719,7 @@ struct BurnDriver BurnDrvTempest3 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tempest3RomInfo, tempest3RomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	502, 512, 3, 4
+	300, 400, 3, 4
 };
 
 
@@ -750,7 +761,7 @@ struct BurnDriver BurnDrvTempest2 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tempest2RomInfo, tempest2RomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	502, 512, 3, 4
+	300, 400, 3, 4
 };
 
 
@@ -792,7 +803,7 @@ struct BurnDriver BurnDrvTempest1 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tempest1RomInfo, tempest1RomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	502, 512, 3, 4
+	300, 400, 3, 4
 };
 
 
@@ -834,5 +845,5 @@ struct BurnDriver BurnDrvTemptube = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, temptubeRomInfo, temptubeRomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	502, 512, 3, 4
+	300, 400, 3, 4
 };

@@ -58,7 +58,7 @@
 //#define VG_DEBUG
 
 #ifdef VG_DEBUG
-#define VGLOG(x) bprintf x
+#define VGLOG(x)  bprintf x
 #else
 #define VGLOG(x)
 #endif
@@ -321,7 +321,8 @@ static INT32 dvg_generate_vector_list(void)
 				z = effective_z(z, z);
 
 				/* determine the scale factor; scale 9 means -1 */
-	  			temp = ((scale + opcode) & 0x0f);
+				temp = ((scale + opcode) & 0x0f);
+
 	  			if (temp > 9)
 					temp = -1;
 
@@ -358,6 +359,7 @@ static INT32 dvg_generate_vector_list(void)
 				/* determine the scale factor; scale 9 means -1 */
 				temp = 2 + ((firstwd >> 2) & 0x02) + ((firstwd >> 11) & 0x01);
 	  			temp = (scale + temp) & 0x0f;
+
 				if (temp > 9)
 					temp = -1;
 				VGLOG((0, L"(%d,%d) z: %d scal: %d", x, y, z, temp));
@@ -625,6 +627,7 @@ static INT32 avg_generate_vector_list(void)
 		/* debugging */
 		(void)avg_mnem;
 		VGLOG((0, L"%4x: %4x ", pc, firstwd));
+
 		if (opcode == VCTR)
 			VGLOG((0, L"%4x  ", secondwd));
 		else
@@ -754,7 +757,8 @@ static INT32 avg_generate_vector_list(void)
 			case SCAL:
 				b = ((firstwd >> 8) & 7) + 8;
 				l = ~firstwd & 0xff;
-				scale = (l << 16) >> b;
+
+				scale = (l << 16) >> (b);
 
 				/* Y-Window toggle for Major Havoc */
 				if (vector_engine == USE_AVG_MHAVOC || vector_engine == USE_AVG_ALPHAONE)
@@ -902,6 +906,7 @@ void avgdvg_checkhalt()
 
 INT32 avgdvg_done(void)
 {
+	avgdvg_checkhalt();
 	return !busy;
 }
 
@@ -923,7 +928,7 @@ void avgdvg_go()
 		total_length = dvg_generate_vector_list();
 
 		avgdvg_halt_next = M6502TotalCycles();
-		last_cyc = total_length;
+		last_cyc = total_length+300;
 	}
 
 	/* AVG case */
@@ -1056,8 +1061,9 @@ void avg_tempest_start(UINT8 *vectram)
 {
 	vectorram = vectram;
 	vectorram_size = 0x1000;
-	//extern int counter;
-	avgdvg_init(USE_AVG_TEMPEST, 0, 580-68+0x3c, 0, 570-68);
+
+	//avgdvg_init(USE_AVG_TEMPEST, 0, 580-68+0x3c, 0, 570-68);
+	avgdvg_init(USE_AVG_TEMPEST, 0, 580, 0, 570);
 }
 
 void dvg_asteroids_start(UINT8 *vectram)
@@ -1065,7 +1071,7 @@ void dvg_asteroids_start(UINT8 *vectram)
 	vectorram = vectram;
 	vectorram_size = 0x1000;
 
-	avgdvg_init(USE_DVG, 522, 1566, 394, 1182);
+	avgdvg_init(USE_DVG, 0, 1044, 0, 788);
 }
 
 // save for later stuff:

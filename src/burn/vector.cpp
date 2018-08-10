@@ -17,10 +17,40 @@ static INT32 vector_cnt;
 static UINT32 *pBitmap = NULL;
 static UINT32 *pPalette = NULL;
 
-static float vector_scaleX = 1.00;
-static float vector_scaleY = 1.00;
-static INT32 vector_offsetX = 0;
-static INT32 vector_offsetY = 0;
+static float vector_scaleX      = 1.00;
+static float vector_scaleY      = 1.00;
+static INT32 vector_offsetX     = 0;
+static INT32 vector_offsetY     = 0;
+static float vector_gamma_corr  = 1.2;
+static float vector_intens      = 1.0;
+static INT32 vector_antialias   = 1;
+static INT32 vector_beam        = 0x00010000; // 16.16 beam width
+
+#define CLAMP8(x) do { if (x > 0xff) x = 0xff; } while (0)
+
+static UINT8 gammaLUT[256];
+
+void vector_set_gamma(float gamma_corr)
+{
+	for (INT32 i = 0; i < 256; i++)	{
+		INT32 gamma = pow((float)i / 255.0, 1.0 / vector_gamma_corr) * (float)((1 << 8) - 1) + 0.5;
+		CLAMP8(gamma);
+		gammaLUT[i] = gamma;
+	}
+}
+
+static inline INT32 divop(INT32 parm1, INT32 parm2)
+{
+    if (parm2 & 0xfffff000)	{
+		parm1 = (parm1 << 4) / (parm2 >> 12);
+		if (parm1 > 0x00010000)
+			return 0x00010000;
+		else if (parm1 < -0x00010000)
+			return -0x00010000;
+		return parm1;
+	}
+	return 0x00010000;
+}
 
 void vector_set_offsets(INT32 x, INT32 y)
 {
@@ -41,38 +71,41 @@ void vector_set_scale(INT32 x, INT32 y)
 
 void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
 {
-	vector_ptr->x = x >> 16;
-	vector_ptr->y = y >> 16;
+	if (vector_cnt + 1 > (TABLE_SIZE - 2)) return;
+	vector_ptr->x = (vector_antialias == 0) ? ((x + 0x8000) >> 16) : x;
+	vector_ptr->y = (vector_antialias == 0) ? ((y + 0x8000) >> 16) : y;
 	vector_ptr->color = color;
-	vector_ptr->intensity = intensity;
+
+	intensity *= vector_intens; // intensity correction
+	CLAMP8(intensity);
+	vector_ptr->intensity = (vector_antialias == 0) ? gammaLUT[intensity] : intensity;
 
 	vector_cnt++;
-	if (vector_cnt > (TABLE_SIZE - 2)) return;
 	vector_ptr++;
 	vector_ptr->color = -1; // mark it as the last one to save some cycles later...
 }
 
-static void vector_draw_pixel(INT32 x, INT32 y, INT32 pixel)
+static inline void vector_draw_pixel(INT32 x, INT32 y, INT32 pixel)
 {
+	pixel = pPalette[pixel];
 	INT32 coords = y * nScreenWidth + x;
-
-	UINT32 d = pBitmap[coords];
-
-	if (d) { // if something is there, mix it.
-		INT32 r = ((d >> 16) & 0xff) + ((pixel >> 16) & 0xff);
-		INT32 g = ((d >>  8) & 0xff) + ((pixel >>  8) & 0xff);
-		INT32 b = (d & 0xff) + (pixel & 0xff);
-		if (b > 0xff) b = 0xff; // clamp
-		if (r > 0xff) r = 0xff; // clamp
-		if (g > 0xff) g = 0xff; // clamp
-
-		pBitmap[coords] = (r << 16) | (g << 8) | b;
-	}
-	else
+	if (x >= 0 && x < nScreenWidth && y >= 0 && y < nScreenHeight)
 	{
-		pBitmap[y * nScreenWidth + x] = pixel;
-	}
+		UINT32 d = pBitmap[coords];
 
+		if (d) { // if something is already there, mix it.
+			INT32 r = ((d >> 16) & 0xff) + ((pixel >> 16) & 0xff);
+			INT32 g = ((d >>  8) & 0xff) + ((pixel >>  8) & 0xff);
+			INT32 b = (d & 0xff) + (pixel & 0xff);
+			CLAMP8(r); CLAMP8(g); CLAMP8(b);
+
+			pBitmap[coords] = (r << 16) | (g << 8) | b;
+		}
+		else
+		{
+			pBitmap[y * nScreenWidth + x] = pixel;
+		}
+	}
 }
 
 static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT32 intensity)
@@ -80,27 +113,83 @@ static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT3
 	color = color * 256 + intensity;
 	UINT32 p = pPalette[color];
 	if (p == 0) return; // safe to assume we can't draw black??
+	INT32 straight = 0;
 
-	// http://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm
+	if (x0 == x1 || y0 == y1) straight = 1;
 
-	INT32 dx = abs(x1 - x0);
-	INT32 dy = abs(y1 - y0);
-	INT32 sx = x0 < x1 ? 1 : -1;
-	INT32 sy = y0 < y1 ? 1 : -1;
-	INT32 err = (dx>dy ? dx : -dy)/2, e2;
+	if (vector_antialias == 0) {
+		// http://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm
 
-	while (1)
-	{
-		if (x0 >= 0 && x0 < nScreenWidth && y0 >= 0 && y0 < nScreenHeight) {
-			vector_draw_pixel(x0, y0, p);
+		INT32 dx = abs(x1 - x0);
+		INT32 dy = abs(y1 - y0);
+		INT32 sx = x0 < x1 ? 1 : -1;
+		INT32 sy = y0 < y1 ? 1 : -1;
+		INT32 err = (dx>dy ? dx : -dy)/2, e2;
+
+		while (1)
+		{
+			vector_draw_pixel(x0, y0, color);
+
+			if (x0 == x1 && y0 == y1) break;
+
+			e2 = err;
+
+			if (e2 >-dx) { err -= dy; x0 += sx; }
+			if (e2 < dy) { err += dx; y0 += sy; }
 		}
+	} else { // anti-aliased
+		INT32 dx = abs(x1 - x0);
+		INT32 dy = abs(y1 - y0);
+		INT32 width = vector_beam;
+		INT32 sx, sy, a1, yy, xx;
 
-		if (x0 == x1 && y0 == y1) break;
+		if (dx >= dy) {
+			sx = x0 <= x1 ? 1 : -1;
+			sy = divop(y1 - y0, dx);
+			if (sy < 0)
+				dy--;
+			x0 >>= 16;
+			xx = x1 >> 16;
+			y0 -= width >> 1;
 
-		e2 = err;
+			while (1) {
+				dx = width;
+				dy = y0 >> 16;
+				vector_draw_pixel(x0, dy++, (color & 0xff00) + gammaLUT[0xff - (0xff & (y0 >> 8))]);
+				dx -= 0x10000 - (0xffff & y0);
+				a1 = gammaLUT[(dx >> 8) & 0xff];
+				dx >>= 16;
+				while (dx--)
+					vector_draw_pixel(x0, dy++, color);
+				vector_draw_pixel(x0, dy, (color & 0xff00) + a1);
+				if (x0 == xx) break;
+				x0 += sx;
+				y0 += sy;
+			}
+		} else {
+			sy = y0 <= y1 ? 1 : -1;
+			sx = divop(x1 - x0, dy);
+			if (sx < 0)
+				dx--;
+			y0 >>= 16;
+			yy = y1 >> 16;
+			x0 -= width >> 1;
 
-		if (e2 >-dx) { err -= dy; x0 += sx; }
-		if (e2 < dy) { err += dx; y0 += sy; }
+			while (1) {
+				dy = width;
+				dx = x0 >> 16;
+				vector_draw_pixel(dx++, y0, (color & 0xff00) + gammaLUT[0xff - (0xff & (x0 >> 8))]);
+				dy -= 0x10000 - (0xffff & x0);
+				a1 = gammaLUT[(dy >> 8) & 0xff];
+				dy >>= 16;
+				while (dy--)
+					vector_draw_pixel(dx++, y0, color);
+				vector_draw_pixel(dx, y0, (color & 0xff00) + a1);
+				if (y0 == yy) break;
+				y0 += sy;
+				x0 += sx;
+			}
+		}
 	}
 }
 
@@ -163,6 +252,7 @@ void vector_init()
 
 	vector_set_scale(-1, -1); // default 1x
 	vector_set_offsets(0, 0);
+	vector_set_gamma(vector_gamma_corr);
 
 	vector_reset();
 }
@@ -174,6 +264,7 @@ void vector_exit()
 	if (pBitmap) {
 		BurnFree (pBitmap);
 	}
+
 	pPalette = NULL;
 
 	BurnFree (vector_table);

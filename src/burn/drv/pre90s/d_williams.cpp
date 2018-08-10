@@ -82,6 +82,8 @@ static UINT8 DrvReset;
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 
+static INT32 defender = 0;
+static INT32 stargate = 0;
 static INT32 mayday = 0;
 static INT32 splat = 0;
 static INT32 blaster = 0;
@@ -106,10 +108,12 @@ static struct BurnInputInfo DefenderInputList[] = {
 	{"P1 Start",				BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
 	{"P1 Up",					BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
 	{"P1 Down",					BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
+	{"P1 Left",					BIT_DIGITAL,	DrvJoy7 + 6,	"p1 left"	},
+	{"P1 Right",				BIT_DIGITAL,	DrvJoy7 + 1,	"p1 right"	},
 	{"Fire",					BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
-	{"Thrust",					BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
-	{"Smart Bomb",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
-	{"Hyperspace",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
+	{"Smart Bomb",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
+	{"Hyperspace",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 3"	},
+	{"Thrust",					BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 4"	},
 	{"Reverse",					BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 5"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
@@ -185,12 +189,14 @@ static struct BurnInputInfo StargateInputList[] = {
 	{"P1 Start",				BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
 	{"P1 Up",					BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
 	{"P1 Down",					BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
+	{"P1 Left",					BIT_DIGITAL,	DrvJoy7 + 6,	"p1 left"	},
+	{"P1 Right",				BIT_DIGITAL,	DrvJoy7 + 1,	"p1 right"	},
 	{"Fire",					BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
-	{"Thrust",					BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
-	{"Smart Bomb",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
-	{"Reverse",					BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 4"	},
-	{"Inviso",					BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 5"	},
-	{"Hyperspace",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 6"	},
+	{"Smart Bomb",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
+	{"Inviso",					BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 3"	},
+	{"Hyperspace",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
+	{"Thrust",					BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 5"	},
+	{"Reverse",					BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 6"	},
 
 	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
@@ -495,7 +501,7 @@ enum
 
 static void blit_pixel(INT32 dstaddr, INT32 srcdata, INT32 controlbyte)
 {
-	INT32 curpix = (dstaddr < 0xc000) ? DrvVidRAM[dstaddr] : M6809CheatRead(dstaddr);   //current pixel values at dest
+	INT32 curpix = (dstaddr < 0xc000) ? DrvVidRAM[dstaddr] : M6809ReadByte(dstaddr);   //current pixel values at dest
 
 	INT32 solid = DrvBlitRAM[1];
 	UINT8 keepmask = 0xff;
@@ -530,7 +536,6 @@ static void blit_pixel(INT32 dstaddr, INT32 srcdata, INT32 controlbyte)
 
 	if (!blitter_window_enable || dstaddr < blitter_clip_address || dstaddr >= 0xc000)
 	{
-		extern void M6809WriteByte(UINT16 Address, UINT8 Data);
 		M6809WriteByte(dstaddr, curpix);
 	}
 }
@@ -559,11 +564,11 @@ static INT32 blitter_core(UINT16 sstart, UINT16 dstart, UINT8 w, UINT8 h, UINT8 
 		{
 			if (!(controlbyte & WMS_BLITTER_CONTROLBYTE_SHIFT)) //no shift
 			{
-				blit_pixel(dest, remap_ptr[M6809CheatRead(source)], controlbyte);
+				blit_pixel(dest, remap_ptr[M6809ReadByte(source)], controlbyte);
 			}
 			else
 			{   //shift one pixel right
-				pixdata = (pixdata << 8) | remap_ptr[M6809CheatRead(source)];
+				pixdata = (pixdata << 8) | remap_ptr[M6809ReadByte(source)];
 				blit_pixel(dest, (pixdata >> 4) & 0xff, controlbyte);
 			}
 			accesses += 2;
@@ -1402,6 +1407,8 @@ static INT32 DrvExit()
 	mayday = 0;
 	splat = 0;
 	blaster = 0;
+	defender = 0;
+	stargate = 0;
 
 	uses_hc55516 = 0;
 	uses_colprom = 0;
@@ -1614,6 +1621,22 @@ static INT32 DrvFrame()
 			DrvInputs[5] ^= (DrvJoy6[i] & 1) << i;
 			DrvInputs[6] ^= (DrvJoy7[i] & 1) << i;
 		}
+
+		if ( (defender || stargate) && (DrvInputs[6] & 0x42) ) {
+			// This kludge gives Defender and Stargate proper L/R joystick ability
+			DrvInputs[0] |= DrvInputs[6] & 0x42;
+
+			M6809Open(0);
+			if ( (defender && M6809ReadByte(0xa0bb) == 0xfd) ||
+				 (stargate && M6809ReadByte(0x9c92) == 0xfd) )
+			{
+				if (DrvInputs[0] & 0x02)
+					DrvInputs[0] = (DrvInputs[0] & 0xfd) | 0x40;
+				else if (DrvInputs[0] & 0x40)
+					DrvInputs[0] = (DrvInputs[0] & 0xbf) | 0x02;
+			}
+			M6809Close();
+		}
 	}
 
 	INT32 nInterleave = 256;
@@ -1748,6 +1771,7 @@ STD_ROM_FN(defender)
 
 static INT32 DefenderInit()
 {
+	defender = 1;
 	return DrvInit(0, 1, 12, -1, 0);
 }
 
@@ -2446,6 +2470,7 @@ STD_ROM_FN(stargate)
 
 static INT32 StargateInit()
 {
+	stargate = 1;
 	return DrvInit(1, 0, 6, -1, 0);
 }
 

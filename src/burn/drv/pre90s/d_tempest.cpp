@@ -635,7 +635,7 @@ struct BurnDriver BurnDrvTempest = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tempestRomInfo, tempestRomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	300, 400, 3, 4
+	500, 600, 3, 4
 };
 
 
@@ -671,7 +671,7 @@ struct BurnDriver BurnDrvTempest1r = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tempest1rRomInfo, tempest1rRomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	300, 400, 3, 4
+	500, 600, 3, 4
 };
 
 static INT32 DrvInitSmall()
@@ -719,7 +719,7 @@ struct BurnDriver BurnDrvTempest3 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tempest3RomInfo, tempest3RomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	300, 400, 3, 4
+	500, 600, 3, 4
 };
 
 
@@ -761,7 +761,7 @@ struct BurnDriver BurnDrvTempest2 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tempest2RomInfo, tempest2RomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	300, 400, 3, 4
+	500, 600, 3, 4
 };
 
 
@@ -803,7 +803,7 @@ struct BurnDriver BurnDrvTempest1 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tempest1RomInfo, tempest1RomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	300, 400, 3, 4
+	500, 600, 3, 4
 };
 
 
@@ -845,5 +845,5 @@ struct BurnDriver BurnDrvTemptube = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, temptubeRomInfo, temptubeRomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	300, 400, 3, 4
+	500, 600, 3, 4
 };

@@ -1,4 +1,4 @@
-
+// vector.cpp, by iq_132.  aa mods by dink
 #include "tiles_generic.h"
 #include "math.h"
 
@@ -39,19 +39,6 @@ void vector_set_gamma(float gamma_corr)
 	}
 }
 
-static inline INT32 divop(INT32 parm1, INT32 parm2)
-{
-    if (parm2 & 0xfffff000)	{
-		parm1 = (parm1 << 4) / (parm2 >> 12);
-		if (parm1 > 0x00010000)
-			return 0x00010000;
-		else if (parm1 < -0x00010000)
-			return -0x00010000;
-		return parm1;
-	}
-	return 0x00010000;
-}
-
 void vector_set_offsets(INT32 x, INT32 y)
 {
 	vector_offsetX = x;
@@ -72,8 +59,8 @@ void vector_set_scale(INT32 x, INT32 y)
 void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
 {
 	if (vector_cnt + 1 > (TABLE_SIZE - 2)) return;
-	vector_ptr->x = (vector_antialias == 0) ? ((x + 0x8000) >> 16) : x;
-	vector_ptr->y = (vector_antialias == 0) ? ((y + 0x8000) >> 16) : y;
+	vector_ptr->x = (vector_antialias == 0) ? (((x + 0x8000) >> 16) + vector_offsetX) : (x + (vector_offsetX << 16));
+	vector_ptr->y = (vector_antialias == 0) ? (((y + 0x8000) >> 16) + vector_offsetY) : (y + (vector_offsetY << 16));
 	vector_ptr->color = color;
 
 	intensity *= vector_intens; // intensity correction
@@ -87,11 +74,11 @@ void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
 
 static inline void vector_draw_pixel(INT32 x, INT32 y, INT32 pixel)
 {
-	pixel = pPalette[pixel];
-	INT32 coords = y * nScreenWidth + x;
 	if (x >= 0 && x < nScreenWidth && y >= 0 && y < nScreenHeight)
 	{
+		INT32 coords = y * nScreenWidth + x;
 		UINT32 d = pBitmap[coords];
+		pixel = pPalette[pixel];
 
 		if (d) { // if something is already there, mix it.
 			INT32 r = ((d >> 16) & 0xff) + ((pixel >> 16) & 0xff);
@@ -106,6 +93,18 @@ static inline void vector_draw_pixel(INT32 x, INT32 y, INT32 pixel)
 			pBitmap[y * nScreenWidth + x] = pixel;
 		}
 	}
+}
+
+static inline INT32 divop(INT32 dividend, INT32 divisor)
+{
+	if (!(divisor >>= 12)) return (1 << 16); // avoid division by zero
+
+	dividend = (dividend << 4) / divisor;
+
+	if (dividend > (1 << 16)) return (1 << 16); // safety net
+	else if (dividend < -(1 << 16)) return -(1 << 16);
+
+	return dividend;
 }
 
 static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT32 intensity)
@@ -137,11 +136,13 @@ static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT3
 			if (e2 >-dx) { err -= dy; x0 += sx; }
 			if (e2 < dy) { err += dx; y0 += sy; }
 		}
-	} else { // anti-aliased
+	} else {
+		// anti-aliased
+
 		INT32 dx = abs(x1 - x0);
 		INT32 dy = abs(y1 - y0);
 		INT32 width = vector_beam;
-		INT32 sx, sy, a1, yy, xx;
+		INT32 sx, sy, aa, yy, xx;
 
 		if (dx >= dy) {
 			sx = x0 <= x1 ? 1 : -1;
@@ -157,11 +158,11 @@ static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT3
 				dy = y0 >> 16;
 				vector_draw_pixel(x0, dy++, (color & 0xff00) + gammaLUT[0xff - (0xff & (y0 >> 8))]);
 				dx -= 0x10000 - (0xffff & y0);
-				a1 = gammaLUT[(dx >> 8) & 0xff];
+				aa = (dx >> 8) & 0xff;
 				dx >>= 16;
 				while (dx--)
-					vector_draw_pixel(x0, dy++, color);
-				vector_draw_pixel(x0, dy, (color & 0xff00) + a1);
+					vector_draw_pixel(x0, dy++, (color & 0xff00) + gammaLUT[color & 0xff]);
+				vector_draw_pixel(x0, dy, (color & 0xff00) + gammaLUT[aa]);
 				if (x0 == xx) break;
 				x0 += sx;
 				y0 += sy;
@@ -180,11 +181,11 @@ static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT3
 				dx = x0 >> 16;
 				vector_draw_pixel(dx++, y0, (color & 0xff00) + gammaLUT[0xff - (0xff & (x0 >> 8))]);
 				dy -= 0x10000 - (0xffff & x0);
-				a1 = gammaLUT[(dy >> 8) & 0xff];
+				aa = (dy >> 8) & 0xff;
 				dy >>= 16;
 				while (dy--)
-					vector_draw_pixel(dx++, y0, color);
-				vector_draw_pixel(dx, y0, (color & 0xff00) + a1);
+					vector_draw_pixel(dx++, y0, (color & 0xff00) + gammaLUT[color & 0xff]);
+				vector_draw_pixel(dx, y0, (color & 0xff00) + gammaLUT[aa]);
 				if (y0 == yy) break;
 				y0 += sy;
 				x0 += sx;
@@ -206,8 +207,8 @@ void draw_vector(UINT32 *palette)
 	{
 		if (ptr->color == -1) break;
 
-		INT32 curr_y = (ptr->y + vector_offsetY) * vector_scaleY;
-		INT32 curr_x = (ptr->x + vector_offsetX) * vector_scaleX;
+		INT32 curr_y = ptr->y * vector_scaleY;
+		INT32 curr_x = ptr->x * vector_scaleX;
 
 		if (ptr->intensity != 0) { // intensity 0 means turn off the beam...
 			lineSimple(curr_x, curr_y, prev_x, prev_y, ptr->color, ptr->intensity);

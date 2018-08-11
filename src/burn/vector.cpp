@@ -49,11 +49,13 @@ void vector_set_scale(INT32 x, INT32 y)
 {
 	if (x == 0 || x == -1)
 		vector_scaleX = 1.00;
+	else
+		vector_scaleX = (float)nScreenWidth / x;
+
 	if (y == 0 || y == -1)
 		vector_scaleY = 1.00;
-
-	vector_scaleX = (float)nScreenWidth / x;
-	vector_scaleY = (float)nScreenHeight / y;
+	else
+		vector_scaleY = (float)nScreenHeight / y;
 }
 
 void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)

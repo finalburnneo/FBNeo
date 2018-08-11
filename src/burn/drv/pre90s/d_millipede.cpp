@@ -5,6 +5,7 @@
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "pokey.h"
+#include "earom.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -39,12 +40,6 @@ static UINT8 DrvJoy4[8];
 static UINT8 DrvDip[5] = {0, 0, 0, 0, 0};
 static UINT8 DrvInput[5];
 static UINT8 DrvReset;
-
-// hi-score stuff! (atari earom)
-#define EAROM_SIZE	0x40
-static UINT8 earom_offset;
-static UINT8 earom_data;
-static UINT8 earom[EAROM_SIZE];
 
 static UINT32 centipedemode = 0;
 
@@ -353,27 +348,6 @@ static void centipede_recalcpalette()
 	}
 }
 
-static UINT8 earom_read(UINT16 /*address*/)
-{
-	return (earom_data);
-}
-
-static void earom_write(UINT16 offset, UINT8 data)
-{
-	earom_offset = offset;
-	earom_data = data;
-}
-
-static void earom_ctrl_write(UINT16 /*offset*/, UINT8 data)
-{
-	if (data & 0x01)
-		earom_data = earom[earom_offset];
-	if ((data & 0x0c) == 0x0c)
-	{
-		earom[earom_offset] = earom_data;
-	}
-}
-
 static void millipede_write(UINT16 address, UINT8 data)
 {
 	address &= 0x7fff; // 15bit addressing
@@ -617,8 +591,7 @@ static INT32 DrvDoReset()
 	M6502Reset();
 	M6502Close();
 
-	earom_offset = 0;
-	earom_data = 0;
+	earom_reset();
 
 	return 0;
 }
@@ -703,7 +676,7 @@ static INT32 DrvInit() // millipede
 
 	GenericTilesInit();
 
-	memset(&earom, 0, sizeof(earom)); // don't put this in DrvDoReset()
+	earom_init();
 
 	DrvDoReset();
 
@@ -752,7 +725,7 @@ static INT32 DrvInitcentiped()
 
 	GenericTilesInit();
 
-	memset(&earom, 0, sizeof(earom)); // don't put this in DrvDoReset()
+	earom_init();
 
 	DrvDoReset();
 
@@ -766,6 +739,8 @@ static INT32 DrvExit()
 	PokeyExit();
 
 	M6502Exit();
+
+	earom_exit();
 
 	BurnFree(AllMem);
 
@@ -957,20 +932,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		pokey_scan(nAction, pnMin);
 
-		SCAN_VAR(earom_offset);
-		SCAN_VAR(earom_data);
 		SCAN_VAR(dip_select);
 		SCAN_VAR(control_select);
 		SCAN_VAR(flipscreen);
 	}
 
-	if (nAction & ACB_NVRAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data		= earom;
-		ba.nLen		= sizeof(earom);
-		ba.szName	= "NV RAM";
-		BurnAcb(&ba);
-	}
+	earom_scan(nAction, pnMin);
 
 	return 0;
 }

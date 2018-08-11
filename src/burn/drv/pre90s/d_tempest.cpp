@@ -9,6 +9,7 @@
 #include "avgdvg.h"
 #include "pokey.h"
 #include "watchdog.h"
+#include "earom.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -39,11 +40,6 @@ static UINT8 player = 0;
 static INT32 avgletsgo = 0;
 
 static UINT32 small_roms = 0;
-
-#define EAROM_SIZE	0x40
-static UINT8 earom_offset;
-static UINT8 earom_data;
-static UINT8 earom[EAROM_SIZE];
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TempestInputList[] = {
@@ -157,28 +153,6 @@ static struct BurnDIPInfo TempestDIPList[]=
 };
 
 STDDIPINFO(Tempest)
-
-static UINT8 earom_read(UINT16 /*address*/)
-{
-	return (earom_data);
-}
-
-static void earom_write(UINT16 offset, UINT8 data)
-{
-	earom_offset = offset;
-	earom_data = data;
-}
-
-static void earom_ctrl_write(UINT16 /*offset*/, UINT8 data)
-{
-	if (data & 0x01)
-		earom_data = earom[earom_offset];
-	if ((data & 0x0c) == 0x0c)
-	{
-		earom[earom_offset] = earom_data;
-	}
-}
-
 
 static UINT8 tempest_read(UINT16 address)
 {
@@ -294,8 +268,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	vector_reset();
 	avgdvg_reset();
 
-	earom_offset = 0;
-	earom_data = 0;
+	earom_reset();
 
 	avgletsgo = 0;
 
@@ -414,7 +387,7 @@ static INT32 DrvInit()
 
 	avg_tempest_start(DrvVecRAM);
 
-	memset(&earom, 0, sizeof(earom)); // don't put this in DrvDoReset()
+	earom_init();
 
 	BurnPaddleInit(2, false);
 
@@ -433,6 +406,8 @@ static INT32 DrvExit()
 	small_roms = 0;
 
 	BurnPaddleExit();
+
+	earom_exit();
 
 	BurnFree(AllMem);
 
@@ -586,18 +561,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		pokey_scan(nAction, pnMin);
 
 		BurnPaddleScan();
-
-		SCAN_VAR(earom_offset);
-		SCAN_VAR(earom_data);
 	}
 
-	if (nAction & ACB_NVRAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data		= earom;
-		ba.nLen		= sizeof(earom);
-		ba.szName	= "NV RAM";
-		BurnAcb(&ba);
-	}
+	earom_scan(nAction, pnMin); // here.
 
 	return 0;
 }

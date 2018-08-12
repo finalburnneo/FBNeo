@@ -35,7 +35,6 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
-static INT32 avgdone = 0; // already ran avgdvg this frame.
 static INT32 avgOK = 0; // ok to run avgdvg?
 
 static INT32 astdelux = 0;
@@ -173,7 +172,7 @@ static void bankswitch(INT32 data)
 {
 	bankdata = data;
 	INT32 bank = (astdelux) ? (data >> 7) & 1 : (data >> 2) & 1;
-	if (bank == 0) { // tih... timmy??
+	if (bank == 0) {
 		M6502MapMemory(DrvM6502RAM + 0x200,	0x0200, 0x02ff, MAP_RAM);
 		M6502MapMemory(DrvM6502RAM + 0x300,	0x0300, 0x03ff, MAP_RAM);
 	} else {
@@ -188,7 +187,6 @@ static void asteroid_write(UINT16 address, UINT8 data)
 	{
 		case 0x3000:
 			avgdvg_go();
-			avgdone = 1;
 			avgOK = 1;
 		return;
 
@@ -214,11 +212,7 @@ static void asteroid_write(UINT16 address, UINT8 data)
 		case 0x3c03:
 		case 0x3c04:
 		case 0x3c05:
-			asteroid_sounds_w(address&7, data);
-		return;
-
-		case 0x3e00:
-			// noise_reset_w
+			asteroid_sounds_w(address & 7, data);
 		return;
 	}
 }
@@ -239,7 +233,6 @@ static void astdelux_write(UINT16 address, UINT8 data)
 	{
 		case 0x3000:
 			avgdvg_go();
-			avgdone = 1;
 			avgOK = 1;
 		return;
 
@@ -353,7 +346,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	earom_reset();
 
-	avgdone = 0;
 	avgOK = 0;
 
 	return 0;
@@ -535,7 +527,6 @@ static INT32 DrvDraw()
 	}
 	DrvPaletteInit();
 
-	if (avgdone == 0 && avgOK) avgdvg_go(); // only if we didn't update this frame
 	draw_vector(DrvPalette);
 
 	return 0;
@@ -562,8 +553,6 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal = (1512000 * 100) / 6152; // 61.5234375 hz
 	INT32 nCyclesDone  = 0;
 	INT32 nSoundBufferPos = 0;
-
-	avgdone = 0;
 
 	M6502Open(0);
 
@@ -635,12 +624,25 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnWatchdogScan(nAction);
 
+		SCAN_VAR(avgOK);
+		SCAN_VAR(bankdata);
+
 		if (astdelux)
 			pokey_scan(nAction, pnMin);
 	}
 
 	if (astdelux)
 		earom_scan(nAction, pnMin); // here.
+
+	if (nAction & ACB_WRITE) {
+		M6502Open(0);
+		bankswitch(bankdata);
+		M6502Close();
+
+		if (avgOK) {
+			avgdvg_go();
+		}
+	}
 
 	return 0;
 }

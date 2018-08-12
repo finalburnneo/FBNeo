@@ -604,6 +604,13 @@ static void rand_init(UINT8 *rng, int size, int left, int right, int add)
 	}
 }
 
+void PokeyAllPotCallback(int chip, int (*pot_cb)(int offs))
+{
+	struct POKEYregisters *p = &pokey[chip];
+
+	p->allpot_r = pot_cb;
+}
+
 void PokeyPotCallback(int chip, int potnum, int (*pot_cb)(int offs))
 {
 	struct POKEYregisters *p = &pokey[chip];

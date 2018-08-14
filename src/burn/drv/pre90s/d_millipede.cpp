@@ -671,6 +671,7 @@ static INT32 DrvInit() // millipede
 	M6502Close();
 
 	PokeyInit(1512000, 2, 1.00, 0);
+	PokeySetTotalCyclesCB(M6502TotalCycles);
 
 	init_penmask();
 
@@ -720,6 +721,7 @@ static INT32 DrvInitcentiped()
 	M6502Close();
 
 	PokeyInit(1512000, 2, 2.40, 0);
+	PokeySetTotalCyclesCB(M6502TotalCycles);
 
 	init_penmask();
 
@@ -881,8 +883,6 @@ static INT32 DrvFrame()
 	}
 
 	DrvMakeInputs();
-
-	M6502NewFrame();
 
 	INT32 nTotalCycles = 1512000 / 60;
 	INT32 nCyclesDone = 0;

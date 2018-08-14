@@ -91,7 +91,7 @@ static INT32 nLeftSample = 0, nRightSample = 0;
 #endif
 
 #if VERBOSE_RAND
-#define LOG_RAND(x) if( errorlog ) fprintf x
+#define LOG_RAND(x) bprintf x
 #else
 #define LOG_RAND(x)
 #endif
@@ -173,7 +173,6 @@ struct POKEYregisters {
 	UINT32 r9;				/* rand9 index */
     UINT32 r17;             /* rand17 index */
 	UINT32 clockmult;		/* clock multiplier */
-    int channel;            /* streams channel */
 
 	UINT8 AUDF[4];          /* AUDFx (D200, D202, D204, D206) */
 	UINT8 AUDC[4];			/* AUDCx (D201, D203, D205, D207) */
@@ -188,12 +187,13 @@ struct POKEYregisters {
 	UINT8 IRQEN;			/* IRQEN  (W/D20E) */
 	UINT8 SKSTAT;			/* SKSTAT (R/D20F) */
 	UINT8 SKCTL;			/* SKCTL  (W/D20F) */
+	UINT32 potgo_timer[8];  // simple ALLPOT timer hack for tempest
+    INT64 rtimer;           /* timer for calculating the random offset */
+	INT32 pokey_end_vars;   // dummy entry for calculating states
 
 	void (*interrupt_cb)(int mask);
 	void *timer[3]; 		/* timers for channel 1,2 and 4 events */
-    INT64 rtimer;          /* timer for calculating the random offset */
 	void *ptimer[8];		/* pot timers */
-	UINT32 potgo_timer[8]; // dink
 	int (*pot_r[8])(int offs);
 	int (*allpot_r)(int offs);
 	int (*serin_r)(int offs);
@@ -203,6 +203,9 @@ struct POKEYregisters {
 static struct POKEYinterface intf;
 static struct POKEYregisters pokey[MAXPOKEYS];
 
+// cycle timing stuff for pot routines
+static INT32 (*pCPUTotalCycles)() = NULL;
+
 void pokey_scan(INT32 nAction, INT32* pnMin)
 {
 	if (pnMin && *pnMin < 0x029521) {
@@ -210,13 +213,13 @@ void pokey_scan(INT32 nAction, INT32* pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		for (INT32 i = 0; i < MAXPOKEYS; i++)
+		for (INT32 i = 0; i < intf.num; i++)
 		{
 			struct BurnArea ba;
 
 			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = &pokey[i];
-			ba.nLen	  = STRUCT_SIZE_HELPER(struct POKEYregisters, SKCTL);
+			ba.nLen	  = STRUCT_SIZE_HELPER(struct POKEYregisters, pokey_end_vars);
 			ba.szName = "Pokey Registers";
 			BurnAcb(&ba);
 		}
@@ -491,7 +494,7 @@ static UINT8 *rand17;
 			PROCESS_SAMPLE(chip);										\
 		}																\
 	}                                                                   \
-	pokey[chip].rtimer = 0;//timer_reset(pokey[chip].rtimer, TIME_NEVER)
+	//pokey[chip].rtimer = pCPUTotalCycles();	//pokey[chip].rtimer = 0;//timer_reset(pokey[chip].rtimer, TIME_NEVER)
 
 void pokey0_update(int param, INT16 *buffer, int length) { PROCESS_POKEY(0); }
 void pokey1_update(int param, INT16 *buffer, int length) { PROCESS_POKEY(1); }
@@ -549,7 +552,7 @@ void (*update[MAXPOKEYS])(int,INT16*,int) =
 			PROCESS_CHANNEL(chip,channel);								\
 		}																\
 	}                                                                   \
-	pokey[chip].rtimer = 0;//timer_reset(pokey[chip].rtimer, TIME_NEVER)
+	//pokey[chip].rtimer = pCPUTotalCycles();//	pokey[chip].rtimer = 0;//timer_reset(pokey[chip].rtimer, TIME_NEVER)
 
 void pokey_update(int num, INT16 *buffer, int length) {
 	if (!intf.addtostream && num == 0)
@@ -618,9 +621,6 @@ void PokeyPotCallback(int chip, int potnum, int (*pot_cb)(int offs))
 	p->pot_r[potnum] = pot_cb;
 }
 
-// cycle timing stuff for pot routines
-static INT32 (*pCPUTotalCycles)() = NULL;
-
 static INT32 DefaultTotalCycles()
 {
 	static int sillyctr = 0;
@@ -635,9 +635,13 @@ void PokeySetTotalCyclesCB(INT32 (*pCPUCyclesCB)())
 	pCPUTotalCycles = pCPUCyclesCB;
 }
 
+static double cyclessec = 0.0;
+
 int PokeyInit(int clock, int num, double vol, int addtostream)
 {
 	int chip, sample_rate;
+
+	cyclessec = 1.0 / clock; // for random generation
 
 	PokeySetTotalCyclesCB(DefaultTotalCycles);
 
@@ -672,7 +676,7 @@ int PokeyInit(int clock, int num, double vol, int addtostream)
 	for( chip = 0; chip < intf.num; chip++ )
 	{
 		struct POKEYregisters *p = &pokey[chip];
-        char name[40];
+		//char name[40];
 
 		memset(p, 0, sizeof(struct POKEYregisters));
 
@@ -685,7 +689,7 @@ int PokeyInit(int clock, int num, double vol, int addtostream)
 		p->KBCODE = 0x09;		 /* Atari 800 'no key' */
 		p->SKCTL = SK_RESET;	 /* let the RNG run after reset */
 		p->rtimer = 0; //timer_set(TIME_NEVER, chip, NULL);
-
+#if 0
 		memset(p->potgo_timer, 0, sizeof(p->potgo_timer));
 
 		p->pot_r[0] = intf.pot0_r[chip];
@@ -702,19 +706,40 @@ int PokeyInit(int clock, int num, double vol, int addtostream)
 		p->interrupt_cb = intf.interrupt_cb[chip];
 
 		sprintf(name, "Pokey #%d", chip);
-//		p->channel = stream_init(name, intf.mixing_level[chip], Machine->sample_rate, chip, update[chip]);
+		p->channel = stream_init(name, intf.mixing_level[chip], Machine->sample_rate, chip, update[chip]);
 
 		if( p->channel == -1 )
 		{
 			//perror("failed to initialize sound channel");
             return 1;
 		}
+#endif
 	}
 
     return 0;
 }
 
-void PokeyExit(void)
+void PokeyReset()
+{
+	for( int chip = 0; chip < intf.num; chip++ )
+	{
+		struct POKEYregisters *p = &pokey[chip];
+
+		memset(p, 0, STRUCT_SIZE_HELPER(struct POKEYregisters, pokey_end_vars));
+
+		p->samplerate_24_8 = (intf.baseclock << 8) / nBurnSoundRate;
+		p->divisor[CHAN1] = 4;
+		p->divisor[CHAN2] = 4;
+		p->divisor[CHAN3] = 4;
+		p->divisor[CHAN4] = 4;
+		p->clockmult = DIV_64;
+		p->KBCODE = 0x09;		 /* Atari 800 'no key' */
+		p->SKCTL = SK_RESET;	 /* let the RNG run after reset */
+		p->rtimer = pCPUTotalCycles(); //timer_set(TIME_NEVER, chip, NULL);
+	}
+}
+
+void PokeyExit()
 {
 	BurnFree(rand17);
 	BurnFree(poly17);
@@ -903,9 +928,9 @@ int pokey_register_r(int chip, int offs)
 			}
 		}
 
-		if (p->rtimer != -1) {
-			p->rtimer++;
-		}
+		// (p->rtimer != -1) {
+		//  p->rtimer++;
+		//}
 	}
 
     switch (offs & 15)
@@ -974,7 +999,7 @@ int pokey_register_r(int chip, int offs)
 		 ****************************************************************/
 		if( p->SKCTL & SK_RESET )
 		{
-			adjust = (UINT32)(p->rtimer * intf.baseclock + 0.5);
+			adjust = (UINT32)(((pCPUTotalCycles() - p->rtimer) * cyclessec) * intf.baseclock + 0.5);
 			p->r9 = (p->r9 + adjust) % 0x001ff;
 			p->r17 = (p->r17 + adjust) % 0x1ffff;
 		}
@@ -983,20 +1008,19 @@ int pokey_register_r(int chip, int offs)
 			adjust = 1;
 			p->r9 = 0;
 			p->r17 = 0;
-            LOG_RAND(("POKEY #%d rand17 freezed (SKCTL): $%02x\n", chip, p->RANDOM));
+			LOG_RAND((0, L"POKEY #%d rand17 freezed (SKCTL): $%02x\n", chip, p->RANDOM));
 		}
 		if( p->AUDCTL & POLY9 )
 		{
 			p->RANDOM = rand9[p->r9];
-			LOG_RAND(("POKEY #%d adjust %u rand9[$%05x]: $%02x\n", chip, adjust, p->r9, p->RANDOM));
+			LOG_RAND((0, L"POKEY #%d adjust %x rand9[$%05x]: $%02x\n", chip, adjust, p->r9, p->RANDOM));
 		}
 		else
 		{
 			p->RANDOM = rand17[p->r17];
-			LOG_RAND(("POKEY #%d adjust %u rand17[$%05x]: $%02x\n", chip, adjust, p->r17, p->RANDOM));
+			LOG_RAND((0, L"POKEY #%d adjust %x rand17[$%05x]: $%02x\n", chip, adjust, p->r17, p->RANDOM));
 		}
-		if (adjust > 0)
-        	p->rtimer = -1;
+		p->rtimer = pCPUTotalCycles();
 		data = p->RANDOM ^ 0xff;
 		break;
 

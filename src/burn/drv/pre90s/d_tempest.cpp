@@ -1,4 +1,4 @@
-// FB Alpha 1942 driver module
+// FB Alpha tempest driver module
 // Based on MAME driver by Brad Oliver, Bernd Wiebelt, Allard van der Bas
 
 #include "tiles_generic.h"
@@ -23,6 +23,8 @@ static UINT8 *DrvColRAM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
+
+static INT32 nExtraCycles;
 
 static UINT8 DrvJoy1[8] =   { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 DrvJoy3[8] =   { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -262,6 +264,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6502Reset();
 	M6502Close();
 
+	PokeyReset();
+
 	BurnWatchdogReset();
 
 	mathbox_reset();
@@ -271,6 +275,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	earom_reset();
 
 	avgletsgo = 0;
+
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -507,19 +513,21 @@ static INT32 DrvFrame()
 		DrvInputs[2] = (DrvInputs[2] & 0xf8) | (DrvDips[1] & 0x07);
 	}
 
-	INT32 nTotalCycles = 1512000 / 60;
+	INT32 nCyclesTotal = 1512000 / 60;
 	INT32 nInterleave = 20;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesDone = nExtraCycles;
 
 	M6502Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone += M6502Run(nTotalCycles / nInterleave);
+		nCyclesDone += M6502Run((nCyclesTotal * (i + 1) / nInterleave) - nCyclesDone);
 		if (i == 9) update_dial();
 		if ((i % 5) == 4) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
 	M6502Close();
+
+	nExtraCycles = nCyclesDone - nCyclesTotal;
 
 	if (pBurnSoundOut) {
 		pokey_update(0, pBurnSoundOut, nBurnSoundLen);
@@ -561,6 +569,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		pokey_scan(nAction, pnMin);
 
 		BurnPaddleScan();
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	earom_scan(nAction, pnMin); // here.

@@ -902,8 +902,7 @@ static INT32 DrvFrame()
 
 	M6502Close();
 	if (pBurnSoundOut) {
-		pokey_update(0, pBurnSoundOut, nBurnSoundLen);
-		pokey_update(1, pBurnSoundOut, nBurnSoundLen);
+		pokey_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

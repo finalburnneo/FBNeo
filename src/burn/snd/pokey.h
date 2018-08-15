@@ -65,11 +65,6 @@
 
 #define MAXPOKEYS	4	/* max number of emulated chips */
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*****************************************************************************
  * pot0_r to pot7_r:
  *	Handlers for reading the pot values. Some Atari games use
@@ -79,67 +74,64 @@ extern "C" {
  *****************************************************************************/
 
 struct POKEYinterface {
-	int num;    /* total number of pokeys in the machine */
-	int addtostream; /* 0 = clear stream 1 = mix previous stream w/ pokey_update */
-    int baseclock;
-    int mixing_level[MAXPOKEYS];
-    int (*pot0_r[MAXPOKEYS])(int offset);
-    int (*pot1_r[MAXPOKEYS])(int offset);
-    int (*pot2_r[MAXPOKEYS])(int offset);
-    int (*pot3_r[MAXPOKEYS])(int offset);
-    int (*pot4_r[MAXPOKEYS])(int offset);
-    int (*pot5_r[MAXPOKEYS])(int offset);
-    int (*pot6_r[MAXPOKEYS])(int offset);
-    int (*pot7_r[MAXPOKEYS])(int offset);
-    int (*allpot_r[MAXPOKEYS])(int offset);
-    int (*serin_r[MAXPOKEYS])(int offset);
-    void (*serout_w[MAXPOKEYS])(int offset, int data);
-    void (*interrupt_cb[MAXPOKEYS])(int mask);
+	INT32 num;    /* total number of pokeys in the machine */
+	INT32 addtostream; /* 0 = clear stream 1 = mix previous stream w/ pokey_update */
+    INT32 baseclock;
+    INT32 mixing_level[MAXPOKEYS];
+    INT32 (*pot0_r[MAXPOKEYS])(INT32 offset);
+    INT32 (*pot1_r[MAXPOKEYS])(INT32 offset);
+    INT32 (*pot2_r[MAXPOKEYS])(INT32 offset);
+    INT32 (*pot3_r[MAXPOKEYS])(INT32 offset);
+    INT32 (*pot4_r[MAXPOKEYS])(INT32 offset);
+    INT32 (*pot5_r[MAXPOKEYS])(INT32 offset);
+    INT32 (*pot6_r[MAXPOKEYS])(INT32 offset);
+    INT32 (*pot7_r[MAXPOKEYS])(INT32 offset);
+    INT32 (*allpot_r[MAXPOKEYS])(INT32 offset);
+    INT32 (*serin_r[MAXPOKEYS])(INT32 offset);
+    void (*serout_w[MAXPOKEYS])(INT32 offset, INT32 data);
+    void (*interrupt_cb[MAXPOKEYS])(INT32 mask);
 };
 
 
-int PokeyInit(int clock, int num, double vol, int addtostream);
+INT32 PokeyInit(INT32 clock, INT32 num, double vol, INT32 addtostream);
 void PokeyExit();
 void PokeyReset();
 
 void PokeySetTotalCyclesCB(INT32 (*pCPUCyclesCB)()); // see pre90s/d_tempest.cpp
 
-void pokey_update(int num, INT16 *buffer, int length);
+void pokey_update(INT32 num, INT16 *buffer, INT32 length);
+void pokey_update(INT16 *buffer, INT32 length);
 
 void pokey_scan(INT32 nAction, INT32* pnMin);
 
-void PokeyPotCallback(int chip, int potnum, int (*pot_cb)(int offs));
-void PokeyAllPotCallback(int chip, int (*pot_cb)(int offs));
+void PokeyPotCallback(INT32 chip, INT32 potnum, INT32 (*pot_cb)(INT32 offs));
+void PokeyAllPotCallback(INT32 chip, INT32 (*pot_cb)(INT32 offs));
 
-int pokey1_r (int offset);
-int pokey2_r (int offset);
-int pokey3_r (int offset);
-int pokey4_r (int offset);
-int quad_pokey_r (int offset);
+INT32 pokey1_r (INT32 offset);
+INT32 pokey2_r (INT32 offset);
+INT32 pokey3_r (INT32 offset);
+INT32 pokey4_r (INT32 offset);
+INT32 quad_pokey_r (INT32 offset);
 
-void pokey1_w (int offset,int data);
-void pokey2_w (int offset,int data);
-void pokey3_w (int offset,int data);
-void pokey4_w (int offset,int data);
-void quad_pokey_w (int offset,int data);
+void pokey1_w (INT32 offset,INT32 data);
+void pokey2_w (INT32 offset,INT32 data);
+void pokey3_w (INT32 offset,INT32 data);
+void pokey4_w (INT32 offset,INT32 data);
+void quad_pokey_w (INT32 offset,INT32 data);
 
-void pokey1_serin_ready (int after);
-void pokey2_serin_ready (int after);
-void pokey3_serin_ready (int after);
-void pokey4_serin_ready (int after);
+void pokey1_serin_ready (INT32 after);
+void pokey2_serin_ready (INT32 after);
+void pokey3_serin_ready (INT32 after);
+void pokey4_serin_ready (INT32 after);
 
-void pokey1_break_w (int shift);
-void pokey2_break_w (int shift);
-void pokey3_break_w (int shift);
-void pokey4_break_w (int shift);
+void pokey1_break_w (INT32 shift);
+void pokey2_break_w (INT32 shift);
+void pokey3_break_w (INT32 shift);
+void pokey4_break_w (INT32 shift);
 
-void pokey1_kbcode_w (int kbcode, int make);
-void pokey2_kbcode_w (int kbcode, int make);
-void pokey3_kbcode_w (int kbcode, int make);
-void pokey4_kbcode_w (int kbcode, int make);
-
-#ifdef __cplusplus
-}
-#endif
+void pokey1_kbcode_w (INT32 kbcode, INT32 make);
+void pokey2_kbcode_w (INT32 kbcode, INT32 make);
+void pokey3_kbcode_w (INT32 kbcode, INT32 make);
+void pokey4_kbcode_w (INT32 kbcode, INT32 make);
 
 #endif	/* POKEYSOUND_H */

@@ -446,8 +446,7 @@ static INT32 DrvFrame()
 			SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
 			SN76496Update(2, pBurnSoundOut, nBurnSoundLen);
 		} else {
-			pokey_update(0, pBurnSoundOut, nBurnSoundLen);
-			pokey_update(1, pBurnSoundOut, nBurnSoundLen);
+			pokey_update(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
 

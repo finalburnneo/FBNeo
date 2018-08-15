@@ -895,12 +895,15 @@ static void avgdvg_clr_busy(INT32 dummy)
 	busy = 0;
 }
 
+// cycle timing stuff for pot routines
+static INT32 (*pCPUTotalCycles)() = NULL;
+
 void avgdvg_checkhalt()
 {
-	if (avgdvg_halt_next && M6502TotalCycles() - avgdvg_halt_next >= last_cyc) {
+	if (avgdvg_halt_next && pCPUTotalCycles() - avgdvg_halt_next >= last_cyc) {
 		avgdvg_halt_next = 0;
 		avgdvg_clr_busy(0);
-		//bprintf(0, _T("SYNC-HALT @ %d\n"), M6502TotalCycles());
+		//bprintf(0, _T("SYNC-HALT @ %d\n"), pCPUTotalCycles());
 	}
 }
 
@@ -927,7 +930,7 @@ void avgdvg_go()
 	{
 		total_length = dvg_generate_vector_list();
 
-		avgdvg_halt_next = M6502TotalCycles();
+		avgdvg_halt_next = pCPUTotalCycles();
 		last_cyc = total_length+300;
 	}
 
@@ -938,7 +941,7 @@ void avgdvg_go()
 
 		/* for Major Havoc, we need to look for empty frames */
 		if (total_length > 1) {
-			avgdvg_halt_next = M6502TotalCycles();
+			avgdvg_halt_next = pCPUTotalCycles();
 			last_cyc = total_length;
 		}
 		else
@@ -990,6 +993,8 @@ WRITE16_HANDLER( avgdvg_reset_word_w )
 INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin, INT32 ysize)
 {
 	INT32 i;
+
+	pCPUTotalCycles = NULL;
 
 	/* 0 vector RAM size is invalid */
 	if (vectorram_size == 0)
@@ -1057,21 +1062,32 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 	return 0;
 }
 
-void avg_tempest_start(UINT8 *vectram)
+void avg_tempest_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
 {
 	vectorram = vectram;
 	vectorram_size = 0x1000;
 
 	//avgdvg_init(USE_AVG_TEMPEST, 0, 580-68+0x3c, 0, 570-68);
 	avgdvg_init(USE_AVG_TEMPEST, 0, 580, 0, 570);
+	pCPUTotalCycles = pCPUCyclesCB;
 }
 
-void dvg_asteroids_start(UINT8 *vectram)
+void dvg_asteroids_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
 {
 	vectorram = vectram;
 	vectorram_size = 0x1000;
 
 	avgdvg_init(USE_DVG, 0, 1044, 0, 788);
+	pCPUTotalCycles = pCPUCyclesCB;
+}
+
+void dvg_omegrace_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
+{
+	vectorram = vectram;
+	vectorram_size = 0x1000;
+
+	avgdvg_init(USE_DVG, 0, 1044, 0, 1044);
+	pCPUTotalCycles = pCPUCyclesCB;
 }
 
 // save for later stuff:

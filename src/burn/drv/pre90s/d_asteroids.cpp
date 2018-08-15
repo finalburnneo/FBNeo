@@ -23,6 +23,7 @@ static UINT8 *DrvM6502ROM;
 static UINT8 *DrvDgvPROM;
 static UINT8 *DrvM6502RAM;
 static UINT8 *DrvVectorRAM;
+static UINT8 *DrvVectorROM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -378,12 +379,13 @@ static INT32 MemIndex()
 	AllRam			= Next;
 
 	DrvM6502RAM		= Next; Next += 0x000800;
+	DrvVectorRAM	= Next; Next += 0x000800;
 
 	RamEnd			= Next;
 
-	MemEnd			= Next;
+	DrvVectorROM	= Next; Next += 0x001000; // needs to be after DrvVectorRAM(!)
 
-	DrvVectorRAM	= DrvM6502ROM + 0x4000;
+	MemEnd			= Next;
 
 	return 0;
 }
@@ -398,15 +400,14 @@ static INT32 DrvInit()
 	MemIndex();
 
 	{
-		if (BurnLoadRom(DrvM6502ROM + 0x6800,  0, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM + 0x7000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM + 0x7800,  2, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM + 0x5000,  3, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x6800,  0, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x7000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x7800,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvDgvPROM  + 0x0000,  4, 1)) return 1;
+		if (BurnLoadRom(DrvVectorROM + 0x0800,  3, 1)) return 1;
+
+		if (BurnLoadRom(DrvDgvPROM   + 0x0000,  4, 1)) return 1;
 	}
-
-	if (DrvVectorRAM != DrvM6502ROM+0x4000) bprintf(0, _T("VectorRAM not hooked up right.\n"));
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
@@ -414,7 +415,7 @@ static INT32 DrvInit()
 	M6502MapMemory(DrvM6502RAM,		        0x0000, 0x01ff, MAP_RAM);
 	bankswitch(0);                       // 0x0200, 0x03ff
 	M6502MapMemory(DrvVectorRAM,		    0x4000, 0x47ff, MAP_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x5000,	0x5000, 0x57ff, MAP_ROM);
+	M6502MapMemory(DrvVectorROM + 0x0800,	0x5000, 0x57ff, MAP_ROM); // + 0x800 offset because asteroids deluxe starts vecrom @ 4800 and things have to line up!
 	M6502MapMemory(DrvM6502ROM + 0x6800,	0x6800, 0x7fff, MAP_ROM);
 	M6502SetWriteHandler(asteroid_write);
 	M6502SetReadHandler(asteroid_read);
@@ -426,7 +427,7 @@ static INT32 DrvInit()
 	vector_set_scale(1044, 788);
 	vector_set_offsets(11, 119);
 
-	dvg_asteroids_start(DrvVectorRAM);
+	dvg_asteroids_start(DrvVectorRAM, M6502TotalCycles);
 
 	asteroid_sound_init();
 
@@ -446,18 +447,16 @@ static INT32 AstdeluxInit()
 	MemIndex();
 
 	{
-		if (BurnLoadRom(DrvM6502ROM + 0x6000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM + 0x6800,  1, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM + 0x7000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM + 0x7800,  3, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x6000,  0, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x6800,  1, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x7000,  2, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x7800,  3, 1)) return 1;
 
-		if (BurnLoadRom(DrvM6502ROM + 0x4800,  4, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM + 0x5000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvVectorROM + 0x0000,  4, 1)) return 1;
+		if (BurnLoadRom(DrvVectorROM + 0x0800,  5, 1)) return 1;
 
-		if (BurnLoadRom(DrvDgvPROM  + 0x0000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvDgvPROM   + 0x0000,  6, 1)) return 1;
 	}
-
-	if (DrvVectorRAM != DrvM6502ROM+0x4000) bprintf(0, _T("VectorRAM not hooked up right.\n"));
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
@@ -465,7 +464,7 @@ static INT32 AstdeluxInit()
 	M6502MapMemory(DrvM6502RAM,		        0x0000, 0x01ff, MAP_RAM);
 	bankswitch(0);                       // 0x0200, 0x03ff
 	M6502MapMemory(DrvVectorRAM,		    0x4000, 0x47ff, MAP_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x4800,	0x4800, 0x57ff, MAP_ROM); // Vector ROM
+	M6502MapMemory(DrvVectorROM,	        0x4800, 0x57ff, MAP_ROM); // Vector ROM
 	M6502MapMemory(DrvM6502ROM + 0x6000,	0x6000, 0x7fff, MAP_ROM); // Main ROM
 	M6502SetWriteHandler(astdelux_write);
 	M6502SetReadHandler(astdelux_read);
@@ -477,7 +476,7 @@ static INT32 AstdeluxInit()
 	vector_set_scale(1044, 788);
 	vector_set_offsets(11, 119);
 
-	dvg_asteroids_start(DrvVectorRAM);
+	dvg_asteroids_start(DrvVectorRAM, M6502TotalCycles);
 
 	asteroid_sound_init();
 
@@ -605,7 +604,7 @@ static INT32 DrvFrame()
 		}
 
 		if (astdelux)
-			pokey_update(0, pBurnSoundOut, nBurnSoundLen);
+			pokey_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -628,12 +627,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = DrvVectorRAM;
-		ba.nLen	  = 0x1000;
-		ba.szName = "Vector Ram";
 		BurnAcb(&ba);
 
 		M6502Scan(nAction);

@@ -517,9 +517,7 @@ static INT32 DrvFrame()
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
-		pokey_update(0, pBurnSoundOut, nBurnSoundLen);
-		pokey_update(1, pBurnSoundOut, nBurnSoundLen);
-		pokey_update(2, pBurnSoundOut, nBurnSoundLen);
+		pokey_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

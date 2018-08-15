@@ -19,6 +19,7 @@ static UINT8 *DrvM6502ROM;
 static UINT8 *DrvAVGPROM;
 static UINT8 *DrvM6502RAM;
 static UINT8 *DrvVecRAM;
+static UINT8 *DrvVecROM;
 static UINT8 *DrvColRAM;
 
 static UINT32 *DrvPalette;
@@ -305,12 +306,13 @@ static INT32 MemIndex()
 
 	DrvM6502RAM		= Next; Next += 0x000800;
 	DrvColRAM		= Next; Next += 0x000010;
+	DrvVecRAM       = Next; Next += 0x001000;
 
 	RamEnd			= Next;
 
-	MemEnd			= Next;
+	DrvVecROM       = Next; Next += 0x001000; // must(!) come after DrvVecRAM
 
-	DrvVecRAM       = DrvM6502ROM + 0x02000;
+	MemEnd			= Next;
 
 	return 0;
 }
@@ -338,8 +340,8 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvM6502ROM + 0xd800,  9, 1)) return 1;
 			if (BurnLoadRom(DrvM6502ROM + 0xf800,  9, 1)) return 1;
 
-			if (BurnLoadRom(DrvM6502ROM + 0x3000, 10, 1)) return 1;
-			if (BurnLoadRom(DrvM6502ROM + 0x3800, 11, 1)) return 1;
+			if (BurnLoadRom(DrvVecROM   + 0x0000, 10, 1)) return 1;
+			if (BurnLoadRom(DrvVecROM   + 0x0800, 11, 1)) return 1;
 
 			if (BurnLoadRom(DrvAVGPROM  + 0x0000, 12, 1)) return 1;
 		} else {
@@ -350,7 +352,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvM6502ROM + 0xd000,  4, 1)) return 1;
 			if (BurnLoadRom(DrvM6502ROM + 0xf000,  4, 1)) return 1;
 
-			if (BurnLoadRom(DrvM6502ROM + 0x3000,  5, 1)) return 1;
+			if (BurnLoadRom(DrvVecROM   + 0x0000,  5, 1)) return 1;
 
 			if (BurnLoadRom(DrvAVGPROM  + 0x0000,  6, 1)) return 1;
 		}
@@ -360,7 +362,7 @@ static INT32 DrvInit()
 	M6502Open(0);
 	M6502MapMemory(DrvM6502RAM,		        0x0000, 0x07ff, MAP_RAM);
 	M6502MapMemory(DrvVecRAM,		        0x2000, 0x2fff, MAP_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x3000,	0x3000, 0x3fff, MAP_ROM);
+	M6502MapMemory(DrvVecROM,               0x3000, 0x3fff, MAP_ROM);
 	M6502MapMemory(DrvM6502ROM + 0x9000,	0x9000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(tempest_write);
 	M6502SetReadHandler(tempest_read);
@@ -391,7 +393,7 @@ static INT32 DrvInit()
 	vector_init();
 	vector_set_scale(580, 570);
 
-	avg_tempest_start(DrvVecRAM);
+	avg_tempest_start(DrvVecRAM, M6502TotalCycles);
 
 	earom_init();
 
@@ -516,6 +518,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal = 1512000 / 60;
 	INT32 nInterleave = 20;
 	INT32 nCyclesDone = nExtraCycles;
+	INT32 nSoundBufferPos = 0;
 
 	M6502Open(0);
 
@@ -524,14 +527,26 @@ static INT32 DrvFrame()
 		nCyclesDone += M6502Run((nCyclesTotal * (i + 1) / nInterleave) - nCyclesDone);
 		if (i == 9) update_dial();
 		if ((i % 5) == 4) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			pokey_update(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 	M6502Close();
 
 	nExtraCycles = nCyclesDone - nCyclesTotal;
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		pokey_update(0, pBurnSoundOut, nBurnSoundLen);
-		pokey_update(1, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			pokey_update(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	if (pBurnDraw) {
@@ -554,12 +569,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = DrvVecRAM;
-		ba.nLen	  = 0x1000;
-		ba.szName = "Vector Ram";
 		BurnAcb(&ba);
 
 		M6502Scan(nAction);

@@ -3,9 +3,16 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
+
+#define USE_SOUND_DEVICE
+#ifdef USE_SOUND_DEVICE
+#include "irem_sound.h"
+#else
 #include "m6800_intf.h"
 #include "msm5205.h"
 #include "ay8910.h"
+#endif
+
 #define USE_SAMPLE_HACK // allow use of sampled drumkit on Kid Niki, Spelunker 1 & 2, Battle-Road, Horizon
 
 #ifdef USE_SAMPLE_HACK
@@ -42,7 +49,10 @@ static UINT8 *M62SpriteRam          = NULL;
 static UINT8 *M62CharRam            = NULL;
 static UINT8 *M62ScrollRam          = NULL;
 static UINT8 *M62Z80Ram             = NULL;
+
+#ifndef USE_SOUND_DEVICE
 static UINT8 *M62M6803Ram           = NULL;
+#endif
 static UINT8 *M62Tiles              = NULL;
 static UINT8 *M62Sprites            = NULL;
 static UINT8 *M62Chars              = NULL;
@@ -56,10 +66,12 @@ static INT32 M62CharHScroll;
 static INT32 M62CharVScroll;
 static INT32 M62FlipScreen;
 static INT32 M62SpriteHeightPromOffset;
+#ifndef USE_SOUND_DEVICE
 static UINT8 M62SoundLatch;
 static UINT8 M62Port1;
 static UINT8 M62Port2;
 static UINT8 M62SlaveMSM5205VClckReset;
+#endif
 static UINT32 M62PaletteEntries;
 static INT32 M62Z80Clock;
 static INT32 M62M6803Clock;
@@ -1787,7 +1799,7 @@ static INT32 M62MemIndex()
 	if (!M62SpriteRamSize) M62SpriteRamSize = 0x100;
 
 	M62Z80Rom              = Next; Next += M62Z80RomSize;
-	M62M6803Rom            = Next; Next += 0x0c000;
+	M62M6803Rom            = Next; Next += 0x10000;
 
 	RamStart               = Next;
 
@@ -1796,7 +1808,10 @@ static INT32 M62MemIndex()
 	if (M62CharRamSize)   { M62CharRam   = Next; Next += M62CharRamSize; }
 	if (M62ScrollRamSize) { M62ScrollRam = Next; Next += M62ScrollRamSize; }
 	M62Z80Ram              = Next; Next += 0x01000;
+	
+#ifndef USE_SOUND_DEVICE
 	M62M6803Ram            = Next; Next += 0x00080;
+#endif
 
 	RamEnd                 = Next;
 
@@ -1817,6 +1832,9 @@ static INT32 M62DoReset()
 	ZetReset();
 	ZetClose();
 
+#ifdef USE_SOUND_DEVICE
+	IremSoundReset();
+#else
 	M6803Open(0);
 	M6803Reset();
 	M6803Close();
@@ -1825,6 +1843,8 @@ static INT32 M62DoReset()
 	AY8910Reset(1);
 
 	MSM5205Reset();
+#endif
+
 #ifdef USE_SAMPLE_HACK
 	BurnSampleReset();
 #endif
@@ -1836,10 +1856,13 @@ static INT32 M62DoReset()
 	M62CharHScroll = 0;
 	M62CharVScroll = 0;
 	M62FlipScreen = 0;
+
+#ifndef USE_SOUND_DEVICE
 	M62SoundLatch = 0;
 	M62Port1 = 0;
 	M62Port2 = 0;
 	M62SlaveMSM5205VClckReset = 0;
+#endif
 	M62BankControl[0] = M62BankControl[1] = 0;
 	Ldrun2BankSwap = 0;
 	Ldrun3TopBottomMask = 0;
@@ -2064,11 +2087,15 @@ void __fastcall M62Z80PortWrite(UINT16 a, UINT8 d)
 
 	switch (a) {
 		case 0x00: {
+#ifdef USE_SOUND_DEVICE
+			IremSoundWrite(d);
+#else
 			if ((d & 0x80) == 0) {
 				M62SoundLatch = d & 0x7f;
 			} else {
 				M6803SetIRQLine(M6803_IRQ_LINE, CPU_IRQSTATUS_ACK);
 			}
+#endif
 			return;
 		}
 
@@ -2345,6 +2372,7 @@ void __fastcall YoujyudnZ80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
+#ifndef USE_SOUND_DEVICE
 UINT8 M62M6803ReadByte(UINT16 a)
 {
 	if (a <= 0x001f) {
@@ -2445,6 +2473,7 @@ void M62M6803WritePort(UINT16 a, UINT8 d)
 
 	bprintf(PRINT_NORMAL, _T("M6803 Write Port -> %04X, %02X\n"), a, d);
 }
+#endif
 
 static INT32 Tile1024PlaneOffsets[3]       = { 0x20000, 0x10000, 0 };
 static INT32 Tile2048PlaneOffsets[3]       = { 0x40000, 0x20000, 0 };
@@ -2471,6 +2500,26 @@ static INT32 YoujyudnTilePlaneOffsets[3]   = { 0x40000, 0x20000, 0 };
 static INT32 YoujyudnTileXOffsets[8]       = { 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 YoujyudnTileYOffsets[16]      = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120 };
 
+#ifdef USE_SOUND_DEVICE
+static void AY8910_1PortAWrite(UINT8 data)
+{
+	if (data == 0xff) {
+		//bprintf(0, _T("M62 Analog drumkit init.\n"));
+		return;
+	}
+
+	if (data > 0) {
+		if (data & 0x01) // bass drum
+			BurnSamplePlay(2);
+		if (data & 0x02) // snare drum
+			BurnSamplePlay(1);
+		if (data & 0x04) // open hat
+			BurnSamplePlay(3);
+		if (data & 0x08) // closed hat
+			BurnSamplePlay(0);
+	}
+}
+#else
 UINT8 M62SoundLatchRead(UINT32)
 {
 	return M62SoundLatch;
@@ -2514,6 +2563,7 @@ static void M62MSM5205Vck0()
 	M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 	M62SlaveMSM5205VClckReset = 1;
 }
+#endif
 
 static INT32 M62MemInit()
 {
@@ -2542,9 +2592,9 @@ static INT32 KungfumLoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x04000,  1, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x06000,  2, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  3, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  2, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0e000,  4, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
@@ -2595,8 +2645,8 @@ static INT32 KungfumdLoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x04000,  1, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x04000,  2, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  2, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  3, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
@@ -2641,9 +2691,9 @@ static INT32 Kungfub3LoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x04000,  1, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x06000,  2, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  3, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  2, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0e000,  4, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
@@ -2696,9 +2746,9 @@ static INT32 BattroadLoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x14000,  9, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x06000, 10, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000, 11, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x0a000, 12, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0a000, 10, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0e000, 12, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x0c000);
@@ -2752,8 +2802,8 @@ static INT32 LdrunLoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x06000,  3, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  4, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0e000,  5, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x06000);
@@ -2799,9 +2849,9 @@ static INT32 Ldrun2LoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x0a000,  5, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x06000,  6, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  7, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  6, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0e000,  8, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x0c000);
@@ -2847,8 +2897,8 @@ static INT32 Ldrun3LoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x08000,  2, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x04000,  3, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  4, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
@@ -2894,8 +2944,8 @@ static INT32 Ldrun3jLoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x08000,  2, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x04000,  3, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  4, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x0c000);
@@ -2937,7 +2987,7 @@ static INT32 LotlotLoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x04000,  1, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  2, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0e000,  2, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x06000);
@@ -2992,9 +3042,9 @@ static INT32 KidnikiLoadRoms()
 	memcpy(M62Z80Rom + 0x20000, M62Z80Rom + 0x18000, 0x8000);
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x00000,  4, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x04000,  5, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  6, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x04000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  6, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x30000);
@@ -3053,9 +3103,9 @@ static INT32 LitheroLoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x10000,  2, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x00000,  3, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x04000,  4, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x04000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  5, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x30000);
@@ -3109,8 +3159,8 @@ static INT32 SpelunkrLoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x0c000,  3, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x04000,  4, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  5, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
@@ -3194,8 +3244,8 @@ static INT32 Spelunk2LoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x18000,  4, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x04000,  5, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  6, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  6, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
@@ -3275,7 +3325,7 @@ static INT32 YoujyudnLoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x0c000,  3, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  4, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
@@ -3333,7 +3383,7 @@ static INT32 HorizonLoadRoms()
 	nRet = BurnLoadRom(M62Z80Rom   + 0x08000,  2, 1); if (nRet != 0) return 1;
 
 	// Load M6803 Program Roms
-	nRet = BurnLoadRom(M62M6803Rom + 0x08000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  3, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
@@ -3390,6 +3440,13 @@ static void M62MachineInit()
 	ZetMapArea(0xe000, 0xefff, 2, M62Z80Ram   );
 	ZetClose();
 
+#ifdef USE_SOUND_DEVICE
+	IremSoundInit(M62M6803Rom, 1, 4000000, AY8910_1PortAWrite);
+	MSM5205SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+#else
 	M6803Init(0);
 	M6803Open(0);
 	M6803MapMemory(M62M6803Rom, 0x4000, 0xffff, MAP_ROM);
@@ -3410,6 +3467,8 @@ static void M62MachineInit()
 	AY8910SetPorts(1, NULL, NULL, &AY8910_1PortAWrite, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+#endif
+
 #ifdef USE_SAMPLE_HACK
 	BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
 	bBurnSampleTrimSampleEnd = 1;
@@ -3965,10 +4024,15 @@ static INT32 HorizonInit()
 static INT32 M62Exit()
 {
 	ZetExit();
+#ifdef USE_SOUND_DEVICE
+	IremSoundExit();
+#else
 	M6800Exit();
 	AY8910Exit(0);
 	AY8910Exit(1);
 	MSM5205Exit();
+#endif
+	
 #ifdef USE_SAMPLE_HACK
 	BurnSampleExit();
 #endif
@@ -3991,10 +4055,12 @@ static INT32 M62Exit()
 	M62CharHScroll = 0;
 	M62CharVScroll = 0;
 	M62FlipScreen = 0;
+#ifndef USE_SOUND_DEVICE
 	M62SoundLatch = 0;
 	M62Port1 = 0;
 	M62Port2 = 0;
 	M62SlaveMSM5205VClckReset = 0;
+#endif
 	M62PaletteEntries = 0;
 	M62Z80Clock = 0;
 	M62M6803Clock = 0;
@@ -4792,11 +4858,19 @@ static INT32 M62Frame()
 		}
 
 		MSM5205Update();
+#ifdef USE_SOUND_DEVICE
+		if (IremSlaveMSM5205VClckReset) {
+			MSM5205VCLKWrite(1, 1);
+			MSM5205VCLKWrite(1, 0);
+			IremSlaveMSM5205VClckReset = 0;
+		}
+#else
 		if (M62SlaveMSM5205VClckReset) {
 			MSM5205VCLKWrite(1, 1);
 			MSM5205VCLKWrite(1, 0);
 			M62SlaveMSM5205VClckReset = 0;
 		}
+#endif
 	}
 
 	if (pBurnSoundOut) {
@@ -4841,10 +4915,16 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		M6803Scan(nAction);
 		ZetScan(nAction);
+
+#ifdef USE_SOUND_DEVICE
+		IremScan(nAction, pnMin);
+#else
+		M6803Scan(nAction);
 		AY8910Scan(nAction, pnMin);
 		MSM5205Scan(nAction, pnMin);
+#endif
+
 #ifdef USE_SAMPLE_HACK
 		BurnSampleScan(nAction, pnMin);
 #endif
@@ -4853,10 +4933,12 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(M62CharHScroll);
 		SCAN_VAR(M62CharVScroll);
 		SCAN_VAR(M62FlipScreen);
+#ifndef USE_SOUND_DEVICE
 		SCAN_VAR(M62SoundLatch);
 		SCAN_VAR(M62Port1);
 		SCAN_VAR(M62Port2);
 		SCAN_VAR(M62SlaveMSM5205VClckReset);
+#endif
 		SCAN_VAR(M62BankControl);
 		SCAN_VAR(Ldrun2BankSwap);
 		SCAN_VAR(Ldrun3TopBottomMask);

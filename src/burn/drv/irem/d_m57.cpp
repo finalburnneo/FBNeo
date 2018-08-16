@@ -372,21 +372,21 @@ static void draw_background()
 				for (INT32 x = sx; x < nScreenWidth; x++) {
 					dst[x] = dst[sx-1];
 				}
-			}			
+			}
 		}
 		else if (scrollx < 0)
 		{
 			INT32 sx = (nScreenWidth - scrollx) - 256;
-				
+
 			if (sx > 0)
 			{
 				UINT16 *dst = pTransDraw + y * nScreenWidth;
-				
+
 				for (INT32 x = 0; x < sx; x++)
 				{
 					dst[x] = dst[sx];
 				}
-			}			
+			}
 		}
 	}
 }
@@ -510,7 +510,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
-		IremSoundScan(nAction, pnMin);
+		IremScan(nAction, pnMin);
 
 		SCAN_VAR(flipscreen);
 	}

@@ -2692,7 +2692,7 @@ static INT32 Kungfub3LoadRoms()
 
 	// Load M6803 Program Roms
 	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  2, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(M62M6803Rom + 0x0a000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(M62M6803Rom + 0x0c000,  3, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62M6803Rom + 0x0e000,  4, 1); if (nRet != 0) return 1;
 
 	// Load and decode the tiles
@@ -3921,6 +3921,9 @@ static INT32 KidnikiInit()
 	if (M62MemInit()) return 1;
 	if (KidnikiLoadRoms()) return 1;
 	if (KidnikiMachineInit()) return 1;
+
+	// more bassline!
+	AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_3, 0.25, BURN_SND_ROUTE_BOTH);
 
 	return 0;
 }

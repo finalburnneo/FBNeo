@@ -201,7 +201,7 @@ static void __fastcall m52_main_write(UINT16 address, UINT8 data)
 		case 0xd000:
 			IremSoundWrite(data);
 		return;
- 
+
 		case 0xd001:
 			flipscreen = (data & 1) ^ (~DrvDips[1] & 0x01);
 		return;
@@ -217,7 +217,7 @@ static UINT8 __fastcall m52_main_read(UINT16 address)
 		}
 		return count ^ (bg1xpos >> 7);
 	}
-	
+
 	switch (address & ~0x07f8)
 	{
 		case 0xd000:
@@ -229,7 +229,7 @@ static UINT8 __fastcall m52_main_read(UINT16 address)
 		case 0xd004:
 			return DrvDips[address - 0xd003];
 	}
-	
+
 	return 0;
 }
 
@@ -432,7 +432,7 @@ static INT32 DrvGfxDecode()
 static INT32 DrvExit()
 {
 	GenericTilesExit();
-	
+
 	ZetExit();
 
 	IremSoundExit();

@@ -62,6 +62,8 @@ static UINT8 IremM6803ReadByte(UINT16 a)
 		return IremM6803Ram[a - 0x0080];
 	}
 
+	if (a == 0x7f) return 0; // NOP
+
 	bprintf(PRINT_NORMAL, _T("M6803 Read Byte -> %04X\n"), a);
 
 	return 0;

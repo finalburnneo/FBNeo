@@ -911,43 +911,15 @@ static INT32 DrvExit()
 	return 0;
 }
 
-/*static void DrvPaletteInit() // iq_132 -- correct?
-{
-    for (INT32 i = 0; i < 0x40; i++) // color
-	{
-		for (INT32 j = 0; j < 256; j++) // intensity
-		{
-			UINT8 data = DrvColRAM[i];
-			int bit3 = (~data >> 3) & 1;
-			int bit2 = (~data >> 2) & 1;
-			int bit1 = (~data >> 1) & 1;
-			int bit0 = (~data >> 0) & 1;
-			int r = bit1 * 0xee + bit0 * 0x11;
-			int g = bit3 * 0xee;
-			int b = bit2 * 0xee;
-
-			r = (r * j) / 255;
-			g = (g * j) / 255;
-			b = (b * j) / 255;
-
-			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b;
-		}
-	}
-	}  */
 static void DrvPaletteInit()
 {
-	for (INT32 i = 0; i < 256; i++) // color
+	for (INT32 i = 0; i < 32; i++) // color
 	{
 		for (INT32 j = 0; j < 256; j++) // intensity
 		{
-			INT32 r = (i >> 4) & 3;
-			r = (r << 6) | (r << 4) | (r << 2) | (r << 0);
-	
-			INT32 g = (i >> 2) & 3;
-			g = (g << 6) | (g << 4) | (g << 2) | (g << 0);
-	
-			INT32 b = (i >> 0) & 3;
-			b = (b << 6) | (b << 4) | (b << 2) | (b << 0);
+			INT32 r = (i & 4) ? 0xff : 0;	
+			INT32 g = (i & 2) ? 0xff : 0;	
+			INT32 b = (i & 1) ? 0xff : 0;
 
 			r = (r * j) / 255;
 			g = (g * j) / 255;
@@ -957,7 +929,6 @@ static void DrvPaletteInit()
 		}
 	}
 }
-
 
 static INT32 DrvDraw()
 {

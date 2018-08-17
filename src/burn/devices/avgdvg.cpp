@@ -1072,6 +1072,16 @@ void avg_tempest_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
 	pCPUTotalCycles = pCPUCyclesCB;
 }
 
+void avg_starwars_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
+{
+	vectorram = vectram;
+	vectorram_size = 0x1000;
+
+	//avgdvg_init(USE_AVG_TEMPEST, 0, 580-68+0x3c, 0, 570-68);
+	avgdvg_init(USE_AVG_SWARS, 0, 250, 0, 280);
+	pCPUTotalCycles = pCPUCyclesCB;
+}
+
 void dvg_asteroids_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
 {
 	vectorram = vectram;

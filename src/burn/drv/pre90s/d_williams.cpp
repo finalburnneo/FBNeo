@@ -637,27 +637,27 @@ static void defender_bank_write(UINT16 address, UINT8 data)
 		return;
 	}
 	
-	if (((address & 0xfc10) & ~0x3e0) == 0x0000) {
+	if ((address & 0xfc10) == 0x0000) {
 		DrvPalRAM[address & 0x0f] = data;
 		return;
 	}
 
-	if (((address & 0xfc10) & ~0x3e0) == 0x0010) {
+	if ((address & 0xfc10) == 0x0010) {
 		cocktail = data & 0x01;
 		return;
 	}
 
-	if (((address & 0xfc00) & ~0x300) == 0x0400) {
+	if ((address & 0xfc00) == 0x0400) {
 		DrvNVRAM[address & 0xff] = data | 0xf0;
 		return;
 	}
 
-	if (((address & 0xfc1c) & ~0x3e0) == 0x0c00) {
+	if ((address & 0xfc1c) == 0x0c00) {
 		pia_write(1, address & 0x3, data);
 		return;
 	}
 
-	if (((address & 0xfc1c) & ~0x3e0) == 0x0c04) {
+	if ((address & 0xfc1c) == 0x0c04) {
 		pia_write(0, address & 0x3, data);
 		return;
 	}
@@ -671,7 +671,7 @@ static UINT8 defender_bank_read(UINT16 address)
 {
 //	bprintf (0, _T("BR: %4.4x\n"), address);
 	
-	if (((address & 0xfc00) & ~0x300) == 0x0400) {
+	if ((address & 0xfc00) == 0x0400) {
 		return DrvNVRAM[address & 0xff];
 	}
 
@@ -679,11 +679,11 @@ static UINT8 defender_bank_read(UINT16 address)
 		return (scanline < 0x100) ? (scanline & 0xfc) : 0xfc;
 	}
 
-	if (((address & 0xfc1c) & ~0x3e0) == 0x0c00) {
+	if ((address & 0xfc1c) == 0x0c00) {
 		return pia_read(1, address & 3);
 	}
 	
-	if (((address & 0xfc1c) & ~0x3e0) == 0x0c04) {
+	if ((address & 0xfc1c) == 0x0c04) {
 		return pia_read(0, address & 3);
 	}
 

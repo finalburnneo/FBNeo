@@ -526,9 +526,17 @@ UINT16 m6809_get_prev_pc()
 	return m6809.ppc.w.l;
 }
 
+static int m6809_running = 0;
+
+void m6809_end_timeslice()
+{
+	m6809_running = 0;
+}
+
 /* execute instructions on this CPU until icount expires */
 int m6809_execute(int cycles)	/* NS 970908 */
 {
+	m6809_running = 1;
 	m6809_segmentcycles = cycles;
 
 	m6809_ICount = cycles - m6809.extra_cycles;
@@ -814,7 +822,7 @@ int m6809_execute(int cycles)	/* NS 970908 */
             m6809_ICount -= cycles1[m6809.ireg];
 #endif
 
-		} while( m6809_ICount > 0 );
+		} while( m6809_ICount > 0 && m6809_running);
 
         m6809_ICount -= m6809.extra_cycles;
 		m6809.extra_cycles = 0;

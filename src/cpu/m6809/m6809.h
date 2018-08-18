@@ -49,6 +49,7 @@ void m6809_get_context(void *dst);
 void m6809_set_context(void *src);
 UINT16 m6809_get_pc();
 UINT16 m6809_get_prev_pc();
+void m6809_end_timeslice();
 
 int m6809_get_segmentcycles();
 

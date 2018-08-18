@@ -82,8 +82,7 @@ static UINT8 DrvReset;
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 
-static INT32 defender = 0;
-static INT32 stargate = 0;
+static INT32 defender_control_hack = 0;
 static INT32 mayday = 0;
 static INT32 splat = 0;
 static INT32 blaster = 0;
@@ -638,27 +637,27 @@ static void defender_bank_write(UINT16 address, UINT8 data)
 		return;
 	}
 	
-	if ((address & 0xfc10) == 0x0000) {
+	if (((address & 0xfc10) & ~0x3e0) == 0x0000) {
 		DrvPalRAM[address & 0x0f] = data;
 		return;
 	}
 
-	if ((address & 0xfc10) == 0x0010) {
+	if (((address & 0xfc10) & ~0x3e0) == 0x0010) {
 		cocktail = data & 0x01;
 		return;
 	}
 
-	if ((address & 0xfc00) == 0x0400) {
+	if (((address & 0xfc00) & ~0x300) == 0x0400) {
 		DrvNVRAM[address & 0xff] = data | 0xf0;
 		return;
 	}
 
-	if ((address & 0xfc1c) == 0x0c00) {
+	if (((address & 0xfc1c) & ~0x3e0) == 0x0c00) {
 		pia_write(1, address & 0x3, data);
 		return;
 	}
 
-	if ((address & 0xfc1c) == 0x0c04) {
+	if (((address & 0xfc1c) & ~0x3e0) == 0x0c04) {
 		pia_write(0, address & 0x3, data);
 		return;
 	}
@@ -672,7 +671,7 @@ static UINT8 defender_bank_read(UINT16 address)
 {
 //	bprintf (0, _T("BR: %4.4x\n"), address);
 	
-	if ((address & 0xfc00) == 0x0400) {
+	if (((address & 0xfc00) & ~0x300) == 0x0400) {
 		return DrvNVRAM[address & 0xff];
 	}
 
@@ -680,16 +679,16 @@ static UINT8 defender_bank_read(UINT16 address)
 		return (scanline < 0x100) ? (scanline & 0xfc) : 0xfc;
 	}
 
-	if ((address & 0xfc1c) == 0x0c00) {
+	if (((address & 0xfc1c) & ~0x3e0) == 0x0c00) {
 		return pia_read(1, address & 3);
 	}
 	
-	if ((address & 0xfc1c) == 0x0c04) {
+	if (((address & 0xfc1c) & ~0x3e0) == 0x0c04) {
 		return pia_read(0, address & 3);
 	}
 
 	if (address >= 0x1000 && address <= 0x9fff) {
-		return DrvM6809ROM0[0xf000 + address];
+		return DrvM6809ROM0[0x10000 + address];
 	}
 
 	if (address >= 0xa000) {
@@ -1222,7 +1221,7 @@ static INT32 DrvRomLoad(INT32 type) // 1-defender, 2-mysticm, 3-tshoot, 4-sinist
 				if (offset == 0x26000) mLoad += 0xa000;
 				if (offset == 0x38000) mLoad += 0x8000;
 			}
-
+			//bprintf(0, _T("loading main ROM @ %04X (%X bytes)\n"), offset, ri.nLen);
 			if (BurnLoadRom(mLoad, i, 1)) return 1;
 			mLoad += ri.nLen;
 
@@ -1281,7 +1280,7 @@ static void blitter_init(INT32 blitter_config, UINT8 *prom)
 			blitter_remap[i * 256 + j] = (table[j >> 4] << 4) | table[j & 0x0f];
 	}
 }
-
+//DrvInit(0, 1, 12, -1, 0);
 static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitter_config, INT32 blitter_clip_addr)
 {
 	AllMem = NULL;
@@ -1407,8 +1406,7 @@ static INT32 DrvExit()
 	mayday = 0;
 	splat = 0;
 	blaster = 0;
-	defender = 0;
-	stargate = 0;
+	defender_control_hack = 0;
 
 	uses_hc55516 = 0;
 	uses_colprom = 0;
@@ -1622,14 +1620,12 @@ static INT32 DrvFrame()
 			DrvInputs[6] ^= (DrvJoy7[i] & 1) << i;
 		}
 
-		if ( (defender || stargate) && (DrvInputs[6] & 0x42) ) {
+		if ( defender_control_hack && (DrvInputs[6] & 0x42) ) {
 			// This kludge gives Defender and Stargate proper L/R joystick ability
 			DrvInputs[0] |= DrvInputs[6] & 0x42;
 
 			M6809Open(0);
-			if ( (defender && M6809ReadByte(0xa0bb) == 0xfd) ||
-				 (stargate && M6809ReadByte(0x9c92) == 0xfd) )
-			{
+			if (defender_control_hack && M6809ReadByte(defender_control_hack) == 0xfd) {
 				if (DrvInputs[0] & 0x02)
 					DrvInputs[0] = (DrvInputs[0] & 0xfd) | 0x40;
 				else if (DrvInputs[0] & 0x40)
@@ -1769,10 +1765,37 @@ static struct BurnRomInfo defenderRomDesc[] = {
 STD_ROM_PICK(defender)
 STD_ROM_FN(defender)
 
+static INT32 DefenderCommInit()
+{
+	return DrvInit(0, 1, 12, -1, 0);
+}
+
 static INT32 DefenderInit()
 {
-	defender = 1;
-	return DrvInit(0, 1, 12, -1, 0);
+	defender_control_hack = 0xa0bb;
+
+	return DefenderCommInit();
+}
+
+static INT32 DefenderBGInit()
+{
+	defender_control_hack = 0xa096;
+
+	return DefenderCommInit();
+}
+
+static INT32 DefenderWhiteInit()
+{
+	defender_control_hack = 0xa093;
+
+	return DefenderCommInit();
+}
+
+static INT32 DefenceInit()
+{
+	defender_control_hack = 0xa0d0;
+
+	return DefenderCommInit();
 }
 
 struct BurnDriver BurnDrvDefender = {
@@ -1815,7 +1838,7 @@ struct BurnDriver BurnDrvDefenderg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, defendergRomInfo, defendergRomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenderBGInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -1848,7 +1871,7 @@ struct BurnDriver BurnDrvDefenderb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, defenderbRomInfo, defenderbRomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenderBGInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -1881,7 +1904,7 @@ struct BurnDriver BurnDrvDefenderw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, defenderwRomInfo, defenderwRomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -1966,9 +1989,9 @@ struct BurnDriver BurnDrvTornado1 = {
 	"tornado1", "defender", NULL, NULL, "1980",
 	"Tornado (set 1, Defender bootleg)\0", NULL, "bootleg (Jeutel)", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, tornado1RomInfo, tornado1RomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -1996,7 +2019,7 @@ struct BurnDriverD BurnDrvTornado2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, tornado2RomInfo, tornado2RomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -2022,9 +2045,9 @@ struct BurnDriver BurnDrvZero = {
 	"zero", "defender", NULL, NULL, "1980",
 	"Zero (set 1, Defender bootleg)\0", NULL, "bootleg (Jeutel)", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, zeroRomInfo, zeroRomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -2050,9 +2073,9 @@ struct BurnDriver BurnDrvZero2 = {
 	"zero2", "defender", NULL, NULL, "1980",
 	"Zero (set 2, Defender bootleg)\0", NULL, "bootleg (Amtec)", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, zero2RomInfo, zero2RomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -2083,7 +2106,7 @@ struct BurnDriver BurnDrvDefcmnd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, defcmndRomInfo, defcmndRomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -2114,7 +2137,7 @@ struct BurnDriver BurnDrvStartrkd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, startrkdRomInfo, startrkdRomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -2145,7 +2168,7 @@ struct BurnDriver BurnDrvDefence = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, defenceRomInfo, defenceRomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenceInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -2212,7 +2235,7 @@ struct BurnDriver BurnDrvGalwars2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, galwars2RomInfo, galwars2RomName, NULL, NULL, DefenderInputInfo, NULL,
-	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	DefenceInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 
@@ -2470,7 +2493,8 @@ STD_ROM_FN(stargate)
 
 static INT32 StargateInit()
 {
-	stargate = 1;
+	defender_control_hack = 0x9c92;
+
 	return DrvInit(1, 0, 6, -1, 0);
 }
 

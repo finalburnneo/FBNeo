@@ -46,7 +46,7 @@ static UINT8 main_data;
 static UINT8 sound_irq_enable;
 static UINT8 irq_flag;
 static UINT8 avgletsgo;
-static INT32 timer_counter;
+static UINT32 timer_counter;
 
 static INT32 mathing;
 static INT32 mathing_cyc;
@@ -223,6 +223,8 @@ static struct BurnDIPInfo EsbDIPList[]=
 
 STDDIPINFO(Esb)
 
+#undef DO
+
 static void check_mbox_timer()
 {
 	if (mathing && M6809TotalCycles() - mathing_cyc >= mathing) {
@@ -302,6 +304,7 @@ static void run_mbox()
 
 		M_STOP--;
 	}
+	//mathing /=2;
 }
 
 static void swmathbx_write(UINT8 offset, UINT8 data)
@@ -404,13 +407,41 @@ static UINT8 esb_setopbase(UINT16 address)
 static void bankswitch(INT32 data)
 {
 	bankdata = data;
-	bprintf(0, _T("bank sw.  %X\n"), data);
+
 	if (is_esb) {
 		M6809MapMemory(DrvM6809ROM0 + 0x06000 + (bankdata * 0x0a000), 0x6000, 0x7fff, MAP_ROM);
 		M6809MapMemory(DrvM6809ROM0 + 0x0a000 + (bankdata * 0x12000), 0xa000, 0xffff, MAP_ROM);
 	} else {
 		M6809MapMemory(DrvM6809ROM0 + 0x10000 + (bankdata * 0x02000), 0x6000, 0x7fff, MAP_ROM);
 	}
+}
+
+static void sync_maincpu()
+{
+	UINT32 sound_cyc = M6809TotalCycles();
+	M6809Close();
+	M6809Open(0);
+	UINT32 main_cyc = M6809TotalCycles();
+	INT32 cyc = sound_cyc - main_cyc;
+	if (cyc > 0)
+		M6809Run(cyc);
+	M6809Close();
+	M6809Open(1);
+
+}
+
+static void sync_soundcpu()
+{
+	UINT32 main_cyc = M6809TotalCycles();
+	M6809Close();
+	M6809Open(1);
+	UINT32 sound_cyc = M6809TotalCycles();
+	INT32 cyc = main_cyc - sound_cyc;
+	if (cyc > 0)
+		M6809Run(cyc);
+	M6809Close();
+	M6809Open(0);
+
 }
 
 static void starwars_main_write(UINT16 address, UINT8 data)
@@ -423,6 +454,7 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 	}
 
 	if (address == 0x4400) {
+		sync_soundcpu();
 		if (port_A & 0x80) bprintf(0, _T("soundlatch overrun!\n"));
 		port_A |= 0x80;
 		sound_data = data;
@@ -430,24 +462,24 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 		if (sound_irq_enable) {
 			M6809Close();
 			M6809Open(1);
-			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			M6809Close();
 			M6809Open(0);
 		}
 		return;
 	}
-	
+
 	if ((address & 0xffe0) == 0x4600) {
 		avgdvg_go();
 		avgletsgo = 1;
 		return;
 	}
-		
+
 	if ((address & 0xffe0) == 0x4620) {
 		avgdvg_reset();
 		return;
 	}
-		
+
 	if ((address & 0xffe0) == 0x4640) {
 		BurnWatchogWrite();
 		return;
@@ -456,8 +488,8 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 	if ((address & 0xffe0) == 0x4660) {
 		M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
-	}	
-		
+	}
+
 	if ((address & 0xffe0) == 0x4680)
 	{
 		address &= 7;
@@ -514,22 +546,22 @@ static UINT8 starwars_main_read(UINT16 address)
 	if ((address & 0xffe0) == 0x4300) {
 		return DrvInputs[0] & ~0x20;
 	}
-	
+
 	if ((address & 0xffe0) == 0x4320) {
 		UINT8 ret = DrvInputs[1] & ~0xc0;
 		if (mathing) ret |= 0x80;
 		if (avgdvg_done()) ret |= 0x40;
 		return ret;
 	}
-	
+
 	if ((address & 0xffe0) == 0x4340) {
 		return DrvDips[0];
 	}
-	
+
 	if ((address & 0xffe0) == 0x4360) {
 		return DrvDips[1];
 	}
-	
+
 	if ((address & 0xffe0) == 0x4380) {
 		switch (control_num) {
 			case 0: return ProcessAnalog(DrvAnalogPort1, 0, 1, 0x00, 0xff);
@@ -544,30 +576,30 @@ static UINT8 starwars_main_read(UINT16 address)
 		case 0x4400:
 			port_A &= 0xbf;
 			return main_data;
-		
+
 		case 0x4401:
 			return port_A & 0xc0;
-			
+
 		case 0x4700:
-			return (quotient_shift & 0xff00) >> 8;//quotient_shift >> 8;
-		
+			return (quotient_shift & 0xff00) >> 8;
+
 		case 0x4701:
-			return quotient_shift & 0x00ff;//quotient_shift;
-		
+			return quotient_shift & 0x00ff;
+
 		case 0x4703:
 			return BurnRandom();
 	}
 
 	return 0;
 }
-	
+
 static void starwars_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf800) == 0x0000) {
+		sync_maincpu();
 		port_A |= 0x40;
 		main_data = data;
-//		cpu_boost_interleave(0, TIME_IN_USEC(100));		// iq_132!!!!!!! (run end with high interleave??)
-		M6809RunEnd(); // iq_132, good?
+		M6809RunEnd();
 		return;
 	}
 	
@@ -608,8 +640,8 @@ static void starwars_sound_write(UINT16 address, UINT8 data)
 			sound_irq_enable = data;
 			return;
 
-		case 0x1f: bprintf(0, _T("timer_counter loadding.. %X!\n"), data);
-			timer_counter = data * 1024;
+		case 0x1f:
+			timer_counter = M6809TotalCycles() + (data * (1024 * 2 / 3));
 			return;
 		}
 	}
@@ -624,16 +656,18 @@ static UINT8 starwars_sound_read(UINT16 address)
 {
 	if ((address & 0xf800) == 0x0800) {
 		port_A &= 0x7f;
-		if (sound_irq_enable)
-			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return sound_data;
 	}
-	
+
+	if ((address & 0xff80) == 0x1000) {
+		return DrvM6809RAM1A[(address & 0x7f)];
+	}
+
 	if ((address & 0xffe0) == 0x1080)
 	{
 		switch (address & 0x1f)
 		{
-			case 0: 
+			case 0:
 				return port_A | 0x10 | (!tms5220_ready() << 2);
 
 			case 1:
@@ -645,14 +679,11 @@ static UINT8 starwars_sound_read(UINT16 address)
 			case 3:
 				return port_B_ddr;
 
-			case 5:
-				{
-				if (irq_flag)
-					M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
+			case 5:	{
 				INT32 tmp = irq_flag;
 				irq_flag = 0;
 				return tmp;
-				}
+			}
 		}
 	}
 
@@ -677,6 +708,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	if (is_esb)
 		SlapsticReset();
+
 	BurnWatchdogReset();
 	BurnRandomSetSeed(0x132132132132132ull);
 
@@ -882,7 +914,7 @@ static INT32 DrvInit(INT32 game_select)
 	vector_set_scale(250, 280);
 	avg_starwars_start(DrvVectorRAM, M6809TotalCycles);
 
-	PokeyInit(1500000, 4, 2.40, 0);
+	PokeyInit(1500000, 4, 0.40, 0);
 	PokeySetTotalCyclesCB(M6809TotalCycles);
 	
 	tms5220_init();
@@ -917,14 +949,14 @@ static void DrvPaletteInit()
 	{
 		for (INT32 j = 0; j < 256; j++) // intensity
 		{
-			INT32 r = (i & 4) ? 0xff : 0;	
-			INT32 g = (i & 2) ? 0xff : 0;	
+			INT32 r = (i & 4) ? 0xff : 0;
+			INT32 g = (i & 2) ? 0xff : 0;
 			INT32 b = (i & 1) ? 0xff : 0;
 
 			r = (r * j) / 255;
 			g = (g * j) / 255;
 			b = (b * j) / 255;
-	
+
 			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b;
 		}
 	}
@@ -934,21 +966,17 @@ static INT32 DrvDraw()
 {
 	DrvPaletteInit();
 
-	if (avgletsgo) avgdvg_go();
-
 	draw_vector(DrvPalette);
 
 	return 0;
 }
-	
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
 		DrvDoReset(1);
 	}
 
-	//M6809NewFrame(); no!
-	
 	{
 		DrvInputs[0] = 0xff & ~0x20;
 		DrvInputs[1] = 0xff & ~(1+2+8);
@@ -962,26 +990,25 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nTotalCycles[2] = { 1512000 / 40, 1512000 / 40 };
+	INT32 nCyclesTotal[2] = { 1512000 / 40, 1512000 / 40 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		nCyclesDone[0] += M6809Run(nTotalCycles[0] / nInterleave);
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if ((i % 40) == 39) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK); // 6x (really 6.15)
 		M6809Close();
 
 		M6809Open(1);
-		INT32 done = M6809Run(nTotalCycles[1] / nInterleave);
-		nCyclesDone[1] += done;
-		if (timer_counter >= 0) {		// should this be a one-shot or repeat??
-			timer_counter -= done;
-			if (timer_counter <= 0) {
-					irq_flag |= 0x80;
-					M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			}
+		nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+
+		if (timer_counter > 0 && timer_counter <= M6809TotalCycles()) {
+			irq_flag |= 0x80;
+			M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			timer_counter = 0;
 		}
+
 		M6809Close();
 	}
 

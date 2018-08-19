@@ -794,6 +794,16 @@ void mcs51_iram_fill(UINT8 *src, UINT32 size)
 	memcpy(&mcs51_state.internal_ram, src, size);
 }
 
+void mcs51_iram_get(UINT8 *dst, UINT32 size)
+{
+	if (size > 0x80) {
+		bprintf(0, _T("mcs51_iram_get(x, %X); size overflow - max 0x80.\n"), size);
+		return;
+	}
+
+	memcpy(dst, &mcs51_state.internal_ram, size);
+}
+
 static INLINE void iram_write(INT32 offset, UINT8 data)
 {
 	if ((offset) < 0x80)

@@ -22,7 +22,7 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvShareRAM;
 static UINT8 *DrvMCURAM;
-static UINT8 *DrvMCUiRAM; // ds5002fp internal/scratch ram
+static UINT8 *DrvMCUiRAM; // ds5002fp internal/scratch ram default.
 static UINT16 *DrvVidRegs;
 static UINT8 DrvRecalc;
 
@@ -294,7 +294,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	SekClose();
 
 	mcs51_reset();
-   // ds5002fp_iram_fill(DrvMCUiRAM, 0x80); // this breaks bootup w/ a gun error
+	ds5002fp_iram_fill(DrvMCUiRAM, 0x80);
 
 	MSM6295Reset(0);
 
@@ -335,7 +335,7 @@ static INT32 MemIndex()
 	RamEnd		= Next;
 
 	DrvMCURAM	= Next; Next += 0x008000; // NV RAM
-	DrvMCUiRAM  = Next; Next += 0x0000ff;
+	DrvMCUiRAM  = Next; Next += 0x0000ff; // default Internal Ram of DS5002fp, loaded from romset
 
 	MemEnd		= Next;
 
@@ -549,11 +549,9 @@ static INT32 DrvFrame()
 		BurnGunMakeInputs(1, DrvGun2, DrvGun3);
 
 		DrvAnalog[0] = scale_gun(BurnGunReturnX(0) * 404 / 255, -0.133) + 0x29;
-		DrvAnalog[1] = scale_gun(BurnGunReturnY(0) + 4, -0.055);
+		DrvAnalog[1] = scale_gun(BurnGunReturnY(0) + 4, -0.035);
 		DrvAnalog[2] = scale_gun(BurnGunReturnX(1) * 404 / 255, -0.133) + 0x29;
-		DrvAnalog[3] = scale_gun(BurnGunReturnY(1) + 4, -0.055);
-
-
+		DrvAnalog[3] = scale_gun(BurnGunReturnY(1) + 4, -0.035);
 	}
 
 	INT32 nInterleave = 256;

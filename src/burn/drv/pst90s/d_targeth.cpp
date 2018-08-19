@@ -5,6 +5,7 @@
 #include "m68000_intf.h"
 #include "msm6295.h"
 #include "burn_pal.h"
+#include "burn_gun.h"
 #include "watchdog.h"
 #include "mcs51.h"
 
@@ -21,6 +22,7 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvShareRAM;
 static UINT8 *DrvMCURAM;
+static UINT8 *DrvMCUiRAM; // ds5002fp internal/scratch ram
 static UINT16 *DrvVidRegs;
 static UINT8 DrvRecalc;
 
@@ -35,30 +37,35 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
+static INT16 DrvGun0;
+static INT16 DrvGun1;
+static INT16 DrvGun2;
+static INT16 DrvGun3;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TargethInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	A("P1 Gun X",    	BIT_ANALOG_REL, &DrvGun0,       "mouse x-axis"	),
+	A("P1 Gun Y",    	BIT_ANALOG_REL, &DrvGun1,       "mouse y-axis"	),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 2"	},
 
-//	PLACEHOLDER INPUTS FOR ANALOG
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 5"	},
-	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 6"	},
-
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
+	A("P2 Gun X",    	BIT_ANALOG_REL, &DrvGun2,       "p2 x-axis"	),
+	A("P2 Gun Y",    	BIT_ANALOG_REL, &DrvGun3,       "p2 y-axis"	),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Targeth)
+#undef A
 
 static struct BurnDIPInfo TargethDIPList[]=
 {
@@ -156,13 +163,9 @@ static UINT16 __fastcall targeth_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x108000:
-		case 0x108001:
 		case 0x108002:
-		case 0x108003:
 		case 0x108004:
-		case 0x108005:
 		case 0x108006:
-		case 0x108007:
 			return DrvAnalog[(address / 2) & 3];
 
 		case 0x700000:
@@ -291,6 +294,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	SekClose();
 
 	mcs51_reset();
+   // ds5002fp_iram_fill(DrvMCUiRAM, 0x80); // this breaks bootup w/ a gun error
 
 	MSM6295Reset(0);
 
@@ -331,6 +335,7 @@ static INT32 MemIndex()
 	RamEnd		= Next;
 
 	DrvMCURAM	= Next; Next += 0x008000; // NV RAM
+	DrvMCUiRAM  = Next; Next += 0x0000ff;
 
 	MemEnd		= Next;
 
@@ -391,7 +396,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvMCUROM + 0x0000000,  2, 1)) return 1;
 		memcpy (DrvMCURAM, DrvMCUROM, 0x8000);
 
-	//	if (BurnLoadRom(DrvMCUROM + 0x0000000,  3, 1)) return 1; // SCRATCH RAM...
+		if (BurnLoadRom(DrvMCUiRAM + 0x0000000,  3, 1)) return 1; // SCRATCH RAM...
 
 		if (BurnLoadRom(DrvGfxROM + 0x0000000,  4, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM + 0x0080000,  5, 1)) return 1;
@@ -441,6 +446,8 @@ static INT32 DrvInit()
 	GenericTilemapSetOffsets(0, -24, -16);
 	GenericTilemapSetOffsets(1, -24, -16);
 
+	BurnGunInit(2, true);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -454,6 +461,8 @@ static INT32 DrvExit()
 
 	SekExit();
 	mcs51_exit();
+
+	BurnGunExit();
 
 	BurnFree (AllMem);
 
@@ -503,7 +512,20 @@ static INT32 DrvDraw()
 
 	BurnTransferCopy(BurnPalette);
 
+	BurnGunDrawTargets();
+
 	return 0;
+}
+
+static INT32 scale_gun(INT32 gun, double scale)
+{
+	INT32 x = 0;
+	if (scale > 0.0)
+		x = gun * scale;
+	else
+		x = -(1.0 - gun) * scale;
+
+	return gun + x;
 }
 
 static INT32 DrvFrame()
@@ -523,6 +545,15 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+		BurnGunMakeInputs(0, DrvGun0, DrvGun1);
+		BurnGunMakeInputs(1, DrvGun2, DrvGun3);
+
+		DrvAnalog[0] = scale_gun(BurnGunReturnX(0) * 404 / 255, -0.133) + 0x29;
+		DrvAnalog[1] = scale_gun(BurnGunReturnY(0) + 4, -0.055);
+		DrvAnalog[2] = scale_gun(BurnGunReturnX(1) * 404 / 255, -0.133) + 0x29;
+		DrvAnalog[3] = scale_gun(BurnGunReturnY(1) + 4, -0.055);
+
+
 	}
 
 	INT32 nInterleave = 256;
@@ -564,7 +595,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029698;
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {	
+	if (nAction & ACB_MEMORY_RAM) {
 		ba.Data		= AllRam;
 		ba.nLen		= RamEnd - AllRam;
 		ba.nAddress	= 0;
@@ -588,6 +619,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		mcs51_scan(nAction);
 
 		BurnWatchdogScan(nAction);
+
+		BurnGunScan();
 
 		SCAN_VAR(oki_bank);
 	}

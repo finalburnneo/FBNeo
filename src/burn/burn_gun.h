@@ -20,6 +20,7 @@ void BurnGunExit();
 void BurnGunScan();
 extern void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y);
 extern void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y);
+void BurnGunDrawTargets(); // call this after BurnTransferCopy();
 
 // Using BurnPaddle gives you 2 paddles (A & B) per player initted.
 // BurnPaddleReturn[A/B] returns Velocity and directional data, see

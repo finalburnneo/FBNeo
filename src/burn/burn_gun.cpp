@@ -312,3 +312,10 @@ void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 		}
 	}
 }
+
+void BurnGunDrawTargets()
+{
+	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
+		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
+	}
+}

@@ -678,7 +678,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
-		IremScan(nAction, pnMin);
+		IremSoundScan(nAction, pnMin);
 
 		SCAN_VAR(bgcontrol);
 		SCAN_VAR(bg1xpos);

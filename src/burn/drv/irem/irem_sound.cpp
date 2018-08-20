@@ -294,7 +294,7 @@ INT32 IremSoundExit()
 	return 0;
 }
 
-INT32 IremScan(INT32 nAction, INT32 *pnMin)
+INT32 IremSoundScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 

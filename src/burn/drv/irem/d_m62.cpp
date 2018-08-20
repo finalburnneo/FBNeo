@@ -4921,7 +4921,7 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 #ifdef USE_SOUND_DEVICE
-		IremScan(nAction, pnMin);
+		IremSoundScan(nAction, pnMin);
 #else
 		M6803Scan(nAction);
 		AY8910Scan(nAction, pnMin);

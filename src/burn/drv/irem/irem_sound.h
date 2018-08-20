@@ -9,4 +9,4 @@ INT32 IremSoundReset();
 void IremSoundInit(UINT8 *pZ80ROM, INT32 nType, INT32 nZ80Clock);
 void IremSoundInit(UINT8 *pZ80ROM, INT32 nType, INT32 nZ80Clock, void (*ay8910cb)(UINT8));
 INT32 IremSoundExit();
-INT32 IremScan(INT32 nAction, INT32 *pnMin);
+INT32 IremSoundScan(INT32 nAction, INT32 *pnMin);

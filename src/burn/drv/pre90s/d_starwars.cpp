@@ -2,6 +2,11 @@
 // Based on MAME driver by Steve Baine and Frank Palazzolo
 // based on mame 0.111/0.119
 
+// todink:
+//   add parent tomcat to d_parent, uncomment BurnDriver for tomcatsw
+//   fix intensity vectors when in antialias mode (vector.cpp)
+//
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "watchdog.h"
@@ -10,6 +15,7 @@
 #include "tms5220.h"
 #include "avgdvg.h"
 #include "vector.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -30,12 +36,11 @@ static UINT8 *DrvAVGPROM;
 static UINT8 *DrvStrPROM;
 static UINT8 *DrvMasPROM;
 static UINT8 *DrvAmPROM;
-static UINT8 *DrvColRAM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT8 bankdata;
+static INT32 bankdata;
 static UINT8 control_num;
 static UINT8 port_A;
 static UINT8 port_B;
@@ -45,21 +50,23 @@ static UINT8 sound_data;
 static UINT8 main_data;
 static UINT8 sound_irq_enable;
 static UINT8 irq_flag;
-static UINT8 avgletsgo;
 static UINT32 timer_counter;
 
-static INT32 mathing;
-static INT32 mathing_cyc;
+static INT32 mbox_run;
+static INT32 mbox_run_cyc;
 static UINT16 quotient_shift;
 static UINT16 dvd_shift;
 static UINT16 divisor;
 static UINT16 dividend;
+
 static INT32 MPA;
 static INT32 BIC;
+static INT16 mbox_A, mbox_B, mbox_C;
+static INT32 mbox_ACC;
 
 static UINT8 *slapstic_source;
-static UINT8 *slapstic_base;
 static INT32 current_bank;
+
 static INT32 is_esb = 0;
 
 static UINT8 DrvJoy1[8];
@@ -70,6 +77,9 @@ static UINT8 DrvReset;
 
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
+
+static INT32 irqcnt = 0;
+static INT32 irqflip = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo StarwarsInputList[] = {
@@ -156,6 +166,10 @@ static struct BurnDIPInfo StarwarsDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{DO+2, 0x01, 0x10, 0x10, "Off"					},
 	{DO+2, 0x01, 0x10, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Y Axis"   			},
+	{DO+2, 0x01, 0x01, 0x00, "Inverted"				},
+	{DO+2, 0x01, 0x01, 0x01, "Normal"				},
 };
 
 STDDIPINFO(Starwars)
@@ -219,6 +233,10 @@ static struct BurnDIPInfo EsbDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{DO+2, 0x01, 0x10, 0x10, "Off"					},
 	{DO+2, 0x01, 0x10, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Y Axis"   			},
+	{DO+2, 0x01, 0x01, 0x00, "Inverted"				},
+	{DO+2, 0x01, 0x01, 0x01, "Normal"				},
 };
 
 STDDIPINFO(Esb)
@@ -227,16 +245,14 @@ STDDIPINFO(Esb)
 
 static void check_mbox_timer()
 {
-	if (mathing && M6809TotalCycles() - mathing_cyc >= mathing) {
-		mathing = 0;
+	if (mbox_run && M6809TotalCycles() - mbox_run_cyc >= mbox_run) {
+		mbox_run = 0;
+		//bprintf(0, _T("mbox END @ %d   (%d cycles).\n"), M6809TotalCycles(), M6809TotalCycles() - mbox_run_cyc);
 	}
 }
 
 static void run_mbox()
 {
-	static INT16 A, B, C;
-	static INT32 ACC;
-
 	int RAMWORD = 0;
 	int MA_byte;
 	int tmp;
@@ -244,12 +260,12 @@ static void run_mbox()
 	int MA;
 	int IP15_8, IP7, IP6_0;
 
-	mathing = 0; // start at 0 cycles.
-	mathing_cyc = M6809TotalCycles();
+	mbox_run = 0; // start at 0 cycles.
+	mbox_run_cyc = M6809TotalCycles();
 
 	while (M_STOP > 0)
 	{
-		mathing += 5;
+		mbox_run += 5;
 
 		IP15_8 = DrvStrPROM[MPA];
 		IP7    = DrvAmPROM[MPA];
@@ -265,16 +281,16 @@ static void run_mbox()
 
 		if (IP15_8 & 0x10) // clear_acc
 		{
-			ACC = 0;
+			mbox_ACC = 0;
 		}
 
 		if (IP15_8 & 0x01) // & LAC
-			ACC = (RAMWORD << 16);
+			mbox_ACC = (RAMWORD << 16);
 
 		if (IP15_8 & 0x02) // read_acc
 		{
-			DrvMathRAM[MA_byte+1] = ((ACC >> 16) & 0xff);
-			DrvMathRAM[MA_byte  ] = ((ACC >> 24) & 0xff);
+			DrvMathRAM[MA_byte+1] = ((mbox_ACC >> 16) & 0xff);
+			DrvMathRAM[MA_byte  ] = ((mbox_ACC >> 24) & 0xff);
 		}
 
 		if (IP15_8 & 0x04) // m_halt
@@ -285,30 +301,35 @@ static void run_mbox()
 
 		if (IP15_8 & 0x20) // LDC
 		{
-			C = RAMWORD;
+			mbox_C = RAMWORD;
 
-			ACC += (((INT32)(A - B) << 1) * C) << 1;
-			A = (A & 0x8000)? 0xffff: 0;
-			B = (B & 0x8000)? 0xffff: 0;
-			mathing += 33;
+			mbox_ACC += (((INT32)(mbox_A - mbox_B) << 1) * mbox_C) << 1;
+			mbox_A = (mbox_A & 0x8000) ? 0xffff: 0;
+			mbox_B = (mbox_B & 0x8000) ? 0xffff: 0;
+			mbox_run += 33;
 		}
 
 		if (IP15_8 & 0x40) // LDB
-			B = RAMWORD;
+			mbox_B = RAMWORD;
 
 		if (IP15_8 & 0x80) // LDA
-			A = RAMWORD;
+			mbox_A = RAMWORD;
 
 		tmp = MPA + 1;
 		MPA = (MPA & 0x0300) | (tmp & 0x00ff);
 
 		M_STOP--;
 	}
-	//mathing /=2;
+	mbox_run /= 4;
+	//bprintf(0, _T("mbox run @ %d   (%d cycles).\n"), mbox_run_cyc, mbox_run);
+	//bprintf(0, _T("mbox_run %X.\n"), mbox_run);
 }
 
-static void swmathbx_write(UINT8 offset, UINT8 data)
+static void swmathbx_write(UINT16 offset, UINT8 data)
 {
+	offset &= 7;
+	data &= 0xff;
+
 	switch (offset & 7)
 	{
 		case 0:
@@ -357,62 +378,39 @@ static void swmathbx_write(UINT8 offset, UINT8 data)
 	}
 }
 
-static UINT8 esb_slapstic_read(UINT16 offset)
+static void slapstic_tweakbankswitch(INT32 offset)
 {
-	int result = slapstic_base[offset];
-	int new_bank = SlapsticTweak(offset);
+	INT32 new_bank = SlapsticTweak(offset);
 
 	if (new_bank != current_bank)
 	{
+		//bprintf(0, _T("slapstic bankswitch %X.\n"), new_bank);
 		current_bank = new_bank;
-		memcpy(slapstic_base, &slapstic_source[current_bank * 0x2000], 0x2000);
 	}
+}
 
-	return result;
+static UINT8 esb_slapstic_read(UINT16 offset)
+{
+	UINT8 data = slapstic_source[current_bank * 0x2000 + offset];
+
+	slapstic_tweakbankswitch(offset);
+
+	return data;
 }
 
 static void esb_slapstic_write(UINT16 offset, UINT8 data)
 {
-	int new_bank = SlapsticTweak(offset);
-
-	if (new_bank != current_bank)
-	{
-		current_bank = new_bank;
-		memcpy(slapstic_base, &slapstic_source[current_bank * 0x2000], 0x2000);
-	}
+	slapstic_tweakbankswitch(offset);
 }
-
-#if 0 // iq_132!!!! how should we handle this nightmare?
-static UINT8 esb_setopbase(UINT16 address)
-{
-	int prevpc = activecpu_get_previouspc(); // iq_132
-
-	if ((address & 0xe000) == 0x8000)
-	{
-		esb_slapstic_read(address & 0x1fff);
-
-		catch_nextBranch(); // iq_132
-		return -1;
-	}
-	else if ((prevpc & 0xe000) == 0x8000)
-	{
-		if (prevpc != 0x8080 && prevpc != 0x8090 && prevpc != 0x80a0 && prevpc != 0x80b0)
-			esb_slapstic_read(prevpc & 0x1fff);
-	}
-
-	return address;
-}
-#endif
 
 static void bankswitch(INT32 data)
 {
 	bankdata = data;
 
+	M6809MapMemory(DrvM6809ROM0 + 0x06000 + (bankdata * 0x0a000), 0x6000, 0x7fff, MAP_ROM);
+
 	if (is_esb) {
-		M6809MapMemory(DrvM6809ROM0 + 0x06000 + (bankdata * 0x0a000), 0x6000, 0x7fff, MAP_ROM);
 		M6809MapMemory(DrvM6809ROM0 + 0x0a000 + (bankdata * 0x12000), 0xa000, 0xffff, MAP_ROM);
-	} else {
-		M6809MapMemory(DrvM6809ROM0 + 0x10000 + (bankdata * 0x02000), 0x6000, 0x7fff, MAP_ROM);
 	}
 }
 
@@ -427,7 +425,6 @@ static void sync_maincpu()
 		M6809Run(cyc);
 	M6809Close();
 	M6809Open(1);
-
 }
 
 static void sync_soundcpu()
@@ -441,13 +438,10 @@ static void sync_soundcpu()
 		M6809Run(cyc);
 	M6809Close();
 	M6809Open(0);
-
 }
 
 static void starwars_main_write(UINT16 address, UINT8 data)
 {
-	check_mbox_timer();
-
 	if ((address & 0xe000) == 0x8000 && is_esb) {
 		esb_slapstic_write(address & 0x1fff, data);
 		return;
@@ -471,7 +465,6 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 
 	if ((address & 0xffe0) == 0x4600) {
 		avgdvg_go();
-		avgletsgo = 1;
 		return;
 	}
 
@@ -498,19 +491,19 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 		// 2 -> led status 3
 		// 3 -> led status 2
 		if (address == 4) {
-			bankswitch(data >> 7);
+			bankswitch((data & 0x80) ? 1 : 0);
 			return;
 		}
 		// 5 -> reset PRNG
 		// 6 -> led status 1
 		if (address == 7) {
-			memcpy (DrvNVRAMBuf, DrvNVRAM, 0x100);
+			memmove (DrvNVRAMBuf, DrvNVRAM, 0x100);
 		}
 		return;
-	}		
+	}
 
 	if ((address & 0xffe0) == 0x46a0) {
-		memcpy (DrvNVRAM, DrvNVRAMBuf, 0x100);
+		memmove (DrvNVRAM, DrvNVRAMBuf, 0x100);
 		return;
 	}
 
@@ -520,6 +513,7 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xffe0) == 0x46e0) {
+		sync_soundcpu();
 		port_A &= 0x3f;
 		M6809Close();
 		M6809Open(1);
@@ -530,15 +524,14 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xfff8) == 0x4700) {
-		swmathbx_write(address, data);
+		swmathbx_write(address & 7, data);
 		return;
 	}
+//	bprintf(0, _T("mw %X  %x.\n"), address, data);
 }
 
 static UINT8 starwars_main_read(UINT16 address)
 {
-	check_mbox_timer();
-
 	if ((address & 0xe000) == 0x8000 && is_esb) {
 		return esb_slapstic_read(address & 0x1fff);
 	}
@@ -548,8 +541,11 @@ static UINT8 starwars_main_read(UINT16 address)
 	}
 
 	if ((address & 0xffe0) == 0x4320) {
+		check_mbox_timer();
 		UINT8 ret = DrvInputs[1] & ~0xc0;
-		if (mathing) ret |= 0x80;
+		if (mbox_run) ret |= 0x80;
+		// bprintf(0, _T("Check DrvInput[1](%X) @ %d  (pc = %X).\n"), ret, M6809TotalCycles(), M6809GetPC());
+
 		if (avgdvg_done()) ret |= 0x40;
 		return ret;
 	}
@@ -564,8 +560,8 @@ static UINT8 starwars_main_read(UINT16 address)
 
 	if ((address & 0xffe0) == 0x4380) {
 		switch (control_num) {
-			case 0: return ProcessAnalog(DrvAnalogPort1, 0, 1, 0x00, 0xff);
-			case 1: return ProcessAnalog(DrvAnalogPort0, 0, 1, 0x00, 0xff);
+			case 0: return (DrvDips[2] & 1) ? 0xff - BurnGunReturnY(0) : BurnGunReturnY(0);
+			case 1: return BurnGunReturnX(0);
 			default: return 0;
 		}
 		return 0;
@@ -589,6 +585,7 @@ static UINT8 starwars_main_read(UINT16 address)
 		case 0x4703:
 			return BurnRandom();
 	}
+	//bprintf(0, _T("mr %X.\n"), address);
 
 	return 0;
 }
@@ -641,7 +638,7 @@ static void starwars_sound_write(UINT16 address, UINT8 data)
 			return;
 
 		case 0x1f:
-			timer_counter = M6809TotalCycles() + (data * (1024 * 2 / 3));
+			timer_counter = M6809TotalCycles() + (data << 10);
 			return;
 		}
 	}
@@ -703,14 +700,13 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	M6809Open(1);
 	tms5220_reset();
+	PokeyReset();
 	M6809Reset();
 	M6809Close();
 
-	if (is_esb)
-		SlapsticReset();
-
 	BurnWatchdogReset();
-	BurnRandomSetSeed(0x132132132132132ull);
+
+	BurnRandomSetSeed(0x1321321321ull);
 
 	vector_reset();
 	avgdvg_reset();
@@ -724,20 +720,25 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	main_data = 0;
 	sound_irq_enable = 0;
 	irq_flag = 0;
-	avgletsgo = 0;
+
 	// MATHBOX
-	mathing = 0;
+	mbox_run = 0;
 	MPA = 0;
 	BIC = 0;
 	dvd_shift = 0;
 	quotient_shift = 0;
 	divisor = 0;
 	dividend = 0;
+	mbox_A = mbox_B = mbox_C = 0;
+	mbox_ACC = 0;
 
 	if (is_esb) {
+		SlapsticReset();
 		current_bank = SlapsticBank();
-		memcpy(slapstic_base, &slapstic_source[current_bank * 0x2000], 0x2000);
 	}
+
+	irqcnt = 0;
+	irqflip = 0;
 
 	return 0;
 }
@@ -757,7 +758,7 @@ static INT32 MemIndex()
 	DrvMasPROM			= Next; Next += 0x000400;
 	DrvAmPROM			= Next; Next += 0x000400;
 
-	DrvPalette			= (UINT32*)Next; Next += 0x10000 * sizeof(UINT32);
+	DrvPalette			= (UINT32*)Next; Next += 32 * 256 * sizeof(UINT32);
 	
 	DrvNVRAM			= Next; Next += 0x000100;
 	DrvNVRAMBuf			= Next; Next += 0x000100;
@@ -774,7 +775,7 @@ static INT32 MemIndex()
 	RamEnd				= Next;
 	DrvVectorROM		= Next; Next += 0x001000;
 
-	DrvColRAM			= Next; Next += 0x000020; // iq_132
+	slapstic_source     = DrvM6809ROM0 + 0x14000;
 
 	MemEnd				= Next;
 
@@ -813,7 +814,8 @@ static INT32 DrvInit(INT32 game_select)
 	{
 		if (BurnLoadRom(DrvVectorROM + 0x00000,  0, 1)) return 1;
 
-		if (BurnLoadRom(DrvM6809ROM0 + 0x10000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0x06000,  1, 1)) return 1;
+		memmove (DrvM6809ROM0 + 0x10000, DrvM6809ROM0 + 0x08000, 0x02000);
 
 		if (BurnLoadRom(DrvM6809ROM0 + 0x08000,  2, 1)) return 1;
 		if (BurnLoadRom(DrvM6809ROM0 + 0x0a000,  3, 1)) return 1;
@@ -835,7 +837,7 @@ static INT32 DrvInit(INT32 game_select)
 	else if (game_select == 1) // tomcat
 	{
 		if (BurnLoadRom(DrvVectorROM + 0x00000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvM6809ROM0 + 0x10000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0x06000,  1, 1)) return 1;
 		if (BurnLoadRom(DrvM6809ROM0 + 0x08000,  2, 1)) return 1;
 		if (BurnLoadRom(DrvM6809ROM0 + 0x0a000,  3, 1)) return 1;
 		if (BurnLoadRom(DrvM6809ROM0 + 0x0e000,  4, 1)) return 1;
@@ -855,23 +857,35 @@ static INT32 DrvInit(INT32 game_select)
 	}
 	else if (game_select == 2) // esb
 	{
+		UINT8 *temp = DrvM6809ROM1; // :)
 		if (BurnLoadRom(DrvVectorROM + 0x00000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvM6809ROM0 + 0x06000,  1, 1)) return 1;
-		memcpy (DrvM6809ROM0 + 0x10000, DrvM6809ROM0 + 0x08000, 0x02000);
-		if (BurnLoadRom(DrvM6809ROM0 + 0x0a000,  2, 1)) return 1;
-		memcpy (DrvM6809ROM0 + 0x1c000, DrvM6809ROM0 + 0x0c000, 0x02000);
-		if (BurnLoadRom(DrvM6809ROM0 + 0x0c000,  3, 1)) return 1;
-		memcpy (DrvM6809ROM0 + 0x1e000, DrvM6809ROM0 + 0x0e000, 0x02000);
-		if (BurnLoadRom(DrvM6809ROM1 + 0x00000,  4, 1)) return 1; // temp buffer
-		memcpy (DrvM6809ROM0 + 0x0e000, DrvM6809ROM1 + 0x00000, 0x02000);
-		memcpy (DrvM6809ROM0 + 0x20000, DrvM6809ROM1 + 0x02000, 0x02000);
+
+		if (BurnLoadRom(temp,  1, 1)) return 1;
+		memmove (DrvM6809ROM0 + 0x06000, temp + 0x00000, 0x02000);
+		memmove (DrvM6809ROM0 + 0x10000, temp + 0x02000, 0x02000);
+
+		if (BurnLoadRom(temp,  2, 1)) return 1;
+		memmove (DrvM6809ROM0 + 0x0a000, temp + 0x00000, 0x02000);
+		memmove (DrvM6809ROM0 + 0x1c000, temp + 0x02000, 0x02000);
+
+		if (BurnLoadRom(temp,  3, 1)) return 1;
+		memmove (DrvM6809ROM0 + 0x0c000, temp + 0x00000, 0x02000);
+		memmove (DrvM6809ROM0 + 0x1e000, temp + 0x02000, 0x02000);
+
+		if (BurnLoadRom(temp,  4, 1)) return 1;
+		memmove (DrvM6809ROM0 + 0x0e000, temp + 0x00000, 0x02000);
+		memmove (DrvM6809ROM0 + 0x20000, temp + 0x02000, 0x02000);
+
 		if (BurnLoadRom(DrvM6809ROM0 + 0x14000,  5, 1)) return 1;
 		if (BurnLoadRom(DrvM6809ROM0 + 0x18000,  6, 1)) return 1;
 
 		if (BurnLoadRom(DrvM6809ROM1 + 0x04000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvM6809ROM1 + 0x0c000,  7, 1)) return 1;
+		memmove (DrvM6809ROM1 + 0x0c000, DrvM6809ROM1 + 0x06000, 0x2000);
+		memset(DrvM6809ROM1 + 0x06000, 0, 0x2000);
+
 		if (BurnLoadRom(DrvM6809ROM1 + 0x06000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvM6809ROM1 + 0x0e000,  8, 1)) return 1;
+		memmove (DrvM6809ROM1 + 0x0e000, DrvM6809ROM1 + 0x08000, 0x2000);
+		memset(DrvM6809ROM1 + 0x08000, 0, 0x2000);
 
 		if (BurnLoadRom(DrvMathPROM  + 0x00000,  9, 1)) return 1;
 		if (BurnLoadRom(DrvMathPROM  + 0x00400, 10, 1)) return 1;
@@ -882,18 +896,23 @@ static INT32 DrvInit(INT32 game_select)
 
 		is_esb = 1;
 	}
-		
+
 	M6809Init(2);
 	M6809Open(0);
 	M6809MapMemory(DrvVectorRAM,			0x0000, 0x2fff, MAP_RAM);
 	M6809MapMemory(DrvVectorROM,			0x3000, 0x3fff, MAP_ROM);
 	M6809MapMemory(DrvNVRAM,				0x4500, 0x45ff, MAP_RAM);
-	M6809MapMemory(DrvM6809RAM0,			0x4800, 0x4fff, MAP_RAM);
+	M6809MapMemory(DrvM6809RAM0,			0x4800, 0x5fff, MAP_RAM);
 	M6809MapMemory(DrvMathRAM,				0x5000, 0x5fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM0 + 0x8000,	0x8000, 0xffff, MAP_ROM);
-	if (is_esb) M6809UnmapMemory(0x8000, 0x9fff, MAP_RAM);
+	if (is_esb)
+		M6809MapMemory(DrvM6809ROM0 + 0xa000,	0xa000, 0xffff, MAP_ROM);
+	else
+		M6809MapMemory(DrvM6809ROM0 + 0x8000,	0x8000, 0xffff, MAP_ROM);
+
 	M6809SetWriteHandler(starwars_main_write);
 	M6809SetReadHandler(starwars_main_read);
+	M6809SetReadOpHandler(starwars_main_read);
+	M6809SetReadOpArgHandler(starwars_main_read);
 	M6809Close();
 
 	M6809Open(1);
@@ -904,8 +923,6 @@ static INT32 DrvInit(INT32 game_select)
 	M6809Close();
 
 	SlapsticInit(101);
-	slapstic_source = DrvM6809ROM0 + 0x14000;
-	slapstic_base = DrvM6809ROM0 + 0x08000;
 
 	BurnWatchdogInit(DrvDoReset, 180 /*NOT REALLY*/);
 	BurnRandomInit();
@@ -916,11 +933,13 @@ static INT32 DrvInit(INT32 game_select)
 
 	PokeyInit(1500000, 4, 0.40, 0);
 	PokeySetTotalCyclesCB(M6809TotalCycles);
-	
+
 	tms5220_init();
 	tms5220_set_frequency(640000);
-	
+
 	swmathbox_init();
+
+	BurnGunInit(2, FALSE);
 
 	DrvDoReset(1);
 
@@ -935,6 +954,8 @@ static INT32 DrvExit()
 	tms5220_exit();
 	PokeyExit();
 	M6809Exit();
+
+	BurnGunExit();
 
 	BurnFree(AllMem);
 
@@ -987,6 +1008,8 @@ static INT32 DrvFrame()
 		}
 
 		DrvInputs[0] = (DrvInputs[0] & ~0x10) | (DrvDips[2] & 0x10);
+
+		BurnGunMakeInputs(0, DrvAnalogPort0, DrvAnalogPort1);
 	}
 
 	INT32 nInterleave = 256;
@@ -997,7 +1020,14 @@ static INT32 DrvFrame()
 	{
 		M6809Open(0);
 		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		if ((i % 40) == 39) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK); // 6x (really 6.15)
+
+		if (irqcnt >= (41 + irqflip)) { // 6.1something irq's per frame logic
+			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			irqcnt = -1;
+			irqflip ^= 1;
+		}
+		irqcnt++;
+
 		M6809Close();
 
 		M6809Open(1);
@@ -1055,7 +1085,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(main_data);
 		SCAN_VAR(sound_irq_enable);
 		SCAN_VAR(irq_flag);
-		SCAN_VAR(avgletsgo);
 		SCAN_VAR(timer_counter);
 
 		SCAN_VAR(MPA);
@@ -1064,6 +1093,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(quotient_shift);
 		SCAN_VAR(divisor);
 		SCAN_VAR(dividend);
+		SCAN_VAR(mbox_run);
+		SCAN_VAR(mbox_run_cyc);
+		SCAN_VAR(mbox_A);
+		SCAN_VAR(mbox_B);
+		SCAN_VAR(mbox_C);
+		SCAN_VAR(mbox_ACC);
+
+		BurnGunScan();
 	}
 
 	if (nAction & ACB_NVRAM) {
@@ -1083,7 +1120,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_WRITE)
 	{
 		M6809Open(0);
-		bankswitch(bankdata << 7);
+		bankswitch(bankdata);
 		M6809Close();
 	}
 
@@ -1104,10 +1141,10 @@ static struct BurnRomInfo starwarsRomDesc[] = {
 	{ "136021.107",		0x2000, 0xdbf3aea2, 2 | BRF_PRG | BRF_ESS }, //  6 M6809 #1 Code
 	{ "136021.208",		0x2000, 0xe38070a8, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "136021.110",		0x0400, 0x01061762, 3 | BRF_PRG | BRF_ESS }, //  8 Math PROMs
-	{ "136021.111",		0x0400, 0x2e619b70, 3 | BRF_PRG | BRF_ESS }, //  9
-	{ "136021.112",		0x0400, 0x6cfa3544, 3 | BRF_PRG | BRF_ESS }, // 10
-	{ "136021.113",		0x0400, 0x03f6acb2, 3 | BRF_PRG | BRF_ESS }, // 11
+	{ "136021.110",		0x0400, 0x810e040e, 3 | BRF_PRG | BRF_ESS }, //  8 Math PROMs
+	{ "136021.111",		0x0400, 0xae69881c, 3 | BRF_PRG | BRF_ESS }, //  9          //  9
+	{ "136021.112",		0x0400, 0xecf22628, 3 | BRF_PRG | BRF_ESS }, // 10          // 10
+	{ "136021.113",		0x0400, 0x83febfde, 3 | BRF_PRG | BRF_ESS }, // 11          // 11
 
 	{ "136021-105.1l",	0x0100, 0x82fc3eb2, 4 | BRF_GRA },           // 12 Video PROM
 };
@@ -1126,8 +1163,8 @@ struct BurnDriver BurnDrvStarwars = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, starwarsRomInfo, starwarsRomName, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
-	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	400, 300, 3, 4
+	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
+	500, 400, 4, 3
 };
 
 
@@ -1161,8 +1198,8 @@ struct BurnDriver BurnDrvStarwars1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, starwars1RomInfo, starwars1RomName, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
-	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	400, 300, 3, 4
+	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
+	500, 400, 4, 3
 };
 
 
@@ -1196,11 +1233,12 @@ struct BurnDriver BurnDrvStarwarso = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, starwarsoRomInfo, starwarsoRomName, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
-	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	250, 280, 3, 4
+	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
+	500, 400, 4, 3
 };
 
 
+/*
 // TomCat (Star Wars hardware, prototype)
 
 static struct BurnRomInfo tomcatswRomDesc[] = {
@@ -1235,10 +1273,10 @@ struct BurnDriver BurnDrvTomcatsw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tomcatswRomInfo, tomcatswRomName, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
-	TomcatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	TomcatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
 	250, 280, 3, 4
 };
-
+*/
 
 // The Empire Strikes Back
 
@@ -1276,8 +1314,8 @@ struct BurnDriver BurnDrvEsb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, esbRomInfo, esbRomName, NULL, NULL, StarwarsInputInfo, EsbDIPInfo,
-	EsbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	250, 280, 3, 4
+	EsbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
+	500, 400, 4, 3
 };
 
 

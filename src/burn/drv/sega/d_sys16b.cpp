@@ -7449,6 +7449,13 @@ static void Altbeast6_Sim8751()
 	}
 }
 
+static INT32 AltbeastInit()
+{
+	AltbeastMode = true;
+
+	return System16Init();
+}
+
 static INT32 AltbeastjInit()
 {
 	Simulate8751 = Altbeastj_Sim8751;
@@ -8681,7 +8688,7 @@ struct BurnDriver BurnDrvAltbeast = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, AltbeastRomInfo, AltbeastRomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
-	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	AltbeastInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

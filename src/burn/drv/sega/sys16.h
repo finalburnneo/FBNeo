@@ -117,6 +117,7 @@ extern bool Hangon;
 extern bool AlienSyndrome;
 extern bool HammerAway;
 extern bool Lockonph;
+extern bool AltbeastMode;
 extern bool System16Z80Enable;
 extern bool System1668KEnable;
 

@@ -402,7 +402,7 @@ static void draw_sprites()
 
 		if (!(flash && (nCurrentFrame & 1)))
 		{
-			INT32 sprite = spriteram[offs + 1];
+			INT32 sprite = spriteram[offs + 1] & 0x7fff;
 			INT32 w = y & 0x0800;
 			INT32 x = spriteram[offs + 2];
 
@@ -418,7 +418,7 @@ static void draw_sprites()
 			INT32 multi = (1 << ((y & 0x0600) >> 9)) - 1;
 
 			x &= 0x1ff;
-			y = ((y & 0x1ff) - 8) & 0x1ff;
+			y &= 0x1ff;
 			if (x >= 320) x -= 512;
 			if (y >= 256) y -= 512;
 			y = 240 - y;
@@ -471,7 +471,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 1;
 //	}
 
- 	flipscreen = deco16_pf_rowscroll[0][0] & 0x80;
+ 	flipscreen = deco16_pf_control[1][0] & 0x80;
 
 	deco16_pf12_update();
 

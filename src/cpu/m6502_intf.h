@@ -84,7 +84,7 @@ inline static INT32 M6502TotalCycles()
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502TotalCycles called without init\n"));
 #endif
 
-	return nM6502CyclesTotal + m6502_get_segmentcycles();
+	return nM6502CyclesTotal;
 }
 
 // m6502.cpp used for Data East encrypted CPUs.

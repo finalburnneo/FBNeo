@@ -362,13 +362,13 @@ INT32 M6502MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
 		if (nType & MAP_READ)	{
-			pMemMap[0     + i] = pMemory + ((i - cStart) << 8);
+			pMemMap[0     + i] = (pMemory == NULL) ? NULL : (pMemory + ((i - cStart) << 8));
 		}
 		if (nType & MAP_WRITE) {
-			pMemMap[0x100 + i] = pMemory + ((i - cStart) << 8);
+			pMemMap[0x100 + i] = (pMemory == NULL) ? NULL : (pMemory + ((i - cStart) << 8));
 		}
 		if (nType & MAP_FETCH) {
-			pMemMap[0x200 + i] = pMemory + ((i - cStart) << 8);
+			pMemMap[0x200 + i] = (pMemory == NULL) ? NULL : (pMemory + ((i - cStart) << 8));
 		}
 	}
 	return 0;

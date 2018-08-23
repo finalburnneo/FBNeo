@@ -1,8 +1,6 @@
 #include "burnint.h"
 #include "taito_ic.h"
 
-INT32 TaitoIC_OpwolfCChipInUse = 0;
-
 INT32 TaitoIC_PC080SNInUse = 0;
 INT32 TaitoIC_PC090OJInUse = 0;
 INT32 TaitoIC_TC0100SCNInUse = 0;
@@ -22,8 +20,6 @@ INT32 TaitoWatchdog;
 
 void TaitoICReset()
 {
-	if (TaitoIC_OpwolfCChipInUse) OpwolfCChipReset();
-
 	if (TaitoIC_PC080SNInUse) PC080SNReset();
 	if (TaitoIC_PC090OJInUse) PC090OJReset();
 	if (TaitoIC_TC0100SCNInUse) TC0100SCNReset();
@@ -46,8 +42,6 @@ void TaitoICReset()
 
 void TaitoICExit()
 {
-	if (TaitoIC_OpwolfCChipInUse) OpwolfCChipExit();
-
 	if (TaitoIC_PC080SNInUse) PC080SNExit();
 	if (TaitoIC_PC090OJInUse) PC090OJExit();
 	if (TaitoIC_TC0100SCNInUse) TC0100SCNExit();
@@ -65,8 +59,6 @@ void TaitoICExit()
 
 	if (cchip_active) cchip_exit();
 	
-	TaitoIC_OpwolfCChipInUse = 0;
-
 	TaitoIC_PC080SNInUse = 0;
 	TaitoIC_PC090OJInUse = 0;
 	TaitoIC_TC0100SCNInUse = 0;
@@ -87,8 +79,6 @@ void TaitoICExit()
 
 void TaitoICScan(INT32 nAction)
 {
-	if (TaitoIC_OpwolfCChipInUse) OpwolfCChipScan(nAction);
-
 	if (TaitoIC_PC080SNInUse) PC080SNScan(nAction);
 	if (TaitoIC_PC090OJInUse) PC090OJScan(nAction);
 	if (TaitoIC_TC0100SCNInUse) TC0100SCNScan(nAction);

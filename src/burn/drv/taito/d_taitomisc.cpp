@@ -294,7 +294,7 @@ static void OpwolfMakeInputs()
 	
 	BurnGunMakeInputs(0, (INT16)TaitoAnalogPort0, (INT16)TaitoAnalogPort1);
 	
-	OpwolfCChipUpdate(TaitoInput[0], TaitoInput[1]);
+	cchip_loadports(0, TaitoInput[0], TaitoInput[1], 0);
 }
 
 static void OpwolfbMakeInputs()
@@ -1610,10 +1610,10 @@ static struct BurnRomInfo OpwolfRomDesc[] = {
 
 	{ "b20-08.21",     0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
 	
-	{ "cchip_b20-18",  0x02000, 0x57165ffb, BRF_OPT },
+	{ "b20-18.73",     0x02000, 0x5987b4e9, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(Opwolf)
+STDROMPICKEXT(Opwolf, Opwolf, cchip)
 STD_ROM_FN(Opwolf)
 
 static struct BurnRomInfo OpwolfaRomDesc[] = {
@@ -1630,10 +1630,10 @@ static struct BurnRomInfo OpwolfaRomDesc[] = {
 
 	{ "b20-08.21",     0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
 	
-	{ "cchip_b20-18",  0x02000, 0x57165ffb, BRF_OPT },
+	{ "b20-18.73",     0x02000, 0x5987b4e9, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(Opwolfa)
+STDROMPICKEXT(Opwolfa, Opwolfa, cchip)
 STD_ROM_FN(Opwolfa)
 
 static struct BurnRomInfo OpwolfjRomDesc[] = {
@@ -1650,10 +1650,10 @@ static struct BurnRomInfo OpwolfjRomDesc[] = {
 
 	{ "b20-08.21",     0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
 	
-	{ "cchip_b20-18",  0x02000, 0x57165ffb, BRF_OPT },
+	{ "b20-18.73",     0x02000, 0x5987b4e9, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(Opwolfj)
+STDROMPICKEXT(Opwolfj, Opwolfj, cchip)
 STD_ROM_FN(Opwolfj)
 
 static struct BurnRomInfo OpwolfjscRomDesc[] = {
@@ -1670,10 +1670,10 @@ static struct BurnRomInfo OpwolfjscRomDesc[] = {
 
 	{ "b20-08.21",     		0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
 	
-	{ "cchip_b20-18",  0x02000, 0x57165ffb, BRF_OPT },
+	{ "b20-18.73",          0x02000, 0x5987b4e9, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(Opwolfjsc)
+STDROMPICKEXT(Opwolfjsc, Opwolfjsc, cchip)
 STD_ROM_FN(Opwolfjsc)
 
 static struct BurnRomInfo OpwolfuRomDesc[] = {
@@ -1690,10 +1690,10 @@ static struct BurnRomInfo OpwolfuRomDesc[] = {
 
 	{ "b20-08.21",     0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
 	
-	{ "cchip_b20-18",  0x02000, 0x57165ffb, BRF_OPT },
+	{ "b20-18.73",     0x02000, 0x5987b4e9, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(Opwolfu)
+STDROMPICKEXT(Opwolfu, Opwolfu, cchip)
 STD_ROM_FN(Opwolfu)
 
 static struct BurnRomInfo OpwolfbRomDesc[] = {
@@ -2706,10 +2706,9 @@ void __fastcall Darius68K2WriteWord(UINT32 a, UINT16 d)
 
 UINT8 __fastcall Opwolf68KReadByte(UINT32 a)
 {
-	if (a >= 0x0ff000 && a <= 0x0ff7ff) {
-		return OpwolfCChipDataRead((a - 0x0ff000) >> 1);
-	}
-	
+	CCHIP_READ(0x0f0000)
+	CCHIP_READ(0x0ff000)
+
 	switch (a) {
 		case 0x3e0002: {
 			return TC0140SYTCommRead();
@@ -2723,10 +2722,8 @@ UINT8 __fastcall Opwolf68KReadByte(UINT32 a)
 
 void __fastcall Opwolf68KWriteByte(UINT32 a, UINT8 d)
 {
-	if (a >= 0x0ff000 && a <= 0x0ff7ff) {
-		OpwolfCChipDataWrite(Taito68KRom1, (a - 0x0ff000) >> 1, d);
-		return;
-	}
+	CCHIP_WRITE(0x0f0000)
+	CCHIP_WRITE(0x0ff000)
 
 	switch (a) {
 		case 0x3e0000: {
@@ -2744,14 +2741,9 @@ void __fastcall Opwolf68KWriteByte(UINT32 a, UINT8 d)
 
 UINT16 __fastcall Opwolf68KReadWord(UINT32 a)
 {
-	if (a >= 0x0f0000 && a <= 0x0f07ff) {
-		return OpwolfCChipDataRead((a - 0x0f0000) >> 1);
-	}
-	
-	if (a >= 0x0ff000 && a <= 0x0ff7ff) {
-		return OpwolfCChipDataRead((a - 0x0ff000) >> 1);
-	}
-	
+	CCHIP_READ(0x0f0000)
+	CCHIP_READ(0x0ff000)
+
 	switch (a) {
 		case 0x3a0000: {
 			INT32 scaled = (BurnGunReturnX(0) * 320) / 256;
@@ -2761,11 +2753,7 @@ UINT16 __fastcall Opwolf68KReadWord(UINT32 a)
 		case 0x3a0002: {
 			return BurnGunReturnY(0) - 0x24 + OpWolfGunYOffset;
 		}
-		
-		case 0x0ff802: {
-			return OpwolfCChipStatusRead();
-		}
-	
+
 		case 0x380000: {
 			return TaitoDip[0];
 		}
@@ -2782,22 +2770,10 @@ UINT16 __fastcall Opwolf68KReadWord(UINT32 a)
 
 void __fastcall Opwolf68KWriteWord(UINT32 a, UINT16 d)
 {
-	if (a >= 0x0ff000 && a <= 0x0ff7ff) {
-		OpwolfCChipDataWrite(Taito68KRom1, (a - 0x0ff000) >> 1, d);
-		return;
-	}
-	
+	CCHIP_WRITE(0x0f0000)
+	CCHIP_WRITE(0x0ff000)
+
 	switch (a) {
-		case 0x0ff802: {
-			OpwolfCChipStatusWrite();
-			return;
-		}
-		
-		case 0x0ffc00: {
-			OpwolfCChipBankWrite(d);
-			return;
-		}
-		
 		case 0x380000: {
 			PC090OJSpriteCtrl = (d & 0xe0) >> 5;
 			return;
@@ -4663,8 +4639,8 @@ static INT32 OpwolfInit()
 	UINT16 *Rom = (UINT16*)Taito68KRom1;
 	OpWolfGunXOffset = 0xec - (Rom[0x03ffb0 / 2] & 0xff);
 	OpWolfGunYOffset = 0x1c - (Rom[0x03ffae / 2] & 0xff);
-	INT32 Region = Rom[0x03fffe / 2] & 0xff;
-	OpwolfCChipInit(Region);
+
+	cchip_init();
 
 	// Reset the driver
 	TaitoResetFunction = OpwolfDoReset;
@@ -6229,7 +6205,7 @@ struct BurnDriver BurnDrvDariuse = {
 };
 
 struct BurnDriver BurnDrvOpwolf = {
-	"opwolf", NULL, NULL, NULL, "1987",
+	"opwolf", NULL, "cchip", NULL, "1987",
 	"Operation Wolf (World, set 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
@@ -6239,7 +6215,7 @@ struct BurnDriver BurnDrvOpwolf = {
 };
 
 struct BurnDriver BurnDrvOpwolfa = {
-	"opwolfa", "opwolf", NULL, NULL, "1987",
+	"opwolfa", "opwolf", "cchip", NULL, "1987",
 	"Operation Wolf (World, set 2)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
@@ -6249,7 +6225,7 @@ struct BurnDriver BurnDrvOpwolfa = {
 };
 
 struct BurnDriver BurnDrvOpwolfj = {
-	"opwolfj", "opwolf", NULL, NULL, "1987",
+	"opwolfj", "opwolf", "cchip", NULL, "1987",
 	"Operation Wolf (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
@@ -6259,7 +6235,7 @@ struct BurnDriver BurnDrvOpwolfj = {
 };
 
 struct BurnDriver BurnDrvOpwolfjsc = {
-	"opwolfjsc", "opwolf", NULL, NULL, "1987",
+	"opwolfjsc", "opwolf", "cchip", NULL, "1987",
 	"Operation Wolf (Japan, SC)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
@@ -6269,7 +6245,7 @@ struct BurnDriver BurnDrvOpwolfjsc = {
 };
 
 struct BurnDriver BurnDrvOpwolfu = {
-	"opwolfu", "opwolf", NULL, NULL, "1987",
+	"opwolfu", "opwolf", "cchip", NULL, "1987",
 	"Operation Wolf (US)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,

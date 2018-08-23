@@ -1,5 +1,3 @@
-extern INT32 TaitoIC_OpwolfCChipInUse;
-
 extern INT32 TaitoIC_PC080SNInUse;
 extern INT32 TaitoIC_PC090OJInUse;
 extern INT32 TaitoIC_TC0100SCNInUse;
@@ -23,17 +21,6 @@ void TaitoICScan(INT32 nAction);
 
 // Emulated C-Chip
 #include "cc.h"
-
-void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2);
-UINT16 OpwolfCChipStatusRead();
-UINT16 OpwolfCChipDataRead(UINT32 Offset);
-void OpwolfCChipStatusWrite();
-void OpwolfCChipBankWrite(UINT16 Data);
-void OpwolfCChipDataWrite(UINT8 *p68kRom, UINT32 Offset, UINT16 Data );
-void OpwolfCChipReset();
-void OpwolfCChipInit(INT32 Region);
-void OpwolfCChipExit();
-void OpwolfCChipScan(INT32 nAction);
 
 // PC080SN
 #define PC080SN_MAX_CHIPS 2

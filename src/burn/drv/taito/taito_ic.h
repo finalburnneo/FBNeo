@@ -20,7 +20,7 @@ void TaitoICExit();
 void TaitoICScan(INT32 nAction);
 
 // Emulated C-Chip
-#include "cc.h"
+#include "cchip.h"
 
 // PC080SN
 #define PC080SN_MAX_CHIPS 2

@@ -12,6 +12,7 @@
 #include <math.h>
 
 #include "burnint.h"
+#include "burn_sound.h"
 #include "tms5220.h"
 
 
@@ -133,7 +134,12 @@ static void set_interrupt_state(struct tms5220 *tms, INT32 state);
 
 static struct tms5220 *our_chip;
 static INT16 *soundbuf;
-static INT32 samples_from; // "re"sampler
+
+// for resampling
+static UINT32 nSampleSize;
+static INT32 nFractionalPosition;
+static INT32 nPosition;
+static INT32 our_freq = 0; // for tms5220_set_frequency()
 
 static void *tms5220_create(void)
 {
@@ -153,7 +159,7 @@ static void tms5220_destroy(void *chip)
 void tms5220_init()
 {
 	our_chip = (tms5220 *)tms5220_create();
-	soundbuf = (INT16*)malloc(0x800);
+	soundbuf = (INT16*)malloc(0x1000);
 }
 
 void tms5220_exit()
@@ -468,12 +474,12 @@ UINT8 tms5220_irq()
 
 ***********************************************************************************************/
 
-static INT32 our_freq = 0;
-
 void tms5220_set_frequency(UINT32 freq)
 {
 	our_freq = freq/80;
-	samples_from = (INT32)((double)((our_freq * 100) / nBurnFPS) + 0.5);
+	nSampleSize = (UINT32)our_freq * (1 << 16) / nBurnSoundRate;
+	nFractionalPosition = 0;
+	nPosition = 0;
 }
 
 
@@ -711,22 +717,44 @@ empty:
 
 void tms5220_update(INT16 *buffer, INT32 samples_len)
 {
-	INT32 samples = (samples_from * samples_len) / nBurnSoundLen;
+	INT32 nSamplesNeeded = ((((((our_freq * 1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10) + 1;
+	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition below
 
-	tms5220_process(our_chip, soundbuf, samples);
+	INT16 *mix = soundbuf + 5 + nPosition;
+	memset(mix, 0, nSamplesNeeded * sizeof(INT16));
 
-	INT16 *mix = soundbuf;
+	tms5220_process(our_chip, mix, nSamplesNeeded - nPosition);
 
-	for (INT32 j = 0; j < samples_len; j++)
-	{
-		INT32 k = (samples_from * j) / nBurnSoundLen;
+	INT16 *pBufL = soundbuf + 5;
 
-		INT32 s = mix[k];
-		buffer[0] = BURN_SND_CLIP(buffer[0] + s);
-		buffer[1] = BURN_SND_CLIP(buffer[1] + s);
-		buffer += 2;
+	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < (samples_len << 1); i += 2, nFractionalPosition += nSampleSize) {
+		INT32 nLeftSample[4] = {0, 0, 0, 0};
+		INT32 nTotalLeftSample; // it's mono!
+
+		nLeftSample[0] += (INT32)(pBufL[(nFractionalPosition >> 16) - 3]);
+		nLeftSample[1] += (INT32)(pBufL[(nFractionalPosition >> 16) - 2]);
+		nLeftSample[2] += (INT32)(pBufL[(nFractionalPosition >> 16) - 1]);
+		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition >> 16) - 0]);
+
+		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+
+		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample);
+
+		buffer[i + 0] = BURN_SND_CLIP(buffer[i + 0] + nTotalLeftSample);
+		buffer[i + 1] = BURN_SND_CLIP(buffer[i + 1] + nTotalLeftSample);
 	}
 
+	if (samples_len >= nBurnSoundLen) {
+		INT32 nExtraSamples = nSamplesNeeded - (nFractionalPosition >> 16);
+
+		for (INT32 i = -4; i < nExtraSamples; i++) {
+			pBufL[i] = pBufL[(nFractionalPosition >> 16) + i];
+		}
+
+		nFractionalPosition &= 0xFFFF;
+
+		nPosition = nExtraSamples;
+	}
 }
 
 

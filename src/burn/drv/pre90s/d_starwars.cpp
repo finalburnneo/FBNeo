@@ -1100,6 +1100,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(mbox_C);
 		SCAN_VAR(mbox_ACC);
 
+		SCAN_VAR(irqcnt);
+		SCAN_VAR(irqflip);
+
 		BurnGunScan();
 	}
 

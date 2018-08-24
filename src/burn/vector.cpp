@@ -24,11 +24,12 @@ static INT32 vector_offsetY     = 0;
 static float vector_gamma_corr  = 1.2;
 static float vector_intens      = 1.0;
 static INT32 vector_antialias   = 1;
-static INT32 vector_beam        = 0x00010000; // 16.16 beam width
+static INT32 vector_beam        = 0x0001865e; // 16.16 beam width
 
-#define CLAMP8(x) do { if (x > 0xff) x = 0xff; } while (0)
+#define CLAMP8(x) do { if (x > 0xff) x = 0xff; if (x < 0) x = 0; } while (0)
 
 static UINT8 gammaLUT[256];
+static UINT32 *cosineLUT;
 
 void vector_set_gamma(float gamma_corr)
 {
@@ -109,6 +110,24 @@ static inline INT32 divop(INT32 dividend, INT32 divisor)
 	return dividend;
 }
 
+static inline INT32 vec_mult(INT32 parm1, INT32 parm2) // stolen from mame, we need to re-write this.
+{
+	INT32 temp, result;
+
+	temp     = abs(parm1);
+	result   = (temp&0x0000ffff) * (parm2&0x0000ffff);
+	result >>= 16;
+	result  += (temp&0x0000ffff) * (parm2>>16       );
+	result  += (temp>>16       ) * (parm2&0x0000ffff);
+	result >>= 16;
+	result  += (temp>>16       ) * (parm2>>16       );
+
+	if( parm1 < 0 )
+		return(-result);
+	else
+		return( result);
+}
+
 static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT32 intensity)
 {
 	color = color * 256 + intensity;
@@ -145,6 +164,8 @@ static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT3
 		INT32 dy = abs(y1 - y0);
 		INT32 width = vector_beam;
 		INT32 sx, sy, aa, yy, xx;
+		INT32 der = 0xff - intensity;
+		der = ((double)der / 1.2);
 
 		if (dx >= dy) {
 			sx = x0 <= x1 ? 1 : -1;
@@ -153,17 +174,22 @@ static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT3
 				dy--;
 			x0 >>= 16;
 			xx = x1 >> 16;
+
+			width = vec_mult(vector_beam << 4, cosineLUT[abs(sy) >> 5]);
 			y0 -= width >> 1;
 
 			while (1) {
 				dx = width;
 				dy = y0 >> 16;
-				vector_draw_pixel(x0, dy++, (color & 0xff00) + gammaLUT[0xff - (0xff & (y0 >> 8))]);
+				aa = (0xff - (0xff & (y0 >> 8))) - der;
+				CLAMP8(aa);
+				vector_draw_pixel(x0, dy++, (color & 0xff00) + gammaLUT[aa]);
 				dx -= 0x10000 - (0xffff & y0);
-				aa = (dx >> 8) & 0xff;
+				aa = ((dx >> 8) & 0xff) - der;
 				dx >>= 16;
 				while (dx--)
 					vector_draw_pixel(x0, dy++, (color & 0xff00) + gammaLUT[color & 0xff]);
+				CLAMP8(aa);
 				vector_draw_pixel(x0, dy, (color & 0xff00) + gammaLUT[aa]);
 				if (x0 == xx) break;
 				x0 += sx;
@@ -176,17 +202,22 @@ static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT3
 				dx--;
 			y0 >>= 16;
 			yy = y1 >> 16;
+
+			width = vec_mult(vector_beam << 4, cosineLUT[abs(sx) >> 5]);
 			x0 -= width >> 1;
 
 			while (1) {
 				dy = width;
 				dx = x0 >> 16;
-				vector_draw_pixel(dx++, y0, (color & 0xff00) + gammaLUT[0xff - (0xff & (x0 >> 8))]);
+				aa = (0xff - (0xff & (x0 >> 8))) - der;
+				CLAMP8(aa);
+				vector_draw_pixel(dx++, y0, (color & 0xff00) + gammaLUT[aa]);
 				dy -= 0x10000 - (0xffff & x0);
-				aa = (dy >> 8) & 0xff;
+				aa = ((dy >> 8) & 0xff) - der;
 				dy >>= 16;
 				while (dy--)
 					vector_draw_pixel(dx++, y0, (color & 0xff00) + gammaLUT[color & 0xff]);
+				CLAMP8(aa);
 				vector_draw_pixel(dx, y0, (color & 0xff00) + gammaLUT[aa]);
 				if (y0 == yy) break;
 				y0 += sy;
@@ -257,6 +288,11 @@ void vector_init()
 	vector_set_offsets(0, 0);
 	vector_set_gamma(vector_gamma_corr);
 
+	cosineLUT = (UINT32*)BurnMalloc(2049 * sizeof(UINT32));
+	for (INT32 i = 0; i < 2049; i++) {
+		cosineLUT[i] = (INT32)((double)(1.0 / cos(atan((double)i / 2048.0))) * 0x10000000 + 0.5);
+	}
+
 	vector_reset();
 }
 
@@ -272,6 +308,8 @@ void vector_exit()
 
 	BurnFree (vector_table);
 	vector_ptr = NULL;
+
+	BurnFree (cosineLUT);
 }
 
 INT32 vector_scan(INT32 nAction)

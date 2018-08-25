@@ -258,6 +258,15 @@ void sp0250_exit()
 	BurnFree(mixer_buffer);
 }
 
+void sp0250_scan(INT32 nAction, INT32 *)
+{
+	ScanVar(sp, sizeof(sp0250), "sp0250 core");
+
+	if (nAction & ACB_WRITE) {
+		nCurrentPosition = 0;
+	}
+}
+
 void sp0250_reset()
 {
 	memset(sp, 0, sizeof(*sp));

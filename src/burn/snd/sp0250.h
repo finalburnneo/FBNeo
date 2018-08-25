@@ -6,3 +6,4 @@ void sp0250_exit();
 void sp0250_reset();
 void sp0250_tick(); // sp0250_tick() needs to be called "sp0250_frame" times per frame! (see sp0250.cpp sp0250_init() code for info.)
 void sp0250_write(UINT8 data);
+void sp0250_scan(INT32 nAction, INT32 *);

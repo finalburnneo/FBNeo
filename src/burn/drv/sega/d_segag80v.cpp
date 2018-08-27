@@ -21,6 +21,7 @@
 #include "samples.h"
 #include "ay8910.h"
 #include "sp0250.h"
+#include "usb_snd.h"
 #include "bitswap.h" // BITSWAP08
 #include "math.h" // ABS()
 #include "joyprocess.h"
@@ -659,7 +660,7 @@ static void __fastcall segag80v_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xf000) == 0xd000) {
-		DrvUSBRAM[decrypt_offset(address & 0xfff)] = data;
+		usb_sound_prgram_write(decrypt_offset(address & 0xfff), data);
 		return;
 	}
 
@@ -667,6 +668,15 @@ static void __fastcall segag80v_write(UINT16 address, UINT8 data)
 		DrvVectorRAM[decrypt_offset(address & 0xfff)] = data;
 		return;
 	}
+}
+
+static UINT8 __fastcall segag80v_read(UINT16 address)
+{
+	if ((address & 0xf000) == 0xd000) {
+		return usb_sound_prgram_read(address);
+	}
+	
+	return 0;
 }
 
 static void __fastcall segag80v_write_port(UINT16 port, UINT8 data)
@@ -740,8 +750,10 @@ static void sega_speech_data_write(UINT8 data)
 	UINT8 old = i8035_latch;
 	i8035_latch = data;
 
+	I8039Open(0);
 	I8039SetIrqState((data & 0x80) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
-
+	I8039Close();
+	
 	if ((old & 0x80) == 0 && (data & 0x80))
 		i8035_t0 = 1;
 }
@@ -799,8 +811,12 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	I8039Open(0);
 	I8039Reset();
+	I8039Close();
 
+	usb_sound_reset();
+	
 	vector_reset();
 
 	BurnSampleReset();
@@ -901,25 +917,30 @@ static INT32 DrvInit()
 	{
 		if (DrvLoad()) return 1;
 	}
-
+	
 	ZetInit(0);
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM,			0x0000, 0xbfff, MAP_ROM);
 	ZetMapMemory(DrvZ80RAM,			0xc800, 0xcfff, MAP_ROM);
-	ZetMapMemory(DrvUSBRAM,			0xd000, 0xdfff, MAP_ROM); // optional
+//	ZetMapMemory(DrvUSBRAM,			0xd000, 0xdfff, MAP_ROM); // optional
 	ZetMapMemory(DrvVectorRAM,		0xe000, 0xefff, MAP_ROM);
+	ZetSetReadHandler(segag80v_read);
 	ZetSetWriteHandler(segag80v_write);
 	ZetSetOutHandler(segag80v_write_port);
 	ZetSetInHandler(segag80v_read_port);
 	ZetClose();
 
 	// speech board games
-	I8035Init(NULL);
+	I8035Init(0);
+	I8039Open(0);
 	I8039SetProgramReadHandler(sega_speech_read);
 	I8039SetCPUOpReadHandler(sega_speech_read);
 	I8039SetCPUOpReadArgHandler(sega_speech_read);
 	I8039SetIOReadHandler(sega_speech_read_port);
 	I8039SetIOWriteHandler(sega_speech_write_port);
+	I8039Close();
+	
+	usb_sound_init(I8039TotalCycles, 400000);
 
 	// zector
 	AY8910Init(0, 1933560, 0);
@@ -1200,8 +1221,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 232; // for speech chip
-	INT32 nCyclesTotal[2] = { 4000000 / 40, 208000 / 40 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[3] = { 4000000 / 40, 208000 / 40, 400000 / 40 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -1209,23 +1230,32 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
+		I8039Open(0);
 		if (has_speech) {
 			nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
 			sp0250_tick();
 		}
+		I8039Close();
+		
+		nCyclesDone[2] += usb_sound_run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+		if ((i % 5) != 4) usb_timer_t1_clock(); // not 100% correct for timing. good enough?
 	}
-
-	ZetClose();
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+		I8039Open(0);
 		if (has_speech) {
 			sp0250_update(pBurnSoundOut, nBurnSoundLen);
 		}
+		I8039Close();
+		segausb_update(pBurnSoundOut, nBurnSoundLen);
+
 	}
 
+	ZetClose();
+	
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -2010,7 +2040,7 @@ static void tacscan_port_write(UINT8 port, UINT8 data)
 	switch (port)
 	{
 		case 0x3f:
-			// usb_sound_device data_w
+			usb_sound_data_write(data);
 		return;
 	}
 }
@@ -2020,7 +2050,7 @@ static UINT8 tacscan_port_read(UINT8 port)
 	switch (port)
 	{
 		case 0x3f:
-			return 0; // usb_sound_device status_r
+			return usb_sound_status_read();
 	}
 
 	return 0;
@@ -2103,7 +2133,7 @@ static void startrek_port_write(UINT8 port, UINT8 data)
 		return;
 
 		case 0x3f:
-			// usb_sound_device data_w
+			usb_sound_data_write(data);
 		return;
 	}
 }
@@ -2113,7 +2143,7 @@ static UINT8 startrek_port_read(UINT8 port)
 	switch (port)
 	{
 		case 0x3f:
-			return 0; // usb_sound_device status_r
+			return usb_sound_status_read();
 	}
 
 	return 0;

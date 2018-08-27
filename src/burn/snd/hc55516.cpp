@@ -349,9 +349,9 @@ void hc55516_update(INT16 *inputs, INT32 sample_len)
 		return;
 	}
 
-	UpdateStream(nBurnSoundLen);
-
 	INT32 samples_from = (INT32)((double)((SAMPLE_RATE * 100) / nBurnFPS) + 0.5);
+
+	UpdateStream(samples_from);
 
 	for (INT32 j = 0; j < sample_len; j++)
 	{

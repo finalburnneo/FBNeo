@@ -33,6 +33,7 @@
  *   - Corrected Positive signal edge sensing (used on the T1 input)        *
  ****************************************************************************/
 
+#define I8039_NUM		2
 
 #include "burnint.h"
 #include "i8039.h"
@@ -109,21 +110,73 @@ typedef struct
 	double total_cycles;
 } I8039_Regs;
 
+typedef struct
+{
+	i8039ReadIoHandler I8039IORead;
+	i8039WriteIoHandler I8039IOWrite;
+	i8039ReadProgHandler I8039ProgramRead;
+	i8039WriteProgHandler I8039ProgramWrite;
+	i8039ReadOpHandler I8039CPUReadOp;
+	i8039ReadOpArgHandler I8039CPUReadOpArg;
+} I8039_Handlers;
+
 static I8039_Regs R;
 static int	   i8039_ICount;
 static int	   i8039_ICount_cycles;
 
 static UINT8 *RAM;
 
+static I8039_Regs RegStore[I8039_NUM];
+static I8039_Handlers Handlers[I8039_NUM];
+static I8039_Handlers *HPtr;
+static UINT8 *RAMStore[I8039_NUM] = { NULL, NULL };
+static int ICountStore[I8039_NUM];
+static int ICountCyclesStore[I8039_NUM];
+static int nI8039Active = -1;
+
+void I8039Open(INT32 nCpu)
+{
+	if (nCpu >= I8039_NUM) {
+		bprintf (0, _T("I8039Open called with nCpu (%d) greater than maximum (%d)!\n"), nCpu, I8039_NUM);
+		return;
+	}
+
+	if (nI8039Active == nCpu) {
+		bprintf (0, _T("I8039Open called with already active cpu (%d)!\n"), nCpu);
+		return;
+	}
+
+	nI8039Active = nCpu;	
+	RAM = RAMStore[nI8039Active];
+	i8039_ICount = ICountStore[nI8039Active];
+	i8039_ICount_cycles = ICountCyclesStore[nI8039Active];
+	memcpy (&R, &RegStore[nI8039Active], sizeof(I8039_Regs));
+	HPtr = &Handlers[nI8039Active];
+}
+
+void I8039Close()
+{	
+	if (nI8039Active == -1) {
+		bprintf (0, _T("I8039Close called no active cpu!\n"));
+		return;
+	}
+	
+	RAM = NULL;
+	ICountStore[nI8039Active] = i8039_ICount;
+	ICountCyclesStore[nI8039Active] = i8039_ICount_cycles;
+	memcpy (&RegStore[nI8039Active], &R, sizeof(I8039_Regs));
+	HPtr = NULL;
+	nI8039Active = -1;
+}
+
+INT32 I8039GetActive()
+{
+	return nI8039Active;
+}
+
 #define I8039_INLINE static inline
 #define change_pc(newpc)	R.PC.w.l = (newpc)
 
-i8039ReadIoHandler I8039IORead;
-i8039WriteIoHandler I8039IOWrite;
-i8039ReadProgHandler I8039ProgramRead;
-i8039WriteProgHandler I8039ProgramWrite;
-i8039ReadOpHandler I8039CPUReadOp;
-i8039ReadOpArgHandler I8039CPUReadOpArg;
 
 unsigned char __fastcall I8039DummyReadIo(unsigned int)
 {
@@ -681,148 +734,160 @@ static int Timer_IRQ(void)
 	return extra_cycles;
 }
 
-void I8039Init(int (*irqcallback)(int))
+static void i8039_common_init(INT32 nCpu, INT32 rammask, INT32 romsize)
 {
 	DebugCPU_I8039Initted = 1;
-	
-	RAM = (UINT8*)malloc(128 * sizeof(UINT8));
-	
-	//R.irq_callback = irqcallback;
 
-	R.cpu_feature = 0;
-	R.ram_mask = 0x7F;
-	R.int_rom_size = 0x800;
+	RAMStore[nCpu] = (UINT8*)BurnMalloc(128 * sizeof(UINT8));
+	memset (RAMStore[nCpu], 0, 128);
+
+	I8039_Regs *ptr = &RegStore[nCpu];
+	memset (ptr, 0, sizeof(I8039_Regs));
+	
+	HPtr = &Handlers[nCpu];
+	memset (HPtr, 0, sizeof(I8039_Handlers));
+	
+	ptr->cpu_feature = 0;
+	ptr->ram_mask = rammask;
+	ptr->int_rom_size = romsize;
 	/* not changed on reset*/
-	memset(RAM, 0x00, 128);
-	R.timer = 0;
+	ptr->timer = 0;
 	
-	I8039IORead = I8039DummyReadIo;
-	I8039IOWrite = I8039DummyWriteIo;
-	I8039ProgramRead = I8039DummyReadProg;
-	I8039ProgramWrite = I8039DummyWriteProg;
-	I8039CPUReadOp = I8039DummyReadOp;
-	I8039CPUReadOpArg = I8039DummyReadOpArg;
+	HPtr->I8039IORead = I8039DummyReadIo;
+	HPtr->I8039IOWrite = I8039DummyWriteIo;
+	HPtr->I8039ProgramRead = I8039DummyReadProg;
+	HPtr->I8039ProgramWrite = I8039DummyWriteProg;
+	HPtr->I8039CPUReadOp = I8039DummyReadOp;
+	HPtr->I8039CPUReadOpArg = I8039DummyReadOpArg;
 }
 
-void I8035Init(int (*irqcallback)(int))
+void I8039Init(INT32 nCpu)
 {
-	I8039Init(irqcallback);
-
-	R.ram_mask = 0x3F;
-	R.int_rom_size = 0x400;
+	i8039_common_init(nCpu, 0x7F, 0x800);
 }
 
-void N7751Init(int (*irqcallback)(int))
+void I8035Init(INT32 nCpu)
 {
-	I8039Init(irqcallback);
+	i8039_common_init(nCpu, 0x3F, 0x400);
+}
+
+void N7751Init(INT32 nCpu)
+{
+	i8039_common_init(nCpu, 0x7F, 0x800);
 }
 
 void I8039SetIOReadHandler(i8039ReadIoHandler handler)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetIOReadHandler called without init\n"));
+	
+	if (nI8039Active == -1) {
+		bprintf (0, _T("I8039SetIOReadHandler called with no active cpu!\n"));
+		return;
+	}
+	
+	if (nI8039Active >= I8039_NUM) {
+		bprintf (0, _T("I8039SetIOReadHandler called with invalid CPU number (%d), MAX (%d)!\n"), nI8039Active, I8039_NUM);
+		return;
+	}
 #endif
 
-	I8039IORead = handler;
+	HPtr->I8039IORead = handler;
 }
 
 void I8039SetIOWriteHandler(i8039WriteIoHandler handler)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetIOWriteHandler called without init\n"));
+	
+	if (nI8039Active == -1) {
+		bprintf (0, _T("I8039SetIOWriteHandler called with no active cpu!\n"));
+		return;
+	}
+	
+	if (nI8039Active >= I8039_NUM) {
+		bprintf (0, _T("I8039SetIOWriteHandler called with invalid CPU number (%d), MAX (%d)!\n"), nI8039Active, I8039_NUM);
+		return;
+	}
 #endif
 
-	I8039IOWrite = handler;
+	HPtr->I8039IOWrite = handler;
 }
 
 void I8039SetProgramReadHandler(i8039ReadProgHandler handler)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetProgramReadHandler called without init\n"));
+	
+	if (nI8039Active == -1) {
+		bprintf (0, _T("I8039SetProgramReadHandler called with no active cpu!\n"));
+		return;
+	}
+	
+	if (nI8039Active >= I8039_NUM) {
+		bprintf (0, _T("I8039SetProgramReadHandler called with invalid CPU number (%d), MAX (%d)!\n"), nI8039Active, I8039_NUM);
+		return;
+	}
 #endif
 
-	I8039ProgramRead = handler;
+	HPtr->I8039ProgramRead = handler;
 }
 
 void I8039SetProgramWriteHandler(i8039WriteProgHandler handler)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetProgramWriteHandler called without init\n"));
+	
+	if (nI8039Active == -1) {
+		bprintf (0, _T("I8039SetProgramWriteHandler called with no active cpu!\n"));
+		return;
+	}
+	
+	if (nI8039Active >= I8039_NUM) {
+		bprintf (0, _T("I8039SetProgramWriteHandler called with invalid CPU number (%d), MAX (%d)!\n"), nI8039Active, I8039_NUM);
+		return;
+	}
 #endif
 
-	I8039ProgramWrite = handler;
+	HPtr->I8039ProgramWrite = handler;
 }
 
 void I8039SetCPUOpReadHandler(i8039ReadOpHandler handler)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetCPUOpReadHandler called without init\n"));
+	
+	if (nI8039Active == -1) {
+		bprintf (0, _T("I8039SetCPUOpReadHandler called with no active cpu!\n"));
+		return;
+	}
+	
+	if (nI8039Active >= I8039_NUM) {
+		bprintf (0, _T("I8039SetCPUOpReadHandler called with invalid CPU number (%d), MAX (%d)!\n"), nI8039Active, I8039_NUM);
+		return;
+	}
 #endif
 
-	I8039CPUReadOp = handler;
+	HPtr->I8039CPUReadOp = handler;
 }
 
 void I8039SetCPUOpReadArgHandler(i8039ReadOpArgHandler handler)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetCPUOpArgReadHandler called without init\n"));
+	
+	if (nI8039Active == -1) {
+		bprintf (0, _T("I8039SetCPUOpReadArgHandler called with no active cpu!\n"));
+		return;
+	}
+	
+	if (nI8039Active >= I8039_NUM) {
+		bprintf (0, _T("I8039SetCPUOpReadArgHandler called with invalid CPU number (%d), MAX (%d)!\n"), nI8039Active, I8039_NUM);
+		return;
+	}
 #endif
 
-	I8039CPUReadOpArg = handler;
-}
-
-void N7751SetIOReadHandler(i8039ReadIoHandler handler)
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetIOReadHandler called without init\n"));
-#endif
-
-	I8039IORead = handler;
-}
-
-void N7751SetIOWriteHandler(i8039WriteIoHandler handler)
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetIOWriteHandler called without init\n"));
-#endif
-
-	I8039IOWrite = handler;
-}
-
-void N7751SetProgramReadHandler(i8039ReadProgHandler handler)
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetProgramReadHandler called without init\n"));
-#endif
-
-	I8039ProgramRead = handler;
-}
-
-void N7751SetProgramWriteHandler(i8039WriteProgHandler handler)
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetProgramWriteHandler called without init\n"));
-#endif
-
-	I8039ProgramWrite = handler;
-}
-
-void N7751SetCPUOpReadHandler(i8039ReadOpHandler handler)
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetCPUOpReadHandler called without init\n"));
-#endif
-
-	I8039CPUReadOp = handler;
-}
-
-void N7751SetCPUOpReadArgHandler(i8039ReadOpArgHandler handler)
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetCPUOpReadArgHandler called without init\n"));
-#endif
-
-	I8039CPUReadOpArg = handler;
+	HPtr->I8039CPUReadOpArg = handler;
 }
 
 void I8039Exit()
@@ -831,19 +896,17 @@ void I8039Exit()
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Exit called without init\n"));
 #endif
 
-	if (RAM) {
-		free(RAM);
-		RAM = NULL;
+	for (INT32 i = 0; i < I8039_NUM; i++)
+	{
+		if (RAMStore[i]) {
+			BurnFree (RAMStore[i]);
+			RAMStore[i] = NULL;
+		}
 	}
 	
 	i8039_ICount = 0;
 	
 	DebugCPU_I8039Initted = 0;
-}
-
-void N7751Exit()
-{
-	I8039Exit();
 }
 
 int I8039Run(int cycles)
@@ -922,12 +985,17 @@ INT32 I8039TotalCycles()
 
 void I8039NewFrame()
 {
-	R.total_cycles = 0;
-}
+	i8039_ICount_cycles = 0;
+	i8039_ICount = 0;
 
-int N7751Run(int cycles)
-{
-	return I8039Run(cycles);
+	for (INT32 i = 0; i < I8039_NUM; i++)
+	{
+		I8039_Regs *ptr = &RegStore[i];
+		
+		ptr->total_cycles = 0;
+		ICountStore[i] = 0;
+		ICountCyclesStore[i] = 0;
+	}
 }
 
 void I8039Reset (void)
@@ -960,11 +1028,6 @@ void I8039Reset (void)
 	R.masterClock = 0;
 }
 
-void N7751Reset()
-{
-	I8039Reset();
-}
-
 void I8039SetIrqState(int state)
 {
 #if defined FBA_DEBUG
@@ -978,11 +1041,6 @@ void I8039SetIrqState(int state)
 	else {
 		R.irq_state = I8039_NO_INT;
 	}
-}
-
-void N7751SetIrqState(int state)
-{
-	I8039SetIrqState(state);
 }
 
 int I8039Scan(int nAction, int *pnMin)
@@ -999,25 +1057,27 @@ int I8039Scan(int nAction, int *pnMin)
 	}
 	
 	if (nAction & ACB_DRIVER_DATA) {
-		ScanVar(&R, sizeof(I8039_Regs), "I8039Regs");
+
+		for (INT32 i = 0; i < I8039_NUM; i++)
+		{	
+			I8039_Regs *ptr = &RegStore[i];
+			ScanVar(&ptr, sizeof(I8039_Regs), "I8039Regs");
 		
-		sprintf(szName, "I8039RAM");
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = RAM;
-		ba.nLen	  = 128;
-		ba.szName = szName;	
-		BurnAcb(&ba);
+			sprintf(szName, "I8039RAM %d", i);
+			memset(&ba, 0, sizeof(ba));
+			ba.Data	  = RAMStore[i];
+			ba.nLen	  = 128;
+			ba.szName = szName;	
+			BurnAcb(&ba);
 		
-		SCAN_VAR(i8039_ICount);
+			SCAN_VAR(ICountStore[i]);
+			SCAN_VAR(ICountCyclesStore[i]);
+		}
 	}
 	
 	return 0;
 }
 
-int N7751Scan(int nAction, int *pnMin)
-{
-	return I8039Scan(nAction, pnMin);
-}
 
 #if 0
 

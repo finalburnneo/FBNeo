@@ -388,9 +388,10 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	ZetReset();
 	ZetClose();
 
+	I8039Open(0);
 	I8039Reset();
-
 	DACReset();
+	I8039Close();
 
 	AY8910Reset(0);
 
@@ -488,12 +489,14 @@ static INT32 DrvInit()
 	ZetSetReadHandler(junofrst_sound_read);
 	ZetClose();
 
-	I8039Init(NULL);
+	I8039Init(0);
+	I8039Open(0);
 	I8039SetProgramReadHandler(junofrst_i8039_read);
 	I8039SetCPUOpReadHandler(junofrst_i8039_read);
 	I8039SetCPUOpReadArgHandler(junofrst_i8039_read);
 	I8039SetIOReadHandler(junofrst_i8039_read_port);
 	I8039SetIOWriteHandler(junofrst_i8039_write_port);
+	I8039Close();
 
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
@@ -616,6 +619,7 @@ static INT32 DrvFrame()
 
 	M6809Open(0);
 	ZetOpen(0);
+	I8039Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -656,6 +660,7 @@ static INT32 DrvFrame()
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
+	I8039Close();
 	M6809Close();
 	ZetClose();
 

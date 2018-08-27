@@ -3344,8 +3344,8 @@ static void take_interrupt(void)
 	IFF1 = IFF2 = 0;
 
 	/* Daisy chain mode? If so, call the requesting device */
-//	if (Z80.daisy)
-//		irq_vector = z80daisy_call_ack_device(Z80.daisy);
+	if (Z80.daisy)
+		irq_vector = z80daisy_call_ack_device(Z80.daisy);
 
 	/* else call back the cpu interface to retrieve the vector */
 //	else
@@ -3528,7 +3528,7 @@ void Z80Reset()
 	//struct z80_irq_daisy_chain *daisy;
 	//int (*irq_callback)(int irqline);
 
-	memset(&Z80, 0, sizeof(Z80));
+	memset(&Z80, 0, STRUCT_SIZE_HELPER(Z80_Regs, hold_irq)); // don't clear the callback's
 	Z80.hold_irq = 0;
 
 	PC = 0x0000;
@@ -3639,8 +3639,8 @@ void Z80SetIrqLine(int irqline, int state)
 	{
 		/* update the IRQ state via the daisy chain */
 		Z80.irq_state = state;
-//		if (Z80.daisy)
-//			Z80.irq_state = z80daisy_update_irq_state(Z80.daisy);
+		if (Z80.daisy)
+			Z80.irq_state = z80daisy_update_irq_state(Z80.daisy);
 
 		/* the main execute loop will take the interrupt */
 	}
@@ -3743,7 +3743,7 @@ int ActiveZ80GetSP()
 
 int ActiveZ80GetPrevPC()
 {
-	return Z80.prvpc.d;
+	return Z80.prvpc.w.l;
 }
 
 void ActiveZ80SetIRQHold()

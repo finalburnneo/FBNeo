@@ -391,7 +391,9 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	AY8910Reset(0);
 	ZetClose();
 
+	I8039Open(0);
 	I8039Reset();
+	I8039Close();
 
 	DACReset();
 
@@ -549,12 +551,14 @@ static INT32 DrvInit()
 	ZetSetReadHandler(pandoras_sound_read);
 	ZetClose();
 
-	I8039Init(NULL);
+	I8039Init(0);
+	I8039Open(0);
 	I8039SetProgramReadHandler(pandoras_i8039_read);
 	I8039SetCPUOpReadHandler(pandoras_i8039_read);
 	I8039SetCPUOpReadArgHandler(pandoras_i8039_read);
 	I8039SetIOReadHandler(pandoras_i8039_read_port);
 	I8039SetIOWriteHandler(pandoras_i8039_write_port);
+	I8039Close();
 
 	AY8910Init(0, 1789772, 0);
 	AY8910SetPorts(0, &AY8910_0_port_A_Read, &AY8910_0_port_B_Read, NULL, NULL);
@@ -690,6 +694,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	ZetOpen(0);
+	I8039Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -729,6 +734,7 @@ static INT32 DrvFrame()
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
+	I8039Close();
 	ZetClose();
 
 	if (pBurnDraw) {

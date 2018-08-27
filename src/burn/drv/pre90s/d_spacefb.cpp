@@ -227,8 +227,10 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	I8039Open(0);
 	I8039Reset();
 	DACReset();
+	I8039Close();
 
 	BurnSampleReset();
 
@@ -320,12 +322,14 @@ static INT32 DrvInit()
 	ZetSetInHandler(spacefb_main_read_port);
 	ZetClose();
 	
-	I8035Init(NULL);
+	I8035Init(0);
+	I8039Open(0);
 	I8039SetProgramReadHandler(spacefb_i8035_read);
 	I8039SetCPUOpReadHandler(spacefb_i8035_read);
 	I8039SetCPUOpReadArgHandler(spacefb_i8035_read);
 	I8039SetIOReadHandler(spacefb_i8035_read_port);
 	I8039SetIOWriteHandler(spacefb_i8035_write_port);
+	I8039Close();
 
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(0.25, BURN_SND_ROUTE_BOTH);
@@ -374,15 +378,11 @@ static void get_starfield_pens()
 		UINT8 ra = (((i >> 4) & 0x01) || background_red) && !disable_star_field;
 		UINT8 rb =  ((i >> 5) & 0x01) && color_contrast_r && !disable_star_field;
 
-		//UINT32 r = ra * 1000 + rb * 470 + 0 * 220;
-		//UINT32 g = ga * 1000 + gb * 470 + 0 * 220;
-		//UINT32 b = ba * 470 + bb * 220;
 		UINT8 r = combine_3_weights(color_weights_rg, 0, rb, ra);
 		UINT8 g = combine_3_weights(color_weights_rg, 0, gb, ga);
 		UINT8 b = combine_2_weights(color_weights_b,     bb, ba);
 
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
-		//DrvPalette[i] = BurnHighCol((r * 255) / 1690, (g * 255) / 1690, (b * 255) / 690, 0);
 	}
 }
 
@@ -405,9 +405,6 @@ static void get_sprite_pens()
 		UINT8 b1 = (data >> 6) & 0x01;
 		UINT8 b2 = (data >> 7) & 0x01;
 
-		//UINT32 r = r2 * 1000 + r1 * 470 + r0 * 220;
-		//UINT32 g = g2 * 1000 + g1 * 470 + g0 * 220;
-		//UINT32 b = b2 * 470 + b1 * 220;
 	    UINT8 r = combine_3_weights(color_weights_rg, r0, r1, r2);
 		UINT8 g = combine_3_weights(color_weights_rg, g0, g1, g2);
 		UINT8 b = combine_2_weights(color_weights_b,      b1, b2);
@@ -422,7 +419,6 @@ static void get_sprite_pens()
 		}
 
 		DrvPalette[i + 0x40] = BurnHighCol(r, g, b, 0);
-		//DrvPalette[i + 0x40] = BurnHighCol((r * 255) / 1690, (g * 255) / 1690, (b * 255) / 690, 0);
 	}
 }
 
@@ -635,6 +631,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	ZetOpen(0);
+	I8039Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -661,6 +658,7 @@ static INT32 DrvFrame()
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
+	I8039Close();
 	ZetClose();
 
 	return 0;

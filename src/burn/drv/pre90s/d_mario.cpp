@@ -377,8 +377,10 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	I8039Open(0);
 	I8039Reset();
 	DACReset();
+	I8039Close();
 
 	i8039_p[1] = 0xf0; // mario sound, start active low top bits
 
@@ -590,12 +592,14 @@ static INT32 DrvInit()
 	ZetSetInHandler(mario_main_read_port);
 	ZetClose();
 
-	I8039Init(NULL);
+	I8039Init(0);
+	I8039Open(0);
 	I8039SetProgramReadHandler(mario_i8039_read);
 	I8039SetCPUOpReadHandler(mario_i8039_read);
 	I8039SetCPUOpReadArgHandler(mario_i8039_read);
 	I8039SetIOReadHandler(mario_i8039_read_port);
 	I8039SetIOWriteHandler(mario_i8039_write_port);
+	I8039Close();
 
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.65, BURN_SND_ROUTE_BOTH);
@@ -617,7 +621,6 @@ static INT32 DrvInit()
 		AY8910SetPorts(0, &masao_ay8910_read_port_A, NULL, NULL, NULL);
 		AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	}
-
 
 	GenericTilesInit();
 
@@ -759,6 +762,8 @@ static INT32 DrvFrame()
 	I8039NewFrame();
 
 	ZetOpen(0);
+	I8039Open(0);
+	
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
@@ -782,6 +787,8 @@ static INT32 DrvFrame()
 		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	I8039Close();
 	ZetClose();
 
 	if (pBurnDraw) {

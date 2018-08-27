@@ -491,7 +491,9 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	I8039Open(0);
 	I8039Reset();
+	I8039Close();
 
 	AY8910Reset(0);
 	AY8910Reset(1);
@@ -548,7 +550,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x010000;
 	DrvGfxROM2		= Next; Next += 0x020000;
 
-	DrvSampleROM		= Next; Next += 0x010000;
+	DrvSampleROM	= Next; Next += 0x010000;
 
 	DrvSndROM		= Next; Next += 0x002000;
 
@@ -567,10 +569,10 @@ static INT32 MemIndex()
 	DrvScrRAM		= Next; Next += 0x000100;
 
 	soundlatch		= Next; Next += 0x000001;
-	interrupt_enable	= Next; Next += 0x000001;
+	interrupt_enable= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
-	palette_bank		= Next; Next += 0x000001;
-	sound_status		= Next; Next += 0x000001;
+	palette_bank	= Next; Next += 0x000001;
+	sound_status	= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 
@@ -594,12 +596,14 @@ static INT32 DrvInit(void (*pMapMainCPU)(), INT32 (*pRomLoadCallback)(), INT32 s
 
 	pMapMainCPU();
 
-	I8039Init(NULL);
+	I8039Init(0);
+	I8039Open(0);
 	I8039SetProgramReadHandler(m63_sound_read);
 	I8039SetCPUOpReadHandler(m63_sound_read);
 	I8039SetCPUOpReadArgHandler(m63_sound_read);
 	I8039SetIOReadHandler(m63_sound_read_port);
 	I8039SetIOWriteHandler(m63_sound_write_port);
+	I8039Close();
 
 	AY8910Init(0, 1500000, 0);
 	AY8910Init(1, 1500000, 1);
@@ -862,6 +866,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 100;
 
 	ZetOpen(0);
+	I8039Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -877,13 +882,13 @@ static INT32 DrvFrame()
 
 	if (*interrupt_enable) ZetNmi();
 
-	ZetClose();
-
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-
 		sample_render(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	I8039Close();
+	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -892,7 +897,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -900,7 +905,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE) {		
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

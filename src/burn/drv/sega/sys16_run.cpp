@@ -298,10 +298,12 @@ static INT32 System16DoReset()
 	}
 	
 	if (System167751ProgSize) {
+		N7751Open(0);
 		N7751Reset();
 		DACReset();
 		N7751Command = 0;
 		N7751RomAddress = 0;
+		N7751Close();
 	}
 	
 	if (System16UPD7759DataSize) {
@@ -1947,13 +1949,14 @@ INT32 System16Init()
 		BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		
 		if (System167751ProgSize) {
-			N7751Init(NULL);
-		
+			N7751Init(0);
+			N7751Open(0);
 			N7751SetIOReadHandler(N7751ReadIo);
 			N7751SetIOWriteHandler(N7751WriteIo);
 			N7751SetProgramReadHandler(N7751Read);
 			N7751SetCPUOpReadHandler(N7751Read);
 			N7751SetCPUOpReadArgHandler(N7751Read);
+			N7751Close();
 			
 			YM2151SetPortWriteHandler(0, &System16N7751ControlWrite);
 			BurnYM2151SetAllRoutes(0.43, BURN_SND_ROUTE_BOTH);
@@ -2757,10 +2760,12 @@ INT32 System16AFrame()
 		
 		if (System167751ProgSize) {
 			nCurrentCPU = 2;
+			N7751Open(0);
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 			nCyclesSegment = N7751Run(nCyclesSegment);
 			nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
+			N7751Close();
 		}
 		
 		if (System16I8751RomNum) {

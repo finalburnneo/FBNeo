@@ -282,8 +282,10 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	M6809Reset();
 	M6809Close();
 
+	I8039Open(0);
 	I8039Reset();
 	DACReset();
+	I8039Close();
 
 	scroll = 0;
 	nmi_enable = 0;
@@ -457,12 +459,14 @@ static INT32 DrvInit()
 	M6809SetReadHandler(finalizr_main_read);
 	M6809Close();
 
-	I8039Init(NULL);
+	I8039Init(0);
+	I8039Open(0);
 	I8039SetProgramReadHandler(finalizr_sound_read);
 	I8039SetCPUOpReadHandler(finalizr_sound_read);
 	I8039SetCPUOpReadArgHandler(finalizr_sound_read);
 	I8039SetIOReadHandler(finalizr_sound_read_port);
 	I8039SetIOWriteHandler(finalizr_sound_write_port);
+	I8039Close();
 
 	SN76489AInit(0, 1536000, 0);
 	SN76496SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
@@ -721,6 +725,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6809Open(0);
+	I8039Open(0);
 
 	vblank = 0;
 
@@ -748,14 +753,15 @@ static INT32 DrvFrame()
 		}
 	}
 
-	M6809Close();
-
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		SN76496Update(0, pSoundBuf, nSegmentLength);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	I8039Close();
+	M6809Close();
 
 	if (pBurnDraw) {
 		DrvDraw();

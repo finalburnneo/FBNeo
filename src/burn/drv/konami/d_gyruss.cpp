@@ -618,7 +618,9 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	I8039Open(1);
 	I8039Reset();
+	I8039Close();
 
 	DACReset();
 
@@ -700,12 +702,14 @@ static INT32 DrvInit()
 	ZetSetInHandler(gyruss_sound0_in);
 	ZetClose();
 
-	I8039Init(NULL);
+	I8039Init(1);
+	I8039Open(1);
 	I8039SetProgramReadHandler(gyruss_i8039_read);
 	I8039SetCPUOpReadHandler(gyruss_i8039_read);
 	I8039SetCPUOpReadArgHandler(gyruss_i8039_read);
 	I8039SetIOReadHandler(gyruss_i8039_read_port);
 	I8039SetIOWriteHandler(gyruss_i8039_write_port);
+	I8039Close();
 
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
@@ -922,6 +926,8 @@ static INT32 DrvFrame()
 	if (pBurnDraw) {
 		DrvDraw();
 	}
+	
+	I8039Open(1);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1001,6 +1007,8 @@ static INT32 DrvFrame()
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
+	I8039Close();
+	
 	if (pBurnDraw) {
 		if (nBurnLayer & 4) draw_background(1);
 		BurnTransferCopy(DrvPalette);

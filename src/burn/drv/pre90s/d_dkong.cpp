@@ -1194,7 +1194,9 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	I8039Open(0);
 	I8039Reset();
+	I8039Close();
 	memset(i8039_p, 0xff, 4);
 	memset(i8039_t, 0x01, 4);
 	dkongjr_walk = 0;
@@ -1436,12 +1438,14 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), void (*pPaletteUpdate)(), UINT
 	ZetSetReadHandler(dkong_main_read);
 	ZetClose();
 
-	I8039Init(NULL);
+	I8039Init(0);
+	I8039Open(0);
 	I8039SetIOReadHandler(i8039_sound_read_port);
 	I8039SetIOWriteHandler(i8039_sound_write_port);
 	I8039SetProgramReadHandler(i8039_sound_read);
 	I8039SetCPUOpReadHandler(i8039_sound_read);
 	I8039SetCPUOpReadArgHandler(i8039_sound_read);
+	I8039Close();
 
 	DACInit(0, 0, 0, DkongDACSync);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
@@ -1635,7 +1639,9 @@ static INT32 s2650DkongDoReset()
 	s2650Reset();
 	s2650Close();
 
+	I8039Open(0);
 	I8039Reset();
+	I8039Close();
 
 	BurnSampleReset();
 	DACReset();
@@ -1710,12 +1716,14 @@ static INT32 s2650DkongInit(INT32 (*pRomLoadCallback)())
 	s2650SetInHandler(s2650_main_read_port);
 	s2650Close();
 
-	I8039Init(NULL);
+	I8039Init(0);
+	I8039Open(0);
 	I8039SetIOReadHandler(i8039_sound_read_port);
 	I8039SetIOWriteHandler(i8039_sound_write_port);
 	I8039SetProgramReadHandler(i8039_sound_read);
 	I8039SetCPUOpReadHandler(i8039_sound_read);
 	I8039SetCPUOpReadArgHandler(i8039_sound_read);
+	I8039Close();
 
 	DACInit(0, 0, 0, DkongDACSync);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
@@ -1931,6 +1939,7 @@ static INT32 DrvFrame()
 	}
 
 	ZetOpen(0);
+	I8039Open(0);
 
 	for (INT32 i = 0; i < 10; i++) {
 		ZetRun(3072000 / 60 / 10);
@@ -1939,7 +1948,6 @@ static INT32 DrvFrame()
 	}
 
 	if (*nmi_mask) ZetNmi();
-	ZetClose();
 
 	if (pBurnSoundOut) {
 		DACUpdate(dacbuf, nBurnSoundLen);
@@ -1947,6 +1955,9 @@ static INT32 DrvFrame()
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
+	I8039Close();
+	ZetClose();
+	
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -2022,6 +2033,7 @@ static INT32 s2650DkongFrame()
 	}
 
 	s2650Open(0);
+	I8039Open(0);
 
 	vblank = 0;
 
@@ -2040,12 +2052,13 @@ static INT32 s2650DkongFrame()
 		}
 	}
 
-	s2650Close();
-
 	if (pBurnSoundOut) {
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	I8039Close();
+	s2650Close();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

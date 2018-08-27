@@ -708,8 +708,11 @@ static UINT8 __fastcall segag80v_read_port(UINT16 port)
 			return 0; // nop
 
 		case 0xbe:
-			return (mult_result >> 8) & 0xff;
-
+			{
+				UINT8 result = mult_result;
+				mult_result >>= 8;
+				return result;
+			}
 		case 0xf8:
 		case 0xf9:
 		case 0xfa:

@@ -740,7 +740,17 @@ UINT8 pia_get_ddr_b(int which)
 	return p->ddr_b;
 }
 
+UINT8 pia_get_irq_a_state(int which)
+{
+	struct pia6821 *p = pia + which;
+	return p->irq_a_state;
+}
 
+UINT8 pia_get_irq_b_state(int which)
+{
+	struct pia6821 *p = pia + which;
+	return p->irq_b_state;
+}
 
 #if 0
 /******************* Standard 8-bit CPU interfaces, D0-D7 *******************/

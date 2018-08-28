@@ -1,3 +1,6 @@
+// Sega USB sound core / cpu combo for FBAlpha, based on code by Aaron Giles,
+// also contains large portions of code by Aaron Giles
+
 #include "burnint.h"
 #include "i8039.h"
 #include "z80_intf.h"
@@ -10,8 +13,8 @@ static UINT8 last_p2_value;
 static UINT8 work_ram_bank;
 static INT32 usb_cpu_disabled;
 
-static UINT8 usb_prgram[0x1000];
-static UINT8 usb_workram[0x400];
+static UINT8 *usb_prgram;  //0x1000
+static UINT8 *usb_workram; //0x0400
 
 static INT16  *mixer_buffer; // re-sampler
 static INT32 (*pCPUTotalCycles)() = NULL;
@@ -35,7 +38,6 @@ struct filter_state
 	double              exponent;           /* constant exponent */
 };
 
-
 struct timer8253_channel
 {
 	UINT8               holding;            /* holding until counts written? */
@@ -50,7 +52,6 @@ struct timer8253_channel
 	UINT16              count;              /* initial count */
 	UINT16              remain;             /* current down counter value */
 };
-
 
 struct timer8253
 {
@@ -100,13 +101,11 @@ INLINE void configure_filter(filter_state *state, double r, double c)
 	state->exponent = 1.0 - exp(-1.0 / (r * c * SAMPLE_RATE));
 }
 
-
 INLINE double step_rc_filter(filter_state *state, double input)
 {
 	state->capval += (input - state->capval) * state->exponent;
 	return state->capval;
 }
-
 
 INLINE double step_cr_filter(filter_state *state, double input)
 {
@@ -426,7 +425,6 @@ void segausb_update(INT16 *outputs, INT32 sample_len)
 
 	memset(mixer_buffer, 0, samples_frame * sizeof(INT16));
 	nCurrentPosition = 0;
-
 }
 
 
@@ -439,7 +437,6 @@ UINT8 usb_sound_status_read()
 
 	return (out_latch & 0x81) | (in_latch & 0x7e);
 }
-
 
 void usb_sound_data_write(UINT8 data)
 {
@@ -472,7 +469,7 @@ void usb_sound_prgram_write(UINT16 offset, UINT8 data)
 //----------------------------------------------------------------------------
 // i8035 
 
-static void workram_write(UINT8 offset, UINT8 data)
+static void workram_write(UINT16 offset, UINT8 data)
 {
 	switch (offset & ~3)
 	{
@@ -511,7 +508,7 @@ static void __fastcall sega_usb_sound_write_port(UINT32 port, UINT8 data)
 {
 	if (port < 0x100) {
 		usb_workram[work_ram_bank * 0x100 + port] = data;
-		workram_write(port, data);
+		workram_write(work_ram_bank * 0x100 + port, data);
 		return;
 	}
 
@@ -531,7 +528,7 @@ static void __fastcall sega_usb_sound_write_port(UINT32 port, UINT8 data)
 			out_latch = ((data & 0x40) << 1) | (out_latch & 0x7f);
 			if ((data & 0x40) == 0)
 				in_latch = 0;
-	
+
 			if ((old & 0x80) && !(data & 0x80))
 				t1_clock = 0;
 		}
@@ -585,6 +582,9 @@ void usb_sound_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 	I8039SetIOWriteHandler(sega_usb_sound_write_port);
 	I8039Close();
 
+	usb_prgram = (UINT8*)BurnMalloc(0x1000 * sizeof(UINT8));
+	usb_workram = (UINT8*)BurnMalloc(0x400 * sizeof(UINT8));
+
 	mixer_buffer = (INT16*)BurnMalloc(2 * sizeof(INT16) * SAMPLE_RATE);
 	pCPUTotalCycles = pCPUCyclesCB;
 	nDACCPUMHZ = nCpuMHZ;
@@ -632,7 +632,50 @@ void usb_sound_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 void usb_sound_exit()
 {
 	BurnFree(mixer_buffer);
+	BurnFree(usb_prgram);
+	BurnFree(usb_workram);
+}
 
+void usb_sound_scan(INT32 nAction, INT32 *)
+{
+	if (nAction & ACB_VOLATILE) {
+		struct BurnArea ba;
+
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = usb_prgram;
+		ba.nLen	  = 0x1000;
+		ba.szName = "usb prgram";
+		BurnAcb(&ba);
+
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = usb_workram;
+		ba.nLen	  = 0x0400;
+		ba.szName = "usb workram";
+		BurnAcb(&ba);
+
+		SCAN_VAR(out_latch);
+		SCAN_VAR(in_latch);
+		SCAN_VAR(t1_clock);
+		SCAN_VAR(t1_clock_mask);
+		SCAN_VAR(last_p2_value);
+		SCAN_VAR(work_ram_bank);
+		SCAN_VAR(usb_cpu_disabled);
+
+		SCAN_VAR(m_timer_group);
+		SCAN_VAR(m_timer_mode);
+		SCAN_VAR(m_noise_shift);
+		SCAN_VAR(m_noise_state);
+		SCAN_VAR(m_noise_subcount);
+		SCAN_VAR(m_gate_rc1_exp);
+		SCAN_VAR(m_gate_rc2_exp);
+		SCAN_VAR(m_final_filter);
+		SCAN_VAR(m_noise_filters);
+	}
+
+	if (nAction & ACB_WRITE) {
+		memset(mixer_buffer, 0, samples_frame * sizeof(INT16));
+		nCurrentPosition = 0;
+	}
 }
 
 void usb_timer_t1_clock() // 7812.5 per sec / 195.3125 per frame (40hz)
@@ -652,4 +695,3 @@ INT32 usb_sound_run(INT32 cycles)
 
 	return ret;
 }
-

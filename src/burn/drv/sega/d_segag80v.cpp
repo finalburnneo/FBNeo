@@ -1,17 +1,10 @@
 // FB Alpha Sega G80 Vector driver module
 // Based on MAME driver by Aaron Giles
 
-// to iq_132:
-//  tac/scan: when goes from a vertical shooter to sorta-horizontal mode,
-//  the graphics become all broken and game becomes unplayable.
-
-//  eliminator 2p: game locks up in attract mode when "danger: elim. shoots deadly
-//  fireballs and destroys opponnents on contact.", but still animates?
-
 // to do:
+//  distortion/crackles on some USB stuff in tac/scan
+//  fix iq_132's sega_decrypt70, remove mame's sega_decrypt70
 //	fix games
-//  add Sega Universal Sound Board
-//	hook up analog*digital dial* inputs DONE -dink
 //	verify samples playing correctly
 
 #include "tiles_generic.h"
@@ -58,10 +51,10 @@ static UINT8 (*read_port_cb)(UINT8 offset) = NULL;
 static INT32 global_flipx = 0;
 static INT32 global_flipy = 0;
 static INT32 has_speech = 0;
+static INT32 has_usb = 0; // tac/scan & startrek uses USB
 static INT32 min_x;
 static INT32 min_y;
 
-static INT32 DrvDial[2];
 static INT32 dialmode = 0; // tac/scan & startrek 1, others 0
 
 static UINT8 DrvJoy1[8];
@@ -179,7 +172,7 @@ static struct BurnInputInfo TacscanInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 2"	},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
 	{"Service Mode",    BIT_DIGITAL,	DrvJoy6 + 0,	"diag"	    },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -198,7 +191,7 @@ static struct BurnInputInfo StartrekInputList[] = {
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 4"	},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
 	{"Service Mode",    BIT_DIGITAL,	DrvJoy6 + 0,	"diag"	    },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -592,33 +585,20 @@ static struct BurnDIPInfo StartrekDIPList[]=
 
 STDDIPINFO(Startrek)
 
-static UINT8 dial2portreset(INT32 dial)
-{
-	static INT32 lastval = 0;
-
-	if (dial > lastval)
-		return (dial-lastval);
-	if (dial < lastval)
-		return (lastval-dial) | 0x80;
-
-	lastval = dial;
-
-	return 0;
-}
-
 static UINT8 spinner_input_read()
 {
-	INT8 delta;
+	INT8 delta = 0;
 
 	if (spinner_select & 1)
 		return DrvInputs[4];
 
-	delta = dial2portreset(DrvDial[0]);
+	if (DrvJoy5[1]) delta = (dialmode) ? 0x10 : 3;
+	if (DrvJoy5[0]) delta = (dialmode) ? -0x10 : -3;
 
 	if (delta != 0)
 	{
 		spinner_sign = (delta >> 7) & 1;
-		spinner_count = abs(delta);
+		spinner_count += abs(delta);
 	}
 
 	return ~((spinner_count << 1) | spinner_sign);
@@ -659,7 +639,7 @@ static void __fastcall segag80v_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0xf000) == 0xd000) {
+	if ((address & 0xf000) == 0xd000 && has_usb) {
 		usb_sound_prgram_write(decrypt_offset(address & 0xfff), data);
 		return;
 	}
@@ -672,11 +652,21 @@ static void __fastcall segag80v_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall segag80v_read(UINT16 address)
 {
-	if ((address & 0xf000) == 0xd000) {
+	if ((address & 0xf000) == 0xd000 && has_usb) {
 		return usb_sound_prgram_read(address);
 	}
 	
 	return 0;
+}
+
+static void sync_sound()
+{
+	I8039Open(1);
+	INT32 cyc = (ZetTotalCycles() / 10) - I8039TotalCycles();
+	if (cyc > 0) {
+		I8039Run(cyc);
+	}
+	I8039Close();
 }
 
 static void __fastcall segag80v_write_port(UINT16 port, UINT8 data)
@@ -706,6 +696,7 @@ static void __fastcall segag80v_write_port(UINT16 port, UINT8 data)
 	}
 
 	if (write_port_cb) {
+		if (has_usb) sync_sound();
 		write_port_cb(port,data);
 	}
 }
@@ -734,6 +725,7 @@ static UINT8 __fastcall segag80v_read_port(UINT16 port)
 	}
 
 	if (read_port_cb) {
+		if (has_usb) sync_sound();
 		return read_port_cb(port);
 	}
 
@@ -815,8 +807,8 @@ static INT32 DrvDoReset()
 	I8039Reset();
 	I8039Close();
 
-	usb_sound_reset();
-	
+	if (has_usb) usb_sound_reset();
+
 	vector_reset();
 
 	BurnSampleReset();
@@ -940,7 +932,7 @@ static INT32 DrvInit()
 	I8039SetIOWriteHandler(sega_speech_write_port);
 	I8039Close();
 	
-	usb_sound_init(I8039TotalCycles, 400000);
+	if (has_usb) usb_sound_init(I8039TotalCycles, 400000);
 
 	// zector
 	AY8910Init(0, 1933560, 0);
@@ -952,6 +944,7 @@ static INT32 DrvInit()
 	if (has_speech) sp0250_init(3120000, sega_speech_drq_write, I8039TotalCycles, 208000);
 
 	vector_init();
+	vector_set_scale(1024, 832);
 
 	min_x = 512;
 	min_y = 608;
@@ -969,6 +962,7 @@ static INT32 DrvExit()
 	I8039Exit();
 
 	if (has_speech) sp0250_exit();
+	if (has_usb) usb_sound_exit();
 	BurnSampleExit();
 	AY8910Exit(0);
 
@@ -977,6 +971,7 @@ static INT32 DrvExit()
 	global_flipx = 0;
 	global_flipy = 0;
 	has_speech = 0;
+	has_usb = 0;
 	dialmode = 0;
 
 	BurnFree(AllMem);
@@ -1036,8 +1031,8 @@ inline int adjust_xy(int rawx, int rawy, int *outx, int *outy)
 	*outx = (*outx - (min_x - 512)) << 16;
 	*outy = (*outy - (min_y - 512)) << 16;
 
-	if (global_flipx) *outx = ((nScreenWidth - 1) - (*outx >> 16)) << 16;
-	if (global_flipy) *outy = ((nScreenHeight - 1) - (*outy >> 16)) << 16;
+	if (global_flipx) *outx = ((1024 - 1) - (*outx >> 16)) << 16;
+	if (global_flipy) *outy = ((832 - 1) - (*outy >> 16)) << 16;
 
 	return clipped;
 }
@@ -1183,6 +1178,7 @@ static INT32 DrvFrame()
 	}
 
 	I8039NewFrame();
+	ZetNewFrame();
 
 	{
 		DrvInputs[0] = 0xff;
@@ -1203,21 +1199,12 @@ static INT32 DrvFrame()
 		{ // Service Mode (Diagnostics) NMI
 			static UINT8 OldDiag = 0;
 			if (DrvJoy6[0] == 0 && OldDiag == 1) {
-				bprintf(0, _T("Diagnostics Mode!\n"));
 				ZetOpen(0);
 				ZetNmi();
 				ZetClose();
 			}
 			OldDiag = DrvJoy6[0];
 		}
-
-
-		if (DrvJoy5[0]) DrvDial[0] -= (dialmode) ? 10 : 3;
-		if (DrvJoy5[1]) DrvDial[0] += (dialmode) ? 10 : 3;
-		if (DrvDial[0] > 0xff) DrvDial[0] = 0;
-		if (DrvDial[0] < 0) DrvDial[0] = 0xff;
-		if (DrvDial[1] > 0xff) DrvDial[1] = 0;
-		if (DrvDial[1] < 0) DrvDial[1] = 0xff;
 	}
 
 	INT32 nInterleave = 232; // for speech chip
@@ -1230,16 +1217,17 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
-		I8039Open(0);
 		if (has_speech) {
+			I8039Open(0);
 			nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
-
 			sp0250_tick();
+			I8039Close();
 		}
-		I8039Close();
-		
-		nCyclesDone[2] += usb_sound_run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
-		if ((i % 5) != 4) usb_timer_t1_clock(); // not 100% correct for timing. good enough?
+
+		if (has_usb) {
+			nCyclesDone[2] += usb_sound_run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			if ((i % 6) != 4) usb_timer_t1_clock();
+		}
 	}
 
 	if (pBurnSoundOut) {
@@ -1250,7 +1238,9 @@ static INT32 DrvFrame()
 			sp0250_update(pBurnSoundOut, nBurnSoundLen);
 		}
 		I8039Close();
-		segausb_update(pBurnSoundOut, nBurnSoundLen);
+		if (has_usb) {
+			segausb_update(pBurnSoundOut, nBurnSoundLen);
+		}
 
 	}
 
@@ -1282,6 +1272,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		I8039Scan(nAction, pnMin);
 		if (has_speech) sp0250_scan(nAction, pnMin);
+		if (has_usb) usb_sound_scan(nAction, pnMin);
 		BurnSampleScan(nAction, pnMin);
 		AY8910Scan(nAction, pnMin);
 		vector_scan(nAction);
@@ -1395,7 +1386,7 @@ static void elim2_port_write(UINT8 port, UINT8 data)
 	}
 }
 
-static UINT8 sega_decrypt70(UINT16 pc, UINT8 lo)
+/*static UINT8 sega_decrypt70(UINT16 pc, UINT8 lo)
 {
 	switch (pc & 0x09)
 	{
@@ -1413,6 +1404,51 @@ static UINT8 sega_decrypt70(UINT16 pc, UINT8 lo)
 	}
 
 	return lo;
+} */
+static UINT8 sega_decrypt70(UINT16 pc, UINT8 lo)
+{
+	UINT32 i = 0;
+	UINT32 b = lo;
+
+	switch (pc & 0x09)
+	{
+		case 0x00:
+			/* B */
+			i=b & 0x03;
+			i+=((b    & 0x80) >> 1);
+			i+=((b    & 0x60) >> 3);
+			i+=((~b) & 0x10);
+			i+=((b    & 0x08) << 2);
+			i+=((b    & 0x04) << 5);
+			i &= 0xFF;
+			break;
+		case 0x01:
+			/* A */
+			i=b;
+			break;
+		case 0x08:
+			/* D */
+			i=b & 0x23;
+			i+=((b    & 0xC0) >> 4);
+			i+=((b    & 0x10) << 2);
+			i+=((b    & 0x08) << 1);
+			i+=(((~b) & 0x04) << 5);
+			i &= 0xFF;
+			break;
+		case 0x09:
+			/* C */
+			i=b & 0x03;
+			i+=((b    & 0x80) >> 4);
+			i+=(((~b) & 0x40) >> 1);
+			i+=((b    & 0x20) >> 1);
+			i+=((b    & 0x10) >> 2);
+			i+=((b    & 0x08) << 3);
+			i+=((b    & 0x04) << 5);
+			i &= 0xFF;
+			break;
+	}
+
+	return i;
 }
 
 static INT32 Elim2Init()
@@ -1431,7 +1467,7 @@ struct BurnDriver BurnDrvElim2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, elim2RomInfo, elim2RomName, elim2SampleInfo, elim2SampleName, Elim2InputInfo, Elim2DIPInfo,
 	Elim2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	1024, 832, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1468,7 +1504,7 @@ struct BurnDriver BurnDrvElim2a = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, elim2aRomInfo, elim2aRomName, elim2SampleInfo, elim2SampleName, Elim2InputInfo, Elim2DIPInfo,
 	Elim2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	1024, 832, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1505,7 +1541,7 @@ struct BurnDriver BurnDrvElim2c = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, elim2cRomInfo, elim2cRomName, elim2SampleInfo, elim2SampleName, Elim2InputInfo, Elim2DIPInfo,
 	Elim2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	1024, 832, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1572,7 +1608,7 @@ struct BurnDriver BurnDrvElim4 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, elim4RomInfo, elim4RomName, elim2SampleInfo, elim2SampleName, Elim4InputInfo, Elim4DIPInfo,
 	Elim4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	1024, 832, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1610,7 +1646,7 @@ struct BurnDriver BurnDrvElim4p = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, elim4pRomInfo, elim4pRomName, elim2SampleInfo, elim2SampleName, Elim4InputInfo, Elim4DIPInfo,
 	Elim4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	1024, 832, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1757,7 +1793,7 @@ struct BurnDriver BurnDrvSpacfury = {
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, spacfuryRomInfo, spacfuryRomName, spacfurySampleInfo, spacfurySampleName, SpacfuryInputInfo, SpacfuryDIPInfo,
 	SpacfuryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	1024, 832, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1797,7 +1833,7 @@ struct BurnDriver BurnDrvSpacfurya = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, spacfuryaRomInfo, spacfuryaRomName, spacfurySampleInfo, spacfurySampleName, SpacfuryInputInfo, SpacfuryDIPInfo,
 	SpacfuryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	1024, 832, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1837,7 +1873,7 @@ struct BurnDriver BurnDrvSpacfuryb = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, spacfurybRomInfo, spacfurybRomName, spacfurySampleInfo, spacfurySampleName, SpacfuryInputInfo, SpacfuryDIPInfo,
 	SpacfuryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	1024, 832, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1997,7 +2033,7 @@ struct BurnDriver BurnDrvZektor = {
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, zektorRomInfo, zektorRomName, zektorSampleInfo, zektorSampleName, ZektorInputInfo, ZektorDIPInfo,
 	ZektorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	1024, 832, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -2029,7 +2065,7 @@ static struct BurnRomInfo tacscanRomDesc[] = {
 
 	{ "s-c.xyt-u39",		0x0400, 0x56484d19, 4 | BRF_GRA },           // 22 Sine Tables
 
-	{ "pr-82.cpu-u15",		0x0020, 0xc609b79e, 3 | BRF_OPT },           // 23 Addressing PROM
+	{ "pr-82.cpu-u15",		0x0020, 0xc609b79e, 0 | BRF_OPT },           // 23 Addressing PROM
 };
 
 STD_ROM_PICK(tacscan)
@@ -2058,6 +2094,7 @@ static UINT8 tacscan_port_read(UINT8 port)
 
 static INT32 TacscanInit()
 {
+	has_usb = 1;
 	dialmode = 1;
 	global_flipx = 1;
 	sega_decrypt = sega_decrypt76;
@@ -2074,7 +2111,7 @@ struct BurnDriver BurnDrvTacscan = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, tacscanRomInfo, tacscanRomName, NULL, NULL, TacscanInputInfo, TacscanDIPInfo,
 	TacscanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	832, 1024, 3, 4
+	600, 800, 3, 4
 };
 
 
@@ -2151,6 +2188,7 @@ static UINT8 startrek_port_read(UINT8 port)
 
 static INT32 StartrekInit()
 {
+	has_usb = 1;
 	dialmode = 1;
 	global_flipy = 1;
 	sega_decrypt = sega_decrypt64;
@@ -2167,5 +2205,5 @@ struct BurnDriver BurnDrvStartrek = {
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, startrekRomInfo, startrekRomName, NULL, NULL, StartrekInputInfo, StartrekDIPInfo,
 	StartrekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	1024, 832, 4, 3
+	800, 600, 4, 3
 };

@@ -502,13 +502,13 @@ static void draw_bg_layer()
 
 	for (INT32 offs = 0; offs < 32 * 32; offs++)
 	{
-		INT32 sx = ((offs & 0x1f) * 8);
+		INT32 sx = ((offs & 0x1f) * 8) - 8;
 		INT32 sy = ((offs / 0x20) * 8) - 16;
 		if (sy < 0 || sy >= nScreenHeight) continue;
 
 		sx -= scrollx;
 
-		if (sx < 25) sx += 256;
+		if (sx < 25 + -8) sx += 256;
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 		INT32 attr  = DrvColRAM0[offs];
@@ -537,8 +537,8 @@ static void draw_fg_layer()
 {
 	for (INT32 offs = 0; offs < 32 * 32; offs++)
 	{
-		INT32 sx = (offs & 0x1f) * 8;
-		if (sx >= 32) continue;
+		INT32 sx = ((offs & 0x1f) * 8) - 16;
+		if (sx >= 24) continue;
 		INT32 sy = ((offs / 0x20) * 8) - 16;
 		if (sy < 0 || sy >= nScreenHeight) continue;
 
@@ -619,6 +619,7 @@ static void draw_sprites()
 	for (INT32 offs = 0; offs <= 0x200 - 5; offs += 5)
 	{
 		INT32 sx    = 32 + 1 + sr[offs + 3] - ((sr[offs + 4] & 0x01) << 8);
+		sx -= 8;
 		INT32 sy    = sr[offs + 2];
 		INT32 flipx = sr[offs + 4] & 0x20;
 		INT32 flipy = sr[offs + 4] & 0x40;

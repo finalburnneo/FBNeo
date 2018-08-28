@@ -592,7 +592,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 	priority &= 0xff;
 
 	// column (less than tile size) and line scroll
-	if ((cur_map->scrolly_table != NULL) && (cur_map->scroll_cols > (cur_map->mwidth / cur_map->twidth)))
+	if ((cur_map->scrolly_table != NULL) && (cur_map->scroll_cols > cur_map->mwidth))
 	{
 		INT32 bitmap_width = maxx - minx;
 		INT32 scrymod = (cur_map->mheight * cur_map->theight);

@@ -1230,11 +1230,11 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
-		I8039Open(0);
 		if (has_speech) {
+			I8039Open(0);
 			sp0250_update(pBurnSoundOut, nBurnSoundLen);
+			I8039Close();
 		}
-		I8039Close();
 		if (has_usb) {
 			segausb_update(pBurnSoundOut, nBurnSoundLen);
 		}

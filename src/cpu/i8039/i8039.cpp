@@ -65,7 +65,6 @@ typedef union
 #define I8039_EXTERNAL_INT	1	/* Execute a normal external interrupt  */
 #define I8039_TIMCNT_INT	2	/* Execute a Timer/Counter interrupt    */
 
-
 static int Ext_IRQ(void);
 static int Timer_IRQ(void);
 
@@ -121,8 +120,8 @@ typedef struct
 } I8039_Handlers;
 
 static I8039_Regs R;
-static int	   i8039_ICount;
-static int	   i8039_ICount_cycles;
+static int	   i8039_ICount = 0;
+static int	   i8039_ICount_cycles = 0;
 
 static UINT8 *RAM;
 
@@ -130,9 +129,10 @@ static I8039_Regs RegStore[I8039_NUM];
 static I8039_Handlers Handlers[I8039_NUM];
 static I8039_Handlers *HPtr;
 static UINT8 *RAMStore[I8039_NUM] = { NULL, NULL };
-static int ICountStore[I8039_NUM];
-static int ICountCyclesStore[I8039_NUM];
 static int nI8039Active = -1;
+
+static void i8039_get_context (void *dst); // forwards
+static void i8039_set_context (void *src);
 
 void I8039Open(INT32 nCpu)
 {
@@ -146,11 +146,9 @@ void I8039Open(INT32 nCpu)
 		return;
 	}
 
-	nI8039Active = nCpu;	
+	nI8039Active = nCpu;
 	RAM = RAMStore[nI8039Active];
-	i8039_ICount = ICountStore[nI8039Active];
-	i8039_ICount_cycles = ICountCyclesStore[nI8039Active];
-	memcpy (&R, &RegStore[nI8039Active], sizeof(I8039_Regs));
+	i8039_set_context(&RegStore[nI8039Active]);
 	HPtr = &Handlers[nI8039Active];
 }
 
@@ -160,11 +158,9 @@ void I8039Close()
 		bprintf (0, _T("I8039Close called no active cpu!\n"));
 		return;
 	}
-	
+
 	RAM = NULL;
-	ICountStore[nI8039Active] = i8039_ICount;
-	ICountCyclesStore[nI8039Active] = i8039_ICount_cycles;
-	memcpy (&RegStore[nI8039Active], &R, sizeof(I8039_Regs));
+	i8039_get_context(&RegStore[nI8039Active]);
 	HPtr = NULL;
 	nI8039Active = -1;
 }
@@ -736,6 +732,11 @@ static int Timer_IRQ(void)
 
 static void i8039_common_init(INT32 nCpu, INT32 rammask, INT32 romsize)
 {
+	if (nCpu >= I8039_NUM) {
+		bprintf (0, _T("I8039Init called with nCpu (%d) greater than maximum (%d)!\n"), nCpu, I8039_NUM);
+		return;
+	}
+
 	DebugCPU_I8039Initted = 1;
 
 	RAMStore[nCpu] = (UINT8*)BurnMalloc(128 * sizeof(UINT8));
@@ -759,6 +760,9 @@ static void i8039_common_init(INT32 nCpu, INT32 rammask, INT32 romsize)
 	HPtr->I8039ProgramWrite = I8039DummyWriteProg;
 	HPtr->I8039CPUReadOp = I8039DummyReadOp;
 	HPtr->I8039CPUReadOpArg = I8039DummyReadOpArg;
+
+	i8039_ICount_cycles = 0;
+	i8039_ICount = 0;
 }
 
 void I8039Init(INT32 nCpu)
@@ -915,7 +919,7 @@ int I8039Run(int cycles)
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Run called without init\n"));
 #endif
 
-	unsigned opcode, T1, timerInt;
+	UINT8 opcode, T1, timerInt;
 	int count;
 
 	i8039_ICount_cycles = cycles;
@@ -975,7 +979,10 @@ int I8039Run(int cycles)
 	R.total_cycles += cycles - i8039_ICount;
 	R.irq_extra_cycles = 0;
 
-	return cycles - i8039_ICount;
+	cycles = cycles - i8039_ICount;
+	i8039_ICount_cycles = i8039_ICount = 0;
+
+	return cycles;
 }
 
 INT32 I8039TotalCycles()
@@ -991,10 +998,8 @@ void I8039NewFrame()
 	for (INT32 i = 0; i < I8039_NUM; i++)
 	{
 		I8039_Regs *ptr = &RegStore[i];
-		
+
 		ptr->total_cycles = 0;
-		ICountStore[i] = 0;
-		ICountCyclesStore[i] = 0;
 	}
 }
 
@@ -1051,33 +1056,50 @@ int I8039Scan(int nAction, int *pnMin)
 
 	struct BurnArea ba;
 	char szName[16];
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029719;
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 
 		for (INT32 i = 0; i < I8039_NUM; i++)
-		{	
-			I8039_Regs *ptr = &RegStore[i];
-			ScanVar(&ptr, sizeof(I8039_Regs), "I8039Regs");
-		
-			sprintf(szName, "I8039RAM %d", i);
-			memset(&ba, 0, sizeof(ba));
-			ba.Data	  = RAMStore[i];
-			ba.nLen	  = 128;
-			ba.szName = szName;	
-			BurnAcb(&ba);
-		
-			SCAN_VAR(ICountStore[i]);
-			SCAN_VAR(ICountCyclesStore[i]);
-		}
+			if (RAMStore[i]) {
+				I8039_Regs *ptr = &RegStore[i];
+				ScanVar(&ptr, sizeof(I8039_Regs), "I8039Regs");
+
+				sprintf(szName, "I8039RAM %d", i);
+				memset(&ba, 0, sizeof(ba));
+				ba.Data	  = RAMStore[i];
+				ba.nLen	  = 128;
+				ba.szName = szName;
+				BurnAcb(&ba);
+			}
 	}
-	
+
 	return 0;
 }
 
+/****************************************************************************
+ * Get all registers in given buffer
+ ****************************************************************************/
+static void i8039_get_context (void *dst)
+{
+	if( dst )
+		*(I8039_Regs*)dst = R;
+}
+
+
+/****************************************************************************
+ * Set all registers to given values
+ ****************************************************************************/
+static void i8039_set_context (void *src)
+{
+	if( src )
+	{
+		R = *(I8039_Regs*)src;
+	}
+}
 
 #if 0
 
@@ -1133,36 +1155,6 @@ static void i8039_exit (void)
 /****************************************************************************
  * Execute cycles CPU cycles. Return number of cycles really executed
  ****************************************************************************/
-/****************************************************************************
- * Get all registers in given buffer
- ****************************************************************************/
-static void i8039_get_context (void *dst)
-{
-	if( dst )
-		*(I8039_Regs*)dst = R;
-}
-
-
-/****************************************************************************
- * Set all registers to given values
- ****************************************************************************/
-static void i8039_set_context (void *src)
-{
-	if( src )
-	{
-		R = *(I8039_Regs*)src;
-		regPTR = ((M_By) ? 24 : 0);
-		R.SP = (R.PSW << 1) & 0x0f;
-		change_pc(R.PC.w.l);
-	}
-	/* Handle forced Interrupts throught the Debugger */
-	if (R.irq_state != I8039_NO_INT) {
-		R.irq_extra_cycles += Ext_IRQ();		/* Handle External IRQ */
-	}
-	if (R.timer == 0) {
-		R.irq_extra_cycles += Timer_IRQ();		/* Handle Timer IRQ */
-	}
-}
 
 
 /****************************************************************************

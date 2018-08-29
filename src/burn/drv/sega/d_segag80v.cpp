@@ -17,7 +17,6 @@
 #include "usb_snd.h"
 #include "bitswap.h" // BITSWAP08
 #include "math.h" // ABS()
-#include "joyprocess.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -86,7 +85,6 @@ static struct BurnInputInfo Elim2InputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Elim2)
@@ -202,9 +200,8 @@ STDINPUTINFO(Startrek)
 
 static struct BurnDIPInfo Elim2DIPList[]=
 {
-	{0x0e, 0xff, 0xff, 0x00, NULL						},
-	{0x0f, 0xff, 0xff, 0x45, NULL						},
-	{0x10, 0xff, 0xff, 0x33, NULL						},
+	{0x0e, 0xff, 0xff, 0x45, NULL						},
+	{0x0f, 0xff, 0xff, 0x33, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"					},
 	{0x0e, 0x01, 0x01, 0x01, "Upright"					},
@@ -1386,7 +1383,7 @@ static void elim2_port_write(UINT8 port, UINT8 data)
 	}
 }
 
-/*static UINT8 sega_decrypt70(UINT16 pc, UINT8 lo)
+static UINT8 sega_decrypt70(UINT16 pc, UINT8 lo)
 {
 	switch (pc & 0x09)
 	{
@@ -1397,58 +1394,13 @@ static void elim2_port_write(UINT8 port, UINT8 data)
 			return lo;
 
 		case 0x08:
-			return BITSWAP08(lo, 2, 4, 5, 3, 7, 6, 1, 0);
+			return BITSWAP08(lo, 2, 4, 5, 3, 7, 6, 1, 0) ^ 0x80;
 
 		case 0x09:
 			return BITSWAP08(lo, 2, 3, 6, 5, 7, 4, 1, 0) ^ 0x20;
 	}
 
 	return lo;
-} */
-static UINT8 sega_decrypt70(UINT16 pc, UINT8 lo)
-{
-	UINT32 i = 0;
-	UINT32 b = lo;
-
-	switch (pc & 0x09)
-	{
-		case 0x00:
-			/* B */
-			i=b & 0x03;
-			i+=((b    & 0x80) >> 1);
-			i+=((b    & 0x60) >> 3);
-			i+=((~b) & 0x10);
-			i+=((b    & 0x08) << 2);
-			i+=((b    & 0x04) << 5);
-			i &= 0xFF;
-			break;
-		case 0x01:
-			/* A */
-			i=b;
-			break;
-		case 0x08:
-			/* D */
-			i=b & 0x23;
-			i+=((b    & 0xC0) >> 4);
-			i+=((b    & 0x10) << 2);
-			i+=((b    & 0x08) << 1);
-			i+=(((~b) & 0x04) << 5);
-			i &= 0xFF;
-			break;
-		case 0x09:
-			/* C */
-			i=b & 0x03;
-			i+=((b    & 0x80) >> 4);
-			i+=(((~b) & 0x40) >> 1);
-			i+=((b    & 0x20) >> 1);
-			i+=((b    & 0x10) >> 2);
-			i+=((b    & 0x08) << 3);
-			i+=((b    & 0x04) << 5);
-			i &= 0xFF;
-			break;
-	}
-
-	return i;
 }
 
 static INT32 Elim2Init()

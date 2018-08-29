@@ -384,7 +384,7 @@ static void segausb_update_int(INT16 *outputs, int samples)
 			}
 
 			/* accumulate the sample */
-			sample += mix;
+			sample += (mix * 0.75);
 		}
 
 
@@ -440,7 +440,7 @@ UINT8 usb_sound_status_read()
 
 void usb_sound_data_write(UINT8 data)
 {
-	if (data & 0x80) 
+	if (data & 0x80)
 	{
 		I8039Open(1);
 		I8039Reset();
@@ -554,41 +554,8 @@ static UINT8 __fastcall sega_usb_sound_read_port(UINT32 port)
 	return 0;
 }
 
-void usb_sound_reset()
+static void usb_sound_init_filters()
 {
-	I8039Open(1);
-	I8039Reset();
-	I8039Close();
-
-	out_latch = 0;
-	in_latch = 0;
-	t1_clock = 0;
-	t1_clock_mask = 0x10;
-	last_p2_value = 0;
-	work_ram_bank = 0;
-	usb_cpu_disabled = 1;
-	memset (usb_workram, 0, 0x400);
-	samples_frame = (INT32)((double)((SAMPLE_RATE * 100) / nBurnFPS) + 0.5);
-}
-
-void usb_sound_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
-{
-	I8035Init(1);
-	I8039Open(1);
-	I8039SetProgramReadHandler(sega_usb_sound_read);
-	I8039SetCPUOpReadHandler(sega_usb_sound_read);
-	I8039SetCPUOpReadArgHandler(sega_usb_sound_read);
-	I8039SetIOReadHandler(sega_usb_sound_read_port);
-	I8039SetIOWriteHandler(sega_usb_sound_write_port);
-	I8039Close();
-
-	usb_prgram = (UINT8*)BurnMalloc(0x1000 * sizeof(UINT8));
-	usb_workram = (UINT8*)BurnMalloc(0x400 * sizeof(UINT8));
-
-	mixer_buffer = (INT16*)BurnMalloc(2 * sizeof(INT16) * SAMPLE_RATE);
-	pCPUTotalCycles = pCPUCyclesCB;
-	nDACCPUMHZ = nCpuMHZ;
-
 	filter_state temp;
 
 	m_noise_shift = 0x15555;
@@ -627,6 +594,45 @@ void usb_sound_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 	configure_filter(&m_noise_filters[4], 33e3, 0.1e-6);
 
 	configure_filter(&m_final_filter, 100e3, 4.7e-6);
+}
+
+void usb_sound_reset()
+{
+	I8039Open(1);
+	I8039Reset();
+	I8039Close();
+
+	out_latch = 0;
+	in_latch = 0;
+	t1_clock = 0;
+	t1_clock_mask = 0x10;
+	last_p2_value = 0;
+	work_ram_bank = 0;
+	usb_cpu_disabled = 1;
+	memset (usb_prgram, 0, 0x1000);
+	memset (usb_workram, 0, 0x400);
+	samples_frame = (INT32)((double)((SAMPLE_RATE * 100) / nBurnFPS) + 0.5);
+
+	usb_sound_init_filters();
+}
+
+void usb_sound_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
+{
+	I8035Init(1);
+	I8039Open(1);
+	I8039SetProgramReadHandler(sega_usb_sound_read);
+	I8039SetCPUOpReadHandler(sega_usb_sound_read);
+	I8039SetCPUOpReadArgHandler(sega_usb_sound_read);
+	I8039SetIOReadHandler(sega_usb_sound_read_port);
+	I8039SetIOWriteHandler(sega_usb_sound_write_port);
+	I8039Close();
+
+	usb_prgram = (UINT8*)BurnMalloc(0x1000 * sizeof(UINT8));
+	usb_workram = (UINT8*)BurnMalloc(0x400 * sizeof(UINT8));
+
+	mixer_buffer = (INT16*)BurnMalloc(2 * sizeof(INT16) * SAMPLE_RATE);
+	pCPUTotalCycles = pCPUCyclesCB;
+	nDACCPUMHZ = nCpuMHZ;
 }
 
 void usb_sound_exit()

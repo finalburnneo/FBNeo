@@ -1065,8 +1065,7 @@ int I8039Scan(int nAction, int *pnMin)
 
 		for (INT32 i = 0; i < I8039_NUM; i++)
 			if (RAMStore[i]) {
-				I8039_Regs *ptr = &RegStore[i];
-				ScanVar(&ptr, sizeof(I8039_Regs), "I8039Regs");
+				ScanVar(&RegStore[i], sizeof(I8039_Regs), "I8039Regs");
 
 				sprintf(szName, "I8039RAM %d", i);
 				memset(&ba, 0, sizeof(ba));

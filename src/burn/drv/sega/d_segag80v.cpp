@@ -59,22 +59,22 @@ static INT32 dialmode = 0; // tac/scan & startrek 1, others 0
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
-//static UINT8 DrvJoy4[8];
-static UINT8 DrvJoy5[8];
+static UINT8 DrvJoy4[8]; // spinner left/right
+static UINT8 DrvJoy5[8]; // fake coin inputs
 static UINT8 DrvJoy6[1];
 static UINT8 DrvDips[8];
 static UINT8 DrvInputs[8];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo Elim2InputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 start"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 2"	},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 right"	},
@@ -89,24 +89,49 @@ static struct BurnInputInfo Elim2InputList[] = {
 
 STDINPUTINFO(Elim2)
 
+static struct BurnInputInfo Elim2cInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 start"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 2"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 2"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Elim2c)
+
 static struct BurnInputInfo Elim4InputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 
-	{"P3 Left",			BIT_DIGITAL,	DrvJoy5 + 7,	"p3 left"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy5 + 2,	"p3 coin"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 7,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 6,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p3 fire 2"	},
 
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy5 + 3,	"p4 coin"	},
 	{"P4 Left",			BIT_DIGITAL,	DrvJoy3 + 3,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy3 + 2,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p4 fire 1"	},
@@ -122,14 +147,14 @@ static struct BurnInputInfo Elim4InputList[] = {
 STDINPUTINFO(Elim4)
 
 static struct BurnInputInfo SpacfuryInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 start"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 2"	},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 right"	},
@@ -146,10 +171,10 @@ static struct BurnInputInfo SpacfuryInputList[] = {
 STDINPUTINFO(Spacfury)
 
 static struct BurnInputInfo ZektorInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy5 + 1,	"p1 right"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 2"	},
 
@@ -163,10 +188,10 @@ static struct BurnInputInfo ZektorInputList[] = {
 STDINPUTINFO(Zektor)
 
 static struct BurnInputInfo TacscanInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy5 + 1,	"p1 right"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 2"	},
 
@@ -180,10 +205,10 @@ static struct BurnInputInfo TacscanInputList[] = {
 STDINPUTINFO(Tacscan)
 
 static struct BurnInputInfo StartrekInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy5 + 1,	"p1 right"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 3"	},
@@ -265,39 +290,39 @@ STDDIPINFO(Elim2)
 
 static struct BurnDIPInfo Elim4DIPList[]=
 {
-	{0x15, 0xff, 0xff, 0x45, NULL						},
-	{0x16, 0xff, 0xff, 0x1f, NULL						},
+	{0x17, 0xff, 0xff, 0x45, NULL						},
+	{0x18, 0xff, 0xff, 0x00, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"					},
-	{0x15, 0x01, 0x01, 0x01, "Upright"					},
-	{0x15, 0x01, 0x01, 0x00, "Cocktail"					},
+	{0x17, 0x01, 0x01, 0x01, "Upright"					},
+	{0x17, 0x01, 0x01, 0x00, "Cocktail"					},
 
 	{0   , 0xfe, 0   ,    3, "Lives"					},
-	{0x15, 0x01, 0x0c, 0x04, "3"						},
-	{0x15, 0x01, 0x0c, 0x08, "4"						},
-	{0x15, 0x01, 0x0c, 0x0c, "5"						},
+	{0x17, 0x01, 0x0c, 0x04, "3"						},
+	{0x17, 0x01, 0x0c, 0x08, "4"						},
+	{0x17, 0x01, 0x0c, 0x0c, "5"						},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"				},
-	{0x15, 0x01, 0x30, 0x00, "Easy"						},
-	{0x15, 0x01, 0x30, 0x10, "Medium"					},
-	{0x15, 0x01, 0x30, 0x20, "Hard"						},
-	{0x15, 0x01, 0x30, 0x30, "Hardest"					},
+	{0x17, 0x01, 0x30, 0x00, "Easy"						},
+	{0x17, 0x01, 0x30, 0x10, "Medium"					},
+	{0x17, 0x01, 0x30, 0x20, "Hard"						},
+	{0x17, 0x01, 0x30, 0x30, "Hardest"					},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"				},
-	{0x15, 0x01, 0xc0, 0xc0, "None"						},
-	{0x15, 0x01, 0xc0, 0x80, "10000"					},
-	{0x15, 0x01, 0xc0, 0x40, "20000"					},
-	{0x15, 0x01, 0xc0, 0x00, "30000"					},
+	{0x18, 0x01, 0xc0, 0xc0, "None"						},
+	{0x18, 0x01, 0xc0, 0x80, "10000"					},
+	{0x18, 0x01, 0xc0, 0x40, "20000"					},
+	{0x18, 0x01, 0xc0, 0x00, "30000"					},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"					},
-	{0x15, 0x01, 0xe0, 0xe0, "8 Coins 1 Credits"		},
-	{0x15, 0x01, 0xe0, 0xc0, "7 Coins 1 Credits"		},
-	{0x15, 0x01, 0xe0, 0xa0, "6 Coins 1 Credits"		},
-	{0x15, 0x01, 0xe0, 0x80, "5 Coins 1 Credits"		},
-	{0x15, 0x01, 0xe0, 0x60, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0xe0, 0x40, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0xe0, 0x20, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0xe0, 0x00, "1 Coin  1 Credits"		},
+	{0x18, 0x01, 0xe0, 0xe0, "8 Coins 1 Credits"		},
+	{0x18, 0x01, 0xe0, 0xc0, "7 Coins 1 Credits"		},
+	{0x18, 0x01, 0xe0, 0xa0, "6 Coins 1 Credits"		},
+	{0x18, 0x01, 0xe0, 0x80, "5 Coins 1 Credits"		},
+	{0x18, 0x01, 0xe0, 0x60, "4 Coins 1 Credits"		},
+	{0x18, 0x01, 0xe0, 0x40, "3 Coins 1 Credits"		},
+	{0x18, 0x01, 0xe0, 0x20, "2 Coins 1 Credits"		},
+	{0x18, 0x01, 0xe0, 0x00, "1 Coin  1 Credits"		},
 };
 
 STDDIPINFO(Elim4)
@@ -589,8 +614,8 @@ static UINT8 spinner_input_read()
 	if (spinner_select & 1)
 		return DrvInputs[4];
 
-	if (DrvJoy5[1]) delta = (dialmode) ? 0x10 : 3;
-	if (DrvJoy5[0]) delta = (dialmode) ? -0x10 : -3;
+	if (DrvJoy4[1]) delta = (dialmode) ? 0x10 : 3;
+	if (DrvJoy4[0]) delta = (dialmode) ? -0x10 : -3;
 
 	if (delta != 0)
 	{
@@ -717,8 +742,8 @@ static UINT8 __fastcall segag80v_read_port(UINT16 port)
 		case 0xfb:
 			return mangled_ports_read(port);
 
-		case 0xfc:
-			return spinner_input_read();
+		case 0xfc: if (dialmode != -1) return spinner_input_read();
+			break; // continue to read_port_cb()!
 	}
 
 	if (read_port_cb) {
@@ -1183,7 +1208,21 @@ static INT32 DrvFrame()
 		DrvInputs[2] = DrvDips[0];
 		DrvInputs[3] = DrvDips[1];
 		DrvInputs[4] = 0;
-		DrvInputs[5] = 0;
+		DrvInputs[5] = 0;  // elim4 fake coins input
+
+		if (dialmode == -1) { // eliminator 4, hold coin for 1 frame
+			static UINT8 last = 0;
+			UINT8 coins = (DrvJoy5[0] | DrvJoy5[1] | DrvJoy5[2] | DrvJoy5[3]);
+			DrvJoy1[0] = (last == 0 && coins);
+			last = coins;
+		} else { // others, hold for 1 frame
+			static UINT8 last[2] = { 0, 0 };
+			UINT8 coin[2] = { DrvJoy5[0], DrvJoy5[4] };
+			DrvJoy1[0] = (last[0] == 0 && coin[0]);
+			DrvJoy1[4] = (last[1] == 0 && coin[1]);
+			last[0] = coin[0];
+			last[1] = coin[1];
+		}
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -1191,6 +1230,7 @@ static INT32 DrvFrame()
 		//	DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		//	DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[5] ^= (DrvJoy5[i] & 1) << i;
 		}
 
 		{ // Service Mode (Diagnostics) NMI
@@ -1491,7 +1531,7 @@ struct BurnDriver BurnDrvElim2c = {
 	"Eliminator (2 Players, cocktail)\0", NULL, "Gremlin", "G80 Vector",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
-	NULL, elim2cRomInfo, elim2cRomName, elim2SampleInfo, elim2SampleName, Elim2InputInfo, Elim2DIPInfo,
+	NULL, elim2cRomInfo, elim2cRomName, elim2SampleInfo, elim2SampleName, Elim2cInputInfo, Elim2DIPInfo,
 	Elim2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3
 };
@@ -1544,11 +1584,31 @@ static UINT8 sega_decrypt76(UINT16 pc, UINT8 lo)
 	return lo;
 }
 
+static UINT8 elim4_port_read(UINT8 port)
+{
+	switch (port)
+	{
+		case 0xfc: {
+			if (spinner_select & 0x08) {
+				switch (spinner_select & 0x07) {
+					case 6: return DrvInputs[4]; // p3,p4 inputs
+					case 7: return DrvInputs[5]; // coins
+				}
+			}
+			return 0;
+		}
+	}
+
+	return 0;
+}
+
 static INT32 Elim4Init()
 {
+	dialmode = -1; // spinner disabled - bypass 0xfc for elim4_port_read()
 	global_flipy = 1;
 	sega_decrypt = sega_decrypt76;
 	write_port_cb = elim2_port_write;
+	read_port_cb = elim4_port_read;
 
 	return DrvInit();
 }

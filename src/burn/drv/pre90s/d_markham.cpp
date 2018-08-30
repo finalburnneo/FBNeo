@@ -92,9 +92,10 @@ static struct BurnInputInfo StrnskilInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy3 + 7,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
+	//{"Service",			BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,  DrvDips + 2,    "dip"		},
 };
 
 STDINPUTINFO(Strnskil)
@@ -213,38 +214,43 @@ STDDIPINFO(Markham)
 
 static struct BurnDIPInfo StrnskilDIPList[]=
 {
+	{0x12, 0xff, 0xff, 0x00, NULL					},
 	{0x13, 0xff, 0xff, 0x00, NULL					},
 	{0x14, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x13, 0x01, 0x01, 0x01, "Off"					},
-	{0x13, 0x01, 0x01, 0x00, "On"					},
+	{0x12, 0x01, 0x01, 0x01, "Off"					},
+	{0x12, 0x01, 0x01, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    16, "Coin1 / Coin2"		},
-	{0x13, 0x01, 0xf0, 0x00, "1C 1C / 1C 1C"		},
-	{0x13, 0x01, 0xf0, 0x10, "2C 1C / 2C 1C"		},
-	{0x13, 0x01, 0xf0, 0x20, "2C 1C / 1C 3C"		},
-	{0x13, 0x01, 0xf0, 0x30, "1C 1C / 1C 2C"		},
-	{0x13, 0x01, 0xf0, 0x40, "1C 1C / 1C 3C"		},
-	{0x13, 0x01, 0xf0, 0x50, "1C 1C / 1C 4C"		},
-	{0x13, 0x01, 0xf0, 0x60, "1C 1C / 1C 5C"		},
-	{0x13, 0x01, 0xf0, 0x70, "1C 1C / 1C 6C"		},
-	{0x13, 0x01, 0xf0, 0x80, "1C 2C / 1C 2C"		},
-	{0x13, 0x01, 0xf0, 0x90, "1C 2C / 1C 4C"		},
-	{0x13, 0x01, 0xf0, 0xa0, "1C 2C / 1C 5C"		},
-	{0x13, 0x01, 0xf0, 0xb0, "1C 2C / 1C 10C"		},
-	{0x13, 0x01, 0xf0, 0xc0, "1C 2C / 1C 11C"		},
-	{0x13, 0x01, 0xf0, 0xd0, "1C 2C / 1C 12C"		},
-	{0x13, 0x01, 0xf0, 0xe0, "1C 2C / 1C 6C"		},
-	{0x13, 0x01, 0xf0, 0xf0, "Free Play"			},
+	{0x12, 0x01, 0xf0, 0x00, "1C 1C / 1C 1C"		},
+	{0x12, 0x01, 0xf0, 0x10, "2C 1C / 2C 1C"		},
+	{0x12, 0x01, 0xf0, 0x20, "2C 1C / 1C 3C"		},
+	{0x12, 0x01, 0xf0, 0x30, "1C 1C / 1C 2C"		},
+	{0x12, 0x01, 0xf0, 0x40, "1C 1C / 1C 3C"		},
+	{0x12, 0x01, 0xf0, 0x50, "1C 1C / 1C 4C"		},
+	{0x12, 0x01, 0xf0, 0x60, "1C 1C / 1C 5C"		},
+	{0x12, 0x01, 0xf0, 0x70, "1C 1C / 1C 6C"		},
+	{0x12, 0x01, 0xf0, 0x80, "1C 2C / 1C 2C"		},
+	{0x12, 0x01, 0xf0, 0x90, "1C 2C / 1C 4C"		},
+	{0x12, 0x01, 0xf0, 0xa0, "1C 2C / 1C 5C"		},
+	{0x12, 0x01, 0xf0, 0xb0, "1C 2C / 1C 10C"		},
+	{0x12, 0x01, 0xf0, 0xc0, "1C 2C / 1C 11C"		},
+	{0x12, 0x01, 0xf0, 0xd0, "1C 2C / 1C 12C"		},
+	{0x12, 0x01, 0xf0, 0xe0, "1C 2C / 1C 6C"		},
+	{0x12, 0x01, 0xf0, 0xf0, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"			},
-	{0x14, 0x01, 0x01, 0x00, "Normal"				},
-	{0x14, 0x01, 0x01, 0x01, "Hard"					},
+	{0x13, 0x01, 0x01, 0x00, "Normal"				},
+	{0x13, 0x01, 0x01, 0x01, "Hard"					},
 
 	{0   , 0xfe, 0   ,    2, "Freeze"				},
-	{0x14, 0x01, 0x80, 0x00, "Off"					},
-	{0x14, 0x01, 0x80, 0x80, "On"					},
+	{0x13, 0x01, 0x80, 0x00, "Off"					},
+	{0x13, 0x01, 0x80, 0x80, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x14, 0x01, 0x20, 0x00, "Off"					},
+	{0x14, 0x01, 0x20, 0x20, "On"					},
 };
 
 STDDIPINFO(Strnskil)
@@ -479,7 +485,7 @@ static UINT8 __fastcall strnskil_main_read(UINT16 address)
 			return DrvDips[1];
 
 		case 0xd803:
-			return DrvInputs[2];
+			return (DrvInputs[2] & ~0x20) | (DrvDips[2] & 0x20);
 
 		case 0xd804:
 			return DrvInputs[0];
@@ -758,10 +764,10 @@ static INT32 CommonInit(INT32 game)
 	GenericTilemapSetScrollRows(0, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM1, 3, 8, 8, 0x10000, 0x200, 0x3f);
 
-	irq_scanline[0] = 96/2;
-	irq_scanline[1] = 240/2;
-	irq_scanline[2] = 120/2;
-	irq_scanline[3] = 240/2;
+	irq_scanline[0] = 96;
+	irq_scanline[1] = 240;
+	irq_scanline[2] = 120;
+	irq_scanline[3] = 240;
 
 	DrvDoReset();
 
@@ -830,10 +836,10 @@ static INT32 IkkiInit()
 
 	GenericTilesInit();
 
-	irq_scanline[0] = 120/2;
-	irq_scanline[1] = 240/2;
-	irq_scanline[2] = 120/2;
-	irq_scanline[3] = 240/2;
+	irq_scanline[0] = 120;
+	irq_scanline[1] = 240;
+	irq_scanline[2] = 120;
+	irq_scanline[3] = 240;
 
 	DrvDoReset();
 
@@ -903,9 +909,9 @@ static INT32 MarkhamInit()
 	GenericTilemapSetScrollRows(0, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM1, 3, 8, 8, 0x10000, 0x200, 0x3f);
 
-	irq_scanline[0] = 240/2;
+	irq_scanline[0] = 240;
 	irq_scanline[1] = -1;
-	irq_scanline[2] = 240/2;
+	irq_scanline[2] = 240;
 	irq_scanline[3] = -1;
 	
 	DrvDoReset();
@@ -941,7 +947,7 @@ static void DrvPaletteInit()
 
 static void draw_sprites()
 {
-	for (INT32 offs = 0x60; offs < 0x100; offs +=4)
+	for (INT32 offs = 0x60; offs < 0x100; offs += 4)
 	{
 		INT32 code  = DrvSprRAM[offs + 1];
 		INT32 color = DrvSprRAM[offs + 2];
@@ -963,8 +969,8 @@ static void draw_sprites()
 
 		px = px & 0xff;
 
-		if (px > 248)
-			px = px - 256;
+	    if (px > 248)
+	    	px = px - 256;
 
 		RenderTileTranstab(pTransDraw, DrvGfxROM0, code, (color & 0x3f) << 3, 0, px - 8, py - 16, flipscreen, flipscreen, 16, 16, DrvTransTab);
 	}
@@ -1013,10 +1019,12 @@ static INT32 StrnskilDraw()
 		}
 	}
 
-//	GenericTilemapSetFlip(0, (flipscreen) ? TMAP_FLIPXY : 0);
-	GenericTilemapDraw(0, pTransDraw, -1);
+	BurnTransferClear();
 
-	draw_sprites();
+//	GenericTilemapSetFlip(0, (flipscreen) ? TMAP_FLIPXY : 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, -1);
+
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1109,28 +1117,43 @@ static INT32 DrvFrame()
 		if (DrvJoy2[1] && DrvJoy2[0]) DrvInputs[1] &= ~0x03;
 	}
 
-	INT32 nInterleave = 256/2;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 4000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == irq_scanline[0]) { ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); irq_source = 1; };
-		if (i == irq_scanline[1]) { ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); irq_source = 0; };
+		if (i == irq_scanline[0]) { ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); irq_source = 0; };
+		if (i == irq_scanline[1]) { ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); irq_source = 1; };
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-		if (i == irq_scanline[2]) { ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); };
-		if (i == irq_scanline[3]) { ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); };
+		if (i == irq_scanline[2]) { ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); };
+		if (i == irq_scanline[3]) {	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); };
 		ZetClose();
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			SN76496Update(1, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			SN76496Update(1, pSoundBuf, nSegmentLength);
+		}
 	}
 
 	if (pBurnDraw) {
@@ -1140,7 +1163,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1148,7 +1171,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -1159,7 +1182,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 		SN76496Scan(nAction, pnMin);
 		BurnRandomScan(nAction);
-	
+
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(irq_source);
 		SCAN_VAR(scroll_control);

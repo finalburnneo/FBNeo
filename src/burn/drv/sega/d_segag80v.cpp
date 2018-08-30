@@ -1839,7 +1839,7 @@ STD_ROM_PICK(spacfurya)
 STD_ROM_FN(spacfurya)
 
 struct BurnDriver BurnDrvSpacfurya = {
-	"spacfurya", "spacfury", NULL, NULL, "1981",
+	"spacfurya", "spacfury", NULL, "spacfury", "1981",
 	"Space Fury (revision A)\0", NULL, "Sega", "G80 Vector",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
@@ -1879,7 +1879,7 @@ STD_ROM_PICK(spacfuryb)
 STD_ROM_FN(spacfuryb)
 
 struct BurnDriver BurnDrvSpacfuryb = {
-	"spacfuryb", "spacfury", NULL, NULL, "1981",
+	"spacfuryb", "spacfury", NULL, "spacfury", "1981",
 	"Space Fury (revision B)\0", NULL, "Sega", "G80 Vector",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,

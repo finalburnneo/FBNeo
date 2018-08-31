@@ -3,6 +3,7 @@
 // Alex Pasadyn, Howie Cohen, Frank Palazzolo, Ernesto Corvi, and Aaron Giles
 
 // to do:
+//  collisions don't work (turbo)
 //	add 9-seg support (i8279)
 //	bug testing
 //	fixing sounds (subroc3d is bad)
@@ -70,8 +71,8 @@ static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo TurboInputList[] = {
-	{"Coin 1",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
-	{"Start",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},

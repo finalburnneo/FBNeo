@@ -3,7 +3,6 @@
 // Alex Pasadyn, Howie Cohen, Frank Palazzolo, Ernesto Corvi, and Aaron Giles
 
 // to do:
-//	analog inputs for turbo
 //	add 9-seg support (i8279)
 //	bug testing
 //	fixing sounds (subroc3d is bad)
@@ -61,26 +60,27 @@ static UINT8 buckrog_mov;
 static UINT8 buckrog_fchg;
 static UINT8 buckrog_obch;
 
+static INT32 DrvDial; // turbo
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
+static UINT8 DrvJoy4[8]; //fake
 static UINT8 DrvDips[3];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo TurboInputList[] = {
 	{"Coin 1",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
-	{"Coin 2",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"Start",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
 
-	// analog placeholder
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 4"	},
-
-	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy1 + 4,	"diag"	    },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
@@ -99,7 +99,7 @@ static struct BurnInputInfo Subroc3dInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 5,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 4,	"diag"	    },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -337,7 +337,7 @@ static void __fastcall turbo_write(UINT16 address, UINT8 data)
 	if ((address & 0xff00) == 0xfc00) address &= ~0x00fe;
 
 	if ((address & 0xf800) == 0xb800) {
-		turbo_last_analog = 0; // ioport("DIAL")->read(); // iq_132
+		turbo_last_analog = DrvDial;
 		return;
 	}
 
@@ -699,7 +699,7 @@ static void turbo_ppi2c_write(UINT8 data)
 
 static UINT8 turbo_ppi3a_read()
 {
-	return /*ioport("DIAL")->read()*/ 0 - turbo_last_analog; // iq_132
+	return DrvDial - turbo_last_analog;
 }
 
 static UINT8 turbo_ppi3b_read()
@@ -953,7 +953,9 @@ static INT32 DrvDoReset()
 	buckrog_mov = 0;
 	buckrog_fchg = 0;
 	buckrog_obch = 0;
-	
+
+	DrvDial = 0;
+
 	return 0;
 }
 
@@ -2275,6 +2277,12 @@ static INT32 TurboFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+
+		if (DrvJoy4[0]) DrvDial-=4;
+		if (DrvJoy4[1]) DrvDial+=4;
+		if (DrvDial > 0xff) DrvDial = 0;
+		if (DrvDial < 0x00) DrvDial = 0xff;
+
 	}
 
 	INT32 nInterleave = 128; // 256/2

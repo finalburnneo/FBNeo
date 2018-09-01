@@ -2,7 +2,6 @@
 // Based on MAME driver by Mike Balfour
 
 // to do:
-//	analog inputs
 //	hook up samples?
 
 #include "tiles_generic.h"
@@ -30,13 +29,14 @@ static UINT8 steering_val;
 static UINT8 last_steering_val;
 static INT32 steering_buf;
 static UINT8 ac_line;
-static UINT8 m_gear;
+static INT32 m_gear;
 static UINT8 m_track;
 
 static INT32 vblank;
 
 static UINT8 DrvJoy1[8];
-static UINT8 DrvJoy2[8];
+static UINT8 DrvJoy2f[8];
+static UINT8 DrvJoy3f[8];
 static UINT8 DrvDips[3];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
@@ -44,16 +44,14 @@ static UINT8 DrvReset;
 static struct BurnInputInfo NitedrvrInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 5"	},
-	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 6"	},
-	{"P1 Button 7",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 7"	},
-	{"P1 Button 8",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 8"	},
-// analog placeholder
-	{"P1 Button 9",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 9"	},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3f + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy3f + 0,	"p1 right"	},
+	{"P1 Accelerator",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
+	{"P1 Gear Up",		BIT_DIGITAL,	DrvJoy2f + 0,	"p1 fire 2"	},
+	{"P1 Gear Down",	BIT_DIGITAL,	DrvJoy2f + 1,	"p1 fire 3"	},
+	{"P1 Novice Track",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 4"	},
+	{"P1 Expert Track",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 5"	},
+	{"P1 Pro Track",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 6"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -65,32 +63,32 @@ STDINPUTINFO(Nitedrvr)
 
 static struct BurnDIPInfo NitedrvrDIPList[]=
 {
-	{0x0c, 0xff, 0xff, 0x90, NULL					},
-	{0x0d, 0xff, 0xff, 0xe0, NULL					},
-	{0x0e, 0xff, 0xff, 0xc0, NULL					},
+	{0x0b, 0xff, 0xff, 0x90, NULL					},
+	{0x0c, 0xff, 0xff, 0xa0, NULL					},
+	{0x0d, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    3, "Coinage"				},
-	{0x0c, 0x01, 0x30, 0x30, "2 Coins 1 Credits"	},
-	{0x0c, 0x01, 0x30, 0x10, "1 Coin  1 Credits"	},
-	{0x0c, 0x01, 0x30, 0x00, "1 Coin  2 Credits"	},
+	{0x0b, 0x01, 0x30, 0x30, "2 Coins 1 Credits"	},
+	{0x0b, 0x01, 0x30, 0x10, "1 Coin  1 Credits"	},
+	{0x0b, 0x01, 0x30, 0x00, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Playing Time"			},
-	{0x0c, 0x01, 0xc0, 0x00, "50"					},
-	{0x0c, 0x01, 0xc0, 0x40, "75"					},
-	{0x0c, 0x01, 0xc0, 0x80, "100"					},
-	{0x0c, 0x01, 0xc0, 0xc0, "125"					},
+	{0x0b, 0x01, 0xc0, 0x00, "50"					},
+	{0x0b, 0x01, 0xc0, 0x40, "75"					},
+	{0x0b, 0x01, 0xc0, 0x80, "100"					},
+	{0x0b, 0x01, 0xc0, 0xc0, "125"					},
 
 	{0   , 0xfe, 0   ,    2, "Track Set"			},
-	{0x0d, 0x01, 0x10, 0x00, "Normal"				},
-	{0x0d, 0x01, 0x10, 0x10, "Reverse"				},
+	{0x0c, 0x01, 0x10, 0x00, "Normal"				},
+	{0x0c, 0x01, 0x10, 0x10, "Reverse"				},
 
 	{0   , 0xfe, 0   ,    2, "Bonus Time"			},
-	{0x0d, 0x01, 0x20, 0x00, "No"					},
-	{0x0d, 0x01, 0x20, 0x20, "Score = 350"			},
+	{0x0c, 0x01, 0x20, 0x00, "No"					},
+	{0x0c, 0x01, 0x20, 0x20, "Score = 350"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x0d, 0x01, 0x80, 0x00, "On"					},
-	{0x0d, 0x01, 0x80, 0x80, "Off"					},
+	{0x0c, 0x01, 0x80, 0x00, "On"					},
+	{0x0c, 0x01, 0x80, 0x80, "Off"					},
 
 	{0   , 0xfe, 0   ,    2, "Difficult Bonus"		},
 	{0x0d, 0x01, 0x20, 0x00, "Normal"				},
@@ -101,26 +99,12 @@ STDDIPINFO(Nitedrvr)
 
 static INT32 nitedrvr_steering()
 {
-	INT32 this_val = 0; // ioport("STEER")->read();
-	INT32 delta = this_val - last_steering_val;
-
-	last_steering_val = this_val;
-
-	if (delta > 128)
-		delta -= 256;
-	else if (delta < -128)
-		delta += 256;
-
-	steering_buf += (delta / 4);
-
-	if (steering_buf > 0)
+	if (DrvJoy3f[0])
 	{
-		steering_buf--;
 		steering_val = 0xc0;
 	}
-	else if (steering_buf < 0)
+	else if (DrvJoy3f[1])
 	{
-		steering_buf++;
 		steering_val = 0x80;
 	}
 	else
@@ -133,12 +117,19 @@ static INT32 nitedrvr_steering()
 
 static UINT8 nitedrvr_in0_r(UINT8 offset)
 {
-	INT32 gear = DrvInputs[1];
+	{ // gear logic
+		static INT32 last = 0;
+		if ((last & (1<<0)) == 0 && DrvInputs[1] & (1<<0)) {
+			m_gear++;
+		}
+		if ((last & (1<<1)) == 0 && DrvInputs[1] & (1<<1)) {
+			m_gear--;
+		}
+		last = DrvInputs[1];
 
-	if (gear & 0x10) m_gear = 1;
-	else if (gear & 0x20) m_gear = 2;
-	else if (gear & 0x40) m_gear = 3;
-	else if (gear & 0x80) m_gear = 4;
+		if (m_gear < 1) m_gear = 1;
+		if (m_gear > 4) m_gear = 4;
+	}
 
 	switch (offset & 0x03)
 	{
@@ -148,7 +139,7 @@ static UINT8 nitedrvr_in0_r(UINT8 offset)
 		case 0x01:
 			return (DrvDips[1] & ~0x40) | (vblank ? 0x40 : 0);
 
-		case 0x02: 
+		case 0x02:
 			if (m_gear == 1)
 				return 0xe0;
 			else if (m_gear == 2)
@@ -159,7 +150,7 @@ static UINT8 nitedrvr_in0_r(UINT8 offset)
 				return 0x70;
 
 		case 0x03:
-			return (DrvDips[2] | nitedrvr_steering());
+			return ((DrvDips[2] & 0x20) | nitedrvr_steering());
 	}
 
 	return 0xff;
@@ -312,7 +303,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	m_track = 0;
 	steering_val = 0;
 	last_steering_val = 0;
-	m_gear = 0;
+	m_gear = 1;
 
 	return 0;
 }
@@ -483,7 +474,7 @@ static INT32 DrvFrame()
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
-			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2f[i] & 1) << i;
 		}
 	}
 
@@ -491,7 +482,7 @@ static INT32 DrvFrame()
 	vblank = 0;
 	M6502Run(16285);
 	vblank = 1;
-	M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD); // do we have hold?
+	M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	M6502Run(1399);
 	M6502Close();
 
@@ -563,7 +554,7 @@ STD_ROM_FN(nitedrvr)
 
 struct BurnDriver BurnDrvNitedrvr = {
 	"nitedrvr", NULL, NULL, NULL, "1976",
-	"Night Driver\0", NULL, "Atari", "Miscellaneous",
+	"Night Driver\0", "No sound", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, nitedrvrRomInfo, nitedrvrRomName, NULL, NULL, NitedrvrInputInfo, NitedrvrDIPInfo,

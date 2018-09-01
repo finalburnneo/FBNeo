@@ -397,7 +397,7 @@ static void segausb_update_int(INT16 *outputs, int samples)
 		  WEIGHT
 
 		*/
-		*dest++ = 4000 * step_cr_filter(&m_final_filter, sample);
+		*dest++ = BURN_SND_CLIP(4000 * step_cr_filter(&m_final_filter, sample));
 	}
 }
 

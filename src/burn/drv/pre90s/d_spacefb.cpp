@@ -607,6 +607,30 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static void dcfilter_dac()
+{
+	// dc-blocking filter
+	static INT16 dac_lastin_r  = 0;
+	static INT16 dac_lastout_r = 0;
+	static INT16 dac_lastin_l  = 0;
+	static INT16 dac_lastout_l = 0;
+
+	for (INT32 i = 0; i < nBurnSoundLen; i++) {
+		INT16 r = pBurnSoundOut[i*2+0];
+		INT16 l = pBurnSoundOut[i*2+1];
+
+		INT16 outr = r - dac_lastin_r + 0.995 * dac_lastout_r;
+		INT16 outl = l - dac_lastin_l + 0.995 * dac_lastout_l;
+
+		dac_lastin_r = r;
+		dac_lastout_r = outr;
+		dac_lastin_l = l;
+		dac_lastout_l = outl;
+		pBurnSoundOut[i*2+0] = outr;
+		pBurnSoundOut[i*2+1] = outl;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -656,6 +680,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		dcfilter_dac();
 	}
 
 	I8039Close();

@@ -193,12 +193,16 @@
 <li>M6800-series gets multi-cpu support [dink]</li>
 <li>Improved timing for M6800, M6809, M6502 cpu's [dink]</li>
 <li>Added M6809GetPrevPC() to M6809 cpu core [dink]</li>
-<li>Fixed erratic movement when using mouse to control Lightgun/analog games and moving fast [dink]</li>
+<li>Fixed erratic movement when moving fast while using mouse to control Lightgun/analog games [dink]</li>
 <li>Added analog-style paddle inputs to burn_gun device, with velocity [dink]</li>
-<li>Added driver for Moon Patrol by IREM on M52 hardware [iq_132]</li>
-<li>Added driver for Tropical Angel by IREM on M57 hardware [iq_132]</li>
 <li>Added device for common IREM M52-M62 sound hardware [iq_132]</li>
 <li>Improvements to vector-based drawing [iq_132, dink]</li>
+<li>Added BurnGunDrawTargets() to burn_gun device [dink]</li>
+<li>Added ability to unmap memory in the m6502 cpu core [iq_132]</li>
+<li>Hook up real C-Chip for Operation Wolf and remove the C-Chip simulation code, big thanks to Caps0ff for dumping this! [dink, Caps0ff]</li>
+<li>Work around graphics corruption in the crystal ball in Altered Beast set 8 (parent set) [dink]</li>
+<li>Ported SP0250 speech synth core, for Sega G80 [dink]</li>
+<li>Added multi-cpu support to the i8039 cpu core (for G80 Vector + Sega's Universal Sound Board emulation) [iq_132]</li>
 <li> []</li>
 </ul>
 <!-- new drivers -->
@@ -235,6 +239,18 @@
 <li>Added driver for Defender, Stargate, Joust, Robotron 2084, Blaster, Sinistar, Jin, Splat, Bubbles and Colony 7 on Williams 6809 Hardware [iq_132, dink]</li>
 <li>Added driver for Asteroids and Asteroids Deluxe [iq_132, dink]</li>
 <li>Added driver for Shisen Sho / Match It [iq_132]</li>
+<li>Added driver for Moon Patrol by IREM on M52 hardware [iq_132]</li>
+<li>Added driver for Tropical Angel by IREM on M57 hardware [iq_132]</li>
+<li>Added driver for Omega Race [iq_132, dink]</li>
+<li>Added driver for Star Wars and The Empire Strikes Back [iq_132, dink]</li>
+<li>Added driver for 10 Yard Fight on IREM M58 Hardware [iq_132]</li>
+<li>Added driver for Gaelco's Target Hits [iq_132]</li>
+<li>Added driver for Night Driver by Atari [iq_132]</li>
+<li>Added driver for Tank Busters by Valadon Automation [iq_132]</li>
+<li>Added driver for Mirage Youjuu Mahjongden [iq_132]</li>
+<li>Added driver for Sega's VCO Object/Z80-3D hardware (WIP) for Turbo, Subroc-3d, Buck Rogers/Zoom909 *WIP/Unfinished!* [iq_132]</li>
+<li>Added driver for Super Trivia Master and Progressive Music Trivia [iq_132]</li>
+<li>Added driver for Tac/Scan, Star Trek, Zektor, Eliminator and Space Fury on Sega's G80 Vector HW [iq_132, dink]</li>
 </ul>
 <!-- new game additions to existing drivers -->
 <h4>New additions / updates to existing drivers</h4>
@@ -250,6 +266,7 @@
 <li>Add Royal Stone English translation the SMS/GameGear driver [barbudreadmon]</li>
 <li>Add Titan (Pac-Man hack) to the Pac-Man driver [Craig Anstett, CraftyMech, JacKc]</li>
 <li>Added Kabuki-Z to the public builds of FB Alpha - somehow this was overlooked, sorry about that! [dink]</li>
+<li>Added Ikki, Strength and Skill, and Banbam to the Markham driver [iq_132]</li>
 </ul>
 <!-- clones and updated romsets in drivers -->
 <h4>Clones and updated romsets in existing drivers</h4>

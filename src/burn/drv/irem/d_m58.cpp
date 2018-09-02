@@ -1,6 +1,9 @@
 // FB Alpha Irem M58 driver module
 // Based on MAME driver by Lee Taylor
 
+// tofix:
+// black numbers under football @ start should not be there
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "irem_sound.h"
@@ -394,7 +397,7 @@ static INT32 DrvInit()
 	GenericTilesInit();
 	GenericTilemapInit(0, bg_map_scan, bg_map_callback, 8, 8, 64, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 3, 8, 8, 0x10000, 0, 0x1f);
-//	GenericTilemapSetOffsets(0, 0, -42);
+	GenericTilemapSetOffsets(0, 0, -8);
 
 	DrvDoReset();
 
@@ -454,19 +457,19 @@ static void DrvPaletteInit()
 
 static void draw_scroll_panel()
 {
-	for (INT32 offset = 0; offset < (nScreenHeight * 16); offset++)
+	for (INT32 offset = 0; offset < ((nScreenHeight + 16) * 16); offset++)
 	{
 		INT32 sx = (offset & 0xf);
 		INT32 sy = (offset >> 4);
 
-		if (sx < 1 || sx > 14)
+		if (sx < (1 + 2) || sx > 14 || (sy - 16) < 0) // + 2 on sx check is to take care of the 16px offset
 			continue;
 
 		sx = 4 * (sx - 1);
 
 		INT32 data = DrvScrollPanel[offset];
 		INT32 color = (sy & 0xfc) + 0x100;
-		UINT16 *dst = pTransDraw + sy * nScreenWidth + sx + (nScreenWidth - 56);
+		UINT16 *dst = pTransDraw + (sy - 16) * nScreenWidth + sx + (nScreenWidth - 56);
 
 		for (INT32 i = 0; i < 4; i++)
 		{
@@ -527,8 +530,8 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	if ((nBurnLayer & 1) == 0) BurnTransferClear();
-	
+	BurnTransferClear();
+
 	GenericTilemapSetScrollX(0, scrollx);
 	GenericTilemapSetScrollY(0, scrolly);
 	if ((nBurnLayer & 1) == 1) GenericTilemapDraw(0, pTransDraw, 0);
@@ -581,11 +584,13 @@ static INT32 DrvFrame()
 		nCyclesDone[1] += M6803Run(nCyclesTotal[1] / nInterleave);
 		
 		MSM5205Update();
+		IremSoundClockSlave();
 	}
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	M6803Close();

@@ -143,7 +143,7 @@ static UINT8 __fastcall m57_main_read(UINT16 address)
 
 		case 0xd003:
 		case 0xd004:
-			return DrvDips[address & 1];
+			return DrvDips[(address & 1) ^ 1];
 	}
 
 	return 0;
@@ -470,11 +470,7 @@ static INT32 DrvFrame()
 		nCyclesDone[1] = M6803Run(nCyclesTotal[1] / nInterleave);
 
 		MSM5205Update();
-		if (IremSlaveMSM5205VClckReset) {
-			MSM5205VCLKWrite(1, 1);
-			MSM5205VCLKWrite(1, 0);
-			IremSlaveMSM5205VClckReset = 0;
-		}
+		IremSoundClockSlave();
 	}
 
 	if (pBurnSoundOut) {

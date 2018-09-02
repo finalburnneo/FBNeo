@@ -24,10 +24,12 @@ static void (*pAY8910P1ACb)(UINT8 data) = NULL;
 
 void IremSoundWrite(UINT8 d)
 {
-	IremSoundLatch = d;
 	if ((d & 0x80) == 0) {
+		IremSoundLatch = d;
+	} else {
 		M6803SetIRQLine(M6803_IRQ_LINE, CPU_IRQSTATUS_ACK);
 	}
+
 }
 
 INT32 IremSoundReset()
@@ -130,7 +132,7 @@ static void IremM6803WriteByte(UINT16 a, UINT8 d)
 	{
 		if (a < 0x2000) {
 			if (a & 1) MSM5205DataWrite(0, d);
-			if ((a & 2) && bHasMSM5205_1) MSM5205DataWrite(0, d);
+			if ((a & 2) && bHasMSM5205_1) MSM5205DataWrite(1, d);
 			return;
 		}
 
@@ -229,8 +231,19 @@ static void IremMSM5205Vck0()
 {
 	M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 	IremSlaveMSM5205VClckReset = 1;
+	// second chip is clocked in driver under MSM5205Update(); with IremSoundClockSlave();
 }
 
+void IremSoundClockSlave()
+{
+	if (bHasMSM5205_1 && IremSlaveMSM5205VClckReset) {
+		MSM5205VCLKWrite(1, 1);
+		MSM5205VCLKWrite(1, 0);
+		IremSlaveMSM5205VClckReset = 0;
+	}
+}
+
+// type 2 = 10 yard fight
 void IremSoundInit(UINT8 *pZ80ROM, INT32 nType, INT32 nZ80Clock)
 {
 	IremM6803Rom = pZ80ROM;
@@ -258,8 +271,8 @@ void IremSoundInit(UINT8 *pZ80ROM, INT32 nType, INT32 nZ80Clock)
 
 	MSM5205Init(0, IremSynchroniseStream, 384000, IremMSM5205Vck0, MSM5205_S96_4B, 1);
 	MSM5205Init(1, IremSynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
-	MSM5205SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
-	MSM5205SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(0, (nType == 2) ? 0.80 : 0.20, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(1, (nType == 2) ? 0.80 : 0.20, BURN_SND_ROUTE_BOTH);
 
 	IremZ80Clock = nZ80Clock;
 	IremM6803Clock = 894886;

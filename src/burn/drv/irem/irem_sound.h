@@ -4,6 +4,7 @@
 
 void IremSoundWrite(UINT8 d);
 extern UINT8 IremSlaveMSM5205VClckReset;
+void IremSoundClockSlave();
 
 INT32 IremSoundReset();
 void IremSoundInit(UINT8 *pZ80ROM, INT32 nType, INT32 nZ80Clock);

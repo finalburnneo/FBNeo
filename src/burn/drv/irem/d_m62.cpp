@@ -4862,11 +4862,7 @@ static INT32 M62Frame()
 
 		MSM5205Update();
 #ifdef USE_SOUND_DEVICE
-		if (IremSlaveMSM5205VClckReset) {
-			MSM5205VCLKWrite(1, 1);
-			MSM5205VCLKWrite(1, 0);
-			IremSlaveMSM5205VClckReset = 0;
-		}
+		IremSoundClockSlave();
 #else
 		if (M62SlaveMSM5205VClckReset) {
 			MSM5205VCLKWrite(1, 1);

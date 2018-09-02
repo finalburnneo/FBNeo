@@ -2,7 +2,9 @@
 // Based on MAME driver by Lee Taylor
 
 // tofix:
-// black numbers under football @ start should not be there
+//  black numbers under football @ start before ball is in the air should not
+//      be there (sprite transmask stuff?)
+//  flickery sprites issues (timing? / see titlescreen letters animation etc)
 
 #include "tiles_generic.h"
 #include "z80_intf.h"

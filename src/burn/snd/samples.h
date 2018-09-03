@@ -18,6 +18,8 @@ INT32  BurnSampleGetStatus(INT32 sample);
 INT32  BurnSampleGetPosition(INT32 sample);
 void BurnSampleSetPosition(INT32 sample, UINT32 position);
 
+// how fast is playback for this sample? (0-400%)
+void BurnSampleSetPlaybackRate(INT32 sample, INT32 rate); 
 void BurnSampleReset();
 
 void BurnSampleInit(INT32 bAdd);

@@ -22,10 +22,11 @@ struct sample_format
 {
 	UINT8 *data;
 	UINT32 length;
-	UINT32 position;
+	UINT64 position;
 	UINT8 playing;
 	UINT8 loop;
 	UINT8 flags;
+	INT32 playback_rate; // 100 = 100%, 200 = 200%, 
 	double gain[2];
 	INT32 output_dir[2];
 };
@@ -69,12 +70,12 @@ static void make_raw(UINT8 *src, UINT32 len)
 
 	sample_ptr->data = (UINT8*)BurnMalloc(converted_len * 4);
 
-	//	up/down sample everything and convert to raw 16 bit stereo
+	// up/down sample everything and convert to raw 16 bit stereo
 	INT16 *data = (INT16*)sample_ptr->data;
 	INT16 *poin = (INT16*)ptr;
 	UINT8 *poib = ptr;
 
-	if (sample_rate == nBurnSoundRate)
+	if ((INT32)sample_rate == nBurnSoundRate)
 	{
 		// don't try to interpolate, just copy
 		bprintf(0, _T("Sample at native rate already..\n"));
@@ -160,22 +161,9 @@ static void make_raw(UINT8 *src, UINT32 len)
 	}
 
 	{ // sample cleanup
-#if 0
-		// note: data is INT16 so this is probably not needed..
-		// now go through and set the gain (clipping check)
-		for (UINT32 i = 0; i < converted_len * 2; i++)
-		{
-			INT32 d = data[i];
-			if (d >  0x7fff) d =  0x7fff;
-			if (d < -0x7fff) d = -0x7fff;
-			data[i] = (INT16)d;
-		}
-#endif
-		//bprintf(0, _T("converted_len before: %X [%d]\n"), converted_len, converted_len);
 		if (bBurnSampleTrimSampleEnd) { // trim silence off the end of the sample, bBurnSampleTrimSampleEnd must be set before init!
 			while (data[converted_len * 2] == 0) converted_len -= 2;
 		}
-		//bprintf(0, _T("converted_len after : %X [%d]\n"), converted_len, converted_len);
 	}
 
 	sample_ptr->length = converted_len;
@@ -240,6 +228,7 @@ void BurnSampleStop(INT32 sample)
 	sample_ptr = &samples[sample];
 	sample_ptr->playing = 0;
 	sample_ptr->position = 0;
+	//sample_ptr->playback_rate = 100; // 100% // on load and reset, only!
 }
 
 void BurnSampleSetLoop(INT32 sample, bool dothis)
@@ -257,11 +246,7 @@ void BurnSampleSetLoop(INT32 sample, bool dothis)
 
 INT32 BurnSampleGetStatus(INT32 sample)
 {
-//#if defined FBA_DEBUG
-//	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleGetStatus called without init\n"));
-//#endif
-
-	// this is also used to see if samples iniitted and/or the game has samples.
+	// this is also used to see if samples initialized and/or the game has samples.
 
 	if (sample >= nTotalSamples) return -1;
 
@@ -278,7 +263,7 @@ INT32 BurnSampleGetPosition(INT32 sample)
 	if (sample >= nTotalSamples) return -1;
 
 	sample_ptr = &samples[sample];
-	return (sample_ptr->position);
+	return (sample_ptr->position / 0x10000);
 }
 
 void BurnSampleSetPosition(INT32 sample, UINT32 position)
@@ -290,7 +275,20 @@ void BurnSampleSetPosition(INT32 sample, UINT32 position)
 	if (sample >= nTotalSamples) return;
 
 	sample_ptr = &samples[sample];
-	sample_ptr->position = position;
+	sample_ptr->position = position * 0x10000;
+}
+
+void BurnSampleSetPlaybackRate(INT32 sample, INT32 rate)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetPlaybackRate called without init\n"));
+	if (rate > 5000 || rate < 0) bprintf (PRINT_ERROR, _T("BurnSampleSetPlaybackRate called with unlikely rate (%d)!\n"), rate);
+#endif
+
+	if (sample >= nTotalSamples) return;
+
+	sample_ptr = &samples[sample];
+	sample_ptr->playback_rate = rate;
 }
 
 void BurnSampleReset()
@@ -301,9 +299,9 @@ void BurnSampleReset()
 
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		BurnSampleStop(i);
+		BurnSampleSetPlaybackRate(i, 100);
 
 		if (sample_ptr->flags & SAMPLE_AUTOLOOP) {
-			//bprintf(0, _T("set loop #%X\n"), i);
 			BurnSampleSetLoop(i, true); // this sets the loop flag, from the driver.
 		}
 	}
@@ -412,6 +410,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] = 1.00;
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] = BURN_SND_ROUTE_BOTH;
+		sample_ptr->playback_rate = 100;
 
 		BurnFree (destination);
 
@@ -435,6 +434,7 @@ void BurnSampleInitOne(INT32 sample)
 			if (clr_ptr->data != NULL && i != sample && (clr_ptr->flags & SAMPLE_NOSTORE)) {
 				BurnFree(clr_ptr->data);
 				clr_ptr->playing = 0;
+				clr_ptr->playback_rate = 100;
 				clr_ptr->data = NULL;
 			}
 
@@ -547,13 +547,13 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleRender called without init\n"));
 #endif
 
-	if (pBurnSoundOut == NULL) return;
+	if (pBurnSoundOut == NULL) {
+		return;
+	}
 
-	INT32 nFirstSample = 0;
-	UINT32 *dest = (UINT32*)pDest;
-
+	// if the sample player is the only, or the first, sound chip, clear out the sound buffer!
 	if (bAddToStream == 0) {
-		memset(dest, 0, pLen * 4); // clear buffer
+		memset (pDest, 0, pLen * 2 * sizeof(INT16)); // clear buffer
 	}
 
 	for (INT32 i = 0; i < nTotalSamples; i++)
@@ -562,143 +562,61 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 		if (sample_ptr->playing == 0) continue;
 
 		INT32 playlen = pLen;
-		INT32 loop = sample_ptr->loop;
 		INT32 length = sample_ptr->length;
-		INT32 position = sample_ptr->position;
+		UINT64 pos = sample_ptr->position;
+		INT32 playback_rate = (0x10000 * sample_ptr->playback_rate) / 100;
 
-		UINT32 *data = (UINT32*)sample_ptr->data;
-
-		if (loop) {
-			if (bAddToStream == 0 && nFirstSample == 0) {
-				position *= 2;
-				length *= 2;
-				INT16 *dst = (INT16*)dest;
-				INT16 *dat = (INT16*)data;
-				
-				for (INT32 j = 0; j < playlen; j++, position+=2, dst += 2) {
-					INT32 nLeftSample = 0, nRightSample = 0;
-					
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-						nLeftSample += (INT32)(dat[(position + 0) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
-					}
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-						nRightSample += (INT32)(dat[(position + 0) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
-					}
-					
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-						nLeftSample += (INT32)(dat[(position + 1) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
-					}
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-						nRightSample += (INT32)(dat[(position + 1) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
-					}
-					
-					nLeftSample = BURN_SND_CLIP(nLeftSample);
-					nRightSample = BURN_SND_CLIP(nRightSample);
-					
-					dst[0] = nLeftSample;
-					dst[1] = nRightSample;
-				}
-			} else {
-				position *= 2;
-				length *= 2;
-				INT16 *dst = (INT16*)dest;
-				INT16 *dat = (INT16*)data;
-				
-				for (INT32 j = 0; j < playlen; j++, position+=2, dst += 2) {
-					INT32 nLeftSample = 0, nRightSample = 0;
-					
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-						nLeftSample += (INT32)(dat[(position + 0) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
-					}
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-						nRightSample += (INT32)(dat[(position + 0) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
-					}
-					
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-						nLeftSample += (INT32)(dat[(position + 1) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
-					}
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-						nRightSample += (INT32)(dat[(position + 1) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
-					}
-					
-					nLeftSample = BURN_SND_CLIP(nLeftSample + dst[0]);
-					nRightSample = BURN_SND_CLIP(nRightSample + dst[1]);
-					
-					dst[0] = nLeftSample;
-					dst[1] = nRightSample;
-				}
+		INT16 *dst = pDest;
+		INT16 *dat = (INT16*)sample_ptr->data;
+		
+		if (sample_ptr->loop == 0) // if not looping, check to make sure sample is in bounds
+		{
+			INT32 current_pos = (pos / 0x10000);
+			// if sample position is greater than length, stop playback
+			if ((length - current_pos) <= 0) {
+				BurnSampleStop(i);
+				continue;
 			}
-		} else {
-			length = length - position;
 
-			if (length <= 0) {
-				if (loop == 0) {
-					sample_ptr->playing = 0;
-					continue;
+			// if samples remaining are less than playlen, set playlen to samples remaining
+			if (playlen > (length - current_pos)) playlen = length - current_pos;
+		}
+		
+		length *= 2; // (stereo) used to ensure position is within bounds
+				
+		for (INT32 j = 0; j < playlen; j++, dst+=2, pos+=playback_rate) {
+			INT32 nLeftSample = 0, nRightSample = 0;
+			UINT32 current_pos = (pos / 0x10000);
+			UINT32 position = current_pos * 2; // ~1
+
+			if (sample_ptr->loop == 0) // if not looping, check to make sure sample is in bounds
+			{
+				// if sample position is greater than length, stop playback
+				if ((sample_ptr->length - current_pos) <= 0) {
+					BurnSampleStop(i);
+					break;
 				}
 			}
 
-			data += position;
-			if (playlen > length) playlen = length;
-			if (bAddToStream == 0 && nFirstSample == 0) {
-				INT16 *dst = (INT16*)dest;
-				INT16 *dat = (INT16*)data;
-				
-				for (INT32 j = 0; j < playlen; j++, dst +=2, dat+=2) {
-					INT32 nLeftSample = 0, nRightSample = 0;
-					
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-						nLeftSample += (INT32)(dat[0] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
-					}
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-						nRightSample += (INT32)(dat[0] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
-					}
-					
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-						nLeftSample += (INT32)(dat[1] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
-					}
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-						nRightSample += (INT32)(dat[1] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
-					}
-					
-					nLeftSample = BURN_SND_CLIP(nLeftSample);
-					nRightSample = BURN_SND_CLIP(nRightSample);
-					
-					dst[0] = nLeftSample;
-					dst[1] = nRightSample;
-				}
-			} else {
-				INT16 *dst = (INT16*)dest;
-				INT16 *dat = (INT16*)data;
-
-				for (INT32 j = 0; j < playlen; j++, dst +=2, dat+=2) {
-					INT32 nLeftSample = 0, nRightSample = 0;
-					
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-						nLeftSample += (INT32)(dat[0] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
-					}
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-						nRightSample += (INT32)(dat[0] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
-					}
-					
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-						nLeftSample += (INT32)(dat[1] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
-					}
-					if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-						nRightSample += (INT32)(dat[1] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
-					}
-					
-					nLeftSample = BURN_SND_CLIP(nLeftSample + dst[0]);
-					nRightSample = BURN_SND_CLIP(nRightSample + dst[1]);
-					
-					dst[0] = nLeftSample;
-					dst[1] = nRightSample;
-				}
+			if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(dat[(position) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
 			}
+			if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(dat[(position) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
+			}
+
+			if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(dat[(position + 1) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
+			}
+			if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(dat[(position + 1) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
+			}
+
+			dst[0] = BURN_SND_CLIP(nLeftSample + dst[0]);
+			dst[1] = BURN_SND_CLIP(nRightSample + dst[1]);
 		}
 
-		sample_ptr->position += playlen;
-		nFirstSample++;
+		sample_ptr->position = pos; // store the updated position 
 	}
 }
 
@@ -718,6 +636,7 @@ void BurnSampleScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(sample_ptr->playing);
 			SCAN_VAR(sample_ptr->loop);
 			SCAN_VAR(sample_ptr->position);
+			SCAN_VAR(sample_ptr->playback_rate);
 		}
 	}
 }

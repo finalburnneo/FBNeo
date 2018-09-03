@@ -17,17 +17,18 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 *prev_snd_data;
+static INT32 explosion_counter = 0;
 
 static UINT16 shift_data;
 static UINT8 shift_count;
 static INT32 watchdog;
 
-static UINT8  DrvJoy1[8];
-static UINT8  DrvJoy2[8];
-static UINT8  DrvJoy3[8];
-static UINT8  DrvDips[1];
-static UINT8  DrvInputs[3];
-static UINT8  DrvReset;
+static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvJoy3[8];
+static UINT8 DrvDips[1];
+static UINT8 DrvInputs[3];
+static UINT8 DrvReset;
 static UINT32 inputxor=0;
 
 static struct BurnInputInfo InvadersInputList[] = {
@@ -138,8 +139,11 @@ static void invaders_sh_1_write(UINT8 data, UINT8 *last)
 {
 	if ( data & 0x01 && ~*last & 0x01) BurnSamplePlay(9);	// Ufo Sound
 	if ( data & 0x02 && ~*last & 0x02) BurnSamplePlay(0);	// Shot Sound
-	if ( data & 0x04 && ~*last & 0x04) BurnSamplePlay(1);	// Base Hit
-	if (~data & 0x04 &&  *last & 0x04) BurnSampleStop(1);
+	if ( data & 0x04 && ~*last & 0x04 && BurnSampleGetStatus(1) == 0 && explosion_counter == 0) {
+		BurnSamplePlay(1);	// Base Hit
+		explosion_counter = 120;
+	}
+	if (~data & 0x04 &&  *last & 0x04 && BurnSampleGetStatus(1) != 0) BurnSampleStop(1);
 	if ( data & 0x08 && ~*last & 0x08) BurnSamplePlay(2);	// Invader Hit
 	if ( data & 0x10 && ~*last & 0x10) BurnSamplePlay(8);	// Bonus Missle Base
 
@@ -214,6 +218,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	ZetClose();
 
 	BurnSampleReset();
+	explosion_counter = 0; // prevent double-playing sample
 
 	watchdog = 0;
 
@@ -392,6 +397,10 @@ static INT32 DrvFrame()
 
 	if (pBurnDraw) {
 		DrvDraw();
+	}
+	
+	if (explosion_counter) {
+		explosion_counter--;
 	}
 
 	return 0;

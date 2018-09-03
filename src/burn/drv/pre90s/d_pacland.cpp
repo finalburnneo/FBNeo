@@ -23,7 +23,6 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvMCURAM;
 static UINT8 *DrvMCUIRAM;
 static UINT8 *DrvSprMask;
-static UINT8 *pPrioBitmap;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -315,8 +314,6 @@ static INT32 MemIndex()
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0c00 * 4 * sizeof(UINT32);
 
-	pPrioBitmap		= Next; Next += 288 * 224;
-
 	DrvSprMask		= Next; Next += 0x000c00;
 
 	AllRam			= Next;
@@ -514,7 +511,7 @@ static INT32 DrvInit()
 	HD63701Close();
 
 	NamcoSoundInit(49152000/2/1024, 8, 0);
-	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH); // MAME uses 1.00, which is way too loud
+	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 
 	BurnLEDInit(2, LED_POSITION_BOTTOM_RIGHT, LED_SIZE_2x2, LED_COLOR_GREEN, 80);
 
@@ -543,16 +540,15 @@ static INT32 DrvExit()
 
 static void draw_bg_layer()
 {
-	INT32 scrollx = (scroll[1] + 27) & 0x1ff;
+	INT32 scrollx = (scroll[1] + 21) & 0x1ff;
 
-	for (INT32 offs = 2 * 64; offs < (64 * 32) - (2 * 64); offs++)
+	for (INT32 offs = 0; offs < (64 * 32); offs++)
 	{
 		INT32 sx = (offs & 0x3f) * 8;
 		INT32 sy = (offs / 0x40) * 8;
 
 		sx -= scrollx;
 		if (sx < -7) sx += 512;
-		if (sx >= nScreenWidth) continue;
 
 		INT32 attr  = DrvVidRAM1[offs * 2 + 0] + (DrvVidRAM1[offs * 2 + 1] << 8);
 		INT32 code  = (attr & 0x01ff);
@@ -561,12 +557,13 @@ static void draw_bg_layer()
 		INT32 flipx = (attr & 0x4000);
 
 		if (*flipscreen) {
-			sx = 280 - sx;
-			sy = 216 - sy;
+			sx = 454 - sx;
+			sy = 248 - sy;
 			flipy ^= 0x8000;
 			flipx ^= 0x4000;
 		}
 
+		if (sx >= nScreenWidth) continue;
 		if (flipy) {
 			if (flipx) {
 				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy-16, color, 2, 0x400, DrvGfxROM1);
@@ -587,16 +584,15 @@ static void draw_fg_layer(INT32 priority)
 {
 	UINT8 *coltable = DrvColPROM + 0x800;
 
-	INT32 scrollx = (scroll[0] + 24) & 0x1ff;
+	INT32 scrollx = (scroll[0] + 24 - ((*flipscreen) ? 7 : 0)) & 0x1ff;
 
-	for (INT32 offs = 2 * 64; offs < (64 * 32) - (2 * 64); offs++)
+	for (INT32 offs = 0; offs < (64 * 32); offs++)
 	{
 		INT32 sx = (offs & 0x3f) * 8;
 		INT32 sy = (offs / 0x40) * 8;
 
 		sx -= (sy >= 40 && sy < 232) ? scrollx : 24;
 		if (sx < -7) sx += 512;
-		if (sx >= nScreenWidth) continue;
 
 		INT32 attr  = DrvVidRAM0[offs * 2 + 0] + (DrvVidRAM0[offs * 2 + 1] << 8);
 		INT32 code  = (attr & 0x01ff);
@@ -606,11 +602,13 @@ static void draw_fg_layer(INT32 priority)
 		INT32 group = (attr & 0x2000) >> 13; // category
 
 		if (*flipscreen) {
-			sx = 280 - sx;
-			sy = 216 - sy;
+			sx = 457 - sx;
+			sy = 248 - sy;
 			flipy ^= 0x8000;
 			flipx ^= 0x4000;
 		}
+
+		if (sx >= nScreenWidth) continue;
 
 		if (group == priority)
 		{
@@ -629,7 +627,7 @@ static void draw_fg_layer(INT32 priority)
 					INT32 pxl = gfx[((y*8)+x)^flip] + color;
 
 					if ((coltable[pxl] & 0x7f) != 0x7f) {
-						if (!pPrioBitmap[sy * nScreenWidth + sx]) {
+						if (!pPrioDraw[sy * nScreenWidth + sx]) {
 							pTransDraw[sy * nScreenWidth + sx] = pxl;
 						}
 					}
@@ -654,7 +652,6 @@ static void draw_sprite(INT32 code, INT32 sx, INT32 sy, INT32 color, INT32 flipx
 	else	prio = 0;
 
 	color <<= 4;
-//	color += 0x800;
 
 	for (INT32 y = 0; y < 16; y++, sy++)
 	{
@@ -669,7 +666,7 @@ static void draw_sprite(INT32 code, INT32 sx, INT32 sy, INT32 color, INT32 flipx
 			if (mask[pxl]) continue;
 
 			pTransDraw[sy * nScreenWidth + sx] = pxl + 0x800;
-			pPrioBitmap[sy * nScreenWidth + sx] = prio;
+			pPrioDraw[sy * nScreenWidth + sx] = prio;
 		}
 
 		sx -= 16;
@@ -698,7 +695,7 @@ static void draw_sprites(INT32 priority)
 			flipy ^= 1;
 		}
 
-		sy = ((sy - 16 * sizey) & 0xff) - 32;	// fix wraparound
+		sy = ((sy - 16 * sizey) & 0xff) - 32;
 
 		for (INT32 y = 0; y <= sizey; y++)
 		{
@@ -717,21 +714,14 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	memset (pPrioBitmap, 0, 288 * 224 * sizeof(UINT8));
+	BurnTransferClear();
 
-	INT32 nLayer = nBurnLayer;
-
-	draw_sprites(0);
-
-	if (nLayer & 1) draw_bg_layer();
-
-	if (nLayer & 2) draw_fg_layer(0);
-
-	draw_sprites(1);
-
-	if (nLayer & 4) draw_fg_layer(1);
-
-	draw_sprites(2);
+	if (nSpriteEnable & 1) draw_sprites(0);
+	if (nBurnLayer & 1) draw_bg_layer();
+	if (nBurnLayer & 2) draw_fg_layer(0);
+	if (nSpriteEnable & 2) draw_sprites(1);
+	if (nBurnLayer & 4) draw_fg_layer(1);
+	if (nSpriteEnable & 4) draw_sprites(2);
 
 	BurnTransferCopy(DrvPalette + palette_bank[0] * 0xc00);
 

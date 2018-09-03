@@ -2,12 +2,15 @@
 // Based on and large pieces copied from (video code & sound code) MAME driver by 
 // Alex Pasadyn, Howie Cohen, Frank Palazzolo, Ernesto Corvi, and Aaron Giles
 
+// done:
+//  done: sample freq. hooked up to turbo. iq/dnk
+
 // to do:
+//  done: sample freq. hooked up to turbo.
 //  collisions don't work (turbo)
 //	add 9-seg support (i8279)
 //	bug testing
 //	fixing sounds (subroc3d is bad)
-//	adding some features to sample core--per sample frequency & volume?
 //	sound disabling
 //	clean up
 
@@ -658,7 +661,9 @@ static void turbo_update_samples()
 	}
 	
 	if (BurnSampleGetStatus(7)) {
-//		sample_set_freq(5, sample_get_base_freq(5) * ((turbo_accel & 0x3f) / 5.25 + 1)); // iq_132 sample player doesn't support this...
+		// my math sucks, there might be a better way to do this:  -dink
+		INT32 percentyderp = (((nBurnSoundRate * ((turbo_accel & 0x3f) / 5.25 + 1)) - nBurnSoundRate) / nBurnSoundRate * 100) + 100;
+		BurnSampleSetPlaybackRate(7, percentyderp);
 	}
 }
 
@@ -2288,6 +2293,7 @@ static INT32 TurboFrame()
 
 	INT32 nInterleave = 128; // 256/2
 	INT32 nCyclesTotal = 4992000 / 60;
+	INT32 nSoundBufferPos = 0;
 
 	ZetOpen(0);
 	
@@ -2295,12 +2301,23 @@ static INT32 TurboFrame()
 	{
 		ZetRun(nCyclesTotal / nInterleave);
 		if (i == 224/2) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+
+		if (pBurnSoundOut && i&1) { // samplizer needs less update-latency for the speed changes.
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnSampleRender(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 	
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			BurnSampleRender(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	if (pBurnDraw) {

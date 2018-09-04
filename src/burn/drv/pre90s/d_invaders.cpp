@@ -178,7 +178,7 @@ static void __fastcall invaders_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x05:
-			invaders_sh_2_write(data, &prev_snd_data[0]);
+			invaders_sh_2_write(data, &prev_snd_data[1]);
 		return;
 
 		case 0x06:
@@ -237,7 +237,7 @@ static INT32 MemIndex()
 
 	DrvMainRAM		= Next; Next += 0x002000;
 
-	prev_snd_data		= Next; Next += 0x000002;
+	prev_snd_data	= Next; Next += 0x000002;
 
 	RamEnd			= Next;
 
@@ -385,7 +385,7 @@ static INT32 DrvFrame()
 		}
 		if (i == 224) {
 			ZetSetVector(0xcf);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);	
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 	}
 
@@ -414,7 +414,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029695;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

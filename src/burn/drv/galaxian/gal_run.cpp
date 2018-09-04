@@ -1158,6 +1158,10 @@ void __fastcall TheendZ80Write(UINT16 a, UINT8 d)
 			GalFlipScreenY = d & 1;
 			return;
 		}
+
+		case 0x7005: {
+			return; // NOP
+		}
 		
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 #1 Write => %04X, %02X\n"), a, d);

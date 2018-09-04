@@ -16904,31 +16904,6 @@ void __fastcall MimonscrZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-static INT32 TheendInit()
-{
-	INT32 nRet;
-	
-	GalPostLoadCallbackFunction = MapTheend;
-	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
-	
-	nRet = GalInit(); if (nRet) return 1;
-	KonamiSoundInit();
-	
-	GalRenderBackgroundFunction = GalaxianDrawBackground;
-	GalDrawBulletsFunction = TheendDrawBullets;
-	
-	KonamiPPIInit();
-	
-	filter_rc_set_src_gain(0, 0.32);
-	filter_rc_set_src_gain(1, 0.32);
-	filter_rc_set_src_gain(2, 0.32);
-	filter_rc_set_src_gain(3, 0.32);
-	filter_rc_set_src_gain(4, 0.32);
-	filter_rc_set_src_gain(5, 0.32);
-	
-	return nRet;
-}
-
 static UINT8 ScramblePPIReadIN2()
 {
 	UINT8 Val = (ScrambleProtectionResult >> 7) & 1;
@@ -16947,18 +16922,67 @@ static UINT8 ScrambleProtectionRead()
 
 static void ScrambleProtectionWrite(UINT8 d)
 {
+	#define min(a,b) (((a)<(b))?(a):(b))
+    #define max(a,b) (((a)>(b))?(a):(b))
+
 	ScrambleProtectionState = (ScrambleProtectionState << 4) | (d & 0x0f);
-	
-	switch (ScrambleProtectionState & 0xfff) {
-		case 0xf09: ScrambleProtectionResult = 0xff; return;
-		case 0xa49: ScrambleProtectionResult = 0xbf; return;
-		case 0x319: ScrambleProtectionResult = 0x4f; return;
-		case 0x5c9: ScrambleProtectionResult = 0x6f; return;
-		
-		// scrambles
-		case 0x246: ScrambleProtectionResult ^= 0x80; return;
-		case 0xb5f: ScrambleProtectionResult = 0x6f; return;
+
+	const UINT8 num1 = (ScrambleProtectionState >> 8) & 0x0f;
+	const UINT8 num2 = (ScrambleProtectionState >> 4) & 0x0f;
+
+	switch (ScrambleProtectionState & 0x0f) {
+		case 0x6:
+		    // scrambles
+			ScrambleProtectionResult ^= 0x80;
+			break;
+		case 0x9:
+			// scramble
+			ScrambleProtectionResult = min(num1 + 1, 0xf) << 4;
+			break;
+		case 0xb:
+			// theend
+			ScrambleProtectionResult = max(num2 - num1, 0) << 4;
+			break;
+		case 0xa:
+			// theend
+			ScrambleProtectionResult = 0x00;
+			break;
+		case 0xf:
+			// scrambles
+			ScrambleProtectionResult = max(num1 - num2, 0) << 4;
+			break;
 	}
+    #undef min
+    #undef max
+}
+
+static INT32 TheendInit()
+{
+	INT32 nRet;
+	
+	GalPostLoadCallbackFunction = MapTheend;
+	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
+	
+	nRet = GalInit(); if (nRet) return 1;
+	KonamiSoundInit();
+	
+	GalRenderBackgroundFunction = GalaxianDrawBackground;
+	GalDrawBulletsFunction = TheendDrawBullets;
+	
+	KonamiPPIInit();
+
+	ppi8255_set_read_port(0, 0xc, ScramblePPIReadIN2);
+	ppi8255_set_read_port(1, 0xc, ScrambleProtectionRead);
+	ppi8255_set_write_port(1, 0xc, ScrambleProtectionWrite);
+	
+	filter_rc_set_src_gain(0, 0.32);
+	filter_rc_set_src_gain(1, 0.32);
+	filter_rc_set_src_gain(2, 0.32);
+	filter_rc_set_src_gain(3, 0.32);
+	filter_rc_set_src_gain(4, 0.32);
+	filter_rc_set_src_gain(5, 0.32);
+	
+	return nRet;
 }
 
 static INT32 ScrambleInit()

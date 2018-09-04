@@ -1149,7 +1149,7 @@ static void draw_block(const UINT8 *scale_table_ptr,INT32 scale_line_count,INT32
 	}
 }
 
-static void draw_sprites(UINT8 *source8, INT32 bank, INT32 colval, INT32 colmask)
+static void draw_sprites(UINT8 *source8, INT32 bank, INT32 pass)
 {
 	UINT16 *source = (UINT16*)source8;
 	const UINT8 *scale_table=DrvZoomTab;
@@ -1176,7 +1176,10 @@ static void draw_sprites(UINT8 *source8, INT32 bank, INT32 colval, INT32 colmask
 		INT32 fx=source[offs+0]&0x800;
 		sprite&=0x3fff;
 
-		if ((colour&colmask)!=colval)
+		// Palettes 0xc-0xf confirmed to be behind tilemap on Beast Busters
+		if (pass == 1 && (colour & 0xc) != 0xc)
+			continue;
+		if (pass == 0 && (colour & 0xc) == 0xc)
 			continue;
 
 		switch ((source[offs+0]>>8)&0x3)
@@ -1223,9 +1226,10 @@ static INT32 BbustersDraw()
 	BurnTransferClear();
 
 	if (nBurnLayer & 1) draw_layer(DrvPfRAM1, DrvGfxROM4, 0x500, 0, DrvPfScroll1, 0);
+	if (nSpriteEnable & 1) draw_sprites(DrvSprBuf + 0x1000, 2, 1);
 	if (nBurnLayer & 2) draw_layer(DrvPfRAM0, DrvGfxROM3, 0x300, 1, DrvPfScroll0, 0);
-	if (nSpriteEnable & 1) draw_sprites(DrvSprBuf + 0x1000, 2, 0, 0);
-	if (nSpriteEnable & 2) draw_sprites(DrvSprBuf + 0x0000, 1, 0, 0);
+	if (nSpriteEnable & 2) draw_sprites(DrvSprBuf + 0x1000, 2, 0);
+	if (nSpriteEnable & 4) draw_sprites(DrvSprBuf + 0x0000, 1, -1);
 	if (nBurnLayer & 4) draw_text_layer();
 
 	BurnTransferCopy(DrvPalette);
@@ -1248,7 +1252,7 @@ static INT32 MechattDraw()
 
 	if (nBurnLayer & 1) draw_layer(DrvPfRAM1, DrvGfxROM4, 0x300, 0, DrvPfScroll1, 1);
 	if (nBurnLayer & 2) draw_layer(DrvPfRAM0, DrvGfxROM3, 0x200, 1, DrvPfScroll0, 1);
-	if (nSpriteEnable & 2) draw_sprites(DrvSprBuf + 0x0000, 1, 0, 0);
+	if (nSpriteEnable & 2) draw_sprites(DrvSprBuf + 0x0000, 1, -1);
 	if (nBurnLayer & 4) draw_text_layer();
 
 	BurnTransferCopy(DrvPalette);

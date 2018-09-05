@@ -302,7 +302,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x020000;
 
 	DrvColPROM		= Next; Next += 0x000520;
-	
+
 	DrvPalette		= (UINT32*)Next; Next += 0x0300 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -520,8 +520,8 @@ static void draw_sprites()
 			sy2 = sy1 + 0x10;
 		}
 
-		Draw16x16MaskTile(pTransDraw, code1 + (bank * 256), sx, sy1, flipx, flipy, color, 3, 0, 0x200, DrvGfxROM1);
-		Draw16x16MaskTile(pTransDraw, code2 + (bank * 256), sx, sy2, flipx, flipy, color, 3, 0, 0x200, DrvGfxROM1);
+		if (nSpriteEnable & 1) RenderTileTranstabOffset(pTransDraw, DrvGfxROM1, code1 + (bank * 256), color << 3, 0x00, sx, sy1, flipx, flipy, 16, 16, DrvColPROM + 0x420, 0x200);
+		if (nSpriteEnable & 2) RenderTileTranstabOffset(pTransDraw, DrvGfxROM1, code2 + (bank * 256), color << 3, 0x00, sx, sy2, flipx, flipy, 16, 16, DrvColPROM + 0x420, 0x200);
 	}
 }
 

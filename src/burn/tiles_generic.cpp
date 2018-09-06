@@ -333,7 +333,7 @@ void Render8x8Tile(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 Sta
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile called without init\n"));
 #endif
 
-	UINT32 nPalette = (nTilePalette << nColourDepth ) | nPaletteOffset;
+	UINT32 nPalette = (nTilePalette << nColourDepth ) + nPaletteOffset;
 	pTileData = pTile + (nTileNumber << 6);
 
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
@@ -2069,7 +2069,7 @@ void RenderCustomTile(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTil
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile called without init\n"));
 #endif
 
-	UINT32 nPalette = (nTilePalette << nColourDepth ) | nPaletteOffset;
+	UINT32 nPalette = (nTilePalette << nColourDepth ) + nPaletteOffset;
 	pTileData = pTile + (nTileNumber * nWidth * nHeight);
 
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
@@ -2395,7 +2395,7 @@ void Render8x8Tile_Prio(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT3
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile called without init\n"));
 #endif
 
-	UINT32 nPalette = (nTilePalette << nColourDepth ) | nPaletteOffset;
+	UINT32 nPalette = (nTilePalette << nColourDepth ) + nPaletteOffset;
 	pTileData = pTile + (nTileNumber << 6);
 
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
@@ -4179,7 +4179,7 @@ void RenderCustomTile_Prio(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile called without init\n"));
 #endif
 
-	UINT32 nPalette = (nTilePalette << nColourDepth ) | nPaletteOffset;
+	UINT32 nPalette = (nTilePalette << nColourDepth ) + nPaletteOffset;
 	pTileData = pTile + (nTileNumber * nWidth * nHeight);
 
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;

@@ -44,6 +44,8 @@ static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 static UINT8 DrvInputs[8];
 
+static INT32 drgnbstr = 0;
+
 static INT32 nCyclesDone[2];
 
 static struct BurnInputInfo SkykidInputList[] = {
@@ -643,6 +645,8 @@ static INT32 DrvExit()
 
 	BurnFree (AllMem);
 
+	drgnbstr = 0;
+
 	return 0;
 }
 
@@ -767,7 +771,12 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 2) draw_fg_layer();
 
-	if (nSpriteEnable & 2 && *priority == 1) draw_sprites();
+	if (nSpriteEnable & 2 && *priority == 1) {
+		// dragon buster needs to keep sprites out of the HUD area
+		if (drgnbstr) GenericTilesSetClip(-1, -1, 2*8, -1);
+		draw_sprites();
+		if (drgnbstr) GenericTilesClearClip();
+	}
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1045,6 +1054,12 @@ struct BurnDriver BurnDrvSkykids = {
 	288, 224, 4, 3
 };
 
+static INT32 DrgnbstrInit()
+{
+	drgnbstr = 1;
+
+	return DrvInit();
+}
 
 // Dragon Buster
 
@@ -1079,6 +1094,6 @@ struct BurnDriver BurnDrvDrgnbstr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, drgnbstrRomInfo, drgnbstrRomName, NULL, NULL, SkykidInputInfo, DrgnbstrDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x500,
+	DrgnbstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x500,
 	288, 224, 4, 3
 };

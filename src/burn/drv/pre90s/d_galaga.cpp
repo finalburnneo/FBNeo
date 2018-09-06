@@ -7,6 +7,7 @@
 #include "z80_intf.h"
 #include "namco_snd.h"
 #include "samples.h"
+#include "earom.h"
 
 static UINT8 DrvInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -64,12 +65,6 @@ static UINT8 Config1[4], Config2[4], Config3[5];
 static INT32 playfield, alphacolor, playenable, playcolor;
 static INT32 digdugmode;
 static UINT8 bHasSamples = 0;
-
-// hi-score stuff! (atari earom)
-#define EAROM_SIZE	0x40
-static UINT8 earom_offset;
-static UINT8 earom_data;
-static UINT8 earom[EAROM_SIZE];
 
 static INT32 DrvButtonHold[2] = { 0, 0 }; // Fire button must be held for 1 frame
 static INT32 DrvButtonHeld[2] = { 0, 0 }; // otherwise Dig Dug acts strangely.
@@ -590,31 +585,6 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static UINT8 earom_read(UINT16 /*address*/)
-{
-	return (earom_data);
-}
-
-static void earom_write(UINT16 offset, UINT8 data)
-{
-	earom_offset = offset;
-	earom_data = data;
-}
-
-static void earom_ctrl_write(UINT16 /*offset*/, UINT8 data)
-{
-	/*
-		0x01 = clock
-		0x02 = set data latch? - writes only (not always)
-		0x04 = write mode? - writes only
-		0x08 = set addr latch?
-	*/
-	if (data & 0x01)
-		earom_data = earom[earom_offset];
-	if ((data & 0x0c) == 0x0c)
-		earom[earom_offset] = earom_data;
-}
-
 static INT32 DrvDoReset()
 {
 	for (INT32 i = 0; i < 3; i++) {
@@ -659,8 +629,7 @@ static INT32 DrvDoReset()
 	playenable = 0;
 	playcolor = 0;
 
-	earom_offset = 0;
-	earom_data = 0;
+	earom_reset();
 
 	HiscoreReset();
 
@@ -1163,7 +1132,7 @@ static void MachineInit()
 
 	GenericTilesInit();
 
-	memset(&earom, 0, sizeof(earom)); // don't put this in DrvDoReset()
+	earom_init();
 
 	// Reset the driver
 	DrvDoReset();
@@ -1336,7 +1305,9 @@ static INT32 DrvExit()
 	NamcoSoundExit();
 	BurnSampleExit();
 	ZetExit();
-	
+
+	earom_exit();
+
 	BurnFree(Mem);
 	
 	DrvCPU1FireIRQ = 0;
@@ -2214,13 +2185,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(playcolor);
 	}
 
-	if (nAction & ACB_NVRAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data		= earom;
-		ba.nLen		= sizeof(earom);
-		ba.szName	= "NV RAM";
-		BurnAcb(&ba);
-	}
+	if (digdugmode)
+		earom_scan(nAction, pnMin); // here.
 
 	return 0;
 }

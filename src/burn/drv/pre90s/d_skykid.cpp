@@ -759,13 +759,15 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_bg_layer();
+	BurnTransferClear();
 
-	if (*priority == 0) draw_sprites();
+	if (nBurnLayer & 1) draw_bg_layer();
 
-	draw_fg_layer();
+	if (nSpriteEnable & 1 && *priority == 0) draw_sprites();
 
-	if (*priority == 1) draw_sprites();
+	if (nBurnLayer & 2) draw_fg_layer();
+
+	if (nSpriteEnable & 2 && *priority == 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 

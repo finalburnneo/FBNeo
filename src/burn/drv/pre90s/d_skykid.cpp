@@ -650,12 +650,14 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_fg_layer()
+static void draw_fg_layer(INT32 drgnbstr_hud)
 {
 	INT32 bank = *flipscreen ? 0x100 : 0;
 
 	for (INT32 y = 0; y < 28; y++)
 	{
+		if (drgnbstr && drgnbstr_hud && y > 1) break; // re-draw hud to cover sprites
+
 		for (INT32 x = 0; x < 36; x++)
 		{
 			INT32 col = x - 2;
@@ -769,13 +771,12 @@ static INT32 DrvDraw()
 
 	if (nSpriteEnable & 1 && *priority == 0) draw_sprites();
 
-	if (nBurnLayer & 2) draw_fg_layer();
+	if (nBurnLayer & 2) draw_fg_layer(0);
 
 	if (nSpriteEnable & 2 && *priority == 1) {
-		// dragon buster needs to keep sprites out of the HUD area
-		if (drgnbstr) GenericTilesSetClip(-1, -1, 2*8, -1);
 		draw_sprites();
-		if (drgnbstr) GenericTilesClearClip();
+		// redraw the hud - dragon buster needs to keep sprites out of this area
+		if (drgnbstr && nBurnLayer & 4) draw_fg_layer(1);
 	}
 
 	BurnTransferCopy(DrvPalette);

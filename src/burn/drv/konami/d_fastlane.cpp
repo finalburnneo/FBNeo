@@ -192,7 +192,7 @@ static void fastlane_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x0b00:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 
 		case 0x0c00:

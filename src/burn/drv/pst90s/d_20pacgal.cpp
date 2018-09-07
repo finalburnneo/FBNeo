@@ -123,7 +123,7 @@ static void __fastcall pacgal20_write_port(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x80:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 
 		case 0x81:

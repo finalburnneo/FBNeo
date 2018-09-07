@@ -139,7 +139,7 @@ static void __fastcall targeth_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x10800c:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 	}
 }

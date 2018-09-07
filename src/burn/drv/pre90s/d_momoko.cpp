@@ -158,7 +158,7 @@ void __fastcall momoko_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xd404:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 
 		case 0xd406:

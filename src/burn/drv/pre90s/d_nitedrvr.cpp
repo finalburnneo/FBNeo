@@ -240,7 +240,7 @@ static void nitedrvr_write(UINT16 address, UINT8 data)
 			DrvHVCRAM[address] = data;
 			return;
 		}
-		BurnWatchogWrite();
+		BurnWatchdogWrite();
 		return;
 	}
 

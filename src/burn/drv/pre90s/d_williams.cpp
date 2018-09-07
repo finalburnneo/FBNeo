@@ -631,7 +631,7 @@ static void defender_bank_write(UINT16 address, UINT8 data)
 	
 	if (address == 0x03ff) {
 		if (data == 0x39) {
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 			bprintf(0, _T("Watchdog Write.    **\n"));
 		}
 		return;
@@ -810,7 +810,7 @@ static void williams_main_write(UINT16 address, UINT8 data)
 	{
 		case 0xcbff:
 			if (data == 0x39) {
-				BurnWatchogWrite();
+				BurnWatchdogWrite();
 			}
 		return;
 	}

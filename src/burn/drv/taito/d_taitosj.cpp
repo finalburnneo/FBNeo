@@ -1254,7 +1254,7 @@ static void __fastcall taitosj_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xd50d:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 
 		case 0xd50e:

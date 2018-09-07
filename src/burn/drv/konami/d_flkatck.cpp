@@ -216,7 +216,7 @@ static void flkatck_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x041c:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 	}
 }

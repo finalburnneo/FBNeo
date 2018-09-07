@@ -151,7 +151,7 @@ static void pb_write(UINT8 /*data*/)
 static void shr_write(UINT8 data)
 {
 	if (data & 0x08)
-		BurnWatchogWrite();
+		BurnWatchdogWrite();
 
 	shift = data & 0x07;
 }

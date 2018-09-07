@@ -807,7 +807,7 @@ static void __fastcall Drv1943Write1(UINT16 a, UINT8 d)
 		}
 		
 		case 0xc806: {
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 			return;
 		}
 		

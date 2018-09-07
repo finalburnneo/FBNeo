@@ -474,7 +474,7 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xffe0) == 0x4640) {
-		BurnWatchogWrite();
+		BurnWatchdogWrite();
 		return;
 	}
 

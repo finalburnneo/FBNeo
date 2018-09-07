@@ -147,7 +147,7 @@ static void __fastcall thoop2_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x10800c:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 	}
 }

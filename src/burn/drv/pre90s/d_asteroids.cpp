@@ -210,7 +210,7 @@ static void asteroid_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x3400:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 
 		case 0x3600:
@@ -256,7 +256,7 @@ static void astdelux_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x3400:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 
 		case 0x3600:

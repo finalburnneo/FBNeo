@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
+#include "watchdog.h"
 #include "burn_ym2610.h"
 
 static UINT8 *AllMem;
@@ -41,10 +42,6 @@ static UINT16 *DrvVidRegBuf;
 static UINT8 *nDrvZ80Bank;
 static UINT8 *soundlatch;
 static UINT8 *soundlatch2;
-
-static INT32 nCyclesTotal[2];
-static INT32 nCyclesDone[2];
-static INT32 watchdog;
 
 static INT32 nGame;
 
@@ -221,7 +218,7 @@ static inline void mcatadv_z80_sync()
 	INT32 nCycles = (SekTotalCycles() / 4) - ZetTotalCycles();
 
 	if (nCycles > 0) {
-		nCyclesDone[1] += BurnTimerUpdate(ZetTotalCycles() + nCycles);
+		BurnTimerUpdate(ZetTotalCycles() + nCycles);
 	}
 }
 
@@ -242,12 +239,12 @@ static inline void palette_write(INT32 offset)
 	DrvPalette[offset/2] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall mcatadv_write_byte(UINT32 /*address*/, UINT8 /*data*/)
+static void __fastcall mcatadv_write_byte(UINT32 /*address*/, UINT8 /*data*/)
 {
 
 }
 
-void __fastcall mcatadv_write_word(UINT32 address, UINT16 data)
+static void __fastcall mcatadv_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{
@@ -275,7 +272,7 @@ void __fastcall mcatadv_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0xb00018:
-			watchdog = 0;
+			BurnWatchdogWrite();
 		return;
 
 		case 0xc00000:
@@ -288,7 +285,7 @@ void __fastcall mcatadv_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT8 __fastcall mcatadv_read_byte(UINT32 address)
+static UINT8 __fastcall mcatadv_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -308,7 +305,7 @@ UINT8 __fastcall mcatadv_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall mcatadv_read_word(UINT32 address)
+static UINT16 __fastcall mcatadv_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -325,7 +322,7 @@ UINT16 __fastcall mcatadv_read_word(UINT32 address)
 			return (DrvDips[1] << 8) | 0x00ff;
 
 		case 0xb0001e:
-			watchdog = 0;
+			BurnWatchdogRead();
 			return 0x0c00;
 
 		case 0xc00000:
@@ -344,7 +341,7 @@ static void sound_bankswitch(INT32 data)
 	ZetMapArea(0x4000 << nGame, 0xbfff, 2, DrvZ80ROM + (data * 0x4000));
 }
 
-void __fastcall mcatadv_sound_write(UINT16 address, UINT8 data)
+static void __fastcall mcatadv_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -361,7 +358,7 @@ void __fastcall mcatadv_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall mcatadv_sound_read(UINT16 address)
+static UINT8 __fastcall mcatadv_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -373,7 +370,7 @@ UINT8 __fastcall mcatadv_sound_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall mcatadv_sound_out(UINT16 port, UINT8 data)
+static void __fastcall mcatadv_sound_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -394,7 +391,7 @@ void __fastcall mcatadv_sound_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall mcatadv_sound_in(UINT16 port)
+static UINT8 __fastcall mcatadv_sound_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -486,11 +483,10 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvDoReset()
+static INT32 DrvDoReset(INT32 clear_mem)
 {
-	DrvReset = 0;
-
-	memset (AllRam, 0, RamEnd - AllRam);
+	if (clear_mem)
+		memset (AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
 	SekReset();
@@ -502,7 +498,8 @@ static INT32 DrvDoReset()
 	BurnYM2610Reset();
 	ZetClose();
 
-	watchdog = 0;
+	BurnWatchdogReset();
+	BurnWatchdogRead(); // needs watchdog on by default
 
 	HiscoreReset();
 
@@ -584,6 +581,8 @@ static INT32 DrvInit()
 	ZetSetOutHandler(mcatadv_sound_out);
 	ZetClose();
 
+	BurnWatchdogInit(DrvDoReset, 180);
+
 	INT32 DrvSndROMLen = nGame ? 0x100000 : 0x80000;
 	BurnYM2610Init(8000000, DrvSndROM, &DrvSndROMLen, DrvSndROM, &DrvSndROMLen, &DrvFMIRQHandler, 0);
 	BurnTimerAttachZet(4000000);
@@ -593,7 +592,7 @@ static INT32 DrvInit()
 
 	GenericTilesInit();
 
-	DrvDoReset();
+	DrvDoReset(1);
 
 	return 0;
 }
@@ -841,8 +840,10 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
+	BurnWatchdogUpdate();
+
 	if (DrvReset) {
-		DrvDoReset();
+		DrvDoReset(1);
 	}
 
 	{
@@ -855,31 +856,22 @@ static INT32 DrvFrame()
 		DrvInputs[0] ^= (nGame << 11); // nostradamus wants bit 11 off
 	}
 
+	INT32 nCyclesTotal[2] = { 16000000 / 60, 4000000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nInterleave = 30;
+
 	if (nGame == 1) { // Nostradamus 4mhz boost -dink
 		nCyclesTotal[0] = 20000000 / 60;
-	} else {
-		nCyclesTotal[0] = 16000000 / 60;
 	}
-	nCyclesTotal[1] = 4000000 / 60;
-	nCyclesDone[1 ] = 0;
-
-	INT32 nInterleave = 30;
 
 	SekNewFrame();
 	ZetNewFrame();
-	
+
 	SekOpen(0);
 	ZetOpen(0);
 
-	watchdog++;
-	if (watchdog == 180) {
-		SekReset();
-		ZetReset();
-		watchdog = 0;
-	}
-
 	for (INT32 i = 0; i < nInterleave; i++) {
-		SekRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
@@ -922,8 +914,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2610Scan(nAction, pnMin);
 
-		SCAN_VAR(nCyclesDone[1]);
-		SCAN_VAR(watchdog);
+		BurnWatchdogScan(nAction);
 	}
 
 	if (nAction & ACB_WRITE) {

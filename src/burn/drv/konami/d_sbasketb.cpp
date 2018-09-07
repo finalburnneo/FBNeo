@@ -151,7 +151,7 @@ static void sbasketb_main_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x3c00:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 
 		case 0x3c20:

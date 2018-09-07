@@ -345,7 +345,7 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 		}
 
 		case 0x7000:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 
 		case 0x7100:

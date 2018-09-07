@@ -2123,29 +2123,17 @@ static struct BurnRomInfo ikari3kRomDesc[] = {
 
 	{ "ik3-7k.16l",     0x08000, 0x8bfb399b, 3 | BRF_GRA }, //  5 Characters
 	{ "ik3-8k.16m",     0x08000, 0x3f0fe576, 3 | BRF_GRA }, //  6
-
-	{ "ik3-13.bin",     0x20000, 0x9a56bd32, 4 | BRF_GRA }, //  7 Sprites
-	{ "ik3-12.bin",     0x20000, 0x0ce6a10a, 4 | BRF_GRA }, //  8
-	{ "ik3-11.bin",     0x20000, 0xe4e2be43, 4 | BRF_GRA }, //  9
-	{ "ik3-10.bin",     0x20000, 0xac222372, 4 | BRF_GRA }, // 10
-	{ "ik3-9.bin",      0x20000, 0xc33971c2, 4 | BRF_GRA }, // 11
-	{ "ik3-14.bin",     0x20000, 0x453bea77, 4 | BRF_GRA }, // 12
-	{ "ik3-15.bin",     0x20000, 0x781a81fc, 4 | BRF_GRA }, // 13
-	{ "ik3-16.bin",     0x20000, 0x80ba400b, 4 | BRF_GRA }, // 14
-	{ "ik3-17.bin",     0x20000, 0x0cc3ce4a, 4 | BRF_GRA }, // 15
-	{ "ik3-18.bin",     0x20000, 0xba106245, 4 | BRF_GRA }, // 16
-	{ "ik3-23.bin",     0x20000, 0xd0fd5c77, 4 | BRF_GRA }, // 17
-	{ "ik3-22.bin",     0x20000, 0x4878d883, 4 | BRF_GRA }, // 18
-	{ "ik3-21.bin",     0x20000, 0x50d0fbf0, 4 | BRF_GRA }, // 19
-	{ "ik3-20.bin",     0x20000, 0x9a851efc, 4 | BRF_GRA }, // 20
-	{ "ik3-19.bin",     0x20000, 0x4ebdba89, 4 | BRF_GRA }, // 21
-	{ "ik3-24.bin",     0x20000, 0xe9b26d68, 4 | BRF_GRA }, // 22
-	{ "ik3-25.bin",     0x20000, 0x073b03f1, 4 | BRF_GRA }, // 23
-	{ "ik3-26.bin",     0x20000, 0x9c613561, 4 | BRF_GRA }, // 24
-	{ "ik3-27.bin",     0x20000, 0x16dd227e, 4 | BRF_GRA }, // 25
-	{ "ik3-28.bin",     0x20000, 0x711715ae, 4 | BRF_GRA }, // 26
-
-	{ "ik3-6.18e",      0x20000, 0x59d256a4, 5 | BRF_SND }, // 27 upd7759 samples
+	
+	{ "ikari-880c_t54.c2", 0x80000, 0x6d728362, 4 | BRF_GRA }, //  7 Sprites
+	{ "ik11.c1",           0x20000, 0xc33971c2, 4 | BRF_GRA }, //  8
+	{ "ikari-880d_t52.b2", 0x80000, 0xe25380e6, 4 | BRF_GRA }, //  9
+	{ "ik10.b1",           0x20000, 0xba106245, 4 | BRF_GRA }, //  10
+	{ "ikari-880d_t53.d2", 0x80000, 0x5855d95e, 4 | BRF_GRA }, //  11
+	{ "ik12.d1",           0x20000, 0x4ebdba89, 4 | BRF_GRA }, //  12
+	{ "ikari-880c_t51.a2", 0x80000, 0x87607772, 4 | BRF_GRA }, //  13
+	{ "ik9.a1",            0x20000, 0x711715ae, 4 | BRF_GRA }, //  14
+	
+	{ "ik3-6.18e",      0x20000, 0x59d256a4, 5 | BRF_SND }, // 15 upd7759 samples
 };
 
 STD_ROM_PICK(ikari3k)

@@ -4710,8 +4710,8 @@ static struct BurnRomInfo rthun2jRomDesc[] = {
 	{ "rst1_mpr0.bin",		0x20000, 0x2563b9ee, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
 	{ "rst1_mpr1.bin",		0x20000, 0x14c4c564, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "rst1_spr0j.bin",		0x10000, 0xf8ef5150, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "rst1_spr1j.bin",		0x10000, 0x52ed3a48, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "rst1_spr0.bin",		0x10000, 0xf8ef5150, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "rst1_spr1.bin",		0x10000, 0x52ed3a48, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "rst1_snd0.bin",		0x20000, 0x55b7562a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 	{ "rst1_snd1.bin",		0x20000, 0x00445a4f, 0x03 | BRF_PRG | BRF_ESS }, //  5
@@ -4727,7 +4727,7 @@ static struct BurnRomInfo rthun2jRomDesc[] = {
 	{ "rst1_chr0.bin",		0x80000, 0x6f0e9a68, 0x06 | BRF_GRA },           // 12 Layer Tiles
 	{ "rst1_chr1.bin",		0x80000, 0x15e44adc, 0x06 | BRF_GRA },           // 13
 
-	{ "roz0.bin",		0x80000, 0x482d0554, 0x07 | BRF_GRA },           // 14 Roz Layer Tiles
+	{ "rst1_roz0.bin",		0x80000, 0x482d0554, 0x07 | BRF_GRA },           // 14 Roz Layer Tiles
 
 	{ "shape.bin",		0x80000, 0xcf58fbbe, 0x08 | BRF_GRA },           // 15 Layer Tiles Mask Data
 
@@ -4737,6 +4737,12 @@ static struct BurnRomInfo rthun2jRomDesc[] = {
 
 	{ "rst1_voi1.bin",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
 	{ "rst1_voi2.bin",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
+	
+	{ "pal12l10.8d",		0x00040, 0xd3ae64a6, 0x00 | BRF_OPT },
+	{ "plhs18p8a.2p",		0x00149, 0x28c634a4, 0x00 | BRF_OPT },
+	{ "plhs18p8a.4g",		0x00149, 0x1932dd5e, 0x00 | BRF_OPT },
+	{ "plhs18p8a.5f",		0x00149, 0xab2fd9c2, 0x00 | BRF_OPT },
+	{ "pal16l8.9d",			0x00104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP},
 };
 
 STD_ROM_PICK(rthun2j)

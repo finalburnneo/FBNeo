@@ -232,7 +232,7 @@ struct BurnDriver BurnDrvdotrikun = {
 // Dottori Kun (old version)
 
 static struct BurnRomInfo dotriku2RomDesc[] = {
-	{ "14479.mpr",	0x4000, 0xa6aa7fa5, BRF_ESS | BRF_PRG }, //  Z80 code
+	{ "epr-13141.ic2",	0x4000, 0xa6aa7fa5, BRF_ESS | BRF_PRG }, //  Z80 code
 };
 
 STD_ROM_PICK(dotriku2)

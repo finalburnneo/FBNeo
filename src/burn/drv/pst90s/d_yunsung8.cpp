@@ -753,9 +753,9 @@ struct BurnDriver BurnDrvCannballv = {
 // Rock Tris
 
 static struct BurnRomInfo rocktrisRomDesc[] = {
-	{ "cpu.bin",		0x20000, 0x46e3b79c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "cpu07.bin",		0x20000, 0x46e3b79c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "cpu2.bin",		0x20000, 0x3a78a4cf, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "cpu08.bin",		0x20000, 0x3a78a4cf, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
 	{ "gfx4.bin",		0x80000, 0xabb49cac, 3 | BRF_GRA },           //  2 Background Tiles
 	{ "gfx3.bin",		0x80000, 0x70a6ad52, 3 | BRF_GRA },           //  3

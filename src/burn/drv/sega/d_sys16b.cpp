@@ -3490,6 +3490,12 @@ static struct BurnRomInfo DduxblRomDesc[] = {
 	{ "dduxb09.bin",    0x10000, 0x6b64f665, SYS16_ROM_SPRITES | BRF_GRA },
 
 	{ "dduxb01.bin",    0x08000, 0x0dbef0d7, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "dduxb_5_82s129.b1",		0x00100, 0xa7c22d96, BRF_OPT },
+	{ "dduxb_4_18s030.a17",		0x00020, 0x58bcf8bd, BRF_OPT },
+	{ "dduxb_pal16l8.1",		0x00104, 0x3b406587, BRF_OPT },
+	{ "dduxb_p_gal16v8.a18",	0x00117, 0xce1ab1e1, BRF_OPT },
+	{ "dduxb_pal20l8.2",		0x00144, 0x09098fbe, BRF_OPT },
 };
 
 

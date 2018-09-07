@@ -9403,7 +9403,7 @@ static struct BurnRomInfo hachamfaRomDesc[] = {
 
 	{ "1.70",			0x010000, 0x9e6f48fc, 2 | BRF_PRG | BRF_ESS }, //  2 NMK004 data
 
-	{ "5.95",			0x020000, 0x29fb04a2, 3 | BRF_GRA },           //  3 Characters
+	{ "5.ic95",			0x020000, 0xa2c1e25d, 3 | BRF_GRA },           //  3 Characters
 
 	{ "91076-4.101",	0x100000, 0xdf9653a4, 4 | BRF_GRA },           //  4 Tiles
 

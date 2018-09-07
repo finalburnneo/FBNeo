@@ -3970,7 +3970,7 @@ static struct BurnRomInfo makyosenRomDesc[] = {
 	{ "dt-10.512",		0x10000, 0xcfcfc9ed, 5 }, // 20
 	{ "dt-11.256",		0x08000, 0x53e9cf17, 5 }, // 21
 
-	{ "ds-a.b1",     	0x01000, 0xf61b77cf, 6 }, // 22 mcu
+	{ "ds-a.b1",     	0x01000, 0x08f36e35, 6 }, // 22 mcu
 
 	{ "ds-23.b10",		0x00400, 0xdcbfec4e, 7 }, // 23 proms
 

@@ -644,6 +644,13 @@ static struct BurnRomInfo cityconaRomDesc[] = {
 	{ "c2",		0x8000, 0xf2da4f23, 6 | BRF_GRA },           // 10 Background Tile Map
 	{ "c3",		0x4000, 0x7ef3ac1b, 6 | BRF_GRA },           // 11
 	{ "c5",		0x2000, 0xc03d8b1b, 6 | BRF_GRA },           // 12
+	
+	{ "citycon_pal16l8a.u7",	0x00104, 0x08d4ff84, 0 | BRF_OPT },
+	{ "citycon_pal16l8a.h7",	0x00104, 0x24a0f5d4, 0 | BRF_OPT },
+	{ "citycon_82s123n.r4",		0x00020, 0x29221e13, 0 | BRF_OPT },
+	{ "citycon_82s123n.n5",		0x00020, 0x5ae142a3, 0 | BRF_OPT },
+	{ "citycon_82s129.l6",		0x00100, 0x91a7b6e3, 0 | BRF_OPT },
+	{ "citycon_pal16l8a.l5",	0x00104, 0xdd0cf771, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(citycona)

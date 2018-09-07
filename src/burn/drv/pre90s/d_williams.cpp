@@ -1947,7 +1947,7 @@ static struct BurnRomInfo defndjeuRomDesc[] = {
 	{ "16",					0x1000, 0x03201532, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "17",					0x1000, 0x25287eca, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "21",					0x1000, 0xbddb71a3, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "20",					0x1000, 0x12fa0788, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  4
+	{ "20",					0x1000, 0x12fa0788, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "19",					0x1000, 0x769f5984, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "18",					0x1000, 0xe99d5679, 1 | BRF_PRG | BRF_ESS }, //  6
 
@@ -1999,9 +1999,9 @@ struct BurnDriver BurnDrvTornado1 = {
 // Tornado (set 2, Defender bootleg)
 
 static struct BurnRomInfo tornado2RomDesc[] = {
-	{ "tto15.bin",			0x1000, 0x910ac603, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  0 M6809 Code
-	{ "to16.bin",			0x1000, 0x46ccd582, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  1
-	{ "tto17.bin",			0x1000, 0xfaa3613c, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  2
+	{ "tto15.bin",			0x1000, 0x910ac603, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "to16.bin",			0x1000, 0x46ccd582, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tto17.bin",			0x1000, 0xfaa3613c, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "to21.bin",			0x1000, 0xe30f4c00, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "to20.bin",			0x1000, 0xe90bdcb2, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "to19.bin",			0x1000, 0x42885b4f, 1 | BRF_PRG | BRF_ESS }, //  5
@@ -2176,9 +2176,9 @@ struct BurnDriver BurnDrvDefence = {
 // Attack (Defender bootleg)
 
 static struct BurnRomInfo attackfRomDesc[] = {
-	{ "1.bin",				0x1000, 0x0ee1019d, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  0 M6809 Code
-	{ "2.bin",				0x1000, 0xd184ab6b, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  1
-	{ "3ojo.bin",			0x1000, 0xa732d649, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  2
+	{ "1.bin",				0x1000, 0x0ee1019d, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "2.bin",				0x1000, 0xd184ab6b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3ojo.bin",			0x1000, 0xa732d649, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "9.bin",				0x0800, 0xf57caa62, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "12.bin",				0x0800, 0xeb73d8a1, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "8.bin",				0x0800, 0x17f7abde, 1 | BRF_PRG | BRF_ESS }, //  5

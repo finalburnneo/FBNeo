@@ -1013,10 +1013,12 @@ static struct BurnRomInfo bounty2RomDesc[] = {
 	{ "mb7051.2a",		0x0020, 0x0de11a46, 4 | BRF_GRA },           //  9 Color Data
 	{ "mb7051.2b",		0x0020, 0x465e31d4, 4 | BRF_GRA },           // 10
 
+#if !defined ROM_VERIFY
 	// NOTE: data is needed from the parent's main rom which is missing in this set.
 	// The missing data is held in battery-backed sram inside an epoxy block z80 module.
 	// 0-ff hex is mapped to the sram using 74series logic.
 	{ "1.4f_parent",	0x1000, 0xf495b19d, 7 | BRF_PRG | BRF_ESS }, // 11 Z80 #0 Code
+#endif
 };
 
 STD_ROM_PICK(bounty2)

@@ -1108,10 +1108,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 static struct BurnSampleInfo nitedrvrSampleDesc[] = {
+#if !defined ROM_VERIFY
 	{ "engine", 		SAMPLE_AUTOLOOP },
 	{ "screech1", 		SAMPLE_NOLOOP },
 	{ "screech2", 		SAMPLE_NOLOOP },
 	{ "crash", 		    SAMPLE_NOLOOP },
+#endif
 	{ "", 0 }
 };
 

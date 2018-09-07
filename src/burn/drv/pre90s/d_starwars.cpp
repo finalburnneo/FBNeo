@@ -1134,22 +1134,22 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Star Wars (rev 1)
 
 static struct BurnRomInfo starwarsRomDesc[] = {
-	{ "136021.105",		0x1000, 0x538e7d2f, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
-	{ "136021.214",		0x4000, 0x04f1876e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "136021.102",		0x2000, 0xf725e344, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "136021.203",		0x2000, 0xf6da0a00, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "136021.104",		0x2000, 0x7e406703, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "136021.206",		0x2000, 0xc7e51237, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "136021-105.1l",	0x1000, 0x538e7d2f, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+	{ "136021.214.1f",	0x4000, 0x04f1876e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136021.102.1hj",	0x2000, 0xf725e344, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136021.203.1jk",	0x2000, 0xf6da0a00, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "136021.104.1kl",	0x2000, 0x7e406703, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "136021.206.1m",	0x2000, 0xc7e51237, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "136021.107",		0x2000, 0xdbf3aea2, 2 | BRF_PRG | BRF_ESS }, //  6 M6809 #1 Code
-	{ "136021.208",		0x2000, 0xe38070a8, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "136021-107.1jk",	0x2000, 0xdbf3aea2, 2 | BRF_PRG | BRF_ESS }, //  6 M6809 #1 Code
+	{ "136021-208.1h",	0x2000, 0xe38070a8, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "136021.110",		0x0400, 0x810e040e, 3 | BRF_PRG | BRF_ESS }, //  8 Math PROMs
-	{ "136021.111",		0x0400, 0xae69881c, 3 | BRF_PRG | BRF_ESS }, //  9          //  9
-	{ "136021.112",		0x0400, 0xecf22628, 3 | BRF_PRG | BRF_ESS }, // 10          // 10
-	{ "136021.113",		0x0400, 0x83febfde, 3 | BRF_PRG | BRF_ESS }, // 11          // 11
+	{ "136021-110.7h",	0x0400, 0x810e040e, 3 | BRF_PRG | BRF_ESS }, //  8 Math PROMs
+	{ "136021-111.7j",	0x0400, 0xae69881c, 3 | BRF_PRG | BRF_ESS }, //  9          //  9
+	{ "136021-112.7k",	0x0400, 0xecf22628, 3 | BRF_PRG | BRF_ESS }, // 10          // 10
+	{ "136021-113.7l",	0x0400, 0x83febfde, 3 | BRF_PRG | BRF_ESS }, // 11          // 11
 
-	{ "136021-105.1l",	0x0100, 0x82fc3eb2, 4 | BRF_GRA },           // 12 Video PROM
+	{ "136021-109.4b",	0x0100, 0x82fc3eb2, 4 | BRF_GRA },           // 12 Video PROM
 };
 
 STD_ROM_PICK(starwars)

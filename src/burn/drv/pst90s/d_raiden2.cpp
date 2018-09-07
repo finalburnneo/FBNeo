@@ -4220,7 +4220,7 @@ static struct BurnRomInfo raidendxRomDesc[] = {
 
 	{ "seibu_6.u1017",			0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
 
-	{ "raiden_2__pcm.u1018",	0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
+	{ "raiden_2_pcm.u1018",		0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
 };
 
 STD_ROM_PICK(raidendx)
@@ -4459,8 +4459,8 @@ static struct BurnRomInfo raidendxptRomDesc[] = {
 	{ "dx_back-1.u075",				0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
 	{ "dx_back-2.u0714",			0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
 
-	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  9 Sprites (Encrypted)
-	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           // 10
+	{ "raiden_2_obj-1.u0811",		0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  9 Sprites (Encrypted)
+	{ "raiden_2_obj-2.u082",		0x200000, 0x638eb771, 6 | BRF_GRA },           // 10
 	{ "dx_obj-3.u0837",				0x200000, 0xba381227, 6 | BRF_GRA },           // 11
 	{ "dx_obj-4.u0836",				0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
 
@@ -4536,7 +4536,7 @@ static struct BurnRomInfo raidendxjRomDesc[] = {
 
 	{ "seibu_5.u1110",  		0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
-	{ "seibu_7.u0724",			0x020000, 0xc73986d4, 4 | BRF_GRA },           //  6 Characters
+	{ "rdxj_7.u0724",			0x020000, 0xec31fa10, 4 | BRF_GRA },           //  6 Characters
 
 	{ "dx_back-1.u075",			0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
 	{ "dx_back-2.u0714",		0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8 Tiles
@@ -4577,7 +4577,7 @@ static struct BurnRomInfo raidendxjaRomDesc[] = {
 
 	{ "seibu_5.u1110",  		0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
-	{ "seibu_7.u0724",			0x020000, 0xc73986d4, 4 | BRF_GRA },           //  6 Characters
+	{ "rdxj_7.u0724",			0x020000, 0xec31fa10, 4 | BRF_GRA },           //  6 Characters
 
 	{ "dx_back-1.u075",			0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
 	{ "dx_back-2.u0714",		0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8 Tiles

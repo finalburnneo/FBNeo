@@ -3126,6 +3126,11 @@ static struct BurnRomInfo rtype2jRomDesc[] = {
 	
 	{ "rt2_b-4n-.bin",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 18 Proms
 	{ "rt2_b-4p-.bin",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },           // 19
+	
+	{ "rt2-a-2h-.5",	0x00104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP },
+	{ "rt2-a-5l-.33",	0x00104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP },
+	{ "rt2-b-3a-.9",	0x00104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP },
+	{ "rt2-a-7d-.45",	0x00104, 0x53c1e087, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(rtype2j)

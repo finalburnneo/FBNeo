@@ -329,8 +329,8 @@ STD_ROM_PICK(Drv)
 STD_ROM_FN(Drv)
 
 static struct BurnRomInfo DrvjRomDesc[] = {
-	{ "30j15.ic78",    0x40000, 0x40618cbc, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "30j14.ic79",    0x20000, 0x96827e80, BRF_ESS | BRF_PRG }, //	 1
+	{ "30j15-0.ic78",  0x40000, 0x40618cbc, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "30j14-0.ic79",  0x20000, 0x96827e80, BRF_ESS | BRF_PRG }, //	 1
 	
 	{ "30j13.ic43",    0x10000, 0x1e974d9b, BRF_ESS | BRF_PRG }, //  2	Z80 Program 
 	

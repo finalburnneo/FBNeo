@@ -5178,7 +5178,7 @@ static struct BurnRomInfo eyesbRomDesc[] = {
 	{ "10.bin",	  0x0800, 0xb247b82c, 2 | BRF_GRA },			// 10
 	{ "12.bin",	  0x0800, 0x99af4b30, 2 | BRF_GRA },			// 11
 
-	{ "7051.bin",	  0x0020, 0x0dad2ccb, 3 | BRF_GRA },		// 12 Color Proms
+	{ "7051.bin",	  0x0020, 0x2c3cc909, 3 | BRF_GRA },		// 12 Color Proms
 	{ "7051-3.bin",	  0x0100, 0xd8d78829, 3 | BRF_GRA },		// 13
 
 	{ "82s126.1m",	  0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom

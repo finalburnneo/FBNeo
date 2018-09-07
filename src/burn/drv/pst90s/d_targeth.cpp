@@ -666,8 +666,8 @@ struct BurnDriver BurnDrvTargeth = {
 // Target Hits (ver 1.1, Checksum 86E1)
 
 static struct BurnRomInfo targethaRomDesc[] = {
-	{ "th2_b_c_23.c23",		0x40000, 0xb99b25dc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "th2_b_c_22.c22",		0x40000, 0x6d34f0cf, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "th2_n_c_23.c23",		0x40000, 0xb99b25dc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "th2_n_c_22.c22",		0x40000, 0x6d34f0cf, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "targeth_ds5002fp.bin",	0x08000, 0xabcdfee4, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002fp SRAM
 

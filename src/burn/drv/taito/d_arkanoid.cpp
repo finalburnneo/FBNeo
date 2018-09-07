@@ -1631,7 +1631,7 @@ static struct BurnRomInfo arkanoidjaRomDesc[] = {
 
 	// the handcrafted value at 0x351 (0x9ddb) seems incorrect compared to other sets? 
 	//(but it appears the value is never used, and the data it would usually point to does not exist in the program rom?)
-	{ "a75-23.ic14",  0x0800, 0x0a4abef6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75-23.ic14",  0x0800, 0x543fed28, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4

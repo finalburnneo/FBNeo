@@ -8202,7 +8202,7 @@ struct BurnDriver BurnDrvIkaria = {
 // Ikari Warriors (US, set 2)
 
 static struct BurnRomInfo ikaria2RomDesc[] = {
-	{ "p1.14",			0x04000, 0x9605f856, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "p1.l4",			0x04000, 0x9605f856, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
 	{ "p2.bin",			0x08000, 0xb585e931, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "p3",				0x04000, 0x8a9bd1f0, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code

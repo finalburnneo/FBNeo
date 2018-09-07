@@ -94,8 +94,8 @@ static struct BurnDIPInfo DocastleDIPList[]=
 	{0x14, 0x01, 0x04, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Advance Level on Getting Diamond"		},
-	{0x14, 0x01, 0x08, 0x08, "Off"		},
-	{0x14, 0x01, 0x08, 0x00, "On"		},
+	{0x14, 0x01, 0x08, 0x08, "On"		},
+	{0x14, 0x01, 0x08, 0x00, "Off"		},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty of EXTRA"		},
 	{0x14, 0x01, 0x10, 0x10, "Easy"		},
@@ -549,7 +549,7 @@ static UINT8 __fastcall docastle_cpu1_read(UINT16 address)
 
 		case 0xc003: return DrvInput[0];
 		case 0xc005: return DrvInput[1];
-		case 0xc007: return DrvInput[2] | DrvDip[0]; // wont work because its active low, revisit.
+		case 0xc007: return (DrvInput[2] & ~0x08) | (DrvDip[0] & 0x08);
 
 		case 0xc004:
 			flipscreen = (address & 0x80) ? 1 : 0;
@@ -615,7 +615,7 @@ static INT32 DrvDoReset()
 }
 
 static INT32 DrvPaletteInit()
-{
+{ // mostly c&p from mame
 	UINT8 *color_prom = DrvProm;
 	UINT8 priority = dorunrunmode; // set 0 for Mr. Do's Castle, 1 for Do's Wild Ride/Do Run Run
 
@@ -789,7 +789,7 @@ static INT32 DrvInit()
 		ZetMapMemory(DrvZ80RAM,         0x8000, 0x97ff, MAP_RAM);
 		ZetMapMemory(DrvSpriteRAM,      0x9800, 0x99ff, MAP_RAM);
 		ZetMapMemory(DrvVidRAM,         0xb000, 0xb7ff, MAP_RAM);
-		ZetMapMemory(DrvVidRAM,         0xb800, 0xbfff, MAP_RAM); /* mirror */
+		ZetMapMemory(DrvVidRAM,         0xb800, 0xbfff, MAP_RAM); // mirror
 	}
 	ZetSetWriteHandler(docastle_cpu0_write);
 	ZetSetReadHandler(docastle_cpu0_read);

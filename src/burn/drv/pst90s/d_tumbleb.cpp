@@ -1051,18 +1051,32 @@ STD_ROM_PICK(Tumbleb)
 STD_ROM_FN(Tumbleb)
 
 static struct BurnRomInfo Tumbleb2RomDesc[] = {
-	{ "thumbpop.2",    0x40000, 0x34b016e1, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "thumbpop.3",    0x40000, 0x89501c71, BRF_ESS | BRF_PRG }, //	 1
+	{ "wj-2",          0x40000, 0x34b016e1, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "wj-3",          0x40000, 0x89501c71, BRF_ESS | BRF_PRG }, //	 1
 	
-	{ "thumbpop.19",   0x40000, 0x0795aab4, BRF_GRA },	     //  2	Tiles
-	{ "thumbpop.18",   0x40000, 0xad58df43, BRF_GRA },	     //  3
+	{ "wj-9",          0x40000, 0x0795aab4, BRF_GRA },	     //  2	Tiles
+	{ "wj-8",          0x40000, 0xad58df43, BRF_GRA },	     //  3
 	
-	{ "map-01.rom",    0x80000, 0xe81ffa09, BRF_GRA },	     //  4	Sprites
-	{ "map-00.rom",    0x80000, 0x8c879cfe, BRF_GRA },	     //  5
+	{ "wj-6",          0x40000, 0xee91db18, BRF_GRA },	     //  4	Sprites
+	{ "wj-7",          0x40000, 0x87cffb06, BRF_GRA },	     //  5
+	{ "wj-4",          0x40000, 0x79a29725, BRF_GRA },	     //  6	Sprites
+	{ "wj-5",          0x40000, 0xdda8932e, BRF_GRA },	     //  7
 	
-	{ "thumbpop.snd",  0x80000, 0xfabbf15d, BRF_SND },	     //  6	Samples
+	{ "wj-1",          0x80000, 0xfabbf15d, BRF_SND },	     //  8	Samples
 	
 	{ "pic_16c57",     0x02d4c, 0x00000000, BRF_NODUMP },
+	
+	{ "palce16v8.1",   0x104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "palce20v8.2",   0x157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "palce16v8.3",   0x104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "palce16v8.4",   0x104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "palce16v8.5",   0x104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "palce16v8.6",   0x104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "palce16v8.7",   0x104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "palce22v10.8",  0x2dd, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "palce22v10.9",  0x2dd, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "palce16v8h.10", 0x117, 0xeef433f9, BRF_OPT    },
+	{ "palce16v8.11",  0x104, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Tumbleb2)
@@ -2427,6 +2441,41 @@ static INT32 TumblebLoadRoms()
 	return 0;
 }
 
+static INT32 Tumbleb2LoadRoms()
+{
+	INT32 nRet = 0;
+	
+	DrvTempRom = (UINT8 *)BurnMalloc(0x100000);
+
+	// Load 68000 Program Roms
+	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	
+	// Load and decode the tiles
+	nRet = BurnLoadRom(DrvTempRom + 0x000000, 2, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x000001, 3, 2); if (nRet != 0) return 1;
+	TumblebTilesRearrange();
+	GfxDecode(DrvNumChars, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x80, DrvTempRom, DrvChars);
+	GfxDecode(DrvNumTiles, 4, 16, 16, CharPlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x200, DrvTempRom, DrvTiles);
+		
+	// Load and decode the sprites
+	memset(DrvTempRom, 0, 0x100000);
+	nRet = BurnLoadRom(DrvTempRom + 0x000000,  4, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x000001,  5, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x080000,  6, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x080001,  7, 2); if (nRet != 0) return 1;
+	GfxDecode(DrvNumSprites, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x200, DrvTempRom, DrvSprites);
+	
+	// Load Sample Roms
+	nRet = BurnLoadRom(DrvMSM6295ROMSrc + 0x00000, 8, 1); if (nRet != 0) return 1;
+	if (Tumbleb2) { nRet = BurnLoadRom(DrvMSM6295ROMSrc + 0x80000, 8, 1); if (nRet != 0) return 1; }
+	memcpy(MSM6295ROM, DrvMSM6295ROMSrc, 0x40000);
+	
+	BurnFree(DrvTempRom);
+	
+	return 0;
+}
+
 static INT32 JumpkidsLoadRoms()
 {
 	INT32 nRet = 0;
@@ -3082,7 +3131,12 @@ static INT32 TumblebInit()
 static INT32 Tumbleb2Init()
 {
 	Tumbleb2 = 1;
-	return TumblebInit();	
+	
+	DrvLoadRoms = Tumbleb2LoadRoms;
+	DrvMap68k = TumblebMap68k;
+	DrvRender = DrvDraw;
+
+	return DrvInit(1, 0x800, 0x3fff, -1, 0, 0x2000, 0x4000, 0x1000, 58.0, 8000000 / 10);
 }
 
 static INT32 JumpkidsInit()

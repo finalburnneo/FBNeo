@@ -1176,6 +1176,36 @@ struct BurnDriver BurnDrvspacecho2 = {
 };
 
 
+// Jongputer
+
+static struct BurnRomInfo jongputeRomDesc[] = {
+	{ "j2",        		0x1000, 0x6690b6a4, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "j3",     	   	0x1000, 0x985723d3, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "j4", 	       	0x1000, 0xf35ab1e6, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "j5",	        	0x1000, 0x77074618, 1 | BRF_ESS | BRF_PRG }, //  3
+
+	{ "j6", 	       	0x1000, 0x54b349b0, 2 | BRF_ESS | BRF_PRG }, //  4 Z80 #1 Code
+	
+	{ "j1", 	       	0x1000, 0x6d6ba272, 0 | BRF_OPT | BRF_SND }, //  5 sampling voice
+
+	{ "ju03",         	0x0100, 0x27d47624, 3 | BRF_GRA },	     //  7 Graphics
+	{ "ju09",        	0x0100, 0x27d47624, 3 | BRF_GRA },	     //  8
+};
+
+STD_ROM_PICK(jongpute)
+STD_ROM_FN(jongpute)
+
+struct BurnDriver BurnDrvjongpute = {
+	"jongpute", NULL, NULL, NULL, "1980",
+	"Jongputer\0", NULL, "Taito", "Route 16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
+	NULL, jongputeRomInfo, jongputeRomName, NULL, NULL, TtmahjngInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, TtmahjngDraw, DrvScan, &DrvRecalc, 0x8,
+	256, 256, 3, 4
+};
+
+
 // T.T Mahjong
 
 static struct BurnRomInfo ttmahjngRomDesc[] = {
@@ -1196,10 +1226,10 @@ STD_ROM_PICK(ttmahjng)
 STD_ROM_FN(ttmahjng)
 
 struct BurnDriver BurnDrvttmahjng = {
-	"ttmahjng", NULL, NULL, NULL, "1980",
+	"ttmahjng", "jongpute", NULL, NULL, "1980",
 	"T.T Mahjong\0", NULL, "Taito", "Route 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, ttmahjngRomInfo, ttmahjngRomName, NULL, NULL, TtmahjngInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, TtmahjngDraw, DrvScan, &DrvRecalc, 0x8,
 	256, 256, 3, 4

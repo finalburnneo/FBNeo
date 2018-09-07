@@ -870,11 +870,11 @@ struct BurnDriver BurnDrvHvysmsha = {
 };
 
 
-// World Cup Volley '95 (Japan v1.0)
+// World Cup Volley '95 (Asia v1.0)
 
 static struct BurnRomInfo wcvol95RomDesc[] = {
-	{ "pn00-0.2f",		0x080000, 0xc9ed2006, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
-	{ "pn01-0.4f",		0x080000, 0x1c3641c3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pw00-0.2f",		0x080000, 0x86765209, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
+	{ "pw01-0.4f",		0x080000, 0x3a0ee861, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "mbx-00.9a",		0x080000, 0xa0b24204, 2 | BRF_GRA },           //  2 Tilemap 0&1 Characters & Tiles
 
@@ -892,10 +892,41 @@ STD_ROM_FN(wcvol95)
 
 struct BurnDriver BurnDrvWcvol95 = {
 	"wcvol95", NULL, NULL, NULL, "1995",
-	"World Cup Volley '95 (Japan v1.0)\0", NULL, "Data East Corporation", "DECO 156",
+	"World Cup Volley '95 (Asia v1.0)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, wcvol95RomInfo, wcvol95RomName, NULL, NULL, HvysmshInputInfo, NULL,
+	Wcvol95Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// World Cup Volley '95 (Japan v1.0)
+
+static struct BurnRomInfo wcvol95jRomDesc[] = {
+	{ "pn00-0.2f",		0x080000, 0xc9ed2006, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
+	{ "pn01-0.4f",		0x080000, 0x1c3641c3, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "mbx-00.9a",		0x080000, 0xa0b24204, 2 | BRF_GRA },           //  2 Tilemap 0&1 Characters & Tiles
+
+	{ "mbx-01.12a",		0x100000, 0x73deb3f1, 3 | BRF_GRA },           //  3 Sprites
+	{ "mbx-02.13a",		0x100000, 0x3204d324, 3 | BRF_GRA },           //  4
+
+	{ "mbx-03.13j",		0x200000, 0x061632bc, 4 | BRF_GRA },           //  5 YMZ280b Samples
+
+	{ "gal16v8b.10j.bin",	0x000117, 0x06bbcbd5, 5 | BRF_GRA },           //  6 GALs
+	{ "gal16v8b.5d.bin",	0x000117, 0x117784f0, 5 | BRF_GRA },           //  7
+};
+
+STD_ROM_PICK(wcvol95j)
+STD_ROM_FN(wcvol95j)
+
+struct BurnDriver BurnDrvWcvol95j = {
+	"wcvol95j", "wcvol95", NULL, NULL, "1995",
+	"World Cup Volley '95 (Japan v1.0)\0", NULL, "Data East Corporation", "DECO 156",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	NULL, wcvol95jRomInfo, wcvol95jRomName, NULL, NULL, HvysmshInputInfo, NULL,
 	Wcvol95Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

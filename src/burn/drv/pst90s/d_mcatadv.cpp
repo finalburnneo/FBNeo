@@ -499,9 +499,8 @@ static INT32 DrvDoReset()
 	ZetOpen(0);
 	ZetReset();
 	sound_bankswitch(1);
-	ZetClose();
-
 	BurnYM2610Reset();
+	ZetClose();
 
 	watchdog = 0;
 

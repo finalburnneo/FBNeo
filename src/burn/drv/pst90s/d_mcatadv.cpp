@@ -25,8 +25,6 @@ static UINT8 *DrvSprBuf;
 static UINT8 *DrvPalRAM;
 static UINT32 *DrvPalette;
 
-static UINT8 *DrvPrioBitmap;
-
 static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[16];
@@ -220,15 +218,11 @@ STDDIPINFO(Nost)
 
 static inline void mcatadv_z80_sync()
 {
-#if 0
-	float nCycles = SekTotalCycles() * 1.0000;
-	nCycles /= nCyclesTotal[0];
-	nCycles *= nCyclesTotal[1];
-	nCycles -= nCyclesDone[1];
+	INT32 nCycles = (SekTotalCycles() / 4) - ZetTotalCycles();
+
 	if (nCycles > 0) {
-		nCyclesDone[1] += ZetRun((INT32)nCycles);
+		nCyclesDone[1] += BurnTimerUpdate(ZetTotalCycles() + nCycles);
 	}
-#endif
 }
 
 static inline void palette_write(INT32 offset)
@@ -287,7 +281,6 @@ void __fastcall mcatadv_write_word(UINT32 address, UINT16 data)
 		case 0xc00000:
 		{
 			mcatadv_z80_sync();
-
 			*soundlatch = data;
 			ZetNmi();
 		}
@@ -349,7 +342,7 @@ static void sound_bankswitch(INT32 data)
 
 	ZetMapArea(0x4000 << nGame, 0xbfff, 0, DrvZ80ROM + (data * 0x4000));
 	ZetMapArea(0x4000 << nGame, 0xbfff, 2, DrvZ80ROM + (data * 0x4000));
-}	
+}
 
 void __fastcall mcatadv_sound_write(UINT16 address, UINT8 data)
 {
@@ -409,7 +402,7 @@ UINT8 __fastcall mcatadv_sound_in(UINT16 port)
 		case 0x05:
 		case 0x06:
 		case 0x07:
-			return BurnYM2610Read(port & 3); 
+			return BurnYM2610Read(port & 3);
 
 		case 0x80:
 			return *soundlatch;
@@ -465,8 +458,6 @@ static INT32 MemIndex()
 	DrvSndROM		= Next; Next += 0x100000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x1001 * sizeof(UINT32);
-
-	DrvPrioBitmap		= Next; Next += 320 * 224; 
 
 	AllRam			= Next;
 
@@ -547,7 +538,7 @@ static INT32 DrvInit()
 		{
 			if (BurnLoadRom(DrvGfxROM1 + 0x000000,	9, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1 + 0x100000, 10, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM2 + 0x000000, 11, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x100000, 12, 1)) return 1;
 
@@ -556,7 +547,7 @@ static INT32 DrvInit()
 		else
 		{
 			if (BurnLoadRom(DrvGfxROM1 + 0x000000,	9, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM2 + 0x000000, 10, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x100000, 11, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x200000, 12, 1)) return 1;
@@ -627,7 +618,7 @@ static void draw_sprites()
 	UINT16 *source = finish + 0x2000-4;
 	UINT16 *vidregram = DrvVidRegs;
 	UINT16 *vidregbuf = DrvVidRegBuf;
-	UINT8 *prio = DrvPrioBitmap;
+	UINT8 *prio = pPrioDraw;
 	INT32 global_x = vidregram[0]-0x184;
 	INT32 global_y = vidregram[1]-0x1f1;
 
@@ -681,7 +672,7 @@ static void draw_sprites()
 
 				if ((drawypos >= 0) && (drawypos < 224)) {
 					destline = pTransDraw + drawypos * 320;
-					prio = DrvPrioBitmap + drawypos * 320;
+					prio = pPrioDraw + drawypos * 320;
 
 					for (xcnt = xstart; xcnt != xend; xcnt += xinc) {
 						drawxpos = x+xcnt-global_x;
@@ -721,7 +712,7 @@ static void draw_background(UINT8 *vidramsrc, UINT8 *gfxbase, UINT16 *scroll, IN
 {
 	UINT16 *vidram	= (UINT16*)vidramsrc;
 	UINT16 *dest 	= pTransDraw;
-	UINT8 *prio	= DrvPrioBitmap;
+	UINT8 *prio	= pPrioDraw;
 
 	INT32 yscroll = ((scroll[1] & 0x1ff) - 0x1df) & 0x1ff;
 	INT32 xscroll = ((scroll[0] & 0x1ff) - 0x194) & 0x1ff;
@@ -757,7 +748,7 @@ static void draw_background(UINT8 *vidramsrc, UINT8 *gfxbase, UINT16 *scroll, IN
 						if (sy >= nScreenHeight) break;
 
 						dest = pTransDraw + nScreenWidth * sy;
-						prio = DrvPrioBitmap + nScreenWidth * sy;
+						prio = pPrioDraw + nScreenWidth * sy;
 
 						for (INT32 vx = 0; vx < 16; vx++, sx++) {
 							if (sx < 0 || sx >= nScreenWidth) continue;
@@ -828,11 +819,8 @@ static INT32 DrvDraw()
 		}
 		DrvPalette[0x1000] = 0;
 	}
-		
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x3f0;
-		DrvPrioBitmap[i] = 0;
-	}
+
+	BurnTransferClear(0x3f0);
 
 	for (INT32 i = 0; i < 4; i++)
 	{
@@ -1093,31 +1081,13 @@ static struct BurnRomInfo nostRomDesc[] = {
 STD_ROM_PICK(nost)
 STD_ROM_FN(nost)
 
-static void NostPatch()
-{
-	// Can also be fixed overclocking the z80 to 4250000 and enabling
-	// z80 sync, but is slow and breaks sound in Mcatadv.
-	*((UINT16*)(Drv68KROM + 0x000122)) = BURN_ENDIAN_SWAP_INT16(0x0146); // Skip ROM Check
-}
-
-static INT32 NostInit()
-{
-	INT32 nRet = DrvInit();
-
-	if (nRet == 0) {
-		NostPatch();
-	}
-
-	return nRet;
-}
-
 struct BurnDriver BurnDrvNost = {
 	"nost", NULL, NULL, NULL, "1993",
 	"Nostradamus\0", NULL, "Face", "LINDA",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, nostRomInfo, nostRomName, NULL, NULL, NostInputInfo, NostDIPInfo,
-	NostInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
 	224, 320, 3, 4
 };
 
@@ -1155,7 +1125,7 @@ struct BurnDriver BurnDrvNostj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, nostjRomInfo, nostjRomName, NULL, NULL, NostInputInfo, NostDIPInfo,
-	NostInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
 	224, 320, 3, 4
 };
 
@@ -1193,6 +1163,6 @@ struct BurnDriver BurnDrvNostk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, nostkRomInfo, nostkRomName, NULL, NULL, NostInputInfo, NostDIPInfo,
-	NostInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
 	224, 320, 3, 4
 };

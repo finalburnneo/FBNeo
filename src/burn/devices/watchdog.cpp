@@ -7,7 +7,7 @@ static INT32 WatchdogFrames = 0;
 static INT32 Watchdog = 0;
 static INT32 WatchdogEnable = 0;
 
-void BurnWatchogWrite()
+void BurnWatchdogWrite()
 {
 	Watchdog = 0;
 	WatchdogEnable = 1;

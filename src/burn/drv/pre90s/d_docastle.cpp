@@ -1,8 +1,4 @@
 // Mr. Do's Castle emu-layer for FB Alpha by dink, based on the MAME driver by Brad Oliver.
-//
-// Todo:
-//   fix DrvDip[0]
-//   figure out why CPU_IRQSTATUS_HOLD screws up the timing in Do! Run Run
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -40,7 +36,7 @@ static UINT8 DrvReset;
 
 static INT32 flipscreen = 0;
 
-static UINT8 cpu0idle = 0;
+static UINT8 cpu0frozen = 0;
 static UINT8 dorunrunmode = 0;
 
 static struct BurnInputInfo DocastleInputList[] = {
@@ -438,7 +434,8 @@ static UINT8 shared1r(UINT8 offs)
 static void shared0w(UINT8 offs, UINT8 data)
 {
 	if (offs == 8) {
-		cpu0idle = 0;
+		cpu0frozen = 0;
+		ZetRunEnd();
 	}
 	DrvSharedRAM0[offs] = data;
 }
@@ -446,7 +443,8 @@ static void shared0w(UINT8 offs, UINT8 data)
 static void shared1w(UINT8 offs, UINT8 data)
 {
 	if (offs == 8) {
-		cpu0idle = 1;
+		cpu0frozen = 1;
+		ZetRunEnd();
 	}
 	DrvSharedRAM1[offs] = data;
 }
@@ -609,7 +607,7 @@ static INT32 DrvDoReset()
 	HiscoreReset();
 
 	flipscreen = 0;
-	cpu0idle = 0;
+	cpu0frozen = 0;
 
 	return 0;
 }
@@ -875,7 +873,7 @@ static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fl
 }
 
 static void draw_chars(INT32 front) {
-	for (int offs = 0x380; offs > 0; offs--) {
+	for (INT32 offs = 0x380; offs > 0; offs--) {
 		INT32 sx = 8 * (offs % 32);
 		INT32 sy = 8 * (offs / 32);
 
@@ -964,32 +962,24 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	// we need a very high interleave here to sync the cpu's -or- dips & music/sfx won't work
-	INT32 nInterleave = 256*16; // why don't we just go single-cycle? -dink    *kidding*
+	INT32 nInterleave = 264*16;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-	INT32 nIdleCycles = 0;
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
-		if (cpu0idle) {
-			nIdleCycles += nCyclesTotal[0] / nInterleave;
-			ZetIdle(nCyclesTotal[0] / nInterleave);
-		} else {
-			ZetRun((nCyclesTotal[0] / nInterleave) + nIdleCycles);
-			nIdleCycles = 0;
+		if (cpu0frozen == 0) {
+			nCyclesDone[0] += ZetRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 		}
-		if (i == ( nInterleave - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(100);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		if (i == 192*16) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		ZetRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += ZetRun((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
 		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(100);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
@@ -1034,7 +1024,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SN76496Scan(nAction, pnMin);
 
-		SCAN_VAR(cpu0idle);
+		SCAN_VAR(cpu0frozen);
 	}
 
 	return 0;

@@ -1255,6 +1255,49 @@ STDDIPINFO(Teddybb)
 static struct BurnDIPInfo TokisensDIPList[]=
 {
 	// Default Values
+	{0x13, 0xff, 0xff, 0xfd, NULL                     },
+	{0x14, 0xff, 0xff, 0xfe, NULL                     },
+
+	// Dip 1
+	SYSTEM1_COINAGE(0x13)
+
+	// Dip 2
+	{0   , 0xfe, 0   ,    2, "Cabinet"                },
+	{0x14, 0x01, 0x01, 0x00, "Upright"                },
+	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"          },
+	{0x14, 0x01, 0x02, 0x02, "Off"          },
+	{0x14, 0x01, 0x02, 0x00, "On"           },
+
+	{0   , 0xfe, 0   ,    4, "Lives"                },
+	{0x14, 0x01, 0x0c, 0x00, "1"            },
+	{0x14, 0x01, 0x0c, 0x08, "2"            },
+	{0x14, 0x01, 0x0c, 0x0c, "3"            },
+	{0x14, 0x01, 0x0c, 0x04, "4"            },
+
+	{0   , 0xfe, 0   ,    2, "Unknown"              },
+	{0x14, 0x01, 0x10, 0x10, "Off"          },
+	{0x04, 0x01, 0x10, 0x00, "On"           },
+
+	{0   , 0xfe, 0   ,    2, "Unknown"              },
+	{0x14, 0x01, 0x20, 0x20, "Off"          },
+	{0x14, 0x01, 0x20, 0x00, "On"           },
+
+	{0   , 0xfe, 0   ,    2, "Unknown"              },
+	{0x14, 0x01, 0x40, 0x40, "Off"          },
+	{0x14, 0x01, 0x40, 0x00, "On"           },
+
+	{0   , 0xfe, 0   ,    2, "Unknown"              },
+	{0x14, 0x01, 0x80, 0x80, "Off"          },
+	{0x14, 0x01, 0x80, 0x00, "On"           },
+};
+
+STDDIPINFO(Tokisens)
+
+static struct BurnDIPInfo TokisensaDIPList[]=
+{
+	// Default Values
 	{0x13, 0xff, 0xff, 0xff, NULL                     },
 	{0x14, 0xff, 0xff, 0xfe, NULL                     },
 
@@ -1293,7 +1336,7 @@ static struct BurnDIPInfo TokisensDIPList[]=
 	{0x14, 0x01, 0x80, 0x00, "On"           },
 };
 
-STDDIPINFO(Tokisens)
+STDDIPINFO(Tokisensa)
 
 static struct BurnDIPInfo UpndownDIPList[]=
 {
@@ -2916,31 +2959,59 @@ static struct BurnRomInfo TeddybboblRomDesc[] = {
 STD_ROM_PICK(Teddybbobl)
 STD_ROM_FN(Teddybbobl)
 
-static struct BurnRomInfo tokisensRomDesc[] = {
-	{ "epr-10961.90",        0x8000, 0x1466b61d, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
-	{ "epr-10962.91",        0x8000, 0xa8479f91, BRF_ESS | BRF_PRG }, //  1
-	{ "epr-10963.92",        0x8000, 0xb7193b39, BRF_ESS | BRF_PRG }, //  2
+static struct BurnRomInfo tokisensRomDesc[] = {	
+	{ "epr-10961.ic90",      0x8000, 0x5c71c203, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "epr-10962.ic91",      0x8000, 0xdb9080e3, BRF_ESS | BRF_PRG }, //  1
+	{ "epr-10963.ic92",      0x8000, 0xd17ad93f, BRF_ESS | BRF_PRG }, //  2
 
-	{ "epr-10967.126",       0x8000, 0x97966bf2, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+	{ "epr-10967.ic126",     0x8000, 0x97966bf2, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
 
-	{ "epr-10964.4",         0x8000, 0x9013b85c, BRF_GRA }, //  4 Tiles
-	{ "epr-10965.5",         0x8000, 0xe4755cc6, BRF_GRA }, //  5
-	{ "epr-10966.6",         0x8000, 0x5bbfbdcc, BRF_GRA }, //  6
+	{ "epr-10964.ic4",       0x8000, 0x25af5c93, BRF_GRA }, //  4 Tiles
+	{ "epr-10965.ic5",       0x8000, 0xcc8eb99a, BRF_GRA }, //  5
+	{ "epr-10966.ic6",       0x8000, 0x7ecf2459, BRF_GRA }, //  6
 
-	{ "epr-10958.87",        0x8000, 0xfc2bcbd7, BRF_GRA }, //  7 Sprites
-	{ "epr-10957.86",        0x8000, 0x4ec56860, BRF_GRA }, //  8
-	{ "epr-10960.89",        0x8000, 0x880e0d44, BRF_GRA }, //  9
-	{ "epr-10959.88",        0x8000, 0x4deda48f, BRF_GRA }, // 10
+	{ "epr-10958.ic87",      0x8000, 0xbb62dbc8, BRF_GRA }, //  7 Sprites
+	{ "epr-10957.ic86",      0x8000, 0x4ec56860, BRF_GRA }, //  8
+	{ "epr-10960.ic89",      0x8000, 0x880e0d44, BRF_GRA }, //  9
+	{ "epr-10959.ic88",      0x8000, 0x4deda48f, BRF_GRA }, // 10
 
-	{ "pri10956.ic20",       0x0100, 0x8eee0f72, BRF_GRA }, // 11 Palette
-	{ "pri10955.ic14",       0x0100, 0x3e7babd7, BRF_GRA }, // 12
-	{ "pri10954.ic8",        0x0100, 0x371c44a6, BRF_GRA }, // 13
+	{ "pr10956.ic20",        0x0100, 0xfd1bba8a, BRF_GRA }, // 11 Palette
+	{ "pr10955.ic14",        0x0100, 0x72b35df7, BRF_GRA }, // 12
+	{ "pr10954.ic8",         0x0100, 0xb7984867, BRF_GRA }, // 13
 
 	{ "pr-5317.ic28",        0x0100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
+	
+	{ "317-0040.key",        0x2000, 0xe2b67fd6, BRF_ESS | BRF_PRG }, // 15 MC8123 Key
 };
  
 STD_ROM_PICK(tokisens)
 STD_ROM_FN(tokisens)
+
+static struct BurnRomInfo tokisensaRomDesc[] = {
+	{ "ic90",                0x8000, 0x1466b61d, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "ic91",                0x8000, 0xa8479f91, BRF_ESS | BRF_PRG }, //  1
+	{ "ic92",                0x8000, 0xb7193b39, BRF_ESS | BRF_PRG }, //  2
+
+	{ "epr-10967.ic126",     0x8000, 0x97966bf2, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+
+	{ "ic4",                 0x8000, 0x9013b85c, BRF_GRA }, //  4 Tiles
+	{ "ic5",                 0x8000, 0xe4755cc6, BRF_GRA }, //  5
+	{ "ic6",                 0x8000, 0x5bbfbdcc, BRF_GRA }, //  6
+
+	{ "ic87",                0x8000, 0xfc2bcbd7, BRF_GRA }, //  7 Sprites
+	{ "epr-10957.ic86",      0x8000, 0x4ec56860, BRF_GRA }, //  8
+	{ "epr-10960.ic89",      0x8000, 0x880e0d44, BRF_GRA }, //  9
+	{ "epr-10959.ic88",      0x8000, 0x4deda48f, BRF_GRA }, // 10
+
+	{ "ic20",                0x0100, 0x8eee0f72, BRF_GRA }, // 11 Palette
+	{ "ic14",                0x0100, 0x3e7babd7, BRF_GRA }, // 12
+	{ "ic8",                 0x0100, 0x371c44a6, BRF_GRA }, // 13
+
+	{ "pr-5317.ic28",        0x0100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
+};
+ 
+STD_ROM_PICK(tokisensa)
+STD_ROM_FN(tokisensa)
 
 static struct BurnRomInfo ufosensiRomDesc[] = {
 	{ "epr11661.90",	0x8000, 0xf3e394e2, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -4244,6 +4315,11 @@ static void gardiab_decode()
 static void blockgal_decode()
 {
 	mc8123_decrypt_rom(0, 0, System1Rom1, System1Fetch1, System1MC8123Key);
+}
+
+static void tokisens_decode()
+{
+	mc8123_decrypt_rom(1, 4, System1Rom1, System1Rom1 + 0x20000, System1MC8123Key);
 }
 
 static void wbml_decode() // & Ufosensi
@@ -5747,6 +5823,27 @@ static INT32 TokisensInit()
 
 	System1ColourProms = 1;
 	System1BankedRom = 1;
+	
+	System1MC8123Key = (UINT8*)BurnMalloc(0x2000);
+	BurnLoadRom(System1MC8123Key, 15, 1);
+	
+	DecodeFunction = tokisens_decode;
+
+	nRet = System2Init(3, 0x8000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
+	BurnFree(System1MC8123Key);
+	System1MC8123Key = NULL;
+
+	System1ScrollXRam = NULL;
+
+	return nRet;
+}
+
+static INT32 TokisensaInit()
+{
+	INT32 nRet;
+
+	System1ColourProms = 1;
+	System1BankedRom = 1;
 
 	DecodeFunction = NULL;
 
@@ -6814,11 +6911,21 @@ struct BurnDriver BurnDrvTeddybbobl = {
 
 struct BurnDriver BurnDrvTokisens = {
 	"tokisens", NULL, NULL, NULL, "1987",
-	"Toki no Senshi - Chrono Soldier\0", NULL, "Sega", "Miscellaneous",
+	"Toki no Senshi - Chrono Soldier (MC-8123, 317-0040)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, tokisensRomInfo, tokisensRomName, NULL, NULL, MyheroInputInfo, TokisensDIPInfo,
 	TokisensInit, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvTokisensa = {
+	"tokisensa", "tokisens", NULL, NULL, "1987",
+	"Toki no Senshi - Chrono Soldier (prototype)\0", NULL, "Sega", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, tokisensaRomInfo, tokisensaRomName, NULL, NULL, MyheroInputInfo, TokisensaDIPInfo,
+	TokisensaInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
 };
 

@@ -2523,22 +2523,155 @@ static void LghostWriteIO(UINT32 offset, UINT8 d)
 {
 	switch (offset) {
 		case 0x1808: {
-			LghostValue = ~BurnGunReturnY(0);
+			//LghostValue = ~BurnGunReturnY(0);
+			UINT8 pos_value_x = BurnGunReturnX(0);
+			UINT8 pos_value_y = 255 - BurnGunReturnY(0);
+
+			// Depending of the position on the X axis, we need to calculate the Y offset accordingly
+			if (pos_value_x >= 50 && pos_value_x <= 99)
+			{
+				// Linear function (decreasing)
+				if (pos_value_y >= 130 && pos_value_y <= 225)
+					LghostValue = round(pos_value_y * 0.94 + 0.80);
+				// Keep real value as no offset is needed
+				else
+					LghostValue = pos_value_y;
+			}
+			else if (pos_value_x >= 100 && pos_value_x <= 199)
+			{
+				// Linear function (decreasing)
+				if (pos_value_y >= 100 && pos_value_y <= 225)
+					LghostValue = round(pos_value_y * 0.89 + 6.00);
+				// Keep real value as no offset is needed
+				else
+					LghostValue = pos_value_y;
+			}
+			else if (pos_value_x >= 200 && pos_value_x <= 249)
+			{
+				// Linear function (decreasing) #1
+				if (pos_value_y >= 30 && pos_value_y <= 55)
+					LghostValue = round(pos_value_y * 0.78 + 18.28);
+
+				// Linear function (decreasing) #2
+				else if (pos_value_y >= 100 && pos_value_y <= 205)
+					LghostValue = round(pos_value_y * 0.70 + 28.00);
+				// Linear function (decreasing) #2
+				else if (pos_value_y >= 206 && pos_value_y <= 225)
+					LghostValue = round(pos_value_y * 1.58 - 151.48);
+				// Keep real value as no offset is needed
+				else
+					LghostValue = pos_value_y;
+			}
+			// if crosshair is near the left edge, keep real value as no offset is needed
+			else
+				LghostValue = pos_value_y;
+
 			return;
 		}
 		
 		case 0x1809: {
-			LghostValue = BurnGunReturnX(0);
+			//LghostValue = BurnGunReturnX(0);
+			UINT8 pos_value_x = BurnGunReturnX(0);
+
+			// Here, linear functions (increasing) are used
+			// The line is divided in two parts to get more precise results
+
+			// Linear function (increasing) #1
+			if (pos_value_x >= 26 && pos_value_x <= 85)
+				LghostValue = round(pos_value_x * 1.13 + 0.95);
+
+			// Linear function (increasing) #2
+			else if (pos_value_x >= 86 && pos_value_x <= 140)
+				LghostValue = round(pos_value_x * 1.10 + 4.00);
+
+			// Here, linear functions (decreasing) are used
+			// The line is divided in two parts to get more precise results
+
+			// Linear function (decreasing) #1
+			else if (pos_value_x >= 141 && pos_value_x <= 190)
+				LghostValue = round(pos_value_x * 1.02 + 11.20);
+
+			// Linear function (decreasing) #2
+			else if (pos_value_x >= 191 && pos_value_x <= 240)
+				LghostValue = round(pos_value_x * 0.76 + 62.60);
+
+			// if crosshair is near the edges, keep real value as no offset is needed
+			else
+				LghostValue = pos_value_x;
+
 			return;
 		}
 		
 		case 0x180a: {
-			LghostValue = (System16AnalogSelect) ? ~BurnGunReturnY(2) : ~BurnGunReturnY(1);
+			//LghostValue = (System16AnalogSelect) ? ~BurnGunReturnY(2) : ~BurnGunReturnY(1);
+			// Player 3, Y axis
+			if (System16AnalogSelect)
+			{
+				UINT8 pos_value_x = BurnGunReturnX(2);
+				UINT8 pos_value_y = 255 - BurnGunReturnY(2);
+
+				// Depending of the position on the X axis, we need to calculate the Y offset accordingly
+				if (pos_value_x >= 128 && pos_value_x <= 255)
+				{
+					// Linear function (increasing)
+					if (pos_value_y >= 30 && pos_value_y <= 125)
+						LghostValue = round(pos_value_y * 1.01 + 11.82);
+					// Linear function (decreasing)
+					else if (pos_value_y >= 126 && pos_value_y <= 235)
+						LghostValue = round(pos_value_y * 0.94 + 21.90);
+					// Keep real value as no offset is needed
+					else
+						LghostValue = pos_value_y;
+				}
+				else if (pos_value_x >= 17 && pos_value_x <= 127)
+				{
+					// Linear function (increasing)
+					if (pos_value_y >= 40 && pos_value_y <= 145)
+						LghostValue = round(pos_value_y * 0.82 + 31.80);
+					// Linear function (decreasing)
+					else if (pos_value_y >= 200 && pos_value_y <= 225)
+						LghostValue = round(pos_value_y * 0.83 + 29.95);
+					// Keep real value as no offset is needed
+					else
+						LghostValue = pos_value_y;
+				}
+				// Keep real value as no offset is needed
+				else
+					LghostValue = pos_value_y;
+			}
+			// Player 2, Y axis. It doesn't need any offset adjustement.
+			else
+				LghostValue = 255 - BurnGunReturnY(1);
 			return;
 		}
 		
 		case 0x180b: {
-			LghostValue = (System16AnalogSelect) ? BurnGunReturnX(2) : BurnGunReturnX(1);
+			//LghostValue = (System16AnalogSelect) ? BurnGunReturnX(2) : BurnGunReturnX(1);
+			// Player 3, X axis
+			if (System16AnalogSelect)
+			{
+				UINT8 pos_value_x = BurnGunReturnX(2);
+
+				// Right edge of screen, constant value
+				if (pos_value_x >= 17 && pos_value_x <= 34)
+					LghostValue = pos_value_x - 17;
+
+				// Linear function (increasing)
+				else if (pos_value_x >= 35 && pos_value_x <= 110)
+					LghostValue = round(pos_value_x * 0.94 - 14.08);
+
+				// Linear function (decreasing) #1
+				else if (pos_value_x >= 111 && pos_value_x <= 225)
+					LghostValue = round(pos_value_x * 1.15 - 35.65);
+
+				// if crosshair is near the edges, keep real value as no offset is needed*/
+				else
+					LghostValue = pos_value_x;
+				break;
+			}
+			// Player 2, X axis. It doesn't need any offset adjustement.
+			else
+				LghostValue = BurnGunReturnX(1);
 			return;
 		}
 		

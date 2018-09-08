@@ -548,10 +548,10 @@ static INT32 DrvFrame()
 		BurnGunMakeInputs(0, DrvGun0, DrvGun1);
 		BurnGunMakeInputs(1, DrvGun2, DrvGun3);
 
-		DrvAnalog[0] = scale_gun(BurnGunReturnX(0) * 404 / 255, -0.133) + 0x29;
-		DrvAnalog[1] = scale_gun(BurnGunReturnY(0) + 4, -0.035);
-		DrvAnalog[2] = scale_gun(BurnGunReturnX(1) * 404 / 255, -0.133) + 0x29;
-		DrvAnalog[3] = scale_gun(BurnGunReturnY(1) + 4, -0.035);
+		DrvAnalog[0] = scale_gun(BurnGunReturnX(0) * 404 / 255, -0.146) + 0x29;
+		DrvAnalog[1] = scale_gun(BurnGunReturnY(0), -0.062) + 4 + (log(0x100 - BurnGunReturnY(0)) + 0.7);
+		DrvAnalog[2] = scale_gun(BurnGunReturnX(1) * 404 / 255, -0.146) + 0x29;
+		DrvAnalog[3] = scale_gun(BurnGunReturnY(1), -0.062) + 4 + (log(0x100 - BurnGunReturnY(1)) + 0.7);
 	}
 
 	INT32 nInterleave = 256;

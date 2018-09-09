@@ -5,9 +5,6 @@
 // 	asterock
 // 	asterockv
 // 	meteorite
-// llander
-//  needs inputs re-named
-//  needs sound hooked
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
@@ -739,7 +736,7 @@ static INT32 MemIndex()
 
 	DrvM6502ROM		= Next; Next += 0x008000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x2 * 256 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x20 * 256 * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -924,13 +921,11 @@ static INT32 DrvExit()
 
 static void DrvPaletteInit()
 {
-    for (INT32 i = 0; i < 2; i++) // color
-	{
-		INT32 color = i * 0xff;
-		
+    for (INT32 i = 0; i < 0x20; i++) // color
+	{		
 		for (INT32 j = 0; j < 256; j++) // intensity
 		{
-			INT32 c = (color * j) / 255;
+			INT32 c = (0xff * j) / 0xff;
 
 			DrvPalette[i * 256 + j] = (c << 16) | (c << 8) | c; // must be 32bit palette! -dink (see vector.cpp)
 		}
@@ -1081,7 +1076,7 @@ struct BurnDriver BurnDrvAsteroid = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, asteroidRomInfo, asteroidRomName, NULL, NULL, AsteroidInputInfo, AsteroidDIPInfo,
-	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1106,7 +1101,7 @@ struct BurnDriver BurnDrvAsteroid2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, asteroid2RomInfo, asteroid2RomName, NULL, NULL, AsteroidInputInfo, AsteroidDIPInfo,
-	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1132,7 +1127,7 @@ struct BurnDriver BurnDrvAsteroid1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, asteroid1RomInfo, asteroid1RomName, NULL, NULL, AsteroidInputInfo, AsteroidDIPInfo,
-	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1172,7 +1167,7 @@ struct BurnDriver BurnDrvAsteroidb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, asteroidbRomInfo, asteroidbRomName, NULL, NULL, AsteroidbInputInfo, AsteroidbDIPInfo,
-	AsteroidbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsteroidbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1198,7 +1193,7 @@ struct BurnDriver BurnDrvSpcrocks = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, spcrocksRomInfo, spcrocksRomName, NULL, NULL, AsteroidInputInfo, AerolitosDIPInfo,
-	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1224,7 +1219,7 @@ struct BurnDriver BurnDrvAerolitos = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, aerolitosRomInfo, aerolitosRomName, NULL, NULL, AsteroidInputInfo, AerolitosDIPInfo,
-	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1268,7 +1263,7 @@ struct BurnDriver BurnDrvAsterock = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, asterockRomInfo, asterockRomName, NULL, NULL, AsterockInputInfo, AsterockDIPInfo,
-	AsterockInt, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsterockInt, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1298,7 +1293,7 @@ struct BurnDriver BurnDrvAsterockv = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, asterockvRomInfo, asterockvRomName, NULL, NULL, AsterockInputInfo, AsterockDIPInfo,
-	AsterockInt, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsterockInt, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1328,7 +1323,7 @@ struct BurnDriver BurnDrvMeteorite = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, meteoriteRomInfo, meteoriteRomName, NULL, NULL, AsterockInputInfo, AsterockDIPInfo,
-	AsterockInt, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsterockInt, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1354,7 +1349,7 @@ struct BurnDriver BurnDrvMeteorts = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, meteortsRomInfo, meteortsRomName, NULL, NULL, AsteroidInputInfo, AsteroidDIPInfo,
-	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1384,7 +1379,7 @@ struct BurnDriver BurnDrvMeteorho = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, meteorhoRomInfo, meteorhoRomName, NULL, NULL, AsteroidInputInfo, AsteroidDIPInfo,
-	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1410,7 +1405,7 @@ struct BurnDriver BurnDrvHyperspc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, hyperspcRomInfo, hyperspcRomName, NULL, NULL, AsteroidInputInfo, AsteroidDIPInfo,
-	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1438,7 +1433,7 @@ struct BurnDriver BurnDrvAstdelux = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, astdeluxRomInfo, astdeluxRomName, NULL, NULL, AstdeluxInputInfo, AstdeluxDIPInfo,
-	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1465,7 +1460,7 @@ struct BurnDriver BurnDrvAstdelux2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, astdelux2RomInfo, astdelux2RomName, NULL, NULL, AstdeluxInputInfo, AstdeluxDIPInfo,
-	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1493,7 +1488,7 @@ struct BurnDriver BurnDrvAstdelux1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, astdelux1RomInfo, astdelux1RomName, NULL, NULL, AstdeluxInputInfo, AstdeluxDIPInfo,
-	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1522,7 +1517,7 @@ struct BurnDriver BurnDrvLlander = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, llanderRomInfo, llanderRomName, NULL, NULL, LlanderInputInfo, LlanderDIPInfo,
-	LlanderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	LlanderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1551,7 +1546,7 @@ struct BurnDriver BurnDrvLlander1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, llander1RomInfo, llander1RomName, NULL, NULL, LlanderInputInfo, Llander1DIPInfo,
-	LlanderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	LlanderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 
@@ -1579,6 +1574,6 @@ struct BurnDriverD BurnDrvLlandert = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, llandertRomInfo, llandertRomName, NULL, NULL, LlandertInputInfo, LlandertDIPInfo,
-	LlanderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2 * 256,
+	LlanderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };

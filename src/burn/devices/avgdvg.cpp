@@ -1005,7 +1005,7 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 
 	/* initialize the pages */
 	for (i = 0; i < NUM_BANKS; i++)
-		vectorbank[i] = vectorram + i * BANK_SIZE;
+		vectorbank[i] = vectorram + ((i * BANK_SIZE) & (vectorram_size-1));
 //	if (vector_type == USE_AVG_MHAVOC || vector_type == USE_AVG_ALPHAONE)
 //		vectorbank[1] = &memory_region(REGION_CPU1)[0x18000];
 

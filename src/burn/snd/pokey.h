@@ -107,6 +107,12 @@ void pokey_scan(INT32 nAction, INT32* pnMin);
 void PokeyPotCallback(INT32 chip, INT32 potnum, INT32 (*pot_cb)(INT32 offs));
 void PokeyAllPotCallback(INT32 chip, INT32 (*pot_cb)(INT32 offs));
 
+void pokey_write(INT32 chip, INT32 offset, UINT8 data);
+UINT8 pokey_read(INT32 chip, INT32 offset);
+void pokey_serin_ready(INT32 after);
+void pokey_break_write(INT32 chip, INT32 shift);
+void pokey_kbcode_write(INT32 chip, INT32 kbcode, INT32 make);
+
 INT32 pokey1_r (INT32 offset);
 INT32 pokey2_r (INT32 offset);
 INT32 pokey3_r (INT32 offset);

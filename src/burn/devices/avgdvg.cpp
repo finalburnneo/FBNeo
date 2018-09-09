@@ -1082,6 +1082,15 @@ void avg_starwars_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
 	pCPUTotalCycles = pCPUCyclesCB;
 }
 
+void avg_quantum_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
+{
+	vectorram = vectram;
+	vectorram_size = 0x2000;
+
+	avgdvg_init(USE_AVG_QUANTUM, 0, 900, 0, 600);
+	pCPUTotalCycles = pCPUCyclesCB;
+}
+
 void dvg_asteroids_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
 {
 	vectorram = vectram;

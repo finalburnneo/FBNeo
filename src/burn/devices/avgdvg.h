@@ -13,5 +13,6 @@ void avg_tempest_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
 void avg_starwars_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
 void dvg_asteroids_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
 void dvg_omegrace_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
+void avg_quantum_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
 
 #endif

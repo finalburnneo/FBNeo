@@ -1613,3 +1613,30 @@ void pokey4_kbcode_w(INT32 kbcode, INT32 make)
 	pokey_kbcode_w(3, kbcode, make);
 }
 
+
+//-------------------------------------------------------------------
+// standardized chip support
+
+void pokey_write(INT32 chip, INT32 offset, UINT8 data)
+{
+	pokey_register_w(chip,offset,data);
+}
+
+UINT8 pokey_read(INT32 chip, INT32 offset)
+{
+	return pokey_register_r(chip, offset);
+}
+
+void pokey_serin_ready(INT32 /*after*/)
+{
+	//timer_set(1.0 * after / intf.baseclock, 0, pokey_serin_ready);
+}
+void pokey_break_write(INT32 chip, INT32 shift)
+{
+	pokey_break_w(chip, shift);
+}
+
+void pokey_kbcode_write(INT32 chip, INT32 kbcode, INT32 make)
+{
+	pokey_kbcode_w(chip, kbcode, make);
+}

@@ -1,6 +1,11 @@
 // FB Alpha Tank Busters driver module
 // Based on MAME driver by Jarek Burczynski
 
+// Notes:
+//  game has stuck sprite issues.  might be due to a unknown bad dump or
+//  unhandled emulation of the device that sits at 0xe803.
+//  *game seems to act more like PCB when e803 is used to return a random#
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
@@ -607,7 +612,7 @@ STD_ROM_FN(tankbust)
 
 struct BurnDriver BurnDrvTankbust = {
 	"tankbust", NULL, NULL, NULL, "1985",
-	"Tank Busters\0", NULL, "Valadon Automation", "Miscellaneous",
+	"Tank Busters\0", "Graphics and stuck sprite issues", "Valadon Automation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tankbustRomInfo, tankbustRomName, NULL, NULL, TankbustInputInfo, TankbustDIPInfo,

@@ -198,6 +198,9 @@ static void __fastcall quantum_write_byte(UINT32 address, UINT8 data)
 
 		case 0x978000:
 		case 0x978001:
+#ifndef BurnWatchdogWrite
+#define BurnWatchdogWrite	BurnWatchogWrite
+#endif
 			BurnWatchdogWrite();
 		return;
 	}
@@ -294,7 +297,7 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvVectorRAM	= Next; Next += 0x002000;
+	DrvVectorRAM	= Next; Next += 0x004000; // 2x size
 	Drv68KRAM		= Next; Next += 0x005000;
 	DrvColRAM		= Next; Next += 0x000010;
 

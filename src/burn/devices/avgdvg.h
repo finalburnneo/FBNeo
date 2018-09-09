@@ -14,5 +14,6 @@ void avg_starwars_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
 void dvg_asteroids_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
 void dvg_omegrace_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
 void avg_quantum_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
+void avg_bwidow_start(UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesCB)(), INT32 width, INT32 height);
 
 #endif

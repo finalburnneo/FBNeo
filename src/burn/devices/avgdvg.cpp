@@ -1005,7 +1005,7 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 
 	/* initialize the pages */
 	for (i = 0; i < NUM_BANKS; i++)
-		vectorbank[i] = vectorram + ((i * BANK_SIZE) & (vectorram_size-1));
+		vectorbank[i] = vectorram + (i * BANK_SIZE);
 //	if (vector_type == USE_AVG_MHAVOC || vector_type == USE_AVG_ALPHAONE)
 //		vectorbank[1] = &memory_region(REGION_CPU1)[0x18000];
 
@@ -1106,6 +1106,15 @@ void dvg_omegrace_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
 	vectorram_size = 0x1000;
 
 	avgdvg_init(USE_DVG, 0, 1044, 0, 1044);
+	pCPUTotalCycles = pCPUCyclesCB;
+}
+
+void avg_bwidow_start(UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesCB)(), INT32 width, INT32 height)
+{
+	vectorram = vectram;
+	vectorram_size = vramsize;
+
+	avgdvg_init(USE_AVG, 0, width, 0, height);
 	pCPUTotalCycles = pCPUCyclesCB;
 }
 

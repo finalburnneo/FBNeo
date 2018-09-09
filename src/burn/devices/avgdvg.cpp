@@ -1109,12 +1109,12 @@ void dvg_omegrace_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
 	pCPUTotalCycles = pCPUCyclesCB;
 }
 
-void avg_bwidow_start(UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesCB)(), INT32 width, INT32 height)
+void avg_bwidow_start(UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesCB)(), INT32 w, INT32 h)
 {
 	vectorram = vectram;
 	vectorram_size = vramsize;
 
-	avgdvg_init(USE_AVG, 0, width, 0, height);
+	avgdvg_init(USE_AVG, 0, w, 0, h);
 	pCPUTotalCycles = pCPUCyclesCB;
 }
 

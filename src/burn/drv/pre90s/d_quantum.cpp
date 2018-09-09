@@ -148,7 +148,7 @@ static void __fastcall quantum_write_word(UINT32 address, UINT16 data)
 
 		case 0x978000:
 		case 0x978001:
-			BurnWatchogWrite();
+			BurnWatchdogWrite();
 		return;
 	}
 }
@@ -198,9 +198,6 @@ static void __fastcall quantum_write_byte(UINT32 address, UINT8 data)
 
 		case 0x978000:
 		case 0x978001:
-#ifndef BurnWatchdogWrite
-#define BurnWatchdogWrite	BurnWatchogWrite
-#endif
 			BurnWatchdogWrite();
 		return;
 	}

@@ -17,5 +17,6 @@ void avg_quantum_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
 void avg_bwidow_start(UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesCB)(), INT32 width, INT32 height);
 void avg_bzone_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
 void avg_redbaron_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
+void avg_mhavoc_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)());
 
 #endif

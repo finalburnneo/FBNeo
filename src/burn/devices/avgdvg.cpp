@@ -869,7 +869,7 @@ static INT32 avg_generate_vector_list(void)
 				{
 					sparkle = firstwd & 0x0800;
 					xflip = firstwd & 0x0400;
-					//vectorbank[1] = &memory_region(REGION_CPU1)[0x18000 + ((firstwd >> 8) & 3) * 0x2000];
+					vectorbank[1] = vectorram + 0x8000 + (((firstwd >> 8) & 3) * 0x2000);
 				}
 
 				/* BattleZone has a clipping circuit */
@@ -1023,7 +1023,7 @@ static INT32 avg_generate_vector_list(void)
 static INT32 avgdvg_halt_next = 0;
 static INT32 last_cyc = 0;
 
-static void avgdvg_clr_busy(INT32 dummy)
+static void avgdvg_clr_busy(INT32 /*dummy*/)
 {
 	busy = 0;
 }
@@ -1140,8 +1140,8 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 	/* initialize the pages */
 	for (i = 0; i < NUM_BANKS; i++)
 		vectorbank[i] = vectorram + (i * BANK_SIZE);
-//	if (vector_type == USE_AVG_MHAVOC || vector_type == USE_AVG_ALPHAONE)
-//		vectorbank[1] = &memory_region(REGION_CPU1)[0x18000];
+	if (vector_type == USE_AVG_MHAVOC || vector_type == USE_AVG_ALPHAONE)
+		vectorbank[1] = vectorram + 0x8000; //&memory_region(REGION_CPU1)[0x18000];
 
 	/* set the engine type and validate it */
 	vector_engine = vector_type;
@@ -1267,6 +1267,15 @@ void avg_redbaron_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
 	vectorram_size = 0x2000;
 
 	avgdvg_init(USE_AVG_RBARON, 0, 520, 0, 400);
+	pCPUTotalCycles = pCPUCyclesCB;
+}
+
+void avg_mhavoc_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
+{
+	vectorram = vectram;
+	vectorram_size = 0x1000;
+	
+	avgdvg_init(USE_AVG_MHAVOC, 0, 300, 0, 260);
 	pCPUTotalCycles = pCPUCyclesCB;
 }
 

@@ -14,6 +14,7 @@
 #include "vector.h"
 #include "pokey.h"
 #include "asteroids.h"
+#include "llander.h"
 #include "earom.h"
 
 static UINT8 *AllMem;
@@ -40,6 +41,7 @@ static UINT8 DrvReset;
 static INT32 avgOK = 0; // ok to run avgdvg?
 
 static INT32 astdelux = 0;
+static INT32 llander = 0;
 
 static struct BurnInputInfo AsteroidInputList[] = {
 	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
@@ -559,11 +561,11 @@ static void llander_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x3c00:
-			// llander_sounds_w
+			llander_sound_write(data);
 		return;
 
 		case 0x3e00:
-			// llander_snd_reset_w
+			llander_sound_lfsr_reset();
 		return;
 
 		case 0x5800:
@@ -894,7 +896,8 @@ static INT32 LlanderInit()
 
 	dvg_asteroids_start(DrvVectorRAM, M6502TotalCycles);
 
-	asteroid_sound_init(); // wrong wrong wrong wrong
+	llander_sound_init();
+	llander = 1;
 
 	DrvDoReset(1);
 
@@ -906,6 +909,7 @@ static INT32 DrvExit()
 	M6502Exit();
 	vector_exit();
 	asteroid_sound_exit();
+	llander_sound_exit();
 
 	BurnFree(AllMem);
 
@@ -915,6 +919,7 @@ static INT32 DrvExit()
 	}
 
 	astdelux = 0;
+	llander = 0;
 
 	return 0;
 }
@@ -982,6 +987,8 @@ static INT32 DrvFrame()
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			if (astdelux)
 				astdelux_sound_update(pSoundBuf, nSegmentLength);
+			else if (llander)
+				llander_sound_update(pSoundBuf, nSegmentLength);
 			else
 				asteroid_sound_update(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
@@ -997,6 +1004,8 @@ static INT32 DrvFrame()
 		if (nSegmentLength) {
 			if (astdelux)
 				astdelux_sound_update(pSoundBuf, nSegmentLength);
+			else if (llander)
+				llander_sound_update(pSoundBuf, nSegmentLength);
 			else
 				asteroid_sound_update(pSoundBuf, nSegmentLength);
 		}

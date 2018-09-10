@@ -130,6 +130,134 @@ static UINT32 sparkle_callback(void)
 
 #define INLINE static
 
+
+#define VGVECTOR 0
+#define VGCLIP 1
+
+static const INT32 MAXVECT = 10000;
+static int nvect = 0;
+
+struct vgvector
+{
+	int x; int y;
+	int color;
+	int intensity;
+	int arg1; int arg2;
+	int status;
+};
+
+static vgvector vectbuf[MAXVECT];
+
+static void vg_flush()
+{
+	int cx0 = 0, cy0 = 0, cx1 = 0x5000000, cy1 = 0x5000000;
+	int i = 0;
+
+	while (vectbuf[i].status == VGCLIP)
+		i++;
+	int xs = vectbuf[i].x;
+	int ys = vectbuf[i].y;
+
+	for (i = 0; i < nvect; i++)
+	{
+		if (vectbuf[i].status == VGVECTOR)
+		{
+			int xe = vectbuf[i].x;
+			int ye = vectbuf[i].y;
+			int x0 = xs, y0 = ys, x1 = xe, y1 = ye;
+
+			xs = xe;
+			ys = ye;
+
+			if((x0 < cx0 && x1 < cx0) || (x0 > cx1 && x1 > cx1))
+				continue;
+
+			if(x0 < cx0) {
+				y0 += INT64(cx0-x0)*INT64(y1-y0)/(x1-x0);
+				x0 = cx0;
+			} else if(x0 > cx1) {
+				y0 += INT64(cx1-x0)*INT64(y1-y0)/(x1-x0);
+				x0 = cx1;
+			}
+			if(x1 < cx0) {
+				y1 += INT64(cx0-x1)*INT64(y1-y0)/(x1-x0);
+				x1 = cx0;
+			} else if(x1 > cx1) {
+				y1 += INT64(cx1-x1)*INT64(y1-y0)/(x1-x0);
+				x1 = cx1;
+			}
+
+			if((y0 < cy0 && y1 < cy0) || (y0 > cy1 && y1 > cy1))
+				continue;
+
+			if(y0 < cy0) {
+				x0 += INT64(cy0-y0)*INT64(x1-x0)/(y1-y0);
+				y0 = cy0;
+			} else if(y0 > cy1) {
+				x0 += INT64(cy1-y0)*INT64(x1-x0)/(y1-y0);
+				y0 = cy1;
+			}
+			if(y1 < cy0) {
+				x1 += INT64(cy0-y1)*INT64(x1-x0)/(y1-y0);
+				y1 = cy0;
+			} else if(y1 > cy1) {
+				x1 += INT64(cy1-y1)*INT64(x1-x0)/(y1-y0);
+				y1 = cy1;
+			}
+
+			vector_add_point(x0, y0, vectbuf[i].color, 0);
+			vector_add_point(x1, y1, vectbuf[i].color, vectbuf[i].intensity);
+		}
+
+		if (vectbuf[i].status == VGCLIP) {
+			cx0 = vectbuf[i].x;
+			cy0 = vectbuf[i].y;
+			cx1 = vectbuf[i].arg1;
+			cy1 = vectbuf[i].arg2;
+			if(cx0 > cx1) {
+				int t = cx1;
+				cx1 = cx0;
+				cx0 = t;
+			}
+			if(cy0 > cx1) {
+				int t = cy1;
+				cy1 = cy0;
+				cy0 = t;
+			}
+		}
+	}
+
+	nvect=0;
+}
+
+void vg_vector_add_point(int x, int y, int color, int intensity)
+{
+	if (nvect < MAXVECT)
+	{
+		vectbuf[nvect].status = VGVECTOR;
+		vectbuf[nvect].x = x;
+		vectbuf[nvect].y = y;
+		vectbuf[nvect].color = color;
+		vectbuf[nvect].intensity = intensity;
+		nvect++;
+	}
+}
+
+void vg_vector_add_clip (int c_xmin, int c_ymin, int c_xmax, int c_ymax)
+{
+	if (nvect < MAXVECT)
+	{
+		vectbuf[nvect].status = VGCLIP;
+		vectbuf[nvect].x = c_xmin;
+		vectbuf[nvect].y = c_ymin;
+		vectbuf[nvect].arg1 = c_xmax;
+		vectbuf[nvect].arg2 = c_ymax;
+		nvect++;
+	}
+}
+
+
+
 /*************************************
  *
  *  Compute 2's complement value
@@ -140,8 +268,6 @@ INLINE INT32 twos_comp_val(INT32 num, INT32 bits)
 {
 	return (INT32)(num << (32 - bits)) >> (32 - bits);
 }
-
-
 
 /*************************************
  *
@@ -336,7 +462,7 @@ static INT32 dvg_generate_vector_list(void)
 				total_length += dvg_vector_timer(temp);
 
 				/* add the new point */
-				vector_add_point(currentx, currenty, colorram[1], z);
+				vg_vector_add_point(currentx, currenty, colorram[1], z);
 				break;
 
 			/* DSVEC: draw a short vector */
@@ -374,7 +500,7 @@ static INT32 dvg_generate_vector_list(void)
 				total_length += dvg_vector_timer(temp);
 
 				/* add the new point */
-				vector_add_point(currentx, currenty, colorram[1], z);
+				vg_vector_add_point(currentx, currenty, colorram[1], z);
 				break;
 
 			/* DLABS: move to an absolute location */
@@ -495,13 +621,13 @@ void avg_apply_flipping_and_swapping(INT32 *x, INT32 *y)
 void avg_add_point(INT32 x, INT32 y, UINT32 color, INT32 intensity)
 {
 	avg_apply_flipping_and_swapping(&x, &y);
-	vector_add_point(x, y, color, intensity);
+	vg_vector_add_point(x, y, color, intensity);
 }
 
 void avg_add_point_callback(INT32 x, INT32 y, UINT32 (*color_callback)(void), INT32 intensity)
 {
 	avg_apply_flipping_and_swapping(&x, &y);
-	vector_add_point(x, y, color_callback(), intensity);
+	vg_vector_add_point(x, y, color_callback(), intensity);
 }
 
 /*************************************
@@ -742,9 +868,9 @@ static INT32 avg_generate_vector_list(void)
 				/* BattleZone has a clipping circuit */
 				else if (vector_engine == USE_AVG_BZONE)
 				{
-					//INT32 newymin = (color == 0) ? 0x0050 : ymin;
-					//vector_add_clip(xmin << 16, newymin << 16,
-					//				xmax << 16, ymax << 16);
+					INT32 newymin = (color == 0) ? 0x0050 : ymin;
+					vg_vector_add_clip(xmin << 16, newymin << 16,
+									xmax << 16, ymax << 16);
 				}
 
 				/* debugging */
@@ -773,8 +899,8 @@ static INT32 avg_generate_vector_list(void)
 						/* adjust accordingly */
 						if (ywindow)
 							newymin = (vector_engine == USE_AVG_MHAVOC) ? 0x0048 : 0x0083;
-						//vector_add_clip(xmin << 16, newymin << 16,
-						//				xmax << 16, ymax << 16);
+						vg_vector_add_clip(xmin << 16, newymin << 16,
+										xmax << 16, ymax << 16);
 					}
 
 				/* debugging */
@@ -949,6 +1075,7 @@ void avgdvg_go()
 			busy = 0;
 		}
 	}
+	vg_flush();
 }
 
 void avgdvg_reset()

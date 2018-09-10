@@ -136,6 +136,7 @@ static UINT32 sparkle_callback(void)
 
 static const INT32 MAXVECT = 10000;
 static INT32 nvect = 0;
+static INT32 has_clip = 0;
 
 struct vgvector
 {
@@ -152,10 +153,8 @@ static void vg_flush()
 {
 	INT32 cx0 = 0, cy0 = 0, cx1 = 0x5000000, cy1 = 0x5000000;
 	INT32 i = 0;
-	INT32 has_clip = 0;
 
 	while (vectbuf[i].status == VGCLIP) {
-		has_clip = 1;
 		i++;
 	}
 	INT32 xs = vectbuf[i].x;
@@ -254,6 +253,8 @@ void vg_vector_add_clip (INT32 c_xmin, INT32 c_ymin, INT32 c_xmax, INT32 c_ymax)
 {
 	if (nvect < MAXVECT)
 	{
+		has_clip = 1;
+
 		vectbuf[nvect].status = VGCLIP;
 		vectbuf[nvect].x = c_xmin;
 		vectbuf[nvect].y = c_ymin;

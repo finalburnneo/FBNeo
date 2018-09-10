@@ -4,7 +4,6 @@
 
 // todink:
 //   add parent tomcat to d_parent, uncomment BurnDriver for tomcatsw
-//   fix intensity vectors when in antialias mode (vector.cpp)
 //
 
 #include "tiles_generic.h"
@@ -708,7 +707,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	BurnRandomSetSeed(0x1321321321ull);
 
-	vector_reset();
 	avgdvg_reset();
 
 	control_num = 0;
@@ -927,9 +925,8 @@ static INT32 DrvInit(INT32 game_select)
 	BurnWatchdogInit(DrvDoReset, 180 /*NOT REALLY*/);
 	BurnRandomInit();
 
-	vector_init();
+	avgdvg_init(USE_AVG_SWARS, DrvVectorRAM, 0x1000, M6809TotalCycles, 250, 280);
 	vector_set_scale(250, 280);
-	avg_starwars_start(DrvVectorRAM, M6809TotalCycles);
 
 	PokeyInit(1500000, 4, 0.40, 0);
 	PokeySetTotalCyclesCB(M6809TotalCycles);
@@ -948,7 +945,7 @@ static INT32 DrvInit(INT32 game_select)
 
 static INT32 DrvExit()
 {
-	vector_exit();
+	avgdvg_exit();
 
 	SlapsticExit();
 	tms5220_exit();

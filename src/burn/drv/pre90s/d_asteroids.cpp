@@ -722,7 +722,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6502Close();
 
 	BurnWatchdogReset();
-	vector_reset();
 	avgdvg_reset();
 
 	earom_reset();
@@ -806,11 +805,9 @@ static INT32 AsteroidInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	vector_init();
+	avgdvg_init(USE_DVG, DrvVectorRAM, 0x1000, M6502TotalCycles, 1044, 788);
 	vector_set_scale(1044, 788);
 	vector_set_offsets(11, 119);
-
-	dvg_asteroids_start(DrvVectorRAM, M6502TotalCycles);
 
 	asteroid_sound_init();
 
@@ -843,11 +840,9 @@ static INT32 AstdeluxInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	vector_init();
+	avgdvg_init(USE_DVG, DrvVectorRAM, 0x1000, M6502TotalCycles, 1044, 788);
 	vector_set_scale(1044, 788);
 	vector_set_offsets(11, 119);
-
-	dvg_asteroids_start(DrvVectorRAM, M6502TotalCycles);
 
 	asteroid_sound_init();
 
@@ -890,11 +885,9 @@ static INT32 LlanderInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	vector_init();
+	avgdvg_init(USE_DVG, DrvVectorRAM, 0x1000, M6502TotalCycles, 1044, 788);
 	vector_set_scale(1044, 788);
 	vector_set_offsets(11, 119);
-
-	dvg_asteroids_start(DrvVectorRAM, M6502TotalCycles);
 
 	llander_sound_init();
 	llander = 1;
@@ -907,7 +900,7 @@ static INT32 LlanderInit()
 static INT32 DrvExit()
 {
 	M6502Exit();
-	vector_exit();
+	avgdvg_exit();
 	asteroid_sound_exit();
 	llander_sound_exit();
 

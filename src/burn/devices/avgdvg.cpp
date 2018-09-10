@@ -41,20 +41,6 @@
 #include "avgdvg.h"
 #include "vector.h"
 
-#define vector_clear_list vector_reset
-
-#define AVGDVG_MIN          1
-#define USE_DVG             1
-#define USE_AVG_RBARON      2
-#define USE_AVG_BZONE       3
-#define USE_AVG             4
-#define USE_AVG_TEMPEST     5
-#define USE_AVG_MHAVOC      6
-#define USE_AVG_ALPHAONE    7
-#define USE_AVG_SWARS       8
-#define USE_AVG_QUANTUM     9
-#define AVGDVG_MAX          10
-
 //#define VG_DEBUG
 
 #ifdef VG_DEBUG
@@ -129,7 +115,6 @@ static UINT32 sparkle_callback(void)
 }
 
 #define INLINE static
-
 
 #define VGVECTOR 0
 #define VGCLIP 1
@@ -233,7 +218,7 @@ static void vg_flush()
 		}
 	}
 
-	nvect=0;
+	nvect = 0;
 }
 
 void vg_vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
@@ -395,7 +380,7 @@ static INT32 dvg_generate_vector_list(void)
 	INT32 deltax, deltay;
 
 	/* reset the vector list */
-	vector_clear_list();
+	vector_reset();
 
 	/* loop until finished */
 	while (!done)
@@ -741,7 +726,7 @@ static INT32 avg_generate_vector_list(void)
 		return total_length;
 
 	/* reset the vector list */
-	vector_clear_list();
+	vector_reset();
 
 	/* loop until finished... */
 	while (!done)
@@ -1090,33 +1075,11 @@ void avgdvg_reset()
 {
 	avgdvg_halt_next = 0;
 	avgdvg_clr_busy(0);
+	vector_reset();
+
+	nvect = 0;
+	has_clip = 0;
 }
-
-#if 0
-WRITE16_HANDLER( avgdvg_go_word_w )
-{
-	avgdvg_go_w(offset, data);
-}
-
-
-
-/*************************************
- *
- *  AVG reset
- *
- ************************************/
-
-WRITE8_HANDLER( avgdvg_reset_w )
-{
-	avgdvg_clr_busy(0);
-}
-
-
-WRITE16_HANDLER( avgdvg_reset_word_w )
-{
-	avgdvg_clr_busy(0);
-}
-#endif
 
 
 /*************************************
@@ -1197,24 +1160,20 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 	return 0;
 }
 
-void avg_tempest_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
+void avgdvg_init(INT32 type, UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesCB)(), INT32 w, INT32 h)
 {
 	vectorram = vectram;
-	vectorram_size = 0x1000;
+	vectorram_size = vramsize;
 
-	//avgdvg_init(USE_AVG_TEMPEST, 0, 580-68+0x3c, 0, 570-68);
-	avgdvg_init(USE_AVG_TEMPEST, 0, 580, 0, 570);
+	vector_init();
+
+	avgdvg_init(type, 0, w, 0, h);
 	pCPUTotalCycles = pCPUCyclesCB;
 }
 
-void avg_starwars_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
+void avgdvg_exit()
 {
-	vectorram = vectram;
-	vectorram_size = 0x1000;
-
-	//avgdvg_init(USE_AVG_TEMPEST, 0, 580-68+0x3c, 0, 570-68);
-	avgdvg_init(USE_AVG_SWARS, 0, 250, 0, 280);
-	pCPUTotalCycles = pCPUCyclesCB;
+	vector_exit();
 }
 
 void avg_quantum_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
@@ -1223,24 +1182,6 @@ void avg_quantum_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
 	vectorram_size = 0x2000;
 
 	avgdvg_init(USE_AVG_QUANTUM, 0, 900, 0, 600);
-	pCPUTotalCycles = pCPUCyclesCB;
-}
-
-void dvg_asteroids_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
-{
-	vectorram = vectram;
-	vectorram_size = 0x1000;
-
-	avgdvg_init(USE_DVG, 0, 1044, 0, 788);
-	pCPUTotalCycles = pCPUCyclesCB;
-}
-
-void dvg_omegrace_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
-{
-	vectorram = vectram;
-	vectorram_size = 0x1000;
-
-	avgdvg_init(USE_DVG, 0, 1044, 0, 1044);
 	pCPUTotalCycles = pCPUCyclesCB;
 }
 

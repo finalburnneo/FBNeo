@@ -270,7 +270,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	BurnWatchdogReset();
 
 	mathbox_reset();
-	vector_reset();
 	avgdvg_reset();
 
 	earom_reset();
@@ -390,10 +389,8 @@ static INT32 DrvInit()
 	PokeyPotCallback(1, 6, port2_read);
 	PokeyPotCallback(1, 7, port2_read);
 
-	vector_init();
+	avgdvg_init(USE_AVG_TEMPEST, DrvVecRAM, 0x1000, M6502TotalCycles, 580, 570);
 	vector_set_scale(580, 570);
-
-	avg_tempest_start(DrvVecRAM, M6502TotalCycles);
 
 	earom_init();
 
@@ -406,7 +403,7 @@ static INT32 DrvInit()
 
 static INT32 DrvExit()
 {
-	vector_exit();
+	avgdvg_exit();
 
 	PokeyExit();
 	M6502Exit();

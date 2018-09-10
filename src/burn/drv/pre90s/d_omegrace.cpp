@@ -234,7 +234,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	ZetReset();
 	ZetClose();
 
-	vector_reset();
 	avgdvg_reset();
 
 	BurnWatchdogReset();
@@ -339,12 +338,9 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
-	GenericTilesInit();
-	vector_init();
+	avgdvg_init(USE_DVG, DrvVectorRAM, 0x1000, ZetTotalCycles, 1044, 1044);
 	vector_set_scale(1044, 1044);
 	vector_set_offsets(11, 0);
-
-	dvg_omegrace_start(DrvVectorRAM, ZetTotalCycles);
 
 	DrvDoReset(1);
 
@@ -353,11 +349,10 @@ static INT32 DrvInit()
 
 static INT32 DrvExit()
 {
-	GenericTilesExit();
 	ZetExit();
 	AY8910Exit(0);
 	AY8910Exit(1);
-	vector_exit();
+	avgdvg_exit();
 
 	BurnFree(AllMem);
 

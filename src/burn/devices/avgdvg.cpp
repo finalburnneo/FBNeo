@@ -135,78 +135,85 @@ static UINT32 sparkle_callback(void)
 #define VGCLIP 1
 
 static const INT32 MAXVECT = 10000;
-static int nvect = 0;
+static INT32 nvect = 0;
 
 struct vgvector
 {
-	int x; int y;
-	int color;
-	int intensity;
-	int arg1; int arg2;
-	int status;
+	INT32 x; INT32 y;
+	INT32 color;
+	INT32 intensity;
+	INT32 arg1; INT32 arg2;
+	INT32 status;
 };
 
 static vgvector vectbuf[MAXVECT];
 
 static void vg_flush()
 {
-	int cx0 = 0, cy0 = 0, cx1 = 0x5000000, cy1 = 0x5000000;
-	int i = 0;
+	INT32 cx0 = 0, cy0 = 0, cx1 = 0x5000000, cy1 = 0x5000000;
+	INT32 i = 0;
+	INT32 has_clip = 0;
 
-	while (vectbuf[i].status == VGCLIP)
+	while (vectbuf[i].status == VGCLIP) {
+		has_clip = 1;
 		i++;
-	int xs = vectbuf[i].x;
-	int ys = vectbuf[i].y;
+	}
+	INT32 xs = vectbuf[i].x;
+	INT32 ys = vectbuf[i].y;
 
 	for (i = 0; i < nvect; i++)
 	{
 		if (vectbuf[i].status == VGVECTOR)
 		{
-			int xe = vectbuf[i].x;
-			int ye = vectbuf[i].y;
-			int x0 = xs, y0 = ys, x1 = xe, y1 = ye;
+			INT32 xe = vectbuf[i].x;
+			INT32 ye = vectbuf[i].y;
+			INT32 x0 = xs, y0 = ys, x1 = xe, y1 = ye;
 
-			xs = xe;
-			ys = ye;
+			if (has_clip) {
+				xs = xe;
+				ys = ye;
 
-			if((x0 < cx0 && x1 < cx0) || (x0 > cx1 && x1 > cx1))
-				continue;
+				if((x0 < cx0 && x1 < cx0) || (x0 > cx1 && x1 > cx1))
+					continue;
 
-			if(x0 < cx0) {
-				y0 += INT64(cx0-x0)*INT64(y1-y0)/(x1-x0);
-				x0 = cx0;
-			} else if(x0 > cx1) {
-				y0 += INT64(cx1-x0)*INT64(y1-y0)/(x1-x0);
-				x0 = cx1;
+				if(x0 < cx0) {
+					y0 += INT64(cx0-x0)*INT64(y1-y0)/(x1-x0);
+					x0 = cx0;
+				} else if(x0 > cx1) {
+					y0 += INT64(cx1-x0)*INT64(y1-y0)/(x1-x0);
+					x0 = cx1;
+				}
+				if(x1 < cx0) {
+					y1 += INT64(cx0-x1)*INT64(y1-y0)/(x1-x0);
+					x1 = cx0;
+				} else if(x1 > cx1) {
+					y1 += INT64(cx1-x1)*INT64(y1-y0)/(x1-x0);
+					x1 = cx1;
+				}
+
+				if((y0 < cy0 && y1 < cy0) || (y0 > cy1 && y1 > cy1))
+					continue;
+
+				if(y0 < cy0) {
+					x0 += INT64(cy0-y0)*INT64(x1-x0)/(y1-y0);
+					y0 = cy0;
+				} else if(y0 > cy1) {
+					x0 += INT64(cy1-y0)*INT64(x1-x0)/(y1-y0);
+					y0 = cy1;
+				}
+				if(y1 < cy0) {
+					x1 += INT64(cy0-y1)*INT64(x1-x0)/(y1-y0);
+					y1 = cy0;
+				} else if(y1 > cy1) {
+					x1 += INT64(cy1-y1)*INT64(x1-x0)/(y1-y0);
+					y1 = cy1;
+				}
+
+				vector_add_point(x0, y0, vectbuf[i].color, 0);
+				vector_add_point(x1, y1, vectbuf[i].color, vectbuf[i].intensity);
+			} else {
+				vector_add_point(x1, y1, vectbuf[i].color, vectbuf[i].intensity);
 			}
-			if(x1 < cx0) {
-				y1 += INT64(cx0-x1)*INT64(y1-y0)/(x1-x0);
-				x1 = cx0;
-			} else if(x1 > cx1) {
-				y1 += INT64(cx1-x1)*INT64(y1-y0)/(x1-x0);
-				x1 = cx1;
-			}
-
-			if((y0 < cy0 && y1 < cy0) || (y0 > cy1 && y1 > cy1))
-				continue;
-
-			if(y0 < cy0) {
-				x0 += INT64(cy0-y0)*INT64(x1-x0)/(y1-y0);
-				y0 = cy0;
-			} else if(y0 > cy1) {
-				x0 += INT64(cy1-y0)*INT64(x1-x0)/(y1-y0);
-				y0 = cy1;
-			}
-			if(y1 < cy0) {
-				x1 += INT64(cy0-y1)*INT64(x1-x0)/(y1-y0);
-				y1 = cy0;
-			} else if(y1 > cy1) {
-				x1 += INT64(cy1-y1)*INT64(x1-x0)/(y1-y0);
-				y1 = cy1;
-			}
-
-			vector_add_point(x0, y0, vectbuf[i].color, 0);
-			vector_add_point(x1, y1, vectbuf[i].color, vectbuf[i].intensity);
 		}
 
 		if (vectbuf[i].status == VGCLIP) {
@@ -215,12 +222,12 @@ static void vg_flush()
 			cx1 = vectbuf[i].arg1;
 			cy1 = vectbuf[i].arg2;
 			if(cx0 > cx1) {
-				int t = cx1;
+				INT32 t = cx1;
 				cx1 = cx0;
 				cx0 = t;
 			}
 			if(cy0 > cx1) {
-				int t = cy1;
+				INT32 t = cy1;
 				cy1 = cy0;
 				cy0 = t;
 			}
@@ -230,7 +237,7 @@ static void vg_flush()
 	nvect=0;
 }
 
-void vg_vector_add_point(int x, int y, int color, int intensity)
+void vg_vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
 {
 	if (nvect < MAXVECT)
 	{
@@ -243,7 +250,7 @@ void vg_vector_add_point(int x, int y, int color, int intensity)
 	}
 }
 
-void vg_vector_add_clip (int c_xmin, int c_ymin, int c_xmax, int c_ymax)
+void vg_vector_add_clip (INT32 c_xmin, INT32 c_ymin, INT32 c_xmax, INT32 c_ymax)
 {
 	if (nvect < MAXVECT)
 	{
@@ -1242,6 +1249,24 @@ void avg_bwidow_start(UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesCB)(), I
 	vectorram_size = vramsize;
 
 	avgdvg_init(USE_AVG, 0, w, 0, h);
+	pCPUTotalCycles = pCPUCyclesCB;
+}
+
+void avg_bzone_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
+{
+	vectorram = vectram;
+	vectorram_size = 0x2000;
+
+	avgdvg_init(USE_AVG_BZONE, 0, 580, 0, 400);
+	pCPUTotalCycles = pCPUCyclesCB;
+}
+
+void avg_redbaron_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
+{
+	vectorram = vectram;
+	vectorram_size = 0x2000;
+
+	avgdvg_init(USE_AVG_RBARON, 0, 520, 0, 400);
 	pCPUTotalCycles = pCPUCyclesCB;
 }
 

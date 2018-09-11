@@ -274,7 +274,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	SekClose();
 
 	BurnWatchdogReset();
-	vector_reset();
 	avgdvg_reset();
 
 	avgOK = 0;
@@ -342,10 +341,8 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		quantum_read_byte);
 	SekClose();
 
-	vector_init();
-//	vector_set_scale(900, 600); // wrong?
+	avgdvg_init(USE_AVG_QUANTUM, DrvVectorRAM, 0x2000, SekTotalCycles, 900, 600);
 //	vector_set_offsets(11, 119); // wrong?
-	avg_quantum_start(DrvVectorRAM, SekTotalCycles); // wrong!
 
 	PokeyInit(600000, 2, 5.00, 0);
 	PokeySetTotalCyclesCB(SekTotalCycles);
@@ -361,7 +358,7 @@ static INT32 DrvExit()
 {
 	SekExit();
 	PokeyExit();
-	vector_exit();
+	avgdvg_exit();
 
 	BurnFree(AllMem);
 

@@ -340,7 +340,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	BurnWatchdogReset();
 
-	vector_reset();
 	avgdvg_reset();
 
 	alpha_irq_clock = 0;
@@ -448,14 +447,11 @@ static INT32 MhavocInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	PokeyInit(12096000/8, 4, 2.40, 0);
+	PokeyInit(12096000/8, 4, 0.50, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, port0_read);
 
-	vector_init();
-//	vector_set_scale(300, 260);
-
-	avg_mhavoc_start(DrvVectorRAM, M6502TotalCycles);
+	avgdvg_init(USE_AVG_MHAVOC, DrvVectorRAM, 0x1000, M6502TotalCycles, 300, 260);
 
 	DrvDoReset(1);
 
@@ -465,7 +461,7 @@ static INT32 MhavocInit()
 
 static INT32 DrvExit()
 {
-	vector_exit();
+	avgdvg_exit();
 
 	PokeyExit();
 	M6502Exit();

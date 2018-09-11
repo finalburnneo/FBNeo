@@ -574,7 +574,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	PokeyReset();
 
-	vector_reset();
 	avgdvg_reset();
 
 	avgletsgo = 0;
@@ -648,9 +647,7 @@ static INT32 BwidowInit()
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
 
-	vector_init();
-//	vector_set_scale(480, 440);
-	avg_bwidow_start(DrvVectorRAM, 0x800, M6502TotalCycles, 480, 440);
+	avgdvg_init(USE_AVG, DrvVectorRAM, 0x800, M6502TotalCycles, 480, 440);
 
 	earom_init();
 
@@ -714,9 +711,7 @@ static INT32 GravitarInit()
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
 
-	vector_init();
-//	vector_set_scale(420, 440);
-	avg_bwidow_start(DrvVectorRAM, 0x800, M6502TotalCycles, 420, 440); // only difference from bwidow!
+	avgdvg_init(USE_AVG, DrvVectorRAM, 0x800, M6502TotalCycles, 420, 440);
 
 	earom_init();
 
@@ -766,9 +761,7 @@ static INT32 BwidowpInit()
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
 
-	vector_init();
-//	vector_set_scale(480, 440);
-	avg_bwidow_start(DrvVectorRAM, 0x800, M6502TotalCycles, 480, 440);
+	avgdvg_init(USE_AVG, DrvVectorRAM, 0x800, M6502TotalCycles, 480, 440);
 
 	earom_init();
 
@@ -824,9 +817,7 @@ static INT32 SpacduelInit()
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
 
-	vector_init();
-//	vector_set_scale(540, 400);
-	avg_bwidow_start(DrvVectorRAM, 0x800, M6502TotalCycles, 540, 440);
+	avgdvg_init(USE_AVG, DrvVectorRAM, 0x800, M6502TotalCycles, 540, 440);
 
 	earom_init();
 
@@ -837,7 +828,7 @@ static INT32 SpacduelInit()
 
 static INT32 DrvExit()
 {
-	vector_exit();
+	avgdvg_exit();
 
 	PokeyExit();
 	M6502Exit();

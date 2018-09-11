@@ -723,7 +723,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	BurnWatchdogReset();
 
 	mathbox_reset();
-	vector_reset();
 	avgdvg_reset();
 	
 	earom_reset();
@@ -800,9 +799,7 @@ static INT32 BzoneInit()
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, bzone_port0_read);
 
-	vector_init();
-	//vector_set_scale(580, 570);
-	avg_bzone_start(DrvVectorRAM, M6502TotalCycles);
+	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x2000, M6502TotalCycles, 580, 400);
 
 	DrvDoReset(1);
 
@@ -853,9 +850,7 @@ static INT32 BradleyInit()
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, bzone_port0_read);
 
-	vector_init();
-	//vector_set_scale(580, 570);
-	avg_bzone_start(DrvVectorRAM, M6502TotalCycles);
+	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x2000, M6502TotalCycles, 580, 400);
 
 	DrvDoReset(1);
 
@@ -906,10 +901,8 @@ static INT32 RedbaronInit()
 	PokeyAllPotCallback(0, redbaron_port0_read);
 
 	redbaron_sound_init();
-	
-	vector_init();
-	//vector_set_scale(580, 570);
-	avg_redbaron_start(DrvVectorRAM, M6502TotalCycles);
+
+	avgdvg_init(USE_AVG_RBARON, DrvVectorRAM, 0x2000, M6502TotalCycles, 520, 400);
 
 	DrvDoReset(1);
 
@@ -918,7 +911,7 @@ static INT32 RedbaronInit()
 
 static INT32 DrvExit()
 {
-	vector_exit();
+	avgdvg_exit();
 
 	PokeyExit();
 	if (redbaron) {
@@ -951,7 +944,6 @@ static INT32 DrvDraw()
 {
 	DrvPaletteInit();
 
-	if (avgletsgo) avgdvg_go();
 	draw_vector(DrvPalette);
 
 	return 0;

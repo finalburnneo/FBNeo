@@ -390,7 +390,6 @@ static INT32 DrvInit()
 	PokeyPotCallback(1, 7, port2_read);
 
 	avgdvg_init(USE_AVG_TEMPEST, DrvVecRAM, 0x1000, M6502TotalCycles, 580, 570);
-	vector_set_scale(580, 570);
 
 	earom_init();
 

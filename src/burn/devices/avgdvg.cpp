@@ -1166,6 +1166,7 @@ void avgdvg_init(INT32 type, UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesC
 	vectorram_size = vramsize;
 
 	vector_init();
+	vector_set_scale(w, h);
 
 	avgdvg_init(type, 0, w, 0, h);
 	pCPUTotalCycles = pCPUCyclesCB;
@@ -1174,51 +1175,6 @@ void avgdvg_init(INT32 type, UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesC
 void avgdvg_exit()
 {
 	vector_exit();
-}
-
-void avg_quantum_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
-{
-	vectorram = vectram;
-	vectorram_size = 0x2000;
-
-	avgdvg_init(USE_AVG_QUANTUM, 0, 900, 0, 600);
-	pCPUTotalCycles = pCPUCyclesCB;
-}
-
-void avg_bwidow_start(UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesCB)(), INT32 w, INT32 h)
-{
-	vectorram = vectram;
-	vectorram_size = vramsize;
-
-	avgdvg_init(USE_AVG, 0, w, 0, h);
-	pCPUTotalCycles = pCPUCyclesCB;
-}
-
-void avg_bzone_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
-{
-	vectorram = vectram;
-	vectorram_size = 0x2000;
-
-	avgdvg_init(USE_AVG_BZONE, 0, 580, 0, 400);
-	pCPUTotalCycles = pCPUCyclesCB;
-}
-
-void avg_redbaron_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
-{
-	vectorram = vectram;
-	vectorram_size = 0x2000;
-
-	avgdvg_init(USE_AVG_RBARON, 0, 520, 0, 400);
-	pCPUTotalCycles = pCPUCyclesCB;
-}
-
-void avg_mhavoc_start(UINT8 *vectram, INT32 (*pCPUCyclesCB)())
-{
-	vectorram = vectram;
-	vectorram_size = 0x1000;
-	
-	avgdvg_init(USE_AVG_MHAVOC, 0, 300, 0, 260);
-	pCPUTotalCycles = pCPUCyclesCB;
 }
 
 // save for later stuff:

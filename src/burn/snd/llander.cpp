@@ -27,11 +27,8 @@ static INT32 llander_volume[8]={0x00,0x20,0x40,0x60,0x80,0xa0,0xc0,0xff};
 static INT32 buffer_len;
 static INT32 emulation_rate;
 static INT32 multiplier;
-//static INT32 sample_pos;
-//static INT32 channel;
 static INT32 lfsr_index;
-//static INT16 *sample_buffer;
-static UINT16 *lfsr_buffer;
+static UINT16 *lfsr_buffer = NULL;
 
 static INT32 volume;
 static INT32 tone_6khz;
@@ -52,7 +49,6 @@ void llander_sound_init()
 
 	buffer_len = nBurnSoundLen;
 	emulation_rate = nBurnSoundRate;
-	//sample_pos = 0;
 
 	/* Calculate the multipler to convert output sample number to the oversample rate (768khz) number */
 	/* multipler is held as a fixed point number 16:16                                                */
@@ -232,7 +228,7 @@ void llander_sound_update(INT16 *buffer, INT32 n)
 
 void llander_sound_lfsr_reset()
 {
-        lfsr_index=0;
+	lfsr_index=0;
 }
 
 void llander_sound_reset()
@@ -245,7 +241,7 @@ void llander_sound_reset()
 
 void llander_sound_write(UINT8 data)
 {
-	/* Lunar Lander sound breakdown */
+	/* Lunar Lander sound breakdown */  // get funky!
 
 	volume    = data & 0x07;
 	tone_3khz = data & 0x10;

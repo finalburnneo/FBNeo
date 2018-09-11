@@ -38,6 +38,10 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT16 BurnGun0 = 0;
+static INT32 nThrust;
+static INT32 nThrustTarget;
+
 static INT32 avgOK = 0; // ok to run avgdvg?
 
 static INT32 astdelux = 0;
@@ -118,22 +122,24 @@ static struct BurnInputInfo AstdeluxInputList[] = {
 
 STDINPUTINFO(Astdelux)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo LlanderInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 4"	},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy2 + 7,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 right"	},
+	{"P1 Select Game",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	}, // yes, p2,3 start instead of fire to avoid accidental pressing of these in-game
+	{"P1 Abort",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 start"	},
+	A("P1 Thrust",      BIT_ANALOG_REL, &BurnGun0,      "p1 y-axis"	),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 1,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
+	{"Diag Step",		BIT_DIGITAL,	DrvJoy1 + 7,	"service2"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 2,	"tilt"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		}, // astdelux
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		}, // servicemode
 };
+#undef A
 
 STDINPUTINFO(Llander)
 
@@ -365,6 +371,7 @@ STDDIPINFO(Astdelux)
 static struct BurnDIPInfo LlanderDIPList[]=
 {
 	{0x0a, 0xff, 0xff, 0x80, NULL					},
+	{0x0b, 0xff, 0xff, 0x02, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Right Coin"			},
 	{0x0a, 0x01, 0x03, 0x00, "X 1"					},
@@ -391,6 +398,10 @@ static struct BurnDIPInfo LlanderDIPList[]=
 	{0x0a, 0x01, 0xd0, 0x50, "1300"					},
 	{0x0a, 0x01, 0xd0, 0x90, "1550"					},
 	{0x0a, 0x01, 0xd0, 0xd0, "1800"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x0b, 0x01, 0x02, 0x02, "Off"					},
+	{0x0b, 0x01, 0x02, 0x00, "On"					},
 };
 
 STDDIPINFO(Llander)
@@ -398,6 +409,7 @@ STDDIPINFO(Llander)
 static struct BurnDIPInfo Llander1DIPList[]=
 {
 	{0x0a, 0xff, 0xff, 0xa0, NULL					},
+	{0x0b, 0xff, 0xff, 0x02, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Right Coin"			},
 	{0x0a, 0x01, 0x03, 0x00, "X 1"					},
@@ -420,6 +432,10 @@ static struct BurnDIPInfo Llander1DIPList[]=
 	{0x0a, 0x01, 0xc0, 0x40, "600"					},
 	{0x0a, 0x01, 0xc0, 0x80, "750"					},
 	{0x0a, 0x01, 0xc0, 0xc0, "900"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x0b, 0x01, 0x02, 0x02, "Off"					},
+	{0x0b, 0x01, 0x02, 0x00, "On"					},
 };
 
 STDDIPINFO(Llander1)
@@ -671,13 +687,44 @@ static UINT8 astdelux_read(UINT16 address)
 	return 0;
 }
 
+// Analog Processing
+static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+static UINT8 ProcessAnalogLinear(INT16 anaval, INT32 reversed, INT32 deadzone, UINT8 scalemin, UINT8 scalemax)
+{
+	INT32 DeadZone = (deadzone) ? 10 : 0;
+	INT16 Temp = anaval / 16;
+	if (anaval == -1) Temp = 0x3f; // digital button mapped on analog (usually!)
+
+	if (deadzone) { // deadzones
+		// 0x7f is center, 0x3f right, 0xbe left.  0x7f +-10 is noise.
+	    if (!(Temp < 0x00-DeadZone || Temp > 0x00+DeadZone)) {
+			Temp = 0x00; // we hit a dead-zone, return mid-range
+		} else {
+			// so we don't jump between 0x7f (center) and next value after deadzone
+			if (Temp < 0x00-DeadZone) Temp += DeadZone;
+			else if (Temp > 0x00+DeadZone) Temp -= DeadZone;
+		}
+	}
+
+	Temp = abs(Temp); // math.h?
+
+	if (Temp < 0x00 + DeadZone) Temp = 0x00 + DeadZone; // clamping for happy scalerange()
+	if (Temp > 0x3f - DeadZone) Temp = 0x3f - DeadZone;
+	Temp = scalerange(Temp, 0x00 + DeadZone, 0x3f - DeadZone, scalemin, scalemax);
+
+	return Temp;
+}
+
 static UINT8 llander_read(UINT16 address)
 {
 	switch (address)
 	{
 		case 0x2000: {
-			UINT8 ret = (DrvInputs[0] ^ 0xff) & ~0x41;
+			UINT8 ret = (DrvInputs[0] ^ 0xff) & ~0x43;
 			ret |= avgdvg_done() ? 0x01 : 0;
+			ret |= DrvDips[1] & 0x02;
 			ret |= (M6502TotalCycles() & 0x100) ? 0x40 : 0;
 			return ret;
 		}
@@ -699,7 +746,15 @@ static UINT8 llander_read(UINT16 address)
 			return 0xfc | ((DrvDips[0] >> ((~address & 3) * 2)) & 3);
 
 		case 0x2c00:
-			return 0; // thrust analog input!!!! - dink!!
+			{
+				UINT8 THRUSTINC = 8; // thrust needs to rise & fall "slowly", game freaks out in huge jumps in thrust.
+
+				if (nThrust+THRUSTINC < nThrustTarget) nThrust += THRUSTINC;
+				if (nThrust+THRUSTINC > nThrustTarget) nThrust -= THRUSTINC;
+				if (nThrust < 0) nThrust = 0;
+
+				return nThrust;
+			}
 	}
 
 	return 0;
@@ -725,6 +780,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	avgdvg_reset();
 
 	earom_reset();
+
+	nThrustTarget = 0;
+	nThrust = 0;
 
 	avgOK = 0;
 
@@ -939,6 +997,30 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static void dcfilter_dac() // for llander!
+{
+	// dc-blocking filter
+	static INT16 dac_lastin_r  = 0;
+	static INT16 dac_lastout_r = 0;
+	static INT16 dac_lastin_l  = 0;
+	static INT16 dac_lastout_l = 0;
+
+	for (INT32 i = 0; i < nBurnSoundLen; i++) {
+		INT16 r = pBurnSoundOut[i*2+0];
+		INT16 l = pBurnSoundOut[i*2+1];
+
+		INT16 outr = r - dac_lastin_r + 0.995 * dac_lastout_r;
+		INT16 outl = l - dac_lastin_l + 0.995 * dac_lastout_l;
+
+		dac_lastin_r = r;
+		dac_lastout_r = outr;
+		dac_lastin_l = l;
+		dac_lastout_l = outl;
+		pBurnSoundOut[i*2+0] = outr;
+		pBurnSoundOut[i*2+1] = outl;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	BurnWatchdogUpdate();
@@ -949,11 +1031,17 @@ static INT32 DrvFrame()
 
 	{
 		memset (DrvInputs, 0, 3);
-
+		if (llander) { // active low stuff
+			DrvInputs[1] |= (1<<1) | (1<<3);
+		}
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy3[i] & 1) << i;
+		}
+
+		if (llander) {
+			nThrustTarget = ProcessAnalogLinear(BurnGun0, 1, 1, 0, 0xfe);
 		}
 	}
 
@@ -961,6 +1049,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal = (1512000 * 100) / 6152; // 61.5234375 hz
 	INT32 nCyclesDone  = 0;
 	INT32 nSoundBufferPos = 0;
+	INT32 interrupts_enabled = (llander) ? (DrvDips[1] & 0x02) : (DrvInputs[0] & 0x80) == 0;
 
 	M6502Open(0);
 
@@ -968,7 +1057,7 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone += M6502Run(nCyclesTotal / nInterleave);
 
-		if ((i % 64) == 63 && (DrvInputs[0] & 0x80) == 0)
+		if ((i % 64) == 63 && interrupts_enabled)
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
 		// Render Sound Segment
@@ -1002,6 +1091,9 @@ static INT32 DrvFrame()
 
 		if (astdelux)
 			pokey_update(pBurnSoundOut, nBurnSoundLen);
+
+		if (llander)
+			dcfilter_dac();
 	}
 
 	if (pBurnDraw) {

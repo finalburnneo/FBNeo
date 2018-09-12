@@ -27,30 +27,33 @@ static INT32 nExtraCycles = 0;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[4];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo BwidowInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+
+	{"Move Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"Move Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"Move Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"Move Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+
+	{"Fire Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"Fire Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"Fire Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
+	{"Fire Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
+	{"Diagnostic Step",	BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		}, // not used
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // service mode
 };
 
 STDINPUTINFO(Bwidow)
@@ -65,10 +68,11 @@ static struct BurnInputInfo GravitarInputList[] = {
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
+	{"Diagnostic Step",	BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		}, // not used
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // service mode
 };
 
 STDINPUTINFO(Gravitar)
@@ -82,8 +86,11 @@ static struct BurnInputInfo LunarbatInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 3"	},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		}, // not used
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		}, // not used
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		}, // not used
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		}, // not used
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // service mode
 };
 
 STDINPUTINFO(Lunarbat)
@@ -91,6 +98,7 @@ STDINPUTINFO(Lunarbat)
 static struct BurnInputInfo SpacduelInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
+	{"P1 Select",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"	},
@@ -98,7 +106,6 @@ static struct BurnInputInfo SpacduelInputList[] = {
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 3"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 fire 1"	},
@@ -106,188 +113,208 @@ static struct BurnInputInfo SpacduelInputList[] = {
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 3"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
+	{"Diagnostic Step",	BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // service mode
 };
 
 STDINPUTINFO(Spacduel)
 
+#define DO 0xe
 static struct BurnDIPInfo BwidowDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x00, NULL					},
-	{0x10, 0xff, 0xff, 0x11, NULL					},
+	{DO+0, 0xff, 0xff, 0x00, NULL					},
+	{DO+1, 0xff, 0xff, 0x11, NULL					},
+	{DO+2, 0xff, 0xff, 0x00, NULL					}, // unused
+	{DO+3, 0xff, 0xff, 0x10, NULL					}, // service mode
 
 	{0   , 0xfe, 0   ,    4, "Coinage"				},
-	{0x0f, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
-	{0x0f, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
-	{0x0f, 0x01, 0x03, 0x03, "1 Coin  2 Credits"	},
-	{0x0f, 0x01, 0x03, 0x02, "Free Play"			},
+	{DO+0, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
+	{DO+0, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
+	{DO+0, 0x01, 0x03, 0x03, "1 Coin  2 Credits"	},
+	{DO+0, 0x01, 0x03, 0x02, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x0f, 0x01, 0x0c, 0x00, "*1"					},
-	{0x0f, 0x01, 0x0c, 0x04, "*4"					},
-	{0x0f, 0x01, 0x0c, 0x08, "*5"					},
-	{0x0f, 0x01, 0x0c, 0x0c, "*6"					},
+	{DO+0, 0x01, 0x0c, 0x00, "*1"					},
+	{DO+0, 0x01, 0x0c, 0x04, "*4"					},
+	{DO+0, 0x01, 0x0c, 0x08, "*5"					},
+	{DO+0, 0x01, 0x0c, 0x0c, "*6"					},
 
 	{0   , 0xfe, 0   ,    2, "Coin A"				},
-	{0x0f, 0x01, 0x10, 0x00, "*1"					},
-	{0x0f, 0x01, 0x10, 0x10, "*2"					},
+	{DO+0, 0x01, 0x10, 0x00, "*1"					},
+	{DO+0, 0x01, 0x10, 0x10, "*2"					},
 
 	{0   , 0xfe, 0   ,    6, "Bonus Coins"			},
-	{0x0f, 0x01, 0xe0, 0x80, "1 each 5"				},
-	{0x0f, 0x01, 0xe0, 0x60, "2 each 4"				},
-	{0x0f, 0x01, 0xe0, 0x40, "1 each 4"				},
-	{0x0f, 0x01, 0xe0, 0xa0, "1 each 3"				},
-	{0x0f, 0x01, 0xe0, 0x20, "1 each 2"				},
-	{0x0f, 0x01, 0xe0, 0x00, "None"					},
+	{DO+0, 0x01, 0xe0, 0x80, "1 each 5"				},
+	{DO+0, 0x01, 0xe0, 0x60, "2 each 4"				},
+	{DO+0, 0x01, 0xe0, 0x40, "1 each 4"				},
+	{DO+0, 0x01, 0xe0, 0xa0, "1 each 3"				},
+	{DO+0, 0x01, 0xe0, 0x20, "1 each 2"				},
+	{DO+0, 0x01, 0xe0, 0x00, "None"					},
 
 	{0   , 0xfe, 0   ,    4, "Max Start"			},
-	{0x10, 0x01, 0x03, 0x00, "Lev 13"				},
-	{0x10, 0x01, 0x03, 0x01, "Lev 21"				},
-	{0x10, 0x01, 0x03, 0x02, "Lev 37"				},
-	{0x10, 0x01, 0x03, 0x03, "Lev 53"				},
+	{DO+1, 0x01, 0x03, 0x00, "Lev 13"				},
+	{DO+1, 0x01, 0x03, 0x01, "Lev 21"				},
+	{DO+1, 0x01, 0x03, 0x02, "Lev 37"				},
+	{DO+1, 0x01, 0x03, 0x03, "Lev 53"				},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x10, 0x01, 0x0c, 0x00, "3"					},
-	{0x10, 0x01, 0x0c, 0x04, "4"					},
-	{0x10, 0x01, 0x0c, 0x08, "5"					},
-	{0x10, 0x01, 0x0c, 0x0c, "6"					},
+	{DO+1, 0x01, 0x0c, 0x00, "3"					},
+	{DO+1, 0x01, 0x0c, 0x04, "4"					},
+	{DO+1, 0x01, 0x0c, 0x08, "5"					},
+	{DO+1, 0x01, 0x0c, 0x0c, "6"					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x10, 0x01, 0x30, 0x00, "Easy"					},
-	{0x10, 0x01, 0x30, 0x10, "Medium"				},
-	{0x10, 0x01, 0x30, 0x20, "Hard"					},
-	{0x10, 0x01, 0x30, 0x30, "Demo"					},
+	{DO+1, 0x01, 0x30, 0x00, "Easy"					},
+	{DO+1, 0x01, 0x30, 0x10, "Medium"				},
+	{DO+1, 0x01, 0x30, 0x20, "Hard"					},
+	{DO+1, 0x01, 0x30, 0x30, "Demo"					},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x10, 0x01, 0xc0, 0x00, "20000"				},
-	{0x10, 0x01, 0xc0, 0x40, "30000"				},
-	{0x10, 0x01, 0xc0, 0x80, "40000"				},
-	{0x10, 0x01, 0xc0, 0xc0, "None"					},
-};
+	{DO+1, 0x01, 0xc0, 0x00, "20000"				},
+	{DO+1, 0x01, 0xc0, 0x40, "30000"				},
+	{DO+1, 0x01, 0xc0, 0x80, "40000"				},
+	{DO+1, 0x01, 0xc0, 0xc0, "None"					},
 
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{DO+3, 0x01, 0x10, 0x10, "Off"					},
+	{DO+3, 0x01, 0x10, 0x00, "On"					},
+};
+#undef DO
 STDDIPINFO(Bwidow)
 
+#define DO 0x9
 static struct BurnDIPInfo GravitarDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0x04, NULL					},
-	{0x0b, 0xff, 0xff, 0x00, NULL					},
+	{DO+0, 0xff, 0xff, 0x04, NULL					},
+	{DO+1, 0xff, 0xff, 0x00, NULL					},
+	{DO+2, 0xff, 0xff, 0x00, NULL					}, // unused
+	{DO+3, 0xff, 0xff, 0x10, NULL					}, // service mode
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x0a, 0x01, 0x0c, 0x00, "3"					},
-	{0x0a, 0x01, 0x0c, 0x04, "4"					},
-	{0x0a, 0x01, 0x0c, 0x08, "5"					},
-	{0x0a, 0x01, 0x0c, 0x0c, "6"					},
+	{DO+0, 0x01, 0x0c, 0x00, "3"					},
+	{DO+0, 0x01, 0x0c, 0x04, "4"					},
+	{DO+0, 0x01, 0x0c, 0x08, "5"					},
+	{DO+0, 0x01, 0x0c, 0x0c, "6"					},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"			},
-	{0x0a, 0x01, 0x10, 0x00, "Easy"					},
-	{0x0a, 0x01, 0x10, 0x10, "Hard"					},
+	{DO+0, 0x01, 0x10, 0x00, "Easy"					},
+	{DO+0, 0x01, 0x10, 0x10, "Hard"					},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x0a, 0x01, 0xc0, 0x00, "10000"				},
-	{0x0a, 0x01, 0xc0, 0x40, "20000"				},
-	{0x0a, 0x01, 0xc0, 0x80, "30000"				},
-	{0x0a, 0x01, 0xc0, 0xc0, "None"					},
+	{DO+0, 0x01, 0xc0, 0x00, "10000"				},
+	{DO+0, 0x01, 0xc0, 0x40, "20000"				},
+	{DO+0, 0x01, 0xc0, 0x80, "30000"				},
+	{DO+0, 0x01, 0xc0, 0xc0, "None"					},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"				},
-	{0x0b, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
-	{0x0b, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
-	{0x0b, 0x01, 0x03, 0x03, "1 Coin  2 Credits"	},
-	{0x0b, 0x01, 0x03, 0x02, "Free Play"			},
+	{DO+1, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
+	{DO+1, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
+	{DO+1, 0x01, 0x03, 0x03, "1 Coin  2 Credits"	},
+	{DO+1, 0x01, 0x03, 0x02, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x0b, 0x01, 0x0c, 0x00, "*1"					},
-	{0x0b, 0x01, 0x0c, 0x04, "*4"					},
-	{0x0b, 0x01, 0x0c, 0x08, "*5"					},
-	{0x0b, 0x01, 0x0c, 0x0c, "*6"					},
+	{DO+1, 0x01, 0x0c, 0x00, "*1"					},
+	{DO+1, 0x01, 0x0c, 0x04, "*4"					},
+	{DO+1, 0x01, 0x0c, 0x08, "*5"					},
+	{DO+1, 0x01, 0x0c, 0x0c, "*6"					},
 
 	{0   , 0xfe, 0   ,    2, "Coin A"				},
-	{0x0b, 0x01, 0x10, 0x00, "*1"					},
-	{0x0b, 0x01, 0x10, 0x10, "*2"					},
+	{DO+1, 0x01, 0x10, 0x00, "*1"					},
+	{DO+1, 0x01, 0x10, 0x10, "*2"					},
 
 	{0   , 0xfe, 0   ,    6, "Bonus Coins"			},
-	{0x0b, 0x01, 0xe0, 0x80, "1 each 5"				},
-	{0x0b, 0x01, 0xe0, 0x60, "2 each 4"				},
-	{0x0b, 0x01, 0xe0, 0x40, "1 each 4"				},
-	{0x0b, 0x01, 0xe0, 0xa0, "1 each 3"				},
-	{0x0b, 0x01, 0xe0, 0x20, "1 each 2"				},
-	{0x0b, 0x01, 0xe0, 0x00, "None"					},
-};
+	{DO+1, 0x01, 0xe0, 0x80, "1 each 5"				},
+	{DO+1, 0x01, 0xe0, 0x60, "2 each 4"				},
+	{DO+1, 0x01, 0xe0, 0x40, "1 each 4"				},
+	{DO+1, 0x01, 0xe0, 0xa0, "1 each 3"				},
+	{DO+1, 0x01, 0xe0, 0x20, "1 each 2"				},
+	{DO+1, 0x01, 0xe0, 0x00, "None"					},
 
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{DO+3, 0x01, 0x10, 0x10, "Off"					},
+	{DO+3, 0x01, 0x10, 0x00, "On"					},
+};
+#undef DO
 STDDIPINFO(Gravitar)
 
+#define DO 0x10
 static struct BurnDIPInfo SpacduelDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x01, NULL					},
-	{0x12, 0xff, 0xff, 0x00, NULL					},
-	{0x13, 0xff, 0xff, 0x07, NULL					},
+	{DO+0, 0xff, 0xff, 0x01, NULL					},
+	{DO+1, 0xff, 0xff, 0x00, NULL					},
+	{DO+2, 0xff, 0xff, 0x07, NULL					},
+	{DO+3, 0xff, 0xff, 0x10, NULL					}, // service mode
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x11, 0x01, 0x03, 0x01, "3"					},
-	{0x11, 0x01, 0x03, 0x00, "4"					},
-	{0x11, 0x01, 0x03, 0x03, "5"					},
-	{0x11, 0x01, 0x03, 0x02, "6"					},
+	{DO+0, 0x01, 0x03, 0x01, "3"					},
+	{DO+0, 0x01, 0x03, 0x00, "4"					},
+	{DO+0, 0x01, 0x03, 0x03, "5"					},
+	{DO+0, 0x01, 0x03, 0x02, "6"					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x11, 0x01, 0x0c, 0x04, "Easy"					},
-	{0x11, 0x01, 0x0c, 0x00, "Normal"				},
-	{0x11, 0x01, 0x0c, 0x0c, "Medium"				},
-	{0x11, 0x01, 0x0c, 0x08, "Hard"					},
+	{DO+0, 0x01, 0x0c, 0x04, "Easy"					},
+	{DO+0, 0x01, 0x0c, 0x00, "Normal"				},
+	{DO+0, 0x01, 0x0c, 0x0c, "Medium"				},
+	{DO+0, 0x01, 0x0c, 0x08, "Hard"					},
 
 	{0   , 0xfe, 0   ,    4, "Language"				},
-	{0x11, 0x01, 0x30, 0x00, "English"				},
-	{0x11, 0x01, 0x30, 0x10, "German"				},
-	{0x11, 0x01, 0x30, 0x20, "French"				},
-	{0x11, 0x01, 0x30, 0x30, "Spanish"				},
+	{DO+0, 0x01, 0x30, 0x00, "English"				},
+	{DO+0, 0x01, 0x30, 0x10, "German"				},
+	{DO+0, 0x01, 0x30, 0x20, "French"				},
+	{DO+0, 0x01, 0x30, 0x30, "Spanish"				},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x11, 0x01, 0xc0, 0xc0, "8000"					},
-	{0x11, 0x01, 0xc0, 0x00, "10000"				},
-	{0x11, 0x01, 0xc0, 0x40, "15000"				},
-	{0x11, 0x01, 0xc0, 0x80, "None"					},
+	{DO+0, 0x01, 0xc0, 0xc0, "8000"					},
+	{DO+0, 0x01, 0xc0, 0x00, "10000"				},
+	{DO+0, 0x01, 0xc0, 0x40, "15000"				},
+	{DO+0, 0x01, 0xc0, 0x80, "None"					},
 
 	
 	{0   , 0xfe, 0   ,    4, "Coinage"				},
-	{0x12, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0x03, 0x03, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x03, 0x02, "Free Play"			},
+	{DO+1, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
+	{DO+1, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
+	{DO+1, 0x01, 0x03, 0x03, "1 Coin  2 Credits"	},
+	{DO+1, 0x01, 0x03, 0x02, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x12, 0x01, 0x0c, 0x00, "*1"					},
-	{0x12, 0x01, 0x0c, 0x04, "*4"					},
-	{0x12, 0x01, 0x0c, 0x08, "*5"					},
-	{0x12, 0x01, 0x0c, 0x0c, "*6"					},
+	{DO+1, 0x01, 0x0c, 0x00, "*1"					},
+	{DO+1, 0x01, 0x0c, 0x04, "*4"					},
+	{DO+1, 0x01, 0x0c, 0x08, "*5"					},
+	{DO+1, 0x01, 0x0c, 0x0c, "*6"					},
 
 	{0   , 0xfe, 0   ,    2, "Coin A"				},
-	{0x12, 0x01, 0x10, 0x00, "*1"					},
-	{0x12, 0x01, 0x10, 0x10, "*2"					},
+	{DO+1, 0x01, 0x10, 0x00, "*1"					},
+	{DO+1, 0x01, 0x10, 0x10, "*2"					},
 
 	{0   , 0xfe, 0   ,    6, "Bonus Coins"			},
-	{0x12, 0x01, 0xe0, 0x80, "1 each 5"				},
-	{0x12, 0x01, 0xe0, 0x60, "2 each 4"				},
-	{0x12, 0x01, 0xe0, 0x40, "1 each 4"				},
-	{0x12, 0x01, 0xe0, 0xa0, "1 each 3"				},
-	{0x12, 0x01, 0xe0, 0x20, "1 each 2"				},
-	{0x12, 0x01, 0xe0, 0x00, "None"					},
+	{DO+1, 0x01, 0xe0, 0x80, "1 each 5"				},
+	{DO+1, 0x01, 0xe0, 0x60, "2 each 4"				},
+	{DO+1, 0x01, 0xe0, 0x40, "1 each 4"				},
+	{DO+1, 0x01, 0xe0, 0xa0, "1 each 3"				},
+	{DO+1, 0x01, 0xe0, 0x20, "1 each 2"				},
+	{DO+1, 0x01, 0xe0, 0x00, "None"					},
 
 	
 	{0   , 0xfe, 0   ,    2, "Charge by ..."		},
-	{0x13, 0x01, 0x01, 0x01, "player"				},
-	{0x13, 0x01, 0x01, 0x00, "game"					},
+	{DO+2, 0x01, 0x01, 0x01, "player"				},
+	{DO+2, 0x01, 0x01, 0x00, "game"					},
 
 	{0   , 0xfe, 0   ,    2, "2-credit minimum"		},
-	{0x13, 0x01, 0x02, 0x02, "Off"					},
-	{0x13, 0x01, 0x02, 0x00, "On"					},
+	{DO+2, 0x01, 0x02, 0x02, "Off"					},
+	{DO+2, 0x01, 0x02, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "1-player game only"	},
-	{0x13, 0x01, 0x04, 0x04, "Off"					},
-	{0x13, 0x01, 0x04, 0x00, "On"					},
-};
+	{DO+2, 0x01, 0x04, 0x04, "Off"					},
+	{DO+2, 0x01, 0x04, 0x00, "On"					},
 
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{DO+3, 0x01, 0x10, 0x10, "Off"					},
+	{DO+3, 0x01, 0x10, 0x00, "On"					},
+};
+#undef DO
 STDDIPINFO(Spacduel)
 
 static void bwidow_write(UINT16 address, UINT8 data)
@@ -476,8 +503,8 @@ static void spacduel_write(UINT16 address, UINT8 data)
 
 static UINT8 spacduel_input_read(UINT8 offset)
 {
-	INT32 res1 = DrvInputs[1];
-	INT32 res2 = DrvInputs[2];
+	INT32 res1 = DrvInputs[1]^0xff;
+	INT32 res2 = DrvInputs[2]^0xff;
 	INT32 res3 = DrvDips[2];
 	INT32 res = 0x00;
 
@@ -597,7 +624,7 @@ static INT32 MemIndex()
 
 	RamEnd				= Next;
 
-	DrvVectorROM 		= Next; Next += 0x004000; // must(!) come after Vector RAM!
+	DrvVectorROM 		= Next; Next += 0x004000*2; // must(!) come after Vector RAM! *2 because bwidow likes to read past the rom data.
 
 	MemEnd				= Next;
 
@@ -642,7 +669,7 @@ static INT32 BwidowInit()
 
 	BurnWatchdogInit(DrvDoReset, 180); // not on bwidow
 
-	PokeyInit(12096000/8, 2, 5.00, 0);
+	PokeyInit(12096000/8, 2, 0.50, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
@@ -706,7 +733,7 @@ static INT32 GravitarInit()
 
 	BurnWatchdogInit(DrvDoReset, 180); // not on bwidow
 
-	PokeyInit(12096000/8, 2, 5.00, 0);
+	PokeyInit(12096000/8, 2, 0.50, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
@@ -756,7 +783,7 @@ static INT32 BwidowpInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	PokeyInit(12096000/8, 2, 5.00, 0);
+	PokeyInit(12096000/8, 2, 0.50, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
@@ -812,7 +839,7 @@ static INT32 SpacduelInit()
 
 	BurnWatchdogInit(DrvDoReset, 180); // not on spacduel
 
-	PokeyInit(12096000/8, 2, 5.00, 0);
+	PokeyInit(12096000/8, 2, 0.50, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
@@ -888,6 +915,8 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		DrvInputs[0] = (DrvInputs[0] & ~0x10) | (DrvDips[3] & 0x10);
 	}
 
 	INT32 nCyclesTotal = 1512000 / 60;
@@ -988,7 +1017,7 @@ struct BurnDriver BurnDrvBwidow = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, bwidowRomInfo, bwidowRomName, NULL, NULL, BwidowInputInfo, BwidowDIPInfo,
 	BwidowInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	480, 440, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1019,7 +1048,7 @@ struct BurnDriverD BurnDrvBwidowp = {
 	BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, bwidowpRomInfo, bwidowpRomName, NULL, NULL, BwidowInputInfo, BwidowDIPInfo,
 	BwidowpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	480, 440, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1053,7 +1082,7 @@ struct BurnDriver BurnDrvGravitar = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gravitarRomInfo, gravitarRomName, NULL, NULL, GravitarInputInfo, GravitarDIPInfo,
 	GravitarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	420, 400, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1087,7 +1116,7 @@ struct BurnDriver BurnDrvGravitar2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gravitar2RomInfo, gravitar2RomName, NULL, NULL, GravitarInputInfo, GravitarDIPInfo,
 	GravitarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	420, 400, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1121,7 +1150,7 @@ struct BurnDriver BurnDrvGravitar1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gravitar1RomInfo, gravitar1RomName, NULL, NULL, GravitarInputInfo, GravitarDIPInfo,
 	GravitarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	420, 400, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1154,7 +1183,7 @@ struct BurnDriver BurnDrvLunarbat = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, lunarbatRomInfo, lunarbatRomName, NULL, NULL, GravitarInputInfo, GravitarDIPInfo,
 	GravitarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	420, 400, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1186,7 +1215,7 @@ struct BurnDriver BurnDrvLunarba1 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, lunarba1RomInfo, lunarba1RomName, NULL, NULL, LunarbatInputInfo, NULL,
 	SpacduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	540, 400, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1214,7 +1243,7 @@ struct BurnDriver BurnDrvSpacduel = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, spacduelRomInfo, spacduelRomName, NULL, NULL, SpacduelInputInfo, SpacduelDIPInfo,
 	SpacduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	540, 400, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1242,7 +1271,7 @@ struct BurnDriver BurnDrvSpacduel1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, spacduel1RomInfo, spacduel1RomName, NULL, NULL, SpacduelInputInfo, SpacduelDIPInfo,
 	SpacduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	540, 400, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1270,5 +1299,5 @@ struct BurnDriver BurnDrvSpacduel0 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, spacduel0RomInfo, spacduel0RomName, NULL, NULL, SpacduelInputInfo, SpacduelDIPInfo,
 	SpacduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	540, 400, 4, 3
+	800, 600, 4, 3
 };

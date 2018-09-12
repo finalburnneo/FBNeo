@@ -237,7 +237,6 @@ static void mhavoc_main_write(UINT16 address, UINT8 data)
 		case 0x1600:
 		{
 			player_1 = (data >> 5) & 1;
-			bprintf(0, _T("player %X\n"), player_1);
 			gamma_halt = ~data & 0x08;
 
 			if (gamma_halt)
@@ -621,6 +620,8 @@ static INT32 MhavocInit()
 
 	avgdvg_init(USE_AVG_MHAVOC, DrvVectorRAM, 0x1000, M6502TotalCycles, 300, 260);
 
+	memset(DrvNVRAM, 0xff, 0x200);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -669,6 +670,8 @@ static INT32 AlphaoneInit()
 	tms5220_set_frequency(555555);
 
 	avgdvg_init(USE_AVG_MHAVOC, DrvVectorRAM, 0x1000, M6502TotalCycles, 580, 500);
+
+	memset(DrvNVRAM, 0xff, 0x200);
 
 	DrvDoReset(1);
 

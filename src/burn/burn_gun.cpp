@@ -179,11 +179,11 @@ void BurnPaddleMakeInputs(INT32 num, INT16 x, INT16 y)
 		}
 
 	if (BurnGunWrapInf[num].ymin != -1)
-		if (BurnGunY[num] <= BurnGunWrapInf[num].ymin * 0x100) {
+		if (BurnGunY[num] < BurnGunWrapInf[num].ymin * 0x100) {
 			BurnGunY[num] = BurnGunWrapInf[num].ymax * 0x100;
 		}
 	if (BurnGunWrapInf[num].ymax != -1)
-		if (BurnGunY[num] >= BurnGunWrapInf[num].ymax * 0x100) {
+		if (BurnGunY[num] > BurnGunWrapInf[num].ymax * 0x100) {
 			BurnGunY[num] = BurnGunWrapInf[num].ymin * 0x100;
 		}
 }

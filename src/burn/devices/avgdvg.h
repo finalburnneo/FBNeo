@@ -15,6 +15,7 @@
 
 void avgdvg_init(INT32 type, UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesCB)(), INT32 w, INT32 h);
 void avgdvg_exit();
+void avgdvg_set_cycles(INT32 cycles); // use if main cpu is not 1512000
 
 INT32 avgdvg_done(void);
 void avgdvg_go();

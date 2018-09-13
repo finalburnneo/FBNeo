@@ -342,6 +342,7 @@ static INT32 DrvInit()
 	SekClose();
 
 	avgdvg_init(USE_AVG_QUANTUM, DrvVectorRAM, 0x2000, SekTotalCycles, 900, 600);
+	avgdvg_set_cycles(6048000);
 //	vector_set_offsets(11, 119); // wrong?
 
 	PokeyInit(600000, 2, 5.00, 0);
@@ -396,7 +397,6 @@ static INT32 DrvDraw()
 		DrvRecalc = 1;
 	}
 
-	if (avgOK) avgdvg_go();
 	draw_vector(DrvPalette);
 
 	return 0;

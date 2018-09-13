@@ -447,7 +447,6 @@ static INT32 DrvDraw()
 {
 	DrvPaletteInit();
 
-	if (avgletsgo) avgdvg_go();
 	draw_vector(DrvPalette);
 
 	return 0;

@@ -81,7 +81,6 @@
 #define DSVEC		0x0f
 
 
-
 /*************************************
  *
  *  Static variables
@@ -1006,6 +1005,8 @@ static INT32 avg_generate_vector_list(void)
  *  AVG execution/busy detection
  *
  ************************************/
+#define AVG_DEFAULT_CPU 1512000
+static INT32 avgdvg_cpu_rate = 0;
 static INT32 avgdvg_halt_next = 0;
 static INT32 last_cyc = 0;
 
@@ -1061,7 +1062,8 @@ void avgdvg_go()
 		/* for Major Havoc, we need to look for empty frames */
 		if (total_length > 1) {
 			avgdvg_halt_next = pCPUTotalCycles();
-			last_cyc = total_length;
+			last_cyc = (INT32)((float)(((float)1512000 / 1000000000) * 2000) * total_length);
+			//bprintf(0, _T("last cyc %d    total_length %d\n"), last_cyc, total_length);
 		}
 		else
 		{
@@ -1170,6 +1172,12 @@ void avgdvg_init(INT32 type, UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesC
 
 	avgdvg_init(type, 0, w, 0, h);
 	pCPUTotalCycles = pCPUCyclesCB;
+	avgdvg_cpu_rate = AVG_DEFAULT_CPU;
+}
+
+void avgdvg_set_cycles(INT32 cycles)
+{
+	avgdvg_cpu_rate = cycles;
 }
 
 void avgdvg_exit()

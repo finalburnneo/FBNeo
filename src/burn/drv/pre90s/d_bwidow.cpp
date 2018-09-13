@@ -31,6 +31,9 @@ static UINT8 DrvDips[4];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 irqcnt = 0;
+static INT32 irqflip = 0;
+
 static struct BurnInputInfo BwidowInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 start"	},
@@ -606,6 +609,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	avgletsgo = 0;
 	nExtraCycles = 0;
 
+	irqcnt = 0;
+	irqflip = 0;
+
 	return 0;
 }
 
@@ -892,8 +898,7 @@ static INT32 DrvDraw()
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
-	
-	if (avgletsgo) avgdvg_go();
+
 	draw_vector(DrvPalette);
 
 	return 0;
@@ -920,7 +925,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nCyclesTotal = 1512000 / 60;
-	INT32 nInterleave = 20;
+	INT32 nInterleave = 256;
 	INT32 nCyclesDone = nExtraCycles;
 	INT32 nSoundBufferPos = 0;
 
@@ -929,11 +934,17 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone += M6502Run((nCyclesTotal * (i + 1) / nInterleave) - nCyclesDone);
-		if ((i % 5) == 4) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+
+		if (irqcnt >= (62 + irqflip)) { // 6.1something irq's per frame logic
+			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			irqcnt = -1;
+			irqflip ^= 1;
+		}
+		irqcnt++;
 
 		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%4 == 3) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			pokey_update(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
@@ -982,6 +993,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		pokey_scan(nAction, pnMin);
 
 		SCAN_VAR(nExtraCycles);
+		SCAN_VAR(irqcnt);
+		SCAN_VAR(irqflip);
 	}
 
 	earom_scan(nAction, pnMin); // here.

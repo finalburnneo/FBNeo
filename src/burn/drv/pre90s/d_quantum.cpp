@@ -26,22 +26,27 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[1];
 static UINT16 DrvInputs[1];
 static UINT8 DrvReset;
 
+static UINT8 trackX = 0;
+static UINT8 trackY = 0;
+
 static INT32 avgOK = 0;
 
 static struct BurnInputInfo QuantumInputList[] = {
-	{"Coin 1",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
-	{"Coin 2",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"	},
-	{"Coin 3",			BIT_DIGITAL,	DrvJoy1 + 1,	"p3 coin"	},
-	{"Start 1",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
-	{"Start 2",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"	    },
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 
-	// analog input placeholders
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p3 coin"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
@@ -49,33 +54,33 @@ static struct BurnInputInfo QuantumInputList[] = {
 };
 
 STDINPUTINFO(Quantum)
-
+#define DO 0xb
 static struct BurnDIPInfo QuantumDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0x00, NULL				},
+	{DO+0, 0xff, 0xff, 0x00, NULL				},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"			},
-	{0x09, 0x01, 0xc0, 0x80, "2 Coins 1 Credits"},
-	{0x09, 0x01, 0xc0, 0x00, "1 Coin  1 Credits"},
-	{0x09, 0x01, 0xc0, 0xc0, "1 Coin  2 Credits"},
-	{0x09, 0x01, 0xc0, 0x40, "Free Play"		},
+	{DO+0, 0x01, 0xc0, 0x80, "2 Coins 1 Credits"},
+	{DO+0, 0x01, 0xc0, 0x00, "1 Coin  1 Credits"},
+	{DO+0, 0x01, 0xc0, 0xc0, "1 Coin  2 Credits"},
+	{DO+0, 0x01, 0xc0, 0x40, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    4, "Right Coin"		},
-	{0x09, 0x01, 0x30, 0x00, "*1"				},
-	{0x09, 0x01, 0x30, 0x20, "*4"				},
-	{0x09, 0x01, 0x30, 0x10, "*5"				},
-	{0x09, 0x01, 0x30, 0x30, "*6"				},
+	{DO+0, 0x01, 0x30, 0x00, "*1"				},
+	{DO+0, 0x01, 0x30, 0x20, "*4"				},
+	{DO+0, 0x01, 0x30, 0x10, "*5"				},
+	{DO+0, 0x01, 0x30, 0x30, "*6"				},
 
 	{0   , 0xfe, 0   ,    2, "Left Coin"		},
-	{0x09, 0x01, 0x08, 0x00, "*1"				},
-	{0x09, 0x01, 0x08, 0x08, "*2"				},
+	{DO+0, 0x01, 0x08, 0x00, "*1"				},
+	{DO+0, 0x01, 0x08, 0x08, "*2"				},
 
 	{0   , 0xfe, 0   ,    5, "Bonus Coins"		},
-	{0x09, 0x01, 0x07, 0x00, "None"				},
-	{0x09, 0x01, 0x07, 0x01, "1 each 5"			},
-	{0x09, 0x01, 0x07, 0x02, "1 each 4"			},
-	{0x09, 0x01, 0x07, 0x05, "1 each 3"			},
-	{0x09, 0x01, 0x07, 0x06, "2 each 4"			},
+	{DO+0, 0x01, 0x07, 0x00, "None"				},
+	{DO+0, 0x01, 0x07, 0x01, "1 each 5"			},
+	{DO+0, 0x01, 0x07, 0x02, "1 each 4"			},
+	{DO+0, 0x01, 0x07, 0x05, "1 each 3"			},
+	{DO+0, 0x01, 0x07, 0x06, "2 each 4"			},
 };
 
 STDDIPINFO(Quantum)
@@ -213,7 +218,7 @@ static UINT16 __fastcall quantum_read_word(UINT32 address)
 	{
 		case 0x940000:
 		case 0x940001:
-			return 0; // (ioport("TRACKY")->read() << 4) | ioport("TRACKX")->read();
+			return (trackY&0xf) | ((trackX&0xf) << 4);
 
 		case 0x948000:
 		case 0x948001:
@@ -237,7 +242,7 @@ static UINT8 __fastcall quantum_read_byte(UINT32 address)
 	{
 		case 0x940000:
 		case 0x940001:
-			return 0; // (ioport("TRACKY")->read() << 4) | ioport("TRACKX")->read();
+			return (trackY&0xf) | ((trackX&0xf) << 4);
 
 		case 0x948000:
 			return 0xff;
@@ -253,14 +258,14 @@ static UINT8 __fastcall quantum_read_byte(UINT32 address)
 	return 0;
 }
 
-static INT32 allpot_read_0(INT32 /*offset*/)
+static INT32 dip0_read(INT32 offset)
 {
-	return DrvDips[0];
+	return (DrvDips[0] << (7 - (offset))) & 0x80;
 }
 
-static INT32 allpot_read_1(INT32 /*offset*/)
+static INT32 dip1_read(INT32 offset)
 {
-	return 0;
+	return (0 << (7 - (offset))) & 0x80;
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)
@@ -345,10 +350,24 @@ static INT32 DrvInit()
 	avgdvg_set_cycles(6048000);
 //	vector_set_offsets(11, 119); // wrong?
 
-	PokeyInit(600000, 2, 5.00, 0);
+	PokeyInit(600000, 2, 0.50, 0);
 	PokeySetTotalCyclesCB(SekTotalCycles);
-	PokeyAllPotCallback(0, allpot_read_0);
-	PokeyAllPotCallback(1, allpot_read_1);
+	PokeyPotCallback(0, 0, dip0_read);
+	PokeyPotCallback(0, 1, dip0_read);
+	PokeyPotCallback(0, 2, dip0_read);
+	PokeyPotCallback(0, 3, dip0_read);
+	PokeyPotCallback(0, 4, dip0_read);
+	PokeyPotCallback(0, 5, dip0_read);
+	PokeyPotCallback(0, 6, dip0_read);
+	PokeyPotCallback(0, 7, dip0_read);
+	PokeyPotCallback(1, 0, dip1_read);
+	PokeyPotCallback(1, 1, dip1_read);
+	PokeyPotCallback(1, 2, dip1_read);
+	PokeyPotCallback(1, 3, dip1_read);
+	PokeyPotCallback(1, 4, dip1_read);
+	PokeyPotCallback(1, 5, dip1_read);
+	PokeyPotCallback(1, 6, dip1_read);
+	PokeyPotCallback(1, 7, dip1_read);
 
 	DrvDoReset(1);
 
@@ -416,6 +435,11 @@ static INT32 DrvFrame()
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
+
+		if (DrvJoy2[0]) trackY += 1;
+		if (DrvJoy2[1]) trackY -= 1;
+		if (DrvJoy2[2]) trackX -= 1;
+		if (DrvJoy2[3]) trackX += 1;
 	}
 
 	INT32 nInterleave = 4; // irq is 4.10 / frame
@@ -450,15 +474,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (pnMin) {
 		*pnMin = 0x029722;
 	}
-	
-	if (nAction & ACB_MEMORY_ROM) {	
+
+	if (nAction & ACB_MEMORY_ROM) {
 		ba.Data		= Drv68KROM;
 		ba.nLen		= 0x14000;
 		ba.nAddress	= 0;
 		ba.szName	= "68K ROM";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = DrvColRAM;
@@ -490,7 +514,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nAddress	= 0x900000;
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_VOLATILE) {
 		SekScan(nAction);
 

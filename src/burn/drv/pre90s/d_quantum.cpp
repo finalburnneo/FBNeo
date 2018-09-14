@@ -1,9 +1,11 @@
 // FB Alpha Quantum driver module
 // Based on MAME driver by Hedley Rainnie, Aaron Giles, Couriersud, and Paul Forgey
 
-// To do:
-//	bug fix
-//	hook up analog trackball
+// todink:
+//  1: service mode hangs.
+//  2: merge the trackball simulation stuff [see DrvFrame] into burn_gun and make
+//  a configurable and "easier to use w/less support code" trackball
+//  for fba!
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -11,6 +13,7 @@
 #include "avgdvg.h"
 #include "vector.h"
 #include "pokey.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -27,15 +30,18 @@ static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
-static UINT8 DrvDips[1];
-static UINT16 DrvInputs[1];
+static UINT8 DrvDips[2];
+static UINT16 DrvInputs[2];
 static UINT8 DrvReset;
 
 static UINT8 trackX = 0;
 static UINT8 trackY = 0;
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
 
 static INT32 avgOK = 0;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo QuantumInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
@@ -43,6 +49,8 @@ static struct BurnInputInfo QuantumInputList[] = {
 	{"P1 Down",		    BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
 	{"P1 Left",		    BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
+	A("P1 Track X",     BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Track Y",     BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"	},
@@ -51,13 +59,17 @@ static struct BurnInputInfo QuantumInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
+#undef A
 
 STDINPUTINFO(Quantum)
-#define DO 0xb
+
+#define DO 0xd
 static struct BurnDIPInfo QuantumDIPList[]=
 {
 	{DO+0, 0xff, 0xff, 0x00, NULL				},
+	{DO+1, 0xff, 0xff, 0x80, NULL				},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"			},
 	{DO+0, 0x01, 0xc0, 0x80, "2 Coins 1 Credits"},
@@ -81,7 +93,12 @@ static struct BurnDIPInfo QuantumDIPList[]=
 	{DO+0, 0x01, 0x07, 0x02, "1 each 4"			},
 	{DO+0, 0x01, 0x07, 0x05, "1 each 3"			},
 	{DO+0, 0x01, 0x07, 0x06, "2 each 4"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{DO+1, 0x01, 0x80, 0x80, "Off"					},
+	{DO+1, 0x01, 0x80, 0x00, "On"					},
 };
+#undef DO
 
 STDDIPINFO(Quantum)
 
@@ -208,6 +225,8 @@ static void __fastcall quantum_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
+static void update_trackball();
+
 static UINT16 __fastcall quantum_read_word(UINT32 address)
 {	
 	if ((address & 0xffffc0) == 0x840000) {
@@ -217,12 +236,12 @@ static UINT16 __fastcall quantum_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x940000:
-		case 0x940001:
+		case 0x940001: update_trackball();
 			return (trackY&0xf) | ((trackX&0xf) << 4);
 
 		case 0x948000:
 		case 0x948001:
-			return DrvInputs[0] | (avgdvg_done() ? 1 : 0);
+			return (DrvInputs[0] & ~0x81) | (DrvDips[1] & 0x80) | (avgdvg_done() ? 1 : 0);
 
 		case 0x978000:
 		case 0x978001:
@@ -241,14 +260,14 @@ static UINT8 __fastcall quantum_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x940000:
-		case 0x940001:
+		case 0x940001: update_trackball();
 			return (trackY&0xf) | ((trackX&0xf) << 4);
 
 		case 0x948000:
 			return 0xff;
 			
 		case 0x948001:
-			return (DrvInputs[0] & 0xfe) | (avgdvg_done() ? 1 : 0);
+			return (DrvInputs[0] & 0x7e) | (DrvDips[1] & 0x80) | (avgdvg_done() ? 1 : 0);
 
 		case 0x978000:
 		case 0x978001:
@@ -348,7 +367,6 @@ static INT32 DrvInit()
 
 	avgdvg_init(USE_AVG_QUANTUM, DrvVectorRAM, 0x2000, SekTotalCycles, 900, 600);
 	avgdvg_set_cycles(6048000);
-//	vector_set_offsets(11, 119); // wrong?
 
 	PokeyInit(600000, 2, 0.50, 0);
 	PokeySetTotalCyclesCB(SekTotalCycles);
@@ -369,6 +387,8 @@ static INT32 DrvInit()
 	PokeyPotCallback(1, 6, dip1_read);
 	PokeyPotCallback(1, 7, dip1_read);
 
+	BurnPaddleInit(2, false);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -379,6 +399,8 @@ static INT32 DrvExit()
 	SekExit();
 	PokeyExit();
 	avgdvg_exit();
+
+	BurnPaddleExit();
 
 	BurnFree(AllMem);
 
@@ -421,6 +443,16 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static INT32 DIAL_INC[2] = { 0, 0 };
+
+static void update_trackball()
+{
+	if (DrvJoy2[0]) trackY += DIAL_INC[0] / 2;
+	if (DrvJoy2[1]) trackY -= DIAL_INC[0] / 2;
+	if (DrvJoy2[2]) trackX -= DIAL_INC[1] / 2;
+	if (DrvJoy2[3]) trackX += DIAL_INC[1] / 2;
+}
+
 static INT32 DrvFrame()
 {
 	BurnWatchdogUpdate();
@@ -431,31 +463,62 @@ static INT32 DrvFrame()
 
 	{
 		DrvInputs[0] = 0xfffe;
+		DrvInputs[1] = 0; // for quick udlr check.
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i; // udlr (digital)
 		}
 
-		if (DrvJoy2[0]) trackY += 1;
-		if (DrvJoy2[1]) trackY -= 1;
-		if (DrvJoy2[2]) trackX -= 1;
-		if (DrvJoy2[3]) trackX += 1;
+		DIAL_INC[0] = (DrvInputs[1]) ? 2 : 1; // default velocity
+		DIAL_INC[1] = (DrvInputs[1]) ? 2 : 1; // 2 digital, 1 analog
+
+		BurnPaddleMakeInputs(0, DrvAnalogPort1, DrvAnalogPort0);
+		BurnDialINF dial = BurnPaddleReturnA(0);
+		if (dial.Backward) DrvJoy2[0] = 1;
+		if (dial.Forward)  DrvJoy2[1] = 1;
+		DIAL_INC[0] += dial.Velocity;
+		if (DIAL_INC[0] > 7) DIAL_INC[0] = 7;
+		//bprintf(0, _T("velY %d int.dial %X (%S%S)    "), DIAL_INC[0], BurnGunX[0], (dial.Backward) ? "Back" : "", (dial.Forward) ? "Fwd" : "");
+
+		dial = BurnPaddleReturnB(0);
+		if (dial.Backward) DrvJoy2[2] = 1;
+		if (dial.Forward)  DrvJoy2[3] = 1;
+		DIAL_INC[1] += dial.Velocity;
+		if (DIAL_INC[1] > 7) DIAL_INC[1] = 7;
+
+		//bprintf(0, _T("velX %d int.dial %X (%S%S)\n"), DIAL_INC[1], BurnGunY[0], (dial.Backward) ? "Back" : "", (dial.Forward) ? "Fwd" : "");
+		update_trackball();
 	}
 
-	INT32 nInterleave = 4; // irq is 4.10 / frame
+	INT32 nInterleave = 20; // irq is 4.10 / frame
 	INT32 nCyclesTotal[1] = { 6048000 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
+	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if ((i % 5) == 4) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			pokey_update(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		pokey_update(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			pokey_update(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	if (pBurnDraw) {

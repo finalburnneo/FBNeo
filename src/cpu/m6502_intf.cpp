@@ -618,6 +618,7 @@ INT32 M6502Scan(INT32 nAction)
 		SCAN_VAR(ptr->nCyclesTotal);
 		SCAN_VAR(ptr->nCyclesSegment);
 		SCAN_VAR(ptr->nCyclesLeft);
+		SCAN_VAR(nM6502CyclesDone);
 	}
 	
 	return 0;

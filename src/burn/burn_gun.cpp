@@ -172,19 +172,23 @@ void BurnPaddleMakeInputs(INT32 num, INT16 x, INT16 y)
 	if (BurnGunWrapInf[num].xmin != -1)
 		if (BurnGunX[num] < BurnGunWrapInf[num].xmin * 0x100) {
 			BurnGunX[num] = BurnGunWrapInf[num].xmax * 0x100;
+			BurnPaddleReturnA(num); // rebase PaddleLast* on wrap
 		}
 	if (BurnGunWrapInf[num].xmax != -1)
 		if (BurnGunX[num] > BurnGunWrapInf[num].xmax * 0x100) {
 			BurnGunX[num] = BurnGunWrapInf[num].xmin * 0x100;
+			BurnPaddleReturnA(num); // rebase PaddleLast* on wrap
 		}
 
 	if (BurnGunWrapInf[num].ymin != -1)
 		if (BurnGunY[num] < BurnGunWrapInf[num].ymin * 0x100) {
 			BurnGunY[num] = BurnGunWrapInf[num].ymax * 0x100;
+			BurnPaddleReturnB(num); // rebase PaddleLast* on wrap
 		}
 	if (BurnGunWrapInf[num].ymax != -1)
 		if (BurnGunY[num] > BurnGunWrapInf[num].ymax * 0x100) {
 			BurnGunY[num] = BurnGunWrapInf[num].ymin * 0x100;
+			BurnPaddleReturnB(num); // rebase PaddleLast* on wrap
 		}
 }
 
@@ -233,7 +237,7 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 		BurnGunX[i] = ((nBurnGunMaxX >> 1) - 7) << 8;
 		BurnGunY[i] = ((nBurnGunMaxY >> 1) - 8) << 8;
 
-		BurnPaddleSetWrap(i, 0, 0xf00, 0, 0xf00); // Paddle/dial stuff
+		BurnPaddleSetWrap(i, 0, 0xf0, 0, 0xf0); // Paddle/dial stuff
 	}
 }
 

@@ -2,6 +2,7 @@
 // Based on MAME driver by Hedley Rainnie, Aaron Giles, Couriersud, and Paul Forgey
 
 // todink:
+//  0: crashes if coined up too quick after booting. (overflow in avgdvg, reading vector ram)
 //  1: merge the trackball simulation stuff [see DrvFrame] into burn_gun and make
 //  a configurable and "easier to use w/less support code" trackball
 //  for fba!
@@ -56,7 +57,6 @@ static struct BurnInputInfo QuantumInputList[] = {
 	{"P3 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p3 coin"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -64,7 +64,7 @@ static struct BurnInputInfo QuantumInputList[] = {
 
 STDINPUTINFO(Quantum)
 
-#define DO 0xd
+#define DO 0xc
 static struct BurnDIPInfo QuantumDIPList[]=
 {
 	{DO+0, 0xff, 0xff, 0x00, NULL				},

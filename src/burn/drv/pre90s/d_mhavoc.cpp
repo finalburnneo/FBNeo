@@ -618,7 +618,7 @@ static INT32 MhavocInit()
 	tms5220_init(); // mhavocrv
 	tms5220_set_frequency(555555);
 
-	avgdvg_init(USE_AVG_MHAVOC, DrvVectorRAM, 0x1000, M6502TotalCycles, 300, 260);
+	avgdvg_init(USE_AVG_MHAVOC, DrvVectorRAM, 0x4000, M6502TotalCycles, 300, 260);
 
 	memset(DrvNVRAM, 0xff, 0x200);
 
@@ -669,7 +669,7 @@ static INT32 AlphaoneInit()
 	tms5220_init(); // not in this set
 	tms5220_set_frequency(555555);
 
-	avgdvg_init(USE_AVG_MHAVOC, DrvVectorRAM, 0x1000, M6502TotalCycles, 580, 500);
+	avgdvg_init(USE_AVG_MHAVOC, DrvVectorRAM, 0x4000, M6502TotalCycles, 580, 500);
 
 	memset(DrvNVRAM, 0xff, 0x200);
 

@@ -389,7 +389,7 @@ static INT32 DrvInit()
 	PokeyPotCallback(1, 6, port2_read);
 	PokeyPotCallback(1, 7, port2_read);
 
-	avgdvg_init(USE_AVG_TEMPEST, DrvVecRAM, 0x1000, M6502TotalCycles, 580, 570);
+	avgdvg_init(USE_AVG_TEMPEST, DrvVecRAM, 0x2000, M6502TotalCycles, 580, 570);
 
 	earom_init();
 

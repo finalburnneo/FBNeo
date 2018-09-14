@@ -117,8 +117,8 @@ static UINT32 sparkle_callback(void)
 
 #define VGVECTOR 0
 #define VGCLIP 1
+#define MAXVECT 10000
 
-static const INT32 MAXVECT = 10000;
 static INT32 nvect = 0;
 static INT32 has_clip = 0;
 
@@ -131,7 +131,7 @@ struct vgvector
 	INT32 status;
 };
 
-static vgvector vectbuf[MAXVECT];
+static vgvector *vectbuf = NULL;
 
 static void vg_flush()
 {
@@ -270,10 +270,12 @@ INLINE INT32 twos_comp_val(INT32 num, INT32 bits)
 INLINE UINT16 vector_word(UINT16 offset)
 {
 	UINT8 *base;
-
 	/* convert from word offset to byte */
 	offset *= 2;
-
+	if (offset >= vectorram_size) {
+		bprintf(0, _T("AVG/DVG Overflow at address: %X\n"), offset);
+		return (vector_engine == USE_DVG) ? DHALT << 12 : HALT << 13; // halt!
+	}
 	/* get address of the word */
 	base = &vectorbank[offset / BANK_SIZE][offset % BANK_SIZE];
 
@@ -1117,6 +1119,16 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 		return 1;
 	}
 
+	vectbuf = (vgvector *)BurnMalloc(sizeof(vgvector) * MAXVECT);
+
+	if (!vectbuf)
+	{
+		bprintf(PRINT_ERROR, _T("Error: Unable to allocate AVG/DVG vector buffer, crashing in 3..2..1...\n"));
+		return 1;
+	}
+
+	memset(vectbuf, 0, sizeof(vgvector) * MAXVECT);
+
 	/* Star Wars is reverse-endian */
 	if (vector_engine == USE_AVG_SWARS)
 		flipword = 1;
@@ -1162,10 +1174,10 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 	return 0;
 }
 
-void avgdvg_init(INT32 type, UINT8 *vectram, INT32 vramsize, INT32 (*pCPUCyclesCB)(), INT32 w, INT32 h)
+void avgdvg_init(INT32 type, UINT8 *vectram, INT32 vramromsize, INT32 (*pCPUCyclesCB)(), INT32 w, INT32 h)
 {
 	vectorram = vectram;
-	vectorram_size = vramsize;
+	vectorram_size = vramromsize; // entire allocated ram+romspace size of game!
 
 	vector_init();
 	vector_set_scale(w, h);
@@ -1183,6 +1195,7 @@ void avgdvg_set_cycles(INT32 cycles)
 void avgdvg_exit()
 {
 	vector_exit();
+	BurnFree(vectbuf);
 }
 
 // save for later stuff:

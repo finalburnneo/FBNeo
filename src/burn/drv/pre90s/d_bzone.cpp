@@ -799,7 +799,7 @@ static INT32 BzoneInit()
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, bzone_port0_read);
 
-	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x2000, M6502TotalCycles, 580, 400);
+	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x5000, M6502TotalCycles, 580, 400);
 
 	DrvDoReset(1);
 
@@ -850,7 +850,7 @@ static INT32 BradleyInit()
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, bzone_port0_read);
 
-	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x2000, M6502TotalCycles, 580, 400);
+	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x5000, M6502TotalCycles, 580, 400);
 
 	DrvDoReset(1);
 
@@ -902,7 +902,7 @@ static INT32 RedbaronInit()
 
 	redbaron_sound_init();
 
-	avgdvg_init(USE_AVG_RBARON, DrvVectorRAM, 0x2000, M6502TotalCycles, 520, 400);
+	avgdvg_init(USE_AVG_RBARON, DrvVectorRAM, 0x5000, M6502TotalCycles, 520, 400);
 
 	DrvDoReset(1);
 

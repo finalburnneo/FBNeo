@@ -863,7 +863,7 @@ static INT32 AsteroidInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	avgdvg_init(USE_DVG, DrvVectorRAM, 0x1000, M6502TotalCycles, 1044, 788);
+	avgdvg_init(USE_DVG, DrvVectorRAM, 0x1800, M6502TotalCycles, 1044, 788);
 	vector_set_offsets(11, 119);
 
 	asteroid_sound_init();
@@ -897,7 +897,7 @@ static INT32 AstdeluxInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	avgdvg_init(USE_DVG, DrvVectorRAM, 0x1000, M6502TotalCycles, 1044, 788);
+	avgdvg_init(USE_DVG, DrvVectorRAM, 0x1800, M6502TotalCycles, 1044, 788);
 	vector_set_offsets(11, 119);
 
 	asteroid_sound_init();
@@ -941,7 +941,7 @@ static INT32 LlanderInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	avgdvg_init(USE_DVG, DrvVectorRAM, 0x1000, M6502TotalCycles, 1044, 788);
+	avgdvg_init(USE_DVG, DrvVectorRAM, 0x2000, M6502TotalCycles, 1044, 788);
 	vector_set_offsets(11, 119);
 
 	llander_sound_init();

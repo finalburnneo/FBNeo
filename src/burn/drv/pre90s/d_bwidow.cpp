@@ -630,7 +630,7 @@ static INT32 MemIndex()
 
 	RamEnd				= Next;
 
-	DrvVectorROM 		= Next; Next += 0x004000*2; // must(!) come after Vector RAM! *2 because bwidow likes to read past the rom data.
+	DrvVectorROM 		= Next; Next += 0x004000; // must(!) come after Vector RAM!
 
 	MemEnd				= Next;
 
@@ -680,7 +680,7 @@ static INT32 BwidowInit()
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
 
-	avgdvg_init(USE_AVG, DrvVectorRAM, 0x800, M6502TotalCycles, 480, 440);
+	avgdvg_init(USE_AVG, DrvVectorRAM, 0x4000, M6502TotalCycles, 480, 440);
 
 	earom_init();
 
@@ -744,7 +744,7 @@ static INT32 GravitarInit()
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
 
-	avgdvg_init(USE_AVG, DrvVectorRAM, 0x800, M6502TotalCycles, 420, 440);
+	avgdvg_init(USE_AVG, DrvVectorRAM, 0x4000, M6502TotalCycles, 420, 440);
 
 	earom_init();
 
@@ -794,7 +794,7 @@ static INT32 BwidowpInit()
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
 
-	avgdvg_init(USE_AVG, DrvVectorRAM, 0x800, M6502TotalCycles, 480, 440);
+	avgdvg_init(USE_AVG, DrvVectorRAM, 0x3000, M6502TotalCycles, 480, 440);
 
 	earom_init();
 
@@ -850,7 +850,7 @@ static INT32 SpacduelInit()
 	PokeyAllPotCallback(0, port1_read);
 	PokeyAllPotCallback(1, port2_read);
 
-	avgdvg_init(USE_AVG, DrvVectorRAM, 0x800, M6502TotalCycles, 540, 440);
+	avgdvg_init(USE_AVG, DrvVectorRAM, 0x2000, M6502TotalCycles, 540, 440);
 
 	earom_init();
 

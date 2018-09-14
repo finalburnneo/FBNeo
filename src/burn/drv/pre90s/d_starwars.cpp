@@ -925,7 +925,7 @@ static INT32 DrvInit(INT32 game_select)
 	BurnWatchdogInit(DrvDoReset, 180 /*NOT REALLY*/);
 	BurnRandomInit();
 
-	avgdvg_init(USE_AVG_SWARS, DrvVectorRAM, 0x1000, M6809TotalCycles, 250, 280);
+	avgdvg_init(USE_AVG_SWARS, DrvVectorRAM, 0x4000, M6809TotalCycles, 250, 280);
 
 	PokeyInit(1500000, 4, 0.40, 0);
 	PokeySetTotalCyclesCB(M6809TotalCycles);

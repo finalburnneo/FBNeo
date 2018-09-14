@@ -338,7 +338,7 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
-	avgdvg_init(USE_DVG, DrvVectorRAM, 0x1000, ZetTotalCycles, 1044, 1044);
+	avgdvg_init(USE_DVG, DrvVectorRAM, 0x2000, ZetTotalCycles, 1044, 1044);
 	vector_set_offsets(11, 0);
 
 	DrvDoReset(1);

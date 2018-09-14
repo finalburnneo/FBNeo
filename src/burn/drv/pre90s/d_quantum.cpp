@@ -2,8 +2,7 @@
 // Based on MAME driver by Hedley Rainnie, Aaron Giles, Couriersud, and Paul Forgey
 
 // todink:
-//  1: service mode hangs.
-//  2: merge the trackball simulation stuff [see DrvFrame] into burn_gun and make
+//  1: merge the trackball simulation stuff [see DrvFrame] into burn_gun and make
 //  a configurable and "easier to use w/less support code" trackball
 //  for fba!
 
@@ -437,6 +436,8 @@ static INT32 DrvDraw()
 		DrvPaletteUpdate();
 		DrvRecalc = 1;
 	}
+
+	if ((~DrvDips[1] & 0x80) && avgOK) avgdvg_go(); // service mode doesn't run avgdvg_go(), so we do it manually.
 
 	draw_vector(DrvPalette);
 

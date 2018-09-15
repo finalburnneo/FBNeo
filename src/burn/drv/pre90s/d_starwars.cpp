@@ -757,7 +757,7 @@ static INT32 MemIndex()
 	DrvAmPROM			= Next; Next += 0x000400;
 
 	DrvPalette			= (UINT32*)Next; Next += 32 * 256 * sizeof(UINT32);
-	
+
 	DrvNVRAM			= Next; Next += 0x000100;
 	DrvNVRAMBuf			= Next; Next += 0x000100;
 
@@ -895,7 +895,7 @@ static INT32 DrvInit(INT32 game_select)
 		is_esb = 1;
 	}
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvVectorRAM,			0x0000, 0x2fff, MAP_RAM);
 	M6809MapMemory(DrvVectorROM,			0x3000, 0x3fff, MAP_ROM);
@@ -913,6 +913,7 @@ static INT32 DrvInit(INT32 game_select)
 	M6809SetReadOpArgHandler(starwars_main_read);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvM6809RAM1B,			0x2000, 0x27ff, MAP_RAM);
 	M6809MapMemory(DrvM6809ROM1 + 0x4000,	0x4000, 0xffff, MAP_ROM);

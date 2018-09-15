@@ -43,6 +43,11 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
 
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort3 = 0;
+
 static INT32 redbaron = 0;
 
 static struct BurnInputInfo BzoneInputList[] = {
@@ -64,6 +69,7 @@ static struct BurnInputInfo BzoneInputList[] = {
 
 STDINPUTINFO(Bzone)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo RedbaronInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
@@ -72,16 +78,17 @@ static struct BurnInputInfo RedbaronInputList[] = {
 	{"P1 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 1"	},
-//	analog placeholders
-	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 2"	},
-	{"P1 Button 3",			BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 3"	},
+
+	A("P1 Stick X",         BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis" ),
+	A("P1 Stick Y",         BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis" ),
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",				BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
+	{"Diagnostic Step",		BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
 	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
+#undef A
 
 STDINPUTINFO(Redbaron)
 
@@ -277,12 +284,6 @@ static struct BurnDIPInfo BradleyDIPList[]=
 STDDIPINFO(Bradley)
 
 
-
-
-
-
-
-
 static int m_latch;
 static int m_poly_counter;
 static int m_poly_shift;
@@ -476,9 +477,6 @@ void redbaron_sound_write(UINT8 data)
 
 
 
-
-
-
 static UINT8 bzone_read(UINT16 address)
 {
 	if ((address & 0xfff0) == 0x1820) {
@@ -532,8 +530,8 @@ static UINT8 bzone_read(UINT16 address)
 			return 0; 
 	}
 
-	bprintf (0, _T("R: %4.4x\n"), address);
-	bprintf (0, _T("Unmapped!!!!!!!!!\n"));
+	//bprintf (0, _T("R: %4.4x\n"), address);
+	//bprintf (0, _T("Unmapped!!!!!!!!!\n"));
 	return 0;
 }
 
@@ -587,8 +585,8 @@ static void bzone_write(UINT16 address, UINT8 data)
 			if (address <= 0x184a) analog_data = 0; // bradley-------attach to analog inputs!!
 		return;
 	}
-	if (address != 0x1400) bprintf (0, _T("W: %4.4x, %2.2x\n"), address,data);
-	bprintf (0, _T("Unmapped!!!!!!!!!\n"));
+	//if (address != 0x1400) bprintf (0, _T("W: %4.4x, %2.2x\n"), address,data);
+	//bprintf (0, _T("Unmapped!!!!!!!!!\n"));
 }
 
 static UINT8 redbaron_read(UINT16 address)
@@ -637,8 +635,8 @@ static UINT8 redbaron_read(UINT16 address)
 			return mathbox_hi_read();
 	}
 
-	bprintf (0, _T("R: %4.4x\n"), address);
-	bprintf (0, _T("Unmapped!!!!!!!!!\n"));
+	//bprintf (0, _T("R: %4.4x\n"), address);
+	//bprintf (0, _T("Unmapped!!!!!!!!!\n"));
 	return 0;
 }
 
@@ -661,7 +659,7 @@ static void redbaron_write(UINT16 address, UINT8 data)
 
 	switch (address)
 	{
-		case 0x1000: 
+		case 0x1000:
 		return;
 
 		case 0x1200:
@@ -678,7 +676,7 @@ static void redbaron_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x1808:
-	//		m_redbaronsound->sounds_w(space, offset, data);
+			redbaron_sound_write(data);
 			input_select = data & 1;
 		return;
 
@@ -690,8 +688,8 @@ static void redbaron_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	if (address != 0x1400) bprintf (0, _T("W: %4.4x, %2.2x\n"), address,data);
-	bprintf (0, _T("Unmapped!!!!!!!!!\n"));
+	//if (address != 0x1400) bprintf (0, _T("W: %4.4x, %2.2x\n"), address,data);
+	//bprintf (0, _T("Unmapped!!!!!!!!!\n"));
 }
 
 static INT32 bzone_port0_read(INT32 /*offset*/)
@@ -701,7 +699,8 @@ static INT32 bzone_port0_read(INT32 /*offset*/)
 
 static INT32 redbaron_port0_read(INT32 /*offset*/)
 {
-	return DrvInputs[1]; // and analog ports (select with input_select)
+	static INT16 analog[2] = { DrvAnalogPort0, DrvAnalogPort1 };
+	return ProcessAnalog(analog[input_select], 0, 1, 0x40, 0xc0);
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)
@@ -717,7 +716,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	if (redbaron) {
 		redbaron_sound_reset();
 	}
-	
+
 	PokeyReset();
 
 	BurnWatchdogReset();
@@ -967,6 +966,7 @@ static INT32 DrvFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
+
 	}
 
 	INT32 nCyclesTotal = 1512000 / 41;

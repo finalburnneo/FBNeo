@@ -2,9 +2,7 @@
 // Based on MAME driver by Brad Oliver and Nicola Salmoria
 
 // to do:
-//	fix bzone / bradley
-// 	hook up analog inputs
-//	hook up custom sounds_w
+// 	hook up analog inputs (bradley)
 //	bug fix
 
 #include "tiles_generic.h"
@@ -16,6 +14,8 @@
 #include "pokey.h"
 #include "watchdog.h"
 #include "earom.h"
+#include "redbaron.h" // audio custom
+#include "bzone.h" // audio custom
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -48,11 +48,15 @@ static INT16 DrvAnalogPort1 = 0;
 static INT16 DrvAnalogPort2 = 0;
 static INT16 DrvAnalogPort3 = 0;
 
+static INT32 x_target, y_target; // for smooth moves between analog values
+static INT32 x_adder, y_adder;
+
 static INT32 redbaron = 0;
+static INT32 redbarona = 0;
 
 static struct BurnInputInfo BzoneInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"Start 1",				BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
 	{"Start 2",				BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
 	{"Left Stick Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
@@ -79,8 +83,8 @@ static struct BurnInputInfo RedbaronInputList[] = {
 	{"P1 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 1"	},
 
-	A("P1 Stick X",         BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis" ),
-	A("P1 Stick Y",         BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis" ),
+	A("P1 Stick X",         BIT_ANALOG_REL, &DrvAnalogPort1,"p1 x-axis" ),
+	A("P1 Stick Y",         BIT_ANALOG_REL, &DrvAnalogPort0,"p1 y-axis" ),
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Diagnostic Step",		BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
@@ -284,199 +288,6 @@ static struct BurnDIPInfo BradleyDIPList[]=
 STDDIPINFO(Bradley)
 
 
-static int m_latch;
-static int m_poly_counter;
-static int m_poly_shift;
-static int m_filter_counter;
-static int m_crash_amp;
-static int m_shot_amp;
-static int m_shot_amp_counter;
-static int m_squeal_amp;
-static int m_squeal_amp_counter;
-static int m_squeal_off_counter;
-static int m_squeal_on_counter;
-static int m_squeal_out;
-static INT16 *m_vol_lookup;
-static INT16 m_vol_crash[16];
-
-void redbaron_sound_reset()
-{
-	m_latch = 0;
-	m_poly_counter = 0;
-	m_poly_shift = 0;
-	m_filter_counter = 0;
-	m_crash_amp = 0;
-	m_shot_amp = 0;
-	m_shot_amp_counter = 0;
-	m_squeal_amp = 0;
-	m_squeal_amp_counter = 0;
-	m_squeal_off_counter = 0;
-	m_squeal_on_counter = 0;
-	m_squeal_out = 0;
-}
-
-void redbaron_sound_init()
-{
-	int i;
-
-	m_vol_lookup = (INT16*)BurnMalloc(0x8000 * 2);
-
-	for( i = 0; i < 0x8000; i++ )
-		m_vol_lookup[0x7fff-i] = (int16_t) (0x7fff/exp(1.0*i/4096));
-
-	for( i = 0; i < 16; i++ )
-	{
-		/* r0 = R18 and R24, r1 = open */
-		double r0 = 1.0/(5600 + 680), r1 = 1/6e12;
-
-		/* R14 */
-		if( i & 1 )
-			r1 += 1.0/8200;
-		else
-			r0 += 1.0/8200;
-		/* R15 */
-		if( i & 2 )
-			r1 += 1.0/3900;
-		else
-			r0 += 1.0/3900;
-		/* R16 */
-		if( i & 4 )
-			r1 += 1.0/2200;
-		else
-			r0 += 1.0/2200;
-		/* R17 */
-		if( i & 8 )
-			r1 += 1.0/1000;
-		else
-			r0 += 1.0/1000;
-
-		r0 = 1.0/r0;
-		r1 = 1.0/r1;
-		m_vol_crash[i] = (INT16)(32767 * r0 / (r0 + r1));
-	}
-}
-
-void redbaron_sound_exit()
-{
-	BurnFree(m_vol_lookup);
-}
-
-void redbaron_sound_update(INT16 *buffer, int samples)
-{
-#define OUTPUT_RATE	nBurnSoundRate
-
-	while( samples-- )
-	{
-		int sum = 0;
-
-		/* polynomial shifter E5 and F4 (LS164) clocked with 12kHz */
-		m_poly_counter -= 12000;
-		while( m_poly_counter <= 0 )
-		{
-			m_poly_counter += OUTPUT_RATE;
-			if( ((m_poly_shift & 0x0001) == 0) == ((m_poly_shift & 0x4000) == 0) )
-				m_poly_shift = (m_poly_shift << 1) | 1;
-			else
-				m_poly_shift <<= 1;
-		}
-
-		/* What is the exact low pass filter frequency? */
-		m_filter_counter -= 330;
-		while( m_filter_counter <= 0 )
-		{
-			m_filter_counter += OUTPUT_RATE;
-			m_crash_amp = (m_poly_shift & 1) ? m_latch >> 4 : 0;
-		}
-		/* mix crash sound at 35% */
-		sum += m_vol_crash[m_crash_amp] * 35 / 100;
-
-		/* shot not active: charge C32 (0.1u) */
-		if( (m_latch & 0x04) == 0 )
-			m_shot_amp = 32767;
-		else
-		if( (m_poly_shift & 0x8000) == 0 )
-		{
-			if( m_shot_amp > 0 )
-			{
-				/* I think this is too short. Is C32 really 1u? */
-				#define C32_DISCHARGE_TIME (int)(32767 / 0.03264);
-				m_shot_amp_counter -= C32_DISCHARGE_TIME;
-				while( m_shot_amp_counter <= 0 )
-				{
-					m_shot_amp_counter += OUTPUT_RATE;
-					if( --m_shot_amp == 0 )
-						break;
-				}
-				/* mix shot sound at 35% */
-				sum += m_vol_lookup[m_shot_amp] * 35 / 100;
-			}
-		}
-
-
-		if( (m_latch & 0x02) == 0 )
-			m_squeal_amp = 0;
-		else
-		{
-			if( m_squeal_amp < 32767 )
-			{
-				/* charge C5 (22u) over R3 (68k) and CR1 (1N914)
-				 * time = 0.68 * C5 * R3 = 1017280us
-				 */
-				#define C5_CHARGE_TIME (int)(32767 / 1.01728);
-				m_squeal_amp_counter -= C5_CHARGE_TIME;
-				while( m_squeal_amp_counter <= 0 )
-				{
-					m_squeal_amp_counter += OUTPUT_RATE;
-					if( ++m_squeal_amp == 32767 )
-						break;
-				}
-			}
-
-			if( m_squeal_out )
-			{
-				/* NE555 setup as pulse position modulator
-				 * C = 0.01u, Ra = 33k, Rb = 47k
-				 * frequency = 1.44 / ((33k + 2*47k) * 0.01u) = 1134Hz
-				 * modulated by squeal_amp
-				 */
-				m_squeal_off_counter -= (1134 + 1134 * m_squeal_amp / 32767) / 3;
-				while( m_squeal_off_counter <= 0 )
-				{
-					m_squeal_off_counter += OUTPUT_RATE;
-					m_squeal_out = 0;
-				}
-			}
-			else
-			{
-				m_squeal_on_counter -= 1134;
-				while( m_squeal_on_counter <= 0 )
-				{
-					m_squeal_on_counter += OUTPUT_RATE;
-					m_squeal_out = 1;
-				}
-			}
-		}
-
-		/* mix sequal sound at 40% */
-		if( m_squeal_out )
-			sum += 32767 * 40 / 100;
-
-		*buffer = BURN_SND_CLIP(sum + *buffer++);
-		*buffer = BURN_SND_CLIP(sum + *buffer++);
-	}
-}
-
-void redbaron_sound_write(UINT8 data)
-{
-	if( data == m_latch )
-		return;
-
-//	m_channel->update();
-	m_latch = data;
-}
-
-
-
 static UINT8 bzone_read(UINT16 address)
 {
 	if ((address & 0xfff0) == 0x1820) {
@@ -484,7 +295,7 @@ static UINT8 bzone_read(UINT16 address)
 	}
 	
 	if ((address & 0xffe0) == 0x1860) {
-		return 0; // reads a lot from here.. why? writes are mathbox_go_write
+		return 0; // reads a lot from here.. why? writes are mathbox_go_write (same as tempest)
 	}
 
 	switch (address)
@@ -530,8 +341,6 @@ static UINT8 bzone_read(UINT16 address)
 			return 0; 
 	}
 
-	//bprintf (0, _T("R: %4.4x\n"), address);
-	//bprintf (0, _T("Unmapped!!!!!!!!!\n"));
 	return 0;
 }
 
@@ -570,7 +379,7 @@ static void bzone_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x1840:
-			// bzone_sounds_w
+			bzone_sound_write(data);
 		return;
 		
 		case 0x1848: // bradley
@@ -585,8 +394,6 @@ static void bzone_write(UINT16 address, UINT8 data)
 			if (address <= 0x184a) analog_data = 0; // bradley-------attach to analog inputs!!
 		return;
 	}
-	//if (address != 0x1400) bprintf (0, _T("W: %4.4x, %2.2x\n"), address,data);
-	//bprintf (0, _T("Unmapped!!!!!!!!!\n"));
 }
 
 static UINT8 redbaron_read(UINT16 address)
@@ -635,8 +442,6 @@ static UINT8 redbaron_read(UINT16 address)
 			return mathbox_hi_read();
 	}
 
-	//bprintf (0, _T("R: %4.4x\n"), address);
-	//bprintf (0, _T("Unmapped!!!!!!!!!\n"));
 	return 0;
 }
 
@@ -687,9 +492,26 @@ static void redbaron_write(UINT16 address, UINT8 data)
 			earom_ctrl_write(address, data);
 		return;
 	}
+}
 
-	//if (address != 0x1400) bprintf (0, _T("W: %4.4x, %2.2x\n"), address,data);
-	//bprintf (0, _T("Unmapped!!!!!!!!!\n"));
+static void update_analog()
+{
+    #define XY_RATE 8
+	if (x_adder != x_target) {
+		if (x_adder+XY_RATE <= x_target) x_adder += XY_RATE;
+		else if (x_adder+1 <= x_target) x_adder += 1;
+
+		else if (x_adder-XY_RATE >= x_target) x_adder -= XY_RATE;
+		else if (x_adder-1 >= x_target) x_adder -= 1;
+	}
+
+	if (y_adder != y_target) {
+		if (y_adder+XY_RATE <= y_target) y_adder += XY_RATE;
+		else if (y_adder+1 <= y_target) y_adder += 1;
+
+		else if (y_adder-XY_RATE >= y_target) y_adder -= XY_RATE;
+		else if (y_adder-1 >= y_target) y_adder -= 1;
+	}
 }
 
 static INT32 bzone_port0_read(INT32 /*offset*/)
@@ -699,8 +521,19 @@ static INT32 bzone_port0_read(INT32 /*offset*/)
 
 static INT32 redbaron_port0_read(INT32 /*offset*/)
 {
-	static INT16 analog[2] = { DrvAnalogPort0, DrvAnalogPort1 };
-	return ProcessAnalog(analog[input_select], 0, 1, 0x40, 0xc0);
+	/*
+	// Idealy, this would be fine here.. but, it won't work!
+	INT16 analog[2] = { DrvAnalogPort0, DrvAnalogPort1 };
+	UINT8 rc = ProcessAnalog(analog[input_select], 0, 1, 0x40, 0xc0);
+	return rc;
+	*/
+
+	// some games need smooth transitions between analog values, redbaron is one of them.
+	// We set a target value (in DrvFrame), then every time this is read, we increment or
+	// decrement the adder until it reaches the target value.
+
+	INT32 analog[2] = { x_adder, y_adder };
+	return analog[input_select];
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)
@@ -715,6 +548,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	if (redbaron) {
 		redbaron_sound_reset();
+	} else {
+		bzone_sound_reset();
 	}
 
 	PokeyReset();
@@ -723,13 +558,16 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	mathbox_reset();
 	avgdvg_reset();
-	
+
 	earom_reset();
 
 	avgletsgo = 0;
 	analog_data = 0;
 	nExtraCycles = 0;
 	input_select = 0;
+
+	x_target = y_target = 0x80;
+	x_adder = y_adder = 0x80;
 
 	return 0;
 }
@@ -754,6 +592,21 @@ static INT32 MemIndex()
 	MemEnd			= Next;
 
 	return 0;
+}
+
+// Driver "NewFrame" support
+// AVG and Pokey needs linear cycles for their timers, so we use this for the
+// buffered sound customs.
+static INT32 drv_cycles = 0;
+
+static INT32 DrvM6502TotalCycles()
+{
+	return M6502TotalCycles() - drv_cycles;
+}
+
+static void DrvM6502NewFrame()
+{
+	drv_cycles = M6502TotalCycles();
 }
 
 static INT32 BzoneInit()
@@ -789,14 +642,16 @@ static INT32 BzoneInit()
 	M6502SetWriteHandler(bzone_write);
 	M6502SetReadHandler(bzone_read);
 	M6502Close();
-	
+
 	earom_init(); // not used in bzone
-	
+
 	BurnWatchdogInit(DrvDoReset, -1);
 
 	PokeyInit(12096000/8, 2, 2.40, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, bzone_port0_read);
+
+	bzone_sound_init(DrvM6502TotalCycles, 1512000);
 
 	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x5000, M6502TotalCycles, 580, 400);
 
@@ -840,14 +695,16 @@ static INT32 BradleyInit()
 	M6502SetWriteHandler(bzone_write);
 	M6502SetReadHandler(bzone_read);
 	M6502Close();
-	
+
 	earom_init(); // not used in bzone
-	
+
 	BurnWatchdogInit(DrvDoReset, -1);
 
 	PokeyInit(12096000/8, 2, 2.40, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, bzone_port0_read);
+
+	bzone_sound_init(DrvM6502TotalCycles, 1512000);
 
 	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x5000, M6502TotalCycles, 580, 400);
 
@@ -858,7 +715,7 @@ static INT32 BradleyInit()
 
 static INT32 RedbaronInit()
 {
-	BurnSetRefreshRate(41.05);
+	BurnSetRefreshRate(60.00);
 	
 	AllMem = NULL;
 	MemIndex();
@@ -868,14 +725,23 @@ static INT32 RedbaronInit()
 	MemIndex();
 
 	{
-		if (BurnLoadRom(DrvM6502ROM  + 0x4800,  0, 1)) return 1;
-		memcpy (DrvM6502ROM + 0x5800, DrvM6502ROM + 0x5000, 0x0800);
-		if (BurnLoadRom(DrvM6502ROM  + 0x5000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM  + 0x6000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM  + 0x6800,  3, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM  + 0x7000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM  + 0x7800,  5, 1)) return 1;
-
+		if (redbarona) {
+			if (BurnLoadRom(DrvM6502ROM  + 0x4800,  0, 1)) return 1;
+			if (BurnLoadRom(DrvM6502ROM  + 0x5000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvM6502ROM  + 0x5800,  2, 1)) return 1;
+			if (BurnLoadRom(DrvM6502ROM  + 0x6000,  3, 1)) return 1;
+			if (BurnLoadRom(DrvM6502ROM  + 0x6800,  4, 1)) return 1;
+			if (BurnLoadRom(DrvM6502ROM  + 0x7000,  5, 1)) return 1;
+			if (BurnLoadRom(DrvM6502ROM  + 0x7800,  6, 1)) return 1;
+		} else {
+			if (BurnLoadRom(DrvM6502ROM  + 0x4800,  0, 1)) return 1;
+			memcpy (DrvM6502ROM + 0x5800, DrvM6502ROM + 0x5000, 0x0800);
+			if (BurnLoadRom(DrvM6502ROM  + 0x5000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvM6502ROM  + 0x6000,  2, 1)) return 1;
+			if (BurnLoadRom(DrvM6502ROM  + 0x6800,  3, 1)) return 1;
+			if (BurnLoadRom(DrvM6502ROM  + 0x7000,  4, 1)) return 1;
+			if (BurnLoadRom(DrvM6502ROM  + 0x7800,  5, 1)) return 1;
+		}
 		if (BurnLoadRom(DrvVectorROM + 0x0000,  6, 1)) return 1;
 		if (BurnLoadRom(DrvVectorROM + 0x0800,  7, 1)) return 1;
 	}
@@ -890,7 +756,7 @@ static INT32 RedbaronInit()
 	M6502SetWriteHandler(redbaron_write);
 	M6502SetReadHandler(redbaron_read);
 	M6502Close();
-	
+
 	earom_init();
 
 	BurnWatchdogInit(DrvDoReset, -1); // why is this being triggered?
@@ -899,9 +765,11 @@ static INT32 RedbaronInit()
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, redbaron_port0_read);
 
-	redbaron_sound_init();
+	redbaron_sound_init(DrvM6502TotalCycles, 1512000);
 
 	avgdvg_init(USE_AVG_RBARON, DrvVectorRAM, 0x5000, M6502TotalCycles, 520, 400);
+
+	redbaron = 1;
 
 	DrvDoReset(1);
 
@@ -916,12 +784,17 @@ static INT32 DrvExit()
 	if (redbaron) {
 		redbaron_sound_exit();
 		redbaron = 0;
+	} else {
+		bzone_sound_exit();
 	}
+
 	M6502Exit();
 
 	earom_exit();
-	
+
 	BurnFree(AllMem);
+
+	redbarona = 0;
 
 	return 0;
 }
@@ -951,7 +824,7 @@ static INT32 DrvDraw()
 static INT32 DrvFrame()
 {
 	BurnWatchdogUpdate();
-	
+
 	if (DrvReset) {
 		DrvDoReset(1);
 	}
@@ -966,20 +839,25 @@ static INT32 DrvFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
-
+		//INT16 analog[2] = { DrvAnalogPort0, DrvAnalogPort1 };
+		// UINT8 rc = ProcessAnalog(analog[input_select], 0, 1, 0x40, 0xc0);
+		x_target = ProcessAnalog(DrvAnalogPort0, 0, 1, 0x40, 0xc0);
+		y_target = ProcessAnalog(DrvAnalogPort1, 0, 1, 0x40, 0xc0);
+		update_analog();
 	}
-
-	INT32 nCyclesTotal = 1512000 / 41;
-	INT32 nInterleave = 20;
+	INT32 nCyclesTotal = 1512000 / ((redbaron) ? 61 : 41);
+	INT32 nInterleave = 256;
 	INT32 nCyclesDone = nExtraCycles;
 	INT32 nSoundBufferPos = 0;
 
 	M6502Open(0);
 
+	DrvM6502NewFrame(); // see comments above in DrvM6502NewFrame() for explanation.
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone += M6502Run((nCyclesTotal * (i + 1) / nInterleave) - nCyclesDone);
-		if ((i % 5) == 4 && (DrvDips[2] & 0x10)) {
+		if ((i % 64) == 63 && (DrvDips[2] & 0x10)) {
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		}
 
@@ -1001,9 +879,11 @@ static INT32 DrvFrame()
 		if (nSegmentLength) {
 			pokey_update(pSoundBuf, nSegmentLength);
 		}
-		
+
 		if (redbaron) {
 			redbaron_sound_update(pBurnSoundOut, nBurnSoundLen);
+		} else {
+			bzone_sound_update(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
 
@@ -1036,6 +916,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnWatchdogScan(nAction);
 
 		pokey_scan(nAction, pnMin);
+		redbaron_sound_scan(nAction, pnMin);
+		bzone_sound_scan(nAction, pnMin);
 
 		SCAN_VAR(nExtraCycles);
 		SCAN_VAR(avgletsgo);
@@ -1044,7 +926,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	earom_scan(nAction, pnMin); // here.
-	
+
 	return 0;
 }
 
@@ -1248,6 +1130,12 @@ struct BurnDriver BurnDrvRedbaron = {
 	520, 400, 4, 3
 };
 
+static INT32 RedbaronaInit()
+{
+	redbarona = 1;
+
+	return RedbaronInit();
+}
 
 // Red Baron
 
@@ -1286,6 +1174,6 @@ struct BurnDriver BurnDrvRedbarona = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, redbaronaRomInfo, redbaronaRomName, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
-	RedbaronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	RedbaronaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	520, 400, 4, 3
 };

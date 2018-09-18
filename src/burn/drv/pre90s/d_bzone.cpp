@@ -46,11 +46,11 @@ static UINT8 DrvReset;
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 static INT16 DrvAnalogPort2 = 0;
-static INT16 DrvAnalogPort3 = 0;
 
 static INT32 x_target, y_target; // for smooth moves between analog values
 static INT32 x_adder, y_adder;
 
+static INT32 bradley = 0;
 static INT32 redbaron = 0;
 static INT32 redbarona = 0;
 
@@ -83,8 +83,8 @@ static struct BurnInputInfo RedbaronInputList[] = {
 	{"P1 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 1"	},
 
-	A("P1 Stick X",         BIT_ANALOG_REL, &DrvAnalogPort1,"p1 x-axis" ),
-	A("P1 Stick Y",         BIT_ANALOG_REL, &DrvAnalogPort0,"p1 y-axis" ),
+	A("P1 Stick X",         BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis" ),
+	A("P1 Stick Y",         BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis" ),
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Diagnostic Step",		BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
@@ -96,6 +96,7 @@ static struct BurnInputInfo RedbaronInputList[] = {
 
 STDINPUTINFO(Redbaron)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo BradleyInputList[] = {
 	{"Coin 1",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"Coin 2",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
@@ -111,10 +112,9 @@ static struct BurnInputInfo BradleyInputList[] = {
 	{"P1 Button 9",		BIT_DIGITAL,	DrvJoy4 + 2,	"p1 fire 9"	},
 	{"P1 Button 10",	BIT_DIGITAL,	DrvJoy4 + 4,	"p1 fire 10"},
 
-	// analog placeholders
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 fire 7"	},
+	A("P1 Stick X",         BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis" ),
+	A("P1 Stick Y",         BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis" ),
+	A("P1 Stick Z",         BIT_ANALOG_REL, &DrvAnalogPort2,"p1 z-axis" ),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
@@ -122,6 +122,7 @@ static struct BurnInputInfo BradleyInputList[] = {
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
+#undef A
 
 STDINPUTINFO(Bradley)
 
@@ -381,23 +382,28 @@ static void bzone_write(UINT16 address, UINT8 data)
 		case 0x1840:
 			bzone_sound_write(data);
 		return;
-		
-		case 0x1848: // bradley
-		case 0x1849:
-		case 0x184a:
+
+		// bradley analog select
+		case 0x1848: analog_data = x_adder; break;
+		case 0x1849: analog_data = y_adder; break;
+		case 0x184a: analog_data = ProcessAnalog(DrvAnalogPort2, 1, 1, 0x10, 0xf0); break;
+
 		case 0x184b:
 		case 0x184c:
 		case 0x184d:
 		case 0x184e:
 		case 0x184f:
 		case 0x1850:
-			if (address <= 0x184a) analog_data = 0; // bradley-------attach to analog inputs!!
-		return;
+		return; // nop's
 	}
 }
+static INT32 redbaron_port0_read(INT32 /*offset*/);
 
 static UINT8 redbaron_read(UINT16 address)
 {
+	if (address == 0x1818) {
+		return redbaron_port0_read(0);
+	}
 	if ((address & 0xfff0) == 0x1810) {
 		return pokey_read(0, address & 0x0f);
 	}
@@ -407,7 +413,7 @@ static UINT8 redbaron_read(UINT16 address)
 	}
 	
 	if ((address & 0xffe0) == 0x1860) {
-		return 0; // reads a lot from here.. why? writes are mathbox_go_write
+		return 0; // reads a lot from here.. why? writes are mathbox_go_write (tempest does this, too)
 	}
 
 	switch (address)
@@ -521,18 +527,19 @@ static INT32 bzone_port0_read(INT32 /*offset*/)
 
 static INT32 redbaron_port0_read(INT32 /*offset*/)
 {
-	/*
-	// Idealy, this would be fine here.. but, it won't work!
-	INT16 analog[2] = { DrvAnalogPort0, DrvAnalogPort1 };
-	UINT8 rc = ProcessAnalog(analog[input_select], 0, 1, 0x40, 0xc0);
-	return rc;
-	*/
-
+   /* if (nCurrentFrame&1) {     // add jitter?
+		x_adder +=1;
+		y_adder -=1;
+	} else {
+		x_adder -=1;
+		y_adder +=1;
+		}*/
+	update_analog();
 	// some games need smooth transitions between analog values, redbaron is one of them.
 	// We set a target value (in DrvFrame), then every time this is read, we increment or
 	// decrement the adder until it reaches the target value.
 
-	INT32 analog[2] = { x_adder, y_adder };
+	INT32 analog[2] = { (y_adder-8) & 0xff, (x_adder+12) & 0xff};
 	return analog[input_select];
 }
 
@@ -612,7 +619,7 @@ static void DrvM6502NewFrame()
 static INT32 BzoneInit()
 {
 	BurnSetRefreshRate(41.05);
-	
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -663,7 +670,7 @@ static INT32 BzoneInit()
 static INT32 BradleyInit()
 {
 	BurnSetRefreshRate(41.05);
-	
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -708,6 +715,8 @@ static INT32 BradleyInit()
 
 	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x5000, M6502TotalCycles, 580, 400);
 
+	bradley = 1;
+
 	DrvDoReset(1);
 
 	return 0;
@@ -716,7 +725,7 @@ static INT32 BradleyInit()
 static INT32 RedbaronInit()
 {
 	BurnSetRefreshRate(60.00);
-	
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -733,6 +742,8 @@ static INT32 RedbaronInit()
 			if (BurnLoadRom(DrvM6502ROM  + 0x6800,  4, 1)) return 1;
 			if (BurnLoadRom(DrvM6502ROM  + 0x7000,  5, 1)) return 1;
 			if (BurnLoadRom(DrvM6502ROM  + 0x7800,  6, 1)) return 1;
+			if (BurnLoadRom(DrvVectorROM + 0x0000,  7, 1)) return 1;
+			if (BurnLoadRom(DrvVectorROM + 0x0800,  8, 1)) return 1;
 		} else {
 			if (BurnLoadRom(DrvM6502ROM  + 0x4800,  0, 1)) return 1;
 			memcpy (DrvM6502ROM + 0x5800, DrvM6502ROM + 0x5000, 0x0800);
@@ -741,15 +752,15 @@ static INT32 RedbaronInit()
 			if (BurnLoadRom(DrvM6502ROM  + 0x6800,  3, 1)) return 1;
 			if (BurnLoadRom(DrvM6502ROM  + 0x7000,  4, 1)) return 1;
 			if (BurnLoadRom(DrvM6502ROM  + 0x7800,  5, 1)) return 1;
+			if (BurnLoadRom(DrvVectorROM + 0x0000,  6, 1)) return 1;
+			if (BurnLoadRom(DrvVectorROM + 0x0800,  7, 1)) return 1;
 		}
-		if (BurnLoadRom(DrvVectorROM + 0x0000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvVectorROM + 0x0800,  7, 1)) return 1;
 	}
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
 	M6502SetAddressMask(0x7fff);
-	M6502MapMemory(DrvM6502RAM,		        0x0000, 0x07ff, MAP_RAM);
+	M6502MapMemory(DrvM6502RAM,		        0x0000, 0x03ff, MAP_RAM);
 	M6502MapMemory(DrvVectorRAM,		    0x2000, 0x2fff, MAP_RAM);
 	M6502MapMemory(DrvVectorROM,            0x3000, 0x3fff, MAP_ROM);
 	M6502MapMemory(DrvM6502ROM + 0x4000,	0x4000, 0x7fff, MAP_ROM);
@@ -759,11 +770,11 @@ static INT32 RedbaronInit()
 
 	earom_init();
 
-	BurnWatchdogInit(DrvDoReset, -1); // why is this being triggered?
+	BurnWatchdogInit(DrvDoReset, 180); // why is this being triggered?
 
 	PokeyInit(12096000/8, 2, 2.40, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
-	PokeyAllPotCallback(0, redbaron_port0_read);
+	//PokeyAllPotCallback(0, redbaron_port0_read);
 
 	redbaron_sound_init(DrvM6502TotalCycles, 1512000);
 
@@ -795,6 +806,7 @@ static INT32 DrvExit()
 	BurnFree(AllMem);
 
 	redbarona = 0;
+	bradley = 0;
 
 	return 0;
 }
@@ -831,7 +843,7 @@ static INT32 DrvFrame()
 
 	{
 		memset (DrvInputs, 0, 5);
-		
+		if (redbaron) DrvInputs[2] = 0x40; // active low
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -839,11 +851,20 @@ static INT32 DrvFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
-		//INT16 analog[2] = { DrvAnalogPort0, DrvAnalogPort1 };
-		// UINT8 rc = ProcessAnalog(analog[input_select], 0, 1, 0x40, 0xc0);
-		x_target = ProcessAnalog(DrvAnalogPort0, 0, 1, 0x40, 0xc0);
-		y_target = ProcessAnalog(DrvAnalogPort1, 0, 1, 0x40, 0xc0);
-		update_analog();
+
+		if (redbaron) {
+			//INT16 analog[2] = { DrvAnalogPort0, DrvAnalogPort1 };
+			// UINT8 rc = ProcessAnalog(analog[input_select], 0, 1, 0x40, 0xc0);
+			x_target = ProcessAnalog(DrvAnalogPort0, 0, 1, 0x50, 0xb0);
+			y_target = ProcessAnalog(DrvAnalogPort1, 0, 1, 0x50, 0xb0);
+			update_analog();
+		}
+
+		if (bradley) {
+			x_target = ProcessAnalog(DrvAnalogPort0, 0, 1, 0x48, 0xc8);
+			y_target = ProcessAnalog(DrvAnalogPort1, 0, 1, 0x46, 0xc6);
+			update_analog();
+		}
 	}
 	INT32 nCyclesTotal = 1512000 / ((redbaron) ? 61 : 41);
 	INT32 nInterleave = 256;
@@ -851,7 +872,6 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 
 	M6502Open(0);
-
 	DrvM6502NewFrame(); // see comments above in DrvM6502NewFrame() for explanation.
 
 	for (INT32 i = 0; i < nInterleave; i++)

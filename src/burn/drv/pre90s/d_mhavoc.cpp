@@ -1026,7 +1026,7 @@ struct BurnDriver BurnDrvAlphaone = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, alphaoneRomInfo, alphaoneRomName, NULL, NULL, AlphaoneInputInfo, AlphaoneDIPInfo,
 	AlphaoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	580, 500, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -1055,5 +1055,5 @@ struct BurnDriver BurnDrvAlphaonea = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, alphaoneaRomInfo, alphaoneaRomName, NULL, NULL, AlphaoneInputInfo, AlphaoneDIPInfo,
 	AlphaoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	580, 500, 4, 3
+	800, 600, 4, 3
 };

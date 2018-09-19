@@ -397,13 +397,9 @@ static void bzone_write(UINT16 address, UINT8 data)
 		return; // nop's
 	}
 }
-static INT32 redbaron_port0_read(INT32 /*offset*/);
 
 static UINT8 redbaron_read(UINT16 address)
 {
-	if (address == 0x1818) {
-		return redbaron_port0_read(0);
-	}
 	if ((address & 0xfff0) == 0x1810) {
 		return pokey_read(0, address & 0x0f);
 	}
@@ -527,17 +523,7 @@ static INT32 bzone_port0_read(INT32 /*offset*/)
 
 static INT32 redbaron_port0_read(INT32 /*offset*/)
 {
-   /* if (nCurrentFrame&1) {     // add jitter?
-		x_adder +=1;
-		y_adder -=1;
-	} else {
-		x_adder -=1;
-		y_adder +=1;
-		}*/
-	update_analog();
-	// some games need smooth transitions between analog values, redbaron is one of them.
-	// We set a target value (in DrvFrame), then every time this is read, we increment or
-	// decrement the adder until it reaches the target value.
+	update_analog(); // pseudo-simulate the counters according to schematics
 
 	INT32 analog[2] = { (y_adder-8) & 0xff, (x_adder+12) & 0xff};
 	return analog[input_select];
@@ -774,7 +760,7 @@ static INT32 RedbaronInit()
 
 	PokeyInit(12096000/8, 2, 2.40, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
-	//PokeyAllPotCallback(0, redbaron_port0_read);
+	PokeyAllPotCallback(0, redbaron_port0_read);
 
 	redbaron_sound_init(DrvM6502TotalCycles, 1512000);
 
@@ -933,6 +919,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		M6502Scan(nAction);
 
+		mathbox_scan(nAction, pnMin);
+		avgdvg_scan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
 
 		pokey_scan(nAction, pnMin);
@@ -943,6 +931,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(avgletsgo);
 		SCAN_VAR(analog_data);
 		SCAN_VAR(input_select);
+		SCAN_VAR(x_target);
+		SCAN_VAR(y_target);
+		SCAN_VAR(x_adder);
+		SCAN_VAR(y_adder);
 	}
 
 	earom_scan(nAction, pnMin); // here.

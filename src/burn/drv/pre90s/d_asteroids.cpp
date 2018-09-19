@@ -1120,6 +1120,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		M6502Scan(nAction);
 
+		avgdvg_scan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
 
 		SCAN_VAR(avgOK);

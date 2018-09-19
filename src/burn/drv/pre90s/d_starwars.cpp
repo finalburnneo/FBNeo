@@ -1068,6 +1068,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		M6809Scan(nAction);
+
+		avgdvg_scan(nAction, pnMin);
 		SlapsticScan(nAction);
 		pokey_scan(nAction, pnMin);
 		tms5220_scan(nAction, pnMin);

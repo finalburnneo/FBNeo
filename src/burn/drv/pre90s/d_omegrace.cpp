@@ -464,7 +464,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
-		vector_scan(nAction);
+
+		avgdvg_scan(nAction, pnMin);
 		AY8910Scan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
 

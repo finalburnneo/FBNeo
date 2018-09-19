@@ -582,6 +582,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_VOLATILE) {
 		SekScan(nAction);
 
+		avgdvg_scan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
 
 		SCAN_VAR(avgOK);

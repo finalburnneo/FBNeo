@@ -1085,6 +1085,13 @@ void avgdvg_reset()
 	has_clip = 0;
 }
 
+void avgdvg_scan(INT32 nAction, INT32 *)
+{
+	SCAN_VAR(avgdvg_halt_next);
+	SCAN_VAR(last_cyc);
+	SCAN_VAR(busy);
+}
+
 
 /*************************************
  *

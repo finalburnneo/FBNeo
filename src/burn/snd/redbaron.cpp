@@ -187,10 +187,10 @@ void redbaron_update_int(INT16 *buffer, INT32 samples)
 
 
 		if( (m_latch & 0x02) == 0 )
-			m_squeal_amp = 0;
+			m_squeal_amp = 32767;
 		else
 		{
-			if( m_squeal_amp < 32767 )
+			if( m_squeal_amp >= 0 )
 			{
 				/* charge C5 (22u) over R3 (68k) and CR1 (1N914)
 				 * time = 0.68 * C5 * R3 = 1017280us
@@ -200,7 +200,7 @@ void redbaron_update_int(INT16 *buffer, INT32 samples)
 				while( m_squeal_amp_counter <= 0 )
 				{
 					m_squeal_amp_counter += OUTPUT_RATE;
-					if( ++m_squeal_amp == 32767 )
+					if( --m_squeal_amp == 0 )
 						break;
 				}
 			}
@@ -212,7 +212,7 @@ void redbaron_update_int(INT16 *buffer, INT32 samples)
 				 * frequency = 1.44 / ((33k + 2*47k) * 0.01u) = 1134Hz
 				 * modulated by squeal_amp
 				 */
-				m_squeal_off_counter -= (1134 + 1134 * m_squeal_amp / 32767) / 3;
+				m_squeal_off_counter -= (((1134 + 1134) * 3) * m_squeal_amp / 32767) / 3;
 				while( m_squeal_off_counter <= 0 )
 				{
 					m_squeal_off_counter += OUTPUT_RATE;
@@ -221,7 +221,7 @@ void redbaron_update_int(INT16 *buffer, INT32 samples)
 			}
 			else
 			{
-				m_squeal_on_counter -= 1134;
+				m_squeal_on_counter -= 1134*10;
 				while( m_squeal_on_counter <= 0 )
 				{
 					m_squeal_on_counter += OUTPUT_RATE;
@@ -232,7 +232,7 @@ void redbaron_update_int(INT16 *buffer, INT32 samples)
 
 		/* mix sequal sound at 40% */
 		if( m_squeal_out )
-			sum += 32767 * 40 / 100;
+			sum += 32767 * 25 / 100;
 
 		*buffer = BURN_SND_CLIP(sum);
 		buffer++;

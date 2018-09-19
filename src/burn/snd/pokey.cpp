@@ -915,7 +915,7 @@ static void pokey_potgo(INT32 chip)
 INT32 pokey_register_r(INT32 chip, INT32 offs)
 {
 	struct POKEYregisters *p = &pokey[chip];
-    INT32 data = 0, pot;
+    UINT8 data = 0, pot;
 	UINT32 adjust = 0;
 
 #ifdef MAME_DEBUG
@@ -928,14 +928,10 @@ INT32 pokey_register_r(INT32 chip, INT32 offs)
 
 	{
 		for (pot = 0; pot < 8; pot++) { // simple hacky timer impl. -dink
-			if (pCPUTotalCycles() - p->potgo_timer[pot] >= 192) {
+			if (pCPUTotalCycles() - p->potgo_timer[pot] >= 192) { // allow pot to be read after 2 scanlines
 				p->ALLPOT &= ~(1 << pot);
 			}
 		}
-
-		// (p->rtimer != -1) {
-		//  p->rtimer++;
-		//}
 	}
 
     switch (offs & 15)
@@ -954,8 +950,7 @@ INT32 pokey_register_r(INT32 chip, INT32 offs)
 
 			if( p->ALLPOT & (1 << pot) )
 			{
-				data = 0xff;
-				data = (UINT8)(/*timer_timeelapsed(p->ptimer[pot])*/1234 / AD_TIME);
+				data = (UINT8)((pCPUTotalCycles() - p->potgo_timer[pot]) / AD_TIME);
 				//bprintf(0, L"POKEY #%d read POT%d (interpolated) $%02x\n", chip, pot, data);
             }
 			else
@@ -972,12 +967,13 @@ INT32 pokey_register_r(INT32 chip, INT32 offs)
          * If the 2 least significant bits of SKCTL are 0, the ALLPOTs
          * are disabled (SKRESET). Thanks to MikeJ for pointing this out.
          ****************************************************************/
-    	if( (p->SKCTL & SK_RESET) == 0)
-    	{
+    	/*if( (p->SKCTL & SK_RESET) == 0)
+    	{ // this breaks Atari's Red Baron
     		data = 0;
-			//bprintf(0, L"POKEY #%d ALLPOT internal $%02x (reset)\n", chip, data);
+			bprintf(0, L"POKEY #%d ALLPOT internal $%02x skpaddle %X(reset)\n", chip, data, (p->SKCTL & SK_PADDLE));
 		}
-		else if( p->allpot_r )
+		else*/
+		if( p->allpot_r )
 		{
 			data = (*p->allpot_r)(offs);
 			//bprintf(0, L"POKEY #%d ALLPOT callback $%02x\n", chip, data);

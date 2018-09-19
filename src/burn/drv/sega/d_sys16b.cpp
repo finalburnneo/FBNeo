@@ -9082,7 +9082,7 @@ struct BurnDriver BurnDrvDduxbl = {
 	"dduxbl", "ddux", NULL, NULL, "1989",
 	"Dynamite Dux (bootleg)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES | HARDWARE_SEGA_5358, GBF_SCRFIGHT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES | HARDWARE_SEGA_5358, GBF_SCRFIGHT, 0,
 	NULL, DduxblRomInfo, DduxblRomName, NULL, NULL, System16bInputInfo, DduxDIPInfo,
 	DduxblInit, System16Exit, System16BFrame, System16BootlegRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3

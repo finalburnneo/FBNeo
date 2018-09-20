@@ -3345,7 +3345,7 @@ static struct BurnRomInfo cv_heistRomDesc[] = {
 STDROMPICKEXT(cv_heist, cv_heist, cv_coleco)
 STD_ROM_FN(cv_heist)
 
-struct BurnDriver BurnDrvcv_heist = {
+struct BurnDriverX BurnDrvcv_heist = {
 	"cv_heist", NULL, "cv_coleco", NULL, "1983",
 	"The Heist\0", NULL, "Micro Fun", "ColecoVision",
 	NULL, NULL, NULL, NULL,
@@ -3367,7 +3367,7 @@ static struct BurnRomInfo cv_heistaRomDesc[] = {
 STDROMPICKEXT(cv_heista, cv_heista, cv_coleco)
 STD_ROM_FN(cv_heista)
 
-struct BurnDriver BurnDrvcv_heista = {
+struct BurnDriverX BurnDrvcv_heista = {
 	"cv_heista", "cv_heist", "cv_coleco", NULL, "1983",
 	"The Heist (Alt)\0", NULL, "Micro Fun", "ColecoVision",
 	NULL, NULL, NULL, NULL,

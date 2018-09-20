@@ -244,6 +244,7 @@ int ConfigAppLoad()
 		VAR(bEnableHighResTimer);
 		VAR(bNoChangeNumLock);
 		VAR(bAlwaysCreateSupportFolders);
+		VAR(bAutoLoadGameList);
 		
 		VAR(nAutoFireRate);
 		
@@ -312,7 +313,7 @@ int ConfigAppSave()
 	TCHAR szConfig[MAX_PATH];
 	FILE *h;
 
-	if (bCmdOptUsed) {
+	if (bCmdOptUsed & 1) {
 		return 1;
 	}
 	
@@ -644,6 +645,9 @@ int ConfigAppSave()
 	
 	_ftprintf(h, _T("\n// If non-zero, create support folders at program start.\n"));
 	VAR(bAlwaysCreateSupportFolders);
+	
+	_ftprintf(h, _T("\n// If non-zero, load game selection dialog at program start.\n"));
+	VAR(bAutoLoadGameList);
 	
 	_ftprintf(h, _T("\n// Auto-Fire Rate, non-linear - use the GUI to change this setting!\n"));
 	VAR(nAutoFireRate);

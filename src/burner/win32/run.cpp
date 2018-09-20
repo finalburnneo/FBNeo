@@ -411,6 +411,14 @@ int RunMessageLoop()
 			SuperWaitVBlankInit();
 		}
 
+		if (bAutoLoadGameList && !bCmdOptUsed) {
+			static INT32 bLoaded = 0; // only do this once (at startup!)
+
+			if (bLoaded == 0)
+				PostMessage(hScrnWnd, WM_KEYDOWN, VK_F6, 0);
+			bLoaded = 1;
+		}
+
 		while (1) {
 			if (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
 				// A message is waiting to be processed
@@ -542,7 +550,7 @@ int RunMessageLoop()
 								if (hwndChat) {
 									DeActivateChat();
 								} else {
-									if (bCmdOptUsed) {
+									if (bCmdOptUsed & 1) {
 										PostQuitMessage(0);
 									} else {
 										if (nVidFullscreen) {

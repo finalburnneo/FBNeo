@@ -37,9 +37,10 @@ int nAppVirtualFps = 6000;			// App fps * 100
 TCHAR szAppBurnVer[16] = _T("");
 TCHAR szAppExeName[EXE_NAME_SIZE + 1];
 
-bool bCmdOptUsed = 0;
+bool bCmdOptUsed = 0; // 1 fullscreen, 2 windowed (-w)
 bool bAlwaysProcessKeyboardInput = false;
 bool bAlwaysCreateSupportFolders = true;
+bool bAutoLoadGameList = false;
 
 bool bQuietLoading = false;
 
@@ -857,7 +858,7 @@ int ProcessCmdLine()
 				bVidArcaderes = 1;
 			} else {
 				if (_tcscmp(szOpt2, _T("-w")) == 0) {
-					bCmdOptUsed = 0;
+					bCmdOptUsed = 2;
 					bFullscreen = 0;
 				}
 			}

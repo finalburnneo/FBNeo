@@ -1986,7 +1986,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CREATEDIRS:
 			bAlwaysCreateSupportFolders = !bAlwaysCreateSupportFolders;
 			break;
-			
+
+		case MENU_AUTOLOADGAMELIST:
+			bAutoLoadGameList = !bAutoLoadGameList;
+			break;
+
 		case MENU_SAVEHISCORES:
 			EnableHiscores = !EnableHiscores;
 			break;

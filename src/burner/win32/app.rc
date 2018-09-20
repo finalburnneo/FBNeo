@@ -1171,7 +1171,8 @@ BEGIN
            MENUITEM "Display mode indicator",				MENU_DISPLAYINDICATOR
            MENUITEM "Modeless menu",					MENU_MODELESS
            MENUITEM "Don't change Num Lock status",			MENU_NOCHANGENUMLOCK
-		   MENUITEM "Create support folders at runtime",	MENU_CREATEDIRS
+	   MENUITEM "Create support folders at runtime",		MENU_CREATEDIRS
+           MENUITEM "Show Game List at start-up",			MENU_AUTOLOADGAMELIST
            MENUITEM SEPARATOR
            POPUP "Set application thread priority"
            BEGIN

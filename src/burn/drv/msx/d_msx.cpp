@@ -23563,10 +23563,10 @@ STDROMPICKEXT(MSX_inspecteurz, MSX_inspecteurz, msx_msx)
 STD_ROM_FN(MSX_inspecteurz)
 
 struct BurnDriver BurnDrvMSX_inspecteurz = {
-	"msx_inspecteurz", NULL, "msx_msx", NULL, "1986",
+	"msx_inspecteurz", "msx_bullmigt", "msx_msx", NULL, "1986",
 	"Buru to Marty Kikiippatsu. Inspecteur Z\0", NULL, "HAL Laboratory", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_inspecteurzRomInfo, MSX_inspecteurzRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3

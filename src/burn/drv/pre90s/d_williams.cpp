@@ -83,6 +83,7 @@ static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 
 static INT32 defender_control_hack = 0;
+static INT32 defender = 0;
 static INT32 mayday = 0;
 static INT32 splat = 0;
 static INT32 blaster = 0;
@@ -1335,6 +1336,7 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 	}
 	else if (maptype == 0) // defender
 	{
+		defender = 1;
 		M6809Init(0);
 		M6809Open(0);
 		if (mayday) {
@@ -1407,6 +1409,7 @@ static INT32 DrvExit()
 	splat = 0;
 	blaster = 0;
 	defender_control_hack = 0;
+	defender = 0;
 
 	uses_hc55516 = 0;
 	uses_colprom = 0;
@@ -1735,6 +1738,19 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nAddress	= 0;
 		ba.szName	= "NVRAM";
 		BurnAcb(&ba);
+	}
+
+	if (nAction & ACB_WRITE) {
+		M6809Open(0);
+		if (blaster) {
+			blaster_bankswitch();
+		}
+		else if (defender) {
+			bankswitch();
+		} else {
+			williams_bank();
+		}
+		M6809Close();
 	}
 
 	return 0;

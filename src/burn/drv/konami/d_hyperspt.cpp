@@ -645,7 +645,11 @@ static INT32 DrvInit(INT32 select)
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, (select > 1) ? roadf_map_callback : hyperspt_map_callback, 8, 8, 64, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM1, 4, 8, 8, 0x20000, 0x100, 0xf);
 	GenericTilemapSetScrollRows(0, 32);
-	GenericTilemapSetOffsets(0, 0, -16);
+
+	if (select == 2 || select == 3) // roadf*
+		GenericTilemapSetOffsets(0, 0, +16);
+	else
+		GenericTilemapSetOffsets(0, 0, -16);
 
 	DrvDoReset(1);
 

@@ -47,60 +47,60 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo HypersptInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 3"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"	},
+	{"P3 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p3 start"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 fire 2"	},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 0,	"p3 fire 3"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p4 coin"	},
+	{"P4 Coin",		    BIT_DIGITAL,	DrvJoy1 + 5,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p4 start"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy3 + 6,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p4 fire 2"	},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy3 + 4,	"p4 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	"reset"		    },
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Hyperspt)
 
 static struct BurnInputInfo RoadfInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	"reset"		    },
+	{"Service",		    BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Roadf)
@@ -373,11 +373,6 @@ static tilemap_callback( roadf )
 	TILE_SET_INFO(0, code, attr, (attr & 0x10) ? TILE_FLIPX : 0);
 }
 
-static INT32 DrvDACSync()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / (nBurnFPS / 100.000))));
-}
-
 static UINT32 DrvVLMSync(INT32 samples_rate)
 {
 	return (samples_rate * ZetTotalCycles()) / 59659;
@@ -415,7 +410,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvM6809ROM		= Next; Next += 0x010000;
-	DrvM6809DecROM		= Next; Next += 0x010000;
+	DrvM6809DecROM  = Next; Next += 0x010000;
 	DrvZ80ROM		= Next; Next += 0x004000;
 
 	DrvGfxROM0		= Next; Next += 0x020000;
@@ -427,7 +422,7 @@ static INT32 MemIndex()
 
 	DrvNVRAM		= Next; Next += 0x000800;
 
-	DrvTransTable		= Next; Next += 0x000200;
+	DrvTransTable   = Next; Next += 0x000200;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x200 * sizeof(UINT32);
 
@@ -638,7 +633,7 @@ static INT32 DrvInit(INT32 select)
 	vlm5030Init(0, 3579545, DrvVLMSync, DrvSndROM, 0x2000, 1);
 	vlm5030SetAllRoutes(0, (select != 0) ? 0 : 1.00, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, DrvDACSync);
+	DACInit(0, 0, 1, ZetTotalCycles, 3579545);
 	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -804,7 +799,7 @@ static INT32 DrvFrame()
 		if (nSegmentLength) {
 			SN76496Update(0, pSoundBuf, nSegmentLength);
 		}
-		// vlm5030 won't interlace, so just run it at the end of the frame..
+		// vlm5030 and DAC are buffered, so just run them at the end of frame.
 		if (game_select == 0) vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -970,7 +965,7 @@ static struct BurnRomInfo hpolym84RomDesc[] = {
 	{ "c01",		0x2000, 0x0c720eeb, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
 	{ "c02",		0x2000, 0x560258e0, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "c03",		0x2000, 0x9b01c7e6, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "330e04.bin",		0x2000, 0x9c5e2934, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "330e04.bin",	0x2000, 0x9c5e2934, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "c05",		0x2000, 0xb105a8cd, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "c06",		0x2000, 0x1a34a849, 1 | BRF_PRG | BRF_ESS }, //  5
 
@@ -987,13 +982,13 @@ static struct BurnRomInfo hpolym84RomDesc[] = {
 	{ "c15",		0x2000, 0xf3d454e6, 3 | BRF_GRA },           // 15
 
 	{ "c26",		0x2000, 0xa6897eac, 4 | BRF_GRA },           // 16 Sprites
-	{ "330e24.bin",		0x2000, 0xf9bbfe1d, 4 | BRF_GRA },           // 17
+	{ "330e24.bin",	0x2000, 0xf9bbfe1d, 4 | BRF_GRA },           // 17
 	{ "c22",		0x2000, 0xed9271a0, 4 | BRF_GRA },           // 18
-	{ "330e20.bin",		0x2000, 0x29969b92, 4 | BRF_GRA },           // 19
+	{ "330e20.bin",	0x2000, 0x29969b92, 4 | BRF_GRA },           // 19
 
-	{ "c03_c27.bin",	0x0020, 0xbc8a5956, 5 | BRF_GRA },           // 20 Color Proms
-	{ "j12_c28.bin",	0x0100, 0x2c891d59, 5 | BRF_GRA },           // 21
-	{ "a09_c29.bin",	0x0100, 0x811a3f3f, 5 | BRF_GRA },           // 22
+	{ "c03_c27.bin",0x0020, 0xbc8a5956, 5 | BRF_GRA },           // 20 Color Proms
+	{ "j12_c28.bin",0x0100, 0x2c891d59, 5 | BRF_GRA },           // 21
+	{ "a09_c29.bin",0x0100, 0x811a3f3f, 5 | BRF_GRA },           // 22
 
 	{ "c08",		0x2000, 0xe8f8ea78, 6 | BRF_GRA },           // 23 VLM Samples
 };
@@ -1059,10 +1054,10 @@ struct BurnDriver BurnDrvRoadf = {
 // Road Fighter (set 2)
 
 static struct BurnRomInfo roadf2RomDesc[] = {
-	{ "5g",			0x2000, 0xd8070d30, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "6g",			0x2000, 0x8b661672, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "8g",			0x2000, 0x714929e8, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "11g",		0x2000, 0x0f2c6b94, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5g",			    0x2000, 0xd8070d30, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "6g",			    0x2000, 0x8b661672, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "8g",			    0x2000, 0x714929e8, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "11g",		    0x2000, 0x0f2c6b94, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "g13_f05.bin",	0x2000, 0x0ad4d796, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "g15_f06.bin",	0x2000, 0xfa42e0ed, 1 | BRF_PRG | BRF_ESS }, //  5
 
@@ -1098,7 +1093,7 @@ struct BurnDriver BurnDrvRoadf2 = {
 // Road Fighter (set 3, conversion hack on Hyper Sports PCB)
 
 static struct BurnRomInfo roadf3RomDesc[] = {
-	{ "1-2.g7",		0x4000, 0x93b168f2, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "1-2.g7",		    0x4000, 0x93b168f2, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
 	{ "3-4.g11",		0x4000, 0xb9ba77f0, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "5-6.g15",		0x4000, 0x91c1788b, 1 | BRF_PRG | BRF_ESS }, //  2
 

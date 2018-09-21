@@ -1055,8 +1055,11 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		if (sx < (INT32)(1-cur_map->twidth)) sx += cur_map->twidth * cur_map->mwidth;
 		if (sy < (INT32)(1-cur_map->theight)) sy += cur_map->theight * cur_map->mheight;
 
-		INT32 flipx = flags & TILE_FLIPX; 
+		INT32 flipx = flags & TILE_FLIPX;
 		INT32 flipy = flags & TILE_FLIPY;
+
+		sx += cur_map->xoffset;
+		sy += cur_map->yoffset;
 
 		if (cur_map->flags & TMAP_FLIPY) {
 			sy = ((maxy - miny) - cur_map->theight) - sy;
@@ -1067,9 +1070,6 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 			sx = ((maxx - minx) - cur_map->twidth) - sx;
 			flipx ^= TILE_FLIPX;
 		}
-
-		sx += cur_map->xoffset;
-		sy += cur_map->yoffset;
 
 		// skip tiles that are out of the visible area
 		if ((sx >= maxx) || (sy >= maxy) || (sx < (INT32)(minx - (cur_map->twidth - 1))) || (sy < (INT32)(miny - (cur_map->theight - 1)))) {

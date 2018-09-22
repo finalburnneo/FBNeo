@@ -545,7 +545,7 @@ void UPD7759Scan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029680;
 	}
 
-	for (INT32 i = 0; i < nNumChips; i++)
+	for (INT32 i = 0; i <= nNumChips; i++) // first chip 0, second chip 1...
 	{
 		Chip = Chips[i];
 

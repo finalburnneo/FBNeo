@@ -23,7 +23,6 @@ static UINT8 *DrvPalRAM;
 static UINT8 *DrvVidRAM0;
 static UINT8 *DrvVidRAM1;
 static UINT8 *DrvSprRAM;
-static UINT8 *DrvSprBUF;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -384,12 +383,11 @@ static INT32 MemIndex()
 
 	DrvZ80RAM		= Next; Next += 0x000800;
 
-	DrvHD6309RAM	= Next; Next += 0x002000;
+	DrvHD6309RAM	= Next; Next += 0x004000;
 	DrvPalRAM		= Next; Next += 0x000400;
 	DrvVidRAM0		= Next; Next += 0x000800;
 	DrvVidRAM1		= Next; Next += 0x000800;
-	DrvSprRAM		= Next; Next += 0x001000;
-	DrvSprBUF		= Next; Next += 0x001000;
+	DrvSprRAM		= Next; Next += 0x000800;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -446,10 +444,11 @@ static INT32 DrvInit(INT32 rom_layout)
 	HD6309MapMemory(DrvHD6309RAM,			0x0000, 0x00ff, MAP_ROM); // write through handler
 	HD6309MapMemory(DrvHD6309RAM + 0x0100,	0x0100, 0x03ff, MAP_RAM);
 	HD6309MapMemory(DrvPalRAM,				0x0800, 0x0bff, MAP_RAM);
-	HD6309MapMemory(DrvHD6309RAM + 0x1000,	0x1000, 0x1fff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309RAM + 0x1000,	0x1000, 0x17ff, MAP_RAM);
+	HD6309MapMemory(DrvSprRAM,				0x1800, 0x1fff, MAP_RAM);
 	HD6309MapMemory(DrvVidRAM0,				0x2000, 0x27ff, MAP_RAM);
 	HD6309MapMemory(DrvVidRAM1,				0x2800, 0x2fff, MAP_RAM);
-	HD6309MapMemory(DrvSprRAM,				0x3000, 0x3fff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309RAM + 0x3000,	0x3000, 0x3fff, MAP_RAM);
 	HD6309MapMemory(DrvHD6309ROM + 0x6000,	0x6000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(flkatck_main_write);
 	HD6309SetReadHandler(flkatck_main_read);
@@ -533,8 +532,7 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprBUF, 0, 40, 16, 0, 0, 0x0000);
-	if (nSpriteEnable & 2) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprBUF, 0, 40, 16, 0, 1, 0x0000);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprRAM, 0, 40, 16, 0, -1, 0x0000);
 
 	GenericTilesSetClip(-1, 40, -1, -1);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
@@ -581,8 +579,6 @@ static INT32 DrvFrame()
 			if (pBurnDraw) { // missing text in service mode if drawn after vbl
 				DrvDraw();
 			}
-
-			memcpy(DrvSprBUF, DrvSprRAM, 0x1000);
 		}
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);

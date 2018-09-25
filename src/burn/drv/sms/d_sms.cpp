@@ -340,6 +340,18 @@ INT32 SMSInit()
 	return 0;
 }
 
+static INT32 rbislandInit()
+{
+	INT32 rc = SMSInit();
+
+	if (rc == 0 && cart.rom[0x7334] == 0xe5) {
+		bprintf(0, _T("SMS HOTFIX: Applying Rainbow Islands \"ending-crash\" fix.\n"));
+		cart.rom[0x7334] = 0xe1;
+	}
+
+	return rc;
+}
+
 static void system_load_state()
 {
 	if(cart.mapper == MAPPER_MSX || cart.mapper == MAPPER_MSX_NEMESIS) {
@@ -7814,7 +7826,7 @@ struct BurnDriver BurnDrvsms_rbisland = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_rbislandRomInfo, sms_rbislandRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	rbislandInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };
 

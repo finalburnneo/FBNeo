@@ -67,6 +67,8 @@ static INT32 motor_amp_new;
 static INT32 motor_amp_step;
 static INT32 motor_amp_counter;
 
+INT32 bzone_sound_enable = 0;
+
 void bzone_sound_scan(INT32 nAction, INT32 *)
 {
 	SCAN_VAR(latch);
@@ -121,6 +123,8 @@ void bzone_sound_reset()
 	motor_amp_new = 0;
 	motor_amp_step = 0;
 	motor_amp_counter = 0;
+
+	bzone_sound_enable = 0;
 }
 
 void bzone_sound_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
@@ -195,7 +199,7 @@ void bzone_update_int(INT16 *buffer, INT32 length)
                  * time constant is 10e-6 * 23000 = 0.23 seconds
                  * (samples were decaying much slower: 1/4th rate? )
                  */
-				explosion_amp_counter -= (int)(32767 / (0.23*4));
+				explosion_amp_counter -= (int)(32767 / (0.23*1));
 				if( explosion_amp_counter < 0 )
 				{
 					INT32 n = (-explosion_amp_counter / OUTPUT_RATE) + 1;
@@ -209,9 +213,9 @@ void bzone_update_int(INT16 *buffer, INT32 length)
              * and feedback, so the loud/soft values are arbitrary
              */
 			if( latch & 0x02 )	/* explosion loud ? */
-				sum += EXP(0,explosion_amp)/3;
+				sum += BURN_SND_CLIP(EXP(0,explosion_amp)/3);
 			else
-				sum += EXP(0,explosion_amp)/4;
+				sum += BURN_SND_CLIP(EXP(0,explosion_amp)/4);
 		}
 
 		/* shell enable: charge C9 */
@@ -242,9 +246,9 @@ void bzone_update_int(INT16 *buffer, INT32 length)
              * and feedback, so the loud/soft values are arbitrary
              */
 			if( latch & 0x08 )	/* shell loud ? */
-				sum += EXP(0,shell_amp)/3;
+				sum += BURN_SND_CLIP(EXP(0,shell_amp)/6);
 			else
-				sum += EXP(0,shell_amp)/4;
+				sum += BURN_SND_CLIP(EXP(0,shell_amp)/8);
 		}
 
 		if( latch & 0x80 )
@@ -258,11 +262,11 @@ void bzone_update_int(INT16 *buffer, INT32 length)
              * with "MOTOR REV EN" being high or low. I took 240Hz as
              * higher rate and sweep up or down to the new rate in 0.25s
              */
-			motor_rate_new = (latch & 0x10) ? 240 : 184;
+			motor_rate_new = (latch & 0x10) ? (940) : (240);
 			if( motor_rate != motor_rate_new )
 			{
 				/* sweep rate to new rate */
-				motor_rate_counter -= (int)((240 - 184) / 0.25);
+				motor_rate_counter -= (int)(((940) - (240)) / 0.25);
 				while( motor_rate_counter <= 0 )
 				{
 					motor_rate_counter += OUTPUT_RATE;
@@ -334,13 +338,13 @@ void bzone_update_int(INT16 *buffer, INT32 length)
 					}
 				}
 			}
-			sum += EXP((motor_amp<motor_amp_new),motor_amp)/3;
+			sum += EXP((motor_amp<motor_amp_new),motor_amp)/30;
 		}
 
-		*buffer++ = (sum + last_val) / 2;
+		*buffer++ = BURN_SND_CLIP((sum + last_val) / 2);
 
 		/* crude 75% low pass filter */
-		last_val = (sum + last_val * 3) / 4;
+		last_val = 0;//(sum + last_val * 3) / 4;
 	}
 }
 
@@ -348,6 +352,8 @@ void bzone_sound_write(UINT8 data)
 {
 	if( data == latch )
 		return;
+
+	bzone_sound_enable = data & (1 << 5);
 
 	UpdateStream(SyncInternal());
 

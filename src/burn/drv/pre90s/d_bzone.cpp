@@ -890,6 +890,8 @@ static INT32 DrvFrame()
 			redbaron_sound_update(pBurnSoundOut, nBurnSoundLen);
 		} else {
 			bzone_sound_update(pBurnSoundOut, nBurnSoundLen);
+			if (!bzone_sound_enable)
+				memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
 		}
 	}
 

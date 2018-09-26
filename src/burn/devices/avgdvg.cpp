@@ -1053,7 +1053,7 @@ void avgdvg_go()
 		total_length = dvg_generate_vector_list();
 
 		avgdvg_halt_next = pCPUTotalCycles();
-		last_cyc = total_length+150;
+		last_cyc = (INT32)((float)(((float)1512000 / 1000000000) * 4500) * total_length);
 	}
 
 	/* AVG case */

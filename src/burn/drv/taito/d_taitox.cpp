@@ -834,6 +834,18 @@ UINT8 __fastcall TaitoX68KReadByte(UINT32 a)
 			return TC0140SYTCommRead();
 		}
 
+		case 0x900001: {
+			return TaitoInput[0];
+		}
+
+		case 0x900003: {
+			return TaitoInput[1];
+		}
+
+		case 0x900005: {
+			return TaitoInput[2];
+		}
+
 	    default: {
 			bprintf(PRINT_NORMAL, _T("68K #1 Read byte => %06X\n"), a);
 		}
@@ -880,6 +892,11 @@ void __fastcall TaitoX68KWriteByte(UINT32 a, UINT8 d)
 		
 		case 0x800003: {
 			TC0140SYTCommWrite(d);
+			return;
+		}
+
+		case 0x900009: {
+			//coin counter/lockout etc.
 			return;
 		}
 

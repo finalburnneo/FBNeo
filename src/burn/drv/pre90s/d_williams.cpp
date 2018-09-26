@@ -14,9 +14,9 @@
 //  Alien Area - no sound (there is none)
 //  Sinistar
 //  Blaster
+//  Speed Ball
 
 // todo / tofix:
-//  Speed Ball - inputs
 //  Lottofun - memory protect sw. error
 
 #include "tiles_generic.h"
@@ -81,12 +81,18 @@ static UINT8 DrvDips[3] = { 0, 0, 0 };
 static UINT8 DrvReset;
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort3 = 0;
+static INT32 TrackX[2] = { 0, 0 };
+static INT32 TrackY[2] = { 0, 0 };
 
 static INT32 defender_control_hack = 0;
 static INT32 defender = 0;
 static INT32 mayday = 0;
 static INT32 splat = 0;
 static INT32 blaster = 0;
+static INT32 spdball = 0;
+
 static INT32 uses_hc55516 = 0;
 static INT32 uses_colprom = 0;
 
@@ -316,6 +322,7 @@ static struct BurnInputInfo JoustInputList[] = {
 
 STDINPUTINFO(Joust)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo SpdballInputList[] = {
 	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
 	{"P1 Start",				BIT_DIGITAL,	DrvJoy5 + 6,	"p1 start"	},
@@ -325,9 +332,8 @@ static struct BurnInputInfo SpdballInputList[] = {
 	{"P1 Right",				BIT_DIGITAL,	DrvJoy5 + 1,	"p1 right"	},
 	{"P1 Button 1",				BIT_DIGITAL,	DrvJoy4 + 4,	"p1 fire 1"	},
 
-	// analog input placeholder
-	{"P1 Button 2",				BIT_DIGITAL,	DrvJoy4 + 5,	"p1 fire 2"	},
-	{"P1 Button 3",				BIT_DIGITAL,	DrvJoy4 + 5,	"p1 fire 3"	},
+	A("P1 Stick X",             BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Stick Y",             BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy5 + 7,	"p2 start"	},
@@ -337,9 +343,8 @@ static struct BurnInputInfo SpdballInputList[] = {
 	{"P2 Right",				BIT_DIGITAL,	DrvJoy5 + 3,	"p2 right"	},
 	{"P2 Button 1",				BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"	},
 
-	// analog input placeholder
-	{"P2 Button 2",				BIT_DIGITAL,	DrvJoy4 + 7,	"p2 fire 2"	},
-	{"P2 Button 3",				BIT_DIGITAL,	DrvJoy4 + 7,	"p2 fire 3"	},
+	A("P2 Stick X",             BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Stick Y",             BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
@@ -347,7 +352,7 @@ static struct BurnInputInfo SpdballInputList[] = {
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
-
+#undef A
 STDINPUTINFO(Spdball)
 
 static struct BurnInputInfo AlienarInputList[] = {
@@ -823,6 +828,13 @@ static void williams_main_write(UINT16 address, UINT8 data)
 static UINT8 williams_main_read(UINT16 address)
 {
 	if ((address & 0xfffc) == 0xc800) {
+		switch (address & 0x03) {
+			case 0: return TrackY[0]&0xff;
+			case 1: return TrackX[0]&0xff;
+			case 2: return TrackY[1]&0xff;
+			case 3: return TrackX[1]&0xff;
+		}
+
 		return 0; // spdball analog input read
 	}
 
@@ -1153,6 +1165,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	dac_lastin_l = 0;
 	dac_lastout_l = 0;
 
+	TrackX[0] = TrackX[1] = 0;
+	TrackY[0] = TrackY[1] = 0;
+
 	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
 	return 0;
@@ -1410,6 +1425,7 @@ static INT32 DrvExit()
 	blaster = 0;
 	defender_control_hack = 0;
 	defender = 0;
+	spdball = 0;
 
 	uses_hc55516 = 0;
 	uses_colprom = 0;
@@ -1636,6 +1652,25 @@ static INT32 DrvFrame()
 			}
 			M6809Close();
 		}
+
+		if (spdball) {
+			UINT8 xy = 0;
+
+			xy = ProcessAnalog(DrvAnalogPort1, 1, 1, 0x00, 0xff);
+			if (xy > (0x80+0x10)) TrackY[0]+=12;
+			if (xy < (0x80-0x10)) TrackY[0]-=12;
+			xy = ProcessAnalog(DrvAnalogPort0, 0, 1, 0x00, 0xff);
+			if (xy > (0x80+0x10)) TrackX[0]+=12;
+			if (xy < (0x80-0x10)) TrackX[0]-=12;
+
+			xy = ProcessAnalog(DrvAnalogPort3, 1, 1, 0x00, 0xff);
+			if (xy > (0x80+0x10)) TrackY[1]+=12;
+			if (xy < (0x80-0x10)) TrackY[1]-=12;
+			xy = ProcessAnalog(DrvAnalogPort2, 0, 1, 0x00, 0xff);
+			if (xy > (0x80+0x10)) TrackX[1]+=12;
+			if (xy < (0x80-0x10)) TrackX[1]-=12;
+
+		}
 	}
 
 	INT32 nInterleave = 256;
@@ -1730,6 +1765,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(blaster_color0);
 
 		SCAN_VAR(nExtraCycles);
+
+		if (spdball) {
+			SCAN_VAR(TrackX);
+			SCAN_VAR(TrackY);
+		}
 	}
 
 	if (nAction & ACB_NVRAM) {
@@ -3031,19 +3071,27 @@ STD_ROM_FN(spdball)
 
 static INT32 SpdballInit()
 {
-	return DrvInit(1, 0, 6, 1, 0xc000);
+	INT32 nRet = DrvInit(1, 0, 6, 1, 0xc000);
+
+	if (nRet == 0) // raster draw
+	{
+		spdball = 1;
+		pStartDraw = DrvDrawBegin;
+		pDrawScanline = DrvDrawLine;
+	}
+
+	return nRet;
 }
 
 struct BurnDriver BurnDrvSpdball = {
 	"spdball", NULL, NULL, NULL, "1985",
 	"Speed Ball - Contest at Neonworld (prototype)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, spdballRomInfo, spdballRomName, NULL, NULL, SpdballInputInfo, NULL,
 	SpdballInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
-
 
 
 // Alien Arena

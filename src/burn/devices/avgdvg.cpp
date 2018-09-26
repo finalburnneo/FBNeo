@@ -1053,7 +1053,7 @@ void avgdvg_go()
 		total_length = dvg_generate_vector_list();
 
 		avgdvg_halt_next = pCPUTotalCycles();
-		last_cyc = total_length+300;
+		last_cyc = total_length+150;
 	}
 
 	/* AVG case */

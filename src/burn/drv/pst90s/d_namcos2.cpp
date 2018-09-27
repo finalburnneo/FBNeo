@@ -3758,7 +3758,9 @@ static struct BurnRomInfo assaultRomDesc[] = {
 
 	{ "at1snd0.bin",	0x20000, 0x1d1ffe12, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65b.bin",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "atobj0.bin",		0x20000, 0x22240076, 0x05 | BRF_GRA },           //  7 Sprites
@@ -3820,7 +3822,9 @@ static struct BurnRomInfo assaultjRomDesc[] = {
 
 	{ "at1snd0.bin",	0x20000, 0x1d1ffe12, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65b.bin",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "atobj0.bin",		0x20000, 0x22240076, 0x05 | BRF_GRA },           //  7 Sprites
@@ -3877,7 +3881,9 @@ static struct BurnRomInfo assaultpRomDesc[] = {
 
 	{ "at1snd0.bin",	0x20000, 0x1d1ffe12, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65b.bin",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "atobj0.bin",		0x20000, 0x22240076, 0x05 | BRF_GRA },           //  7 Sprites
@@ -3939,7 +3945,9 @@ static struct BurnRomInfo ordyneRomDesc[] = {
 
 	{ "or1_sd.snd0",	0x20000, 0xc41e5d22, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2_c65b.3f",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "or_obj-0.obj0",	0x20000, 0x67b2b9e4, 0x05 | BRF_GRA },           //  7 Sprites
@@ -4037,7 +4045,9 @@ static struct BurnRomInfo ordynejRomDesc[] = {
 
 	{ "or1_sd.snd0",	0x20000, 0xc41e5d22, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2_c65b.3f",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "or_obj-0.obj0",	0x20000, 0x67b2b9e4, 0x05 | BRF_GRA },           //  7 Sprites
@@ -4098,7 +4108,9 @@ static struct BurnRomInfo ordynejeRomDesc[] = {
 
 	{ "or1_sd.snd0",	0x20000, 0xc41e5d22, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2_c65b.3f",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "or_obj-0.obj0",	0x20000, 0x67b2b9e4, 0x05 | BRF_GRA },           //  7 Sprites
@@ -4159,7 +4171,9 @@ static struct BurnRomInfo cosmogngRomDesc[] = {
 
 	{ "co2_s0",		0x20000, 0x4ca59338, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "co1obj0.bin",	0x80000, 0x5df8ce0c, 0x05 | BRF_GRA },           //  7 Sprites
@@ -4220,7 +4234,9 @@ static struct BurnRomInfo mirninjaRomDesc[] = {
 
 	{ "mn_snd0.bin",	0x20000, 0x6aa1ae84, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65b.bin",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "mn_obj0.bin",	0x20000, 0x6bd1e290, 0x05 | BRF_GRA },           //  7 Sprites
@@ -4290,7 +4306,9 @@ static struct BurnRomInfo pheliosRomDesc[] = {
 
 	{ "ps2_snd0.snd0",	0x20000, 0xda694838, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2_c65c.3f",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "ps_obj-0.obj0",	0x40000, 0xf323db2b, 0x05 | BRF_GRA },           //  7 Sprites
@@ -4372,7 +4390,9 @@ static struct BurnRomInfo pheliosjRomDesc[] = {
 
 	{ "ps1_snd0.snd0",	0x20000, 0xda694838, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2_c65c.3f",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "ps_obj-0.obj0",	0x40000, 0xf323db2b, 0x05 | BRF_GRA },           //  7 Sprites
@@ -4434,7 +4454,9 @@ static struct BurnRomInfo marvlandRomDesc[] = {
 
 	{ "mv2_snd0",		0x20000, 0xa5b99162, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "mv1-obj0.bin",	0x40000, 0x73a29361, 0x05 | BRF_GRA },           //  7 Sprites
@@ -4514,7 +4536,9 @@ static struct BurnRomInfo marvlandjRomDesc[] = {
 
 	{ "mv1-snd0.bin",	0x20000, 0x51b8ccd7, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "mv1-obj0.bin",	0x40000, 0x73a29361, 0x05 | BRF_GRA },           //  7 Sprites
@@ -4566,7 +4590,9 @@ static struct BurnRomInfo valkyrieRomDesc[] = {
 
 	{ "wd1snd0.bin",	0x20000, 0xd0fbf58b, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "wdobj0.bin",		0x40000, 0xe8089451, 0x05 | BRF_GRA },           //  7 Sprites
@@ -4639,7 +4665,9 @@ static struct BurnRomInfo rthun2RomDesc[] = {
 	{ "rst1_snd0.bin",		0x20000, 0x55b7562a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 	{ "rst1_snd1.bin",		0x20000, 0x00445a4f, 0x03 | BRF_PRG | BRF_ESS }, //  5
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
+#endif
 	{ "sys2c65c.bin",		0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "rst1_obj0.bin",		0x80000, 0xe5cb82c1, 0x05 | BRF_GRA },           //  8 Sprites
@@ -4716,7 +4744,9 @@ static struct BurnRomInfo rthun2jRomDesc[] = {
 	{ "rst1_snd0.bin",		0x20000, 0x55b7562a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 	{ "rst1_snd1.bin",		0x20000, 0x00445a4f, 0x03 | BRF_PRG | BRF_ESS }, //  5
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "rst1_obj0.bin",		0x80000, 0xe5cb82c1, 0x05 | BRF_GRA },           //  8 Sprites
@@ -4771,7 +4801,9 @@ static struct BurnRomInfo dsaberRomDesc[] = {
 	{ "do1 snd0.snd0",	0x20000, 0xaf5b1ff8, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 	{ "do1 snd1.snd1",	0x20000, 0xc4ca6f3f, 0x03 | BRF_PRG | BRF_ESS }, //  5
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "do obj-0a.obj0",	0x80000, 0xf08c6648, 0x05 | BRF_GRA },           //  8 Sprites
@@ -4837,7 +4869,9 @@ static struct BurnRomInfo dsaberaRomDesc[] = {
 	{ "do1 snd0.snd0",	0x20000, 0xaf5b1ff8, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 	{ "do1 snd1.snd1",	0x20000, 0xc4ca6f3f, 0x03 | BRF_PRG | BRF_ESS }, //  5
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "do obj-0a.obj0",	0x80000, 0xf08c6648, 0x05 | BRF_GRA },           //  8 Sprites
@@ -4889,7 +4923,9 @@ static struct BurnRomInfo dsaberjRomDesc[] = {
 	{ "do1 snd0.snd0",	0x20000, 0xaf5b1ff8, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 	{ "do1 snd1.snd1",	0x20000, 0xc4ca6f3f, 0x03 | BRF_PRG | BRF_ESS }, //  5
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "do obj-0a.obj0",	0x80000, 0xf08c6648, 0x05 | BRF_GRA },           //  8 Sprites
@@ -4940,7 +4976,9 @@ static struct BurnRomInfo burnforcRomDesc[] = {
 
 	{ "bu1_snd0.bin",	0x20000, 0xfabb1150, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "bu_obj-0.bin",	0x80000, 0x24c919a1, 0x05 | BRF_GRA },           //  7 Sprites
@@ -5014,7 +5052,9 @@ static struct BurnRomInfo burnforcoRomDesc[] = {
 
 	{ "bu1_snd0.bin",	0x20000, 0xfabb1150, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "bu_obj-0.bin",	0x80000, 0x24c919a1, 0x05 | BRF_GRA },           //  7 Sprites
@@ -5071,7 +5111,9 @@ static struct BurnRomInfo finehourRomDesc[] = {
 
 	{ "fh1_sd0.bin",	0x20000, 0x059a9cfd, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "fh1_ob0.bin",	0x80000, 0xb1fd86f1, 0x05 | BRF_GRA },           //  7 Sprites
@@ -5149,8 +5191,10 @@ static struct BurnRomInfo swsRomDesc[] = {
 
 	{ "sst1snd0.bin",	0x20000, 0x8fc45114, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c68.3f",		0x08000, 0xca64550a, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "ss1_obj0.5b",	0x80000, 0x9bd6add1, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "ss1_obj1.4b",	0x80000, 0xa9db3d02, 0x05 | BRF_GRA },           //  8
@@ -5208,8 +5252,10 @@ static struct BurnRomInfo sws92RomDesc[] = {
 
 	{ "sst1snd0.bin",	0x20000, 0x8fc45114, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c68.3f",		0x08000, 0xca64550a, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "sss_obj0.bin",	0x80000, 0x375e8f1f, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "sss_obj1.bin",	0x80000, 0x675c1014, 0x05 | BRF_GRA },           //  8
@@ -5269,8 +5315,10 @@ static struct BurnRomInfo sws92gRomDesc[] = {
 
 	{ "sst1snd0.bin",	0x20000, 0x8fc45114, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c68.3f",		0x08000, 0xca64550a, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "sss_obj0.bin",	0x80000, 0x375e8f1f, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "sss_obj1.bin",	0x80000, 0x675c1014, 0x05 | BRF_GRA },           //  8
@@ -5332,8 +5380,10 @@ static struct BurnRomInfo sws93RomDesc[] = {
 
 	{ "sst1snd0.bin",	0x20000, 0x8fc45114, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "sst_obj0.bin",	0x80000, 0x4089dfd7, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "sst_obj1.bin",	0x80000, 0xcfbc25c7, 0x05 | BRF_GRA },           //  8
@@ -5393,7 +5443,9 @@ static struct BurnRomInfo kyukaidkRomDesc[] = {
 
 	{ "ky1_s0.bin",		0x20000, 0x27aea3e9, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "ky1_o0.bin",		0x80000, 0xebec5132, 0x05 | BRF_GRA },           //  7 Sprites
@@ -5451,7 +5503,9 @@ static struct BurnRomInfo kyukaidkoRomDesc[] = {
 
 	{ "ky1_s0.bin",		0x20000, 0x27aea3e9, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "ky1_o0.bin",		0x80000, 0xebec5132, 0x05 | BRF_GRA },           //  7 Sprites
@@ -5504,8 +5558,10 @@ static struct BurnRomInfo sgunnerRomDesc[] = {
 
 	{ "sn1_snd0.8j",	0x20000, 0xbdf36d44, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
-	{ "sys2c68.3f",		0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
+	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "sn_obj0.8c",		0x80000, 0xbbae38f7, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "sn_obj4.9c",		0x80000, 0x82fdaa06, 0x05 | BRF_GRA },           //  8
@@ -5560,8 +5616,10 @@ static struct BurnRomInfo sgunnerjRomDesc[] = {
 
 	{ "sn1_snd0.8j",	0x20000, 0xbdf36d44, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
-	{ "sys2c68.3f",		0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
+	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "sn_obj0.8c",		0x80000, 0xbbae38f7, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "sn_obj4.9c",		0x80000, 0x82fdaa06, 0x05 | BRF_GRA },           //  8
@@ -5611,11 +5669,8 @@ static struct BurnRomInfo sgunner2RomDesc[] = {
 
 	{ "sns_snd0.bin",	0x20000, 0xf079cd32, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
-#if defined ROM_VERIFY
-//	correct M37450 Code, unemulated/doesn't work. JacKc & Barry - please do not change these next 3 lines (5, 6, 7) or the game will break.
-	{ "sys2_c68.3f",	0x08000, 0xca64550a, 0x00 | BRF_PRG | BRF_ESS },    //  5 c68 Code (unused for now)
-#else
-//	not actually on this hw, but works
+#if !defined ROM_VERIFY
+	//	not actually on this hw, but works
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
 #endif
@@ -5684,15 +5739,13 @@ static struct BurnRomInfo sgunner2jRomDesc[] = {
 
 	{ "sns_snd0.bin",	0x20000, 0xf079cd32, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
-#ifdef ROM_VERIFY
-	// note - this define is only enabled for rom verification and is omitted completely from normal builds
-//	correct M37450 Code, unemulated/doesn't work. JacKc & Barry - please do not change these next 3 lines (5, 6, 7) or the game will break.
+#if !defined ROM_VERIFY
 	{ "sys2_c68.3f",	0x08000, 0xca64550a, 0x00 | BRF_PRG | BRF_ESS }, //	5 c68 Code (unused for now)
-#endif
 
-//	not actually on this hw, but works
+	//	not actually on this hw, but works
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
+#endif
 
 	{ "sns_obj0.bin",	0x80000, 0xc762445c, 0x05 | BRF_GRA },           //  8 Sprites
 	{ "sns_obj4.bin",	0x80000, 0x0b1be894, 0x05 | BRF_GRA },           //  9
@@ -5746,7 +5799,9 @@ static struct BurnRomInfo dirtfoxjRomDesc[] = {
 
 	{ "df1_snd0.bin",	0x20000, 0x66b4f3ab, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "df1_obj0.bin",	0x80000, 0xb6bd1a68, 0x05 | BRF_GRA },           //  7 Sprites
@@ -5774,6 +5829,8 @@ static struct BurnRomInfo dirtfoxjRomDesc[] = {
 	{ "df1_dat1.bin",	0x40000, 0x1a31e46b, 0x09 | BRF_PRG | BRF_ESS }, // 25
 
 	{ "df1_voi1.bin",	0x80000, 0x15053904, 0x0a | BRF_SND },           // 26 C140 Samples Samples
+	
+	{ "nvram",			0x02000, 0x4b9f7b06, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(dirtfoxj)
@@ -5822,7 +5879,9 @@ static struct BurnRomInfo gollyghoRomDesc[] = {
 
 	{ "gl1snd0.7j",		0x20000, 0x008bce72, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "gl1edr0c.ic7",	0x08000, 0xdb60886f, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "gl1obj0.5b",		0x40000, 0x6809d267, 0x05 | BRF_GRA },           //  7 Sprites
@@ -5886,7 +5945,9 @@ static struct BurnRomInfo bubbletrRomDesc[] = {
 
 	{ "bt1-snd0.7j",	0x20000, 0x46a5c625, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "bt1edr0a.ic7",	0x08000, 0x155b02fc, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "bt1-obj0.5b",	0x80000, 0x16b5dc04, 0x05 | BRF_GRA },           //  7 Sprites
@@ -5951,7 +6012,9 @@ static struct BurnRomInfo bubbletrjRomDesc[] = {
 
 	{ "bt1-snd0.7j",	0x20000, 0x46a5c625, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "bt1edr0a.ic7",	0x08000, 0x155b02fc, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "bt1-obj0.5b",	0x80000, 0x16b5dc04, 0x05 | BRF_GRA },           //  7 Sprites
@@ -5998,7 +6061,9 @@ static struct BurnRomInfo metlhawkRomDesc[] = {
 
 	{ "mh1s0.7j",		0x20000, 0x79e054cf, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "mhobj-4.5c",		0x40000, 0xe3590e1a, 0x05 | BRF_GRA },           //  7 Sprites
@@ -6068,7 +6133,9 @@ static struct BurnRomInfo metlhawkjRomDesc[] = {
 
 	{ "mh1s0.7j",		0x20000, 0x79e054cf, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "mhobj-4.5c",		0x40000, 0xe3590e1a, 0x05 | BRF_GRA },           //  7 Sprites
@@ -6138,7 +6205,9 @@ static struct BurnRomInfo luckywldRomDesc[] = {
 
 	{ "lw1snd0.7j",		0x20000, 0xcc83c6b6, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 
 	{ "lw1obj0.3p",		0x80000, 0x21485830, 0x05 | BRF_GRA },           //  6 Sprites
 	{ "lw1obj4.3s",		0x80000, 0x0050458a, 0x05 | BRF_GRA },           // 10
@@ -6202,7 +6271,9 @@ static struct BurnRomInfo luckywldjRomDesc[] = {
 
 	{ "lw1snd0.7j",		0x20000, 0xcc83c6b6, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 
 	{ "lw1obj0.3p",		0x80000, 0x21485830, 0x05 | BRF_GRA },           //  6 Sprites
 	{ "lw1obj4.3s",		0x80000, 0x0050458a, 0x05 | BRF_GRA },           //  8
@@ -6267,8 +6338,10 @@ static struct BurnRomInfo suzuka8hRomDesc[] = {
 
 	{ "eh1-snd0.bin",	0x20000, 0x36748d3c, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "eh1-obj0.bin",	0x80000, 0x864b6816, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "eh1-obj4.bin",	0x80000, 0xcde13867, 0x05 | BRF_GRA },           //  8
@@ -6332,8 +6405,10 @@ static struct BurnRomInfo suzuka8hjRomDesc[] = {
 
 	{ "eh1-snd0.bin",	0x20000, 0x36748d3c, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "eh1-obj0.bin",	0x80000, 0x864b6816, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "eh1-obj4.bin",	0x80000, 0xcde13867, 0x05 | BRF_GRA },           //  8
@@ -6385,8 +6460,10 @@ static struct BurnRomInfo suzuk8h2RomDesc[] = {
 
 	{ "ehs1-snd0.7j",	0x20000, 0xfc95993b, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c68.3f",		0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "ehs1-obj0.3p",	0x80000, 0xa0acf307, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "ehs1-obj4.3s",	0x80000, 0x4e503ca5, 0x05 | BRF_GRA },           //  8
@@ -6460,8 +6537,10 @@ static struct BurnRomInfo suzuk8h2jRomDesc[] = {
 
 	{ "ehs1-snd0.7j",	0x20000, 0xfc95993b, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c68.3f",		0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "ehs1-obj0.3p",	0x80000, 0xa0acf307, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "ehs1-obj4.3s",	0x80000, 0x4e503ca5, 0x05 | BRF_GRA },           // 11
@@ -6519,8 +6598,10 @@ static struct BurnRomInfo finallapRomDesc[] = {
 
 	{ "fl1-s0b",		0x20000, 0xf5d76989, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "obj-0b",		0x80000, 0xc6986523, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "obj-1b",		0x80000, 0x6af7d284, 0x05 | BRF_GRA },           //  8
@@ -6568,8 +6649,10 @@ static struct BurnRomInfo finallapdRomDesc[] = {
 
 	{ "fl1-s0b",		0x20000, 0xf5d76989, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "obj-0b",		0x80000, 0xc6986523, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "obj-1b",		0x80000, 0x6af7d284, 0x05 | BRF_GRA },           //  8
@@ -6617,8 +6700,10 @@ static struct BurnRomInfo finallapcRomDesc[] = {
 
 	{ "fl1-s0",		0x20000, 0x1f8ff494, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "obj-0b",		0x80000, 0xc6986523, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "obj-1b",		0x80000, 0x6af7d284, 0x05 | BRF_GRA },           //  8
@@ -6664,10 +6749,12 @@ static struct BurnRomInfo finallapjcRomDesc[] = {
 	{ "fl1-sp0",		0x10000, 0x2c5ff15d, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
 	{ "fl1-sp1",		0x10000, 0xea9d1a2e, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "fl1_s0b",		0x20000, 0xf5d76989, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "fl1-s0b",		0x20000, 0xf5d76989, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "obj-0b",		0x80000, 0xc6986523, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "obj-1b",		0x80000, 0x6af7d284, 0x05 | BRF_GRA },           //  8
@@ -6713,10 +6800,12 @@ static struct BurnRomInfo finallapjbRomDesc[] = {
 	{ "fl1-sp0",		0x10000, 0x2c5ff15d, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
 	{ "fl1-sp1",		0x10000, 0xea9d1a2e, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "fl1_s0.bin",		0x20000, 0x1f8ff494, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "fl1-s0",			0x20000, 0x1f8ff494, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "obj-0b",		0x80000, 0xc6986523, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "obj-1b",		0x80000, 0x6af7d284, 0x05 | BRF_GRA },           //  8
@@ -6764,7 +6853,9 @@ static struct BurnRomInfo finalap2RomDesc[] = {
 
 	{ "flss0",		0x20000, 0xc07cc10a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "fl2obj0",		0x80000, 0x3657dd7a, 0x05 | BRF_GRA },           //  7 Sprites
@@ -6823,7 +6914,9 @@ static struct BurnRomInfo finalap2jRomDesc[] = {
 
 	{ "flss0",		0x20000, 0xc07cc10a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "fl2obj0",		0x80000, 0x3657dd7a, 0x05 | BRF_GRA },           //  7 Sprites
@@ -6882,8 +6975,10 @@ static struct BurnRomInfo finalap3RomDesc[] = {
 
 	{ "flt1_snd0.7j",	0x20000, 0x60b72aed, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "flt_obj-0.4c",	0x80000, 0xeab19ec6, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "flt_obj-2.4a",	0x80000, 0x2a3b7ded, 0x05 | BRF_GRA },           //  8
@@ -6943,8 +7038,10 @@ static struct BurnRomInfo finalap3aRomDesc[] = {
 
 	{ "flt1_snd0.7j",	0x20000, 0x60b72aed, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "flt_obj-0.4c",	0x80000, 0xeab19ec6, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "flt_obj-2.4a",	0x80000, 0x2a3b7ded, 0x05 | BRF_GRA },           //  8
@@ -7006,8 +7103,10 @@ static struct BurnRomInfo finalap3jRomDesc[] = {
 
 	{ "flt1_snd0.7j",	0x20000, 0x60b72aed, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "flt_obj-0.4c",	0x80000, 0xeab19ec6, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "flt_obj-2.4a",	0x80000, 0x2a3b7ded, 0x05 | BRF_GRA },           //  8
@@ -7067,8 +7166,10 @@ static struct BurnRomInfo finalap3jcRomDesc[] = {
 
 	{ "flt1_snd0.7j",	0x20000, 0x60b72aed, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c68.3f",		0x08000, 0xca64550a, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "flt_obj-0.4c",	0x80000, 0xeab19ec6, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "flt_obj-2.4a",	0x80000, 0x2a3b7ded, 0x05 | BRF_GRA },           //  8
@@ -7126,10 +7227,12 @@ static struct BurnRomInfo finalap3blRomDesc[] = {
 	{ "flt1sp0",		0x20000, 0xe804ced1, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
 	{ "flt1sp1",		0x20000, 0x3a2b24ee, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "flt1snd0",		0x20000, 0x60b72aed, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "flt1_snd0.7j",	0x20000, 0x60b72aed, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+#endif
 
 	{ "fltobj0",		0x80000, 0xeab19ec6, 0x05 | BRF_GRA },           //  7 Sprites
 	{ "fltobj2",		0x80000, 0x2a3b7ded, 0x05 | BRF_GRA },           //  8
@@ -7189,7 +7292,9 @@ static struct BurnRomInfo fourtraxRomDesc[] = {
 
 	{ "fx1_sd0.7j",		0x20000, 0xacccc934, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "fx_obj-0.4c",	0x40000, 0x1aa60ffa, 0x15 | BRF_GRA },           //  7 Sprites
@@ -7200,18 +7305,18 @@ static struct BurnRomInfo fourtraxRomDesc[] = {
 	{ "fx_obj-9.7c",	0x40000, 0x90f0735b, 0x15 | BRF_GRA },           // 12
 	{ "fx_obj-12.8a",	0x40000, 0xf5e23b78, 0x15 | BRF_GRA },           // 13
 	{ "fx_obj-13.7a",	0x40000, 0x04a25007, 0x15 | BRF_GRA },           // 14
-	{ "fx_obj2.2c",		0x40000, 0x243affc7, 0x15 | BRF_GRA },           // 15
+	{ "fx_obj-2.2c",	0x40000, 0x243affc7, 0x15 | BRF_GRA },           // 15
 	{ "fx_obj-3.1c",	0x40000, 0xb7e5d17d, 0x15 | BRF_GRA },           // 16
-	{ "fx_obj6.2a",		0x40000, 0xa2d5ce4a, 0x15 | BRF_GRA },           // 17
-	{ "fx_obj7.1a",		0x40000, 0x4d91c929, 0x15 | BRF_GRA },           // 18
-	{ "fx_obj10.6c",	0x40000, 0x7a01e86f, 0x15 | BRF_GRA },           // 19
+	{ "fx_obj-6.2a",	0x40000, 0xa2d5ce4a, 0x15 | BRF_GRA },           // 17
+	{ "fx_obj-7.1a",	0x40000, 0x4d91c929, 0x15 | BRF_GRA },           // 18
+	{ "fx_obj-10.6c",	0x40000, 0x7a01e86f, 0x15 | BRF_GRA },           // 19
 	{ "fx_obj-11.5c",	0x40000, 0x514b3fe5, 0x15 | BRF_GRA },           // 20
 	{ "fx_obj-14.6a",	0x40000, 0xc1658c77, 0x15 | BRF_GRA },           // 21
-	{ "fx_obj15.5a",	0x40000, 0x2bc909b3, 0x15 | BRF_GRA },           // 22
+	{ "fx_obj-15.5a",	0x40000, 0x2bc909b3, 0x15 | BRF_GRA },           // 22
 
 	{ "fx_chr-0.11n",	0x20000, 0x6658c1c3, 0x06 | BRF_GRA },           // 23 Layer Tiles
 	{ "fx_chr-1.11p",	0x20000, 0x3a888943, 0x06 | BRF_GRA },           // 24
-	{ "fx2_ch2.11r",	0x20000, 0xfdf1e86b, 0x06 | BRF_GRA },           // 25
+	{ "fx2_chr-2.11r",	0x20000, 0xfdf1e86b, 0x06 | BRF_GRA },           // 25
 	{ "fx_chr-3.11s",	0x20000, 0x47fa7e61, 0x06 | BRF_GRA },           // 26
 	{ "fx_chr-4.9n",	0x20000, 0xc720c5f5, 0x06 | BRF_GRA },           // 27
 	{ "fx_chr-5.9p",	0x20000, 0x9eacdbc8, 0x06 | BRF_GRA },           // 28
@@ -7247,15 +7352,17 @@ struct BurnDriverD BurnDrvFourtrax = {
 // Four Trax (Asia)
 
 static struct BurnRomInfo fourtraxaRomDesc[] = {
-	{ "fx4_mp0.11d",	0x20000, 0xf87b3dce, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
-	{ "fx4_mp1.13d",	0x20000, 0xd82f7c20, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "fx4_mpr-0a.11d",	0x20000, 0xf147cd6b, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "fx4_mpr-1a.13d",	0x20000, 0xd1138c85, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "fx1_sp0.11k",	0x20000, 0x41687edd, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "fx1_sp1.13k",	0x20000, 0xdbbae326, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "fx1_sp0.11k",	0x20000, 0x48548e78, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "fx1_sp1.13k",	0x20000, 0xd2861383, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "fx1_sd0.7j",		0x20000, 0xacccc934, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
+#if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "fx_obj-0.4c",	0x40000, 0x1aa60ffa, 0x15 | BRF_GRA },           //  7 Sprites
@@ -7266,18 +7373,18 @@ static struct BurnRomInfo fourtraxaRomDesc[] = {
 	{ "fx_obj-9.7c",	0x40000, 0x90f0735b, 0x15 | BRF_GRA },           // 12
 	{ "fx_obj-12.8a",	0x40000, 0xf5e23b78, 0x15 | BRF_GRA },           // 13
 	{ "fx_obj-13.7a",	0x40000, 0x04a25007, 0x15 | BRF_GRA },           // 14
-	{ "fx_obj2.2c",		0x40000, 0x243affc7, 0x15 | BRF_GRA },           // 15
+	{ "fx_obj-2.2c",	0x40000, 0x243affc7, 0x15 | BRF_GRA },           // 15
 	{ "fx_obj-3.1c",	0x40000, 0xb7e5d17d, 0x15 | BRF_GRA },           // 16
-	{ "fx_obj6.2a",		0x40000, 0xa2d5ce4a, 0x15 | BRF_GRA },           // 17
-	{ "fx_obj7.1a",		0x40000, 0x4d91c929, 0x15 | BRF_GRA },           // 18
-	{ "fx_obj10.6c",	0x40000, 0x7a01e86f, 0x15 | BRF_GRA },           // 19
+	{ "fx_obj-6.2a",	0x40000, 0xa2d5ce4a, 0x15 | BRF_GRA },           // 17
+	{ "fx_obj-7.1a",	0x40000, 0x4d91c929, 0x15 | BRF_GRA },           // 18
+	{ "fx_obj-10.6c",	0x40000, 0x7a01e86f, 0x15 | BRF_GRA },           // 19
 	{ "fx_obj-11.5c",	0x40000, 0x514b3fe5, 0x15 | BRF_GRA },           // 20
 	{ "fx_obj-14.6a",	0x40000, 0xc1658c77, 0x15 | BRF_GRA },           // 21
-	{ "fx_obj15.5a",	0x40000, 0x2bc909b3, 0x15 | BRF_GRA },           // 22
+	{ "fx_obj-15.5a",	0x40000, 0x2bc909b3, 0x15 | BRF_GRA },           // 22
 
 	{ "fx_chr-0.11n",	0x20000, 0x6658c1c3, 0x06 | BRF_GRA },           // 23 Layer Tiles
 	{ "fx_chr-1.11p",	0x20000, 0x3a888943, 0x06 | BRF_GRA },           // 24
-	{ "fx4_ch2.11r",	0x20000, 0xa5d1ab10, 0x06 | BRF_GRA },           // 25
+	{ "fx4_chr-2a.11r",	0x20000, 0xa5d1ab10, 0x06 | BRF_GRA },           // 25
 	{ "fx_chr-3.11s",	0x20000, 0x47fa7e61, 0x06 | BRF_GRA },           // 26
 	{ "fx_chr-4.9n",	0x20000, 0xc720c5f5, 0x06 | BRF_GRA },           // 27
 	{ "fx_chr-5.9p",	0x20000, 0x9eacdbc8, 0x06 | BRF_GRA },           // 28

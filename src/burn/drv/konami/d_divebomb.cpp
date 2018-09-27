@@ -704,44 +704,44 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Kyuukoukabakugekitai - Dive Bomber Squad (Japan, prototype)
 
 static struct BurnRomInfo divebombRomDesc[] = {
-	{ "U20.27256",		0x08000, 0x89a30c82, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code (Text)
+	{ "u20.27256",		0x08000, 0x89a30c82, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code (Text)
 
-	{ "U21.27256",		0x08000, 0x3896d3f6, 2 | BRF_GRA },           //  1 Z80 #1 Code (Sprite)
+	{ "u21.27256",		0x08000, 0x3896d3f6, 2 | BRF_GRA },           //  1 Z80 #1 Code (Sprite)
 
-	{ "U19.27256",		0x08000, 0x16e26fb9, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code (Roz)
-	{ "U9.27512",		0x10000, 0xc842f831, 3 | BRF_PRG | BRF_ESS }, //  3
-	{ "U10.27512",		0x10000, 0xc77f3574, 3 | BRF_PRG | BRF_ESS }, //  4
-	{ "U11.27512",		0x10000, 0x8d46be7d, 3 | BRF_PRG | BRF_ESS }, //  5
+	{ "u19.27256",		0x08000, 0x16e26fb9, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code (Roz)
+	{ "u9.27512",		0x10000, 0xc842f831, 3 | BRF_PRG | BRF_ESS }, //  3
+	{ "u10.27512",		0x10000, 0xc77f3574, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "u11.27512",		0x10000, 0x8d46be7d, 3 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "U22.27256",		0x08000, 0xf816f9c5, 4 | BRF_GRA },           //  6 Text Tiles
-	{ "U23.27256",		0x08000, 0xd2600570, 4 | BRF_GRA },           //  7
+	{ "u22.27256",		0x08000, 0xf816f9c5, 4 | BRF_GRA },           //  6 Text Tiles
+	{ "u23.27256",		0x08000, 0xd2600570, 4 | BRF_GRA },           //  7
 
-	{ "U15.27C100",		0x20000, 0xccba7fa0, 5 | BRF_GRA },           //  8 Sprites
-	{ "U16.27C100",		0x20000, 0x16891fef, 5 | BRF_GRA },           //  9
-	{ "U17.27C100",		0x20000, 0xf4cbc97f, 5 | BRF_GRA },           // 10
-	{ "U18.27C100",		0x20000, 0x91ab9d89, 5 | BRF_GRA },           // 11
+	{ "u15.27c100",		0x20000, 0xccba7fa0, 5 | BRF_GRA },           //  8 Sprites
+	{ "u16.27c100",		0x20000, 0x16891fef, 5 | BRF_GRA },           //  9
+	{ "u17.27c100",		0x20000, 0xf4cbc97f, 5 | BRF_GRA },           // 10
+	{ "u18.27c100",		0x20000, 0x91ab9d89, 5 | BRF_GRA },           // 11
 
-	{ "U1.27512",		0x10000, 0x99af1e18, 6 | BRF_GRA },           // 12 K051316 #0 Tiles
-	{ "U2.27512",		0x10000, 0x99c8d516, 6 | BRF_GRA },           // 13
-	{ "U3.27512",		0x10000, 0x5ab4af3c, 6 | BRF_GRA },           // 14
+	{ "u1.27512",		0x10000, 0x99af1e18, 6 | BRF_GRA },           // 12 K051316 #0 Tiles
+	{ "u2.27512",		0x10000, 0x99c8d516, 6 | BRF_GRA },           // 13
+	{ "u3.27512",		0x10000, 0x5ab4af3c, 6 | BRF_GRA },           // 14
 
-	{ "U5.27512",		0x10000, 0x6726d022, 7 | BRF_GRA },           // 15 K051316 #1 Tiles
-	{ "U6.27512",		0x10000, 0x756b8a12, 7 | BRF_GRA },           // 16
-	{ "U7.27512",		0x10000, 0x01c07d84, 7 | BRF_GRA },           // 17
-	{ "U8.27512",		0x10000, 0x5b9e7caa, 7 | BRF_GRA },           // 18
+	{ "u5.27512",		0x10000, 0x6726d022, 7 | BRF_GRA },           // 15 K051316 #1 Tiles
+	{ "u6.27512",		0x10000, 0x756b8a12, 7 | BRF_GRA },           // 16
+	{ "u7.27512",		0x10000, 0x01c07d84, 7 | BRF_GRA },           // 17
+	{ "u8.27512",		0x10000, 0x5b9e7caa, 7 | BRF_GRA },           // 18
 
-	{ "u29.MB7122.bin",	0x00400, 0x8b3d60d2, 8 | BRF_GRA },           // 19 K051316 #0 Palette
-	{ "u30.MB7122.bin",	0x00400, 0x0aeb1a88, 8 | BRF_GRA },           // 20
-	{ "u31.MB7122.bin",	0x00400, 0x75cf5f3d, 8 | BRF_GRA },           // 21
-	{ "u34.MB7122.bin",	0x00400, 0xe0e2d93b, 8 | BRF_GRA },           // 22 K051316 #1 Palette
-	{ "u33.MB7122.bin",	0x00400, 0x4df75f4f, 8 | BRF_GRA },           // 23
-	{ "u32.MB7122.bin",	0x00400, 0xe2e4b443, 8 | BRF_GRA },           // 24
-	{ "u37.MB7122.bin",	0x00400, 0x55c17465, 8 | BRF_GRA },           // 25 Text Palette
-	{ "u36.MB7122.bin",	0x00400, 0x0c1ecdb5, 8 | BRF_GRA },           // 26
-	{ "u35.MB7122.bin",	0x00400, 0xe890259d, 8 | BRF_GRA },           // 27
-	{ "u83.MB7114.bin",	0x00100, 0xd216110d, 8 | BRF_GRA },           // 28 Sprite Palette
-	{ "u82.MB7114.bin",	0x00100, 0x52637774, 8 | BRF_GRA },           // 29
-	{ "u81.MB7114.bin",	0x00100, 0xc59b0857, 8 | BRF_GRA },           // 30
+	{ "u29.mb7122.bin",	0x00400, 0x8b3d60d2, 8 | BRF_GRA },           // 19 K051316 #0 Palette
+	{ "u30.mb7122.bin",	0x00400, 0x0aeb1a88, 8 | BRF_GRA },           // 20
+	{ "u31.mb7122.bin",	0x00400, 0x75cf5f3d, 8 | BRF_GRA },           // 21
+	{ "u34.mb7122.bin",	0x00400, 0xe0e2d93b, 8 | BRF_GRA },           // 22 K051316 #1 Palette
+	{ "u33.mb7122.bin",	0x00400, 0x4df75f4f, 8 | BRF_GRA },           // 23
+	{ "u32.mb7122.bin",	0x00400, 0xe2e4b443, 8 | BRF_GRA },           // 24
+	{ "u37.mb7122.bin",	0x00400, 0x55c17465, 8 | BRF_GRA },           // 25 Text Palette
+	{ "u36.mb7122.bin",	0x00400, 0x0c1ecdb5, 8 | BRF_GRA },           // 26
+	{ "u35.mb7122.bin",	0x00400, 0xe890259d, 8 | BRF_GRA },           // 27
+	{ "u83.mb7114.bin",	0x00100, 0xd216110d, 8 | BRF_GRA },           // 28 Sprite Palette
+	{ "u82.mb7114.bin",	0x00100, 0x52637774, 8 | BRF_GRA },           // 29
+	{ "u81.mb7114.bin",	0x00100, 0xc59b0857, 8 | BRF_GRA },           // 30
 };
 
 STD_ROM_PICK(divebomb)

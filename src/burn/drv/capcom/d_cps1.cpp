@@ -11765,24 +11765,24 @@ STD_ROM_PICK(Sf2ceuab3)
 STD_ROM_FN(Sf2ceuab3)
 
 static struct BurnRomInfo Sf2ceuab4RomDesc[] = {
-	{ "6st-u196.u196",  0x0100000, 0x596609d4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "6st-u10.u10",    0x0080000, 0xed4186bd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ms6.u196",       0x0100000, 0x596609d4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ms6.u10",        0x0080000, 0xed4186bd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "6st-u70.u70",  	0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
-	{ "6st-u68.u68",  	0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
-	{ "6st-u69.u69",  	0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
-	{ "6st-u64.u64",  	0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
-	{ "6st-u19.u19",  	0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
-	{ "6st-u18.u18",  	0x0100000, 0x2ddfe46e, BRF_GRA | CPS1_TILES },
+	{ "ms6.u70",     	0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
+	{ "ms6.u68",  	    0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
+	{ "ms6.u69",  	    0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
+	{ "ms6.u64",       	0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
+	{ "ms6.u19",     	0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
+	{ "ms6.u18",  	    0x0100000, 0x2ddfe46e, BRF_GRA | CPS1_TILES },
 
-	{ "u191",           0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "ms6.u191",       0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "u210",           0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "ms6.u210",       0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
-	{ "6st-u31.u31",    0x0040000, 0x35486f2d, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 }, 
-	{ "6st-u29.u29",    0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 },
+	{ "ms6.u31",        0x0040000, 0x35486f2d, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 }, 
+	{ "ms6.u29",        0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 },
 	
-	{ "u133",           0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
+	{ "ms6.u133",       0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
 };
 
 STD_ROM_PICK(Sf2ceuab4)

@@ -2220,28 +2220,36 @@ STD_ROM_PICK(gtstarb2)
 STD_ROM_FN(gtstarb2)
 
 static struct BurnRomInfo gtstarb1RomDesc[] = {
-	{ "gs_rb_1.bin",  0x004000, 0x9afad7e0, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "gs_rb_2.bin",  0x004000, 0x5feb0a60, BRF_ESS | BRF_PRG }, //  1
-	{ "gs_rb_3.bin",  0x008000, 0xe3cfb1ba, BRF_ESS | BRF_PRG }, //  2
+	{ "getstar_14_b.8p",  0x004000, 0x9afad7e0, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "getstar_13_b.8n",  0x004000, 0x5feb0a60, BRF_ESS | BRF_PRG }, //  1
+	{ "getstar_12_b.8k",  0x008000, 0xe3cfb1ba, BRF_ESS | BRF_PRG }, //  2
 
-	{ "a68-13",       0x008000, 0x643fb282, BRF_GRA },			 //  3 Sprite data
-	{ "a68-12",       0x008000, 0x11f74e32, BRF_GRA },			 //  4
-	{ "a68-11",       0x008000, 0xf24158cf, BRF_GRA },			 //  5
-	{ "a68-10",       0x008000, 0x83161ed0, BRF_GRA },			 //  6
+	{ "getstar_4_a.8j",   0x008000, 0x643fb282, BRF_GRA },			 //  3 Sprite data
+	{ "getstar_2_a.7j",   0x008000, 0x11f74e32, BRF_GRA },			 //  4
+	{ "getstar_3_a.8h",   0x008000, 0xf24158cf, BRF_GRA },			 //  5
+	{ "getstar_1_a.7h",   0x008000, 0x83161ed0, BRF_GRA },			 //  6
 
-	{ "a68_05.bin",   0x002000, 0xe3d409e7, BRF_GRA },			 //  7 Text layer
-	{ "a68_04.bin",   0x002000, 0x6e5ac9d4, BRF_GRA },			 //  8
+	{ "getstar_7_b.6f",   0x002000, 0xe3d409e7, BRF_GRA },			 //  7 Text layer
+	{ "getstar_8_b.6g",   0x002000, 0x6e5ac9d4, BRF_GRA },			 //  8
 
-	{ "a68_09",       0x008000, 0xa293cc2e, BRF_GRA },			 //  9 Background layer
-	{ "a68_08",       0x008000, 0x37662375, BRF_GRA },			 // 10
-	{ "a68_07",       0x008000, 0xcf1a964c, BRF_GRA },			 // 11
-	{ "a68_06",       0x008000, 0x05f9eb9a, BRF_GRA },			 // 12
+	{ "getstar_6_b.4m",   0x008000, 0xa293cc2e, BRF_GRA },			 //  9 Background layer
+	{ "getstar_9_b.6m",   0x008000, 0x37662375, BRF_GRA },			 // 10
+	{ "getstar_10_b.6n",  0x008000, 0xcf1a964c, BRF_GRA },			 // 11
+	{ "getstar_11_b.6p",  0x008000, 0x05f9eb9a, BRF_GRA },			 // 12
 
-	{ "rom21",        0x000100, 0xd6360b4d, BRF_GRA },			 // 13
-	{ "rom20",        0x000100, 0x4ca01887, BRF_GRA },			 // 14
-	{ "rom19",        0x000100, 0x513224f0, BRF_GRA },			 // 15
+	{ "getstar_p7_a.12q", 0x000100, 0xd6360b4d, BRF_GRA },			 // 13
+	{ "getstar_p5_a.12m", 0x000100, 0x4ca01887, BRF_GRA },			 // 14
+	{ "getstar_p6_a.12n", 0x000100, 0x35eefbbb, BRF_GRA },			 // 15
 
-	{ "a68-03",       0x002000, 0x18daa44c, BRF_ESS | BRF_PRG }, // 16
+	{ "getstar_5_a.12e",  0x002000, 0x18daa44c, BRF_ESS | BRF_PRG }, // 16
+	
+	{ "getstar_p1_a.1c",  0x000100, 0xd492e6c2, BRF_OPT },
+	{ "getstar_p2_a.1e",  0x000100, 0x59490887, BRF_OPT },
+	{ "getstar_p3_a.2b",  0x000020, 0xaa0ca5a5, BRF_OPT },
+	{ "getstar_p8_b.2c",  0x000100, 0x4dc04453, BRF_OPT },
+	{ "getstar_p9_b.8b",  0x000100, 0x48ac3db4, BRF_OPT },
+	
+	{ "getstar_p4_a.2e",  0x000104, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 

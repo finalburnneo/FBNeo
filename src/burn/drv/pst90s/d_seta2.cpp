@@ -1019,23 +1019,23 @@ STD_ROM_PICK(penbros)
 STD_ROM_FN(penbros)
 
 static struct BurnRomInfo gundamexRomDesc[] = {
-	{ "ka002002.u2",	0x080000, 0xe850f6d8, BRF_ESS | BRF_PRG }, //  0 68000 code
-	{ "ka002004.u3",	0x080000, 0xc0fb1208, BRF_ESS | BRF_PRG }, //  1
-	{ "ka002001.u4",	0x080000, 0x553ebe6b, BRF_ESS | BRF_PRG }, //  2
-	{ "ka002003.u5",	0x080000, 0x946185aa, BRF_ESS | BRF_PRG }, //  3
-	{ "ka001005.u77",	0x080000, 0xf01d3d00, BRF_ESS | BRF_PRG }, //  4
+	{ "ka_002_002.u2",	0x080000, 0xe850f6d8, BRF_ESS | BRF_PRG }, //  0 68000 code
+	{ "ka_002_004.u3",	0x080000, 0xc0fb1208, BRF_ESS | BRF_PRG }, //  1
+	{ "ka_002_001.u4",	0x080000, 0x553ebe6b, BRF_ESS | BRF_PRG }, //  2
+	{ "ka_002_003.u5",	0x080000, 0x946185aa, BRF_ESS | BRF_PRG }, //  3
+	{ "ka-001-005.u77",	0x080000, 0xf01d3d00, BRF_ESS | BRF_PRG }, //  4
 
-	{ "ka001009.u16",	0x200000, 0x997d8d93, BRF_GRA }, //  5 GFX
-	{ "ka001010.u18",	0x200000, 0x811b67ca, BRF_GRA }, //  6
-	{ "ka001011.u20",	0x200000, 0x08a72700, BRF_GRA }, //  7
-	{ "ka001012.u15",	0x200000, 0xb789e4a8, BRF_GRA }, //  8
-	{ "ka001013.u17",	0x200000, 0xd8a0201f, BRF_GRA }, //  9
-	{ "ka001014.u19",	0x200000, 0x7635e026, BRF_GRA }, // 10
-	{ "ka001006.u21",	0x200000, 0x6aac2f2f, BRF_GRA }, // 11
-	{ "ka001007.u22",	0x200000, 0x588f9d63, BRF_GRA }, // 12
-	{ "ka001008.u23",	0x200000, 0xdb55a60a, BRF_GRA }, // 13
+	{ "ka-001-009.u16",	0x200000, 0x997d8d93, BRF_GRA }, //  5 GFX
+	{ "ka-001-010.u18",	0x200000, 0x811b67ca, BRF_GRA }, //  6
+	{ "ka-001-011.u20",	0x200000, 0x08a72700, BRF_GRA }, //  7
+	{ "ka-001-012.u15",	0x200000, 0xb789e4a8, BRF_GRA }, //  8
+	{ "ka-001-013.u17",	0x200000, 0xd8a0201f, BRF_GRA }, //  9
+	{ "ka-001-014.u19",	0x200000, 0x7635e026, BRF_GRA }, // 10
+	{ "ka-001-006.u21",	0x200000, 0x6aac2f2f, BRF_GRA }, // 11
+	{ "ka-001-007.u22",	0x200000, 0x588f9d63, BRF_GRA }, // 12
+	{ "ka-001-008.u23",	0x200000, 0xdb55a60a, BRF_GRA }, // 13
 
-	{ "ka001015.u28",	0x200000, 0xada2843b, BRF_SND }, // 14 PCM
+	{ "ka-001-015.u28",	0x200000, 0xada2843b, BRF_SND }, // 14 PCM
 	
 	{ "eeprom.bin",         0x000080, 0x80f8e248, BRF_OPT },
 };

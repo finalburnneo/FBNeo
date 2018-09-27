@@ -2334,8 +2334,8 @@ struct BurnDriver BurnDrvPanicstr = {
 // Gals Panic 4 (Japan)
 
 static struct BurnRomInfo galpani4RomDesc[] = {
-	{ "gp4j1.u10",		0x080000, 0x919a3893, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
-	{ "gp4j1.u8",		0x080000, 0x94cb1fb7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gp4-000-e0.u10",	0x080000, 0x7464cc28, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gp4-001-e0.u8",	0x080000, 0x8d162069, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "gp4-100-00.u24",	0x200000, 0x1df61f01, 2 | BRF_GRA },           //  2 Sprites
 	{ "gp4-101-00.u20",	0x100000, 0x8e2c9349, 2 | BRF_GRA },           //  3
@@ -2344,6 +2344,10 @@ static struct BurnRomInfo galpani4RomDesc[] = {
 	{ "gp4-201-00.u18",	0x200000, 0x10c4b183, 3 | BRF_GRA },           //  5
 
 	{ "gp4-300-00.u4",	0x200000, 0x8374663a, 5 | BRF_SND },           //  6 YMZ280b Samples
+	
+	{ "gp4-301-00.u7",	0x200000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "skns-r11.u11",	0x000117, 0xa9f05af4, 0 | BRF_OPT },
+	{ "skns-r09.u9",	0x000117, 0xb02058d9, 0 | BRF_OPT },
 };
 
 STDROMPICKEXT(galpani4, galpani4, skns)

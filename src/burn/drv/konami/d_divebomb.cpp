@@ -587,7 +587,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	BurnTransferClear(); // BLACK?
+	BurnTransferClear(0x800); // BLACK?
 
 	if (roz_enable[1] && (nBurnLayer & 1)) K051316_zoom_draw(1, K051316_16BIT);
 	if (roz_enable[0] && (nBurnLayer & 2)) K051316_zoom_draw(0, K051316_16BIT);

@@ -88,7 +88,7 @@ ifdef	INCLUDE_CPLUSPLUS11_FILES
 	drvsrc += d_kinst.o d_wunit.o
 endif
 
-depobj	= 	burn.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o load.o \
+depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o load.o \
 			tilemap_generic.o tiles_generic.o timer.o vector.o \
 			\
 			6821pia.o 8255ppi.o 8257dma.o c169.o avgdvg.o bsmt2000.o decobsmt.o earom.o eeprom.o gaelco_crypt.o joyprocess.o nb1414m4.o nb1414m4_8bit.o nmk004.o nmk112.o kaneko_tmap.o mathbox.o mb87078.o \

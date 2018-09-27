@@ -38,7 +38,7 @@ static UINT32 *DrvPalette;
 static UINT32 *DrvPalette32;
 static UINT8 DrvRecalc;
 
-static UINT8 palette_intensity;
+static UINT16 palette_intensity;
 static UINT8 bg_status;
 static UINT8 bg1_status;
 static UINT8 flipscreen;
@@ -1496,6 +1496,10 @@ static INT32 DrvFrame()
 		if (i == irq2_line) {
 			ZetSetVector(0xd7);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+
+			if (pBurnDraw) {
+				BurnDrvRedraw();
+			}
 		}
 		ZetClose();
 
@@ -1512,10 +1516,6 @@ static INT32 DrvFrame()
 	}
 
 	ZetClose();
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
-	}
 
 	return 0;
 }
@@ -1602,10 +1602,10 @@ struct BurnDriver BurnDrvArgus = {
 	"argus", NULL, NULL, NULL, "1986",
 	"Argus\0", NULL, "NMK (Jaleco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, argusRomInfo, argusRomName, NULL, NULL, ArgusInputInfo, ArgusDIPInfo,
 	ArgusInit, DrvExit, DrvFrame, ArgusDraw, DrvScan, &DrvRecalc, 0x380,
-	256, 224, 4, 3
+	224, 256, 3, 4
 };
 
 
@@ -1639,10 +1639,10 @@ struct BurnDriver BurnDrvValtric = {
 	"valtric", NULL, NULL, NULL, "1986",
 	"Valtric\0", NULL, "NMK (Jaleco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, valtricRomInfo, valtricRomName, NULL, NULL, ValtricInputInfo, ValtricDIPInfo,
 	ValtricInit, DrvExit, DrvFrame, ValtricDraw, DrvScan, &DrvRecalc, 0x300,
-	256, 224, 4, 3
+	224, 256, 3, 4
 };
 
 

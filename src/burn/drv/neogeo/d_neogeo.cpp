@@ -4140,13 +4140,20 @@ static struct BurnRomInfo ssideki2RomDesc[] = {
 STDROMPICKEXT(ssideki2, ssideki2, neogeo)
 STD_ROM_FN(ssideki2)
 
+static INT32 ssideki2Init()
+{
+	ssideki2mode = 1; // enable raster irq kludge
+
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvSsideki2 = {
 	"ssideki2", NULL, "neogeo", NULL, "1994",
 	"Super Sidekicks 2 - The World Championship / Tokuten Ou 2 - real fight football (NGM-061)(NGH-061)\0", NULL, "SNK", "Neo Geo MVS",
 	L"Super Sidekicks 2 - the world championship\0\u5F97\u70B9\u738B\uFF12 - \u30EA\u30A2\u30EB\u30D5\u30A1\u30A4\u30C8\u30D5\u30C3\u30C8\u30DC\u30FC\u30EB (NGM-061)(NGH-061)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSFOOTBALL, 0,
 	NULL, ssideki2RomInfo, ssideki2RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ssideki2Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };
 

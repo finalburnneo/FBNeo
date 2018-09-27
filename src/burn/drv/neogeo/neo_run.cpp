@@ -225,6 +225,7 @@ static UINT32 nSoundStatus;
 static INT32 nSoundPrevReply;
 #endif
 
+INT32 ssideki2mode = 0;
 INT32 s1945pmode = 0;
 INT32 fatfury2mode = 0; // fatfury2 protection active (fatfury2, ssideki)
 INT32 vlinermode = 0;
@@ -2228,11 +2229,14 @@ void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 
 				// ssideki2 has some problems with this
 				nIRQCycles = SekCurrentScanline() * nSekCyclesScanline + NeoConvertIRQPosition(nIRQOffset + 8);
-//				bprintf(PRINT_NORMAL, _T("   %i - %i\n"), SekCurrentScanline(), SekTotalCycles() % SekCyclesScanline());
+
+				if (ssideki2mode) // kludge for ssideki2
+					nIRQCycles = SekTotalCycles() + NeoConvertIRQPosition(nIRQOffset);
+//				bprintf(PRINT_NORMAL, _T("   %i - %i\n"), SekCurrentScanline(), SekTotalCycles() % nSekCyclesScanline);
 #endif
 
 #if 0 || defined LOG_IRQ
-				bprintf(PRINT_NORMAL, _T("    IRQ Line -> %3i (at line %3i, relative).\n"), nIRQCycles / SekCyclesScanline(), SekCurrentScanline());
+				bprintf(PRINT_NORMAL, _T("    IRQ Line -> %3i (at line %3i, relative).\n"), nIRQCycles / nSekCyclesScanline, SekCurrentScanline());
 #endif
 
 				if (nIRQCycles < 0) {
@@ -4287,6 +4291,7 @@ INT32 NeoExit()
 	// release the NeoGeo CD information object if needed
 	NeoCDInfo_Exit();
 
+	ssideki2mode = 0;
 	s1945pmode = 0;
 	fatfury2mode = 0;
 	vlinermode = 0;
@@ -4640,14 +4645,14 @@ INT32 NeoFrame()
 			SekSetIRQLine(nScanlineIRQ, CPU_IRQSTATUS_ACK);
 
 #if 0 || defined LOG_IRQ
-			bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * SekCyclesScanline());
+			bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * nSekCyclesScanline);
 #endif
 
 			if (nIRQControl & 0x80) {
 				nIRQCycles += NeoConvertIRQPosition(nIRQOffset + 1);
 
 #if 0 || defined LOG_IRQ
-				bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, autoload).\n"), nIRQCycles / SekCyclesScanline(), SekCurrentScanline());
+				bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, autoload).\n"), nIRQCycles / nSekCyclesScanline, SekCurrentScanline());
 #endif
 
 			}
@@ -4676,13 +4681,13 @@ INT32 NeoFrame()
 				nIRQAcknowledge &= ~2;
 				SekSetIRQLine(nScanlineIRQ, CPU_IRQSTATUS_ACK);
 #if 0 || defined LOG_IRQ
-				bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * SekCyclesScanline());
+				bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * nSekCyclesScanline);
 #endif
 
 				if (nIRQControl & 0x80) {
 					nIRQCycles += NeoConvertIRQPosition(nIRQOffset + 1);
 #if 0 || defined LOG_IRQ
-					bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, autoload).\n"), nIRQCycles / SekCyclesScanline(), SekCurrentScanline());
+					bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, autoload).\n"), nIRQCycles / nSekCyclesScanline, SekCurrentScanline());
 #endif
 
 				}
@@ -4735,14 +4740,14 @@ INT32 NeoFrame()
 				SekSetIRQLine(nScanlineIRQ, CPU_IRQSTATUS_ACK);
 
 #if 0 || defined LOG_IRQ
-				bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * SekCyclesScanline());
+				bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * nSekCyclesScanline);
 #endif
 
 				if (nIRQControl & 0x80) {
 					nIRQCycles += NeoConvertIRQPosition(nIRQOffset + 1);
 
 #if 0 || defined LOG_IRQ
-					bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, autoload).\n"), nIRQCycles / SekCyclesScanline(), SekCurrentScanline());
+					bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, autoload).\n"), nIRQCycles / nSekCyclesScanline, SekCurrentScanline());
 #endif
 
 				}
@@ -4815,7 +4820,7 @@ INT32 NeoFrame()
 		}
 
 #if 0 || defined LOG_IRQ
-		bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, VBlank).\n"), nIRQCycles / SekCyclesScanline(), SekCurrentScanline());
+		bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, VBlank).\n"), nIRQCycles / nSekCyclesScanline, SekCurrentScanline());
 #endif
 
 	}
@@ -4828,14 +4833,14 @@ INT32 NeoFrame()
 			SekSetIRQLine(nScanlineIRQ, CPU_IRQSTATUS_ACK);
 
 #if 0 || defined LOG_IRQ
-			bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * SekCyclesScanline());
+			bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * nSekCyclesScanline);
 #endif
 
 			if (nIRQControl & 0x80) {
 				nIRQCycles += NeoConvertIRQPosition(nIRQOffset + 1);
 
 #if 0 || defined LOG_IRQ
-				bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, autoload).\n"), nIRQCycles / SekCyclesScanline(), SekCurrentScanline());
+				bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, autoload).\n"), nIRQCycles / nSekCyclesScanline, SekCurrentScanline());
 #endif
 
 			}
@@ -4855,12 +4860,12 @@ INT32 NeoFrame()
 
 #if 0 || defined LOG_IRQ
 		} else {
-			bprintf(PRINT_NORMAL, _T("  - IRQ Line past screen end (IRQControl: %02X, line -> %3i).\n"), nIRQControl, nIRQCycles / SekCyclesScanline());
+			bprintf(PRINT_NORMAL, _T("  - IRQ Line past screen end (IRQControl: %02X, line -> %3i).\n"), nIRQControl, nIRQCycles / nSekCyclesScanline);
 #endif
 
 		}
 	}
-//	bprintf(PRINT_NORMAL, " -- IRQControl: %02X, nIRQCycles / SekCyclesScanline(): %3i.\n", nIRQControl, nIRQCycles / SekCyclesScanline());
+//	bprintf(PRINT_NORMAL, " -- IRQControl: %02X, nIRQCycles / nSekCyclesScanline: %3i.\n", nIRQControl, nIRQCycles / nSekCyclesScanline);
 
 	// Update the sound until the end of the frame
 	

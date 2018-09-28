@@ -1916,17 +1916,15 @@ INT32 DrvCps3Draw()
 								{
 									INT32 realtileno = tileno+count;
 
-									if ( realtileno ) {
-										if (global_alpha || alpha) {
-											// fix jojo's title in it's intro ???
-											if ( global_alpha && (global_pal & 0x100))
-												actualpal &= 0x0ffff;
-												
-											cps3_drawgfxzoom_2(realtileno,actualpal,flipx,flipy,current_xpos,current_ypos,xinc,yinc, color_granularity);
-											
-										} else {
-											cps3_drawgfxzoom_2(realtileno,actualpal,flipx,flipy,current_xpos,current_ypos,xinc,yinc, 0);
-										}
+									if (global_alpha || alpha) {
+										// fix jojo's title in it's intro ???
+										if ( global_alpha && (global_pal & 0x100))
+											actualpal &= 0x0ffff;
+
+										cps3_drawgfxzoom_2(realtileno,actualpal,flipx,flipy,current_xpos,current_ypos,xinc,yinc, color_granularity);
+
+									} else {
+										cps3_drawgfxzoom_2(realtileno,actualpal,flipx,flipy,current_xpos,current_ypos,xinc,yinc, 0);
 									}
 									count++;
 								}

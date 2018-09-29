@@ -1,13 +1,6 @@
 // FB Alpha Return of the Jedi driver module
 // Based on MAME driver by Dan Boris and Aaron Giles
 
-/*
-	to do:
-		analog inputs
-		test
-		fix bugs
-*/
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "pokey.h"
@@ -52,29 +45,47 @@ static INT32 vblank;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
-//static UINT8 DrvDips[2];
+static UINT8 DrvDips[1];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo JediInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 3"	},
 
-	// analog input placeholder
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 5"	},
+	A("P1 Stick X",     BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Stick Y",     BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy2 + 2,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
+#undef A
 
 STDINPUTINFO(Jedi)
 
+static struct BurnDIPInfo JediDIPList[]=
+{
+	{0x09, 0xff, 0xff, 0x10, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x09, 0x01, 0x10, 0x10, "Off"					},
+	{0x09, 0x01, 0x10, 0x00, "On"					},
+};
+
+STDDIPINFO(Jedi)
+
 static void bankswitch(INT32 data)
 {
+	bankselect = data;
+
 	if (data & 1) M6502MapMemory(DrvM6502ROM0 + 0x10000, 0x4000, 0x7fff, MAP_ROM);
 	if (data & 2) M6502MapMemory(DrvM6502ROM0 + 0x14000, 0x4000, 0x7fff, MAP_ROM);
 	if (data & 4) M6502MapMemory(DrvM6502ROM0 + 0x18000, 0x4000, 0x7fff, MAP_ROM);
@@ -174,15 +185,20 @@ static void jedi_main_write(UINT16 address, UINT8 data)
 		return;
 	}
 
+	if ((address & 0xf800) == 0x6800) return; // NOP (service mode control test)
+
 	bprintf (0, _T("MW: %4.4x, %2.2x\n"), address, data);
 }
 
 static UINT8 jedi_main_read(UINT16 address)
 {
+	if ((address & 0xfc00) == 0x1400) address &= 0xfc00; // masking 0x3ff
+	if ((address & 0xfc00) == 0x1800) address &= 0xfc00; // same
+
 	switch (address)
 	{
 		case 0x0c00:
-			return DrvInputs[0];
+			return (DrvInputs[0] & ~0x10) | (DrvDips[0] & 0x10);
 
 		case 0x0c01:
 		{
@@ -197,10 +213,11 @@ static UINT8 jedi_main_read(UINT16 address)
 			return soundlatch[1];
 
 		case 0x1800:
-			// if (a2d_select == 0) return analog stick 0
-			// if (a2d_select == 2) return analog stick 1
-			return 0;
-
+			switch (a2d_select) {
+				case 0: return ProcessAnalog(DrvAnalogPort1, 0, 1, 0x00, 0xff);
+				case 2: return ProcessAnalog(DrvAnalogPort0, 0, 1, 0x00, 0xff);
+			    default: return 0;
+			}
 		case 0x3c00:
 		case 0x3c01:
 		case 0x3d00:
@@ -227,13 +244,15 @@ static void jedi_sound_write(UINT16 address, UINT8 data)
 	if ((address & 0xfe00) == 0x1200) {
 		address = (~address >> 8) & 1;
 
-		if ((address != speech_strobe) && address)
+		if ((address ^ speech_strobe) && address)
 		{
 			tms5220_write(speech_data);
 		}
 		speech_strobe = address;
 		return;
 	}
+
+	if ((address & 0xff00) == 0x1100) address = 0x1100; // speech_data mask
 
 	switch (address)
 	{
@@ -271,7 +290,7 @@ static UINT8 jedi_sound_read(UINT16 address)
 			return soundlatch[0];
 
 		case 0x1c00:
-			return tms5220_ready() ? 0x80 : 0;
+			return tms5220_ready() ? 0 : 0x80;
 
 		case 0x1c01:
 			return (audio_pending() << 6);
@@ -366,9 +385,6 @@ static INT32 DrvInit()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	memset (DrvNVRAM + 0x00, 0x100, 0x0f);
-	memset (DrvNVRAM + 0x50, 0x010, 0x00);
-
 	{
 		INT32 k = 0;
 		if (BurnLoadRom(DrvM6502ROM0 + 0x08000,  k++, 1)) return 1;
@@ -420,29 +436,13 @@ static INT32 DrvInit()
 
 	PokeyInit(12096000/8, 4, 0.15, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
+	PokeySetRoute(0, BURN_SND_ROUTE_BOTH);
+	PokeySetRoute(1, BURN_SND_ROUTE_BOTH);
+	PokeySetRoute(2, BURN_SND_ROUTE_LEFT);
+	PokeySetRoute(3, BURN_SND_ROUTE_RIGHT);
 
 	tms5220_init();
 	tms5220_set_frequency(672000);
-
-#if 0
-	MCFG_DEVICE_ADD("pokey1", POKEY, JEDI_POKEY_CLOCK)
-	MCFG_POKEY_OUTPUT_OPAMP(RES_K(1), 0.0, 5.0)
-	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "lspeaker", 0.30)
-	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "rspeaker", 0.30)
-
-	MCFG_DEVICE_ADD("pokey2", POKEY, JEDI_POKEY_CLOCK)
-	MCFG_POKEY_OUTPUT_OPAMP(RES_K(1), 0.0, 5.0)
-	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "lspeaker", 0.30)
-	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "rspeaker", 0.30)
-
-	MCFG_DEVICE_ADD("pokey3", POKEY, JEDI_POKEY_CLOCK)
-	MCFG_POKEY_OUTPUT_OPAMP(RES_K(1), 0.0, 5.0)
-	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "lspeaker", 0.30)
-
-	MCFG_DEVICE_ADD("pokey4", POKEY, JEDI_POKEY_CLOCK)
-	MCFG_POKEY_OUTPUT_OPAMP(RES_K(1), 0.0, 5.0)
-	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "rspeaker", 0.30)
-#endif
 
 	GenericTilesInit();
 
@@ -494,7 +494,7 @@ static void draw_background_and_text()
 	UINT8 *tx_ram = DrvFgRAM;
 	UINT8 *bg_ram = DrvBgRAM;
 
-	memset(background_line_buffer, 0, 0x200 * sizeof(int));
+	memset(background_line_buffer, 0, 0x200 * sizeof(INT32));
 
 	for (INT32 y = 0; y < nScreenHeight; y++)
 	{
@@ -647,14 +647,12 @@ static INT32 DrvDraw()
 		DrvRecalc = 1; // force update
 	}
 
-	if (video_off)
+	BurnTransferClear();
+
+	if (!video_off)
 	{
-		BurnTransferClear();
-	}
-	else
-	{
-		draw_background_and_text();
-		draw_sprites();
+		if (nBurnLayer & 1) draw_background_and_text();
+		if (nSpriteEnable & 1) draw_sprites();
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -683,14 +681,15 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 262; // for scanlines
 	INT32 nCyclesTotal[2] = { 2500000 / 60, 1512000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
-	vblank = 1;
+	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
 		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
-		if ((i & 0x1f) == 0x1f) M6502SetIRQLine(0, (i & 0x20) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
+		if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6502Close();
 
 		M6502Open(1);
@@ -699,19 +698,32 @@ static INT32 DrvFrame()
 		} else {
 			nCyclesDone[1] += nCyclesTotal[1] / nInterleave;
 		}
-		if ((i & 0x1f) == 0x1f) M6502SetIRQLine(0, (i & 0x20) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
+		if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6502Close();
 
-		if (i == 240) vblank = 0;
+		if (i == 240) {
+			vblank = 1;
+
+			if (pBurnDraw) {
+				BurnDrvRedraw();
+			}
+		}
+
+		if (pBurnSoundOut && (i%4)==3) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/4);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			pokey_update(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	if (pBurnSoundOut) {
-		pokey_update(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			pokey_update(pSoundBuf, nSegmentLength);
+		}
 		tms5220_update(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
 	}
 
 	return 0;
@@ -762,6 +774,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 
+	if (nAction & ACB_WRITE) {
+		M6502Open(0);
+		bankswitch(bankselect);
+		M6502Close();
+	}
+
 	return 0;
 }
 
@@ -799,8 +817,8 @@ struct BurnDriver BurnDrvJedi = {
 	"jedi", NULL, NULL, NULL, "1984",
 	"Return of the Jedi\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, jediRomInfo, jediRomName, NULL, NULL, JediInputInfo, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_RACING | GBF_ACTION, 0,
+	NULL, jediRomInfo, jediRomName, NULL, NULL, JediInputInfo, JediDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	296, 240, 4, 3
 };

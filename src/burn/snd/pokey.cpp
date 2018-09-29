@@ -162,7 +162,6 @@ struct POKEYregisters {
 	UINT32 volume[4];		/* channel volume - derived */
 	UINT8 output[4];		/* channel output signal (1 active, 0 inactive) */
 	UINT8 audible[4];		/* channel plays an audible tone/effect */
-	UINT32 samplerate_24_8; /* sample rate in 24.8 format */
 	UINT32 samplepos_fract; /* sample position fractional part */
 	UINT32 samplepos_whole; /* sample position whole part */
 	UINT32 polyadjust;		/* polynome adjustment */
@@ -191,6 +190,7 @@ struct POKEYregisters {
     INT64 rtimer;           /* timer for calculating the random offset */
 	INT32 pokey_end_vars;   // dummy entry for calculating states
 
+	// set by init
 	void (*interrupt_cb)(INT32 mask);
 	void *timer[3]; 		/* timers for channel 1,2 and 4 events */
 	void *ptimer[8];		/* pot timers */
@@ -198,6 +198,8 @@ struct POKEYregisters {
 	INT32 (*allpot_r)(INT32 offs);
 	INT32 (*serin_r)(INT32 offs);
 	void (*serout_w)(INT32 offs, INT32 data);
+	INT32  OutputDir;
+	UINT32 samplerate_24_8; /* sample rate in 24.8 format */
 };
 
 static struct POKEYinterface intf;
@@ -357,10 +359,10 @@ static UINT8 *rand17;
 		pokey[chip].samplepos_fract &= 0x000000ff;						\
 	}																	\
 	/* store sum of output signals into the buffer */					\
-	nLeftSample  = buffer[0] + (INT32)(sum * pokey_mastervol);          \
-	nRightSample = buffer[1] + (INT32)(sum * pokey_mastervol);          \
-	buffer[0] = BURN_SND_CLIP(nLeftSample);                             \
-	buffer[1] = BURN_SND_CLIP(nRightSample);                            \
+	nLeftSample  = ((pokey[chip].OutputDir & BURN_SND_ROUTE_LEFT ) == BURN_SND_ROUTE_LEFT ) ? BURN_SND_CLIP((INT32)(sum * pokey_mastervol)) : 0; \
+	nRightSample = ((pokey[chip].OutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) ? BURN_SND_CLIP((INT32)(sum * pokey_mastervol)) : 0; \
+	buffer[0] = BURN_SND_CLIP(buffer[0] + nLeftSample);                 \
+	buffer[1] = BURN_SND_CLIP(buffer[1] + nRightSample);                \
 	buffer++; buffer++;                                                 \
 	length--;
 
@@ -619,6 +621,13 @@ void PokeyAllPotCallback(INT32 chip, INT32 (*pot_cb)(INT32 offs))
 	p->allpot_r = pot_cb;
 }
 
+void PokeySetRoute(INT32 chip, INT32 nRouteDir)
+{
+	struct POKEYregisters *p = &pokey[chip];
+
+	p->OutputDir = nRouteDir;
+}
+
 void PokeyPotCallback(INT32 chip, INT32 potnum, INT32 (*pot_cb)(INT32 offs))
 {
 	struct POKEYregisters *p = &pokey[chip];
@@ -694,6 +703,9 @@ INT32 PokeyInit(INT32 clock, INT32 num, double vol, INT32 addtostream)
 		p->KBCODE = 0x09;		 /* Atari 800 'no key' */
 		p->SKCTL = SK_RESET;	 /* let the RNG run after reset */
 		p->rtimer = 0; //timer_set(TIME_NEVER, chip, NULL);
+
+		p->OutputDir = BURN_SND_ROUTE_BOTH; // default routing
+
 #if 0
 		memset(p->potgo_timer, 0, sizeof(p->potgo_timer));
 

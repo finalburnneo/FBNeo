@@ -91,6 +91,7 @@ void __fastcall cps3SndWriteWord(UINT32 addr, UINT16 data)
 void __fastcall cps3SndWriteLong(UINT32 addr, UINT32 data)
 {
 	//addr &= 0x000003ff;
+	if (addr == 0x240e0210) return; // NOP (jojoba*)
 	bprintf(PRINT_NORMAL, _T("SND Attempt to write long value %8x to location %8x\n"), data, addr);
 }
 

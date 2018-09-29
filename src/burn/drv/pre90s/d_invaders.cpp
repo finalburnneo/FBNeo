@@ -386,6 +386,10 @@ static INT32 DrvFrame()
 		if (i == 224) {
 			ZetSetVector(0xcf);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
 		}
 	}
 
@@ -395,10 +399,6 @@ static INT32 DrvFrame()
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-	
 	if (explosion_counter) {
 		explosion_counter--;
 	}

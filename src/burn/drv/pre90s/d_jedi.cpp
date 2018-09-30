@@ -436,10 +436,10 @@ static INT32 DrvInit()
 
 	PokeyInit(12096000/8, 4, 0.15, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
-	PokeySetRoute(0, BURN_SND_ROUTE_BOTH);
-	PokeySetRoute(1, BURN_SND_ROUTE_BOTH);
-	PokeySetRoute(2, BURN_SND_ROUTE_LEFT);
-	PokeySetRoute(3, BURN_SND_ROUTE_RIGHT);
+	PokeySetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
+	PokeySetRoute(1, 0.15, BURN_SND_ROUTE_BOTH);
+	PokeySetRoute(2, 0.15, BURN_SND_ROUTE_LEFT);
+	PokeySetRoute(3, 0.15, BURN_SND_ROUTE_RIGHT);
 
 	tms5220_init();
 	tms5220_set_frequency(672000);

@@ -57,7 +57,6 @@
  * I use 15/11 = 1.3636, so this is a little lower.
  */
 #define POKEY_DEFAULT_GAIN (32767/11/4)
-static double pokey_mastervol = 1.0;
 static INT32 nLeftSample = 0, nRightSample = 0;
 
 #define VERBOSE 		0
@@ -198,7 +197,8 @@ struct POKEYregisters {
 	INT32 (*allpot_r)(INT32 offs);
 	INT32 (*serin_r)(INT32 offs);
 	void (*serout_w)(INT32 offs, INT32 data);
-	INT32  OutputDir;
+	INT32  OutputDir;       // routing of chip
+	double ChipVol;         // volume of chip
 	UINT32 samplerate_24_8; /* sample rate in 24.8 format */
 };
 
@@ -359,8 +359,8 @@ static UINT8 *rand17;
 		pokey[chip].samplepos_fract &= 0x000000ff;						\
 	}																	\
 	/* store sum of output signals into the buffer */					\
-	nLeftSample  = ((pokey[chip].OutputDir & BURN_SND_ROUTE_LEFT ) == BURN_SND_ROUTE_LEFT ) ? BURN_SND_CLIP((INT32)(sum * pokey_mastervol)) : 0; \
-	nRightSample = ((pokey[chip].OutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) ? BURN_SND_CLIP((INT32)(sum * pokey_mastervol)) : 0; \
+	nLeftSample  = ((pokey[chip].OutputDir & BURN_SND_ROUTE_LEFT ) == BURN_SND_ROUTE_LEFT ) ? BURN_SND_CLIP((INT32)(sum * pokey[chip].ChipVol)) : 0; \
+	nRightSample = ((pokey[chip].OutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) ? BURN_SND_CLIP((INT32)(sum * pokey[chip].ChipVol)) : 0; \
 	buffer[0] = BURN_SND_CLIP(buffer[0] + nLeftSample);                 \
 	buffer[1] = BURN_SND_CLIP(buffer[1] + nRightSample);                \
 	buffer++; buffer++;                                                 \
@@ -621,11 +621,12 @@ void PokeyAllPotCallback(INT32 chip, INT32 (*pot_cb)(INT32 offs))
 	p->allpot_r = pot_cb;
 }
 
-void PokeySetRoute(INT32 chip, INT32 nRouteDir)
+void PokeySetRoute(INT32 chip, double chipvol, INT32 nRouteDir)
 {
 	struct POKEYregisters *p = &pokey[chip];
 
 	p->OutputDir = nRouteDir;
+	p->ChipVol = chipvol;
 }
 
 void PokeyPotCallback(INT32 chip, INT32 potnum, INT32 (*pot_cb)(INT32 offs))
@@ -663,7 +664,7 @@ INT32 PokeyInit(INT32 clock, INT32 num, double vol, INT32 addtostream)
 	sample_rate = nBurnSoundRate;
 	intf.num = num;
 	//intf.mixing_level[0] = vol;
-	pokey_mastervol = vol;
+    //pokey_mastervol = vol;
 	intf.baseclock = (clock) ? clock : FREQ_17_EXACT;
 	intf.addtostream = addtostream;
 
@@ -705,6 +706,7 @@ INT32 PokeyInit(INT32 clock, INT32 num, double vol, INT32 addtostream)
 		p->rtimer = 0; //timer_set(TIME_NEVER, chip, NULL);
 
 		p->OutputDir = BURN_SND_ROUTE_BOTH; // default routing
+		p->ChipVol = vol;
 
 #if 0
 		memset(p->potgo_timer, 0, sizeof(p->potgo_timer));

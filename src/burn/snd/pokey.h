@@ -96,7 +96,7 @@ struct POKEYinterface {
 INT32 PokeyInit(INT32 clock, INT32 num, double vol, INT32 addtostream);
 void PokeyExit();
 void PokeyReset();
-void PokeySetRoute(INT32 chip, INT32 nRouteDir);
+void PokeySetRoute(INT32 chip, double chipvol, INT32 nRouteDir);
 
 void PokeySetTotalCyclesCB(INT32 (*pCPUCyclesCB)()); // see pre90s/d_tempest.cpp
 

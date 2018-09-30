@@ -755,11 +755,11 @@ static INT32 DrvFrame()
 
 		if (dacholer) {
 			// Convert to 4-way for Dacholer
-			ProcessJoystick(&DrvInputs[0], 0, 0,1,2,3, INPUT_4WAY | INPUT_MAKEACTIVELOW);
-			ProcessJoystick(&DrvInputs[1], 1, 0,1,2,3, INPUT_4WAY | INPUT_MAKEACTIVELOW);
+			ProcessJoystick(&DrvInputs[0], 0, 0,1,2,3, INPUT_4WAY | INPUT_MAKEACTIVELOW | INPUT_CLEAROPPOSITES);
+			ProcessJoystick(&DrvInputs[1], 1, 0,1,2,3, INPUT_4WAY | INPUT_MAKEACTIVELOW | INPUT_CLEAROPPOSITES);
 		} else {
-			ProcessJoystick(&DrvInputs[0], 0, 0,1,2,3, INPUT_MAKEACTIVELOW);
-			ProcessJoystick(&DrvInputs[1], 1, 0,1,2,3, INPUT_MAKEACTIVELOW);
+			ProcessJoystick(&DrvInputs[0], 0, 0,1,2,3, INPUT_MAKEACTIVELOW | INPUT_CLEAROPPOSITES);
+			ProcessJoystick(&DrvInputs[1], 1, 0,1,2,3, INPUT_MAKEACTIVELOW | INPUT_CLEAROPPOSITES);
 		}
 	}
 

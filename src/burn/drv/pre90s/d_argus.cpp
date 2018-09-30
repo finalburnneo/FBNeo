@@ -33,6 +33,7 @@ static UINT8 *DrvBgRAM0;
 static UINT8 *DrvBgRAM1;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvBlendTable;
+static UINT32 *DrvTransBuffer;
 
 static UINT32 *DrvPalette;
 static UINT32 *DrvPalette32;
@@ -817,6 +818,8 @@ static INT32 MemIndex()
 
 	DrvPalette32	= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
+	DrvTransBuffer  = (UINT32*)Next; Next += 512 * 512 * sizeof(UINT32);
+
 	RamEnd			= Next;
 
 	MemEnd			= Next;
@@ -1166,15 +1169,15 @@ static void draw_sprite_blend(INT32 bgmask, INT32 code, INT32 sx, INT32 sy, INT3
 
 				if (a & 8)
 				{
-					UINT32 d = blend_color(DrvPalette32[pTransDraw[dst]], DrvPalette32[c], a);
+					UINT32 d = blend_color(DrvTransBuffer[dst], DrvPalette32[c], a);
+					DrvTransBuffer[dst] = d;
 					PutPix(pBurnDraw + (dst * nBurnBpp), BurnHighCol((d/0x10000)&0xff, (d/0x100)&0xff, d&0xff, 0));
 				}
 				else
 				{
+					DrvTransBuffer[dst] = DrvPalette32[c];
 					PutPix(pBurnDraw + (dst * nBurnBpp), DrvPalette[c]);
 				}
-
-				pTransDraw[dst] = c;
 			}
 		}
 	}
@@ -1248,6 +1251,12 @@ static INT32 ArgusDraw()
 
 	BurnTransferCopy(DrvPalette);
 
+	// copy screen to 32bit alpha-trans buffer. yay! :)
+	for (INT32 sy = 0; sy < nScreenHeight; sy++)
+		for (INT32 sx = 0; sx < nScreenWidth; sx++) {
+			DrvTransBuffer[(sy * nScreenWidth) + sx] = DrvPalette32[pTransDraw[(sy * nScreenWidth) + sx]];
+		}
+
 	if (nSpriteEnable & 2) argus_draw_sprites(8, 8, 0x07);
 	if (nSpriteEnable & 1) argus_draw_sprites(8, 0, 0x07);
 
@@ -1263,28 +1272,17 @@ static void draw_mosaic()
 		if (mosaic_data & 0x80) auto_mosaic *= -1;
 	}
 
+	GenericTilemapSetScrollX(1, scrollx1);
+	GenericTilemapSetScrollY(1, scrolly1);
+
 	if (auto_mosaic == 0)
 	{
-		GenericTilemapSetScrollX(1, scrollx1);
-		GenericTilemapSetScrollY(1, scrolly1);
-
 		GenericTilemapDraw(1, pTransDraw, 0);
 	}
 	else
 	{
-		GenericTilemapSetScrollX(1, 0);
-		GenericTilemapSetScrollY(1, 0);
-
 		UINT16 *pTempDraw = BurnBitmapGetBitmap(1);
-		pPrioDraw = BurnBitmapGetPriomap(1);
-
-		GenericTilesSetClipRaw(0, 512, 0, 512);
-
 		GenericTilemapDraw(1, pTempDraw, 0);
-
-		GenericTilesClearClipRaw();
-
-		pPrioDraw = BurnBitmapGetPriomap(0);
 
 		{
 			INT32 step = auto_mosaic;
@@ -1293,18 +1291,21 @@ static void draw_mosaic()
 
 			for (INT32 y=0;y<nScreenWidth+step;y+=step)
 			{
-				for (INT32 x=0;x<nScreenHeight+step;x+=step)
+				for (INT32 x=0;x<nScreenHeight+32+step;x+=step)
 				{
-					INT32 c = pTempDraw[((((y) & 0x1ff) * 512) + ((x) & 0x1ff))];
+					INT32 c = 0;
+					if (y < nScreenHeight && x < nScreenWidth)
+						c = pTempDraw[(y * nScreenWidth) + x];
 
 					if (auto_mosaic<0)
-							c = pTempDraw[((((y+step-1) & 0x1ff) * 512) + (((x+step-1)) & 0x1ff))];
+						if (y+step-1 < nScreenHeight && x+step-1 < nScreenWidth)
+							c = pTempDraw[((y+step-1) * nScreenWidth) + (x+step-1)];
 
 					for (INT32 yy=0;yy<step;yy++)
 					{
 						for (INT32 xx=0;xx<step;xx++)
 						{
-							if ((xx+x) >= 0 && (xx+x) < nScreenWidth && (yy+y) >=0 && (yy+y) < nScreenHeight)
+							if ((xx+x) >= 0 && (xx+x) < nScreenWidth && (yy+y) >= 0 && (yy+y) < nScreenHeight)
 							{
 								pTransDraw[((y+yy) * nScreenWidth) + (x+xx)] = c;
 							}
@@ -1339,6 +1340,12 @@ static INT32 ValtricDraw()
 	}
 
 	BurnTransferCopy(DrvPalette);
+
+	// copy screen to 32bit alpha-trans buffer. yay! :)
+	for (INT32 sy = 0; sy < nScreenHeight; sy++)
+		for (INT32 sx = 0; sx < nScreenWidth; sx++) {
+			DrvTransBuffer[(sy * nScreenWidth) + sx] = DrvPalette32[pTransDraw[(sy * nScreenWidth) + sx]];
+		}
 
 	if (nSpriteEnable & 1) argus_draw_sprites(0,8,0xf);
 
@@ -1452,6 +1459,12 @@ static INT32 ButasanDraw()
 	}
 
 	BurnTransferCopy(DrvPalette);
+
+	// copy screen to 32bit alpha-trans buffer. yay! :)
+	for (INT32 sy = 0; sy < nScreenHeight; sy++)
+		for (INT32 sx = 0; sx < nScreenWidth; sx++) {
+			DrvTransBuffer[(sy * nScreenWidth) + sx] = DrvPalette32[pTransDraw[(sy * nScreenWidth) + sx]];
+		}
 
 	if (nSpriteEnable & 1) butasan_draw_sprites();
 

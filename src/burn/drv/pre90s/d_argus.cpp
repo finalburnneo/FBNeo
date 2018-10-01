@@ -1,10 +1,7 @@
 // FB Alpha NMK Argus driver module
 // Based on MAME driver by Yochizo
 
-// to do:
-//  fix butasan
-//	bug test
-//  sort subroutines in cleaner order
+// todo: figure out Argus' title logo alpha effect
 
 #include "tiles_generic.h"
 #include "burn_bitmap.h"
@@ -37,6 +34,8 @@ static UINT32 *DrvTransBuffer;
 static UINT32 *DrvPalette;
 static UINT32 *DrvPalette32;
 static UINT8 DrvRecalc;
+
+static INT32 nExtraCycles;
 
 static UINT16 palette_intensity;
 static UINT8 bg_status;
@@ -620,12 +619,13 @@ static void rambankswitch(INT32 data)
 {
 	rambank = data & 1;
 
-	if (rambank) {
-		ZetMapMemory(DrvTxtRAM,			0xd000, 0xdfff, MAP_WRITE);
-		ZetMapMemory(DrvTxtRAM,			0xd000, 0xd7ff, MAP_ROM);
-		ZetMapMemory(DrvBgRAM0 + 0x800, 0xd800, 0xdfff, MAP_ROM); // right??
+	if (rambank == 0) {
+		ZetMapMemory(DrvBgRAM0,			0xd000, 0xd7ff, MAP_RAM);
+		ZetMapMemory(DrvBgRAM0 + 0x800,	0xd800, 0xdfff, MAP_RAM);
 	} else {
-		ZetMapMemory(DrvBgRAM0,			0xd000, 0xdfff, MAP_RAM);
+		ZetMapMemory(DrvTxtRAM,			0xd000, 0xd7ff, MAP_RAM);
+		ZetMapMemory(DrvTxtRAM + 0x800,	0xd800, 0xdfff, MAP_WRITE);
+		ZetMapMemory(DrvBgRAM0 + 0x800, 0xd800, 0xdfff, MAP_ROM);
 	}
 }
 
@@ -641,8 +641,40 @@ static void __fastcall butasan_main_write(UINT16 address, UINT8 data)
 		case 0xc100:
 		return; // unknown
 
+		case 0xc200:
+			soundlatch = data;
+		return;
+
+		case 0xc201:
+			flipscreen = data & 0x80;
+		return;
+
+		case 0xc202:
+			bankswitch(data);
+		return;
+
 		case 0xc203:
 			rambankswitch(data);
+		return;
+
+		case 0xc300:
+		case 0xc301:
+			scrollx0 = (scrollx0 & (0xff00 >> ((address & 1) * 8))) | (data << ((address & 1) * 8));
+		return;
+
+		case 0xc302:
+		case 0xc303:
+			scrolly0 = (scrolly0 & (0xff00 >> ((address & 1) * 8))) | (data << ((address & 1) * 8));
+		return;
+
+		case 0xc308:
+		case 0xc309:
+			scrollx1 = (scrollx1 & (0xff00 >> ((address & 1) * 8))) | (data << ((address & 1) * 8));
+		return;
+
+		case 0xc30a:
+		case 0xc30b:
+			scrolly1 = (scrolly1 & (0xff00 >> ((address & 1) * 8))) | (data << ((address & 1) * 8));
 		return;
 
 		case 0xc304:
@@ -783,6 +815,8 @@ static INT32 DrvDoReset()
 	scrolly1 = 0;
 	mosaic_data = 0;
 	auto_mosaic = 0;
+
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -1131,9 +1165,9 @@ static void DrvPaletteRecalc()
 {
 	for (INT32 i = 0; i < 0x400; i++)
 	{
-		UINT8 r = DrvPalette32[i] / 0x10000;
-		UINT8 g = DrvPalette32[i] / 0x100;
-		UINT8 b = DrvPalette32[i];
+		UINT8 r = (DrvPalette32[i] / 0x10000) & 0xff;
+		UINT8 g = (DrvPalette32[i] / 0x100) & 0xff;
+		UINT8 b = DrvPalette32[i] & 0xff;
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
@@ -1213,7 +1247,6 @@ static void argus_draw_sprites(INT32 prio_mask, INT32 priority, INT32 color_mask
 			}
 
 			draw_sprite_blend(pri, code, sx, sy - 16, flipx, flipy, color, 4, 0xf, 0, DrvGfxROM0);
-		//	Draw16x16MaskTile(pSpriteDraw, code, sx, sy, flipx, flipy, color, 4, 0xf, 0, DrvGfxROM0);
 		}
 	}
 }
@@ -1378,7 +1411,6 @@ static void butasan_draw_sprites()
 		if ((offs >= 0x100 && offs <= 0x2ff) || (offs >= 0x400 && offs <= 0x57f))
 		{
 			draw_sprite_blend(0x200, code, sx, sy, flipx, flipy, color, 4, 7, 0, DrvGfxROM0);
-		//	Draw16x16MaskTile(pSpriteDraw, code, sx, sy, flipx, flipy, color, 4, 7, 0, DrvGfxROM0);
 		}
 		else if ((offs <= 0xff) || (offs >= 0x300 && offs <= 0x3ff))
 		{
@@ -1387,7 +1419,6 @@ static void butasan_draw_sprites()
 				INT32 td = (flipx) ? (1 - i) : i;
 
 				draw_sprite_blend(0x200, code + td, sx + i * 16, sy, flipx, flipy, color, 4, 7, 0, DrvGfxROM0);
-			//	Draw16x16MaskTile(pSpriteDraw, code + td, sx + i * 16, sy, flipx, flipy, color, 4, 7, 0, DrvGfxROM0);
 			}
 		}
 		else if (offs >= 0x580 && offs <= 0x61f)
@@ -1402,8 +1433,7 @@ static void butasan_draw_sprites()
 					else
 						td = (flipx) ? (i * 2) + 1 - j : i * 2 + j;
 
-					draw_sprite_blend(0x200, code + td, sx + j * 16, sy - i * 1, flipx, flipy, color, 4, 7, 0, DrvGfxROM0);
-				//	Draw16x16MaskTile(pSpriteDraw, code + td, sx + j * 16, sy - i * 16, flipx, flipy, color, 4, 7, 0, DrvGfxROM0);
+					draw_sprite_blend(0x200, code + td, sx + j * 16, sy - i * 16, flipx, flipy, color, 4, 7, 0, DrvGfxROM0);
 				}
 			}
 		}
@@ -1419,8 +1449,7 @@ static void butasan_draw_sprites()
 					else
 						td = (flipx) ? (i * 4) + 3 - j : i * 4 + j;
 
-					draw_sprite_blend(0x200, code + td, sx + j * 16, sy - i * 16, flipx, flipy, color, 4, 0x7, 0, DrvGfxROM0);
-				//	Draw16x16MaskTile(pSpriteDraw, code + td, sx + j * 16, sy - i * 16, flipx, flipy, color, 4, 0x7, 0, DrvGfxROM0);
+					draw_sprite_blend(0x200, code + td, sx + j * 16, sy - i * 16, flipx, flipy, color, 4, 7, 0, DrvGfxROM0);
 				}
 			}
 		}
@@ -1490,17 +1519,17 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256 / 8;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 5000000 / 54, 5000000 / 54 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
-	INT32 irq1_line = ((256 - nScreenHeight) / 2) / 8;
-	INT32 irq2_line = (256 - ((256 - nScreenHeight) /2)) / 8;
+	INT32 irq1_line = ((256 - nScreenHeight) / 2);
+	INT32 irq2_line = (256 - ((256 - nScreenHeight) / 2));
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if (i == irq1_line) {
 			ZetSetVector(0xcf);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -1528,6 +1557,8 @@ static INT32 DrvFrame()
 	}
 
 	ZetClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	return 0;
 }
@@ -1560,17 +1591,19 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(scrollx1);
 		SCAN_VAR(scrolly0);
 		SCAN_VAR(scrolly1);
-		SCAN_VAR(bankdata);
 		SCAN_VAR(mosaic_data);
 		SCAN_VAR(auto_mosaic);
+		SCAN_VAR(bankdata);
 		SCAN_VAR(rambank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE)
 	{
 		ZetOpen(0);
 		bankswitch(bankdata);
-		if (rambank >= 0) rambankswitch(rambank);
+		if (rambank >= 0) rambankswitch(rambank); // butasan
 		ZetClose();
 	}
 
@@ -1619,7 +1652,6 @@ struct BurnDriver BurnDrvArgus = {
 	ArgusInit, DrvExit, DrvFrame, ArgusDraw, DrvScan, &DrvRecalc, 0x380,
 	224, 256, 3, 4
 };
-
 
 
 // Valtric

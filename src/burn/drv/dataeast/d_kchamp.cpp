@@ -40,7 +40,7 @@ static UINT8 soundlatch;
 static UINT8 flipscreen;
 static UINT8 msm_play_lo_nibble;
 static UINT8 msm_data;
-static UINT8 msmcounter;
+static UINT8 msm_counter;
 
 static struct BurnInputInfo KchampInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -204,7 +204,9 @@ static void __fastcall kchamp_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x04:
-			DACWrite(0, data);
+			if (data < 0x40) return; // take a little edge off the distortion
+			if (data > 0xc0) return;
+			DACSignedWrite(0, data);
 		return;
 
 		case 0x05:
@@ -318,7 +320,7 @@ static void kchampvs_adpcm_interrupt()
 
 	msm_play_lo_nibble = !msm_play_lo_nibble;
 
-	if (!(msmcounter ^= 1) && sound_nmi_enable) {
+	if (!(msm_counter ^= 1) && sound_nmi_enable) {
 		ZetNmi();
 	}
 }
@@ -326,11 +328,6 @@ static void kchampvs_adpcm_interrupt()
 static INT32 SynchroniseStream(INT32 nSoundRate)
 {
 	return (INT64)ZetTotalCycles() * nSoundRate / 3000000;
-}
-
-static INT32 DrvDACSync()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3000000.0000 / (nBurnFPS / 100.0000))));
 }
 
 static INT32 DrvDoReset()
@@ -356,7 +353,7 @@ static INT32 DrvDoReset()
 	flipscreen = 0;
 	msm_play_lo_nibble = 1;
 	msm_data = 0;
-	msmcounter = 0;
+	msm_counter = 0;
 
 	return 0;
 }
@@ -492,7 +489,7 @@ static INT32 KchampInit()
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, DrvDACSync);
+	DACInit(0, 0, 1, ZetTotalCycles, 3579545);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	// not used in this hardware
@@ -592,7 +589,7 @@ static INT32 KchampvsInit()
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	// not used on this hardware
-	DACInit(0, 0, 1, DrvDACSync);
+	DACInit(0, 0, 1, ZetTotalCycles, 3000000);
 	DACSetRoute(0, 0.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -722,7 +719,7 @@ static INT32 KchampFrame()
 	}
 
 	INT32 nInterleave = 40;
-	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
+	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -733,8 +730,8 @@ static INT32 KchampFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-		if (sound_nmi_enable && (i == 20 || i == 39)) ZetNmi();
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		if (sound_nmi_enable && ((i%20) == 19)) ZetNmi();
 		ZetClose();
 	}
 
@@ -843,6 +840,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(msm_play_lo_nibble);
 		SCAN_VAR(msm_data);
+		SCAN_VAR(msm_counter);
 	}
 
 	return 0;

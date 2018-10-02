@@ -7,8 +7,6 @@
 #include "namcoio.h"
 #include "samples.h"
 
-// stars not hooked up to states
-
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -33,16 +31,16 @@ static UINT8 sub_irq_mask;
 static UINT8 sub2_irq_mask;
 static UINT8 flipscreen;
 
-static UINT8 custom_io[16];
-static UINT8 starfield_control[4];
+static UINT8 *custom_io;
+static UINT8 *starfield_control;
 
 struct star {
-	float x,y;
-	INT32 col,set;
+	float x, y;
+	INT32 col, set;
 };
 
 static INT32 total_stars;
-static struct star m_stars[250];
+static struct star *stars;
 
 static INT32 watchdog; // not hooked up
 
@@ -56,22 +54,22 @@ static UINT8 DrvReset;
 
 static struct BurnInputInfo GaplusInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 1"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 1"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 1"	},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,      "reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy4 + 3,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -96,11 +94,11 @@ static struct BurnDIPInfo GaplusDIPList[]=
 	{0x10, 0x01, 0x03, 0x03, "1 Coin  1 Credits"		},
 	{0x10, 0x01, 0x03, 0x02, "1 Coin  2 Credits"		},
 
-	{0   , 0xfe, 0   ,    0, "Demo Sounds"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
 	{0x10, 0x01, 0x08, 0x00, "Off"				},
 	{0x10, 0x01, 0x08, 0x08, "On"				},
 
-	{0   , 0xfe, 0   ,    2, "Coin A"			},
+	{0   , 0xfe, 0   ,    4, "Coin A"			},
 	{0x11, 0x01, 0x03, 0x00, "3 Coins 1 Credits"		},
 	{0x11, 0x01, 0x03, 0x01, "2 Coins 1 Credits"		},
 	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credits"		},
@@ -112,7 +110,7 @@ static struct BurnDIPInfo GaplusDIPList[]=
 	{0x11, 0x01, 0x0c, 0x04, "4"				},
 	{0x11, 0x01, 0x0c, 0x00, "5"				},
 
-	{0   , 0xfe, 0   ,    2, "Bonus Life"			},
+	{0   , 0xfe, 0   ,    8, "Bonus Life"			},
 	{0x12, 0x01, 0x07, 0x00, "30k 70k and every 70k"	},
 	{0x12, 0x01, 0x07, 0x01, "30k 100k and every 100k"	},
 	{0x12, 0x01, 0x07, 0x02, "30k 100k and every 200k"	},
@@ -122,11 +120,11 @@ static struct BurnDIPInfo GaplusDIPList[]=
 	{0x12, 0x01, 0x07, 0x05, "50k 150k and every 300k"	},
 	{0x12, 0x01, 0x07, 0x06, "50k 150k"			},
 
-	{0   , 0xfe, 0   ,    4, "Round Advance"		},
+	{0   , 0xfe, 0   ,    2, "Round Advance"		},
 	{0x12, 0x01, 0x08, 0x08, "Off"				},
 	{0x12, 0x01, 0x08, 0x00, "On"				},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"			},
+	{0   , 0xfe, 0   ,    8, "Difficulty"			},
 	{0x13, 0x01, 0x07, 0x07, "0 - Standard"			},
 	{0x13, 0x01, 0x07, 0x06, "1 - Easiest"			},
 	{0x13, 0x01, 0x07, 0x05, "2"				},
@@ -136,7 +134,7 @@ static struct BurnDIPInfo GaplusDIPList[]=
 	{0x13, 0x01, 0x07, 0x01, "6"				},
 	{0x13, 0x01, 0x07, 0x00, "7 - Hardest"			},
 
-	{0   , 0xfe, 0   ,    8, "Cabinet"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"			},
 	{0x14, 0x01, 0x04, 0x04, "Upright"			},
 	{0x14, 0x01, 0x04, 0x00, "Cocktail"			},
 };
@@ -310,13 +308,12 @@ static UINT8 nio0_i1(UINT8) { return DrvInputs[0]; }
 static UINT8 nio0_i2(UINT8) { return DrvInputs[1]; }
 static UINT8 nio0_i3(UINT8) { return DrvInputs[2]; }
 static UINT8 nio1_i0(UINT8) { return DrvDips[1]; }
-static UINT8 nio1_i1(UINT8) { return DrvDips[0]; }
+static UINT8 nio1_i1(UINT8) { return DrvDips[2]; }
 static UINT8 nio1_i2(UINT8) { return DrvDips[3]; }
-static UINT8 nio1_i3(UINT8) { return DrvDips[2]; }
+static UINT8 nio1_i3(UINT8) { return DrvDips[0]; }
 
 static void starfield_init()
 {
-	struct star *stars = m_stars;
 	INT32 generator = 0;
 	INT32 set = 0;
 
@@ -344,7 +341,8 @@ static void starfield_init()
 
 					if (set == 3) set = 0;
 
-					total_stars++;
+					if (total_stars+1 < 260)
+						total_stars++;
 				}
 			}
 		}
@@ -375,8 +373,6 @@ static INT32 DrvDoReset()
 	main_irq_mask = 0;
 	sub_irq_mask = 0;
 	sub2_irq_mask = 0;
-	memset (custom_io, 0, 16);
-	memset (starfield_control, 0, 4);
 
 	sub_cpu_in_reset = 1; // by default
 	sub2_cpu_in_reset = 0;
@@ -392,16 +388,16 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvM6809ROM0		= Next; Next += 0x006000;
-	DrvM6809ROM1		= Next; Next += 0x006000;
-	DrvM6809ROM2		= Next; Next += 0x002000;
+	DrvM6809ROM0    = Next; Next += 0x006000;
+	DrvM6809ROM1    = Next; Next += 0x006000;
+	DrvM6809ROM2    = Next; Next += 0x002000;
 
 	DrvGfxROM0		= Next; Next += 0x010000;
 	DrvGfxROM1		= Next; Next += 0x020000;
 
 	DrvColPROM		= Next; Next += 0x000800;
 
-	NamcoSoundProm		= Next;
+	NamcoSoundProm  = Next;
 	DrvSndPROM		= Next; Next += 0x000100;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0300 * sizeof(UINT32);
@@ -410,6 +406,10 @@ static INT32 MemIndex()
 
 	DrvVidRAM		= Next; Next += 0x000800;
 	DrvSprRAM		= Next; Next += 0x001800;
+
+	custom_io       = Next; Next += 0x000010;
+	starfield_control = Next; Next += 0x000010;
+	stars           = (star*)Next; Next += 260 * sizeof(star);
 
 	RamEnd			= Next;
 
@@ -633,8 +633,6 @@ static void draw_sprites()
 
 static void starfield_render()
 {
-	struct star *stars = m_stars;
-
 	if ((starfield_control[0] & 1) == 0)
 		return;
 
@@ -643,7 +641,7 @@ static void starfield_render()
 		INT32 x = (INT32)stars[i].x;
 		INT32 y = (INT32)stars[i].y;
 
-		if (x >=0 && x < nScreenWidth && y >= 0 && y < nScreenHeight)
+		if (x >= 0 && x < nScreenWidth && y >= 0 && y < nScreenHeight)
 		{
 			pTransDraw[(y * nScreenWidth) + x] = stars[i].col;
 		}
@@ -675,8 +673,6 @@ static INT32 DrvDraw()
 
 static void vblank_update()
 {
-	struct star *stars = m_stars;
-
 	if ((starfield_control[0] & 1) == 0)
 		return;
 
@@ -726,40 +722,37 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = 0;
-
 		M6809Open(0);
-		nCyclesDone[0] += M6809Run((nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i));
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if (i == (nInterleave - 1))
 		{
 			if (main_irq_mask)
 				M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-	
+
 			vblank_update();
-	
+
 			if (!namcoio_read_reset_line(0))
 				namcoio_run(0);
-	
+
 			if (!namcoio_read_reset_line(1))
 				namcoio_run(1);
 		}
-		nSegment = M6809TotalCycles();
 		M6809Close();
 
 		if (sub_cpu_in_reset) {
-			nCyclesDone[1] += nSegment - nCyclesDone[1];
+			nCyclesDone[1] += ((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1];
 		} else {
 			M6809Open(1);
-			nCyclesDone[1] += M6809Run(nSegment - nCyclesDone[1]);
+			nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 			if (i == nInterleave-1 && sub_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 		}
 
 		if (sub2_cpu_in_reset) {
-			nCyclesDone[2] += nSegment - nCyclesDone[2];
+			nCyclesDone[2] += ((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2];
 		} else {
 			M6809Open(2);
-			nCyclesDone[2] += M6809Run(nSegment - nCyclesDone[2]);
+			nCyclesDone[2] += M6809Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
 			if (i == nInterleave-1 && sub_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 		}
@@ -805,8 +798,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sub_irq_mask);
 		SCAN_VAR(sub2_irq_mask);
 		SCAN_VAR(flipscreen);
-		SCAN_VAR(custom_io);
-		SCAN_VAR(starfield_control);
 	}
 
 	return 0;

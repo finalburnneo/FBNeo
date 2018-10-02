@@ -3812,6 +3812,16 @@ static INT32 GaryoretDraw()
 	return 0;
 }
 
+static inline void DrvClearOppositesLOW(UINT8* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
+	}
+}
+
 static INT32 GondoFrame()
 {
 	if (DrvReset) {
@@ -3830,6 +3840,9 @@ static INT32 GondoFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
+
+		DrvClearOppositesLOW(&DrvInputs[0]);
+		DrvClearOppositesLOW(&DrvInputs[1]);
 	}
 
 	INT32 nInterleave = 272;

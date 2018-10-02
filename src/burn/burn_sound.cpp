@@ -23,3 +23,32 @@ INT32 cmc_4p_Precalc()
 	return 0;
 }
 
+static INT16 dac_lastin_r  = 0;
+static INT16 dac_lastout_r = 0;
+static INT16 dac_lastin_l  = 0;
+static INT16 dac_lastout_l = 0;
+
+void BurnSoundDCFilterReset()
+{
+	dac_lastin_r = dac_lastout_r = 0;
+	dac_lastin_l = dac_lastout_l = 0;
+}
+
+// Runs a dc-blocking filter on pBurnSoundOut - see drv/pre90s/d_mappy.cpp for usage.
+void BurnSoundDCFilter()
+{
+	for (INT32 i = 0; i < nBurnSoundLen; i++) {
+		INT16 r = pBurnSoundOut[i*2+0];
+		INT16 l = pBurnSoundOut[i*2+1];
+
+		INT16 outr = r - dac_lastin_r + 0.995 * dac_lastout_r;
+		INT16 outl = l - dac_lastin_l + 0.995 * dac_lastout_l;
+
+		dac_lastin_r = r;
+		dac_lastout_r = outr;
+		dac_lastin_l = l;
+		dac_lastout_l = outl;
+		pBurnSoundOut[i*2+0] = outr;
+		pBurnSoundOut[i*2+1] = outl;
+	}
+}

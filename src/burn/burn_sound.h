@@ -32,6 +32,8 @@ void BurnSoundCopyClamp_Mono_C(INT32* Src, INT16* Dest, INT32 Len);
 void BurnSoundCopyClamp_Mono_Add_C(INT32* Src, INT16* Dest, INT32 Len);
 
 extern INT32 cmc_4p_Precalc();
+void BurnSoundDCFilter();
+void BurnSoundDCFilterReset();
 
 #ifdef __ELF__
  #define Precalc _Precalc

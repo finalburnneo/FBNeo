@@ -426,7 +426,7 @@ static INT32 DrvGfxDecode()
 	INT32 XOffs1[16] = { STEP4(0,1), STEP4(64,1), STEP4(128,1), STEP4(192,1) };
 	INT32 YOffs[16]  = { STEP8(0,8), STEP8(256,8) };
 
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x10000); // 2nd decode tries to access out of bounds w/0xc000
+	UINT8 *tmp = (UINT8*)BurnMalloc(0xc000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -437,7 +437,7 @@ static INT32 DrvGfxDecode()
 
 	memcpy (tmp, DrvGfxROM1, 0xc000);
 
-	GfxDecode(0x0200, 3, 16, 16, Plane1, XOffs1, YOffs, 0x200, tmp, DrvGfxROM1);
+	GfxDecode(0x0180, 3, 16, 16, Plane1, XOffs1, YOffs, 0x200, tmp, DrvGfxROM1);
 
 	BurnFree(tmp);
 

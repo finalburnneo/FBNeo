@@ -4,8 +4,9 @@ UINT8 GalInputPort0[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 GalInputPort1[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 GalInputPort2[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 GalInputPort3[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
+UINT8 GalInputPort4[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 GalDip[7]              = {0, 0, 0, 0, 0, 0, 0};
-UINT8 GalInput[4]            = {0x00, 0x00, 0x00, 0x00};
+UINT8 GalInput[5]            = {0x00, 0x00, 0x00, 0x00, 0x00};
 UINT8 GalReset               = 0;
 UINT8 GalFakeDip             = 0;
 INT32 GalAnalogPort0         = 0;
@@ -71,11 +72,13 @@ UINT8 SfxSampleControl;
 UINT16 ScrambleProtectionState;
 UINT8 ScrambleProtectionResult;
 UINT8 MoonwarPortSelect;
+UINT8 MoonwarDialX[2];
 UINT8 MshuttleAY8910CS;
 UINT8 GmgalaxSelectedGame;
 UINT8 Fourin1Bank;
 UINT8 GameIsGmgalax;
 UINT8 GameIsBagmanmc;
+UINT8 GameIsMoonwar = 0;
 UINT8 CavelonBankSwitch;
 UINT8 GalVBlank;
 UINT8 Dingo;
@@ -83,7 +86,7 @@ UINT8 Dingo;
 static inline void GalMakeInputs()
 {
 	// Reset Inputs
-	GalInput[0] = GalInput[1] = GalInput[2] = GalInput[3] = 0x00;
+	GalInput[0] = GalInput[1] = GalInput[2] = GalInput[3] = GalInput[4] = 0x00;
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
@@ -91,6 +94,7 @@ static inline void GalMakeInputs()
 		GalInput[1] |= (GalInputPort1[i] & 1) << i;
 		GalInput[2] |= (GalInputPort2[i] & 1) << i;
 		GalInput[3] |= (GalInputPort3[i] & 1) << i;
+		GalInput[4] |= (GalInputPort4[i] & 1) << i;
 	}
 }
 
@@ -181,6 +185,7 @@ static INT32 GalDoReset()
 	ScrambleProtectionState = 0;
 	ScrambleProtectionResult = 0;
 	MoonwarPortSelect = 0;
+	MoonwarDialX[0] = MoonwarDialX[1] = 0;
 	MshuttleAY8910CS = 0;
 	Fourin1Bank = 0;
 	CavelonBankSwitch = 0;
@@ -1593,6 +1598,7 @@ INT32 GalExit()
 	Fourin1Bank = 0;
 	GameIsGmgalax = 0;
 	GameIsBagmanmc = 0;
+	GameIsMoonwar = 0;
 	CavelonBankSwitch = 0;
 	DarkplntBulletColour = 0;
 	DambustrBgColour1 = 0;
@@ -1849,6 +1855,10 @@ INT32 GalFrame()
 					filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
 				}
 			}
+			if (GameIsMoonwar) {
+				// Moonwar[a] has a horrible DC Offset
+				BurnSoundDCFilter();
+			}
 		}
 	}
 	
@@ -1927,6 +1937,7 @@ INT32 GalScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(SfxSampleControl);
 		SCAN_VAR(ScrambleProtectionResult);
 		SCAN_VAR(MoonwarPortSelect);
+		SCAN_VAR(MoonwarDialX);
 		SCAN_VAR(MshuttleAY8910CS);
 		SCAN_VAR(GmgalaxSelectedGame);
 		SCAN_VAR(Fourin1Bank);

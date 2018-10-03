@@ -1,4 +1,5 @@
 #include "tiles_generic.h"
+#include "burn_sound.h"
 #include "z80_intf.h"
 #include "dac.h"
 #include "8255ppi.h"
@@ -178,8 +179,9 @@ extern UINT8 GalInputPort0[8];
 extern UINT8 GalInputPort1[8];
 extern UINT8 GalInputPort2[8];
 extern UINT8 GalInputPort3[8];
+extern UINT8 GalInputPort4[8];
 extern UINT8 GalDip[7];
-extern UINT8 GalInput[4];
+extern UINT8 GalInput[5];
 extern UINT8 GalReset;
 extern UINT8 GalFakeDip;
 extern INT32           GalAnalogPort0;
@@ -242,11 +244,13 @@ extern UINT8 KingballSpeechDip;
 extern UINT16 ScrambleProtectionState;
 extern UINT8 ScrambleProtectionResult;
 extern UINT8 MoonwarPortSelect;
+extern UINT8 MoonwarDialX[2];
 extern UINT8 MshuttleAY8910CS;
 extern UINT8 GmgalaxSelectedGame;
 extern UINT8 Fourin1Bank;
 extern UINT8 GameIsGmgalax;
 extern UINT8 GameIsBagmanmc;
+extern UINT8 GameIsMoonwar;
 extern UINT8 CavelonBankSwitch;
 extern UINT8 GalVBlank;
 

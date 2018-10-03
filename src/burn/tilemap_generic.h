@@ -10,7 +10,6 @@
 #define TMAP_FLIPY		    (1 <<  1)
 #define TMAP_FLIPXY		    (TMAP_FLIPX | TMAP_FLIPY)
 
-
 // Drawing flags, these are passed in the priority field of GenericTilemapDraw()
 
 // force the tilemap to ignore any transparency settings and any tile skipping
@@ -31,7 +30,6 @@
 
 // select which group to use in the tilemap (group is set in the tilemap_callback)
 #define TMAP_SET_GROUP(x)	((x) << 8)
-
 
 // Tile defines (used in tilemap_callback)
 
@@ -140,11 +138,26 @@ void GenericTilemapSetFlip(INT32 which, INT32 flip);
 // Disable (0) or enable (1) tile map (draw or don't draw)
 void GenericTilemapSetEnable(INT32 which, INT32 enable);
 
+// Enable using the dirty tiles system for this tilemap
+void GenericTilemapUseDirtyTiles(INT32 which);
+
+// Mark tile as dirty (note that offset will be %= map_height * map_width!!)
+void GenericTilemapSetTileDirty(INT32 which, UINT32 offset);
+
+// Mark all tiles as dirty
+void GenericTilemapAllTilesDirty(INT32 which);
+
+// Is this tile dirty (note that offset will be %= map_height * map_width!!)
+INT32 GenericTilemapGetTileDirty(INT32 which, UINT32 offset);
+
 // Actually draw the tilemap.
 // which 	- select which tilemap to draw
 // Bitmap	- pointer to the bitmap to draw the tilemap
 // priority	- this will be used to set priority data, and/or draw flags
 void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority);
+
+// Draw using the bitmap manager (uses clipping and bitmap dimensions)
+void GenericTilemapDraw(INT32 which, INT32 bitmap, INT32 priority);
 
 // Dump all tilemaps to bitmap files
 void GenericTilemapDumpToBitmap();

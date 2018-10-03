@@ -22,8 +22,10 @@ struct GenericTilemap {
 	INT32 xoffset;
 	INT32 yoffset;
 	UINT32 flags;
-	UINT8 *transparent[256]; // 0 draw, 1 skip
+	UINT8 *transparent[256];	// 0 draw, 1 skip
 	INT32 transcolor;
+	UINT8 *dirty_tiles;			// 1 skip, 0 draw
+	INT32 dirty_tiles_enable;
 };
 
 struct GenericTilemapGfx {
@@ -33,7 +35,7 @@ struct GenericTilemapGfx {
 	INT32 height;		// tile height
 	UINT32 gfx_len;		// full size of the tile data
 	UINT32 code_mask;	// gfx_len / width / height
-	UINT32 color_offset;	// is there a color offset for this graphics region?
+	UINT32 color_offset;// is there a color offset for this graphics region?
 	UINT32 color_mask;	// mask the color added to the pixels
 };
 
@@ -43,39 +45,37 @@ static GenericTilemap *cur_map;
 
 void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void (*pTile)(INT32 offs, INT32 *tile_gfx, INT32 *tile_code, INT32 *tile_color, UINT32 *tile_flags, INT32 *category), UINT32 tile_width, UINT32 tile_height, UINT32 map_width, UINT32 map_height)
 {
+#if defined FBA_DEBUG
 	if (Debug_GenericTilesInitted == 0) {
-		bprintf (0, _T("Please call GenericTilesInit() before GenericTilemapInit()!\n"));
+		bprintf (PRINT_ERROR, _T("Please call GenericTilesInit() before GenericTilemapInit()!\n"));
 		return;
 	}
+
+	if (pTile == NULL) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapInit %d pTile initializer cannot be NULL!\n"), which);
+		return;
+	}
+
+	if (pScan == NULL) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapInit %d pScan initializer cannot be NULL!\n"), which);
+		return;
+	}
+
+	if (map_width == 0 || map_height == 0 || tile_width == 0 || tile_height == 0) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapInit(%d, pScan, pTile, %d, %d, %d, %d) called with bad initializer!\n"), which, tile_width, tile_height, map_width, map_height);
+		return;
+	}
+
+	if (map_width > 4096 || map_height > 4096 || tile_width > 512 || tile_height > 512) {
+		bprintf (PRINT_NORMAL, _T("GenericTilemapInit(%d, pScan, pTile, %d, %d, %d, %d) called with likely bad initializer!\n"), which, tile_width, tile_height, map_width, map_height);
+	}
+#endif
 
 	cur_map = &maps[which];
 
 	memset (cur_map, 0, sizeof(GenericTilemap));
 
 	cur_map->initialized = 1;
-
-	// error
-	if (pTile == NULL) {
-		bprintf (0, _T("GenericTilemapInit %d pTile initializer cannot be NULL!\n"), which);
-		return;
-	}
-
-	// error
-	if (pScan == NULL) {
-		bprintf (0, _T("GenericTilemapInit %d pScan initializer cannot be NULL!\n"), which);
-		return;
-	}
-
-	// error
-	if (map_width == 0 || map_height == 0 || tile_width == 0 || tile_height == 0) {
-		bprintf (0, _T("GenericTilemapInit(%d, pScan, pTile, %d, %d, %d, %d) called with bad initializer!\n"), which, tile_width, tile_height, map_width, map_height);
-		return;
-	}
-
-	// warning
-	if (map_width > 2048 || map_height > 2048 || tile_width > 512 || tile_height > 512) {
-		bprintf (0, _T("GenericTilemapInit(%d, pScan, pTile, %d, %d, %d, %d) called with likely bad initializer!\n"), which, tile_width, tile_height, map_width, map_height);
-	}
 
 	cur_map->pTile = pTile;
 	cur_map->pScan = pScan;
@@ -103,25 +103,30 @@ void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void 
 	cur_map->flags = 0;
 	memset (cur_map->transparent[0], 0, 256);
 	cur_map->transcolor = 0xfff; // opaque by default
+
+	cur_map->dirty_tiles = NULL; // disable by default
+	cur_map->dirty_tiles_enable = 0; // disable by default
 }
 
 void GenericTilemapSetGfx(INT32 num, UINT8 *gfxbase, INT32 depth, INT32 tile_width, INT32 tile_height, INT32 gfxlen, UINT32 color_offset, UINT32 color_mask)
 {
+#if defined FBA_DEBUG
 	if (Debug_GenericTilesInitted == 0) {
-		bprintf (0, _T("GenericTilesInit must be called before GenericTilemapSetGfx!\n"));
+		bprintf (PRINT_ERROR, _T("GenericTilesInit must be called before GenericTilemapSetGfx!\n"));
 		return;
 	}
 
 	// warning
 	if (depth > 8 || tile_width > 512 || tile_height > 512 || gfxlen <= 0 || gfxlen > 0x10000000 || color_offset > 0x10000) {
-		bprintf (0, _T("GenericTilemapSetGfx(%d, gfxbase, %d, %d, %d, 0x%x, 0x%x, 0x%s) called with likely bad initializer(s)!\n"), num, depth, tile_width, tile_height, gfxlen, color_offset, color_mask);
+		bprintf (PRINT_NORMAL, _T("GenericTilemapSetGfx(%d, gfxbase, %d, %d, %d, 0x%x, 0x%x, 0x%s) called with likely bad initializer(s)!\n"), num, depth, tile_width, tile_height, gfxlen, color_offset, color_mask);
 	}
 
 	// error
 	if (num < 0 || num >= MAX_GFX || tile_width <= 0 || tile_height <= 0 || gfxlen <= 0 || gfxbase == NULL) {
-		bprintf (0, _T("GenericTilemapSetGfx(%d, gfxbase (%s), %d, %d, %d, 0x%x, 0x%x, 0x%s) called with bad initializer(s)!\n"), num, (gfxbase == NULL) ? _T("NULL") : _T("NON-NULL"), depth, tile_width, tile_height, gfxlen, color_offset, color_mask);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetGfx(%d, gfxbase (%s), %d, %d, %d, 0x%x, 0x%x, 0x%s) called with bad initializer(s)!\n"), num, (gfxbase == NULL) ? _T("NULL") : _T("NON-NULL"), depth, tile_width, tile_height, gfxlen, color_offset, color_mask);
 		return;
 	}
+#endif
 
 	GenericTilemapGfx *ptr = &gfxdata[num];
 
@@ -158,6 +163,7 @@ void GenericTilemapExit()
 		if (cur_map->scrolly_table) BurnFree(cur_map->scrolly_table);
 		if (cur_map->scrollx_table) BurnFree(cur_map->scrollx_table);
 		if (cur_map->transparent[0]) BurnFree(cur_map->transparent[0]);
+		if (cur_map->dirty_tiles) BurnFree(cur_map->dirty_tiles);
 	}
 
 	// wipe everything else out
@@ -167,10 +173,12 @@ void GenericTilemapExit()
 
 void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y)
 {
+#if defined FBA_DEBUG
 	if (which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetOffsets(%d, %d, %d); called with impossible tilemap!\n"), which, x, y);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetOffsets(%d, %d, %d); called with impossible tilemap!\n"), which, x, y);
 		return;
 	}
+#endif
 
 	// set offsets globally
 	if (which == TMAP_GLOBAL)
@@ -187,9 +195,11 @@ void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y)
 			}
 		}
 
+#if defined FBA_DEBUG
 		if (counter == 0) {
-			bprintf (0, _T("GenericTilemapSetOffsets(TMAP_GLOBAL, %d, %d); called, but there are no initialized tilemaps!\n"), x, y);
+			bprintf (PRINT_NORMAL, _T("GenericTilemapSetOffsets(TMAP_GLOBAL, %d, %d); called, but there are no initialized tilemaps!\n"), x, y);
 		}
+#endif
 
 		return;
 	}
@@ -197,10 +207,12 @@ void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y)
 	// set offsets to a single tile map
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapSetOffsets(%d, %d, %d); called without initialized tilemap!\n"), which, x, y);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetOffsets(%d, %d, %d); called without initialized tilemap!\n"), which, x, y);
 		return;
 	}
+#endif
 
 	cur_map->xoffset = x;
 	cur_map->yoffset = y;
@@ -208,17 +220,21 @@ void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y)
 
 void GenericTilemapSetTransparent(INT32 which, UINT32 transparent)
 {
+#if defined FBA_DEBUG
 	if (which < 0 || which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetTransparent(%d, 0x%x); called with impossible tilemap number!\n"), which, transparent);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetTransparent(%d, 0x%x); called with impossible tilemap number!\n"), which, transparent);
 		return;
 	}
+#endif
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapSetTransparent(%d, 0x%x); called without initialized tilemap!\n"), which, transparent);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetTransparent(%d, 0x%x); called without initialized tilemap!\n"), which, transparent);
 		return;
 	}
+#endif
 
 	memset (cur_map->transparent[0], 0, 256);	// set all to opaque
 
@@ -230,22 +246,26 @@ void GenericTilemapSetTransparent(INT32 which, UINT32 transparent)
 
 void GenericTilemapSetTransMask(INT32 which, INT32 category, UINT16 transmask)
 {
+#if defined FBA_DEBUG
 	if (which < 0 || which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetTransMask(%d, %d, 0x%4.4x); called with impossible tilemap number!\n"), which, category, transmask);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetTransMask(%d, %d, 0x%4.4x); called with impossible tilemap number!\n"), which, category, transmask);
 		return;
 	}
+#endif
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapsSetTransMask(%d, %d, 0x%4.4x); called without initialized tilemap!\n"), which, category, transmask);
+		bprintf (PRINT_ERROR, _T("GenericTilemapsSetTransMask(%d, %d, 0x%4.4x); called without initialized tilemap!\n"), which, category, transmask);
 		return;
 	}
 
 	if (cur_map->transparent[category] == NULL) {
-		bprintf (0, _T("GenericTilemapSetTransMask(%d, %d, 0x%4.4x); called without configured category\n"), which, category, transmask);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetTransMask(%d, %d, 0x%4.4x); called without configured category\n"), which, category, transmask);
 		return;
 	}
+#endif
 
 	memset (cur_map->transparent[category], 1, 256);
 
@@ -260,15 +280,17 @@ void GenericTilemapSetTransMask(INT32 which, INT32 category, UINT16 transmask)
 
 void GenericTilemapCategoryConfig(INT32 which, INT32 categories)
 {
+#if defined FBA_DEBUG
 	if (which < 0 || which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapCategoryConfig(%d, %d); called with impossible tilemap number!\n"), which, categories);
+		bprintf (PRINT_ERROR, _T("GenericTilemapCategoryConfig(%d, %d); called with impossible tilemap number!\n"), which, categories);
 		return;
 	}
 
 	if (categories < 0 || categories > 256) {
-		bprintf (0, _T("GenericTilemapCategoryConfig(%d, %d); called with invalid category number (<0 or >255)!\nForcing to 0!\n"), which, categories);
+		bprintf (PRINT_NORMAL, _T("GenericTilemapCategoryConfig(%d, %d); called with invalid category number (<0 or >255)!\nForcing to 0!\n"), which, categories);
 		categories = 0;
 	}
+#endif
 
 	cur_map = &maps[which];
 
@@ -280,7 +302,7 @@ void GenericTilemapCategoryConfig(INT32 which, INT32 categories)
 
 	for (INT32 i = 1; i < categories; i++)
 	{
-		cur_map->transparent[i] = &cur_map->transparent[0][i * 256];	
+		cur_map->transparent[(i % categories)] = &cur_map->transparent[0][(i % categories) * 256];	
 	}
 
 	cur_map->flags |= TMAP_TRANSMASK;
@@ -290,88 +312,103 @@ void GenericTilemapSetCategoryEntry(INT32 which, INT32 category, INT32 entry, IN
 {
 	trans = (trans) ? 1 : 0;
 
+#if defined FBA_DEBUG
 	if (which < 0 || which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetCategoryEntry(%d, %d, %d, %d); called with impossible tilemap number!\n"), which, category, entry, trans);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetCategoryEntry(%d, %d, %d, %d); called with impossible tilemap number!\n"), which, category, entry, trans);
 		return;
 	}
 
 	if (category < 0 || category > 256) {
-		bprintf (0, _T("GenericTilemapSetCategoryEntry(%d, %d, %d, %d); called with invalid category number (<0 or >255)!\nForcing to 0!\n"), which, category, entry, trans);
+		bprintf (PRINT_NORMAL, _T("GenericTilemapSetCategoryEntry(%d, %d, %d, %d); called with invalid category number (<0 or >255)!\nForcing to 0!\n"), which, category, entry, trans);
 		category = 0;
 	}
 
 	if (entry < 0 || entry >= 256) {
-		bprintf (0, _T("GenericTilemapSetCategoryEntry(%d, %d, %d, %d); called with invalid entry number (<0 or >255)!\nForcing to 0!\n"), which, category, entry, trans);
+		bprintf (PRINT_NORMAL, _T("GenericTilemapSetCategoryEntry(%d, %d, %d, %d); called with invalid entry number (<0 or >255)!\nForcing to 0!\n"), which, category, entry, trans);
 		entry = 0;
 	}
+#endif
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->transparent[category] == NULL) {
-		bprintf (0, _T("GenericTilemapSetCategoryEntry(%d, %d, %d, %d); without configured category\n"), which, category, entry, trans);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetCategoryEntry(%d, %d, %d, %d); without configured category\n"), which, category, entry, trans);
 		return;
 	}
+#endif
 
 	cur_map->transparent[category][entry] = trans;
 }
 
 void GenericTilemapSetScrollX(INT32 which, INT32 scrollx)
 {
+#if defined FBA_DEBUG
 	if (which < 0 || which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetScrollX(%d, %d); called with impossible tilemap!\n"), which, scrollx);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollX(%d, %d); called with impossible tilemap!\n"), which, scrollx);
 		return;
 	}
+#endif
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapSetScrollX(%d, %d); called without initialized tilemap!\n"), which, scrollx);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollX(%d, %d); called without initialized tilemap!\n"), which, scrollx);
 		return;
 	}
+#endif
 
 	cur_map->scrollx = scrollx % (cur_map->twidth * cur_map->mwidth);
 }
 
 void GenericTilemapSetScrollY(INT32 which, INT32 scrolly)
 {
+#if defined FBA_DEBUG
 	if (which < 0 || which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetScrollY(%d, %d); called with impossible tilemap!\n"), which, scrolly);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollY(%d, %d); called with impossible tilemap!\n"), which, scrolly);
 		return;
 	}
+#endif
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapSetScrollY(%d, %d); called without initialized tilemap!\n"), which, scrolly);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollY(%d, %d); called without initialized tilemap!\n"), which, scrolly);
 		return;
 	}
+#endif
 
 	cur_map->scrolly = scrolly % (cur_map->theight * cur_map->mheight);
 }
 
 void GenericTilemapSetScrollCols(INT32 which, UINT32 cols)
 {
+#if defined FBA_DEBUG
 	if (which < 0 || which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetScrollCols(%d, %d); called with impossible tilemap!\n"), which, cols);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollCols(%d, %d); called with impossible tilemap!\n"), which, cols);
 		return;
 	}
+#endif
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapSetScrollCols(%d, %d); called without initialized tilemap!\n"), which, cols);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollCols(%d, %d); called without initialized tilemap!\n"), which, cols);
 		return;
 	}
 
 	if (cols > (cur_map->mwidth * cur_map->twidth)) {
-		bprintf (0, _T("GenericTilemapSetScrollCols(%d, %d); called with more cols than tilemap is wide (%d)!\n"), which, cols, cur_map->mwidth*cur_map->twidth);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollCols(%d, %d); called with more cols than tilemap is wide (%d)!\n"), which, cols, cur_map->mwidth*cur_map->twidth);
 		return;
 	}
+#endif
 
-	// use scrolly instead
-	if (cols <= 0) cols = 1;
-	if (cols == 1) {
-		cur_map->scroll_rows = cols;
+	// if setting cols <= 1, use scrolly instead
+	if (cols <= 1) {
+		cur_map->scroll_cols = 1;
 		if (cur_map->scrolly_table) {
 			BurnFree(cur_map->scrolly_table);
 		}
@@ -394,27 +431,30 @@ void GenericTilemapSetScrollCols(INT32 which, UINT32 cols)
 
 void GenericTilemapSetScrollRows(INT32 which, UINT32 rows)
 {
+#if defined FBA_DEBUG
 	if (which < 0 || which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetScrollRows(%d, %d); called with impossible tilemap!\n"), which, rows);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollRows(%d, %d); called with impossible tilemap!\n"), which, rows);
 		return;
 	}
+#endif
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapSetScrollRows(%d, %d); called without initialized tilemap!\n"), which, rows);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollRows(%d, %d); called without initialized tilemap!\n"), which, rows);
 		return;
 	}
 
 	if (rows > (cur_map->mheight * cur_map->theight)) {
-		bprintf (0, _T("GenericTilemapSetScrollRows(%d, %d); called with more rows than tilemap is high (%d)!\n"), which, rows, cur_map->mheight*cur_map->theight);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollRows(%d, %d); called with more rows than tilemap is high (%d)!\n"), which, rows, cur_map->mheight*cur_map->theight);
 		return;
 	}
+#endif
 
 	// use scrollx instead
-	if (rows <= 0) rows = 1;
-	if (rows == 1) {
-		cur_map->scroll_rows = rows;
+	if (rows <= 1) {
+		cur_map->scroll_rows = 1;
 		if (cur_map->scrollx_table) {
 			BurnFree(cur_map->scrollx_table);
 		}
@@ -437,22 +477,26 @@ void GenericTilemapSetScrollRows(INT32 which, UINT32 rows)
 
 void GenericTilemapSetScrollCol(INT32 which, INT32 col, INT32 scroll)
 {
+#if defined FBA_DEBUG
 	if (which < 0 || which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetScrollCol(%d, %d, %d); called with impossible tilemap!\n"), which, col, scroll);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollCol(%d, %d, %d); called with impossible tilemap!\n"), which, col, scroll);
 		return;
 	}
+#endif
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapSetScrollCol(%d, %d, %d); called without initialized tilemap!\n"), which, col, scroll);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollCol(%d, %d, %d); called without initialized tilemap!\n"), which, col, scroll);
 		return;
 	}
 
 	if ((INT32)cur_map->scroll_cols <= col || col < 0) {
-		bprintf (0, _T("GenericTilemapSetScrollCol(%d, %d, %d); called with improper col value!\n"), which, col, scroll);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollCol(%d, %d, %d); called with improper col value!\n"), which, col, scroll);
 		return;
 	}
+#endif
 
 	if (cur_map->scrolly_table != NULL) {
 		cur_map->scrolly_table[col] = scroll % (cur_map->theight * cur_map->mheight);
@@ -461,22 +505,26 @@ void GenericTilemapSetScrollCol(INT32 which, INT32 col, INT32 scroll)
 
 void GenericTilemapSetScrollRow(INT32 which, INT32 row, INT32 scroll)
 {
+#if defined FBA_DEBUG
 	if (which < 0 || which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetScrollRow(%d, %d, %d); called with impossible tilemap!\n"), which, row, scroll);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollRow(%d, %d, %d); called with impossible tilemap!\n"), which, row, scroll);
 		return;
 	}
+#endif
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapSetScrollRow(%d, %d, %d); called without initialized tilemap!\n"), which, row, scroll);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollRow(%d, %d, %d); called without initialized tilemap!\n"), which, row, scroll);
 		return;
 	}
 
 	if ((INT32)cur_map->scroll_rows <= row || row < 0) {
-		bprintf (0, _T("GenericTilemapSetScrollRow(%d, %d, %d); called with improper row value!\n"), which, row, scroll);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetScrollRow(%d, %d, %d); called with improper row value!\n"), which, row, scroll);
 		return;
 	}
+#endif
 
 	if (cur_map->scrollx_table != NULL) {
 		cur_map->scrollx_table[row] = scroll % (cur_map->twidth * cur_map->mwidth);
@@ -485,10 +533,12 @@ void GenericTilemapSetScrollRow(INT32 which, INT32 row, INT32 scroll)
 
 void GenericTilemapSetFlip(INT32 which, INT32 flip)
 {
+#if defined FBA_DEBUG
 	if (which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetFlip(%d, %d); called with impossible tilemap!\n"), which, flip);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetFlip(%d, %d); called with impossible tilemap!\n"), which, flip);
 		return;
 	}
+#endif
 
 	if (which == TMAP_GLOBAL) {
 		INT32 counter = 0;
@@ -502,19 +552,23 @@ void GenericTilemapSetFlip(INT32 which, INT32 flip)
 			}
 		}
 
+#if defined FBA_DEBUG
 		if (counter == 0) {
-			bprintf (0, _T("GenericTilemapSetFlip(TMAP_GLOBAL, %d); called, but there are no initialized tilemaps!\n"), flip);
+			bprintf (PRINT_ERROR, _T("GenericTilemapSetFlip(TMAP_GLOBAL, %d); called, but there are no initialized tilemaps!\n"), flip);
 		}
+#endif
 
 		return;
 	}
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapSetFlip(%d, %d); called without initialized tilemap!\n"), which, flip);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetFlip(%d, %d); called without initialized tilemap!\n"), which, flip);
 		return;
 	}
+#endif
 
 	cur_map->flags &= ~(TMAP_FLIPY|TMAP_FLIPX);
 	cur_map->flags |= flip;
@@ -522,10 +576,12 @@ void GenericTilemapSetFlip(INT32 which, INT32 flip)
 
 void GenericTilemapSetEnable(INT32 which, INT32 enable)
 {
+#if defined FBA_DEBUG
 	if (which >= MAX_TILEMAPS) {
-		bprintf (0, _T("GenericTilemapSetEnable(%d, %d); called with impossible tilemap!\n"), which, enable);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetEnable(%d, %d); called with impossible tilemap!\n"), which, enable);
 		return;
 	}
+#endif
 
 	if (which == TMAP_GLOBAL) {
 		INT32 counter = 0;
@@ -537,35 +593,146 @@ void GenericTilemapSetEnable(INT32 which, INT32 enable)
 			}
 		}
 
+#if defined FBA_DEBUG
 		if (counter == 0) {
-			bprintf (0, _T("GenericTilemapSetEnable(TMAP_GLOBAL, %d); called, but there are no initialized tilemaps!\n"), enable);
+			bprintf (PRINT_NORMAL, _T("GenericTilemapSetEnable(TMAP_GLOBAL, %d); called, but there are no initialized tilemaps!\n"), enable);
 		}
+#endif
 		return;
 	}
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapSetEnable(%d, %d); called without initialized tilemap!\n"), which, enable);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetEnable(%d, %d); called without initialized tilemap!\n"), which, enable);
 		return;
 	}
+#endif
 
 	cur_map->enable = enable ? 1 : 0;
 }
 
-void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
+void GenericTilemapUseDirtyTiles(INT32 which)
 {
-	if (Bitmap == NULL) {
-		bprintf (0, _T("GenericTilemapDraw(%d, Bitmap, %d); called without initialized Bitmap!\n"), which, priority);
+#if defined FBA_DEBUG
+	if (which >= MAX_TILEMAPS) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapUseDirtyTiles(%d) called with impossible tilemap!\n"), which);
 		return;
 	}
+#endif
 
 	cur_map = &maps[which];
 
+#if defined FBA_DEBUG
 	if (cur_map->initialized == 0) {
-		bprintf (0, _T("GenericTilemapDraw(%d, Bitmap, %d); called without initialized tilemap!\n"), which, priority);
+		bprintf (PRINT_ERROR, _T("GenericTilemapUseDirtyTiles(%d) called without initialized tilemap!\n"), which);
 		return;
 	}
+#endif
+
+	cur_map->dirty_tiles = (UINT8*)BurnMalloc(cur_map->mwidth * cur_map->mheight);
+
+	memset (cur_map->dirty_tiles, 1, cur_map->mwidth * cur_map->mheight); // force all dirty by default
+
+	cur_map->dirty_tiles_enable = 1;
+}
+
+void GenericTilemapSetTileDirty(INT32 which, UINT32 offset)
+{
+#if defined FBA_DEBUG
+	if (which >= MAX_TILEMAPS) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetTileDirty(%d, %x); called with impossible tilemap!\n"), which, offset);
+		return;
+	}
+#endif
+
+	cur_map = &maps[which];
+
+#if defined FBA_DEBUG
+	if (cur_map->initialized == 0) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetTileDirty(%d, %x) called without initialized tilemap!\n"), which, offset);
+		return;
+	}
+
+	if (cur_map->dirty_tiles_enable == 0) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetTileDirty(%d, %x) called without calling GenericTilemapUseDirtyTiles first!\n"), which, offset);
+		return;
+	}
+#endif
+
+	cur_map->dirty_tiles[offset % (cur_map->mwidth * cur_map->mheight)] = 1;
+}
+
+void GenericTilemapAllTilesDirty(INT32 which)
+{
+#if defined FBA_DEBUG
+	if (which >= MAX_TILEMAPS) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapAllTilesDirty(%d); called with impossible tilemap!\n"), which);
+		return;
+	}
+#endif
+
+	cur_map = &maps[which];
+
+#if defined FBA_DEBUG
+	if (cur_map->initialized == 0) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapAllTilesDirty(%d) called without initialized tilemap!\n"), which);
+		return;
+	}
+
+	if (cur_map->dirty_tiles_enable == 0) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapAllTilesDirty(%d) called without calling GenericTilemapUseDirtyTiles first!\n"), which);
+		return;
+	}
+#endif
+
+	memset (cur_map->dirty_tiles, 1, cur_map->mwidth * cur_map->mheight);
+}
+
+INT32 GenericTilemapGetTileDirty(INT32 which, UINT32 offset)
+{
+#if defined FBA_DEBUG
+	if (which >= MAX_TILEMAPS) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapGetTileDirty(%d, %x); called with impossible tilemap!\n"), which, offset);
+		return 1; // default to dirty tile
+	}
+#endif
+
+	cur_map = &maps[which];
+
+#if defined FBA_DEBUG
+	if (cur_map->initialized == 0) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapGetTileDirty(%d, %x) called without initialized tilemap!\n"), which, offset);
+		return 1; // default to dirty tile
+	}
+
+	if (cur_map->dirty_tiles_enable == 0) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapGetTileDirty(%d, %x) called without calling GenericTilemapUseDirtyTiles first!\n"), which, offset);
+		return 1; // default to dirty tile
+	}
+#endif
+
+	return cur_map->dirty_tiles[offset % (cur_map->mwidth * cur_map->mheight)];
+}
+
+void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
+{
+#if defined FBA_DEBUG
+	if (Bitmap == NULL) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapDraw(%d, Bitmap, %d); called without initialized Bitmap!\n"), which, priority);
+		return;
+	}
+#endif
+
+	cur_map = &maps[which];
+
+#if defined FBA_DEBUG
+	if (cur_map->initialized == 0) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapDraw(%d, Bitmap, %d); called without initialized tilemap!\n"), which, priority);
+		return;
+	}
+#endif
 
 	if (cur_map->enable == 0) { // layer disabled!
 		return;
@@ -576,8 +743,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 	// check clipping and fix clipping sizes if out of bounds
 	if (minx < 0 || maxx > nScreenWidth || miny < 0 || maxy > nScreenHeight) {
-		bprintf (0, _T("GenericTilemapDraw(%d, Bitmap, %d) called with improper clipping values (%d, %d, %d, %d)!"), which, priority, minx, maxx, miny, maxy);
-		bprintf (0, _T("pPrioDraw is %d pixels wide and %d pixels high!\n"), nScreenWidth, nScreenHeight);
+		bprintf (PRINT_ERROR, _T("GenericTilemapDraw(%d, Bitmap, %d) called with improper clipping values (%d, %d, %d, %d)!"), which, priority, minx, maxx, miny, maxy);
+		bprintf (PRINT_ERROR, _T("pPrioDraw is %d pixels wide and %d pixels high!\n"), nScreenWidth, nScreenHeight);
 
 		if (minx < 0) minx = 0;
 		if (maxx >= nScreenWidth) maxx = nScreenWidth;
@@ -623,10 +790,15 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 					bx = (bitmap_width - cur_map->twidth) - bx;
 				}
 
-				INT32 code, color, group, gfxnum, category = 0;
+				INT32 code, color, group, gfxnum, category = 0, offset = cur_map->pScan(col,row);
 				UINT32 flags;
 
-				cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags, &category);
+				if (cur_map->dirty_tiles_enable) {
+					if (cur_map->dirty_tiles[offset] == 0) continue;
+					cur_map->dirty_tiles[offset] = 0;
+				}
+
+				cur_map->pTile(offset, &gfxnum, &code, &color, &flags, &category);
 
 				category |= category_or;
 				
@@ -644,7 +816,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 						group = (flags >> 16) & 0xff;
 
 						if (group != tgroup) {
-						continue;
+							continue;
 						}
 					}
 				}
@@ -652,7 +824,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				GenericTilemapGfx *gfx = &gfxdata[gfxnum];
 
 				if (gfx->gfxbase == NULL) {
-					bprintf (0,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
 					continue;
 				}
 
@@ -716,10 +888,15 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				INT32 sx = x;
 				INT32 col = ((x + scrollx) % (cur_map->mwidth * cur_map->twidth)) / cur_map->twidth;
 
-				INT32 code, color, group, gfxnum, category = 0;
+				INT32 code, color, group, gfxnum, category = 0, offset = cur_map->pScan(col,row);
 				UINT32 flags;
 
-				cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags, &category);
+				if (cur_map->dirty_tiles_enable) {
+					if (cur_map->dirty_tiles[offset] == 0) continue;
+					cur_map->dirty_tiles[offset] = 0;
+				}
+
+				cur_map->pTile(offset, &gfxnum, &code, &color, &flags, &category);
 
 				category |= category_or;
 				
@@ -745,7 +922,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				GenericTilemapGfx *gfx = &gfxdata[gfxnum];
 
 				if (gfx->gfxbase == NULL) {
-					bprintf (0,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
 					continue;
 				}
 
@@ -829,9 +1006,15 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				INT32 sxx = (x + scrollx) % (cur_map->twidth * cur_map->mwidth);
 
 				INT32 code, color, group, gfxnum, category = 0;
+				INT32 offset = cur_map->pScan(sxx/cur_map->twidth,syy/cur_map->theight);
 				UINT32 flags;
-			
-				cur_map->pTile(cur_map->pScan(sxx/cur_map->twidth,syy/cur_map->theight), &gfxnum, &code, &color, &flags, &category);
+
+				if (cur_map->dirty_tiles_enable) {
+					if (cur_map->dirty_tiles[offset] == 0) continue;
+					cur_map->dirty_tiles[offset] = 0;
+				}
+
+				cur_map->pTile(offset, &gfxnum, &code, &color, &flags, &category);
 
 				category |= category_or;
 
@@ -857,7 +1040,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				GenericTilemapGfx *gfx = &gfxdata[gfxnum];
 
 				if (gfx->gfxbase == NULL) {
-					bprintf (0,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
 					continue;
 				}
 
@@ -999,10 +1182,15 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		INT32 col = offs % cur_map->mwidth; //x
 		INT32 row = offs / cur_map->mwidth; //y
 
-		INT32 code, color, group, gfxnum, category = 0;
+		INT32 code, color, group, gfxnum, category = 0, offset = cur_map->pScan(col,row);
 		UINT32 flags;
 
-		cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags, &category);
+		if (cur_map->dirty_tiles_enable) {
+			if (cur_map->dirty_tiles[offset] == 0) continue;
+			cur_map->dirty_tiles[offset] = 0;
+		}
+
+		cur_map->pTile(offset, &gfxnum, &code, &color, &flags, &category);
 
 		category |= category_or;
 
@@ -1028,7 +1216,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		GenericTilemapGfx *gfx = &gfxdata[gfxnum];
 
 		if (gfx->gfxbase == NULL) {
-			bprintf (0,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+			bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
 			continue;
 		}
 
@@ -1181,18 +1369,59 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 	}
 }
 
+// generic drawing using bitmap manager
+void GenericTilemapDraw(INT32 which, INT32 bitmap, INT32 priority)
+{
+	// this is hacky for now
+	// ideally we would pass the bitmap struct
+	INT32 swap_bitmaps = (pTransDraw == BurnBitmapGetBitmap(bitmap)) ? 0 : 1;
+
+	if (swap_bitmaps)
+	{
+		INT32 nMinx=0, nMaxx=0, nMiny=0, nMaxy=0;
+
+		// get dimensions of the destination bitmap and store 
+		BurnBitmapGetDimensions(bitmap, &nScreenWidth, &nScreenHeight);
+
+		// get clipping information from the destination bitmap
+		BurnBitmapGetClipDims(bitmap, &nMinx, &nMaxx, &nMiny, &nMaxy);
+
+		// set clipping using destination bitmap's clipping info
+		GenericTilesSetClipRaw(nMinx, nMaxx, nMiny, nMaxy);
+
+		// point to drawing surface
+		pTransDraw = BurnBitmapGetBitmap(bitmap);
+
+		// change priority map pointer as to not override the default priority map
+		pPrioDraw = BurnBitmapGetPriomap(bitmap);
+	}
+
+	// draw to our bitmap!
+	GenericTilemapDraw(which, pTransDraw, priority);
+
+	if (swap_bitmaps)
+	{
+		// bitmap #0 is always pTransDraw, restore drawing surface, priority, dimensions, and clip
+		pTransDraw = BurnBitmapGetBitmap(0);
+		pPrioDraw = BurnBitmapGetPriomap(0);
+		BurnBitmapGetDimensions(0, &nScreenWidth, &nScreenHeight);
+		GenericTilesClearClipRaw();
+	}
+}
 
 void GenericTilemapDumpToBitmap()
 {
+#if defined FBA_DEBUG
 	if (pBurnDrvPalette == NULL) {
-		bprintf (0, _T("GenericTilemapDumptoBitmap called with pBurnDrvPalette == NULL\n"));
+		bprintf (PRINT_ERROR, _T("GenericTilemapDumptoBitmap called with pBurnDrvPalette == NULL\n"));
 		return;
 	}
 
 	if (nBurnBpp < 3) {
-		bprintf (0, _T("GenericTilemapDumptoBitmap called with pBurnBpp < 24 bit\n"));
+		bprintf (PRINT_ERROR, _T("GenericTilemapDumptoBitmap called with pBurnBpp < 24 bit\n"));
 		return;
 	}	
+#endif
 
 	GenericTilemap *tmp_map = cur_map;
 
@@ -1217,15 +1446,15 @@ void GenericTilemapDumpToBitmap()
 	bmp_data[0x18] = (x)>>16
 
 	UINT8 bmp_data[0x36] = {
-		0x42, 0x4D, 		// 'BM' (leave alone)
+		0x42, 0x4D, 			// 'BM' (leave alone)
 		0x00, 0x00, 0x00, 0x00, // file size
 		0x00, 0x00, 0x00, 0x00, // padding
 		0x36, 0x00, 0x00, 0x00, // offset to data (leave alone)
 		0x28, 0x00, 0x00, 0x00, // windows mode (leave alone)
 		0x00, 0x00, 0x00, 0x00, // bitmap width
 		0x00, 0x00, 0x00, 0x00, // bitmap height
-		0x01, 0x00,		// planes (1) always!
-		0x20, 0x00, 		// bits per pixel (let's do 32 so no conversion!)
+		0x01, 0x00,				// planes (1) always!
+		0x20, 0x00, 			// bits per pixel (let's do 32 so no conversion!)
 		0x00, 0x00, 0x00, 0x00, // compression (none)
 		0x00, 0x00, 0x00, 0x00, // size of bitmap data
 		0x00, 0x00, 0x00, 0x00,
@@ -1317,5 +1546,3 @@ tilemap_scan( scan_cols )
 {
 	return (cur_map->mheight * col) + row;
 }
-
-

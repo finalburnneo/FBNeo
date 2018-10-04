@@ -1084,7 +1084,7 @@ static INT32 DrvDoReset()
 	M6809Open(0);
 	M6809Reset();
 	for (INT32 i = 0; i < 0x10; i+=2) {
-		M6809WriteRom(0x2000 + i, 0); // send through the game's write handler
+		M6809WriteRom(0x5000 + i, 0); // send through the game's write handler
 	}
 	M6809Close();
 
@@ -1966,11 +1966,8 @@ static INT32 DrvFrame()
 		}
 
 		if (fourwaymode) {
-			DrvInputs[0] ^= 0xff; // make active-high for ProcessJoystick()
-			DrvInputs[1] ^= 0xff;
-
-			ProcessJoystick(&DrvInputs[0], 0, 0,2,3,1, INPUT_4WAY | INPUT_MAKEACTIVELOW);
-			ProcessJoystick(&DrvInputs[1], 1, 0,2,3,1, INPUT_4WAY | INPUT_MAKEACTIVELOW);
+			ProcessJoystick(&DrvInputs[0], 0, 0,2,3,1, INPUT_4WAY | INPUT_ISACTIVELOW);
+			ProcessJoystick(&DrvInputs[1], 1, 0,2,3,1, INPUT_4WAY | INPUT_ISACTIVELOW);
 		}
 	}
 

@@ -1,8 +1,6 @@
 // FB Alpha NMK Argus driver module
 // Based on MAME driver by Yochizo
 
-// todo: figure out Argus' title logo alpha effect
-
 #include "tiles_generic.h"
 #include "burn_bitmap.h"
 #include "z80_intf.h"
@@ -57,6 +55,8 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
+
+static INT32 is_argus = 0;
 
 static struct BurnInputInfo ArgusInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
@@ -977,6 +977,8 @@ static INT32 ArgusInit()
 	GenericTilemapSetTransparent(0, 0xf);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -((256 - nScreenHeight) / 2));
 
+	is_argus = 1;
+
 	DrvDoReset();
 
 	return 0;
@@ -1158,6 +1160,8 @@ static INT32 DrvExit()
 
 	rambank = -1;
 
+	is_argus = 0;
+
 	return 0;
 }
 
@@ -1196,7 +1200,12 @@ static void draw_sprite_blend(INT32 bgmask, INT32 code, INT32 sx, INT32 sy, INT3
 				c += color;
 				INT32 dst = (sy * nScreenWidth) + sx + x;
 
-				if (pTransDraw[dst] >= bgmask) continue;
+				if (pTransDraw[dst] >= bgmask) continue; // Don't draw over text layer
+
+				// Don't allow the title "mask" to get blitted over the background
+				if (is_argus && ((code >= 0x3f0 && code <= 0x3f8) || (code >= 0x3b6 && code <= 0x3bf) ||
+					  (code >= 0x3ac && code <= 0x3af)) && (~pTransDraw[dst] & 0x200))
+					continue;
 
 				UINT8 a = DrvBlendTable[c];
 

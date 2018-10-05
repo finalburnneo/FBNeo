@@ -1056,8 +1056,6 @@ static INT32 ValtricInit()
 	GenericTilemapSetTransparent(0, 0xf);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -((256 - nScreenHeight) / 2));
 
-	BurnBitmapAllocate(1, 512, 512, true);
-
 	DrvDoReset();
 
 	return 0;
@@ -1322,7 +1320,7 @@ static void draw_mosaic()
 	}
 	else
 	{
-		UINT16 *pTempDraw = BurnBitmapGetBitmap(1);
+		UINT16 *pTempDraw = (UINT16*)DrvTransBuffer;
 		GenericTilemapDraw(1, pTempDraw, 0);
 
 		{

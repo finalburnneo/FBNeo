@@ -4685,28 +4685,28 @@ static struct BurnDIPInfo MoonwarDIPList[]=
 {
 	// Default Values
 	{0x0f, 0xff, 0xff, 0x00, NULL                     },
-	{0x10, 0xff, 0xff, 0x03, NULL                     },
-	{0x11, 0xff, 0xff, 0x0c, NULL                     },
+	{0x10, 0xff, 0xff, 0x00, NULL                     },
+	{0x11, 0xff, 0xff, 0x02, NULL                     },
 	
 	// Dip 1
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x10, 0x01, 0x03, 0x03, "3"                      },
-	{0x10, 0x01, 0x03, 0x02, "4"                      },
-	{0x10, 0x01, 0x03, 0x01, "5"                      },
-	{0x10, 0x01, 0x03, 0x00, "Free Play"              },
+	{0x10, 0x01, 0x03, 0x00, "3"                      },
+	{0x10, 0x01, 0x03, 0x01, "4"                      },
+	{0x10, 0x01, 0x03, 0x02, "5"                      },
+	{0x10, 0x01, 0x03, 0x03, "Free Play"              },
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
-	{0x11, 0x01, 0x06, 0x04, "1 Coin 1 Play"          },
-	{0x11, 0x01, 0x06, 0x06, "1 Coin 2 Plays"         },
-	{0x11, 0x01, 0x06, 0x02, "1 Coin 3 Plays"         },
-	{0x11, 0x01, 0x06, 0x00, "1 Coin 4 Plays"         },
+	{0x11, 0x01, 0x06, 0x02, "1 Coin 1 Play"          },
+	{0x11, 0x01, 0x06, 0x00, "1 Coin 2 Plays"         },
+	{0x11, 0x01, 0x06, 0x04, "1 Coin 3 Plays"         },
+	{0x11, 0x01, 0x06, 0x06, "1 Coin 4 Plays"         },
 	
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x11, 0x01, 0x08, 0x08, "Upright"                },
-	{0x11, 0x01, 0x08, 0x00, "Cocktail"               },
+	{0   , 0xfe, 0   , 1   , "Cabinet"                }, // Coctail mode in this game has serious issues - disabled.
+	{0x11, 0x01, 0x08, 0x00, "Upright"                },
+	//{0x11, 0x01, 0x08, 0x08, "Cocktail"               },
 };
 
 STDDIPINFO(Moonwar)
@@ -4715,28 +4715,28 @@ static struct BurnDIPInfo MoonwaraDIPList[]=
 {
 	// Default Values
 	{0x0f, 0xff, 0xff, 0x00, NULL                     },
-	{0x10, 0xff, 0xff, 0x03, NULL                     },
-	{0x11, 0xff, 0xff, 0x0e, NULL                     },
+	{0x10, 0xff, 0xff, 0x00, NULL                     },
+	{0x11, 0xff, 0xff, 0x00, NULL                     },
 	
 	// Dip 1
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x10, 0x01, 0x03, 0x03, "3"                      },
-	{0x10, 0x01, 0x03, 0x02, "4"                      },
-	{0x10, 0x01, 0x03, 0x01, "5"                      },
-	{0x10, 0x01, 0x03, 0x00, "Free Play"              },
+	{0x10, 0x01, 0x03, 0x00, "3"                      },
+	{0x10, 0x01, 0x03, 0x01, "4"                      },
+	{0x10, 0x01, 0x03, 0x02, "5"                      },
+	{0x10, 0x01, 0x03, 0x03, "Free Play"              },
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
-	{0x11, 0x01, 0x06, 0x06, "1 Coin 1 Play"          },
-	{0x11, 0x01, 0x06, 0x04, "1 Coin 2 Plays"         },
-	{0x11, 0x01, 0x06, 0x02, "1 Coin 3 Plays"         },
-	{0x11, 0x01, 0x06, 0x00, "1 Coin 4 Plays"         },
+	{0x11, 0x01, 0x06, 0x00, "1 Coin 1 Play"          },
+	{0x11, 0x01, 0x06, 0x02, "1 Coin 2 Plays"         },
+	{0x11, 0x01, 0x06, 0x04, "1 Coin 3 Plays"         },
+	{0x11, 0x01, 0x06, 0x06, "1 Coin 4 Plays"         },
 	
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x11, 0x01, 0x08, 0x08, "Upright"                },
-	{0x11, 0x01, 0x08, 0x00, "Cocktail"               },
+	{0   , 0xfe, 0   , 1   , "Cabinet"                },
+	{0x11, 0x01, 0x08, 0x00, "Upright"                },
+	//{0x11, 0x01, 0x08, 0x08, "Cocktail"               },
 };
 
 STDDIPINFO(Moonwara)
@@ -20750,7 +20750,7 @@ static INT32 SuperbonInit()
 	INT32 nRet;
 	
 	GalPostLoadCallbackFunction = SuperbonPostLoad;
-	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;	
+	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
@@ -20798,7 +20798,7 @@ static INT32 CalipsoInit()
 
 static UINT8 MoonwarPPIReadIN0()
 {
-	UINT8 Input0 = 0xff - GalInput[0] - GalDip[0];
+	UINT8 Input0 = (GalInput[0] ^ 0xff);
 	UINT8 Direction = 0;
 	UINT8 Delta = 0;
 	if (MoonwarPortSelect == 0) {
@@ -20816,9 +20816,19 @@ static UINT8 MoonwarPPIReadIN0()
 	return (Input0 & 0xe0) | Delta | Direction;
 }
 
+static UINT8 MoonwarPPIReadIN1()
+{
+	return ((GalInput[1] ^ 0xff) & ~3) | (GalDip[1] & 3);
+}
+
+static UINT8 MoonwarPPIReadIN2()
+{
+	return ((GalInput[2] ^ 0xff) & 1) | (GalDip[2] & 0xe) | 0xf0;
+}
+
 static void MoonwarPortSelectWrite(UINT8 d)
 {
-	MoonwarPortSelect = ((d & 0x10) >> 4) ^ ((GameIsMoonwar & 2) >> 1); // "Moonwara" value is flipped
+	MoonwarPortSelect = ((d & 0x10) >> 4) ^ 1;
 }
 
 static INT32 MoonwarInit()
@@ -20835,7 +20845,7 @@ static INT32 MoonwarInit()
 	GalDrawBulletsFunction = MoonwarDrawBullets;
 	
 	KonamiPPIInit();
-	ppi8255_set_read_port(0, 0xa, MoonwarPPIReadIN0);
+	ppi8255_set_read_ports(0, MoonwarPPIReadIN0, MoonwarPPIReadIN1, MoonwarPPIReadIN2);
 	ppi8255_set_write_port(0, 0xc, MoonwarPortSelectWrite);
 
 	filter_rc_set_src_gain(0, 0.20);
@@ -20846,15 +20856,6 @@ static INT32 MoonwarInit()
 	filter_rc_set_src_gain(5, 0.20);
 
 	GameIsMoonwar = 1;
-
-	return nRet;
-}
-
-static INT32 MoonwaraInit()
-{
-	INT32 nRet = MoonwarInit();
-
-	GameIsMoonwar |= 2; // 2 == "moonwara"
 
 	return nRet;
 }
@@ -21476,7 +21477,7 @@ struct BurnDriver BurnDrvMoonwara = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SHOOT, 0,
 	NULL, MoonwaraRomInfo, MoonwaraRomName, NULL, NULL, MoonwarInputInfo, MoonwaraDIPInfo,
-	MoonwaraInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	MoonwarInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

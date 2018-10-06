@@ -2693,6 +2693,8 @@ static INT32 DecocassGetRoms()
 
 static INT32 DecocassInit(UINT8 (*read)(UINT16),void (*write)(UINT16,UINT8))
 {
+	BurnSetRefreshRate(57.44);
+
 	prot_write = write;
 	prot_read = read;
 

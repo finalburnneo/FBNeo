@@ -1332,6 +1332,8 @@ static INT32 MemIndex()
 
 static INT32 DrvDoReset()
 {
+	BurnSetRefreshRate(57.44);
+
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	M6502Open(0);

@@ -727,6 +727,8 @@ static INT32 LoadNibbles(UINT8 *dst, INT32 idx, INT32 len)
 
 static INT32 DrvInit()
 {
+	BurnSetRefreshRate(54.87);
+
 	GenericTilesInit();
 
 	AllMem = NULL;
@@ -994,7 +996,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 286;
-	INT32 nCyclesTotal[3] = { 6000000 / 60, 3500000 / 60, 14000000 / 60 };
+	INT32 nCyclesTotal[3] = { (INT32)((double)6000000 / 54.87), (INT32)((double)3500000 / 54.87), (INT32)((double)14000000 / 54.87) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	vblank = 0;

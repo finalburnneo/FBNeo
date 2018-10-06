@@ -222,7 +222,7 @@ static struct BurnInputInfo Megadrive5pInputList[] = {
 STDINPUTINFO(Megadrive5p)
 
 static struct BurnDIPInfo MegadriveDIPList[] = {
-	{0x1a,	0xff, 0xff, 0x02,  NULL               },
+	{0x1a,	0xff, 0xff, 0x01,  NULL               },
 
 	{0,	0xfe, 0,       5, "Hardware"          },
 	{0x19,	0x01, 0xc1, 0x01, "Auto Detect"       },

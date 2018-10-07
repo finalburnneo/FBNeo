@@ -436,8 +436,8 @@ void K052109Exit()
 	K052109RomMask = 0;
 	K052109Rom = NULL;
 	
-	memset(K052109ScrollX, 0, 3);
-	memset(K052109ScrollY, 0, 3);
+	memset(K052109ScrollX, 0, sizeof(K052109ScrollX));
+	memset(K052109ScrollY, 0, sizeof(K052109ScrollY));
 	K052109ScrollCtrl = 0;
 	memset(K052109CharRomBank, 0, 4);
 	K052109RMRDLine = 0;

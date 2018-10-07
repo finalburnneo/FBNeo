@@ -85,10 +85,10 @@ UINT8 __fastcall hotdogstReadByte(UINT32 sekAddress)
 void __fastcall hotdogstWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress) {
-			if (~byteValue & 0x0100) {
 		case 0xd00000:
-			EEPROMWrite(byteValue & 0x04, byteValue & 0x02, byteValue & 0x08);
-			break;
+			{
+				EEPROMWrite(byteValue & 0x04, byteValue & 0x02, byteValue & 0x08);
+				break;
 			}
 		default: {
 			bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
@@ -148,7 +148,10 @@ void __fastcall hotdogstWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			CaveSpriteBuffer();
 			nCaveSpriteBank = wordValue;
 			return;
-		
+
+		case 0xa8006c: // nop
+			return;
+
 		case 0xa8006e: {
 			DrvSoundLatch = wordValue;
 			ZetNmi();

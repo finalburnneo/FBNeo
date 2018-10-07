@@ -828,7 +828,7 @@ void TC0480SCPRenderCharLayer()
 void TC0480SCPReset()
 {
 	memset(TC0480SCPChars, 0, 256 * 8 * 8);
-	memset(TC0480SCPCtrl, 0, 0x18);
+	memset(TC0480SCPCtrl, 0, sizeof(TC0480SCPCtrl));
 	BgScrollX[0] = BgScrollX[1] = BgScrollX[2] = BgScrollX[3] = 0;
 	BgScrollY[0] = BgScrollY[1] = BgScrollY[2] = BgScrollY[3] = 0;
 	CharScrollX = 0;
@@ -881,7 +881,7 @@ void TC0480SCPExit()
 	BurnFree(TC0480SCPChars);
 	BurnFree(pTC0480SCPTempDraw);
 	
-	memset(TC0480SCPCtrl, 0, 0x18);
+	memset(TC0480SCPCtrl, 0, sizeof(TC0480SCPCtrl));
 	BgScrollX[0] = BgScrollX[1] = BgScrollX[2] = BgScrollX[3] = 0;
 	BgScrollY[0] = BgScrollY[1] = BgScrollY[2] = BgScrollY[3] = 0;
 	CharScrollX = 0;

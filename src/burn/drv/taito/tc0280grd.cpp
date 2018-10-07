@@ -162,7 +162,7 @@ void TC0280GRDCtrlWordWrite(UINT32 Offset, UINT16 Data)
 
 void TC0280GRDReset()
 {
-	memset(TC0280GRDCtrl, 0, 8);
+	memset(TC0280GRDCtrl, 0, sizeof(TC0280GRDCtrl));
 	
 	TC0280GRDBaseColour = 0;
 }
@@ -205,7 +205,7 @@ void TC0280GRDExit()
 	BurnFree(TC0280GRDRam);
 	BurnFree(pRozTileMapData);
 	
-	memset(TC0280GRDCtrl, 0, 8);
+	memset(TC0280GRDCtrl, 0, sizeof(TC0280GRDCtrl));
 	
 	TC0280GRDBaseColour = 0;
 	

@@ -4420,7 +4420,7 @@ static void KungfumRenderBgLayer(INT32 PriorityToRender, INT32 Cols, INT32 Rows,
 			Code |= (Colour & 0xc0) << 2;
 			Code &= (M62NumTiles - 1);
 
-			if ((TileIndex / 64) << 6 || ((Colour & 0x1f) >> 1) > 0x0c) {
+			if ((TileIndex / 64) < 6 || ((Colour & 0x1f) >> 1) > 0x0c) {
 				Priority = 1;
 			} else {
 				Priority = 0;

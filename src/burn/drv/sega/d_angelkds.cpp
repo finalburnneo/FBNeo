@@ -45,7 +45,7 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[3];
 static UINT8 DrvReset;
-static UINT16 DrvInputs[3];
+static UINT8 DrvInputs[3];
 
 static struct BurnInputInfo AngelkdsInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},

@@ -5472,8 +5472,8 @@ static INT32 CommonExit()
 	PlayTitleSample = 0;
 	TitleSamplePos = 0;
 	SpriteColourBase = 0;
-	memset(LayerColourBase, 0, 3);
-	memset(LayerPri, 0, 3);
+	memset(LayerColourBase, 0, sizeof(LayerColourBase));
+	memset(LayerPri, 0, sizeof(LayerPri));
 	PriorityFlag = 0;
 	
 	DrvNvRamBank = 0;

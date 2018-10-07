@@ -2229,10 +2229,14 @@ static inline UINT16 get_palette_register(INT32 reg)
 
 static inline void adjust_clip()
 {
-	if (min_x > nScreenWidth) min_x = nScreenWidth-1; if (min_x < 0) min_x = 0;
-	if (max_x > nScreenWidth) max_x = nScreenWidth-1; if (max_x < 0) max_x = 0;
-	if (min_y > nScreenHeight) min_y = nScreenHeight-1; if (min_y < 0) min_y = 0;
-	if (max_y > nScreenHeight) max_y = nScreenHeight-1; if (max_y < 0) max_y = 0;
+	if (min_x > nScreenWidth) min_x = nScreenWidth-1;
+	if (min_x < 0) min_x = 0;
+	if (max_x > nScreenWidth) max_x = nScreenWidth-1;
+	if (max_x < 0) max_x = 0;
+	if (min_y > nScreenHeight) min_y = nScreenHeight-1;
+	if (min_y < 0) min_y = 0;
+	if (max_y > nScreenHeight) max_y = nScreenHeight-1;
+	if (max_y < 0) max_y = 0;
 }
 
 static void apply_clip()

@@ -599,7 +599,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	graphics_bank = 0;
 	question_rom = 0;
 	question_address = 0;
-	memset (remap_address, 0, 0x10);
+	memset (remap_address, 0, sizeof(remap_address));
 
 	return 0;
 }

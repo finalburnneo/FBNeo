@@ -341,8 +341,8 @@ void CheatSearchExit()
 	
 	nMemorySize = 0;
 	
-	memset(CheatSearchShowResultAddresses, 0, CHEATSEARCH_SHOWRESULTS);
-	memset(CheatSearchShowResultValues, 0, CHEATSEARCH_SHOWRESULTS);
+	memset(CheatSearchShowResultAddresses, 0, sizeof(CheatSearchShowResultAddresses));
+	memset(CheatSearchShowResultValues, 0, sizeof(CheatSearchShowResultValues));
 }
 
 void CheatSearchStart()
@@ -380,9 +380,9 @@ static void CheatSearchGetResults()
 	UINT32 nAddress;
 	UINT32 nResultsPos = 0;
 	
-	memset(CheatSearchShowResultAddresses, 0, CHEATSEARCH_SHOWRESULTS);
-	memset(CheatSearchShowResultValues, 0, CHEATSEARCH_SHOWRESULTS);
-	
+	memset(CheatSearchShowResultAddresses, 0, sizeof(CheatSearchShowResultAddresses));
+	memset(CheatSearchShowResultValues, 0, sizeof(CheatSearchShowResultValues));
+
 	for (nAddress = 0; nAddress < nMemorySize; nAddress++) {		
 		if (MemoryStatus[nAddress] == IN_RESULTS) {
 			CheatSearchShowResultAddresses[nResultsPos] = nAddress;

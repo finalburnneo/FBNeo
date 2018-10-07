@@ -484,7 +484,7 @@ void TC0100SCNRenderCharLayer(INT32 Chip, INT32 Priority)
 void TC0100SCNReset()
 {
 	for (INT32 i = 0;i < TC0100SCNNum; i++) {
-		memset(TC0100SCNCtrl[i], 0, 8);	
+		memset(TC0100SCNCtrl[i], 0, sizeof(TC0100SCNCtrl[i]));
 		memset(TC0100SCNChars[i], 0, 256 * 8 * 8);
 		
 		BgScrollX[i] = 0;
@@ -574,7 +574,7 @@ void TC0100SCNExit()
 		BurnFree(pTC0100SCNBgTempDraw[i]);
 		BurnFree(pTC0100SCNFgTempDraw[i]);
 		
-		memset(TC0100SCNCtrl[i], 0, 8);
+		memset(TC0100SCNCtrl[i], 0, sizeof(TC0100SCNCtrl[i]));
 		
 		BgScrollX[i] = 0;
 		BgScrollY[i] = 0;

@@ -92,11 +92,9 @@ UINT8 __fastcall metmqstrReadByte(UINT32 sekAddress)
 void __fastcall metmqstrWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress) {
-			if (~byteValue & 0x0100) {
 		case 0xd00000:
 			EEPROMWrite(byteValue & 0x04, byteValue & 0x02, byteValue & 0x08);
 			break;
-			}
 		default: {
 			bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
 
@@ -210,10 +208,10 @@ void __fastcall metmqstrWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		
 		case 0xd00000:
 			if (~wordValue & 0x0100) {
-			wordValue >>= 8;
-			EEPROMWrite(wordValue & 0x04, wordValue & 0x02, wordValue & 0x08);
-			break;
+				wordValue >>= 8;
+				EEPROMWrite(wordValue & 0x04, wordValue & 0x02, wordValue & 0x08);
 			}
+			break;
 		default: {
 			bprintf(PRINT_NORMAL, _T("Attempt to write word value %x to location %x\n"), wordValue, sekAddress);
 

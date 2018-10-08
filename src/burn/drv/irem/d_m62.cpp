@@ -4665,7 +4665,6 @@ static INT32 KungfumDraw()
 	if (nBurnLayer & 1) KungfumRenderBgLayer(0, 64, 32, 0);
 	if (nSpriteEnable & 1) M62RenderSprites(0x1f, 0, 0, 128, 256);
 	if (nBurnLayer & 2) KungfumRenderBgLayer(1, 64, 32, 0);
-	// this makes no sense. if (nBurnLayer & 4) KungfumRenderBgLayer(0, 64, 32, 1);
 	BurnTransferCopy(M62Palette);
 
 	return 0;

@@ -40,7 +40,7 @@ static UINT8 *DrvZ80RAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT32 nExtraCycles[2];
+static INT32 nExtraCycles[3];
 
 static UINT16 *scrollx;
 static UINT16 *scrolly;
@@ -856,7 +856,7 @@ static INT32 DrvDoReset()
 	twin16_CPUA_register = 0;
 	twin16_CPUB_register = 0;
 
-	nExtraCycles[0] = nExtraCycles[1] = 0;
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
 	return 0;
 }
@@ -879,7 +879,7 @@ static INT32 MemIndex()
 	DrvGfxExp	= Next; Next += 0x400000;
 	DrvNvRAM	= Next; Next += 0x008000;
 
-	DrvPalette	= (UINT32*)Next; Next += 0x0400 * 2 * sizeof(UINT32); // first: normal, second (+0x400) shadow
+	DrvPalette	= (UINT32*)Next; Next += 0x0401 * 2 * sizeof(UINT32); // first: normal, second (+0x400) shadow, 0x801 default shadow
 
 	AllRam		= Next;
 
@@ -1066,7 +1066,8 @@ enum
 	// user-defined priorities
 	TWIN16_BG_OVER_SPRITES = 0x01, // BG pixel has priority over opaque sprite pixels
 	TWIN16_BG_NO_SHADOW    = 0x02, // BG pixel has priority over shadow sprite pixels
-	TWIN16_SPRITE_OCCUPIED = 0x04
+	TWIN16_SPRITE_OCCUPIED = 0x04,
+	TWIN16_BG_DEF_SHADOW   = 0x08  // BG pixel can't be shadowed but use a default shadow  -dink
 };
 
 #define CLAMP8(x) do { if (x > 0xff) x = 0xff; if (x < 0) x = 0; } while (0)
@@ -1090,12 +1091,13 @@ static inline void DrvRecalcPal()
 		// Regular palette
 		DrvPalette[0x0000 + i/2] = BurnHighCol(r, g, b, 0);
 
-		// Shadow palette (1/2 intensity, used in devilw)
+		// Shadow palette (1/2 intensity, used in devilw, miaj, fround)
 		r /= 2; CLAMP8(r);
 		g /= 2; CLAMP8(g);
 		b /= 2; CLAMP8(b);
 
 		DrvPalette[0x0400 + i/2] = BurnHighCol(r, g, b, 0);
+		DrvPalette[0x0801] = BurnHighCol(0x28, 0x28, 0x28, 0); // default shadow
 	}
 }
 
@@ -1292,8 +1294,10 @@ static void draw_sprites()
 
 								if (pen==0xf) // shadow
 								{
-									if (!(pdest[sx] & TWIN16_BG_NO_SHADOW))
-										dest[sx] = dest[sx] + 0x0400; //DrvPalette[0x0400 + dest[sx]];
+									if (pdest[sx] & TWIN16_BG_DEF_SHADOW)
+										dest[sx] = 0x801;
+									else if (!(pdest[sx] & TWIN16_BG_NO_SHADOW))
+										dest[sx] = dest[sx] + 0x0400;
 								}
 								else // opaque pixel
 								{
@@ -1320,7 +1324,9 @@ static INT32 DrvDraw()
 	switch ((video_register >> 2) & 0x3)
 	{
 		case 0:
-			if (nBurnLayer & 1) draw_layer(1, -1, TMAP_DRAWOPAQUE);
+			// Layer 1 is the lava on the lava world in devilw, mark it to use default (solid) shadow,
+			// otherwise we show shadowed lava on the sprite-rock platforms -dink
+			if (nBurnLayer & 1) draw_layer(1, -1, TMAP_DRAWOPAQUE | TWIN16_BG_DEF_SHADOW);
 			if (nBurnLayer & 2) draw_layer(0, -1, 0);
 			break;
 		case 1:
@@ -1377,9 +1383,8 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 264;
 	if (twin16_custom_video == 0 && is_vulcan == 0) nInterleave = 600; // devilw
-
-	INT32 nCyclesTotal[3] = { (twin16_custom_video == 1) ? 10000000 / 60 : (INT32)((double)9216000 / 60.606061), (INT32)((double)9216000 / 60.606061), (INT32)((double)3579545 / 60.606061) };
-	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
+	INT32 nCyclesTotal[3] = { (INT32)((double)9216000 / 60.606061), (INT32)((double)9216000 / 60.606061), (INT32)((double)3579545 / 60.606061) };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	ZetOpen(0);
 
@@ -1423,6 +1428,7 @@ static INT32 DrvFrame()
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnDraw) {
 		DrvDraw();

@@ -73,8 +73,8 @@ static UINT8 M62Port2;
 static UINT8 M62SlaveMSM5205VClckReset;
 #endif
 static UINT32 M62PaletteEntries;
-static INT32 M62Z80Clock;
-static INT32 M62M6803Clock;
+static INT32 M62Z80Clock = 0;
+static INT32 M62M6803Clock = 0;
 static UINT8 M62BankControl[2];
 static UINT8 Ldrun2BankSwap;
 static UINT8 Ldrun3TopBottomMask;
@@ -3441,7 +3441,7 @@ static void M62MachineInit()
 	ZetClose();
 
 #ifdef USE_SOUND_DEVICE
-	IremSoundInit(M62M6803Rom, 1, 4000000, AY8910_1PortAWrite);
+	IremSoundInit(M62M6803Rom, 1, M62Z80Clock, AY8910_1PortAWrite);
 	MSM5205SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 	MSM5205SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
@@ -3497,7 +3497,7 @@ static void M62MachineInit()
 
 	GenericTilesInit();
 
-	M62Z80Clock = 4000000;
+	if (M62Z80Clock == 0) M62Z80Clock = 4000000;
 	M62M6803Clock = 894886;
 
 	M62SpriteHeightPromOffset = (M62PaletteEntries & 0xf00) * 3;
@@ -3505,14 +3505,14 @@ static void M62MachineInit()
 
 static INT32 KungfumMachineInit()
 {
+	M62Z80Clock = 3072000;
+
 	M62MachineInit();
 
 	ZetOpen(0);
 	ZetSetReadHandler(KungfumZ80Read);
 	ZetSetWriteHandler(KungfumZ80Write);
 	ZetClose();
-
-	M62Z80Clock = 3072000;
 
 	M62DoReset();
 
@@ -3521,6 +3521,8 @@ static INT32 KungfumMachineInit()
 
 static INT32 BattroadMachineInit()
 {
+	M62Z80Clock = 3072000;
+
 	M62MachineInit();
 
 	ZetOpen(0);
@@ -3531,8 +3533,6 @@ static INT32 BattroadMachineInit()
 	ZetMapArea(0xc800, 0xcfff, 1, M62CharRam        );
 	ZetMapArea(0xc800, 0xcfff, 2, M62CharRam        );
 	ZetClose();
-
-	M62Z80Clock = 3072000;
 
 	M62ExtendTileInfoFunction = BattroadExtendTile;
 	M62ExtendCharInfoFunction = BattroadExtendChar;
@@ -3652,6 +3652,8 @@ static INT32 KidnikiMachineInit()
 
 static INT32 SpelunkrMachineInit()
 {
+	M62Z80Clock = 5000000; // needs a little boost or the top bg tiles don't scroll right. weird. -dink
+
 	M62MachineInit();
 
 	ZetOpen(0);
@@ -3671,7 +3673,6 @@ static INT32 SpelunkrMachineInit()
 
 	M62ExtendTileInfoFunction = SpelunkrExtendTile;
 	M62ExtendCharInfoFunction = SpelunkrExtendChar;
-	M62Z80Clock = 5000000; // needs a little boost or the top bg tiles don't scroll right. weird. -dink
 
 	M62DoReset();
 
@@ -3711,6 +3712,8 @@ static INT32 Spelunk2MachineInit()
 
 static INT32 YoujyudnMachineInit()
 {
+	M62Z80Clock = 3072000;
+
 	M62MachineInit();
 
 	ZetOpen(0);
@@ -3727,8 +3730,6 @@ static INT32 YoujyudnMachineInit()
 
 	M62ExtendTileInfoFunction = YoujyudnExtendTile;
 	M62ExtendCharInfoFunction = YoujyudnExtendChar;
-
-	M62Z80Clock = 3072000;
 
 	M62DoReset();
 
@@ -4420,7 +4421,7 @@ static void KungfumRenderBgLayer(INT32 PriorityToRender, INT32 Cols, INT32 Rows,
 			Code |= (Colour & 0xc0) << 2;
 			Code &= (M62NumTiles - 1);
 
-			if ((TileIndex / 64) < 6 || ((Colour & 0x1f) >> 1) > 0x0c) {
+			if (((TileIndex / 64) < 6) || (((Colour & 0x1f) >> 1) > 0x0c)) {
 				Priority = 1;
 			} else {
 				Priority = 0;
@@ -4662,9 +4663,9 @@ static INT32 KungfumDraw()
 	BurnTransferClear();
 	M62CalcPalette();
 	if (nBurnLayer & 1) KungfumRenderBgLayer(0, 64, 32, 0);
-	if (nBurnLayer & 2) KungfumRenderBgLayer(1, 64, 32, 0);
 	if (nSpriteEnable & 1) M62RenderSprites(0x1f, 0, 0, 128, 256);
-	if (nBurnLayer & 4) KungfumRenderBgLayer(0, 64, 32, 1);
+	if (nBurnLayer & 2) KungfumRenderBgLayer(1, 64, 32, 0);
+	// this makes no sense. if (nBurnLayer & 4) KungfumRenderBgLayer(0, 64, 32, 1);
 	BurnTransferCopy(M62Palette);
 
 	return 0;

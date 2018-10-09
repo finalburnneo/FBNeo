@@ -1451,9 +1451,15 @@ static INT32 DrvFrame()
 			twin16_spriteram_process();
 		need_process_spriteram = 1;
 
-		memcpy(DrvSprBuf + 0x3000, DrvSprBuf2, 0x1000);
-		memcpy(DrvSprBuf2, DrvSprRAM + 0x3000, 0x1000);
-	} else {
+		if (is_devilw) {
+			// devilw needs an extra layer of sprite buffering to sync sprite:tile layers
+			// but this causes the ground turrets in gradius to desync from bg.
+			memcpy(DrvSprBuf + 0x3000, DrvSprBuf2, 0x1000);
+			memcpy(DrvSprBuf2, DrvSprRAM + 0x3000, 0x1000);
+		}
+	}
+
+	if (!is_devilw) {
 		memcpy (DrvSprBuf, DrvSprRAM, 0x4000);
 	}
 

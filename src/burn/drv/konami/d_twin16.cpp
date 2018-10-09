@@ -27,6 +27,7 @@ static UINT8 *DrvVidRAM2;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprBuf;
+static UINT8 *DrvSprBuf2;
 static UINT8 *DrvNvRAM;
 static UINT8 *DrvNvRAMBank;
 static UINT8 *Drv68KRAM1;
@@ -48,6 +49,8 @@ static UINT16 *scrolly;
 static UINT8 *soundlatch;
 static UINT8 *soundlatch2;
 
+static INT32 sprite_timer;
+
 static INT32 video_register;
 static INT32 gfx_bank;
 
@@ -58,6 +61,7 @@ static INT32 need_process_spriteram;
 static INT32 twin16_custom_video;
 static INT32 is_vulcan = 0;
 static INT32 is_cuebrick = 0;
+static INT32 is_devilw = 0;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -523,7 +527,9 @@ static void twin16_spriteram_process()
 	UINT16 *source = spriteram16;
 	UINT16 *finish = spriteram16 + 0x1800;
 
-	memset(&spriteram16[0x1800], 0, 0x800);
+	sprite_timer = 2;
+
+	memset(&spriteram16[0x1800], 0, 0x800 * sizeof(UINT16));
 
 	while (source < finish)
 	{
@@ -575,8 +581,11 @@ static void twin16_CPUA_register_w(INT32 data)
 			twin16_spriteram_process();
 
 		if ((twin16_CPUA_register & 0x10) == 0 && (data & 0x10)) {
+			INT32 cyc = SekTotalCycles();
 			SekClose();
 			SekOpen(1);
+			cyc = cyc - SekTotalCycles();
+			if (cyc > 0) SekRun(cyc);
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			SekClose();
 			SekOpen(0);
@@ -594,8 +603,11 @@ static void twin16_CPUB_register_w(INT32 data)
 	{
 		if ((old & 0x01) == 0 && (twin16_CPUB_register & 0x01))
 		{
+			INT32 cyc = SekTotalCycles();
 			SekClose();
 			SekOpen(0);
+			cyc = cyc - SekTotalCycles();
+			if (cyc > 0) SekRun(cyc);
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			SekClose();
 			SekOpen(1);
@@ -667,11 +679,7 @@ UINT16 __fastcall twin16_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x0c000e:
-		case 0x0c000f: {
-			static INT32 ret = 0;
-			ret = 1-ret;
-			return ret;
-		}
+			return (sprite_timer > 0) ? 1 : 0;
 
 		case 0x0a0000:
 		case 0x0a0002:
@@ -696,12 +704,8 @@ UINT8 __fastcall twin16_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
-		case 0x0c000e:
-		case 0x0c000f: {
-			static INT32 ret = 0;
-			ret = 1-ret;
-			return ret;
-		}
+		case 0x0c000f:
+			return (sprite_timer > 0) ? 1 : 0;
 
 		case 0x0a0000:
 		case 0x0a0001:
@@ -853,6 +857,8 @@ static INT32 DrvDoReset()
 	gfx_bank = 0x3210; // for other than fround
 	video_register = 0;
 
+	sprite_timer = 0;
+
 	twin16_CPUA_register = 0;
 	twin16_CPUB_register = 0;
 
@@ -885,6 +891,7 @@ static INT32 MemIndex()
 
 	DrvSprRAM	= Next; Next += 0x004000;
 	DrvSprBuf	= Next; Next += 0x004000;
+	DrvSprBuf2	= Next; Next += 0x004000;
 	DrvShareRAM	= Next; Next += 0x010000;
 	Drv68KRAM0	= Next; Next += 0x004000;
 	DrvPalRAM	= Next; Next += 0x001000;
@@ -1046,6 +1053,7 @@ static INT32 DrvExit()
 
 	is_cuebrick = 0;
 	is_vulcan = 0;
+	is_devilw = 0;
 	twin16_custom_video = 0;
 
 	return 0;
@@ -1326,7 +1334,7 @@ static INT32 DrvDraw()
 		case 0:
 			// Layer 1 is the lava on the lava world in devilw, mark it to use default (solid) shadow,
 			// otherwise we show shadowed lava on the sprite-rock platforms -dink
-			if (nBurnLayer & 1) draw_layer(1, -1, TMAP_DRAWOPAQUE | TWIN16_BG_DEF_SHADOW);
+			if (nBurnLayer & 1) draw_layer(1, -1, TMAP_DRAWOPAQUE | ((is_devilw) ? TWIN16_BG_DEF_SHADOW : 0));
 			if (nBurnLayer & 2) draw_layer(0, -1, 0);
 			break;
 		case 1:
@@ -1383,7 +1391,7 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 264;
 	if (twin16_custom_video == 0 && is_vulcan == 0) nInterleave = 600; // devilw
-	INT32 nCyclesTotal[3] = { (INT32)((double)9216000 / 60.606061), (INT32)((double)9216000 / 60.606061), (INT32)((double)3579545 / 60.606061) };
+	INT32 nCyclesTotal[3] = { 9216000 / 60, 9216000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	ZetOpen(0);
@@ -1412,6 +1420,8 @@ static INT32 DrvFrame()
 			K007232Update(0, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
+
+		if (sprite_timer > 0) sprite_timer--;
 	}
 
 	if (pBurnSoundOut) {
@@ -1434,12 +1444,18 @@ static INT32 DrvFrame()
 		DrvDraw();
 	}
 
-	if (~twin16_CPUA_register & 0x40 && need_process_spriteram)
-		twin16_spriteram_process();
+	sprite_timer = 2; // set regardless
 
-	need_process_spriteram = 1;
+	if (~twin16_CPUA_register & 0x40) {
+		if (need_process_spriteram)
+			twin16_spriteram_process();
+		need_process_spriteram = 1;
 
-	memcpy (DrvSprBuf, DrvSprRAM, 0x4000);
+		memcpy(DrvSprBuf + 0x3000, DrvSprBuf2, 0x1000);
+		memcpy(DrvSprBuf2, DrvSprRAM + 0x3000, 0x1000);
+	} else {
+		memcpy (DrvSprBuf, DrvSprRAM, 0x4000);
+	}
 
 	return 0;
 }
@@ -1480,6 +1496,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(video_register);
 		SCAN_VAR(twin16_CPUA_register);
 		SCAN_VAR(twin16_CPUB_register);
+		SCAN_VAR(sprite_timer);
+
 		SCAN_VAR(nExtraCycles);
 	}
 
@@ -1565,6 +1583,7 @@ static INT32 devilwCallback()
 static INT32 devilwInit()
 {
 	twin16_custom_video = 0;
+	is_devilw = 1;
 
 	return DrvInit(devilwCallback);
 }

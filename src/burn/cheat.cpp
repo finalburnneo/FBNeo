@@ -53,13 +53,12 @@ INT32 CheatUpdate()
 	return 0;
 }
 
-INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable, -2 disable & don't undo memory
+INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 {
 	INT32 nCurrentCheat = 0;
 	CheatInfo* pCurrentCheat = pCheatInfo;
 	CheatAddressInfo* pAddressInfo;
 	INT32 nOpenCPU = -1;
-	INT32 no_undo = 0;
 
 	if (!bCheatsAllowed) {
 		return 1;
@@ -76,8 +75,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable, -2 disable &
 		if (nCurrentCheat == nCheat) { // Cheat found, let's process it.
 			INT32 deactivate = 0;
 
-			if (nOption == -1 || nOption == 0 || nOption == -2) { // -2 = dont write back previous
-				if (nOption == -2) no_undo = 1;
+			if (nOption == -1 || nOption == 0) {
 				nOption = pCurrentCheat->nDefault;
 				deactivate = 1;
 			}
@@ -107,7 +105,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable, -2 disable &
 							cheat_subptr->open(cheat_ptr->nCPU);
 						}
 
-						if (!no_undo) {
+						if (pCurrentCheat->bRestoreOnDisable) {
 							// Write back original values to memory
 							bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
 							bprintf(0, _T("Undo cheat @ 0x%X -> 0x%X.\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
@@ -267,7 +265,7 @@ INT32 CheatApply()
 						nOpenCPU = -1;
 					}
 					bprintf(0, _T("One-Shot cheat #%d ends.\n"), nCurrentCheat);
-					CheatEnable(nCurrentCheat, -2);
+					CheatEnable(nCurrentCheat, -1);
 				}
 				if (pCurrentCheat->bOneShot > 1) pCurrentCheat->bOneShot--;
 			}

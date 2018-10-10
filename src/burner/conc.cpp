@@ -543,6 +543,9 @@ static INT32 ConfigParseMAMEFile()
 				if (flags & 0x2) {
 					pCurrentCheat->bWaitForModification = 1; // wait for modification before changing
 				}
+				if (flags & 0x800000) {
+					pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
+				}
 				if ((flags & 0x6) == 0x6) {
 					pCurrentCheat->bWatchMode = 1; // display value @ address
 				}
@@ -582,6 +585,9 @@ static INT32 ConfigParseMAMEFile()
 			}
 			if ((flags & 0x6) == 0x6) {
 				pCurrentCheat->bWatchMode = 1; // display value @ address
+			}
+			if (flags & 0x800000) {
+				pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
 			}
 
 			OptionName(tmp);

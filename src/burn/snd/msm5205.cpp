@@ -325,7 +325,7 @@ void MSM5205SetRightVolume(INT32 chip, double nRightVolume)
 #endif
 
 	voice = &chips[chip];
-	voice->left_volume = nRightVolume;
+	voice->right_volume = nRightVolume;
 }
 
 void MSM5205SetSeperateVolumes(INT32 chip, INT32 state)

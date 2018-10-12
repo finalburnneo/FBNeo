@@ -93,7 +93,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			\
 			6821pia.o 8255ppi.o 8257dma.o c169.o avgdvg.o bsmt2000.o decobsmt.o earom.o eeprom.o gaelco_crypt.o joyprocess.o nb1414m4.o nb1414m4_8bit.o nmk004.o nmk112.o kaneko_tmap.o mathbox.o mb87078.o \
 			mermaid.o namco_c45.o namcoio.o pandora.o resnet.o seibusnd.o sknsspr.o slapstic.o st0020.o t5182.o timekpr.o tms34061.o v3021.o vdc.o tms9928a.o \
-			watchdog.o \
+			watchdog.o x2212.o \
 			\
 			asteroids.o ay8910.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o burn_md2612.o \
 			burn_ym3526.o burn_ym3812.o burn_ymf278b.o bzone.o c6280.o dac.o es5506.o es8712.o flower.o flt_rc.o fm.o fmopl.o ym2612.o gaelco.o hc55516.o ics2115.o iremga20.o \

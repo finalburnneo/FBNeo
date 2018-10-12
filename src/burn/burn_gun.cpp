@@ -104,7 +104,7 @@ BurnDialINF BurnPaddleReturnA(INT32 num)
 
 	if (num > MAX_GUNS - 1) return dial;
 
-	INT32 PaddleA = ((BurnGunX[num] >> 8) / 0x10) & 0xff;
+	INT32 PaddleA = ((BurnGunX[num] >> 8) / 0x4) & 0xff;
 
 	if (PaddleA < PaddleLastA[num]) {
 		dial.Velocity = (PaddleLastA[num] - PaddleA);
@@ -131,7 +131,7 @@ BurnDialINF BurnPaddleReturnB(INT32 num)
 
 	if (num > MAX_GUNS - 1) return dial;
 
-	INT32 PaddleB = ((BurnGunY[num] >> 8) / 0x10) & 0xff;
+	INT32 PaddleB = ((BurnGunY[num] >> 8) / 0x4) & 0xff;
 
 	if (PaddleB < PaddleLastB[num]) {
 		dial.Velocity = (PaddleLastB[num] - PaddleB);

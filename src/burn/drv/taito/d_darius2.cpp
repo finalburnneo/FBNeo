@@ -2026,6 +2026,8 @@ static INT32 Darius2Scan(INT32 nAction, INT32 *pnMin)
 
 		if (TaitoNumYM2610) BurnYM2610Scan(nAction, pnMin);
 
+		SCAN_VAR(TaitoCpuACtrl);
+
 		SCAN_VAR(TaitoInput);
 		SCAN_VAR(TaitoZ80Bank);
 		SCAN_VAR(nTaitoCyclesDone);

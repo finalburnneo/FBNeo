@@ -3294,7 +3294,7 @@ static UINT8 __fastcall Topspeed68K2ReadByte(UINT32 a)
 		INT32 Offset = (a - 0x900000) >> 1;
 
 		switch (Offset) {
-			case 0x000: return rand() & 0xff;
+			case 0x000: return BurnRandom() & 0xff;
 			case 0x101: return 0x55;
 		}
 	}
@@ -5943,7 +5943,7 @@ static INT32 DariusFrame()
 		}
 
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nTaitoCyclesTotal[2] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[2] / nInterleave));
 		ZetClose();
 
 		nCurrentCPU = 3;
@@ -5962,7 +5962,6 @@ static INT32 DariusFrame()
 	ZetClose();
 
 	ZetOpen(1);
-	ZetRun(nTaitoCyclesTotal[3] - nTaitoCyclesDone[3]);
 	if (pBurnSoundOut) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	ZetClose();
 
@@ -6160,7 +6159,9 @@ static INT32 TaitoMiscScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DariusVol);
 		SCAN_VAR(DariusPan);
 		SCAN_VAR(PC090OJSpriteCtrl);	// for jumping
+
 		z80ctc_scan();
+		BurnRandomScan(nAction);
 	}
 
 	if (nAction & ACB_WRITE && banked_z80) {

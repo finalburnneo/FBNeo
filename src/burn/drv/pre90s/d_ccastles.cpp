@@ -1,10 +1,9 @@
-// FB Alpha Cloud 9 / Firebeast driver module
-// Based on MAME driver by Mike Balfour and Aaron Giles
-
-// Todo: hook up burn_gun's trackball emu (forgot the name.. tempest uses it)
+// FB Alpha Crystal Castles driver module
+// Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
+#include "burn_gun.h"
 #include "watchdog.h"
 #include "pokey.h"
 #include "x2212.h"
@@ -38,23 +37,58 @@ static INT32 nvram_storelatch[2];
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
+static UINT8 DrvJoy4f[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
+
+static INT16 DrvAnalogPortX = 0;
+static INT16 DrvAnalogPortY = 0;
 
 static INT32 TrackX;
 static INT32 TrackY;
 
 static INT32 is_joyver = 0;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo CcastlesInputList[] = {
 	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy4f+ 0,	"p1 start"	},
 	{"P1 Up",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"		},
 	{"P1 Down",		    BIT_DIGITAL,	DrvJoy3 + 1,	"p1 down"	},
 	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 right"	},
-	{"P1 Left Jump / 1P Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
-	{"P1 Right Jump / 2P Start",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"	},
+	{"P1 Button 1",     BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
+	{"P1 Button 2",     BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"	},
+
+	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPortX,"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPortY,"p1 x-axis"),
+
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy4f+ 1,	"p2 start"	},
+
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Service",		    BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Tilt",		    BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+#undef A
+
+STDINPUTINFO(Ccastles)
+
+static struct BurnInputInfo CcastlesjInputList[] = {
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy4f+ 0,	"p1 start"	},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"		},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy3 + 1,	"p1 down"	},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 right"	},
+	{"P1 Button 1",     BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
+	{"P1 Button 2",     BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"	},
+
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy4f+ 1,	"p2 start"	},
 
 	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Service",		    BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
@@ -63,23 +97,39 @@ static struct BurnInputInfo CcastlesInputList[] = {
 	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
-STDINPUTINFO(Ccastles)
+STDINPUTINFO(Ccastlesj)
 
 static struct BurnDIPInfo CcastlesDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0xc7, NULL				},
-	{0x0b, 0xff, 0xff, 0x10, NULL				},
+	{0x0f, 0xff, 0xff, 0xc7, NULL				},
+	{0x10, 0xff, 0xff, 0x10, NULL				},
 
 	{0   , 0xfe, 0   ,    1, "Cabinet"			},
-	{0x0a, 0x01, 0x20, 0x00, "Upright"			},
-//	{0x0a, 0x01, 0x20, 0x20, "Cocktail"			}, // not impl.!
+	{0x0f, 0x01, 0x20, 0x00, "Upright"			},
+//	{0x0f, 0x01, 0x20, 0x20, "Cocktail"			}, // not impl.!
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x0b, 0x01, 0x10, 0x10, "Off"					},
-	{0x0b, 0x01, 0x10, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x10, 0x01, 0x10, 0x10, "Off"				},
+	{0x10, 0x01, 0x10, 0x00, "On"				},
 };
 
 STDDIPINFO(Ccastles)
+
+static struct BurnDIPInfo CcastlesjDIPList[]=
+{
+	{0x0d, 0xff, 0xff, 0xc7, NULL				},
+	{0x0e, 0xff, 0xff, 0x10, NULL				},
+
+	{0   , 0xfe, 0   ,    1, "Cabinet"			},
+	{0x0d, 0x01, 0x20, 0x00, "Upright"			},
+//	{0x0d, 0x01, 0x20, 0x20, "Cocktail"			}, // not impl.!
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x0e, 0x01, 0x10, 0x10, "Off"				},
+	{0x0e, 0x01, 0x10, 0x00, "On"				},
+};
+
+STDDIPINFO(Ccastlesj)
 
 static void palette_write(UINT8 offset)
 {
@@ -337,6 +387,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (AllRam, 0, RamEnd - AllRam);
 	}
 
+	DrvPalRAM[0x10] = 0x2ff; // black background @ boot
+
 	M6502Open(0);
 	bankswitch(0);
 	M6502Reset();
@@ -454,6 +506,8 @@ static INT32 DrvInit()
 
 	x2212_init_autostore(2);
 
+	BurnPaddleInit(2, false);
+
 	GenericTilesInit();
 
 	DrvDoReset(1);
@@ -469,6 +523,8 @@ static INT32 DrvExit()
 	PokeyExit();
 
 	x2212_exit();
+
+	BurnPaddleExit();
 
 	BurnFree(AllMem);
 
@@ -607,11 +663,30 @@ static INT32 DrvFrame()
 		}
 
 		{
+			// fake start buttons for convenience
+			if (DrvJoy4f[0]) DrvInputs[0] &= ~0x40;
+			if (DrvJoy4f[1]) DrvInputs[0] &= ~0x80;
+		}
+
+		{
 			// UDLR fake trackball
 			if (DrvJoy3[2]) TrackY+=3;
 			if (DrvJoy3[1]) TrackY-=3;
 			if (DrvJoy3[0]) TrackX-=3;
 			if (DrvJoy3[3]) TrackX+=3;
+		}
+
+		{
+			// real trackball
+			BurnPaddleMakeInputs(0, DrvAnalogPortX, DrvAnalogPortY);
+
+			BurnDialINF dial = BurnPaddleReturnA(0);
+			if (dial.Backward) TrackX-=3;
+			if (dial.Forward)  TrackX+=3;
+
+			dial = BurnPaddleReturnB(0);
+			if (dial.Backward) TrackY+=3;
+			if (dial.Forward)  TrackY-=3;
 		}
 	}
 
@@ -667,6 +742,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		M6502Scan(nAction);
 		pokey_scan(nAction, pnMin);
 
+		BurnPaddleScan();
+
 		SCAN_VAR(bank_latch);
 		SCAN_VAR(irq_state);
 		SCAN_VAR(video_latch);
@@ -716,7 +793,7 @@ struct BurnDriver BurnDrvCcastles = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ccastlesRomInfo, ccastlesRomName, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x40,
+	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
 };
 
@@ -753,8 +830,8 @@ struct BurnDriver BurnDrvCcastlesj = {
 	"Crystal Castles (joystick version)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, ccastlesjRomInfo, ccastlesjRomName, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
-	CcastlesjInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x40,
+	NULL, ccastlesjRomInfo, ccastlesjRomName, NULL, NULL, CcastlesjInputInfo, CcastlesjDIPInfo,
+	CcastlesjInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
 };
 
@@ -785,7 +862,7 @@ struct BurnDriver BurnDrvCcastlesg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ccastlesgRomInfo, ccastlesgRomName, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x40,
+	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
 };
 
@@ -817,7 +894,7 @@ struct BurnDriver BurnDrvCcastlesp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ccastlespRomInfo, ccastlespRomName, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x40,
+	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
 };
 
@@ -849,7 +926,7 @@ struct BurnDriver BurnDrvCcastlesf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ccastlesfRomInfo, ccastlesfRomName, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x40,
+	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
 };
 
@@ -881,7 +958,7 @@ struct BurnDriver BurnDrvCcastles3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ccastles3RomInfo, ccastles3RomName, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x40,
+	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
 };
 
@@ -913,7 +990,7 @@ struct BurnDriver BurnDrvCcastles2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ccastles2RomInfo, ccastles2RomName, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x40,
+	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
 };
 
@@ -945,6 +1022,6 @@ struct BurnDriver BurnDrvCcastles1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ccastles1RomInfo, ccastles1RomName, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x40,
+	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
 };

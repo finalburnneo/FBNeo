@@ -159,10 +159,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		
 		if (Id == IDC_GFX_VIEWER_PREV && Notify == BN_CLICKED) {
 			nPalettePosition -= 0x100;
-			if (nPalettePosition < 0) nPalettePosition = nPaletteEntries - 0x100;
+			if (nPalettePosition < 0) nPalettePosition = nPaletteEntries - 0x100; // last page
+			if (nPalettePosition < 0) nPalettePosition = 0x0000; // no last page, stay on first
 			CalcBrushes(nPalettePosition);
 			RedrawWindow(hPaletteViewerDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ALLCHILDREN);
-			UpdateLabels();			
+			UpdateLabels();
 			return 0;
 		}
 		
@@ -171,7 +172,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (nPalettePosition >= nPaletteEntries) nPalettePosition = 0x0000;
 			CalcBrushes(nPalettePosition);
 			RedrawWindow(hPaletteViewerDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ALLCHILDREN);
-			UpdateLabels();			
+			UpdateLabels();
 			return 0;
 		}
 	}

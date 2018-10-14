@@ -4214,7 +4214,7 @@ static void RastanBankSwitch(UINT32, UINT32 Data)
 
 static void DariusAdpcmInt()
 {
-	if (DariusNmiEnable) ZetNmi();
+	if (DariusNmiEnable) nTaitoCyclesDone[3] += ZetNmi();
 }
 
 static void OpwolfMSM5205Vck0()

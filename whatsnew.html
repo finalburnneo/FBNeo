@@ -224,7 +224,18 @@
 <li>Added BurnSoundDCFilter() to burn_sound.cpp/h for games with problematic dac/chips [dink]</li>
 <li>Slight improvement to dac sound in Grobda [dink]</li>
 <li>Fix sporatic crashes with Garyo Retsuden and Itazura Tenshi [dink]</li>
-<li> []</li>
+<li>Fix controls in Moonwar and clone [dink]</li>
+<li>Megadrive, set 32column mode defaults (DIPs) to "center" instead of "zoom" [dink]</li>
+<li>Set correct hz rate for Deco Cassette, BurgerTime/Bump 'n Jump and Wardner [dink]</li>
+<li>Fix priority issues in Gradius II [dink]</li>
+<li>Cheat engine: only undo value if cheat is flagged to do so [dink]</li>
+<li>Fix L/R volume issue in MSM5205 sound core [dink]</li>
+<li>Fix soundcpu breaks on state load w/Darius [dink]</li>
+<li>Fix for bad sample address calculation in Irem M90 (Risky Challenge et all) [dink]</li>
+<li>Fix for lost cycles in Z80 interface, causing what gets returned by ZetRun() and ZetTotalCycles() to be different [dink]</li>
+<li>Remove ugly hack from Irem M72 which was added to counteract the Z80 bug above [dink]</li>
+<li>Improvements to the tilemap system: add support for drawing to generic bitmaps, fix bug when setting row/col scroll, disable checks if not in debug for speed, add "dirty" tile drawing manager [iq_132]</li>
+<li>Added Atari EEROM (x2212) device [dink]</li>
 <li> []</li>
 </ul>
 <!-- new drivers -->
@@ -280,6 +291,8 @@
 <li>Added driver for NMK's (Jaleco licensed) Argus, Valtric and Butasan (Pig's and Bomber's) [iq_132, dink]</li>
 <li>Added driver for Konami's Dive Bomber Squad prototype [iq_132]</li>
 <li>Added driver for Atari's Return of the Jedi [iq_132]</li>
+<li>Added driver for Atari's Cloud 9 and Firebeast [iq_132]</li>
+<li>Added driver for Atari's Crystal Castles [dink]</li>
 </ul>
 <!-- new game additions to existing drivers -->
 <h4>New additions / updates to existing drivers</h4>

@@ -4214,7 +4214,7 @@ static void RastanBankSwitch(UINT32, UINT32 Data)
 
 static void DariusAdpcmInt()
 {
-	if (DariusNmiEnable) nTaitoCyclesDone[3] += ZetNmi();
+	if (DariusNmiEnable) ZetNmi();
 }
 
 static void OpwolfMSM5205Vck0()
@@ -5997,7 +5997,7 @@ static INT32 JumpingFrame()
 
 		// Run Z80
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nTaitoCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[1] / nInterleave));
 		ZetClose();
 
 		if (cchip_active) { // volfied

@@ -2116,7 +2116,7 @@ static INT32 DrvFrame()
 
 		if (z80_reset == 0) {
 			nCyclesDone[1] += ZetRun((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
-			if (i%multiplier==2 && i/multiplier & 1 && z80samplecount < (128-3)) { // 128-3 times per frame any more/less sounds nasty (test: dbreed coin up, hharry "lets get busy" startup)
+			if (i%multiplier==2 && i/multiplier & 1 && z80samplecount < 128) {
 				if (z80_nmi_enable == Z80_FAKE_NMI) {
 					z80samplecount++;
 					if (DrvSndROM[sample_address]) {

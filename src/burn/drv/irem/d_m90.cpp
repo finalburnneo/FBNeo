@@ -917,13 +917,13 @@ static void __fastcall m90_sound_write_port(UINT16 port, UINT8 data)
 
 		case 0x80:
 			sample_address >>= 5;
-			sample_address = (sample_address & 0x00ff) | (data << 8);
+			sample_address = (sample_address & 0xff00) | (data << 0);
 			sample_address <<= 5;
 		return;
 
 		case 0x81:
 			sample_address >>= 5;
-			sample_address = (sample_address & 0xff00) | (data << 0);
+			sample_address = (sample_address & 0x00ff) | (data << 8);
 			sample_address <<= 5;
 		return;
 
@@ -1396,7 +1396,7 @@ static INT32 DrvFrame()
 			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, CPU_IRQSTATUS_NONE);
 		}
 
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		ZetNmi();
 
 		if (pBurnSoundOut && i&1) {

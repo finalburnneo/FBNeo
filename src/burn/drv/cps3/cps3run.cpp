@@ -619,7 +619,9 @@ void __fastcall cps3WriteByte(UINT32 addr, UINT8 data)
 	case 0x05050027: break;
 
 	default:
-		if ((addr >= 0x05050000) && (addr < 0x05060000)) {
+		if ((addr >= 0x04100000) && (addr <= 0x041fffff)) {
+			((UINT8 *)RamCRam)[ (cram_bank * 0x100000 + (addr & 0xfffff)) ] = data; // no change for byte writes!! -dink
+		} else if ((addr >= 0x05050000) && (addr < 0x05060000)) {
 			// VideoReg
 
 		} else
@@ -638,7 +640,7 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 		if (cram_bank != data) {
 			cram_bank = data & 7;
 			//bprintf(PRINT_NORMAL, _T("CRAM bank set to %d\n"), data);
-			Sh2MapMemory(((UINT8 *)RamCRam) + (cram_bank << 20), 0x04100000, 0x041fffff, MAP_RAM);
+			Sh2MapMemory(((UINT8 *)RamCRam) + (cram_bank << 20), 0x04100000, 0x041fffff, MAP_ROM); // writes in byte,word,long handler!
 		}
 		break;
 
@@ -749,6 +751,14 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 #endif
 			
 		} else
+		if ((addr >= 0x04100000) && (addr <= 0x041fffff)) {
+			// RamCRam word write -dink
+#ifdef LSB_FIRST
+			((UINT16 *)RamCRam)[ ((cram_bank * 0x100000 + (addr & 0xfffff)) >> 1) ^ 1 ] = data;
+#else
+			((UINT16 *)RamCRam)[ ((cram_bank * 0x100000 + (addr & 0xfffff)) >> 1) ] = data;
+#endif
+		} else
 		if ((addr >= 0x05000000) && (addr < 0x05001000)) {
 			
 			
@@ -775,7 +785,17 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 void __fastcall cps3WriteLong(UINT32 addr, UINT32 data)
 {
 	addr &= 0xc7ffffff;
-	
+
+	if ((addr >= 0x04100000) && (addr <= 0x041fffff)) {
+		// RamCRam long write -dink
+#ifdef LSB_FIRST
+		RamCRam[ ((cram_bank * 0x100000 + (addr & 0xfffff)) >> 2) ^ 0 ] = data;
+#else
+		RamCRam[ ((cram_bank * 0x100000 + (addr & 0xfffff)) >> 2) ] = data;
+#endif
+		return;
+	}
+
 	switch (addr) {
 	case 0x07ff000c:
 	case 0x07ff0048:
@@ -1038,7 +1058,7 @@ static INT32 Cps3Reset()
 {
 	// re-map cram_bank
 	cram_bank = 0;
-	Sh2MapMemory((UINT8 *)RamCRam, 0x04100000, 0x041fffff, MAP_RAM);
+	Sh2MapMemory((UINT8 *)RamCRam, 0x04100000, 0x041fffff, MAP_ROM); // writes in byte,word,long handler!
 
 	Cps3PatchRegion();
 	

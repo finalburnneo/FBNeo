@@ -7788,6 +7788,23 @@ static struct BurnRomInfo ChikijRomDesc[] = {
 STD_ROM_PICK(Chikij)
 STD_ROM_FN(Chikij)
 
+static struct BurnRomInfo MtwinsbRomDesc[] = {
+	{ "2-prg-27c4001.bin",    0x080000, 0x7d5b8a97, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "1-prg-27c4001.bin",    0x080000, 0x8938a029, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "g4.bin",               0x080000, 0x11493e55, BRF_GRA | CPS1_TILES },
+	{ "g3.bin",               0x080000, 0xfeda0f8b, BRF_GRA | CPS1_TILES },
+	{ "g2.bin",               0x080000, 0x745f0eba, BRF_GRA | CPS1_TILES },
+	{ "g1.bin",               0x080000, 0x8069026f, BRF_GRA | CPS1_TILES },
+
+	{ "4-snd-z80-27c512.bin", 0x010000, 0x4d4255b7, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "3-snd-27c208.bin",     0x040000, 0xa0c3de92, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Mtwinsb)
+STD_ROM_FN(Mtwinsb)
+
 static struct BurnRomInfo NemoRomDesc[] = {
 	{ "nme_30a.11f",   0x020000, 0xd2c03e56, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "nme_35a.11h",   0x020000, 0x5fd31661, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -13950,6 +13967,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "mswordj"     , CPS_B_13    , mapper_MS24B , 0, NULL                },
 	{ "mtwins"      , CPS_B_14    , mapper_CK24B , 0, NULL                },
 	{ "chikij"      , CPS_B_14    , mapper_CK24B , 0, NULL                },
+	{ "mtwinsb"     , CPS_B_14    , mapper_CK24B , 0, NULL                },
 	{ "nemo"        , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemor1"      , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemoj"       , CPS_B_15    , mapper_NM24B , 0, NULL                },
@@ -15743,6 +15761,74 @@ static INT32 MercsInit()
 	Cps1DisableBgHi = 1;
 
 	return DrvInit();
+}
+
+void __fastcall MtwinsbWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x980000: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x980002: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d - 0x3e);
+			return;
+		}
+		
+		case 0x980004: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x980006: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d - 0x3c);
+			return;
+		}
+		
+		case 0x980008: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x98000a: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
+			return;
+		}
+	}
+	
+	bprintf(PRINT_IMPORTANT, _T("Unknown value written at %x %x\n"), a, d);
+}
+
+static INT32 MtwinsbInit()
+{
+	INT32 nRet = 0;
+	
+	Port6SoundWrite = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesMtwinsb;
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
+	
+	nRet = DrvInit();
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
+	SekMapHandler(1, 0x980000, 0x98ffff, MAP_WRITE);
+	SekSetWriteWordHandler(1, MtwinsbWriteWord);
+	SekClose();
+	
+	*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(0x9100); // doesn't seem to write this anywhere
+	
+	return nRet;
 }
 
 static INT32 Pang3bInit()
@@ -19404,6 +19490,16 @@ struct BurnDriver BurnDrvCpsChikij = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
 	NULL, ChikijRomInfo, ChikijRomName, NULL, NULL, MtwinsInputInfo, MtwinsDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsMtwinsb = {
+	"mtwinsb", "mtwins", NULL, NULL, "1993",
+	"Twins (bootleg of Mega Twins)\0", NULL, "David Inc. (bootleg)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	NULL, MtwinsbRomInfo, MtwinsbRomName, NULL, NULL, MtwinsInputInfo, MtwinsDIPInfo,
+	MtwinsbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

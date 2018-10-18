@@ -495,6 +495,46 @@ static INT32 CpsLoadOneBootlegType3Swap(UINT8 *Tile, INT32 nNum, INT32 nWord, IN
 	return 0;
 }
 
+static INT32 CpsLoadOneBootlegSwap(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
+{
+	UINT8 *Rom = NULL; INT32 nRomLen=0;
+	UINT8 *pt = NULL, *pr = NULL;
+	INT32 i;
+
+	LoadUp(&Rom, &nRomLen, nNum);
+	if (Rom == NULL) {
+		return 1;
+	}
+	nRomLen &= ~1;								// make sure even
+
+	for (i = 0, pt = Tile + 4, pr = Rom; i < 0x40000; pt += 8) {
+		UINT32 Pix;						// Eight pixels
+		UINT8 b;
+		b = *pr++; i++; Pix = SepTable[b];
+		if (nWord) {
+			b = *pr++; i++; Pix |= SepTable[b] << 1;
+		}
+
+		Pix <<= nShift;
+		*((UINT32 *)pt) |= Pix;
+	}
+
+	for (i = 0, pt = Tile + 0, pr = Rom + 0x40000; i < 0x40000; pt += 8) {
+		UINT32 Pix;						// Eight pixels
+		UINT8 b;
+		b = *pr++; i++; Pix = SepTable[b];
+		if (nWord) {
+			b = *pr++; i++; Pix |= SepTable[b] << 1;
+		}
+
+		Pix <<= nShift;
+		*((UINT32 *)pt) |= Pix;
+	}
+
+	BurnFree(Rom);
+	return 0;
+}
+
 static INT32 CpsLoadOneSf2ebbl(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
 {
 	UINT8 *Rom = NULL; INT32 nRomLen=0;
@@ -1164,6 +1204,16 @@ static INT32 CpsLoadTilesBootleg(UINT8 *Tile, INT32 nStart)
 	return 0;
 }
 
+static INT32 CpsLoadTilesBootlegSwap(UINT8 *Tile, INT32 nStart)
+{
+	CpsLoadOneBootlegSwap(Tile, nStart + 0, 0, 0);
+	CpsLoadOneBootlegSwap(Tile, nStart + 1, 0, 1);
+	CpsLoadOneBootlegSwap(Tile, nStart + 2, 0, 2);
+	CpsLoadOneBootlegSwap(Tile, nStart + 3, 0, 3);
+	
+	return 0;
+}
+
 INT32 CpsLoadTilesSf2ebbl(UINT8 *Tile, INT32 nStart)
 {
 	CpsLoadOneSf2ebbl(Tile, nStart + 0, 0, 0);
@@ -1450,6 +1500,13 @@ INT32 CpsLoadTilesKnightsb2(INT32 nStart)
 	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 1, 0, 1);
 	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 2, 0, 2);
 	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 3, 0, 3);
+	
+	return 0;
+}
+
+INT32 CpsLoadTilesMtwinsb(INT32 nStart)
+{
+	CpsLoadTilesBootlegSwap(CpsGfx + 0x000000, nStart + 0);
 	
 	return 0;
 }

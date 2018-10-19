@@ -122,7 +122,6 @@
 <li>Fixed crash when selecting Super Speed Race Junior in the Game List [Barry]</li>
 <li>Fixed Use / Select buttons were swapped in Dungeons &amp; Dragons - shadow over mystara [barbudreadmon]</li>
 <li>DAC: Internalized the stream synchronization, driver callbacks no longer required [dink]</li>
-<li>IREM M72: Improved DAC Synchroniztion, slight sound quality improvement with DAC sounds [dink]</li>
 <li>Added ProcessAnalog() to the joyprocess device, for easy analog hookups and scaling during driver development [dink]</li>
 <li>Fixed SCI's analog handling so all the sounds can be selected in service mode [dink]</li>
 <li>Fixed attract mode in Super Hang-on [dink]</li>
@@ -150,8 +149,8 @@
 <li>Added &lt; tilesize column scroll to tilemap system [iq_132]</li>
 <li>Added color effect to 1945kiii sprites [AJR, iq_132]</li>
 <li>Fixed clicking noise in Syvalion @ the robot-chicken boss [dink]</li>
-<li>Fixed glitchy raster effects in Chiki Chiki Boys and Captain Commando on Capcom CPS1 (Draw at VBL instead of end of frame) [dink]</li>
-<li>Changed CPS-1/2 to run for 262 scanlines and set refresh rate to 59.63Hz [Barry]</li>
+<li>Fixed glitchy raster effects in Chiki Chiki Boys and Captain Commando on Capcom CPS1 (Draw at VBL instead of end of frame) (1/2) [dink]</li>
+<li>Changed CPS-1/2 to run for 262 scanlines and set refresh rate to 59.63Hz (2/2) [Barry]</li>
 <li>Changed Super Street Fighter 2 Turbo, Hyper Street Fighter 2, Street Fighter 2 Champion Edition and Street Fighter 2 Hyper Fighting to run at a speed that more closely matches the PCB [Barry, RN]</li>
 <li>Fixed in Double Dragon: sprite flickers and crash after the end boss, also improvements for netplay and input recordings [dink]</li>
 <li>Fixed graphics corruption in Streets of Rage 2 stage 3 pirate ship scene [dink]</li>
@@ -232,10 +231,14 @@
 <li>Fix L/R volume issue in MSM5205 sound core [dink]</li>
 <li>Fix soundcpu breaks on state load w/Darius [dink]</li>
 <li>Fix for bad sample address calculation in Irem M90 (Risky Challenge et all) [dink]</li>
-<li>Fix for lost cycles in Z80 interface, causing what gets returned by ZetRun() and ZetTotalCycles() to be different [dink]</li>
-<li>Remove ugly hack from Irem M72 which was added to counteract the Z80 bug above [dink]</li>
+<li>Fix for lost cycles in Z80 interface, causing what gets returned by ZetRun() and ZetTotalCycles() to be different.  This affected games where a nmi was used to pull each sample from the z80, namely Darius [dink]</li>
+<li>IREM M72: Improved DAC Synchroniztion, slight sound quality improvement with DAC sounds, huge improvement when coupled with the Z80 cycle fix above. [dink]</li>
 <li>Improvements to the tilemap system: add support for drawing to generic bitmaps, fix bug when setting row/col scroll, disable checks if not in debug for speed, add "dirty" tile drawing manager [iq_132]</li>
 <li>Added Atari EEROM (x2212) device [dink]</li>
+<li>Fix distorted Kanji text in jojoba's (CPS3) service mode [dink]</li>
+<li>Enabled highscore saving for all CPS1/2 [barbudreadmon]</li>
+<li>Add Twins (booleg of Mega Twins) [barry, ClawGrip, Roberto Fresca, Recreativas.org, The Dumping Union]</li>
+<li>Added Strahl (World), making Strahl Japan Sets 1 and 2 clones in the NMK16 driver [dink]</li>
 <li> []</li>
 </ul>
 <!-- new drivers -->

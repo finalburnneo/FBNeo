@@ -5763,13 +5763,13 @@ struct BurnDriver BurnDrvPopnpopu = {
 };
 
 
-// Land Maker (Ver 2.01J 1998/06/01)
+// Land Maker (Ver 2.02O 1998/06/02)
 
 static struct BurnRomInfo landmakrRomDesc[] = {
-	{ "e61-13.20",		0x080000, 0x0af756a2, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
-	{ "e61-12.19",		0x080000, 0x636b3df9, TAITO_68KROM1_BYTESWAP32 }, //  1
-	{ "e61-11.18",		0x080000, 0x279a0ee4, TAITO_68KROM1_BYTESWAP32 }, //  2
-	{ "e61-10.17",		0x080000, 0xdaabf2b2, TAITO_68KROM1_BYTESWAP32 }, //  3
+	{ "e61-19.20",		0x080000, 0xf92eccd0, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e61-18.19",		0x080000, 0x5a26c9e0, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e61-17.18",		0x080000, 0x710776a8, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e61-16.17",		0x080000, 0xb073cda9, TAITO_68KROM1_BYTESWAP32 }, //  3
 
 	{ "e61-03.12",		0x200000, 0xe8abfc46, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
 	{ "e61-02.08",		0x200000, 0x1dc4a164, TAITO_SPRITESA_BYTESWAP },  //  5
@@ -5779,8 +5779,8 @@ static struct BurnRomInfo landmakrRomDesc[] = {
 	{ "e61-08.45",		0x200000, 0x76c98e14, TAITO_CHARS_BYTESWAP },     //  8
 	{ "e61-07.43",		0x200000, 0x4a57965d, TAITO_CHARS },              //  9
 
-	{ "e61-14.32",		0x020000, 0xb905f4a7, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
-	{ "e61-15.33",		0x020000, 0x87909869, TAITO_68KROM2_BYTESWAP },   // 11
+	{ "e61-14.32",		0x040000, 0x18961bbb, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "e61-15.33",		0x040000, 0x2c64557a, TAITO_68KROM2_BYTESWAP },   // 11
 
 	{ "e61-04.38",		0x200000, 0xc27aec0c, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "e61-05.39",		0x200000, 0x83920d9d, TAITO_ES5505_BYTESWAP },    // 13
@@ -5797,10 +5797,48 @@ static INT32 landmakrInit()
 
 struct BurnDriver BurnDrvLandmakr = {
 	"landmakr", NULL, NULL, NULL, "1998",
-	"Land Maker (Ver 2.01J 1998/06/01)\0", NULL, "Taito Corporation", "Taito F3 System",
+	"Land Maker (Ver 2.02O 1998/06/02)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, landmakrRomInfo, landmakrRomName, NULL, NULL, F3InputInfo, NULL,
+	landmakrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
+	320, 232, 4, 3
+};
+
+
+// Land Maker (Ver 2.01J 1998/06/01)
+
+static struct BurnRomInfo landmakrjRomDesc[] = {
+	{ "e61-13.20",		0x080000, 0x0af756a2, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e61-12.19",		0x080000, 0x636b3df9, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e61-11.18",		0x080000, 0x279a0ee4, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e61-10.17",		0x080000, 0xdaabf2b2, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "e61-03.12",		0x200000, 0xe8abfc46, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "e61-02.08",		0x200000, 0x1dc4a164, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "e61-01.04",		0x200000, 0x6cdd8311, TAITO_SPRITESA },           //  6
+
+	{ "e61-09.47",		0x200000, 0x6ba29987, TAITO_CHARS_BYTESWAP },     //  7 Layer Tiles
+	{ "e61-08.45",		0x200000, 0x76c98e14, TAITO_CHARS_BYTESWAP },     //  8
+	{ "e61-07.43",		0x200000, 0x4a57965d, TAITO_CHARS },              //  9
+
+	{ "e61-14.32",		0x040000, 0x18961bbb, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "e61-15.33",		0x040000, 0x2c64557a, TAITO_68KROM2_BYTESWAP },   // 11
+
+	{ "e61-04.38",		0x200000, 0xc27aec0c, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
+	{ "e61-05.39",		0x200000, 0x83920d9d, TAITO_ES5505_BYTESWAP },    // 13
+	{ "e61-06.40",		0x200000, 0x2e717bfe, TAITO_ES5505_BYTESWAP },    // 14
+};
+
+STD_ROM_PICK(landmakrj)
+STD_ROM_FN(landmakrj)
+
+struct BurnDriver BurnDrvLandmakrj = {
+	"landmakrj", "landmakr", NULL, NULL, "1998",
+	"Land Maker (Ver 2.01J 1998/06/01)\0", NULL, "Taito Corporation", "Taito F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, landmakrjRomInfo, landmakrjRomName, NULL, NULL, F3InputInfo, NULL,
 	landmakrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
 };

@@ -1086,9 +1086,9 @@ static INT32 powerinsFrame()
 	
 	if (game_drv == GAME_POWERINB) {
 		ZetRun(nCyclesTotal[1] - nCyclesDone[1]);
-	
+
 		if (pBurnSoundOut) {
-			memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
+			BurnSoundClear();
 			MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 		}
 		

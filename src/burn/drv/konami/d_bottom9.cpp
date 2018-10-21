@@ -666,7 +666,7 @@ static INT32 DrvFrame()
 	if (K052109_irq_enabled) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		memset(pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16) * 2);
+		BurnSoundClear();
 		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
 		K007232Update(1, pBurnSoundOut, nBurnSoundLen);
 	}

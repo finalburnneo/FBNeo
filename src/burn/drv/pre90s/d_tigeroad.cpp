@@ -572,7 +572,7 @@ static INT32 DrvDoReset()
 	}
 
 	if (pBurnSoundOut) { // fix ym2203 junk..
-		memset (pBurnSoundOut, 0, nBurnSoundLen);
+		BurnSoundClear();
 	}
 
 	HiscoreReset();

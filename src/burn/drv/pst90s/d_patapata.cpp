@@ -269,7 +269,7 @@ static INT32 DrvInit()
 	SekSetReadWordHandler(0,	patapata_read_word);
 	SekClose();
 
-	MSM6295Init(0, 4000000 / 165, 1);
+	MSM6295Init(0, 4000000 / 165, 0);
 	MSM6295Init(1, 4000000 / 165, 1);
 	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -379,7 +379,6 @@ static INT32 DrvFrame()
 	SekClose();
 
 	if (pBurnSoundOut) {
-		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(UINT16));
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 

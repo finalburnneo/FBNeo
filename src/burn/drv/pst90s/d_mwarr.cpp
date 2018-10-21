@@ -618,7 +618,7 @@ static INT32 MwarrInit()
 //	SekSetReadWordHandler(0,	mwarr_read_word);
 	SekClose();
 
-	MSM6295Init(0, 937500 / 132, 1);
+	MSM6295Init(0, 937500 / 132, 0);
 	MSM6295Init(1, 937500 / 132, 1);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
@@ -915,9 +915,8 @@ static INT32 stlforceFrame()
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
-		nCycleSegment = nBurnSoundLen / nInterleave;
-
 		if (pBurnSoundOut) {
+			nCycleSegment = nBurnSoundLen / nInterleave;
 			MSM6295Render(pBurnSoundOut + nSoundBufferPos, nCycleSegment);
 			nSoundBufferPos += (nCycleSegment << 1);
 		}
@@ -978,7 +977,6 @@ static INT32 DrvFrame()
 		nCycleSegment = nBurnSoundLen / nInterleave;
 
 		if (pBurnSoundOut) {
-			memset (pBurnSoundOut + nSoundBufferPos, 0, nCycleSegment * 2 * sizeof(INT16));
 			MSM6295Render(pBurnSoundOut + nSoundBufferPos, nCycleSegment);
 			nSoundBufferPos += (nCycleSegment << 1);
 		}
@@ -986,7 +984,6 @@ static INT32 DrvFrame()
 
 	nCycleSegment = nBurnSoundLen - (nSoundBufferPos>>1);
 	if (pBurnSoundOut && nCycleSegment > 0) {
-		memset (pBurnSoundOut + nSoundBufferPos, 0, nCycleSegment * 2 * sizeof(INT16));
 		MSM6295Render(pBurnSoundOut + nSoundBufferPos, nCycleSegment);
 	}
 

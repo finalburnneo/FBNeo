@@ -448,7 +448,7 @@ static INT32 DrvFrame()
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 		if (sound_mute) {
-			memset (pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16) * 2);
+			BurnSoundClear();
 		} else {
 			TimepltSndUpdate(pSoundBuf, nSegmentLength);
 		}

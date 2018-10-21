@@ -3582,7 +3582,7 @@ static INT32 System1DFrame() // peekaboo
 	SekClose();
 
 	if (pBurnSoundOut) {
-		memset (pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16) * 2);
+		BurnSoundClear();
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 

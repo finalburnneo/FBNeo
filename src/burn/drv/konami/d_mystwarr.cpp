@@ -2939,7 +2939,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * 2);
+		BurnSoundClear();
 		K054539Update(0, pBurnSoundOut, nBurnSoundLen);
 		K054539Update(1, pBurnSoundOut, nBurnSoundLen);
 	}

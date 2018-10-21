@@ -386,7 +386,7 @@ static INT32 CommonInit(INT32 (*pRomLoad)(INT32 *, INT32 *), void (*pMap)(), INT
 
 	EEPROMInit(&eeprom_interface_93C46);
 
-	MSM6295Init(0, 1006875 / 132, 1);
+	MSM6295Init(0, 1006875 / 132, 0);
 	MSM6295Init(1, 2013750 / 132 / msm, 1);
 	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
@@ -555,7 +555,6 @@ static INT32 DrvFrame()
 	ArmClose();
 
 	if (pBurnSoundOut) {
-		memset (pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16) * 2);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 

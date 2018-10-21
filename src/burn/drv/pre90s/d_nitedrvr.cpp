@@ -1056,7 +1056,7 @@ static INT32 DrvFrame()
 		}
 
 		if (sound_disable) {
-			memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
+			BurnSoundClear();
 		}
 	}
 

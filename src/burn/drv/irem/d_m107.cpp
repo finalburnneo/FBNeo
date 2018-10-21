@@ -1080,7 +1080,7 @@ static INT32 DrvFrame()
 	nCyclesTotal[1] = (INT32)((INT64)(7159090 / 60) * nBurnCPUSpeedAdjust / 0x0100);
 
 	if (pBurnSoundOut) {
-		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
+		BurnSoundClear();
 	}
 
 	nInterleave = 256 * 8; // * 8 for tight sync

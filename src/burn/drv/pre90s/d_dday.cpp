@@ -597,7 +597,7 @@ static INT32 DrvFrame()
 		if (sl_control & 0x10) {
 			AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		} else {
-			memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(UINT16));
+			BurnSoundClear();
 		}
 	}
 

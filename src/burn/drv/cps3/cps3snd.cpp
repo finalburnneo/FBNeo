@@ -146,7 +146,7 @@ void cps3SndUpdate()
 		return;	
 	}
 	
-	memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
+	BurnSoundClear();
 	INT8 * base = (INT8 *)chip->rombase;
 	cps3_voice *vptr = &chip->voice[0];
 

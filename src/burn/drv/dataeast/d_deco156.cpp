@@ -491,7 +491,7 @@ static INT32 HvysmshInit()
 	deco16_set_graphics(DrvGfxROM0, 0x400000, DrvGfxROM1, 0x400000, DrvGfxROM1, 0x100);
 	deco16_set_global_offsets(0, 8);
 
-	MSM6295Init(0, (28000000 / 28) / MSM6295_PIN7_HIGH, 1);
+	MSM6295Init(0, (28000000 / 28) / MSM6295_PIN7_HIGH, 0);
 	MSM6295Init(1, (28000000 / 14) / MSM6295_PIN7_HIGH, 1);
 
 	EEPROMInit(&eeprom_interface_93C46);
@@ -732,7 +732,6 @@ static INT32 DrvFrame()
 		if (has_ymz) {
 			YMZ280BRender(pBurnSoundOut, nBurnSoundLen);
 		} else {
-			memset (pBurnSoundOut, 0, nBurnSoundLen * 4);
 			MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 		}
 	}

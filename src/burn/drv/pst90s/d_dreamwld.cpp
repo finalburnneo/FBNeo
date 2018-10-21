@@ -844,7 +844,7 @@ static INT32 DrvFrame()
 	SekClose();
 	
 	if (pBurnSoundOut) {
-		memset (pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16) * 2);
+		BurnSoundClear();
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 

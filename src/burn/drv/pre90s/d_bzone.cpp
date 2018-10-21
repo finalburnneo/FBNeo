@@ -16,6 +16,7 @@
 #include "earom.h"
 #include "redbaron.h" // audio custom
 #include "bzone.h" // audio custom
+#include "burn_sound.h" // dc filter
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -891,8 +892,9 @@ static INT32 DrvFrame()
 		} else {
 			bzone_sound_update(pBurnSoundOut, nBurnSoundLen);
 			if (!bzone_sound_enable)
-				memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
+				BurnSoundClear();
 		}
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {
@@ -975,7 +977,7 @@ STD_ROM_FN(bzone)
 
 struct BurnDriver BurnDrvBzone = {
 	"bzone", NULL, NULL, NULL, "1980",
-	"Battle Zone (rev 2)\0", NULL, "Atari", "Miscellaneous",
+	"Battle Zone (rev 2)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, bzoneRomInfo, bzoneRomName, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
@@ -1014,7 +1016,7 @@ STD_ROM_FN(bzonea)
 
 struct BurnDriver BurnDrvBzonea = {
 	"bzonea", "bzone", NULL, NULL, "1980",
-	"Battle Zone (rev 1)\0", NULL, "Atari", "Miscellaneous",
+	"Battle Zone (rev 1)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, bzoneaRomInfo, bzoneaRomName, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
@@ -1054,7 +1056,7 @@ STD_ROM_FN(bzonec)
 
 struct BurnDriver BurnDrvBzonec = {
 	"bzonec", "bzone", NULL, NULL, "1980",
-	"Battle Zone (cocktail)\0", NULL, "Atari", "Miscellaneous",
+	"Battle Zone (cocktail)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, bzonecRomInfo, bzonecRomName, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
@@ -1095,7 +1097,7 @@ STD_ROM_FN(bradley)
 
 struct BurnDriver BurnDrvBradley = {
 	"bradley", NULL, NULL, NULL, "1980",
-	"Bradley Trainer\0", NULL, "Atari", "Miscellaneous",
+	"Bradley Trainer\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, bradleyRomInfo, bradleyRomName, NULL, NULL, BradleyInputInfo, BradleyDIPInfo,

@@ -533,9 +533,9 @@ INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, bool bAddSignal)
 
 	if (nChip == 0) {
 		memset(&MSM6295, 0, sizeof(MSM6295));
-	}
 
-	bAdd = bAddSignal;
+		bAdd = bAddSignal;
+	}
 
 	// Convert volume from percentage
 	MSM6295[nChip].nVolume = INT32(100.0 * 256.0 / 100.0 + 0.5);

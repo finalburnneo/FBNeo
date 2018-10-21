@@ -28,6 +28,7 @@ static INT16 dac_lastout_r = 0;
 static INT16 dac_lastin_l  = 0;
 static INT16 dac_lastout_l = 0;
 
+// BurnSoundDCFilterReset() is called automatically @ game init, no need to call this in-driver.
 void BurnSoundDCFilterReset()
 {
 	dac_lastin_r = dac_lastout_r = 0;
@@ -51,4 +52,10 @@ void BurnSoundDCFilter()
 		pBurnSoundOut[i*2+0] = outr;
 		pBurnSoundOut[i*2+1] = outl;
 	}
+}
+
+void BurnSoundClear()
+{
+	if (pBurnSoundOut)
+		memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
 }

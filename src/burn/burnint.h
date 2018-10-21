@@ -18,6 +18,7 @@
 #endif
 
 #include "burn.h"
+#include "burn_sound.h"
 
 #ifdef LSB_FIRST
 typedef union

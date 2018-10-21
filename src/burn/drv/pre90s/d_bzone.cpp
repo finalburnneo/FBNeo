@@ -16,7 +16,6 @@
 #include "earom.h"
 #include "redbaron.h" // audio custom
 #include "bzone.h" // audio custom
-#include "burn_sound.h" // dc filter
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

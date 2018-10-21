@@ -87,7 +87,6 @@ Ensoniq OTIS - ES5505                                            Ensoniq OTTO - 
 //
 
 #include "burnint.h"
-#include "burn_sound.h"
 #include "es5506.h"
 
 

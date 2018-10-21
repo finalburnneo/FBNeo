@@ -4,7 +4,6 @@
 #include <math.h>
 #include "burnint.h"
 #include "ymz280b.h"
-#include "burn_sound.h"
 
 static INT32 nYMZ280BSampleRate;
 bool bESPRaDeMixerKludge = false;

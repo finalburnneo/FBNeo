@@ -7,7 +7,6 @@
 #include "namcoio.h"
 #include "bitswap.h"
 #include "dac.h"
-#include "burn_sound.h" // dc filter
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

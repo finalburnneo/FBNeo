@@ -2,7 +2,6 @@
 // Note: if a mono route is needed (in the future), uncomment in the main render loop.
 
 #include "burnint.h"
-#include "burn_sound.h"
 #include "burn_md2612.h"
 
 void (*BurnMD2612Update)(INT16* pSoundBuf, INT32 nSegmentEnd);

@@ -3,7 +3,6 @@
 #include <math.h>
 #include <stddef.h>
 #include "cps.h"
-#include "burn_sound.h"
 
 static const INT32 nQscClock = 4000000;
 static const INT32 nQscClockDivider = 166;

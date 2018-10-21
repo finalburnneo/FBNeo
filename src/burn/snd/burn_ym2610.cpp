@@ -1,5 +1,4 @@
 #include "burnint.h"
-#include "burn_sound.h"
 #include "burn_ym2610.h"
 
 void (*BurnYM2610Update)(INT16* pSoundBuf, INT32 nSegmentEnd);

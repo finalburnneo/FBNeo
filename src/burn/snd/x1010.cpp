@@ -2,7 +2,6 @@
 
 #include "burnint.h"
 #include "msm6295.h"
-#include "burn_sound.h"
 #include "x1010.h"
 
 UINT8 *X1010SNDROM;

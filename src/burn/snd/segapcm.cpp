@@ -4,7 +4,6 @@
 /*********************************************************/
 
 #include "burnint.h"
-#include "burn_sound.h"
 #include "segapcm.h"
 
 #define MAX_CHIPS		2

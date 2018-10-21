@@ -25,7 +25,6 @@ added external port callback, and functions to set the volume of the channels
 
 
 #include "burnint.h"
-#include "burn_sound.h"
 #include "k007232.h"
 
 #define KDAC_A_PCM_MAX	(2)

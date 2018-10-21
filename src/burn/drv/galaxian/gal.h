@@ -1,5 +1,4 @@
 #include "tiles_generic.h"
-#include "burn_sound.h"
 #include "z80_intf.h"
 #include "dac.h"
 #include "8255ppi.h"

@@ -47,7 +47,6 @@ Unmapped registers:
 
 
 #include "burnint.h"
-#include "burn_sound.h"
 #include "c140.h"
 
 // --- Future NOTE: if asic219 DOES NOT WORK, this is why!! (line below) -dink

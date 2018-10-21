@@ -1,6 +1,5 @@
 // FBAlpha YM-2151 sound core interface
 #include "burnint.h"
-#include "burn_sound.h"
 #include "burn_ym2151.h"
 
 // Irq Callback timing notes..

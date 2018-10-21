@@ -34,7 +34,6 @@ Registers per channel:
 ***************************************************************************/
 
 #include "burnint.h"
-#include "burn_sound.h"
 #include "gaelco.h"
 
 #define GAELCO_NUM_CHANNELS     0x07

@@ -1,7 +1,6 @@
 // copyright-holders:Nicola Salmoria,Aaron Giles
 
 #include "burnint.h"
-#include "burn_sound.h"
 #include "namco_snd.h"
 
 #define MAX_VOICES 8

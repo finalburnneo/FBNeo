@@ -5,7 +5,6 @@
 
 #include "burnint.h"
 #include "rf5c68.h"
-#include "burn_sound.h"
 
 #define NUM_CHANNELS	(8)
 

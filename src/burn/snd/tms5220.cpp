@@ -12,7 +12,6 @@
 #include <math.h>
 
 #include "burnint.h"
-#include "burn_sound.h"
 #include "tms5220.h"
 
 

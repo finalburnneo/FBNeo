@@ -16,7 +16,6 @@
 
 
 #include "burnint.h"
-#include "burn_sound.h"
 //#include <cmath>
 
 #include "timer.h"

@@ -4,7 +4,6 @@
 #include <math.h>
 #include "burnint.h"
 #include "msm6295.h"
-#include "burn_sound.h"
 #include <stddef.h>
 
 UINT8* MSM6295ROM;

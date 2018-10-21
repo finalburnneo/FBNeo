@@ -13,7 +13,6 @@
 // Jan 19, 2018: added cubic resampling.
 
 #include "burnint.h"
-#include "burn_sound.h"
 #include "math.h"
 #include "k054539.h"
 

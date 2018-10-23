@@ -79,8 +79,7 @@ static INT32 DrvTile2TilemapWidth;
 static INT32 DrvTile2TilemapHeight;
 static UINT8 DrvTileRamBank[3];
 static UINT8 DrvSlyspyProtValue;
-
-//typedef void (*Dec0Render)();
+static UINT8 DrvSlyspySoundProt;
 
 typedef INT32 (*Dec0LoadRoms)();
 static Dec0LoadRoms LoadRomsFunction;
@@ -100,6 +99,8 @@ static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
 
 static INT32 nCyclesDone[3], nCyclesTotal[3];
+
+static INT32 slyspy_mode = 0;
 
 static INT32 Dec0Game = 0;
 
@@ -2029,7 +2030,9 @@ static INT32 SlyspyDoReset()
 	h6280Open(0);
 	h6280Reset();
 	h6280Close();
-	
+
+	DrvSlyspySoundProt = 0;
+
 	return nRet;
 }
 
@@ -3045,6 +3048,10 @@ static UINT16 __fastcall Slyspy68KReadWord(UINT32 a)
 			case 0x02: return 0x13;
 			case 0x04: return 0x00;
 			case 0x06: return 0x02;
+			case 0x0c: {
+				UINT16 *mem = (UINT16*)Drv68KRam;
+				return mem[0x2028/2] >> 8;
+			}
 		}
 		
 		return 0;
@@ -3310,21 +3317,48 @@ static void SlyspySetProtectionMap(UINT8 Type)
 
 static UINT8 SlyspyH6280ReadProg(UINT32 Address)
 {
-	switch (Address) {
-		case 0x0a0000: {
-			// nop
-			return 0;
-		}
-		
-		case 0x0e0000: {
-			return MSM6295Read(0);
-		}
-		
-		case 0x0f0000: {
-			return DrvSoundLatch;
+	if (!(Address >= 0x80000 && Address <= 0xfffff)) return 0;
+
+	Address = (Address & 0x7ffff) | (DrvSlyspySoundProt * 0x80000);
+
+	if ((Address&~0x180001) == 0x20000) {
+		DrvSlyspySoundProt++;
+		DrvSlyspySoundProt &= 3;
+
+		return 0xff;
+	}
+
+	if ((Address&~0x180001) == 0x50000) {
+		DrvSlyspySoundProt = 0;
+
+		return 0xff;
+	}
+
+	if (DrvSlyspySoundProt == 0) {
+		switch (Address) {
+			case 0x060000: return MSM6295Read(0);
+			case 0x070000: return DrvSoundLatch;
 		}
 	}
-	
+	if (DrvSlyspySoundProt == 1) {
+		switch (Address) {
+			case 0x090000: return MSM6295Read(0);
+			case 0x0c0000: return DrvSoundLatch;
+		}
+	}
+	if (DrvSlyspySoundProt == 2) {
+		switch (Address) {
+			case 0x110000: return DrvSoundLatch;
+			case 0x130000: return MSM6295Read(0);
+		}
+	}
+	if (DrvSlyspySoundProt == 3) {
+		switch (Address) {
+			case 0x1e0000: return DrvSoundLatch;
+			case 0x1f0000: return MSM6295Read(0);
+		}
+	}
+
 	bprintf(PRINT_NORMAL, _T("H6280 Read Prog %x\n"), Address);
 	
 	return 0;
@@ -3332,38 +3366,87 @@ static UINT8 SlyspyH6280ReadProg(UINT32 Address)
 
 static void SlyspyH6280WriteProg(UINT32 Address, UINT8 Data)
 {
-	switch (Address) {
-		case 0x090000: {
-			BurnYM3812Write(0, 0, Data);
-			return;
-		}
-		
-		case 0x090001: {
-			BurnYM3812Write(0, 1, Data);
-			return;
-		}
-		
-		case 0x0b0000: {
-			BurnYM2203Write(0, 0, Data);
-			return;
-		}
-		
-		case 0x0b0001: {
-			BurnYM2203Write(0, 1, Data);
-			return;
-		}
-		
-		case 0x0e0000: {
-			MSM6295Write(0, Data);
-			return;
-		}
-	}
-	
 	if (Address >= 0x1ff400 && Address <= 0x1ff403) {
 		h6280_irq_status_w(Address - 0x1ff400, Data);
 		return;
 	}
-	
+
+	if (!(Address >= 0x80000 && Address <= 0xfffff)) return;
+
+	Address = (Address & 0x7ffff) | (DrvSlyspySoundProt * 0x80000);
+
+	if (DrvSlyspySoundProt == 0) {
+		switch (Address) {
+			case 0x010000:
+			case 0x010001:
+				BurnYM3812Write(0, Address&1, Data);
+				return;
+
+			case 0x030000:
+			case 0x030001:
+				BurnYM2203Write(0, Address&1, Data);
+				return;
+
+			case 0x060000:
+				MSM6295Write(0, Data);
+				return;
+		}
+	}
+
+	if (DrvSlyspySoundProt == 1) {
+		switch (Address) {
+			case 0x0f0000:
+			case 0x0f0001:
+				BurnYM3812Write(0, Address&1, Data);
+				return;
+
+			case 0x0e0000:
+			case 0x0e0001:
+				BurnYM2203Write(0, Address&1, Data);
+				return;
+
+			case 0x090000:
+				MSM6295Write(0, Data);
+				return;
+		}
+	}
+
+	if (DrvSlyspySoundProt == 2) {
+		switch (Address) {
+			case 0x170000:
+			case 0x170001:
+				BurnYM3812Write(0, Address&1, Data);
+				return;
+
+			case 0x140000:
+			case 0x140001:
+				BurnYM2203Write(0, Address&1, Data);
+				return;
+
+			case 0x130000:
+				MSM6295Write(0, Data);
+				return;
+		}
+	}
+
+	if (DrvSlyspySoundProt == 3) {
+		switch (Address) {
+			case 0x190000:
+			case 0x190001:
+				BurnYM3812Write(0, Address&1, Data);
+				return;
+
+			case 0x1c0000:
+			case 0x1c0001:
+				BurnYM2203Write(0, Address&1, Data);
+				return;
+
+			case 0x1f0000:
+				MSM6295Write(0, Data);
+				return;
+		}
+	}
+
 	bprintf(PRINT_NORMAL, _T("H6280 Write Prog %x, %x\n"), Address, Data);
 }
 
@@ -4238,8 +4321,6 @@ static INT32 SlyspyDrvInit()
 	for (INT32 i = 0x00000; i < 0x10000; i++) {
 		DrvH6280Rom[i] = (DrvH6280Rom[i] & 0x7e) | ((DrvH6280Rom[i] & 0x1) << 7) | ((DrvH6280Rom[i] & 0x80) >> 7);
 	}
-	DrvH6280Rom[0xf2d] = 0xea;
-	DrvH6280Rom[0xf2e] = 0xea;
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -4267,7 +4348,7 @@ static INT32 SlyspyDrvInit()
 	GenericTilesInit();
 	
 	BurnYM3812Init(1, 3000000, &Dec1YM3812IRQHandler, 1);
-	BurnTimerAttachYM3812(&H6280Config, 2000000);
+	BurnTimerAttachYM3812(&H6280Config, 3000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, 0);
@@ -4281,7 +4362,9 @@ static INT32 SlyspyDrvInit()
 	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	DrvSpriteDMABufferRam = DrvSpriteRam;
-	
+
+	slyspy_mode = 1;
+
 	SlyspyDoReset();
 
 	return 0;
@@ -4538,7 +4621,9 @@ static INT32 DrvExit()
 	DrvSlyspyProtValue = 0;
 	
 	LoadRomsFunction = NULL;
-	
+
+	slyspy_mode = 0;
+
 	Dec0Game = 0;
 	
 	DrvCharPalOffset = 0;
@@ -5445,6 +5530,8 @@ static INT32 Dec1Frame()
 	if (Dec0Game == DEC1_GAME_MIDRES)
 		nCyclesTotal[0] = (INT32)((double)14000000 / 57.41);
 	nCyclesTotal[1] = (INT32)((double)2000000 / 57.41);
+	if (slyspy_mode)
+		nCyclesTotal[1] = (INT32)((double)3000000 / 57.41);
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	
 	SekNewFrame();
@@ -5519,6 +5606,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvPriority);
 		SCAN_VAR(DrvTileRamBank);
 		SCAN_VAR(DrvSlyspyProtValue);
+		SCAN_VAR(DrvSlyspySoundProt);
 
 		SCAN_VAR(nRotate);
 		SCAN_VAR(nRotateTarget);

@@ -12,11 +12,12 @@
 #include "burn_ym2203.h"
 #include "msm6295.h"
 
-static INT32 Footchmp;
+static INT32 Footchmp = 0;
 static INT32 YesnoDip;
 static INT32 MjnquestInput;
 static INT32 DriveoutSoundNibble;
 static INT32 DriveoutOkiBank;
+static INT32 Driftout = 0;
 
 INT32 TaitoF2SpriteType;
 INT32 TaitoF2SpritesFlipScreen;
@@ -5266,6 +5267,11 @@ void __fastcall Driftout68KWriteWord(UINT32 a, UINT16 d)
 			//???
 			return;
 		}
+
+		case 0x20019c: {
+			//???
+			return;
+		}
 		
 		default: {
 			bprintf(PRINT_NORMAL, _T("68K #1 Write word => %06X, %04X\n"), a, d);
@@ -7957,6 +7963,8 @@ static INT32 DriftoutInit()
 
 	SpritePriWritebackMode = 0;
 
+	Driftout = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -8053,7 +8061,9 @@ static INT32 DriveoutInit()
 	PaletteType = QZQUESTPalette;
 
 	SpritePriWritebackMode = 0;
-	
+
+	Driftout = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -9468,7 +9478,9 @@ static INT32 TaitoF2Exit()
 	MjnquestInput = 0;
 	DriveoutSoundNibble = 0;
 	DriveoutOkiBank = 0;
-	
+
+	Driftout = 0;
+
 	TaitoF2SpriteBufferFunction = NULL;
 
 	PaletteType = 0;
@@ -10379,6 +10391,8 @@ static INT32 TaitoF2PriRozDraw()
 	RozPriority = (TC0360PRIRegs[1] & 0xc0) >> 6;
 	RozPriority = (TC0360PRIRegs[8 + (RozPriority / 2)] >> 4 * (RozPriority & 1)) & 0x0f;
 	TC0280GRDBaseColour = (TC0360PRIRegs[1] & 0x3f) << 2;
+
+	if (Driftout && RozPriority == 0) RozPriority = -1; // disable roz layer for driftout
 
 	BurnTransferClear();
 	DynCalcPalette();

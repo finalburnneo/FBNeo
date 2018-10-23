@@ -732,8 +732,8 @@ void HiscoreExit()
 
 				BurnFree(Buffer);
 			}
+			fclose(fp);
 		}
-		fclose(fp);
 	} else {
 #if 1 && defined FBA_DEBUG
 		bprintf(0, _T("HiscoreExit(): -NOT- ok to write Hiscore data!\n"));

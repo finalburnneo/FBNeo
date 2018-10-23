@@ -415,14 +415,12 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 					return 0;
 				}
 			}
+			fclose(fp);
 		} else {
 
 			//bprintf(PRINT_NORMAL, _T("    Couldn't open %s \n"), GetIsoPath());
 			return 0;
 		}
-
-		if(fp) fclose(fp);
-
 	} else {
 
 		//bprintf(PRINT_NORMAL, _T("    File doesn't have a valid ISO extension [ .iso / .ISO ] \n"));

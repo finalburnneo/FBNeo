@@ -969,8 +969,8 @@ static void draw_sprites()
 
 		px = px & 0xff;
 
-	    if (px > 248)
-	    	px = px - 256;
+		if (px > 248)
+			px = px - 256;
 
 		RenderTileTranstab(pTransDraw, DrvGfxROM0, code, (color & 0x3f) << 3, 0, px - 8, py - 16, flipscreen, flipscreen, 16, 16, DrvTransTab);
 	}

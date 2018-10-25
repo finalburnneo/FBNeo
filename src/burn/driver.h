@@ -14,6 +14,11 @@
  #define __cdecl
 #endif
 
+#if !defined (_MSC_VER) && defined(FASTCALL)
+ #undef __fastcall
+ #define __fastcall __attribute__((fastcall))
+#endif
+
 #ifndef INLINE
  #define INLINE __inline static
 #endif

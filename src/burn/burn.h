@@ -2,6 +2,8 @@
 //            Refer to the "license.txt" file for more info
 
 // Burner emulation library
+#ifndef _BURNH_H
+#define _BURNH_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -9,6 +11,11 @@
 
 #if !defined (_WIN32)
  #define __cdecl
+#endif
+
+#if !defined (_MSC_VER) && defined(FASTCALL)
+ #undef __fastcall
+ #define __fastcall __attribute__((fastcall))
 #endif
 
 #ifndef MAX_PATH
@@ -649,3 +656,4 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
  } // End of extern "C"
 #endif
 
+#endif

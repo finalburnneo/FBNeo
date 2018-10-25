@@ -1,3 +1,6 @@
+#ifndef _BURNINT_H
+#define _BURNINT_H
+
 // Burn - Arcade emulator library - internal code
 
 // Standard headers
@@ -13,7 +16,7 @@
 #include "tchar.h"
 #endif
 
-#ifdef __LIBRETRO_OPTIMIZATIONS__
+#ifdef __LIBRETRO__
 #include "burn_libretro_opts.h"
 #endif
 
@@ -243,3 +246,5 @@ extern UINT8 DebugCPU_I8039Initted;
 extern UINT8 DebugCPU_SH2Initted;
 
 void DebugTrackerExit();
+
+#endif

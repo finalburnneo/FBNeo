@@ -23,12 +23,12 @@
 
 #define MOVSPA	\
 	tmp = (Wreg(PSW_SAVE) & 0x7000) >> 8;	\
-	Sreg(SS) = nec_state->ram.w[tmp+SS];	\
+	Sreg(SS_) = nec_state->ram.w[tmp+SS_];	\
 	Wreg(SP) = nec_state->ram.w[tmp+SP]
 
 #define MOVSPB	\
 	tmp <<= 4;	\
-	nec_state->ram.w[tmp+SS] = Sreg(SS);	\
+	nec_state->ram.w[tmp+SS_] = Sreg(SS_);	\
 	nec_state->ram.w[tmp+SP] = Wreg(SP)
 
 #define FINT	\

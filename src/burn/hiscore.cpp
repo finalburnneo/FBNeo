@@ -517,7 +517,11 @@ void HiscoreInit()
 	if (nHiscoreNumRanges) HiscoresInUse = 1;
 	
 	TCHAR szFilename[MAX_PATH];
-	_stprintf(szFilename, _T("%s%s.hi"), szAppHiscorePath, BurnDrvGetText(DRV_NAME));
+#ifndef __LIBRETRO__
+ 	_stprintf(szFilename, _T("%s%s.hi"), szAppHiscorePath, BurnDrvGetText(DRV_NAME));
+#else
+	_stprintf(szFilename, _T("%s%s.hi"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
+#endif
 
 	fp = _tfopen(szFilename, _T("rb"));
 	INT32 Offset = 0;
@@ -714,7 +718,11 @@ void HiscoreExit()
 		if (nCpuType == -1) set_cpu_type();
 
 		TCHAR szFilename[MAX_PATH];
-		_stprintf(szFilename, _T("%s%s.hi"), szAppHiscorePath, BurnDrvGetText(DRV_NAME));
+#ifndef __LIBRETRO__
+ 		_stprintf(szFilename, _T("%s%s.hi"), szAppHiscorePath, BurnDrvGetText(DRV_NAME));
+#else
+		_stprintf(szFilename, _T("%s%s.hi"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
+#endif
 
 		FILE *fp = _tfopen(szFilename, _T("wb"));
 		if (fp) {

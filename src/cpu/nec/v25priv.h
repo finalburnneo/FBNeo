@@ -137,7 +137,7 @@ enum {
 typedef enum {
 	DS1 = 0x0E/2,
 	PS  = 0x0C/2,
-	SS  = 0x0A/2,
+	SS_  = 0x0A/2,
 	DS0 = 0x08/2
 } SREGS;
 
@@ -215,7 +215,7 @@ void v25_write_word(v25_state_t *nec_state, unsigned a, UINT16 d);
 
 #define SegBase(Seg) (Sreg(Seg) << 4)
 
-#define DefaultBase(Seg) ((nec_state->seg_prefix && (Seg==DS0 || Seg==SS)) ? nec_state->prefix_base : Sreg(Seg) << 4)
+#define DefaultBase(Seg) ((nec_state->seg_prefix && (Seg==DS0 || Seg==SS_)) ? nec_state->prefix_base : Sreg(Seg) << 4)
 
 #define GetMemB(Seg,Off) (read_mem_byte(DefaultBase(Seg) + (Off)))
 #define GetMemW(Seg,Off) (read_mem_word(DefaultBase(Seg) + (Off)))
@@ -230,8 +230,8 @@ void v25_write_word(v25_state_t *nec_state, unsigned a, UINT16 d);
 #define EMPTY_PREFETCH()	nec_state->prefetch_reset = 1
 
 
-#define PUSH(val) { Wreg(SP) -= 2; write_mem_word(((Sreg(SS)<<4)+Wreg(SP)), val); }
-#define POP(var) { Wreg(SP) += 2; var = read_mem_word(((Sreg(SS)<<4) + ((Wreg(SP)-2) & 0xffff))); }
+#define PUSH(val) { Wreg(SP) -= 2; write_mem_word(((Sreg(SS_)<<4)+Wreg(SP)), val); }
+#define POP(var) { Wreg(SP) += 2; var = read_mem_word(((Sreg(SS_)<<4) + ((Wreg(SP)-2) & 0xffff))); }
 
 #define GetModRM UINT32 ModRM=FETCH()
 

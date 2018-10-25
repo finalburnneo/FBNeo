@@ -54,6 +54,10 @@ static INT16 *discharge;        // look up table
 static INT16 vol_explosion[16]; // look up table
 #define EXP(charge,n) (charge ? 0x7fff - discharge[0x7fff-n] : discharge[n])
 
+#ifdef INLINE
+#undef INLINE
+#endif
+
 #define INLINE static inline
 
 struct asteroid_sound {

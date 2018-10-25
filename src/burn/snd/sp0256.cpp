@@ -788,7 +788,7 @@ static UINT32 getb( INT32 len )
 
 		data = ((d1 << 10) | d0) >> m_fifo_bitp;
 
-		LOG_FIFO((0, L"sp0256: RD_FIFO %.3X %d.%d %d\n", data & ((1 << len) - 1),
+		LOG_FIFO((0, _T("sp0256: RD_FIFO %.3X %d.%d %d\n"), data & ((1 << len) - 1),
 				m_fifo_tail, m_fifo_bitp, m_fifo_head));
 
 		/* ---------------------------------------------------------------- */
@@ -888,7 +888,7 @@ static void micro()
 		repeat = 0;
 		ctrl_xfer = 0;
 
-		LOG((0, L"$%.4X.%.1X: OPCODE %d%d%d%d.%d%d\n",
+		LOG((0, _T("$%.4X.%.1X: OPCODE %d%d%d%d.%d%d\n"),
 				(m_pc >> 3) - 1, m_pc & 7,
 				!!(opcode & 1), !!(opcode & 2),
 				!!(opcode & 4), !!(opcode & 8),
@@ -1011,7 +1011,7 @@ static void micro()
 		/* ---------------------------------------------------------------- */
 		if (ctrl_xfer)
 		{
-			LOG((0, L"jumping to $%.4X.%.1X: ", m_pc >> 3, m_pc & 7));
+			LOG((0, _T("jumping to $%.4X.%.1X: "), m_pc >> 3, m_pc & 7));
 
 			/* ------------------------------------------------------------ */
 			/*  Set our "FIFO Selected" flag based on whether we're going   */
@@ -1019,7 +1019,7 @@ static void micro()
 			/* ------------------------------------------------------------ */
 			m_fifo_sel = m_pc == FIFO_ADDR;
 
-			LOG((0, L"%s ", m_fifo_sel ? "FIFO" : "ROM"));
+			LOG((0, _T("%s "), m_fifo_sel ? "FIFO" : "ROM"));
 
 			/* ------------------------------------------------------------ */
 			/*  Control transfers to the FIFO cause it to discard the       */
@@ -1027,14 +1027,14 @@ static void micro()
 			/* ------------------------------------------------------------ */
 			if (m_fifo_sel && m_fifo_bitp)
 			{
-				LOG((0, L"bitp = %d -> Flush", m_fifo_bitp));
+				LOG((0, _T("bitp = %d -> Flush"), m_fifo_bitp));
 
 				/* Discard partially-read decle. */
 				if (m_fifo_tail < m_fifo_head) m_fifo_tail++;
 				m_fifo_bitp = 0;
 			}
 
-			LOG((0, L"\n"));
+			LOG((0, _T("\n")));
 
 			continue;
 		}
@@ -1046,7 +1046,7 @@ static void micro()
 		if (!repeat) continue;
 
 		m_filt.rpt = repeat + 1;
-		LOG((0, L"repeat = %d\n", repeat));
+		LOG((0, _T("repeat = %d\n"), repeat));
 
 		i = (opcode << 3) | (m_mode & 6);
 		idx0 = sp0256_df_idx[i++];
@@ -1076,7 +1076,7 @@ static void micro()
 			field = cr & CR_FIELD;
 			value = 0;
 
-			LOG((0, L"$%.4X.%.1X: len=%2d shf=%2d prm=%2d d=%d f=%d ",
+			LOG((0, _T("$%.4X.%.1X: len=%2d shf=%2d prm=%2d d=%d f=%d "),
 						m_pc >> 3, m_pc & 7, len, shf, prm, !!delta, !!field));
 			/* ------------------------------------------------------------ */
 			/*  Clear any registers that were requested to be cleared.      */
@@ -1101,7 +1101,7 @@ static void micro()
 			}
 			else
 			{
-				LOG((0, L" (no update)\n"));
+				LOG((0, _T(" (no update)\n")));
 				continue;
 			}
 
@@ -1119,7 +1119,7 @@ static void micro()
 			if (shf)
 				value <<= shf;
 
-			LOG((0, L"v=%.2X (%c%.2X)  ", value & 0xFF,
+			LOG((0, _T("v=%.2X (%c%.2X)  "), value & 0xFF,
 						value & 0x80 ? '-' : '+',
 						0xFF & (value & 0x80 ? -value : value)));
 
@@ -1130,12 +1130,12 @@ static void micro()
 			/* ------------------------------------------------------------ */
 			if (field)
 			{
-				LOG((0, L"--field-> r[%2d] = %.2X -> ", prm, m_filt.r[prm]));
+				LOG((0, _T("--field-> r[%2d] = %.2X -> "), prm, m_filt.r[prm]));
 
 				m_filt.r[prm] &= ~(~0 << shf); /* Clear the old bits.     */
 				m_filt.r[prm] |= value;        /* Merge in the new bits.  */
 
-				LOG((0, L"%.2X\n", m_filt.r[prm]));
+				LOG((0, _T("%.2X\n"), m_filt.r[prm]));
 
 				continue;
 			}
@@ -1145,11 +1145,11 @@ static void micro()
 			/* ------------------------------------------------------------ */
 			if (delta)
 			{
-				LOG((0, L"--delta-> r[%2d] = %.2X -> ", prm, m_filt.r[prm]));
+				LOG((0, _T("--delta-> r[%2d] = %.2X -> "), prm, m_filt.r[prm]));
 
 				m_filt.r[prm] += value;
 
-				LOG((0, L"%.2X\n", m_filt.r[prm]));
+				LOG((0, _T("%.2X\n"), m_filt.r[prm]));
 
 				continue;
 			}
@@ -1158,7 +1158,7 @@ static void micro()
 			/*  Otherwise, just write the new value.                        */
 			/* ------------------------------------------------------------ */
 			m_filt.r[prm] = value;
-			LOG((0, L"--value-> r[%2d] = %.2X\n", prm, m_filt.r[prm]));
+			LOG((0, _T("--value-> r[%2d] = %.2X\n"), prm, m_filt.r[prm]));
 		}
 
 		/* ---------------------------------------------------------------- */
@@ -1190,7 +1190,7 @@ void sp0256_ald_write(UINT8 data)
 
 	if (!m_lrq)
 	{
-		LOG((0, L"sp0256: Droped ALD write\n"));
+		LOG((0, _T("sp0256: Droped ALD write\n")));
 		return;
 	}
 
@@ -1272,7 +1272,7 @@ void sp0256_spb640_write(UINT16 offset, UINT16 data)
 		/* ---------------------------------------------------------------- */
 		if ((m_fifo_head - m_fifo_tail) >= 64)
 		{
-			LOG((0, L"spb640: Dropped FIFO write\n"));
+			LOG((0, _T("spb640: Dropped FIFO write\n")));
 			return;
 		}
 
@@ -1280,7 +1280,7 @@ void sp0256_spb640_write(UINT16 offset, UINT16 data)
 		/*  FIFO up the lower 10 bits of the data.                          */
 		/* ---------------------------------------------------------------- */
 
-		LOG((0, L"spb640: WR_FIFO %.3X %d.%d %d\n", data & 0x3ff,
+		LOG((0, _T("spb640: WR_FIFO %.3X %d.%d %d\n"), data & 0x3ff,
 				m_fifo_tail, m_fifo_bitp, m_fifo_head));
 
 		m_fifo[m_fifo_head++ & 63] = data & 0x3ff;

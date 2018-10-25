@@ -58,8 +58,8 @@ OP( 0x12, i_adc_r8b  ) { DEF_r8b;	src+=CF;	ADDB;	RegByte(ModRM)=dst;			CLKM(2,2,
 OP( 0x13, i_adc_r16w ) { DEF_r16w;	src+=CF;	ADDW;	RegWord(ModRM)=dst;			CLKR(15,15,8,15,11,6,2,EA);	}
 OP( 0x14, i_adc_ald8 ) { DEF_ald8;	src+=CF;	ADDB;	Breg(AL)=dst;			CLKS(4,4,2);				}
 OP( 0x15, i_adc_axd16) { DEF_axd16;	src+=CF;	ADDW;	Wreg(AW)=dst;			CLKS(4,4,2);				}
-OP( 0x16, i_push_ss  ) { PUSH(Sreg(SS));		CLKS(12,8,3);	}
-OP( 0x17, i_pop_ss   ) { POP(Sreg(SS));		CLKS(12,8,5);	nec_state->no_interrupt=1; }
+OP( 0x16, i_push_ss  ) { PUSH(Sreg(SS_));		CLKS(12,8,3);	}
+OP( 0x17, i_pop_ss   ) { POP(Sreg(SS_));		CLKS(12,8,5);	nec_state->no_interrupt=1; }
 
 OP( 0x18, i_sbb_br8  ) { DEF_br8;	src+=CF;	SUBB;	PutbackRMByte(ModRM,dst);	CLKM(2,2,2,16,16,7);		}
 OP( 0x19, i_sbb_wr16 ) { DEF_wr16;	src+=CF;	SUBW;	PutbackRMWord(ModRM,dst);	CLKR(24,24,11,24,16,7,2,EA);}
@@ -94,7 +94,7 @@ OP( 0x32, i_xor_r8b  ) { DEF_r8b;	XORB;	RegByte(ModRM)=dst;			CLKM(2,2,2,11,11,6
 OP( 0x33, i_xor_r16w ) { DEF_r16w;	XORW;	RegWord(ModRM)=dst;			CLKR(15,15,8,15,11,6,2,EA);	}
 OP( 0x34, i_xor_ald8 ) { DEF_ald8;	XORB;	Breg(AL)=dst;			CLKS(4,4,2);				}
 OP( 0x35, i_xor_axd16) { DEF_axd16;	XORW;	Wreg(AW)=dst;			CLKS(4,4,2);	}
-OP( 0x36, i_ss       ) { nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS)<<4;	CLK(2);		nec_instruction[fetchop(nec_state)](nec_state);	nec_state->seg_prefix=FALSE; }
+OP( 0x36, i_ss       ) { nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS_)<<4;	CLK(2);		nec_instruction[fetchop(nec_state)](nec_state);	nec_state->seg_prefix=FALSE; }
 OP( 0x37, i_aaa      ) { ADJB(6, (Breg(AL) > 0xf9) ? 2 : 1);		CLKS(7,7,4);	}
 
 OP( 0x38, i_cmp_br8  ) { DEF_br8;	SUBB;					CLKM(2,2,2,11,11,6); }
@@ -182,7 +182,7 @@ OP( 0x64, i_repnc  ) {	UINT32 next = fetchop(nec_state);	UINT16 c = Wreg(CW);
 	switch(next) { /* Segments */
 		case 0x26:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS1)<<4;	next = fetchop(nec_state);	CLK(2); break;
 		case 0x2e:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(PS)<<4;	next = fetchop(nec_state);	CLK(2); break;
-		case 0x36:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS)<<4;	next = fetchop(nec_state);	CLK(2); break;
+		case 0x36:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS_)<<4;	next = fetchop(nec_state);	CLK(2); break;
 		case 0x3e:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS0)<<4;	next = fetchop(nec_state);	CLK(2); break;
 	}
 
@@ -210,7 +210,7 @@ OP( 0x65, i_repc  ) {	UINT32 next = fetchop(nec_state);	UINT16 c = Wreg(CW);
 	switch(next) { /* Segments */
 		case 0x26:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS1)<<4;	next = fetchop(nec_state);	CLK(2); break;
 		case 0x2e:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(PS)<<4;	next = fetchop(nec_state);	CLK(2); break;
-		case 0x36:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS)<<4;	next = fetchop(nec_state);	CLK(2); break;
+		case 0x36:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS_)<<4;	next = fetchop(nec_state);	CLK(2); break;
 		case 0x3e:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS0)<<4;	next = fetchop(nec_state);	CLK(2); break;
 	}
 
@@ -329,7 +329,7 @@ OP( 0x8c, i_mov_wsreg ) { GetModRM;
 	switch (ModRM & 0x38) {
 		case 0x00: PutRMWord(ModRM,Sreg(DS1)); CLKR(14,14,5,14,10,3,2,EA); break;
 		case 0x08: PutRMWord(ModRM,Sreg(PS)); CLKR(14,14,5,14,10,3,2,EA); break;
-		case 0x10: PutRMWord(ModRM,Sreg(SS)); CLKR(14,14,5,14,10,3,2,EA); break;
+		case 0x10: PutRMWord(ModRM,Sreg(SS_)); CLKR(14,14,5,14,10,3,2,EA); break;
 		case 0x18: PutRMWord(ModRM,Sreg(DS0)); CLKR(14,14,5,14,10,3,2,EA); break;
 //		default:   logerror("%06x: MOV Sreg - Invalid register\n",PC(nec_state));
 	}
@@ -339,7 +339,7 @@ OP( 0x8e, i_mov_sregw ) { UINT16 src; GetModRM; src = GetRMWord(ModRM); CLKR(15,
 	switch (ModRM & 0x38) {
 		case 0x00: Sreg(DS1) = src; break; /* mov es,ew */
 		case 0x08: Sreg(PS) = src; break; /* mov cs,ew */
-		case 0x10: Sreg(SS) = src; break; /* mov ss,ew */
+		case 0x10: Sreg(SS_) = src; break; /* mov ss,ew */
 		case 0x18: Sreg(DS0) = src; break; /* mov ds,ew */
 //		default:   logerror("%06x: MOV Sreg - Invalid register\n",PC(nec_state));
 	}
@@ -452,7 +452,7 @@ OP( 0xc8, i_enter ) {
 	Wreg(BP)=Wreg(SP);
 	Wreg(SP) -= nb;
 	for (i=1;i<level;i++) {
-		PUSH(GetMemW(SS,Wreg(BP)-i*2));
+		PUSH(GetMemW(SS_,Wreg(BP)-i*2));
 		nec_state->icount-=16;
 	}
 	if (level) PUSH(Wreg(BP));
@@ -560,7 +560,7 @@ OP( 0xf2, i_repne    ) { UINT32 next = fetchop(nec_state); UINT16 c = Wreg(CW);
 	switch(next) { /* Segments */
 		case 0x26:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS1)<<4;	next = fetchop(nec_state);	CLK(2); break;
 		case 0x2e:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(PS)<<4;		next = fetchop(nec_state);	CLK(2); break;
-		case 0x36:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS)<<4;		next = fetchop(nec_state);	CLK(2); break;
+		case 0x36:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS_)<<4;		next = fetchop(nec_state);	CLK(2); break;
 		case 0x3e:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS0)<<4;	next = fetchop(nec_state);	CLK(2); break;
 	}
 
@@ -587,7 +587,7 @@ OP( 0xf3, i_repe     ) { UINT32 next = fetchop(nec_state); UINT16 c = Wreg(CW);
 	switch(next) { /* Segments */
 		case 0x26:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS1)<<4;	next = fetchop(nec_state);	CLK(2); break;
 		case 0x2e:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(PS)<<4;	next = fetchop(nec_state);	CLK(2); break;
-		case 0x36:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS)<<4;	next = fetchop(nec_state);	CLK(2); break;
+		case 0x36:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS_)<<4;	next = fetchop(nec_state);	CLK(2); break;
 		case 0x3e:	nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS0)<<4;	next = fetchop(nec_state);	CLK(2); break;
 	}
 

@@ -4,6 +4,10 @@
 #ifndef __7Z_TYPES_H
 #define __7Z_TYPES_H
 
+#ifdef __LIBRETRO__
+#include "streams/file_stream_transforms.h"
+#endif
+
 #ifdef _WIN32
 /* #include <windows.h> */
 #endif

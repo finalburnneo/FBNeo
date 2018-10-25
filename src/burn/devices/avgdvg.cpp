@@ -113,6 +113,10 @@ static UINT32 sparkle_callback(void)
 	return colorram[16 + ((rand() >> 8) & 15)];
 }
 
+#ifdef INLINE
+#undef INLINE
+#endif
+
 #define INLINE static
 
 #define VGVECTOR 0
@@ -519,7 +523,7 @@ static INT32 dvg_generate_vector_list(void)
 				/* handle stack underflow */
 				if (sp == 0)
 	    		{
-					bprintf(0, L"\n*** Vector generator stack underflow! ***\n");
+					bprintf(0, _T("\n*** Vector generator stack underflow! ***\n"));
 					done = 1;
 					sp = MAXSTACK - 1;
 				}
@@ -564,7 +568,7 @@ static INT32 dvg_generate_vector_list(void)
 				/* check for stack overflows */
 				if (sp == (MAXSTACK - 1))
 	    		{
-					bprintf(0, L"\n*** Vector generator stack overflow! ***\n");
+					bprintf(0, _T("\n*** Vector generator stack overflow! ***\n"));
 					done = 1;
 					sp = 0;
 				}
@@ -577,7 +581,7 @@ static INT32 dvg_generate_vector_list(void)
 
 			/* anything else gets caught here */
 			default:
-				bprintf(0, L"Unknown DVG opcode found\n");
+				bprintf(0, _T("Unknown DVG opcode found\n"));
 				done = 1;
 		}
    		VGLOG((0, L"\n"));
@@ -1108,7 +1112,7 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 	/* 0 vector RAM size is invalid */
 	if (vectorram_size == 0)
 	{
-		bprintf(0, L"Error: vectorram_size not initialized\n");
+		bprintf(0, _T("Error: vectorram_size not initialized\n"));
 		return 1;
 	}
 
@@ -1122,7 +1126,7 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 	vector_engine = vector_type;
 	if (vector_engine < AVGDVG_MIN || vector_engine > AVGDVG_MAX)
 	{
-		bprintf(0, L"Error: unknown Atari Vector Game Type\n");
+		bprintf(0, _T("Error: unknown Atari Vector Game Type\n"));
 		return 1;
 	}
 

@@ -48,6 +48,8 @@
 #  define read _read
 #  define write _write
 #  define close _close
+#else
+#  include <unistd.h>
 #endif
 
 #ifdef NO_DEFLATE       /* for compatibility with old definition */

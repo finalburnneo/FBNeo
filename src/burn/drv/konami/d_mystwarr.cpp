@@ -1259,17 +1259,24 @@ static void __fastcall martchmp_main_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x410000:
-			mw_irq_control = data & 0x40; // & 0x40
+			mw_irq_control = data & 0x40;
 			EEPROMWrite((data & 0x04), (data & 0x02), (data & 0x01));
 		return;
 
 		case 0x412000:
-			//mw_irq_control = data; // & 0x02 (moved above)
+			// ??
 		return;
 
 		case 0x412001:
 			K053246_set_OBJCHA_line(data & 0x04);
 		return;
+
+		case 0x418001:
+		case 0x418003:
+		case 0x418005:
+		case 0x418007:
+		case 0x418009:
+		return; // k054321 volume stuff
 
 		case 0x41800c:
 		case 0x41800d:
@@ -1348,6 +1355,9 @@ static UINT8 __fastcall martchmp_main_read_byte(UINT32 address)
 
 		case 0x416003:
 			return (DrvInputs[1] & 0xf0) | ((DrvService[0]^1) << 0x2) | 2 | (EEPROMRead() ? 0x01 : 0);
+
+		case 0x418011:
+			return 0; // k054321 (sound) busy
 
 		case 0x418015:
 			if ((*soundlatch3 & 0xf) == 0xe) return *soundlatch3 | 1;

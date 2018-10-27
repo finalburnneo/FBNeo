@@ -1199,7 +1199,7 @@ struct BurnDriver BurnDrvjongpute = {
 	"jongpute", NULL, NULL, NULL, "1980",
 	"Jongputer\0", NULL, "Taito", "Route 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, jongputeRomInfo, jongputeRomName, NULL, NULL, TtmahjngInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, TtmahjngDraw, DrvScan, &DrvRecalc, 0x8,
 	256, 256, 3, 4

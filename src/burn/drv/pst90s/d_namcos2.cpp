@@ -14,7 +14,7 @@
 // marvland
 // metlhawk
 // kyukaidk
-// sws & clones - bug: kanji text is solid blue when it should be white with black outline
+// sws92,93
 // sgunner
 // sgunner2 (needs old mcu)
 // dirtfoxj
@@ -1593,6 +1593,7 @@ static INT32 Namcos2GetRoms(INT32 gfx0_offset)
 	UINT8 *gfx[5] = { DrvGfxROM0 + gfx0_offset, DrvGfxROM2, DrvGfxROM3, DrvGfxROM4 };
 	UINT8 *snd = DrvSndROM;
 	UINT8 *data = Drv68KData;
+	INT32 sws92_ctr = 0;
 
 	memset (DrvEEPROM,  0xff, 0x002000);
 	memset (DrvGfxROM0, 0xff, 0x400000);
@@ -1603,6 +1604,7 @@ static INT32 Namcos2GetRoms(INT32 gfx0_offset)
 		BurnDrvGetRomInfo(&pi, i+1);
 
 		INT32 use_size = ri.nType & 0x10;
+		INT32 use_sws92 = ri.nType & 0x20;
 
 		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) < 3) {
 			INT32 c = (ri.nType - 1) & 1;
@@ -1627,6 +1629,11 @@ static INT32 Namcos2GetRoms(INT32 gfx0_offset)
 		if ((ri.nType & BRF_GRA) && ((ri.nType & 0x0f) >= 5 && (ri.nType & 0x0f) < 9)) {
 			if (BurnLoadRom(gfx[(ri.nType - 5) & 0xf], i, 1)) return 1;
 
+			if (use_sws92) {
+				INT32 inc_len = (sws92_ctr == 0) ? 0x300000 : 0x80000;
+				gfx[(ri.nType - 5) & 0xf] += inc_len;
+				sws92_ctr++;
+			} else
 			if (use_size) {
 				gfx[(ri.nType - 5) & 0xf] += ri.nLen;
 			} else {
@@ -5266,9 +5273,9 @@ static struct BurnRomInfo sws92RomDesc[] = {
 	{ "sss_obj2.bin",	0x80000, 0xbdc55f1c, 0x05 | BRF_GRA },           //  9
 	{ "sss_obj3.bin",	0x80000, 0xe32ac432, 0x05 | BRF_GRA },           // 10
 
-	{ "sss_chr0.bin",	0x80000, 0x1d2876f2, 0x06 | BRF_GRA },           // 11 Layer Tiles
-	{ "sss_chr6.bin",	0x80000, 0x354f0ed2, 0x06 | BRF_GRA },           // 12
-	{ "sss_chr7.bin",	0x80000, 0x4032f4c1, 0x06 | BRF_GRA },           // 13
+	{ "sss_chr0.bin",	0x80000, 0x1d2876f2, 0x26 | BRF_GRA },           // 11 Layer Tiles
+	{ "sss_chr6.bin",	0x80000, 0x354f0ed2, 0x26 | BRF_GRA },           // 12
+	{ "sss_chr7.bin",	0x80000, 0x4032f4c1, 0x26 | BRF_GRA },           // 13
 
 	{ "ss_roz0.bin",	0x80000, 0x40ce9a58, 0x07 | BRF_GRA },           // 14 Roz Layer Tiles
 	{ "ss_roz1.bin",	0x80000, 0xc98902ff, 0x07 | BRF_GRA },           // 15
@@ -5329,9 +5336,9 @@ static struct BurnRomInfo sws92gRomDesc[] = {
 	{ "sss_obj2.bin",	0x80000, 0xbdc55f1c, 0x05 | BRF_GRA },           //  9
 	{ "sss_obj3.bin",	0x80000, 0xe32ac432, 0x05 | BRF_GRA },           // 10
 
-	{ "sss_chr0.bin",	0x80000, 0x1d2876f2, 0x06 | BRF_GRA },           // 11 Layer Tiles
-	{ "sss_chr6.bin",	0x80000, 0x354f0ed2, 0x06 | BRF_GRA },           // 12
-	{ "sss_chr7.bin",	0x80000, 0x4032f4c1, 0x06 | BRF_GRA },           // 13
+	{ "sss_chr0.bin",	0x80000, 0x1d2876f2, 0x26 | BRF_GRA },           // 11 Layer Tiles
+	{ "sss_chr6.bin",	0x80000, 0x354f0ed2, 0x26 | BRF_GRA },           // 12
+	{ "sss_chr7.bin",	0x80000, 0x4032f4c1, 0x26 | BRF_GRA },           // 13
 
 	{ "ss_roz0.bin",	0x80000, 0x40ce9a58, 0x07 | BRF_GRA },           // 14 Roz Layer Tiles
 	{ "ss_roz1.bin",	0x80000, 0xc98902ff, 0x07 | BRF_GRA },           // 15
@@ -5394,9 +5401,9 @@ static struct BurnRomInfo sws93RomDesc[] = {
 	{ "sst_obj2.bin",	0x80000, 0x61ed3558, 0x05 | BRF_GRA },           //  9
 	{ "sst_obj3.bin",	0x80000, 0x0e3bc05d, 0x05 | BRF_GRA },           // 10
 
-	{ "sst_chr0.bin",	0x80000, 0x3397850d, 0x06 | BRF_GRA },           // 11 Layer Tiles
-	{ "sss_chr6.bin",	0x80000, 0x354f0ed2, 0x06 | BRF_GRA },           // 12
-	{ "sst_chr7.bin",	0x80000, 0xe0abb763, 0x06 | BRF_GRA },           // 13
+	{ "sst_chr0.bin",	0x80000, 0x3397850d, 0x26 | BRF_GRA },           // 11 Layer Tiles
+	{ "sss_chr6.bin",	0x80000, 0x354f0ed2, 0x26 | BRF_GRA },           // 12
+	{ "sst_chr7.bin",	0x80000, 0xe0abb763, 0x26 | BRF_GRA },           // 13
 
 	{ "ss_roz0.bin",	0x80000, 0x40ce9a58, 0x07 | BRF_GRA },           // 14 Roz Layer Tiles
 	{ "ss_roz1.bin",	0x80000, 0xc98902ff, 0x07 | BRF_GRA },           // 15

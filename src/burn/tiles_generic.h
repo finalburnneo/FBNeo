@@ -2,6 +2,22 @@
 #include "burn_bitmap.h"
 #include "tilemap_generic.h"
 
+#define MAX_GFX		32	// number of graphics data regions allowed
+
+struct GenericTilesGfx {
+	UINT8 *gfxbase;		// pointer to graphics data
+	INT32 depth;		// bits per pixel
+	INT32 width;		// tile width
+	INT32 height;		// tile height
+	UINT32 gfx_len;		// full size of the tile data
+	UINT32 code_mask;	// gfx_len / width / height
+	UINT32 color_offset;// is there a color offset for this graphics region?
+	UINT32 color_mask;	// mask the color added to the pixels
+};
+
+extern GenericTilesGfx gfxdata[];
+void GenericTilesSetGfx(INT32 nNum, UINT8 *GfxBase, INT32 nDepth, INT32 nTileWidth, INT32 nTileHeight, INT32 nGfxLen, UINT32 nColorOffset, UINT32 nColorMask);
+
 extern UINT8* pTileData;
 extern INT32 nScreenWidth, nScreenHeight;
 
@@ -43,6 +59,13 @@ void RenderTileTranstab(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32
 void RenderTileTranstabOffset(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT8 *tab, UINT32 color_offset);
 void RenderTilePrioTranstab(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT8 *tab, INT32 priority);
 void RenderTilePrioTranstabOffset(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT8 *tab, UINT32 color_offset, INT32 priority);
+
+// draw single tile - Set gfx with GenericTilesSetGfx!
+// respects clipping for bitmap!
+void DrawGfxTile(INT32 nBitmap, INT32 nGfx, INT32 nTileNumber, INT32 nStartX, INT32 nStartY, INT32 nFlipx, INT32 nFlipy, INT32 nPalette);
+void DrawGfxMaskTile(INT32 nBitmap, INT32 nGfx, INT32 nTileNumber, INT32 nStartX, INT32 nStartY, INT32 nFlipx, INT32 nFlipy, INT32 nPalette, INT32 nMaskColor);
+void DrawGfxPrioTile(INT32 nBitmap, INT32 nGfx, INT32 nTileNumber, INT32 nStartX, INT32 nStartY, INT32 nFlipx, INT32 nFlipy, INT32 nPalette, INT32 nPriority);
+void DrawGfxPrioMaskTile(INT32 nBitmap, INT32 nGfx, INT32 nTileNumber, INT32 nStartX, INT32 nStartY, INT32 nFlipx, INT32 nFlipy, INT32 nPalette, INT32 nMaskColor, INT32 nPriority);
 
 // draw single tile with flipping, auto-clips if necessary
 void Draw8x8Tile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile);

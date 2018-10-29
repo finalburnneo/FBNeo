@@ -614,15 +614,21 @@ static INT32 BzoneInit()
 	MemIndex();
 
 	{
-		if (BurnLoadRom(DrvM6502ROM  + 0x5000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM  + 0x5800,  1, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM  + 0x6000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM  + 0x6800,  3, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM  + 0x7000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvM6502ROM  + 0x7800,  5, 1)) return 1;
+		INT32 k = 0;
 
-		if (BurnLoadRom(DrvVectorROM + 0x0000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvVectorROM + 0x0800,  7, 1)) return 1;
+		if (strstr(BurnDrvGetTextA(DRV_NAME), "bzonec")) {
+			if (BurnLoadRom(DrvM6502ROM  + 0x4800,  k++, 1)) return 1;
+		}
+
+		if (BurnLoadRom(DrvM6502ROM  + 0x5000,  k++, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x5800,  k++, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x6000,  k++, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x6800,  k++, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x7000,  k++, 1)) return 1;
+		if (BurnLoadRom(DrvM6502ROM  + 0x7800,  k++, 1)) return 1;
+
+		if (BurnLoadRom(DrvVectorROM + 0x0000,  k++, 1)) return 1;
+		if (BurnLoadRom(DrvVectorROM + 0x0800,  k++, 1)) return 1;
 	}
 
 	M6502Init(0, TYPE_M6502);
@@ -813,6 +819,8 @@ static void DrvPaletteInit()
 static INT32 DrvDraw()
 {
 	DrvPaletteInit();
+//	extern int counter;
+	vector_set_clip(0x20, nScreenWidth-0x20, 0, nScreenHeight);
 
 	draw_vector(DrvPalette);
 
@@ -978,7 +986,7 @@ struct BurnDriver BurnDrvBzone = {
 	"bzone", NULL, NULL, NULL, "1980",
 	"Battle Zone (rev 2)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bzoneRomInfo, bzoneRomName, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	580, 400, 4, 3
@@ -1017,7 +1025,7 @@ struct BurnDriver BurnDrvBzonea = {
 	"bzonea", "bzone", NULL, NULL, "1980",
 	"Battle Zone (rev 1)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bzoneaRomInfo, bzoneaRomName, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	580, 400, 4, 3
@@ -1057,7 +1065,7 @@ struct BurnDriver BurnDrvBzonec = {
 	"bzonec", "bzone", NULL, NULL, "1980",
 	"Battle Zone (cocktail)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bzonecRomInfo, bzonecRomName, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	580, 400, 4, 3
@@ -1098,7 +1106,7 @@ struct BurnDriver BurnDrvBradley = {
 	"bradley", NULL, NULL, NULL, "1980",
 	"Bradley Trainer\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bradleyRomInfo, bradleyRomName, NULL, NULL, BradleyInputInfo, BradleyDIPInfo,
 	BradleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	580, 400, 4, 3
@@ -1139,7 +1147,7 @@ struct BurnDriver BurnDrvRedbaron = {
 	"redbaron", NULL, NULL, NULL, "1980",
 	"Red Baron (Revised Hardware)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, redbaronRomInfo, redbaronRomName, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
 	RedbaronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	520, 400, 4, 3
@@ -1187,7 +1195,7 @@ struct BurnDriver BurnDrvRedbarona = {
 	"redbarona", "redbaron", NULL, NULL, "1980",
 	"Red Baron\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, redbaronaRomInfo, redbaronaRomName, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
 	RedbaronaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	520, 400, 4, 3

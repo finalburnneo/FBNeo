@@ -1028,7 +1028,7 @@ struct BurnDriver BurnDrvBwidow = {
 	"bwidow", NULL, NULL, NULL, "1982",
 	"Black Widow\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, bwidowRomInfo, bwidowRomName, NULL, NULL, BwidowInputInfo, BwidowDIPInfo,
 	BwidowInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
@@ -1059,7 +1059,7 @@ struct BurnDriverD BurnDrvBwidowp = {
 	"bwidowp", "bwidow", NULL, NULL, "1982",
 	"Black Widow (prototype)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, bwidowpRomInfo, bwidowpRomName, NULL, NULL, BwidowInputInfo, BwidowDIPInfo,
 	BwidowpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
@@ -1093,7 +1093,7 @@ struct BurnDriver BurnDrvGravitar = {
 	"gravitar", NULL, NULL, NULL, "1982",
 	"Gravitar (version 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, gravitarRomInfo, gravitarRomName, NULL, NULL, GravitarInputInfo, GravitarDIPInfo,
 	GravitarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
@@ -1127,7 +1127,7 @@ struct BurnDriver BurnDrvGravitar2 = {
 	"gravitar2", "gravitar", NULL, NULL, "1982",
 	"Gravitar (version 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, gravitar2RomInfo, gravitar2RomName, NULL, NULL, GravitarInputInfo, GravitarDIPInfo,
 	GravitarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
@@ -1161,7 +1161,7 @@ struct BurnDriver BurnDrvGravitar1 = {
 	"gravitar1", "gravitar", NULL, NULL, "1982",
 	"Gravitar (version 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, gravitar1RomInfo, gravitar1RomName, NULL, NULL, GravitarInputInfo, GravitarDIPInfo,
 	GravitarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
@@ -1194,7 +1194,7 @@ struct BurnDriver BurnDrvLunarbat = {
 	"lunarbat", "gravitar", NULL, NULL, "1982",
 	"Lunar Battle (prototype, later)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, lunarbatRomInfo, lunarbatRomName, NULL, NULL, GravitarInputInfo, GravitarDIPInfo,
 	GravitarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
@@ -1226,7 +1226,7 @@ struct BurnDriver BurnDrvLunarba1 = {
 	"lunarba1", "gravitar", NULL, NULL, "1982",
 	"Lunar Battle (prototype, earlier)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, lunarba1RomInfo, lunarba1RomName, NULL, NULL, LunarbatInputInfo, NULL,
 	SpacduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
@@ -1254,7 +1254,7 @@ struct BurnDriver BurnDrvSpacduel = {
 	"spacduel", NULL, NULL, NULL, "1980",
 	"Space Duel (version 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, spacduelRomInfo, spacduelRomName, NULL, NULL, SpacduelInputInfo, SpacduelDIPInfo,
 	SpacduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
@@ -1282,7 +1282,7 @@ struct BurnDriver BurnDrvSpacduel1 = {
 	"spacduel1", "spacduel", NULL, NULL, "1980",
 	"Space Duel (version 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, spacduel1RomInfo, spacduel1RomName, NULL, NULL, SpacduelInputInfo, SpacduelDIPInfo,
 	SpacduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
@@ -1310,7 +1310,7 @@ struct BurnDriver BurnDrvSpacduel0 = {
 	"spacduel0", "spacduel", NULL, NULL, "1980",
 	"Space Duel (prototype)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, spacduel0RomInfo, spacduel0RomName, NULL, NULL, SpacduelInputInfo, SpacduelDIPInfo,
 	SpacduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3

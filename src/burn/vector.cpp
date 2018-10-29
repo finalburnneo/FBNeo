@@ -17,6 +17,9 @@ static INT32 vector_cnt;
 static UINT32 *pBitmap = NULL;
 static UINT32 *pPalette = NULL;
 
+static INT32 clip_xmin, clip_xmax; // clipping for the final blit
+static INT32 clip_ymin, clip_ymax;
+
 static float vector_scaleX      = 1.00;
 static float vector_scaleY      = 1.00;
 static INT32 vector_offsetX     = 0;
@@ -30,6 +33,14 @@ static INT32 vector_beam        = 0x0001865e; // 16.16 beam width
 
 static UINT8 gammaLUT[256];
 static UINT32 *cosineLUT;
+
+void vector_set_clip(INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax)
+{
+	clip_xmin = xmin;
+	clip_xmax = xmax;
+	clip_ymin = ymin;
+	clip_ymax = ymax;
+}
 
 void vector_set_gamma(float gamma_corr)
 {
@@ -256,6 +267,24 @@ void draw_vector(UINT32 *palette)
 	{
 		memset (pBurnDraw, 0, nScreenWidth * nScreenHeight * nBurnBpp);
 
+		for (INT32 y = 0; y < nScreenHeight; y++)
+		{
+			if (y < clip_ymin || y > clip_ymax) continue;
+
+			for (INT32 x = 0; x < nScreenWidth; x++)
+			{
+				if (x < clip_xmin || x > clip_xmax) continue;
+
+				UINT32 idx = (y * nScreenWidth) + x;
+				UINT32 p = pBitmap[idx];
+
+				if (p) {
+					PutPix(pBurnDraw + idx * nBurnBpp, BurnHighCol((p >> 16) & 0xff, (p >> 8) & 0xff, p & 0xff, 0));
+				}
+			}
+		}
+
+#if 0
 		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++)
 		{
 			UINT32 p = pBitmap[i];
@@ -264,6 +293,7 @@ void draw_vector(UINT32 *palette)
 				PutPix(pBurnDraw + i * nBurnBpp, BurnHighCol((p >> 16) & 0xff, (p >> 8) & 0xff, p & 0xff, 0));
 			}
 		}
+#endif
 	}
 }
 
@@ -277,7 +307,9 @@ void vector_reset()
 void vector_init()
 {
 	GenericTilesInit();
-	
+
+	vector_set_clip(0, nScreenWidth, 0, nScreenHeight);
+
 	pBitmap = (UINT32*)BurnMalloc(nScreenWidth * nScreenHeight * sizeof(INT32));
 
 	vector_table = (struct vector_line*)BurnMalloc(TABLE_SIZE * sizeof(vector_line));

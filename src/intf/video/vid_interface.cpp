@@ -401,9 +401,8 @@ INT32 VidReInitialise()
 {
 	if (pVidTransImage) {
 		free(pVidTransImage);
-		pVidTransImage = NULL;
+		pVidTransImage = (UINT8*)malloc(nVidImageWidth * nVidImageHeight * sizeof(INT16));
 	}
-	pVidTransImage = (UINT8*)malloc(nVidImageWidth * nVidImageHeight * sizeof(INT16));
 	bSkipNextFrame = 1;
 
 	return 0;

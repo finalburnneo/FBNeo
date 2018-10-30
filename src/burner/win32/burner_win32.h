@@ -28,6 +28,12 @@
 
 #include <mmsystem.h>
 #include <shellapi.h>
+
+// fix for shlwapi.h
+#ifndef _In_
+#define _In_ 
+#endif
+
 #include <shlwapi.h>
 #include "d3dkmt_sync.h"
 

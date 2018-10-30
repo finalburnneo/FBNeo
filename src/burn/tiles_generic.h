@@ -15,7 +15,7 @@ struct GenericTilesGfx {
 	UINT32 color_mask;	// mask the color added to the pixels
 };
 
-extern GenericTilesGfx gfxdata[];
+extern GenericTilesGfx GenericGfxData[];
 void GenericTilesSetGfx(INT32 nNum, UINT8 *GfxBase, INT32 nDepth, INT32 nTileWidth, INT32 nTileHeight, INT32 nGfxLen, UINT32 nColorOffset, UINT32 nColorMask);
 
 extern UINT8* pTileData;

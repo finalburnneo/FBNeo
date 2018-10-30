@@ -29,7 +29,7 @@ struct GenericTilemap {
 
 static GenericTilemap maps[MAX_TILEMAPS];
 static GenericTilemap *cur_map;
-GenericTilesGfx gfxdata[MAX_TILEMAPS];
+GenericTilesGfx GenericGfxData[MAX_TILEMAPS];
 
 void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void (*pTile)(INT32 offs, INT32 *tile_gfx, INT32 *tile_code, INT32 *tile_color, UINT32 *tile_flags, INT32 *category), UINT32 tile_width, UINT32 tile_height, UINT32 map_width, UINT32 map_height)
 {
@@ -116,7 +116,7 @@ void GenericTilemapSetGfx(INT32 num, UINT8 *gfxbase, INT32 depth, INT32 tile_wid
 	}
 #endif
 
-	GenericTilesGfx *ptr = &gfxdata[num];
+	GenericTilesGfx *ptr = &GenericGfxData[num];
 
 	ptr->gfxbase = gfxbase;
 	ptr->depth = depth;
@@ -156,7 +156,7 @@ void GenericTilemapExit()
 
 	// wipe everything else out
 	memset (maps, 0, sizeof(maps));
-	memset (gfxdata, 0, sizeof(gfxdata));
+	memset (GenericGfxData, 0, sizeof(GenericGfxData));
 }
 
 void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y)
@@ -809,7 +809,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 					}
 				}
 
-				GenericTilesGfx *gfx = &gfxdata[gfxnum];
+				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
 
 				if (gfx->gfxbase == NULL) {
 					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
@@ -907,7 +907,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 					}
 				}
 
-				GenericTilesGfx *gfx = &gfxdata[gfxnum];
+				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
 
 				if (gfx->gfxbase == NULL) {
 					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
@@ -1025,7 +1025,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 					}
 				}
 
-				GenericTilesGfx *gfx = &gfxdata[gfxnum];
+				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
 
 				if (gfx->gfxbase == NULL) {
 					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
@@ -1201,7 +1201,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 			}
 		}
 
-		GenericTilesGfx *gfx = &gfxdata[gfxnum];
+		GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
 
 		if (gfx->gfxbase == NULL) {
 			bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
@@ -1489,7 +1489,7 @@ void GenericTilemapDumpToBitmap()
 					cur_map->pTile(cur_map->pScan(col, row), &gfxnum, &code, &color, &flags, &category);
 
 					{
-						GenericTilesGfx *gfxptr = &gfxdata[gfxnum];
+						GenericTilesGfx *gfxptr = &GenericGfxData[gfxnum];
 
 						UINT8 *gfx = gfxptr->gfxbase + (code * gfxptr->width * gfxptr->height);
 

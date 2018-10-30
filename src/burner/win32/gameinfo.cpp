@@ -667,7 +667,7 @@ static void MyEndDialog()
 	}
 	
 	hTabControl = NULL;
-	memset(szFullName, 0, 1024);
+	memset(szFullName, 0, 1024 * sizeof(TCHAR));
 	
 	EndDialog(hGameInfoDlg, 0);
 }

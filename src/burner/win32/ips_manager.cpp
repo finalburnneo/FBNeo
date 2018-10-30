@@ -187,13 +187,13 @@ static void FillListBox()
 		int Done = 0;
 		
 		while (!Done ) {
-			memset(szFileName, '\0', MAX_PATH);
+			memset(szFileName, '\0', MAX_PATH * sizeof(TCHAR));
 			_stprintf(szFileName, _T("%s%s"), szFilePath, wfd.cFileName);
 			
 			FILE *fp = _tfopen(szFileName, _T("r"));
 			if (fp) {
 				PatchDesc = NULL;
-				memset(PatchName, '\0', 256);
+				memset(PatchName, '\0', 256 * sizeof(TCHAR));
 				
 				PatchDesc = GetPatchDescByLangcode(fp, nIpsSelectedLanguage);
 				// If not available - try English first
@@ -526,8 +526,8 @@ static void IpsManagerExit()
 		szLanguageCodes[i][0] = _T('\0');
 	}
 	
-	memset(hItemHandles, 0, MAX_NODES);
-	memset(hPatchHandlesIndex, 0, MAX_NODES);
+	memset(hItemHandles, 0, MAX_NODES * sizeof(HTREEITEM));
+	memset(hPatchHandlesIndex, 0, MAX_NODES * sizeof(HTREEITEM));
 
 	nPatchIndex = 0;
 	nNumPatches = 0;

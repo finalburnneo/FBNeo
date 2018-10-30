@@ -17,7 +17,7 @@ double compute_resistor_weights(INT32 minval, INT32 maxval, double scaler, INT32
 	INT32 r_pd[MAX_NETS];         /* pulldown resistances */
 	INT32 r_pu[MAX_NETS];         /* pullup resistances */
 
-	double max_out[MAX_NETS];
+	double max_out[MAX_NETS] = {0};
 	double * out[MAX_NETS];
 
 	INT32 i,j,n;

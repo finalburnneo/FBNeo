@@ -5677,7 +5677,7 @@ void DrawGfxTile(INT32 nBitmap, INT32 nGfx, INT32 nTileNumber, INT32 nStartX, IN
 		bitmap = pTransDraw;
 	}
 
-	GenericTilesGfx *gfx = &gfxdata[nGfx];
+	GenericTilesGfx *gfx = &GenericGfxData[nGfx];
 
 	DrawCustomTile(bitmap, gfx->width, gfx->height, nTileNumber & gfx->code_mask, nStartX, nStartY, nFlipx, nFlipy, nTilePalette & gfx->color_mask, gfx->depth, gfx->color_offset, gfx->gfxbase);
 
@@ -5703,7 +5703,7 @@ void DrawGfxMaskTile(INT32 nBitmap, INT32 nGfx, INT32 nTileNumber, INT32 nStartX
 		bitmap = pTransDraw;
 	}
 
-	GenericTilesGfx *gfx = &gfxdata[nGfx];
+	GenericTilesGfx *gfx = &GenericGfxData[nGfx];
 
 	DrawCustomMaskTile(bitmap, gfx->width, gfx->height, nTileNumber & gfx->code_mask, nStartX, nStartY, nFlipx, nFlipy, nTilePalette & gfx->color_mask, gfx->depth, nMaskColor, gfx->color_offset, gfx->gfxbase);
 
@@ -5730,7 +5730,7 @@ void DrawGfxPrioTile(INT32 nBitmap, INT32 nGfx, INT32 nTileNumber, INT32 nStartX
 		bitmap = pTransDraw;
 	}
 
-	GenericTilesGfx *gfx = &gfxdata[nGfx];
+	GenericTilesGfx *gfx = &GenericGfxData[nGfx];
 
 	DrawCustomPrioTile(bitmap, gfx->width, gfx->height, nTileNumber & gfx->code_mask, nStartX, nStartY, nFlipx, nFlipy, nTilePalette & gfx->color_mask, gfx->depth, gfx->color_offset, nPriority, gfx->gfxbase);
 
@@ -5758,7 +5758,7 @@ void DrawGfxPrioMaskTile(INT32 nBitmap, INT32 nGfx, INT32 nTileNumber, INT32 nSt
 		bitmap = pTransDraw;
 	}
 
-	GenericTilesGfx *gfx = &gfxdata[nGfx];
+	GenericTilesGfx *gfx = &GenericGfxData[nGfx];
 
 	DrawCustomPrioMaskTile(bitmap, gfx->width, gfx->height, nTileNumber & gfx->code_mask, nStartX, nStartY, nFlipx, nFlipy, nTilePalette & gfx->color_mask, gfx->depth, nMaskColor, gfx->color_offset, nPriority, gfx->gfxbase);
 

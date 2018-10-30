@@ -1724,7 +1724,7 @@ int VidSNewShortMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)	
 	VidSShortMsg.pMsgText[nSize] = 0;
 
 	// copy osd message
-	memset(OSDMsg, '\0', MAX_PATH);
+	memset(OSDMsg, '\0', MAX_PATH * sizeof(TCHAR));
 	_tcsncpy(OSDMsg, pText, nSize);
 
 	if (nRGB) {

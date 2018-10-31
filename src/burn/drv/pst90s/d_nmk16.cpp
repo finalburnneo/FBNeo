@@ -2062,9 +2062,9 @@ static void HachaRAMProt(INT32 offset)
 		case 0xe51e/2: PROT_INPUT(0xe51e/2,0x0f82,0xe008/2,0x00080008); break;
 		case 0xe6b4/2: PROT_INPUT(0xe6b4/2,0x79be,0xe00c/2,0x0008000a); break;
 		case 0xe10e/2: PROT_JSR(0xe10e,0x8007,0x870a); //870a not 9d66
-			       PROT_JSR(0xe10e,0x8000,0xd9c6); break;
-		case 0xe11e/2: PROT_JSR(0xe11e,0x8038,0x972a); // 972a
-					  PROT_JSR(0xe11e,0x8031,0xd1f8); break;
+			          PROT_JSR(0xe10e,0x8000,0xd9c6); break;
+		case 0xe11e/2: PROT_JSR(0xe11e,0x8038,0x7b9c); // 972a
+					  PROT_JSR(0xe11e,0x8031,0x7a54); break;
 		case 0xe12e/2: PROT_JSR(0xe12e,0x8019,0x9642); // OK-9642
 					  PROT_JSR(0xe12e,0x8022,0xda06); break;
 		case 0xe13e/2: PROT_JSR(0xe13e,0x802a,0x9d66); // 9d66 not 9400 - OK
@@ -2072,16 +2072,16 @@ static void HachaRAMProt(INT32 offset)
 		case 0xe14e/2: PROT_JSR(0xe14e,0x800b,0xb3f2); // b3f2 - OK
 					  PROT_JSR(0xe14e,0x8004,0x8994); break;
 		case 0xe15e/2: PROT_JSR(0xe15e,0x803c,0xb59e); // b59e - OK
-					  PROT_JSR(0xe15e,0x8035,0x8d0c); break;
+					  PROT_JSR(0xe15e,0x8035,0x8c36); break;
 		case 0xe16e/2: PROT_JSR(0xe16e,0x801d,0x9ac2); // 9ac2 - OK
-				 	  PROT_JSR(0xe16e,0x8026,0x8c36); break;
+				 	  PROT_JSR(0xe16e,0x8026,0x8d0c); break;
 		case 0xe17e/2: PROT_JSR(0xe17e,0x802e,0xc366); // c366 - OK
 					  PROT_JSR(0xe17e,0x8017,0x870a); break;
-		case 0xe18e/2: PROT_JSR(0xe18e,0x8004,0xd620);       		 // unused
-					  PROT_JSR(0xe18e,0x8008,0x972a); break; // unused
+		case 0xe18e/2: PROT_JSR(0xe18e,0x8004,0x7b9c);       		 // unused
+					  PROT_JSR(0xe18e,0x8008,0x7b9c); break; // unused
 		case 0xe19e/2: PROT_JSR(0xe19e,0x8030,0xd9c6); // OK-d9c6
 					  PROT_JSR(0xe19e,0x8039,0x9642); break;
-		case 0xe1ae/2: PROT_JSR(0xe1ae,0x8011,0xd1f8); // d1f8 not c67e
+		case 0xe1ae/2: PROT_JSR(0xe1ae,0x8011,0x7a54); // d1f8 not c67e
 					  PROT_JSR(0xe1ae,0x802a,0x9d66); break;
 		case 0xe1be/2: PROT_JSR(0xe1be,0x8022,0xda06); // da06
 					  PROT_JSR(0xe1be,0x801b,0xb3f2); break;
@@ -2089,10 +2089,10 @@ static void HachaRAMProt(INT32 offset)
 					  PROT_JSR(0xe1ce,0x800c,0xb59e); break;
 		case 0xe1de/2: PROT_JSR(0xe1de,0x8034,0x8994); // 8994 - OK
 					  PROT_JSR(0xe1de,0x803d,0x9ac2); break;
-		case 0xe1ee/2: PROT_JSR(0xe1ee,0x8015,0x8d0c); // 8d0c not 82f6
+		case 0xe1ee/2: PROT_JSR(0xe1ee,0x8015,0x8c36); // 8d0c not 82f6
 					  PROT_JSR(0xe1ee,0x802e,0xc366); break;
-		case 0xe1fe/2: PROT_JSR(0xe1fe,0x8026,0x8c36); // 8c36
-					  PROT_JSR(0xe1fe,0x8016,0xd620); break;  // unused
+		case 0xe1fe/2: PROT_JSR(0xe1fe,0x8026,0x8d0c); // 8c36
+					  PROT_JSR(0xe1fe,0x8016,0x7b9c); break;  // unused
 		case 0xef00/2:
 			if(nmk16_mainram[0xef00/2] == BURN_ENDIAN_SWAP_INT16(0x60fe))
 			{
@@ -3501,12 +3501,18 @@ static UINT8 __fastcall hachamf_main_read_byte(UINT32 address)
 			return DrvInputs[1] >> ((~address & 1) << 3);
 
 		case 0x080008:
+			{
+				return (HachamfTdragonMCU) ? DrvDips[0] : 0;
+			}
+
 		case 0x080009:
-			return DrvDips[0];
+			{
+				return (HachamfTdragonMCU) ? DrvDips[1] : DrvDips[0];
+			}
 
 		case 0x08000a:
 		case 0x08000b:
-			return DrvDips[1];
+			return DrvDips[1] >> ((~address & 1) << 3);
 
 		case 0x08000e:
 		case 0x08000f:
@@ -3527,7 +3533,12 @@ static UINT16 __fastcall hachamf_main_read_word(UINT32 address)
 			return DrvInputs[1];
 
 		case 0x080008:
-			return DrvDips[0];
+			{
+				if (HachamfTdragonMCU)
+					return (DrvDips[0] << 8) | DrvDips[1];
+				else
+					return DrvDips[0];
+			}
 
 		case 0x08000a:
 			return DrvDips[1];
@@ -9383,7 +9394,7 @@ static INT32 HachamfLoadCallback()
 	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c3ff, MAP_WRITE);
 	SekMapMemory(DrvBgRAM0,		0x090000, 0x093fff, MAP_RAM);
 	SekMapMemory(DrvTxRAM,		0x09c000, 0x09c7ff, MAP_RAM);
-	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, MAP_ROM); // write in handler
 	SekSetWriteWordHandler(0,	hachamf_main_write_word);
 	SekSetWriteByteHandler(0,	hachamf_main_write_byte);
 	SekSetReadWordHandler(0,	hachamf_main_read_word);

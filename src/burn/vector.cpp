@@ -22,6 +22,8 @@ static INT32 clip_ymin, clip_ymax;
 
 static float vector_scaleX      = 1.00;
 static float vector_scaleY      = 1.00;
+static INT32 vector_scaleX_int  = 0;
+static INT32 vector_scaleY_int  = 0;
 static INT32 vector_offsetX     = 0;
 static INT32 vector_offsetY     = 0;
 static float vector_gamma_corr  = 1.2;
@@ -59,6 +61,9 @@ void vector_set_offsets(INT32 x, INT32 y)
 
 void vector_set_scale(INT32 x, INT32 y)
 {
+	vector_scaleX_int = x;
+	vector_scaleY_int = y;
+
 	if (x == 0 || x == -1)
 		vector_scaleX = 1.00;
 	else
@@ -68,6 +73,20 @@ void vector_set_scale(INT32 x, INT32 y)
 		vector_scaleY = 1.00;
 	else
 		vector_scaleY = (float)nScreenHeight / y;
+}
+
+void vector_rescale(INT32 x, INT32 y)
+{
+	BurnDrvSetVisibleSize(x, y);
+	Reinitialise();
+	GenericTilesExit();
+	GenericTilesInit(); // create pTransDraw w/ new size
+	BurnFree(pBitmap);
+	pBitmap = (UINT32*)BurnMalloc(nScreenWidth * nScreenHeight * sizeof(INT32));
+
+	vector_set_clip(0, nScreenWidth, 0, nScreenHeight);
+
+	vector_set_scale(vector_scaleX_int, vector_scaleY_int);
 }
 
 void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)

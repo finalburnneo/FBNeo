@@ -613,7 +613,7 @@ struct BurnDriver BurnDrvTempest = {
 	"tempest", NULL, NULL, NULL, "1980",
 	"Tempest (rev 3, Revised Hardware)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, tempestRomInfo, tempestRomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
 	500, 600, 3, 4
@@ -649,7 +649,7 @@ struct BurnDriver BurnDrvTempest1r = {
 	"tempest1r", "tempest", NULL, NULL, "1980",
 	"Tempest (rev 1, Revised Hardware)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, tempest1rRomInfo, tempest1rRomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
 	500, 600, 3, 4
@@ -697,7 +697,7 @@ struct BurnDriver BurnDrvTempest3 = {
 	"tempest3", "tempest", NULL, NULL, "1980",
 	"Tempest (rev 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, tempest3RomInfo, tempest3RomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
 	500, 600, 3, 4
@@ -739,7 +739,7 @@ struct BurnDriver BurnDrvTempest2 = {
 	"tempest2", "tempest", NULL, NULL, "1980",
 	"Tempest (rev 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, tempest2RomInfo, tempest2RomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
 	500, 600, 3, 4
@@ -781,7 +781,7 @@ struct BurnDriver BurnDrvTempest1 = {
 	"tempest1", "tempest", NULL, NULL, "1980",
 	"Tempest (rev 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, tempest1RomInfo, tempest1RomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
 	500, 600, 3, 4
@@ -823,7 +823,7 @@ struct BurnDriver BurnDrvTemptube = {
 	"temptube", "tempest", NULL, NULL, "1980",
 	"Tempest Tubes\0", NULL, "hack (Duncan Brown)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, temptubeRomInfo, temptubeRomName, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
 	500, 600, 3, 4

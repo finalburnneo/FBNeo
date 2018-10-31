@@ -585,6 +585,70 @@ static struct BurnDIPInfo HachamfbDIPList[]=
 
 STDDIPINFO(Hachamfb)
 
+static struct BurnDIPInfo HachamfpDIPList[]=
+{
+	{0x12, 0xff, 0xff, 0xff, NULL				},
+	{0x13, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x12, 0x01, 0x01, 0x01, "Off"				},
+	{0x12, 0x01, 0x01, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Unused"			},
+	{0x12, 0x01, 0x02, 0x02, "Japanese"			},
+	{0x12, 0x01, 0x02, 0x00, "English"			},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x12, 0x01, 0x0c, 0x04, "Easy"				},
+	{0x12, 0x01, 0x0c, 0x0c, "Normal"			},
+	{0x12, 0x01, 0x0c, 0x08, "Hard"				},
+	{0x12, 0x01, 0x0c, 0x00, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    2, "Unused"			},
+	{0x12, 0x01, 0x10, 0x10, "Off"				},
+	{0x12, 0x01, 0x10, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Unused"			},
+	{0x12, 0x01, 0x20, 0x20, "Off"				},
+	{0x12, 0x01, 0x20, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x12, 0x01, 0xc0, 0x00, "1"				},
+	{0x12, 0x01, 0xc0, 0x40, "2"				},
+	{0x12, 0x01, 0xc0, 0xc0, "3"				},
+	{0x12, 0x01, 0xc0, 0x80, "4"				},
+
+	{0   , 0xfe, 0   ,    2, "Unused"			},
+	{0x13, 0x01, 0x01, 0x00, "Off"				},
+	{0x13, 0x01, 0x01, 0x01, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x13, 0x01, 0x02, 0x00, "Off"				},
+	{0x13, 0x01, 0x02, 0x02, "On"				},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"			},
+	{0x13, 0x01, 0x1c, 0x10, "4 Coins 1 Credits"		},
+	{0x13, 0x01, 0x1c, 0x08, "3 Coins 1 Credits"		},
+	{0x13, 0x01, 0x1c, 0x18, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"		},
+	{0x13, 0x01, 0x1c, 0x04, "1 Coin  4 Credits"		},
+	{0x13, 0x01, 0x1c, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"			},
+	{0x13, 0x01, 0xe0, 0x80, "4 Coins 1 Credits"		},
+	{0x13, 0x01, 0xe0, 0x40, "3 Coins 1 Credits"		},
+	{0x13, 0x01, 0xe0, 0xc0, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0xe0, 0x60, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"		},
+	{0x13, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"		},
+	{0x13, 0x01, 0xe0, 0x00, "Free Play"			},
+};
+
+STDDIPINFO(Hachamfp)
+
 static struct BurnDIPInfo VandykeDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xff, NULL			},
@@ -9455,6 +9519,91 @@ struct BurnDriver BurnDrvHachamfb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, hachamfbRomInfo, hachamfbRomName, NULL, NULL, CommonInputInfo, HachamfbDIPInfo,
 	HachamfbInit, NMK004Exit, NMK004Frame, HachamfDraw, DrvScan, NULL, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Hacha Mecha Fighter (Location Test Prototype, 19th Sep. 1991)
+
+static struct BurnRomInfo hachamfpRomDesc[] = {
+	{ "kf-68-pe-b.ic7",	0x20000, 0xb98a525e, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "kf-68-po-b.ic6",	0x20000, 0xb62ad179, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "kf-snd.ic4",		0x10000, 0xf7cace47, 2 | BRF_PRG | BRF_ESS }, //  2 NMK004 data
+
+	{ "kf-vram.ic3",	0x20000, 0xa2c1e25d, 3 | BRF_GRA },           //  3 Characters
+
+	{ "kf-scl0.ic5",	0x80000, 0x8604adff, 4 | BRF_GRA },           //  4 Tiles
+	{ "kf-scl1.ic12",	0x80000, 0x05a624e3, 4 | BRF_GRA },           //  5
+
+	{ "kf-obj0.ic8",	0x80000, 0xa471bbd8, 5 | BRF_GRA },           //  6 Sprites
+	{ "kf-obj1.ic11",	0x80000, 0x81594aad, 5 | BRF_GRA },           //  7
+
+	{ "kf-a0.ic2",		0x80000, 0xe068d2cf, 6 | BRF_SND },           //  8 OKI1 Samples
+
+	{ "kf-a1.ic1",		0x80000, 0xd945aabb, 7 | BRF_SND },           //  9 OKI2 Samples
+
+	{ "82s135.ic50",	0x00100, 0x633ab1c9, 8 | BRF_OPT },           // 10 proms
+	{ "82s129.ic51",	0x00100, 0xcfdbb86c, 8 | BRF_OPT },           // 11
+};
+
+STDROMPICKEXT(hachamfp, hachamfp, nmk004)
+STD_ROM_FN(hachamfp)
+
+static INT32 HachamfpLoadCallback()
+{
+	{
+		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  4, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x080000,  5, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM2 + 0x000000,  6, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x000001,  7, 2)) return 1;
+
+		if (BurnLoadRom(DrvSndROM0 + 0x020000,  8, 1)) return 1;
+		memcpy (DrvSndROM0 + 0x000000, DrvSndROM0 + 0x20000, 0x20000);
+
+		if (BurnLoadRom(DrvSndROM1 + 0x020000,  9, 1)) return 1;
+		memcpy (DrvSndROM1 + 0x000000, DrvSndROM1 + 0x20000, 0x20000);
+
+		DrvGfxDecode(0x20000, 0x100000, 0x100000);
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(DrvPalRAM,		0x088000, 0x0887ff, MAP_RAM);
+	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c3ff, MAP_WRITE);
+	SekMapMemory(DrvBgRAM0,		0x090000, 0x093fff, MAP_RAM);
+	SekMapMemory(DrvTxRAM,		0x09c000, 0x09c7ff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, MAP_RAM);
+	SekSetWriteWordHandler(0,	hachamf_main_write_word);
+	SekSetWriteByteHandler(0,	hachamf_main_write_byte);
+	SekSetReadWordHandler(0,	hachamf_main_read_word);
+	SekSetReadByteHandler(0,	hachamf_main_read_byte);
+	SekClose();
+
+	return 0;
+}
+
+static INT32 HachamfpInit()
+{
+	return NMK004Init(HachamfpLoadCallback, 10000000);
+}
+
+struct BurnDriver BurnDrvHachamfp = {
+	"hachamfp", "hachamf", "nmk004", NULL, "1991",
+	"Hacha Mecha Fighter (Location Test Prototype, 19th Sep. 1991)\0", NULL, "NMK", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	NULL, hachamfpRomInfo, hachamfpRomName, NULL, NULL, CommonInputInfo, HachamfpDIPInfo,
+	HachamfpInit, NMK004Exit, NMK004Frame, HachamfDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 

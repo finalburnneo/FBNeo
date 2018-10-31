@@ -6996,6 +6996,39 @@ static struct BurnRomInfo Ssf2tbhRomDesc[] = {
 STD_ROM_PICK(Ssf2tbh)
 STD_ROM_FN(Ssf2tbh)
 
+static struct BurnRomInfo Ssf2tbuRomDesc[] = {
+	{ "ssfu.03t",      0x080000, 0x4635b35e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ssfu.04t",      0x080000, 0x2630b3dd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ssfu.05t",      0x080000, 0xc0293c97, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ssfu.06t",      0x080000, 0xaaa33888, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ssfu.07t",      0x080000, 0x44c54534, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "ssf.13m",       0x200000, 0xcf94d275, CPS2_GFX | BRF_GRA },
+	{ "ssf.15m",       0x200000, 0x5eb703af, CPS2_GFX | BRF_GRA },
+	{ "ssf.17m",       0x200000, 0xffa60e0f, CPS2_GFX | BRF_GRA },
+	{ "ssf.19m",       0x200000, 0x34e825c5, CPS2_GFX | BRF_GRA },
+	{ "ssf.14m",       0x100000, 0xb7cc32e7, CPS2_GFX | BRF_GRA },
+	{ "ssf.16m",       0x100000, 0x8376ad18, CPS2_GFX | BRF_GRA },
+	{ "ssf.18m",       0x100000, 0xf5b1b336, CPS2_GFX | BRF_GRA },
+	{ "ssf.20m",       0x100000, 0x459d5c6b, CPS2_GFX | BRF_GRA },
+
+	{ "ssf.01",        0x020000, 0xeb247e8c, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "ssf.q01",       0x080000, 0xa6f9da5c, CPS2_QSND | BRF_SND },
+	{ "ssf.q02",       0x080000, 0x8c66ae26, CPS2_QSND | BRF_SND },
+	{ "ssf.q03",       0x080000, 0x695cc2ca, CPS2_QSND | BRF_SND },
+	{ "ssf.q04",       0x080000, 0x9d9ebe32, CPS2_QSND | BRF_SND },
+	{ "ssf.q05",       0x080000, 0x4770e7b7, CPS2_QSND | BRF_SND },
+	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
+	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
+	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2tbu.key",   0x000014, 0x1da3ccf3, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Ssf2tbu)
+STD_ROM_FN(Ssf2tbu)
+
 static struct BurnRomInfo Ssf2tRomDesc[] = {
 	{ "sfxe.03c",      0x080000, 0x2fa1f396, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfxe.04a",      0x080000, 0xd0bc29c6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -10645,6 +10678,16 @@ struct BurnDriver BurnDrvCpsSsf2tbh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Ssf2tbhRomInfo, Ssf2tbhRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tbInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSsf2tbu = {
+	"ssf2tbu", "ssf2", NULL, NULL, "1993",
+	"Super Street Fighter II - the tournament battle (930911 USA)\0", "Linkup feature not implemented", "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Ssf2tbuRomInfo, Ssf2tbuRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Ssf2tbInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

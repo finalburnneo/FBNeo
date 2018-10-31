@@ -8716,6 +8716,56 @@ static struct BurnRomInfo Sf2emRomDesc[] = {
 STD_ROM_PICK(Sf2em)
 STD_ROM_FN(Sf2em)
 
+static struct BurnRomInfo Sf2enRomDesc[] = {
+	{ "epr-b-05.12f",  0x020000, 0xbc02c14c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "epr-b-09.12h",  0x020000, 0x1c1266b3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "epr-b-06.13f",  0x020000, 0x8b8221e6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "epr-b-10.13h",  0x020000, 0x2d42d82a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "epr-b-03.10f",  0x020000, 0x852e10ec, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "epr-b-07.10h",  0x020000, 0x3b075de1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "epr-b-04.11f",  0x020000, 0xfdd0b5c1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "epr-b-08.11h",  0x020000, 0xdb66b127, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+	{ "epr-b-18.5e",   0x040000, 0x88f3485a, BRF_GRA | CPS1_TILES },
+	{ "epr-b-13.5c",   0x040000, 0x63d63e0c, BRF_GRA | CPS1_TILES },
+	{ "epr-b-24.8h",   0x040000, 0x25ae23bc, BRF_GRA | CPS1_TILES },
+	{ "epr-b-23.8f",   0x040000, 0xe5819676, BRF_GRA | CPS1_TILES },
+	{ "epr-b-07.4b",   0x040000, 0x84afb959, BRF_GRA | CPS1_TILES },
+	{ "epr-b-01.4a",   0x040000, 0xab21635d, BRF_GRA | CPS1_TILES },
+	{ "epr-b-10.9b",   0x040000, 0x2ce56f9f, BRF_GRA | CPS1_TILES },
+	{ "epr-b-04.9a",   0x040000, 0x0ad7fb2b, BRF_GRA | CPS1_TILES },
+	{ "epr-b-19.8e",   0x040000, 0x031525cc, BRF_GRA | CPS1_TILES },
+	{ "epr-b-14.8c",   0x040000, 0xc97046a5, BRF_GRA | CPS1_TILES },
+	{ "epr-b-21.10e",  0x040000, 0xacbbdb09, BRF_GRA | CPS1_TILES },
+	{ "epr-b-16.10c",  0x040000, 0xfa6f32d9, BRF_GRA | CPS1_TILES },
+	{ "epr-b-08.7b",   0x040000, 0x14756473, BRF_GRA | CPS1_TILES },
+	{ "epr-b-02.7a",   0x040000, 0xee3d878a, BRF_GRA | CPS1_TILES },
+	{ "epr-b-11.11b",  0x040000, 0xdbbfd400, BRF_GRA | CPS1_TILES },
+	{ "epr-b-05.11a",  0x040000, 0x37635e97, BRF_GRA | CPS1_TILES },
+	{ "epr-b-20.9e",   0x040000, 0x27cae573, BRF_GRA | CPS1_TILES },
+	{ "epr-b-15.9c",   0x040000, 0x14e46ab1, BRF_GRA | CPS1_TILES },
+	{ "epr-b-22.11e",  0x040000, 0xf241f0c7, BRF_GRA | CPS1_TILES },
+	{ "epr-b-17.11c",  0x040000, 0xf187086b, BRF_GRA | CPS1_TILES },
+	{ "epr-b-09.8b",   0x040000, 0x4894aa8f, BRF_GRA | CPS1_TILES },
+	{ "epr-b-03.8a",   0x040000, 0xe8877e9d, BRF_GRA | CPS1_TILES },
+	{ "epr-b-12.12b",  0x040000, 0xc9d4ed76, BRF_GRA | CPS1_TILES },
+	{ "epr-b-06.12a",  0x040000, 0x67dcc295, BRF_GRA | CPS1_TILES },
+
+	{ "27c512.13b",    0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "epr-b-01.12c",  0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "epr-b-02.13c",  0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
+	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
+};
+
+STD_ROM_PICK(Sf2en)
+STD_ROM_FN(Sf2en)
+
 static struct BurnRomInfo Sf2ebblRomDesc[] = {
 	{ "12.bin",        0x040000, 0xa258b4d5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "09.bin",        0x040000, 0x59ccd474, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -13997,6 +14047,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ed"       , CPS_B_05    , mapper_STF29 , 0, NULL                },
 	{ "sf2ee"       , CPS_B_18    , mapper_STF29 , 0, NULL                },
 	{ "sf2em"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
+	{ "sf2en"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ebbl"     , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ebbl2"    , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ebbl3"    , CPS_B_17    , mapper_STF29 , 0, NULL                },
@@ -19789,6 +19840,16 @@ struct BurnDriver BurnDrvCpsSf2em = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2emRomInfo, Sf2emRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2en = {
+	"sf2en", "sf2", NULL, NULL, "1991",
+	"Street Fighter II - The World Warrior (910204 etc)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2enRomInfo, Sf2enRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

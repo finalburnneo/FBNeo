@@ -4037,7 +4037,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x800000;
 	DrvGfxROM2		= Next; Next += 0x800000;
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "rapheroa") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
 					Next += 0x800000;
 	}
 
@@ -4046,13 +4046,13 @@ static INT32 MemIndex()
 	MSM6295ROM		= Next;
 	DrvSndROM0		= Next; Next += 0x300000;
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "rapheroa") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
 					Next += 0x140000;
 	}
 
 	DrvSndROM1		= Next; Next += 0x300000;
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "rapheroa") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
 					Next += 0x140000;
 	}
 
@@ -5446,7 +5446,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (!no_z80)
 			ZetScan(nAction);
 		SekScan(nAction);
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "rapheroa") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
 			tlcs90Scan(nAction);
 		}
 
@@ -9925,7 +9925,7 @@ struct BurnDriver BurnDrvSbsgomo = {
 // Rapid Hero
 
 static struct BurnRomInfo rapheroRomDesc[] = {
-	{ "rhp94099.3",		0x080000, 0xec9b4f05, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "3",				0x080000, 0x3257bfbd, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
 
 	{ "rhp94099.2",		0x020000, 0xfe01ece1, 2 | BRF_PRG | BRF_ESS }, //  1 Tmp90c841 Code
 
@@ -9950,6 +9950,33 @@ static struct BurnRomInfo rapheroRomDesc[] = {
 
 STD_ROM_PICK(raphero)
 STD_ROM_FN(raphero)
+
+static struct BurnRomInfo rapheroaRomDesc[] = {
+	{ "rhp94099.3",		0x080000, 0xec9b4f05, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+
+	{ "rhp94099.2",		0x020000, 0xfe01ece1, 2 | BRF_PRG | BRF_ESS }, //  1 Tmp90c841 Code
+
+	{ "rhp94099.1",		0x020000, 0x55a7a011, 3 | BRF_GRA },           //  2 Characters
+
+	{ "rhp94099.4",		0x200000, 0x076eee7b, 4 | BRF_GRA },           //  3 Tiles
+
+	{ "rhp94099.8",		0x200000, 0x49892f07, 5 | BRF_GRA },           //  4 Sprites
+	{ "rhp94099.9",		0x200000, 0xea2e47f0, 5 | BRF_GRA },           //  5
+	{ "rhp94099.10",	0x200000, 0x512cb839, 5 | BRF_GRA },           //  6
+
+	{ "rhp94099.6",		0x200000, 0xf1a80e5a, 7 | BRF_SND },           //  7 OKI1 Samples
+	{ "rhp94099.7",		0x200000, 0x0d99547e, 7 | BRF_SND },           //  8
+
+	{ "rhp94099.5",		0x200000, 0x515eba93, 7 | BRF_SND },           //  9 OKI2 Samples
+	{ "rhp94099.6",		0x200000, 0xf1a80e5a, 7 | BRF_SND },           // 10
+
+	{ "prom1.u19",		0x000100, 0x4299776e, 0 | BRF_OPT },           // 11 Unused proms
+	{ "prom2.u53",		0x000100, 0xe6ead349, 0 | BRF_OPT },           // 12
+	{ "prom3.u60",		0x000100, 0x304f98c6, 0 | BRF_OPT },           // 13
+};
+
+STD_ROM_PICK(rapheroa)
+STD_ROM_FN(rapheroa)
 
 static void __fastcall raphero_main_write_byte(UINT32 address, UINT8 data)
 {
@@ -10306,10 +10333,20 @@ static INT32 RapheroFrame()
 
 struct BurnDriver BurnDrvRaphero = {
 	"raphero", "arcadian", NULL, NULL, "1994",
-	"Rapid Hero\0", NULL, "Media Trading Corp", "NMK16",
+	"Rapid Hero (NMK)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rapheroRomInfo, rapheroRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
+	RapheroInit, RapheroExit, RapheroFrame, RapheroDraw, DrvScan, NULL, 0x400,
+	224, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvRapheroa = {
+	"rapheroa", "arcadian", NULL, NULL, "1994",
+	"Rapid Hero (Media Trading)\0", NULL, "Media Trading Corp", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, rapheroaRomInfo, rapheroaRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
 	RapheroInit, RapheroExit, RapheroFrame, RapheroDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
 };

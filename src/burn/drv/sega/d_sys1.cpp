@@ -2020,20 +2020,20 @@ STD_ROM_PICK(Flickyup)
 STD_ROM_FN(Flickyup)
 
 static struct BurnRomInfo GardiaRomDesc[] = {
-	{ "epr10255.1",        0x008000, 0x89282a6b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "epr10254.2",        0x008000, 0x2826b6d8, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	{ "epr10253.3",        0x008000, 0x7911260f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	{ "epr-10255.1",       0x008000, 0x89282a6b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-10254.2",       0x008000, 0x2826b6d8, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-10253.3",       0x008000, 0x7911260f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 	
-	{ "epr10243.120",      0x004000, 0x87220660, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+	{ "epr-10243.120",     0x004000, 0x87220660, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "epr10249.61",       0x004000, 0x4e0ad0f2, BRF_GRA },		  	  //  4 Tiles
-	{ "epr10248.64",       0x004000, 0x3515d124, BRF_GRA },		  	  //  5 Tiles
-	{ "epr10247.66",       0x004000, 0x541e1555, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-10249.61",      0x004000, 0x4e0ad0f2, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-10248.64",      0x004000, 0x3515d124, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-10247.66",      0x004000, 0x541e1555, BRF_GRA },		  	  //  6 Tiles
 	
-	{ "epr10234.117",      0x008000, 0x8a6aed33, BRF_GRA },		  	  //  7 Sprites
-	{ "epr10233.110",      0x008000, 0xc52784d3, BRF_GRA },		  	  //  8 Sprites
-	{ "epr10236.04",       0x008000, 0xb35ab227, BRF_GRA },		  	  //  9 Sprites
-	{ "epr10235.5",        0x008000, 0x006a3151, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-10234.117",     0x008000, 0x8a6aed33, BRF_GRA },		  	  //  7 Sprites
+	{ "epr-10233.110",     0x008000, 0xc52784d3, BRF_GRA },		  	  //  8 Sprites
+	{ "epr-10236.04",      0x008000, 0xb35ab227, BRF_GRA },		  	  //  9 Sprites
+	{ "epr-10235.5",       0x008000, 0x006a3151, BRF_GRA },		  	  // 10 Sprites
 
 	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  	  // 11 Red PROM
 	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  	  // 12 Green PROM

@@ -1068,7 +1068,7 @@ static struct BurnRomInfo Drgninjab2RomDesc[] = {
 	
 	{ "a30.10b",            0x10000, 0xf6806826, BRF_SND },			// 23	Samples
 	
-	{ "mc68705r3p",         0x01000, 0x00000000, BRF_PRG | BRF_NODUMP },	// 24	I8751
+	{ "68705r3.0m",         0x01000, 0x34bc5e7f, BRF_PRG },			// 24	I8751
 	
 	{ "n82s129an.12c",		0x00100, 0x78994fdb, BRF_OPT },
 	{ "n82s131n.5q",		0x00200, 0x86e775f8, BRF_OPT },

@@ -5785,6 +5785,12 @@ static struct BurnRomInfo landmakrRomDesc[] = {
 	{ "e61-04.38",		0x200000, 0xc27aec0c, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "e61-05.39",		0x200000, 0x83920d9d, TAITO_ES5505_BYTESWAP },    // 13
 	{ "e61-06.40",		0x200000, 0x2e717bfe, TAITO_ES5505_BYTESWAP },    // 14
+	
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 15 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 16
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 17
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 18
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 19
 };
 
 STD_ROM_PICK(landmakr)
@@ -5828,6 +5834,12 @@ static struct BurnRomInfo landmakrjRomDesc[] = {
 	{ "e61-04.38",		0x200000, 0xc27aec0c, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "e61-05.39",		0x200000, 0x83920d9d, TAITO_ES5505_BYTESWAP },    // 13
 	{ "e61-06.40",		0x200000, 0x2e717bfe, TAITO_ES5505_BYTESWAP },    // 14
+	
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 15 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 16
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 17
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 18
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 19
 };
 
 STD_ROM_PICK(landmakrj)

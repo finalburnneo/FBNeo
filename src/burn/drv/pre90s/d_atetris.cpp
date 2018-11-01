@@ -581,11 +581,15 @@ static struct BurnRomInfo atetrisb2RomDesc[] = {
 
 	{ "136066-1101.35a",	0x10000, 0x84a1939f, 2 | BRF_GRA },           //  1 Graphics Tiles
 	
-	{ "tibpal16l8-25cn.pal2",	0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
-	{ "tibpal16l8-25cn.pal4",	0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP  },
-	{ "tibpal16l8-25cn.pal5",	0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP  },
-	{ "tibpal16r4-25cn.pal1",	0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP  },
-	{ "tibpal16r4-25cn.pal3",	0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP  },
+	{ "4-pal16l8-a.9n",		0x00104, 0x3630e734, 0 | BRF_OPT },
+	{ "5-pal16l8-a.9m",		0x00104, 0x53b64be1, 0 | BRF_OPT },
+	{ "a-gal16v8-b.bin",	0x00117, 0xb1dfab0f, 0 | BRF_OPT },
+	{ "b-gal16v8-b.bin",	0x00117, 0xb1dfab0f, 0 | BRF_OPT },
+	{ "2-pal16r4-a.3r",		0x00104, 0xd71bdf27, 0 | BRF_OPT },
+	{ "1-pal16l8-a.3g",		0x00104, 0xdcf0d2fe, 0 | BRF_OPT },
+	{ "3-pal16r4-a.8p",		0x00104, 0xe007edf2, 0 | BRF_OPT },
+	{ "c-gal16v8-b.bin",	0x00117, 0xe1a9db0b, 0 | BRF_OPT },
+	
 	{ "m3-7603-5.prom1",		0x00020, 0x79656af3, 0 | BRF_OPT },
 };
 

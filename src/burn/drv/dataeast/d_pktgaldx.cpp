@@ -605,7 +605,7 @@ static struct BurnRomInfo pktgaldxbRomDesc[] = {
 	{ "9.bin",		0x80000, 0x078f371c, 2 | BRF_GRA },           //  6
 	{ "8.bin",		0x80000, 0x40f5a032, 2 | BRF_GRA },           //  7
 
-	{ "kg01.14f",		0x20000, 0x8a106263, 3 | BRF_SND },           //  8 OKI M6295 Sample 0
+	{ "1.bin",		0x20000, 0x8a106263, 3 | BRF_SND },           //  8 OKI M6295 Sample 0
 
 	{ "3.bin",		0x80000, 0x4638747b, 4 | BRF_SND },           //  9 OKI M6295 Sample 1
 	{ "2.bin",		0x80000, 0xf841d995, 4 | BRF_SND },           // 10

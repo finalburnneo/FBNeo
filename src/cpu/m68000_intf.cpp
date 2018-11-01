@@ -1982,6 +1982,8 @@ UINT32 SekDbgGetRegister(SekRegister nRegister)
 
 		case SEK_REG_PC:
 			return m68k_get_reg(NULL, M68K_REG_PC);
+		case SEK_REG_PPC:
+			return m68k_get_reg(NULL, M68K_REG_PPC);
 
 		case SEK_REG_SR:
 			return m68k_get_reg(NULL, M68K_REG_SR);

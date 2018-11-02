@@ -9,6 +9,7 @@ UINT8 BurnWatchdogRead();
 
 // call this in the DrvReset
 void BurnWatchdogReset();
+void BurnWatchdogResetEnable(); // with auto-enable
 
 // call this to initialize the watchdog
 // pass the DrvReset routine though this (note INT32 DrvReset(INT32 clear_mem))

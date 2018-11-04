@@ -2197,21 +2197,37 @@ static struct BurnRomInfo earthjkrRomDesc[] = {
 STD_ROM_PICK(earthjkr)
 STD_ROM_FN(earthjkr)
 
+static INT32 EarthjkrInit()
+{
+	INT32 nRet = CommonInit(Asuka68KSetup, CadashZ80Setup, CadashSoundSetup, 0);
+
+	if (nRet == 0) {
+		BurnByteswap(Taito68KRom1 + 0x40000, 0x80000);
+
+		{ // remove when earthjkr redumped
+			// bitrot patch from Haze, fixes scrolling in middle-part of last level
+			UINT16 *rom = (UINT16*)Taito68KRom1;
+			rom[0x7aaa/2] = BURN_ENDIAN_SWAP_INT16(0x317c);
+		}
+	}
+
+	return nRet;
+}
+
 struct BurnDriver BurnDrvEarthjkr = {
 	"earthjkr", NULL, NULL, NULL, "1993",
 	"U.N. Defense Force: Earth Joker (Japan)\0", NULL, "Visco", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, earthjkrRomInfo, earthjkrRomName, NULL, NULL, AsukaInputInfo, EarthjkrDIPInfo,
-	GalmedesInit, TaitoExit, EtoFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	EarthjkrInit, TaitoExit, EtoFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	240, 320, 3, 4
 };
 
-// Known to exist (not dumped) a US version of Earth Joker, title screen shows "DISTRIBUTED BY ROMSTAR, INC."
-//  ROMs number from 0 through 4 and the fix rom at IC30 is labeled 1 even though IC5 is also labled as 1
-
-// U.N. Defense Force: Earth Joker (Japan, prototype?)
-// was production PCB complete with MASK rom, could just be an early revision, not proto
+// Known to exist (not dumped) a Japanese version with ROMs 3 & 4 also stamped "A" same as above or different version??
+// Also known to exist (not dumped) a US version of Earth Joker, title screen shows "DISTRIBUTED BY ROMSTAR, INC."  ROMs were numbered
+// from 0 through 4 and the fix ROM at IC30 is labeled 1 even though IC5 is also labled as 1 similar to the below set:
+// (ROMSTAR license is set by a dipswitch, is set mentioned above really undumped?)
 
 static struct BurnRomInfo earthjkrpRomDesc[] = {
 	{ "4.ic8",				0x20000, 0xe9b1ef0c, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code

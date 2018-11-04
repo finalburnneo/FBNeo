@@ -78,6 +78,7 @@ INT32 NeoUpdatePalette()
 void NeoSetPalette()
 {
 	NeoPalette = NeoPaletteData[nNeoPaletteBank];
+	pBurnDrvPalette = NeoPalette;
 }
 
 // Update the PC copy of the palette on writes to the palette memory

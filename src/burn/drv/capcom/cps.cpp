@@ -1511,6 +1511,14 @@ INT32 CpsLoadTilesMtwinsb(INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesWofabl(INT32 nStart)
+{
+	CpsLoadTilesBootlegType3(CpsGfx + 0x000000, nStart + 0);
+	CpsLoadTilesBootlegType3(CpsGfx + 0x200000, nStart + 4);
+	
+	return 0;
+}
+
 INT32 CpsLoadStars(UINT8* pStar, INT32 nStart)
 {
 	UINT8* pTemp[2] = { NULL, NULL};

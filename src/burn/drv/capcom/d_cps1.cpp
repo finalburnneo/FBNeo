@@ -13833,6 +13833,29 @@ static struct BurnRomInfo WofjhRomDesc[] = {
 STD_ROM_PICK(Wofjh)
 STD_ROM_FN(Wofjh)
 
+static struct BurnRomInfo WofablRomDesc[] = {
+	{ "5.prg.040",     0x080000, 0x4d9d2327, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "3.prg.040",     0x080000, 0xef25fe49, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "6.prg.010",     0x020000, 0x93eeb161, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.prg.010",     0x020000, 0xa0751944, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "gfx13.040",     0x080000, 0x8e8db215, BRF_GRA | CPS1_TILES },
+	{ "gfx14.040",     0x080000, 0xf34a7f9d, BRF_GRA | CPS1_TILES },
+	{ "gfx15.040",     0x080000, 0xa5e4f449, BRF_GRA | CPS1_TILES },
+	{ "gfx16.040",     0x080000, 0x49a3dfc7, BRF_GRA | CPS1_TILES },
+	{ "gfx9.040",      0x080000, 0xf8f33a0e, BRF_GRA | CPS1_TILES },
+	{ "gfx10.040",     0x080000, 0x6a060c6c, BRF_GRA | CPS1_TILES },
+	{ "gfx11.040",     0x080000, 0x13324965, BRF_GRA | CPS1_TILES },
+	{ "gfx12.040",     0x080000, 0xc29f7b70, BRF_GRA | CPS1_TILES },
+
+	{ "sound.512",     0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "sound.020",     0x040000, 0x672dcb46, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Wofabl)
+STD_ROM_FN(Wofabl)
+
 static struct BurnRomInfo WofahRomDesc[] = {
 	{ "htk2a_23b.rom", 0x080000, 0x1b17fc85, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "tk2a_22b.rom",  0x080000, 0x900ad4cd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -14238,6 +14261,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofsjc"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofb"        , CPS_B_21_DEF, mapper_TK263B, 0, NULL                }, // game controls layers at 0x98000c
 	{ "wofjh"       , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
+	{ "wofabl"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofah"       , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofaha"      , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofahb"      , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
@@ -18471,6 +18495,107 @@ static INT32 WofbInit()
 	return nRet;
 }
 
+UINT8 __fastcall WofablInputReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0x880000: {
+			return ~Inp000;
+		}
+		
+		case 0x880001: {
+			return ~Inp001;
+		}
+		
+		case 0x880008: {
+			return ~Inp018;
+		}
+		
+		case 0x880009: {
+			return ~Inp177;
+		}
+		
+		case 0x88000a: {
+			return ~Cpi01A;
+		}
+		
+		case 0x88000c: {
+			return ~Cpi01C;
+		}
+		
+		case 0x88000e: {
+			return ~Cpi01E;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Read Byte %x\n"), a);
+		}
+	}
+	
+	return 0x00;
+}
+
+UINT16 __fastcall WofablInputReadWord(UINT32 a)
+{
+	SEK_DEF_READ_WORD(3, a);
+}
+
+void __fastcall WofablInputWriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		case 0x880006: {
+			PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+
+			PsndCode = d;
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Write Byte %x, %x\n"), a, d);
+		}
+	}
+}
+
+void __fastcall WofablInputWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x880006: {
+			PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+
+			PsndCode = d & 0xff;
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Write word %x, %x\n"), a, d);
+		}
+	}
+}
+
+static INT32 WofablInit()
+{
+	bCpsUpdatePalEveryFrame = 1;
+	CpsBootlegEEPROM = 1;
+	CpsLayer1XOffs = 0xffc0;
+	CpsLayer2XOffs = 0xffc0;
+	CpsLayer3XOffs = 0xffc0;
+	
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesWofabl;
+	Cps1ObjGetCallbackFunction = WofhObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	
+	INT32 nRet = TwelveMhzInit();
+	
+	SekOpen(0);
+	SekMapHandler(3, 0x880000, 0x89ffff, MAP_READ | MAP_WRITE);
+	SekSetReadByteHandler(3, WofablInputReadByte);
+	SekSetReadWordHandler(3, WofablInputReadWord);
+	SekSetWriteByteHandler(3, WofablInputWriteByte);
+	SekSetWriteWordHandler(3, WofablInputWriteWord);
+	SekClose();
+	
+	return nRet;
+}
+
 // Driver Definitions
 
 struct BurnDriver BurnDrvCps1941 = {
@@ -21440,6 +21565,16 @@ struct BurnDriver BurnDrvCpsWofjh = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofjhRomInfo, WofjhRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsWofabl = {
+	"wofabl", "wof", NULL, NULL, "1992",
+	"Sangokushi II (bootleg)\0", NULL, "hack", "CPS1",
+	L"\u4E09\u56FD\u5FD7 II\0Sangokushi II (bootleg)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, WofablRomInfo, WofablRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
+	WofablInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

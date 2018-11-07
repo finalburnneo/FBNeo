@@ -20010,7 +20010,7 @@ struct BurnDriver BurnDrvCpsSf2em = {
 
 struct BurnDriver BurnDrvCpsSf2en = {
 	"sf2en", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - The World Warrior (910204 etc, coversion)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910204 etc, conversion)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2enRomInfo, Sf2enRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,

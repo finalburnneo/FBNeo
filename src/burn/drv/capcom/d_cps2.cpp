@@ -8480,9 +8480,10 @@ static INT32 Ssf2tInit()
 	
 	Ssf2t = 1;
 	
-	// game runs too fast - RN compared MAME to PCB and setting the CPU overclock to 86.49% of 12MHz was the closest match
-	// this value also compares well with PCB recording - https://www.youtube.com/watch?v=m3bnMgrE2y8
-	nCPS68KClockspeed = 10378800;
+	// game runs too fast - RN compared MAME/FBA to PCB
+	// RN October 2018 research: adjust excessive speed to 90.5625% if 12Mhz as per: https://www.youtube.com/watch?v=RafLAkg0Wr4
+	
+	nCPS68KClockspeed = 10867500;
 	
 	nRet = Cps2Init();
 	

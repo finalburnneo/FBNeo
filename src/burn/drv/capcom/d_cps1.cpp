@@ -17632,8 +17632,10 @@ static INT32 Sf2bhhInit()
 
 static INT32 Sf2hfInit()
 {
-	// runs too fast - slow it down a bit (73.75% of 12MHz as per http://mametesters.org/view.php?id=408)
-	nCPS68KClockspeed = 8850000;
+	// game runs too fast - RN compared MAME/FBA to PCB
+	// RN October 2018 research: adjust excessive speed to 65.83% of 12Mhz as per: https://www.youtube.com/watch?v=HyL87eswe8M
+	
+	nCPS68KClockspeed = 7900000;
 	
 	return DrvInit();
 }

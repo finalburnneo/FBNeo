@@ -374,14 +374,14 @@ static inline void System1MakeInputs()
 static inline void BlockgalMakeInputs()
 {
 	System1Input[2] = 0x00;
-	
+
 	for (INT32 i = 0; i < 8; i++) {
 		System1Input[2] |= (System1InputPort2[i] & 1) << i;
 	}
-	
+
 	if (System1InputPort0[0]) BlockgalDial1 += 0x04;
 	if (System1InputPort0[1]) BlockgalDial1 -= 0x04;
-	
+
 	if (System1InputPort0[2]) BlockgalDial2 += 0x04;
 	if (System1InputPort0[3]) BlockgalDial2 -= 0x04;;
 }
@@ -431,18 +431,18 @@ static struct BurnDIPInfo FourdwarrioDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x06, 0x06, "3"                      },
 	{0x14, 0x01, 0x06, 0x04, "4"                      },
 	{0x14, 0x01, 0x06, 0x02, "5"                      },
 	{0x14, 0x01, 0x06, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 8   , "Bonus Life"             },
 	{0x14, 0x01, 0x38, 0x38, "30k"                    },
 	{0x14, 0x01, 0x38, 0x30, "40k"                    },
@@ -452,7 +452,7 @@ static struct BurnDIPInfo FourdwarrioDIPList[]=
 	{0x14, 0x01, 0x38, 0x10, "80k"                    },
 	{0x14, 0x01, 0x38, 0x08, "90k"                    },
 	{0x14, 0x01, 0x38, 0x00, "None"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x14, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x14, 0x01, 0x40, 0x00, "Hard"                   },
@@ -470,27 +470,27 @@ static struct BurnDIPInfo BlockgalDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x0c, 0x01, 0x01, 0x00, "Upright"                },
 	{0x0c, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x0c, 0x01, 0x02, 0x00, "Off"                    },
 	{0x0c, 0x01, 0x02, 0x02, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Lives"                  },
 	{0x0c, 0x01, 0x08, 0x08, "2"                      },
 	{0x0c, 0x01, 0x08, 0x00, "3"                      },
-	
+
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
 	{0x0c, 0x01, 0x10, 0x10, "10k 30k 60k 100k 150k"  },
 	{0x0c, 0x01, 0x10, 0x00, "30k 50k 100k 200k 300k" },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x0c, 0x01, 0x20, 0x20, "Off"                    },
 	{0x0c, 0x01, 0x20, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Service Mode"           },
 	{0x0c, 0x01, 0x80, 0x80, "Off"                    },
 	{0x0c, 0x01, 0x80, 0x00, "On"                     },
-	
+
 	// Dip 2
 	SYSTEM1_COINAGE(0x0d)
 };
@@ -505,16 +505,16 @@ static struct BurnDIPInfo BrainDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x14, 0x01, 0x02, 0x02, "Off"                    },
 	{0x14, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
@@ -532,22 +532,22 @@ static struct BurnDIPInfo BullfgtDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x14, 0x01, 0x02, 0x02, "Off"                    },
 	{0x14, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, "30k"                    },
 	{0x14, 0x01, 0x30, 0x20, "50k"                    },
@@ -565,24 +565,24 @@ static struct BurnDIPInfo FlickyDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x0d)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x0e, 0x01, 0x01, 0x00, "Upright"                },
 	{0x0e, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x0e, 0x01, 0x0c, 0x0c, "2"                      },
 	{0x0e, 0x01, 0x0c, 0x08, "3"                      },
 	{0x0e, 0x01, 0x0c, 0x04, "4"                      },
 	{0x0e, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x0e, 0x01, 0x30, 0x30, "30k  80k 160k"          },
 	{0x0e, 0x01, 0x30, 0x20, "30k 100k 200k"          },
 	{0x0e, 0x01, 0x30, 0x10, "40k 120k 240k"          },
 	{0x0e, 0x01, 0x30, 0x00, "40k 140k 280k"          },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x0e, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x0e, 0x01, 0x40, 0x00, "Hard"                   },
@@ -598,28 +598,28 @@ static struct BurnDIPInfo GardiaDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x14, 0x01, 0x02, 0x02, "Off"                    },
 	{0x14, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, " 5k 20k 30k"            },
 	{0x14, 0x01, 0x30, 0x20, "10k 25k 50k"            },
 	{0x14, 0x01, 0x30, 0x10, "15k 30k 60k"            },
 	{0x14, 0x01, 0x30, 0x00, "None"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x14, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x14, 0x01, 0x40, 0x00, "Hard"                   },
@@ -635,28 +635,28 @@ static struct BurnDIPInfo HvymetalDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x14, 0x01, 0x02, 0x02, "Off"                    },
 	{0x14, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, "50k, 100k"              },
 	{0x14, 0x01, 0x30, 0x20, "60k, 120k"              },
 	{0x14, 0x01, 0x30, 0x10, "70k, 150k"              },
 	{0x14, 0x01, 0x30, 0x00, "100k"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x14, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x14, 0x01, 0x40, 0x00, "Hard"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x14, 0x01, 0x80, 0x80, "Off"                    },
 	{0x14, 0x01, 0x80, 0x00, "On"                     },
@@ -672,22 +672,22 @@ static struct BurnDIPInfo ImsorryDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x14, 0x01, 0x02, 0x02, "Off"                    },
 	{0x14, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, "30k"                    },
 	{0x14, 0x01, 0x30, 0x20, "40k"                    },
@@ -705,28 +705,28 @@ static struct BurnDIPInfo MrvikingDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Maximum Credit"         },
 	{0x14, 0x01, 0x02, 0x02, "9"                      },
 	{0x14, 0x01, 0x02, 0x00, "99"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, "10k, 30k then every 30k"},
 	{0x14, 0x01, 0x30, 0x20, "20k, 40k then every 30k"},
 	{0x14, 0x01, 0x30, 0x10, "30k, then every 30k"    },
 	{0x14, 0x01, 0x30, 0x00, "40k, then every 30k"    },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x14, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x14, 0x01, 0x40, 0x00, "Hard"                   },
@@ -742,24 +742,24 @@ static struct BurnDIPInfo MrvikngjDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, "10k, 30k then every 30k"},
 	{0x14, 0x01, 0x30, 0x20, "20k, 40k then every 30k"},
 	{0x14, 0x01, 0x30, 0x10, "30k, then every 30k"    },
 	{0x14, 0x01, 0x30, 0x00, "40k, then every 30k"    },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x14, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x14, 0x01, 0x40, 0x00, "Hard"                   },
@@ -775,28 +775,28 @@ static struct BurnDIPInfo MyheroDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x14, 0x01, 0x02, 0x02, "Off"                    },
 	{0x14, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, "30k"                    },
 	{0x14, 0x01, 0x30, 0x20, "50k"                    },
 	{0x14, 0x01, 0x30, 0x10, "70k"                    },
 	{0x14, 0x01, 0x30, 0x00, "90k"                    },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x14, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x14, 0x01, 0x40, 0x00, "Hard"                   },
@@ -816,44 +816,44 @@ static struct BurnDIPInfo NobbDIPList[]=
 	{0x13, 0x01, 0x03, 0x03, "1 Coin  1 Credit"       },
 	{0x13, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
 	{0x13, 0x01, 0x03, 0x01, "1 Coin  3 Credits"      },
-	
+
 	{0   , 0xfe, 0   , 4   , "Coin B"                 },
 	{0x13, 0x01, 0x0c, 0x00, "2 Coins 1 Credit"       },
 	{0x13, 0x01, 0x0c, 0x0c, "1 Coin  1 Credit"       },
 	{0x13, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"      },
 	{0x13, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"      },
-	
+
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
 	{0x13, 0x01, 0x30, 0x20, "Easy"                   },
 	{0x13, 0x01, 0x30, 0x30, "Medium"                 },
 	{0x13, 0x01, 0x30, 0x10, "Hard"                   },
 	{0x13, 0x01, 0x30, 0x00, "Hardest"                },
-	
+
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x13, 0x01, 0x40, 0x00, "Upright"                },
 	{0x13, 0x01, 0x40, 0x40, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
 	{0x13, 0x01, 0x80, 0x00, "Off"                    },
 	{0x13, 0x01, 0x80, 0x80, "On"                     },
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x03, 0x02, "2"                      },
 	{0x14, 0x01, 0x03, 0x03, "3"                      },
 	{0x14, 0x01, 0x03, 0x01, "5"                      },
 	{0x14, 0x01, 0x03, 0x00, "99"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x0c, 0x08, "40k,  80k, 120k, 160k"  },
 	{0x14, 0x01, 0x0c, 0x0c, "50k, 100k, 150k"        },
 	{0x14, 0x01, 0x0c, 0x04, "60k, 120k, 180k"        },
 	{0x14, 0x01, 0x0c, 0x00, "None"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x14, 0x01, 0x10, 0x00, "Off"                    },
 	{0x14, 0x01, 0x10, 0x10, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
 	{0x14, 0x01, 0x20, 0x20, "Off"                    },
 	{0x14, 0x01, 0x20, 0x00, "On"                     },
@@ -869,30 +869,30 @@ static struct BurnDIPInfo Pitfall2DIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x14, 0x01, 0x02, 0x02, "Off"                    },
 	{0x14, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
 	{0x14, 0x01, 0x10, 0x10, "20k 50k"                },
 	{0x14, 0x01, 0x10, 0x00, "30k 70k"                },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x14, 0x01, 0x20, 0x20, "Off"                    },
 	{0x14, 0x01, 0x20, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Time"                   },
 	{0x14, 0x01, 0x40, 0x00, "2 minutes"              },
 	{0x14, 0x01, 0x40, 0x40, "3 minutes"              },
@@ -908,28 +908,28 @@ static struct BurnDIPInfo PitfalluDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x06, 0x06, "3"                      },
 	{0x14, 0x01, 0x06, 0x04, "4"                      },
 	{0x14, 0x01, 0x06, 0x02, "5"                      },
 	{0x14, 0x01, 0x06, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Starting Stage"         },
 	{0x14, 0x01, 0x18, 0x18, "1"                      },
 	{0x14, 0x01, 0x18, 0x10, "2"                      },
 	{0x14, 0x01, 0x18, 0x08, "3"                      },
 	{0x14, 0x01, 0x18, 0x00, "4"                      },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x14, 0x01, 0x20, 0x20, "Off"                    },
 	{0x14, 0x01, 0x20, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Time"                   },
 	{0x14, 0x01, 0x40, 0x00, "2 minutes"              },
 	{0x14, 0x01, 0x40, 0x40, "3 minutes"              },
@@ -945,22 +945,22 @@ static struct BurnDIPInfo RaflesiaDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
-	// Dip 2	
+
+	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x14, 0x01, 0x02, 0x02, "Off"                    },
 	{0x14, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, "20k,  70k and 120k"     },
 	{0x14, 0x01, 0x30, 0x20, "30k,  80k and 150k"     },
@@ -978,22 +978,22 @@ static struct BurnDIPInfo RegulusDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x14, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x14, 0x01, 0x40, 0x00, "Hard"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x14, 0x01, 0x80, 0x80, "Off"                    },
 	{0x14, 0x01, 0x80, 0x00, "On"                     },
@@ -1009,18 +1009,18 @@ static struct BurnDIPInfo RegulusoDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x08, "4"                      },
 	{0x14, 0x01, 0x0c, 0x04, "5"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x14, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x14, 0x01, 0x40, 0x00, "Hard"                   },
@@ -1036,30 +1036,30 @@ static struct BurnDIPInfo SeganinjDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x15)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x16, 0x01, 0x01, 0x00, "Upright"                },
 	{0x16, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x16, 0x01, 0x02, 0x02, "Off"                    },
 	{0x16, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x16, 0x01, 0x0c, 0x08, "2"                      },
 	{0x16, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x16, 0x01, 0x0c, 0x04, "4"                      },
 	{0x16, 0x01, 0x0c, 0x00, "240"                    },
-	
+
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
 	{0x16, 0x01, 0x10, 0x10, "20k  70k 120k 170k"     },
 	{0x16, 0x01, 0x10, 0x00, "50k 100k 150k 200k"     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x16, 0x01, 0x20, 0x20, "Off"                    },
 	{0x16, 0x01, 0x20, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x16, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x16, 0x01, 0x40, 0x00, "Hard"                   },
@@ -1075,28 +1075,28 @@ static struct BurnDIPInfo SpatterDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x14, 0x01, 0x02, 0x02, "Off"                    },
 	{0x14, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x08, "2"                      },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x04, "4"                      },
 	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, "40k, 120k and 480k"     },
 	{0x14, 0x01, 0x30, 0x20, "50k and 200k"           },
 	{0x14, 0x01, 0x30, 0x10, "100k only"              },
 	{0x14, 0x01, 0x30, 0x00, "None"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Reset Timer/Objects on Life Loss" },
 	{0x14, 0x01, 0x40, 0x40, "No"                     },
 	{0x14, 0x01, 0x40, 0x00, "Yes"                    },
@@ -1112,18 +1112,18 @@ static struct BurnDIPInfo StarjackDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x06, 0x06, "3"                      },
 	{0x14, 0x01, 0x06, 0x04, "4"                      },
 	{0x14, 0x01, 0x06, 0x02, "5"                      },
 	{0x14, 0x01, 0x06, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 8   , "Bonus Life"             },
 	{0x14, 0x01, 0x38, 0x38, "Every 20k"              },
 	{0x14, 0x01, 0x38, 0x28, "Every 30k"              },
@@ -1133,7 +1133,7 @@ static struct BurnDIPInfo StarjackDIPList[]=
 	{0x14, 0x01, 0x38, 0x20, "30k, then every 40k"    },
 	{0x14, 0x01, 0x38, 0x10, "40k, then every 50k"    },
 	{0x14, 0x01, 0x38, 0x00, "50k, then every 60k"    },
-	
+
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
 	{0x14, 0x01, 0xc0, 0xc0, "Easy"                   },
 	{0x14, 0x01, 0xc0, 0x80, "Medium"                 },
@@ -1151,28 +1151,28 @@ static struct BurnDIPInfo StarjacsDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x06, 0x06, "3"                      },
 	{0x14, 0x01, 0x06, 0x04, "4"                      },
 	{0x14, 0x01, 0x06, 0x02, "5"                      },
 	{0x14, 0x01, 0x06, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Ship"                   },
 	{0x14, 0x01, 0x08, 0x08, "Single"                 },
 	{0x14, 0x01, 0x08, 0x00, "Multi"                  },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, "30k, then every 40k"    },
 	{0x14, 0x01, 0x30, 0x20, "40k, then every 50k"    },
 	{0x14, 0x01, 0x30, 0x10, "50k, then every 60k"    },
 	{0x14, 0x01, 0x30, 0x00, "60k, then every 70k"    },
-	
+
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
 	{0x14, 0x01, 0xc0, 0xc0, "Easy"                   },
 	{0x14, 0x01, 0xc0, 0x80, "Medium"                 },
@@ -1190,18 +1190,18 @@ static struct BurnDIPInfo SwatDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x06, 0x06, "3"                      },
 	{0x14, 0x01, 0x06, 0x04, "4"                      },
 	{0x14, 0x01, 0x06, 0x02, "5"                      },
 	{0x14, 0x01, 0x06, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 8   , "Bonus Life"             },
 	{0x14, 0x01, 0x38, 0x38, "30k"                    },
 	{0x14, 0x01, 0x38, 0x30, "40k"                    },
@@ -1223,28 +1223,28 @@ static struct BurnDIPInfo TeddybbDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x13)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x14, 0x01, 0x02, 0x00, "Off"                    },
 	{0x14, 0x01, 0x02, 0x02, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x0c, 0x08, "2"                      },
 	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x14, 0x01, 0x0c, 0x04, "4"                      },
 	{0x14, 0x01, 0x0c, 0x00, "252"                    },
-	
+
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
 	{0x14, 0x01, 0x30, 0x30, "100k 400k"              },
 	{0x14, 0x01, 0x30, 0x20, "200k 600k"              },
 	{0x14, 0x01, 0x30, 0x10, "400k 800k"              },
 	{0x14, 0x01, 0x30, 0x00, "600k"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x14, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x14, 0x01, 0x40, 0x00, "Hard"                   },
@@ -1339,18 +1339,18 @@ static struct BurnDIPInfo UpndownDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x11)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x12, 0x01, 0x01, 0x00, "Upright"                },
 	{0x12, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x12, 0x01, 0x06, 0x06, "3"                      },
 	{0x12, 0x01, 0x06, 0x04, "4"                      },
 	{0x12, 0x01, 0x06, 0x02, "5"                      },
 	{0x12, 0x01, 0x06, 0x00, "Infinite"               },
-	
+
 	{0   , 0xfe, 0   , 8   , "Bonus Life"             },
 	{0x12, 0x01, 0x38, 0x38, "10k"                    },
 	{0x12, 0x01, 0x38, 0x30, "20k"                    },
@@ -1360,7 +1360,7 @@ static struct BurnDIPInfo UpndownDIPList[]=
 	{0x12, 0x01, 0x38, 0x10, "60k"                    },
 	{0x12, 0x01, 0x38, 0x08, "70k"                    },
 	{0x12, 0x01, 0x38, 0x00, "None"                   },
-	
+
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
 	{0x12, 0x01, 0xc0, 0xc0, "Easy"                   },
 	{0x12, 0x01, 0xc0, 0x80, "Medium"                 },
@@ -1378,30 +1378,30 @@ static struct BurnDIPInfo WboyDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x0f)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x10, 0x01, 0x01, 0x00, "Upright"                },
 	{0x10, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x10, 0x01, 0x02, 0x02, "Off"                    },
 	{0x10, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x10, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x10, 0x01, 0x0c, 0x08, "4"                      },
 	{0x10, 0x01, 0x0c, 0x04, "5"                      },
 	{0x10, 0x01, 0x0c, 0x00, "Freeplay"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
 	{0x10, 0x01, 0x10, 0x10, "30k 100k 170k 240k"     },
 	{0x10, 0x01, 0x10, 0x00, "30k 120k 210k 300k"     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x10, 0x01, 0x20, 0x00, "Off"                    },
 	{0x10, 0x01, 0x20, 0x20, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x10, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x10, 0x01, 0x40, 0x00, "Hard"                   },
@@ -1417,30 +1417,30 @@ static struct BurnDIPInfo Wboy3DIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x0f)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x10, 0x01, 0x01, 0x00, "Upright"                },
 	{0x10, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x10, 0x01, 0x02, 0x02, "Off"                    },
 	{0x10, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x10, 0x01, 0x0c, 0x0c, "1"                      },
 	{0x10, 0x01, 0x0c, 0x08, "2"                      },
 	{0x10, 0x01, 0x0c, 0x04, "3"                      },
 	{0x10, 0x01, 0x0c, 0x00, "Freeplay"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
 	{0x10, 0x01, 0x10, 0x10, "30k 100k 170k 240k"     },
 	{0x10, 0x01, 0x10, 0x00, "30k 120k 210k 300k"     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x10, 0x01, 0x20, 0x00, "Off"                    },
 	{0x10, 0x01, 0x20, 0x20, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x10, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x10, 0x01, 0x40, 0x00, "Hard"                   },
@@ -1458,17 +1458,17 @@ static struct BurnDIPInfo WboyuDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x0f, 0x01, 0x01, 0x00, "Upright"                },
 	{0x0f, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x0f, 0x01, 0x06, 0x00, "2"                      },
 	{0x0f, 0x01, 0x06, 0x06, "3"                      },
 	{0x0f, 0x01, 0x06, 0x04, "4"                      },
 	{0x0f, 0x01, 0x06, 0x02, "5"                      },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x0f, 0x01, 0x40, 0x40, "Off"                    },
 	{0x0f, 0x01, 0x40, 0x00, "On"                     },
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 8   , "Coinage"                },
 	{0x10, 0x01, 0x07, 0x04, "4 Coins 1 Credit"       },
@@ -1479,11 +1479,11 @@ static struct BurnDIPInfo WboyuDIPList[]=
 	{0x10, 0x01, 0x07, 0x02, "2 Coins 1 Credits"      },
 	{0x10, 0x01, 0x07, 0x07, "1 Coin  1 Credit"       },
 	{0x10, 0x01, 0x07, 0x03, "1 Coin  2 Credits"      },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x10, 0x01, 0x10, 0x00, "Off"                    },
 	{0x10, 0x01, 0x10, 0x10, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Mode"                   },
 	{0x10, 0x01, 0xc0, 0xc0, "Normal Game"            },
 	{0x10, 0x01, 0xc0, 0x80, "Free Play"              },
@@ -1501,34 +1501,34 @@ static struct BurnDIPInfo WbdeluxeDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x0f)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x10, 0x01, 0x01, 0x00, "Upright"                },
 	{0x10, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x10, 0x01, 0x02, 0x02, "Off"                    },
 	{0x10, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x10, 0x01, 0x0c, 0x0c, "3"                      },
 	{0x10, 0x01, 0x0c, 0x08, "4"                      },
 	{0x10, 0x01, 0x0c, 0x04, "5"                      },
 	{0x10, 0x01, 0x0c, 0x00, "Freeplay"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
 	{0x10, 0x01, 0x10, 0x10, "30k 100k 170k 240k"     },
 	{0x10, 0x01, 0x10, 0x00, "30k 120k 210k 300k"     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x10, 0x01, 0x20, 0x00, "Off"                    },
 	{0x10, 0x01, 0x20, 0x20, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x10, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x10, 0x01, 0x40, 0x00, "Hard"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Energy Consumption"     },
 	{0x10, 0x01, 0x80, 0x00, "Slow"                   },
 	{0x10, 0x01, 0x80, 0x80, "Fast"                   },
@@ -1544,26 +1544,26 @@ static struct BurnDIPInfo WmatchDIPList[]=
 
 	// Dip 1
 	SYSTEM1_COINAGE(0x19)
-	
+
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x1a, 0x01, 0x01, 0x00, "Upright"                },
 	{0x1a, 0x01, 0x01, 0x01, "Cocktail"               },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x1a, 0x01, 0x02, 0x02, "Off"                    },
 	{0x1a, 0x01, 0x02, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 4   , "Time"                   },
 	{0x1a, 0x01, 0x0c, 0x0c, "Normal"                 },
 	{0x1a, 0x01, 0x0c, 0x08, "Fast"                   },
 	{0x1a, 0x01, 0x0c, 0x04, "Faster"                 },
 	{0x1a, 0x01, 0x0c, 0x00, "Fastest"                },
-	
+
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
 	{0x1a, 0x01, 0x10, 0x10, "20k 50k"                },
 	{0x1a, 0x01, 0x10, 0x00, "30k 70k"                },
-	
+
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x1a, 0x01, 0x40, 0x40, "Easy"                   },
 	{0x1a, 0x01, 0x40, 0x00, "Hard"                   },
@@ -1581,7 +1581,7 @@ static struct BurnDIPInfo ChplftbDIPList[]=
    {0   , 0xfe, 0   , 2   , "Cabinet"                },
    {0x13, 0x01, 0x01, 0x00, "Upright"                },
    {0x13, 0x01, 0x01, 0x01, "Cocktail"               },
-   
+
    {0   , 0xfe, 0   , 3   , "Lives"                  },
    {0x13, 0x01, 0x0c, 0x04, "3"                      },
    {0x13, 0x01, 0x0c, 0x0c, "4"                      },
@@ -1590,7 +1590,7 @@ static struct BurnDIPInfo ChplftbDIPList[]=
    {0   , 0xfe, 0   , 2   , "Demo Sounds"            },
    {0x13, 0x01, 0x40, 0x40, "Off"                    },
    {0x13, 0x01, 0x40, 0x00, "On"                     },
-   
+
    // Dip 2
    {0   , 0xfe, 0   , 8   , "Coinage"                },
    {0x14, 0x01, 0x07, 0x04, "4 Coins 1 Credit"       },
@@ -1605,7 +1605,7 @@ static struct BurnDIPInfo ChplftbDIPList[]=
    {0   , 0xfe, 0   , 2   , "Allow Continue"         },
    {0x14, 0x01, 0x10, 0x00, "Off"                    },
    {0x14, 0x01, 0x10, 0x10, "On"                     },
-   
+
    {0   , 0xfe, 0   , 4   , "Mode"                   },
    {0x14, 0x01, 0xc0, 0xc0, "Normal Game"            },
    {0x14, 0x01, 0xc0, 0x80, "Free Play"              },
@@ -1648,7 +1648,7 @@ static struct BurnDIPInfo UfosensiDIPList[]=
    {0   , 0xfe, 0   ,    2, "Invulnerability"		},
    {0x15, 0x01, 0x80, 0x80, "Off"		},
    {0x15, 0x01, 0x80, 0x00, "On"		},
-   
+
    // Dip 2
    {0   , 0xfe, 0   , 8   , "Coinage"                },
    {0x16, 0x01, 0x07, 0x04, "4 Coins 1 Credit"       },
@@ -1663,7 +1663,7 @@ static struct BurnDIPInfo UfosensiDIPList[]=
    {0   , 0xfe, 0   , 2   , "Allow Continue"         },
    {0x16, 0x01, 0x10, 0x00, "Off"                    },
    {0x16, 0x01, 0x10, 0x10, "On"                     },
-   
+
    {0   , 0xfe, 0   , 4   , "Mode"                   },
    {0x16, 0x01, 0xc0, 0xc0, "Normal Game"            },
    {0x16, 0x01, 0xc0, 0x80, "Free Play"              },
@@ -1725,16 +1725,16 @@ static struct BurnRomInfo FourdwarrioRomDesc[] = {
 	{ "4d.116",            0x004000, 0x546d1bc7, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "4d.109",            0x004000, 0xf1074ec3, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "4d.96",             0x004000, 0x387c1e8f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "4d.120",            0x002000, 0x5241c009, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "4d.62",             0x002000, 0xf31b2e09, BRF_GRA },		  	  //  4 Tiles
 	{ "4d.61",             0x002000, 0x5430e925, BRF_GRA },		  	  //  5 Tiles
 	{ "4d.64",             0x002000, 0x9f442351, BRF_GRA },		  	  //  6 Tiles
 	{ "4d.63",             0x002000, 0x633232bd, BRF_GRA },		  	  //  7 Tiles
 	{ "4d.66",             0x002000, 0x52bfa2ed, BRF_GRA },		  	  //  8 Tiles
 	{ "4d.65",             0x002000, 0xe9ba4658, BRF_GRA },		  	  //  9 Tiles
-	
+
 	{ "4d.117",            0x004000, 0x436e4141, BRF_GRA },		  	  // 10 Sprites
 	{ "4d.04",             0x004000, 0x8b7cecef, BRF_GRA },		  	  // 11 Sprites
 	{ "4d.110",            0x004000, 0x6ec5990a, BRF_GRA },		  	  // 12 Sprites
@@ -1749,23 +1749,23 @@ STD_ROM_FN(Fourdwarrio)
 static struct BurnRomInfo BlockgalRomDesc[] = {
 	{ "bg.116",            0x004000, 0xa99b231a, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "bg.109",            0x004000, 0xa6b573d5, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	
+
 	{ "bg.120",            0x002000, 0xd848faff, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
-	
+
 	{ "bg.62",             0x002000, 0x7e3ea4eb, BRF_GRA },		  	  //  3 Tiles
 	{ "bg.61",             0x002000, 0x4dd3d39d, BRF_GRA },		  	  //  4 Tiles
 	{ "bg.64",             0x002000, 0x17368663, BRF_GRA },		  	  //  5 Tiles
 	{ "bg.63",             0x002000, 0x0c8bc404, BRF_GRA },		  	  //  6 Tiles
 	{ "bg.66",             0x002000, 0x2b7dc4fa, BRF_GRA },		  	  //  7 Tiles
 	{ "bg.65",             0x002000, 0xed121306, BRF_GRA },		  	  //  8 Tiles
-	
+
 	{ "bg.117",            0x004000, 0xe99cc920, BRF_GRA },		  	  //  9 Sprites
 	{ "bg.04",             0x004000, 0x213057f8, BRF_GRA },		  	  // 10 Sprites
 	{ "bg.110",            0x004000, 0x064c812c, BRF_GRA },		  	  // 11 Sprites
 	{ "bg.05",             0x004000, 0x02e0b040, BRF_GRA },		  	  // 12 Sprites
 
 	{ "pr5317.76",         0x000100, 0x648350b8, BRF_OPT },		  	  // 13 Timing PROM
-	
+
 	{ "317-0029.key",      0x002000, 0x350d7f93, BRF_ESS | BRF_PRG }, // 14 MC8123 Key
 };
 
@@ -1776,13 +1776,13 @@ static struct BurnRomInfo BrainRomDesc[] = {
 	{ "brain.1",           0x008000, 0x2d2aec31, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "brain.2",           0x008000, 0x810a8ab5, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "brain.3",           0x008000, 0x9a225634, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "brain.120",         0x008000, 0xc7e50278, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "brain.62",          0x004000, 0x7dce2302, BRF_GRA },		  	  //  4 Tiles
 	{ "brain.64",          0x004000, 0x7ce03fd3, BRF_GRA },		  	  //  5 Tiles
 	{ "brain.66",          0x004000, 0xea54323f, BRF_GRA },		  	  //  6 Tiles
-	
+
 	{ "brain.117",         0x008000, 0x92ff71a4, BRF_GRA },		  	  //  7 Sprites
 	{ "brain.110",         0x008000, 0xa1b847ec, BRF_GRA },		  	  //  8 Sprites
 	{ "brain.4",           0x008000, 0xfd2ea53b, BRF_GRA },		  	  //  9 Sprites
@@ -1803,16 +1803,16 @@ static struct BurnRomInfo BullfgtRomDesc[] = {
 	{ "epr-.132",          0x002000, 0x72c3c712, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-.133",          0x002000, 0x7d9fa4cd, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-.134",          0x002000, 0x061f2797, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-6077.120",      0x002000, 0x02a37602, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-.82",           0x002000, 0xb71c349f, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-.65",           0x002000, 0x86deafa8, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-6087.81",       0x002000, 0x2677742c, BRF_GRA },		  	  //  9 Tiles
 	{ "epr-.64",           0x002000, 0x6f0a62be, BRF_GRA },		  	  // 10 Tiles
 	{ "epr-6085.80",       0x002000, 0x9c3ddc62, BRF_GRA },		  	  // 11 Tiles
 	{ "epr-.63",           0x002000, 0xc0fce57c, BRF_GRA },		  	  // 12 Tiles
-	
+
 	{ "epr-6069.86",       0x004000, 0xfe691e41, BRF_GRA },		  	  // 13 Sprites
 	{ "epr-6070.93",       0x004000, 0x34f080df, BRF_GRA },		  	  // 14 Sprites
 
@@ -1826,16 +1826,16 @@ static struct BurnRomInfo ThetogyuRomDesc[] = {
 	{ "epr-6071.116",      0x004000, 0x96b57df9, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6072.109",      0x004000, 0xf7baadd0, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6073.96",       0x004000, 0x721af166, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6077.120",      0x002000, 0x02a37602, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-6089.62",       0x002000, 0xa183e5ff, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-6088.61",       0x002000, 0xb919b4a6, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-6087.64",       0x002000, 0x2677742c, BRF_GRA },		  	  //  9 Tiles
 	{ "epr-6086.63",       0x002000, 0x76b5a084, BRF_GRA },		  	  // 10 Tiles
 	{ "epr-6085.66",       0x002000, 0x9c3ddc62, BRF_GRA },		  	  // 11 Tiles
 	{ "epr-6084.65",       0x002000, 0x90e1fa5f, BRF_GRA },		  	  // 12 Tiles
-	
+
 	{ "epr-6069.117",      0x004000, 0xfe691e41, BRF_GRA },		  	  // 13 Sprites
 	{ "epr-6070.110",      0x004000, 0x34f080df, BRF_GRA },		  	  // 14 Sprites
 
@@ -1848,16 +1848,16 @@ STD_ROM_FN(Thetogyu)
 static struct BurnRomInfo FlickyRomDesc[] = {
 	{ "epr5978a.116",      0x004000, 0x296f1492, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr5979a.109",      0x004000, 0x64b03ef9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	
+
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
-	
+
 	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  	  //  3 Tiles
 	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  	  //  4 Tiles
 	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  	  //  5 Tiles
 	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  	  //  6 Tiles
 	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  	  //  8 Tiles
-	
+
 	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  9 Sprites
 	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  // 10 Sprites
 
@@ -1870,13 +1870,13 @@ STD_ROM_FN(Flicky)
 static struct BurnRomInfo FlickyaRomDesc[] = {
 	{ "epr5978a.116",      0x004000, 0x296f1492, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr5979a.109",      0x004000, 0x64b03ef9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	
+
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
-	
+
 	{ "epr-6001.62",       0x004000, 0xf1a75200, BRF_GRA },		  	  //  3 Tiles
 	{ "epr-6000.64",       0x004000, 0x299aefb7, BRF_GRA },		  	  //  4 Tiles
 	{ "epr-5999.66",       0x004000, 0x1ca53157, BRF_GRA },		  	  //  5 Tiles
-		
+
 	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  6 Sprites
 	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  //  7 Sprites
 
@@ -1889,13 +1889,13 @@ STD_ROM_FN(Flickya)
 static struct BurnRomInfo FlickygRomDesc[] = {
 	{ "epr5978a.116",      0x004000, 0x296f1492, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr5979a.109",      0x004000, 0x64b03ef9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	
+
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
-	
+
 	{ "66xx.ic62",         0x004000, 0xf1a75200, BRF_GRA },		  	  //  3 Tiles
 	{ "66x0.ic64",         0x004000, 0x299aefb7, BRF_GRA },		  	  //  4 Tiles
 	{ "5999.ic66",         0x004000, 0x1ca53157, BRF_GRA },		  	  //  5 Tiles
-	
+
 	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  6 Sprites
 	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  //  7 Sprites
 
@@ -1910,16 +1910,16 @@ static struct BurnRomInfo Flickys1RomDesc[] = {
 	{ "ic130",             0x002000, 0xe7ed012d, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "ic131",             0x002000, 0xc5e98cd1, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 	{ "ic132",             0x002000, 0x0e5122c2, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
-	
+
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  4	Z80 #2 Program Code
-	
+
 	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  	  //  5 Tiles
 	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  	  //  6 Tiles
 	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  	  //  9 Tiles
 	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  	  // 10 Tiles
-	
+
 	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  // 11 Sprites
 	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  // 12 Sprites
 
@@ -1932,16 +1932,16 @@ STD_ROM_FN(Flickys1)
 static struct BurnRomInfo Flickys2RomDesc[] = {
 	{ "epr-6621.bin",      0x004000, 0xb21ff546, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6622.bin",      0x004000, 0x133a8bf1, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	
+
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
-	
+
 	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  	  //  3 Tiles
 	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  	  //  4 Tiles
 	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  	  //  5 Tiles
 	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  	  //  6 Tiles
 	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  	  //  8 Tiles
-	
+
 	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  9 Sprites
 	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  // 10 Sprites
 
@@ -1954,13 +1954,13 @@ STD_ROM_FN(Flickys2)
 static struct BurnRomInfo Flickys2gRomDesc[] = {
 	{ "epr-6621.bin",      0x004000, 0xb21ff546, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6622.bin",      0x004000, 0x133a8bf1, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	
+
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
-	
+
 	{ "66xx.ic62",         0x004000, 0xf1a75200, BRF_GRA },		  	  //  3 Tiles
 	{ "66x0.ic64",         0x004000, 0x299aefb7, BRF_GRA },		  	  //  4 Tiles
 	{ "5999.ic66",         0x004000, 0x1ca53157, BRF_GRA },		  	  //  5 Tiles
-	
+
 	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  6 Sprites
 	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  //  7 Sprites
 
@@ -1975,16 +1975,16 @@ static struct BurnRomInfo FlickyoRomDesc[] = {
 	{ "epr5858a.bin",      0x002000, 0x18b412f4, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-5859.bin",      0x002000, 0xa5558d7e, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 	{ "epr-5860.bin",      0x002000, 0x1b35fef1, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
-	
+
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  4	Z80 #2 Program Code
-	
+
 	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  	  //  5 Tiles
 	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  	  //  6 Tiles
 	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  	  //  9 Tiles
 	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  	  // 10 Tiles
-	
+
 	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  // 11 Sprites
 	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  // 12 Sprites
 
@@ -2000,16 +2000,16 @@ static struct BurnRomInfo FlickyupRomDesc[] = {
 	{ "2764-ic30",         0x002000, 0x5c84216f, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "2764-ic31",         0x002000, 0x106132fa, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 	{ "2764-ic32",         0x002000, 0xc5ea7f58, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
-	
+
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  4	Z80 #2 Program Code
-	
+
 	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  	  //  5 Tiles
 	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  	  //  6 Tiles
 	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  	  //  9 Tiles
 	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  	  // 10 Tiles
-	
+
 	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  // 11 Sprites
 	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  // 12 Sprites
 
@@ -2023,13 +2023,13 @@ static struct BurnRomInfo GardiaRomDesc[] = {
 	{ "epr-10255.1",       0x008000, 0x89282a6b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-10254.2",       0x008000, 0x2826b6d8, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-10253.3",       0x008000, 0x7911260f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-10243.120",     0x004000, 0x87220660, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-10249.61",      0x004000, 0x4e0ad0f2, BRF_GRA },		  	  //  4 Tiles
 	{ "epr-10248.64",      0x004000, 0x3515d124, BRF_GRA },		  	  //  5 Tiles
 	{ "epr-10247.66",      0x004000, 0x541e1555, BRF_GRA },		  	  //  6 Tiles
-	
+
 	{ "epr-10234.117",     0x008000, 0x8a6aed33, BRF_GRA },		  	  //  7 Sprites
 	{ "epr-10233.110",     0x008000, 0xc52784d3, BRF_GRA },		  	  //  8 Sprites
 	{ "epr-10236.04",      0x008000, 0xb35ab227, BRF_GRA },		  	  //  9 Sprites
@@ -2048,13 +2048,13 @@ static struct BurnRomInfo GardiabRomDesc[] = {
 	{ "gardiabl.5",        0x008000, 0x207f9cbb, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "gardiabl.6",        0x008000, 0xb2ed05dc, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "gardiabl.7",        0x008000, 0x0a490588, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr10243.120",      0x004000, 0x87220660, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "gardiabl.8",        0x004000, 0x367c9a17, BRF_GRA },		  	  //  4 Tiles
 	{ "gardiabl.9",        0x004000, 0x1540fd30, BRF_GRA },		  	  //  5 Tiles
 	{ "gardiabl.10",       0x004000, 0xe5c9af10, BRF_GRA },		  	  //  6 Tiles
-	
+
 	{ "epr10234.117",      0x008000, 0x8a6aed33, BRF_GRA },		  	  //  7 Sprites
 	{ "epr10233.110",      0x008000, 0xc52784d3, BRF_GRA },		  	  //  8 Sprites
 	{ "epr10236.04",       0x008000, 0xb35ab227, BRF_GRA },		  	  //  9 Sprites
@@ -2098,21 +2098,21 @@ static struct BurnRomInfo HvymetalRomDesc[] = {
 	{ "epra6790.1",        0x008000, 0x59195bb9, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epra6789.2",        0x008000, 0x83e1d18a, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epra6788.3",        0x008000, 0x6ecefd57, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr6787.120",       0x008000, 0xb64ac7f0, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr6795.62",        0x004000, 0x58a3d038, BRF_GRA },		  	  //  4 Tiles
 	{ "epr6796.61",        0x004000, 0xd8b08a55, BRF_GRA },		  	  //  5 Tiles
 	{ "epr6793.64",        0x004000, 0x487407c2, BRF_GRA },		  	  //  6 Tiles
 	{ "epr6794.63",        0x004000, 0x89eb3793, BRF_GRA },		  	  //  7 Tiles
 	{ "epr6791.66",        0x004000, 0xa7dcd042, BRF_GRA },		  	  //  8 Tiles
 	{ "epr6792.65",        0x004000, 0xd0be5e33, BRF_GRA },		  	  //  9 Tiles
-	
+
 	{ "epr6778.117",       0x008000, 0x0af61aee, BRF_GRA },		  	  // 10 Sprites
 	{ "epr6777.110",       0x008000, 0x91d7a197, BRF_GRA },		  	  // 11 Sprites
 	{ "epr6780.4",         0x008000, 0x55b31df5, BRF_GRA },		  	  // 12 Sprites
 	{ "epr6779.5",         0x008000, 0xe03a2b28, BRF_GRA },		  	  // 13 Sprites
-	
+
 	{ "pr7036.3",          0x000100, 0x146f16fb, BRF_GRA },		  	  // 14 Red PROM
 	{ "pr7035.2",          0x000100, 0x50b201ed, BRF_GRA },		  	  // 15 Green PROM
 	{ "pr7034.1",          0x000100, 0xdfb5f139, BRF_GRA },		  	  // 16 Blue PROM
@@ -2127,16 +2127,16 @@ static struct BurnRomInfo ImsorryRomDesc[] = {
 	{ "epr-6676.116",      0x004000, 0xeb087d7f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6677.109",      0x004000, 0xbd244bee, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6678.96",       0x004000, 0x2e16b9fd, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6656.120",      0x002000, 0x25e3d685, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6684.62",       0x002000, 0x2c8df377, BRF_GRA },		  	  //  4 Tiles
 	{ "epr-6683.61",       0x002000, 0x89431c48, BRF_GRA },		  	  //  5 Tiles
 	{ "epr-6682.64",       0x002000, 0x256a9246, BRF_GRA },		  	  //  6 Tiles
 	{ "epr-6681.63",       0x002000, 0x6974d189, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-6680.66",       0x002000, 0x10a629d6, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-6674.65",       0x002000, 0x143d883c, BRF_GRA },		  	  //  9 Tiles
-	
+
 	{ "epr-6645.117",      0x004000, 0x1ba167ee, BRF_GRA },		  	  // 10 Sprites
 	{ "epr-6646.04",       0x004000, 0xedda7ad6, BRF_GRA },		  	  // 11 Sprites
 
@@ -2150,16 +2150,16 @@ static struct BurnRomInfo ImsorryjRomDesc[] = {
 	{ "epr-6647.116",      0x004000, 0xcc5d915d, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6648.109",      0x004000, 0x37574d60, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6649.96",       0x004000, 0x5f59bdee, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6656.120",      0x002000, 0x25e3d685, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6655.62",       0x002000, 0xbe1f762f, BRF_GRA },		  	  //  4 Tiles
 	{ "epr-6654.61",       0x002000, 0xed5f7fc8, BRF_GRA },		  	  //  5 Tiles
 	{ "epr-6653.64",       0x002000, 0x8b4845a7, BRF_GRA },		  	  //  6 Tiles
 	{ "epr-6652.63",       0x002000, 0x001d68cb, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-6651.66",       0x002000, 0x4ee9b5e6, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-6650.65",       0x002000, 0x3fca4414, BRF_GRA },		  	  //  9 Tiles
-	
+
 	{ "epr-6645.117",      0x004000, 0x1ba167ee, BRF_GRA },		  	  // 10 Sprites
 	{ "epr-6646.04",       0x004000, 0xedda7ad6, BRF_GRA },		  	  // 11 Sprites
 
@@ -2176,16 +2176,16 @@ static struct BurnRomInfo MrvikingRomDesc[] = {
 	{ "epr-5876.132",      0x002000, 0xe77db1dc, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-5755.133",      0x002000, 0xedd62ae1, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-5756.134",      0x002000, 0x11974040, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-5763.3",        0x002000, 0xd712280d, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-5762.82",       0x002000, 0x4a91d08a, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-5761.65",       0x002000, 0xf7d61b65, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-5760.81",       0x002000, 0x95045820, BRF_GRA },		  	  //  9 Tiles
 	{ "epr-5759.64",       0x002000, 0x5f9bae4e, BRF_GRA },		  	  // 10 Tiles
 	{ "epr-5758.80",       0x002000, 0x808ee706, BRF_GRA },		  	  // 11 Tiles
 	{ "epr-5757.63",       0x002000, 0x480f7074, BRF_GRA },		  	  // 12 Tiles
-	
+
 	{ "epr-5749.86",       0x004000, 0xe24682cd, BRF_GRA },		  	  // 13 Sprites
 	{ "epr-5750.93",       0x004000, 0x6564d1ad, BRF_GRA },		  	  // 14 Sprites
 
@@ -2202,16 +2202,16 @@ static struct BurnRomInfo MrvikingjRomDesc[] = {
 	{ "epr-5754.132",      0x002000, 0x1f47ed02, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-5755.133",      0x002000, 0xedd62ae1, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-5756.134",      0x002000, 0x11974040, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-5763.3",        0x002000, 0xd712280d, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-5762.82",       0x002000, 0x4a91d08a, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-5761.65",       0x002000, 0xf7d61b65, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-5760.81",       0x002000, 0x95045820, BRF_GRA },		  	  //  9 Tiles
 	{ "epr-5759.64",       0x002000, 0x5f9bae4e, BRF_GRA },		  	  // 10 Tiles
 	{ "epr-5758.80",       0x002000, 0x808ee706, BRF_GRA },		  	  // 11 Tiles
 	{ "epr-5757.63",       0x002000, 0x480f7074, BRF_GRA },		  	  // 12 Tiles
-	
+
 	{ "epr-5749.86",       0x004000, 0xe24682cd, BRF_GRA },		  	  // 13 Sprites
 	{ "epr-5750.93",       0x004000, 0x6564d1ad, BRF_GRA },		  	  // 14 Sprites
 
@@ -2225,16 +2225,16 @@ static struct BurnRomInfo MyheroRomDesc[] = {
 	{ "epr6963b.116",      0x004000, 0x4daf89d4, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr6964a.109",      0x004000, 0xc26188e5, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6927.96",       0x004000, 0x3cbbaf64, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-69xx.120",      0x002000, 0x0039e1e9, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6966.62",       0x002000, 0x157f0401, BRF_GRA },		  	  //  4 Tiles
 	{ "epr-6961.61",       0x002000, 0xbe53ce47, BRF_GRA },		  	  //  5 Tiles
 	{ "epr-6960.64",       0x002000, 0xbd381baa, BRF_GRA },		  	  //  6 Tiles
 	{ "epr-6959.63",       0x002000, 0xbc04e79a, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-6958.66",       0x002000, 0x714f2c26, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-6957.65",       0x002000, 0x80920112, BRF_GRA },		  	  //  9 Tiles
-	
+
 	{ "epr-6921.117",      0x004000, 0xf19e05a1, BRF_GRA },		  	  // 10 Sprites
 	{ "epr-6923.04",       0x004000, 0x7988adc3, BRF_GRA },		  	  // 11 Sprites
 	{ "epr-6922.110",      0x004000, 0x37f77a78, BRF_GRA },		  	  // 12 Sprites
@@ -2250,16 +2250,16 @@ static struct BurnRomInfo SscandalRomDesc[] = {
 	{ "epr6925b.116",      0x004000, 0xff54dcec, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr6926a.109",      0x004000, 0x5c41eea8, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6927.96",       0x004000, 0x3cbbaf64, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6934.120",      0x002000, 0xaf467223, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6933.62",       0x002000, 0xe7304036, BRF_GRA },		  	  //  4 Tiles
 	{ "epr-6932.61",       0x002000, 0xf5cfbfda, BRF_GRA },		  	  //  5 Tiles
 	{ "epr-6931.64",       0x002000, 0x599d7f87, BRF_GRA },		  	  //  6 Tiles
 	{ "epr-6930.63",       0x002000, 0xcb6616c2, BRF_GRA },		  	  //  7 Tiles
 	{ "epr-6929.66",       0x002000, 0x27a16856, BRF_GRA },		  	  //  8 Tiles
 	{ "epr-6928.65",       0x002000, 0xc0c9cfa4, BRF_GRA },		  	  //  9 Tiles
-	
+
 	{ "epr-6921.117",      0x004000, 0xf19e05a1, BRF_GRA },		  	  // 10 Sprites
 	{ "epr-6923.04",       0x004000, 0x7988adc3, BRF_GRA },		  	  // 11 Sprites
 	{ "epr-6922.110",      0x004000, 0x37f77a78, BRF_GRA },		  	  // 12 Sprites
@@ -2275,13 +2275,13 @@ static struct BurnRomInfo MyherokRomDesc[] = {
 	{ "ry-11.rom",         0x004000, 0x6f4c8ee5, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "ry-09.rom",         0x004000, 0x369302a1, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "ry-07.rom",         0x004000, 0xb8e9922e, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6934.120",      0x002000, 0xaf467223, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "ry-04.rom",         0x004000, 0xdfb75143, BRF_GRA },		  	  //  4 Tiles
 	{ "ry-03.rom",         0x004000, 0xcf68b4a2, BRF_GRA },		  	  //  5 Tiles
 	{ "ry-02.rom",         0x004000, 0xd100eaef, BRF_GRA },		  	  //  6 Tiles
-	
+
 	{ "epr-6921.117",      0x004000, 0xf19e05a1, BRF_GRA },		  	  //  7 Sprites
 	{ "epr-6923.04",       0x004000, 0x7988adc3, BRF_GRA },		  	  //  8 Sprites
 	{ "epr-6922.110",      0x004000, 0x37f77a78, BRF_GRA },		  	  //  9 Sprites
@@ -2297,20 +2297,20 @@ static struct BurnRomInfo MyheroblRomDesc[] = {
 	{ "1.f2",         	   0x004000, 0xc1d354dc, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "2.g2",         	   0x004000, 0x688c9ede, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "3.h2",              0x004000, 0x3cbbaf64, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "6.e10",      	   0x002000, 0xaf467223, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "b13.r10",           0x004000, 0x9a4861b1, BRF_GRA },		  	  //  4 Tiles
 	{ "b11.r7",            0x004000, 0x0d6f248a, BRF_GRA },		  	  //  5 Tiles
 	{ "x.r8",              0x004000, 0x24537709, BRF_GRA },		  	  //  6 Tiles
-	
+
 	{ "4.f4",      		   0x004000, 0xf19e05a1, BRF_GRA },		  	  //  7 Sprites
 	{ "x.h4",              0x004000, 0x7988adc3, BRF_GRA },		  	  //  8 Sprites
 	{ "x.g4",      		   0x004000, 0x37f77a78, BRF_GRA },		  	  //  9 Sprites
 	{ "b7.k4",       	   0x004000, 0x42bdc8f6, BRF_GRA },		  	  // 10 Sprites
 
 	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 11 Timing PROM
-	
+
 	{ "prom.a2",           0x000200, 0x4fcaf000, BRF_OPT },       	  // 12 Timing PROMBL
 };
 
@@ -2321,13 +2321,13 @@ static struct BurnRomInfo NobRomDesc[] = {
 	{ "dm08.1f",           0x008000, 0x98d602d6, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "dm10.1k",           0x008000, 0xe7c06663, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "dm09.1h",           0x008000, 0xdc4c872f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "dm03.9h",           0x004000, 0x415adf76, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "dm01.12b",          0x008000, 0x446fbcdd, BRF_GRA },		  	  //  4 Tiles
-	{ "dm02.13b",          0x008000, 0xf12df039, BRF_GRA },		  	  //  5 Tiles	
+	{ "dm02.13b",          0x008000, 0xf12df039, BRF_GRA },		  	  //  5 Tiles
 	{ "dm00.10b",          0x008000, 0x35f396df, BRF_GRA },		  	  //  6 Tiles
-	
+
 	{ "dm04.5f",           0x008000, 0x2442b86d, BRF_GRA },		  	  //  7 Sprites
 	{ "dm06.5k",           0x008000, 0xe33743a6, BRF_GRA },		  	  //  8 Sprites
 	{ "dm05.5h",           0x008000, 0x7fbba01d, BRF_GRA },		  	  //  9 Sprites
@@ -2337,7 +2337,7 @@ static struct BurnRomInfo NobRomDesc[] = {
 	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_GRA },		  	  // 12 Green PROM
 	{ "dm-12.ic3",         0x000100, 0xde394cee, BRF_GRA },		  	  // 13 Blue PROM
 	{ "dc-11.6a",          0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
-	
+
 	{ "dm.bin",            0x001000, 0x6fde9dcb, BRF_PRG | BRF_OPT }, // 15 MCU
 };
 
@@ -2348,13 +2348,13 @@ static struct BurnRomInfo NobbRomDesc[] = {
 	{ "nobo-t.bin",        0x008000, 0x176fd168, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "nobo-r.bin",        0x008000, 0xd61cf3c9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "nobo-s.bin",        0x008000, 0xb0e7697f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "nobo-m.bin",        0x004000, 0x415adf76, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "nobo-k.bin",        0x008000, 0x446fbcdd, BRF_GRA },		  	  //  4 Tiles
-	{ "nobo-j.bin",        0x008000, 0xf12df039, BRF_GRA },		  	  //  5 Tiles	
+	{ "nobo-j.bin",        0x008000, 0xf12df039, BRF_GRA },		  	  //  5 Tiles
 	{ "nobo-l.bin",        0x008000, 0x35f396df, BRF_GRA },		  	  //  6 Tiles
-	
+
 	{ "nobo-q.bin",        0x008000, 0x2442b86d, BRF_GRA },		  	  //  7 Sprites
 	{ "nobo-o.bin",        0x008000, 0xe33743a6, BRF_GRA },		  	  //  8 Sprites
 	{ "nobo-p.bin",        0x008000, 0x7fbba01d, BRF_GRA },		  	  //  9 Sprites
@@ -2373,16 +2373,16 @@ static struct BurnRomInfo Pitfall2RomDesc[] = {
 	{ "epr6456a.116",      0x004000, 0xbcc8406b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr6457a.109",      0x004000, 0xa016fd2a, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr6458a.96",       0x004000, 0x5c30b3e8, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6462.120",      0x002000, 0x86bb9185, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr6474a.62",       0x002000, 0x9f1711b9, BRF_GRA },		  	  //  4 Tiles
 	{ "epr6473a.61",       0x002000, 0x8e53b8dd, BRF_GRA },		  	  //  5 Tiles
 	{ "epr6472a.64",       0x002000, 0xe0f34a11, BRF_GRA },		  	  //  6 Tiles
 	{ "epr6471a.63",       0x002000, 0xd5bc805c, BRF_GRA },		  	  //  7 Tiles
 	{ "epr6470a.66",       0x002000, 0x1439729f, BRF_GRA },		  	  //  8 Tiles
 	{ "epr6469a.65",       0x002000, 0xe4ac6921, BRF_GRA },		  	  //  9 Tiles
-	
+
 	{ "epr6454a.117",      0x004000, 0xa5d96780, BRF_GRA },		  	  // 10 Sprites
 	{ "epr-6455.05",       0x004000, 0x32ee64a1, BRF_GRA },		  	  // 11 Sprites
 
@@ -2396,16 +2396,16 @@ static struct BurnRomInfo Pitfall2aRomDesc[] = {
 	{ "epr-6505",          0x004000, 0xb6769739, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6506",          0x004000, 0x1ce6aec4, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr6458a.96",       0x004000, 0x5c30b3e8, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6462.120",      0x002000, 0x86bb9185, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr6474a.62",       0x002000, 0x9f1711b9, BRF_GRA },		  	  //  4 Tiles
 	{ "epr6473a.61",       0x002000, 0x8e53b8dd, BRF_GRA },		  	  //  5 Tiles
 	{ "epr6472a.64",       0x002000, 0xe0f34a11, BRF_GRA },		  	  //  6 Tiles
 	{ "epr6471a.63",       0x002000, 0xd5bc805c, BRF_GRA },		  	  //  7 Tiles
 	{ "epr6470a.66",       0x002000, 0x1439729f, BRF_GRA },		  	  //  8 Tiles
 	{ "epr6469a.65",       0x002000, 0xe4ac6921, BRF_GRA },		  	  //  9 Tiles
-	
+
 	{ "epr6454a.117",      0x004000, 0xa5d96780, BRF_GRA },		  	  // 10 Sprites
 	{ "epr-6455.05",       0x004000, 0x32ee64a1, BRF_GRA },		  	  // 11 Sprites
 
@@ -2419,16 +2419,16 @@ static struct BurnRomInfo Pitfall2uRomDesc[] = {
 	{ "epr-6623.116",      0x004000, 0xbcb47ed6, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr6624a.109",      0x004000, 0x6e8b09c1, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6625.96",       0x004000, 0xdc5484ba, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6462.120",      0x002000, 0x86bb9185, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr6474a.62",       0x002000, 0x9f1711b9, BRF_GRA },		  	  //  4 Tiles
 	{ "epr6473a.61",       0x002000, 0x8e53b8dd, BRF_GRA },		  	  //  5 Tiles
 	{ "epr6472a.64",       0x002000, 0xe0f34a11, BRF_GRA },		  	  //  6 Tiles
 	{ "epr6471a.63",       0x002000, 0xd5bc805c, BRF_GRA },		  	  //  7 Tiles
 	{ "epr6470a.66",       0x002000, 0x1439729f, BRF_GRA },		  	  //  8 Tiles
 	{ "epr6469a.65",       0x002000, 0xe4ac6921, BRF_GRA },		  	  //  9 Tiles
-	
+
 	{ "epr6454a.117",      0x004000, 0xa5d96780, BRF_GRA },		  	  // 10 Sprites
 	{ "epr-6455.05",       0x004000, 0x32ee64a1, BRF_GRA },		  	  // 11 Sprites
 
@@ -2442,16 +2442,16 @@ static struct BurnRomInfo RaflesiaRomDesc[] = {
 	{ "epr-7411.116",      0x004000, 0x88a0c6c6, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-7412.109",      0x004000, 0xd3b8cddf, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-7413.96",       0x004000, 0xb7e688b3, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-7420.120",      0x002000, 0x14387666, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-7419.62",       0x002000, 0xbfd5f34c, BRF_GRA },		  //  4 Tiles
 	{ "epr-7418.61",       0x002000, 0xf8cbc9b6, BRF_GRA },		  //  5 Tiles
 	{ "epr-7417.64",       0x002000, 0xe63501bc, BRF_GRA },		  //  6 Tiles
 	{ "epr-7416.63",       0x002000, 0x093e5693, BRF_GRA },		  //  7 Tiles
 	{ "epr-7415.66",       0x002000, 0x1a8d6bd6, BRF_GRA },		  //  8 Tiles
 	{ "epr-7414.65",       0x002000, 0x5d20f218, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-7407.117",      0x004000, 0xf09fc057, BRF_GRA },		  //  10 Sprites
 	{ "epr-7409.04",       0x004000, 0x819fedb8, BRF_GRA },		  //  11 Sprites
 	{ "epr-7408.110",      0x004000, 0x3189f33c, BRF_GRA },		  //  12 Sprites
@@ -2470,16 +2470,16 @@ static struct BurnRomInfo RegulusRomDesc[] = {
 	{ "epr-5643a.132",     0x002000, 0xb8ac7eb4, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-5644.133",      0x002000, 0xffd05b7d, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-5645a.134",     0x002000, 0x6b4bf77c, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-5652.3",        0x002000, 0x74edcb98, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-5651.82",       0x002000, 0xf07f3e82, BRF_GRA },		  //  7 Tiles
 	{ "epr-5650.65",       0x002000, 0x84c1baa2, BRF_GRA },		  //  8 Tiles
 	{ "epr-5649.81",       0x002000, 0x6774c895, BRF_GRA },		  //  9 Tiles
 	{ "epr-5648.64",       0x002000, 0x0c69e92a, BRF_GRA },		  //  10 Tiles
 	{ "epr-5647.80",       0x002000, 0x9330f7b5, BRF_GRA },		  //  11 Tiles
 	{ "epr-5646.63",       0x002000, 0x4dfacbbc, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-5638.86",       0x004000, 0x617363dd, BRF_GRA },		  //  13 Sprites
 	{ "epr-5639.93",       0x004000, 0xa4ec5131, BRF_GRA },		  //  14 Sprites
 
@@ -2496,16 +2496,16 @@ static struct BurnRomInfo RegulusoRomDesc[] = {
 	{ "epr-5643.132",      0x002000, 0x0d867df0, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-5644.133",      0x002000, 0xffd05b7d, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-5645.134",      0x002000, 0x57a2b4b4, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-5652.3",        0x002000, 0x74edcb98, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-5651.82",       0x002000, 0xf07f3e82, BRF_GRA },		  //  7 Tiles
 	{ "epr-5650.65",       0x002000, 0x84c1baa2, BRF_GRA },		  //  8 Tiles
 	{ "epr-5649.81",       0x002000, 0x6774c895, BRF_GRA },		  //  9 Tiles
 	{ "epr-5648.64",       0x002000, 0x0c69e92a, BRF_GRA },		  //  10 Tiles
 	{ "epr-5647.80",       0x002000, 0x9330f7b5, BRF_GRA },		  //  11 Tiles
 	{ "epr-5646.63",       0x002000, 0x4dfacbbc, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-5638.86",       0x004000, 0x617363dd, BRF_GRA },		  //  13 Sprites
 	{ "epr-5639.93",       0x004000, 0xa4ec5131, BRF_GRA },		  //  14 Sprites
 
@@ -2522,16 +2522,16 @@ static struct BurnRomInfo RegulusuRomDesc[] = {
 	{ "epr-5953.132",      0x002000, 0xa9ad4f44, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-5644.133",      0x002000, 0xffd05b7d, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-5955.134",      0x002000, 0x65ddb2a3, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-5652.3",        0x002000, 0x74edcb98, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-5651.82",       0x002000, 0xf07f3e82, BRF_GRA },		  //  7 Tiles
 	{ "epr-5650.65",       0x002000, 0x84c1baa2, BRF_GRA },		  //  8 Tiles
 	{ "epr-5649.81",       0x002000, 0x6774c895, BRF_GRA },		  //  9 Tiles
 	{ "epr-5648.64",       0x002000, 0x0c69e92a, BRF_GRA },		  //  10 Tiles
 	{ "epr-5647.80",       0x002000, 0x9330f7b5, BRF_GRA },		  //  11 Tiles
 	{ "epr-5646.63",       0x002000, 0x4dfacbbc, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-5638.86",       0x004000, 0x617363dd, BRF_GRA },		  //  13 Sprites
 	{ "epr-5639.93",       0x004000, 0xa4ec5131, BRF_GRA },		  //  14 Sprites
 
@@ -2545,16 +2545,16 @@ static struct BurnRomInfo SeganinjRomDesc[] = {
 	{ "epr-6594a.116",     0x004000, 0xa5d0c9d0, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6595a.109",     0x004000, 0xb9e6775c, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6596a.96",      0x004000, 0xf2eeb0d8, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6559.120",      0x002000, 0x5a1570ee, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6558.62",       0x002000, 0x2af9eaeb, BRF_GRA },		  //  4 Tiles
 	{ "epr-6592.61",       0x002000, 0x7804db86, BRF_GRA },		  //  5 Tiles
 	{ "epr-6556.64",       0x002000, 0x79fd26f7, BRF_GRA },		  //  6 Tiles
 	{ "epr-6590.63",       0x002000, 0xbf858cad, BRF_GRA },		  //  7 Tiles
 	{ "epr-6554.66",       0x002000, 0x5ac9d205, BRF_GRA },		  //  8 Tiles
 	{ "epr-6588.65",       0x002000, 0xdc931dbb, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-6546.117",      0x004000, 0xa4785692, BRF_GRA },		  //  10 Sprites
 	{ "epr-6548.04",       0x004000, 0xbdf278c1, BRF_GRA },		  //  11 Sprites
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  12 Sprites
@@ -2570,16 +2570,16 @@ static struct BurnRomInfo SeganinjuRomDesc[] = {
 	{ "epr-7149.116",      0x004000, 0xcd9fade7, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-7150.109",      0x004000, 0xc36351e2, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-7151.96",       0x004000, 0xf2eeb0d8, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6559.120",      0x002000, 0x5a1570ee, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6558.62",       0x002000, 0x2af9eaeb, BRF_GRA },		  //  4 Tiles
 	{ "epr-6592.61",       0x002000, 0x7804db86, BRF_GRA },		  //  5 Tiles
 	{ "epr-6556.64",       0x002000, 0x79fd26f7, BRF_GRA },		  //  6 Tiles
 	{ "epr-6590.63",       0x002000, 0xbf858cad, BRF_GRA },		  //  7 Tiles
 	{ "epr-6554.66",       0x002000, 0x5ac9d205, BRF_GRA },		  //  8 Tiles
 	{ "epr-6588.65",       0x002000, 0xdc931dbb, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-6546.117",      0x004000, 0xa4785692, BRF_GRA },		  //  10 Sprites
 	{ "epr-6548.04",       0x004000, 0xbdf278c1, BRF_GRA },		  //  11 Sprites
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  12 Sprites
@@ -2595,16 +2595,16 @@ static struct BurnRomInfo SeganinjaRomDesc[] = {
 	{ "epr-6879.116",      0x004000, 0xcae7e51f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6880.109",      0x004000, 0x7af85e01, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6881.96",       0x004000, 0xf2eeb0d8, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6559.120",      0x002000, 0x5a1570ee, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6558.62",       0x002000, 0x2af9eaeb, BRF_GRA },		  //  4 Tiles
 	{ "epr-6592.61",       0x002000, 0x7804db86, BRF_GRA },		  //  5 Tiles
 	{ "epr-6556.64",       0x002000, 0x79fd26f7, BRF_GRA },		  //  6 Tiles
 	{ "epr-6590.63",       0x002000, 0xbf858cad, BRF_GRA },		  //  7 Tiles
 	{ "epr-6554.66",       0x002000, 0x5ac9d205, BRF_GRA },		  //  8 Tiles
 	{ "epr-6588.65",       0x002000, 0xdc931dbb, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-6546.117",      0x004000, 0xa4785692, BRF_GRA },		  //  10 Sprites
 	{ "epr-6548.04",       0x004000, 0xbdf278c1, BRF_GRA },		  //  11 Sprites
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  12 Sprites
@@ -2620,16 +2620,16 @@ static struct BurnRomInfo NinjaRomDesc[] = {
 	{ "epr6594.bin",       0x004000, 0x3ef0e5fc, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr6595.bin",       0x004000, 0xb16f13cd, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6552.96",       0x004000, 0xf2eeb0d8, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6559.120",      0x002000, 0x5a1570ee, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6558.62",       0x002000, 0x2af9eaeb, BRF_GRA },		  //  4 Tiles
 	{ "epr6592.bin",       0x002000, 0x88d0c7a1, BRF_GRA },		  //  5 Tiles
 	{ "epr-6556.64",       0x002000, 0x79fd26f7, BRF_GRA },		  //  6 Tiles
 	{ "epr6590.bin",       0x002000, 0x956e3b61, BRF_GRA },		  //  7 Tiles
 	{ "epr-6554.66",       0x002000, 0x5ac9d205, BRF_GRA },		  //  8 Tiles
 	{ "epr6588.bin",       0x002000, 0x023a14a3, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-6546.117",      0x004000, 0xa4785692, BRF_GRA },		  //  10 Sprites
 	{ "epr-6548.04",       0x004000, 0xbdf278c1, BRF_GRA },		  //  11 Sprites
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  12 Sprites
@@ -2648,16 +2648,16 @@ static struct BurnRomInfo NprincesRomDesc[] = {
 	{ "epr-6615.132",      0x002000, 0x1d0374c8, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-6616.133",      0x002000, 0x73616e03, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-6617.134",      0x002000, 0x20b6f895, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-6559.120",      0x002000, 0x5a1570ee, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-6558.62",       0x002000, 0x2af9eaeb, BRF_GRA },		  //  7 Tiles
 	{ "epr-6557.61",       0x002000, 0x6eb131d0, BRF_GRA },		  //  8 Tiles
 	{ "epr-6556.64",       0x002000, 0x79fd26f7, BRF_GRA },		  //  9 Tiles
 	{ "epr-6555.63",       0x002000, 0x7f669aac, BRF_GRA },		  //  10 Tiles
 	{ "epr-6554.66",       0x002000, 0x5ac9d205, BRF_GRA },		  //  11 Tiles
 	{ "epr-6553.65",       0x002000, 0xeb82a8fe, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-6546.117",      0x004000, 0xa4785692, BRF_GRA },		  //  13 Sprites
 	{ "epr-6548.04",       0x004000, 0xbdf278c1, BRF_GRA },		  //  14 Sprites
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  15 Sprites
@@ -2673,16 +2673,16 @@ static struct BurnRomInfo NprincesoRomDesc[] = {
 	{ "epr-6550.116",      0x004000, 0x5f6d59f1, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6551.109",      0x004000, 0x1af133b2, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6552.96",       0x004000, 0xf2eeb0d8, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6559.120",      0x002000, 0x5a1570ee, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6558.62",       0x002000, 0x2af9eaeb, BRF_GRA },		  //  4 Tiles
 	{ "epr-6557.61",       0x002000, 0x6eb131d0, BRF_GRA },		  //  5 Tiles
 	{ "epr-6556.64",       0x002000, 0x79fd26f7, BRF_GRA },		  //  6 Tiles
 	{ "epr-6555.63",       0x002000, 0x7f669aac, BRF_GRA },		  //  7 Tiles
 	{ "epr-6554.66",       0x002000, 0x5ac9d205, BRF_GRA },		  //  8 Tiles
 	{ "epr-6553.65",       0x002000, 0xeb82a8fe, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-6546.117",      0x004000, 0xa4785692, BRF_GRA },		  //  10 Sprites
 	{ "epr-6548.04",       0x004000, 0xbdf278c1, BRF_GRA },		  //  11 Sprites
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  12 Sprites
@@ -2701,16 +2701,16 @@ static struct BurnRomInfo NprincesuRomDesc[] = {
 	{ "epr-6576.132",      0x002000, 0x27d3bbdb, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-6577.133",      0x002000, 0x73616e03, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-6578.134",      0x002000, 0xab68499f, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-6559.120",      0x002000, 0x5a1570ee, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-6558.62",       0x002000, 0x2af9eaeb, BRF_GRA },		  //  7 Tiles
 	{ "epr-6557.61",       0x002000, 0x6eb131d0, BRF_GRA },		  //  8 Tiles
 	{ "epr-6556.64",       0x002000, 0x79fd26f7, BRF_GRA },		  //  9 Tiles
 	{ "epr-6555.63",       0x002000, 0x7f669aac, BRF_GRA },		  //  10 Tiles
 	{ "epr-6554.66",       0x002000, 0x5ac9d205, BRF_GRA },		  //  11 Tiles
 	{ "epr-6553.65",       0x002000, 0xeb82a8fe, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-6546.117",      0x004000, 0xa4785692, BRF_GRA },		  //  13 Sprites
 	{ "epr-6548.04",       0x004000, 0xbdf278c1, BRF_GRA },		  //  14 Sprites
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  15 Sprites
@@ -2726,16 +2726,16 @@ static struct BurnRomInfo NprincesbRomDesc[] = {
 	{ "nprinces.001",      0x004000, 0xe0de073c, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "nprinces.002",      0x004000, 0x27219c7f, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6552.96",       0x004000, 0xf2eeb0d8, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6559.120",      0x002000, 0x5a1570ee, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6558.62",       0x002000, 0x2af9eaeb, BRF_GRA },		  //  4 Tiles
 	{ "epr-6557.61",       0x002000, 0x6eb131d0, BRF_GRA },		  //  5 Tiles
 	{ "epr-6556.64",       0x002000, 0x79fd26f7, BRF_GRA },		  //  6 Tiles
 	{ "epr-6555.63",       0x002000, 0x7f669aac, BRF_GRA },		  //  7 Tiles
 	{ "epr-6554.66",       0x002000, 0x5ac9d205, BRF_GRA },		  //  8 Tiles
 	{ "epr-6553.65",       0x002000, 0xeb82a8fe, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-6546.117",      0x004000, 0xa4785692, BRF_GRA },		  //  10 Sprites
 	{ "epr-6548.04",       0x004000, 0xbdf278c1, BRF_GRA },		  //  11 Sprites
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  12 Sprites
@@ -2753,16 +2753,16 @@ static struct BurnRomInfo SpatterRomDesc[] = {
 	{ "epr-6392.116",      0x004000, 0x329b4506, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6393.109",      0x004000, 0x3b56e25f, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6394.96",       0x004000, 0x647c1301, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6316.120",      0x002000, 0x1df95511, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6328.62",       0x002000, 0xa2bf2832, BRF_GRA },		  //  4 Tiles
 	{ "epr-6397.61",       0x002000, 0xc60d4471, BRF_GRA },		  //  5 Tiles
 	{ "epr-6326.64",       0x002000, 0x269fbb4c, BRF_GRA },		  //  6 Tiles
 	{ "epr-6396.63",       0x002000, 0xc15ccf3b, BRF_GRA },		  //  7 Tiles
 	{ "epr-6324.66",       0x002000, 0x8ab3b563, BRF_GRA },		  //  8 Tiles
 	{ "epr-6395.65",       0x002000, 0x3f083065, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-6306.04",       0x004000, 0xe871e132, BRF_GRA },		  //  10 Sprites
 	{ "epr-6308.117",      0x004000, 0x99c2d90e, BRF_GRA },		  //  11 Sprites
 	{ "epr-6307.05",       0x004000, 0x0a5ad543, BRF_GRA },		  //  12 Sprites
@@ -2778,16 +2778,16 @@ static struct BurnRomInfo SsanchanRomDesc[] = {
 	{ "epr-6310.116",      0x004000, 0x26b43701, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6311.109",      0x004000, 0xcb2bc620, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6312.96",       0x004000, 0x71b15b47, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6316.120",      0x002000, 0x1df95511, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6328.62",       0x002000, 0xa2bf2832, BRF_GRA },		  //  4 Tiles
 	{ "epr-6327.61",       0x002000, 0x53298109, BRF_GRA },		  //  5 Tiles
 	{ "epr-6326.64",       0x002000, 0x269fbb4c, BRF_GRA },		  //  6 Tiles
 	{ "epr-6325.63",       0x002000, 0xbf038745, BRF_GRA },		  //  7 Tiles
 	{ "epr-6324.66",       0x002000, 0x8ab3b563, BRF_GRA },		  //  8 Tiles
 	{ "epr-6323.65",       0x002000, 0x0394673c, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-6306.04",       0x004000, 0xe871e132, BRF_GRA },		  //  10 Sprites
 	{ "epr-6308.117",      0x004000, 0x99c2d90e, BRF_GRA },		  //  11 Sprites
 	{ "epr-6307.05",       0x004000, 0x0a5ad543, BRF_GRA },		  //  12 Sprites
@@ -2806,16 +2806,16 @@ static struct BurnRomInfo StarjackRomDesc[] = {
 	{ "epr-5323.132",      0x002000, 0x46af0d58, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-5324.133",      0x002000, 0x1e89efe2, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-5325.134",      0x002000, 0xd6e379a1, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-5332.3",        0x002000, 0x7a72ab3d, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-5331.82",       0x002000, 0x251d898f, BRF_GRA },		  //  7 Tiles
 	{ "epr-5330.65",       0x002000, 0xeb048745, BRF_GRA },		  //  8 Tiles
 	{ "epr-5329.81",       0x002000, 0x3e8bcaed, BRF_GRA },		  //  9 Tiles
 	{ "epr-5328.64",       0x002000, 0x9ed7849f, BRF_GRA },		  //  10 Tiles
 	{ "epr-5327.80",       0x002000, 0x79e92cb1, BRF_GRA },		  //  11 Tiles
 	{ "epr-5326.63",       0x002000, 0xba7e2b47, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-5318.86",       0x004000, 0x6f2e1fd3, BRF_GRA },		  //  13 Sprites
 	{ "epr-5319.93",       0x004000, 0xebee4999, BRF_GRA },		  //  14 Sprites
 
@@ -2832,16 +2832,16 @@ static struct BurnRomInfo StarjacksRomDesc[] = {
 	{ "star_jacker_a1_ic32.132",       	0x002000, 0x1c48a3fa, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "star_jacker_a1_ic33.133",       	0x002000, 0x7598bd51, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "star_jacker_a1_ic34.134",       	0x002000, 0xf66fa604, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "star_jacker_a1_ic3.3",          	0x002000, 0x7a72ab3d, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "star_jacker_a1_ic82.82",       	0x002000, 0x251d898f, BRF_GRA },		  //  7 Tiles
 	{ "star_jacker_a1_ic65.65",         0x002000, 0x0ab1893c, BRF_GRA },		  //  8 Tiles
 	{ "epr-5456.81",       				0x002000, 0x3e8bcaed, BRF_GRA },		  //  9 Tiles
 	{ "epr-5455.64",        			0x002000, 0x7f628ae6, BRF_GRA },		  //  10 Tiles
 	{ "epr-5454.80",       				0x002000, 0x79e92cb1, BRF_GRA },		  //  11 Tiles
 	{ "epr-5453.63",        			0x002000, 0x5bcb253e, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "star_jacker_a1_ic86.86",        	0x004000, 0x6f2e1fd3, BRF_GRA },		  //  13 Sprites
 	{ "epr-5446.93",        			0x004000, 0x07987244, BRF_GRA },		  //  14 Sprites
 
@@ -2858,16 +2858,16 @@ static struct BurnRomInfo SwatRomDesc[] = {
 	{ "epr-5810.132",      0x002000, 0xdc2b279d, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-5811.133",      0x002000, 0x093e3ab1, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-5812.134",      0x002000, 0x5bfd692f, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-5819.3",        0x002000, 0xf6afd0fd, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-5818.82",       0x002000, 0xb22033d9, BRF_GRA },		  //  7 Tiles
 	{ "epr-5817.65",       0x002000, 0xfd942797, BRF_GRA },		  //  8 Tiles
 	{ "epr-5816.81",       0x002000, 0x4384376d, BRF_GRA },		  //  9 Tiles
 	{ "epr-5815.64",       0x002000, 0x16ad046c, BRF_GRA },		  //  10 Tiles
 	{ "epr-5814.80",       0x002000, 0xbe721c99, BRF_GRA },		  //  11 Tiles
 	{ "epr-5813.63",       0x002000, 0x0d42c27e, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-5805.86",       0x004000, 0x5a732865, BRF_GRA },		  //  13 Sprites
 	{ "epr-5806.93",       0x004000, 0x26ac258c, BRF_GRA },		  //  14 Sprites
 
@@ -2881,16 +2881,16 @@ static struct BurnRomInfo TeddybbRomDesc[] = {
 	{ "epr-6768.116",      0x004000, 0x5939817e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6769.109",      0x004000, 0x14a98ddd, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6770.96",       0x004000, 0x67b0c7c2, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr6748x.120",      0x002000, 0xc2a1b89d, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6747.62",       0x002000, 0xa0e5aca7, BRF_GRA },		  //  4 Tiles
 	{ "epr-6746.61",       0x002000, 0xcdb77e51, BRF_GRA },		  //  5 Tiles
 	{ "epr-6745.64",       0x002000, 0x0cab75c3, BRF_GRA },		  //  6 Tiles
 	{ "epr-6744.63",       0x002000, 0x0ef8d2cd, BRF_GRA },		  //  7 Tiles
 	{ "epr-6743.66",       0x002000, 0xc33062b5, BRF_GRA },		  //  8 Tiles
 	{ "epr-6742.65",       0x002000, 0xc457e8c5, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-6735.117",      0x004000, 0x1be35a97, BRF_GRA },		  //  10 Sprites
 	{ "epr-6737.04",       0x004000, 0x6b53aa7a, BRF_GRA },		  //  11 Sprites
 	{ "epr-6736.110",      0x004000, 0x565c25d0, BRF_GRA },		  //  12 Sprites
@@ -2906,16 +2906,16 @@ static struct BurnRomInfo TeddybboRomDesc[] = {
 	{ "epr-6739.116",      0x004000, 0x81a37e69, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6740.109",      0x004000, 0x715388a9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6741.96",       0x004000, 0xe5a74f5f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-6748.120",      0x002000, 0x9325a1cf, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-6747.62",       0x002000, 0xa0e5aca7, BRF_GRA },		  //  4 Tiles
 	{ "epr-6746.61",       0x002000, 0xcdb77e51, BRF_GRA },		  //  5 Tiles
 	{ "epr-6745.64",       0x002000, 0x0cab75c3, BRF_GRA },		  //  6 Tiles
 	{ "epr-6744.63",       0x002000, 0x0ef8d2cd, BRF_GRA },		  //  7 Tiles
 	{ "epr-6743.66",       0x002000, 0xc33062b5, BRF_GRA },		  //  8 Tiles
 	{ "epr-6742.65",       0x002000, 0xc457e8c5, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-6735.117",      0x004000, 0x1be35a97, BRF_GRA },		  //  10 Sprites
 	{ "epr-6737.04",       0x004000, 0x6b53aa7a, BRF_GRA },		  //  11 Sprites
 	{ "epr-6736.110",      0x004000, 0x565c25d0, BRF_GRA },		  //  12 Sprites
@@ -2932,27 +2932,27 @@ static struct BurnRomInfo TeddybboblRomDesc[] = {
 	{ "2.j2",	           0x004000, 0x715388a9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "3.k2",        	   0x004000, 0xe5a74f5f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 
-//	No sound rom present on the PCB - Instead use epr-6748.120 from Teddybbo set //	
+//	No sound rom present on the PCB - Instead use epr-6748.120 from Teddybbo set //
 	{ "6.e10",             0x002000, 0x9325a1cf, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "11.r7",       	   0x004000, 0x55d7aaf7, BRF_GRA },		  //  4 Tiles
 	{ "10.r8",       	   0x004000, 0x52a5083d, BRF_GRA },		  //  5 Tiles
 	{ "9.r10",       	   0x004000, 0x8076d3a3, BRF_GRA },		  //  6 Tiles
-		
+
 	{ "4.f3",	           0x004000, 0x1be35a97, BRF_GRA },		  //  7 Sprites
 	{ "6.k3",        	   0x004000, 0x6b53aa7a, BRF_GRA },		  //  8 Sprites
 	{ "5.h3",	           0x004000, 0x565c25d0, BRF_GRA },		  //  9 Sprites
 	{ "7.m3",        	   0x004000, 0xe116285f, BRF_GRA },		  //  10 Sprites
 
 	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
-	
+
 	{ "74s287.bin",        0x000100, 0xde9af32c, BRF_OPT },		  //  15
 };
 
 STD_ROM_PICK(Teddybbobl)
 STD_ROM_FN(Teddybbobl)
 
-static struct BurnRomInfo tokisensRomDesc[] = {	
+static struct BurnRomInfo tokisensRomDesc[] = {
 	{ "epr-10961.ic90",      0x8000, 0x5c71c203, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
 	{ "epr-10962.ic91",      0x8000, 0xdb9080e3, BRF_ESS | BRF_PRG }, //  1
 	{ "epr-10963.ic92",      0x8000, 0xd17ad93f, BRF_ESS | BRF_PRG }, //  2
@@ -2973,10 +2973,10 @@ static struct BurnRomInfo tokisensRomDesc[] = {
 	{ "pr10954.ic8",         0x0100, 0xb7984867, BRF_GRA }, // 13
 
 	{ "pr-5317.ic28",        0x0100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
-	
+
 	{ "317-0040.key",        0x2000, 0xe2b67fd6, BRF_ESS | BRF_PRG }, // 15 MC8123 Key
 };
- 
+
 STD_ROM_PICK(tokisens)
 STD_ROM_FN(tokisens)
 
@@ -3002,7 +3002,7 @@ static struct BurnRomInfo tokisensaRomDesc[] = {
 
 	{ "pr-5317.ic28",        0x0100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
 };
- 
+
 STD_ROM_PICK(tokisensa)
 STD_ROM_FN(tokisensa)
 
@@ -3041,16 +3041,16 @@ static struct BurnRomInfo UpndownRomDesc[] = {
 	{ "epr-5519.132",      0x002000, 0x9d664a58, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-5520.133",      0x002000, 0x208dfbdf, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-5521.134",      0x002000, 0xe7b8d87a, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-5535.3",        0x002000, 0xcf4e4c45, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-5527.82",       0x002000, 0xb2d616f1, BRF_GRA },		  //  7 Tiles
 	{ "epr-5526.65",       0x002000, 0x8a8b33c2, BRF_GRA },		  //  8 Tiles
 	{ "epr-5525.81",       0x002000, 0xe749c5ef, BRF_GRA },		  //  9 Tiles
 	{ "epr-5524.64",       0x002000, 0x8b886952, BRF_GRA },		  //  10 Tiles
 	{ "epr-5523.80",       0x002000, 0xdede35d9, BRF_GRA },		  //  11 Tiles
 	{ "epr-5522.63",       0x002000, 0x5e6d9dff, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-5514.86",       0x004000, 0xfcc0a88b, BRF_GRA },		  //  13 Sprites
 	{ "epr-5515.93",       0x004000, 0x60908838, BRF_GRA },		  //  14 Sprites
 
@@ -3067,16 +3067,16 @@ static struct BurnRomInfo UpndownuRomDesc[] = {
 	{ "epr-5682.132",      0x002000, 0x4a5edc1e, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-5520.133",      0x002000, 0x208dfbdf, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-5684.133",      0x002000, 0x32fa95da, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-5528.3",        0x002000, 0x00cd44ab, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-5527.82",       0x002000, 0xb2d616f1, BRF_GRA },		  //  7 Tiles
 	{ "epr-5526.65",       0x002000, 0x8a8b33c2, BRF_GRA },		  //  8 Tiles
 	{ "epr-5525.81",       0x002000, 0xe749c5ef, BRF_GRA },		  //  9 Tiles
 	{ "epr-5524.64",       0x002000, 0x8b886952, BRF_GRA },		  //  10 Tiles
 	{ "epr-5523.80",       0x002000, 0xdede35d9, BRF_GRA },		  //  11 Tiles
 	{ "epr-5522.63",       0x002000, 0x5e6d9dff, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-5514.86",       0x004000, 0xfcc0a88b, BRF_GRA },		  //  13 Sprites
 	{ "epr-5515.93",       0x004000, 0x60908838, BRF_GRA },		  //  14 Sprites
 
@@ -3090,16 +3090,16 @@ static struct BurnRomInfo WboyRomDesc[] = {
 	{ "epr-7489.116",      0x004000, 0x130f4b70, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-7490.109",      0x004000, 0x9e656733, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-7491.96",       0x004000, 0x1f7d0efe, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-7498.120",      0x002000, 0x78ae1e7b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },		  //  4 Tiles
 	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },		  //  5 Tiles
 	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },		  //  6 Tiles
 	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },		  //  7 Tiles
 	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },		  //  8 Tiles
 	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-7485.117",      0x004000, 0xc2891722, BRF_GRA },		  //  10 Sprites
 	{ "epr-7487.04",       0x004000, 0x2d3a421b, BRF_GRA },		  //  11 Sprites
 	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  12 Sprites
@@ -3114,17 +3114,17 @@ STD_ROM_FN(Wboy)
 static struct BurnRomInfo WboyoRomDesc[] = {
 	{ "epr-7532.116",      0x004000, 0x51d27534, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-7533.109",      0x004000, 0xe29d1cd1, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	{ "epr-7534.96",       0x004000, 0x1f7d0efe, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code 
-	
+	{ "epr-7534.96",       0x004000, 0x1f7d0efe, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+
 	{ "epr-7498.120",      0x002000, 0x78ae1e7b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },		  //  4 Tiles
 	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },		  //  5 Tiles
 	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },		  //  6 Tiles
 	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },		  //  7 Tiles
 	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },		  //  8 Tiles
 	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-7485.117",      0x004000, 0xc2891722, BRF_GRA },		  //  10 Sprites
 	{ "epr-7487.04",       0x004000, 0x2d3a421b, BRF_GRA },		  //  11 Sprites
 	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  12 Sprites
@@ -3143,16 +3143,16 @@ static struct BurnRomInfo Wboy2RomDesc[] = {
 	{ "epr-7590.132",      0x002000, 0xbb525a0b, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-7591.133",      0x002000, 0x8379aa23, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-7592.134",      0x002000, 0xc767a5d7, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr-7498.120",      0x002000, 0x78ae1e7b, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },		  //  7 Tiles
 	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },		  //  8 Tiles
 	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },		  //  9 Tiles
 	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },		  //  10 Tiles
 	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },		  //  11 Tiles
 	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-7485.117",      0x004000, 0xc2891722, BRF_GRA },		  //  13 Sprites
 	{ "epr-7487.04",       0x004000, 0x2d3a421b, BRF_GRA },		  //  14 Sprites
 	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  15 Sprites
@@ -3171,16 +3171,16 @@ static struct BurnRomInfo Wboy2uRomDesc[] = {
 	{ "ic132_05.bin",      0x002000, 0x7b922708, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-7591.133",      0x002000, 0x8379aa23, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-7592.134",      0x002000, 0xc767a5d7, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr7498a.3",        0x002000, 0xc198205c, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },		  //  7 Tiles
 	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },		  //  8 Tiles
 	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },		  //  9 Tiles
 	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },		  //  10 Tiles
 	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },		  //  11 Tiles
 	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-7485.117",      0x004000, 0xc2891722, BRF_GRA },		  //  13 Sprites
 	{ "epr-7487.04",       0x004000, 0x2d3a421b, BRF_GRA },		  //  14 Sprites
 	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  15 Sprites
@@ -3196,16 +3196,16 @@ static struct BurnRomInfo Wboy3RomDesc[] = {
 	{ "wb_1",              0x004000, 0xbd6fef49, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "wb_2",              0x004000, 0x4081b624, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "wb_3",              0x004000, 0xc48a0e36, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-7498.120",      0x002000, 0x78ae1e7b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },		  //  4 Tiles
 	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },		  //  5 Tiles
 	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },		  //  6 Tiles
 	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },		  //  7 Tiles
 	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },		  //  8 Tiles
 	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-7485.117",      0x004000, 0xc2891722, BRF_GRA },		  //  10 Sprites
 	{ "epr-7487.04",       0x004000, 0x2d3a421b, BRF_GRA },		  //  11 Sprites
 	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  12 Sprites
@@ -3220,13 +3220,13 @@ STD_ROM_FN(Wboy3)
 static struct BurnRomInfo Wboy4RomDesc[] = {
 	{ "epr7622.ic1",       0x008000, 0x48b2c006, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr7621.ic2",       0x008000, 0x466cae31, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	
+
 	{ "7583.126",          0x008000, 0x99334b3c, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
-	
+
 	{ "epr7610.ic62",      0x004000, 0x1685d26a, BRF_GRA },		  //  3 Tiles
 	{ "epr7609.ic64",      0x004000, 0x87ecba53, BRF_GRA },		  //  4 Tiles
 	{ "epr7608.ic66",      0x004000, 0xe812b3ec, BRF_GRA },		  //  5 Tiles
-	
+
 	{ "7578.87",           0x008000, 0x6ff1637f, BRF_GRA },		  //  6 Sprites
 	{ "7577.86",           0x008000, 0x58b3705e, BRF_GRA },		  //  7 Sprites
 
@@ -3240,16 +3240,16 @@ static struct BurnRomInfo Wboy5RomDesc[] = {
 	{ "wb1.ic116",         0x004000, 0x6c67407c, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "wb_2",              0x004000, 0x4081b624, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "wb_3",              0x004000, 0xc48a0e36, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-7498.120",      0x002000, 0x78ae1e7b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },		  //  4 Tiles
 	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },		  //  5 Tiles
 	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },		  //  6 Tiles
 	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },		  //  7 Tiles
 	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },		  //  8 Tiles
 	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "epr-7485.117",      0x004000, 0xc2891722, BRF_GRA },		  //  10 Sprites
 	{ "epr-7487.04",       0x004000, 0x2d3a421b, BRF_GRA },		  //  11 Sprites
 	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  12 Sprites
@@ -3265,16 +3265,16 @@ static struct BurnRomInfo WboyuRomDesc[] = {
 	{ "ic116_89.bin",      0x004000, 0x73d8cef0, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "ic109_90.bin",      0x004000, 0x29546828, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "ic096_91.bin",      0x004000, 0xc7145c2a, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-7498.120",      0x002000, 0x78ae1e7b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },		  //  4 Tiles
 	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },		  //  5 Tiles
 	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },		  //  6 Tiles
 	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },		  //  7 Tiles
 	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },		  //  8 Tiles
 	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },		  //  9 Tiles
-	
+
 	{ "ic117_85.bin",      0x004000, 0x1ee96ae8, BRF_GRA },		  //  10 Sprites
 	{ "ic004_87.bin",      0x004000, 0x119735bb, BRF_GRA },		  //  11 Sprites
 	{ "ic110_86.bin",      0x004000, 0x26d0fac4, BRF_GRA },		  //  12 Sprites
@@ -3293,16 +3293,16 @@ static struct BurnRomInfo WbdeluxeRomDesc[] = {
 	{ "ic132_05.bin",      0x002000, 0x7b922708, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "wbd5.bin",          0x002000, 0xf6b02902, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "wbd6.bin",          0x002000, 0x43df21fe, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "epr7498a.3",        0x002000, 0xc198205c, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },		  //  7 Tiles
 	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },		  //  8 Tiles
 	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },		  //  9 Tiles
 	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },		  //  10 Tiles
 	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },		  //  11 Tiles
 	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "epr-7485.117",      0x004000, 0xc2891722, BRF_GRA },		  //  13 Sprites
 	{ "epr-7487.04",       0x004000, 0x2d3a421b, BRF_GRA },		  //  14 Sprites
 	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  15 Sprites
@@ -3321,16 +3321,16 @@ static struct BurnRomInfo WmatchRomDesc[] = {
 	{ "wm.132",            0x002000, 0xe2e44b29, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "wm.133",            0x002000, 0x43a36445, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "wm.134",            0x002000, 0x5624794c, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
-	
+
 	{ "wm.3",              0x002000, 0x50d2afb7, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
-	
+
 	{ "wm.82",             0x002000, 0x540f0bf3, BRF_GRA },		  //  7 Tiles
 	{ "wm.65",             0x002000, 0x92c1e39e, BRF_GRA },		  //  8 Tiles
 	{ "wm.81",             0x002000, 0x6a01ff2a, BRF_GRA },		  //  9 Tiles
 	{ "wm.64",             0x002000, 0xaae6449b, BRF_GRA },		  //  10 Tiles
 	{ "wm.80",             0x002000, 0xfc3f0bd4, BRF_GRA },		  //  11 Tiles
 	{ "wm.63",             0x002000, 0xc2ce9b93, BRF_GRA },		  //  12 Tiles
-	
+
 	{ "wm.86",             0x004000, 0x238ae0e5, BRF_GRA },		  //  13 Sprites
 	{ "wm.93",             0x004000, 0xa2f19170, BRF_GRA },		  //  14 Sprites
 
@@ -3344,9 +3344,9 @@ static struct BurnRomInfo ChopliftRomDesc[] = {
 	{ "epr-7124.ic90",       0x008000, 0x678d5c41, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-7125.ic91",       0x008000, 0xf5283498, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-7126.ic92",       0x008000, 0xdbd192ab, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-7130.ic126",      0x008000, 0x346af118, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-7127.ic4",        0x008000, 0x1e708f6d, BRF_GRA },		  //  4 Tiles
 	{ "epr-7128.ic5",        0x008000, 0xb922e787, BRF_GRA },		  //  5 Tiles
 	{ "epr-7129.ic6",        0x008000, 0xbd3b6e6e, BRF_GRA },		  //  6 Tiles
@@ -3359,7 +3359,7 @@ static struct BurnRomInfo ChopliftRomDesc[] = {
 	{ "pr7119.ic20",         0x000100, 0xb2a8260f, BRF_GRA },		  //  8 Red PROM
 	{ "pr7118.ic14",         0x000100, 0x693e20c7, BRF_GRA },		  //  9 Green PROM
 	{ "pr7117.ic8",          0x000100, 0x4124307e, BRF_GRA },		  //  10 Blue PROM
-	
+
 	{ "315-5151.ic74",       0x001000, 0x7bd11a6c, BRF_OPT },
 	{ "pr5317.ic28",         0x000100, 0x648350b8, BRF_OPT },
 	{ "315-5152.bin",        0x000104, 0x2c9229b4, BRF_OPT },
@@ -3379,7 +3379,7 @@ static struct BurnRomInfo ChopliftuRomDesc[] = {
 	{ "epr-7154.ic92",       0x008000, 0x56d6222a, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 
     { "epr-7130.ic126",      0x008000, 0x346af118, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-7127.ic4",        0x008000, 0x1e708f6d, BRF_GRA },		  //  4 Tiles
 	{ "epr-7128.ic5",        0x008000, 0xb922e787, BRF_GRA },		  //  5 Tiles
 	{ "epr-7129.ic6",        0x008000, 0xbd3b6e6e, BRF_GRA },		  //  6 Tiles
@@ -3392,7 +3392,7 @@ static struct BurnRomInfo ChopliftuRomDesc[] = {
 	{ "pr7119.ic20",         0x000100, 0xb2a8260f, BRF_OPT },		  //  8 Red PROM
 	{ "pr7118.ic14",         0x000100, 0x693e20c7, BRF_OPT },		  //  9 Green PROM
 	{ "pr7117.ic8",          0x000100, 0x4124307e, BRF_OPT },		  //  10 Blue PROM
-	
+
 	{ "pr5317.ic28",         0x000100, 0x648350b8, BRF_OPT },
 	{ "315-5152.bin",        0x000104, 0x2c9229b4, BRF_OPT },
 	{ "315-5138.bin",        0x000104, 0xdd223015, BRF_OPT },
@@ -3409,9 +3409,9 @@ static struct BurnRomInfo ChopliftblRomDesc[] = {
 	{ "ep7124bl.90",         0x008000, 0x71a37932, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-7125.91",         0x008000, 0xf5283498, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-7126.92",         0x008000, 0xdbd192ab, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	
+
 	{ "epr-7130.126",        0x008000, 0x346af118, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
-	
+
 	{ "epr-7127.4",          0x008000, 0x1e708f6d, BRF_GRA },		  //  4 Tiles
 	{ "epr-7128.5",          0x008000, 0xb922e787, BRF_GRA },		  //  5 Tiles
 	{ "epr-7129.6",          0x008000, 0xbd3b6e6e, BRF_GRA },		  //  6 Tiles
@@ -3424,7 +3424,7 @@ static struct BurnRomInfo ChopliftblRomDesc[] = {
 	{ "pr7119.20",           0x000100, 0xb2a8260f, BRF_OPT },		  //  8 Red PROM
 	{ "pr7118.14",           0x000100, 0x693e20c7, BRF_OPT },		  //  9 Green PROM
 	{ "pr7117.8",            0x000100, 0x4124307e, BRF_OPT },		  //  10 Blue PROM
-	
+
 	{ "pr5317.28",           0x000100, 0x648350b8, BRF_OPT },
 	{ "pal16r4.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
 	{ "pal16r4.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP  },
@@ -3596,7 +3596,7 @@ static void sega_decode(const UINT8 convtable[32][4])
 	INT32 cryptlen = 0x8000;
 	UINT8 *rom = System1Rom1;
 	UINT8 *decrypted = System1Fetch1;
-	
+
 	for (A = 0x0000;A < cryptlen;A++)
 	{
 		INT32 xorval = 0;
@@ -4085,7 +4085,7 @@ static void sega_decode_2(UINT8 *pDest, UINT8 *pDestDec, const UINT8 opcode_xor[
 		tbl = swaptable[data_swap_select[row]];
 		rom[A] = BITSWAP08(src,7,tbl[0],5,tbl[1],3,tbl[2],1,tbl[3]) ^ data_xor[row];
 	}
-	
+
 	memcpy(pDestDec + 0x8000, pDest + 0x8000, 0x4000);
 }
 
@@ -4389,7 +4389,7 @@ static INT32 MemIndex()
 	System1f4Ram           = Next; Next += 0x000400;
 	System1fcRam           = Next; Next += 0x000400;
 	SpriteOnScreenMap      = Next; Next += (256 * 256);
-	
+
 	RamEnd = Next;
 
 	System1Sprites         = Next; Next += System1SpriteRomSize;
@@ -4438,7 +4438,7 @@ static INT32 System1DoReset()
 	NoboranbInp23Step = 0;
 	BlockgalDial1 = 0;
 	BlockgalDial2 = 0;
-	
+
 	return 0;
 }
 
@@ -4493,44 +4493,44 @@ static inline void __fastcall System1SoundLatchWrite(UINT8 d)
 static UINT8 __fastcall System1Z801PortRead(UINT16 a)
 {
 	a &= 0xff;
-	
+
 	switch (a) {
 		case 0x00: {
 			return 0xff - System1Input[0];
 		}
-	
+
 		case 0x04: {
 			return 0xff - System1Input[1];
 		}
-		
+
 		case 0x08: {
 			return 0xff - System1Input[2];
 		}
-		
+
 		case 0x0c: {
 			return System1Dip[0];
 		}
-		
+
 		case 0x0d: {
 			return System1Dip[1];
 		}
-	
+
 		case 0x10: {
 			return System1Dip[1];
 		}
-		
+
 		case 0x11: {
 			return System1Dip[0];
 		}
-		
+
 		case 0x15: {
 			return System1VideoMode;
 		}
-	
+
 		case 0x19: {
 			return System1VideoMode;
 		}
-	}	
+	}
 
 	//bprintf(PRINT_NORMAL, _T("IO Read %x\n"), a);
 	return 0;
@@ -4539,44 +4539,44 @@ static UINT8 __fastcall System1Z801PortRead(UINT16 a)
 static UINT8 __fastcall BlockgalZ801PortRead(UINT16 a)
 {
 	a &= 0xff;
-	
+
 	switch (a) {
 		case 0x00: {
 			return BlockgalDial1;
 		}
-	
+
 		case 0x04: {
 			return BlockgalDial2;
 		}
-		
+
 		case 0x08: {
 			return 0xff - System1Input[2];
 		}
-		
+
 		case 0x0c: {
 			return System1Dip[0];
 		}
-		
+
 		case 0x0d: {
 			return System1Dip[1];
 		}
-	
+
 		case 0x10: {
 			return System1Dip[1];
 		}
-		
+
 		case 0x11: {
 			return System1Dip[0];
 		}
-		
+
 		case 0x15: {
 			return System1VideoMode;
 		}
-	
+
 		case 0x19: {
 			return System1VideoMode;
 		}
-	}	
+	}
 
 	//bprintf(PRINT_NORMAL, _T("IO Read %x\n"), a);
 	return 0;
@@ -4585,48 +4585,48 @@ static UINT8 __fastcall BlockgalZ801PortRead(UINT16 a)
 static UINT8 __fastcall NoboranbZ801PortRead(UINT16 a)
 {
 	a &= 0xff;
-	
+
 	switch (a) {
 		case 0x00: {
 			return 0xff - System1Input[0];
 		}
-		
+
 		case 0x04: {
 			return 0xff - System1Input[1];
 		}
-		
+
 		case 0x08: {
 			return 0xff - System1Input[2];
 		}
-		
+
 		case 0x0c: {
 			return System1Dip[0];
 		}
-		
+
 		case 0x0d: {
 			return System1Dip[1];
 		}
-		
+
 		case 0x15: {
 			return System1VideoMode;
 		}
-	
+
 		case 0x16: {
 			return NoboranbInp16Step;
 		}
-		
+
 		case 0x1c: {
 			return 0x80;
 		}
-		
+
 		case 0x22: {
 			return NoboranbInp17Step;
 		}
-		
+
 		case 0x23: {
 			return NoboranbInp23Step;
 		}
-	}	
+	}
 
 	//bprintf(PRINT_NORMAL, _T("IO Read %x\n"), a);
 	return 0;
@@ -4649,7 +4649,7 @@ static void __fastcall System1Z801PortWrite(UINT16 a, UINT8 d)
 	}
 
 	a &= 0xff;
-	
+
 	switch (a) {
 		case 0x14:
 		case 0x18:
@@ -4664,7 +4664,7 @@ static void __fastcall System1Z801PortWrite(UINT16 a, UINT8 d)
 		}
 		case 0x1c: return; // NOP
 	}
-	
+
 	//bprintf(PRINT_NORMAL, _T("IO Write %x, %x\n"), a, d);
 }
 
@@ -4699,7 +4699,7 @@ static UINT8 __fastcall ChplftZ801PortRead(UINT16 a)
 static void __fastcall BrainZ801PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
-	
+
 	switch (a) {
 		case 0x14:
 		case 0x18:
@@ -4710,20 +4710,20 @@ static void __fastcall BrainZ801PortWrite(UINT16 a, UINT8 d)
 		case 0x19: {
 			System1VideoMode = d;
 			System1FlipScreen = d & 0x80;
-			
+
 			System1RomBank = ((d & 0x04) >> 2) + ((d & 0x40) >> 5);
 			System1BankRom();
 			return;
 		}
 	}
-	
+
 	//bprintf(PRINT_NORMAL, _T("IO Write %x, %x\n"), a, d);
 }
 
 static void __fastcall NoboranbZ801PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
-	
+
 	switch (a) {
 		case 0x14:
 		case 0x18:
@@ -4738,23 +4738,23 @@ static void __fastcall NoboranbZ801PortWrite(UINT16 a, UINT8 d)
 			System1BankRom();
 			return;
 		}
-		
+
 		case 0x16: {
 			NoboranbInp16Step = d;
 			return;
 		}
-		
+
 		case 0x17: {
 			NoboranbInp17Step = d;
 			return;
 		}
-		
+
 		case 0x24: {
 			NoboranbInp23Step = d;
 			return;
 		}
 	}
-	
+
 	//bprintf(PRINT_NORMAL, _T("IO Write %x, %x\n"), a, d);
 }
 
@@ -4762,29 +4762,29 @@ static void __fastcall System1Z801ProgWrite(UINT16 a, UINT8 d)
 {
 	if (a >= 0xf000 && a <= 0xf3ff) { System1BgCollisionRam[a - 0xf000] = 0x7e; return; }
 	if (a >= 0xf800 && a <= 0xfbff) { System1SprCollisionRam[a - 0xf800] = 0x7e; return; }
-	
+
 	switch (a) {
 		case 0xefbd: {
 			System1ScrollY = d;
 			break;
 		}
-		
+
 		case 0xeffc: {
 			System1ScrollX[0] = d;
 			break;
 		}
-		
+
 		case 0xeffd: {
 			System1ScrollX[1] = d;
 			break;
 		}
 	}
-	
+
 	if (a >= 0xef00 && a <= 0xefff) {
 		System1efRam[a - 0xef00] = d;
 		return;
 	}
-	
+
 //	//bprintf(PRINT_NORMAL, _T("Prog Write %x, %x\n"), a, d);
 }
 
@@ -4792,29 +4792,29 @@ static void __fastcall NoboranbZ801ProgWrite(UINT16 a, UINT8 d)
 {
 	if (a >= 0xc000 && a <= 0xc3ff) { System1BgCollisionRam[a - 0xc000] = 0x7e; return; }
 	if (a >= 0xc800 && a <= 0xcbff) { System1SprCollisionRam[a - 0xc800] = 0x7e; return; }
-	
+
 	switch (a) {
 		case 0xefbd: {
 			System1ScrollY = d;
 			break;
 		}
-		
+
 		case 0xeffc: {
 			System1ScrollX[0] = d;
 			break;
 		}
-		
+
 		case 0xeffd: {
 			System1ScrollX[1] = d;
 			break;
 		}
 	}
-	
+
 	if (a >= 0xef00 && a <= 0xefff) {
 		System1efRam[a - 0xef00] = d;
 		return;
 	}
-	
+
 //	//bprintf(PRINT_NORMAL, _T("Prog Write %x, %x\n"), a, d);
 }
 
@@ -4825,12 +4825,12 @@ static UINT8 __fastcall System1Z802ProgRead(UINT16 a)
 		case 0xe000: {
 			return System1SoundLatch;
 		}
-		
+
 		case 0xffff: {
 			return System1SoundLatch;
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("Z80 2 Prog Read %x\n"), a);
 	return 0;
 }
@@ -4845,7 +4845,7 @@ static void __fastcall System1Z802ProgWrite(UINT16 a, UINT8 d)
 			SN76496Write(0, d);
 			return;
 		}
-		
+
 		case 0xc000:
 		case 0xc001:
 		case 0xc002:
@@ -4854,7 +4854,7 @@ static void __fastcall System1Z802ProgWrite(UINT16 a, UINT8 d)
 			return;
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("Z80 2 Prog Write %x, %x\n"), a, d);
 }
 
@@ -4883,7 +4883,7 @@ static void System2PPI0WriteC(UINT8 data)
 static UINT8 __fastcall System2Z801PortRead(UINT16 a)
 {
 	a &= 0x1f;
-	switch (a) 
+	switch (a)
 	{
 		case 0x00: return 0xff - System1Input[0];
 		case 0x04: return 0xff - System1Input[1];
@@ -4906,7 +4906,7 @@ static UINT8 __fastcall System2Z801PortRead(UINT16 a)
 static void __fastcall System2Z801PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0x1f;
-	switch (a) 
+	switch (a)
 	{
 		case 0x14:
 		case 0x15:
@@ -4934,8 +4934,8 @@ static void __fastcall System2Z801ProgWrite(UINT16 a, UINT8 d)
 
 static UINT8 __fastcall System2Z801ProgRead(UINT16 a)
 {
-	if (a >= 0xe000 && a <= 0xefff) 
-	{ 
+	if (a >= 0xe000 && a <= 0xefff)
+	{
 		return System1VideoRam[(0x1000*System1BgBank) + (a & 0xfff)];
 	}
 	return 0;
@@ -4950,7 +4950,7 @@ static void CalcPenUsage()
 	INT32 i, x, y;
 	UINT32 Usage;
 	UINT8 *dp = NULL;
-	
+
 	for (i = 0; i < System1NumTiles; i++) {
 		dp = System1Tiles + (i * 64);
 		Usage = 0;
@@ -4958,10 +4958,10 @@ static void CalcPenUsage()
 			for (x = 0; x < 8; x++) {
 				Usage |= 1 << dp[x];
 			}
-			
+
 			dp += 8;
 		}
-		
+
 		System1TilesPenUsage[i] = Usage;
 	}
 }
@@ -4973,10 +4973,10 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 {
 	INT32 TilePlaneOffsets[3]  = { RGN_FRAC((nTileRomSize * nTileRomNum), 0, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 1, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 2, 3) };
 	INT32 nRet = 0, nLen, i, RomOffset;
-	
+
 	System1NumTiles = (((nTileRomNum * nTileRomSize) / 3) * 8) / (8 * 8);
 	System1SpriteRomSize = nSpriteRomNum * nSpriteRomSize;
-	
+
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
@@ -4986,13 +4986,13 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	MemIndex();
 
 	System1TempRom = (UINT8*)BurnMalloc(0x18000);
-		
+
 	// Load Z80 #1 Program roms
 	RomOffset = 0;
 	for (i = 0; i < nZ80Rom1Num; i++) {
 		nRet = BurnLoadRom(System1Rom1 + (i * nZ80Rom1Size), i + RomOffset, 1); if (nRet != 0) return 1;
 	}
-	
+
 	if (System1BankedRom) {
 		memcpy(System1TempRom, System1Rom1, 0x18000);
 		memset(System1Rom1, 0, 0x18000);
@@ -5001,15 +5001,15 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 		memcpy(System1Rom1 + 0x08000, System1TempRom + 0x08000, 0x8000);
 		memcpy(System1Rom1 + 0x18000, System1TempRom + 0x10000, 0x8000);
 	}
-	
+
 	if (DecodeFunction) DecodeFunction();
-	
+
 	// Load Z80 #2 Program roms
 	RomOffset += nZ80Rom1Num;
 	for (i = 0; i < nZ80Rom2Num; i++) {
 		nRet = BurnLoadRom(System1Rom2 + (i * nZ80Rom2Size), i + RomOffset, 1); if (nRet != 0) return 1;
 	}
-	
+
 	// Load and decode tiles
 	memset(System1TempRom, 0, 0x18000);
 	RomOffset += nZ80Rom2Num;
@@ -5022,13 +5022,13 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 
 	CalcPenUsage();
 	BurnFree(System1TempRom);
-	
+
 	// Load Sprite roms
 	RomOffset += nTileRomNum;
 	for (i = 0; i < nSpriteRomNum; i++) {
 		nRet = BurnLoadRom(System1Sprites + (i * nSpriteRomSize), i + RomOffset, 1);
 	}
-	
+
 	// Load Colour proms
 	if (System1ColourProms) {
 		RomOffset += nSpriteRomNum;
@@ -5036,7 +5036,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 		nRet = BurnLoadRom(System1PromGreen, 1 + RomOffset, 1);
 		nRet = BurnLoadRom(System1PromBlue, 2 + RomOffset, 1);
 	}
-	
+
 	// Setup the Z80 emulation
 	ZetInit(0);
 	ZetOpen(0);
@@ -5102,11 +5102,11 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 		ppi8255_init(1);
 		ppi8255_set_write_ports(0, System2PPI0WriteA, NULL, System2PPI0WriteC);
 	}
-	
+
 	memset(SpriteOnScreenMap, 255, 256 * 256);
-	
+
 	System1SpriteXOffset = 1;
-	
+
 	nCyclesTotal[0] = 4000000 / 60;
 	nCyclesTotal[1] = 4000000 / 60;
 
@@ -5114,15 +5114,15 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	SN76489AInit(1, 4000000, 1);
 	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
-	
+
 	GenericTilesInit();
-	
+
 	MakeInputsFunction = System1MakeInputs;
 	System1Draw = System1Render;
-	
+
 	// Reset the driver
 	if (bReset) System1DoReset();
-	
+
 	return 0;
 }
 
@@ -5134,7 +5134,7 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 
 	System1NumTiles = (((nTileRomNum * nTileRomSize) / 3) * 8) / (8 * 8);
 	System1SpriteRomSize = nSpriteRomNum * nSpriteRomSize;
-	
+
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
@@ -5269,11 +5269,11 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	ZetMapArea(0x8800, 0x8fff, 1, System1Ram2);
 	ZetMapArea(0x8800, 0x8fff, 2, System1Ram2);
 	ZetClose();
-	
+
 	memset(SpriteOnScreenMap, 255, 256 * 256);
-	
+
 	System1SpriteXOffset = 1;
-	
+
 	nCyclesTotal[0] = 4000000 / 60;
 	nCyclesTotal[1] = 4000000 / 60;
 
@@ -5283,7 +5283,7 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
-	
+
 	MakeInputsFunction = System1MakeInputs;
 
 	System1BgRam = NULL;
@@ -5299,7 +5299,7 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 
 	System1Draw = System2Render;
 	memset(System1VideoRam, 0x00, 0x4000); // mapped through bank_latch
-	
+
 	// Reset the driver
 	if (bReset) System1DoReset();
 
@@ -5311,26 +5311,28 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 static INT32 FourdwarrioInit()
 {
 	DecodeFunction = fdwarrio_decode;
-	
+
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
 static INT32 BlockgalInit()
 {
 	INT32 nRet;
-	
+
 	System1MC8123Key = (UINT8*)BurnMalloc(0x2000);
 	BurnLoadRom(System1MC8123Key, 14, 1);
 
 	DecodeFunction = blockgal_decode;
-	
+
 	nRet = System1Init(2, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 	BurnFree(System1MC8123Key);
-	
-	ZetOpen(0);
-	ZetSetInHandler(BlockgalZ801PortRead);
-	ZetClose();
-	MakeInputsFunction = BlockgalMakeInputs;
+
+	if (nRet == 0) {
+		ZetOpen(0);
+		ZetSetInHandler(BlockgalZ801PortRead);
+		ZetClose();
+		MakeInputsFunction = BlockgalMakeInputs;
+	}
 
 	return nRet;
 }
@@ -5338,53 +5340,55 @@ static INT32 BlockgalInit()
 static INT32 BrainInit()
 {
 	INT32 nRet;
-	
+
 	System1ColourProms = 1;
 	System1BankedRom = 1;
-	
+
 	nRet = System1Init(3, 0x8000, 1, 0x8000, 3, 0x4000, 3, 0x8000, 0);
-	
-	ZetOpen(0);
-	ZetSetOutHandler(BrainZ801PortWrite);
-	ZetClose();
-	
-	System1DoReset();
-	
+
+	if (nRet == 0) {
+		ZetOpen(0);
+		ZetSetOutHandler(BrainZ801PortWrite);
+		ZetClose();
+
+		System1DoReset();
+	}
+
 	return nRet;
 }
 
 static INT32 BullfgtInit()
 {
 	DecodeFunction = bullfgtj_decode;
-	
+
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
 static INT32 ThetogyuInit()
 {
 	DecodeFunction = bullfgtj_decode;
-	
+
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
 static INT32 FlickyInit()
 {
 	DecodeFunction = flicky_decode;
-	
+
 	return System1Init(2, 0x4000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
 static INT32 FlickygInit()
 {
 	DecodeFunction = flicky_decode;
-	
+
 	return System1Init(2, 0x4000, 1, 0x2000, 3, 0x4000, 2, 0x4000, 1);
 }
 
 static INT32 Flicks1Init()
 {
 	DecodeFunction = flicky_decode;
-	
+
 	return System1Init(4, 0x2000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
@@ -5401,94 +5405,102 @@ static INT32 Flicks2gInit()
 static INT32 GardiaInit()
 {
 	INT32 nRet;
-	
+
 	System1ColourProms = 1;
 	System1BankedRom = 1;
-	
+
 	DecodeFunction = gardia_decode;
-	
+
 	nRet = System1Init(3, 0x8000, 1, 0x4000, 3, 0x4000, 4, 0x8000, 0);
-	
-	ZetOpen(0);
-	ZetSetOutHandler(BrainZ801PortWrite);
-	ZetClose();
-		
-	System1DoReset();
-	
+
+	if (nRet == 0) {
+		ZetOpen(0);
+		ZetSetOutHandler(BrainZ801PortWrite);
+		ZetClose();
+
+		System1DoReset();
+	}
+
 	return nRet;
 }
 
 static INT32 GardiabInit()
 {
 	INT32 nRet;
-	
+
 	System1ColourProms = 1;
 	System1BankedRom = 1;
-	
+
 	DecodeFunction = gardiab_decode;
-	
+
 	nRet = System1Init(3, 0x8000, 1, 0x4000, 3, 0x4000, 4, 0x8000, 0);
-	
-	ZetOpen(0);
-	ZetSetOutHandler(BrainZ801PortWrite);
-	ZetClose();
-		
-	System1DoReset();
-	
+
+	if (nRet == 0) {
+		ZetOpen(0);
+		ZetSetOutHandler(BrainZ801PortWrite);
+		ZetClose();
+
+		System1DoReset();
+	}
+
 	return nRet;
 }
 
 static INT32 GardiajInit()
 {
 	INT32 nRet;
-	
+
 	System1ColourProms = 1;
 	System1BankedRom = 1;
-	
+
 	DecodeFunction = gardia_decode;
-	
+
 	nRet = System1Init(3, 0x8000, 1, 0x4000, 3, 0x8000, 4, 0x8000, 0);
-	
-	ZetOpen(0);
-	ZetSetOutHandler(BrainZ801PortWrite);
-	ZetClose();
-		
-	System1DoReset();
-	
+
+	if (nRet == 0) {
+		ZetOpen(0);
+		ZetSetOutHandler(BrainZ801PortWrite);
+		ZetClose();
+
+		System1DoReset();
+	}
+
 	return nRet;
 }
 
 static INT32 HvymetalInit()
 {
 	INT32 nRet;
-	
+
 	System1ColourProms = 1;
 	System1BankedRom = 1;
-	
+
 	DecodeFunction = hvymetal_decode;
-	
+
 	nRet = System1Init(3, 0x8000, 1, 0x8000, 6, 0x4000, 4, 0x8000, 0);
-	
-	ZetOpen(0);
-	ZetSetOutHandler(BrainZ801PortWrite);
-	ZetClose();
-		
-	System1DoReset();
-	
+
+	if (nRet == 0) {
+		ZetOpen(0);
+		ZetSetOutHandler(BrainZ801PortWrite);
+		ZetClose();
+
+		System1DoReset();
+	}
+
 	return nRet;
 }
 
 static INT32 ImsorryInit()
 {
 	DecodeFunction = imsorry_decode;
-	
+
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
 static INT32 MrvikingInit()
 {
 	DecodeFunction = mrviking_decode;
-	
+
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
@@ -5500,14 +5512,14 @@ static INT32 MyheroInit()
 static INT32 SscandalInit()
 {
 	DecodeFunction = myheroj_decode;
-	
+
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
 static INT32 MyheroblInit()
 {
 	DecodeFunction = myheroj_decode;
-			
+
 	return System1Init(3, 0x4000, 1, 0x2000, 3, 0x4000, 4, 0x4000, 1);
 }
 
@@ -5515,92 +5527,95 @@ static INT32 MyherokInit()
 {
 	DecodeFunction = myherok_decode;
 	TileDecodeFunction = myherok_tile_decode;
-	
+
 	return System1Init(3, 0x4000, 1, 0x2000, 3, 0x4000, 4, 0x4000, 1);
 }
 
 static INT32 NobbInit()
 {
 	INT32 nRet;
-	
+
 	System1ColourProms = 1;
 	System1BankedRom = 1;
-	
+
 	nRet = System1Init(3, 0x8000, 1, 0x4000, 3, 0x8000, 4, 0x8000, 0);
-	nCyclesTotal[0] = 8000000 / 60;
-	System1Rom2[0x02f9] = 0x28;
-	
-	ZetOpen(0);
-	ZetSetWriteHandler(NoboranbZ801ProgWrite);
-	ZetSetInHandler(NoboranbZ801PortRead);
-	ZetSetOutHandler(NoboranbZ801PortWrite);
-	ZetMemCallback(0xc000, 0xffff, 0);
-	ZetMemCallback(0xc000, 0xffff, 1);
-	ZetMemCallback(0xc000, 0xffff, 2);
-	ZetMapArea(0xc000, 0xc3ff, 0, System1BgCollisionRam);
-	ZetMapArea(0xc000, 0xc3ff, 2, System1BgCollisionRam);
-	ZetMapArea(0xc400, 0xc7ff, 0, System1f4Ram);
-	ZetMapArea(0xc400, 0xc7ff, 1, System1f4Ram);
-	ZetMapArea(0xc400, 0xc7ff, 2, System1f4Ram);
-	ZetMapArea(0xc800, 0xcbff, 0, System1SprCollisionRam);
-	ZetMapArea(0xc800, 0xcbff, 2, System1SprCollisionRam);
-	ZetMapArea(0xcc00, 0xcfff, 0, System1fcRam);
-	ZetMapArea(0xcc00, 0xcfff, 1, System1fcRam);
-	ZetMapArea(0xcc00, 0xcfff, 2, System1fcRam);	
-	ZetMapArea(0xd000, 0xd1ff, 0, System1SpriteRam);
-	ZetMapArea(0xd000, 0xd1ff, 1, System1SpriteRam);
-	ZetMapArea(0xd000, 0xd1ff, 2, System1SpriteRam);
-	ZetMapArea(0xd200, 0xd7ff, 0, System1Ram1 + 0x1000);
-	ZetMapArea(0xd200, 0xd7ff, 1, System1Ram1 + 0x1000);
-	ZetMapArea(0xd200, 0xd7ff, 2, System1Ram1 + 0x1000);
-	ZetMapArea(0xd800, 0xddff, 0, System1PaletteRam);
-	ZetMapArea(0xd800, 0xddff, 1, System1PaletteRam);
-	ZetMapArea(0xd800, 0xddff, 2, System1PaletteRam);
-	ZetMapArea(0xde00, 0xdfff, 0, System1deRam);
-	ZetMapArea(0xde00, 0xdfff, 1, System1deRam);
-	ZetMapArea(0xde00, 0xdfff, 2, System1deRam);
-	ZetMapArea(0xe000, 0xe7ff, 0, System1BgRam);
-	ZetMapArea(0xe000, 0xe7ff, 1, System1BgRam);
-	ZetMapArea(0xe000, 0xe7ff, 2, System1BgRam);
-	ZetMapArea(0xe800, 0xeeff, 0, System1VideoRam);
-	ZetMapArea(0xe800, 0xeeff, 1, System1VideoRam);
-	ZetMapArea(0xe800, 0xeeff, 2, System1VideoRam);
-	ZetMapArea(0xef00, 0xefff, 0, System1efRam);
-	ZetMapArea(0xef00, 0xefff, 2, System1efRam);
-	ZetMapArea(0xf000, 0xffff, 0, System1Ram1);
-	ZetMapArea(0xf000, 0xffff, 1, System1Ram1);
-	ZetMapArea(0xf000, 0xffff, 2, System1Ram1);	
-	ZetClose();
-	
-	System1DoReset();
-	
+
+	if (nRet == 0) {
+		nCyclesTotal[0] = 8000000 / 60;
+		System1Rom2[0x02f9] = 0x28;
+
+		ZetOpen(0);
+		ZetSetWriteHandler(NoboranbZ801ProgWrite);
+		ZetSetInHandler(NoboranbZ801PortRead);
+		ZetSetOutHandler(NoboranbZ801PortWrite);
+		ZetMemCallback(0xc000, 0xffff, 0);
+		ZetMemCallback(0xc000, 0xffff, 1);
+		ZetMemCallback(0xc000, 0xffff, 2);
+		ZetMapArea(0xc000, 0xc3ff, 0, System1BgCollisionRam);
+		ZetMapArea(0xc000, 0xc3ff, 2, System1BgCollisionRam);
+		ZetMapArea(0xc400, 0xc7ff, 0, System1f4Ram);
+		ZetMapArea(0xc400, 0xc7ff, 1, System1f4Ram);
+		ZetMapArea(0xc400, 0xc7ff, 2, System1f4Ram);
+		ZetMapArea(0xc800, 0xcbff, 0, System1SprCollisionRam);
+		ZetMapArea(0xc800, 0xcbff, 2, System1SprCollisionRam);
+		ZetMapArea(0xcc00, 0xcfff, 0, System1fcRam);
+		ZetMapArea(0xcc00, 0xcfff, 1, System1fcRam);
+		ZetMapArea(0xcc00, 0xcfff, 2, System1fcRam);
+		ZetMapArea(0xd000, 0xd1ff, 0, System1SpriteRam);
+		ZetMapArea(0xd000, 0xd1ff, 1, System1SpriteRam);
+		ZetMapArea(0xd000, 0xd1ff, 2, System1SpriteRam);
+		ZetMapArea(0xd200, 0xd7ff, 0, System1Ram1 + 0x1000);
+		ZetMapArea(0xd200, 0xd7ff, 1, System1Ram1 + 0x1000);
+		ZetMapArea(0xd200, 0xd7ff, 2, System1Ram1 + 0x1000);
+		ZetMapArea(0xd800, 0xddff, 0, System1PaletteRam);
+		ZetMapArea(0xd800, 0xddff, 1, System1PaletteRam);
+		ZetMapArea(0xd800, 0xddff, 2, System1PaletteRam);
+		ZetMapArea(0xde00, 0xdfff, 0, System1deRam);
+		ZetMapArea(0xde00, 0xdfff, 1, System1deRam);
+		ZetMapArea(0xde00, 0xdfff, 2, System1deRam);
+		ZetMapArea(0xe000, 0xe7ff, 0, System1BgRam);
+		ZetMapArea(0xe000, 0xe7ff, 1, System1BgRam);
+		ZetMapArea(0xe000, 0xe7ff, 2, System1BgRam);
+		ZetMapArea(0xe800, 0xeeff, 0, System1VideoRam);
+		ZetMapArea(0xe800, 0xeeff, 1, System1VideoRam);
+		ZetMapArea(0xe800, 0xeeff, 2, System1VideoRam);
+		ZetMapArea(0xef00, 0xefff, 0, System1efRam);
+		ZetMapArea(0xef00, 0xefff, 2, System1efRam);
+		ZetMapArea(0xf000, 0xffff, 0, System1Ram1);
+		ZetMapArea(0xf000, 0xffff, 1, System1Ram1);
+		ZetMapArea(0xf000, 0xffff, 2, System1Ram1);
+		ZetClose();
+
+		System1DoReset();
+	}
+
 	return nRet;
 }
 
 static INT32 Pitfall2Init()
 {
 	INT32 nRet;
-	
+
 	DecodeFunction = pitfall2_decode;
-	
+
 	nRet = System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
-	
+
 	return nRet;
 }
 
 static INT32 PitfalluInit()
 {
 	INT32 nRet;
-	
+
 	nRet = System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
-	
+
 	return nRet;
 }
 
 static INT32 RaflesiaInit()
 {
 	DecodeFunction = fdwarrio_decode;
-	
+
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
@@ -5634,7 +5649,7 @@ static INT32 SeganinuInit()
 static INT32 NprincesInit()
 {
 	DecodeFunction = flicky_decode;
-	
+
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
@@ -5672,7 +5687,7 @@ static INT32 StarjackInit()
 static INT32 SwatInit()
 {
 	DecodeFunction = swat_decode;
-	
+
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
@@ -5693,7 +5708,7 @@ static INT32 TeddybboblInit()
 static INT32 UpndownInit()
 {
 	DecodeFunction = nprinces_decode;
-	
+
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
@@ -5705,21 +5720,21 @@ static INT32 UpndownuInit()
 static INT32 WboyInit()
 {
 	DecodeFunction = astrofl_decode;
-	
+
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
 static INT32 WboyoInit()
 {
 	DecodeFunction = hvymetal_decode;
-	
+
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
 static INT32 Wboy2Init()
 {
 	DecodeFunction = wboy2_decode;
-	
+
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
@@ -5731,7 +5746,7 @@ static INT32 Wboy2uInit()
 static INT32 Wboy4Init()
 {
 	DecodeFunction = fdwarrio_decode;
-	
+
 	return System1Init(2, 0x8000, 1, 0x8000, 3, 0x4000, 2, 0x8000, 1);
 }
 
@@ -5743,7 +5758,7 @@ static INT32 WboyuInit()
 static INT32 WmatchInit()
 {
 	DecodeFunction = wmatch_decode;
-	
+
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
@@ -5753,24 +5768,27 @@ static INT32 ChplftbInit()
 	System1ColourProms = 1;
 	System1BankedRom = 1;
 	nRet = System1Init(3, 0x8000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
-	System1RowScroll = 1;
-	ZetOpen(0);
 
-	ZetMapArea(0xe7c0, 0xe7ff, 0, System1ScrollXRam);
-	ZetMapArea(0xe7c0, 0xe7ff, 1, System1ScrollXRam);
-	ZetMapArea(0xe7c0, 0xe7ff, 2, System1ScrollXRam);
+	if (nRet == 0) {
+		System1RowScroll = 1;
+		ZetOpen(0);
 
-	ZetMapArea(0xe000, 0xe7ff, 0, System1VideoRam); //read
-	ZetMapArea(0xe000, 0xe7ff, 1, System1VideoRam);	//write
-	ZetMapArea(0xe000, 0xe7ff, 2, System1VideoRam); //fetch
+		ZetMapArea(0xe7c0, 0xe7ff, 0, System1ScrollXRam);
+		ZetMapArea(0xe7c0, 0xe7ff, 1, System1ScrollXRam);
+		ZetMapArea(0xe7c0, 0xe7ff, 2, System1ScrollXRam);
 
-	ZetMapArea(0xe800, 0xeeff, 0, System1BgRam);
-	ZetMapArea(0xe800, 0xeeff, 1, System1BgRam);
-	ZetMapArea(0xe800, 0xeeff, 2, System1BgRam);
+		ZetMapArea(0xe000, 0xe7ff, 0, System1VideoRam); //read
+		ZetMapArea(0xe000, 0xe7ff, 1, System1VideoRam);	//write
+		ZetMapArea(0xe000, 0xe7ff, 2, System1VideoRam); //fetch
 
-	ZetSetInHandler(ChplftZ801PortRead);
-	ZetSetOutHandler(ChplftZ801PortWrite);
-	ZetClose();
+		ZetMapArea(0xe800, 0xeeff, 0, System1BgRam);
+		ZetMapArea(0xe800, 0xeeff, 1, System1BgRam);
+		ZetMapArea(0xe800, 0xeeff, 2, System1BgRam);
+
+		ZetSetInHandler(ChplftZ801PortRead);
+		ZetSetOutHandler(ChplftZ801PortWrite);
+		ZetClose();
+	}
 
 	return nRet;
 }
@@ -5816,10 +5834,10 @@ static INT32 TokisensInit()
 
 	System1ColourProms = 1;
 	System1BankedRom = 1;
-	
+
 	System1MC8123Key = (UINT8*)BurnMalloc(0x2000);
 	BurnLoadRom(System1MC8123Key, 15, 1);
-	
+
 	DecodeFunction = tokisens_decode;
 
 	nRet = System2Init(3, 0x8000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
@@ -5857,16 +5875,16 @@ static INT32 UfosensiInit()
 static INT32 System1Exit()
 {
 	ZetExit();
-	
+
 	SN76496Exit();
 
 	if (IsSystem2 || Sys1UsePPI)
 		ppi8255_exit();
 
 	GenericTilesExit();
-	
+
 	BurnFree(Mem);
-	
+
 	System1SoundLatch = 0;
 	System1ScrollX[0] = System1ScrollX[1] = System1ScrollY = 0;
 	System1BgScrollX = 0;
@@ -5879,7 +5897,7 @@ static INT32 System1Exit()
 	NoboranbInp23Step = 0;
 	BlockgalDial1 = 0;
 	BlockgalDial2 = 0;
-	
+
 	System1SpriteRomSize = 0;
 	System1NumTiles = 0;
 	System1SpriteXOffset = 0;
@@ -5907,30 +5925,30 @@ Graphics Rendering
 static void DrawPixel(INT32 x, INT32 y, INT32 SpriteNum, INT32 Colour)
 {
 	INT32 xr, yr, SpriteOnScreen, dx, dy;
-	
+
 	dx = x;
 	dy = y;
 	if (nScreenWidth == 240) dx -= 8;
-	
+
 	if (x < 0 || x > 255  || y < 0 || y > 255) return;
-	
+
 	if (SpriteOnScreenMap[(y * 256) + x] != 255) {
 		SpriteOnScreen = SpriteOnScreenMap[(y * 256) + x];
 		System1SprCollisionRam[SpriteOnScreen + (32 * SpriteNum)] = 0xff;
 	}
-	
+
 	SpriteOnScreenMap[(y * 256) + x] = SpriteNum;
-	
+
 	if (dx >= 0 && dx < nScreenWidth && dy >= 0 && dy < nScreenHeight) {
 		UINT16 *pPixel = pTransDraw + (dy * nScreenWidth);
 		pPixel[dx] = Colour;
 	}
-	
+
 	xr = ((x - System1BgScrollX) & 0xff) / 8;
 	yr = ((y - System1BgScrollY) & 0xff) / 8;
-	
+
 	if(System1Draw != System2Render)
-		if (System1BgRam[2 * (32 * yr + xr) + 1] & 0x10) 
+		if (System1BgRam[2 * (32 * yr + xr) + 1] & 0x10)
 		{
 			System1BgCollisionRam[0x20 + SpriteNum] = 0xff;
 		}
@@ -5942,32 +5960,32 @@ static void DrawSprite(INT32 Num)
 	INT16 Skip;
 	UINT8 *SpriteBase;
 	UINT32 *SpritePalette;
-	
+
 	SpriteBase = System1SpriteRam + (0x10 * Num);
 	Src = (SpriteBase[7] << 8) | SpriteBase[6];
 	Bank = 0x8000 * (((SpriteBase[3] & 0x80) >> 7) + ((SpriteBase[3] & 0x40) >> 5));
 	Bank &= (System1SpriteRomSize - 1);
 	Skip = (SpriteBase[5] << 8) | SpriteBase[4];
-	
+
 	Height = SpriteBase[1] - SpriteBase[0];
 	SpritePalette = System1Palette + (0x10 * Num);
-	
+
 	sy = SpriteBase[0] + 1;
-	
+
 	for (Row = 0; Row < Height; Row++) {
 		INT32 x, y, Src2;
-		
+
 		Src = Src2 = Src + Skip;
 		x = ((SpriteBase[3] & 0x01) << 8) + SpriteBase[2] + System1SpriteXOffset;
 		y = sy + Row;
-		
+
 		x /= 2;
-		
+
 		while(1) {
 			INT32 Colour1, Colour2, Data;
-			
+
 			Data = System1Sprites[Bank + (Src2 & 0x7fff)];
-			
+
 			if (Src & 0x8000) {
 				Src2--;
 				Colour1 = Data & 0x0f;
@@ -5977,11 +5995,11 @@ static void DrawSprite(INT32 Num)
 				Colour1 = Data >> 4;
 				Colour2 = Data & 0x0f;
 			}
-			
+
 			if (Colour1 == 0x0f) break;
 			if (Colour1) DrawPixel(x, y, Num, Colour1 + (0x10 * Num));
 			x++;
-			
+
 			if (Colour2 == 0x0f) break;
 			if (Colour2) DrawPixel(x, y, Num, Colour2 + (0x10 * Num));
 			x++;
@@ -5997,7 +6015,7 @@ static void System1DrawSprites()
 	if (System1SpriteRam[0] == 0xff) return; // 0xff in first byte of spriteram is all-sprite-disable mode
 
 	memset(SpriteOnScreenMap, 255, 256 * 256);
-	
+
 	for (i = 0; i < 32; i++) {
 		SpriteBase = System1SpriteRam + (0x10 * i);
 		SpriteTopY = SpriteBase[0];
@@ -6011,7 +6029,7 @@ static void System1DrawSprites()
 static void System1DrawBgLayer(INT32 PriorityDraw)
 {
 	INT32 Offs, sx, sy;
-	
+
 	System1BgScrollX = ((System1ScrollX[0] >> 1) + ((System1ScrollX[1] & 1) << 7) + 14) & 0xff;
 	System1BgScrollY = (-System1ScrollY & 0xff);
 
@@ -6022,19 +6040,19 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 			Code = (System1BgRam[Offs + 1] << 8) | System1BgRam[Offs + 0];
 			Code = ((Code >> 4) & 0x800) | (Code & 0x7ff);
 			Colour = ((Code >> 5) & 0x3f);
-			
+
 			sx = (Offs >> 1) % 32;
 			sy = (Offs >> 1) / 32;
-			
+
 			if (System1RowScroll)
 				System1BgScrollX = (System1ScrollXRam[(Offs/32) & ~1] >> 1) + ((System1ScrollXRam[(Offs/32) | 1] & 1) << 7) ;
 			sx = 8 * sx + System1BgScrollX;
 			sy = 8 * sy + System1BgScrollY;
-			
+
 			if (nScreenWidth == 240) sx -= 8;
-			
+
 			Code &= (System1NumTiles - 1);
-			
+
 			Render8x8Tile_Clip(pTransDraw, Code, sx      , sy      , Colour, 3, 512 * 2, System1Tiles);
 			Render8x8Tile_Clip(pTransDraw, Code, sx - 256, sy      , Colour, 3, 512 * 2, System1Tiles);
 			Render8x8Tile_Clip(pTransDraw, Code, sx      , sy - 256, Colour, 3, 512 * 2, System1Tiles);
@@ -6042,20 +6060,20 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 		}
 	} else {
 		PriorityDraw <<= 3;
-		
+
 		for (Offs = 0; Offs < 0x800; Offs += 2) {
 			if ((System1BgRam[Offs + 1] & 0x08) == PriorityDraw) {
 				INT32 Code, Colour;
-			
+
 				Code = (System1BgRam[Offs + 1] << 8) | System1BgRam[Offs + 0];
 				Code = ((Code >> 4) & 0x800) | (Code & 0x7ff);
 				Colour = ((Code >> 5) & 0x3f);
-								
+
 				INT32 ColourOffs = 0x40;
 				if (Colour >= 0x10 && Colour <= 0x1f) ColourOffs += 0x10;
 				if (Colour >= 0x20 && Colour <= 0x2f) ColourOffs += 0x20;
 				if (Colour >= 0x30 && Colour <= 0x3f) ColourOffs += 0x30;
-		
+
 				sx = (Offs >> 1) % 32;
 				sy = (Offs >> 1) / 32;
 
@@ -6064,11 +6082,11 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 
 				sx = 8 * sx + System1BgScrollX;
 				sy = 8 * sy + System1BgScrollY;
-				
+
 				if (nScreenWidth == 240) sx -= 8;
-				
+
 				Code &= (System1NumTiles - 1);
-				
+
 				Render8x8Tile_Mask_Clip(pTransDraw, Code, sx      , sy      , Colour, 3, 0, 512 * 2, System1Tiles);
 				Render8x8Tile_Mask_Clip(pTransDraw, Code, sx - 256, sy      , Colour, 3, 0, 512 * 2, System1Tiles);
 				Render8x8Tile_Mask_Clip(pTransDraw, Code, sx      , sy - 256, Colour, 3, 0, 512 * 2, System1Tiles);
@@ -6081,28 +6099,28 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 static void System1DrawFgLayer(INT32 PriorityDraw)
 {
 	INT32 Offs, sx, sy;
-	
+
 	PriorityDraw <<= 3;
-	
+
 	for (Offs = 0; Offs < 0x700; Offs += 2) {
 		INT32 Code, Colour;
-		
+
 		if ((System1VideoRam[Offs + 1] & 0x08) == PriorityDraw) {
 			Code = (System1VideoRam[Offs + 1] << 8) | System1VideoRam[Offs + 0];
 			Code = ((Code >> 4) & 0x800) | (Code & 0x7ff);
 			Colour = (Code >> 5) & 0x3f;
-		
+
 			sx = (Offs >> 1) % 32;
 			sy = (Offs >> 1) / 32;
-			
+
 			sx *= 8;
 			sy *= 8;
-			
+
 			if (nScreenWidth == 240) sx -= 8;
-		
+
 			Code %= System1NumTiles;
 			Code &= (System1NumTiles - 1);
-			
+
 			if (System1TilesPenUsage[Code] & ~1) {
 				Render8x8Tile_Mask_Clip(pTransDraw, Code, sx, sy, Colour, 3, 0, 512, System1Tiles);
 			}
@@ -6140,28 +6158,28 @@ static INT32 System1CalcPalette()
 		INT32 i;
 		for (i = 0; i < 0x800; i++) {
 			INT32 bit0, bit1, bit2, bit3, r, g, b, val;
-		
+
 			val = System1PromRed[System1PaletteRam[i]];
 			bit0 = (val >> 0) & 0x01;
 			bit1 = (val >> 1) & 0x01;
 			bit2 = (val >> 2) & 0x01;
 			bit3 = (val >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-		
+
 			val = System1PromGreen[System1PaletteRam[i]];
 			bit0 = (val >> 0) & 0x01;
 			bit1 = (val >> 1) & 0x01;
 			bit2 = (val >> 2) & 0x01;
 			bit3 = (val >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-		
+
 			val = System1PromBlue[System1PaletteRam[i]];
 			bit0 = (val >> 0) & 0x01;
 			bit1 = (val >> 1) & 0x01;
 			bit2 = (val >> 2) & 0x01;
 			bit3 = (val >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-	
+
 			System1Palette[i] = BurnHighCol(r, g, b, 0);
 		}
 	} else {
@@ -6287,19 +6305,19 @@ INT32 System1Frame()
 {
 	INT32 nInterleave = 10;
 	INT32 nSoundBufferPos = 0;
-		
+
 	if (System1Reset)
-	{	
+	{
 		System1DoReset();
 	}
 
 	MakeInputsFunction();
-	
+
 	nCyclesDone[0] = nCyclesDone[1] = 0;
-	
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
-		
+
 		// Run Z80 #1
 		nCurrentCPU = 0;
 		ZetOpen(nCurrentCPU);
@@ -6309,7 +6327,7 @@ INT32 System1Frame()
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if (i == 9) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
-		
+
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
@@ -6318,7 +6336,7 @@ INT32 System1Frame()
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if (i == 2 || i == 4 || i == 6 || i == 8) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
-		
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -6327,7 +6345,7 @@ INT32 System1Frame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
-	
+
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -6338,9 +6356,9 @@ INT32 System1Frame()
 			SN76496Update(1, pSoundBuf, nSegmentLength);
 		}
 	}
-	
+
 	if (pBurnDraw) System1Draw();
-	
+
 	return 0;
 }
 
@@ -6416,7 +6434,7 @@ struct BurnDriver BurnDrvBlockgal = {
 	"blockgal", NULL, NULL, NULL, "1987",
 	"Block Gal (MC-8123B, 317-0029)\0", NULL, "Sega / Vic Tokai", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM1, GBF_BREAKOUT, 0,
 	NULL, BlockgalRomInfo, BlockgalRomName, NULL, NULL, BlockgalInputInfo, BlockgalDIPInfo,
 	BlockgalInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
@@ -7088,7 +7106,7 @@ struct BurnDriver BurnDrvWbml = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlRomInfo, wbmlRomName, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
-	WbmlInit, System1Exit, System1Frame, System2Render, System1Scan, 
+	WbmlInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -7098,7 +7116,7 @@ struct BurnDriver BurnDrvWbmljb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljbRomInfo, wbmljbRomName, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
-	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan, 
+	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -7108,7 +7126,7 @@ struct BurnDriver BurnDrvWbmljo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljoRomInfo, wbmljoRomName, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
-	WbmlInit, System1Exit, System1Frame, System2Render, System1Scan, 
+	WbmlInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -7118,7 +7136,7 @@ struct BurnDriver BurnDrvWbmlb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlbRomInfo, wbmlbRomName, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
-	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan, 
+	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 

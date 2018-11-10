@@ -866,12 +866,12 @@ static INT32 alt2_kludge(UINT32 /*offset*/)
 	{
 		static const SekRegister SekRegs1[8] = { SEK_REG_A0, SEK_REG_A1, SEK_REG_A2, SEK_REG_A3, SEK_REG_A4, SEK_REG_A5, SEK_REG_A6, SEK_REG_A7 };
 
-		/* first verify that the prefetched PC matches the first alternate */
-		if (MATCHES_MASK_VALUE((INT32)(SekGetPC(-1) >> 1), slapstic.alt1))
+		UINT32 pc = SekDbgGetRegister(SEK_REG_PPC);
+	/* first verify that the prefetched PC matches the first alternate */
+		if (MATCHES_MASK_VALUE((INT32)((pc+2) >> 1), slapstic.alt1))
 		{
 			/* now look for a move.w (An),(An) or cmpm.w (An)+,(An)+ */
-			UINT16 opcode = SekFetchWord((SekGetPC(-1) - 4) & 0xffffff); // IQ_132 check this!
-		//	UINT16 opcode = space->direct().read_decrypted_word(cpu_get_previouspc(&space->device()) & 0xffffff);
+			UINT16 opcode = SekReadWord(pc);
 			if ((opcode & 0xf1f8) == 0x3090 || (opcode & 0xf1f8) == 0xb148)
 			{
 				/* fetch the value of the register for the second operand, and see */

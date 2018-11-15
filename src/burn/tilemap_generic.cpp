@@ -982,14 +982,14 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		INT32 scrollx = ((cur_map->scrollx - cur_map->xoffset) / cur_map->twidth) * cur_map->twidth;
 
 		// start drawing at tile-border, and let RenderCustomTile..Clip() take care of the sub-tile clipping.
-		miny -= (miny % cur_map->theight);
-		minx -= (minx % cur_map->twidth);
+		INT32 starty = miny - (miny % cur_map->theight);
+		INT32 startx = minx - (minx % cur_map->twidth);
 
-		for (INT32 y = miny; y < (INT32)(maxy + cur_map->theight); y += cur_map->theight)
+		for (INT32 y = starty; y < (INT32)(maxy + cur_map->theight); y += cur_map->theight)
 		{
 			INT32 syy = (y + scrolly) % (cur_map->theight * cur_map->mheight);
 
-			for (INT32 x = minx; x < (INT32)(maxx + cur_map->twidth); x += cur_map->twidth)
+			for (INT32 x = startx; x < (INT32)(maxx + cur_map->twidth); x += cur_map->twidth)
 			{
 				INT32 sxx = (x + scrollx) % (cur_map->twidth * cur_map->mwidth);
 

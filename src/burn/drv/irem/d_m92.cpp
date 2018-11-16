@@ -1858,10 +1858,12 @@ static void RenderTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, IN
 
 	gfx += code * width * height;
 
-	//"m92 is a special case, usually it would need pri |= 1<<31; but not this time! -dink"
+	prio |= 1 << 31; // always on!
 
 	for (INT32 y = 0; y < height; y++, sy++) {
 		if (sy < 0 || sy >= nScreenHeight) continue;
+
+		INT32 row = sy * nScreenWidth;
 
 		for (INT32 x = 0; x < width; x++, sx++) {
 			if (sx < 0 || sx >= nScreenWidth) continue;
@@ -1870,10 +1872,10 @@ static void RenderTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, IN
 
 			if (pxl == 0) continue;
 
-			if ((prio & (1 << pri[sy * nScreenWidth + sx])) == 0) {
-				dest[sy * nScreenWidth + sx] = pxl | color;
+			if ((prio & (1 << (pri[row + sx] & 0x1f))) == 0) {
+				dest[row + sx] = pxl | color;
 			}
-			pri[sy * nScreenWidth + sx] = 7;
+			pri[row + sx] |= 0x1f;
 		}
 
 		sx -= width;
@@ -1892,7 +1894,7 @@ static void draw_sprites()
 			INT32 x = (BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0x1ff) - 96;
 
 			INT32 pri_s  = (BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0xe000) >> 13;
-			INT32 pri_b  = (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x0080) ? 0x80 : 0x82;
+			INT32 pri_b  = (~BURN_ENDIAN_SWAP_INT16(ram[offs+2]) >> 6) & 2;
 			INT32 code   =  BURN_ENDIAN_SWAP_INT16(ram[offs+1]);
 			INT32 color  =  BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x007f;
 
@@ -1943,7 +1945,7 @@ static void draw_layer_byline(INT32 start, INT32 finish, INT32 layer, INT32 forc
 		{ { 0xffff, 0x0000 }, { 0x00ff, 0xff00 }, { 0x0001, 0xfffe } }
 	};
 
-	INT32 priority = 1 << forcelayer;
+	INT32 priority = forcelayer^1;
 
 	for (INT32 sy = start; sy < finish; sy++)
 	{
@@ -1963,10 +1965,10 @@ static void draw_layer_byline(INT32 start, INT32 finish, INT32 layer, INT32 forc
 			INT32 color =(attr & 0x007f) << 4;
 			INT32 flipy = attr & 0x0400;
 			INT32 flipx = attr & 0x0200;
-	
+
 			INT32 group = 0;
 			if (attr & 0x0180) group = (attr & 0x0100) ? 2 : 1;
-		
+
 			{
 				INT32 x_xor = 0;
 				INT32 romoff = romoff_1;
@@ -1974,18 +1976,18 @@ static void draw_layer_byline(INT32 start, INT32 finish, INT32 layer, INT32 forc
 				if (flipx) x_xor = 7;
 
 				UINT8 *rom = DrvGfxROM0 + ((code & graphics_mask[0]) * 0x40) + romoff;
-				INT32 mask = transmask[layer][group][forcelayer];
+				UINT32 mask = transmask[layer][group][forcelayer];
 
 				INT32 xx = sx - (scrollx_1&0x7);
 
 				for (INT32 x = 0; x < 8; x++, xx++) {
 					if (xx < 0 || xx >= nScreenWidth) continue;
 
-					INT32 pxl = rom[x ^ x_xor];
+					INT32 pxl = (rom[x ^ x_xor]&0x0f);
 					if (mask & (1 << pxl)) continue;
 
 					dest[xx] = pxl | color;
-					pri[xx] = priority;
+					pri[xx] |= priority;
 				}
 			}
 		}
@@ -2008,7 +2010,7 @@ static void DrawLayers(INT32 start, INT32 finish)
 	if (nBurnLayer & 2) draw_layer_byline(start, finish, 1, 1);
 	if (nBurnLayer & 2) draw_layer_byline(start, finish, 1, 0);
 	if (nBurnLayer & 4) draw_layer_byline(start, finish, 0, 1);
-	if (nBurnLayer & 4) draw_layer_byline(start, finish, 0, 0);
+	if (nBurnLayer & 8) draw_layer_byline(start, finish, 0, 0);
 }
 
 static INT32 DrvDraw()
@@ -2021,7 +2023,7 @@ static INT32 DrvDraw()
 
 //	DrawLayers(0, nScreenHeight);
 
-	if (nBurnLayer & 8) draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	if (m92_video_reg & 0x80) BurnTransferClear(0x800); // most-likely probably screen disable (fixes bad fades in nbbatman)
 
@@ -2040,7 +2042,7 @@ static INT32 DrvReDraw()
 
 	DrawLayers(0, nScreenHeight);
 
-	if (nBurnLayer & 8) draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 

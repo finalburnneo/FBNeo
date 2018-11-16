@@ -8591,11 +8591,6 @@ static struct BurnRomInfo Sf2eaRomDesc[] = {
 
 	{ "sf2_18.11c",    0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "sf2_19.12c",    0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
-
-	{ "27c512.13b",    0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
-
-	{ "epr-b-01.12c",  0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "epr-b-02.13c",  0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	A_BOARD_PLDS
 	

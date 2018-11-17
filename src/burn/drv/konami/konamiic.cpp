@@ -604,14 +604,14 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32
 								if (pxl == shadow_color) {
 									if ((priority & (1 << (pri[x]&0x1f)))==0 && (pri[x] & 0x80) == 0) {
 										dst[x] = highlight_mode ? highlight_blend(dst[x]) : shadow_blend(dst[x]);
-										pri[x] = 0x80;
+										pri[x] |= 0x80; // 0x80 - shadow/hilight "drawn here".  Nov.16, 2018, changed to |= to fix player shadow issue @ end of level in The Simpsons
 										if (highlight_over_sprites_mode)
 											pri[x] |= 0x20;
 									}
 								} else {
 									if ((priority & (1 << (pri[x]&0x1f)))==0) {
 										if (pri[x] & 0x20) {
-											dst[x] = highlight_mode ? highlight_blend(dst[x]) : shadow_blend(dst[x]);//pal[pxl];
+											dst[x] = highlight_mode ? highlight_blend(dst[x]) : shadow_blend(dst[x]);
 										} else {
 											dst[x] = pal[pxl];
 										}

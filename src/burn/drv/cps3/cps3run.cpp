@@ -1978,8 +1978,10 @@ INT32 DrvCps3Draw()
 				if (tile == 0) continue; // ok?
 
 				tile+=0x200;
-				cps3_drawgfxzoom_0(tile,pal,flipx,flipy,(x*8)-rowscroll,y*8);
-				cps3_drawgfxzoom_0(tile,pal,flipx,flipy,512 + (x*8)-rowscroll,y*8);
+
+				INT32 effx = (x*8)-rowscroll;
+				if (effx < -7 || effx > cps3_gfx_width) continue;
+				cps3_drawgfxzoom_0(tile,pal,flipx,flipy,effx,y*8);
 			}
 		}
 	}

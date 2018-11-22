@@ -4,7 +4,9 @@ alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/capcom burn/drv/cave burn
 			cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/i8x41 cpu/i8051 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec \
 			cpu/pic16c5x cpu/s2650 cpu/tlcs90 cpu/sh2 cpu/tms32010 cpu/upd7725 cpu/upd7810 cpu/v60 cpu/z80 cpu/z180
 
-drvsrc	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwange.o d_hotdogst.o d_korokoro.o d_mazinger.o d_metmqstr.o d_pwrinst2.o \
+drvsrc	= 	d_arcadecl.cpp d_atarig1.cpp d_badlands.cpp d_batman.cpp d_blstroid.cpp d_eprom.cpp d_gauntlet.cpp d_klax.cpp d_offtwall.cpp d_rampart.cpp d_relief.cpp d_shuuz.cpp d_skullxbo.cpp d_thunderj.cpp d_toobin.cpp d_vindictr.cpp d_xybots.cpp \
+			\
+			d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwange.o d_hotdogst.o d_korokoro.o d_mazinger.o d_metmqstr.o d_pwrinst2.o \
 			d_sailormn.o d_tjumpman.o d_uopoko.o \
 			\
 			d_cps1.o \
@@ -97,7 +99,7 @@ endif
 depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o \
 			load.o tilemap_generic.o tiles_generic.o timer.o vector.o \
 			\
-			6821pia.o 8255ppi.o 8257dma.o c169.o avgdvg.o bsmt2000.o decobsmt.o earom.o eeprom.o gaelco_crypt.o joyprocess.o nb1414m4.o nb1414m4_8bit.o \
+			6821pia.o 8255ppi.o 8257dma.o c169.o atariic.o atarijsa.o atarimo.o atarirle.o atarivad.o avgdvg.o bsmt2000.o decobsmt.o earom.o eeprom.o gaelco_crypt.o joyprocess.o nb1414m4.o nb1414m4_8bit.o \
 			nmk004.o nmk112.o kaneko_tmap.o mathbox.o mb87078.o mermaid.o namco_c45.o namcoio.o pandora.o resnet.o seibusnd.o sknsspr.o slapstic.o st0020.o \
 			t5182.o timekpr.o tms34061.o v3021.o vdc.o tms9928a.o watchdog.o x2212.o \
 			\

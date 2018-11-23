@@ -7,108 +7,72 @@
 #include "burn_ym3812.h"
 #include "upd7759.h"
 
-// Input Related Variables
-static UINT8 PrehisleInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 PrehisleInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 PrehisleInputPort2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 PrehisleDip[2]        = {0, 0};
-static UINT8 PrehisleInput[3]      = {0x00, 0x00, 0x00};
-static UINT8 PrehisleReset         = 0;
+static UINT8 *Mem				= NULL;
+static UINT8 *MemEnd			= NULL;
+static UINT8 *RamStart			= NULL;
+static UINT8 *RamEnd			= NULL;
+static UINT8 *Drv68KROM			= NULL;
+static UINT8 *DrvZ80ROM			= NULL;
+static UINT8 *DrvTileMapROM		= NULL;
+static UINT8 *DrvSndROM 		= NULL;
+static UINT8 *Drv68KRAM         = NULL;
+static UINT8 *DrvVidRAM0		= NULL;
+static UINT8 *DrvSprRAM			= NULL;
+static UINT8 *DrvVidRAM1		= NULL;
+static UINT8 *DrvPalRAM			= NULL;
+static UINT8 *DrvZ80RAM			= NULL;
+static UINT32 *DrvPalette		= NULL;
+static UINT8 *DrvTextROM		= NULL;
+static UINT8 *DrvSprROM			= NULL;
+static UINT8 *DrvFgROM			= NULL;
+static UINT8 *DrvBgROM			= NULL;
 
-// Memory Holders
-static UINT8 *Mem                  = NULL;
-static UINT8 *MemEnd               = NULL;
-static UINT8 *RamStart             = NULL;
-static UINT8 *RamEnd               = NULL;
-static UINT8 *PrehisleRom          = NULL;
-static UINT8 *PrehisleZ80Rom       = NULL;
-static UINT8 *PrehisleTileMapRom   = NULL;
-static UINT8 *PrehisleADPCMSamples = NULL;
-static UINT8 *PrehisleRam          = NULL;
-static UINT8 *PrehisleVideoRam     = NULL;
-static UINT8 *PrehisleSpriteRam    = NULL;
-static UINT8 *PrehisleVideo2Ram    = NULL;
-static UINT8 *PrehislePaletteRam   = NULL;
-static UINT8 *PrehisleZ80Ram       = NULL;
-static UINT32 *PrehislePalette     = NULL;
-static UINT8 *PrehisleTextTiles    = NULL;
-static UINT8 *PrehisleSprites      = NULL;
-static UINT8 *PrehisleBack1Tiles   = NULL;
-static UINT8 *PrehisleBack2Tiles   = NULL;
-static UINT8 *PrehisleTempGfx      = NULL;
-
-// Misc Variables, system control values, etc.
 static INT32 ControlsInvert;
-static UINT16 VidControl[7];
+static UINT16 ScrollData[4];
+static INT32 FlipScreen;
 static INT32 SoundLatch;
 
-// CPU Interleave Variables
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
+static UINT8 DrvInputPort0[8];
+static UINT8 DrvInputPort1[8];
+static UINT8 DrvInputPort2[8];
+static UINT8 DrvDip[2];
+static UINT8 DrvInput[3];
+static UINT8 DrvReset;
 
-// Dip Switch and Input Definitions
 static struct BurnInputInfo PrehisleInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , PrehisleInputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , PrehisleInputPort0 + 7, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , PrehisleInputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , PrehisleInputPort1 + 7, "p2 start"  },
+	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
+	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 coin"   },
+	{"Start 2"           , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
 
-	{"P1 Up"             , BIT_DIGITAL  , PrehisleInputPort0 + 0, "p1 up"     },
-	{"P1 Down"           , BIT_DIGITAL  , PrehisleInputPort0 + 1, "p1 down"   },
-	{"P1 Left"           , BIT_DIGITAL  , PrehisleInputPort0 + 2, "p1 left"   },
-	{"P1 Right"          , BIT_DIGITAL  , PrehisleInputPort0 + 3, "p1 right"  },
-	{"P1 Fire 1"         , BIT_DIGITAL  , PrehisleInputPort0 + 4, "p1 fire 1" },
-	{"P1 Fire 2"         , BIT_DIGITAL  , PrehisleInputPort0 + 5, "p1 fire 2" },
-	{"P1 Fire 3"         , BIT_DIGITAL  , PrehisleInputPort0 + 6, "p1 fire 3" },
+	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
+	{"P1 Fire 3"         , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
 
-	{"P2 Up"             , BIT_DIGITAL  , PrehisleInputPort1 + 0, "p2 up"     },
-	{"P2 Down"           , BIT_DIGITAL  , PrehisleInputPort1 + 1, "p2 down"   },
-	{"P2 Left"           , BIT_DIGITAL  , PrehisleInputPort1 + 2, "p2 left"   },
-	{"P2 Right"          , BIT_DIGITAL  , PrehisleInputPort1 + 3, "p2 right"  },
-	{"P2 Fire 1"         , BIT_DIGITAL  , PrehisleInputPort1 + 4, "p2 fire 1" },
-	{"P2 Fire 2"         , BIT_DIGITAL  , PrehisleInputPort1 + 5, "p2 fire 2" },
-	{"P2 Fire 3"         , BIT_DIGITAL  , PrehisleInputPort1 + 6, "p2 fire 3" },
+	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
+	{"P2 Fire 3"         , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 fire 3" },
 
-	{"Reset"             , BIT_DIGITAL  , &PrehisleReset        , "reset"     },
-	{"Service"           , BIT_DIGITAL  , PrehisleInputPort2 + 2, "service"   },
-	{"Diagnostics"       , BIT_DIGITAL  , PrehisleInputPort2 + 3, "diag"      },
-	{"Tilt"              , BIT_DIGITAL  , PrehisleInputPort2 + 4, "tilt"      },
-	{"Dip 1"             , BIT_DIPSWITCH, PrehisleDip + 0       , "dip"       },
-	{"Dip 2"             , BIT_DIPSWITCH, PrehisleDip + 1       , "dip"       },
+	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
+	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 2, "service"   },
+	{"Diagnostics"       , BIT_DIGITAL  , DrvInputPort2 + 3, "diag"      },
+	{"Tilt"              , BIT_DIGITAL  , DrvInputPort2 + 4, "tilt"      },
+	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
 };
 
 STDINPUTINFO(Prehisle)
 
-inline void PrehisleClearOpposites(UINT8* nJoystickInputs)
-{
-	if ((*nJoystickInputs & 0x03) == 0x03) {
-		*nJoystickInputs &= ~0x03;
-	}
-	if ((*nJoystickInputs & 0x0c) == 0x0c) {
-		*nJoystickInputs &= ~0x0c;
-	}
-}
-
-inline void PrehisleMakeInputs()
-{
-	// Reset Inputs
-	PrehisleInput[0] = PrehisleInput[1] = PrehisleInput[2] = 0x00;
-
-	// Compile Digital Inputs
-	for (INT32 i = 0; i < 8; i++) {
-		PrehisleInput[0] |= (PrehisleInputPort0[i] & 1) << i;
-		PrehisleInput[1] |= (PrehisleInputPort1[i] & 1) << i;
-		PrehisleInput[2] |= (PrehisleInputPort2[i] & 1) << i;
-	}
-
-	// Clear Opposites
-	PrehisleClearOpposites(&PrehisleInput[0]);
-	PrehisleClearOpposites(&PrehisleInput[1]);
-}
-
 static struct BurnDIPInfo PrehisleDIPList[]=
 {
-	// Default Values
 	{0x16, 0xff, 0xff, 0xff, NULL                     },
 	{0x17, 0xff, 0xff, 0x7f, NULL                     },
 
@@ -125,10 +89,6 @@ static struct BurnDIPInfo PrehisleDIPList[]=
 	{0x16, 0x01, 0x04, 0x04, "2nd"                    },
 	{0x16, 0x01, 0x04, 0x00, "Every"                  },
 
-//	{0   , 0xfe, 0   , 2   , "Unknown"                },
-//	{0x16, 0x01, 0x08, 0x08, "Off"                    },
-//	{0x16, 0x01, 0x08, 0x00, "On"                     },
-
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
 	{0x16, 0x01, 0x30, 0x30, "A 1-1 B 1-1"            },
 	{0x16, 0x01, 0x30, 0x20, "A 2-1 B 1-2"            },
@@ -141,7 +101,6 @@ static struct BurnDIPInfo PrehisleDIPList[]=
 	{0x16, 0x01, 0xc0, 0x40, "4"                      },
 	{0x16, 0x01, 0xc0, 0x00, "5"                      },
 
-	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Level"                  },
 	{0x17, 0x01, 0x03, 0x02, "1 (Easy)"               },
 	{0x17, 0x01, 0x03, 0x03, "2 (Standard)"           },
@@ -167,166 +126,6 @@ static struct BurnDIPInfo PrehisleDIPList[]=
 
 STDDIPINFO(Prehisle)
 
-// Rom Definitions
-static struct BurnRomInfo PrehisleRomDesc[] = {
-	{ "gt-e2.2h",      0x20000, 0x7083245a, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "gt-e3.3h",      0x20000, 0x6d8cdf58, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
-
-	{ "gt15.b15",      0x08000, 0xac652412, BRF_GRA },			 //  2	Text Layer Tiles
-	{ "pi8914.b14",    0x40000, 0x207d6187, BRF_GRA },			 //  3	Background2 Layer Tiles
-	{ "pi8916.h16",    0x40000, 0x7cffe0f6, BRF_GRA },			 //  4	Background1 Layer Tiles
-	{ "pi8910.k14",    0x80000, 0x5a101b0b, BRF_GRA },			 //  5	Sprite Layer Tiles
-	{ "gt5.5",         0x20000, 0x3d3ab273, BRF_GRA },			 //  6	Sprite Layer Tiles
-	{ "gt11.11",       0x10000, 0xb4f0fcf0, BRF_GRA },			 //  7	Background 2 TileMap
-
-	{ "gt1.1",         0x10000, 0x80a4c093, BRF_SND },			 //  8	Z80 Program Code
-
-	{ "gt4.4",         0x20000, 0x85dfb9ec, BRF_SND },			 //  9	ADPCM Samples
-};
-
-
-STD_ROM_PICK(Prehisle)
-STD_ROM_FN(Prehisle)
-
-static struct BurnRomInfo PrehisluRomDesc[] = {
-	{ "gt-u2.2h",      0x20000, 0xa14f49bb, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "gt-u3.3h",      0x20000, 0xf165757e, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
-
-	{ "gt15.b15",      0x08000, 0xac652412, BRF_GRA },			 //  2	Text Layer Tiles
-	{ "pi8914.b14",    0x40000, 0x207d6187, BRF_GRA },			 //  3	Background2 Layer Tiles
-	{ "pi8916.h16",    0x40000, 0x7cffe0f6, BRF_GRA },			 //  4	Background1 Layer Tiles
-	{ "pi8910.k14",    0x80000, 0x5a101b0b, BRF_GRA },			 //  5	Sprite Layer Tiles
-	{ "gt5.5",         0x20000, 0x3d3ab273, BRF_GRA },			 //  6	Sprite Layer Tiles
-	{ "gt11.11",       0x10000, 0xb4f0fcf0, BRF_GRA },			 //  7	Background 2 TileMap
-
-	{ "gt1.1",         0x10000, 0x80a4c093, BRF_SND },			 //  8	Z80 Program Code
-
-	{ "gt4.4",         0x20000, 0x85dfb9ec, BRF_SND },			 //  9	ADPCM Samples
-};
-
-
-STD_ROM_PICK(Prehislu)
-STD_ROM_FN(Prehislu)
-
-static struct BurnRomInfo PrehislkRomDesc[] = {
-	{ "gt-k2.2h",      0x20000, 0xf2d3544d, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "gt-k3.3h",      0x20000, 0xebf7439b, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
-
-	{ "gt15.b15",      0x08000, 0xac652412, BRF_GRA },			 //  2	Text Layer Tiles
-	{ "pi8914.b14",    0x40000, 0x207d6187, BRF_GRA },			 //  3	Background2 Layer Tiles
-	{ "pi8916.h16",    0x40000, 0x7cffe0f6, BRF_GRA },			 //  4	Background1 Layer Tiles
-	{ "pi8910.k14",    0x80000, 0x5a101b0b, BRF_GRA },			 //  5	Sprite Layer Tiles
-	{ "gt5.5",         0x20000, 0x3d3ab273, BRF_GRA },			 //  6	Sprite Layer Tiles
-	{ "gt11.11",       0x10000, 0xb4f0fcf0, BRF_GRA },			 //  7	Background 2 TileMap
-
-	{ "gt1.1",         0x10000, 0x80a4c093, BRF_SND },			 //  8	Z80 Program Code
-
-	{ "gt4.4",         0x20000, 0x85dfb9ec, BRF_SND },			 //  9	ADPCM Samples
-};
-
-
-STD_ROM_PICK(Prehislk)
-STD_ROM_FN(Prehislk)
-
-static struct BurnRomInfo GensitouRomDesc[] = {
-	{ "gt-j2.2h",      0x20000, 0xa2da0b6b, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "gt-j3.3h",      0x20000, 0xc1a0ae8e, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
-
-	{ "gt15.b15",      0x08000, 0xac652412, BRF_GRA },			 //  2	Text Layer Tiles
-	{ "pi8914.b14",    0x40000, 0x207d6187, BRF_GRA },			 //  3	Background2 Layer Tiles
-	{ "pi8916.h16",    0x40000, 0x7cffe0f6, BRF_GRA },			 //  4	Background1 Layer Tiles
-	{ "pi8910.k14",    0x80000, 0x5a101b0b, BRF_GRA },			 //  5	Sprite Layer Tiles
-	{ "gt5.5",         0x20000, 0x3d3ab273, BRF_GRA },			 //  6	Sprite Layer Tiles
-	{ "gt11.11",       0x10000, 0xb4f0fcf0, BRF_GRA },			 //  7	Background 2 TileMap
-
-	{ "gt1.1",         0x10000, 0x80a4c093, BRF_SND },			 //  8	Z80 Program Code
-
-	{ "gt4.4",         0x20000, 0x85dfb9ec, BRF_SND },			 //  9	ADPCM Samples
-};
-
-
-STD_ROM_PICK(Gensitou)
-STD_ROM_FN(Gensitou)
-
-static struct BurnRomInfo PrehislbRomDesc[] = {
-	// world bootleg using 64k*8 UVEPROMs, program and sound unchanged, sprites and background tilemaps altered
-	{ "u_h1.bin",      0x10000, 0x04c1703b, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "u_h3.bin",      0x10000, 0x62f04cd1, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
-	{ "u_j2.bin",      0x10000, 0x7b12501d, BRF_ESS | BRF_PRG }, //  2	68000 Program Code
-	{ "u_j3.bin",      0x10000, 0x2a86f7c4, BRF_ESS | BRF_PRG }, //  3	68000 Program Code
-
-	{ "l_a17.bin",     0x08000, 0xac652412, BRF_GRA },			 //  4	Text Layer Tiles
-	{ "l_b17.bin",     0x10000, 0x65a22ffc, BRF_GRA },			 //  5	Background2 Layer Tiles
-	{ "l_b16.bin",     0x10000, 0xb1e1f527, BRF_GRA },			 //  6	Background2 Layer Tiles
-	{ "l_b14.bin",     0x10000, 0x28e94d40, BRF_GRA },			 //  7	Background2 Layer Tiles
-	{ "l_b13.bin",     0x10000, 0x4dbb557a, BRF_GRA },			 //  8	Background2 Layer Tiles
-	{ "l_h17.bin",     0x10000, 0x79c42316, BRF_GRA },			 //  9	Background1 Layer Tiles
-	{ "l_h15.bin",     0x10000, 0x50e31fb0, BRF_GRA },			 // 10	Background1 Layer Tiles
-	{ "l_f17.bin",     0x10000, 0x2af1739d, BRF_GRA },			 // 11	Background1 Layer Tiles
-	{ "l_f15.bin",     0x10000, 0xcac11327, BRF_GRA },			 // 12	Background1 Layer Tiles
-	
-	{ "u_k12.bin",     0x10000, 0x4b0215f0, BRF_GRA },			 // 13	Sprite Layer Tiles
-	{ "u_k13.bin",     0x10000, 0x68b8a698, BRF_GRA },			 // 14	Sprite Layer Tiles
-	{ "u_j4.bin",      0x10000, 0x06ce7b57, BRF_GRA },			 // 15	Sprite Layer Tiles
-	{ "u_j5.bin",      0x10000, 0x2ee8b401, BRF_GRA },			 // 16	Sprite Layer Tiles
-	{ "u_j7.bin",      0x10000, 0x35656cbc, BRF_GRA },			 // 17	Sprite Layer Tiles
-	{ "u_j8.bin",      0x10000, 0x1e7e9336, BRF_GRA },			 // 18	Sprite Layer Tiles
-	{ "u_j10.bin",     0x10000, 0x785bf046, BRF_GRA },			 // 19	Sprite Layer Tiles
-	{ "u_j11.bin",     0x10000, 0xc306b9fa, BRF_GRA },			 // 20	Sprite Layer Tiles
-	{ "u_j12.bin",     0x10000, 0x5ba5bbed, BRF_GRA },			 // 21	Sprite Layer Tiles
-	{ "u_j13.bin",     0x10000, 0x007dee47, BRF_GRA },			 // 22	Sprite Layer Tiles // modified by bootleggers
-	
-	{ "l_a6.bin",      0x10000, 0xe2b9a44b, BRF_GRA },			 // 23	Background 2 TileMap // modified by bootleggers
-
-	{ "u_e12.bin",     0x10000, 0x80a4c093, BRF_SND },			 // 24	Z80 Program Code
-
-	{ "u_f14.bin",     0x10000, 0x2fb32933, BRF_SND },			 // 25	ADPCM Samples
-	{ "u_j14.bin",     0x10000, 0x32d5f7c9, BRF_SND },			 // 26	ADPCM Samples
-};
-
-
-STD_ROM_PICK(Prehislb)
-STD_ROM_FN(Prehislb)
-
-// Misc Driver Functions and Memory Handlers
-static INT32 PrehisleDoReset()
-{
-	ControlsInvert = 0;
-	SoundLatch = 0;
-	VidControl[0] = VidControl[1] = VidControl[2] = VidControl[3] = VidControl[4] = VidControl[5] = VidControl[6] = 0;
-
-	SekOpen(0);
-	SekReset();
-	SekClose();
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	BurnYM3812Reset();
-	UPD7759Reset();
-
-	return 0;
-}
-
-// ----------------------------------------------------------------------------
-// Callbacks for the FM chip
-
-static void prehisleFMIRQHandler(INT32, INT32 nStatus)
-{
-	if (nStatus) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
-}
-
-static INT32 prehisleSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-// VBlank
-
 inline UINT16 PrehisleVBlankRegister()
 {
 	INT32 nCycles = SekTotalCycles();
@@ -343,374 +142,338 @@ inline UINT16 PrehisleVBlankRegister()
 	return 0x00;
 }
 
-static UINT16 __fastcall PrehisleReadWord(UINT32 a)
+static UINT16 __fastcall PrehisleReadWord(UINT32 address)
 {
-	switch (a) {
-		case 0x0e0010: {
-			return 0xff - PrehisleInput[1];
-		}
+	switch (address)
+	{
+		case 0x0e0010:
+			return DrvInput[1];
 
-		case 0x0e0020: {
-			return 0xff - PrehisleInput[2];
-		}
+		case 0x0e0020:
+			return DrvInput[2];
 
-		case 0x0e0040: {
-			return 0xff - (PrehisleInput[0] ^ ControlsInvert);
-		}
+		case 0x0e0040:
+			return DrvInput[0] ^ ControlsInvert;
 
-		case 0x0e0042: {
-			return PrehisleDip[0];
-		}
+		case 0x0e0042:
+			return DrvDip[0];
 
-		case 0x0e0044: {
-			return PrehisleDip[1] + PrehisleVBlankRegister();
-		}
+		case 0x0e0044:
+			return DrvDip[1] + PrehisleVBlankRegister();
 	}
 
 	return 0;
 }
 
-static void __fastcall PrehisleWriteWord(UINT32 a, UINT16 d)
+static void __fastcall PrehisleWriteWord(UINT32 address, UINT16 data)
 {
-	switch (a) {
-		case 0x0f0000: {
-			VidControl[0] = d;
-			return;
-		}
+	switch (address)
+	{
+		case 0x0f0000:
+			ScrollData[0] = data;
+		return;
 
-		case 0x0f0010: {
-			VidControl[1] = d;
-			return;
-		}
+		case 0x0f0010:
+			ScrollData[1] = data;
+		return;
 
-		case 0x0f0020: {
-			VidControl[2] = d;
-			return;
-		}
+		case 0x0f0020:
+			ScrollData[2] = data;
+		return;
 
-		case 0x0f0030: {
-			VidControl[3] = d;
-			return;
-		}
+		case 0x0f0030:
+			ScrollData[3] = data;
+		return;
 
-		case 0x0f0046: {
-			ControlsInvert = d ? 0xff : 0x00;
-			return;
-		}
+		case 0x0f0046:
+			ControlsInvert = data ? 0xff : 0x00;
+		return;
 
-		case 0x0f0050: {
-			VidControl[4] = d;
-			return;
-		}
+		case 0x0f0050:
+		case 0x0f0052:
+			// coin counters
+		return;
 
-		case 0x0f0052: {
-			VidControl[5] = d;
-			return;
-		}
+		case 0x0f0060:
+			FlipScreen = data & 0x01;
+		return;
 
-		case 0x0f0060: {
-			VidControl[6] = d;
-			return;
-		}
-
-		case 0x0f0070: {
-			SoundLatch = d & 0xff;
+		case 0x0f0070:
+			SoundLatch = data & 0xff;
 			ZetNmi();
-			return;
-		}
+		return;
 	}
 }
 
-static UINT8 __fastcall PrehisleZ80PortRead(UINT16 a)
+static UINT8 __fastcall PrehisleZ80PortRead(UINT16 port)
 {
-	a &= 0xff;
-	switch (a) {
-		case 0x00: {
+	switch (port & 0xff)
+	{
+		case 0x00:
 			return BurnYM3812Read(0, 0);
-		}
 	}
 
 	return 0;
 }
 
-static void __fastcall PrehisleZ80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall PrehisleZ80PortWrite(UINT16 port, UINT8 data)
 {
-	a &= 0xff;
-	switch (a) {
-		case 0x00: {
-			BurnYM3812Write(0, 0, d);
-			return;
-		}
+	switch (port & 0xff)
+	{
+		case 0x00:
+			BurnYM3812Write(0, 0, data);
+		return;
 
-		case 0x20: {
-			BurnYM3812Write(0, 1, d);
-			return;
-		}
+		case 0x20:
+			BurnYM3812Write(0, 1, data);
+		return;
 
-		case 0x40: {
-			UPD7759PortWrite(0,d);
+		case 0x40:
+			UPD7759PortWrite(0,data);
 			UPD7759StartWrite(0,0);
 			UPD7759StartWrite(0,1);
-			return;
-		}
+		return;
 
-		case 0x80: {
-			UPD7759ResetWrite(0,d);
-			return;
-		}
+		case 0x80:
+			UPD7759ResetWrite(0,data);
+		return;
 	}
 }
 
-static UINT8 __fastcall PrehisleZ80Read(UINT16 a)
+static UINT8 __fastcall PrehisleZ80Read(UINT16 address)
 {
-	switch (a) {
-		case 0xf800: {
+	switch (address)
+	{
+		case 0xf800:
 			return SoundLatch;
-		}
 	}
 
 	return 0;
 }
 
-// Function to Allocate and Index required memory
+static tilemap_callback( bg )
+{
+	INT32 attr = (DrvTileMapROM[offs * 2] * 256) + DrvTileMapROM[offs * 2 + 1];
+
+	TILE_SET_INFO(0, attr, attr >> 12, TILE_FLIPYX((attr >> 11) & 1)); // flipx
+}
+
+static tilemap_callback( fg )
+{
+	INT32 attr = (DrvVidRAM1[offs * 2 + 1] * 256) + DrvVidRAM1[offs * 2 + 0];
+
+	TILE_SET_INFO(1, attr, attr >> 12, TILE_FLIPYX((attr >> 10) & 2)); // flipy
+}
+
+static tilemap_callback( tx )
+{
+	INT32 attr = (DrvVidRAM0[offs * 2 + 1] * 256) + DrvVidRAM0[offs * 2 + 0];
+
+	TILE_SET_INFO(2, attr, attr >> 12, 0);
+}
+
+static void DrvFMIRQHandler(INT32, INT32 nStatus)
+{
+	ZetSetIRQLine(0, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
+static INT32 DrvDoReset()
+{
+	memset (RamStart, 0, RamEnd - RamStart);
+
+	SekOpen(0);
+	SekReset();
+	SekClose();
+
+	ZetOpen(0);
+	ZetReset();
+	BurnYM3812Reset();
+	UPD7759Reset();
+	ZetClose();
+
+	memset (ScrollData, 0, sizeof(ScrollData));
+	ControlsInvert = 0;
+	SoundLatch = 0;
+	FlipScreen = 0;
+
+	return 0;
+}
+
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
 
-	PrehisleRom          = Next; Next += 0x40000;
-	PrehisleZ80Rom       = Next; Next += 0x10000;
-	PrehisleTileMapRom   = Next; Next += 0x10000;
-	PrehisleADPCMSamples = Next; Next += 0x20000;
+	Drv68KROM			= Next; Next += 0x40000;
+	DrvZ80ROM			= Next; Next += 0x10000;
 
-	RamStart = Next;
+	DrvTileMapROM		= Next; Next += 0x10000;
 
-	PrehisleRam          = Next; Next += 0x04000;
-	PrehisleVideoRam     = Next; Next += 0x00800;
-	PrehisleSpriteRam    = Next; Next += 0x00800;
-	PrehisleVideo2Ram    = Next; Next += 0x04000;
-	PrehislePaletteRam   = Next; Next += 0x00800;
-	PrehisleZ80Ram       = Next; Next += 0x00800;
+	DrvTextROM			= Next; Next += (1024 * 8 * 8);
+	DrvSprROM			= Next; Next += (5120 * 16 * 16);
+	DrvFgROM			= Next; Next += (2048 * 16 * 16);
+	DrvBgROM			= Next; Next += (2048 * 16 * 16);
+
+	DrvSndROM			= Next; Next += 0x20000;
+
+	DrvPalette			= (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
+
+	RamStart			= Next;
+
+	Drv68KRAM			= Next; Next += 0x04000;
+	DrvVidRAM0			= Next; Next += 0x00800;
+	DrvSprRAM			= Next; Next += 0x00800;
+	DrvVidRAM1			= Next; Next += 0x04000;
+	DrvPalRAM			= Next; Next += 0x00800;
+	DrvZ80RAM			= Next; Next += 0x00800;
 
 	RamEnd = Next;
 
-	PrehisleTextTiles    = Next; Next += (1024 * 8 * 8);
-	PrehisleSprites      = Next; Next += (5120 * 16 * 16);
-	PrehisleBack1Tiles   = Next; Next += (2048 * 16 * 16);
-	PrehisleBack2Tiles   = Next; Next += (2048 * 16 * 16);
-	PrehislePalette = (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
 	MemEnd = Next;
 
 	return 0;
 }
 
-static INT32 CharPlaneOffsets[4]   = { 0, 1, 2, 3 };
-static INT32 CharXOffsets[8]       = { 0, 4, 8, 12, 16, 20, 24, 28 };
-static INT32 CharYOffsets[8]       = { 0, 32, 64, 96, 128, 160, 192, 224 };
-static INT32 TilePlaneOffsets[4]   = { 0, 1, 2, 3 };
-static INT32 TileXOffsets[16]      = { 0, 4, 8, 12, 16, 20, 24, 28, 512, 516, 520, 524, 528, 532, 536, 540 };
-static INT32 TileYOffsets[16]      = { 0, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 480 };
+static void DrvGfxDecode()
+{
+	INT32 Planes[4] = { STEP4(0,1) };
+	INT32 XOffs[16] = { STEP8(0,4), STEP8(512,4) };
+	INT32 YOffs[16] = { STEP16(0,32) };
 
-// Driver Init and Exit Functions
+	UINT8 *tmp = (UINT8*)BurnMalloc(0xa0000);
+
+	memcpy (tmp, DrvTextROM, 0x08000);
+
+	GfxDecode(1024, 4,  8,  8, Planes, XOffs, YOffs, 0x100, tmp, DrvTextROM);
+
+	memcpy (tmp, DrvBgROM, 0x40000);
+
+	GfxDecode(2048, 4, 16, 16, Planes, XOffs, YOffs, 0x400, tmp, DrvBgROM);
+
+	memcpy (tmp, DrvFgROM, 0x40000);
+
+	GfxDecode(2048, 4, 16, 16, Planes, XOffs, YOffs, 0x400, tmp, DrvFgROM);
+
+	memcpy (tmp, DrvSprROM, 0xa0000);
+
+	GfxDecode(5120, 4, 16, 16, Planes, XOffs, YOffs, 0x400, tmp, DrvSprROM);
+
+	BurnFree(tmp);
+}
+
 static INT32 PrehisleInit()
 {
-	INT32 nRet = 0, nLen;
-
-	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
+	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	MemIndex();
 
-	PrehisleTempGfx = (UINT8*)BurnMalloc(0xa0000);
+	if ((BurnDrvGetFlags() & BDF_BOOTLEG) == 0) // normal
+	{
+		if (BurnLoadRom(Drv68KROM  + 0x00001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x00000,  1, 2)) return 1;
 
-	// Load and byte-swap 68000 Program roms
-	nRet = BurnLoadRom(PrehisleRom + 0x00001, 0, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleRom + 0x00000, 1, 2); if (nRet != 0) return 1;
+		if (BurnLoadRom(DrvTextROM + 0x00000,  2, 1)) return 1;
 
-	// Load and decode Text Tiles rom
-	memset(PrehisleTempGfx, 0, 0xa0000);
-	nRet = BurnLoadRom(PrehisleTempGfx, 2, 1); if (nRet != 0) return 1;
-	GfxDecode(1024, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, PrehisleTempGfx, PrehisleTextTiles);
+		if (BurnLoadRom(DrvBgROM   + 0x00000,  3, 1)) return 1;
 
-	// Load and decode Background2 Tile rom
-	memset(PrehisleTempGfx, 0, 0xa0000);
-	nRet = BurnLoadRom(PrehisleTempGfx, 3, 1); if (nRet != 0) return 1;
-	GfxDecode(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, PrehisleTempGfx, PrehisleBack2Tiles);
+		if (BurnLoadRom(DrvFgROM   + 0x00000,  4, 1)) return 1;
 
-	// Load and decode Background1 Tile rom
-	memset(PrehisleTempGfx, 0, 0xa0000);
-	nRet = BurnLoadRom(PrehisleTempGfx, 4, 1); if (nRet != 0) return 1;
-	GfxDecode(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, PrehisleTempGfx, PrehisleBack1Tiles);
+		if (BurnLoadRom(DrvSprROM  + 0x00000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvSprROM  + 0x80000,  6, 1)) return 1;
 
-	// Load and decode Sprite roms
-	memset(PrehisleTempGfx, 0, 0xa0000);
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x00000, 5, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x80000, 6, 1); if (nRet != 0) return 1;
-	GfxDecode(5120, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, PrehisleTempGfx, PrehisleSprites);
+		if (BurnLoadRom(DrvTileMapROM + 0x00,  7, 1)) return 1;
 
-	BurnFree(PrehisleTempGfx);
+		if (BurnLoadRom(DrvZ80ROM  + 0x00000,  8, 1)) return 1;
 
-	// Load Background2 Tilemap rom
-	nRet = BurnLoadRom(PrehisleTileMapRom, 7, 1); if (nRet != 0) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x00000,  9, 1)) return 1;
+	}
+	else // bootleg
+	{
+		if (BurnLoadRom(Drv68KROM  + 0x00001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x00000,  1, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x20001,  2, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x20000,  3, 2)) return 1;
 
-	// Load Z80 Program rom
-	nRet = BurnLoadRom(PrehisleZ80Rom, 8, 1); if (nRet != 0) return 1;
+		if (BurnLoadRom(DrvTextROM + 0x00000,  4, 1)) return 1;
 
-	// Load ADPCM Samples
-	nRet = BurnLoadRom(PrehisleADPCMSamples, 9, 1); if (nRet != 0) return 1;
+		if (BurnLoadRom(DrvBgROM   + 0x00000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvBgROM   + 0x10000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvBgROM   + 0x20000,  7, 1)) return 1;
+		if (BurnLoadRom(DrvBgROM   + 0x30000,  8, 1)) return 1;
 
-	// Setup the 68000 emulation
+		if (BurnLoadRom(DrvFgROM   + 0x00000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvFgROM   + 0x10000, 10, 1)) return 1;
+		if (BurnLoadRom(DrvFgROM   + 0x20000, 11, 1)) return 1;
+		if (BurnLoadRom(DrvFgROM   + 0x30000, 12, 1)) return 1;
+
+		if (BurnLoadRom(DrvSprROM  + 0x00000, 13, 1)) return 1;
+		if (BurnLoadRom(DrvSprROM  + 0x10000, 14, 1)) return 1;
+		if (BurnLoadRom(DrvSprROM  + 0x20000, 15, 1)) return 1;
+		if (BurnLoadRom(DrvSprROM  + 0x30000, 16, 1)) return 1;
+		if (BurnLoadRom(DrvSprROM  + 0x40000, 17, 1)) return 1;
+		if (BurnLoadRom(DrvSprROM  + 0x50000, 18, 1)) return 1;
+		if (BurnLoadRom(DrvSprROM  + 0x60000, 19, 1)) return 1;
+		if (BurnLoadRom(DrvSprROM  + 0x70000, 20, 1)) return 1;
+		if (BurnLoadRom(DrvSprROM  + 0x80000, 21, 1)) return 1;
+		if (BurnLoadRom(DrvSprROM  + 0x90000, 22, 1)) return 1;
+
+		if (BurnLoadRom(DrvTileMapROM + 0x00, 23, 1)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM  + 0x00000, 24, 1)) return 1;
+
+		if (BurnLoadRom(DrvSndROM  + 0x00000, 25, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x10000, 26, 1)) return 1;
+	}
+
+	DrvGfxDecode();
+
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(PrehisleRom       , 0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(PrehisleRam       , 0x070000, 0x073fff, MAP_RAM);
-	SekMapMemory(PrehisleVideoRam  , 0x090000, 0x0907ff, MAP_RAM);
-	SekMapMemory(PrehisleSpriteRam , 0x0a0000, 0x0a07ff, MAP_RAM);
-	SekMapMemory(PrehisleVideo2Ram , 0x0b0000, 0x0b3fff, MAP_RAM);
-	SekMapMemory(PrehislePaletteRam, 0x0d0000, 0x0d07ff, MAP_RAM);
-	SekSetReadWordHandler(0, PrehisleReadWord);
-	SekSetWriteWordHandler(0, PrehisleWriteWord);
+	SekMapMemory(Drv68KROM, 	0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM, 	0x070000, 0x073fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM0, 	0x090000, 0x0907ff, MAP_RAM);
+	SekMapMemory(DrvSprRAM, 	0x0a0000, 0x0a07ff, MAP_RAM);
+	SekMapMemory(DrvVidRAM1, 	0x0b0000, 0x0b3fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM, 	0x0d0000, 0x0d07ff, MAP_RAM);
+	SekSetReadWordHandler(0, 	PrehisleReadWord);
+	SekSetWriteWordHandler(0, 	PrehisleWriteWord);
 	SekClose();
 
-	// Setup the Z80 emulation
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xefff, 0, PrehisleZ80Rom);
-	ZetMapArea(0x0000, 0xefff, 2, PrehisleZ80Rom);
-	ZetMapArea(0xf000, 0xf7ff, 0, PrehisleZ80Ram);
-	ZetMapArea(0xf000, 0xf7ff, 1, PrehisleZ80Ram);
-	ZetMapArea(0xf000, 0xf7ff, 2, PrehisleZ80Ram);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0xefff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,		0xf000, 0xf7ff, MAP_RAM);
 	ZetSetReadHandler(PrehisleZ80Read);
 	ZetSetInHandler(PrehisleZ80PortRead);
 	ZetSetOutHandler(PrehisleZ80PortWrite);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, &prehisleFMIRQHandler, &prehisleSynchroniseStream, 0);
+	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler, 0);
 	BurnTimerAttachYM3812(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
-	UPD7759Init(0, UPD7759_STANDARD_CLOCK, PrehisleADPCMSamples);
+	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM);
 	UPD7759SetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 1024, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_COLS, fg_map_callback, 16, 16,  256, 32);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, tx_map_callback,  8,  8,   32, 32);
+	GenericTilemapSetGfx(0, DrvBgROM,   4, 16, 16, 0x80000, 0x300, 0xf);
+	GenericTilemapSetGfx(1, DrvFgROM,   4, 16, 16, 0x80000, 0x200, 0xf);
+	GenericTilemapSetGfx(2, DrvTextROM, 4,  8,  8, 0x10000, 0x000, 0xf);
+	GenericTilemapSetTransparent(1, 0xf);
+	GenericTilemapSetTransparent(2, 0xf);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 
-	// Reset the driver
-	PrehisleDoReset();
+	DrvDoReset();
 
 	return 0;
 }
 
-static INT32 PrehislebInit()
-{
-	INT32 nRet = 0, nLen;
-
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
-
-	PrehisleTempGfx = (UINT8*)BurnMalloc(0xa0000);
-
-	// Load and byte-swap 68000 Program roms
-	nRet = BurnLoadRom(PrehisleRom + 0x00001, 0, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleRom + 0x00000, 1, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleRom + 0x20001, 2, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleRom + 0x20000, 3, 2); if (nRet != 0) return 1;
-
-	// Load and decode Text Tiles rom
-	memset(PrehisleTempGfx, 0, 0xa0000);
-	nRet = BurnLoadRom(PrehisleTempGfx, 4, 1); if (nRet != 0) return 1;
-	GfxDecode(1024, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, PrehisleTempGfx, PrehisleTextTiles);
-
-	// Load and decode Background2 Tile rom
-	memset(PrehisleTempGfx, 0, 0xa0000);
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x00000, 5, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x10000, 6, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x20000, 7, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x30000, 8, 1); if (nRet != 0) return 1;
-	GfxDecode(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, PrehisleTempGfx, PrehisleBack2Tiles);
-
-	// Load and decode Background1 Tile rom
-	memset(PrehisleTempGfx, 0, 0xa0000);
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x00000, 9, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x10000,10, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x20000,11, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x30000,12, 1); if (nRet != 0) return 1;
-	GfxDecode(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, PrehisleTempGfx, PrehisleBack1Tiles);
-
-	// Load and decode Sprite roms
-	memset(PrehisleTempGfx, 0, 0xa0000);
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x00000,13, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x10000,14, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x20000,15, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x30000,16, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x40000,17, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x50000,18, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x60000,19, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x70000,20, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x80000,21, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleTempGfx + 0x90000,22, 1); if (nRet != 0) return 1;
-	GfxDecode(5120, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, PrehisleTempGfx, PrehisleSprites);
-
-	BurnFree(PrehisleTempGfx);
-
-	// Load Background2 Tilemap rom
-	nRet = BurnLoadRom(PrehisleTileMapRom,23, 1); if (nRet != 0) return 1;
-
-	// Load Z80 Program rom
-	nRet = BurnLoadRom(PrehisleZ80Rom,24, 1); if (nRet != 0) return 1;
-
-	// Load ADPCM Samples
-	nRet = BurnLoadRom(PrehisleADPCMSamples + 0x00000,25, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(PrehisleADPCMSamples + 0x10000,26, 1); if (nRet != 0) return 1;
-
-	// Setup the 68000 emulation
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(PrehisleRom       , 0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(PrehisleRam       , 0x070000, 0x073fff, MAP_RAM);
-	SekMapMemory(PrehisleVideoRam  , 0x090000, 0x0907ff, MAP_RAM);
-	SekMapMemory(PrehisleSpriteRam , 0x0a0000, 0x0a07ff, MAP_RAM);
-	SekMapMemory(PrehisleVideo2Ram , 0x0b0000, 0x0b3fff, MAP_RAM);
-	SekMapMemory(PrehislePaletteRam, 0x0d0000, 0x0d07ff, MAP_RAM);
-	SekSetReadWordHandler(0, PrehisleReadWord);
-	SekSetWriteWordHandler(0, PrehisleWriteWord);
-	SekClose();
-
-	// Setup the Z80 emulation
-	ZetInit(0);
-	ZetOpen(0);
-	ZetMapArea(0x0000, 0xefff, 0, PrehisleZ80Rom);
-	ZetMapArea(0x0000, 0xefff, 2, PrehisleZ80Rom);
-	ZetMapArea(0xf000, 0xf7ff, 0, PrehisleZ80Ram);
-	ZetMapArea(0xf000, 0xf7ff, 1, PrehisleZ80Ram);
-	ZetMapArea(0xf000, 0xf7ff, 2, PrehisleZ80Ram);
-	ZetSetReadHandler(PrehisleZ80Read);
-	ZetSetInHandler(PrehisleZ80PortRead);
-	ZetSetOutHandler(PrehisleZ80PortWrite);
-	ZetClose();
-
-	BurnYM3812Init(1, 4000000, &prehisleFMIRQHandler, &prehisleSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
-	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
-	
-	UPD7759Init(0, UPD7759_STANDARD_CLOCK, PrehisleADPCMSamples);
-	UPD7759SetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);
-	
-	GenericTilesInit();
-
-	// Reset the driver
-	PrehisleDoReset();
-
-	return 0;
-}
-
-static INT32 PrehisleExit()
+static INT32 DrvExit()
 {
 	BurnYM3812Exit();
 	UPD7759Exit();
@@ -725,225 +488,113 @@ static INT32 PrehisleExit()
 	return 0;
 }
 
-// Graphics Emulation
-static void PrehisleRenderBack2TileLayer()
-{
-	INT32 TileBase, mx, my, Tile, Colour, Scrollx, Scrolly, x, y, Flipx;
-
-	TileBase = ((VidControl[3] >> 4) & 0x3ff) * 32;
-	TileBase &= 0x7fff;
-	Scrollx = -(VidControl[3] & 0x0f);
-	Scrolly = -VidControl[2];
-
-	for (mx = 0; mx < 17; mx++) {
-		for (my = 0; my < 32; my++) {
-			Tile = (PrehisleTileMapRom[2 * TileBase + 0] << 8) + PrehisleTileMapRom[2 * TileBase + 1];
-			Colour = Tile >> 12;
-			Flipx = Tile & 0x800;
-			x = 16 * mx + Scrollx;
-			y = (16 * my + Scrolly) & 0x1ff;
-			y -= 16;
-
-			if (x > 15 && x < 240 && y > 15 && y < 208) {
-				if (!Flipx) {
-					Render16x16Tile(pTransDraw, Tile & 0x7ff, x, y, Colour, 4, 768, PrehisleBack2Tiles);
-				} else {
-					Render16x16Tile_FlipX(pTransDraw, Tile & 0x7ff, x, y, Colour, 4, 768, PrehisleBack2Tiles);
-				}
-			} else {
-				if (!Flipx) {
-					Render16x16Tile_Clip(pTransDraw, Tile & 0x7ff, x, y, Colour, 4, 768, PrehisleBack2Tiles);
-				} else {
-					Render16x16Tile_FlipX_Clip(pTransDraw, Tile & 0x7ff, x, y, Colour, 4, 768, PrehisleBack2Tiles);
-				}
-			}
-
-			TileBase ++;
-			if (TileBase == 0x8000) TileBase = 0;
-		}
-	}
-}
-
-static void PrehisleRenderBack1TileLayer()
-{
-	INT32 TileBase, mx, my, Tile, Colour, Scrollx, Scrolly, x, y, Flipy;
-
-	TileBase = ((VidControl[1] >> 4) & 0xff) * 32;
-	TileBase &= 0x1fff;
-	Scrollx = -(VidControl[1] & 0x0f);
-	Scrolly = -VidControl[0];
-
-	for (mx = 0; mx < 17; mx++) {
-		for (my = 0; my < 32; my++) {
-			Tile = (PrehisleVideo2Ram[2 * TileBase + 1] << 8) + PrehisleVideo2Ram[2 * TileBase + 0];
-			Colour = Tile >> 12;
-			Flipy = Tile & 0x800;
-			x = 16 * mx + Scrollx;
-			y = (16 * my + Scrolly) & 0x1ff;
-			y -= 16;
-
-			if (x > 15 && x < 240 && y > 15 && y < 208) {
-				if (!Flipy) {
-					Render16x16Tile_Mask(pTransDraw, Tile & 0x7ff, x, y, Colour, 4, 0x0f, 512, PrehisleBack1Tiles);
-				} else {
-					Render16x16Tile_Mask_FlipY(pTransDraw, Tile & 0x7ff, x, y, Colour, 4, 0x0f, 512, PrehisleBack1Tiles);
-				}
-			} else {
-				if (!Flipy) {
-					Render16x16Tile_Mask_Clip(pTransDraw, Tile & 0x7ff, x, y, Colour, 4, 0x0f, 512, PrehisleBack1Tiles);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Tile & 0x7ff, x, y, Colour, 4, 0x0f, 512, PrehisleBack1Tiles);
-				}
-			}
-
-			TileBase ++;
-			if (TileBase == 0x2000) TileBase = 0;
-		}
-	}
-}
-
 static void PrehisleRenderSpriteLayer()
 {
-	INT32 offs;
+	for (INT32 offs = 0x800 - 8; offs >= 0; offs -= 8)
+	{
+		INT32 sy = ((DrvSprRAM[offs + 1] << 8) + DrvSprRAM[offs + 0]) & 0x1ff;
+		INT32 sx = ((DrvSprRAM[offs + 3] << 8) + DrvSprRAM[offs + 2]) & 0x1ff;
+		if (sx & 0x100) sx = -(0xff - (sx & 0xff));
+		if (sy & 0x100) sy = -(0xff - (sy & 0xff));
 
-	for (offs = 0; offs < 0x800; offs += 8) {
-		INT32 x, y, Sprite, Colour, Flipx, Flipy;
+		INT32 Sprite	= (DrvSprRAM[offs + 5] << 8) + DrvSprRAM[offs + 4];
+		INT32 Colour	= DrvSprRAM[offs + 7] >> 4;
+		INT32 Priority	= (Colour < 0x4) ? 0 : 0xaaaa;
+		INT32 Flipy		= Sprite & 0x8000;
+		INT32 Flipx		= Sprite & 0x4000;
 
-		y = (PrehisleSpriteRam[offs + 1] << 8) + PrehisleSpriteRam[offs + 0];
-		if (y > 254) continue;
-		y -= 16;
-		x = (PrehisleSpriteRam[offs + 3] << 8) +  PrehisleSpriteRam[offs + 2];
-		if (x & 0x200) x = -(0xff - (x & 0xff));
-		if (x > 256) continue;
-
-		Sprite = (PrehisleSpriteRam[offs + 5] << 8) + PrehisleSpriteRam[offs + 4];
-		Colour = ((PrehisleSpriteRam[offs + 7] << 8) + PrehisleSpriteRam[offs + 6]) >> 12;
-		Flipy = Sprite & 0x8000;
-		Flipx = Sprite & 0x4000;
 		Sprite &= 0x1fff;
-		if (Sprite > 0x13ff) Sprite = 0x13ff;
+		if (Sprite >= 0x13ff) Sprite = 0x13ff;
 
-		if (x > 15 && x < 240 && y > 15 && y < 208) {
-			if (!Flipy) {
-				if (!Flipx) {
-					Render16x16Tile_Mask(pTransDraw, Sprite, x, y, Colour, 4, 0x0f, 256, PrehisleSprites);
-				} else {
-					Render16x16Tile_Mask_FlipX(pTransDraw, Sprite, x, y, Colour, 4, 0x0f, 256, PrehisleSprites);
-				}
-			} else {
-				if (!Flipx) {
-					Render16x16Tile_Mask_FlipY(pTransDraw, Sprite, x, y, Colour, 4, 0x0f, 256, PrehisleSprites);
-				} else {
-					Render16x16Tile_Mask_FlipXY(pTransDraw, Sprite, x, y, Colour, 4, 0x0f, 256, PrehisleSprites);
-				}
-			}
-		} else {
-			if (!Flipy) {
-				if (!Flipx) {
-					Render16x16Tile_Mask_Clip(pTransDraw, Sprite, x, y, Colour, 4, 0x0f, 256, PrehisleSprites);
-				} else {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Sprite, x, y, Colour, 4, 0x0f, 256, PrehisleSprites);
-				}
-			} else {
-				if (!Flipx) {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Sprite, x, y, Colour, 4, 0x0f, 256, PrehisleSprites);
-				} else {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Sprite, x, y, Colour, 4, 0x0f, 256, PrehisleSprites);
-				}
-			}
-		}
+		RenderPrioSprite(pTransDraw, DrvSprROM, Sprite, (Colour * 0x10) + 0x100, 0xf, sx, sy - 16, Flipx, Flipy, 16, 16, Priority);
 	}
 }
 
-static void PrehisleRenderTextLayer()
+static void DrvRecalcPalette()
 {
-	INT32 offs, mx, my, Colour, Tile, x, y;
+	UINT16 *p = (UINT16*)DrvPalRAM;
 
-	mx = -1;
-	my = 0;
-	for (offs = 0x000; offs < 0x800; offs+=2) {
-		mx++;
-		if (mx == 32) {
-			mx = 0;
-			my++;
-		}
-		Tile = (PrehisleVideoRam[offs + 1] << 8) + PrehisleVideoRam[offs + 0];
-		Colour = Tile >> 12;
-		x = 8 * mx;
-		y = 8 * my;
-		y -= 16;
+	for (INT32 i = 0; i < 0x800; i++)
+	{
+		INT32 r =  p[i] >> 12;
+		INT32 g = (p[i] >> 8) & 0x0f;
+		INT32 b = (p[i] >> 4) & 0x0f;
 
-		if (x > 7 && x < 248 && y > 7 && y < 216) {
-			Render8x8Tile_Mask(pTransDraw, Tile & 0xfff, x, y, Colour, 4, 0x0f, 0, PrehisleTextTiles);
-		} else {
-			Render8x8Tile_Mask_Clip(pTransDraw, Tile & 0xfff, x, y, Colour, 4, 0x0f, 0, PrehisleTextTiles);
-		}
+		r = (r * 16) + r;
+		g = (g * 16) + g;
+		b = (b * 16) + b;
+
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 }
 
-inline static UINT32 CalcCol(UINT16 nColour)
+static INT32 DrvDraw()
 {
-	INT32 r, g, b;
+	DrvRecalcPalette();
 
-	r = (nColour >> 12) & 0x0f;
-	g = (nColour >> 8) & 0x0f;
-	b = (nColour >> 4) & 0x0f;
+	GenericTilemapSetFlip(TMAP_GLOBAL, FlipScreen ? (TMAP_FLIPY | TMAP_FLIPX) : 0);
 
-	r = (r << 4) | r;
-	g = (g << 4) | g;
-	b = (b << 4) | b;
+	GenericTilemapSetScrollX(0, ScrollData[3]);
+	GenericTilemapSetScrollY(0, ScrollData[2]);
+	GenericTilemapSetScrollX(1, ScrollData[1]);
+	GenericTilemapSetScrollY(1, ScrollData[0]);
 
-	return BurnHighCol(r, g, b, 0);
-}
+	if (~nBurnLayer & 1) BurnTransferClear();
 
-static INT32 PrehisleCalcPalette()
-{
-	INT32 i;
-	UINT16* ps;
-	UINT32* pd;
+	if ( nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if ( nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
 
-	for (i = 0, ps = (UINT16*)PrehislePaletteRam, pd = PrehislePalette; i < 0x800; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
-	}
+	if (nSpriteEnable & 1) PrehisleRenderSpriteLayer();
+
+	if ( nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);
+
+	BurnTransferCopy(DrvPalette);
 
 	return 0;
 }
 
-static INT32 PrehisleDraw()
+static inline void DrvClearOpposites(UINT8* nJoystickInputs)
 {
-	PrehisleCalcPalette();
-	PrehisleRenderBack2TileLayer();
-	PrehisleRenderBack1TileLayer();
-	PrehisleRenderSpriteLayer();
-	PrehisleRenderTextLayer();
-	BurnTransferCopy(PrehislePalette);
-
-	return 0;
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
+	}
 }
 
-// Frame Function
-static INT32 PrehisleFrame()
+static INT32 DrvFrame()
 {
-	INT32 nInterleave = 1;
-	
-	if (PrehisleReset) PrehisleDoReset();
-
-	PrehisleMakeInputs();
-
-	nCyclesTotal[0] = 9000000 / 60;
-	nCyclesTotal[1] = 4000000 / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
-	
-	SekOpen(0);
-	ZetOpen(0);
+	if (DrvReset) {
+		DrvDoReset();
+	}
 
 	SekNewFrame();
 	ZetNewFrame();
+
+	{
+		DrvInput[0] = DrvInput[1] = DrvInput[2] = 0xff;
+
+		for (INT32 i = 0; i < 8; i++) {
+			DrvInput[0] ^= (DrvInputPort0[i] & 1) << i;
+			DrvInput[1] ^= (DrvInputPort1[i] & 1) << i;
+			DrvInput[2] ^= (DrvInputPort2[i] & 1) << i;
+		}
+
+		DrvClearOpposites(&DrvInput[0]);
+		DrvClearOpposites(&DrvInput[1]);
+	}
+
+	INT32 nInterleave = 1;
+	INT32 nCyclesTotal[2] = { 9000000 / 60, 4000000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+	
+	SekOpen(0);
+	ZetOpen(0);
 	
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
+		INT32 nCurrentCPU, nNext, nCyclesSegment;
 
-		// Run 68000
 		nCurrentCPU = 0;
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
@@ -952,6 +603,7 @@ static INT32 PrehisleFrame()
 	}
 	
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		UPD7759Update(0, pBurnSoundOut, nBurnSoundLen);
@@ -960,21 +612,22 @@ static INT32 PrehisleFrame()
 	ZetClose();
 	SekClose();
 
-	if (pBurnDraw) PrehisleDraw();
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
 
 	return 0;
 }
 
-// Scan RAM
-static INT32 PrehisleScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin != NULL) {			// Return minimum compatible version
+	if (pnMin != NULL) {
 		*pnMin = 0x029521;
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {								// Scan all memory, devices & variables
+	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = RamStart;
 		ba.nLen	  = RamEnd-RamStart;
@@ -983,31 +636,84 @@ static INT32 PrehisleScan(INT32 nAction,INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_DRIVER_DATA) {
-		SekScan(nAction);			// Scan 68000
-		ZetScan(nAction);			// Scan Z80
+		SekScan(nAction);
+		ZetScan(nAction);
 
 		BurnYM3812Scan(nAction, pnMin);
 		UPD7759Scan(nAction, pnMin);
 
-		// Scan critical driver variables
 		SCAN_VAR(ControlsInvert);
-		SCAN_VAR(VidControl);
+		SCAN_VAR(ScrollData);
 		SCAN_VAR(SoundLatch);
+		SCAN_VAR(FlipScreen);
 	}
 
 	return 0;
 }
 
-// Driver Declarations
+
+// Prehistoric Isle in 1930 (World)
+
+static struct BurnRomInfo PrehisleRomDesc[] = {
+	{ "gt-e2.2h",      0x20000, 0x7083245a, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "gt-e3.3h",      0x20000, 0x6d8cdf58, BRF_ESS | BRF_PRG }, //  1
+
+	{ "gt15.b15",      0x08000, 0xac652412, BRF_GRA },			 //  2	Text Layer Tiles
+
+	{ "pi8914.b14",    0x40000, 0x207d6187, BRF_GRA },			 //  3	Background2 Layer Tiles
+
+	{ "pi8916.h16",    0x40000, 0x7cffe0f6, BRF_GRA },			 //  4	Background1 Layer Tiles
+
+	{ "pi8910.k14",    0x80000, 0x5a101b0b, BRF_GRA },			 //  5	Sprite Layer Tiles
+	{ "gt5.5",         0x20000, 0x3d3ab273, BRF_GRA },			 //  6
+
+	{ "gt11.11",       0x10000, 0xb4f0fcf0, BRF_GRA },			 //  7	Background 2 TileMap
+
+	{ "gt1.1",         0x10000, 0x80a4c093, BRF_SND },			 //  8	Z80 Program Code
+
+	{ "gt4.4",         0x20000, 0x85dfb9ec, BRF_SND },			 //  9	ADPCM Samples
+};
+
+
+STD_ROM_PICK(Prehisle)
+STD_ROM_FN(Prehisle)
+
 struct BurnDriver BurnDrvPrehisle = {
 	"prehisle", NULL, NULL, NULL, "1989",
 	"Prehistoric Isle in 1930 (World)\0", NULL, "SNK", "Prehistoric Isle (SNK)",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, PrehisleRomInfo, PrehisleRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
-	PrehisleInit, PrehisleExit, PrehisleFrame, PrehisleDraw, PrehisleScan,
-	NULL, 0x800, 256, 224, 4, 3
+	PrehisleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x800,
+	256, 224, 4, 3
 };
+
+
+// Prehistoric Isle in 1930 (US)
+
+static struct BurnRomInfo PrehisluRomDesc[] = {
+	{ "gt-u2.2h",      0x20000, 0xa14f49bb, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "gt-u3.3h",      0x20000, 0xf165757e, BRF_ESS | BRF_PRG }, //  1
+
+	{ "gt15.b15",      0x08000, 0xac652412, BRF_GRA },			 //  2	Text Layer Tiles
+
+	{ "pi8914.b14",    0x40000, 0x207d6187, BRF_GRA },			 //  3	Background2 Layer Tiles
+
+	{ "pi8916.h16",    0x40000, 0x7cffe0f6, BRF_GRA },			 //  4	Background1 Layer Tiles
+
+	{ "pi8910.k14",    0x80000, 0x5a101b0b, BRF_GRA },			 //  5	Sprite Layer Tiles
+	{ "gt5.5",         0x20000, 0x3d3ab273, BRF_GRA },			 //  6
+
+	{ "gt11.11",       0x10000, 0xb4f0fcf0, BRF_GRA },			 //  7	Background 2 TileMap
+
+	{ "gt1.1",         0x10000, 0x80a4c093, BRF_SND },			 //  8	Z80 Program Code
+
+	{ "gt4.4",         0x20000, 0x85dfb9ec, BRF_SND },			 //  9	ADPCM Samples
+};
+
+
+STD_ROM_PICK(Prehislu)
+STD_ROM_FN(Prehislu)
 
 struct BurnDriver BurnDrvPrehislu = {
 	"prehisleu", "prehisle", NULL, NULL, "1989",
@@ -1015,9 +721,36 @@ struct BurnDriver BurnDrvPrehislu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, PrehisluRomInfo, PrehisluRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
-	PrehisleInit, PrehisleExit, PrehisleFrame, PrehisleDraw, PrehisleScan,
-	NULL, 0x800, 256, 224, 4, 3
+	PrehisleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x800,
+	256, 224, 4, 3
 };
+
+
+// Prehistoric Isle in 1930 (Korea)
+
+static struct BurnRomInfo PrehislkRomDesc[] = {
+	{ "gt-k2.2h",      0x20000, 0xf2d3544d, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "gt-k3.3h",      0x20000, 0xebf7439b, BRF_ESS | BRF_PRG }, //  1
+
+	{ "gt15.b15",      0x08000, 0xac652412, BRF_GRA },			 //  2	Text Layer Tiles
+
+	{ "pi8914.b14",    0x40000, 0x207d6187, BRF_GRA },			 //  3	Background2 Layer Tiles
+
+	{ "pi8916.h16",    0x40000, 0x7cffe0f6, BRF_GRA },			 //  4	Background1 Layer Tiles
+
+	{ "pi8910.k14",    0x80000, 0x5a101b0b, BRF_GRA },			 //  5	Sprite Layer Tiles
+	{ "gt5.5",         0x20000, 0x3d3ab273, BRF_GRA },			 //  6
+
+	{ "gt11.11",       0x10000, 0xb4f0fcf0, BRF_GRA },			 //  7	Background 2 TileMap
+
+	{ "gt1.1",         0x10000, 0x80a4c093, BRF_SND },			 //  8	Z80 Program Code
+
+	{ "gt4.4",         0x20000, 0x85dfb9ec, BRF_SND },			 //  9	ADPCM Samples
+};
+
+
+STD_ROM_PICK(Prehislk)
+STD_ROM_FN(Prehislk)
 
 struct BurnDriver BurnDrvPrehislk = {
 	"prehislek", "prehisle", NULL, NULL, "1989",
@@ -1025,9 +758,36 @@ struct BurnDriver BurnDrvPrehislk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, PrehislkRomInfo, PrehislkRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
-	PrehisleInit, PrehisleExit, PrehisleFrame, PrehisleDraw, PrehisleScan,
-	NULL, 0x800, 256, 224, 4, 3
+	PrehisleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x800,
+	256, 224, 4, 3
 };
+
+
+// Genshi-Tou 1930's (Japan)
+
+static struct BurnRomInfo GensitouRomDesc[] = {
+	{ "gt-j2.2h",      0x20000, 0xa2da0b6b, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "gt-j3.3h",      0x20000, 0xc1a0ae8e, BRF_ESS | BRF_PRG }, //  1
+
+	{ "gt15.b15",      0x08000, 0xac652412, BRF_GRA },			 //  2	Text Layer Tiles
+
+	{ "pi8914.b14",    0x40000, 0x207d6187, BRF_GRA },			 //  3	Background2 Layer Tiles
+
+	{ "pi8916.h16",    0x40000, 0x7cffe0f6, BRF_GRA },			 //  4	Background1 Layer Tiles
+
+	{ "pi8910.k14",    0x80000, 0x5a101b0b, BRF_GRA },			 //  5	Sprite Layer Tiles
+	{ "gt5.5",         0x20000, 0x3d3ab273, BRF_GRA },			 //  6
+
+	{ "gt11.11",       0x10000, 0xb4f0fcf0, BRF_GRA },			 //  7	Background 2 TileMap
+
+	{ "gt1.1",         0x10000, 0x80a4c093, BRF_SND },			 //  8	Z80 Program Code
+
+	{ "gt4.4",         0x20000, 0x85dfb9ec, BRF_SND },			 //  9	ADPCM Samples
+};
+
+
+STD_ROM_PICK(Gensitou)
+STD_ROM_FN(Gensitou)
 
 struct BurnDriver BurnDrvGensitou = {
 	"gensitou", "prehisle", NULL, NULL, "1989",
@@ -1035,16 +795,61 @@ struct BurnDriver BurnDrvGensitou = {
 	L"Genshi-Tou 1930's (Japan)\0\u539F\u59CB\u5CF6 1930's\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, GensitouRomInfo, GensitouRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
-	PrehisleInit, PrehisleExit, PrehisleFrame, PrehisleDraw, PrehisleScan,
-	NULL, 0x800, 256, 224, 4, 3
+	PrehisleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x800,
+	256, 224, 4, 3
 };
+
+
+// Prehistoric Isle in 1930 (World, bootleg)
+
+static struct BurnRomInfo PrehislbRomDesc[] = {
+	// world bootleg using 64k*8 UVEPROMs, program and sound unchanged, sprites and background tilemaps altered
+	{ "u_h1.bin",      0x10000, 0x04c1703b, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "u_h3.bin",      0x10000, 0x62f04cd1, BRF_ESS | BRF_PRG }, //  1
+	{ "u_j2.bin",      0x10000, 0x7b12501d, BRF_ESS | BRF_PRG }, //  2
+	{ "u_j3.bin",      0x10000, 0x2a86f7c4, BRF_ESS | BRF_PRG }, //  3
+
+	{ "l_a17.bin",     0x08000, 0xac652412, BRF_GRA },			 //  4	Text Layer Tiles
+
+	{ "l_b17.bin",     0x10000, 0x65a22ffc, BRF_GRA },			 //  5	Background2 Layer Tiles
+	{ "l_b16.bin",     0x10000, 0xb1e1f527, BRF_GRA },			 //  6
+	{ "l_b14.bin",     0x10000, 0x28e94d40, BRF_GRA },			 //  7
+	{ "l_b13.bin",     0x10000, 0x4dbb557a, BRF_GRA },			 //  8
+
+	{ "l_h17.bin",     0x10000, 0x79c42316, BRF_GRA },			 //  9	Background1 Layer Tiles
+	{ "l_h15.bin",     0x10000, 0x50e31fb0, BRF_GRA },			 // 10
+	{ "l_f17.bin",     0x10000, 0x2af1739d, BRF_GRA },			 // 11
+	{ "l_f15.bin",     0x10000, 0xcac11327, BRF_GRA },			 // 12
+	
+	{ "u_k12.bin",     0x10000, 0x4b0215f0, BRF_GRA },			 // 13	Sprite Layer Tiles
+	{ "u_k13.bin",     0x10000, 0x68b8a698, BRF_GRA },			 // 14
+	{ "u_j4.bin",      0x10000, 0x06ce7b57, BRF_GRA },			 // 15
+	{ "u_j5.bin",      0x10000, 0x2ee8b401, BRF_GRA },			 // 16
+	{ "u_j7.bin",      0x10000, 0x35656cbc, BRF_GRA },			 // 17
+	{ "u_j8.bin",      0x10000, 0x1e7e9336, BRF_GRA },			 // 18
+	{ "u_j10.bin",     0x10000, 0x785bf046, BRF_GRA },			 // 19
+	{ "u_j11.bin",     0x10000, 0xc306b9fa, BRF_GRA },			 // 20
+	{ "u_j12.bin",     0x10000, 0x5ba5bbed, BRF_GRA },			 // 21
+	{ "u_j13.bin",     0x10000, 0x007dee47, BRF_GRA },			 // 22 - modified by bootleggers
+	
+	{ "l_a6.bin",      0x10000, 0xe2b9a44b, BRF_GRA },			 // 23	Background 2 TileMap - modified by bootleggers
+
+	{ "u_e12.bin",     0x10000, 0x80a4c093, BRF_SND },			 // 24	Z80 Program Code
+
+	{ "u_f14.bin",     0x10000, 0x2fb32933, BRF_SND },			 // 25	ADPCM Samples
+	{ "u_j14.bin",     0x10000, 0x32d5f7c9, BRF_SND },			 // 26
+};
+
+
+STD_ROM_PICK(Prehislb)
+STD_ROM_FN(Prehislb)
 
 struct BurnDriver BurnDrvPrehislb = {
 	"prehisleb", "prehisle", NULL, NULL, "1989",
 	"Prehistoric Isle in 1930 (World, bootleg)\0", NULL, "bootleg", "Prehistoric Isle (SNK)",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, PrehislbRomInfo, PrehislbRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
-	PrehislebInit, PrehisleExit, PrehisleFrame, PrehisleDraw, PrehisleScan,
-	NULL, 0x800, 256, 224, 4, 3
+	PrehisleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x800,
+	256, 224, 4, 3
 };

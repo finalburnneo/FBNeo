@@ -68,25 +68,38 @@ static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min,
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 deadzone, UINT8 scalemin, UINT8 scalemax)
+UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, UINT8 scalemax)
 {
-	INT32 DeadZone = (deadzone) ? 10 : 0;
+	if (flags & INPUT_MIGHTBEDIGITAL && (UINT16)anaval == 0xffff) {
+		anaval = 0x3fc; // digital button mapped here & pressed.
+	}
+	if (flags & INPUT_LINEAR) anaval = abs(anaval);
+	INT32 DeadZone = (flags & INPUT_DEADZONE) ? 10 : 0;
 	INT16 Temp = (reversed) ? (0x7f - (anaval / 16)) : (0x7f + (anaval / 16));  // - for reversed, + for normal
 
-	if (deadzone) { // deadzones
-		// 0x7f is center, 0x3f right, 0xbe left.  0x7f +-10 is noise.
-		if (!(Temp < 0x7f-DeadZone || Temp > 0x7f+DeadZone)) {
-			Temp = 0x7f; // we hit a dead-zone, return mid-range
+	if (flags & INPUT_DEADZONE) { // deadzones
+		if (flags & INPUT_LINEAR) {
+			if (Temp < DeadZone) Temp = 0;
 		} else {
-			// so we don't jump between 0x7f (center) and next value after deadzone
-			if (Temp < 0x7f-DeadZone) Temp += DeadZone;
-			else if (Temp > 0x7f+DeadZone) Temp -= DeadZone;
+			// 0x7f is center, 0x3f right, 0xbe left.  0x7f +-10 is noise.
+			if (!(Temp < 0x7f-DeadZone || Temp > 0x7f+DeadZone)) {
+				Temp = 0x7f; // we hit a dead-zone, return mid-range
+			} else {
+				// so we don't jump between 0x7f (center) and next value after deadzone
+				if (Temp < 0x7f-DeadZone) Temp += DeadZone;
+				else if (Temp > 0x7f+DeadZone) Temp -= DeadZone;
+			}
 		}
     }
 
 	if (Temp < 0x3f + DeadZone) Temp = 0x3f + DeadZone; // clamping for happy scalerange()
 	if (Temp > 0xbe - DeadZone) Temp = 0xbe - DeadZone;
 	Temp = scalerange(Temp, 0x3f + DeadZone, 0xbe - DeadZone, scalemin, scalemax);
+
+	if (flags & INPUT_LINEAR) {
+		Temp -= 0x80;
+		Temp = scalerange(Temp, 0, 0x7f, 0, 0xff);
+	}
 
 	return Temp;
 }

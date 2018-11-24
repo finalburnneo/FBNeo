@@ -7,4 +7,13 @@
 void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, INT8 left_bit, INT8 right_bit, UINT8 flags);
 void CompileInput(UINT8 **input, void *output, INT32 num, INT32 bits, UINT32 *init);
 
-UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 deadzone, UINT8 scalemin, UINT8 scalemax);
+// ---[ ProcessAnalog() flags
+// by default, it centers at the midpoint between scalemin and scalemax.
+// use INPUT_LINEAR to change to linear-mode.
+#define INPUT_DEADZONE          0x01
+#define INPUT_LINEAR            0x02
+
+// for analog pedals, allows a mapped digital button to work
+#define INPUT_MIGHTBEDIGITAL    0x04
+
+UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, UINT8 scalemax);

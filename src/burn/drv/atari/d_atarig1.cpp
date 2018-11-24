@@ -1,10 +1,6 @@
 // FB Alpha Atari G1 system driver module
 // Based on MAME driver by Aaron Giles
 
-// needs analog inputs for hydra
-// save states for rle
-// reset routine for rle
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "m6502_intf.h"
@@ -47,24 +43,28 @@ static UINT16 DrvInputs[5];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo HydraInputList[] = {
 	{"Coin 1",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
-	{"Coin 2",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 coin"	},
-	{"Coin 3",			BIT_DIGITAL,	DrvJoy3 + 0,	"p3 coin"	},
+	{"Coin 2",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"Coin 3",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
+	A("P1 Stick X",     BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Stick Y",     BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
+	A("P1 Accelerator", BIT_ANALOG_REL, &DrvAnalogPort2,"p1 fire 1"),
 	{"P1 Right Trigger",BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 	{"P1 Right Thumb",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 3"	},
 	{"P1 Left Trigger",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 5"	},
 	{"P1 Left Thumb",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 6"	},
 	{"P1 Boost",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 4"	},
 
-	// placeholder
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 fire 3"	},
-
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
+#undef A
 
 STDINPUTINFO(Hydra)
 
@@ -242,6 +242,19 @@ static inline UINT16 special_read()
 	return ret;
 }
 
+static UINT8 read_analog(INT32 port)
+{
+	UINT8 ret = 0;
+
+	switch (port) {
+		case 0: ret = ProcessAnalog(DrvAnalogPort0, 0, INPUT_DEADZONE, 0x00, 0xfe); break;
+		case 1: ret = ProcessAnalog(DrvAnalogPort1, 0, INPUT_DEADZONE, 0x00, 0xfe); break;
+		case 2: ret = ProcessAnalog(DrvAnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff); break;
+	}
+
+	return ret;
+}
+
 static UINT16 __fastcall atarig1_main_read_word(UINT32 address)
 {
 	switch (address)
@@ -254,7 +267,7 @@ static UINT16 __fastcall atarig1_main_read_word(UINT32 address)
 		case 0xfc8004:
 		case 0xfc8006:
 			if (pitfight) return DrvInputs[1];
-			return DrvInputs[1 + a2d_select];
+			return read_analog(a2d_select) << 8;
 
 		case 0xfd0000:
 			return 0xff | (AtariJSARead() << 8);
@@ -280,7 +293,7 @@ static UINT8 __fastcall atarig1_main_read_byte(UINT32 address)
 		case 0xfc8006:
 		case 0xfc8007:
 			if (pitfight) return (DrvInputs[1] >> ((~address & 1) * 8));
-			return (DrvInputs[1 + a2d_select] >> ((~address & 1) * 8));
+			return ((read_analog(a2d_select) << 8) >> ((~address & 1) * 8));
 
 		case 0xfd0000:
 		case 0xfd0001:
@@ -356,7 +369,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x040000;
 	DrvGfxROM2		= Next; Next += 0x200000;
 
-	DrvSndROM		= Next; Next += 0x040000;
+	DrvSndROM		= Next; Next += 0x080000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
 
@@ -518,7 +531,7 @@ static INT32 DrvInit(INT32 game, INT32 slapstic)
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000, k++, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM  + 0x010000, k++, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM  + 0x020000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x060000, k++, 1)) return 1;
 
 		DrvGfxDecode();
 	}
@@ -560,8 +573,8 @@ static INT32 DrvInit(INT32 game, INT32 slapstic)
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000, k++, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM  + 0x010000, k++, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM  + 0x020000, k++, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM  + 0x030000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x060000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x070000, k++, 1)) return 1;
 
 		DrvGfxDecode();
 	}
@@ -632,6 +645,8 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	SekExit();
+
+	atarirle_exit();
 
 	AtariJSAExit();
 	AtariSlapsticExit();
@@ -710,14 +725,9 @@ static INT32 DrvDraw()
 		DrvRecalc = 1; // force!!
 	}
 
-	if (nBurnLayer & 1) 
-	{
-		draw_background();
-	}
-	else
-	{
-		BurnTransferClear();
-	}
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_background();
 
 	copy_sprites();
 
@@ -759,7 +769,8 @@ static INT32 DrvFrame()
 
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 262;
-//	INT32 nCyclesTotal[2] = { (INT32)(14318180 / 59.92), (INT32)(1789773 / 59.92) };
+	INT32 nCyclesTotal[2] = { (INT32)(14318180 / 59.92), (INT32)(1789773 / 59.92) };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 	M6502Open(0);
@@ -770,18 +781,12 @@ static INT32 DrvFrame()
 	{
 		scanline = i;
 
-		// beam active
-		SekRun(320);
-		M6502Run((SekTotalCycles()/8) - M6502TotalCycles());
-		SekRun(320);
-		M6502Run((SekTotalCycles()/8) - M6502TotalCycles());
-
-		// hblank
-		SekRun(272);
-		M6502Run((SekTotalCycles()/8) - M6502TotalCycles());
+		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
 		if (i == 239) {
 			vblank = 1;
+
 			video_int_state = 1;
 			update_interrupts();
 
@@ -792,8 +797,8 @@ static INT32 DrvFrame()
 
 		AtariJSAInterruptUpdate(nInterleave);
 
-		if (pBurnSoundOut) {
-			INT32 nSegment = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegment = nBurnSoundLen / (nInterleave / 2);
 			AtariJSAUpdate(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 			nSoundBufferPos += nSegment;
 		}
@@ -830,6 +835,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SekScan(nAction);
 
+		atarirle_scan(nAction, pnMin);
 		AtariJSAScan(nAction, pnMin);
 		AtariSlapsticScan(nAction, pnMin);
 		AtariEEPROMScan(nAction, pnMin);

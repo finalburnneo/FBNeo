@@ -130,6 +130,7 @@ static struct atarirle_data atarirle[ATARIRLE_MAX];
 
 static UINT8 rle_bpp[8];
 static UINT16 *rle_table[8];
+static UINT16 *rle_table_base;
 
 
 
@@ -330,23 +331,23 @@ int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT
 	}
 
 	/* allocate the object info */
-	mo->info = (atarirle_info*)BurnMalloc(sizeof(mo->info[0]) * mo->objectcount);
+	mo->info = (atarirle_info*)BurnMalloc(sizeof(atarirle_info) * mo->objectcount);
 
 	/* fill in the data */
-	memset(mo->info, 0, sizeof(mo->info[0]) * mo->objectcount);
+	memset(mo->info, 0, sizeof(atarirle_info) * mo->objectcount);
 	for (i = 0; i < mo->objectcount; i++)
 		prescan_rle(mo, i);
 
 	/* allocate the spriteram */
-	mo->spriteram = (atarirle_entry*)BurnMalloc(sizeof(mo->spriteram[0]) * mo->spriteramsize);
+	mo->spriteram = (atarirle_entry*)BurnMalloc(sizeof(atarirle_entry) * mo->spriteramsize);
 
 	/* clear it to zero */
-	memset(mo->spriteram, 0, sizeof(mo->spriteram[0]) * mo->spriteramsize);
+	memset(mo->spriteram, 0, sizeof(atarirle_entry) * mo->spriteramsize);
 
-	BurnBitmapAllocate(1, nScreenWidth, nScreenHeight, 0);
-	BurnBitmapAllocate(2, nScreenWidth, nScreenHeight, 0);
-	BurnBitmapAllocate(3, nScreenWidth, nScreenHeight, 0);
-	BurnBitmapAllocate(4, nScreenWidth, nScreenHeight, 0);
+	BurnBitmapAllocate(1, nScreenWidth, nScreenHeight+4, 0); // +4 because rle sometimes likes to ignore clipping and go out of bounds..
+	BurnBitmapAllocate(2, nScreenWidth, nScreenHeight+4, 0);
+	BurnBitmapAllocate(3, nScreenWidth, nScreenHeight+4, 0);
+	BurnBitmapAllocate(4, nScreenWidth, nScreenHeight+4, 0);
 
 	/* allocate bitmaps */
 	mo->vram[0][0] = BurnBitmapGetBitmap(1);
@@ -371,7 +372,38 @@ int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT
 	return 1;
 }
 
+void atarirle_exit()
+{
+	BurnFree(rle_table_base);
 
+	for (INT32 i = 0; i < ATARIRLE_MAX; i++) {
+		struct atarirle_data *mo = &atarirle[i];
+
+		BurnFree(mo->info);
+		BurnFree(mo->spriteram);
+	}
+}
+
+INT32 atarirle_scan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_VOLATILE)
+	{
+		for (INT32 i = 0; i < ATARIRLE_MAX; i++)
+		{
+			atarirle_data *mo = &atarirle[i];
+
+			if (mo->spriteram)
+			{
+				ScanVar(mo->spriteram, sizeof(atarirle_entry) * mo->spriteramsize, "AtariRLE RAM");
+
+				SCAN_VAR(mo->control_bits);
+				SCAN_VAR(mo->command);
+			}
+		}
+	}
+
+	return 0;
+}
 
 /*---------------------------------------------------------------
     atarirle_control_w: Write handler for MO control bits.
@@ -546,7 +578,6 @@ UINT16 *atarirle_get_vram(int map, int idx)
 
 static int build_rle_tables(void)
 {
-	UINT16 *base;
 	int i;
 
 	/* if we've already done it, don't bother */
@@ -554,14 +585,14 @@ static int build_rle_tables(void)
 //      return 0;
 
 	/* allocate all 5 tables */
-	base = (UINT16*)BurnMalloc(0x500 * sizeof(UINT16));
+	rle_table_base = (UINT16*)BurnMalloc(0x500 * sizeof(UINT16));
 
 	/* assign the tables */
-	rle_table[0] = &base[0x000];
-	rle_table[1] = &base[0x100];
-	rle_table[2] = rle_table[3] = &base[0x200];
-	rle_table[4] = rle_table[6] = &base[0x300];
-	rle_table[5] = rle_table[7] = &base[0x400];
+	rle_table[0] = &rle_table_base[0x000];
+	rle_table[1] = &rle_table_base[0x100];
+	rle_table[2] = rle_table[3] = &rle_table_base[0x200];
+	rle_table[4] = rle_table[6] = &rle_table_base[0x300];
+	rle_table[5] = rle_table[7] = &rle_table_base[0x400];
 
 	/* set the bpps */
 	rle_bpp[0] = 4;
@@ -624,7 +655,7 @@ int count_objects(const UINT16 *base, int length)
 			lowest_address = offset;
 	}
 
-	bprintf (0, _T("Lowest: %x\n"), lowest_address/4);
+	//bprintf (0, _T("Lowest: %x\n"), lowest_address/4);
 
 	/* that determines how many objects */
 	return lowest_address / 4;
@@ -661,7 +692,7 @@ static void prescan_rle(const struct atarirle_data *mo, int which)
 	/* make sure it's valid */
 	if (offset < which * 4 || offset >= mo->romlength)
 	{
-		memset(rledata, 0, sizeof(*rledata));
+		memset(rledata, 0, sizeof(atarirle_info));
 		return;
 	}
 
@@ -757,8 +788,8 @@ static void sort_and_render(struct atarirle_data *mo)
 	struct mo_sort_entry *current;
 	int i;
 
-struct atarirle_entry *hilite = NULL;
-int count = 0;
+	struct atarirle_entry *hilite = NULL;
+	int count = 0;
 
 	/* sort the motion objects into their proper priorities */
 	memset(list_head, 0, sizeof(list_head));
@@ -785,7 +816,7 @@ int count = 0;
 			/* make sure they are in range */
 			if (scale > 0 && code < mo->objectcount)
 			{
-				bprintf (0, _T("draw: %x, %x, %x\n"), scale, code, mo->objectcount);
+				//bprintf (0, _T("draw: %x, %x, %x\n"), scale, code, mo->objectcount);
 
 				int hflip = EXTRACT_DATA(obj, mo->hflipmask);
 				int color = EXTRACT_DATA(obj, mo->colormask);
@@ -815,110 +846,110 @@ int count = 0;
 			}
 		}
 
-if (hilite)
-{
-	int scale, code, which;
-
-	/* extract scale and code */
-	obj = hilite;
-	scale = EXTRACT_DATA(obj, mo->scalemask);
-	code = EXTRACT_DATA(obj, mo->codemask);
-	which = EXTRACT_DATA(obj, mo->vrammask);
-
-	/* make sure they are in range */
-	if (scale > 0 && code < mo->objectcount)
+	if (hilite)
 	{
-		int hflip = EXTRACT_DATA(obj, mo->hflipmask);
-		int color = EXTRACT_DATA(obj, mo->colormask);
-		int priority = EXTRACT_DATA(obj, mo->prioritymask);
-		int x = EXTRACT_DATA(obj, mo->xposmask);
-		int y = EXTRACT_DATA(obj, mo->yposmask);
-		int scaled_xoffs, scaled_yoffs;
-		const struct atarirle_info *info;
+		int scale, code, which;
 
-		if (x & ((mo->xposmask.mask + 1) >> 1))
-			x = (INT16)(x | ~mo->xposmask.mask);
-		if (y & ((mo->yposmask.mask + 1) >> 1))
-			y = (INT16)(y | ~mo->yposmask.mask);
-		x += 0; //mo->cliprect.nMinx;
+		/* extract scale and code */
+		obj = hilite;
+		scale = EXTRACT_DATA(obj, mo->scalemask);
+		code = EXTRACT_DATA(obj, mo->codemask);
+		which = EXTRACT_DATA(obj, mo->vrammask);
 
-		/* merge priority and color */
-		color = (color << 4) | (priority << ATARIRLE_PRIORITY_SHIFT);
-
-		info = &mo->info[code];
-		scaled_xoffs = (scale * info->xoffs) >> 12;
-		scaled_yoffs = (scale * info->yoffs) >> 12;
-
-		/* we're hflipped, account for it */
-		if (hflip)
-			scaled_xoffs = ((scale * info->width) >> 12) - scaled_xoffs;
-
-		/* adjust for the x and y offsets */
-		x -= scaled_xoffs;
-		y -= scaled_yoffs;
-
-		do
+		/* make sure they are in range */
+		if (scale > 0 && code < mo->objectcount)
 		{
-			int scaled_width = (scale * info->width + 0x7fff) >> 12;
-			int scaled_height = (scale * info->height + 0x7fff) >> 12;
-			int dx, dy, ex, ey, sx = x, sy = y, tx, ty;
+			int hflip = EXTRACT_DATA(obj, mo->hflipmask);
+			int color = EXTRACT_DATA(obj, mo->colormask);
+			int priority = EXTRACT_DATA(obj, mo->prioritymask);
+			int x = EXTRACT_DATA(obj, mo->xposmask);
+			int y = EXTRACT_DATA(obj, mo->yposmask);
+			int scaled_xoffs, scaled_yoffs;
+			const struct atarirle_info *info;
 
-			/* make sure we didn't end up with 0 */
-			if (scaled_width == 0) scaled_width = 1;
-			if (scaled_height == 0) scaled_height = 1;
+			if (x & ((mo->xposmask.mask + 1) >> 1))
+				x = (INT16)(x | ~mo->xposmask.mask);
+			if (y & ((mo->yposmask.mask + 1) >> 1))
+				y = (INT16)(y | ~mo->yposmask.mask);
+			x += 0; //mo->cliprect.nMinx;
 
-			/* compute the remaining parameters */
-			dx = (info->width << 12) / scaled_width;
-			dy = (info->height << 12) / scaled_height;
-			ex = sx + scaled_width - 1;
-			ey = sy + scaled_height - 1;
+			/* merge priority and color */
+			color = (color << 4) | (priority << ATARIRLE_PRIORITY_SHIFT);
 
-			/* left edge clip */
-			if (sx < 0)
-				sx = 0;
-			if (sx >= nScreenWidth)
-				break;
+			info = &mo->info[code];
+			scaled_xoffs = (scale * info->xoffs) >> 12;
+			scaled_yoffs = (scale * info->yoffs) >> 12;
 
-			/* right edge clip */
-			if (ex >= nScreenWidth)
-				ex = nScreenWidth - 1; // right?? iq_132
-			else if (ex < 0)
-				break;
+			/* we're hflipped, account for it */
+			if (hflip)
+				scaled_xoffs = ((scale * info->width) >> 12) - scaled_xoffs;
 
-			/* top edge clip */
-			if (sy < 0)
-				sy = 0;
-			else if (sy >= nScreenHeight)
-				break;
+			/* adjust for the x and y offsets */
+			x -= scaled_xoffs;
+			y -= scaled_yoffs;
 
-			/* bottom edge clip */
-			if (ey >= nScreenHeight)
-				ey = nScreenHeight-1; // right?? iq_132
-			else if (ey < 0)
-				break;
-
-			for (ty = sy; ty <= ey; ty++)
+			do
 			{
-				bitmap1[(ty * nScreenWidth) + sx] = rand() & 0xff;
-				bitmap1[(ty * nScreenWidth) + ex] = rand() & 0xff;
-			//	plot_pixel(bitmap1, sx, ty, rand() & 0xff);
-			//	plot_pixel(bitmap1, ex, ty, rand() & 0xff);
-			}
-			for (tx = sx; tx <= ex; tx++)
-			{
-				bitmap1[(sy * nScreenWidth) + tx] = rand() & 0xff;
-				bitmap1[(ey * nScreenWidth) + tx] = rand() & 0xff;
-			//	plot_pixel(bitmap1, tx, sy, rand() & 0xff);
-			//	plot_pixel(bitmap1, tx, ey, rand() & 0xff);
-			}
-		} while (0);
-fprintf(stderr, "   Sprite: c=%04X l=%04X h=%d X=%4d (o=%4d w=%3d) Y=%4d (o=%4d h=%d) s=%04X\n",
-	code, color, hflip,
-	x, -scaled_xoffs, (scale * info->width) >> 12,
-	y, -scaled_yoffs, (scale * info->height) >> 12, scale);
+				int scaled_width = (scale * info->width + 0x7fff) >> 12;
+				int scaled_height = (scale * info->height + 0x7fff) >> 12;
+				int dx, dy, ex, ey, sx = x, sy = y, tx, ty;
+
+				/* make sure we didn't end up with 0 */
+				if (scaled_width == 0) scaled_width = 1;
+				if (scaled_height == 0) scaled_height = 1;
+
+				/* compute the remaining parameters */
+				dx = (info->width << 12) / scaled_width;
+				dy = (info->height << 12) / scaled_height;
+				ex = sx + scaled_width - 1;
+				ey = sy + scaled_height - 1;
+
+				/* left edge clip */
+				if (sx < 0)
+					sx = 0;
+				if (sx >= nScreenWidth)
+					break;
+
+				/* right edge clip */
+				if (ex >= nScreenWidth)
+					ex = nScreenWidth - 1; // right?? iq_132
+				else if (ex < 0)
+					break;
+
+				/* top edge clip */
+				if (sy < 0)
+					sy = 0;
+				else if (sy >= nScreenHeight)
+					break;
+
+				/* bottom edge clip */
+				if (ey >= nScreenHeight)
+					ey = nScreenHeight-1; // right?? iq_132
+				else if (ey < 0)
+					break;
+
+				for (ty = sy; ty <= ey; ty++)
+				{
+					bitmap1[(ty * nScreenWidth) + sx] = rand() & 0xff;
+					bitmap1[(ty * nScreenWidth) + ex] = rand() & 0xff;
+					//	plot_pixel(bitmap1, sx, ty, rand() & 0xff);
+					//	plot_pixel(bitmap1, ex, ty, rand() & 0xff);
+				}
+				for (tx = sx; tx <= ex; tx++)
+				{
+					bitmap1[(sy * nScreenWidth) + tx] = rand() & 0xff;
+					bitmap1[(ey * nScreenWidth) + tx] = rand() & 0xff;
+					//	plot_pixel(bitmap1, tx, sy, rand() & 0xff);
+					//	plot_pixel(bitmap1, tx, ey, rand() & 0xff);
+				}
+			} while (0);
+
+			/*fprintf(stderr, "   Sprite: c=%04X l=%04X h=%d X=%4d (o=%4d w=%3d) Y=%4d (o=%4d h=%d) s=%04X\n",
+			 code, color, hflip,
+			 x, -scaled_xoffs, (scale * info->width) >> 12,
+			 y, -scaled_yoffs, (scale * info->height) >> 12, scale); */
+		}
 	}
-
-}
 }
 
 
@@ -1011,14 +1042,12 @@ void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
 	if (sx >= nScreenWidth) //clip->nMaxx)
 		return;
 
-	//bprintf (0, _T("REC\n"));
 	/* right edge clip */
 	if (ex >= nScreenWidth) //clip->nMaxx)
 		ex = /*clip->nMaxx*/nScreenWidth-1, xclipped = 1;
 	else if (ex < 0)//clip->nMinx)
 		return;
 
-	//bprintf (0, _T("TEC\n"));
 	/* top edge clip */
 	if (sy < 0)//clip->nMiny)
 	{
@@ -1028,14 +1057,12 @@ void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
 	else if (sy >= nScreenHeight) //clip->nMaxy)
 		return;
 
-	bprintf (0, _T("BEC\n"));
 	/* bottom edge clip */
 	if (ey >= nScreenHeight) //clip->nMaxy)
-		ey = nScreenHeight-1; //clip->nMaxy;
+		ey = (nScreenHeight-1); //clip->nMaxy;
 	else if (ey < 0) //clip->nMiny)
 		return;
 
-	//bprintf (0, _T("LOOP\n"));
 	/* loop top to bottom */
 	for (y = sy; y <= ey; y++, sourcey += dy)
 	{

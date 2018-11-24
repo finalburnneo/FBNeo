@@ -786,33 +786,6 @@ void AtariMoRender(INT32 map)
 	atarimo_render(map, &cliprect, &rectlist);
 }
 
-static void DrawCustomMaskTile_MO(UINT16 *pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
-{
-	if (FlipY)
-	{
-		if (FlipX)
-		{
-			RenderCustomTile_Mask_FlipXY_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);
-		}
-		else
-		{
-			RenderCustomTile_Mask_FlipY_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);
-		}
-	}
-	else
-	{
-		if (FlipX)
-		{
-			RenderCustomTile_Mask_FlipX_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);
-		}
-		else
-		{
-			RenderCustomTile_Mask_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);
-		}
-	}
-}
-
-
 /*---------------------------------------------------------------
     mo_render_object: Internal processing callback that
     renders to the backing bitmap and then copies the result
@@ -937,7 +910,7 @@ if ((temp & 0xff00) == 0xc800)
 				// 1. set clipping to this sprite's bandclip:
 				GenericTilesSetClip(cliprect->min_x, cliprect->max_x, cliprect->min_y, (cliprect->max_y+1 > nScreenHeight) ? nScreenHeight : cliprect->max_y+1);
 				// 2: draw sprite:
-				DrawCustomMaskTile_MO(bitmap, gfx->width, gfx->height, code, sx, sy, hflip, vflip, color, 0, mo->transpen, 0, gfx->gfxbase);
+				DrawCustomMaskTile(bitmap, gfx->width, gfx->height, code, sx, sy, hflip, vflip, color, 0, mo->transpen, 0, gfx->gfxbase);
 				// 3: set clipping back to cached value @ AtariMoRender()
 				GenericTilesSetClip(mainclippy.min_x, mainclippy.max_x, mainclippy.min_y, mainclippy.max_y);
 				rendered = 1;
@@ -977,7 +950,7 @@ if ((temp & 0xff00) == 0xc800)
 
 				/* draw the sprite */
 				GenericTilesSetClip(cliprect->min_x, cliprect->max_x, cliprect->min_y, (cliprect->max_y+1 > nScreenHeight) ? nScreenHeight : cliprect->max_y+1);
-				DrawCustomMaskTile_MO(bitmap, gfx->width, gfx->height, code, sx, sy, hflip, vflip, color, 0, mo->transpen, 0, gfx->gfxbase);
+				DrawCustomMaskTile(bitmap, gfx->width, gfx->height, code, sx, sy, hflip, vflip, color, 0, mo->transpen, 0, gfx->gfxbase);
 				GenericTilesSetClip(mainclippy.min_x, mainclippy.max_x, mainclippy.min_y, mainclippy.max_y);
 				rendered = 1;
 

@@ -221,11 +221,11 @@ static UINT8 atarijsa_read(UINT16 address)
 		case 0x2804:
 		case 0x280c:
 		{
-			UINT8 result = atarijsa_input_port;
+			UINT8 result = (atarijsa_input_port) | 0x10;
 			if (!(atarijsa_test_port & atarijsa_test_mask)) result ^= 0x80;
 			if (atarigen_cpu_to_sound_ready) result ^= 0x40;
 			if (atarigen_sound_to_cpu_ready) result ^= 0x20;
-			if (has_tms5220 && tms5220_ready()) result ^= 0x10;
+			if (has_tms5220 && tms5220_ready() == 0) result ^= 0x10;
 			return result;
 		}
 

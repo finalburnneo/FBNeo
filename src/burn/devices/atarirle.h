@@ -72,6 +72,8 @@ struct atarirle_desc
 
 /* setup/shutdown */
 int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT32 romsize);
+void atarirle_exit();
+INT32 atarirle_scan(INT32 nAction, INT32 *pnMin);
 
 /* control handlers */
 void atarirle_control_w(int map, UINT8 bits, INT32 scanline);

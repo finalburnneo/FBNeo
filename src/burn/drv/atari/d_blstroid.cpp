@@ -625,7 +625,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		INT32 nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment >= 0) {
+		if (nSegment > 0) {
 			AtariJSAUpdate(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 		}
 	}

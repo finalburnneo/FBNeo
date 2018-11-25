@@ -618,8 +618,8 @@ static INT32 DrvFrame()
 		atarivad_scanline = i;
 
 		if (i == 0) {
-			for (INT32 i = 0; i < 0x100; i+=2) {
-				atarimo_0_slipram[i/2] = SekReadWord(0x7f5f00);
+			for (INT32 j = 0; j < 0x100; j+=2) {
+				atarimo_0_slipram[j/2] = SekReadWord(0x7f5f00);
 			}
 			AtariVADEOFUpdate(DrvEOFData);
 		}
@@ -703,6 +703,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 
 		AtariJSAScan(nAction, pnMin);
+		AtariVADScan(nAction, pnMin);
+		AtariMoScan(nAction, pnMin);
 
 		BurnWatchdogScan(nAction);
 

@@ -3,6 +3,7 @@
 
 // to do:
 //	play test hard!! verify
+//  remove internal sound device, add atariJSA device
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -1059,6 +1060,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		tms5220_scan(nAction, pnMin);
 
 		AtariSlapsticScan(nAction, pnMin);
+		AtariMoScan(nAction, pnMin);
+
 		BurnWatchdogScan(nAction);
 
 		SCAN_VAR(DrvVBlank);

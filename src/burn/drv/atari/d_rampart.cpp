@@ -654,8 +654,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		MSM6295Scan(nAction, pnMin);
 
 		BurnWatchdogScan(nAction);
+
 		AtariSlapsticScan(nAction, pnMin);
-//	atarimo
+		AtariMoScan(nAction, pnMin);
 	}
 
 	AtariEEPROMScan(nAction, pnMin);

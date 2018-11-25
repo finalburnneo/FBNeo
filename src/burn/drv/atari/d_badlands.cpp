@@ -649,6 +649,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SekScan(nAction);
 
+		AtariMoScan(nAction, pnMin);
 		AtariJSAScan(nAction, pnMin);
 
 		BurnWatchdogScan(nAction);

@@ -781,7 +781,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		AtariJSAScan(nAction, pnMin);
 		AtariVADScan(nAction, pnMin);
 		AtariMoScan(nAction, pnMin);
-		AtariEEPROMScan(nAction, pnMin);
 
 		BurnWatchdogScan(nAction);
 
@@ -790,6 +789,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(scanline_int_state);
 		SCAN_VAR(nExtraCycles);
 	}
+
+	AtariEEPROMScan(nAction, pnMin);
 
 	return 0;
 }

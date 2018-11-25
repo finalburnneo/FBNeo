@@ -143,6 +143,15 @@ static void __fastcall atarig1_main_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
+	if (address >= 0xff0000 && address <= 0xff3000) {
+		*((UINT16*)(DrvRLERAM + (address & 0x3ffe))) = data;
+		INT32 moaddress = (address & 0x3fff) / 2;
+		if (moaddress < 0x800)
+			atarirle_0_spriteram_w(moaddress);
+
+		if (address != 0xff2000) return;
+	}
+
 	switch (address)
 	{
 		case 0xf80000:
@@ -185,6 +194,15 @@ static void __fastcall atarig1_main_write_byte(UINT32 address, UINT8 data)
 	if ((address & 0xff8000) == 0xf88000) {
 		AtariEEPROMUnlockWrite();
 		return;
+	}
+
+	if (address >= 0xff0000 && address <= 0xff3000) {
+		INT32 moaddress = address & 0x3fff;
+		DrvRLERAM[moaddress^1] = data;
+		if (moaddress < 0x1000)
+			atarirle_0_spriteram_w(moaddress/2);
+
+		if (address != 0xff2000 || address != 0xff2001) return;
 	}
 
 	switch (address)
@@ -296,25 +314,12 @@ static UINT8 __fastcall atarig1_main_read_byte(UINT32 address)
 			return ((read_analog(a2d_select) << 8) >> ((~address & 1) * 8));
 
 		case 0xfd0000:
-		case 0xfd0001:
 			return AtariJSARead();
+		case 0xfd0001:
+			return 0xff;
 	}
 
 	return 0;
-}
-
-static void __fastcall rle_write_word(UINT32 address, UINT16 data)
-{
-	address = (address / 2) & 0x7ff;
-	atarirle_0_spriteram[address] = data;
-	atarirle_0_spriteram_w(address);
-}
-
-static void __fastcall rle_write_byte(UINT32 address, UINT8 data)
-{
-	address = address & 0xfff;
-	DrvRLERAM[address^1] = data;
-	atarirle_0_spriteram_w(address/2);
 }
 
 static tilemap_callback( bg )
@@ -349,8 +354,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	BurnWatchdogReset();
 
-//	atari_rle_reset();
-
 	a2d_select = 0;
 	video_int_state = 0;
 	pf_tile_bank = 0;
@@ -376,16 +379,12 @@ static INT32 MemIndex()
 	AllRam			= Next;
 
 	DrvPalRAM		= Next; Next += 0x000c00;
+
 	Drv68KRAM		= Next;
-
-	DrvRLERAM		= Next + 0x0000;
-	DrvPfRAM		= Next + 0x4000;
-	DrvAlphaRAM		= Next + 0x6000;
-					  Next += 0x010000;
-
-//	DrvRLERAM		= Next; Next += 0x002000;
-//	DrvPfRAM		= Next; Next += 0x002000;
-//	DrvAlphaRAM		= Next; Next += 0x001000;
+	DrvRLERAM		= Next; Next += 0x4000; // 0 - fff
+	DrvPfRAM		= Next; Next += 0x2000; // 4000 - 5fff
+	DrvAlphaRAM		= Next; Next += 0x1000; // 6000 - 6fff
+					  Next += 0x9000; // 7000 - ffff (Drv68KRAM)
 
 	atarirle_0_spriteram = (UINT16*)DrvRLERAM;
 
@@ -594,12 +593,7 @@ static INT32 DrvInit(INT32 game, INT32 slapstic)
 	SekMapMemory(DrvPalRAM,					0xfe8000, 0xfe8bff, MAP_RAM); // 0-9ff
 	SekMapMemory(Drv68KRAM,					0xff0000, 0xffffff, MAP_RAM);
 
-	// map over 68K RAM
-//	SekMapMemory(DrvRLERAM,					0xff0000, 0xff0fff, MAP_RAM); 
-//	SekMapMemory(DrvPfRAM,					0xff4000, 0xff5fff, MAP_RAM);
-//	SekMapMemory(DrvAlphaRAM,				0xff6000, 0xff6fff, MAP_RAM);
-
-	SekMapMemory(NULL,						0xff2000, 0xff23ff, MAP_RAM); // unmap!!
+	SekMapHandler(0,						0xff0000, 0xff23ff, MAP_WRITE); // unmap this part
 
 	SekSetWriteWordHandler(0,				atarig1_main_write_word);
 	SekSetWriteByteHandler(0,				atarig1_main_write_byte);
@@ -613,10 +607,6 @@ static INT32 DrvInit(INT32 game, INT32 slapstic)
 		AtariSlapsticInit(Drv68KROM + addr, slapstic);
 		AtariSlapsticInstallMap(1, 			addr);
 	}
-
-	SekMapHandler(2,						0xff0000, 0xff0fff, MAP_WRITE);
-	SekSetWriteWordHandler(2,				rle_write_word);
-	SekSetWriteByteHandler(2,				rle_write_byte);
 
 	AtariEEPROMInit(0x8000);
 	AtariEEPROMInstallMap(3, 				0xfd8000, 0xfdffff);
@@ -672,7 +662,7 @@ static void draw_background()
 
 		if (word0 & 0x8000)
 		{
-			GenericTilemapSetScrollX(0, (word0 >> 6));
+			GenericTilemapSetScrollX(0, (word0 >> 6) + ((pitfight) ? 2 : 0)); // +2 offset for pitfight?
 		}
 
 		if (word1 & 0x8000)
@@ -690,12 +680,10 @@ static void draw_background()
 static void copy_sprites()
 {
 	UINT16 *b1 = BurnBitmapGetBitmap(1);
-	UINT16 *b2 = BurnBitmapGetBitmap(2);
 
 	for (INT32 z = 0; z < nScreenWidth * nScreenHeight; z++)
 	{
 		if (nSpriteEnable & 1) if (b1[z]) pTransDraw[z] = b1[z] & 0x3ff;
-		if (nSpriteEnable & 2) if (b2[z]) pTransDraw[z] = b2[z] & 0x3ff;
 	}
 }
 
@@ -838,7 +826,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		atarirle_scan(nAction, pnMin);
 		AtariJSAScan(nAction, pnMin);
 		AtariSlapsticScan(nAction, pnMin);
-		AtariEEPROMScan(nAction, pnMin);
 
 		BurnWatchdogScan(nAction);
 
@@ -846,6 +833,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(pf_tile_bank);
 		SCAN_VAR(video_int_state);
 	}
+
+	AtariEEPROMScan(nAction, pnMin);
 
 	return 0;
 }
@@ -1055,6 +1044,8 @@ STD_ROM_FN(pitfight)
 
 static INT32 PitfightInit()
 {
+	pitfight = 1;
+
 	return DrvInit(1, 114);
 }
 

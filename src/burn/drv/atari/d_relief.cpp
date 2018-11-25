@@ -615,6 +615,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2413Scan(nAction, pnMin);
 
 		BurnWatchdogScan(nAction);
+		AtariVADScan(nAction, pnMin);
+		AtariMoScan(nAction, pnMin);
 
 		SCAN_VAR(oki_bank);
 	}

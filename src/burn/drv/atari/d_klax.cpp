@@ -544,7 +544,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 
 		AtariMoScan(nAction, pnMin);
-		AtariEEPROMScan(nAction, pnMin);
 
 		MSM6295Scan(nAction, pnMin);
 
@@ -553,6 +552,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(video_int_state);
 		SCAN_VAR(scanline_int_state);
 	}
+
+	AtariEEPROMScan(nAction, pnMin);
 
 	return 0;
 }

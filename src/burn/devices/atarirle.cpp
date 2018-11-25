@@ -311,13 +311,13 @@ int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT
 	mo->objectcount   = count_objects(base, mo->romlength);
 
 // iq_132
-//	mo->cliprect      = BurnBitmapClipDims(0); // ptransdraw
+	mo->cliprect      = {0, nScreenWidth, 0, nScreenHeight};
 
-//	if (desc->rightclip)
-//	{
-//		mo->cliprect.nMinx = desc->leftclip;
-//		mo->cliprect.nMaxx = desc->rightclip;
-//	}
+	if (desc->rightclip)
+	{
+		mo->cliprect.nMinx = desc->leftclip;
+		mo->cliprect.nMaxx = desc->rightclip;
+	}
 
 	/* compute the checksums */
 	memset(mo->checksums, 0, sizeof(mo->checksums));
@@ -325,8 +325,10 @@ int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT
 	{
 		const UINT16 *csbase = &mo->rombase[0x10000 * i];
 		int cursum = 0, j;
-		for (j = 0; j < 0x10000; j++)
-			cursum += *csbase++;
+		for (j = 0; j < 0x10000; j++) {
+			cursum += (*csbase << 8) | (*csbase >> 8);
+			csbase++;
+		}
 		mo->checksums[i] = cursum;
 	}
 
@@ -405,6 +407,20 @@ INT32 atarirle_scan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
+// partial_erase() only erases full lines (doesn't respect nMinx/nMaxx as it doesn't need to)
+static void partial_erase(INT32 map, clip_struct *cliprect)
+{
+	if (cliprect->nMiny > cliprect->nMaxy || cliprect->nMiny == cliprect->nMaxy)
+		return;
+
+	for (INT32 y = cliprect->nMiny; y < cliprect->nMaxy; y++) {
+		UINT16 *line = BurnBitmapGetPosition(map, 0, y);
+
+		if (y < nScreenHeight)
+			memset(line, 0, nScreenWidth * sizeof(UINT16));
+	}
+}
+
 /*---------------------------------------------------------------
     atarirle_control_w: Write handler for MO control bits.
 ---------------------------------------------------------------*/
@@ -414,16 +430,12 @@ void atarirle_control_w(int map, UINT8 bits, INT32 scanline)
 	struct atarirle_data *mo = &atarirle[map];
 	int oldbits = mo->control_bits;
 
-//logerror("atarirle_control_w(%d)\n", bits);
-
 	/* do nothing if nothing changed */
 	if (oldbits == bits)
 		return;
 
-//	bprintf (0, _T("control %2.2x, command: %4.4x\n"), oldbits, mo->command);
-
 	/* force a partial update first */
-//	video_screen_update_partial(0, scanline); // iq_132
+	//	video_screen_update_partial(0, scanline); // iq_132
 
 	/* if the erase flag was set, erase the front map */
 	if (oldbits & ATARIRLE_CONTROL_ERASE)
@@ -436,14 +448,14 @@ void atarirle_control_w(int map, UINT8 bits, INT32 scanline)
 		if (scanline < cliprect.nMaxy)
 			cliprect.nMaxy = scanline;
 
-//logerror("  partial erase %d-%d (frame %d)\n", cliprect.nMiny, cliprect.nMaxy, (oldbits & ATARIRLE_CONTROL_FRAME) >> 2);
+		//bprintf(0, _T("  partial erase %d-%d (frame %d)\n"), cliprect.nMiny, cliprect.nMaxy, (oldbits & ATARIRLE_CONTROL_FRAME) >> 2);
 
 		/* erase the bitmap */
-		//fillbitmap(mo->vram[0][(oldbits & ATARIRLE_CONTROL_FRAME) >> 2], 0, &cliprect);
-		BurnBitmapFill(1+((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
+		//BurnBitmapFill(1+((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
+		partial_erase(1+((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
 		if (mo->vrammask.mask != 0)
-			BurnBitmapFill(3+((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
-		//	fillbitmap(mo->vram[1][(oldbits & ATARIRLE_CONTROL_FRAME) >> 2], 0, &cliprect);
+			partial_erase(3+((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
+		// BurnBitmapFill(3+((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
 	}
 
 	/* update the bits */
@@ -454,7 +466,6 @@ void atarirle_control_w(int map, UINT8 bits, INT32 scanline)
 	{
 		if (mo->command == ATARIRLE_COMMAND_DRAW) {
 			sort_and_render(mo);
-		//	bprintf (0, _T("Sort and render!!\n"));
 		}
 		else if (mo->command == ATARIRLE_COMMAND_CHECKSUM)
 			compute_checksum(mo);
@@ -502,14 +513,14 @@ void atarirle_eof()
 			if (mo->partial_scanline + 1 > cliprect.nMiny)
 				cliprect.nMiny = mo->partial_scanline + 1;
 
-//logerror("  partial erase %d-%d (frame %d)\n", cliprect.nMiny, cliprect.nMaxy, (mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2);
+			//bprintf(0, _T("  partial erase %d-%d (frame %d)\n"), cliprect.nMiny, cliprect.nMaxy, (mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2);
 
 			/* erase the bitmap */
-			BurnBitmapFill(1+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
-			//fillbitmap(mo->vram[0][(mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2], 0, &cliprect);
+			//BurnBitmapFill(1+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
+			partial_erase(1+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
 			if (mo->vrammask.mask != 0)
-				BurnBitmapFill(3+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
-			//	fillbitmap(mo->vram[1][(mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2], 0, &cliprect);
+				partial_erase(3+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
+				//BurnBitmapFill(3+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
 		}
 
 		/* reset the partial scanline to -1 so we can detect full updates */
@@ -629,8 +640,6 @@ static int build_rle_tables(void)
 			rle_table[4][i] = (((i & 0xc0) + 0x40) << 2) | (i & 0x3f);
 	}
 
-//	BurnFree(base);
-
 	return 1;
 }
 
@@ -650,7 +659,7 @@ int count_objects(const UINT16 *base, int length)
 	for (i = 0; i < lowest_address; i += 4)
 	{
 		int offset = ((base[i + 2] & 0xff) << 16) | base[i + 3];
-//logerror("count_objects: i=%d offset=%08X\n", i, offset);
+		//logerror("count_objects: i=%d offset=%08X\n", i, offset);
 		if (offset > i && offset < lowest_address)
 			lowest_address = offset;
 	}
@@ -753,6 +762,8 @@ static void compute_checksum(struct atarirle_data *mo)
 	int reqsums = mo->spriteram[0].data[0] + 1;
 	int i;
 
+	//bprintf(0, _T("atarirle: compute_checksum(%d)\n"), reqsums);
+
 	/* number of checksums is in the first word */
 	if (reqsums > 256)
 		reqsums = 256;
@@ -832,7 +843,7 @@ static void sort_and_render(struct atarirle_data *mo)
 					x = (INT16)(x | ~mo->xposmask.mask);
 				if (y & ((mo->yposmask.mask + 1) >> 1))
 					y = (INT16)(y | ~mo->yposmask.mask);
-				x += 0; //mo->cliprect.nMinx;
+				x += mo->cliprect.nMinx;
 
 				/* merge priority and color */
 				color = (color << 4) | (priority << ATARIRLE_PRIORITY_SHIFT);
@@ -871,7 +882,7 @@ static void sort_and_render(struct atarirle_data *mo)
 				x = (INT16)(x | ~mo->xposmask.mask);
 			if (y & ((mo->yposmask.mask + 1) >> 1))
 				y = (INT16)(y | ~mo->yposmask.mask);
-			x += 0; //mo->cliprect.nMinx;
+			x += mo->cliprect.nMinx;
 
 			/* merge priority and color */
 			color = (color << 4) | (priority << ATARIRLE_PRIORITY_SHIFT);
@@ -1037,30 +1048,30 @@ void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
 	//bprintf (0, _T("LEC\n"));
 
 	/* left edge clip */
-	if (sx < 0) //clip->nMinx)
-		pixels_to_skip = /*clip->nMinx*/0 - sx, xclipped = 1;
-	if (sx >= nScreenWidth) //clip->nMaxx)
+	if (sx < clip->nMinx)
+		pixels_to_skip = clip->nMinx - sx, xclipped = 1;
+	if (sx >= clip->nMaxx)
 		return;
 
 	/* right edge clip */
-	if (ex >= nScreenWidth) //clip->nMaxx)
-		ex = /*clip->nMaxx*/nScreenWidth-1, xclipped = 1;
-	else if (ex < 0)//clip->nMinx)
+	if (ex >= clip->nMaxx)
+		ex = clip->nMaxx, xclipped = 1;
+	else if (ex < clip->nMinx)
 		return;
 
 	/* top edge clip */
-	if (sy < 0)//clip->nMiny)
+	if (sy < clip->nMiny)
 	{
-		sourcey += (/*clip->nMiny*/0 - sy) * dy;
-		sy = 0; //clip->nMiny;
+		sourcey += (clip->nMiny - sy) * dy;
+		sy = clip->nMiny;
 	}
-	else if (sy >= nScreenHeight) //clip->nMaxy)
+	else if (sy >= clip->nMaxy)
 		return;
 
 	/* bottom edge clip */
-	if (ey >= nScreenHeight) //clip->nMaxy)
-		ey = (nScreenHeight-1); //clip->nMaxy;
-	else if (ey < 0) //clip->nMiny)
+	if (ey >= clip->nMaxy)
+		ey = clip->nMaxy;
+	else if (ey < clip->nMiny)
 		return;
 
 	/* loop top to bottom */
@@ -1226,30 +1237,30 @@ void draw_rle_zoom_hflip(UINT16 *bitmap, const struct atarirle_info *gfx,
 	sourcey = dy / 2;
 
 	/* left edge clip */
-	if (sx < 0) //clip->nMinx)
-		sx = 0/*clip->nMinx*/, xclipped = 1;
-	if (sx >= nScreenWidth) //clip->nMaxx)
+	if (sx < clip->nMinx)
+		sx = clip->nMinx, xclipped = 1;
+	if (sx >= clip->nMaxx)
 		return;
 
 	/* right edge clip */
-	if (ex >= nScreenWidth) //clip->nMaxx)
-		pixels_to_skip = ex - /*clip->nMaxx*/(nScreenWidth - 1), xclipped = 1;
-	else if (ex < 0) //clip->nMinx)
+	if (ex >= clip->nMaxx)
+		pixels_to_skip = ex - clip->nMaxx, xclipped = 1;
+	else if (ex < clip->nMinx)
 		return;
 
 	/* top edge clip */
-	if (sy < 0) //clip->nMiny)
+	if (sy < clip->nMiny)
 	{
-		sourcey += (/*clip->nMiny*/0 - sy) * dy;
-		sy = 0;//clip->nMiny;
+		sourcey += (clip->nMiny - sy) * dy;
+		sy = clip->nMiny;
 	}
-	else if (sy >= nScreenHeight) //clip->nMaxy)
+	else if (sy >= clip->nMaxy)
 		return;
 
 	/* bottom edge clip */
-	if (ey >= nScreenHeight) // clip->nMaxy)
-		ey = nScreenHeight-1; //clip->nMaxy;
-	else if (ey < 0) //clip->nMiny)
+	if (ey >= clip->nMaxy)
+		ey = clip->nMaxy;
+	else if (ey < clip->nMiny)
 		return;
 
 	/* loop top to bottom */

@@ -542,6 +542,10 @@ static struct BurnRomInfo HangonRomDesc[] = {
 	{ "epr-6832.ic6",     0x08000, 0x4165aea5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
+	
+	{ "315-5118.bin",     0x0008f, 0x51d448a2, BRF_OPT },
+	{ "315-5119.bin",     0x0008f, 0xa37f00e1, BRF_OPT },
+	{ "315-5120.bin",     0x0008f, 0xba5f92ec, BRF_OPT },
 };
 
 
@@ -584,6 +588,10 @@ static struct BurnRomInfo Hangon1RomDesc[] = {
 	{ "epr-6832.ic6",     0x08000, 0x4165aea5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
+	
+	{ "315-5118.bin",     0x0008f, 0x51d448a2, BRF_OPT },
+	{ "315-5119.bin",     0x0008f, 0xa37f00e1, BRF_OPT },
+	{ "315-5120.bin",     0x0008f, 0xba5f92ec, BRF_OPT },
 };
 
 
@@ -626,6 +634,10 @@ static struct BurnRomInfo Hangon2RomDesc[] = {
 	{ "epr-6832.ic6",     0x08000, 0x4165aea5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "epr-6844.ic119",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
+	
+	{ "315-5118.bin",     0x0008f, 0x51d448a2, BRF_OPT },
+	{ "315-5119.bin",     0x0008f, 0xa37f00e1, BRF_OPT },
+	{ "315-5120.bin",     0x0008f, 0xba5f92ec, BRF_OPT },
 };
 
 

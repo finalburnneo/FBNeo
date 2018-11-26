@@ -2232,20 +2232,20 @@ struct BurnDriver BurnDrvDefence = {
 // Attack (Defender bootleg)
 
 static struct BurnRomInfo attackfRomDesc[] = {
-	{ "1.bin",				0x1000, 0x0ee1019d, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "2.bin",				0x1000, 0xd184ab6b, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3ojo.bin",			0x1000, 0xa732d649, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "9.bin",				0x0800, 0xf57caa62, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "12.bin",				0x0800, 0xeb73d8a1, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "8.bin",				0x0800, 0x17f7abde, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "11.bin",				0x0800, 0x5ca4e860, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "7.bin",				0x0800, 0x545c3326, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "10.bin",				0x0800, 0x3940d731, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "6.bin",				0x0800, 0x3af34c05, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "002-1.ic1",		0x1000, 0x0ee1019d, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "002-2.ic2",		0x1000, 0xd184ab6b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "002-3.ic3",		0x1000, 0xa732d649, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "002-9.ic12",		0x0800, 0xf57caa62, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "002-12.ic9",		0x0800, 0xeb73d8a1, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "002-8.ic11",		0x0800, 0x17f7abde, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "002-11.ic8",		0x0800, 0x5ca4e860, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "002-7.ic10",		0x0800, 0x545c3326, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "002-10.ic7",		0x0800, 0x3940d731, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "002-6.ic6",		0x0800, 0x3af34c05, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "13.bin",				0x0800, 0xfefd5b48, 2 | BRF_PRG | BRF_ESS }, // 10 M6808 Code
+	{ "003-13.ic12",	0x0800, 0xfefd5b48, 2 | BRF_PRG | BRF_ESS }, // 10 M6808 Code
 
-	{ "decoder.1",			0x0200, 0x8dd98da5, 0 | BRF_OPT },           // 11 Address Decoder
+	{ "001-14.g1",		0x0200, 0x8dd98da5, 0 | BRF_OPT },           // 11 Address Decoder
 };
 
 STD_ROM_PICK(attackf)

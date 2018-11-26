@@ -731,9 +731,134 @@ struct BurnDriver BurnDrvPbaction = {
 };
 
 
-// Pinball Action (set 2)
+// Pinball Action (set 2, encrypted)
 
 static struct BurnRomInfo pbaction2RomDesc[] = {
+	{ "14.bin",				0x4000, 0xf17a62eb, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "12.bin",				0x4000, 0xec3c64c6, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "13.bin",				0x4000, 0xc93c851e, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "pba1.bin",			0x2000, 0x8b69b933, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "a-s6.bin",			0x2000, 0x9a74a8e1, 3 | BRF_GRA },           //  4 Foreground Tiles
+	{ "a-s7.bin",			0x2000, 0x5ca6ad3c, 3 | BRF_GRA },           //  5
+	{ "a-s8.bin",			0x2000, 0x9f00b757, 3 | BRF_GRA },           //  6
+
+	{ "a-j5.bin",			0x4000, 0x21efe866, 4 | BRF_GRA },           //  7 Background Tiles
+	{ "a-j6.bin",			0x4000, 0x7f984c80, 4 | BRF_GRA },           //  8
+	{ "a-j7.bin",			0x4000, 0xdf69e51b, 4 | BRF_GRA },           //  9
+	{ "a-j8.bin",			0x4000, 0x0094cb8b, 4 | BRF_GRA },           // 10
+
+	{ "b-c7.bin",			0x2000, 0xd1795ef5, 5 | BRF_GRA },           // 11 Sprites
+	{ "b-d7.bin",			0x2000, 0xf28df203, 5 | BRF_GRA },           // 12
+	{ "b-f7.bin",			0x2000, 0xaf6e9817, 5 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(pbaction2)
+STD_ROM_FN(pbaction2)
+
+static INT32 Pbaction2Init()
+{
+	return DrvInit(3);
+}
+
+struct BurnDriver BurnDrvPbaction2 = {
+	"pbaction2", "pbaction", NULL, NULL, "1985",
+	"Pinball Action (set 2, encrypted)\0", NULL, "Tehkan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	NULL, pbaction2RomInfo, pbaction2RomName, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
+	Pbaction2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Pinball Action (set 3, encrypted)
+
+static struct BurnRomInfo pbaction3RomDesc[] = {
+	{ "pinball_09.bin",		0x8000, 0xc8e81ece, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "pinball_10.bin",		0x8000, 0x04b56c7c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "pinball_01.bin",		0x2000, 0x8b69b933, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "pinball_06.bin",		0x2000, 0x9a74a8e1, 3 | BRF_GRA },           //  3 Foreground Tiles
+	{ "pinball_07.bin",		0x2000, 0x5ca6ad3c, 3 | BRF_GRA },           //  4
+	{ "pinball_08.bin",		0x2000, 0x9f00b757, 3 | BRF_GRA },           //  5
+
+	{ "pinball_02.bin",		0x8000, 0x01ba32c9, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "pinball_03.bin",		0x8000, 0xf605ae40, 4 | BRF_GRA },           //  7
+	{ "pinball_04.bin",		0x8000, 0x9e23a780, 4 | BRF_GRA },           //  8
+	{ "pinball_05.bin",		0x8000, 0xc9a4dfea, 4 | BRF_GRA },           //  9
+
+	{ "pinball_14.bin",		0x2000, 0xd1795ef5, 5 | BRF_GRA },           // 10 Sprites
+	{ "pinball_13.bin",		0x2000, 0xf28df203, 5 | BRF_GRA },           // 11
+	{ "pinball_12.bin",		0x2000, 0xaf6e9817, 5 | BRF_GRA },           // 12
+};
+
+STD_ROM_PICK(pbaction3)
+STD_ROM_FN(pbaction3)
+
+static INT32 Pbaction3Init()
+{
+	return DrvInit(2);
+}
+
+struct BurnDriver BurnDrvPbaction3 = {
+	"pbaction3", "pbaction", NULL, NULL, "1985",
+	"Pinball Action (set 3, encrypted)\0", NULL, "Tehkan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	NULL, pbaction3RomInfo, pbaction3RomName, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
+	Pbaction3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Pinball Action (set 4, encrypted)
+
+static struct BurnRomInfo pbaction4RomDesc[] = {
+	{ "p16.bin",			0x4000, 0xad20b360, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "c15.bin",			0x4000, 0x057acfe3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "p14.bin",			0x2000, 0xe7412d68, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "p1.bin",				0x2000, 0x8b69b933, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "p7.bin",				0x2000, 0x9a74a8e1, 3 | BRF_GRA },           //  4 Foreground Tiles
+	{ "p8.bin",				0x2000, 0x5ca6ad3c, 3 | BRF_GRA },           //  5
+	{ "p9.bin",				0x2000, 0x9f00b757, 3 | BRF_GRA },           //  6
+
+	{ "p2.bin",				0x4000, 0x21efe866, 4 | BRF_GRA },           //  7 Background Tiles
+	{ "p3.bin",				0x4000, 0x7f984c80, 4 | BRF_GRA },           //  8
+	{ "p4.bin",				0x4000, 0xdf69e51b, 4 | BRF_GRA },           //  9
+	{ "p5.bin",				0x4000, 0x0094cb8b, 4 | BRF_GRA },           // 10
+
+	{ "p11.bin",			0x2000, 0xd1795ef5, 5 | BRF_GRA },           // 11 Sprites
+	{ "p12.bin",			0x2000, 0xf28df203, 5 | BRF_GRA },           // 12
+	{ "p13.bin",			0x2000, 0xaf6e9817, 5 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(pbaction4)
+STD_ROM_FN(pbaction4)
+
+static INT32 Pbaction4Init()
+{
+	return DrvInit(5);
+}
+
+struct BurnDriver BurnDrvPbaction4 = {
+	"pbaction4", "pbaction", NULL, NULL, "1985",
+	"Pinball Action (set 4, encrypted)\0", NULL, "Tehkan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	NULL, pbaction4RomInfo, pbaction4RomName, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
+	Pbaction4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Pinball Action (Tecfi License)
+
+static struct BurnRomInfo pbactiontRomDesc[] = {
 	{ "pba16.bin",			0x4000, 0x4a239ebd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "pba15.bin",			0x4000, 0x3afef03a, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "pba14.bin",			0x2000, 0xc0a98c8a, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -756,140 +881,15 @@ static struct BurnRomInfo pbaction2RomDesc[] = {
 	{ "pba17.bin",			0x4000, 0x2734ae60, 0 | BRF_PRG | BRF_OPT }, // 14 Z80 #2 Code (not emulated)
 };
 
-STD_ROM_PICK(pbaction2)
-STD_ROM_FN(pbaction2)
+STD_ROM_PICK(pbactiont)
+STD_ROM_FN(pbactiont)
 
-struct BurnDriver BurnDrvPbaction2 = {
-	"pbaction2", "pbaction", NULL, NULL, "1985",
-	"Pinball Action (set 2)\0", NULL, "Tehkan", "Miscellaneous",
+struct BurnDriver BurnDrvPbactiont = {
+	"pbactiont", "pbaction", NULL, NULL, "1985",
+	"Pinball Action (Tecfri License)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
-	NULL, pbaction2RomInfo, pbaction2RomName, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
+	NULL, pbactiontRomInfo, pbactiontRomName, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
 	PbactionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	224, 256, 3, 4
-};
-
-
-// Pinball Action (set 3, encrypted)
-
-static struct BurnRomInfo pbaction3RomDesc[] = {
-	{ "14.bin",				0x4000, 0xf17a62eb, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "12.bin",				0x4000, 0xec3c64c6, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "13.bin",				0x4000, 0xc93c851e, 1 | BRF_PRG | BRF_ESS }, //  2
-
-	{ "pba1.bin",			0x2000, 0x8b69b933, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
-
-	{ "a-s6.bin",			0x2000, 0x9a74a8e1, 3 | BRF_GRA },           //  4 Foreground Tiles
-	{ "a-s7.bin",			0x2000, 0x5ca6ad3c, 3 | BRF_GRA },           //  5
-	{ "a-s8.bin",			0x2000, 0x9f00b757, 3 | BRF_GRA },           //  6
-
-	{ "a-j5.bin",			0x4000, 0x21efe866, 4 | BRF_GRA },           //  7 Background Tiles
-	{ "a-j6.bin",			0x4000, 0x7f984c80, 4 | BRF_GRA },           //  8
-	{ "a-j7.bin",			0x4000, 0xdf69e51b, 4 | BRF_GRA },           //  9
-	{ "a-j8.bin",			0x4000, 0x0094cb8b, 4 | BRF_GRA },           // 10
-
-	{ "b-c7.bin",			0x2000, 0xd1795ef5, 5 | BRF_GRA },           // 11 Sprites
-	{ "b-d7.bin",			0x2000, 0xf28df203, 5 | BRF_GRA },           // 12
-	{ "b-f7.bin",			0x2000, 0xaf6e9817, 5 | BRF_GRA },           // 13
-};
-
-STD_ROM_PICK(pbaction3)
-STD_ROM_FN(pbaction3)
-
-static INT32 Pbaction3Init()
-{
-	return DrvInit(3);
-}
-
-struct BurnDriver BurnDrvPbaction3 = {
-	"pbaction3", "pbaction", NULL, NULL, "1985",
-	"Pinball Action (set 3, encrypted)\0", NULL, "Tehkan", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
-	NULL, pbaction3RomInfo, pbaction3RomName, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
-	Pbaction3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	224, 256, 3, 4
-};
-
-
-// Pinball Action (set 4, encrypted)
-
-static struct BurnRomInfo pbaction4RomDesc[] = {
-	{ "pinball_09.bin",		0x8000, 0xc8e81ece, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "pinball_10.bin",		0x8000, 0x04b56c7c, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "pinball_01.bin",		0x2000, 0x8b69b933, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
-
-	{ "pinball_06.bin",		0x2000, 0x9a74a8e1, 3 | BRF_GRA },           //  3 Foreground Tiles
-	{ "pinball_07.bin",		0x2000, 0x5ca6ad3c, 3 | BRF_GRA },           //  4
-	{ "pinball_08.bin",		0x2000, 0x9f00b757, 3 | BRF_GRA },           //  5
-
-	{ "pinball_02.bin",		0x8000, 0x01ba32c9, 4 | BRF_GRA },           //  6 Background Tiles
-	{ "pinball_03.bin",		0x8000, 0xf605ae40, 4 | BRF_GRA },           //  7
-	{ "pinball_04.bin",		0x8000, 0x9e23a780, 4 | BRF_GRA },           //  8
-	{ "pinball_05.bin",		0x8000, 0xc9a4dfea, 4 | BRF_GRA },           //  9
-
-	{ "pinball_14.bin",		0x2000, 0xd1795ef5, 5 | BRF_GRA },           // 10 Sprites
-	{ "pinball_13.bin",		0x2000, 0xf28df203, 5 | BRF_GRA },           // 11
-	{ "pinball_12.bin",		0x2000, 0xaf6e9817, 5 | BRF_GRA },           // 12
-};
-
-STD_ROM_PICK(pbaction4)
-STD_ROM_FN(pbaction4)
-
-static INT32 Pbaction4Init()
-{
-	return DrvInit(2);
-}
-
-struct BurnDriver BurnDrvPbaction4 = {
-	"pbaction4", "pbaction", NULL, NULL, "1985",
-	"Pinball Action (set 4, encrypted)\0", NULL, "Tehkan", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
-	NULL, pbaction4RomInfo, pbaction4RomName, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
-	Pbaction4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	224, 256, 3, 4
-};
-
-
-// Pinball Action (set 5, encrypted)
-
-static struct BurnRomInfo pbaction5RomDesc[] = {
-	{ "p16.bin",			0x4000, 0xad20b360, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "c15.bin",			0x4000, 0x057acfe3, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "p14.bin",			0x2000, 0xe7412d68, 1 | BRF_PRG | BRF_ESS }, //  2
-
-	{ "p1.bin",				0x2000, 0x8b69b933, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
-
-	{ "p7.bin",				0x2000, 0x9a74a8e1, 3 | BRF_GRA },           //  4 Foreground Tiles
-	{ "p8.bin",				0x2000, 0x5ca6ad3c, 3 | BRF_GRA },           //  5
-	{ "p9.bin",				0x2000, 0x9f00b757, 3 | BRF_GRA },           //  6
-
-	{ "p2.bin",				0x4000, 0x21efe866, 4 | BRF_GRA },           //  7 Background Tiles
-	{ "p3.bin",				0x4000, 0x7f984c80, 4 | BRF_GRA },           //  8
-	{ "p4.bin",				0x4000, 0xdf69e51b, 4 | BRF_GRA },           //  9
-	{ "p5.bin",				0x4000, 0x0094cb8b, 4 | BRF_GRA },           // 10
-
-	{ "p11.bin",			0x2000, 0xd1795ef5, 5 | BRF_GRA },           // 11 Sprites
-	{ "p12.bin",			0x2000, 0xf28df203, 5 | BRF_GRA },           // 12
-	{ "p13.bin",			0x2000, 0xaf6e9817, 5 | BRF_GRA },           // 13
-};
-
-STD_ROM_PICK(pbaction5)
-STD_ROM_FN(pbaction5)
-
-static INT32 Pbaction5Init()
-{
-	return DrvInit(5);
-}
-
-struct BurnDriver BurnDrvPbaction5 = {
-	"pbaction5", "pbaction", NULL, NULL, "1985",
-	"Pinball Action (set 5, encrypted)\0", NULL, "Tehkan", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
-	NULL, pbaction5RomInfo, pbaction5RomName, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
-	Pbaction5Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

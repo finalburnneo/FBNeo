@@ -732,7 +732,7 @@ static struct BurnRomInfo PrehislkRomDesc[] = {
 	{ "gt-k2.2h",      0x20000, 0xf2d3544d, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "gt-k3.3h",      0x20000, 0xebf7439b, BRF_ESS | BRF_PRG }, //  1
 
-	{ "gt15.b15",      0x08000, 0xac652412, BRF_GRA },			 //  2	Text Layer Tiles
+	{ "gt15k.b15",     0x08000, 0x4cad1451, BRF_GRA },			 //  2	Text Layer Tiles
 
 	{ "pi8914.b14",    0x40000, 0x207d6187, BRF_GRA },			 //  3	Background2 Layer Tiles
 

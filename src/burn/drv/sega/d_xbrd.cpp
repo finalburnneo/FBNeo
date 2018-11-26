@@ -1526,6 +1526,11 @@ static struct BurnRomInfo RascotRomDesc[] = {
 	{ "epr-13957",        0x20000, 0x6d50fb54, SYS16_ROM_SPRITES | BRF_GRA },
 	
 	{ "epr-14221a",       0x10000, 0x0d429ac4, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "r1230.bin",        0x20000, 0x48bddec5, BRF_OPT },
+	{ "r1232.bin",        0x20000, 0x3f1671ef, BRF_OPT },
+	{ "r1234.bin",        0x20000, 0xc7d01444, BRF_OPT },
+	{ "g1049.bin",        0x20000, 0x3ab80f90, BRF_OPT },
 };
 
 

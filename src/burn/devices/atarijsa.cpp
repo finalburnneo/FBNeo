@@ -99,6 +99,7 @@ static void atarijsa_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x2800:
+		case 0x2900:
 			// :overall_volume_w (jsaiii) (volumes)
 		return;
 

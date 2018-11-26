@@ -12,10 +12,10 @@ eprom: good. (sometimes scratchy/corrupted tms5220 voice synth noise?)
 klax: good
 atarig1: good
 gauntlet: good
+batman: good
 
   - WIP drivers -
 arcadecl
-batman
 offtwall
 rampart
 relief

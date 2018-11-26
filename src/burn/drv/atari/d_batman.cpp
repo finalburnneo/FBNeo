@@ -1,10 +1,6 @@
 // FB Alpha Atari Batman driver module
 // Based on MAME driver by Aaron Giles
 
-// to do:
-// 	priorities are not 100% (see balconies on orange brick building in level 1, bricks over batsy)
-// 	sounds not 100%
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "m6502_intf.h"
@@ -46,18 +42,19 @@ static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo BatmanInputList[] = {
-	{"Coin 1",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
-	{"Coin 2",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 15,	"p1 up"		},
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 14,	"p1 down"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 13,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 12,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 9,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 fire 2"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
 	
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy2 + 2,	"tilt"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy2 + 3,	"service 1"	},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 3,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -77,7 +74,7 @@ STDDIPINFO(Batman)
 
 static void update_interrupts()
 {
-	INT32  newstate = 0;
+	INT32 newstate = 0;
 	if (scanline_int_state) newstate |= 4;
 	if (atarijsa_int_state)	newstate |= 6;
 
@@ -130,6 +127,7 @@ static void __fastcall batman_main_write_word(UINT32 address, UINT16 data)
 			BurnWatchdogWrite();
 		return;
 	}
+	bprintf(0, _T("mww %X %x\n"), address, data);
 }
 
 static void __fastcall batman_main_write_byte(UINT32 address, UINT8 data)
@@ -173,10 +171,9 @@ static void __fastcall batman_main_write_byte(UINT32 address, UINT8 data)
 
 static inline UINT16 special_port_read()
 {
-	UINT16 ret = DrvInputs[1] & ~0x40;
+	UINT16 ret = (0xffff & ~0x40) | (DrvDips[0] & 0x40);
 
 	if (vblank) ret ^= 0x80;
-	if (DrvDips[0] & 0x40) ret ^= 0x40;
 	if (atarigen_cpu_to_sound_ready) ret ^= 0x20;
 	if (atarigen_sound_to_cpu_ready) ret ^= 0x10;
 
@@ -234,6 +231,8 @@ static UINT8 __fastcall batman_main_read_byte(UINT32 address)
 
 	return 0;
 }
+
+static INT32 lastline = 0;
 
 static void scanline_timer(INT32 state)
 {
@@ -570,28 +569,44 @@ static void copy_sprites_step2()
 
 static void draw_scanline(INT32 line)
 {
-	GenericTilesSetClip(-1, -1, line-1, line);
+	if (!pBurnDraw) return;
+
+	GenericTilesSetClip(-1, -1, lastline, line + 1);
 
 	if (nSpriteEnable & 4) AtariMoRender(0);
 
-	AtariVADDraw(pTransDraw, 1);
+	AtariVADDraw(pTransDraw, 1); // nBurnLayer 1,2 check is internal
 
 	if (nSpriteEnable & 1) copy_sprites_step1();
 
-	GenericTilemapDraw(2, pTransDraw, 0);
+	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);
 
 	if (nSpriteEnable & 2) copy_sprites_step2();
 
 	GenericTilesClearClip();
+
+	lastline = line + 1;
+}
+
+static void DrvDrawBegin()
+{
+	if (DrvRecalc) {
+		AtariVADRecalcPalette();
+		DrvRecalc = 0;
+	}
+
+	if (pBurnDraw)
+		BurnTransferClear();
+
+	lastline = 0;
 }
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
-		DrvRecalc = 1; // force!!
+	if (DrvRecalc) { // bpp changed, let's not present a blank screen
+		DrvDrawBegin();
+		draw_scanline(239); // 0 - 240
 	}
-
-//	BurnTransferClear();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -611,7 +626,7 @@ static INT32 DrvFrame()
 
 	{
 		DrvInputs[0] = 0xffff;
-		DrvInputs[1] = 0xffbf | (DrvDips[0] & 0x40);
+		//DrvInputs[1] = 0xffbf | (DrvDips[0] & 0x40);
 		DrvInputs[2] = 0x0040;
 
 		for (INT32 i = 0; i < 16; i++) {
@@ -626,12 +641,15 @@ static INT32 DrvFrame()
 
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 262;
-//	INT32 nCyclesTotal[2] = { (INT32)(14318180 / 59.92), (INT32)(1789773 / 59.92) };
+	INT32 nCyclesTotal[2] = { (INT32)(14318180 / 59.92), (INT32)(1789773 / 59.92) };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 	M6502Open(0);
 
 	vblank = 0;
+
+	DrvDrawBegin();
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -639,38 +657,27 @@ static INT32 DrvFrame()
 
 		if (i == 0) AtariVADEOFUpdate(DrvEOFData);
 
-		if (atarivad_scanline_timer == atarivad_scanline) {
-			scanline_timer(CPU_IRQSTATUS_ACK);
+		if (atarivad_scanline_timer_enabled) {
+			if (atarivad_scanline_timer == atarivad_scanline) {
+				draw_scanline(i);
+				scanline_timer(CPU_IRQSTATUS_ACK);
+			}
 		}
 
-		// beam active (2 instances for higher interleave)
-		SekRun(336);
-		if (sound_cpu_halt == 0) {
-			M6502Run(((SekTotalCycles() / 8) - M6502TotalCycles()));
-		} else {
-			M6502Idle(((SekTotalCycles() / 8) - M6502TotalCycles()));
-		}
-		SekRun(336);
-		if (sound_cpu_halt == 0) {
-			M6502Run(((SekTotalCycles() / 8) - M6502TotalCycles()));
-		} else {
-			M6502Idle(((SekTotalCycles() / 8) - M6502TotalCycles()));
-		}
+		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
-		// hblank
-		SekRun(240);
 		if (sound_cpu_halt == 0) {
-			M6502Run(((SekTotalCycles() / 8) - M6502TotalCycles()));
+			nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		} else {
-			M6502Idle(((SekTotalCycles() / 8) - M6502TotalCycles()));
+			nCyclesDone[1] += M6502Idle(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		}
 
 		if (i <= 240) {
 			AtariVADTileRowUpdate(i, (UINT16*)DrvAlphaRAM);
-			if (i > 0) draw_scanline(i);
 		}
 
 		if (i == 239) {
+			draw_scanline(i);
 			vblank = 1;
 
 			if (pBurnDraw) {
@@ -680,7 +687,7 @@ static INT32 DrvFrame()
 
 		AtariJSAInterruptUpdate(nInterleave);
 
-		if (pBurnSoundOut && (i & 1) == 1) {
+		if (pBurnSoundOut && i&1) {
 			INT32 nSegment = nBurnSoundLen / (nInterleave / 2);
 
 			AtariJSAUpdate(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
@@ -691,7 +698,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		INT32 nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment >= 0) {
+		if (nSegment > 0) {
 			AtariJSAUpdate(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 		}
 	}

@@ -83,7 +83,7 @@ void AtariEEPROMInstallMap(INT32 map_handler, UINT32 address_start, UINT32 addre
 
 	atari_eeprom_address_start = address_start;
 
-	bprintf (0, _T("atarieeprom size: %4.4x, address_start: %6.6x, address_end: %6.6x\n"), atari_eeprom_size, address_start, address_end);
+	//bprintf (0, _T("atarieeprom size: %4.4x, address_start: %6.6x, address_end: %6.6x\n"), atari_eeprom_size, address_start, address_end);
 
 	SekMapMemory(atari_eeprom, 				address_start, address_end, MAP_ROM);
 	SekMapHandler(map_handler,				address_start, address_end, MAP_WRITE);

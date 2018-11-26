@@ -566,7 +566,8 @@ static void draw_scanline(INT32 line)
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		DrvRecalc = 1; // force!!
+		AtariVADRecalcPalette();
+		DrvRecalc = 0;
 	}
 
 //	BurnTransferClear();

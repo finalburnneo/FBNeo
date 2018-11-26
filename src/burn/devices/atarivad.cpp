@@ -90,7 +90,7 @@ static void update_parameter(UINT16 data)
 	}
 }
 
-static void recalc_palette()
+void AtariVADRecalcPalette()
 {
 	if (atari_palette_write) {
 		for (INT32 i = 0; i < 0x7ff; i++) {
@@ -241,7 +241,7 @@ INT32 AtariVADScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		recalc_palette();
+		AtariVADRecalcPalette();
 	}
 
 	return 0;

@@ -477,7 +477,8 @@ static void sprite_copy()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		DrvRecalc = 1;
+		AtariVADRecalcPalette();
+		DrvRecalc = 0;
 	}
 
 	if ((nBurnLayer & 1) == 0) BurnTransferClear();

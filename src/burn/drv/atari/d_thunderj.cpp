@@ -641,7 +641,8 @@ static void copy_sprites_step2()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		DrvRecalc = 1; // force!!
+		AtariVADRecalcPalette();
+		DrvRecalc = 0;
 	}
 
 	AtariVADDraw(pTransDraw, 1);

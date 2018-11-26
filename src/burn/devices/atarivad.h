@@ -12,3 +12,4 @@ void AtariVADEOFUpdate(UINT16 *eof_data); // call after last scanline
 void AtariVADTimerUpdate(); // call after each scanline
 void AtariVADTileRowUpdate(INT32 scanline, UINT16 *alphamap_ram); // each scanline, only if alpha map is present!
 void AtariVADDraw(UINT16 *pDestDraw, INT32 use_categories);
+void AtariVADRecalcPalette();

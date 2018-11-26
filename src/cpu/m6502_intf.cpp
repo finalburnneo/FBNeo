@@ -272,13 +272,15 @@ INT32 M6502GetActive()
 	return nActiveCPU;
 }
 
-void M6502Idle(INT32 nCycles)
+INT32 M6502Idle(INT32 nCycles)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Idle called without init\n"));
 #endif
 
 	nM6502CyclesTotal += nCycles;
+
+	return nCycles;
 }
 
 void M6502ReleaseSlice()

@@ -3,7 +3,6 @@
 
 // to do:
 //	play test hard!! verify
-//  remove internal sound device, add atariJSA device
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"

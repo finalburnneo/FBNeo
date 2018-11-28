@@ -1,9 +1,6 @@
 // FB Alpha Atari Vindicators Driver Module
 // Based on MAME driver by Aaron Giles
 
-// to do:
-//	sprites disappear randomly...
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "m6502_intf.h"
@@ -36,45 +33,53 @@ static INT32 bg_scroll_y;
 static INT32 playfield_tile_bank;
 static INT32 scanline_int_state;
 
-static INT32 vblank;
-
-static INT32 tilebank_cache[262];
-static INT32 bgscrollx_cache[262];
-static INT32 mbscrollx_cache[262];
-static INT32 scrolly_cache[262];
+static INT32 vblank, scanline;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
 static UINT8 DrvJoy4[16];
-static UINT16 DrvInputs[4];
+static UINT8 DrvJoy5f[16];
+static UINT8 DrvJoy6f[16];
+static UINT16 DrvInputs[6];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo VindictrInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy4 + 2,	"p3 coin"	},
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 8,	"p1 start"	},
-	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy1 + 12,	"p1 up"		},
-	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy1 + 14,	"p1 down"	},
-	{"P1 Right Stick Up",	BIT_DIGITAL,	DrvJoy1 + 13,	"p3 up"		},
-	{"P1 Right Stick Down",	BIT_DIGITAL,	DrvJoy1 + 15,	"p3 down"	},
+	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy1 + 12,	"p1 up_alt"		},
+	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy1 + 14,	"p1 down_alt"	},
+	{"P1 Right Stick Up",	BIT_DIGITAL,	DrvJoy1 + 13,	"p3 up_alt"		},
+	{"P1 Right Stick Down",	BIT_DIGITAL,	DrvJoy1 + 15,	"p3 down_alt"	},
 	{"P1 Left Stick Fire",	BIT_DIGITAL,	DrvJoy1 + 8,	"p1 fire 1"	},
-	{"P1 Right Stick Fire",	BIT_DIGITAL,	DrvJoy1 + 10,	"p1 fire 2"	},
-	{"P1 Left Stick Thumb",	BIT_DIGITAL,	DrvJoy1 + 9,	"p1 fire 3"	},
+	{"P1 Left Stick Thumb",	BIT_DIGITAL,	DrvJoy1 + 9,	"p1 fire 2"	},
+	{"P1 Right Stick Fire",	BIT_DIGITAL,	DrvJoy1 + 10,	"p1 fire 3"	},
 	{"P1 Right Stick Thumb",BIT_DIGITAL,	DrvJoy1 + 11,	"p1 fire 4"	},
+	{"P1 -- Alt. Input --", BIT_DIGITAL,    DrvJoy5f + 10,  "p1 altcontrol" },
+	{"P1 Up",			    BIT_DIGITAL,	DrvJoy5f + 0,	"p1 up"		},
+	{"P1 Down",			    BIT_DIGITAL,	DrvJoy5f + 1,	"p1 down"	},
+	{"P1 Left",			    BIT_DIGITAL,	DrvJoy5f + 2,	"p1 left"	},
+	{"P1 Right",		    BIT_DIGITAL,	DrvJoy5f + 3,	"p1 right"	},
 
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 9,	"p2 start"	},
-	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy2 + 12,	"p2 up"		},
-	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy2 + 14,	"p2 down"	},
-	{"P2 Right Stick Up",	BIT_DIGITAL,	DrvJoy2 + 13,	"p4 up"		},
-	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvJoy2 + 15,	"p4 down"	},
+	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy2 + 12,	"p2 up_alt"		},
+	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy2 + 14,	"p2 down_alt"	},
+	{"P2 Right Stick Up",	BIT_DIGITAL,	DrvJoy2 + 13,	"p4 up_alt"		},
+	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvJoy2 + 15,	"p4 down_alt"	},
 	{"P2 Left Stick Fire",	BIT_DIGITAL,	DrvJoy2 + 8,	"p2 fire 1"	},
-	{"P2 Right Stick Fire",	BIT_DIGITAL,	DrvJoy2 + 10,	"p2 fire 2"	},
-	{"P2 Left Stick Thumb",	BIT_DIGITAL,	DrvJoy2 + 9,	"p2 fire 3"	},
+	{"P2 Left Stick Thumb",	BIT_DIGITAL,	DrvJoy2 + 9,	"p2 fire 2"	},
+	{"P2 Right Stick Fire",	BIT_DIGITAL,	DrvJoy2 + 10,	"p2 fire 3"	},
 	{"P2 Right Stick Thumb",BIT_DIGITAL,	DrvJoy2 + 11,	"p2 fire 4"	},
+	{"P2 -- Alt. Input --", BIT_DIGITAL,    DrvJoy6f + 10,  "p2 altcontrol" },
+	{"P2 Up",			    BIT_DIGITAL,	DrvJoy6f + 0,	"p2 up"		},
+	{"P2 Down",			    BIT_DIGITAL,	DrvJoy6f + 1,	"p2 down"	},
+	{"P2 Left",			    BIT_DIGITAL,	DrvJoy6f + 2,	"p2 left"	},
+	{"P2 Right",		    BIT_DIGITAL,	DrvJoy6f + 3,	"p2 right"	},
+
+	{"P3 Coin",				BIT_DIGITAL,	DrvJoy4 + 2,	"p3 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -84,11 +89,11 @@ STDINPUTINFO(Vindictr)
 
 static struct BurnDIPInfo VindictrDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0x02, NULL			},
+	{0x20, 0xff, 0xff, 0x02, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x16, 0x01, 0x02, 0x02, "Off"			},
-	{0x16, 0x01, 0x02, 0x00, "On"			},
+	{0x20, 0x01, 0x02, 0x02, "Off"			},
+	{0x20, 0x01, 0x02, 0x00, "On"			},
 };
 
 STDDIPINFO(Vindictr)
@@ -113,14 +118,14 @@ static void __fastcall vindictr_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if ((address & 0xf00000) == 0x1f0000) {
+	if ((address & 0xff0000) == 0x1f0000) {
 		AtariEEPROMUnlockWrite();
 		return;
 	}
 
 	if ((address & 0xff6000) == 0x3f2000) {
 		*((UINT16*)(DrvMobRAM + (address & 0x1ffe))) = data;
-		AtariMoWrite(0, (address / 2) & 0xfff, data);
+		AtariMoWrite(0, ((address & 0x1fff) / 2) & 0xfff, data);
 		return;
 	}
 
@@ -140,7 +145,7 @@ static void __fastcall vindictr_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x360020:
-			AtariJSAResetWrite(data);
+			AtariJSAResetWrite(0);
 		return;
 
 		case 0x360030:
@@ -156,14 +161,14 @@ static void __fastcall vindictr_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0xf00000) == 0x1f0000) {
+	if ((address & 0xff0000) == 0x1f0000) {
 		AtariEEPROMUnlockWrite();
 		return;
 	}
 
 	if ((address & 0xff6000) == 0x3f2000) {
 		DrvMobRAM[(address & 0x1fff)^1] = data;
-		AtariMoWrite(0, (address / 2) & 0xfff, *((UINT16*)(DrvMobRAM + (address & 0x1ffe))));
+		AtariMoWrite(0, ((address & 0x1fff) / 2) & 0xfff, *((UINT16*)(DrvMobRAM + (address & 0x1ffe))));
 		return;
 	}
 
@@ -187,7 +192,7 @@ static void __fastcall vindictr_write_byte(UINT32 address, UINT8 data)
 
 		case 0x360020:
 		case 0x360021:
-			AtariJSAResetWrite(data);
+			AtariJSAResetWrite(0);
 		return;
 
 		case 0x360031:
@@ -199,9 +204,9 @@ static void __fastcall vindictr_write_byte(UINT32 address, UINT8 data)
 
 static inline UINT16 special_read()
 {
-	UINT16 ret = DrvInputs[1] ^ vblank;
-	if (atarigen_cpu_to_sound_ready) ret ^= 0x0004;
-	if (atarigen_sound_to_cpu_ready) ret ^= 0x0008;
+	UINT16 ret = (DrvInputs[1] & ~1) | (vblank^1);
+	if (atarigen_cpu_to_sound_ready) ret ^= 0x0008;
+	if (atarigen_sound_to_cpu_ready) ret ^= 0x0004;
 	return ret;
 }
 
@@ -316,7 +321,7 @@ static INT32 MemIndex()
 	DrvAlphaRAM			= Next; Next += 0x001000;
 	Drv68KRAM			= Next; Next += 0x003000;
 
-	atarimo_0_slipram 	= (UINT16*)(DrvMobRAM + 0xf80);
+	atarimo_0_slipram 	= (UINT16*)(DrvAlphaRAM + 0xf80);
 
 	RamEnd				= Next;
 
@@ -543,12 +548,17 @@ static void copy_sprites_step2()
 	}
 }
 
-static void scanline_update(INT32 scanline)
+static void partial_update_sprite(INT32 line);
+static void partial_update(INT32 line);
+
+static void scanline_update()
 {
 	INT32 offset = ((scanline - 8) / 8) * 64 + 42;
 	if (offset < 0)	offset += 0x7c0;
 	else if (offset >= 0x7c0)
 		return;
+
+	partial_update(scanline);
 
 	for (INT32 x = 42; x < 64; x++, offset++)
 	{
@@ -562,6 +572,7 @@ static void scanline_update(INT32 scanline)
 
 			case 3: 
 				bg_scroll_x = data & 0x1ff;
+				GenericTilemapSetScrollX(0, bg_scroll_x);
 			break;
 
 			case 4:
@@ -570,6 +581,7 @@ static void scanline_update(INT32 scanline)
 			break;
 
 			case 6:
+				partial_update_sprite(scanline);
 				scanline_int_state = 1;
 				update_interrupts();
 			break;
@@ -579,24 +591,49 @@ static void scanline_update(INT32 scanline)
 				INT32 sl = scanline;
 				if (sl >= nScreenHeight) sl -= nScreenHeight;
 				bg_scroll_y = (data - sl) & 0x1ff;
+				GenericTilemapSetScrollY(0, bg_scroll_y);
 				atarimo_set_yscroll(0, bg_scroll_y);
 			}
 			break;
 		}
 	}
+}
 
-	// cache
-	tilebank_cache[scanline] = playfield_tile_bank;
-	bgscrollx_cache[scanline] = bg_scroll_x;
-	mbscrollx_cache[scanline] = mob_scroll_x;
-	scrolly_cache[scanline] = bg_scroll_y;
+static INT32 lastline_sprite = 0;
+static INT32 lastline = 0;
+
+static void DrvDrawBegin()
+{
+	lastline = 0;
+	lastline_sprite = 0;
+	if (pBurnDraw) BurnTransferClear();
+}
+
+static void partial_update_sprite(INT32 line)
+{
+	if (line >= 240 || !pBurnDraw) return;
+	//bprintf(0, _T("%08X: (tmap) partial %d - %d\n"), nCurrentFrame, lastline, line);
+	GenericTilesSetClip(0, nScreenWidth, lastline_sprite, line+1);
+	if (nSpriteEnable & 4) AtariMoRender(0);
+	GenericTilesClearClip();
+
+	lastline_sprite = line+1;
 }
 
 static void partial_update(INT32 line)
 {
-	GenericTilesSetClip(-1, -1, line & ~0x3f, line+1);
-	if (nSpriteEnable & 4) AtariMoRender(0);
+	if (line >= 240 || !pBurnDraw) return;
+	//bprintf(0, _T("%08X: (spr) partial %d - %d\n"), nCurrentFrame, lastline, line);
+	GenericTilesSetClip(0, nScreenWidth, lastline, line+1);
+
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nSpriteEnable & 1) copy_sprites_step1();
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
+	if (nSpriteEnable & 1) copy_sprites_step2();
+
 	GenericTilesClearClip();
+
+	lastline = line+1;
 }
 
 static INT32 DrvDraw()
@@ -606,48 +643,43 @@ static INT32 DrvDraw()
 		DrvRecalc = 1; // force!!
 	}
 
-	GenericTilesSetClip(-1, -1, 192, 240);
-	if (nSpriteEnable & 4) AtariMoRender(0);
-	GenericTilesClearClip();
-
-	for (INT32 i = 0; i < nScreenHeight; i++)
-	{
-		INT32 j = i + 1;
-		while (j < nScreenHeight)
-		{
-			if (tilebank_cache[i] != tilebank_cache[j]) break;
-			if (scrolly_cache[i] != scrolly_cache[j]) break;
-			if (bgscrollx_cache[i] != bgscrollx_cache[j]) break;
-			if (mbscrollx_cache[i] != mbscrollx_cache[j]) break;
-			j++;
-		}
-
-		playfield_tile_bank = tilebank_cache[i];
-		GenericTilemapSetScrollY(0, scrolly_cache[i] + 7); // + 7???
-		GenericTilemapSetScrollX(0, bgscrollx_cache[i]);
-		atarimo_set_yscroll(0, scrolly_cache[i]);
-		atarimo_set_xscroll(0, mbscrollx_cache[i]);
-
-		GenericTilesSetClip(-1, -1, i, j);
-
-	//	if (nSpriteEnable & 4) AtariMoRender(0);
-
-		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
-
-		if (nSpriteEnable & 1) copy_sprites_step1();
-
-		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
-
-		if (nSpriteEnable & 1) copy_sprites_step2();
-
-		GenericTilesClearClip();
-
-		i = j-1;
-	}
+	partial_update_sprite(239);
+	partial_update(239);
 
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
+}
+
+static UINT16 udlr(UINT8 real_port, UINT8 fake_port)
+{
+	UINT16 result = DrvInputs[real_port];
+	UINT16 fake = DrvInputs[fake_port];
+
+	if (fake & 0x01)			// up
+	{
+		if (fake & 0x04)		// up and left
+			result &= ~0x2000;
+		else if (fake & 0x08)	// up and right
+			result &= ~0x1000;
+		else					// up only
+			result &= ~0x3000;
+	}
+	else if (fake & 0x02)		// down
+	{
+		if (fake & 0x04)		// down and left
+			result &= ~0x8000;
+		else if (fake & 0x08)	// down and right
+			result &= ~0x4000;
+		else					// down only
+			result &= ~0xc000;
+	}
+	else if (fake & 0x04)		// left only
+		result &= ~0x6000;
+	else if (fake & 0x08)		// right only
+		result &= ~0x9000;
+
+	return result;
 }
 
 static INT32 DrvFrame()
@@ -665,14 +697,21 @@ static INT32 DrvFrame()
 		DrvInputs[0] = 0xffff;
 		DrvInputs[1] = 0xfffe;
 		DrvInputs[2] = 0xffff;
-		DrvInputs[3] = 0x0040; 
+		DrvInputs[3] = 0x0040;
+		DrvInputs[4] = 0x0000; // fake udlr
+		DrvInputs[5] = 0x0000; // fake udlr
 
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
+			DrvInputs[4] ^= (DrvJoy5f[i] & 1) << i;
+			DrvInputs[5] ^= (DrvJoy6f[i] & 1) << i;
 		}
+
+		DrvInputs[0] = udlr(0, 4);
+		DrvInputs[1] = udlr(1, 5);
 
 		DrvInputs[1] = (DrvInputs[1] & ~2) | (DrvDips[0] & 2);
 
@@ -683,27 +722,24 @@ static INT32 DrvFrame()
 
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 262;
-//	INT32 nCyclesTotal[2] = { (INT32)(7159090 / 59.92), (INT32)(1789773 / 59.92) };
+	INT32 nCyclesTotal[2] = { (INT32)(7159090 / 59.92), (INT32)(1789773 / 59.92) };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 	M6502Open(0);
 
 	vblank = 0;
+	DrvDrawBegin();
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		// beam active (2 instances for higher interleave)
-		SekRun(168);
-		M6502Run((SekTotalCycles()/4) - M6502TotalCycles());
-		SekRun(168);
-		M6502Run((SekTotalCycles()/4) - M6502TotalCycles());
+		scanline = i;
 
-		// hblank
-		SekRun(120);
-		M6502Run((SekTotalCycles()/4) - M6502TotalCycles());
+		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
-		if ((i & 0x3f) == 0x3f) partial_update(i); // sprite update every 64 lines
-		scanline_update(i); // every line
+		if ((i & 0x3f) == 0x3f) partial_update_sprite(i); // sprite update every 64 lines
+		if ((i % 8) == 0) scanline_update(); // every 8th line
 
 		if (i == 239) {
 			vblank = 1;
@@ -880,7 +916,7 @@ static struct BurnRomInfo vindictrgRomDesc[] = {
 	{ "136059-1101.8r",				0x20000, 0x2d07fdaa, 3 | BRF_GRA },           // 13
 	{ "136059-1113.2r",				0x10000, 0x0a2aba63, 3 | BRF_GRA },           // 14
 
-	{ "136059-1223.16n",			0x04000, 0xd27975bb, 4 | BRF_GRA },           // 15 Characters
+	{ "136059-1123.16n",			0x04000, 0xf99b631a, 4 | BRF_GRA },           // 15 Characters
 
 	{ "pal16l8a-136059-1150.c3",	0x00104, 0x09d02b00, 5 | BRF_OPT },           // 16 PLDs
 	{ "pal16l8a-136059-1151.d17",	0x00104, 0x797dcde7, 5 | BRF_OPT },           // 17

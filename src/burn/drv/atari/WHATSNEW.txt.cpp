@@ -13,13 +13,13 @@ klax: good
 atarig1: good
 gauntlet: good
 batman: good
+vindictr: good
 
   - WIP drivers -
 arcadecl
 offtwall
 rampart
 relief
-vindictr
 
 NOTE: _all_ games need good sync, see d_thunderj, d_blstroid's frame to see how it needs to be.
 

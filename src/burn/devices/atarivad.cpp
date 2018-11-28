@@ -22,6 +22,7 @@ static INT32 tilerow_partial_prev_line = 0;
 INT32 atarivad_scanline_timer = 0;
 INT32 atarivad_scanline_timer_enabled = 0;
 static void (*scanline_timer_callback)(INT32 param); // const
+static void (*AtariVADPartialCB)(INT32 param);
 
 INT32 atarivad_scanline; // external
 
@@ -282,6 +283,7 @@ void AtariVADInit(INT32 tmap_num0, INT32 tmap_num1, INT32 bg_map_type, void (*sl
 	palette_ram = (UINT8*)BurnMalloc(0x1000);
 
 	scanline_timer_callback = (sl_timer_cb) ? sl_timer_cb : scanline_timer_dummy;
+	AtariVADPartialCB = NULL;
 
 	GenericTilemapInit(tmap_num0, TILEMAP_SCAN_COLS, bg_map_type ? bg_map_callback : bg0_map_callback, 8, 8, 64, 64);
 	GenericTilemapInit(tmap_num1, TILEMAP_SCAN_COLS, bg1_map_callback, 8, 8, 64, 64);
@@ -291,6 +293,11 @@ void AtariVADInit(INT32 tmap_num0, INT32 tmap_num1, INT32 bg_map_type, void (*sl
 	playfield_number[1] = tmap_num1;
 
 	atari_palette_write = palette_write ? palette_write : palette_write_dummy;
+}
+
+void AtariVADSetPartialCB(void (*partial_cb)(INT32))
+{
+	AtariVADPartialCB = partial_cb;
 }
 
 void AtariVADExit()
@@ -332,6 +339,8 @@ void AtariVADEOFUpdate(UINT16 *eof_data)
 			atari_vad_write_word(0x0ffc0 + (i*2), eof_data[i]);
 		}
 	}
+
+	tilerow_partial_prev_line = 0;
 }
 
 void AtariVADTimerUpdate()
@@ -357,9 +366,7 @@ void AtariVADTileRowUpdate(INT32 scanline, UINT16 *alphamap_ram)
 		{
 			if (tilerow_partial_prev_line > scanline) tilerow_partial_prev_line = 0;
 
-		//	GenericTilesSetClip(-1, -1, tilerow_partial_prev_line, scanline);
-		//	BurnDrvRedraw();
-		//	GenericTilesClearClip();
+			if (AtariVADPartialCB) AtariVADPartialCB(scanline);
 
 			tilerow_partial_prev_line = scanline;
 		}

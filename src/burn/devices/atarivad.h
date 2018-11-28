@@ -7,6 +7,7 @@ void AtariVADInit(INT32 tmap_num0, INT32 tmap_num1, INT32 bgtype, void (*sl_time
 void AtariVADExit();
 void AtariVADMap(INT32 startaddress, INT32 endaddress, INT32 shuuz);
 INT32 AtariVADScan(INT32 nAction, INT32 *pnMin);
+void AtariVADSetPartialCB(void (*partial_cb)(INT32));
 
 void AtariVADEOFUpdate(UINT16 *eof_data); // call after last scanline
 void AtariVADTimerUpdate(); // call after each scanline

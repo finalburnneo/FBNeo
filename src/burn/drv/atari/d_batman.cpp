@@ -41,6 +41,8 @@ static UINT16 DrvInputs[3];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
+static void draw_scanline(INT32 line); // partials
+
 static struct BurnInputInfo BatmanInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 15,	"p1 up"		},
@@ -447,6 +449,7 @@ static INT32 DrvInit()
 	GenericTilemapSetGfx(3, DrvGfxROM0, 2, 8, 8, 0x080000, 0x000, 0x0f);
 
 	AtariVADInit(0, 1, 0, scanline_timer, palette_write);
+	AtariVADSetPartialCB(draw_scanline);
 	AtariMoInit(0, &modesc);
 
 	SekInit(0, 0x68000);
@@ -659,7 +662,6 @@ static INT32 DrvFrame()
 
 		if (atarivad_scanline_timer_enabled) {
 			if (atarivad_scanline_timer == atarivad_scanline) {
-				draw_scanline(i);
 				scanline_timer(CPU_IRQSTATUS_ACK);
 			}
 		}

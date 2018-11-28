@@ -310,8 +310,10 @@ int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT
 	mo->romlength     = romsize;
 	mo->objectcount   = count_objects(base, mo->romlength);
 
-// iq_132
-	mo->cliprect      = {0, nScreenWidth, 0, nScreenHeight};
+	mo->cliprect.nMinx = 0;
+	mo->cliprect.nMaxx = nScreenWidth;
+	mo->cliprect.nMiny = 0;
+	mo->cliprect.nMaxy = nScreenHeight;
 
 	if (desc->rightclip)
 	{

@@ -2,7 +2,7 @@
 #include "burnint.h"
 #include "midwayic.h"
 
-static int nUpper;
+static INT32 nUpper;
 static UINT8 nData[16];
 static UINT8 nBuffer;
 static UINT8 nIndex;
@@ -10,14 +10,13 @@ static UINT8 nStatus;
 static UINT8 nBits;
 static UINT8 nOrMask;
 
-void MidwaySerialPicInit(int upper)
+void MidwaySerialPicInit(INT32 upper)
 {
     nUpper = upper;
-    for (int i = 0; i < 16; i++)
-        nData[i] = 0;
+    for (INT32 i = 0; i < 16; i++) nData[i] = 0;
     MidwaySerialPicReset();
 
-    int year = 1994, month = 12, day = 11;
+    INT32 year = 1994, month = 12, day = 11;
     UINT32 serial_number, temp;
     UINT8 serial_digit[9];
 

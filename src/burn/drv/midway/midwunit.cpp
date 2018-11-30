@@ -1,5 +1,4 @@
-#include "driver.h"
-#include "burnint.h"
+#include "tiles_generic.h"
 #include "midwunit.h"
 #include "midwayic.h"
 #include "dcs2k.h"
@@ -13,7 +12,7 @@ static UINT8 *DrvGfxROM;
 static UINT8 *DrvRAM;
 static UINT8 *DrvNVRAM;
 static UINT8 *DrvPalette;
-static UINT16 *DrvPaletteB;
+static UINT32 *DrvPaletteB;
 static UINT8 *DrvVRAM;
 static UINT16 *DrvVRAM16;
 
@@ -22,8 +21,9 @@ UINT8 nWolfUnitJoy1[32];
 UINT8 nWolfUnitJoy2[32];
 UINT8 nWolfUnitJoy3[32];
 UINT8 nWolfUnitDSW[8];
+UINT8 nWolfReset = 0;
 static UINT32 DrvInputs[4];
-int nIOShuffle[16];
+static INT32 nIOShuffle[16];
 
 
 static bool bCMOSWriteEnable = false;
@@ -58,14 +58,14 @@ static INT32 MemIndex()
 {
     UINT8 *Next; Next = AllMem;
 
-    DrvBootROM 	= Next;             Next += 0x80000 * 2;
-	DrvSoundROM	= Next;				Next += 0x1000000;
-	DrvGfxROM 	= Next;				Next += 0x2000000;
-	DrvRAM		= Next;				Next += 0x80000;
-	DrvNVRAM	= Next;				Next += 0xC000;
-	DrvPalette	= Next;				Next += 0x10000;
-	DrvPaletteB	= (UINT16*)Next;	Next += 0x10000;
-	DrvVRAM		= Next;				Next += 0x400000;
+    DrvBootROM 	= Next;             Next += 0x800000 * sizeof(UINT8);
+	DrvSoundROM	= Next;				Next += 0x1000000 * sizeof(UINT8);
+	DrvGfxROM 	= Next;				Next += 0x2000000 * sizeof(UINT8);
+	DrvRAM		= Next;				Next += 0x400000 * sizeof(UINT8);
+	DrvNVRAM	= Next;				Next += 0x60000 * sizeof(UINT8);
+	DrvPalette	= Next;				Next += 0x80000 * sizeof(UINT8);
+	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
+	DrvVRAM		= Next;				Next += 0x400000 * sizeof(UINT8);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
     MemEnd		= Next;
     return 0;
@@ -194,6 +194,15 @@ UINT16 WolfUnitGfxRead(UINT32 address)
     return base[offset] | (base[offset + 1] << 8);
 }
 
+UINT16 WolfSoundRead(UINT32 address)
+{
+	return Dcs2kDataRead() & 0xff;
+}
+
+void WolfSoundWrite(UINT32 address, UINT16 value)
+{
+	Dcs2kDataWrite(value & 0xff);
+}
 
 static void WolfUnitToShift(UINT32 address, void *dst)
 {
@@ -206,31 +215,31 @@ static void WolfUnitFromShift(UINT32 address, void *src)
 }
 
 
-static int ScanlineRender(int line, TMS34010Display *info)
+static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 {
     if (!pBurnDraw)
         return 0;
 
     UINT16 *src = &DrvVRAM16[(info->rowaddr << 9) & 0x3FE00];
-    if (info->rowaddr >= 254)
+    if (info->rowaddr >= nScreenHeight)
         return 0;
 
-    int col = info->coladdr << 1;
-    UINT16 *dest = (UINT16*) pBurnDraw + (info->rowaddr * 512);
+    INT32 col = info->coladdr << 1;
+    UINT16 *dest = (UINT16*) pTransDraw + (info->rowaddr * nScreenWidth);
 
-    const int heblnk = info->heblnk;
-    const int hsblnk = info->hsblnk;
-    for (int x = heblnk; x < hsblnk; x++) {
-        dest[x] = DrvPaletteB[src[col++ & 0x1FF] & 0x7FFF];
+    const INT32 heblnk = info->heblnk;
+    const INT32 hsblnk = info->hsblnk;
+    for (INT32 x = heblnk; x < hsblnk; x++) {
+        dest[x - heblnk] = src[col++ & 0x1FF] & 0x7FFF;
     }
 
     // blank
-    for (int x = 0; x < heblnk; x++) {
+    /*for (INT32 x = 0; x < heblnk; x++) {
         dest[x] = 0;
     }
-    for (int x = hsblnk; x < info->htotal; x++) {
+    for (INT32 x = hsblnk; x < info->htotal; x++) {
         dest[x] = 0;
-    }
+    }*/
     return 0;
 }
 
@@ -251,15 +260,15 @@ static INT32 LoadGfxBanks()
     char *pRomName;
     struct BurnRomInfo pri;
 
-    for (int i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
-        bprintf(PRINT_NORMAL, _T("ROM %d\n"), i);
+    for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
+        //bprintf(PRINT_NORMAL, _T("ROM %d\n"), i);
         BurnDrvGetRomInfo(&pri, i);
         if ((pri.nType & 7) == 3) {
 
             UINT32 addr = WUNIT_GFX_ADR(pri.nType) << 20;
             UINT32 offs = WUNIT_GFX_OFF(pri.nType);
 
-            bprintf(PRINT_NORMAL, _T("ROM %d - %X\n"), i, addr+offs);
+            //bprintf(PRINT_NORMAL, _T("ROM %d - %X\n"), i, addr+offs);
 
             if (BurnLoadRom(DrvGfxROM + addr + offs, i, 4) != 0) {
                 return 1;
@@ -267,6 +276,12 @@ static INT32 LoadGfxBanks()
         }
     }
     return 0;
+}
+
+static void WolfDoReset()
+{
+	TMS34010Reset();
+	Dcs2kReset();
 }
 
 INT32 WolfUnitInit()
@@ -297,9 +312,7 @@ INT32 WolfUnitInit()
     if (nRet != 0)
         return 1;
 
-    for (int i = 0; i < 16; i++)
-        nIOShuffle[i] = i % 8;
-
+    for (INT32 i = 0; i < 16; i++) nIOShuffle[i] = i % 8;
 
     Dcs2kInit();
     Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
@@ -339,24 +352,29 @@ INT32 WolfUnitInit()
     TMS34010MapHandler(7, 0x01a00000, 0x01a000ff, MAP_READ | MAP_WRITE);
     TMS34010MapHandler(7, 0x01a80000, 0x01a800ff, MAP_READ | MAP_WRITE);
 
-
     TMS34010SetReadHandler(8, WolfUnitGfxRead);
     TMS34010MapHandler(8, 0x02000000, 0x06ffffff, MAP_READ);
+	
+	TMS34010SetHandlers(9, WolfSoundRead, WolfSoundWrite);
+    TMS34010MapHandler(9, 0x01680000, 0x0168001f, MAP_READ | MAP_WRITE);
 
     TMS34010SetHandlers(11, WolfUnitVramRead, WolfUnitVramWrite);
     TMS34010MapHandler(11, 0x00000000, 0x003fffff, MAP_READ | MAP_WRITE);
 
-    
-    Dcs2kBoot();
+	Dcs2kBoot();
 
-    Dcs2kResetWrite(1);
-    Dcs2kResetWrite(0);
-
+	Dcs2kResetWrite(1);
+	Dcs2kResetWrite(0);
 
     memset(DrvVRAM, 0, 0x400000);
     DrvInputs[2] = 0;
-
-	TMS34010Reset();
+	
+	GenericTilesInit();
+	
+	BurnSetRefreshRate(54.71);
+	
+	WolfDoReset();
+	
     return 0;
 }
 
@@ -367,26 +385,34 @@ static void MakeInputs()
     DrvInputs[2] = 0xFD7D | 0x0200;
     DrvInputs[3] = 0;
 
-    for (int i = 0; i < 16; i++) {
-        if (nWolfUnitJoy1[i] & 1)
-            DrvInputs[0] |= (1 << i);
-        if (nWolfUnitJoy2[i] & 1)
-            DrvInputs[1] |= (1 << i);
-        if (nWolfUnitJoy3[i] & 1)
-            DrvInputs[3] |= (1 << i);
+    for (INT32 i = 0; i < 16; i++) {
+        if (nWolfUnitJoy1[i] & 1) DrvInputs[0] |= (1 << i);
+        if (nWolfUnitJoy2[i] & 1) DrvInputs[1] |= (1 << i);
+        if (nWolfUnitJoy3[i] & 1) DrvInputs[3] |= (1 << i);
     }
 
-    if (nWolfUnitDSW[0] & 1)
-        DrvInputs[2] ^= 0x08000;
+    if (nWolfUnitDSW[0] & 1) DrvInputs[2] ^= 0x08000;
 }
 
 INT32 WolfUnitFrame()
 {
+	if (nWolfReset) WolfDoReset();
+	
 	MakeInputs();
-	static int line = 0;
-    for (int i = 0; i < 288; i++) {
-    	TMS34010Run(2893);//50000000/60/288
+	static INT32 line = 0;
+    for (INT32 i = 0; i < 288; i++) {
+    	TMS34010Run(3173);//50000000/54.71/288
     	line = TMS34010GenerateScanline(line);
+		
+		//Dcs2kRun(635); //10000000/54.71/288
+    }
+	
+	if (pBurnDraw) {
+		BurnTransferCopy(DrvPaletteB);
+	}
+	
+	if (pBurnSoundOut) {
+        //Dcs2kRender(pBurnSoundOut, nBurnSoundLen);
     }
 
     return 0;
@@ -396,6 +422,9 @@ INT32 WolfUnitExit()
 {
 	Dcs2kExit();
 	BurnFree(AllMem);
+	
+	GenericTilesExit();
+	
     return 0;
 }
 

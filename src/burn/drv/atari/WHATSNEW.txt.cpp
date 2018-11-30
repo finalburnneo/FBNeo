@@ -14,12 +14,12 @@ atarig1: good
 gauntlet: good
 batman: good
 vindictr: good
+relief: good
 
   - WIP drivers -
 arcadecl
 offtwall
 rampart
-relief
 
 NOTE: _all_ games need good sync, see d_thunderj, d_blstroid's frame to see how it needs to be.
 

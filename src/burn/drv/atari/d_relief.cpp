@@ -36,6 +36,8 @@ static UINT16 DrvInputs[4];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
+static INT32 lastline = 0;
+
 static struct BurnInputInfo ReliefInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"	},
@@ -59,9 +61,9 @@ static struct BurnInputInfo ReliefInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy2 + 5,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy2 + 6,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"service"	},
+	{"Service 3",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -227,11 +229,11 @@ static void __fastcall relief_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x140030:
-			set_oki_bank(((data >> 6) & 3) | (oki_bank & 4));
+			set_oki_bank(((data << 2) & 4) | (oki_bank & 3)); // wrong?
 		return;
 
 		case 0x140031:
-			set_oki_bank(((data << 2) & 4) | (oki_bank & 3)); // wrong?
+			set_oki_bank(((data >> 6) & 3) | (oki_bank & 4));
 		return;
 
 		case 0x1c0030:
@@ -445,10 +447,10 @@ static INT32 DrvInit()
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	BurnYM2413Init(2500000);
-	BurnYM2413SetAllRoutes(1.40, BURN_SND_ROUTE_BOTH);
+	BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1193181 / MSM6295_PIN7_LOW, 1);
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset(1);
 
@@ -502,20 +504,43 @@ static void sprite_copy()
 	}
 }
 
-static INT32 DrvDraw()
+static void draw_scanline(INT32 line)
 {
-	if (DrvRecalc) {
-		AtariVADRecalcPalette();
-		DrvRecalc = 0;
-	}
+	if (!pBurnDraw || line > 239) return;
 
-	if ((nBurnLayer & 1) == 0) BurnTransferClear();
+	GenericTilesSetClip(-1, -1, lastline, line + 1);
 
 	AtariVADDraw(pTransDraw, 0);
 
 	AtariMoRender(0);
 
 	if (nSpriteEnable & 1) sprite_copy();
+
+	GenericTilesClearClip();
+
+	lastline = line + 1;
+}
+
+static void DrvDrawBegin()
+{
+	if (DrvRecalc) {
+		AtariVADRecalcPalette();
+		DrvRecalc = 0;
+	}
+
+	if (pBurnDraw)
+		BurnTransferClear();
+
+	lastline = 0;
+}
+
+static INT32 DrvDraw()
+{
+	if (DrvRecalc) { // bpp changed, let's not present a blank screen
+		DrvDrawBegin();
+	}
+
+	draw_scanline(239); // 0 - 240
 
 	BurnTransferCopy(DrvPalette);
 
@@ -543,10 +568,12 @@ static INT32 DrvFrame()
 
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 262;
-//	INT32 nCyclesTotal[1] = { 7159090 / 60 }; // 59.92HZ
+	INT32 nCyclesTotal[1] = { 7159090 / 60 }; // 59.92HZ
 	INT32 nCyclesDone[1] = { 0 };
 
 	vblank = 0;
+
+	DrvDrawBegin();
 
 	SekOpen(0);
 
@@ -556,12 +583,16 @@ static INT32 DrvFrame()
 		if (i == 0) AtariVADEOFUpdate((UINT16*)(DrvMobRAM + 0x2f00));
 
 		hblank = 0;
-		nCyclesDone[0] += SekRun(336);
+		INT32 sek_line = ((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0];
+		nCyclesDone[0] += SekRun((INT32)((double)sek_line * 0.9));
 		hblank = 1;
-		nCyclesDone[0] += SekRun(120);
+		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+
+		if ((i % 64) == 0) draw_scanline(i);
 
 		if (atarivad_scanline_timer_enabled) {
 			if (atarivad_scanline_timer == atarivad_scanline) {
+				draw_scanline(i);
 				scanline_timer(CPU_IRQSTATUS_ACK);
 			}
 		}
@@ -620,6 +651,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		AtariMoScan(nAction, pnMin);
 
 		SCAN_VAR(oki_bank);
+	}
+
+	if (nAction & ACB_WRITE) {
+		set_oki_bank(oki_bank);
 	}
 
 	AtariEEPROMScan(nAction, pnMin);

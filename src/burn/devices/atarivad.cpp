@@ -191,7 +191,8 @@ static void __fastcall atari_vad_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	bprintf (0, _T("VAD,WW: %5.5x, %4.4x\n"), address, data);
+	// relief pitcher goes nuts with unmapped writes.
+	//bprintf (0, _T("VAD,WW: %5.5x, %4.4x\n"), address, data);
 }
 
 static UINT16 __fastcall atari_vad_read_word(UINT32 address)

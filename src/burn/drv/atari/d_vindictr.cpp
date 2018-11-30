@@ -916,7 +916,7 @@ static struct BurnRomInfo vindictrgRomDesc[] = {
 	{ "136059-1101.8r",				0x20000, 0x2d07fdaa, 3 | BRF_GRA },           // 13
 	{ "136059-1113.2r",				0x10000, 0x0a2aba63, 3 | BRF_GRA },           // 14
 
-	{ "136059-1123.16n",			0x04000, 0xf99b631a, 4 | BRF_GRA },           // 15 Characters
+	{ "136059-1223.16n",			0x04000, 0xd27975bb, 4 | BRF_GRA },           // 15 Characters
 
 	{ "pal16l8a-136059-1150.c3",	0x00104, 0x09d02b00, 5 | BRF_OPT },           // 16 PLDs
 	{ "pal16l8a-136059-1151.d17",	0x00104, 0x797dcde7, 5 | BRF_OPT },           // 17

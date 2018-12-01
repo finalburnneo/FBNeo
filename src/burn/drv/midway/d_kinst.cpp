@@ -30,6 +30,7 @@ static UINT32 DrvInputs[3];
 static UINT32 nSoundData;
 static UINT32 nSoundCtrl;
 static ide::ide_disk *DrvDisk;
+static UINT8 DrvReset = 0;
 
 // Fast conversion from BGR555 to RGB565
 static UINT16 *DrvColorLUT;
@@ -60,6 +61,8 @@ static struct BurnInputInfo kinstInputList[] = {
     {"P2 Button Y",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 5"	},
     {"P2 Button Z",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 6"	},
     {"Test",        BIT_DIGITAL,    DrvDSW + 0,     "diag"      },
+	
+	{"Reset"      , BIT_DIGITAL,	&DrvReset,		"reset"     },
 };
 
 STDINPUTINFO(kinst)
@@ -106,8 +109,23 @@ static void GenerateColorLUT()
 {
     for (int i = 0; i < 0x8000; i++) {
         //UINT16 x = i;
-        DrvColorLUT[i] = RGB888_2_565(RGB555_2_888(i));
+        //DrvColorLUT[i] = RGB888_2_565(RGB555_2_888(i));
+		
+		INT32 r = (i >>  0) & 0x1f;
+		INT32 g = (i >>  5) & 0x1f;
+		INT32 b = (i >> 10) & 0x1f;
+
+		r = (r << 3) | (r >> 2);
+		g = (g << 3) | (g >> 2);
+		b = (b << 3) | (b >> 2);
+ 
+		DrvColorLUT[i] = BurnHighCol(r, g, b, 0);
     }
+}
+
+static void DrvDoReset()
+{
+	Mips3Reset();
 }
 
 static void IDESetIRQState(int state)
@@ -321,8 +339,8 @@ static INT32 LoadSoundBanks()
 static INT32 kinstSetup()
 {
     printf("kinst: loading image at kinst.img\n");
-    // FIXME:
-    if (!DrvDisk->load_disk_image("hdd/kinst.img")) {
+    // FIXME: this needs support adding for a hdd folder if we ever get to the point where we enable this driver in release builds
+    if (!DrvDisk->load_disk_image("d:\\downloads\\kinst.img")) {
         printf("kinst: harddisk image not found!");
         return 1;
     }
@@ -396,8 +414,7 @@ static INT32 DrvInit(int version)
     Mips3UseRecompiler(true);
 #endif
     Mips3Init();
-    Mips3Reset();
-
+    
     DrvVRAMBase = 0x30000;
 
     Mips3MapMemory(DrvBootROM,  0x1FC00000, 0x1FC7FFFF, MAP_READ);
@@ -421,6 +438,8 @@ static INT32 DrvInit(int version)
 
     nSoundData = 0;
     nSoundCtrl = 0;
+	
+	DrvDoReset();
 
     return 0;
 }
@@ -464,7 +483,14 @@ static INT32 DrvDraw()
 //
 static INT32 DrvFrame()
 {
-    MakeInputs();
+    if (DrvReset) DrvDoReset();
+	
+	if (DrvRecalc) {
+		GenerateColorLUT();
+		DrvRecalc = 0;
+	}
+	
+	MakeInputs();
 
     const long FPS = 60;
     const long nMipsCycPerFrame = MHz(100) / FPS;
@@ -552,7 +578,7 @@ static struct BurnRomInfo kinstRomDesc[] = {
 STD_ROM_PICK(kinst)
 STD_ROM_FN(kinst)
 
-struct BurnDriver BurnDrvKinst = {
+struct BurnDriverD BurnDrvKinst = {
     "kinst", NULL, NULL, NULL, "1994/1995",
     "Killer Instinct (ver. 1.5)\0", NULL, "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
@@ -582,7 +608,7 @@ static struct BurnRomInfo kinst2RomDesc[] = {
 STD_ROM_PICK(kinst2)
 STD_ROM_FN(kinst2)
 
-struct BurnDriver BurnDrvKinst2 = {
+struct BurnDriverD BurnDrvKinst2 = {
     "kinst2", NULL, NULL, NULL, "1994/1995",
     "Killer Instinct II (ver. 1.4)\0", NULL, "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,

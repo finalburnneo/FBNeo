@@ -185,7 +185,9 @@ struct cpu_state {
     dword pc;
     dword last_pc;
     dword st;
-    sdword icounter;
+	sdword icounter;
+	sdword cycles_start;
+	u64 total_cycles;
     dword convdp;
     dword convsp;
     byte pshift;
@@ -492,9 +494,13 @@ int generate_scanline(cpu_state *cpu, int line, scanline_render_t render);
 #ifdef TMS34010_DEBUGGER
 void run(cpu_state *cpu, int cycles, bool stepping=false);
 #else
-void run(cpu_state *cpu, int cycles);
+int run(cpu_state *cpu, int cycles);
 
 #endif
+
+i64 total_cycles(cpu_state *cpu);
+void new_frame(cpu_state *cpu);
+
 void reset(cpu_state *cpu);
 void write_ioreg(cpu_state *cpu, dword addr, word value);
 dword read_ioreg(cpu_state *cpu, dword addr);

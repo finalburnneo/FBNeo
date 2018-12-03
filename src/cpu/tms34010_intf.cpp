@@ -54,10 +54,19 @@ void TMS34010Init()
     TMS34010MapHandler(MAXHANDLER-1, 0xc0000000, 0xc00001ff, MAP_READ | MAP_WRITE);
 }
 
-int TMS34010Run(int cycles) 
+int TMS34010Run(int cycles)
 {
-    tms::run(&tms34010, cycles);
-    return 0;
+    return tms::run(&tms34010, cycles);
+}
+
+int TMS34010TotalCycles()
+{
+	return tms::total_cycles(&tms34010);
+}
+
+void TMS34010NewFrame()
+{
+	tms::new_frame(&tms34010);
 }
 
 void TMS34010Reset()

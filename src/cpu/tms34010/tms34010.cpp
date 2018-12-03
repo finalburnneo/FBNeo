@@ -34,7 +34,8 @@ const char *io_regs_names[32] = {
 void reset(cpu_state *cpu)
 {
     cpu->pc = rdfield_32(VECT_RESET);
-    cpu->icounter = 0;
+	cpu->icounter = 0;
+	cpu->total_cycles = 0;
     cpu->st = 0x00000010;
     for (int i = 0; i < 15; i++) {
         cpu->a[i].value = 0;
@@ -128,9 +129,10 @@ void run(cpu_state *cpu, int cycles, bool stepping)
 }
 
 #else
-void run(cpu_state *cpu, int cycles)
+int run(cpu_state *cpu, int cycles)
 {
-    cpu->icounter = cycles;
+	cpu->cycles_start = cycles;
+	cpu->icounter = cycles;
     while (cpu->icounter > 0) {
 
         check_irq(cpu);
@@ -139,9 +141,25 @@ void run(cpu_state *cpu, int cycles)
         cpu->last_pc = cpu->pc;
         cpu->pc += 16;
         opcode_table[(opcode >> 4) & 0xFFF](cpu, opcode);
-    }
+	}
+
+	cycles = cycles - cpu->icounter;
+
+	cpu->cycles_start = cpu->icounter = 0;
+
+	return cycles;
 }
 #endif
+
+i64 total_cycles(cpu_state *cpu)
+{
+	return cpu->total_cycles + (cpu->cycles_start - cpu->icounter);
+}
+
+void new_frame(cpu_state *cpu)
+{
+	cpu->total_cycles = 0;
+}
 
 void generate_irq(cpu_state *cpu, int num)
 {

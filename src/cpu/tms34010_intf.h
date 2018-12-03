@@ -19,6 +19,8 @@ typedef tms::scanline_render_t pTMS34010ScanlineRender;
 
 void TMS34010Init();
 int TMS34010Run(int cycles);
+int TMS34010TotalCycles();
+void TMS34010NewFrame();
 void TMS34010Reset();
 void TMS34010GenerateIRQ(UINT32 line);
 void TMS34010ClearIRQ(UINT32 line);

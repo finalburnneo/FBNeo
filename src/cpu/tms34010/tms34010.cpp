@@ -99,6 +99,7 @@ static void perform_trace(cpu_state *cpu)
 
 void run(cpu_state *cpu, int cycles, bool stepping)
 {
+	cpu->cycles_start = cycles;
     cpu->icounter = cycles;
     while (cpu->icounter > 0) {
 
@@ -126,6 +127,10 @@ void run(cpu_state *cpu, int cycles, bool stepping)
             return;
     }
     cpu->reason = ICOUNTER_EXPIRED;
+
+	cycles = cycles - cpu->icounter;
+	cpu->total_cycles += cycles;
+	cpu->cycles_start = cpu->icounter = 0;
 }
 
 #else
@@ -144,7 +149,7 @@ int run(cpu_state *cpu, int cycles)
 	}
 
 	cycles = cycles - cpu->icounter;
-
+	cpu->total_cycles += cycles;
 	cpu->cycles_start = cpu->icounter = 0;
 
 	return cycles;
@@ -159,6 +164,16 @@ i64 total_cycles(cpu_state *cpu)
 void new_frame(cpu_state *cpu)
 {
 	cpu->total_cycles = 0;
+}
+
+dword get_pc(cpu_state *cpu)
+{
+	return cpu->pc;
+}
+
+dword get_ppc(cpu_state *cpu)
+{
+	return cpu->last_pc;
 }
 
 void generate_irq(cpu_state *cpu, int num)

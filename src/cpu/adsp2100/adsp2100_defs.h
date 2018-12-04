@@ -167,8 +167,14 @@ typedef struct ADSP2100STATE
     //const device_config *device;
 
     /* other internal states */
-    int			icount;
-    int			chip_type;
+	int			icount;
+
+	int         total_cycles;
+	int         cycles_start;
+	int         end_run;
+
+
+	int			chip_type;
     int			mstat_mask;
     int			imask_mask;
 

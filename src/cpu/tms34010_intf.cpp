@@ -59,7 +59,7 @@ int TMS34010Run(int cycles)
     return tms::run(&tms34010, cycles);
 }
 
-int TMS34010TotalCycles()
+INT64 TMS34010TotalCycles()
 {
 	return tms::total_cycles(&tms34010);
 }
@@ -67,6 +67,16 @@ int TMS34010TotalCycles()
 void TMS34010NewFrame()
 {
 	tms::new_frame(&tms34010);
+}
+
+UINT32 TMS34010GetPC()
+{
+	return tms::get_pc(&tms34010);
+}
+
+UINT32 TMS34010GetPPC()
+{
+	return tms::get_ppc(&tms34010);
 }
 
 void TMS34010Reset()

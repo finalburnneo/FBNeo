@@ -19,7 +19,7 @@ typedef tms::scanline_render_t pTMS34010ScanlineRender;
 
 void TMS34010Init();
 int TMS34010Run(int cycles);
-int TMS34010TotalCycles();
+INT64 TMS34010TotalCycles();
 void TMS34010NewFrame();
 void TMS34010Reset();
 void TMS34010GenerateIRQ(UINT32 line);
@@ -29,6 +29,8 @@ void TMS34010SetToShift(void (*SL)(UINT32 addr, void *dst));
 void TMS34010SetFromShift(void (*FS)(UINT32 addr, void *src));
 int TMS34010GenerateScanline(int line);
 TMS34010State *TMS34010GetState();
+UINT32 TMS34010GetPC();
+UINT32 TMS34010GetPPC();
 
 UINT16 TMS34010ReadWord(UINT32 address);
 void TMS34010WriteWord(UINT32 address, UINT16 value);

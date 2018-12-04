@@ -127,6 +127,21 @@ int Adsp2100Run(int cycles)
     return adsp21xx_execute(pADSP, cycles);
 }
 
+int Adsp2100TotalCycles()
+{
+	return adsp21xx_total_cycles(pADSP);
+}
+
+void Adsp2100NewFrame()
+{
+	adsp21xx_new_frame(pADSP);
+}
+
+void Adsp2100RunEnd()
+{
+	adsp21xx_stop_execute(pADSP);
+}
+
 void Adsp2100SetRxCallback(pAdsp2100RxCallback cb)
 {
     pRxCallback = cb;

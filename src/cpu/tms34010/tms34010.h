@@ -187,7 +187,7 @@ struct cpu_state {
     dword st;
 	sdword icounter;
 	sdword cycles_start;
-	u64 total_cycles;
+	i64 total_cycles;
     dword convdp;
     dword convsp;
     byte pshift;
@@ -500,6 +500,9 @@ int run(cpu_state *cpu, int cycles);
 
 i64 total_cycles(cpu_state *cpu);
 void new_frame(cpu_state *cpu);
+
+dword get_pc(cpu_state *cpu);
+dword get_ppc(cpu_state *cpu);
 
 void reset(cpu_state *cpu);
 void write_ioreg(cpu_state *cpu, dword addr, word value);

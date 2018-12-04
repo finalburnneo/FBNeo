@@ -27,6 +27,10 @@ void Adsp2100Reset();
 int Adsp2100Run(int cycles);
 int Adsp2100LoadBootROM(void *src, void *dst);
 
+int Adsp2100TotalCycles();
+void Adsp2100NewFrame();
+void Adsp2100RunEnd();
+
 void Adsp2100SetRxCallback(pAdsp2100RxCallback cb);
 void Adsp2100SetTxCallback(pAdsp2100TxCallback cb);
 void Adsp2100SetTimerCallback(pAdsp2100TimerCallback cb);
@@ -45,7 +49,6 @@ int Adsp2100SetReadDataWordHandler(int i, pAdsp2100ReadWordHandler pHandler);
 int Adsp2100SetWriteDataWordHandler(int i, pAdsp2100WriteWordHandler pHandler);
 
 void Adsp2100SetIRQLine(const int line, const int state);
-
 
 adsp2100_state *Adsp2100GetState();
 

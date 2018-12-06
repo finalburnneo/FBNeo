@@ -1,5 +1,7 @@
 // Based on MAME driver by Aaron Giles
 
+// sound is temp. broken -dink dec 05, 2018 - will fix asap!
+
 #include "driver.h"
 #include "burnint.h"
 #include "mips3_intf.h"
@@ -163,7 +165,7 @@ static UINT32 kinstRead(UINT32 address)
         switch (address & 0xFF) {
         case 0x90:
             tmp = ~2;
-            if (Dcs2kDataRead() & 0x800)
+            if (Dcs2kControlRead() & 0x800)
                 tmp |= 2;
             return tmp;
         case 0x98:
@@ -195,7 +197,7 @@ static UINT32 kinst2Read(UINT32 address)
         switch (address & 0xFF) {
         case 0x80:
             tmp = ~2;
-            if (Dcs2kDataRead() & 0x800)
+            if (Dcs2kControlRead() & 0x800)
                 tmp |= 2;
             return tmp;
         case 0xA0:
@@ -408,7 +410,7 @@ static INT32 DrvInit(int version)
     if (nRet != 0)
         return 1;
 
-    Dcs2kInit();
+    Dcs2kInit(DCS_2K, MHz(10));
 
 #ifdef MIPS3_X64_DRC
     Mips3UseRecompiler(true);
@@ -472,9 +474,6 @@ static INT32 DrvDraw()
     }
     return 0;
 }
-
-#define MHz(x)  (x * 1000000)
-#define kHz(x)  (x * 1000)
 
 // R4600: 100 MHz
 // VIDEO:  60  Hz

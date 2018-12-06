@@ -1,8 +1,14 @@
+// midway wolf unit
+
+// todo:
+//  1: fix dips (f.ex, service mode is "Coinage Source" for Rampage W.T.)
+
 #include "tiles_generic.h"
 #include "midwunit.h"
 #include "midwayic.h"
 #include "dcs2k.h"
 #include "tms34010_intf.h"
+#include "adsp2100_intf.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -61,15 +67,32 @@ static INT32 MemIndex()
     DrvBootROM 	= Next;             Next += 0x800000 * sizeof(UINT8);
 	DrvSoundROM	= Next;				Next += 0x1000000 * sizeof(UINT8);
 	DrvGfxROM 	= Next;				Next += 0x2000000 * sizeof(UINT8);
-	DrvRAM		= Next;				Next += 0x400000 * sizeof(UINT8);
-	DrvNVRAM	= Next;				Next += 0x60000 * sizeof(UINT8);
+	DrvRAM		= Next;				Next += 0x400000 * sizeof(UINT16);
+	DrvNVRAM	= Next;				Next += 0x60000 * sizeof(UINT16);
 	DrvPalette	= Next;				Next += 0x80000 * sizeof(UINT8);
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
-	DrvVRAM		= Next;				Next += 0x400000 * sizeof(UINT8);
+	DrvVRAM		= Next;				Next += 0x400000 * sizeof(UINT16);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
     MemEnd		= Next;
     return 0;
 }
+
+static void sound_sync()
+{
+	INT32 cyc = ((double)TMS34010TotalCycles() / 63 * 100) - Dcs2kTotalCycles();
+	if (cyc > 0) {
+		Dcs2kRun(cyc);
+	}
+}
+
+static void sound_sync_end()
+{
+	INT32 cyc = ((double)10000000 * 100 / nBurnFPS) - Dcs2kTotalCycles();
+	if (cyc > 0) {
+		Dcs2kRun(cyc);
+	}
+}
+
 
 
 static UINT16 WolfUnitIoRead(UINT32 address)
@@ -81,7 +104,10 @@ static UINT16 WolfUnitIoRead(UINT32 address)
     case 1: return ~DrvInputs[1];
     case 2: return DrvInputs[2];
     case 3: return ~DrvInputs[3];
-    case 4: return ((MidwaySerialPicStatus() << 12) | (Dcs2kDataRead()));
+	case 4: {
+		sound_sync();
+		return ((MidwaySerialPicStatus() << 12) | (Dcs2kControlRead() & 0xfff));
+	}
     default:
     	return ~0;
     }
@@ -92,7 +118,8 @@ void WolfUnitIoWrite(UINT32 address, UINT16 value)
     UINT32 offset = (address >> 4) % 8;
     switch(offset) {
     case 1:
-    	Dcs2kResetWrite(value & 0x10);
+		sound_sync();
+		Dcs2kResetWrite(value & 0x10);
         MidwaySerialPicReset();
         break;
     }
@@ -125,7 +152,7 @@ void WolfUnitSecurityWrite(UINT32 address, UINT16 value)
 UINT16 WolfUnitCMOSRead(UINT32 address)
 {
     UINT16 *wn = (UINT16*)DrvNVRAM;
-    UINT32 offset = (address - 0x01400000) >> 1;
+    UINT32 offset = (address & 0x05ffff) >> 1;
     return wn[offset];
 }
 
@@ -134,7 +161,7 @@ void WolfUnitCMOSWrite(UINT32 address, UINT16 value)
 {
     if (bCMOSWriteEnable) {
         UINT16 *wn = (UINT16*) DrvNVRAM;
-        UINT32 offset = (address - 0x01400000) >> 1;
+        UINT32 offset = (address & 0x05ffff) >> 1;
         wn[offset] = value;
         bCMOSWriteEnable = false;
     }
@@ -160,7 +187,6 @@ void WolfUnitPalWrite(UINT32 address, UINT16 value)
     UINT32 col = RGB555_2_888(BURN_ENDIAN_SWAP_INT16(value));
     DrvPaletteB[address>>4] = BurnHighCol(RGB888_r(col),RGB888_g(col),RGB888_b(col),0);
 }
-
 
 
 UINT16 WolfUnitVramRead(UINT32 address)
@@ -196,12 +222,18 @@ UINT16 WolfUnitGfxRead(UINT32 address)
 
 UINT16 WolfSoundRead(UINT32 address)
 {
-	return Dcs2kDataRead() & 0xff;
+	sound_sync();
+	UINT16 dr = Dcs2kDataRead();
+	Dcs2kRun(20); // "sync" in frame will even things out.
+	return dr & 0xff;
 }
 
 void WolfSoundWrite(UINT32 address, UINT16 value)
 {
+	if (address & 0x1f) return; // ignore bad writes
+	sound_sync();
 	Dcs2kDataWrite(value & 0xff);
+	Dcs2kRun(20);
 }
 
 static void WolfUnitToShift(UINT32 address, void *dst)
@@ -233,13 +265,6 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
         dest[x - heblnk] = src[col++ & 0x1FF] & 0x7FFF;
     }
 
-    // blank
-    /*for (INT32 x = 0; x < heblnk; x++) {
-        dest[x] = 0;
-    }
-    for (INT32 x = hsblnk; x < info->htotal; x++) {
-        dest[x] = 0;
-    }*/
     return 0;
 }
 
@@ -314,7 +339,7 @@ INT32 WolfUnitInit()
 
     for (INT32 i = 0; i < 16; i++) nIOShuffle[i] = i % 8;
 
-    Dcs2kInit();
+    Dcs2kInit(DCS_8K, MHz(10));
     Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
 
     MidwaySerialPicInit(528);
@@ -399,20 +424,38 @@ INT32 WolfUnitFrame()
 	if (nWolfReset) WolfDoReset();
 	
 	MakeInputs();
+
+	TMS34010NewFrame();
+	Dcs2kNewFrame();
+
+	INT32 nInterleave = 288;
+	//INT32 nCyclesTotal[2] = { (INT32)(50000000/54.71), (INT32)(26000000 / 54.71) };
+	//INT32 nCyclesDone[2] = { 0, 0 };
 	static INT32 line = 0;
-    for (INT32 i = 0; i < 288; i++) {
-    	TMS34010Run(3173);//50000000/54.71/288
-    	line = TMS34010GenerateScanline(line);
-		
-		//Dcs2kRun(635); //10000000/54.71/288
+
+	for (INT32 i = 0; i < nInterleave; i++) {
+	   // nCyclesDone[0] += TMS34010Run(nCyclesTotal[0] / nInterleave); //(nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+
+		TMS34010Run(396); //50000000/8/54.71/288
+		line = TMS34010GenerateScanline(line);
+
+		if (nCurrentFrame&1) {
+			if (i == 0 || i == 144) DcsIRQ(); // 2x per frame
+		} else {
+			if (i == 0 || i == 96 || i == 192) DcsIRQ(); // 3x
+		}
+
+		sound_sync(); // sync to main cpu
+		if (i == nInterleave - 1)
+			sound_sync_end();
     }
-	
+
 	if (pBurnDraw) {
 		BurnTransferCopy(DrvPaletteB);
 	}
 	
 	if (pBurnSoundOut) {
-        //Dcs2kRender(pBurnSoundOut, nBurnSoundLen);
+        Dcs2kRender(pBurnSoundOut, nBurnSoundLen);
     }
 
     return 0;
@@ -433,8 +476,6 @@ INT32 WolfUnitDraw()
 	// TMS34010 renders scanlines direct to pBurnDraw
 	return 0;
 }
-
-
 
 INT32 WolfUnitScan(INT32 nAction, INT32 *pnMin)
 {

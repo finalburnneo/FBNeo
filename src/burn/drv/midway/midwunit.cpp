@@ -2,6 +2,8 @@
 
 // todo:
 //  1: fix dips (f.ex, service mode is "Coinage Source" for Rampage W.T.)
+//  2: going from window'd (32bit) to fullscreen (16bit) causes broken colors
+//  3: screen tearing in rmpgwt
 
 #include "tiles_generic.h"
 #include "midwunit.h"
@@ -341,6 +343,7 @@ INT32 WolfUnitInit()
 
     Dcs2kInit(DCS_8K, MHz(10));
     Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
+	Dcs2kSetVolume(2.50);
 
     MidwaySerialPicInit(528);
     MidwaySerialPicReset();
@@ -419,6 +422,21 @@ static void MakeInputs()
     if (nWolfUnitDSW[0] & 1) DrvInputs[2] ^= 0x08000;
 }
 
+static void HandleDCSIRQ(INT32 line)
+{
+	if (nBurnFPS == 6000) {
+		// 60hz needs 2 irq's/frame (this is here for "force 60hz"/etc)
+		if (line == 0 || line == 144) DcsIRQ(); // 2x per frame
+	} else {
+		// 54.71hz needs 5 irq's every 2 frames
+		if (nCurrentFrame & 1) {
+			if (line == 0 || line == 144) DcsIRQ(); // 2x per frame
+		} else {
+			if (line == 0 || line == 96 || line == 192) DcsIRQ(); // 3x
+		}
+	}
+}
+
 INT32 WolfUnitFrame()
 {
 	if (nWolfReset) WolfDoReset();
@@ -439,11 +457,7 @@ INT32 WolfUnitFrame()
 		TMS34010Run(396); //50000000/8/54.71/288
 		line = TMS34010GenerateScanline(line);
 
-		if (nCurrentFrame&1) {
-			if (i == 0 || i == 144) DcsIRQ(); // 2x per frame
-		} else {
-			if (i == 0 || i == 96 || i == 192) DcsIRQ(); // 3x
-		}
+		HandleDCSIRQ(i);
 
 		sound_sync(); // sync to main cpu
 		if (i == nInterleave - 1)

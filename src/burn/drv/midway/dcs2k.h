@@ -13,6 +13,7 @@ void Dcs2kInit(INT32 dtype, INT32 dmhz);
 void Dcs2kExit();
 void Dcs2kRun(int cycles);
 void Dcs2kMapSoundROM(void *ptr, int size);
+void Dcs2kSetVolume(double vol);
 void Dcs2kBoot();
 void Dcs2kDataWrite(int data);
 int Dcs2kDataRead();

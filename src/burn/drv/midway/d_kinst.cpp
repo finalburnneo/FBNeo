@@ -342,7 +342,7 @@ static INT32 kinstSetup()
 {
     printf("kinst: loading image at kinst.img\n");
     // FIXME: this needs support adding for a hdd folder if we ever get to the point where we enable this driver in release builds
-    if (!DrvDisk->load_disk_image("d:\\downloads\\kinst.img")) {
+    if (!DrvDisk->load_disk_image("hdd/kinst.img")) {
         printf("kinst: harddisk image not found!");
         return 1;
     }
@@ -512,9 +512,18 @@ static INT32 DrvFrame()
     Mips3SetIRQLine(VBLANK_IRQ, 0);
 
     bool isVblank = false;
+	bool dcsIrq = false;
 
     while ((nMipsTotalCyc < nMipsCycPerFrame) || (nDcsTotalCyc < nDcsCycPerFrame))
-    {
+	{
+		// @ 60hz, dcs needs 2 IRQs/frame
+		if (nDcsTotalCyc == 0)
+			DcsIRQ();
+		if (nDcsTotalCyc >= (nDcsCycPerFrame / 2) && !dcsIrq) {
+			DcsIRQ();
+			dcsIrq = true;
+		}
+
         if ((nNextMipsSegment + nMipsTotalCyc) > nMipsCycPerFrame)
             nNextMipsSegment -= (nNextMipsSegment + nMipsTotalCyc) - nMipsCycPerFrame;
 

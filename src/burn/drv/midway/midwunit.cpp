@@ -3,7 +3,7 @@
 // todo:
 //  1: fix dips (f.ex, service mode is "Coinage Source" for Rampage W.T.)
 //  2: going from window'd (32bit) to fullscreen (16bit) causes broken colors
-//  3: screen tearing in rmpgwt
+//  3: figure out why last line doesn't always render in rampgwt
 
 #include "tiles_generic.h"
 #include "midwunit.h"
@@ -42,7 +42,6 @@ static UINT32 nVideoBank = 1;
 
 static UINT16 nDMA[32];
 static UINT16 nWolfUnitCtrl = 0;
-
 
 
 #define RGB888(r,g,b)   ((r) | ((g) << 8) | ((b) << 16))
@@ -94,7 +93,6 @@ static void sound_sync_end()
 		Dcs2kRun(cyc);
 	}
 }
-
 
 
 static UINT16 WolfUnitIoRead(UINT32 address)
@@ -254,7 +252,8 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
     if (!pBurnDraw)
         return 0;
 
-    UINT16 *src = &DrvVRAM16[(info->rowaddr << 9) & 0x3FE00];
+	UINT16 *src = &DrvVRAM16[(info->rowaddr << 9) & 0x3FE00];
+
     if (info->rowaddr >= nScreenHeight)
         return 0;
 
@@ -447,15 +446,13 @@ INT32 WolfUnitFrame()
 	Dcs2kNewFrame();
 
 	INT32 nInterleave = 288;
-	//INT32 nCyclesTotal[2] = { (INT32)(50000000/54.71), (INT32)(26000000 / 54.71) };
-	//INT32 nCyclesDone[2] = { 0, 0 };
-	static INT32 line = 0;
+	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/54.71), (INT32)(10000000 / 54.71) };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-	   // nCyclesDone[0] += TMS34010Run(nCyclesTotal[0] / nInterleave); //(nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		nCyclesDone[0] += TMS34010Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 
-		TMS34010Run(396); //50000000/8/54.71/288
-		line = TMS34010GenerateScanline(line);
+		TMS34010GenerateScanline(i);
 
 		HandleDCSIRQ(i);
 

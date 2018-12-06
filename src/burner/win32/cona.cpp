@@ -224,6 +224,7 @@ int ConfigAppLoad()
 		STR(szAppCheatsPath);
 		STR(szAppHiscorePath);
 		STR(szAppSamplesPath);
+		STR(szAppHDDPath);
 		STR(szAppIpsPath);
 		STR(szAppIconsPath);
 		STR(szNeoCDCoverDir);
@@ -605,6 +606,7 @@ int ConfigAppSave()
 	STR(szAppCheatsPath);
 	STR(szAppHiscorePath);
 	STR(szAppSamplesPath);
+	STR(szAppHDDPath);
 	STR(szAppIpsPath);
 	STR(szAppIconsPath);
 	STR(szNeoCDCoverDir);

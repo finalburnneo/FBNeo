@@ -128,6 +128,7 @@
 #define IDS_SPATH_PCBS					(IDS_STRING +  470)
 #define IDS_SPATH_HISTORY				(IDS_STRING +  472)
 #define IDS_SPATH_EEPROM				(IDS_STRING +  474)
+#define IDS_SPATH_HDD					(IDS_STRING +  476)
 
 #define IDS_ROMPATH_1					(IDS_STRING +  480)
 #define IDS_ROMPATH_2					(IDS_STRING +  482)

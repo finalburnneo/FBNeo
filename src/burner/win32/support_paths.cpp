@@ -10,6 +10,7 @@ TCHAR szAppTitlesPath[MAX_PATH]		= _T("support/titles/");
 TCHAR szAppCheatsPath[MAX_PATH]		= _T("support/cheats/");
 TCHAR szAppHiscorePath[MAX_PATH]	= _T("support/hiscores/");
 TCHAR szAppSamplesPath[MAX_PATH]	= _T("support/samples/");
+TCHAR szAppHDDPath[MAX_PATH]		= _T("support/hdd/");
 TCHAR szAppIpsPath[MAX_PATH]		= _T("support/ips/");
 TCHAR szAppIconsPath[MAX_PATH]		= _T("support/icons/");
 TCHAR szAppBlendPath[MAX_PATH]		= _T("support/blend/");
@@ -74,6 +75,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT21, szAppPCBsPath);
 			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT22, szAppHistoryPath);
 			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT23, szAppEEPROMPath);
+			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT24, szAppHDDPath);
 
 			// Setup the tabs
 			hTabControl = GetDlgItem(hDlg, IDC_SPATH_TAB);
@@ -81,9 +83,9 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			TC_ITEM tcItem; 
 			tcItem.mask = TCIF_TEXT;
 
-			UINT idsString[23] = { IDS_SPATH_PREVIEW, IDS_SPATH_TITLES, IDS_SPATH_ICONS, IDS_SPATH_CHEATS, IDS_SPATH_HISCORE, IDS_SPATH_SAMPLES, IDS_SPATH_IPS, IDS_SPATH_NGCD_ISOS, IDS_SPATH_NGCD_COVERS, IDS_SPATH_BLEND, IDS_SPATH_SELECT, IDS_SPATH_VERSUS, IDS_SPATH_HOWTO, IDS_SPATH_SCORES, IDS_SPATH_BOSSES, IDS_SPATH_GAMEOVER, IDS_SPATH_FLYERS, IDS_SPATH_MARQUEES, IDS_SPATH_CONTROLS, IDS_SPATH_CABINETS, IDS_SPATH_PCBS, IDS_SPATH_HISTORY, IDS_SPATH_EEPROM };
+			UINT idsString[24] = { IDS_SPATH_PREVIEW, IDS_SPATH_TITLES, IDS_SPATH_ICONS, IDS_SPATH_CHEATS, IDS_SPATH_HISCORE, IDS_SPATH_SAMPLES, IDS_SPATH_IPS, IDS_SPATH_NGCD_ISOS, IDS_SPATH_NGCD_COVERS, IDS_SPATH_BLEND, IDS_SPATH_SELECT, IDS_SPATH_VERSUS, IDS_SPATH_HOWTO, IDS_SPATH_SCORES, IDS_SPATH_BOSSES, IDS_SPATH_GAMEOVER, IDS_SPATH_FLYERS, IDS_SPATH_MARQUEES, IDS_SPATH_CONTROLS, IDS_SPATH_CABINETS, IDS_SPATH_PCBS, IDS_SPATH_HISTORY, IDS_SPATH_EEPROM, IDS_SPATH_HDD };
 			
-			for(int nIndex = 0; nIndex < 23; nIndex++) {
+			for(int nIndex = 0; nIndex < 24; nIndex++) {
 				tcItem.pszText = FBALoadStringEx(hAppInst, idsString[nIndex], true);
 				TabCtrl_InsertItem(hTabControl, nIndex, &tcItem);
 			}
@@ -91,7 +93,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			int TabPage = TabCtrl_GetCurSel(hTabControl);
 			
 			// hide all controls excluding the selected controls
-			for(int x = 0; x < 23; x++) {
+			for(int x = 0; x < 24; x++) {
 				if(x != TabPage) {
 					ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1 + x), SW_HIDE);		// browse buttons
 					ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_HIDE);	// edit controls
@@ -108,7 +110,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (nInitTabSelect) {
 				SendMessage(hTabControl, TCM_SETCURSEL, nInitTabSelect, 0);
 				// hide all controls excluding the selected controls
-				for(int x = 0; x < 23; x++) {
+				for(int x = 0; x < 24; x++) {
 					if(x != nInitTabSelect) {
 						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1 + x), SW_HIDE);		// browse buttons
 						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_HIDE);	// edit controls
@@ -131,7 +133,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				int TabPage = TabCtrl_GetCurSel(hTabControl);
 				
 				// hide all controls excluding the selected controls
-				for(int x = 0; x < 23; x++) {
+				for(int x = 0; x < 24; x++) {
 					if(x != TabPage) {
 						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1 + x), SW_HIDE);		// browse buttons
 						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_HIDE);	// edit controls
@@ -179,11 +181,12 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT21, szAppPCBsPath,		sizeof(szAppPCBsPath));
 				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT22, szAppHistoryPath,	sizeof(szAppHistoryPath));
 				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT23, szAppEEPROMPath,	sizeof(szAppEEPROMPath));
+				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT24, szAppHDDPath,		sizeof(szAppHDDPath));
 
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
 				break;
 			} else {
-				if (LOWORD(wParam) >= IDC_SUPPORTDIR_BR1 && LOWORD(wParam) <= IDC_SUPPORTDIR_BR23) {
+				if (LOWORD(wParam) >= IDC_SUPPORTDIR_BR1 && LOWORD(wParam) <= IDC_SUPPORTDIR_BR24) {
 					var = IDC_SUPPORTDIR_EDIT1 + LOWORD(wParam) - IDC_SUPPORTDIR_BR1;
 				} else {
 					if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDCANCEL) {

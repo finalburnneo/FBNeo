@@ -128,6 +128,7 @@ BEGIN
 	IDS_SPATH_PCBS				"PCBs"
 	IDS_SPATH_HISTORY			"History.dat"
 	IDS_SPATH_EEPROM			"EEPROM Saves"
+	IDS_SPATH_HDD				"HDD Images"
 	
 	IDS_ROMPATH_1				"Path #1"
 	IDS_ROMPATH_2				"Path #2"

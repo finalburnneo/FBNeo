@@ -1,10 +1,11 @@
 // Killer Instinct hd image:
 // Tag='GDDD'  Index=0  Length=34 bytes
 // CYLS:419,HEADS:13,SECS:47,BPS:512.
-#include <string>
+/*#include <string>
 #include <fstream>
 #include <cstdio>
-#include <cstring>
+#include <cstring>*/
+#include "burnint.h"
 #include "ide.h"
 
 #define DEBUG_ATA   0
@@ -14,6 +15,9 @@
 #else
 # define ata_log(...)
 #endif
+
+char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
+#define _TtoA(a)	TCHARToANSI(a, NULL, 0)
 
 namespace ide
 {
@@ -328,7 +332,12 @@ unsigned ide_disk::read_alternate(unsigned offset)
 
 bool ide_disk::load_disk_image(const string &filename)
 {
-    m_disk_image.open(filename, ios_base::binary | ios_base::in | ios_base::out);
+    char szFilePath[MAX_PATH];
+	const char *szFileName = filename.c_str();
+
+	sprintf(szFilePath, "%s%s", _TtoA(szAppHDDPath), szFileName);
+	
+	m_disk_image.open(szFilePath, ios_base::binary | ios_base::in | ios_base::out);
     if (!m_disk_image.is_open()) {
         ata_log("disk image not found!\n");
         return false;

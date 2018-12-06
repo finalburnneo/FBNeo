@@ -342,7 +342,7 @@ static INT32 kinstSetup()
 {
     printf("kinst: loading image at kinst.img\n");
     // FIXME: this needs support adding for a hdd folder if we ever get to the point where we enable this driver in release builds
-    if (!DrvDisk->load_disk_image("hdd/kinst.img")) {
+    if (!DrvDisk->load_disk_image("kinst.img")) {
         printf("kinst: harddisk image not found!");
         return 1;
     }
@@ -366,7 +366,7 @@ static INT32 kinst2Setup()
 {
     printf("kinst: loading image at kinst2.img\n");
     // FIXME:
-    if (!DrvDisk->load_disk_image("hdd/kinst2.img")) {
+    if (!DrvDisk->load_disk_image("kinst2.img")) {
         printf("kinst: harddisk image not found!");
         return 1;
     }

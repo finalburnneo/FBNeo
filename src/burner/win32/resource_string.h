@@ -205,6 +205,7 @@
 #define IDS_SEL_GG						(IDS_STRING +  634)
 #define IDS_SEL_MSX						(IDS_STRING +  636)
 #define IDS_SEL_SPECTRUM				(IDS_STRING +  638)
+#define IDS_SEL_MIDWAY					(IDS_STRING +  640)
 
 #define IDS_GENRE						(IDS_STRING +  650)
 #define IDS_GENRE_HORSHOOT				(IDS_STRING +  652)

@@ -127,6 +127,7 @@ HTREEITEM hFilterGg					= NULL;
 HTREEITEM hFilterSg1000				= NULL;
 HTREEITEM hFilterColeco				= NULL;
 HTREEITEM hFilterSpectrum			= NULL;
+HTREEITEM hFilterMidway				= NULL;
 HTREEITEM hFilterBootleg			= NULL;
 HTREEITEM hFilterDemo				= NULL;
 HTREEITEM hFilterHack				= NULL;
@@ -252,8 +253,10 @@ static int MsxValue				= HARDWARE_PREFIX_MSX >> 24;
 static int MASKMSX				= 1 << MsxValue;
 static int SpecValue			= HARDWARE_PREFIX_SPECTRUM >> 24;
 static int MASKSPECTRUM			= 1 << SpecValue;
+static int MidwayValue			= HARDWARE_PREFIX_MIDWAY >> 24;
+static int MASKMIDWAY			= 1 << MidwayValue;
 
-static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM; // | MASKSNES
+static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKMIDWAY; // | MASKSNES
 
 #define UNAVAILABLE				(1 << 27)
 #define AVAILABLE				(1 << 28)
@@ -1235,6 +1238,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_IREM			, hFilterIrem			, nLoadMenuShowX & MASKIREM							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_KANEKO		, hFilterKaneko			, nLoadMenuShowX & MASKKANEKO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_KONAMI		, hFilterKonami			, nLoadMenuShowX & MASKKONAMI						);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_MIDWAY		, hFilterMidway			, nLoadMenuShowX & MASKMIDWAY						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_NEOGEO		, hFilterNeogeo			, nLoadMenuShowX & MASKNEOGEO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PACMAN		, hFilterPacman			, nLoadMenuShowX & MASKPACMAN						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PGM			, hFilterPgm			, nLoadMenuShowX & MASKPGM							);
@@ -1571,6 +1575,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterColeco, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMsx, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterSpectrum, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterMidway, FALSE);
 				
 				nLoadMenuShowX |= MASKALL;
 			} else {
@@ -1606,6 +1611,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterColeco, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMsx, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSpectrum, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterMidway, TRUE);
 				
 				nLoadMenuShowX &= (0xFFFFFFFF - MASKALL); //0xf8000000; make this dynamic for future hardware additions -dink
 			}
@@ -1773,6 +1779,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterColeco)			_ToggleGameListing(nLoadMenuShowX, MASKCOLECO);
 		if (hItemChanged == hFilterMsx)				_ToggleGameListing(nLoadMenuShowX, MASKMSX);
 		if (hItemChanged == hFilterSpectrum)		_ToggleGameListing(nLoadMenuShowX, MASKSPECTRUM);
+		if (hItemChanged == hFilterMidway)			_ToggleGameListing(nLoadMenuShowX, MASKMIDWAY);
 		
 		if (hItemChanged == hFilterBootleg)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_BOOTLEG);
 		if (hItemChanged == hFilterDemo)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_DEMO);

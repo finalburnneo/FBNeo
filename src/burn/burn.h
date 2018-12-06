@@ -617,6 +617,12 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 
 #define HARDWARE_SPECTRUM								(HARDWARE_PREFIX_SPECTRUM)
 
+#define HARDWARE_MIDWAY_KINST							(HARDWARE_PREFIX_MIDWAY | 0x00010000)
+#define HARDWARE_MIDWAY_TUNIT							(HARDWARE_PREFIX_MIDWAY | 0x00020000)
+#define HARDWARE_MIDWAY_WUNIT							(HARDWARE_PREFIX_MIDWAY | 0x00030000)
+#define HARDWARE_MIDWAY_YUNIT							(HARDWARE_PREFIX_MIDWAY | 0x00040000)
+
+
 // flags for the genre member
 #define GBF_HORSHOOT									(1 << 0)
 #define GBF_VERSHOOT									(1 << 1)

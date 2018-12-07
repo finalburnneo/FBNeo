@@ -1,7 +1,9 @@
 // midway wolf unit
 
 // todo:
-//  1: fix dips (f.ex, service mode is "Coinage Source" for Rampage W.T.)
+//  1: wwfmania crashes
+//  2: openice goes bonkers on game start, cpu players wont move
+//    1 + 2 is probably due to cmos issues
 //  3: figure out why last line doesn't always render in rampgwt
 
 #include "tiles_generic.h"
@@ -32,9 +34,6 @@ UINT8 nWolfUnitJoy3[32];
 UINT8 nWolfUnitDSW[8];
 UINT8 nWolfReset = 0;
 static UINT32 DrvInputs[4];
-static INT32 nIOShuffle[16];
-
-
 
 static bool bGfxRomLarge = true;
 static UINT32 nGfxBankOffset[2] = { 0x000000, 0x400000 };
@@ -43,7 +42,9 @@ static bool bCMOSWriteEnable = false;
 static UINT32 nVideoBank = 1;
 static UINT16 nDMA[32];
 static UINT16 nWolfUnitCtrl = 0;
+static INT32 nIOShuffle[16];
 
+static INT32 wwfmania = 0;
 
 #define RGB888(r,g,b)   ((r) | ((g) << 8) | ((b) << 16))
 #define RGB888_r(x) ((x) & 0xFF)
@@ -105,27 +106,69 @@ static UINT16 WolfUnitIoRead(UINT32 address)
     UINT32 offset = (address >> 4);
     offset = nIOShuffle[offset % 16];
     switch (offset) {
-    case 0: return ~DrvInputs[0];
-    case 1: return ~DrvInputs[1];
-    case 2: return DrvInputs[2];
-    case 3: return ~DrvInputs[3];
-	case 4: {
-		sound_sync();
-		return ((MidwaySerialPicStatus() << 12) | (Dcs2kControlRead() & 0xfff));
+		case 0: return ~DrvInputs[0];
+		case 1: return ~DrvInputs[1];
+		case 2: return nWolfUnitDSW[0] | (nWolfUnitDSW[1] << 8);
+		case 3: return ~DrvInputs[3];
+		case 4: {
+			sound_sync();
+			return ((MidwaySerialPicStatus() << 12) | (Dcs2kControlRead() & 0xfff));
+		}
+	default:
+		return ~0;
 	}
-    default:
-    	return ~0;
-    }
 }
 
 void WolfUnitIoWrite(UINT32 address, UINT16 value)
 {
+   // if (wwfmania) bprintf(0, _T("addy %X  %x.\n"), address, value);
+	if (wwfmania && address <= 0x180000f) {
+		for (INT32 i = 0; i < 16; i++) nIOShuffle[i] = i % 8;
+
+		switch (value) {
+			case 1: {
+				nIOShuffle[0x04] = 0;
+				nIOShuffle[0x08] = 1;
+				nIOShuffle[0x01] = 2;
+				nIOShuffle[0x09] = 3;
+				nIOShuffle[0x02] = 4;
+				break;
+			}
+			case 2: {
+				nIOShuffle[0x08] = 0;
+				nIOShuffle[0x02] = 1;
+				nIOShuffle[0x04] = 2;
+				nIOShuffle[0x06] = 3;
+				nIOShuffle[0x01] = 4;
+				break;
+			}
+			case 3: {
+				nIOShuffle[0x01] = 0;
+				nIOShuffle[0x08] = 1;
+				nIOShuffle[0x02] = 2;
+				nIOShuffle[0x0A] = 3;
+				nIOShuffle[0x05] = 4;
+				break;
+			}
+			case 4: {
+				nIOShuffle[0x02] = 0;
+				nIOShuffle[0x04] = 1;
+				nIOShuffle[0x01] = 2;
+				nIOShuffle[0x07] = 3;
+				nIOShuffle[0x08] = 4;
+				break;
+			}
+		}
+
+		return;
+	}
+
     UINT32 offset = (address >> 4) % 8;
     switch(offset) {
     case 1:
 		sound_sync();
 		Dcs2kResetWrite(value & 0x10);
-        MidwaySerialPicReset();
+		MidwaySerialPicReset();
         break;
     }
 }
@@ -149,8 +192,8 @@ UINT16 WolfUnitSecurityRead(UINT32 address)
 
 void WolfUnitSecurityWrite(UINT32 address, UINT16 value)
 {
-    if (address == 0x01600000) {
-        MidwaySerialPicWrite(value);
+	if (address == 0x01600000) {
+		MidwaySerialPicWrite(value);
     }
 }
 
@@ -326,7 +369,6 @@ static void WolfDoReset()
 
 INT32 WolfUnitInit()
 {
-
     MemIndex();
     INT32 nLen = MemEnd - (UINT8 *)0;
 
@@ -353,6 +395,8 @@ INT32 WolfUnitInit()
         return 1;
 
     for (INT32 i = 0; i < 16; i++) nIOShuffle[i] = i % 8;
+
+	wwfmania = (strstr(BurnDrvGetTextA(DRV_NAME), "wwfmania") ? 1 : 0);
 
     Dcs2kInit(DCS_8K, MHz(10));
     Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
@@ -423,7 +467,7 @@ static void MakeInputs()
 {
     DrvInputs[0] = 0;
     DrvInputs[1] = 0;
-    DrvInputs[2] = 0xFD7D | 0x0200;
+    DrvInputs[2] = 0; // not used
     DrvInputs[3] = 0;
 
     for (INT32 i = 0; i < 16; i++) {
@@ -431,8 +475,6 @@ static void MakeInputs()
         if (nWolfUnitJoy2[i] & 1) DrvInputs[1] |= (1 << i);
         if (nWolfUnitJoy3[i] & 1) DrvInputs[3] |= (1 << i);
     }
-
-    if (nWolfUnitDSW[0] & 1) DrvInputs[2] ^= 0x08000;
 }
 
 static void HandleDCSIRQ(INT32 line)
@@ -492,7 +534,9 @@ INT32 WolfUnitExit()
 	BurnFree(AllMem);
 	
 	GenericTilesExit();
-	
+
+	wwfmania = 0;
+
     return 0;
 }
 

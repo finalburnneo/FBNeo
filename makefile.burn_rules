@@ -31,7 +31,7 @@ drvsrc	= 	d_arcadecl.cpp d_atarig1.cpp d_badlands.cpp d_batman.cpp d_blstroid.cp
 			d_rollerg.o d_sbasketb.o d_scotrsht.o d_shaolins.o d_simpsons.o d_spy.o d_surpratk.o d_thunderx.o d_timeplt.o d_tmnt.o d_tp84.o d_trackfld.o \
 			d_tutankhm.o d_twin16.o d_ultraman.o d_vendetta.o d_xexex.o d_xmen.o d_yiear.o \
 			\
-			d_wunit.o \
+			d_tunit.o d_wunit.o \
 			\
 			d_neogeo.o \
 			\
@@ -134,7 +134,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			k007121.o k007342_k007420.o k051316.o k051733.o k051960.o k052109.o k053245.o k053247.o k053250.o k053251.o k053936.o k054000.o k054338.o \
 			k055555.o k056832.o konamigx.o konamiic.o timeplt_snd.o \
 			\
-			dcs2k.o midwayic.o midwunit.o \
+			dcs2k.o midwayic.o midtunit.o midwunit.o \
 			\
 			neo_decrypt.o neo_palette.o neo_run.o neo_sprite.o neo_text.o neo_upd4990a.o neogeo.o \
 			\

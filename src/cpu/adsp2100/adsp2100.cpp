@@ -267,8 +267,6 @@ INLINE adsp2100_state *get_safe_token(const device_config *device)
 		   cpu_get_type(device) == CPU_ADSP2181);
 	return (adsp2100_state *)device->token;   
 }
-#else
-#define get_safe_token(x)   nullptr
 #endif
 
 

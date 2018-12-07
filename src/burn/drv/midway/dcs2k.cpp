@@ -1,11 +1,10 @@
 // dcs 2k, 8k by Romhack w/modifications by dink.
 
-#include <math.h>
-#include <cstdint>
+#include "burnint.h"
 #include "adsp2100_intf.h"
 #include "adsp2100/adsp2100.h"
 #include "dcs2k.h"
-#include <stdio.h>
+#include <math.h>
 
 #define MHz(x)  (x * 1000000)
 #define ADSP_CLOCK   MHz(10)

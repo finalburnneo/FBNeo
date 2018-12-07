@@ -1,9 +1,6 @@
 #include "adsp2100/adsp2100.h"
 #include "adsp2100_intf.h"
 
-//#include <QDebug>
-#include <cstdio>
-
 //#define xlog(...)   fprintf(stdout, "dcs: " __VA_ARGS__); fflush(stdout)
 #define xlog(...)
 
@@ -90,7 +87,7 @@ int Adsp2100Init()
     pMemMap = new Adsp2100MemoryMap;
     ResetMemoryMap();
     pADSP = (adsp2100_state*) BurnMalloc(sizeof(adsp2100_state));
-    adsp2105_init(pADSP, nullptr);
+    adsp2105_init(pADSP, NULL);
     pADSP->sport_rx_callback = RxCallback;
     pADSP->sport_tx_callback = TxCallback;
     pADSP->timer_fired = TimerCallback;
@@ -110,7 +107,7 @@ int Adsp2100Exit()
     adsp21xx_exit(pADSP);
     BurnFree(pADSP);
     delete pMemMap;
-    pMemMap = nullptr;
+    pMemMap = NULL;
 #if ENABLE_TRACE
     fclose(pTrace);
 #endif

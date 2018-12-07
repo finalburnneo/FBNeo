@@ -19,7 +19,7 @@
 
 #define DEBUG_GSP   0
 
-#define DXYTOL(r)  (((r.y * cpu->convdp) | (r.x << cpu->pshift)) + OFFSET)
+#define DXYTOL(r)  (((r.datavalue.y * cpu->convdp) | (r.datavalue.x << cpu->pshift)) + OFFSET)
 
 namespace tms { namespace ops {
 

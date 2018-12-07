@@ -26,10 +26,10 @@
 #define _sp     cpu->sp.value
 #define _st     cpu->st
 
-#define _rsx     cpu->r[RS]->x
-#define _rdx     cpu->r[RD]->x
-#define _rsy     cpu->r[RS]->y
-#define _rdy     cpu->r[RD]->y
+#define _rsx     cpu->r[RS]->datavalue.x
+#define _rdx     cpu->r[RD]->datavalue.x
+#define _rsy     cpu->r[RS]->datavalue.y
+#define _rdy     cpu->r[RD]->datavalue.y
 
 #define ODD_RD  (RD_n & 1)
 
@@ -74,8 +74,8 @@
 #define SADDR_R   cpu->b[_SADDR]
 
 #define DADDR       cpu->b[_DADDR].value
-#define DADDR_X   cpu->b[_DADDR].x
-#define DADDR_Y   cpu->b[_DADDR].y
+#define DADDR_X   cpu->b[_DADDR].datavalue.x
+#define DADDR_Y   cpu->b[_DADDR].datavalue.y
 #define DADDR_R   cpu->b[_DADDR]
 
 #define DPTCH   cpu->b[_DPTCH].value
@@ -83,15 +83,15 @@
 #define WSTART  cpu->b[_WSTART].value
 #define WEND    cpu->b[_WEND].value
 
-#define WSTART_X  cpu->b[_WSTART].x
-#define WSTART_Y  cpu->b[_WSTART].y
-#define WEND_X    cpu->b[_WEND].x
-#define WEND_Y    cpu->b[_WEND].y
+#define WSTART_X  cpu->b[_WSTART].datavalue.x
+#define WSTART_Y  cpu->b[_WSTART].datavalue.y
+#define WEND_X    cpu->b[_WEND].datavalue.x
+#define WEND_Y    cpu->b[_WEND].datavalue.y
 
 
 #define DYDX    cpu->b[_DYDX].value
-#define DYDX_X    cpu->b[_DYDX].x
-#define DYDX_Y    cpu->b[_DYDX].y
+#define DYDX_X    cpu->b[_DYDX].datavalue.x
+#define DYDX_Y    cpu->b[_DYDX].datavalue.y
 
 #define COLOR0  cpu->b[_COLOR0].value
 #define COLOR1  cpu->b[_COLOR1].value

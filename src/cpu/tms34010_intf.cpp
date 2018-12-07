@@ -149,8 +149,8 @@ void TMS34010WriteWord(UINT32 address, UINT16 value)
 void TMS34010MapReset()
 {
     for (int page = 0; page < PAGE_COUNT; page++) {
-        g_mmap.map[page] = nullptr;
-        g_mmap.map[page + PAGE_WADD] = nullptr;
+        g_mmap.map[page] = NULL;
+        g_mmap.map[page + PAGE_WADD] = NULL;
     }
     for (int handler = 0; handler < MAXHANDLER; handler++) {
         g_mmap.read[handler] = default_read;

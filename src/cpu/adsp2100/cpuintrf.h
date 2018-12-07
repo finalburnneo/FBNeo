@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <stdint.h>
+#include "burnint.h"
 
 #define INLINE inline
 
@@ -24,7 +24,7 @@ enum {
     CLEAR_LINE = 0,				/* clear (a fired, held or pulsed) line */
     ASSERT_LINE,				/* assert an interrupt immediately */
     HOLD_LINE,					/* hold interrupt line until acknowledged */
-    PULSE_LINE,					/* pulse interrupt line for one instruction */
+    PULSE_LINE					/* pulse interrupt line for one instruction */
 };
 
 

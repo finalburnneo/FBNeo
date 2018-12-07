@@ -5,12 +5,13 @@
 #ifndef TMS34010_H
 #define TMS34010_H
 
-#include <cstdint>
+//#include <cstdint>
 #include <string>
 #include <list>
 #include <fstream>
-#include <array>
+//#include <array>
 #include <cmath>
+
 
 namespace tms
 {
@@ -31,7 +32,7 @@ const int fw_lut[32] = {
     32,  1,  2,  3,  4,  5,  6,  7,  8,  9,
     10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
     20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
-    30, 31,
+    30, 31
 };
 
 enum STATUS_FLAGS
@@ -48,7 +49,7 @@ enum STATUS_FLAGS
     ST_V         = 0x10000000,
     ST_Z         = 0x20000000,
     ST_C         = 0x40000000,
-    ST_N         = 0x80000000,
+    ST_N         = 0x80000000
 };
 
 enum IO_REGISTERS
@@ -80,7 +81,7 @@ enum IO_REGISTERS
     IO_HTOTAL   = 0x0C0000030,
     IO_HSBLNK   = 0x0C0000020,
     IO_HEBLNK   = 0x0C0000010,
-    IO_HESYNC   = 0x0C0000000,
+    IO_HESYNC   = 0x0C0000000
 };
 
 enum {
@@ -111,7 +112,7 @@ enum {
     HTOTAL   = 0x03,
     HSBLNK   = 0x02,
     HEBLNK   = 0x01,
-    HESYNC   = 0x00,
+    HESYNC   = 0x00
 };
 
 enum {
@@ -119,7 +120,7 @@ enum {
     INTERRUPT_EXTERN_2 = (1 << 2),
     INTERRUPT_HOST     = (1 << 9),
     INTERRUPT_DISPLAY  = (1 << 10),
-    INTERRUPT_WINDOW   = (1 << 11),
+    INTERRUPT_WINDOW   = (1 << 11)
 };
 
 
@@ -128,7 +129,7 @@ extern const char *io_regs_names[32];
 
 enum TRAP_VECTORS
 {
-    VECT_RESET = 0xFFFFFFE0,
+    VECT_RESET = 0xFFFFFFE0
 };
 
 enum {
@@ -153,7 +154,7 @@ enum B_FILE_REGISTERS
     _INC1,
     _INC2,
     _PATTRN,
-    _TEMP,
+    _TEMP
 };
 
 static const char *const gfx_reg_names[15] = {
@@ -164,15 +165,15 @@ static const char *const gfx_reg_names[15] = {
 #ifdef TMS34010_DEBUGGER
 typedef enum {
     ICOUNTER_EXPIRED = 0,
-    BREAKPOINT_FOUND,
+    BREAKPOINT_FOUND
 } stop_reason_t;
 #endif
 
 typedef union {
-    struct {
+   struct datavalue {
         sword x;
         sword y;
-    };
+    } datavalue;
     dword value;
 } cpu_register;
 

@@ -12,7 +12,6 @@
 #include <array>
 #include <cmath>
 
-
 namespace tms
 {
 
@@ -178,7 +177,6 @@ typedef union {
 } cpu_register;
 
 struct cpu_state {
-    cpu_register *r[32];
     cpu_register a[15];
     cpu_register b[15];
     cpu_register sp;
@@ -194,6 +192,8 @@ struct cpu_state {
     word io_regs[32];
     word shiftreg[4096];
 
+	// unscanned vars
+    cpu_register *r[32];
     void (*shift_read_cycle)(dword address, void*);
     void (*shift_write_cycle)(dword address, void*);
 
@@ -500,6 +500,7 @@ int run(cpu_state *cpu, int cycles);
 
 i64 total_cycles(cpu_state *cpu);
 void new_frame(cpu_state *cpu);
+void scan(cpu_state *cpu, sdword nAction);
 
 dword get_pc(cpu_state *cpu);
 dword get_ppc(cpu_state *cpu);

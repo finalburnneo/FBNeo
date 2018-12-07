@@ -2,7 +2,6 @@
 
 // todo:
 //  1: fix dips (f.ex, service mode is "Coinage Source" for Rampage W.T.)
-//  2: going from window'd (32bit) to fullscreen (16bit) causes broken colors
 //  3: figure out why last line doesn't always render in rampgwt
 
 #include "tiles_generic.h"
@@ -13,6 +12,8 @@
 #include "adsp2100_intf.h"
 
 static UINT8 *AllMem;
+static UINT8 *RamEnd;
+static UINT8 *AllRam;
 static UINT8 *MemEnd;
 static UINT8 *DrvBootROM;
 static UINT8 *DrvSoundROM;
@@ -34,12 +35,12 @@ static UINT32 DrvInputs[4];
 static INT32 nIOShuffle[16];
 
 
-static bool bCMOSWriteEnable = false;
 
 static bool bGfxRomLarge = true;
 static UINT32 nGfxBankOffset[2] = { 0x000000, 0x400000 };
-static UINT32 nVideoBank = 1;
 
+static bool bCMOSWriteEnable = false;
+static UINT32 nVideoBank = 1;
 static UINT16 nDMA[32];
 static UINT16 nWolfUnitCtrl = 0;
 
@@ -68,13 +69,17 @@ static INT32 MemIndex()
     DrvBootROM 	= Next;             Next += 0x800000 * sizeof(UINT8);
 	DrvSoundROM	= Next;				Next += 0x1000000 * sizeof(UINT8);
 	DrvGfxROM 	= Next;				Next += 0x2000000 * sizeof(UINT8);
+
+	AllRam		= Next;
 	DrvRAM		= Next;				Next += 0x400000 * sizeof(UINT16);
 	DrvNVRAM	= Next;				Next += 0x60000 * sizeof(UINT16);
-	DrvPalette	= Next;				Next += 0x80000 * sizeof(UINT8);
+	DrvPalette	= Next;				Next += 0x20000 * sizeof(UINT8);
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
 	DrvVRAM		= Next;				Next += 0x400000 * sizeof(UINT16);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
-    MemEnd		= Next;
+	RamEnd		= Next;
+
+	MemEnd		= Next;
     return 0;
 }
 
@@ -188,6 +193,15 @@ void WolfUnitPalWrite(UINT32 address, UINT16 value)
     DrvPaletteB[address>>4] = BurnHighCol(RGB888_r(col),RGB888_g(col),RGB888_b(col),0);
 }
 
+void WolfUnitPalRecalc()
+{
+	for (INT32 i = 0; i < 0x10000; i += 2) {
+		UINT16 value = *(UINT16*)(&DrvPalette[i]);
+
+		UINT32 col = RGB555_2_888(BURN_ENDIAN_SWAP_INT16(value));
+		DrvPaletteB[i>>1] = BurnHighCol(RGB888_r(col),RGB888_g(col),RGB888_b(col),0);
+	}
+}
 
 UINT16 WolfUnitVramRead(UINT32 address)
 {
@@ -462,7 +476,7 @@ INT32 WolfUnitFrame()
     }
 
 	if (pBurnDraw) {
-		BurnTransferCopy(DrvPaletteB);
+		WolfUnitDraw();
 	}
 	
 	if (pBurnSoundOut) {
@@ -484,11 +498,49 @@ INT32 WolfUnitExit()
 
 INT32 WolfUnitDraw()
 {
-	// TMS34010 renders scanlines direct to pBurnDraw
+	if (nWolfUnitRecalc) {
+		bprintf(0, _T("\nRecalculating the palette!!!!\n"));
+		WolfUnitPalRecalc();
+		nWolfUnitRecalc = 0;
+	}
+
+	// TMS34010 renders scanlines direct to pTransDraw
+	BurnTransferCopy(DrvPaletteB);
+
 	return 0;
 }
 
 INT32 WolfUnitScan(INT32 nAction, INT32 *pnMin)
 {
+	struct BurnArea ba;
+
+	if (pnMin) {
+		*pnMin = 0x029704;
+	}
+
+	if (nAction & ACB_VOLATILE) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd - AllRam;
+		ba.szName = "All RAM";
+		BurnAcb(&ba);
+	}
+
+	if (nAction & ACB_DRIVER_DATA) {
+		TMS34010Scan(nAction);
+
+		Dcs2kScan(nAction, pnMin);
+
+		SCAN_VAR(nVideoBank);
+		SCAN_VAR(nDMA);
+		SCAN_VAR(nWolfUnitCtrl);
+		SCAN_VAR(bCMOSWriteEnable);
+		// Might need to scan the dma_state struct in midtunit_dma.h
+	}
+
+	if (nAction & ACB_WRITE) {
+		//
+	}
+
 	return 0;
 }

@@ -882,7 +882,18 @@ void adsp21xx_exit(adsp2100_state *adsp)
 
 }
 
-
+// States
+void adsp21xx_scan(adsp2100_state *adsp, INT32 nAction)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = adsp;
+		ba.nLen	  = STRUCT_SIZE_HELPER(adsp2100_state, irq_latch);
+		ba.szName = "Adsp21xx Regs";
+		BurnAcb(&ba);
+	}
+}
 
 /***************************************************************************
     CORE EXECUTION LOOP

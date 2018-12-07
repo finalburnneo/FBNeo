@@ -11,14 +11,15 @@ enum {
 
 void Dcs2kInit(INT32 dtype, INT32 dmhz);
 void Dcs2kExit();
-void Dcs2kRun(int cycles);
-void Dcs2kMapSoundROM(void *ptr, int size);
+void Dcs2kRun(INT32 cycles);
+INT32 Dcs2kScan(INT32 nAction, INT32 *pnMin);
+void Dcs2kMapSoundROM(void *ptr, INT32 size);
 void Dcs2kSetVolume(double vol);
 void Dcs2kBoot();
-void Dcs2kDataWrite(int data);
-int Dcs2kDataRead();
-int Dcs2kControlRead();
-void Dcs2kResetWrite(int data);
+void Dcs2kDataWrite(INT32 data);
+INT32 Dcs2kDataRead();
+INT32 Dcs2kControlRead();
+void Dcs2kResetWrite(INT32 data);
 void Dcs2kRender(INT16 *pSoundBuf, INT32 nSegmentLength);
 void Dcs2kReset();
 void Dcs2kNewFrame();

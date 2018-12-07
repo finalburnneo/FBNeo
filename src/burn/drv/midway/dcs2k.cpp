@@ -59,9 +59,10 @@ static UINT32 *pExtRAM32;
 static UINT8 *pDataRAM;
 static UINT8 *pDataRAM0;
 static UINT8 *pSoundROM;
-static UINT16 nCurrentBank;
 static UINT32 nSoundSize;
 static UINT32 nSoundBanks;
+
+static UINT16 nCurrentBank;
 static UINT32 nOutputData;
 static UINT32 nInputData;
 static UINT16 nLatchControl;
@@ -73,7 +74,6 @@ static UINT32 nTxIncrement;
 static UINT64 nNextIRQCycle;
 static UINT64 nTotalCycles;
 static UINT8 bGenerateIRQ;
-extern UINT16 adsp21xx_data_read_word_16le(UINT32 address);
 
 static INT32 samples_from; // samples per frame
 static INT32 sample_rate;  // sample rate of dcs
@@ -85,10 +85,10 @@ static INT32 rate_adjusted;  // wait x frames until adjuster kicks in
 
 void Dcs2kBoot();
 static void SetupMemory();
-static int RxCallback(int port);
-static void TxCallback(int port, int data);
-static void TimerCallback(int enable);
-static int IRQCallback(int line);
+static INT32 RxCallback(INT32 port);
+static void TxCallback(INT32 port, INT32 data);
+static void TimerCallback(INT32 enable);
+static INT32 IRQCallback(INT32 line);
 
 void DcsIRQ();
 
@@ -238,7 +238,7 @@ void Dcs2kRender(INT16 *pSoundBuf, INT32 nSegmentLength)
 		}
 
 		last_mixer_pos = get_avg();
-		bprintf(0, _T("dcs2k: samples_from %d  avg %d  extra samples: %d  rateadjuster %d\n"), effective_samples_from, get_avg(), mixer_pos, sample_rateadj);
+		//bprintf(0, _T("dcs2k: samples_from %d  avg %d  extra samples: %d  rateadjuster %d\n"), effective_samples_from, get_avg(), mixer_pos, sample_rateadj);
 
 		if (mixer_pos > 10000) {
 			bprintf(0, _T("dcs2k: overrun!\n"));
@@ -257,7 +257,7 @@ UINT32 Dcs2kTotalCycles()
 	return Adsp2100TotalCycles();
 }
 
-void Dcs2kRun(int cycles)
+void Dcs2kRun(INT32 cycles)
 {
 	Adsp2100Run(cycles);
 
@@ -313,7 +313,7 @@ static UINT32 ReadProgramEXT(UINT32 address)
 
 static void WriteProgramEXT(UINT32 address, UINT32 value)
 {
-    int offset = address & 0x7FF;
+    INT32 offset = address & 0x7FF;
 #if LOG_MEMACC
     dcs_log(_T("prg_ext_w %x - %x\n"), address, value);
 #endif
@@ -391,7 +391,7 @@ static void SetupMemory()
 
 
 
-void Dcs2kMapSoundROM(void *ptr, int size)
+void Dcs2kMapSoundROM(void *ptr, INT32 size)
 {
     pSoundROM = (UINT8*)ptr;
     nSoundSize = size;
@@ -404,7 +404,7 @@ void Dcs2kBoot()
 {
     UINT8 buffer[0x1000];
     UINT16 *base;
-    int i;
+    INT32 i;
 
     base = (UINT16*) pSoundROM + ((nCurrentBank & 0x7FF) * 0x1000);
 
@@ -433,7 +433,7 @@ void Dcs2kReset()
     nInputData = 0;
     nLatchControl = 0;
 
-    for (int i = 0; i < 32; i++)
+    for (INT32 i = 0; i < 32; i++)
         nCtrlReg[i] = 0;
 
     SET_INPUT_EMPTY();
@@ -499,7 +499,7 @@ static void WriteRAM0(UINT32 address, UINT16 value)
 
 static UINT16 ReadData(UINT32 address)
 {
-    int offset = (address & 0x7FF);
+    INT32 offset = (address & 0x7FF);
 #if LOG_MEMACC
     dcs_log(_T("dataram_r %x - %x\n"), offset, pExtRAM32[offset] >> 8);
 #endif
@@ -508,7 +508,7 @@ static UINT16 ReadData(UINT32 address)
 
 static void WriteData(UINT32 address, UINT16 value)
 {
-    int offset = (address & 0x7FF);
+    INT32 offset = (address & 0x7FF);
 
     pExtRAM32[offset] &= 0xFF;
     pExtRAM32[offset] |= value << 8;
@@ -589,7 +589,7 @@ static void AdspWrite(UINT32 address, UINT16 value)
 	}
 }
 
-void Dcs2kDataWrite(int data)
+void Dcs2kDataWrite(INT32 data)
 {
     dcs_log(_T("data_w %x\n"), data);
     Adsp2100SetIRQLine(ADSP2105_IRQ2, ASSERT_LINE);
@@ -597,7 +597,7 @@ void Dcs2kDataWrite(int data)
     nInputData = data;
 }
 
-void Dcs2kResetWrite(int data)
+void Dcs2kResetWrite(INT32 data)
 {
     dcs_log(_T("reset_w %x\n"), data);
     if (data) {
@@ -605,20 +605,20 @@ void Dcs2kResetWrite(int data)
     }
 }
 
-int Dcs2kControlRead()
+INT32 Dcs2kControlRead()
 {
 //	dcs_log(_T("control_r %x\n"), nLatchControl);
     return nLatchControl;
 }
 
-int Dcs2kDataRead()
+INT32 Dcs2kDataRead()
 {
 	SET_OUTPUT_EMPTY();
     return nOutputData;
 }
 
 
-static int RxCallback(int port)
+static INT32 RxCallback(INT32 port)
 {
     dcs_log(_T("rx_sport %d\n"), port);
     return 0;
@@ -637,7 +637,7 @@ static void ComputeNextIRQCycle()
 
 }
 
-static void TxCallback(int port, int data)
+static void TxCallback(INT32 port, INT32 data)
 {
     dcs_log(_T("tx_sport p: %d, d: %d\n"), port, data);
     if (port != 1)
@@ -647,7 +647,7 @@ static void TxCallback(int port, int data)
         if (nCtrlReg[S1_AUTOBUF_REG] & 2) {
             adsp2100_state *adsp = Adsp2100GetState();
             UINT16 src;
-            int	m, l;
+            INT32 m, l;
 
             nTxIR = (nCtrlReg[S1_AUTOBUF_REG] >> 9) & 7;
             m = (nCtrlReg[S1_AUTOBUF_REG] >> 7) & 3;
@@ -689,11 +689,11 @@ void DcsIRQ()
 {
 	if (!bGenerateIRQ) return;
     adsp2100_state *adsp = Adsp2100GetState();
-    int r = adsp->i[nTxIR];
+    INT32 r = adsp->i[nTxIR];
 
-    int count = nTxSize / 2;
+    INT32 count = nTxSize / 2;
 
-    for (int i = 0; i < count; i++) {
+    for (INT32 i = 0; i < count; i++) {
         mixer_buffer[mixer_pos++] = adsp21xx_data_read_word_16le(r<<1);
         r += nTxIncrement;
 	}
@@ -718,13 +718,49 @@ void DcsIRQ()
     }
 }
 
-static void TimerCallback(int enable)
+static void TimerCallback(INT32 enable)
 {
     dcs_log(_T("timer %d\n"), enable);
 }
 
-static int IRQCallback(int line)
+static INT32 IRQCallback(INT32 line)
 {
     dcs_log(_T("irq %d\n"), line);
     return 0;
+}
+
+INT32 Dcs2kScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_VOLATILE)
+	{
+		Adsp2100Scan(nAction);
+
+		ScanVar(pIntRAM,    (0x400 + 0x1000) * sizeof(UINT32),  "DcsIntRAM");
+		ScanVar(pExtRAM,    0x800 * sizeof(UINT32),             "DcsExtRAM");
+		ScanVar(pDataRAM,   0x200 * sizeof(UINT16),             "DcsDataRAM");
+		ScanVar(pDataRAM0,  0x800 * sizeof(UINT16),             "DcsDataRAM0");
+
+		SCAN_VAR(nCurrentBank);
+		SCAN_VAR(nOutputData);
+		SCAN_VAR(nInputData);
+		SCAN_VAR(nLatchControl);
+		SCAN_VAR(nCtrlReg[32]);
+		SCAN_VAR(nTxIR);
+		SCAN_VAR(nTxIRBase);
+		SCAN_VAR(nTxSize);
+		SCAN_VAR(nTxIncrement);
+		SCAN_VAR(nNextIRQCycle);
+		SCAN_VAR(nTotalCycles);
+		SCAN_VAR(bGenerateIRQ);
+
+		SCAN_VAR(samples_from); // samples per frame
+		SCAN_VAR(sample_rate);  // sample rate of dcs
+		SCAN_VAR(sample_rateadj); // rate adjuster, to match the amount of samples being supplied by dcs with the host rate
+		ScanVar(mixer_buffer, 10000 * sizeof(INT16), "DcsMixerBuffer");
+		SCAN_VAR(mixer_pos);
+		SCAN_VAR(last_mixer_pos); // last average mixer buffer size
+		SCAN_VAR(rate_adjusted);  // wait x frames until adjuster kicks in
+	}
+
+	return 0;
 }

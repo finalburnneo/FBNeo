@@ -163,7 +163,8 @@ typedef struct ADSP2100STATE
     UINT16		ifc;
     UINT8    	irq_state[9];
     UINT8    	irq_latch[9];
-    cpu_irq_callback irq_callback;
+
+	cpu_irq_callback irq_callback;
     //const device_config *device;
 
     /* other internal states */

@@ -142,6 +142,11 @@ void Adsp2100RunEnd()
 	adsp21xx_stop_execute(pADSP);
 }
 
+void Adsp2100Scan(INT32 nAction)
+{
+	adsp21xx_scan(pADSP, nAction);
+}
+
 void Adsp2100SetRxCallback(pAdsp2100RxCallback cb)
 {
     pRxCallback = cb;

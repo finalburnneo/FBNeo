@@ -11,6 +11,7 @@
 #include "tms34010_jump.h"
 #include "tms34010_shift.h"
 #include "tms34010_gfx.h"
+#include "stddef.h"
 
 #ifdef TMS34010_DEBUGGER
 #include <algorithm>
@@ -30,6 +31,18 @@ const char *io_regs_names[32] = {
     "PSIZE", "PMASK", "RS_70", "RS_80", "RS_90", "RS_A0",
     "DPYTAP", "HCOUNT", "VCOUNT", "DPYADR", "REFCNT"
 };
+
+void scan(cpu_state *cpu, sdword nAction)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = cpu;
+		ba.nLen	  = STRUCT_SIZE_HELPER(cpu_state, shiftreg);
+		ba.szName = "TMS34010 Regs";
+		BurnAcb(&ba);
+	}
+}
 
 void reset(cpu_state *cpu)
 {

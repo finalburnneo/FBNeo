@@ -48,6 +48,7 @@ void adsp21xx_set_irq_line(adsp2100_state *adsp, int irqline, int state);
 void adsp21xx_stop_execute(adsp2100_state *adsp);
 int adsp21xx_total_cycles(adsp2100_state *adsp);
 void adsp21xx_new_frame(adsp2100_state *adsp);
+void adsp21xx_scan(adsp2100_state *adsp, INT32 nAction);
 
 // direct memory r/w (functions in adsp2100_intf.cpp)
 UINT16 adsp21xx_data_read_word_16le(UINT32 address);

@@ -34,8 +34,6 @@ enum
 
 static struct
 {
-    UINT8 *     gfxrom;
-
     UINT32      offset;         /* source offset, in bits */
     INT32       rowbits;        /* source bits to skip each row */
     INT32       xpos;           /* x position, clipped */
@@ -57,6 +55,9 @@ static struct
     INT32       endskip;        /* pixels to skip at end */
     UINT16      xstep;          /* 8.8 fixed number scale x factor */
     UINT16      ystep;          /* 8.8 fixed number scale y factor */
+
+	UINT8 *     gfxrom;
+
 } dma_state;
 
 /*** constant definitions ***/

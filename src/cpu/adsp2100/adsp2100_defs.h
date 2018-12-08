@@ -1,7 +1,7 @@
 #ifndef ADSP2100_DEFS
 #define ADSP2100_DEFS
 
-#include <cstdint>
+#include <stdint.h>
 #include "burnint.h"
 #include "cpuintrf.h"
 

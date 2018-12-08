@@ -21,6 +21,7 @@ void TMS34010Init();
 int TMS34010Run(int cycles);
 INT64 TMS34010TotalCycles();
 void TMS34010Scan(INT32 nAction);
+void TMS34010RunEnd();
 void TMS34010NewFrame();
 void TMS34010Reset();
 void TMS34010GenerateIRQ(UINT32 line);

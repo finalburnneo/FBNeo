@@ -113,8 +113,9 @@ static void perform_trace(cpu_state *cpu)
 void run(cpu_state *cpu, int cycles, bool stepping)
 {
 	cpu->cycles_start = cycles;
-    cpu->icounter = cycles;
-    while (cpu->icounter > 0) {
+	cpu->icounter = cycles;
+	cpu->stop = 0;
+    while (cpu->icounter > 0 && !cpu->stop) {
 
         check_irq(cpu);
 
@@ -151,7 +152,8 @@ int run(cpu_state *cpu, int cycles)
 {
 	cpu->cycles_start = cycles;
 	cpu->icounter = cycles;
-    while (cpu->icounter > 0) {
+	cpu->stop = 0;
+    while (cpu->icounter > 0 && !cpu->stop) {
 
         check_irq(cpu);
         cpu->pc &= 0xFFFFFFF0;
@@ -168,6 +170,11 @@ int run(cpu_state *cpu, int cycles)
 	return cycles;
 }
 #endif
+
+void stop(cpu_state *cpu)
+{
+	cpu->stop = 1;
+}
 
 i64 total_cycles(cpu_state *cpu)
 {
@@ -239,7 +246,11 @@ dword read_ioreg(cpu_state *cpu, dword addr)
 
 int generate_scanline(cpu_state *cpu, int line, scanline_render_t render)
 {
-    int enabled = cpu->io_regs[DPYCTL] & 0x8000;
+/*	if (line==0) {
+		bprintf(0, _T("vtotal %X   veblnk %X   vsblnk %X.  dpyint %X (enable: %X)\n"), cpu->io_regs[VTOTAL], cpu->io_regs[VEBLNK], cpu->io_regs[VSBLNK], cpu->io_regs[DPYINT], cpu->io_regs[DPYCTL] & 0x8000);
+	}
+*/
+	int enabled = cpu->io_regs[DPYCTL] & 0x8000;
     cpu->io_regs[VCOUNT] = line;
 
     if (enabled && line == cpu->io_regs[DPYINT]) {
@@ -250,7 +261,7 @@ int generate_scanline(cpu_state *cpu, int line, scanline_render_t render)
         cpu->io_regs[DPYADR] = cpu->io_regs[DPYSTRT];
     }
 
-    if (line >= cpu->io_regs[VEBLNK] && line <= cpu->io_regs[VSBLNK] - 1) {
+    if (line >= cpu->io_regs[VEBLNK] && line <= cpu->io_regs[VSBLNK]) {
         word dpyadr = cpu->io_regs[DPYADR];
         if (!(cpu->io_regs[DPYCTL] & 0x0400))
             dpyadr ^= 0xFFFC;

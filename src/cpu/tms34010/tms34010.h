@@ -184,6 +184,7 @@ struct cpu_state {
     dword pc;
     dword last_pc;
     dword st;
+	sdword stop;
 	sdword icounter;
 	sdword cycles_start;
 	i64 total_cycles;
@@ -499,6 +500,7 @@ int run(cpu_state *cpu, int cycles);
 
 #endif
 
+void stop(cpu_state *cpu);
 i64 total_cycles(cpu_state *cpu);
 void new_frame(cpu_state *cpu);
 void scan(cpu_state *cpu, sdword nAction);

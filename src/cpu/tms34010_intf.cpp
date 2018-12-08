@@ -69,6 +69,11 @@ void TMS34010NewFrame()
 	tms::new_frame(&tms34010);
 }
 
+void TMS34010RunEnd()
+{
+	tms::stop(&tms34010);
+}
+
 void TMS34010Scan(INT32 nAction)
 {
 	tms::scan(&tms34010, nAction);

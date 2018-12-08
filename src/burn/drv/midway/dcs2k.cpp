@@ -743,7 +743,7 @@ INT32 Dcs2kScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nOutputData);
 		SCAN_VAR(nInputData);
 		SCAN_VAR(nLatchControl);
-		SCAN_VAR(nCtrlReg[32]);
+		SCAN_VAR(nCtrlReg);
 		SCAN_VAR(nTxIR);
 		SCAN_VAR(nTxIRBase);
 		SCAN_VAR(nTxSize);

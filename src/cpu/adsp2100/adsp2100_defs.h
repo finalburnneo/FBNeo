@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include "burnint.h"
-#include "cpuintrf.h"
 
 /***************************************************************************
     CONSTANTS
@@ -24,6 +23,25 @@
 #define CHIP_TYPE_ADSP2105	3
 #define CHIP_TYPE_ADSP2115	4
 #define CHIP_TYPE_ADSP2181	5
+
+#define CLEAR_LINE 0
+#define INLINE inline
+
+#define logerror(...)
+#define fatalerror(...)
+
+typedef int (*cpu_irq_callback)(int state);
+
+/* register definitions */
+enum
+{
+    MAX_REGS = 256,
+
+    REG_GENPCBASE = MAX_REGS - 1,	/* generic "base" PC, should point to start of current opcode */
+    REG_GENPC = MAX_REGS - 2,		/* generic PC, may point within an opcode */
+    REG_GENSP = MAX_REGS - 3		/* generic SP, or closest equivalent */
+};
+
 
 /***************************************************************************
     TYPE DEFINITIONS

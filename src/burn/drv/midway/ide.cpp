@@ -95,7 +95,7 @@ ide_disk::ide_disk()
     reset();
     m_buffer_pos = 0;
     m_buffer = new unsigned short[256];
-    m_irq_callback = nullptr;
+    m_irq_callback = NULL;
 }
 
 void ide_disk::set_irq_callback(void (*irq)(int))

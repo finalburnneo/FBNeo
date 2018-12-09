@@ -88,6 +88,15 @@ static void check_irq(cpu_state *cpu)
     }
 }
 
+static void check_timer(cpu_state *cpu)
+{
+	if (cpu->timer_active && total_cycles(cpu) >= cpu->timer_cyc) {
+		cpu->timer_active = 0;
+		if (cpu->timer_cb)
+			cpu->timer_cb();
+	}
+}
+
 #ifdef TMS34010_DEBUGGER
 static void perform_trace(cpu_state *cpu)
 {
@@ -117,6 +126,7 @@ void run(cpu_state *cpu, int cycles, bool stepping)
 	cpu->stop = 0;
     while (cpu->icounter > 0 && !cpu->stop) {
 
+		check_timer(cpu);
         check_irq(cpu);
 
         if (!stepping) {
@@ -155,12 +165,13 @@ int run(cpu_state *cpu, int cycles)
 	cpu->stop = 0;
     while (cpu->icounter > 0 && !cpu->stop) {
 
+		check_timer(cpu);
         check_irq(cpu);
         cpu->pc &= 0xFFFFFFF0;
         word opcode = mem_read(cpu->pc);
         cpu->last_pc = cpu->pc;
         cpu->pc += 16;
-        opcode_table[(opcode >> 4) & 0xFFF](cpu, opcode);
+		opcode_table[(opcode >> 4) & 0xFFF](cpu, opcode);
 	}
 
 	cycles = cycles - cpu->icounter;
@@ -170,6 +181,13 @@ int run(cpu_state *cpu, int cycles)
 	return cycles;
 }
 #endif
+
+void timer_arm(cpu_state *cpu, i64 cycle, void (*t_cb)())
+{
+	cpu->timer_active = 1;
+	cpu->timer_cyc = cycle;
+	cpu->timer_cb = t_cb;
+}
 
 void stop(cpu_state *cpu)
 {
@@ -183,6 +201,9 @@ i64 total_cycles(cpu_state *cpu)
 
 void new_frame(cpu_state *cpu)
 {
+	if (cpu->timer_active) {
+		cpu->timer_cyc -= cpu->total_cycles;
+	}
 	cpu->total_cycles = 0;
 }
 

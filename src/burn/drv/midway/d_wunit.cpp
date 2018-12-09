@@ -536,7 +536,7 @@ static struct BurnRomInfo mk3RomDesc[] = {
 STD_ROM_PICK(mk3)
 STD_ROM_FN(mk3)
 
-struct BurnDriverD BurnDrvMk3 = {
+struct BurnDriver BurnDrvMk3 = {
 	"mk3", NULL, NULL, NULL, "1994",
 	"Mortal Kombat 3 (rev 2.1)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -587,7 +587,7 @@ static struct BurnRomInfo mk3r20RomDesc[] = {
 STD_ROM_PICK(mk3r20)
 STD_ROM_FN(mk3r20)
 
-struct BurnDriverD BurnDrvMk3r20 = {
+struct BurnDriver BurnDrvMk3r20 = {
 	"mk3r20", "mk3", NULL, NULL, "1994",
 	"Mortal Kombat 3 (rev 2.0)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -638,7 +638,7 @@ static struct BurnRomInfo mk3r10RomDesc[] = {
 STD_ROM_PICK(mk3r10)
 STD_ROM_FN(mk3r10)
 
-struct BurnDriverD BurnDrvMk3r10 = {
+struct BurnDriver BurnDrvMk3r10 = {
 	"mk3r10", "mk3", NULL, NULL, "1994",
 	"Mortal Kombat 3 (rev 1.0)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -689,7 +689,7 @@ static struct BurnRomInfo mk3p40RomDesc[] = {
 STD_ROM_PICK(mk3p40)
 STD_ROM_FN(mk3p40)
 
-struct BurnDriverD BurnDrvMk3p40 = {
+struct BurnDriver BurnDrvMk3p40 = {
 	"mk3p40", "mk3", NULL, NULL, "1994",
 	"Mortal Kombat 3 (rev 1 chip label p4.0)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -742,7 +742,7 @@ static struct BurnRomInfo umk3RomDesc[] = {
 STD_ROM_PICK(umk3)
 STD_ROM_FN(umk3)
 
-struct BurnDriverD BurnDrvUmk3 = {
+struct BurnDriver BurnDrvUmk3 = {
 	"umk3", NULL, NULL, NULL, "1994",
 	"Ultimate Mortal Kombat 3 (rev 1.2)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -795,7 +795,7 @@ static struct BurnRomInfo umk3r11RomDesc[] = {
 STD_ROM_PICK(umk3r11)
 STD_ROM_FN(umk3r11)
 
-struct BurnDriverD BurnDrvUmk3r11 = {
+struct BurnDriver BurnDrvUmk3r11 = {
 	"umk3r11", "umk3", NULL, NULL, "1994",
 	"Ultimate Mortal Kombat 3 (rev 1.1)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -848,7 +848,7 @@ static struct BurnRomInfo umk3r10RomDesc[] = {
 STD_ROM_PICK(umk3r10)
 STD_ROM_FN(umk3r10)
 
-struct BurnDriverD BurnDrvUmk3r10 = {
+struct BurnDriver BurnDrvUmk3r10 = {
 	"umk3r10", "umk3", NULL, NULL, "1994",
 	"Ultimate Mortal Kombat 3 (rev 1.0)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1142,7 +1142,7 @@ static struct BurnRomInfo rmpgwtRomDesc[] = {
 STD_ROM_PICK(rmpgwt)
 STD_ROM_FN(rmpgwt)
 
-struct BurnDriverD BurnDrvRmpgwt = {
+struct BurnDriver BurnDrvRmpgwt = {
 	"rmpgwt", NULL, NULL, NULL, "1997",
 	"Rampage: World Tour (rev 1.3)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1190,7 +1190,7 @@ static struct BurnRomInfo rmpgwt11RomDesc[] = {
 STD_ROM_PICK(rmpgwt11)
 STD_ROM_FN(rmpgwt11)
 
-struct BurnDriverD BurnDrvRmpgwt11 = {
+struct BurnDriver BurnDrvRmpgwt11 = {
 	"rmpgwt11", "rmpgwt", NULL, NULL, "1997",
 	"Rampage: World Tour (rev 1.1)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,

@@ -32,7 +32,7 @@ enum
 };
 
 
-static struct
+struct dma_state_s
 {
     UINT32      offset;         /* source offset, in bits */
     INT32       rowbits;        /* source bits to skip each row */
@@ -54,11 +54,15 @@ static struct
     INT32       startskip;      /* pixels to skip at start */
     INT32       endskip;        /* pixels to skip at end */
     UINT16      xstep;          /* 8.8 fixed number scale x factor */
-    UINT16      ystep;          /* 8.8 fixed number scale y factor */
+	UINT16      ystep;          /* 8.8 fixed number scale y factor */
+
+	INT32       dmastop;        // for silly timer
 
 	UINT8 *     gfxrom;
 
-} dma_state;
+};
+
+static dma_state_s dma_state;
 
 /*** constant definitions ***/
 #define PIXEL_SKIP      0
@@ -315,6 +319,13 @@ DECLARE_BLITTER_SET(dma_draw_noskip_scale,     dma_state.bpp, EXTRACTGEN,   SKIP
 DECLARE_BLITTER_SET(dma_draw_skip_noscale,     dma_state.bpp, EXTRACTGEN,   SKIP_YES, SCALE_NO)
 DECLARE_BLITTER_SET(dma_draw_noskip_noscale,   dma_state.bpp, EXTRACTGEN,   SKIP_NO,  SCALE_NO)
 
+#define DMA_IRQ     TMS34010_INT_EX1
+
+static void TUnitDmaCallback()
+{
+	TMS34010GenerateIRQ(DMA_IRQ);
+	nDMA[DMA_COMMAND] &= ~0x8000;
+}
 
 static UINT16 TUnitDmaRead(UINT32 address)
 {
@@ -324,7 +335,6 @@ static UINT16 TUnitDmaRead(UINT32 address)
     return nDMA[offset];
 }
 
-#define DMA_IRQ     TMS34010_INT_EX1
 static void TUnitDmaWrite(UINT32 address, UINT16 value)
 {
     dma_state.gfxrom = DrvGfxROM;
@@ -338,7 +348,7 @@ static void TUnitDmaWrite(UINT32 address, UINT16 value)
     int command, bpp, regnum;
     UINT32 gfxoffset;
     int pixels = 0;
-  
+
     nDMA[reg] = value;
 
     if (reg != DMA_COMMAND)
@@ -433,7 +443,5 @@ static void TUnitDmaWrite(UINT32 address, UINT16 value)
     }
 
 skipdma:
-    TMS34010GenerateIRQ(DMA_IRQ);
-    nDMA[DMA_COMMAND] &= ~0x8000;
-
+	TMS34010TimerCB(TMS34010TotalCycles() + ((double)(41*dma_state.dmastop) * 0.0063447), TUnitDmaCallback);
 }

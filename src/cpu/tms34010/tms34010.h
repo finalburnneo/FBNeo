@@ -188,7 +188,11 @@ struct cpu_state {
 	sdword icounter;
 	sdword cycles_start;
 	i64 total_cycles;
-    dword convdp;
+
+	i64 timer_cyc; // silly cycle timer
+	sdword timer_active;
+
+	dword convdp;
     dword convsp;
     byte pshift;
     word io_regs[32];
@@ -198,7 +202,7 @@ struct cpu_state {
     cpu_register *r[32];
     void (*shift_read_cycle)(dword address, void*);
     void (*shift_write_cycle)(dword address, void*);
-
+	void (*timer_cb)();
 #ifdef TMS34010_DEBUGGER
     // debugger...
     stop_reason_t reason;
@@ -500,6 +504,7 @@ int run(cpu_state *cpu, int cycles);
 
 #endif
 
+void timer_arm(cpu_state *cpu, i64 cycle, void (*t_cb)());
 void stop(cpu_state *cpu);
 i64 total_cycles(cpu_state *cpu);
 void new_frame(cpu_state *cpu);

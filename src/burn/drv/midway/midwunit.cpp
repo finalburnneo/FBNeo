@@ -1,10 +1,14 @@
 // midway wolf unit
 
-// todo:
-//  1: wwfmania crashes
+// bugs due to tms34010:
+//  1: wwfmania crashes shortly after booting.  missing raster ops in tms34010?
 //  2: openice goes bonkers on game start, cpu players wont move
-//    1 + 2 is probably due to cmos issues
-//  3: figure out why last line doesn't always render in rampgwt
+//     plus writes garbage to cmos
+//  3: nbahangt, missing video objects
+//
+// easy:
+//  4: figure out why last line doesn't always render in rampgwt
+//    3: answer, screen is offset by -1 line
 
 #include "tiles_generic.h"
 #include "midwunit.h"
@@ -71,12 +75,13 @@ static INT32 MemIndex()
 	DrvSoundROM	= Next;				Next += 0x1000000 * sizeof(UINT8);
 	DrvGfxROM 	= Next;				Next += 0x2000000 * sizeof(UINT8);
 
+	DrvNVRAM	= Next;             Next += 0x60000 * sizeof(UINT16);
+
 	AllRam		= Next;
 	DrvRAM		= Next;				Next += 0x400000 * sizeof(UINT16);
-	DrvNVRAM	= Next;				Next += 0x60000 * sizeof(UINT16);
 	DrvPalette	= Next;				Next += 0x20000 * sizeof(UINT8);
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
-	DrvVRAM		= Next;				Next += 0x400000 * sizeof(UINT16);
+	DrvVRAM		= Next;				Next += 0x80000 * sizeof(UINT16);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
 	RamEnd		= Next;
 
@@ -121,7 +126,6 @@ static UINT16 WolfUnitIoRead(UINT32 address)
 
 void WolfUnitIoWrite(UINT32 address, UINT16 value)
 {
-   // if (wwfmania) bprintf(0, _T("addy %X  %x.\n"), address, value);
 	if (wwfmania && address <= 0x180000f) {
 		for (INT32 i = 0; i < 16; i++) nIOShuffle[i] = i % 8;
 
@@ -165,11 +169,11 @@ void WolfUnitIoWrite(UINT32 address, UINT16 value)
 
     UINT32 offset = (address >> 4) % 8;
     switch(offset) {
-    case 1:
-		sound_sync();
-		Dcs2kResetWrite(value & 0x10);
-		MidwaySerialPicReset();
-        break;
+		case 1:
+			sound_sync();
+			Dcs2kResetWrite(value & 0x10);
+			if (value & 0x20) MidwaySerialPicReset();
+			break;
     }
 }
 
@@ -192,31 +196,31 @@ UINT16 WolfUnitSecurityRead(UINT32 address)
 
 void WolfUnitSecurityWrite(UINT32 address, UINT16 value)
 {
-	if (address == 0x01600000) {
+	if (address == 0x1600000) {
 		MidwaySerialPicWrite(value);
     }
 }
 
 UINT16 WolfUnitCMOSRead(UINT32 address)
 {
-    UINT16 *wn = (UINT16*)DrvNVRAM;
-    UINT32 offset = (address & 0x05ffff) >> 1;
-    return wn[offset];
+	address &= 0x05ffff;
+	//bprintf(0, _T("cmos_r: %X (%x(%x))  \n"), address, address>>3, address >> 4);
+    return DrvNVRAM[address >> 3]; //*((UINT16*)(&DrvNVRAM[TOBYTE(address)]));
 }
-
 
 void WolfUnitCMOSWrite(UINT32 address, UINT16 value)
 {
     if (bCMOSWriteEnable) {
-        UINT16 *wn = (UINT16*) DrvNVRAM;
-        UINT32 offset = (address & 0x05ffff) >> 1;
-        wn[offset] = value;
+		address &= 0x05ffff;
+		//bprintf(0, _T("cmos_w: %X (%x(%x))  %x\n"), address, address>>3, address >> 4, value);
+        DrvNVRAM[address >> 3] = value; //*((UINT16*)(&DrvNVRAM[TOBYTE(address)])) = value;
         bCMOSWriteEnable = false;
     }
 }
 
 void WolfUnitCMOSWriteEnable(UINT32 address, UINT16 value)
 {
+	//bprintf(0, _T("cmos_U: %X (%x(%x))  \n"), address, address>>3, address >> 4);
     bCMOSWriteEnable = true;
 }
 
@@ -295,12 +299,12 @@ void WolfSoundWrite(UINT32 address, UINT16 value)
 
 static void WolfUnitToShift(UINT32 address, void *dst)
 {
-    memcpy(dst, &DrvVRAM16[(address >> 3)], 4096/2);
+	memcpy(dst, &DrvVRAM16[(address >> 3)], 4096/2);
 }
 
 static void WolfUnitFromShift(UINT32 address, void *src)
 {
-    memcpy(&DrvVRAM16[(address >> 3)], src, 4096/2);
+	memcpy(&DrvVRAM16[(address >> 3)], src, 4096/2);
 }
 
 
@@ -363,6 +367,10 @@ static INT32 LoadGfxBanks()
 
 static void WolfDoReset()
 {
+	memset(&dma_state, 0, sizeof(dma_state));
+    memset(DrvVRAM, 0, 0x80000);
+    DrvInputs[2] = 0;
+
 	TMS34010Reset();
 	Dcs2kReset();
 }
@@ -451,9 +459,6 @@ INT32 WolfUnitInit()
 	Dcs2kResetWrite(1);
 	Dcs2kResetWrite(0);
 
-    memset(DrvVRAM, 0, 0x400000);
-    DrvInputs[2] = 0;
-	
 	GenericTilesInit();
 	
 	BurnSetRefreshRate(54.71);
@@ -543,7 +548,6 @@ INT32 WolfUnitExit()
 INT32 WolfUnitDraw()
 {
 	if (nWolfUnitRecalc) {
-		bprintf(0, _T("\nRecalculating the palette!!!!\n"));
 		WolfUnitPalRecalc();
 		nWolfUnitRecalc = 0;
 	}
@@ -580,6 +584,14 @@ INT32 WolfUnitScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nWolfUnitCtrl);
 		SCAN_VAR(bCMOSWriteEnable);
 		// Might need to scan the dma_state struct in midtunit_dma.h
+	}
+
+	if (nAction & ACB_NVRAM) {
+		ba.Data		= DrvNVRAM;
+		ba.nLen		= 0x60000;
+		ba.nAddress	= 0;
+		ba.szName	= "NV RAM";
+		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_WRITE) {

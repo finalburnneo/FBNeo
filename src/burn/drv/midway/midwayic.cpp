@@ -2,21 +2,35 @@
 #include "burnint.h"
 #include "midwayic.h"
 
+// config
 static INT32 nUpper;
+static UINT8 nOrMask;
+// driver data
 static UINT8 nData[16];
 static UINT8 nBuffer;
 static UINT8 nIndex;
 static UINT8 nStatus;
-static UINT8 nBits;
-static UINT8 nOrMask;
+
+void MidwaySerialPicScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_VOLATILE)
+	{
+		BurnRandomScan(nAction);
+		SCAN_VAR(nData);
+		SCAN_VAR(nBuffer);
+		SCAN_VAR(nIndex);
+		SCAN_VAR(nStatus);
+		SCAN_VAR(nOrMask);
+	}
+}
 
 void MidwaySerialPicInit(INT32 upper)
 {
     nUpper = upper;
-    for (INT32 i = 0; i < 16; i++) nData[i] = 0;
-    MidwaySerialPicReset();
 
-    INT32 year = 1994, month = 12, day = 11;
+	memset(&nData, 0, sizeof(nData));
+
+    INT32 year = 2018, month = 12, day = 11;
     UINT32 serial_number, temp;
     UINT8 serial_digit[9];
 
@@ -33,8 +47,8 @@ void MidwaySerialPicInit(INT32 upper)
     serial_digit[7] = (serial_number / 10) % 10;
     serial_digit[8] = (serial_number / 1) % 10;
 
-    nData[12] = rand() & 0xff;
-    nData[13] = rand() & 0xff;
+    nData[12] = BurnRandom() & 0xff;
+    nData[13] = BurnRandom() & 0xff;
 
     nData[14] = 0; /* ??? */
     nData[15] = 0; /* ??? */
@@ -73,8 +87,6 @@ void MidwaySerialPicReset()
     nBuffer = 0;
     nIndex = 0;
     nStatus = 0;
-    nBits = 0;
-    nOrMask = 0;
 }
 
 

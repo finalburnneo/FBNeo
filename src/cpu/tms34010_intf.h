@@ -19,6 +19,7 @@ typedef tms::scanline_render_t pTMS34010ScanlineRender;
 
 void TMS34010Init();
 int TMS34010Run(int cycles);
+void TMS34010TimerCB(INT64 cycles, void (*timer_cb)());
 INT64 TMS34010TotalCycles();
 void TMS34010Scan(INT32 nAction);
 void TMS34010RunEnd();

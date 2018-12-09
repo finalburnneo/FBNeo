@@ -3,13 +3,6 @@
 
 #include "adsp2100/adsp2100_defs.h"
 
-enum {
-    ADSP21XX_CLEAR_LINE = 0,				/* clear (a fired, held or pulsed) line */
-    ADSP21XX_ASSERT_LINE,				/* assert an interrupt immediately */
-    ADSP21XX_HOLD_LINE,					/* hold interrupt line until acknowledged */
-    ADSP21XX_PULSE_LINE					/* pulse interrupt line for one instruction */
-};
-
 typedef unsigned short (*pAdsp2100ReadWordHandler)(unsigned int a);
 typedef void (*pAdsp2100WriteWordHandler)(unsigned int a, unsigned short d);
 

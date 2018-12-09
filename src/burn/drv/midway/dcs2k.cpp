@@ -415,9 +415,9 @@ void Dcs2kBoot()
 void Dcs2kReset()
 {
     Adsp2100Reset();
-    Adsp2100SetIRQLine(ADSP2105_IRQ0, CLEAR_LINE);
-    Adsp2100SetIRQLine(ADSP2105_IRQ1, CLEAR_LINE);
-    Adsp2100SetIRQLine(ADSP2105_IRQ2, CLEAR_LINE);
+    Adsp2100SetIRQLine(ADSP2105_IRQ0, CPU_IRQSTATUS_NONE);
+    Adsp2100SetIRQLine(ADSP2105_IRQ1, CPU_IRQSTATUS_NONE);
+    Adsp2100SetIRQLine(ADSP2105_IRQ2, CPU_IRQSTATUS_NONE);
 
     nTxIR = 0;
     nTxIRBase = 0;
@@ -531,7 +531,7 @@ static void SelectDataBank(UINT32 address, UINT16 value)
 static UINT16 InputLatch(UINT32 address)
 {
 	if (address >= latch_addr_lo && address <= latch_addr_hi) {
-		Adsp2100SetIRQLine(ADSP2105_IRQ2, CLEAR_LINE);
+		Adsp2100SetIRQLine(ADSP2105_IRQ2, CPU_IRQSTATUS_NONE);
 		SET_INPUT_EMPTY();
 		dcs_log(_T("input_latch %x\n"), nInputData);
 		return nInputData;
@@ -591,7 +591,7 @@ static void AdspWrite(UINT32 address, UINT16 value)
 void Dcs2kDataWrite(INT32 data)
 {
     dcs_log(_T("data_w %x\n"), data);
-    Adsp2100SetIRQLine(ADSP2105_IRQ2, ASSERT_LINE);
+    Adsp2100SetIRQLine(ADSP2105_IRQ2, CPU_IRQSTATUS_ACK);
     SET_INPUT_FULL();
     nInputData = data;
 }
@@ -710,9 +710,9 @@ void DcsIRQ()
     bGenerateIRQ = 1;
 
     if (wrapped) {
-        Adsp2100SetIRQLine(ADSP2105_IRQ1, ASSERT_LINE);
+        Adsp2100SetIRQLine(ADSP2105_IRQ1, CPU_IRQSTATUS_ACK);
         Adsp2100Run(1);
-        Adsp2100SetIRQLine(ADSP2105_IRQ1, CLEAR_LINE);
+        Adsp2100SetIRQLine(ADSP2105_IRQ1, CPU_IRQSTATUS_NONE);
         //nTotalCycles++;
     }
 }

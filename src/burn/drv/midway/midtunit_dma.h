@@ -319,20 +319,24 @@ DECLARE_BLITTER_SET(dma_draw_noskip_scale,     dma_state.bpp, EXTRACTGEN,   SKIP
 DECLARE_BLITTER_SET(dma_draw_skip_noscale,     dma_state.bpp, EXTRACTGEN,   SKIP_YES, SCALE_NO)
 DECLARE_BLITTER_SET(dma_draw_noskip_noscale,   dma_state.bpp, EXTRACTGEN,   SKIP_NO,  SCALE_NO)
 
+#define DMA_IRQ     TMS34010_INT_EX1
+
+static void TUnitDmaCallback()
+{
+	TMS34010GenerateIRQ(DMA_IRQ);
+	nDMA[DMA_COMMAND] &= ~0x8000;
+}
 
 static UINT16 TUnitDmaRead(UINT32 address)
 {
-	if ((address&0xffff) > 0xff) bprintf(0, _T("dmaread %X.\n"), address);
     UINT32 offset = (address >> 4) & 0xF;
     if (offset == 0)
         offset = 1;
     return nDMA[offset];
 }
 
-#define DMA_IRQ     TMS34010_INT_EX1
 static void TUnitDmaWrite(UINT32 address, UINT16 value)
 {
-	if ((address&0xffff) > 0xff) bprintf(0, _T("dmawrite %X.\n"), address);
     dma_state.gfxrom = DrvGfxROM;
     static const UINT8 register_map[2][16] =
     {
@@ -439,17 +443,6 @@ static void TUnitDmaWrite(UINT32 address, UINT16 value)
     }
 
 skipdma:
-
-	TMS34010RunEnd();
-	dma_state.dmastop = pixels;
-//    TMS34010GenerateIRQ(DMA_IRQ);
-//    nDMA[DMA_COMMAND] &= ~0x8000;
-
+	TUnitDmaCallback();
+	TMS34010TimerCB(TMS34010TotalCycles() + ((double)(41*dma_state.dmastop) * 0.0063447), TUnitDmaCallback);
 }
-
-static void TUnitDmaCallback()
-{
-	TMS34010GenerateIRQ(DMA_IRQ);
-	nDMA[DMA_COMMAND] &= ~0x8000;
-}
-

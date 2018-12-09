@@ -1,11 +1,14 @@
 // midway wolf unit
 
-// todo:
-//  1: wwfmania crashes shortly after booting.
+// bugs due to tms34010:
+//  1: wwfmania crashes shortly after booting.  missing raster ops in tms34010?
 //  2: openice goes bonkers on game start, cpu players wont move
-//    1 + 2 is probably due to cmos issues
-//  3: figure out why last line doesn't always render in rampgwt
-//    3: answer, screen is offset by +1 line
+//     plus writes garbage to cmos
+//  3: nbahangt, missing video objects
+//
+// easy:
+//  4: figure out why last line doesn't always render in rampgwt
+//    3: answer, screen is offset by -1 line
 
 #include "tiles_generic.h"
 #include "midwunit.h"
@@ -72,9 +75,10 @@ static INT32 MemIndex()
 	DrvSoundROM	= Next;				Next += 0x1000000 * sizeof(UINT8);
 	DrvGfxROM 	= Next;				Next += 0x2000000 * sizeof(UINT8);
 
+	DrvNVRAM	= Next;             Next += 0x60000 * sizeof(UINT16);
+
 	AllRam		= Next;
 	DrvRAM		= Next;				Next += 0x400000 * sizeof(UINT16);
-	DrvNVRAM	= Next;             Next += 0x60000 * sizeof(UINT16);
 	DrvPalette	= Next;				Next += 0x20000 * sizeof(UINT8);
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
 	DrvVRAM		= Next;				Next += 0x80000 * sizeof(UINT16);
@@ -165,11 +169,11 @@ void WolfUnitIoWrite(UINT32 address, UINT16 value)
 
     UINT32 offset = (address >> 4) % 8;
     switch(offset) {
-    case 1:
-		sound_sync();
-		Dcs2kResetWrite(value & 0x10);
-		if (value & 0x20) MidwaySerialPicReset();
-        break;
+		case 1:
+			sound_sync();
+			Dcs2kResetWrite(value & 0x10);
+			if (value & 0x20) MidwaySerialPicReset();
+			break;
     }
 }
 
@@ -295,12 +299,12 @@ void WolfSoundWrite(UINT32 address, UINT16 value)
 
 static void WolfUnitToShift(UINT32 address, void *dst)
 {
-    memcpy(dst, &DrvVRAM16[(address >> 3)], 4096/2);
+	memcpy(dst, &DrvVRAM16[(address >> 3)], 4096/2);
 }
 
 static void WolfUnitFromShift(UINT32 address, void *src)
 {
-    memcpy(&DrvVRAM16[(address >> 3)], src, 4096/2);
+	memcpy(&DrvVRAM16[(address >> 3)], src, 4096/2);
 }
 
 
@@ -507,14 +511,7 @@ INT32 WolfUnitFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		do {
-			dma_state.dmastop = 0;
-			nCyclesDone[0] += TMS34010Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
-			if (dma_state.dmastop) {
-				nCyclesDone[0] += TMS34010Run((41*dma_state.dmastop) / 100000);
-				TUnitDmaCallback();
-			}
-		} while (dma_state.dmastop == 1);
+		nCyclesDone[0] += TMS34010Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 
 		TMS34010GenerateScanline(i);
 

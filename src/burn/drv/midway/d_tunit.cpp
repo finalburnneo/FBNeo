@@ -3,11 +3,7 @@
 #include "midtunit.h"
 
 static struct BurnInputInfo MkInputList[] = {
-	{ "Coin 1",			BIT_DIGITAL,	nTUnitJoy2 + 0,	 "p1 coin"   },
-	{ "Coin 2",			BIT_DIGITAL,	nTUnitJoy2 + 1,	 "p2 coin"   },
-	{ "Coin 3",			BIT_DIGITAL,	nTUnitJoy2 + 7,	 "p1 coin"   },
-	{ "Coin 4",			BIT_DIGITAL,	nTUnitJoy2 + 8,	 "p2 coin"   },
-	
+	{ "P1 Coin",		BIT_DIGITAL,	nTUnitJoy2 + 0,	 "p1 coin"   },
 	{ "P1 Start",		BIT_DIGITAL,	nTUnitJoy2 + 2,	 "p1 start"  },
 	{ "P1 Up",			BIT_DIGITAL,	nTUnitJoy1 + 0,	 "p1 up"     },
 	{ "P1 Down",		BIT_DIGITAL,	nTUnitJoy1 + 1,	 "p1 down"   },
@@ -20,6 +16,7 @@ static struct BurnInputInfo MkInputList[] = {
 	{ "P1 Button 5",	BIT_DIGITAL,	nTUnitJoy2 + 13, "p1 fire 5" },
 	{ "P1 Button 6",	BIT_DIGITAL,	nTUnitJoy2 + 15, "p1 fire 6" },
 	
+	{ "P2 Coin",		BIT_DIGITAL,	nTUnitJoy2 + 1,	 "p2 coin"   },
 	{ "P2 Start",		BIT_DIGITAL,	nTUnitJoy2 + 5,	 "p2 start"  },
 	{ "P2 Up",			BIT_DIGITAL,	nTUnitJoy1 + 8,	 "p2 up"     },
 	{ "P2 Down",		BIT_DIGITAL,	nTUnitJoy1 + 9,	 "p2 down"   },
@@ -32,6 +29,9 @@ static struct BurnInputInfo MkInputList[] = {
 	{ "P2 Button 5",	BIT_DIGITAL,	nTUnitJoy2 + 10, "p2 fire 5" },
 	{ "P2 Button 6",	BIT_DIGITAL,	nTUnitJoy2 + 11, "p2 fire 6" },
 
+	{ "P3 Coin",		BIT_DIGITAL,	nTUnitJoy2 + 7,	 "p3 coin"   },
+	{ "P4 Coin",		BIT_DIGITAL,	nTUnitJoy2 + 8,	 "p4 coin"   },
+
 	{ "Reset",			BIT_DIGITAL,	&nTUnitReset,    "reset"     },
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
 	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
@@ -43,11 +43,7 @@ static struct BurnInputInfo MkInputList[] = {
 STDINPUTINFO(Mk)
 
 static struct BurnInputInfo Mk2InputList[] = {
-	{ "Coin 1",			BIT_DIGITAL,	nTUnitJoy2 + 0,	 "p1 coin"   },
-	{ "Coin 2",			BIT_DIGITAL,	nTUnitJoy2 + 1,	 "p2 coin"   },
-	{ "Coin 3",			BIT_DIGITAL,	nTUnitJoy2 + 7,	 "p1 coin"   },
-	{ "Coin 4",			BIT_DIGITAL,	nTUnitJoy2 + 8,	 "p2 coin"   },
-	
+	{ "P1 Coin",		BIT_DIGITAL,	nTUnitJoy2 + 0,	 "p1 coin"   },
 	{ "P1 Start",		BIT_DIGITAL,	nTUnitJoy2 + 2,	 "p1 start"  },
 	{ "P1 Up",			BIT_DIGITAL,	nTUnitJoy1 + 0,	 "p1 up"     },
 	{ "P1 Down",		BIT_DIGITAL,	nTUnitJoy1 + 1,	 "p1 down"   },
@@ -60,6 +56,7 @@ static struct BurnInputInfo Mk2InputList[] = {
 	{ "P1 Button 5",	BIT_DIGITAL,	nTUnitJoy3 + 1,  "p1 fire 5" },
 	{ "P1 Button 6",	BIT_DIGITAL,	nTUnitJoy3 + 2,  "p1 fire 6" },
 	
+	{ "P2 Coin",		BIT_DIGITAL,	nTUnitJoy2 + 1,	 "p2 coin"   },
 	{ "P2 Start",		BIT_DIGITAL,	nTUnitJoy2 + 5,	 "p2 start"  },
 	{ "P2 Up",			BIT_DIGITAL,	nTUnitJoy1 + 8,	 "p2 up"     },
 	{ "P2 Down",		BIT_DIGITAL,	nTUnitJoy1 + 9,	 "p2 down"   },
@@ -71,6 +68,9 @@ static struct BurnInputInfo Mk2InputList[] = {
 	{ "P2 Button 4",	BIT_DIGITAL,	nTUnitJoy3 + 4,  "p2 fire 4" },
 	{ "P2 Button 5",	BIT_DIGITAL,	nTUnitJoy3 + 5,  "p2 fire 5" },
 	{ "P2 Button 6",	BIT_DIGITAL,	nTUnitJoy3 + 6,  "p2 fire 6" },
+
+	{ "P3 Coin",		BIT_DIGITAL,	nTUnitJoy2 + 7,	 "p3 coin"   },
+	{ "P4 Coin",		BIT_DIGITAL,	nTUnitJoy2 + 8,	 "p4 coin"   },
 
 	{ "Reset",			BIT_DIGITAL,	&nTUnitReset,    "reset"     },
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },

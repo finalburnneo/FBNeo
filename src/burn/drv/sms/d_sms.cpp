@@ -27602,9 +27602,7 @@ struct BurnDriverD BurnDrvsms_zexall = {
 	256, 192, 4, 3
 };
 
-
 // VDP TEST
-
 
 static struct BurnRomInfo sms_vdptestRomDesc[] = {
 	{ "vdptest.sms",	0x8000, 0x2f7d2cea, BRF_PRG | BRF_ESS },
@@ -27623,3 +27621,21 @@ struct BurnDriverD BurnDrvsms_vdptest = {
 	256, 192, 4, 3
 };
 
+// Flight of Pigarus (Version 1.0)
+
+static struct BurnRomInfo sms_fpigarusRomDesc[] = {
+	{ "FlightOfPigarus-SMS-1.00.sms",	0x40000, 0x838574d1, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_fpigarus)
+STD_ROM_FN(sms_fpigarus)
+
+struct BurnDriver BurnDrvsms_fpigarus = {
+	"sms_fpigarus", NULL, NULL, NULL, "2018",
+	"Flight of Pigarus (Version 1.0)\0", NULL, "Kagesan", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_fpigarusRomInfo, sms_fpigarusRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};

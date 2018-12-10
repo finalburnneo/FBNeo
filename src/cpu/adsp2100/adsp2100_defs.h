@@ -25,6 +25,9 @@
 #define CHIP_TYPE_ADSP2181	5
 
 #define CLEAR_LINE 0
+#ifdef INLINE
+#undef INLINE
+#endif
 #define INLINE inline
 
 #define logerror(...)

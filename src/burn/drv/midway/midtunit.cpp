@@ -38,6 +38,10 @@ static UINT16 nTUnitCtrl = 0;
 static UINT8 DrvFakeSound = 0;
 
 static UINT8 MKProtIndex = 0;
+static UINT16 MK2ProtData = 0;
+
+UINT8 TUnitIsMK = 0;
+UINT8 TUnitIsMK2 = 0;
 
 #define RGB888(r,g,b)   ((r) | ((g) << 8) | ((b) << 16))
 #define RGB888_r(x) ((x) & 0xFF)
@@ -87,7 +91,8 @@ static INT32 LoadGfxBanks()
     for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
         BurnDrvGetRomInfo(&pri, i);
         if ((pri.nType & 7) == 3) {
-
+			if (pri.nLen > 0x80000) bGfxRomLarge = true;
+		
             UINT32 addr = TUNIT_GFX_ADR(pri.nType) << 20;
             UINT32 offs = TUNIT_GFX_OFF(pri.nType);
 
@@ -129,13 +134,16 @@ static void TUnitDoReset()
 {
 	TMS34010Reset();
 	
-	M6809Open(0);
-	M6809Reset();
-	M6809Close();
+	if (TUnitIsMK) {
+		M6809Open(0);
+		M6809Reset();
+		M6809Close();
 	
-	BurnYM2151Reset();
+		BurnYM2151Reset();
+	}
 	
 	MKProtIndex = 0;
+	MK2ProtData = 0;
 	DrvFakeSound = 0;
 }
 
@@ -261,14 +269,14 @@ static UINT16 TUnitSoundStateRead(UINT32 address)
 
 static UINT16 TUnitSoundRead(UINT32 address)
 {
-	bprintf(PRINT_NORMAL, _T("Sound Read %x\n"), address);
+	//bprintf(PRINT_NORMAL, _T("Sound Read %x\n"), address);
 
 	return ~0;
 }
 
 static void TUnitSoundWrite(UINT32 address, UINT16 value)
 {
-	bprintf(PRINT_NORMAL, _T("Sound Write %x, %x\n"), address, value);
+	//bprintf(PRINT_NORMAL, _T("Sound Write %x, %x\n"), address, value);
 }
 
 static void TUnitCtrlWrite(UINT32 address, UINT16 value)
@@ -379,6 +387,26 @@ static void MKSoundWrite(UINT16 address, UINT8 value)
 	bprintf(PRINT_NORMAL, _T("M6809 Write Byte -> %04X, %02X\n"), address, value);
 }
 
+static UINT16 MK2ProtConstRead(UINT32 /*address*/)
+{
+	return 2;
+}
+
+static UINT16 MK2ProtRead(UINT32 /*address*/)
+{
+	return MK2ProtData;
+}
+
+static UINT16 MK2ProtShiftRead(UINT32 /*address*/)
+{
+	return MK2ProtData >> 1;
+}
+
+static void MK2ProtWrite(UINT32 /*address*/, UINT16 value)
+{
+	MK2ProtData = value;
+}
+
 INT32 TUnitInit()
 {
     MemIndex();
@@ -396,8 +424,10 @@ INT32 TUnitInit()
     nRet = BurnLoadRom(DrvBootROM + 1, 1, 2);
     if (nRet != 0) return 1;
 	
-	nRet = LoadSoundProgRom();
-	if (nRet != 0) return 1;
+	if (TUnitIsMK) {
+		nRet = LoadSoundProgRom();
+		if (nRet != 0) return 1;
+	}
 
 /*    nRet = LoadSoundBanks();
     if (nRet != 0)
@@ -414,14 +444,6 @@ INT32 TUnitInit()
     TMS34010SetScanlineRender(ScanlineRender);
     TMS34010SetToShift(TUnitToShift);
     TMS34010SetFromShift(TUnitFromShift);
-	
-#if 0
-	// barry - for reference - unmapped memory
-	map(0x01b00000, 0x01b0001f).w(FUNC(midtunit_state::midtunit_control_w));
-	m_maincpu->space(AS_PROGRAM).install_readwrite_handler(0x1b00000, 0x1b6ffff, read16_delegate(FUNC(midtunit_state::mk_prot_r),this), write16_delegate(FUNC(midtunit_state::mk_prot_w),this));
-	
-	map(0x02000000, 0x07ffffff).r(FUNC(midtunit_state::midtunit_gfxrom_r)).share("gfxrom");
-#endif
 	
 	// this will be removed - but putting all unmapped memory through generic handlers to enable logging unmapped reads/writes
 	TMS34010SetHandlers(1, TUnitRead, TUnitWrite);
@@ -449,8 +471,13 @@ INT32 TUnitInit()
 	TMS34010SetHandlers(7, TUnitDmaRead, TUnitDmaWrite);
     TMS34010MapHandler(7, 0x01a80000, 0x01a800ff, MAP_READ | MAP_WRITE);
 	
-	TMS34010SetHandlers(8, MKProtRead, MKProtWrite);
-    TMS34010MapHandler(8, 0x01b00000, 0x1b6ffff, MAP_READ | MAP_WRITE);
+	if (TUnitIsMK) {
+		TMS34010SetHandlers(8, MKProtRead, MKProtWrite);
+		TMS34010MapHandler(8, 0x01b00000, 0x1b6ffff, MAP_READ | MAP_WRITE);
+	} else {
+		TMS34010SetWriteHandler(8, TUnitCtrlWrite);
+		TMS34010MapHandler(8, 0x01b00000, 0x01b0001f, MAP_WRITE);
+	}
 	
 	TMS34010SetReadHandler(9, TUnitSoundStateRead);
     TMS34010MapHandler(9, 0x01d00000, 0x01d0001f, MAP_READ);
@@ -463,22 +490,47 @@ INT32 TUnitInit()
 	
 	TMS34010SetReadHandler(12, TUnitGfxRead);
     TMS34010MapHandler(12, 0x02000000, 0x07ffffff, MAP_READ);
+	
+	if (TUnitIsMK2) {
+		TMS34010SetWriteHandler(13, MK2ProtWrite);
+		TMS34010MapHandler(13, 0x00f20c60, 0x00f20c7f, MAP_WRITE);
+		
+		TMS34010SetWriteHandler(14, MK2ProtWrite);
+		TMS34010MapHandler(14, 0x00f42820, 0x00f4283f, MAP_WRITE);
+		
+		TMS34010SetReadHandler(15, MK2ProtRead);
+		TMS34010MapHandler(15, 0x01a190e0, 0x01a190ff, MAP_READ);
+		
+		TMS34010SetReadHandler(16, MK2ProtShiftRead);
+		TMS34010MapHandler(16, 0x01a191c0, 0x01a191df, MAP_READ);
+		
+		TMS34010SetReadHandler(17, MK2ProtRead);
+		TMS34010MapHandler(17, 0x01a3d0c0, 0x01a3d0ff, MAP_READ);
+		
+		TMS34010SetReadHandler(18, MK2ProtConstRead);
+		TMS34010MapHandler(18, 0x01d9d1e0, 0x01d9d1ff, MAP_READ);
+		
+		TMS34010SetReadHandler(19, MK2ProtConstRead);
+		TMS34010MapHandler(19, 0x01def920, 0x01def93f, MAP_READ);
+	}
 
     memset(DrvVRAM, 0, 0x400000);
 	
-	M6809Init(0);
-	M6809Open(0);
-	M6809MapMemory(DrvSoundProgRAM         , 0x0000, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvSoundProgROM         , 0x4000, 0xbfff, MAP_ROM);
-	M6809MapMemory(DrvSoundProgROM + 0x8000, 0xc000, 0xffff, MAP_ROM);
-	M6809SetReadHandler(MKSoundRead);
-	M6809SetWriteHandler(MKSoundWrite);
-	M6809Close();
-	
-	BurnYM2151Init(3579545);
-	BurnYM2151SetIrqHandler(&MKYM2151IrqHandler);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	if (TUnitIsMK) {
+		M6809Init(0);
+		M6809Open(0);
+		M6809MapMemory(DrvSoundProgRAM         , 0x0000, 0x1fff, MAP_RAM);
+		M6809MapMemory(DrvSoundProgROM         , 0x4000, 0xbfff, MAP_ROM);
+		M6809MapMemory(DrvSoundProgROM + 0x8000, 0xc000, 0xffff, MAP_ROM);
+		M6809SetReadHandler(MKSoundRead);
+		M6809SetWriteHandler(MKSoundWrite);
+		M6809Close();
+		
+		BurnYM2151Init(3579545);
+		BurnYM2151SetIrqHandler(&MKYM2151IrqHandler);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	}
 	
 	GenericTilesInit();
 	
@@ -509,6 +561,9 @@ INT32 TUnitExit()
 	BurnYM2151Exit();
 	
 	GenericTilesExit();
+	
+	TUnitIsMK = 0;
+	TUnitIsMK2 = 0;
 
     return 0;
 }
@@ -534,41 +589,46 @@ INT32 TUnitFrame()
 	MakeInputs();
 
 	TMS34010NewFrame();
-	M6809NewFrame();
+	
+	if (TUnitIsMK) M6809NewFrame();
 
 	INT32 nInterleave = 288;
 	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/54.71), (INT32)(2000000 / 54.71) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 	INT32 nSoundBufferPos = 0;
 	
-	M6809Open(0);
+	if (TUnitIsMK) M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		nCyclesDone[0] += TMS34010Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 		
-		nCyclesDone[1] += M6809Run((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
+		if (TUnitIsMK) nCyclesDone[1] += M6809Run((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
 
 		TMS34010GenerateScanline(i);
 		
 		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
+			if (TUnitIsMK) {
+				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+				BurnYM2151Render(pSoundBuf, nSegmentLength);
+				nSoundBufferPos += nSegmentLength;
+			}
 		}
     }
 	
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (TUnitIsMK) {
+			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			if (nSegmentLength) {
+				BurnYM2151Render(pSoundBuf, nSegmentLength);
+			}
 		}
 	}
 	
-	M6809Close();
+	if (TUnitIsMK) M6809Close();
 
 	if (pBurnDraw) {
 		TUnitDraw();

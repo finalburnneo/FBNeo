@@ -19,4 +19,6 @@ INT32 TUnitDraw();
 INT32 TUnitScan(INT32 nAction, INT32 *pnMin);
 
 extern UINT8 TUnitIsMK;
+extern UINT8 TUnitIsMKTurbo;
 extern UINT8 TUnitIsMK2;
+extern UINT8 TUnitIsNbajam;

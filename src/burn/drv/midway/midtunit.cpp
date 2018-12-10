@@ -1,3 +1,6 @@
+// todo:
+//   MK: sound tempo too slow
+
 #include "tiles_generic.h"
 #include "midtunit.h"
 #include "tms34010_intf.h"
@@ -338,6 +341,9 @@ static void TUnitSoundWrite(UINT32 address, UINT16 value)
 {
 	//bprintf(PRINT_NORMAL, _T("Sound Write %x, %x\n"), address, value);
 	if (address >= 0x01d01020 && address <= 0x01d0103f) {
+		// this should check the mem mask for a full 16-bit write. and ignore byte-writes.
+		if (value == 0 || value == 1) return; // spurious bad-writes
+
 		switch (nSoundType)	{
 			case SOUND_ADPCM:
 				MKsound_reset_write(~value & 0x100);
@@ -760,6 +766,7 @@ INT32 TUnitInit()
 		M6809Close();
 		
 		BurnYM2151Init(3579545);
+		BurnYM2151SetInterleave(145);
 		BurnYM2151SetIrqHandler(&MKYM2151IrqHandler);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);

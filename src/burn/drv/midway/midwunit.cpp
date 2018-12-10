@@ -310,24 +310,23 @@ static void WolfUnitFromShift(UINT32 address, void *src)
 
 static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 {
-    if (!pBurnDraw)
-        return 0;
+	if (!pBurnDraw)
+		return 0;
+
+	if (info->rowaddr >= nScreenHeight)
+		return 0;
 
 	UINT16 *src = &DrvVRAM16[(info->rowaddr << 9) & 0x3FE00];
+	INT32 col = info->coladdr << 1;
+	UINT16 *dest = (UINT16*) pTransDraw + (info->rowaddr * nScreenWidth);
 
-    if (info->rowaddr >= nScreenHeight)
-        return 0;
+	const INT32 heblnk = info->heblnk;
+	const INT32 hsblnk = info->hsblnk;
+	for (INT32 x = heblnk; x < hsblnk; x++) {
+		dest[x - heblnk] = src[col++ & 0x1FF] & 0x7FFF;
+	}
 
-    INT32 col = info->coladdr << 1;
-    UINT16 *dest = (UINT16*) pTransDraw + (info->rowaddr * nScreenWidth);
-
-    const INT32 heblnk = info->heblnk;
-    const INT32 hsblnk = info->hsblnk;
-    for (INT32 x = heblnk; x < hsblnk; x++) {
-        dest[x - heblnk] = src[col++ & 0x1FF] & 0x7FFF;
-    }
-
-    return 0;
+	return 0;
 }
 
 

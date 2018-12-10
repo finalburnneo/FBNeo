@@ -183,7 +183,7 @@ void TMS34010MapMemory(UINT8 *mem, UINT32 start, UINT32 end, UINT8 type)
     }
 }
 
-void TMS34010MapHandler(UINT32 num, UINT32 start, UINT32 end, UINT8 type)
+void TMS34010MapHandler(uintptr_t num, UINT32 start, UINT32 end, UINT8 type)
 {
     const int max_pages = (PFN(end) - PFN(start)) + 1;
 

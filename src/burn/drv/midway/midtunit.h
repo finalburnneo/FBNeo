@@ -22,3 +22,5 @@ extern UINT8 TUnitIsMK;
 extern UINT8 TUnitIsMKTurbo;
 extern UINT8 TUnitIsMK2;
 extern UINT8 TUnitIsNbajam;
+extern UINT8 TUnitIsNbajamTe;
+extern UINT8 TUnitIsJdreddp;

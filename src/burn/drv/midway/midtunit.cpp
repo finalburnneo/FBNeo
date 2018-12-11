@@ -1,6 +1,7 @@
 // todo:
 //   MK: sound tempo too slow
-//   NBAJAM: resets in intro - CPU core?
+//   NBAJAM & NBA JAM TE: resets in intro - CPU core?
+//   JDREDDP - sound
 
 #include "tiles_generic.h"
 #include "midtunit.h"
@@ -51,6 +52,10 @@ static UINT16 MK2ProtData = 0xffff;
 static UINT16 NbajamProtQueue[5] = { 0, 0, 0, 0, 0 };
 static UINT8 NbajamProtIndex = 0;
 
+static UINT8 JdreddpProtIndex = 0;
+static UINT8 JdreddpProtMax = 0;
+static const UINT8 *JdreddpProtTable = NULL;
+
 static UINT16 SoundProtAddressStart = 0;
 static UINT16 SoundProtAddressEnd = 0;
 
@@ -58,6 +63,8 @@ UINT8 TUnitIsMK = 0;
 UINT8 TUnitIsMKTurbo = 0;
 UINT8 TUnitIsMK2 = 0;
 UINT8 TUnitIsNbajam = 0;
+UINT8 TUnitIsNbajamTe = 0;
+UINT8 TUnitIsJdreddp = 0;
 
 static INT32 nSoundType = 0;
 
@@ -262,7 +269,7 @@ static void MKSoundWrite(UINT16 address, UINT8 value)
 	if (address >= SoundProtAddressStart && address <= SoundProtAddressEnd) { // MK sound protection ram.
 		DrvSoundProgRAMProt[address - SoundProtAddressStart] = value;
 	}
-
+	
 	if (address >= 0x4000) return; // ROM
 
 	if ((address & ~0x3ff) == 0x2400) // mirroring
@@ -413,6 +420,9 @@ static void TUnitDoReset()
 	MK2ProtData = 0xffff;
 	NbajamProtIndex = 0;
 	memset(NbajamProtQueue, 0, 5 * sizeof(UINT8));
+	JdreddpProtIndex = 0;
+	JdreddpProtMax = 0;
+	JdreddpProtTable = NULL;
 	
 	DrvFakeSound = 0;
 }
@@ -760,6 +770,155 @@ static void NbajamProtWrite(UINT32 address, UINT16 value)
 	}
 }
 
+// nba jam te protection
+static const UINT32 nbajamte_prot_values[128] =
+{
+	0x00000000, 0x04081020, 0x08102000, 0x0c183122, 0x10200000, 0x14281020, 0x18312204, 0x1c393326,
+	0x20000001, 0x24081021, 0x28102000, 0x2c183122, 0x30200001, 0x34281021, 0x38312204, 0x3c393326,
+	0x00000102, 0x04081122, 0x08102102, 0x0c183122, 0x10200000, 0x14281020, 0x18312204, 0x1c393326,
+	0x20000103, 0x24081123, 0x28102102, 0x2c183122, 0x30200001, 0x34281021, 0x38312204, 0x3c393326,
+	0x00010204, 0x04091224, 0x08112204, 0x0c193326, 0x10210204, 0x14291224, 0x18312204, 0x1c393326,
+	0x20000001, 0x24081021, 0x28102000, 0x2c183122, 0x30200001, 0x34281021, 0x38312204, 0x3c393326,
+	0x00010306, 0x04091326, 0x08112306, 0x0c193326, 0x10210204, 0x14291224, 0x18312204, 0x1c393326,
+	0x20000103, 0x24081123, 0x28102102, 0x2c183122, 0x30200001, 0x34281021, 0x38312204, 0x3c393326,
+	0x00000000, 0x01201028, 0x02213018, 0x03012030, 0x04223138, 0x05022110, 0x06030120, 0x07231108,
+	0x08042231, 0x09243219, 0x0a251229, 0x0b050201, 0x0c261309, 0x0d060321, 0x0e072311, 0x0f273339,
+	0x10080422, 0x1128140a, 0x1229343a, 0x13092412, 0x142a351a, 0x150a2532, 0x160b0502, 0x172b152a,
+	0x180c2613, 0x192c363b, 0x1a2d160b, 0x1b0d0623, 0x1c2e172b, 0x1d0e0703, 0x1e0f2733, 0x1f2f371b,
+	0x20100804, 0x2130182c, 0x2231381c, 0x23112834, 0x2432393c, 0x25122914, 0x26130924, 0x2733190c,
+	0x28142a35, 0x29343a1d, 0x2a351a2d, 0x2b150a05, 0x2c361b0d, 0x2d160b25, 0x2e172b15, 0x2f373b3d,
+	0x30180c26, 0x31381c0e, 0x32393c3e, 0x33192c16, 0x343a3d1e, 0x351a2d36, 0x361b0d06, 0x373b1d2e,
+	0x381c2e17, 0x393c3e3f, 0x3a3d1e0f, 0x3b1d0e27, 0x3c3e1f2f, 0x3d1e0f07, 0x3e1f2f37, 0x3f3f3f1f
+};
+
+static UINT16 NbajamteProtRead(UINT32 address)
+{
+	if ((address >= 0x1b15f40 && address <= 0x1b37f5f) || (address >= 0x1b95f40 && address <= 0x1bb7f5f)) {
+		UINT16 result = NbajamProtQueue[NbajamProtIndex];
+		if (NbajamProtIndex < 4) NbajamProtIndex++;
+		return result;
+	}
+	
+	return ~0;
+}
+
+static void NbajamteProtWrite(UINT32 address, UINT16 value)
+{
+	UINT32 offset = 0;
+	
+	if (address >= 0x1b15f40 && address <= 0x1b37f5f) offset = address - 0x1b15f40;
+	if (address >= 0x1b95f40 && address <= 0x1bb7f5f) offset = address - 0x1b95f40;
+	
+	if (offset > 0) {
+		offset = offset >> 4;
+		INT32 table_index = (offset >> 6) & 0x7f;
+		UINT32 protval = nbajamte_prot_values[table_index];
+		
+		NbajamProtQueue[0] = value;
+		NbajamProtQueue[1] = ((protval >> 24) & 0xff) << 9;
+		NbajamProtQueue[2] = ((protval >> 16) & 0xff) << 9;
+		NbajamProtQueue[3] = ((protval >> 8) & 0xff) << 9;
+		NbajamProtQueue[4] = ((protval >> 0) & 0xff) << 9;
+		NbajamProtIndex = 0;
+	}
+}
+
+// judge dredd protection
+static const UINT8 jdredd_prot_values_10740[] =
+{
+	0x14,0x2A,0x15,0x0A,0x25,0x32,0x39,0x1C,
+	0x2E,0x37,0x3B,0x1D,0x2E,0x37,0x1B,0x0D,
+	0x26,0x33,0x39,0x3C,0x1E,0x2F,0x37,0x3B,
+	0x3D,0x3E,0x3F,0x1F,0x2F,0x17,0x0B,0x25,
+	0x32,0x19,0x0C,0x26,0x33,0x19,0x2C,0x16,
+	0x2B,0x15,0x0A,0x05,0x22,0x00
+};
+
+static const UINT8 jdredd_prot_values_13240[] =
+{
+	0x28
+};
+
+static const UINT8 jdredd_prot_values_76540[] =
+{
+	0x04,0x08
+};
+
+static const UINT8 jdredd_prot_values_77760[] =
+{
+	0x14,0x2A,0x14,0x2A,0x35,0x2A,0x35,0x1A,
+	0x35,0x1A,0x2D,0x1A,0x2D,0x36,0x2D,0x36,
+	0x1B,0x36,0x1B,0x36,0x2C,0x36,0x2C,0x18,
+	0x2C,0x18,0x31,0x18,0x31,0x22,0x31,0x22,
+	0x04,0x22,0x04,0x08,0x04,0x08,0x10,0x08,
+	0x10,0x20,0x10,0x20,0x00,0x20,0x00,0x00,
+	0x00,0x00,0x01,0x00,0x01,0x02,0x01,0x02,
+	0x05,0x02,0x05,0x0B,0x05,0x0B,0x16,0x0B,
+	0x16,0x2C,0x16,0x2C,0x18,0x2C,0x18,0x31,
+	0x18,0x31,0x22,0x31,0x22,0x04,0x22,0x04,
+	0x08,0x04,0x08,0x10,0x08,0x10,0x20,0x10,
+	0x20,0x00,0x00
+};
+
+static const UINT8 jdredd_prot_values_80020[] =
+{
+	0x3A,0x1D,0x2E,0x37,0x00,0x00,0x2C,0x1C,
+	0x39,0x33,0x00,0x00,0x00,0x00,0x00,0x00
+};
+
+static UINT16 JdreddpProtRead(UINT32 address)
+{
+	UINT16 result = 0xffff;
+
+	if (JdreddpProtTable && JdreddpProtIndex < JdreddpProtMax) {
+		result = JdreddpProtTable[JdreddpProtIndex++] << 9;
+	}
+
+	return result;
+}
+
+static void JdreddpProtWrite(UINT32 address, UINT16 value)
+{
+	UINT32 offset = (address - 0x1b00000) >> 4;
+	
+	switch (offset) {
+		case 0x1074: {
+			JdreddpProtIndex = 0;
+			JdreddpProtTable = jdredd_prot_values_10740;
+			JdreddpProtMax = sizeof(jdredd_prot_values_10740);
+			break;
+		}
+
+		case 0x1324: {
+			JdreddpProtIndex = 0;
+			JdreddpProtTable = jdredd_prot_values_13240;
+			JdreddpProtMax = sizeof(jdredd_prot_values_13240);
+			break;
+		}
+
+		case 0x7654: {
+			JdreddpProtIndex = 0;
+			JdreddpProtTable = jdredd_prot_values_76540;
+			JdreddpProtMax = sizeof(jdredd_prot_values_76540);
+			break;
+		}
+
+		case 0x7776: {
+			JdreddpProtIndex = 0;
+			JdreddpProtTable = jdredd_prot_values_77760;
+			JdreddpProtMax = sizeof(jdredd_prot_values_77760);
+			break;
+		}
+
+		case 0x8002: {
+			JdreddpProtIndex = 0;
+			JdreddpProtTable = jdredd_prot_values_80020;
+			JdreddpProtMax = sizeof(jdredd_prot_values_80020);
+			break;
+		}
+	}
+}
+
 // init, exit, etc.
 INT32 TUnitInit()
 {
@@ -793,7 +952,7 @@ INT32 TUnitInit()
 		if (nRet != 0) return 1;
 	}
 	
-	if (TUnitIsNbajam) {
+	if (TUnitIsNbajam || TUnitIsNbajamTe || TUnitIsJdreddp) {
 		nRet = LoadSoundProgNbajamRom();
 		if (nRet != 0) return 1;
 
@@ -879,10 +1038,20 @@ INT32 TUnitInit()
 		TMS34010SetHandlers(13, NbajamProtRead, NbajamProtWrite);
 		TMS34010MapHandler(13, 0x1b14000, 0x1b25fff, MAP_READ | MAP_WRITE);
 	}
+	
+	if (TUnitIsNbajamTe) {
+		TMS34010SetHandlers(13, NbajamteProtRead, NbajamteProtWrite);
+		TMS34010MapHandler(13, 0x1b15000, 0x1bbffff, MAP_READ | MAP_WRITE);
+	}
+	
+	if (TUnitIsJdreddp) {
+		TMS34010SetHandlers(13, JdreddpProtRead, JdreddpProtWrite);
+		TMS34010MapHandler(13, 0x1b00000, 0x1bfffff, MAP_READ | MAP_WRITE);
+	}
 
     memset(DrvVRAM, 0, 0x400000);
 	
-	if (TUnitIsMK || TUnitIsNbajam) {
+	if (TUnitIsMK || TUnitIsNbajam || TUnitIsNbajamTe || TUnitIsJdreddp) {
 		M6809Init(0);
 		M6809Open(0);
 		M6809MapMemory(DrvSoundProgRAM, 0x0000, 0x1fff, MAP_RAM);
@@ -913,6 +1082,11 @@ INT32 TUnitInit()
 		if (TUnitIsNbajam) {
 			SoundProtAddressStart = 0xfbaa;
 			SoundProtAddressEnd = 0xfbd4;
+		}
+		
+		if (TUnitIsNbajamTe) {
+			SoundProtAddressStart = 0xfbec;
+			SoundProtAddressEnd = 0xfc16;
 		}
 	}
 	
@@ -971,6 +1145,8 @@ INT32 TUnitExit()
 	TUnitIsMK2 = 0;
 	TUnitIsMKTurbo = 0;
 	TUnitIsNbajam = 0;
+	TUnitIsNbajamTe = 0;
+	TUnitIsJdreddp = 0;
 	
 	SoundProtAddressStart = 0;
 	SoundProtAddressEnd = 0;
@@ -1110,6 +1286,15 @@ INT32 TUnitScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nDMA);
 		SCAN_VAR(nTUnitCtrl);
 		SCAN_VAR(bCMOSWriteEnable);
+		
+		SCAN_VAR(MKProtIndex);
+		SCAN_VAR(MK2ProtData);
+		SCAN_VAR(NbajamProtQueue);
+		SCAN_VAR(NbajamProtIndex);
+		SCAN_VAR(JdreddpProtIndex);
+		SCAN_VAR(JdreddpProtMax);
+		SCAN_VAR(JdreddpProtTable);
+		
 		// Might need to scan the dma_state struct in midtunit_dma.h
 	}
 

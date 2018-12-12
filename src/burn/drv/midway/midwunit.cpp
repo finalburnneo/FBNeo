@@ -78,7 +78,7 @@ static INT32 MemIndex()
 	DrvNVRAM	= Next;             Next += 0x60000 * sizeof(UINT16);
 
 	AllRam		= Next;
-	DrvRAM		= Next;				Next += 0x400000 * sizeof(UINT16);
+	DrvRAM		= Next;				Next += TOBYTE(0x400000) * sizeof(UINT16);
 	DrvPalette	= Next;				Next += 0x20000 * sizeof(UINT8);
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
 	DrvVRAM		= Next;				Next += 0x80000 * sizeof(UINT16);

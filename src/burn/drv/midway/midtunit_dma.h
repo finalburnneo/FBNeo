@@ -443,5 +443,5 @@ static void TUnitDmaWrite(UINT32 address, UINT16 value)
     }
 
 skipdma:
-	TMS34010TimerCB(TMS34010TotalCycles() + ((double)(41*dma_state.dmastop) * 0.0063447), TUnitDmaCallback);
+	TMS34010TimerCB(TMS34010TotalCycles() + ((double)(41*pixels) * 0.0063447), TUnitDmaCallback);
 }

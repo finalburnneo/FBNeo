@@ -101,12 +101,12 @@ static INT32 MemIndex()
 	DrvNVRAM	= Next;				Next += 0x002000 * sizeof(UINT16);
 
 	AllRam		= Next;
-	DrvRAM		= Next;				Next += 0x400000 * sizeof(UINT16);
+	DrvRAM		= Next;				Next += TOBYTE(0x400000) * sizeof(UINT16);
 	DrvSoundProgRAM = Next;			Next += 0x002000 * sizeof(UINT8);
-	DrvSoundProgRAMProt = Next;		Next += 0x0000ff * sizeof(UINT8);
+	DrvSoundProgRAMProt = Next;		Next += 0x000100 * sizeof(UINT8);
 	DrvPalette	= Next;				Next += 0x20000 * sizeof(UINT8);
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
-	DrvVRAM		= Next;				Next += 0x400000 * sizeof(UINT16);
+	DrvVRAM		= Next;				Next += TOBYTE(0x400000) * sizeof(UINT16);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
 	RamEnd		= Next;
 
@@ -419,7 +419,9 @@ static void TUnitDoReset()
 			break;
 		}
 	}
-	
+
+	memset(DrvVRAM, 0, TOBYTE(0x400000));
+
 	MKProtIndex = 0;
 	MK2ProtData = 0xffff;
 	NbajamProtIndex = 0;
@@ -1053,8 +1055,6 @@ INT32 TUnitInit()
 		TMS34010MapHandler(13, 0x1b00000, 0x1bfffff, MAP_READ | MAP_WRITE);
 	}
 
-    memset(DrvVRAM, 0, 0x400000);
-	
 	if (TUnitIsMK || TUnitIsNbajam || TUnitIsNbajamTe || TUnitIsJdreddp) {
 		M6809Init(0);
 		M6809Open(0);

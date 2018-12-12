@@ -1,5 +1,4 @@
 // todo:
-//   MK: sound tempo too slow
 //   NBAJAM & NBA JAM TE: resets in intro - CPU core?
 //   JDREDDP - sound
 
@@ -177,9 +176,9 @@ static void MKsound_reset(INT32 local)
 	MKsound_bankswitch(0);
 	MKsound_msm6295bankswitch(0);
 	M6809Reset();
+	BurnYM2151Reset();
 	if (!local) M6809Close();
 
-	BurnYM2151Reset();
 	DACReset();
 	MSM6295Reset();
 }
@@ -203,10 +202,15 @@ static void MKsound_main2soundwrite(INT32 data)
 	}
 }
 
-static void MKsound_statescan(INT32 nAction)
+static void MKsound_statescan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		M6809Scan(nAction);
+
+		BurnYM2151Scan(nAction, pnMin);
+		MSM6295Scan(nAction, pnMin);
+		DACScan(nAction, pnMin);
+
 		SCAN_VAR(sound_latch);
 		SCAN_VAR(sound_talkback);
 		SCAN_VAR(sound_irqstate);
@@ -1063,17 +1067,17 @@ INT32 TUnitInit()
 		M6809SetReadOpArgHandler(MKSoundRead);
 		M6809SetWriteHandler(MKSoundWrite);
 		M6809Close();
-		
-		BurnYM2151Init(3579545);
-		BurnYM2151SetInterleave(145);
+
+		BurnYM2151Init(3579545, 1);
+		BurnTimerAttachM6809(2000000);
 		BurnYM2151SetIrqHandler(&MKYM2151IrqHandler);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 		DACInit(0, 0, 1, M6809TotalCycles, 2000000);
-		DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 
-		MSM6295Init(0, 1000000 / MSM6295_PIN7_HIGH, 1);
+		MSM6295Init(0, /*1000000 / MSM6295_PIN7_HIGH*/8000, 1);
 		MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 		
 		SoundProtAddressStart = 0xfb9c;
@@ -1206,18 +1210,21 @@ INT32 TUnitFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		nCyclesDone[0] += TMS34010Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
-		
-		if (nSoundType == SOUND_ADPCM && !sound_inreset) nCyclesDone[1] += M6809Run((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
 
 		TMS34010GenerateScanline(i);
-		
+
 		if (nSoundType == SOUND_DCS) {
 			HandleDCSIRQ(i);
 
 			dcs_sound_sync(); // sync to main cpu
 			if (i == nInterleave - 1) dcs_sound_sync_end();
 		}
-		
+
+		if (nSoundType == SOUND_ADPCM && !sound_inreset) {
+			BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+			if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[1]);
+		}
+
 		if (pBurnSoundOut) {
 			if (nSoundType == SOUND_ADPCM && i&1) {
 				INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
@@ -1227,7 +1234,7 @@ INT32 TUnitFrame()
 			}
 		}
     }
-	
+
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
 		if (nSoundType == SOUND_ADPCM) {
@@ -1275,7 +1282,7 @@ INT32 TUnitScan(INT32 nAction, INT32 *pnMin)
 		TMS34010Scan(nAction);
 
 		if (nSoundType == SOUND_ADPCM) {
-			MKsound_statescan(nAction);
+			MKsound_statescan(nAction, pnMin);
 		}
 
 		if (nSoundType == SOUND_DCS) {

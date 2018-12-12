@@ -7,8 +7,9 @@
 extern "C" double BurnTimerGetTime();
 
 // Callbacks for various sound chips
+void BurnOPMTimerCallback(INT32 c, double period);                      // period in  s
 void BurnOPNTimerCallback(INT32 n, INT32 c, INT32 cnt, double stepTime);	// period = cnt * stepTime in s
-void BurnOPLTimerCallback(INT32 c, double period);					// period in  s
+void BurnOPLTimerCallback(INT32 c, double period);					    // period in  s
 void BurnYMFTimerCallback(INT32 n, INT32 c, double period);				// period in us
 
 // Start / stop a timer

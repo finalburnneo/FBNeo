@@ -133,20 +133,22 @@ typedef struct
 	UINT32		status;					/* chip status (BUSY, IRQ Flags) */
 	UINT8		connect[8];				/* channels connections */
 
-#ifdef USE_MAME_TIMERS
+//#ifdef USE_MAME_TIMERS
 /* ASG 980324 -- added for tracking timers */
-	void		*timer_A;
-	void		*timer_B;
-	double		timer_A_time[1024];		/* timer A times for MAME */
-	double		timer_B_time[256];		/* timer B times for MAME */
-#else
+	INT32       UseBurnTimer;
+	void        (*timer_callback)(INT32, double);
+	INT32		timer_A;                // Timer A / B enable/disable
+	INT32		timer_B;                // ""
+	double		timer_A_time[1024];		/* timer A times for MAME/FM Timers */
+	double		timer_B_time[256];		/* timer B times for MAME/FM Timers */
+//#else
 	UINT8		tim_A;					/* timer A enable (0-disabled) */
 	UINT8		tim_B;					/* timer B enable (0-disabled) */
 	double		tim_A_val;				/* current value of timer A */
 	double		tim_B_val;				/* current value of timer B */
 	double		tim_A_tab[1024];		/* timer A deltas */
 	double		tim_B_tab[256];			/* timer B deltas */
-#endif
+//#endif
 	UINT32		timer_A_index;			/* timer A index */
 	UINT32		timer_B_index;			/* timer B index */
 	UINT32		timer_A_index_old;		/* timer A previous index */
@@ -719,24 +721,24 @@ static void init_chip_tables(YM2151 *chip)
 	{
 		/* ASG 980324: changed to compute both tim_A_tab and timer_A_time */
 		pom= ( 64.0  *  (1024.0-i) / (double)chip->clock );
-		#ifdef USE_MAME_TIMERS
+        //#ifdef USE_MAME_TIMERS
 			chip->timer_A_time[i] = pom;
-		#else
+		//#else
 			chip->tim_A_tab[i] = pom * (double)chip->sampfreq * mult;  /* number of samples that timer period takes (fixed point) */
-		#endif
+		//#endif
 	}
 	for (i=0; i<256; i++)
 	{
 		/* ASG 980324: changed to compute both tim_B_tab and timer_B_time */
 		pom= ( 1024.0 * (256.0-i)  / (double)chip->clock );
-		#ifdef USE_MAME_TIMERS
+		//#ifdef USE_MAME_TIMERS
 			chip->timer_B_time[i] = pom;
-		#else
+		//#else
 			if (chip->timer_sync != 0)
 				chip->tim_B_tab[i] = pom * (double)chip->timer_sync * mult;  /* number of samples that timer period takes (fixed point) */
 			else
 				chip->tim_B_tab[i] = pom * (double)chip->sampfreq * mult;  /* number of samples that timer period takes (fixed point) */
-		#endif
+		//#endif
 	}
 
 	/* calculate noise periods table */
@@ -805,11 +807,14 @@ INLINE void envelope_KONKOFF(YM2151Operator * op, int v)
 }
 
 
-#ifdef USE_MAME_TIMERS
+//#ifdef USE_MAME_TIMERS
 static void timer_callback_a (int n)
 {
 	YM2151 *chip = &YMPSG[n];
-	timer_adjust(chip->timer_A, chip->timer_A_time[ chip->timer_A_index ], n, 0);
+
+	//timer_adjust(chip->timer_A, chip->timer_A_time[ chip->timer_A_index ], n, 0);
+	chip->timer_callback(0, chip->timer_A_time[ chip->timer_A_index ]);
+
 	chip->timer_A_index_old = chip->timer_A_index;
 	if (chip->irq_enable & 0x04)
 	{
@@ -823,7 +828,10 @@ static void timer_callback_a (int n)
 static void timer_callback_b (int n)
 {
 	YM2151 *chip = &YMPSG[n];
-	timer_adjust(chip->timer_B, chip->timer_B_time[ chip->timer_B_index ], n, 0);
+
+	//timer_adjust(chip->timer_B, chip->timer_B_time[ chip->timer_B_index ], n, 0);
+	chip->timer_callback(1, chip->timer_B_time[ chip->timer_B_index ]);
+
 	chip->timer_B_index_old = chip->timer_B_index;
 	if (chip->irq_enable & 0x08)
 	{
@@ -832,6 +840,18 @@ static void timer_callback_b (int n)
 		if ((!oldstate) && (chip->irqhandler)) (*chip->irqhandler)(1);
 	}
 }
+
+int ym2151_timer_over(int num, int timer)
+{
+	switch (timer) {
+		case 0: timer_callback_a(0); break;
+		case 1: timer_callback_b(0); break;
+	}
+
+	return 0;
+}
+
+
 #if 0
 static void timer_callback_chip_busy (int n)
 {
@@ -839,7 +859,7 @@ static void timer_callback_chip_busy (int n)
 	chip->status &= 0x7f;	/* reset busy flag */
 }
 #endif
-#endif
+//#endif
 
 
 
@@ -1104,53 +1124,73 @@ void YM2151WriteReg(int n, int r, int v)
 			}
 
 			if (v&0x02){	/* load and start timer B */
-				#ifdef USE_MAME_TIMERS
+				//#ifdef USE_MAME_TIMERS
 				/* ASG 980324: added a real timer */
 				/* start timer _only_ if it wasn't already started (it will reload time value next round) */
-					if (!timer_enable(chip->timer_B, 1))
+				if (chip->UseBurnTimer) {
+					if (!chip->timer_B) //(!timer_enable(chip->timer_B, 1))
 					{
-						timer_adjust(chip->timer_B, chip->timer_B_time[ chip->timer_B_index ], n, 0);
+						//timer_adjust(chip->timer_B, chip->timer_B_time[ chip->timer_B_index ], n, 0);
+						chip->timer_callback(1, chip->timer_B_time[ chip->timer_B_index ]);
+						chip->timer_B = 1;
 						chip->timer_B_index_old = chip->timer_B_index;
 					}
-				#else
+				} else {
+				//#else
 					if (!chip->tim_B)
 					{
 						chip->tim_B = 1;
 						chip->tim_B_val = chip->tim_B_tab[ chip->timer_B_index ];
 					}
-				#endif
+				}
+				//#endif
 			}else{		/* stop timer B */
-				#ifdef USE_MAME_TIMERS
+				//#ifdef USE_MAME_TIMERS
 				/* ASG 980324: added a real timer */
-					timer_enable(chip->timer_B, 0);
-				#else
+				if (chip->UseBurnTimer) {
+					chip->timer_B = 0;
+					chip->timer_callback(1, 0.0);
+					//timer_enable(chip->timer_B, 0);
+				} else {
+				//#else
 					chip->tim_B = 0;
-				#endif
+				}
+				//#endif
 			}
 
 			if (v&0x01){	/* load and start timer A */
-				#ifdef USE_MAME_TIMERS
+				//#ifdef USE_MAME_TIMERS
 				/* ASG 980324: added a real timer */
 				/* start timer _only_ if it wasn't already started (it will reload time value next round) */
-					if (!timer_enable(chip->timer_A, 1))
+				if (chip->UseBurnTimer) {
+					if (!chip->timer_A) //(!timer_enable(chip->timer_A, 1))
 					{
-						timer_adjust(chip->timer_A, chip->timer_A_time[ chip->timer_A_index ], n, 0);
+						//timer_adjust(chip->timer_A, chip->timer_A_time[ chip->timer_A_index ], n, 0);
+						chip->timer_callback(0, chip->timer_A_time[ chip->timer_A_index ]);
+						chip->timer_A = 1;
 						chip->timer_A_index_old = chip->timer_A_index;
 					}
-				#else
+				} else {
+				//#else
 					if (!chip->tim_A)
 					{
 						chip->tim_A = 1;
 						chip->tim_A_val = chip->tim_A_tab[ chip->timer_A_index ];
 					}
-				#endif
+				}
+				//#endif
 			}else{		/* stop timer A */
-				#ifdef USE_MAME_TIMERS
+				//#ifdef USE_MAME_TIMERS
 				/* ASG 980324: added a real timer */
-					timer_enable(chip->timer_A, 0);
-				#else
+				if (chip->UseBurnTimer) {
+					chip->timer_A = 0;
+					chip->timer_callback(0, 0.0);
+					//timer_enable(chip->timer_A, 0);
+				} else {
+				//#else
 					chip->tim_A = 0;
-				#endif
+				}
+				//#endif
 			}
 			break;
 
@@ -1587,6 +1627,8 @@ void BurnYM2151Scan_int(INT32 nAction)
 		SCAN_VAR(YMPSG[i].irq_enable);
 		SCAN_VAR(YMPSG[i].status);
 
+		SCAN_VAR(YMPSG[i].timer_A); // burn_timer FM-timer_A enable/disable
+		SCAN_VAR(YMPSG[i].timer_B); // burn_timer FM-timer_B enable/disable
 		SCAN_VAR(YMPSG[i].timer_A_index);
 		SCAN_VAR(YMPSG[i].timer_B_index);
 		SCAN_VAR(YMPSG[i].timer_A_index_old);
@@ -1643,7 +1685,7 @@ void YM2151SetTimerInterleave(double d)
 *	'clock' is the chip clock in Hz
 *	'rate' is sampling rate
 */
-int YM2151Init(int num, int clock, int rate)
+int YM2151Init(int num, int clock, int rate, void (*timer_cb)(INT32, double))
 {
 	int i;
 
@@ -1678,14 +1720,18 @@ int YM2151Init(int num, int clock, int rate)
 		YMPSG[i].eg_timer_overflow = ( 3 ) * (1<<EG_SH);
 		/*logerror("YM2151[init] eg_timer_add=%8x eg_timer_overflow=%8x\n", YMPSG[i].eg_timer_add, YMPSG[i].eg_timer_overflow);*/
 
-#ifdef USE_MAME_TIMERS
+//#ifdef USE_MAME_TIMERS
 /* this must be done _before_ a call to YM2151ResetChip() */
-		YMPSG[i].timer_A = timer_alloc(timer_callback_a);
-		YMPSG[i].timer_B = timer_alloc(timer_callback_b);
-#else
+		YMPSG[i].timer_A = 0; //timer_alloc(timer_callback_a);
+		YMPSG[i].timer_B = 0; //timer_alloc(timer_callback_b);
+		if (timer_cb) {
+			YMPSG[i].UseBurnTimer = 1;
+			YMPSG[i].timer_callback = timer_cb;
+		}
+//#else
 		YMPSG[i].tim_A      = 0;
 		YMPSG[i].tim_B      = 0;
-#endif
+//#endif
 		YM2151ResetChip(i);
 		/*logerror("YM2151[init] clock=%i sampfreq=%i\n", YMPSG[i].clock, YMPSG[i].sampfreq);*/
 	}
@@ -1765,16 +1811,22 @@ void YM2151ResetChip(int num)
 	chip->test= 0;
 
 	chip->irq_enable = 0;
-#ifdef USE_MAME_TIMERS
+//#ifdef USE_MAME_TIMERS
 	/* ASG 980324 -- reset the timers before writing to the registers */
-	timer_enable(chip->timer_A, 0);
-	timer_enable(chip->timer_B, 0);
-#else
+	chip->timer_A = 0;
+	chip->timer_B = 0;
+	if (chip->UseBurnTimer) {
+		//chip->timer_callback(0, 0.0); // this is taken care of in burn_ym2151.cpp's reset function.
+		//chip->timer_callback(1, 0.0);
+		//timer_enable(chip->timer_A, 0);
+		//timer_enable(chip->timer_B, 0);
+	}
+//#else
 	chip->tim_A      = 0;
 	chip->tim_B      = 0;
 	chip->tim_A_val  = 0;
 	chip->tim_B_val  = 0;
-#endif
+//#endif
 	chip->timer_A_index = 0;
 	chip->timer_B_index = 0;
 	chip->timer_A_index_old = 0;
@@ -2530,27 +2582,29 @@ void YM2151UpdateOne(int num, INT16 **buffers, int length)
 
 	PSG = &YMPSG[num];
 
-#ifdef USE_MAME_TIMERS
+//#ifdef USE_MAME_TIMERS
 		/* ASG 980324 - handled by real timers now */
-#else
-	if (PSG->tim_B)
-	{
-		if (PSG->timer_sync != 0)
-			PSG->tim_B_val -= ( 1 << TIMER_SH );
-		else
-			PSG->tim_B_val -= ( length << TIMER_SH );
-		if (PSG->tim_B_val<=0)
+//#else
+	if (PSG->UseBurnTimer == 0) {
+		if (PSG->tim_B)
 		{
-			PSG->tim_B_val += PSG->tim_B_tab[ PSG->timer_B_index ];
-			if ( PSG->irq_enable & 0x08 )
+			if (PSG->timer_sync != 0)
+				PSG->tim_B_val -= ( 1 << TIMER_SH );
+			else
+				PSG->tim_B_val -= ( length << TIMER_SH );
+			if (PSG->tim_B_val<=0)
 			{
-				int oldstate = PSG->status & 3;
-				PSG->status |= 2;
-				if ((!oldstate) && (PSG->irqhandler)) (*PSG->irqhandler)(1);
+				PSG->tim_B_val += PSG->tim_B_tab[ PSG->timer_B_index ];
+				if ( PSG->irq_enable & 0x08 )
+				{
+					int oldstate = PSG->status & 3;
+					PSG->status |= 2;
+					if ((!oldstate) && (PSG->irqhandler)) (*PSG->irqhandler)(1);
+				}
 			}
 		}
 	}
-#endif
+//#endif
 
 	for (i=0; i<length; i++)
 	{
@@ -2610,27 +2664,30 @@ void YM2151UpdateOne(int num, INT16 **buffers, int length)
 
 		SAVE_ALL_CHANNELS
 
-#ifdef USE_MAME_TIMERS
+//#ifdef USE_MAME_TIMERS
 		/* ASG 980324 - handled by real timers now */
-#else
-		/* calculate timer A */
-		if (PSG->tim_A)
+//#else
+		if (PSG->UseBurnTimer == 0)
 		{
-			PSG->tim_A_val -= ( 1 << TIMER_SH );
-			if (PSG->tim_A_val <= 0)
+			/* calculate timer A */
+			if (PSG->tim_A)
 			{
-				PSG->tim_A_val += PSG->tim_A_tab[ PSG->timer_A_index ];
-				if (PSG->irq_enable & 0x04)
+				PSG->tim_A_val -= ( 1 << TIMER_SH );
+				if (PSG->tim_A_val <= 0)
 				{
-					int oldstate = PSG->status & 3;
-					PSG->status |= 1;
-					if ((!oldstate) && (PSG->irqhandler)) (*PSG->irqhandler)(1);
+					PSG->tim_A_val += PSG->tim_A_tab[ PSG->timer_A_index ];
+					if (PSG->irq_enable & 0x04)
+					{
+						int oldstate = PSG->status & 3;
+						PSG->status |= 1;
+						if ((!oldstate) && (PSG->irqhandler)) (*PSG->irqhandler)(1);
+					}
+					if (PSG->irq_enable & 0x80)
+						PSG->csm_req = 2;	/* request KEY ON / KEY OFF sequence */
 				}
-				if (PSG->irq_enable & 0x80)
-					PSG->csm_req = 2;	/* request KEY ON / KEY OFF sequence */
 			}
 		}
-#endif
+//#endif
 		advance();
 	}
 }

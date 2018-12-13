@@ -35,7 +35,7 @@ UINT8 nTUnitRecalc;
 UINT8 nTUnitJoy1[32];
 UINT8 nTUnitJoy2[32];
 UINT8 nTUnitJoy3[32];
-UINT8 nTUnitDSW[8];
+UINT8 nTUnitDSW[2];
 UINT8 nTUnitReset = 0;
 static UINT32 DrvInputs[4];
 
@@ -44,7 +44,7 @@ static UINT32 nGfxBankOffset[2] = { 0x000000, 0x400000 };
 
 static bool bCMOSWriteEnable = false;
 static UINT32 nVideoBank = 1;
-static UINT16 nDMA[32];
+static UINT16 *nDMA;
 static UINT16 nTUnitCtrl = 0;
 static UINT8 DrvFakeSound = 0;
 
@@ -111,6 +111,10 @@ static INT32 MemIndex()
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
 	DrvVRAM		= Next;				Next += TOBYTE(0x400000) * sizeof(UINT16);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
+
+	nDMA        = (UINT16*)Next;    Next += 0x0020 * sizeof(UINT16);
+	dma_state   = (dma_state_s*)Next; Next += sizeof(dma_state_s);
+
 	RamEnd		= Next;
 
 	MemEnd		= Next;
@@ -421,11 +425,13 @@ static void TUnitDoReset()
 		}
 	}
 
-	memset(&dma_state, 0, sizeof(dma_state));
-	memset(DrvVRAM, 0, TOBYTE(0x400000));
+	memset (AllRam, 0, RamEnd - AllRam);
 
 	nGfxBankOffset[0] = 0x000000;
 	nGfxBankOffset[1] = 0x400000;
+
+	nVideoBank = 1;
+	nTUnitCtrl = 0;
 
 	MKProtIndex = 0;
 	MK2ProtData = 0xffff;
@@ -935,7 +941,8 @@ static void JdreddpProtWrite(UINT32 address, UINT16 value)
 INT32 TUnitInit()
 {
     nSoundType = SOUND_ADPCM;
-	
+	bGfxRomLarge = false;
+
 	MemIndex();
     INT32 nLen = MemEnd - (UINT8 *)0;
 
@@ -1298,7 +1305,6 @@ INT32 TUnitScan(INT32 nAction, INT32 *pnMin)
 		}
 
 		SCAN_VAR(nVideoBank);
-		SCAN_VAR(nDMA);
 		SCAN_VAR(nTUnitCtrl);
 		SCAN_VAR(nGfxBankOffset);
 		SCAN_VAR(bCMOSWriteEnable);
@@ -1310,8 +1316,6 @@ INT32 TUnitScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(JdreddpProtIndex);
 		SCAN_VAR(JdreddpProtMax);
 		SCAN_VAR(JdreddpProtTable);
-
-		ScanVar(&dma_state, STRUCT_SIZE_HELPER(dma_state_s, ystep), "MidTDMAState");
 	}
 
 	if (nAction & ACB_NVRAM) {

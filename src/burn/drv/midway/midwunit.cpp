@@ -35,7 +35,7 @@ UINT8 nWolfUnitRecalc;
 UINT8 nWolfUnitJoy1[32];
 UINT8 nWolfUnitJoy2[32];
 UINT8 nWolfUnitJoy3[32];
-UINT8 nWolfUnitDSW[8];
+UINT8 nWolfUnitDSW[2];
 UINT8 nWolfReset = 0;
 static UINT32 DrvInputs[4];
 
@@ -44,7 +44,7 @@ static UINT32 nGfxBankOffset[2] = { 0x000000, 0x400000 };
 
 static bool bCMOSWriteEnable = false;
 static UINT32 nVideoBank = 1;
-static UINT16 nDMA[32];
+static UINT16 *nDMA;
 static UINT16 nWolfUnitCtrl = 0;
 static INT32 nIOShuffle[16];
 
@@ -83,6 +83,10 @@ static INT32 MemIndex()
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
 	DrvVRAM		= Next;				Next += 0x80000 * sizeof(UINT16);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
+
+	nDMA        = (UINT16*)Next;    Next += 0x0020 * sizeof(UINT16);
+	dma_state   = (dma_state_s*)Next; Next += sizeof(dma_state_s);
+
 	RamEnd		= Next;
 
 	MemEnd		= Next;
@@ -365,9 +369,11 @@ static INT32 LoadGfxBanks()
 
 static void WolfDoReset()
 {
-	memset(&dma_state, 0, sizeof(dma_state));
-    memset(DrvVRAM, 0, 0x80000);
-    DrvInputs[2] = 0;
+	memset (AllRam, 0, RamEnd - AllRam);
+
+	bCMOSWriteEnable = false;
+	nVideoBank = 1;
+	nWolfUnitCtrl = 0;
 
 	nGfxBankOffset[0] = 0x000000;
 	nGfxBankOffset[1] = 0x400000;
@@ -581,12 +587,9 @@ INT32 WolfUnitScan(INT32 nAction, INT32 *pnMin)
 		Dcs2kScan(nAction, pnMin);
 
 		SCAN_VAR(nVideoBank);
-		SCAN_VAR(nDMA);
 		SCAN_VAR(nWolfUnitCtrl);
 		SCAN_VAR(bCMOSWriteEnable);
 		SCAN_VAR(nGfxBankOffset);
-
-		ScanVar(&dma_state, STRUCT_SIZE_HELPER(dma_state_s, ystep), "MidTDMAState");
 	}
 
 	if (nAction & ACB_NVRAM) {

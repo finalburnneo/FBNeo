@@ -4,7 +4,7 @@
 extern UINT8 nWolfUnitJoy1[32];
 extern UINT8 nWolfUnitJoy2[32];
 extern UINT8 nWolfUnitJoy3[32];
-extern UINT8 nWolfUnitDSW[8];
+extern UINT8 nWolfUnitDSW[2];
 extern UINT8 nWolfReset;
 extern UINT8 nWolfUnitRecalc;
 

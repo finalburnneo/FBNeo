@@ -56,10 +56,7 @@ struct dma_state_s
     UINT16      xstep;          /* 8.8 fixed number scale x factor */
 	UINT16      ystep;          /* 8.8 fixed number scale y factor */
 
-	INT32       dmastop;        // for silly timer
-
 	UINT8 *     gfxrom;
-
 };
 
 static dma_state_s dma_state;
@@ -86,10 +83,8 @@ typedef void (*dma_draw_func)(void);
 
 
 /*** fast pixel extractors ***/
-#if 1//!defined(ALIGN_SHORTS) && defined(LSB_FIRST)
+#ifndef __LIBRETRO__
 #define EXTRACTGEN(m)   ((*(UINT16 *)&base[o >> 3] >> (o & 7)) & (m))
-#elif defined(powerc)
-#define EXTRACTGEN(m)   ((__lhbrx(base, o >> 3) >> (o & 7)) & (m))
 #else
 #define EXTRACTGEN(m)   (((base[o >> 3] | (base[(o >> 3) + 1] << 8)) >> (o & 7)) & (m))
 #endif

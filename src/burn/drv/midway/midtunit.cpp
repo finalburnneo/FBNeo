@@ -10,6 +10,9 @@
 #include "dcs2k.h"
 #include "msm6295.h"
 #include "dac.h"
+#include <stddef.h>
+
+#define LOG_UNMAPPED    0
 
 static UINT8 *AllMem;
 static UINT8 *RamEnd;
@@ -414,13 +417,15 @@ static void TUnitDoReset()
 
 		case SOUND_DCS: {
 			Dcs2kReset();
-			Dcs2kResetWrite(1);
-			Dcs2kResetWrite(0);
 			break;
 		}
 	}
 
+	memset(&dma_state, 0, sizeof(dma_state));
 	memset(DrvVRAM, 0, TOBYTE(0x400000));
+
+	nGfxBankOffset[0] = 0x000000;
+	nGfxBankOffset[1] = 0x400000;
 
 	MKProtIndex = 0;
 	MK2ProtData = 0xffff;
@@ -502,6 +507,7 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
     return 0;
 }
 
+#if LOG_UNMAPPED
 static UINT16 TUnitRead(UINT32 address)
 {
 	if (address == 0x01600040) return 0xff; // ???
@@ -523,6 +529,7 @@ static void TUnitWrite(UINT32 address, UINT16 value)
 	
 	bprintf(PRINT_NORMAL, _T("Write %x, %x\n"), address, value);
 }
+#endif
 
 static UINT16 TUnitInputRead(UINT32 address)
 {
@@ -581,11 +588,9 @@ static UINT16 TUnitSoundRead(UINT32 address)
 
 static void TUnitSoundWrite(UINT32 address, UINT16 value)
 {
-	//bprintf(PRINT_NORMAL, _T("Sound Write %x, %x\n"), address, value);
-	if (address >= 0x01d01020 && address <= 0x01d0103f) {
-		// this should check the mem mask for a full 16-bit write. and ignore byte-writes.
-		if (value == 0 || value == 1) return; // spurious bad-writes
-		
+	if (address >= 0x01d01021 && address <= 0x01d0103f) {
+		//bprintf(PRINT_NORMAL, _T("Sound Write %x, %x\n"), address, value);
+
 		switch (nSoundType)	{
 			case SOUND_ADPCM: {
 				MKsound_reset_write(~value & 0x100);
@@ -596,6 +601,7 @@ static void TUnitSoundWrite(UINT32 address, UINT16 value)
 			}
 
 			case SOUND_DCS: {
+
 				Dcs2kResetWrite(~value & 0x100);
 				dcs_sound_sync();
 				Dcs2kDataWrite(value & 0xff);
@@ -978,10 +984,12 @@ INT32 TUnitInit()
     TMS34010SetToShift(TUnitToShift);
     TMS34010SetFromShift(TUnitFromShift);
 	
+#if LOG_UNMAPPED
 	// this will be removed - but putting all unmapped memory through generic handlers to enable logging unmapped reads/writes
 	TMS34010SetHandlers(1, TUnitRead, TUnitWrite);
 	TMS34010MapHandler(1, 0x00000000, 0x1FFFFFFF, MAP_READ | MAP_WRITE);
-	
+#endif
+
 	TMS34010MapMemory(DrvBootROM, 0xFF800000, 0xFFFFFFFF, MAP_READ);
 	TMS34010MapMemory(DrvBootROM, 0x1F800000, 0x1FFFFFFF, MAP_READ); // mirror
 	TMS34010MapMemory(DrvRAM,     0x01000000, 0x013FFFFF, MAP_READ | MAP_WRITE);
@@ -1097,7 +1105,7 @@ INT32 TUnitInit()
 	if (TUnitIsMK2) {
 		nSoundType = SOUND_DCS;
 		
-		Dcs2kInit(DCS_8K, MHz(10));
+		Dcs2kInit(DCS_2K, MHz(10));
 		Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
 		Dcs2kSetVolume(10.00);
 		
@@ -1292,6 +1300,7 @@ INT32 TUnitScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nVideoBank);
 		SCAN_VAR(nDMA);
 		SCAN_VAR(nTUnitCtrl);
+		SCAN_VAR(nGfxBankOffset);
 		SCAN_VAR(bCMOSWriteEnable);
 		
 		SCAN_VAR(MKProtIndex);
@@ -1301,13 +1310,13 @@ INT32 TUnitScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(JdreddpProtIndex);
 		SCAN_VAR(JdreddpProtMax);
 		SCAN_VAR(JdreddpProtTable);
-		
-		// Might need to scan the dma_state struct in midtunit_dma.h
+
+		ScanVar(&dma_state, STRUCT_SIZE_HELPER(dma_state_s, ystep), "MidTDMAState");
 	}
 
 	if (nAction & ACB_NVRAM) {
 		ba.Data		= DrvNVRAM;
-		ba.nLen		= 0x2000;
+		ba.nLen		= 0x2000 * sizeof(UINT16);
 		ba.nAddress	= 0;
 		ba.szName	= "NV RAM";
 		BurnAcb(&ba);

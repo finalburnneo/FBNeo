@@ -15,7 +15,7 @@
 #include "midwayic.h"
 #include "dcs2k.h"
 #include "tms34010_intf.h"
-#include "adsp2100_intf.h"
+#include <stddef.h>
 
 static UINT8 *AllMem;
 static UINT8 *RamEnd;
@@ -75,7 +75,7 @@ static INT32 MemIndex()
 	DrvSoundROM	= Next;				Next += 0x1000000 * sizeof(UINT8);
 	DrvGfxROM 	= Next;				Next += 0x2000000 * sizeof(UINT8);
 
-	DrvNVRAM	= Next;             Next += 0x60000 * sizeof(UINT16);
+	DrvNVRAM	= Next;             Next += TOBYTE(0x60000) * sizeof(UINT16);
 
 	AllRam		= Next;
 	DrvRAM		= Next;				Next += TOBYTE(0x400000) * sizeof(UINT16);
@@ -203,25 +203,24 @@ void WolfUnitSecurityWrite(UINT32 address, UINT16 value)
 
 UINT16 WolfUnitCMOSRead(UINT32 address)
 {
-	address &= 0x05ffff;
-	//bprintf(0, _T("cmos_r: %X (%x(%x))  \n"), address, address>>3, address >> 4);
-    return DrvNVRAM[address >> 3]; //*((UINT16*)(&DrvNVRAM[TOBYTE(address)]));
+    UINT16 *wn = (UINT16*)DrvNVRAM;
+	UINT32 offset = (address & 0x05ffff) >> 4;
+    return wn[offset];
 }
 
 void WolfUnitCMOSWrite(UINT32 address, UINT16 value)
 {
     if (bCMOSWriteEnable) {
-		address &= 0x05ffff;
-		//bprintf(0, _T("cmos_w: %X (%x(%x))  %x\n"), address, address>>3, address >> 4, value);
-        DrvNVRAM[address >> 3] = value; //*((UINT16*)(&DrvNVRAM[TOBYTE(address)])) = value;
-        bCMOSWriteEnable = false;
+		UINT16 *wn = (UINT16*)DrvNVRAM;
+		UINT32 offset = (address & 0x05ffff) >> 4;
+		wn[offset] = value;
+		bCMOSWriteEnable = false;
     }
 }
 
 void WolfUnitCMOSWriteEnable(UINT32 address, UINT16 value)
 {
-	//bprintf(0, _T("cmos_U: %X (%x(%x))  \n"), address, address>>3, address >> 4);
-    bCMOSWriteEnable = true;
+	bCMOSWriteEnable = true;
 }
 
 
@@ -370,6 +369,9 @@ static void WolfDoReset()
     memset(DrvVRAM, 0, 0x80000);
     DrvInputs[2] = 0;
 
+	nGfxBankOffset[0] = 0x000000;
+	nGfxBankOffset[1] = 0x400000;
+
 	TMS34010Reset();
 	Dcs2kReset();
 }
@@ -407,7 +409,7 @@ INT32 WolfUnitInit()
 
     Dcs2kInit(DCS_8K, MHz(10));
     Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
-	Dcs2kSetVolume(2.50);
+	Dcs2kSetVolume(5.50);
 
     MidwaySerialPicInit(528);
     MidwaySerialPicReset();
@@ -582,12 +584,14 @@ INT32 WolfUnitScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nDMA);
 		SCAN_VAR(nWolfUnitCtrl);
 		SCAN_VAR(bCMOSWriteEnable);
-		// Might need to scan the dma_state struct in midtunit_dma.h
+		SCAN_VAR(nGfxBankOffset);
+
+		ScanVar(&dma_state, STRUCT_SIZE_HELPER(dma_state_s, ystep), "MidTDMAState");
 	}
 
 	if (nAction & ACB_NVRAM) {
 		ba.Data		= DrvNVRAM;
-		ba.nLen		= 0x60000;
+		ba.nLen		= TOBYTE(0x60000);
 		ba.nAddress	= 0;
 		ba.szName	= "NV RAM";
 		BurnAcb(&ba);

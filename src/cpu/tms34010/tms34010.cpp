@@ -57,7 +57,11 @@ void reset(cpu_state *cpu)
         cpu->io_regs[i] = 0;
     }
 
-    memset(cpu->shiftreg, 0, 4096*2);
+	memset(cpu->shiftreg, 0, 4096*2);
+
+	cpu->timer_active = 0;
+	cpu->timer_cb = NULL;
+	cpu->timer_cyc = 0;
 }
 
 static void check_irq(cpu_state *cpu)

@@ -696,6 +696,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
     return 0;
 }
 
+static struct BurnHDDInfo kinstHDDDesc[] = {
+	{ "kinst.img",		0x7d01200, 0x2b9b6c0d }
+};
+
+STD_HDD_PICK(kinst)
+STD_HDD_FN(kinst)
+
 static struct BurnRomInfo kinstRomDesc[] = {
     { "ki-l15d.u98",		0x80000, 0x7b65ca3d, 1 | BRF_PRG | BRF_ESS }, //  0 MIPS R4600 Code
 
@@ -724,7 +731,7 @@ struct BurnDriverD BurnDrvKinst = {
     "Killer Instinct (ROM ver. 1.5d)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
-    NULL, kinstRomInfo, kinstRomName, NULL, NULL, NULL, NULL, kinstInputInfo, kinstDIPInfo,
+    NULL, kinstRomInfo, kinstRomName, kinstHDDInfo, kinstHDDName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };
@@ -750,7 +757,7 @@ struct BurnDriverD BurnDrvKinst14 = {
     "Killer Instinct (ROM ver. 1.4)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
-    NULL, kinst14RomInfo, kinst14RomName, NULL, NULL, NULL, NULL, kinstInputInfo, kinstDIPInfo,
+    NULL, kinst14RomInfo, kinst14RomName, kinstHDDInfo, kinstHDDName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };
@@ -776,7 +783,7 @@ struct BurnDriverD BurnDrvKinst13 = {
     "Killer Instinct (ROM ver. 1.3)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
-    NULL, kinst13RomInfo, kinst13RomName, NULL, NULL, NULL, NULL, kinstInputInfo, kinstDIPInfo,
+    NULL, kinst13RomInfo, kinst13RomName, kinstHDDInfo, kinstHDDName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };
@@ -802,7 +809,7 @@ struct BurnDriverD BurnDrvKinstp47 = {
     "Killer Instinct (ROM proto ver. 4.7)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
-    NULL, kinstp47RomInfo, kinstp47RomName, NULL, NULL, NULL, NULL, kinstInputInfo, kinstDIPInfo,
+    NULL, kinstp47RomInfo, kinstp47RomName, kinstHDDInfo, kinstHDDName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };
@@ -828,10 +835,17 @@ struct BurnDriverD BurnDrvKinst15ai = {
     "Killer Instinct (ROM ver. 1.5 AnyIDE)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
-    NULL, kinst15aiRomInfo, kinst15aiRomName, NULL, NULL, NULL, NULL, kinstInputInfo, kinstDIPInfo,
+    NULL, kinst15aiRomInfo, kinst15aiRomName, kinstHDDInfo, kinstHDDName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };
+
+static struct BurnHDDInfo kinst2HDDDesc[] = {
+	{ "kinst2.img",		0x1b478a00, 0x63bc7789 }
+};
+
+STD_HDD_PICK(kinst2)
+STD_HDD_FN(kinst2)
 
 static struct BurnRomInfo kinst2RomDesc[] = {
     { "ki2-l14.u98",		0x80000, 0x27d0285e, 1 | BRF_PRG | BRF_ESS }, //  0 MIPS R4600 Code
@@ -861,7 +875,7 @@ struct BurnDriverD BurnDrvKinst2 = {
     "Killer Instinct II (ROM ver. 1.4)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
-    NULL, kinst2RomInfo, kinst2RomName, NULL, NULL, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
+    NULL, kinst2RomInfo, kinst2RomName, kinst2HDDInfo, kinst2HDDName, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };
@@ -887,7 +901,7 @@ struct BurnDriverD BurnDrvKinst213 = {
     "Killer Instinct II (ROM ver. 1.3)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
-    NULL, kinst213RomInfo, kinst213RomName, NULL, NULL, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
+    NULL, kinst213RomInfo, kinst213RomName, kinst2HDDInfo, kinst2HDDName, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };
@@ -913,7 +927,7 @@ struct BurnDriverD BurnDrvKinst211 = {
     "Killer Instinct II (ROM ver. 1.1)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
-    NULL, kinst211RomInfo, kinst211RomName, NULL, NULL, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
+    NULL, kinst211RomInfo, kinst211RomName, kinst2HDDInfo, kinst2HDDName, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };
@@ -939,7 +953,7 @@ struct BurnDriverD BurnDrvKinst210 = {
     "Killer Instinct II (ROM ver. 1.0)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
-    NULL, kinst210RomInfo, kinst210RomName, NULL, NULL, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
+    NULL, kinst210RomInfo, kinst210RomName, kinst2HDDInfo, kinst2HDDName, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };
@@ -965,7 +979,7 @@ struct BurnDriverD BurnDrvKinst214ai = {
     "Killer Instinct II (ROM ver. 1.4 AnyIDE)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
-    NULL, kinst214aiRomInfo, kinst214aiRomName, NULL, NULL, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
+    NULL, kinst214aiRomInfo, kinst214aiRomName, kinst2HDDInfo, kinst2HDDName, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };

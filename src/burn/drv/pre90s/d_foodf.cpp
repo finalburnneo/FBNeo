@@ -597,7 +597,7 @@ struct BurnDriver BurnDrvFoodf = {
 	"Food Fight (rev 3)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, foodfRomInfo, foodfRomName, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
+	NULL, foodfRomInfo, foodfRomName, NULL, NULL, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -633,7 +633,7 @@ struct BurnDriver BurnDrvFoodf2 = {
 	"Food Fight (rev 2)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, foodf2RomInfo, foodf2RomName, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
+	NULL, foodf2RomInfo, foodf2RomName, NULL, NULL, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -669,7 +669,7 @@ struct BurnDriver BurnDrvFoodf1 = {
 	"Food Fight (rev 1)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, foodf1RomInfo, foodf1RomName, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
+	NULL, foodf1RomInfo, foodf1RomName, NULL, NULL, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -705,7 +705,7 @@ struct BurnDriver BurnDrvFoodfc = {
 	"Food Fight (cocktail)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, foodfcRomInfo, foodfcRomName, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
+	NULL, foodfcRomInfo, foodfcRomName, NULL, NULL, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

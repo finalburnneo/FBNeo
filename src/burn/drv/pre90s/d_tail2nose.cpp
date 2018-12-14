@@ -717,7 +717,7 @@ struct BurnDriver BurnDrvTail2nos = {
 	"Tail to Nose - Great Championship\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, tail2nosRomInfo, tail2nosRomName, NULL, NULL, Tail2nosInputInfo, Tail2nosDIPInfo,
+	NULL, tail2nosRomInfo, tail2nosRomName, NULL, NULL, NULL, NULL, Tail2nosInputInfo, Tail2nosDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -754,7 +754,7 @@ struct BurnDriver BurnDrvSformula = {
 	"Super Formula (Japan)\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, sformulaRomInfo, sformulaRomName, NULL, NULL, Tail2nosInputInfo, Tail2nosDIPInfo,
+	NULL, sformulaRomInfo, sformulaRomName, NULL, NULL, NULL, NULL, Tail2nosInputInfo, Tail2nosDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };

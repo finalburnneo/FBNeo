@@ -1080,7 +1080,7 @@ struct BurnDriver BurnDrvGyruss = {
 	"Gyruss (Konami)\0", NULL, "Konami", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, gyrussRomInfo, gyrussRomName, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,
+	NULL, gyrussRomInfo, gyrussRomName, NULL, NULL, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	224, 256, 3, 4
 };
@@ -1120,7 +1120,7 @@ struct BurnDriver BurnDrvGyrussce = {
 	"Gyruss (Centuri)\0", NULL, "Konami (Centuri license)", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, gyrussceRomInfo, gyrussceRomName, NULL, NULL, GyrussInputInfo, GyrussceDIPInfo,
+	NULL, gyrussceRomInfo, gyrussceRomName, NULL, NULL, NULL, NULL, GyrussInputInfo, GyrussceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	224, 256, 3, 4
 };
@@ -1160,7 +1160,7 @@ struct BurnDriver BurnDrvGyrussb = {
 	"Gyruss (bootleg)\0", NULL, "bootleg", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, gyrussbRomInfo, gyrussbRomName, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,
+	NULL, gyrussbRomInfo, gyrussbRomName, NULL, NULL, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	224, 256, 3, 4
 };
@@ -1200,7 +1200,7 @@ struct BurnDriver BurnDrvVenus = {
 	"Venus\0", NULL, "bootleg", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, venusRomInfo, venusRomName, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,
+	NULL, venusRomInfo, venusRomName, NULL, NULL, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	224, 256, 3, 4
 };

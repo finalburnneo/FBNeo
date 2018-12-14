@@ -630,7 +630,7 @@ struct BurnDriver BurnDrvMatchit = {
 	"Match It\0", NULL, "Tamtex", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, matchitRomInfo, matchitRomName, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
+	NULL, matchitRomInfo, matchitRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	MatchitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };
@@ -680,7 +680,7 @@ struct BurnDriver BurnDrvSichuan2 = {
 	"Sichuan II (hack, set 1)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, sichuan2RomInfo, sichuan2RomName, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
+	NULL, sichuan2RomInfo, sichuan2RomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	Sichuan2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };
@@ -725,7 +725,7 @@ struct BurnDriver BurnDrvSichuan2a = {
 	"Sichuan II (hack, set 2)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, sichuan2aRomInfo, sichuan2aRomName, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
+	NULL, sichuan2aRomInfo, sichuan2aRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	Sichuan2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };
@@ -774,7 +774,7 @@ struct BurnDriver BurnDrvShisen = {
 	"Shisensho - Joshiryo-Hen (Japan)\0", NULL, "Tamtex", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, shisenRomInfo, shisenRomName, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
+	NULL, shisenRomInfo, shisenRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	ShisenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };

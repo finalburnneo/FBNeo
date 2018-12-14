@@ -1318,7 +1318,7 @@ struct BurnDriver BurnDrvFstarfrc = {
 	"Final Star Force (US)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, FstarfrcRomInfo, FstarfrcRomName, NULL, NULL, FstarfrcInputInfo, FstarfrcDIPInfo,
+	NULL, FstarfrcRomInfo, FstarfrcRomName, NULL, NULL, NULL, NULL, FstarfrcInputInfo, FstarfrcDIPInfo,
 	FstarfrcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 224, 256, 3, 4
 };
@@ -1328,7 +1328,7 @@ struct BurnDriver BurnDrvFstarfrcj = {
 	"Final Star Force (Japan)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, FstarfrcjRomInfo, FstarfrcjRomName, NULL, NULL, FstarfrcInputInfo, FstarfrcDIPInfo,
+	NULL, FstarfrcjRomInfo, FstarfrcjRomName, NULL, NULL, NULL, NULL, FstarfrcInputInfo, FstarfrcDIPInfo,
 	FstarfrcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 224, 256, 3, 4
 };
@@ -1338,7 +1338,7 @@ struct BurnDriver BurnDrvGinkun = {
 	"Ganbare Ginkun\0", NULL, "Tecmo", "Miscellaneous",
 	L"\u304C\u3093\u3070\u308C \u30AE\u30F3\u304F\u3093\0Ganbare Ginkun\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
-	NULL, GinkunRomInfo, GinkunRomName, NULL, NULL, FstarfrcInputInfo, GinkunDIPInfo,
+	NULL, GinkunRomInfo, GinkunRomName, NULL, NULL, NULL, NULL, FstarfrcInputInfo, GinkunDIPInfo,
 	GinkunInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 256, 224, 4, 3
 };
@@ -1348,7 +1348,7 @@ struct BurnDriver BurnDrvRiot = {
 	"Riot\0", NULL, "NMK", "Miscellaneous",
 	L"\u96F7\u8ECB\u6597 Riot\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, RiotRomInfo, RiotRomName, NULL, NULL, RiotInputInfo, RiotDIPInfo,
+	NULL, RiotRomInfo, RiotRomName, NULL, NULL, NULL, NULL, RiotInputInfo, RiotDIPInfo,
 	RiotInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 256, 224, 4, 3
 };

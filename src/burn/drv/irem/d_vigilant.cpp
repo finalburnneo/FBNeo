@@ -2411,7 +2411,7 @@ struct BurnDriver BurnDrvVigilant = {
 	"Vigilante (World, Rev E)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
@@ -2421,7 +2421,7 @@ struct BurnDriver BurnDrvVigilanta = {
 	"Vigilante (World, Rev A)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, VigilantaRomInfo, VigilantaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, VigilantaRomInfo, VigilantaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
@@ -2431,7 +2431,7 @@ struct BurnDriver BurnDrvVigilantb = {
 	"Vigilante (US, Rev B)\0", NULL, "Irem (Data East License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, VigilantbRomInfo, VigilantbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, VigilantbRomInfo, VigilantbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
@@ -2441,7 +2441,7 @@ struct BurnDriver BurnDrvVigilantc = {
 	"Vigilante (World, Rev C)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, Drv1RomInfo, Drv1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, Drv1RomInfo, Drv1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
@@ -2451,7 +2451,7 @@ struct BurnDriver BurnDrvVigilanto = {
 	"Vigilante (US)\0", NULL, "Irem (Data East USA License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
@@ -2461,7 +2461,7 @@ struct BurnDriver BurnDrvVigilantg = {
 	"Vigilante (US, Rev G)\0", NULL, "Irem (Data East USA License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, Drvu2RomInfo, Drvu2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, Drvu2RomInfo, Drvu2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
@@ -2471,7 +2471,7 @@ struct BurnDriver BurnDrvVigilantd = {
 	"Vigilante (Japan, Rev D)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
@@ -2481,7 +2481,7 @@ struct BurnDriver BurnDrvVigilantbl = {
 	"Vigilante (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
@@ -2491,7 +2491,7 @@ struct BurnDriver BurnDrvKikcubic = {
 	"Meikyu Jima (Japan)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
-	NULL, KikcubicRomInfo, KikcubicRomName, NULL, NULL, KikcubicInputInfo, KikcubicDIPInfo,
+	NULL, KikcubicRomInfo, KikcubicRomName, NULL, NULL, NULL, NULL, KikcubicInputInfo, KikcubicDIPInfo,
 	KikcubicInit, DrvExit, DrvFrame, KikcubicDraw, DrvScan,
 	NULL, 544, 384, 256, 4, 3
 };
@@ -2501,7 +2501,7 @@ struct BurnDriver BurnDrvKikcubicb = {
 	"Kickle Cubele\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
-	NULL, KikcubicbRomInfo, KikcubicbRomName, NULL, NULL, KikcubicInputInfo, KikcubicDIPInfo,
+	NULL, KikcubicbRomInfo, KikcubicbRomName, NULL, NULL, NULL, NULL, KikcubicInputInfo, KikcubicDIPInfo,
 	KikcubicInit, DrvExit, DrvFrame, KikcubicDraw, DrvScan,
 	NULL, 544, 384, 256, 4, 3
 };
@@ -2511,7 +2511,7 @@ struct BurnDriver BurnDrvBuccanrs = {
 	"Buccaneers (set 1)\0", NULL, "Duintronic", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, BuccanrsRomInfo, BuccanrsRomName, NULL, NULL, BuccanrsInputInfo, BuccanrsDIPInfo,
+	NULL, BuccanrsRomInfo, BuccanrsRomName, NULL, NULL, NULL, NULL, BuccanrsInputInfo, BuccanrsDIPInfo,
 	BuccanrsInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
@@ -2521,7 +2521,7 @@ struct BurnDriver BurnDrvBuccanrsa = {
 	"Buccaneers (set 2)\0", NULL, "Duintronic", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, BuccanrsaRomInfo, BuccanrsaRomName, NULL, NULL, BuccanrsaInputInfo, BuccanrsaDIPInfo,
+	NULL, BuccanrsaRomInfo, BuccanrsaRomName, NULL, NULL, NULL, NULL, BuccanrsaInputInfo, BuccanrsaDIPInfo,
 	BuccanrsInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
@@ -2531,7 +2531,7 @@ struct BurnDriver BurnDrvBuccanrsb = {
 	"Buccaneers (set 3, harder)\0", NULL, "Duintronic", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
-	NULL, BuccanrsbRomInfo, BuccanrsbRomName, NULL, NULL, BuccanrsInputInfo, BuccanrsDIPInfo,
+	NULL, BuccanrsbRomInfo, BuccanrsbRomName, NULL, NULL, NULL, NULL, BuccanrsInputInfo, BuccanrsDIPInfo,
 	BuccanrsInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };

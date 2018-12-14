@@ -556,7 +556,7 @@ struct BurnDriver BurnDrvSub = {
 	"Submarine (Sigma)\0", NULL, "Sigma Enterprises Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, subRomInfo, subRomName, NULL, NULL, SubInputInfo, SubDIPInfo,
+	NULL, subRomInfo, subRomName, NULL, NULL, NULL, NULL, SubInputInfo, SubDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
 };

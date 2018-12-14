@@ -749,7 +749,7 @@ struct BurnDriver BurnDrvExzisus = {
 	"Exzisus (Japan, dedicated)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
-	NULL, exzisusRomInfo, exzisusRomName, NULL, NULL, ExzisusInputInfo, ExzisusDIPInfo,
+	NULL, exzisusRomInfo, exzisusRomName, NULL, NULL, NULL, NULL, ExzisusInputInfo, ExzisusDIPInfo,
 	exzisusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
@@ -799,7 +799,7 @@ struct BurnDriver BurnDrvExzisusa = {
 	"Exzisus (Japan, conversion)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
-	NULL, exzisusaRomInfo, exzisusaRomName, NULL, NULL, ExzisusInputInfo, ExzisusDIPInfo,
+	NULL, exzisusaRomInfo, exzisusaRomName, NULL, NULL, NULL, NULL, ExzisusInputInfo, ExzisusDIPInfo,
 	exzisusaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
@@ -844,7 +844,7 @@ struct BurnDriver BurnDrvExzisust = {
 	"Exzisus (TAD license)\0", NULL, "Taito Corporation (TAD license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
-	NULL, exzisustRomInfo, exzisustRomName, NULL, NULL, ExzisusInputInfo, ExzisusDIPInfo,
+	NULL, exzisustRomInfo, exzisustRomName, NULL, NULL, NULL, NULL, ExzisusInputInfo, ExzisusDIPInfo,
 	exzisusaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

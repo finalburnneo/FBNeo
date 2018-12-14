@@ -611,7 +611,7 @@ struct BurnDriver BurnDrvFastlane = {
 	"Fast Lane\0", NULL, "Konami", "GX752",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
-	NULL, fastlaneRomInfo, fastlaneRomName, NULL, NULL, FastlaneInputInfo, FastlaneDIPInfo,
+	NULL, fastlaneRomInfo, fastlaneRomName, NULL, NULL, NULL, NULL, FastlaneInputInfo, FastlaneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 280, 3, 4
 };

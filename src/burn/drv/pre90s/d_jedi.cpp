@@ -818,7 +818,7 @@ struct BurnDriver BurnDrvJedi = {
 	"Return of the Jedi\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_RACING | GBF_ACTION, 0,
-	NULL, jediRomInfo, jediRomName, NULL, NULL, JediInputInfo, JediDIPInfo,
+	NULL, jediRomInfo, jediRomName, NULL, NULL, NULL, NULL, JediInputInfo, JediDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	296, 240, 4, 3
 };

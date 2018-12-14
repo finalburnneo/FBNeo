@@ -852,7 +852,7 @@ struct BurnDriver BurnDrvVball = {
 	"U.S. Championship V'ball (US)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, vballRomInfo, vballRomName, NULL, NULL, VballInputInfo, VballDIPInfo,
+	NULL, vballRomInfo, vballRomName, NULL, NULL, NULL, NULL, VballInputInfo, VballDIPInfo,
 	VballInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };
@@ -890,7 +890,7 @@ struct BurnDriver BurnDrvVball2pj = {
 	"U.S. Championship V'ball (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, vball2pjRomInfo, vball2pjRomName, NULL, NULL, Vball2pjInputInfo, Vball2pjDIPInfo,
+	NULL, vball2pjRomInfo, vball2pjRomName, NULL, NULL, NULL, NULL, Vball2pjInputInfo, Vball2pjDIPInfo,
 	Vball2pjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };
@@ -936,7 +936,7 @@ struct BurnDriver BurnDrvVballb = {
 	"U.S. Championship V'ball (bootleg of US set)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, vballbRomInfo, vballbRomName, NULL, NULL, VballInputInfo, VballDIPInfo,
+	NULL, vballbRomInfo, vballbRomName, NULL, NULL, NULL, NULL, VballInputInfo, VballDIPInfo,
 	VballbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };
@@ -984,7 +984,7 @@ struct BurnDriver BurnDrvVball2pjb = {
 	"U.S. Championship V'ball (bootleg of Japan set)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, vball2pjbRomInfo, vball2pjbRomName, NULL, NULL, VballInputInfo, VballDIPInfo,
+	NULL, vball2pjbRomInfo, vball2pjbRomName, NULL, NULL, NULL, NULL, VballInputInfo, VballDIPInfo,
 	Vball2pjbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };

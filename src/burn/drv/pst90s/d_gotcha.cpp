@@ -625,7 +625,7 @@ struct BurnDriver BurnDrvGotcha = {
 	"Got-cha Mini Game Festival\0", NULL, "Dongsung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
-	NULL, gotchaRomInfo, gotchaRomName, NULL, NULL, GotchaInputInfo, GotchaDIPInfo,
+	NULL, gotchaRomInfo, gotchaRomName, NULL, NULL, NULL, NULL, GotchaInputInfo, GotchaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };
@@ -660,7 +660,7 @@ struct BurnDriver BurnDrvPpchamp = {
 	"Pasha Pasha Champ Mini Game Festival\0", NULL, "Dongsung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
-	NULL, ppchampRomInfo, ppchampRomName, NULL, NULL, GotchaInputInfo, GotchaDIPInfo,
+	NULL, ppchampRomInfo, ppchampRomName, NULL, NULL, NULL, NULL, GotchaInputInfo, GotchaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };

@@ -654,7 +654,7 @@ struct BurnDriver BurnDrvMagix = {
 	"Magix / Rock\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, magixRomInfo, magixRomName, NULL, NULL, RocktrisInputInfo, MagixDIPInfo,
+	NULL, magixRomInfo, magixRomName, NULL, NULL, NULL, NULL, RocktrisInputInfo, MagixDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 240, 4, 3
 };
@@ -684,7 +684,7 @@ struct BurnDriver BurnDrvMagixb = {
 	"Magix / Rock (no copyright message)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, magixbRomInfo, magixbRomName, NULL, NULL, RocktrisInputInfo, MagixDIPInfo,
+	NULL, magixbRomInfo, magixbRomName, NULL, NULL, NULL, NULL, RocktrisInputInfo, MagixDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 240, 4, 3
 };
@@ -714,7 +714,7 @@ struct BurnDriver BurnDrvCannball = {
 	"Cannon Ball (Yun Sung, horizontal)\0", NULL, "Yun Sung / Soft Vision", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, cannballRomInfo, cannballRomName, NULL, NULL, CannballInputInfo, CannballDIPInfo,
+	NULL, cannballRomInfo, cannballRomName, NULL, NULL, NULL, NULL, CannballInputInfo, CannballDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 240, 4, 3
 };
@@ -744,7 +744,7 @@ struct BurnDriver BurnDrvCannballv = {
 	"Cannon Ball (Yun Sung, vertical)\0", NULL, "Yun Sung / J&K Production", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, cannballvRomInfo, cannballvRomName, NULL, NULL, CannballInputInfo, CannballDIPInfo,
+	NULL, cannballvRomInfo, cannballvRomName, NULL, NULL, NULL, NULL, CannballInputInfo, CannballDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 384, 3, 4
 };
@@ -774,7 +774,7 @@ struct BurnDriver BurnDrvRocktris = {
 	"Rock Tris\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, rocktrisRomInfo, rocktrisRomName, NULL, NULL, RocktrisInputInfo, RocktrisDIPInfo,
+	NULL, rocktrisRomInfo, rocktrisRomName, NULL, NULL, NULL, NULL, RocktrisInputInfo, RocktrisDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 240, 4, 3
 };

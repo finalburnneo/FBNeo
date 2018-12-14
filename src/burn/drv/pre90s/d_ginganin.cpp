@@ -700,7 +700,7 @@ struct BurnDriver BurnDrvGinganin = {
 	"Ginga NinkyouDen (set 1)\0", NULL, "Jaleco", "Miscellaneous",
 	L"\u9280\u6CB3\u4EFB\u4FA0\u4F1D\0Ginga NinkyouDen (set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, ginganinRomInfo, ginganinRomName, NULL, NULL, GinganinInputInfo, GinganinDIPInfo,
+	NULL, ginganinRomInfo, ginganinRomName, NULL, NULL, NULL, NULL, GinganinInputInfo, GinganinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
@@ -741,7 +741,7 @@ struct BurnDriver BurnDrvGinganina = {
 	"Ginga NinkyouDen (set 2)\0", NULL, "Jaleco", "Miscellaneous",
 	L"\u9280\u6CB3\u4EFB\u4FA0\u4F1D\0Ginga NinkyouDen (set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, ginganinaRomInfo, ginganinaRomName, NULL, NULL, GinganinInputInfo, GinganinDIPInfo,
+	NULL, ginganinaRomInfo, ginganinaRomName, NULL, NULL, NULL, NULL, GinganinInputInfo, GinganinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

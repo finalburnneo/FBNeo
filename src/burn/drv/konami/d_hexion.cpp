@@ -635,7 +635,7 @@ struct BurnDriver BurnDrvHexion = {
 	"Hexion (Japan ver. JAB)\0", NULL, "Konami", "GX122",
 	L"Hexion  (Japan ver. JAB)\0\u30D8\u30AF\u30B7\u30AA\u30F3 (Japan ver. JAB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
-	NULL, hexionRomInfo, hexionRomName, NULL, NULL, HexionInputInfo, HexionDIPInfo,
+	NULL, hexionRomInfo, hexionRomName, NULL, NULL, NULL, NULL, HexionInputInfo, HexionDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };
@@ -666,7 +666,7 @@ struct BurnDriver BurnDrvHexionb = {
 	"Hexion (Bootleg, Asia ver. AAA)\0", NULL, "Bootleg", "GX122",
 	L"Hexion  (Bootleg, Asia ver. AAA)\0\u30D8\u30AF\u30B7\u30AA\u30F3 (Bootleg, Asia ver. AAA)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
-	NULL, hexionbRomInfo, hexionbRomName, NULL, NULL, HexionInputInfo, HexionDIPInfo,
+	NULL, hexionbRomInfo, hexionbRomName, NULL, NULL, NULL, NULL, HexionInputInfo, HexionDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };

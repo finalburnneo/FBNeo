@@ -579,7 +579,7 @@ struct BurnDriver BurnDrvChanbara = {
 	"Chanbara\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, ChanbaraRomInfo, ChanbaraRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, ChanbaraRomInfo, ChanbaraRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

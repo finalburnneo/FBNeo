@@ -466,7 +466,7 @@ struct BurnDriver BurnDrvPkscram = {
 	"PK Scramble\0", NULL, "Cosmo Electronics Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, pkscramRomInfo, pkscramRomName, NULL, NULL, PkscrambleInputInfo, PkscrambleDIPInfo,
+	NULL, pkscramRomInfo, pkscramRomName, NULL, NULL, NULL, NULL, PkscrambleInputInfo, PkscrambleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 192, 4, 3
 };

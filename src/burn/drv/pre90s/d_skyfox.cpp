@@ -570,7 +570,7 @@ struct BurnDriver BurnDrvSkyfox = {
 	"Sky Fox\0", NULL, "Jaleco (Nichibutsu USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, skyfoxRomInfo, skyfoxRomName, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
+	NULL, skyfoxRomInfo, skyfoxRomName, NULL, NULL, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4
 };
@@ -606,7 +606,7 @@ struct BurnDriver BurnDrvExerizrb = {
 	"Exerizer (Japan) (bootleg)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, exerizrbRomInfo, exerizrbRomName, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
+	NULL, exerizrbRomInfo, exerizrbRomName, NULL, NULL, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	224, 320, 3, 4
 };

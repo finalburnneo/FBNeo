@@ -710,7 +710,7 @@ struct BurnDriver BurnDrvCrimfght = {
 	"Crime Fighters (World 2 players)\0", NULL, "Konami", "GX821",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, crimfghtRomInfo, crimfghtRomName, NULL, NULL, CrimfghtInputInfo, CrimfghtDIPInfo,
+	NULL, crimfghtRomInfo, crimfghtRomName, NULL, NULL, NULL, NULL, CrimfghtInputInfo, CrimfghtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3
 };
@@ -742,7 +742,7 @@ struct BurnDriver BurnDrvCrimfghtj = {
 	"Crime Fighters (Japan 2 Players)\0", NULL, "Konami", "GX821",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, crimfghtjRomInfo, crimfghtjRomName, NULL, NULL, CrimfghtInputInfo, CrimfghtDIPInfo,
+	NULL, crimfghtjRomInfo, crimfghtjRomName, NULL, NULL, NULL, NULL, CrimfghtInputInfo, CrimfghtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3
 };
@@ -774,7 +774,7 @@ struct BurnDriver BurnDrvCrimfghtu = {
 	"Crime Fighters (US 4 Players)\0", NULL, "Konami", "GX821",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, crimfghtuRomInfo, crimfghtuRomName, NULL, NULL, CrimfghtuInputInfo, CrimfghtuDIPInfo,
+	NULL, crimfghtuRomInfo, crimfghtuRomName, NULL, NULL, NULL, NULL, CrimfghtuInputInfo, CrimfghtuDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3
 };

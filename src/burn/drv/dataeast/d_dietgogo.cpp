@@ -528,7 +528,7 @@ struct BurnDriver BurnDrvDietgou = {
 	"Diet Go Go (USA v1.1 1992.09.26)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, dietgouRomInfo, dietgouRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
+	NULL, dietgouRomInfo, dietgouRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };
@@ -562,7 +562,7 @@ struct BurnDriver BurnDrvDietgoe = {
 	"Diet Go Go (Euro v1.1 1992.08.04)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, dietgoeRomInfo, dietgoeRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
+	NULL, dietgoeRomInfo, dietgoeRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };
@@ -596,7 +596,7 @@ struct BurnDriver BurnDrvDietgo = {
 	"Diet Go Go (Euro v1.1 1992.09.26)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, dietgoRomInfo, dietgoRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
+	NULL, dietgoRomInfo, dietgoRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };
@@ -630,7 +630,7 @@ struct BurnDriver BurnDrvDietgoj = {
 	"Diet Go Go (Japan v1.1 1992.09.26)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, dietgojRomInfo, dietgojRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
+	NULL, dietgojRomInfo, dietgojRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };

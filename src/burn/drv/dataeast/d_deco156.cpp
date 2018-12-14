@@ -803,7 +803,7 @@ struct BurnDriver BurnDrvHvysmsh = {
 	"Heavy Smash (Europe version -2)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, hvysmshRomInfo, hvysmshRomName, NULL, NULL, HvysmshInputInfo, NULL,
+	NULL, hvysmshRomInfo, hvysmshRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
 	HvysmshInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -833,7 +833,7 @@ struct BurnDriver BurnDrvHvysmshj = {
 	"Heavy Smash (Japan version -2)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, hvysmshjRomInfo, hvysmshjRomName, NULL, NULL, HvysmshInputInfo, NULL,
+	NULL, hvysmshjRomInfo, hvysmshjRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
 	HvysmshInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -863,7 +863,7 @@ struct BurnDriver BurnDrvHvysmsha = {
 	"Heavy Smash (Asia version -4)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, hvysmshaRomInfo, hvysmshaRomName, NULL, NULL, HvysmshInputInfo, NULL,
+	NULL, hvysmshaRomInfo, hvysmshaRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
 	HvysmshInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -894,7 +894,7 @@ struct BurnDriver BurnDrvWcvol95 = {
 	"World Cup Volley '95 (Asia v1.0)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, wcvol95RomInfo, wcvol95RomName, NULL, NULL, HvysmshInputInfo, NULL,
+	NULL, wcvol95RomInfo, wcvol95RomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
 	Wcvol95Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -925,7 +925,7 @@ struct BurnDriver BurnDrvWcvol95j = {
 	"World Cup Volley '95 (Japan v1.0)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, wcvol95jRomInfo, wcvol95jRomName, NULL, NULL, HvysmshInputInfo, NULL,
+	NULL, wcvol95jRomInfo, wcvol95jRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
 	Wcvol95Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -956,7 +956,7 @@ struct BurnDriver BurnDrvWcvol95x = {
 	"World Cup Volley '95 Extra Version (Asia v2.0B)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, wcvol95xRomInfo, wcvol95xRomName, NULL, NULL, HvysmshInputInfo, NULL,
+	NULL, wcvol95xRomInfo, wcvol95xRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
 	Wcvol95Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

@@ -4643,7 +4643,7 @@ struct BurnDriver BurnDrvTumbleb = {
 	"Tumble Pop (bootleg set 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, TumblebRomInfo, TumblebRomName, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
+	NULL, TumblebRomInfo, TumblebRomName, NULL, NULL, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
 	TumblebInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4653,7 +4653,7 @@ struct BurnDriver BurnDrvTumbleb2 = {
 	"Tumble Pop (bootleg set 2)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, Tumbleb2RomInfo, Tumbleb2RomName, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
+	NULL, Tumbleb2RomInfo, Tumbleb2RomName, NULL, NULL, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
 	Tumbleb2Init, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4663,7 +4663,7 @@ struct BurnDriver BurnDrvJumpkids = {
 	"Jump Kids\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, JumpkidsRomInfo, JumpkidsRomName, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
+	NULL, JumpkidsRomInfo, JumpkidsRomName, NULL, NULL, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
 	JumpkidsInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4673,7 +4673,7 @@ struct BurnDriver BurnDrvMetlsavr = {
 	"Metal Saver\0", NULL, "First Amusement", "Miscellaneous",
 	L"Metal Saver\0\uBA54\uD0C8\uC138\uC774\uBC84\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, MetlsavrRomInfo, MetlsavrRomName, NULL, NULL, MetlsavrInputInfo, MetlsavrDIPInfo,
+	NULL, MetlsavrRomInfo, MetlsavrRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, MetlsavrDIPInfo,
 	MetlsavrInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4683,7 +4683,7 @@ struct BurnDriver BurnDrvPangpang = {
 	"Pang Pang\0", NULL, "Dong Gue La Mi Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, PangpangRomInfo, PangpangRomName, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
+	NULL, PangpangRomInfo, PangpangRomName, NULL, NULL, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
 	PangpangInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4693,7 +4693,7 @@ struct BurnDriver BurnDrvSuprtrio = {
 	"Super Trio\0", NULL, "Gameace", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, SuprtrioRomInfo, SuprtrioRomName, NULL, NULL, SuprtrioInputInfo, SuprtrioDIPInfo,
+	NULL, SuprtrioRomInfo, SuprtrioRomName, NULL, NULL, NULL, NULL, SuprtrioInputInfo, SuprtrioDIPInfo,
 	SuprtrioInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4703,7 +4703,7 @@ struct BurnDriver BurnDrvHtchctch = {
 	"Hatch Catch\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, HtchctchRomInfo, HtchctchRomName, NULL, NULL, HtchctchInputInfo, HtchctchDIPInfo,
+	NULL, HtchctchRomInfo, HtchctchRomName, NULL, NULL, NULL, NULL, HtchctchInputInfo, HtchctchDIPInfo,
 	HtchctchInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4713,7 +4713,7 @@ struct BurnDriver BurnDrvCookbib = {
 	"Cookie & Bibi (set 1)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, CookbibRomInfo, CookbibRomName, NULL, NULL, HtchctchInputInfo, CookbibDIPInfo,
+	NULL, CookbibRomInfo, CookbibRomName, NULL, NULL, NULL, NULL, HtchctchInputInfo, CookbibDIPInfo,
 	CookbibInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4723,7 +4723,7 @@ struct BurnDriver BurnDrvCookbiba = {
 	"Cookie & Bibi (set 2)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, CookbibaRomInfo, CookbibaRomName, NULL, NULL, HtchctchInputInfo, CookbibDIPInfo,
+	NULL, CookbibaRomInfo, CookbibaRomName, NULL, NULL, NULL, NULL, HtchctchInputInfo, CookbibDIPInfo,
 	CookbibInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4733,7 +4733,7 @@ struct BurnDriver BurnDrvChokChok = {
 	"Choky! Choky!\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, ChokchokRomInfo, ChokchokRomName, NULL, NULL, HtchctchInputInfo, ChokchokDIPInfo,
+	NULL, ChokchokRomInfo, ChokchokRomName, NULL, NULL, NULL, NULL, HtchctchInputInfo, ChokchokDIPInfo,
 	ChokchokInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4743,7 +4743,7 @@ struct BurnDriver BurnDrvWlstar = {
 	"Wonder League Star - Sok-Magicball Fighting (Korea)\0", NULL, "Mijin", "Miscellaneous",
 	L"\uC6D0\uB354\uB9AC\uADF8\uC2A4\uD0C0 - \uC18D \uB9E4\uC9C1\uBCFC \uD30C\uC774\uD305 (Korea)\0Wonder League Star - Sok-Magicball Fighting\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, WlstarRomInfo, WlstarRomName, NULL, NULL, MetlsavrInputInfo, WlstarDIPInfo,
+	NULL, WlstarRomInfo, WlstarRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, WlstarDIPInfo,
 	WlstarInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4753,7 +4753,7 @@ struct BurnDriver BurnDrvWondl96 = {
 	"Wonder League '96 (Korea)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, Wondl96RomInfo, Wondl96RomName, NULL, NULL, MetlsavrInputInfo, Wondl96DIPInfo,
+	NULL, Wondl96RomInfo, Wondl96RomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, Wondl96DIPInfo,
 	Wondl96Init, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4763,7 +4763,7 @@ struct BurnDriver BurnDrvFancywld = {
 	"Fancy World - Earth of Crisis\0", NULL, "Unico", "Miscellaneous",
 	L"Fancy World - Earth of Crisis\0\uD39C\uC2DC\uC6D4\uB4DC \uD658\uC0C1\uC758 \uC138\uACC4 - Earth of Crisis\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, FncywldRomInfo, FncywldRomName, NULL, NULL, FncywldInputInfo, FncywldDIPInfo,
+	NULL, FncywldRomInfo, FncywldRomName, NULL, NULL, NULL, NULL, FncywldInputInfo, FncywldDIPInfo,
 	FncywldInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4773,7 +4773,7 @@ struct BurnDriver BurnDrvSdfight = {
 	"SD Fighters (Korea)\0", NULL, "SemiCom", "Miscellaneous",
 	L"\uFF33\uFF24 \uD30C\uC774\uD130\uC988 (Korea)\0SD Fighters\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
-	NULL, SdfightRomInfo, SdfightRomName, NULL, NULL, MetlsavrInputInfo, SdfightDIPInfo,
+	NULL, SdfightRomInfo, SdfightRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, SdfightDIPInfo,
 	SdfightInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4783,7 +4783,7 @@ struct BurnDriver BurnDrvBcstry = {
 	"B.C. Story (set 1)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, BcstryRomInfo, BcstryRomName, NULL, NULL, MetlsavrInputInfo, BcstryDIPInfo,
+	NULL, BcstryRomInfo, BcstryRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, BcstryDIPInfo,
 	BcstryInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4793,7 +4793,7 @@ struct BurnDriver BurnDrvBcstrya = {
 	"B.C. Story (set 2)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, BcstryaRomInfo, BcstryaRomName, NULL, NULL, MetlsavrInputInfo, BcstryDIPInfo,
+	NULL, BcstryaRomInfo, BcstryaRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, BcstryDIPInfo,
 	BcstryInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4803,7 +4803,7 @@ struct BurnDriver BurnDrvSemibase = {
 	"MuHanSeungBu (SemiCom Baseball) (Korea)\0", NULL, "SemiCom", "Miscellaneous",
 	L"\u7121\u9650\u52DD\u8CA0\0\uC804\uC6D0 \uAD6D\uC81C\uB9AC\uADF8 \uC804 (SemiCom Baseball) (Korea)\0MuHanSeungBu\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, SemibaseRomInfo, SemibaseRomName, NULL, NULL, SemibaseInputInfo, SemibaseDIPInfo,
+	NULL, SemibaseRomInfo, SemibaseRomName, NULL, NULL, NULL, NULL, SemibaseInputInfo, SemibaseDIPInfo,
 	SemibaseInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4813,7 +4813,7 @@ struct BurnDriver BurnDrvDquizgo = {
 	"Date Quiz Go Go (Korea)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, DquizgoRomInfo, DquizgoRomName, NULL, NULL, MetlsavrInputInfo, DquizgoDIPInfo,
+	NULL, DquizgoRomInfo, DquizgoRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, DquizgoDIPInfo,
 	DquizgoInit, DrvExit, DrvFrame, DrvRender, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -4824,7 +4824,7 @@ struct BurnDriver BurnDrvJumppop = {
 	"Jumping Pop (set 1)\0", NULL, "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, JumppopRomInfo, JumppopRomName, NULL, NULL, JumppopInputInfo, JumppopDIPInfo,
+	NULL, JumppopRomInfo, JumppopRomName, NULL, NULL, NULL, NULL, JumppopInputInfo, JumppopDIPInfo,
 	JumppopInit, JumppopExit, JumppopFrame, DrvRender, DrvScan,
 	NULL, 0x400, 320, 240, 4, 3
 };
@@ -4834,7 +4834,7 @@ struct BurnDriver BurnDrvJumppope = {
 	"Jumping Pop (set 2)\0", NULL, "Emag Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, JumppopeRomInfo, JumppopeRomName, NULL, NULL, JumppopInputInfo, JumppopDIPInfo,
+	NULL, JumppopeRomInfo, JumppopeRomName, NULL, NULL, NULL, NULL, JumppopInputInfo, JumppopDIPInfo,
 	JumppopInit, JumppopExit, JumppopFrame, DrvRender, DrvScan,
 	NULL, 0x400, 320, 240, 4, 3
 };

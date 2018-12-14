@@ -696,7 +696,7 @@ struct BurnDriver BurnDrvKBash = {
 	"Knuckle Bash\0", NULL, "Toaplan / Atari", "Toaplan GP9001 based",
 	L"Knuckle Bash\0Knuckle Bash \u30CA\u30C3\u30AF\u30EB\u30D0\u30C3\u30B7\u30E5\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_SCRFIGHT, 0,
-	NULL, drvRomInfo, drvRomName, NULL, NULL, kbashInputInfo,kbashDIPInfo,
+	NULL, drvRomInfo, drvRomName, NULL, NULL, NULL, NULL, kbashInputInfo,kbashDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
@@ -706,7 +706,7 @@ struct BurnDriver BurnDrvKBashk = {
 	"Knuckle Bash (Korean PCB)\0", NULL, "Toaplan / Taito", "Toaplan GP9001 based",
 	L"Knuckle Bash\0Knuckle Bash \u30CA\u30C3\u30AF\u30EB\u30D0\u30C3\u30B7\u30E5 (Korean PCB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_SCRFIGHT, 0,
-	NULL, drvkRomInfo, drvkRomName, NULL, NULL, kbashInputInfo,kbashkDIPInfo,
+	NULL, drvkRomInfo, drvkRomName, NULL, NULL, NULL, NULL, kbashInputInfo,kbashkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

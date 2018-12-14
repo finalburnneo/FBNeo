@@ -966,7 +966,7 @@ struct BurnDriver BurnDrvMainevt = {
 	"The Main Event (4 Players ver. Y)\0", NULL, "Konami", "GX799",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, mainevtRomInfo, mainevtRomName, NULL, NULL, MainevtInputInfo, MainevtDIPInfo,
+	NULL, mainevtRomInfo, mainevtRomName, NULL, NULL, NULL, NULL, MainevtInputInfo, MainevtDIPInfo,
 	mainevtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	288, 224, 4, 3
 };
@@ -1002,7 +1002,7 @@ struct BurnDriver BurnDrvMainevto = {
 	"The Main Event (4 Players ver. F)\0", NULL, "Konami", "GX799",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, mainevtoRomInfo, mainevtoRomName, NULL, NULL, MainevtInputInfo, MainevtDIPInfo,
+	NULL, mainevtoRomInfo, mainevtoRomName, NULL, NULL, NULL, NULL, MainevtInputInfo, MainevtDIPInfo,
 	mainevtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	288, 224, 4, 3
 };
@@ -1038,7 +1038,7 @@ struct BurnDriver BurnDrvMainevt2p = {
 	"The Main Event (2 Players ver. X)\0", NULL, "Konami", "GX799",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, mainevt2pRomInfo, mainevt2pRomName, NULL, NULL, Mainevt2pInputInfo, Mainevt2pDIPInfo,
+	NULL, mainevt2pRomInfo, mainevt2pRomName, NULL, NULL, NULL, NULL, Mainevt2pInputInfo, Mainevt2pDIPInfo,
 	mainevtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	288, 224, 4, 3
 };
@@ -1074,7 +1074,7 @@ struct BurnDriver BurnDrvRingohja = {
 	"Ring no Ohja (Japan 2 Players ver. N)\0", NULL, "Konami", "GX799",
 	L"\u30EA\u30F3\u30B0\u306E \u738B\u8005 (Japan 2 Players ver. N)\0Ring no Ohja\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, ringohjaRomInfo, ringohjaRomName, NULL, NULL, Mainevt2pInputInfo, Mainevt2pDIPInfo,
+	NULL, ringohjaRomInfo, ringohjaRomName, NULL, NULL, NULL, NULL, Mainevt2pInputInfo, Mainevt2pDIPInfo,
 	mainevtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	288, 224, 4, 3
 };
@@ -1113,7 +1113,7 @@ struct BurnDriver BurnDrvDevstors = {
 	"Devastators (ver. Z)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, devstorsRomInfo, devstorsRomName, NULL, NULL, DevstorsInputInfo, DevstorsDIPInfo,
+	NULL, devstorsRomInfo, devstorsRomName, NULL, NULL, NULL, NULL, DevstorsInputInfo, DevstorsDIPInfo,
 	devstorsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 304, 3, 4
 };
@@ -1147,7 +1147,7 @@ struct BurnDriver BurnDrvDevstorsx = {
 	"Devastators (ver. X)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, devstorsxRomInfo, devstorsxRomName, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,
+	NULL, devstorsxRomInfo, devstorsxRomName, NULL, NULL, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,
 	devstorsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 304, 3, 4
 };
@@ -1181,7 +1181,7 @@ struct BurnDriver BurnDrvDevstorsv = {
 	"Devastators (ver. V)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, devstorsvRomInfo, devstorsvRomName, NULL, NULL, DevstorsInputInfo, DevstorsDIPInfo,
+	NULL, devstorsvRomInfo, devstorsvRomName, NULL, NULL, NULL, NULL, DevstorsInputInfo, DevstorsDIPInfo,
 	devstorsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 304, 3, 4
 };
@@ -1215,7 +1215,7 @@ struct BurnDriver BurnDrvDevstors2 = {
 	"Devastators (ver. 2)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, devstors2RomInfo, devstors2RomName, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,
+	NULL, devstors2RomInfo, devstors2RomName, NULL, NULL, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,
 	devstorsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 304, 3, 4
 };
@@ -1249,7 +1249,7 @@ struct BurnDriver BurnDrvGaruka = {
 	"Garuka (Japan ver. W)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
 	L"\u9913\u6D41\u798D (Japan ver. W)\0Garuka\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, garukaRomInfo, garukaRomName, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,
+	NULL, garukaRomInfo, garukaRomName, NULL, NULL, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,
 	devstorsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 304, 3, 4
 };

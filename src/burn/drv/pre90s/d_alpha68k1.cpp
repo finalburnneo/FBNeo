@@ -863,7 +863,7 @@ struct BurnDriver BurnDrvPaddlema = {
 	"Paddle Mania\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BALLPADDLE, 0,
-	NULL, paddlemaRomInfo, paddlemaRomName, NULL, NULL, PaddlemaInputInfo, PaddlemaDIPInfo,
+	NULL, paddlemaRomInfo, paddlemaRomName, NULL, NULL, NULL, NULL, PaddlemaInputInfo, PaddlemaDIPInfo,
 	PaddlemaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
 };
@@ -897,7 +897,7 @@ struct BurnDriver BurnDrvTnextspc = {
 	"The Next Space (set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, tnextspcRomInfo, tnextspcRomName, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
+	NULL, tnextspcRomInfo, tnextspcRomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
 	TnextspcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
 };
@@ -938,7 +938,7 @@ struct BurnDriver BurnDrvTnextspc2 = {
 	"The Next Space (set 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, tnextspc2RomInfo, tnextspc2RomName, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
+	NULL, tnextspc2RomInfo, tnextspc2RomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
 	Tnextspc2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
 };
@@ -972,7 +972,7 @@ struct BurnDriver BurnDrvTnextspcj = {
 	"The Next Space (Japan)\0", NULL, "SNK (Pasadena International Corp. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, tnextspcjRomInfo, tnextspcjRomName, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
+	NULL, tnextspcjRomInfo, tnextspcjRomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
 	TnextspcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
 };

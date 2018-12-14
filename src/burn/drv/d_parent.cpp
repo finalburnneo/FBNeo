@@ -53,7 +53,7 @@ struct BurnDriver BurnDrvEightballact = {
 	"Eight Ball Action (DK conversion)\0", "Parent set for working drivers", "Seatongrove Ltd (Magic Eletronics USA licence)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, EightballactRomInfo, EightballactRomName, NULL, NULL, ParentInputInfo, NULL,
+	NULL, EightballactRomInfo, EightballactRomName, NULL, NULL, NULL, NULL, ParentInputInfo, NULL,
 	ParentInit, ParentExit, NULL, NULL, NULL,
 	NULL, 0, 256, 224, 4, 3
 };
@@ -87,7 +87,7 @@ struct BurnDriver BurnDrvHero = {
 	"Hero\0", "Parent set for working drivers", "Century Electronics / Seatongrove Ltd", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, HeroRomInfo, HeroRomName, NULL, NULL, ParentInputInfo, NULL,
+	NULL, HeroRomInfo, HeroRomName, NULL, NULL, NULL, NULL, ParentInputInfo, NULL,
 	ParentInit, ParentExit, NULL, NULL, NULL,
 	NULL, 0, 224, 256, 3, 4
 };
@@ -121,7 +121,7 @@ struct BurnDriver BurnDrvHunchbak = {
 	"Hunchback (set 1)\0", "Parent set for working drivers", "Century Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, HunchbakRomInfo, HunchbakRomName, NULL, NULL, ParentInputInfo, NULL,
+	NULL, HunchbakRomInfo, HunchbakRomName, NULL, NULL, NULL, NULL, ParentInputInfo, NULL,
 	ParentInit, ParentExit, NULL, NULL, NULL,
 	NULL, 0, 224, 256, 3, 4
 };
@@ -155,7 +155,7 @@ struct BurnDriver BurnDrvHuncholy = {
 	"Hunchback Olympic\0", "Parent set for working drivers", "Seatongrove Ltd", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, HuncholyRomInfo, HuncholyRomName, NULL, NULL, ParentInputInfo, NULL,
+	NULL, HuncholyRomInfo, HuncholyRomName, NULL, NULL, NULL, NULL, ParentInputInfo, NULL,
 	ParentInit, ParentExit, NULL, NULL, NULL,
 	NULL, 0, 224, 256, 3, 4
 };

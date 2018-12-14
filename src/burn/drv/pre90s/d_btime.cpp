@@ -2508,7 +2508,7 @@ struct BurnDriver BurnDrvBtime = {
 	"Burger Time (Data East set 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, btimeRomInfo, btimeRomName, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
+	NULL, btimeRomInfo, btimeRomName, NULL, NULL, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
 	BtimeInit, DrvExit, BtimeFrame, BtimeDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
 };
@@ -2545,7 +2545,7 @@ struct BurnDriver BurnDrvBtime2 = {
 	"Burger Time (Data East set 2)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, btime2RomInfo, btime2RomName, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
+	NULL, btime2RomInfo, btime2RomName, NULL, NULL, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
 	BtimeInit, DrvExit, BtimeFrame, BtimeDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
 };
@@ -2589,7 +2589,7 @@ struct BurnDriver BurnDrvBtime3 = {
 	"Burger Time (Data East USA)\0", "graphics issues, use parent romset!", "Data East USA Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, btime3RomInfo, btime3RomName, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
+	NULL, btime3RomInfo, btime3RomName, NULL, NULL, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
 	Btime3Init, DrvExit, BtimeFrame, BtimeDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
 };
@@ -2627,7 +2627,7 @@ struct BurnDriver BurnDrvBtimem = {
 	"Burger Time (Midway)\0", NULL, "Data East (Bally Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, btimemRomInfo, btimemRomName, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
+	NULL, btimemRomInfo, btimemRomName, NULL, NULL, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
 	Btime3Init, DrvExit, BtimeFrame, BtimeDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
 };
@@ -2662,7 +2662,7 @@ struct BurnDriver BurnDrvMmonkey = {
 	"Minky Monkey\0", NULL, "Technos Japan / Roller Tron", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, mmonkeyRomInfo, mmonkeyRomName, NULL, NULL, MmonkeyInputInfo, MmonkeyDIPInfo,
+	NULL, mmonkeyRomInfo, mmonkeyRomName, NULL, NULL, NULL, NULL, MmonkeyInputInfo, MmonkeyDIPInfo,
 	MmonkeyInit, DrvExit, BtimeFrame, eggsDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
 };
@@ -2697,7 +2697,7 @@ struct BurnDriver BurnDrvBrubber = {
 	"Burnin' Rubber\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING | GBF_ACTION, 0,
-	NULL, brubberRomInfo, brubberRomName, NULL, NULL, BnjInputInfo, BnjDIPInfo,
+	NULL, brubberRomInfo, brubberRomName, NULL, NULL, NULL, NULL, BnjInputInfo, BnjDIPInfo,
 	brubberInit, DrvExit, BtimeFrame, BnjDraw, DrvScan, &DrvRecalc, 16,
 	240, 256, 3, 4
 };
@@ -2731,7 +2731,7 @@ struct BurnDriver BurnDrvBnj = {
 	"Bump 'n' Jump\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING | GBF_ACTION, 0,
-	NULL, bnjRomInfo, bnjRomName, NULL, NULL, BnjInputInfo, BnjDIPInfo,
+	NULL, bnjRomInfo, bnjRomName, NULL, NULL, NULL, NULL, BnjInputInfo, BnjDIPInfo,
 	BnjInit, DrvExit, BtimeFrame, BnjDraw, DrvScan, &DrvRecalc, 16,
 	240, 256, 3, 4
 };
@@ -2759,7 +2759,7 @@ struct BurnDriver BurnDrvDisco = {
 	"Disco No.1\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, discoRomInfo, discoRomName, NULL, NULL, DiscoInputInfo, DiscoDIPInfo,
+	NULL, discoRomInfo, discoRomName, NULL, NULL, NULL, NULL, DiscoInputInfo, DiscoDIPInfo,
 	DiscoInit, DrvExit, BtimeFrame, DiscoDraw, DrvScan, &DrvRecalc, 32,
 	240, 242, 3, 4
 };
@@ -2788,7 +2788,7 @@ struct BurnDriver BurnDrvDiscof = {
 	"Disco No.1 (Rev.F)\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, discofRomInfo, discofRomName, NULL, NULL, DiscoInputInfo, DiscoDIPInfo,
+	NULL, discofRomInfo, discofRomName, NULL, NULL, NULL, NULL, DiscoInputInfo, DiscoDIPInfo,
 	DiscoInit, DrvExit, BtimeFrame, DiscoDraw, DrvScan, &DrvRecalc, 32,
 	240, 242, 3, 4
 };
@@ -2828,7 +2828,7 @@ struct BurnDriver BurnDrvLnc = {
 	"Lock'n'Chase\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, lncRomInfo, lncRomName, NULL, NULL, LncInputInfo, LncDIPInfo,
+	NULL, lncRomInfo, lncRomName, NULL, NULL, NULL, NULL, LncInputInfo, LncDIPInfo,
 	LncInit, DrvExit, BtimeFrame, LncDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
 };
@@ -2872,7 +2872,7 @@ struct BurnDriver BurnDrvZoar = {
 	"Zoar\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, zoarRomInfo, zoarRomName, NULL, NULL, ZoarInputInfo, ZoarDIPInfo,
+	NULL, zoarRomInfo, zoarRomName, NULL, NULL, NULL, NULL, ZoarInputInfo, ZoarDIPInfo,
 	ZoarInit, DrvExit, BtimeFrame, ZoarDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4
 };

@@ -602,7 +602,7 @@ struct BurnDriver BurnDrvMirage = {
 	"Mirage Youjuu Mahjongden (Japan)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, mirageRomInfo, mirageRomName, NULL, NULL, MirageInputInfo, NULL,
+	NULL, mirageRomInfo, mirageRomName, NULL, NULL, NULL, NULL, MirageInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

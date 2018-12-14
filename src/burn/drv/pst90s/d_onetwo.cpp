@@ -550,7 +550,7 @@ struct BurnDriver BurnDrvOnetwo = {
 	"One + Two\0", NULL, "Barko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, onetwoRomInfo, onetwoRomName, NULL, NULL, OnetwoInputInfo, OnetwoDIPInfo,
+	NULL, onetwoRomInfo, onetwoRomName, NULL, NULL, NULL, NULL, OnetwoInputInfo, OnetwoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	512, 256, 4, 3
 };
@@ -578,7 +578,7 @@ struct BurnDriver BurnDrvOnetwoe = {
 	"One + Two (earlier)\0", NULL, "Barko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, onetwoeRomInfo, onetwoeRomName, NULL, NULL, OnetwoInputInfo, OnetwoDIPInfo,
+	NULL, onetwoeRomInfo, onetwoeRomName, NULL, NULL, NULL, NULL, OnetwoInputInfo, OnetwoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	512, 256, 4, 3
 };

@@ -375,7 +375,7 @@ struct BurnDriver BurnDrvDreambal = {
 	"Dream Ball (Japan V2.4)\0", NULL, "NDK / Data East", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
-	NULL, dreambalRomInfo, dreambalRomName, NULL, NULL, DreambalInputInfo, NULL,
+	NULL, dreambalRomInfo, dreambalRomName, NULL, NULL, NULL, NULL, DreambalInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };

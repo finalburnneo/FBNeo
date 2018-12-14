@@ -2449,7 +2449,7 @@ struct BurnDriver BurnDrvHardhead = {
 	"Hard Head\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, hardheadRomInfo, hardheadRomName, NULL, NULL, DrvInputInfo, HardheadDIPInfo,
+	NULL, hardheadRomInfo, hardheadRomName, NULL, NULL, NULL, NULL, DrvInputInfo, HardheadDIPInfo,
 	HardheadInit, HardheadExit, HardheadFrame, HardheadDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -2486,7 +2486,7 @@ struct BurnDriver BurnDrvSranger = {
 	"Super Ranger (v2.0)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, srangerRomInfo, srangerRomName, NULL, NULL, DrvInputInfo, RrangerDIPInfo,
+	NULL, srangerRomInfo, srangerRomName, NULL, NULL, NULL, NULL, DrvInputInfo, RrangerDIPInfo,
 	RrangerInit, RrangerExit, RrangerFrame, RrangerDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -2523,7 +2523,7 @@ struct BurnDriver BurnDrvHardhea2 = {
 	"Hard Head 2 (v2.0)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, hardhea2RomInfo, hardhea2RomName, NULL, NULL, DrvInputInfo, Hardhea2DIPInfo,
+	NULL, hardhea2RomInfo, hardhea2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Hardhea2DIPInfo,
 	Hardhea2Init, Hardhea2Exit, Hardhea2Frame, Hardhea2Draw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -2562,7 +2562,7 @@ struct BurnDriver BurnDrvSparkman = {
 	"Spark Man (v2.0, set 1)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, sparkmanRomInfo, sparkmanRomName, NULL, NULL, SparkmanInputInfo, SparkmanDIPInfo,
+	NULL, sparkmanRomInfo, sparkmanRomName, NULL, NULL, NULL, NULL, SparkmanInputInfo, SparkmanDIPInfo,
 	SparkmanInit, HardheadExit, SparkmanFrame, SparkmanDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -2599,7 +2599,7 @@ struct BurnDriver BurnDrvStarfigh = {
 	"Star Fighter (v1)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, starfighRomInfo, starfighRomName, NULL, NULL, DrvInputInfo, StarfighDIPInfo,
+	NULL, starfighRomInfo, starfighRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StarfighDIPInfo,
 	StarfighInit, HardheadExit, SparkmanFrame, StarfighDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

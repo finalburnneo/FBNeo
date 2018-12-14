@@ -482,7 +482,7 @@ struct BurnDriver BurnDrvMosaic = {
 	"Mosaic\0", NULL, "Space", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, mosaicRomInfo, mosaicRomName, NULL, NULL, MosaicInputInfo, MosaicDIPInfo,
+	NULL, mosaicRomInfo, mosaicRomName, NULL, NULL, NULL, NULL, MosaicInputInfo, MosaicDIPInfo,
 	MosaicInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3
 };
@@ -512,7 +512,7 @@ struct BurnDriver BurnDrvMosaica = {
 	"Mosaic (Fuuki)\0", NULL, "Space (Fuuki license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, mosaicaRomInfo, mosaicaRomName, NULL, NULL, MosaicInputInfo, MosaicDIPInfo,
+	NULL, mosaicaRomInfo, mosaicaRomName, NULL, NULL, NULL, NULL, MosaicInputInfo, MosaicDIPInfo,
 	MosaicInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3
 };
@@ -547,7 +547,7 @@ struct BurnDriver BurnDrvGfire2 = {
 	"Golden Fire II\0", NULL, "Topis Corp", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, gfire2RomInfo, gfire2RomName, NULL, NULL, Gfire2InputInfo, Gfire2DIPInfo,
+	NULL, gfire2RomInfo, gfire2RomName, NULL, NULL, NULL, NULL, Gfire2InputInfo, Gfire2DIPInfo,
 	Gfire2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3
 };

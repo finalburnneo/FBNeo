@@ -1779,7 +1779,7 @@ struct BurnDriver BurnDrvSasuke = {
 	"Sasuke vs. Commander\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, sasukeRomInfo, sasukeRomName, sasukeSampleInfo, sasukeSampleName, SasukeInputInfo, SasukeDIPInfo,
+	NULL, sasukeRomInfo, sasukeRomName, NULL, NULL, sasukeSampleInfo, sasukeSampleName, SasukeInputInfo, SasukeDIPInfo,
 	SasukeInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 256, 3, 4
 };
@@ -1817,7 +1817,7 @@ struct BurnDriver BurnDrvSatansat = {
 	"Satan of Saturn (set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, satansatRomInfo, satansatRomName, vanguardSampleInfo, vanguardSampleName, SatansatInputInfo, SatansatDIPInfo,
+	NULL, satansatRomInfo, satansatRomName, NULL, NULL, vanguardSampleInfo, vanguardSampleName, SatansatInputInfo, SatansatDIPInfo,
 	SatansatInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -1856,7 +1856,7 @@ struct BurnDriver BurnDrvSatansata = {
 	"Satan of Saturn (set 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, satansataRomInfo, satansataRomName, vanguardSampleInfo, vanguardSampleName, SatansatInputInfo, SatansatDIPInfo,
+	NULL, satansataRomInfo, satansataRomName, NULL, NULL, vanguardSampleInfo, vanguardSampleName, SatansatInputInfo, SatansatDIPInfo,
 	SatansatInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -1894,7 +1894,7 @@ struct BurnDriver BurnDrvZarzon = {
 	"Zarzon\0", NULL, "SNK (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, zarzonRomInfo, zarzonRomName, vanguardSampleInfo, vanguardSampleName, SatansatInputInfo, SatansatDIPInfo,
+	NULL, zarzonRomInfo, zarzonRomName, NULL, NULL, vanguardSampleInfo, vanguardSampleName, SatansatInputInfo, SatansatDIPInfo,
 	SatansatInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -1933,7 +1933,7 @@ struct BurnDriver BurnDrvSatansatind = {
 	"Satan of Saturn (Inder S.A., bootleg)\0", NULL, "bootleg (Inder S.A.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, satansatindRomInfo, satansatindRomName, vanguardSampleInfo, vanguardSampleName, SatansatInputInfo, SatansatDIPInfo,
+	NULL, satansatindRomInfo, satansatindRomName, NULL, NULL, vanguardSampleInfo, vanguardSampleName, SatansatInputInfo, SatansatDIPInfo,
 	SatansatindInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -1973,7 +1973,7 @@ struct BurnDriver BurnDrvVanguard = {
 	"Vanguard (SNK)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, vanguardRomInfo, vanguardRomName, vanguardSampleInfo, vanguardSampleName, VanguardInputInfo, VanguardDIPInfo,
+	NULL, vanguardRomInfo, vanguardRomName, NULL, NULL, vanguardSampleInfo, vanguardSampleName, VanguardInputInfo, VanguardDIPInfo,
 	VanguardInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2013,7 +2013,7 @@ struct BurnDriver BurnDrvVanguardc = {
 	"Vanguard (Centuri)\0", NULL, "SNK (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, vanguardcRomInfo, vanguardcRomName, vanguardSampleInfo, vanguardSampleName, VanguardInputInfo, VanguardDIPInfo,
+	NULL, vanguardcRomInfo, vanguardcRomName, NULL, NULL, vanguardSampleInfo, vanguardSampleName, VanguardInputInfo, VanguardDIPInfo,
 	VanguardInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2053,7 +2053,7 @@ struct BurnDriver BurnDrvVanguardj = {
 	"Vanguard (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, vanguardjRomInfo, vanguardjRomName, vanguardSampleInfo, vanguardSampleName, VanguardInputInfo, VanguardDIPInfo,
+	NULL, vanguardjRomInfo, vanguardjRomName, NULL, NULL, vanguardSampleInfo, vanguardSampleName, VanguardInputInfo, VanguardDIPInfo,
 	VanguardInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2095,7 +2095,7 @@ struct BurnDriver BurnDrvFantasyu = {
 	"Fantasy (US)\0", NULL, "SNK (Rock-Ola license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, fantasyuRomInfo, fantasyuRomName, fantasySampleInfo, fantasySampleName, FantasyInputInfo, FantasyuDIPInfo,
+	NULL, fantasyuRomInfo, fantasyuRomName, NULL, NULL, fantasySampleInfo, fantasySampleName, FantasyInputInfo, FantasyuDIPInfo,
 	FantasyuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2137,7 +2137,7 @@ struct BurnDriver BurnDrvFantasyg = {
 	"Fantasy (Germany, set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, fantasygRomInfo, fantasygRomName, fantasySampleInfo, fantasySampleName, FantasyInputInfo, FantasyuDIPInfo,
+	NULL, fantasygRomInfo, fantasygRomName, NULL, NULL, fantasySampleInfo, fantasySampleName, FantasyInputInfo, FantasyuDIPInfo,
 	FantasyuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2179,7 +2179,7 @@ struct BurnDriver BurnDrvFantasyg2 = {
 	"Fantasy (Germany, set 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, fantasyg2RomInfo, fantasyg2RomName, fantasySampleInfo, fantasySampleName, FantasyInputInfo, FantasyDIPInfo,
+	NULL, fantasyg2RomInfo, fantasyg2RomName, NULL, NULL, fantasySampleInfo, fantasySampleName, FantasyInputInfo, FantasyDIPInfo,
 	FantasyuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2221,7 +2221,7 @@ struct BurnDriver BurnDrvFantasyj = {
 	"Fantasy (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, fantasyjRomInfo, fantasyjRomName, fantasySampleInfo, fantasySampleName, FantasyInputInfo, FantasyuDIPInfo,
+	NULL, fantasyjRomInfo, fantasyjRomName, NULL, NULL, fantasySampleInfo, fantasySampleName, FantasyInputInfo, FantasyuDIPInfo,
 	FantasyuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2258,7 +2258,7 @@ struct BurnDriver BurnDrvNibbler = {
 	"Nibbler (rev 9)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, nibblerRomInfo, nibblerRomName, NULL, NULL, NibblerInputInfo, NibblerDIPInfo,
+	NULL, nibblerRomInfo, nibblerRomName, NULL, NULL, NULL, NULL, NibblerInputInfo, NibblerDIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2295,7 +2295,7 @@ struct BurnDriver BurnDrvNibbler8 = {
 	"Nibbler (rev 8)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, nibbler8RomInfo, nibbler8RomName, NULL, NULL, NibblerInputInfo, Nibbler8DIPInfo,
+	NULL, nibbler8RomInfo, nibbler8RomName, NULL, NULL, NULL, NULL, NibblerInputInfo, Nibbler8DIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2332,7 +2332,7 @@ struct BurnDriver BurnDrvNibbler7 = {
 	"Nibbler (rev 7)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, nibbler7RomInfo, nibbler7RomName, NULL, NULL, NibblerInputInfo, Nibbler8DIPInfo,
+	NULL, nibbler7RomInfo, nibbler7RomName, NULL, NULL, NULL, NULL, NibblerInputInfo, Nibbler8DIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2369,7 +2369,7 @@ struct BurnDriver BurnDrvNibbler6 = {
 	"Nibbler (rev 6)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, nibbler6RomInfo, nibbler6RomName, NULL, NULL, NibblerInputInfo, Nibbler6DIPInfo,
+	NULL, nibbler6RomInfo, nibbler6RomName, NULL, NULL, NULL, NULL, NibblerInputInfo, Nibbler6DIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2406,7 +2406,7 @@ struct BurnDriver BurnDrvNibblera = {
 	"Nibbler (rev 9, alternate set)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, nibbleraRomInfo, nibbleraRomName, NULL, NULL, NibblerInputInfo, NibblerDIPInfo,
+	NULL, nibbleraRomInfo, nibbleraRomName, NULL, NULL, NULL, NULL, NibblerInputInfo, NibblerDIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2444,7 +2444,7 @@ struct BurnDriver BurnDrvNibblerp = {
 	"Nibbler (Pioneer Balloon conversion - rev 6)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, nibblerpRomInfo, nibblerpRomName, NULL, NULL, NibblerInputInfo, Nibbler6DIPInfo,
+	NULL, nibblerpRomInfo, nibblerpRomName, NULL, NULL, NULL, NULL, NibblerInputInfo, Nibbler6DIPInfo,
 	NibblerpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2481,7 +2481,7 @@ struct BurnDriver BurnDrvNibblero = {
 	"Nibbler (Olympia - rev 8)\0", NULL, "Rock-Ola (Olympia license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, nibbleroRomInfo, nibbleroRomName, NULL, NULL, NibblerInputInfo, Nibbler8DIPInfo,
+	NULL, nibbleroRomInfo, nibbleroRomName, NULL, NULL, NULL, NULL, NibblerInputInfo, Nibbler8DIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2517,7 +2517,7 @@ struct BurnDriver BurnDrvPballoon = {
 	"Pioneer Balloon\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, pballoonRomInfo, pballoonRomName, NULL, NULL, PballoonInputInfo, PballoonDIPInfo,
+	NULL, pballoonRomInfo, pballoonRomName, NULL, NULL, NULL, NULL, PballoonInputInfo, PballoonDIPInfo,
 	PballoonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2553,7 +2553,7 @@ struct BurnDriver BurnDrvPballoonr = {
 	"Pioneer Balloon (Rock-Ola license)\0", NULL, "SNK (Rock-Ola license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, pballoonrRomInfo, pballoonrRomName, NULL, NULL, PballoonInputInfo, PballoonDIPInfo,
+	NULL, pballoonrRomInfo, pballoonrRomName, NULL, NULL, NULL, NULL, PballoonInputInfo, PballoonDIPInfo,
 	PballoonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

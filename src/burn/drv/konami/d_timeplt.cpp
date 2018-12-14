@@ -834,7 +834,7 @@ struct BurnDriver BurnDrvTimeplt = {
 	"Time Pilot\0", NULL, "Konami", "GX393",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, timepltRomInfo, timepltRomName, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
+	NULL, timepltRomInfo, timepltRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
 	timepltInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
 };
@@ -868,7 +868,7 @@ struct BurnDriver BurnDrvTimeplta = {
 	"Time Pilot (Atari)\0", NULL, "Konami (Atari license)", "GX393",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, timepltaRomInfo, timepltaRomName, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
+	NULL, timepltaRomInfo, timepltaRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
 	timepltInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
 };
@@ -902,7 +902,7 @@ struct BurnDriver BurnDrvTimepltc = {
 	"Time Pilot (Centuri)\0", NULL, "Konami (Centuri license)", "GX393",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, timepltcRomInfo, timepltcRomName, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
+	NULL, timepltcRomInfo, timepltcRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
 	timepltInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
 };
@@ -936,7 +936,7 @@ struct BurnDriver BurnDrvSpaceplt = {
 	"Space Pilot\0", NULL, "bootleg", "GX393",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, spacepltRomInfo, spacepltRomName, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
+	NULL, spacepltRomInfo, spacepltRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
 	timepltInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
 };
@@ -976,7 +976,7 @@ struct BurnDriver BurnDrvPsurge = {
 	"Power Surge\0", NULL, "Vision Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_MAZE, 0,
-	NULL, psurgeRomInfo, psurgeRomName, NULL, NULL, TimepltInputInfo, PsurgeDIPInfo,
+	NULL, psurgeRomInfo, psurgeRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, PsurgeDIPInfo,
 	psurgeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
 };
@@ -1019,7 +1019,7 @@ struct BurnDriver BurnDrvChkun = {
 	"Chance Kun (Japan)\0", NULL, "Peni Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_CASINO, 0,
-	NULL, chkunRomInfo, chkunRomName, NULL, NULL, ChkunInputInfo, ChkunDIPInfo,
+	NULL, chkunRomInfo, chkunRomName, NULL, NULL, NULL, NULL, ChkunInputInfo, ChkunDIPInfo,
 	chkunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
 };
@@ -1059,7 +1059,7 @@ struct BurnDriver BurnDrvBikkuric = {
 	"Bikkuri Card (Japan)\0", NULL, "Peni Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_CASINO, 0,
-	NULL, bikkuricRomInfo, bikkuricRomName, NULL, NULL, BikkuricInputInfo, BikkuricDIPInfo,
+	NULL, bikkuricRomInfo, bikkuricRomName, NULL, NULL, NULL, NULL, BikkuricInputInfo, BikkuricDIPInfo,
 	bikkuricInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
 };

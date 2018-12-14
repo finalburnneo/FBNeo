@@ -2223,7 +2223,7 @@ struct BurnDriver BurnDrvTimesold = {
 	"Time Soldiers (US Rev 3)\0", NULL, "Alpha Denshi Co. (SNK/Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, timesoldRomInfo, timesoldRomName, NULL, NULL, TimesoldInputInfo, TimesoldDIPInfo,
+	NULL, timesoldRomInfo, timesoldRomName, NULL, NULL, NULL, NULL, TimesoldInputInfo, TimesoldDIPInfo,
 	TimesoldInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };
@@ -2280,7 +2280,7 @@ struct BurnDriver BurnDrvTimesold1 = {
 	"Time Soldiers (US Rev 1)\0", NULL, "Alpha Denshi Co. (SNK/Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, timesold1RomInfo, timesold1RomName, NULL, NULL, TimesoldInputInfo, TimesoldDIPInfo,
+	NULL, timesold1RomInfo, timesold1RomName, NULL, NULL, NULL, NULL, TimesoldInputInfo, TimesoldDIPInfo,
 	Timesold1Init, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };
@@ -2366,7 +2366,7 @@ struct BurnDriver BurnDrvBtlfield = {
 	"Battle Field (Japan)\0", NULL, "Alpha Denshi Co. (SNK license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, btlfieldRomInfo, btlfieldRomName, NULL, NULL, BtlfieldInputInfo, BtlfieldDIPInfo,
+	NULL, btlfieldRomInfo, btlfieldRomName, NULL, NULL, NULL, NULL, BtlfieldInputInfo, BtlfieldDIPInfo,
 	BtlfieldInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };
@@ -2473,7 +2473,7 @@ struct BurnDriver BurnDrvBtlfieldb = {
 	"Battle Field (bootleg)\0", "no-rotation joystick ver", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, btlfieldbRomInfo, btlfieldbRomName, NULL, NULL, BtlfieldbInputInfo, BtlfieldbDIPInfo,
+	NULL, btlfieldbRomInfo, btlfieldbRomName, NULL, NULL, NULL, NULL, BtlfieldbInputInfo, BtlfieldbDIPInfo,
 	BtlfieldbInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };
@@ -2568,7 +2568,7 @@ struct BurnDriver BurnDrvSkysoldr = {
 	"Sky Soldiers (US)\0", NULL, "Alpha Denshi Co. (SNK of America/Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, skysoldrRomInfo, skysoldrRomName, NULL, NULL, SkysoldrInputInfo, SkysoldrDIPInfo,
+	NULL, skysoldrRomInfo, skysoldrRomName, NULL, NULL, NULL, NULL, SkysoldrInputInfo, SkysoldrDIPInfo,
 	SkysoldrInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };
@@ -2699,7 +2699,7 @@ struct BurnDriver BurnDrvSkysoldrbl = {
 	"Sky Soldiers (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, skysoldrblRomInfo, skysoldrblRomName, NULL, NULL, SkysoldrInputInfo, SkysoldrDIPInfo,
+	NULL, skysoldrblRomInfo, skysoldrblRomName, NULL, NULL, NULL, NULL, SkysoldrInputInfo, SkysoldrDIPInfo,
 	SkysoldrblInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };
@@ -2772,7 +2772,7 @@ struct BurnDriver BurnDrvGoldmedl = {
 	"Gold Medalist (set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, goldmedlRomInfo, goldmedlRomName, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
+	NULL, goldmedlRomInfo, goldmedlRomName, NULL, NULL, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
 	GoldmedlInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -2844,7 +2844,7 @@ struct BurnDriver BurnDrvGoldmedla = {
 	"Gold Medalist (set 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, goldmedlaRomInfo, goldmedlaRomName, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
+	NULL, goldmedlaRomInfo, goldmedlaRomName, NULL, NULL, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
 	GoldmedlaInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -2882,7 +2882,7 @@ struct BurnDriver BurnDrvGoldmedlb = {
 	"Gold Medalist (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, goldmedlbRomInfo, goldmedlbRomName, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
+	NULL, goldmedlbRomInfo, goldmedlbRomName, NULL, NULL, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
 	GoldmedlaInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -2950,7 +2950,7 @@ struct BurnDriver BurnDrvSkyadvnt = {
 	"Sky Adventure (World)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, skyadvntRomInfo, skyadvntRomName, NULL, NULL, GangwarsInputInfo, SkyadvntDIPInfo,
+	NULL, skyadvntRomInfo, skyadvntRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, SkyadvntDIPInfo,
 	SkyadvntInit, DrvExit, DrvFrame, SkyadvntDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
 };
@@ -2990,7 +2990,7 @@ struct BurnDriver BurnDrvSkyadvntu = {
 	"Sky Adventure (US)\0", NULL, "Alpha Denshi Co. (SNK of America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, skyadvntuRomInfo, skyadvntuRomName, NULL, NULL, GangwarsInputInfo, SkyadvntuDIPInfo,
+	NULL, skyadvntuRomInfo, skyadvntuRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, SkyadvntuDIPInfo,
 	SkyadvntuInit, DrvExit, DrvFrame, SkyadvntDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
 };
@@ -3025,7 +3025,7 @@ struct BurnDriver BurnDrvSkyadvntj = {
 	"Sky Adventure (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, skyadvntjRomInfo, skyadvntjRomName, NULL, NULL, GangwarsInputInfo, SkyadvntDIPInfo,
+	NULL, skyadvntjRomInfo, skyadvntjRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, SkyadvntDIPInfo,
 	SkyadvntInit, DrvExit, DrvFrame, SkyadvntDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
 };
@@ -3100,7 +3100,7 @@ struct BurnDriver BurnDrvGangwars = {
 	"Gang Wars\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, gangwarsRomInfo, gangwarsRomName, NULL, NULL, GangwarsInputInfo, GangwarsDIPInfo,
+	NULL, gangwarsRomInfo, gangwarsRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, GangwarsDIPInfo,
 	GangwarsInit, DrvExit, DrvFrame, GangwarsDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -3238,7 +3238,7 @@ struct BurnDriver BurnDrvGangwarsb = {
 	"Gang Wars (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, gangwarsbRomInfo, gangwarsbRomName, NULL, NULL, GangwarsInputInfo, GangwarsDIPInfo,
+	NULL, gangwarsbRomInfo, gangwarsbRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, GangwarsDIPInfo,
 	GangwarsbInit, DrvExit, DrvFrame, GangwarsDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -3279,7 +3279,7 @@ struct BurnDriver BurnDrvGangwarsj = {
 	"Gang Wars (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, gangwarsjRomInfo, gangwarsjRomName, NULL, NULL, GangwarsInputInfo, GangwarsDIPInfo,
+	NULL, gangwarsjRomInfo, gangwarsjRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, GangwarsDIPInfo,
 	GangwarsInit, DrvExit, DrvFrame, GangwarsDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -3320,7 +3320,7 @@ struct BurnDriver BurnDrvGangwarsu = {
 	"Gang Wars (US)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, gangwarsuRomInfo, gangwarsuRomName, NULL, NULL, GangwarsInputInfo, GangwarsuDIPInfo,
+	NULL, gangwarsuRomInfo, gangwarsuRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, GangwarsuDIPInfo,
 	GangwarsInit, DrvExit, DrvFrame, GangwarsDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -3392,7 +3392,7 @@ struct BurnDriver BurnDrvSbasebal = {
 	"Super Champion Baseball (US)\0", NULL, "Alpha Denshi Co. (SNK of America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, sbasebalRomInfo, sbasebalRomName, NULL, NULL, SbasebalInputInfo, SbasebalDIPInfo,
+	NULL, sbasebalRomInfo, sbasebalRomName, NULL, NULL, NULL, NULL, SbasebalInputInfo, SbasebalDIPInfo,
 	SbasebalInit, DrvExit, DrvFrame, SbasebalDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -3432,7 +3432,7 @@ struct BurnDriver BurnDrvSbasebalj = {
 	"Super Champion Baseball (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, sbasebaljRomInfo, sbasebaljRomName, NULL, NULL, SbasebalInputInfo, SbasebalDIPInfo /*wrong*/,
+	NULL, sbasebaljRomInfo, sbasebaljRomName, NULL, NULL, NULL, NULL, SbasebalInputInfo, SbasebalDIPInfo /*wrong*/,
 	SbasebaljInit, DrvExit, DrvFrame, SbasebalDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };

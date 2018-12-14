@@ -595,7 +595,7 @@ struct BurnDriver BurnDrvBogeyman = {
 	"Bogey Manor\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, bogeymanRomInfo, bogeymanRomName, NULL, NULL, BogeymanInputInfo, BogeymanDIPInfo,
+	NULL, bogeymanRomInfo, bogeymanRomName, NULL, NULL, NULL, NULL, BogeymanInputInfo, BogeymanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 272,
 	256, 240, 4, 3
 };

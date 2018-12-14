@@ -767,7 +767,7 @@ struct BurnDriver BurnDrvMainsnk = {
 	"Main Event (1984)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, mainsnkRomInfo, mainsnkRomName, NULL, NULL, MainsnkInputInfo, MainsnkDIPInfo,
+	NULL, mainsnkRomInfo, mainsnkRomName, NULL, NULL, NULL, NULL, MainsnkInputInfo, MainsnkDIPInfo,
 	DrvInitmainsnk, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
 };
@@ -807,7 +807,7 @@ struct BurnDriver BurnDrvCanvas = {
 	"Canvas Croquis\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, canvasRomInfo, canvasRomName, NULL, NULL, CanvasInputInfo, CanvasDIPInfo,
+	NULL, canvasRomInfo, canvasRomName, NULL, NULL, NULL, NULL, CanvasInputInfo, CanvasDIPInfo,
 	DrvInitcanvas, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
 };

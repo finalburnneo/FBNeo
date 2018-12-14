@@ -803,7 +803,7 @@ struct BurnDriver BurnDrvBatman = {
 	"Batman\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, batmanRomInfo, batmanRomName, NULL, NULL, BatmanInputInfo, BatmanDIPInfo,
+	NULL, batmanRomInfo, batmanRomName, NULL, NULL, NULL, NULL, BatmanInputInfo, BatmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };

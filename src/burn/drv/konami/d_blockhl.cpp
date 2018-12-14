@@ -528,7 +528,7 @@ struct BurnDriver BurnDrvBlockhl = {
 	"Block Hole\0", NULL, "Konami", "GX973",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
-	NULL, blockhlRomInfo, blockhlRomName, NULL, NULL, BlockhlInputInfo, BlockhlDIPInfo,
+	NULL, blockhlRomInfo, blockhlRomName, NULL, NULL, NULL, NULL, BlockhlInputInfo, BlockhlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
 };
@@ -562,7 +562,7 @@ struct BurnDriver BurnDrvQuarth = {
 	"Quarth (Japan)\0", NULL, "Konami", "GX973",
 	L"Quarth\0\u30AF\u30A9\u30FC\u30B9 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
-	NULL, quarthRomInfo, quarthRomName, NULL, NULL, BlockhlInputInfo, BlockhlDIPInfo,
+	NULL, quarthRomInfo, quarthRomName, NULL, NULL, NULL, NULL, BlockhlInputInfo, BlockhlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
 };

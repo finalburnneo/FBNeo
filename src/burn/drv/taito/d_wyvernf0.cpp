@@ -740,7 +740,7 @@ struct BurnDriver BurnDrvWyvernf0 = {
 	"Wyvern F-0\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2,  HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, wyvernf0RomInfo, wyvernf0RomName, NULL, NULL, Wyvernf0InputInfo, Wyvernf0DIPInfo,
+	NULL, wyvernf0RomInfo, wyvernf0RomName, NULL, NULL, NULL, NULL, Wyvernf0InputInfo, Wyvernf0DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

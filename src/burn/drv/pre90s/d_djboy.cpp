@@ -713,7 +713,7 @@ struct BurnDriver BurnDrvDjboy = {
 	"DJ Boy (set 1)\0", NULL, "Kaneko (American Sammy license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_MISC, GBF_SCRFIGHT, 0,
-	NULL, djboyRomInfo, djboyRomName, NULL, NULL, DjboyInputInfo, DjboyDIPInfo,
+	NULL, djboyRomInfo, djboyRomName, NULL, NULL, NULL, NULL, DjboyInputInfo, DjboyDIPInfo,
 	DjboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -754,7 +754,7 @@ struct BurnDriver BurnDrvDjboya = {
 	"DJ Boy (set 2)\0", NULL, "Kaneko (American Sammy license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_SCRFIGHT, 0,
-	NULL, djboyaRomInfo, djboyaRomName, NULL, NULL, DjboyInputInfo, DjboyDIPInfo,
+	NULL, djboyaRomInfo, djboyaRomName, NULL, NULL, NULL, NULL, DjboyInputInfo, DjboyDIPInfo,
 	DjboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -802,7 +802,7 @@ struct BurnDriver BurnDrvDjboyj = {
 	"DJ Boy (Japan)\0", NULL, "Kaneko (Sega license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_SCRFIGHT, 0,
-	NULL, djboyjRomInfo, djboyjRomName, NULL, NULL, DjboyInputInfo, DjboyDIPInfo,
+	NULL, djboyjRomInfo, djboyjRomName, NULL, NULL, NULL, NULL, DjboyInputInfo, DjboyDIPInfo,
 	DjboyjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };

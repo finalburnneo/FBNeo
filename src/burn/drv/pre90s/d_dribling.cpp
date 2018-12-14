@@ -434,7 +434,7 @@ struct BurnDriver BurnDrvDribling = {
 	"Dribbling\0", "No sound", "Model Racing", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, driblingRomInfo, driblingRomName, NULL, NULL, DriblingInputInfo, NULL,
+	NULL, driblingRomInfo, driblingRomName, NULL, NULL, NULL, NULL, DriblingInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 216, 4, 3
 };
@@ -467,7 +467,7 @@ struct BurnDriver BurnDrvDriblingo = {
 	"Dribbling (Olympia)\0", "No sound", "Model Racing (Olympia license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, driblingoRomInfo, driblingoRomName, NULL, NULL, DriblingInputInfo, NULL,
+	NULL, driblingoRomInfo, driblingoRomName, NULL, NULL, NULL, NULL, DriblingInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 216, 4, 3
 };
@@ -500,7 +500,7 @@ struct BurnDriver BurnDrvDriblingbr = {
 	"Dribbling (bootleg, Brazil)\0", "No sound", "bootleg (Videomac)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, driblingbrRomInfo, driblingbrRomName, NULL, NULL, DriblingInputInfo, NULL,
+	NULL, driblingbrRomInfo, driblingbrRomName, NULL, NULL, NULL, NULL, DriblingInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 216, 4, 3
 };

@@ -690,7 +690,7 @@ struct BurnDriver BurnDrvBlockade = {
 	"Blockade\0", NULL, "Gremlin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, blockadeRomInfo, blockadeRomName, BlockadeSampleInfo, BlockadeSampleName, BlockadeInputInfo, BlockadeDIPInfo,
+	NULL, blockadeRomInfo, blockadeRomName, NULL, NULL, BlockadeSampleInfo, BlockadeSampleName, BlockadeInputInfo, BlockadeDIPInfo,
 	BlockadeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -721,7 +721,7 @@ struct BurnDriver BurnDrvComotion = {
 	"CoMOTION\0", NULL, "Gremlin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, comotionRomInfo, comotionRomName,  BlockadeSampleInfo, BlockadeSampleName, ComotionInputInfo, ComotionDIPInfo,
+	NULL, comotionRomInfo, comotionRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, ComotionInputInfo, ComotionDIPInfo,
 	ComotionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -752,7 +752,7 @@ struct BurnDriver BurnDrvBlasto = {
 	"Blasto\0", NULL, "Gremlin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, blastoRomInfo, blastoRomName,  BlockadeSampleInfo, BlockadeSampleName, BlastoInputInfo, BlastoDIPInfo,
+	NULL, blastoRomInfo, blastoRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, BlastoInputInfo, BlastoDIPInfo,
 	BlastoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -783,7 +783,7 @@ struct BurnDriver BurnDrvHustle = {
 	"Hustle\0", NULL, "Gremlin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, hustleRomInfo, hustleRomName,  BlockadeSampleInfo, BlockadeSampleName, HustleInputInfo, HustleDIPInfo,
+	NULL, hustleRomInfo, hustleRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, HustleInputInfo, HustleDIPInfo,
 	HustleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -812,7 +812,7 @@ struct BurnDriver BurnDrvMineswpr = {
 	"Minesweeper\0", NULL, "Amutech", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, mineswprRomInfo, mineswprRomName,  BlockadeSampleInfo, BlockadeSampleName, MineswprInputInfo, MineswprDIPInfo,
+	NULL, mineswprRomInfo, mineswprRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, MineswprInputInfo, MineswprDIPInfo,
 	MineswprInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -836,7 +836,7 @@ struct BurnDriver BurnDrvMineswpr4 = {
 	"Minesweeper (4-Player)\0", NULL, "Amutech", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, mineswpr4RomInfo, mineswpr4RomName,  BlockadeSampleInfo, BlockadeSampleName, Mineswpr4InputInfo, Mineswpr4DIPInfo,
+	NULL, mineswpr4RomInfo, mineswpr4RomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, Mineswpr4InputInfo, Mineswpr4DIPInfo,
 	MineswprInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };

@@ -1809,7 +1809,7 @@ struct BurnDriver BurnDrvTerracre = {
 	"Terra Cresta (YM3526 set 1)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	TerracreInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
@@ -1819,7 +1819,7 @@ struct BurnDriver BurnDrvTerracreo = {
 	"Terra Cresta (YM3526 set 2)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, DrvoRomInfo, DrvoRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvoRomInfo, DrvoRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	TerracreoInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
@@ -1829,7 +1829,7 @@ struct BurnDriver BurnDrvTerracrea = {
 	"Terra Cresta (YM3526 set 3)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, DrvaRomInfo, DrvaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvaRomInfo, DrvaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	TerracreoInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
@@ -1839,7 +1839,7 @@ struct BurnDriver BurnDrvTerracren = {
 	"Terra Cresta (YM2203)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, DrvnRomInfo, DrvnRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvnRomInfo, DrvnRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	TerracrenInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
@@ -1849,7 +1849,7 @@ struct BurnDriver BurnDrvAmazon = {
 	"Soldier Girl Amazon\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, AmazonRomInfo, AmazonRomName, NULL, NULL, AmazonInputInfo, AmazonDIPInfo,
+	NULL, AmazonRomInfo, AmazonRomName, NULL, NULL, NULL, NULL, AmazonInputInfo, AmazonDIPInfo,
 	AmazonInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
@@ -1859,7 +1859,7 @@ struct BurnDriver BurnDrvAmatelas = {
 	"Sei Senshi Amatelass\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, AmatelasRomInfo, AmatelasRomName, NULL, NULL, AmazonInputInfo, AmazonDIPInfo,
+	NULL, AmatelasRomInfo, AmatelasRomName, NULL, NULL, NULL, NULL, AmazonInputInfo, AmazonDIPInfo,
 	AmatelasInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
@@ -1869,7 +1869,7 @@ struct BurnDriver BurnDrvHorekid = {
 	"Kid no Hore Hore Daisakusen\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, HorekidRomInfo, HorekidRomName, NULL, NULL, HorekidInputInfo, HorekidDIPInfo,
+	NULL, HorekidRomInfo, HorekidRomName, NULL, NULL, NULL, NULL, HorekidInputInfo, HorekidDIPInfo,
 	HorekidInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
@@ -1879,7 +1879,7 @@ struct BurnDriver BurnDrvHorekidb = {
 	"Kid no Hore Hore Daisakusen (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, HorekidbRomInfo, HorekidbRomName, NULL, NULL, HorekidInputInfo, HorekidDIPInfo,
+	NULL, HorekidbRomInfo, HorekidbRomName, NULL, NULL, NULL, NULL, HorekidInputInfo, HorekidDIPInfo,
 	HorekidInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
@@ -1889,7 +1889,7 @@ struct BurnDriver BurnDrvBoobhack = {
 	"Booby Kids (Italian manufactured graphic hack / bootleg of Kid no Hore Hore Daisakusen (bootleg))\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, BoobhackRomInfo, BoobhackRomName, NULL, NULL, HorekidInputInfo, HorekidDIPInfo,
+	NULL, BoobhackRomInfo, BoobhackRomName, NULL, NULL, NULL, NULL, HorekidInputInfo, HorekidDIPInfo,
 	HorekidInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };

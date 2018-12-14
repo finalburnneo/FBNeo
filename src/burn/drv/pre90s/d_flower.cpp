@@ -690,7 +690,7 @@ struct BurnDriver BurnDrvFlower = {
 	"Flower (US)\0", NULL, "Clarue (Komax license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, flowerRomInfo, flowerRomName, NULL, NULL, FlowerInputInfo, FlowerDIPInfo,
+	NULL, flowerRomInfo, flowerRomName, NULL, NULL, NULL, NULL, FlowerInputInfo, FlowerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	272, 224, 4, 3
 };
@@ -739,7 +739,7 @@ struct BurnDriver BurnDrvFlowerj = {
 	"Flower (Japan)\0", NULL, "Clarue (Sega / Alpha Denshi Co. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, flowerjRomInfo, flowerjRomName, NULL, NULL, FlowerInputInfo, FlowerDIPInfo,
+	NULL, flowerjRomInfo, flowerjRomName, NULL, NULL, NULL, NULL, FlowerInputInfo, FlowerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	272, 224, 4, 3
 };

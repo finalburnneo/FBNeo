@@ -1326,7 +1326,7 @@ struct BurnDriver BurnDrvPunchout = {
 	"Punch-Out!! (Rev B)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, punchoutRomInfo, punchoutRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
+	NULL, punchoutRomInfo, punchoutRomName, NULL, NULL, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
 	PunchoutInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };
@@ -1398,7 +1398,7 @@ struct BurnDriver BurnDrvPunchouta = {
 	"Punch-Out!! (Rev A)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, punchoutaRomInfo, punchoutaRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
+	NULL, punchoutaRomInfo, punchoutaRomName, NULL, NULL, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
 	PunchoutaInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };
@@ -1465,7 +1465,7 @@ struct BurnDriver BurnDrvPunchoutj = {
 	"Punch-Out!! (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, punchoutjRomInfo, punchoutjRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
+	NULL, punchoutjRomInfo, punchoutjRomName, NULL, NULL, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
 	PunchoutaInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };
@@ -1537,7 +1537,7 @@ struct BurnDriver BurnDrvPunchita = {
 	"Punch-Out!! (Italian bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, punchitaRomInfo, punchitaRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
+	NULL, punchitaRomInfo, punchitaRomName, NULL, NULL, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
 	SpnchoutInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };
@@ -1604,7 +1604,7 @@ struct BurnDriver BurnDrvSpnchout = {
 	"Super Punch-Out!! (Rev B)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, spnchoutRomInfo, spnchoutRomName, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
+	NULL, spnchoutRomInfo, spnchoutRomName, NULL, NULL, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
 	SpnchoutInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };
@@ -1671,7 +1671,7 @@ struct BurnDriver BurnDrvSpnchouta = {
 	"Super Punch-Out!! (Rev A)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, spnchoutaRomInfo, spnchoutaRomName, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
+	NULL, spnchoutaRomInfo, spnchoutaRomName, NULL, NULL, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
 	PunchoutaInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };
@@ -1743,7 +1743,7 @@ struct BurnDriver BurnDrvSpnchoutj = {
 	"Super Punch-Out!! (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, spnchoutjRomInfo, spnchoutjRomName, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
+	NULL, spnchoutjRomInfo, spnchoutjRomName, NULL, NULL, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
 	SpnchoutjInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };
@@ -1805,7 +1805,7 @@ struct BurnDriver BurnDrvArmwrest = {
 	"Arm Wrestling\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, armwrestRomInfo, armwrestRomName, NULL, NULL, ArmwrestInputInfo, ArmwrestDIPInfo,
+	NULL, armwrestRomInfo, armwrestRomName, NULL, NULL, NULL, NULL, ArmwrestInputInfo, ArmwrestDIPInfo,
 	ArmwrestInit, DrvExit, DrvFrame, ArmwrestDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };

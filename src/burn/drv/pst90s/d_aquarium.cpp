@@ -763,7 +763,7 @@ struct BurnDriver BurnDrvAquarium = {
 	"Aquarium (US)\0", NULL, "Excellent System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, aquariumRomInfo, aquariumRomName, NULL, NULL, AquariumInputInfo, AquariumDIPInfo,
+	NULL, aquariumRomInfo, aquariumRomName, NULL, NULL, NULL, NULL, AquariumInputInfo, AquariumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
@@ -797,7 +797,7 @@ struct BurnDriver BurnDrvAquariumj = {
 	"Aquarium (Japan)\0", NULL, "Excellent System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, aquariumjRomInfo, aquariumjRomName, NULL, NULL, AquariumInputInfo, AquariumDIPInfo,
+	NULL, aquariumjRomInfo, aquariumjRomName, NULL, NULL, NULL, NULL, AquariumInputInfo, AquariumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };

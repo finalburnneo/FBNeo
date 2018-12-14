@@ -777,7 +777,7 @@ struct BurnDriver BurnDrvBottom9 = {
 	"Bottom of the Ninth (ver. T)\0", NULL, "Konami", "GX891",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, bottom9RomInfo, bottom9RomName, NULL, NULL, Bottom9InputInfo, Bottom9DIPInfo,
+	NULL, bottom9RomInfo, bottom9RomName, NULL, NULL, NULL, NULL, Bottom9InputInfo, Bottom9DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
 };
@@ -841,7 +841,7 @@ struct BurnDriver BurnDrvBottom9n = {
 	"Bottom of the Ninth (ver. N)\0", NULL, "Konami", "GX891",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, bottom9nRomInfo, bottom9nRomName, NULL, NULL, Bottom9InputInfo, Bottom9DIPInfo,
+	NULL, bottom9nRomInfo, bottom9nRomName, NULL, NULL, NULL, NULL, Bottom9InputInfo, Bottom9DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
 };
@@ -905,7 +905,7 @@ struct BurnDriver BurnDrvMstadium = {
 	"Main Stadium (Japan ver. 4)\0", NULL, "Konami", "GX891",
 	L"Main Stadium\0\u30E1\u30A4\u30F3\u30B9\u30BF\u30B8\u30A2\u30E0 (Japan ver. 4)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, mstadiumRomInfo, mstadiumRomName, NULL, NULL, Bottom9InputInfo, MstadiumDIPInfo,
+	NULL, mstadiumRomInfo, mstadiumRomName, NULL, NULL, NULL, NULL, Bottom9InputInfo, MstadiumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
 };

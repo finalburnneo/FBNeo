@@ -947,7 +947,7 @@ struct BurnDriver BurnDrvGalivan = {
 	"Cosmo Police Galivan (12/26/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, galivanRomInfo, galivanRomName, NULL, NULL, DrvInputInfo, GalivanDIPInfo,
+	NULL, galivanRomInfo, galivanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalivanDIPInfo,
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -992,7 +992,7 @@ struct BurnDriver BurnDrvGalivan2 = {
 	"Cosmo Police Galivan (12/16/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, galivan2RomInfo, galivan2RomName, NULL, NULL, DrvInputInfo, GalivanDIPInfo,
+	NULL, galivan2RomInfo, galivan2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalivanDIPInfo,
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1037,7 +1037,7 @@ struct BurnDriver BurnDrvGalivan3 = {
 	"Cosmo Police Galivan (12/11/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, galivan3RomInfo, galivan3RomName, NULL, NULL, DrvInputInfo, GalivanDIPInfo,
+	NULL, galivan3RomInfo, galivan3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalivanDIPInfo,
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1082,7 +1082,7 @@ struct BurnDriver BurnDrvDangar = {
 	"Ufo Robo Dangar (4/07/1987)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dangarRomInfo, dangarRomName, NULL, NULL, DrvInputInfo, DangarDIPInfo,
+	NULL, dangarRomInfo, dangarRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarDIPInfo,
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1127,7 +1127,7 @@ struct BurnDriver BurnDrvDangara = {
 	"Ufo Robo Dangar (12/1/1986)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dangaraRomInfo, dangaraRomName, NULL, NULL, DrvInputInfo, DangarDIPInfo, // dangar2
+	NULL, dangaraRomInfo, dangaraRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarDIPInfo, // dangar2
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1172,7 +1172,7 @@ struct BurnDriver BurnDrvDangarb = {
 	"Ufo Robo Dangar (9/26/1986)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dangarbRomInfo, dangarbRomName, NULL, NULL, DrvInputInfo, DangarDIPInfo, // Dangar2
+	NULL, dangarbRomInfo, dangarbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarDIPInfo, // Dangar2
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1221,7 +1221,7 @@ struct BurnDriver BurnDrvDangarj = {
 	"Ufo Robo Dangar (9/26/1986, Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dangarjRomInfo, dangarjRomName, NULL, NULL, DrvInputInfo, DangarDIPInfo, // Dangar2
+	NULL, dangarjRomInfo, dangarjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarDIPInfo, // Dangar2
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1266,7 +1266,7 @@ struct BurnDriver BurnDrvDangarbt = {
 	"Ufo Robo Dangar (bootleg)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dangarbtRomInfo, dangarbtRomName, NULL, NULL, DrvInputInfo, DangarDIPInfo, // Dangar2
+	NULL, dangarbtRomInfo, dangarbtRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarDIPInfo, // Dangar2
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1320,7 +1320,7 @@ struct BurnDriver BurnDrvNinjemak = {
 	"Ninja Emaki (US)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, ninjemakRomInfo, ninjemakRomName, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
+	NULL, ninjemakRomInfo, ninjemakRomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1369,7 +1369,7 @@ struct BurnDriver BurnDrvYouma = {
 	"Youma Ninpou Chou (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, youmaRomInfo, youmaRomName, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
+	NULL, youmaRomInfo, youmaRomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1418,7 +1418,7 @@ struct BurnDriver BurnDrvYouma2 = {
 	"Youma Ninpou Chou (Japan, alt)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, youma2RomInfo, youma2RomName, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
+	NULL, youma2RomInfo, youma2RomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1465,7 +1465,7 @@ struct BurnDriverD BurnDrvYoumab = {
 	"Youma Ninpou Chou (Game Electronics bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, youmabRomInfo, youmabRomName, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
+	NULL, youmabRomInfo, youmabRomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1512,7 +1512,7 @@ struct BurnDriverD BurnDrvYoumab2 = {
 	"Youma Ninpou Chou (Game Electronics bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, youmab2RomInfo, youmab2RomName, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
+	NULL, youmab2RomInfo, youmab2RomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };

@@ -574,7 +574,7 @@ struct BurnDriver BurnDrvProgolf = {
 	"18 Holes Pro Golf (set 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, progolfRomInfo, progolfRomName, NULL, NULL, ProgolfInputInfo, ProgolfDIPInfo,
+	NULL, progolfRomInfo, progolfRomName, NULL, NULL, NULL, NULL, ProgolfInputInfo, ProgolfDIPInfo,
 	ProgolfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 256, 3, 4
 };
@@ -613,7 +613,7 @@ struct BurnDriverD BurnDrvProgolfa = {
 	"18 Holes Pro Golf (set 2)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, progolfaRomInfo, progolfaRomName, NULL, NULL, ProgolfInputInfo, ProgolfDIPInfo,
+	NULL, progolfaRomInfo, progolfaRomName, NULL, NULL, NULL, NULL, ProgolfInputInfo, ProgolfDIPInfo,
 	ProgolfaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 256, 3, 4
 };

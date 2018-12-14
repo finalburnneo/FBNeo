@@ -831,7 +831,7 @@ struct BurnDriver BurnDrvFriskyt = {
 	"Frisky Tom (set 1)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, friskytRomInfo, friskytRomName, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
+	NULL, friskytRomInfo, friskytRomName, NULL, NULL, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
 	friskytInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -866,7 +866,7 @@ struct BurnDriver BurnDrvFriskyta = {
 	"Frisky Tom (set 2)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, friskytaRomInfo, friskytaRomName, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
+	NULL, friskytaRomInfo, friskytaRomName, NULL, NULL, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
 	friskytInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -906,7 +906,7 @@ struct BurnDriver BurnDrvFriskytb = {
 	"Frisky Tom (set 3, encrypted)\0", "Broken, please use parent romset!", "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, friskytbRomInfo, friskytbRomName, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
+	NULL, friskytbRomInfo, friskytbRomName, NULL, NULL, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
 	friskytbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -948,7 +948,7 @@ struct BurnDriver BurnDrvRadrad = {
 	"Radical Radial (US)\0", NULL, "Nichibutsu USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, radradRomInfo, radradRomName, NULL, NULL, RadradInputInfo, RadradDIPInfo,
+	NULL, radradRomInfo, radradRomName, NULL, NULL, NULL, NULL, RadradInputInfo, RadradDIPInfo,
 	radradInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -986,7 +986,7 @@ struct BurnDriver BurnDrvRadradj = {
 	"Radical Radial (Japan)\0", NULL, "Logitec Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, radradjRomInfo, radradjRomName, NULL, NULL, RadradInputInfo, RadradDIPInfo,
+	NULL, radradjRomInfo, radradjRomName, NULL, NULL, NULL, NULL, RadradInputInfo, RadradDIPInfo,
 	radradInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -1028,7 +1028,7 @@ struct BurnDriver BurnDrvSeicross = {
 	"Seicross\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, seicrossRomInfo, seicrossRomName, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
+	NULL, seicrossRomInfo, seicrossRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
 	seicrossInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -1065,7 +1065,7 @@ struct BurnDriver BurnDrvSectrzon = {
 	"Sector Zone\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sectrzonRomInfo, sectrzonRomName, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
+	NULL, sectrzonRomInfo, sectrzonRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
 	seicrossInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

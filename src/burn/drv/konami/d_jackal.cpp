@@ -1257,7 +1257,7 @@ struct BurnDriver BurnDrvJackal = {
 	"Jackal (World, 8-way Joystick)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, jackalRomInfo, jackalRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, jackalRomInfo, jackalRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 240, 3, 4
 };
@@ -1267,7 +1267,7 @@ struct BurnDriver BurnDrvJackalr = {
 	"Jackal (World, Rotary Joystick)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, jackalrRomInfo, jackalrRomName, NULL, NULL, DrvrotateInputInfo, DrvrotateDIPInfo,
+	NULL, jackalrRomInfo, jackalrRomName, NULL, NULL, NULL, NULL, DrvrotateInputInfo, DrvrotateDIPInfo,
 	DrvInitRo, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 240, 3, 4
 };
@@ -1277,7 +1277,7 @@ struct BurnDriver BurnDrvJackalj = {
 	"Tokushu Butai Jackal (Japan, 8-way Joystick)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, jackaljRomInfo, jackaljRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, jackaljRomInfo, jackaljRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 240, 3, 4
 };
@@ -1287,7 +1287,7 @@ struct BurnDriver BurnDrvJackalbl = {
 	"Jackal (bootleg, Rotary Joystick)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, jackalblRomInfo, jackalblRomName, NULL, NULL, DrvrotateInputInfo, DrvrotateDIPInfo,
+	NULL, jackalblRomInfo, jackalblRomName, NULL, NULL, NULL, NULL, DrvrotateInputInfo, DrvrotateDIPInfo,
 	DrvInitbl, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 240, 3, 4
 };
@@ -1297,7 +1297,7 @@ struct BurnDriver BurnDrvTopgunr = {
 	"Top Gunner (US, 8-way Joystick)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, topgunrRomInfo, topgunrRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, topgunrRomInfo, topgunrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 240, 3, 4
 };
@@ -1307,7 +1307,7 @@ struct BurnDriver BurnDrvTopgunbl = {
 	"Top Gunner (bootleg, Rotary Joystick)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, topgunblRomInfo, topgunblRomName, NULL, NULL, DrvrotateInputInfo, DrvrotateDIPInfo,
+	NULL, topgunblRomInfo, topgunblRomName, NULL, NULL, NULL, NULL, DrvrotateInputInfo, DrvrotateDIPInfo,
 	DrvInitbl, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 240, 3, 4
 };

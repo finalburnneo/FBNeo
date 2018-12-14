@@ -1015,7 +1015,7 @@ struct BurnDriver BurnDrvThndzone = {
 	"Thunder Zone (World, Rev 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, thndzoneRomInfo, thndzoneRomName, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
+	NULL, thndzoneRomInfo, thndzoneRomName, NULL, NULL, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
 };
@@ -1085,7 +1085,7 @@ struct BurnDriver BurnDrvThndzonea = {
 	"Thunder Zone (World)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, thndzoneaRomInfo, thndzoneaRomName, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
+	NULL, thndzoneaRomInfo, thndzoneaRomName, NULL, NULL, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
 };
@@ -1155,7 +1155,7 @@ struct BurnDriver BurnDrvThndzone4 = {
 	"Thunder Zone (World 4 Players)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, thndzone4RomInfo, thndzone4RomName, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
+	NULL, thndzone4RomInfo, thndzone4RomName, NULL, NULL, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
 };
@@ -1231,7 +1231,7 @@ struct BurnDriver BurnDrvThndzonej = {
 	"Thunder Zone (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, thndzonejRomInfo, thndzonejRomName, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
+	NULL, thndzonejRomInfo, thndzonejRomName, NULL, NULL, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
 };
@@ -1301,7 +1301,7 @@ struct BurnDriver BurnDrvDassault = {
 	"Desert Assault (US)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, dassaultRomInfo, dassaultRomName, NULL, NULL, ThndzoneInputInfo, DassaultDIPInfo,
+	NULL, dassaultRomInfo, dassaultRomName, NULL, NULL, NULL, NULL, ThndzoneInputInfo, DassaultDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
 };
@@ -1371,7 +1371,7 @@ struct BurnDriver BurnDrvDassault4 = {
 	"Desert Assault (US 4 Players)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, dassault4RomInfo, dassault4RomName, NULL, NULL, ThndzoneInputInfo, Dassault4DIPInfo,
+	NULL, dassault4RomInfo, dassault4RomName, NULL, NULL, NULL, NULL, ThndzoneInputInfo, Dassault4DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
 };

@@ -1107,7 +1107,7 @@ struct BurnDriver BurnDrvWc90b1 = {
 	"Euro League (Italian hack of Tecmo World Cup '90)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, Wc90b1RomInfo, Wc90b1RomName, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
+	NULL, Wc90b1RomInfo, Wc90b1RomName, NULL, NULL, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, Wc90b1Draw, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
@@ -1117,7 +1117,7 @@ struct BurnDriver BurnDrvWc90b2 = {
 	"World Cup '90 (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, Wc90b2RomInfo, Wc90b2RomName, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
+	NULL, Wc90b2RomInfo, Wc90b2RomName, NULL, NULL, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, Wc90b1Draw, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
@@ -1127,7 +1127,7 @@ struct BurnDriver BurnDrvWc90b3 = {
 	"World Cup '90 (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, Wc90b3RomInfo, Wc90b3RomName, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
+	NULL, Wc90b3RomInfo, Wc90b3RomName, NULL, NULL, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, Wc90b1Draw, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
@@ -1137,7 +1137,7 @@ struct BurnDriver BurnDrvWc90b4 = {
 	"World Cup '90 (bootleg, set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, Wc90b4RomInfo, Wc90b4RomName, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
+	NULL, Wc90b4RomInfo, Wc90b4RomName, NULL, NULL, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, Wc90b1Draw, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
@@ -1147,7 +1147,7 @@ struct BurnDriver BurnDrvWc90ba = {
 	"Euro League (Italian hack of Tecmo World Cup '90 - alt version)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, Wc90baRomInfo, Wc90baRomName, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
+	NULL, Wc90baRomInfo, Wc90baRomName, NULL, NULL, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, Wc90b1Draw, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
@@ -1157,7 +1157,7 @@ struct BurnDriver BurnDrvWc90bb = {
 	"World Cup '90 (european hack, different title)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, Wc90bbRomInfo, Wc90bbRomName, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
+	NULL, Wc90bbRomInfo, Wc90bbRomName, NULL, NULL, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, Wc90b1Draw, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };

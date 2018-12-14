@@ -699,7 +699,7 @@ struct BurnDriver BurnDrvFormatz = {
 	"Formation Z\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, formatzRomInfo, formatzRomName, NULL, NULL, FormatzInputInfo, FormatzDIPInfo,
+	NULL, formatzRomInfo, formatzRomName, NULL, NULL, NULL, NULL, FormatzInputInfo, FormatzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	248, 224, 4, 3
 };
@@ -735,7 +735,7 @@ struct BurnDriver BurnDrvAeroboto = {
 	"Aeroboto\0", NULL, "Jaleco (Williams license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, aerobotoRomInfo, aerobotoRomName, NULL, NULL, FormatzInputInfo, FormatzDIPInfo,
+	NULL, aerobotoRomInfo, aerobotoRomName, NULL, NULL, NULL, NULL, FormatzInputInfo, FormatzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	248, 224, 4, 3
 };

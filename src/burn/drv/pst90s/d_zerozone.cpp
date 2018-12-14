@@ -520,7 +520,7 @@ struct BurnDriver BurnDrvZerozone = {
 	"Zero Zone\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, zerozoneRomInfo, zerozoneRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, zerozoneRomInfo, zerozoneRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	368, 224, 4, 3
 };
@@ -548,7 +548,7 @@ struct BurnDriver BurnDrvLvgirl94 = {
 	"Las Vegas Girl (Girl '94)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, lvgirl94RomInfo, lvgirl94RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, lvgirl94RomInfo, lvgirl94RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	368, 224, 4, 3
 };

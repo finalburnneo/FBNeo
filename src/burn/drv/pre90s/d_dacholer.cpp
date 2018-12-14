@@ -887,7 +887,7 @@ struct BurnDriver BurnDrvDacholer = {
 	"Dacholer\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, dacholerRomInfo, dacholerRomName, NULL, NULL, DacholerInputInfo, DacholerDIPInfo,
+	NULL, dacholerRomInfo, dacholerRomName, NULL, NULL, NULL, NULL, DacholerInputInfo, DacholerDIPInfo,
 	DacholerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3
 };
@@ -930,7 +930,7 @@ struct BurnDriver BurnDrvKickboy = {
 	"Kick Boy\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, kickboyRomInfo, kickboyRomName, NULL, NULL, DacholerInputInfo, KickboyDIPInfo,
+	NULL, kickboyRomInfo, kickboyRomName, NULL, NULL, NULL, NULL, DacholerInputInfo, KickboyDIPInfo,
 	KickboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3
 };
@@ -979,7 +979,7 @@ struct BurnDriver BurnDrvItaten = {
 	"Itazura Tenshi (Japan)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, itatenRomInfo, itatenRomName, NULL, NULL, ItatenInputInfo, ItatenDIPInfo,
+	NULL, itatenRomInfo, itatenRomName, NULL, NULL, NULL, NULL, ItatenInputInfo, ItatenDIPInfo,
 	ItatenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3
 };

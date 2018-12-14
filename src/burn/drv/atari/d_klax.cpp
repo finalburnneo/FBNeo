@@ -593,7 +593,7 @@ struct BurnDriver BurnDrvKlax = {
 	"Klax (set 1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, klaxRomInfo, klaxRomName, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
+	NULL, klaxRomInfo, klaxRomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };
@@ -633,7 +633,7 @@ struct BurnDriver BurnDrvKlaxd2 = {
 	"Klax (Germany, version 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, klaxd2RomInfo, klaxd2RomName, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
+	NULL, klaxd2RomInfo, klaxd2RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };
@@ -673,7 +673,7 @@ struct BurnDriver BurnDrvKlaxj3 = {
 	"Klax (Japan, version 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, klaxj3RomInfo, klaxj3RomName, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
+	NULL, klaxj3RomInfo, klaxj3RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };
@@ -713,7 +713,7 @@ struct BurnDriver BurnDrvKlax4 = {
 	"Klax (version 4)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, klax4RomInfo, klax4RomName, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
+	NULL, klax4RomInfo, klax4RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };
@@ -753,7 +753,7 @@ struct BurnDriver BurnDrvKlax5 = {
 	"Klax (version 5)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, klax5RomInfo, klax5RomName, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
+	NULL, klax5RomInfo, klax5RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };
@@ -787,7 +787,7 @@ struct BurnDriverD BurnDrvKlax5bl = {
 	"Klax (version 5, bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, klax5blRomInfo, klax5blRomName, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
+	NULL, klax5blRomInfo, klax5blRomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };

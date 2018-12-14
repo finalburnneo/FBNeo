@@ -1706,7 +1706,7 @@ struct BurnDriver BurnDrvBigtwin = {
 	"Big Twin\0", NULL, "Playmark", "Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, BigtwinRomInfo, BigtwinRomName, NULL, NULL, BigtwinInputInfo, BigtwinDIPInfo,
+	NULL, BigtwinRomInfo, BigtwinRomName, NULL, NULL, NULL, NULL, BigtwinInputInfo, BigtwinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x400, 320, 240, 4, 3
 };
@@ -1716,7 +1716,7 @@ struct BurnDriver BurnDrvExcelsr = {
 	"Excelsior (set 1)\0", NULL, "Playmark", "Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, ExcelsrRomInfo, ExcelsrRomName, NULL, NULL, ExcelsrInputInfo, ExcelsrDIPInfo,
+	NULL, ExcelsrRomInfo, ExcelsrRomName, NULL, NULL, NULL, NULL, ExcelsrInputInfo, ExcelsrDIPInfo,
 	ExcelsrInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x400, 320, 240, 4, 3
 };
@@ -1726,7 +1726,7 @@ struct BurnDriver BurnDrvExcelsra = {
 	"Excelsior (set 2)\0", NULL, "Playmark", "Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, ExcelsraRomInfo, ExcelsraRomName, NULL, NULL, ExcelsrInputInfo, ExcelsrDIPInfo,
+	NULL, ExcelsraRomInfo, ExcelsraRomName, NULL, NULL, NULL, NULL, ExcelsrInputInfo, ExcelsrDIPInfo,
 	ExcelsrInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x400, 320, 240, 4, 3
 };
@@ -1736,7 +1736,7 @@ struct BurnDriver BurnDrvHotmind = {
 	"Hot Mind (Hard Times hardware)\0", NULL, "Playmark", "Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, HotmindRomInfo, HotmindRomName, NULL, NULL, HotmindInputInfo, HotmindDIPInfo,
+	NULL, HotmindRomInfo, HotmindRomName, NULL, NULL, NULL, NULL, HotmindInputInfo, HotmindDIPInfo,
 	HotmindInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x400, 320, 224, 4, 3
 };

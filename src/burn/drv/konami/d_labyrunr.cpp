@@ -815,7 +815,7 @@ struct BurnDriver BurnDrvTricktrp = {
 	"Trick Trap (World?)\0", NULL, "Konami", "GX771",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, tricktrpRomInfo, tricktrpRomName, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
+	NULL, tricktrpRomInfo, tricktrpRomName, NULL, NULL, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 280, 3, 4
 };
@@ -840,7 +840,7 @@ struct BurnDriver BurnDrvLabyrunr = {
 	"Labyrinth Runner (Japan)\0", NULL, "Konami", "GX771",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, labyrunrRomInfo, labyrunrRomName, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
+	NULL, labyrunrRomInfo, labyrunrRomName, NULL, NULL, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
 	DrvInit2, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 280, 3, 4
 };
@@ -868,7 +868,7 @@ struct BurnDriver BurnDrvLabyrunrk = {
 	"Labyrinth Runner (World Ver. K)\0", NULL, "Konami", "GX771",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, labyrunrkRomInfo, labyrunrkRomName, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
+	NULL, labyrunrkRomInfo, labyrunrkRomName, NULL, NULL, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
 	DrvInit, DrvExit, DrvFrame,DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 280, 3, 4
 };

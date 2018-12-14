@@ -676,7 +676,7 @@ struct BurnDriver BurnDrvBlueprnt = {
 	"Blue Print (Midway)\0", NULL, "[Zilec Electronics] Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, blueprntRomInfo, blueprntRomName, NULL, NULL, BlueprntInputInfo, BlueprntDIPInfo,
+	NULL, blueprntRomInfo, blueprntRomName, NULL, NULL, NULL, NULL, BlueprntInputInfo, BlueprntDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x208,
 	224, 256, 3, 4
 };
@@ -710,7 +710,7 @@ struct BurnDriver BurnDrvBlueprnj = {
 	"Blue Print (Jaleco)\0", NULL, "[Zilec Electronics] Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, blueprnjRomInfo, blueprnjRomName, NULL, NULL, BlueprntInputInfo, BlueprntDIPInfo,
+	NULL, blueprnjRomInfo, blueprnjRomName, NULL, NULL, NULL, NULL, BlueprntInputInfo, BlueprntDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x208,
 	224, 256, 3, 4
 };
@@ -745,7 +745,7 @@ struct BurnDriver BurnDrvSaturnzi = {
 	"Saturn\0", NULL, "[Zilec Electronics] Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, saturnziRomInfo, saturnziRomName, NULL, NULL, SaturnInputInfo, SaturnDIPInfo,
+	NULL, saturnziRomInfo, saturnziRomName, NULL, NULL, NULL, NULL, SaturnInputInfo, SaturnDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x208,
 	224, 256, 3, 4
 };
@@ -785,7 +785,7 @@ struct BurnDriver BurnDrvGrasspin = {
 	"Grasspin\0", NULL, "[Zilec Electronics] Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, grasspinRomInfo, grasspinRomName, NULL, NULL, GrasspinInputInfo, GrasspinDIPInfo,
+	NULL, grasspinRomInfo, grasspinRomName, NULL, NULL, NULL, NULL, GrasspinInputInfo, GrasspinDIPInfo,
 	GrasspinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

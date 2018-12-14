@@ -704,7 +704,7 @@ struct BurnDriver BurnDrvBlackt96 = {
 	"Black Touch '96\0", "Game is glitchy (very poor quality)! This is normal!", "D.G.R.M.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, blackt96RomInfo, blackt96RomName, NULL, NULL, Blackt96InputInfo, Blackt96DIPInfo,
+	NULL, blackt96RomInfo, blackt96RomName, NULL, NULL, NULL, NULL, Blackt96InputInfo, Blackt96DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 208, 4, 3
 };

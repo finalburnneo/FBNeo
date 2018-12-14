@@ -1837,7 +1837,7 @@ struct BurnDriver BurnDrvGhostb = {
 	"The Real Ghostbusters (US 2 Players, revision 2)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, ghostbRomInfo, ghostbRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
+	NULL, ghostbRomInfo, ghostbRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -1884,7 +1884,7 @@ struct BurnDriver BurnDrvGhostb2a = {
 	"The Real Ghostbusters (US 2 Players)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, ghostb2aRomInfo, ghostb2aRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
+	NULL, ghostb2aRomInfo, ghostb2aRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -1931,7 +1931,7 @@ struct BurnDriver BurnDrvGhostb3 = {
 	"The Real Ghostbusters (US 3 Players)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, ghostb3RomInfo, ghostb3RomName, NULL, NULL, Ghostb3InputInfo, Ghostb3DIPInfo,
+	NULL, ghostb3RomInfo, ghostb3RomName, NULL, NULL, NULL, NULL, Ghostb3InputInfo, Ghostb3DIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -1977,7 +1977,7 @@ struct BurnDriverD BurnDrvGhostb3a = {
 	"The Real Ghostbusters (US 3 Players, revision ?)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, ghostb3aRomInfo, ghostb3aRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
+	NULL, ghostb3aRomInfo, ghostb3aRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -2023,7 +2023,7 @@ struct BurnDriver BurnDrvMeikyuh = {
 	"Meikyuu Hunter G (Japan, set 1)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, meikyuhRomInfo, meikyuhRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
+	NULL, meikyuhRomInfo, meikyuhRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -2069,7 +2069,7 @@ struct BurnDriver BurnDrvMeikyuha = {
 	"Meikyuu Hunter G (Japan, set 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, meikyuhaRomInfo, meikyuhaRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
+	NULL, meikyuhaRomInfo, meikyuhaRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -2570,7 +2570,7 @@ struct BurnDriver BurnDrvCobracom = {
 	"Cobra-Command (World/US revision 5)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, cobracomRomInfo, cobracomRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
+	NULL, cobracomRomInfo, cobracomRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
@@ -2609,7 +2609,7 @@ struct BurnDriver BurnDrvCobracoma = {
 	"Cobra-Command (World/US revision 4)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, cobracomaRomInfo, cobracomaRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
+	NULL, cobracomaRomInfo, cobracomaRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
@@ -2648,7 +2648,7 @@ struct BurnDriver BurnDrvCobracmj = {
 	"Cobra-Command (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, cobracmjRomInfo, cobracmjRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
+	NULL, cobracmjRomInfo, cobracmjRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
@@ -2687,7 +2687,7 @@ struct BurnDriver BurnDrvCobracmja = {
 	"Cobra-Command (Japan?, set 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, cobracmjaRomInfo, cobracmjaRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
+	NULL, cobracmjaRomInfo, cobracmjaRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
@@ -2729,7 +2729,7 @@ struct BurnDriver BurnDrvCobracomb = {
 	"Cobra-Command (Italian bootleg)\0", NULL, "bootleg", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, cobracombRomInfo, cobracombRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
+	NULL, cobracombRomInfo, cobracombRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
@@ -2771,7 +2771,7 @@ struct BurnDriver BurnDrvCobracomjb = {
 	"Cobra-Command (Japan, bootleg)\0", NULL, "bootleg", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, cobracomjbRomInfo, cobracomjbRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
+	NULL, cobracomjbRomInfo, cobracomjbRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
@@ -3255,7 +3255,7 @@ struct BurnDriver BurnDrvSrdarwin = {
 	"Super Real Darwin (World)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, srdarwinRomInfo, srdarwinRomName, NULL, NULL, SrdarwinInputInfo, SrdarwinDIPInfo,
+	NULL, srdarwinRomInfo, srdarwinRomName, NULL, NULL, NULL, NULL, SrdarwinInputInfo, SrdarwinDIPInfo,
 	SrdarwinInit, CobraExit, SrdarwinFrame, SrdarwinDraw, CobraScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
@@ -3294,7 +3294,7 @@ struct BurnDriver BurnDrvSrdarwnj = {
 	"Super Real Darwin (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, srdarwnjRomInfo, srdarwnjRomName, NULL, NULL, SrdarwinInputInfo, SrdarwinDIPInfo,
+	NULL, srdarwnjRomInfo, srdarwnjRomName, NULL, NULL, NULL, NULL, SrdarwinInputInfo, SrdarwinDIPInfo,
 	SrdarwinInit, CobraExit, SrdarwinFrame, SrdarwinDraw, CobraScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
@@ -3947,7 +3947,7 @@ struct BurnDriverD BurnDrvGondo = {
 	"Gondomania (US)\0", "Broken inputs", "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, gondoRomInfo, gondoRomName, NULL, NULL, GondoInputInfo, GondoDIPInfo,
+	NULL, gondoRomInfo, gondoRomName, NULL, NULL, NULL, NULL, GondoInputInfo, GondoDIPInfo,
 	GondoInit, GondoExit, GondoFrame, GondoDraw, GondoScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -4000,7 +4000,7 @@ struct BurnDriverD BurnDrvMakyosen = {
 	"Makyou Senshi (Japan)\0", "Broken inputs", "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, makyosenRomInfo, makyosenRomName, NULL, NULL, GondoInputInfo, GondoDIPInfo,
+	NULL, makyosenRomInfo, makyosenRomName, NULL, NULL, NULL, NULL, GondoInputInfo, GondoDIPInfo,
 	GondoInit, GondoExit, GondoFrame, GondoDraw, GondoScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -4049,7 +4049,7 @@ struct BurnDriver BurnDrvGaryoret = {
 	"Garyo Retsuden (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, garyoretRomInfo, garyoretRomName, NULL, NULL, GaryoretInputInfo, GaryoretDIPInfo,
+	NULL, garyoretRomInfo, garyoretRomName, NULL, NULL, NULL, NULL, GaryoretInputInfo, GaryoretDIPInfo,
 	GondoInit, GondoExit, GondoFrame, GaryoretDraw, GondoScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -4450,7 +4450,7 @@ struct BurnDriver BurnDrvOscar = {
 	"Psycho-Nics Oscar (World revision 0)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, oscarRomInfo, oscarRomName, NULL, NULL, OscarInputInfo, OscarDIPInfo,
+	NULL, oscarRomInfo, oscarRomName, NULL, NULL, NULL, NULL, OscarInputInfo, OscarDIPInfo,
 	OscarInit, GondoExit, OscarFrame, OscarDraw, GondoScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
 };
@@ -4489,7 +4489,7 @@ struct BurnDriver BurnDrvOscaru = {
 	"Psycho-Nics Oscar (US)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, oscaruRomInfo, oscaruRomName, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
+	NULL, oscaruRomInfo, oscaruRomName, NULL, NULL, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
 	OscarInit, GondoExit, OscarFrame, OscarDraw, GondoScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
 };
@@ -4528,7 +4528,7 @@ struct BurnDriver BurnDrvOscarj1 = {
 	"Psycho-Nics Oscar (Japan revision 1)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, oscarj1RomInfo, oscarj1RomName, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
+	NULL, oscarj1RomInfo, oscarj1RomName, NULL, NULL, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
 	OscarInit, GondoExit, OscarFrame, OscarDraw, GondoScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
 };
@@ -4567,7 +4567,7 @@ struct BurnDriver BurnDrvOscarj2 = {
 	"Psycho-Nics Oscar (Japan revision 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, oscarj2RomInfo, oscarj2RomName, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
+	NULL, oscarj2RomInfo, oscarj2RomName, NULL, NULL, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
 	OscarInit, GondoExit, OscarFrame, OscarDraw, GondoScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
 };
@@ -5191,7 +5191,7 @@ struct BurnDriver BurnDrvLastmisn = {
 	"Last Mission (World revision 8)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, lastmisnRomInfo, lastmisnRomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
+	NULL, lastmisnRomInfo, lastmisnRomName, NULL, NULL, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, LastmissScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -5232,7 +5232,7 @@ struct BurnDriver BurnDrvLastmsnu6 = {
 	"Last Mission (US revision 6)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, lastmsnu6RomInfo, lastmsnu6RomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
+	NULL, lastmsnu6RomInfo, lastmsnu6RomName, NULL, NULL, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, LastmissScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -5273,7 +5273,7 @@ struct BurnDriver BurnDrvLastmsnu5 = {
 	"Last Mission (US revision 5)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, lastmsnu5RomInfo, lastmsnu5RomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
+	NULL, lastmsnu5RomInfo, lastmsnu5RomName, NULL, NULL, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, LastmissScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -5314,7 +5314,7 @@ struct BurnDriver BurnDrvLastmsnj = {
 	"Last Mission (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, lastmsnjRomInfo, lastmsnjRomName, NULL, NULL, LastmisnInputInfo, LastmsnjDIPInfo,
+	NULL, lastmsnjRomInfo, lastmsnjRomName, NULL, NULL, NULL, NULL, LastmisnInputInfo, LastmsnjDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, LastmissScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -5362,7 +5362,7 @@ struct BurnDriver BurnDrvShackled = {
 	"Shackled (US)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, shackledRomInfo, shackledRomName, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
+	NULL, shackledRomInfo, shackledRomName, NULL, NULL, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, LastmissScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -5410,7 +5410,7 @@ struct BurnDriver BurnDrvBreywood = {
 	"Breywood (Japan revision 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, breywoodRomInfo, breywoodRomName, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
+	NULL, breywoodRomInfo, breywoodRomName, NULL, NULL, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, LastmissScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -5860,7 +5860,7 @@ struct BurnDriver BurnDrvCsilver = {
 	"Captain Silver (World)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, csilverRomInfo, csilverRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
+	NULL, csilverRomInfo, csilverRomName, NULL, NULL, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
 	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, CsilverScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -5901,7 +5901,7 @@ struct BurnDriver BurnDrvCsilverj = {
 	"Captain Silver (Japan revision 3)\0", "imperfect sound", "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, csilverjRomInfo, csilverjRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
+	NULL, csilverjRomInfo, csilverjRomName, NULL, NULL, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
 	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, CsilverScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -5943,7 +5943,7 @@ struct BurnDriver BurnDrvCsilverja = {
 	"Captain Silver (Japan revision 1)\0", "imperfect sound", "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, csilverjaRomInfo, csilverjaRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
+	NULL, csilverjaRomInfo, csilverjaRomName, NULL, NULL, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
 	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, CsilverScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

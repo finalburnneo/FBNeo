@@ -1823,7 +1823,7 @@ struct BurnDriver BurnDrvTrackfld = {
 	"Track & Field\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, trackfldRomInfo, trackfldRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
+	NULL, trackfldRomInfo, trackfldRomName, NULL, NULL, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -1864,7 +1864,7 @@ struct BurnDriver BurnDrvTrackfldc = {
 	"Track & Field (Centuri)\0", NULL, "Konami (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, trackfldcRomInfo, trackfldcRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
+	NULL, trackfldcRomInfo, trackfldcRomName, NULL, NULL, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -1905,7 +1905,7 @@ struct BurnDriver BurnDrvHyprolym = {
 	"Hyper Olympic\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, hyprolymRomInfo, hyprolymRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
+	NULL, hyprolymRomInfo, hyprolymRomName, NULL, NULL, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -1946,7 +1946,7 @@ struct BurnDriver BurnDrvTrackfldnz = {
 	"Track & Field (NZ bootleg?)\0", NULL, "bootleg? (Goldberg Enterprizes Inc.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, trackfldnzRomInfo, trackfldnzRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
+	NULL, trackfldnzRomInfo, trackfldnzRomName, NULL, NULL, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	TrackfldnzInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -1998,7 +1998,7 @@ struct BurnDriver BurnDrvHyprolymb = {
 	"Hyper Olympic (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, hyprolymbRomInfo, hyprolymbRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
+	NULL, hyprolymbRomInfo, hyprolymbRomName, NULL, NULL, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -2045,7 +2045,7 @@ struct BurnDriver BurnDrvHyprolymba = {
 	"Hyper Olympic (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, hyprolymbaRomInfo, hyprolymbaRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
+	NULL, hyprolymbaRomInfo, hyprolymbaRomName, NULL, NULL, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -2092,7 +2092,7 @@ struct BurnDriver BurnDrvHipoly = {
 	"Hipoly (bootleg of Hyper Olympic)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, hipolyRomInfo, hipolyRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
+	NULL, hipolyRomInfo, hipolyRomName, NULL, NULL, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -2125,7 +2125,7 @@ struct BurnDriver BurnDrvAtlantol = {
 	"Atlant Olimpic\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, atlantolRomInfo, atlantolRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo, //AtlantolInputInfo, AtlantolDIPInfo,
+	NULL, atlantolRomInfo, atlantolRomName, NULL, NULL, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo, //AtlantolInputInfo, AtlantolDIPInfo,
 	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	256, 224, 4, 3
 };
@@ -2162,7 +2162,7 @@ struct BurnDriver BurnDrvYieartf = {
 	"Yie Ar Kung-Fu (GX361 conversion)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
-	NULL, yieartfRomInfo, yieartfRomName, NULL, NULL, YieartfInputInfo, YieartfDIPInfo,
+	NULL, yieartfRomInfo, yieartfRomName, NULL, NULL, NULL, NULL, YieartfInputInfo, YieartfDIPInfo,
 	YieartfInit, DrvExit, YieartfFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -2199,7 +2199,7 @@ struct BurnDriver BurnDrvReaktor = {
 	"Reaktor (Track & Field conversion)\0", NULL, "Zilec", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
-	NULL, reaktorRomInfo, reaktorRomName, NULL, NULL, ReaktorInputInfo, ReaktorDIPInfo,
+	NULL, reaktorRomInfo, reaktorRomName, NULL, NULL, NULL, NULL, ReaktorInputInfo, ReaktorDIPInfo,
 	ReaktorInit, DrvExit, ReaktorFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -2241,7 +2241,7 @@ struct BurnDriver BurnDrvWizzquiz = {
 	"Wizz Quiz (Konami version)\0", NULL, "Zilec-Zenitone (Konami license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, wizzquizRomInfo, wizzquizRomName, NULL, NULL, WizzquizInputInfo, WizzquizDIPInfo,
+	NULL, wizzquizRomInfo, wizzquizRomName, NULL, NULL, NULL, NULL, WizzquizInputInfo, WizzquizDIPInfo,
 	WizzquizInit, DrvExit, WizzquizFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 256, 4, 3
 };
@@ -2283,7 +2283,7 @@ struct BurnDriver BurnDrvWizzquiza = {
 	"Wizz Quiz (version 4)\0", NULL, "Zilec-Zenitone", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, wizzquizaRomInfo, wizzquizaRomName, NULL, NULL, WizzquizInputInfo, WizzquizDIPInfo,
+	NULL, wizzquizaRomInfo, wizzquizaRomName, NULL, NULL, NULL, NULL, WizzquizInputInfo, WizzquizDIPInfo,
 	WizzquizInit, DrvExit, WizzquizFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 256, 4, 3
 };
@@ -2322,7 +2322,7 @@ struct BurnDriver BurnDrvMastkin = {
 	"The Masters of Kin\0", "Colors are wrong", "Du Tech", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, mastkinRomInfo, mastkinRomName, NULL, NULL, MastkinInputInfo, MastkinDIPInfo,
+	NULL, mastkinRomInfo, mastkinRomName, NULL, NULL, NULL, NULL, MastkinInputInfo, MastkinDIPInfo,
 	MastkinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };

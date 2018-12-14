@@ -43,7 +43,7 @@ struct BurnDriverD BurnDrvrSMW = {
 	"Super Mario World (Europe) (Rev 1)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (Europe) (Rev 1)", NULL, NULL, NULL,
 	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
-	NULL, rSuperMarioWorldEuropeRev1RomInfo, rSuperMarioWorldEuropeRev1RomName,NULL,NULL, SnesInputInfo, SnesDIPInfo,
+	NULL, rSuperMarioWorldEuropeRev1RomInfo, rSuperMarioWorldEuropeRev1RomName,NULL,NULL,NULL,NULL, SnesInputInfo, SnesDIPInfo,
 	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
 	NULL,0x6000,512 , 244, 4, 3
 };
@@ -61,7 +61,7 @@ struct BurnDriverD BurnDrvrSuperMarioWorldEurope = {
 	"Super Mario World (Europe)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (Europe)", NULL, NULL, NULL,
 	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
-	NULL, rSuperMarioWorldEuropeRomInfo, rSuperMarioWorldEuropeRomName,NULL,NULL, SnesInputInfo, SnesDIPInfo,
+	NULL, rSuperMarioWorldEuropeRomInfo, rSuperMarioWorldEuropeRomName,NULL,NULL,NULL,NULL, SnesInputInfo, SnesDIPInfo,
 	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
 	NULL,0x6000,512 , 244, 4, 3
 };
@@ -79,7 +79,7 @@ struct BurnDriverD BurnDrvrSuperMarioWorldJapan = {
 	"Super Mario World (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (Japan)", NULL, NULL, NULL,
 	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
-	NULL, rSuperMarioWorldJapanRomInfo, rSuperMarioWorldJapanRomName,NULL,NULL, SnesInputInfo, SnesDIPInfo,
+	NULL, rSuperMarioWorldJapanRomInfo, rSuperMarioWorldJapanRomName,NULL,NULL,NULL,NULL, SnesInputInfo, SnesDIPInfo,
 	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
 	NULL,0x6000,512 , 244, 4, 3
 };
@@ -97,7 +97,7 @@ struct BurnDriverD BurnDrvrSuperMarioWorldUSA = {
 	"Super Mario World (USA)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (USA)", NULL, NULL, NULL,
 	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
-	NULL, rSuperMarioWorldUSARomInfo, rSuperMarioWorldUSARomName,NULL,NULL, SnesInputInfo, SnesDIPInfo,
+	NULL, rSuperMarioWorldUSARomInfo, rSuperMarioWorldUSARomName,NULL,NULL,NULL,NULL, SnesInputInfo, SnesDIPInfo,
 	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
 	NULL,0x6000,512 , 244, 4, 3
 };

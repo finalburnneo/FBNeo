@@ -583,7 +583,7 @@ struct BurnDriver BurnDrvKicker = {
 	"Kicker\0", NULL, "Konami", "GX477",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, kickerRomInfo, kickerRomName, NULL, NULL, ShaolinsInputInfo, ShaolinsDIPInfo,
+	NULL, kickerRomInfo, kickerRomName, NULL, NULL, NULL, NULL, ShaolinsInputInfo, ShaolinsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
 };
@@ -617,7 +617,7 @@ struct BurnDriver BurnDrvShaolins = {
 	"Shao-lin's Road (set 1)\0", NULL, "Konami", "GX477",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, shaolinsRomInfo, shaolinsRomName, NULL, NULL, ShaolinsInputInfo, ShaolinsDIPInfo,
+	NULL, shaolinsRomInfo, shaolinsRomName, NULL, NULL, NULL, NULL, ShaolinsInputInfo, ShaolinsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
 };
@@ -651,7 +651,7 @@ struct BurnDriver BurnDrvShaolinb = {
 	"Shao-lin's Road (set 2)\0", NULL, "Konami", "GX477",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, shaolinbRomInfo, shaolinbRomName, NULL, NULL, ShaolinsInputInfo, ShaolinsDIPInfo,
+	NULL, shaolinbRomInfo, shaolinbRomName, NULL, NULL, NULL, NULL, ShaolinsInputInfo, ShaolinsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
 };

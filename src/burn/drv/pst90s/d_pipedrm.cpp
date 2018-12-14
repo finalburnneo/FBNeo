@@ -926,7 +926,7 @@ struct BurnDriver BurnDrvPipedrm = {
 	"Pipe Dream (World)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, pipedrmRomInfo, pipedrmRomName, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
+	NULL, pipedrmRomInfo, pipedrmRomName, NULL, NULL, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
 	pipedrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
 };
@@ -967,7 +967,7 @@ struct BurnDriver BurnDrvPipedrmu = {
 	"Pipe Dream (US)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, pipedrmuRomInfo, pipedrmuRomName, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
+	NULL, pipedrmuRomInfo, pipedrmuRomName, NULL, NULL, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
 	pipedrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
 };
@@ -1008,7 +1008,7 @@ struct BurnDriver BurnDrvPipedrmj = {
 	"Pipe Dream (Japan)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, pipedrmjRomInfo, pipedrmjRomName, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
+	NULL, pipedrmjRomInfo, pipedrmjRomName, NULL, NULL, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
 	pipedrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
 };
@@ -1049,7 +1049,7 @@ struct BurnDriver BurnDrvPipedrmt = {
 	"Pipe Dream (Taiwan)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, pipedrmtRomInfo, pipedrmtRomName, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
+	NULL, pipedrmtRomInfo, pipedrmtRomName, NULL, NULL, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
 	pipedrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
 };
@@ -1084,7 +1084,7 @@ struct BurnDriver BurnDrvHatris = {
 	"Hatris (US)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, hatrisRomInfo, hatrisRomName, NULL, NULL, HatrisInputInfo, HatrisDIPInfo,
+	NULL, hatrisRomInfo, hatrisRomName, NULL, NULL, NULL, NULL, HatrisInputInfo, HatrisDIPInfo,
 	hatrisInit, DrvExit, DrvFrame, FromanceDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
 };
@@ -1114,7 +1114,7 @@ struct BurnDriver BurnDrvHatrisj = {
 	"Hatris (Japan)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, hatrisjRomInfo, hatrisjRomName, NULL, NULL, HatrisInputInfo, HatrisDIPInfo,
+	NULL, hatrisjRomInfo, hatrisjRomName, NULL, NULL, NULL, NULL, HatrisInputInfo, HatrisDIPInfo,
 	hatrisInit, DrvExit, DrvFrame, FromanceDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
 };

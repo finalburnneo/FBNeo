@@ -785,7 +785,7 @@ struct BurnDriver BurnDrvMomoko = {
 	"Momoko 120% (Japanese text)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, momokoRomInfo, momokoRomName, NULL, NULL, MomokoInputInfo, MomokoDIPInfo,
+	NULL, momokoRomInfo, momokoRomName, NULL, NULL, NULL, NULL, MomokoInputInfo, MomokoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };
@@ -832,7 +832,7 @@ struct BurnDriver BurnDrvMomokoe = {
 	"Momoko 120% (English text)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, momokoeRomInfo, momokoeRomName, NULL, NULL, MomokoInputInfo, MomokoDIPInfo,
+	NULL, momokoeRomInfo, momokoeRomName, NULL, NULL, NULL, NULL, MomokoInputInfo, MomokoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };
@@ -880,7 +880,7 @@ struct BurnDriver BurnDrvMomokob = {
 	"Momoko 120% (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, momokobRomInfo, momokobRomName, NULL, NULL, MomokoInputInfo, MomokoDIPInfo,
+	NULL, momokobRomInfo, momokobRomName, NULL, NULL, NULL, NULL, MomokoInputInfo, MomokoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };

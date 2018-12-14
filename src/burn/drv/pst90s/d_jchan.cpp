@@ -752,7 +752,7 @@ struct BurnDriver BurnDrvJchan = {
 	"Jackie Chan - The Kung-Fu Master\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_MISC, GBF_VSFIGHT, 0,
-	NULL, jchanRomInfo, jchanRomName, NULL, NULL, JchanInputInfo, JchanDIPInfo,
+	NULL, jchanRomInfo, jchanRomName, NULL, NULL, NULL, NULL, JchanInputInfo, JchanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };
@@ -799,7 +799,7 @@ struct BurnDriver BurnDrvJchan2 = {
 	"Jackie Chan in Fists of Fire\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_MISC, GBF_VSFIGHT, 0,
-	NULL, jchan2RomInfo, jchan2RomName, NULL, NULL, JchanInputInfo, Jchan2DIPInfo,
+	NULL, jchan2RomInfo, jchan2RomName, NULL, NULL, NULL, NULL, JchanInputInfo, Jchan2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };

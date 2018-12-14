@@ -578,7 +578,7 @@ struct BurnDriver BurnDrvFunybubl = {
 	"Funny Bubble\0", NULL, "In Chang Electronic Co", "misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, funybublRomInfo, funybublRomName, NULL, NULL, FunybublInputInfo, FunybublDIPInfo,
+	NULL, funybublRomInfo, funybublRomName, NULL, NULL, NULL, NULL, FunybublInputInfo, FunybublDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 224, 4, 3
 };
@@ -617,7 +617,7 @@ struct BurnDriver BurnDrvFunybubc = {
 	"Funny Bubble (Comad version)\0", NULL, "Comad Industry Co Ltd", "misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, funybubcRomInfo, funybubcRomName, NULL, NULL, FunybublInputInfo, FunybublDIPInfo,
+	NULL, funybubcRomInfo, funybubcRomName, NULL, NULL, NULL, NULL, FunybublInputInfo, FunybublDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 224, 4, 3
 };

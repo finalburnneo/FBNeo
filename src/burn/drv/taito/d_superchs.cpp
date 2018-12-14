@@ -864,7 +864,7 @@ struct BurnDriver BurnDrvSuperchs = {
 	"Super Chase - Criminal Termination (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
-	NULL, SuperchsRomInfo, SuperchsRomName, NULL, NULL, SuperchsInputInfo, NULL,
+	NULL, SuperchsRomInfo, SuperchsRomName, NULL, NULL, NULL, NULL, SuperchsInputInfo, NULL,
 	SuperchsInit, SuperchsExit, SuperchsFrame, SuperchsDraw, SuperchsScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
@@ -874,7 +874,7 @@ struct BurnDriver BurnDrvSuperchsu = {
 	"Super Chase - Criminal Termination (US)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
-	NULL, SuperchsuRomInfo, SuperchsuRomName, NULL, NULL, SuperchsInputInfo, NULL,
+	NULL, SuperchsuRomInfo, SuperchsuRomName, NULL, NULL, NULL, NULL, SuperchsInputInfo, NULL,
 	SuperchsInit, SuperchsExit, SuperchsFrame, SuperchsDraw, SuperchsScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
@@ -884,7 +884,7 @@ struct BurnDriver BurnDrvSuperchsj = {
 	"Super Chase - Criminal Termination (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
-	NULL, SuperchsjRomInfo, SuperchsjRomName, NULL, NULL, SuperchsInputInfo, NULL,
+	NULL, SuperchsjRomInfo, SuperchsjRomName, NULL, NULL, NULL, NULL, SuperchsInputInfo, NULL,
 	SuperchsInit, SuperchsExit, SuperchsFrame, SuperchsDraw, SuperchsScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };

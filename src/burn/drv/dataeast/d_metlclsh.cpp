@@ -676,7 +676,7 @@ struct BurnDriver BurnDrvMetlclsh = {
 	"Metal Clash (Japan)\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, metlclshRomInfo, metlclshRomName, NULL, NULL, MetlclshInputInfo, MetlclshDIPInfo,
+	NULL, metlclshRomInfo, metlclshRomName, NULL, NULL, NULL, NULL, MetlclshInputInfo, MetlclshDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x30,
 	256, 224, 4, 3
 };

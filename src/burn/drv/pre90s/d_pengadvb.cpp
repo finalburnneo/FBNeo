@@ -478,7 +478,7 @@ struct BurnDriver BurnDrvPengadvb = {
 	"Penguin Adventure (bootleg of MSX version)\0", NULL, "bootleg (Screen) / Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, pengadvbRomInfo, pengadvbRomName, NULL, NULL, PengadvbInputInfo, NULL,
+	NULL, pengadvbRomInfo, pengadvbRomName, NULL, NULL, NULL, NULL, PengadvbInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 216, 4, 3
 };

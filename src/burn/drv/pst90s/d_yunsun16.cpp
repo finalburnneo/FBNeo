@@ -968,7 +968,7 @@ struct BurnDriver BurnDrvMagicbub = {
 	"Magic Bubble\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, magicbubRomInfo, magicbubRomName, NULL, NULL, MagicbubInputInfo, MagicbubDIPInfo,
+	NULL, magicbubRomInfo, magicbubRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubDIPInfo,
 	MagicbubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
@@ -1012,7 +1012,7 @@ struct BurnDriver BurnDrvMagicbuba = {
 	"Magic Bubble (Adult version, YS-1302 PCB)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, magicbubaRomInfo, magicbubaRomName, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
+	NULL, magicbubaRomInfo, magicbubaRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
 	MagicbubaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
@@ -1054,7 +1054,7 @@ struct BurnDriver BurnDrvMagicbubb = {
 	"Magic Bubble (Adult version, YS-0211 PCB)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, magicbubbRomInfo, magicbubbRomName, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
+	NULL, magicbubbRomInfo, magicbubbRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
 	MagicbubbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
@@ -1096,7 +1096,7 @@ struct BurnDriver BurnDrvPaprazzi = {
 	"Paparazzi\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, paprazziRomInfo, paprazziRomName, NULL, NULL, MagicbubInputInfo, PaprazziDIPInfo,
+	NULL, paprazziRomInfo, paprazziRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, PaprazziDIPInfo,
 	PaprazziInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 384, 3, 4
 };
@@ -1134,7 +1134,7 @@ struct BurnDriver BurnDrvShocking = {
 	"Shocking\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, shockingRomInfo, shockingRomName, NULL, NULL, MagicbubInputInfo, ShockingDIPInfo,
+	NULL, shockingRomInfo, shockingRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, ShockingDIPInfo,
 	ShockingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 224, 4, 3
 };
@@ -1167,7 +1167,7 @@ struct BurnDriver BurnDrvBombkick = {
 	"Bomb Kick (set 1)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, bombkickRomInfo, bombkickRomName, NULL, NULL, BombkickInputInfo, BombkickDIPInfo,
+	NULL, bombkickRomInfo, bombkickRomName, NULL, NULL, NULL, NULL, BombkickInputInfo, BombkickDIPInfo,
 	ShockingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 224, 4, 3
 };
@@ -1200,7 +1200,7 @@ struct BurnDriver BurnDrvBombkicka = {
 	"Bomb Kick (set 2)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, bombkickaRomInfo, bombkickaRomName, NULL, NULL, BombkickInputInfo, BombkickDIPInfo,
+	NULL, bombkickaRomInfo, bombkickaRomName, NULL, NULL, NULL, NULL, BombkickInputInfo, BombkickDIPInfo,
 	ShockingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 224, 4, 3
 };

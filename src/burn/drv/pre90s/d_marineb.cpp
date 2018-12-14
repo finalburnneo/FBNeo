@@ -1736,7 +1736,7 @@ struct BurnDriver BurnDrvMarineb = {
 	"Marine Boy\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
-	NULL, MarinebRomInfo, MarinebRomName, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,
+	NULL, MarinebRomInfo, MarinebRomName, NULL, NULL, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,
 	MarinebInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 256, 224, 4, 3
 };
@@ -1769,7 +1769,7 @@ struct BurnDriver BurnDrvSpringer = {
 	"Springer\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, SpringerRomInfo, SpringerRomName, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,
+	NULL, SpringerRomInfo, SpringerRomName, NULL, NULL, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,
 	SpringerInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 224, 256, 3, 4
 };
@@ -1801,7 +1801,7 @@ struct BurnDriver BurnDrvhopprobo = {
 	"Hopper Robo\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, hopproboRomInfo, hopproboRomName, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,
+	NULL, hopproboRomInfo, hopproboRomName, NULL, NULL, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,
 	hopproboInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 224, 256, 3, 4
 };
@@ -1831,7 +1831,7 @@ struct BurnDriver BurnDrvChanges = {
 	"Changes\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, changesRomInfo, changesRomName, NULL, NULL, ChangesInputInfo, ChangesDIPInfo,
+	NULL, changesRomInfo, changesRomName, NULL, NULL, NULL, NULL, ChangesInputInfo, ChangesDIPInfo,
 	changesInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 256, 224, 4, 3
 };
@@ -1862,7 +1862,7 @@ struct BurnDriver BurnDrvChangesa = {
 	"Changes (EME license)\0", NULL, "Orca (Eastern Micro Electronics, Inc. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, changesaRomInfo, changesaRomName, NULL, NULL, ChangesInputInfo, ChangesDIPInfo,
+	NULL, changesaRomInfo, changesaRomName, NULL, NULL, NULL, NULL, ChangesInputInfo, ChangesDIPInfo,
 	changesInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 256, 224, 4, 3
 };
@@ -1892,7 +1892,7 @@ struct BurnDriver BurnDrvLooper = {
 	"Looper\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, looperRomInfo, looperRomName, NULL, NULL, ChangesInputInfo, ChangesDIPInfo,
+	NULL, looperRomInfo, looperRomName, NULL, NULL, NULL, NULL, ChangesInputInfo, ChangesDIPInfo,
 	changesInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 256, 224, 4, 3
 };
@@ -1921,7 +1921,7 @@ struct BurnDriver BurnDrvHoccer = {
 	"Hoccer (set 1)\0", NULL, "Eastern Micro Electronics, Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, hoccerRomInfo, hoccerRomName, NULL, NULL, HoccerInputInfo, HoccerDIPInfo,
+	NULL, hoccerRomInfo, hoccerRomName, NULL, NULL, NULL, NULL, HoccerInputInfo, HoccerDIPInfo,
 	hoccerInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 224, 256, 3, 4
 };
@@ -1951,7 +1951,7 @@ struct BurnDriver BurnDrvHoccer2 = {
 	"Hoccer (set 2)\0", NULL, "Eastern Micro Electronics, Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, hoccer2RomInfo, hoccer2RomName, NULL, NULL, HoccerInputInfo, HoccerDIPInfo,
+	NULL, hoccer2RomInfo, hoccer2RomName, NULL, NULL, NULL, NULL, HoccerInputInfo, HoccerDIPInfo,
 	hoccerInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 224, 256, 3, 4
 };
@@ -1982,7 +1982,7 @@ struct BurnDriver BurnDrvWanted = {
 	"Wanted\0", NULL, "Sigma Enterprises Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, wantedRomInfo, wantedRomName, NULL, NULL, WantedInputInfo, WantedDIPInfo,
+	NULL, wantedRomInfo, wantedRomName, NULL, NULL, NULL, NULL, WantedInputInfo, WantedDIPInfo,
 	wantedInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 224, 256, 3, 4
 };
@@ -2013,7 +2013,7 @@ struct BurnDriver BurnDrvBcruzm12 = {
 	"Battle Cruiser M-12\0", NULL, "Sigma Enterprises Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bcruzm12RomInfo, bcruzm12RomName, NULL, NULL, Bcruzm12InputInfo, Bcruzm12DIPInfo,
+	NULL, bcruzm12RomInfo, bcruzm12RomName, NULL, NULL, NULL, NULL, Bcruzm12InputInfo, Bcruzm12DIPInfo,
 	bcruzm12Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 224, 256, 3, 4
 };

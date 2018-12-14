@@ -905,7 +905,7 @@ struct BurnDriver BurnDrvMhavoc = {
 	"Major Havoc (rev 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, mhavocRomInfo, mhavocRomName, NULL, NULL, MhavocInputInfo, MhavocDIPInfo,
+	NULL, mhavocRomInfo, mhavocRomName, NULL, NULL, NULL, NULL, MhavocInputInfo, MhavocDIPInfo,
 	MhavocInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
 };
@@ -935,7 +935,7 @@ struct BurnDriver BurnDrvMhavoc2 = {
 	"Major Havoc (rev 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, mhavoc2RomInfo, mhavoc2RomName, NULL, NULL, MhavocInputInfo, MhavocDIPInfo,
+	NULL, mhavoc2RomInfo, mhavoc2RomName, NULL, NULL, NULL, NULL, MhavocInputInfo, MhavocDIPInfo,
 	MhavocInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
 };
@@ -965,7 +965,7 @@ struct BurnDriver BurnDrvMhavocrv = {
 	"Major Havoc - Return to Vax\0", NULL, "hack (JMA)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
-	NULL, mhavocrvRomInfo, mhavocrvRomName, NULL, NULL, MhavocInputInfo, MhavocDIPInfo,
+	NULL, mhavocrvRomInfo, mhavocrvRomName, NULL, NULL, NULL, NULL, MhavocInputInfo, MhavocDIPInfo,
 	MhavocInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
 };
@@ -995,7 +995,7 @@ struct BurnDriver BurnDrvMhavocp = {
 	"Major Havoc (prototype)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, mhavocpRomInfo, mhavocpRomName, NULL, NULL, MhavocInputInfo, MhavocpDIPInfo,
+	NULL, mhavocpRomInfo, mhavocpRomName, NULL, NULL, NULL, NULL, MhavocInputInfo, MhavocpDIPInfo,
 	MhavocInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
 };
@@ -1025,7 +1025,7 @@ struct BurnDriver BurnDrvAlphaone = {
 	"Alpha One (prototype, 3 lives)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, alphaoneRomInfo, alphaoneRomName, NULL, NULL, AlphaoneInputInfo, AlphaoneDIPInfo,
+	NULL, alphaoneRomInfo, alphaoneRomName, NULL, NULL, NULL, NULL, AlphaoneInputInfo, AlphaoneDIPInfo,
 	AlphaoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
 };
@@ -1054,7 +1054,7 @@ struct BurnDriver BurnDrvAlphaonea = {
 	"Alpha One (prototype, 5 lives)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, alphaoneaRomInfo, alphaoneaRomName, NULL, NULL, AlphaoneInputInfo, AlphaoneDIPInfo,
+	NULL, alphaoneaRomInfo, alphaoneaRomName, NULL, NULL, NULL, NULL, AlphaoneInputInfo, AlphaoneDIPInfo,
 	AlphaoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	800, 600, 4, 3
 };

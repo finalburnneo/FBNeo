@@ -1370,7 +1370,7 @@ struct BurnDriver BurnDrvTetrisp2 = {
 	"Tetris Plus 2 (World)\0", NULL, "Jaleco / The Tetris Company", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, tetrisp2RomInfo, tetrisp2RomName, NULL, NULL, Tetrisp2InputInfo, Tetrisp2DIPInfo,
+	NULL, tetrisp2RomInfo, tetrisp2RomName, NULL, NULL, NULL, NULL, Tetrisp2InputInfo, Tetrisp2DIPInfo,
 	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
 };
@@ -1401,7 +1401,7 @@ struct BurnDriver BurnDrvTetrisp2j = {
 	"Tetris Plus 2 (Japan, V2.2)\0", NULL, "Jaleco / The Tetris Company", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, tetrisp2jRomInfo, tetrisp2jRomName, NULL, NULL, Tetrisp2InputInfo, Tetrisp2jDIPInfo,
+	NULL, tetrisp2jRomInfo, tetrisp2jRomName, NULL, NULL, NULL, NULL, Tetrisp2InputInfo, Tetrisp2jDIPInfo,
 	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
 };
@@ -1432,7 +1432,7 @@ struct BurnDriver BurnDrvTetrisp2ja = {
 	"Tetris Plus 2 (Japan, V2.1)\0", NULL, "Jaleco / The Tetris Company", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, tetrisp2jaRomInfo, tetrisp2jaRomName, NULL, NULL, Tetrisp2InputInfo, Tetrisp2jDIPInfo,
+	NULL, tetrisp2jaRomInfo, tetrisp2jaRomName, NULL, NULL, NULL, NULL, Tetrisp2InputInfo, Tetrisp2jDIPInfo,
 	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
 };
@@ -1477,7 +1477,7 @@ struct BurnDriver BurnDrvRockn = {
 	"Rock'n Tread (Japan)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, rocknRomInfo, rocknRomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
+	NULL, rocknRomInfo, rocknRomName, NULL, NULL, NULL, NULL, RocknInputInfo, RocknDIPInfo,
 	RocknInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
@@ -1522,7 +1522,7 @@ struct BurnDriver BurnDrvRockna = {
 	"Rock'n Tread (Japan, alternate)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, rocknaRomInfo, rocknaRomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
+	NULL, rocknaRomInfo, rocknaRomName, NULL, NULL, NULL, NULL, RocknInputInfo, RocknDIPInfo,
 	RocknInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
@@ -1574,7 +1574,7 @@ struct BurnDriver BurnDrvRockn2 = {
 	"Rock'n Tread 2 (Japan)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, rockn2RomInfo, rockn2RomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
+	NULL, rockn2RomInfo, rockn2RomName, NULL, NULL, NULL, NULL, RocknInputInfo, RocknDIPInfo,
 	Rockn2Init, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
@@ -1625,7 +1625,7 @@ struct BurnDriver BurnDrvRockn3 = {
 	"Rock'n 3 (Japan)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, rockn3RomInfo, rockn3RomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
+	NULL, rockn3RomInfo, rockn3RomName, NULL, NULL, NULL, NULL, RocknInputInfo, RocknDIPInfo,
 	Rockn3Init, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
@@ -1665,7 +1665,7 @@ struct BurnDriver BurnDrvRockn4 = {
 	"Rock'n 4 (Japan, prototype)\0", NULL, "Jaleco / PCCWJ", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, rockn4RomInfo, rockn4RomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
+	NULL, rockn4RomInfo, rockn4RomName, NULL, NULL, NULL, NULL, RocknInputInfo, RocknDIPInfo,
 	Rockn4Init, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
@@ -1694,7 +1694,7 @@ struct BurnDriverD BurnDrvNndmseal = {
 	"Nandemo Seal Iinkai\0", NULL, "I'Max / Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, nndmsealRomInfo, nndmsealRomName, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
+	NULL, nndmsealRomInfo, nndmsealRomName, NULL, NULL, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
 	NndmsealInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };
@@ -1722,7 +1722,7 @@ struct BurnDriverD BurnDrvNndmseala = {
 	"Nandemo Seal Iinkai (Astro Boy ver.)\0", NULL, "I'Max / Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, nndmsealaRomInfo, nndmsealaRomName, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
+	NULL, nndmsealaRomInfo, nndmsealaRomName, NULL, NULL, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
 	NndmsealaInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };

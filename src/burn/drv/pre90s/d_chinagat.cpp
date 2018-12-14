@@ -949,7 +949,7 @@ struct BurnDriver BurnDrvChinagat = {
 	"China Gate (US)\0", NULL, "Technos Japan (Taito Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, chinagatRomInfo, chinagatRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, chinagatRomInfo, chinagatRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	256, 240, 4, 3
 };
@@ -991,7 +991,7 @@ struct BurnDriver BurnDrvSaiyugou = {
 	"Sai Yu Gou Ma Roku (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, saiyugouRomInfo, saiyugouRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, saiyugouRomInfo, saiyugouRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	256, 240, 4, 3
 };
@@ -1037,7 +1037,7 @@ struct BurnDriver BurnDrvSaiyugoub1 = {
 	"Sai Yu Gou Ma Roku (Japan bootleg 1)\0", "missing some sounds", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, saiyugoub1RomInfo, saiyugoub1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, saiyugoub1RomInfo, saiyugoub1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	256, 240, 4, 3
 };
@@ -1081,7 +1081,7 @@ struct BurnDriver BurnDrvSaiyugoub2 = {
 	"Sai Yu Gou Ma Roku (Japan bootleg 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, saiyugoub2RomInfo, saiyugoub2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, saiyugoub2RomInfo, saiyugoub2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvBoot2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	256, 240, 4, 3
 };

@@ -411,7 +411,7 @@ struct BurnDriver BurnDrvUsg32 = {
 	"Super Duper Casino (California V3.2)\0", NULL, "U.S. Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, usg32RomInfo, usg32RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, usg32RomInfo, usg32RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	Usg32Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	400, 256, 4, 3
 };
@@ -440,7 +440,7 @@ struct BurnDriver BurnDrvSuperten = {
 	"Super Ten V8.3\0", NULL, "U.S. Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, supertenRomInfo, supertenRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, supertenRomInfo, supertenRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	SupertenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	400, 256, 4, 3
 };
@@ -464,7 +464,7 @@ struct BurnDriver BurnDrvUsg83x = {
 	"Super Ten V8.3X\0", NULL, "U.S. Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, usg83xRomInfo, usg83xRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, usg83xRomInfo, usg83xRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	SupertenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	400, 256, 4, 3
 };
@@ -488,7 +488,7 @@ struct BurnDriver BurnDrvUsg82 = {
 	"Super Ten V8.2\0", NULL, "U.S. Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, usg82RomInfo, usg82RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, usg82RomInfo, usg82RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	SupertenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	400, 256, 4, 3
 };
@@ -517,7 +517,7 @@ struct BurnDriver BurnDrvUsgames = {
 	"Games V25.4X\0", NULL, "U.S. Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, usgamesRomInfo, usgamesRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, usgamesRomInfo, usgamesRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	UsgamesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	400, 256, 4, 3
 };
@@ -546,7 +546,7 @@ struct BurnDriver BurnDrvUsg187c = {
 	"Games V18.7C\0", NULL, "U.S. Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, usg187cRomInfo, usg187cRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, usg187cRomInfo, usg187cRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	Usg187cInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	400, 256, 4, 3
 };
@@ -575,7 +575,7 @@ struct BurnDriver BurnDrvUsg185 = {
 	"Games V18.5\0", NULL, "U.S. Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, usg185RomInfo, usg185RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, usg185RomInfo, usg185RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	Usg185Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	400, 256, 4, 3
 };
@@ -599,7 +599,7 @@ struct BurnDriver BurnDrvUsg182 = {
 	"Games V18.2\0", NULL, "U.S. Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, usg182RomInfo, usg182RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, usg182RomInfo, usg182RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	Usg185Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	400, 256, 4, 3
 };

@@ -840,7 +840,7 @@ struct BurnDriver BurnDrvAjax = {
 	"Ajax\0", NULL, "Konami", "GX770",
 	L"Ajax\0\u30A8\u30FC\u30B8\u30E3\u30C3\u30AF\u30B9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, ajaxRomInfo, ajaxRomName, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
+	NULL, ajaxRomInfo, ajaxRomName, NULL, NULL, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
 	ajaxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 304, 3, 4
 };
@@ -886,7 +886,7 @@ struct BurnDriver BurnDrvTyphoon = {
 	"Typhoon\0", NULL, "Konami", "GX770",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, typhoonRomInfo, typhoonRomName, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
+	NULL, typhoonRomInfo, typhoonRomName, NULL, NULL, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
 	typhoonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 304, 3, 4
 };
@@ -927,7 +927,7 @@ struct BurnDriver BurnDrvAjaxj = {
 	"Ajax (Japan)\0", NULL, "Konami", "GX770",
 	L"Ajax\0\u30A8\u30FC\u30B8\u30E3\u30C3\u30AF\u30B9 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, ajaxjRomInfo, ajaxjRomName, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
+	NULL, ajaxjRomInfo, ajaxjRomName, NULL, NULL, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
 	typhoonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 304, 3, 4
 };

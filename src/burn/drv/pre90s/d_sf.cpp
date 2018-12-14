@@ -1415,7 +1415,7 @@ struct BurnDriver BurnDrvsf = {
 	"Street Fighter (US, set 1)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
-	NULL, sfRomInfo, sfRomName, NULL, NULL, SfusInputInfo, SfusDIPInfo,
+	NULL, sfRomInfo, sfRomName, NULL, NULL, NULL, NULL, SfusInputInfo, SfusDIPInfo,
 	SfusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x401, 384, 224, 4, 3
 };
@@ -1491,7 +1491,7 @@ struct BurnDriver BurnDrvsfan = {
 	"Street Fighter (World, pneumatic buttons)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
-	NULL, sfanRomInfo, sfanRomName, NULL, NULL, SfInputInfo, SfDIPInfo,
+	NULL, sfanRomInfo, sfanRomName, NULL, NULL, NULL, NULL, SfInputInfo, SfDIPInfo,
 	SfanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x401, 384, 224, 4, 3
 };
@@ -1569,7 +1569,7 @@ struct BurnDriver BurnDrvsfua = {
 	"Street Fighter (US set 2) (protected)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
-	NULL, sfuaRomInfo, sfuaRomName, NULL, NULL, SfjInputInfo, SfusDIPInfo,
+	NULL, sfuaRomInfo, sfuaRomName, NULL, NULL, NULL, NULL, SfjInputInfo, SfusDIPInfo,
 	SfuaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x401, 384, 224, 4, 3
 };
@@ -1647,7 +1647,7 @@ struct BurnDriver BurnDrvsfj = {
 	"Street Fighter (Japan) (protected)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
-	NULL, sfjRomInfo, sfjRomName, NULL, NULL, SfjInputInfo, SfusDIPInfo,
+	NULL, sfjRomInfo, sfjRomName, NULL, NULL, NULL, NULL, SfjInputInfo, SfusDIPInfo,
 	SfjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x401, 384, 224, 4, 3
 };
@@ -1723,7 +1723,7 @@ struct BurnDriver BurnDrvsfjan = {
 	"Street Fighter (Japan, pneumatic buttons)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
-	NULL, sfjanRomInfo, sfjanRomName, NULL, NULL, SfInputInfo, SfDIPInfo,
+	NULL, sfjanRomInfo, sfjanRomName, NULL, NULL, NULL, NULL, SfInputInfo, SfDIPInfo,
 	SfjanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x401, 384, 224, 4, 3
 };
@@ -1792,7 +1792,7 @@ struct BurnDriver BurnDrvsfp = {
 	"Street Fighter (Prototype)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
-	NULL, sfpRomInfo, sfpRomName, NULL, NULL, SfInputInfo, SfDIPInfo,
+	NULL, sfpRomInfo, sfpRomName, NULL, NULL, NULL, NULL, SfInputInfo, SfDIPInfo,
 	SfpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x401, 384, 224, 4, 3
 };
@@ -1870,7 +1870,7 @@ struct BurnDriver BurnDrvsfw = {
 	"Street Fighter (World) (protected)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
-	NULL, sfwRomInfo, sfwRomName, NULL, NULL, SfjInputInfo, SfusDIPInfo,
+	NULL, sfwRomInfo, sfwRomName, NULL, NULL, NULL, NULL, SfjInputInfo, SfusDIPInfo,
 	SfwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x401, 384, 224, 4, 3
 };

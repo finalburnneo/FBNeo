@@ -822,7 +822,7 @@ struct BurnDriver BurnDrvBlmbycar = {
 	"Blomby Car\0", NULL, "ABM & Gecas", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	BlmbycarInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x300, 384, 256, 4, 3
 };
@@ -832,7 +832,7 @@ struct BurnDriver BurnDrvBlmbycaru = {
 	"Blomby Car (not encrypted)\0", NULL, "ABM & Gecas", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x300, 384, 256, 4, 3
 };
@@ -842,7 +842,7 @@ struct BurnDriver BurnDrvWatrball = {
 	"Water Balls\0", NULL, "ABM", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, WatrballRomInfo, WatrballRomName, NULL, NULL, DrvInputInfo, WatrballDIPInfo,
+	NULL, WatrballRomInfo, WatrballRomName, NULL, NULL, NULL, NULL, DrvInputInfo, WatrballDIPInfo,
 	WatrballInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x300, 384, 240, 4, 3
 };

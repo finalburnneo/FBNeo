@@ -897,7 +897,7 @@ struct BurnDriver BurnDrvHyperspt = {
 	"Hyper Sports\0", NULL, "Konami (Centuri license)", "GX330",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, hypersptRomInfo, hypersptRomName, NULL, NULL, HypersptInputInfo, HypersptDIPInfo,
+	NULL, hypersptRomInfo, hypersptRomName, NULL, NULL, NULL, NULL, HypersptInputInfo, HypersptDIPInfo,
 	HypersptInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -953,7 +953,7 @@ struct BurnDriver BurnDrvHypersptb = {
 	"Hyper Sports (bootleg)\0", "imcomplete sound", "bootleg", "GX330",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, hypersptbRomInfo, hypersptbRomName, NULL, NULL, HypersptInputInfo, HypersptDIPInfo,
+	NULL, hypersptbRomInfo, hypersptbRomName, NULL, NULL, NULL, NULL, HypersptInputInfo, HypersptDIPInfo,
 	HypersptbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -1001,7 +1001,7 @@ struct BurnDriver BurnDrvHpolym84 = {
 	"Hyper Olympic '84\0", NULL, "Konami", "GX330",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, hpolym84RomInfo, hpolym84RomName, NULL, NULL, HypersptInputInfo, HypersptDIPInfo,
+	NULL, hpolym84RomInfo, hpolym84RomName, NULL, NULL, NULL, NULL, HypersptInputInfo, HypersptDIPInfo,
 	HypersptInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -1045,7 +1045,7 @@ struct BurnDriver BurnDrvRoadf = {
 	"Road Fighter (set 1)\0", NULL, "Konami", "GX461",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
-	NULL, roadfRomInfo, roadfRomName, NULL, NULL, RoadfInputInfo, RoadfDIPInfo,
+	NULL, roadfRomInfo, roadfRomName, NULL, NULL, NULL, NULL, RoadfInputInfo, RoadfDIPInfo,
 	RoadfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1084,7 +1084,7 @@ struct BurnDriver BurnDrvRoadf2 = {
 	"Road Fighter (set 2)\0", NULL, "Konami", "GX461",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
-	NULL, roadf2RomInfo, roadf2RomName, NULL, NULL, RoadfInputInfo, RoadfDIPInfo,
+	NULL, roadf2RomInfo, roadf2RomName, NULL, NULL, NULL, NULL, RoadfInputInfo, RoadfDIPInfo,
 	RoadfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1129,7 +1129,7 @@ struct BurnDriver BurnDrvRoadf3 = {
 	"Road Fighter (set 3, conversion hack on Hyper Sports PCB)\0", NULL, "hack", "GX330",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
-	NULL, roadf3RomInfo, roadf3RomName, NULL, NULL, RoadfInputInfo, RoadfDIPInfo,
+	NULL, roadf3RomInfo, roadf3RomName, NULL, NULL, NULL, NULL, RoadfInputInfo, RoadfDIPInfo,
 	Roadf3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

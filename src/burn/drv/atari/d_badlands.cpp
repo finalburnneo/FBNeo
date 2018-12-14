@@ -704,7 +704,7 @@ struct BurnDriver BurnDrvBadlands = {
 	"Bad Lands\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, badlandsRomInfo, badlandsRomName, NULL, NULL, BadlandsInputInfo, BadlandsDIPInfo,
+	NULL, badlandsRomInfo, badlandsRomName, NULL, NULL, NULL, NULL, BadlandsInputInfo, BadlandsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };

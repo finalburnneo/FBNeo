@@ -589,7 +589,7 @@ struct BurnDriver BurnDrvUoPoko = {
 	"Puzzle Uo Poko (International, ver. 98/02/06)\0", NULL, "Cave / Jaleco", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_PUZZLE, 0,
-	NULL, uopokoRomInfo, uopokoRomName, NULL, NULL, uopokoInputInfo, NULL,
+	NULL, uopokoRomInfo, uopokoRomName, NULL, NULL, NULL, NULL, uopokoInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
@@ -599,7 +599,7 @@ struct BurnDriver BurnDrvUoPokoj = {
 	"Puzzle Uo Poko (Japan, ver. 98/02/06)\0", NULL, "Cave / Jaleco", "Cave",
 	L"\u30D1\u30BA\u30EB \u9B5A\u30DD\u30B3 \u3046\u304A\u307D\u3053 (Japan, ver. 98/02/06)\0Puzzle Uo Poko\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_PUZZLE, 0,
-	NULL, uopokojRomInfo, uopokojRomName, NULL, NULL, uopokoInputInfo, NULL,
+	NULL, uopokojRomInfo, uopokojRomName, NULL, NULL, NULL, NULL, uopokoInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };

@@ -700,7 +700,7 @@ struct BurnDriver BurnDrvXmen = {
 	"X-Men (4 Players ver UBB)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmenRomInfo, xmenRomName, NULL, NULL, XmenInputInfo, NULL,
+	NULL, xmenRomInfo, xmenRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -737,7 +737,7 @@ struct BurnDriver BurnDrvXmena = {
 	"X-Men (4 Players ver AEA)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmenaRomInfo, xmenaRomName, NULL, NULL, XmenInputInfo, NULL,
+	NULL, xmenaRomInfo, xmenaRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -774,7 +774,7 @@ struct BurnDriver BurnDrvXmenaa = {
 	"X-Men (4 Players ver ADA)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmenaaRomInfo, xmenaaRomName, NULL, NULL, XmenInputInfo, NULL,
+	NULL, xmenaaRomInfo, xmenaaRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -811,7 +811,7 @@ struct BurnDriver BurnDrvXmene = {
 	"X-Men (4 Players ver EBA)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmeneRomInfo, xmeneRomName, NULL, NULL, XmenInputInfo, NULL,
+	NULL, xmeneRomInfo, xmeneRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -848,7 +848,7 @@ struct BurnDriver BurnDrvXmenj = {
 	"X-Men (4 Players ver JBA)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmenjRomInfo, xmenjRomName, NULL, NULL, XmenInputInfo, NULL,
+	NULL, xmenjRomInfo, xmenjRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -885,7 +885,7 @@ struct BurnDriver BurnDrvXmen2pe = {
 	"X-Men (2 Players ver EAA)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmen2peRomInfo, xmen2peRomName, NULL, NULL, Xmen2pInputInfo, NULL,
+	NULL, xmen2peRomInfo, xmen2peRomName, NULL, NULL, NULL, NULL, Xmen2pInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -922,7 +922,7 @@ struct BurnDriver BurnDrvXmen2pu = {
 	"X-Men (2 Players ver UAB)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmen2puRomInfo, xmen2puRomName, NULL, NULL, Xmen2pInputInfo, NULL,
+	NULL, xmen2puRomInfo, xmen2puRomName, NULL, NULL, NULL, NULL, Xmen2pInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -959,7 +959,7 @@ struct BurnDriver BurnDrvXmen2pa = {
 	"X-Men (2 Players ver AAA)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmen2paRomInfo, xmen2paRomName, NULL, NULL, Xmen2pInputInfo, NULL,
+	NULL, xmen2paRomInfo, xmen2paRomName, NULL, NULL, NULL, NULL, Xmen2pInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -996,7 +996,7 @@ struct BurnDriver BurnDrvXmen2pj = {
 	"X-Men (2 Players ver JAA)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmen2pjRomInfo, xmen2pjRomName, NULL, NULL, Xmen2pInputInfo, NULL,
+	NULL, xmen2pjRomInfo, xmen2pjRomName, NULL, NULL, NULL, NULL, Xmen2pInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -1033,7 +1033,7 @@ struct BurnDriverD BurnDrvXmen6p = {
 	"X-Men (6 Players ver ECB)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 6, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmen6pRomInfo, xmen6pRomName, NULL, NULL, XmenInputInfo, NULL,
+	NULL, xmen6pRomInfo, xmen6pRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 256, 4, 3
 };
@@ -1070,7 +1070,7 @@ struct BurnDriverD BurnDrvXmen6pu = {
 	"X-Men (6 Players ver UCB)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 6, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmen6puRomInfo, xmen6puRomName, NULL, NULL, XmenInputInfo, NULL,
+	NULL, xmen6puRomInfo, xmen6puRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 256, 4, 3
 };

@@ -550,7 +550,7 @@ struct BurnDriver BurnDrvTroangel = {
 	"Tropical Angel\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_MISC, GBF_MISC, 0,
-	NULL, troangelRomInfo, troangelRomName, NULL, NULL, TroangelInputInfo, TroangelDIPInfo,
+	NULL, troangelRomInfo, troangelRomName, NULL, NULL, NULL, NULL, TroangelInputInfo, TroangelDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 240, 4, 3
 };
@@ -591,7 +591,7 @@ struct BurnDriver BurnDrvNewtangl = {
 	"New Tropical Angel\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_MISC, 0,
-	NULL, newtanglRomInfo, newtanglRomName, NULL, NULL, TroangelInputInfo, TroangelDIPInfo,
+	NULL, newtanglRomInfo, newtanglRomName, NULL, NULL, NULL, NULL, TroangelInputInfo, TroangelDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 240, 4, 3
 };

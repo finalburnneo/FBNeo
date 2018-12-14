@@ -263,7 +263,7 @@ struct BurnDriverD BurnDrvCpsKenseim = {
 	"Ken Sei Mogura: Street Fighter II (Japan 940418, Ver 1.00)\0", NULL, "Capcom / Togo / Sigma", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_MINIGAMES, 0,
-	NULL, KenseimRomInfo, KenseimRomName, NULL, NULL, KenseimInputInfo, KenseimDIPInfo,
+	NULL, KenseimRomInfo, KenseimRomName, NULL, NULL, NULL, NULL, KenseimInputInfo, KenseimDIPInfo,
 	KenseimInit, KenseimExit, KenseimFrame, KenseimRedraw, KenseimScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

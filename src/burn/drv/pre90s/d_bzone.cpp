@@ -987,7 +987,7 @@ struct BurnDriver BurnDrvBzone = {
 	"Battle Zone (rev 2)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bzoneRomInfo, bzoneRomName, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
+	NULL, bzoneRomInfo, bzoneRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	580, 400, 4, 3
 };
@@ -1026,7 +1026,7 @@ struct BurnDriver BurnDrvBzonea = {
 	"Battle Zone (rev 1)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bzoneaRomInfo, bzoneaRomName, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
+	NULL, bzoneaRomInfo, bzoneaRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	580, 400, 4, 3
 };
@@ -1066,7 +1066,7 @@ struct BurnDriver BurnDrvBzonec = {
 	"Battle Zone (cocktail)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bzonecRomInfo, bzonecRomName, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
+	NULL, bzonecRomInfo, bzonecRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	580, 400, 4, 3
 };
@@ -1107,7 +1107,7 @@ struct BurnDriver BurnDrvBradley = {
 	"Bradley Trainer\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bradleyRomInfo, bradleyRomName, NULL, NULL, BradleyInputInfo, BradleyDIPInfo,
+	NULL, bradleyRomInfo, bradleyRomName, NULL, NULL, NULL, NULL, BradleyInputInfo, BradleyDIPInfo,
 	BradleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	580, 400, 4, 3
 };
@@ -1148,7 +1148,7 @@ struct BurnDriver BurnDrvRedbaron = {
 	"Red Baron (Revised Hardware)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, redbaronRomInfo, redbaronRomName, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
+	NULL, redbaronRomInfo, redbaronRomName, NULL, NULL, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
 	RedbaronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	520, 400, 4, 3
 };
@@ -1196,7 +1196,7 @@ struct BurnDriver BurnDrvRedbarona = {
 	"Red Baron\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, redbaronaRomInfo, redbaronaRomName, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
+	NULL, redbaronaRomInfo, redbaronaRomName, NULL, NULL, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
 	RedbaronaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	520, 400, 4, 3
 };

@@ -810,7 +810,7 @@ struct BurnDriver BurnDrvPitnrun = {
 	"Pit & Run - F-1 Race (set 1)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
-	NULL, pitnrunRomInfo, pitnrunRomName, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
+	NULL, pitnrunRomInfo, pitnrunRomName, NULL, NULL, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
 	PitnrunInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
 	224, 256, 3, 4
 };
@@ -853,7 +853,7 @@ struct BurnDriver BurnDrvPitnruna = {
 	"Pit & Run - F-1 Race (set 2)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
-	NULL, pitnrunaRomInfo, pitnrunaRomName, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
+	NULL, pitnrunaRomInfo, pitnrunaRomName, NULL, NULL, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
 	PitnrunInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
 	224, 256, 3, 4
 };
@@ -898,7 +898,7 @@ struct BurnDriver BurnDrvJumpkun = {
 	"Jump Kun (prototype)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_PLATFORM, 0,
-	NULL, jumpkunRomInfo, jumpkunRomName, NULL, NULL, JumpkunInputInfo, JumpkunDIPInfo,
+	NULL, jumpkunRomInfo, jumpkunRomName, NULL, NULL, NULL, NULL, JumpkunInputInfo, JumpkunDIPInfo,
 	JumpkunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
 };

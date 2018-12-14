@@ -756,7 +756,7 @@ struct BurnDriver BurnDrvSolomon = {
 	"Solomon's Key (US)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, SolomonRomInfo, SolomonRomName, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
+	NULL, SolomonRomInfo, SolomonRomName, NULL, NULL, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
 	SolomonInit, SolomonExit, SolomonFrame, SolomonDraw, SolomonScan,
 	NULL, 0x200, 256, 224, 4, 3
 };
@@ -766,7 +766,7 @@ struct BurnDriver BurnDrvSolomonj = {
 	"Solomon's Key (Japan)\0", NULL, "Tecmo", "Miscellaneous",
 	L"Solomon's Key (Japan)\0Solomon's Key \u30BD\u30ED\u30E2\u30F3\u306E\u9375\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, SolomonjRomInfo, SolomonjRomName, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
+	NULL, SolomonjRomInfo, SolomonjRomName, NULL, NULL, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
 	SolomonInit, SolomonExit, SolomonFrame, SolomonDraw, SolomonScan,
 	NULL, 0x200, 256, 224, 4, 3
 };

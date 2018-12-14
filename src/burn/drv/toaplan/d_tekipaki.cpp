@@ -753,7 +753,7 @@ struct BurnDriver BurnDrvTekiPaki = {
 	"Teki Paki\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	L"Teki Paki\0\u6D17\u8133\u30B2\u30FC\u30E0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PUZZLE, 0,
-	NULL, drvRomInfo, drvRomName, NULL, NULL, tekipakiInputInfo, tekipakiDIPInfo,
+	NULL, drvRomInfo, drvRomName, NULL, NULL, NULL, NULL, tekipakiInputInfo, tekipakiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
@@ -763,7 +763,7 @@ struct BurnDriver BurnDrvTekiPakit = {
 	"Teki Paki (location test)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	L"Teki Paki\0\u6D17\u8133\u30B2\u30FC\u30E0 (location test)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PUZZLE, 0,
-	NULL, drvtRomInfo, drvtRomName, NULL, NULL, tekipakiInputInfo, tekipakiDIPInfo,
+	NULL, drvtRomInfo, drvtRomName, NULL, NULL, NULL, NULL, tekipakiInputInfo, tekipakiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
@@ -773,7 +773,7 @@ struct BurnDriver BurnDrvWhoopee = {
 	"Pipi & Bibis / Whoopee!! (Teki Paki hardware)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PLATFORM, 0,
-	NULL, whoopeeRomInfo, whoopeeRomName, NULL, NULL, whoopeeInputInfo, whoopeeDIPInfo,
+	NULL, whoopeeRomInfo, whoopeeRomName, NULL, NULL, NULL, NULL, whoopeeInputInfo, whoopeeDIPInfo,
 	WhoopeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

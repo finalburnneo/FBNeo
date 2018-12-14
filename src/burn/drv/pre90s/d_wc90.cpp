@@ -1269,7 +1269,7 @@ struct BurnDriver BurnDrvYm2608 = {
 	"YM2608 Internal ROM\0", "Internal ROM only", "Yamaha", "YM2608 Internal ROM",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_BOARDROM, 0, HARDWARE_MISC_PRE90S, GBF_BIOS, 0,
-	NULL, Ym2608RomInfo, Ym2608RomName, NULL, NULL, Wc90InputInfo, NULL,
+	NULL, Ym2608RomInfo, Ym2608RomName, NULL, NULL, NULL, NULL, Wc90InputInfo, NULL,
 	NULL, NULL, NULL, NULL, NULL,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -1279,7 +1279,7 @@ struct BurnDriver BurnDrvWc90 = {
 	"World Cup '90 (World)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, Wc90RomInfo, Wc90RomName, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
+	NULL, Wc90RomInfo, Wc90RomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
 	Wc90Init, Wc90Exit, Wc90Frame, Wc90Draw, Wc90Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
@@ -1289,7 +1289,7 @@ struct BurnDriver BurnDrvWc90a = {
 	"World Cup '90 (Euro set 1)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, Wc90aRomInfo, Wc90aRomName, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
+	NULL, Wc90aRomInfo, Wc90aRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
 	Wc90Init, Wc90Exit, Wc90Frame, Wc90Draw, Wc90Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
@@ -1299,7 +1299,7 @@ struct BurnDriver BurnDrvWc90b = {
 	"World Cup '90 (Euro set 2)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, Wc90bRomInfo, Wc90bRomName, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
+	NULL, Wc90bRomInfo, Wc90bRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
 	Wc90Init, Wc90Exit, Wc90Frame, Wc90Draw, Wc90Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
@@ -1309,7 +1309,7 @@ struct BurnDriver BurnDrvWc90t = {
 	"World Cup '90 (trackball)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, Wc90tRomInfo, Wc90tRomName, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
+	NULL, Wc90tRomInfo, Wc90tRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
 	Wc90tInit, Wc90Exit, Wc90Frame, Wc90tDraw, Wc90Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };

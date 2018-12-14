@@ -1061,7 +1061,7 @@ struct BurnDriver BurnDrvdocastle = {
 	"Mr. Do\'s Castle (set 1)\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, docastleRomInfo, docastleRomName, NULL, NULL, DocastleInputInfo, DocastleDIPInfo,
+	NULL, docastleRomInfo, docastleRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DocastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	192, 240, 3, 4
 };
@@ -1103,7 +1103,7 @@ struct BurnDriver BurnDrvDorunrun = {
 	"Do! Run Run (set 1)\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, dorunrunRomInfo, dorunrunRomName, NULL, NULL, DocastleInputInfo, DorunrunDIPInfo,
+	NULL, dorunrunRomInfo, dorunrunRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DorunrunDIPInfo,
 	DorunrunDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 192, 4, 3
 };
@@ -1138,7 +1138,7 @@ struct BurnDriver BurnDrvDowild = {
 	"Mr. Do's Wild Ride\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, dowildRomInfo, dowildRomName, NULL, NULL, DocastleInputInfo, DowildDIPInfo,
+	NULL, dowildRomInfo, dowildRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DowildDIPInfo,
 	DorunrunDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 192, 4, 3
 };
@@ -1173,7 +1173,7 @@ struct BurnDriver BurnDrvJjack = {
 	"Jumping Jack\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, jjackRomInfo, jjackRomName, NULL, NULL, DocastleInputInfo, JjackDIPInfo,
+	NULL, jjackRomInfo, jjackRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, JjackDIPInfo,
 	DorunrunDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	192, 240, 3, 4
 };
@@ -1209,7 +1209,7 @@ struct BurnDriver BurnDrvKickridr = {
 	"Kick Rider\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, kickridrRomInfo, kickridrRomName, NULL, NULL, DocastleInputInfo, KickridrDIPInfo,
+	NULL, kickridrRomInfo, kickridrRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, KickridrDIPInfo,
 	DorunrunDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 192, 4, 3
 };

@@ -908,7 +908,7 @@ struct BurnDriver BurnDrvLiblrabl = {
 	"Libble Rabble\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, liblrablRomInfo, liblrablRomName, NULL, NULL, LiblrablInputInfo, LiblrablDIPInfo,
+	NULL, liblrablRomInfo, liblrablRomName, NULL, NULL, NULL, NULL, LiblrablInputInfo, LiblrablDIPInfo,
 	LiblrablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x320,
 	288, 224, 4, 3
 };
@@ -951,7 +951,7 @@ struct BurnDriver BurnDrvToypop = {
 	"Toypop\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, toypopRomInfo, toypopRomName, NULL, NULL, ToypopInputInfo, ToypopDIPInfo,
+	NULL, toypopRomInfo, toypopRomName, NULL, NULL, NULL, NULL, ToypopInputInfo, ToypopDIPInfo,
 	ToypopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x320,
 	288, 224, 4, 3
 };

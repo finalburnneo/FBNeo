@@ -558,7 +558,7 @@ struct BurnDriver BurnDrvGo2000 = {
 	"Go 2000\0", NULL, "SunA?", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, go2000RomInfo, go2000RomName, NULL, NULL, Go2000InputInfo, Go2000DIPInfo,
+	NULL, go2000RomInfo, go2000RomName, NULL, NULL, NULL, NULL, Go2000InputInfo, Go2000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };

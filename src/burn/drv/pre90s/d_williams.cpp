@@ -1859,7 +1859,7 @@ struct BurnDriver BurnDrvDefender = {
 	"Defender (Red label)\0", NULL, "Williams", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, defenderRomInfo, defenderRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, defenderRomInfo, defenderRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -1893,7 +1893,7 @@ struct BurnDriver BurnDrvDefenderg = {
 	"Defender (Green label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, defendergRomInfo, defendergRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, defendergRomInfo, defendergRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderBGInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -1926,7 +1926,7 @@ struct BurnDriver BurnDrvDefenderb = {
 	"Defender (Blue label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, defenderbRomInfo, defenderbRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, defenderbRomInfo, defenderbRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderBGInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -1959,7 +1959,7 @@ struct BurnDriver BurnDrvDefenderw = {
 	"Defender (White label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, defenderwRomInfo, defenderwRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, defenderwRomInfo, defenderwRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -1990,7 +1990,7 @@ struct BurnDriver BurnDrvDefenderj = {
 	"T.T Defender\0", NULL, "Williams (Taito Corporation license)", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, defenderjRomInfo, defenderjRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, defenderjRomInfo, defenderjRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2018,7 +2018,7 @@ struct BurnDriverD BurnDrvDefndjeu = {
 	"Defender (bootleg)\0", NULL, "bootleg (Jeutel)", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, defndjeuRomInfo, defndjeuRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, defndjeuRomInfo, defndjeuRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2046,7 +2046,7 @@ struct BurnDriver BurnDrvTornado1 = {
 	"Tornado (set 1, Defender bootleg)\0", NULL, "bootleg (Jeutel)", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, tornado1RomInfo, tornado1RomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, tornado1RomInfo, tornado1RomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2074,7 +2074,7 @@ struct BurnDriverD BurnDrvTornado2 = {
 	"Tornado (set 2, Defender bootleg)\0", NULL, "bootleg (Jeutel)", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, tornado2RomInfo, tornado2RomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, tornado2RomInfo, tornado2RomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2102,7 +2102,7 @@ struct BurnDriver BurnDrvZero = {
 	"Zero (set 1, Defender bootleg)\0", NULL, "bootleg (Jeutel)", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, zeroRomInfo, zeroRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, zeroRomInfo, zeroRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2130,7 +2130,7 @@ struct BurnDriver BurnDrvZero2 = {
 	"Zero (set 2, Defender bootleg)\0", NULL, "bootleg (Amtec)", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, zero2RomInfo, zero2RomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, zero2RomInfo, zero2RomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2161,7 +2161,7 @@ struct BurnDriver BurnDrvDefcmnd = {
 	"Defense Command (Defender bootleg)\0", NULL, "bootleg", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, defcmndRomInfo, defcmndRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, defcmndRomInfo, defcmndRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2192,7 +2192,7 @@ struct BurnDriver BurnDrvStartrkd = {
 	"Star Trek (Defender bootleg)\0", NULL, "bootleg", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, startrkdRomInfo, startrkdRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, startrkdRomInfo, startrkdRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2223,7 +2223,7 @@ struct BurnDriver BurnDrvDefence = {
 	"Defence Command (Defender bootleg)\0", NULL, "bootleg (Outer Limits)", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, defenceRomInfo, defenceRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, defenceRomInfo, defenceRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenceInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2256,7 +2256,7 @@ struct BurnDriver BurnDrvAttackf = {
 	"Attack (Defender bootleg)\0", NULL, "bootleg (Famare SA)", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, attackfRomInfo, attackfRomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, attackfRomInfo, attackfRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2290,7 +2290,7 @@ struct BurnDriver BurnDrvGalwars2 = {
 	"Galaxy Wars II (Defender bootleg)\0", NULL, "bootleg (Sonic)", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, galwars2RomInfo, galwars2RomName, NULL, NULL, DefenderInputInfo, NULL,
+	NULL, galwars2RomInfo, galwars2RomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenceInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2325,7 +2325,7 @@ struct BurnDriver BurnDrvMayday = {
 	"Mayday (set 1)\0", NULL, "Hoei", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, maydayRomInfo, maydayRomName, NULL, NULL, MaydayInputInfo, NULL,
+	NULL, maydayRomInfo, maydayRomName, NULL, NULL, NULL, NULL, MaydayInputInfo, NULL,
 	MaydayInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2353,7 +2353,7 @@ struct BurnDriver BurnDrvMaydaya = {
 	"Mayday (set 2)\0", NULL, "Hoei", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, maydayaRomInfo, maydayaRomName, NULL, NULL, MaydayInputInfo, NULL,
+	NULL, maydayaRomInfo, maydayaRomName, NULL, NULL, NULL, NULL, MaydayInputInfo, NULL,
 	MaydayInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2386,7 +2386,7 @@ struct BurnDriver BurnDrvMaydayb = {
 	"Mayday (set 3)\0", NULL, "Hoei", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, maydaybRomInfo, maydaybRomName, NULL, NULL, MaydayInputInfo, NULL,
+	NULL, maydaybRomInfo, maydaybRomName, NULL, NULL, NULL, NULL, MaydayInputInfo, NULL,
 	MaydayInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2414,7 +2414,7 @@ struct BurnDriver BurnDrvBatlzone = {
 	"Battle Zone (bootleg of Mayday)\0", NULL, "bootleg (Video Game)", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, batlzoneRomInfo, batlzoneRomName, NULL, NULL, MaydayInputInfo, NULL,
+	NULL, batlzoneRomInfo, batlzoneRomName, NULL, NULL, NULL, NULL, MaydayInputInfo, NULL,
 	MaydayInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2451,7 +2451,7 @@ struct BurnDriver BurnDrvColony7 = {
 	"Colony 7 (set 1)\0", NULL, "Taito", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, colony7RomInfo, colony7RomName, NULL, NULL, Colony7InputInfo, Colony7DIPInfo,
+	NULL, colony7RomInfo, colony7RomName, NULL, NULL, NULL, NULL, Colony7InputInfo, Colony7DIPInfo,
 	Colony7Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 292, 3, 4
 };
@@ -2483,7 +2483,7 @@ struct BurnDriver BurnDrvColony7a = {
 	"Colony 7 (set 2)\0", NULL, "Taito", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, colony7aRomInfo, colony7aRomName, NULL, NULL, Colony7InputInfo, Colony7DIPInfo,
+	NULL, colony7aRomInfo, colony7aRomName, NULL, NULL, NULL, NULL, Colony7InputInfo, Colony7DIPInfo,
 	Colony7Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 292, 3, 4
 };
@@ -2516,7 +2516,7 @@ struct BurnDriver BurnDrvJin = {
 	"Jin\0", NULL, "Falcon", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, jinRomInfo, jinRomName, NULL, NULL, JinInputInfo, JinDIPInfo,
+	NULL, jinRomInfo, jinRomName, NULL, NULL, NULL, NULL, JinInputInfo, JinDIPInfo,
 	JinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 316, 3, 4
 };
@@ -2559,7 +2559,7 @@ struct BurnDriver BurnDrvStargate = {
 	"Stargate\0", NULL, "Williams / Vid Kidz", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, stargateRomInfo, stargateRomName, NULL, NULL, StargateInputInfo, NULL,
+	NULL, stargateRomInfo, stargateRomName, NULL, NULL, NULL, NULL, StargateInputInfo, NULL,
 	StargateInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2600,7 +2600,7 @@ struct BurnDriver BurnDrvRobotron = {
 	"Robotron: 2084 (Solid Blue label)\0", NULL, "Williams / Vid Kidz", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, robotronRomInfo, robotronRomName, NULL, NULL, RobotronInputInfo, NULL,
+	NULL, robotronRomInfo, robotronRomName, NULL, NULL, NULL, NULL, RobotronInputInfo, NULL,
 	RobotronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2636,7 +2636,7 @@ struct BurnDriver BurnDrvRobotronyo = {
 	"Robotron: 2084 (Yellow/Orange label)\0", NULL, "Williams / Vid Kidz", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, robotronyoRomInfo, robotronyoRomName, NULL, NULL, RobotronInputInfo, NULL,
+	NULL, robotronyoRomInfo, robotronyoRomName, NULL, NULL, NULL, NULL, RobotronInputInfo, NULL,
 	RobotronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2672,7 +2672,7 @@ struct BurnDriver BurnDrvRobotron87 = {
 	"Robotron: 2084 (1987 'shot-in-the-corner' bugfix)\0", NULL, "hack", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, robotron87RomInfo, robotron87RomName, NULL, NULL, RobotronInputInfo, NULL,
+	NULL, robotron87RomInfo, robotron87RomName, NULL, NULL, NULL, NULL, RobotronInputInfo, NULL,
 	RobotronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2708,7 +2708,7 @@ struct BurnDriver BurnDrvRobotron12 = {
 	"Robotron: 2084 (2012 'wave 201 start' hack)\0", NULL, "hack", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, robotron12RomInfo, robotron12RomName, NULL, NULL, RobotronInputInfo, NULL,
+	NULL, robotron12RomInfo, robotron12RomName, NULL, NULL, NULL, NULL, RobotronInputInfo, NULL,
 	RobotronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2744,7 +2744,7 @@ struct BurnDriver BurnDrvRobotrontd = {
 	"Robotron: 2084 (2015 'tie-die V2' hack)\0", NULL, "hack", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, robotrontdRomInfo, robotrontdRomName, NULL, NULL, RobotronInputInfo, NULL,
+	NULL, robotrontdRomInfo, robotrontdRomName, NULL, NULL, NULL, NULL, RobotronInputInfo, NULL,
 	RobotronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2794,7 +2794,7 @@ struct BurnDriver BurnDrvJoust = {
 	"Joust (White/Green label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, joustRomInfo, joustRomName, NULL, NULL, JoustInputInfo, NULL,
+	NULL, joustRomInfo, joustRomName, NULL, NULL, NULL, NULL, JoustInputInfo, NULL,
 	JoustInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2830,7 +2830,7 @@ struct BurnDriver BurnDrvJoustwr = {
 	"Joust (White/Red label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, joustwrRomInfo, joustwrRomName, NULL, NULL, JoustInputInfo, NULL,
+	NULL, joustwrRomInfo, joustwrRomName, NULL, NULL, NULL, NULL, JoustInputInfo, NULL,
 	JoustInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2866,7 +2866,7 @@ struct BurnDriver BurnDrvJoustr = {
 	"Joust (Solid Red label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, joustrRomInfo, joustrRomName, NULL, NULL, JoustInputInfo, NULL,
+	NULL, joustrRomInfo, joustrRomName, NULL, NULL, NULL, NULL, JoustInputInfo, NULL,
 	JoustInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2915,7 +2915,7 @@ struct BurnDriver BurnDrvBubbles = {
 	"Bubbles\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, bubblesRomInfo, bubblesRomName, NULL, NULL, BubblesInputInfo, NULL,
+	NULL, bubblesRomInfo, bubblesRomName, NULL, NULL, NULL, NULL, BubblesInputInfo, NULL,
 	BubblesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2951,7 +2951,7 @@ struct BurnDriver BurnDrvBubblesr = {
 	"Bubbles (Solid Red label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, bubblesrRomInfo, bubblesrRomName, NULL, NULL, BubblesInputInfo, NULL,
+	NULL, bubblesrRomInfo, bubblesrRomName, NULL, NULL, NULL, NULL, BubblesInputInfo, NULL,
 	BubblesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -2987,7 +2987,7 @@ struct BurnDriver BurnDrvBubblesp = {
 	"Bubbles (prototype version)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, bubblespRomInfo, bubblespRomName, NULL, NULL, BubblesInputInfo, NULL,
+	NULL, bubblespRomInfo, bubblespRomName, NULL, NULL, NULL, NULL, BubblesInputInfo, NULL,
 	BubblesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -3039,7 +3039,7 @@ struct BurnDriver BurnDrvSplat = {
 	"Splat!\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, splatRomInfo, splatRomName, NULL, NULL, SplatInputInfo, NULL,
+	NULL, splatRomInfo, splatRomName, NULL, NULL, NULL, NULL, SplatInputInfo, NULL,
 	SplatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -3088,7 +3088,7 @@ struct BurnDriver BurnDrvSpdball = {
 	"Speed Ball - Contest at Neonworld (prototype)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, spdballRomInfo, spdballRomName, NULL, NULL, SpdballInputInfo, NULL,
+	NULL, spdballRomInfo, spdballRomName, NULL, NULL, NULL, NULL, SpdballInputInfo, NULL,
 	SpdballInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -3131,7 +3131,7 @@ struct BurnDriver BurnDrvAlienar = {
 	"Alien Arena\0", "Game has no sound", "Duncan Brown", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, alienarRomInfo, alienarRomName, NULL, NULL, AlienarInputInfo, NULL,
+	NULL, alienarRomInfo, alienarRomName, NULL, NULL, NULL, NULL, AlienarInputInfo, NULL,
 	AlienarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -3167,7 +3167,7 @@ struct BurnDriver BurnDrvAlienaru = {
 	"Alien Arena (Stargate upgrade)\0", NULL, "Duncan Brown", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, alienaruRomInfo, alienaruRomName, NULL, NULL, AlienarInputInfo, NULL,
+	NULL, alienaruRomInfo, alienaruRomName, NULL, NULL, NULL, NULL, AlienarInputInfo, NULL,
 	AlienarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -3232,7 +3232,7 @@ struct BurnDriver BurnDrvSinistar = {
 	"Sinistar (revision 3)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, sinistarRomInfo, sinistarRomName, NULL, NULL, SinistarInputInfo, NULL,
+	NULL, sinistarRomInfo, sinistarRomName, NULL, NULL, NULL, NULL, SinistarInputInfo, NULL,
 	SinistarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 292, 3, 4
 };
@@ -3271,7 +3271,7 @@ struct BurnDriver BurnDrvSinistar1 = {
 	"Sinistar (prototype version)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, sinistar1RomInfo, sinistar1RomName, NULL, NULL, SinistarInputInfo, NULL,
+	NULL, sinistar1RomInfo, sinistar1RomName, NULL, NULL, NULL, NULL, SinistarInputInfo, NULL,
 	SinistarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 292, 3, 4
 };
@@ -3310,7 +3310,7 @@ struct BurnDriver BurnDrvSinistar2 = {
 	"Sinistar (revision 2)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, sinistar2RomInfo, sinistar2RomName, NULL, NULL, SinistarInputInfo, NULL,
+	NULL, sinistar2RomInfo, sinistar2RomName, NULL, NULL, NULL, NULL, SinistarInputInfo, NULL,
 	SinistarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 292, 3, 4
 };
@@ -3348,7 +3348,7 @@ struct BurnDriver BurnDrvLottofun = {
 	"Lotto Fun\0", NULL, "H.A.R. Management", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, lottofunRomInfo, lottofunRomName, NULL, NULL, LottofunInputInfo, NULL,
+	NULL, lottofunRomInfo, lottofunRomName, NULL, NULL, NULL, NULL, LottofunInputInfo, NULL,
 	LottofunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
@@ -3407,7 +3407,7 @@ struct BurnDriver BurnDrvBlaster = {
 	"Blaster\0", NULL, "Williams / Vid Kidz", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, blasterRomInfo, blasterRomName, NULL, NULL, BlasterInputInfo, NULL,
+	NULL, blasterRomInfo, blasterRomName, NULL, NULL, NULL, NULL, BlasterInputInfo, NULL,
 	BlasterInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x110,
 	292, 240, 4, 3
 };

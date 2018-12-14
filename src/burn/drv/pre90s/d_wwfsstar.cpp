@@ -798,7 +798,7 @@ struct BurnDriver BurnDrvWwfsstar = {
 	"WWF Superstars (Europe)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, wwfsstarRomInfo, wwfsstarRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	NULL, wwfsstarRomInfo, wwfsstarRomName, NULL, NULL, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };
@@ -836,7 +836,7 @@ struct BurnDriver BurnDrvWwfsstaru7 = {
 	"WWF Superstars (US revision 7)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, wwfsstaru7RomInfo, wwfsstaru7RomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	NULL, wwfsstaru7RomInfo, wwfsstaru7RomName, NULL, NULL, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };
@@ -874,7 +874,7 @@ struct BurnDriver BurnDrvWwfsstaru6 = {
 	"WWF Superstars (US revision 6)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, wwfsstaru6RomInfo, wwfsstaru6RomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	NULL, wwfsstaru6RomInfo, wwfsstaru6RomName, NULL, NULL, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };
@@ -912,7 +912,7 @@ struct BurnDriver BurnDrvWwfsstaru4 = {
 	"WWF Superstars (US revision 4)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, wwfsstaru4RomInfo, wwfsstaru4RomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	NULL, wwfsstaru4RomInfo, wwfsstaru4RomName, NULL, NULL, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };
@@ -950,7 +950,7 @@ struct BurnDriver BurnDrvWwfsstarj = {
 	"WWF Superstars (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, wwfsstarjRomInfo, wwfsstarjRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	NULL, wwfsstarjRomInfo, wwfsstarjRomName, NULL, NULL, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };
@@ -1024,7 +1024,7 @@ struct BurnDriver BurnDrvWwfsstarb = {
 	"WWF Superstars (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, wwfsstarbRomInfo, wwfsstarbRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	NULL, wwfsstarbRomInfo, wwfsstarbRomName, NULL, NULL, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };

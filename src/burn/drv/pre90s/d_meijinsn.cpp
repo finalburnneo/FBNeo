@@ -520,7 +520,7 @@ struct BurnDriver BurnDrvMeijinsn = {
 	"Meijinsen\0", NULL, "SNK Electronics corp.", "Miscellaneous",
 	L"\u540D\u4EBA\u6226\0Meijinsen\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, meijinsnRomInfo, meijinsnRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, meijinsnRomInfo, meijinsnRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	232, 224, 4, 3
 };

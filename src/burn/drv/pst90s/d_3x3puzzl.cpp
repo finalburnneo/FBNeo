@@ -564,7 +564,7 @@ struct BurnDriver BurnDrvPuzzl3x3 = {
 	"3X3 Puzzle (Enterprise)\0", NULL, "Ace Enterprise", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, puzzl3x3RomInfo, puzzl3x3RomName, NULL, NULL, Puzzle3x3InputInfo, Puzzle3x3DIPInfo,
+	NULL, puzzl3x3RomInfo, puzzl3x3RomName, NULL, NULL, NULL, NULL, Puzzle3x3InputInfo, Puzzle3x3DIPInfo,
 	Puzzl3x3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 240, 4, 3
 };
@@ -602,7 +602,7 @@ struct BurnDriver BurnDrvPuzzl3x3a = {
 	"3X3 Puzzle (Normal)\0", NULL, "Ace Enterprise", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, puzzl3x3aRomInfo, puzzl3x3aRomName, NULL, NULL, Puzzle3x3InputInfo, Puzzle3x3DIPInfo,
+	NULL, puzzl3x3aRomInfo, puzzl3x3aRomName, NULL, NULL, NULL, NULL, Puzzle3x3InputInfo, Puzzle3x3DIPInfo,
 	Puzzl3x3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 240, 4, 3
 };
@@ -650,7 +650,7 @@ struct BurnDriver BurnDrvCasanova = {
 	"Casanova\0", NULL, "Promat", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, casanovaRomInfo, casanovaRomName, NULL, NULL, CasanovaInputInfo, CasanovaDIPInfo,
+	NULL, casanovaRomInfo, casanovaRomName, NULL, NULL, NULL, NULL, CasanovaInputInfo, CasanovaDIPInfo,
 	CasanovaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 240, 4, 3
 };

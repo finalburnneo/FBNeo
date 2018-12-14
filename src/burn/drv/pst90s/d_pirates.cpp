@@ -647,7 +647,7 @@ struct BurnDriver BurnDrvPirates = {
 	"Pirates (set 1)\0", NULL, "NIX", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, piratesRomInfo, piratesRomName, NULL, NULL, PiratesInputInfo, PiratesDIPInfo,
+	NULL, piratesRomInfo, piratesRomName, NULL, NULL, NULL, NULL, PiratesInputInfo, PiratesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -681,7 +681,7 @@ struct BurnDriver BurnDrvPiratesb = {
 	"Pirates (set 2)\0", NULL, "NIX", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, piratesbRomInfo, piratesbRomName, NULL, NULL, PiratesInputInfo, PiratesDIPInfo,
+	NULL, piratesbRomInfo, piratesbRomName, NULL, NULL, NULL, NULL, PiratesInputInfo, PiratesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -714,7 +714,7 @@ struct BurnDriver BurnDrvGenix = {
 	"Genix Family\0", NULL, "NIX", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, genixRomInfo, genixRomName, NULL, NULL, PiratesInputInfo, PiratesDIPInfo,
+	NULL, genixRomInfo, genixRomName, NULL, NULL, NULL, NULL, PiratesInputInfo, PiratesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };

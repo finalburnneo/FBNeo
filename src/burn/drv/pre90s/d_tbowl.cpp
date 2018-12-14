@@ -823,7 +823,7 @@ struct BurnDriver BurnDrvTbowl = {
 	"Tecmo Bowl (World, set 1)\0", NULL, "Tecmo", "hardware",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, tbowlRomInfo, tbowlRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
+	NULL, tbowlRomInfo, tbowlRomName, NULL, NULL, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	512, 224, 8, 3
 };
@@ -873,7 +873,7 @@ struct BurnDriver BurnDrvTbowla = {
 	"Tecmo Bowl (World, set 2)\0", NULL, "Tecmo", "hardware",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, tbowlaRomInfo, tbowlaRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
+	NULL, tbowlaRomInfo, tbowlaRomName, NULL, NULL, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	512, 224, 8, 3
 };
@@ -929,7 +929,7 @@ struct BurnDriver BurnDrvTbowlp = {
 	"Tecmo Bowl (World, prototype?)\0", NULL, "Tecmo", "hardware",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, tbowlpRomInfo, tbowlpRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
+	NULL, tbowlpRomInfo, tbowlpRomName, NULL, NULL, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	512, 224, 8, 3
 };
@@ -979,7 +979,7 @@ struct BurnDriver BurnDrvTbowlj = {
 	"Tecmo Bowl (Japan)\0", NULL, "Tecmo", "hardware",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, tbowljRomInfo, tbowljRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
+	NULL, tbowljRomInfo, tbowljRomName, NULL, NULL, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	512, 224, 8, 3
 };

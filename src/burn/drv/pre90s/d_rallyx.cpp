@@ -2074,7 +2074,7 @@ struct BurnDriver BurnDrvRallyx = {
 	"Rally X (32k Ver.?)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, RallyxRomInfo, RallyxRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
+	NULL, RallyxRomInfo, RallyxRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
@@ -2084,7 +2084,7 @@ struct BurnDriver BurnDrvRallyxa = {
 	"Rally X\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, RallyxaRomInfo, RallyxaRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
+	NULL, RallyxaRomInfo, RallyxaRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
@@ -2094,7 +2094,7 @@ struct BurnDriver BurnDrvRallyxm = {
 	"Rally X (Midway)\0", NULL, "Namco (Midway License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, RallyxmRomInfo, RallyxmRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
+	NULL, RallyxmRomInfo, RallyxmRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
@@ -2104,7 +2104,7 @@ struct BurnDriver BurnDrvRallyxmr = {
 	"Rally X (Model Racing)\0", NULL, "bootleg (Petaco)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, RallyxmrRomInfo, RallyxmrRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
+	NULL, RallyxmrRomInfo, RallyxmrRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
@@ -2114,7 +2114,7 @@ struct BurnDriver BurnDrvDngrtrck = {
 	"Danger Track (Rally X bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, DngrtrckRomInfo, DngrtrckRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DngrtrckDIPInfo,
+	NULL, DngrtrckRomInfo, DngrtrckRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DngrtrckDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
@@ -2124,7 +2124,7 @@ struct BurnDriver BurnDrvNrallyx = {
 	"New Rally X\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, NrallyxRomInfo, NrallyxRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
+	NULL, NrallyxRomInfo, NrallyxRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	NrallyxInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
@@ -2134,7 +2134,7 @@ struct BurnDriver BurnDrvJungler = {
 	"Jungler\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, JunglerRomInfo, JunglerRomName, NULL, NULL, JunglerInputInfo, JunglerDIPInfo,
+	NULL, JunglerRomInfo, JunglerRomName, NULL, NULL, NULL, NULL, JunglerInputInfo, JunglerDIPInfo,
 	JunglerInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 288, 3, 4
 };
@@ -2175,7 +2175,7 @@ struct BurnDriver BurnDrvTactcian = {
 	"Tactician (set 1)\0", NULL, "Konami (Sega license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, tactcianRomInfo, tactcianRomName, NULL, NULL, TactcianInputInfo, TactcianDIPInfo,
+	NULL, tactcianRomInfo, tactcianRomName, NULL, NULL, NULL, NULL, TactcianInputInfo, TactcianDIPInfo,
 	TactcianDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 288, 3, 4
 };
@@ -2212,7 +2212,7 @@ struct BurnDriver BurnDrvTactcian2 = {
 	"Tactician (set 2)\0", NULL, "Konami (Sega license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, tactcian2RomInfo, tactcian2RomName, NULL, NULL, TactcianInputInfo, TactcianDIPInfo,
+	NULL, tactcian2RomInfo, tactcian2RomName, NULL, NULL, NULL, NULL, TactcianInputInfo, TactcianDIPInfo,
 	TactcianDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 288, 3, 4
 };
@@ -2252,7 +2252,7 @@ struct BurnDriver BurnDrvLocomotn = {
 	"Loco-Motion\0", NULL, "Konami (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, locomotnRomInfo, locomotnRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
+	NULL, locomotnRomInfo, locomotnRomName, NULL, NULL, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
 	LocomotnDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };
@@ -2292,7 +2292,7 @@ struct BurnDriver BurnDrvGutangtn = {
 	"Guttang Gottong\0", NULL, "Konami (Sega license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, gutangtnRomInfo, gutangtnRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
+	NULL, gutangtnRomInfo, gutangtnRomName, NULL, NULL, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
 	GutangtnDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };
@@ -2333,7 +2333,7 @@ struct BurnDriver BurnDrvCottong = {
 	"Cotocoto Cottong\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, cottongRomInfo, cottongRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
+	NULL, cottongRomInfo, cottongRomName, NULL, NULL, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
 	CottongDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };
@@ -2373,7 +2373,7 @@ struct BurnDriver BurnDrvLocoboot = {
 	"Loco-Motion (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, locobootRomInfo, locobootRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
+	NULL, locobootRomInfo, locobootRomName, NULL, NULL, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
 	LocobootDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };
@@ -2415,7 +2415,7 @@ struct BurnDriver BurnDrvCommsega = {
 	"Commando (Sega)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, commsegaRomInfo, commsegaRomName, NULL, NULL, CommsegaInputInfo, CommsegaDIPInfo,
+	NULL, commsegaRomInfo, commsegaRomName, NULL, NULL, NULL, NULL, CommsegaInputInfo, CommsegaDIPInfo,
 	CommsegaDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };

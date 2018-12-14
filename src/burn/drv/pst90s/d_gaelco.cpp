@@ -1314,7 +1314,7 @@ struct BurnDriver BurnDrvBigkarnk = {
 	"Big Karnak\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM | GBF_SCRFIGHT, 0,
-	NULL, bigkarnkRomInfo, bigkarnkRomName, NULL, NULL, BigkarnkInputInfo, BigkarnkDIPInfo,
+	NULL, bigkarnkRomInfo, bigkarnkRomName, NULL, NULL, NULL, NULL, BigkarnkInputInfo, BigkarnkDIPInfo,
 	BigkarnkInit, DrvExit, BigkarnkFrame, BigkarnkDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1342,7 +1342,7 @@ struct BurnDriver BurnDrvManiacsp = {
 	"Maniac Square (prototype)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, maniacspRomInfo, maniacspRomName, NULL, NULL, DrvInputInfo, ManiacsqDIPInfo,
+	NULL, maniacspRomInfo, maniacspRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ManiacsqDIPInfo,
 	ManiacspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1376,7 +1376,7 @@ struct BurnDriver BurnDrvBiomtoy = {
 	"Biomechanical Toy (Ver. 1.0.1885)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
-	NULL, biomtoyRomInfo, biomtoyRomName, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
+	NULL, biomtoyRomInfo, biomtoyRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
 	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1410,7 +1410,7 @@ struct BurnDriver BurnDrvBiomtoya = {
 	"Biomechanical Toy (Ver. 1.0.1884)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
-	NULL, biomtoyaRomInfo, biomtoyaRomName, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
+	NULL, biomtoyaRomInfo, biomtoyaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
 	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1444,7 +1444,7 @@ struct BurnDriver BurnDrvBiomtoyb = {
 	"Biomechanical Toy (Ver. 1.0.1878)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
-	NULL, biomtoybRomInfo, biomtoybRomName, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
+	NULL, biomtoybRomInfo, biomtoybRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
 	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1478,7 +1478,7 @@ struct BurnDriver BurnDrvBiomtoyc = {
 	"Biomechanical Toy (Ver. 1.0.1870)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
-	NULL, biomtoycRomInfo, biomtoycRomName, NULL, NULL, DrvInputInfo, BiomtoycDIPInfo,
+	NULL, biomtoycRomInfo, biomtoycRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BiomtoycDIPInfo,
 	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1513,7 +1513,7 @@ struct BurnDriver BurnDrvBioplayc = {
 	"Bioplaything Cop (Ver. 1.0.1823, prototype)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
-	NULL, bioplaycRomInfo, bioplaycRomName, NULL, NULL, DrvInputInfo, BioplaycDIPInfo,
+	NULL, bioplaycRomInfo, bioplaycRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BioplaycDIPInfo,
 	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1542,7 +1542,7 @@ struct BurnDriver BurnDrvSquash = {
 	"Squash (Ver. 1.0)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, squashRomInfo, squashRomName, NULL, NULL, DrvInputInfo, SquashDIPInfo,
+	NULL, squashRomInfo, squashRomName, NULL, NULL, NULL, NULL, DrvInputInfo, SquashDIPInfo,
 	SquashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1571,7 +1571,7 @@ struct BurnDriver BurnDrvThoop = {
 	"Thunder Hoop (Ver. 1)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
-	NULL, thoopRomInfo, thoopRomName, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
+	NULL, thoopRomInfo, thoopRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
 	ThoopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1599,7 +1599,7 @@ struct BurnDriver BurnDrvLastkm = {
 	"Last KM (Ver 1.0.0275)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, lastkmRomInfo, lastkmRomName, NULL, NULL, LastkmInputInfo, LastkmDIPInfo,
+	NULL, lastkmRomInfo, lastkmRomName, NULL, NULL, NULL, NULL, LastkmInputInfo, LastkmDIPInfo,
 	ManiacspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

@@ -707,7 +707,7 @@ struct BurnDriver BurnDrvKncljoe = {
 	"Knuckle Joe (set 1)\0", NULL, "[Seibu Kaihatsu] (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, kncljoeRomInfo, kncljoeRomName, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
+	NULL, kncljoeRomInfo, kncljoeRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
@@ -748,7 +748,7 @@ struct BurnDriver BurnDrvKncljoea = {
 	"Knuckle Joe (set 2)\0", NULL, "[Seibu Kaihatsu] (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, kncljoeaRomInfo, kncljoeaRomName, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
+	NULL, kncljoeaRomInfo, kncljoeaRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
@@ -789,7 +789,7 @@ struct BurnDriver BurnDrvBcrusher = {
 	"Bone Crusher\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, bcrusherRomInfo, bcrusherRomName, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
+	NULL, bcrusherRomInfo, bcrusherRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };

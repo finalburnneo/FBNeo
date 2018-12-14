@@ -299,7 +299,7 @@ struct BurnDriver BurnDrvAlinvade = {
 	"Alien Invaders\0", "preliminary sound", "Forbes?", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, alinvadeRomInfo, alinvadeRomName, NULL, NULL, AlinvadeInputInfo, AlinvadeDIPInfo,
+	NULL, alinvadeRomInfo, alinvadeRomName, NULL, NULL, NULL, NULL, AlinvadeInputInfo, AlinvadeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	128, 128, 4, 3
 };

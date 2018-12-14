@@ -920,7 +920,7 @@ struct BurnDriver BurnDrvMatmania = {
 	"Mat Mania\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, matmaniaRomInfo, matmaniaRomName, NULL, NULL, MatmaniaInputInfo, MatmaniaDIPInfo,
+	NULL, matmaniaRomInfo, matmaniaRomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, MatmaniaDIPInfo,
 	MatmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
 };
@@ -980,7 +980,7 @@ struct BurnDriver BurnDrvExcthour = {
 	"Exciting Hour\0", NULL, "Technos Japan (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, excthourRomInfo, excthourRomName, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
+	NULL, excthourRomInfo, excthourRomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
 	MatmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
 };
@@ -1053,7 +1053,7 @@ struct BurnDriver BurnDrvManiach = {
 	"Mania Challenge (set 1)\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, maniachRomInfo, maniachRomName, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
+	NULL, maniachRomInfo, maniachRomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
 	ManiachInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
 };
@@ -1121,7 +1121,7 @@ struct BurnDriver BurnDrvManiach2 = {
 	"Mania Challenge (set 2)\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, maniach2RomInfo, maniach2RomName, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
+	NULL, maniach2RomInfo, maniach2RomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
 	ManiachInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
 };

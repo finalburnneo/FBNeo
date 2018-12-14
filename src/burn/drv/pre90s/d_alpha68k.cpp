@@ -1200,7 +1200,7 @@ struct BurnDriver BurnDrvSstingry = {
 	"Super Stingray (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, SstingryRomInfo, SstingryRomName, NULL, NULL, SstingryInputInfo, SstingryDIPInfo,
+	NULL, SstingryRomInfo, SstingryRomName, NULL, NULL, NULL, NULL, SstingryInputInfo, SstingryDIPInfo,
 	SstingryInit, DrvExit, DrvFrame, SstingryDraw, DrvScan,
 	NULL, 0x101, 224, 256, 3, 4
 };
@@ -1210,7 +1210,7 @@ struct BurnDriver BurnDrvKyros = {
 	"Kyros\0", NULL, "Alpha Denshi Co. (World Games Inc. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, KyrosRomInfo, KyrosRomName, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,
+	NULL, KyrosRomInfo, KyrosRomName, NULL, NULL, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,
 	KyrosInit, DrvExit, DrvFrame, KyrosDraw, DrvScan,
 	NULL, 0x101, 224, 256, 3, 4
 };
@@ -1220,7 +1220,7 @@ struct BurnDriver BurnDrvKyrosj = {
 	"Kyros No Yakata (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, KyrosjRomInfo, KyrosjRomName, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,
+	NULL, KyrosjRomInfo, KyrosjRomName, NULL, NULL, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,
 	KyrosInit, DrvExit, DrvFrame, KyrosDraw, DrvScan,
 	NULL, 0x101, 224, 256, 3, 4
 };

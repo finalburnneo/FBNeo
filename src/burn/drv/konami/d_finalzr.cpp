@@ -838,7 +838,7 @@ struct BurnDriver BurnDrvFinalizr = {
 	"Finalizer - Super Transformation\0", NULL, "Konami", "GX523",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, finalizrRomInfo, finalizrRomName, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
+	NULL, finalizrRomInfo, finalizrRomName, NULL, NULL, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 272, 3, 4
 };
@@ -873,7 +873,7 @@ struct BurnDriver BurnDrvFinalizrb = {
 	"Finalizer - Super Transformation (bootleg)\0", NULL, "bootleg", "GX523",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, finalizrbRomInfo, finalizrbRomName, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
+	NULL, finalizrbRomInfo, finalizrbRomName, NULL, NULL, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 272, 3, 4
 };

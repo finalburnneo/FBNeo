@@ -769,7 +769,7 @@ struct BurnDriver BurnDrvDdribble = {
 	"Double Dribble\0", NULL, "Konami", "GX690",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, ddribbleRomInfo, ddribbleRomName, NULL, NULL, DdribbleInputInfo, DdribbleDIPInfo,
+	NULL, ddribbleRomInfo, ddribbleRomName, NULL, NULL, NULL, NULL, DdribbleInputInfo, DdribbleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	256, 224, 4, 3
 };
@@ -812,7 +812,7 @@ struct BurnDriver BurnDrvDdribblep = {
 	"Double Dribble (prototype?)\0", NULL, "Konami", "GX690",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, ddribblepRomInfo, ddribblepRomName, NULL, NULL, DdribbleInputInfo, DdribbleDIPInfo,
+	NULL, ddribblepRomInfo, ddribblepRomName, NULL, NULL, NULL, NULL, DdribbleInputInfo, DdribbleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	256, 224, 4, 3
 };

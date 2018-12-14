@@ -844,7 +844,7 @@ struct BurnDriver BurnDrvZodiack = {
 	"Zodiack\0", NULL, "Orca (Esco Trading Co., Inc. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, zodiackRomInfo, zodiackRomName, NULL, NULL, ZodiackInputInfo, ZodiackDIPInfo,
+	NULL, zodiackRomInfo, zodiackRomName, NULL, NULL, NULL, NULL, ZodiackInputInfo, ZodiackDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x31,
 	224, 256, 3, 4
 };
@@ -876,7 +876,7 @@ struct BurnDriver BurnDrvDogfight = {
 	"Dog Fight (Thunderbolt)\0", NULL, "Orca / Thunderbolt", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, dogfightRomInfo, dogfightRomName, NULL, NULL, DogfightInputInfo, DogfightDIPInfo,
+	NULL, dogfightRomInfo, dogfightRomName, NULL, NULL, NULL, NULL, DogfightInputInfo, DogfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x31,
 	224, 256, 3, 4
 };
@@ -915,7 +915,7 @@ struct BurnDriver BurnDrvMoguchan = {
 	"Mogu Chan (bootleg?)\0", NULL, "Orca (Eastern Commerce Inc. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, moguchanRomInfo, moguchanRomName, NULL, NULL, MoguchanInputInfo, MoguchanDIPInfo,
+	NULL, moguchanRomInfo, moguchanRomName, NULL, NULL, NULL, NULL, MoguchanInputInfo, MoguchanDIPInfo,
 	moguchanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x31,
 	224, 256, 3, 4
 };
@@ -956,7 +956,7 @@ struct BurnDriver BurnDrvPercuss = {
 	"The Percussor\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, percussRomInfo, percussRomName, NULL, NULL, PercussInputInfo, PercussDIPInfo,
+	NULL, percussRomInfo, percussRomName, NULL, NULL, NULL, NULL, PercussInputInfo, PercussDIPInfo,
 	percussInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x31,
 	224, 256, 3, 4
 };
@@ -989,7 +989,7 @@ struct BurnDriver BurnDrvBounty = {
 	"The Bounty\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bountyRomInfo, bountyRomName, NULL, NULL, BountyInputInfo, BountyDIPInfo,
+	NULL, bountyRomInfo, bountyRomName, NULL, NULL, NULL, NULL, BountyInputInfo, BountyDIPInfo,
 	percussInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x31,
 	256, 224, 4, 3
 };
@@ -1046,7 +1046,7 @@ struct BurnDriver BurnDrvBounty2 = {
 	"The Bounty (set 2)\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bounty2RomInfo, bounty2RomName, NULL, NULL, BountyInputInfo, BountyDIPInfo,
+	NULL, bounty2RomInfo, bounty2RomName, NULL, NULL, NULL, NULL, BountyInputInfo, BountyDIPInfo,
 	Bounty2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x31,
 	256, 224, 4, 3
 };

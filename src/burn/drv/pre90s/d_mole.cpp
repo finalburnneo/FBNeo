@@ -398,7 +398,7 @@ struct BurnDriver BurnDrvMole = {
 	"Mole Attack\0", NULL, "Yachiyo Electronics, Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, moleRomInfo, moleRomName, NULL, NULL, MoleInputInfo, MoleDIPInfo,
+	NULL, moleRomInfo, moleRomName, NULL, NULL, NULL, NULL, MoleInputInfo, MoleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	320, 200, 4, 3
 };

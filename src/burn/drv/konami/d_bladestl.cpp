@@ -640,7 +640,7 @@ struct BurnDriver BurnDrvBladestl = {
 	"Blades of Steel (version T)\0", NULL, "Konami", "GX797",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, bladestlRomInfo, bladestlRomName, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
+	NULL, bladestlRomInfo, bladestlRomName, NULL, NULL, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x120,
 	224, 256, 3, 4
 };
@@ -671,7 +671,7 @@ struct BurnDriver BurnDrvBladestll = {
 	"Blades of Steel (version L)\0", NULL, "Konami", "GX797",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, bladestllRomInfo, bladestllRomName, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
+	NULL, bladestllRomInfo, bladestllRomName, NULL, NULL, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x120,
 	224, 256, 3, 4
 };
@@ -702,7 +702,7 @@ struct BurnDriver BurnDrvBladestle = {
 	"Blades of Steel (version E)\0", NULL, "Konami", "GX797",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, bladestleRomInfo, bladestleRomName, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
+	NULL, bladestleRomInfo, bladestleRomName, NULL, NULL, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x120,
 	224, 256, 3, 4
 };

@@ -557,7 +557,7 @@ struct BurnDriverD BurnDrvEnmadaio = {
 	"Enma Daio (Japan)\0", NULL, "Toaplan / Taito", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_68K_ONLY, GBF_MISC, 0,
-	NULL, enmadaioRomInfo, enmadaioRomName, NULL, NULL, EnmadaioInputInfo, EnmadaioDIPInfo,
+	NULL, enmadaioRomInfo, enmadaioRomName, NULL, NULL, NULL, NULL, EnmadaioInputInfo, EnmadaioDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

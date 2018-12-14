@@ -1140,7 +1140,7 @@ struct BurnDriver BurnDrvNitedrvr = {
 	"Night Driver\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, nitedrvrRomInfo, nitedrvrRomName, nitedrvrSampleInfo, nitedrvrSampleName, NitedrvrInputInfo, NitedrvrDIPInfo,
+	NULL, nitedrvrRomInfo, nitedrvrRomName, NULL, NULL, nitedrvrSampleInfo, nitedrvrSampleName, NitedrvrInputInfo, NitedrvrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x12,
 	512, 512, 4, 3
 };

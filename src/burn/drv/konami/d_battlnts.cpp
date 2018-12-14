@@ -634,7 +634,7 @@ struct BurnDriver BurnDrvBattlnts = {
 	"Battlantis (program code G)\0", NULL, "Konami", "GX777",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, battlntsRomInfo, battlntsRomName, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
+	NULL, battlntsRomInfo, battlntsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
 };
@@ -661,7 +661,7 @@ struct BurnDriver BurnDrvBattlntsa = {
 	"Battlantis (program code F)\0", NULL, "Konami", "GX777",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, battlntsaRomInfo, battlntsaRomName, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
+	NULL, battlntsaRomInfo, battlntsaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
 };
@@ -688,7 +688,7 @@ struct BurnDriver BurnDrvBattlntsj = {
 	"Battlantis (Japan, program code E)\0", NULL, "Konami", "GX777",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, battlntsjRomInfo, battlntsjRomName, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
+	NULL, battlntsjRomInfo, battlntsjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
 };
@@ -715,7 +715,7 @@ struct BurnDriver BurnDrvRackemup = {
 	"Rack 'em Up (program code L)\0", NULL, "Konami", "GX765",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, rackemupRomInfo, rackemupRomName, NULL, NULL, DrvInputInfo, RackemupDIPInfo,
+	NULL, rackemupRomInfo, rackemupRomName, NULL, NULL, NULL, NULL, DrvInputInfo, RackemupDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
 };
@@ -742,7 +742,7 @@ struct BurnDriver BurnDrvThehustl = {
 	"The Hustler (Japan, program code M)\0", NULL, "Konami", "GX765",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, thehustlRomInfo, thehustlRomName, NULL, NULL, DrvInputInfo, RackemupDIPInfo,
+	NULL, thehustlRomInfo, thehustlRomName, NULL, NULL, NULL, NULL, DrvInputInfo, RackemupDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
 };
@@ -769,7 +769,7 @@ struct BurnDriver BurnDrvThehustlj = {
 	"The Hustler (Japan, program code J)\0", NULL, "Konami", "GX765",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, thehustljRomInfo, thehustljRomName, NULL, NULL, DrvInputInfo, RackemupDIPInfo,
+	NULL, thehustljRomInfo, thehustljRomName, NULL, NULL, NULL, NULL, DrvInputInfo, RackemupDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
 };

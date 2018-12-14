@@ -681,7 +681,7 @@ struct BurnDriver BurnDrvPacman25 = {
 	"Pac-Man - 25th Anniversary Edition (Rev 3.00)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacman25RomInfo, Pacman25RomName, NULL, NULL, Pacgal20InputInfo, NULL,
+	NULL, Pacman25RomInfo, Pacman25RomName, NULL, NULL, NULL, NULL, Pacgal20InputInfo, NULL,
 	Pacman25Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -703,7 +703,7 @@ struct BurnDriver BurnDrvPacman25o = {
 	"Pac-Man - 25th Anniversary Edition (Rev 2.00)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacman25oRomInfo, Pacman25oRomName, NULL, NULL, Pacgal20InputInfo, NULL,
+	NULL, Pacman25oRomInfo, Pacman25oRomName, NULL, NULL, NULL, NULL, Pacgal20InputInfo, NULL,
 	Pacman25Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -725,7 +725,7 @@ struct BurnDriver BurnDrvPacgal20 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.08)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE | GBF_SHOOT, 0,
-	NULL, Pacgal20RomInfo, Pacgal20RomName, NULL, NULL, Pacgal20InputInfo, NULL,
+	NULL, Pacgal20RomInfo, Pacgal20RomName, NULL, NULL, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -747,7 +747,7 @@ struct BurnDriver BurnDrvPacgal20r4 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.04)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE | GBF_SHOOT, 0,
-	NULL, Pacgal20r4RomInfo, Pacgal20r4RomName, NULL, NULL, Pacgal20InputInfo, NULL,
+	NULL, Pacgal20r4RomInfo, Pacgal20r4RomName, NULL, NULL, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -769,7 +769,7 @@ struct BurnDriver BurnDrvPacgal20r3 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.03)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE | GBF_SHOOT, 0,
-	NULL, Pacgal20r3RomInfo, Pacgal20r3RomName, NULL, NULL, Pacgal20InputInfo, NULL,
+	NULL, Pacgal20r3RomInfo, Pacgal20r3RomName, NULL, NULL, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -791,7 +791,7 @@ struct BurnDriver BurnDrvPacgal20r2 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.02)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE | GBF_SHOOT, 0,
-	NULL, Pacgal20r2RomInfo, Pacgal20r2RomName, NULL, NULL, Pacgal20InputInfo, NULL,
+	NULL, Pacgal20r2RomInfo, Pacgal20r2RomName, NULL, NULL, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -813,7 +813,7 @@ struct BurnDriver BurnDrvPacgal20r1 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.01)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE | GBF_SHOOT, 0,
-	NULL, Pacgal20r1RomInfo, Pacgal20r1RomName, NULL, NULL, Pacgal20InputInfo, NULL,
+	NULL, Pacgal20r1RomInfo, Pacgal20r1RomName, NULL, NULL, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -835,7 +835,7 @@ struct BurnDriver BurnDrvPacgal20r0 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.00)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE | GBF_SHOOT, 0,
-	NULL, Pacgal20r0RomInfo, Pacgal20r0RomName, NULL, NULL, Pacgal20InputInfo, NULL,
+	NULL, Pacgal20r0RomInfo, Pacgal20r0RomName, NULL, NULL, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };

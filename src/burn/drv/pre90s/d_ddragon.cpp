@@ -2761,7 +2761,7 @@ struct BurnDriver BurnDrvDdragon = {
 	"Double Dragon (Japan)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2771,7 +2771,7 @@ struct BurnDriver BurnDrvDdragonw = {
 	"Double Dragon (World set 1)\0", NULL, "[Technos] (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DrvwRomInfo, DrvwRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvwRomInfo, DrvwRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2781,7 +2781,7 @@ struct BurnDriver BurnDrvDdragnw1 = {
 	"Double Dragon (World set 2)\0", NULL, "[Technos] (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, Drvw1RomInfo, Drvw1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, Drvw1RomInfo, Drvw1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2791,7 +2791,7 @@ struct BurnDriver BurnDrvDdragonu = {
 	"Double Dragon (US set 1)\0", NULL, "[Technos] (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2801,7 +2801,7 @@ struct BurnDriver BurnDrvDdragoua = {
 	"Double Dragon (US set 2)\0", NULL, "[Technos] (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DrvuaRomInfo, DrvuaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvuaRomInfo, DrvuaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2811,7 +2811,7 @@ struct BurnDriver BurnDrvDdragoub = {
 	"Double Dragon (US set 3)\0", NULL, "[Technos] (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DrvubRomInfo, DrvubRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvubRomInfo, DrvubRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2821,7 +2821,7 @@ struct BurnDriver BurnDrvDdragob2 = {
 	"Double Dragon (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2831,7 +2831,7 @@ struct BurnDriver BurnDrvDdragonb = {
 	"Double Dragon (bootleg with HD6309)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2841,7 +2841,7 @@ struct BurnDriver BurnDrvDdragnba = {
 	"Double Dragon (bootleg with M6803)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DrvbaRomInfo, DrvbaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvbaRomInfo, DrvbaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvbaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2851,7 +2851,7 @@ struct BurnDriver BurnDrvDdragon2 = {
 	"Double Dragon II - The Revenge (World)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, Drv2RomInfo, Drv2RomName, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
+	NULL, Drv2RomInfo, Drv2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
 	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2861,7 +2861,7 @@ struct BurnDriver BurnDrvDdragon2u = {
 	"Double Dragon II - The Revenge (US)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, Drv2uRomInfo, Drv2uRomName, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
+	NULL, Drv2uRomInfo, Drv2uRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
 	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2871,7 +2871,7 @@ struct BurnDriver BurnDrvDdragon2b = {
 	"Double Dragon II - The Revenge (US bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, Drv2bRomInfo, Drv2bRomName, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
+	NULL, Drv2bRomInfo, Drv2bRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
 	Drv2bInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2881,7 +2881,7 @@ struct BurnDriver BurnDrvDdragon2b2 = {
 	"Double Dragon II - The Revenge (US bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, Drv2b2RomInfo, Drv2b2RomName, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
+	NULL, Drv2b2RomInfo, Drv2b2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
 	Drv2bInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2891,7 +2891,7 @@ struct BurnDriverD BurnDrvDdungeon = {
 	"Dangerous Dungeons\0", NULL, "Game Room", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DdungeonRomInfo, DdungeonRomName, NULL, NULL, DrvInputInfo, DdungeonDIPInfo,
+	NULL, DdungeonRomInfo, DdungeonRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DdungeonDIPInfo,
 	DdungeonInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
@@ -2901,7 +2901,7 @@ struct BurnDriver BurnDrvDarktowr = {
 	"Dark Tower\0", NULL, "Game Room", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DarktowrRomInfo, DarktowrRomName, NULL, NULL, DrvInputInfo, DarktowrDIPInfo,
+	NULL, DarktowrRomInfo, DarktowrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DarktowrDIPInfo,
 	DarktowrInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };

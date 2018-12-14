@@ -2091,7 +2091,7 @@ struct BurnDriver BurnDrvMappy = {
 	"Mappy (US)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, mappyRomInfo, mappyRomName, NULL, NULL, MappyInputInfo, MappyDIPInfo,
+	NULL, mappyRomInfo, mappyRomName, NULL, NULL, NULL, NULL, MappyInputInfo, MappyDIPInfo,
 	MappyInit, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2126,7 +2126,7 @@ struct BurnDriver BurnDrvMappyj = {
 	"Mappy (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, mappyjRomInfo, mappyjRomName, NULL, NULL, MappyInputInfo, MappyDIPInfo,
+	NULL, mappyjRomInfo, mappyjRomName, NULL, NULL, NULL, NULL, MappyInputInfo, MappyDIPInfo,
 	MappyInit, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2160,7 +2160,7 @@ struct BurnDriver BurnDrvDigdug2 = {
 	"Dig Dug II (New Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, digdug2RomInfo, digdug2RomName, NULL, NULL, Digdug2InputInfo, Digdug2DIPInfo,
+	NULL, digdug2RomInfo, digdug2RomName, NULL, NULL, NULL, NULL, Digdug2InputInfo, Digdug2DIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2194,7 +2194,7 @@ struct BurnDriver BurnDrvDigdug2o = {
 	"Dig Dug II (Old Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, digdug2oRomInfo, digdug2oRomName, NULL, NULL, Digdug2InputInfo, Digdug2DIPInfo,
+	NULL, digdug2oRomInfo, digdug2oRomName, NULL, NULL, NULL, NULL, Digdug2InputInfo, Digdug2DIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2228,7 +2228,7 @@ struct BurnDriver BurnDrvTodruaga = {
 	"The Tower of Druaga (New Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, todruagaRomInfo, todruagaRomName, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
+	NULL, todruagaRomInfo, todruagaRomName, NULL, NULL, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x500,
 	224, 288, 3, 4
 };
@@ -2262,7 +2262,7 @@ struct BurnDriver BurnDrvTodruagao = {
 	"The Tower of Druaga (Old Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, todruagaoRomInfo, todruagaoRomName, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
+	NULL, todruagaoRomInfo, todruagaoRomName, NULL, NULL, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x500,
 	224, 288, 3, 4
 };
@@ -2296,7 +2296,7 @@ struct BurnDriver BurnDrvTodruagas = {
 	"The Tower of Druaga (Sidam)\0", NULL, "bootleg? (Sidam)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, todruagasRomInfo, todruagasRomName, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
+	NULL, todruagasRomInfo, todruagasRomName, NULL, NULL, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x500,
 	224, 288, 3, 4
 };
@@ -2330,7 +2330,7 @@ struct BurnDriver BurnDrvMotos = {
 	"Motos\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, motosRomInfo, motosRomName, NULL, NULL, MotosInputInfo, MotosDIPInfo,
+	NULL, motosRomInfo, motosRomName, NULL, NULL, NULL, NULL, MotosInputInfo, MotosDIPInfo,
 	MotosInit, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2363,7 +2363,7 @@ struct BurnDriver BurnDrvSuperpac = {
 	"Super Pac-Man\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, superpacRomInfo, superpacRomName, NULL, NULL, SuperpacInputInfo, SuperpacDIPInfo,
+	NULL, superpacRomInfo, superpacRomName, NULL, NULL, NULL, NULL, SuperpacInputInfo, SuperpacDIPInfo,
 	SuperpacInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2396,7 +2396,7 @@ struct BurnDriver BurnDrvSuperpacm = {
 	"Super Pac-Man (Midway)\0", NULL, "Namco (Bally Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, superpacmRomInfo, superpacmRomName, NULL, NULL, SuperpacInputInfo, SuperpacDIPInfo,
+	NULL, superpacmRomInfo, superpacmRomName, NULL, NULL, NULL, NULL, SuperpacInputInfo, SuperpacDIPInfo,
 	SuperpacInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2430,7 +2430,7 @@ struct BurnDriver BurnDrvPacnpal = {
 	"Pac & Pal\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, pacnpalRomInfo, pacnpalRomName, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
+	NULL, pacnpalRomInfo, pacnpalRomName, NULL, NULL, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
 	PacnpalInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2464,7 +2464,7 @@ struct BurnDriver BurnDrvPacnpal2 = {
 	"Pac & Pal (older)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, pacnpal2RomInfo, pacnpal2RomName, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
+	NULL, pacnpal2RomInfo, pacnpal2RomName, NULL, NULL, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
 	PacnpalInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2498,7 +2498,7 @@ struct BurnDriver BurnDrvPacnchmp = {
 	"Pac-Man & Chomp Chomp\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, pacnchmpRomInfo, pacnchmpRomName, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
+	NULL, pacnchmpRomInfo, pacnchmpRomName, NULL, NULL, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
 	PacnpalInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2533,7 +2533,7 @@ struct BurnDriver BurnDrvGrobda = {
 	"Grobda (New Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, grobdaRomInfo, grobdaRomName, NULL, NULL, GrobdaInputInfo, GrobdaDIPInfo,
+	NULL, grobdaRomInfo, grobdaRomName, NULL, NULL, NULL, NULL, GrobdaInputInfo, GrobdaDIPInfo,
 	GrobdaInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2568,7 +2568,7 @@ struct BurnDriver BurnDrvGrobda2 = {
 	"Grobda (Old Ver. set 1)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, grobda2RomInfo, grobda2RomName, NULL, NULL, GrobdaInputInfo, GrobdaDIPInfo,
+	NULL, grobda2RomInfo, grobda2RomName, NULL, NULL, NULL, NULL, GrobdaInputInfo, GrobdaDIPInfo,
 	GrobdaInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2603,7 +2603,7 @@ struct BurnDriver BurnDrvGrobda3 = {
 	"Grobda (Old Ver. set 2)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, grobda3RomInfo, grobda3RomName, NULL, NULL, GrobdaInputInfo, GrobdaDIPInfo,
+	NULL, grobda3RomInfo, grobda3RomName, NULL, NULL, NULL, NULL, GrobdaInputInfo, GrobdaDIPInfo,
 	GrobdaInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2644,7 +2644,7 @@ struct BurnDriver BurnDrvPhozon = {
 	"Phozon (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, phozonRomInfo, phozonRomName, NULL, NULL, PhozonInputInfo, PhozonDIPInfo,
+	NULL, phozonRomInfo, phozonRomName, NULL, NULL, NULL, NULL, PhozonInputInfo, PhozonDIPInfo,
 	PhozonInit, DrvExit, DrvFrame, PhozonDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -2685,7 +2685,7 @@ struct BurnDriver BurnDrvPhozons = {
 	"Phozon (Sidam)\0", NULL, "Namco (Sidam license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, phozonsRomInfo, phozonsRomName, NULL, NULL, PhozonInputInfo, PhozonDIPInfo,
+	NULL, phozonsRomInfo, phozonsRomName, NULL, NULL, NULL, NULL, PhozonInputInfo, PhozonDIPInfo,
 	PhozonInit, DrvExit, DrvFrame, PhozonDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

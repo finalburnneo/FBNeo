@@ -440,7 +440,7 @@ struct BurnDriverD BurnDrvWarpsped = {
 	"Warp Speed (prototype)\0", "No sound, bad colors", "Meadows Games, Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, warpspedRomInfo, warpspedRomName, NULL, NULL, WarpspeedInputInfo, WarpspeedDIPInfo,
+	NULL, warpspedRomInfo, warpspedRomName, NULL, NULL, NULL, NULL, WarpspeedInputInfo, WarpspeedDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 10,
 	224, 192, 4, 3
 };

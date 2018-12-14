@@ -545,7 +545,7 @@ struct BurnDriver BurnDrvCultures = {
 	"Jibun wo Migaku Culture School Mahjong Hen\0", NULL, "Face", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, culturesRomInfo, culturesRomName, NULL, NULL, CulturesInputInfo, CulturesDIPInfo,
+	NULL, culturesRomInfo, culturesRomName, NULL, NULL, NULL, NULL, CulturesInputInfo, CulturesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	384, 240, 4, 3
 };

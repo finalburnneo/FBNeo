@@ -874,7 +874,7 @@ struct BurnDriver BurnDrvThunderj = {
 	"ThunderJaws (rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, thunderjRomInfo, thunderjRomName, NULL, NULL, ThunderjInputInfo, ThunderjDIPInfo,
+	NULL, thunderjRomInfo, thunderjRomName, NULL, NULL, NULL, NULL, ThunderjInputInfo, ThunderjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };
@@ -957,7 +957,7 @@ struct BurnDriver BurnDrvThunderja = {
 	"ThunderJaws (rev 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, thunderjaRomInfo, thunderjaRomName, NULL, NULL, ThunderjInputInfo, ThunderjDIPInfo,
+	NULL, thunderjaRomInfo, thunderjaRomName, NULL, NULL, NULL, NULL, ThunderjInputInfo, ThunderjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };

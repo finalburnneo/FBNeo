@@ -1456,7 +1456,7 @@ struct BurnDriver BurnDrvHangonjr = {
 	"Hang-On Jr. Rev.B\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
-	NULL, hangonjrRomInfo, hangonjrRomName, NULL, NULL, HangonjrInputInfo, HangonjrDIPInfo,
+	NULL, hangonjrRomInfo, hangonjrRomName, NULL, NULL, NULL, NULL, HangonjrInputInfo, HangonjrDIPInfo,
 	DrvHangonJrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	256, 192, 4, 3
 };
@@ -1466,7 +1466,7 @@ struct BurnDriver BurnDrvTetrisse = {
 	"Tetris (Japan, System E)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
-	NULL, TetrisseRomInfo, TetrisseRomName, NULL, NULL, TetrisseInputInfo, TetrisseDIPInfo,
+	NULL, TetrisseRomInfo, TetrisseRomName, NULL, NULL, NULL, NULL, TetrisseInputInfo, TetrisseDIPInfo,
 	DrvTetrisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	256, 192, 4, 3
 };
@@ -1476,7 +1476,7 @@ struct BurnDriver BurnDrvTransfrm = {
 	"Transformer\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
-	NULL, TransfrmRomInfo, TransfrmRomName, NULL, NULL, TransfrmInputInfo, TransfrmDIPInfo,
+	NULL, TransfrmRomInfo, TransfrmRomName, NULL, NULL, NULL, NULL, TransfrmInputInfo, TransfrmDIPInfo,
 	DrvTransfrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	256, 192, 4, 3
 };
@@ -1501,7 +1501,7 @@ struct BurnDriver BurnDrvFantzn2 = {
 	"Fantasy Zone II - The Tears of Opa-Opa (MC-8123, 317-0057)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
-	NULL, fantzn2RomInfo, fantzn2RomName, NULL, NULL, TransfrmInputInfo, Fantzn2DIPInfo,
+	NULL, fantzn2RomInfo, fantzn2RomName, NULL, NULL, NULL, NULL, TransfrmInputInfo, Fantzn2DIPInfo,
 	DrvFantzn2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	248, 192, 4, 3
 };
@@ -1525,7 +1525,7 @@ struct BurnDriver BurnDrvOpaopan = {
 	"Opa Opa (MC-8123, 317-0042)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
-	NULL, opaopanRomInfo, opaopanRomName, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
+	NULL, opaopanRomInfo, opaopanRomName, NULL, NULL, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
 	DrvTransfrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 192, 4, 3
 };
@@ -1551,7 +1551,7 @@ struct BurnDriver BurnDrvOpaopa = {
 	"Opa Opa (Rev A, unprotected)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
-	NULL, opaopaRomInfo, opaopaRomName, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
+	NULL, opaopaRomInfo, opaopaRomName, NULL, NULL, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
 	DrvOpaopapInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 192, 4, 3
 };
@@ -1575,7 +1575,7 @@ struct BurnDriver BurnDrvSlapshtr = {
 	"Slap Shooter\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
-	NULL, slapshtrRomInfo, slapshtrRomName, NULL, NULL, TransfrmInputInfo, TransfrmDIPInfo,
+	NULL, slapshtrRomInfo, slapshtrRomName, NULL, NULL, NULL, NULL, TransfrmInputInfo, TransfrmDIPInfo,
 	DrvSlapshtrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	256, 192, 4, 3
 };
@@ -1599,7 +1599,7 @@ struct BurnDriver BurnDrvAstrofl = {
 	"Astro Flash (Japan)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
-	NULL, AstroflRomInfo, AstroflRomName, NULL, NULL, TransfrmInputInfo, TransfrmDIPInfo,
+	NULL, AstroflRomInfo, AstroflRomName, NULL, NULL, NULL, NULL, TransfrmInputInfo, TransfrmDIPInfo,
 	DrvAstroflInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	256, 192, 4, 3
 };
@@ -1623,7 +1623,7 @@ struct BurnDriver BurnDrvRidleOfp = {
 	"Riddle of Pythagoras (Japan)\0", NULL, "Sega / Nasco", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MISC, GBF_BREAKOUT, 0,
-	NULL, RidleOfpRomInfo, RidleOfpRomName, NULL, NULL, RidleofpInputInfo, RidleOfpDIPInfo,
+	NULL, RidleOfpRomInfo, RidleOfpRomName, NULL, NULL, NULL, NULL, RidleofpInputInfo, RidleOfpDIPInfo,
 	DrvRidleOfpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	192, 240, 3, 4
 };

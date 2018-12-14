@@ -445,7 +445,7 @@ struct BurnDriver BurnDrvCanyon = {
 	"Canyon Bomber\0", "No sound", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, canyonRomInfo, canyonRomName, NULL, NULL, CanyonInputInfo, CanyonDIPInfo,
+	NULL, canyonRomInfo, canyonRomName, NULL, NULL, NULL, NULL, CanyonInputInfo, CanyonDIPInfo,
 	CanyonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 4,
 	256, 240, 4, 3
 };
@@ -480,7 +480,7 @@ struct BurnDriver BurnDrvCanyonp = {
 	"Canyon Bomber (prototype)\0", "No sound", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, canyonpRomInfo, canyonpRomName, NULL, NULL, CanyonInputInfo, CanyonDIPInfo,
+	NULL, canyonpRomInfo, canyonpRomName, NULL, NULL, NULL, NULL, CanyonInputInfo, CanyonDIPInfo,
 	CanyonpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 4,
 	256, 240, 4, 3
 };

@@ -548,7 +548,7 @@ struct BurnDriver BurnDrvMouser = {
 	"Mouser\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, mouserRomInfo, mouserRomName, NULL, NULL, MouserInputInfo, MouserDIPInfo,
+	NULL, mouserRomInfo, mouserRomName, NULL, NULL, NULL, NULL, MouserInputInfo, MouserDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -580,7 +580,7 @@ struct BurnDriver BurnDrvMouserc = {
 	"Mouser (Cosmos)\0", NULL, "UPL (Cosmos license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, mousercRomInfo, mousercRomName, NULL, NULL, MouserInputInfo, MouserDIPInfo,
+	NULL, mousercRomInfo, mousercRomName, NULL, NULL, NULL, NULL, MouserInputInfo, MouserDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

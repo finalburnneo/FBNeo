@@ -868,7 +868,7 @@ struct BurnDriver BurnDrvHoleland = {
 	"Hole Land (Japan)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
-	NULL, holelandRomInfo, holelandRomName, NULL, NULL, HolelandInputInfo, HolelandDIPInfo,
+	NULL, holelandRomInfo, holelandRomName, NULL, NULL, NULL, NULL, HolelandInputInfo, HolelandDIPInfo,
 	HolelandInit, DrvExit, DrvFrame, HolelandDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 448, 4, 3
 };
@@ -906,7 +906,7 @@ struct BurnDriver BurnDrvHoleland2 = {
 	"Hole Land (Spain)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
-	NULL, holeland2RomInfo, holeland2RomName, NULL, NULL, HolelandInputInfo, Holeland2DIPInfo,
+	NULL, holeland2RomInfo, holeland2RomName, NULL, NULL, NULL, NULL, HolelandInputInfo, Holeland2DIPInfo,
 	HolelandInit, DrvExit, DrvFrame, HolelandDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 448, 4, 3
 };
@@ -952,7 +952,7 @@ struct BurnDriver BurnDrvCrzrally = {
 	"Crazy Rally (set 1)\0", "Graphics issues on some levels", "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, crzrallyRomInfo, crzrallyRomName, NULL, NULL, CrzrallyInputInfo, CrzrallyDIPInfo,
+	NULL, crzrallyRomInfo, crzrallyRomName, NULL, NULL, NULL, NULL, CrzrallyInputInfo, CrzrallyDIPInfo,
 	CrzrallyInit, DrvExit, DrvFrame, CrzrallyDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -993,7 +993,7 @@ struct BurnDriver BurnDrvCrzrallya = {
 	"Crazy Rally (set 2)\0", "Graphics issues on some levels", "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, crzrallyaRomInfo, crzrallyaRomName, NULL, NULL, CrzrallyInputInfo, CrzrallyDIPInfo,
+	NULL, crzrallyaRomInfo, crzrallyaRomName, NULL, NULL, NULL, NULL, CrzrallyInputInfo, CrzrallyDIPInfo,
 	CrzrallyInit, DrvExit, DrvFrame, CrzrallyDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1034,7 +1034,7 @@ struct BurnDriver BurnDrvCrzrallyg = {
 	"Crazy Rally (Gecas license)\0", "Graphics issues on some levels", "Tecfri (Gecas license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, crzrallygRomInfo, crzrallygRomName, NULL, NULL, CrzrallyInputInfo, CrzrallyDIPInfo,
+	NULL, crzrallygRomInfo, crzrallygRomName, NULL, NULL, NULL, NULL, CrzrallyInputInfo, CrzrallyDIPInfo,
 	CrzrallyInit, DrvExit, DrvFrame, CrzrallyDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

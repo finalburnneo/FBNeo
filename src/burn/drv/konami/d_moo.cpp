@@ -1414,7 +1414,7 @@ struct BurnDriver BurnDrvMoomesa = {
 	"Wild West C.O.W.-Boys of Moo Mesa (ver EAB)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, moomesaRomInfo, moomesaRomName, NULL, NULL, MooInputInfo, MooDIPInfo,
+	NULL, moomesaRomInfo, moomesaRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1451,7 +1451,7 @@ struct BurnDriver BurnDrvMoomesauac = {
 	"Wild West C.O.W.-Boys of Moo Mesa (ver UAC)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, moomesauacRomInfo, moomesauacRomName, NULL, NULL, MooInputInfo, MooDIPInfo,
+	NULL, moomesauacRomInfo, moomesauacRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1488,7 +1488,7 @@ struct BurnDriver BurnDrvMoomesauab = {
 	"Wild West C.O.W.-Boys of Moo Mesa (ver UAB)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, moomesauabRomInfo, moomesauabRomName, NULL, NULL, MooInputInfo, MooDIPInfo,
+	NULL, moomesauabRomInfo, moomesauabRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1525,7 +1525,7 @@ struct BurnDriver BurnDrvMoomesaaab = {
 	"Wild West C.O.W.-Boys of Moo Mesa (ver AAB)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, moomesaaabRomInfo, moomesaaabRomName, NULL, NULL, MooInputInfo, MooDIPInfo,
+	NULL, moomesaaabRomInfo, moomesaaabRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1570,7 +1570,7 @@ struct BurnDriverD BurnDrvMoomesabl = {
 	"Wild West C.O.W.-Boys of Moo Mesa (bootleg)\0", NULL, "bootleg", "GX151",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, moomesablRomInfo, moomesablRomName, NULL, NULL, MooInputInfo, MooDIPInfo,
+	NULL, moomesablRomInfo, moomesablRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	moomesablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1608,7 +1608,7 @@ struct BurnDriver BurnDrvBucky = {
 	"Bucky O'Hare (ver EAB)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, buckyRomInfo, buckyRomName, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
+	NULL, buckyRomInfo, buckyRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
 };
@@ -1646,7 +1646,7 @@ struct BurnDriver BurnDrvBuckyea = {
 	"Bucky O'Hare (ver EA)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, buckyeaRomInfo, buckyeaRomName, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
+	NULL, buckyeaRomInfo, buckyeaRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
 };
@@ -1684,7 +1684,7 @@ struct BurnDriver BurnDrvBuckyjaa = {
 	"Bucky O'Hare (ver JAA)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, buckyjaaRomInfo, buckyjaaRomName, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
+	NULL, buckyjaaRomInfo, buckyjaaRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
 };
@@ -1723,7 +1723,7 @@ struct BurnDriver BurnDrvBuckyaa = {
 	"Bucky O'Hare (ver AA)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, buckyaaRomInfo, buckyaaRomName, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
+	NULL, buckyaaRomInfo, buckyaaRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
 };
@@ -1761,7 +1761,7 @@ struct BurnDriver BurnDrvBuckyuab = {
 	"Bucky O'Hare (ver UAB)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, buckyuabRomInfo, buckyuabRomName, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
+	NULL, buckyuabRomInfo, buckyuabRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
 };
@@ -1799,7 +1799,7 @@ struct BurnDriver BurnDrvBuckyaab = {
 	"Bucky O'Hare (ver AAB)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, buckyaabRomInfo, buckyaabRomName, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
+	NULL, buckyaabRomInfo, buckyaabRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
 };

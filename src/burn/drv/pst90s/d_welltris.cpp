@@ -869,7 +869,7 @@ struct BurnDriver BurnDrvWelltris = {
 	"Welltris - Alexey Pajitnov's (World?, 2 players)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, welltrisRomInfo, welltrisRomName, NULL, NULL, WelltrisInputInfo, WelltrisDIPInfo,
+	NULL, welltrisRomInfo, welltrisRomName, NULL, NULL, NULL, NULL, WelltrisInputInfo, WelltrisDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
 };
@@ -904,7 +904,7 @@ struct BurnDriver BurnDrvWelltrisj = {
 	"Welltris - Alexey Pajitnov's (Japan, 2 players)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, welltrisjRomInfo, welltrisjRomName, NULL, NULL, WelltrisInputInfo, WelltrisDIPInfo,
+	NULL, welltrisjRomInfo, welltrisjRomName, NULL, NULL, NULL, NULL, WelltrisInputInfo, WelltrisDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
 };
@@ -941,7 +941,7 @@ struct BurnDriver BurnDrvQuiz18k = {
 	"Miyasu Nonki no Quiz 18-Kin\0", NULL, "EIM", "Miscellaneous",
 	L"\u307F\u3084\u3059\u306E\u3093\u304D\u306E \u30AF\u30A4\u30BA\uFF11\uFF18\u7981 \uFF24\uFF52\uFF0E \u30A8\u30C3\u3061\u3083\u3093\u306E\u8A3A\u5BDF\u5BA4\0Miyasu Nonki no Quiz 18-Kin\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, quiz18kRomInfo, quiz18kRomName, NULL, NULL, Quiz18kInputInfo, Quiz18kDIPInfo,
+	NULL, quiz18kRomInfo, quiz18kRomName, NULL, NULL, NULL, NULL, Quiz18kInputInfo, Quiz18kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
 };

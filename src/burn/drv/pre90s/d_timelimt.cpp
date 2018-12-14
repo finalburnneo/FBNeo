@@ -685,7 +685,7 @@ struct BurnDriver BurnDrvTimelimt = {
 	"Time Limit\0", NULL, "Chuo Co. Ltd", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, timelimtRomInfo, timelimtRomName, NULL, NULL, TimelimtInputInfo, TimelimtDIPInfo,
+	NULL, timelimtRomInfo, timelimtRomName, NULL, NULL, NULL, NULL, TimelimtInputInfo, TimelimtDIPInfo,
 	TimelimtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
 };
@@ -724,7 +724,7 @@ struct BurnDriver BurnDrvProgress = {
 	"Progress\0", NULL, "Chuo Co. Ltd", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, progressRomInfo, progressRomName, NULL, NULL, ProgressInputInfo, ProgressDIPInfo,
+	NULL, progressRomInfo, progressRomName, NULL, NULL, NULL, NULL, ProgressInputInfo, ProgressDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
 };

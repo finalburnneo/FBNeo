@@ -1049,7 +1049,7 @@ struct BurnDriver BurnDrvTp84 = {
 	"Time Pilot '84 (set 1)\0", NULL, "Konami", "GX388",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, tp84RomInfo, tp84RomName, NULL, NULL, Tp84InputInfo, Tp84DIPInfo,
+	NULL, tp84RomInfo, tp84RomName, NULL, NULL, NULL, NULL, Tp84InputInfo, Tp84DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
 };
@@ -1090,7 +1090,7 @@ struct BurnDriver BurnDrvTp84a = {
 	"Time Pilot '84 (set 2)\0", NULL, "Konami", "GX388",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, tp84aRomInfo, tp84aRomName, NULL, NULL, Tp84InputInfo, Tp84aDIPInfo,
+	NULL, tp84aRomInfo, tp84aRomName, NULL, NULL, NULL, NULL, Tp84InputInfo, Tp84aDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
 };
@@ -1126,7 +1126,7 @@ struct BurnDriver BurnDrvTp84b = {
 	"Time Pilot '84 (set 3)\0", NULL, "Konami", "GX388",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, tp84bRomInfo, tp84bRomName, NULL, NULL, Tp84InputInfo, Tp84DIPInfo,
+	NULL, tp84bRomInfo, tp84bRomName, NULL, NULL, NULL, NULL, Tp84InputInfo, Tp84DIPInfo,
 	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
 };

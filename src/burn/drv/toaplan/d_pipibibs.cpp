@@ -557,7 +557,7 @@ struct BurnDriver BurnDrvPipibibs = {
 	"Pipi & Bibis / Whoopee!! (Z80 sound cpu, set 1)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PLATFORM, 0,
-	NULL, pipibibsRomInfo, pipibibsRomName, NULL, NULL, PipibibsInputInfo, PipibibsDIPInfo,
+	NULL, pipibibsRomInfo, pipibibsRomName, NULL, NULL, NULL, NULL, PipibibsInputInfo, PipibibsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
@@ -583,7 +583,7 @@ struct BurnDriver BurnDrvPipibibsa = {
 	"Pipi & Bibis / Whoopee!! (Z80 sound cpu, set 2)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PLATFORM, 0,
-	NULL, pipibibsaRomInfo, pipibibsaRomName, NULL, NULL, PipibibsInputInfo, PipibibsDIPInfo,
+	NULL, pipibibsaRomInfo, pipibibsaRomName, NULL, NULL, NULL, NULL, PipibibsInputInfo, PipibibsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
@@ -611,7 +611,7 @@ struct BurnDriver BurnDrvPipibibsp = {
 	"Pipi & Bibis / Whoopee!! (prototype)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PLATFORM, 0,
-	NULL, pipibibspRomInfo, pipibibspRomName, NULL, NULL, PipibibsInputInfo, PipibibsDIPInfo,
+	NULL, pipibibspRomInfo, pipibibspRomName, NULL, NULL, NULL, NULL, PipibibsInputInfo, PipibibsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

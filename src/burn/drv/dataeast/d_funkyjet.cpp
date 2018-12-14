@@ -668,7 +668,7 @@ struct BurnDriver BurnDrvFunkyjet = {
 	"Funky Jet (World, rev 1)\0", NULL, "[Data East] (Mitchell license)", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, funkyjetRomInfo, funkyjetRomName, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
+	NULL, funkyjetRomInfo, funkyjetRomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -698,7 +698,7 @@ struct BurnDriver BurnDrvFunkyjeta = {
 	"Funky Jet (World)\0", NULL, "[Data East] (Mitchell license)", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, funkyjetaRomInfo, funkyjetaRomName, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
+	NULL, funkyjetaRomInfo, funkyjetaRomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -728,7 +728,7 @@ struct BurnDriver BurnDrvFunkyjetj = {
 	"Funky Jet (Japan, rev 2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, funkyjetjRomInfo, funkyjetjRomName, NULL, NULL, FunkyjetInputInfo, FunkyjetjDIPInfo,
+	NULL, funkyjetjRomInfo, funkyjetjRomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, FunkyjetjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -758,7 +758,7 @@ struct BurnDriver BurnDrvSotsugyo = {
 	"Sotsugyo Shousho\0", NULL, "Mitchell (Atlus license)", "DECO IC16",
 	L"\u5352\u696D\u8A3C\u66F8\0Sotsugyo Shousho\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MINIGAMES, 0,
-	NULL, sotsugyoRomInfo, sotsugyoRomName, NULL, NULL, FunkyjetInputInfo, SotsugyoDIPInfo,
+	NULL, sotsugyoRomInfo, sotsugyoRomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, SotsugyoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

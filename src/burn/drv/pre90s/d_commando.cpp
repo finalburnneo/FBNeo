@@ -1105,7 +1105,7 @@ struct BurnDriver BurnDrvCommando = {
 	"Commando (World)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
@@ -1115,7 +1115,7 @@ struct BurnDriver BurnDrvCommandu = {
 	"Commando (US, set 1)\0", NULL, "Capcom (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
@@ -1125,7 +1125,7 @@ struct BurnDriver BurnDrvCommandu2 = {
 	"Commando (US, set 2)\0", NULL, "Capcom (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, Drvu2RomInfo, Drvu2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, Drvu2RomInfo, Drvu2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
@@ -1135,7 +1135,7 @@ struct BurnDriver BurnDrvCommandj = {
 	"Senjou no Ookami\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
@@ -1145,7 +1145,7 @@ struct BurnDriver BurnDrvCommandb = {
 	"Commando (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	BootlegInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
@@ -1155,7 +1155,7 @@ struct BurnDriver BurnDrvCommandb2 = {
 	"Commando (bootleg 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
@@ -1165,7 +1165,7 @@ struct BurnDriver BurnDrvSinvasn = {
 	"Space Invasion (Europe)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, SinvasnRomInfo, SinvasnRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, SinvasnRomInfo, SinvasnRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
@@ -1175,7 +1175,7 @@ struct BurnDriver BurnDrvSinvasnb = {
 	"Space Invasion (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, SinvasnbRomInfo, SinvasnbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, SinvasnbRomInfo, SinvasnbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	BootlegInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
@@ -1185,7 +1185,7 @@ struct BurnDriver BurnDrvMercenario = {
 	"Mercenario (Commando bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MercenarioRomInfo, MercenarioRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, MercenarioRomInfo, MercenarioRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	MercenarioInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };

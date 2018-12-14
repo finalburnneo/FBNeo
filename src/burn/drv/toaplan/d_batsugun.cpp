@@ -794,7 +794,7 @@ struct BurnDriver BurnDrvBatsugun = {
 	"Batsugun (set 1)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
-	NULL, batsugunRomInfo, batsugunRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
+	NULL, batsugunRomInfo, batsugunRomName, NULL, NULL, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
 	BatsugunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -804,7 +804,7 @@ struct BurnDriver BurnDrvBatsugunSP = {
 	"Batsugun (Special Ver.)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
-	NULL, batugnspRomInfo, batugnspRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
+	NULL, batugnspRomInfo, batugnspRomName, NULL, NULL, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
 	BatsugunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -814,7 +814,7 @@ struct BurnDriver BurnDrvBatsugna = {
 	"Batsugun (set 2)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
-	NULL, batsugnaRomInfo, batsugnaRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
+	NULL, batsugnaRomInfo, batsugnaRomName, NULL, NULL, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
 	BatsugunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -824,7 +824,7 @@ struct BurnDriver BurnDrvBatsugunb = {
 	"Batsugun (Korean PCB)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
-	NULL, batsugunbRomInfo, batsugunbRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
+	NULL, batsugunbRomInfo, batsugunbRomName, NULL, NULL, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
 	BatsugunbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

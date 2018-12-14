@@ -845,7 +845,7 @@ struct BurnDriver BurnDrvDarkmist = {
 	"The Lost Castle In Darkmist\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, darkmistRomInfo, darkmistRomName, NULL, NULL, DarkmistInputInfo, DarkmistDIPInfo,
+	NULL, darkmistRomInfo, darkmistRomName, NULL, NULL, NULL, NULL, DarkmistInputInfo, DarkmistDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
 };

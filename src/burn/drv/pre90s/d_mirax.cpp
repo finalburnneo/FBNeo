@@ -577,7 +577,7 @@ struct BurnDriver BurnDrvMirax = {
 	"Mirax (set 1)\0", NULL, "Current Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, miraxRomInfo, miraxRomName, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
+	NULL, miraxRomInfo, miraxRomName, NULL, NULL, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -615,7 +615,7 @@ struct BurnDriver BurnDrvMiraxa = {
 	"Mirax (set 2)\0", NULL, "Current Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, miraxaRomInfo, miraxaRomName, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
+	NULL, miraxaRomInfo, miraxaRomName, NULL, NULL, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };

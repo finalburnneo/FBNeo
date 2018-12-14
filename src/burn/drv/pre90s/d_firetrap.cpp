@@ -1027,7 +1027,7 @@ struct BurnDriver BurnDrvFiretrap = {
 	"Fire Trap (US, set 1)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, firetrapRomInfo, firetrapRomName, NULL, NULL, FiretrapInputInfo, FiretrapDIPInfo,
+	NULL, firetrapRomInfo, firetrapRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
@@ -1076,7 +1076,7 @@ struct BurnDriver BurnDrvFiretrapa = {
 	"Fire Trap (US, set 2)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, firetrapaRomInfo, firetrapaRomName, NULL, NULL, FiretrapInputInfo, FiretrapDIPInfo,
+	NULL, firetrapaRomInfo, firetrapaRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
@@ -1125,7 +1125,7 @@ struct BurnDriver BurnDrvFiretrapj = {
 	"Fire Trap (Japan)\0", NULL, "Wood Place Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, firetrapjRomInfo, firetrapjRomName, NULL, NULL, FiretrapInputInfo, FiretrapjDIPInfo,
+	NULL, firetrapjRomInfo, firetrapjRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
@@ -1174,7 +1174,7 @@ struct BurnDriver BurnDrvFiretrapbl = {
 	"Fire Trap (Japan bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, firetrapblRomInfo, firetrapblRomName, NULL, NULL, FiretrapblInputInfo, FiretrapblDIPInfo,
+	NULL, firetrapblRomInfo, firetrapblRomName, NULL, NULL, NULL, NULL, FiretrapblInputInfo, FiretrapblDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };

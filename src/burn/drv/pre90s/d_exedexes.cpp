@@ -683,7 +683,7 @@ struct BurnDriver BurnDrvExedexes = {
 	"Exed Exes\0", NULL, "Capcom", "Miscellaneous",
 	L"Exed Exes\0\u30A8\u30B0\u30BC\u30C9 \u30A8\u30B0\u30BC\u30B9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, exedexesRomInfo, exedexesRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, exedexesRomInfo, exedexesRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
 };
@@ -734,7 +734,7 @@ struct BurnDriver BurnDrvSavgbees = {
 	"Savage Bees\0", NULL, "Capcom (Memetron license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, savgbeesRomInfo, savgbeesRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, savgbeesRomInfo, savgbeesRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
 };

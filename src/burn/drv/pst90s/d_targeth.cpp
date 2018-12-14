@@ -658,7 +658,7 @@ struct BurnDriver BurnDrvTargeth = {
 	"Target Hits (ver 1.1, Checksum 5152)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, targethRomInfo, targethRomName, NULL, NULL, TargethInputInfo, TargethDIPInfo,
+	NULL, targethRomInfo, targethRomName, NULL, NULL, NULL, NULL, TargethInputInfo, TargethDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 232, 4, 3
 };
@@ -690,7 +690,7 @@ struct BurnDriver BurnDrvTargetha = {
 	"Target Hits (ver 1.1, Checksum 86E1)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, targethaRomInfo, targethaRomName, NULL, NULL, TargethInputInfo, TargethDIPInfo,
+	NULL, targethaRomInfo, targethaRomName, NULL, NULL, NULL, NULL, TargethInputInfo, TargethDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 232, 4, 3
 };
@@ -723,7 +723,7 @@ struct BurnDriver BurnDrvTargeth10 = {
 	"Target Hits (ver 1.0, Checksum FBCB)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, targeth10RomInfo, targeth10RomName, NULL, NULL, TargethInputInfo, TargethDIPInfo,
+	NULL, targeth10RomInfo, targeth10RomName, NULL, NULL, NULL, NULL, TargethInputInfo, TargethDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 232, 4, 3
 };

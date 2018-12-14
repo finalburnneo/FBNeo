@@ -630,7 +630,7 @@ struct BurnDriver BurnDrvCapbowl = {
 	"Capcom Bowling (set 1)\0", NULL, "Incredible Technologies / Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, capbowlRomInfo, capbowlRomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
+	NULL, capbowlRomInfo, capbowlRomName, NULL, NULL, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
 	CapbowlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	244, 360, 3, 4
 };
@@ -655,7 +655,7 @@ struct BurnDriver BurnDrvCapbowl2 = {
 	"Capcom Bowling (set 2)\0", NULL, "Incredible Technologies / Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, capbowl2RomInfo, capbowl2RomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
+	NULL, capbowl2RomInfo, capbowl2RomName, NULL, NULL, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
 	CapbowlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	244, 360, 3, 4
 };
@@ -680,7 +680,7 @@ struct BurnDriver BurnDrvCapbowl3 = {
 	"Capcom Bowling (set 3)\0", NULL, "Incredible Technologies / Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, capbowl3RomInfo, capbowl3RomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
+	NULL, capbowl3RomInfo, capbowl3RomName, NULL, NULL, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
 	CapbowlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	244, 360, 3, 4
 };
@@ -705,7 +705,7 @@ struct BurnDriver BurnDrvCapbowl4 = {
 	"Capcom Bowling (set 4)\0", NULL, "Incredible Technologies / Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, capbowl4RomInfo, capbowl4RomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
+	NULL, capbowl4RomInfo, capbowl4RomName, NULL, NULL, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
 	CapbowlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	244, 360, 3, 4
 };
@@ -730,7 +730,7 @@ struct BurnDriver BurnDrvClbowl = {
 	"Coors Light Bowling\0", NULL, "Incredible Technologies / Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, clbowlRomInfo, clbowlRomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
+	NULL, clbowlRomInfo, clbowlRomName, NULL, NULL, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
 	CapbowlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	244, 360, 3, 4
 };
@@ -759,7 +759,7 @@ struct BurnDriver BurnDrvBowlrama = {
 	"Bowl-O-Rama\0", NULL, "P&P Marketing", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, bowlramaRomInfo, bowlramaRomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
+	NULL, bowlramaRomInfo, bowlramaRomName, NULL, NULL, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
 	BowlramaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	240, 360, 3, 4
 };

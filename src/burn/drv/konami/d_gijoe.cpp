@@ -811,7 +811,7 @@ struct BurnDriver BurnDrvGijoe = {
 	"G.I. Joe (World, EAB, set 1)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gijoeRomInfo, gijoeRomName, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
+	NULL, gijoeRomInfo, gijoeRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -848,7 +848,7 @@ struct BurnDriver BurnDrvGijoeea = {
 	"G.I. Joe (World, EB8, prototype?)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gijoeeaRomInfo, gijoeeaRomName, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
+	NULL, gijoeeaRomInfo, gijoeeaRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -885,7 +885,7 @@ struct BurnDriver BurnDrvGijoeu = {
 	"G.I. Joe (US, UAB)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gijoeuRomInfo, gijoeuRomName, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
+	NULL, gijoeuRomInfo, gijoeuRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -922,7 +922,7 @@ struct BurnDriver BurnDrvGijoej = {
 	"G.I. Joe (Japan, JAA)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gijoejRomInfo, gijoejRomName, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
+	NULL, gijoejRomInfo, gijoejRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -959,7 +959,7 @@ struct BurnDriver BurnDrvGijoea = {
 	"G.I. Joe (Asia, AA)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gijoeaRomInfo, gijoeaRomName, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
+	NULL, gijoeaRomInfo, gijoeaRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };

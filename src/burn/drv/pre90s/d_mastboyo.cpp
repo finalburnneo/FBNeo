@@ -420,7 +420,7 @@ struct BurnDriver BurnDrvMastboyo = {
 	"Master Boy (1987, Z80 hardware, set 1)\0", NULL, "Gaelco (Covielsa license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, mastboyoRomInfo, mastboyoRomName, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
+	NULL, mastboyoRomInfo, mastboyoRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
 	mastboyoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -455,7 +455,7 @@ struct BurnDriver BurnDrvMastboyoa = {
 	"Master Boy (1987, Z80 hardware, set 2)\0", NULL, "Gaelco (Covielsa license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, mastboyoaRomInfo, mastboyoaRomName, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
+	NULL, mastboyoaRomInfo, mastboyoaRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
 	mastboyoaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

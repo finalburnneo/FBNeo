@@ -688,7 +688,7 @@ struct BurnDriver BurnDrvCloud9 = {
 	"Cloud 9 (prototype)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT | GBF_ACTION, 0,
-	NULL, cloud9RomInfo, cloud9RomName, NULL, NULL, Cloud9InputInfo, Cloud9DIPInfo,
+	NULL, cloud9RomInfo, cloud9RomName, NULL, NULL, NULL, NULL, Cloud9InputInfo, Cloud9DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
 };
@@ -722,7 +722,7 @@ struct BurnDriver BurnDrvFirebeas = {
 	"Firebeast (prototype)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, firebeasRomInfo, firebeasRomName, NULL, NULL, FirebeasInputInfo, FirebeasDIPInfo,
+	NULL, firebeasRomInfo, firebeasRomName, NULL, NULL, NULL, NULL, FirebeasInputInfo, FirebeasDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
 };

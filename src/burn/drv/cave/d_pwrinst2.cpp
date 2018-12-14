@@ -1097,7 +1097,7 @@ struct BurnDriver BurnDrvPwrinst2 = {
 	"Power Instinct 2 (USA, ver. 94/04/08)\0", NULL, "Atlus", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
-	NULL, pwrinst2RomInfo, pwrinst2RomName, NULL, NULL, pwrinst2InputInfo, NULL,
+	NULL, pwrinst2RomInfo, pwrinst2RomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
@@ -1107,7 +1107,7 @@ struct BurnDriver BurnDrvPwrinst2j = {
 	"Gouketsuji Ichizoku 2 (Japan, ver. 94/04/08)\0", NULL, "Atlus", "Cave",
 	L"\u8C6A\u8840\u5BFA\u4E00\u65CF \uFF12 (Japan, ver. 94/04/08)\0Gouketsuji Ichizoku 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
-	NULL, pwrinst2jRomInfo, pwrinst2jRomName, NULL, NULL, pwrinst2InputInfo, NULL,
+	NULL, pwrinst2jRomInfo, pwrinst2jRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
@@ -1117,7 +1117,7 @@ struct BurnDriver BurnDrvPlegends = {
 	"Gouketsuji Gaiden Legends (USA, ver. 95/06/20)\0", NULL, "Atlus / KM International", "Cave",
 	L"\u8C6A\u8840\u5BFA\u5916\u4F1D Gogetsuji Legends (USA, ver. 95/06/20)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
-	NULL, plegendsRomInfo, plegendsRomName, NULL, NULL, pwrinst2InputInfo, NULL,
+	NULL, plegendsRomInfo, plegendsRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
 	PlegendsInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
@@ -1127,7 +1127,7 @@ struct BurnDriver BurnDrvPlegendsj = {
 	"Gouketsuji Gaiden Saikyou Densetsu (Japan, ver. 95/06/20)\0", NULL, "Atlus", "Cave",
 	L"\u8C6A\u8840\u5BFA\u5916\u4F1D Gogetsuji \u6700\u5F37\u4F1D\u8AAC (Japan, ver. 95/06/20)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
-	NULL, plegendsjRomInfo, plegendsjRomName, NULL, NULL, pwrinst2InputInfo, NULL,
+	NULL, plegendsjRomInfo, plegendsjRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
 	PlegendsInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };

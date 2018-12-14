@@ -1104,7 +1104,7 @@ struct BurnDriver BurnDrvRenegade = {
 	"Renegade (US)\0", NULL, "Technos (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	RenegadeInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 240, 240, 4, 3
 };
@@ -1114,7 +1114,7 @@ struct BurnDriver BurnDrvKuniokun = {
 	"Nekketsu Kouha Kunio-kun (Japan)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	RenegadeInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 240, 240, 4, 3
 };
@@ -1124,7 +1124,7 @@ struct BurnDriver BurnDrvKuniokunb = {
 	"Nekketsu Kouha Kunio-kun (Japan bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	KuniokunbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 240, 240, 4, 3
 };

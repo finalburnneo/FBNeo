@@ -971,7 +971,7 @@ struct BurnDriver BurnDrvWilytowr = {
 	"Wily Tower\0", NULL, "Irem", "Irem M63",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
-	NULL, wilytowrRomInfo, wilytowrRomName, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
+	NULL, wilytowrRomInfo, wilytowrRomName, NULL, NULL, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
 	wilytowrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x104,
 	256, 224, 4, 3
 };
@@ -1019,7 +1019,7 @@ struct BurnDriver BurnDrvAtomboy = {
 	"Atomic Boy (revision B)\0", NULL, "Irem (Memetron license)", "Irem M63",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
-	NULL, atomboyRomInfo, atomboyRomName, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
+	NULL, atomboyRomInfo, atomboyRomName, NULL, NULL, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
 	atomboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x104,
 	256, 224, 4, 3
 };
@@ -1067,7 +1067,7 @@ struct BurnDriver BurnDrvAtomboya = {
 	"Atomic Boy (revision A)\0", NULL, "Irem (Memetron license)", "Irem M63",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
-	NULL, atomboyaRomInfo, atomboyaRomName, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
+	NULL, atomboyaRomInfo, atomboyaRomName, NULL, NULL, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
 	atomboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x104,
 	256, 224, 4, 3
 };
@@ -1118,7 +1118,7 @@ struct BurnDriver BurnDrvFghtbskt = {
 	"Fighting Basketball\0", NULL, "Paradise Co. Ltd.", "Irem M63",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M63, GBF_SPORTSMISC, 0,
-	NULL, fghtbsktRomInfo, fghtbsktRomName, NULL, NULL, FghtbsktInputInfo, FghtbsktDIPInfo,
+	NULL, fghtbsktRomInfo, fghtbsktRomName, NULL, NULL, NULL, NULL, FghtbsktInputInfo, FghtbsktDIPInfo,
 	fghtbsktInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

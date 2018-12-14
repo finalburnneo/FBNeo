@@ -925,7 +925,7 @@ struct BurnDriver BurnDrvVendetta = {
 	"Vendetta (World, 4 Players ver. T)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendettaRomInfo, vendettaRomName, NULL, NULL, Vendet4pInputInfo, NULL,
+	NULL, vendettaRomInfo, vendettaRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -959,7 +959,7 @@ struct BurnDriver BurnDrvVendettar = {
 	"Vendetta (US, 4 Players ver. R)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendettarRomInfo, vendettarRomName, NULL, NULL, Vendet4pInputInfo, NULL,
+	NULL, vendettarRomInfo, vendettarRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -993,7 +993,7 @@ struct BurnDriver BurnDrvVendettaz = {
 	"Vendetta (Asia, 4 Players ver. Z)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendettazRomInfo, vendettazRomName, NULL, NULL, Vendet4pInputInfo, NULL,
+	NULL, vendettazRomInfo, vendettazRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -1027,7 +1027,7 @@ struct BurnDriver BurnDrvVendetta2pw = {
 	"Vendetta (World, 2 Players ver. W)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendetta2pwRomInfo, vendetta2pwRomName, NULL, NULL, VendettaInputInfo, NULL,
+	NULL, vendetta2pwRomInfo, vendetta2pwRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -1061,7 +1061,7 @@ struct BurnDriver BurnDrvVendetta2peba = {
     "Vendetta (World, 2 Players ver. EB-A?)\0", NULL, "Konami", "GX081",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-    NULL, vendetta2pebaRomInfo, vendetta2pebaRomName, NULL, NULL, VendettaInputInfo, NULL,
+    NULL, vendetta2pebaRomInfo, vendetta2pebaRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
     VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
     304, 224, 4, 3
 };
@@ -1096,7 +1096,7 @@ struct BurnDriver BurnDrvVendetta2pun = {
 	"Vendetta (World, 2 Players ver. ?)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendetta2punRomInfo, vendetta2punRomName, NULL, NULL, VendettaInputInfo, NULL,
+	NULL, vendetta2punRomInfo, vendetta2punRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -1130,7 +1130,7 @@ struct BurnDriver BurnDrvVendetta2pu = {
 	"Vendetta (Asia, 2 Players ver. U)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendetta2puRomInfo, vendetta2puRomName, NULL, NULL, VendettaInputInfo, NULL,
+	NULL, vendetta2puRomInfo, vendetta2puRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -1164,7 +1164,7 @@ struct BurnDriver BurnDrvVendetta2pd = {
 	"Vendetta (Asia, 2 Players ver. D)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendetta2pdRomInfo, vendetta2pdRomName, NULL, NULL, VendettaInputInfo, NULL,
+	NULL, vendetta2pdRomInfo, vendetta2pdRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -1198,7 +1198,7 @@ struct BurnDriver BurnDrvVendettan = {
 	"Crime Fighters 2 (Japan, 4 Players ver. N)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendettanRomInfo, vendettanRomName, NULL, NULL, Vendet4pInputInfo, NULL,
+	NULL, vendettanRomInfo, vendettanRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -1232,7 +1232,7 @@ struct BurnDriver BurnDrvVendetta2pp = {
 	"Crime Fighters 2 (Japan, 2 Players ver. P)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendetta2ppRomInfo, vendetta2ppRomName, NULL, NULL, VendettaInputInfo, NULL,
+	NULL, vendetta2ppRomInfo, vendetta2ppRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -1271,7 +1271,7 @@ struct BurnDriver BurnDrvEsckids = {
 	"Escape Kids (Asia, 4 Players)\0", NULL, "Konami", "GX975",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
-	NULL, esckidsRomInfo, esckidsRomName, NULL, NULL, EsckidsInputInfo, NULL,
+	NULL, esckidsRomInfo, esckidsRomName, NULL, NULL, NULL, NULL, EsckidsInputInfo, NULL,
 	EsckidsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -1305,7 +1305,7 @@ struct BurnDriver BurnDrvEsckidsj = {
 	"Escape Kids (Japan, 2 Players)\0", NULL, "Konami", "GX975",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
-	NULL, esckidsjRomInfo, esckidsjRomName, NULL, NULL, EsckidsjInputInfo, NULL,
+	NULL, esckidsjRomInfo, esckidsjRomName, NULL, NULL, NULL, NULL, EsckidsjInputInfo, NULL,
 	EsckidsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 240, 4, 3
 };

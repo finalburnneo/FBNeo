@@ -638,7 +638,7 @@ struct BurnDriver BurnDrvBigprowr = {
 	"The Big Pro Wrestling!\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, bigprowrRomInfo, bigprowrRomName, NULL, NULL, BigprowrInputInfo, BigprowrDIPInfo,
+	NULL, bigprowrRomInfo, bigprowrRomName, NULL, NULL, NULL, NULL, BigprowrInputInfo, BigprowrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	240, 256, 3, 4
 };
@@ -682,7 +682,7 @@ struct BurnDriver BurnDrvTagteam = {
 	"Tag Team Wrestling\0", NULL, "Technos Japan (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, tagteamRomInfo, tagteamRomName, NULL, NULL, BigprowrInputInfo, TagteamDIPInfo,
+	NULL, tagteamRomInfo, tagteamRomName, NULL, NULL, NULL, NULL, BigprowrInputInfo, TagteamDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	240, 256, 3, 4
 };

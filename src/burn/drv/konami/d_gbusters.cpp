@@ -609,7 +609,7 @@ struct BurnDriver BurnDrvGbusters = {
 	"Gang Busters (set 1)\0", NULL, "Konami", "GX878",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gbustersRomInfo, gbustersRomName, NULL, NULL, GbustersInputInfo, GbustersDIPInfo,
+	NULL, gbustersRomInfo, gbustersRomName, NULL, NULL, NULL, NULL, GbustersInputInfo, GbustersDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 288, 3, 4
 };
@@ -642,7 +642,7 @@ struct BurnDriver BurnDrvGbustera = {
 	"Gang Busters (set 2)\0", NULL, "Konami", "GX878",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gbusteraRomInfo, gbusteraRomName, NULL, NULL, GbustersInputInfo, GbustersDIPInfo,
+	NULL, gbusteraRomInfo, gbusteraRomName, NULL, NULL, NULL, NULL, GbustersInputInfo, GbustersDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 288, 3, 4
 };
@@ -675,7 +675,7 @@ struct BurnDriver BurnDrvCrazycop = {
 	"Crazy Cop (Japan)\0", NULL, "Konami", "GX878",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, crazycopRomInfo, crazycopRomName, NULL, NULL, GbustersInputInfo, GbustersDIPInfo,
+	NULL, crazycopRomInfo, crazycopRomName, NULL, NULL, NULL, NULL, GbustersInputInfo, GbustersDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 288, 3, 4
 };

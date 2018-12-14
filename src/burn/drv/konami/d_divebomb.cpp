@@ -752,7 +752,7 @@ struct BurnDriver BurnDrvDivebomb = {
 	"Kyuukoukabakugekitai - Dive Bomber Squad (Japan, prototype)\0", "bugs are normal!", "Konami", "GX840",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, divebombRomInfo, divebombRomName, NULL, NULL, DivebombInputInfo, DivebombDIPInfo,
+	NULL, divebombRomInfo, divebombRomName, NULL, NULL, NULL, NULL, DivebombInputInfo, DivebombDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xd00,
 	224, 256, 3, 4
 };

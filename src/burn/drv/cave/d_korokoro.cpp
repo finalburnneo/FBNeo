@@ -700,7 +700,7 @@ struct BurnDriver BurnDrvKorokoro = {
 	"Koro Koro Quest (Japan)\0", NULL, "Takumi", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_MISC, 0,
-	NULL, korokoroRomInfo, korokoroRomName, NULL, NULL, KorokoroInputInfo, KorokoroDIPInfo,
+	NULL, korokoroRomInfo, korokoroRomName, NULL, NULL, NULL, NULL, KorokoroInputInfo, KorokoroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
@@ -728,7 +728,7 @@ struct BurnDriver BurnDrvCrusherm = {
 	"Crusher Makochan (Japan)\0", NULL, "Takumi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_MINIGAMES, 0,
-	NULL, crushermRomInfo, crushermRomName, NULL, NULL, KorokoroInputInfo, KorokoroDIPInfo,
+	NULL, crushermRomInfo, crushermRomName, NULL, NULL, NULL, NULL, KorokoroInputInfo, KorokoroDIPInfo,
 	crushermInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };

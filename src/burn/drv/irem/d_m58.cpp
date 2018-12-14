@@ -668,7 +668,7 @@ struct BurnDriver BurnDrvyard10 = {
 	"10-Yard Fight (World, set 1)\0", NULL, "Irem", "M58",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_MISC, GBF_SPORTSMISC, 0,
-	NULL, yard10RomInfo, yard10RomName, NULL, NULL, YardInputInfo, YardDIPInfo,
+	NULL, yard10RomInfo, yard10RomName, NULL, NULL, NULL, NULL, YardInputInfo, YardDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
 };
@@ -713,7 +713,7 @@ struct BurnDriver BurnDrvyardj10 = {
 	"10-Yard Fight (Japan)\0", NULL, "Irem", "M58",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SPORTSMISC, 0,
-	NULL, yardj10RomInfo, yardj10RomName, NULL, NULL, YardInputInfo, YardDIPInfo,
+	NULL, yardj10RomInfo, yardj10RomName, NULL, NULL, NULL, NULL, YardInputInfo, YardDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
 };
@@ -765,7 +765,7 @@ struct BurnDriver BurnDrvVs10yard = {
 	"Vs 10-Yard Fight (World, 11/05/84)\0", NULL, "Irem", "M58",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SPORTSMISC, 0,
-	NULL, vs10yardRomInfo, vs10yardRomName, NULL, NULL, YardInputInfo, YardDIPInfo,
+	NULL, vs10yardRomInfo, vs10yardRomName, NULL, NULL, NULL, NULL, YardInputInfo, YardDIPInfo,
 	Vs10yard, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
 };
@@ -810,7 +810,7 @@ struct BurnDriver BurnDrvVs10yardj = {
 	"Vs 10-Yard Fight (Japan)\0", NULL, "Irem", "M58",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SPORTSMISC, 0,
-	NULL, vs10yardjRomInfo, vs10yardjRomName, NULL, NULL, YardInputInfo, Vs10yarjDIPInfo,
+	NULL, vs10yardjRomInfo, vs10yardjRomName, NULL, NULL, NULL, NULL, YardInputInfo, Vs10yarjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
 };
@@ -862,7 +862,7 @@ struct BurnDriver BurnDrvVs10yardu = {
 	"Vs 10-Yard Fight (US, Taito license)\0", NULL, "Irem (Taito license)", "M58",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SPORTSMISC, 0,
-	NULL, vs10yarduRomInfo, vs10yarduRomName, NULL, NULL, YardInputInfo, YardDIPInfo,
+	NULL, vs10yarduRomInfo, vs10yarduRomName, NULL, NULL, NULL, NULL, YardInputInfo, YardDIPInfo,
 	Vs10yarduInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
 };
@@ -907,7 +907,7 @@ struct BurnDriver BurnDrvyard1085 = {
 	"10-Yard Fight '85 (US, Taito license)\0", NULL, "Irem (Taito license)", "M58",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SPORTSMISC, 0,
-	NULL, yard1085RomInfo, yard1085RomName, NULL, NULL, YardInputInfo, YardDIPInfo,
+	NULL, yard1085RomInfo, yard1085RomName, NULL, NULL, NULL, NULL, YardInputInfo, YardDIPInfo,
 	Vs10yarduInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
 };

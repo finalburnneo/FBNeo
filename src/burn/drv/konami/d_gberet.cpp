@@ -980,7 +980,7 @@ struct BurnDriver BurnDrvGberet = {
 	"Green Beret\0", NULL, "Konami", "GX577",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gberetRomInfo, gberetRomName, NULL, NULL, GberetInputInfo, GberetDIPInfo,
+	NULL, gberetRomInfo, gberetRomName, NULL, NULL, NULL, NULL, GberetInputInfo, GberetDIPInfo,
 	GberetInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };
@@ -1013,7 +1013,7 @@ struct BurnDriver BurnDrvRushatck = {
 	"Rush'n Attack (US)\0", NULL, "Konami", "GX577",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, rushatckRomInfo, rushatckRomName, NULL, NULL, GberetInputInfo, GberetDIPInfo,
+	NULL, rushatckRomInfo, rushatckRomName, NULL, NULL, NULL, NULL, GberetInputInfo, GberetDIPInfo,
 	GberetInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };
@@ -1052,7 +1052,7 @@ struct BurnDriver BurnDrvGberetb = {
 	"Green Beret (bootleg)\0", NULL, "bootleg", "GX577",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gberetbRomInfo, gberetbRomName, NULL, NULL, GberetbInputInfo, GberetbDIPInfo,
+	NULL, gberetbRomInfo, gberetbRomName, NULL, NULL, NULL, NULL, GberetbInputInfo, GberetbDIPInfo,
 	GberetbInit, DrvExit, DrvFrame, BootDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };
@@ -1087,7 +1087,7 @@ struct BurnDriver BurnDrvMrgoemon = {
 	"Mr. Goemon (Japan)\0", NULL, "Konami", "GX621",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
-	NULL, mrgoemonRomInfo, mrgoemonRomName, NULL, NULL, GberetInputInfo, MrgoemonDIPInfo,
+	NULL, mrgoemonRomInfo, mrgoemonRomName, NULL, NULL, NULL, NULL, GberetInputInfo, MrgoemonDIPInfo,
 	MrgoemonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };

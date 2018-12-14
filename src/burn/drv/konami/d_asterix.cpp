@@ -759,7 +759,7 @@ struct BurnDriver BurnDrvAsterix = {
 	"Asterix (ver EAD)\0", NULL, "Konami", "GX068",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, asterixRomInfo, asterixRomName, NULL, NULL, AsterixInputInfo, AsterixDIPInfo,
+	NULL, asterixRomInfo, asterixRomName, NULL, NULL, NULL, NULL, AsterixInputInfo, AsterixDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -794,7 +794,7 @@ struct BurnDriver BurnDrvAsterixeac = {
 	"Asterix (ver EAC)\0", NULL, "Konami", "GX068",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, asterixeacRomInfo, asterixeacRomName, NULL, NULL, AsterixInputInfo, AsterixDIPInfo,
+	NULL, asterixeacRomInfo, asterixeacRomName, NULL, NULL, NULL, NULL, AsterixInputInfo, AsterixDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -829,7 +829,7 @@ struct BurnDriver BurnDrvAsterixeaa = {
 	"Asterix (ver EAA)\0", NULL, "Konami", "GX068",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, asterixeaaRomInfo, asterixeaaRomName, NULL, NULL, AsterixInputInfo, AsterixDIPInfo,
+	NULL, asterixeaaRomInfo, asterixeaaRomName, NULL, NULL, NULL, NULL, AsterixInputInfo, AsterixDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -864,7 +864,7 @@ struct BurnDriver BurnDrvAsterixaad = {
 	"Asterix (ver AAD)\0", NULL, "Konami", "GX068",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, asterixaadRomInfo, asterixaadRomName, NULL, NULL, AsterixInputInfo, AsterixDIPInfo,
+	NULL, asterixaadRomInfo, asterixaadRomName, NULL, NULL, NULL, NULL, AsterixInputInfo, AsterixDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -899,7 +899,7 @@ struct BurnDriver BurnDrvAsterixj = {
 	"Asterix (ver JAD)\0", NULL, "Konami", "GX068",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, asterixjRomInfo, asterixjRomName, NULL, NULL, AsterixInputInfo, AsterixDIPInfo,
+	NULL, asterixjRomInfo, asterixjRomName, NULL, NULL, NULL, NULL, AsterixInputInfo, AsterixDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };

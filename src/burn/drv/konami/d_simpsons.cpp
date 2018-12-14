@@ -747,7 +747,7 @@ struct BurnDriver BurnDrvSimpsons = {
 	"The Simpsons (4 Players World, set 1)\0", NULL, "Konami", "GX072",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, simpsonsRomInfo, simpsonsRomName, NULL, NULL, SimpsonsInputInfo, NULL,
+	NULL, simpsonsRomInfo, simpsonsRomName, NULL, NULL, NULL, NULL, SimpsonsInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -785,7 +785,7 @@ struct BurnDriver BurnDrvSimpsons4pe = {
 	"The Simpsons (4 Players World, set 2)\0", NULL, "Konami", "GX072",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, simpsons4peRomInfo, simpsons4peRomName, NULL, NULL, SimpsonsInputInfo, NULL,
+	NULL, simpsons4peRomInfo, simpsons4peRomName, NULL, NULL, NULL, NULL, SimpsonsInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -823,7 +823,7 @@ struct BurnDriver BurnDrvSimpsons2p = {
 	"The Simpsons (2 Players World, set 1)\0", NULL, "Konami", "GX072",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, simpsons2pRomInfo, simpsons2pRomName, NULL, NULL, Simpsons2pInputInfo, NULL,
+	NULL, simpsons2pRomInfo, simpsons2pRomName, NULL, NULL, NULL, NULL, Simpsons2pInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -861,7 +861,7 @@ struct BurnDriver BurnDrvSimpsons2p2 = {
 	"The Simpsons (2 Players World, set 2)\0", NULL, "Konami", "GX072",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, simpsons2p2RomInfo, simpsons2p2RomName, NULL, NULL, SimpsonsInputInfo, NULL,
+	NULL, simpsons2p2RomInfo, simpsons2p2RomName, NULL, NULL, NULL, NULL, SimpsonsInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -899,7 +899,7 @@ struct BurnDriver BurnDrvSimpsons2p3 = {
 	"The Simpsons (2 Players World, set 3)\0", NULL, "Konami", "GX072",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, simpsons2p3RomInfo, simpsons2p3RomName, NULL, NULL, SimpsonsInputInfo, NULL,
+	NULL, simpsons2p3RomInfo, simpsons2p3RomName, NULL, NULL, NULL, NULL, SimpsonsInputInfo, NULL,
  	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -937,7 +937,7 @@ struct BurnDriver BurnDrvSimpsons2pa = {
 	"The Simpsons (2 Players Asia)\0", NULL, "Konami", "GX072",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, simpsons2paRomInfo, simpsons2paRomName, NULL, NULL, Simpsons2pInputInfo, NULL,
+	NULL, simpsons2paRomInfo, simpsons2paRomName, NULL, NULL, NULL, NULL, Simpsons2pInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -975,7 +975,7 @@ struct BurnDriver BurnDrvSimpsons2pj = {
 	"The Simpsons (2 Players Japan)\0", NULL, "Konami", "GX072",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, simpsons2pjRomInfo, simpsons2pjRomName, NULL, NULL, Simpsons2pInputInfo, NULL,
+	NULL, simpsons2pjRomInfo, simpsons2pjRomName, NULL, NULL, NULL, NULL, Simpsons2pInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };

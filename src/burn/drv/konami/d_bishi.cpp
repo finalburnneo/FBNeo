@@ -672,7 +672,7 @@ struct BurnDriver BurnDrvBishi = {
 	"Bishi Bashi Championship Mini Game Senshuken (ver JAA, 3 Players)\0", "Imperfect gfx (one gfx rom bad, bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
-	NULL, bishiRomInfo, bishiRomName, NULL, NULL, BishiInputInfo, BishiDIPInfo,
+	NULL, bishiRomInfo, bishiRomName, NULL, NULL, NULL, NULL, BishiInputInfo, BishiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -703,7 +703,7 @@ struct BurnDriver BurnDrvSbishi = {
 	"Super Bishi Bashi Championship (ver JAA, 2 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
-	NULL, sbishiRomInfo, sbishiRomName, NULL, NULL, Bishi2pInputInfo, Bishi2pDIPInfo,
+	NULL, sbishiRomInfo, sbishiRomName, NULL, NULL, NULL, NULL, Bishi2pInputInfo, Bishi2pDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -734,7 +734,7 @@ struct BurnDriver BurnDrvSbishik = {
 	"Super Bishi Bashi Championship (ver KAB, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
-	NULL, sbishikRomInfo, sbishikRomName, NULL, NULL, BishiInputInfo, BishiDIPInfo,
+	NULL, sbishikRomInfo, sbishikRomName, NULL, NULL, NULL, NULL, BishiInputInfo, BishiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -765,7 +765,7 @@ struct BurnDriver BurnDrvSbishika = {
 	"Super Bishi Bashi Championship (ver KAA, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
-	NULL, sbishikaRomInfo, sbishikaRomName, NULL, NULL, BishiInputInfo, BishiDIPInfo,
+	NULL, sbishikaRomInfo, sbishikaRomName, NULL, NULL, NULL, NULL, BishiInputInfo, BishiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };

@@ -649,7 +649,7 @@ struct BurnDriver BurnDrvGoindol = {
 	"Goindol (World)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
-	NULL, goindolRomInfo, goindolRomName, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
+	NULL, goindolRomInfo, goindolRomName, NULL, NULL, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
 	GoindolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -685,7 +685,7 @@ struct BurnDriver BurnDrvGoindolu = {
 	"Goindol (US)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
-	NULL, goindoluRomInfo, goindoluRomName, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
+	NULL, goindoluRomInfo, goindoluRomName, NULL, NULL, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
 	GoindolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -721,7 +721,7 @@ struct BurnDriver BurnDrvGoindolk = {
 	"Goindol (Korea)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
-	NULL, goindolkRomInfo, goindolkRomName, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
+	NULL, goindolkRomInfo, goindolkRomName, NULL, NULL, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
 	GoindolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -757,7 +757,7 @@ struct BurnDriver BurnDrvHomo = {
 	"Homo\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
-	NULL, homoRomInfo, homoRomName, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
+	NULL, homoRomInfo, homoRomName, NULL, NULL, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

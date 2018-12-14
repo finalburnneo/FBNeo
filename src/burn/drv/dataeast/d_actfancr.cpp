@@ -909,7 +909,7 @@ struct BurnDriver BurnDrvActfancr = {
 	"Act-Fancer Cybernetick Hyper Weapon (World revision 3)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, actfancrRomInfo, actfancrRomName, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
+	NULL, actfancrRomInfo, actfancrRomName, NULL, NULL, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
 	ActfanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3
 };
@@ -952,7 +952,7 @@ struct BurnDriver BurnDrvActfancr1 = {
 	"Act-Fancer Cybernetick Hyper Weapon (World revision 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, actfancr1RomInfo, actfancr1RomName, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
+	NULL, actfancr1RomInfo, actfancr1RomName, NULL, NULL, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
 	ActfanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3
 };
@@ -995,7 +995,7 @@ struct BurnDriver BurnDrvActfancr2 = {
 	"Act-Fancer Cybernetick Hyper Weapon (World revision 2)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, actfancr2RomInfo, actfancr2RomName, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
+	NULL, actfancr2RomInfo, actfancr2RomName, NULL, NULL, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
 	ActfanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3
 };
@@ -1038,7 +1038,7 @@ struct BurnDriver BurnDrvActfancrj = {
 	"Act-Fancer Cybernetick Hyper Weapon (Japan revision 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, actfancrjRomInfo, actfancrjRomName, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
+	NULL, actfancrjRomInfo, actfancrjRomName, NULL, NULL, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
 	ActfanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3
 };
@@ -1081,7 +1081,7 @@ struct BurnDriver BurnDrvTriothep = {
 	"Trio The Punch - Never Forget Me... (World)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, triothepRomInfo, triothepRomName, NULL, NULL, TriothepInputInfo, TriothepDIPInfo,
+	NULL, triothepRomInfo, triothepRomName, NULL, NULL, NULL, NULL, TriothepInputInfo, TriothepDIPInfo,
 	TriothepInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3
 };
@@ -1124,7 +1124,7 @@ struct BurnDriver BurnDrvTriothepj = {
 	"Trio The Punch - Never Forget Me... (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, triothepjRomInfo, triothepjRomName, NULL, NULL, TriothepInputInfo, TriothepDIPInfo,
+	NULL, triothepjRomInfo, triothepjRomName, NULL, NULL, NULL, NULL, TriothepInputInfo, TriothepDIPInfo,
 	TriothepInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3
 };

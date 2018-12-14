@@ -1491,7 +1491,7 @@ struct BurnDriver BurnDrvarkanoid = {
 	"Arkanoid (World, oldest rev)\0", NULL, "Taito Corporation Japan", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkanoidRomInfo, arkanoidRomName, NULL, NULL, DrvInputInfo, arkanoidDIPInfo,
+	NULL, arkanoidRomInfo, arkanoidRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1522,7 +1522,7 @@ struct BurnDriver BurnDrvarkanoidu = {
 	"Arkanoid (US)\0", NULL, "Taito America Corporation (Romstar license)", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkanoiduRomInfo, arkanoiduRomName, NULL, NULL, DrvInputInfo, arkanoidDIPInfo,
+	NULL, arkanoiduRomInfo, arkanoiduRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1556,7 +1556,7 @@ struct BurnDriver BurnDrvarkanoiduo = {
 	"Arkanoid (US, oldest rev)\0", NULL, "Taito America Corporation (Romstar license)", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkanoiduoRomInfo, arkanoiduoRomName, NULL, NULL, DrvInputInfo, arkanoidDIPInfo,
+	NULL, arkanoiduoRomInfo, arkanoiduoRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1587,7 +1587,7 @@ struct BurnDriver BurnDrvarkatour = {
 	"Tournament Arkanoid (US)\0", NULL, "Taito America Corporation (Romstar license)", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkatourRomInfo, arkatourRomName, NULL, NULL, DrvInputInfo, arkanoidDIPInfo,
+	NULL, arkatourRomInfo, arkatourRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1618,7 +1618,7 @@ struct BurnDriver BurnDrvarkanoidj = {
 	"Arkanoid (Japan)\0", NULL, "Taito Corporation", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkanoidjRomInfo, arkanoidjRomName, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
+	NULL, arkanoidjRomInfo, arkanoidjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1650,7 +1650,7 @@ struct BurnDriver BurnDrvarkanoidja = {
 	"Arkanoid (Japan, older rev)\0", NULL, "Taito Corporation", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkanoidjaRomInfo, arkanoidjaRomName, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
+	NULL, arkanoidjaRomInfo, arkanoidjaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1681,7 +1681,7 @@ struct BurnDriver BurnDrvarkanoidjb = {
 	"Arkanoid (Japan, oldest rev)\0", NULL, "Taito Corporation", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkanoidjbRomInfo, arkanoidjbRomName, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
+	NULL, arkanoidjbRomInfo, arkanoidjbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1714,7 +1714,7 @@ struct BurnDriver BurnDrvarkanoidjbl = {
 	"Arkanoid (bootleg with MCU set 1)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkanoidjblRomInfo, arkanoidjblRomName, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
+	NULL, arkanoidjblRomInfo, arkanoidjblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1745,7 +1745,7 @@ struct BurnDriver BurnDrvarkanoidjbl2 = {
 	"Arkanoid (bootleg with MCU set 2)\0", NULL, "bootleg (Beta)", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkanoidjbl2RomInfo, arkanoidjbl2RomName, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
+	NULL, arkanoidjbl2RomInfo, arkanoidjbl2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1779,7 +1779,7 @@ struct BurnDriver BurnDrvarkanoidjbla = {
 	"Arkanoid (bootleg with MCU, alt)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkanoidjblaRomInfo, arkanoidjblaRomName, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
+	NULL, arkanoidjblaRomInfo, arkanoidjblaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1810,7 +1810,7 @@ struct BurnDriver BurnDrvark1ball = {
 	"Arkanoid (bootleg with MCU, harder)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, ark1ballRomInfo, ark1ballRomName, NULL, NULL, DrvInputInfo, ark1ballDIPInfo,
+	NULL, ark1ballRomInfo, ark1ballRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ark1ballDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1842,7 +1842,7 @@ struct BurnDriver BurnDrvark1balla = {
 	"Arkanoid (bootleg with MCU, harder, alt)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, ark1ballaRomInfo, ark1ballaRomName, NULL, NULL, DrvInputInfo, ark1ballDIPInfo,
+	NULL, ark1ballaRomInfo, ark1ballaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ark1ballDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1878,7 +1878,7 @@ struct BurnDriver BurnDrvarkangc = {
 	"Arkanoid (Game Corporation bootleg, set 1)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkangcRomInfo, arkangcRomName, NULL, NULL, DrvInputInfo, arkangcDIPInfo,
+	NULL, arkangcRomInfo, arkangcRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkangcDIPInfo,
 	arkangcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1914,7 +1914,7 @@ struct BurnDriver BurnDrvarkangc2 = {
 	"Arkanoid (Game Corporation bootleg, set 2)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkangc2RomInfo, arkangc2RomName, NULL, NULL, DrvInputInfo, arkangc2DIPInfo,
+	NULL, arkangc2RomInfo, arkangc2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkangc2DIPInfo,
 	arkangc2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1950,7 +1950,7 @@ struct BurnDriver BurnDrvarkblock = {
 	"Block (Game Corporation bootleg, set 1)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkblockRomInfo, arkblockRomName, NULL, NULL, DrvInputInfo, arkangcDIPInfo,
+	NULL, arkblockRomInfo, arkblockRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkangcDIPInfo,
 	arkblockInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1986,7 +1986,7 @@ struct BurnDriver BurnDrvarkbloc2 = {
 	"Block (Game Corporation bootleg, set 2)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkbloc2RomInfo, arkbloc2RomName, NULL, NULL, DrvInputInfo, arkangcDIPInfo,
+	NULL, arkbloc2RomInfo, arkbloc2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkangcDIPInfo,
 	arkbloc2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -2027,7 +2027,7 @@ struct BurnDriver BurnDrvarkgcbl = {
 	"Arkanoid (bootleg on Block hardware)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkgcblRomInfo, arkgcblRomName, NULL, NULL, DrvInputInfo, arkgcblDIPInfo,
+	NULL, arkgcblRomInfo, arkgcblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkgcblDIPInfo,
 	arkgcblInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -2063,7 +2063,7 @@ struct BurnDriver BurnDrvpaddle2 = {
 	"Paddle 2 (bootleg on Block hardware)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, paddle2RomInfo, paddle2RomName, NULL, NULL, DrvInputInfo, paddle2DIPInfo,
+	NULL, paddle2RomInfo, paddle2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, paddle2DIPInfo,
 	paddle2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -2092,7 +2092,7 @@ struct BurnDriver BurnDrvarkatayt = {
 	"Arkanoid (Tayto bootleg)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkataytRomInfo, arkataytRomName, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
+	NULL, arkataytRomInfo, arkataytRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -2121,7 +2121,7 @@ struct BurnDriver BurnDrvarktayt2 = {
 	"Arkanoid (Tayto bootleg, harder)\0", NULL, "bootleg", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arktayt2RomInfo, arktayt2RomName, NULL, NULL, DrvInputInfo, arktayt2DIPInfo,
+	NULL, arktayt2RomInfo, arktayt2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, arktayt2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -2167,7 +2167,7 @@ struct BurnDriver BurnDrvtetrsark = {
 	"Tetris (D.R. Korea)\0", "Wrong colors", "D.R. Korea", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
-	NULL, tetrsarkRomInfo, tetrsarkRomName, NULL, NULL, tetrsarkInputInfo, tetrsarkDIPInfo,
+	NULL, tetrsarkRomInfo, tetrsarkRomName, NULL, NULL, NULL, NULL, tetrsarkInputInfo, tetrsarkDIPInfo,
 	tetrsarkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -2203,7 +2203,7 @@ struct BurnDriver BurnDrvHexa = {
 	"Hexa\0", NULL, "D. R. Korea", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
-	NULL, hexaRomInfo, hexaRomName, NULL, NULL, HexaInputInfo, HexaDIPInfo,
+	NULL, hexaRomInfo, hexaRomName, NULL, NULL, NULL, NULL, HexaInputInfo, HexaDIPInfo,
 	HexaInit, DrvExit, DrvFrame, DrvDraw, HexaScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

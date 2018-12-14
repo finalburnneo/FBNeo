@@ -926,7 +926,7 @@ struct BurnDriver BurnDrvRetofinv = {
 	"Return of the Invaders\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, retofinvRomInfo, retofinvRomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	NULL, retofinvRomInfo, retofinvRomName, NULL, NULL, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
 };
@@ -969,7 +969,7 @@ struct BurnDriver BurnDrvRetofinvb = {
 	"Return of the Invaders (bootleg w/MCU)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, retofinvbRomInfo, retofinvbRomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	NULL, retofinvbRomInfo, retofinvbRomName, NULL, NULL, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
 };
@@ -1010,7 +1010,7 @@ struct BurnDriver BurnDrvRetofinvb1 = {
 	"Return of the Invaders (bootleg no MCU set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, retofinvb1RomInfo, retofinvb1RomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	NULL, retofinvb1RomInfo, retofinvb1RomName, NULL, NULL, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
 };
@@ -1051,7 +1051,7 @@ struct BurnDriver BurnDrvRetofinvb2 = {
 	"Return of the Invaders (bootleg no MCU set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, retofinvb2RomInfo, retofinvb2RomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	NULL, retofinvb2RomInfo, retofinvb2RomName, NULL, NULL, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
 };
@@ -1095,7 +1095,7 @@ struct BurnDriver BurnDrvRetofinvb3 = {
 	"Return of the Invaders (bootleg no MCU set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, retofinvb3RomInfo, retofinvb3RomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	NULL, retofinvb3RomInfo, retofinvb3RomName, NULL, NULL, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
 };

@@ -589,7 +589,7 @@ struct BurnDriver BurnDrvEfdt = {
 	"El Fin Del Tiempo\0", NULL, "Niemer", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, efdtRomInfo, efdtRomName, NULL, NULL, EfdtInputInfo, EfdtDIPInfo,
+	NULL, efdtRomInfo, efdtRomName, NULL, NULL, NULL, NULL, EfdtInputInfo, EfdtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

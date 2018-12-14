@@ -1091,7 +1091,7 @@ struct BurnDriver BurnDrvMwarr = {
 	"Mighty Warriors\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
-	NULL, mwarrRomInfo, mwarrRomName, NULL, NULL, DrvInputInfo, MwarrDIPInfo,
+	NULL, mwarrRomInfo, mwarrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, MwarrDIPInfo,
 	MwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	366, 240, 4, 3
 };
@@ -1126,7 +1126,7 @@ struct BurnDriver BurnDrvStlforce = {
 	"Steel Force\0", NULL, "Electronic Devices Italy / Ecogames S.L. Spain", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
-	NULL, stlforceRomInfo, stlforceRomName, NULL, NULL, StlforceInputInfo, NULL,
+	NULL, stlforceRomInfo, stlforceRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,
 	StlforceInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	368, 240, 4, 3
 };
@@ -1162,7 +1162,7 @@ struct BurnDriver BurnDrvTwinbrat = {
 	"Twin Brats (set 1)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, twinbratRomInfo, twinbratRomName, NULL, NULL, StlforceInputInfo, NULL,
+	NULL, twinbratRomInfo, twinbratRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	334, 240, 4, 3
 };
@@ -1198,7 +1198,7 @@ struct BurnDriver BurnDrvTwinbrata = {
 	"Twin Brats (set 2)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, twinbrataRomInfo, twinbrataRomName, NULL, NULL, StlforceInputInfo, NULL,
+	NULL, twinbrataRomInfo, twinbrataRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	334, 240, 4, 3
 };
@@ -1233,7 +1233,7 @@ struct BurnDriver BurnDrvTwinbratb = {
 	"Twin Brats (set 3)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, twinbratbRomInfo, twinbratbRomName, NULL, NULL, StlforceInputInfo, NULL,
+	NULL, twinbratbRomInfo, twinbratbRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	334, 240, 4, 3
 };

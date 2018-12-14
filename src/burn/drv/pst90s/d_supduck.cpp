@@ -654,7 +654,7 @@ struct BurnDriver BurnDrvSupduck = {
 	"Super Duck\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, supduckRomInfo, supduckRomName, NULL, NULL, SupduckInputInfo, SupduckDIPInfo,
+	NULL, supduckRomInfo, supduckRomName, NULL, NULL, NULL, NULL, SupduckInputInfo, SupduckDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

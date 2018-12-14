@@ -1410,7 +1410,7 @@ struct BurnDriver BurnDrvBbusters = {
 	"Beast Busters (World)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bbustersRomInfo, bbustersRomName, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
+	NULL, bbustersRomInfo, bbustersRomName, NULL, NULL, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
 	256, 224, 4, 3
 };
@@ -1461,7 +1461,7 @@ struct BurnDriver BurnDrvBbustersu = {
 	"Beast Busters (US, Version 3)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bbustersuRomInfo, bbustersuRomName, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
+	NULL, bbustersuRomInfo, bbustersuRomName, NULL, NULL, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
 	256, 224, 4, 3
 };
@@ -1512,7 +1512,7 @@ struct BurnDriver BurnDrvBbustersua = {
 	"Beast Busters (US, Version 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bbustersuaRomInfo, bbustersuaRomName, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
+	NULL, bbustersuaRomInfo, bbustersuaRomName, NULL, NULL, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
 	256, 224, 4, 3
 };
@@ -1563,7 +1563,7 @@ struct BurnDriver BurnDrvBbustersj = {
 	"Beast Busters (Japan, Version 2, 3 Players)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bbustersjRomInfo, bbustersjRomName, NULL, NULL, Bbusters2pInputInfo, Bbusters2pDIPInfo,
+	NULL, bbustersjRomInfo, bbustersjRomName, NULL, NULL, NULL, NULL, Bbusters2pInputInfo, Bbusters2pDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
 	256, 224, 4, 3
 };
@@ -1614,7 +1614,7 @@ struct BurnDriver BurnDrvBbustersja = {
 	"Beast Busters (Japan, Version 2, 2 Players)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bbustersjaRomInfo, bbustersjaRomName, NULL, NULL, Bbusters2pInputInfo, Bbusters2pDIPInfo,
+	NULL, bbustersjaRomInfo, bbustersjaRomName, NULL, NULL, NULL, NULL, Bbusters2pInputInfo, Bbusters2pDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
 	256, 224, 4, 3
 };
@@ -1667,7 +1667,7 @@ struct BurnDriver BurnDrvMechatt = {
 	"Mechanized Attack (World)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, mechattRomInfo, mechattRomName, NULL, NULL, MechattInputInfo, MechattDIPInfo,
+	NULL, mechattRomInfo, mechattRomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattDIPInfo,
 	MechattInit, DrvExit, DrvFrame, MechattDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
@@ -1725,7 +1725,7 @@ struct BurnDriver BurnDrvMechattj = {
 	"Mechanized Attack (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, mechattjRomInfo, mechattjRomName, NULL, NULL, MechattInputInfo, MechattDIPInfo,
+	NULL, mechattjRomInfo, mechattjRomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattDIPInfo,
 	MechattjInit, DrvExit, DrvFrame, MechattDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
@@ -1765,7 +1765,7 @@ struct BurnDriver BurnDrvMechattu = {
 	"Mechanized Attack (US)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, mechattuRomInfo, mechattuRomName, NULL, NULL, MechattInputInfo, MechattuDIPInfo,
+	NULL, mechattuRomInfo, mechattuRomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattuDIPInfo,
 	MechattInit, DrvExit, DrvFrame, MechattDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
@@ -1823,7 +1823,7 @@ struct BurnDriver BurnDrvMechattu1 = {
 	"Mechanized Attack (US, Version 1, Single Player)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, mechattu1RomInfo, mechattu1RomName, NULL, NULL, MechattInputInfo, MechattuDIPInfo,
+	NULL, mechattu1RomInfo, mechattu1RomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattuDIPInfo,
 	MechattjInit, DrvExit, DrvFrame, MechattDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

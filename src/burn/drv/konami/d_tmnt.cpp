@@ -6464,7 +6464,7 @@ struct BurnDriver BurnDrvTmnt = {
 	"Teenage Mutant Ninja Turtles (World 4 Players, version X)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, TmntRomInfo, TmntRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	NULL, TmntRomInfo, TmntRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6474,7 +6474,7 @@ struct BurnDriver BurnDrvTmntu = {
 	"Teenage Mutant Ninja Turtles (US 4 Players, version R)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, TmntuRomInfo, TmntuRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	NULL, TmntuRomInfo, TmntuRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6484,7 +6484,7 @@ struct BurnDriver BurnDrvTmntua = {
 	"Teenage Mutant Ninja Turtles (US 4 Players, version J)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, TmntuaRomInfo, TmntuaRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	NULL, TmntuaRomInfo, TmntuaRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6494,7 +6494,7 @@ struct BurnDriver BurnDrvTmntub = {
 	"Teenage Mutant Ninja Turtles (US 4 Players, version H)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, TmntubRomInfo, TmntubRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	NULL, TmntubRomInfo, TmntubRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6504,7 +6504,7 @@ struct BurnDriver BurnDrvTmht = {
 	"Teenage Mutant Hero Turtles (UK 4 Players, version F)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, TmhtRomInfo, TmhtRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	NULL, TmhtRomInfo, TmhtRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6514,7 +6514,7 @@ struct BurnDriver BurnDrvTmhta = {
 	"Teenage Mutant Hero Turtles (UK 4 Players, version S)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, TmhtaRomInfo, TmhtaRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	NULL, TmhtaRomInfo, TmhtaRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6524,7 +6524,7 @@ struct BurnDriver BurnDrvTmhtb = {
 	"Teenage Mutant Hero Turtles (UK 4 Players, version ?)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, TmhtbRomInfo, TmhtbRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	NULL, TmhtbRomInfo, TmhtbRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6534,7 +6534,7 @@ struct BurnDriver BurnDrvTmntj = {
 	"Teenage Mutant Ninja Turtles (Japan 4 Players, version 2)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, TmntjRomInfo, TmntjRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	NULL, TmntjRomInfo, TmntjRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6544,7 +6544,7 @@ struct BurnDriver BurnDrvTmnta = {
 	"Teenage Mutant Ninja Turtles (Asia 4 Players, version ?)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, TmntaRomInfo, TmntaRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	NULL, TmntaRomInfo, TmntaRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6554,7 +6554,7 @@ struct BurnDriver BurnDrvTmht2p = {
 	"Teenage Mutant Hero Turtles (UK 2 Players, version U)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, Tmht2pRomInfo, Tmht2pRomName, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
+	NULL, Tmht2pRomInfo, Tmht2pRomName, NULL, NULL, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6564,7 +6564,7 @@ struct BurnDriver BurnDrvTmht2pa = {
 	"Teenage Mutant Hero Turtles (UK 2 Players, version ?)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, Tmht2paRomInfo, Tmht2paRomName, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
+	NULL, Tmht2paRomInfo, Tmht2paRomName, NULL, NULL, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6574,7 +6574,7 @@ struct BurnDriver BurnDrvTmht2pj = {
 	"Teenage Mutant Ninja Turtles (Japan 2 Players, version 1)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, Tmnt2pjRomInfo, Tmnt2pjRomName, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
+	NULL, Tmnt2pjRomInfo, Tmnt2pjRomName, NULL, NULL, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6584,7 +6584,7 @@ struct BurnDriver BurnDrvTmht2po = {
 	"Teenage Mutant Ninja Turtles (Oceania 2 Players, version ?)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, Tmnt2poRomInfo, Tmnt2poRomName, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
+	NULL, Tmnt2poRomInfo, Tmnt2poRomName, NULL, NULL, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6594,7 +6594,7 @@ struct BurnDriver BurnDrvMia = {
 	"M.I.A. - Missing in Action (version T)\0", NULL, "Konami", "GX808",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, MiaRomInfo, MiaRomName, NULL, NULL, MiaInputInfo, MiaDIPInfo,
+	NULL, MiaRomInfo, MiaRomName, NULL, NULL, NULL, NULL, MiaInputInfo, MiaDIPInfo,
 	MiaInit, MiaExit, MiaFrame, TmntDraw, MiaScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6604,7 +6604,7 @@ struct BurnDriver BurnDrvMia2 = {
 	"M.I.A. - Missing in Action (version S)\0", NULL, "Konami", "GX808",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, Mia2RomInfo, Mia2RomName, NULL, NULL, MiaInputInfo, MiaDIPInfo,
+	NULL, Mia2RomInfo, Mia2RomName, NULL, NULL, NULL, NULL, MiaInputInfo, MiaDIPInfo,
 	MiaInit, MiaExit, MiaFrame, TmntDraw, MiaScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6614,7 +6614,7 @@ struct BurnDriver BurnDrvCuebrick = {
 	"Cue Brick (World, version D)\0", NULL, "Konami", "GX903",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_PUZZLE, 0,
-	NULL, CuebrickRomInfo, CuebrickRomName, NULL, NULL, MiaInputInfo, MiaDIPInfo,
+	NULL, CuebrickRomInfo, CuebrickRomName, NULL, NULL, NULL, NULL, MiaInputInfo, MiaDIPInfo,
 	CuebrickInit, CommonExit, CuebrickFrame, TmntDraw, CuebrickScan,
 	NULL, 0x400, 304, 224, 4, 3
 };
@@ -6624,7 +6624,7 @@ struct BurnDriver BurnDrvBlswhstl = {
 	"Bells & Whistles (World, version L)\0", NULL, "Konami", "GX060",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
-	NULL, BlswhstlRomInfo, BlswhstlRomName, NULL, NULL, BlswhstlInputInfo, NULL,
+	NULL, BlswhstlRomInfo, BlswhstlRomName, NULL, NULL, NULL, NULL, BlswhstlInputInfo, NULL,
 	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, BlswhstlScan,
 	NULL, 0x810, 224, 280, 3, 4
 };
@@ -6634,7 +6634,7 @@ struct BurnDriver BurnDrvBlswhstla = {
 	"Bells & Whistles (Asia, version M)\0", NULL, "Konami", "GX060",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
-	NULL, BlswhstlaRomInfo, BlswhstlaRomName, NULL, NULL, BlswhstlInputInfo, NULL,
+	NULL, BlswhstlaRomInfo, BlswhstlaRomName, NULL, NULL, NULL, NULL, BlswhstlInputInfo, NULL,
 	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, BlswhstlScan,
 	NULL, 0x810, 224, 280, 3, 4
 };
@@ -6644,7 +6644,7 @@ struct BurnDriver BurnDrvDetatwin = {
 	"Detana!! Twin Bee (Japan ver. J)\0", NULL, "Konami", "GX060",
 	L"\u51FA\u305F\u306A!! Twin Bee \u30C4\u30A4\u30F3\u30D3\u30FC (Japan, version J)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
-	NULL, DetatwinRomInfo, DetatwinRomName, NULL, NULL, BlswhstlInputInfo, NULL,
+	NULL, DetatwinRomInfo, DetatwinRomName, NULL, NULL, NULL, NULL, BlswhstlInputInfo, NULL,
 	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, BlswhstlScan,
 	NULL, 0x810, 224, 280, 3, 4
 };
@@ -6654,7 +6654,7 @@ struct BurnDriver BurnDrvSsriders = {
 	"Sunset Riders (4 Players ver. EAC)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersRomInfo, SsridersRomName, NULL, NULL, Ssriders4pInputInfo, NULL,
+	NULL, SsridersRomInfo, SsridersRomName, NULL, NULL, NULL, NULL, Ssriders4pInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6664,7 +6664,7 @@ struct BurnDriver BurnDrvSsridersebd = {
 	"Sunset Riders (2 Players ver. EBD)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersebdRomInfo, SsridersebdRomName, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, SsridersebdRomInfo, SsridersebdRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6674,7 +6674,7 @@ struct BurnDriver BurnDrvSsridersebc = {
 	"Sunset Riders (2 Players ver. EBC)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersebcRomInfo, SsridersebcRomName, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, SsridersebcRomInfo, SsridersebcRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6684,7 +6684,7 @@ struct BurnDriver BurnDrvSsridersuda = {
 	"Sunset Riders (4 Players ver. UDA)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersudaRomInfo, SsridersudaRomName, NULL, NULL, Ssriders4psInputInfo, NULL,
+	NULL, SsridersudaRomInfo, SsridersudaRomName, NULL, NULL, NULL, NULL, Ssriders4psInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6694,7 +6694,7 @@ struct BurnDriver BurnDrvSsriderseaa = {
 	"Sunset Riders (4 Players ver. EAA)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsriderseaaRomInfo, SsriderseaaRomName, NULL, NULL, Ssriders4psInputInfo, NULL,
+	NULL, SsriderseaaRomInfo, SsriderseaaRomName, NULL, NULL, NULL, NULL, Ssriders4psInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6704,7 +6704,7 @@ struct BurnDriver BurnDrvSsridersuab = {
 	"Sunset Riders (4 Players ver. UAB)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersuabRomInfo, SsridersuabRomName, NULL, NULL, Ssriders4pInputInfo, NULL,
+	NULL, SsridersuabRomInfo, SsridersuabRomName, NULL, NULL, NULL, NULL, Ssriders4pInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6714,7 +6714,7 @@ struct BurnDriver BurnDrvSsridersuac = {
 	"Sunset Riders (4 Players ver. UAC)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersuacRomInfo, SsridersuacRomName, NULL, NULL, Ssriders4pInputInfo, NULL,
+	NULL, SsridersuacRomInfo, SsridersuacRomName, NULL, NULL, NULL, NULL, Ssriders4pInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6724,7 +6724,7 @@ struct BurnDriver BurnDrvSsridersubc = {
 	"Sunset Riders (2 Players ver. UBC)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersubcRomInfo, SsridersubcRomName, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, SsridersubcRomInfo, SsridersubcRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6734,7 +6734,7 @@ struct BurnDriver BurnDrvSsridersabd = {
 	"Sunset Riders (2 Players ver. ABD)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersabdRomInfo, SsridersabdRomName, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, SsridersabdRomInfo, SsridersabdRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6744,7 +6744,7 @@ struct BurnDriver BurnDrvSsridersadd = {
 	"Sunset Riders (4 Players ver. ADD)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersaddRomInfo, SsridersaddRomName, NULL, NULL, Ssriders4psInputInfo, NULL,
+	NULL, SsridersaddRomInfo, SsridersaddRomName, NULL, NULL, NULL, NULL, Ssriders4psInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6754,7 +6754,7 @@ struct BurnDriver BurnDrvSsridersjac = {
 	"Sunset Riders (4 Players ver. JAC)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersjacRomInfo, SsridersjacRomName, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, SsridersjacRomInfo, SsridersjacRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6764,7 +6764,7 @@ struct BurnDriver BurnDrvSsridersjad = {
 	"Sunset Riders (4 Players ver. JAD)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersjadRomInfo, SsridersjadRomName, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, SsridersjadRomInfo, SsridersjadRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6774,7 +6774,7 @@ struct BurnDriver BurnDrvSsridersjbd = {
 	"Sunset Riders (2 Players ver. JBD)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersjbdRomInfo, SsridersjbdRomName, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, SsridersjbdRomInfo, SsridersjbdRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6789,7 +6789,7 @@ struct BurnDriverD BurnDrvSsridersb = {
 	"Sunset Riders (bootleg 4 Players ver. ADD)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, ssridersbRomInfo, ssridersbRomName, NULL, NULL, Ssriders4psInputInfo, NULL,
+	NULL, ssridersbRomInfo, ssridersbRomName, NULL, NULL, NULL, NULL, Ssriders4psInputInfo, NULL,
 	SsridersbInit, CommonExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6799,7 +6799,7 @@ struct BurnDriver BurnDrvThndrx2 = {
 	"Thunder Cross II (World)\0", NULL, "Konami", "GX073",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
-	NULL, thndrx2RomInfo, thndrx2RomName, NULL, NULL, Thndrx2InputInfo, NULL,
+	NULL, thndrx2RomInfo, thndrx2RomName, NULL, NULL, NULL, NULL, Thndrx2InputInfo, NULL,
 	Thndrx2Init, BlswhstlExit, Thndrx2Frame, Thndrx2Draw, Thndrx2aScan,
 	NULL, 0x800, 288, 224, 4, 3
 };
@@ -6809,7 +6809,7 @@ struct BurnDriver BurnDrvThndrx2a = {
 	"Thunder Cross II (Asia)\0", NULL, "Konami", "GX073",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
-	NULL, thndrx2aRomInfo, thndrx2aRomName, NULL, NULL, Thndrx2InputInfo, NULL,
+	NULL, thndrx2aRomInfo, thndrx2aRomName, NULL, NULL, NULL, NULL, Thndrx2InputInfo, NULL,
 	Thndrx2Init, BlswhstlExit, Thndrx2Frame, Thndrx2Draw, Thndrx2aScan,
 	NULL, 0x800, 288, 224, 4, 3
 };
@@ -6819,7 +6819,7 @@ struct BurnDriver BurnDrvThndrx2j = {
 	"Thunder Cross II (Japan)\0", NULL, "Konami", "GX073",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
-	NULL, thndrx2jRomInfo, thndrx2jRomName, NULL, NULL, Thndrx2InputInfo, NULL,
+	NULL, thndrx2jRomInfo, thndrx2jRomName, NULL, NULL, NULL, NULL, Thndrx2InputInfo, NULL,
 	Thndrx2Init, BlswhstlExit, Thndrx2Frame, Thndrx2Draw, Thndrx2aScan,
 	NULL, 0x800, 288, 224, 4, 3
 };
@@ -6829,7 +6829,7 @@ struct BurnDriver BurnDrvLgtnfght = {
 	"Lightning Fighters (World)\0", NULL, "Konami", "GX939",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
-	NULL, lgtnfghtRomInfo, lgtnfghtRomName, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
+	NULL, lgtnfghtRomInfo, lgtnfghtRomName, NULL, NULL, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
 	LgtnfghtInit, BlswhstlExit, LgtnfghtFrame, BlswhstlDraw, Thndrx2aScan, 
 	NULL, 0x800, 224, 288, 3, 4
 };
@@ -6839,7 +6839,7 @@ struct BurnDriver BurnDrvLgtnfghtu = {
 	"Lightning Fighters (US)\0", NULL, "Konami", "GX939",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
-	NULL, lgtnfghtuRomInfo, lgtnfghtuRomName, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
+	NULL, lgtnfghtuRomInfo, lgtnfghtuRomName, NULL, NULL, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
 	LgtnfghtInit, BlswhstlExit, LgtnfghtFrame, BlswhstlDraw, Thndrx2aScan, 
 	NULL, 0x800, 224, 288, 3, 4
 };
@@ -6849,7 +6849,7 @@ struct BurnDriver BurnDrvLgtnfghta = {
 	"Lightning Fighters (Asia)\0", NULL, "Konami", "GX939",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
-	NULL, lgtnfghtaRomInfo, lgtnfghtaRomName, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
+	NULL, lgtnfghtaRomInfo, lgtnfghtaRomName, NULL, NULL, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
 	LgtnfghtInit, BlswhstlExit, LgtnfghtFrame, BlswhstlDraw, Thndrx2aScan, 
 	NULL, 0x800, 224, 288, 3, 4
 };
@@ -6859,7 +6859,7 @@ struct BurnDriver BurnDrvTrigon = {
 	"Trigon (Japan)\0", NULL, "Konami", "GX939",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
-	NULL, trigonRomInfo, trigonRomName, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
+	NULL, trigonRomInfo, trigonRomName, NULL, NULL, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
 	LgtnfghtInit, BlswhstlExit, LgtnfghtFrame, BlswhstlDraw, Thndrx2aScan, 
 	NULL, 0x800, 224, 288, 3, 4
 };
@@ -6869,7 +6869,7 @@ struct BurnDriver BurnDrvTmnt2 = {
 	"Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver. UAA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, tmnt2RomInfo, tmnt2RomName, NULL, NULL, Ssriders4pInputInfo, NULL,
+	NULL, tmnt2RomInfo, tmnt2RomName, NULL, NULL, NULL, NULL, Ssriders4pInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
 };
@@ -6879,7 +6879,7 @@ struct BurnDriver BurnDrvTmnt22pu = {
 	"Teenage Mutant Ninja Turtles - Turtles in Time (2 Players ver. UDA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, tmnt22puRomInfo, tmnt22puRomName, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, tmnt22puRomInfo, tmnt22puRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
 };
@@ -6889,7 +6889,7 @@ struct BurnDriver BurnDrvTmht22pe = {
 	"Teenage Mutant Hero Turtles - Turtles in Time (2 Players ver. EBA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, tmht22peRomInfo, tmht22peRomName, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, tmht22peRomInfo, tmht22peRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
 };
@@ -6899,7 +6899,7 @@ struct BurnDriver BurnDrvTmht24pe = {
 	"Teenage Mutant Hero Turtles - Turtles in Time (4 Players ver. EAA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, tmht24peRomInfo, tmht24peRomName, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, tmht24peRomInfo, tmht24peRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
 };
@@ -6909,7 +6909,7 @@ struct BurnDriver BurnDrvTmnt2a = {
 	"Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver. ADA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, tmnt2aRomInfo, tmnt2aRomName, NULL, NULL, Ssriders4psInputInfo, NULL,
+	NULL, tmnt2aRomInfo, tmnt2aRomName, NULL, NULL, NULL, NULL, Ssriders4psInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
 };
@@ -6919,7 +6919,7 @@ struct BurnDriver BurnDrvQgakumon = {
 	"Quiz Gakumon no Susume (Japan ver. JA2 Type L)\0", NULL, "Konami", "GX248",
 	L"\u30AF\u30A4\u30BA \u5B66\u554F\u30CE\u30B9\u30B9\u30E1 Gakumon no Susume (Japan ver. JA2 Type L)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_QUIZ, 0,
-	NULL, qgakumonRomInfo, qgakumonRomName, NULL, NULL, QgakumonInputInfo, NULL,
+	NULL, qgakumonRomInfo, qgakumonRomName, NULL, NULL, NULL, NULL, QgakumonInputInfo, NULL,
 	QgakumonInit, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan, 
 	NULL, 0x800, 304, 224, 4, 3
 };
@@ -6929,7 +6929,7 @@ struct BurnDriver BurnDrvPunkshot = {
 	"Punk Shot (US 4 Players)\0", NULL, "Konami", "GX907",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
-	NULL, punkshotRomInfo, punkshotRomName, NULL, NULL, PunkshotInputInfo, PunkshotDIPInfo,
+	NULL, punkshotRomInfo, punkshotRomName, NULL, NULL, NULL, NULL, PunkshotInputInfo, PunkshotDIPInfo,
 	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
 	NULL, 0x800, 288, 224, 4, 3
 };
@@ -6939,7 +6939,7 @@ struct BurnDriver BurnDrvPunkshot2 = {
 	"Punk Shot (US 2 Players)\0", NULL, "Konami", "GX907",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
-	NULL, punkshot2RomInfo, punkshot2RomName, NULL, NULL, Punkshot2InputInfo, Punkshot2DIPInfo,
+	NULL, punkshot2RomInfo, punkshot2RomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, Punkshot2DIPInfo,
 	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
 	NULL, 0x800, 288, 224, 4, 3
 };
@@ -6949,7 +6949,7 @@ struct BurnDriver BurnDrvPunkshotj = {
 	"Punk Shot (Japan 2 Players)\0", NULL, "Konami", "GX907",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
-	NULL, punkshotjRomInfo, punkshotjRomName, NULL, NULL, Punkshot2InputInfo, PunkshotjDIPInfo,
+	NULL, punkshotjRomInfo, punkshotjRomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, PunkshotjDIPInfo,
 	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
 	NULL, 0x800, 288, 224, 4, 3
 };

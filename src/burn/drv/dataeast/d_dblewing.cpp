@@ -678,7 +678,7 @@ struct BurnDriver BurnDrvDblewing = {
 	"Double Wings\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, dblewingRomInfo, dblewingRomName, NULL, NULL, DblewingInputInfo, DblewingDIPInfo,
+	NULL, dblewingRomInfo, dblewingRomName, NULL, NULL, NULL, NULL, DblewingInputInfo, DblewingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 320, 3, 4
 };

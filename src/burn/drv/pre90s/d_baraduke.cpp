@@ -849,7 +849,7 @@ struct BurnDriver BurnDrvAliensec = {
 	"Alien Sector\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, aliensecRomInfo, aliensecRomName, NULL, NULL, BaradukeInputInfo, BaradukeDIPInfo,
+	NULL, aliensecRomInfo, aliensecRomName, NULL, NULL, NULL, NULL, BaradukeInputInfo, BaradukeDIPInfo,
 	AlienInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -888,7 +888,7 @@ struct BurnDriver BurnDrvBaraduke = {
 	"Baraduke\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, baradukeRomInfo, baradukeRomName, NULL, NULL, BaradukeInputInfo, BaradukeDIPInfo,
+	NULL, baradukeRomInfo, baradukeRomName, NULL, NULL, NULL, NULL, BaradukeInputInfo, BaradukeDIPInfo,
 	AlienInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -929,7 +929,7 @@ struct BurnDriver BurnDrvMetrocrs = {
 	"Metro-Cross (set 1)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, metrocrsRomInfo, metrocrsRomName, NULL, NULL, BaradukeInputInfo, MetrocrsDIPInfo,
+	NULL, metrocrsRomInfo, metrocrsRomName, NULL, NULL, NULL, NULL, BaradukeInputInfo, MetrocrsDIPInfo,
 	MetroInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -965,7 +965,7 @@ struct BurnDriver BurnDrvMetrocrsa = {
 	"Metro-Cross (set 2)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, metrocrsaRomInfo, metrocrsaRomName, NULL, NULL, BaradukeInputInfo, MetrocrsDIPInfo,
+	NULL, metrocrsaRomInfo, metrocrsaRomName, NULL, NULL, NULL, NULL, BaradukeInputInfo, MetrocrsDIPInfo,
 	MetroInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };

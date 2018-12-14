@@ -729,7 +729,7 @@ struct BurnDriver BurnDrvEspial = {
 	"Espial (Europe)\0", NULL, "Orca / Thunderbolt", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, espialRomInfo, espialRomName, NULL, NULL, EspialInputInfo, EspialDIPInfo,
+	NULL, espialRomInfo, espialRomName, NULL, NULL, NULL, NULL, EspialInputInfo, EspialDIPInfo,
 	EspialInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -764,7 +764,7 @@ struct BurnDriver BurnDrvEspialu = {
 	"Espial (US?)\0", NULL, "Orca / Thunderbolt", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, espialuRomInfo, espialuRomName, NULL, NULL, EspialInputInfo, EspialDIPInfo,
+	NULL, espialuRomInfo, espialuRomName, NULL, NULL, NULL, NULL, EspialInputInfo, EspialDIPInfo,
 	EspialInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -797,7 +797,7 @@ struct BurnDriver BurnDrvNetwars = {
 	"Net Wars\0", NULL, "Orca (Esco Trading Co license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, netwarsRomInfo, netwarsRomName, NULL, NULL, NetwarsInputInfo, NetwarsDIPInfo,
+	NULL, netwarsRomInfo, netwarsRomName, NULL, NULL, NULL, NULL, NetwarsInputInfo, NetwarsDIPInfo,
 	NetwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

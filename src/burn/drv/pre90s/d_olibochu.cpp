@@ -593,7 +593,7 @@ struct BurnDriver BurnDrvOlibochu = {
 	"Oli-Boo-Chu\0", NULL, "Irem / GDI", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
-	NULL, olibochuRomInfo, olibochuRomName, NULL, NULL, OlibochuInputInfo, OlibochuDIPInfo,
+	NULL, olibochuRomInfo, olibochuRomName, NULL, NULL, NULL, NULL, OlibochuInputInfo, OlibochuDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 256, 3, 4
 };

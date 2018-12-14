@@ -724,7 +724,7 @@ struct BurnDriver BurnDrvWrally = {
 	"World Rally (Version 1.0, Checksum 0E56)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, wrallyRomInfo, wrallyRomName, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
+	NULL, wrallyRomInfo, wrallyRomName, NULL, NULL, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
 	WrallyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3
 };
@@ -761,7 +761,7 @@ struct BurnDriver BurnDrvWrallya = {
 	"World Rally (Version 1.0, Checksum 3873)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, wrallyaRomInfo, wrallyaRomName, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
+	NULL, wrallyaRomInfo, wrallyaRomName, NULL, NULL, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
 	WrallyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3
 };
@@ -800,7 +800,7 @@ struct BurnDriver BurnDrvWrallyb = {
 	"World Rally (Version 1.0, Checksum 8AA2)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, wrallybRomInfo, wrallybRomName, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
+	NULL, wrallybRomInfo, wrallybRomName, NULL, NULL, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
 	WrallybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3
 };
@@ -834,7 +834,7 @@ struct BurnDriver BurnDrvWrallyat = {
 	"World Rally (US, 930217)\0", NULL, "Gaelco (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, wrallyatRomInfo, wrallyatRomName, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
+	NULL, wrallyatRomInfo, wrallyatRomName, NULL, NULL, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
 	WrallybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3
 };

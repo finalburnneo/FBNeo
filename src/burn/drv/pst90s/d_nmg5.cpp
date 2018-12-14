@@ -1457,7 +1457,7 @@ struct BurnDriver BurnDrvNmg5 = {
 	"Multi 5 / New Multi Game 5 (set 1)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
-	NULL, nmg5RomInfo, nmg5RomName, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
+	NULL, nmg5RomInfo, nmg5RomName, NULL, NULL, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
 	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1497,7 +1497,7 @@ struct BurnDriver BurnDrvNmg5a = {
 	"Multi 5 / New Multi Game 5 (set 2)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
-	NULL, nmg5aRomInfo, nmg5aRomName, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
+	NULL, nmg5aRomInfo, nmg5aRomName, NULL, NULL, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
 	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1537,7 +1537,7 @@ struct BurnDriver BurnDrvNmg5e = {
 	"Multi 5 / New Multi Game 5 (set 3, earlier)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
-	NULL, nmg5eRomInfo, nmg5eRomName, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
+	NULL, nmg5eRomInfo, nmg5eRomName, NULL, NULL, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
 	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1577,7 +1577,7 @@ struct BurnDriver BurnDrvSearchey = {
 	"Search Eye (English / Korean / Japanese / Italian)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, searcheyRomInfo, searcheyRomName, NULL, NULL, SearcheyInputInfo, SearcheyDIPInfo,
+	NULL, searcheyRomInfo, searcheyRomName, NULL, NULL, NULL, NULL, SearcheyInputInfo, SearcheyDIPInfo,
 	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1617,7 +1617,7 @@ struct BurnDriver BurnDrvSearcheya = {
 	"Search Eye (English / Korean)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, searcheyaRomInfo, searcheyaRomName, NULL, NULL, SearcheyInputInfo, SearcheyaDIPInfo,
+	NULL, searcheyaRomInfo, searcheyaRomName, NULL, NULL, NULL, NULL, SearcheyInputInfo, SearcheyaDIPInfo,
 	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1662,7 +1662,7 @@ struct BurnDriver BurnDrvSearchp2 = {
 	"Search Eye Plus V2.0\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, searchp2RomInfo, searchp2RomName, NULL, NULL, SearcheyInputInfo, Searchp2DIPInfo,
+	NULL, searchp2RomInfo, searchp2RomName, NULL, NULL, NULL, NULL, SearcheyInputInfo, Searchp2DIPInfo,
 	Searchp2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1705,7 +1705,7 @@ struct BurnDriver BurnDrvPclubys = {
 	"Puzzle Club (Yun Sung, set 1)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
-	NULL, pclubysRomInfo, pclubysRomName, NULL, NULL, PclubysInputInfo, PclubysDIPInfo,
+	NULL, pclubysRomInfo, pclubysRomName, NULL, NULL, NULL, NULL, PclubysInputInfo, PclubysDIPInfo,
 	PclubysInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1741,7 +1741,7 @@ struct BurnDriver BurnDrvPclubysa = {
 	"Puzzle Club (Yun Sung, set 2)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
-	NULL, pclubysaRomInfo, pclubysaRomName, NULL, NULL, PclubysInputInfo, PclubysDIPInfo,
+	NULL, pclubysaRomInfo, pclubysaRomName, NULL, NULL, NULL, NULL, PclubysInputInfo, PclubysDIPInfo,
 	PclubysInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1788,7 +1788,7 @@ struct BurnDriver BurnDrvGarogun = {
 	"Garogun Seroyang (Korea)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, garogunRomInfo, garogunRomName, NULL, NULL, GarogunInputInfo, GarogunDIPInfo,
+	NULL, garogunRomInfo, garogunRomName, NULL, NULL, NULL, NULL, GarogunInputInfo, GarogunDIPInfo,
 	GarogunInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1845,7 +1845,7 @@ struct BurnDriver BurnDrvOrdi7 = {
 	"7 Ordi (Korea)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MISC_POST90S, GBF_CASINO, 0,
-	NULL, ordi7RomInfo, ordi7RomName, NULL, NULL, Ordi7InputInfo, Ordi7DIPInfo,
+	NULL, ordi7RomInfo, ordi7RomName, NULL, NULL, NULL, NULL, Ordi7InputInfo, Ordi7DIPInfo,
 	Ordi7Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1892,7 +1892,7 @@ struct BurnDriver BurnDrvWondstck = {
 	"Wonder Stick (set 1)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, wondstckRomInfo, wondstckRomName, NULL, NULL, SearcheyInputInfo, WondstckDIPInfo,
+	NULL, wondstckRomInfo, wondstckRomName, NULL, NULL, NULL, NULL, SearcheyInputInfo, WondstckDIPInfo,
 	WondstckInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1933,7 +1933,7 @@ struct BurnDriver BurnDrvWondstcka = {
 	"Wonder Stick (set 2, censored)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, wondstckaRomInfo, wondstckaRomName, NULL, NULL, SearcheyInputInfo, WondstckDIPInfo,
+	NULL, wondstckaRomInfo, wondstckaRomName, NULL, NULL, NULL, NULL, SearcheyInputInfo, WondstckDIPInfo,
 	WondstckInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };

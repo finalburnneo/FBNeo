@@ -869,7 +869,7 @@ struct BurnDriver BurnDrvXexex = {
 	"Xexex (ver EAA)\0", NULL, "Konami", "GX067",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, xexexRomInfo, xexexRomName, NULL, NULL, XexexInputInfo, XexexDIPInfo,
+	NULL, xexexRomInfo, xexexRomName, NULL, NULL, NULL, NULL, XexexInputInfo, XexexDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 256, 4, 3
 };
@@ -909,7 +909,7 @@ struct BurnDriver BurnDrvOrius = {
 	"Orius (ver UAA)\0", NULL, "Konami", "GX067",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, oriusRomInfo, oriusRomName, NULL, NULL, XexexInputInfo, XexexDIPInfo,
+	NULL, oriusRomInfo, oriusRomName, NULL, NULL, NULL, NULL, XexexInputInfo, XexexDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 256, 4, 3
 };
@@ -949,7 +949,7 @@ struct BurnDriver BurnDrvXexexa = {
 	"Xexex (ver AAA)\0", NULL, "Konami", "GX067",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, xexexaRomInfo, xexexaRomName, NULL, NULL, XexexInputInfo, XexexDIPInfo,
+	NULL, xexexaRomInfo, xexexaRomName, NULL, NULL, NULL, NULL, XexexInputInfo, XexexDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 256, 4, 3
 };
@@ -989,7 +989,7 @@ struct BurnDriver BurnDrvXexexj = {
 	"Xexex (ver JAA)\0", NULL, "Konami", "GX067",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, xexexjRomInfo, xexexjRomName, NULL, NULL, XexexInputInfo, XexexDIPInfo,
+	NULL, xexexjRomInfo, xexexjRomName, NULL, NULL, NULL, NULL, XexexInputInfo, XexexDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 256, 4, 3
 };

@@ -1151,7 +1151,7 @@ struct BurnDriver BurnDrvTigeroad = {
 	"Tiger Road (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, tigeroadRomInfo, tigeroadRomName, NULL, NULL, TigeroadInputInfo, TigeroadDIPInfo,
+	NULL, tigeroadRomInfo, tigeroadRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, TigeroadDIPInfo,
 	TigeroadInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -1194,7 +1194,7 @@ struct BurnDriver BurnDrvTigeroadu = {
 	"Tiger Road (US, Romstar license)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, tigeroaduRomInfo, tigeroaduRomName, NULL, NULL, TigeroadInputInfo, TigeroadDIPInfo,
+	NULL, tigeroaduRomInfo, tigeroaduRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, TigeroadDIPInfo,
 	TigeroadInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -1246,7 +1246,7 @@ struct BurnDriver BurnDrvToramich = {
 	"Tora e no Michi (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, toramichRomInfo, toramichRomName, NULL, NULL, TigeroadInputInfo, ToramichDIPInfo,
+	NULL, toramichRomInfo, toramichRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, ToramichDIPInfo,
 	ToramichInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -1323,7 +1323,7 @@ struct BurnDriver BurnDrvTigeroadb = {
 	"Tiger Road (US bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, tigeroadbRomInfo, tigeroadbRomName, NULL, NULL, TigeroadInputInfo, TigeroadDIPInfo,
+	NULL, tigeroadbRomInfo, tigeroadbRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, TigeroadDIPInfo,
 	TigeroadbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -1409,7 +1409,7 @@ struct BurnDriver BurnDrvTigeroadb2 = {
 	"Tiger Road (US bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, tigeroadb2RomInfo, tigeroadb2RomName, NULL, NULL, TigeroadInputInfo, TigeroadDIPInfo,
+	NULL, tigeroadb2RomInfo, tigeroadb2RomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, TigeroadDIPInfo,
 	Tigeroadb2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -1482,7 +1482,7 @@ struct BurnDriver BurnDrvF1dream = {
 	"F-1 Dream\0", "Game is bugged, use the bootleg instead.", "Capcom (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
-	NULL, f1dreamRomInfo, f1dreamRomName, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
+	NULL, f1dreamRomInfo, f1dreamRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
 	F1dreamInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -1555,7 +1555,7 @@ struct BurnDriver BurnDrvF1dreamb = {
 	"F-1 Dream (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
-	NULL, f1dreambRomInfo, f1dreambRomName, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
+	NULL, f1dreambRomInfo, f1dreambRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
 	F1dreambInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -1598,7 +1598,7 @@ struct BurnDriver BurnDrvF1dreamba = {
 	"F-1 Dream (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
-	NULL, f1dreambaRomInfo, f1dreambaRomName, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
+	NULL, f1dreambaRomInfo, f1dreambaRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
 	F1dreambInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };

@@ -878,7 +878,7 @@ struct BurnDriver BurnDrvContra = {
 	"Contra (US / Asia, set 1)\0", NULL, "Konami", "GX633",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, contraRomInfo, contraRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, contraRomInfo, contraRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -914,7 +914,7 @@ struct BurnDriver BurnDrvContra1 = {
 	"Contra (US / Asia, set 2)\0", NULL, "Konami", "GX633",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, contra1RomInfo, contra1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, contra1RomInfo, contra1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -963,7 +963,7 @@ struct BurnDriver BurnDrvContrae = {
 	"Contra (US / Asia, set 3)\0", NULL, "Konami", "GX633",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, contraeRomInfo, contraeRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, contraeRomInfo, contraeRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	ContraeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -999,7 +999,7 @@ struct BurnDriver BurnDrvContraj = {
 	"Contra (Japan, set 1)\0", NULL, "Konami", "GX633",
 	L"\u9B42\u6597\u7F85 \u30B3\u30F3\u30C8\u30E9 (Japan, set 1)\0Contra\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, contrajRomInfo, contrajRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, contrajRomInfo, contrajRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -1035,7 +1035,7 @@ struct BurnDriver BurnDrvContraj1 = {
 	"Contra (Japan, set 2)\0", NULL, "Konami", "GX633",
 	L"\u9B42\u6597\u7F85 \u30B3\u30F3\u30C8\u30E9 (Japan, set 2)\0Contra\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, contraj1RomInfo, contraj1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, contraj1RomInfo, contraj1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -1071,7 +1071,7 @@ struct BurnDriver BurnDrvGryzor = {
 	"Gryzor (Set 1)\0", NULL, "Konami", "GX633",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gryzorRomInfo, gryzorRomName, NULL, NULL, DrvInputInfo, GryzorDIPInfo,
+	NULL, gryzorRomInfo, gryzorRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GryzorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -1107,7 +1107,7 @@ struct BurnDriver BurnDrvGryzor1 = {
 	"Gryzor (Set 2)\0", NULL, "Konami", "GX633",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, gryzor1RomInfo, gryzor1RomName, NULL, NULL, DrvInputInfo, GryzorDIPInfo,
+	NULL, gryzor1RomInfo, gryzor1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, GryzorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -1154,7 +1154,7 @@ struct BurnDriver BurnDrvContrab = {
 	"Contra (bootleg)\0", NULL, "Konami", "GX633",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, contrabRomInfo, contrabRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, contrabRomInfo, contrabRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	BootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -1199,7 +1199,7 @@ struct BurnDriver BurnDrvContrabj = {
 	"Contra (Japan bootleg, set 1)\0", NULL, "Konami", "GX633",
 	L"\u9B42\u6597\u7F85 \u30B3\u30F3\u30C8\u30E9 (Japan bootleg, set 1)\0Contra\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, contrabjRomInfo, contrabjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, contrabjRomInfo, contrabjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	BootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -1244,7 +1244,7 @@ struct BurnDriver BurnDrvContrabj1 = {
 	"Contra (Japan bootleg, set 2)\0", NULL, "Konami", "GX633",
 	L"\u9B42\u6597\u7F85 \u30B3\u30F3\u30C8\u30E9 (Japan bootleg, set 2)\0Contra\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, contrabj1RomInfo, contrabj1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, contrabj1RomInfo, contrabj1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	BootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };

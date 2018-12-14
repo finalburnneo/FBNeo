@@ -689,7 +689,7 @@ struct BurnDriver BurnDrvMahouDai = {
 	"Mahou Daisakusen (Japan)\0", NULL, "Raizing", "Toaplan GP9001 based",
 	L"\u9B54\u6CD5\u5927\u4F5C\u6226 (Mahou Daisakusen Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, mahoudaiRomInfo, mahoudaiRomName, NULL, NULL, mahoudaiInputInfo, mahoudaiDIPInfo,
+	NULL, mahoudaiRomInfo, mahoudaiRomName, NULL, NULL, NULL, NULL, mahoudaiInputInfo, mahoudaiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -699,7 +699,7 @@ struct BurnDriver BurnDrvSStriker = {
 	"Sorcer Striker\0", NULL, "Raizing", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, sstrikerRomInfo, sstrikerRomName, NULL, NULL, mahoudaiInputInfo, sstrikerDIPInfo,
+	NULL, sstrikerRomInfo, sstrikerRomName, NULL, NULL, NULL, NULL, mahoudaiInputInfo, sstrikerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -709,7 +709,7 @@ struct BurnDriver BurnDrvSStrikerk = {
 	"Sorcer Striker (Korea)\0", NULL, "Raizing (Unite Trading license)", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, sstrikerkRomInfo, sstrikerkRomName, NULL, NULL, mahoudaiInputInfo, sstrikerkDIPInfo,
+	NULL, sstrikerkRomInfo, sstrikerkRomName, NULL, NULL, NULL, NULL, mahoudaiInputInfo, sstrikerkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

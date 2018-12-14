@@ -813,7 +813,7 @@ struct BurnDriver BurnDrvBoogwing = {
 	"Boogie Wings (Euro v1.5, 92.12.07)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, boogwingRomInfo, boogwingRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
+	NULL, boogwingRomInfo, boogwingRomName, NULL, NULL, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -859,7 +859,7 @@ struct BurnDriver BurnDrvBoogwingu = {
 	"Boogie Wings (USA v1.7, 92.12.14)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, boogwinguRomInfo, boogwinguRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
+	NULL, boogwinguRomInfo, boogwinguRomName, NULL, NULL, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -905,7 +905,7 @@ struct BurnDriver BurnDrvBoogwinga = {
 	"Boogie Wings (Asia v1.5, 92.12.07)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, boogwingaRomInfo, boogwingaRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
+	NULL, boogwingaRomInfo, boogwingaRomName, NULL, NULL, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -951,7 +951,7 @@ struct BurnDriver BurnDrvRagtime = {
 	"The Great Ragtime Show (Japan v1.5, 92.12.07)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, ragtimeRomInfo, ragtimeRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
+	NULL, ragtimeRomInfo, ragtimeRomName, NULL, NULL, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -997,7 +997,7 @@ struct BurnDriver BurnDrvRagtimea = {
 	"The Great Ragtime Show (Japan v1.3, 92.11.26)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, ragtimeaRomInfo, ragtimeaRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
+	NULL, ragtimeaRomInfo, ragtimeaRomName, NULL, NULL, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

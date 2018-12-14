@@ -650,7 +650,7 @@ struct BurnDriver BurnDrvJoemacr = {
 	"Joe & Mac Returns (World, Version 1.1, 1994.05.27)\0", NULL, "Data East", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, joemacrRomInfo, joemacrRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, joemacrRomInfo, joemacrRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	joemacrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -703,7 +703,7 @@ struct BurnDriver BurnDrvJoemacra = {
 	"Joe & Mac Returns (World, Version 1.0, 1994.05.19)\0", NULL, "Data East", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, joemacraRomInfo, joemacraRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, joemacraRomInfo, joemacraRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	joemacraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -760,7 +760,7 @@ struct BurnDriver BurnDrvJoemacrj = {
 	"Joe & Mac Returns (Japan, Version 1.2, 1994.06.06)\0", NULL, "Data East", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, joemacrjRomInfo, joemacrjRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, joemacrjRomInfo, joemacrjRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	joemacrjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -821,7 +821,7 @@ struct BurnDriver BurnDrvChainrec = {
 	"Chain Reaction (World, Version 2.2, 1995.09.25)\0", NULL, "Data East", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
-	NULL, chainrecRomInfo, chainrecRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, chainrecRomInfo, chainrecRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	chainrecInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -878,7 +878,7 @@ struct BurnDriver BurnDrvMagdrop = {
 	"Magical Drop (Japan, Version 1.1, 1995.06.21)\0", NULL, "Data East", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
-	NULL, magdropRomInfo, magdropRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, magdropRomInfo, magdropRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	magdropInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -914,7 +914,7 @@ struct BurnDriver BurnDrvMagdropp = {
 	"Magical Drop Plus 1 (Japan, Version 2.1, 1995.09.12)\0", NULL, "Data East", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
-	NULL, magdroppRomInfo, magdroppRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, magdroppRomInfo, magdroppRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	magdroppInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -973,7 +973,7 @@ struct BurnDriver BurnDrvCharlien = {
 	"Charlie Ninja\0", NULL, "Mitchell", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_RUNGUN, 0,
-	NULL, charlienRomInfo, charlienRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, charlienRomInfo, charlienRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	charlienInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1039,7 +1039,7 @@ struct BurnDriver BurnDrvPrtytime = {
 	"Party Time: Gonta the Diver II / Ganbare! Gonta!! 2 (World Release)\0", NULL, "Mitchell", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, prtytimeRomInfo, prtytimeRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, prtytimeRomInfo, prtytimeRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	prtytimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 320, 3, 4
 };
@@ -1072,7 +1072,7 @@ struct BurnDriver BurnDrvGangonta = {
 	"Ganbare! Gonta!! 2 / Party Time: Gonta the Diver II (Japan Release)\0", NULL, "Mitchell", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, gangontaRomInfo, gangontaRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, gangontaRomInfo, gangontaRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	prtytimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 320, 3, 4
 };
@@ -1110,7 +1110,7 @@ struct BurnDriver BurnDrvOsman = {
 	"Osman (World)\0", NULL, "Mitchell", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_SCRFIGHT, 0,
-	NULL, osmanRomInfo, osmanRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, osmanRomInfo, osmanRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	osmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -1143,7 +1143,7 @@ struct BurnDriver BurnDrvCandance = {
 	"Cannon Dancer (Japan)\0", NULL, "Mitchell (Atlus license)", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_SCRFIGHT, 0,
-	NULL, candanceRomInfo, candanceRomName, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
+	NULL, candanceRomInfo, candanceRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
 	osmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

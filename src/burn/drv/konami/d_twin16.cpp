@@ -1599,7 +1599,7 @@ struct BurnDriver BurnDrvDevilw = {
 	"Devil World\0", NULL, "Konami", "GX687",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, devilwRomInfo, devilwRomName, NULL, NULL, DevilwInputInfo, DevilwDIPInfo,
+	NULL, devilwRomInfo, devilwRomName, NULL, NULL, NULL, NULL, DevilwInputInfo, DevilwDIPInfo,
 	devilwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -1643,7 +1643,7 @@ struct BurnDriver BurnDrvMajuu = {
 	"Majuu no Ohkoku\0", NULL, "Konami", "GX687",
 	L"\u9B54\u7363\u306E\u738B\u56FD\0Majuu no Ohkoku\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, majuuRomInfo, majuuRomName, NULL, NULL, DevilwInputInfo, DevilwDIPInfo,
+	NULL, majuuRomInfo, majuuRomName, NULL, NULL, NULL, NULL, DevilwInputInfo, DevilwDIPInfo,
 	devilwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -1687,7 +1687,7 @@ struct BurnDriver BurnDrvDarkadv = {
 	"Dark Adventure\0", NULL, "Konami", "GX687",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, darkadvRomInfo, darkadvRomName, NULL, NULL, DarkadvInputInfo, DarkadvDIPInfo,
+	NULL, darkadvRomInfo, darkadvRomName, NULL, NULL, NULL, NULL, DarkadvInputInfo, DarkadvDIPInfo,
 	devilwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -1756,7 +1756,7 @@ struct BurnDriver BurnDrvVulcan = {
 	"Vulcan Venture (New)\0", NULL, "Konami", "GX785",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, vulcanRomInfo, vulcanRomName, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
+	NULL, vulcanRomInfo, vulcanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
 	vulcanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -1797,7 +1797,7 @@ struct BurnDriver BurnDrvVulcana = {
 	"Vulcan Venture (Old)\0", NULL, "Konami", "GX785",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, vulcanaRomInfo, vulcanaRomName, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
+	NULL, vulcanaRomInfo, vulcanaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
 	vulcanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -1838,7 +1838,7 @@ struct BurnDriver BurnDrvVulcanb = {
 	"Vulcan Venture (Oldest)\0", NULL, "Konami", "GX785",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, vulcanbRomInfo, vulcanbRomName, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
+	NULL, vulcanbRomInfo, vulcanbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
 	vulcanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -1879,7 +1879,7 @@ struct BurnDriver BurnDrvGradius2 = {
 	"Gradius II - GOFER no Yabou (Japan New ver.)\0", NULL, "Konami", "GX785",
 	L"Gradius II - GOFER \u306E\u91CE\u671B (Japan New ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, gradius2RomInfo, gradius2RomName, NULL, NULL, DrvInputInfo, Gradius2DIPInfo,
+	NULL, gradius2RomInfo, gradius2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Gradius2DIPInfo,
 	vulcanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -1920,7 +1920,7 @@ struct BurnDriver BurnDrvGradius2a = {
 	"Gradius II - GOFER no Yabou (Japan Old ver.)\0", NULL, "Konami", "GX785",
 	L"Gradius II - GOFER \u306E\u91CE\u671B (Japan Old ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, gradius2aRomInfo, gradius2aRomName, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
+	NULL, gradius2aRomInfo, gradius2aRomName, NULL, NULL, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
 	vulcanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -1961,7 +1961,7 @@ struct BurnDriver BurnDrvGradius2b = {
 	"Gradius II - GOFER no Yabou (Japan Older ver.)\0", NULL, "Konami", "GX785",
 	L"Gradius II - GOFER \u306E\u91CE\u671B (Japan Older ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, gradius2bRomInfo, gradius2bRomName, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
+	NULL, gradius2bRomInfo, gradius2bRomName, NULL, NULL, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
 	vulcanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -2022,7 +2022,7 @@ struct BurnDriver BurnDrvFround = {
 	"The Final Round (ver. M)\0", NULL, "Konami", "GX870",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, froundRomInfo, froundRomName, NULL, NULL, DrvInputInfo, FroundDIPInfo,
+	NULL, froundRomInfo, froundRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FroundDIPInfo,
 	froundInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -2056,7 +2056,7 @@ struct BurnDriver BurnDrvFroundl = {
 	"The Final Round (ver. L)\0", NULL, "Konami", "GX870",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, froundlRomInfo, froundlRomName, NULL, NULL, DrvInputInfo, FroundDIPInfo,
+	NULL, froundlRomInfo, froundlRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FroundDIPInfo,
 	froundInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -2124,7 +2124,7 @@ struct BurnDriver BurnDrvHpuncher = {
 	"Hard Puncher (Japan)\0", NULL, "Konami", "GX870",
 	L"Hard Puncher \uFF0D\u8840\u307E\u307F\u308C\u306E\u6804\u5149\uFF0D (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, hpuncherRomInfo, hpuncherRomName, NULL, NULL, DrvInputInfo, FroundDIPInfo,
+	NULL, hpuncherRomInfo, hpuncherRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FroundDIPInfo,
 	hpuncherInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
@@ -2185,7 +2185,7 @@ struct BurnDriver BurnDrvMiaj = {
 	"M.I.A. - Missing in Action (version R) (Japan)\0", NULL, "Konami", "GX808",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, miajRomInfo, miajRomName, NULL, NULL, DrvInputInfo, MiajDIPInfo,
+	NULL, miajRomInfo, miajRomName, NULL, NULL, NULL, NULL, DrvInputInfo, MiajDIPInfo,
 	miajInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	304, 224, 4, 3
 };
@@ -2243,7 +2243,7 @@ struct BurnDriver BurnDrvCuebrckj = {
 	"Cue Brick (Japan)\0", NULL, "Konami", "GX903",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
-	NULL, cuebrckjRomInfo, cuebrckjRomName, NULL, NULL, DrvInputInfo, CuebrckjDIPInfo,
+	NULL, cuebrckjRomInfo, cuebrckjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CuebrckjDIPInfo,
 	cuebrckjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	304, 224, 4, 3
 };

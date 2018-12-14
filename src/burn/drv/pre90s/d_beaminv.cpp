@@ -326,7 +326,7 @@ struct BurnDriverD BurnDrvBeaminv = {
 	"Beam Invader\0", "No sound", "Teknon Kogyo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, beaminvRomInfo, beaminvRomName, NULL, NULL, BeaminvInputInfo, BeaminvDIPInfo,
+	NULL, beaminvRomInfo, beaminvRomName, NULL, NULL, NULL, NULL, BeaminvInputInfo, BeaminvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	216, 248, 3, 4
 };
@@ -351,7 +351,7 @@ struct BurnDriverD BurnDrvPacominv = {
 	"Pacom Invader\0", "No sound", "Pacom Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, pacominvRomInfo, pacominvRomName, NULL, NULL, BeaminvInputInfo, PacominvDIPInfo,
+	NULL, pacominvRomInfo, pacominvRomName, NULL, NULL, NULL, NULL, BeaminvInputInfo, PacominvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	216, 248, 3, 4
 };

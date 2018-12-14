@@ -714,7 +714,7 @@ struct BurnDriver BurnDrvBlstroid = {
 	"Blasteroids (rev 4)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, blstroidRomInfo, blstroidRomName, NULL, NULL, BlstroidInputInfo, BlstroidDIPInfo,
+	NULL, blstroidRomInfo, blstroidRomName, NULL, NULL, NULL, NULL, BlstroidInputInfo, BlstroidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	640, 240, 4, 3
 };
@@ -761,7 +761,7 @@ struct BurnDriver BurnDrvBlstroid3 = {
 	"Blasteroids (rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, blstroid3RomInfo, blstroid3RomName, NULL, NULL, BlstroidInputInfo, BlstroidDIPInfo,
+	NULL, blstroid3RomInfo, blstroid3RomName, NULL, NULL, NULL, NULL, BlstroidInputInfo, BlstroidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	640, 240, 4, 3
 };
@@ -808,7 +808,7 @@ struct BurnDriver BurnDrvBlstroid2 = {
 	"Blasteroids (rev 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, blstroid2RomInfo, blstroid2RomName, NULL, NULL, BlstroidInputInfo, BlstroidDIPInfo,
+	NULL, blstroid2RomInfo, blstroid2RomName, NULL, NULL, NULL, NULL, BlstroidInputInfo, BlstroidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	640, 240, 4, 3
 };
@@ -855,7 +855,7 @@ struct BurnDriver BurnDrvBlstroidg = {
 	"Blasteroids (German, rev 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, blstroidgRomInfo, blstroidgRomName, NULL, NULL, BlstroidInputInfo, BlstroidDIPInfo,
+	NULL, blstroidgRomInfo, blstroidgRomName, NULL, NULL, NULL, NULL, BlstroidInputInfo, BlstroidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	640, 240, 4, 3
 };
@@ -902,7 +902,7 @@ struct BurnDriver BurnDrvBlstroidh = {
 	"Blasteroids (with heads)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, blstroidhRomInfo, blstroidhRomName, NULL, NULL, BlstroidInputInfo, BlstroidDIPInfo,
+	NULL, blstroidhRomInfo, blstroidhRomName, NULL, NULL, NULL, NULL, BlstroidInputInfo, BlstroidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	640, 240, 4, 3
 };

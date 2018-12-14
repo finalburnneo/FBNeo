@@ -2772,7 +2772,7 @@ struct BurnDriver BurnDrvRallybik = {
 	"Rally Bike / Dash Yarou\0", NULL, "Toaplan / Taito Corporation", "Toaplan BCU-2 / FCU-2 based",
 	L"Rally Bike\0\u30C0\u30C3\u30B7\u30E5\uC91E\u90CE\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RACING, 0,
-	NULL, rallybikRomInfo, rallybikRomName, NULL, NULL, Drv2bInputInfo, RallybikDIPInfo,
+	NULL, rallybikRomInfo, rallybikRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, RallybikDIPInfo,
 	RallybikInit, DrvExit, DrvFrame, RallybikDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -2808,7 +2808,7 @@ struct BurnDriver BurnDrvTruxton = {
 	"Truxton / Tatsujin\0", NULL, "Toaplan / Taito Corporation", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, truxtonRomInfo, truxtonRomName, NULL, NULL, Drv2bInputInfo, TruxtonDIPInfo,
+	NULL, truxtonRomInfo, truxtonRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, TruxtonDIPInfo,
 	TruxtonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -2844,7 +2844,7 @@ struct BurnDriver BurnDrvHellfire = {
 	"Hellfire (2P set)\0", NULL, "Toaplan (Taito license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, hellfireRomInfo, hellfireRomName, NULL, NULL, Drv2bInputInfo, HellfireDIPInfo,
+	NULL, hellfireRomInfo, hellfireRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, HellfireDIPInfo,
 	HellfireInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2880,7 +2880,7 @@ struct BurnDriver BurnDrvHellfire1 = {
 	"Hellfire (1P set)\0", NULL, "Toaplan (Taito license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, hellfire1RomInfo, hellfire1RomName, NULL, NULL, Drv2bInputInfo, Hellfire1DIPInfo,
+	NULL, hellfire1RomInfo, hellfire1RomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, Hellfire1DIPInfo,
 	HellfireInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2916,7 +2916,7 @@ struct BurnDriver BurnDrvHellfire2a = {
 	"Hellfire (2P set, older)\0", NULL, "Toaplan (Taito license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, hellfire2aRomInfo, hellfire2aRomName, NULL, NULL, Drv2bInputInfo, Hellfire2aDIPInfo,
+	NULL, hellfire2aRomInfo, hellfire2aRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, Hellfire2aDIPInfo,
 	HellfireInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2952,7 +2952,7 @@ struct BurnDriver BurnDrvHellfire1a = {
 	"Hellfire (1P set, older)\0", NULL, "Toaplan (Taito license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, hellfire1aRomInfo, hellfire1aRomName, NULL, NULL, Drv2bInputInfo, Hellfire1aDIPInfo,
+	NULL, hellfire1aRomInfo, hellfire1aRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, Hellfire1aDIPInfo,
 	HellfireInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2990,7 +2990,7 @@ struct BurnDriver BurnDrvZerowing = {
 	"Zero Wing (2P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, zerowingRomInfo, zerowingRomName, NULL, NULL, Drv2bInputInfo, Zerowing2DIPInfo,
+	NULL, zerowingRomInfo, zerowingRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, Zerowing2DIPInfo,
 	ZerowingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -3028,7 +3028,7 @@ struct BurnDriver BurnDrvZerowing1 = {
 	"Zero Wing (1P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, zerowing1RomInfo, zerowing1RomName, NULL, NULL, Drv2bInputInfo, ZerowingDIPInfo,
+	NULL, zerowing1RomInfo, zerowing1RomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, ZerowingDIPInfo,
 	ZerowingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -3066,7 +3066,7 @@ struct BurnDriver BurnDrvZerowingw = {
 	"Zero Wing (2P set, Williams license)\0", NULL, "Toaplan (Williams license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, zerowingwRomInfo, zerowingwRomName, NULL, NULL, Drv2bInputInfo, Zerowing2DIPInfo,
+	NULL, zerowingwRomInfo, zerowingwRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, Zerowing2DIPInfo,
 	ZerowingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -3105,7 +3105,7 @@ struct BurnDriver BurnDrvDemonwld = {
 	"Demon's World / Horror Story (set 1)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, demonwldRomInfo, demonwldRomName, NULL, NULL, Drv3bInputInfo, DemonwldDIPInfo,
+	NULL, demonwldRomInfo, demonwldRomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, DemonwldDIPInfo,
 	DemonwldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -3144,7 +3144,7 @@ struct BurnDriver BurnDrvDemonwld1 = {
 	"Demon's World / Horror Story (set 2)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, demonwld1RomInfo, demonwld1RomName, NULL, NULL, Drv3bInputInfo, DemonwldDIPInfo,
+	NULL, demonwld1RomInfo, demonwld1RomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, DemonwldDIPInfo,
 	DemonwldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -3183,7 +3183,7 @@ struct BurnDriver BurnDrvDemonwld2 = {
 	"Demon's World / Horror Story (set 3)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 3)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, demonwld2RomInfo, demonwld2RomName, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
+	NULL, demonwld2RomInfo, demonwld2RomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
 	DemonwldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -3222,7 +3222,7 @@ struct BurnDriver BurnDrvDemonwld3 = {
 	"Demon's World / Horror Story (set 4)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 4)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, demonwld3RomInfo, demonwld3RomName, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
+	NULL, demonwld3RomInfo, demonwld3RomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
 	DemonwldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -3261,7 +3261,7 @@ struct BurnDriver BurnDrvDemonwld4 = {
 	"Demon's World / Horror Story (set 5)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 5)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, demonwld4RomInfo, demonwld4RomName, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
+	NULL, demonwld4RomInfo, demonwld4RomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
 	DemonwldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -3299,7 +3299,7 @@ struct BurnDriver BurnDrvSamesame = {
 	"Same! Same! Same! (1P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! (1P set)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, samesameRomInfo, samesameRomName, NULL, NULL, FiresharkInputInfo, SamesameDIPInfo,
+	NULL, samesameRomInfo, samesameRomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, SamesameDIPInfo,
 	SamesameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3337,7 +3337,7 @@ struct BurnDriver BurnDrvSamesame2 = {
 	"Same! Same! Same! (2P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, samesame2RomInfo, samesame2RomName, NULL, NULL, FiresharkInputInfo, Samesame2DIPInfo,
+	NULL, samesame2RomInfo, samesame2RomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, Samesame2DIPInfo,
 	SamesameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3375,7 +3375,7 @@ struct BurnDriver BurnDrvSamesamenh = {
 	"Same! Same! Same! (1P set, NEW VER! hack)\0", NULL, "hack (trap15)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, samesamenhRomInfo, samesamenhRomName, NULL, NULL, FiresharkInputInfo, SamesameDIPInfo,
+	NULL, samesamenhRomInfo, samesamenhRomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, SamesameDIPInfo,
 	SamesameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3413,7 +3413,7 @@ struct BurnDriver BurnDrvFireshrk = {
 	"Fire Shark\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, fireshrkRomInfo, fireshrkRomName, NULL, NULL, FiresharkInputInfo, FireshrkDIPInfo,
+	NULL, fireshrkRomInfo, fireshrkRomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, FireshrkDIPInfo,
 	SamesameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3451,7 +3451,7 @@ struct BurnDriver BurnDrvFireshrka = {
 	"Fire Shark (earlier)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, fireshrkaRomInfo, fireshrkaRomName, NULL, NULL, FiresharkInputInfo, FireshrkaDIPInfo,
+	NULL, fireshrkaRomInfo, fireshrkaRomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, FireshrkaDIPInfo,
 	SamesameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3489,7 +3489,7 @@ struct BurnDriver BurnDrvFireshrkd = {
 	"Fire Shark (Korea, set 1, easier)\0", NULL, "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, fireshrkdRomInfo, fireshrkdRomName, NULL, NULL, FiresharkInputInfo, Samesame2DIPInfo,
+	NULL, fireshrkdRomInfo, fireshrkdRomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, Samesame2DIPInfo,
 	SamesameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3527,7 +3527,7 @@ struct BurnDriver BurnDrvFireshrkdh = {
 	"Fire Shark (Korea, set 2, harder)\0", NULL, "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, fireshrkdhRomInfo, fireshrkdhRomName, NULL, NULL, FiresharkInputInfo, Samesame2DIPInfo,
+	NULL, fireshrkdhRomInfo, fireshrkdhRomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, Samesame2DIPInfo,
 	SamesameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3561,7 +3561,7 @@ struct BurnDriver BurnDrvOutzone = {
 	"Out Zone\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, outzoneRomInfo, outzoneRomName, NULL, NULL, Drv3bInputInfo, OutzoneDIPInfo,
+	NULL, outzoneRomInfo, outzoneRomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, OutzoneDIPInfo,
 	OutzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3595,7 +3595,7 @@ struct BurnDriver BurnDrvOutzoneh = {
 	"Out Zone (harder)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, outzonehRomInfo, outzonehRomName, NULL, NULL, Drv3bInputInfo, OutzoneDIPInfo,
+	NULL, outzonehRomInfo, outzonehRomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, OutzoneDIPInfo,
 	OutzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3629,7 +3629,7 @@ struct BurnDriver BurnDrvOutzonea = {
 	"Out Zone (old set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, outzoneaRomInfo, outzoneaRomName, NULL, NULL, Drv3bInputInfo, OutzoneaDIPInfo,
+	NULL, outzoneaRomInfo, outzoneaRomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, OutzoneaDIPInfo,
 	OutzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3663,7 +3663,7 @@ struct BurnDriver BurnDrvOutzoneb = {
 	"Out Zone (older set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, outzonebRomInfo, outzonebRomName, NULL, NULL, Drv3bInputInfo, OutzoneaDIPInfo,
+	NULL, outzonebRomInfo, outzonebRomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, OutzoneaDIPInfo,
 	OutzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3697,7 +3697,7 @@ struct BurnDriver BurnDrvOutzonec = {
 	"Out Zone (oldest set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, outzonecRomInfo, outzonecRomName, NULL, NULL, Drv3bInputInfo, OutzonecDIPInfo,
+	NULL, outzonecRomInfo, outzonecRomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, OutzonecDIPInfo,
 	OutzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3731,7 +3731,7 @@ struct BurnDriver BurnDrvOutzonecv = {
 	"Out Zone (Zero Wing TP-015 PCB conversion)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
-	NULL, outzonecvRomInfo, outzonecvRomName, NULL, NULL, Drv3bInputInfo, OutzoneDIPInfo,
+	NULL, outzonecvRomInfo, outzonecvRomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, OutzoneDIPInfo,
 	OutzonecvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3765,7 +3765,7 @@ struct BurnDriver BurnDrvVimana = {
 	"Vimana (World, set 1)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, vimanaRomInfo, vimanaRomName, NULL, NULL, Drv2bInputInfo, VimanaDIPInfo,
+	NULL, vimanaRomInfo, vimanaRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, VimanaDIPInfo,
 	VimanaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3799,7 +3799,7 @@ struct BurnDriver BurnDrvVimanan = {
 	"Vimana (World, set 2)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, vimananRomInfo, vimananRomName, NULL, NULL, Drv2bInputInfo, VimananDIPInfo,
+	NULL, vimananRomInfo, vimananRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, VimananDIPInfo,
 	VimanaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3833,7 +3833,7 @@ struct BurnDriver BurnDrvVimanaj = {
 	"Vimana (Japan)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, vimanajRomInfo, vimanajRomName, NULL, NULL, Drv2bInputInfo, VimanajDIPInfo,
+	NULL, vimanajRomInfo, vimanajRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, VimanajDIPInfo,
 	VimanaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };

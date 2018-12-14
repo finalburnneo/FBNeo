@@ -931,7 +931,7 @@ struct BurnDriver BurnDrvSlapshot = {
 	"Slap Shot (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
-	NULL, SlapshotRomInfo, SlapshotRomName, NULL, NULL, SlapshotInputInfo, SlapshotDIPInfo,
+	NULL, SlapshotRomInfo, SlapshotRomName, NULL, NULL, NULL, NULL, SlapshotInputInfo, SlapshotDIPInfo,
 	SlapshotInit, SlapshotExit, SlapshotFrame, SlapshotDraw, SlapshotScan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
@@ -941,7 +941,7 @@ struct BurnDriver BurnDrvOpwolf3 = {
 	"Operation Wolf 3 (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, Opwolf3RomInfo, Opwolf3RomName, NULL, NULL, Opwolf3InputInfo, Opwolf3DIPInfo,
+	NULL, Opwolf3RomInfo, Opwolf3RomName, NULL, NULL, NULL, NULL, Opwolf3InputInfo, Opwolf3DIPInfo,
 	Opwolf3Init, SlapshotExit, SlapshotFrame, SlapshotDraw, Opwolf3Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
@@ -951,7 +951,7 @@ struct BurnDriver BurnDrvOpwolf3u = {
 	"Operation Wolf 3 (US)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, Opwolf3uRomInfo, Opwolf3uRomName, NULL, NULL, Opwolf3InputInfo, Opwolf3DIPInfo,
+	NULL, Opwolf3uRomInfo, Opwolf3uRomName, NULL, NULL, NULL, NULL, Opwolf3InputInfo, Opwolf3DIPInfo,
 	Opwolf3Init, SlapshotExit, SlapshotFrame, SlapshotDraw, Opwolf3Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };

@@ -467,7 +467,7 @@ struct BurnDriver BurnDrvEnraya4 = {
 	"4 En Raya (set 1)\0", NULL, "IDSA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, enraya4RomInfo, enraya4RomName, NULL, NULL, Enraya4InputInfo, Enraya4DIPInfo,
+	NULL, enraya4RomInfo, enraya4RomName, NULL, NULL, NULL, NULL, Enraya4InputInfo, Enraya4DIPInfo,
 	enraya4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
 	256, 224, 4, 3
 };
@@ -494,7 +494,7 @@ struct BurnDriver BurnDrvEnrayaa4 = {
 	"4 En Raya (set 2)\0", NULL, "IDSA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, enrayaa4RomInfo, enrayaa4RomName, NULL, NULL, Enraya4InputInfo, Enraya4DIPInfo,
+	NULL, enrayaa4RomInfo, enrayaa4RomName, NULL, NULL, NULL, NULL, Enraya4InputInfo, Enraya4DIPInfo,
 	enraya4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
 	256, 224, 4, 3
 };
@@ -524,7 +524,7 @@ struct BurnDriver BurnDrvUnkpacg = {
 	"unknown Pac-Man gambling game\0", NULL, "unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, unkpacgRomInfo, unkpacgRomName, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
+	NULL, unkpacgRomInfo, unkpacgRomName, NULL, NULL, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
 	unkpacgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
 	256, 224, 4, 3
 };

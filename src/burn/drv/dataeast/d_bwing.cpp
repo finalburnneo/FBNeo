@@ -851,7 +851,7 @@ struct BurnDriver BurnDrvBwings = {
 	"B-Wings (Japan new Ver.)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, bwingsRomInfo, bwingsRomName, NULL, NULL, BwingInputInfo, BwingDIPInfo,
+	NULL, bwingsRomInfo, bwingsRomName, NULL, NULL, NULL, NULL, BwingInputInfo, BwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -885,7 +885,7 @@ struct BurnDriver BurnDrvBwingso = {
 	"B-Wings (Japan old Ver.)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, bwingsoRomInfo, bwingsoRomName, NULL, NULL, BwingInputInfo, BwingDIPInfo,
+	NULL, bwingsoRomInfo, bwingsoRomName, NULL, NULL, NULL, NULL, BwingInputInfo, BwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -926,7 +926,7 @@ struct BurnDriver BurnDrvBwingsa = {
 	"B-Wings (Alt Ver.?)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, bwingsaRomInfo, bwingsaRomName, NULL, NULL, BwingInputInfo, BwingDIPInfo,
+	NULL, bwingsaRomInfo, bwingsaRomName, NULL, NULL, NULL, NULL, BwingInputInfo, BwingDIPInfo,
 	bwingsaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -960,7 +960,7 @@ struct BurnDriver BurnDrvZaviga = {
 	"Zaviga\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, zavigaRomInfo, zavigaRomName, NULL, NULL, BwingInputInfo, BwingDIPInfo,
+	NULL, zavigaRomInfo, zavigaRomName, NULL, NULL, NULL, NULL, BwingInputInfo, BwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -994,7 +994,7 @@ struct BurnDriver BurnDrvZavigaj = {
 	"Zaviga (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, zavigajRomInfo, zavigajRomName, NULL, NULL, BwingInputInfo, BwingDIPInfo,
+	NULL, zavigajRomInfo, zavigajRomName, NULL, NULL, NULL, NULL, BwingInputInfo, BwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };

@@ -906,7 +906,7 @@ struct BurnDriver BurnDrvHydra = {
 	"Hydra\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, hydraRomInfo, hydraRomName, NULL, NULL, HydraInputInfo, HydraDIPInfo,
+	NULL, hydraRomInfo, hydraRomName, NULL, NULL, NULL, NULL, HydraInputInfo, HydraDIPInfo,
 	HydraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	336, 240, 4, 3
 };
@@ -978,7 +978,7 @@ struct BurnDriver BurnDrvHydrap = {
 	"Hydra (prototype 5/14/90)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, hydrapRomInfo, hydrapRomName, NULL, NULL, HydraInputInfo, HydraDIPInfo,
+	NULL, hydrapRomInfo, hydrapRomName, NULL, NULL, NULL, NULL, HydraInputInfo, HydraDIPInfo,
 	HydrapInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	336, 240, 4, 3
 };
@@ -1054,7 +1054,7 @@ struct BurnDriver BurnDrvPitfight = {
 	"Pit Fighter (rev 9)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, pitfightRomInfo, pitfightRomName, NULL, NULL, PitfightInputInfo, PitfightDIPInfo,
+	NULL, pitfightRomInfo, pitfightRomName, NULL, NULL, NULL, NULL, PitfightInputInfo, PitfightDIPInfo,
 	PitfightInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	336, 240, 4, 3
 };

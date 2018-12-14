@@ -1324,7 +1324,7 @@ struct BurnDriver BurnDrvLadybug = {
 	"Lady Bug\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, ladybugRomInfo, ladybugRomName, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
+	NULL, ladybugRomInfo, ladybugRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
 	LadybugInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
 };
@@ -1359,7 +1359,7 @@ struct BurnDriver BurnDrvLadybugb = {
 	"Lady Bug (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, ladybugbRomInfo, ladybugbRomName, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
+	NULL, ladybugbRomInfo, ladybugbRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
 	LadybugInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
 };
@@ -1394,7 +1394,7 @@ struct BurnDriver BurnDrvLadybugb2 = {
 	"Coccinelle (bootleg of Lady Bug, set 2)\0", NULL, "bootleg (Model Racing)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, ladybugb2RomInfo, ladybugb2RomName, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
+	NULL, ladybugb2RomInfo, ladybugb2RomName, NULL, NULL, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
 	LadybugInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
 };
@@ -1436,7 +1436,7 @@ struct BurnDriver BurnDrvSnapjack = {
 	"Snap Jack\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, snapjackRomInfo, snapjackRomName, NULL, NULL, LadybugInputInfo, SnapjackDIPInfo,
+	NULL, snapjackRomInfo, snapjackRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, SnapjackDIPInfo,
 	SnapJackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	240, 196, 4, 3
 };
@@ -1477,7 +1477,7 @@ struct BurnDriver BurnDrvCavenger = {
 	"Cosmic Avenger\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, cavengerRomInfo, cavengerRomName, NULL, NULL, LadybugInputInfo, CavengerDIPInfo,
+	NULL, cavengerRomInfo, cavengerRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, CavengerDIPInfo,
 	CavengerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	240, 196, 4, 3
 };
@@ -1518,7 +1518,7 @@ struct BurnDriver BurnDrvDorodon = {
 	"Dorodon (set 1)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, dorodonRomInfo, dorodonRomName, NULL, NULL, LadybugInputInfo, DorodonDIPInfo,
+	NULL, dorodonRomInfo, dorodonRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, DorodonDIPInfo,
 	DorodonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
 };
@@ -1553,7 +1553,7 @@ struct BurnDriver BurnDrvDorodon2 = {
 	"Dorodon (set 2)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, dorodon2RomInfo, dorodon2RomName, NULL, NULL, LadybugInputInfo, DorodonDIPInfo,
+	NULL, dorodon2RomInfo, dorodon2RomName, NULL, NULL, NULL, NULL, LadybugInputInfo, DorodonDIPInfo,
 	DorodonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
 };
@@ -1591,7 +1591,7 @@ struct BurnDriver BurnDrvSraider = {
 	"Space Raider\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, sraiderRomInfo, sraiderRomName, NULL, NULL, SraiderInputInfo, SraiderDIPInfo,
+	NULL, sraiderRomInfo, sraiderRomName, NULL, NULL, NULL, NULL, SraiderInputInfo, SraiderDIPInfo,
 	SraiderInit, DrvExit, SraiderFrame, SraiderDraw, DrvScan, &DrvRecalc, 0x82,
 	192, 240, 3, 4
 };

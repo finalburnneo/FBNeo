@@ -791,7 +791,7 @@ struct BurnDriver BurnDrvChqflag = {
 	"Chequered Flag\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
-	NULL, chqflagRomInfo, chqflagRomName, NULL, NULL, ChqflagInputInfo, ChqflagDIPInfo,
+	NULL, chqflagRomInfo, chqflagRomName, NULL, NULL, NULL, NULL, ChqflagInputInfo, ChqflagDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 304, 3, 4
 };
@@ -828,7 +828,7 @@ struct BurnDriver BurnDrvChqflagj = {
 	"Chequered Flag (Japan)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
-	NULL, chqflagjRomInfo, chqflagjRomName, NULL, NULL, ChqflagInputInfo, ChqflagDIPInfo,
+	NULL, chqflagjRomInfo, chqflagjRomName, NULL, NULL, NULL, NULL, ChqflagInputInfo, ChqflagDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 304, 3, 4
 };

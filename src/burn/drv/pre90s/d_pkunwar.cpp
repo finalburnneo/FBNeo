@@ -1684,7 +1684,7 @@ struct BurnDriver BurnDrvpkunwar = {
 	"Penguin-Kun Wars (US)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, pkunwarRomInfo, pkunwarRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, pkunwarRomInfo, pkunwarRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	PkunwarInit, DrvExit, PkunwarFrame, PkunwarDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 192, 4, 3
 };
@@ -1713,7 +1713,7 @@ struct BurnDriver BurnDrvpkunwarj = {
 	"Penguin-Kun Wars (Japan)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, pkunwarjRomInfo, pkunwarjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, pkunwarjRomInfo, pkunwarjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	PkunwarInit, DrvExit, PkunwarFrame, PkunwarDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 192, 4, 3
 };
@@ -1742,7 +1742,7 @@ struct BurnDriver BurnDrvNova2001 = {
 	"Nova 2001 (Japan)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, nova2001RomInfo, nova2001RomName, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
+	NULL, nova2001RomInfo, nova2001RomName, NULL, NULL, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
 	NovaInit, DrvExit, NovaFrame, NovaDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 192, 4, 3
 };
@@ -1774,7 +1774,7 @@ struct BurnDriver BurnDrvNova2001h = {
 	"Nova 2001 (Japan, hack?)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, nova2001hRomInfo, nova2001hRomName, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
+	NULL, nova2001hRomInfo, nova2001hRomName, NULL, NULL, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
 	NovaInit, DrvExit, NovaFrame, NovaDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 192, 4, 3
 };
@@ -1804,7 +1804,7 @@ struct BurnDriver BurnDrvNova2001u = {
 	"Nova 2001 (US)\0", NULL, "UPL (Universal license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, nova2001uRomInfo, nova2001uRomName, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
+	NULL, nova2001uRomInfo, nova2001uRomName, NULL, NULL, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
 	NovaInit, DrvExit, NovaFrame, NovaDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 192, 4, 3
 };
@@ -1839,7 +1839,7 @@ struct BurnDriver BurnDrvNinjakun = {
 	"Ninjakun Majou no Bouken\0", NULL, "UPL (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, ninjakunRomInfo, ninjakunRomName, NULL, NULL, NinjakunInputInfo, NinjakunDIPInfo,
+	NULL, ninjakunRomInfo, ninjakunRomName, NULL, NULL, NULL, NULL, NinjakunInputInfo, NinjakunDIPInfo,
 	NinjakunInit, DrvExit, NinjakunFrame, NinjakunDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 192, 4, 3
 };
@@ -1866,7 +1866,7 @@ struct BurnDriver BurnDrvRaiders5 = {
 	"Raiders5\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, raiders5RomInfo, raiders5RomName, NULL, NULL, Raiders5InputInfo, Raiders5DIPInfo,
+	NULL, raiders5RomInfo, raiders5RomName, NULL, NULL, NULL, NULL, Raiders5InputInfo, Raiders5DIPInfo,
 	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x300,
 	256, 192, 4, 3
 };
@@ -1893,7 +1893,7 @@ struct BurnDriver BurnDrvRaidrs5t = {
 	"Raiders5 (Japan)\0", NULL, "UPL (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, raiders5tRomInfo, raiders5tRomName, NULL, NULL, Raiders5InputInfo, Raiders5DIPInfo,
+	NULL, raiders5tRomInfo, raiders5tRomName, NULL, NULL, NULL, NULL, Raiders5InputInfo, Raiders5DIPInfo,
 	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x300,
 	256, 192, 4, 3
 };

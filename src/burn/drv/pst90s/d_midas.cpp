@@ -665,7 +665,7 @@ struct BurnDriver BurnDrvLivequiz = {
 	"Live Quiz Show\0", NULL, "Andamiro Entertainment Co. Ltd.", "Andamiro Midas",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, livequizRomInfo, livequizRomName, NULL, NULL, LivequizInputInfo, LivequizDIPInfo,
+	NULL, livequizRomInfo, livequizRomName, NULL, NULL, NULL, NULL, LivequizInputInfo, LivequizDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x10000,
 	320, 224, 4, 3
 };

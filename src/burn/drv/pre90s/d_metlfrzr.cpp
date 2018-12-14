@@ -610,7 +610,7 @@ struct BurnDriver BurnDrvMetlfrzr = {
 	"Metal Freezer\0", NULL, "Seibu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, metlfrzrRomInfo, metlfrzrRomName, NULL, NULL, MetlfrzrInputInfo, MetlfrzrDIPInfo,
+	NULL, metlfrzrRomInfo, metlfrzrRomName, NULL, NULL, NULL, NULL, MetlfrzrInputInfo, MetlfrzrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

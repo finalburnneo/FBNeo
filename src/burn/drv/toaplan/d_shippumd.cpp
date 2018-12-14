@@ -665,7 +665,7 @@ struct BurnDriver BurnDrvShippuMD = {
 	"Shippu Mahou Daisakusen - Kingdom Grandprix\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
 	L"\u75BE\u98A8\u9B54\u6CD5\u5927\u4F5C\u6226 (Shippu Mahou Daisakusen - Kingdom Grandprix Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, shippumdRomInfo, shippumdRomName, NULL, NULL, shippumdInputInfo, shippumdDIPInfo,
+	NULL, shippumdRomInfo, shippumdRomName, NULL, NULL, NULL, NULL, shippumdInputInfo, shippumdDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -675,7 +675,7 @@ struct BurnDriver BurnDrvKingdmGP = {
 	"Kingdom Grandprix (World)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, kingdmgpRomInfo, kingdmgpRomName, NULL, NULL, shippumdInputInfo, kingdmgpDIPInfo,
+	NULL, kingdmgpRomInfo, kingdmgpRomName, NULL, NULL, NULL, NULL, shippumdInputInfo, kingdmgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

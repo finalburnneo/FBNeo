@@ -1335,7 +1335,7 @@ struct BurnDriver BurnDrvFastfred = {
 	"Fast Freddie\0", NULL, "Kaneko (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, fastfredRomInfo, fastfredRomName, NULL, NULL, CommonInputInfo, FastfredDIPInfo,
+	NULL, fastfredRomInfo, fastfredRomName, NULL, NULL, NULL, NULL, CommonInputInfo, FastfredDIPInfo,
 	fastfredInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1468,7 +1468,7 @@ struct BurnDriver BurnDrvFlyboy = {
 	"Fly-Boy\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, flyboyRomInfo, flyboyRomName, NULL, NULL, CommonInputInfo, FlyboyDIPInfo,
+	NULL, flyboyRomInfo, flyboyRomName, NULL, NULL, NULL, NULL, CommonInputInfo, FlyboyDIPInfo,
 	flyboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1513,7 +1513,7 @@ struct BurnDriver BurnDrvFlyboyb = {
 	"Fly-Boy (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, flyboybRomInfo, flyboybRomName, NULL, NULL, CommonInputInfo, FlyboyDIPInfo,
+	NULL, flyboybRomInfo, flyboybRomName, NULL, NULL, NULL, NULL, CommonInputInfo, FlyboyDIPInfo,
 	fastfredInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1552,7 +1552,7 @@ struct BurnDriver BurnDrvJumpcoas = {
 	"Jump Coaster (World)\0", NULL, "Kaneko Elc. Co", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, jumpcoasRomInfo, jumpcoasRomName, NULL, NULL, CommonInputInfo, JumpcoasDIPInfo,
+	NULL, jumpcoasRomInfo, jumpcoasRomName, NULL, NULL, NULL, NULL, CommonInputInfo, JumpcoasDIPInfo,
 	jumpcoasInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1584,7 +1584,7 @@ struct BurnDriver BurnDrvJumpcoasa = {
 	"Jump Coaster\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, jumpcoasaRomInfo, jumpcoasaRomName, NULL, NULL, CommonInputInfo, JumpcoasDIPInfo,
+	NULL, jumpcoasaRomInfo, jumpcoasaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, JumpcoasDIPInfo,
 	jumpcoasInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1616,7 +1616,7 @@ struct BurnDriver BurnDrvJumpcoast = {
 	"Jump Coaster (Taito)\0", NULL, "Kaneko (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, jumpcoastRomInfo, jumpcoastRomName, NULL, NULL, CommonInputInfo, JumpcoasDIPInfo,
+	NULL, jumpcoastRomInfo, jumpcoastRomName, NULL, NULL, NULL, NULL, CommonInputInfo, JumpcoasDIPInfo,
 	jumpcoasInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1664,7 +1664,7 @@ struct BurnDriver BurnDrvBoggy84 = {
 	"Boggy '84\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, boggy84RomInfo, boggy84RomName, NULL, NULL, TwoBtnInputInfo, Boggy84DIPInfo,
+	NULL, boggy84RomInfo, boggy84RomName, NULL, NULL, NULL, NULL, TwoBtnInputInfo, Boggy84DIPInfo,
 	boggy84Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1694,7 +1694,7 @@ struct BurnDriver BurnDrvBoggy84b = {
 	"Boggy '84 (bootleg)\0", NULL, "bootleg (Eddie's Games)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, boggy84bRomInfo, boggy84bRomName, NULL, NULL, TwoBtnInputInfo, Boggy84DIPInfo,
+	NULL, boggy84bRomInfo, boggy84bRomName, NULL, NULL, NULL, NULL, TwoBtnInputInfo, Boggy84DIPInfo,
 	boggy84bInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1740,7 +1740,7 @@ struct BurnDriver BurnDrvRedrobin = {
 	"Red Robin\0", NULL, "Elettronolo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, redrobinRomInfo, redrobinRomName, NULL, NULL, TwoBtnInputInfo, RedrobinDIPInfo,
+	NULL, redrobinRomInfo, redrobinRomName, NULL, NULL, NULL, NULL, TwoBtnInputInfo, RedrobinDIPInfo,
 	fastfredInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1798,7 +1798,7 @@ struct BurnDriver BurnDrvImago = {
 	"Imago (cocktail set)\0", NULL, "Acom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, imagoRomInfo, imagoRomName, NULL, NULL, ImagoInputInfo, ImagoDIPInfo,
+	NULL, imagoRomInfo, imagoRomName, NULL, NULL, NULL, NULL, ImagoInputInfo, ImagoDIPInfo,
 	imagoInit, DrvExit, DrvFrame, ImagoDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1842,7 +1842,7 @@ struct BurnDriver BurnDrvImagoa = {
 	"Imago (no cocktail set)\0", NULL, "Acom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, imagoaRomInfo, imagoaRomName, NULL, NULL, ImagoInputInfo, ImagoDIPInfo,
+	NULL, imagoaRomInfo, imagoaRomName, NULL, NULL, NULL, NULL, ImagoInputInfo, ImagoDIPInfo,
 	imagoInit, DrvExit, DrvFrame, ImagoDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

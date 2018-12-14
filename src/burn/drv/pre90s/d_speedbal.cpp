@@ -647,7 +647,7 @@ struct BurnDriver BurnDrvSpeedbal = {
 	"Speed Ball\0", NULL, "Tecfri / Desystem S.A.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
-	NULL, speedbalRomInfo, speedbalRomName, NULL, NULL, SpeedbalInputInfo, SpeedbalDIPInfo,
+	NULL, speedbalRomInfo, speedbalRomName, NULL, NULL, NULL, NULL, SpeedbalInputInfo, SpeedbalDIPInfo,
 	SpeedbalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 256, 3, 4
 };
@@ -685,7 +685,7 @@ struct BurnDriver BurnDrvMusicbal = {
 	"Music Ball\0", NULL, "Tecfri / Desystem S.A.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
-	NULL, musicbalRomInfo, musicbalRomName, NULL, NULL, SpeedbalInputInfo, MusicbalDIPInfo,
+	NULL, musicbalRomInfo, musicbalRomName, NULL, NULL, NULL, NULL, SpeedbalInputInfo, MusicbalDIPInfo,
 	MusicbalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 256, 3, 4
 };

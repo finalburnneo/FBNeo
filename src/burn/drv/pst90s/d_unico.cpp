@@ -1885,7 +1885,7 @@ struct BurnDriver BurnDrvBurglarx = {
 	"Burglar X\0", NULL, "Unico", "Unico",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, BurglarxRomInfo, BurglarxRomName, NULL, NULL, BurglarxInputInfo, BurglarxDIPInfo,
+	NULL, BurglarxRomInfo, BurglarxRomName, NULL, NULL, NULL, NULL, BurglarxInputInfo, BurglarxDIPInfo,
 	BurglarxInit, DrvExit, DrvFrame, DrvDraw, BurglarxScan,
 	NULL, 0x2000, 384, 224, 4, 3
 };
@@ -1895,7 +1895,7 @@ struct BurnDriver BurnDrvZeropnt = {
 	"Zero Point (set 1)\0", NULL, "Unico", "Unico",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, ZeropntRomInfo, ZeropntRomName, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
+	NULL, ZeropntRomInfo, ZeropntRomName, NULL, NULL, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
 	ZeropntInit, DrvExit, DrvFrame, DrvDraw, ZeropntScan,
 	NULL, 0x2000, 384, 224, 4, 3
 };
@@ -1905,7 +1905,7 @@ struct BurnDriver BurnDrvZeropntj = {
 	"Zero Point (Japan)\0", NULL, "Unico", "Unico",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, ZeropntjRomInfo, ZeropntjRomName, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
+	NULL, ZeropntjRomInfo, ZeropntjRomName, NULL, NULL, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
 	ZeropntInit, DrvExit, DrvFrame, DrvDraw, ZeropntScan,
 	NULL, 0x2000, 384, 224, 4, 3
 };
@@ -1915,7 +1915,7 @@ struct BurnDriver BurnDrvZeropnta = {
 	"Zero Point (set 2)\0", NULL, "Unico", "Unico",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, ZeropntaRomInfo, ZeropntaRomName, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
+	NULL, ZeropntaRomInfo, ZeropntaRomName, NULL, NULL, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
 	ZeropntInit, DrvExit, DrvFrame, DrvDraw, ZeropntScan,
 	NULL, 0x2000, 384, 224, 4, 3
 };
@@ -1925,7 +1925,7 @@ struct BurnDriver BurnDrvZeropnt2 = {
 	"Zero Point 2\0", NULL, "Unico", "Unico",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, Zeropnt2RomInfo, Zeropnt2RomName, NULL, NULL, ZeropntInputInfo, Zeropnt2DIPInfo,
+	NULL, Zeropnt2RomInfo, Zeropnt2RomName, NULL, NULL, NULL, NULL, ZeropntInputInfo, Zeropnt2DIPInfo,
 	Zeropnt2Init, Zeropnt2Exit, Zeropnt2Frame, Zeropnt2Draw, Zeropnt2Scan,
 	NULL, 0x2000, 384, 224, 4, 3
 };

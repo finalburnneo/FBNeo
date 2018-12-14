@@ -971,7 +971,7 @@ struct BurnDriver BurnDrvSauro = {
 	"Sauro\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sauroRomInfo, sauroRomName, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	NULL, sauroRomInfo, sauroRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1011,7 +1011,7 @@ struct BurnDriver BurnDrvSaurop = {
 	"Sauro (Philko license)\0", NULL, "Tecfri (Philko license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sauropRomInfo, sauropRomName, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	NULL, sauropRomInfo, sauropRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1051,7 +1051,7 @@ struct BurnDriver BurnDrvSaurorr = {
 	"Sauro (Recreativos Real S.A. license)\0", NULL, "Tecfri (Recreativos Real S.A. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, saurorrRomInfo, saurorrRomName, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	NULL, saurorrRomInfo, saurorrRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1091,7 +1091,7 @@ struct BurnDriver BurnDrvSaurob = {
 	"Sauro (bootleg)\0", "Missing speech is normal", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, saurobRomInfo, saurobRomName, NULL, NULL, TecfriInputInfo, SaurobDIPInfo,
+	NULL, saurobRomInfo, saurobRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, SaurobDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1126,7 +1126,7 @@ struct BurnDriver BurnDrvTrckydoc = {
 	"Tricky Doc (set 1)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, trckydocRomInfo, trckydocRomName, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	NULL, trckydocRomInfo, trckydocRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	TrckydocInit, DrvExit, TrckydocFrame, TrckydocDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1161,7 +1161,7 @@ struct BurnDriver BurnDrvTrckydoca = {
 	"Tricky Doc (set 2)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, trckydocaRomInfo, trckydocaRomName, NULL, NULL, TecfriInputInfo, TrckydocaDIPInfo,
+	NULL, trckydocaRomInfo, trckydocaRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TrckydocaDIPInfo,
 	TrckydocInit, DrvExit, TrckydocFrame, TrckydocDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };

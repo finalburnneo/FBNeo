@@ -712,7 +712,7 @@ struct BurnDriver BurnDrvGhox = {
 	"Ghox (spinner)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
-	NULL, ghoxRomInfo, ghoxRomName, NULL, NULL, GhoxInputInfo, GhoxDIPInfo,
+	NULL, ghoxRomInfo, ghoxRomName, NULL, NULL, NULL, NULL, GhoxInputInfo, GhoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -738,7 +738,7 @@ struct BurnDriver BurnDrvGhoxj = {
 	"Ghox (joystick)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
-	NULL, ghoxjRomInfo, ghoxjRomName, NULL, NULL, GhoxInputInfo, GhoxDIPInfo,
+	NULL, ghoxjRomInfo, ghoxjRomName, NULL, NULL, NULL, NULL, GhoxInputInfo, GhoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -764,7 +764,7 @@ struct BurnDriver BurnDrvGhoxjo = {
 	"Ghox (joystick, older)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
-	NULL, ghoxjoRomInfo, ghoxjoRomName, NULL, NULL, GhoxInputInfo, GhoxjoDIPInfo,
+	NULL, ghoxjoRomInfo, ghoxjoRomName, NULL, NULL, NULL, NULL, GhoxInputInfo, GhoxjoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

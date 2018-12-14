@@ -879,7 +879,7 @@ struct BurnDriver BurnDrvPacland = {
 	"Pac-Land (World)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, paclandRomInfo, paclandRomName, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
+	NULL, paclandRomInfo, paclandRomName, NULL, NULL, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xc00 * 4,
 	288, 224, 4, 3
 };
@@ -922,7 +922,7 @@ struct BurnDriver BurnDrvPaclandj = {
 	"Pac-Land (Japan new)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, paclandjRomInfo, paclandjRomName, NULL, NULL,PaclandInputInfo, PaclandDIPInfo,
+	NULL, paclandjRomInfo, paclandjRomName, NULL, NULL, NULL, NULL,PaclandInputInfo, PaclandDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xc00 * 4,
 	288, 224, 4, 3
 };
@@ -965,7 +965,7 @@ struct BurnDriver BurnDrvPaclandjo = {
 	"Pac-Land (Japan old)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, paclandjoRomInfo, paclandjoRomName, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
+	NULL, paclandjoRomInfo, paclandjoRomName, NULL, NULL, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xc00 * 4,
 	288, 224, 4, 3
 };
@@ -1008,7 +1008,7 @@ struct BurnDriver BurnDrvPaclandjo2 = {
 	"Pac-Land (Japan older)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, paclandjo2RomInfo, paclandjo2RomName, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
+	NULL, paclandjo2RomInfo, paclandjo2RomName, NULL, NULL, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xc00 * 4,
 	288, 224, 4, 3
 };
@@ -1051,7 +1051,7 @@ struct BurnDriver BurnDrvPaclandm = {
 	"Pac-Land (Midway)\0", NULL, "Namco (Bally Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, paclandmRomInfo, paclandmRomName, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
+	NULL, paclandmRomInfo, paclandmRomName, NULL, NULL, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xc00 * 4,
 	288, 224, 4, 3
 };
@@ -1094,7 +1094,7 @@ struct BurnDriver BurnDrvPaclandm2 = {
 	"Pac-Land (Bally-Midway)\0", NULL, "Namco (Bally Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, paclandm2RomInfo, paclandm2RomName, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
+	NULL, paclandm2RomInfo, paclandm2RomName, NULL, NULL, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xc00 * 4,
 	288, 224, 4, 3
 };

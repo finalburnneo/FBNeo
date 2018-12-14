@@ -592,7 +592,7 @@ struct BurnDriver BurnDrvPooyan = {
 	"Pooyan\0", NULL, "Konami", "GX320",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, pooyanRomInfo, pooyanRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, pooyanRomInfo, pooyanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -628,7 +628,7 @@ struct BurnDriver BurnDrvPooyans = {
 	"Pooyan (Stern)\0", NULL, "[Konami] (Stern license)", "GX320",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, pooyansRomInfo, pooyansRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, pooyansRomInfo, pooyansRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -664,7 +664,7 @@ struct BurnDriver BurnDrvPootan = {
 	"Pootan\0", NULL, "bootleg", "GX320",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, pootanRomInfo, pootanRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, pootanRomInfo, pootanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

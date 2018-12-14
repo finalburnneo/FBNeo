@@ -705,7 +705,7 @@ struct BurnDriver BurnDrvCrospang = {
 	"Cross Pang\0", NULL, "F2 System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, crospangRomInfo, crospangRomName, NULL, NULL, CrospangInputInfo, CrospangDIPInfo,
+	NULL, crospangRomInfo, crospangRomName, NULL, NULL, NULL, NULL, CrospangInputInfo, CrospangDIPInfo,
 	crospangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };
@@ -743,7 +743,7 @@ struct BurnDriver BurnDrvHeuksun = {
 	"Heuk Sun Baek Sa (Korea)\0", NULL, "Oksan / F2 System", "Miscellaneous",
 	L"\uD751\uC120\uBC31\uC0AC (Korea)\0Heuk Sun Baek Sa\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, heuksunRomInfo, heuksunRomName, NULL, NULL, CrospangInputInfo, HeuksunDIPInfo,
+	NULL, heuksunRomInfo, heuksunRomName, NULL, NULL, NULL, NULL, CrospangInputInfo, HeuksunDIPInfo,
 	heuksunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };
@@ -785,7 +785,7 @@ struct BurnDriver BurnDrvBestri = {
 	"Bestri (Korea)\0", NULL, "F2 System", "Miscellaneous",
 	L"Bestri\0\uBCA0\uC2A4\uD2B8\uB77C\uC774 (Korea)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
-	NULL, bestriRomInfo, bestriRomName, NULL, NULL, CrospangInputInfo, BestriDIPInfo,
+	NULL, bestriRomInfo, bestriRomName, NULL, NULL, NULL, NULL, CrospangInputInfo, BestriDIPInfo,
 	bestriInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };

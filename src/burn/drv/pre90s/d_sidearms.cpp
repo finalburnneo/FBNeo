@@ -1501,7 +1501,7 @@ struct BurnDriver BurnDrvSidearms = {
 	"Side Arms - Hyper Dyne (World, 861129)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sidearmsRomInfo, sidearmsRomName, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
+	NULL, sidearmsRomInfo, sidearmsRomName, NULL, NULL, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
 	SidearmsInit, DrvExit, DrvFrame, SidearmsDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1554,7 +1554,7 @@ struct BurnDriver BurnDrvSidearmsu = {
 	"Side Arms - Hyper Dyne (US, 861202)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sidearmsuRomInfo, sidearmsuRomName, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
+	NULL, sidearmsuRomInfo, sidearmsuRomName, NULL, NULL, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
 	SidearmsInit, DrvExit, DrvFrame, SidearmsDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1607,7 +1607,7 @@ struct BurnDriver BurnDrvSidearmsur1 = {
 	"Side Arms - Hyper Dyne (US, 861128)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sidearmsur1RomInfo, sidearmsur1RomName, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
+	NULL, sidearmsur1RomInfo, sidearmsur1RomName, NULL, NULL, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
 	SidearmsInit, DrvExit, DrvFrame, SidearmsDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1660,7 +1660,7 @@ struct BurnDriver BurnDrvSidearmsj = {
 	"Side Arms - Hyper Dyne (Japan, 861128)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sidearmsjRomInfo, sidearmsjRomName, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
+	NULL, sidearmsjRomInfo, sidearmsjRomName, NULL, NULL, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
 	SidearmsInit, DrvExit, DrvFrame, SidearmsDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1700,7 +1700,7 @@ struct BurnDriver BurnDrvTurtship = {
 	"Turtle Ship (North America)\0", NULL, "Philko (Sharp Image license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, turtshipRomInfo, turtshipRomName, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
+	NULL, turtshipRomInfo, turtshipRomName, NULL, NULL, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
 	TurtshipInit, DrvExit, DrvFrame, TurtshipDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1740,7 +1740,7 @@ struct BurnDriver BurnDrvTurtshipj = {
 	"Turtle Ship (Japan)\0", NULL, "Philko (Pacific Games license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, turtshipjRomInfo, turtshipjRomName, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
+	NULL, turtshipjRomInfo, turtshipjRomName, NULL, NULL, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
 	TurtshipInit, DrvExit, DrvFrame, TurtshipDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1780,7 +1780,7 @@ struct BurnDriver BurnDrvTurtshipk = {
 	"Turtle Ship (Korea)\0", NULL, "Philko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, turtshipkRomInfo, turtshipkRomName, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
+	NULL, turtshipkRomInfo, turtshipkRomName, NULL, NULL, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
 	TurtshipkInit, DrvExit, DrvFrame, TurtshipDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1820,7 +1820,7 @@ struct BurnDriver BurnDrvTurtshipko = {
 	"Turtle Ship (Korea, older)\0", NULL, "Philko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, turtshipkoRomInfo, turtshipkoRomName, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
+	NULL, turtshipkoRomInfo, turtshipkoRomName, NULL, NULL, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
 	TurtshipInit, DrvExit, DrvFrame, TurtshipDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1860,7 +1860,7 @@ struct BurnDriver BurnDrvTurtshipkn = {
 	"Turtle Ship (Korea, 88/9)\0", NULL, "Philko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, turtshipknRomInfo, turtshipknRomName, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
+	NULL, turtshipknRomInfo, turtshipknRomName, NULL, NULL, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
 	TurtshipInit, DrvExit, DrvFrame, TurtshipDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -1910,7 +1910,7 @@ struct BurnDriver BurnDrvDyger = {
 	"Dyger (Korea set 1)\0", NULL, "Philko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dygerRomInfo, dygerRomName, NULL, NULL, DygerInputInfo, DygerDIPInfo,
+	NULL, dygerRomInfo, dygerRomName, NULL, NULL, NULL, NULL, DygerInputInfo, DygerDIPInfo,
 	DygerInit, DrvExit, DrvFrame, DygerDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 384, 3, 4
 };
@@ -1950,7 +1950,7 @@ struct BurnDriver BurnDrvDygera = {
 	"Dyger (Korea set 2)\0", NULL, "Philko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dygeraRomInfo, dygeraRomName, NULL, NULL, DygerInputInfo, DygerDIPInfo,
+	NULL, dygeraRomInfo, dygeraRomName, NULL, NULL, NULL, NULL, DygerInputInfo, DygerDIPInfo,
 	DygerInit, DrvExit, DrvFrame, DygerDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 384, 3, 4
 };
@@ -1989,7 +1989,7 @@ struct BurnDriver BurnDrvTwinfalc = {
 	"Twin Falcons\0", NULL, "Philko (Poara Enterprises license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, twinfalcRomInfo, twinfalcRomName, NULL, NULL, WhizzInputInfo, WhizzDIPInfo,
+	NULL, twinfalcRomInfo, twinfalcRomName, NULL, NULL, NULL, NULL, WhizzInputInfo, WhizzDIPInfo,
 	WhizzInit, DrvExit, DrvFrame, DygerDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
@@ -2028,7 +2028,7 @@ struct BurnDriver BurnDrvWhizz = {
 	"Whizz\0", NULL, "Philko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, whizzRomInfo, whizzRomName, NULL, NULL, WhizzInputInfo, WhizzDIPInfo,
+	NULL, whizzRomInfo, whizzRomName, NULL, NULL, NULL, NULL, WhizzInputInfo, WhizzDIPInfo,
 	WhizzInit, DrvExit, DrvFrame, DygerDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };

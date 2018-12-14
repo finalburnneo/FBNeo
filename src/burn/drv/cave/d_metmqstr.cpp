@@ -820,7 +820,7 @@ struct BurnDriver BurnDrvmetmqstr = {
 	"Metamoqester (International)\0", NULL, "Banpresto / Pandorabox", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, 0,
-	NULL, metmqstrRomInfo, metmqstrRomName, NULL, NULL, metmqstrInputInfo, NULL,
+	NULL, metmqstrRomInfo, metmqstrRomName, NULL, NULL, NULL, NULL, metmqstrInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 384, 240, 4, 3
 };
@@ -830,7 +830,7 @@ struct BurnDriver BurnDrvnmaster = {
 	"Oni - The Ninja Master (Japan)\0", NULL, "Banpresto / Pandorabox", "Cave",
 	L"\u7A4F\u5FCD - The Ninja Master (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, 0,
-	NULL, nmasterRomInfo, nmasterRomName, NULL, NULL, metmqstrInputInfo, NULL,
+	NULL, nmasterRomInfo, nmasterRomName, NULL, NULL, NULL, NULL, metmqstrInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 384, 240, 4, 3
 };

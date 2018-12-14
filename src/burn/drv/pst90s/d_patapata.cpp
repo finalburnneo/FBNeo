@@ -450,7 +450,7 @@ struct BurnDriver BurnDrvPatapata = {
 	"Pata Pata Panic\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
-	NULL, patapataRomInfo, patapataRomName, NULL, NULL, PatapataInputInfo, PatapataDIPInfo,
+	NULL, patapataRomInfo, patapataRomName, NULL, NULL, NULL, NULL, PatapataInputInfo, PatapataDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	480, 352, 4, 3
 };

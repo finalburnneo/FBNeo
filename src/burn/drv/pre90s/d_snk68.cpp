@@ -1640,7 +1640,7 @@ struct BurnDriver BurnDrvpow = {
 	"P.O.W. - Prisoners of War (US version 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, powRomInfo, powRomName, NULL, NULL, DrvInputInfo, PowDIPInfo,
+	NULL, powRomInfo, powRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PowDIPInfo,
 	powInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -1687,7 +1687,7 @@ struct BurnDriver BurnDrvpowj = {
 	"Datsugoku - Prisoners of War (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, powjRomInfo, powjRomName, NULL, NULL, DrvInputInfo, PowjDIPInfo,
+	NULL, powjRomInfo, powjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PowjDIPInfo,
 	powInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -1729,7 +1729,7 @@ struct BurnDriver BurnDrvsearchar = {
 	"SAR - Search And Rescue (World)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, searcharRomInfo, searcharRomName, NULL, NULL, IkariInputInfo, SarDIPInfo,
+	NULL, searcharRomInfo, searcharRomName, NULL, NULL, NULL, NULL, IkariInputInfo, SarDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 224, 256, 3, 4
 };
@@ -1766,7 +1766,7 @@ struct BurnDriver BurnDrvsercharu = {
 	"SAR - Search And Rescue (US)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, sercharuRomInfo, sercharuRomName, NULL, NULL, IkariInputInfo, SarDIPInfo,
+	NULL, sercharuRomInfo, sercharuRomName, NULL, NULL, NULL, NULL, IkariInputInfo, SarDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 224, 256, 3, 4
 };
@@ -1803,7 +1803,7 @@ struct BurnDriver BurnDrvsercharj = {
 	"SAR - Search And Rescue (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, sercharjRomInfo, sercharjRomName, NULL, NULL, IkariInputInfo, SarDIPInfo,
+	NULL, sercharjRomInfo, sercharjRomName, NULL, NULL, NULL, NULL, IkariInputInfo, SarDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 224, 256, 3, 4
 };
@@ -1846,7 +1846,7 @@ struct BurnDriver BurnDrvstreetsm = {
 	"Street Smart (US version 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, streetsmRomInfo, streetsmRomName, NULL, NULL, DrvInputInfo, StreetsmDIPInfo,
+	NULL, streetsmRomInfo, streetsmRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsmDIPInfo,
 	streetsmInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -1881,7 +1881,7 @@ struct BurnDriver BurnDrvstreets1 = {
 	"Street Smart (US version 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, streets1RomInfo, streets1RomName, NULL, NULL, DrvInputInfo, StreetsmDIPInfo,
+	NULL, streets1RomInfo, streets1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsmDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -1916,7 +1916,7 @@ struct BurnDriver BurnDrvstreetsw = {
 	"Street Smart (World version 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, streetswRomInfo, streetswRomName, NULL, NULL, DrvInputInfo, StreetsjDIPInfo,
+	NULL, streetswRomInfo, streetswRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsjDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -1951,7 +1951,7 @@ struct BurnDriver BurnDrvstreetsj = {
 	"Street Smart (Japan version 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, streetsjRomInfo, streetsjRomName, NULL, NULL, DrvInputInfo, StreetsjDIPInfo,
+	NULL, streetsjRomInfo, streetsjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsjDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -2006,7 +2006,7 @@ struct BurnDriver BurnDrvikari3 = {
 	"Ikari III - The Rescue (8-Way Joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, ikari3RomInfo, ikari3RomName, NULL, NULL, IkariInputInfo, IkariDIPInfo,
+	NULL, ikari3RomInfo, ikari3RomName, NULL, NULL, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -2056,7 +2056,7 @@ struct BurnDriver BurnDrvikari3u = {
 	"Ikari III - The Rescue (US, Rotary Joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, ikari3uRomInfo, ikari3uRomName, NULL, NULL, IkariInputInfo, IkariDIPInfo,
+	NULL, ikari3uRomInfo, ikari3uRomName, NULL, NULL, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -2106,7 +2106,7 @@ struct BurnDriver BurnDrvikari3j = {
 	"Ikari Three - The Rescue (Japan, Rotary Joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, ikari3jRomInfo, ikari3jRomName, NULL, NULL, IkariInputInfo, IkariDIPInfo,
+	NULL, ikari3jRomInfo, ikari3jRomName, NULL, NULL, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -2144,7 +2144,7 @@ struct BurnDriver BurnDrvikari3k = {
 	"Ikari III - The Rescue (Korea, 8-Way Joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, ikari3kRomInfo, ikari3kRomName, NULL, NULL, IkariInputInfo, IkariDIPInfo,
+	NULL, ikari3kRomInfo, ikari3kRomName, NULL, NULL, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };

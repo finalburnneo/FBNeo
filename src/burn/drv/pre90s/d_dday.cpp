@@ -675,7 +675,7 @@ struct BurnDriver BurnDrvDday = {
 	"D-Day\0", NULL, "Olympia", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, ddayRomInfo, ddayRomName, NULL, NULL, DdayInputInfo, DdayDIPInfo,
+	NULL, ddayRomInfo, ddayRomName, NULL, NULL, NULL, NULL, DdayInputInfo, DdayDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -716,7 +716,7 @@ struct BurnDriver BurnDrvDdayc = {
 	"D-Day (Centuri)\0", NULL, "Olympia (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, ddaycRomInfo, ddaycRomName, NULL, NULL, DdaycInputInfo, DdaycDIPInfo,
+	NULL, ddaycRomInfo, ddaycRomName, NULL, NULL, NULL, NULL, DdaycInputInfo, DdaycDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };

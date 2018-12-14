@@ -2091,7 +2091,7 @@ struct BurnDriver BurnDrvGforce2 = {
 	"Galaxy Force 2\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, Gforce2RomInfo, Gforce2RomName, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
+	NULL, Gforce2RomInfo, Gforce2RomName, NULL, NULL, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
 	Gforce2Init, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2101,7 +2101,7 @@ struct BurnDriver BurnDrvGforce2sd = {
 	"Galaxy Force 2 (Super Deluxe unit)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, Gforce2sdRomInfo, Gforce2sdRomName, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
+	NULL, Gforce2sdRomInfo, Gforce2sdRomName, NULL, NULL, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
 	Gforce2Init, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2111,7 +2111,7 @@ struct BurnDriver BurnDrvGforce2j = {
 	"Galaxy Force 2 (Japan)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, Gforce2jRomInfo, Gforce2jRomName, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
+	NULL, Gforce2jRomInfo, Gforce2jRomName, NULL, NULL, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
 	Gforce2Init, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2121,7 +2121,7 @@ struct BurnDriver BurnDrvGforce2ja = {
 	"Galaxy Force 2 (Japan, Rev A)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, Gforce2jaRomInfo, Gforce2jaRomName, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
+	NULL, Gforce2jaRomInfo, Gforce2jaRomName, NULL, NULL, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
 	Gforce2Init, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2131,7 +2131,7 @@ struct BurnDriver BurnDrvGloc = {
 	"G-LOC Air Battle (World)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, GlocRomInfo, GlocRomName, NULL, NULL, GlocInputInfo, GlocDIPInfo,
+	NULL, GlocRomInfo, GlocRomName, NULL, NULL, NULL, NULL, GlocInputInfo, GlocDIPInfo,
 	GlocInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2141,7 +2141,7 @@ struct BurnDriver BurnDrvGlocu = {
 	"G-LOC Air Battle (US)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, GlocuRomInfo, GlocuRomName, NULL, NULL, GlocInputInfo, GlocDIPInfo,
+	NULL, GlocuRomInfo, GlocuRomName, NULL, NULL, NULL, NULL, GlocInputInfo, GlocDIPInfo,
 	GlocInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2151,7 +2151,7 @@ struct BurnDriver BurnDrvGlocr360 = {
 	"G-LOC R360\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, Glocr360RomInfo, Glocr360RomName, NULL, NULL, Glocr360InputInfo, Glocr360DIPInfo,
+	NULL, Glocr360RomInfo, Glocr360RomName, NULL, NULL, NULL, NULL, Glocr360InputInfo, Glocr360DIPInfo,
 	Glocr360Init, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2161,7 +2161,7 @@ struct BurnDriver BurnDrvPdrift = {
 	"Power Drift (World, Rev A)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
-	NULL, PdriftRomInfo, PdriftRomName, NULL, NULL, PdriftInputInfo, PdriftDIPInfo,
+	NULL, PdriftRomInfo, PdriftRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdriftDIPInfo,
 	PdriftInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2171,7 +2171,7 @@ struct BurnDriver BurnDrvPdrifta = {
 	"Power Drift (World)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
-	NULL, PdriftaRomInfo, PdriftaRomName, NULL, NULL, PdriftInputInfo, PdriftDIPInfo,
+	NULL, PdriftaRomInfo, PdriftaRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdriftDIPInfo,
 	PdriftInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2181,7 +2181,7 @@ struct BurnDriver BurnDrvPdrifte = {
 	"Power Drift (World, Earlier)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
-	NULL, PdrifteRomInfo, PdrifteRomName, NULL, NULL, PdriftInputInfo, PdrifteDIPInfo,
+	NULL, PdrifteRomInfo, PdrifteRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdrifteDIPInfo,
 	PdriftInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2191,7 +2191,7 @@ struct BurnDriver BurnDrvPdriftj = {
 	"Power Drift (Japan)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
-	NULL, PdriftjRomInfo, PdriftjRomName, NULL, NULL, PdriftInputInfo, PdriftjDIPInfo,
+	NULL, PdriftjRomInfo, PdriftjRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdriftjDIPInfo,
 	PdriftInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2201,7 +2201,7 @@ struct BurnDriver BurnDrvRchase = {
 	"Rail Chase (World)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, RchaseRomInfo, RchaseRomName, NULL, NULL, RchaseInputInfo, RchaseDIPInfo,
+	NULL, RchaseRomInfo, RchaseRomName, NULL, NULL, NULL, NULL, RchaseInputInfo, RchaseDIPInfo,
 	RchaseInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2211,7 +2211,7 @@ struct BurnDriver BurnDrvRchasej = {
 	"Rail Chase (Japan)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, RchasejRomInfo, RchasejRomName, NULL, NULL, RchaseInputInfo, RchaseDIPInfo,
+	NULL, RchasejRomInfo, RchasejRomName, NULL, NULL, NULL, NULL, RchaseInputInfo, RchaseDIPInfo,
 	RchaseInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2221,7 +2221,7 @@ struct BurnDriver BurnDrvStrkfgtr = {
 	"Strike Fighter (World)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, StrkfgtrRomInfo, StrkfgtrRomName, NULL, NULL, GlocInputInfo, StrkfgtrDIPInfo,
+	NULL, StrkfgtrRomInfo, StrkfgtrRomName, NULL, NULL, NULL, NULL, GlocInputInfo, StrkfgtrDIPInfo,
 	GlocInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
@@ -2231,7 +2231,7 @@ struct BurnDriver BurnDrvStrkfgtrj = {
 	"Strike Fighter (Japan)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
-	NULL, StrkfgtrjRomInfo, StrkfgtrjRomName, NULL, NULL, GlocInputInfo, StrkfgtrDIPInfo,
+	NULL, StrkfgtrjRomInfo, StrkfgtrjRomName, NULL, NULL, NULL, NULL, GlocInputInfo, StrkfgtrDIPInfo,
 	GlocInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };

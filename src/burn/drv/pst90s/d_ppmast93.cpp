@@ -506,7 +506,7 @@ struct BurnDriver BurnDrvPpmast93 = {
 	"Ping Pong Masters '93\0", NULL, "Electronic Devices S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_BALLPADDLE, 0,
-	NULL, ppmast93RomInfo, ppmast93RomName, NULL, NULL, Ppmast93InputInfo, Ppmast93DIPInfo,
+	NULL, ppmast93RomInfo, ppmast93RomName, NULL, NULL, NULL, NULL, Ppmast93InputInfo, Ppmast93DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 256, 4, 3
 };

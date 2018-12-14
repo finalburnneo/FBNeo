@@ -1437,7 +1437,7 @@ struct BurnDriver BurnDrvLasso = {
 	"Lasso\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, lassoRomInfo, lassoRomName, NULL, NULL, LassoInputInfo, LassoDIPInfo,
+	NULL, lassoRomInfo, lassoRomName, NULL, NULL, NULL, NULL, LassoInputInfo, LassoDIPInfo,
 	LassoInit, LassoExit, LassoFrame, LassoDraw, LassoScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -1470,7 +1470,7 @@ struct BurnDriver BurnDrvChameleo = {
 	"Chameleon\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, chameleoRomInfo, chameleoRomName, NULL, NULL, ChameleoInputInfo, ChameleoDIPInfo,
+	NULL, chameleoRomInfo, chameleoRomName, NULL, NULL, NULL, NULL, ChameleoInputInfo, ChameleoDIPInfo,
 	ChameleoInit, LassoExit, LassoFrame, LassoDraw, LassoScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -1505,7 +1505,7 @@ struct BurnDriver BurnDrvWwjgtin = {
 	"Wai Wai Jockey Gate-In!\0", NULL, "Jaleco / Casio", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, wwjgtinRomInfo, wwjgtinRomName, NULL, NULL, WwjgtinInputInfo, WwjgtinDIPInfo,
+	NULL, wwjgtinRomInfo, wwjgtinRomName, NULL, NULL, NULL, NULL, WwjgtinInputInfo, WwjgtinDIPInfo,
 	WwjgtinInit, LassoExit, LassoFrame, WwjgtinDraw, LassoScan, &DrvRecalc, 0x140,
 	256, 224, 4, 3
 };
@@ -1540,7 +1540,7 @@ struct BurnDriver BurnDrvPhotof = {
 	"Photo Finish (bootleg?)\0", NULL, "Jaleco / Casio", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, photofRomInfo, photofRomName, NULL, NULL, WwjgtinInputInfo, WwjgtinDIPInfo,
+	NULL, photofRomInfo, photofRomName, NULL, NULL, NULL, NULL, WwjgtinInputInfo, WwjgtinDIPInfo,
 	WwjgtinInit, LassoExit, LassoFrame, WwjgtinDraw, LassoScan, &DrvRecalc, 0x140,
 	256, 224, 4, 3
 };
@@ -1573,7 +1573,7 @@ struct BurnDriver BurnDrvPinbo = {
 	"Pinbo (set 1)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
-	NULL, pinboRomInfo, pinboRomName, NULL, NULL, PinboInputInfo, PinboDIPInfo,
+	NULL, pinboRomInfo, pinboRomName, NULL, NULL, NULL, NULL, PinboInputInfo, PinboDIPInfo,
 	PinboInit, LassoExit, PinboFrame, PinboDraw, LassoScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

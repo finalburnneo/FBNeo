@@ -614,7 +614,7 @@ struct BurnDriver BurnDrvSupbtime = {
 	"Super Burger Time (World, set 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, supbtimeRomInfo, supbtimeRomName, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
+	NULL, supbtimeRomInfo, supbtimeRomName, NULL, NULL, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
 	supbtimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -644,7 +644,7 @@ struct BurnDriver BurnDrvSupbtimea = {
 	"Super Burger Time (World, set 2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, supbtimeaRomInfo, supbtimeaRomName, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
+	NULL, supbtimeaRomInfo, supbtimeaRomName, NULL, NULL, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
 	supbtimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -674,7 +674,7 @@ struct BurnDriver BurnDrvSupbtimej = {
 	"Super Burger Time (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, supbtimejRomInfo, supbtimejRomName, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
+	NULL, supbtimejRomInfo, supbtimejRomName, NULL, NULL, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
 	supbtimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -709,7 +709,7 @@ struct BurnDriver BurnDrvChinatwn = {
 	"China Town (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
-	NULL, chinatwnRomInfo, chinatwnRomName, NULL, NULL, SupbtimeInputInfo, ChinatwnDIPInfo,
+	NULL, chinatwnRomInfo, chinatwnRomName, NULL, NULL, NULL, NULL, SupbtimeInputInfo, ChinatwnDIPInfo,
 	chinatwnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

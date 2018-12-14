@@ -555,7 +555,7 @@ struct BurnDriver BurnDrvBigstrkb = {
 	"Big Striker (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, bigstrkbRomInfo, bigstrkbRomName, NULL, NULL, BigstrkbInputInfo, BigstrkbDIPInfo,
+	NULL, bigstrkbRomInfo, bigstrkbRomName, NULL, NULL, NULL, NULL, BigstrkbInputInfo, BigstrkbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
@@ -595,7 +595,7 @@ struct BurnDriver BurnDrvBigstrkba = {
 	"Big Striker (bootleg w/Italian teams)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, bigstrkbaRomInfo, bigstrkbaRomName, NULL, NULL, BigstrkbInputInfo, BigstrkbDIPInfo,
+	NULL, bigstrkbaRomInfo, bigstrkbaRomName, NULL, NULL, NULL, NULL, BigstrkbInputInfo, BigstrkbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

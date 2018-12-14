@@ -1655,7 +1655,7 @@ struct BurnDriver BurnDrvArgus = {
 	"Argus\0", NULL, "NMK (Jaleco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, argusRomInfo, argusRomName, NULL, NULL, ArgusInputInfo, ArgusDIPInfo,
+	NULL, argusRomInfo, argusRomName, NULL, NULL, NULL, NULL, ArgusInputInfo, ArgusDIPInfo,
 	ArgusInit, DrvExit, DrvFrame, ArgusDraw, DrvScan, &DrvRecalc, 0x380,
 	224, 256, 3, 4
 };
@@ -1691,7 +1691,7 @@ struct BurnDriver BurnDrvValtric = {
 	"Valtric\0", NULL, "NMK (Jaleco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, valtricRomInfo, valtricRomName, NULL, NULL, ValtricInputInfo, ValtricDIPInfo,
+	NULL, valtricRomInfo, valtricRomName, NULL, NULL, NULL, NULL, ValtricInputInfo, ValtricDIPInfo,
 	ValtricInit, DrvExit, DrvFrame, ValtricDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 256, 3, 4
 };
@@ -1734,7 +1734,7 @@ struct BurnDriver BurnDrvButasan = {
 	"Butasan - Pig's & Bomber's (Japan, English)\0", NULL, "NMK (Jaleco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, butasanRomInfo, butasanRomName, NULL, NULL, ButasanInputInfo, ButasanDIPInfo,
+	NULL, butasanRomInfo, butasanRomName, NULL, NULL, NULL, NULL, ButasanInputInfo, ButasanDIPInfo,
 	ButasanInit, DrvExit, DrvFrame, ButasanDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3
 };
@@ -1777,7 +1777,7 @@ struct BurnDriver BurnDrvButasanj = {
 	"Butasan (Japan, Japanese)\0", NULL, "NMK (Jaleco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, butasanjRomInfo, butasanjRomName, NULL, NULL, ButasanInputInfo, ButasanDIPInfo,
+	NULL, butasanjRomInfo, butasanjRomName, NULL, NULL, NULL, NULL, ButasanInputInfo, ButasanDIPInfo,
 	ButasanInit, DrvExit, DrvFrame, ButasanDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3
 };

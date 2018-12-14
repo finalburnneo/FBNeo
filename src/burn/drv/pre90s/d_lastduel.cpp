@@ -1854,7 +1854,7 @@ struct BurnDriver BurnDrvLastduel = {
 	"Last Duel (US New Ver.)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, LastduelRomInfo, LastduelRomName, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
+	NULL, LastduelRomInfo, LastduelRomName, NULL, NULL, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
 	LastduelInit, DrvExit, LastduelFrame, LastduelDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -1864,7 +1864,7 @@ struct BurnDriver BurnDrvLastduelo = {
 	"Last Duel (US Old Ver.)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, LastdueloRomInfo, LastdueloRomName, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
+	NULL, LastdueloRomInfo, LastdueloRomName, NULL, NULL, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
 	LastduelInit, DrvExit, LastduelFrame, LastduelDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -1874,7 +1874,7 @@ struct BurnDriver BurnDrvLastduelj = {
 	"Last Duel (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, LastdueljRomInfo, LastdueljRomName, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
+	NULL, LastdueljRomInfo, LastdueljRomName, NULL, NULL, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
 	LastduelInit, DrvExit, LastduelFrame, LastduelDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -1884,7 +1884,7 @@ struct BurnDriver BurnDrvLsstduelb = {
 	"Last Duel (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, LastduelbRomInfo, LastduelbRomName, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
+	NULL, LastduelbRomInfo, LastduelbRomName, NULL, NULL, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
 	LastduelbInit, DrvExit, LastduelFrame, LastduelDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -1894,7 +1894,7 @@ struct BurnDriver BurnDrvMadgear = {
 	"Mad Gear (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
-	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, MadgearExit, DrvFrame, DrvDraw, MadgearScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -1904,7 +1904,7 @@ struct BurnDriver BurnDrvMadgearj = {
 	"Mad Gear (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
-	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, MadgearExit, DrvFrame, DrvDraw, MadgearScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -1914,7 +1914,7 @@ struct BurnDriver BurnDrvMadgearu = {
 	"Led Storm (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
-	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, MadgearExit, DrvFrame, DrvDraw, MadgearScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -1924,7 +1924,7 @@ struct BurnDriver BurnDrvLeds2011 = {
 	"Led Storm Rally 2011 (World)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
-	NULL, Leds2011RomInfo, Leds2011RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, Leds2011RomInfo, Leds2011RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	Leds2011Init, MadgearExit, DrvFrame, DrvDraw, MadgearScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -1934,7 +1934,7 @@ struct BurnDriver BurnDrvLeds2011u = {
 	"Led Storm Rally 2011 (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
-	NULL, Leds2011uRomInfo, Leds2011uRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, Leds2011uRomInfo, Leds2011uRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	Leds2011Init, MadgearExit, DrvFrame, DrvDraw, MadgearScan,
 	NULL, 0x800, 240, 384, 3, 4
 };

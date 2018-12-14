@@ -714,7 +714,7 @@ struct BurnDriver BurnDrvFirebatl = {
 	"Fire Battle\0", NULL, "Wood Place Inc. (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, firebatlRomInfo, firebatlRomName, NULL, NULL, FirebatlInputInfo, FirebatlDIPInfo,
+	NULL, firebatlRomInfo, firebatlRomName, NULL, NULL, NULL, NULL, FirebatlInputInfo, FirebatlDIPInfo,
 	FirebatlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4 
 };
@@ -764,7 +764,7 @@ struct BurnDriver BurnDrvClshroad = {
 	"Clash-Road\0", NULL, "Wood Place Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, clshroadRomInfo, clshroadRomName, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
+	NULL, clshroadRomInfo, clshroadRomName, NULL, NULL, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
 	ClshroadInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
 };
@@ -809,7 +809,7 @@ struct BurnDriver BurnDrvClshroadd = {
 	"Clash-Road (Data East license)\0", NULL, "Wood Place Inc. (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, clshroaddRomInfo, clshroaddRomName, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
+	NULL, clshroaddRomInfo, clshroaddRomName, NULL, NULL, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
 	ClshroadInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
 };
@@ -863,7 +863,7 @@ struct BurnDriver BurnDrvClshroads = {
 	"Clash-Road (Status license)\0", NULL, "Wood Place Inc. (Status Game Corp. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, clshroadsRomInfo, clshroadsRomName, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
+	NULL, clshroadsRomInfo, clshroadsRomName, NULL, NULL, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
 	ClshroadsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
 };

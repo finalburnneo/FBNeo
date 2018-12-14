@@ -150,6 +150,12 @@ struct BurnSampleInfo {
 	UINT32 nFlags;
 };
 
+struct BurnHDDInfo {
+	char szName[100];
+	UINT32 nLen;
+	UINT32 nCrc;
+};
+
 // Inputs
 
 #define BIT_DIGITAL			(1)

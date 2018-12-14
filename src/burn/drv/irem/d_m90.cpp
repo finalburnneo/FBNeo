@@ -1486,7 +1486,7 @@ struct BurnDriver BurnDrvHasamu = {
 	"Hasamu (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MAHJONG, 0,
-	NULL, hasamuRomInfo, hasamuRomName, NULL, NULL, p2commonInputInfo, HasamuDIPInfo,
+	NULL, hasamuRomInfo, hasamuRomName, NULL, NULL, NULL, NULL, p2commonInputInfo, HasamuDIPInfo,
 	hasamuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 240, 4, 3
 };
@@ -1523,7 +1523,7 @@ struct BurnDriver BurnDrvDynablst = {
 	"Dynablaster / Bomber Man\0", NULL, "Irem (licensed from Hudson Soft)", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IREM_M90, GBF_MAZE, 0,
-	NULL, dynablstRomInfo, dynablstRomName, NULL, NULL, p4commonInputInfo, DynablstDIPInfo,
+	NULL, dynablstRomInfo, dynablstRomName, NULL, NULL, NULL, NULL, p4commonInputInfo, DynablstDIPInfo,
 	dynablstInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
@@ -1553,7 +1553,7 @@ struct BurnDriver BurnDrvBombrman = {
 	"Bomber Man (Japan)\0", NULL, "Irem (licensed from Hudson Soft)", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
-	NULL, bombrmanRomInfo, bombrmanRomName, NULL, NULL, p2commonInputInfo, BombrmanDIPInfo,
+	NULL, bombrmanRomInfo, bombrmanRomName, NULL, NULL, NULL, NULL, p2commonInputInfo, BombrmanDIPInfo,
 	dynablstInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
@@ -1583,7 +1583,7 @@ struct BurnDriver BurnDrvAtompunk = {
 	"Atomic Punk (US)\0", NULL, "Irem America (licensed from Hudson Soft)", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M90, GBF_MAZE, 0,
-	NULL, atompunkRomInfo, atompunkRomName, NULL, NULL, p4commonInputInfo, AtompunkDIPInfo,
+	NULL, atompunkRomInfo, atompunkRomName, NULL, NULL, NULL, NULL, p4commonInputInfo, AtompunkDIPInfo,
 	dynablstInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
@@ -1620,7 +1620,7 @@ struct BurnDriver BurnDrvBbmanw = {
 	"Bomber Man World / New Dyna Blaster - Global Quest\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
-	NULL, bbmanwRomInfo, bbmanwRomName, NULL, NULL, p4commonInputInfo, BbmanwDIPInfo,
+	NULL, bbmanwRomInfo, bbmanwRomName, NULL, NULL, NULL, NULL, p4commonInputInfo, BbmanwDIPInfo,
 	bbmanwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
@@ -1650,7 +1650,7 @@ struct BurnDriver BurnDrvBbmanwj = {
 	"Bomber Man World (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
-	NULL, bbmanwjRomInfo, bbmanwjRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
+	NULL, bbmanwjRomInfo, bbmanwjRomName, NULL, NULL, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
 	bbmanwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
@@ -1680,7 +1680,7 @@ struct BurnDriver BurnDrvBbmanwja = {
 	"Bomber Man World (Japan, revised sound hardware)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
-	NULL, bbmanwjaRomInfo, bbmanwjaRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
+	NULL, bbmanwjaRomInfo, bbmanwjaRomName, NULL, NULL, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
 	bbmanwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
@@ -1710,7 +1710,7 @@ struct BurnDriver BurnDrvNewapunk = {
 	"New Atomic Punk - Global Quest (US)\0", NULL, "Irem America", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
-	NULL, newapunkRomInfo, newapunkRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
+	NULL, newapunkRomInfo, newapunkRomName, NULL, NULL, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
 	bbmanwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
@@ -1750,7 +1750,7 @@ struct BurnDriver BurnDrvQuizf1 = {
 	"Quiz F1 1-2 Finish (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_QUIZ, 0,
-	NULL, quizf1RomInfo, quizf1RomName, NULL, NULL, Quizf1InputInfo, Quizf1DIPInfo,
+	NULL, quizf1RomInfo, quizf1RomName, NULL, NULL, NULL, NULL, Quizf1InputInfo, Quizf1DIPInfo,
 	quizf1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 240, 4, 3
 };
@@ -1788,7 +1788,7 @@ struct BurnDriver BurnDrvRiskchal = {
 	"Risky Challenge\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
-	NULL, riskchalRomInfo, riskchalRomName, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,
+	NULL, riskchalRomInfo, riskchalRomName, NULL, NULL, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,
 	riskchalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
@@ -1818,7 +1818,7 @@ struct BurnDriver BurnDrvGussun = {
 	"Gussun Oyoyo (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
-	NULL, gussunRomInfo, gussunRomName, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,
+	NULL, gussunRomInfo, gussunRomName, NULL, NULL, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,
 	riskchalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
@@ -1853,7 +1853,7 @@ struct BurnDriver BurnDrvMatchit2 = {
 	"Match It II\0", NULL, "Tamtex", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
-	NULL, matchit2RomInfo, matchit2RomName, NULL, NULL, Matchit2InputInfo, Matchit2DIPInfo,
+	NULL, matchit2RomInfo, matchit2RomName, NULL, NULL, NULL, NULL, Matchit2InputInfo, Matchit2DIPInfo,
 	matchit2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
@@ -1881,7 +1881,7 @@ struct BurnDriver BurnDrvShisen2 = {
 	"Shisensho II\0", NULL, "Tamtex", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
-	NULL, shisen2RomInfo, shisen2RomName, NULL, NULL, Matchit2InputInfo, Shisen2DIPInfo,
+	NULL, shisen2RomInfo, shisen2RomName, NULL, NULL, NULL, NULL, Matchit2InputInfo, Shisen2DIPInfo,
 	matchit2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };

@@ -648,7 +648,7 @@ struct BurnDriver BurnDrvarabian = {
 	"Arabian\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, arabianRomInfo, arabianRomName, NULL, NULL, ArabianInputInfo, ArabianDIPInfo,
+	NULL, arabianRomInfo, arabianRomName, NULL, NULL, NULL, NULL, ArabianInputInfo, ArabianDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	234, 256, 3, 4
 };
@@ -677,7 +677,7 @@ struct BurnDriver BurnDrvarabiana = {
 	"Arabian (Atari)\0", NULL, "[Sun Electronics] (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, arabianaRomInfo, arabianaRomName, NULL, NULL, ArabianInputInfo, ArabianaDIPInfo,
+	NULL, arabianaRomInfo, arabianaRomName, NULL, NULL, NULL, NULL, ArabianInputInfo, ArabianaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	234, 256, 3, 4
 };

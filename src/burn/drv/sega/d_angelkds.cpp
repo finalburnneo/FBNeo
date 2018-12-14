@@ -970,7 +970,7 @@ struct BurnDriver BurnDrvAngelkds = {
 	"Angel Kids (Japan)\0", NULL, "Sega / Nasco?", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MISC, GBF_BREAKOUT, 0,
-	NULL, angelkdsRomInfo, angelkdsRomName, NULL, NULL, AngelkdsInputInfo, AngelkdsDIPInfo,
+	NULL, angelkdsRomInfo, angelkdsRomName, NULL, NULL, NULL, NULL, AngelkdsInputInfo, AngelkdsDIPInfo,
 	angelkdsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x100,
 	240, 256, 3, 4
 };
@@ -1017,7 +1017,7 @@ struct BurnDriver BurnDrvSpcpostn = {
 	"Space Position (Japan)\0", NULL, "Sega / Nasco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
-	NULL, spcpostnRomInfo, spcpostnRomName, NULL, NULL, SpcpostnInputInfo, SpcpostnDIPInfo,
+	NULL, spcpostnRomInfo, spcpostnRomName, NULL, NULL, NULL, NULL, SpcpostnInputInfo, SpcpostnDIPInfo,
 	spcpostnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x100,
 	240, 256, 3, 4
 };

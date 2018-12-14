@@ -581,7 +581,7 @@ struct BurnDriver BurnDrvBestleag = {
 	"Best League (bootleg of Big Striker, Italian Serie A)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, bestleagRomInfo, bestleagRomName, NULL, NULL, BestleagInputInfo, BestleagDIPInfo,
+	NULL, bestleagRomInfo, bestleagRomName, NULL, NULL, NULL, NULL, BestleagInputInfo, BestleagDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BestleagDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
@@ -620,7 +620,7 @@ struct BurnDriver BurnDrvBestleaw = {
 	"Best League (bootleg of Big Striker, World Cup)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
-	NULL, bestleawRomInfo, bestleawRomName, NULL, NULL, BestleagInputInfo, BestleagDIPInfo,
+	NULL, bestleawRomInfo, bestleawRomName, NULL, NULL, NULL, NULL, BestleagInputInfo, BestleagDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BestleawDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

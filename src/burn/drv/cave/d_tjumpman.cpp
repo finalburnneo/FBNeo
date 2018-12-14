@@ -578,7 +578,7 @@ struct BurnDriverD BurnDrvTjumpman = {
 	"Tobikose! Jumpman\0", "Coin input not working?", "Namco", "Cave",
 	L"\u30E1\u30B0\u30EB\u3092\u3044\u308C\u3066\u306D!\0Tobikose! Jumpman\0", NULL, NULL, NULL,
 	BDF_16BIT_ONLY, 1, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_MISC, 0,
-	NULL, tjumpmanRomInfo, tjumpmanRomName, NULL, NULL, TjumpmanInputInfo, TjumpmanDIPInfo,
+	NULL, tjumpmanRomInfo, tjumpmanRomName, NULL, NULL, NULL, NULL, TjumpmanInputInfo, TjumpmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };

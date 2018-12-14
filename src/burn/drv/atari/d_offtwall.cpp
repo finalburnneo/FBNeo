@@ -764,7 +764,7 @@ struct BurnDriver BurnDrvOfftwall = {
 	"Off the Wall (2/3-player upright)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, offtwallRomInfo, offtwallRomName, NULL, NULL, OfftwallInputInfo, OfftwallDIPInfo,
+	NULL, offtwallRomInfo, offtwallRomName, NULL, NULL, NULL, NULL, OfftwallInputInfo, OfftwallDIPInfo,
 	OfftwallInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };
@@ -805,7 +805,7 @@ struct BurnDriver BurnDrvOfftwallc = {
 	"Off the Wall (2-player cocktail)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, offtwallcRomInfo, offtwallcRomName, NULL, NULL, OfftwallInputInfo, OfftwallDIPInfo,
+	NULL, offtwallcRomInfo, offtwallcRomName, NULL, NULL, NULL, NULL, OfftwallInputInfo, OfftwallDIPInfo,
 	OfftwallcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };

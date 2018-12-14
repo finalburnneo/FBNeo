@@ -921,7 +921,7 @@ struct BurnDriver BurnDrvVastar = {
 	"Vastar (set 1)\0", NULL, "Sesame Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, vastarRomInfo, vastarRomName, NULL, NULL, VastarInputInfo, VastarDIPInfo,
+	NULL, vastarRomInfo, vastarRomName, NULL, NULL, NULL, NULL, VastarInputInfo, VastarDIPInfo,
 	vastarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -966,7 +966,7 @@ struct BurnDriver BurnDrvVastar2 = {
 	"Vastar (set 2)\0", NULL, "Sesame Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, vastar2RomInfo, vastar2RomName, NULL, NULL, VastarInputInfo, VastarDIPInfo,
+	NULL, vastar2RomInfo, vastar2RomName, NULL, NULL, NULL, NULL, VastarInputInfo, VastarDIPInfo,
 	vastarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1012,7 +1012,7 @@ struct BurnDriver BurnDrvVastar3 = {
 	"Vastar (set 3)\0", NULL, "Sesame Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, vastar3RomInfo, vastar3RomName, NULL, NULL, VastarInputInfo, VastarDIPInfo,
+	NULL, vastar3RomInfo, vastar3RomName, NULL, NULL, NULL, NULL, VastarInputInfo, VastarDIPInfo,
 	vastar3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1057,7 +1057,7 @@ struct BurnDriver BurnDrvVastar4 = {
 	"Vastar (set 4)\0", NULL, "Sesame Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, vastar4RomInfo, vastar4RomName, NULL, NULL, VastarInputInfo, Vastar4DIPInfo,
+	NULL, vastar4RomInfo, vastar4RomName, NULL, NULL, NULL, NULL, VastarInputInfo, Vastar4DIPInfo,
 	vastarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1102,7 +1102,7 @@ struct BurnDriver BurnDrvPprobe = {
 	"Planet Probe (prototype?)\0", NULL, "Crux / Kyugo?", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, pprobeRomInfo, pprobeRomName, NULL, NULL, PprobeInputInfo, PprobeDIPInfo,
+	NULL, pprobeRomInfo, pprobeRomName, NULL, NULL, NULL, NULL, PprobeInputInfo, PprobeDIPInfo,
 	pprobeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

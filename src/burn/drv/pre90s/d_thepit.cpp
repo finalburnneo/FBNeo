@@ -1088,7 +1088,7 @@ struct BurnDriver BurnDrvThepit = {
 	"The Pit\0", NULL, "Zilec Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, thepitRomInfo, thepitRomName, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
+	NULL, thepitRomInfo, thepitRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1119,7 +1119,7 @@ struct BurnDriver BurnDrvThepitu1 = {
 	"The Pit (US set 1)\0", NULL, "Zilec Electronics (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, thepitu1RomInfo, thepitu1RomName, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
+	NULL, thepitu1RomInfo, thepitu1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1150,7 +1150,7 @@ struct BurnDriver BurnDrvThepitu2 = {
 	"The Pit (US set 2)\0", NULL, "Zilec Electronics (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, thepitu2RomInfo, thepitu2RomName, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
+	NULL, thepitu2RomInfo, thepitu2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1182,7 +1182,7 @@ struct BurnDriver BurnDrvThepitj = {
 	"The Pit (Japan)\0", NULL, "Zilec Electronics (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, thepitjRomInfo, thepitjRomName, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
+	NULL, thepitjRomInfo, thepitjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1214,7 +1214,7 @@ struct BurnDriver BurnDrvRoundup = {
 	"Round-Up\0", NULL, "Taito Corporation (Amenip/Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, roundupRomInfo, roundupRomName, NULL, NULL, DrvInputInfo, RoundupDIPInfo,
+	NULL, roundupRomInfo, roundupRomName, NULL, NULL, NULL, NULL, DrvInputInfo, RoundupDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1246,7 +1246,7 @@ struct BurnDriver BurnDrvFitter = {
 	"Fitter\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, fitterRomInfo, fitterRomName, NULL, NULL, DrvInputInfo, FitterDIPInfo,
+	NULL, fitterRomInfo, fitterRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FitterDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1278,7 +1278,7 @@ struct BurnDriver BurnDrvFitterbl = {
 	"Fitter (bootleg of Round-Up)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, fitterblRomInfo, fitterblRomName, NULL, NULL, DrvInputInfo, FitterDIPInfo,
+	NULL, fitterblRomInfo, fitterblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FitterDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1310,7 +1310,7 @@ struct BurnDriver BurnDrvTtfitter = {
 	"T.T Fitter (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, ttfitterRomInfo, ttfitterRomName, NULL, NULL, DrvInputInfo, FitterDIPInfo,
+	NULL, ttfitterRomInfo, ttfitterRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FitterDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1348,7 +1348,7 @@ struct BurnDriver BurnDrvIntrepid = {
 	"Intrepid (set 1)\0", NULL, "Nova Games Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, intrepidRomInfo, intrepidRomName, NULL, NULL, IntrepidInputInfo, IntrepidDIPInfo,
+	NULL, intrepidRomInfo, intrepidRomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1380,7 +1380,7 @@ struct BurnDriver BurnDrvIntrepid2 = {
 	"Intrepid (set 2)\0", NULL, "Nova Games Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, intrepid2RomInfo, intrepid2RomName, NULL, NULL, IntrepidInputInfo, IntrepidDIPInfo,
+	NULL, intrepid2RomInfo, intrepid2RomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1412,7 +1412,7 @@ struct BurnDriver BurnDrvIntrepidb = {
 	"Intrepid (Elsys bootleg, set 1)\0", NULL, "bootleg (Elsys)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, intrepidbRomInfo, intrepidbRomName, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
+	NULL, intrepidbRomInfo, intrepidbRomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1444,7 +1444,7 @@ struct BurnDriver BurnDrvIntrepidb2 = {
 	"Intrepid (Loris bootleg)\0", NULL, "bootleg (Loris)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, intrepidb2RomInfo, intrepidb2RomName, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
+	NULL, intrepidb2RomInfo, intrepidb2RomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1476,7 +1476,7 @@ struct BurnDriver BurnDrvIntrepidb3 = {
 	"Intrepid (Elsys bootleg, set 2)\0", NULL, "bootleg (Elsys)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, intrepidb3RomInfo, intrepidb3RomName, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
+	NULL, intrepidb3RomInfo, intrepidb3RomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1511,7 +1511,7 @@ struct BurnDriverD BurnDrvZaryavos = {
 	"Zarya Vostoka\0", "undumped/missing roms", "Nova Games of Canada", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, zaryavosRomInfo, zaryavosRomName, NULL, NULL, IntrepidInputInfo, IntrepidDIPInfo,
+	NULL, zaryavosRomInfo, zaryavosRomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1543,7 +1543,7 @@ struct BurnDriver BurnDrvDockman = {
 	"Dock Man\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, dockmanRomInfo, dockmanRomName, NULL, NULL, DockmanInputInfo, DockmanDIPInfo,
+	NULL, dockmanRomInfo, dockmanRomName, NULL, NULL, NULL, NULL, DockmanInputInfo, DockmanDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1575,7 +1575,7 @@ struct BurnDriver BurnDrvPortman = {
 	"Port Man\0", NULL, "Taito Corporation (Nova Games Ltd. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, portmanRomInfo, portmanRomName, NULL, NULL, DockmanInputInfo, DockmanDIPInfo,
+	NULL, portmanRomInfo, portmanRomName, NULL, NULL, NULL, NULL, DockmanInputInfo, DockmanDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1607,7 +1607,7 @@ struct BurnDriver BurnDrvPortmanj = {
 	"Port Man (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, portmanjRomInfo, portmanjRomName, NULL, NULL, DockmanInputInfo, DockmanDIPInfo,
+	NULL, portmanjRomInfo, portmanjRomName, NULL, NULL, NULL, NULL, DockmanInputInfo, DockmanDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1648,7 +1648,7 @@ struct BurnDriver BurnDrvSuprmous = {
 	"Super Mouse\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, suprmousRomInfo, suprmousRomName, NULL, NULL, IntrepidInputInfo, SuprmousDIPInfo,
+	NULL, suprmousRomInfo, suprmousRomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, SuprmousDIPInfo,
 	SuprmousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1681,7 +1681,7 @@ struct BurnDriver BurnDrvFunnymou = {
 	"Funny Mouse (Japan)\0", NULL, "Taito Corporation (Chuo Co. Ltd license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, funnymouRomInfo, funnymouRomName, NULL, NULL, IntrepidInputInfo, SuprmousDIPInfo,
+	NULL, funnymouRomInfo, funnymouRomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, SuprmousDIPInfo,
 	SuprmousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1714,7 +1714,7 @@ struct BurnDriver BurnDrvMachomou = {
 	"Macho Mouse\0", NULL, "Techstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, machomouRomInfo, machomouRomName, NULL, NULL, IntrepidInputInfo, SuprmousDIPInfo,
+	NULL, machomouRomInfo, machomouRomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, SuprmousDIPInfo,
 	SuprmousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1754,7 +1754,7 @@ struct BurnDriverD BurnDrvRtriv = {
 	"Romar Triv\0", "Incorrect colors", "Romar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, rtrivRomInfo, rtrivRomName, NULL, NULL, RtrivInputInfo, RtrivDIPInfo,
+	NULL, rtrivRomInfo, rtrivRomName, NULL, NULL, NULL, NULL, RtrivInputInfo, RtrivDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1796,7 +1796,7 @@ struct BurnDriver BurnDrvDesertdn = {
 	"Desert Dan\0", NULL, "Video Optics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, desertdnRomInfo, desertdnRomName, NULL, NULL, DrvInputInfo, DesertdnDIPInfo,
+	NULL, desertdnRomInfo, desertdnRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DesertdnDIPInfo,
 	DesertdnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	256, 224, 4, 3
 };

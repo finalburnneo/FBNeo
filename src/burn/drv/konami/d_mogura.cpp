@@ -392,7 +392,7 @@ struct BurnDriver BurnDrvMogura = {
 	"Mogura Desse\0", "Konami test board", "Konami", "Miscellaneous",
 	L"\u30E2\u30B0\u30E9\u30C7\u30C3\u30BB\0Mogura Desse\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
-	NULL, moguraRomInfo, moguraRomName, NULL, NULL, MoguraInputInfo, NULL,
+	NULL, moguraRomInfo, moguraRomName, NULL, NULL, NULL, NULL, MoguraInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	320, 256, 4, 3
 };

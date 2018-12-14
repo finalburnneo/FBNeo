@@ -547,7 +547,7 @@ struct BurnDriver BurnDrvKbash2 = {
 	"Knuckle Bash 2 (bootleg)\0", NULL, "bootleg", "Toaplan GP9001 based",
 	L"Knuckle Bash 2\0Knuckle Bash \u30CA\u30C3\u30AF\u30EB\u30D0\u30C3\u30B7\u30E5 \uFF12 (bootleg)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_BOOTLEG, 2, HARDWARE_TOAPLAN_68K_ONLY, GBF_SCRFIGHT, 0,
-	NULL, kbash2RomInfo, kbash2RomName, NULL, NULL, Kbash2InputInfo, Kbash2DIPInfo,
+	NULL, kbash2RomInfo, kbash2RomName, NULL, NULL, NULL, NULL, Kbash2InputInfo, Kbash2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

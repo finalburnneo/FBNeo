@@ -1015,7 +1015,7 @@ struct BurnDriver BurnDrvDrgnmst = {
 	"Dragon Master\0", NULL, "Unico", "Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
-	NULL, drgnmstRomInfo, drgnmstRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, drgnmstRomInfo, drgnmstRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc,	0x2000, 384, 224, 4, 3
 };

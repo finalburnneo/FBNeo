@@ -1089,7 +1089,7 @@ struct BurnDriver BurnDrvBattleBkraidu = {
 	"Battle Bakraid - Unlimited Version (U.S.A.) (Tue Jun 8 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, bkraiduRomInfo, bkraiduRomName, NULL, NULL, bbakraidInputInfo, bkraiduDIPInfo,
+	NULL, bkraiduRomInfo, bkraiduRomName, NULL, NULL, NULL, NULL, bbakraidInputInfo, bkraiduDIPInfo,
 	bbakraidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1099,7 +1099,7 @@ struct BurnDriver BurnDrvBattleBkraidc = {
 	"Battle Bakraid - Unlimited Version (China) (Tue Jun 8 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, bkraidcRomInfo, bkraidcRomName, NULL, NULL, bbakraidInputInfo, bbakraidDIPInfo,
+	NULL, bkraidcRomInfo, bkraidcRomName, NULL, NULL, NULL, NULL, bbakraidInputInfo, bbakraidDIPInfo,
 	bbakraidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1109,7 +1109,7 @@ struct BurnDriver BurnDrvBattleBkraiduj = {
 	"Battle Bakraid - Unlimited Version (Japan) (Tue Jun 8 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, bkraidujRomInfo, bkraidujRomName, NULL, NULL, bbakraidInputInfo, bbakraidDIPInfo,
+	NULL, bkraidujRomInfo, bkraidujRomName, NULL, NULL, NULL, NULL, bbakraidInputInfo, bbakraidDIPInfo,
 	bbakraidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1119,7 +1119,7 @@ struct BurnDriver BurnDrvBattleBkraidj = {
 	"Battle Bakraid (Japan) (Wed Apr 7 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, bkraidjRomInfo, bkraidjRomName, NULL, NULL, bbakraidInputInfo, bbakraidDIPInfo,
+	NULL, bkraidjRomInfo, bkraidjRomName, NULL, NULL, NULL, NULL, bbakraidInputInfo, bbakraidDIPInfo,
 	bbakraidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

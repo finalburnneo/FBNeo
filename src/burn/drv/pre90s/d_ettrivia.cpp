@@ -456,7 +456,7 @@ struct BurnDriver BurnDrvPromutrv = {
 	"Progressive Music Trivia (Question set 1)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, promutrvRomInfo, promutrvRomName, NULL, NULL, EttriviaInputInfo, EttriviaDIPInfo,
+	NULL, promutrvRomInfo, promutrvRomName, NULL, NULL, NULL, NULL, EttriviaInputInfo, EttriviaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -494,7 +494,7 @@ struct BurnDriver BurnDrvPromutrva = {
 	"Progressive Music Trivia (Question set 2)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, promutrvaRomInfo, promutrvaRomName, NULL, NULL, EttriviaInputInfo, EttriviaDIPInfo,
+	NULL, promutrvaRomInfo, promutrvaRomName, NULL, NULL, NULL, NULL, EttriviaInputInfo, EttriviaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -535,7 +535,7 @@ struct BurnDriver BurnDrvPromutrvb = {
 	"Progressive Music Trivia (Question set 3)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, promutrvbRomInfo, promutrvbRomName, NULL, NULL, EttriviaInputInfo, EttriviaDIPInfo,
+	NULL, promutrvbRomInfo, promutrvbRomName, NULL, NULL, NULL, NULL, EttriviaInputInfo, EttriviaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -576,7 +576,7 @@ struct BurnDriver BurnDrvPromutrvc = {
 	"Progressive Music Trivia (Question set 4)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, promutrvcRomInfo, promutrvcRomName, NULL, NULL, EttriviaInputInfo, EttriviaDIPInfo,
+	NULL, promutrvcRomInfo, promutrvcRomName, NULL, NULL, NULL, NULL, EttriviaInputInfo, EttriviaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -614,7 +614,7 @@ struct BurnDriver BurnDrvStrvmstr = {
 	"Super Trivia Master\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, strvmstrRomInfo, strvmstrRomName, NULL, NULL, EttriviaInputInfo, EttriviaDIPInfo,
+	NULL, strvmstrRomInfo, strvmstrRomName, NULL, NULL, NULL, NULL, EttriviaInputInfo, EttriviaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

@@ -631,7 +631,7 @@ struct BurnDriver BurnDrvFnkyfish = {
 	"Funky Fish\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, fnkyfishRomInfo, fnkyfishRomName, NULL, NULL, FnkyfishInputInfo, FnkyfishDIPInfo,
+	NULL, fnkyfishRomInfo, fnkyfishRomName, NULL, NULL, NULL, NULL, FnkyfishInputInfo, FnkyfishDIPInfo,
 	fnkyfishInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	240, 512, 3, 4
 };
@@ -671,7 +671,7 @@ struct BurnDriver BurnDrvKangaroo = {
 	"Kangaroo\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, kangarooRomInfo, kangarooRomName, NULL, NULL, KangarooInputInfo, KangarooDIPInfo,
+	NULL, kangarooRomInfo, kangarooRomName, NULL, NULL, NULL, NULL, KangarooInputInfo, KangarooDIPInfo,
 	kangarooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	240, 512, 3, 4
 };
@@ -706,7 +706,7 @@ struct BurnDriver BurnDrvKangarooa = {
 	"Kangaroo (Atari)\0", NULL, "Sun Electronics (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, kangarooaRomInfo, kangarooaRomName, NULL, NULL, KangarooInputInfo, KangarooDIPInfo,
+	NULL, kangarooaRomInfo, kangarooaRomName, NULL, NULL, NULL, NULL, KangarooInputInfo, KangarooDIPInfo,
 	kangarooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	240, 512, 3, 4
 };
@@ -738,7 +738,7 @@ struct BurnDriver BurnDrvKangaroob = {
 	"Kangaroo (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, kangaroobRomInfo, kangaroobRomName, NULL, NULL, KangarooInputInfo, KangarooDIPInfo,
+	NULL, kangaroobRomInfo, kangaroobRomName, NULL, NULL, NULL, NULL, KangarooInputInfo, KangarooDIPInfo,
 	kangarooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	240, 512, 3, 4
 };

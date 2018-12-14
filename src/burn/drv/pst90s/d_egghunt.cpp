@@ -548,7 +548,7 @@ struct BurnDriver BurnDrvEgghunt = {
 	"Egg Hunt\0", NULL, "Invi Image", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, egghuntRomInfo, egghuntRomName, NULL, NULL, EgghuntInputInfo, EgghuntDIPInfo,
+	NULL, egghuntRomInfo, egghuntRomName, NULL, NULL, NULL, NULL, EgghuntInputInfo, EgghuntDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	384, 240, 4, 3
 };

@@ -583,7 +583,7 @@ struct BurnDriver BurnDrvKsayakyu = {
 	"Kusayakyuu\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
-	NULL, ksayakyuRomInfo, ksayakyuRomName, NULL, NULL, KsayakyuInputInfo, KsayakyuDIPInfo,
+	NULL, ksayakyuRomInfo, ksayakyuRomName, NULL, NULL, NULL, NULL, KsayakyuInputInfo, KsayakyuDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

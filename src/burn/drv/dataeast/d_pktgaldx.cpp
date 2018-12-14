@@ -557,7 +557,7 @@ struct BurnDriver BurnDrvPktgaldx = {
 	"Pocket Gal Deluxe (Euro v3.00)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, pktgaldxRomInfo, pktgaldxRomName, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
+	NULL, pktgaldxRomInfo, pktgaldxRomName, NULL, NULL, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -586,7 +586,7 @@ struct BurnDriver BurnDrvPktgaldxj = {
 	"Pocket Gal Deluxe (Japan v3.00)\0", NULL, "Nihon System", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, pktgaldxjRomInfo, pktgaldxjRomName, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
+	NULL, pktgaldxjRomInfo, pktgaldxjRomName, NULL, NULL, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -624,7 +624,7 @@ struct BurnDriverD BurnDrvPktgaldxb = {
 	"Pocket Gal Deluxe (Euro v3.00, bootleg)\0", NULL, "bootleg", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, pktgaldxbRomInfo, pktgaldxbRomName, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
+	NULL, pktgaldxbRomInfo, pktgaldxbRomName, NULL, NULL, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
 	pkgaldxbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

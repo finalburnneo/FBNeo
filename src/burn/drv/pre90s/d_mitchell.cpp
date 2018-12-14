@@ -3139,7 +3139,7 @@ struct BurnDriver BurnDrvMgakuen = {
 	"Mahjong Gakuen\0", NULL, "Yuga", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
-	NULL, MgakuenRomInfo, MgakuenRomName, NULL, NULL, MgakuenInputInfo, MgakuenDIPInfo,
+	NULL, MgakuenRomInfo, MgakuenRomName, NULL, NULL, NULL, NULL, MgakuenInputInfo, MgakuenDIPInfo,
 	MgakuenInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 384, 240, 4, 3
 };
@@ -3149,7 +3149,7 @@ struct BurnDriver BurnDrvSeventoitsu = {
 	"Chi-Toitsu\0", NULL, "Yuga", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
-	NULL, SeventoitsuRomInfo, SeventoitsuRomName, NULL, NULL, MgakuenInputInfo, MgakuenDIPInfo,
+	NULL, SeventoitsuRomInfo, SeventoitsuRomName, NULL, NULL, NULL, NULL, MgakuenInputInfo, MgakuenDIPInfo,
 	MgakuenInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 384, 240, 4, 3
 };
@@ -3159,7 +3159,7 @@ struct BurnDriver BurnDrvMgakuen2 = {
 	"Mahjong Gakuen 2 Gakuen-chou no Fukushuu\0", NULL, "Face", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
-	NULL, Mgakuen2RomInfo, Mgakuen2RomName, NULL, NULL, MarukinInputInfo, NULL,
+	NULL, Mgakuen2RomInfo, Mgakuen2RomName, NULL, NULL, NULL, NULL, MarukinInputInfo, NULL,
 	Mgakuen2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3169,7 +3169,7 @@ struct BurnDriver BurnDrvPkladies = {
 	"Poker Ladies\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
-	NULL, PkladiesRomInfo, PkladiesRomName, NULL, NULL, PkladiesInputInfo, NULL,
+	NULL, PkladiesRomInfo, PkladiesRomName, NULL, NULL, NULL, NULL, PkladiesInputInfo, NULL,
 	PkladiesInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3179,7 +3179,7 @@ struct BurnDriver BurnDrvPkladiesl = {
 	"Poker Ladies (Leprechaun ver. 510)\0", NULL, "Leprechaun", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
-	NULL, PkladieslRomInfo, PkladieslRomName, NULL, NULL, PkladiesInputInfo, NULL,
+	NULL, PkladieslRomInfo, PkladieslRomName, NULL, NULL, NULL, NULL, PkladiesInputInfo, NULL,
 	PkladiesInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3189,7 +3189,7 @@ struct BurnDriver BurnDrvPkladiesla = {
 	"Poker Ladies (Leprechaun ver. 401)\0", NULL, "Leprechaun", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
-	NULL, PkladieslaRomInfo, PkladieslaRomName, NULL, NULL, PkladiesInputInfo, NULL,
+	NULL, PkladieslaRomInfo, PkladieslaRomName, NULL, NULL, NULL, NULL, PkladiesInputInfo, NULL,
 	PkladiesInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3199,7 +3199,7 @@ struct BurnDriver BurnDrvDokaben = {
 	"Dokaben (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, DokabenRomInfo, DokabenRomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, DokabenRomInfo, DokabenRomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	DokabenInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3209,7 +3209,7 @@ struct BurnDriver BurnDrvPang = {
 	"Pang (World)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, PangRomInfo, PangRomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, PangRomInfo, PangRomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	PangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3219,7 +3219,7 @@ struct BurnDriver BurnDrvBbros = {
 	"Buster Bros. (USA)\0", NULL, "Mitchell (Capcom license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, BbrosRomInfo, BbrosRomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, BbrosRomInfo, BbrosRomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	PangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3229,7 +3229,7 @@ struct BurnDriver BurnDrvPompingw = {
 	"Pomping World (Japan)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, PompingwRomInfo, PompingwRomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, PompingwRomInfo, PompingwRomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	PangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3239,7 +3239,7 @@ struct BurnDriver BurnDrvPangb = {
 	"Pang (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, PangbRomInfo, PangbRomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, PangbRomInfo, PangbRomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	PangbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3249,7 +3249,7 @@ struct BurnDriver BurnDrvPangbold = {
 	"Pang (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, PangboldRomInfo, PangboldRomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, PangboldRomInfo, PangboldRomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	PangboldInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3259,7 +3259,7 @@ struct BurnDriver BurnDrvPangbold2 = {
 	"Pang (bootleg, set 5)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, Pangbold2RomInfo, Pangbold2RomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, Pangbold2RomInfo, Pangbold2RomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	PangboldInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3269,7 +3269,7 @@ struct BurnDriver BurnDrvPangbold3 = {
 	"Pang (bootleg, set 6)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, Pangbold3RomInfo, Pangbold3RomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, Pangbold3RomInfo, Pangbold3RomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	PangboldInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3279,7 +3279,7 @@ struct BurnDriver BurnDrvPangb2 = {
 	"Pang (bootleg, set 4)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, Pangb2RomInfo, Pangb2RomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, Pangb2RomInfo, Pangb2RomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	Pangb2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3289,7 +3289,7 @@ struct BurnDriver BurnDrvCworld = {
 	"Capcom World (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, CworldRomInfo, CworldRomName, NULL, NULL, Qtono1InputInfo, NULL,
+	NULL, CworldRomInfo, CworldRomName, NULL, NULL, NULL, NULL, Qtono1InputInfo, NULL,
 	CworldInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3299,7 +3299,7 @@ struct BurnDriver BurnDrvHatena = {
 	"Adventure Quiz 2 - Hatena? no Daibouken (Japan 900228)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, HatenaRomInfo, HatenaRomName, NULL, NULL, Qtono1InputInfo, NULL,
+	NULL, HatenaRomInfo, HatenaRomName, NULL, NULL, NULL, NULL, Qtono1InputInfo, NULL,
 	HatenaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3309,7 +3309,7 @@ struct BurnDriver BurnDrvSpang = {
 	"Super Pang (World 900914)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, SpangRomInfo, SpangRomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, SpangRomInfo, SpangRomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	SpangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3319,7 +3319,7 @@ struct BurnDriver BurnDrvSpangj = {
 	"Super Pang (Japan 901023)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, SpangjRomInfo, SpangjRomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, SpangjRomInfo, SpangjRomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	SpangjInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3329,7 +3329,7 @@ struct BurnDriver BurnDrvSbbros = {
 	"Super Buster Bros. (USA 901001)\0", NULL, "Mitchell (Capcom license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, SbbrosRomInfo, SbbrosRomName, NULL, NULL, PangInputInfo, NULL,
+	NULL, SbbrosRomInfo, SbbrosRomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
 	SbbrosInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3339,7 +3339,7 @@ struct BurnDriver BurnDrvMstworld = {
 	"Monsters World (bootleg of Super Pang)\0", NULL, "bootleg (TCH)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, MstworldRomInfo, MstworldRomName, NULL, NULL, MstworldInputInfo, MstworldDIPInfo,
+	NULL, MstworldRomInfo, MstworldRomName, NULL, NULL, NULL, NULL, MstworldInputInfo, MstworldDIPInfo,
 	MstworldInit, CommonExit, MstworldFrame, DrvDraw, MstworldScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3349,7 +3349,7 @@ struct BurnDriver BurnDrvMarukin = {
 	"Super Marukin-Ban (Japan 901017)\0", NULL, "Yuga", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, MarukinRomInfo, MarukinRomName, NULL, NULL, MarukinInputInfo, NULL,
+	NULL, MarukinRomInfo, MarukinRomName, NULL, NULL, NULL, NULL, MarukinInputInfo, NULL,
 	MarukinInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3359,7 +3359,7 @@ struct BurnDriver BurnDrvQtono1 = {
 	"Quiz Tonosama no Yabou (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, Qtono1RomInfo, Qtono1RomName, NULL, NULL, Qtono1InputInfo, NULL,
+	NULL, Qtono1RomInfo, Qtono1RomName, NULL, NULL, NULL, NULL, Qtono1InputInfo, NULL,
 	Qtono1Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3369,7 +3369,7 @@ struct BurnDriver BurnDrvQsangoku = {
 	"Quiz Sangokushi (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
-	NULL, QsangokuRomInfo, QsangokuRomName, NULL, NULL, Qtono1InputInfo, NULL,
+	NULL, QsangokuRomInfo, QsangokuRomName, NULL, NULL, NULL, NULL, Qtono1InputInfo, NULL,
 	QsangokuInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -3379,7 +3379,7 @@ struct BurnDriver BurnDrvBlock = {
 	"Block Block (World 911219 Joystick)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
-	NULL, BlockRomInfo, BlockRomName, NULL, NULL, BlockjoyInputInfo, NULL,
+	NULL, BlockRomInfo, BlockRomName, NULL, NULL, NULL, NULL, BlockjoyInputInfo, NULL,
 	BlockjoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -3389,7 +3389,7 @@ struct BurnDriver BurnDrvBlockr1 = {
 	"Block Block (World 911106 Joystick)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
-	NULL, Blockr1RomInfo, Blockr1RomName, NULL, NULL, BlockjoyInputInfo, NULL,
+	NULL, Blockr1RomInfo, Blockr1RomName, NULL, NULL, NULL, NULL, BlockjoyInputInfo, NULL,
 	BlockjoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -3399,7 +3399,7 @@ struct BurnDriver BurnDrvBlockr2 = {
 	"Block Block (World 910910)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
-	NULL, Blockr2RomInfo, Blockr2RomName, NULL, NULL, BlockInputInfo, NULL,
+	NULL, Blockr2RomInfo, Blockr2RomName, NULL, NULL, NULL, NULL, BlockInputInfo, NULL,
 	BlockInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -3409,7 +3409,7 @@ struct BurnDriver BurnDrvBlockj = {
 	"Block Block (Japan 910910)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
-	NULL, BlockjRomInfo, BlockjRomName, NULL, NULL, BlockInputInfo, NULL,
+	NULL, BlockjRomInfo, BlockjRomName, NULL, NULL, NULL, NULL, BlockInputInfo, NULL,
 	BlockInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -3419,7 +3419,7 @@ struct BurnDriver BurnDrvBlockbl = {
 	"Block Block (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
-	NULL, BlockblRomInfo, BlockblRomName, NULL, NULL, BlockInputInfo, NULL,
+	NULL, BlockblRomInfo, BlockblRomName, NULL, NULL, NULL, NULL, BlockInputInfo, NULL,
 	BlockblInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };

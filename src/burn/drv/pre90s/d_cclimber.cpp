@@ -1681,7 +1681,7 @@ struct BurnDriver BurnDrvCclimber = {
 	"Crazy Climber (US set 1)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, cclimberRomInfo, cclimberRomName, NULL, NULL, CclimberInputInfo, CclimberDIPInfo,
+	NULL, cclimberRomInfo, cclimberRomName, NULL, NULL, NULL, NULL, CclimberInputInfo, CclimberDIPInfo,
 	cclimberInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	256, 224, 4, 3
 };
@@ -1719,7 +1719,7 @@ struct BurnDriver BurnDrvCclimbera = {
 	"Crazy Climber (US set 2)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, cclimberaRomInfo, cclimberaRomName, NULL, NULL, CclimberInputInfo, CclimberDIPInfo,
+	NULL, cclimberaRomInfo, cclimberaRomName, NULL, NULL, NULL, NULL, CclimberInputInfo, CclimberDIPInfo,
 	cclimberInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	256, 224, 4, 3
 };
@@ -1772,7 +1772,7 @@ struct BurnDriver BurnDrvCclimberj = {
 	"Crazy Climber (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, cclimberjRomInfo, cclimberjRomName, NULL, NULL, CclimberInputInfo, CclimberjDIPInfo,
+	NULL, cclimberjRomInfo, cclimberjRomName, NULL, NULL, NULL, NULL, CclimberInputInfo, CclimberjDIPInfo,
 	cclimberjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	256, 224, 4, 3
 };
@@ -1820,7 +1820,7 @@ struct BurnDriverD BurnDrvCkongpt2 = {
 	"Crazy Kong Part II (set 1)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, ckongpt2RomInfo, ckongpt2RomName, NULL, NULL, CkongInputInfo, CkongDIPInfo,
+	NULL, ckongpt2RomInfo, ckongpt2RomName, NULL, NULL, NULL, NULL, CkongInputInfo, CkongDIPInfo,
 	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
 };
@@ -1859,7 +1859,7 @@ struct BurnDriver BurnDrvCkong = {
 	"Crazy Kong\0", NULL, "Kyoei / Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, ckongRomInfo, ckongRomName, NULL, NULL, CkongInputInfo, CkongDIPInfo,
+	NULL, ckongRomInfo, ckongRomName, NULL, NULL, NULL, NULL, CkongInputInfo, CkongDIPInfo,
 	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
 };
@@ -1991,7 +1991,7 @@ struct BurnDriver BurnDrvYamato = {
 	"Yamato (US)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, yamatoRomInfo, yamatoRomName, NULL, NULL, YamatoInputInfo, YamatoDIPInfo,
+	NULL, yamatoRomInfo, yamatoRomName, NULL, NULL, NULL, NULL, YamatoInputInfo, YamatoDIPInfo,
 	yamatoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -2030,7 +2030,7 @@ struct BurnDriver BurnDrvYamato2 = {
 	"Yamato (World?)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, yamato2RomInfo, yamato2RomName, NULL, NULL, YamatoInputInfo, YamatoDIPInfo,
+	NULL, yamato2RomInfo, yamato2RomName, NULL, NULL, NULL, NULL, YamatoInputInfo, YamatoDIPInfo,
 	yamatoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -2075,7 +2075,7 @@ struct BurnDriver BurnDrvGuzzler = {
 	"Guzzler\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
-	NULL, guzzlerRomInfo, guzzlerRomName, NULL, NULL, GuzzlerInputInfo, GuzzlerDIPInfo,
+	NULL, guzzlerRomInfo, guzzlerRomName, NULL, NULL, NULL, NULL, GuzzlerInputInfo, GuzzlerDIPInfo,
 	guzzlerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -2115,7 +2115,7 @@ struct BurnDriver BurnDrvSwimmer = {
 	"Swimmer (set 1)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, swimmerRomInfo, swimmerRomName, NULL, NULL, SwimmerInputInfo, SwimmerDIPInfo,
+	NULL, swimmerRomInfo, swimmerRomName, NULL, NULL, NULL, NULL, SwimmerInputInfo, SwimmerDIPInfo,
 	guzzlerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -2184,7 +2184,7 @@ struct BurnDriver BurnDrvRpatrol = {
 	"River Patrol (Orca)\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, rpatrolRomInfo, rpatrolRomName, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
+	NULL, rpatrolRomInfo, rpatrolRomName, NULL, NULL, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
 	rpatrolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -2220,7 +2220,7 @@ struct BurnDriver BurnDrvRpatrolb = {
 	"River Patrol (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, rpatrolbRomInfo, rpatrolbRomName, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
+	NULL, rpatrolbRomInfo, rpatrolbRomName, NULL, NULL, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
 	rpatrolbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -2257,7 +2257,7 @@ struct BurnDriver BurnDrvSilvland = {
 	"Silver Land\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, silvlandRomInfo, silvlandRomName, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
+	NULL, silvlandRomInfo, silvlandRomName, NULL, NULL, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
 	silvlandInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };

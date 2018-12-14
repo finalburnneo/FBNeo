@@ -701,7 +701,7 @@ struct BurnDriver BurnDrvRampart = {
 	"Rampart (Trackball)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, rampartRomInfo, rampartRomName, NULL, NULL, RampartInputInfo, RampartDIPInfo,
+	NULL, rampartRomInfo, rampartRomName, NULL, NULL, NULL, NULL, RampartInputInfo, RampartDIPInfo,
 	RampartInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };
@@ -743,7 +743,7 @@ struct BurnDriver BurnDrvRampart2p = {
 	"Rampart (Joystick)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, rampart2pRomInfo, rampart2pRomName, NULL, NULL, Ramprt2pInputInfo, Ramprt2pDIPInfo,
+	NULL, rampart2pRomInfo, rampart2pRomName, NULL, NULL, NULL, NULL, Ramprt2pInputInfo, Ramprt2pDIPInfo,
 	Rampart2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };
@@ -789,7 +789,7 @@ struct BurnDriver BurnDrvRampartj = {
 	"Rampart (Japan, Joystick)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, rampartjRomInfo, rampartjRomName, NULL, NULL, RampartjInputInfo, RampartjDIPInfo,
+	NULL, rampartjRomInfo, rampartjRomName, NULL, NULL, NULL, NULL, RampartjInputInfo, RampartjDIPInfo,
 	RampartjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };

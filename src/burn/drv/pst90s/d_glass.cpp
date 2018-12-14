@@ -648,7 +648,7 @@ struct BurnDriver BurnDrvGlass = {
 	"Glass (Ver 1.1, Break Edition, Version 1994)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, glassRomInfo, glassRomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
+	NULL, glassRomInfo, glassRomName, NULL, NULL, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3
 };
@@ -678,7 +678,7 @@ struct BurnDriver BurnDrvGlass10 = {
 	"Glass (Ver 1.0, Break Edition) (set 1)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, glass10RomInfo, glass10RomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
+	NULL, glass10RomInfo, glass10RomName, NULL, NULL, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3
 };
@@ -708,7 +708,7 @@ struct BurnDriver BurnDrvGlass10a = {
 	"Glass (Ver 1.0, Break Edition) (set 2)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, glass10aRomInfo, glass10aRomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
+	NULL, glass10aRomInfo, glass10aRomName, NULL, NULL, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3
 };
@@ -736,7 +736,7 @@ struct BurnDriver BurnDrvGlasskr = {
 	"Glass (Ver 1.1, Break Edition, Version 1994) (censored, unprotected)\0", NULL, "OMK / Gaelco (Promat license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, glasskrRomInfo, glasskrRomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
+	NULL, glasskrRomInfo, glasskrRomName, NULL, NULL, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3
 };

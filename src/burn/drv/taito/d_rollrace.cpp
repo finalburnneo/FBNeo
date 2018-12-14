@@ -739,7 +739,7 @@ struct BurnDriver BurnDrvFightrol = {
 	"Fighting Roller\0", NULL, "Kaneko (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
-	NULL, fightrolRomInfo, fightrolRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, fightrolRomInfo, fightrolRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 240, 3, 4
 };
@@ -791,7 +791,7 @@ struct BurnDriver BurnDrvRollace = {
 	"Roller Aces (set 1)\0", NULL, "Kaneko (Williams license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
-	NULL, RollaceRomInfo, RollaceRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, RollaceRomInfo, RollaceRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 240, 3, 4
 };
@@ -851,7 +851,7 @@ struct BurnDriver BurnDrvRollace2 = {
 	"Roller Aces (set 2)\0", NULL, "Kaneko (Williams license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
-	NULL, Rollace2RomInfo, Rollace2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, Rollace2RomInfo, Rollace2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	Rollace2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 240, 3, 4
 };

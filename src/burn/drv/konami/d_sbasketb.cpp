@@ -735,7 +735,7 @@ struct BurnDriver BurnDrvSbasketb = {
 	"Super Basketball (version I, encrypted)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, sbasketbRomInfo, sbasketbRomName, NULL, NULL, SbasketbInputInfo, SbasketbDIPInfo,
+	NULL, sbasketbRomInfo, sbasketbRomName, NULL, NULL, NULL, NULL, SbasketbInputInfo, SbasketbDIPInfo,
 	SbasketbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1100,
 	224, 256, 3, 4
 };
@@ -778,7 +778,7 @@ struct BurnDriver BurnDrvSbasketh = {
 	"Super Basketball (version H, unprotected)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, sbaskethRomInfo, sbaskethRomName, NULL, NULL, SbasketbInputInfo, SbasketbDIPInfo,
+	NULL, sbaskethRomInfo, sbaskethRomName, NULL, NULL, NULL, NULL, SbasketbInputInfo, SbasketbDIPInfo,
 	SbaskethInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1100,
 	224, 256, 3, 4
 };
@@ -826,7 +826,7 @@ struct BurnDriver BurnDrvSbasketg = {
 	"Super Basketball (version G, encrypted)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, sbasketgRomInfo, sbasketgRomName, NULL, NULL, SbasketbInputInfo, SbasketbDIPInfo,
+	NULL, sbasketgRomInfo, sbasketgRomName, NULL, NULL, NULL, NULL, SbasketbInputInfo, SbasketbDIPInfo,
 	SbasketgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1100,
 	224, 256, 3, 4
 };
@@ -869,7 +869,7 @@ struct BurnDriver BurnDrvSbaskete = {
 	"Super Basketball (version E, encrypted)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, sbasketeRomInfo, sbasketeRomName, NULL, NULL, SbasketbInputInfo, SbasketbDIPInfo,
+	NULL, sbasketeRomInfo, sbasketeRomName, NULL, NULL, NULL, NULL, SbasketbInputInfo, SbasketbDIPInfo,
 	SbasketgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1100,
 	224, 256, 3, 4
 };

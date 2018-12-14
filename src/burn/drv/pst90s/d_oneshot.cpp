@@ -782,7 +782,7 @@ struct BurnDriver BurnDrvOneshot = {
 	"One Shot One Kill\0", NULL, "Promat", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, oneshotRomInfo, oneshotRomName, NULL, NULL, OneshotInputInfo, OneshotDIPInfo,
+	NULL, oneshotRomInfo, oneshotRomName, NULL, NULL, NULL, NULL, OneshotInputInfo, OneshotDIPInfo,
 	OneshotInit, DrvExit, DrvFrame, OneshotDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -821,7 +821,7 @@ struct BurnDriver BurnDrvMaddonna = {
 	"Mad Donna (set 1)\0", NULL, "Tuning", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, maddonnaRomInfo, maddonnaRomName, NULL, NULL, MaddonnaInputInfo, MaddonnaDIPInfo,
+	NULL, maddonnaRomInfo, maddonnaRomName, NULL, NULL, NULL, NULL, MaddonnaInputInfo, MaddonnaDIPInfo,
 	MaddonnaInit, DrvExit, DrvFrame, MaddonnaDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -855,7 +855,7 @@ struct BurnDriverD BurnDrvMaddonnb = {
 	"Mad Donna (set 2)\0", NULL, "Tuning", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, maddonnbRomInfo, maddonnbRomName, NULL, NULL, MaddonnaInputInfo, MaddonnaDIPInfo,
+	NULL, maddonnbRomInfo, maddonnbRomName, NULL, NULL, NULL, NULL, MaddonnaInputInfo, MaddonnaDIPInfo,
 	MaddonnaInit, DrvExit, DrvFrame, MaddonnaDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

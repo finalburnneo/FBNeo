@@ -1010,7 +1010,7 @@ struct BurnDriver BurnDrvQbert = {
 	"Q*bert (US set 1)\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, qbertRomInfo, qbertRomName, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
+	NULL, qbertRomInfo, qbertRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
 };
@@ -1043,7 +1043,7 @@ struct BurnDriver BurnDrvQberta = {
 	"Q*bert (US set 2)\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, qbertaRomInfo, qbertaRomName, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
+	NULL, qbertaRomInfo, qbertaRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
 };
@@ -1076,7 +1076,7 @@ struct BurnDriver BurnDrvQbertj = {
 	"Q*bert (Japan)\0", NULL, "Gottlieb (Konami license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, qbertjRomInfo, qbertjRomName, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
+	NULL, qbertjRomInfo, qbertjRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
 };
@@ -1109,7 +1109,7 @@ struct BurnDriver BurnDrvMyqbert = {
 	"Mello Yello Q*bert\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, myqbertRomInfo, myqbertRomName, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
+	NULL, myqbertRomInfo, myqbertRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
 };
@@ -1149,7 +1149,7 @@ struct BurnDriver BurnDrvSqbert = {
 	"Faster, Harder, More Challenging Q*bert (prototype)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, sqbertRomInfo, sqbertRomName, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
+	NULL, sqbertRomInfo, sqbertRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
 };
@@ -1183,7 +1183,7 @@ struct BurnDriver BurnDrvMplanets = {
 	"Mad Planets\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, mplanetsRomInfo, mplanetsRomName, NULL, NULL, MplanetsInputInfo, MplanetsDIPInfo,
+	NULL, mplanetsRomInfo, mplanetsRomName, NULL, NULL, NULL, NULL, MplanetsInputInfo, MplanetsDIPInfo,
 	DrvInitMplanets, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
 };
@@ -1218,7 +1218,7 @@ struct BurnDriver BurnDrvMplanetsuk = {
 	"Mad Planets (UK)\0", NULL, "Gottlieb (Taitel license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, mplanetsukRomInfo, mplanetsukRomName, NULL, NULL, MplanetsInputInfo, MplanetsDIPInfo,
+	NULL, mplanetsukRomInfo, mplanetsukRomName, NULL, NULL, NULL, NULL, MplanetsInputInfo, MplanetsDIPInfo,
 	DrvInitMplanets, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
 };
@@ -1258,7 +1258,7 @@ struct BurnDriver BurnDrvQbertqub = {
 	"Q*bert's Qubes\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, qbertqubRomInfo, qbertqubRomName, qbertSampleInfo, qbertSampleName, QbertqubInputInfo, QbertqubDIPInfo,
+	NULL, qbertqubRomInfo, qbertqubRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertqubInputInfo, QbertqubDIPInfo,
 	DrvInitCube, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
 };

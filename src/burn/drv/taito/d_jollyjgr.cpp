@@ -721,7 +721,7 @@ struct BurnDriver BurnDrvJollyjgr = {
 	"Jolly Jogger\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE, 0,
-	NULL, jollyjgrRomInfo, jollyjgrRomName, NULL, NULL, JollyjgrInputInfo, JollyjgrDIPInfo,
+	NULL, jollyjgrRomInfo, jollyjgrRomName, NULL, NULL, NULL, NULL, JollyjgrInputInfo, JollyjgrDIPInfo,
 	JollyjgrInit, DrvExit, DrvFrame, JollyjgrDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -760,7 +760,7 @@ struct BurnDriver BurnDrvFspiderb = {
 	"Frog & Spiders (bootleg?)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_VERSHOOT, 0,
-	NULL, fspiderbRomInfo, fspiderbRomName, NULL, NULL, FspiderInputInfo, FspiderDIPInfo,
+	NULL, fspiderbRomInfo, fspiderbRomName, NULL, NULL, NULL, NULL, FspiderInputInfo, FspiderDIPInfo,
 	FspiderbInit, DrvExit, DrvFrame, FspiderbDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };

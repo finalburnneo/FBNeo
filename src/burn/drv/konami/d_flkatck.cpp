@@ -676,7 +676,7 @@ struct BurnDriver BurnDrvMx5000 = {
 	"MX5000\0", NULL, "Konami", "GX669",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, mx5000RomInfo, mx5000RomName, NULL, NULL, FlkatckInputInfo, FlkatckDIPInfo,
+	NULL, mx5000RomInfo, mx5000RomName, NULL, NULL, NULL, NULL, FlkatckInputInfo, FlkatckDIPInfo,
 	Mx5000Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 280, 3, 4
 };
@@ -702,7 +702,7 @@ struct BurnDriver BurnDrvFlkatck = {
 	"Flak Attack (Japan)\0", NULL, "Konami", "GX669",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, flkatckRomInfo, flkatckRomName, NULL, NULL, FlkatckInputInfo, FlkatckDIPInfo,
+	NULL, flkatckRomInfo, flkatckRomName, NULL, NULL, NULL, NULL, FlkatckInputInfo, FlkatckDIPInfo,
 	Mx5000Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 280, 3, 4
 };
@@ -740,7 +740,7 @@ struct BurnDriver BurnDrvFlkatcka = {
 	"Flak Attack (Japan, PWB 450593 sub-board)\0", NULL, "Konami", "GX669",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, flkatckaRomInfo, flkatckaRomName, NULL, NULL, FlkatckInputInfo, FlkatckDIPInfo,
+	NULL, flkatckaRomInfo, flkatckaRomName, NULL, NULL, NULL, NULL, FlkatckInputInfo, FlkatckDIPInfo,
 	FlkatckaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 280, 3, 4
 };

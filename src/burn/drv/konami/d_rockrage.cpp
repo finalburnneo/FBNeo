@@ -615,7 +615,7 @@ struct BurnDriver BurnDrvRockrage = {
 	"Rock'n Rage (World)\0", NULL, "Konami", "GX620",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, rockrageRomInfo, rockrageRomName, NULL, NULL, RockrageInputInfo, RockrageDIPInfo,
+	NULL, rockrageRomInfo, rockrageRomName, NULL, NULL, NULL, NULL, RockrageInputInfo, RockrageDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
 };
@@ -654,7 +654,7 @@ struct BurnDriver BurnDrvRockragea = {
 	"Rock'n Rage (prototype?)\0", NULL, "Konami", "GX620",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, rockrageaRomInfo, rockrageaRomName, NULL, NULL, RockrageInputInfo, RockrageDIPInfo,
+	NULL, rockrageaRomInfo, rockrageaRomName, NULL, NULL, NULL, NULL, RockrageInputInfo, RockrageDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
 };
@@ -689,7 +689,7 @@ struct BurnDriver BurnDrvRockragej = {
 	"Koi no Hotrock (Japan)\0", NULL, "Konami", "GX620",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, rockragejRomInfo, rockragejRomName, NULL, NULL, RockrageInputInfo, RockrageDIPInfo,
+	NULL, rockragejRomInfo, rockragejRomName, NULL, NULL, NULL, NULL, RockrageInputInfo, RockrageDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
 };

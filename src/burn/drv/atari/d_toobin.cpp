@@ -727,7 +727,7 @@ struct BurnDriver BurnDrvToobin = {
 	"Toobin' (rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, toobinRomInfo, toobinRomName, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
+	NULL, toobinRomInfo, toobinRomName, NULL, NULL, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	384, 512, 3, 4
 };
@@ -784,7 +784,7 @@ struct BurnDriver BurnDrvToobine = {
 	"Toobin' (Europe, rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, toobineRomInfo, toobineRomName, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
+	NULL, toobineRomInfo, toobineRomName, NULL, NULL, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	384, 512, 3, 4
 };
@@ -841,7 +841,7 @@ struct BurnDriver BurnDrvToobing = {
 	"Toobin' (German, rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, toobingRomInfo, toobingRomName, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
+	NULL, toobingRomInfo, toobingRomName, NULL, NULL, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	384, 512, 3, 4
 };
@@ -898,7 +898,7 @@ struct BurnDriver BurnDrvToobin2e = {
 	"Toobin' (Europe, rev 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, toobin2eRomInfo, toobin2eRomName, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
+	NULL, toobin2eRomInfo, toobin2eRomName, NULL, NULL, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	384, 512, 3, 4
 };
@@ -955,7 +955,7 @@ struct BurnDriver BurnDrvToobin2 = {
 	"Toobin' (rev 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, toobin2RomInfo, toobin2RomName, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
+	NULL, toobin2RomInfo, toobin2RomName, NULL, NULL, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	384, 512, 3, 4
 };
@@ -1012,7 +1012,7 @@ struct BurnDriver BurnDrvToobin1 = {
 	"Toobin' (rev 1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, toobin1RomInfo, toobin1RomName, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
+	NULL, toobin1RomInfo, toobin1RomName, NULL, NULL, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	384, 512, 3, 4
 };

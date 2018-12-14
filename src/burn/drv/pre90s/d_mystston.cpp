@@ -612,7 +612,7 @@ struct BurnDriver BurnDrvmystston = {
 	"Mysterious Stones - Dr. John's Adventure\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
-	NULL, myststonRomInfo, myststonRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, myststonRomInfo, myststonRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4
 };
@@ -653,7 +653,7 @@ struct BurnDriver BurnDrvmyststno = {
 	"Mysterious Stones - Dr. Kick in Adventure\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
-	NULL, myststnoRomInfo, myststnoRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, myststnoRomInfo, myststnoRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4
 };
@@ -697,7 +697,7 @@ struct BurnDriver BurnDrvmyststni = {
 	"Mysterious Stones - Dr. Kick in Adventure (Itisa PCB)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
-	NULL, myststniRomInfo, myststniRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, myststniRomInfo, myststniRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4
 };

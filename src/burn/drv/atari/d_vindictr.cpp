@@ -846,7 +846,7 @@ struct BurnDriver BurnDrvVindictr = {
 	"Vindicators (rev 5)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, vindictrRomInfo, vindictrRomName, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
+	NULL, vindictrRomInfo, vindictrRomName, NULL, NULL, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	336, 240, 4, 3
 };
@@ -889,7 +889,7 @@ struct BurnDriver BurnDrvVindictre = {
 	"Vindicators (Europe, rev 5)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, vindictreRomInfo, vindictreRomName, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
+	NULL, vindictreRomInfo, vindictreRomName, NULL, NULL, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	336, 240, 4, 3
 };
@@ -932,7 +932,7 @@ struct BurnDriver BurnDrvVindictrg = {
 	"Vindicators (German, rev 1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, vindictrgRomInfo, vindictrgRomName, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
+	NULL, vindictrgRomInfo, vindictrgRomName, NULL, NULL, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	336, 240, 4, 3
 };
@@ -975,7 +975,7 @@ struct BurnDriver BurnDrvVindictre4 = {
 	"Vindicators (Europe, rev 4)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, vindictre4RomInfo, vindictre4RomName, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
+	NULL, vindictre4RomInfo, vindictre4RomName, NULL, NULL, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	336, 240, 4, 3
 };
@@ -1018,7 +1018,7 @@ struct BurnDriver BurnDrvVindictr4 = {
 	"Vindicators (rev 4)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, vindictr4RomInfo, vindictr4RomName, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
+	NULL, vindictr4RomInfo, vindictr4RomName, NULL, NULL, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	336, 240, 4, 3
 };
@@ -1061,7 +1061,7 @@ struct BurnDriver BurnDrvVindictre3 = {
 	"Vindicators (Europe, rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, vindictre3RomInfo, vindictre3RomName, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
+	NULL, vindictre3RomInfo, vindictre3RomName, NULL, NULL, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	336, 240, 4, 3
 };
@@ -1104,7 +1104,7 @@ struct BurnDriver BurnDrvVindictr2 = {
 	"Vindicators (rev 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, vindictr2RomInfo, vindictr2RomName, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
+	NULL, vindictr2RomInfo, vindictr2RomName, NULL, NULL, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	336, 240, 4, 3
 };
@@ -1147,7 +1147,7 @@ struct BurnDriver BurnDrvVindictr1 = {
 	"Vindicators (rev 1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, vindictr1RomInfo, vindictr1RomName, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
+	NULL, vindictr1RomInfo, vindictr1RomName, NULL, NULL, NULL, NULL, VindictrInputInfo, VindictrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	336, 240, 4, 3
 };

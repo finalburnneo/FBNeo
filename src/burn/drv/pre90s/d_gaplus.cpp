@@ -857,7 +857,7 @@ struct BurnDriver BurnDrvGaplus = {
 	"Gaplus (GP2 rev. B)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, gaplusRomInfo, gaplusRomName, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, gaplusRomInfo, gaplusRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -903,7 +903,7 @@ struct BurnDriver BurnDrvGaplusa = {
 	"Gaplus (GP2)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, gaplusaRomInfo, gaplusaRomName, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, gaplusaRomInfo, gaplusaRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -954,7 +954,7 @@ struct BurnDriver BurnDrvGaplusd = {
 	"Gaplus (GP2 rev D, alternate hardware)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, gaplusdRomInfo, gaplusdRomName, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, gaplusdRomInfo, gaplusdRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusdInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -1000,7 +1000,7 @@ struct BurnDriver BurnDrvGaplust = {
 	"Gaplus (Tecfri PCB)\0", NULL, "bootleg (Tecfri)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, gaplustRomInfo, gaplustRomName, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, gaplustRomInfo, gaplustRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -1046,7 +1046,7 @@ struct BurnDriver BurnDrvGalaga3 = {
 	"Galaga 3 (GP3 rev. D)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, galaga3RomInfo, galaga3RomName, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, galaga3RomInfo, galaga3RomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -1092,7 +1092,7 @@ struct BurnDriver BurnDrvGalaga3a = {
 	"Galaga 3 (GP3 rev. C)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, galaga3aRomInfo, galaga3aRomName, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, galaga3aRomInfo, galaga3aRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -1138,7 +1138,7 @@ struct BurnDriver BurnDrvGalaga3b = {
 	"Galaga 3 (GP3)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, galaga3bRomInfo, galaga3bRomName, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, galaga3bRomInfo, galaga3bRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -1182,7 +1182,7 @@ struct BurnDriver BurnDrvGalaga3c = {
 	"Galaga 3 (set 4)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, galaga3cRomInfo, galaga3cRomName, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, galaga3cRomInfo, galaga3cRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -1226,7 +1226,7 @@ struct BurnDriver BurnDrvGalaga3m = {
 	"Galaga 3 (set 5)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, galaga3mRomInfo, galaga3mRomName, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, galaga3mRomInfo, galaga3mRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

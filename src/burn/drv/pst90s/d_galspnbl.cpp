@@ -628,7 +628,7 @@ struct BurnDriver BurnDrvGalspnbl = {
 	"Gals Pinball\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_POST90S, GBF_PINBALL, 0,
-	NULL, galspnblRomInfo, galspnblRomName, NULL, NULL, GalspnblInputInfo, GalspnblDIPInfo,
+	NULL, galspnblRomInfo, galspnblRomName, NULL, NULL, NULL, NULL, GalspnblInputInfo, GalspnblDIPInfo,
 	galspnblInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8400,
 	224, 512, 3, 4
 };
@@ -670,7 +670,7 @@ struct BurnDriver BurnDrvHotpinbl = {
 	"Hot Pinball\0", NULL, "Comad & New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_POST90S, GBF_PINBALL, 0,
-	NULL, hotpinblRomInfo, hotpinblRomName, NULL, NULL, GalspnblInputInfo, GalspnblDIPInfo,
+	NULL, hotpinblRomInfo, hotpinblRomName, NULL, NULL, NULL, NULL, GalspnblInputInfo, GalspnblDIPInfo,
 	hotpinblInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8400,
 	224, 512, 3, 4
 };

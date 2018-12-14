@@ -617,7 +617,7 @@ struct BurnDriver BurnDrvCitycon = {
 	"City Connection (set 1)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, cityconRomInfo, cityconRomName, NULL, NULL, CityconInputInfo, CityconDIPInfo,
+	NULL, cityconRomInfo, cityconRomName, NULL, NULL, NULL, NULL, CityconInputInfo, CityconDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 224, 4, 3
 };
@@ -661,7 +661,7 @@ struct BurnDriver BurnDrvCitycona = {
 	"City Connection (set 2)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, cityconaRomInfo, cityconaRomName, NULL, NULL, CityconInputInfo, CityconDIPInfo,
+	NULL, cityconaRomInfo, cityconaRomName, NULL, NULL, NULL, NULL, CityconInputInfo, CityconDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 224, 4, 3
 };
@@ -698,7 +698,7 @@ struct BurnDriver BurnDrvCruisin = {
 	"Cruisin\0", NULL, "Jaleco (Kitkorp license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, cruisinRomInfo, cruisinRomName, NULL, NULL, CityconInputInfo, CityconDIPInfo,
+	NULL, cruisinRomInfo, cruisinRomName, NULL, NULL, NULL, NULL, CityconInputInfo, CityconDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 224, 4, 3
 };

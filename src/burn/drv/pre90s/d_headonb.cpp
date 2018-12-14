@@ -260,7 +260,7 @@ struct BurnDriver BurnDrvHeadonb = {
 	"Head On (bootleg on dedicated hardware)\0", NULL, "bootleg (EFG Sanremo)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, headonbRomInfo, headonbRomName, NULL, NULL, HeadonbInputInfo, NULL,
+	NULL, headonbRomInfo, headonbRomName, NULL, NULL, NULL, NULL, HeadonbInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };

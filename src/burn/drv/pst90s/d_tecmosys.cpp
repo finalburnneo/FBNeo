@@ -1337,7 +1337,7 @@ struct BurnDriver BurnDrvDeroon = {
 	"Deroon DeroDero\0", "No sound", "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, deroonRomInfo, deroonRomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, deroonRomInfo, deroonRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
 	DeroonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4800,
 	320, 240, 4, 3
 };
@@ -1379,7 +1379,7 @@ struct BurnDriver BurnDrvDeroona = {
 	"Deroon DeroDero (alt set)\0", "No sound", "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, deroonaRomInfo, deroonaRomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, deroonaRomInfo, deroonaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
 	DeroonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4800,
 	320, 240, 4, 3
 };
@@ -1472,7 +1472,7 @@ struct BurnDriver BurnDrvTkdensho = {
 	"Toukidenshou - Angel Eyes (VER. 960614)\0", "No sound", "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
-	NULL, tkdenshoRomInfo, tkdenshoRomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, tkdenshoRomInfo, tkdenshoRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
 	TkdenshoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4800,
 	320, 240, 4, 3
 };
@@ -1526,7 +1526,7 @@ struct BurnDriver BurnDrvTkdenshoa = {
 	"Toukidenshou - Angel Eyes (VER. 960427)\0", "No sound", "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
-	NULL, tkdenshoaRomInfo, tkdenshoaRomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, tkdenshoaRomInfo, tkdenshoaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
 	TkdenshoaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4800,
 	320, 240, 4, 3
 };

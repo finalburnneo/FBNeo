@@ -354,7 +354,7 @@ struct BurnDriver BurnDrvKontest = {
 	"Konami Test Board (GX800, Japan)\0", NULL, "Konami", "GX800",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
-	NULL, kontestRomInfo, kontestRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, kontestRomInfo, kontestRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3
 };

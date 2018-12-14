@@ -639,7 +639,7 @@ struct BurnDriver BurnDrvXybots = {
 	"Xybots (rev 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, xybotsRomInfo, xybotsRomName, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
+	NULL, xybotsRomInfo, xybotsRomName, NULL, NULL, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 240, 4, 3
 };
@@ -678,7 +678,7 @@ struct BurnDriver BurnDrvXybotsg = {
 	"Xybots (German, rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, xybotsgRomInfo, xybotsgRomName, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
+	NULL, xybotsgRomInfo, xybotsgRomName, NULL, NULL, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 240, 4, 3
 };
@@ -717,7 +717,7 @@ struct BurnDriver BurnDrvXybotsf = {
 	"Xybots (French, rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, xybotsfRomInfo, xybotsfRomName, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
+	NULL, xybotsfRomInfo, xybotsfRomName, NULL, NULL, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 240, 4, 3
 };
@@ -756,7 +756,7 @@ struct BurnDriver BurnDrvXybots1 = {
 	"Xybots (rev 1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, xybots1RomInfo, xybots1RomName, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
+	NULL, xybots1RomInfo, xybots1RomName, NULL, NULL, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 240, 4, 3
 };
@@ -795,7 +795,7 @@ struct BurnDriver BurnDrvXybots0 = {
 	"Xybots (rev 0)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, xybots0RomInfo, xybots0RomName, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
+	NULL, xybots0RomInfo, xybots0RomName, NULL, NULL, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 240, 4, 3
 };

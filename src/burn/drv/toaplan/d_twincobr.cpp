@@ -1424,7 +1424,7 @@ struct BurnDriver BurnDrvTwincobr = {
 	"Twin Cobra (World)\0", NULL, "Toaplan / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, twincobrRomInfo, twincobrRomName, NULL, NULL, TwincobrInputInfo, TwincobrDIPInfo,
+	NULL, twincobrRomInfo, twincobrRomName, NULL, NULL, NULL, NULL, TwincobrInputInfo, TwincobrDIPInfo,
 	twincobrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -1477,7 +1477,7 @@ struct BurnDriver BurnDrvTwincobru = {
 	"Twin Cobra (US)\0", NULL, "Toaplan / Taito America Corporation (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, twincobruRomInfo, twincobruRomName, NULL, NULL, TwincobrInputInfo, TwincobruDIPInfo,
+	NULL, twincobruRomInfo, twincobruRomName, NULL, NULL, NULL, NULL, TwincobrInputInfo, TwincobruDIPInfo,
 	twincobrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -1530,7 +1530,7 @@ struct BurnDriver BurnDrvKtiger = {
 	"Kyukyoku Tiger (Japan)\0", NULL, "Toaplan / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, ktigerRomInfo, ktigerRomName, NULL, NULL, TwincobrInputInfo, KtigerDIPInfo,
+	NULL, ktigerRomInfo, ktigerRomName, NULL, NULL, NULL, NULL, TwincobrInputInfo, KtigerDIPInfo,
 	twincobrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -1592,7 +1592,7 @@ struct BurnDriver BurnDrvFshark = {
 	"Flying Shark (World)\0", NULL, "Toaplan / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, fsharkRomInfo, fsharkRomName, NULL, NULL, FsharkInputInfo, FsharkDIPInfo,
+	NULL, fsharkRomInfo, fsharkRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, FsharkDIPInfo,
 	fsharkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -1649,7 +1649,7 @@ struct BurnDriver BurnDrvSkyshark = {
 	"Sky Shark (US, set 1)\0", NULL, "Toaplan / Taito America Corporation (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, skysharkRomInfo, skysharkRomName, NULL, NULL, FsharkInputInfo, SkysharkDIPInfo,
+	NULL, skysharkRomInfo, skysharkRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, SkysharkDIPInfo,
 	fsharkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -1706,7 +1706,7 @@ struct BurnDriver BurnDrvSkysharka = {
 	"Sky Shark (US, set 2)\0", NULL, "Toaplan / Taito America Corporation (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, skysharkaRomInfo, skysharkaRomName, NULL, NULL, FsharkInputInfo, SkysharkDIPInfo,
+	NULL, skysharkaRomInfo, skysharkaRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, SkysharkDIPInfo,
 	fsharkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -1763,7 +1763,7 @@ struct BurnDriver BurnDrvHishouza = {
 	"Hishou Zame (Japan)\0", NULL, "Toaplan / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, hishouzaRomInfo, hishouzaRomName, NULL, NULL, FsharkInputInfo, HishouzaDIPInfo,
+	NULL, hishouzaRomInfo, hishouzaRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, HishouzaDIPInfo,
 	fsharkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -1820,7 +1820,7 @@ struct BurnDriver BurnDrvFsharkbt = {
 	"Flying Shark (bootleg with 8741)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, fsharkbtRomInfo, fsharkbtRomName, NULL, NULL, FsharkInputInfo, SkysharkDIPInfo,
+	NULL, fsharkbtRomInfo, fsharkbtRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, SkysharkDIPInfo,
 	fsharkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -1876,7 +1876,7 @@ struct BurnDriver BurnDrvFnshark = {
 	"Flyin' Shark (bootleg of Hishou Zame)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, fnsharkRomInfo, fnsharkRomName, NULL, NULL, FsharkInputInfo, HishouzaDIPInfo,
+	NULL, fnsharkRomInfo, fnsharkRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, HishouzaDIPInfo,
 	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -1932,7 +1932,7 @@ struct BurnDriver BurnDrvGulfwar2 = {
 	"Gulf War II (set 1)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, gulfwar2RomInfo, gulfwar2RomName, NULL, NULL, TwincobrInputInfo, TwincobrDIPInfo,
+	NULL, gulfwar2RomInfo, gulfwar2RomName, NULL, NULL, NULL, NULL, TwincobrInputInfo, TwincobrDIPInfo,
 	gulfwar2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -1983,7 +1983,7 @@ struct BurnDriver BurnDrvGulfwar2a = {
 	"Gulf War II (set 2)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, gulfwar2aRomInfo, gulfwar2aRomName, NULL, NULL, TwincobrInputInfo, TwincobrDIPInfo,
+	NULL, gulfwar2aRomInfo, gulfwar2aRomName, NULL, NULL, NULL, NULL, TwincobrInputInfo, TwincobrDIPInfo,
 	gulfwar2Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };

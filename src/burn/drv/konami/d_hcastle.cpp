@@ -860,7 +860,7 @@ struct BurnDriver BurnDrvHcastle = {
 	"Haunted Castle (ver. M)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, hcastleRomInfo, hcastleRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
+	NULL, hcastleRomInfo, hcastleRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -898,7 +898,7 @@ struct BurnDriver BurnDrvHcastlek = {
 	"Haunted Castle (ver. K)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, hcastlekRomInfo, hcastlekRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
+	NULL, hcastlekRomInfo, hcastlekRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -936,7 +936,7 @@ struct BurnDriver BurnDrvHcastlee = {
 	"Haunted Castle (ver. E)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, hcastleeRomInfo, hcastleeRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
+	NULL, hcastleeRomInfo, hcastleeRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -974,7 +974,7 @@ struct BurnDriver BurnDrvAkumajou = {
 	"Akuma-Jou Dracula (Japan ver. P)\0", NULL, "Konami", "GX768",
 	L"\u60AA\u9B54\u57CE \u30C9\u30E9\u30AD\u30E5\u30E9 (Japan ver. P)\0Akuma-Jou Dracula\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, akumajouRomInfo, akumajouRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
+	NULL, akumajouRomInfo, akumajouRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -1012,7 +1012,7 @@ struct BurnDriver BurnDrvAkumajoun = {
 	"Akuma-Jou Dracula (Japan ver. N)\0", NULL, "Konami", "GX768",
 	L"\u60AA\u9B54\u57CE \u30C9\u30E9\u30AD\u30E5\u30E9 (Japan ver. N)\0Akuma-Jou Dracula\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, akumajounRomInfo, akumajounRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
+	NULL, akumajounRomInfo, akumajounRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };

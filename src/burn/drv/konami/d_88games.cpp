@@ -695,7 +695,7 @@ struct BurnDriver BurnDrvgames88 = {
 	"'88 Games\0", NULL, "Konami", "GX861",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, games88RomInfo, games88RomName, NULL, NULL, games88InputInfo, games88DIPInfo,
+	NULL, games88RomInfo, games88RomName, NULL, NULL, NULL, NULL, games88InputInfo, games88DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -757,7 +757,7 @@ struct BurnDriver BurnDrvKonami88 = {
 	"Konami '88\0", NULL, "Konami", "GX861",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, konami88RomInfo, konami88RomName, NULL, NULL, games88InputInfo, games88DIPInfo,
+	NULL, konami88RomInfo, konami88RomName, NULL, NULL, NULL, NULL, games88InputInfo, games88DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -819,7 +819,7 @@ struct BurnDriver BurnDrvHypsptsp = {
 	"Hyper Sports Special (Japan)\0", NULL, "Konami", "GX861",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, hypsptspRomInfo, hypsptspRomName, NULL, NULL, games88InputInfo, games88DIPInfo,
+	NULL, hypsptspRomInfo, hypsptspRomName, NULL, NULL, NULL, NULL, games88InputInfo, games88DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };

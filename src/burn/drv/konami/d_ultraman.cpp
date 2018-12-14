@@ -685,7 +685,7 @@ struct BurnDriver BurnDrvUltraman = {
 	"Ultraman (Japan)\0", NULL, "Banpresto / Bandai", "GX910",
 	L"\uFEFF\u30A6\u30EB\u30c8\u30E9\u30DE\u30f3  \u7A7A\u60F3\u7279\u64AE\u30B7\u30EA\u30FC\u30BA (Japan)\0Ultraman\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
-	NULL, ultramanRomInfo, ultramanRomName, NULL, NULL, UltramanInputInfo, UltramanDIPInfo,
+	NULL, ultramanRomInfo, ultramanRomName, NULL, NULL, NULL, NULL, UltramanInputInfo, UltramanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };

@@ -632,7 +632,7 @@ struct BurnDriver BurnDrvMugsmash = {
 	"Mug Smashers\0", NULL, "Electronic Devices Italy / 3D Games England", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, mugsmashRomInfo, mugsmashRomName, NULL, NULL, MugsmashInputInfo, MugsmashDIPInfo,
+	NULL, mugsmashRomInfo, mugsmashRomName, NULL, NULL, NULL, NULL, MugsmashInputInfo, MugsmashDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };

@@ -729,7 +729,7 @@ struct BurnDriver BurnDrvMpatrol = {
 	"Moon Patrol\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
-	NULL, mpatrolRomInfo, mpatrolRomName, NULL, NULL, MpatrolInputInfo, MpatrolDIPInfo,
+	NULL, mpatrolRomInfo, mpatrolRomName, NULL, NULL, NULL, NULL, MpatrolInputInfo, MpatrolDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42c,
 	240, 240, 4, 3
 };
@@ -771,7 +771,7 @@ struct BurnDriver BurnDrvMpatrolw = {
 	"Moon Patrol (Williams)\0", NULL, "Irem (Williams license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
-	NULL, mpatrolwRomInfo, mpatrolwRomName, NULL, NULL, MpatrolInputInfo, MpatrolwDIPInfo,
+	NULL, mpatrolwRomInfo, mpatrolwRomName, NULL, NULL, NULL, NULL, MpatrolInputInfo, MpatrolwDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42c,
 	240, 240, 4, 3
 };
@@ -813,7 +813,7 @@ struct BurnDriver BurnDrvMranger = {
 	"Moon Ranger (bootleg of Moon Patrol)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
-	NULL, mrangerRomInfo, mrangerRomName, NULL, NULL, MpatrolInputInfo, MpatrolDIPInfo,
+	NULL, mrangerRomInfo, mrangerRomName, NULL, NULL, NULL, NULL, MpatrolInputInfo, MpatrolDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42c,
 	240, 240, 4, 3
 };
@@ -860,7 +860,7 @@ struct BurnDriver BurnDrvAlpha1v = {
 	"Alpha One (Vision Electronics)\0", NULL, "Vision Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_IREM_M62, GBF_MISC, 0,
-	NULL, alpha1vRomInfo, alpha1vRomName, NULL, NULL, Alpha1vInputInfo, Alpha1vDIPInfo,
+	NULL, alpha1vRomInfo, alpha1vRomName, NULL, NULL, NULL, NULL, Alpha1vInputInfo, Alpha1vDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42c,
 	240, 240, 4, 3
 };

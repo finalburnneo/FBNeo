@@ -2487,7 +2487,7 @@ struct BurnDriver BurnDrvTurbo = {
 	"Turbo (program 1513-1515)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
-	NULL, turboRomInfo, turboRomName, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
+	NULL, turboRomInfo, turboRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboDecInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
 };
@@ -2548,7 +2548,7 @@ struct BurnDriver BurnDrvTurboa = {
 	"Turbo (encrypted, program 1262-1264)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
-	NULL, turboaRomInfo, turboaRomName, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
+	NULL, turboaRomInfo, turboaRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboEncInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
 };
@@ -2609,7 +2609,7 @@ struct BurnDriver BurnDrvTurbob = {
 	"Turbo (encrypted, program 1363-1365 rev B)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
-	NULL, turbobRomInfo, turbobRomName, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
+	NULL, turbobRomInfo, turbobRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboEncInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
 };
@@ -2670,7 +2670,7 @@ struct BurnDriver BurnDrvTurboc = {
 	"Turbo (encrypted, program 1363-1365 rev A)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
-	NULL, turbocRomInfo, turbocRomName, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
+	NULL, turbocRomInfo, turbocRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboEncInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
 };
@@ -2731,7 +2731,7 @@ struct BurnDriver BurnDrvTurbod = {
 	"Turbo (encrypted, program 1363-1365)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
-	NULL, turbodRomInfo, turbodRomName, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
+	NULL, turbodRomInfo, turbodRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboEncInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
 };
@@ -2790,7 +2790,7 @@ struct BurnDriver BurnDrvTurbobl = {
 	"Indianapolis (bootleg of Turbo)\0", NULL, "bootleg", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
-	NULL, turboblRomInfo, turboblRomName, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
+	NULL, turboblRomInfo, turboblRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboDecInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
 };
@@ -2866,7 +2866,7 @@ struct BurnDriver BurnDrvSubroc3d = {
 	"Subroc-3D\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
-	NULL, subroc3dRomInfo, subroc3dRomName, subroc3dSampleInfo, subroc3dSampleName, Subroc3dInputInfo, Subroc3dDIPInfo,
+	NULL, subroc3dRomInfo, subroc3dRomName, NULL, NULL, subroc3dSampleInfo, subroc3dSampleName, Subroc3dInputInfo, Subroc3dDIPInfo,
 	Subroc3dInit, DrvExit, TurboFrame, Subroc3dDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 224, 4, 3
 };
@@ -2931,7 +2931,7 @@ struct BurnDriver BurnDrvBuckrog = {
 	"Buck Rogers: Planet of Zoom\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
-	NULL, buckrogRomInfo, buckrogRomName, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
+	NULL, buckrogRomInfo, buckrogRomName, NULL, NULL, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
 	BuckrogEncInit, DrvExit, BuckrogFrame, BuckrogDraw, DrvScan, &DrvRecalc, 0x400,
 	512, 224, 4, 3
 };
@@ -2978,7 +2978,7 @@ struct BurnDriver BurnDrvBuckrogn = {
 	"Buck Rogers: Planet of Zoom (not encrypted, set 1)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
-	NULL, buckrognRomInfo, buckrognRomName, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
+	NULL, buckrognRomInfo, buckrognRomName, NULL, NULL, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
 	BuckrogDecInit, DrvExit, BuckrogFrame, BuckrogDraw, DrvScan, &DrvRecalc, 0x400,
 	512, 224, 4, 3
 };
@@ -3025,7 +3025,7 @@ struct BurnDriver BurnDrvBuckrogn2 = {
 	"Buck Rogers: Planet of Zoom (not encrypted, set 2)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
-	NULL, buckrogn2RomInfo, buckrogn2RomName, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
+	NULL, buckrogn2RomInfo, buckrogn2RomName, NULL, NULL, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
 	BuckrogDecInit, DrvExit, BuckrogFrame, BuckrogDraw, DrvScan, &DrvRecalc, 0x400,
 	512, 224, 4, 3
 };
@@ -3072,7 +3072,7 @@ struct BurnDriver BurnDrvZoom909 = {
 	"Zoom 909\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
-	NULL, zoom909RomInfo, zoom909RomName, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
+	NULL, zoom909RomInfo, zoom909RomName, NULL, NULL, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
 	BuckrogEncInit, DrvExit, BuckrogFrame, BuckrogDraw, DrvScan, &DrvRecalc, 0x400,
 	512, 224, 4, 3
 };

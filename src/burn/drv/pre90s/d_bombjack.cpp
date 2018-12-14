@@ -659,7 +659,7 @@ struct BurnDriver BurnDrvBombjack = {
 	"Bomb Jack (set 1)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, bombjackRomInfo, bombjackRomName, NULL, NULL, BombjackInputInfo, BombjackDIPInfo,
+	NULL, bombjackRomInfo, bombjackRomName, NULL, NULL, NULL, NULL, BombjackInputInfo, BombjackDIPInfo,
 	BombjackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
 };
@@ -699,7 +699,7 @@ struct BurnDriver BurnDrvBombjack2 = {
 	"Bomb Jack (set 2)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, bombjack2RomInfo, bombjack2RomName, NULL, NULL, BombjackInputInfo, BombjackDIPInfo,
+	NULL, bombjack2RomInfo, bombjack2RomName, NULL, NULL, NULL, NULL, BombjackInputInfo, BombjackDIPInfo,
 	BombjackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
 };
@@ -737,7 +737,7 @@ struct BurnDriver BurnDrvBombjackt = {
 	"Bomb Jack (Tecfri, Spain)\0", NULL, "Tehkan (Tecfri licence)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, bombjacktRomInfo, bombjacktRomName, NULL, NULL, BombjackInputInfo, BombjackDIPInfo,
+	NULL, bombjacktRomInfo, bombjacktRomName, NULL, NULL, NULL, NULL, BombjackInputInfo, BombjackDIPInfo,
 	BombjacktInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
 };

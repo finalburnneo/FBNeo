@@ -612,7 +612,7 @@ struct BurnDriver BurnDrvSpeedspn = {
 	"Speed Spin\0", NULL, "TCH", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_BALLPADDLE, 0,
-	NULL, speedspnRomInfo, speedspnRomName, NULL, NULL, SpeedspnInputInfo, SpeedspnDIPInfo,
+	NULL, speedspnRomInfo, speedspnRomName, NULL, NULL, NULL, NULL, SpeedspnInputInfo, SpeedspnDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	384, 240, 4, 3
 };

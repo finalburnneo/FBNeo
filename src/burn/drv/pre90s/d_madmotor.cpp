@@ -615,7 +615,7 @@ struct BurnDriver BurnDrvMadmotor = {
 	"Mad Motor (prototype)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, madmotorRomInfo, madmotorRomName, NULL, NULL, MadmotorInputInfo, MadmotorDIPInfo,
+	NULL, madmotorRomInfo, madmotorRomName, NULL, NULL, NULL, NULL, MadmotorInputInfo, MadmotorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

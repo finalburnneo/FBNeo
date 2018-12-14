@@ -918,7 +918,7 @@ struct BurnDriver BurnDrvEprom = {
 	"Escape from the Planet of the Robot Monsters (set 1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, epromRomInfo, epromRomName, NULL, NULL, EpromInputInfo, EpromDIPInfo,
+	NULL, epromRomInfo, epromRomName, NULL, NULL, NULL, NULL, EpromInputInfo, EpromDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };

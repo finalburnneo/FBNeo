@@ -997,7 +997,7 @@ struct BurnDriver BurnDrvAppoooh = {
 	"Appoooh\0", NULL, "Sanritsu / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
-	NULL, appooohRomInfo, appooohRomName, NULL, NULL, AppooohInputInfo, AppooohDIPInfo,
+	NULL, appooohRomInfo, appooohRomName, NULL, NULL, NULL, NULL, AppooohInputInfo, AppooohDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x220,
 	256, 224, 4, 3
 };
@@ -1007,7 +1007,7 @@ struct BurnDriver BurnDrvRobowres = {
 	"Robo Wres 2001\0", NULL, "Sanritsu / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
-	NULL, robowresRomInfo, robowresRomName, NULL, NULL, AppooohInputInfo, RobowresDIPInfo,
+	NULL, robowresRomInfo, robowresRomName, NULL, NULL, NULL, NULL, AppooohInputInfo, RobowresDIPInfo,
 	DrvRobowresInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x220,
 	256, 224, 4, 3
 };

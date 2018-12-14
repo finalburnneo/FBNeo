@@ -1152,7 +1152,7 @@ struct BurnDriver BurnDrvWardner = {
 	"Wardner (World)\0", NULL, "Toaplan / Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
-	NULL, wardnerRomInfo, wardnerRomName, NULL, NULL, WardnerInputInfo, WardnerDIPInfo,
+	NULL, wardnerRomInfo, wardnerRomName, NULL, NULL, NULL, NULL, WardnerInputInfo, WardnerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	320, 240, 4, 3
 };
@@ -1211,7 +1211,7 @@ struct BurnDriver BurnDrvPyros = {
 	"Pyros (US)\0", NULL, "Toaplan / Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
-	NULL, pyrosRomInfo, pyrosRomName, NULL, NULL, WardnerInputInfo, PyrosDIPInfo,
+	NULL, pyrosRomInfo, pyrosRomName, NULL, NULL, NULL, NULL, WardnerInputInfo, PyrosDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	320, 240, 4, 3
 };
@@ -1270,7 +1270,7 @@ struct BurnDriver BurnDrvWardnerj = {
 	"Wardner no Mori (Japan)\0", NULL, "Toaplan / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
-	NULL, wardnerjRomInfo, wardnerjRomName, NULL, NULL, WardnerInputInfo, WardnerjDIPInfo,
+	NULL, wardnerjRomInfo, wardnerjRomName, NULL, NULL, NULL, NULL, WardnerInputInfo, WardnerjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	320, 240, 4, 3
 };

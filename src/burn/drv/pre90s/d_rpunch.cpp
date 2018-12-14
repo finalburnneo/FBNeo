@@ -901,7 +901,7 @@ struct BurnDriver BurnDrvRabiolep = {
 	"Rabio Lepus (Japan)\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, rabiolepRomInfo, rabiolepRomName, NULL, NULL, RpunchInputInfo, RabiolepDIPInfo,
+	NULL, rabiolepRomInfo, rabiolepRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, RabiolepDIPInfo,
 	rpunchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
 };
@@ -943,7 +943,7 @@ struct BurnDriver BurnDrvRpunch = {
 	"Rabbit Punch (US)\0", NULL, "V-System Co. (Bally/Midway/Sente license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, rpunchRomInfo, rpunchRomName, NULL, NULL, RpunchInputInfo, RpunchDIPInfo,
+	NULL, rpunchRomInfo, rpunchRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, RpunchDIPInfo,
 	rpunchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
 };
@@ -1029,7 +1029,7 @@ struct BurnDriver BurnDrvSvolley = {
 	"Super Volleyball (Japan)\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, svolleyRomInfo, svolleyRomName, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
+	NULL, svolleyRomInfo, svolleyRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
 	svolleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
 };
@@ -1117,7 +1117,7 @@ struct BurnDriver BurnDrvSvolleyk = {
 	"Super Volleyball (Korea)\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, svolleykRomInfo, svolleykRomName, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
+	NULL, svolleykRomInfo, svolleykRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
 	svolleykInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
 };
@@ -1164,7 +1164,7 @@ struct BurnDriver BurnDrvSvolleyu = {
 	"Super Volleyball (US)\0", NULL, "V-System Co. (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, svolleyuRomInfo, svolleyuRomName, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
+	NULL, svolleyuRomInfo, svolleyuRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
 	svolleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
 };

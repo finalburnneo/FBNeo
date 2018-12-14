@@ -223,7 +223,7 @@ struct BurnDriver BurnDrvdotrikun = {
 	"Dottori Kun (new version)\0", NULL, "Sega", "Test Hardware",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MISC, GBF_MAZE, 0,
-	NULL, dotrikunRomInfo, dotrikunRomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, dotrikunRomInfo, dotrikunRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x02,
 	256, 192, 4, 3
 };
@@ -243,7 +243,7 @@ struct BurnDriver BurnDrvdotriku2 = {
 	"Dottori Kun (old version)\0", NULL, "Sega", "Test Hardware",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MAZE, 0,
-	NULL, dotriku2RomInfo, dotriku2RomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, dotriku2RomInfo, dotriku2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x02,
 	256, 192, 4, 3
 };
@@ -263,7 +263,7 @@ struct BurnDriver BurnDrvdotriman = {
 	"Dottori-Man Jr.\0", NULL, "hack (Chris Covell)", "Test Hardware",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MAZE, 0,
-	NULL, dotrimanRomInfo, dotrimanRomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, dotrimanRomInfo, dotrimanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x02,
 	256, 192, 4, 3
 };

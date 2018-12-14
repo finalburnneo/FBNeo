@@ -859,7 +859,7 @@ struct BurnDriver BurnDrvMegazone = {
 	"Mega Zone (program code L)\0", NULL, "Konami", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, megazoneRomInfo, megazoneRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
+	NULL, megazoneRomInfo, megazoneRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -902,7 +902,7 @@ struct BurnDriver BurnDrvMegazonej = {
 	"Mega Zone (program code J)\0", NULL, "Konami (Interlogic / Kosuka license)", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, megazonejRomInfo, megazonejRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
+	NULL, megazonejRomInfo, megazonejRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -944,7 +944,7 @@ struct BurnDriver BurnDrvMegazonei = {
 	"Mega Zone (program code I)\0", NULL, "Konami", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, megazoneiRomInfo, megazoneiRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
+	NULL, megazoneiRomInfo, megazoneiRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -987,7 +987,7 @@ struct BurnDriver BurnDrvMegazoneh = {
 	"Mega Zone (program code H)\0", NULL, "Konami (Kosuka license)", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, megazonehRomInfo, megazonehRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
+	NULL, megazonehRomInfo, megazonehRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -1029,7 +1029,7 @@ struct BurnDriver BurnDrvMegazonea = {
 	"Mega Zone (unknown program code 1)\0", NULL, "Konami (Interlogic / Kosuka license)", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, megazoneaRomInfo, megazoneaRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
+	NULL, megazoneaRomInfo, megazoneaRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -1071,7 +1071,7 @@ struct BurnDriver BurnDrvMegazoneb = {
 	"Mega Zone (unknown program code 2)\0", NULL, "Konami", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, megazonebRomInfo, megazonebRomName, NULL, NULL, MegazoneInputInfo, MegazonaDIPInfo,
+	NULL, megazonebRomInfo, megazonebRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazonaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

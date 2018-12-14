@@ -689,7 +689,7 @@ struct BurnDriver BurnDrvVmetal = {
 	"Varia Metal\0", NULL, "Excellent System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, vmetalRomInfo, vmetalRomName, NULL, NULL, vmetalInputInfo, vmetalDIPInfo,
+	NULL, vmetalRomInfo, vmetalRomName, NULL, NULL, NULL, NULL, vmetalInputInfo, vmetalDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 320, 3, 4
 };
@@ -719,7 +719,7 @@ struct BurnDriver BurnDrvVmetaln = {
 	"Varia Metal (New Ways Trading Co.)\0", NULL, "Excellent System (New Ways Trading Co. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, vmetalnRomInfo, vmetalnRomName, NULL, NULL, vmetalInputInfo, vmetalDIPInfo,
+	NULL, vmetalnRomInfo, vmetalnRomName, NULL, NULL, NULL, NULL, vmetalInputInfo, vmetalDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 320, 3, 4
 };

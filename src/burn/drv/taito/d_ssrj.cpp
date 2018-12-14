@@ -441,7 +441,7 @@ struct BurnDriver BurnDrvSsrj = {
 	"Super Speed Race Junior (Japan)\0", "Weird colors", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
-	NULL, ssrjRomInfo, ssrjRomName, NULL, NULL, SsrjInputInfo, SsrjDIPInfo,
+	NULL, ssrjRomInfo, ssrjRomName, NULL, NULL, NULL, NULL, SsrjInputInfo, SsrjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	240, 270, 3, 4
 };

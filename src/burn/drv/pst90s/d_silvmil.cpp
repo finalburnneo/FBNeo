@@ -785,7 +785,7 @@ struct BurnDriver BurnDrvPuzzlove = {
 	"PuzzLove\0", NULL, "Para", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, puzzloveRomInfo, puzzloveRomName, NULL, NULL, SilvmilInputInfo, PuzzloveDIPInfo,
+	NULL, puzzloveRomInfo, puzzloveRomName, NULL, NULL, NULL, NULL, SilvmilInputInfo, PuzzloveDIPInfo,
 	puzzloveInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };
@@ -818,7 +818,7 @@ struct BurnDriver BurnDrvPuzzlovek = {
 	"PuzzLove (Korea)\0", NULL, "Para", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, puzzlovekRomInfo, puzzlovekRomName, NULL, NULL, SilvmilInputInfo, PuzzlovekDIPInfo,
+	NULL, puzzlovekRomInfo, puzzlovekRomName, NULL, NULL, NULL, NULL, SilvmilInputInfo, PuzzlovekDIPInfo,
 	puzzloveInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };
@@ -862,7 +862,7 @@ struct BurnDriver BurnDrvSilvmil = {
 	"Silver Millennium\0", NULL, "Para", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, silvmilRomInfo, silvmilRomName, NULL, NULL, SilvmilInputInfo, SilvmilDIPInfo,
+	NULL, silvmilRomInfo, silvmilRomName, NULL, NULL, NULL, NULL, SilvmilInputInfo, SilvmilDIPInfo,
 	silmilInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	240, 320, 3, 4
 };

@@ -654,7 +654,7 @@ struct BurnDriver BurnDrvJailbrek = {
 	"Jail Break\0", NULL, "Konami", "GX507",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, jailbrekRomInfo, jailbrekRomName, NULL, NULL, JailbrekInputInfo, JailbrekDIPInfo,
+	NULL, jailbrekRomInfo, jailbrekRomName, NULL, NULL, NULL, NULL, JailbrekInputInfo, JailbrekDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };
@@ -690,7 +690,7 @@ struct BurnDriver BurnDrvManhatan = {
 	"Manhattan 24 Bunsyo (Japan)\0", NULL, "Konami", "GX507",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, manhatanRomInfo, manhatanRomName, NULL, NULL, JailbrekInputInfo, JailbrekDIPInfo,
+	NULL, manhatanRomInfo, manhatanRomName, NULL, NULL, NULL, NULL, JailbrekInputInfo, JailbrekDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };
@@ -727,7 +727,7 @@ struct BurnDriver BurnDrvJailbrekb = {
 	"Jail Break (bootleg)\0", NULL, "bootleg", "GX507",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
-	NULL, jailbrekbRomInfo, jailbrekbRomName, NULL, NULL, JailbrekInputInfo, JailbrekDIPInfo,
+	NULL, jailbrekbRomInfo, jailbrekbRomName, NULL, NULL, NULL, NULL, JailbrekInputInfo, JailbrekDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };

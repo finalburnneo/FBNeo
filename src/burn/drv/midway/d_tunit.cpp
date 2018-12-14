@@ -501,7 +501,7 @@ struct BurnDriver BurnDrvMk = {
 	"Mortal Kombat (rev 5.0 T-Unit 03/19/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mkRomInfo, mkRomName, NULL, NULL, MkInputInfo, MkDIPInfo,
+	NULL, mkRomInfo, mkRomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
     MkInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -539,7 +539,7 @@ struct BurnDriver BurnDrvMkr4 = {
 	"Mortal Kombat (rev 4.0 T-Unit 02/11/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mkr4RomInfo, mkr4RomName, NULL, NULL, MkInputInfo, MkDIPInfo,
+	NULL, mkr4RomInfo, mkr4RomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
     MkInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -584,7 +584,7 @@ struct BurnDriver BurnDrvMkturbo = {
 	"Mortal Kombat (Turbo Ninja T-Unit 03/19/93, hack)\0", NULL, "Hack", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mkturboRomInfo, mkturboRomName, NULL, NULL, MkInputInfo, MkDIPInfo,
+	NULL, mkturboRomInfo, mkturboRomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
     MkTurboInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -631,7 +631,7 @@ struct BurnDriver BurnDrvMk2 = {
 	"Mortal Kombat II (rev L3.1)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2RomInfo, mk2RomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2RomInfo, mk2RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -671,7 +671,7 @@ struct BurnDriver BurnDrvMk2r32e = {
 	"Mortal Kombat II (rev L3.2 (European))\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2r32eRomInfo, mk2r32eRomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2r32eRomInfo, mk2r32eRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -711,7 +711,7 @@ struct BurnDriver BurnDrvMk2r31e = {
 	"Mortal Kombat II (rev L3.1 (European))\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2r31eRomInfo, mk2r31eRomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2r31eRomInfo, mk2r31eRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -751,7 +751,7 @@ struct BurnDriver BurnDrvMk2r30 = {
 	"Mortal Kombat II (rev L3.0)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2r30RomInfo, mk2r30RomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2r30RomInfo, mk2r30RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -791,7 +791,7 @@ struct BurnDriver BurnDrvMk2r21 = {
 	"Mortal Kombat II (rev L2.1)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2r21RomInfo, mk2r21RomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2r21RomInfo, mk2r21RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -831,7 +831,7 @@ struct BurnDriver BurnDrvMk2r20 = {
 	"Mortal Kombat II (rev L2.0)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2r20RomInfo, mk2r20RomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2r20RomInfo, mk2r20RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -871,7 +871,7 @@ struct BurnDriver BurnDrvMk2r14 = {
 	"Mortal Kombat II (rev L1.4)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2r14RomInfo, mk2r14RomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2r14RomInfo, mk2r14RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -911,7 +911,7 @@ struct BurnDriver BurnDrvMk2r11 = {
 	"Mortal Kombat II (rev L1.1)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2r11RomInfo, mk2r11RomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2r11RomInfo, mk2r11RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -951,7 +951,7 @@ struct BurnDriver BurnDrvMk2r42 = {
 	"Mortal Kombat II (rev L4.2, hack)\0", NULL, "hack", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2r42RomInfo, mk2r42RomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2r42RomInfo, mk2r42RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -991,7 +991,7 @@ struct BurnDriver BurnDrvMk2r91 = {
 	"Mortal Kombat II (rev L9.1, hack)\0", NULL, "hack", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2r91RomInfo, mk2r91RomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2r91RomInfo, mk2r91RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -1031,7 +1031,7 @@ struct BurnDriver BurnDrvMk2chal = {
 	"Mortal Kombat II Challenger (hack)\0", NULL, "hack", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mk2chalRomInfo, mk2chalRomName, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+	NULL, mk2chalRomInfo, mk2chalRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -1081,7 +1081,7 @@ struct BurnDriverD BurnDrvNbajam = {
 	"NBA Jam (rev 3.01 04/07/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, nbajamRomInfo, nbajamRomName, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
+	NULL, nbajamRomInfo, nbajamRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
     NbajamInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -1124,7 +1124,7 @@ struct BurnDriverD BurnDrvNbajamr2 = {
 	"NBA Jam (rev 2.00 02/10/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, nbajamr2RomInfo, nbajamr2RomName, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
+	NULL, nbajamr2RomInfo, nbajamr2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
     NbajamInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -1167,7 +1167,7 @@ struct BurnDriverD BurnDrvNbajamr1 = {
 	"NBA Jam (rev 1.00 02/1/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, nbajamr1RomInfo, nbajamr1RomName, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
+	NULL, nbajamr1RomInfo, nbajamr1RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
     NbajamInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -1217,7 +1217,7 @@ struct BurnDriverD BurnDrvNbajamte = {
 	"NBA Jam TE (rev 4.0 03/23/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, nbajamteRomInfo, nbajamteRomName, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
+	NULL, nbajamteRomInfo, nbajamteRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -1260,7 +1260,7 @@ struct BurnDriverD BurnDrvNbajamte3 = {
 	"NBA Jam TE (rev 3.0 03/04/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, nbajamte3RomInfo, nbajamte3RomName, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
+	NULL, nbajamte3RomInfo, nbajamte3RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -1303,7 +1303,7 @@ struct BurnDriverD BurnDrvNbajamte2 = {
 	"NBA Jam TE (rev 2.0 01/28/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, nbajamte2RomInfo, nbajamte2RomName, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
+	NULL, nbajamte2RomInfo, nbajamte2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -1346,7 +1346,7 @@ struct BurnDriverD BurnDrvNbajamte1 = {
 	"NBA Jam TE (rev 1.0 01/17/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, nbajamte1RomInfo, nbajamte1RomName, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
+	NULL, nbajamte1RomInfo, nbajamte1RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -1389,7 +1389,7 @@ struct BurnDriverD BurnDrvNbajamten = {
 	"NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, nbajamtenRomInfo, nbajamtenRomName, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
+	NULL, nbajamtenRomInfo, nbajamtenRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
@@ -1439,7 +1439,7 @@ struct BurnDriverD BurnDrvJdreddp = {
 	"Judge Dredd (rev TA1 7/12/92, location test)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_PROTOTYPE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, jdreddpRomInfo, jdreddpRomName, NULL, NULL, JdreddpInputInfo, JdreddpDIPInfo,
+	NULL, jdreddpRomInfo, jdreddpRomName, NULL, NULL, NULL, NULL, JdreddpInputInfo, JdreddpDIPInfo,
     JdreddpInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };

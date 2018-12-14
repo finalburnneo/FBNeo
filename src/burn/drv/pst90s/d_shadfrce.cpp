@@ -883,7 +883,7 @@ struct BurnDriver BurnDrvShadfrce = {
 	"Shadow Force (World, Version 3)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, shadfrceRomInfo, shadfrceRomName, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
+	NULL, shadfrceRomInfo, shadfrceRomName, NULL, NULL, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, shadfrceDraw, shadfrceScan, &bRecalcPalette, 0x4000,
 	320, 256, 4, 3
 };
@@ -922,7 +922,7 @@ struct BurnDriver BurnDrvShadfrceu = {
 	"Shadow Force (US, Version 2)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, shadfrceuRomInfo, shadfrceuRomName, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
+	NULL, shadfrceuRomInfo, shadfrceuRomName, NULL, NULL, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, shadfrceDraw, shadfrceScan, &bRecalcPalette, 0x4000,
 	320, 256, 4, 3
 };
@@ -961,7 +961,7 @@ struct BurnDriver BurnDrvShadfrcej = {
 	"Shadow Force (Japan, Version 2)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, shadfrcejRomInfo, shadfrcejRomName, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
+	NULL, shadfrcejRomInfo, shadfrcejRomName, NULL, NULL, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, shadfrceDraw, shadfrceScan, &bRecalcPalette, 0x4000,
 	320, 256, 4, 3
 };

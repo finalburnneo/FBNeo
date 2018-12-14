@@ -818,7 +818,7 @@ struct BurnDriver BurnDrvDynduke = {
 	"Dynamite Duke (Europe, 03SEP89)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, dyndukeRomInfo, dyndukeRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
+	NULL, dyndukeRomInfo, dyndukeRomName, NULL, NULL, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
 	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -875,7 +875,7 @@ struct BurnDriver BurnDrvDyndukea = {
 	"Dynamite Duke (Europe, 25JUL89)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, dyndukeaRomInfo, dyndukeaRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
+	NULL, dyndukeaRomInfo, dyndukeaRomName, NULL, NULL, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
 	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -932,7 +932,7 @@ struct BurnDriver BurnDrvDyndukej = {
 	"Dynamite Duke (Japan, 03SEP89)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, dyndukejRomInfo, dyndukejRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
+	NULL, dyndukejRomInfo, dyndukejRomName, NULL, NULL, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
 	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -989,7 +989,7 @@ struct BurnDriver BurnDrvDyndukeja = {
 	"Dynamite Duke (Japan, 25JUL89)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, dyndukejaRomInfo, dyndukejaRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
+	NULL, dyndukejaRomInfo, dyndukejaRomName, NULL, NULL, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
 	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -1046,7 +1046,7 @@ struct BurnDriver BurnDrvDyndukeu = {
 	"Dynamite Duke (US, 25JUL89)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, dyndukeuRomInfo, dyndukeuRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
+	NULL, dyndukeuRomInfo, dyndukeuRomName, NULL, NULL, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
 	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -1108,7 +1108,7 @@ struct BurnDriver BurnDrvDbldynj = {
 	"The Double Dynamites (Japan, 13NOV89)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, dbldynjRomInfo, dbldynjRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
+	NULL, dbldynjRomInfo, dbldynjRomName, NULL, NULL, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
 	dbldynjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -1165,7 +1165,7 @@ struct BurnDriver BurnDrvDbldynu = {
 	"The Double Dynamites (US, 13NOV89)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, dbldynuRomInfo, dbldynuRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
+	NULL, dbldynuRomInfo, dbldynuRomName, NULL, NULL, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
 	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };

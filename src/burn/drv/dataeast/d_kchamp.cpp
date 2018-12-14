@@ -894,7 +894,7 @@ struct BurnDriver BurnDrvKchamp = {
 	"Karate Champ (US)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, kchampRomInfo, kchampRomName, NULL, NULL, KchampInputInfo, KchampDIPInfo,
+	NULL, kchampRomInfo, kchampRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -947,7 +947,7 @@ struct BurnDriver BurnDrvKaratedo = {
 	"Karate Dou (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, karatedoRomInfo, karatedoRomName, NULL, NULL, KchampInputInfo, KchampDIPInfo,
+	NULL, karatedoRomInfo, karatedoRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1027,7 +1027,7 @@ struct BurnDriver BurnDrvKchampvs = {
 	"Karate Champ (US VS version, set 1)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, kchampvsRomInfo, kchampvsRomName, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
+	NULL, kchampvsRomInfo, kchampvsRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1078,7 +1078,7 @@ struct BurnDriver BurnDrvKchampvs2 = {
 	"Karate Champ (US VS version, set 2)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, kchampvs2RomInfo, kchampvs2RomName, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
+	NULL, kchampvs2RomInfo, kchampvs2RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1129,7 +1129,7 @@ struct BurnDriver BurnDrvKaratevs = {
 	"Taisen Karate Dou (Japan VS version)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, karatevsRomInfo, karatevsRomName, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
+	NULL, karatevsRomInfo, karatevsRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

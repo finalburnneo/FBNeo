@@ -833,7 +833,7 @@ struct BurnDriver BurnDrvPushman = {
 	"Pushman (Korea, set 1)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, pushmanRomInfo, pushmanRomName, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
+	NULL, pushmanRomInfo, pushmanRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -874,7 +874,7 @@ struct BurnDriver BurnDrvPushmana = {
 	"Pushman (Korea, set 2)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, pushmanaRomInfo, pushmanaRomName, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
+	NULL, pushmanaRomInfo, pushmanaRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -915,7 +915,7 @@ struct BurnDriver BurnDrvPushmans = {
 	"Pushman (American Sammy license)\0", NULL, "Comad (American Sammy license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, pushmansRomInfo, pushmansRomName, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
+	NULL, pushmansRomInfo, pushmansRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -963,7 +963,7 @@ struct BurnDriver BurnDrvBballs = {
 	"Bouncing Balls\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, bballsRomInfo, bballsRomName, NULL, NULL, BballsInputInfo, BballsDIPInfo,
+	NULL, bballsRomInfo, bballsRomName, NULL, NULL, NULL, NULL, BballsInputInfo, BballsDIPInfo,
 	bballsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -1004,7 +1004,7 @@ struct BurnDriver BurnDrvBballsa = {
 	"Bouncing Balls (Adult)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, bballsaRomInfo, bballsaRomName, NULL, NULL, BballsInputInfo, BballsDIPInfo,
+	NULL, bballsaRomInfo, bballsaRomName, NULL, NULL, NULL, NULL, BballsInputInfo, BballsDIPInfo,
 	bballsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };

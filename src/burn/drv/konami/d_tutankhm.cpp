@@ -529,7 +529,7 @@ struct BurnDriver BurnDrvTutankhm = {
 	"Tutankham\0", NULL, "Konami", "GX350",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_KONAMI, GBF_MAZE, 0,
-	NULL, tutankhmRomInfo, tutankhmRomName, NULL, NULL, TutankhmInputInfo, TutankhmDIPInfo,
+	NULL, tutankhmRomInfo, tutankhmRomName, NULL, NULL, NULL, NULL, TutankhmInputInfo, TutankhmDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	224, 256, 3, 4
 };
@@ -566,7 +566,7 @@ struct BurnDriver BurnDrvTutankhms = {
 	"Tutankham (Stern Electronics)\0", NULL, "Konami (Stern Electronics license)", "GX350",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_KONAMI, GBF_MAZE, 0,
-	NULL, tutankhmsRomInfo, tutankhmsRomName, NULL, NULL, TutankhmInputInfo, TutankhmDIPInfo,
+	NULL, tutankhmsRomInfo, tutankhmsRomName, NULL, NULL, NULL, NULL, TutankhmInputInfo, TutankhmDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	224, 256, 3, 4
 };

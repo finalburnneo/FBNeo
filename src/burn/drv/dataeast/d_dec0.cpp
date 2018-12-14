@@ -5651,7 +5651,7 @@ struct BurnDriver BurnDrvBaddudes = {
 	"Bad Dudes vs. Dragonninja (US)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, BaddudesRomInfo, BaddudesRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
+	NULL, BaddudesRomInfo, BaddudesRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
 	BaddudesInit, BaddudesExit, DrvFrame, BaddudesDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5661,7 +5661,7 @@ struct BurnDriver BurnDrvBirdtry = {
 	"Birdie Try (Japan)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, HbarrelInputInfo, BirdtryDIPInfo,
+	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, NULL, NULL, HbarrelInputInfo, BirdtryDIPInfo,
 	BirdtryInit, BaddudesExit, DrvFrame, BirdtryDraw, DrvScan,
 	NULL, 0x400, 240, 256, 3, 4
 };
@@ -5671,7 +5671,7 @@ struct BurnDriver BurnDrvDrgninja = {
 	"Dragonninja (Japan)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, DrgninjaRomInfo, DrgninjaRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
+	NULL, DrgninjaRomInfo, DrgninjaRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
 	BaddudesInit, BaddudesExit, DrvFrame, BaddudesDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5681,7 +5681,7 @@ struct BurnDriver BurnDrvDrgninjab = {
 	"Dragonninja (bootleg set 1)\0", NULL, "bootleg", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, DrgninjabRomInfo, DrgninjabRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
+	NULL, DrgninjabRomInfo, DrgninjabRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
 	BaddudesInit, BaddudesExit, DrvFrame, BaddudesDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5691,7 +5691,7 @@ struct BurnDriver BurnDrvDrgninjab2 = {
 	"Dragonninja (bootleg set 2)\0", NULL, "bootleg", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, Drgninjab2RomInfo, Drgninjab2RomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
+	NULL, Drgninjab2RomInfo, Drgninjab2RomName, NULL, NULL, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
 	Drgninjab2Init, BaddudesExit, DrvFrame, BaddudesDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5701,7 +5701,7 @@ struct BurnDriver BurnDrvBouldash = {
 	"Boulder Dash / Boulder Dash Part 2 (World)\0", NULL, "Data East Corporation (licensed from First Star)", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, BouldashRomInfo, BouldashRomName, NULL, NULL, Dec1InputInfo, BouldashDIPInfo,
+	NULL, BouldashRomInfo, BouldashRomName, NULL, NULL, NULL, NULL, Dec1InputInfo, BouldashDIPInfo,
 	BouldashInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5711,7 +5711,7 @@ struct BurnDriver BurnDrvBouldashj = {
 	"Boulder Dash / Boulder Dash Part 2 (Japan)\0", NULL, "Data East Corporation (licensed from First Star)", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, BouldashjRomInfo, BouldashjRomName, NULL, NULL, Dec1InputInfo, BouldashDIPInfo,
+	NULL, BouldashjRomInfo, BouldashjRomName, NULL, NULL, NULL, NULL, Dec1InputInfo, BouldashDIPInfo,
 	BouldashInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5721,7 +5721,7 @@ struct BurnDriver BurnDrvHbarrel = {
 	"Heavy Barrel (US)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, HbarrelRomInfo, HbarrelRomName, NULL, NULL, HbarrelInputInfo, HbarrelDIPInfo,
+	NULL, HbarrelRomInfo, HbarrelRomName, NULL, NULL, NULL, NULL, HbarrelInputInfo, HbarrelDIPInfo,
 	HbarrelInit, BaddudesExit, DrvFrame, HbarrelDraw, BaddudesScan,
 	NULL, 0x400, 240, 256, 3, 4
 };
@@ -5731,7 +5731,7 @@ struct BurnDriver BurnDrvHbarrelw = {
 	"Heavy Barrel (World)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, HbarrelwRomInfo, HbarrelwRomName, NULL, NULL, HbarrelInputInfo, HbarrelDIPInfo,
+	NULL, HbarrelwRomInfo, HbarrelwRomName, NULL, NULL, NULL, NULL, HbarrelInputInfo, HbarrelDIPInfo,
 	HbarrelInit, BaddudesExit, DrvFrame, HbarrelDraw, BaddudesScan,
 	NULL, 0x400, 240, 256, 3, 4
 };
@@ -5741,7 +5741,7 @@ struct BurnDriver BurnDrvHippodrm = {
 	"Hippodrome (US)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, HippodrmRomInfo, HippodrmRomName, NULL, NULL, Dec0InputInfo, HippodrmDIPInfo,
+	NULL, HippodrmRomInfo, HippodrmRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, HippodrmDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, HippodrmDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5751,7 +5751,7 @@ struct BurnDriver BurnDrvFfantasy = {
 	"Fighting Fantasy (Japan revision 3)\0", NULL, "Data East Corpotation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, FfantasyRomInfo, FfantasyRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
+	NULL, FfantasyRomInfo, FfantasyRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, HippodrmDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5761,7 +5761,7 @@ struct BurnDriver BurnDrvFfantasyj = {
 	"Fighting Fantasy (Japan revision 2)\0", NULL, "Data East Corpotation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, FfantasyjRomInfo, FfantasyjRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
+	NULL, FfantasyjRomInfo, FfantasyjRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, HippodrmDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5771,7 +5771,7 @@ struct BurnDriver BurnDrvFfantasya = {
 	"Fighting Fantasy (Japan)\0", NULL, "Data East Corpotation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, FfantasyaRomInfo, FfantasyaRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
+	NULL, FfantasyaRomInfo, FfantasyaRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, HippodrmDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5781,7 +5781,7 @@ struct BurnDriver BurnDrvFfantasyb = {
 	"Fighting Fantasy (Japan revision ?)\0", NULL, "Data East Corpotation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, FfantasybRomInfo, FfantasybRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
+	NULL, FfantasybRomInfo, FfantasybRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, HippodrmDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5791,7 +5791,7 @@ struct BurnDriver BurnDrvMidres = {
 	"Midnight Resistance (World)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, MidresRomInfo, MidresRomName, NULL, NULL, MidresInputInfo, MidresDIPInfo,
+	NULL, MidresRomInfo, MidresRomName, NULL, NULL, NULL, NULL, MidresInputInfo, MidresDIPInfo,
 	MidresInit, SlyspyExit, Dec1Frame, MidresDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5801,7 +5801,7 @@ struct BurnDriver BurnDrvMidresu = {
 	"Midnight Resistance (US)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, MidresuRomInfo, MidresuRomName, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
+	NULL, MidresuRomInfo, MidresuRomName, NULL, NULL, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
 	MidresInit, SlyspyExit, Dec1Frame, MidresDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5811,7 +5811,7 @@ struct BurnDriver BurnDrvMidresj = {
 	"Midnight Resistance (Japan)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, MidresjRomInfo, MidresjRomName, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
+	NULL, MidresjRomInfo, MidresjRomName, NULL, NULL, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
 	MidresInit, SlyspyExit, Dec1Frame, MidresDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5821,7 +5821,7 @@ struct BurnDriver BurnDrvRobocop = {
 	"Robocop (World revision 4)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, RobocopRomInfo, RobocopRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
+	NULL, RobocopRomInfo, RobocopRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopInit, RobocopExit, RobocopFrame, RobocopDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5831,7 +5831,7 @@ struct BurnDriver BurnDrvRobocopw = {
 	"Robocop (World revision 3)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, RobocopwRomInfo, RobocopwRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
+	NULL, RobocopwRomInfo, RobocopwRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopInit, RobocopExit, RobocopFrame, RobocopDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5841,7 +5841,7 @@ struct BurnDriver BurnDrvRobocopj = {
 	"Robocop (Japan)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, RobocopjRomInfo, RobocopjRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
+	NULL, RobocopjRomInfo, RobocopjRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopInit, RobocopExit, RobocopFrame, RobocopDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5851,7 +5851,7 @@ struct BurnDriver BurnDrvRobocopu = {
 	"Robocop (US revision 1)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, RobocopuRomInfo, RobocopuRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
+	NULL, RobocopuRomInfo, RobocopuRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopInit, RobocopExit, RobocopFrame, RobocopDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5861,7 +5861,7 @@ struct BurnDriver BurnDrvRobocopu0 = {
 	"Robocop (US revision 0)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, Robocopu0RomInfo, Robocopu0RomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
+	NULL, Robocopu0RomInfo, Robocopu0RomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopInit, RobocopExit, RobocopFrame, RobocopDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5871,7 +5871,7 @@ struct BurnDriver BurnDrvRobocopb = {
 	"Robocop (World bootleg)\0", NULL, "bootleg", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, RobocopbRomInfo, RobocopbRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
+	NULL, RobocopbRomInfo, RobocopbRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopbInit, BaddudesExit, DrvFrame, RobocopDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5881,7 +5881,7 @@ struct BurnDriver BurnDrvRobocopb2 = {
 	"Robocop (Red Corporation World bootleg)\0", NULL, "bootleg", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, Robocopb2RomInfo, Robocopb2RomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
+	NULL, Robocopb2RomInfo, Robocopb2RomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopbInit, BaddudesExit, DrvFrame, RobocopDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5891,7 +5891,7 @@ struct BurnDriver BurnDrvSecretag = {
 	"Secret Agent (World revision 3)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, SecretagRomInfo, SecretagRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
+	NULL, SecretagRomInfo, SecretagRomName, NULL, NULL, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
 	SlyspyInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5901,7 +5901,7 @@ struct BurnDriver BurnDrvSecretagj = {
 	"Secret Agent (Japan revision 2)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, SecretagjRomInfo, SecretagjRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
+	NULL, SecretagjRomInfo, SecretagjRomName, NULL, NULL, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
 	SlyspyInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5911,7 +5911,7 @@ struct BurnDriver BurnDrvSlyspy = {
 	"Sly Spy (US revision 4)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, SlyspyRomInfo, SlyspyRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
+	NULL, SlyspyRomInfo, SlyspyRomName, NULL, NULL, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
 	SlyspyInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5921,7 +5921,7 @@ struct BurnDriver BurnDrvSlyspy2 = {
 	"Sly Spy (US revision 2)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, Slyspy2RomInfo, Slyspy2RomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
+	NULL, Slyspy2RomInfo, Slyspy2RomName, NULL, NULL, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
 	SlyspyInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5931,7 +5931,7 @@ struct BurnDriver BurnDrvSlyspy3 = {
 	"Sly Spy (US revision 3)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, Slyspy3RomInfo, Slyspy3RomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
+	NULL, Slyspy3RomInfo, Slyspy3RomName, NULL, NULL, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
 	SlyspyInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

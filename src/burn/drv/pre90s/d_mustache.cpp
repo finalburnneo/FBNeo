@@ -662,7 +662,7 @@ struct BurnDriver BurnDrvMustache = {
 	"Mustache Boy (Japan)\0", NULL, "Seibu Kaihatsu (March license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, mustacheRomInfo, mustacheRomName, NULL, NULL, MustacheInputInfo, MustacheDIPInfo,
+	NULL, mustacheRomInfo, mustacheRomName, NULL, NULL, NULL, NULL, MustacheInputInfo, MustacheDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	248, 240, 3, 4
 };
@@ -705,7 +705,7 @@ struct BurnDriver BurnDrvMustachei = {
 	"Mustache Boy (Italy)\0", NULL, "Seibu Kaihatsu (IG SPA licence)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, mustacheiRomInfo, mustacheiRomName, NULL, NULL, MustacheInputInfo, MustacheDIPInfo,
+	NULL, mustacheiRomInfo, mustacheiRomName, NULL, NULL, NULL, NULL, MustacheInputInfo, MustacheDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	248, 240, 3, 4
 };

@@ -831,7 +831,7 @@ struct BurnDriver BurnDrvHimesiki = {
 	"Himeshikibu (Japan)\0", NULL, "Hi-Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
-	NULL, himesikiRomInfo, himesikiRomName, NULL, NULL, HimesikiInputInfo, HimesikiDIPInfo,
+	NULL, himesikiRomInfo, himesikiRomName, NULL, NULL, NULL, NULL, HimesikiInputInfo, HimesikiDIPInfo,
 	himesikiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	192, 256, 3, 4
 };
@@ -868,7 +868,7 @@ struct BurnDriver BurnDrvAndroidpo = {
 	"Android (prototype, early build)\0", NULL, "Nasco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, androidpoRomInfo, androidpoRomName, NULL, NULL, AndroidpInputInfo, AndroidpoDIPInfo,
+	NULL, androidpoRomInfo, androidpoRomName, NULL, NULL, NULL, NULL, AndroidpInputInfo, AndroidpoDIPInfo,
 	androidpoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	192, 256, 3, 4
 };
@@ -900,7 +900,7 @@ struct BurnDriver BurnDrvAndroidp = {
 	"Android (prototype, later build)\0", NULL, "Nasco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, androidpRomInfo, androidpRomName, NULL, NULL, AndroidpInputInfo, AndroidpDIPInfo,
+	NULL, androidpRomInfo, androidpRomName, NULL, NULL, NULL, NULL, AndroidpInputInfo, AndroidpDIPInfo,
 	androidpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	192, 256, 3, 4
 };

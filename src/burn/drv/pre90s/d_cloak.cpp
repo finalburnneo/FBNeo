@@ -696,7 +696,7 @@ struct BurnDriver BurnDrvCloak = {
 	"Cloak & Dagger (rev 5)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, cloakRomInfo, cloakRomName, NULL, NULL, CloakInputInfo, CloakDIPInfo,
+	NULL, cloakRomInfo, cloakRomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
 };
@@ -735,7 +735,7 @@ struct BurnDriver BurnDrvCloaksp = {
 	"Cloak & Dagger (Spanish)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, cloakspRomInfo, cloakspRomName, NULL, NULL, CloakInputInfo, CloakDIPInfo,
+	NULL, cloakspRomInfo, cloakspRomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
 };
@@ -774,7 +774,7 @@ struct BurnDriver BurnDrvCloakfr = {
 	"Cloak & Dagger (French)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, cloakfrRomInfo, cloakfrRomName, NULL, NULL, CloakInputInfo, CloakDIPInfo,
+	NULL, cloakfrRomInfo, cloakfrRomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
 };
@@ -813,7 +813,7 @@ struct BurnDriver BurnDrvCloakgr = {
 	"Cloak & Dagger (German)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, cloakgrRomInfo, cloakgrRomName, NULL, NULL, CloakInputInfo, CloakDIPInfo,
+	NULL, cloakgrRomInfo, cloakgrRomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
 };
@@ -852,7 +852,7 @@ struct BurnDriver BurnDrvAgentx4 = {
 	"Agent X (prototype, rev 4)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, agentx4RomInfo, agentx4RomName, NULL, NULL, CloakInputInfo, CloakDIPInfo,
+	NULL, agentx4RomInfo, agentx4RomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
 };
@@ -891,7 +891,7 @@ struct BurnDriver BurnDrvAgentx3 = {
 	"Agent X (prototype, rev 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, agentx3RomInfo, agentx3RomName, NULL, NULL, CloakInputInfo, CloakDIPInfo,
+	NULL, agentx3RomInfo, agentx3RomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
 };
@@ -930,7 +930,7 @@ struct BurnDriver BurnDrvAgentx2 = {
 	"Agent X (prototype, rev 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, agentx2RomInfo, agentx2RomName, NULL, NULL, CloakInputInfo, CloakDIPInfo,
+	NULL, agentx2RomInfo, agentx2RomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
 };
@@ -969,7 +969,7 @@ struct BurnDriver BurnDrvAgentx1 = {
 	"Agent X (prototype, rev 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, agentx1RomInfo, agentx1RomName, NULL, NULL, CloakInputInfo, CloakDIPInfo,
+	NULL, agentx1RomInfo, agentx1RomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
 };

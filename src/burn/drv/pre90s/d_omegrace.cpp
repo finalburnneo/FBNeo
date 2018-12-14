@@ -512,7 +512,7 @@ struct BurnDriver BurnDrvOmegrace = {
 	"Omega Race (set 1)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, omegraceRomInfo, omegraceRomName, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
+	NULL, omegraceRomInfo, omegraceRomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	800, 800, 4, 3
 };
@@ -541,7 +541,7 @@ struct BurnDriver BurnDrvOmegrace2 = {
 	"Omega Race (set 2)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, omegrace2RomInfo, omegrace2RomName, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
+	NULL, omegrace2RomInfo, omegrace2RomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	800, 800, 4, 3
 };
@@ -570,7 +570,7 @@ struct BurnDriver BurnDrvDeltrace = {
 	"Delta Race\0", NULL, "bootleg (Allied Leisure)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, deltraceRomInfo, deltraceRomName, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
+	NULL, deltraceRomInfo, deltraceRomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	800, 800, 4, 3
 };

@@ -653,7 +653,7 @@ struct BurnDriver BurnDrvPturn = {
 	"Parallel Turn\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, pturnRomInfo, pturnRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, pturnRomInfo, pturnRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

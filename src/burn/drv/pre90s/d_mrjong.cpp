@@ -521,7 +521,7 @@ struct BurnDriver BurnDrvMrjong = {
 	"Mr. Jong (Japan)\0", NULL, "Kiwako", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, mrjongRomInfo, mrjongRomName, NULL, NULL, MrjongInputInfo, MrjongDIPInfo,
+	NULL, mrjongRomInfo, mrjongRomName, NULL, NULL, NULL, NULL, MrjongInputInfo, MrjongDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 512,
 	224, 240, 3, 4
 };
@@ -531,7 +531,7 @@ struct BurnDriver BurnDrvCrazyblk = {
 	"Crazy Blocks\0", NULL, "Kiwako (ECI license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, crazyblkRomInfo, crazyblkRomName, NULL, NULL, MrjongInputInfo, MrjongDIPInfo,
+	NULL, crazyblkRomInfo, crazyblkRomName, NULL, NULL, NULL, NULL, MrjongInputInfo, MrjongDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 512,
 	224, 240, 3, 4
 };
@@ -541,7 +541,7 @@ struct BurnDriver BurnDrvBlkbustr = {
 	"BlockBuster\0", NULL, "Kiwako (ECI license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, blkbustrRomInfo, blkbustrRomName, NULL, NULL, MrjongInputInfo, MrjongDIPInfo,
+	NULL, blkbustrRomInfo, blkbustrRomName, NULL, NULL, NULL, NULL, MrjongInputInfo, MrjongDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 512,
 	224, 240, 3, 4
 };

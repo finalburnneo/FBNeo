@@ -637,7 +637,7 @@ struct BurnDriver BurnDrvStadhero = {
 	"Stadium Hero (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, stadheroRomInfo, stadheroRomName, NULL, NULL, StadheroInputInfo, StadheroDIPInfo,
+	NULL, stadheroRomInfo, stadheroRomName, NULL, NULL, NULL, NULL, StadheroInputInfo, StadheroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

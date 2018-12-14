@@ -1216,7 +1216,7 @@ struct BurnDriver BurnDrvOthunder = {
 	"Operation Thunderbolt (World, rev 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, OthunderRomInfo, OthunderRomName, NULL, NULL, OthunderInputInfo, OthunderDIPInfo,
+	NULL, OthunderRomInfo, OthunderRomName, NULL, NULL, NULL, NULL, OthunderInputInfo, OthunderDIPInfo,
 	OthunderInit, OthunderExit, OthunderFrame, OthunderDraw, OthunderScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
@@ -1226,7 +1226,7 @@ struct BurnDriver BurnDrvOthundero = {
 	"Operation Thunderbolt (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, OthunderoRomInfo, OthunderoRomName, NULL, NULL, OthunderInputInfo, OthunderuDIPInfo,
+	NULL, OthunderoRomInfo, OthunderoRomName, NULL, NULL, NULL, NULL, OthunderInputInfo, OthunderuDIPInfo,
 	OthunderInit, OthunderExit, OthunderFrame, OthunderDraw, OthunderScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
@@ -1236,7 +1236,7 @@ struct BurnDriver BurnDrvOthunderu = {
 	"Operation Thunderbolt (US, rev 1)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, OthunderuRomInfo, OthunderuRomName, NULL, NULL, OthunderInputInfo, OthunderuDIPInfo,
+	NULL, OthunderuRomInfo, OthunderuRomName, NULL, NULL, NULL, NULL, OthunderInputInfo, OthunderuDIPInfo,
 	OthunderInit, OthunderExit, OthunderFrame, OthunderDraw, OthunderScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
@@ -1246,7 +1246,7 @@ struct BurnDriver BurnDrvOthunderuo = {
 	"Operation Thunderbolt (US)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, OthunderuoRomInfo, OthunderuoRomName, NULL, NULL, OthunderInputInfo, OthunderuDIPInfo,
+	NULL, OthunderuoRomInfo, OthunderuoRomName, NULL, NULL, NULL, NULL, OthunderInputInfo, OthunderuDIPInfo,
 	OthunderInit, OthunderExit, OthunderFrame, OthunderDraw, OthunderScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
@@ -1256,7 +1256,7 @@ struct BurnDriver BurnDrvOthunderj = {
 	"Operation Thunderbolt (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, OthunderjRomInfo, OthunderjRomName, NULL, NULL, OthunderInputInfo, OthunderjDIPInfo,
+	NULL, OthunderjRomInfo, OthunderjRomName, NULL, NULL, NULL, NULL, OthunderInputInfo, OthunderjDIPInfo,
 	OthunderInit, OthunderExit, OthunderFrame, OthunderDraw, OthunderScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
@@ -1266,7 +1266,7 @@ struct BurnDriver BurnDrvOthunderjsc = {
 	"Operation Thunderbolt (Japan, SC)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, OthunderjscRomInfo, OthunderjscRomName, NULL, NULL, OthunderInputInfo, OthunderjDIPInfo,
+	NULL, OthunderjscRomInfo, OthunderjscRomName, NULL, NULL, NULL, NULL, OthunderInputInfo, OthunderjDIPInfo,
 	OthunderInit, OthunderExit, OthunderFrame, OthunderDraw, OthunderScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };

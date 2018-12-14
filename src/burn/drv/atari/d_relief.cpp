@@ -700,7 +700,7 @@ struct BurnDriver BurnDrvRelief = {
 	"Relief Pitcher (set 1, 07 Jun 1992 / 28 May 1992)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, reliefRomInfo, reliefRomName, NULL, NULL, ReliefInputInfo, ReliefDIPInfo,
+	NULL, reliefRomInfo, reliefRomName, NULL, NULL, NULL, NULL, ReliefInputInfo, ReliefDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };
@@ -743,7 +743,7 @@ struct BurnDriver BurnDrvRelief2 = {
 	"Relief Pitcher (set 2, 26 Apr 1992 / 08 Apr 1992)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, relief2RomInfo, relief2RomName, NULL, NULL, ReliefInputInfo, ReliefDIPInfo,
+	NULL, relief2RomInfo, relief2RomName, NULL, NULL, NULL, NULL, ReliefInputInfo, ReliefDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };
@@ -786,7 +786,7 @@ struct BurnDriver BurnDrvRelief3 = {
 	"Relief Pitcher (set 3, 10 Apr 1992 / 08 Apr 1992)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, relief3RomInfo, relief3RomName, NULL, NULL, ReliefInputInfo, ReliefDIPInfo,
+	NULL, relief3RomInfo, relief3RomName, NULL, NULL, NULL, NULL, ReliefInputInfo, ReliefDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };

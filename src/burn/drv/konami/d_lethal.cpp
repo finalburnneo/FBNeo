@@ -790,7 +790,7 @@ struct BurnDriver BurnDrvLethalen = {
 	"Lethal Enforcers (ver UAE, 11/19/92 15:04)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, lethalenRomInfo, lethalenRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
+	NULL, lethalenRomInfo, lethalenRomName, NULL, NULL, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
 	LethalenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -825,7 +825,7 @@ struct BurnDriver BurnDrvLethalenub = {
 	"Lethal Enforcers (ver UAB, 09/01/92 11:12)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, lethalenubRomInfo, lethalenubRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
+	NULL, lethalenubRomInfo, lethalenubRomName, NULL, NULL, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
 	LethalenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -860,7 +860,7 @@ struct BurnDriver BurnDrvLethalenua = {
 	"Lethal Enforcers (ver UAA, 08/17/92 21:38)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, lethalenuaRomInfo, lethalenuaRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
+	NULL, lethalenuaRomInfo, lethalenuaRomName, NULL, NULL, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
 	LethalenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -895,7 +895,7 @@ struct BurnDriver BurnDrvLethalenux = {
 	"Lethal Enforcers (ver unknown, US, 08/06/92 15:11, hacked/proto?)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, lethalenuxRomInfo, lethalenuxRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
+	NULL, lethalenuxRomInfo, lethalenuxRomName, NULL, NULL, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
 	LethalenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -930,7 +930,7 @@ struct BurnDriver BurnDrvLethaleneaa = {
 	"Lethal Enforcers (ver EAA, 09/09/92 09:44)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, lethaleneaaRomInfo, lethaleneaaRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
+	NULL, lethaleneaaRomInfo, lethaleneaaRomName, NULL, NULL, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
 	LethalenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -965,7 +965,7 @@ struct BurnDriver BurnDrvLethaleneab = {
 	"Lethal Enforcers (ver EAB, 10/14/92 19:53)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, lethaleneabRomInfo, lethaleneabRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
+	NULL, lethaleneabRomInfo, lethaleneabRomName, NULL, NULL, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
 	LethalenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -1000,7 +1000,7 @@ struct BurnDriver BurnDrvLethaleneae = {
 	"Lethal Enforcers (ver EAE, 11/19/92 16:24)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, lethaleneaeRomInfo, lethaleneaeRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
+	NULL, lethaleneaeRomInfo, lethaleneaeRomName, NULL, NULL, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
 	LethalenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -1035,7 +1035,7 @@ struct BurnDriverD BurnDrvLethalenj = {
 	"Lethal Enforcers (ver JAD, 12/04/92 17:16)\0", "no sprites!", "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, lethalenjRomInfo, lethalenjRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
+	NULL, lethalenjRomInfo, lethalenjRomName, NULL, NULL, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
 	LethalenjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };

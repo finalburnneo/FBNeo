@@ -499,7 +499,7 @@ struct BurnDriverD BurnDrvCopsnrob = {
 	"Cops'n Robbers\0", "No sound", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, copsnrobRomInfo, copsnrobRomName, NULL, NULL, CopsnrobInputInfo, CopsnrobDIPInfo,
+	NULL, copsnrobRomInfo, copsnrobRomName, NULL, NULL, NULL, NULL, CopsnrobInputInfo, CopsnrobDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 208, 4, 3
 };

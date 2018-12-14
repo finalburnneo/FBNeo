@@ -688,7 +688,7 @@ struct BurnDriver BurnDrvSilkroad = {
 	"The Legend of Silkroad\0", NULL, "Unico", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, silkroadRomInfo, silkroadRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, silkroadRomInfo, silkroadRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1001,
 	380, 224, 4, 3
 };
@@ -724,7 +724,7 @@ struct BurnDriver BurnDrvSilkroada = {
 	"The Legend of Silkroad (larger roms)\0", NULL, "Unico", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, silkroadaRomInfo, silkroadaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, silkroadaRomInfo, silkroadaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1001,
 	380, 224, 4, 3
 };

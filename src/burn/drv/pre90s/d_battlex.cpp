@@ -662,7 +662,7 @@ struct BurnDriver BurnDrvBattlex = {
 	"Battle Cross\0", NULL, "Omori Electric Co., Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, battlexRomInfo, battlexRomName, NULL, NULL, BattlexInputInfo, BattlexDIPInfo,
+	NULL, battlexRomInfo, battlexRomName, NULL, NULL, NULL, NULL, BattlexInputInfo, BattlexDIPInfo,
 	battlexInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42,
 	256, 224, 4, 3
 };
@@ -699,7 +699,7 @@ struct BurnDriver BurnDrvDodgeman = {
 	"Dodge Man\0", NULL, "Omori Electric Co., Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, dodgemanRomInfo, dodgemanRomName, NULL, NULL, DodgemanInputInfo, DodgemanDIPInfo,
+	NULL, dodgemanRomInfo, dodgemanRomName, NULL, NULL, NULL, NULL, DodgemanInputInfo, DodgemanDIPInfo,
 	dodgemanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };

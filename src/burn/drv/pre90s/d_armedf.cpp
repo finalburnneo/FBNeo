@@ -1522,7 +1522,7 @@ struct BurnDriver BurnDrvArmedf = {
 	"Armed Formation\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, armedfRomInfo, armedfRomName, NULL, NULL, ArmedfInputInfo, ArmedfDIPInfo,
+	NULL, armedfRomInfo, armedfRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, ArmedfDIPInfo,
 	ArmedfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -1532,7 +1532,7 @@ struct BurnDriver BurnDrvArmedff = {
 	"Armed Formation (Fillmore license)\0", NULL, "Nichibutsu (Fillmore license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, armedffRomInfo, armedffRomName, NULL, NULL, ArmedfInputInfo, ArmedfDIPInfo,
+	NULL, armedffRomInfo, armedffRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, ArmedfDIPInfo,
 	ArmedfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -1611,7 +1611,7 @@ struct BurnDriver BurnDrvCclimbr2 = {
 	"Crazy Climber 2 (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, cclimbr2RomInfo, cclimbr2RomName, NULL, NULL, Cclimbr2InputInfo, Cclimbr2DIPInfo,
+	NULL, cclimbr2RomInfo, cclimbr2RomName, NULL, NULL, NULL, NULL, Cclimbr2InputInfo, Cclimbr2DIPInfo,
 	Cclimbr2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -1654,7 +1654,7 @@ struct BurnDriver BurnDrvCclmbr2a = {
 	"Crazy Climber 2 (Japan, Harder)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, cclmbr2aRomInfo, cclmbr2aRomName, NULL, NULL, Cclimbr2InputInfo, Cclimbr2DIPInfo,
+	NULL, cclmbr2aRomInfo, cclmbr2aRomName, NULL, NULL, NULL, NULL, Cclimbr2InputInfo, Cclimbr2DIPInfo,
 	Cclimbr2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -1740,7 +1740,7 @@ struct BurnDriver BurnDrvKozure = {
 	"Kozure Ookami (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, kozureRomInfo, kozureRomName, NULL, NULL, ArmedfInputInfo, KozureDIPInfo,
+	NULL, kozureRomInfo, kozureRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, KozureDIPInfo,
 	KozureInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -1819,7 +1819,7 @@ struct BurnDriver BurnDrvLegion = {
 	"Legion - Spinner-87 (World ver 2.03)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, legionRomInfo, legionRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
+	NULL, legionRomInfo, legionRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
 	LegionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 288, 3, 4
 };
@@ -1858,7 +1858,7 @@ struct BurnDriver BurnDrvLegionj = {
 	"Chouji Meikyuu Legion (Japan ver 1.05)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, legionjRomInfo, legionjRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
+	NULL, legionjRomInfo, legionjRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
 	LegionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 288, 3, 4
 };
@@ -1934,7 +1934,7 @@ struct BurnDriver BurnDrvLegionjb = {
 	"Chouji Meikyuu Legion (Japan ver 1.05, bootleg)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, legionjbRomInfo, legionjbRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
+	NULL, legionjbRomInfo, legionjbRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
 	LegionjbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 288, 3, 4
 };
@@ -1996,7 +1996,7 @@ struct BurnDriver BurnDrvTerraf = {
 	"Terra Force\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, terrafRomInfo, terrafRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
+	NULL, terrafRomInfo, terrafRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
 	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2054,7 +2054,7 @@ struct BurnDriver BurnDrvTerrafu = {
 	"Terra Force (US)\0", NULL, "Nichibutsu USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, terrafuRomInfo, terrafuRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
+	NULL, terrafuRomInfo, terrafuRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
 	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2096,7 +2096,7 @@ struct BurnDriver BurnDrvTerrafj = {
 	"Terra Force (Japan)\0", NULL, "Nichibutsu Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, terrafjRomInfo, terrafjRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
+	NULL, terrafjRomInfo, terrafjRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
 	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2183,7 +2183,7 @@ struct BurnDriver BurnDrvTerrafjb = {
 	"Terra Force (Japan, bootleg with additional Z80)\0", "imperfect graphics", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, terrafjbRomInfo, terrafjbRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
+	NULL, terrafjbRomInfo, terrafjbRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
 	TerrafjbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2221,7 +2221,7 @@ struct BurnDriver BurnDrvTerrafb = {
 	"Terra Force (Japan, bootleg set 2)\0", "imperfect graphics", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, terrafbRomInfo, terrafbRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
+	NULL, terrafbRomInfo, terrafbRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
 	TerrafbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2304,7 +2304,7 @@ struct BurnDriver BurnDrvSkyrobo = {
 	"Sky Robo\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, skyroboRomInfo, skyroboRomName, NULL, NULL, BigfghtrInputInfo, BigfghtrDIPInfo,
+	NULL, skyroboRomInfo, skyroboRomName, NULL, NULL, NULL, NULL, BigfghtrInputInfo, BigfghtrDIPInfo,
 	SkyRoboInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2344,7 +2344,7 @@ struct BurnDriver BurnDrvBigfghtr = {
 	"Tatakae! Big Fighter (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, bigfghtrRomInfo, bigfghtrRomName, NULL, NULL, BigfghtrInputInfo, BigfghtrDIPInfo,
+	NULL, bigfghtrRomInfo, bigfghtrRomName, NULL, NULL, NULL, NULL, BigfghtrInputInfo, BigfghtrDIPInfo,
 	SkyRoboInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

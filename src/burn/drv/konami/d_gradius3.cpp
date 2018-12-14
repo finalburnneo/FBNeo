@@ -1001,7 +1001,7 @@ struct BurnDriver BurnDrvGrdius3 = {
 	"Gradius III (World, program code R)\0", NULL, "Konami", "GX945",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, grdius3RomInfo, grdius3RomName, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
+	NULL, grdius3RomInfo, grdius3RomName, NULL, NULL, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
 };
@@ -1050,7 +1050,7 @@ struct BurnDriver BurnDrvGradius3j = {
 	"Gradius III (Japan, program code S)\0", NULL, "Konami", "GX945",
 	L"Gradius III \u4F1D\u8AAC\u304B\u3089\u795E\u8A71\u3078 (Japan, program code S)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, gradius3jRomInfo, gradius3jRomName, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
+	NULL, gradius3jRomInfo, gradius3jRomName, NULL, NULL, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
 };
@@ -1107,7 +1107,7 @@ struct BurnDriver BurnDrvGradius3js = {
 	"Gradius III (Japan, program code S, split)\0", NULL, "Konami", "GX945",
 	L"Gradius III \u4F1D\u8AAC\u304B\u3089\u795E\u8A71\u3078 (Japan, program code S, split)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, gradius3jsRomInfo, gradius3jsRomName, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
+	NULL, gradius3jsRomInfo, gradius3jsRomName, NULL, NULL, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
 	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
 };
@@ -1156,7 +1156,7 @@ struct BurnDriver BurnDrvGrdius3a = {
 	"Gradius III (Asia)\0", NULL, "Konami", "GX945",
 	L"Gradius III \u4F1D\u8AAC\u304B\u3089\u795E\u8A71\u3078 (Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, grdius3aRomInfo, grdius3aRomName, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
+	NULL, grdius3aRomInfo, grdius3aRomName, NULL, NULL, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
 };

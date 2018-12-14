@@ -1262,7 +1262,7 @@ struct BurnDriver BurnDrvAirass = {
 	"Air Assault (World)\0", NULL, "Irem", "Irem M107",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_VERSHOOT, 0,
-	NULL, airassRomInfo, airassRomName, NULL, NULL, FirebarrInputInfo, FirebarrDIPInfo,
+	NULL, airassRomInfo, airassRomName, NULL, NULL, NULL, NULL, FirebarrInputInfo, FirebarrDIPInfo,
 	airassInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1346,7 +1346,7 @@ struct BurnDriver BurnDrvFirebarr = {
 	"Fire Barrel (Japan)\0", NULL, "Irem", "Irem M107",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_VERSHOOT, 0,
-	NULL, firebarrRomInfo, firebarrRomName, NULL, NULL, FirebarrInputInfo, FirebarrDIPInfo,
+	NULL, firebarrRomInfo, firebarrRomName, NULL, NULL, NULL, NULL, FirebarrInputInfo, FirebarrDIPInfo,
 	firebarrInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1417,7 +1417,7 @@ struct BurnDriver BurnDrvDsoccr94 = {
 	"Dream Soccer '94 (World, M107 hardware)\0", NULL, "Irem (Data East Corporation license)", "Irem M107",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IREM_MISC, GBF_SPORTSFOOTBALL, 0,
-	NULL, dsoccr94RomInfo, dsoccr94RomName, NULL, NULL, Dsoccr94InputInfo, Dsoccr94DIPInfo,
+	NULL, dsoccr94RomInfo, dsoccr94RomName, NULL, NULL, NULL, NULL, Dsoccr94InputInfo, Dsoccr94DIPInfo,
 	dsoccr94Init, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
@@ -1456,7 +1456,7 @@ struct BurnDriver BurnDrvDsoccr94k = {
 	"Dream Soccer '94 (Korea, M107 hardware)\0", NULL, "Irem (Data East Corporation license)", "Irem M107",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_MISC, GBF_SPORTSFOOTBALL, 0,
-	NULL, dsoccr94kRomInfo, dsoccr94kRomName, NULL, NULL, Dsoccr94InputInfo, Dsoccr94DIPInfo,
+	NULL, dsoccr94kRomInfo, dsoccr94kRomName, NULL, NULL, NULL, NULL, Dsoccr94InputInfo, Dsoccr94DIPInfo,
 	dsoccr94Init, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
@@ -1531,7 +1531,7 @@ struct BurnDriverD BurnDrvWpksoc = {
 	"World PK Soccer\0", NULL, "Jaleco", "Irem M107",
 	NULL, NULL, NULL, NULL,
 	0, 4, HARDWARE_IREM_MISC, GBF_SPORTSFOOTBALL, 0,
-	NULL, wpksocRomInfo, wpksocRomName, NULL, NULL, Dsoccr94InputInfo, Dsoccr94DIPInfo,
+	NULL, wpksocRomInfo, wpksocRomName, NULL, NULL, NULL, NULL, Dsoccr94InputInfo, Dsoccr94DIPInfo,
 	wpksocInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
@@ -1572,7 +1572,7 @@ struct BurnDriverD BurnDrvKftgoal = {
 	"Kick for the Goal\0", NULL, "Jaleco", "Irem M107",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IREM_MISC, GBF_SPORTSFOOTBALL, 0,
-	NULL, kftgoalRomInfo, kftgoalRomName, NULL, NULL, Dsoccr94InputInfo, Dsoccr94DIPInfo,
+	NULL, kftgoalRomInfo, kftgoalRomName, NULL, NULL, NULL, NULL, Dsoccr94InputInfo, Dsoccr94DIPInfo,
 	wpksocInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

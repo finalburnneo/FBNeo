@@ -453,7 +453,7 @@ struct BurnDriver BurnDrvXyonix = {
 	"Xyonix\0", NULL, "Philko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, xyonixRomInfo, xyonixRomName, NULL, NULL, XyonixInputInfo, XyonixDIPInfo,
+	NULL, xyonixRomInfo, xyonixRomName, NULL, NULL, NULL, NULL, XyonixInputInfo, XyonixDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3
 };

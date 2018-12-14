@@ -1734,7 +1734,7 @@ struct BurnDriver BurnDrvShadoww = {
 	"Shadow Warriors (World, set 1)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, shadowwRomInfo, shadowwRomName, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
+	NULL, shadowwRomInfo, shadowwRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -1782,7 +1782,7 @@ struct BurnDriver BurnDrvShadowwa = {
 	"Shadow Warriors (World, set 2)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, shadowwaRomInfo, shadowwaRomName, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
+	NULL, shadowwaRomInfo, shadowwaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -1828,7 +1828,7 @@ struct BurnDriver BurnDrvGaiden = {
 	"Ninja Gaiden (US)\0", NULL, "Tecmo", "Miscellaneous",
 	L"Ninja \u5916\u4F1D Gaiden (US)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, gaidenRomInfo, gaidenRomName, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
+	NULL, gaidenRomInfo, gaidenRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -1876,7 +1876,7 @@ struct BurnDriver BurnDrvRyukendn = {
 	"Ninja Ryukenden (Japan, set 1)\0", NULL, "Tecmo", "Miscellaneous",
 	L"\u5FCD\u8005 \u9F8D\u5263\u4F1D (Japan, set 1)\0Ninja Ryukenden\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, ryukendnRomInfo, ryukendnRomName, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
+	NULL, ryukendnRomInfo, ryukendnRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -1922,7 +1922,7 @@ struct BurnDriver BurnDrvRyukendna = {
 	"Ninja Ryukenden (Japan, set 2)\0", NULL, "Tecmo", "Miscellaneous",
 	L"\u5FCD\u8005 \u9F8D\u5263\u4F1D (Japan, set 2)\0Ninja Ryukenden\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, ryukendnaRomInfo, ryukendnaRomName, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
+	NULL, ryukendnaRomInfo, ryukendnaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -1961,7 +1961,7 @@ struct BurnDriver BurnDrvWildfang = {
 	"Wild Fang / Tecmo Knight\0", NULL, "Tecmo", "Miscellaneous",
 	L"Wild Fang\0Tecmo Knight\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, wildfangRomInfo, wildfangRomName, NULL, NULL, DrvInputInfo, WildfangDIPInfo,
+	NULL, wildfangRomInfo, wildfangRomName, NULL, NULL, NULL, NULL, DrvInputInfo, WildfangDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -1997,7 +1997,7 @@ struct BurnDriver BurnDrvTknight = {
 	"Tecmo Knight\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, tknightRomInfo, tknightRomName, NULL, NULL, DrvInputInfo, TknightDIPInfo,
+	NULL, tknightRomInfo, tknightRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TknightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -2041,7 +2041,7 @@ struct BurnDriver BurnDrvStratof = {
 	"Raiga - Strato Fighter (US)\0", NULL, "Tecmo", "Miscellaneous",
 	L"\u96F7\u7259 Strato Fighter (US)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
-	NULL, stratofRomInfo, stratofRomName, NULL, NULL, RaigaInputInfo, RaigaDIPInfo,
+	NULL, stratofRomInfo, stratofRomName, NULL, NULL, NULL, NULL, RaigaInputInfo, RaigaDIPInfo,
 	stratofInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -2077,7 +2077,7 @@ struct BurnDriver BurnDrvRaiga = {
 	"Raiga - Strato Fighter (Japan)\0", NULL, "Tecmo", "Miscellaneous",
 	L"\u96F7\u7259 Strato Fighter (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
-	NULL, raigaRomInfo, raigaRomName, NULL, NULL, RaigaInputInfo, RaigaDIPInfo,
+	NULL, raigaRomInfo, raigaRomName, NULL, NULL, NULL, NULL, RaigaInputInfo, RaigaDIPInfo,
 	stratofInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -2134,7 +2134,7 @@ struct BurnDriver BurnDrvDrgnbowl = {
 	"Dragon Bowl\0", NULL, "Nics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, drgnbowlRomInfo, drgnbowlRomName, NULL, NULL, DrvInputInfo, DrgnbowlDIPInfo,
+	NULL, drgnbowlRomInfo, drgnbowlRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrgnbowlDIPInfo,
 	drgnbowlInit, DrvExit, DrvFrame, DrgnbowlDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -2191,7 +2191,7 @@ struct BurnDriver BurnDrvDrgnbowla = {
 	"Dragon Bowl (set 2, unencrypted program)\0", NULL, "Nics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, drgnbowlaRomInfo, drgnbowlaRomName, NULL, NULL, DrvInputInfo, DrgnbowlDIPInfo,
+	NULL, drgnbowlaRomInfo, drgnbowlaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrgnbowlDIPInfo,
 	drgnbowlaInit, DrvExit, DrvFrame, DrgnbowlDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };

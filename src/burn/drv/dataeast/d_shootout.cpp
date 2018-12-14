@@ -860,7 +860,7 @@ struct BurnDriver BurnDrvShootout = {
 	"Shoot Out (US)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, shootoutRomInfo, shootoutRomName, NULL, NULL, ShootoutInputInfo, ShootoutDIPInfo,
+	NULL, shootoutRomInfo, shootoutRomName, NULL, NULL, NULL, NULL, ShootoutInputInfo, ShootoutDIPInfo,
 	ShootoutInit, DrvExit, ShootoutFrame, ShootoutDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
@@ -894,7 +894,7 @@ struct BurnDriver BurnDrvShootoutj = {
 	"Shoot Out (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, shootoutjRomInfo, shootoutjRomName, NULL, NULL, ShootoutInputInfo, ShootoujDIPInfo,
+	NULL, shootoutjRomInfo, shootoutjRomName, NULL, NULL, NULL, NULL, ShootoutInputInfo, ShootoujDIPInfo,
 	ShootoujInit, DrvExit, ShootoujFrame, ShootoujDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
@@ -929,7 +929,7 @@ struct BurnDriver BurnDrvShootoutb = {
 	"Shoot Out (Korean Bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, shootoutbRomInfo, shootoutbRomName, NULL, NULL, ShootoutInputInfo, ShootoujDIPInfo,
+	NULL, shootoutbRomInfo, shootoutbRomName, NULL, NULL, NULL, NULL, ShootoutInputInfo, ShootoujDIPInfo,
 	ShootoutbInit, DrvExit, ShootoujFrame, ShootoutDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };

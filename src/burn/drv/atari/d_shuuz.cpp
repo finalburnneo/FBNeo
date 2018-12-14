@@ -663,7 +663,7 @@ struct BurnDriver BurnDrvShuuz = {
 	"Shuuz (version 8.0)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, shuuzRomInfo, shuuzRomName, NULL, NULL, ShuuzInputInfo, ShuuzDIPInfo,
+	NULL, shuuzRomInfo, shuuzRomName, NULL, NULL, NULL, NULL, ShuuzInputInfo, ShuuzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };
@@ -707,7 +707,7 @@ struct BurnDriver BurnDrvShuuz2 = {
 	"Shuuz (version 7.1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, shuuz2RomInfo, shuuz2RomName, NULL, NULL, Shuuz2InputInfo, Shuuz2DIPInfo,
+	NULL, shuuz2RomInfo, shuuz2RomName, NULL, NULL, NULL, NULL, Shuuz2InputInfo, Shuuz2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };

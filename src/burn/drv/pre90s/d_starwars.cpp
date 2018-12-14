@@ -1164,7 +1164,7 @@ struct BurnDriver BurnDrvStarwars = {
 	"Star Wars (rev 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, starwarsRomInfo, starwarsRomName, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
+	NULL, starwarsRomInfo, starwarsRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
 	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
 	500, 400, 4, 3
 };
@@ -1199,7 +1199,7 @@ struct BurnDriver BurnDrvStarwars1 = {
 	"Star Wars (set 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, starwars1RomInfo, starwars1RomName, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
+	NULL, starwars1RomInfo, starwars1RomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
 	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
 	500, 400, 4, 3
 };
@@ -1234,7 +1234,7 @@ struct BurnDriver BurnDrvStarwarso = {
 	"Star Wars (set 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, starwarsoRomInfo, starwarsoRomName, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
+	NULL, starwarsoRomInfo, starwarsoRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
 	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
 	500, 400, 4, 3
 };
@@ -1274,7 +1274,7 @@ struct BurnDriver BurnDrvTomcatsw = {
 	"TomCat (Star Wars hardware, prototype)\0", "No sound!", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, tomcatswRomInfo, tomcatswRomName, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
+	NULL, tomcatswRomInfo, tomcatswRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
 	TomcatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
 	250, 280, 3, 4
 };
@@ -1315,7 +1315,7 @@ struct BurnDriver BurnDrvEsb = {
 	"The Empire Strikes Back\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, esbRomInfo, esbRomName, NULL, NULL, StarwarsInputInfo, EsbDIPInfo,
+	NULL, esbRomInfo, esbRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, EsbDIPInfo,
 	EsbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
 	500, 400, 4, 3
 };

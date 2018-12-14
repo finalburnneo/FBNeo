@@ -1145,7 +1145,7 @@ struct BurnDriver BurnDrvPowerins = {
 	"Power Instinct (USA)\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
-	NULL, powerinsRomInfo, powerinsRomName, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
+	NULL, powerinsRomInfo, powerinsRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3
 };
@@ -1155,7 +1155,7 @@ struct BurnDriver BurnDrvPowerinj = {
 	"Gouketsuji Ichizoku (Japan)\0", NULL, "Atlus", "Miscellaneous",
 	L"\u8C6A\u8840\u5BFA\u4E00\u65CF (Japan)\0Gouketsuji Ichizoku\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
-	NULL, powerinjRomInfo, powerinjRomName, NULL, NULL, powerinsInputInfo, powerinjDIPInfo,
+	NULL, powerinjRomInfo, powerinjRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinjDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3
 };
@@ -1165,7 +1165,7 @@ struct BurnDriver BurnDrvPowerina = {
 	"Power Instinct (USA, bootleg set 1)\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
-	NULL, powerinaRomInfo, powerinaRomName, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
+	NULL, powerinaRomInfo, powerinaRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3
 };
@@ -1175,7 +1175,7 @@ struct BurnDriver BurnDrvPowerinb = {
 	"Power Instinct (USA, bootleg set 2)\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
-	NULL, powerinbRomInfo, powerinbRomName, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
+	NULL, powerinbRomInfo, powerinbRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3
 };

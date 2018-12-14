@@ -1514,7 +1514,7 @@ static INT32 Namcos1GetRoms()
 				whichrompos = pRomName[j] & 7;
 			}
 		}
-		//bprintf(0, _T("[%S] rompos %X.\n"), pRomName, whichrompos);
+		//bprintf(0, _T("[%S] rompos %X.\n"), pRomName, NULL, NULL, whichrompos);
 		// pacmania has rom positions at the end of the file name
 		if ((pRomName[strlen(pRomName)-1] & 0xf8) == 0x30 && pRomName[strlen(pRomName)-2] != '1') {
 			whichrompos = pRomName[strlen(pRomName)-1] & 7;
@@ -2180,7 +2180,7 @@ struct BurnDriver BurnDrvShadowld = {
 	"Shadowland (YD3)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, shadowldRomInfo, shadowldRomName, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
+	NULL, shadowldRomInfo, shadowldRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
 	ShadowldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -2232,7 +2232,7 @@ struct BurnDriver BurnDrvYoukaidk2 = {
 	"Yokai Douchuuki (Japan, new version (YD2, Rev B))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, youkaidk2RomInfo, youkaidk2RomName, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
+	NULL, youkaidk2RomInfo, youkaidk2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
 	ShadowldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -2284,7 +2284,7 @@ struct BurnDriver BurnDrvYoukaidk1 = {
 	"Yokai Douchuuki (Japan, old version (YD1))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
-	NULL, youkaidk1RomInfo, youkaidk1RomName, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
+	NULL, youkaidk1RomInfo, youkaidk1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
 	ShadowldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -2347,7 +2347,7 @@ struct BurnDriver BurnDrvDspirit = {
 	"Dragon Spirit (new version (DS3))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dspiritRomInfo, dspiritRomName, NULL, NULL, DrvInputInfo, DspiritDIPInfo,
+	NULL, dspiritRomInfo, dspiritRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DspiritDIPInfo,
 	DspiritInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2402,7 +2402,7 @@ struct BurnDriver BurnDrvDspirit2 = {
 	"Dragon Spirit (DS2)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dspirit2RomInfo, dspirit2RomName, NULL, NULL, DrvInputInfo, DspiritDIPInfo,
+	NULL, dspirit2RomInfo, dspirit2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DspiritDIPInfo,
 	DspiritInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2457,7 +2457,7 @@ struct BurnDriver BurnDrvDspirit1 = {
 	"Dragon Spirit (old version (DS1))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dspirit1RomInfo, dspirit1RomName, NULL, NULL, DrvInputInfo, DspiritDIPInfo,
+	NULL, dspirit1RomInfo, dspirit1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DspiritDIPInfo,
 	DspiritInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2526,7 +2526,7 @@ struct BurnDriver BurnDrvBlazer = {
 	"Blazer (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, blazerRomInfo, blazerRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, blazerRomInfo, blazerRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	BlazerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2570,7 +2570,7 @@ struct BurnDriver BurnDrvQuester = {
 	"Quester (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
-	NULL, questerRomInfo, questerRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo, //QuesterInputInfo, QuesterDIPInfo,
+	NULL, questerRomInfo, questerRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo, //QuesterInputInfo, QuesterDIPInfo,
 	QuesterInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2607,7 +2607,7 @@ struct BurnDriver BurnDrvQuesters = {
 	"Quester Special Edition (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
-	NULL, questersRomInfo, questersRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo, //QuesterInputInfo, QuesterDIPInfo,
+	NULL, questersRomInfo, questersRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo, //QuesterInputInfo, QuesterDIPInfo,
 	QuesterInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2652,7 +2652,7 @@ struct BurnDriver BurnDrvPacmania = {
 	"Pac-Mania\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, pacmaniaRomInfo, pacmaniaRomName, NULL, NULL, DrvInputInfo, PacmaniaDIPInfo,
+	NULL, pacmaniaRomInfo, pacmaniaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PacmaniaDIPInfo,
 	PacmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2690,7 +2690,7 @@ struct BurnDriver BurnDrvPacmaniao = {
 	"Pac-Mania (111187 sound program)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, pacmaniaoRomInfo, pacmaniaoRomName, NULL, NULL, DrvInputInfo, PacmaniaDIPInfo,
+	NULL, pacmaniaoRomInfo, pacmaniaoRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PacmaniaDIPInfo,
 	PacmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2728,7 +2728,7 @@ struct BurnDriver BurnDrvPacmaniaj = {
 	"Pac-Mania (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, pacmaniajRomInfo, pacmaniajRomName, NULL, NULL, DrvInputInfo, PacmaniaDIPInfo,
+	NULL, pacmaniajRomInfo, pacmaniajRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PacmaniaDIPInfo,
 	PacmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2785,7 +2785,7 @@ struct BurnDriver BurnDrvGalaga88 = {
 	"Galaga '88\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, galaga88RomInfo, galaga88RomName, NULL, NULL, DrvInputInfo, Galaga88DIPInfo,
+	NULL, galaga88RomInfo, galaga88RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Galaga88DIPInfo,
 	Galaga88Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2835,7 +2835,7 @@ struct BurnDriver BurnDrvGalaga88j = {
 	"Galaga '88 (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, galaga88jRomInfo, galaga88jRomName, NULL, NULL, DrvInputInfo, Galaga88DIPInfo,
+	NULL, galaga88jRomInfo, galaga88jRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Galaga88DIPInfo,
 	Galaga88Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2886,7 +2886,7 @@ struct BurnDriver BurnDrvGalaga88a = {
 	"Galaga '88 (02-03-88)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, galaga88aRomInfo, galaga88aRomName, NULL, NULL, DrvInputInfo, Galaga88DIPInfo,
+	NULL, galaga88aRomInfo, galaga88aRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Galaga88DIPInfo,
 	Galaga88Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2939,7 +2939,7 @@ struct BurnDriver BurnDrvWs = {
 	"World Stadium (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, wsRomInfo, wsRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, wsRomInfo, wsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	WsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -2997,7 +2997,7 @@ struct BurnDriver BurnDrvBerabohm = {
 	"Beraboh Man (Japan, Rev C)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, berabohmRomInfo, berabohmRomName, NULL, NULL, BerabohmInputInfo, BerabohmDIPInfo,
+	NULL, berabohmRomInfo, berabohmRomName, NULL, NULL, NULL, NULL, BerabohmInputInfo, BerabohmDIPInfo,
 	BerabohmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3047,7 +3047,7 @@ struct BurnDriver BurnDrvBerabohmb = {
 	"Beraboh Man (Japan, Rev B)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, berabohmbRomInfo, berabohmbRomName, NULL, NULL, BerabohmInputInfo, BerabohmDIPInfo,
+	NULL, berabohmbRomInfo, berabohmbRomName, NULL, NULL, NULL, NULL, BerabohmInputInfo, BerabohmDIPInfo,
 	BerabohmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3103,7 +3103,7 @@ struct BurnDriver BurnDrvMmaze = {
 	"Marchen Maze (Japan)\0", "Error on first boot is normal", "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, mmazeRomInfo, mmazeRomName, NULL, NULL, DrvInputInfo, MmazeDIPInfo,
+	NULL, mmazeRomInfo, mmazeRomName, NULL, NULL, NULL, NULL, DrvInputInfo, MmazeDIPInfo,
 	MmazeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3151,7 +3151,7 @@ struct BurnDriver BurnDrvMmaze2 = {
 	"Marchen Maze (Japan, hack?)\0", "Error on first boot is normal", "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, mmaze2RomInfo, mmaze2RomName, NULL, NULL, DrvInputInfo, MmazeDIPInfo,
+	NULL, mmaze2RomInfo, mmaze2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, MmazeDIPInfo,
 	MmazeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3208,7 +3208,7 @@ struct BurnDriver BurnDrvBakutotu = {
 	"Bakutotsu Kijuutei\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, bakutotuRomInfo, bakutotuRomName, NULL, NULL, DrvInputInfo, BakutotuDIPInfo,
+	NULL, bakutotuRomInfo, bakutotuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BakutotuDIPInfo,
 	BakutotuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3255,7 +3255,7 @@ struct BurnDriver BurnDrvWldcourt = {
 	"World Court (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, wldcourtRomInfo, wldcourtRomName, NULL, NULL, DrvInputInfo, WldcourtDIPInfo,
+	NULL, wldcourtRomInfo, wldcourtRomName, NULL, NULL, NULL, NULL, DrvInputInfo, WldcourtDIPInfo,
 	WldcourtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3318,7 +3318,7 @@ struct BurnDriver BurnDrvSplatter = {
 	"Splatter House (World, new version (SH3))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, splatterRomInfo, splatterRomName, NULL, NULL, DrvInputInfo, Splatter3DIPInfo,
+	NULL, splatterRomInfo, splatterRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Splatter3DIPInfo,
 	SplatterInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3373,7 +3373,7 @@ struct BurnDriver BurnDrvSplatter2 = {
 	"Splatter House (World, old version (SH2))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, splatter2RomInfo, splatter2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, splatter2RomInfo, splatter2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	SplatterInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3428,7 +3428,7 @@ struct BurnDriver BurnDrvSplatterj = {
 	"Splatter House (Japan, SH1)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, splatterjRomInfo, splatterjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, splatterjRomInfo, splatterjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	SplatterInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3477,7 +3477,7 @@ struct BurnDriver BurnDrvFaceoff = {
 	"Face Off (Japan 2 Players)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, faceoffRomInfo, faceoffRomName, NULL, NULL, FaceoffInputInfo, FaceoffDIPInfo,
+	NULL, faceoffRomInfo, faceoffRomName, NULL, NULL, NULL, NULL, FaceoffInputInfo, FaceoffDIPInfo,
 	FaceoffInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3530,7 +3530,7 @@ struct BurnDriver BurnDrvRompers = {
 	"Rompers (Japan, new version (Rev B))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, rompersRomInfo, rompersRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, rompersRomInfo, rompersRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	RompersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -3574,7 +3574,7 @@ struct BurnDriver BurnDrvRomperso = {
 	"Rompers (Japan, old version)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, rompersoRomInfo, rompersoRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, rompersoRomInfo, rompersoRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	RompersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -3628,7 +3628,7 @@ struct BurnDriver BurnDrvBlastoff = {
 	"Blast Off (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, blastoffRomInfo, blastoffRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, blastoffRomInfo, blastoffRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	BlastoffInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -3680,7 +3680,7 @@ struct BurnDriver BurnDrvWs89 = {
 	"World Stadium '89 (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, ws89RomInfo, ws89RomName, NULL, NULL, DrvInputInfo, Ws89DIPInfo,
+	NULL, ws89RomInfo, ws89RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Ws89DIPInfo,
 	Ws89Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3729,7 +3729,7 @@ struct BurnDriver BurnDrvDangseed = {
 	"Dangerous Seed (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dangseedRomInfo, dangseedRomName, NULL, NULL, DrvInputInfo, DangseedDIPInfo,
+	NULL, dangseedRomInfo, dangseedRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangseedDIPInfo,
 	DangseedInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -3781,7 +3781,7 @@ struct BurnDriver BurnDrvWs90 = {
 	"World Stadium '90 (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, ws90RomInfo, ws90RomName, NULL, NULL, DrvInputInfo, Ws90DIPInfo,
+	NULL, ws90RomInfo, ws90RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Ws90DIPInfo,
 	Ws90Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3834,7 +3834,7 @@ struct BurnDriver BurnDrvPistoldm = {
 	"Pistol Daimyo no Bouken (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
-	NULL, pistoldmRomInfo, pistoldmRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, pistoldmRomInfo, pistoldmRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	PistoldmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3878,7 +3878,7 @@ struct BurnDriver BurnDrvBoxyboy = {
 	"Boxy Boy (SB?)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, boxyboyRomInfo, boxyboyRomName, NULL, NULL, DrvInputInfo, BoxyboyDIPInfo,
+	NULL, boxyboyRomInfo, boxyboyRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BoxyboyDIPInfo,
 	BoxyboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3915,7 +3915,7 @@ struct BurnDriver BurnDrvSoukobdx = {
 	"Souko Ban Deluxe (Japan, SB1)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, soukobdxRomInfo, soukobdxRomName, NULL, NULL, DrvInputInfo, BoxyboyDIPInfo,
+	NULL, soukobdxRomInfo, soukobdxRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BoxyboyDIPInfo,
 	BoxyboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -3959,7 +3959,7 @@ struct BurnDriver BurnDrvPuzlclub = {
 	"Puzzle Club (Japan prototype)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, puzlclubRomInfo, puzlclubRomName, NULL, NULL, DrvInputInfo, PuzlclubDIPInfo,
+	NULL, puzlclubRomInfo, puzlclubRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PuzlclubDIPInfo,
 	PuzlclubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -4007,7 +4007,7 @@ struct BurnDriver BurnDrvTankfrce = {
 	"Tank Force (US, 2 Players)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, tankfrceRomInfo, tankfrceRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, tankfrceRomInfo, tankfrceRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	TankfrceInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -4057,7 +4057,7 @@ struct BurnDriver BurnDrvTankfrce4 = {
 	"Tank Force (US, 4 Players)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, tankfrce4RomInfo, tankfrce4RomName, NULL, NULL, Tankfrce4InputInfo, FaceoffDIPInfo,
+	NULL, tankfrce4RomInfo, tankfrce4RomName, NULL, NULL, NULL, NULL, Tankfrce4InputInfo, FaceoffDIPInfo,
 	Tankfrce4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
@@ -4098,7 +4098,7 @@ struct BurnDriver BurnDrvTankfrcej = {
 	"Tank Force (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, tankfrcejRomInfo, tankfrcejRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, tankfrcejRomInfo, tankfrcejRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	TankfrceInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };

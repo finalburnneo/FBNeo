@@ -3858,7 +3858,7 @@ struct BurnDriver BurnDrvCaptaven = {
 	"Captain America and The Avengers (Asia Rev 1.4)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, captavenRomInfo, captavenRomName, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
+	NULL, captavenRomInfo, captavenRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -3908,7 +3908,7 @@ struct BurnDriver BurnDrvCaptavena = {
 	"Captain America and The Avengers (Asia Rev 1.0)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, captavenaRomInfo, captavenaRomName, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
+	NULL, captavenaRomInfo, captavenaRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -3959,7 +3959,7 @@ struct BurnDriver BurnDrvCaptavene = {
 	"Captain America and The Avengers (UK Rev 1.4)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, captaveneRomInfo, captaveneRomName, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
+	NULL, captaveneRomInfo, captaveneRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4009,7 +4009,7 @@ struct BurnDriver BurnDrvCaptavenu = {
 	"Captain America and The Avengers (US Rev 1.9)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, captavenuRomInfo, captavenuRomName, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
+	NULL, captavenuRomInfo, captavenuRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4059,7 +4059,7 @@ struct BurnDriver BurnDrvCaptavenuu = {
 	"Captain America and The Avengers (US Rev 1.6)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, captavenuuRomInfo, captavenuuRomName, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
+	NULL, captavenuuRomInfo, captavenuuRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4109,7 +4109,7 @@ struct BurnDriver BurnDrvCaptavenua = {
 	"Captain America and The Avengers (US Rev 1.4)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, captavenuaRomInfo, captavenuaRomName, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
+	NULL, captavenuaRomInfo, captavenuaRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4159,7 +4159,7 @@ struct BurnDriver BurnDrvCaptavenj = {
 	"Captain America and The Avengers (Japan Rev 0.2)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, captavenjRomInfo, captavenjRomName, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
+	NULL, captavenjRomInfo, captavenjRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4205,7 +4205,7 @@ struct BurnDriver BurnDrvFghthist = {
 	"Fighter's History (World ver 43-09, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, fghthistRomInfo, fghthistRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
+	NULL, fghthistRomInfo, fghthistRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4251,7 +4251,7 @@ struct BurnDriver BurnDrvFghthista = {
 	"Fighter's History (World ver 43-07, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, fghthistaRomInfo, fghthistaRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
+	NULL, fghthistaRomInfo, fghthistaRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistaInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4297,7 +4297,7 @@ struct BurnDriver BurnDrvFghthistb = {
 	"Fighter's History (World ver 43-05, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, fghthistbRomInfo, fghthistbRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
+	NULL, fghthistbRomInfo, fghthistbRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistbInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4343,7 +4343,7 @@ struct BurnDriver BurnDrvFghthistu = {
 	"Fighter's History (US ver 42-09, DE-0396-0 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, fghthistuRomInfo, fghthistuRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
+	NULL, fghthistuRomInfo, fghthistuRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistuInit, DrvExit, DrvZ80Frame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4389,7 +4389,7 @@ struct BurnDriver BurnDrvFghthistua = {
 	"Fighter's History (US ver 42-06, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, fghthistuaRomInfo, fghthistuaRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
+	NULL, fghthistuaRomInfo, fghthistuaRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistuaInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4435,7 +4435,7 @@ struct BurnDriver BurnDrvFghthistub = {
 	"Fighter's History (US ver 42-05, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, fghthistubRomInfo, fghthistubRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
+	NULL, fghthistubRomInfo, fghthistubRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistubInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4481,7 +4481,7 @@ struct BurnDriver BurnDrvFghthistuc = {
 	"Fighter's History (US ver 42-03, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, fghthistucRomInfo, fghthistucRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
+	NULL, fghthistucRomInfo, fghthistucRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistucInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4522,7 +4522,7 @@ struct BurnDriver BurnDrvFghthistj = {
 	"Fighter's History (Japan ver 41-07, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, fghthistjRomInfo, fghthistjRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
+	NULL, fghthistjRomInfo, fghthistjRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4568,7 +4568,7 @@ struct BurnDriver BurnDrvFghthistja = {
 	"Fighter's History (Japan ver 41-05, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, fghthistjaRomInfo, fghthistjaRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
+	NULL, fghthistjaRomInfo, fghthistjaRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistjaInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4614,7 +4614,7 @@ struct BurnDriver BurnDrvFghthistjb = {
 	"Fighter's History (Japan ver 41-04, DE-0380-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, fghthistjbRomInfo, fghthistjbRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
+	NULL, fghthistjbRomInfo, fghthistjbRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistjbInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4666,7 +4666,7 @@ struct BurnDriver BurnDrvNslasher = {
 	"Night Slashers (Korea Rev 1.3, DE-0397-0 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, nslasherRomInfo, nslasherRomName, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
+	NULL, nslasherRomInfo, nslasherRomName, NULL, NULL, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
 	NslasherInit, DrvExit, DrvZ80Frame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4719,7 +4719,7 @@ struct BurnDriver BurnDrvNslasherj = {
 	"Night Slashers (Japan Rev 1.2, DE-0397-0 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, nslasherjRomInfo, nslasherjRomName, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
+	NULL, nslasherjRomInfo, nslasherjRomName, NULL, NULL, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
 	NslasherjInit, DrvExit, DrvZ80Frame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4766,7 +4766,7 @@ struct BurnDriver BurnDrvNslashers = {
 	"Night Slashers (Over Sea Rev 1.2, DE-0397-0 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, nslashersRomInfo, nslashersRomName, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
+	NULL, nslashersRomInfo, nslashersRomName, NULL, NULL, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
 	NslasherInit, DrvExit, DrvZ80Frame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4818,7 +4818,7 @@ struct BurnDriver BurnDrvNslasheru = {
 	"Night Slashers (US Rev 1.2, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, nslasheruRomInfo, nslasheruRomName, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
+	NULL, nslasheruRomInfo, nslasheruRomName, NULL, NULL, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
 	NslasheruInit, DrvExit, DrvFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4905,7 +4905,7 @@ struct BurnDriver BurnDrvTattass = {
 	"Tattoo Assassins (US prototype)\0", NULL, "Data East Pinball", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, tattassRomInfo, tattassRomName, NULL, NULL, TattassInputInfo, TattassDIPInfo,
+	NULL, tattassRomInfo, tattassRomName, NULL, NULL, NULL, NULL, TattassInputInfo, TattassDIPInfo,
 	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4987,7 +4987,7 @@ struct BurnDriver BurnDrvTattassa = {
 	"Tattoo Assassins (Asia prototype)\0", NULL, "Data East Pinball", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, tattassaRomInfo, tattassaRomName, NULL, NULL, TattassInputInfo, TattassDIPInfo,
+	NULL, tattassaRomInfo, tattassaRomName, NULL, NULL, NULL, NULL, TattassInputInfo, TattassDIPInfo,
 	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -5063,7 +5063,7 @@ struct BurnDriver BurnDrvDragngun = {
 	"Dragon Gun (US)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, dragngunRomInfo, dragngunRomName, NULL, NULL, DragngunInputInfo, DragngunDIPInfo,
+	NULL, dragngunRomInfo, dragngunRomName, NULL, NULL, NULL, NULL, DragngunInputInfo, DragngunDIPInfo,
 	DragngunInit, DrvExit, DrvFrame, DragngunDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -5131,7 +5131,7 @@ struct BurnDriver BurnDrvDragngunj = {
 	"Dragon Gun (Japan)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, dragngunjRomInfo, dragngunjRomName, NULL, NULL, DragngunInputInfo, DragngunDIPInfo,
+	NULL, dragngunjRomInfo, dragngunjRomName, NULL, NULL, NULL, NULL, DragngunInputInfo, DragngunDIPInfo,
 	DragngunInit, DrvExit, DrvFrame, DragngunDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

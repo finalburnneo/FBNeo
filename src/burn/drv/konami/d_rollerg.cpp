@@ -575,7 +575,7 @@ struct BurnDriver BurnDrvRollerg = {
 	"Rollergames (US)\0", NULL, "Konami", "GX999",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, rollergRomInfo, rollergRomName, NULL, NULL, RollergInputInfo, RollergDIPInfo,
+	NULL, rollergRomInfo, rollergRomName, NULL, NULL, NULL, NULL, RollergInputInfo, RollergDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
 };
@@ -605,7 +605,7 @@ struct BurnDriver BurnDrvRollergj = {
 	"Rollergames (Japan)\0", NULL, "Konami", "GX999",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, rollergjRomInfo, rollergjRomName, NULL, NULL, RollergInputInfo, RollergDIPInfo,
+	NULL, rollergjRomInfo, rollergjRomName, NULL, NULL, NULL, NULL, RollergInputInfo, RollergDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
 };

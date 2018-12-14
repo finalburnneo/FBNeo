@@ -1086,7 +1086,7 @@ struct BurnDriver BurnDrvCybertnk = {
 	"Cyber Tank (v1.4)\0", NULL, "Coreland", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, cybertnkRomInfo, cybertnkRomName, NULL, NULL, CybertnkInputInfo, CybertnkDIPInfo,
+	NULL, cybertnkRomInfo, cybertnkRomName, NULL, NULL, NULL, NULL, CybertnkInputInfo, CybertnkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	512, 224, 8, 3
 };

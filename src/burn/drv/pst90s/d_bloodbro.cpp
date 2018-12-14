@@ -931,7 +931,7 @@ struct BurnDriver BurnDrvBloodbro = {
 	"Blood Bros. (World?)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bloodbroRomInfo, bloodbroRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
+	NULL, bloodbroRomInfo, bloodbroRomName, NULL, NULL, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -967,7 +967,7 @@ struct BurnDriver BurnDrvBloodbroj = {
 	"Blood Bros. (Japan, rev A)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bloodbrojRomInfo, bloodbrojRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
+	NULL, bloodbrojRomInfo, bloodbrojRomName, NULL, NULL, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -1003,7 +1003,7 @@ struct BurnDriver BurnDrvBloodbroja = {
 	"Blood Bros. (Japan)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bloodbrojaRomInfo, bloodbrojaRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
+	NULL, bloodbrojaRomInfo, bloodbrojaRomName, NULL, NULL, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -1039,7 +1039,7 @@ struct BurnDriver BurnDrvBloodbrou = {
 	"Blood Bros. (US)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bloodbrouRomInfo, bloodbrouRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
+	NULL, bloodbrouRomInfo, bloodbrouRomName, NULL, NULL, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -1089,7 +1089,7 @@ struct BurnDriverD BurnDrvWeststry = {
 	"West Story (bootleg of Blood Bros., set 1)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, weststryRomInfo, weststryRomName, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
+	NULL, weststryRomInfo, weststryRomName, NULL, NULL, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -1139,7 +1139,7 @@ struct BurnDriverD BurnDrvWeststrya = {
 	"West Story (bootleg of Blood Bros., set 2)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, weststryaRomInfo, weststryaRomName, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
+	NULL, weststryaRomInfo, weststryaRomName, NULL, NULL, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -1175,7 +1175,7 @@ struct BurnDriver BurnDrvSkysmash = {
 	"Sky Smasher\0", NULL, "Nihon System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, skysmashRomInfo, skysmashRomName, NULL, NULL, SkysmashInputInfo, SkysmashDIPInfo,
+	NULL, skysmashRomInfo, skysmashRomName, NULL, NULL, NULL, NULL, SkysmashInputInfo, SkysmashDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };

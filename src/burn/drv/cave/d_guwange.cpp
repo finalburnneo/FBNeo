@@ -663,7 +663,7 @@ struct BurnDriver BurnDrvGuwange = {
 	"Guwange (Japan, Master Ver. 99/06/24)\0", NULL, "Atlus / Cave", "Cave",
 	L"\u3050\u308F\u3093\u3052 (Japan, Master Ver. 99/06/24)\0Guwange\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_VERSHOOT, 0,
-	NULL, guwangeRomInfo, guwangeRomName, NULL, NULL, guwangeInputInfo, NULL,
+	NULL, guwangeRomInfo, guwangeRomName, NULL, NULL, NULL, NULL, guwangeInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
@@ -702,7 +702,7 @@ struct BurnDriver BurnDrvGuwanges = {
 	"Guwange (Japan, Special Ver. 00/01/01)\0", NULL, "Atlus / Cave", "Cave",
 	L"\u3050\u308F\u3093\u3052 (Japan, Special Ver. 00/07/07)\0Guwange\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_VERSHOOT, 0,
-	NULL, guwangesRomInfo, guwangesRomName, NULL, NULL, guwangeInputInfo, NULL,
+	NULL, guwangesRomInfo, guwangesRomName, NULL, NULL, NULL, NULL, guwangeInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };

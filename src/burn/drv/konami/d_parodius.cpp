@@ -642,7 +642,7 @@ struct BurnDriver BurnDrvParodius = {
 	"Parodius DA! (World, set 1)\0", NULL, "Konami", "GX955",
 	L"Parodius \u30D1\u30ED\u30C7\u30A3\u30A6\u30B9\u3060\uFF01 \uFF0D\u795E\u8A71\u304B\u3089\u304A\u7B11\u3044\u3078\uFF0D (World, set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, parodiusRomInfo, parodiusRomName, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
+	NULL, parodiusRomInfo, parodiusRomName, NULL, NULL, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -673,7 +673,7 @@ struct BurnDriver BurnDrvParodiuse = {
 	"Parodius DA! (World, set 2)\0", NULL, "Konami", "GX955",
 	L"Parodius \u30D1\u30ED\u30C7\u30A3\u30A6\u30B9\u3060\uFF01 \uFF0D\u795E\u8A71\u304B\u3089\u304A\u7B11\u3044\u3078\uFF0D (World, set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, parodiuseRomInfo, parodiuseRomName, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
+	NULL, parodiuseRomInfo, parodiuseRomName, NULL, NULL, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -704,7 +704,7 @@ struct BurnDriver BurnDrvParodiusj = {
 	"Parodius DA! (Japan)\0", NULL, "Konami", "GX955",
 	L"Parodius \u30D1\u30ED\u30C7\u30A3\u30A6\u30B9\u3060\uFF01 \uFF0D\u795E\u8A71\u304B\u3089\u304A\u7B11\u3044\u3078\uFF0D (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, parodiusjRomInfo, parodiusjRomName, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
+	NULL, parodiusjRomInfo, parodiusjRomName, NULL, NULL, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -735,7 +735,7 @@ struct BurnDriver BurnDrvParodiusa = {
 	"Parodius DA! (Asia)\0", NULL, "Konami", "GX955",
 	L"Parodius \u30D1\u30ED\u30C7\u30A3\u30A6\u30B9\u3060\uFF01 \uFF0D\u795E\u8A71\u304B\u3089\u304A\u7B11\u3044\u3078\uFF0D (Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, parodiusaRomInfo, parodiusaRomName, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
+	NULL, parodiusaRomInfo, parodiusaRomName, NULL, NULL, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };

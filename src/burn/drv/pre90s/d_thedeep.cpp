@@ -781,7 +781,7 @@ struct BurnDriver BurnDrvThedeep = {
 	"The Deep (Japan)\0", NULL, "Wood Place Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, thedeepRomInfo, thedeepRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, thedeepRomInfo, thedeepRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
 	248, 256, 3, 4
 };
@@ -822,7 +822,7 @@ struct BurnDriver BurnDrvRundeep = {
 	"Run Deep\0", NULL, "bootleg (Cream)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, rundeepRomInfo, rundeepRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, rundeepRomInfo, rundeepRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
 	248, 256, 3, 4
 };

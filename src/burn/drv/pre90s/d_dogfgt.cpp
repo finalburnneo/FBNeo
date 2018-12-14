@@ -637,7 +637,7 @@ struct BurnDriver BurnDrvDogfgt = {
 	"Acrobatic Dog-Fight\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, dogfgtRomInfo, dogfgtRomName, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,
+	NULL, dogfgtRomInfo, dogfgtRomName, NULL, NULL, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	256, 240, 4, 3
 };
@@ -682,7 +682,7 @@ struct BurnDriver BurnDrvDogfgtu = {
 	"Acrobatic Dog-Fight (USA)\0", NULL, "Technos Japan (Data East USA, Inc. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, dogfgtuRomInfo, dogfgtuRomName, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,
+	NULL, dogfgtuRomInfo, dogfgtuRomName, NULL, NULL, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	256, 240, 4, 3
 };
@@ -727,7 +727,7 @@ struct BurnDriver BurnDrvDogfgtj = {
 	"Dog-Fight (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, dogfgtjRomInfo, dogfgtjRomName, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,
+	NULL, dogfgtjRomInfo, dogfgtjRomName, NULL, NULL, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	256, 240, 4, 3
 };

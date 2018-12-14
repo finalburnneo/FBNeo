@@ -683,7 +683,7 @@ struct BurnDriver BurnDrvOhmygod = {
 	"Oh My God!\0", NULL, "Atlus", "Miscellaneous",
 	L"Oh my God! (Japan)\0Oh my god! \u30AA\u30FC\u30DE\u30A4\u30AC\u30A1\u30FC\uFF01\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, OhmygodRomInfo, OhmygodRomName, NULL, NULL, OhmygodInputInfo, OhmygodDIPInfo,
+	NULL, OhmygodRomInfo, OhmygodRomName, NULL, NULL, NULL, NULL, OhmygodInputInfo, OhmygodDIPInfo,
 	OhmygodInit, OhmygodExit, OhmygodFrame, OhmygodDraw, OhmygodScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
@@ -693,7 +693,7 @@ struct BurnDriver BurnDrvNaname = {
 	"Naname de Magic!\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, NanameRomInfo, NanameRomName, NULL, NULL, OhmygodInputInfo, NanameDIPInfo,
+	NULL, NanameRomInfo, NanameRomName, NULL, NULL, NULL, NULL, OhmygodInputInfo, NanameDIPInfo,
 	OhmygodInit, OhmygodExit, OhmygodFrame, OhmygodDraw, OhmygodScan,
 	NULL, 0x800, 320, 240, 4, 3
 };

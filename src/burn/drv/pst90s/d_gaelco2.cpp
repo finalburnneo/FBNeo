@@ -1794,7 +1794,7 @@ struct BurnDriver BurnDrvManiacsq = {
 	"Maniac Square (protected, Version 1.0, Checksum DEEE)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, maniacsqRomInfo, maniacsqRomName, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
+	NULL, maniacsqRomInfo, maniacsqRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
 	maniacsqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -1822,7 +1822,7 @@ struct BurnDriver BurnDrvManiacsqa = {
 	"Maniac Square (protected, Version 1.0, Checksum CF2D)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, maniacsqaRomInfo, maniacsqaRomName, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
+	NULL, maniacsqaRomInfo, maniacsqaRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
 	maniacsqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -1848,7 +1848,7 @@ struct BurnDriver BurnDrvManiacsqu = {
 	"Maniac Square (unprotected, Version 1.0, Checksum BB73)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, maniacsquRomInfo, maniacsquRomName, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
+	NULL, maniacsquRomInfo, maniacsquRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
 	maniacsqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -1881,7 +1881,7 @@ struct BurnDriver BurnDrvAligator = {
 	"Alligator Hunt (World, protected)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, aligatorRomInfo, aligatorRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
+	NULL, aligatorRomInfo, aligatorRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
 	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -1909,7 +1909,7 @@ struct BurnDriver BurnDrvAligators = {
 	"Alligator Hunt (Spain, protected)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, aligatorsRomInfo, aligatorsRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
+	NULL, aligatorsRomInfo, aligatorsRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
 	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -1935,7 +1935,7 @@ struct BurnDriver BurnDrvAligatorun = {
 	"Alligator Hunt (unprotected, set 1)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, aligatorunRomInfo, aligatorunRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
+	NULL, aligatorunRomInfo, aligatorunRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
 	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -1961,7 +1961,7 @@ struct BurnDriver BurnDrvAligatoruna = {
 	"Alligator Hunt (unprotected, set 2)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, aligatorunaRomInfo, aligatorunaRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
+	NULL, aligatorunaRomInfo, aligatorunaRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
 	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -1992,7 +1992,7 @@ struct BurnDriver BurnDrvSnowboara = {
 	"Snow Board Championship (Version 2.0)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, snowboaraRomInfo, snowboaraRomName, NULL, NULL, SnowboarInputInfo, NULL,
+	NULL, snowboaraRomInfo, snowboaraRomName, NULL, NULL, NULL, NULL, SnowboarInputInfo, NULL,
 	snowboaraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	384, 240, 4, 3
 };
@@ -2043,7 +2043,7 @@ struct BurnDriver BurnDrvSnowboar = {
 	"Snow Board Championship (Version 2.1)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, snowboarRomInfo, snowboarRomName, NULL, NULL, SnowboarInputInfo, NULL,
+	NULL, snowboarRomInfo, snowboarRomName, NULL, NULL, NULL, NULL, SnowboarInputInfo, NULL,
 	snowboarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	384, 240, 4, 3
 };
@@ -2077,7 +2077,7 @@ struct BurnDriver BurnDrvTouchgo = {
 	"Touch & Go (World)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, touchgoRomInfo, touchgoRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	NULL, touchgoRomInfo, touchgoRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
 };
@@ -2106,7 +2106,7 @@ struct BurnDriver BurnDrvTouchgon = {
 	"Touch & Go (Non North America)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, touchgonRomInfo, touchgonRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	NULL, touchgonRomInfo, touchgonRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
 };
@@ -2135,7 +2135,7 @@ struct BurnDriver BurnDrvTouchgoe = {
 	"Touch & Go (earlier revision)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, touchgoeRomInfo, touchgoeRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	NULL, touchgoeRomInfo, touchgoeRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
 };
@@ -2161,7 +2161,7 @@ struct BurnDriver BurnDrvTouchgok = {
 	"Touch & Go (Korea, unprotected)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, touchgokRomInfo, touchgokRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	NULL, touchgokRomInfo, touchgokRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
 };
@@ -2208,7 +2208,7 @@ struct BurnDriver BurnDrvBang = {
 	"Bang!\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bangRomInfo, bangRomName, NULL, NULL, BangInputInfo, NULL,
+	NULL, bangRomInfo, bangRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,
 	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -2244,7 +2244,7 @@ struct BurnDriver BurnDrvBangj = {
 	"Gun Gabacho (Japan)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bangjRomInfo, bangjRomName, NULL, NULL, BangInputInfo, NULL,
+	NULL, bangjRomInfo, bangjRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,
 	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -2276,7 +2276,7 @@ struct BurnDriver BurnDrvWrally2 = {
 	"World Rally 2: Twin Racing (mask ROM version)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, wrally2RomInfo, wrally2RomName, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
+	NULL, wrally2RomInfo, wrally2RomName, NULL, NULL, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
 	wrally2Init, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
 	384*2, 240, 8, 3
 };
@@ -2319,7 +2319,7 @@ struct BurnDriver BurnDrvWrally2a = {
 	"World Rally 2: Twin Racing (EPROM version)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, wrally2aRomInfo, wrally2aRomName, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
+	NULL, wrally2aRomInfo, wrally2aRomName, NULL, NULL, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
 	wrally2aInit, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
 	384*2, 240, 8, 3
 };

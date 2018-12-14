@@ -626,7 +626,7 @@ struct BurnDriver BurnDrvWiping = {
 	"Wiping\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, wipingRomInfo, wipingRomName, NULL, NULL, WipingInputInfo, WipingDIPInfo,
+	NULL, wipingRomInfo, wipingRomName, NULL, NULL, NULL, NULL, WipingInputInfo, WipingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -664,7 +664,7 @@ struct BurnDriver BurnDrvRugrats = {
 	"Rug Rats\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, rugratsRomInfo, rugratsRomName, NULL, NULL, WipingInputInfo, RugratsDIPInfo,
+	NULL, rugratsRomInfo, rugratsRomName, NULL, NULL, NULL, NULL, WipingInputInfo, RugratsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

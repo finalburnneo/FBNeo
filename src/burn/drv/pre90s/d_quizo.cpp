@@ -354,7 +354,7 @@ struct BurnDriver BurnDrvQuizo = {
 	"Quiz Olympic (set 1)\0", NULL, "Seoul Coin Corp.", "Miscellaneous",
 	L"\uD034\uC988\uC62C\uB9BC\uD53D (set 1)\0Quiz Olympic (set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, quizoRomInfo, quizoRomName, NULL, NULL, QuizoInputInfo, QuizoDIPInfo,
+	NULL, quizoRomInfo, quizoRomName, NULL, NULL, NULL, NULL, QuizoInputInfo, QuizoDIPInfo,
 	QuizoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x10,
 	320, 200, 4, 3
 };
@@ -387,7 +387,7 @@ struct BurnDriver BurnDrvQuizoa = {
 	"Quiz Olympic (set 2)\0", NULL, "Seoul Coin Corp.", "Miscellaneous",
 	L"\uD034\uC988\uC62C\uB9BC\uD53D (set 2)\0Quiz Olympic (set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, quizoaRomInfo, quizoaRomName, NULL, NULL, QuizoInputInfo, QuizoDIPInfo,
+	NULL, quizoaRomInfo, quizoaRomName, NULL, NULL, NULL, NULL, QuizoInputInfo, QuizoDIPInfo,
 	QuizoaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x10,
 	320, 200, 4, 3
 };

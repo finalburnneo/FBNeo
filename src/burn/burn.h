@@ -344,6 +344,8 @@ INT32 BurnDrvGetGenreFlags();
 INT32 BurnDrvGetFamilyFlags();
 INT32 BurnDrvGetSampleInfo(struct BurnSampleInfo *pri, UINT32 i);
 INT32 BurnDrvGetSampleName(char** pszName, UINT32 i, INT32 nAka);
+INT32 BurnDrvGetHDDInfo(struct BurnHDDInfo *pri, UINT32 i);
+INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka);
 
 void Reinitialise();
 

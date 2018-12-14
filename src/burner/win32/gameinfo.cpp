@@ -118,6 +118,16 @@ static int DisplayRomInfo()
 	return 0;
 }
 
+static int DisplayHDDInfo()
+{
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST3), SW_SHOW);
+	UpdateWindow(hGameInfoDlg);
+	
+	return 0;
+}
+
 static int DisplaySampleInfo()
 {
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_HIDE);
@@ -133,6 +143,7 @@ static int DisplayHistory()
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST1), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST2), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST3), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_SHOW);
 	UpdateWindow(hGameInfoDlg);
 	
@@ -168,9 +179,9 @@ static int GameInfoInit()
     TC_ITEM TCI; 
     TCI.mask = TCIF_TEXT; 
 
-	UINT idsString[16] = {  IDS_GAMEINFO_ROMINFO, IDS_GAMEINFO_SAMPLES, IDS_GAMEINFO_HISTORY, IDS_GAMEINFO_INGAME, IDS_GAMEINFO_TITLE, IDS_GAMEINFO_SELECT, IDS_GAMEINFO_VERSUS, IDS_GAMEINFO_HOWTO, IDS_GAMEINFO_SCORES, IDS_GAMEINFO_BOSSES, IDS_GAMEINFO_GAMEOVER, IDS_GAMEINFO_FLYER, IDS_GAMEINFO_CABINET, IDS_GAMEINFO_MARQUEE, IDS_GAMEINFO_CONTROLS, IDS_GAMEINFO_PCB };
+	UINT idsString[17] = {  IDS_GAMEINFO_ROMINFO, IDS_GAMEINFO_HDD, IDS_GAMEINFO_SAMPLES, IDS_GAMEINFO_HISTORY, IDS_GAMEINFO_INGAME, IDS_GAMEINFO_TITLE, IDS_GAMEINFO_SELECT, IDS_GAMEINFO_VERSUS, IDS_GAMEINFO_HOWTO, IDS_GAMEINFO_SCORES, IDS_GAMEINFO_BOSSES, IDS_GAMEINFO_GAMEOVER, IDS_GAMEINFO_FLYER, IDS_GAMEINFO_CABINET, IDS_GAMEINFO_MARQUEE, IDS_GAMEINFO_CONTROLS, IDS_GAMEINFO_PCB };
 	
-	for(int i = 0; i < 16; i++) {
+	for(int i = 0; i < 17; i++) {
 		TCI.pszText = FBALoadStringEx(hAppInst, idsString[i], true);
 		SendMessage(hTabControl, TCM_INSERTITEM, (WPARAM) i, (LPARAM) &TCI);
 	}
@@ -187,6 +198,7 @@ static int GameInfoInit()
 
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST1), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST2), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST3), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_SHOW);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_V), SW_SHOW);
@@ -491,6 +503,60 @@ static int GameInfoInit()
 		}
 	}
 	
+	// Set up the hdd info list
+	hList = GetDlgItem(hGameInfoDlg, IDC_LIST3);
+	
+	ListView_SetExtendedListViewStyle(hList, LVS_EX_FULLROWSELECT);
+	
+	memset(&LvCol, 0, sizeof(LvCol));
+	LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
+	LvCol.cx = 200;
+	LvCol.pszText = _T("Name");	
+	SendMessage(hList, LVM_INSERTCOLUMN , 0, (LPARAM)&LvCol);
+	LvCol.cx = 100;
+	LvCol.pszText = _T("Size (bytes)");	
+	SendMessage(hList, LVM_INSERTCOLUMN , 1, (LPARAM)&LvCol);
+	LvCol.cx = 100;
+	LvCol.pszText = _T("CRC32");	
+	SendMessage(hList, LVM_INSERTCOLUMN , 2, (LPARAM)&LvCol);
+	LvCol.cx = 100;
+		
+	memset(&LvItem, 0, sizeof(LvItem));
+	LvItem.mask=  LVIF_TEXT;
+	LvItem.cchTextMax = 256;
+	int HDDPos = 0;
+	for (int i = 0; i < 0x100; i++) { // assume max 0x100 hdds per game
+		int nRet;
+		struct BurnHDDInfo hddi;
+		char nLen[10] = "";
+		char nCrc[10] = "";
+		char *szHDDName = NULL;
+
+		memset(&hddi, 0, sizeof(hddi));
+
+		nRet = BurnDrvGetHDDInfo(&hddi, i);
+		nRet += BurnDrvGetHDDName(&szHDDName, i, 0);
+		
+		if (hddi.nLen == 0) continue;		
+		
+		LvItem.iItem = HDDPos;
+		LvItem.iSubItem = 0;
+		LvItem.pszText = ANSIToTCHAR(szHDDName, NULL, 0);
+		SendMessage(hList, LVM_INSERTITEM, 0, (LPARAM)&LvItem);
+		
+		sprintf(nLen, "%d", hddi.nLen);
+		LvItem.iSubItem = 1;
+		LvItem.pszText = ANSIToTCHAR(nLen, NULL, 0);
+		SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
+		
+		sprintf(nCrc, "%08X", hddi.nCrc);
+		LvItem.iSubItem = 2;
+		LvItem.pszText = ANSIToTCHAR(nCrc, NULL, 0);
+		SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
+		
+		HDDPos++;
+	}
+	
 	// Get the history info
 	CHAR szFileName[MAX_PATH] = "";
 	sprintf(szFileName, "%shistory.dat", TCHARToANSI(szAppHistoryPath, NULL, 0));
@@ -788,6 +854,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			
 			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST1), SW_HIDE);
 			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST2), SW_HIDE);
+			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST3), SW_HIDE);
 			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
 			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_SHOW);
 			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_V), SW_SHOW);
@@ -796,21 +863,22 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			nBurnDrvActive = nGiDriverSelected;
 
 			if (TabPage == 0) DisplayRomInfo();
-			if (TabPage == 1) DisplaySampleInfo();
-			if (TabPage == 2) DisplayHistory();
-			if (TabPage == 3) SetPreview(szAppPreviewsPath, IMG_ASPECT_4_3);
-			if (TabPage == 4) SetPreview(szAppTitlesPath, IMG_ASPECT_4_3);
-			if (TabPage == 5) SetPreview(szAppSelectPath, IMG_ASPECT_4_3);
-			if (TabPage == 6) SetPreview(szAppVersusPath, IMG_ASPECT_4_3);
-			if (TabPage == 7) SetPreview(szAppHowtoPath, IMG_ASPECT_4_3);
-			if (TabPage == 8) SetPreview(szAppScoresPath, IMG_ASPECT_4_3);
-			if (TabPage == 9) SetPreview(szAppBossesPath, IMG_ASPECT_4_3);
-			if (TabPage == 10) SetPreview(szAppGameoverPath, IMG_ASPECT_4_3);
-			if (TabPage == 11) SetPreview(szAppFlyersPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 12) SetPreview(szAppCabinetsPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 13) SetPreview(szAppMarqueesPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 14) SetPreview(szAppControlsPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 15) SetPreview(szAppPCBsPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 1) DisplayHDDInfo();
+			if (TabPage == 2) DisplaySampleInfo();
+			if (TabPage == 3) DisplayHistory();
+			if (TabPage == 4) SetPreview(szAppPreviewsPath, IMG_ASPECT_4_3);
+			if (TabPage == 5) SetPreview(szAppTitlesPath, IMG_ASPECT_4_3);
+			if (TabPage == 6) SetPreview(szAppSelectPath, IMG_ASPECT_4_3);
+			if (TabPage == 7) SetPreview(szAppVersusPath, IMG_ASPECT_4_3);
+			if (TabPage == 8) SetPreview(szAppHowtoPath, IMG_ASPECT_4_3);
+			if (TabPage == 9) SetPreview(szAppScoresPath, IMG_ASPECT_4_3);
+			if (TabPage == 10) SetPreview(szAppBossesPath, IMG_ASPECT_4_3);
+			if (TabPage == 11) SetPreview(szAppGameoverPath, IMG_ASPECT_4_3);
+			if (TabPage == 12) SetPreview(szAppFlyersPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 13) SetPreview(szAppCabinetsPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 14) SetPreview(szAppMarqueesPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 15) SetPreview(szAppControlsPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 16) SetPreview(szAppPCBsPath, IMG_ASPECT_PRESERVE);
 
 			return FALSE;
 		}

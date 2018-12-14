@@ -1261,6 +1261,7 @@ INT32 TUnitFrame()
 			}
 			DACUpdate(pBurnSoundOut, nBurnSoundLen);
 			MSM6295Render(pBurnSoundOut, nBurnSoundLen);
+			BurnSoundDCFilter();
 		}
 		
 		if (nSoundType == SOUND_DCS) {

@@ -1,7 +1,5 @@
 // Based on MAME driver by Aaron Giles
 
-// sound is temp. broken -dink dec 05, 2018 - will fix asap!
-
 #include "driver.h"
 #include "burnint.h"
 #include "mips3_intf.h"

@@ -12,7 +12,8 @@ using namespace std;
 class ide_disk
 {
 public:
-    void write(unsigned offset, unsigned value);
+    void reset();
+	void write(unsigned offset, unsigned value);
     void write_alternate(unsigned offset, unsigned value);
     unsigned read(unsigned offset);
     unsigned read_alternate(unsigned offset);
@@ -23,7 +24,6 @@ public:
 
 
 private:
-    void reset();
     void execute();
     void build_identify_buffer();
 

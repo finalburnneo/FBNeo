@@ -1086,8 +1086,8 @@ INT32 TUnitInit()
 		BurnYM2151Init(3579545, 1);
 		BurnTimerAttachM6809(2000000);
 		BurnYM2151SetIrqHandler(&MKYM2151IrqHandler);
-		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 
 		DACInit(0, 0, 1, M6809TotalCycles, 2000000);
 		DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
@@ -1261,7 +1261,6 @@ INT32 TUnitFrame()
 			}
 			DACUpdate(pBurnSoundOut, nBurnSoundLen);
 			MSM6295Render(pBurnSoundOut, nBurnSoundLen);
-			BurnSoundDCFilter();
 		}
 		
 		if (nSoundType == SOUND_DCS) {

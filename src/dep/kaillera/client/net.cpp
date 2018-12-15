@@ -1,3 +1,7 @@
+#ifdef _UNICODE
+#undef _UNICODE
+#endif
+
 #include <stdio.h>
 #include <windows.h>
 #include "net.h"

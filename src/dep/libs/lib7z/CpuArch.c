@@ -179,12 +179,12 @@ static Bool CPU_Sys_Is_SSE_Supported()
 {
   OSVERSIONINFO vi;
   vi.dwOSVersionInfoSize = sizeof(vi);
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-  return False;
-#else
+//#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+//  return False;
+//#else
   if (!GetVersionEx(&vi))
     return False;
-#endif
+//#endif
 	return (vi.dwMajorVersion >= 5);
 }
 #define CHECK_SYS_SSE_SUPPORT if (!CPU_Sys_Is_SSE_Supported()) return False;

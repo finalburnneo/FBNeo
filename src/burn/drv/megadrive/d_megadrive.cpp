@@ -43018,3 +43018,39 @@ struct BurnDriver BurnDrvmd_starchaser = {
  	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
  	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Tanglewood (V1.0)
+static struct BurnRomInfo md_tnglwdRomDesc[] = {
+	{ "twood_v1.0.md", 0x400000, 0x1a91c419, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tnglwd)
+STD_ROM_FN(md_tnglwd)
+
+struct BurnDriver BurnDrvmd_tnglwd = {
+	"md_tnglwd", NULL, NULL, NULL, "2018",
+	"Tanglewood (V1.0)\0", NULL, "Big Evil Corp.", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_tnglwdRomInfo, md_tnglwdRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
+ 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+ 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Tanglewood (Demo)
+static struct BurnRomInfo md_tnglwddRomDesc[] = {
+	{ "twood_demo.md", 0x200000, 0x9cc94381, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tnglwdd)
+STD_ROM_FN(md_tnglwdd)
+
+struct BurnDriver BurnDrvmd_tnglwdd = {
+	"md_tnglwdd", "md_tnglwd", NULL, NULL, "2018",
+	"Tanglewood (Demo)\0", NULL, "Big Evil Corp.", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_tnglwddRomInfo, md_tnglwddRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
+ 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+ 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

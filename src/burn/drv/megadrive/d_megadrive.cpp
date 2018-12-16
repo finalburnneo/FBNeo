@@ -4333,11 +4333,30 @@ STD_ROM_PICK(md_barver)
 STD_ROM_FN(md_barver)
 
 struct BurnDriver BurnDrvmd_barver = {
-	"md_barver", NULL, NULL, NULL, "199?",
+	"md_barver", NULL, NULL, NULL, "1996",
 	"Barver Battle Saga - Tai Kong Zhan Shi (Chi)\0", NULL, "<unlicensed>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
 	MegadriveGetZipName, md_barverRomInfo, md_barverRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Barver Battle Saga - Tai Kong Zhan Shi (Hack, English)
+// Source : http://www.romhacking.net/translations/1467/
+static struct BurnRomInfo md_barvereRomDesc[] = {
+	{ "barver battle saga - tai kong zhan shi (english translation).md", 0x200000, 0x34e5445f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_barvere)
+STD_ROM_FN(md_barvere)
+
+struct BurnDriver BurnDrvmd_barvere = {
+	"md_barvere", "md_barver", NULL, NULL, "2010",
+	"Barver Battle Saga - Tai Kong Zhan Shi (Hack, English)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_barvereRomInfo, md_barvereRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -29239,6 +29258,25 @@ struct BurnDriver BurnDrvmd_sonicer = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_sonicerRomInfo, md_sonicerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic Eraser (Hack, English)
+// Source : http://www.romhacking.net/translations/799/
+static struct BurnRomInfo md_sonicereRomDesc[] = {
+	{ "sonic eraser (english translation).md", 0x040000, 0x26d9bc32, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonicere)
+STD_ROM_FN(md_sonicere)
+
+struct BurnDriver BurnDrvmd_sonicere = {
+	"md_sonicere", "md_sonicer", NULL, NULL, "2004",
+	"Sonic Eraser (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sonicereRomInfo, md_sonicereRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

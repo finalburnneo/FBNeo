@@ -8417,6 +8417,16 @@ static INT32 SnapperInit()
 	return nRet;
 }
 
+static INT32 SonicbomInit()
+{
+	INT32 nRet = System16Init();
+
+	System16ScreenFlipXoffs = 7;
+	System16ScreenFlipYoffs = 7;
+
+	return nRet;
+}
+
 static void TetrisblMap68K()
 {
 	SekInit(0, 0x68000);
@@ -9821,9 +9831,9 @@ struct BurnDriver BurnDrvSonicbom = {
 	"sonicbom", NULL, NULL, NULL, "1987",
 	"Sonic Boom (FD1094 317-0053)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_VERSHOOT, 0,
 	NULL, SonicbomRomInfo, SonicbomRomName, NULL, NULL, NULL, NULL, System16bInputInfo, SonicbomDIPInfo,
-	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	SonicbomInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -9831,9 +9841,9 @@ struct BurnDriver BurnDrvSonicbomd = {
 	"sonicbomd", "sonicbom", NULL, NULL, "1987",
 	"Sonic Boom (FD1094 317-0053 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_VERSHOOT, 0,
 	NULL, SonicbomdRomInfo, SonicbomdRomName, NULL, NULL, NULL, NULL, System16bInputInfo, SonicbomDIPInfo,
-	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	SonicbomInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 

@@ -245,6 +245,8 @@ extern INT32 System16VideoEnable;
 extern INT32 System18VdpEnable;
 extern INT32 System18VdpMixing;
 extern INT32 System16ScreenFlip;
+extern INT32 System16ScreenFlipXoffs;
+extern INT32 System16ScreenFlipYoffs;
 extern INT32 System16SpriteShadow;
 extern INT32 System16SpriteXOffset;
 extern INT32 System16SpriteBanks[16];

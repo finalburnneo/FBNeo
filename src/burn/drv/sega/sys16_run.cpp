@@ -2578,6 +2578,8 @@ INT32 System16Exit()
 	System18VdpEnable = 0;
 	System18VdpMixing = 0;
 	System16ScreenFlip = 0;
+	System16ScreenFlipXoffs = 0;
+	System16ScreenFlipYoffs = 0;
 	System16SpriteShadow = 0;
 	System16SpriteXOffset = 0;
 	System16VideoControl = 0;

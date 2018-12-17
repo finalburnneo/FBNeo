@@ -13,8 +13,8 @@ INT32 System16VideoEnable;
 INT32 System18VdpEnable;
 INT32 System18VdpMixing;
 INT32 System16ScreenFlip = 0;
-INT32 System16ScreenFlipXoffs = 0;
-INT32 System16ScreenFlipYoffs = 0;
+INT32 System16ScreenFlipXoffs = 0; // 16B
+INT32 System16ScreenFlipYoffs = 0; // 16B
 INT32 System16SpriteShadow;
 INT32 System16SpriteXOffset = 0;
 INT32 System16ColScroll = 0;

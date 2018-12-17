@@ -346,6 +346,7 @@
 #define IDS_ERR_LOAD_REQUEST			(IDS_ERROR  +   48)
 #define IDS_ERR_LOAD_DISK				(IDS_ERROR  +   50)
 #define IDS_ERR_LOAD_DISK_CRC			(IDS_ERROR  +   52)
+#define IDS_ERR_LOAD_NOHDDDATA			(IDS_ERROR  +   54)
 
 #define IDS_ERR_BURN_INIT				(IDS_ERROR  +   60)
 

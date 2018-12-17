@@ -345,6 +345,35 @@ bool ide_disk::load_disk_image(const string &filename)
     return true;
 }
 
+int ide_disk::load_hdd_image(int idx)
+{
+	// get setname (use parent if applicable)
+	char setname[128];
+	
+	if (BurnDrvGetTextA(DRV_PARENT)) {
+		strcpy(setname, BurnDrvGetTextA(DRV_PARENT));
+	} else {
+		strcpy(setname, BurnDrvGetTextA(DRV_NAME));
+	}
+	
+	// get hdd name
+	char *szHDDNameTmp = NULL;
+	BurnDrvGetHDDName(&szHDDNameTmp, idx, 0);
+	
+	// make the path
+	char path[256];
+	sprintf(path, "%s\\%s", setname, szHDDNameTmp);
+	
+	// null terminate
+	path[strlen(path)] = '\0';
+	
+	if (!load_disk_image(path)) {
+		return 1;
+	}
+
+	return 0;
+}
+
 void ide_disk::setup_transfer(int mode)
 {
     m_transfer_operation = mode;

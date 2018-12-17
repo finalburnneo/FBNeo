@@ -471,11 +471,6 @@ static INT32 LoadSoundBanks()
 
 static INT32 kinstSetup()
 {
-    if (!DrvDisk->load_disk_image("kinst.img")) {
-        bprintf(PRINT_IMPORTANT, _T("kinst: harddisk image not found!"));
-        return 1;
-    }
-
     Mips3SetReadByteHandler(1, kinstReadByte);
     Mips3SetReadHalfHandler(1, kinstReadHalf);
     Mips3SetReadWordHandler(1, kinstReadWord);
@@ -493,11 +488,6 @@ static INT32 kinstSetup()
 
 static INT32 kinst2Setup()
 {
-    if (!DrvDisk->load_disk_image("kinst2.img")) {
-        bprintf(PRINT_IMPORTANT, _T("kinst2: harddisk image not found!"));
-        return 1;
-    }
-
     Mips3SetReadByteHandler(1, kinst2ReadByte);
     Mips3SetReadHalfHandler(1, kinst2ReadHalf);
     Mips3SetReadWordHandler(1, kinst2ReadWord);
@@ -530,6 +520,9 @@ static INT32 DrvInit(INT32 version)
 
     nRet = LoadSoundBanks();
     if (nRet != 0) return 1;
+	
+	nRet = DrvDisk->load_hdd_image(0);
+	if (nRet != 0) return 1;
 
     Dcs2kInit(DCS_2K, MHz(10));
 
@@ -726,7 +719,7 @@ static struct BurnRomInfo kinstRomDesc[] = {
 STD_ROM_PICK(kinst)
 STD_ROM_FN(kinst)
 
-struct BurnDriverD BurnDrvKinst = {
+struct BurnDriver BurnDrvKinst = {
     "kinst", NULL, NULL, NULL, "1994",
     "Killer Instinct (ROM ver. 1.5d)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
@@ -752,7 +745,7 @@ static struct BurnRomInfo kinst14RomDesc[] = {
 STD_ROM_PICK(kinst14)
 STD_ROM_FN(kinst14)
 
-struct BurnDriverD BurnDrvKinst14 = {
+struct BurnDriver BurnDrvKinst14 = {
     "kinst14", "kinst", NULL, NULL, "1994",
     "Killer Instinct (ROM ver. 1.4)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
@@ -778,7 +771,7 @@ static struct BurnRomInfo kinst13RomDesc[] = {
 STD_ROM_PICK(kinst13)
 STD_ROM_FN(kinst13)
 
-struct BurnDriverD BurnDrvKinst13 = {
+struct BurnDriver BurnDrvKinst13 = {
     "kinst13", "kinst", NULL, NULL, "1994",
     "Killer Instinct (ROM ver. 1.3)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
@@ -830,7 +823,7 @@ static struct BurnRomInfo kinst15aiRomDesc[] = {
 STD_ROM_PICK(kinst15ai)
 STD_ROM_FN(kinst15ai)
 
-struct BurnDriverD BurnDrvKinst15ai = {
+struct BurnDriver BurnDrvKinst15ai = {
     "kinst15ai", "kinst", NULL, NULL, "1994",
     "Killer Instinct (ROM ver. 1.5 AnyIDE)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
@@ -870,7 +863,7 @@ static struct BurnRomInfo kinst2RomDesc[] = {
 STD_ROM_PICK(kinst2)
 STD_ROM_FN(kinst2)
 
-struct BurnDriverD BurnDrvKinst2 = {
+struct BurnDriver BurnDrvKinst2 = {
     "kinst2", NULL, NULL, NULL, "1995",
     "Killer Instinct II (ROM ver. 1.4)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
@@ -896,7 +889,7 @@ static struct BurnRomInfo kinst213RomDesc[] = {
 STD_ROM_PICK(kinst213)
 STD_ROM_FN(kinst213)
 
-struct BurnDriverD BurnDrvKinst213 = {
+struct BurnDriver BurnDrvKinst213 = {
     "kinst213", "kinst2", NULL, NULL, "1995",
     "Killer Instinct II (ROM ver. 1.3)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
@@ -922,7 +915,7 @@ static struct BurnRomInfo kinst211RomDesc[] = {
 STD_ROM_PICK(kinst211)
 STD_ROM_FN(kinst211)
 
-struct BurnDriverD BurnDrvKinst211 = {
+struct BurnDriver BurnDrvKinst211 = {
     "kinst211", "kinst2", NULL, NULL, "1995",
     "Killer Instinct II (ROM ver. 1.1)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
@@ -948,7 +941,7 @@ static struct BurnRomInfo kinst210RomDesc[] = {
 STD_ROM_PICK(kinst210)
 STD_ROM_FN(kinst210)
 
-struct BurnDriverD BurnDrvKinst210 = {
+struct BurnDriver BurnDrvKinst210 = {
     "kinst210", "kinst2", NULL, NULL, "1995",
     "Killer Instinct II (ROM ver. 1.0)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
@@ -974,7 +967,7 @@ static struct BurnRomInfo kinst214aiRomDesc[] = {
 STD_ROM_PICK(kinst214ai)
 STD_ROM_FN(kinst214ai)
 
-struct BurnDriverD BurnDrvKinst214ai = {
+struct BurnDriver BurnDrvKinst214ai = {
     "kinst214ai", "kinst2", NULL, NULL, "1995",
     "Killer Instinct II (ROM ver. 1.4 AnyIDE)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,

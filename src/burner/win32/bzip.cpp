@@ -513,7 +513,7 @@ int BzipOpen(bool bootApp)
 		ZipClose();														// Close the last zip file if open
 		nCurrentZip = -1;
 	}
-
+	
 	if (!bootApp) {
 		// Check the roms to see if the code, graphics etc are complete
 		CheckRoms();
@@ -577,10 +577,61 @@ int BzipOpen(bool bootApp)
 			FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n"));
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
 		}
+		
+		// check for hard drive images (assumed max one per game)
+		char *szHDDNameTmp = NULL;
+		BurnDrvGetHDDName(&szHDDNameTmp, 0, 0);
+		
+		if (szHDDNameTmp) {
+			char *szHddFolderName = NULL;
+		
+			if (BurnDrvGetTextA(DRV_PARENT)) {
+				szHddFolderName = BurnDrvGetTextA(DRV_PARENT);
+			} else {
+				szHddFolderName = BurnDrvGetTextA(DRV_NAME);
+			}
+			
+			char szHDDPath[MAX_PATH];
+			sprintf(szHDDPath, "%s%s/%s", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
+			
+			FILE *test = fopen(szHDDPath, "rb");
+			if (test) {
+				fclose(test);
+			} else {
+				FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n"));
+				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOHDDDATA));
+				
+				nBzipError = 1;
+			}
+		}
 
 		BurnExtLoadRom = BzipBurnLoadRom;								// Okay to call our function to load each rom
 
 	} else {
+		// check for hard drive images (assumed max one per game)
+		char *szHDDNameTmp = NULL;
+		BurnDrvGetHDDName(&szHDDNameTmp, 0, 0);
+		
+		if (szHDDNameTmp) {
+			char *szHddFolderName = NULL;
+		
+			if (BurnDrvGetTextA(DRV_PARENT)) {
+				szHddFolderName = BurnDrvGetTextA(DRV_PARENT);
+			} else {
+				szHddFolderName = BurnDrvGetTextA(DRV_NAME);
+			}
+			
+			char szHDDPath[MAX_PATH];
+			sprintf(szHDDPath, "%s%s/%s", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
+			
+			FILE *test = fopen(szHDDPath, "rb");
+			if (test) {
+				fclose(test);
+			} else {
+				return 1;
+			}
+		}
+		
 		return CheckRomsBoot();
 	}
 

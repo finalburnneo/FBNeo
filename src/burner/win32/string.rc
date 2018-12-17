@@ -345,6 +345,7 @@ BEGIN
 	IDS_ERR_LOAD_DISK			"Error reading %.32hs from %.512s"
 	IDS_ERR_LOAD_DISK_CRC		"CRC mismatch reading %.32hs from %.512s"
 	IDS_ERR_LOAD_REQUEST		"Error loading %.32hs, requested by %.128s.\nThe emulation will likely suffer problems."
+	IDS_ERR_LOAD_NOHDDDATA		"No HDD data was found, the game will not run!"
 
 	IDS_ERR_BURN_INIT			"There was a problem starting '%.128s'.\n"
 

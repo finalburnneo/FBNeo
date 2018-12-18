@@ -1,7 +1,7 @@
 #include "mips3_intf.h"
 #include "mips3/mips3.h"
 #include "burnint.h"
-#include <cstdint>
+#include <stdint.h>
 
 #ifdef MIPS3_X64_DRC
 #include "mips3/x64/mips3_x64.h"
@@ -31,8 +31,8 @@ struct Mips3MemoryMap
 };
 
 
-static mips::mips3 *g_mips = nullptr;
-static Mips3MemoryMap *g_mmap = nullptr;
+static mips::mips3 *g_mips = NULL;
+static Mips3MemoryMap *g_mmap = NULL;
 static bool g_useRecompiler = false;
 
 #ifdef MIPS3_X64_DRC
@@ -96,8 +96,8 @@ int Mips3Exit()
 #endif
     delete g_mips;
     delete g_mmap;
-    g_mips = nullptr;
-    g_mmap = nullptr;
+    g_mips = NULL;
+    g_mmap = NULL;
 	
 	return 0;
 }

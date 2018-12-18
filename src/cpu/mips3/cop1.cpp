@@ -3,7 +3,6 @@
  * Licensed under BSD 3-clause.
  */
 #include <iostream>
-#include <cstdint>
 #include <cmath>
 #include "mips3.h"
 #include "mipsdef.h"

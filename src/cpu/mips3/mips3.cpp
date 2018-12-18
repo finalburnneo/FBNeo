@@ -12,7 +12,6 @@
 
 //#include <QDebug>
 #include <iostream>
-#include <cstdint>
 #include "mips3.h"
 #include "mipsdef.h"
 #include "mips3_memory.h"

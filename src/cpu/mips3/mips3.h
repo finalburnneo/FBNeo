@@ -10,7 +10,6 @@
 #include "mips3_common.h"
 
 #include <string>
-#include <unordered_set>
 
 namespace mips
 {

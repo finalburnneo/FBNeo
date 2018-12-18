@@ -362,7 +362,7 @@ int ide_disk::load_hdd_image(int idx)
 	
 	// make the path
 	char path[256];
-	sprintf(path, "%s\\%s", setname, szHDDNameTmp);
+	sprintf(path, "%s/%s", setname, szHDDNameTmp);
 	
 	// null terminate
 	path[strlen(path)] = '\0';

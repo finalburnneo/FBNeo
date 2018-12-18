@@ -39,9 +39,6 @@ INCLUDE_7Z_SUPPORT = 1
 # Include AVI recording support (uses Video For Windows)
 INCLUDE_AVI_RECORDING = 1
 
-# Include Files that require C++11 (Killer Instinct, IDE module and MIPS3 core) - requires C++11 support
-INCLUDE_CPLUSPLUS11_FILES = 1
-
 # Include symbols and other debug information in the executable
 #SYMBOL = 1
 

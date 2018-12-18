@@ -35,13 +35,13 @@ enum ata_registers {
     REG_DRIVE_HEAD = 6,
     REG_STATUS_RO = 7,
     REG_FEATURES_WO = 1,
-    REG_COMMAND_WO = 7,
+    REG_COMMAND_WO = 7
 };
 
 enum ata_alt_registers {
     REG_ALT_STATUS_RO = 6,
     REG_ALT_DRIVE_ADDRESS_RO = 7,
-    REG_ALT_DEV_CONTROL_WO = 6,
+    REG_ALT_DEV_CONTROL_WO = 6
 };
 
 enum ata_commands {
@@ -59,14 +59,14 @@ enum ata_commands {
     CMD_WRITE_LONG_NO_RETRY = 0x33,
     CMD_WRITE_SECTOR = 0x30,
     CMD_WRITE_SECTOR_NO_RETRY = 0x31,
-    CMD_IDENTIFY_DRIVE = 0xEC,
+    CMD_IDENTIFY_DRIVE = 0xEC
 };
 
 enum transfer_operations {
     TRF_NONE = 0,
     TRF_SECTOR_READ,
     TRF_SECTOR_WRITE,
-    TRF_IDENTIFY,
+    TRF_IDENTIFY
 };
 
 enum ata_status_flags {
@@ -87,7 +87,7 @@ enum ata_error_flags {
     ERR_MCR = 8,
     ERR_IDNF = 16,
     ERR_MC = 32,
-    ERR_UNC = 64,
+    ERR_UNC = 64
 };
 
 ide_disk::ide_disk()

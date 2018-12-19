@@ -4,6 +4,7 @@
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
+#include "burn_gun.h"
 #include "pokey.h"
 #include "earom.h"
 
@@ -30,135 +31,155 @@ static UINT32 vblank;
 // transmask stuff
 static UINT8 penmask[64];
 // trackball stuff
-static INT32 oldpos[4];
+static UINT8 oldpos[4];
 static UINT8 sign[4];
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
-static UINT8 DrvDip[5] = {0, 0, 0, 0, 0};
+static UINT8 DrvJoyT[8];
+static UINT8 DrvDip[6] = {0, 0, 0, 0, 0, 0};
 static UINT8 DrvInput[5];
 static UINT8 DrvReset;
 
+static INT16 Analog0PortX = 0;
+static INT16 Analog0PortY = 0;
+static INT16 Analog1PortX = 0;
+static INT16 Analog1PortY = 0;
+
 static UINT32 centipedemode = 0;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo MillipedInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 left"},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy3 + 3,	"p1 up"},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p1 down"},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	A("P1 Trackball X", BIT_ANALOG_REL, &Analog0PortX,  "p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog0PortY,  "p1 x-axis"),
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 left"},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p2 up"},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	A("P2 Trackball X", BIT_ANALOG_REL, &Analog1PortX,  "p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog1PortY,  "p2 x-axis"),
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 7,	"service"},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 4,	"tilt"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	"dip"},
-	{"Dip D",		BIT_DIPSWITCH,	DrvDip + 3,	"dip"},
-//  {"Dip E",		BIT_DIPSWITCH,	DrvDip + 4,	"dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
+	{"Service",		    BIT_DIGITAL,	DrvJoy3 + 7,	"service"},
+	{"Tilt",		    BIT_DIGITAL,	DrvJoy3 + 4,	"tilt"},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	    "dip"},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDip + 1,	    "dip"},
+	{"Dip C",		    BIT_DIPSWITCH,	DrvDip + 2,	    "dip"},
+	{"Dip D",		    BIT_DIPSWITCH,	DrvDip + 3,	    "dip"},
+	{"Dip E",		    BIT_DIPSWITCH,	DrvDip + 4,	    "dip"},
 };
 
 STDINPUTINFO(Milliped)
 
 static struct BurnInputInfo CentipedInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy4 + 5,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy4 + 6,	"p1 left"},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy4 + 4,	"p1 up"},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy4 + 5,	"p1 down"},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy4 + 6,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 7,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"},
+	A("P1 Trackball X", BIT_ANALOG_REL, &Analog0PortX,  "p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog0PortY,  "p1 x-axis"),
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 left"},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy4 + 1,	"p2 up"},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p2 down"},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"},
+	A("P2 Trackball X", BIT_ANALOG_REL, &Analog1PortX,  "p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog1PortY,  "p2 x-axis"),
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 4,	"tilt"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	"dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
+	{"Service",		    BIT_DIGITAL,	DrvJoy2 + 7,	"service"},
+	{"Tilt",		    BIT_DIGITAL,	DrvJoy2 + 4,	"tilt"},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	    "dip"},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDip + 4,	    "dip"},
+	{"Dip C",		    BIT_DIPSWITCH,	DrvDip + 5,	    "dip"},
 };
+#undef A
 
 STDINPUTINFO(Centiped)
 
 
 static struct BurnDIPInfo CentipedDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x00, NULL		},
-	{0x12, 0xff, 0xff, 0x54, NULL		},
-	{0x13, 0xff, 0xff, 0x02, NULL		},
+	{0x15, 0xff, 0xff, 0x20, NULL		},  // dip0
+	{0x16, 0xff, 0xff, 0x54, NULL		},  // dip4
+	{0x17, 0xff, 0xff, 0x02, NULL		},  // dip5
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x11, 0x01, 0x10, 0x00, "Upright"		},
-	{0x11, 0x01, 0x10, 0x10, "Cocktail"		},
+	{0x15, 0x01, 0x10, 0x00, "Upright"		},
+	{0x15, 0x01, 0x10, 0x10, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x15, 0x01, 0x20, 0x20, "Off"		},
+	{0x15, 0x01, 0x20, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    4, "Language"		},
-	{0x12, 0x01, 0x03, 0x00, "English"		},
-	{0x12, 0x01, 0x03, 0x01, "German"		},
-	{0x12, 0x01, 0x03, 0x02, "French"		},
-	{0x12, 0x01, 0x03, 0x03, "Spanish"		},
+	{0x16, 0x01, 0x03, 0x00, "English"		},
+	{0x16, 0x01, 0x03, 0x01, "German"		},
+	{0x16, 0x01, 0x03, 0x02, "French"		},
+	{0x16, 0x01, 0x03, 0x03, "Spanish"		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x12, 0x01, 0x0c, 0x00, "2"		},
-	{0x12, 0x01, 0x0c, 0x04, "3"		},
-	{0x12, 0x01, 0x0c, 0x08, "4"		},
-	{0x12, 0x01, 0x0c, 0x0c, "5"		},
+	{0x16, 0x01, 0x0c, 0x00, "2"		},
+	{0x16, 0x01, 0x0c, 0x04, "3"		},
+	{0x16, 0x01, 0x0c, 0x08, "4"		},
+	{0x16, 0x01, 0x0c, 0x0c, "5"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x30, 0x00, "10000"		},
-	{0x12, 0x01, 0x30, 0x10, "12000"		},
-	{0x12, 0x01, 0x30, 0x20, "15000"		},
-	{0x12, 0x01, 0x30, 0x30, "20000"		},
+	{0x16, 0x01, 0x30, 0x00, "10000"		},
+	{0x16, 0x01, 0x30, 0x10, "12000"		},
+	{0x16, 0x01, 0x30, 0x20, "15000"		},
+	{0x16, 0x01, 0x30, 0x30, "20000"		},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x12, 0x01, 0x40, 0x40, "Easy"		},
-	{0x12, 0x01, 0x40, 0x00, "Hard"		},
+	{0x16, 0x01, 0x40, 0x40, "Easy"		},
+	{0x16, 0x01, 0x40, 0x00, "Hard"		},
 
 	{0   , 0xfe, 0   ,    2, "Credit Minimum"		},
-	{0x12, 0x01, 0x80, 0x00, "1"		},
-	{0x12, 0x01, 0x80, 0x80, "2"		},
+	{0x16, 0x01, 0x80, 0x00, "1"		},
+	{0x16, 0x01, 0x80, 0x80, "2"		},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x13, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
-	{0x13, 0x01, 0x03, 0x02, "1 Coin  1 Credits"		},
-	{0x13, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
-	{0x13, 0x01, 0x03, 0x00, "Free Play"		},
+	{0x17, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
+	{0x17, 0x01, 0x03, 0x02, "1 Coin  1 Credits"		},
+	{0x17, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
+	{0x17, 0x01, 0x03, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    4, "Right Coin"		},
-	{0x13, 0x01, 0x0c, 0x00, "*1"		},
-	{0x13, 0x01, 0x0c, 0x04, "*4"		},
-	{0x13, 0x01, 0x0c, 0x08, "*5"		},
-	{0x13, 0x01, 0x0c, 0x0c, "*6"		},
+	{0x17, 0x01, 0x0c, 0x00, "*1"		},
+	{0x17, 0x01, 0x0c, 0x04, "*4"		},
+	{0x17, 0x01, 0x0c, 0x08, "*5"		},
+	{0x17, 0x01, 0x0c, 0x0c, "*6"		},
 
 	{0   , 0xfe, 0   ,    2, "Left Coin"		},
-	{0x13, 0x01, 0x10, 0x00, "*1"		},
-	{0x13, 0x01, 0x10, 0x10, "*2"		},
+	{0x17, 0x01, 0x10, 0x00, "*1"		},
+	{0x17, 0x01, 0x10, 0x10, "*2"		},
 
 	{0   , 0xfe, 0   ,    6, "Bonus Coins"		},
-	{0x13, 0x01, 0xe0, 0x00, "None"		},
-	{0x13, 0x01, 0xe0, 0x20, "3 credits/2 coins"		},
-	{0x13, 0x01, 0xe0, 0x40, "5 credits/4 coins"		},
-	{0x13, 0x01, 0xe0, 0x60, "6 credits/4 coins"		},
-	{0x13, 0x01, 0xe0, 0x80, "6 credits/5 coins"		},
-	{0x13, 0x01, 0xe0, 0xa0, "4 credits/3 coins"		},
+	{0x17, 0x01, 0xe0, 0x00, "None"		},
+	{0x17, 0x01, 0xe0, 0x20, "3 credits/2 coins"		},
+	{0x17, 0x01, 0xe0, 0x40, "5 credits/4 coins"		},
+	{0x17, 0x01, 0xe0, 0x60, "6 credits/4 coins"		},
+	{0x17, 0x01, 0xe0, 0x80, "6 credits/5 coins"		},
+	{0x17, 0x01, 0xe0, 0xa0, "4 credits/3 coins"		},
 };
 
 STDDIPINFO(Centiped)
@@ -166,92 +187,92 @@ STDDIPINFO(Centiped)
 
 static struct BurnDIPInfo MillipedDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x04, NULL		},
-//	{0x12, 0xff, 0xff, 0x08, NULL		},
-	{0x12, 0xff, 0xff, 0xA0, NULL		},
-	{0x13, 0xff, 0xff, 0x04, NULL		},
-	{0x14, 0xff, 0xff, 0x02, NULL		},
+	{0x15, 0xff, 0xff, 0x04, NULL		},
+	{0x16, 0xff, 0xff, 0x00, NULL		},
+	{0x17, 0xff, 0xff, 0xA0, NULL		},
+	{0x18, 0xff, 0xff, 0x04, NULL		},
+	{0x19, 0xff, 0xff, 0x02, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Language"		},
-	{0x11, 0x01, 0x03, 0x00, "English"		},
-	{0x11, 0x01, 0x03, 0x01, "German"		},
-	{0x11, 0x01, 0x03, 0x02, "French"		},
-	{0x11, 0x01, 0x03, 0x03, "Spanish"		},
+	{0x15, 0x01, 0x03, 0x00, "English"		},
+	{0x15, 0x01, 0x03, 0x01, "German"		},
+	{0x15, 0x01, 0x03, 0x02, "French"		},
+	{0x15, 0x01, 0x03, 0x03, "Spanish"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus"		},
-	{0x11, 0x01, 0x0c, 0x00, "0"		},
-	{0x11, 0x01, 0x0c, 0x04, "0 1x"		},
-	{0x11, 0x01, 0x0c, 0x08, "0 1x 2x"		},
-	{0x11, 0x01, 0x0c, 0x0c, "0 1x 2x 3x"		},
+	{0x15, 0x01, 0x0c, 0x00, "0"		},
+	{0x15, 0x01, 0x0c, 0x04, "0 1x"		},
+	{0x15, 0x01, 0x0c, 0x08, "0 1x 2x"		},
+	{0x15, 0x01, 0x0c, 0x0c, "0 1x 2x 3x"		},
 
-/*	{0   , 0xfe, 0   ,    2, "Credit Minimum"		},
-	{0x12, 0x01, 0x04, 0x00, "1"		},
-	{0x12, 0x01, 0x04, 0x04, "2"		},
+	{0   , 0xfe, 0   ,    2, "Credit Minimum"		},
+	{0x16, 0x01, 0x04, 0x00, "1"		},
+	{0x16, 0x01, 0x04, 0x04, "2"		},
 
 	{0   , 0xfe, 0   ,    2, "Coin Counters"		},
-	{0x12, 0x01, 0x08, 0x00, "1"		},
-	{0x12, 0x01, 0x08, 0x08, "2"		},  */
+	{0x16, 0x01, 0x08, 0x00, "1"		},
+	{0x16, 0x01, 0x08, 0x08, "2"		},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x12, 0x01, 0x20, 0x20, "Upright"		},
-	{0x12, 0x01, 0x20, 0x00, "Cocktail"		},
+	{0x17, 0x01, 0x20, 0x20, "Upright"		},
+	{0x17, 0x01, 0x20, 0x00, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x12, 0x01, 0x80, 0x80, "Off"		},
-	{0x12, 0x01, 0x80, 0x00, "On"		},
+	{0x17, 0x01, 0x80, 0x80, "Off"		},
+	{0x17, 0x01, 0x80, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Millipede Head"		},
-	{0x13, 0x01, 0x01, 0x00, "Easy"		},
-	{0x13, 0x01, 0x01, 0x01, "Hard"		},
+	{0x18, 0x01, 0x01, 0x00, "Easy"		},
+	{0x18, 0x01, 0x01, 0x01, "Hard"		},
 
 	{0   , 0xfe, 0   ,    2, "Beetle"		},
-	{0x13, 0x01, 0x02, 0x00, "Easy"		},
-	{0x13, 0x01, 0x02, 0x02, "Hard"		},
+	{0x18, 0x01, 0x02, 0x00, "Easy"		},
+	{0x18, 0x01, 0x02, 0x02, "Hard"		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x13, 0x01, 0x0c, 0x00, "2"		},
-	{0x13, 0x01, 0x0c, 0x04, "3"		},
-	{0x13, 0x01, 0x0c, 0x08, "4"		},
-	{0x13, 0x01, 0x0c, 0x0c, "5"		},
+	{0x18, 0x01, 0x0c, 0x00, "2"		},
+	{0x18, 0x01, 0x0c, 0x04, "3"		},
+	{0x18, 0x01, 0x0c, 0x08, "4"		},
+	{0x18, 0x01, 0x0c, 0x0c, "5"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x13, 0x01, 0x30, 0x00, "12000"		},
-	{0x13, 0x01, 0x30, 0x10, "15000"		},
-	{0x13, 0x01, 0x30, 0x20, "20000"		},
-	{0x13, 0x01, 0x30, 0x30, "None"		},
+	{0x18, 0x01, 0x30, 0x00, "12000"		},
+	{0x18, 0x01, 0x30, 0x10, "15000"		},
+	{0x18, 0x01, 0x30, 0x20, "20000"		},
+	{0x18, 0x01, 0x30, 0x30, "None"		},
 
 	{0   , 0xfe, 0   ,    2, "Spider"		},
-	{0x13, 0x01, 0x40, 0x00, "Easy"		},
-	{0x13, 0x01, 0x40, 0x40, "Hard"		},
+	{0x18, 0x01, 0x40, 0x00, "Easy"		},
+	{0x18, 0x01, 0x40, 0x40, "Hard"		},
 
 	{0   , 0xfe, 0   ,    2, "Starting Score Select"		},
-	{0x13, 0x01, 0x80, 0x80, "Off"		},
-	{0x13, 0x01, 0x80, 0x00, "On"		},
+	{0x18, 0x01, 0x80, 0x80, "Off"		},
+	{0x18, 0x01, 0x80, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x14, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
-	{0x14, 0x01, 0x03, 0x02, "1 Coin  1 Credits"		},
-	{0x14, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
-	{0x14, 0x01, 0x03, 0x00, "Free Play"		},
+	{0x19, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
+	{0x19, 0x01, 0x03, 0x02, "1 Coin  1 Credits"		},
+	{0x19, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
+	{0x19, 0x01, 0x03, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    4, "Right Coin"		},
-	{0x14, 0x01, 0x0c, 0x00, "*1"		},
-	{0x14, 0x01, 0x0c, 0x04, "*4"		},
-	{0x14, 0x01, 0x0c, 0x08, "*5"		},
-	{0x14, 0x01, 0x0c, 0x0c, "*6"		},
+	{0x19, 0x01, 0x0c, 0x00, "*1"		},
+	{0x19, 0x01, 0x0c, 0x04, "*4"		},
+	{0x19, 0x01, 0x0c, 0x08, "*5"		},
+	{0x19, 0x01, 0x0c, 0x0c, "*6"		},
 
 	{0   , 0xfe, 0   ,    2, "Left Coin"		},
-	{0x14, 0x01, 0x10, 0x00, "*1"		},
-	{0x14, 0x01, 0x10, 0x10, "*2"		},
+	{0x19, 0x01, 0x10, 0x00, "*1"		},
+	{0x19, 0x01, 0x10, 0x10, "*2"		},
 
 	{0   , 0xfe, 0   ,    7, "Bonus Coins"		},
-	{0x14, 0x01, 0xe0, 0x00, "None"		},
-	{0x14, 0x01, 0xe0, 0x20, "3 credits/2 coins"		},
-	{0x14, 0x01, 0xe0, 0x40, "5 credits/4 coins"		},
-	{0x14, 0x01, 0xe0, 0x60, "6 credits/4 coins"		},
-	{0x14, 0x01, 0xe0, 0x80, "6 credits/5 coins"		},
-	{0x14, 0x01, 0xe0, 0xa0, "4 credits/3 coins"		},
-	{0x14, 0x01, 0xe0, 0xc0, "Demo Mode"		},
+	{0x19, 0x01, 0xe0, 0x00, "None"		},
+	{0x19, 0x01, 0xe0, 0x20, "3 credits/2 coins"		},
+	{0x19, 0x01, 0xe0, 0x40, "5 credits/4 coins"		},
+	{0x19, 0x01, 0xe0, 0x60, "6 credits/4 coins"		},
+	{0x19, 0x01, 0xe0, 0x80, "6 credits/5 coins"		},
+	{0x19, 0x01, 0xe0, 0xa0, "4 credits/3 coins"		},
+	{0x19, 0x01, 0xe0, 0xc0, "Demo Mode"		},
 };
 
 STDDIPINFO(Milliped)
@@ -452,21 +473,25 @@ static void centipede_write(UINT16 address, UINT8 data)
 
 static INT32 read_trackball(INT32 idx, INT32 switch_port)
 {
-	INT32 newpos;
+	//UINT8 trackie[4] = { TrackX[0], TrackY[0], TrackX[1], TrackY[1] };
+	UINT8 trackie[4] = { BurnTrackballRead(0, 0), BurnTrackballRead(0, 1), BurnTrackballRead(1, 0), BurnTrackballRead(1, 0) };
+
+	UINT8 newpos;
 
 	if (flipscreen)
 		idx += 2;
 
-	if (dip_select)
-		return (DrvInput[switch_port] & 0x7f) | sign[idx];
+	if (dip_select) {
+		return ((DrvInput[switch_port] | DrvDip[switch_port]) & 0x7f) | sign[idx];
+	}
 
-	newpos = 0; // no trackball!! -dink
+	newpos = trackie[idx];
 	if (newpos != oldpos[idx]) {
 		sign[idx] = (newpos - oldpos[idx]) & 0x80;
 		oldpos[idx] = newpos;
 	}
 
-	return (DrvInput[switch_port] & 0x70) | (oldpos[idx] & 0x0f) | sign[idx];
+	return ((DrvInput[switch_port] | DrvDip[switch_port]) & 0x70) | (oldpos[idx] & 0x0f) | sign[idx];
 }
 
 static UINT8 millipede_read(UINT16 address)
@@ -487,10 +512,10 @@ static UINT8 millipede_read(UINT16 address)
 
 	switch (address)
 	{
-		case 0x2000: return ((read_trackball(0, 0) | DrvDip[0]) & 0x3f) | ((vblank) ? 0x40 : 0x00);
-		case 0x2001: return read_trackball(1, 1);// | DrvDip[1] ;
+		case 0x2000: return (read_trackball(0, 0) & ~0x40) | ((vblank) ? 0x40 : 0x00);
+		case 0x2001: return read_trackball(1, 1);
 		case 0x2010: return DrvInput[2];
-		case 0x2011: return DrvInput[3] | DrvDip[1];
+		case 0x2011: return DrvInput[3] | DrvDip[2];
 		case 0x2030: return earom_read(address);
 		case 0x0400:
 		case 0x0401:
@@ -500,7 +525,7 @@ static UINT8 millipede_read(UINT16 address)
 		case 0x0405:
 		case 0x0406:
 		case 0x0407: return pokey1_r(address);
-		case 0x0408: return DrvDip[2];
+		case 0x0408: return DrvDip[3];
 		case 0x0409:
 		case 0x040a:
 		case 0x040b:
@@ -516,7 +541,7 @@ static UINT8 millipede_read(UINT16 address)
 		case 0x0805:
 		case 0x0806:
 		case 0x0807: return pokey2_r(address);
-		case 0x0808: return DrvDip[3];
+		case 0x0808: return DrvDip[4];
 		case 0x0809:
 		case 0x080a:
 		case 0x080b:
@@ -552,12 +577,12 @@ static UINT8 centipede_read(UINT16 address)
 
 	switch (address)
 	{
-		case 0x0c00: return ((read_trackball(0, 0) | DrvDip[0]) & 0x3f) | ((vblank) ? 0x40 : 0x00);
+		case 0x0c00: return (read_trackball(0, 0) & ~0x40) | ((vblank) ? 0x40 : 0x00);
 		case 0x0c01: return DrvInput[1];
 		case 0x0c02: return read_trackball(1, 2);
 		case 0x0c03: return DrvInput[3];
-		case 0x0800: return DrvDip[1];
-		case 0x0801: return DrvDip[2];
+		case 0x0800: return DrvDip[4];
+		case 0x0801: return DrvDip[5];
 		case 0x1000:
 		case 0x1001:
 		case 0x1002:
@@ -566,7 +591,7 @@ static UINT8 centipede_read(UINT16 address)
 		case 0x1005:
 		case 0x1006:
 		case 0x1007: return pokey1_r(address);
-		case 0x1008: return DrvDip[2];
+		case 0x1008:
 		case 0x1009:
 		case 0x100a:
 		case 0x100b:
@@ -586,6 +611,8 @@ static INT32 DrvDoReset()
 	memset (AllRam, 0, RamEnd - AllRam);
 	dip_select = 0;
 	flipscreen = 0;
+
+	memset(&DrvJoyT, 0, sizeof(DrvJoyT));
 
 	M6502Open(0);
 	M6502Reset();
@@ -662,6 +689,7 @@ static INT32 DrvInit() // millipede
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
+	M6502SetAddressMask(0x7fff);
 	M6502MapMemory(Drv6502RAM,	0x0000, 0x03ff, MAP_RAM);
 	M6502MapMemory(Drv6502ROM + 0x4000,	0x4000, 0x7fff, MAP_ROM);
 	M6502SetWriteHandler(millipede_write);
@@ -678,6 +706,8 @@ static INT32 DrvInit() // millipede
 	GenericTilesInit();
 
 	earom_init();
+
+	BurnTrackballInit(2, false);
 
 	DrvDoReset();
 
@@ -712,6 +742,7 @@ static INT32 DrvInitcentiped()
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
+	M6502SetAddressMask(0x3fff);
 	M6502MapMemory(Drv6502RAM,	0x0000, 0x03ff, MAP_RAM);
 	M6502MapMemory(Drv6502ROM + 0x2000,	0x2000, 0x3fff, MAP_ROM);
 	M6502SetWriteHandler(centipede_write);
@@ -728,6 +759,8 @@ static INT32 DrvInitcentiped()
 	GenericTilesInit();
 
 	earom_init();
+
+	BurnTrackballInit(2, false);
 
 	DrvDoReset();
 
@@ -746,9 +779,13 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
+	BurnTrackballExit();
+
 	centipedemode = 0;
 	dip_select = 0;
 	flipscreen = 0;
+
+	memset(&DrvDip, 0, sizeof(DrvDip));
 
 	return 0;
 }
@@ -853,17 +890,17 @@ static INT32 DrvDraw()
 static void DrvMakeInputs()
 {
 	// Reset Inputs - bring active-LOW stuff HIGH
-	DrvInput[0] = (centipedemode) ? 0x20 : 0x10 + 0x20;
+	DrvInput[0] = (centipedemode) ? 0x00 : 0x10 + 0x20;
 	DrvInput[1] = (centipedemode) ? 0xff : 0x01 + 0x02 + 0x10 + 0x20 + 0x40;
 	DrvInput[2] = 0xff;
 	DrvInput[3] = (centipedemode) ? 0xff : 0x01 + 0x02 + 0x04 + 0x08 + 0x10 + 0x40;
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] -= (DrvJoy1[i] & 1) << i;
-		DrvInput[1] -= (DrvJoy2[i] & 1) << i;
-		DrvInput[2] -= (DrvJoy3[i] & 1) << i;
-		DrvInput[3] -= (DrvJoy4[i] & 1) << i;
+		DrvInput[0] ^= (DrvJoy1[i] & 1) << i;
+		DrvInput[1] ^= (DrvJoy2[i] & 1) << i;
+		DrvInput[2] ^= (DrvJoy3[i] & 1) << i;
+		DrvInput[3] ^= (DrvJoy4[i] & 1) << i;
 	}
 
 }
@@ -882,7 +919,13 @@ static INT32 DrvFrame()
 		DrvRecalc = 0;
 	}
 
-	DrvMakeInputs();
+	{
+		DrvMakeInputs();
+
+		BurnTrackballConfig(0, AXIS_REVERSED, AXIS_NORMAL);
+		BurnTrackballFrame(0, Analog0PortX, Analog0PortY, 3, 2);
+		BurnTrackballUpdate(0);
+	}
 
 	INT32 nTotalCycles = 1512000 / 60;
 	INT32 nCyclesDone = 0;
@@ -895,6 +938,8 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		nCyclesDone += M6502Run(((i + 1) * nTotalCycles / nInterleave) - nCyclesDone);
 		M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+
+		if (i < 2) BurnTrackballUpdate(0);
 
 		if (i == 2)
 		    vblank = 1;
@@ -931,9 +976,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		pokey_scan(nAction, pnMin);
 
+		BurnTrackballScan();
+
 		SCAN_VAR(dip_select);
 		SCAN_VAR(control_select);
 		SCAN_VAR(flipscreen);
+		SCAN_VAR(oldpos);
+		SCAN_VAR(sign);
 	}
 
 	earom_scan(nAction, pnMin);
@@ -988,9 +1037,9 @@ STD_ROM_FN(centiped)
 
 struct BurnDriver BurnDrvCentiped = {
 	"centiped", NULL, NULL, NULL, "1980",
-	"Centipede (revision 4)\0", NULL, "Atari", "Miscellaneous",
+	"Centipede (revision 4)\0", "1 Player version", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, centipedRomInfo, centipedRomName, NULL, NULL, NULL, NULL, CentipedInputInfo, CentipedDIPInfo,
 	DrvInitcentiped, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
@@ -1015,7 +1064,7 @@ STD_ROM_FN(centiped3)
 
 struct BurnDriver BurnDrvCentiped3 = {
 	"centiped3", "centiped", NULL, NULL, "1980",
-	"Centipede (revision 3)\0", NULL, "Atari", "Miscellaneous",
+	"Centipede (revision 3)\0", "2 Player version", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, centiped3RomInfo, centiped3RomName, NULL, NULL, NULL, NULL, CentipedInputInfo, CentipedDIPInfo,

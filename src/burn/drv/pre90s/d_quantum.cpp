@@ -1,12 +1,6 @@
 // FB Alpha Quantum driver module
 // Based on MAME driver by Hedley Rainnie, Aaron Giles, Couriersud, and Paul Forgey
 
-// todink:
-//  0: crashes if coined up too quick after booting. (overflow in avgdvg, reading vector ram)
-//  1: merge the trackball simulation stuff [see DrvFrame] into burn_gun and make
-//  a configurable and "easier to use w/less support code" trackball
-//  for fba!
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "watchdog.h"
@@ -34,8 +28,6 @@ static UINT8 DrvDips[2];
 static UINT16 DrvInputs[2];
 static UINT8 DrvReset;
 
-static UINT8 trackX = 0;
-static UINT8 trackY = 0;
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 
@@ -224,8 +216,6 @@ static void __fastcall quantum_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-static void update_trackball();
-
 static UINT16 __fastcall quantum_read_word(UINT32 address)
 {	
 	if ((address & 0xffffc0) == 0x840000) {
@@ -235,8 +225,8 @@ static UINT16 __fastcall quantum_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x940000:
-		case 0x940001: update_trackball();
-			return (trackY&0xf) | ((trackX&0xf) << 4);
+		case 0x940001: BurnTrackballUpdate(0);
+			return (BurnTrackballRead(0, 1)&0xf) | ((BurnTrackballRead(0, 0)&0xf) << 4);
 
 		case 0x948000:
 		case 0x948001:
@@ -259,8 +249,8 @@ static UINT8 __fastcall quantum_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x940000:
-		case 0x940001: update_trackball();
-			return (trackY&0xf) | ((trackX&0xf) << 4);
+		case 0x940001: BurnTrackballUpdate(0);
+			return (BurnTrackballRead(0, 1)&0xf) | ((BurnTrackballRead(0, 0)&0xf) << 4);
 
 		case 0x948000:
 			return 0xff;
@@ -444,16 +434,6 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static INT32 DIAL_INC[2] = { 0, 0 };
-
-static void update_trackball()
-{
-	if (DrvJoy2[0]) trackY += DIAL_INC[0] / 2;
-	if (DrvJoy2[1]) trackY -= DIAL_INC[0] / 2;
-	if (DrvJoy2[2]) trackX -= DIAL_INC[1] / 2;
-	if (DrvJoy2[3]) trackX += DIAL_INC[1] / 2;
-}
-
 static INT32 DrvFrame()
 {
 	BurnWatchdogUpdate();
@@ -471,25 +451,11 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i; // udlr (digital)
 		}
 
-		DIAL_INC[0] = (DrvInputs[1]) ? 2 : 1; // default velocity
-		DIAL_INC[1] = (DrvInputs[1]) ? 2 : 1; // 2 digital, 1 analog
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
+		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, (DrvInputs[1]) ? 2 : 1, 0x07); // Velocity: 2 digital, 1 analog
+		BurnTrackballUDLR(0, DrvJoy2[2], DrvJoy2[3], DrvJoy2[0], DrvJoy2[1]);
+		BurnTrackballUpdate(0);
 
-		BurnPaddleMakeInputs(0, DrvAnalogPort1, DrvAnalogPort0);
-		BurnDialINF dial = BurnPaddleReturnA(0);
-		if (dial.Backward) DrvJoy2[0] = 1;
-		if (dial.Forward)  DrvJoy2[1] = 1;
-		DIAL_INC[0] += dial.Velocity;
-		if (DIAL_INC[0] > 7) DIAL_INC[0] = 7;
-		//bprintf(0, _T("velY %d int.dial %X (%S%S)    "), DIAL_INC[0], BurnGunX[0], (dial.Backward) ? "Back" : "", (dial.Forward) ? "Fwd" : "");
-
-		dial = BurnPaddleReturnB(0);
-		if (dial.Backward) DrvJoy2[2] = 1;
-		if (dial.Forward)  DrvJoy2[3] = 1;
-		DIAL_INC[1] += dial.Velocity;
-		if (DIAL_INC[1] > 7) DIAL_INC[1] = 7;
-
-		//bprintf(0, _T("velX %d int.dial %X (%S%S)\n"), DIAL_INC[1], BurnGunY[0], (dial.Backward) ? "Back" : "", (dial.Forward) ? "Fwd" : "");
-		update_trackball();
 	}
 
 	INT32 nInterleave = 20; // irq is 4.10 / frame
@@ -584,6 +550,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		avgdvg_scan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
+
+		BurnTrackballScan();
 
 		SCAN_VAR(avgOK);
 

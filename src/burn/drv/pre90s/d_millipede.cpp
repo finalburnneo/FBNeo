@@ -60,7 +60,7 @@ static struct BurnInputInfo MillipedInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 	A("P1 Trackball X", BIT_ANALOG_REL, &Analog0PortX,  "p1 x-axis"),
-	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog0PortY,  "p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog0PortY,  "p1 y-axis"),
 
 	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"},
@@ -70,7 +70,7 @@ static struct BurnInputInfo MillipedInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 	A("P2 Trackball X", BIT_ANALOG_REL, &Analog1PortX,  "p2 x-axis"),
-	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog1PortY,  "p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog1PortY,  "p2 y-axis"),
 
 	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
 	{"Service",		    BIT_DIGITAL,	DrvJoy3 + 7,	"service"},
@@ -93,7 +93,7 @@ static struct BurnInputInfo CentipedInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 7,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"},
 	A("P1 Trackball X", BIT_ANALOG_REL, &Analog0PortX,  "p1 x-axis"),
-	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog0PortY,  "p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog0PortY,  "p1 y-axis"),
 
 	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"},
@@ -103,7 +103,7 @@ static struct BurnInputInfo CentipedInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"},
 	A("P2 Trackball X", BIT_ANALOG_REL, &Analog1PortX,  "p2 x-axis"),
-	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog1PortY,  "p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog1PortY,  "p2 y-axis"),
 
 	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
 	{"Service",		    BIT_DIGITAL,	DrvJoy2 + 7,	"service"},

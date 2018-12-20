@@ -148,8 +148,8 @@ BurnDialINF BurnPaddleReturnB(INT32 num)
 }
 
 // Trackball Helpers
-static UINT8 TrackA[MAX_GUNS]; // trackball counters
-static UINT8 TrackB[MAX_GUNS];
+static UINT16 TrackA[MAX_GUNS]; // trackball counters
+static UINT16 TrackB[MAX_GUNS];
 
 static INT32 DIAL_INC[MAX_GUNS * 2]; // velocity counter
 static UINT8 DrvJoyT[MAX_GUNS * 4];  // direction bytemask
@@ -207,9 +207,17 @@ void BurnTrackballUpdate(INT32 dev)
 UINT8 BurnTrackballRead(INT32 dev, INT32 isB)
 {
 	if (isB)
-		return TrackB[dev];
+		return TrackB[dev] & 0xff;
 	else
-		return TrackA[dev];
+		return TrackA[dev] & 0xff;
+}
+
+UINT16 BurnTrackballReadWord(INT32 dev, INT32 isB)
+{
+	if (isB)
+		return TrackB[dev] & 0xffff;
+	else
+		return TrackA[dev] & 0xffff;
 }
 
 void BurnTrackballUDLR(INT32 dev, INT32 u, INT32 d, INT32 l, INT32 r)

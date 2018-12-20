@@ -50,7 +50,10 @@ void BurnTrackballUDLR(INT32 dev, INT32 u, INT32 d, INT32 l, INT32 r);
 
 // Configure if an axis (Port) is reversed (1) or normal (0)
 void BurnTrackballConfig(INT32 dev, INT32 PortA_rev, INT32 PortB_rev);
+
+// Read the position counter (8/16bit)
 UINT8 BurnTrackballRead(INT32 dev, INT32 isB);
+UINT16 BurnTrackballReadWord(INT32 dev, INT32 isB);
 
 // TODO: add configurable start/stop points
 

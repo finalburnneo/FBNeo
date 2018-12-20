@@ -5,6 +5,7 @@
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "seibusnd.h"
+#include "burn_gun.h"
 #include "bitswap.h"
 
 static UINT8 *AllMem;
@@ -34,36 +35,69 @@ static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
 static UINT8 DrvDips[2];
 static UINT16 DrvInputs[5];
-static UINT16 DrvPrvInputs[5];
 static UINT8 DrvReset;
 
+static INT32 TballPrev[4];
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort3 = 0;
+
+static INT32 is_joyver = 0;
+
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p1 start"	}, 
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 13,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 left"	},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy2 + 5,	"p2 down"	},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy2 + 6,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo DrvTrkInputList[] = {
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p1 start"	},
+	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 13,	"p1 fire 3"	},
+
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 start"	},
+	A("P2 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 3"	},
+
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"		}, // f
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+#undef A
+
+STDINPUTINFO(DrvTrk)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
@@ -141,9 +175,100 @@ static struct BurnDIPInfo DrvDIPList[]=
 
 STDDIPINFO(Drv)
 
+static struct BurnDIPInfo DrvTrkDIPList[]=
+{
+	{0x0f, 0xff, 0xff, 0xff, NULL			},
+	{0x10, 0xff, 0xff, 0xdf, NULL			},
+
+	{0   , 0xfe, 0   ,   16, "Coinage (Mode 1)"	},
+	{0x0f, 0x01, 0x0f, 0x0a, "6 Coins 1 Credit"	},
+	{0x0f, 0x01, 0x0f, 0x0b, "5 Coins 1 Credit"	},
+	{0x0f, 0x01, 0x0f, 0x0c, "4 Coins 1 Credit"	},
+	{0x0f, 0x01, 0x0f, 0x0d, "3 Coin  1 Credit"	},
+	{0x0f, 0x01, 0x0f, 0x01, "8 Coins 3 Credits"	},
+	{0x0f, 0x01, 0x0f, 0x0e, "2 Coin  1 Credit"	},
+	{0x0f, 0x01, 0x0f, 0x02, "5 Coins 3 Credits"	},
+	{0x0f, 0x01, 0x0f, 0x03, "3 Coin  2 Credits"	},
+	{0x0f, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"	},
+	{0x0f, 0x01, 0x0f, 0x04, "2 Coins 3 Credits"	},
+	{0x0f, 0x01, 0x0f, 0x09, "1 Coin  2 Credits"	},
+	{0x0f, 0x01, 0x0f, 0x08, "1 Coin  3 Credits"	},
+	{0x0f, 0x01, 0x0f, 0x07, "1 Coin  4 Credits"	},
+	{0x0f, 0x01, 0x0f, 0x06, "1 Coin  5 Credits"	},
+	{0x0f, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
+	{0x0f, 0x01, 0x0f, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin A (Mode 2)"	},
+	{0x0f, 0x01, 0x03, 0x00, "5 Coins 1 Credit"	},
+	{0x0f, 0x01, 0x03, 0x01, "3 Coins 1 Credit"	},
+	{0x0f, 0x01, 0x03, 0x02, "2 Coins 1 Credit"	},
+	{0x0f, 0x01, 0x03, 0x03, "1 Coin  1 Credit"	},
+
+	{0   , 0xfe, 0   ,    4, "Coin B (Mode 2)"	},
+	{0x0f, 0x01, 0x0c, 0x00, "1 Coin  2 Credits"	},
+	{0x0f, 0x01, 0x0c, 0x0c, "1 Coin  3 Credits"	},
+	{0x0f, 0x01, 0x0c, 0x04, "1 Coin  5 Credits"	},
+	{0x0f, 0x01, 0x0c, 0x00, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Coin Mode"		},
+	{0x0f, 0x01, 0x10, 0x10, "Mode 1"		},
+	{0x0f, 0x01, 0x10, 0x00, "Mode 2"		},
+
+	{0   , 0xfe, 0   ,    2, "Invert Buttons"	},
+	{0x0f, 0x01, 0x20, 0x20, "Off"			},
+	{0x0f, 0x01, 0x20, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x0f, 0x01, 0x40, 0x40, "Off"			},
+	{0x0f, 0x01, 0x40, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Trackball"		},
+	{0x0f, 0x01, 0x80, 0x80, "Small"		},
+	{0x0f, 0x01, 0x80, 0x00, "Large"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x10, 0x01, 0x03, 0x02, "2"			},
+	{0x10, 0x01, 0x03, 0x03, "3"			},
+	{0x10, 0x01, 0x03, 0x01, "5"			},
+	{0x10, 0x01, 0x03, 0x00, "121 (Cheat)"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x10, 0x01, 0x0c, 0x0c, "150k 650k 500k+"	},
+	{0x10, 0x01, 0x0c, 0x08, "200k 800k 600k+"	},
+	{0x10, 0x01, 0x0c, 0x04, "300k 1000k 700k+"	},
+	{0x10, 0x01, 0x0c, 0x00, "300k Only"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x10, 0x01, 0x30, 0x30, "Easy"			},
+	{0x10, 0x01, 0x30, 0x20, "Normal"		},
+	{0x10, 0x01, 0x30, 0x10, "Hard"			},
+	{0x10, 0x01, 0x30, 0x00, "Very Hard"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x10, 0x01, 0x80, 0x80, "On"			},
+	{0x10, 0x01, 0x80, 0x00, "Off"			},
+};
+
+STDDIPINFO(DrvTrk)
+
 static void cabal_audiocpu_irq_trigger()
 {
 	//ZetIdle(100);
+}
+
+static UINT16 read_inpt(INT32 idx)
+{
+	if (is_joyver) {
+		return DrvInputs[idx];
+	} else {
+		return BurnTrackballReadWord(idx>>1, idx&1) & 0xfff;
+	}
+}
+
+static void Tball_Reset()
+{
+	for (INT32 i = 0; i < 4; i++)
+		TballPrev[i] = read_inpt(i);
 }
 
 static void __fastcall cabal_main_write_word(UINT32 address, UINT16 data)
@@ -151,8 +276,7 @@ static void __fastcall cabal_main_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x0c0000:
-		case 0x0c0001:
-			memcpy (DrvPrvInputs, DrvInputs, 4 * sizeof(UINT16));
+		case 0x0c0001: Tball_Reset();
 		return;
 
 		case 0x0c0080:
@@ -186,7 +310,7 @@ static void __fastcall cabal_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x0c0000:
 		case 0x0c0001:
-			memcpy (DrvPrvInputs, DrvInputs, 4 * sizeof(UINT16));
+			Tball_Reset();
 		return;
 
 		case 0x0c0040:
@@ -223,13 +347,13 @@ static UINT16 trackball_read(INT32 offset)
 	switch (offset & 3)
 	{
 		case 0:
-			return (( DrvInputs[0] - DrvPrvInputs[0]) & 0x00ff)       | (((DrvInputs[2] - DrvPrvInputs[2]) & 0x00ff) << 8);
+			return (( read_inpt(0) - TballPrev[0]) & 0x00ff)       | (((read_inpt(2) - TballPrev[2]) & 0x00ff) << 8);
 		case 1:
-			return (((DrvInputs[0] - DrvPrvInputs[0]) & 0xff00) >> 8) | (( DrvInputs[2] - DrvPrvInputs[2]) & 0xff00);
+			return (((read_inpt(0) - TballPrev[0]) & 0xff00) >> 8) | (( read_inpt(2) - TballPrev[2]) & 0xff00);
 		case 2:
-			return (( DrvInputs[0] - DrvPrvInputs[1]) & 0x00ff)       | (((DrvInputs[3] - DrvPrvInputs[3]) & 0x00ff) << 8);
+			return (( read_inpt(1) - TballPrev[1]) & 0x00ff)       | (((read_inpt(3) - TballPrev[3]) & 0x00ff) << 8);
 		case 3:
-			return (((DrvInputs[0] - DrvPrvInputs[1]) & 0xff00) >> 8) | (( DrvInputs[3] - DrvPrvInputs[3]) & 0xff00);
+			return (((read_inpt(1) - TballPrev[1]) & 0xff00) >> 8) | (( read_inpt(3) - TballPrev[3]) & 0xff00);
 	}
 
 	return 0;
@@ -503,6 +627,8 @@ static INT32 DrvInit(INT32 select)
 	SeibuADPCMDataLen[1] = 0x10000;
 	seibu_sound_init(1|8, 0x2000, 3579545, 3579545, 8000);
 
+	BurnTrackballInit(2, false);
+
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -518,7 +644,11 @@ static INT32 DrvExit()
 
 	seibu_sound_exit();
 
+	BurnTrackballExit();
+
 	BurnFree (AllMem);
+
+	is_joyver = 0;
 
 	return 0;
 }
@@ -678,11 +808,20 @@ static INT32 DrvFrame()
 		DrvClearOpposites(&DrvInputs[2]);
 
 		seibu_coin_input = 0xfc | (DrvJoy3[1] << 1) | DrvJoy3[0];
+
+		if (!is_joyver) {
+			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
+			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x06, 0x0a);
+			BurnTrackballUpdate(0);
+
+			BurnTrackballConfig(1, AXIS_NORMAL, AXIS_NORMAL);
+			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 0x06, 0x0a);
+			BurnTrackballUpdate(1);
+		}
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 256;
-	INT32 nTotalCycles[2] = { 10000000 / 60, 3579545 / 60 };
+	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 	INT32 nSoundBufferPos = 0;
 
@@ -691,11 +830,14 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = nTotalCycles[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment);
+		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
-		nSegment = nTotalCycles[1] / nInterleave;
-		nCyclesDone[1] += ZetRun(nSegment);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+
+		if ((i%64) == 63 && !is_joyver) {
+			BurnTrackballUpdate(0);
+			BurnTrackballUpdate(1);
+		}
 
 		if (i == 240)
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
@@ -750,7 +892,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		seibu_sound_scan(nAction, pnMin);
 
-		DrvRecalc = 1;
+		if (!is_joyver)	BurnTrackballScan();
 	}
 
 	return 0;
@@ -798,6 +940,8 @@ STD_ROM_FN(cabal)
 
 static INT32 CabalInit()
 {
+	is_joyver = 1;
+
 	return DrvInit(0);
 }
 
@@ -839,6 +983,8 @@ STD_ROM_FN(cabala)
 
 static INT32 CabalaInit()
 {
+	is_joyver = 1;
+
 	return DrvInit(1);
 }
 
@@ -885,10 +1031,10 @@ static INT32 CabalukInit()
 
 struct BurnDriver BurnDrvCabaluk = {
 	"cabaluk", "cabal", NULL, NULL, "1988",
-	"Cabal (UK, Trackball)\0", "Needs Trackball Support", "TAD Corporation (Electrocoin license)", "Miscellaneous",
+	"Cabal (UK, Trackball)\0", NULL, "TAD Corporation (Electrocoin license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, cabalukRomInfo, cabalukRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, cabalukRomInfo, cabalukRomName, NULL, NULL, NULL, NULL, DrvTrkInputInfo, DrvTrkDIPInfo,
 	CabalukInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
@@ -935,6 +1081,8 @@ STD_ROM_FN(cabalukj)
 
 static INT32 CabalukjInit()
 {
+	is_joyver = 1;
+
 	return DrvInit(0);
 }
 
@@ -984,10 +1132,10 @@ static INT32 CabalusInit()
 
 struct BurnDriver BurnDrvCabalus = {
 	"cabalus", "cabal", NULL, NULL, "1988",
-	"Cabal (US set 1, Trackball)\0", "Needs Trackball Support", "TAD Corporation (Fabtek license)", "Miscellaneous",
+	"Cabal (US set 1, Trackball)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, cabalusRomInfo, cabalusRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, cabalusRomInfo, cabalusRomName, NULL, NULL, NULL, NULL, DrvTrkInputInfo, DrvTrkDIPInfo,
 	CabalusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
@@ -1028,10 +1176,10 @@ static INT32 Cabalus2Init()
 
 struct BurnDriver BurnDrvCabalus2 = {
 	"cabalus2", "cabal", NULL, NULL, "1988",
-	"Cabal (US set 2, Trackball)\0", "Needs Trackball Support", "TAD Corporation (Fabtek license)", "Miscellaneous",
+	"Cabal (US set 2, Trackball)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, cabalus2RomInfo, cabalus2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, cabalus2RomInfo, cabalus2RomName, NULL, NULL, NULL, NULL, DrvTrkInputInfo, DrvTrkDIPInfo,
 	Cabalus2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

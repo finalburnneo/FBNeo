@@ -41,8 +41,8 @@ static struct BurnInputInfo QuantumInputList[] = {
 	{"P1 Down",		    BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
 	{"P1 Left",		    BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
-	A("P1 Track X",     BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
-	A("P1 Track Y",     BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
+	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"	},

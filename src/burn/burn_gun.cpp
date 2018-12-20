@@ -176,7 +176,7 @@ void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart
 
 void BurnTrackballUpdate(INT32 dev)
 {
-	// PortA
+	// PortA (usually X-Axis)
 	if (DrvJoyT[(dev*4) + 0]) { // Backward
 		if (TrackRev[(dev*2) + 0])
 			TrackA[dev] += DIAL_INC[(dev*2) + 0] / 2;
@@ -189,7 +189,7 @@ void BurnTrackballUpdate(INT32 dev)
 		else
 			TrackA[dev] += DIAL_INC[(dev*2) + 0] / 2;
 	}
-	// PortB
+	// PortB (usually Y-Axis)
 	if (DrvJoyT[(dev*4) + 2]) { // Backward
 		if (TrackRev[(dev*2) + 1])
 			TrackB[dev] += DIAL_INC[(dev*2) + 1] / 2;
@@ -214,10 +214,10 @@ UINT8 BurnTrackballRead(INT32 dev, INT32 isB)
 
 void BurnTrackballUDLR(INT32 dev, INT32 u, INT32 d, INT32 l, INT32 r)
 {
-	DrvJoyT[(dev*4) + 0] |= u;
-	DrvJoyT[(dev*4) + 1] |= d;
-	DrvJoyT[(dev*4) + 2] |= l;
-	DrvJoyT[(dev*4) + 3] |= r;
+	DrvJoyT[(dev*4) + 0] |= l;
+	DrvJoyT[(dev*4) + 1] |= r;
+	DrvJoyT[(dev*4) + 2] |= u;
+	DrvJoyT[(dev*4) + 3] |= d;
 }
 
 void BurnTrackballConfig(INT32 dev, INT32 PortA_rev, INT32 PortB_rev)

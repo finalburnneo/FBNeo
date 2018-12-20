@@ -391,7 +391,7 @@ static INT32 DrvInit()
 
 	earom_init();
 
-	BurnPaddleInit(2, false);
+	BurnTrackballInit(2, false);
 
 	DrvDoReset(1);
 
@@ -407,7 +407,7 @@ static INT32 DrvExit()
 
 	small_roms = 0;
 
-	BurnPaddleExit();
+	BurnTrackballExit();
 
 	earom_exit();
 
@@ -479,7 +479,7 @@ static INT32 DrvFrame()
 
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
 		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x04, 0x0a);
-		BurnTrackballUDLR(0, DrvJoy4f[0], DrvJoy4f[1], DrvJoy4f[2], DrvJoy4f[3]);
+		BurnTrackballUDLR(0, DrvJoy4f[2], DrvJoy4f[3], DrvJoy4f[0], DrvJoy4f[1]);
 		update_dial();
 
 		DrvInputs[0] = (DrvInputs[0] & 0x2f) | (DrvDips[4] & 0x10); // service mode
@@ -549,7 +549,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		pokey_scan(nAction, pnMin);
 
-		BurnPaddleScan();
+		BurnTrackballScan();
 
 		SCAN_VAR(nExtraCycles);
 	}

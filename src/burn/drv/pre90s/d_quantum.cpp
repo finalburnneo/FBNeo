@@ -376,7 +376,7 @@ static INT32 DrvInit()
 	PokeyPotCallback(1, 6, dip1_read);
 	PokeyPotCallback(1, 7, dip1_read);
 
-	BurnPaddleInit(2, false);
+	BurnTrackballInit(2, false);
 
 	DrvDoReset(1);
 
@@ -389,7 +389,7 @@ static INT32 DrvExit()
 	PokeyExit();
 	avgdvg_exit();
 
-	BurnPaddleExit();
+	BurnTrackballExit();
 
 	BurnFree(AllMem);
 
@@ -453,9 +453,8 @@ static INT32 DrvFrame()
 
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
 		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, (DrvInputs[1]) ? 2 : 1, 0x07); // Velocity: 2 digital, 1 analog
-		BurnTrackballUDLR(0, DrvJoy2[2], DrvJoy2[3], DrvJoy2[0], DrvJoy2[1]);
+		BurnTrackballUDLR(0, DrvJoy2[0], DrvJoy2[1], DrvJoy2[2], DrvJoy2[3]);
 		BurnTrackballUpdate(0);
-
 	}
 
 	INT32 nInterleave = 20; // irq is 4.10 / frame

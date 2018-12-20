@@ -29,7 +29,6 @@ static INT32 vblank;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
-static UINT8 DrvJoy4f[8] =  { 0, 0, 0, 0, 0, 0, 0, 0 }; // dink
 static UINT16 DrvInputs[2];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
@@ -37,8 +36,6 @@ static UINT8 DrvReset;
 static INT16 DrvAnalogPortX = 0;
 static INT16 DrvAnalogPortY = 0;
 
-static INT32 TrackX;
-static INT32 TrackY;
 static INT32 track_inf[2];
 
 static UINT32 linecycles;
@@ -163,14 +160,13 @@ static UINT16 leta_r(INT32 port)
 {
 	if (port == 0)
 	{
-		INT32 dx = (INT8)TrackX;
-		INT32 dy = (INT8)TrackY;
+		INT32 dx = (INT8)BurnTrackballRead(0, 0);
+		INT32 dy = (INT8)BurnTrackballRead(0, 1);
 
 		track_inf[0] = dx + dy;
 		track_inf[1] = dx - dy;
 	}
 
-	/* clip the result to -0x3f to +0x3f to remove directional ambiguities */
 	return track_inf[port];
 }
 
@@ -260,8 +256,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	MSM6295Reset();
 
-	TrackX = 0;
-	TrackY = 0;
 	track_inf[0] = track_inf[1] = 0;
 
 	return 0;
@@ -422,7 +416,7 @@ static INT32 DrvInit()
 	MSM6295Init(0, 894886 / MSM6295_PIN7_HIGH, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
-	BurnPaddleInit(2, false);
+	BurnTrackballInit(2, false);
 
 	DrvDoReset(1);
 
@@ -443,7 +437,7 @@ static INT32 DrvExit()
 
 	SekExit();
 
-	BurnPaddleExit();
+	BurnTrackballExit();
 
 	return 0;
 }
@@ -494,16 +488,6 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static INT32 DIAL_INC[2] = { 0, 0 };
-
-static void update_dial()
-{
-	if (DrvJoy4f[0]) TrackX-=DIAL_INC[0];
-	if (DrvJoy4f[1]) TrackX+=DIAL_INC[0];
-	if (DrvJoy4f[2]) TrackY+=DIAL_INC[1];
-	if (DrvJoy4f[3]) TrackY-=DIAL_INC[1];
-}
-
 static INT32 DrvFrame()
 {
 	BurnWatchdogUpdate();
@@ -521,25 +505,9 @@ static INT32 DrvFrame()
 		}
 
 		{
-			DIAL_INC[0] = 6; // default velocity
-			DIAL_INC[1] = 6;
-
-			DrvJoy4f[0] = DrvJoy4f[1] = DrvJoy4f[2] = DrvJoy4f[3] = 0;
-
-			// real(?) trackball
-			BurnPaddleMakeInputs(0, DrvAnalogPortX, DrvAnalogPortY);
-
-			BurnDialINF dial = BurnPaddleReturnA(0);
-			DIAL_INC[0] += ((dial.Velocity > 0xa) ? 0xa : dial.Velocity);
-			if (dial.Backward) DrvJoy4f[0] = 1;
-			if (dial.Forward)  DrvJoy4f[1] = 1;
-
-			dial = BurnPaddleReturnB(0);
-			DIAL_INC[1] += ((dial.Velocity > 0xa) ? 0xa : dial.Velocity);
-			if (dial.Backward) DrvJoy4f[2] = 1;
-			if (dial.Forward)  DrvJoy4f[3] = 1;
-
-			update_dial();
+			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
+			BurnTrackballFrame(0, DrvAnalogPortX, DrvAnalogPortY, 0x09, 0x0a);
+			BurnTrackballUpdate(0);
 		}
 	}
 
@@ -561,8 +529,8 @@ static INT32 DrvFrame()
 
 		AtariVADTimerUpdate();
 
-		if (i == 96 || i == 160) {
-			update_dial();
+		if ((i%64) == 63) {
+			BurnTrackballUpdate(0);
 		}
 
 		if (i == 239) {
@@ -616,7 +584,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnWatchdogScan(nAction);
 
-		BurnPaddleScan();
+		BurnTrackballScan();
 	}
 
 	AtariEEPROMScan(nAction, pnMin);

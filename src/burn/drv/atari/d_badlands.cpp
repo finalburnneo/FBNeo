@@ -40,9 +40,6 @@ static UINT8 DrvReset;
 static INT16 DrvAnalogPortA = 0;
 static INT16 DrvAnalogPortB = 0;
 
-static INT32 TrackA;
-static INT32 TrackB;
-
 static UINT8 pedal[2];
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
@@ -200,10 +197,10 @@ static UINT16 __fastcall badlands_main_read_word(UINT32 address)
 			{
 				default:
 				case 0x0:
-					return 0xff00 | (TrackA & 0xff); // fe6000
+					return 0xff00 | (BurnTrackballRead(0, 0) & 0xff); // fe6000
 
 				case 0x2:
-					return 0xff00 | (TrackB & 0xff); // fe6002
+					return 0xff00 | (BurnTrackballRead(0, 1) & 0xff); // fe6002
 
 				case 0x4:
 					return pedal[0];
@@ -244,10 +241,10 @@ static UINT8 __fastcall badlands_main_read_byte(UINT32 address)
 			{
 				default:
 				case 0x0:
-					return (0xff00 | (TrackA & 0xff)) >> ((~address & 1) * 8); // fe6000
+					return (0xff00 | (BurnTrackballRead(0, 0) & 0xff)) >> ((~address & 1) * 8); // fe6000
 
 				case 0x2:
-					return (0xff00 | (TrackB & 0xff)) >> ((~address & 1) * 8); // fe6002
+					return (0xff00 | (BurnTrackballRead(0, 1) & 0xff)) >> ((~address & 1) * 8); // fe6002
 
 				case 0x4:
 					return pedal[0] >> ((~address & 1) * 8);
@@ -289,9 +286,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	BurnWatchdogReset();
 
 	playfield_bank = 0;
-
-	TrackA = 0;
-	TrackB = 0;
 
 	pedal[0] = pedal[1] = 0x80;
 
@@ -451,7 +445,7 @@ static INT32 DrvInit()
 
 	AtariMoInit(0, &modesc);
 
-	BurnPaddleInit(2, false);
+	BurnTrackballInit(2, false);
 
 	DrvDoReset(1);
 
@@ -469,7 +463,7 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
-	BurnPaddleExit();
+	BurnTrackballExit();
 
 	return 0;
 }
@@ -562,18 +556,10 @@ static INT32 DrvFrame()
 		atarijsa_test_port = (DrvDips[0] & atarijsa_test_mask);
 
 		{
-			INT32 DIAL_INC[2] = { 4, 4 };
-			// dial
-			BurnPaddleMakeInputs(0, DrvAnalogPortA, DrvAnalogPortB);
-			BurnDialINF dial = BurnPaddleReturnA(0);
-			DIAL_INC[0] += ((dial.Velocity > 0xa) ? 0xa : dial.Velocity);
-			if (dial.Backward) TrackA-=DIAL_INC[0];
-			if (dial.Forward)  TrackA+=DIAL_INC[0];
-
-			dial = BurnPaddleReturnB(0);
-			DIAL_INC[1] += ((dial.Velocity > 0xa) ? 0xa : dial.Velocity);
-			if (dial.Backward) TrackB-=DIAL_INC[1];
-			if (dial.Forward)  TrackB+=DIAL_INC[1];
+			// Using trackball device as 2 steering wheel paddles
+			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+			BurnTrackballFrame(0, DrvAnalogPortA, DrvAnalogPortB, 0x04, 0x0a);
+			BurnTrackballUpdate(0);
 		}
 	}
 
@@ -591,6 +577,8 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+
+		if ((i%64) == 63) BurnTrackballUpdate(0);
 
 		if (i == 239) {
 			vblank = 1;
@@ -653,12 +641,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		AtariJSAScan(nAction, pnMin);
 
 		BurnWatchdogScan(nAction);
+		BurnTrackballScan();
 
 		SCAN_VAR(playfield_bank);
 		SCAN_VAR(video_int_state);
-		BurnPaddleScan();
-		SCAN_VAR(TrackA);
-		SCAN_VAR(TrackB);
 	}
 
 	AtariEEPROMScan(nAction, pnMin);

@@ -45,9 +45,6 @@ static UINT8 DrvReset;
 static INT16 DrvAnalogPortX = 0;
 static INT16 DrvAnalogPortY = 0;
 
-static INT32 TrackX;
-static INT32 TrackY;
-
 static INT32 is_joyver = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
@@ -62,7 +59,7 @@ static struct BurnInputInfo CcastlesInputList[] = {
 	{"P1 Button 2",     BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"	},
 
 	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPortX,"p1 x-axis"),
-	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPortY,"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPortY,"p1 y-axis"),
 
 	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy4f+ 1,	"p2 start"	},
@@ -357,8 +354,8 @@ static UINT8 ccastles_read(UINT16 address)
 
 	if ((address & 0xfe00) == 0x9400) {
 		switch (address & 1) {
-			case 0: return (is_joyver) ? DrvInputs[2] : (TrackY&0xff);
-			case 1: return TrackX&0xff;
+			case 0: return (is_joyver) ? DrvInputs[2] : (BurnTrackballRead(0, 1)&0xff);
+			case 1: return BurnTrackballRead(0, 0)&0xff;
 		}
 		return 0;
 	}
@@ -506,7 +503,7 @@ static INT32 DrvInit()
 
 	x2212_init_autostore(2);
 
-	BurnPaddleInit(2, false);
+	BurnTrackballInit(2, false);
 
 	GenericTilesInit();
 
@@ -524,7 +521,7 @@ static INT32 DrvExit()
 
 	x2212_exit();
 
-	BurnPaddleExit();
+	BurnTrackballExit();
 
 	BurnFree(AllMem);
 
@@ -669,24 +666,10 @@ static INT32 DrvFrame()
 		}
 
 		{
-			// UDLR fake trackball
-			if (DrvJoy3[2]) TrackY+=3;
-			if (DrvJoy3[1]) TrackY-=3;
-			if (DrvJoy3[0]) TrackX-=3;
-			if (DrvJoy3[3]) TrackX+=3;
-		}
-
-		{
-			// real trackball
-			BurnPaddleMakeInputs(0, DrvAnalogPortX, DrvAnalogPortY);
-
-			BurnDialINF dial = BurnPaddleReturnA(0);
-			if (dial.Backward) TrackX-=3;
-			if (dial.Forward)  TrackX+=3;
-
-			dial = BurnPaddleReturnB(0);
-			if (dial.Backward) TrackY+=3;
-			if (dial.Forward)  TrackY-=3;
+			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
+			BurnTrackballFrame(0, DrvAnalogPortX, DrvAnalogPortY, 6, 0);
+			BurnTrackballUDLR(0, DrvJoy3[2], DrvJoy3[1], DrvJoy3[0], DrvJoy3[3]);
+			BurnTrackballUpdate(0);
 		}
 	}
 
@@ -742,7 +725,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		M6502Scan(nAction);
 		pokey_scan(nAction, pnMin);
 
-		BurnPaddleScan();
+		BurnTrackballScan();
 
 		SCAN_VAR(bank_latch);
 		SCAN_VAR(irq_state);
@@ -750,8 +733,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bitmode_addr);
 		SCAN_VAR(hscroll);
 		SCAN_VAR(vscroll);
-		SCAN_VAR(TrackX);
-		SCAN_VAR(TrackY);
 		SCAN_VAR(nvram_storelatch);
 	}
 

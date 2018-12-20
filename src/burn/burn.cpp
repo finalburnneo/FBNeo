@@ -476,7 +476,7 @@ extern "C" INT32 BurnDrvGetHDDInfo(struct BurnHDDInfo* pri, UINT32 i)		// Forwar
 	if (pDriver[nBurnDrvActive]->GetHDDInfo) {
 		return pDriver[nBurnDrvActive]->GetHDDInfo(pri, i);
 	} else {
-		return NULL;
+		return 0;
 	}
 }
 
@@ -485,7 +485,7 @@ extern "C" INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka)		// For
 	if (pDriver[nBurnDrvActive]->GetHDDName) {
 		return pDriver[nBurnDrvActive]->GetHDDName(pszName, i, nAka);
 	} else {
-		return NULL;
+		return 0;
 	}
 }
 

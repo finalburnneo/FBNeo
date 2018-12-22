@@ -488,7 +488,7 @@ static INT32 MemIndex()
 
 	DrvPalette	= (UINT32  *)Next; Next += 0x2000 * sizeof(UINT32);
 	DrvScrollBuf	= (UINT32  *)Next; Next += 256 * 4 * sizeof(UINT32);
-	DrvRasterPos	= (UINT16*)Next; Next += 0x0001 * sizeof(UINT16);
+	DrvRasterPos	= (UINT16*)Next; Next += 0x0001 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -508,8 +508,8 @@ static INT32 MemIndex()
 
 	priority	= Next; Next += 0x000001;
 
-	tilebank	= (UINT16*)Next; Next += 0x0001 * sizeof(UINT16);
-	tilebank_buf	= (UINT16*)Next; Next += 0x0002 * sizeof(UINT16);
+	tilebank	= (UINT16*)Next; Next += 0x0001 * sizeof(UINT32);
+	tilebank_buf	= (UINT16*)Next; Next += 0x0002 * sizeof(UINT32);
 
 	nDrvZ80Bank	= Next; Next += 0x000001;
 
@@ -672,9 +672,9 @@ static INT32 DrvInit()
 	ZetClose();
 
 	if (asurablade) {
-		BurnYMF278BInit((INT32)(YMF278B_STD_CLOCK * 1.93), DrvSndROM, 0x400000, &DrvFMIRQHandler, DrvSynchroniseStream);
+		BurnYMF278BInit((INT32)(YMF278B_STD_CLOCK * 1.93) | 0x80000000, DrvSndROM, 0x400000, &DrvFMIRQHandler, DrvSynchroniseStream);
 	} else {
-		BurnYMF278BInit((INT32)(YMF278B_STD_CLOCK * 1.80), DrvSndROM, 0x400000, &DrvFMIRQHandler, DrvSynchroniseStream);
+		BurnYMF278BInit((INT32)(YMF278B_STD_CLOCK * 1.80) | 0x80000000, DrvSndROM, 0x400000, &DrvFMIRQHandler, DrvSynchroniseStream);
 	}
 	BurnYMF278BSetRoute(BURN_SND_YMF278B_YMF278B_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYMF278BSetRoute(BURN_SND_YMF278B_YMF278B_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);

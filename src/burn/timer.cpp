@@ -197,6 +197,21 @@ void BurnYMFTimerCallback(INT32 /* n */, INT32 c, double period)
 //	bprintf(PRINT_NORMAL, _T("  - timer %i started, %08X ticks (fires in %lf seconds)\n"), c, nTimerCount[c], period);
 }
 
+void BurnYMF262TimerCallback(INT32 /* n */, INT32 c, double period)
+{
+	pCPURunEnd();
+
+	if (period == 0.0) {
+		nTimerCount[c] = MAX_TIMER_VALUE;
+		return;
+	}
+
+	nTimerCount[c]  = (INT32)(period * (double)TIMER_TICKS_PER_SECOND);
+	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
+
+//	bprintf(PRINT_NORMAL, _T("  - timer %i started, %08X ticks (fires in %lf seconds)\n"), c, nTimerCount[c], period);
+}
+
 void BurnTimerSetRetrig(INT32 c, double period)
 {
 	pCPURunEnd();

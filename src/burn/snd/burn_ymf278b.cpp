@@ -17,6 +17,8 @@ static INT32 nBurnYMF278SoundRate;
 static double YMF278BVolumes[2];
 static INT32 YMF278BRouteDirs[2];
 
+static INT32 uses_timer; // when init passed w/NULL IRQHandler, timer is disabled.
+
 // ----------------------------------------------------------------------------
 // Dummy functions
 
@@ -210,7 +212,8 @@ void BurnYMF278BReset()
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BReset called without init\n"));
 #endif
 
-	BurnTimerReset();
+	if (uses_timer)
+		BurnTimerReset();
 	ymf278b_reset();
 }
 
@@ -224,7 +227,8 @@ void BurnYMF278BExit()
 
 	YMF278B_sh_stop();
 
-	BurnTimerExit();
+	if (uses_timer)
+		BurnTimerExit();
 
 	BurnFree(pBuffer);
 	
@@ -258,7 +262,11 @@ INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, INT32 YMF278BROM
 	nSampleSize = (UINT32)nBurnYMF278SoundRate * (1 << 16) / nBurnSoundRate;
 	bYMF278BAddSignal = 0; // not used by any driver. (yet)
 
-	BurnTimerInit(&ymf278b_timer_over, NULL);
+	uses_timer = (IRQCallback != NULL);
+
+	if (uses_timer)
+		BurnTimerInit(&ymf278b_timer_over, NULL);
+
 	ymf278b_start(0, YMF278BROM, YMF278BROMSize, IRQCallback, BurnYMFTimerCallback, nClockFrequency);
 
 	pBuffer = (INT16*)BurnMalloc(4096 * 2 * sizeof(INT16));
@@ -293,7 +301,10 @@ void BurnYMF278BScan(INT32 nAction, INT32* pnMin)
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BScan called without init\n"));
 #endif
 
-	BurnTimerScan(nAction, pnMin);
+	if (uses_timer) {
+		BurnTimerScan(nAction, pnMin);
+	}
+
 	ymf278b_scan(nAction, pnMin);
 
 	if (nAction & ACB_WRITE) {

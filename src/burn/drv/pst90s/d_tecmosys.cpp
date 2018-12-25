@@ -8,6 +8,7 @@
 #include "ymz280b.h"
 #include "burn_ymf262.h"
 #include "z80_intf.h"
+#include "watchdog.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -62,7 +63,6 @@ static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
 
 static INT32 vblank;
-static INT32 watchdog;
 static INT32 deroon;
 
 static struct BurnInputInfo DrvInputList[] = {
@@ -88,8 +88,8 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 fire 4"	},
 
 	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"		},
-	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 9,	"service"	},
-	{"Service 2",		BIT_DIGITAL,	DrvJoy2 + 9,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy1 + 9,	"diag"	    },
+	{"Service",		    BIT_DIGITAL,	DrvJoy2 + 9,	"service"	},
 };
 
 STDINPUTINFO(Drv)
@@ -122,7 +122,7 @@ static void protection_reset()
 
 static void tecmosys_prot_data_write(INT32 data)
 {
-	static const UINT8 ranges[] = { 
+	static const UINT8 ranges[] = {
 		0x10,0x11,0x12,0x13,0x24,0x25,0x26,0x27,0x38,0x39,0x3a,0x3b,0x4c,0x4d,0x4e,0x4f, 0x00
 	};
 
@@ -197,7 +197,7 @@ static inline void cpu_sync() // sync z80 & 68k
 	}
 }
 
-void __fastcall tecmosys_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall tecmosys_main_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{
@@ -211,7 +211,7 @@ void __fastcall tecmosys_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x880022:
-			watchdog = 0;
+			BurnWatchdogWrite();
 		return;
 
 		case 0xa00000:
@@ -255,20 +255,21 @@ void __fastcall tecmosys_main_write_word(UINT32 address, UINT16 data)
 			tecmosys_prot_data_write(data >> 8);
 		return;
 	}
-	bprintf(0, _T("ww: %X  %x\n"), address, data);
+
+	//bprintf(0, _T("ww: %X  %x\n"), address, data);
 }
 
-void __fastcall tecmosys_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall tecmosys_main_write_byte(UINT32 address, UINT8 data)
 {
-	bprintf(0, _T("wb: %X  %x\n"), address, data);
+	//bprintf(0, _T("wb: %X  %x\n"), address, data);
 }
 
-UINT16 __fastcall tecmosys_main_read_word(UINT32 address)
+static UINT16 __fastcall tecmosys_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
 		case 0x880000:
-			return vblank;
+			return vblank ^ 1;
 
 		case 0xd00000:
 			return DrvInputs[0];
@@ -292,14 +293,15 @@ UINT16 __fastcall tecmosys_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall tecmosys_main_read_byte(UINT32 address)
+static UINT8 __fastcall tecmosys_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
 		case 0xb80000:
 			return 0x00; // protection status
 	}
-	bprintf(0, _T("rb: %X  %x\n"), address);
+
+	//bprintf(0, _T("rb: %X  %x\n"), address);
 
 	return 0;
 }
@@ -320,7 +322,7 @@ static inline void palette_update(INT32 pal)
 	DrvPalette24[pal] = (r << 16) + (g << 8) + b;
 }
 
-void __fastcall tecmosys_palette_write_word(UINT32 address, UINT16 data)
+static void __fastcall tecmosys_palette_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xff8000) == 0x900000) {
 		*((UINT16 *)(DrvPalRAM + 0x0000 + (address & 0x7ffe))) = BURN_ENDIAN_SWAP_INT16(data);
@@ -335,7 +337,7 @@ void __fastcall tecmosys_palette_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall tecmosys_palette_write_byte(UINT32 address, UINT8 data)
+static void __fastcall tecmosys_palette_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xff8000) == 0x900000) {
 		DrvPalRAM[(0x0000 + (address & 0x7fff)) ^ 1] = data;
@@ -368,7 +370,7 @@ static void oki_bankswitch(INT32 data)
 	*DrvOkiBank = data & 0x33;
 }
 
-void __fastcall tecmosys_sound_out(UINT16 port, UINT8 data)
+static void __fastcall tecmosys_sound_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -376,7 +378,7 @@ void __fastcall tecmosys_sound_out(UINT16 port, UINT8 data)
 		case 0x01:
 		case 0x02:
 		case 0x03:
-			BurnYMF262Write(port&3, data);
+			BurnYMF262Write(port & 3, data);
 		return;
 
 		case 0x10:
@@ -402,7 +404,7 @@ void __fastcall tecmosys_sound_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall tecmosys_sound_in(UINT16 port)
+static UINT8 __fastcall tecmosys_sound_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -410,7 +412,7 @@ UINT8 __fastcall tecmosys_sound_in(UINT16 port)
 		case 0x01:
 		case 0x02:
 		case 0x03:
-			return BurnYMF262Read(port&3);
+			return BurnYMF262Read(port & 3);
 
 		case 0x10:
 			return MSM6295Read(0);
@@ -420,7 +422,7 @@ UINT8 __fastcall tecmosys_sound_in(UINT16 port)
 
 		case 0x60:
 		case 0x61:
-			return YMZ280BRead(port&1);
+			return YMZ280BRead(port & 1);
 	}
 
 	return 0;
@@ -436,10 +438,10 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 	return (INT64)ZetTotalCycles() * nSoundRate / 8000000;
 }
 
-static INT32 DrvDoReset(INT32 full_reset)
+static INT32 DrvDoReset(INT32 clear_mem)
 {
-	if (full_reset) {
-		memset (AllRam, 0, RamEnd - AllRam);
+	if (clear_mem) {
+		memset(AllRam, 0, RamEnd - AllRam);
 	}
 
 	SekOpen(0);
@@ -450,7 +452,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	protection_reset();
 
-	watchdog = 0;
+	BurnWatchdogReset();
 
 	ZetOpen(0);
 	bankswitch(0);
@@ -461,8 +463,6 @@ static INT32 DrvDoReset(INT32 full_reset)
 	YMZ280BReset();
 	MSM6295Reset();
 	oki_bankswitch(0);
-
-	*DrvOkiBank = *DrvZ80Bank = ~0;
 
 	return 0;
 }
@@ -500,11 +500,11 @@ static INT32 MemIndex(INT32 sndlen)
 	DrvTxtRAM		= Next; Next += 0x004000;
 
 	DrvBgRAM0		= Next; Next += 0x001000;
-	DrvBgScrRAM0		= Next; Next += 0x000400;
+	DrvBgScrRAM0	= Next; Next += 0x000400;
 	DrvBgRAM1		= Next; Next += 0x001000;
-	DrvBgScrRAM1		= Next; Next += 0x000400;
+	DrvBgScrRAM1	= Next; Next += 0x000400;
 	DrvBgRAM2		= Next; Next += 0x001000;
-	DrvBgScrRAM2		= Next; Next += 0x000400;
+	DrvBgScrRAM2	= Next; Next += 0x000400;
 
 
 	DrvOkiBank 		= Next; Next += 0x000001 * sizeof(UINT32);
@@ -620,7 +620,9 @@ static INT32 CommonInit(INT32 (*pRomLoadCallback)(), INT32 spritelen, INT32 sndl
 
 	EEPROMInit(&eeprom_interface_93C46);
 
-	//BurnSetRefreshRate(57.4458);
+	BurnWatchdogInit(DrvDoReset, 400);
+
+	BurnSetRefreshRate(57.4458);
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -629,18 +631,18 @@ static INT32 CommonInit(INT32 (*pRomLoadCallback)(), INT32 spritelen, INT32 sndl
 	ZetSetOutHandler(tecmosys_sound_out);
 	ZetSetInHandler(tecmosys_sound_in);
 	ZetClose();
-									   // 1.00
+
 	BurnYMF262Init(14318180, &DrvFMIRQHandler, DrvSynchroniseStream, 1);
-	BurnYMF262SetRoute(BURN_SND_YMF262_YMF262_ROUTE_1, 0.00, BURN_SND_ROUTE_LEFT);
-	BurnYMF262SetRoute(BURN_SND_YMF262_YMF262_ROUTE_2, 0.00, BURN_SND_ROUTE_RIGHT);
+	BurnYMF262SetRoute(BURN_SND_YMF262_YMF262_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	BurnYMF262SetRoute(BURN_SND_YMF262_YMF262_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	BurnTimerAttachZet(8000000);
 
 	YMZ280BInit(16934400, NULL, sndlen);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 0.30, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 0.30, BURN_SND_ROUTE_RIGHT);
-							// .50
+
 	MSM6295Init(0, 2000000 / 132, 1);
-	MSM6295SetRoute(0, 0.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -697,13 +699,13 @@ static void draw_character_layer()
 				if (flipx) {
 					Render8x8Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
 				} else {
-					Render8x8Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);	
+					Render8x8Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
 				}
 			} else {
 				if (flipx) {
 					Render8x8Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
 				} else {
-					Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);	
+					Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
 				}
 			}
 		} else {
@@ -711,13 +713,13 @@ static void draw_character_layer()
 				if (flipx) {
 					Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
 				} else {
-					Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);	
+					Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
 				}
 			} else {
 				if (flipx) {
 					Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
 				} else {
-					Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);	
+					Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
 				}
 			}
 		}
@@ -756,13 +758,13 @@ static void draw_background_layer(UINT8 *ram, UINT8 *gfx, UINT8 *regs, INT32 yof
 				if (flipx) {
 					Render16x16Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
 				} else {
-					Render16x16Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);	
+					Render16x16Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
 				}
 			} else {
 				if (flipx) {
 					Render16x16Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
 				} else {
-					Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);	
+					Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
 				}
 			}
 		} else {
@@ -770,13 +772,13 @@ static void draw_background_layer(UINT8 *ram, UINT8 *gfx, UINT8 *regs, INT32 yof
 				if (flipx) {
 					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
 				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);	
+					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
 				}
 			} else {
 				if (flipx) {
 					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
 				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);	
+					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
 				}
 			}
 		}
@@ -843,7 +845,7 @@ static void draw_sprite_nozoom(INT32 addr, INT32 color, INT32 x, INT32 y, INT32 
 				for (INT32 xcnt = 0; xcnt < xsize; xcnt++)
 				{
 					INT32 data = rom[xcnt];
-		
+
 					if (data) dstptr[drawx - xcnt] = data + color;
 				}
 			} else {
@@ -852,7 +854,7 @@ static void draw_sprite_nozoom(INT32 addr, INT32 color, INT32 x, INT32 y, INT32 
 				for (INT32 xcnt = 0; xcnt < xsize; xcnt++)
 				{
 					INT32 data = rom[xcnt];
-		
+
 					if (data) dstptr[xcnt] = data + color;
 				}
 			}
@@ -863,11 +865,11 @@ static void draw_sprite_nozoom(INT32 addr, INT32 color, INT32 x, INT32 y, INT32 
 					drawx = x + (xsize - 1) - xcnt;
 				else
 					drawx = x + xcnt;
-	
+
 				if (drawx >= 0 && drawx < 320)
 				{
 					INT32 data = rom[xcnt];
-	
+
 					if (data) dstptr[drawx] = data + color;
 				}
 			}
@@ -983,10 +985,7 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	watchdog++;
-	if (watchdog >= 400) { //?
-		DrvDoReset(0);
-	}
+	BurnWatchdogUpdate();
 
 	if (DrvReset) {
 		DrvDoReset(1);
@@ -1008,21 +1007,25 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 1600000000 / 5745, 800000000 / 5745 }; // 57.4458hz
+	INT32 nCyclesTotal[2] = { (INT32)(16000000 / 57.4458), (INT32)(8000000 / 57.4458) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
-	//nCyclesTotal[0] = (INT32)((INT64)nCyclesTotal[0] * nBurnCPUSpeedAdjust / 0x0100);
+	nCyclesTotal[0] = (INT32)((INT64)nCyclesTotal[0] * nBurnCPUSpeedAdjust / 0x0100);
 
 	SekOpen(0);
 	ZetOpen(0);
 
-	vblank = 1;
+	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		if (i == 240) {
-			vblank = 0;
+			vblank = 1;
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
 		}
 
 		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
@@ -1041,10 +1044,6 @@ static INT32 DrvFrame()
 	ZetClose();
 	SekClose();
 
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
 	return 0;
 }
 
@@ -1056,122 +1055,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin =  0x029702;
 	}
 
-	DrvRecalc = 1;
-
-	if (nAction & ACB_MEMORY_ROM) {
-		ba.Data		= Drv68KROM;
-		ba.nLen		= 0x100000;
-		ba.nAddress	= 0;
-		ba.szName	= "68K ROM";
-		BurnAcb(&ba);
-	}
-
 	if (nAction & ACB_MEMORY_RAM) {
-		ba.Data		= Drv68KRAM;
-		ba.nLen		= 0x010000;
-		ba.nAddress	= 0x200000;
-		ba.szName	= "68K RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvBgRAM0;
-		ba.nLen		= 0x0001000;
-		ba.nAddress	= 0x300000;
-		ba.szName	= "Background RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvBgScrRAM0;
-		ba.nLen		= 0x000400;
-		ba.nAddress	= 0x301000;
-		ba.szName	= "Background Scroll RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvBgRAM1;
-		ba.nLen		= 0x0001000;
-		ba.nAddress	= 0x400000;
-		ba.szName	= "Midground RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvBgScrRAM1;
-		ba.nLen		= 0x000400;
-		ba.nAddress	= 0x401000;
-		ba.szName	= "Midground Scroll RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvBgRAM2;
-		ba.nLen		= 0x0001000;
-		ba.nAddress	= 0x500000;
-		ba.szName	= "Foreground RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvBgScrRAM2;
-		ba.nLen		= 0x000400;
-		ba.nAddress	= 0x501000;
-		ba.szName	= "Foreground Scroll RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvTxtRAM;
-		ba.nLen		= 0x004000;
-		ba.nAddress	= 0x700000;
-		ba.szName	= "Text RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvSprRAM;
-		ba.nLen		= 0x001000;
-		ba.nAddress	= 0x800000;
-		ba.szName	= "Sprite RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= Drv88Regs;
-		ba.nLen		= 0x000004;
-		ba.nAddress	= 0x880000;
-		ba.szName	= "880000 Registers";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvPalRAM;
-		ba.nLen		= 0x008000;
-		ba.nAddress	= 0x900000;
-		ba.szName	= "Sprite Palette RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvPalRAM;
-		ba.nLen		= 0x001000;
-		ba.nAddress	= 0x980000;
-		ba.szName	= "Layer Palette RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvA8Regs;
-		ba.nLen		= 0x000006;
-		ba.nAddress	= 0xa80000;
-		ba.szName	= "A80000 Registers";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvB0Regs;
-		ba.nLen		= 0x000006;
-		ba.nAddress	= 0xb00000;
-		ba.szName	= "B00000 Registers";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvC0Regs;
-		ba.nLen		= 0x000006;
-		ba.nAddress	= 0xc00000;
-		ba.szName	= "C00000 Registers";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvC8Regs;
-		ba.nLen		= 0x000006;
-		ba.nAddress	= 0xc80000;
-		ba.szName	= "C80000 Registers";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvZ80RAM;
-		ba.nLen		= 0x001800;
-		ba.nAddress	= 0xff0000;
-		ba.szName	= "Z80 RAM (Not accessible)";
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-	
+
 		SekScan(nAction);
 		ZetScan(nAction);
 
@@ -1180,6 +1073,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		MSM6295Scan(nAction, pnMin);
 
 		EEPROMScan(nAction, pnMin);
+		BurnWatchdogScan(nAction);
 
 		SCAN_VAR(protection_read_pointer);
 		SCAN_VAR(protection_status);
@@ -1188,16 +1082,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		INT32 bank;
-
 		ZetOpen(0);
-		bank = *DrvZ80Bank;
-		*DrvZ80Bank = ~0;
-		bankswitch(bank);
+		bankswitch(*DrvZ80Bank);
 		ZetClose();
 
-		bank = *DrvOkiBank;
-		*DrvOkiBank = ~0;
 		oki_bankswitch(*DrvOkiBank);
 	}
 

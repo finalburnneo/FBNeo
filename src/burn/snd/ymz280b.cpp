@@ -577,9 +577,9 @@ void YMZ280BWriteRegister(UINT8 nValue)
 
 				if ((nValue & 0x80) == 0) {
 					YMZ280BChannelInfo[nWriteChannel].bEnabled = false;
-					if (!YMZ280BChannelInfo[nWriteChannel].bLoop) {
+					//if (!YMZ280BChannelInfo[nWriteChannel].bLoop) { // dec.24,2018 - also stops looping (fixes glitches in deroon & tkdensho)
 						YMZ280BChannelInfo[nWriteChannel].bPlaying = false;
-					}
+					//}
 				} else {
 					if (!YMZ280BChannelInfo[nWriteChannel].bEnabled) {
 						YMZ280BChannelInfo[nWriteChannel].bEnabled = true;
@@ -588,9 +588,8 @@ void YMZ280BWriteRegister(UINT8 nValue)
 						YMZ280BChannelInfo[nWriteChannel].nStep = 127;
 
 						if (YMZ280BChannelInfo[nWriteChannel].nMode > 1) {
-#ifdef DEBUG
-							//bprintf(0,_T("Sample Start: %08X - Stop: %08X.\n"),YMZ280BChannelInfo[nWriteChannel].nSampleStart, YMZ280BChannelInfo[nWriteChannel].nSampleStop);
-#endif
+							// Handy debug info:
+							//bprintf(0,_T("ch#%02x - Sample Start: %08X - Stop: %08X.  %S\n"), nWriteChannel, YMZ280BChannelInfo[nWriteChannel].nSampleStart, YMZ280BChannelInfo[nWriteChannel].nSampleStop, (YMZ280BChannelInfo[nWriteChannel].bLoop) ? "Looping" : "");
 						}
 
 #if 0

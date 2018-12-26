@@ -555,7 +555,7 @@ static void draw_pf23_layer_rowscroll(INT32 scroll_x, INT32 scroll_y)
 	for (INT32 y = 8; y < 248; y++)
 	{
 		INT32 row = (scroll_y + y) >> 4;
-		INT32 xscr = scroll_x + (BURN_ENDIAN_SWAP_INT16(rows[0x40+y]) & 0x3ff);
+		INT32 xscr = scroll_x + (BURN_ENDIAN_SWAP_INT16(rows[0x40+(y/2)]) & 0x3ff);
 		dest = pTransDraw + ((y-8) * nScreenWidth);
 
 		for (INT32 x = 0; x < 256+16; x+=16)

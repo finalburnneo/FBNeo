@@ -818,8 +818,11 @@ static void DrvPaletteInit()
 
 static INT32 DrvDraw()
 {
-	DrvPaletteInit();
-//	extern int counter;
+	if (DrvRecalc) {
+		DrvPaletteInit();
+		DrvRecalc = 0;
+	}
+
 	vector_set_clip(0x20, nScreenWidth-0x20, 0, nScreenHeight);
 
 	draw_vector(DrvPalette);

@@ -443,7 +443,10 @@ static void DrvPaletteInit()
 
 static INT32 DrvDraw()
 {
-	DrvPaletteInit();
+	if (DrvRecalc) {
+		DrvPaletteInit();
+		DrvRecalc = 0;
+	}
 
 	draw_vector(DrvPalette);
 

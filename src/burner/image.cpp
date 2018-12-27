@@ -423,7 +423,7 @@ bool PNGIsImage(FILE* fp)
 INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 {
 	IMAGE temp_img;
-	png_uint_32 width = NULL, height = NULL;
+	png_uint_32 width = 0, height = 0;
 	INT32 bit_depth, color_type;
 	
 	if (fp) {
@@ -531,7 +531,7 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 INT32 PNGGetInfo(IMAGE* img, FILE *fp)
 {
 	IMAGE temp_img;
-	png_uint_32 width, height;
+	png_uint_32 width = 0, height = 0;
 	INT32 bit_depth, color_type;
 	
 	if (fp) {

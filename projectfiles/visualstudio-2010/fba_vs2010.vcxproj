@@ -157,6 +157,7 @@
     <ClInclude Include="..\..\src\burn\snd\burn_ym2612.h" />
     <ClInclude Include="..\..\src\burn\snd\burn_ym3526.h" />
     <ClInclude Include="..\..\src\burn\snd\burn_ym3812.h" />
+    <ClInclude Include="..\..\src\burn\snd\burn_ymf262.h" />
     <ClInclude Include="..\..\src\burn\snd\burn_ymf278b.h" />
     <ClInclude Include="..\..\src\burn\snd\bzone.h" />
     <ClInclude Include="..\..\src\burn\snd\c140.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="..\..\src\burn\snd\ym2413.h" />
     <ClInclude Include="..\..\src\burn\snd\ym2612.h" />
     <ClInclude Include="..\..\src\burn\snd\ymdeltat.h" />
+    <ClInclude Include="..\..\src\burn\snd\ymf262.h" />
     <ClInclude Include="..\..\src\burn\snd\ymf278b.h" />
     <ClInclude Include="..\..\src\burn\snd\ymz280b.h" />
     <ClInclude Include="..\..\src\burn\state.h" />
@@ -487,6 +489,8 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\cps_rw.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\cps_scr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\ctv.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\burn_ymf262.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
     <ClCompile Include="generated\m68kops.c" />
     <CustomBuild Include="..\..\src\burn\drv\capcom\ctv_make.cpp">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 

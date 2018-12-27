@@ -976,6 +976,12 @@
     <ClInclude Include="..\..\src\burner\win32\d3dkmt_sync.h">
       <Filter>burner\win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\snd\burn_ymf262.h">
+      <Filter>Burn\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\snd\ymf262.h">
+      <Filter>Burn\snd</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4004,6 +4010,12 @@
     </ClCompile>
     <ClCompile Include="generated\m68kops.c">
       <Filter>generated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\burn_ymf262.cpp">
+      <Filter>Burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\ymf262.cpp">
+      <Filter>Burn\snd</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

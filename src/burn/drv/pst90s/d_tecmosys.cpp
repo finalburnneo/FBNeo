@@ -452,7 +452,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	protection_reset();
 
-	BurnWatchdogReset();
+	BurnWatchdogResetEnable();
 
 	ZetOpen(0);
 	bankswitch(0);

@@ -644,7 +644,7 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		DrvPaletteUpdate();
-		DrvRecalc = 1; // force update
+		DrvRecalc = 1; // force update (palram)
 	}
 
 	BurnTransferClear();

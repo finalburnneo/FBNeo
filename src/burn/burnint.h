@@ -203,6 +203,7 @@ extern UINT8 DebugSnd_YM2612Initted;
 extern UINT8 DebugSnd_YM3526Initted;
 extern UINT8 DebugSnd_YM3812Initted;
 extern UINT8 DebugSnd_YMF278BInitted;
+extern UINT8 DebugSnd_YMF262Initted;
 extern UINT8 DebugSnd_C6280Initted;
 extern UINT8 DebugSnd_DACInitted;
 extern UINT8 DebugSnd_ES5506Initted;

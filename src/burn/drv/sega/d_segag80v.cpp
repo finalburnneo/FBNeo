@@ -1020,7 +1020,7 @@ static void DrvPaletteInit()
 			g = (g * j) / 255;
 			b = (b * j) / 255;
 
-			DrvPalette[i * 256 + j] = BurnHighCol(r, g, b, 0);
+			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b; // must be 32bit palette! -dink (see vector.cpp)
 		}
 	}
 }

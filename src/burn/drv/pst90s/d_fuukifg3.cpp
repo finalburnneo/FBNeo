@@ -5,6 +5,7 @@
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "burn_ymf278b.h"
+#include "burn_ymf262.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -415,13 +416,16 @@ static void __fastcall fuuki32_sound_out(UINT16 port, UINT8 data)
 		return;
 
 		case 0x40:
+		case 0x41:
 		case 0x42:
+		case 0x43:
+			BurnYMF262Write(port&3, data);
+		return;
+
 		case 0x44:
 			BurnYMF278BSelectRegister((port >> 1) & 3, data);
 		return;
 
-		case 0x41:
-		case 0x43:
 		case 0x45:
 			BurnYMF278BWriteRegister((port >> 1) & 3, data);
 		return;
@@ -433,7 +437,7 @@ static UINT8 __fastcall fuuki32_sound_in(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x40:
-			return BurnYMF278BReadStatus();
+			return BurnYMF262Read(0);
 	}
 
 	return 0;
@@ -459,9 +463,9 @@ static INT32 DrvDoReset()
 
 	ZetOpen(0);
 	ZetReset();
-	ZetClose();
-
 	BurnYMF278BReset();
+	BurnYMF262Reset();
+	ZetClose();
 
 	return 0;
 }
@@ -669,13 +673,13 @@ static INT32 DrvInit()
 	ZetSetInHandler(fuuki32_sound_in);
 	ZetClose();
 
-	if (asurablade) {
-		BurnYMF278BInit((INT32)(YMF278B_STD_CLOCK * 1.93) | 0x80000000, DrvSndROM, 0x400000, &DrvFMIRQHandler, DrvSynchroniseStream);
-	} else {
-		BurnYMF278BInit((INT32)(YMF278B_STD_CLOCK * 1.80) | 0x80000000, DrvSndROM, 0x400000, &DrvFMIRQHandler, DrvSynchroniseStream);
-	}
+	BurnYMF278BInit(0, DrvSndROM, 0x400000, NULL, DrvSynchroniseStream);
 	BurnYMF278BSetRoute(BURN_SND_YMF278B_YMF278B_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYMF278BSetRoute(BURN_SND_YMF278B_YMF278B_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
+
+	BurnYMF262Init(14318180, &DrvFMIRQHandler, DrvSynchroniseStream, 1);
+	BurnYMF262SetRoute(BURN_SND_YMF262_YMF262_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
+	BurnYMF262SetRoute(BURN_SND_YMF262_YMF262_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 	BurnTimerAttachZet(6000000);
 
 	GenericTilesInit();
@@ -689,6 +693,7 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
+	BurnYMF262Exit();
 	BurnYMF278BExit();
 	SekExit();
 	ZetExit();
@@ -1281,7 +1286,7 @@ static INT32 DrvFrame()
 		if (i == 248) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO); // level 1
 		if (i == 240) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO); // vblank
 
-		cpu_sync(); // sync soundcpu
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 
 		// hack -- save scroll/offset registers so the
 		// lines can be drawn in one pass -- should save
@@ -1305,6 +1310,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		BurnYMF278BUpdate(nBurnSoundLen);
+		BurnYMF262Update(nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -1334,6 +1340,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYMF278BScan(nAction, pnMin);
+		BurnYMF262Scan(nAction, pnMin);
 	}
 
 	if (nAction & ACB_WRITE) {

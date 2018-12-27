@@ -53,6 +53,10 @@ differences between OPL2 and OPL3 shown in datasheets:
 
 */
 
+#if defined (_MSC_VER)
+#define _USE_MATH_DEFINES
+#endif
+
 #include <math.h>
 #include "driver.h"
 #include "ymf262.h"

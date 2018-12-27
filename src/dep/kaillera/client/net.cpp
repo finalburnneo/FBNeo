@@ -65,7 +65,7 @@ int Init_Network(void)
 //#if defined (_UNICODE)
 //	Kaillera_HDLL = LoadLibrary(L"kailleraclient.dll");
 //#else
-	Kaillera_HDLL = LoadLibrary("kailleraclient.dll");
+	Kaillera_HDLL = LoadLibraryA("kailleraclient.dll");
 //#endif
 
 	

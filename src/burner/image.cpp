@@ -423,7 +423,7 @@ bool PNGIsImage(FILE* fp)
 INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 {
 	IMAGE temp_img;
-	png_uint_32 width, height;
+	png_uint_32 width = NULL, height = NULL;
 	INT32 bit_depth, color_type;
 	
 	if (fp) {
@@ -521,7 +521,7 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 	}
 	
 	bPngImageOrientation = 0;
-	if (height > width) bPngImageOrientation = 1;
+	if (height && width && height > width) bPngImageOrientation = 1;
 	
 	memcpy(img, &temp_img, sizeof(IMAGE));
 

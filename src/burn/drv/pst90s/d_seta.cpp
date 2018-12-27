@@ -107,12 +107,18 @@ static UINT8 DrvReset;
 
 // trackball stuff for Krazy Bowl & usclssic
 static INT32 trackball_mode = 0;
-static INT32 DrvAnalogPort0 = 0;
-static INT32 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort3 = 0;
 static UINT32 track_x = 0;
 static UINT32 track_y = 0;
 static INT32 track_x_last = 0;
 static INT32 track_y_last = 0;
+static UINT32 track_x2 = 0;
+static UINT32 track_y2 = 0;
+static INT32 track_x2_last = 0;
+static INT32 track_y2_last = 0;
 
 // Rotation stuff! -dink
 static UINT8  DrvFakeInput[6]       = {0, 0, 0, 0, 0, 0};
@@ -834,9 +840,8 @@ static struct BurnInputInfo KrzybowlInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	// space holders for analog inputs
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 fire 4"	},
-	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 fire 5"	},
+	A("P2 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
@@ -1193,9 +1198,9 @@ static struct BurnInputInfo UsclssicInputList[] = {
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy5 + 14,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy5 + 13,	"p2 fire 1"	},
-// space holder for analog inputs
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy5 + 0,	"p2 fire 3"	},
+
+	A("P2 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
@@ -4373,15 +4378,13 @@ UINT8 __fastcall kamenrid_read_byte(UINT32 address)
 static void trackball_input_tick() // krzybowl, usclssic
 {
 	INT32 padx = ProcessAnalog(DrvAnalogPort0, 1, 1, 0x01, 0xff) - 0x7f;
+	if (padx > 0 && padx < 8) padx = 0;
 
 	if (usclssic) {
 		padx /= 16;
 		track_x -= padx;
 		if (padx) track_x_last = padx;
 		if (!padx) {
-			//if (nCurrentFrame & 4) track_x_last /= 4; // deceleration code, save for later
-			//track_x += track_x_last;
-			//if (track_x_last == 0) track_x = 0;
 			track_x = 0; track_x_last = 0; // PORT_RESET
 		}
 	} else { // krzybowl
@@ -4389,19 +4392,43 @@ static void trackball_input_tick() // krzybowl, usclssic
 	}
 
 	INT32 pady = ProcessAnalog(DrvAnalogPort1, 1, 1, 0x01, 0xff) - 0x7f;
-
+	if (pady > 0 && pady < 8) pady = 0;
 	if (usclssic) {
 		pady /= 16;
 		track_y -= pady;
 		if (pady) track_y_last = pady;
 		if (!pady) {
-			//if (nCurrentFrame & 4) track_y_last /= 4;
-			//track_y += track_y_last;
-			//if (track_y_last == 0) track_y = 0;
 			track_y = 0; track_y_last = 0; // PORT_RESET
 		}
 	} else { // krzybowl
 		track_y += pady;
+	}
+
+	padx = ProcessAnalog(DrvAnalogPort2, 1, 1, 0x01, 0xff) - 0x7f;
+	if (padx > 0 && padx < 8) padx = 0;
+
+	if (usclssic) {
+		padx /= 16;
+		track_x2 -= padx;
+		if (padx) track_x2_last = padx;
+		if (!padx) {
+			track_x2 = 0; track_x2_last = 0; // PORT_RESET
+		}
+	} else { // krzybowl
+		track_x2 += padx;
+	}
+
+	pady = ProcessAnalog(DrvAnalogPort3, 1, 1, 0x01, 0xff) - 0x7f;
+	if (pady > 0 && pady < 8) pady = 0;
+	if (usclssic) {
+		pady /= 16;
+		track_y2 -= pady;
+		if (pady) track_y2_last = pady;
+		if (!pady) {
+			track_y2 = 0; track_y2_last = 0; // PORT_RESET
+		}
+	} else { // krzybowl
+		track_y2 += pady;
 	}
 }
 
@@ -4409,8 +4436,8 @@ static UINT16 krzybowl_input_read(INT32 offset)
 {
 	INT32 dir1x = track_x & 0xfff;
 	INT32 dir1y = track_y & 0xfff;
-	INT32 dir2x = 0x800;
-	INT32 dir2y = 0x800;
+	INT32 dir2x = track_x2 & 0xfff;
+	INT32 dir2y = track_y2 & 0xfff;
 
 	switch (offset / 2)
 	{
@@ -5053,8 +5080,13 @@ void __fastcall usclssic_write_byte(UINT32 address, UINT8 data)
 static UINT8 uclssic_trackball_read(INT32 offset)
 {
 	UINT16 start_vals[2] = { 0xf000, 0x9000 };
-	start_vals[0] |= track_x&0xfff;
-	start_vals[1] |= track_y&0xfff;
+	if (!usclssic_port_select) {
+		start_vals[0] |= track_x&0xfff;
+		start_vals[1] |= track_y&0xfff;
+	} else {
+		start_vals[0] |= track_x2&0xfff;
+		start_vals[1] |= track_y2&0xfff;
+	}
 
 	UINT16 ret = DrvInputs[1 + ((offset & 4)/4) + (usclssic_port_select * 2)] ^ start_vals[(offset / 4) & 1];
 

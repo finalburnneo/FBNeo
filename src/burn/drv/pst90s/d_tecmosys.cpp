@@ -1205,6 +1205,45 @@ struct BurnDriver BurnDrvDeroona = {
 	320, 240, 4, 3
 };
 
+// Deroon DeroDero (newer)
+
+static struct BurnRomInfo deroon2RomDesc[] = {
+	{ "stk_t001.upau1",		0x080000, 0x90c794df, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "stk_t002.upal1",		0x080000, 0xcca9f87c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "t003.uz1",			0x040000, 0x8bdfafa0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "t101.uah1",			0x200000, 0x74baf845, 3 | BRF_GRA },           //  3 Sprites
+	{ "t102.ual1",			0x200000, 0x1a02c4a3, 3 | BRF_GRA },           //  4
+	{ "t103.ubl1",			0x400000, 0x84e7da88, 3 | BRF_GRA },           //  5
+	{ "t104.ucl1",			0x200000, 0x66eb611a, 3 | BRF_GRA },           //  6
+
+	{ "t301.ubd1",			0x100000, 0x8b026177, 4 | BRF_GRA },           //  7 Character Tiles
+
+	{ "t201.ubb1",			0x100000, 0xd5a087ac, 6 | BRF_GRA },           //  8 Midground Layer
+
+	{ "t202.ubc1",			0x100000, 0xf051dae1, 7 | BRF_GRA },           //  9 Foreground Layer
+
+	{ "t401.uya1",			0x200000, 0x92111992, 8 | BRF_SND },           // 10 YMZ280B Samples
+
+	{ "t501.uad1",			0x080000, 0x2fbcfe27, 9 | BRF_SND },           // 11 OKI6295 Samples
+
+	{ "deroon_68hc11a8.rom",	0x002000, 0x00000000, 0 | BRF_NODUMP },        // 12 68HC11A8 Code
+	{ "deroon_68hc11a8.eeprom",	0x000200, 0x00000000, 0 | BRF_NODUMP },        // 13 68HC11A8 EEPROM
+};
+
+STD_ROM_PICK(deroon2)
+STD_ROM_FN(deroon2)
+
+struct BurnDriver BurnDrvDeroon2 = {
+	"deroon2", "deroon", NULL, NULL, "1995",
+	"Deroon DeroDero (newer)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, deroon2RomInfo, deroon2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
+	DeroonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4800,
+	320, 240, 4, 3
+};
 
 // Toukidenshou - Angel Eyes (VER. 960614)
 

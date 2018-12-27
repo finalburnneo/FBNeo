@@ -1255,7 +1255,9 @@ rm %(Filename).exe</Command>
     <ClCompile Include="..\..\src\cpu\m6809\m6809.cpp" />
     <ClCompile Include="..\..\src\cpu\m6809_intf.cpp" />
     <ClCompile Include="..\..\src\cpu\m68k\m68kcpu.c" />
-    <ClCompile Include="..\..\src\cpu\m68k\m68kdasm.c" />
+    <ClCompile Include="..\..\src\cpu\m68k\m68kdasm.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <CustomBuild Include="..\..\src\cpu\m68k\m68kmake.c">
       <FileType>CppCode</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl /DINLINE="__inline static" ..\..\src\cpu\m68k\%(Filename).c

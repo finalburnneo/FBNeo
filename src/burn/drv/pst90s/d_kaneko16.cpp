@@ -1073,8 +1073,8 @@ STD_ROM_PICK(Packbang)
 STD_ROM_FN(Packbang)
 
 static struct BurnRomInfo BlazeonRomDesc[] = {
-	{ "bz_prg1.u80",       	0x040000, 0x8409e31d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "bz_prg2.u81",       	0x040000, 0xb8a0a08b, BRF_ESS | BRF_PRG }, //  1	
+	{ "bz_prg1.u80",       	0x040000, 0x3d79aa70, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "bz_prg2.u81",       	0x040000, 0xa16d3b1e, BRF_ESS | BRF_PRG }, //  1	
 	
 	{ "bz_sp1.u20",        	0x100000, 0x0d5809a1, BRF_GRA },	   	   //  2 Sprites
 	{ "bz_sp2.u21",        	0x100000, 0x56ead2bd, BRF_GRA },	   	   //  3	
@@ -1090,6 +1090,25 @@ static struct BurnRomInfo BlazeonRomDesc[] = {
 
 STD_ROM_PICK(Blazeon)
 STD_ROM_FN(Blazeon)
+
+static struct BurnRomInfo BlazeonjRomDesc[] = {
+	{ "bz_prg1.u80",       	0x040000, 0x8409e31d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "bz_prg2.u81",       	0x040000, 0xb8a0a08b, BRF_ESS | BRF_PRG }, //  1	
+	
+	{ "bz_sp1.u20",        	0x100000, 0x0d5809a1, BRF_GRA },	   	   //  2 Sprites
+	{ "bz_sp2.u21",        	0x100000, 0x56ead2bd, BRF_GRA },	   	   //  3	
+	
+	{ "bz_bg.u2",          	0x100000, 0xfc67f19f, BRF_GRA },	   	   //  4 Tiles (scrambled)
+	
+	{ "3.u45",             	0x020000, 0x52fe4c94, BRF_ESS | BRF_PRG }, //  5 Z80 Program Code
+	
+	{ "bz_sp1.u68",        	0x100000, 0x0d5809a1, BRF_OPT },
+	{ "bz_sp2.u86",        	0x100000, 0x56ead2bd, BRF_OPT },
+};
+
+
+STD_ROM_PICK(Blazeonj)
+STD_ROM_FN(Blazeonj)
 
 static struct BurnRomInfo WingforcRomDesc[] = {
 	{ "e_2.24.u80",       	0x080000, 0x837e0726, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
@@ -7598,7 +7617,7 @@ struct BurnDriver BurnDrvPackbang = {
 
 struct BurnDriver BurnDrvBlazeon = {
 	"blazeon", NULL, NULL, NULL, "1992",
-	"Blaze On (Japan)\0", NULL, "Atlus", "Kaneko16",
+	"Blaze On (World)\0", NULL, "A.I (Atlus license)", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, BlazeonRomInfo, BlazeonRomName, NULL, NULL, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
@@ -7606,9 +7625,19 @@ struct BurnDriver BurnDrvBlazeon = {
 	NULL, 0x1000, 320, 232, 4, 3
 };
 
+struct BurnDriver BurnDrvBlazeonj = {
+	"blazeonj", "blazeon", NULL, NULL, "1992",
+	"Blaze On (Japan)\0", NULL, "A.I (Atlus license)", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
+	NULL, BlazeonjRomInfo, BlazeonjRomName, NULL, NULL, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
+	BlazeonInit, BlazeonExit, BlazeonFrame, Kaneko16FrameRender, BlazeonScan,
+	NULL, 0x1000, 320, 232, 4, 3
+};
+
 struct BurnDriver BurnDrvWingforc = {
 	"wingforc", NULL, NULL, NULL, "1993",
-	"Wing Force (Japan, prototype)\0", NULL, "Atlus", "Kaneko16",
+	"Wing Force (Japan, prototype)\0", NULL, "A.I (Atlus license)", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, WingforcRomInfo, WingforcRomName, NULL, NULL, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,

@@ -8498,27 +8498,6 @@ static INT32 Ssf2Init()
 	return nRet;
 }
 
-static INT32 Spf2tInit()
-{
-	INT32 nRet;
-
-	// graphics glitch:
-	// after the first match ends, the computer selects a new player to
-	// fight against. it will glitch the 2 player sprites at the bottom right
-	// and left of the screen through the yellow closing/opening screen animation.
-
-	// note: happens in MAME - I wonder if this is an original PCB bug?
-
-	// note2: since this worked without the glitch before the 262line change,
-	// we shall kludge it to acheive previous perfect status.
-
-	nCpsNumScanlines = 259;
-	
-	nRet = Cps2Init();
-	
-	return nRet;
-}
-
 static INT32 Ssf2tbInit()
 {
 	Ssf2tb = 1;
@@ -10541,7 +10520,7 @@ struct BurnDriver BurnDrvCpsSpf2t = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
 	NULL, Spf2tRomInfo, Spf2tRomName, NULL, NULL, NULL, NULL, Spf2tInputInfo, NULL,
-	Spf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -10551,7 +10530,7 @@ struct BurnDriver BurnDrvCpsSpf2tu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
 	NULL, Spf2tuRomInfo, Spf2tuRomName, NULL, NULL, NULL, NULL, Spf2tInputInfo, NULL,
-	Spf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -10561,7 +10540,7 @@ struct BurnDriver BurnDrvCpsSpf2xj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
 	NULL, Spf2xjRomInfo, Spf2xjRomName, NULL, NULL, NULL, NULL, Spf2tInputInfo, NULL,
-	Spf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -10571,7 +10550,7 @@ struct BurnDriver BurnDrvCpsSpf2ta = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
 	NULL, Spf2taRomInfo, Spf2taRomName, NULL, NULL, NULL, NULL, Spf2tInputInfo, NULL,
-	Spf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -10581,7 +10560,7 @@ struct BurnDriver BurnDrvCpsSpf2th = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
 	NULL, Spf2thRomInfo, Spf2thRomName, NULL, NULL, NULL, NULL, Spf2tInputInfo, NULL,
-	Spf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

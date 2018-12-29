@@ -140,7 +140,6 @@ static void __fastcall stadhero_main_write_byte(UINT32 address, UINT8 data)
 
 	switch (address)
 	{
-		case 0x30c006:
 		case 0x30c007:
 			soundlatch = data & 0xff;
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // pulse
@@ -217,6 +216,9 @@ static UINT8 stadhero_sound_read(UINT16 address)
 	{
 		case 0x3000:
 			return soundlatch;
+
+		case 0x3800:
+			return MSM6295Read(0);
 	}
 
 	return 0;
@@ -244,12 +246,12 @@ static INT32 DrvDoReset()
 
 	SekOpen(0);
 	SekReset();
-	BurnYM3812Reset();
+	BurnYM2203Reset();
 	SekClose();
 
 	M6502Open(0);
 	M6502Reset();
-	BurnYM2203Reset();
+	BurnYM3812Reset();
 	M6502Close();
 
 	MSM6295Reset(0);
@@ -384,13 +386,13 @@ static INT32 DrvInit()
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachYM3812(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
-	
+
 	BurnYM2203Init(1, 1500000, NULL, 1);
 	BurnTimerAttach(&SekConfig, 10000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.23, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.43, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.43, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.43, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1056000 / MSM6295_PIN7_HIGH, 1);
 	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
@@ -553,8 +555,8 @@ static INT32 DrvFrame()
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 

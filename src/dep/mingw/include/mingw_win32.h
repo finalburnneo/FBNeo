@@ -54,11 +54,13 @@
 #define ST_SELECTION			(2)
 
 #if __W32API_MAJOR_VERSION >=3 && __W32API_MINOR_VERSION < 8
+#if __GNUC__ <= 6
 typedef struct _settextex
 {
 	DWORD	flags;
 	UINT	codepage;
 } SETTEXTEX;
+#endif
 #endif
 
 // Macro used for handling Window Messages

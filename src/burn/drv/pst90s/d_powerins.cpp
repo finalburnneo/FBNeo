@@ -743,7 +743,7 @@ static INT32 powerinsInit()
 			LoadDecodeSprRom(tmp, RomSpr+0x400000*i, i+5, 0x200000);
 
 		BurnLoadRom(MSM6295ROM + 0x10000, 9, 1);
-		memcpy(MSM6295ROM, MSM6295ROM + 0x10000, 0x30000);
+		memmove(MSM6295ROM, MSM6295ROM + 0x10000, 0x30000); // this is madness
 
 	} else 
 	if ( game_drv == GAME_POWERINB ) {

@@ -323,7 +323,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 	}
 
 	INT32 length;
-	char path[256];
+	char path[256*2];
 	char setname[128];
 	void *destination = NULL;
 	char szTempPath[MAX_PATH];

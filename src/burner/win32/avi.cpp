@@ -128,7 +128,7 @@ static INT32 AviCreateFile()
 {
 	HRESULT hRet;
 
-	char szFilePath[MAX_PATH];
+	char szFilePath[MAX_PATH*2];
     time_t currentTime;
     tm* tmTime;
 

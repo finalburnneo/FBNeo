@@ -60,11 +60,11 @@ void AY8910SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 #define BURN_SND_AY8910_ROUTE_2		1
 #define BURN_SND_AY8910_ROUTE_3		2
 
-#define AY8910SetAllRoutes(i, v, d)							\
+#define AY8910SetAllRoutes(i, v, d)	do {						\
 	AY8910SetRoute(i, BURN_SND_AY8910_ROUTE_1, v, d);	\
 	AY8910SetRoute(i, BURN_SND_AY8910_ROUTE_2, v, d);	\
-	AY8910SetRoute(i, BURN_SND_AY8910_ROUTE_3, v, d);
-
+	AY8910SetRoute(i, BURN_SND_AY8910_ROUTE_3, v, d);   \
+    } while (0)
 #endif
 
 #ifndef AY8910_CORE

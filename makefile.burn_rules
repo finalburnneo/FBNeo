@@ -50,7 +50,7 @@ drvsrc	= 	d_arcadecl.cpp d_atarig1.cpp d_badlands.cpp d_batman.cpp d_blstroid.cp
 			d_batrider.o d_batsugun.o d_battleg.o d_bbakraid.o d_dogyuun.o d_enmadaio.o d_fixeight.o d_ghox.o d_kbash.o d_kbash2.o d_mahoudai.o d_pipibibs.o \
 			d_shippumd.o d_slapfght.o d_snowbro2.o d_tekipaki.o d_toaplan1.o d_truxton2.o d_twincobr.o d_vfive.o d_wardner.o \
 			\
-			d_4enraya.o d_1942.o d_1943.o d_aeroboto.o d_alinvade.o d_alpha68k.o d_alpha68k1.o d_alpha68k2.o d_ambush.o d_amspdwy.o d_arabian.o d_armedf.o \
+			d_4enraya.o d_1942.o d_1943.o d_aeroboto.o d_alinvade.o d_alpha68k.o d_alpha68k1.o d_alpha68k2.o d_ambush.o d_amspdwy.o d_arabian.o d_argus.o d_armedf.o \
 			d_asteroids.o d_atetris.o d_aztarac.o d_bagman.o d_baraduke.o d_battlane.o d_battlex.o d_bbusters.o d_beaminv.o d_bionicc.o d_blktiger.o \
 			d_blockade.o d_blockout.o d_blueprnt.o d_bogeyman.o d_bombjack.o d_btime.o d_bwidow.o d_bzone.o d_cabal.o d_calorie.o d_canyon.o d_capbowl.o \
 			d_carjmbre.o d_ccastles.o d_cclimber.o d_cheekyms.o d_chinagat.o d_citycon.o d_cloak.o d_cloud9.o d_clshroad.o d_commando.o d_cop01.o d_copsnrob.o \

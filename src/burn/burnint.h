@@ -157,7 +157,7 @@ void CpuCheatRegister(INT32 type, cpu_core_config *config);
 void BurnInitMemoryManager();
 UINT8 *BurnMalloc(INT32 size);
 void _BurnFree(void *ptr);
-#define BurnFree(x)		_BurnFree(x); x = NULL;
+#define BurnFree(x) do {_BurnFree(x); x = NULL; } while (0)
 void BurnExitMemoryManager();
 
 // ---------------------------------------------------------------------------

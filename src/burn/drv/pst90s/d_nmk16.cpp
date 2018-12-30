@@ -3823,8 +3823,8 @@ static void macross2_sound_bank(INT32 bank)
 {
 	bank = (bank & 7) * 0x4000;
 
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM + 0x10000 + bank);
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM + 0x10000 + bank);
+	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM + bank);
+	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM + bank);
 }
 
 static void __fastcall macross2_sound_write(UINT16 address, UINT8 data)
@@ -4303,7 +4303,6 @@ static INT32 Macross2Init()
 		}
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  rom++, 1)) return 1;
-		memcpy (DrvZ80ROM + 0x10000, DrvZ80ROM, 0x20000);
 
 		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  rom++, 1)) return 1;
 

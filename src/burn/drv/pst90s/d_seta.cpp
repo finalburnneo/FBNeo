@@ -5794,7 +5794,7 @@ static void madshark68kInit()
 		DrvROMLen[1] = DrvROMLen[2] = 0x200000;
 
 		memcpy (DrvGfxROM0 + 0x200000, DrvGfxROM0 + 0x000000, 0x100000);
-		memcpy (DrvGfxROM0 + 0x000000, DrvGfxROM0 + 0x100000, 0x200000);
+		memmove (DrvGfxROM0 + 0x000000, DrvGfxROM0 + 0x100000, 0x200000); // dink??
 
 		memcpy (DrvGfxROM2 + 0x000000, DrvGfxROM1 + 0x100000, 0x100000);
 		memcpy (DrvGfxROM2 + 0x100000, DrvGfxROM1 + 0x300000, 0x100000);
@@ -5882,7 +5882,7 @@ static void zombraid68kInit()
 	SekSetWriteByteHandler(2,		zombraid_gun_write_byte);
 	SekClose();
 
-	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x080000, 0x280000);
+	memmove (DrvSndROM + 0x100000, DrvSndROM + 0x080000, 0x280000);
 }
 
 static void BlandiaGfxRearrange()
@@ -5892,7 +5892,7 @@ static void BlandiaGfxRearrange()
 
 	UINT8 *rom = DrvGfxROM1 + 0x40000;
 
-	if (rom_size == 0x100000) memcpy (rom, rom + 0x40000, 0x80000); // blandia
+	if (rom_size == 0x100000) memmove (rom, rom + 0x40000, 0x80000); // blandia dink??
 
 	for (INT32 rpos = 0; rpos < 0x80000/2; rpos++) {
 		buf[rpos+0x40000] = rom[rpos*2];
@@ -5903,7 +5903,7 @@ static void BlandiaGfxRearrange()
 
 	rom = DrvGfxROM2 + 0x40000;
 
-	if (rom_size == 0x100000) memcpy (rom, rom + 0x40000, 0x80000); // blandia
+	if (rom_size == 0x100000) memmove (rom, rom + 0x40000, 0x80000); // blandia dink??
 
 	for (INT32 rpos = 0; rpos < 0x80000/2; rpos++) {
 		buf[rpos+0x40000] = rom[rpos*2];
@@ -6110,7 +6110,7 @@ static void extdwnhl68kInit()
 
 	// swap halves of sound rom
 	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000);
-	memcpy (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x100000);
+	memcpy (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x080000);
 }
 
 static void krzybowl68kInit()
@@ -9501,11 +9501,9 @@ static void gundhara68kInit()
 {
 	wrofaero68kInit();
 
-	//memmove (DrvSndROM + 0x100000, DrvSndROM + 0x080000, 0x080000);
-	//memmove (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x100000);
 	// swap halves of sound rom
 	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000);
-	memcpy (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x100000);
+	memcpy (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x080000);
 }
 
 static INT32 gundharaInit()

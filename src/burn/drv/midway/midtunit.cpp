@@ -436,7 +436,7 @@ static void TUnitDoReset()
 	MKProtIndex = 0;
 	MK2ProtData = 0xffff;
 	NbajamProtIndex = 0;
-	memset(NbajamProtQueue, 0, 5 * sizeof(UINT8));
+	memset(NbajamProtQueue, 0, 5 * sizeof(UINT16));
 	JdreddpProtIndex = 0;
 	JdreddpProtMax = 0;
 	JdreddpProtTable = NULL;

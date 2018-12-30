@@ -1121,7 +1121,9 @@ static inline void DrvPaletteRecalc()
 
 static inline void AssembleInputs()
 {
-	memset (DrvInputs, 0xff, 2 * sizeof(INT16));
+	DrvInputs[0] = 0xffff;
+	DrvInputs[1] = 0xffff;
+
 	for (INT32 i = 0; i < 16; i++) {
 		DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;

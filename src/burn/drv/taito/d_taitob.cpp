@@ -2712,7 +2712,7 @@ static void ViofightInitCallback()
 //	SekSetReadWordHandler(0,		viofight_read_word);
 	SekClose();
 
-	memcpy (Taito68KRom1 + 0x40000, Taito68KRom1 + 0x20000, 0x40000);
+	memmove (Taito68KRom1 + 0x40000, Taito68KRom1 + 0x20000, 0x40000);
 
 	cpu_speed[1] = 6000000; // 6mhz
 }

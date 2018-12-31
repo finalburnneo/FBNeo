@@ -89,8 +89,8 @@ static struct BurnInputInfo powerinsInputList[] = {
 	{"P2 Button 4",	BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 4"},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"},
-	{"Diagnostics",	BIT_DIGITAL, DrvButton + 5,	"diag"},
-	{"Service",		BIT_DIGITAL, DrvButton + 2,	"service"},
+	{"Diagnostics",	BIT_DIGITAL,    DrvButton + 5,	"diag"},
+	{"Service",		BIT_DIGITAL,    DrvButton + 2,	"service"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvInput + 4,	"dip"},
 	{"Dip B",		BIT_DIPSWITCH,	DrvInput + 6,	"dip"},
 };
@@ -157,7 +157,7 @@ static struct BurnDIPInfo powerinaDIPList[] = {
 	{0,		0xFE, 0,	4,	  "Difficulty"},
 	{0x18,	0x01, 0xC0, 0x80, "Easy"},
 	{0x18,	0x01, 0xC0, 0x00, "Normal"},
-	{0x18,	0x01, 0xC0, 0x40, "Hard"}, 
+	{0x18,	0x01, 0xC0, 0x40, "Hard"},
 	{0x18,	0x01, 0xC0, 0xC0, "Hardest"},
 
 };
@@ -189,7 +189,7 @@ static struct BurnDIPInfo powerinjDIPList[] = {
 	{0,		0xFE, 0,	4,	  "Difficulty"},
 	{0x18,	0x01, 0xC0, 0x80, "Easy"},
 	{0x18,	0x01, 0xC0, 0x00, "Normal"},
-	{0x18,	0x01, 0xC0, 0x40, "Hard"}, 
+	{0x18,	0x01, 0xC0, 0x40, "Hard"},
 	{0x18,	0x01, 0xC0, 0xC0, "Hardest"},
 
 };
@@ -332,7 +332,7 @@ static struct BurnRomInfo powerinbRomDesc[] = {
 	{ "5c.bin",		  0x080000, 0x5839a2bd, BRF_SND },
 	{ "5d.bin",		  0x080000, 0x446f9dc3, BRF_SND },
 
-	{ "82s123.bin",	0x000020, 0x67d5ec4b, BRF_OPT },				// unknown 
+	{ "82s123.bin",	0x000020, 0x67d5ec4b, BRF_OPT },				// unknown
 	{ "82s147.bin",	0x000200, 0xd7818542, BRF_OPT },
 
 };
@@ -368,20 +368,17 @@ static INT32 MemIndex()
 	return 0;
 }
 
-UINT8 __fastcall powerinsReadByte(UINT32 sekAddress)
+static UINT8 __fastcall powerinsReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress) {
-		
+
 		case 0x10003f:
 			return MSM6295Read(0);
-			
-//		default:
-//			bprintf(PRINT_NORMAL, _T("Attempt to read byte value of location %x\n"), sekAddress);
 	}
 	return 0;
 }
 
-UINT16 __fastcall powerinsReadWord(UINT32 sekAddress)
+static UINT16 __fastcall powerinsReadWord(UINT32 sekAddress)
 {
 	switch (sekAddress)
 	{
@@ -396,22 +393,20 @@ UINT16 __fastcall powerinsReadWord(UINT32 sekAddress)
 
 		case 0x10000A:
 			return ~DrvInput[6];
-
-//		default:
-//			bprintf(PRINT_NORMAL, _T("Attempt to read word value of location %x\n"), sekAddress);
 	}
 	return 0;
 }
 
-void __fastcall powerinsWriteByte(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall powerinsWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
+	if (game_drv != GAME_POWERINA) return; // for powerina
+
 	switch (sekAddress)
 	{
-		case 0x100031:
-			// powerins_okibank
+		case 0x100031: // powerina oki msm6295 bank
 			if (oki_bank != (byteValue & 7)) {
 				oki_bank = byteValue & 7;
-				MSM6295SetBank(0, MSM6295ROM + 0x40000 + 0x10000*oki_bank, 0x30000, 0x3ffff);
+				MSM6295SetBank(0, MSM6295ROM + 0x30000 + 0x10000*oki_bank, 0x30000, 0x3ffff);
 			}
 			break;
 
@@ -423,49 +418,42 @@ void __fastcall powerinsWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			// powerina only!
 			MSM6295Write(0, byteValue);
 			break;
-			
-//		default:
-//			bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
 	}
 }
 
-void __fastcall powerinsWriteWord(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall powerinsWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	switch (sekAddress)
 	{
 		case 0x100014:
-			// powerins_flipscreen_w
+			// flipscreen
 			break;
 
 		case 0x100018:
-			// powerins_tilebank_w
 			tile_bank = wordValue * 0x800;
 			break;
 
 		case 0x10001e:
-			//powerins_soundlatch_w
 			soundlatch = wordValue & 0xff;
 			break;
 
 		case 0x10003e:
-			// powerina only!
-			MSM6295Write(0, wordValue & 0xff);
+			if (game_drv == GAME_POWERINA) {
+				MSM6295Write(0, wordValue & 0xff);
+			}
 			break;
 
 		case 0x130000:	RamVReg[0] = wordValue; break;
 		case 0x130002:	RamVReg[1] = wordValue; break;
 		case 0x130004:	RamVReg[2] = wordValue; break;
 		case 0x130006:	RamVReg[3] = wordValue; break;
-		
+
 		case 0x100016:	// NOP
 			break;
-
-//		default:
-//			bprintf(PRINT_NORMAL, _T("Attempt to write word value %x to location %x\n"), wordValue, sekAddress);
 	}
 }
 
-void __fastcall powerinsWriteWordPalette(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall powerinsWriteWordPalette(UINT32 sekAddress, UINT16 wordValue)
 {
 	sekAddress -= 0x120000;
 	sekAddress >>= 1;
@@ -473,46 +461,29 @@ void __fastcall powerinsWriteWordPalette(UINT32 sekAddress, UINT16 wordValue)
 	CalcCol( sekAddress );
 }
 
-UINT8 __fastcall powerinsZ80Read(UINT16 a)
+static UINT8 __fastcall powerinsZ80Read(UINT16 a)
 {
 	switch (a)
 	{
 		case 0xE000:
 			return soundlatch;
-
-//		default:
-//			bprintf(PRINT_NORMAL, _T("Z80 Attempt to read value of location %04x\n"), a);
 	}
 
 	return 0;
 }
 
-#if 1 && defined FBA_DEBUG
-void __fastcall powerinsZ80Write(UINT16 a,UINT8 v)
-{
-	switch (a) {
-		case 0xE000:
-		case 0xE001:
-			break;
-
-		default:
-			bprintf(PRINT_NORMAL, _T("Z80 Attempt to write value %x to location %x\n"), v, a);
-	}
-}
-#endif
-
-UINT8 __fastcall powerinsZ80In(UINT16 p)
+static UINT8 __fastcall powerinsZ80In(UINT16 p)
 {
 	switch (p & 0xFF)
 	{
 		case 0x00:
-			if ( game_drv == GAME_POWERINS )
+			if (game_drv == GAME_POWERINS)
 				return BurnYM2203Read(0, 0);
 			else
 				return 0x01;
 
 		case 0x01:
-			if ( game_drv == GAME_POWERINS )
+			if (game_drv == GAME_POWERINS)
 				return BurnYM2203Read(0, 1);
 			else
 				return 0;
@@ -522,25 +493,22 @@ UINT8 __fastcall powerinsZ80In(UINT16 p)
 
 		case 0x88:
 			return MSM6295Read(1);
-
-//		default:
-//			bprintf(PRINT_NORMAL, _T("Z80 Attempt to read port %04x\n"), p);
 	}
 
 	return 0;
 }
 
-void __fastcall powerinsZ80Out(UINT16 p, UINT8 v)
+static void __fastcall powerinsZ80Out(UINT16 p, UINT8 v)
 {
 	switch (p & 0x0FF) {
 		case 0x00:
-			if ( game_drv == GAME_POWERINS ) {
+			if (game_drv == GAME_POWERINS) {
 				BurnYM2203Write(0, 0, v);
 			}
 			break;
 
 		case 0x01:
-			if ( game_drv == GAME_POWERINS ) {
+			if (game_drv == GAME_POWERINS) {
 				BurnYM2203Write(0, 1, v);
 			}
 			break;
@@ -563,37 +531,27 @@ void __fastcall powerinsZ80Out(UINT16 p, UINT8 v)
 		case 0x97:
 			NMK112_okibank_write(p & 7, v);
 			break;
-
-//		default:
-//			bprintf(PRINT_NORMAL, _T("Z80 Attempt to write %02x to port %04x\n"), v, p);
 	}
 }
 
 static void powerinsIRQHandler(INT32, INT32 nStatus)
 {
-//	bprintf(PRINT_NORMAL, _T("powerinsIRQHandler %i\n"), nStatus);
-	
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
 {
 	SekOpen(0);
-	SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
-	
+
 	MSM6295Reset();
-	
+
 	if (game_drv != GAME_POWERINA) {
 		ZetOpen(0);
 		ZetReset();
 		ZetClose();
-		
+
 		if (game_drv == GAME_POWERINS) BurnYM2203Reset();
 
 		NMK112Reset();
@@ -640,7 +598,7 @@ static void LoadDecodeSprRom(UINT8 *tmp, UINT8 * dest, INT32 id, INT32 size)
 	if ( game_drv == GAME_POWERINB ) {
 		BurnLoadRom(tmp + 0,  9 + id*2, 2);
 		BurnLoadRom(tmp + 1, 10 + id*2, 2);
-	} else 
+	} else
 		BurnLoadRom(tmp, id, 1);
 
 	for (INT32 z=0;z<(size/128);z++) {
@@ -696,7 +654,7 @@ static INT32 powerinsInit()
 	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);										// blank all memory
-	MemIndex();	
+	MemIndex();
 
 	// load roms
 
@@ -725,8 +683,7 @@ static INT32 powerinsInit()
 		BurnLoadRom(MSM6295ROM + 0x200000, 17, 1);
 		BurnLoadRom(MSM6295ROM + 0x300000, 18, 1);
 
-
-	} else 
+	} else
 	if ( game_drv == GAME_POWERINA ) {
 		nRet = BurnLoadRom(Rom68K + 0x000000, 0, 1); if (nRet != 0) return 1;
 		nRet = BurnLoadRom(Rom68K + 0x080000, 1, 1); if (nRet != 0) return 1;
@@ -742,10 +699,9 @@ static INT32 powerinsInit()
 		for (INT32 i=0;i<4;i++)
 			LoadDecodeSprRom(tmp, RomSpr+0x400000*i, i+5, 0x200000);
 
-		BurnLoadRom(MSM6295ROM + 0x10000, 9, 1);
-		memmove(MSM6295ROM, MSM6295ROM + 0x10000, 0x30000); // this is madness
+		BurnLoadRom(MSM6295ROM + 0x00000, 9, 1);
 
-	} else 
+	} else
 	if ( game_drv == GAME_POWERINB ) {
 
 		nRet = BurnLoadRom(Rom68K + 0x000001, 0, 2); if (nRet != 0) return 1;
@@ -787,9 +743,9 @@ static INT32 powerinsInit()
 									0x120000, 0x120FFF, MAP_ROM);	// palette
 		SekMapMemory((UINT8 *)RamBg,
 									0x140000, 0x143fff, MAP_RAM);	// b ground
-		SekMapMemory((UINT8 *)RamFg,		
+		SekMapMemory((UINT8 *)RamFg,
 									0x170000, 0x170fff, MAP_RAM);	// f ground
-		SekMapMemory((UINT8 *)RamFg,		
+		SekMapMemory((UINT8 *)RamFg,
 									0x171000, 0x171fff, MAP_RAM);	// f ground Mirror
 		SekMapMemory((UINT8 *)RamSpr,
 									0x180000, 0x18ffff, MAP_RAM);	// sprites
@@ -802,21 +758,17 @@ static INT32 powerinsInit()
 		SekSetWriteWordHandler(0, powerinsWriteWord);
 		SekSetWriteByteHandler(0, powerinsWriteByte);
 
-		//SekSetWriteByteHandler(1, powerinsWriteBytePalette);
 		SekSetWriteWordHandler(1, powerinsWriteWordPalette);
 
 		SekClose();
 	}
 
-	if ( game_drv != GAME_POWERINA ) {
+	if (game_drv != GAME_POWERINA) {
 
 		ZetInit(0);
 		ZetOpen(0);
 
 		ZetSetReadHandler(powerinsZ80Read);
-#if 1 && defined FBA_DEBUG
-		ZetSetWriteHandler(powerinsZ80Write);
-#endif
 		ZetSetInHandler(powerinsZ80In);
 		ZetSetOutHandler(powerinsZ80Out);
 
@@ -831,17 +783,17 @@ static INT32 powerinsInit()
 		ZetClose();
 	}
 
-	if ( game_drv == GAME_POWERINA ) {
+	if (game_drv == GAME_POWERINA) {
 		MSM6295Init(0, 990000 / 165, 0);
 		MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	}
-	
-	if (game_drv == GAME_POWERINS ) {
+
+	if (game_drv == GAME_POWERINS) {
 		BurnYM2203Init(1, 12000000 / 8, &powerinsIRQHandler, 0);
 		BurnTimerAttachZet(6000000);
 		BurnYM2203SetAllRoutes(0, 2.00, BURN_SND_ROUTE_BOTH);
 		BurnSetRefreshRate(56.0);
-		
+
 		MSM6295Init(0, 4000000 / 165, 1);
 		MSM6295Init(1, 4000000 / 165, 1);
 		MSM6295SetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
@@ -850,7 +802,7 @@ static INT32 powerinsInit()
 		NMK112_init(0, MSM6295ROM, MSM6295ROM + 0x200000, 0x200000, 0x200000);
 	}
 
-	if (game_drv == GAME_POWERINB ) {
+	if (game_drv == GAME_POWERINB) {
 		MSM6295Init(0, 4000000 / 165, 1);
 		MSM6295Init(1, 4000000 / 165, 1);
 		MSM6295SetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
@@ -949,7 +901,7 @@ static inline void drawgfx(UINT32 code,UINT32 color,INT32 flipx,/*INT32 flipy,*/
 		if ( flipx )
 			Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x400, RomSpr);
 		else
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x400, RomSpr);		
+			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x400, RomSpr);
 	}
 }
 
@@ -985,15 +937,16 @@ static void DrawSprites()
 static INT32 DrvDraw()
 {
 	if (bRecalcPalette) {
-		for (INT32 i=0; i<0x800; i++) CalcCol(i);
+		for (INT32 i = 0; i < 0x800; i++)
+			CalcCol(i);
 		bRecalcPalette = 0;
 	}
 
 	BurnTransferClear();
-	
-	TileBackground();
-	DrawSprites();
-	TileForeground();
+
+	if (nBurnLayer & 1) TileBackground();
+	if (nSpriteEnable & 1) DrawSprites();
+	if (nBurnLayer & 2) TileForeground();
 
 	BurnTransferCopy(RamCurPal);
 
@@ -1003,9 +956,9 @@ static INT32 DrvDraw()
 static INT32 powerinsFrame()
 {
 	INT32 nInterleave = 200;
-	
+
 	if (DrvReset) DrvDoReset();
-	
+
 	DrvInput[0] = 0x00;
 	DrvInput[2] = 0x00;
 	DrvInput[3] = 0x00;
@@ -1014,7 +967,7 @@ static INT32 powerinsFrame()
 		DrvInput[3] |= (DrvJoy2[i] & 1) << i;
 		DrvInput[0] |= (DrvButton[i] & 1) << i;
 	}
-	
+
 	nCyclesTotal[0] = (INT32)((INT64)12000000 * nBurnCPUSpeedAdjust / (0x0100 * 56));
 	if (game_drv == GAME_POWERINB) nCyclesTotal[0] = (INT32)((INT64)12000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[1] = 6000000 / 60;
@@ -1027,14 +980,14 @@ static INT32 powerinsFrame()
 		ZetOpen(0);
 	}
 
-	if ( game_drv == GAME_POWERINA ) {
+	if (game_drv == GAME_POWERINA) {
 		nCyclesTotal[0] = (INT32)((INT64)12000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 		SekRun(nCyclesTotal[0]);
 		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		if (pBurnSoundOut) MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	if (game_drv == GAME_POWERINS) {
 		for (INT32 i = 0; i < nInterleave; i++) {
 			INT32 nCurrentCPU, nNext;
@@ -1043,13 +996,13 @@ static INT32 powerinsFrame()
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		
+
 			BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 		}
 
 		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-	}	
-	
+	}
+
 	if (game_drv == GAME_POWERINB) {
 		for (INT32 i = 0; i < nInterleave; i++) {
 			INT32 nCurrentCPU, nNext;
@@ -1058,7 +1011,7 @@ static INT32 powerinsFrame()
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		
+
 			nCurrentCPU = 1;
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
@@ -1072,18 +1025,18 @@ static INT32 powerinsFrame()
 	}
 
 	SekClose();
-	
+
 	if (game_drv == GAME_POWERINS) {
 		BurnTimerEndFrame(nCyclesTotal[1]);
-	
+
 		if (pBurnSoundOut) {
 			BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 			MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 		}
-		
+
 		ZetClose();
 	}
-	
+
 	if (game_drv == GAME_POWERINB) {
 		ZetRun(nCyclesTotal[1] - nCyclesDone[1]);
 
@@ -1091,7 +1044,7 @@ static INT32 powerinsFrame()
 			BurnSoundClear();
 			MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 		}
-		
+
 		ZetClose();
 	}
 
@@ -1100,7 +1053,7 @@ static INT32 powerinsFrame()
 	return 0;
 }
 
-static INT32 powerinsScan(INT32 nAction,INT32 *pnMin)
+static INT32 powerinsScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1108,7 +1061,7 @@ static INT32 powerinsScan(INT32 nAction,INT32 *pnMin)
 		*pnMin =  0x029671;
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {				// Scan all memory, devices & variables
+	if (nAction & ACB_MEMORY_RAM) {	    // Scan all memory, devices & variables
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = RamStart;
 		ba.nLen	  = RamEnd-RamStart;
@@ -1118,22 +1071,21 @@ static INT32 powerinsScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 
-		SekScan(nAction);										// Scan 68000 state
+		SekScan(nAction);			    // Scan 68000 state
 
-		if ( game_drv != GAME_POWERINA ) ZetScan(nAction);										// Scan Z80 state
+		if (game_drv != GAME_POWERINA) ZetScan(nAction);										// Scan Z80 state
 
-		if ( game_drv == GAME_POWERINS ) BurnYM2203Scan(nAction, pnMin);
+		if (game_drv == GAME_POWERINS) BurnYM2203Scan(nAction, pnMin);
 
 		MSM6295Scan(nAction, pnMin);
 
 		SCAN_VAR(soundlatch);
-		if ( game_drv == GAME_POWERINA ) SCAN_VAR(oki_bank);
+		if (game_drv == GAME_POWERINA) SCAN_VAR(oki_bank);
 
 		SCAN_VAR(tile_bank);
 
 		if (nAction & ACB_WRITE) {
-			bRecalcPalette = 1;
-			if ( game_drv == GAME_POWERINA )  MSM6295SetBank(0, MSM6295ROM + 0x40000 + 0x10000*oki_bank, 0x30000, 0x3ffff);
+			if (game_drv == GAME_POWERINA)  MSM6295SetBank(0, MSM6295ROM + 0x30000 + 0x10000*oki_bank, 0x30000, 0x3ffff);
 		}
 	}
 

@@ -150,6 +150,12 @@ static int DisplayHistory()
 	return 0;
 }
 
+// make gcc 8.x happy about sprintf() usage below...
+#if __GNUC__ == 8
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-overflow="
+#endif
+
 static int GameInfoInit()
 {
 	// Get the games full name
@@ -623,6 +629,16 @@ static int GameInfoInit()
 	return 0;
 }
 
+#if __GNUC__ == 8
+#pragma GCC diagnostic pop
+#endif
+
+// make gcc 8.x happy about strncpy() usage below...
+#if __GNUC__ == 8
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-truncation"
+#endif
+
 #define MAXFAVORITES 2000
 char szFavorites[MAXFAVORITES][28];
 INT32 nFavorites = 0;
@@ -717,6 +733,10 @@ void AddFavorite_Ext(UINT8 addf)
 	nGiDriverSelected = nBurnDrvActive;
 	AddFavorite(addf);
 }
+
+#if __GNUC__ == 8
+#pragma GCC diagnostic pop
+#endif
 
 static void MyEndDialog()
 {

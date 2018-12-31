@@ -793,7 +793,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base)
 				// skip CRC check
 				strtok(NULL, "\r\n");
 
-				char ips_path[MAX_PATH];
+				char ips_path[MAX_PATH*2];
 				char ips_dir[MAX_PATH];
 				TCHARToANSI(szAppIpsPath, ips_dir, sizeof(ips_dir));
 

@@ -441,7 +441,11 @@ int OpenDebugLog()
 				AllocConsole();
 			}
 #else
- #define ATTACH_PARENT_PROCESS ((DWORD)-1)
+
+#ifdef ATTACH_PARENT_PROCESS
+#undef ATTACH_PARENT_PROCESS
+#endif
+#define ATTACH_PARENT_PROCESS ((DWORD)-1)
 
 			BOOL (WINAPI* pAttachConsole)(DWORD dwProcessId) = NULL;
 			HINSTANCE hKernel32DLL = LoadLibrary(_T("kernel32.dll"));

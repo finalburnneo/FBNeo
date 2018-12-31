@@ -391,6 +391,7 @@ static INT32 DrvInit()
 
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, NULL, 0.55, 1006875, 1.00, 2013750, 0.60);
 	BurnYM2203SetAllRoutes(0, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetInterleave((232/2) + 1); // "BurnYM2151Render()" called this many times per frame
 
 	deco16_music_tempofix = 1;
 

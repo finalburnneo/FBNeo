@@ -15,9 +15,9 @@ gauntlet: good
 batman: good
 vindictr: good
 relief: good
+arcadecl: good
 
   - WIP drivers -
-arcadecl
 offtwall
 rampart
 

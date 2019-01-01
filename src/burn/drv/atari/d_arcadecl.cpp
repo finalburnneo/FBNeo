@@ -1,13 +1,11 @@
 // FB Alpha Atari Arcade Classics / Sparkz driver module
 // Based on MAME driver by Aaron Giles
 
-// to do:
-// 	analog inputs
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "atariic.h"
 #include "atarimo.h"
+#include "burn_gun.h"
 #include "watchdog.h"
 #include "msm6295.h"
 
@@ -38,25 +36,37 @@ static UINT8 DrvDips[1];
 static UINT16 DrvInputs[4];
 static UINT8 DrvReset;
 
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort3 = 0;
+
+static INT32 is_joyver = 0;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo ArcadeclInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"	},
+	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 11,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 9,	"p1 fire 3"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 start"	},
+	A("P2 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 fire 3"	},
 	
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy4 + 4,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy4 + 5,	"service"	},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
-
+#undef A
 STDINPUTINFO(Arcadecl)
 
 static struct BurnInputInfo SparkzInputList[] = {
@@ -81,8 +91,8 @@ static struct BurnInputInfo SparkzInputList[] = {
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 fire 3"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy4 + 4,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy4 + 5,	"service"	},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -90,11 +100,11 @@ STDINPUTINFO(Sparkz)
 
 static struct BurnDIPInfo ArcadeclDIPList[]=
 {
-	{0x0d, 0xff, 0xff, 0x40, NULL			},
+	{0x11, 0xff, 0xff, 0x40, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x0d, 0x01, 0x40, 0x40, "Off"			},
-	{0x0d, 0x01, 0x40, 0x00, "On"			},
+	{0x11, 0x01, 0x40, 0x40, "Off"			},
+	{0x11, 0x01, 0x40, 0x00, "On"			},
 };
 
 STDDIPINFO(Arcadecl)
@@ -222,7 +232,7 @@ static UINT16 __fastcall arcadecl_read_word(UINT32 address)
 		case 0x640010:
 		{
 			UINT16 ret = DrvInputs[2] & ~0x00c0;
-			ret |= (vblank ? 0 : 0x0080);
+			ret |= (vblank ? 0x0080 : 0x0000);
 			ret |= DrvDips[0] & 0x40;
 			return ret;
 		}
@@ -231,16 +241,16 @@ static UINT16 __fastcall arcadecl_read_word(UINT32 address)
 			return DrvInputs[3];
 
 		case 0x640020:
-			return 0; // trackx2
+			return 0xff00 | BurnTrackballRead(1, 0); // trackx p2
 
 		case 0x640022:
-			return 0; // tracky2
+			return 0xff00 | BurnTrackballRead(1, 1); // tracky p2
 
 		case 0x640024:
-			return 0; // trackx1
+			return 0xff00 | BurnTrackballRead(0, 0); // trackx p1
 
 		case 0x640026:
-			return 0; // tracky1
+			return 0xff00 | BurnTrackballRead(0, 1); // tracky p1
 
 		case 0x642000:
 			return (MSM6295Read(0) << 8) | 0xff;
@@ -255,50 +265,7 @@ static UINT8 __fastcall arcadecl_read_byte(UINT32 address)
 		return DrvPalRAM[(address / 2) & 0x3ff];
 	}
 
-	switch (address)
-	{
-		case 0x640000:
-		case 0x640001:
-			return DrvInputs[0] >> ((~address & 1) * 8);
-
-		case 0x640002:
-		case 0x640003:
-			return DrvInputs[1] >> ((~address & 1) * 8);
-
-		case 0x640010:
-		case 0x640011: {
-			UINT16 ret = DrvInputs[2] & ~0x00c0;
-			ret |= (vblank ? 0 : 0x0080);
-			ret |= DrvDips[0] & 0x40;
-			return ret >> ((~address & 1) * 8);
-		}
-
-		case 0x640012:
-		case 0x640013:
-			return DrvInputs[3] >> ((~address & 1) * 8);
-
-		case 0x640020:
-		case 0x640021:
-			return 0 >> ((~address & 1) * 8); // trackx2
-
-		case 0x640022:
-		case 0x640023:
-			return 0 >> ((~address & 1) * 8); // tracky2
-
-		case 0x640024:
-		case 0x640025:
-			return 0 >> ((~address & 1) * 8); // trackx1
-
-		case 0x640026:
-		case 0x640027:
-			return 0 >> ((~address & 1) * 8); // tracky1
-
-		case 0x642000:
-		case 0x642001:
-			return MSM6295Read(0);
-	}
-
-	return 0;
+	return arcadecl_read_word(address&~1) >> ((~address & 1) * 8);
 }
 
 static INT32 DrvDoReset(INT32 full_reset)
@@ -447,6 +414,10 @@ static INT32 DrvInit()
 //	atarimo_set_xscroll(0, 4);
 	atarimo_set_yscroll(0, 0x110);
 
+	BurnTrackballInit(2, false);
+
+	is_joyver = (!!strstr(BurnDrvGetTextA(DRV_NAME), "sparkz"));
+
 	DrvDoReset(1);
 
 	return 0;
@@ -455,11 +426,18 @@ static INT32 DrvInit()
 static INT32 DrvExit()
 {
 	GenericTilesExit();
-	
+
 	SekExit();
 	MSM6295Exit();
 
+	AtariMoExit();
+	AtariEEPROMExit();
+
+	BurnTrackballExit();
+
 	BurnFree(AllMem);
+
+	is_joyver = 0;
 
 	return 0;
 }
@@ -541,6 +519,17 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
+
+		if (!is_joyver) {
+			BurnTrackballConfig(0, AXIS_REVERSED, AXIS_NORMAL);
+			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x06, 0x0a);
+			BurnTrackballUpdate(0);
+
+			BurnTrackballConfig(1, AXIS_REVERSED, AXIS_NORMAL);
+			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 0x06, 0x0a);
+			BurnTrackballUpdate(1);
+		}
+
 	}
 
 	INT32 nInterleave = 262;
@@ -555,15 +544,18 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
-		if ((i & 0x1f) == 0x1f && (i & 0x20) == 0) {
+		if ((i & 0x1f) == 0x00 && (i & 0x20) == 0) {
 			scanline_int_state = 1;
 			update_interrupts();
 		}
 
-		if ((i == 239) || (i == 255)) {
-			vblank = (i == 239) ? 1 : 0;
-			scanline_int_state = vblank;
-			update_interrupts();
+		if ((i%42) == 41 && !is_joyver) {
+			BurnTrackballUpdate(0);
+			BurnTrackballUpdate(1);
+		}
+
+		if (i == 239) {
+			vblank = 1;
 		}
 	}
 
@@ -603,6 +595,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		MSM6295Scan(nAction, pnMin);
 
 		BurnWatchdogScan(nAction);
+		if (!is_joyver)	BurnTrackballScan();
 
 		SCAN_VAR(scanline_int_state);
 		SCAN_VAR(oki_bank);

@@ -330,7 +330,7 @@ static struct BurnRomInfo EndurorRomDesc[] = {
 	
 	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
 	
-	{ "317-0013a.key",    0x02000, 0x295e6737, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0013a.key",    0x02000, 0xa965b2da, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -395,7 +395,7 @@ static struct BurnRomInfo Enduror1RomDesc[] = {
 	
 	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
 	
-	{ "317-0013a.key",    0x02000, 0x295e6737, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0013a.key",    0x02000, 0xa965b2da, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -436,7 +436,7 @@ static struct BurnRomInfo EnduroraRomDesc[] = {
 	
 	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
 	
-	{ "317-0013a.key",    0x02000, 0x295e6737, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0013a.key",    0x02000, 0xa965b2da, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 

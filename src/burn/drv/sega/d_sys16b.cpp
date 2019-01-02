@@ -2102,7 +2102,7 @@ static struct BurnRomInfo Aliensyn3RomDesc[] = {
 	{ "epr-10725.a9",   0x08000, 0x6a50e08f, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-10726.a10",  0x08000, 0xd50b7736, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0033.key",   0x02000, 0x49e882e5, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0033.key",   0x02000, 0x68bb7745, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -2170,7 +2170,7 @@ static struct BurnRomInfo AliensynjRomDesc[] = {
 	{ "epr-10725.a9",   0x08000, 0x6a50e08f, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-10726.a10",  0x08000, 0xd50b7736, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0033.key",   0x02000, 0x49e882e5, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0033.key",   0x02000, 0x68bb7745, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -2686,7 +2686,7 @@ static struct BurnRomInfo Aurail1RomDesc[] = {
 	
 	{ "mpr-13449.a11",  0x20000, 0xd3d9aaf9, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0168.key",   0x02000, 0xbc2d1792, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0168.key",   0x02000, 0xfed38390, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -2766,7 +2766,7 @@ static struct BurnRomInfo AurailjRomDesc[] = {
 	
 	{ "mpr-13449.a11",  0x20000, 0xd3d9aaf9, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0167.key",   0x02000, 0xbc2d1792, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0167.key",   0x02000, 0xfed38390, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -3529,7 +3529,7 @@ static struct BurnRomInfo DunkshotRomDesc[] = {
 	{ "epr-10475.a9",   0x08000, 0x17d55e85, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-10476.a10",  0x08000, 0xa6be0956, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0022.key",   0x02000, 0x4eedc66d, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0022.key",   0x02000, 0x3f218333, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -3564,7 +3564,7 @@ static struct BurnRomInfo DunkshotaRomDesc[] = {
 	{ "epr-10475.a9",   0x08000, 0x17d55e85, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-10476.a10",  0x08000, 0xa6be0956, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0022.key",   0x02000, 0x4eedc66d, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0022.key",   0x02000, 0x3f218333, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -3598,7 +3598,7 @@ static struct BurnRomInfo DunkshotoRomDesc[] = {
 	{ "epr-10475.a9",   0x08000, 0x17d55e85, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-10476.a10",  0x08000, 0xa6be0956, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0022.key",   0x02000, 0x4eedc66d, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0022.key",   0x02000, 0x3f218333, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -4987,7 +4987,7 @@ static struct BurnRomInfo SdibRomDesc[] = {
 
 	{ "10775.a7",       0x08000, 0x4cbd55a8, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "317-0028.key",   0x02000, 0x9a5307b2, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0028.key",   0x02000, 0x1514662f, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -5206,7 +5206,7 @@ static struct BurnRomInfo DefenseRomDesc[] = {
 
 	{ "10775.a7",       0x08000, 0x4cbd55a8, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "317-0028.key",   0x02000, 0x9a5307b2, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0028.key",   0x02000, 0x1514662f, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -5405,7 +5405,7 @@ static struct BurnRomInfo SjryukoRomDesc[] = {
 	{ "epr-12247.a10",    0x08000, 0xef8a64c6, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-12248.a11",    0x08000, 0xd1eabdab, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-5021.key",     0x02000, 0xc3e32937, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-5021.key",     0x02000, 0x8e40b2ab, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 

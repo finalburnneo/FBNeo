@@ -8613,147 +8613,41 @@ struct BurnDriver BurnDrvDogosokb = {
 };
 
 
-// Chopper I (US set 1)
-
-static struct BurnRomInfo chopperRomDesc[] = {
-	{ "kk_01.rom",		0x10000, 0x8fa2f839, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 code
-
-	{ "kk_04.rom",		0x10000, 0x004f7d9a, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 code
-
-	{ "kk_03.rom",		0x10000, 0xdbaafb87, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 code
-
-	{ "up03_k1.rom",	0x00400, 0x7f07a45c, 14 | BRF_GRA },	      //  3 Color Data
-	{ "up03_l1.rom",	0x00400, 0x15359fc3, 14 | BRF_GRA },	      //  4
-	{ "up03_k2.rom",	0x00400, 0x79b50f7d, 14 | BRF_GRA },	      //  5
-
-	{ "kk_05.rom",		0x08000, 0xdefc0987, 4 | BRF_GRA },           //  6 Text Characters
-
-	{ "kk_10.rom",		0x10000, 0x5cf4d22b, 6 | BRF_GRA },           //  7 Background Tiles
-	{ "kk_11.rom",		0x10000, 0x9af4cad0, 6 | BRF_GRA },           //  8
-	{ "kk_12.rom",		0x10000, 0x02fec778, 6 | BRF_GRA },           //  9
-	{ "kk_13.rom",		0x10000, 0x2756817d, 6 | BRF_GRA },           // 10
-
-	{ "kk_09.rom",		0x08000, 0x653c4342, 7 | BRF_GRA },           // 11 16x16 Sprites
-	{ "kk_08.rom",		0x08000, 0x2da45894, 7 | BRF_GRA },           // 12
-	{ "kk_07.rom",		0x08000, 0xa0ebebdf, 7 | BRF_GRA },           // 13
-	{ "kk_06.rom",		0x08000, 0x284fad9e, 7 | BRF_GRA },           // 14
-
-	{ "kk_18.rom",		0x10000, 0x6abbff36, 8 | BRF_GRA },           // 15 32x32 Sprites
-	{ "kk_19.rom",		0x10000, 0x5283b4d3, 8 | BRF_GRA },           // 16
-	{ "kk_20.rom",		0x10000, 0x6403ddf2, 8 | BRF_GRA },           // 17
-	{ "kk_21.rom",		0x10000, 0x9f411940, 8 | BRF_GRA },           // 18
-	{ "kk_14.rom",		0x10000, 0x9bad9e25, 8 | BRF_GRA },           // 19
-	{ "kk_15.rom",		0x10000, 0x89faf590, 8 | BRF_GRA },           // 20
-	{ "kk_16.rom",		0x10000, 0xefb1fb6c, 8 | BRF_GRA },           // 21
-	{ "kk_17.rom",		0x10000, 0x6b7fb0a5, 8 | BRF_GRA },           // 22
-
-	{ "kk_02.rom",		0x10000, 0x06169ae0, 15 | BRF_SND },          // 23 Samples
-
-	{ "pal16r6b.2c",	0x00104, 0x311e5ae6, 0 | BRF_OPT },           // 24 PLDs
-};
-
-STD_ROM_PICK(chopper)
-STD_ROM_FN(chopper)
-
-struct BurnDriver BurnDrvChopper = {
-	"chopper", NULL, NULL, NULL, "1988",
-	"Chopper I (US set 1)\0", NULL, "SNK", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, chopperRomInfo, chopperRomName, NULL, NULL, NULL, NULL, ChopperInputInfo, ChopperDIPInfo,
-	Chopper1Init, DrvExit, ChopperFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
-	224, 400, 3, 4
-};
-
-
-// Chopper I (US set 2)
-
-static struct BurnRomInfo chopperaRomDesc[] = {
-	{ "1a.rom",		0x10000, 0xdc325860, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 code
-
-	{ "4a.rom",		0x10000, 0x56d10ba3, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 code
-
-	{ "kk_03.rom",		0x10000, 0xdbaafb87, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 code
-
-	{ "up03_k1.rom",	0x00400, 0x7f07a45c, 14 | BRF_GRA },	      //  3 Color Data
-	{ "up03_l1.rom",	0x00400, 0x15359fc3, 14 | BRF_GRA },	      //  4
-	{ "up03_k2.rom",	0x00400, 0x79b50f7d, 14 | BRF_GRA },	      //  5
-
-	{ "kk_05.rom",		0x08000, 0xdefc0987, 4 | BRF_GRA },           //  6 Text Characters
-
-	{ "kk_10.rom",		0x10000, 0x5cf4d22b, 6 | BRF_GRA },           //  7 Background Tiles
-	{ "11a.rom",		0x10000, 0x881ac259, 6 | BRF_GRA },           //  8
-	{ "12a.rom",		0x10000, 0xde96b331, 6 | BRF_GRA },           //  9
-	{ "kk_13.rom",		0x10000, 0x2756817d, 6 | BRF_GRA },           // 10
-
-	{ "9a.rom",			0x08000, 0x106c2dcc, 7 | BRF_GRA },           // 11 16x16 Sprites
-	{ "8a.rom",			0x08000, 0xd4f88f62, 7 | BRF_GRA },           // 12
-	{ "7a.rom",			0x08000, 0x28ae39f9, 7 | BRF_GRA },           // 13
-	{ "6a.rom",			0x08000, 0x16774a36, 7 | BRF_GRA },           // 14
-
-	{ "kk_18.rom",		0x10000, 0x6abbff36, 8 | BRF_GRA },           // 15 32x32 Sprites
-	{ "kk_19.rom",		0x10000, 0x5283b4d3, 8 | BRF_GRA },           // 16
-	{ "kk_20.rom",		0x10000, 0x6403ddf2, 8 | BRF_GRA },           // 17
-	{ "kk_21.rom",		0x10000, 0x9f411940, 8 | BRF_GRA },           // 18
-	{ "kk_14.rom",		0x10000, 0x9bad9e25, 8 | BRF_GRA },           // 19
-	{ "kk_15.rom",		0x10000, 0x89faf590, 8 | BRF_GRA },           // 20
-	{ "kk_16.rom",		0x10000, 0xefb1fb6c, 8 | BRF_GRA },           // 21
-	{ "kk_17.rom",		0x10000, 0x6b7fb0a5, 8 | BRF_GRA },           // 22
-
-	{ "kk_02.rom",		0x10000, 0x06169ae0, 15 | BRF_SND },          // 23 Samples
-
-	{ "pal16r6b.2c",	0x00104, 0x311e5ae6, 0 | BRF_OPT },           // 24 PLDs
-};
-
-STD_ROM_PICK(choppera)
-STD_ROM_FN(choppera)
-
-struct BurnDriver BurnDrvChoppera = {
-	"choppera", "chopper", NULL, NULL, "1988",
-	"Chopper I (US set 2)\0", NULL, "SNK", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, chopperaRomInfo, chopperaRomName, NULL, NULL, NULL, NULL, ChopperaInputInfo, ChopperaDIPInfo,
-	ChopperaInit, DrvExit, ChopperFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
-	224, 400, 3, 4
-};
-
-
-// Chopper I (US set 3)
+// Chopper I (US)
 
 static struct BurnRomInfo chopperbRomDesc[] = {
-	{ "chpri-1.bin",	0x10000, 0xa4e6e978, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 code
+	{ "kk_01.8g",		0x10000, 0x8fa2f839, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 code
 
-	{ "chpri-4.bin",	0x10000, 0x56d10ba3, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 code
+	{ "kk_04.6g",		0x10000, 0x004f7d9a, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 code
 
-	{ "kk_03.rom",		0x10000, 0xdbaafb87, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 code
+	{ "kk_03.3d",		0x10000, 0xdbaafb87, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 code
 
-	{ "up03_k1.rom",	0x00400, 0x7f07a45c, 14 | BRF_GRA },	      //  3 Color Data
-	{ "up03_l1.rom",	0x00400, 0x15359fc3, 14 | BRF_GRA },	      //  4
-	{ "up03_k2.rom",	0x00400, 0x79b50f7d, 14 | BRF_GRA },	      //  5
+	{ "k1.9w",			0x00400, 0x7f07a45c, 14 | BRF_GRA },	      //  3 Color Data
+	{ "k3.9u",			0x00400, 0x15359fc3, 14 | BRF_GRA },	      //  4
+	{ "k2.9v",			0x00400, 0x79b50f7d, 14 | BRF_GRA },	      //  5
 
-	{ "kk_05.rom",		0x08000, 0xdefc0987, 4 | BRF_GRA },           //  6 Text Characters
+	{ "kk_05.8p",		0x08000, 0xdefc0987, 4 | BRF_GRA },           //  6 Text Characters
 
-	{ "kk_10.rom",		0x10000, 0x5cf4d22b, 6 | BRF_GRA },           //  7 bBackground Tiles
-	{ "chpri-11.bin",	0x10000, 0x881ac259, 6 | BRF_GRA },           //  8
-	{ "chpri-12.bin",	0x10000, 0xde96b331, 6 | BRF_GRA },           //  9
-	{ "kk_13.rom",		0x10000, 0x2756817d, 6 | BRF_GRA },           // 10
+	{ "kk_10.8y",		0x10000, 0x5cf4d22b, 6 | BRF_GRA },           //  7 Background Tiles
+	{ "kk_11.8z",		0x10000, 0x9af4cad0, 6 | BRF_GRA },           //  8
+	{ "kk_12.8ab",		0x10000, 0x02fec778, 6 | BRF_GRA },           //  9
+	{ "kk_13.8ac",		0x10000, 0x2756817d, 6 | BRF_GRA },           // 10
 
-	{ "chpri-9.bin",	0x08000, 0x106c2dcc, 7 | BRF_GRA },           // 11 16x16 Sprites
-	{ "chpri-8.bin",	0x08000, 0xd4f88f62, 7 | BRF_GRA },           // 12
-	{ "chpri-7.bin",	0x08000, 0x28ae39f9, 7 | BRF_GRA },           // 13
-	{ "chpri-6.bin",	0x08000, 0x16774a36, 7 | BRF_GRA },           // 14
+	{ "kk_09.3k",		0x08000, 0x653c4342, 7 | BRF_GRA },           // 11 16x16 Sprites
+	{ "kk_08.3l",		0x08000, 0x2da45894, 7 | BRF_GRA },           // 12
+	{ "kk_07.3n",		0x08000, 0xa0ebebdf, 7 | BRF_GRA },           // 13
+	{ "kk_06.3p",		0x08000, 0x284fad9e, 7 | BRF_GRA },           // 14
 
-	{ "kk_18.rom",		0x10000, 0x6abbff36, 8 | BRF_GRA },           // 15 32x32 Sprites
-	{ "kk_19.rom",		0x10000, 0x5283b4d3, 8 | BRF_GRA },           // 16
-	{ "kk_20.rom",		0x10000, 0x6403ddf2, 8 | BRF_GRA },           // 17
-	{ "kk_21.rom",		0x10000, 0x9f411940, 8 | BRF_GRA },           // 18
-	{ "kk_14.rom",		0x10000, 0x9bad9e25, 8 | BRF_GRA },           // 19
-	{ "kk_15.rom",		0x10000, 0x89faf590, 8 | BRF_GRA },           // 20
-	{ "kk_16.rom",		0x10000, 0xefb1fb6c, 8 | BRF_GRA },           // 21
-	{ "kk_17.rom",		0x10000, 0x6b7fb0a5, 8 | BRF_GRA },           // 22
+	{ "kk_18.3ab",		0x10000, 0x6abbff36, 8 | BRF_GRA },           // 15 32x32 Sprites
+	{ "kk_19.2ad",		0x10000, 0x5283b4d3, 8 | BRF_GRA },           // 16
+	{ "kk_20.3y",		0x10000, 0x6403ddf2, 8 | BRF_GRA },           // 17
+	{ "kk_21.3aa",		0x10000, 0x9f411940, 8 | BRF_GRA },           // 18
+	{ "kk_14.3v",		0x10000, 0x9bad9e25, 8 | BRF_GRA },           // 19
+	{ "kk_15.3x",		0x10000, 0x89faf590, 8 | BRF_GRA },           // 20
+	{ "kk_16.3s",		0x10000, 0xefb1fb6c, 8 | BRF_GRA },           // 21
+	{ "kk_17.3t",		0x10000, 0x6b7fb0a5, 8 | BRF_GRA },           // 22
 
-	{ "kk_02.rom",		0x10000, 0x06169ae0, 15 | BRF_SND },          // 23 Samples
+	{ "kk_2.3j",		0x10000, 0x06169ae0, 15 | BRF_SND },          // 23 Samples
 
 	{ "pal16r6b.2c",	0x00104, 0x311e5ae6, 0 | BRF_OPT },           // 24 PLDs
 };
@@ -8763,10 +8657,116 @@ STD_ROM_FN(chopperb)
 
 struct BurnDriver BurnDrvChopperb = {
 	"chopperb", "chopper", NULL, NULL, "1988",
-	"Chopper I (US set 3)\0", NULL, "SNK", "Miscellaneous",
+	"Chopper I (US)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, chopperbRomInfo, chopperbRomName, NULL, NULL, NULL, NULL, ChopperInputInfo, ChopperDIPInfo,
+	Chopper1Init, DrvExit, ChopperFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
+	224, 400, 3, 4
+};
+
+
+// Chopper I (US ver 2)
+
+static struct BurnRomInfo chopperRomDesc[] = {
+	{ "kk_a_ver2_1.8g",	0x10000, 0xdc325860, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 code
+
+	{ "kk_a_4.6g",		0x10000, 0x56d10ba3, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 code
+
+	{ "kk_03.3d",		0x10000, 0xdbaafb87, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 code
+
+	{ "k1.9w",			0x00400, 0x7f07a45c, 14 | BRF_GRA },	      //  3 Color Data
+	{ "k3.9u",			0x00400, 0x15359fc3, 14 | BRF_GRA },	      //  4
+	{ "k2.9v",			0x00400, 0x79b50f7d, 14 | BRF_GRA },	      //  5
+
+	{ "kk_05.8p",		0x08000, 0xdefc0987, 4 | BRF_GRA },           //  6 Text Characters
+
+	{ "kk_10.8y",		0x10000, 0x5cf4d22b, 6 | BRF_GRA },           //  7 Background Tiles
+	{ "kk_a_11.8z",		0x10000, 0x881ac259, 6 | BRF_GRA },           //  8
+	{ "kk_a_12.8ab",	0x10000, 0xde96b331, 6 | BRF_GRA },           //  9
+	{ "kk_13.8ac",		0x10000, 0x2756817d, 6 | BRF_GRA },           // 10
+
+	{ "kk_a_9.3k",		0x08000, 0x106c2dcc, 7 | BRF_GRA },           // 11 16x16 Sprites
+	{ "kk_a_8.3l",		0x08000, 0xd4f88f62, 7 | BRF_GRA },           // 12
+	{ "kk_a_7.3n",		0x08000, 0x28ae39f9, 7 | BRF_GRA },           // 13
+	{ "kk_a_6.3p",		0x08000, 0x16774a36, 7 | BRF_GRA },           // 14
+
+	{ "kk_18.3ab",		0x10000, 0x6abbff36, 8 | BRF_GRA },           // 15 32x32 Sprites
+	{ "kk_19.2ad",		0x10000, 0x5283b4d3, 8 | BRF_GRA },           // 16
+	{ "kk_20.3y",		0x10000, 0x6403ddf2, 8 | BRF_GRA },           // 17
+	{ "kk_21.3aa",		0x10000, 0x9f411940, 8 | BRF_GRA },           // 18
+	{ "kk_14.3v",		0x10000, 0x9bad9e25, 8 | BRF_GRA },           // 19
+	{ "kk_15.3x",		0x10000, 0x89faf590, 8 | BRF_GRA },           // 20
+	{ "kk_16.3s",		0x10000, 0xefb1fb6c, 8 | BRF_GRA },           // 21
+	{ "kk_17.3t",		0x10000, 0x6b7fb0a5, 8 | BRF_GRA },           // 22
+
+	{ "kk_2.3j",		0x10000, 0x06169ae0, 15 | BRF_SND },          // 23 Samples
+
+	{ "pal16r6b.2c",	0x00104, 0x311e5ae6, 0 | BRF_OPT },           // 24 PLDs
+};
+
+STD_ROM_PICK(chopper)
+STD_ROM_FN(chopper)
+
+struct BurnDriver BurnDrvChopper = {
+	"chopper", NULL,  NULL, NULL, "1988",
+	"Chopper I (US ver 2)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, chopperRomInfo, chopperRomName, NULL, NULL, NULL, NULL, ChopperaInputInfo, ChopperaDIPInfo,
+	ChopperaInit, DrvExit, ChopperFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
+	224, 400, 3, 4
+};
+
+
+// Chopper I (US ver 1?)
+
+static struct BurnRomInfo chopperaRomDesc[] = {
+	{ "chpri-1.8g",		0x10000, 0xa4e6e978, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 code
+
+	{ "kk_a_4.6g",		0x10000, 0x56d10ba3, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 code
+
+	{ "kk_03.3d",		0x10000, 0xdbaafb87, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 code
+
+	{ "k1.9w",			0x00400, 0x7f07a45c, 14 | BRF_GRA },	      //  3 Color Data
+	{ "k3.9u",			0x00400, 0x15359fc3, 14 | BRF_GRA },	      //  4
+	{ "k2.9v",			0x00400, 0x79b50f7d, 14 | BRF_GRA },	      //  5
+
+	{ "kk_05.8p",		0x08000, 0xdefc0987, 4 | BRF_GRA },           //  6 Text Characters
+
+	{ "kk_10.8y",		0x10000, 0x5cf4d22b, 6 | BRF_GRA },           //  7 Background Tiles
+	{ "kk_a_11.8z",		0x10000, 0x881ac259, 6 | BRF_GRA },           //  8
+	{ "kk_a_12.8ab",	0x10000, 0xde96b331, 6 | BRF_GRA },           //  9
+	{ "kk_13.8ac",		0x10000, 0x2756817d, 6 | BRF_GRA },           // 10
+
+	{ "kk_a_9.3k",		0x08000, 0x106c2dcc, 7 | BRF_GRA },           // 11 16x16 Sprites
+	{ "kk_a_8.3l",		0x08000, 0xd4f88f62, 7 | BRF_GRA },           // 12
+	{ "kk_a_7.3n",		0x08000, 0x28ae39f9, 7 | BRF_GRA },           // 13
+	{ "kk_a_6.3p",		0x08000, 0x16774a36, 7 | BRF_GRA },           // 14
+
+	{ "kk_18.3ab",		0x10000, 0x6abbff36, 8 | BRF_GRA },           // 15 32x32 Sprites
+	{ "kk_19.2ad",		0x10000, 0x5283b4d3, 8 | BRF_GRA },           // 16
+	{ "kk_20.3y",		0x10000, 0x6403ddf2, 8 | BRF_GRA },           // 17
+	{ "kk_21.3aa",		0x10000, 0x9f411940, 8 | BRF_GRA },           // 18
+	{ "kk_14.3v",		0x10000, 0x9bad9e25, 8 | BRF_GRA },           // 19
+	{ "kk_15.3x",		0x10000, 0x89faf590, 8 | BRF_GRA },           // 20
+	{ "kk_16.3s",		0x10000, 0xefb1fb6c, 8 | BRF_GRA },           // 21
+	{ "kk_17.3t",		0x10000, 0x6b7fb0a5, 8 | BRF_GRA },           // 22
+
+	{ "kk_2.3j",		0x10000, 0x06169ae0, 15 | BRF_SND },          // 23 Samples
+
+	{ "pal16r6b.2c",	0x00104, 0x311e5ae6, 0 | BRF_OPT },           // 24 PLDs
+};
+
+STD_ROM_PICK(choppera)
+STD_ROM_FN(choppera)
+
+struct BurnDriver BurnDrvChoppera = {
+	"choppera", "chopper", NULL, NULL, "1988",
+	"Chopper I (US ver 1?)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, chopperaRomInfo, chopperaRomName, NULL, NULL, NULL, NULL, ChopperInputInfo, ChopperDIPInfo,
 	Chopper1Init, DrvExit, ChopperFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 400, 3, 4
 };
@@ -8779,34 +8779,36 @@ static struct BurnRomInfo legofairRomDesc[] = {
 
 	{ "up03_m8.rom",	0x10000, 0x96d3a4d9, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 code
 
-	{ "kk_03.rom",		0x10000, 0xdbaafb87, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 code
+	{ "kk_03.3d",		0x10000, 0xdbaafb87, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 code
 
 	{ "up03_k1.rom",	0x00400, 0x7f07a45c, 14 | BRF_GRA },          //  3 Color Data
 	{ "up03_l1.rom",	0x00400, 0x15359fc3, 14 | BRF_GRA },          //  4
 	{ "up03_k2.rom",	0x00400, 0x79b50f7d, 14 | BRF_GRA },          //  5
 
-	{ "kk_05.rom",		0x08000, 0xdefc0987, 4 | BRF_GRA },           //  6 Text Tiles
+	{ "kk_05.8p",		0x08000, 0xdefc0987, 4 | BRF_GRA },           //  6 Text Tiles
 
-	{ "kk_10.rom",		0x10000, 0x5cf4d22b, 6 | BRF_GRA },           //  7 Background Tiles
-	{ "kk_11.rom",		0x10000, 0x9af4cad0, 6 | BRF_GRA },           //  8
-	{ "kk_12.rom",		0x10000, 0x02fec778, 6 | BRF_GRA },           //  9
-	{ "kk_13.rom",		0x10000, 0x2756817d, 6 | BRF_GRA },           // 10
+	{ "kk_10.8y",		0x10000, 0x5cf4d22b, 6 | BRF_GRA },           //  7 Background Tiles
+	{ "kk_11.8z",		0x10000, 0x9af4cad0, 6 | BRF_GRA },           //  8
+	{ "kk_12.8ab",		0x10000, 0x02fec778, 6 | BRF_GRA },           //  9
+	{ "kk_13.8ac",		0x10000, 0x2756817d, 6 | BRF_GRA },           // 10
 
-	{ "kk_09.rom",		0x08000, 0x653c4342, 7 | BRF_GRA },           // 11 16x16 Sprites
-	{ "kk_08.rom",		0x08000, 0x2da45894, 7 | BRF_GRA },           // 12
-	{ "kk_07.rom",		0x08000, 0xa0ebebdf, 7 | BRF_GRA },           // 13
-	{ "kk_06.rom",		0x08000, 0x284fad9e, 7 | BRF_GRA },           // 14
+	{ "kk_09.3k",		0x08000, 0x653c4342, 7 | BRF_GRA },           // 11 16x16 Sprites
+	{ "kk_08.3l",		0x08000, 0x2da45894, 7 | BRF_GRA },           // 12
+	{ "kk_07.3n",		0x08000, 0xa0ebebdf, 7 | BRF_GRA },           // 13
+	{ "kk_06.3p",		0x08000, 0x284fad9e, 7 | BRF_GRA },           // 14
 
-	{ "kk_18.rom",		0x10000, 0x6abbff36, 8 | BRF_GRA },           // 15 32x32 Sprites
-	{ "kk_19.rom",		0x10000, 0x5283b4d3, 8 | BRF_GRA },           // 16
-	{ "kk_20.rom",		0x10000, 0x6403ddf2, 8 | BRF_GRA },           // 17
-	{ "kk_21.rom",		0x10000, 0x9f411940, 8 | BRF_GRA },           // 18
-	{ "kk_14.rom",		0x10000, 0x9bad9e25, 8 | BRF_GRA },           // 19
-	{ "kk_15.rom",		0x10000, 0x89faf590, 8 | BRF_GRA },           // 20
-	{ "kk_16.rom",		0x10000, 0xefb1fb6c, 8 | BRF_GRA },           // 21
-	{ "kk_17.rom",		0x10000, 0x6b7fb0a5, 8 | BRF_GRA },           // 22
+	{ "kk_18.3ab",		0x10000, 0x6abbff36, 8 | BRF_GRA },           // 15 32x32 Sprites
+	{ "kk_19.2ad",		0x10000, 0x5283b4d3, 8 | BRF_GRA },           // 16
+	{ "kk_20.3y",		0x10000, 0x6403ddf2, 8 | BRF_GRA },           // 17
+	{ "kk_21.3aa",		0x10000, 0x9f411940, 8 | BRF_GRA },           // 18
+	{ "kk_14.3v",		0x10000, 0x9bad9e25, 8 | BRF_GRA },           // 19
+	{ "kk_15.3x",		0x10000, 0x89faf590, 8 | BRF_GRA },           // 20
+	{ "kk_16.3s",		0x10000, 0xefb1fb6c, 8 | BRF_GRA },           // 21
+	{ "kk_17.3t",		0x10000, 0x6b7fb0a5, 8 | BRF_GRA },           // 22
 
-	{ "kk_02.rom",		0x10000, 0x06169ae0, 15 | BRF_SND },          // 23 Samples
+	{ "kk_2.3j",		0x10000, 0x06169ae0, 15 | BRF_SND },          // 23 Samples
+	
+	{ "pal16r6b.2c",	0x00104, 0x311e5ae6, 0 | BRF_OPT },           // 24 PLDs
 };
 
 STD_ROM_PICK(legofair)

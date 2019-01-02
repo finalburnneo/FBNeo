@@ -1073,8 +1073,8 @@ STD_ROM_PICK(Packbang)
 STD_ROM_FN(Packbang)
 
 static struct BurnRomInfo BlazeonRomDesc[] = {
-	{ "bz_prg1.u80",       	0x040000, 0x3d79aa70, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "bz_prg2.u81",       	0x040000, 0xa16d3b1e, BRF_ESS | BRF_PRG }, //  1	
+	{ "bz-prg1.u80",       	0x040000, 0x3d79aa70, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "bz-prg2.u81",       	0x040000, 0xa16d3b1e, BRF_ESS | BRF_PRG }, //  1	
 	
 	{ "bz_sp1.u20",        	0x100000, 0x0d5809a1, BRF_GRA },	   	   //  2 Sprites
 	{ "bz_sp2.u21",        	0x100000, 0x56ead2bd, BRF_GRA },	   	   //  3	

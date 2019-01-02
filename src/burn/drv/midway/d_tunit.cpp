@@ -544,7 +544,7 @@ struct BurnDriver BurnDrvMkr4 = {
     400, 254, 4, 3
 };
 
-static struct BurnRomInfo mkturboRomDesc[] = {
+static struct BurnRomInfo mktturboRomDesc[] = {
 	{ "kombo-rom-uj-12.bin",	0x080000, 0x7a441f2d, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "kombo-rom-ug-12.bin",	0x080000, 0x45bed5a1, 1 | BRF_PRG | BRF_ESS }, //  1
 	
@@ -569,23 +569,23 @@ static struct BurnRomInfo mkturboRomDesc[] = {
 	{ "mkt-uj22.bin",	0x080000, 0x5e12523b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
 };
 
-STD_ROM_PICK(mkturbo)
-STD_ROM_FN(mkturbo)
+STD_ROM_PICK(mktturbo)
+STD_ROM_FN(mktturbo)
 
-static INT32 MkTurboInit()
+static INT32 MkTturboInit()
 {
 	TUnitIsMKTurbo = 1;
 	
 	return MkInit();
 }
 
-struct BurnDriver BurnDrvMkturbo = {
-	"mkturbo", "mk", NULL, NULL, "1992",
+struct BurnDriver BurnDrvMktturbo = {
+	"mktturbo", "mk", NULL, NULL, "1992",
 	"Mortal Kombat (Turbo Ninja T-Unit 03/19/93, hack)\0", NULL, "Hack", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
-	NULL, mkturboRomInfo, mkturboRomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
-    MkTurboInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
+	NULL, mktturboRomInfo, mktturboRomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
+    MkTturboInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
 
@@ -1435,7 +1435,7 @@ static INT32 JdreddpInit()
 }
 
 struct BurnDriverD BurnDrvJdreddp = {
-	"jdreddp", "nbajamte", NULL, NULL, "1995",
+	"jdreddp", NULL, NULL, NULL, "1995",
 	"Judge Dredd (rev TA1 7/12/92, location test)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_PROTOTYPE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,

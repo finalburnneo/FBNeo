@@ -1208,8 +1208,8 @@ struct BurnDriver BurnDrvDeroona = {
 // Deroon DeroDero (newer)
 
 static struct BurnRomInfo deroon2RomDesc[] = {
-	{ "stk_t001.upau1",		0x080000, 0x90c794df, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "stk_t002.upal1",		0x080000, 0xcca9f87c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "stk_t01.upau1",		0x080000, 0x90c794df, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "stk_t02.upal1",		0x080000, 0xcca9f87c, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "t003.uz1",			0x040000, 0x8bdfafa0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 

@@ -688,7 +688,7 @@ static struct BurnRomInfo djboyRomDesc[] = {
 	{ "bs001.1f",	0x80000, 0xfdf36e6b, 5 | BRF_GRA },           //  7
 	{ "bs002.1d",	0x80000, 0xc52fee7f, 5 | BRF_GRA },           //  8
 	{ "bs003.1k",	0x80000, 0xed89acb4, 5 | BRF_GRA },           //  9
-	{ "bs07.1b",	0x10000, 0xd9b7a220, 5 | BRF_GRA },           // 10
+	{ "bs07s.1b",	0x10000, 0xd9b7a220, 5 | BRF_GRA },           // 10
 
 	{ "bs004.1s",	0x80000, 0x2f1392c3, 6 | BRF_GRA },           // 11 Tiles
 	{ "bs005.1u",	0x80000, 0x46b400c4, 6 | BRF_GRA },           // 12
@@ -736,7 +736,7 @@ static struct BurnRomInfo djboyaRomDesc[] = {
 	{ "bs001.1f",	0x80000, 0xfdf36e6b, 5 | BRF_GRA },           //  7
 	{ "bs002.1d",	0x80000, 0xc52fee7f, 5 | BRF_GRA },           //  8
 	{ "bs003.1k",	0x80000, 0xed89acb4, 5 | BRF_GRA },           //  9
-	{ "bs07.1b",	0x10000, 0xd9b7a220, 5 | BRF_GRA },           // 10
+	{ "bs07s.1b",	0x10000, 0xd9b7a220, 5 | BRF_GRA },           // 10
 
 	{ "bs004.1s",	0x80000, 0x2f1392c3, 6 | BRF_GRA },           // 11 Tiles
 	{ "bs005.1u",	0x80000, 0x46b400c4, 6 | BRF_GRA },           // 12

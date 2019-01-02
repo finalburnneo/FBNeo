@@ -669,7 +669,7 @@ static struct BurnRomInfo OutrundxjRomDesc[] = {
 	{ "opr-10189.70",     0x08000, 0x01366b54, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "opr-10188.71",     0x08000, 0xbad30ad9, SYS16_ROM_PCMDATA | BRF_SND },
 	
-	{ "317-0019.key",  0x02000, 0x6ff847c6, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0019.key",     0x02000, 0x8ffbed98, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -943,7 +943,7 @@ static struct BurnRomInfo Shangon1RomDesc[] = {
 	{ "epr-10645.68",     0x08000, 0xa60dabff, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-10646.69",     0x08000, 0x473cc411, SYS16_ROM_PCMDATA | BRF_SND },
 	
-	{ "317-0034.key",     0x02000, 0x263ca773, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0034.key",     0x02000, 0xad61539a, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -989,7 +989,7 @@ static struct BurnRomInfo Shangon2RomDesc[] = {
 	{ "epr-10645.68",     0x08000, 0xa60dabff, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-10646.69",     0x08000, 0x473cc411, SYS16_ROM_PCMDATA | BRF_SND },
 	
-	{ "317-0034.key",     0x02000, 0x263ca773, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0034.key",     0x02000, 0xad61539a, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -1035,7 +1035,7 @@ static struct BurnRomInfo Shangon3RomDesc[] = {
 	{ "epr-10645.68",     0x08000, 0xa60dabff, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-10646.69",     0x08000, 0x473cc411, SYS16_ROM_PCMDATA | BRF_SND },
 	
-	{ "317-0034.key",     0x02000, 0x263ca773, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0034.key",     0x02000, 0xad61539a, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 	
 

@@ -896,6 +896,10 @@ static struct BurnRomInfo darwinRomDesc[] = {
 
 	{ "df.12",		0x0100, 0x89b952ef, 6 | BRF_GRA },           // 12 Color data
 	{ "df.13",		0x0100, 0xd595e91d, 6 | BRF_GRA },           // 13
+	
+	{ "1-pal16r4pc.bin",	0x104, 0xc859298c, BRF_OPT },
+	{ "2-pal16r4pc.bin",	0x104, 0x226629c3, BRF_OPT },
+	{ "3-pal16r4pc.bin", 	0x104, 0xb3e980a0, BRF_OPT },
 };
 
 STD_ROM_PICK(darwin)

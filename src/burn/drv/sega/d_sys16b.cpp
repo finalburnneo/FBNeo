@@ -211,6 +211,28 @@ static struct BurnInputInfo AceattacInputList[] = {
 
 STDINPUTINFO(Aceattac)
 
+static struct BurnInputInfo Afighter_analogInputList[] = {
+	{"Coin 1"            , BIT_DIGITAL  , System16InputPort0 + 0, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL  , System16InputPort0 + 4, "p1 start"  },
+	{"Coin 2"            , BIT_DIGITAL  , System16InputPort0 + 1, "p2 coin"   },
+	{"Start 2"           , BIT_DIGITAL  , System16InputPort0 + 5, "p2 start"  },
+
+	A("Steering"         , BIT_ANALOG_ABS, &System16AnalogPort0,  "p1 x-axis" ),
+	A("Accelerate"       , BIT_ANALOG_ABS, &System16AnalogPort1,  "p1 y-axis" ),
+	{"P1 Fire 1"         , BIT_DIGITAL  , System16InputPort1 + 4, "p1 fire 2" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , System16InputPort1 + 5, "p1 fire 3" },
+	{"P1 Fire 3"         , BIT_DIGITAL  , System16InputPort1 + 6, "p1 fire 4" },
+	{"P1 Fire 4"         , BIT_DIGITAL  , System16InputPort1 + 7, "p1 fire 5" },
+
+	{"Service"           , BIT_DIGITAL  , System16InputPort0 + 3 , "service"   },
+	{"Diagnostics"       , BIT_DIGITAL  , System16InputPort0 + 2 , "diag"      },
+	{"Reset"             , BIT_DIGITAL  , &System16Reset         , "reset"     },
+	{"Dip 1"             , BIT_DIPSWITCH, System16Dip + 0        , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, System16Dip + 1        , "dip"       },
+};
+
+STDINPUTINFO(Afighter_analog)
+
 static struct BurnInputInfo AtomicpInputList[] = {
 	{"Coin 1"            , BIT_DIGITAL  , System16InputPort1 + 7, "p1 coin"   },
 	{"Start 1"           , BIT_DIGITAL  , System16InputPort0 + 6, "p1 start"  },
@@ -692,6 +714,88 @@ static struct BurnDIPInfo AceattacDIPList[]=
 };
 
 STDDIPINFO(Aceattac)
+
+static struct BurnDIPInfo AfighterDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0xfc, NULL                                 },
+	{0x14, 0xff, 0xff, 0xff, NULL                                 },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                            },
+	{0x13, 0x01, 0x01, 0x00, "Upright"                            },
+	{0x13, 0x01, 0x01, 0x01, "Cocktail"                           },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x13, 0x01, 0x02, 0x02, "Off"                                },
+	{0x13, 0x01, 0x02, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 4   , "Lives"                              },
+	{0x13, 0x01, 0x0c, 0x08, "2"                                  },
+	{0x13, 0x01, 0x0c, 0x0c, "3"                                  },
+	{0x13, 0x01, 0x0c, 0x04, "4"                                  },
+	{0x13, 0x01, 0x0c, 0x00, "Infinite"                           },
+	
+	{0   , 0xfe, 0   , 4   , "Bonus Life"                         },
+	{0x13, 0x01, 0x30, 0x30, "10000 - 20000"                      },
+	{0x13, 0x01, 0x30, 0x20, "20000 - 40000"                      },
+	{0x13, 0x01, 0x30, 0x10, "30000 - 60000"                      },
+	{0x13, 0x01, 0x30, 0x00, "40000 - 80000"                      },
+	
+	{0   , 0xfe, 0   , 2   , "Difficulty"                         },
+	{0x13, 0x01, 0x40, 0x40, "Normal"                             },
+	{0x13, 0x01, 0x40, 0x00, "Hard"                               },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"                     },
+	{0x13, 0x01, 0x80, 0x00, "No"                                 },
+	{0x13, 0x01, 0x80, 0x80, "Yes"                                },
+	
+	// Dip 2
+	SYSTEM16B_COINAGE(0x14)
+};
+
+STDDIPINFO(Afighter)
+
+static struct BurnDIPInfo Afighter_analogDIPList[]=
+{
+	// Default Values
+	{0x0d, 0xff, 0xff, 0xfc, NULL                                 },
+	{0x0e, 0xff, 0xff, 0xff, NULL                                 },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                            },
+	{0x0d, 0x01, 0x01, 0x00, "Upright"                            },
+	{0x0d, 0x01, 0x01, 0x01, "Cocktail"                           },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x0d, 0x01, 0x02, 0x02, "Off"                                },
+	{0x0d, 0x01, 0x02, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 4   , "Lives"                              },
+	{0x0d, 0x01, 0x0c, 0x08, "2"                                  },
+	{0x0d, 0x01, 0x0c, 0x0c, "3"                                  },
+	{0x0d, 0x01, 0x0c, 0x04, "4"                                  },
+	{0x0d, 0x01, 0x0c, 0x00, "Infinite"                           },
+	
+	{0   , 0xfe, 0   , 4   , "Bonus Life"                         },
+	{0x0d, 0x01, 0x30, 0x30, "10000 - 20000"                      },
+	{0x0d, 0x01, 0x30, 0x20, "20000 - 40000"                      },
+	{0x0d, 0x01, 0x30, 0x10, "30000 - 60000"                      },
+	{0x0d, 0x01, 0x30, 0x00, "40000 - 80000"                      },
+	
+	{0   , 0xfe, 0   , 2   , "Difficulty"                         },
+	{0x0d, 0x01, 0x40, 0x40, "Normal"                             },
+	{0x0d, 0x01, 0x40, 0x00, "Hard"                               },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"                     },
+	{0x0d, 0x01, 0x80, 0x00, "No"                                 },
+	{0x0d, 0x01, 0x80, 0x80, "Yes"                                },
+	
+	// Dip 2
+	SYSTEM16B_COINAGE(0x0e)
+};
+
+STDDIPINFO(Afighter_analog)
 
 static struct BurnDIPInfo AliensynDIPList[]=
 {
@@ -2056,6 +2160,124 @@ static struct BurnRomInfo AceattacRomDesc[] = {
 
 STD_ROM_PICK(Aceattac)
 STD_ROM_FN(Aceattac)
+
+static struct BurnRomInfo AfightereRomDesc[] = {
+	{ "epr10272.bin",  0x08000, 0xbc3b75b6, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10269.bin",  0x08000, 0x688b4ff7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10273.bin",  0x08000, 0x0ca74019, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10270.bin",  0x08000, 0x53fab467, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10274.bin",  0x08000, 0xd2601561, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10271.bin",  0x08000, 0xd0d73af5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr10048.bin",  0x10000, 0x643ca883, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr10049.bin",  0x10000, 0xf8b5058b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr10050.bin",  0x10000, 0x0ffb48dd, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr10040.bin",  0x08000, 0x5a9f81f9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10044.bin",  0x08000, 0x71d0db1f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10041.bin",  0x08000, 0x8da050cf, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10045.bin",  0x08000, 0x39354223, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10042.bin",  0x08000, 0xdd706d18, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10046.bin",  0x08000, 0xb49b3136, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10043.bin",  0x08000, 0x645ccfb9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10047.bin",  0x08000, 0x84a49518, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr10039.bin",  0x08000, 0xb04757b0, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Afightere)
+STD_ROM_FN(Afightere)
+
+static struct BurnRomInfo AfighterfRomDesc[] = {
+	{ "epr10036.bin",  0x08000, 0xd0589391, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10033.bin",  0x08000, 0x1b836a91, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10037.bin",  0x08000, 0x3a312b9e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10034.bin",  0x08000, 0x423e983e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10038.bin",  0x08000, 0x22c2b533, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10035.bin",  0x08000, 0x68177755, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr10048.bin",  0x10000, 0x643ca883, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr10049.bin",  0x10000, 0xf8b5058b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr10050.bin",  0x10000, 0x0ffb48dd, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr10040.bin",  0x08000, 0x5a9f81f9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10044.bin",  0x08000, 0x71d0db1f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10041.bin",  0x08000, 0x8da050cf, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10045.bin",  0x08000, 0x39354223, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10042.bin",  0x08000, 0xdd706d18, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10046.bin",  0x08000, 0xb49b3136, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10043.bin",  0x08000, 0x645ccfb9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10047.bin",  0x08000, 0x84a49518, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr10039.bin",  0x08000, 0xb04757b0, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "317-0018.key",  0x02000, 0x65b5b1af, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Afighterf)
+STD_ROM_FN(Afighterf)
+
+static struct BurnRomInfo AfightergRomDesc[] = {
+	{ "epr10163.bin",  0x08000, 0x6d62eccd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10160.bin",  0x08000, 0x86f020da, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10164.bin",  0x08000, 0x3a312b9e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10161.bin",  0x08000, 0x423e983e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10165.bin",  0x08000, 0xcc68a82d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10162.bin",  0x08000, 0xa20acfd5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr10048.bin",  0x10000, 0x643ca883, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr10049.bin",  0x10000, 0xf8b5058b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr10050.bin",  0x10000, 0x0ffb48dd, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr10040.bin",  0x08000, 0x5a9f81f9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10044.bin",  0x08000, 0x71d0db1f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10041.bin",  0x08000, 0x8da050cf, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10045.bin",  0x08000, 0x39354223, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10042.bin",  0x08000, 0xdd706d18, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10046.bin",  0x08000, 0xb49b3136, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10043.bin",  0x08000, 0x645ccfb9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10047.bin",  0x08000, 0x84a49518, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr10039.bin",  0x08000, 0xb04757b0, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "317-0018.key",  0x02000, 0x65b5b1af, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Afighterg)
+STD_ROM_FN(Afighterg)
+
+static struct BurnRomInfo AfighterhRomDesc[] = {
+	{ "epr10357.bin",  0x08000, 0x69777a15, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10354.bin",  0x08000, 0x6dad6dd1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10358.bin",  0x08000, 0x8f9da9a0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10355.bin",  0x08000, 0xac865097, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10359.bin",  0x08000, 0x1dc12296, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10356.bin",  0x08000, 0xda7f05f2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr10048.bin",  0x10000, 0x643ca883, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr10049.bin",  0x10000, 0xf8b5058b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr10050.bin",  0x10000, 0x0ffb48dd, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr10040.bin",  0x08000, 0x5a9f81f9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10044.bin",  0x08000, 0x71d0db1f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10041.bin",  0x08000, 0x8da050cf, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10045.bin",  0x08000, 0x39354223, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10042.bin",  0x08000, 0xdd706d18, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10046.bin",  0x08000, 0xb49b3136, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10043.bin",  0x08000, 0x645ccfb9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr10047.bin",  0x08000, 0x84a49518, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr10039.bin",  0x08000, 0xb04757b0, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "317-0018.key",  0x02000, 0x65b5b1af, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Afighterh)
+STD_ROM_FN(Afighterh)
 
 static struct BurnRomInfo AliensynRomDesc[] = {
 	{ "epr-11083.a4",   0x08000, 0xcb2ad9b3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -6420,6 +6642,91 @@ static UINT8 AceattacReadIO(UINT32 offset)
 	return sega_315_5195_io_read(offset);
 }
 
+static UINT8 Afighter_Accel_Read()
+{
+	UINT8 accel = System16AnalogPort1 >> 13;
+	if (accel > 4) accel = 4;
+	
+	switch (accel) {
+		case 0x00: return (1 << 2);
+		case 0x01: return (1 << 2);
+		case 0x02: return (1 << 1);
+		case 0x03: return (1 << 0);
+		case 0x04: return 0;
+	}
+	
+	return 0;
+}
+
+static UINT8 Afighter_Steer_Left_Read()
+{
+	UINT8 steer = System16AnalogPort0 >> 12;
+	switch (steer) {
+		case 0x00: return (1 << 0);
+		case 0x01: return (1 << 1);
+		case 0x02: return (1 << 2);
+		case 0x03: return (1 << 3);
+		case 0x04: return (1 << 4);
+		case 0x05: return (1 << 5);
+		case 0x06: return (1 << 6);
+		case 0x07: return (1 << 7);
+	}
+	
+	return 0;
+}
+
+static UINT8 Afighter_Steer_Right_Read()
+{
+	UINT8 steer = System16AnalogPort0 >> 12;
+	switch (steer) {
+//		case 0x08: return (1 << 7);
+		case 0x09: return (1 << 6);
+		case 0x0a: return (1 << 5);
+		case 0x0b: return (1 << 4);
+		case 0x0c: return (1 << 3);
+		case 0x0d: return (1 << 2);
+		case 0x0e: return (1 << 1);
+		case 0x0f: return (1 << 0);
+	}
+	
+	return 0;
+}
+
+static UINT8 __fastcall AfighterAnalogReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0xc41001: {
+			return 0xff - System16Input[0];
+		}
+		
+		case 0xc41003: {
+			return 0xff - System16Input[1] - Afighter_Accel_Read();
+		}
+		
+		case 0xc41005: {
+			return 0xff - Afighter_Steer_Right_Read();
+		}
+		
+		case 0xc41007: {
+			return 0xff - Afighter_Steer_Left_Read();
+		}
+		
+		case 0xc42001: {
+			return System16Dip[0];
+		}
+
+		case 0xc42003: {
+			return System16Dip[1];
+		}
+	}
+	
+#if 0 && defined FBA_DEBUG
+	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
+#endif
+
+	return 0xff;
+}
+
 static void __fastcall AltbeastblSoundWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
@@ -7469,6 +7776,44 @@ static INT32 AceattacInit()
 	sega_315_5195_custom_io_do = AceattacReadIO;
 	
 	return System16Init();
+}
+
+static INT32 AfighterInit()
+{
+	// Start off with some sprite rom and let the load routine add on the rest
+	System16SpriteRomSize = 0x80000 - 0x40000;
+	
+	INT32 nRet = System16Init();
+	
+	if (!nRet) {
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
+		if (pTemp) {
+			memcpy(pTemp, System16Sprites, 0x40000);
+			memset(System16Sprites, 0, 0x40000);
+			memcpy(System16Sprites + 0x000000, pTemp + 0x00000, 0x10000);
+			memcpy(System16Sprites + 0x020000, pTemp + 0x10000, 0x10000);
+			memcpy(System16Sprites + 0x040000, pTemp + 0x20000, 0x10000);
+			memcpy(System16Sprites + 0x060000, pTemp + 0x30000, 0x10000);
+		} else {
+			nRet = 1;
+		}
+		BurnFree(pTemp);
+	}
+	
+	return nRet;
+}
+
+static INT32 AfighterAnalogInit()
+{
+	INT32 nRet = AfighterInit();
+	
+	if (!nRet) {
+		SekOpen(0);
+		SekSetReadByteHandler(0, AfighterAnalogReadByte);
+		SekClose();
+	}
+	
+	return nRet;
 }
 
 static INT32 AliensynInit()
@@ -8750,6 +9095,46 @@ struct BurnDriver BurnDrvAceattac = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
 	NULL, AceattacRomInfo, AceattacRomName, NULL, NULL, NULL, NULL, AceattacInputInfo, AceattacDIPInfo,
 	AceattacInit, System16Exit, System16BFrame, System16BRender, System16Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvAfightere = {
+	"afightere", "afighter", NULL, NULL, "1991",
+	"Action Fighter (System 16B, unprotected, analog controls)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
+	NULL, AfightereRomInfo, AfightereRomName, NULL, NULL, NULL, NULL, Afighter_analogInputInfo, Afighter_analogDIPInfo,
+	AfighterAnalogInit, System16Exit, System16BFrame, System16BRender, System16Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvAfighterf = {
+	"afighterf", "afighter", NULL, NULL, "1991",
+	"Action Fighter (System 16B, FD1089B 317-unknown, analog controls)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
+	NULL, AfighterfRomInfo, AfighterfRomName, NULL, NULL, NULL, NULL, Afighter_analogInputInfo, Afighter_analogDIPInfo,
+	AfighterAnalogInit, System16Exit, System16BFrame, System16BRender, System16Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvAfighterg = {
+	"afighterg", "afighter", NULL, NULL, "1991",
+	"Action Fighter (System 16B, FD1089B 317-unknown)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
+	NULL, AfightergRomInfo, AfightergRomName, NULL, NULL, NULL, NULL, System16bInputInfo, AfighterDIPInfo,
+	AfighterInit, System16Exit, System16BFrame, System16BRender, System16Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvAfighterh = {
+	"afighterh", "afighter", NULL, NULL, "1991",
+	"Action Fighter (System 16B, FD1089A 317-0018)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
+	NULL, AfighterhRomInfo, AfighterhRomName, NULL, NULL, NULL, NULL, System16bInputInfo, AfighterDIPInfo,
+	AfighterInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 

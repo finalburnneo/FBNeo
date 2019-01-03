@@ -1171,6 +1171,66 @@ static struct BurnRomInfo AfighterbRomDesc[] = {
 STD_ROM_PICK(Afighterb)
 STD_ROM_FN(Afighterb)
 
+static struct BurnRomInfo AfightercRomDesc[] = {
+	{ "epr10302.bin",  0x08000, 0xe4ccefa2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10299.bin",  0x08000, 0xd57b0955, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10303.bin",  0x08000, 0xfb67bdce, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10300.bin",  0x08000, 0x1c91baa1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10304.bin",  0x08000, 0x756f5472, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10301.bin",  0x08000, 0x6b4ef29b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10281.95",  0x10000, 0x30e92cda, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10282.94",  0x10000, 0xb67b8910, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10283.93",  0x10000, 0xe7dbfd2d, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-10285",     0x08000, 0x98aa3d04, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10289",     0x08000, 0xc59d1b98, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10286",     0x08000, 0x8da050cf, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10290",     0x08000, 0x39354223, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10287",     0x08000, 0x7989b74a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10291",     0x08000, 0x6e4b245c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10288",     0x08000, 0xd3ce551a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10292",     0x08000, 0xcef289a3, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-10284.12",  0x08000, 0x8ff09116, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "317-0018.key",  0x02000, 0x65b5b1af, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Afighterc)
+STD_ROM_FN(Afighterc)
+
+static struct BurnRomInfo AfighterdRomDesc[] = {
+	{ "epr10278.bin",  0x08000, 0x13c6bbad, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10275.bin",  0x08000, 0x964c1985, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10279.bin",  0x08000, 0xfb67bdce, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10276.bin",  0x08000, 0x1c91baa1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10280.bin",  0x08000, 0x9bc5496c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr10277.bin",  0x08000, 0xa1534a1b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10281.95",  0x10000, 0x30e92cda, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10282.94",  0x10000, 0xb67b8910, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10283.93",  0x10000, 0xe7dbfd2d, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-10285",     0x08000, 0x98aa3d04, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10289",     0x08000, 0xc59d1b98, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10286",     0x08000, 0x8da050cf, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10290",     0x08000, 0x39354223, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10287",     0x08000, 0x7989b74a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10291",     0x08000, 0x6e4b245c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10288",     0x08000, 0xd3ce551a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10292",     0x08000, 0xcef289a3, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-10284.12",  0x08000, 0x8ff09116, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "317-0018.key",  0x02000, 0x65b5b1af, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Afighterd)
+STD_ROM_FN(Afighterd)
+
 static struct BurnRomInfo AlexkiddRomDesc[] = {
 	{ "epr-10447.43",  0x10000, 0x29e87f71, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10445.26",  0x10000, 0x25ce5b6f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -3620,6 +3680,26 @@ struct BurnDriver BurnDrvAFighterb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A, GBF_RACING, 0,
 	NULL, AfighterbRomInfo, AfighterbRomName, NULL, NULL, NULL, NULL, Afighter_analogInputInfo, Afighter_analogDIPInfo,
+	AfighterbInit, System16Exit, System16AFrame, System16ARender, System16Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvAFighterc = {
+	"afighterc", "afighter", NULL, NULL, "1986",
+	"Action Fighter (FD1089B 317-unknown)\0", NULL, "Sega", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_RACING, 0,
+	NULL, AfightercRomInfo, AfightercRomName, NULL, NULL, NULL, NULL, System16aInputInfo, AfighterDIPInfo,
+	System16Init, System16Exit, System16AFrame, System16ARender, System16Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvAFighterd = {
+	"afighterd", "afighter", NULL, NULL, "1986",
+	"Action Fighter (FD1089B 317-unknown, analog controls)\0", NULL, "Sega", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_RACING, 0,
+	NULL, AfighterdRomInfo, AfighterdRomName, NULL, NULL, NULL, NULL, Afighter_analogInputInfo, Afighter_analogDIPInfo,
 	AfighterbInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };

@@ -56,13 +56,9 @@ static UINT8 rearrange_key(UINT8 table, INT32 opcode)
 	if (opcode == 0) {
 		table ^= (1<<4);
 		table ^= (1<<5);
-		table ^= (1<<6);
 
 		if (BIT(~table,3))
 			table ^= (1<<1);
-
-		if (BIT(table,6))
-			table ^= (1<<7);
 
 		table = BITSWAP08(table,1,0,6,4,3,5,2,7);
 
@@ -76,10 +72,10 @@ static UINT8 rearrange_key(UINT8 table, INT32 opcode)
 		if (BIT(~table,3))
 			table ^= (1<<5);
 
-		if (BIT(~table,7))
+		if (BIT(table,7))
 			table ^= (1<<6);
 
-		table = BITSWAP08(table,5,6,7,4,2,3,1,0);
+		table = BITSWAP08(table,5,7,6,4,2,3,1,0);
 
 		if (BIT(table,6))
 			table = BITSWAP08(table,7,6,5,3,2,4,1,0);
@@ -124,7 +120,7 @@ static INT32 decode_fd1089a(INT32 val,INT32 key,INT32 opcode)
 	INT32 family;
 
 	/* special case - don't decrypt */
-	if (key == 0x40)
+	if (key == 0x00)
 		return val;
 
 	table = rearrange_key(key, opcode);
@@ -183,7 +179,7 @@ static INT32 decode_fd1089b(INT32 val,INT32 key,INT32 opcode)
 	const struct parameters *p;
 
 	/* special case - don't decrypt */
-	if (key == 0x40)
+	if (key == 0x00)
 		return val;
 
 	table = rearrange_key(key, opcode);

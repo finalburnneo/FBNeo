@@ -1829,6 +1829,38 @@ static struct BurnRomInfo LghostdRomDesc[] = {
 STD_ROM_PICK(Lghostd)
 STD_ROM_FN(Lghostd)
 
+static struct BurnRomInfo LghostjRomDesc[] = {
+	{ "epr-13410.a4",   0x40000, 0x9c1d672b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13412.a6",   0x40000, 0x3a3155fa, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13411.a5",   0x40000, 0x5160167b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13413.a7",   0x40000, 0x656b3bd8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13414.c1",   0x40000, 0xdada2419, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13415.c2",   0x40000, 0xbbb62c48, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13416.c3",   0x40000, 0x1d11dbae, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-13604.c10",  0x80000, 0x4009c8e5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13603.a10",  0x80000, 0x5350a94e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13424.c11",  0x80000, 0xfb98d920, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13421.a11",  0x80000, 0x2fc75890, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13425.c12",  0x80000, 0xf8252589, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13422.a12",  0x80000, 0x48a0754d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13426.c13",  0x80000, 0x5cfb1e25, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13423.a13",  0x80000, 0x335bbc9d, SYS16_ROM_SPRITES | BRF_GRA },	
+
+	{ "epr-13417.c7",   0x20000, 0xcd7beb49, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-13420.c6",   0x40000, 0x3de0dee4, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13419.c5",   0x40000, 0xe7021b0a, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13418.c4",   0x40000, 0x0732594d, SYS16_ROM_RF5C68DATA | BRF_SND },
+	
+	{ "317-0164.key",   0x02000, 0x6bf5cf2d, SYS16_ROM_KEY | BRF_ESS | BRF_PRG},
+};
+
+
+STD_ROM_PICK(Lghostj)
+STD_ROM_FN(Lghostj)
+
 static struct BurnRomInfo LghostuRomDesc[] = {
 	{ "epr-13427.a4",   0x40000, 0x5bf8fb6b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13428.a6",   0x40000, 0x276775f5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -3644,7 +3676,7 @@ struct BurnDriver BurnDrvHamaway = {
 
 struct BurnDriver BurnDrvLghost = {
 	"lghost", NULL, NULL, NULL, "1990",
-	"Laser Ghost (set 2, World, 317-0166)\0", NULL, "Sega", "System 18",
+	"Laser Ghost (World, 317-0166)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_SHOOT, 0,
 	NULL, LghostRomInfo, LghostRomName, NULL, NULL, NULL, NULL, LghostInputInfo, LghostDIPInfo,
@@ -3654,7 +3686,7 @@ struct BurnDriver BurnDrvLghost = {
 
 struct BurnDriver BurnDrvLghostd = {
 	"lghostd", "lghost", NULL, NULL, "1990",
-	"Laser Ghost (set 2, World, 317-0166 decrypted)\0", NULL, "Sega", "System 18",
+	"Laser Ghost (World, 317-0166 decrypted)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_SHOOT, 0,
 	NULL, LghostdRomInfo, LghostdRomName, NULL, NULL, NULL, NULL, LghostInputInfo, LghostDIPInfo,
@@ -3662,9 +3694,19 @@ struct BurnDriver BurnDrvLghostd = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvLghostj = {
+	"lghostj", "lghost", NULL, NULL, "1990",
+	"Laser Ghost (Japan, 317-0164)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_SHOOT, 0,
+	NULL, LghostjRomInfo, LghostjRomName, NULL, NULL, NULL, NULL, LghostInputInfo, LghostDIPInfo,
+	LghostInit, LghostExit, System18Frame, System18Render, LghostScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvLghostu = {
 	"lghostu", "lghost", NULL, NULL, "1990",
-	"Laser Ghost (set 1, US, 317-0165)\0", NULL, "Sega", "System 18",
+	"Laser Ghost (US, 317-0165)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_SHOOT, 0,
 	NULL, LghostuRomInfo, LghostuRomName, NULL, NULL, NULL, NULL, LghostInputInfo, LghostDIPInfo,
@@ -3674,7 +3716,7 @@ struct BurnDriver BurnDrvLghostu = {
 
 struct BurnDriver BurnDrvLghostud = {
 	"lghostud", "lghost", NULL, NULL, "1990",
-	"Laser Ghost (set 1, US, 317-0165 decrypted)\0", NULL, "Sega", "System 18",
+	"Laser Ghost (US, 317-0165 decrypted)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_SHOOT, 0,
 	NULL, LghostudRomInfo, LghostudRomName, NULL, NULL, NULL, NULL, LghostInputInfo, LghostDIPInfo,

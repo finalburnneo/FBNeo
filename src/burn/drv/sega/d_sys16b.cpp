@@ -1935,6 +1935,20 @@ static struct BurnDIPInfo TturfDIPList[]=
 
 STDDIPINFO(Tturf)
 
+static struct BurnDIPInfo UltracinDIPList[]=
+{
+	// Default Values
+	{0x15, 0xff, 0xff, 0xff, NULL                                 },
+	{0x16, 0xff, 0xff, 0xff, NULL                                 },
+
+	// Dip 1
+		
+	// Dip 2
+	SYSTEM16B_COINAGE(0x16)
+};
+
+STDDIPINFO(Ultracin)
+
 static struct BurnDIPInfo Wb3DIPList[]=
 {
 	// Default Values
@@ -5732,6 +5746,31 @@ static struct BurnRomInfo TturfuRomDesc[] = {
 STD_ROM_PICK(Tturfu)
 STD_ROM_FN(Tturfu)
 
+static struct BurnRomInfo UltracinRomDesc[] = {
+	{ "epr-18946.ic2",  0x40000, 0x7e70d62f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-18945.ic1",  0x40000, 0x22bc0fd9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-18956.ic19", 0x20000, 0x58ce183b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-18957.ic20", 0x20000, 0xc807b164, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-18958.ic21", 0x20000, 0xb263bd0c, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-18950.ic9",   0x40000, 0xa2724dc5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-18953.ic12",  0x40000, 0xf58fdf96, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-18951.ic10",  0x40000, 0x8a35ddca, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-18954.ic13",  0x40000, 0x1255c0bf, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-18952.ic11",  0x40000, 0x77634b5c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-18955.ic14",  0x40000, 0x8c161f97, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "epr-18949.ic8",  0x08000, 0x4f7f8bf5, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-18947.ic6",  0x40000, 0x23122c51, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "epr-18948.ic7",  0x40000, 0x6d060a08, SYS16_ROM_UPD7759DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Ultracin)
+STD_ROM_FN(Ultracin)
+
 static struct BurnRomInfo Wb3RomDesc[] = {
 	{ "epr-12259.a7",   0x20000, 0x54927c7e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12258.a5",   0x20000, 0x01f5898c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -8560,6 +8599,33 @@ static INT32 TturfuInit()
 	return nRet;
 }
 
+static INT32 UltracinInit()
+{
+	// Start off with some sprite rom and let the load routine add on the rest
+	System16SpriteRomSize = 0x1c0000 - 0x180000;
+	
+	INT32 nRet = System16Init();
+	
+	if (!nRet) {
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
+		if (pTemp) {
+			memcpy(pTemp, System16Sprites, 0x1c0000);
+			memset(System16Sprites, 0, 0x1c0000);
+			memcpy(System16Sprites + 0x000000, pTemp + 0x000000, 0x40000);
+			memcpy(System16Sprites + 0x100000, pTemp + 0x040000, 0x40000);
+			memcpy(System16Sprites + 0x040000, pTemp + 0x080000, 0x40000);
+			memcpy(System16Sprites + 0x140000, pTemp + 0x0c0000, 0x40000);
+			memcpy(System16Sprites + 0x080000, pTemp + 0x100000, 0x40000);
+			memcpy(System16Sprites + 0x180000, pTemp + 0x140000, 0x40000);
+		} else {
+			nRet = 1;
+		}
+		BurnFree(pTemp);
+	}
+	
+	return nRet;
+}
+
 void Wb3_Sim8751()
 {
 	// Sound command
@@ -9944,6 +10010,16 @@ struct BurnDriver BurnDrvTturfu = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SCRFIGHT, 0,
 	NULL, TturfuRomInfo, TturfuRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, TturfDIPInfo,
 	TturfuInit, System16Exit, System16BFrame, System16BRender, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvUltracin = {
+	"ultracin", NULL, NULL, NULL, "1996",
+	"Waku Waku Ultraman Racing\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_RACING, 0,
+	NULL, UltracinRomInfo, UltracinRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, UltracinDIPInfo,
+	UltracinInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

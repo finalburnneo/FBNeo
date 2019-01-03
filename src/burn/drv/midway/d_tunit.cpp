@@ -1036,6 +1036,46 @@ struct BurnDriver BurnDrvMk2chal = {
     400, 254, 4, 3
 };
 
+static struct BurnRomInfo mk2uteRomDesc[] = {
+	{ "mk2ute.uj12",	0x080000, 0xa027088c, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "mk2ute.ug12",	0x080000, 0x474cf238, 1 | BRF_PRG | BRF_ESS }, //  1
+	
+	{ "l1_mortal_kombat_ii_sound_rom_u2.u2",	0x080000, 0x5f23d71d, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l1_mortal_kombat_ii_sound_rom_u3.u3",	0x080000, 0xd6d92bf9, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "l1_mortal_kombat_ii_sound_rom_u4.u4",	0x080000, 0xeebc8e0f, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1_mortal_kombat_ii_sound_rom_u5.u5",	0x080000, 0x2b0b7961, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "l1_mortal_kombat_ii_sound_rom_u6.u6",	0x080000, 0xf694b27f, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "l1_mortal_kombat_ii_sound_rom_u7.u7",	0x080000, 0x20387e0a, 2 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "l1_mortal_kombat_ii_game_rom_ug14.ug14",	0x100000, 0x01e73af6, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  8 GFX
+	{ "l1_mortal_kombat_ii_game_rom_uj14.uj14",	0x100000, 0xd4985cbb, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  9
+	{ "l1_mortal_kombat_ii_game_rom_ug19.ug19",	0x100000, 0xfec137be, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  10
+	{ "l1_mortal_kombat_ii_game_rom_uj19.uj19",	0x100000, 0x2d763156, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  11
+
+	{ "l1_mortal_kombat_ii_game_rom_ug16.ug16",	0x100000, 0x8ba6ae18, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, //  12
+	{ "l1_mortal_kombat_ii_game_rom_uj16.uj16",	0x100000, 0x39d885b4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, //  13
+	{ "l1_mortal_kombat_ii_game_rom_ug20.ug20",	0x100000, 0x809118c1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 14
+	{ "l1_mortal_kombat_ii_game_rom_uj20.uj20",	0x100000, 0xb96824f0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 15
+
+	{ "l1_mortal_kombat_ii_game_rom_ug17.ug17",	0x100000, 0x937d8620, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x08, 0) }, // 16
+	{ "l1_mortal_kombat_ii_game_rom_uj17.uj17",	0x100000, 0x218de160, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x08, 1) }, // 17
+	{ "l1_mortal_kombat_ii_game_rom_ug22.ug22",	0x100000, 0x154d53b1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x08, 2) }, // 18
+	{ "l1_mortal_kombat_ii_game_rom_uj22.uj22",	0x100000, 0x8891d785, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x08, 3) }, // 19
+};
+
+STD_ROM_PICK(mk2ute)
+STD_ROM_FN(mk2ute)
+
+struct BurnDriver BurnDrvMk2ute = {
+	"mk2ute", "mk2", NULL, NULL, "2014",
+	"Mortal Kombat II Ultimate Tournament Edition (hack, V5.0.052)\0", NULL, "hack", "Midway T-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
+	NULL, mk2uteRomInfo, mk2uteRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
+    Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
+    400, 254, 4, 3
+};
+
 static struct BurnRomInfo nbajamRomDesc[] = {
 	{ "l3_nba_jam_game_rom_uj12.uj12",			0x080000, 0xb93e271c, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l3_nba_jam_game_rom_ug12.ug12",			0x080000, 0x407d3390, 1 | BRF_PRG | BRF_ESS }, //  1

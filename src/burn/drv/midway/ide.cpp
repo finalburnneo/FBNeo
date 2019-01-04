@@ -98,6 +98,16 @@ ide_disk::ide_disk()
     m_irq_callback = NULL;
 }
 
+ide_disk::~ide_disk()
+{
+	delete[] m_buffer;
+
+	if (m_disk_image) {
+		fclose(m_disk_image);
+		m_disk_image = NULL;
+	}
+}
+
 void ide_disk::set_irq_callback(void (*irq)(int))
 {
     m_irq_callback = irq;
@@ -332,17 +342,18 @@ unsigned ide_disk::read_alternate(unsigned offset)
 
 bool ide_disk::load_disk_image(const string &filename)
 {
-    char szFilePath[MAX_PATH];
+	char szFilePath[MAX_PATH];
 	const char *szFileName = filename.c_str();
 
 	sprintf(szFilePath, "%s%s", _TtoA(szAppHDDPath), szFileName);
-	
-	m_disk_image.open(szFilePath, ios_base::binary | ios_base::in | ios_base::out);
-    if (!m_disk_image.is_open()) {
-        ata_log("disk image not found!\n");
-        return false;
-    }
-    return true;
+
+	m_disk_image = fopen(szFilePath, "r+b");
+	if (!m_disk_image) {
+		ata_log("disk image not found!\n");
+		return false;
+	}
+
+	return true;
 }
 
 int ide_disk::load_hdd_image(int idx)
@@ -415,8 +426,8 @@ void ide_disk::update_transfer()
         lba = lba_from_regs() * m_num_bytes_per_sector;
         m_last_buffer_lba = lba;
 
-        m_disk_image.seekg(lba, ios_base::beg);
-        m_disk_image.read(reinterpret_cast<char*>(m_buffer), m_num_bytes_per_sector);
+        fseek(m_disk_image, lba, SEEK_SET);
+        fread(m_buffer, m_num_bytes_per_sector, 1, m_disk_image);
         m_buffer_pos = 0;
 
         chs_next_sector();
@@ -433,8 +444,8 @@ void ide_disk::flush_write_transfer()
 {
     ata_log("flush write buffer\n");
 
-    m_disk_image.seekp(m_last_buffer_lba, ios_base::beg);
-    m_disk_image.write(reinterpret_cast<char*>(m_buffer), m_num_bytes_per_sector);
+    fseek(m_disk_image, m_last_buffer_lba, SEEK_SET);
+    fwrite(m_buffer, m_num_bytes_per_sector, 1, m_disk_image);
 }
 
 // ========================================================================== //

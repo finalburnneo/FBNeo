@@ -2,7 +2,6 @@
 #define IDE
 
 #include <string>
-#include <fstream>
 
 namespace ide
 {
@@ -18,8 +17,10 @@ public:
     unsigned read(unsigned offset);
     unsigned read_alternate(unsigned offset);
     bool load_disk_image(const string &filename);
+	void close_disk_image();
 	int load_hdd_image(int idx);
     ide_disk();
+    ~ide_disk();
 
     void set_irq_callback(void (*irq)(int state));
 
@@ -80,7 +81,7 @@ private:
     int m_features;
     int m_command;
 
-    fstream m_disk_image;
+    FILE * m_disk_image;
 
 };
 

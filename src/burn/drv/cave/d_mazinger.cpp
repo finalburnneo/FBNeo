@@ -15,8 +15,9 @@ static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 static UINT8 *Rom01, *RomZ80;
 static UINT8 *Ram01, *RamZ80;
-static UINT8 *MSM6295ROMSrc;
 static UINT8 *DefEEPROM = NULL;
+
+static UINT8 *DrvSndROM;
 
 static UINT8 DrvReset = 0;
 static UINT8 bDrawScreen;
@@ -32,11 +33,8 @@ static INT32 nCyclesTotal[2];
 static INT32 nCyclesDone[2];
 
 static INT32 SoundLatch;
-static INT32 SoundLatchReply[48];
+static INT32 SoundLatchReply;
 static INT32 SoundLatchStatus;
-
-static INT32 SoundLatchReplyIndex;
-static INT32 SoundLatchReplyMax;
 
 static UINT8 DrvZ80Bank;
 static UINT8 DrvOkiBank1;
@@ -130,12 +128,7 @@ static UINT16 __fastcall mazingerReadWord(UINT32 sekAddress)
 		}
 
 		case 0x30006E:
-			if (SoundLatchReplyIndex > SoundLatchReplyMax) {
-				SoundLatchReplyIndex = 0;
-				SoundLatchReplyMax = -1;
-				return 0;
-			}
-			return SoundLatchReply[SoundLatchReplyIndex++];
+			return SoundLatchReply;
 
 		case 0x800000:
 			return DrvInput[0] ^ 0xFFFF;
@@ -242,6 +235,12 @@ static UINT8 __fastcall mazingerZIn(UINT16 nAddress)
 	return 0;
 }
 
+static void msm6295_bank()
+{
+	MSM6295SetBank(0, DrvSndROM + 0x20000 * DrvOkiBank1, 0x00000, 0x1ffff);
+	MSM6295SetBank(0, DrvSndROM + 0x20000 * DrvOkiBank2, 0x20000, 0x3ffff);
+}
+
 static void __fastcall mazingerZOut(UINT16 nAddress, UINT8 nValue)
 {
 	nAddress &= 0xFF;
@@ -255,12 +254,7 @@ static void __fastcall mazingerZOut(UINT16 nAddress, UINT8 nValue)
 		}
 
 		case 0x10:
-			if (SoundLatchReplyIndex > SoundLatchReplyMax) {
-				SoundLatchReplyMax = -1;
-				SoundLatchReplyIndex = 0;
-			}
-			SoundLatchReplyMax++;
-			SoundLatchReply[SoundLatchReplyMax] = nValue;
+			SoundLatchReply = nValue;
 			break;
 
 		case 0x50: {
@@ -282,8 +276,7 @@ static void __fastcall mazingerZOut(UINT16 nAddress, UINT8 nValue)
 			DrvOkiBank1 = (nValue >> 0) & 0x03;
 			DrvOkiBank2 = (nValue >> 4) & 0x03;
 
-			memcpy(MSM6295ROM + 0x00000, MSM6295ROMSrc + 0x20000 * DrvOkiBank1, 0x20000);
-			memcpy(MSM6295ROM + 0x20000, MSM6295ROMSrc + 0x20000 * DrvOkiBank2, 0x20000);
+			msm6295_bank();
 			return;
 		}
 
@@ -371,13 +364,10 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	DrvZ80Bank = 0;
 	DrvOkiBank1 = 0;
 	DrvOkiBank2 = 0;
+	msm6295_bank();
 
 	SoundLatch = 0;
 	SoundLatchStatus = 0x0C;
-
-	memset(SoundLatchReply, 0, sizeof(SoundLatchReply));
-	SoundLatchReplyIndex = 0;
-	SoundLatchReplyMax = -1;
 
 	return 0;
 }
@@ -398,11 +388,6 @@ static INT32 DrvDraw()
 		CaveTileRender(1);					// Render tiles
 	}
 
-	return 0;
-}
-
-inline static INT32 CheckSleep(INT32)
-{
 	return 0;
 }
 
@@ -451,11 +436,7 @@ static INT32 DrvFrame()
 		if (!bVBlank && nNext > nCyclesVBlank) {
 			if (nCyclesDone[nCurrentCPU] < nCyclesVBlank) {
 				nCyclesSegment = nCyclesVBlank - nCyclesDone[nCurrentCPU];
-				if (!CheckSleep(nCurrentCPU)) {							// See if this CPU is busywaiting
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-				} else {
-					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-				}
+				nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 			}
 
 			if (pBurnDraw != NULL) {
@@ -474,11 +455,7 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		} else {
-			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
+		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 	}
@@ -507,8 +484,10 @@ static INT32 MemIndex()
 	CaveSpriteROM	= Next; Next += 0x800000;
 	CaveTileROM[0]	= Next; Next += 0x400000;		// Tile layer 0
 	CaveTileROM[1]	= Next; Next += 0x400000;		// Tile layer 1
-	MSM6295ROM		= Next; Next += 0x040000;
-	MSM6295ROMSrc		= Next; Next += 0x080000;
+
+	MSM6295ROM		= Next;
+	DrvSndROM		= Next; Next += 0x080000;
+
 	DefEEPROM               = Next; Next += 0x000080;
 	RamStart		= Next;
 	Ram01			= Next; Next += 0x010000;		// CPU #0 work RAM
@@ -577,7 +556,7 @@ static INT32 LoadRoms()
 	BurnFree(pTemp);
 
 	// Load MSM6295 ADPCM data
-	BurnLoadRom(MSM6295ROMSrc, 7, 1);
+	BurnLoadRom(DrvSndROM, 7, 1);
 
 	BurnLoadRom(DefEEPROM, 8, 1);
 
@@ -605,7 +584,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
+		ZetOpen(0);
 		BurnYM2203Scan(nAction, pnMin);
+		ZetClose();
+
 		MSM6295Scan(nAction, pnMin);
 
 		SCAN_VAR(nVideoIRQ);
@@ -628,10 +610,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			ZetMapMemory(RomZ80 + (DrvZ80Bank * 0x4000), 0x4000, 0x7FFF, MAP_ROM);
 			ZetClose();
 
-			memcpy(MSM6295ROM + 0x00000, MSM6295ROMSrc + 0x20000 * DrvOkiBank1, 0x20000);
-			memcpy(MSM6295ROM + 0x20000, MSM6295ROMSrc + 0x20000 * DrvOkiBank2, 0x20000);
-
-			CaveRecalcPalette = 1;
+			msm6295_bank();
 		}
 	}
 
@@ -730,7 +709,6 @@ static INT32 DrvInit()
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.20, BURN_SND_ROUTE_BOTH);
 
-	memcpy(MSM6295ROM, MSM6295ROMSrc, 0x40000);
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295SetRoute(0, 2.00, BURN_SND_ROUTE_BOTH);
 

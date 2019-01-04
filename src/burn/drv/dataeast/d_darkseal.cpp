@@ -707,8 +707,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		
 		deco16SoundScan(nAction, pnMin);
 		
-		deco16Scan();
-		
 		SCAN_VAR(vblank);
 	}
 

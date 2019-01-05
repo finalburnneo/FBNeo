@@ -1874,7 +1874,7 @@ static inline void AssembleInputs()
 
 		case 2: // uballoon
 		{
-			DrvInputs[1] = (DrvInputs[1] & 0xff) | (DrvDips[0] << 8);
+			DrvInputs[1] = (DrvInputs[1] & ~0x3000) | ((DrvDips[0] << 8) & 0x3000);
 			DrvInputs[2] = DrvDips[1];
 			DrvInputs[3] = DrvDips[2];
 		}

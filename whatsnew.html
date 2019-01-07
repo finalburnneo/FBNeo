@@ -276,8 +276,15 @@
 <li>Hook-up YMF262 to Tecmosys, fixes sound for Deroon DeroDero and Toukidenshou - Angel Eyes [dink]</li>
 <li>Fixed loop sample stop issue in YMZ280b, which caused glitches in Tecmosys games [dink]</li>
 <li>Fixed missing half of image in Darkseal's attractmode intro (rowscroll bug) [dink]</li>
-<li>Fixed music tempo in Darkseal [dink]</li>
+<li>Fixed music tempo and savestate issues in Darkseal [dink]</li>
 <li>Fixed some issues compiling w/latest official MingW w/GCC 6.3.0 and 8.2.0 (@osdn) [dink]</li>
+<li>Sync romsets with MAME 0.205 [Barry]</li>
+<li>Add high score saving to Cyber Lip, Ghost Pilots, Last Resort, Metal Slug X and Nam1975 [Riddler]</li>
+<li>Update FD1089 decryption to use the Sega key format (Update your romsets!) [Barry]</li>
+<li>Fix possible crash in Mazinger Z [dink]</li>
+<li>Fix player 2 inputs in Suna's Ultra Baloon [dink]</li>
+<li>Fix possible crash and savestate issues in TaitoF3 [dink]</li>
+<li>Fix inputs for JoJo and JoJo's Bizarre Adventure [barbudreamon]</li>
 <li> []</li>
 </ul>
 <!-- new drivers -->
@@ -343,7 +350,7 @@
 <li>Added driver for Klax [iq_132]</li>
 <li>Added driver for Off The Wall *WIP/Not working* [iq_132]</li>
 <li>Added driver for Ramparts *WIP* [iq_132]</li>
-<li>Added driver for Arcade Classics *WIP* [iq_132]</li>
+<li>Added driver for Atari Arcade Classics Prototype [iq_132]</li>
 <li>Added driver for Relief Pitcher [iq_132]</li>
 <li>Added driver for Shuuz [iq_132]</li>
 <li>Added driver for Skull and Crossbones [iq_132]</li>
@@ -367,18 +374,20 @@
 <li>Add Ghost Pilots (prototype) to the Neo Geo driver [Barry, Razoola]</li>
 <li>Add Royal Stone English translation the SMS/GameGear driver [barbudreadmon]</li>
 <li>Add Titan (Pac-Man hack) to the Pac-Man driver [Craig Anstett, CraftyMech, JacKc]</li>
-<li>Added Kabuki-Z to the public builds of FB Alpha - somehow this was overlooked, sorry about that! [dink]</li>
-<li>Added Ikki, Strength and Skill, and Banbam to the Markham driver [iq_132]</li>
-<li>Added Toki no Senshi - Chrono Soldier as parent, older version is actually a prototype [Barry]</li>
+<li>Add Kabuki-Z to the public builds of FB Alpha - somehow this was overlooked, sorry about that! [dink]</li>
+<li>Add Ikki, Strength and Skill, and Banbam to the Markham driver [iq_132]</li>
+<li>Add Toki no Senshi - Chrono Soldier as parent, older version is actually a prototype [Barry]</li>
 <li>Add support for Neo-Geo Universe BIOS 3.3 [Barry, Razoola]</li>
 <li>Add Neo Geo BIOS (NEO-MVH MV1C, Japan) [Barry, Razoola]</li>
 <li>Add Neo Geo BIOS (sp1-u4, US) [Barry, ack]</li>
-<li>Added Vindicators II to the Gauntlet driver [iq_132]</li>
-<li>Added Street Fighter 2 Red Wave Pt II [Barry, okada yuko]</li>
+<li>Add Vindicators II to the Gauntlet driver [iq_132]</li>
+<li>Add Street Fighter 2 Red Wave Pt II [Barry, okada yuko]</li>
 <li>Add English translations for Sonic Eraser and Barver Battle Saga to the Megadrive driver [barbudreadmon]</li>
 <li>Add Tanglewood v1.0 and demo to the Megadrive driver [dink]</li>
 <li>Add Flight of Pigarus v1.0 by Kagesan to the SMS driver [dink]</li>
-<li>Added Blaze On (World), making it the new parent [rtw, The Dumping Union]</li>
+<li>Add Blaze On (World), making it the new parent [rtw, The Dumping Union]</li>
+<li>Add Ultimate Mortal Kombat 3 Tournament Edition and Ultimate Mortal Kombat 2 Tournament Edition hacks [dink]</li>
+<li>Add Waku Waku Ultraman Racing to the Sega System 16B driver [Barry]</li>
 </ul>
 <!-- clones and updated romsets in drivers -->
 <h4>Clones and updated romsets in existing drivers</h4>
@@ -409,15 +418,21 @@
 <li>Added Strahl (World), making Strahl Japan Sets 1 and 2 clones in the NMK16 driver [dink]</li>
 <li>Added clone of Landmaker 2.02O World version [SEGV, Brian Troha]</li>
 <li>Added Hacha Mecha Fighter location test prototype [Mike Moffitt, Osso13]</li>
-<li>Add bootleg of World Cup '90 (twcup90bb) [Barry, Roberto Fresca, Martin Mejia Britez]</li>
-<li>Add clone of Super Street Fighter II - the tournament battle [Barry]</li>
-<li>Add clone of Street Fighter 2 [Barry, Erik Preston]</li>
-<li>Add clone of Street Fighter 2 [Barry, Chris Gleed]</li>
-<li>Add bootleg of Warriors of Fate (wofabl) [Barry]</li>
-<li>Add clone of Street Fighter 2 (sf2ea) [Barry]</li>
-<li>Add clone of Shinobi (unprotected) [Barry, Brian Troha]</li>
-<li>Add clone of X-Men: Children of the Atom to CPS-2 driver [Barry, Brad Hicks]</li>
+<li>Added bootleg of World Cup '90 (twcup90bb) [Barry, Roberto Fresca, Martin Mejia Britez]</li>
+<li>Added clone of Super Street Fighter II - the tournament battle [Barry]</li>
+<li>Added clone of Street Fighter 2 [Barry, Erik Preston]</li>
+<li>Added clone of Street Fighter 2 [Barry, Chris Gleed]</li>
+<li>Added bootleg of Warriors of Fate (wofabl) [Barry]</li>
+<li>Added clone of Street Fighter 2 (sf2ea) [Barry]</li>
+<li>Added clone of Shinobi (unprotected) [Barry, Brian Troha]</li>
+<li>Added clone of X-Men: Children of the Atom to CPS-2 driver [Barry, Brad Hicks]</li>
 <li>Added clone of Deroon DeroDero (newer) [Farzeno, The Dumpin Union, arcadez]</li>
+<li>Added clone of Laser Ghost (Japan) to System 18 [Barry]</li>
+<li>Added 2 bootleg clones of Enduro Racer to the Hang On driver [Barry]</li>
+<li>Added clone of G-LOC R360 (Japan) to the Sega Y-Board driver [Barry]</li>
+<li>Added prototype of Fantasy Zone to the Sega System 16A driver [Barry]</li>
+<li>Added 2 clones of Action Fighter to the Sega System 16A driver [Barry]</li>
+<li>Added 4 clones of Action Fighter to the Sega System 16B driver [Barry]</li>
 </ul>
 
 <h3>v0.2.97.43</h3>

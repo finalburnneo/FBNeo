@@ -373,7 +373,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 // Flags for the hardware member
 // Format: 0xDDEEFFFF, where EE: Manufacturer, DD: Hardware platform, FFFF: Flags (used by driver)
 
-#define HARDWARE_PUBLIC_MASK							(0xFFFF0000)
+#define HARDWARE_PUBLIC_MASK							(0x7FFF0000)
 
 #define HARDWARE_PREFIX_CARTRIDGE						((INT32)0x80000000)
 

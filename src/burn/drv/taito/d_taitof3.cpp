@@ -1459,6 +1459,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin =  0x029702;
 	}
 
+	/* Save for later debugging...?
+
 	if (nAction & ACB_MEMORY_ROM) {
 		ba.Data		= Taito68KRom1;
 		ba.nLen		= 0x0200000;
@@ -1467,7 +1469,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {	
+	if (nAction & ACB_MEMORY_RAM) {
 		ba.Data		= Taito68KRam1;
 		ba.nLen		= 0x020000;
 		ba.nAddress	= 0x400000;
@@ -1475,7 +1477,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ba.Data		= TaitoPaletteRam;
-		ba.nLen		= 0x0010000;
+		ba.nLen		= 0x0008000;
 		ba.nAddress	= 0x440000;
 		ba.szName	= "Palette RAM";
 		BurnAcb(&ba);
@@ -1544,6 +1546,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nLen		= 0x0000c0 * sizeof(UINT32);
 		ba.nAddress	= 0x000000;
 		ba.szName	= "ES5510 GPR RAM";
+		BurnAcb(&ba);
+	} */
+
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+
+		ba.Data	  = TaitoRamStart;
+		ba.nLen	  = TaitoRamEnd - TaitoRamStart;
+		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
 

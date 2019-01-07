@@ -2828,8 +2828,7 @@ void TaitoF3DrawCommon(INT32 scanline_start)
 				if (nBurnBpp == 2) { // 16bpp
 					for (INT32 x = 0; x < nScreenWidth; x++, i++, dst += nBurnBpp)
 					{
-						//UINT32 pixel = src[x];
-						PutPix(dst, pal16[src[x]]);
+						PutPix(dst, pal16[src[x]&((1<<24)-1)]);
 					}
 
 					src -= 512;
@@ -2863,7 +2862,7 @@ void TaitoF3DrawCommon(INT32 scanline_start)
 				if (nBurnBpp == 2) { // 16bpp
 					for (INT32 x = 0; x < nScreenWidth; x++, i++, dst += nBurnBpp)
 					{
-						PutPix(dst, pal16[src[x]]);
+						PutPix(dst, pal16[src[x]&((1<<24)-1)]);
 					}
 
 					src += 512;

@@ -213,7 +213,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			continue;
 		}
 
-		if (((BurnDrvGetHardwareCode() & (HARDWARE_PUBLIC_MASK - HARDWARE_PREFIX_CARTRIDGE)) != HARDWARE_SNK_NEOGEO) && (bType == DAT_NEOGEO_ONLY)) {
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_NEOGEO) && (bType == DAT_NEOGEO_ONLY)) {
 			continue;
 		}
 
@@ -576,7 +576,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			continue;
 		}
 
-		if (((BurnDrvGetHardwareCode() & (HARDWARE_PUBLIC_MASK - HARDWARE_PREFIX_CARTRIDGE)) != HARDWARE_SNK_NEOGEO) && (bType == DAT_NEOGEO_ONLY)) {
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_NEOGEO) && (bType == DAT_NEOGEO_ONLY)) {
 			continue;
 		}
 

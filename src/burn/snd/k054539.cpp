@@ -623,8 +623,8 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 			nRightSample += (INT32)(rval * info->volume[BURN_SND_K054539_ROUTE_2]);
 		}
 
-		pBufL[0] = nLeftSample;  pBufL++;
-		pBufR[0] = nRightSample; pBufR++;
+		pBufL[0] = BURN_SND_CLIP(nLeftSample);  pBufL++;
+		pBufR[0] = BURN_SND_CLIP(nRightSample); pBufR++;
 	}
 
 	pBufL = soundbuf[chip] + 0 * 4096 + 5;

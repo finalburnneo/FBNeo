@@ -99,6 +99,7 @@ static INT32 Bloodwar = 0;
 static INT32 Bonkadv = 0;
 static INT32 Mgcrystl = 0;
 static INT32 Shogwarr = 0;
+static INT32 Brapboys = 0;
 
 typedef void (*MCURun)();
 static MCURun ToyboxMCURun;
@@ -136,11 +137,8 @@ Input Definitions
 ===============================================================================================*/
 
 static struct BurnInputInfo BerlwallInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , Kaneko16InputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , Kaneko16InputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , Kaneko16InputPort0 + 2, "p1 left"   },
@@ -149,6 +147,8 @@ static struct BurnInputInfo BerlwallInputList[] = {
 	{"P1 Fire 2"         , BIT_DIGITAL  , Kaneko16InputPort0 + 5, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , Kaneko16InputPort0 + 6, "p1 fire 3" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , Kaneko16InputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , Kaneko16InputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , Kaneko16InputPort1 + 2, "p2 left"   },
@@ -169,11 +169,8 @@ static struct BurnInputInfo BerlwallInputList[] = {
 STDINPUTINFO(Berlwall)
 
 static struct BurnInputInfo BlazeonInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , Kaneko16InputPort0 + 7, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , Kaneko16InputPort0 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , Kaneko16InputPort1 + 7, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , Kaneko16InputPort1 + 6, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , Kaneko16InputPort0 + 7, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , Kaneko16InputPort0 + 6, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , Kaneko16InputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , Kaneko16InputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , Kaneko16InputPort0 + 2, "p1 left"   },
@@ -181,6 +178,8 @@ static struct BurnInputInfo BlazeonInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , Kaneko16InputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , Kaneko16InputPort0 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , Kaneko16InputPort1 + 7, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , Kaneko16InputPort1 + 6, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , Kaneko16InputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , Kaneko16InputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , Kaneko16InputPort1 + 2, "p2 left"   },
@@ -199,11 +198,8 @@ static struct BurnInputInfo BlazeonInputList[] = {
 STDINPUTINFO(Blazeon)
 
 static struct BurnInputInfo BloodwarInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , Kaneko16InputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , Kaneko16InputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , Kaneko16InputPort0 + 2, "p1 left"   },
@@ -213,6 +209,8 @@ static struct BurnInputInfo BloodwarInputList[] = {
 	{"P1 Fire 3"         , BIT_DIGITAL  , Kaneko16InputPort0 + 6, "p1 fire 3" },
 	{"P1 Fire 4"         , BIT_DIGITAL  , Kaneko16InputPort0 + 7, "p1 fire 4" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , Kaneko16InputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , Kaneko16InputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , Kaneko16InputPort1 + 2, "p2 left"   },
@@ -231,11 +229,8 @@ static struct BurnInputInfo BloodwarInputList[] = {
 STDINPUTINFO(Bloodwar)
 
 static struct BurnInputInfo BonkadvInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , Kaneko16InputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , Kaneko16InputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , Kaneko16InputPort0 + 2, "p1 left"   },
@@ -243,6 +238,8 @@ static struct BurnInputInfo BonkadvInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , Kaneko16InputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , Kaneko16InputPort0 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , Kaneko16InputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , Kaneko16InputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , Kaneko16InputPort1 + 2, "p2 left"   },
@@ -260,11 +257,8 @@ static struct BurnInputInfo BonkadvInputList[] = {
 STDINPUTINFO(Bonkadv)
 
 static struct BurnInputInfo ExplbrkrInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , Kaneko16InputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , Kaneko16InputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , Kaneko16InputPort0 + 2, "p1 left"   },
@@ -272,6 +266,8 @@ static struct BurnInputInfo ExplbrkrInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , Kaneko16InputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , Kaneko16InputPort0 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , Kaneko16InputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , Kaneko16InputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , Kaneko16InputPort1 + 2, "p2 left"   },
@@ -287,11 +283,8 @@ static struct BurnInputInfo ExplbrkrInputList[] = {
 STDINPUTINFO(Explbrkr)
 
 static struct BurnInputInfo GtmrInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , Kaneko16InputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , Kaneko16InputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , Kaneko16InputPort0 + 2, "p1 left"   },
@@ -299,6 +292,8 @@ static struct BurnInputInfo GtmrInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , Kaneko16InputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , Kaneko16InputPort0 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , Kaneko16InputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , Kaneko16InputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , Kaneko16InputPort1 + 2, "p2 left"   },
@@ -316,11 +311,8 @@ static struct BurnInputInfo GtmrInputList[] = {
 STDINPUTINFO(Gtmr)
 
 static struct BurnInputInfo MgcrystlInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 0, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , Kaneko16InputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , Kaneko16InputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , Kaneko16InputPort0 + 2, "p1 left"   },
@@ -328,6 +320,8 @@ static struct BurnInputInfo MgcrystlInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , Kaneko16InputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , Kaneko16InputPort0 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , Kaneko16InputPort2 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , Kaneko16InputPort2 + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , Kaneko16InputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , Kaneko16InputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , Kaneko16InputPort1 + 2, "p2 left"   },
@@ -434,7 +428,9 @@ inline void Kaneko16MakeInputs()
 	// Clear Opposites
 	Kaneko16ClearOpposites(&Kaneko16Input[0]);
 	Kaneko16ClearOpposites(&Kaneko16Input[1]);
-	Kaneko16ClearOpposites(&Kaneko16Input[2]);
+
+	if (Brapboys)
+		Kaneko16ClearOpposites(&Kaneko16Input[2]);
 }
 
 /*==============================================================================================
@@ -5791,6 +5787,8 @@ static INT32 BrapboysInit()
 	MSM6295Init(1, (16000000 / 8) / 165, 1);
 	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
 
+	Brapboys = 1;
+
 	ShogwarrDoReset();
 
 	return 0;
@@ -5845,6 +5843,7 @@ static INT32 Kaneko16Exit()
 	Bonkadv = 0;
 	Mgcrystl = 0;
 	Shogwarr = 0;
+	Brapboys = 0;
 
 	return 0;
 }

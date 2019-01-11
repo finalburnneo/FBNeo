@@ -1703,10 +1703,8 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x03:	/* STRT (lo) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
 				voice->start = (voice->start & ~0x00000380) | ((data & 0x00e0) << 2);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
 				voice->start = (voice->start & ~0x0003fc00) | ((data & 0xff00) << 2);
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, loop start=%08x\n", machine->describe_context(), chip->current_page & 0x1f, voice->start);

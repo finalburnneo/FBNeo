@@ -1690,7 +1690,7 @@ static INT32 Tgm2Init()
 	speedhack_address = 0x6000c;
 	speedhack_pc[0] = 0x0602895a;
 	speedhack_pc[1] = 0x06028cac;
-	speedhack_pc[2] = 0x06029272;
+	//speedhack_pc[2] = 0x06029272; // bad!! (game logic, etc)
 	speedhack_pc[3] = 0x06028ef2;
 
 	return DrvInit(Tgm2LoadCallback, 1, 0x2c00000, 0x0c00000);
@@ -1743,7 +1743,7 @@ static INT32 Tgm2pInit()
 	speedhack_address = 0x6000c;
 	speedhack_pc[0] = 0x0602ae5a;
 	speedhack_pc[1] = 0x0602b1ac;
-	speedhack_pc[2] = 0x0602b772;
+	//speedhack_pc[2] = 0x0602b772; // bad!! (game logic, etc)
 	speedhack_pc[3] = 0x0602b3f2;
 
 	return DrvInit(Tgm2LoadCallback, 1, 0x2c00000, 0x0c00000);

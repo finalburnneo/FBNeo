@@ -58,11 +58,8 @@ static INT32 Snowbro3MusicPlaying;
 static INT32 Snowbro3Music;
 
 static struct BurnInputInfo HyperpacInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , HyperpacInputPort2 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , HyperpacInputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , HyperpacInputPort2 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , HyperpacInputPort2 + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , HyperpacInputPort2 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , HyperpacInputPort2 + 0, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , HyperpacInputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , HyperpacInputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , HyperpacInputPort0 + 2, "p1 left"   },
@@ -71,6 +68,8 @@ static struct BurnInputInfo HyperpacInputList[] = {
 	{"P1 Fire 2"         , BIT_DIGITAL  , HyperpacInputPort0 + 5, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , HyperpacInputPort0 + 6, "p1 fire 3" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , HyperpacInputPort2 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , HyperpacInputPort2 + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , HyperpacInputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , HyperpacInputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , HyperpacInputPort1 + 2, "p2 left"   },
@@ -87,9 +86,8 @@ static struct BurnInputInfo HyperpacInputList[] = {
 STDINPUTINFO(Hyperpac)
 
 static struct BurnInputInfo SnowbrosInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , HyperpacInputPort2 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , HyperpacInputPort2 + 0, "p1 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , HyperpacInputPort2 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , HyperpacInputPort2 + 0, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , HyperpacInputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , HyperpacInputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , HyperpacInputPort0 + 2, "p1 left"   },
@@ -98,9 +96,8 @@ static struct BurnInputInfo SnowbrosInputList[] = {
 	{"P1 Fire 2"         , BIT_DIGITAL  , HyperpacInputPort0 + 5, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , HyperpacInputPort0 + 6, "p1 fire 3" },
 
-	{"Coin 2"            , BIT_DIGITAL  , HyperpacInputPort2 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , HyperpacInputPort2 + 1, "p2 start"  },
-
+	{"P2 Coin"           , BIT_DIGITAL  , HyperpacInputPort2 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , HyperpacInputPort2 + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , HyperpacInputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , HyperpacInputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , HyperpacInputPort1 + 2, "p2 left"   },
@@ -255,7 +252,7 @@ static struct BurnDIPInfo Cookbib3DIPList[]=
 	{0   , 0xfe, 0   , 2   , "Mode"                   },
 	{0x13, 0x01, 0x80, 0x80, "Game"                   },
 	{0x13, 0x01, 0x80, 0x00, "Test"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
 	{0x14, 0x01, 0x80, 0x80, "Off"                    },
 	{0x14, 0x01, 0x80, 0x00, "On"                     },
@@ -297,7 +294,7 @@ static struct BurnDIPInfo MoremoreDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Mode"                   },
 	{0x13, 0x01, 0x80, 0x80, "Game"                   },
 	{0x13, 0x01, 0x80, 0x00, "Test"                   },
-	
+
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
 	{0x14, 0x01, 0x80, 0x80, "Off"                    },
 	{0x14, 0x01, 0x80, 0x00, "On"                     },
@@ -335,31 +332,31 @@ static struct BurnDIPInfo ToppyrapDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Mode"                   },
 	{0x13, 0x01, 0x80, 0x80, "Game"                   },
 	{0x13, 0x01, 0x80, 0x00, "Test"                   },
-	
+
 	{0   , 0xfe, 0   , 4   , "Player Count"           },
 	{0x14, 0x01, 0x03, 0x00, "2"                      },
 	{0x14, 0x01, 0x03, 0x03, "3"                      },
 	{0x14, 0x01, 0x03, 0x02, "4"                      },
 	{0x14, 0x01, 0x03, 0x01, "5"                      },
-	
+
 	{0   , 0xfe, 0   , 4   , "Game Time"              },
 	{0x14, 0x01, 0x0c, 0x04, "40 seconds"             },
 	{0x14, 0x01, 0x0c, 0x08, "50 seconds"             },
 	{0x14, 0x01, 0x0c, 0x0c, "60 seconds"             },
 	{0x14, 0x01, 0x0c, 0x00, "70 seconds"             },
-	
+
 	{0   , 0xfe, 0   , 2   , "God Mode"               },
 	{0x14, 0x01, 0x20, 0x20, "Off"                    },
 	{0x14, 0x01, 0x20, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Internal Test"          },
 	{0x14, 0x01, 0x40, 0x40, "Off"                    },
 	{0x14, 0x01, 0x40, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
 	{0x14, 0x01, 0x80, 0x80, "Off"                    },
 	{0x14, 0x01, 0x80, 0x00, "On"                     },
-};      
+};
 
 STDDIPINFO(Toppyrap)
 
@@ -408,7 +405,7 @@ static struct BurnDIPInfo Fourin1bootDIPList[]=
 	{0x14, 0x01, 0x03, 0x00, "2"                      },
 	{0x14, 0x01, 0x03, 0x03, "3"                      },
 	{0x14, 0x01, 0x03, 0x01, "4"                      },
-	
+
 	{0   , 0xfe, 0   , 2   , "Mode"                   },
 	{0x14, 0x01, 0x80, 0x80, "Game"                   },
 	{0x14, 0x01, 0x80, 0x00, "Test"                   },
@@ -442,7 +439,7 @@ static struct BurnDIPInfo FinalttrDIPList[]=
 	{0x14, 0x01, 0x0c, 0x0c, "90 seconds"             },
 	{0x14, 0x01, 0x0c, 0x08, "120 seconds"            },
 	{0x14, 0x01, 0x0c, 0x04, "150 seconds"            },
-};	
+};
 
 STDDIPINFO(Finalttr)
 
@@ -458,15 +455,15 @@ static struct BurnDIPInfo TwinadvDIPList[]=
 	{0x13, 0x01, 0x03, 0x01, "2 : 1"                  },
 	{0x13, 0x01, 0x03, 0x03, "1 : 1"                  },
 	{0x13, 0x01, 0x03, 0x02, "1 : 2"                  },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
 	{0x13, 0x01, 0x10, 0x00, "Off"                    },
 	{0x13, 0x01, 0x10, 0x10, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
 	{0x13, 0x01, 0x20, 0x20, "Off"                    },
 	{0x13, 0x01, 0x20, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Level Select"           },
 	{0x13, 0x01, 0x80, 0x80, "Off"                    },
 	{0x13, 0x01, 0x80, 0x00, "On"                     },
@@ -477,24 +474,24 @@ static struct BurnDIPInfo TwinadvDIPList[]=
 	{0x14, 0x01, 0x03, 0x02, "Hard"                   },
 	{0x14, 0x01, 0x03, 0x01, "Harder"                 },
 	{0x14, 0x01, 0x03, 0x00, "Hardest"                },
-	
+
 	{0   , 0xfe, 0   , 2   , "Lives"                  },
 	{0x14, 0x01, 0x04, 0x04, "3"                      },
 	{0x14, 0x01, 0x04, 0x00, "5"                      },
-	
+
 	{0   , 0xfe, 0   , 2   , "Ticket Mode 1"          },
 	{0x14, 0x01, 0x08, 0x08, "Off"                    },
 	{0x14, 0x01, 0x08, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Ticket Mode 2"          },
 	{0x14, 0x01, 0x40, 0x40, "Off"                    },
 	{0x14, 0x01, 0x40, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
 	{0x14, 0x01, 0x80, 0x80, "Off"                    },
 	{0x14, 0x01, 0x80, 0x00, "On"                     },
 };
-	
+
 STDDIPINFO(Twinadv)
 
 static struct BurnDIPInfo HoneydolDIPList[]=
@@ -509,11 +506,11 @@ static struct BurnDIPInfo HoneydolDIPList[]=
 	{0x13, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
 	{0x13, 0x01, 0x03, 0x03, "1 Coin  1 Credit"       },
 	{0x13, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
-	
+
 	{0   , 0xfe, 0   , 2   , "Show Girls"             },
 	{0x13, 0x01, 0x04, 0x00, "Off"                    },
 	{0x13, 0x01, 0x04, 0x04, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
 	{0x13, 0x01, 0x10, 0x00, "Off"                    },
 	{0x13, 0x01, 0x10, 0x10, "On"                     },
@@ -521,7 +518,7 @@ static struct BurnDIPInfo HoneydolDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Level Select"           },
 	{0x13, 0x01, 0x40, 0x40, "Off"                    },
 	{0x13, 0x01, 0x40, 0x00, "On"                     },
-	
+
 	{0   , 0xfe, 0   , 2   , "Slide show on boot"     },
 	{0x13, 0x01, 0x80, 0x80, "Off"                    },
 	{0x13, 0x01, 0x80, 0x00, "On"                     },
@@ -532,13 +529,13 @@ static struct BurnDIPInfo HoneydolDIPList[]=
 	{0x14, 0x01, 0x03, 0x02, "Hard"                   },
 	{0x14, 0x01, 0x03, 0x01, "Harder"                 },
 	{0x14, 0x01, 0x03, 0x00, "Hardest"                },
-	
+
 	{0   , 0xfe, 0   , 4   , "Timer speed"            },
 	{0x14, 0x01, 0x0c, 0x0c, "Normal"                 },
 	{0x14, 0x01, 0x0c, 0x08, "Fast"                   },
 	{0x14, 0x01, 0x0c, 0x04, "Faster"                 },
 	{0x14, 0x01, 0x0c, 0x00, "Fastest"                },
-	
+
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x14, 0x01, 0x30, 0x00, "1"                      },
 	{0x14, 0x01, 0x30, 0x10, "2"                      },
@@ -693,7 +690,7 @@ static struct BurnRomInfo HyperpacRomDesc[] = {
 	{ "hyperpac.u1",   0x10000, 0x03faf88e, BRF_SND },			 //  5	Z80 Program Code
 
 	{ "hyperpac.j15",  0x40000, 0xfb9f468d, BRF_SND },			 //  6	Samples
-	
+
 	{ "at89c52.bin",   0x02000, 0x291f9326, BRF_PRG | BRF_OPT },
 };
 
@@ -746,9 +743,9 @@ static struct BurnRomInfo Cookbib2RomDesc[] = {
 	{ "cookbib2.07",   0x10000, 0xf59f1c9a, BRF_SND },			 //  5	Z80 Program Code
 
 	{ "cookbib2.06",   0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
-	
+
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
-	
+
 	{ "protdata.bin",  0x00200, 0xae6d8ed5, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
@@ -767,9 +764,9 @@ static struct BurnRomInfo Cookbib2aRomDesc[] = {
 	{ "u1.512",   	   		0x10000, 0xf59f1c9a, BRF_SND },			 //  5	Z80 Program Code
 
 	{ "uj15.010",   		0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
-	
+
 	{ "87c52.mcu",     		0x10000, 0x00000000, BRF_NODUMP },
-	
+
 	{ "protdata_alt.bin",  	0x00200, 0xbc136ead, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
@@ -788,9 +785,9 @@ static struct BurnRomInfo Cookbib3RomDesc[] = {
 	{ "u35.bin",       0x10000, 0x5dfd2a98, BRF_SND },			 //  5	Z80 Program Code
 
 	{ "u14.bin",       0x20000, 0xe5bf9288, BRF_SND },			 //  6	Samples
-	
+
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
-	
+
 	{ "protdata.bin",  0x00200, 0xc819b9a8, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
@@ -810,9 +807,9 @@ static struct BurnRomInfo MoremoreRomDesc[] = {
 	{ "u35.bin",       0x10000, 0x92dc95fc, BRF_SND },			 //  6	Z80 Program Code
 
 	{ "u14.bin",       0x40000, 0x90580088, BRF_SND },			 //  7	Samples
-	
+
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
-	
+
 	{ "protdata.bin",  0x00200, 0x782dd2aa, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
@@ -832,9 +829,9 @@ static struct BurnRomInfo MoremorpRomDesc[] = {
 	{ "mmp_u35.bin",   0x10000, 0x4d098cad, BRF_SND },			 //  6	Z80 Program Code
 
 	{ "mmp_u14.bin",   0x40000, 0x211a2566, BRF_SND },			 //  7	Samples
-	
+
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
-	
+
 	{ "protdata.bin",  0x00200, 0x782dd2aa, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
@@ -854,9 +851,9 @@ static struct BurnRomInfo ToppyrapRomDesc[] = {
 	{ "u1.bin",        0x10000, 0x07f50947, BRF_SND },			 //  6	Z80 Program Code
 
 	{ "uj15.bin",      0x20000, 0xa3bacfd7, BRF_SND },			 //  7	Samples
-	
+
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
-	
+
 	{ "protdata.bin",  0x00200, 0x0704e6c7, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
@@ -876,9 +873,9 @@ static struct BurnRomInfo Threein1semiRomDesc[] = {
 	{ "u35",           0x10000, 0xe40481da, BRF_SND },			 //  6	Z80 Program Code
 
 	{ "u14",           0x40000, 0xc83c11be, BRF_SND },			 //  7	Samples
-	
+
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
-	
+
 	{ "protdata.bin",  0x00200, 0x85deba7c, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
@@ -895,9 +892,9 @@ static struct BurnRomInfo TwinkleRomDesc[] = {
 	{ "u1.bin",        0x10000, 0xe40481da, BRF_SND },			 //  3	Z80 Program Code
 
 	{ "uj15.bin",      0x40000, 0x0a534b37, BRF_SND },			 //  4	Samples
-	
+
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
-	
+
 	{ "protdata.bin",  0x00200, 0x00d3e4b4, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
@@ -915,9 +912,9 @@ static struct BurnRomInfo PzlbreakRomDesc[] = {
 	{ "0.u1",          0x10000, 0x1ad646b7, BRF_SND },			 //  4	Z80 Program Code
 
 	{ "1.uj15",        0x40000, 0xdbfae77c, BRF_SND },			 //  5	Samples
-	
+
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
-	
+
 	{ "protdata.bin",  0x00200, 0x092cb794, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
@@ -952,9 +949,9 @@ static struct BurnRomInfo FinalttrRomDesc[] = {
 	{ "12.5r",         0x10000, 0x4bc21361, BRF_SND },			 //  6	Z80 Program Code
 
 	{ "11.7p",         0x20000, 0x2e331022, BRF_SND },			 //  7	Samples
-	
+
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
-	
+
 	{ "protdata.bin",  0x00200, 0xd5bbb006, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
@@ -1021,7 +1018,7 @@ static struct BurnRomInfo HoneydolRomDesc[] = {
 	{ "d-17.ui12",     0x20000, 0xcac44154, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "d-13.1",        0x80000, 0xff6a57fb, BRF_GRA },			 //  2	4bpp Sprites
-	
+
 	{ "d-14.5",        0x80000, 0x2178996f, BRF_GRA },			 //  3	8bpp Sprites
 	{ "d-15.6",        0x80000, 0x6629239e, BRF_GRA },			 //  4	8bpp Sprites
 	{ "d-18.9",        0x80000, 0x0210507a, BRF_GRA },			 //  5	8bpp Sprites
@@ -1163,12 +1160,12 @@ static struct BurnRomInfo Snowbro3RomDesc[] = {
 	{ "ur3",           0x020000, 0x3f32fa15, BRF_ESS | BRF_PRG }, 	 //  1	68000 Program Code
 
 	{ "ua5",           0x080000, 0x0604e385, BRF_GRA },			 	 //  2	4bpp Sprites
-	
+
 	{ "un7",           0x200000, 0x4a79da4c, BRF_GRA },			 	 //  3	8bpp Sprites
 	{ "un8",           0x200000, 0x7a4561a4, BRF_GRA },			 	 //  4	8bpp Sprites
 
 	{ "us5",           0x080000, 0x7c6368ef, BRF_SND },			 	 //  5	Samples
-	
+
 	{ "sound.mcu",     0x010000, 0x00000000, BRF_PRG | BRF_NODUMP }, //  6	Sound MCU
 };
 
@@ -1181,12 +1178,12 @@ static struct BurnRomInfo BallboyRomDesc[] = {
 	{ "27c010.ur3",    0x020000, 0xa9c1fdda, BRF_ESS | BRF_PRG }, 	 //  1	68000 Program Code
 
 	{ "27c040.ua5",    0x080000, 0x0604e385, BRF_GRA },			 	 //  2	4bpp Sprites
-	
+
 	{ "27c160.un7",    0x200000, 0x4a79da4c, BRF_GRA },			 	 //  3	8bpp Sprites
 	{ "27c160.un8",    0x200000, 0xbfef8c44, BRF_GRA },			 	 //  4	8bpp Sprites
 
 	{ "27c040.us5",    0x080000, 0x7c6368ef, BRF_SND },			 	 //  5	Samples
-	
+
 	{ "sound.mcu",     0x010000, 0x00000000, BRF_PRG | BRF_NODUMP }, //  6	Sound MCU
 };
 
@@ -1197,7 +1194,7 @@ STD_ROM_FN(Ballboy)
 static INT32 HyperpacDoReset()
 {
 	HyperpacSoundLatch = 0;
-	
+
 	if(HyperpacProtData && !Finalttr) memcpy(HyperpacRam + 0xf000, HyperpacProtData, 0x200);
 	if(HyperpacProtData && Finalttr) memcpy(HyperpacRam + 0x2000, HyperpacProtData, 0x200);
 
@@ -1238,9 +1235,9 @@ static INT32 Snowbro3DoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
-	
+
 	MSM6295Reset(0);
-	
+
 	Snowbro3Music = 0;
 	Snowbro3MusicPlaying = 0;
 
@@ -1249,11 +1246,7 @@ static INT32 Snowbro3DoReset()
 
 static void HyperpacYM2151IrqHandler(INT32 Irq)
 {
-	if (Irq) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (Irq) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 // ----------------------------------------------------------------------------
@@ -1278,11 +1271,7 @@ static inline void snowbrosSynchroniseZ80(INT32 nExtraCycles)
 
 static void snowbrosFMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 snowbrosSynchroniseStream(INT32 nSoundRate)
@@ -1298,34 +1287,34 @@ static INT32 HoneydolSynchroniseStream(INT32 nSoundRate)
 static void Snowbro3PlayMusic(INT32 data)
 {
 	Snowbro3Music = data;
-	
+
 	bprintf(PRINT_NORMAL, _T("%x\n"), data);
-	
+
 	switch (data) {
 		case 0x23: {
 			memcpy(MSM6295ROM + 0x20000, MSM6295ROM + 0x80000, 0x20000);
 			Snowbro3MusicPlaying = 1;
 			break;
 		}
-		
+
 		case 0x24: {
 			memcpy(MSM6295ROM + 0x20000, MSM6295ROM + 0xa0000, 0x20000);
 			Snowbro3MusicPlaying = 1;
 			break;
 		}
-		
+
 		case 0x25: {
 			memcpy(MSM6295ROM + 0x20000, MSM6295ROM + 0xc0000, 0x20000);
 			Snowbro3MusicPlaying = 1;
 			break;
 		}
-		
+
 		case 0x26: {
 			memcpy(MSM6295ROM + 0x20000, MSM6295ROM + 0x80000, 0x20000);
 			Snowbro3MusicPlaying = 1;
 			break;
 		}
-		
+
 		case 0x27:
 		case 0x28:
 		case 0x29:
@@ -1337,7 +1326,7 @@ static void Snowbro3PlayMusic(INT32 data)
 			Snowbro3MusicPlaying = 1;
 			break;
 		}
-		
+
 		case 0x2e: {
 			Snowbro3MusicPlaying = 0;
 			break;
@@ -1348,7 +1337,7 @@ static void Snowbro3PlayMusic(INT32 data)
 static void Snowbro3PlaySound(INT32 data)
 {
 	INT32 Status = MSM6295Read(0);
-	
+
 	if ((Status & 0x01) == 0x00) {
 		MSM6295Write(0, 0x80 | data);
 		MSM6295Write(0, 0x12);
@@ -1361,23 +1350,23 @@ static void Snowbro3PlaySound(INT32 data)
 				MSM6295Write(0, 0x80 | data);
 				MSM6295Write(0, 0x42);
 			}
-		}	
+		}
 	}
 }
 
 // ----------------------------------------------------------------------------
 
-UINT8 __fastcall HyperpacReadByte(UINT32 a)
+static UINT8 __fastcall HyperpacReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x200000: {
 			if (Threein1semi) return 0x0a;
 		}
-	
+
 		case 0x200001: {
 			if (Moremore || Threein1semi) return 0x0a;
 		}
-		
+
 		case 0x500000: {
 			return HyperpacInput[0];
 		}
@@ -1389,7 +1378,7 @@ UINT8 __fastcall HyperpacReadByte(UINT32 a)
 		case 0x500002: {
 			return HyperpacInput[1];
 		}
-		
+
 		case 0x500003: {
 			return HyperpacDip[1];
 		}
@@ -1397,22 +1386,22 @@ UINT8 __fastcall HyperpacReadByte(UINT32 a)
 		case 0x500004: {
 			return HyperpacInput[2];
 		}
-		
+
 		default: {
 			bprintf(PRINT_NORMAL, _T("Read byte -> %06X\n"), a);
 		}
 	}
-	
+
 	return 0;
 }
 
-UINT8 __fastcall HyperpacReadByteLow(UINT32 a)
+static UINT8 __fastcall HyperpacReadByteLow(UINT32 a)
 {
 	switch (a) {
 		case 0x200001: {
 			if (Fourin1boot) return 0x02;
 		}
-		
+
 		case 0x500000: {
 			return 0x7f - HyperpacInput[0];
 		}
@@ -1424,7 +1413,7 @@ UINT8 __fastcall HyperpacReadByteLow(UINT32 a)
 		case 0x500002: {
 			return 0x7f - HyperpacInput[1];
 		}
-		
+
 		case 0x500003: {
 			return HyperpacDip[1];
 		}
@@ -1432,20 +1421,20 @@ UINT8 __fastcall HyperpacReadByteLow(UINT32 a)
 		case 0x500004: {
 			return 0xff - HyperpacInput[2];
 		}
-		
+
 		case 0x500005: {
 			return 0xff - HyperpacInput[2];
 		}
-		
+
 		default: {
 			bprintf(PRINT_NORMAL, _T("Read byte -> %06X\n"), a);
 		}
 	}
-	
+
 	return 0xff;
 }
 
-void __fastcall HyperpacWriteByte(UINT32 a, UINT8 d)
+static void __fastcall HyperpacWriteByte(UINT32 a, UINT8 d)
 {
 	if (a < 0x100000) return;
 
@@ -1454,49 +1443,49 @@ void __fastcall HyperpacWriteByte(UINT32 a, UINT8 d)
 			HyperpacSoundLatch = d & 0xff;
 			return;
 		}
-		
+
 		default: {
 			bprintf(PRINT_NORMAL, _T("Write byte -> %06X, %02X\n"), a, d);
 		}
 	}
 }
 
-void __fastcall TwinadvWriteByte(UINT32 a, UINT8 d)
+static void __fastcall TwinadvWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x200000:
 		case 0x200001: {
 			return;
 		}
-	
+
 		case 0x300001: {
 			HyperpacSoundLatch = d & 0xff;
 			ZetNmi();
 			return;
 		}
-		
+
 		default: {
 			bprintf(PRINT_NORMAL, _T("Write byte -> %06X, %02X\n"), a, d);
 		}
 	}
 }
 
-UINT16 __fastcall HyperpacReadWord(UINT32 a)
+static UINT16 __fastcall HyperpacReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x200000: {
 			if (Cookbib3) return 0x2a2a;
 		}
-		
+
 		default: {
 			bprintf(PRINT_NORMAL, _T("Read Word -> %06X\n"), a);
 		}
 	}
-	
+
 	return 0;
 }
 
-UINT16 __fastcall HyperpacReadWordLow(UINT32 a)
+static UINT16 __fastcall HyperpacReadWordLow(UINT32 a)
 {
 	switch (a) {
 		case 0x500000:
@@ -1504,28 +1493,28 @@ UINT16 __fastcall HyperpacReadWordLow(UINT32 a)
 		case 0x500004: {
 			SEK_DEF_READ_WORD(0, a);
 		}
-		
+
 		default: {
 			bprintf(PRINT_NORMAL, _T("Read Word -> %06X\n"), a);
 		}
-		
+
 	}
-	
+
 	return 0xffff;
 }
 
-void __fastcall HyperpacWriteWord(UINT32 a, UINT16 d)
+static void __fastcall HyperpacWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
-		case 0x00b7d6: 
+		case 0x00b7d6:
 		case 0x00b7d8: {
 			if (Finalttr) return;
 		}
-		
+
 		case 0x200000: {
 			if (Fourin1boot) return; // Watchdog in original Snow Bros.
 		}
-		
+
 		case 0x300000: {
 			SEK_DEF_WRITE_WORD(0, a, d);
 			return;
@@ -1534,54 +1523,54 @@ void __fastcall HyperpacWriteWord(UINT32 a, UINT16 d)
 		case 0x400000: {
 			return;
 		}
-		
-		case 0x800000: 
-		case 0x900000: 
+
+		case 0x800000:
+		case 0x900000:
 		case 0xa00000: {
 			// IRQ ACK
 			return;
 		}
-		
+
 		default: {
 			bprintf(PRINT_NORMAL, _T("Write word -> %06X, %04X\n"), a, d);
 		}
 	}
 }
 
-UINT8 __fastcall HoneydolReadByte(UINT32 a)
+static UINT8 __fastcall HoneydolReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x900000: {
 			return 0x7f - HyperpacInput[0];
 		}
-		
+
 		case 0x900001: {
 			return HyperpacDip[0];
 		}
-		
+
 		case 0x900002: {
 			return 0x7f - HyperpacInput[1];
 		}
-		
+
 		case 0x900003: {
 			return HyperpacDip[1];
 		}
-		
+
 		case 0x900004: {
 			return 0xff - HyperpacInput[2];
 		}
-		
+
 		case 0x900005: {
 			return 0xff;
 		}
 	}
 
 	bprintf(PRINT_NORMAL, _T("Read byte -> %06X\n"), a);
-	
+
 	return 0;
 }
 
-UINT16 __fastcall HoneydolReadWord(UINT32 a)
+static UINT16 __fastcall HoneydolReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x900000:
@@ -1590,19 +1579,19 @@ UINT16 __fastcall HoneydolReadWord(UINT32 a)
 			SEK_DEF_READ_WORD(0, a);
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("Read Word -> %06X\n"), a);
-	
+
 	return 0;
 }
 
-void __fastcall HoneydolWriteByte(UINT32 a, UINT8 d)
+static void __fastcall HoneydolWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x300000: {
 			return;
 		}
-		
+
 		case 0x300001: {
 			HyperpacSoundLatch = d;
 			snowbrosSynchroniseZ80(0);
@@ -1610,39 +1599,39 @@ void __fastcall HoneydolWriteByte(UINT32 a, UINT8 d)
 			return;
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("Write byte -> %06X, %02X\n"), a, d);
 }
 
-void __fastcall HoneydolWriteWord(UINT32 a, UINT16 d)
+static void __fastcall HoneydolWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x200000: {
 			return; // Watchdog?
 		}
-		
+
 		case 0x300000: {
 			SEK_DEF_WRITE_WORD(0, a, d);
 			return;
 		}
-	
+
 		case 0x400000:
-		case 0x500000: 
+		case 0x500000:
 		case 0x600000: {
 			// IRQ Ack
 			return;
 		}
-		
+
 		case 0x800000: {
 			// ?
 			return;
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("Write word -> %06X, %04X\n"), a, d);
 }
 
-UINT8 __fastcall HyperpacZ80Read(UINT16 a)
+static UINT8 __fastcall HyperpacZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xf001: {
@@ -1652,19 +1641,19 @@ UINT8 __fastcall HyperpacZ80Read(UINT16 a)
 		case 0xf008: {
 			return HyperpacSoundLatch;
 		}
-		
+
 		default: {
 //			bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
 		}
 	}
-	
+
 	return 0;
 }
 
-void __fastcall HyperpacZ80Write(UINT16 a, UINT8 d)
+static void __fastcall HyperpacZ80Write(UINT16 a, UINT8 d)
 {
 	d &= 0xff;
-	
+
 	switch (a) {
 		case 0xf000: {
 			BurnYM2151SelectRegister(d);
@@ -1680,48 +1669,48 @@ void __fastcall HyperpacZ80Write(UINT16 a, UINT8 d)
 			MSM6295Write(0, d);
 			return;
 		}
-		
+
 		default: {
 //			bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02x\n"), a, d);
 		}
 	}
 }
 
-UINT8 __fastcall TwinadvZ80PortRead(UINT16 a)
+static UINT8 __fastcall TwinadvZ80PortRead(UINT16 a)
 {
 	a &= 0xff;
-	
+
 	switch (a) {
 		case 0x02: {
 			return HyperpacSoundLatch;
 		}
-		
+
 		case 0x06: {
 			return MSM6295Read(0);
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("Z80 Port Read -> %02X\n"), a);
 
 	return 0;
 }
 
-void __fastcall TwinadvZ80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall TwinadvZ80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
-	
+
 	switch (a) {
 		case 0x02: {
 			HyperpacSoundLatch = d;
 			return;
 		}
-		
+
 		case 0x04: {
 			INT32 bank = (d &0x02) >> 1;
 			memcpy(MSM6295ROM + 0x00000, MSM6295ROM + (0x40000 * bank), 0x40000);
 			return;
 		}
-		
+
 		case 0x06: {
 			MSM6295Write(0, d);
 			return;
@@ -1731,34 +1720,34 @@ void __fastcall TwinadvZ80PortWrite(UINT16 a, UINT8 d)
 	bprintf(PRINT_NORMAL, _T("Z80 Port Write -> %02X, %02x\n"), a, d);
 }
 
-UINT8 __fastcall HoneydolZ80Read(UINT16 a)
+static UINT8 __fastcall HoneydolZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xe010: {
 			return MSM6295Read(0);
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
-	
+
 	return 0;
 }
 
-void __fastcall HoneydolZ80Write(UINT16 a, UINT8 d)
+static void __fastcall HoneydolZ80Write(UINT16 a, UINT8 d)
 {
 	d &= 0xff;
-	
+
 	switch (a) {
 		case 0xe010: {
 			MSM6295Write(0, d);
 			return;
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02x\n"), a, d);
 }
 
-UINT16 __fastcall SnowbrosReadWord(UINT32 a)
+static UINT16 __fastcall SnowbrosReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x300000:
@@ -1775,7 +1764,7 @@ UINT16 __fastcall SnowbrosReadWord(UINT32 a)
 	return 0;
 }
 
-UINT8 __fastcall SnowbrosReadByte(UINT32 a)
+static UINT8 __fastcall SnowbrosReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x300001: {
@@ -1811,7 +1800,7 @@ UINT8 __fastcall SnowbrosReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall SnowbrosWriteWord(UINT32 a, UINT16 d)
+static void __fastcall SnowbrosWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x300000: {
@@ -1821,7 +1810,7 @@ void __fastcall SnowbrosWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-void __fastcall SnowbrosWriteByte(UINT32 a, UINT8 d)
+static void __fastcall SnowbrosWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x300001: {
@@ -1833,26 +1822,26 @@ void __fastcall SnowbrosWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Snowbro3ReadWord(UINT32 a)
+static UINT16 __fastcall Snowbro3ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x300000: {
 			return 3;
 		}
-		
+
 		case 0x500000:
 		case 0x500002:
 		case 0x500004: {
 			SEK_DEF_READ_WORD(0, a);
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("68000 Read Word %06X\n"), a);
 
 	return 0;
 }
 
-UINT8 __fastcall Snowbro3ReadByte(UINT32 a)
+static UINT8 __fastcall Snowbro3ReadByte(UINT32 a)
 {
 	switch (a) {
 /*		case 0x300001: {
@@ -1879,18 +1868,18 @@ UINT8 __fastcall Snowbro3ReadByte(UINT32 a)
 		case 0x500004: {
 			return 0xff - HyperpacInput[2];
 		}
-		
+
 		case 0x500005: {
 			return 0xff;
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte %06X\n"), a);
 
 	return 0;
 }
 
-void __fastcall Snowbro3WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Snowbro3WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x300000: {
@@ -1899,7 +1888,7 @@ void __fastcall Snowbro3WriteWord(UINT32 a, UINT16 d)
 				MSM6295Write(0, 0x78);
 			} else {
 				d = d >> 8;
-				
+
 				if (d <= 0x21) Snowbro3PlaySound(d);
 				if (d >= 0x22 && d <= 0x31) Snowbro3PlayMusic(d);
 				if (d >= 0x30 && d <= 0x51) Snowbro3PlaySound(d - 0x30);
@@ -1907,7 +1896,7 @@ void __fastcall Snowbro3WriteWord(UINT32 a, UINT16 d)
 			}
 			return;
 		}
-		
+
 		case 0x200000:
 		case 0x800000:
 		case 0x900000:
@@ -1915,11 +1904,11 @@ void __fastcall Snowbro3WriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("68000 Write Word %06X -> %04X\n"), a, d);
 }
 
-void __fastcall Snowbro3WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Snowbro3WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x300000: {
@@ -1928,7 +1917,7 @@ void __fastcall Snowbro3WriteByte(UINT32 a, UINT8 d)
 				MSM6295Write(0, 0x78);
 			} else {
 				//d = d >> 8;
-				
+
 				if (d <= 0x21) Snowbro3PlaySound(d);
 				if (d >= 0x22 && d <= 0x31) Snowbro3PlayMusic(d);
 				if (d >= 0x30 && d <= 0x51) Snowbro3PlaySound(d - 0x30);
@@ -1937,11 +1926,11 @@ void __fastcall Snowbro3WriteByte(UINT32 a, UINT8 d)
 			return;
 		}
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte %06X -> %02X\n"), a, d);
 }
 
-UINT8 __fastcall SnowbrosZ80PortRead(UINT16 a)
+static UINT8 __fastcall SnowbrosZ80PortRead(UINT16 a)
 {
 	a &= 0xff;
 
@@ -1959,7 +1948,7 @@ UINT8 __fastcall SnowbrosZ80PortRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall SnowbrosZ80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall SnowbrosZ80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 
@@ -2069,7 +2058,7 @@ static INT32 Snowbro3MemIndex()
 static INT32 HyperpacMachineInit()
 {
 	BurnSetRefreshRate(57.5);
-	
+
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -2140,7 +2129,7 @@ static INT32 Snowbro38BppYOffsets[16]      = { 0, 64, 128, 192, 256, 320, 384, 4
 static INT32 HyperpacInit()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	HyperpacNumTiles = 6144;
 
 	// Allocate and Blank all required memory
@@ -2152,11 +2141,11 @@ static INT32 HyperpacInit()
 	MemIndex();
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x0c0000);
-	
+
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Load Z80 Program Rom
 	nRet = BurnLoadRom(HyperpacZ80Rom, 5, 1); if (nRet != 0) return 1;
 
@@ -2177,17 +2166,17 @@ static INT32 HyperpacInit()
 		HyperpacRam[0xe086 + 0] = 0x10;
 		HyperpacRam[0xe086 + 1] = 0x32;
 	}
-	
+
 	// Load and Decode Sprite Roms
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x00000, 2, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x40000, 3, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x80000, 4, 1); if (nRet != 0) return 1;
-	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);	
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 	BurnFree(HyperpacTempGfx);
 
 	// Load Sample Rom
 	nRet = BurnLoadRom(MSM6295ROM, 6, 1); if (nRet != 0) return 1;
-	
+
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
 
 	return 0;
@@ -2196,7 +2185,7 @@ static INT32 HyperpacInit()
 static INT32 Cookbib2Init()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	HyperpacNumTiles = 10240;
 
 	// Allocate and Blank all required memory
@@ -2208,11 +2197,11 @@ static INT32 Cookbib2Init()
 	MemIndex();
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x200000);
-	
+
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Load Z80 Program Rom
 	nRet = BurnLoadRom(HyperpacZ80Rom, 5, 1); if (nRet != 0) return 1;
 
@@ -2220,16 +2209,16 @@ static INT32 Cookbib2Init()
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 2, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x080000, 3, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x100000, 4, 1); if (nRet != 0) return 1;
-	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);	
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 	BurnFree(HyperpacTempGfx);
 
 	// Load Sample Rom
 	nRet = BurnLoadRom(MSM6295ROM, 6, 1); if (nRet != 0) return 1;
-	
+
 	// Load Shared RAM data
 	nRet = BurnLoadRom(HyperpacProtData, 8, 1); if (nRet) return 1;
 	BurnByteswap(HyperpacProtData, 0x200);
-	
+
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
 
 	return 0;
@@ -2238,9 +2227,9 @@ static INT32 Cookbib2Init()
 static INT32 Cookbib3Init()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	HyperpacNumTiles = 16384;
-	
+
 	Cookbib3 = 1;
 
 	// Allocate and Blank all required memory
@@ -2252,11 +2241,11 @@ static INT32 Cookbib3Init()
 	MemIndex();
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x200000);
-	
+
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Load and descramble Z80 Program Rom
 	nRet = BurnLoadRom(HyperpacZ80Rom, 5, 1); if (nRet != 0) return 1;
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x10000);
@@ -2271,16 +2260,16 @@ static INT32 Cookbib3Init()
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 2, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x080000, 3, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x100000, 4, 1); if (nRet != 0) return 1;
-	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);	
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 	BurnFree(HyperpacTempGfx);
 
 	// Load Sample Rom
 	nRet = BurnLoadRom(MSM6295ROM, 6, 1); if (nRet != 0) return 1;
-	
+
 	// Load Shared RAM data
 	nRet = BurnLoadRom(HyperpacProtData, 8, 1); if (nRet) return 1;
 	BurnByteswap(HyperpacProtData, 0x200);
-	
+
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
 
 	return 0;
@@ -2289,9 +2278,9 @@ static INT32 Cookbib3Init()
 static INT32 MoremoreInit()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	HyperpacNumTiles = 16384;
-	
+
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "moremore") || !strcmp(BurnDrvGetTextA(DRV_NAME), "moremorp")) Moremore = 1;
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "3in1semi")) Threein1semi = 1;
 
@@ -2304,11 +2293,11 @@ static INT32 MoremoreInit()
 	MemIndex();
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x200000);
-	
+
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Load Z80 Program Rom
 	nRet = BurnLoadRom(HyperpacZ80Rom, 6, 1); if (nRet != 0) return 1;
 
@@ -2317,16 +2306,16 @@ static INT32 MoremoreInit()
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x080000, 3, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x100000, 4, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x180000, 5, 1); if (nRet != 0) return 1;
-	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);	
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 	BurnFree(HyperpacTempGfx);
 
 	// Load Sample Rom
 	nRet = BurnLoadRom(MSM6295ROM, 7, 1); if (nRet != 0) return 1;
-	
+
 	// Load Shared RAM data
 	nRet = BurnLoadRom(HyperpacProtData, 9, 1); if (nRet) return 1;
 	BurnByteswap(HyperpacProtData, 0x200);
-	
+
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
 
 	return 0;
@@ -2335,9 +2324,9 @@ static INT32 MoremoreInit()
 static INT32 TwinkleInit()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	HyperpacNumTiles = 4096;
-	
+
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
@@ -2347,26 +2336,26 @@ static INT32 TwinkleInit()
 	MemIndex();
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x080000);
-	
+
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Load Z80 Program Rom
 	nRet = BurnLoadRom(HyperpacZ80Rom, 3, 1); if (nRet != 0) return 1;
 
 	// Load and Decode Sprite Roms
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 2, 1); if (nRet != 0) return 1;
-	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);	
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 	BurnFree(HyperpacTempGfx);
 
 	// Load Sample Rom
 	nRet = BurnLoadRom(MSM6295ROM, 4, 1); if (nRet != 0) return 1;
-	
+
 	// Load Shared RAM data
 	nRet = BurnLoadRom(HyperpacProtData, 6, 1); if (nRet) return 1;
 	BurnByteswap(HyperpacProtData, 0x200);
-	
+
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
 
 	return 0;
@@ -2375,9 +2364,9 @@ static INT32 TwinkleInit()
 static INT32 PzlbreakInit()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	HyperpacNumTiles = 8192;
-	
+
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
@@ -2387,27 +2376,27 @@ static INT32 PzlbreakInit()
 	MemIndex();
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x100000);
-	
+
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Load Z80 Program Rom
 	nRet = BurnLoadRom(HyperpacZ80Rom, 4, 1); if (nRet != 0) return 1;
 
 	// Load and Decode Sprite Roms
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 2, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x080000, 3, 1); if (nRet != 0) return 1;
-	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);	
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 	BurnFree(HyperpacTempGfx);
 
 	// Load Sample Rom
 	nRet = BurnLoadRom(MSM6295ROM, 5, 1); if (nRet != 0) return 1;
-	
+
 	// Load Shared RAM data
 	nRet = BurnLoadRom(HyperpacProtData, 7, 1); if (nRet) return 1;
 	BurnByteswap(HyperpacProtData, 0x200);
-	
+
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
 
 	return 0;
@@ -2449,9 +2438,9 @@ static void Fourin1bootDescrambleRom()
 static INT32 Fourin1bootInit()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	HyperpacNumTiles = 16384;
-	
+
 	Fourin1boot = 1;
 
 	// Allocate and Blank all required memory
@@ -2463,35 +2452,35 @@ static INT32 Fourin1bootInit()
 	MemIndex();
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x200000);
-	
+
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Load and Z80 Program Rom
 	nRet = BurnLoadRom(HyperpacZ80Rom, 3, 1); if (nRet != 0) return 1;
-	
+
 	Fourin1bootDescrambleRom();
-	
+
 	// Load and Decode Sprite Roms
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 2, 1); if (nRet != 0) return 1;
-	GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);		
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 	BurnFree(HyperpacTempGfx);
 
 	// Load Sample Rom
 	nRet = BurnLoadRom(MSM6295ROM, 4, 1); if (nRet != 0) return 1;
-	
+
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
-	
+
 	return 0;
 }
 
 static INT32 FinalttrInit()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	HyperpacNumTiles = 8192;
-	
+
 	Finalttr = 1;
 
 	// Allocate and Blank all required memory
@@ -2503,11 +2492,11 @@ static INT32 FinalttrInit()
 	MemIndex();
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x100000);
-	
+
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Load Z80 Program Rom
 	nRet = BurnLoadRom(HyperpacZ80Rom, 6, 1); if (nRet != 0) return 1;
 
@@ -2516,18 +2505,18 @@ static INT32 FinalttrInit()
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x040000, 3, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x080000, 4, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x0c0000, 5, 1); if (nRet != 0) return 1;
-	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);	
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 	BurnFree(HyperpacTempGfx);
 
 	// Load Sample Rom
 	nRet = BurnLoadRom(MSM6295ROM, 7, 1); if (nRet != 0) return 1;
-	
+
 	// Load Shared RAM data
 	nRet = BurnLoadRom(HyperpacProtData, 9, 1); if (nRet) return 1;
 	BurnByteswap(HyperpacProtData, 0x200);
-	
+
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
-	
+
 	BurnYM2151SetAllRoutes(0.08, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
@@ -2537,11 +2526,11 @@ static INT32 FinalttrInit()
 static INT32 TwinadvInit()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	HyperpacNumTiles = 12288;
-	
+
 	Twinadv = 1;
-	
+
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
@@ -2551,11 +2540,11 @@ static INT32 TwinadvInit()
 	MemIndex();
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x180000);
-	
+
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Load Z80 Program Rom
 	nRet = BurnLoadRom(HyperpacZ80Rom, 5, 1); if (nRet != 0) return 1;
 
@@ -2563,15 +2552,15 @@ static INT32 TwinadvInit()
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 2, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x080000, 3, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x100000, 4, 1); if (nRet != 0) return 1;
-	GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);		
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 	BurnFree(HyperpacTempGfx);
 
 	// Load Sample Roms
 	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 6, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(MSM6295ROM + 0x40000, 7, 1); if (nRet != 0) return 1;
-	
+
 	BurnSetRefreshRate(57.5);
-	
+
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -2612,12 +2601,12 @@ static INT32 TwinadvInit()
 static INT32 HoneydolInit()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	HyperpacNumTiles = 4096;
 	HyperpacNumTiles8bpp = 8192;
-	
+
 	Honeydol = 1;
-	
+
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
@@ -2627,18 +2616,18 @@ static INT32 HoneydolInit()
 	MemIndex();
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x200000);
-	
+
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Load Z80 Program Rom
 	nRet = BurnLoadRom(HyperpacZ80Rom, 7, 1); if (nRet != 0) return 1;
 
 	// Load and Decode Sprite Roms
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 2, 1); if (nRet != 0) return 1;
-	GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);		
-		
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
+
 	// Load and Decode 8bpp Sprite Roms
 	memset(HyperpacTempGfx, 0, 0x200000);
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 3, 1); if (nRet != 0) return 1;
@@ -2650,9 +2639,9 @@ static INT32 HoneydolInit()
 
 	// Load Sample Roms
 	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 8, 1); if (nRet != 0) return 1;
-		
+
 	BurnSetRefreshRate(57.5);
-	
+
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -2730,7 +2719,7 @@ static INT32 SnowbrosInit()
 	INT32 nRet = 0, nLen;
 
 	BurnSetRefreshRate(57.5);
-	
+
 	HyperpacNumTiles = 4096;
 
 	// Allocate and Blank all required memory
@@ -2779,7 +2768,7 @@ static INT32 SnowbrosInit()
 		nRet = BurnLoadRom(HyperpacTempGfx + 0x40001, 9, 2); if (nRet != 0) return 1;
 		nRet = BurnLoadRom(HyperpacTempGfx + 0x60000, 10, 2); if (nRet != 0) return 1;
 		nRet = BurnLoadRom(HyperpacTempGfx + 0x60001, 11, 2); if (nRet != 0) return 1;
-		GfxDecode(HyperpacNumTiles, 4, 16, 16, WintbobSpritePlaneOffsets, WintbobSpriteXOffsets, WintbobSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);		
+		GfxDecode(HyperpacNumTiles, 4, 16, 16, WintbobSpritePlaneOffsets, WintbobSpriteXOffsets, WintbobSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 		BurnFree(HyperpacTempGfx);
 	} else {
 		// Load and byte-swap 68000 Program roms
@@ -2791,7 +2780,7 @@ static INT32 SnowbrosInit()
 
 		// Load and Decode Sprite Roms
 		nRet = BurnLoadRom(HyperpacTempGfx + 0x00000, 2, 1); if (nRet != 0) return 1;
-		GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);		
+		GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 		BurnFree(HyperpacTempGfx);
 	}
 
@@ -2835,21 +2824,21 @@ static INT32 SnowbrosInit()
 static INT32 WintbobInit()
 {
 	Wintbob = 1;
-	
+
 	return SnowbrosInit();
 }
 
 static INT32 TotoInit()
 {
 	Toto = 1;
-	
+
 	return SnowbrosInit();
 }
 
 static INT32 Snowbro3Init()
 {
 	INT32 nRet = 0, nLen;
-	
+
 	Snowbro3 = 1;
 
 	HyperpacNumTiles = 0x1000;
@@ -2868,7 +2857,7 @@ static INT32 Snowbro3Init()
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(HyperpacRom + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacRom + 0x00000, 1, 2); if (nRet != 0) return 1;
-	
+
 	// Decode 68000 Program Rom
 	UINT8 *buffer;
 	buffer = (UINT8*)BurnMalloc(0x40000);
@@ -2881,13 +2870,13 @@ static INT32 Snowbro3Init()
 	// Load and Decode Sprite Roms
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x00000, 2, 1); if (nRet != 0) return 1;
 	GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
-	
+
 	// Load and Decode 8bpp Sprite Roms
 	memset(HyperpacTempGfx, 0, 0x400000);
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 3, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x200000, 4, 1); if (nRet != 0) return 1;
 	GfxDecode(HyperpacNumTiles8bpp, 8, 16, 16, Snowbro38BppPlaneOffsets, Snowbro38BppXOffsets, Snowbro38BppYOffsets, 0x800, HyperpacTempGfx, HyperpacSprites8bpp);
-	
+
 	// Load Sample Roms
 	memset(HyperpacTempGfx, 0, 0x400000);
 	nRet = BurnLoadRom(HyperpacTempGfx, 5, 1); if (nRet != 0) return 1;
@@ -2907,7 +2896,7 @@ static INT32 Snowbro3Init()
 	SekSetReadByteHandler(0, Snowbro3ReadByte);
 	SekSetWriteByteHandler(0, Snowbro3WriteByte);
 	SekClose();
-	
+
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 999900 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -2926,17 +2915,17 @@ static INT32 HyperpacExit()
 
 	SekExit();
 	ZetExit();
-	
+
 	GenericTilesExit();
-	
+
 	if (!Twinadv && !Honeydol) BurnYM2151Exit();
 	if (Honeydol) BurnYM3812Exit();
 
 	BurnFree(Mem);
-	
+
 	HyperpacNumTiles = 0;
 	HyperpacNumTiles8bpp = 0;
-	
+
 	Moremore = 0;
 	Threein1semi = 0;
 	Cookbib3 = 0;
@@ -2945,7 +2934,7 @@ static INT32 HyperpacExit()
 	Twinadv = 0;
 	Honeydol = 0;
 	Snowbro3 = 0;
-	
+
 	return 0;
 }
 
@@ -2960,7 +2949,7 @@ static INT32 SnowbrosExit()
 	GenericTilesExit();
 
 	BurnFree(Mem);
-	
+
 	HyperpacNumTiles = 0;
 	HyperpacNumTiles8bpp = 0;
 	Wintbob = 0;
@@ -3109,7 +3098,7 @@ static void HoneydolRenderSpriteLayer()
 
 		if (x > 511) x &= 0x1ff;
 		if (y > 511) y &= 0x1ff;
-		
+
 		if (x > 15 && x < 240 && (y - 16) > 15 && (y - 16) <= 208) {
 			if (!FlipY) {
 				if (!FlipX) {
@@ -3140,10 +3129,7 @@ static void HoneydolRenderSpriteLayer()
 				}
 			}
 		}
-		
-		
-		
-		
+
 		dx         = ((HyperpacSpriteRam[Offs +  9]  << 8) + HyperpacSpriteRam[Offs +  8]) & 0xff;
 		dy         = ((HyperpacSpriteRam[Offs + 11]  << 8) + HyperpacSpriteRam[Offs + 10]) & 0xff;
 		TileColour = (HyperpacSpriteRam[Offs +  7]  << 8) + HyperpacSpriteRam[Offs +  6];
@@ -3154,7 +3140,7 @@ static void HoneydolRenderSpriteLayer()
 		Tile       = ((Attr & 0x3f) << 8) + (Attr2 & 0xff);
 		Colour     = (TileColour & 0x3f0) >> 4;
 		Colour    ^= 0x3f;
-		
+
 		x = dx;
 		y = dy;
 
@@ -3258,7 +3244,7 @@ static void SnowbrosRenderSpriteLayer()
 static void WintbobRenderSpriteLayer()
 {
 	INT32 x = 0, y = 0, Offs;
-	
+
 	UINT16 *SpriteRam = (UINT16*)HyperpacSpriteRam;
 
 	for (Offs = 0; Offs < 0x2000 >> 1; Offs += 8) {
@@ -3315,7 +3301,7 @@ static void WintbobRenderSpriteLayer()
 static void Snowbro3RenderSpriteLayer()
 {
 	INT32 x = 0, y = 0, Offs;
-	
+
 	UINT16 *SpriteRam = (UINT16*)HyperpacSpriteRam;
 	UINT8 *pTile = NULL;
 	INT32 ColourDepth = 0;
@@ -3329,7 +3315,7 @@ static void Snowbro3RenderSpriteLayer()
 		INT32 FlipX      = Attr & 0x80;
 		INT32 FlipY      = (Attr & 0x40) << 1;
 		INT32 Tile       = ((Attr & 0xff) << 8) + (Attr2 & 0xff);
-		
+
 		if (TileColour & 1) dx = -1 - (dx ^ 0xff);
 		if (TileColour & 2) dy = -1 - (dy ^ 0xff);
 		if (TileColour & 4) {
@@ -3342,7 +3328,7 @@ static void Snowbro3RenderSpriteLayer()
 
 		if (x > 511) x &= 0x1ff;
 		if (y > 511) y &= 0x1ff;
-		
+
 		if (Offs < 0x800) {
 			TileColour = 0x10;
 			Tile &= 0x3fff;
@@ -3353,7 +3339,7 @@ static void Snowbro3RenderSpriteLayer()
 			ColourDepth = 4;
 			pTile = HyperpacSprites;
 		}
-		
+
 		INT32 Colour     = (TileColour & 0xf0) >> 4;
 
 		if (x > 15 && x < 240 && (y - 16) > 15 && (y - 16) <= 208) {
@@ -3446,11 +3432,9 @@ static INT32 Snowbro3CalcPalette()
 static INT32 HyperpacRender()
 {
 	HyperpacCalcPalette();
-	
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0xf0;	
-	}
-	
+
+	BurnTransferClear(0xf0);
+
 	HyperpacRenderSpriteLayer();
 	BurnTransferCopy(HyperpacPalette);
 
@@ -3460,11 +3444,9 @@ static INT32 HyperpacRender()
 static INT32 PzlbreakRender()
 {
 	HyperpacCalcPalette();
-	
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0xc0;	
-	}
-	
+
+	BurnTransferClear(0xc0);
+
 	HyperpacRenderSpriteLayer();
 	BurnTransferCopy(HyperpacPalette);
 
@@ -3474,11 +3456,9 @@ static INT32 PzlbreakRender()
 static INT32 TwinadvRender()
 {
 	HyperpacCalcPalette();
-	
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0xf0;	
-	}
-	
+
+	BurnTransferClear(0xf0);
+
 	TwinadvRenderSpriteLayer();
 	BurnTransferCopy(HyperpacPalette);
 
@@ -3488,11 +3468,9 @@ static INT32 TwinadvRender()
 static INT32 HoneydolRender()
 {
 	HoneydolCalcPalette();
-	
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0xf0;	
-	}
-	
+
+	BurnTransferClear(0xf0);
+
 	HoneydolRenderSpriteLayer();
 	BurnTransferCopy(HyperpacPalette);
 
@@ -3502,11 +3480,9 @@ static INT32 HoneydolRender()
 static INT32 SnowbrosRender()
 {
 	HyperpacCalcPalette();
-	
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0xf0;	
-	}
-	
+
+	BurnTransferClear(0xf0);
+
 	if (Wintbob) {
 		WintbobRenderSpriteLayer();
 	} else {
@@ -3520,12 +3496,9 @@ static INT32 SnowbrosRender()
 static INT32 Snowbro3Render()
 {
 	Snowbro3CalcPalette();
-	
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0xf0;
-	
-	}
-	
+
+	BurnTransferClear(0xf0);
+
 	Snowbro3RenderSpriteLayer();
 	BurnTransferCopy(HyperpacPalette);
 
@@ -3534,7 +3507,7 @@ static INT32 Snowbro3Render()
 
 static INT32 HyperpacFrame()
 {
-	INT32 nInterleave = 4;
+	INT32 nInterleave = 256/2;
 
 	if (HyperpacReset) HyperpacDoReset();
 
@@ -3575,9 +3548,9 @@ static INT32 HyperpacFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 
-		if (i == 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 32/2) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 128/2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 240/2) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	}
 
 	SekClose();
@@ -3592,7 +3565,7 @@ static INT32 HyperpacFrame()
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
 		}
 	}
-	
+
 	ZetClose();
 
 	if (pBurnDraw) HyperpacRender();
@@ -3660,7 +3633,7 @@ static INT32 PzlbreakFrame()
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
 		}
 	}
-	
+
 	ZetClose();
 
 	if (pBurnDraw) PzlbreakRender();
@@ -3728,7 +3701,7 @@ static INT32 FinalttrFrame()
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
 		}
 	}
-	
+
 	ZetClose();
 
 	if (pBurnDraw) HyperpacRender();
@@ -3812,7 +3785,7 @@ static INT32 HoneydolFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
-	
+
 	SekOpen(0);
 	ZetOpen(0);
 
@@ -3842,7 +3815,7 @@ static INT32 HoneydolFrame()
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 	nCyclesDone[1] = ZetTotalCycles() - nCyclesTotal[1];
 
@@ -3866,7 +3839,7 @@ static INT32 SnowbrosFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
-	
+
 	SekOpen(0);
 	ZetOpen(0);
 
@@ -3926,7 +3899,7 @@ static INT32 Snowbro3Frame()
 		if (i == 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		
+
 		INT32 Status = MSM6295Read(0);
 		if (Snowbro3MusicPlaying) {
 			if ((Status & 0x08) == 0x00) {
@@ -3943,7 +3916,7 @@ static INT32 Snowbro3Frame()
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 
 	SekClose();
-	
+
 	if (pBurnSoundOut) MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 
 	if (pBurnDraw) Snowbro3Render();
@@ -3951,7 +3924,7 @@ static INT32 Snowbro3Frame()
 	return 0;
 }
 
-static INT32 HyperpacScan(INT32 nAction,INT32 *pnMin)
+static INT32 HyperpacScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -3967,7 +3940,7 @@ static INT32 HyperpacScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 
-	if (nAction & ACB_DRIVER_DATA) {	
+	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);				// Scan 68000
 		ZetScan(nAction);					// Scan Z80
 
@@ -3983,7 +3956,7 @@ static INT32 HyperpacScan(INT32 nAction,INT32 *pnMin)
 	return 0;
 }
 
-static INT32 SnowbrosScan(INT32 nAction,INT32 *pnMin)
+static INT32 SnowbrosScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -4016,7 +3989,7 @@ static INT32 SnowbrosScan(INT32 nAction,INT32 *pnMin)
 	return 0;
 }
 
-static INT32 Snowbro3Scan(INT32 nAction,INT32 *pnMin)
+static INT32 Snowbro3Scan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -4032,7 +4005,7 @@ static INT32 Snowbro3Scan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 
-	if (nAction & ACB_DRIVER_DATA) {	
+	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);				// Scan 68000
 
 		MSM6295Scan(nAction, pnMin);			// Scan OKIM6295

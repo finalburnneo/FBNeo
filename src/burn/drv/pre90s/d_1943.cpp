@@ -56,6 +56,8 @@ static UINT8 DrvSpritesOn;
 static UINT8 DrvCharsOn;
 static UINT8 DrvProtValue;
 
+static INT32 bootleg = 0;
+
 static struct BurnInputInfo DrvInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 coin"   },
@@ -715,6 +717,8 @@ STD_ROM_FN(Drvmii)
 
 static UINT8 Drv1943ProtRead()
 {
+	if (bootleg) return 0;
+
 	// This data comes from a table at $21a containing 64 entries, even is "case", odd is return value.
 	switch (DrvProtValue) {
 		case 0x24: return 0x1d;
@@ -751,7 +755,7 @@ static UINT8 Drv1943ProtRead()
 		case 0x25: return 0x04;
 	}
 
-	return 0; // bootlegs expect 0
+	return 0;
 }
 
 static UINT8 __fastcall Drv1943Read1(UINT16 a)
@@ -846,6 +850,13 @@ static void __fastcall Drv1943Write1(UINT16 a, UINT8 d)
 			DrvBg2On = d & 0x20;
 			DrvSpritesOn = d & 0x40;
 			return;
+		}
+
+		case 0xD808:
+		case 0xD868:
+		case 0xD888:
+		case 0xD8A8: {
+			return; // NOP
 		}
 		
 		default: {
@@ -1202,6 +1213,7 @@ static INT32 DrvbLoad()
 
 static INT32 DrvbInit()
 {
+	bootleg = 1;
 	return CommonInit(DrvbLoad);
 }
 
@@ -1285,6 +1297,8 @@ static INT32 DrvbjLoad()
 
 static INT32 DrvbjInit()
 {
+	bootleg = 1;
+
 	return CommonInit(DrvbjLoad);
 }
 
@@ -1366,6 +1380,8 @@ static INT32 Drvb2Load()
 
 static INT32 Drvb2Init()
 {
+	bootleg = 1;
+
 	return CommonInit(Drvb2Load);
 }
 
@@ -1388,7 +1404,8 @@ static INT32 DrvExit()
 	DrvSpritesOn = 0;
 	DrvCharsOn = 0;
 	DrvProtValue = 0;
-	
+	bootleg = 0;
+
 	BurnFree(Mem);
 
 	return 0;

@@ -416,7 +416,7 @@ static INT32 DrvInit()
 	MSM6295Init(0, 894886 / MSM6295_PIN7_HIGH, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
-	BurnTrackballInit(2, false);
+	BurnTrackballInit(2);
 
 	DrvDoReset(1);
 

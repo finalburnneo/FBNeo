@@ -707,7 +707,7 @@ static INT32 DrvInit() // millipede
 
 	earom_init();
 
-	BurnTrackballInit(2, false);
+	BurnTrackballInit(2);
 
 	DrvDoReset();
 
@@ -760,7 +760,7 @@ static INT32 DrvInitcentiped()
 
 	earom_init();
 
-	BurnTrackballInit(2, false);
+	BurnTrackballInit(2);
 
 	DrvDoReset();
 

@@ -376,7 +376,7 @@ static INT32 DrvInit()
 	PokeyPotCallback(1, 6, dip1_read);
 	PokeyPotCallback(1, 7, dip1_read);
 
-	BurnTrackballInit(2, false);
+	BurnTrackballInit(2);
 
 	DrvDoReset(1);
 

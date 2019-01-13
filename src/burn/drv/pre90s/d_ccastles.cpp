@@ -503,7 +503,7 @@ static INT32 DrvInit()
 
 	x2212_init_autostore(2);
 
-	BurnTrackballInit(2, false);
+	BurnTrackballInit(2);
 
 	GenericTilesInit();
 

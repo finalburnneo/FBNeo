@@ -445,7 +445,7 @@ static INT32 DrvInit()
 
 	AtariMoInit(0, &modesc);
 
-	BurnTrackballInit(2, false);
+	BurnTrackballInit(2);
 
 	DrvDoReset(1);
 

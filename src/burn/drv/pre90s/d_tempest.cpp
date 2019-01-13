@@ -391,7 +391,7 @@ static INT32 DrvInit()
 
 	earom_init();
 
-	BurnTrackballInit(2, false);
+	BurnTrackballInit(2);
 
 	DrvDoReset(1);
 

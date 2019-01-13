@@ -627,7 +627,7 @@ static INT32 DrvInit(INT32 select)
 	SeibuADPCMDataLen[1] = 0x10000;
 	seibu_sound_init(1|8, 0x2000, 3579545, 3579545, 8000);
 
-	BurnTrackballInit(2, false);
+	BurnTrackballInit(2);
 
 	GenericTilesInit();
 

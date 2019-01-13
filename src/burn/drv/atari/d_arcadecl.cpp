@@ -414,7 +414,7 @@ static INT32 DrvInit()
 //	atarimo_set_xscroll(0, 4);
 	atarimo_set_yscroll(0, 0x110);
 
-	BurnTrackballInit(2, false);
+	BurnTrackballInit(2);
 
 	is_joyver = (!!strstr(BurnDrvGetTextA(DRV_NAME), "sparkz"));
 

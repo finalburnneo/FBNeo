@@ -2740,6 +2740,11 @@ INT32 System16AFrame()
 	I8039NewFrame();
 
 	SekOpen(0);
+
+	if (System167751ProgSize) {
+		N7751Open(0);
+	}
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 
@@ -2762,12 +2767,10 @@ INT32 System16AFrame()
 		
 		if (System167751ProgSize) {
 			nCurrentCPU = 2;
-			N7751Open(0);
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 			nCyclesSegment = N7751Run(nCyclesSegment);
 			nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-			N7751Close();
 		}
 		
 		if (System16I8751RomNum) {
@@ -2791,6 +2794,10 @@ INT32 System16AFrame()
 			nSoundBufferPos += nSegmentLength;
 			ZetClose();
 		}
+	}
+
+	if (System167751ProgSize) {
+		N7751Close();
 	}
 
 	if (System1668KEnable && !System16I8751RomNum) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);

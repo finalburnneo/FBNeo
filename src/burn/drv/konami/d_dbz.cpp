@@ -24,7 +24,7 @@ static UINT8 *DrvGfxROM3;
 static UINT8 *DrvGfxROMExp3;
 static UINT8 *DrvSndROM;
 static UINT8 *Drv68KRAM0;
-static UINT8 *Drv68KRAM1;
+static UINT8 *DrvObjDMARam;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvBg2RAM;
 static UINT8 *DrvBg1RAM;
@@ -230,6 +230,38 @@ static struct BurnDIPInfo Dbz2DIPList[]=
 };
 
 STDDIPINFO(Dbz2)
+
+static void dbz_objdma() // modified from moo mesa
+{
+	UINT16 *dst = (UINT16*)K053247Ram;   // 0x800 words
+	UINT16 *src = (UINT16*)DrvObjDMARam; // 0x2000 words
+
+	INT32 dmacntr, num_inactive;
+
+	num_inactive = dmacntr = 0x100;
+
+	do
+	{
+		if (*src & 0x8000)
+		{
+			memcpy(dst, src, 0x10);
+			dst += 0x10/2;
+			num_inactive--;
+		}
+		src += 0x40/2;
+	}
+	while (--dmacntr); // traverse 0x2000 words src, max (0x100 * 0x40/2)
+
+	if (num_inactive)
+	{
+		do
+		{
+			*dst = 0;
+			dst += 0x10/2;
+		}
+		while (--num_inactive);
+	}
+}
 
 static void __fastcall dbz_main_write_word(UINT32 address, UINT16 data)
 {
@@ -537,7 +569,7 @@ static INT32 MemIndex()
 	AllRam			= Next;
 
 	Drv68KRAM0		= Next; Next += 0x010000;
-	Drv68KRAM1		= Next; Next += 0x004000;
+	DrvObjDMARam	= Next; Next += 0x004000; // dma area, 0x2000 words
 	DrvPalRAM		= Next; Next += 0x004000;
 
 	DrvBg2RAM		= Next; Next += 0x004000;
@@ -716,7 +748,7 @@ static INT32 DrvInit(INT32 nGame)
 
 	K056832Init(DrvGfxROM0, DrvGfxROMExp0, 0x400000, dbz_tile_callback);
 	K056832SetGlobalOffsets(0, 0);
-	K056832SetLayerOffsets(0, (nGame == 2) ? -34 : -35, -16);
+	K056832SetLayerOffsets(0, (nGame == 2) ? -35 : -34, -16);
 	K056832SetLayerOffsets(1, -31, -16);
 	K056832SetLayerOffsets(2,   0,   0);
 	K056832SetLayerOffsets(3, -31, -16);
@@ -728,8 +760,7 @@ static INT32 DrvInit(INT32 nGame)
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
 	SekMapMemory(Drv68KRAM0,	0x480000, 0x48ffff, MAP_RAM);
-	SekMapMemory(K053247Ram,	0x4a0000, 0x4a0fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM1,	0x4a1000, 0x4a3fff, MAP_RAM);
+	SekMapMemory(DrvObjDMARam,	0x4a0000, 0x4a3fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x4a8000, 0x4abfff, MAP_RAM);
 	SekMapMemory(DrvK053936Ctrl1,	0x4d0000, 0x4d03ff, MAP_RAM);
 	SekMapMemory(DrvK053936Ctrl2,	0x4d4000, 0x4d43ff, MAP_RAM);
@@ -913,9 +944,11 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[0];
 		nCyclesDone[0] += SekRun(nCyclesSegment);
 
-		if (i == 0 && K053246_is_IRQ_enabled()) {
+		if (i == ((nInterleave/2)-1) && K053246_is_IRQ_enabled()) {
+			dbz_objdma();
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
+
 		if (i == (nInterleave - 1)) {
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}

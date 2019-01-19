@@ -2676,7 +2676,7 @@ static INT32 HeadonInit()
 	return DrvInit(0x2000, 0xc000, 0, headon_write_port, headon_read_port, NULL, NULL);
 }
 
-struct BurnDriverD BurnDrvHeadon = {
+struct BurnDriver BurnDrvHeadon = {
 	"headon", NULL, NULL, NULL, "1979",
 	"Head On (2 players)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2707,7 +2707,7 @@ static struct BurnRomInfo headon1RomDesc[] = {
 STD_ROM_PICK(headon1)
 STD_ROM_FN(headon1)
 
-struct BurnDriverD BurnDrvHeadon1 = {
+struct BurnDriver BurnDrvHeadon1 = {
 	"headon1", "headon", NULL, NULL, "1979",
 	"Head On (1 player)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2736,7 +2736,7 @@ static struct BurnRomInfo headonsRomDesc[] = {
 STD_ROM_PICK(headons)
 STD_ROM_FN(headons)
 
-struct BurnDriverD BurnDrvHeadons = {
+struct BurnDriver BurnDrvHeadons = {
 	"headons", "headon", NULL, NULL, "1979",
 	"Head On (Sidam bootleg, set 1)\0", "No sound", "bootleg (Sidam)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2765,7 +2765,7 @@ static struct BurnRomInfo headonsaRomDesc[] = {
 STD_ROM_PICK(headonsa)
 STD_ROM_FN(headonsa)
 
-struct BurnDriverD BurnDrvHeadonsa = {
+struct BurnDriver BurnDrvHeadonsa = {
 	"headonsa", "headon", NULL, NULL, "1979",
 	"Head On (Sidam bootleg, set 2)\0", "No sound", "bootleg (Sidam)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2794,7 +2794,7 @@ static struct BurnRomInfo hocrashRomDesc[] = {
 STD_ROM_PICK(hocrash)
 STD_ROM_FN(hocrash)
 
-struct BurnDriverD BurnDrvHocrash = {
+struct BurnDriver BurnDrvHocrash = {
 	"hocrash", "headon", NULL, NULL, "1979",
 	"Crash (bootleg of Head On)\0", "No sound", "bootleg (Fraber)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2825,7 +2825,7 @@ static struct BurnRomInfo headonmzRomDesc[] = {
 STD_ROM_PICK(headonmz)
 STD_ROM_FN(headonmz)
 
-struct BurnDriverD BurnDrvHeadonmz = {
+struct BurnDriver BurnDrvHeadonmz = {
 	"headonmz", "headon", NULL, NULL, "1979",
 	"Head On (bootleg, alt maze)\0", "No sound", "bootleg", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2862,7 +2862,7 @@ static INT32 HeadonnInit()
 	return DrvInit(0x4000, 0x8000, 0, headonn_write_port, headonn_read_port, NULL, NULL);
 }
 
-struct BurnDriverD BurnDrvHeadonn = {
+struct BurnDriver BurnDrvHeadonn = {
 	"headonn", "headon", NULL, NULL, "1979",
 	"Head On N\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2893,7 +2893,7 @@ static INT32 SupcrashInit()
 	return DrvInit(0x4000, 0x8000, 0, headon_write_port, supcrash_read_port, NULL, NULL);
 }
 
-struct BurnDriverD BurnDrvSupcrash = {
+struct BurnDriver BurnDrvSupcrash = {
 	"supcrash", "headon", NULL, NULL, "1979",
 	"Super Crash (bootleg of Head On)\0", "No sound", "bootleg (VGG)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2922,7 +2922,7 @@ static struct BurnRomInfo startrksRomDesc[] = {
 STD_ROM_PICK(startrks)
 STD_ROM_FN(startrks)
 
-struct BurnDriverD BurnDrvStartrks = {
+struct BurnDriver BurnDrvStartrks = {
 	"startrks", NULL, NULL, NULL, "198?",
 	"Star Trek (Head On hardware)\0", "No sound", "bootleg (Sidam)", "Vic Dual",
 	NULL, NULL, NULL, NULL,

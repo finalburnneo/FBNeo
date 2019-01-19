@@ -2,6 +2,9 @@
 // Based on MAME driver by Zsolt Vasvari
 
 /*
+    finished:
+		carnival (w/sound)
+
 	to do:
 	  	bugtest
 		sound?
@@ -10,6 +13,8 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "samples.h"
+#include "i8039.h"
+#include "ay8910.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -36,6 +41,8 @@ static UINT8 DrvJoy5[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[4];
 static UINT8 DrvReset;
+
+static INT32 carnival_sound = 0;
 
 static struct BurnInputInfo Invho2InputList[] = {
 	{"Game Select",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 fire 2"	},
@@ -1313,9 +1320,15 @@ static UINT8 __fastcall spacetrk_read_port(UINT16 port)
 	return 0;
 }
 
+// forwards
+static void CarnivalSoundWrite1(UINT8 data);
+static void CarnivalSoundWrite2(UINT8 data);
+static void CarnivalSoundReset();
+
 static void __fastcall carnival_write_port(UINT16 port, UINT8 data)
 {
-//	if (port & 0x03) // audio
+	if (port & 0x01) CarnivalSoundWrite1(data);
+	if (port & 0x02) CarnivalSoundWrite2(data);
 	if (port & 0x08) coin_status = 1;
 	if (port & 0x40) palette_bank = data & 3;
 }
@@ -1325,16 +1338,16 @@ static UINT8 __fastcall carnival_read_port(UINT16 port)
 	switch (port & 3)
 	{
 		case 0x00:
-			return (DrvInputs[0] & ~0x1c) | (DrvDips[0] & 0x10);
+			return (DrvInputs[0] & ~0x1c) | (DrvDips[0] & 0x10) | 4 | 8;
 
 		case 0x01:
-			return (DrvInputs[1] & ~0x0c) | get_composite_blank_comp(8);
+			return (DrvInputs[1] & ~0x0c) | get_composite_blank_comp(8) | 4;
 
 		case 0x02:
-			return (DrvInputs[2] & ~0x0c) | get_timer_value(8);
+			return (DrvInputs[2] & ~0x0c) | get_timer_value(8) | 4;
 
 		case 0x03:
-			return (DrvInputs[3] & ~0x0c) | get_coin_status(8);
+			return (DrvInputs[3] & ~0x0c) | get_coin_status(8) | 4;
 	}
 
 	return 0;
@@ -1490,6 +1503,10 @@ static INT32 DrvDoReset()
 
 	BurnSampleReset();
 
+	if (carnival_sound) {
+		CarnivalSoundReset();
+	}
+
 	coin_status = 0;
 	palette_bank = 0;
 	samurai_protection = 0;
@@ -1581,6 +1598,163 @@ static INT32 DrvLoadRoms()
 	return 0;
 }
 
+// carnival sound board
+static UINT8 ay8910_bus;
+static UINT8 ay8910_data;
+static UINT8 i8039_port1_state;
+static UINT8 i8039_port2_state;
+static UINT8 i8039_in_reset;
+
+#define CARNIVAL_RIFLE        0x01
+#define CARNIVAL_CLANG        0x02
+#define CARNIVAL_DUCK1        0x04
+#define CARNIVAL_DUCK2        0x08
+#define CARNIVAL_DUCK3        0x10
+#define CARNIVAL_PIPEHIT      0x20
+#define CARNIVAL_BONUS1       0x40
+#define CARNIVAL_BONUS2       0x80
+#define CARNIVAL_BEAR         0x04
+#define CARNIVAL_RANKING      0x20
+
+static void CarnivalSoundWrite1(UINT8 data)
+{
+	UINT8 Low = (i8039_port1_state ^ data) & ~data;
+
+	i8039_port1_state = data;
+
+	if (Low & CARNIVAL_RIFLE)
+		BurnSamplePlay(9);
+
+	if (Low & CARNIVAL_CLANG)
+		BurnSamplePlay(3);
+
+	if (Low & CARNIVAL_DUCK1)
+		BurnSamplePlay(4);
+
+	if (Low & CARNIVAL_DUCK2)
+		BurnSamplePlay(5);
+
+	if (Low & CARNIVAL_DUCK3)
+		BurnSamplePlay(6);
+
+	if (Low & CARNIVAL_PIPEHIT)
+		BurnSamplePlay(7);
+
+	if (Low & CARNIVAL_BONUS1)
+		BurnSamplePlay(1);
+
+	if (Low & CARNIVAL_BONUS2)
+		BurnSamplePlay(2);
+}
+
+static void CarnivalSoundWrite2(UINT8 data)
+{
+	UINT8 Low = (i8039_port2_state ^ data) & ~data;
+
+	i8039_port2_state = data;
+
+	if (Low & CARNIVAL_BEAR)
+		BurnSamplePlay(0);
+
+	if (Low & CARNIVAL_RANKING)
+		BurnSamplePlay(8);
+
+	if (~data & 0x10) {
+		I8039Reset();
+		i8039_in_reset = 1;
+	} else {
+		i8039_in_reset = 0;
+	}
+}
+
+static UINT8 __fastcall i8039_sound_read(UINT32 address)
+{
+	return DrvI8039ROM[address & 0x03ff];
+}
+
+static void ay8910_check_latch()
+{
+	if (ay8910_bus & 1) {
+		AY8910Write(0, (~ay8910_bus >> 1) & 1, ay8910_data);
+	}
+}
+
+static UINT8 __fastcall i8039_sound_read_port(UINT32 port)
+{
+	if (port == I8039_t1)
+		return (~i8039_port2_state & 0x08) >> 3;
+
+	return 0;
+}
+
+static void __fastcall i8039_sound_write_port(UINT32 port, UINT8 data)
+{
+	switch (port)
+	{
+		case I8039_p1:
+			ay8910_data = data;
+			ay8910_check_latch();
+		return;
+
+		case I8039_p2:
+			ay8910_bus = data >> 6;
+			ay8910_check_latch();
+		return;
+	}
+}
+
+static void CarnivalSoundInit()
+{
+	carnival_sound = 1;
+	AY8910Init(0, 3579545 / 3, 1);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+
+	I8039Init(0);
+	I8039Open(0);
+	I8039SetIOReadHandler(i8039_sound_read_port);
+	I8039SetIOWriteHandler(i8039_sound_write_port);
+	I8039SetProgramReadHandler(i8039_sound_read);
+	I8039SetCPUOpReadHandler(i8039_sound_read);
+	I8039SetCPUOpReadArgHandler(i8039_sound_read);
+	I8039Close();
+
+	BurnSampleSetAllRoutesAllSamples(0.40, BURN_SND_ROUTE_BOTH);
+}
+
+static void CarnivalSoundReset()
+{
+	I8039Open(0);
+	I8039Reset();
+	I8039Close();
+
+	AY8910Reset(0);
+
+	ay8910_bus = 0;
+	ay8910_data = 0;
+	i8039_port1_state = 0;
+	i8039_port2_state = 0;
+	i8039_in_reset = 0;
+}
+
+static void CarnivalSoundScan(INT32 nAction, INT32 *pnMin)
+{
+	I8039Scan(nAction, pnMin);
+	AY8910Scan(nAction, pnMin);
+
+	SCAN_VAR(ay8910_bus);
+	SCAN_VAR(ay8910_data);
+	SCAN_VAR(i8039_port1_state);
+	SCAN_VAR(i8039_port2_state);
+	SCAN_VAR(i8039_in_reset);
+}
+
+static void CarnivalSoundExit()
+{
+	carnival_sound = 0;
+	AY8910Exit(0);
+	I8039Exit();
+}
+
 static INT32 DrvInit(INT32 romsize, INT32 rambase, INT32 has_z80ram, void (__fastcall *wp)(UINT16,UINT8), UINT8 (__fastcall *rp)(UINT16), void (*z80_cb)(), void (*rom_cb)())
 {
 	AllMem = NULL;
@@ -1639,6 +1813,9 @@ static INT32 DrvExit()
 
 	ZetExit();
 	BurnSampleExit();
+
+	if (carnival_sound)
+		CarnivalSoundExit();
 
 	BurnFree(AllMem);
 
@@ -1715,6 +1892,8 @@ static INT32 DrvFrame()
 
 	ZetNewFrame();
 
+	INT32 nCyclesDone[2] = { 0, 0 };
+
 	{
 		memset (DrvInputs, 0xff, 4);
 
@@ -1724,23 +1903,43 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy5[i] & 1) << i;
 		}
+
+		{ // nutso coin handling stuff.
+			static UINT8 last_coin = 0;
+
+			if (DrvJoy1[0] & 1 && last_coin == 0) {
+				ZetOpen(0);
+				ZetReset();
+				nCyclesDone[0] += ZetRun(4000); // give some cycles for coin to be read
+				coin_status = 0;
+				ZetClose();
+			}
+			last_coin = DrvJoy1[0] & 1;
+		}
 	}
 
-	INT32 nTotalCycles = 1933560 / 60;
+	INT32 nInterleave = 10;
+	INT32 nCyclesTotal[2] = { 1933560 / 60, 3579545 / 15 / 60 };
 
 	ZetOpen(0);
 
-	if (DrvJoy1[0] & 1) {
-		ZetReset();
-		ZetRun(75); // give some cycles for coin to be read
+	if (carnival_sound)	I8039Open(0);
+
+	for (INT32 i = 0; i < nInterleave; i++) {
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+
+		if (carnival_sound && !i8039_in_reset)
+			nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 	}
 
-//	coin_status = 0; // clear coin status (no coin on hard reset)
-	ZetRun(nTotalCycles - ZetTotalCycles());
+	if (carnival_sound)	I8039Close();
+
 	ZetClose();
 
 	if (pBurnSoundOut) {
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+		if (carnival_sound)
+			AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -1768,6 +1967,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 		BurnSampleScan(nAction, pnMin);
+
+		if (carnival_sound) {
+			CarnivalSoundScan(nAction, pnMin);
+		}
 
 		SCAN_VAR(coin_status);
 		SCAN_VAR(palette_bank);
@@ -1812,7 +2015,7 @@ static INT32 DepthchInit()
 	return DrvInit(0x4000, 0x8000, 0, depthch_write_port, depthch_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvDepthch = {
+struct BurnDriverD BurnDrvDepthch = {
 	"depthch", NULL, NULL, "depthch", "1977",
 	"Depthcharge\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -1846,7 +2049,7 @@ static struct BurnRomInfo depthchoRomDesc[] = {
 STD_ROM_PICK(depthcho)
 STD_ROM_FN(depthcho)
 
-struct BurnDriver BurnDrvDepthcho = {
+struct BurnDriverD BurnDrvDepthcho = {
 	"depthcho", "depthch", NULL, "depthch", "1977",
 	"Depthcharge (older)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -1880,7 +2083,7 @@ static struct BurnRomInfo subhuntRomDesc[] = {
 STD_ROM_PICK(subhunt)
 STD_ROM_FN(subhunt)
 
-struct BurnDriver BurnDrvSubhunt = {
+struct BurnDriverD BurnDrvSubhunt = {
 	"subhunt", "depthch", NULL, "depthch", "1977",
 	"Sub Hunter (Gremlin / Taito)\0", "No sound", "Gremlin (Taito license)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -1939,7 +2142,7 @@ static INT32 Invho2Init()
 	return DrvInit(0x4000, 0x8000, 0, invho2_write_port, invho2_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvInvho2 = {
+struct BurnDriverD BurnDrvInvho2 = {
 	"invho2", NULL, NULL, "invinco", "1979",
 	"Invinco / Head On 2\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -1976,7 +2179,7 @@ static INT32 SafariInit()
 	return DrvInit(0x4000, 0xc000, 1, safari_write_port, safari_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvSafari = {
+struct BurnDriverD BurnDrvSafari = {
 	"safari", NULL, NULL, NULL, "1977",
 	"Safari (set 1)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2008,7 +2211,7 @@ static struct BurnRomInfo safariaRomDesc[] = {
 STD_ROM_PICK(safaria)
 STD_ROM_FN(safaria)
 
-struct BurnDriver BurnDrvSafaria = {
+struct BurnDriverD BurnDrvSafaria = {
 	"safaria", "safari", NULL, NULL, "1977",
 	"Safari (set 2, bootleg?)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2056,7 +2259,7 @@ static INT32 FrogsInit()
 	return DrvInit(0x4000, 0x8000, 0, frogs_write_port, frogs_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvFrogs = {
+struct BurnDriverD BurnDrvFrogs = {
 	"frogs", NULL, NULL, "frogs", "1978",
 	"Frogs\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2098,7 +2301,7 @@ static INT32 AlphahoInit()
 	return DrvInit(0x4000, 0x8000, 0, alphaho_write_port, alphaho_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvAlphaho = {
+struct BurnDriverD BurnDrvAlphaho = {
 	"alphaho", NULL, NULL, NULL, "19??",
 	"Alpha Fighter / Head On\0", "No sound", "Data East Corporation", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2151,7 +2354,7 @@ static INT32 HeiankyoInit()
 	return DrvInit(0x4000, 0x8000, 0, heiankyo_write_port, heiankyo_read_port, NULL, heiankyo_callback);
 }
 
-struct BurnDriver BurnDrvHeiankyo = {
+struct BurnDriverD BurnDrvHeiankyo = {
 	"heiankyo", NULL, NULL, NULL, "1979",
 	"Heiankyo Alien\0", "No sound", "Denki Onkyo", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2214,7 +2417,7 @@ static INT32 PulsarInit()
 	return DrvInit(0x4000, 0x8000, 0, pulsar_write_port, pulsar_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvPulsar = {
+struct BurnDriverD BurnDrvPulsar = {
 	"pulsar", NULL, NULL, "pulsar", "1981",
 	"Pulsar\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2250,7 +2453,7 @@ static INT32 DiggerInit()
 	return DrvInit(0x2000, 0xc000, 0, digger_write_port, digger_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvDigger = {
+struct BurnDriverD BurnDrvDigger = {
 	"digger", NULL, NULL, NULL, "1980",
 	"Digger\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2294,7 +2497,7 @@ static INT32 InvdsInit()
 	return DrvInit(0x4000, 0x8000, 0, invds_write_port, invds_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvInvds = {
+struct BurnDriverD BurnDrvInvds = {
 	"invds", NULL, NULL, "invinco", "1979",
 	"Invinco / Deep Scan\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2329,7 +2532,7 @@ static INT32 InvincoInit()
 	return DrvInit(0x4000, 0xc000, 0, invinco_write_port, invinco_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvInvinco = {
+struct BurnDriverD BurnDrvInvinco = {
 	"invinco", NULL, NULL, "invinco", "1979",
 	"Invinco\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2377,7 +2580,7 @@ static INT32 SamuraiInit()
 	return DrvInit(0x4000, 0x8000, 0, samurai_write_port, samurai_read_port, samurai_map, NULL);
 }
 
-struct BurnDriver BurnDrvSamurai = {
+struct BurnDriverD BurnDrvSamurai = {
 	"samurai", NULL, NULL, NULL, "1980",
 	"Samurai\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2437,7 +2640,7 @@ static INT32 TranqgunInit()
 	return DrvInit(0x4000, 0x8000, 0, tranqgun_write_port, tranqgun_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvTranqgun = {
+struct BurnDriverD BurnDrvTranqgun = {
 	"tranqgun", NULL, NULL, "tranqgun", "1980",
 	"Tranquillizer Gun\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2473,7 +2676,7 @@ static INT32 HeadonInit()
 	return DrvInit(0x2000, 0xc000, 0, headon_write_port, headon_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvHeadon = {
+struct BurnDriverD BurnDrvHeadon = {
 	"headon", NULL, NULL, NULL, "1979",
 	"Head On (2 players)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2504,7 +2707,7 @@ static struct BurnRomInfo headon1RomDesc[] = {
 STD_ROM_PICK(headon1)
 STD_ROM_FN(headon1)
 
-struct BurnDriver BurnDrvHeadon1 = {
+struct BurnDriverD BurnDrvHeadon1 = {
 	"headon1", "headon", NULL, NULL, "1979",
 	"Head On (1 player)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2591,7 +2794,7 @@ static struct BurnRomInfo hocrashRomDesc[] = {
 STD_ROM_PICK(hocrash)
 STD_ROM_FN(hocrash)
 
-struct BurnDriver BurnDrvHocrash = {
+struct BurnDriverD BurnDrvHocrash = {
 	"hocrash", "headon", NULL, NULL, "1979",
 	"Crash (bootleg of Head On)\0", "No sound", "bootleg (Fraber)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2622,7 +2825,7 @@ static struct BurnRomInfo headonmzRomDesc[] = {
 STD_ROM_PICK(headonmz)
 STD_ROM_FN(headonmz)
 
-struct BurnDriver BurnDrvHeadonmz = {
+struct BurnDriverD BurnDrvHeadonmz = {
 	"headonmz", "headon", NULL, NULL, "1979",
 	"Head On (bootleg, alt maze)\0", "No sound", "bootleg", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2659,7 +2862,7 @@ static INT32 HeadonnInit()
 	return DrvInit(0x4000, 0x8000, 0, headonn_write_port, headonn_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvHeadonn = {
+struct BurnDriverD BurnDrvHeadonn = {
 	"headonn", "headon", NULL, NULL, "1979",
 	"Head On N\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2690,7 +2893,7 @@ static INT32 SupcrashInit()
 	return DrvInit(0x4000, 0x8000, 0, headon_write_port, supcrash_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvSupcrash = {
+struct BurnDriverD BurnDrvSupcrash = {
 	"supcrash", "headon", NULL, NULL, "1979",
 	"Super Crash (bootleg of Head On)\0", "No sound", "bootleg (VGG)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2719,7 +2922,7 @@ static struct BurnRomInfo startrksRomDesc[] = {
 STD_ROM_PICK(startrks)
 STD_ROM_FN(startrks)
 
-struct BurnDriver BurnDrvStartrks = {
+struct BurnDriverD BurnDrvStartrks = {
 	"startrks", NULL, NULL, NULL, "198?",
 	"Star Trek (Head On hardware)\0", "No sound", "bootleg (Sidam)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2782,7 +2985,7 @@ static INT32 BrdrlineInit()
 	return DrvInit(0x4000, 0x8000, 0, brdrline_write_port, brdrline_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvBrdrline = {
+struct BurnDriverD BurnDrvBrdrline = {
 	"brdrline", NULL, NULL, "brdrline", "1981",
 	"Borderline\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2827,7 +3030,7 @@ static struct BurnRomInfo brdrlinsRomDesc[] = {
 STD_ROM_PICK(brdrlins)
 STD_ROM_FN(brdrlins)
 
-struct BurnDriver BurnDrvBrdrlins = {
+struct BurnDriverD BurnDrvBrdrlins = {
 	"brdrlins", "brdrline", NULL, "brdrline", "1981",
 	"Borderline (Sidam bootleg)\0", "No sound", "bootleg (Sidam)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2862,7 +3065,7 @@ static struct BurnRomInfo brdrlinbRomDesc[] = {
 STD_ROM_PICK(brdrlinb)
 STD_ROM_FN(brdrlinb)
 
-struct BurnDriver BurnDrvBrdrlinb = {
+struct BurnDriverD BurnDrvBrdrlinb = {
 	"brdrlinb", "brdrline", NULL, "brdrline", "1981",
 	"Borderline (Karateco bootleg)\0", "No sound", "bootleg (Karateco)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2912,7 +3115,7 @@ static struct BurnRomInfo starrkrRomDesc[] = {
 STD_ROM_PICK(starrkr)
 STD_ROM_FN(starrkr)
 
-struct BurnDriver BurnDrvStarrkr = {
+struct BurnDriverD BurnDrvStarrkr = {
 	"starrkr", "brdrline", NULL, "brdrline", "1981",
 	"Star Raker\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -2996,7 +3199,7 @@ static INT32 SpacetrkInit()
 	return DrvInit(0x4000, 0x8000, 0, spacetrk_write_port, spacetrk_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvSpacetrk = {
+struct BurnDriverD BurnDrvSpacetrk = {
 	"spacetrk", NULL, NULL, NULL, "1980",
 	"Space Trek (upright)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -3036,7 +3239,7 @@ static struct BurnRomInfo spacetrkcRomDesc[] = {
 STD_ROM_PICK(spacetrkc)
 STD_ROM_FN(spacetrkc)
 
-struct BurnDriver BurnDrvSpacetrkc = {
+struct BurnDriverD BurnDrvSpacetrkc = {
 	"spacetrkc", "spacetrk", NULL, NULL, "1980",
 	"Space Trek (cocktail)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -3096,12 +3299,17 @@ STD_SAMPLE_FN(carnival)
 
 static INT32 CarnivalInit()
 {
-	return DrvInit(0x4000, 0x8000, 0, carnival_write_port, carnival_read_port, NULL, NULL);
+	INT32 rc = DrvInit(0x4000, 0x8000, 0, carnival_write_port, carnival_read_port, NULL, NULL);
+	if (!rc) {
+		CarnivalSoundInit();
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvCarnival = {
 	"carnival", NULL, NULL, "carnival", "1980",
-	"Carnival (upright)\0", "No sound", "Sega", "Vic Dual",
+	"Carnival (upright)\0", NULL, "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, carnivalRomInfo, carnivalRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalInputInfo, CarnivalDIPInfo,
@@ -3138,11 +3346,11 @@ static INT32 CarnivalhInit()
 	return DrvInit(0x4000, 0x8000, 0, headon_write_port, carnivalh_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvCarnivalh = {
+struct BurnDriverD BurnDrvCarnivalh = {
 	"carnivalh", "carnival", NULL, "carnival", "1980",
 	"Carnival (Head On hardware, set 1)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, carnivalhRomInfo, carnivalhRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalhInputInfo, NULL,
 	CarnivalhInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3172,11 +3380,11 @@ static struct BurnRomInfo carnivalhaRomDesc[] = {
 STD_ROM_PICK(carnivalha)
 STD_ROM_FN(carnivalha)
 
-struct BurnDriver BurnDrvCarnivalha = {
+struct BurnDriverD BurnDrvCarnivalha = {
 	"carnivalha", "carnival", NULL, "carnival", "1980",
 	"Carnival (Head On hardware, set 2)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, carnivalhaRomInfo, carnivalhaRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalhInputInfo, NULL,
 	CarnivalhInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3215,7 +3423,7 @@ STD_ROM_FN(carnivalc)
 
 struct BurnDriver BurnDrvCarnivalc = {
 	"carnivalc", "carnival", NULL, "carnival", "1980",
-	"Carnival (cocktail)\0", "No sound", "Sega", "Vic Dual",
+	"Carnival (cocktail)\0", NULL, "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, carnivalcRomInfo, carnivalcRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalcInputInfo, CarnivalcDIPInfo,
@@ -3255,7 +3463,7 @@ static INT32 CarhntdsInit()
 	return DrvInit(0x8000, 0x8000, 0, carhntds_write_port, carhntds_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvCarhntds = {
+struct BurnDriverD BurnDrvCarhntds = {
 	"carhntds", NULL, NULL, NULL, "1979",
 	"Car Hunt / Deep Scan (France)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -3291,7 +3499,7 @@ static INT32 Headon2Init()
 	return DrvInit(0x2000, 0xc000, 0, headon2_write_port, headon2_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvHeadon2 = {
+struct BurnDriverD BurnDrvHeadon2 = {
 	"headon2", NULL, NULL, NULL, "1979",
 	"Head On 2\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -3354,7 +3562,7 @@ static struct BurnRomInfo car2RomDesc[] = {
 STD_ROM_PICK(car2)
 STD_ROM_FN(car2)
 
-struct BurnDriver BurnDrvCar2 = {
+struct BurnDriverD BurnDrvCar2 = {
 	"car2", "headon2", NULL, NULL, "1979",
 	"Car 2 (bootleg of Head On 2)\0", "No sound", "bootleg (RZ Bologna)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -3391,7 +3599,7 @@ static INT32 SspaceatInit()
 	return DrvInit(0x2000, 0xc000, 0, sspaceat_write_port,sspaceat_read_port , NULL, NULL);
 }
 
-struct BurnDriver BurnDrvSspaceat = {
+struct BurnDriverD BurnDrvSspaceat = {
 	"sspaceat", NULL, NULL, NULL, "1979",
 	"Space Attack (upright set 1)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -3423,7 +3631,7 @@ static struct BurnRomInfo sspaceat2RomDesc[] = {
 STD_ROM_PICK(sspaceat2)
 STD_ROM_FN(sspaceat2)
 
-struct BurnDriver BurnDrvSspaceat2 = {
+struct BurnDriverD BurnDrvSspaceat2 = {
 	"sspaceat2", "sspaceat", NULL, NULL, "1979",
 	"Space Attack (upright set 2)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -3455,7 +3663,7 @@ static struct BurnRomInfo sspaceat3RomDesc[] = {
 STD_ROM_PICK(sspaceat3)
 STD_ROM_FN(sspaceat3)
 
-struct BurnDriver BurnDrvSspaceat3 = {
+struct BurnDriverD BurnDrvSspaceat3 = {
 	"sspaceat3", "sspaceat", NULL, NULL, "1979",
 	"Space Attack (upright set 3)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -3487,7 +3695,7 @@ static struct BurnRomInfo sspaceatcRomDesc[] = {
 STD_ROM_PICK(sspaceatc)
 STD_ROM_FN(sspaceatc)
 
-struct BurnDriver BurnDrvSspaceatc = {
+struct BurnDriverD BurnDrvSspaceatc = {
 	"sspaceatc", "sspaceat", NULL, NULL, "1979",
 	"Space Attack (cocktail)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -3523,7 +3731,7 @@ static INT32 SspacahoInit()
 	return DrvInit(0x4000, 0x8000, 0, sspacaho_write_port, sspacaho_read_port, NULL, NULL);
 }
 
-struct BurnDriver BurnDrvSspacaho = {
+struct BurnDriverD BurnDrvSspacaho = {
 	"sspacaho", NULL, NULL, NULL, "1979",
 	"Space Attack / Head On\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
@@ -3587,7 +3795,7 @@ static INT32 NsubInit()
 	return DrvInit(0x4000, 0xc000, 0, nsub_write_port, nsub_read_port, NULL, nsub_callback);
 }
 
-struct BurnDriver BurnDrvNsub = {
+struct BurnDriverD BurnDrvNsub = {
 	"nsub", NULL, NULL, "nsub", "1980",
 	"N-Sub (upright)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

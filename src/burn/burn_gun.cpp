@@ -389,8 +389,18 @@ void BurnGunScan()
 
 	SCAN_VAR(BurnGunX);
 	SCAN_VAR(BurnGunY);
-	SCAN_VAR(TrackA);
-	SCAN_VAR(TrackB);
+
+	if (Using_Trackball) {
+		SCAN_VAR(TrackA);
+		SCAN_VAR(TrackB);
+
+		SCAN_VAR(PaddleLastA);
+		SCAN_VAR(PaddleLastB);
+
+		SCAN_VAR(DIAL_INC);
+		SCAN_VAR(DrvJoyT);
+		SCAN_VAR(TrackRev);
+	}
 }
 
 void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)

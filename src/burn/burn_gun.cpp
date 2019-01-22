@@ -179,7 +179,7 @@ void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart
 
 	DIAL_INC[(dev*2) + 0] = VelocityStart;
 	DIAL_INC[(dev*2) + 1] = VelocityStart;
-	BurnPaddleMakeInputs(dev, PortA, PortB);
+	BurnPaddleMakeInputs(dev, AnalogDeadZone(PortA), AnalogDeadZone(PortB));
 
 	BurnDialINF dial = BurnPaddleReturnA(dev);
 	if (dial.Backward) DrvJoyT[(dev*4) + 0] = 1;

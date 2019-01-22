@@ -64,6 +64,23 @@ void CompileInput(UINT8 **input, void *output, INT32 num, INT32 bits, UINT32 *in
 }
 
 // Analog Processing
+INT16 AnalogDeadZone(INT16 anaval)
+{
+	INT32 negative = (anaval < 0);
+
+	anaval = abs(anaval);
+
+	// < 160 is usually "noise" with modern gamepad thumbsticks
+	// (mouse movements are usually above 200)
+	if (anaval < 160) {
+		anaval = 0;
+	} else {
+		anaval -= 160;
+	}
+
+	return (negative) ? -anaval : anaval;
+}
+
 static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }

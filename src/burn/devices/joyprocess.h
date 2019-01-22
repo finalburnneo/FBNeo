@@ -17,3 +17,5 @@ void CompileInput(UINT8 **input, void *output, INT32 num, INT32 bits, UINT32 *in
 #define INPUT_MIGHTBEDIGITAL    0x04
 
 UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, UINT8 scalemax);
+
+INT16 AnalogDeadZone(INT16 anaval);

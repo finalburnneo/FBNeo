@@ -811,6 +811,16 @@ void ZetSetBUSREQLine(INT32 nStatus)
 	ZetCPUContext[nOpenedCPU]->BusReq = nStatus;
 }
 
+INT32 ZetGetBUSREQLine()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetBUSREQ called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetBUSREQ called when no CPU open\n"));
+#endif
+
+	return ZetCPUContext[nOpenedCPU]->BusReq;
+}
+
 void ZetSetAF(INT32 n, UINT16 value)
 {
 	ZetCPUContext[n]->reg.af.w.l = value;

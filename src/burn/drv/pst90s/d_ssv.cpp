@@ -5242,7 +5242,7 @@ struct BurnDriver BurnDrvSxyreact = {
 	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_CASINO, 0,
 	NULL, sxyreactRomInfo, sxyreactRomName, NULL, NULL, NULL, NULL, SxyreactInputInfo, SxyreactDIPInfo,
 	SxyreactInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	338, 240, 4, 3
+	334, 240, 4, 3
 };
 
 

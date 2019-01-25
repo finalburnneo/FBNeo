@@ -8,6 +8,7 @@
 #include "st0020.h"
 #include "eeprom.h"
 #include "math.h"
+#include "burn_gun.h"
 
 // Use for slower systems like rpi & xbox
 // #define SSV_UPD_SPEEDHACK
@@ -54,7 +55,7 @@ static UINT16 enable_video;
 static UINT16 irq_enable;
 static UINT8 input_select;
 static UINT16 sexyreact_previous_dial;
-static UINT32 sexyreact_serial_read;
+static UINT16 sexyreact_serial_read;
 
 static UINT8 *eaglshot_bank;
 
@@ -91,6 +92,9 @@ static UINT8 DrvJoy8[8];
 static UINT8 DrvInputs[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
+
+static INT32 sxyreact_kludge = 0;
+static INT16 SxyGun = 0;
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -254,8 +258,8 @@ static struct BurnInputInfo MeosismInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 3,	"service"	},
+	{"Service 1",	BIT_DIGITAL,	DrvJoy3 + 3,	"service2"	},
+	{"Service 2",	BIT_DIGITAL,	DrvJoy2 + 3,	"service3"	},
 	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 5,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -543,9 +547,11 @@ static struct BurnInputInfo Srmp7InputList[] = {
 
 STDINPUTINFO(Srmp7)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo SxyreactInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
+	A("P1 Dial",    BIT_ANALOG_REL, &SxyGun,        "p1 x-axis" ),
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 left"	},
@@ -553,9 +559,6 @@ static struct BurnInputInfo SxyreactInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 3"	},
-
-	// placeholder for analog inputs
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 4"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 start"	},
@@ -569,12 +572,12 @@ static struct BurnInputInfo SxyreactInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
+	{"Test SW",     BIT_DIGITAL,	DrvJoy3 + 4,	"service2"	},
 	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 3,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
-
+#undef A
 STDINPUTINFO(Sxyreact)
 
 static struct BurnInputInfo EaglshotInputList[] = {
@@ -1817,7 +1820,7 @@ STDDIPINFO(Srmp7)
 static struct BurnDIPInfo SxyreactDIPList[]=
 {
 	{0x17, 0xff, 0xff, 0xff, NULL			},
-	{0x18, 0xff, 0xff, 0xef, NULL			},
+	{0x18, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    7, "Coin A"		},
 	{0x17, 0x01, 0x07, 0x05, "3 Coins 1 Credits"	},
@@ -2647,6 +2650,13 @@ static UINT8 srmp7_read_byte(UINT32 address)
 	return common_main_read_byte(address);
 }
 
+static UINT8 sxydial()
+{
+	INT32 d = BurnGunReturnX(0) * 0xcf / 0xff;
+
+	return d & 0xff;
+}
+
 static void sxyreact_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
@@ -2665,9 +2675,9 @@ static void sxyreact_write_word(UINT32 address, UINT16 data)
 		case 0x520001:
 		{
 			if ((data & 0x20) == 0x20)
-				sexyreact_serial_read = 0; // analog port for paddle
+				sexyreact_serial_read = sxydial();
 
-			if ((data & 0x40) == 0x00 && (sexyreact_previous_dial & 0x40) == 0x40)
+			if ((data & 0x40) == 0x00 && (sexyreact_previous_dial & 0x40))
 				sexyreact_serial_read<<=1;
 
 			sexyreact_previous_dial = data;
@@ -2696,9 +2706,9 @@ static void sxyreact_write_byte(UINT32 address, UINT8 data)
 		case 0x520001:
 		{
 			if ((data & 0x20) == 0x20)
-				sexyreact_serial_read = 0; // analog port for paddle
+				sexyreact_serial_read = sxydial(); // analog port for paddle
 
-			if ((data & 0x40) == 0x00 && (sexyreact_previous_dial & 0x40) == 0x40)
+			if ((data & 0x40) == 0x00 && (sexyreact_previous_dial & 0x40))
 				sexyreact_serial_read<<=1;
 
 			sexyreact_previous_dial = data;
@@ -2715,7 +2725,7 @@ static UINT16 sxyreact_read_word(UINT32 address)
 	{
 		case 0x500002: // ballswitch
 		case 0x500003:
-			return DrvInputs[3];
+			return 0;//DrvInputs[3];
 
 		case 0x500004:
 		case 0x500005:
@@ -2731,7 +2741,7 @@ static UINT8 sxyreact_read_byte(UINT32 address)
 	{
 		case 0x500002: // ballswitch
 		case 0x500003:
-			return DrvInputs[3];
+			return 0;//DrvInputs[3];
 
 		case 0x500004:
 		case 0x500005:
@@ -2965,15 +2975,6 @@ static void st010Expand(INT32 rom_offset)
 	BurnFree(dspsrc);
 }
 
-static void DrvMemSwap(UINT8 *src0, UINT8 *src1, INT32 len)
-{
-	for (INT32 i = 0; i < len; i++ ) {
-		INT32 t = src0[i];
-		src0[i] = src1[i];
-		src1[i] = t;
-	}
-}
-
 static void DrvComputeTileCode(INT32 version)
 {
 	if (version)
@@ -3100,9 +3101,10 @@ static INT32 DrvGetRoms(bool bLoad)
 		nDrvSndROMLen[1] = SNDLoad[1] - DrvSndROM1;
 		nDrvSndROMLen[2] = SNDLoad[2] - DrvSndROM2;
 		nDrvSndROMLen[3] = SNDLoad[3] - DrvSndROM3;
+
 		if (nDrvSndROMLen[0] && nDrvSndROMLen[0] < 0x400000) nDrvSndROMLen[0] = 0x400000;
 		if (nDrvSndROMLen[1] && nDrvSndROMLen[1] < 0x400000) nDrvSndROMLen[1] = 0x400000;
-		if (nDrvSndROMLen[2] && nDrvSndROMLen[2] < 0x400000) nDrvSndROMLen[2] = 0x400000;
+		if ((nDrvSndROMLen[2] || sxyreact_kludge) && nDrvSndROMLen[2] < 0x400000) nDrvSndROMLen[2] = 0x400000;
 		if (nDrvSndROMLen[3] && nDrvSndROMLen[3] < 0x400000) nDrvSndROMLen[3] = 0x400000;
 	}
 
@@ -3168,6 +3170,11 @@ static INT32 DrvExit()
 	dsp_enable = 0;
 	vbl_kludge = 0;
 	vbl_invert = 0;
+
+	if (sxyreact_kludge) {
+		BurnGunExit();
+	}
+	sxyreact_kludge = 0;
 
 	return 0;
 }
@@ -3718,6 +3725,12 @@ static INT32 DrvFrame()
 			DrvInputs[6] ^= (DrvJoy7[i] & 1) << i;
 			DrvInputs[7] ^= (DrvJoy8[i] & 1) << i;
 		}
+
+		if (sxyreact_kludge) {
+			BurnGunMakeInputs(0, SxyGun, 0);
+		}
+
+
 	}
 
 	INT32 nInterleave = 256;
@@ -3791,6 +3804,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ES5506Scan(nAction,pnMin);
 		if (dsp_enable) upd96050Scan(nAction);
+
+		if (sxyreact_kludge) BurnGunScan();
 
 		SCAN_VAR(requested_int);
 		SCAN_VAR(enable_video);
@@ -5192,7 +5207,11 @@ STD_ROM_FN(sxyreact)
 
 static void SexyreactRomLoadCallback()
 {
-	DrvMemSwap(DrvSndROM1, DrvSndROM1 + 0x200000, 0x200000);
+	memmove(DrvSndROM2 + 0x200000, DrvSndROM1 + 0x200000, 0x200000);
+	memmove(DrvSndROM1 + 0x200000, DrvSndROM1 + 0x000000, 0x200000);
+	memmove(DrvSndROM1 + 0x000000, DrvSndROM2 + 0x200000, 0x200000);
+
+	BurnGunInit(2, false);
 }
 
 static void SxyreactV60Map()
@@ -5211,6 +5230,8 @@ static void SxyreactV60Map()
 
 static INT32 SxyreactInit()
 {
+	sxyreact_kludge = 1;
+
 	return DrvCommonInit(SxyreactV60Map, SexyreactRomLoadCallback, 1, 0, 1, 2, -1, 0.10, 0);
 }
 
@@ -5247,6 +5268,8 @@ STD_ROM_FN(sxyreac2)
 
 static INT32 Sxyreac2Init()
 {
+	sxyreact_kludge = 1;
+
 	return DrvCommonInit(SxyreactV60Map, SexyreactRomLoadCallback, 1, 0, 1, 2, -1, 0.10, 0);
 }
 

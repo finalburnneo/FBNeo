@@ -395,7 +395,8 @@ INT32 SG1KGetZipName(char** pszName, UINT32 i)
 	}
 
 	// remove the "SG1K_"
-	for (UINT32 j = 0; j < strlen(pszGameName); j++) {
+	memset(szFilename, 0, MAX_PATH);
+	for (UINT32 j = 0; j < (strlen(pszGameName) - 5); j++) {
 		szFilename[j] = pszGameName[j + 5];
 	}
 

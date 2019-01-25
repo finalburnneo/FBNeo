@@ -225,7 +225,7 @@ INT32 SpectrumGetZipName(char** pszName, UINT32 i)
 	
 	// remove leader
 	memset(szFilename, 0, MAX_PATH);
-	for (UINT32 j = 0; j < strlen(pszGameName); j++) {
+	for (UINT32 j = 0; j < (strlen(pszGameName) - 5); j++) {
 		szFilename[j] = pszGameName[j + 5];
 	}
 	

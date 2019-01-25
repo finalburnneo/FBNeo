@@ -535,7 +535,8 @@ INT32 CVGetZipName(char** pszName, UINT32 i)
 	}
 
 	// remove the "CV_"
-	for (UINT32 j = 0; j < strlen(pszGameName); j++) {
+	memset(szFilename, 0, MAX_PATH);
+	for (UINT32 j = 0; j < (strlen(pszGameName) - 3); j++) {
 		szFilename[j] = pszGameName[j + 3];
 	}
 

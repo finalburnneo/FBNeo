@@ -432,8 +432,10 @@ INT32 SMSGetZipName(char** pszName, UINT32 i)
 		*pszName = NULL;
 		return 1;
 	}
-   // remove sms_
-	for (UINT32 j = 0; j < strlen(pszGameName); j++) {
+
+	// remove sms_
+	memset(szFilename, 0, MAX_PATH);
+	for (UINT32 j = 0; j < (strlen(pszGameName) - 4); j++) {
 		szFilename[j] = pszGameName[j+4];
 	}
 
@@ -461,8 +463,10 @@ INT32 GGGetZipName(char** pszName, UINT32 i)
 		*pszName = NULL;
 		return 1;
 	}
-   // remove sms_
-	for (UINT32 j = 0; j < strlen(pszGameName); j++) {
+
+	// remove gg_
+	memset(szFilename, 0, MAX_PATH);
+	for (UINT32 j = 0; j < (strlen(pszGameName) - 3); j++) {
 		szFilename[j] = pszGameName[j+3];
 	}
 

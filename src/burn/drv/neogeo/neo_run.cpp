@@ -250,8 +250,6 @@ bool bDisableNeoWatchdog = false;
 static INT32 nNeoCDIRQVector;
 static INT32 nNeoCDIRQVectorAck;
 
-static INT32 nNeoCDZ80ProgWriteWordCancelHack = 0;
-
 INT32 nNeoScreenWidth;
 
 UINT8 nLEDLatch, nLED[3];
@@ -3489,11 +3487,12 @@ void __fastcall neogeoWriteWordTransfer(UINT32 sekAddress, UINT16 wordValue)
 			YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)] = wordValue;
 			break;
 		case 4:							// Z80
-			// The games that write here, seem to write crap, however the BIOS writes the Z80 code here, and not in the byte area
-			// So basically, we are allowing writes to here, until the BIOS has finished writing the program, then not allowing any further writes
-			if (((sekAddress & 0xfffff) >= 0x20000) || nNeoCDZ80ProgWriteWordCancelHack) break;
-			if (sekAddress == 0xe1fdf2) nNeoCDZ80ProgWriteWordCancelHack = 1;
-			NeoZ80ROMActive[(sekAddress & 0x1FFFF) >> 1] = wordValue;
+			if (ZetGetBUSREQLine() == 0) {
+				YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)] = wordValue;
+			} else {
+				if ((sekAddress & 0xfffff) >= 0x20000) break;
+				NeoZ80ROMActive[(sekAddress & 0x1FFFF) >> 1] = wordValue;
+			}
 			break;
 		case 5:							// Text
 			NeoTextRAM[(sekAddress & 0x3FFFF) >> 1] = wordValue;
@@ -3600,8 +3599,6 @@ static INT32 neogeoReset()
 		
 		// exit WAV object if needed
 		wav_exit();
-		
-		nNeoCDZ80ProgWriteWordCancelHack = 0;
 	}
 #endif
 
@@ -4268,8 +4265,6 @@ INT32 NeoExit()
 	NeoZ80ROMActive = NULL;
 
 	nCodeSize[0] = 0;
-	
-	nNeoCDZ80ProgWriteWordCancelHack = 0;
 	
 #ifdef BUILD_A68K
 	// Switch back CPU core if needed

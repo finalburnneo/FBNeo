@@ -679,6 +679,16 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static void DrvClearOpposites(UINT8* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -694,6 +704,10 @@ static INT32 DrvFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
+		DrvClearOpposites(&DrvInputs[0]);
+		DrvClearOpposites(&DrvInputs[1]);
+		DrvClearOpposites(&DrvInputs[2]);
+		DrvClearOpposites(&DrvInputs[3]);
 	}
 
 	ZetNewFrame();

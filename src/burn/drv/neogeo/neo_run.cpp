@@ -1,42 +1,16 @@
-/*
+// NeoGeo CD-WIP - Jan 25, 2019
 
-struct NeoMediaInfo {
-	UINT8* p68KROM;
-	UINT8* pVector;
-	UINT8* pZ80ROM;
-	UINT8* pSpriteROM;
-	UINT8* pTextROM;
-	UINT8* pADPCMROM;
-	UINT8* pDeltaTROM;
-
-	INT32 n68KBankOffset;
-	INT32 nVectorOffset;
-
-	INT32 n68KROMSize;
-	INT32 nZ80ROMSize;
-	INT32 nSpriteROMSize;
-	INT32 nTextROMSize;
-	INT32 nADPCMROMSize;
-	INT32 nADeltaROMSize;
-
-	// Function callbacks
-
-	void (*pLoadCallback)();
-	void (*pUnloadCallback)();
-	void (*pInstallCallback)();
-	void (*pUnnstallCallback)();
-	void (*pBankswitchCallback)();
-	INT32  (*pScan)(int, int*);
-
-	// Private data
-
-	INT32 nSRAMProtectionOffset;
-
-	void* pCustomData;
-	void* pTextData;
-};
-
-*/
+// neogeocd: states WIP "the 3rd attempt."
+// working restrictions AKA at least it no longer crashes :)
+//   game must be fully loaded in order to use them.
+//
+// TODO: (in order to remove restrictions)
+//   state-able iso-library
+//   state-able wav-player
+// Advanced-TODO:
+//   stream wav instead of telling directX/SDL to play WAVfile.
+//   this will fix neo-cdplayer in bios, get rid of platform-specific stuff, etc..
+// Note: this text will self-destruct upon completion / end of WIP.  -dink
 
 /*
  * FB Alpha Neo Geo module
@@ -310,6 +284,52 @@ static INT32 /*nNeoCDCyclesIRQ = 0,*/ nNeoCDCyclesIRQPeriod = 0;
 #ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
 #endif
+
+// NeoGeo CD-ROM Stuff
+static INT32 nLC8951Register = 0;
+static INT32 LC8951RegistersR[16];
+static INT32 LC8951RegistersW[16];
+
+static INT32 nActiveTransferArea;
+static INT32 nSpriteTransferBank;
+static INT32 nADPCMTransferBank;
+
+static UINT8 nTransferWriteEnable;
+
+static bool NeoCDOBJBankUpdate[4];
+
+static bool bNeoCDCommsClock, bNeoCDCommsSend;
+
+static UINT8 NeoCDCommsCommandFIFO[10] = { 0, };
+static UINT8 NeoCDCommsStatusFIFO[10]  = { 0, };
+
+static INT32 NeoCDCommsWordCount = 0;
+
+static INT32 NeoCDAssyStatus  = 0;
+
+static INT32 NeoCDTrack = 0;
+
+static INT32 NeoCDSectorMin = 0;
+static INT32 NeoCDSectorSec = 0;
+static INT32 NeoCDSectorFrm = 0;
+static INT32 NeoCDSectorLBA = 0;
+
+static char NeoCDSectorData[2352];
+
+static bool bNeoCDLoadSector = false;
+
+static INT32 NeoCDDMAAddress1 = 0;
+static INT32 NeoCDDMAAddress2 = 0;
+static INT32 NeoCDDMAValue1   = 0;
+static INT32 NeoCDDMAValue2   = 0;
+static INT32 NeoCDDMACount    = 0;
+
+static INT32 NeoCDDMAMode     = 0;
+
+// hax0r
+static INT32 nNeoCDMode = 0;
+static INT32 nff0002 = 0;
+
 
 bool IsNeoGeoCD() {
 	return (nNeoSystemType & NEO_SYS_CD);
@@ -1361,6 +1381,12 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			ba.nAddress = 0;
 			ba.szName	= "Z80 program RAM";
 			BurnAcb(&ba);
+
+			ba.Data		= NeoVector[0];
+			ba.nLen		= 0x00000400;
+			ba.nAddress = 0;
+			ba.szName	= "68K vector RAM";
+			BurnAcb(&ba);
 		}
 
     	ba.Data		= NeoPalSrc[0];
@@ -1466,13 +1492,79 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 
 		SCAN_OFF(Neo68KFix[nNeoActiveSlot], Neo68KROM[nNeoActiveSlot], nAction);
 
+		SCAN_VAR(nLEDLatch);
+		SCAN_VAR(nLED);
+
+//			BurnGameFeedback(sizeof(nLED), nLED);
+
+		if (nNeoSystemType & NEO_SYS_CD) {
+			//xxxxxxxxxxxxxxxx
+			SCAN_VAR(nNeoCDIRQVector);
+			SCAN_VAR(nNeoCDIRQVectorAck);
+
+			SCAN_VAR(nLC8951Register);
+			SCAN_VAR(LC8951RegistersR);
+			SCAN_VAR(LC8951RegistersW);
+
+			SCAN_VAR(nActiveTransferArea);
+			SCAN_VAR(nSpriteTransferBank);
+			SCAN_VAR(nADPCMTransferBank);
+
+			SCAN_VAR(nTransferWriteEnable);
+
+			SCAN_VAR(NeoCDOBJBankUpdate);
+
+			SCAN_VAR(bNeoCDCommsClock);
+			SCAN_VAR(bNeoCDCommsSend);
+
+			SCAN_VAR(NeoCDCommsCommandFIFO);
+			SCAN_VAR(NeoCDCommsStatusFIFO);
+
+			SCAN_VAR(NeoCDCommsWordCount);
+
+			SCAN_VAR(NeoCDAssyStatus);
+
+			SCAN_VAR(NeoCDTrack);
+
+			SCAN_VAR(NeoCDSectorMin);
+			SCAN_VAR(NeoCDSectorSec);
+			SCAN_VAR(NeoCDSectorFrm);
+			SCAN_VAR(NeoCDSectorLBA);
+
+			SCAN_VAR(NeoCDSectorData);
+
+			SCAN_VAR(bNeoCDLoadSector);
+
+			SCAN_VAR(NeoCDDMAAddress1);
+			SCAN_VAR(NeoCDDMAAddress2);
+			SCAN_VAR(NeoCDDMAValue1);
+			SCAN_VAR(NeoCDDMAValue2);
+			SCAN_VAR(NeoCDDMACount);
+
+			SCAN_VAR(NeoCDDMAMode);
+
+			SCAN_VAR(nNeoCDMode);
+			SCAN_VAR(nff0002);
+		}
+
 		if (nAction & ACB_WRITE) {
 			INT32 nNewBIOS = nBIOS;
 			INT32 nBank;
 
-			SekOpen(0);
-			NeoMap68KFix();
-			SekClose();
+			if (nNeoSystemType & NEO_SYS_CD) {
+				for (INT32 i = 0; i < 4; i++) {
+					NeoCDOBJBankUpdate[i] = 1;
+					if (NeoCDOBJBankUpdate[i]) {
+						NeoDecodeSpritesCD(NeoSpriteRAM + (i << 20), NeoSpriteROM[0] + (i << 20), 0x100000);
+						NeoUpdateSprites((i << 20), 0x100000);
+					}
+				}
+				NeoUpdateText(0, 0x020000, NeoTextRAM, NeoTextROM[0]);
+			} else {
+				SekOpen(0);
+				NeoMap68KFix();
+				SekClose();
+			}
 
 			if (nNeoSystemType & NEO_SYS_CART) {
 				ZetOpen(0);
@@ -1514,11 +1606,6 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			}
 
 			nPrevBurnCPUSpeedAdjust = -1;
-
-			SCAN_VAR(nLEDLatch);
-			SCAN_VAR(nLED);
-
-//			BurnGameFeedback(sizeof(nLED), nLED);
 		}
 	}
 
@@ -2349,50 +2436,6 @@ void __fastcall neoCDWriteByteMemoryCard(UINT32 sekAddress, UINT8 byteValue)
 #define CD_FRAMES_MINUTE (60 * 75)
 #define CD_FRAMES_SECOND (     75)
 #define CD_FRAMES_PREGAP ( 2 * 75)
-
-static INT32 nLC8951Register = 0;
-static INT32 LC8951RegistersR[16];
-static INT32 LC8951RegistersW[16];
-
-static INT32 nActiveTransferArea;
-static INT32 nSpriteTransferBank;
-static INT32 nADPCMTransferBank;
-
-static UINT8 nTransferWriteEnable;
-
-static bool NeoCDOBJBankUpdate[4];
-
-static bool bNeoCDCommsClock, bNeoCDCommsSend;
-
-static UINT8 NeoCDCommsCommandFIFO[10] = { 0, };
-static UINT8 NeoCDCommsStatusFIFO[10]  = { 0, };
-
-static INT32 NeoCDCommsWordCount = 0;
-
-static INT32 NeoCDAssyStatus  = 0;
-
-static INT32 NeoCDTrack = 0;
-
-static INT32 NeoCDSectorMin = 0;
-static INT32 NeoCDSectorSec = 0;
-static INT32 NeoCDSectorFrm = 0;
-static INT32 NeoCDSectorLBA = 0;
-
-static char NeoCDSectorData[2352];
-
-static bool bNeoCDLoadSector = false;
-
-static INT32 NeoCDDMAAddress1 = 0;
-static INT32 NeoCDDMAAddress2 = 0;
-static INT32 NeoCDDMAValue1   = 0;
-static INT32 NeoCDDMAValue2   = 0;
-static INT32 NeoCDDMACount    = 0;
-
-static INT32 NeoCDDMAMode     = 0;
-
-// hax0r
-static INT32 nNeoCDMode = 0;
-static INT32 nff0002 = 0;
 
 static void NeoCDLBAToMSF(const INT32 LBA)
 {

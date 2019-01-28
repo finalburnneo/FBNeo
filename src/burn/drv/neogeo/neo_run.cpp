@@ -2553,6 +2553,10 @@ static void LC8951Reset()
 	LC8951UpdateHeader();
 }
 
+// for NeoGeo CD (WAV playback)
+void wav_exit();
+void wav_pause(bool bResume);
+
 static void NeoCDProcessCommand()
 {
 	memset(NeoCDCommsStatusFIFO,  0, sizeof(NeoCDCommsStatusFIFO));
@@ -2743,11 +2747,14 @@ static void NeoCDProcessCommand()
 //			bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
 			NeoCDAssyStatus = 4;
 			bNeoCDLoadSector = false;
+			CDEmuPause();
+			wav_pause(0);
 			break;
 		case 7:
 //			bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
 			NeoCDAssyStatus = 1;
 			bNeoCDLoadSector = true;
+			wav_pause(1);
 			break;
 
 		case 8:

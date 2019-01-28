@@ -1529,6 +1529,34 @@ static struct BurnRomInfo Fantzone1RomDesc[] = {
 STD_ROM_PICK(Fantzone1)
 STD_ROM_FN(Fantzone1)
 
+static struct BurnRomInfo FantzoneeRomDesc[] = {
+	{ "epr-10170.43",  0x08000, 0x063c6d76, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10167.26",  0x08000, 0x0ee190b0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10171.42",  0x08000, 0x2ca92d64, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10168.25",  0x08000, 0x850964ad, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10172.41",  0x08000, 0xb5b624f0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10169.24",  0x08000, 0x9c57d613, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-7388.95",   0x08000, 0x8eb02f6b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7389.94",   0x08000, 0x2f4f71b8, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7390.93",   0x08000, 0xd90609c6, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-7392.10",   0x08000, 0x5bb7c8b6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7396.11",   0x08000, 0x74ae4b57, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7393.17",   0x08000, 0x14fc7e82, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7397.18",   0x08000, 0xe05a1e25, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7394.23",   0x08000, 0x531ca13f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7398.24",   0x08000, 0x68807b49, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-7535a.12",  0x08000, 0xbc1374fa, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-7391.12",   0x02000, 0xc03e155e, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Fantzonee)
+STD_ROM_FN(Fantzonee)
+
 static struct BurnRomInfo FantzonepRomDesc[] = {
 	{ "epr-7385.43",   0x08000, 0x5cb64450, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-7382.26",   0x08000, 0x3fda7416, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -3790,6 +3818,16 @@ struct BurnDriver BurnDrvFantzone1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
 	NULL, Fantzone1RomInfo, Fantzone1RomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzoneDIPInfo,
+	System16Init, System16Exit, System16AFrame, System16ARender, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvFantzonee = {
+	"fantzonee", "fantzone", NULL, NULL, "1986",
+	"Fantasy Zone (FD1089B 317-0016)\0", NULL, "Sega", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_HORSHOOT, 0,
+	NULL, FantzoneeRomInfo, FantzoneeRomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzoneDIPInfo,
 	System16Init, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

@@ -2754,6 +2754,7 @@ static void NeoCDProcessCommand()
 //			bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
 			NeoCDAssyStatus = 1;
 			bNeoCDLoadSector = true;
+			CDEmuResume();
 			wav_pause(1);
 			break;
 

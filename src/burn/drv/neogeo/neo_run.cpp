@@ -3340,6 +3340,7 @@ void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 			static UINT8 clara = 0;
 			if (!byteValue && clara) {
 				bprintf(PRINT_IMPORTANT, _T("  - NGCD Z80 reset (PC: 0x%06X)\n"), SekGetPC(-1));
+				BurnYM2610Reset();
 				ZetReset();
 			}
 			clara = byteValue;			

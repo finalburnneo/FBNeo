@@ -2520,7 +2520,7 @@ static void LC8951UpdateHeader()
 	}
 }
 
-static char* LC8915InitTransfer()
+static char* LC8951InitTransfer()
 {
 	if (!LC8951RegistersW[6]) {
 		bprintf(PRINT_ERROR, _T("    LC8951 DTTRG status invalid\n"));
@@ -2538,7 +2538,7 @@ static char* LC8915InitTransfer()
 	return NeoCDSectorData + ((LC8951RegistersW[5] << 8) | LC8951RegistersW[4]);
 }						
 
-static void LC8915EndTransfer()
+static void LC8951EndTransfer()
 {
 	LC8951RegistersW[6]  = 0x00;												// reset DTTRG
 
@@ -2556,9 +2556,7 @@ static void LC8915EndTransfer()
 
 static void LC8951Reset()
 {
-	bprintf(0, _T("LC8951Reset()\n"));
 	memset(NeoCDSectorData, 0, sizeof(NeoCDSectorData));
-
 
 	memset(LC8951RegistersR, 0, sizeof(LC8951RegistersR));
 	memset(LC8951RegistersW, 0, sizeof(LC8951RegistersW));
@@ -2869,7 +2867,7 @@ static void NeoCDDoDMA()
 			//  - DMA controller program[12] -> 0x48E7 (PC: 0xC0A19E)
 			//  - DMA controller program[14] -> 0xFFFE (PC: 0xC0A1A0)
 
-			char* data = LC8915InitTransfer();
+			char* data = LC8951InitTransfer();
 			if (data == NULL) {
 				break;
 			}
@@ -2883,7 +2881,7 @@ static void NeoCDDoDMA()
 				data += 2;
 			}
 
-			LC8915EndTransfer();
+			LC8951EndTransfer();
 
 			break;
 		}
@@ -2967,7 +2965,7 @@ if (NeoCDDMAAddress2 == 0x0800)  {
 			//  - DMA controller program[12] -> 0x8492 (PC: 0xC0A19E)
 			//  - DMA controller program[14] -> 0xDA92 (PC: 0xC0A1A0)
 
-			char* data = LC8915InitTransfer();
+			char* data = LC8951InitTransfer();
 			if (data == NULL) {
 				break;
 			}
@@ -2981,7 +2979,7 @@ if (NeoCDDMAAddress2 == 0x0800)  {
 				data += 2;
 			}
 
-			LC8915EndTransfer();
+			LC8951EndTransfer();
 
 			break;
 		}
@@ -3524,8 +3522,12 @@ void __fastcall neogeoWriteByteTransfer(UINT32 sekAddress, UINT8 byteValue)
 			YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)] = byteValue;
 			break;
 		case 4:							// Z80
-			if ((sekAddress & 0xfffff) >= 0x20000) break;
-			NeoZ80ROMActive[(sekAddress & 0x1FFFF) >> 1] = byteValue;
+			if (ZetGetBUSREQLine() == 0) {
+				YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)] = byteValue;
+			} else {
+				if ((sekAddress & 0xfffff) >= 0x20000) break;
+				NeoZ80ROMActive[(sekAddress & 0x1FFFF) >> 1] = byteValue;
+			}
 			break;
 		case 5:							// Text
 			NeoTextRAM[(sekAddress & 0x3FFFF) >> 1] = byteValue;
@@ -3555,7 +3557,9 @@ void __fastcall neogeoWriteWordTransfer(UINT32 sekAddress, UINT16 wordValue)
 			if (ZetGetBUSREQLine() == 0) {
 				YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)] = wordValue;
 			} else {
-				if ((sekAddress & 0xfffff) >= 0x20000) break;
+				// What's the deal with the high bits?  Some games (Karnov's Revenge) will spew onto
+				// the sound cpu which causes issues - so we ignore all writes with the high bits set.
+				if ((sekAddress & 0xfffff) >= 0x20000 || (wordValue & 0xFF00)) break;
 				NeoZ80ROMActive[(sekAddress & 0x1FFFF) >> 1] = wordValue;
 			}
 			break;

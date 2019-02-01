@@ -1598,9 +1598,9 @@ static struct BurnRomInfo FantzoneprRomDesc[] = {
 	{ "epr-7392.10",           0x08000, 0x5bb7c8b6, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "ic11-6235.bin",         0x08000, 0x74ae4b57, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-7393.17",           0x08000, 0x14fc7e82, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-7397.18",           0x08000, 0xe05a1e25, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-7394.23",           0x08000, 0x531ca13f, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-7398.24",           0x08000, 0x68807b49, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "ic18-2614.bin",         0x08000, 0xe05a1e25, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "ic23",                  0x08000, 0x531ca13f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "ic24",                  0x08000, 0x68807b49, SYS16_ROM_SPRITES | BRF_GRA },
 
 	{ "ic12-sound-56-5.bin",   0x08000, 0xe62ddff6, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	

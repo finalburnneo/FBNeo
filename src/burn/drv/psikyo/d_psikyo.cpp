@@ -1294,7 +1294,7 @@ static INT32 s1945nCheckSleep(INT32)
 	return 0;
 }
 
-static INT32 s1945jnCheckSleep(INT32)
+static INT32 s1945njCheckSleep(INT32)
 {
 	return 0;
 }
@@ -1638,7 +1638,7 @@ static INT32 DrvInit()
 
 		bPsikyoClearBackground = false;
 	}
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "gunbird") || !strcmp(BurnDrvGetTextA(DRV_NAME), "gunbirdj") || !strcmp(BurnDrvGetTextA(DRV_NAME), "gunbirdk") || !strcmp(BurnDrvGetTextA(DRV_NAME), "btlkroad") || !strcmp(BurnDrvGetTextA(DRV_NAME), "btlkroadk") || !strcmp(BurnDrvGetTextA(DRV_NAME), "s1945n") || !strcmp(BurnDrvGetTextA(DRV_NAME), "s1945jn")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "gunbird") || !strcmp(BurnDrvGetTextA(DRV_NAME), "gunbirdj") || !strcmp(BurnDrvGetTextA(DRV_NAME), "gunbirdk") || !strcmp(BurnDrvGetTextA(DRV_NAME), "btlkroad") || !strcmp(BurnDrvGetTextA(DRV_NAME), "btlkroadk") || !strcmp(BurnDrvGetTextA(DRV_NAME), "s1945n") || !strcmp(BurnDrvGetTextA(DRV_NAME), "s1945nj")) {
 		PsikyoHardwareVersion = PSIKYO_HW_GUNBIRD;
 
 		CheckSleep = psikyoCheckSleep;
@@ -1655,8 +1655,8 @@ static INT32 DrvInit()
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "s1945n")) {
 			CheckSleep = s1945nCheckSleep;
 		}
-		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "s1945jn")) {
-			CheckSleep = s1945jnCheckSleep;
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "s1945nj")) {
+			CheckSleep = s1945njCheckSleep;
 		}
 
 		PsikyoTileROMSize = 0x0400000;
@@ -1669,7 +1669,7 @@ static INT32 DrvInit()
 		PsikyoSampleROM01Size = 0x080000;
 		PsikyoSampleROM02Size = 0x100000;
 
-		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "s1945n") ||  !strcmp(BurnDrvGetTextA(DRV_NAME), "s1945jn")) {
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "s1945n") ||  !strcmp(BurnDrvGetTextA(DRV_NAME), "s1945nj")) {
 			bPsikyoClearBackground = false;
 		} else {
 			bPsikyoClearBackground = true;
@@ -2314,7 +2314,7 @@ struct BurnDriver BurnDrvS1945n = {
 
 // Strikers 1945 (Japan, unprotected)
 
-static struct BurnRomInfo s1945jnRomDesc[] = {
+static struct BurnRomInfo s1945njRomDesc[] = {
 	{ "1-u46.bin",    0x040000, 0x95028132, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "2-u39.bin",    0x040000, 0x3df79a16, BRF_ESS | BRF_PRG }, //  1
 
@@ -2333,15 +2333,15 @@ static struct BurnRomInfo s1945jnRomDesc[] = {
 	{ "u56.bin",      0x100000, 0xfe1312c2, BRF_SND },			 // 10 YM2610 ADPCM data
 };
 
-STD_ROM_PICK(s1945jn)
-STD_ROM_FN(s1945jn)
+STD_ROM_PICK(s1945nj)
+STD_ROM_FN(s1945nj)
 
-struct BurnDriver BurnDrvS1945jn = {
-	"s1945jn", "s1945", NULL, NULL, "1995",
+struct BurnDriver BurnDrvS1945nj = {
+	"s1945nj", "s1945", NULL, NULL, "1995",
 	"Strikers 1945 (Japan, unprotected)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
-	NULL, s1945jnRomInfo, s1945jnRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, s1945DIPInfo,
+	NULL, s1945njRomInfo, s1945njRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, s1945DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
 };

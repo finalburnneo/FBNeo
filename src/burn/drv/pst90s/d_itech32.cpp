@@ -4744,7 +4744,7 @@ struct BurnDriver BurnDrvSftm110 = {
 
 // Street Fighter: The Movie (v1.12N, Japan)
 
-static struct BurnRomInfo sftmjRomDesc[] = {
+static struct BurnRomInfo sftmj112RomDesc[] = {
 	{ "sfmn_0_v1.12.prom0",					0x040000, 0x640a04a8, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "sfmn_1_v1.12.prom1",					0x040000, 0x2a27b690, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "sfmn_2_v1.12.prom2",					0x040000, 0xcec1dd7b, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -4770,15 +4770,15 @@ static struct BurnRomInfo sftmjRomDesc[] = {
 	{ "sfm_srom3.srom3",					0x080000, 0x4f181534, 7 | BRF_SND },           // 18 Ensoniq Bank 3
 };
 
-STD_ROM_PICK(sftmj)
-STD_ROM_FN(sftmj)
+STD_ROM_PICK(sftmj112)
+STD_ROM_FN(sftmj112)
 
-struct BurnDriver BurnDrvSftmj = {
-	"sftmj", "sftm", NULL, NULL, "1995",
+struct BurnDriver BurnDrvSftmj112 = {
+	"sftmj112", "sftm", NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.12N, Japan)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, sftmjRomInfo, sftmjRomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
+	NULL, sftmj112RomInfo, sftmj112RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
 };

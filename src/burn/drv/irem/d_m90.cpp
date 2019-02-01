@@ -1759,8 +1759,8 @@ struct BurnDriver BurnDrvQuizf1 = {
 // Risky Challenge
 
 static struct BurnRomInfo riskchalRomDesc[] = {
-	{ "rc_h0.ic77",		0x40000, 0x4c9b5344, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "rc_l0.ic79",		0x40000, 0x0455895a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "l4-a-h0-b.ic77",	0x40000, 0x4c9b5344, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "l4-a-l0-b.ic79",	0x40000, 0x0455895a, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "l4_a-sp.ic33",	0x10000, 0xbb80094e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 

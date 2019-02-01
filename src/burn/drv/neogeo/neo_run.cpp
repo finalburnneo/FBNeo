@@ -2788,6 +2788,21 @@ static void NeoCDProcessCommand()
 	}
 }
 
+static INT32 CheckDMASourceForBlankVectorTable(INT32 dmadest, INT32 dmasrc)
+{
+	if (dmadest == 0) {
+		INT32 vectnotok = 1;
+		for (INT32 i = 0; i < 0x40; i++) {
+			if (SekReadWord(dmasrc + (i<<1)) != 0x0000)
+				vectnotok = 0;
+		}
+
+		return vectnotok;
+	} else {
+		return 0;
+	}
+}
+
 static void NeoCDDoDMA()
 {
 
@@ -2911,20 +2926,25 @@ static void NeoCDDoDMA()
 			//  - DMA controller program[12] -> 0xC515 (PC: 0xC0FD88)
 			//  - DMA controller program[14] -> 0xFCF5 (PC: 0xC0FD8A)
 
+			// Double Dragon clears the vector table before loading in the
+			// actual vectors, leading me to believe that there is some sort
+			// of vector-cache going on here.  Let's just ignore the clearing
+			// so the game doesn't freeze while loading.
+
+			INT32 OkWriteVect = !CheckDMASourceForBlankVectorTable(NeoCDDMAAddress2, NeoCDDMAAddress1);
+
 			SekIdle(NeoCDDMACount * 1);
 
 			while (NeoCDDMACount--) {
-				SekWriteWord(NeoCDDMAAddress2, SekReadWord(NeoCDDMAAddress1));
+				if (OkWriteVect || NeoCDDMAAddress2 >= 0x80) {
+					SekWriteWord(NeoCDDMAAddress2, SekReadWord(NeoCDDMAAddress1));
+				} else {
+					bprintf(0, _T("DMA bytes into rom-vectspace failed @ %X:  %X\n"), NeoCDDMAAddress2, SekReadWord(NeoCDDMAAddress1));
+				}
 				NeoCDDMAAddress1 += 2;
 				NeoCDDMAAddress2 += 2;
 			}
 
-if (NeoCDDMAAddress2 == 0x0800)  {
-// MapVectorTable(false);
-//	bprintf(PRINT_ERROR, _T("    RAM vectors mapped (PC = 0x%08X\n"), SekGetPC(0));
-//	extern INT32 bRunPause;
-//	bRunPause = 1;
-}
 			break;
 		}
 
@@ -3975,9 +3995,10 @@ static INT32 NeoInitCommon()
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "zedblade")) {
 		bRenderLineByLine = true;
 	}
-//	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "ssideki2")) {
-//		bRenderLineByLine = true;
-//	}
+
+	//if (!strcmp(BurnDrvGetTextA(DRV_NAME), "neocdz")) {
+	//	bRenderLineByLine = true;
+	//}
 
 	nNeoControlConfig = BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK;
 

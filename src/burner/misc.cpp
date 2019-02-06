@@ -477,3 +477,14 @@ UINT32 NameToDriver(TCHAR* szName)
 
 	return nDrv;
 }
+
+TCHAR *StrReplace(TCHAR *str, TCHAR find, TCHAR replace)
+{
+	INT32 length = _tcslen(str);
+
+	for (INT32 i = 0; i < length; i++) {
+		if (str[i] == find) str[i] = replace;
+	}
+
+	return str;
+}

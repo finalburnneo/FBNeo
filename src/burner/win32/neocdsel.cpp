@@ -524,14 +524,14 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 								{
 									// Parse CUE
 									TCHAR szParse[512] = _T("\0");				
-									_stprintf(szParse, _T("%s%s/%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
+									_stprintf(szParse, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
 
 									//MessageBox(NULL, szParse, _T(""), MB_OK);
 
 									TCHAR *pszISO = NeoCDList_ParseCUE( szParse );
 
 									TCHAR szISO[512] =_T("\0");
-									_stprintf(szISO, _T("%s%s/%s"), pszDirectory, ffdDirectory.cFileName,  pszISO);
+									_stprintf(szISO, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName,  pszISO);
 
 									free(pszISO);
 
@@ -575,7 +575,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 							if(_tcsstr(ffdSubDirectory.cFileName, _T(".bin")) || _tcsstr(ffdSubDirectory.cFileName, _T(".img")))
 							{
 								TCHAR szISO[512] = _T("\0");				
-								_stprintf(szISO, _T("%s%s/%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
+								_stprintf(szISO, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
 
 								NeoCDList_CheckISO(hList, szISO);
 

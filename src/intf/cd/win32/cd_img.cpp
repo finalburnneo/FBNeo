@@ -16,7 +16,6 @@ const int CD_TYPE_CCD      = 1 << 2;
 static int cd_pregap;
 
 struct MSF { UINT8 M; UINT8 S; UINT8 F; };
-struct MSFAddress { UINT8 Control; MSF MSF; };
 
 struct cdimgTRACK_DATA { UINT8 Control; UINT8 TrackNumber; UINT8 Address[4]; UINT8 EndAddress[4]; };
 struct cdimgCDROM_TOC { UINT8 FirstTrack; UINT8 LastTrack; UINT8 ImageType; TCHAR Image[MAX_PATH]; cdimgTRACK_DATA TrackData[MAXIMUM_NUMBER_TRACKS]; };

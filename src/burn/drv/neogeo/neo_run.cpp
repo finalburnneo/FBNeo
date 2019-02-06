@@ -1,16 +1,10 @@
-// NeoGeo CD-WIP - Jan 25, 2019
+// NeoGeo CD-WIP - Jan 25, 2019 - present
 
-// neogeocd: states WIP "the 3rd attempt."
-// working restrictions AKA at least it no longer crashes :)
-//   game must be fully loaded in order to use them.
-//
-// TODO: (in order to remove restrictions)
-//   state-able iso-library
-//   state-able wav-player
-// Advanced-TODO:
-//   stream wav instead of telling directX/SDL to play WAVfile.
-//   this will fix neo-cdplayer in bios, get rid of platform-specific stuff, etc..
-// Note: this text will self-destruct upon completion / end of WIP.  -dink
+// mit .bin/.cue & .ccd/.img (trurip) unterstutzung (feb.4.2019)
+// todo:
+//   burner/win32/neocdsel.cpp needs updated to support mode1/2352
+//   ssrpg bugs in sfx-audio in cutscene after starting game
+
 
 /*
  * FB Alpha Neo Geo module
@@ -78,6 +72,8 @@
 #include "burn_ym2610.h"
 #include "bitswap.h"
 #include "neocdlist.h"
+
+static INT32 isowav_mode = 0;
 
 // #undef USE_SPEEDHACKS
 
@@ -280,7 +276,7 @@ static INT32 nNeoControlConfig;
 static INT32 nNeoSystemType;
 static bool bZ80BIOS;
 
-static INT32 /*nNeoCDCyclesIRQ = 0,*/ nNeoCDCyclesIRQPeriod = 0;
+static INT32 nNeoCDCyclesIRQ = 0, nNeoCDCyclesIRQPeriod = 0;
 
 #ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
@@ -1555,6 +1551,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 
 			SCAN_VAR(nNeoCDMode);
 			SCAN_VAR(nff0002);
+			CDEmuScan(nAction, pnMin);
 		}
 
 		if (nAction & ACB_WRITE) {
@@ -2512,11 +2509,17 @@ static void LC8951UpdateHeader()
 	} else {
 
 		// HEAD registers have header
-
-		LC8951RegistersR[4] = ((NeoCDSectorMin / 10) << 4) | (NeoCDSectorMin % 10);	// HEAD0
-		LC8951RegistersR[5] = ((NeoCDSectorSec / 10) << 4) | (NeoCDSectorSec % 10);	// HEAD1
-		LC8951RegistersR[6] = ((NeoCDSectorFrm / 10) << 4) | (NeoCDSectorFrm % 10);	// HEAD2
-		LC8951RegistersR[7] = 1;													// HEAD3
+		if (isowav_mode) {
+			LC8951RegistersR[4] = ((NeoCDSectorMin / 10) << 4) | (NeoCDSectorMin % 10);	// HEAD0
+			LC8951RegistersR[5] = ((NeoCDSectorSec / 10) << 4) | (NeoCDSectorSec % 10);	// HEAD1
+			LC8951RegistersR[6] = ((NeoCDSectorFrm / 10) << 4) | (NeoCDSectorFrm % 10);	// HEAD2
+			LC8951RegistersR[7] = 1;													// HEAD3
+		} else {
+			LC8951RegistersR[4] = NeoCDSectorData[12];	// HEAD0
+			LC8951RegistersR[5] = NeoCDSectorData[13];	// HEAD1
+			LC8951RegistersR[6] = NeoCDSectorData[14];	// HEAD2
+			LC8951RegistersR[7] = NeoCDSectorData[15];	// HEAD3
+		}
 	}
 }
 
@@ -2535,8 +2538,12 @@ static char* LC8951InitTransfer()
 		return NULL;
 	}
 
-	return NeoCDSectorData + ((LC8951RegistersW[5] << 8) | LC8951RegistersW[4]);
-}						
+	if (isowav_mode) {
+		return NeoCDSectorData + ((LC8951RegistersW[5] << 8) | LC8951RegistersW[4]);
+	} else {
+		return NeoCDSectorData + 12 + ((LC8951RegistersW[5] << 8) | LC8951RegistersW[4]);
+	}
+}
 
 static void LC8951EndTransfer()
 {
@@ -2556,21 +2563,21 @@ static void LC8951EndTransfer()
 
 static void LC8951Reset()
 {
-	memset(NeoCDSectorData, 0, sizeof(NeoCDSectorData));
-
 	memset(LC8951RegistersR, 0, sizeof(LC8951RegistersR));
 	memset(LC8951RegistersW, 0, sizeof(LC8951RegistersW));
-	LC8951RegistersR[0x04] = 0x01; // head0
+
+	bNeoCDLoadSector = false;
 
 	LC8951RegistersR[0x01] = 0xFF;
 	LC8951RegistersR[0x0F] = 0x80;
 
+	memset(NeoCDSectorData, 0, sizeof(NeoCDSectorData));
 	LC8951UpdateHeader();
 }
 
 // for NeoGeo CD (WAV playback)
-void wav_exit();
-void wav_pause(bool bResume);
+//void wav_exit();
+//void wav_pause(bool bResume);
 
 static void NeoCDProcessCommand()
 {
@@ -2598,16 +2605,29 @@ static void NeoCDProcessCommand()
 				case 0: {
 					UINT8* ChannelData = CDEmuReadQChannel();
 
-					NeoCDCommsStatusFIFO[2] = ChannelData[1] / 10;
-					NeoCDCommsStatusFIFO[3] = ChannelData[1] % 10;
+					if (isowav_mode) {
+						NeoCDCommsStatusFIFO[2] = ChannelData[1] / 10;
+						NeoCDCommsStatusFIFO[3] = ChannelData[1] % 10;
 
-					NeoCDCommsStatusFIFO[4] = ChannelData[2] / 10;
-					NeoCDCommsStatusFIFO[5] = ChannelData[2] % 10;
+						NeoCDCommsStatusFIFO[4] = ChannelData[2] / 10;
+						NeoCDCommsStatusFIFO[5] = ChannelData[2] % 10;
 
-					NeoCDCommsStatusFIFO[6] = ChannelData[3] / 10;
-					NeoCDCommsStatusFIFO[7] = ChannelData[3] % 10;
-					
-					NeoCDCommsStatusFIFO[8] = ChannelData[7];
+						NeoCDCommsStatusFIFO[6] = ChannelData[3] / 10;
+						NeoCDCommsStatusFIFO[7] = ChannelData[3] % 10;
+
+						NeoCDCommsStatusFIFO[8] = ChannelData[7];
+					} else {
+						NeoCDCommsStatusFIFO[2] = ChannelData[1] >> 4;
+						NeoCDCommsStatusFIFO[3] = ChannelData[1] & 0x0F;
+
+						NeoCDCommsStatusFIFO[4] = ChannelData[2] >> 4;
+						NeoCDCommsStatusFIFO[5] = ChannelData[2] & 0x0F;
+
+						NeoCDCommsStatusFIFO[6] = ChannelData[3] >> 4;
+						NeoCDCommsStatusFIFO[7] = ChannelData[3] & 0x0F;
+
+						NeoCDCommsStatusFIFO[8] = ChannelData[7];
+					}
 
 // bprintf(PRINT_ERROR, _T("    %02i %02i:%02i:%02i %02i:%02i:%02i %02i\n"), ChannelData[0], ChannelData[1], ChannelData[2], ChannelData[3], ChannelData[4], ChannelData[5], ChannelData[6], ChannelData[7]);
 
@@ -2616,16 +2636,29 @@ static void NeoCDProcessCommand()
 				case 1: {
 					UINT8* ChannelData = CDEmuReadQChannel();
 
-					NeoCDCommsStatusFIFO[2] = ChannelData[4] / 10;
-					NeoCDCommsStatusFIFO[3] = ChannelData[4] % 10;
+					if (isowav_mode) {
+						NeoCDCommsStatusFIFO[2] = ChannelData[4] / 10;
+						NeoCDCommsStatusFIFO[3] = ChannelData[4] % 10;
 
-					NeoCDCommsStatusFIFO[4] = ChannelData[5] / 10;
-					NeoCDCommsStatusFIFO[5] = ChannelData[5] % 10;
+						NeoCDCommsStatusFIFO[4] = ChannelData[5] / 10;
+						NeoCDCommsStatusFIFO[5] = ChannelData[5] % 10;
 
-					NeoCDCommsStatusFIFO[6] = ChannelData[6] / 10;
-					NeoCDCommsStatusFIFO[7] = ChannelData[6] % 10;
+						NeoCDCommsStatusFIFO[6] = ChannelData[6] / 10;
+						NeoCDCommsStatusFIFO[7] = ChannelData[6] % 10;
 
-					NeoCDCommsStatusFIFO[8] = ChannelData[7];
+						NeoCDCommsStatusFIFO[8] = ChannelData[7];
+					} else {
+						NeoCDCommsStatusFIFO[2] = ChannelData[4] >> 4;
+						NeoCDCommsStatusFIFO[3] = ChannelData[4] & 0x0F;
+
+						NeoCDCommsStatusFIFO[4] = ChannelData[5] >> 4;
+						NeoCDCommsStatusFIFO[5] = ChannelData[5] & 0x0F;
+
+						NeoCDCommsStatusFIFO[6] = ChannelData[6] >> 4;
+						NeoCDCommsStatusFIFO[7] = ChannelData[6] & 0x0F;
+
+						NeoCDCommsStatusFIFO[8] = ChannelData[7];
+					}
 
 					break;
 				}
@@ -2633,59 +2666,99 @@ static void NeoCDProcessCommand()
 
 					UINT8* ChannelData = CDEmuReadQChannel();
 
-					NeoCDCommsStatusFIFO[2] = ChannelData[0] / 10;
-					NeoCDCommsStatusFIFO[3] = ChannelData[0] % 10;
+					if (isowav_mode) {
+						NeoCDCommsStatusFIFO[2] = ChannelData[0] / 10;
+						NeoCDCommsStatusFIFO[3] = ChannelData[0] % 10;
 
+						NeoCDCommsStatusFIFO[8] = ChannelData[7];
+					} else {
+						NeoCDCommsStatusFIFO[2] = ChannelData[0] >> 4;
+						NeoCDCommsStatusFIFO[3] = ChannelData[0] & 0x0F;
 
-					NeoCDCommsStatusFIFO[8] = ChannelData[7];
+						NeoCDCommsStatusFIFO[8] = ChannelData[7];
+					}
 
 					break;
 				}
 				case 3: {
 					UINT8* TOCEntry = CDEmuReadTOC(-2);
 
-					NeoCDCommsStatusFIFO[2] = TOCEntry[0] / 10;
-					NeoCDCommsStatusFIFO[3] = TOCEntry[0] % 10;
+					if (isowav_mode) {
+						NeoCDCommsStatusFIFO[2] = TOCEntry[0] / 10;
+						NeoCDCommsStatusFIFO[3] = TOCEntry[0] % 10;
 
-					NeoCDCommsStatusFIFO[4] = TOCEntry[1] / 10;
-					NeoCDCommsStatusFIFO[5] = TOCEntry[1] % 10;
+						NeoCDCommsStatusFIFO[4] = TOCEntry[1] / 10;
+						NeoCDCommsStatusFIFO[5] = TOCEntry[1] % 10;
 
-					NeoCDCommsStatusFIFO[6] = TOCEntry[2] / 10;
-					NeoCDCommsStatusFIFO[7] = TOCEntry[2] % 10;
+						NeoCDCommsStatusFIFO[6] = TOCEntry[2] / 10;
+						NeoCDCommsStatusFIFO[7] = TOCEntry[2] % 10;
+					} else {
+						NeoCDCommsStatusFIFO[2] = TOCEntry[0] >> 4;
+						NeoCDCommsStatusFIFO[3] = TOCEntry[0] & 0x0F;
+
+						NeoCDCommsStatusFIFO[4] = TOCEntry[1] >> 4;
+						NeoCDCommsStatusFIFO[5] = TOCEntry[1] & 0x0F;
+
+						NeoCDCommsStatusFIFO[6] = TOCEntry[2] >> 4;
+						NeoCDCommsStatusFIFO[7] = TOCEntry[2] & 0x0F;
+					}
 
 					break;
 				}
 				case 4: {
 					UINT8* TOCEntry = CDEmuReadTOC(-1);
 
-					NeoCDCommsStatusFIFO[2] = TOCEntry[0] / 10;
-					NeoCDCommsStatusFIFO[3] = TOCEntry[0] % 10;
+					if (isowav_mode) {
+						NeoCDCommsStatusFIFO[2] = TOCEntry[0] / 10;
+						NeoCDCommsStatusFIFO[3] = TOCEntry[0] % 10;
 
-					NeoCDCommsStatusFIFO[4] = TOCEntry[1] / 10;
-					NeoCDCommsStatusFIFO[5] = TOCEntry[1] % 10;
+						NeoCDCommsStatusFIFO[4] = TOCEntry[1] / 10;
+						NeoCDCommsStatusFIFO[5] = TOCEntry[1] % 10;
+					} else {
+						NeoCDCommsStatusFIFO[2] = TOCEntry[0] > 4;
+						NeoCDCommsStatusFIFO[3] = TOCEntry[0] & 0x0F;
+
+						NeoCDCommsStatusFIFO[4] = TOCEntry[1] >> 4;
+						NeoCDCommsStatusFIFO[5] = TOCEntry[1] & 0x0F;
+					}
 
 					break;
 				}
 				case 5:	{
-					NeoCDTrack = NeoCDCommsCommandFIFO[4] * 10 + NeoCDCommsCommandFIFO[5];
+					NeoCDTrack = (NeoCDCommsCommandFIFO[4] << 4) | NeoCDCommsCommandFIFO[5];
 
 					UINT8* TOCEntry = CDEmuReadTOC(NeoCDTrack);
 
-					NeoCDCommsStatusFIFO[2] = TOCEntry[0] / 10;
-					NeoCDCommsStatusFIFO[3] = TOCEntry[0] % 10;
+					if (isowav_mode) {
+						NeoCDCommsStatusFIFO[2] = TOCEntry[0] / 10;
+						NeoCDCommsStatusFIFO[3] = TOCEntry[0] % 10;
 
-					NeoCDCommsStatusFIFO[4] = TOCEntry[1] / 10;
-					NeoCDCommsStatusFIFO[5] = TOCEntry[1] % 10;
+						NeoCDCommsStatusFIFO[4] = TOCEntry[1] / 10;
+						NeoCDCommsStatusFIFO[5] = TOCEntry[1] % 10;
 
-					NeoCDCommsStatusFIFO[6] = TOCEntry[2] / 10;
-					NeoCDCommsStatusFIFO[7] = TOCEntry[2] % 10;
+						NeoCDCommsStatusFIFO[6] = TOCEntry[2] / 10;
+						NeoCDCommsStatusFIFO[7] = TOCEntry[2] % 10;
+					} else {
+						NeoCDCommsStatusFIFO[2] = TOCEntry[0] >> 4;
+						NeoCDCommsStatusFIFO[3] = TOCEntry[0] & 0x0F;
+
+						NeoCDCommsStatusFIFO[4] = TOCEntry[1] >> 4;
+						NeoCDCommsStatusFIFO[5] = TOCEntry[1] & 0x0F;
+
+						NeoCDCommsStatusFIFO[6] = TOCEntry[2] >> 4;
+						NeoCDCommsStatusFIFO[7] = TOCEntry[2] & 0x0F;
+					}
 
 					// bit 3 of the 1st minutes digit indicates a data track
 					if (TOCEntry[3] & 4) {
 						NeoCDCommsStatusFIFO[6] |= 8;
 					}
 
-					NeoCDCommsStatusFIFO[8] = NeoCDTrack % 10;
+					if (isowav_mode) {
+						NeoCDCommsStatusFIFO[8] = NeoCDTrack % 10;
+					} else {
+						NeoCDCommsStatusFIFO[8] = NeoCDTrack & 0x0F;
+					}
 
 					break;
 				}
@@ -2703,7 +2776,7 @@ static void NeoCDProcessCommand()
 
 					// must be 02, 0E, 0F, or 05
 					NeoCDCommsStatusFIFO[2] = 0;
-					NeoCDCommsStatusFIFO[3] = 5;
+					NeoCDCommsStatusFIFO[3] = (isowav_mode) ? 5 : NeoCDAssyStatus;
 
 					NeoCDCommsStatusFIFO[4] = 0;
 					NeoCDCommsStatusFIFO[5] = 0;
@@ -2730,7 +2803,8 @@ static void NeoCDProcessCommand()
 				NeoCDSectorLBA += NeoCDCommsCommandFIFO[6] * (10                   );
 				NeoCDSectorLBA += NeoCDCommsCommandFIFO[7] * ( 1                   );
 
-				NeoCDSectorLBA -= CD_FRAMES_PREGAP;
+				if (isowav_mode)
+					NeoCDSectorLBA -= CD_FRAMES_PREGAP;
 
 				CDEmuStartRead();
 //				LC8951RegistersR[1] |= 0x20;
@@ -2740,7 +2814,11 @@ static void NeoCDProcessCommand()
 					bprintf(PRINT_ERROR, _T("*** Switching CD mode to audio while in CD-ROM mode!(PC: 0x%06X)\n"), SekGetPC(-1));
 				}
 
-				CDEmuPlay((NeoCDCommsCommandFIFO[2] * 10) + NeoCDCommsCommandFIFO[3], (NeoCDCommsCommandFIFO[4] * 10) + NeoCDCommsCommandFIFO[5], (NeoCDCommsCommandFIFO[6] * 10) + NeoCDCommsCommandFIFO[7]);
+				if (isowav_mode) {
+					CDEmuPlay((NeoCDCommsCommandFIFO[2] * 10) + NeoCDCommsCommandFIFO[3], (NeoCDCommsCommandFIFO[4] * 10) + NeoCDCommsCommandFIFO[5], (NeoCDCommsCommandFIFO[6] * 10) + NeoCDCommsCommandFIFO[7]);
+				} else {
+					CDEmuPlay((NeoCDCommsCommandFIFO[2] * 16) + NeoCDCommsCommandFIFO[3], (NeoCDCommsCommandFIFO[4] * 16) + NeoCDCommsCommandFIFO[5], (NeoCDCommsCommandFIFO[6] * 16) + NeoCDCommsCommandFIFO[7]);
+				}
 			}
 
 			NeoCDAssyStatus = 1;
@@ -2763,14 +2841,14 @@ static void NeoCDProcessCommand()
 			NeoCDAssyStatus = 4;
 			bNeoCDLoadSector = false;
 			CDEmuPause();
-			wav_pause(0);
+			//if (isowav_mode) wav_pause(0);
 			break;
 		case 7:
 //			bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
 			NeoCDAssyStatus = 1;
 			bNeoCDLoadSector = true;
 			CDEmuResume();
-			wav_pause(1);
+			//if (isowav_mode) wav_pause(1);
 			break;
 
 		case 8:
@@ -3137,7 +3215,11 @@ void NeoCDReadSector()
 
 //			if (LC8951RegistersW[10] & 0x80) {
 				NeoCDSectorLBA++;
-				NeoCDSectorLBA = CDEmuLoadSector(NeoCDSectorLBA, NeoCDSectorData + 4) - 1;
+				if (isowav_mode) {
+					NeoCDSectorLBA = CDEmuLoadSector(NeoCDSectorLBA, NeoCDSectorData + 4) - 1;
+				} else {
+					NeoCDSectorLBA = CDEmuLoadSector(NeoCDSectorLBA, NeoCDSectorData) - 1;
+				}
 //			}
 
 			if (LC8951RegistersW[10] & 0x80) {
@@ -3148,18 +3230,18 @@ void NeoCDReadSector()
 				LC8951RegistersR[14] = 0x10;										// STAT2
 				LC8951RegistersR[15] = 0;											// STAT3
 	
-//				bprintf(PRINT_IMPORTANT, _T("    Sector %08i (%02i:%02i:%02i) read\n"), NeoCDSectorLBA, NeoCDSectorMin, NeoCDSectorSec, NeoCDSectorFrm);
+				//bprintf(PRINT_IMPORTANT, _T("    Sector %08i (%02i:%02i:%02i) read\n"), NeoCDSectorLBA, NeoCDSectorMin, NeoCDSectorSec, NeoCDSectorFrm);
+
+				INT32 sectoffs = (isowav_mode) ? 0 : 12;
+
+				if (NeoCDSectorData[sectoffs + 4 + 64] == 'g' && !strncmp(NeoCDSectorData + sectoffs + 4, "Copyright by SNK", 16)) {
+					//bprintf(0, _T("\n    simulated CDZ protection error\n"));
+					//bprintf(PRINT_ERROR, _T("    %.70hs\n"), NeoCDSectorData + sectoffs + 4);
 	
-#if 1
-				if (NeoCDSectorData[4 + 64] == 'g' && !strncmp(NeoCDSectorData + 4, "Copyright by SNK", 16)) {
-//					printf(PRINT_ERROR, _T("    simulated CDZ protection error\n"));
-//					bprintf(PRINT_ERROR, _T("    %.70hs\n"), NeoCDSectorData + 4);
-	
-					NeoCDSectorData[4 + 64] = 'f';
+					NeoCDSectorData[sectoffs + 4 + 64] = 'f';
 	
 					// LC8951RegistersR[12] = 0x00;									// STAT0
 				}
-#endif
 
 				nIRQAcknowledge &= ~0x20;
 				NeoCDIRQUpdate(0);
@@ -3241,7 +3323,7 @@ void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 //	bprintf(PRINT_NORMAL, _T("  - Neo Geo CD: 0x%06X -> 0x%02X (PC: 0x%06X)\n"), sekAddress, byteValue, SekGetPC(-1));
 
 	switch (sekAddress & 0xFFFF) {
-		case 0x000E:
+		//case 0x000E:
 		case 0x000F:
 			NeoCDIRQUpdate(byteValue);
 			break;
@@ -3397,15 +3479,18 @@ void __fastcall neogeoWriteWordCDROM(UINT32 sekAddress, UINT16 wordValue)
 	switch (sekAddress & 0xFFFE) {
 		case 0x0002:
 //			bprintf(PRINT_IMPORTANT, _T("  - NGCD Interrupt mask -> 0x%04X (PC: 0x%06X)\n"), wordValue, SekGetPC(-1));
-			nff0002 = wordValue;			
+			if ((wordValue & 0x0500) && !(nff0002 & 0x0500))
+				nNeoCDCyclesIRQ = nNeoCDCyclesIRQPeriod;
+
+			nff0002 = wordValue;
 
 // LC8951RegistersR[1] |= 0x20;
 
-			if (nff0002 & 0x0500)
+/*			if (nff0002 & 0x0500)
 				nNeoCDCyclesIRQPeriod = (INT32)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 75.0));
 			else
 				nNeoCDCyclesIRQPeriod = (INT32)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 *  75.0));
-
+  */
 			break;
 
 		case 0x000E:
@@ -3413,6 +3498,11 @@ void __fastcall neogeoWriteWordCDROM(UINT32 sekAddress, UINT16 wordValue)
 			break;
 
 		// DMA controller
+		case 0x0060:
+			if (wordValue & 0x40) {
+				NeoCDDoDMA();
+			}
+			break;
 
 		case 0x0064:
 			NeoCDDMAAddress1 &= 0x0000FFFF;
@@ -3542,12 +3632,8 @@ void __fastcall neogeoWriteByteTransfer(UINT32 sekAddress, UINT8 byteValue)
 			YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)] = byteValue;
 			break;
 		case 4:							// Z80
-			if (ZetGetBUSREQLine() == 0) {
-				YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)] = byteValue;
-			} else {
-				if ((sekAddress & 0xfffff) >= 0x20000) break;
-				NeoZ80ROMActive[(sekAddress & 0x1FFFF) >> 1] = byteValue;
-			}
+			if ((sekAddress & 0xfffff) >= 0x20000) break;
+			NeoZ80ROMActive[(sekAddress & 0x1FFFF) >> 1] = byteValue;
 			break;
 		case 5:							// Text
 			NeoTextRAM[(sekAddress & 0x3FFFF) >> 1] = byteValue;
@@ -3609,9 +3695,6 @@ UINT8 __fastcall neogeoCDReadByte68KProgram(UINT32 sekAddress)
 }
 
 // ----------------------------------------------------------------------------
-
-// for NeoGeo CD (WAV playback)
-void wav_exit();
 
 static INT32 neogeoReset()
 {
@@ -3681,7 +3764,7 @@ static INT32 neogeoReset()
 		bprintf(PRINT_IMPORTANT, _T("  - Emulating Neo CD system.\n"));
 		
 		// exit WAV object if needed
-		wav_exit();
+		//if (isowav_mode) wav_exit();
 	}
 #endif
 
@@ -4448,17 +4531,15 @@ static void NeoStandardInputs(INT32 nBank)
 	}
 }
 
-#if 1
+#if 0
 #define NeoSekRun SekRun
 #else
 static INT32 NeoSekRun(const INT32 nCycles)
 {
 	INT32 nCyclesExecutedTotal = 0, nOldCyclesSegment = nCyclesSegment;
 
-	if (!(nNeoSystemType & NEO_SYS_CD) || !(nff0002 & 0x0050))
+	if (!(nNeoSystemType & NEO_SYS_CD) /*|| !(nff0002 & 0x0050)*/ )
 		return SekRun(nCycles);
-
-//bprintf(PRINT_NORMAL, _T("***\n"));
 
 	while (nCyclesExecutedTotal < nCycles) {
 
@@ -4467,24 +4548,20 @@ static INT32 NeoSekRun(const INT32 nCycles)
 		if (nNeoCDCyclesIRQ <= 0) {
 			nNeoCDCyclesIRQ += nNeoCDCyclesIRQPeriod;
 
-			// Trigger CD mechanism communication interrupt
-//bprintf(PRINT_NORMAL, _T("    DECI status %i\n"), (LC8951RegistersR[1] & 0x20) >> 5);
+			if ((nff0002 & 0x0500) /*&& (LC8951RegistersR[1] & 0x20)*/ )
+				NeoCDReadSector();
 
+			// Trigger CD mechanism communication interrupt
+			//bprintf(PRINT_NORMAL, _T("    DECI status %i\n"), (LC8951RegistersR[1] & 0x20) >> 5);
 			nIRQAcknowledge &= ~0x10;
 			NeoCDIRQUpdate(0);
-
-			if ((nff0002 & 0x0500) && (LC8951RegistersR[1] & 0x20))
-				NeoCDReadSector();
 		}
 
 		nCyclesSegment = (nNeoCDCyclesIRQ < (nCycles - nCyclesExecutedTotal)) ? nNeoCDCyclesIRQ : (nCycles - nCyclesExecutedTotal);
 		nCyclesExecuted = SekRun(nCyclesSegment);
 
-//bprintf(PRINT_NORMAL, _T("%010i  %010i %010i %010i\n"), nCycles, nCyclesExecutedTotal, nCyclesExecuted, nNeoCDCyclesIRQ);
-
 		nCyclesExecutedTotal += nCyclesExecuted;
 		nNeoCDCyclesIRQ      -= nCyclesExecuted;
-
 	}
 
 	nCyclesSegment = nOldCyclesSegment;
@@ -4663,6 +4740,8 @@ INT32 NeoFrame()
 		// uPD499A ticks per second (same as 68K clock)
 		uPD499ASetTicks((INT64)12000000 * nBurnCPUSpeedAdjust / 256);
 
+		nNeoCDCyclesIRQPeriod = (int)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 150.0));
+
 		nPrevBurnCPUSpeedAdjust = nBurnCPUSpeedAdjust;
 	}
 
@@ -4706,12 +4785,14 @@ INT32 NeoFrame()
 	// Run 68000
 
 
-	if ((nNeoSystemType & NEO_SYS_CD) && (nff0002 & 0x0050)) {
-		nIRQAcknowledge &= ~0x10;
-		NeoCDIRQUpdate(0);
+	if (isowav_mode) {
+		if ((nNeoSystemType & NEO_SYS_CD) && (nff0002 & 0x0050)) {
+			nIRQAcknowledge &= ~0x10;
+			NeoCDIRQUpdate(0);
 
-		if (nff0002 & 0x0500) {
-			NeoCDReadSector();
+			if (nff0002 & 0x0500) {
+				NeoCDReadSector();
+			}
 		}
 	}
 
@@ -4981,7 +5062,8 @@ INT32 NeoFrame()
 	}
 
 	if (pBurnSoundOut) {
-		CDEmuGetSoundBuffer(pBurnSoundOut, nBurnSoundLen);
+		if (!(LC8951RegistersW[10] & 4))
+			CDEmuGetSoundBuffer(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	return 0;

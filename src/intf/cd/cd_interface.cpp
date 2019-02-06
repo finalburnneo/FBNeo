@@ -9,7 +9,7 @@ CDEmuStatusValue CDEmuStatus;
 static InterfaceInfo CDEmuInfo = { NULL, NULL, NULL };
 
 #if defined BUILD_WIN32
-	extern struct CDEmuDo isowavDo;
+	extern struct CDEmuDo cdimgDo;
 #elif defined BUILD_SDL
 	// CD emulation module
 #elif defined (_XBOX)
@@ -19,7 +19,7 @@ static InterfaceInfo CDEmuInfo = { NULL, NULL, NULL };
 static struct CDEmuDo* pCDEmuDo[] =
 {
 #if defined BUILD_WIN32
-	&isowavDo,
+	&cdimgDo,
 #elif defined BUILD_SDL
 	// CD emulation module
 #elif defined (_XBOX)
@@ -115,6 +115,15 @@ INT32 CDEmuGetSoundBuffer(INT16* buffer, INT32 samples)
 	}
 
 	return pCDEmuDo[nCDEmuSelect]->CDEmuGetSoundBuffer(buffer, samples);
+}
+
+INT32 CDEmuScan(INT32 nAction, INT32 *pnMin)
+{
+	if (!bCDEmuOkay || nCDEmuSelect >= CDEMU_LEN) {
+		return 1;
+	}
+
+	return pCDEmuDo[nCDEmuSelect]->CDEmuScan(nAction, pnMin);
 }
 
 InterfaceInfo* CDEmuGetInfo()

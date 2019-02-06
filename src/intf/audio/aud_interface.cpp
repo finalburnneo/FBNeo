@@ -51,13 +51,8 @@ static struct AudOut *pAudOut[]=
 
 static InterfaceInfo AudInfo = { NULL, NULL, NULL };
 
-// for NeoGeo CD (WAV playback)
-void wav_pause(bool bResume);
-
 INT32 AudBlankSound()
 {
-	wav_pause(false); // pause / stop if needed
-
 	if (!bAudOkay || nAudActive >= AUD_LEN) {
 		return 1;
 	}
@@ -67,8 +62,6 @@ INT32 AudBlankSound()
 // This function checks the Sound loop, and if necessary gets some more sound
 INT32 AudSoundCheck()
 {
-	if(!bRunPause) wav_pause(true); // resume, if needed
-
 	if (!bAudOkay || nAudActive >= AUD_LEN) {
 		return 1;
 	}
@@ -109,7 +102,6 @@ INT32 AudSoundPlay()
 	INT32 nRet = pAudOut[nAudActive]->SoundPlay();
 	if (!nRet) {
 		bAudPlaying = true;
-		if (bCDEmuOkay) wav_pause(true);
 	}
 	
 	return nRet;
@@ -122,8 +114,7 @@ INT32 AudSoundStop()
 	}
 	
 	bAudPlaying = false;
-	if (bCDEmuOkay) wav_pause(false);
-	
+
 	return pAudOut[nAudActive]->SoundStop();
 }
 

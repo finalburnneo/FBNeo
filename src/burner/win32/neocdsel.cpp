@@ -51,6 +51,9 @@ struct GAMELIST {
 GAMELIST ngcd_list[100];
 int nListItems = 0;
 
+// CD image stuff
+const int nSectorLength		= 2352;
+
 // Add game to List
 static int NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID) 
 {
@@ -158,7 +161,6 @@ static int NeoCDList_CheckDuplicates(HWND hList, unsigned int nID)
 
 static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* fp, int nSector) 
 {
-	int		nSectorLength		= 2048;	
 	//int		nFile				= 0;
 	unsigned int	lBytesRead			= 0;
 	//int		nLen				= 0;
@@ -207,7 +209,7 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 			iso9660_ReadOffset(nLenDR, fp, lOffset + 1, 1, sizeof(unsigned char));
 
 			if(nLenDR[0] < 0x22) {
-				lOffset += (2048 - lBytesRead);
+				lOffset += (nSectorLength - lBytesRead);
 				lBytesRead = 0;
 				bNewSector = true;
 				continue;
@@ -228,7 +230,7 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 			unsigned int nValue = 0;
 			sscanf(szValue, "%x", &nValue); 
 
-			iso9660_ReadOffset(Data, fp, nValue * 2048, 0x10a, sizeof(unsigned char));
+			iso9660_ReadOffset(Data, fp, nValue * nSectorLength, 0x10a, sizeof(unsigned char));
 
 			char szData[8];
 			sprintf(szData, "%c%c%c%c%c%c%c", Data[0x100], Data[0x101], Data[0x102], Data[0x103], Data[0x104], Data[0x105], Data[0x106]);
@@ -248,6 +250,8 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 				iso9660_ReadOffset((unsigned char*)File, fp, lOffset + 33, LEN_FI[0], sizeof(char));
 				strncpy(File, File, LEN_FI[0]);				
 				File[LEN_FI[0]] = 0;
+
+				//bprintf(0, _T("\n------------\n--------------> nID %X\n"), nID);
 
 				// King of Fighters '94, The (1994)(SNK)(JP)
 				// 10-6-1994 (P1.PRG)
@@ -353,7 +357,7 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 	}
 
 	// Make sure we have a valid ISO file extension...
-	if(_tcsstr(pszFile, _T(".iso")) || _tcsstr(pszFile, _T(".ISO")) ) 
+	if(_tcsstr(pszFile, _T(".img")) || _tcsstr(pszFile, _T(".bin")) )
 	{
 		FILE* fp = _tfopen(pszFile, _T("rb"));
 		if(fp) 
@@ -369,16 +373,15 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 			fseek(fp, 0, SEEK_SET);
 
 			// If it has at least 16 sectors proceed
-			if(lSize > (2048 * 16)) 
+			if(lSize > (nSectorLength * 16))
 			{	
 				// Check for Standard ISO9660 Identifier
-				unsigned char IsoHeader[2048 * 16 + 1];
 				unsigned char IsoCheck[6];
-		
-				fread(IsoHeader, 1, 2048 * 16 + 1, fp); // advance to sector 16 and PVD Field 2
-				fread(IsoCheck, 1, 5, fp);	// get Standard Identifier Field from PVD
-		
-				// Verify that we have indeed a valid ISO9660 MODE1/2048
+
+				// advance to sector 16 and PVD Field 2
+				iso9660_ReadOffset(&IsoCheck[0], fp, 2352 * 16 + 1, 1, 5); // get Standard Identifier Field from PVD
+
+				// Verify that we have indeed a valid ISO9660 MODE1/2352
 				if(!memcmp(IsoCheck, "CD001", 5))
 				{
 					//bprintf(PRINT_NORMAL, _T("    Standard ISO9660 Identifier Found. \n"));
@@ -387,7 +390,7 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 					// Get Volume Descriptor Header			
 					memset(&vdh, 0, sizeof(vdh));
 					//memcpy(&vdh, iso9660_ReadOffset(fp, (2048 * 16), sizeof(vdh)), sizeof(vdh));
-					iso9660_ReadOffset((unsigned char*)&vdh, fp, 2048 * 16, 1, sizeof(vdh));
+					iso9660_ReadOffset((unsigned char*)&vdh, fp, 16 * 2352, 1, sizeof(vdh));
 
 					// Check for a valid Volume Descriptor Type
 					if(vdh.vdtype == 0x01) 
@@ -398,7 +401,7 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 						iso9660_PVD pvd;
 						memset(&pvd, 0, sizeof(pvd));
 						//memcpy(&pvd, iso9660_ReadOffset(fp, (2048 * 16), sizeof(pvd)), sizeof(pvd));
-						iso9660_ReadOffset((unsigned char*)&pvd, fp, 2048 * 16, 1, sizeof(pvd));
+						iso9660_ReadOffset((unsigned char*)&pvd, fp, 2352 * 16, 1, sizeof(pvd));
 
 						// ROOT DIRECTORY RECORD
 
@@ -415,13 +418,12 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 						// Convert HEX string to Decimal
 						sscanf(szRootSector, "%X", &nRootSector);
 #else
-// Just read from the file directly at the correct offset (0x8000 + 0x9e for the start of the root directory record)
+// Just read from the file directly at the correct offset (SECTOR_SIZE * 16 + 0x9e for the start of the root directory record)
 						unsigned char buffer[8];
 						char szRootSector[32];
 						unsigned int nRootSector = 0;
 						
-						fseek(fp, 0x809e, SEEK_SET);
-						fread(buffer, 1, 8, fp);
+						iso9660_ReadOffset(&buffer[0], fp, 2352 * 16 + 0x9e, 1, 8);
 						
 						sprintf(szRootSector, "%02x%02x%02x%02x", buffer[4], buffer[5], buffer[6], buffer[7]);
 						
@@ -491,9 +493,6 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 					continue;
 				}
 
-				TCHAR* pszISO = NULL;
-				pszISO = (TCHAR*)malloc(sizeof(TCHAR) * 512);
-				
 				bool bDone = false;
 
 				WIN32_FIND_DATA ffdSubDirectory;
@@ -529,10 +528,12 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 
 									//MessageBox(NULL, szParse, _T(""), MB_OK);
 
-									pszISO = NeoCDList_ParseCUE( szParse );
+									TCHAR *pszISO = NeoCDList_ParseCUE( szParse );
 
 									TCHAR szISO[512] =_T("\0");
 									_stprintf(szISO, _T("%s%s/%s"), pszDirectory, ffdDirectory.cFileName,  pszISO);
+
+									free(pszISO);
 
 									NeoCDList_CheckISO(hList, szISO);
 									bDone = true;
@@ -541,11 +542,6 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 								}
 							}
 						} while(FindNextFile(hSubDirectory, &ffdSubDirectory));
-					}
-
-					if(pszISO) {
-						free(pszISO);
-						pszISO = NULL;
 					}
 
 					if(bDone) {
@@ -562,7 +558,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 				memset(&ffdSubDirectory, 0, sizeof(WIN32_FIND_DATA));
 
 				// Scan sub-directory for ISO
-				_stprintf(szSubSearch, _T("%s%s/*.iso"), pszDirectory, ffdDirectory.cFileName);
+				_stprintf(szSubSearch, _T("%s%s/*.*"), pszDirectory, ffdDirectory.cFileName);
 
 				hSubDirectory = FindFirstFile(szSubSearch, &ffdSubDirectory);
 
@@ -576,7 +572,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 						if(!(ffdSubDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 						{
 							// File is ISO
-							if(_tcsstr(ffdSubDirectory.cFileName, _T(".iso")) || _tcsstr(ffdSubDirectory.cFileName, _T(".ISO")))
+							if(_tcsstr(ffdSubDirectory.cFileName, _T(".bin")) || _tcsstr(ffdSubDirectory.cFileName, _T(".img")))
 							{
 								TCHAR szISO[512] = _T("\0");				
 								_stprintf(szISO, _T("%s%s/%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
@@ -605,9 +601,6 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 //	ListView_DeleteAllItems(hList);
 
 	//	
-	TCHAR* pszISO = NULL;
-	pszISO = (TCHAR*)malloc(sizeof(TCHAR) * 512);
-				
 	WIN32_FIND_DATA ffdDirectory;
 
 	HANDLE hDirectory = NULL;
@@ -640,10 +633,11 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 
 						//MessageBox(NULL, szParse, _T(""), MB_OK);
 
-						pszISO = NeoCDList_ParseCUE( szParse );
+						TCHAR *pszISO = NeoCDList_ParseCUE( szParse );
 
 						TCHAR szISO[512] =_T("\0");
 						_stprintf(szISO, _T("%s%s"), pszDirectory, pszISO);
+						free(pszISO);
 
 						NeoCDList_CheckISO(hList, szISO);
 					}
@@ -662,7 +656,7 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 	memset(&ffdDirectory, 0, sizeof(WIN32_FIND_DATA));
 
 	// Scan directory for ISO
-	_stprintf(szSearch, _T("%s*.iso"), pszDirectory);
+	_stprintf(szSearch, _T("%s*.*"), pszDirectory);
 
 	hDirectory = FindFirstFile(szSearch, &ffdDirectory);
 
@@ -676,7 +670,7 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 			if(!(ffdDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 			{
 				// File is ISO
-				if(_tcsstr(ffdDirectory.cFileName, _T(".iso")) || _tcsstr(ffdDirectory.cFileName, _T(".ISO")))
+				if(_tcsstr(ffdDirectory.cFileName, _T(".bin")) || _tcsstr(ffdDirectory.cFileName, _T(".img")))
 				{
 					TCHAR szISO[512] = _T("\0");				
 					_stprintf(szISO, _T("%s%s"), pszDirectory, ffdDirectory.cFileName);
@@ -690,11 +684,6 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 		FindClose(hDirectory);
 	}
 	
-	if (pszISO) {
-		free(pszISO);
-		pszISO = NULL;
-	}
-
 //	bProcessingList = false;
 }
 
@@ -728,11 +717,7 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 		_fgetts(szBuffer, sizeof(szBuffer), fp);
 
 		// terminate string
-		szBuffer[260] = 0;
-
-		if(!*szBuffer) {
-			return NULL;
-		}
+		szBuffer[260] = 0; // ????
 
 		int nLength = 0;
 		nLength = _tcslen(szBuffer);
@@ -769,7 +754,7 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 				_tcscpy(ngcd_list[nListItems].szISOFile,  pStart + 1);
 			} 
 			
-			if (!_tcsncmp(pEnd + 2, _T("WAVE"), 5)) {
+			/*if (!_tcsncmp(pEnd + 2, _T("WAVE"), 5)) {
 				if(!ngcd_list[nListItems].nAudioTracks) {
 					ngcd_list[nListItems].nAudioTracks = 0;
 				}
@@ -777,7 +762,7 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 				_tcscpy(ngcd_list[nListItems].szTracks[ngcd_list[nListItems].nAudioTracks], pStart + 1);
 
 				ngcd_list[nListItems].nAudioTracks++;
-			} 
+			} */
 		}
 	}
 	if(fp) fclose(fp);
@@ -1254,7 +1239,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					SetFocus(hListView);
 					break;
 				}
-
+#if 0
 				case IDC_NCD_SISO_ONLY_CHECK:
 				{
 					if(BST_CHECKED == IsDlgButtonChecked(hDlg, IDC_NCD_SISO_ONLY_CHECK)) {
@@ -1271,7 +1256,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					SetFocus(hListView);
 					break;
 				}
-
+#endif
 				case IDC_NCD_CANCEL_BUTTON:
 				{
 					NeoCDList_Clean();
@@ -1279,7 +1264,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					DeleteObject(hWhiteBGBrush);
 
 					hNeoCDWnd	= NULL;
-					hListView	= NULL;				
+					hListView	= NULL;
 
 					EndDialog(hDlg, 0);
 					break;

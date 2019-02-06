@@ -163,13 +163,13 @@ void iso9660_ReadOffset(unsigned char *Dest, FILE* fp, unsigned int lOffset, uns
 	if(fp == NULL) return;
 	if (Dest == NULL) return;
 	
-	fseek(fp, lOffset, SEEK_SET);
+	fseek(fp, lOffset + 16, SEEK_SET);
 	fread(Dest, lLength, lSize, fp);
 }
 
 static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector) 
 {
-	int		nSectorLength		= 2048;	
+	int		nSectorLength		= 2352;
 	//int		nFile				= 0;
 	unsigned int	lBytesRead			= 0;
 	//int		nLen				= 0;
@@ -213,7 +213,7 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 			iso9660_ReadOffset(nLenDR, fp, lOffset + 1, 1, sizeof(unsigned char));
 			
 			if(nLenDR[0] < 0x22) {
-				lOffset += (2048 - lBytesRead);
+				lOffset += (nSectorLength - lBytesRead);
 				lBytesRead = 0;
 				bNewSector = true;
 				continue;
@@ -234,7 +234,7 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 			unsigned int nValue = 0;
 			sscanf(szValue, "%x", &nValue); 
 
-			iso9660_ReadOffset(Data, fp, nValue * 2048, 0x10a, sizeof(unsigned char));
+			iso9660_ReadOffset(Data, fp, nValue * nSectorLength, 0x10a, sizeof(unsigned char));
 
 			char szData[8];
 			sprintf(szData, "%c%c%c%c%c%c%c", Data[0x100], Data[0x101], Data[0x102], Data[0x103], Data[0x104], Data[0x105], Data[0x106]);
@@ -346,7 +346,7 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 	}
 
 	// Make sure we have a valid ISO file extension...
-	if(_tcsstr(pszFile, _T(".iso")) || _tcsstr(pszFile, _T(".ISO")) ) 
+	if(_tcsstr(pszFile, _T(".img")) || _tcsstr(pszFile, _T(".bin")) )
 	{
 		FILE* fp = _tfopen(pszFile, _T("rb"));
 		if(fp) 
@@ -359,20 +359,18 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 			fseek(fp, 0, SEEK_END);
 			unsigned int lSize = 0;
 			lSize = ftell(fp);
-			//rewind(fp);
 			fseek(fp, 0, SEEK_SET);
 
 			// If it has at least 16 sectors proceed
-			if(lSize > (2048 * 16)) 
+			if(lSize > (2352 * 16))
 			{	
 				// Check for Standard ISO9660 Identifier
-				unsigned char IsoHeader[2048 * 16 + 1];
 				unsigned char IsoCheck[6];
 		
-				fread(IsoHeader, 1, 2048 * 16 + 1, fp); // advance to sector 16 and PVD Field 2
-				fread(IsoCheck, 1, 5, fp);	// get Standard Identifier Field from PVD
+				// advance to sector 16 and PVD Field 2
+				iso9660_ReadOffset(&IsoCheck[0], fp, 2352 * 16 + 1, 1, 5); // get Standard Identifier Field from PVD
 				
-				// Verify that we have indeed a valid ISO9660 MODE1/2048
+				// Verify that we have indeed a valid ISO9660 MODE1/2352
 				if(!memcmp(IsoCheck, "CD001", 5))
 				{
 					//bprintf(PRINT_NORMAL, _T("    Standard ISO9660 Identifier Found. \n"));
@@ -381,7 +379,7 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 					// Get Volume Descriptor Header			
 					memset(&vdh, 0, sizeof(vdh));
 					//memcpy(&vdh, iso9660_ReadOffset(fp, (2048 * 16), sizeof(vdh)), sizeof(vdh));
-					iso9660_ReadOffset((unsigned char*)&vdh, fp, 2048 * 16, 1, sizeof(vdh));
+					iso9660_ReadOffset((unsigned char*)&vdh, fp, 16 * 2352, 1, sizeof(vdh));
 
 					// Check for a valid Volume Descriptor Type
 					if(vdh.vdtype == 0x01) 
@@ -392,7 +390,7 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 						iso9660_PVD pvd;
 						memset(&pvd, 0, sizeof(pvd));
 						//memcpy(&pvd, iso9660_ReadOffset(fp, (2048 * 16), sizeof(pvd)), sizeof(pvd));
-						iso9660_ReadOffset((unsigned char*)&pvd, fp, 2048 * 16, 1, sizeof(pvd));
+						iso9660_ReadOffset((unsigned char*)&pvd, fp, 2352 * 16, 1, sizeof(pvd));
 
 						// ROOT DIRECTORY RECORD
 
@@ -409,18 +407,17 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 						// Convert HEX string to Decimal
 						sscanf(szRootSector, "%X", &nRootSector);
 #else
-// Just read from the file directly at the correct offset (0x8000 + 0x9e for the start of the root directory record)
+// Just read from the file directly at the correct offset (SECTOR_SIZE * 16 + 0x9e for the start of the root directory record)
 						unsigned char buffer[8];
 						char szRootSector[32];
 						unsigned int nRootSector = 0;
-						
-						fseek(fp, 0x809e, SEEK_SET);
-						fread(buffer, 1, 8, fp);
+
+						iso9660_ReadOffset(&buffer[0], fp, 2352 * 16 + 0x9e, 1, 8);
 						
 						sprintf(szRootSector, "%02x%02x%02x%02x", buffer[4], buffer[5], buffer[6], buffer[7]);
 						
 						sscanf(szRootSector, "%x", &nRootSector);
-#endif						
+#endif
 						
 						// Process the Root Directory Records
 						NeoCDList_iso9660_CheckDirRecord(fp, nRootSector);
@@ -459,10 +456,11 @@ int GetNeoGeoCD_Identifier()
 	}
 
 	// Make sure we have a valid ISO file extension...
-	if(_tcsstr(GetIsoPath(), _T(".iso")) || _tcsstr(GetIsoPath(), _T(".ISO")) ) 
+	if(_tcsstr(GetIsoPath(), _T(".img")) || _tcsstr(GetIsoPath(), _T(".bin")) )
 	{
 		if(_tfopen(GetIsoPath(), _T("rb"))) 
 		{
+			bprintf(0, _T("checking %s\n"), GetIsoPath());
 			// Read ISO and look for 68K ROM standard program header, ID is always there
 			// Note: This function works very quick, doesn't compromise performance :)
 			// it just read each sector first 264 bytes aproximately only.
@@ -476,7 +474,7 @@ int GetNeoGeoCD_Identifier()
 
 	} else {
 
-		bprintf(PRINT_NORMAL, _T("    File doesn't have a valid ISO extension [ .iso / .ISO ] \n"));
+		bprintf(PRINT_NORMAL, _T("    File doesn't have a valid ISO extension [ .img / .bin ] \n"));
 		return 0;
 	}
 

@@ -159,6 +159,21 @@ static void cdimgPrintImageInfo()
 	}
 }
 
+static void cdimgAddLastTrack()
+{ // Make a fake last-track w/total image size (for bounds checking)
+	FILE* h = _wfopen(cdimgTOC->Image, _T("rb"));
+	if (h)
+	{
+		fseek(h, 0, SEEK_END);
+		const UINT8* address = cdimgLBAToMSF(((ftell(h) + 2351) / 2352) + cd_pregap);
+		fclose(h);
+
+		cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[1] = address[1];
+		cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[2] = address[2];
+		cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[3] = address[3];
+	}
+}
+
 // parse .sub file and build a TOC based in Q sub channel data
 static int cdimgParseSubFile()
 {
@@ -258,19 +273,7 @@ static int cdimgParseSubFile()
 	cd_pregap = QChannel[0].MSFabs.F + QChannel[0].MSFabs.S * CD_FRAMES_SECOND + QChannel[0].MSFabs.M * CD_FRAMES_MINUTE;
 	//bprintf(0, _T("pregap lba: %d MSF: %d:%d:%d\n"), cd_pregap, QChannel[0].MSFabs.M, QChannel[0].MSFabs.S, QChannel[0].MSFabs.F);
 
-	{ // Make a fake last-track w/total image size (for bounds checking)
-		h = _wfopen(cdimgTOC->Image, _T("rb"));
-		if (h)
-		{
-			fseek(h, 0, SEEK_END);
-			const UINT8* address = cdimgLBAToMSF((ftell(h) + 2351) / 2352);
-			fclose(h);
-
-			cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[1] = address[1];
-			cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[2] = address[2];
-			cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[3] = address[3];
-		}
-	}
+	cdimgAddLastTrack();
 
 	return 0;
 }
@@ -420,19 +423,7 @@ static int cdimgParseCueFile()
 
 	fclose(h);
 
-	{
-		h = _wfopen(cdimgTOC->Image, _T("rb"));
-		if (h)
-		{
-			fseek(h, 0, SEEK_END);
-			const UINT8* address = cdimgLBAToMSF((ftell(h) + 2351) / 2352);
-			fclose(h);
-
-			cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[1] = address[1];
-			cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[2] = address[2];
-			cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[3] = address[3];
-		}
-	}
+	cdimgAddLastTrack();
 
 	return 0;
 }
@@ -614,7 +605,8 @@ static int cdimgPlay(UINT8 M, UINT8 S, UINT8 F)
 {
 	const UINT8 address[] = { 0, M, S, F };
 
-	dprintf(_T("    play %02i:%02i:%02i\n"), M, S, F);
+	const UINT8* displayaddress = dinkLBAToMSF(cdimgMSFToLBA(address));
+	dprintf(_T("    play %02i:%02i:%02i\n"), displayaddress[1], displayaddress[2], displayaddress[3]);
 
 	return cdimgPlayLBA(cdimgMSFToLBA(address));
 }
@@ -786,6 +778,17 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 				cdimgPlayLBA(cdimgLBA); */
 	}
 
+#if 0
+	extern int counter;
+	if (counter) {
+		const UINT8* displayaddress = dinkLBAToMSF(cdimgLBA);
+		dprintf(_T("  index  %02i:%02i:%02i"), displayaddress[1], displayaddress[2], displayaddress[3]);
+		INT32 endt = cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1 /* next track */].Address);
+		const UINT8* displayaddressend = dinkLBAToMSF(endt);
+		dprintf(_T("    end  %02i:%02i:%02i\n"), displayaddressend[1], displayaddressend[2], displayaddressend[3]);
+	}
+#endif
+
 	if (cdimgFile == NULL) { // restart play if fileptr lost
 		bprintf(0, _T("CDDA file pointer lost, re-starting!\n"));
 		if (cdimgLBA < cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1].Address))
@@ -793,6 +796,12 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 	}
 
 	if (cdimgFile == NULL) { // restart failed (really?) - time to give up.
+		cdimgStop();
+		return 0;
+	}
+
+	if (cdimgLBA >= cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1 /* next track */].Address)) {
+		bprintf(0, _T("End of audio track %d reached!! stopping.\n"), cdimgTrack + 1);
 		cdimgStop();
 		return 0;
 	}
@@ -812,14 +821,8 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 		samples -= (cdimgOutputbufferSize - cdimgOutputPosition);
 
 		cdimgOutputPosition = 0;
-		cdimgLBA++;
 		if ((cdimgOutputbufferSize = fread(cdimgOutputbuffer, 4, cdimgOUT_SIZE, cdimgFile)) <= 0)
 			cdimgStop();
-
-		if (cdimgLBA >= cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1 /* next track */].Address)) {
-			bprintf(0, _T("End of audio track %d reached!! stopping.\n"), cdimgTrack + 1);
-			cdimgStop();
-		}
 	}
 
 	if ((cdimgOutputPosition + samples) < cdimgOutputbufferSize)

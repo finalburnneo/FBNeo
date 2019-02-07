@@ -151,6 +151,9 @@ TCHAR* ExtractFilename(TCHAR* fullname);
 TCHAR* DriverToName(UINT32 nDrv);
 UINT32 NameToDriver(TCHAR* szName);
 TCHAR *StrReplace(TCHAR *str, TCHAR find, TCHAR replace);
+TCHAR *StrLower(TCHAR *str);
+TCHAR *FileExt(TCHAR *str);
+bool IsFileExt(TCHAR *str, TCHAR *ext);
 
 extern INT32 bDoGamma;
 extern INT32 bHardwareGammaOnly;

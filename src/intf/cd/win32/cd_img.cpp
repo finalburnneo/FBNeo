@@ -176,9 +176,9 @@ static int cdimgParseSubFile()
 	length = _tcslen(filename_sub);
 
 	if (length <= 4 ||
-		(_tcscmp(_T(".ccd"), filename_sub + length - 4) &&
-		 _tcscmp(_T(".img"), filename_sub + length - 4) &&
-		 _tcscmp(_T(".sub"), filename_sub + length - 4)))
+		(!IsFileExt(filename_sub, _T(".ccd")) &&
+		 !IsFileExt(filename_sub, _T(".img")) &&
+		 !IsFileExt(filename_sub, _T(".sub"))))
 	{
 		dprintf(_T("*** Bad image: %s\n"), filename_sub);
 		return 1;
@@ -476,7 +476,7 @@ static int cdimgInit()
 	if (_tcslen(filename) < 4)
 		return 1;
 
-	if (_tcscmp(_T(".cue"), filename + _tcslen(filename) - 4) == 0)
+	if (IsFileExt(filename, _T(".cue")))
 	{
 		if (cdimgParseCueFile())
 		{
@@ -487,7 +487,7 @@ static int cdimgInit()
 		}
 
 	} else
-	if (_tcscmp(_T(".ccd"), filename + _tcslen(filename) - 4) == 0)
+	if (IsFileExt(filename, _T(".ccd")))
 	{
 		if (cdimgParseSubFile())
 		{

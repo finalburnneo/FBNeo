@@ -357,7 +357,7 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 	}
 
 	// Make sure we have a valid ISO file extension...
-	if(_tcsstr(pszFile, _T(".img")) || _tcsstr(pszFile, _T(".bin")) )
+	if ( IsFileExt(pszFile, _T(".img")) || IsFileExt(pszFile, _T(".bin")) )
 	{
 		FILE* fp = _tfopen(pszFile, _T("rb"));
 		if(fp) 
@@ -504,8 +504,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 
 				if(!bNeoCDListScanOnlyISO) 
 				{
-
-					// Scan sub-directory for CUE									
+					// Scan sub-directory for CUE
 					_stprintf(szSubSearch, _T("%s%s/*.cue"), pszDirectory, ffdDirectory.cFileName);
 
 					hSubDirectory = FindFirstFile(szSubSearch, &ffdSubDirectory);
@@ -520,7 +519,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 							if(!(ffdSubDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 							{
 								// File is CUE
-								if(_tcsstr(ffdSubDirectory.cFileName, _T(".cue")) || _tcsstr(ffdSubDirectory.cFileName, _T(".CUE")))
+								if(IsFileExt(ffdSubDirectory.cFileName, _T(".cue")))
 								{
 									// Parse CUE
 									TCHAR szParse[512] = _T("\0");				
@@ -572,7 +571,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 						if(!(ffdSubDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 						{
 							// File is ISO
-							if(_tcsstr(ffdSubDirectory.cFileName, _T(".bin")) || _tcsstr(ffdSubDirectory.cFileName, _T(".img")))
+							if ( IsFileExt(ffdSubDirectory.cFileName, _T(".img")) || IsFileExt(ffdSubDirectory.cFileName, _T(".bin")) )
 							{
 								TCHAR szISO[512] = _T("\0");				
 								_stprintf(szISO, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
@@ -625,7 +624,7 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 				if(!(ffdDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 				{
 					// File is CUE
-					if(_tcsstr(ffdDirectory.cFileName, _T(".cue")) || _tcsstr(ffdDirectory.cFileName, _T(".CUE")))
+					if(IsFileExt(ffdDirectory.cFileName, _T(".cue")))
 					{
 						// Parse CUE
 						TCHAR szParse[512] = _T("\0");				
@@ -670,7 +669,7 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 			if(!(ffdDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 			{
 				// File is ISO
-				if(_tcsstr(ffdDirectory.cFileName, _T(".bin")) || _tcsstr(ffdDirectory.cFileName, _T(".img")))
+				if ( IsFileExt(ffdDirectory.cFileName, _T(".img")) || IsFileExt(ffdDirectory.cFileName, _T(".bin")) )
 				{
 					TCHAR szISO[512] = _T("\0");				
 					_stprintf(szISO, _T("%s%s"), pszDirectory, ffdDirectory.cFileName);

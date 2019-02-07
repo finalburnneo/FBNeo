@@ -346,7 +346,7 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 	}
 
 	// Make sure we have a valid ISO file extension...
-	if(_tcsstr(pszFile, _T(".img")) || _tcsstr(pszFile, _T(".bin")) )
+	if (IsFileExt(pszFile, _T(".img")) || IsFileExt(pszFile, _T(".bin")))
 	{
 		FILE* fp = _tfopen(pszFile, _T("rb"));
 		if(fp) 
@@ -456,11 +456,11 @@ int GetNeoGeoCD_Identifier()
 	}
 
 	// Make sure we have a valid ISO file extension...
-	if(_tcsstr(GetIsoPath(), _T(".img")) || _tcsstr(GetIsoPath(), _T(".bin")) )
+	if (IsFileExt(GetIsoPath(), _T(".img")) || IsFileExt(GetIsoPath(), _T(".bin")))
 	{
 		if(_tfopen(GetIsoPath(), _T("rb"))) 
 		{
-			bprintf(0, _T("checking %s\n"), GetIsoPath());
+			bprintf(0, _T("NeoCDList: checking %s\n"), GetIsoPath());
 			// Read ISO and look for 68K ROM standard program header, ID is always there
 			// Note: This function works very quick, doesn't compromise performance :)
 			// it just read each sector first 264 bytes aproximately only.

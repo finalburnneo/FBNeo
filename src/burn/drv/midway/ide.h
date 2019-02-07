@@ -2,6 +2,7 @@
 #define IDE
 
 #include <string>
+#include "burnint.h"
 
 namespace ide
 {

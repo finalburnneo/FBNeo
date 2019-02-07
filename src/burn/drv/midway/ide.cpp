@@ -5,7 +5,6 @@
 #include <fstream>
 #include <cstdio>
 #include <cstring>*/
-#include "burnint.h"
 #include "ide.h"
 
 #define DEBUG_ATA   0

@@ -668,6 +668,7 @@ static INT32 LoadRoms()
 	if (!strcmp("kof2k2omg", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
 	if (!strcmp("kof2k2omg9b", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
 	if (!strcmp("kof2k2omg9", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
+	if (!strcmp("kof98pfe", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
 	
 //	bprintf(PRINT_NORMAL, _T("%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
 	
@@ -725,6 +726,7 @@ static INT32 LoadRoms()
 		}
 	}
 
+	if (!strcmp("kof98pfe", BurnDrvGetTextA(DRV_NAME))) nCodeSize[nNeoActiveSlot] = 0x720000;
 	Neo68KROM[nNeoActiveSlot] = (UINT8*)BurnMalloc(nCodeSize[nNeoActiveSlot]);	// 68K cartridge ROM
 	if (Neo68KROM[nNeoActiveSlot] == NULL) {
 		return 1;

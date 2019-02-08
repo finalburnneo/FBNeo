@@ -961,7 +961,7 @@ void NeoUpdateVector()
 // ----------------------------------------------------------------------------
 // 68K bankswitch for most games without SMA/PVC protection
 
-void __fastcall neogeoWriteByteBankswitch(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall neogeoWriteByteBankswitch(UINT32 sekAddress, UINT8 byteValue)
 {
 	if (sekAddress >= 0x2FFFF0) {
 
@@ -972,7 +972,7 @@ void __fastcall neogeoWriteByteBankswitch(UINT32 sekAddress, UINT8 byteValue)
 	}
 }
 
-void __fastcall neogeoWriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall neogeoWriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 {
 	if (sekAddress >= 0x2FFFF0) {
 
@@ -1018,7 +1018,7 @@ static void neogeoFMIRQHandler(INT32, INT32 nStatus)
 
 // ----------------------------------------------------------------------------
 
-UINT8 __fastcall neogeoReadByteGambling(UINT32 sekAddress)
+static UINT8 __fastcall neogeoReadByteGambling(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 		case 0x280001: {
@@ -1035,7 +1035,7 @@ UINT8 __fastcall neogeoReadByteGambling(UINT32 sekAddress)
 	return 0xff;
 }
 
-UINT16 __fastcall neogeoReadWordGambling(UINT32 sekAddress)
+static UINT16 __fastcall neogeoReadWordGambling(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 		case 0x280000: {
@@ -1052,7 +1052,7 @@ UINT16 __fastcall neogeoReadWordGambling(UINT32 sekAddress)
 	return 0xffff;
 }
 
-UINT8 __fastcall vliner_timing(UINT32 sekAddress)
+static UINT8 __fastcall vliner_timing(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 		case 0x320000: {
@@ -1438,7 +1438,9 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SekScan(nAction);									// Scan 68000 state
 		ZetScan(nAction);									// Scan Z80 state
 
+		ZetOpen(0);
 		BurnYM2610Scan(nAction, pnMin);
+		ZetClose();
 
 		if (nNeoSystemType & NEO_SYS_MVS) {
 			uPD4990AScan(nAction, pnMin);
@@ -1500,7 +1502,6 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 //			BurnGameFeedback(sizeof(nLED), nLED);
 
 		if (nNeoSystemType & NEO_SYS_CD) {
-			//xxxxxxxxxxxxxxxx
 			SCAN_VAR(bNeoCDIRQEnabled);
 			SCAN_VAR(nNeoCDIRQVector);
 			SCAN_VAR(nNeoCDIRQVectorAck);
@@ -1550,6 +1551,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 
 			SCAN_VAR(nNeoCDMode);
 			SCAN_VAR(nff0002);
+
 			CDEmuScan(nAction, pnMin);
 		}
 
@@ -1621,7 +1623,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 // -----------------------------------------------------------------------------
 // Z80 handlers
 
-UINT8 __fastcall neogeoZ80In(UINT16 nAddress)
+static UINT8 __fastcall neogeoZ80In(UINT16 nAddress)
 {
 	switch (nAddress & 0xFF) {
 		case 0x00:									// Read sound command
@@ -1664,7 +1666,7 @@ UINT8 __fastcall neogeoZ80In(UINT16 nAddress)
 	return 0;
 }
 
-UINT8 __fastcall neogeoZ80InCD(UINT16 nAddress)
+static UINT8 __fastcall neogeoZ80InCD(UINT16 nAddress)
 {
 	switch (nAddress & 0xFF) {
 		case 0x00:									// Read sound command
@@ -1697,7 +1699,7 @@ UINT8 __fastcall neogeoZ80InCD(UINT16 nAddress)
 	return 0;
 }
 
-void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
+static void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 {
 	switch (nAddress & 0x0FF) {
 		case 0x00:
@@ -1748,7 +1750,7 @@ void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 // -----------------------------------------------------------------------------
 // 68K handlers
 
-INT32 __fastcall NeoCDIRQCallback(INT32 /* nIRQ */)
+static INT32 __fastcall NeoCDIRQCallback(INT32 /* nIRQ */)
 {
 //	bprintf(PRINT_NORMAL, _T("  - IRQ Callback %i %2X.\n"), nIRQ, nNeoCDIRQVector);
 	if (nNeoCDIRQVectorAck) {
@@ -1882,7 +1884,7 @@ static UINT8 ReadInput3(INT32 nOffset)
 	return ~0;
 }
 
-UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
+static UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress & 0xFE0000) {
 		case 0x300000:
@@ -1933,7 +1935,7 @@ UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 	return ~0;
 }
 
-UINT16 __fastcall neogeoReadWord(UINT32 sekAddress)
+static UINT16 __fastcall neogeoReadWord(UINT32 sekAddress)
 {
 	switch (sekAddress & 0xFE0000) {
 		case 0x300000:
@@ -2147,7 +2149,7 @@ static void WriteIO2(INT32 nOffset, UINT8 /*byteValue*/)
 	return;
 }
 
-void __fastcall neogeoWriteByte(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall neogeoWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress & 0xFF0000) {
 		case 0x300000:
@@ -2193,7 +2195,7 @@ void __fastcall neogeoWriteWord(UINT32 sekAddress, UINT16 wordValue)
 // ----------------------------------------------------------------------------
 // Video controller reads
 
-UINT16 __fastcall neogeoReadWordVideo(UINT32 sekAddress)
+static UINT16 __fastcall neogeoReadWordVideo(UINT32 sekAddress)
 {
 	switch (sekAddress & 6) {
 		case 0x00:
@@ -2218,7 +2220,7 @@ UINT16 __fastcall neogeoReadWordVideo(UINT32 sekAddress)
 	return 0;
 }
 
-UINT8 __fastcall neogeoReadByteVideo(UINT32 sekAddress)
+static UINT8 __fastcall neogeoReadByteVideo(UINT32 sekAddress)
 {
 	if (sekAddress & 1) {
 		return 0x0FF;
@@ -2227,7 +2229,7 @@ UINT8 __fastcall neogeoReadByteVideo(UINT32 sekAddress)
 	}
 }
 
-void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 {
 //	if (sekAddress >= 0x3C0010)
 //	bprintf(PRINT_NORMAL, _T("  - Attempt to write word 0x%06X -> 0x%04X\n"), sekAddress, wordValue);
@@ -2345,7 +2347,7 @@ void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 	}
 }
 
-void __fastcall neogeoWriteByteVideo(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall neogeoWriteByteVideo(UINT32 sekAddress, UINT8 byteValue)
 {
 //	bprintf(PRINT_NORMAL, _T("  - Attempt to write byte 0x%06X ->   0x%02X\n"), sekAddress, byteValue);
 
@@ -2369,7 +2371,7 @@ void __fastcall neogeoWriteByteVideo(UINT32 sekAddress, UINT8 byteValue)
 // ----------------------------------------------------------------------------
 // Backup RAM on MVS hardware
 
-void __fastcall neogeoWriteByteSRAM(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall neogeoWriteByteSRAM(UINT32 sekAddress, UINT8 byteValue)
 {
 	sekAddress &= 0xFFFF;
 
@@ -2378,7 +2380,7 @@ void __fastcall neogeoWriteByteSRAM(UINT32 sekAddress, UINT8 byteValue)
 	}
 }
 
-void __fastcall neogeoWriteWordSRAM(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall neogeoWriteWordSRAM(UINT32 sekAddress, UINT16 wordValue)
 {
 	sekAddress &= 0xFFFF;
 
@@ -2389,7 +2391,7 @@ void __fastcall neogeoWriteWordSRAM(UINT32 sekAddress, UINT16 wordValue)
 
 // ----------------------------------------------------------------------------
 
-UINT8 __fastcall neogeoReadByteMemoryCard(UINT32 sekAddress)
+static UINT8 __fastcall neogeoReadByteMemoryCard(UINT32 sekAddress)
 {
 //	if (sekAddress < 0x800100)
 //	bprintf(PRINT_NORMAL, _T("  - Memcard 0x%04X read (PC: 0x%06X).\n"), sekAddress & 0x7FFF, SekGetPC(-1));
@@ -2403,7 +2405,7 @@ UINT8 __fastcall neogeoReadByteMemoryCard(UINT32 sekAddress)
 	return 0xFF;
 }
 
-void __fastcall neogeoWriteByteMemoryCard(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall neogeoWriteByteMemoryCard(UINT32 sekAddress, UINT8 byteValue)
 {
 //	if (sekAddress < 0x800100)
 //	bprintf(PRINT_NORMAL, _T("  - Memcard 0x%04X -> 0x%02X (PC: 0x%06X).\n"), sekAddress & 0x7FFF, byteValue, SekGetPC(-1));
@@ -2415,7 +2417,7 @@ void __fastcall neogeoWriteByteMemoryCard(UINT32 sekAddress, UINT8 byteValue)
 	}
 }
 
-UINT8 __fastcall neoCDReadByteMemoryCard(UINT32 sekAddress)
+static UINT8 __fastcall neoCDReadByteMemoryCard(UINT32 sekAddress)
 {
 	sekAddress &= 0x01FFFF;
 	if (sekAddress < 0x4000 && sekAddress & 1) {
@@ -2425,7 +2427,7 @@ UINT8 __fastcall neoCDReadByteMemoryCard(UINT32 sekAddress)
 	return 0xFF;
 }
 
-void __fastcall neoCDWriteByteMemoryCard(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall neoCDWriteByteMemoryCard(UINT32 sekAddress, UINT8 byteValue)
 {
 	sekAddress &= 0x01FFFF;
 	if (sekAddress < 0x4000 && sekAddress & 1) {
@@ -4327,6 +4329,8 @@ INT32 NeoExit()
 	s1945pmode = 0;
 	fatfury2mode = 0;
 	vlinermode = 0;
+
+	nNeoSystemType = 0;
 
 	return 0;
 }

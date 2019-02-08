@@ -17447,25 +17447,19 @@ STD_ROM_FN(kof98pfe)
 
 static UINT8 *kof98pfeExtraROM;
 
-static void kof98pfeCallback()
-{
-	BurnLoadRom(Neo68KROMActive + 0x700000, 2, 1);
-	Neo68KROMActive[0x701af4] = 0x4e;
-	Neo68KROMActive[0x701af5] = 0x71;
-	Neo68KROMActive[0x701b18] = 0x60;
-	Neo68KROMActive[0x701ca2] = 0x60;
-}
-
 static INT32 kof98pfeInit()
 {
-	NeoCallbackActive->pInitialise = kof98pfeCallback;
-
 	INT32 nRet = NeoInit();
 
 	if (nRet == 0) {
 		kof98pfeExtraROM = (UINT8*)BurnMalloc(0x20000);
 
 		if (BurnLoadRom(kof98pfeExtraROM, 2, 1)) return 1;
+
+		kof98pfeExtraROM[0x1af4] = 0x71;
+		kof98pfeExtraROM[0x1af5] = 0x4e;
+		kof98pfeExtraROM[0x1b19] = 0x60;
+		kof98pfeExtraROM[0x1ca3] = 0x60;
 
 		UINT16 *rom = (UINT16*)kof98pfeExtraROM;
 		for (INT32 i = 0; i < 0x20000/2; i++) {
@@ -17479,7 +17473,7 @@ static INT32 kof98pfeInit()
 			if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
 			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
 		}
-		
+
 		SekOpen(0);
 		SekMapMemory(kof98pfeExtraROM, 0x900000, 0x91ffff, MAP_ROM);
 		SekClose();

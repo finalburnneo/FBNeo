@@ -723,7 +723,6 @@ static INT32 LoadRoms()
 		}
 	}
 
-	if (!strcmp("kof98pfe", BurnDrvGetTextA(DRV_NAME))) nCodeSize[nNeoActiveSlot] = 0x720000;
 	Neo68KROM[nNeoActiveSlot] = (UINT8*)BurnMalloc(nCodeSize[nNeoActiveSlot]);	// 68K cartridge ROM
 	if (Neo68KROM[nNeoActiveSlot] == NULL) {
 		return 1;

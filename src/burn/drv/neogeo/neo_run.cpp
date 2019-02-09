@@ -3,7 +3,6 @@
 // mit .bin/.cue & .ccd/.img (trurip) unterstutzung (feb.4.2019)
 // known issues:
 //   Audio Hz rate must be 44100 for proper CDDA speed
-//   ssrpg bugs in sfx-audio in cutscene after starting game
 
 /*
  * FB Alpha Neo Geo module
@@ -301,8 +300,6 @@ static INT32 NeoCDCommsWordCount = 0;
 
 static INT32 NeoCDAssyStatus  = 0;
 
-static INT32 NeoCDTrack = 0;
-
 static INT32 NeoCDSectorMin = 0;
 static INT32 NeoCDSectorSec = 0;
 static INT32 NeoCDSectorFrm = 0;
@@ -321,7 +318,6 @@ static INT32 NeoCDDMACount    = 0;
 static INT32 NeoCDDMAMode     = 0;
 static INT32 NeoCDVectorSwitch = 0; // 1 ROM(ram), 0 BIOS
 
-// hax0r
 static INT32 nNeoCDMode = 0;
 static INT32 nff0002 = 0;
 
@@ -1527,8 +1523,6 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 
 			SCAN_VAR(NeoCDAssyStatus);
 
-			SCAN_VAR(NeoCDTrack);
-
 			SCAN_VAR(NeoCDSectorMin);
 			SCAN_VAR(NeoCDSectorSec);
 			SCAN_VAR(NeoCDSectorFrm);
@@ -1738,6 +1732,12 @@ static void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 			}
 #endif
 
+			break;
+
+		case 0x80: // NOP
+		case 0xc0:
+		case 0xc1:
+		case 0xc2:
 			break;
 
 		default: {
@@ -2487,6 +2487,7 @@ static void NeoCDCommsReset()
 	bNeoCDLoadSector = false;
 
 	nNeoCDMode = 0;
+	NeoCDSectorLBA = 0;
 }
 
 static void LC8951UpdateHeader()
@@ -2654,7 +2655,7 @@ static void NeoCDProcessCommand()
 					break;
 				}
 				case 5:	{
-					NeoCDTrack = (NeoCDCommsCommandFIFO[4] << 4) | NeoCDCommsCommandFIFO[5];
+					INT32 NeoCDTrack = (NeoCDCommsCommandFIFO[4] << 4) | NeoCDCommsCommandFIFO[5];
 
 					UINT8* TOCEntry = CDEmuReadTOC(NeoCDTrack);
 
@@ -3327,13 +3328,14 @@ static void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 			break;
 
 		case 0x0183: {
-			static UINT8 clara = 0;
-			if (!byteValue && clara) {
-				bprintf(PRINT_IMPORTANT, _T("  - NGCD Z80 reset (PC: 0x%06X)\n"), SekGetPC(-1));
+			if (byteValue == 0) {
+				bprintf(PRINT_IMPORTANT, _T("  - NGCD Z80 in-reset (PC: 0x%06X, 68k Cyc: %d, Z80 Cyc: %d, Frame: %d)\n"), SekGetPC(-1), SekTotalCycles(), ZetTotalCycles(), nCurrentFrame);
 				BurnYM2610Reset();
-				ZetReset();
+				ZetSetRESETLine(1);
+			} else {
+				bprintf(PRINT_IMPORTANT, _T("  - NGCD Z80 out-reset (PC: 0x%06X, 68k Cyc: %d, Z80 Cyc: %d, Frame: %d)\n"), SekGetPC(-1), SekTotalCycles(), ZetTotalCycles(), nCurrentFrame);
+				ZetSetRESETLine(0);
 			}
-			clara = byteValue;
 			break;
 		}
 		case 0x01A1:
@@ -3534,9 +3536,7 @@ static void __fastcall neogeoWriteWordTransfer(UINT32 sekAddress, UINT16 wordVal
 			if (ZetGetBUSREQLine() == 0) {
 				YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)] = wordValue;
 			} else {
-				// What's the deal with the high bits?  Some games (Karnov's Revenge) will spew onto
-				// the sound cpu which causes issues - so we ignore all writes with the high bits set.
-				if ((sekAddress & 0xfffff) >= 0x20000 || (wordValue & 0xFF00)) break;
+				if ((sekAddress & 0xfffff) >= 0x20000) break;
 				NeoZ80ROMActive[(sekAddress & 0x1FFFF) >> 1] = wordValue;
 			}
 			break;
@@ -3726,6 +3726,7 @@ static INT32 neogeoReset()
 		}
 
 		ZetSetBUSREQLine(0);
+		ZetSetRESETLine(0);
 
 		SekReset();
 		ZetReset();

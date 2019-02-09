@@ -830,9 +830,11 @@ void ZetSetRESETLine(INT32 nStatus)
 
 	if (nOpenedCPU < 0) return;
 	
-	ZetCPUContext[nOpenedCPU]->ResetLine = nStatus;
+	if (ZetCPUContext[nOpenedCPU]->ResetLine && nStatus == 0) {
+		ZetReset();
+	}
 
-	if (nStatus == 0) ZetReset();
+	ZetCPUContext[nOpenedCPU]->ResetLine = nStatus;
 }
 
 INT32 ZetGetRESETLine()

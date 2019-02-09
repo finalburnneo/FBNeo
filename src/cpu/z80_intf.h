@@ -81,6 +81,9 @@ void ZetSetEDFECallback(void (*pCallback)(Z80_Regs*));
 void ZetSetBUSREQLine(INT32 nStatus);
 INT32 ZetGetBUSREQLine();
 
+void ZetSetRESETLine(INT32 nStatus);
+INT32 ZetGetRESETLine();
+
 void ZetCheatWriteROM(UINT32 a, UINT8 d); // cheat core
 UINT8 ZetCheatRead(UINT32 a);
 

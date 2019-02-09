@@ -3260,6 +3260,10 @@ static void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 			nActiveTransferArea = byteValue;
 			break;
 
+		case 0x0119:
+			bNeoEnableGraphics = (byteValue != 0);
+			break;
+
 		case 0x0121:
 //			bprintf(PRINT_NORMAL, _T("  - NGCD OBJ BUSREQ -> 1 (PC: 0x%06X)\n"), SekGetPC(-1));
 			NeoSetSpriteSlot(1);

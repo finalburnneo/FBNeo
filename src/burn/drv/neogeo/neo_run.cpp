@@ -3333,11 +3333,11 @@ static void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 
 		case 0x0183: {
 			if (byteValue == 0) {
-				bprintf(PRINT_IMPORTANT, _T("  - NGCD Z80 in-reset (PC: 0x%06X, 68k Cyc: %d, Z80 Cyc: %d, Frame: %d)\n"), SekGetPC(-1), SekTotalCycles(), ZetTotalCycles(), nCurrentFrame);
+				//bprintf(PRINT_IMPORTANT, _T("  - NGCD Z80 in-reset (PC: 0x%06X, 68k Cyc: %d, Z80 Cyc: %d, Frame: %d)\n"), SekGetPC(-1), SekTotalCycles(), ZetTotalCycles(), nCurrentFrame);
 				BurnYM2610Reset();
 				ZetSetRESETLine(1);
 			} else {
-				bprintf(PRINT_IMPORTANT, _T("  - NGCD Z80 out-reset (PC: 0x%06X, 68k Cyc: %d, Z80 Cyc: %d, Frame: %d)\n"), SekGetPC(-1), SekTotalCycles(), ZetTotalCycles(), nCurrentFrame);
+				//bprintf(PRINT_IMPORTANT, _T("  - NGCD Z80 out-reset (PC: 0x%06X, 68k Cyc: %d, Z80 Cyc: %d, Frame: %d)\n"), SekGetPC(-1), SekTotalCycles(), ZetTotalCycles(), nCurrentFrame);
 				ZetSetRESETLine(0);
 			}
 			break;

@@ -68,6 +68,8 @@ static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 static UINT8 DrvInputs[6];
 
+static INT32 is_shufshot = 0;
+
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 static INT16 DrvAnalogPort2 = 0;
@@ -2206,7 +2208,8 @@ static void __fastcall common32_main_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	bprintf (0, _T("MWW: %5.5x, %4.4x\n"), address, data);
+	if ((address&0xffff00) != 0x61ff00)
+		bprintf (0, _T("MWW: %5.5x, %4.4x\n"), address, data);
 }
 
 static void __fastcall common32_main_write_byte(UINT32 address, UINT8 data)
@@ -2274,7 +2277,8 @@ static void __fastcall common32_main_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-	bprintf (0, _T("MWB: %5.5x, %2.2x\n"), address, data);
+	if ((address&0xffff00) != 0x61ff00)
+		bprintf (0, _T("MWB: %5.5x, %2.2x\n"), address, data);
 }
 
 static UINT8 wcbowl_track_read(INT32 player)
@@ -2285,6 +2289,17 @@ static UINT8 wcbowl_track_read(INT32 player)
 static UINT16 track_read_8bit(INT32 player)
 {
 	return (BurnTrackballRead(player, 0) & 0xff) | ((BurnTrackballRead(player, 1) & 0xff) << 8);
+}
+
+static INT32 shufshot_weird_y(INT16 ana)
+{
+	// todo: revisit at a later time.
+	// "git 'r dun"-style
+	if (ana > 1024) ana = 1024;
+	if (ana < -1024) ana = -1024;
+	ana /= 256; // -4 - +4
+	ana *= 0.9; // tone it down a bit..
+	return (ana);
 }
 
 static UINT32 track_read_4bit(INT32 player)
@@ -2306,6 +2321,12 @@ static UINT32 track_read_4bit(INT32 player)
 		else if (dy > 0x80) dy -= 0x100;
 		if (dy > 7) dy = 7;
 		else if (dy < -7) dy = -7;
+
+		if (is_shufshot) {
+			// keep shufshot happy...
+			dy = shufshot_weird_y((player == 0) ? DrvAnalogPort1 : DrvAnalogPort3);
+		}
+
 		tb_effy[player] = (tb_effy[player] + dy) & 0xff;
 		INT32 upper = tb_effy[player] & 15;
 
@@ -2812,8 +2833,9 @@ static INT32 DrvGetRoms(bool bLoad)
 			if (bLoad) {
 				if (BurnLoadRom(pSndLoad[bank] + 1, i, 2)) return 1;
 			}
-			if (nSndROMLen[1]) {
+			if (nSndROMLen[1] || is_shufshot) {
 				// wcbowl,wcbowldx,wcbowl{140,165,161,16} have bank1 and 0x200000 spacing
+				// shufshot has 0x200000 spacing but only bank0
 				pSndLoad[bank] += 0x200000;
 			} else {
 				pSndLoad[bank] += ri.nLen * 2;
@@ -2999,6 +3021,8 @@ static INT32 DrvExit()
 	BurnFree (videoram16);
 
 	Trackball_Type = -1;
+
+	is_shufshot = 0;
 
 	return 0;
 }
@@ -4821,6 +4845,7 @@ STD_ROM_FN(shufshot)
 static INT32 ShufshotInit()
 {
 	Trackball_Type = TB_TYPE0;
+	is_shufshot = 1;
 
 	return Common32BitInit(0x111a, 1, 0);
 }

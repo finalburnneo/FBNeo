@@ -4847,10 +4847,7 @@ INT32 NeoFrame()
 		NeoRenderText();											// Render text layer
 	}
 
-	if ((nNeoSystemType & NEO_SYS_CD) && (nff0004 & 0x0030) == 0x0030) {
-		nIRQAcknowledge &= ~4;
-		SekSetIRQLine(nVBLankIRQ, CPU_IRQSTATUS_ACK);
-	} else {
+	if ( ((nNeoSystemType & NEO_SYS_CD) && (nff0004 & 0x0030) == 0x0030) || (~nNeoSystemType & NEO_SYS_CD) ) {
 		nIRQAcknowledge &= ~4;
 		SekSetIRQLine(nVBLankIRQ, CPU_IRQSTATUS_ACK);
 	}

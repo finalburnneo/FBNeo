@@ -2541,7 +2541,7 @@ static char* LC8951InitTransfer()
 
 static void LC8951EndTransfer()
 {
-	LC8951RegistersW[6]  = 0x00;												// reset DTTRG
+	LC8951RegistersW[6]  = 0x00; 												// reset DTTRG
 
 	LC8951RegistersR[1] |= 0x48;												//   set DTEI & DTBSY
 	if (LC8951RegistersW[1] & 0x40) {
@@ -2591,7 +2591,7 @@ static void NeoCDProcessCommand()
 		case 2:
 //								bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
 			NeoCDCommsStatusFIFO[1] = NeoCDCommsCommandFIFO[3];
-			 switch (NeoCDCommsCommandFIFO[3]) {
+			switch (NeoCDCommsCommandFIFO[3]) {
 
 				case 0: {
 					UINT8* ChannelData = CDEmuReadQChannel();
@@ -2633,12 +2633,16 @@ static void NeoCDProcessCommand()
 					NeoCDCommsStatusFIFO[2] = ChannelData[0] >> 4;
 					NeoCDCommsStatusFIFO[3] = ChannelData[0] & 0x0F;
 
+					UINT8* TOCEntry = CDEmuReadTOC(CDEmuTOC_FIRSTINDEX);
+					NeoCDCommsStatusFIFO[4] = TOCEntry[0] >> 4;
+					NeoCDCommsStatusFIFO[5] = TOCEntry[0] & 0x0F;
+
 					NeoCDCommsStatusFIFO[8] = ChannelData[7];
 
 					break;
 				}
 				case 3: {
-					UINT8* TOCEntry = CDEmuReadTOC(-2);
+					UINT8* TOCEntry = CDEmuReadTOC(CDEmuTOC_LASTMSF);
 
 					NeoCDCommsStatusFIFO[2] = TOCEntry[0] >> 4;
 					NeoCDCommsStatusFIFO[3] = TOCEntry[0] & 0x0F;
@@ -2652,7 +2656,7 @@ static void NeoCDProcessCommand()
 					break;
 				}
 				case 4: {
-					UINT8* TOCEntry = CDEmuReadTOC(-1);
+					UINT8* TOCEntry = CDEmuReadTOC(CDEmuTOC_FIRSTLAST);
 
 					NeoCDCommsStatusFIFO[2] = TOCEntry[0] > 4;
 					NeoCDCommsStatusFIFO[3] = TOCEntry[0] & 0x0F;

@@ -5,6 +5,7 @@
 // CD emulation module
 
 enum CDEmuStatusValue { idle = 0, reading, playing, paused, seeking, fastforward, fastreverse };
+enum CDEmuReadTOCFlags { CDEmuTOC_FIRSTLAST = 0x1000, CDEmuTOC_LASTMSF, CDEmuTOC_FIRSTINDEX };
 
 extern TCHAR CDEmuImage[MAX_PATH];
 

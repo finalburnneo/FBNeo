@@ -686,10 +686,10 @@ static UINT8* cdimgReadTOC(int track)
 	}
 	if (track == CDEmuTOC_FIRSTINDEX)
 	{
-		if (cdimgLBA < cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTOC->FirstTrack - 1].Address))
+		if (cdimgLBA < cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTOC->FirstTrack].Address))
 		{
 			const UINT8* addressUNBCD = dinkLBAToMSF(cdimgLBA);
-			UINT8 index = addressUNBCD[1] * 25 + ((addressUNBCD[2] + 4) / 4);
+			UINT8 index = ((addressUNBCD[1] * 60) + (addressUNBCD[2] + 4)) / 4;
 			TOCEntry[0] = tobcd((index < 100) ? index : 99);
 		}
 		else

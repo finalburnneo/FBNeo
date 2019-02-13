@@ -1893,6 +1893,9 @@ static UINT8 ReadInput3(INT32 nOffset)
 
 static UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 {
+	if (sekAddress >= 0x200000 && sekAddress <= 0x2fffff)
+		return ~0; // data from open bus should be read here
+
 	switch (sekAddress & 0xFE0000) {
 		case 0x300000:
 			return ReadInput1(sekAddress & 0xFF);
@@ -1944,6 +1947,9 @@ static UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 
 static UINT16 __fastcall neogeoReadWord(UINT32 sekAddress)
 {
+	if (sekAddress >= 0x200000 && sekAddress <= 0x2fffff)
+		return ~0; // data from open bus should be read here
+
 	switch (sekAddress & 0xFE0000) {
 		case 0x300000:
 			return (ReadInput1(sekAddress & 0xFE) << 8) | ReadInput1((sekAddress & 0xFE) | 1);
@@ -2922,20 +2928,22 @@ static void NeoCDDoDMA()
 			//  - DMA controller program[14] -> 0xFCF5 (PC: 0xC0FD8A)
 
 			// Double Dragon clears the vector table before loading in the
-			// actual vectors, leading me to believe that there is some sort
-			// of vector-cache going on here.  Let's just ignore the clearing
+			// actual vectors.  Let's just ignore the clearing part
 			// so the game doesn't freeze while loading.
 
 			INT32 OkWriteVect = !CheckDMASourceForBlankVectorTable(NeoCDDMAAddress2, NeoCDDMAAddress1);
+
+			if (!OkWriteVect) {
+				bprintf(0, _T("(DMA) Inhibit blank vector table write into 68k ram-vectspace\n"));
+			}
 
 			SekIdle(NeoCDDMACount * 1);
 
 			while (NeoCDDMACount--) {
 				if (OkWriteVect || NeoCDDMAAddress2 >= 0x80) {
 					SekWriteWord(NeoCDDMAAddress2, SekReadWord(NeoCDDMAAddress1));
-				} else {
-					bprintf(0, _T("DMA bytes into rom-vectspace failed @ %X:  %X\n"), NeoCDDMAAddress2, SekReadWord(NeoCDDMAAddress1));
 				}
+
 				NeoCDDMAAddress1 += 2;
 				NeoCDDMAAddress2 += 2;
 			}
@@ -3234,7 +3242,14 @@ static void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 		case 0x0061:
 			if (byteValue & 0x40) {
 				NeoCDDoDMA();
-			}
+			} else
+				if (byteValue == 0) {
+					NeoCDDMAAddress1 = 0;
+					NeoCDDMAAddress2 = 0;
+					NeoCDDMAValue1 = 0;
+					NeoCDDMAValue2 = 0;
+					NeoCDDMACount = 0;
+				}
 			break;
 
 		// LC8951 registers
@@ -3399,12 +3414,6 @@ static void __fastcall neogeoWriteWordCDROM(UINT32 sekAddress, UINT16 wordValue)
 			break;
 
 		// DMA controller
-		case 0x0060:
-			if (wordValue & 0x40) {
-				NeoCDDoDMA();
-			}
-			break;
-
 		case 0x0064:
 			NeoCDDMAAddress1 &= 0x0000FFFF;
 			NeoCDDMAAddress1 |= wordValue << 16;
@@ -3561,12 +3570,8 @@ static void __fastcall neogeoWriteWordTransfer(UINT32 sekAddress, UINT16 wordVal
 			YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)] = wordValue;
 			break;
 		case 4:							// Z80
-			if (ZetGetBUSREQLine() == 0) {
-				YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)] = wordValue;
-			} else {
-				if ((sekAddress & 0xfffff) >= 0x20000) break;
-				NeoZ80ROMActive[(sekAddress & 0x1FFFF) >> 1] = wordValue;
-			}
+			if ((sekAddress & 0xfffff) >= 0x20000) break;
+			NeoZ80ROMActive[(sekAddress & 0x1FFFF) >> 1] = wordValue;
 			break;
 		case 5:							// Text
 			NeoTextRAM[(sekAddress & 0x3FFFF) >> 1] = wordValue;
@@ -4474,7 +4479,9 @@ INT32 NeoFrame()
 		if (nNeoSystemType & NEO_SYS_CART) {
 			memset(Neo68KRAM, 0, 0x010000);
 		}
-
+		if (nNeoSystemType & NEO_SYS_CD) {
+			memset(Neo68KROM[0], 0, nCodeSize[0]);
+		}
 		neogeoReset();
 	}
 

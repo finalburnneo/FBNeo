@@ -2611,7 +2611,7 @@ static void NeoCDProcessCommand()
 					NeoCDCommsStatusFIFO[6] = ChannelData[3] >> 4;
 					NeoCDCommsStatusFIFO[7] = ChannelData[3] & 0x0F;
 
-					NeoCDCommsStatusFIFO[8] = ChannelData[7];
+					NeoCDCommsStatusFIFO[8] = ChannelData[7] >> 4;
 
 // bprintf(PRINT_ERROR, _T("    %02i %02i:%02i:%02i %02i:%02i:%02i %02i\n"), ChannelData[0], ChannelData[1], ChannelData[2], ChannelData[3], ChannelData[4], ChannelData[5], ChannelData[6], ChannelData[7]);
 
@@ -2629,7 +2629,7 @@ static void NeoCDProcessCommand()
 					NeoCDCommsStatusFIFO[6] = ChannelData[6] >> 4;
 					NeoCDCommsStatusFIFO[7] = ChannelData[6] & 0x0F;
 
-					NeoCDCommsStatusFIFO[8] = ChannelData[7];
+					NeoCDCommsStatusFIFO[8] = ChannelData[7] >> 4;
 
 					break;
 				}
@@ -2643,7 +2643,7 @@ static void NeoCDProcessCommand()
 					NeoCDCommsStatusFIFO[4] = TOCEntry[0] >> 4;
 					NeoCDCommsStatusFIFO[5] = TOCEntry[0] & 0x0F;
 
-					NeoCDCommsStatusFIFO[8] = ChannelData[7];
+					NeoCDCommsStatusFIFO[8] = ChannelData[7] >> 4;
 
 					break;
 				}
@@ -2699,7 +2699,7 @@ static void NeoCDProcessCommand()
 				case 6: {
 					UINT8* ChannelData = CDEmuReadQChannel();
 
-					NeoCDCommsStatusFIFO[8] = ChannelData[7];
+					NeoCDCommsStatusFIFO[8] = ChannelData[7] >> 4;
 
 					break;
 				}

@@ -1030,7 +1030,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				memset(&ofn, 0, sizeof(ofn));
 				ofn.lStructSize = sizeof(ofn);
 				ofn.hwndOwner = hScrnWnd;
-				ofn.lpstrFile = CDEmuImage;
+				ofn.lpstrFile = StrReplace(CDEmuImage, _T('/'), _T('\\'));
 				ofn.nMaxFile = MAX_PATH;
 				ofn.lpstrTitle = szTitle;
 				ofn.lpstrFilter = szFilter;

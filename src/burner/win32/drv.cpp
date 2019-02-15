@@ -10,6 +10,8 @@ TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = { { _T("") }, { _T("") }, { _T("") }, 
 
 static bool bSaveRAM = false;
 
+static INT32 nNeoCDZnAudSampleRateSave = 0;
+
 static int DrvBzipOpen()
 {
 	BzipOpen(false);
@@ -118,6 +120,24 @@ int __cdecl DrvCartridgeAccess(BurnCartrigeCommand nCommand)
 	return 0;
 }
 
+void NeoCDZRateChangeback()
+{
+	if (nNeoCDZnAudSampleRateSave != 0) {
+		bprintf(PRINT_IMPORTANT, _T("Switching sound rate back to user-selected %dhz\n"), nNeoCDZnAudSampleRateSave);
+		nAudSampleRate[nAudSelect] = nNeoCDZnAudSampleRateSave;
+		nNeoCDZnAudSampleRateSave = 0;
+	}
+}
+
+static void NeoCDZRateChange()
+{
+	if (nAudSampleRate[nAudSelect] != 44100) {
+		nNeoCDZnAudSampleRateSave = nAudSampleRate[nAudSelect];
+		bprintf(PRINT_IMPORTANT, _T("Switching sound rate to 44100hz (from %dhz) as required by NeoGeo CDZ\n"), nNeoCDZnAudSampleRateSave);
+		nAudSampleRate[nAudSelect] = 44100; // force 44100hz for CDDA
+	}
+}
+
 int DrvInit(int nDrvNum, bool bRestore)
 {
 	int nStatus;
@@ -145,6 +165,8 @@ int DrvInit(int nDrvNum, bool bRestore)
 			POST_INITIALISE_MESSAGE;
 			return 0;
 		}
+
+		NeoCDZRateChange();
 	}
 
 	{ // Init input and audio, save blitter init for later. (reduce # of mode changes, nice for emu front-ends)
@@ -168,6 +190,7 @@ int DrvInit(int nDrvNum, bool bRestore)
 	}
 
 	nStatus = DoLibInit();			// Init the Burn library's driver
+
 	if (nStatus) {
 		if (nStatus & 2) {
 			BurnDrvExit();			// Exit the driver
@@ -177,6 +200,8 @@ int DrvInit(int nDrvNum, bool bRestore)
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_BURN_INIT), BurnDrvGetText(DRV_FULLNAME));
 			FBAPopupDisplay(PUF_TYPE_WARNING);
 		}
+
+		NeoCDZRateChangeback();
 
 		POST_INITIALISE_MESSAGE;
 		return 1;
@@ -230,6 +255,8 @@ int DrvInitCallback()
 int DrvExit()
 {
 	if (bDrvOkay) {
+		NeoCDZRateChangeback();
+
 		StopReplay();
 
 		VidExit();

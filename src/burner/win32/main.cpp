@@ -1042,7 +1042,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 			RunMessageLoop();					// Run the application message loop
 		}
 	}
-	
+
+	NeoCDZRateChangeback();                     // Change back temp CDZ rate before saving
+
 	ConfigAppSave();							// Save config for the application
 
 	AppExit();									// Exit the application	

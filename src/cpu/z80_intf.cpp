@@ -21,7 +21,8 @@ struct ZetExt {
 	pZetReadHandler ZetRead;
 	pZetWriteHandler ZetWrite;
 	
-	UINT8 BusReq;
+	UINT32 BusReq;
+	UINT32 ResetLine;
 };
  
 static INT32 nZetCyclesDone[MAX_Z80];
@@ -216,7 +217,8 @@ INT32 ZetInit(INT32 nCPU)
 		ZetCPUContext[nCPU]->ZetRead = ZetDummyReadHandler;
 		ZetCPUContext[nCPU]->ZetWrite = ZetDummyWriteHandler;
 		ZetCPUContext[nCPU]->BusReq = 0;
-		// TODO: Z80Init() will set IX IY F regs with default value, so get them ...
+		ZetCPUContext[nCPU]->ResetLine = 0;
+		// Z80Init() will set IX IY F regs with default value, so get them ...
 		Z80GetContext(&ZetCPUContext[nCPU]->reg);
 		
 		nZetCyclesDone[nCPU] = 0;
@@ -265,6 +267,7 @@ INT32 ZetInit(INT32 nCount)
 		ZetCPUContext[i].ZetRead = ZetDummyReadHandler;
 		ZetCPUContext[i].ZetWrite = ZetDummyWriteHandler;
 		ZetCPUContext[i].BusReq = 0;
+		ZetCPUContext[i].ResetLine = 0;
 		// TODO: Z80Init() will set IX IY F regs with default value, so get them ...
 		Z80GetContext(&ZetCPUContext[i].reg);
 		
@@ -388,13 +391,9 @@ INT32 ZetRun(INT32 nCycles)
 		nCycles -= nDelayed;
 	}
 
-	if (ZetCPUContext[nOpenedCPU]->BusReq) {
-		nCycles += nDelayed;
-		nZetCyclesTotal += nCycles;
-		return nCycles;
+	if (!ZetCPUContext[nOpenedCPU]->BusReq && !ZetCPUContext[nOpenedCPU]->ResetLine) {
+		nCycles = Z80Execute(nCycles);
 	}
-
-	nCycles = Z80Execute(nCycles);
 
 	nCycles += nDelayed;
 
@@ -698,6 +697,7 @@ INT32 ZetScan(INT32 nAction)
 		SCAN_VAR(nZetCyclesDone[i]);
 		SCAN_VAR(nZetCyclesDelayed[i]);
 		SCAN_VAR(ZetCPUContext[i]->BusReq);
+		SCAN_VAR(ZetCPUContext[i]->ResetLine);
 	}
 	
 	SCAN_VAR(nZetCyclesTotal);
@@ -819,6 +819,32 @@ INT32 ZetGetBUSREQLine()
 #endif
 
 	return ZetCPUContext[nOpenedCPU]->BusReq;
+}
+
+void ZetSetRESETLine(INT32 nStatus)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetRESETLine called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetRESETLine called when no CPU open\n"));
+#endif
+
+	if (nOpenedCPU < 0) return;
+	
+	if (ZetCPUContext[nOpenedCPU]->ResetLine && nStatus == 0) {
+		ZetReset();
+	}
+
+	ZetCPUContext[nOpenedCPU]->ResetLine = nStatus;
+}
+
+INT32 ZetGetRESETLine()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetRESET called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetRESET called when no CPU open\n"));
+#endif
+
+	return ZetCPUContext[nOpenedCPU]->ResetLine;
 }
 
 void ZetSetAF(INT32 n, UINT16 value)

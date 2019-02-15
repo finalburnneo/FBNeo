@@ -477,3 +477,45 @@ UINT32 NameToDriver(TCHAR* szName)
 
 	return nDrv;
 }
+
+TCHAR *FileExt(TCHAR *str)
+{
+	TCHAR *dot = _tcsrchr(str, _T('.'));
+
+	return (dot) ? StrLower(dot) : str;
+}
+
+bool IsFileExt(TCHAR *str, TCHAR *ext)
+{
+	return (_tcsicmp(ext, FileExt(str)) == 0);
+}
+
+TCHAR *StrReplace(TCHAR *str, TCHAR find, TCHAR replace)
+{
+	INT32 length = _tcslen(str);
+
+	for (INT32 i = 0; i < length; i++) {
+		if (str[i] == find) str[i] = replace;
+	}
+
+	return str;
+}
+
+// StrLower() - leaves str untouched, returns modified string
+TCHAR *StrLower(TCHAR *str)
+{
+	static TCHAR szBuffer[256] = _T("");
+	INT32 length = _tcslen(str);
+
+	if (length > 255) length = 255;
+
+	for (INT32 i = 0; i < length; i++) {
+		if (str[i] >= _T('A') && str[i] <= _T('Z'))
+			szBuffer[i] = (str[i] + _T(' '));
+		else
+			szBuffer[i] = str[i];
+	}
+	szBuffer[length] = 0;
+
+	return &szBuffer[0];
+}

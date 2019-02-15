@@ -17417,3 +17417,125 @@ struct BurnDriver BurnDrvKof98mix = {
 	kof98mixInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+static struct BurnRomInfo kof98pfeRomDesc[] = {
+	{ "242pfe.p1",  0x100000, 0x23876d95, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+	{ "242pfe.p2",  0x400000, 0xadbaa852, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+	{ "242pfe.p3",  0x020000, 0x930ea34e, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+
+	{ "242pfe.s1",  0x020000, 0x7f4dbf23, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
+
+	{ "242hx73.c1", 0x800000, 0x379654a5, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242hx73.c2", 0x800000, 0x9c71fa3d, 3 | BRF_GRA },           //  4 
+	{ "242.c3",     0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5 
+	{ "242.c4",     0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6 
+	{ "242.c5",     0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7 
+	{ "242.c6",     0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8 
+	{ "242pfe.c7",  0x800000, 0x02f09b2e, 3 | BRF_GRA },           //  9 
+	{ "242pfe.c8",  0x800000, 0xd43ab3e6, 3 | BRF_GRA },           // 10 
+
+	{ "242-mg1.m1", 0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "242.v1",     0x400000, 0xb9ea8051, 5 | BRF_SND },           // 12 Sound data
+	{ "242.v2",     0x400000, 0xcc11106e, 5 | BRF_SND },           // 13 
+	{ "242.v3",     0x400000, 0x044ea4e1, 5 | BRF_SND },           // 14 
+	{ "242.v4",     0x400000, 0x7985ea30, 5 | BRF_SND },           // 15 
+};
+
+STDROMPICKEXT(kof98pfe, kof98pfe, neogeo)
+STD_ROM_FN(kof98pfe)
+
+static UINT8 *kof98pfeExtraROM;
+
+static INT32 kof98pfeInit()
+{
+	INT32 nRet = NeoInit();
+
+	if (nRet == 0) {
+		kof98pfeExtraROM = (UINT8*)BurnMalloc(0x20000);
+
+		if (BurnLoadRom(kof98pfeExtraROM, 2, 1)) return 1;
+
+		kof98pfeExtraROM[0x1af4] = 0x71;
+		kof98pfeExtraROM[0x1af5] = 0x4e;
+		kof98pfeExtraROM[0x1b19] = 0x60;
+		kof98pfeExtraROM[0x1ca3] = 0x60;
+
+		UINT16 *rom = (UINT16*)kof98pfeExtraROM;
+		for (INT32 i = 0; i < 0x20000/2; i++) {
+			if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
+			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		}
+
+		rom = (UINT16*)Neo68KROMActive;
+
+		for (INT32 i = 0; i < 0x100000/2; i++) {
+			if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
+			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		}
+
+		SekOpen(0);
+		SekMapMemory(kof98pfeExtraROM, 0x900000, 0x91ffff, MAP_ROM);
+		SekClose();
+	}
+
+	return nRet;
+}
+
+static INT32 kof98pfeExit()
+{
+	BurnFree (kof98pfeExtraROM);
+
+	return NeoExit();
+}
+
+struct BurnDriver BurnDrvkof98pfe = {
+	"kof98pfe", "kof98", "neogeo", NULL, "2017",
+	"Kof'98 (Plus Final Edition)(2017-07-23)(Korean board)\0", NULL, "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof98pfeRomInfo, kof98pfeRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof98pfeInit, kof98pfeExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+static struct BurnRomInfo kof10thdRomDesc[] = {
+	{ "363d.p1",      0x800000, 0x30c82f4c, 1 | BRF_ESS | BRF_PRG }, // 1 68K code
+
+	{ "363d.s1",      0x020000, 0x3c757cb1, 2 | BRF_GRA },           // 2 Text layer tiles / TC531000
+
+	{ "kf10-c1a.bin", 0x400000, 0x3bbc0364, 3 | BRF_GRA },           // 3 Sprite data
+	{ "kf10-c2a.bin", 0x400000, 0x91230075, 3 | BRF_GRA },           // 4
+	{ "kf10-c1b.bin", 0x400000, 0xb5abfc28, 3 | BRF_GRA },           // 5
+	{ "kf10-c2b.bin", 0x400000, 0x6cc4c6e1, 3 | BRF_GRA },           // 6
+	{ "kf10-c3a.bin", 0x400000, 0x5b3d4a16, 3 | BRF_GRA },           // 7
+	{ "kf10-c4a.bin", 0x400000, 0xc6f3419b, 3 | BRF_GRA },           // 8
+	{ "kf10-c3b.bin", 0x400000, 0x9d2bba19, 3 | BRF_GRA },           // 9
+	{ "kf10-c4b.bin", 0x400000, 0x5a4050cb, 3 | BRF_GRA },           // 10
+	{ "kf10-c5a.bin", 0x400000, 0xa289d1e1, 3 | BRF_GRA },           // 11
+	{ "kf10-c6a.bin", 0x400000, 0xe6494b5d, 3 | BRF_GRA },           // 12
+	{ "kf10-c5b.bin", 0x400000, 0x404fff02, 3 | BRF_GRA },           // 13
+	{ "kf10-c6b.bin", 0x400000, 0xf2ccfc9e, 3 | BRF_GRA },           // 14
+	{ "kf10-c7a.bin", 0x400000, 0xbe79c5a8, 3 | BRF_GRA },           // 15
+	{ "kf10-c8a.bin", 0x400000, 0xa5952ca4, 3 | BRF_GRA },           // 16
+	{ "kf10-c7b.bin", 0x400000, 0x3fdb3542, 3 | BRF_GRA },           // 17
+	{ "kf10-c8b.bin", 0x400000, 0x661b7a52, 3 | BRF_GRA },           // 18
+
+	{ "kf10-m1.bin",  0x020000, 0xf6fab859, 4 | BRF_ESS | BRF_PRG }, // 19 Z80 code
+
+	{ "kf10-v1.bin",  0x800000, 0x0fc9a58d, 5 | BRF_SND },           // 20 Sound data
+	{ "kf10-v2.bin",  0x800000, 0xb8c475a4, 5 | BRF_SND },           // 21 
+};
+
+STDROMPICKEXT(kof10thd, kof10thd, neogeo)
+STD_ROM_FN(kof10thd)
+
+struct BurnDriver BurnDrvkof10thd = {
+	"kof10thd", "kof2002", "neogeo", NULL, "200?",
+	"Kof 10th Anniversary (The King of Fighters 2002 bootleg / Fully Decrypted)\0", NULL, "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof10thdRomInfo, kof10thdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

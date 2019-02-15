@@ -224,6 +224,7 @@ extern TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH];
 int DrvInit(int nDrvNum, bool bRestore);
 int DrvInitCallback();								// Used when Burn library needs to load a game. DrvInit(nBurnSelect, false)
 int DrvExit();
+void NeoCDZRateChangeback();
 
 // burn_shift
 extern INT32 BurnShiftEnabled;

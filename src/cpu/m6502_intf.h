@@ -73,6 +73,8 @@ void M6502SetReadOpHandler(UINT8 (*pHandler)(UINT16));
 void M6502SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6502Scan(INT32 nAction);
 
+void M6502SetOpcodeDecode(UINT8 *table);
+
 void M6502SetAddressMask(UINT16 RangeMask);
 
 UINT32 M6502GetPC(INT32);

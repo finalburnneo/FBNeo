@@ -229,6 +229,15 @@ void M6502Exit()
 	DebugCPU_M6502Initted = 0;
 }
 
+void M6502SetOpcodeDecode(UINT8 *table)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetOpcodeDecode called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetOpcodeDecode called with no CPU open\n"));
+#endif
+	memcpy (pCurrentCPU->opcode_reorder, table, 0x100);
+}
+
 void M6502Open(INT32 num)
 {
 #if defined FBA_DEBUG

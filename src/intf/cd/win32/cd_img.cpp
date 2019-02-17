@@ -665,6 +665,8 @@ static UINT8* cdimgReadTOC(int track)
 {
 	static UINT8 TOCEntry[4];
 
+	memset(&TOCEntry, 0, sizeof(TOCEntry));
+
 	if (track == CDEmuTOC_FIRSTLAST)
 	{
 		TOCEntry[0] = tobcd(cdimgTOC->FirstTrack - 1);
@@ -695,6 +697,16 @@ static UINT8* cdimgReadTOC(int track)
 		else
 		{
 			TOCEntry[0] = tobcd(1);
+		}
+
+		return TOCEntry;
+	}
+	if (track == CDEmuTOC_ENDOFDISC)
+	{
+		if (cdimgLBA >= cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTOC->LastTrack].Address))
+		{
+			bprintf(0, _T("END OF DISC: curr.lba %06d end lba: %06d\n"), cdimgLBA, cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTOC->LastTrack].Address));
+			TOCEntry[0] = 1;
 		}
 
 		return TOCEntry;

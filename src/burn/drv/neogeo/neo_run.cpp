@@ -1,12 +1,13 @@
 // NeoGeo CD-WIP - Jan 25, 2019 - present
 
 // mit .bin/.cue & .ccd/.img (trurip) unterstutzung (feb.4.2019)
+// fix lastblade2 (cd) (feb.17.2019)
+//
 // known issues:
 //   Audio Hz rate must be 44100 for proper CDDA speed (auto-handled in fba-ui)
 //
-//   Ninja Commando: glitching "logo" during demo play.  This is fixed by
-//     changing renderbyline mode on.  A side-effect is that it makes CD-Loading
-//     for other games (karnovr, fatalfury3, etc) very slow.  Must investigate.
+//   Ninja Commando: glitching "logo" during demo play.
+//   CD Access is slow when line-by-line raster rendering is on, investigate (verify sekrunadj etc)
 
 /*
  * FB Alpha Neo Geo module
@@ -166,6 +167,8 @@ static INT32 nCyclesExtra[2];
 static INT32 nPrevBurnCPUSpeedAdjust;
 
 bool bNeoEnableGraphics;
+bool bNeoEnableSprites;
+bool bNeoEnableText;
 
 UINT32 nNeo68KROMBank;
 
@@ -190,6 +193,7 @@ static INT32 nSpriteFrameTimer;
 static UINT8 nSoundLatch;
 static UINT8 nSoundReply;
 static UINT32 nSoundStatus;
+static INT32 bSoundNMIEnabled;
 
 #if 1 && defined USE_SPEEDHACKS
 static INT32 nSoundPrevReply;
@@ -219,7 +223,6 @@ bool bDisableNeoWatchdog = false;
 
 static INT32 bNeoCDIRQEnabled = false;
 static INT32 nNeoCDIRQVector;
-static INT32 nNeoCDIRQVectorAck;
 
 INT32 nNeoScreenWidth;
 
@@ -1504,7 +1507,6 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		if (nNeoSystemType & NEO_SYS_CD) {
 			SCAN_VAR(bNeoCDIRQEnabled);
 			SCAN_VAR(nNeoCDIRQVector);
-			SCAN_VAR(nNeoCDIRQVectorAck);
 
 			SCAN_VAR(nLC8951Register);
 			SCAN_VAR(LC8951RegistersR);
@@ -1701,14 +1703,23 @@ static UINT8 __fastcall neogeoZ80InCD(UINT16 nAddress)
 static void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 {
 	switch (nAddress & 0x0FF) {
-		case 0x00:
-//			bprintf(PRINT_NORMAL, _T("  - Z80 port 0x00 -> 0x%02X.\n"), nValue);
+		case 0x00:									// Clear sound command
+			nSoundLatch = 0;
 			break;
+
 		case 0x04:
 		case 0x05:
 		case 0x06:
 		case 0x07:
 			BurnYM2610Write(nAddress & 3, nValue);
+			break;
+
+		case 0x08:
+			bSoundNMIEnabled = 1;
+			break;
+
+		case 0x18:
+			bSoundNMIEnabled = 0;
 			break;
 
 		case 0x0C:									// Write reply to sound commands
@@ -1755,13 +1766,17 @@ static void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 // -----------------------------------------------------------------------------
 // 68K handlers
 
-static INT32 __fastcall NeoCDIRQCallback(INT32 /* nIRQ */)
+static INT32 __fastcall NeoCDIRQCallback(INT32 level)
 {
-//	bprintf(PRINT_NORMAL, _T("  - IRQ Callback %i %2X.\n"), nIRQ, nNeoCDIRQVector);
-	if (nNeoCDIRQVectorAck) {
-		nNeoCDIRQVectorAck = 0;
-		return nNeoCDIRQVector;
+	switch (level) {
+		case 1:
+			return (0x68 / 4); // irq 1 w/irq 2 vector
+		case 3:
+			return (0x64 / 4); // irq 3 w/irq 1 vector
+		case 2:
+			return (nNeoCDIRQVector);
 	}
+
 	return M68K_INT_ACK_AUTOVECTOR;
 }
 
@@ -1810,21 +1825,18 @@ static inline void NeoCDIRQUpdate(UINT8 byteValue)
 		if (!bNeoCDIRQEnabled) return;
 
 		if ((nIRQAcknowledge & 0x08) == 0) {
-			nNeoCDIRQVector = 0x17;
-			nNeoCDIRQVectorAck = 1;
-			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+			nNeoCDIRQVector = 0x5c / 4;
+			SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
 			return;
 		}
 		if ((nIRQAcknowledge & 0x10) == 0) {
-			nNeoCDIRQVector = 0x16;
-			nNeoCDIRQVectorAck = 1;
-			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+			nNeoCDIRQVector = 0x58 / 4;
+			SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
 			return;
 		}
 		if ((nIRQAcknowledge & 0x20) == 0) {
-			nNeoCDIRQVector = 0x15;
-			nNeoCDIRQVectorAck = 1;
-			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+			nNeoCDIRQVector = 0x54 / 4;
+			SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
 			return;
 		}
 	}
@@ -1839,7 +1851,7 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 	nSoundStatus &= ~1;
 	nSoundLatch = nCommand;
 
-	ZetNmi();
+	if (bSoundNMIEnabled) ZetNmi();
 
 #if 1 && defined USE_SPEEDHACKS
 	neogeoSynchroniseZ80((s1945pmode) ? 0x60 : 0x0200);
@@ -2070,8 +2082,8 @@ static void WriteIO2(INT32 nOffset, UINT8 /*byteValue*/)
 			if (nNeoSystemType & NEO_SYS_CART) {
 				bNeoEnableGraphics = true;
 //				bprintf(PRINT_NORMAL, _T("  - Display  enabled (0x%02X, at scanline %i).\n"), byteValue, SekCurrentScanline());
-				break;
 			}
+			break;
 
 		case 0x03:											// Select BIOS vector table
 			if (nNeoSystemType & NEO_SYS_CART) {
@@ -2099,7 +2111,6 @@ static void WriteIO2(INT32 nOffset, UINT8 /*byteValue*/)
 				ZetReset();
 #endif
 			}
-
 			break;
 
 		case 0x0D:											// Write-protect SRAM
@@ -2116,8 +2127,8 @@ static void WriteIO2(INT32 nOffset, UINT8 /*byteValue*/)
 			if (nNeoSystemType & NEO_SYS_CART) {
 				bNeoEnableGraphics = false;
 //				bprintf(PRINT_NORMAL, _T("  - Display disabled (0x%02X, at scanline %i).\n"), byteValue, SekCurrentScanline());
-				break;
 			}
+			break;
 
 		case 0x13:											// Select game vector table
 			if (nNeoSystemType & NEO_SYS_CART) {
@@ -2145,7 +2156,6 @@ static void WriteIO2(INT32 nOffset, UINT8 /*byteValue*/)
 				ZetReset();
 #endif
 			}
-
 			break;
 
 		case 0x1D:											// Write-enable SRAM
@@ -3293,6 +3303,14 @@ static void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 			nActiveTransferArea = byteValue;
 			break;
 
+		case 0x0111:
+			bNeoEnableSprites = (byteValue == 0);
+			break;
+
+		case 0x0115:
+			bNeoEnableText = (byteValue == 0);
+			break;
+
 		case 0x0119:
 			bNeoEnableGraphics = (byteValue != 0);
 			break;
@@ -3674,6 +3692,8 @@ static INT32 neogeoReset()
 	bSRAMWritable = false;
 
 	bNeoEnableGraphics = true;
+	bNeoEnableSprites = true;
+	bNeoEnableText = true;
 
 	bBIOSTextROMEnabled = false;
 	bZ80BoardROMBankedIn = false;
@@ -3691,6 +3711,7 @@ static INT32 neogeoReset()
 	nSoundLatch = 0x00;
 	nSoundReply = 0x00;
 	nSoundStatus = 1;
+	bSoundNMIEnabled = 0;
 
 #if 1 && defined USE_SPEEDHACKS
 	nSoundPrevReply = -1;
@@ -3740,6 +3761,9 @@ static INT32 neogeoReset()
 		MapVectorTable(true);
 
 		if (nNeoSystemType & NEO_SYS_CD) {
+			bNeoEnableSprites = false;
+			bNeoEnableText = false;
+
 			nActiveTransferArea = -1;
 			nSpriteTransferBank = -1;
 			nADPCMTransferBank  = -1;
@@ -3784,7 +3808,6 @@ static INT32 neogeoReset()
 
 	bNeoCDIRQEnabled = false;
 	nNeoCDIRQVector = 0;
-	nNeoCDIRQVectorAck = 0;
 	nff0002 = 0;
 	nff0004 = 0;
 
@@ -3814,8 +3837,8 @@ static INT32 NeoInitCommon()
 		nVBLankIRQ   = 1;
 		nScanlineIRQ = 2;
 	} else {
-		nVBLankIRQ   = 2;
-		nScanlineIRQ = 1;
+		nVBLankIRQ   = 1;
+		nScanlineIRQ = 3;
 	}
 
 	// Allocate all memory is needed for RAM
@@ -4382,8 +4405,8 @@ INT32 NeoRender()
 		bprintf(PRINT_NORMAL, _T(" -- Drawing slice: %3i - %3i.\n"), nSliceStart, nSliceEnd);
 #endif
 
-		NeoRenderSprites();						// Render sprites
-		NeoRenderText();						// Render text layer
+		if (bNeoEnableSprites) NeoRenderSprites();					// Render sprites
+		if (bNeoEnableText)    NeoRenderText();						// Render text layer
 	}
 
 	return 0;
@@ -4455,10 +4478,12 @@ static INT32 NeoSekRun(const INT32 nCycles)
 			if ((nff0002 & 0x0500) /*&& (LC8951RegistersR[1] & 0x20)*/ )
 				NeoCDReadSector();
 
-			// Trigger CD mechanism communication interrupt
-			//bprintf(PRINT_NORMAL, _T("    DECI status %i\n"), (LC8951RegistersR[1] & 0x20) >> 5);
-			nIRQAcknowledge &= ~0x10;
-			NeoCDIRQUpdate(0);
+			if (nff0002 & 0x0050) {
+				// Trigger CD mechanism communication interrupt
+				//bprintf(PRINT_NORMAL, _T("    DECI status %i\n"), (LC8951RegistersR[1] & 0x20) >> 5);
+				nIRQAcknowledge &= ~0x10;
+				NeoCDIRQUpdate(0);
+			}
 		}
 
 		nCyclesSegment = (nNeoCDCyclesIRQ < (nCycles - nCyclesExecutedTotal)) ? nNeoCDCyclesIRQ : (nCycles - nCyclesExecutedTotal);
@@ -4475,6 +4500,8 @@ static INT32 NeoSekRun(const INT32 nCycles)
 
 INT32 NeoFrame()
 {
+	//bprintf(0, _T("%X,"), SekReadWord(0x108)); // show game-id
+
 	if (NeoReset) {							   						// Reset machine
 		if (nNeoSystemType & NEO_SYS_CART) {
 			memset(Neo68KRAM, 0, 0x010000);
@@ -4717,6 +4744,18 @@ INT32 NeoFrame()
 		}
 	}
 
+	// NeoCDZ: Automatically enable raster rendering for gameID's that need it.
+	if (IsNeoGeoCD()) { //xxdinkx experimental
+		INT32 nGameID = SekReadWord(0x108);
+		INT32 bRenderMode = 0;
+
+		switch (nGameID) {
+			case 0x0050: bRenderMode = 1; break; // ninjacommando (cd)
+			case 0x0061: bRenderMode = 1; break; // ssideki2 (cd)
+		}
+		bRenderLineByLine = (!bNeoCDIRQEnabled) && bRenderMode;
+	}
+
 	bRenderImage = pBurnDraw != NULL && bNeoEnableGraphics;
 	bForceUpdateOnStatusRead = bRenderImage && bRenderLineByLine;
 	bForcePartialRender = false;
@@ -4768,7 +4807,7 @@ INT32 NeoFrame()
 					bprintf(PRINT_NORMAL, _T(" -- Drawing slice: %3i - %3i.\n"), nSliceStart, nSliceEnd);
 #endif
 
-					NeoRenderSprites();								// Render sprites
+					if (bNeoEnableSprites) NeoRenderSprites();		// Render sprites
 				}
 			}
 
@@ -4825,7 +4864,7 @@ INT32 NeoFrame()
 						bprintf(PRINT_NORMAL, _T(" -- Drawing slice: %3i - %3i.\n"), nSliceStart, nSliceEnd);
 #endif
 
-						NeoRenderSprites();								// Render sprites
+						if (bNeoEnableSprites) NeoRenderSprites();		// Render sprites
 					}
 				}
 
@@ -4853,19 +4892,18 @@ INT32 NeoFrame()
 			bprintf(PRINT_NORMAL, _T(" -- Drawing slice: %3i - %3i.\n"), nSliceStart, nSliceEnd);
 #endif
 
-			NeoRenderSprites();										// Render sprites
+			if (bNeoEnableSprites) NeoRenderSprites();				// Render sprites
 		}
-		NeoRenderText();											// Render text layer
+		if (bNeoEnableText) NeoRenderText();						// Render text layer
 	}
 
 	if ( ((nNeoSystemType & NEO_SYS_CD) && (nff0004 & 0x0030) == 0x0030) || (~nNeoSystemType & NEO_SYS_CD) ) {
+#if 0 || defined LOG_IRQ
+		bprintf(PRINT_NORMAL, _T("  - VBLank.\n"));
+#endif
 		nIRQAcknowledge &= ~4;
 		SekSetIRQLine(nVBLankIRQ, CPU_IRQSTATUS_ACK);
 	}
-
-#if 0 || defined LOG_IRQ
-	bprintf(PRINT_NORMAL, _T("  - VBLank.\n"));
-#endif
 
 	// set IRQ scanline at line 248
 	if (nIRQControl & 0x40) {

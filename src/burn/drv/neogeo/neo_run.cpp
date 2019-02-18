@@ -331,7 +331,8 @@ static INT32 nff0004 = 0;
 
 
 bool IsNeoGeoCD() {
-	return (nNeoSystemType & NEO_SYS_CD);
+	//return (nNeoSystemType & NEO_SYS_CD);
+	return ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOCD);
 }
 
 // This function is called once to determine how much memory is needed (RAMEnd-(UINT8 *)0),
@@ -1456,6 +1457,9 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(nCyclesExtra);
 
 		SCAN_VAR(bNeoEnableGraphics);
+		SCAN_VAR(bNeoEnableSprites);
+		SCAN_VAR(bNeoEnableText);
+
 		SCAN_VAR(nIRQAcknowledge);
 
 		SCAN_VAR(nIRQControl);	SCAN_VAR(nIRQOffset); SCAN_VAR(nIRQCycles);
@@ -1484,6 +1488,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(nSoundLatch);
 		SCAN_VAR(nSoundReply);
 		SCAN_VAR(nSoundStatus);
+		SCAN_VAR(bSoundNMIEnabled);
 
 #if 1 && defined USE_SPEEDHACKS
 		SCAN_VAR(nSoundPrevReply);
@@ -1766,9 +1771,9 @@ static void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 // -----------------------------------------------------------------------------
 // 68K handlers
 
-static INT32 __fastcall NeoCDIRQCallback(INT32 level)
+static INT32 __fastcall NeoCDIRQCallback(INT32 nIRQ)
 {
-	switch (level) {
+	switch (nIRQ) {
 		case 1:
 			return (0x68 / 4); // irq 1 w/irq 2 vector
 		case 3:

@@ -22,13 +22,13 @@ static void MakeOfn(TCHAR* pszFilter)
 	return;
 }
 
-// The automatic save
+// The automatic save (nvram or nvram+state if restore state on load is enabled.)
 int StatedAuto(int bSave)
 {
 	static TCHAR szName[MAX_PATH] = _T("");
 	int nRet;
 
-	if (NeoCDInfo_ID()) {
+	if (NeoCDInfo_ID() && bDrvSaveAll != 0) {
 		_stprintf(szName, _T("config/games/ngcd_%s.fs"), NeoCDInfo_Text(DRV_NAME));
 	} else {
 		_stprintf(szName, _T("config/games/%s.fs"), BurnDrvGetText(DRV_NAME));

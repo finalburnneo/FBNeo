@@ -1,5 +1,6 @@
 // Driver Init module
 #include "burner.h"
+#include "neocdlist.h"
 
 int bDrvOkay = 0;						// 1 if the Driver has been initted okay, and it's okay to use the BurnDrv functions
 
@@ -165,6 +166,8 @@ int DrvInit(int nDrvNum, bool bRestore)
 			POST_INITIALISE_MESSAGE;
 			return 0;
 		}
+
+		NeoCDInfo_Init();
 
 		NeoCDZRateChange();
 	}

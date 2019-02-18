@@ -5149,7 +5149,7 @@ struct BurnDriver BurnDrvGt3dl191 = {
 };
 
 
-// Golden Tee 3D Golf (v1.92L)
+// Golden Tee 3D Golf (v1.9L)
 
 static struct BurnRomInfo gt3dl19RomDesc[] = {
 	{ "gtg3_prom0_v1.9l.prom0",				0x080000, 0xb6293cf6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -5185,7 +5185,7 @@ STD_ROM_FN(gt3dl19)
 
 struct BurnDriver BurnDrvGt3dl19 = {
 	"gt3dl19", "gt3d", NULL, NULL, "1995",
-	"Golden Tee 3D Golf (v1.92L)\0", NULL, "Incredible Technologies", "Miscellaneous",
+	"Golden Tee 3D Golf (v1.9L)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, gt3dl19RomInfo, gt3dl19RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,

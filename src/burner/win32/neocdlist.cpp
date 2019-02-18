@@ -4,7 +4,7 @@
 #include "burner.h"
 #include "neocdlist.h"
 
-struct NGCDGAME games[] = 
+struct NGCDGAME games[] =
 {
 // ---------------------------------------------------------------------------------------------------------------------------------------------//
 //	* Name				* Title														* Year			* Company					* Game ID		//
@@ -108,6 +108,7 @@ struct NGCDGAME games[] =
 	{ _T("lastbld2")	, _T("The Last Blade 2")									, _T("1998")	, _T("SNK")					, 0x0243 },		//
 	{ _T("kof99")		, _T("The King of Fighters '99 - Millennium Battle")		, _T("1999")	, _T("SNK")					, 0x0251 },		//
 	{ _T("fatfury3")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - Harukanaru Tatakai"), _T("1995"), _T("SNK"), 0x069c },		//
+	{ _T("lasthope")	, _T("Last Hope")									        , _T("2007")	, _T("NG.DEV.TEAM")			, 0x0666 },		//
 };
 
 NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)
@@ -122,36 +123,36 @@ NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)
 }
 
 // Update the main window title
-void SetNeoCDTitle(TCHAR* pszTitle) 
+void SetNeoCDTitle(TCHAR* pszTitle)
 {
 	TCHAR szText[1024] = _T("");
 	_stprintf(szText, _T(APP_TITLE) _T( " v%.20s") _T(SEPERATOR_1) _T("%s") _T(SEPERATOR_1) _T("%s"), szAppBurnVer, BurnDrvGetText(DRV_FULLNAME), pszTitle);
-	
+
 	SetWindowText(hScrnWnd, szText);
 }
 
 NGCDGAME* game;
 
-// Get the title 
-int GetNeoCDTitle(unsigned int nGameID) 
+// Get the title
+int GetNeoCDTitle(unsigned int nGameID)
 {
 	game = (NGCDGAME*)malloc(sizeof(NGCDGAME));
 	memset(game, 0, sizeof(NGCDGAME));
-	
-	if(GetNeoGeoCDInfo(nGameID)) {		
+
+	if(GetNeoGeoCDInfo(nGameID)) {
 		memcpy(game, GetNeoGeoCDInfo(nGameID), sizeof(NGCDGAME));
 
 		bprintf(PRINT_NORMAL, _T("    Title: %s \n")		, game->pszTitle);
 		bprintf(PRINT_NORMAL, _T("    Shortname: %s \n")	, game->pszName);
 		bprintf(PRINT_NORMAL, _T("    Year: %s \n")			, game->pszYear);
 		bprintf(PRINT_NORMAL, _T("    Company: %s \n")		, game->pszCompany);
-		
+
 		// Update the main window title
 		SetNeoCDTitle(game->pszTitle);
 
 		return 1;
 	} else {
-		SetNeoCDTitle(FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));		
+		SetNeoCDTitle(FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
 	}
 
 	game = NULL;
@@ -162,12 +163,12 @@ void iso9660_ReadOffset(unsigned char *Dest, FILE* fp, unsigned int lOffset, uns
 {
 	if(fp == NULL) return;
 	if (Dest == NULL) return;
-	
+
 	fseek(fp, lOffset + 16, SEEK_SET);
 	fread(Dest, lLength, lSize, fp);
 }
 
-static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector) 
+static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 {
 	int		nSectorLength		= 2352;
 	//int		nFile				= 0;
@@ -176,10 +177,10 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 	unsigned int	lOffset				= 0;
 	bool	bNewSector			= false;
 	bool	bRevisionQueve		= false;
-	int		nRevisionQueveID	= 0;	
-	
+	int		nRevisionQueveID	= 0;
+
 	lOffset = (nSector * nSectorLength);
-	
+
 	unsigned char* nLenDR = (unsigned char*)malloc(1 * sizeof(unsigned char));
 	unsigned char* Flags = (unsigned char*)malloc(1 * sizeof(unsigned char));
 	unsigned char* ExtentLoc = (unsigned char*)malloc(8 * sizeof(unsigned char));
@@ -187,19 +188,19 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 	unsigned char* LEN_FI = (unsigned char*)malloc(1 * sizeof(unsigned char));
 	char *File = (char*)malloc(32 * sizeof(char));
 
-	while(1) 
+	while(1)
 	{
 		iso9660_ReadOffset(nLenDR, fp, lOffset, 1, sizeof(unsigned char));
-				
+
 		if(nLenDR[0] == 0x22) {
 			lOffset		+= nLenDR[0];
 			lBytesRead	+= nLenDR[0];
 			continue;
 		}
 
-		if(nLenDR[0] < 0x22) 
+		if(nLenDR[0] < 0x22)
 		{
-			if(bNewSector) 
+			if(bNewSector)
 			{
 				if(bRevisionQueve) {
 					bRevisionQueve		= false;
@@ -211,7 +212,7 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 
 			nLenDR[0] = 0;
 			iso9660_ReadOffset(nLenDR, fp, lOffset + 1, 1, sizeof(unsigned char));
-			
+
 			if(nLenDR[0] < 0x22) {
 				lOffset += (nSectorLength - lBytesRead);
 				lBytesRead = 0;
@@ -221,10 +222,10 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 		}
 
 		bNewSector = false;
-		
+
 		iso9660_ReadOffset(Flags, fp, lOffset + 25, 1, sizeof(unsigned char));
 
-		if(!(Flags[0] & (1 << 1))) 
+		if(!(Flags[0] & (1 << 1)))
 		{
 			iso9660_ReadOffset(ExtentLoc, fp, lOffset + 2, 8, sizeof(unsigned char));
 
@@ -232,14 +233,14 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 			sprintf(szValue, "%02x%02x%02x%02x", ExtentLoc[4], ExtentLoc[5], ExtentLoc[6], ExtentLoc[7]);
 
 			unsigned int nValue = 0;
-			sscanf(szValue, "%x", &nValue); 
+			sscanf(szValue, "%x", &nValue);
 
 			iso9660_ReadOffset(Data, fp, nValue * nSectorLength, 0x10a, sizeof(unsigned char));
 
 			char szData[8];
 			sprintf(szData, "%c%c%c%c%c%c%c", Data[0x100], Data[0x101], Data[0x102], Data[0x103], Data[0x104], Data[0x105], Data[0x106]);
 
-			if(!strncmp(szData, "NEO-GEO", 7)) 
+			if(!strncmp(szData, "NEO-GEO", 7))
 			{
 				char id[] = "0000";
 				sprintf(id, "%02X%02X",  Data[0x108], Data[0x109]);
@@ -250,7 +251,7 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 				iso9660_ReadOffset(LEN_FI, fp, lOffset + 32, 1, sizeof(unsigned char));
 
 				iso9660_ReadOffset((unsigned char*)File, fp, lOffset + 33, LEN_FI[0], sizeof(char));
-				strncpy(File, File, LEN_FI[0]);				
+				strncpy(File, File, LEN_FI[0]);
 				File[LEN_FI[0]] = 0;
 
 				// King of Fighters '94, The (1994)(SNK)(JP)
@@ -258,14 +259,14 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 				if(nID == 0x0055 && Data[0x67] == 0xDE) {
 					// ...continue
 				}
-				
+
 				// King of Fighters '94, The (1994)(SNK)(JP-US)
 				// 11-21-1994 (P1.PRG)
 				if(nID == 0x0055 && Data[0x67] == 0xE6) {
 					// Change to custom revision id
 					nID = 0x1055;
 				}
-				
+
 				// King of Fighters '95, The (1995)(SNK)(JP-US)[!][NGCD-084 MT B01, B03-B06, NGCD-084E MT B01]
 				// 9-11-1995 (P1.PRG)
 				if(nID == 0x0084 && Data[0x6C] == 0xC0) {
@@ -300,37 +301,37 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 
 				break;
 			}
-		}	
-		
+		}
+
 		lOffset		+= nLenDR[0];
-		lBytesRead	+= nLenDR[0];		
+		lBytesRead	+= nLenDR[0];
 	}
-	
+
 	if (nLenDR) {
 		free(nLenDR);
 		nLenDR = NULL;
 	}
-	
+
 	if (Flags) {
 		free(Flags);
 		Flags = NULL;
 	}
-	
+
 	if (ExtentLoc) {
 		free(ExtentLoc);
 		ExtentLoc = NULL;
 	}
-	
+
 	if (Data) {
 		free(Data);
 		Data = NULL;
 	}
-	
+
 	if (LEN_FI) {
 		free(LEN_FI);
 		LEN_FI = NULL;
 	}
-	
+
 	if (File) {
 		free(File);
 		File = NULL;
@@ -349,7 +350,7 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 	if (IsFileExt(pszFile, _T(".img")) || IsFileExt(pszFile, _T(".bin")))
 	{
 		FILE* fp = _tfopen(pszFile, _T("rb"));
-		if(fp) 
+		if(fp)
 		{
 			// Read ISO and look for 68K ROM standard program header, ID is always there
 			// Note: This function works very quick, doesn't compromise performance :)
@@ -363,26 +364,26 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 
 			// If it has at least 16 sectors proceed
 			if(lSize > (2352 * 16))
-			{	
+			{
 				// Check for Standard ISO9660 Identifier
 				unsigned char IsoCheck[6];
-		
+
 				// advance to sector 16 and PVD Field 2
 				iso9660_ReadOffset(&IsoCheck[0], fp, 2352 * 16 + 1, 1, 5); // get Standard Identifier Field from PVD
-				
+
 				// Verify that we have indeed a valid ISO9660 MODE1/2352
 				if(!memcmp(IsoCheck, "CD001", 5))
 				{
 					//bprintf(PRINT_NORMAL, _T("    Standard ISO9660 Identifier Found. \n"));
 					iso9660_VDH vdh;
 
-					// Get Volume Descriptor Header			
+					// Get Volume Descriptor Header
 					memset(&vdh, 0, sizeof(vdh));
 					//memcpy(&vdh, iso9660_ReadOffset(fp, (2048 * 16), sizeof(vdh)), sizeof(vdh));
 					iso9660_ReadOffset((unsigned char*)&vdh, fp, 16 * 2352, 1, sizeof(vdh));
 
 					// Check for a valid Volume Descriptor Type
-					if(vdh.vdtype == 0x01) 
+					if(vdh.vdtype == 0x01)
 					{
 #if 0
 // This will fail on 64-bit due to differing variable sizes in the pvd struct
@@ -398,10 +399,10 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 						char szRootSector[32];
 						unsigned int nRootSector = 0;
 
-						sprintf(szRootSector, "%02X%02X%02X%02X", 
-							pvd.root_directory_record.location_of_extent[4], 
-							pvd.root_directory_record.location_of_extent[5], 
-							pvd.root_directory_record.location_of_extent[6], 
+						sprintf(szRootSector, "%02X%02X%02X%02X",
+							pvd.root_directory_record.location_of_extent[4],
+							pvd.root_directory_record.location_of_extent[5],
+							pvd.root_directory_record.location_of_extent[6],
 							pvd.root_directory_record.location_of_extent[7]);
 
 						// Convert HEX string to Decimal
@@ -413,12 +414,12 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 						unsigned int nRootSector = 0;
 
 						iso9660_ReadOffset(&buffer[0], fp, 2352 * 16 + 0x9e, 1, 8);
-						
+
 						sprintf(szRootSector, "%02x%02x%02x%02x", buffer[4], buffer[5], buffer[6], buffer[7]);
-						
+
 						sscanf(szRootSector, "%x", &nRootSector);
 #endif
-						
+
 						// Process the Root Directory Records
 						NeoCDList_iso9660_CheckDirRecord(fp, nRootSector);
 
@@ -458,7 +459,7 @@ int GetNeoGeoCD_Identifier()
 	// Make sure we have a valid ISO file extension...
 	if (IsFileExt(GetIsoPath(), _T(".img")) || IsFileExt(GetIsoPath(), _T(".bin")))
 	{
-		if(_tfopen(GetIsoPath(), _T("rb"))) 
+		if(_tfopen(GetIsoPath(), _T("rb")))
 		{
 			bprintf(0, _T("NeoCDList: checking %s\n"), GetIsoPath());
 			// Read ISO and look for 68K ROM standard program header, ID is always there
@@ -481,7 +482,7 @@ int GetNeoGeoCD_Identifier()
 	return 1;
 }
 
-int NeoCDInfo_Init() 
+int NeoCDInfo_Init()
 {
 	NeoCDInfo_Exit();
 	return GetNeoGeoCD_Identifier();
@@ -491,7 +492,7 @@ TCHAR* NeoCDInfo_Text(int nText)
 {
 	if(!game || !IsNeoGeoCD() || !bDrvOkay) return NULL;
 
-	switch(nText) 
+	switch(nText)
 	{
 		case DRV_NAME:			return game->pszName;
 		case DRV_FULLNAME:		return game->pszTitle;
@@ -502,13 +503,13 @@ TCHAR* NeoCDInfo_Text(int nText)
 	return NULL;
 }
 
-int NeoCDInfo_ID() 
+int NeoCDInfo_ID()
 {
 	if(!game || !IsNeoGeoCD() || !bDrvOkay) return 0;
 	return game->id;
 }
 
-void NeoCDInfo_Exit() 
+void NeoCDInfo_Exit()
 {
 	if(game) {
 		free(game);

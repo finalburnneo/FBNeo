@@ -55,20 +55,20 @@ int nListItems = 0;
 const int nSectorLength		= 2352;
 
 // Add game to List
-static int NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID) 
+static int NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID)
 {
 	NGCDGAME* game;
-	
+
 	if(GetNeoGeoCDInfo(nGameID))
-	{	
+	{
 		game = (NGCDGAME*)malloc(sizeof(NGCDGAME));
 		memset(game, 0, sizeof(NGCDGAME));
-		
+
 		memcpy(game, GetNeoGeoCDInfo(nGameID), sizeof(NGCDGAME));
-		
+
 		TCHAR szNGCDID[12];
 		_stprintf(szNGCDID, _T("%04X"), nGameID);
-		
+
 		LVITEM lvi;
 		ZeroMemory(&lvi, sizeof(lvi));
 
@@ -95,7 +95,7 @@ static int NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID)
 		ListView_SetItem(hListView, &lvi);
 
 		ngcd_list[nListItems].nID = nGameID;
-		
+
 		_tcscpy(ngcd_list[nListItems].szPath, pszFile);
 		_tcscpy(ngcd_list[nListItems].szShortName, game->pszName);
 		_stprintf(ngcd_list[nListItems].szPublisher, _T("%s (%s)"), game->pszCompany, game->pszYear);
@@ -104,7 +104,7 @@ static int NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID)
 
 	} else {
 		// error
-		
+
 		return 0;
 	}
 
@@ -132,16 +132,16 @@ static void NeoCDList_InitListView()
 	SendMessage(hListView, LVM_INSERTCOLUMN , 1, (LPARAM)&LvCol);
 
 	// Setup ListView Icons
-//	HIMAGELIST hImageList = ImageList_Create(16, 16, ILC_MASK | ILC_COLOR16, 0, 1);		
+//	HIMAGELIST hImageList = ImageList_Create(16, 16, ILC_MASK | ILC_COLOR16, 0, 1);
 //	ListView_SetImageList(hListView, hImageList, LVSIL_SMALL);
 //	ImageList_AddMasked(hImageList, LoadBitmap(hAppInst, MAKEINTRESOURCE(BMP_CD)), RGB(255, 0, 255));
 }
 
-static int NeoCDList_CheckDuplicates(HWND hList, unsigned int nID) 
+static int NeoCDList_CheckDuplicates(HWND hList, unsigned int nID)
 {
 	int nItemCount = ListView_GetItemCount(hList);
 
-	for(int nItem = 0; nItem < nItemCount; nItem++) 
+	for(int nItem = 0; nItem < nItemCount; nItem++)
 	{
 		unsigned int nItemVal = 0;
 		TCHAR szText[] = _T("0000");
@@ -159,7 +159,7 @@ static int NeoCDList_CheckDuplicates(HWND hList, unsigned int nID)
 	return 0;
 }
 
-static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* fp, int nSector) 
+static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* fp, int nSector)
 {
 	//int		nFile				= 0;
 	unsigned int	lBytesRead			= 0;
@@ -167,10 +167,10 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 	unsigned int	lOffset				= 0;
 	bool	bNewSector			= false;
 	bool	bRevisionQueve		= false;
-	int		nRevisionQueveID	= 0;	
+	int		nRevisionQueveID	= 0;
 
-	lOffset = (nSector * nSectorLength);	
-	
+	lOffset = (nSector * nSectorLength);
+
 	unsigned char* nLenDR = (unsigned char*)malloc(1 * sizeof(unsigned char));
 	unsigned char* Flags = (unsigned char*)malloc(1 * sizeof(unsigned char));
 	unsigned char* ExtentLoc = (unsigned char*)malloc(8 * sizeof(unsigned char));
@@ -178,7 +178,7 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 	unsigned char* LEN_FI = (unsigned char*)malloc(1 * sizeof(unsigned char));
 	char *File = (char*)malloc(32 * sizeof(char));
 
-	while(1) 
+	while(1)
 	{
 		iso9660_ReadOffset(nLenDR, fp, lOffset, 1, sizeof(unsigned char));
 
@@ -188,9 +188,9 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 			continue;
 		}
 
-		if(nLenDR[0] < 0x22) 
+		if(nLenDR[0] < 0x22)
 		{
-			if(bNewSector) 
+			if(bNewSector)
 			{
 				if(bRevisionQueve) {
 					bRevisionQueve		= false;
@@ -220,7 +220,7 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 
 		iso9660_ReadOffset(Flags, fp, lOffset + 25, 1, sizeof(unsigned char));
 
-		if(!(Flags[0] & (1 << 1))) 
+		if(!(Flags[0] & (1 << 1)))
 		{
 			iso9660_ReadOffset(ExtentLoc, fp, lOffset + 2, 8, sizeof(unsigned char));
 
@@ -228,14 +228,14 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 			sprintf(szValue, "%02x%02x%02x%02x", ExtentLoc[4], ExtentLoc[5], ExtentLoc[6], ExtentLoc[7]);
 
 			unsigned int nValue = 0;
-			sscanf(szValue, "%x", &nValue); 
+			sscanf(szValue, "%x", &nValue);
 
 			iso9660_ReadOffset(Data, fp, nValue * nSectorLength, 0x10a, sizeof(unsigned char));
 
 			char szData[8];
 			sprintf(szData, "%c%c%c%c%c%c%c", Data[0x100], Data[0x101], Data[0x102], Data[0x103], Data[0x104], Data[0x105], Data[0x106]);
 
-			if(!strncmp(szData, "NEO-GEO", 7)) 
+			if(!strncmp(szData, "NEO-GEO", 7))
 			{
 				_tcscpy(ngcd_list[nListItems].szISOFile, pszFile);
 
@@ -248,7 +248,7 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 				iso9660_ReadOffset(LEN_FI, fp, lOffset + 32, 1, sizeof(unsigned char));
 
 				iso9660_ReadOffset((unsigned char*)File, fp, lOffset + 33, LEN_FI[0], sizeof(char));
-				strncpy(File, File, LEN_FI[0]);				
+				strncpy(File, File, LEN_FI[0]);
 				File[LEN_FI[0]] = 0;
 
 				//bprintf(0, _T("\n------------\n--------------> nID %X\n"), nID);
@@ -265,7 +265,7 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 					// Change to custom revision id
 					nID = 0x1055;
 				}
-				
+
 				// King of Fighters '95, The (1995)(SNK)(JP-US)[!][NGCD-084 MT B01, B03-B06, NGCD-084E MT B01]
 				// 9-11-1995 (P1.PRG)
 				if(nID == 0x0084 && Data[0x6C] == 0xC0) {
@@ -311,37 +311,37 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 				//MessageBoxA(NULL, id, "", MB_OK);
 				break;
 			}
-		}	
-		
+		}
+
 		lOffset		+= nLenDR[0];
 		lBytesRead	+= nLenDR[0];
 	}
-	
+
 	if (nLenDR) {
 		free(nLenDR);
 		nLenDR = NULL;
 	}
-	
+
 	if (Flags) {
 		free(Flags);
 		Flags = NULL;
 	}
-	
+
 	if (ExtentLoc) {
 		free(ExtentLoc);
 		ExtentLoc = NULL;
 	}
-	
+
 	if (Data) {
 		free(Data);
 		Data = NULL;
 	}
-	
+
 	if (LEN_FI) {
 		free(LEN_FI);
 		LEN_FI = NULL;
 	}
-	
+
 	if (File) {
 		free(File);
 		File = NULL;
@@ -360,7 +360,7 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 	if ( IsFileExt(pszFile, _T(".img")) || IsFileExt(pszFile, _T(".bin")) )
 	{
 		FILE* fp = _tfopen(pszFile, _T("rb"));
-		if(fp) 
+		if(fp)
 		{
 			// Read ISO and look for 68K ROM standard program header, ID is always there
 			// Note: This function works very quick, doesn't compromise performance :)
@@ -374,7 +374,7 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 
 			// If it has at least 16 sectors proceed
 			if(lSize > (nSectorLength * 16))
-			{	
+			{
 				// Check for Standard ISO9660 Identifier
 				unsigned char IsoCheck[6];
 
@@ -387,16 +387,16 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 					//bprintf(PRINT_NORMAL, _T("    Standard ISO9660 Identifier Found. \n"));
 					iso9660_VDH vdh;
 
-					// Get Volume Descriptor Header			
+					// Get Volume Descriptor Header
 					memset(&vdh, 0, sizeof(vdh));
 					//memcpy(&vdh, iso9660_ReadOffset(fp, (2048 * 16), sizeof(vdh)), sizeof(vdh));
 					iso9660_ReadOffset((unsigned char*)&vdh, fp, 16 * 2352, 1, sizeof(vdh));
 
 					// Check for a valid Volume Descriptor Type
-					if(vdh.vdtype == 0x01) 
+					if(vdh.vdtype == 0x01)
 					{
 #if 0
-// This will fail on 64-bit due to differing variable sizes in the pvd struct						
+// This will fail on 64-bit due to differing variable sizes in the pvd struct
 						// Get Primary Volume Descriptor
 						iso9660_PVD pvd;
 						memset(&pvd, 0, sizeof(pvd));
@@ -409,10 +409,10 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 						char szRootSector[32];
 						unsigned int nRootSector = 0;
 
-						sprintf(szRootSector, "%02X%02X%02X%02X", 
-							pvd.root_directory_record.location_of_extent[4], 
-							pvd.root_directory_record.location_of_extent[5], 
-							pvd.root_directory_record.location_of_extent[6], 
+						sprintf(szRootSector, "%02X%02X%02X%02X",
+							pvd.root_directory_record.location_of_extent[4],
+							pvd.root_directory_record.location_of_extent[5],
+							pvd.root_directory_record.location_of_extent[6],
 							pvd.root_directory_record.location_of_extent[7]);
 
 						// Convert HEX string to Decimal
@@ -422,13 +422,13 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 						unsigned char buffer[8];
 						char szRootSector[32];
 						unsigned int nRootSector = 0;
-						
+
 						iso9660_ReadOffset(&buffer[0], fp, 2352 * 16 + 0x9e, 1, 8);
-						
+
 						sprintf(szRootSector, "%02x%02x%02x%02x", buffer[4], buffer[5], buffer[6], buffer[7]);
-						
+
 						sscanf(szRootSector, "%x", &nRootSector);
-#endif			
+#endif
 
 						// Process the Root Directory Records
 						NeoCDList_iso9660_CheckDirRecord(hList, pszFile, fp, nRootSector);
@@ -470,19 +470,19 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 
 	HANDLE hDirectory = NULL;
 	memset(&ffdDirectory, 0, sizeof(WIN32_FIND_DATA));
-		
+
 	// Scan main dir for sub-directories
 	TCHAR szSearch[2048] = _T("\0");
 
 	_stprintf(szSearch, _T("%s*"), pszDirectory);
-	
+
 	hDirectory = FindFirstFile(szSearch, &ffdDirectory);
-	
+
 	if (hDirectory == INVALID_HANDLE_VALUE) {
 		// error
 	} else {
-		
-		do 
+
+		do
 		{
 			// DIRECTORY
 			if((ffdDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -502,17 +502,17 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 
 				TCHAR szSubSearch[512] = _T("\0");
 
-				if(!bNeoCDListScanOnlyISO) 
+				if(!bNeoCDListScanOnlyISO)
 				{
 					// Scan sub-directory for CUE
 					_stprintf(szSubSearch, _T("%s%s/*.cue"), pszDirectory, ffdDirectory.cFileName);
 
 					hSubDirectory = FindFirstFile(szSubSearch, &ffdSubDirectory);
-				
+
 					if (hSubDirectory == INVALID_HANDLE_VALUE) {
 						// error
 					} else {
-		
+
 						do
 						{
 							// Sub-directories only
@@ -522,7 +522,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 								if(IsFileExt(ffdSubDirectory.cFileName, _T(".cue")))
 								{
 									// Parse CUE
-									TCHAR szParse[512] = _T("\0");				
+									TCHAR szParse[512] = _T("\0");
 									_stprintf(szParse, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
 
 									//MessageBox(NULL, szParse, _T(""), MB_OK);
@@ -537,7 +537,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 									NeoCDList_CheckISO(hList, szISO);
 									bDone = true;
 
-									break; // no need to continue				
+									break; // no need to continue
 								}
 							}
 						} while(FindNextFile(hSubDirectory, &ffdSubDirectory));
@@ -564,7 +564,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 				if (hSubDirectory == INVALID_HANDLE_VALUE) {
 					// error
 				} else {
-		
+
 					do
 					{
 						// Sub-directories only
@@ -573,7 +573,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 							// File is ISO
 							if ( IsFileExt(ffdSubDirectory.cFileName, _T(".img")) || IsFileExt(ffdSubDirectory.cFileName, _T(".bin")) )
 							{
-								TCHAR szISO[512] = _T("\0");				
+								TCHAR szISO[512] = _T("\0");
 								_stprintf(szISO, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
 
 								NeoCDList_CheckISO(hList, szISO);
@@ -586,10 +586,10 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 			} else {
 				// FILE
 			}
-		} while(FindNextFile(hDirectory, &ffdDirectory));			
+		} while(FindNextFile(hDirectory, &ffdDirectory));
 	}
 	FindClose(hDirectory);
-	
+
 //	bProcessingList = false;
 }
 
@@ -599,7 +599,7 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 //	bProcessingList = true;
 //	ListView_DeleteAllItems(hList);
 
-	//	
+	//
 	WIN32_FIND_DATA ffdDirectory;
 
 	HANDLE hDirectory = NULL;
@@ -608,7 +608,7 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 	// Scan directory for CUE
 	TCHAR szSearch[512] = _T("\0");
 
-	if(!bNeoCDListScanOnlyISO) 
+	if(!bNeoCDListScanOnlyISO)
 	{
 		_stprintf(szSearch, _T("%s*.cue"), pszDirectory);
 
@@ -627,7 +627,7 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 					if(IsFileExt(ffdDirectory.cFileName, _T(".cue")))
 					{
 						// Parse CUE
-						TCHAR szParse[512] = _T("\0");				
+						TCHAR szParse[512] = _T("\0");
 						_stprintf(szParse, _T("%s%s"), pszDirectory, ffdDirectory.cFileName);
 
 						//MessageBox(NULL, szParse, _T(""), MB_OK);
@@ -662,7 +662,7 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 	if (hDirectory == INVALID_HANDLE_VALUE) {
 		// error
 	} else {
-		
+
 		do
 		{
 			// Files only
@@ -671,7 +671,7 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 				// File is ISO
 				if ( IsFileExt(ffdDirectory.cFileName, _T(".img")) || IsFileExt(ffdDirectory.cFileName, _T(".bin")) )
 				{
-					TCHAR szISO[512] = _T("\0");				
+					TCHAR szISO[512] = _T("\0");
 					_stprintf(szISO, _T("%s%s"), pszDirectory, ffdDirectory.cFileName);
 
 					NeoCDList_CheckISO(hList, szISO);
@@ -682,13 +682,13 @@ static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
 
 		FindClose(hDirectory);
 	}
-	
+
 //	bProcessingList = false;
 }
 
 
 // This will parse the specified CUE file and return the ISO path, if found
-static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile) 
+static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 {
 	//if(!pszFile) return NULL;
 
@@ -712,6 +712,8 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 	{
 		TCHAR szBuffer[2048];
 		TCHAR szOriginal[2048];
+		TCHAR* s;
+		TCHAR* t;
 
 		_fgetts(szBuffer, sizeof(szBuffer), fp);
 
@@ -751,17 +753,31 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 				ngcd_list[nListItems].bFoundCUE = true;
 				_tcscpy(ngcd_list[nListItems].szPathCUE,  pszFile);
 				_tcscpy(ngcd_list[nListItems].szISOFile,  pStart + 1);
-			} 
-			
-			/*if (!_tcsncmp(pEnd + 2, _T("WAVE"), 5)) {
-				if(!ngcd_list[nListItems].nAudioTracks) {
-					ngcd_list[nListItems].nAudioTracks = 0;
-				}
+			}
+		}
+		// track info
+		if ((t = LabelCheck(szBuffer, _T("TRACK"))) != 0) {
+			s = t;
 
-				_tcscpy(ngcd_list[nListItems].szTracks[ngcd_list[nListItems].nAudioTracks], pStart + 1);
+			// track number
+			/*UINT8 track = */ _tcstol(s, &t, 10);
 
+			s = t;
+
+			// type of track
+
+			if ((t = LabelCheck(s, _T("MODE1/2352"))) != 0) {
+				//bprintf(0, _T(".cue: Track #%d, data.\n"), track);
+				continue;
+			}
+			if ((t = LabelCheck(s, _T("AUDIO"))) != 0) {
+				//bprintf(0, _T(".cue: Track #%d, AUDIO.\n"), track);
 				ngcd_list[nListItems].nAudioTracks++;
-			} */
+				continue;
+			}
+
+			fclose(fp);
+			return szISO;
 		}
 	}
 	if(fp) fclose(fp);
@@ -820,10 +836,10 @@ static PNGRESOLUTION GetPNGResolution(TCHAR* szFile)
 	return nResolution;
 }
 
-static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFrameCtrID, float maxw, float maxh) 
+static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFrameCtrID, float maxw, float maxh)
 {
 	PNGRESOLUTION PNGRes = { 0, 0 };
-	if(!_tfopen(szFile, _T("rb"))) 
+	if(!_tfopen(szFile, _T("rb")))
 	{
 		HRSRC hrsrc			= FindResource(NULL, MAKEINTRESOURCE(BMP_SPLASH), RT_BITMAP);
 		HGLOBAL hglobal		= LoadResource(NULL, (HRSRC)hrsrc);
@@ -840,13 +856,13 @@ static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFra
 	}
 
 	// ------------------------------------------------------
-	// PROPER ASPECT RATIO CALCULATIONS 
+	// PROPER ASPECT RATIO CALCULATIONS
 
 	float w = (float)PNGRes.nWidth;
 	float h = (float)PNGRes.nHeight;
 
-	//float maxw = 216; // 
-	//float maxh = 150; // 
+	//float maxw = 216; //
+	//float maxh = 150; //
 
 	// max WIDTH
 	if(w > maxw) {
@@ -894,7 +910,7 @@ static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFra
 	// ------------------------------------------------------
 
 	FILE* fp = _tfopen(szFile, _T("rb"));
-	
+
 	HBITMAP hCoverBmp = PNGLoadBitmap(hDlg, fp, (int)w, (int)h, 0);
 
 	SetWindowPos(GetDlgItem(hDlg, nCtrID), NULL, (int)(pt.x + x), (int)(pt.y + y), 0, 0, SWP_NOSIZE | SWP_SHOWWINDOW);
@@ -904,7 +920,7 @@ static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFra
 
 }
 
-static void NeoCDList_Clean() 
+static void NeoCDList_Clean()
 {
 	NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 216, 150);
 	NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 216, 150);
@@ -916,7 +932,7 @@ static void NeoCDList_Clean()
 
 	hProcessThread = NULL;
 	ProcessThreadID = 0;
-	
+
 	for(int x = 0; x < 100; x++) {
 		for(int y = 0; y < 99; y++) {
 			memset(&ngcd_list[x].szTracks[y], 0, sizeof(TCHAR) * 256);
@@ -946,13 +962,13 @@ static INT_PTR CALLBACK NeoCDList_CoverWndProc(HWND hDlg, UINT Msg, WPARAM wPara
 
 		return TRUE;
 	}
-	
+
 	if(Msg == WM_CLOSE)
-	{		
+	{
 		EndDialog(hDlg, 0);
 		hNeoCDList_CoverDlg	= NULL;
 	}
-	
+
 	if(Msg == WM_COMMAND)
 	{
 		if (LOWORD(wParam) == WM_DESTROY) {
@@ -982,7 +998,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 		HICON hIcon = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
 		SendMessage(hDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);		// Set the Game Selection dialog icon.
-		
+
 		hWhiteBGBrush	= CreateSolidBrush(RGB(0xFF,0xFF,0xFF));
 
 		NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 216, 150);
@@ -995,25 +1011,25 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 		CheckDlgButton(hNeoCDWnd, IDC_NCD_SSUBDIR_CHECK, bNeoCDListScanSub ? BST_CHECKED : BST_UNCHECKED);
 		CheckDlgButton(hNeoCDWnd, IDC_NCD_SISO_ONLY_CHECK, bNeoCDListScanOnlyISO ? BST_CHECKED : BST_UNCHECKED);
-		
+
 		TreeView_SetItemHeight(hListView, 40);
-		
+
 		TCHAR szDialogTitle[200];
 		_stprintf(szDialogTitle, FBALoadStringEx(hAppInst, IDS_NGCD_DIAG_TITLE, true), _T(APP_TITLE), _T(SEPERATOR_1), _T(SEPERATOR_1));
 		SetWindowText(hDlg, szDialogTitle);
 
 		hProcessThread = (HANDLE)_beginthreadex(NULL, 0, NeoCDList_DoProc, NULL, 0, &ProcessThreadID);
-		
+
 		WndInMid(hDlg, hScrnWnd);
 		SetFocus(hListView);
-	
+
 		return TRUE;
 	}
-	
+
 	if(Msg == WM_CLOSE)
 	{
 		NeoCDList_Clean();
-		
+
 		DeleteObject(hWhiteBGBrush);
 
 		hNeoCDWnd	= NULL;
@@ -1021,7 +1037,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 		EndDialog(hDlg, 0);
 	}
-	
+
 	if (Msg == WM_CTLCOLORSTATIC)
 	{
 		if ((HWND)lParam == GetDlgItem(hNeoCDWnd, IDC_NCD_LABELSHORT))	return (INT_PTR)hWhiteBGBrush;
@@ -1033,13 +1049,13 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 		if ((HWND)lParam == GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTIMAGE))	return (INT_PTR)hWhiteBGBrush;
 		if ((HWND)lParam == GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTAUDIO))	return (INT_PTR)hWhiteBGBrush;
 	}
-	
-	if (Msg == WM_NOTIFY) 
+
+	if (Msg == WM_NOTIFY)
 	{
 		NMLISTVIEW* pNMLV	= (NMLISTVIEW*)lParam;
 
 		// Game Selected
-		if (pNMLV->hdr.code == LVN_ITEMCHANGED && pNMLV->hdr.idFrom == IDC_NCD_LIST) 
+		if (pNMLV->hdr.code == LVN_ITEMCHANGED && pNMLV->hdr.idFrom == IDC_NCD_LIST)
 		{
 			int iCount		= SendMessage(hListView, LVM_GETITEMCOUNT, 0, 0);
 			int iSelCount	= SendMessage(hListView, LVM_GETSELECTEDCOUNT, 0, 0);
@@ -1078,12 +1094,12 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTIMAGE), _T(""));
 			SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTAUDIO), _T(""));
 
-			for(int nItem = 0; nItem < nListItems; nItem++) 
+			for(int nItem = 0; nItem < nListItems; nItem++)
 			{
 				unsigned int nID = 0;
 				_stscanf(szID, _T("%x"), &nID);
 
-				TCHAR szAudioTracks[] =_T("0");				
+				TCHAR szAudioTracks[] =_T("0");
 
 				if(nID == ngcd_list[nItem].nID) {
 					SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTSHORT), ngcd_list[nItem].szShortName);
@@ -1097,11 +1113,11 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				}
 			}
 
-			
+
 		}
 
 		// Double Click
-		if (pNMLV->hdr.code == NM_DBLCLK && pNMLV->hdr.idFrom == IDC_NCD_LIST) 
+		if (pNMLV->hdr.code == NM_DBLCLK && pNMLV->hdr.idFrom == IDC_NCD_LIST)
 		{
 			if(nSelectedItem >= 0) {
 				nCDEmuSelect = 0;
@@ -1117,7 +1133,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			NeoCDList_Clean();
 
 			hNeoCDWnd	= NULL;
-			hListView	= NULL;					
+			hListView	= NULL;
 
 			EndDialog(hDlg, 0);
 
@@ -1127,11 +1143,11 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 	if(Msg == WM_COMMAND)
 	{
-		if(HIWORD(wParam) == STN_CLICKED) 
+		if(HIWORD(wParam) == STN_CLICKED)
 		{
 			int nCtrlID = LOWORD(wParam);
 
-			if(nCtrlID == IDC_NCD_FRONT_PIC) 
+			if(nCtrlID == IDC_NCD_FRONT_PIC)
 			{
 				if(nSelectedItem >= 0) {
 					_stprintf(szBigCover, _T("%s%04x-front.png"), szNeoCDCoverDir, ngcd_list[nSelectedItem].nID );
@@ -1147,7 +1163,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				return 0;
 			}
 
-			if(nCtrlID == IDC_NCD_BACK_PIC) 
+			if(nCtrlID == IDC_NCD_BACK_PIC)
 			{
 				if(nSelectedItem >= 0) {
 					_stprintf(szBigCover, _T("%s%04x-back.png"), szNeoCDCoverDir, ngcd_list[nSelectedItem].nID );
@@ -1163,16 +1179,16 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				return 0;
 			}
 		}
-		
+
 		if (LOWORD(wParam) == WM_DESTROY) {
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
 		}
 
-		if(HIWORD(wParam) == BN_CLICKED) 
+		if(HIWORD(wParam) == BN_CLICKED)
 		{
 			int nCtrlID	= LOWORD(wParam);
 
-			switch(nCtrlID) 
+			switch(nCtrlID)
 			{
 				case IDC_NCD_PLAY_BUTTON:
 				{
@@ -1188,11 +1204,11 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					}
 
 					NeoCDList_Clean();
-					
+
 					DeleteObject(hWhiteBGBrush);
 
 					hNeoCDWnd	= NULL;
-					hListView	= NULL;					
+					hListView	= NULL;
 
 					EndDialog(hDlg, 0);
 
@@ -1215,7 +1231,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					if(bProcessingList) break;
 
 					NeoCDList_Clean();
-					
+
 					SupportDirCreateTab(IDC_SUPPORTDIR_EDIT8, hNeoCDWnd);
 					hProcessThread = (HANDLE)_beginthreadex(NULL, 0, NeoCDList_DoProc, NULL, 0, &ProcessThreadID);
 					SetFocus(hListView);
@@ -1229,11 +1245,11 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					} else {
 						bNeoCDListScanSub = false;
 					}
-					
+
 					if(bProcessingList) break;
 
 					NeoCDList_Clean();
-					
+
 					hProcessThread = (HANDLE)_beginthreadex(NULL, 0, NeoCDList_DoProc, NULL, 0, &ProcessThreadID);
 					SetFocus(hListView);
 					break;
@@ -1246,11 +1262,11 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					} else {
 						bNeoCDListScanOnlyISO = false;
 					}
-					
+
 					if(bProcessingList) break;
 
 					NeoCDList_Clean();
-					
+
 					hProcessThread = (HANDLE)_beginthreadex(NULL, 0, NeoCDList_DoProc, NULL, 0, &ProcessThreadID);
 					SetFocus(hListView);
 					break;
@@ -1259,7 +1275,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				case IDC_NCD_CANCEL_BUTTON:
 				{
 					NeoCDList_Clean();
-					
+
 					DeleteObject(hWhiteBGBrush);
 
 					hNeoCDWnd	= NULL;
@@ -1274,7 +1290,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 	return 0;
 }
 
-//static DWORD WINAPI NeoCDList_DoProc(LPVOID) 
+//static DWORD WINAPI NeoCDList_DoProc(LPVOID)
 static unsigned __stdcall NeoCDList_DoProc(void*)
 {
 	if(bProcessingList) return 0;
@@ -1283,14 +1299,14 @@ static unsigned __stdcall NeoCDList_DoProc(void*)
 
 	bProcessingList = true;
 	ListView_DeleteAllItems(hListView);
-	
+
 	if(bNeoCDListScanSub) {
 		NeoCDList_ScanSingleDir(hListView, szNeoCDGamesDir);
-		NeoCDList_ScanDir(hListView, szNeoCDGamesDir);	
+		NeoCDList_ScanDir(hListView, szNeoCDGamesDir);
 	} else {
 		NeoCDList_ScanSingleDir(hListView, szNeoCDGamesDir);
 	}
-	
+
 	bProcessingList = false;
 
 	PostThreadMessage(ProcessThreadID, WM_APP + 0, 0, 0);
@@ -1305,11 +1321,11 @@ static unsigned __stdcall NeoCDList_DoProc(void*)
 	CloseHandle(hProcessThread);
 	hProcessThread = NULL;
 	ProcessThreadID = 0;
-	
+
 	return 0;
 }
 
-int NeoCDList_Init() 
+int NeoCDList_Init()
 {
 	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_NCD_DLG), hScrnWnd, (DLGPROC)NeoCDList_WndProc);
 }

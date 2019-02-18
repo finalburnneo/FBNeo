@@ -4476,6 +4476,7 @@ static INT32 NeoSekRun(const INT32 nCycles)
 	while (nCyclesExecutedTotal < nCycles) {
 
 		INT32 nCyclesExecuted;
+		INT32 nIRQCyc = 0;
 
 		if (nNeoCDCyclesIRQ <= 0) {
 			nNeoCDCyclesIRQ += nNeoCDCyclesIRQPeriod;
@@ -4484,6 +4485,8 @@ static INT32 NeoSekRun(const INT32 nCycles)
 				NeoCDReadSector();
 
 			if (nff0002 & 0x0050) {
+				nIRQCyc += SekRun(100); // Allow cpu to ack Decoder irq
+
 				// Trigger CD mechanism communication interrupt
 				//bprintf(PRINT_NORMAL, _T("    DECI status %i\n"), (LC8951RegistersR[1] & 0x20) >> 5);
 				nIRQAcknowledge &= ~0x10;
@@ -4492,7 +4495,9 @@ static INT32 NeoSekRun(const INT32 nCycles)
 		}
 
 		nCyclesSegment = (nNeoCDCyclesIRQ < (nCycles - nCyclesExecutedTotal)) ? nNeoCDCyclesIRQ : (nCycles - nCyclesExecutedTotal);
-		nCyclesExecuted = SekRun(nCyclesSegment);
+		nCyclesExecuted = SekRun(nCyclesSegment - nIRQCyc);
+		nCyclesExecuted += nIRQCyc;
+		nIRQCyc = 0;
 
 		nCyclesExecutedTotal += nCyclesExecuted;
 		nNeoCDCyclesIRQ      -= nCyclesExecuted;

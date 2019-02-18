@@ -593,8 +593,8 @@ static int cdimgPlayLBA(int LBA)
 	cdimgOutputPosition = 0;
 
 	cdimgSamples = 0;
-
-	cdimgLBA = cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack].Address);
+	// this breaks states, commenting for now just in-case. -dink
+	//cdimgLBA = cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack].Address); // start at the beginning of track
 	CDEmuStatus = playing;
 
 	return 0;
@@ -816,7 +816,7 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 #endif
 
 	if (cdimgFile == NULL) { // restart play if fileptr lost
-		bprintf(0, _T("CDDA file pointer lost, re-starting!\n"));
+		bprintf(0, _T("CDDA file pointer lost, re-starting @ %d!\n"), cdimgLBA);
 		if (cdimgLBA < cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1].Address))
 			cdimgPlayLBA(cdimgLBA);
 	}

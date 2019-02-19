@@ -16,6 +16,8 @@ static TCHAR* GameConfigName()
 		_stprintf(szName, _T("config/games/%s.ini"), BurnDrvGetText(DRV_NAME));
 	}
 
+	bprintf(0, _T("config game name: %s\n"), szName);
+
 	return szName;
 }
 

@@ -3335,7 +3335,7 @@ int ScrnSize()
   	return 0;
 }
 
-//#include "neocdlist.h"
+#include "neocdlist.h" // IsNeoGeoCD()
 
 int ScrnTitle()
 {
@@ -3354,12 +3354,10 @@ int ScrnTitle()
 			pszPosition += _stprintf(pszPosition, _T(SEPERATOR_2) _T("%s"), pszName);
 		}
 
-#if 0
-		// moved to drv.cpp (feb 18, 2019)
-		if(NeoCDInfo_Init()) {
+		if (IsNeoGeoCD()) {
+			NeoCDInfo_SetTitle();
 			return 0;
 		}
-#endif
 
 	} else {
 		_stprintf(szText, _T(APP_TITLE) _T( " v%.20s") _T(SEPERATOR_1) _T("[%s]"), szAppBurnVer, FBALoadStringEx(hAppInst, IDS_SCRN_NOGAME, true));

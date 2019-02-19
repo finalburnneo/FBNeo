@@ -4,6 +4,8 @@
 #include "burner.h"
 #include "neocdlist.h"
 
+NGCDGAME* game;
+
 struct NGCDGAME games[] =
 {
 // ---------------------------------------------------------------------------------------------------------------------------------------------//
@@ -123,7 +125,7 @@ NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)
 }
 
 // Update the main window title
-void SetNeoCDTitle(TCHAR* pszTitle)
+static void SetNeoCDTitle(TCHAR* pszTitle)
 {
 	TCHAR szText[1024] = _T("");
 	_stprintf(szText, _T(APP_TITLE) _T( " v%.20s") _T(SEPERATOR_1) _T("%s") _T(SEPERATOR_1) _T("%s"), szAppBurnVer, BurnDrvGetText(DRV_FULLNAME), pszTitle);
@@ -131,7 +133,14 @@ void SetNeoCDTitle(TCHAR* pszTitle)
 	SetWindowText(hScrnWnd, szText);
 }
 
-NGCDGAME* game;
+void NeoCDInfo_SetTitle()
+{
+	if (IsNeoGeoCD() && game && game->id) {
+		SetNeoCDTitle(game->pszTitle);
+	} else if (IsNeoGeoCD()) {
+		SetNeoCDTitle(FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
+	}
+}
 
 // Get the title
 int GetNeoCDTitle(unsigned int nGameID)
@@ -148,14 +157,13 @@ int GetNeoCDTitle(unsigned int nGameID)
 		bprintf(PRINT_NORMAL, _T("    Company: %s \n")		, game->pszCompany);
 
 		// Update the main window title
-		SetNeoCDTitle(game->pszTitle);
+		//SetNeoCDTitle(game->pszTitle);
 
 		return 1;
 	} else {
-		SetNeoCDTitle(FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
+		//SetNeoCDTitle(FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
 	}
 
-	game = NULL;
 	return 0;
 }
 
@@ -490,7 +498,7 @@ int NeoCDInfo_Init()
 
 TCHAR* NeoCDInfo_Text(int nText)
 {
-	if(!game || !IsNeoGeoCD() || !bDrvOkay) return NULL;
+	if(!game || !IsNeoGeoCD()) return NULL;
 
 	switch(nText)
 	{
@@ -505,7 +513,7 @@ TCHAR* NeoCDInfo_Text(int nText)
 
 int NeoCDInfo_ID()
 {
-	if(!game || !IsNeoGeoCD() || !bDrvOkay) return 0;
+	if(!game || !IsNeoGeoCD()) return 0;
 	return game->id;
 }
 

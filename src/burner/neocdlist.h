@@ -12,7 +12,6 @@ struct NGCDGAME
 
 NGCDGAME*	GetNeoGeoCDInfo(unsigned int nID);
 int			GetNeoCDTitle(unsigned int nGameID);
-void		SetNeoCDTitle(TCHAR* pszTitle); 
 int			GetNeoGeoCD_Identifier();
 
 bool	IsNeoGeoCD();		// neo_run.cpp
@@ -21,6 +20,7 @@ TCHAR*	GetIsoPath();	// cd_isowav.cpp
 int		NeoCDInfo_Init();
 TCHAR*	NeoCDInfo_Text(int nText);
 int		NeoCDInfo_ID();
+void    NeoCDInfo_SetTitle();
 void	NeoCDInfo_Exit();
 
 // ------------------------------------------------------

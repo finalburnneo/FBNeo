@@ -4,6 +4,8 @@
 #include "burner.h"
 #include "neocdlist.h"
 
+const int nSectorLength = 2352;
+
 NGCDGAME* game;
 
 struct NGCDGAME games[] =
@@ -167,21 +169,17 @@ int GetNeoCDTitle(unsigned int nGameID)
 	return 0;
 }
 
-void iso9660_ReadOffset(unsigned char *Dest, FILE* fp, unsigned int lOffset, unsigned int lSize, unsigned int lLength)
+void iso9660_ReadOffset(UINT8 *Dest, FILE* fp, unsigned int lOffset, unsigned int lSize, unsigned int lLength)
 {
-	if(fp == NULL) return;
-	if (Dest == NULL) return;
+	if (fp == NULL || Dest == NULL) return;
 
-	fseek(fp, lOffset + 16, SEEK_SET);
+	fseek(fp, lOffset + ((nSectorLength == 2352) ? 16 : 0), SEEK_SET);
 	fread(Dest, lLength, lSize, fp);
 }
 
 static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 {
-	int		nSectorLength		= 2352;
-	//int		nFile				= 0;
 	unsigned int	lBytesRead			= 0;
-	//int		nLen				= 0;
 	unsigned int	lOffset				= 0;
 	bool	bNewSector			= false;
 	bool	bRevisionQueve		= false;
@@ -189,39 +187,38 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 
 	lOffset = (nSector * nSectorLength);
 
-	unsigned char* nLenDR = (unsigned char*)malloc(1 * sizeof(unsigned char));
-	unsigned char* Flags = (unsigned char*)malloc(1 * sizeof(unsigned char));
-	unsigned char* ExtentLoc = (unsigned char*)malloc(8 * sizeof(unsigned char));
-	unsigned char* Data = (unsigned char*)malloc(0x10b * sizeof(unsigned char));
-	unsigned char* LEN_FI = (unsigned char*)malloc(1 * sizeof(unsigned char));
-	char *File = (char*)malloc(32 * sizeof(char));
+	UINT8 nLenDR;
+	UINT8 Flags;
+	UINT8 LEN_FI;
+	UINT8* ExtentLoc = (UINT8*)malloc(8 + 32);
+	UINT8* Data = (UINT8*)malloc(0x10b + 32);
+	char *File = (char*)malloc(32 + 32);
 
 	while(1)
 	{
-		iso9660_ReadOffset(nLenDR, fp, lOffset, 1, sizeof(unsigned char));
+		iso9660_ReadOffset(&nLenDR, fp, lOffset, 1, sizeof(UINT8));
 
-		if(nLenDR[0] == 0x22) {
-			lOffset		+= nLenDR[0];
-			lBytesRead	+= nLenDR[0];
+		if(nLenDR == 0x22) {
+			lOffset		+= nLenDR;
+			lBytesRead	+= nLenDR;
 			continue;
 		}
 
-		if(nLenDR[0] < 0x22)
+		if(nLenDR < 0x22)
 		{
 			if(bNewSector)
 			{
 				if(bRevisionQueve) {
-					bRevisionQueve		= false;
-
+					bRevisionQueve = false;
 					GetNeoCDTitle(nRevisionQueveID);
 				}
 				return;
 			}
 
-			nLenDR[0] = 0;
-			iso9660_ReadOffset(nLenDR, fp, lOffset + 1, 1, sizeof(unsigned char));
+			nLenDR = 0;
+			iso9660_ReadOffset(&nLenDR, fp, lOffset + 1, 1, sizeof(UINT8));
 
-			if(nLenDR[0] < 0x22) {
+			if(nLenDR < 0x22) {
 				lOffset += (nSectorLength - lBytesRead);
 				lBytesRead = 0;
 				bNewSector = true;
@@ -231,36 +228,36 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 
 		bNewSector = false;
 
-		iso9660_ReadOffset(Flags, fp, lOffset + 25, 1, sizeof(unsigned char));
+		iso9660_ReadOffset(&Flags, fp, lOffset + 25, 1, sizeof(UINT8));
 
-		if(!(Flags[0] & (1 << 1)))
+		if(!(Flags & (1 << 1)))
 		{
-			iso9660_ReadOffset(ExtentLoc, fp, lOffset + 2, 8, sizeof(unsigned char));
+			iso9660_ReadOffset(ExtentLoc, fp, lOffset + 2, 8, sizeof(UINT8));
 
-			char szValue[9];
+			char szValue[32];
 			sprintf(szValue, "%02x%02x%02x%02x", ExtentLoc[4], ExtentLoc[5], ExtentLoc[6], ExtentLoc[7]);
 
 			unsigned int nValue = 0;
 			sscanf(szValue, "%x", &nValue);
 
-			iso9660_ReadOffset(Data, fp, nValue * nSectorLength, 0x10a, sizeof(unsigned char));
+			iso9660_ReadOffset(Data, fp, nValue * nSectorLength, 0x10a, sizeof(UINT8));
 
-			char szData[8];
+			char szData[32];
 			sprintf(szData, "%c%c%c%c%c%c%c", Data[0x100], Data[0x101], Data[0x102], Data[0x103], Data[0x104], Data[0x105], Data[0x106]);
 
 			if(!strncmp(szData, "NEO-GEO", 7))
 			{
-				char id[] = "0000";
+				char id[32];
 				sprintf(id, "%02X%02X",  Data[0x108], Data[0x109]);
 
 				unsigned int nID = 0;
 				sscanf(id, "%x", &nID);
 
-				iso9660_ReadOffset(LEN_FI, fp, lOffset + 32, 1, sizeof(unsigned char));
+				iso9660_ReadOffset(&LEN_FI, fp, lOffset + 32, 1, sizeof(UINT8));
 
-				iso9660_ReadOffset((unsigned char*)File, fp, lOffset + 33, LEN_FI[0], sizeof(char));
-				strncpy(File, File, LEN_FI[0]);
-				File[LEN_FI[0]] = 0;
+				iso9660_ReadOffset((UINT8*)File, fp, lOffset + 33, LEN_FI, sizeof(UINT8));
+				strncpy(File, File, LEN_FI);
+				File[LEN_FI] = 0;
 
 				// King of Fighters '94, The (1994)(SNK)(JP)
 				// 10-6-1994 (P1.PRG)
@@ -300,29 +297,18 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 				if(nID == 0x0214) {
 					bRevisionQueve		= true;
 					nRevisionQueveID	= nID;
-					lOffset		+= nLenDR[0];
-					lBytesRead	+= nLenDR[0];
+					lOffset		+= nLenDR;
+					lBytesRead	+= nLenDR;
 					continue;
 				}
 
 				GetNeoCDTitle(nID);
-
 				break;
 			}
 		}
 
-		lOffset		+= nLenDR[0];
-		lBytesRead	+= nLenDR[0];
-	}
-
-	if (nLenDR) {
-		free(nLenDR);
-		nLenDR = NULL;
-	}
-
-	if (Flags) {
-		free(Flags);
-		Flags = NULL;
+		lOffset		+= nLenDR;
+		lBytesRead	+= nLenDR;
 	}
 
 	if (ExtentLoc) {
@@ -333,11 +319,6 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 	if (Data) {
 		free(Data);
 		Data = NULL;
-	}
-
-	if (LEN_FI) {
-		free(LEN_FI);
-		LEN_FI = NULL;
 	}
 
 	if (File) {
@@ -371,13 +352,13 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 			fseek(fp, 0, SEEK_SET);
 
 			// If it has at least 16 sectors proceed
-			if(lSize > (2352 * 16))
+			if(lSize > (nSectorLength * 16))
 			{
 				// Check for Standard ISO9660 Identifier
-				unsigned char IsoCheck[6];
+				UINT8 IsoCheck[32];
 
 				// advance to sector 16 and PVD Field 2
-				iso9660_ReadOffset(&IsoCheck[0], fp, 2352 * 16 + 1, 1, 5); // get Standard Identifier Field from PVD
+				iso9660_ReadOffset(&IsoCheck[0], fp, nSectorLength * 16 + 1, 1, 5); // get Standard Identifier Field from PVD
 
 				// Verify that we have indeed a valid ISO9660 MODE1/2352
 				if(!memcmp(IsoCheck, "CD001", 5))
@@ -388,7 +369,7 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 					// Get Volume Descriptor Header
 					memset(&vdh, 0, sizeof(vdh));
 					//memcpy(&vdh, iso9660_ReadOffset(fp, (2048 * 16), sizeof(vdh)), sizeof(vdh));
-					iso9660_ReadOffset((unsigned char*)&vdh, fp, 16 * 2352, 1, sizeof(vdh));
+					iso9660_ReadOffset((UINT8*)&vdh, fp, 16 * nSectorLength, 1, sizeof(vdh));
 
 					// Check for a valid Volume Descriptor Type
 					if(vdh.vdtype == 0x01)
@@ -399,7 +380,7 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 						iso9660_PVD pvd;
 						memset(&pvd, 0, sizeof(pvd));
 						//memcpy(&pvd, iso9660_ReadOffset(fp, (2048 * 16), sizeof(pvd)), sizeof(pvd));
-						iso9660_ReadOffset((unsigned char*)&pvd, fp, 2352 * 16, 1, sizeof(pvd));
+						iso9660_ReadOffset((UINT8*)&pvd, fp, nSectorLength * 16, 1, sizeof(pvd));
 
 						// ROOT DIRECTORY RECORD
 
@@ -417,11 +398,11 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 						sscanf(szRootSector, "%X", &nRootSector);
 #else
 // Just read from the file directly at the correct offset (SECTOR_SIZE * 16 + 0x9e for the start of the root directory record)
-						unsigned char buffer[8];
+						UINT8 buffer[32];
 						char szRootSector[32];
 						unsigned int nRootSector = 0;
 
-						iso9660_ReadOffset(&buffer[0], fp, 2352 * 16 + 0x9e, 1, 8);
+						iso9660_ReadOffset(&buffer[0], fp, nSectorLength * 16 + 0x9e, 1, 8);
 
 						sprintf(szRootSector, "%02x%02x%02x%02x", buffer[4], buffer[5], buffer[6], buffer[7]);
 

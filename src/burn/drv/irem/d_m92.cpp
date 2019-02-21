@@ -66,6 +66,7 @@ static INT32 nPrevScreenPos = 0;
 static INT32 nScreenOffsets[2] = { 0, 0 }; // x,y (ppan)
 
 static UINT16 m92_video_reg = 0;
+static INT32 m92_ok_to_blank = 0;
 
 static INT32 msm6295_bank;
 
@@ -1831,6 +1832,7 @@ static INT32 DrvExit()
 	m92_kludge = 0;
 	m92_raster_irq_position = 0;
 	nScreenOffsets[0] = nScreenOffsets[1] = 0;
+	m92_ok_to_blank = 0;
 
 	return 0;
 }
@@ -2012,7 +2014,7 @@ static INT32 DrvDraw()
 
 	if (nSpriteEnable & 1) draw_sprites();
 
-	if (m92_video_reg & 0x80) BurnTransferClear(0x800); // most-likely probably screen disable (fixes bad fades in nbbatman)
+	if (m92_ok_to_blank && m92_video_reg & 0x80) BurnTransferClear(0x800); // most-likely probably screen disable (fixes bad fades in nbbatman, rtypeleo)
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2647,6 +2649,7 @@ static INT32 rtypeleoInit()
 {
 	m92_kludge = 4+1; // fix for sporatic tilemap corruption in the first attract-mode stage (stage 2)
 	// same as nbbatman, but without scroll offset.
+	m92_ok_to_blank = 1;
 
 	return DrvInit(rtypeleoRomLoad, rtypeleo_decryption_table, 1, 0x200000, 0x400000);
 }
@@ -3318,6 +3321,7 @@ static INT32 nbbatmanInit()
 	const UINT8 *decrtab = leagueman_decryption_table;
 
 	m92_kludge = 4; // tilemap offset(for the "roz"-like map at beginning of stage) + cycle hacks
+	m92_ok_to_blank = 1;
 
 	if (DrvInput[8] & 1) // dip option, use old soundCPU emulation "style", for weirdos! :)
 		decrtab = leagueman_OLD_decryption_table;

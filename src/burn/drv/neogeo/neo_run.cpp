@@ -83,7 +83,7 @@
 
 #define NEO_HREFRESH (15625.0)
 #define NEO_VREFRESH (NEO_HREFRESH / 264.0)
-// #define NEO_VREFRESH (NEO_HREFRESH / 312.0)
+#define NEO_CDVREFRESH (6041957.0 / (264 * 384))
 
 // If defined, enable emulation of the watchdog timer (timing doesn't match real hardware 100%)
 #define EMULATE_WATCHDOG
@@ -3834,7 +3834,7 @@ static void SwitchToMusashi()
 
 static INT32 NeoInitCommon()
 {
-	BurnSetRefreshRate(NEO_VREFRESH);
+	BurnSetRefreshRate((nNeoSystemType & NEO_SYS_CD) ? NEO_CDVREFRESH : NEO_VREFRESH);
 	INT32 nNeoScreenHeight; // not used
 	BurnDrvGetFullSize(&nNeoScreenWidth, &nNeoScreenHeight);
 

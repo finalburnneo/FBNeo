@@ -91,6 +91,9 @@
 // If defined, reset the Z80 when switching between the Z80 BIOS/cartridge ROM
 //#define Z80_RESET_ON_BANKSWITCH
 
+// If defined, overclock CDZ
+#define OVERCLOCK_CDZ
+
 // If defined, adjust the Z80 speed along with the 68000 when overclocking
 #define Z80_SPEED_ADJUST
 
@@ -4682,7 +4685,11 @@ INT32 NeoFrame()
 		// uPD499A ticks per second (same as 68K clock)
 		uPD499ASetTicks((INT64)12000000 * nBurnCPUSpeedAdjust / 256);
 
+#if defined OVERCLOCK_CDZ
+		nNeoCDCyclesIRQPeriod = (int)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 300.0));
+#else
 		nNeoCDCyclesIRQPeriod = (int)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 150.0));
+#endif
 
 		nPrevBurnCPUSpeedAdjust = nBurnCPUSpeedAdjust;
 	}

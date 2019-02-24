@@ -34,8 +34,8 @@ static UINT16 *pTC0100SCNBgTempDraw[TC0100SCN_MAX_CHIPS] = { NULL, };
 static UINT16 *pTC0100SCNFgTempDraw[TC0100SCN_MAX_CHIPS] = { NULL, };
 static INT32 TC0100SCNNum = 0;
 
-#define PLOTPIXEL(x, po) pPixel[x] = nPalette | pTileData[x] | po;
-#define PLOTPIXEL_FLIPX(x, a, po) pPixel[x] = nPalette | pTileData[a] | po;
+#define PLOTPIXEL(x, po) if (pTileData[x]) {pPixel[x] = nPalette | pTileData[x] | po;}
+#define PLOTPIXEL_FLIPX(x, a, po) if (pTileData[a]) {pPixel[x] = nPalette | pTileData[a] | po;}
 
 static void RenderTile(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nTilemapWidth, UINT8 *pTile)
 {
@@ -252,7 +252,7 @@ void TC0100SCNRenderBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, INT32 Priorit
 		for (x = TC0100SCNClipStartX[Chip]; x < TC0100SCNClipStartX[Chip] + TC0100SCNClipWidth[Chip]; x++) {
 			p = pTC0100SCNBgTempDraw[Chip][((ySrc & HeightMask) * Columns * 8) + xSrc];
 
-			if ((p & 0x0f) != 0 || Opaque) {
+			if (p != 0 || Opaque) {
 				pTransDraw[(y * nScreenWidth) + x] = p;
 
 				if (TC0100SCNPriorityMap[Chip]) {

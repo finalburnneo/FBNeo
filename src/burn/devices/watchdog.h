@@ -19,6 +19,9 @@ void BurnWatchdogResetEnable(); // with auto-enable
 // pass -1 for frames to disable watchdog entirely
 void BurnWatchdogInit(INT32 (*reset)(INT32 clear_mem), INT32 frames);
 
+// exit
+void BurnWatchdogExit();
+
 // update the wathdog timer, call at the start of the 'Frame function.
 void BurnWatchdogUpdate();
 

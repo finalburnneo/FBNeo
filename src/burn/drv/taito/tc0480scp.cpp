@@ -376,11 +376,18 @@ void TC0480SCPCtrlWordWrite(INT32 Offset, UINT16 Data)
 
 static inline void DrawScanLine(INT32 y, const UINT16 *src, INT32 Transparent, INT32 Prio)
 {
-	UINT16 *pPixel = pTransDraw + (y * nScreenWidth);
-	INT32 Length = nScreenWidth;
+	INT32 minx = 0, maxx = nScreenWidth, miny = 0, maxy = nScreenHeight; 
+	GenericTilesGetClip(&minx, &maxx, &miny, &maxy);
+
+	if (y < miny || y >= maxy) return;
+
+	UINT16 *pPixel = pTransDraw + (y * nScreenWidth) + minx;
+	INT32 Length = maxx - minx;
+
+	src += minx;
 
 	if (TC0480SCPPriMap) {
-		UINT8 *pPrio = TC0480SCPPriMap + (y * nScreenWidth);
+		UINT8 *pPrio = TC0480SCPPriMap + (y * nScreenWidth) + minx;
 		if (Transparent) {
 			while (Length--) {
 				UINT16 sPixel = *src++;

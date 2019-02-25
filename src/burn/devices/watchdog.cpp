@@ -33,6 +33,14 @@ void BurnWatchdogResetEnable()
 	WatchdogEnable = 1;
 }
 
+void BurnWatchdogExit()
+{
+	WatchdogFrames = 0;
+	Watchdog = 0;
+	WatchdogEnable = 0;
+	WatchdogReset = NULL;
+}
+
 void BurnWatchdogInit(INT32 (*reset)(INT32 clear_mem), INT32 frames)
 {
 	if (reset == NULL) {

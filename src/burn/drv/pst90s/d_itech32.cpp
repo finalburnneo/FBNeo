@@ -4235,7 +4235,7 @@ struct BurnDriver BurnDrvWcbowl161 = {
 };
 
 
-// World Class Bowling (v1.65)
+// World Class Bowling (v1.6)
 
 static struct BurnRomInfo wcbowl16RomDesc[] = {
 	{ "wcb_prom0_v1.6n.prom0",				0x020000, 0x332c558f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -4266,7 +4266,7 @@ STD_ROM_FN(wcbowl16)
 
 struct BurnDriver BurnDrvWcbowl16 = {
 	"wcbowl16", "wcbowl", NULL, NULL, "1995",
-	"World Class Bowling (v1.65)\0", NULL, "Incredible Technologies", "Miscellaneous",
+	"World Class Bowling (v1.6)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, wcbowl16RomInfo, wcbowl16RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowloDIPInfo,

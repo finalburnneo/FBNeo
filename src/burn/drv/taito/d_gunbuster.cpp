@@ -550,7 +550,7 @@ static INT32 DrvFrame()
 		SekOpen(0);
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 
-		if (i == 239)
+		if (i == 255)
 		{
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 

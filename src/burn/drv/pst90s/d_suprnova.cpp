@@ -2453,14 +2453,14 @@ static struct BurnRomInfo galpanisRomDesc[] = {
 	{ "gps-000-e1.u10",	0x100000, 0xb9ea3c44, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
 	{ "gps-001-e1.u8",	0x100000, 0xded57bd0, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "gps10000.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
-	{ "gps10100.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
-	{ "gps10200.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
+	{ "gps-100-00.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
+	{ "gps-101-00.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
+	{ "gps-102-00.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
 
-	{ "gps20000.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "gps20100.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
+	{ "gps-200-00.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "gps-201-00.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
 
-	{ "gps30000.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
+	{ "gps-300-00.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
 };
 
 STDROMPICKEXT(galpanis, galpanis, skns)
@@ -2491,14 +2491,14 @@ static struct BurnRomInfo galpanisjRomDesc[] = {
 	{ "gps-000-j1.u10",	0x100000, 0xc6938c3f, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
 	{ "gps-001-j1.u8",	0x100000, 0xe764177a, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "gps10000.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
-	{ "gps10100.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
-	{ "gps10200.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
+	{ "gps-100-00.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
+	{ "gps-101-00.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
+	{ "gps-102-00.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
 
-	{ "gps20000.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "gps20100.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
+	{ "gps-200-00.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "gps-201-00.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
 
-	{ "gps30000.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
+	{ "gps-300-00.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
 };
 
 STDROMPICKEXT(galpanisj, galpanisj, skns)
@@ -2529,14 +2529,14 @@ static struct BurnRomInfo galpaniskRomDesc[] = {
 	{ "gps-000-k1.u10",	0x100000, 0xc9ff3d8a, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
 	{ "gps-001-k1.u8",	0x100000, 0x354e601d, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "gps10000.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
-	{ "gps10100.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
-	{ "gps10200.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
+	{ "gps-100-00.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
+	{ "gps-101-00.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
+	{ "gps-102-00.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
 
-	{ "gps20000.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "gps20100.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
+	{ "gps-200-00.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "gps-201-00.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
 
-	{ "gps30000.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
+	{ "gps-300-00.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
 };
 
 STDROMPICKEXT(galpanisk, galpanisk, skns)

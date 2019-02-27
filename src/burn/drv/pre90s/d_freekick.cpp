@@ -1757,16 +1757,16 @@ struct BurnDriver BurnDrvCountrunb = {
 // Gigas (bootleg)
 
 static struct BurnRomInfo gigasbRomDesc[] = {
-	{ "g-7",	0x08000, 0xdaf4e88d, 1 }, //  0 maincpu
-	{ "g-8",	0x10000, 0x4ab4c1f1, 1 }, //  1
+	{ "g-7.r8",	0x08000, 0xdaf4e88d, 1 }, //  0 maincpu
+	{ "g-8.t8",	0x10000, 0x4ab4c1f1, 1 }, //  1
 
-	{ "g-4",	0x04000, 0x8ed78981, 2 }, //  2 gfx1
-	{ "g-5",	0x04000, 0x0645ec2d, 2 }, //  3
-	{ "g-6",	0x04000, 0x99e9cb27, 2 }, //  4
+	{ "g-4.3l",	0x04000, 0x8ed78981, 2 }, //  2 gfx1
+	{ "g-5.3k",	0x04000, 0x0645ec2d, 2 }, //  3
+	{ "g-6.3fh",0x04000, 0x99e9cb27, 2 }, //  4
 
-	{ "g-1",	0x04000, 0xd78fae6e, 3 }, //  5 gfx2
-	{ "g-3",	0x04000, 0x37df4a4c, 3 }, //  6
-	{ "g-2",	0x04000, 0x3a46e354, 3 }, //  7
+	{ "g-1.3t",	0x04000, 0xd78fae6e, 3 }, //  5 gfx2
+	{ "g-3.3p",	0x04000, 0x37df4a4c, 3 }, //  6
+	{ "g-2.3r",	0x04000, 0x3a46e354, 3 }, //  7
 
 	{ "1.pr",	0x00100, 0xa784e71f, 4 }, //  8 proms
 	{ "6.pr",	0x00100, 0x376df30c, 4 }, //  9

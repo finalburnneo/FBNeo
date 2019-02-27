@@ -30,7 +30,7 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[2];
-static UINT8 DrvInputs[2];
+static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo IqblockInputList[] = {
@@ -66,7 +66,7 @@ STDINPUTINFO(Iqblock)
 static struct BurnDIPInfo IqblockDIPList[]=
 {
 	{0x15, 0xff, 0xff, 0xff, NULL					},
-	{0x16, 0xff, 0xff, 0x7e, NULL					},
+	{0x16, 0xff, 0xff, 0xfe, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Helps"				},
 	{0x15, 0x01, 0x0c, 0x0c, "1"					},
@@ -91,6 +91,10 @@ static struct BurnDIPInfo IqblockDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Free Play"			},
 	{0x16, 0x01, 0x02, 0x02, "Off"					},
 	{0x16, 0x01, 0x02, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x16, 0x01, 0x80, 0x80, "Off"					},
+	{0x16, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Iqblock)
@@ -201,7 +205,7 @@ static UINT8 __fastcall iqblock_read_port(UINT16 address)
 		return DrvBgRAM[address & 0xfff];
 	}
 
-	if (address > 0x8000) {
+	if (address >= 0x8000) {
 		return DrvZ80ROM[0x8000 + address];
 	}
 
@@ -287,7 +291,7 @@ static INT32 MemIndex()
 	DrvZ80ROM			= Next; Next += 0x018000;
 
 	DrvGfxROM0			= Next; Next += 0x100000;
-	DrvGfxROM1			= Next; Next += 0x008000;
+	DrvGfxROM1			= Next; Next += 0x010000;
 
 	DrvPalette			= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
@@ -324,7 +328,7 @@ static INT32 DrvGfxDecode() // 0, 100
 
 	memcpy (tmp, DrvGfxROM1, 0x08000);
 
-	GfxDecode(0x0080, 4, 8, 32, Plane1, XOffs, YOffs, 0x200, tmp, DrvGfxROM1);
+	GfxDecode(0x0100, 4, 8, 32, Plane1, XOffs, YOffs, 0x200, tmp, DrvGfxROM1);
 
 	BurnFree(tmp);
 
@@ -377,7 +381,7 @@ static INT32 DrvInit(void (*decode)(), UINT16 prot_address, INT32 video_type)
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, (video_type) ? bg_type1_map_callback : bg_type0_map_callback, 8,  8, 64, 32);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, fg_map_callback, 8, 32, 64,  8);
-	GenericTilemapSetGfx(0, DrvGfxROM0, 6, 8,  8, 0x100000, 0, 0xf);
+	GenericTilemapSetGfx(0, DrvGfxROM0, 6, 8,  8, (video_type) ? 0x80000 : 0x100000, 0, 0xf);
 	GenericTilemapSetGfx(1, DrvGfxROM1, 4, 8, 32, 0x008000, 0, 0x3);
 	GenericTilemapSetTransparent(0, 0);
 	GenericTilemapSetScrollCols(1, 64);
@@ -393,6 +397,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 	BurnYM2413Exit();
+	ppi8255_exit();
 
 	BurnFree (AllMem);
 
@@ -470,8 +475,9 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+
 		if ((i & 0x1f) == 0x10) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		if ((i & 0x1f) == 0) {
 			ZetNmi();

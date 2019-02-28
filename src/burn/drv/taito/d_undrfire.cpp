@@ -1346,7 +1346,7 @@ struct BurnDriver BurnDrvCbombersj = {
 // Chase Bombers (Japan Prototype)
 
 static struct BurnRomInfo cbomberspRomDesc[] = {
-	{ "hh.bin",					0x800000, 0x8ee7b6c2, TAITO_68KROM1_BYTESWAP32 },	//  0 M68EC020 Code
+	{ "hh.bin",					0x080000, 0x8ee7b6c2, TAITO_68KROM1_BYTESWAP32 },	//  0 M68EC020 Code
 	{ "hl.bin",					0x080000, 0x63683ed8, TAITO_68KROM1_BYTESWAP32 },	//  1
 	{ "lh.bin",					0x080000, 0x77ad9acb, TAITO_68KROM1_BYTESWAP32 },	//  2
 	{ "ll.bin",					0x080000, 0x54c060a5, TAITO_68KROM1_BYTESWAP32 },	//  3

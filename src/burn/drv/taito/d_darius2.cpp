@@ -722,6 +722,9 @@ static struct BurnRomInfo WarriorbRomDesc[] = {
 	
 	{ "d24-13.37",     0x000400, 0x3ca18eb3, BRF_OPT },
 	{ "d24-14.38",     0x000400, 0xbaf2a193, BRF_OPT },
+	
+	{ "d24-15.78",     0x000144, 0x04992a7d, BRF_OPT },
+	{ "d24-16.79",     0x000144, 0x92c59a8d, BRF_OPT },
 };
 
 STD_ROM_PICK(Warriorb)

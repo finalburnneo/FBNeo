@@ -2582,7 +2582,7 @@ static struct BurnRomInfo DblaxleRomDesc[] = {
 STD_ROM_PICK(Dblaxle)
 STD_ROM_FN(Dblaxle)
 
-static struct BurnRomInfo DblaxleuRomDesc[] = {
+static struct BurnRomInfo DblaxleulRomDesc[] = {
 	{ "c78_41-1.2",    0x020000, 0xcf297fe4, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c78_43-1.4",    0x020000, 0x38a8bad6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c78_42-1.3",    0x020000, 0x4124ab2b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -2617,8 +2617,8 @@ static struct BurnRomInfo DblaxleuRomDesc[] = {
 	{ "c84-11.17",     0x000400, 0x10728853, BRF_OPT },
 };
 
-STD_ROM_PICK(Dblaxleu)
-STD_ROM_FN(Dblaxleu)
+STD_ROM_PICK(Dblaxleul)
+STD_ROM_FN(Dblaxleul)
 
 static struct BurnRomInfo PwheelsjRomDesc[] = {
 	{ "c78_26-2.2",    0x020000, 0x25c8eb2e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -7059,12 +7059,12 @@ struct BurnDriver BurnDrvDblaxle = {
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvDblaxleu = {
-	"dblaxleu", "dblaxle", NULL, NULL, "1991",
-	"Double Axle (US earlier)\0", NULL, "Taito America Corporation", "Taito Z",
+struct BurnDriver BurnDrvDblaxleul = {
+	"dblaxleul", "dblaxle", NULL, NULL, "1991",
+	"Double Axle (US, Rev 1, Linkable)\0", NULL, "Taito America Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
-	NULL, DblaxleuRomInfo, DblaxleuRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, DblaxleDIPInfo,
+	NULL, DblaxleulRomInfo, DblaxleulRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, DblaxleDIPInfo,
 	DblaxleInit, TaitoZExit, TaitoZFrame, DblaxleDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };

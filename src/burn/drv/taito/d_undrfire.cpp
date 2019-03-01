@@ -518,8 +518,14 @@ static INT32 CommonInit(INT32 game_select)
 		if (BurnLoadRom(Taito68KRom3 + 0x000001, k++, 2)) return 1;
 		if (BurnLoadRom(Taito68KRom3 + 0x000000, k++, 2)) return 1;
 
-		if (BurnLoadRom(TaitoChars + 0x000000, k++, 2)) return 1;
-		if (BurnLoadRom(TaitoChars + 0x000001, k++, 2)) return 1;
+		if (BurnLoadRom(TaitoChars + 0x000000, k++, 4)) return 1;
+		if (BurnLoadRom(TaitoChars + 0x000001, k++, 4)) return 1;
+		if (BurnLoadRom(TaitoChars + 0x000002, k++, 4)) return 1;
+		if (BurnLoadRom(TaitoChars + 0x000003, k++, 4)) return 1;
+		if (BurnLoadRom(TaitoChars + 0x200000, k++, 4)) return 1;
+		if (BurnLoadRom(TaitoChars + 0x200001, k++, 4)) return 1;
+		if (BurnLoadRom(TaitoChars + 0x200002, k++, 4)) return 1;
+		if (BurnLoadRom(TaitoChars + 0x200003, k++, 4)) return 1;
 
 		if (BurnLoadRom(TaitoSpritesA + 0x000003, k++, 8)) return 1;
 		if (BurnLoadRom(TaitoSpritesA + 0x000002, k++, 8)) return 1;
@@ -553,11 +559,11 @@ static INT32 CommonInit(INT32 game_select)
 		if (BurnLoadRom(TaitoSpritesA + 0x1400000, k++, 8)) return 1;
 		if (BurnLoadRom(TaitoSpritesA + 0x1400004, k++, 8)) return 1;
 
-		if (BurnLoadRom(TaitoCharsPivot + 0x000000, k++, 2)) return 1;
 		if (BurnLoadRom(TaitoCharsPivot + 0x000001, k++, 2)) return 1;
+		if (BurnLoadRom(TaitoCharsPivot + 0x000000, k++, 2)) return 1;
 		if (BurnLoadRom(TaitoCharsPivot + 0x300000, k++, 1)) return 1;
-		if (BurnLoadRom(TaitoCharsPivot + 0x100000, k++, 2)) return 1;
 		if (BurnLoadRom(TaitoCharsPivot + 0x100001, k++, 2)) return 1;
+		if (BurnLoadRom(TaitoCharsPivot + 0x100000, k++, 2)) return 1;
 		if (BurnLoadRom(TaitoCharsPivot + 0x380000, k++, 1)) return 1;
 
 		if (BurnLoadRom(TaitoSpriteMapRom + 0x000001, k++, 2)) return 1;

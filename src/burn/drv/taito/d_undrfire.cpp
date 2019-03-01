@@ -17,6 +17,8 @@
 static INT32 subcpu_in_reset;
 static INT32 interrupt5_timer;
 
+static UINT8 ReloadGun[2] = { 0, 0 };
+
 static INT32 has_subcpu = 0;
 static UINT8 DrvRecalc;
 
@@ -28,13 +30,14 @@ static struct BurnInputInfo UndrfireInputList[] = {
 	{"P1 Start",		BIT_DIGITAL,	TaitoInputPort2 + 4,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TaitoInputPort1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	TaitoInputPort1 + 5,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	TaitoInputPort1 + 3,	"p1 fire 3"	},
+	{"P1 Button 3",		BIT_DIGITAL,	ReloadGun + 0,          "p1 fire 3"	},
 	A("P1 Gun X",       BIT_ANALOG_REL, &TaitoAnalogPort0,      "mouse x-axis"),
 	A("P1 Gun Y",       BIT_ANALOG_REL, &TaitoAnalogPort1,      "mouse y-axis"),
 
 	{"P2 Start",		BIT_DIGITAL,	TaitoInputPort2 + 5,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TaitoInputPort1 + 6,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	TaitoInputPort1 + 7,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	ReloadGun + 1,          "p2 fire 3"	},
 	A("P2 Gun X",       BIT_ANALOG_REL, &TaitoAnalogPort2,      "p2 x-axis"),
 	A("P2 Gun Y",       BIT_ANALOG_REL, &TaitoAnalogPort3,      "p2 y-axis"),
 
@@ -262,8 +265,8 @@ static UINT8 __fastcall undrfire_main_read_byte(UINT32 address)
 	if ((address & 0xfffff8) == 0xf00000) {
 		if (has_subcpu) return 0;
 
-		INT32 x = 0xff - BurnGunReturnX((address & 7) >> 2);
-		INT32 y = BurnGunReturnY((address & 7) >> 2);
+		INT32 x = (ReloadGun[(address & 7) >> 2]) ? 0xff : 0xff - BurnGunReturnX((address & 7) >> 2);
+		INT32 y = (ReloadGun[(address & 7) >> 2]) ? 0x00 : BurnGunReturnY((address & 7) >> 2);
 		UINT32 res = ((x << 30) & 0xff000000) | ((x << 14) & 0xff0000) | ((y << 14) & 0xff00) | ((y >> 2) & 0xff);
 
 		return res >> (8 * (~address & 0x3));
@@ -1013,6 +1016,13 @@ static INT32 DrvFrame()
 		TaitoInput[1] = 0xf7;
 		TaitoInput[2] = 0xff;
 		TaitoInput[3] = 0xff;
+
+		if (ReloadGun[0]) {
+			TaitoInputPort1[4] = 1;
+		}
+		if (ReloadGun[1]) {
+			TaitoInputPort1[6] = 1;
+		}
 
 		for (INT32 i = 0; i < 8; i++) {
 			TaitoInput[0] ^= (TaitoInputPort0[i] & 1) << i;

@@ -5,7 +5,8 @@
 // rev 0.02: now uses VidRedraw()
 //
 // Known Problems:
-// Swiching anything causes the frame to advance
+// Swiching anything causes the frame to advance.
+//    Only if game doesn't have ReDraw set up! -dink
 //
 // "ghosting" that appears on screen is not captured (this is a good thing)
 
@@ -26,7 +27,6 @@ void ToggleSprite(unsigned char PriNum)
 
 static int SFactdUpdate()
 {
-
 	CheckDlgButton(hSFactdlg,IDC_LAYER1,(nBurnLayer & 1)?BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(hSFactdlg,IDC_LAYER2,(nBurnLayer & 2)?BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(hSFactdlg,IDC_LAYER3,(nBurnLayer & 4)?BST_CHECKED:BST_UNCHECKED);
@@ -64,15 +64,24 @@ static int SFactdInit()
 
 static int SFactdExit()
 {
-	nBurnLayer=layerBackup;
-	nSpriteEnable= 0xFF;
-	hSFactdlg=NULL;
+	nBurnLayer = layerBackup;
+	nSpriteEnable = 0xFF;
+	hSFactdlg = NULL;
 	bShotsFactory = 0;
-	bRunPause=bOldPause;
+	bRunPause = bOldPause;
 	GameInpCheckMouse();
+
 	return 0;
 }
 
+static void FrameAdvance()
+{
+	VidFrame();
+	VidPaint(0);
+	nFramesEmulated++;
+	nCurrentFrame++;
+	nFramesRendered++;
+}
 
 static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lParam)
 {
@@ -87,17 +96,17 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lPara
 		SetFocus(hDlg); // Enable Esc=close
 		return 0;
 	}
+
 	if (Msg==WM_CLOSE)
 	{
-		//DestroyWindow(hSFactdlg);
 		EndDialog(hDlg, 0);
 		return 0;
 	}
+
 	if (Msg==WM_DESTROY) { SFactdExit(); return 0; }
 
 	if (Msg==WM_HELP) { // F1 frame advance (F1 == WM_HELP in a dialog box)
-		VidFrame();
-		VidPaint(0);
+		FrameAdvance();
 	}
 
 	if (Msg==WM_COMMAND)
@@ -177,8 +186,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lPara
 
 		if (Id==IDC_ADVANCE && Notify==BN_CLICKED)
 		{
-			VidFrame();
-			VidPaint(0);
+			FrameAdvance();
 		}
 	}
 
@@ -190,7 +198,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lPara
 }
 
 
-
 int SFactdCreate()
 {
 	if (bShotsFactory) {
@@ -200,11 +207,7 @@ int SFactdCreate()
 	bOldPause = bRunPause;
 	bRunPause = 1;
 	AudBlankSound();
-	//	hSFactdlg=FBACreateDialog(hAppInst,MAKEINTRESOURCE(IDD_CAPTURE),hScrnWnd,DialogProc);
-	//	if (hSFactdlg==NULL) return 1;
-	//	WndInMid(hSFactdlg,hScrnWnd);
-	//	ShowWindow(hSFactdlg,SW_NORMAL);
-	//	SFactdUpdate();
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_CAPTURE), hScrnWnd, (DLGPROC)DialogProc);
+
 	return 0;
 }

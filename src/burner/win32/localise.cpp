@@ -1438,7 +1438,7 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 			n = wcstol(s, &t, 0);
 
 			// Link a new control info structure
-			if (n < 256) {
+			if (n < 512) {
 				s = t;
 
 				// Read option name

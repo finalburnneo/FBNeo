@@ -65,6 +65,8 @@ UINT8 pia_get_ddr_b(int which);
 UINT8 pia_get_irq_a_state(int which);
 UINT8 pia_get_irq_b_state(int which);
 
+UINT8 pia_read_porta(int which);
+UINT8 pia_read_portb(int which);
 
 #if 0
 #define PIA_UNUSED_VAL(x) ((read8_handler)(x+1))

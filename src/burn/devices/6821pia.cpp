@@ -752,6 +752,19 @@ UINT8 pia_get_irq_b_state(int which)
 	return p->irq_b_state;
 }
 
+/******************* Interface retrieving port Data *************************/
+
+UINT8 pia_read_porta(int which)
+{
+	return pia[which].in_a;
+}
+
+UINT8 pia_read_portb(int which)
+{
+	return pia[which].in_b;
+}
+
+
 #if 0
 /******************* Standard 8-bit CPU interfaces, D0-D7 *******************/
 

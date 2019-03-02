@@ -1059,16 +1059,6 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 			//MessageBox(NULL, LvItem.pszText, _T(""), MB_OK);
 
-			TCHAR szFront[512];
-			TCHAR szBack[512];
-
-			_stprintf(szFront, _T("%s%s-front.png"), szNeoCDCoverDir, LvItem.pszText );
-			_stprintf(szBack, _T("%s%s-back.png"), szNeoCDCoverDir, LvItem.pszText );
-
-			// Front / Back Cover preview
-			NeoCDList_ShowPreview(hNeoCDWnd, szFront, IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 216, 150);
-			NeoCDList_ShowPreview(hNeoCDWnd, szBack, IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 216, 150);
-
 			SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTSHORT), _T(""));
 			SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTPUBLISHER), _T(""));
 			SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTIMAGE), _T(""));
@@ -1087,6 +1077,16 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTIMAGE), ngcd_list[nItem].szISOFile);
 					_stprintf(szAudioTracks, _T("%d"), ngcd_list[nItem].nAudioTracks);
 					SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTAUDIO), szAudioTracks);
+
+					TCHAR szFront[512];
+					TCHAR szBack[512];
+
+					_stprintf(szFront, _T("%s%s-front.png"), szNeoCDCoverDir, ngcd_list[nItem].szShortName );
+					_stprintf(szBack, _T("%s%s.png"), szAppPreviewsPath, ngcd_list[nItem].szShortName );
+
+					// Front / Back Cover preview
+					NeoCDList_ShowPreview(hNeoCDWnd, szFront, IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 216, 150);
+					NeoCDList_ShowPreview(hNeoCDWnd, szBack, IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 216, 150);
 
 					nSelectedItem = nItem;
 					break;
@@ -1130,32 +1130,30 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			if(nCtrlID == IDC_NCD_FRONT_PIC)
 			{
 				if(nSelectedItem >= 0) {
-					_stprintf(szBigCover, _T("%s%04x-front.png"), szNeoCDCoverDir, ngcd_list[nSelectedItem].nID );
+					_stprintf(szBigCover, _T("%s%s-front.png"), szNeoCDCoverDir, ngcd_list[nSelectedItem].szShortName );
 
 					if(!_tfopen(szBigCover, _T("rb"))) {
 						szBigCover[0] = 0;
 						return 0;
 					}
-				} else {
-					return 0;
+
+					NeoCDList_InitCoverDlg();
 				}
-				NeoCDList_InitCoverDlg();
 				return 0;
 			}
 
 			if(nCtrlID == IDC_NCD_BACK_PIC)
 			{
 				if(nSelectedItem >= 0) {
-					_stprintf(szBigCover, _T("%s%04x-back.png"), szNeoCDCoverDir, ngcd_list[nSelectedItem].nID );
+					_stprintf(szBigCover, _T("%s%s.png"), szAppPreviewsPath, ngcd_list[nSelectedItem].szShortName );
 
 					if(!_tfopen(szBigCover, _T("rb"))) {
 						szBigCover[0] = 0;
 						return 0;
 					}
-				} else {
-					return 0;
+
+					NeoCDList_InitCoverDlg();
 				}
-				NeoCDList_InitCoverDlg();
 				return 0;
 			}
 		}

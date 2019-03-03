@@ -954,9 +954,13 @@ INT32 v60Run(int cycles)
 			v60_try_irq();
 	}
 
-	v60.current_cycles += cycles - v60_ICount;
+	cycles = cycles - v60_ICount;
 
-	return cycles - v60_ICount;
+	v60.cycles = v60_ICount = 0;
+
+	v60.current_cycles += cycles;
+
+	return cycles;
 }
 
 void v60SetIRQLine(INT32 irqline, INT32 state)

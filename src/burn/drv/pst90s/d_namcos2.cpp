@@ -5938,7 +5938,7 @@ struct BurnDriver BurnDrvGollygho = {
 	"gollygho", NULL, NULL, NULL, "1990",
 	"Golly! Ghost!\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, gollyghoRomInfo, gollyghoRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //GollyghoInputInfo, GollyghoDIPInfo,
 	GollyghoInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6005,7 +6005,7 @@ struct BurnDriver BurnDrvBubbletr = {
 	"bubbletr", NULL, NULL, NULL, "1992",
 	"Bubble Trouble (World, Rev B)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bubbletrRomInfo, bubbletrRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //BubbletrInputInfo, BubbletrDIPInfo,
 	BubbletrInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6054,7 +6054,7 @@ struct BurnDriver BurnDrvBubbletrj = {
 	"bubbletrj", "bubbletr", NULL, NULL, "1992",
 	"Bubble Trouble (Japan, Rev C)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bubbletrjRomInfo, bubbletrjRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //BubbletrInputInfo, BubbletrDIPInfo,
 	BubbletrInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3

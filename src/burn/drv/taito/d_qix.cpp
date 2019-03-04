@@ -2,6 +2,7 @@
 // Based on MAME driver by Aaron Giles and Zsolt Vasvari
 
 // sdungeon goes to service mode after a game or wait a bit in attract
+// kram is broken
 // all: coin 1,2,3 -> p1 coin, p2 coint, p3 coin
 
 #include "tiles_generic.h"
@@ -863,7 +864,7 @@ static INT32 DrvInit()
 
 	bprintf (0, _T("banked: %d, sndcpu: %d, mcu: %d\n"),banked_prog, has_soundcpu, has_mcu);
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	if (banked_prog) // zookeep
 	{
@@ -884,6 +885,7 @@ static INT32 DrvInit()
 	M6809SetReadHandler(qix_main_read);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvVidRAM,				0x0000, 0x7fff, MAP_ROM); // banked!!
 	M6809MapMemory(DrvShareRAM,				0x8000, 0x83ff, MAP_RAM);
@@ -1309,13 +1311,42 @@ static struct BurnRomInfo qixoRomDesc[] = {
 STD_ROM_PICK(qixo)
 STD_ROM_FN(qixo)
 
+static INT32 QixoInit()
+{
+	INT32 rc = FourWayInit();
+
+	if (!rc) {
+		if (BurnLoadRom(DrvM6809ROM0 + 0xc000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0xc800, 1, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0xd000, 2, 1)) return 1;
+		// empty space (d800 - dfff)
+		memset(DrvM6809ROM0 + 0xd800, 0, 0x800); // previous loader wrote stuff here.
+		if (BurnLoadRom(DrvM6809ROM0 + 0xe000, 3, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0xe800, 4, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0xf000, 5, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0xf800, 6, 1)) return 1;
+
+		if (BurnLoadRom(DrvM6809ROM1 + 0xc000, 7, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM1 + 0xc800, 8, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM1 + 0xd000, 9, 1)) return 1;
+		// empty space (d800 - dfff)
+		memset(DrvM6809ROM1 + 0xd800, 0, 0x800);
+		if (BurnLoadRom(DrvM6809ROM1 + 0xe000,10, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM1 + 0xe800,11, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM1 + 0xf000,12, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM1 + 0xf800,13, 1)) return 1;
+	}
+
+	return rc;
+}
+
 struct BurnDriver BurnDrvQixo = {
 	"qixo", "qix", NULL, NULL, "1981",
 	"Qix (set 3, earlier)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, qixoRomInfo, qixoRomName, NULL, NULL, NULL, NULL, QixInputInfo, NULL,
-	FourWayInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	QixoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
@@ -1722,7 +1753,7 @@ struct BurnDriverX BurnDrvKram3 = {
 	"kram3", "kram", NULL, NULL, "1982",
 	"Kram (encrypted)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, kram3RomInfo, kram3RomName, NULL, NULL, NULL, NULL, KramInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3

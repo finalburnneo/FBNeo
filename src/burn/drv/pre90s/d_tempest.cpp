@@ -200,6 +200,7 @@ static void tempest_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x0800 && address <= 0x080f) {
 		DrvColRAM[address & 0x0f] = data;
+		DrvRecalc = 1;
 		return;
 	}
 
@@ -423,17 +424,13 @@ static void DrvPaletteInit()
 		for (INT32 j = 0; j < 256; j++) // intensity
 		{
 			UINT8 data = DrvColRAM[i];
-			int bit3 = (~data >> 3) & 1;
-			int bit2 = (~data >> 2) & 1;
-			int bit1 = (~data >> 1) & 1;
-			int bit0 = (~data >> 0) & 1;
-			int r = bit1 * 0xee + bit0 * 0x11;
-			int g = bit3 * 0xee;
-			int b = bit2 * 0xee;
-
-			r = (r * j) / 255;
-			g = (g * j) / 255;
-			b = (b * j) / 255;
+			INT32 bit3 = (~data >> 3) & 1;
+			INT32 bit2 = (~data >> 2) & 1;
+			INT32 bit1 = (~data >> 1) & 1;
+			INT32 bit0 = (~data >> 0) & 1;
+			INT32 r = (bit1 * 0xee + bit0 * 0x11) * j / 255;
+			INT32 g = (bit3 * 0xee) * j / 255;
+			INT32 b = (bit2 * 0xee) * j / 255;
 
 			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b; // must be 32bit palette! -dink (see vector.cpp)
 		}

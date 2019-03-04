@@ -217,7 +217,7 @@ static void paddle_callback()
 	}
 }
 
-void __fastcall coleco_write_port(UINT16 port, UINT8 data)
+static void __fastcall coleco_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & ~0xff1e)
 	{
@@ -246,16 +246,21 @@ void __fastcall coleco_write_port(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall coleco_read_port(UINT16 port)
+static UINT8 __fastcall coleco_read_port(UINT16 port)
 {
-	switch (port & ~0xff1e)
+	port &= 0xff;
+
+	switch (port & ~0x1e)
 	{
 		case 0xa0:
 			return TMS9928AReadVRAM();
 
 		case 0xa1:
 			return TMS9928AReadRegs();
+	}
 
+	switch (port & ~0x1d)
+	{
 		case 0xe0:
 		case 0xe1:
 			return paddle_r(0);
@@ -459,9 +464,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal / nInterleave;
-
-		nCyclesDone += ZetRun(nSegment);
+		nCyclesDone += ZetRun(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone);
 
 		TMS9928AScanline(i);
 
@@ -4979,4 +4982,20 @@ struct BurnDriver BurnDrvcv_ttennis = {
 	272, 228, 4, 3
 };
 
+// CV Joystick Test
+static struct BurnRomInfo cv_cvjoytestRomDesc[] = {
+	{ "Super Action Controller Test Cartridge (1983) (Nuvatec).rom",	0x004000, 0xeb6cb4d8, BRF_PRG | BRF_ESS },
+};
 
+STDROMPICKEXT(cv_cvjoytest, cv_cvjoytest, cv_coleco)
+STD_ROM_FN(cv_cvjoytest)
+
+struct BurnDriver BurnDrvcv_cvjoytest = {
+	"cv_cvjoytest", NULL, "cv_coleco", NULL, "1983",
+	"ColecoVision Joystick Test\0", NULL, "Coleco", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_cvjoytestRomInfo, cv_cvjoytestRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

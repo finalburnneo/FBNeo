@@ -1,10 +1,6 @@
 // FB Alpha Taito Qix driver module
 // Based on MAME driver by Aaron Giles and Zsolt Vasvari
 
-// sdungeon goes to service mode after a game or wait a bit in attract
-// kram is broken
-// all: coin 1,2,3 -> p1 coin, p2 coint, p3 coin
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"
@@ -41,10 +37,14 @@ static INT32 qix_coinctrl;
 static INT32 videoram_mask;
 
 static INT32 scanline;
-static UINT16 maincpu_address_fix = 0;
+static INT32 lastline;
+
 static INT32 has_mcu = 0;
 static INT32 has_soundcpu = 0;
 static INT32 has_4way = 0;
+
+static INT32 is_slither = 0;
+static INT32 is_zookeep = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -59,10 +59,7 @@ static INT16 DrvAnalogPort3 = 0;
 static UINT8 DrvReset;
 
 static struct BurnInputInfo QixInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
-
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
@@ -71,6 +68,7 @@ static struct BurnInputInfo QixInputList[] = {
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
 
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
 	{"P2 Up",				BIT_DIGITAL,	DrvJoy5 + 0,	"p2 up"		},
 	{"P2 Down",				BIT_DIGITAL,	DrvJoy5 + 2,	"p2 down"	},
@@ -78,6 +76,8 @@ static struct BurnInputInfo QixInputList[] = {
 	{"P2 Right",			BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right"	},
 	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy5 + 7,	"p2 fire 1"	},
 	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy5 + 4,	"p2 fire 2"	},
+
+	{"P3 Coin",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Test Advance",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
@@ -90,10 +90,7 @@ static struct BurnInputInfo QixInputList[] = {
 STDINPUTINFO(Qix)
 
 static struct BurnInputInfo ZookeepInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
-
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
 	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
@@ -101,12 +98,15 @@ static struct BurnInputInfo ZookeepInputList[] = {
 	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
 
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
 	{"P2 Up",				BIT_DIGITAL,	DrvJoy5 + 0,	"p2 up"		},
 	{"P2 Down",				BIT_DIGITAL,	DrvJoy5 + 2,	"p2 down"	},
 	{"P2 Left",				BIT_DIGITAL,	DrvJoy5 + 3,	"p2 left"	},
 	{"P2 Right",			BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right"	},
 	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy5 + 6,	"p2 fire 1"	},
+
+	{"P3 Coin",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Test Advance",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
@@ -119,10 +119,7 @@ static struct BurnInputInfo ZookeepInputList[] = {
 STDINPUTINFO(Zookeep)
 
 static struct BurnInputInfo SdungeonInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
-
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 start"	},
 	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
@@ -133,6 +130,7 @@ static struct BurnInputInfo SdungeonInputList[] = {
 	{"P1 Right Stick Left",	BIT_DIGITAL,	DrvJoy1 + 7,	"p3 left"	},
 	{"P1 Right Stick Right",BIT_DIGITAL,	DrvJoy1 + 5,	"p3 right"	},
 
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Left Stick Start",	BIT_DIGITAL,	DrvJoy4 + 1,	"p2 start"	},
 	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy5 + 0,	"p2 up"		},
 	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy5 + 2,	"p2 down"	},
@@ -142,6 +140,8 @@ static struct BurnInputInfo SdungeonInputList[] = {
 	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvJoy5 + 6,	"p4 down"	},
 	{"P2 Right Stick Left",	BIT_DIGITAL,	DrvJoy5 + 7,	"p4 left"	},
 	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy5 + 5,	"p4 right"	},
+
+	{"P3 Coin",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Test Advance",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
@@ -155,20 +155,20 @@ STDINPUTINFO(Sdungeon)
 
 static struct BurnInputInfo ElecyoyoInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
-	{"P2 Coin",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
-	{"P3 Coin",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
-
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
 	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
 	{"P2 Up",				BIT_DIGITAL,	DrvJoy5 + 0,	"p2 up"		},
 	{"P2 Down",				BIT_DIGITAL,	DrvJoy5 + 2,	"p2 down"	},
 	{"P2 Left",				BIT_DIGITAL,	DrvJoy5 + 3,	"p2 left"	},
 	{"P2 Right",			BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right"	},
+
+	{"P3 Coin",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Test Advance",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
@@ -181,10 +181,7 @@ static struct BurnInputInfo ElecyoyoInputList[] = {
 STDINPUTINFO(Elecyoyo)
 
 static struct BurnInputInfo KramInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
-
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
@@ -193,6 +190,7 @@ static struct BurnInputInfo KramInputList[] = {
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
 
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
 	{"P2 Up",				BIT_DIGITAL,	DrvJoy5 + 0,	"p2 up"		},
 	{"P2 Down",				BIT_DIGITAL,	DrvJoy5 + 2,	"p2 down"	},
@@ -200,6 +198,8 @@ static struct BurnInputInfo KramInputList[] = {
 	{"P2 Right",			BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right"	},
 	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy5 + 7,	"p2 fire 1"	},
 	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy5 + 4,	"p2 fire 2"	},
+
+	{"P3 Coin",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Test Advance",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
@@ -212,13 +212,8 @@ static struct BurnInputInfo KramInputList[] = {
 STDINPUTINFO(Kram)
 
 static struct BurnInputInfo ComplexxInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
-
-	{"Start 1",				BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"Start 2",				BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
-
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
+	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
 	{"P1 Left Stick Left",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
@@ -228,6 +223,10 @@ static struct BurnInputInfo ComplexxInputList[] = {
 	{"P2 Right Stick Left",	BIT_DIGITAL,	DrvJoy5 + 7,	"p2 left"	},
 	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy5 + 5,	"p2 right"	},
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
+	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
+	{"P3 Coin",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Test Advance",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
@@ -240,23 +239,22 @@ static struct BurnInputInfo ComplexxInputList[] = {
 STDINPUTINFO(Complexx)
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
-
 static struct BurnInputInfo SlitherInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
-
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
 	A("P1 Trackball X", 	BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis" ),
 	A("P1 Trackball Y", 	BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis" ),
 
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
 	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 fire 1"	},
 	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 2"	},
 	A("P2 Trackball X", 	BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis" ),
 	A("P2 Trackball Y", 	BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis" ),
+
+	{"P3 Coin",				BIT_DIGITAL,	DrvJoy2 + 6,	"p3 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service Mode",		BIT_DIGITAL,	DrvJoy1 + 0,	"diag"		},
@@ -266,9 +264,20 @@ static struct BurnInputInfo SlitherInputList[] = {
 STDINPUTINFO(Slither)
 #undef A
 
+static void partial_update();
+
+static void mcu_sync()
+{
+	if (!has_mcu) return;
+	INT32 cyc = (M6809TotalCycles() * 100 / 125) - m6805TotalCycles();
+	if (cyc > 0) {
+		m6805Run(cyc);
+	}
+}
+
 static UINT8 qix_main_read(UINT16 address)
 {
-	address |= maincpu_address_fix;
+	address |= is_zookeep << 15;
 
 	if ((address & 0xfc00) == 0x8800) return 0; // nop (ACIA)
 
@@ -277,6 +286,7 @@ static UINT8 qix_main_read(UINT16 address)
 	}
 
 	if ((address & 0xfc00) == 0x9400) {
+		mcu_sync();
 		return pia_read(0, address & 0x3ff);
 	}
 
@@ -285,6 +295,7 @@ static UINT8 qix_main_read(UINT16 address)
 	}
 
 	if ((address & 0xfc00) == 0x9c00) {
+		mcu_sync();
 		return pia_read(2, address & 0x3ff);
 	}
 
@@ -305,14 +316,14 @@ static UINT8 qix_main_read(UINT16 address)
 			return 0xff;
 	}
 
-	bprintf (0, _T("MR: %4.4x\n"), address);
+	//bprintf (0, _T("MR: %4.4x\n"), address);
 
 	return 0;
 }
 
 static void qix_main_write(UINT16 address, UINT8 data)
 {
-	address |= maincpu_address_fix;
+	address |= is_zookeep << 15;
 
 	if ((address & 0xfc00) == 0x9000) {
 		pia_write(3, address & 0x3ff, data);
@@ -320,9 +331,7 @@ static void qix_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xfc00) == 0x9400) {
-		if (has_mcu) {
-			m6805Run(((M6809TotalCycles()*92)/100) - m6805TotalCycles());
-		}
+		mcu_sync();
 		if ((address & 0x3ff) == 0 && has_mcu) data = 0;
 		pia_write(0, address & 0x3ff, data);
 		return;
@@ -334,6 +343,8 @@ static void qix_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xfc00) == 0x9c00) {
+		mcu_sync();
+		if ((address & 0x3ff) == 0 && has_mcu) data = 0;
 		pia_write(2, address & 0x3ff, data);
 		return;
 	}
@@ -355,7 +366,7 @@ static void qix_main_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	bprintf (0, _T("MW: %4.4x, %2.2x\n"), address, data);
+	//bprintf (0, _T("MW: %4.4x, %2.2x\n"), address, data);
 }
 
 static void bankswitch()
@@ -374,6 +385,11 @@ static void videobank()
 
 static UINT8 qix_video_read(UINT16 address)
 {
+	if (address < 0x8000) {
+		INT32 offset = address + ((videoaddress[0] & 0x80) << 8);
+		return DrvVidRAM[offset];
+	}
+
 	switch (address)
 	{
 		case 0x8800:
@@ -393,8 +409,7 @@ static UINT8 qix_video_read(UINT16 address)
 			return 0xff;
 
 		case 0x9400:
-			{UINT16 offset = videoaddress[1] + (videoaddress[0] * 256);
-				return DrvVidRAM[offset];}
+			return DrvVidRAM[videoaddress[1] + (videoaddress[0] * 256)];
 
 		case 0x9402:
 			return 0; // ??
@@ -407,7 +422,7 @@ static UINT8 qix_video_read(UINT16 address)
 			return 0;
 	}
 
-	bprintf (0, _T("SR: %4.4x\n"), address);
+	//bprintf (0, _T("SR: %4.4x\n"), address);
 
 	return 0;
 }
@@ -415,24 +430,33 @@ static UINT8 qix_video_read(UINT16 address)
 static void qix_video_write(UINT16 address, UINT8 data)
 {
 	if (address < 0x8000) {
+		partial_update();
 		INT32 offset = address + ((videoaddress[0] & 0x80) << 8);
 		DrvVidRAM[offset] &= ~videoram_mask;
 		DrvVidRAM[offset] |= data & videoram_mask;
 		return;
 	}
 
-	switch (address)
+	if ((address & 0xfc00) == 0x9000) {
+		DrvPalRAM[address & 0x3ff] = data;
+		DrvRecalc = 1;
+		return;
+	}
+
+	switch (address & ~0x3ff)
 	{
 		case 0x8800:
 			palettebank = data & 3;
-		return;
 
-		case 0x8801:
-			bankaddress = data & 4;
-			bankswitch();
-			palettebank = data & 3;
+			if ((address & ~0x3fe) == 0x8801 && is_zookeep) {
+				bankaddress = data & 4;
+				bankswitch();
+			}
 		return;
+	}
 
+	switch (address)
+	{
 		case 0x8c00:
 			M6809Close();
 			M6809Open(0);
@@ -445,14 +469,17 @@ static void qix_video_write(UINT16 address, UINT8 data)
 			M6809SetIRQLine(1, CPU_IRQSTATUS_NONE);
 		return;
 
-		case 0x9400:{
+		case 0x9400: {
+			partial_update();
 			UINT16 offset = videoaddress[1] + (videoaddress[0] * 256);
 			DrvVidRAM[offset] &= ~videoram_mask;
-			DrvVidRAM[offset] |= data & videoram_mask;}
+			DrvVidRAM[offset] |= data & videoram_mask;
+		}
 		return;
 
 		case 0x9401:
-			videoram_mask = data;
+			if (is_slither)
+				videoram_mask = data;
 		return;
 
 		case 0x9402:
@@ -472,7 +499,7 @@ static void qix_video_write(UINT16 address, UINT8 data)
 		case 0x9ffd:
 		return; // nop
 	}
-	bprintf (0, _T("SW: %4.4x, %2.2x\n"), address, data);
+	//bprintf (0, _T("SW: %4.4x, %2.2x\n"), address, data);
 }
 
 static UINT8 qix_sound_read(UINT16 address)
@@ -554,15 +581,13 @@ static pia6821_interface pia_1 =
 	0, 0
 };
 
-static UINT8 input4_read(UINT16) // input_port_4_r - pia2
+static UINT8 input4_read(UINT16)
 {
 	return DrvInputs[4];
 }
 
-static void coins_write(UINT16,UINT8 /*data*/)
+static void coins_write(UINT16, UINT8 /*data*/)
 {
-//	coin_lockout_w(0, (~data >> 2) & 1);
-//	coin_counter_w(0, (data >> 1) & 1);
 }
 
 static pia6821_interface pia_2 =
@@ -592,10 +617,8 @@ static void sync_pia4_porta_write(UINT16, UINT8 data)
 
 static void qix_vol_write(UINT16, UINT8 data)
 {
-	//if (data < 0x10) data = 0x10;
 	double vol = 1 / ((data < 0x10) ? 0x10 : data);
 
-	//bprintf(0, _T("Set vol: %X  %g\n"), data, vol);
 	DACSetRoute(0, 0.04-vol, BURN_SND_ROUTE_BOTH);
 }
 
@@ -660,8 +683,6 @@ static pia6821_interface pia_5 =
 
 static void mcu_portb_write(UINT8 */*data*/)
 {
-//	coin_lockout_w(0, (~data >> 6) & 1);
-//	coin_counter_w(0, (data >> 7) & 1);
 }
 
 static void mcu_portb_read()
@@ -680,8 +701,6 @@ static m68705_interface zoo_mcu_inf =
 	NULL, NULL, NULL,
 	NULL, mcu_portb_read, mcu_portc_read
 };
-
-
 
 
 static UINT8 trackball_lr_read(UINT16)
@@ -712,8 +731,6 @@ static void slither_sn76489_1_write(UINT16, UINT8 data)
 
 static void slither_coin_write(UINT16, UINT8 /*data*/)
 {
-//	coin_lockout_w(0, (~data >> 6) & 1);
-//	coin_counter_w(0, (data >> 5) & 1);
 }
 
 static pia6821_interface slither_pia_1 =
@@ -815,20 +832,20 @@ static INT32 DrvRomLoad(INT32 *banked_prg)
 		BurnDrvGetRomInfo(&ri, i);
 
 		if ((ri.nType & 0xf) == 1) {
-			memcpy (DrvM6809ROM0, DrvM6809ROM0 + ri.nLen, 0x10000 - ri.nLen);
+			memmove (DrvM6809ROM0, DrvM6809ROM0 + ri.nLen, 0x10000 - ri.nLen);
 			if (BurnLoadRom(DrvM6809ROM0 + (0x10000 - ri.nLen), i, 1)) return 1;
 			continue;
 		}
 
 		if ((ri.nType & 0xf) == 2) {
-			memcpy (DrvM6809ROM1 + 0x8000, DrvM6809ROM1 + ri.nLen + 0x8000, 0x8000 - ri.nLen);
+			memmove (DrvM6809ROM1 + 0x8000, DrvM6809ROM1 + ri.nLen + 0x8000, 0x8000 - ri.nLen);
 			if (BurnLoadRom(DrvM6809ROM1 + (0x10000 - ri.nLen), i, 1)) return 1;
 			continue;
 		}
 
 		if ((ri.nType & 0xf) == 3) {
 			has_soundcpu = 1;
-			memcpy (DrvM6802ROM, DrvM6802ROM + ri.nLen, 0x10000 - ri.nLen);
+			memmove (DrvM6802ROM, DrvM6802ROM + ri.nLen, 0x10000 - ri.nLen);
 			if (BurnLoadRom(DrvM6802ROM + (0x10000 - ri.nLen), i, 1)) return 1;
 			continue;
 		}
@@ -864,11 +881,13 @@ static INT32 DrvInit()
 
 	bprintf (0, _T("banked: %d, sndcpu: %d, mcu: %d\n"),banked_prog, has_soundcpu, has_mcu);
 
+	BurnSetRefreshRate(55.84);
+
 	M6809Init(0);
 	M6809Open(0);
 	if (banked_prog) // zookeep
 	{
-		maincpu_address_fix = 0x8000;
+		is_zookeep = 1;
 
 		M6809MapMemory(DrvShareRAM,				0x0000, 0x03ff, MAP_RAM);
 		M6809MapMemory(DrvM6809RAM0,			0x0400, 0x07ff, MAP_RAM);
@@ -890,7 +909,7 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvVidRAM,				0x0000, 0x7fff, MAP_ROM); // banked!!
 	M6809MapMemory(DrvShareRAM,				0x8000, 0x83ff, MAP_RAM);
 	M6809MapMemory(DrvNVRAM,				0x8400, 0x87ff, MAP_RAM);
-	M6809MapMemory(DrvPalRAM,				0x9000, 0x93ff, MAP_RAM);
+	M6809MapMemory(DrvPalRAM,				0x9000, 0x93ff, MAP_ROM); // handler w/recalc
 	M6809MapMemory(DrvM6809ROM1 + 0xa000,	0xa000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(qix_video_write);
 	M6809SetReadHandler(qix_video_read);
@@ -907,7 +926,7 @@ static INT32 DrvInit()
 	m67805_taito_init(DrvM68705ROM, DrvM68705RAM, &zoo_mcu_inf);
 
 	pia_init();
-	pia_config(0, 0, has_mcu ? & mcu_pia_0 : &pia_0);
+	pia_config(0, 0, has_mcu ? &mcu_pia_0 : &pia_0);
 
 	if (has_soundcpu)
 	{
@@ -953,10 +972,12 @@ static INT32 DrvExit()
 	SN76496Exit();
 	BurnTrackballExit();
 
-	maincpu_address_fix = 0;
 	has_mcu = 0;
 	has_soundcpu = 0;
 	has_4way = 0;
+
+	is_slither = 0;
+	is_zookeep = 0;
 
 	BurnFree(AllMem);
 
@@ -965,7 +986,7 @@ static INT32 DrvExit()
 
 static void DrvPaletteUpdate()
 {
-	static UINT8 table[16] = { 
+	const UINT8 table[16] = {
 		0x00, 0x12, 0x24, 0x49, 0x12, 0x24, 0x49, 0x92,
 		0x5b, 0x6d, 0x92, 0xdb, 0x7f, 0x91, 0xb6, 0xff
 	};
@@ -983,16 +1004,18 @@ static void DrvPaletteUpdate()
 	}
 }
 
-static void draw_layer()
+static void draw_layer(INT32 draw_to)
 {
 	INT32 flip = flipscreen ? 0xff : 0;
 	INT32 color = palettebank * 256;
 	INT32 start_y = (256 - nScreenHeight) / 2;
 
-	for (INT32 y = start_y; y < nScreenHeight + start_y; y++)
+	if (draw_to > nScreenHeight) draw_to = nScreenHeight;
+
+	for (INT32 y = lastline; y < draw_to; y++)
 	{
-		UINT8 *vram = DrvVidRAM + (y ^ flip) * 256;
-		UINT16 *dest = pTransDraw + (y - start_y) * nScreenWidth;
+		UINT8 *vram = DrvVidRAM + ((y + start_y) ^ flip) * 256;
+		UINT16 *dest = pTransDraw + y * nScreenWidth;
 
 		for (INT32 x = 0; x < nScreenWidth; x++)
 		{
@@ -1001,16 +1024,39 @@ static void draw_layer()
 	}
 }
 
-static INT32 DrvDraw()
+static void DrvDrawBegin()
 {
-//	if (DrvRecalc) {
+	if (DrvRecalc) {
 		DrvPaletteUpdate();
 		DrvRecalc = 0;
-//	}
+	}
 
-	draw_layer();
+	lastline = 0;
+}
+
+static void partial_update()
+{
+	if (!pBurnDraw) return;
+
+	if (scanline < 0 || scanline > nScreenHeight || scanline == lastline || lastline > scanline) return;
+
+	draw_layer(scanline);
+
+	lastline = scanline;
+}
+
+static void DrvDrawEnd()
+{
+	draw_layer(256 + 0x10);
 
 	BurnTransferCopy(DrvPalette);
+}
+
+static INT32 DrvDraw() // driver redraw
+{
+	DrvDrawBegin();
+
+	DrvDrawEnd();
 
 	return 0;
 }
@@ -1041,19 +1087,20 @@ static INT32 DrvFrame()
 			ProcessJoystick(&DrvInputs[4], 1, 0,2,3,1, INPUT_4WAY | INPUT_ISACTIVELOW);
 		}
 
-		// totally wrong!!
-		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
-		BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
-		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 2, 3);
-		BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 2, 3);
-	//	BurnTrackballUDLR(0, DrvJoy2[0], DrvJoy2[1], DrvJoy2[2], DrvJoy2[3]);
-	//	BurnTrackballUDLR(0, DrvJoy2[0], DrvJoy2[1], DrvJoy2[2], DrvJoy2[3]);
-		BurnTrackballUpdate(0);
-		BurnTrackballUpdate(1);
+		if (is_slither) {
+			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
+			BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
+			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 2, 3);
+			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 2, 3);
+			//	BurnTrackballUDLR(0, DrvJoy2[0], DrvJoy2[1], DrvJoy2[2], DrvJoy2[3]);
+			//	BurnTrackballUDLR(0, DrvJoy2[0], DrvJoy2[1], DrvJoy2[2], DrvJoy2[3]);
+			BurnTrackballUpdateSlither(0);
+			BurnTrackballUpdateSlither(1);
+		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[4] = { 1250000 / 60, 1250000 / 60, 920000 / 60, 1000000 / 60 };
+	INT32 nInterleave = 267;
+	INT32 nCyclesTotal[4] = { (INT32)(1250000 / 55.84), (INT32)(1250000 / 55.84), (INT32)(920000 / 55.84), (INT32)(1000000 / 55.84) };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	if (has_soundcpu == 0) {
@@ -1064,28 +1111,28 @@ static INT32 DrvFrame()
 	M6800Open(0);
 	m6805Open(0);
 
+	DrvDrawBegin();
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		scanline = i;
 
 		M6809Open(0);
-
 		if (i == 0) {
 			pia_set_input_cb1(3, 0);
 		}
-
-		if (i == 240) {	
+		if (i == 248) {
 			pia_set_input_cb1(3, 1);
+
+			if (pBurnDraw) {
+				DrvDrawEnd();
+			}
 		}
-
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
-
-		INT32 sync_cycles = M6809TotalCycles();
-
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		M6809Close();
 
 		M6809Open(1);
-		nCyclesDone[1] += M6809Run(sync_cycles - M6809TotalCycles());
+		nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		M6809Close();
 
 		if (has_soundcpu) {
@@ -1093,18 +1140,19 @@ static INT32 DrvFrame()
 		}
 
 		if (has_mcu) {
-			nCyclesDone[3] += m6805Run(((sync_cycles * 100)/125) - m6805TotalCycles());
+			nCyclesDone[3] += m6805Run(((i + 1) * nCyclesTotal[3] / nInterleave) - m6805TotalCycles());
 		}
 
 		if ((i%64) == 63) {
-			BurnTrackballUpdate(0);
-			BurnTrackballUpdate(1);
+			BurnTrackballUpdateSlither(0);
+			BurnTrackballUpdateSlither(1);
 		}
 	}
 
 	if (pBurnSoundOut) {
 		if (has_soundcpu) {
 			DACUpdate(pBurnSoundOut, nBurnSoundLen);
+			BurnSoundDCFilter();
 		}
 		else
 		{
@@ -1115,10 +1163,6 @@ static INT32 DrvFrame()
 
 	m6805Close();
 	M6800Close();
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
-	}
 
 	return 0;
 }
@@ -1145,7 +1189,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		pia_scan(nAction, pnMin);
 		DACScan(nAction, pnMin);
 		SN76496Scan(nAction, pnMin);
-		BurnTrackballScan();
+
+		if (is_slither)
+			BurnTrackballScan();
 
 		SCAN_VAR(videoaddress);
 		SCAN_VAR(palettebank);
@@ -1815,13 +1861,20 @@ static struct BurnRomInfo slitherRomDesc[] = {
 STD_ROM_PICK(slither)
 STD_ROM_FN(slither)
 
+static INT32 SlitherInit()
+{
+	is_slither = 1;
+
+	return DrvInit();
+}
+
 struct BurnDriver BurnDrvSlither = {
 	"slither", NULL, NULL, NULL, "1982",
 	"Slither (set 1)\0", NULL, "Century II", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, slitherRomInfo, slitherRomName, NULL, NULL, NULL, NULL, SlitherInputInfo, NULL,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	SlitherInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 256, 3, 4
 };
 
@@ -1852,6 +1905,6 @@ struct BurnDriver BurnDrvSlithera = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, slitheraRomInfo, slitheraRomName, NULL, NULL, NULL, NULL, SlitherInputInfo, NULL,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	SlitherInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 256, 3, 4
 };

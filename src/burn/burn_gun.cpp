@@ -222,6 +222,42 @@ void BurnTrackballUpdate(INT32 dev)
 	}
 }
 
+void BurnTrackballUpdateSlither(INT32 dev)
+{
+	// simulate the divider circuit on down + right(V) for Slither (taito/d_qix.cpp)
+	static INT32 flippy[2] = { 0, 0 };
+	// PortA (usually X-Axis)
+	if (DrvJoyT[(dev*4) + 0]) { // Backward
+		flippy[0] ^= 1;
+		if (flippy[0]) return;
+		if (TrackRev[(dev*2) + 0])
+			TrackA[dev] += DIAL_INC[(dev*2) + 0] / 2;
+		else
+			TrackA[dev] -= DIAL_INC[(dev*2) + 0] / 2;
+	}
+	if (DrvJoyT[(dev*4) + 1]) { // Forward
+		if (TrackRev[(dev*2) + 0])
+			TrackA[dev] -= DIAL_INC[(dev*2) + 0] / 2;
+		else
+			TrackA[dev] += DIAL_INC[(dev*2) + 0] / 2;
+	}
+	// PortB (usually Y-Axis)
+	if (DrvJoyT[(dev*4) + 2]) { // Backward
+		if (TrackRev[(dev*2) + 1])
+			TrackB[dev] += DIAL_INC[(dev*2) + 1] / 2;
+		else
+			TrackB[dev] -= DIAL_INC[(dev*2) + 1] / 2;
+	}
+	if (DrvJoyT[(dev*4) + 3]) { // Forward
+		flippy[1] ^= 1;
+		if (flippy[1]) return;
+		if (TrackRev[(dev*2) + 1])
+			TrackB[dev] -= DIAL_INC[(dev*2) + 1] / 2;
+		else
+			TrackB[dev] += DIAL_INC[(dev*2) + 1] / 2;
+	}
+}
+
 UINT8 BurnTrackballRead(INT32 dev, INT32 isB)
 {
 	if (isB)

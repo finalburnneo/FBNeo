@@ -1862,7 +1862,7 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 	if (bSoundNMIEnabled) ZetNmi();
 
 #if 1 && defined USE_SPEEDHACKS
-	neogeoSynchroniseZ80((s1945pmode) ? 0x60 : 0x0200);
+	neogeoSynchroniseZ80(0x64);
 #endif
 }
 

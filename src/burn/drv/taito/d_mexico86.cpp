@@ -595,6 +595,12 @@ static INT32 DrvInit(INT32 game)
 		memcpy(DrvZ80ROM0 + 0x18000, DrvGfxROM + 0x08000, 0x8000);
 		if (BurnLoadRom(DrvZ80ROM0 + 0x08000, k++, 1)) return 1;
 
+		if (strstr(BurnDrvGetTextA(DRV_NAME), "kicknrun")) {
+			// "PS4 STOP ERROR" message removal -dink (march 09, 2019)
+			DrvZ80ROM0[0x22f] = 0x18; // jr over mcu check
+			DrvZ80ROM0[0x7d1] = 0x18; // rom check
+		}
+
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, k++, 1)) return 1;
 
 		if (BurnLoadRom(DrvMCUROM  + 0x00000, k++, 1)) return 1;
@@ -662,9 +668,9 @@ static INT32 DrvInit(INT32 game)
 	BurnYM2203SetPorts(0, &YM2203_read_portA, &YM2203_read_portB, NULL, NULL);
 	BurnTimerAttachZet(6000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.30, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.30, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.30, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.20, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.20, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1029,9 +1035,9 @@ static INT32 DrvFrame()
 
 		ZetOpen(1);
 		if (nSoundCPUHalted) {
-			ZetIdle(((nCyclesTotal[0] / nInterleave) * (i + 1)) - ZetTotalCycles());
+			ZetIdle(((nCyclesTotal[1] / nInterleave) * (i + 1)) - ZetTotalCycles());
 		} else {
-			BurnTimerUpdate((nCyclesTotal[0] / nInterleave) * (i + 1));
+			BurnTimerUpdate((nCyclesTotal[1] / nInterleave) * (i + 1));
 		}
 		if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();

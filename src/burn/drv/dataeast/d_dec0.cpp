@@ -207,6 +207,34 @@ static struct BurnInputInfo HbarrelInputList[] =
 
 STDINPUTINFO(Hbarrel)
 
+static struct BurnInputInfo BirdtryInputList[] =
+{
+	{"P1 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 4, "p1 coin"   },
+	{"P1 Start"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p1 start"  },
+	{"P1 Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
+	{"P1 Down"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
+	{"P1 Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
+	{"P1 Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
+	{"P1 Fire 1 (Hit)"      , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
+	{"P1 Fire 2 (Select)"   , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
+	
+	{"P2 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 coin"   },
+	{"P2 Start"             , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 start"  },
+	{"P2 Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
+	{"P2 Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
+	{"P2 Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
+	{"P2 Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
+	{"P2 Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
+	{"P2 Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
+
+	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
+	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 6, "service"   },
+	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
+};
+
+STDINPUTINFO(Birdtry)
+
 static struct BurnInputInfo MidresInputList[] =
 {
 	{"P1 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
@@ -320,59 +348,59 @@ STDDIPINFO(Baddudes)
 
 static struct BurnDIPInfo BirdtryDIPList[]=
 {
-	{0x18, 0xff, 0xff, 0xff, NULL		},
-	{0x19, 0xff, 0xff, 0x3f, NULL		},
+	{0x12, 0xff, 0xff, 0xff, NULL		},
+	{0x13, 0xff, 0xff, 0x3f, NULL		},
 
 	// Dip 1
 	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x18, 0x01, 0x03, 0x00, "2 Coins 1 Play"         },
-	{0x18, 0x01, 0x03, 0x03, "1 Coin  1 Play"         },
-	{0x18, 0x01, 0x03, 0x02, "1 Coin  2 Plays"        },
-	{0x18, 0x01, 0x03, 0x01, "1 Coin  3 Plays"        },
+	{0x12, 0x01, 0x03, 0x00, "2 Coins 1 Play"         },
+	{0x12, 0x01, 0x03, 0x03, "1 Coin  1 Play"         },
+	{0x12, 0x01, 0x03, 0x02, "1 Coin  2 Plays"        },
+	{0x12, 0x01, 0x03, 0x01, "1 Coin  3 Plays"        },
 	
 	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x18, 0x01, 0x0c, 0x00, "2 Coins 1 Play"         },
-	{0x18, 0x01, 0x0c, 0x0c, "1 Coin  1 Play"         },
-	{0x18, 0x01, 0x0c, 0x08, "1 Coin  2 Plays"        },
-	{0x18, 0x01, 0x0c, 0x04, "1 Coin  3 Plays"        },
+	{0x12, 0x01, 0x0c, 0x00, "2 Coins 1 Play"         },
+	{0x12, 0x01, 0x0c, 0x0c, "1 Coin  1 Play"         },
+	{0x12, 0x01, 0x0c, 0x08, "1 Coin  2 Plays"        },
+	{0x12, 0x01, 0x0c, 0x04, "1 Coin  3 Plays"        },
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x18, 0x01, 0x10, 0x10, "Off"		},
-	{0x18, 0x01, 0x10, 0x00, "On"		},
+	{0x12, 0x01, 0x10, 0x10, "Off"		},
+	{0x12, 0x01, 0x10, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x18, 0x01, 0x20, 0x00, "Off"		},
-	{0x18, 0x01, 0x20, 0x20, "On"		},
+	{0x12, 0x01, 0x20, 0x00, "Off"		},
+	{0x12, 0x01, 0x20, 0x20, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x18, 0x01, 0x40, 0x40, "Off"		},
-	{0x18, 0x01, 0x40, 0x00, "On"		},
+	{0x12, 0x01, 0x40, 0x40, "Off"		},
+	{0x12, 0x01, 0x40, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty (Extend)"		},
-	{0x19, 0x01, 0x03, 0x02, "Easy"		},
-	{0x19, 0x01, 0x03, 0x03, "Normal"		},
-	{0x19, 0x01, 0x03, 0x01, "Hard"		},
-	{0x19, 0x01, 0x03, 0x00, "Hardest"		},
+	{0x13, 0x01, 0x03, 0x02, "Easy"		},
+	{0x13, 0x01, 0x03, 0x03, "Normal"		},
+	{0x13, 0x01, 0x03, 0x01, "Hard"		},
+	{0x13, 0x01, 0x03, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty (Course)"		},
-	{0x19, 0x01, 0x0c, 0x08, "Easy"		},
-	{0x19, 0x01, 0x0c, 0x0c, "Normal"		},
-	{0x19, 0x01, 0x0c, 0x04, "Hard"		},
-	{0x19, 0x01, 0x0c, 0x00, "Hardest"		},
+	{0x13, 0x01, 0x0c, 0x08, "Easy"		},
+	{0x13, 0x01, 0x0c, 0x0c, "Normal"		},
+	{0x13, 0x01, 0x0c, 0x04, "Hard"		},
+	{0x13, 0x01, 0x0c, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x19, 0x01, 0x10, 0x00, "Off"		},
-	{0x19, 0x01, 0x10, 0x10, "On"		},
+	{0x13, 0x01, 0x10, 0x00, "Off"		},
+	{0x13, 0x01, 0x10, 0x10, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Timer"		},
-	{0x19, 0x01, 0x20, 0x20, "Normal"		},
-	{0x19, 0x01, 0x20, 0x00, "Fast"		},
+	{0x13, 0x01, 0x20, 0x20, "Normal"		},
+	{0x13, 0x01, 0x20, 0x00, "Fast"		},
 
 	{0   , 0xfe, 0   ,    4, "Control Panel Type"		},
-	{0x19, 0x01, 0xc0, 0xc0, "Type A - Cocktail"		},
-	{0x19, 0x01, 0xc0, 0x80, "Type B - Cocktail 2"		},
-	{0x19, 0x01, 0xc0, 0x40, "Unused"		},
-	{0x19, 0x01, 0xc0, 0x00, "Type C - Upright"		},
+	{0x13, 0x01, 0xc0, 0xc0, "Type A - Cocktail"		},
+	{0x13, 0x01, 0xc0, 0x80, "Type B - Cocktail 2"		},
+	{0x13, 0x01, 0xc0, 0x40, "Unused"		},
+	{0x13, 0x01, 0xc0, 0x00, "Type C - Upright"		},
 };
 
 STDDIPINFO(Birdtry)
@@ -2216,7 +2244,7 @@ static int dialRotation(INT32 playernum) {
 	static UINT8 lastplayer[2][2] = { { 0, 0 }, { 0, 0 } };
 
     if ((playernum != 0) && (playernum != 1)) {
-        bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
+		//bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
         return 0;
     }
     if (playernum == 0) {
@@ -2451,9 +2479,11 @@ static UINT8 __fastcall Dec068KReadByte(UINT32 a)
 	}
 	
 	if (a >= 0x300000 && a <= 0x30001f) {
-		dialRotation((a - 0x300000) / 8);
+		return dialRotation((a - 0x300000) / 8);
 	}
-	
+
+	if ((a&0xfffff0) == 0x804030) return 0; // nop?
+
 	switch (a) {
 		case 0x30c000: {
 			return 0xff - DrvInput[1];
@@ -5661,8 +5691,8 @@ struct BurnDriver BurnDrvBirdtry = {
 	"Birdie Try (Japan)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, NULL, NULL, HbarrelInputInfo, BirdtryDIPInfo,
-	BirdtryInit, BaddudesExit, DrvFrame, BirdtryDraw, DrvScan,
+	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, NULL, NULL, BirdtryInputInfo, BirdtryDIPInfo,
+	BirdtryInit, BaddudesExit, DrvFrame, BirdtryDraw, BaddudesScan,
 	NULL, 0x400, 240, 256, 3, 4
 };
 

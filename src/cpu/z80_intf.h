@@ -17,6 +17,7 @@ void ZetNewFrame();
 void ZetOpen(INT32 nCPU);
 void ZetClose();
 INT32 ZetGetActive();
+void ZetSwapActive(INT32 nCPU);
 
 //#define ZET_FETCHOP	4
 //#define ZET_FETCHARG	8
@@ -34,6 +35,7 @@ INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem02);
 
 void ZetReset();
+void ZetReset(INT32 nCPU);
 UINT32 ZetGetPC(INT32 n);
 INT32 ZetGetPrevPC(INT32 n);
 INT32 ZetBc(INT32 n);
@@ -45,9 +47,11 @@ INT32 ZetScan(INT32 nAction);
 INT32 ZetRun(INT32 nCycles);
 void ZetRunEnd();
 void ZetSetIRQLine(const INT32 line, const INT32 status);
+void ZetSetIRQLine(INT32 nCPU, const INT32 line, const INT32 status);
 void ZetSetVector(INT32 vector);
 UINT8 ZetGetVector();
 INT32 ZetNmi();
+INT32 ZetNmi(INT32 nCPU);
 INT32 ZetIdle(INT32 nCycles);
 INT32 ZetSegmentCycles();
 INT32 ZetTotalCycles();
@@ -81,6 +85,7 @@ void ZetSetEDFECallback(void (*pCallback)(Z80_Regs*));
 void ZetSetBUSREQLine(INT32 nStatus);
 INT32 ZetGetBUSREQLine();
 
+void ZetSetRESETLine(INT32 nCPU, INT32 nStatus);
 void ZetSetRESETLine(INT32 nStatus);
 INT32 ZetGetRESETLine();
 

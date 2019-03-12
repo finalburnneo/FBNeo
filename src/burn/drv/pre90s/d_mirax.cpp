@@ -149,11 +149,7 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 		case 0xF507: *flipscreen_y = data & 0x01; return;
 		case 0xF800: {
 			*soundlatch = data & 0xff;
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(1);
 			return;
 		}
 	}
@@ -212,9 +208,7 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
 
 	AY8910Reset(0);
 	AY8910Reset(1);

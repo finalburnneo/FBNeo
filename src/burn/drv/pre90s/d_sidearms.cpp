@@ -455,11 +455,7 @@ static void __fastcall sidearms_main_write(UINT16 address, UINT8 data)
 			// coin lockout data & 0x04, data & 0x08
 
 			if (data & 0x10) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 
 			if (starfield_enable != (data & 0x20)) {
@@ -557,11 +553,7 @@ static void __fastcall turtship_main_write(UINT16 address, UINT8 data)
 			// coin lockout data & 0x04, data & 0x08
 
 			if (data & 0x10) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 
 			character_enable = data & 0x40;

@@ -182,11 +182,7 @@ static void __fastcall espial_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x6090:
 			soundlatch[0] = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0x7000:
@@ -284,13 +280,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		flipscreen = 0;
 	}
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
 
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(1);
 
 	AY8910Reset(0);
 

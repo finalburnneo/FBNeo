@@ -563,11 +563,7 @@ static void __fastcall CommandoWrite1(UINT16 a, UINT8 d)
 			DrvFlipScreen = d & 0x80;
 			
 			if (d & 0x10) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 			
 			return;

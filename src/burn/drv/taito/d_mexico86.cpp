@@ -286,11 +286,7 @@ static void __fastcall mexico86_main_write(UINT16 address, UINT8 data)
 
 			nSoundCPUHalted = ~data & 0x04;
 			if (nSoundCPUHalted) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 
 			mcu_running = data & 2;

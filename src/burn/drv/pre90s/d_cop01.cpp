@@ -232,11 +232,7 @@ static void __fastcall cop01_main_write_port(UINT16 port, UINT8 data)
 
 		case 0x44:
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x45:
@@ -451,13 +447,9 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
 
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(1);
 
 	if (mightguy == 0)
 	{

@@ -642,11 +642,7 @@ static void __fastcall ninjakd2_main_write(UINT16 address, UINT8 data)
 		{
 			if (data & 0x10)
 			{
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 
 			*flipscreen = data & 0x80;
@@ -689,11 +685,7 @@ static void __fastcall mnight_main_write(UINT16 address, UINT8 data)
 		{
 			if (data & 0x10)
 			{
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 
 			*flipscreen = data & 0x80;
@@ -747,11 +739,7 @@ static void __fastcall robokid_main_write(UINT16 address, UINT8 data)
 		case 0xdc01:
 		{
 			if (data & 0x10) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 
 			*flipscreen = data & 0x80;
@@ -924,11 +912,7 @@ static void __fastcall omegaf_main_write(UINT16 address, UINT8 data)
 		case 0xc001:
 		{
 			if (data & 0x10) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 
 			*flipscreen = data & 0x80;

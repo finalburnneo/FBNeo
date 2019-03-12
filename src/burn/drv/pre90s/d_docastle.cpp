@@ -472,11 +472,7 @@ static void __fastcall docastle_cpu0_write(UINT16 address, UINT8 data)
 
 		case 0xb800:
 		case 0xe000:
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(1);
 		return;
 	}
 }

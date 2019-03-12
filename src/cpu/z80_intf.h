@@ -49,6 +49,7 @@ void ZetRunEnd();
 void ZetSetIRQLine(const INT32 line, const INT32 status);
 void ZetSetIRQLine(INT32 nCPU, const INT32 line, const INT32 status);
 void ZetSetVector(INT32 vector);
+void ZetSetVector(INT32 nCPU, INT32 vector);
 UINT8 ZetGetVector();
 INT32 ZetNmi();
 INT32 ZetNmi(INT32 nCPU);

@@ -336,11 +336,7 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 		case 0x6090:
 		{
 			soundlatch0 = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 			return;
 		}
 
@@ -435,9 +431,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (AllRam, 0, RamEnd - AllRam);
 	}
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	AY8910Reset(0);
 

@@ -176,11 +176,7 @@ static void __fastcall wiping_main_write(UINT16 address, UINT8 data)
 			sub_cpu_in_reset = ~data & 1;
 			if (sub_cpu_in_reset)
 			{
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 		return;
 
@@ -242,13 +238,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (AllRam, 0, RamEnd - AllRam);
 	}
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	wipingsnd_reset();
 

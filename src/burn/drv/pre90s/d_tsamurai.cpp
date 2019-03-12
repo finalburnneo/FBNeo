@@ -396,20 +396,12 @@ static void __fastcall tsamurai_main_write(UINT16 address, UINT8 data)
 
 		case 0xf401:
 			soundlatch0 = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0xf402:
 			soundlatch1 = data;
-			ZetClose();
-			ZetOpen(2);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0xf801:
@@ -487,29 +479,17 @@ static void __fastcall m660_main_write(UINT16 address, UINT8 data)
 	{
 		case 0xf401:
 			soundlatch2 = data;
-			ZetClose();
-			ZetOpen(3);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(3, 0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0xf402:
 			soundlatch1 = data;
-			ZetClose();
-			ZetOpen(2);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0xf403:
 			soundlatch0 = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0xfc07:
@@ -537,11 +517,7 @@ static void __fastcall vsgongf_main_write(UINT16 address, UINT8 data)
 	{
 		case 0xe800:
 			soundlatch0 = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(1);
 		return;
 
 		case 0xec00: // nop
@@ -703,24 +679,15 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	if (game_select == 1 || game_select == 2) {
-		ZetOpen(2);
-		ZetReset();
-		ZetClose();
+		ZetReset(2);
 	}
 
 	if (game_select == 2) {
-		ZetOpen(3);
-		ZetReset();
-		ZetClose();
+		ZetReset(3);
 	}
 
 	AY8910Reset(0);
@@ -964,7 +931,7 @@ static INT32 DrvInit(INT32 game)
 	ZetSetReadHandler(tsamurai_sound1_read);
 	ZetClose();
 
-	AY8910Init(0, 3000000, 0);
+	AY8910Init(0, 3000000, 1);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 0, DrvSyncDAC);
@@ -1089,7 +1056,7 @@ static INT32 m660CommonInit(INT32 game)
 	ZetSetOutHandler(tsamurai_main_out_port); // re-use this since it's the same
 	ZetClose();
 
-	AY8910Init(0, 3000000, 0);
+	AY8910Init(0, 3000000, 1);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 0, DrvSyncDAC);
@@ -1181,7 +1148,7 @@ static INT32 VsgongfCommonInit(INT32 game)
 	ZetSetOutHandler(tsamurai_main_out_port); // re-use this since it's the same
 	ZetClose();
 
-	AY8910Init(0, 3000000, 0);
+	AY8910Init(0, 3000000, 1);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 0, DrvSyncDAC);

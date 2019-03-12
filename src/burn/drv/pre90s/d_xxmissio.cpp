@@ -166,12 +166,8 @@ static void __fastcall xxmission_main_write(UINT16 address, UINT8 data)
 
 				case 0x40: {
 					cpu_status &= ~0x08;
-					ZetClose();
-					ZetOpen(1);
-					ZetSetVector(0x10);
-					ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-					ZetClose();
-					ZetOpen(0);
+					ZetSetVector(1, 0x10);
+					ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 				}
 				break;
 			}
@@ -226,12 +222,8 @@ static void __fastcall xxmission_sub_write(UINT16 address, UINT8 data)
 
 				case 0x80: {
 					cpu_status &= ~0x04;
-					ZetClose();
-					ZetOpen(0);
-					ZetSetVector(0x10);
-					ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-					ZetClose();
-					ZetOpen(1);
+					ZetSetVector(0, 0x10);
+					ZetSetIRQLine(0, 0, CPU_IRQSTATUS_HOLD);
 				}
 				break;
 			}

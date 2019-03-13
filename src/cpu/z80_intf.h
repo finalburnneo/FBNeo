@@ -45,6 +45,7 @@ INT32 ZetI(INT32 n);
 INT32 ZetSP(INT32 n);
 INT32 ZetScan(INT32 nAction);
 INT32 ZetRun(INT32 nCycles);
+INT32 ZetRun(INT32 nCPU, INT32 nCycles);
 void ZetRunEnd();
 void ZetSetIRQLine(const INT32 line, const INT32 status);
 void ZetSetIRQLine(INT32 nCPU, const INT32 line, const INT32 status);

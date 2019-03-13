@@ -614,14 +614,10 @@ static void __fastcall reaktor_main_write(UINT16 address, UINT8 data)
 	{
 		if (last_sound_irq == 0 && data)
 		{
-			ZetClose();
-			ZetOpen(1);
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(100);
-			ZetSetIRQLine(0,CPU_IRQSTATUS_NONE);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetVector(1, 0xff);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
+			ZetRun(1, 100);
+			ZetSetIRQLine(1, 0,CPU_IRQSTATUS_NONE);
 		}
 		last_sound_irq = data;
 		return;

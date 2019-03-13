@@ -432,6 +432,21 @@ INT32 ZetRun(INT32 nCycles)
 	return nCycles;
 }
 
+INT32 ZetRun(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetRun called without init\n"));
+#endif
+
+	ZetCPUPush(nCPU);
+
+	INT32 nRet = ZetRun(nCycles);
+
+	ZetCPUPop();
+
+	return nRet;
+}
+
 void ZetRunAdjust(INT32 /*nCycles*/)
 {
 #if defined FBA_DEBUG

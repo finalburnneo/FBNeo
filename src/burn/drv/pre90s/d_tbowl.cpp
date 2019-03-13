@@ -205,11 +205,7 @@ static void __fastcall tbowl_main_write(UINT16 address, UINT8 data)
 
 		case 0xfc0d:
 			*soundlatch = data;
-			ZetClose();
-			ZetOpen(2);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(2);
 		return;
 	}
 
@@ -260,11 +256,7 @@ static void __fastcall tbowl_sub_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xfc02:
-			ZetClose();
-			ZetOpen(0);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(1);
+			ZetNmi(0);
 		return;
 	}
 }

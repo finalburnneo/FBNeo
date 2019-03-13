@@ -275,12 +275,8 @@ static void __fastcall timeplt_main_write(UINT16 address, UINT8 data)
 
 		case 0xc304:
 			if (last_sound_irq == 0 && data) {
-				ZetClose();
-				ZetOpen(1);
-				ZetSetVector(0xff);
-				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-				ZetClose();
-				ZetOpen(0);
+				ZetSetVector(1, 0xff);
+				ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 			}
 			last_sound_irq = data;
 		return;
@@ -335,9 +331,7 @@ static INT32 DrvDoReset(INT32 clear_ram)
 		memset(AllRam, 0, RamEnd - AllRam);
 	}
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
 
 	TimepltSndReset();
 

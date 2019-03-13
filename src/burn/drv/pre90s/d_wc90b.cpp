@@ -476,11 +476,7 @@ void __fastcall Wc90b1Write1(UINT16 a, UINT8 d)
 		
 		case 0xfd00: {
 			Wc90b1SoundLatch = d;
-			ZetClose();
-			ZetOpen(2);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_ACK);
 			return;
 		}
 		

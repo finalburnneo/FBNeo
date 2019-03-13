@@ -230,11 +230,7 @@ static void __fastcall wyvernf0_main_write(UINT16 address, UINT8 data)
 		{
 			*soundlatch = data;
 			if (*nmi_enable) {
-				ZetClose();
-				ZetOpen(1);
-				ZetNmi();
-				ZetClose();
-				ZetOpen(0);
+				ZetNmi(1);
 			} else {
 				*pending_nmi = 1;
 			}

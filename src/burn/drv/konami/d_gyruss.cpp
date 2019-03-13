@@ -239,12 +239,8 @@ static void __fastcall gyruss_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xc080:
-			ZetClose();
-			ZetOpen(1);
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetVector(1, 0xff);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0xc100:
@@ -606,17 +602,13 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
 
 	M6809Open(0);
 	M6809Reset();
 	M6809Close();
 
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(1);
 
 	I8039Open(1);
 	I8039Reset();

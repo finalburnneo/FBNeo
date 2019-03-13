@@ -123,11 +123,7 @@ static void __fastcall divebomb_main_write_port(UINT16 port, UINT8 data)
 
 		case 0x10:
 		{
-			ZetClose();
-			ZetOpen(2);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_ACK);
 
 			to_rozcpu = data;
 		}
@@ -135,11 +131,7 @@ static void __fastcall divebomb_main_write_port(UINT16 port, UINT8 data)
 
 		case 0x20:
 		{
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 
 			to_spritecpu = data;
 		}
@@ -531,6 +523,8 @@ static INT32 DrvExit()
 	ZetExit();
 
 	K051316Exit();
+
+	KonamiICExit(); // allocated konami-bitmaps for k051316
 
 	SN76496Exit();
 

@@ -703,12 +703,8 @@ static void __fastcall tnzsb_cpu1_write(UINT16 address, UINT8 data)
 
 		case 0xb004:
 			*soundlatch = data;
-			ZetClose();
-			ZetOpen(2);
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(1);
+			ZetSetVector(2, 0xff);
+			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_HOLD);
 		break;
 	}
 }

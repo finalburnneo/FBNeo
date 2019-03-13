@@ -328,13 +328,7 @@ static inline void wc90SendSoundCommand(INT32 nCommand)
 {
 	Wc90SoundLatch = nCommand;
 
-	ZetClose();
-
-	ZetOpen(2);
-	ZetNmi();
-	ZetClose();
-
-	ZetOpen(0);
+	ZetNmi(2);
 }
 
 UINT8 __fastcall Wc90Read1(UINT16 a)

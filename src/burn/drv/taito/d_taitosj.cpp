@@ -1241,11 +1241,7 @@ static void __fastcall taitosj_main_write(UINT16 address, UINT8 data)
 		case 0xd50b:
 			soundlatch = data;
 			if (sound_nmi_disable == 0) {
-				ZetClose();
-				ZetOpen(1);
-				ZetNmi();
-				ZetClose();
-				ZetOpen(0);
+				ZetNmi(1);
 			}
 		return;
 

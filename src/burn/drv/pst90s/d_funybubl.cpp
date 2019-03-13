@@ -190,11 +190,7 @@ void __fastcall funybubl_out(UINT16 port, UINT8 data)
 		case 0x03:
 			soundlatch = data;
 
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x06:

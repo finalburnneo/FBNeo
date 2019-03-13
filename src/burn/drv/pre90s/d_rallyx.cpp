@@ -1061,12 +1061,8 @@ static void __fastcall JunglerZ80ProgWrite1(UINT16 a, UINT8 d)
 		
 		case 0xa180: {
 			if (last_sound_irq == 0 && d) {
-				ZetClose();
-				ZetOpen(1);
-				ZetSetVector(0xff);
-				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-				ZetClose();
-				ZetOpen(0);
+				ZetSetVector(1, 0xff);
+				ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 			}
 			last_sound_irq = d;
 			return;

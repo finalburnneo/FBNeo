@@ -246,12 +246,8 @@ static void __fastcall mario_main_write(UINT16 address, UINT8 data)
 			if (!masao) { // mario
 				I8039SetIrqState((data) ? 1 : 0);
 			} else { // masao
-				ZetClose(); // masao
-				ZetOpen(1);
-				ZetSetVector(0xff);
-				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-				ZetClose();
-				ZetOpen(0);
+				ZetSetVector(1, 0xff);
+				ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 			}
 		return;
 
@@ -369,13 +365,8 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1); // masao
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1); // masao
 
 	I8039Open(0);
 	I8039Reset();

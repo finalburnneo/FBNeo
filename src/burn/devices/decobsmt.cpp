@@ -94,6 +94,9 @@ void decobsmt_scan(INT32 nAction, INT32 *pnMin)
 	SCAN_VAR(bsmt_reset);
 	SCAN_VAR(bsmt_comms);
 	SCAN_VAR(bsmt_in_reset);
+
+	M6809Scan(nAction);
+
 	bsmt2kScan(nAction, pnMin);
 }
 

@@ -258,11 +258,7 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 		{
 			sound_cpu_busy = 1;
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(1);
 		}
 		return;
 	}
@@ -320,13 +316,8 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	AY8910Reset(0);
 	AY8910Reset(1);

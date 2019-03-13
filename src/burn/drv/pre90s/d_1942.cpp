@@ -462,14 +462,9 @@ static INT32 MemIndex()
 
 static INT32 DrvDoReset()
 {
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
-	
 	AY8910Reset(0);
 	AY8910Reset(1);
 
@@ -537,11 +532,7 @@ static void __fastcall Drv1942Write1(UINT16 a, UINT8 d)
 		case 0xc804: {
 			DrvFlipScreen = d & 0x80;
 			if (d & 0x10) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 			return;
 		}
@@ -1011,7 +1002,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvPaletteBank);
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(DrvBgScroll);
-		SCAN_VAR(DrvFlipScreen);		
+		SCAN_VAR(DrvFlipScreen);
 		SCAN_VAR(DrvDip);
 		SCAN_VAR(DrvInput);
 	}

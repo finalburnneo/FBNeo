@@ -145,12 +145,8 @@ static void __fastcall ddayjc_main_write(UINT16 address, UINT8 data)
 
 		case 0xf000:
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetVector(1, 0xff);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0xf080:
@@ -291,9 +287,7 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(1);
 
 	AY8910Reset(0);
 	AY8910Reset(1);

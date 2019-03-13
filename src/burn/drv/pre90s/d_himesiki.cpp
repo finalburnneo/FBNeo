@@ -281,11 +281,7 @@ static void __fastcall himesiki_main_write_port(UINT16 port, UINT8 data)
 
 		case 0x0b:
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(1);
 		return;
 	}
 }

@@ -206,11 +206,7 @@ static void __fastcall djboy_cpu1_write_port(UINT16 port, UINT8 data)
 		case 0x02:
 		{
 			*soundlatch = data;
-			ZetClose();
-			ZetOpen(2);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(1);
+			ZetNmi(2);
 		}
 		return;
 
@@ -228,11 +224,7 @@ static void __fastcall djboy_cpu1_write_port(UINT16 port, UINT8 data)
 
 		case 0x0a:
 		{
-			ZetClose();
-			ZetOpen(0);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(1);
+			ZetNmi(0);
 		}
 		return;
 

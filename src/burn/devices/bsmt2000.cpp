@@ -10,7 +10,7 @@ static UINT16 write_data = 0;
 static UINT16 register_select = 0;
 static UINT16 rom_address = 0;
 static UINT8 rom_bank = 0;
-static INT8 *datarom = NULL;
+static UINT8 *datarom = NULL;
 static INT32 datarom_len = 0;
 static void (*ready_callback)() = NULL;
 static UINT16 data_left = 0;
@@ -60,12 +60,12 @@ static void bsmt2k_write_port(INT32 port, UINT16 data)
 		return;
 
 		case 3:
-			data_left = data * 16;
+			data_left = data;
 			update_stream();
 		return;
 
 		case 7:
-			data_right = data * 16;
+			data_right = data;
 			update_stream();
 		return;
 	}
@@ -87,7 +87,7 @@ static UINT16 bsmt2k_read_port(INT32 port)
 		case 2: {
 			INT32 addr = (rom_bank << 16) + rom_address;
 			if (addr >= datarom_len) return 0;
-			return (INT16)(datarom[addr]);
+			return (INT16)(datarom[addr] << 8);
 		}
 
 		case TMS32010_BIO:
@@ -146,7 +146,7 @@ void bsmt2kInit(INT32 clock, UINT8 *tmsrom, UINT8 *tmsram, UINT8 *data, INT32 si
 	tms32010_rom = (UINT16*)tmsrom; // 0x1000 words (0x2000 bytes)
 	tms32010_ram = (UINT16*)tmsram; // 0x100 bytes
 
-	datarom = (INT8*)data;
+	datarom = data;
 	datarom_len = size;
 
 	ready_callback = cb;
@@ -156,7 +156,7 @@ void bsmt2kInit(INT32 clock, UINT8 *tmsrom, UINT8 *tmsram, UINT8 *data, INT32 si
 	tms32010_set_read_port_handler(bsmt2k_read_port);
 
 	DACInit(0, 0, 0, BSMTSyncDAC);
-	DACSetRoute(0, 4.00, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 	DACStereoMode(0);
 }
 

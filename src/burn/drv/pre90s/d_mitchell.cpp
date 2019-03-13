@@ -1552,11 +1552,7 @@ static void __fastcall MstworldZ80PortWrite(UINT16 a, UINT8 d)
 		
 		case 0x03: {
 			DrvSoundLatch = d;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		}
 		
 		case 0x06: {

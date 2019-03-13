@@ -932,12 +932,7 @@ static void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 		case 0x6820: {
 			DrvCPU1FireIRQ = d & 0x01;
 			if (!DrvCPU1FireIRQ) {
-				INT32 nActive = ZetGetActive();
-				ZetClose();
-				ZetOpen(0);
-				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-				ZetClose();
-				ZetOpen(nActive);
+				ZetSetIRQLine(0, 0, CPU_IRQSTATUS_NONE);
 			}
 			return;
 		}
@@ -945,12 +940,7 @@ static void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 		case 0x6821: {
 			DrvCPU2FireIRQ = d & 0x01;
 			if (!DrvCPU2FireIRQ) {
-				INT32 nActive = ZetGetActive();
-				ZetClose();
-				ZetOpen(1);
-				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-				ZetClose();
-				ZetOpen(nActive);
+				ZetSetIRQLine(1, 0, CPU_IRQSTATUS_NONE);
 			}
 			return;
 		}
@@ -962,15 +952,9 @@ static void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 		
 		case 0x6823: {
 			if (!(d & 0x01)) {
-				INT32 nActive = ZetGetActive();
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(2);
-				ZetReset();
-				ZetClose();
-				ZetOpen(nActive);
+				ZetReset(1);
+				ZetReset(2);
+
 				DrvCPU2Halt = 1;
 				DrvCPU3Halt = 1;
 				return;

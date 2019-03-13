@@ -246,11 +246,7 @@ static void __fastcall airbustr_main_out(UINT16 port, UINT8 data)
 
 		case 0x02:
 		{
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(1);
 		}
 		return;
 	}
@@ -272,11 +268,7 @@ static void __fastcall airbustr_sub_out(UINT16 port, UINT8 data)
 		{
 			*soundlatch = data;
 			*sound_status = 1;
-			ZetClose();
-			ZetOpen(2);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(1);
+			ZetNmi(2);
 		}
 		return;
 

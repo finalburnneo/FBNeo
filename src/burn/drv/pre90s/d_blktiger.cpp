@@ -221,11 +221,7 @@ static void __fastcall blacktiger_out(UINT16 port, UINT8 data)
 
 		case 0x04:
 			if (data & 0x20) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 
 			*flipscreen  =  data & 0x40;

@@ -271,11 +271,7 @@ static void __fastcall pipedrm_main_write_port(UINT16 port, UINT8 data)
 			pending_command = 1;
 			soundlatch = data;
 			if (nmi_enable) {
-				ZetClose();
-				ZetOpen(1);
-				ZetNmi();
-				ZetClose();
-				ZetOpen(0);
+				ZetNmi(1);
 			}
 		return;
 

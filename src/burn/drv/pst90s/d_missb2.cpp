@@ -146,11 +146,7 @@ static void __fastcall missb2_main_write(UINT16 address, UINT8 data)
 		{
 			soundlatch = data;
 			if (sound_nmi_enable) {
-				ZetClose();
-				ZetOpen(2);
-				ZetNmi();
-				ZetClose();
-				ZetOpen(0);
+				ZetNmi(2);
 			} else {
 				sound_pending_nmi = 1;
 			}
@@ -161,11 +157,7 @@ static void __fastcall missb2_main_write(UINT16 address, UINT8 data)
 		{
 			sound_cpu_in_reset = ~data & 0x10;
 			if (sound_cpu_in_reset) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 
 			bankswitch0(data);
@@ -278,13 +270,8 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	ZetOpen(2);
 	BurnYM3526Reset();

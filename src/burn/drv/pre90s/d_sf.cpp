@@ -453,9 +453,7 @@ void __fastcall sf_write_word(UINT32 address, UINT16 data)
 		{
 			soundlatch = data & 0xff;
 
-			ZetOpen(0);
-			ZetNmi();
-			ZetClose();
+			ZetNmi(0);
 		}
 		return;
 
@@ -696,13 +694,8 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	BurnYM2151Reset();
 	MSM5205Reset();

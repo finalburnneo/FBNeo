@@ -169,11 +169,7 @@ static void __fastcall amspdwy_main_write(UINT16 address, UINT8 data)
 
 		case 0xb400:
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(1);
 		return;
 	}
 }
@@ -264,9 +260,7 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
 
 	ZetOpen(1);
 	ZetReset();

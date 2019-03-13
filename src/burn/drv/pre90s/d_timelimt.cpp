@@ -134,11 +134,7 @@ static void __fastcall timelimt_main_write(UINT16 address, UINT8 data)
 
 		case 0xb003:
 			if (data & 1) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 			}
 		return;
 
@@ -233,13 +229,9 @@ static INT32 DrvDoReset(INT32 clear_ram)
 		memset (AllRam, 0, RamEnd - AllRam);
 	}
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
 
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(1);
 
 	AY8910Reset(0);
 	AY8910Reset(1);
@@ -615,7 +607,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -623,7 +615,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;

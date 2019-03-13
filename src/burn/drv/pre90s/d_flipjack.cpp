@@ -110,11 +110,7 @@ static void __fastcall flipjack_main_write(UINT16 address, UINT8 data)
 
 		case 0x7000:
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x7010:// hd6845 address
@@ -235,9 +231,7 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(1);
 
 	AY8910Reset(0);
 

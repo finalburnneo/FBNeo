@@ -139,11 +139,7 @@ void __fastcall egghunt_main_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x03:
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 			*soundlatch = data;
 		return;
 	}
@@ -217,13 +213,8 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	set_oki_bank(0);
 	MSM6295Reset(0);

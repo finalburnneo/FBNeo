@@ -207,19 +207,11 @@ static UINT8 __fastcall popper_main_read(UINT16 address)
 		}
 
 		case 0xe400:
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(1);
 			return 0;
 
 		case 0xf800:
-			ZetClose();
-			ZetOpen(1);
-			ZetReset();
-			ZetClose();
-			ZetOpen(0);
+			ZetReset(1);
 			return 0;
 
 		case 0xfc00: //	watchdog_clear (not used)
@@ -274,13 +266,8 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	AY8910Reset(0);
 	AY8910Reset(1);

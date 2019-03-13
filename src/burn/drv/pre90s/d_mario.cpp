@@ -777,6 +777,7 @@ static INT32 DrvFrame()
 			BurnSampleRender(pSoundBuf, nSegmentLength);
 		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	I8039Close();
@@ -821,6 +822,7 @@ static INT32 MasaoFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {

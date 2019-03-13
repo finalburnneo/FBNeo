@@ -1727,7 +1727,7 @@ static void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 			break;
 
 		case 0x18:
-			bSoundNMIEnabled = 0;
+			//bSoundNMIEnabled = 0; // this breaks sound in sonicwi3 (cd and aes/mvs version)
 			break;
 
 		case 0x0C:									// Write reply to sound commands

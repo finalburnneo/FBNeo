@@ -128,12 +128,8 @@ void __fastcall suprloco_main_write(UINT16 address, UINT8 data)
 	{
 		case 0xe800:
 			*soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetRun(50);
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(1);
+			ZetRun(1, 50);
 		return;
 
 		case 0xe801:
@@ -194,13 +190,8 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	return 0;
 }
@@ -601,7 +592,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += ZetRun(nCyclesSegment);
 		if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
-	
+
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nCyclesSegment);
 		if (i == 24 || i == 49 || i == 74 || i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
@@ -620,7 +611,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -628,7 +619,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029714;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

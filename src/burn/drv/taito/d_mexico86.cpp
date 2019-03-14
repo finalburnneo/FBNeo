@@ -399,10 +399,8 @@ static void mexico86_m68705_portB_out(UINT8 *data)
 	}
 	if ((ddrB & 0x20) && (*data & 0x20) && (~portB_out & 0x20))
 	{
-		ZetOpen(0);
-		ZetSetVector(DrvPrtRAM[0]);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		ZetClose();
+		ZetSetVector(0, DrvPrtRAM[0]);
+		ZetSetIRQLine(0, 0, CPU_IRQSTATUS_HOLD);
 		m68705SetIrqLine(M68705_IRQ_LINE, CPU_IRQSTATUS_NONE);
 	}
 

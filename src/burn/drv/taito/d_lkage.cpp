@@ -279,11 +279,7 @@ void __fastcall lkage_main_write(UINT16 address, UINT8 data)
 		case 0xf060:
 			soundlatch = data;
 			if (DrvNmiEnable) {
-				ZetClose();
-				ZetOpen(1);
-				ZetNmi();
-				ZetClose();
-				ZetOpen(0);
+				ZetNmi(1);
 			} else {
 				pending_nmi = 1;
 			}

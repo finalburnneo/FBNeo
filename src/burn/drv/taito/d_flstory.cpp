@@ -695,11 +695,7 @@ static void __fastcall flstory_main_write(UINT16 address, UINT8 data)
 			*soundlatch = data;
 
 			if (nmi_enable) {
-				ZetClose();
-				ZetOpen(1);
-				ZetNmi();
-				ZetClose();
-				ZetOpen(0);
+				ZetNmi(1);
 			} else {
 				pending_nmi = 1;
 			}
@@ -895,13 +891,8 @@ static INT32 DrvDoReset()
 	DrvReset = 0;
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	m67805_taito_reset();
 

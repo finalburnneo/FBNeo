@@ -1384,11 +1384,7 @@ void __fastcall BublboblWrite1(UINT16 a, UINT8 d)
 		
 		case 0xfa03: {
 			if (d) {
-				ZetClose();
-				ZetOpen(2);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(2);
 				DrvSoundCPUActive = 0;
 			} else {
 				DrvSoundCPUActive = 1;
@@ -1406,11 +1402,7 @@ void __fastcall BublboblWrite1(UINT16 a, UINT8 d)
 			ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
 			
 			if (!(d & 0x10)) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 				DrvSlaveCPUActive = 0;
 			} else {
 				DrvSlaveCPUActive = 1;
@@ -1498,11 +1490,7 @@ void __fastcall BoblboblWrite1(UINT16 a, UINT8 d)
 		
 		case 0xfa03: {
 			if (d) {
-				ZetClose();
-				ZetOpen(2);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(2);
 				DrvSoundCPUActive = 0;
 			} else {
 				DrvSoundCPUActive = 1;
@@ -1521,11 +1509,7 @@ void __fastcall BoblboblWrite1(UINT16 a, UINT8 d)
 			ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
 			
 			if (!(d & 0x10)) {
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(0);
+				ZetReset(1);
 				DrvSlaveCPUActive = 0;
 			} else {
 				DrvSlaveCPUActive = 1;
@@ -1763,10 +1747,8 @@ void BublboblMcuWriteByte(UINT16 Address, UINT8 Data)
 		
 		case 0x02: {
 			if ((port1_out & 0x40) && (~Data & 0x40)) {
-				ZetOpen(0);
-				ZetSetVector(DrvZ80Ram1[0]);
-				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-				ZetClose();
+				ZetSetVector(0, DrvZ80Ram1[0]);
+				ZetSetIRQLine(0, 0, CPU_IRQSTATUS_AUTO);
 			}
 			
 			port1_out = Data;
@@ -1861,14 +1843,11 @@ void bublbobl_68705_portB_out(UINT8 *bytevalue)
 	}
 	if ((ddrB & 0x20) && (~data & 0x20) && (portB_out & 0x20))
 	{
-		ZetOpen(0);
-
 		/* hack to get random EXTEND letters (who is supposed to do this? 68705? PAL?) */
 		DrvZ80Ram1[0x7c] = BurnRandom() % 6;
 
-		ZetSetVector(DrvZ80Ram1[0]);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-		ZetClose();
+		ZetSetVector(0, DrvZ80Ram1[0]);
+		ZetSetIRQLine(0, 0, CPU_IRQSTATUS_AUTO);
 	}
 }
 
@@ -1923,11 +1902,7 @@ void __fastcall TokioWrite1(UINT16 a, UINT8 d)
 		}
 
 		case 0xfb80: {
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+			ZetNmi(1);
 			return;
 		}
 

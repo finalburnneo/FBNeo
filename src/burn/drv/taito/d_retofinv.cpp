@@ -237,11 +237,7 @@ void __fastcall retofinv_main_write(UINT16 address, UINT8 data)
 		case 0xd800:
 		{
 			*soundlatch = data;
-			ZetClose();
-			ZetOpen(2);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_ACK);
 		}
 		return;
 

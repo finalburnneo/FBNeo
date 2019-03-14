@@ -4413,13 +4413,8 @@ static INT32 System1DoReset()
 
 	memset (RamStart, 0, RamEnd - RamStart);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	SN76496Reset();
 
@@ -4481,12 +4476,8 @@ static inline void System2_videoram_bank_latch_w(UINT8 d)
 static inline void __fastcall System1SoundLatchWrite(UINT8 d)
 {
 	System1SoundLatch = d;
+	ZetNmi(1);
 
-	ZetClose();
-	ZetOpen(1);
-	ZetNmi();
-	ZetClose();
-	ZetOpen(0);
 	return;
 }
 
@@ -4870,11 +4861,7 @@ static void System2PPI0WriteB(UINT8 data)
 
 static void System2PPI0WriteC(UINT8 data)
 {
-	ZetClose();
-	ZetOpen(1);
-	ZetSetIRQLine(0x20, (data & 0x80) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
-	ZetClose();
-	ZetOpen(0);
+	ZetSetIRQLine(1, 0x20, (data & 0x80) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 
 	if (!Sys1UsePPI)
 		System2_videoram_bank_latch_w(data);

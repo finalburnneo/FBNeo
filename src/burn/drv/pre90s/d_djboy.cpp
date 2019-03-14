@@ -661,7 +661,7 @@ static struct BurnRomInfo djboyRomDesc[] = {
 
 	{ "bs200.8c",	0x20000, 0xf6c19e51, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "beast.9s",	0x01000, 0xebe0f5f3, 4 | BRF_GRA },           //  5 Kaneko Beast MCU
+	{ "beast.9s",	0x01000, 0xebe0f5f3, 4 | BRF_PRG | BRF_ESS }, //  5 Kaneko Beast MCU
 
 	{ "bs000.1h",	0x80000, 0xbe4bf805, 5 | BRF_GRA },           //  6 Sprites
 	{ "bs001.1f",	0x80000, 0xfdf36e6b, 5 | BRF_GRA },           //  7
@@ -707,7 +707,7 @@ static struct BurnRomInfo djboyuRomDesc[] = {
 
 	{ "bs200.8c",	0x20000, 0xf6c19e51, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "beast.9s",	0x01000, 0xebe0f5f3, 4 | BRF_GRA },           //  5 Kaneko Beast MCU
+	{ "beast.9s",	0x01000, 0xebe0f5f3, 4 | BRF_PRG | BRF_ESS }, //  5 Kaneko Beast MCU
 
 	{ "bs000.1h",	0x80000, 0xbe4bf805, 5 | BRF_GRA },           //  6 Sprites
 	{ "bs001.1f",	0x80000, 0xfdf36e6b, 5 | BRF_GRA },           //  7
@@ -746,7 +746,7 @@ static struct BurnRomInfo djboyuaRomDesc[] = {
 
 	{ "bs200.8c",	0x20000, 0xf6c19e51, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "beast.9s",	0x01000, 0xebe0f5f3, 4 | BRF_GRA },           //  5 Kaneko Beast MCU
+	{ "beast.9s",	0x01000, 0xebe0f5f3, 4 | BRF_PRG | BRF_ESS }, //  5 Kaneko Beast MCU
 
 	{ "bs000.1h",	0x80000, 0xbe4bf805, 5 | BRF_GRA },           //  6 Sprites
 	{ "bs001.1f",	0x80000, 0xfdf36e6b, 5 | BRF_GRA },           //  7
@@ -785,7 +785,7 @@ static struct BurnRomInfo djboyjRomDesc[] = {
 
 	{ "bs200.8c",	0x20000, 0xf6c19e51, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "beast.9s",	0x01000, 0xebe0f5f3, 4 | BRF_GRA },           //  5 Kaneko Beast MCU
+	{ "beast.9s",	0x01000, 0xebe0f5f3, 4 | BRF_PRG | BRF_ESS }, //  5 Kaneko Beast MCU
 
 	{ "bs000.1h",	0x80000, 0xbe4bf805, 5 | BRF_GRA },           //  6 Sprites
 	{ "bs001.1f",	0x80000, 0xfdf36e6b, 5 | BRF_GRA },           //  7
@@ -831,7 +831,7 @@ static struct BurnRomInfo djboyjaRomDesc[] = {
 
 	{ "bs200.8c",	0x20000, 0xf6c19e51, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "beast.9s",	0x01000, 0xebe0f5f3, 4 | BRF_GRA },           //  5 Kaneko Beast MCU
+	{ "beast.9s",	0x01000, 0xebe0f5f3, 4 | BRF_PRG | BRF_ESS }, //  5 Kaneko Beast MCU
 
 	{ "bs000.1h",	0x80000, 0xbe4bf805, 5 | BRF_GRA },           //  6 Sprites
 	{ "bs001.1f",	0x80000, 0xfdf36e6b, 5 | BRF_GRA },           //  7

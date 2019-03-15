@@ -634,13 +634,9 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		if (mermaid_sub_z80_reset) {
-			nCyclesDone[1] += ZetIdle(nSegment);
-		} else {
-			if (i == 240*4) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			nSegment = (nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1];
-			nCyclesDone[1] += ZetRun(nSegment);
-		}
+		if (i == 240*4) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		nSegment = (nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1];
+		nCyclesDone[1] += ZetRun(nSegment);
 		ZetClose();
 
 		ZetOpen(2);
@@ -649,7 +645,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		nSegment = (nCyclesTotal[3] * (i + 1) / nInterleave) - nCyclesDone[3];
-		nCyclesDone[3] += mcs51Run(nSegment);
+		nCyclesDone[3] += mermaidRun(nSegment);
 
 		if (i == 239*4) {
 			pandora_buffer_sprites();

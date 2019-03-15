@@ -24,6 +24,7 @@ static UINT8 *DrvShareRAM0;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvPandoraRAM;
 static UINT8 *DrvPalRAM;
+static UINT8 *DrvZ80RAM1;
 static UINT8 *DrvZ80RAM2;
 
 static UINT8 *soundlatch;
@@ -175,11 +176,6 @@ static void __fastcall djboy_cpu1_write(UINT16 address, UINT8 data)
 		if (address & 1) palette_update(address & 0x3fe);
 		return;
 	}
-
-	if ((address & 0xf000) == 0xd000) {
-		DrvPalRAM[address & 0xfff] = data;
-		return;
-	}
 }
 
 static void cpu1_bankswitch(INT32 data)
@@ -193,6 +189,35 @@ static void cpu1_bankswitch(INT32 data)
 	ZetMapMemory(DrvZ80ROM1 + (bankdata[data & 0x0f] * 0x4000), 0x8000, 0xbfff, MAP_ROM);
 }
 
+static void sync_main_to_sub()
+{
+	INT32 subcyc = ZetTotalCycles();
+	ZetClose();
+	ZetOpen(0);
+	INT32 maincyc = ZetTotalCycles();
+	INT32 nowcyc = subcyc - maincyc;
+
+	if (nowcyc>0) {
+		ZetRun(nowcyc);
+	}
+	ZetClose();
+	ZetOpen(1);
+}
+
+static void sync_sound_to_sub()
+{
+	INT32 subcyc = ZetTotalCycles();
+	ZetClose();
+	ZetOpen(2);
+	INT32 soundcyc = ZetTotalCycles();
+	INT32 nowcyc = subcyc - soundcyc;
+	if (nowcyc > 0) {
+		BurnTimerUpdate(subcyc);
+	}
+	ZetClose();
+	ZetOpen(1);
+}
+
 static void __fastcall djboy_cpu1_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
@@ -203,6 +228,7 @@ static void __fastcall djboy_cpu1_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x02:
+			sync_sound_to_sub();
 			*soundlatch = data;
 			ZetNmi(2);
 		return;
@@ -220,11 +246,12 @@ static void __fastcall djboy_cpu1_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x0a:
+			sync_main_to_sub();
 			ZetNmi(0);
 		return;
 
 		case 0x0e:
-			// coin counter	
+			// coin counter
 		return;
 	}
 }
@@ -360,7 +387,8 @@ static INT32 MemIndex()
 
 	DrvPandoraRAM	= Next; Next += 0x001000;
 	DrvSprRAM		= Next; Next += 0x001000;
-	DrvPalRAM		= Next; Next += 0x001000;
+	DrvPalRAM		= Next; Next += 0x000400;
+	DrvZ80RAM1		= Next; Next += 0x000500;
 	DrvZ80RAM2		= Next; Next += 0x002000;
 
 	soundlatch		= Next; Next += 0x000001;
@@ -446,7 +474,8 @@ static INT32 DrvInit()
 	ZetOpen(1);
 	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, MAP_ROM);
 	ZetMapMemory(DrvVidRAM,			0xc000, 0xcfff, MAP_RAM);
-	ZetMapMemory(DrvPalRAM,			0xd000, 0xd8ff, MAP_ROM); // handler
+	ZetMapMemory(DrvPalRAM,			0xd000, 0xd3ff, MAP_ROM); // handler
+	ZetMapMemory(DrvZ80RAM1,        0xd400, 0xd8ff, MAP_RAM);
 	ZetMapMemory(DrvShareRAM0,		0xe000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(djboy_cpu1_write);
 	ZetSetOutHandler(djboy_cpu1_write_port);
@@ -471,11 +500,11 @@ static INT32 DrvInit()
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.50, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1500000 / 165, 1);
-	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_LEFT);
 	MSM6295SetBank(0, DrvSndROM, 0, 0x3ffff);
 
 	MSM6295Init(1, 1500000 / 165, 1);
-	MSM6295SetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.80, BURN_SND_ROUTE_RIGHT);
 	MSM6295SetBank(1, DrvSndROM, 0, 0x3ffff);
 
 	GenericTilesInit();
@@ -483,7 +512,7 @@ static INT32 DrvInit()
 	GenericTilemapSetGfx(0, DrvGfxROM1, 4, 16, 16, 0x200000, 0, 0x0f);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 
-	pandora_init(DrvPandoraRAM, DrvGfxROM0, (0x400000/0x100)-1, 0x100, 0, -16);
+	pandora_init(DrvPandoraRAM, DrvGfxROM0, (0x400000/0x100)-1, 0x100, -1, -16);
 
 	DrvDoReset(1);
 
@@ -516,11 +545,14 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	if (~nBurnLayer & 1) BurnTransferClear();
+
 	GenericTilemapSetScrollX(0, scrollx + ((videoreg & 0xc0) << 2) - 0x391);
 	GenericTilemapSetScrollY(0, scrolly + ((videoreg & 0x20) << 3));
-	GenericTilemapDraw(0, pTransDraw, 0);
 
-	pandora_update(pTransDraw);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+
+	if (nSpriteEnable & 1) pandora_update(pTransDraw);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -544,43 +576,41 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256*4;
-	INT32 nCyclesTotal[4] =  { (6000000 * 10) / 575, (6000000 * 10) / 575, (6000000 * 10) / 575, (6000000 * 10) / 575 }; // 57.5 fps
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[4] =  { (6000000 * 10) / 575, (6000000 * 10) / 575, (6000000 * 10) / 575, (6000000 * 10) / 575 / 12 }; // 57.5 fps
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 
-		INT32 nSegment = (nCyclesTotal[0] / nInterleave);
-
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == 64*4 || i == 240*4) {
-			if (i ==  64*4) ZetSetVector(0xff);
-			if (i == 240*4) ZetSetVector(0xfd);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		if (i == 64 || i == 240) {
+			if (i ==  64) ZetSetVector(0xff);
+			if (i == 240) ZetSetVector(0xfd);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		nSegment = nCyclesTotal[1] / nInterleave;
-		if (mermaid_sub_z80_reset) {
-			nCyclesDone[1] += nSegment;
-			ZetIdle(nSegment);
-		} else {
-			nCyclesDone[1] += ZetRun(nSegment);
-			if (i == 240*4) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		}
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[2] / nInterleave));
-		if (i == 240*4) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		nCyclesDone[3] += mermaidRun(nCyclesTotal[3] / nInterleave);
+		nCyclesDone[3] += mermaidRun(((i + 1) * nCyclesTotal[3] / nInterleave) - nCyclesDone[3]);
 
-		if (i == 239*4)
+		if (i == 240) {
 			pandora_buffer_sprites();
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+		}
+
 	}
 
 	ZetOpen(2);
@@ -594,10 +624,6 @@ static INT32 DrvFrame()
 
 	ZetClose();
 	
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
 	return 0;
 }
 

@@ -66,11 +66,10 @@ static void mermaid_write_port(INT32 port, UINT8 data)
 		case MCS51_PORT_P3:
 		{
 			if ((data & 2) == 0) {
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
+				ZetSetRESETLine(1, 1);
 				mermaid_sub_z80_reset = 1;
 			} else {
+				ZetSetRESETLine(1, 0);
 				mermaid_sub_z80_reset = 0;
 			}
 		}
@@ -148,9 +147,7 @@ void mermaidExit()
 
 INT32 mermaidRun(INT32 cycles)
 {
-	mcs51Run(cycles / 12);
-
-	return cycles;
+	return mcs51Run(cycles);
 }
 
 INT32 mermaidScan(INT32 nAction)

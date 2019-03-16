@@ -1,17 +1,13 @@
 // FB Alpha Irem M72 driver module
 // Based on MAME driver by Nicola Salmoria and Nao
 
-/*
-	to do:
-	    poundfor inputs
-*/
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2151.h"
 #include "nec_intf.h"
 #include "irem_cpu.h"
 #include "dac.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -58,6 +54,10 @@ static UINT8 DrvJoy5[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort3 = 0;
 
 static INT32 nExtraCycles;
 static INT32 nCurrentCycles;
@@ -67,6 +67,7 @@ static INT32 nCyclesTotal[2];
 static INT32 Clock_16mhz = 0;
 static INT32 Kengo = 0;
 static INT32 CosmicCop = 0;
+static INT32 Poundfor = 0;
 static INT32 m72_video_type = 0;
 static INT32 z80_nmi_enable = 0;
 static INT32 enable_z80_reset = 0; // only if z80 is not rom-based!
@@ -110,30 +111,28 @@ static struct BurnInputInfo CommonInputList[] = {
 
 STDINPUTINFO(Common)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo PoundforInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 coin"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 2,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis" ),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis" ),
 
-	// save space for analog inputs
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy5 + 6,	"p2 fire 3"},
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy5 + 6,	"p2 fire 4"},
-
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 coin"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 3,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
-
-	// save space for analog inputs...
-	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy5 + 6,	"p2 fire 5"},
-	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy5 + 6,	"p2 fire 6"},
+	A("P2 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis" ),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis" ),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 4,	"service"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
+#undef A
 
 STDINPUTINFO(Poundfor)
 
@@ -971,7 +970,7 @@ static void palette_write(INT32 offset, INT32 offset2)
 	DrvPalette[offset3] = BurnHighCol((r << 3) | (r >> 2), (g << 3) | (g >> 2), (b << 3) | (b >> 2), 0);
 }
 
-UINT8 __fastcall m72_main_read(UINT32 address)
+static UINT8 __fastcall m72_main_read(UINT32 address)
 {
 	if ((address & 0xff000) == 0xb0000) {
 		return protection_read(address);
@@ -980,7 +979,7 @@ UINT8 __fastcall m72_main_read(UINT32 address)
 	return 0;
 }
 
-void __fastcall m72_main_write(UINT32 address, UINT8 data)
+static void __fastcall m72_main_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xff000) == 0xb0000) {
 		protection_write(address, data);
@@ -1002,7 +1001,7 @@ void __fastcall m72_main_write(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall rtype2_main_write(UINT32 address, UINT8 data)
+static void __fastcall rtype2_main_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xff000) == 0xc8000 || (address & 0xff000) == 0xa0000 || (address & 0xff000) == 0xcc000) {
 		if (address & 1) data = 0xff;
@@ -1039,7 +1038,7 @@ void __fastcall rtype2_main_write(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
+static void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 {
 	//if (port!=0) bprintf (0, _T("%2.2x, %2.2x wp\n"), port, data);
 
@@ -1120,26 +1119,29 @@ void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 	}
 }
 
-static UINT16 __fastcall poundfor_trackball_r(INT32 offset)
+static UINT16 __fastcall poundfor_trackball_r(INT32 port)
 {
-	static INT32 prev[4],diff[4];
-//	static const char *const axisnames[] = { "TRACK0_X", "TRACK0_Y", "TRACK1_X", "TRACK1_Y" };
+	static INT32 prev[4] = { 0, 0, 0, 0 };
+	static INT32 diff[4] = { 0, 0, 0, 0 };
 
-#if 0
-	if (offset == 0)
+	INT32 offset = (port / 2) & 0x03;
+
+	BurnTrackballUpdate(0);
+	BurnTrackballUpdate(1);
+
+	INT16 axis[4] = { (INT16)BurnTrackballReadWord(0, 0), (INT16)BurnTrackballReadWord(0, 1), (INT16)BurnTrackballReadWord(1, 0), (INT16)BurnTrackballReadWord(1, 1) };
+
+	if (port == 8)
 	{
-		INT32 i,curr;
+		INT32 curr;
 
-		for (i = 0;i < 4;i++)
+		for (INT32 i = 0; i < 4; i++)
 		{
-			curr = input_port_read(space->machine, axisnames[i]);
+			curr = axis[i];
 			diff[i] = (curr - prev[i]);
 			prev[i] = curr;
 		}
 	}
-#endif
-	prev[0] = 0;
-	diff[0] = diff[1] = diff[2] = diff[3] = ~0;
 	INT32 input = DrvInputs[0] | (DrvInputs[3] << 8);
 
 	switch (offset)
@@ -1158,8 +1160,25 @@ static UINT16 __fastcall poundfor_trackball_r(INT32 offset)
 	return 0;
 }
 
-UINT8 __fastcall m72_main_read_port(UINT32 port)
+static UINT8 __fastcall m72_main_read_port(UINT32 port)
 {
+	if (Poundfor) {
+		if ((port & 0xf8) == 0x08) {
+			UINT16 ret = poundfor_trackball_r(port);
+			return (ret >> ((port & 1) * 8)) & 0xff;
+		}
+
+		switch (port)
+		{
+			case 0x02: return DrvInputs[1];
+			case 0x03: return 0xff;
+			case 0x04: return DrvDips[0];
+			case 0x05: return DrvDips[1];
+		}
+
+		return 0;
+	}
+
 	switch (port)
 	{
 		case 0x00: return DrvInputs[0];
@@ -1170,16 +1189,10 @@ UINT8 __fastcall m72_main_read_port(UINT32 port)
 		case 0x05: return DrvDips[1];
 	}
 
-	if ((port & 0xf8) == 0x08) {
-		INT32 ret = poundfor_trackball_r((port / 2) & 0x03);
-		if (port & 1) return ret >> 8;
-		else return ret;
-	}
-
 	return 0;
 }
 
-void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
+static void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -1200,17 +1213,19 @@ void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x10: // poundfor
-		case 0x11:
 			sample_address >>= 4;
 			sample_address = (sample_address & 0xff00) | (data << 0);
 			sample_address <<= 4;
 		return;
 
-		case 0x12:
-		case 0x13: // poundfor
+		case 0x11: // poundfor
 			sample_address >>= 4;
 			sample_address = (sample_address & 0x00ff) | (data << 8);
 			sample_address <<= 4;
+		return;
+
+		case 0x12: // poundfor "sample end address" - not used
+		case 0x13:
 		return;
 
 		case 0x80: // rtype2
@@ -1235,7 +1250,7 @@ void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall m72_sound_read_port(UINT16 port)
+static UINT8 __fastcall m72_sound_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -1756,12 +1771,16 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
+	if (Poundfor)
+		BurnTrackballExit();
+
 	m72_video_type = 0;
 	enable_z80_reset = 0;
 	z80_nmi_enable = 0;
 	m72_irq_base = 0;
 	Kengo = 0;
 	CosmicCop = 0;
+	Poundfor = 0;
 	Clock_16mhz = 0;
 
 	m72_install_protection(NULL,NULL,NULL);
@@ -2044,6 +2063,15 @@ static void compile_inputs()
 		DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 	}
+
+	if (Poundfor) {
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
+		BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
+		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 5, 8);
+		BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 5, 8);
+		BurnTrackballUpdate(0);
+		BurnTrackballUpdate(1);
+	}
 }
 
 static INT32 nPreviousLine = 0;
@@ -2134,7 +2162,7 @@ static INT32 DrvFrame()
 		} else {
 			ZetIdle(nCyclesTotal[1] / nInterleave);
 		}
-		
+
 		if ((i%multiplier)==0) {
 			if (pBurnSoundOut) {
 				INT32 nSegmentLength = nBurnSoundLen / (nInterleave / multiplier);
@@ -2190,6 +2218,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2151Scan(nAction, pnMin);
 		DACScan(nAction, pnMin);
 		VezScan(nAction);
+
+		if (Poundfor)
+			BurnTrackballScan();
 
 		SCAN_VAR(irq_raster_position);
 		SCAN_VAR(m72_irq_base);
@@ -3891,14 +3922,21 @@ STD_ROM_FN(poundfor)
 
 static INT32 poundforInit()
 {
-	return DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, Z80_FAKE_NMI, 4);
+	INT32 rc = DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, Z80_FAKE_NMI, 4);
+
+	if (!rc) {
+		Poundfor = 1;
+		BurnTrackballInit(2);
+	}
+
+	return rc;
 }
 
-struct BurnDriverD BurnDrvPoundfor = {
+struct BurnDriver BurnDrvPoundfor = {
 	"poundfor", NULL, NULL, NULL, "1990",
 	"Pound for Pound (World)\0", NULL, "Irem", "Irem M85",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforRomInfo, poundforRomName, NULL, NULL, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
 	poundforInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
@@ -3931,11 +3969,11 @@ static struct BurnRomInfo poundforjRomDesc[] = {
 STD_ROM_PICK(poundforj)
 STD_ROM_FN(poundforj)
 
-struct BurnDriverD BurnDrvPoundforj = {
+struct BurnDriver BurnDrvPoundforj = {
 	"poundforj", "poundfor", NULL, NULL, "1990",
 	"Pound for Pound (Japan)\0", NULL, "Irem", "Irem M85",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforjRomInfo, poundforjRomName, NULL, NULL, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
 	poundforInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
@@ -3968,11 +4006,11 @@ static struct BurnRomInfo poundforuRomDesc[] = {
 STD_ROM_PICK(poundforu)
 STD_ROM_FN(poundforu)
 
-struct BurnDriverD BurnDrvPoundforu = {
+struct BurnDriver BurnDrvPoundforu = {
 	"poundforu", "poundfor", NULL, NULL, "1990",
 	"Pound for Pound (US)\0", NULL, "Irem America", "Irem M85",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforuRomInfo, poundforuRomName, NULL, NULL, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
 	poundforInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4

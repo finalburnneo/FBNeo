@@ -30,7 +30,7 @@ static INT32 nExtraCycles;
 static UINT8 DrvJoy1[8] =   { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 DrvJoy3[8] =   { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 DrvJoy4f[8] =  { 0, 0, 0, 0, 0, 0, 0, 0 };
-static UINT8 DrvDips[5] =   { 0, 0, 0, 0, 0 };
+static UINT8 DrvDips[6] =   { 0, 0, 0, 0, 0, 0 };
 static UINT8 DrvInputs[3] = { 0, 0, 0 };
 static UINT8 DrvReset;
 
@@ -68,6 +68,7 @@ static struct BurnInputInfo TempestInputList[] = {
 	{"Dip C",		        BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 	{"Dip D",		        BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 	{"Dip E",		        BIT_DIPSWITCH,	DrvDips + 4,	"dip"		},
+	{"Dip F",		        BIT_DIPSWITCH,	DrvDips + 5,	"dip"		},
 };
 #undef A
 STDINPUTINFO(Tempest)
@@ -81,6 +82,7 @@ static struct BurnDIPInfo TempestDIPList[]=
 	{DIPOFFS + 0x02, 0xff, 0xff, 0x00, NULL				    },
 	{DIPOFFS + 0x03, 0xff, 0xff, 0x00, NULL				    },
 	{DIPOFFS + 0x04, 0xff, 0xff, 0x10, NULL				    },
+	{DIPOFFS + 0x05, 0xff, 0xff, 0x00, NULL				    },
 
 	{0             , 0xfe, 0   ,    2, "Cabinet"			    },
 	{DIPOFFS + 0x00, 0x01, 0x10, 0x10, "Upright"			    },
@@ -151,6 +153,10 @@ static struct BurnDIPInfo TempestDIPList[]=
 	{0             , 0xfe, 0   ,    2, "Service Mode"			},
 	{DIPOFFS + 0x04, 0x01, 0x10, 0x10, "Off"  		        },
 	{DIPOFFS + 0x04, 0x01, 0x10, 0x00, "On"   	            },
+
+	{0             , 0xfe, 0   ,    2, "Hires Mode"			},
+	{DIPOFFS + 0x05, 0x01, 0x01, 0x00, "No"  		        },
+	{DIPOFFS + 0x05, 0x01, 0x01, 0x01, "Yes"   	            },
 };
 
 STDDIPINFO(Tempest)
@@ -276,6 +282,22 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	avgletsgo = 0;
 
 	nExtraCycles = 0;
+
+	if (DrvDips[5] & 1) {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Width != 1000) {
+			vector_rescale(1200, 1000);
+		}
+	} else {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Width != 500) {
+			vector_rescale(600, 500);
+		}
+	}
 
 	return 0;
 }
@@ -445,6 +467,21 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	if (DrvDips[5] & 1) {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Width != 1000) {
+			vector_rescale(1200, 1000);
+		}
+	} else {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Width != 500) {
+			vector_rescale(600, 500);
+		}
+	}
 	draw_vector(DrvPalette);
 
 	return 0;

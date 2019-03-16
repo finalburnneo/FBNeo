@@ -473,6 +473,7 @@ static INT32 DrvDraw()
 
 		if (Width != 1000) {
 			vector_rescale(1200, 1000);
+			return 0;
 		}
 	} else {
 		INT32 Width, Height;
@@ -480,6 +481,7 @@ static INT32 DrvDraw()
 
 		if (Width != 500) {
 			vector_rescale(600, 500);
+			return 0;
 		}
 	}
 	draw_vector(DrvPalette);

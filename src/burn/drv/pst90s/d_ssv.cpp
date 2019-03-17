@@ -11,7 +11,7 @@
 #include "burn_gun.h"
 
 // Use for slower systems like rpi & xbox
-// #define SSV_UPD_SPEEDHACK
+#define SSV_UPD_SPEEDHACK
 
 /*
 	srmp7 - no music/sfx
@@ -93,6 +93,10 @@ static UINT8 DrvInputs[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
+static INT32 line_cycles_total = 0;
+static INT32 line_cycles = 0;
+
+static INT32 pastelis = 0;
 static INT32 sxyreact_kludge = 0;
 static INT16 SxyGun = 0;
 
@@ -921,6 +925,68 @@ static struct BurnDIPInfo KeithlcyDIPList[]=
 };
 
 STDDIPINFO(Keithlcy)
+
+static struct BurnDIPInfo PastelisDIPList[]=
+{
+	{0x15, 0xff, 0xff, 0xff, NULL				},
+	{0x16, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Unused"			},
+	{0x15, 0x01, 0x01, 0x01, "Off"				},
+	{0x15, 0x01, 0x01, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x15, 0x01, 0x02, 0x02, "Off"				},
+	{0x15, 0x01, 0x02, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x15, 0x01, 0x04, 0x04, "Off"				},
+	{0x15, 0x01, 0x04, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x15, 0x01, 0x08, 0x00, "Off"				},
+	{0x15, 0x01, 0x08, 0x08, "On"				},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"			},
+	{0x15, 0x01, 0x30, 0x10, "2 Coins 1 Credits"		},
+	{0x15, 0x01, 0x30, 0x00, "2 Coins 3 Credits"		},
+	{0x15, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
+	{0x15, 0x01, 0x30, 0x20, "1 Coin  2 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"			},
+	{0x15, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"		},
+	{0x15, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"		},
+	{0x15, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"		},
+	{0x15, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x16, 0x01, 0x03, 0x02, "Easy"				},
+	{0x16, 0x01, 0x03, 0x03, "Normal"			},
+	{0x16, 0x01, 0x03, 0x01, "Hard"				},
+	{0x16, 0x01, 0x03, 0x00, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    2, "Unused"			},
+	{0x16, 0x01, 0x04, 0x04, "Off"				},
+	{0x16, 0x01, 0x04, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Unused"			},
+	{0x16, 0x01, 0x08, 0x08, "Off"				},
+	{0x16, 0x01, 0x08, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x16, 0x01, 0x30, 0x20, "1"				},
+	{0x16, 0x01, 0x30, 0x30, "2"				},
+	{0x16, 0x01, 0x30, 0x10, "3"				},
+	{0x16, 0x01, 0x30, 0x00, "4"				},
+
+	{0   , 0xfe, 0   ,    4, "Extend"			},
+	{0x16, 0x01, 0xc0, 0x00, "70000, every 90000"		},
+	{0x16, 0x01, 0xc0, 0x40, "every 70000"			},
+	{0x16, 0x01, 0xc0, 0x80, "50000, every 70000"		},
+	{0x16, 0x01, 0xc0, 0xc0, "every 50000"			},
+};
+
+STDDIPINFO(Pastelis)
 
 static struct BurnDIPInfo Twineag2DIPList[]=
 {
@@ -2218,6 +2284,15 @@ static UINT16 common_main_read_word(UINT32 address)
 	switch (address & ~1)
 	{
 		case 0x1c0000:
+			if (pastelis) { // pastel island checks hblank
+				INT32 status = 0;
+				INT32 hblank_cycs = line_cycles_total * 95 / 100;
+				if ((v60TotalCycles() - line_cycles) > hblank_cycs) {
+					status |= 0x0800;
+				}
+				if (vblank) status |= 0x3000;
+				return status;
+			}
 			if (vbl_invert) {
 				return (vblank) ? 0 : 0x3000;
 			} else {
@@ -2960,14 +3035,14 @@ static void st010Expand(INT32 rom_offset)
 	memset (DrvDSPROM, 0xff, 0x11000);
 
 	// copy DSP program
-	for (int i = 0; i < 0x10000; i+= 4)
+	for (INT32 i = 0; i < 0x10000; i+= 4)
 	{
 		*dspprg = dspsrc[0+i]<<24 | dspsrc[1+i]<<16 | dspsrc[2+i]<<8;
 		dspprg++;
 	}
 
 	// copy DSP data
-	for (int i = 0; i < 0x1000; i+= 2)
+	for (INT32 i = 0; i < 0x1000; i+= 2)
 	{
 		*dspdata++ = dspsrc[0x10000+i]<<8 | dspsrc[0x10001+i];
 	}
@@ -3023,7 +3098,7 @@ static INT32 DrvGetRoms(bool bLoad)
 
 		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 1) {
 			if (bLoad) BurnLoadRom(V60Load, i, 1);
-			V60Load += ri.nLen;
+			V60Load += ((pastelis) ? ri.nLen / 2 : ri.nLen);
 			prev_type = 1;
 			continue;
 		}
@@ -3175,6 +3250,7 @@ static INT32 DrvExit()
 		BurnGunExit();
 	}
 	sxyreact_kludge = 0;
+	pastelis = 0;
 
 	return 0;
 }
@@ -3193,14 +3269,40 @@ static void DrvPaletteInit()
 	}
 }
 
-static void drawgfx(INT32 gfx, UINT32 code, UINT32 color, int flipx, int flipy, int x0, int y0, int shadow)
+struct rectangle
+{
+	INT32 min_x;
+	INT32 max_x;
+	INT32 min_y;
+	INT32 max_y;
+};
+
+static void set_rect(rectangle *rect, INT32 minx, INT32 maxx, INT32 miny, INT32 maxy)
+{
+	rect->min_x = minx;
+	rect->max_x = maxx;
+	rect->min_y = miny;
+	rect->max_y = maxy;
+}
+
+static void clip_rect(rectangle *rect, const rectangle *cliprect)
+{
+	if (rect->min_x < cliprect->min_x) rect->min_x = cliprect->min_x;
+	if (rect->min_y < cliprect->min_y) rect->min_y = cliprect->min_y;
+	if (rect->max_x > cliprect->max_x) rect->max_x = cliprect->max_x;
+	if (rect->max_y > cliprect->max_y) rect->max_y = cliprect->max_y;
+	if (rect->min_y >= rect->max_y) rect->min_y = rect->max_y;
+	if (rect->min_x >= rect->max_x) rect->min_x = rect->max_x;
+}
+
+static void drawgfx(INT32 gfx, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 x0, INT32 y0, INT32 shadow)
 {
 	const UINT8 *addr, *source;
 	UINT8 pen;
 	UINT16 *dest;
-	int sx, x1, dx;
-	int sy, y1, dy;
-	int penmask = gfx-1;
+	INT32 sx, x1, dx;
+	INT32 sy, y1, dy;
+	INT32 penmask = gfx-1;
 
 	addr    =   DrvGfxROM + ((code * 16 * 8) % nDrvGfxROMLen);
 	color   =   (color * 0x40) & 0x7fc0;
@@ -3241,161 +3343,191 @@ static void drawgfx(INT32 gfx, UINT32 code, UINT32 color, int flipx, int flipy, 
 	}
 }
 
-static void draw_row(int sx, int sy, int scroll)
+static void drawgfx_line(const rectangle *cliprect, INT32 gfx, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 base_sx, INT32 base_sy, INT32 shadow, INT32 realline, INT32 line)
+{
+	const UINT8 *addr    =   DrvGfxROM + ((code * 16 * 8) % nDrvGfxROMLen);
+	UINT32 realcolor = (color * 0x40) & 0x7fc0; // where the derp does this come from? -dink
+	const UINT8 *const source = flipy ? addr + (7 - line) * 16 : addr + line * 16;
+
+	if (realline >= cliprect->min_y && realline <= cliprect->max_y)
+	{
+		struct drawmodes
+		{
+			INT32 gfx_mask;
+			INT32 gfx_shift;
+		};
+
+		// comments at top suggest that each bit of 'gfx' enables 2 bitplanes, but ultrax case disagrees, also that would require 4 bits to cover all cases, and we only have 3
+		// see also seta2.cpp where the same logic is used
+		drawmodes BPP_MASK_TABLE[8] = {
+			{ 0x3f,0 },   // 0: ultrax, twineag2 text - is there a local / global mixup somewhere, or is this an 'invalid' setting that just enables all planes?
+			{ 0xff,0 },   // 1: unverified case, mimic old driver behavior of only using lowest bit
+			{ 0x3f,0 },   // 2: unverified case, mimic old driver behavior of only using lowest bit
+			{ 0xff,0 },   // 3: unverified case, mimic old driver behavior of only using lowest bit (pastelis sets this on shadows, but seems to need behavior beyond what we currently emulate, maybe also changes number of shadow bits in addition to global shadow mask/shift?)
+			{ 0x0f,0 },   // 4: eagle shot 4bpp birdie text
+			{ 0xf0,4 },   // 5: eagle shot 4bpp Japanese text
+			{ 0x3f,0 },   // 6: common 6bpp case + keithlcy (logo), drifto94 (wheels) masking
+			{ 0xff,0 }    // 7: common 8bpp case
+		};
+
+		const UINT8 gfxbppmask = BPP_MASK_TABLE[gfx & 0x07].gfx_mask;
+		const UINT8 gfxshift = BPP_MASK_TABLE[gfx & 0x07].gfx_shift;
+
+		UINT16 *dest = pTransDraw + (realline * nScreenWidth);
+		const INT32 x0 = flipx ? (base_sx + 16 - 1) : base_sx;
+		const INT32 x1 = flipx ? (base_sx - 1) : (x0 + 16);
+		const INT32 dx = flipx ? -1 : 1;
+
+		INT32 column = 0;
+		for (INT32 sx = x0; sx != x1; sx += dx)
+		{
+			const UINT8 pen = (source[column] & gfxbppmask) >> gfxshift;
+
+			if (pen && sx >= cliprect->min_x && sx <= cliprect->max_x)
+			{
+				if (shadow)
+					dest[sx] = ((dest[sx] & shadow_pen_mask) | (pen << shadow_pen_shift)) & 0x7fff;
+				else
+					dest[sx] = (realcolor + pen) & 0x7fff;
+			}
+			column++;
+		}
+	}
+}
+
+static void draw_16x16_tile_line(const rectangle *cliprect, INT32 flipx, INT32 flipy, INT32 mode, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 realline, INT32 line)
+{
+	/* Force 16x16 tiles ? */
+	INT32 realcode;
+	if (flipy)
+	{
+		if (line & 8)
+			realcode = code;
+		else
+			realcode = code + 1;
+	}
+	else
+	{
+		if (line & 8)
+			realcode = code + 1;
+		else
+			realcode = code;
+	}
+	INT32 tileline = line & 7;
+
+	INT32 shadow = (mode & 0x0800);
+	/* Select 256 or 64 color tiles */
+	INT32 gfx = ((mode & 0x0700) >> 8);
+
+	drawgfx_line(cliprect, gfx, realcode, color, flipx, flipy, sx, sy, shadow, realline, tileline);
+}
+
+static inline void get_tile(INT32 x, INT32 y, INT32 size, INT32 page, int& code, int& attr, int& flipx, int& flipy)
 {
 	UINT16 *ssv_scroll = (UINT16*)DrvScrollRAM;
 	UINT16 *spriteram16 = (UINT16*)DrvSprRAM;
+	UINT16 *s3 = &spriteram16[page * (size * ((0x1000 / 0x200) / 2)) +
+							  ((x & ((size - 1) & ~0xf)) << 2) +
+							  ((y & ((0x200 - 1) & ~0xf)) >> 3)];
 
-	int attr, code, color, mode, size, page, shadow;
-	int x, x1, sx1, flipx, xnum, xstart, xend, xinc;
-	int y, y1, sy1, flipy, ynum, ystart, yend, yinc;
-	UINT16 *s3;
+	code = s3[0];  // code high bits
+	attr = s3[1];  // code low  bits + color
 
-	INT32 clip_min_x = Gclip_min_x;
-	INT32 clip_max_x = Gclip_max_x;
-	INT32 clip_min_y = Gclip_min_y;
-	INT32 clip_max_y = Gclip_max_y;
+	/* Code's high bits are scrambled */
+	code += tile_code[(attr & 0x3c00) >> 10];
+	flipy = (attr & 0x4000);
+	flipx = (attr & 0x8000);
 
-	xnum = 0x20;        // width in tiles (screen-wide)
-	ynum = 0x8;         // height in tiles (always 64 pixels?)
-
-	scroll &= 0x7;      // scroll register index
-
-	/* Sign extend the position */
-	sx = 0;
-	sy = (sy & 0x1ff) - (sy & 0x200);
-
-	/* Set up a clipping region for the tilemap slice .. */
-	int clip[4] = { Gclip_min_x, Gclip_max_x, Gclip_min_y, Gclip_max_y };
-//	clip.set(sx, sx + xnum * 0x10 - 1, sy, sy + ynum * 0x8  - 1);
-
-	clip_min_x = sx;
-	clip_max_x = sx + xnum * 0x10 - 1;
-	clip_min_y = sy;
-	clip_max_y = sy + ynum * 0x8  - 1;
-
-	/* .. and clip it against the visible screen */
-	if (clip_min_x >= nScreenWidth) return;
-	if (clip_min_y >= nScreenHeight) return;
-	if (clip_max_x < 0) return;
-	if (clip_max_y < 0) return;
-
-	if (clip_min_x < 0)  clip_min_x = 0;
-	if (clip_max_x >= nScreenWidth) clip_max_x = nScreenWidth - 1;
-	if (clip_min_y < 0)  clip_min_y = 0;
-	if (clip_max_y >= nScreenHeight) clip_max_y = nScreenHeight - 1;
-
-	/* Get the scroll data */
-	x    = ssv_scroll[ scroll * 4 + 0 ];    // x scroll
-	y    = ssv_scroll[ scroll * 4 + 1 ];    // y scroll
-	//     ssv_scroll[ scroll * 4 + 2 ];    // ???
-	mode = ssv_scroll[ scroll * 4 + 3 ];    // layer disabled, shadow, depth etc.
-
-	/* Background layer disabled */
-	if ((mode & 0xe000) == 0)
-		return;
-
-#if 0 // iq_132
-	Gclip_min_x = clip_min_x;
-	Gclip_min_y = clip_min_y;
-	Gclip_max_x = clip_max_x;
-	Gclip_max_y = clip_max_y;
-#endif
-
-	shadow = (mode & 0x0800);
-
-	/* Decide the actual size of the tilemap */
-	size    =   1 << (8 + ((mode & 0xe000) >> 13));
-	page    =   (x & 0x7fff) / size;
-
-	/* Given a fixed scroll value, the portion of tilemap displayed changes with the sprite position */
-	x += sx;
-	y += sy;
-
-	/* Tweak the scroll values */
-	y += ((ssv_scroll[0x70/2] & 0x1ff) - (ssv_scroll[0x70/2] & 0x200) + ssv_scroll[0x6a/2] + 2);
-
-	// Kludge for eaglshot
-	if ((ssv_scroll[ scroll * 4 + 2 ] & 0x05ff) == 0x0440) x += -0x10;
-	if ((ssv_scroll[ scroll * 4 + 2 ] & 0x05ff) == 0x0401) x += -0x20;
-
-	/* Draw the rows */
-	x1  = x;
-	y1  = y;
-	sx1 = sx - (x & 0xf);
-	sy1 = sy - (y & 0xf);
-
-	for (sx=sx1,x=x1; sx <= clip_max_x; sx+=0x10,x+=0x10)
+	if ((ssv_scroll[0x74 / 2] & 0x1000) && ((ssv_scroll[0x74 / 2] & 0x2000) == 0))
 	{
-		for (sy=sy1,y=y1; sy <= clip_max_y; sy+=0x10,y+=0x10)
-		{
-			int tx, ty, gfx;
-
-			s3  =   &spriteram16[page * (size * 4) + ((x & ((size -1) & ~0xf)) << 2) + ((y & (0x1ff & ~0xf)) >> 3)];
-
-			code    =   s3[0];  // code high bits
-			attr    =   s3[1];  // code low  bits + color
-
-			/* Code's high bits are scrambled */
-			code    +=  tile_code[(attr & 0x3c00)>>10];
-			flipy   =   (attr & 0x4000);
-			flipx   =   (attr & 0x8000);
-
-			if ((ssv_scroll[0x74/2] & 0x1000) && ((ssv_scroll[0x74/2] & 0x2000) == 0))
-			{
-				if (flipx == 0) flipx = 1; else flipx = 0;
-			}
-
-			if ((ssv_scroll[0x74/2] & 0x4000) && ((ssv_scroll[0x74/2] & 0x2000) == 0))
-			{
-				if (flipy == 0) flipy = 1; else flipy = 0;
-			}
-
-			color   =   attr;
-
-			/* Select tile pen mask */
-			gfx = 0x00;
-
-			switch ((mode & 0x0700) >> 8) {
-				case 0x07: gfx = 0xff+1; break;
-				case 0x06: gfx = 0x3f+1; break;
-				case 0x05: gfx = 0xff+1; break;
-				case 0x04: gfx = 0x0f+1; break;
-				case 0x03: gfx = 0xff+1; break;
-				case 0x02: gfx = 0x3f+1; break;
-				case 0x01: gfx = 0xff+1; break;
-				case 0x00: gfx = 0x3f+1; break;
-			}
-
-			/* Force 16x16 tiles ? */
-			if (flipx)  { xstart = 1-1;  xend = -1; xinc = -1; }
-			else        { xstart = 0;    xend = 1;  xinc = +1; }
-
-			if (flipy)  { ystart = 2-1;  yend = -1; yinc = -1; }
-			else        { ystart = 0;    yend = 2;  yinc = +1; }
-
-			/* Draw a tile (16x16) */
-			for (tx = xstart; tx != xend; tx += xinc)
-			{
-				for (ty = ystart; ty != yend; ty += yinc)
-				{
-					drawgfx(gfx, code++, color, flipx, flipy, (sx + tx * 16), (sy + ty * 8), shadow);
-				} /* ty */
-			} /* tx */
-
-		} /* sy */
-	} /* sx */
-
-	Gclip_min_x = clip[0];
-	Gclip_min_y = clip[2];
-	Gclip_max_x = clip[1];
-	Gclip_max_y = clip[3];
+		if (flipx == 0) flipx = 1; else flipx = 0;
+	}
+	if ((ssv_scroll[0x74 / 2] & 0x4000) && ((ssv_scroll[0x74 / 2] & 0x2000) == 0))
+	{
+		if (flipy == 0) flipy = 1; else flipy = 0;
+	}
 }
 
-static void draw_layer(int  nr)
+void draw_row_64pixhigh(INT32 in_sy, INT32 scrollreg)
+{
+	UINT16 *ssv_scroll = (UINT16*)DrvScrollRAM;
+	UINT16 *spriteram16 = (UINT16*)DrvSprRAM;
+	scrollreg &= 0x7;      // scroll register index
+
+	/* in_sy will always be 0x00, 0x40, 0x80, 0xc0 in 'draw layer' */
+	in_sy = (in_sy & 0x1ff) - (in_sy & 0x200);
+
+	/* Set up a clipping region for the tilemap slice .. */
+	rectangle outclip;
+	set_rect(&outclip, 0, 0x20 * 0x10, in_sy, in_sy + 0x8 * 0x8);
+	rectangle cliprect;
+	set_rect(&cliprect, Gclip_min_x, Gclip_max_x, Gclip_min_y, Gclip_max_y);
+
+	/* .. and clip it against the visible screen */
+
+	if (outclip.min_x > cliprect.max_x)    return;
+	if (outclip.min_y > cliprect.max_y)    return;
+
+	if (outclip.max_x < cliprect.min_x)    return;
+	if (outclip.max_y < cliprect.min_y)    return;
+
+	clip_rect(&outclip, &cliprect);
+
+	for (INT32 line = outclip.min_y; line <= outclip.max_y; line++)
+	{
+		rectangle clip;
+		set_rect(&clip, outclip.min_x, outclip.max_x, line, line);
+
+		/* Get the scroll data */
+		INT32 tilemap_scrollx = ssv_scroll[scrollreg * 4 + 0];    // x scroll
+		INT32 tilemap_scrolly = ssv_scroll[scrollreg * 4 + 1];    // y scroll
+		INT32 unknown = ssv_scroll[scrollreg * 4 + 2];    // ???
+		INT32 mode = ssv_scroll[scrollreg * 4 + 3];    // layer disabled, shadow, depth etc.
+
+		/* Background layer disabled */
+		if ((mode & 0xe000) == 0)
+			return;
+
+		/* Decide the actual size of the tilemap */
+		INT32 size = 1 << (8 + ((mode & 0xe000) >> 13));
+		INT32 page = (tilemap_scrollx & 0x7fff) / size;
+
+		/* Given a fixed scroll value, the portion of tilemap displayed changes with the sprite position */
+		tilemap_scrolly += in_sy;
+
+		/* Tweak the scroll values */
+		tilemap_scrolly += ((ssv_scroll[0x70 / 2] & 0x1ff) - (ssv_scroll[0x70 / 2] & 0x200) + ssv_scroll[0x6a / 2] + 2);
+
+		// Kludge for eaglshot
+		if ((unknown & 0x05ff) == 0x0440) tilemap_scrollx += -0x10;
+		if ((unknown & 0x05ff) == 0x0401) tilemap_scrollx += -0x20;
+
+		INT32 realy = tilemap_scrolly + (line - in_sy);
+
+		if ((mode & 0x1000))
+		{
+			UINT32 scrolltable_base = ((mode & 0x00ff) * 0x400 ) /2;
+			//logerror("line %d realy %04x: scrolltable base is %08x\n", line,realy&0x1ff, scrolltable_base*2);
+			tilemap_scrollx += spriteram16[(scrolltable_base+(realy&0x1ff)) & 0x1ffff];
+		}
+
+		/* Draw the rows */
+		INT32 sx1 = 0 - (tilemap_scrollx & 0xf);
+		INT32 x = tilemap_scrollx;
+		for (INT32 sx = sx1; sx <= clip.max_x; sx += 0x10)
+		{
+			INT32 code, attr, flipx, flipy;
+			get_tile(x, realy, size, page, code, attr, flipx, flipy);
+			draw_16x16_tile_line(&clip, flipx, flipy, mode, code, attr, sx, realy, line,realy & 0xf);
+			x += 0x10;
+		} /* sx */
+	} /* line */
+}
+
+static void draw_layer(INT32 nr)
 {
 	for (INT32 sy = 0; sy < nScreenHeight; sy += 0x40)
-		if (nBurnLayer & 4) draw_row(0, sy, nr);
+		if (nBurnLayer & 4) draw_row_64pixhigh(sy, nr);
 }
 
 static void draw_sprites()
@@ -3483,8 +3615,8 @@ static void draw_sprites()
 					}
 				}
 
-				if ((mode & 0x001f) != 0)
-					if (nBurnLayer & 2) draw_row(sx, sy, scroll);
+				if ((mode & 0x001f) != 0 && s2[0] != 0)
+					if (nBurnLayer & 2) draw_row_64pixhigh(sy, scroll);
 			}
 			else
 			{
@@ -3740,16 +3872,18 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal[2] = { (16000000 * 100) / 6018, (10000000 * 100) / 6018 };
 #endif
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSegment = 0;
 
 	v60Open(0);
 
 	vblank = 0;
 
+	line_cycles_total = nCyclesTotal[0] / nInterleave;
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += v60Run(nSegment);
+		line_cycles = v60TotalCycles();
+
+		nCyclesDone[0] += v60Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
 		if (dsp_enable)
 			nCyclesDone[1] += upd96050Run(nCyclesTotal[1] / nInterleave);
@@ -3761,6 +3895,11 @@ static INT32 DrvFrame()
 
 		if ((i & 0x3f) == 0 && is_gdfs) {
 			requested_int |= 1 << 6;
+			update_irq_state();
+		}
+
+		if (i == 120 && pastelis) {
+			requested_int |= 1 << 2;
 			update_irq_state();
 		}
 
@@ -4148,7 +4287,7 @@ static void KeithlcyV60Map()
 	v60MapMemory(DrvSprRAM,			0x100000, 0x13ffff, MAP_RAM);
 	v60MapMemory(DrvPalRAM,			0x140000, 0x15ffff, MAP_ROM); // handler
 	v60MapMemory(DrvV60RAM1,		0x160000, 0x17ffff, MAP_RAM);
-	v60MapMemory(DrvV60ROM,			0xe00000, 0xffffff, MAP_ROM);	
+	v60MapMemory(DrvV60ROM,			0xe00000, 0xffffff, MAP_ROM);
 	v60SetWriteWordHandler(common_main_write_word);
 	v60SetWriteByteHandler(common_main_write_byte);
 	v60SetReadWordHandler(common_main_read_word);
@@ -4170,6 +4309,48 @@ struct BurnDriver BurnDrvKeithlcy = {
 	NULL, keithlcyRomInfo, keithlcyRomName, NULL, NULL, NULL, NULL, KeithlcyInputInfo, KeithlcyDIPInfo,
 	KeithlcyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 238, 4, 3
+};
+
+
+// Pastel Island (Japan, prototype)
+
+static struct BurnRomInfo pastelisRomDesc[] = {
+	{ "data.u28",	0x200000, 0xe71dcc02, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "prg_l.u26",	0x080000, 0x96c9d4d7, 2 | BRF_PRG | BRF_ESS }, //  1
+	{ "prg_h.u27",	0x080000, 0xa513733b, 2 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "a0.u13",	0x200000, 0x61688d29, 3 | BRF_GRA },           //  3 gfx1
+	{ "a1.u14",	0x080000, 0xd38b9805, 3 | BRF_GRA },           //  4
+	{ "b0.u16",	0x200000, 0xfc93f7bb, 3 | BRF_GRA },           //  5
+	{ "b1.u17",	0x080000, 0xb85f4933, 3 | BRF_GRA },           //  6
+	{ "c0.u21",	0x200000, 0x7128bc51, 3 | BRF_GRA },           //  7
+	{ "c1.u22",	0x080000, 0x2462206b, 3 | BRF_GRA },           //  8
+	{ "d0.u34",	0x200000, 0x4f79415a, 3 | BRF_GRA },           //  9
+	{ "d1.u35",	0x080000, 0xd3c75994, 3 | BRF_GRA },           // 10
+
+	{ "snd_0.u29",	0x200000, 0x8bc0dde9, 4 | BRF_SND },           // 11 ensoniq.0
+	{ "snd_1.u33",	0x200000, 0xf958e0ea, 4 | BRF_SND },           // 12
+};
+
+STD_ROM_PICK(pastelis)
+STD_ROM_FN(pastelis)
+
+static INT32 PastelisInit()
+{
+	watchdog_disable = 1;
+	pastelis = 1;
+
+	return DrvCommonInit(KeithlcyV60Map, NULL, 0, 0, -1, -1, -1, 0.80, 0);
+}
+
+struct BurnDriver BurnDrvPastelis = {
+	"pastelis", NULL, NULL, NULL, "1993",
+	"Pastel Island (Japan, prototype)\0", NULL, "Visco", "SSV",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_MAZE, 0,
+	NULL, pastelisRomInfo, pastelisRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PastelisDIPInfo,
+	PastelisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	352, 240, 4, 3
 };
 
 

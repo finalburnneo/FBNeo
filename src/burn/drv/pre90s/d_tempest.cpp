@@ -260,6 +260,28 @@ static void tempest_write(UINT16 address, UINT8 data)
 	}
 }
 
+static INT32 res_check()
+{
+	if (DrvDips[5] & 1) {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Width != 1000) {
+			vector_rescale(1200, 1000);
+			return 1;
+		}
+	} else {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Width != 500) {
+			vector_rescale(600, 500);
+			return 1;
+		}
+	}
+	return 0;
+}
+
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
@@ -283,21 +305,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	nExtraCycles = 0;
 
-	if (DrvDips[5] & 1) {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Width != 1000) {
-			vector_rescale(1200, 1000);
-		}
-	} else {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Width != 500) {
-			vector_rescale(600, 500);
-		}
-	}
+	res_check();
 
 	return 0;
 }
@@ -467,23 +475,8 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	if (DrvDips[5] & 1) {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
+	if (res_check()) return 0; // resolution was changed
 
-		if (Width != 1000) {
-			vector_rescale(1200, 1000);
-			return 0;
-		}
-	} else {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Width != 500) {
-			vector_rescale(600, 500);
-			return 0;
-		}
-	}
 	draw_vector(DrvPalette);
 
 	return 0;

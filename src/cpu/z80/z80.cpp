@@ -3523,6 +3523,11 @@ void Z80Init()
 	F = ZF;			/* Zero flag is set */
 }
 
+void Z80SetDaisy(void *dptr)
+{
+	Z80.daisy = (z80_irq_daisy_chain *)dptr;
+}
+
 void Z80Reset()
 {
 	//struct z80_irq_daisy_chain *daisy;

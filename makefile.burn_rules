@@ -114,7 +114,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			z180_intf.o  \
 			\
 			arm.o arm7.o h6280.o hd6309.o i8039.o i8x41.o mcs51.o konami.o m6502.o m6800.o m6805.o m6809.o nec.o pic16c5x.o s2650.o sh2.o tms32010.o tlcs90.o \
-			upd7725.o upd7810.o v25.o v60.o z80.o z80daisy.o z180.o \
+			upd7725.o upd7810.o v25.o v60.o z80.o z80daisy.o z80ctc.o z80pio.o z180.o \
 			\
 			cop0.o cop1.o mips3.o \
 			\

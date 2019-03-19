@@ -14,11 +14,11 @@
 /* daisy-chain link */
 struct z80_irq_daisy_chain
 {
-	void (*reset)(int); 			/* reset callback */
-	int (*irq_state)(int);			/* get interrupt state */
-	int (*irq_ack)(int);			/* interrupt acknowledge callback */
-	void (*irq_reti)(int);			/* reti callback */
-	int param;						/* callback parameter (-1 ends list) */
+	void (*reset)(); 			/* reset callback */
+	int (*irq_state)();			/* get interrupt state */
+	int (*irq_ack)();			/* interrupt acknowledge callback */
+	void (*irq_reti)();			/* reti callback */
+	int param;					/* callback parameter (-1 ends list) */
 };
 
 

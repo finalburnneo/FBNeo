@@ -25,13 +25,13 @@ void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, I
 			if((fourway[playernum] & rl) && (fourway[playernum] & ud))
 				fourway[playernum] ^= (fourway[playernum] & (DrvInputPrev[playernum] & udrlmask));
 
-			if((fourway[playernum] & rl) && (fourway[playernum] & ud)) // if it starts out diagonally, pick a direction
-				fourway[playernum] &= (rand()&1) ? rl : ud;
+			if((fourway[playernum] & rl) && (fourway[playernum] & ud))
+				fourway[playernum] &= ud | ud; // diagonals aren't allowed w/INPUT_4WAY
 		}
 
 		DrvInputPrev[playernum] = *input;
 
-		*input = fourway[playernum] | (DrvInputPrev[playernum] & othermask); // preserve the unprocessed/other bits
+		*input = fourway[playernum] | (DrvInputPrev[playernum] & othermask); // add back the unprocessed/other bits
 	}
 
 	if (flags & INPUT_CLEAROPPOSITES) {

@@ -58,6 +58,8 @@ static INT16 DrvAnalogPort2 = 0;
 static INT16 DrvAnalogPort3 = 0;
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles[4] = { 0, 0, 0, 0 };
+
 static struct BurnInputInfo QixInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
@@ -438,6 +440,7 @@ static void qix_video_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xfc00) == 0x9000) {
+		partial_update();
 		DrvPalRAM[address & 0x3ff] = data;
 		DrvRecalc = 1;
 		return;
@@ -446,6 +449,7 @@ static void qix_video_write(UINT16 address, UINT8 data)
 	switch (address & ~0x3ff)
 	{
 		case 0x8800:
+			partial_update();
 			palettebank = data & 3;
 
 			if ((address & ~0x3fe) == 0x8801 && is_zookeep) {
@@ -483,6 +487,7 @@ static void qix_video_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x9402:
+			partial_update();
 			videoaddress[0] = data;
 			videobank();
 		return;
@@ -786,6 +791,8 @@ static INT32 DrvDoReset()
 
 	pia_reset();
 
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = nExtraCycles[3] = 0;
+
 	return 0;
 }
 
@@ -918,7 +925,7 @@ static INT32 DrvInit()
 	M6800Init(0);
 	M6800Open(0);
 	M6800MapMemory(DrvM6802RAM, 			0x0000, 0x007f, MAP_RAM);
-	M6800MapMemory(DrvM6802ROM + 0xd000,	0xd000, 0xffff, MAP_RAM);
+	M6800MapMemory(DrvM6802ROM + 0xd000,	0xd000, 0xffff, MAP_ROM);
 	M6800SetWriteHandler(qix_sound_write);
 	M6800SetReadHandler(qix_sound_read);
 	M6800Close();
@@ -1099,9 +1106,9 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 267;
+	INT32 nInterleave = 267*8;
 	INT32 nCyclesTotal[4] = { (INT32)(1250000 / 55.84), (INT32)(1250000 / 55.84), (INT32)(920000 / 55.84), (INT32)(1000000 / 55.84) };
-	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
+	INT32 nCyclesDone[4] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2], nExtraCycles[3] };
 
 	if (has_soundcpu == 0) {
 		nCyclesTotal[0] = 1340000 / 60;
@@ -1115,13 +1122,13 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		scanline = i;
+		scanline = i / 8;
 
 		M6809Open(0);
-		if (i == 0) {
+		if (i == 0*8) {
 			pia_set_input_cb1(3, 0);
 		}
-		if (i == 248) {
+		if (i == 248*8) {
 			pia_set_input_cb1(3, 1);
 
 			if (pBurnDraw) {
@@ -1143,7 +1150,11 @@ static INT32 DrvFrame()
 			nCyclesDone[3] += m6805Run(((i + 1) * nCyclesTotal[3] / nInterleave) - m6805TotalCycles());
 		}
 
-		if ((i%64) == 63) {
+		if (scanline - lastline >= 4) {
+			partial_update();
+		}
+
+		if ((i%(64*8)) == (64*8)-1) {
 			BurnTrackballUpdateSlither(0);
 			BurnTrackballUpdateSlither(1);
 		}
@@ -1163,6 +1174,11 @@ static INT32 DrvFrame()
 
 	m6805Close();
 	M6800Close();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
+	nExtraCycles[3] = nCyclesDone[3] - nCyclesTotal[3];
 
 	return 0;
 }
@@ -1199,6 +1215,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bankaddress);
 		SCAN_VAR(qix_coinctrl);
 		SCAN_VAR(videoram_mask);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_NVRAM) {

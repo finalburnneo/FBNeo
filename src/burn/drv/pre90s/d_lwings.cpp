@@ -41,7 +41,7 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
 static UINT8 DrvJoy5[8];
 static UINT8 DrvDip[2];
-static UINT8 DrvInp[5];
+static UINT8 DrvInputs[5];
 
 static UINT8 interrupt_enable;
 static UINT8 soundlatch;
@@ -699,14 +699,14 @@ static UINT8 avengers_protection_r()
 
 
 
-UINT8 __fastcall lwings_main_read(UINT16 address)
+static UINT8 __fastcall lwings_main_read(UINT16 address)
 {
 	switch (address)
 	{
 		case 0xf808:
 		case 0xf809:
 		case 0xf80a:
-			return DrvInp[address - 0xf808];
+			return DrvInputs[address - 0xf808];
 
 		case 0xf80b:
 		case 0xf80c:
@@ -715,7 +715,7 @@ UINT8 __fastcall lwings_main_read(UINT16 address)
 		case 0xf80d:
 		case 0xf80e:
 			if (fball) {
-				return DrvInp[(address - 0xf80d) + 3];
+				return DrvInputs[(address - 0xf80d) + 3];
 			} else {
 				return avengers_protection_r();
 			}
@@ -745,7 +745,7 @@ static inline void palette_update(INT32 entry)
 	DrvPalette[entry] = BurnHighCol((r*16)+r, (g*16)+g, (b*16)+b, 0);
 }
 
-void __fastcall lwings_main_write(UINT16 address, UINT8 data)
+static void __fastcall lwings_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf800) == 0xf000) {
 		DrvPalRAM[address & 0x7ff] = data;
@@ -818,7 +818,7 @@ void __fastcall lwings_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-void __fastcall lwings_sound_write(UINT16 address, UINT8 data)
+static void __fastcall lwings_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -835,7 +835,7 @@ void __fastcall lwings_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall lwings_sound_read(UINT16 address)
+static UINT8 __fastcall lwings_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -889,7 +889,7 @@ static UINT8 __fastcall fball_sound_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall trojan_adpcm_out(UINT16 port, UINT8 data)
+static void __fastcall trojan_adpcm_out(UINT16 port, UINT8 data)
 {
 	if ((port & 0xff) == 0x01) {
 		MSM5205ResetWrite(0, (data >> 7) & 1);
@@ -899,7 +899,7 @@ void __fastcall trojan_adpcm_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall trojan_adpcm_in(UINT16 port)
+static UINT8 __fastcall trojan_adpcm_in(UINT16 port)
 {
 	port &= 0xff;
 
@@ -1010,12 +1010,7 @@ static INT32 DrvGfxDecode()
 
 inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)((double)ZetTotalCycles() * nSoundRate / (nCyclesTotal[0] * 130));
-}
-
-inline static INT32 DrvMSM5205SynchroniseStreamAvengers(INT32 nSoundRate)
-{
-	return (INT64)((double)ZetTotalCycles() * nSoundRate / (nCyclesTotal[0] * 60));
+	return (INT64)((double)ZetTotalCycles() * nSoundRate / (3000000));
 }
 
 static void lwings_main_cpu_init()
@@ -1177,7 +1172,7 @@ static INT32 TrojanInit()
 	ZetSetOutHandler(trojan_adpcm_out);
 	ZetClose();
 	
-	MSM5205Init(0, (avengers) ? DrvMSM5205SynchroniseStreamAvengers : DrvMSM5205SynchroniseStream, /*455000*/384000, NULL, MSM5205_SEX_4B, 1);
+	MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
 	MSM5205SetRoute(0, (avengers) ? 1.00 : 0.50, BURN_SND_ROUTE_BOTH);
 	MSM5205InUse = 1;
 
@@ -1268,6 +1263,10 @@ static INT32 DrvExit()
 	} else {
 		BurnYM2203Exit();
 	}
+
+	if (MSM5205InUse)
+		MSM5205Exit();
+
 	BurnFree (AllMem);
 
 	fball = 0;
@@ -1275,12 +1274,6 @@ static INT32 DrvExit()
 	MSM5205InUse = 0;
 
 	return 0;
-}
-
-static INT32 TrojanExit()
-{
-	MSM5205Exit();
-	return DrvExit();
 }
 
 static void draw_foreground(INT32 colbase)
@@ -1585,7 +1578,7 @@ static void trojan_draw_sprites()
 		INT32 sx = DrvSprBuf[offs + 3] - 0x100 * (DrvSprBuf[offs + 1] & 0x01);
 		INT32 sy = DrvSprBuf[offs + 2];
 
-		if (sy && sx)
+		if (sy || sx)
 		{
 			INT32 flipx, flipy;
 
@@ -1671,79 +1664,56 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInp, 0xff, 3);
+		memset (DrvInputs, 0xff, 3);
 
 		for (INT32 i = 0; i < 8; i++) {
-			DrvInp[0] ^= (DrvJoy1[i] & 1) << i;
-			DrvInp[1] ^= (DrvJoy2[i] & 1) << i;
-			DrvInp[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		if ((DrvInp[1] & 0x03) == 0) DrvInp[1] |= 0x03;
-		if ((DrvInp[1] & 0x0c) == 0) DrvInp[1] |= 0x0c;
-		if ((DrvInp[2] & 0x03) == 0) DrvInp[2] |= 0x03;
-		if ((DrvInp[2] & 0x0c) == 0) DrvInp[2] |= 0x0c;
+		if ((DrvInputs[1] & 0x03) == 0) DrvInputs[1] |= 0x03;
+		if ((DrvInputs[1] & 0x0c) == 0) DrvInputs[1] |= 0x0c;
+		if ((DrvInputs[2] & 0x03) == 0) DrvInputs[2] |= 0x03;
+		if ((DrvInputs[2] & 0x0c) == 0) DrvInputs[2] |= 0x0c;
 	}
 
-	INT32 nInterleave;
-	INT32 MSMIRQSlice[134];
-	
-	if (MSM5205InUse) {
-		nInterleave = MSM5205CalcInterleave(0, 6000000);
-	
-		for (INT32 i = 0; i < 133; i++) {
-			MSMIRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 134));
-		}
-	} else {
-		nInterleave = 16;
-	}
-
+	INT32 nInterleave = 67; // # of interrupts/frame MSM5205 cpu needs
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	
 	ZetNewFrame();
 
+	if (MSM5205InUse) {
+		MSM5205NewFrame(0, 3000000, nInterleave);
+	}
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
-
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (interrupt_enable && i == (nInterleave-1 /* * 242 / 256*/)) {
+		ZetOpen(0);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		if (interrupt_enable && i == (nInterleave-1)) {
 			if (avengers & 1) {
 				ZetNmi();
 			} else {
 				ZetSetVector(0xd7);
-				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
 		}
 		if (MSM5205InUse) MSM5205Update();
 		ZetClose();
-		
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+
+		ZetOpen(1);
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		if ((i % (nInterleave / 4)) == ((nInterleave / 4) - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(500);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		if (MSM5205InUse) {
-			nCurrentCPU = 2;
-			ZetOpen(nCurrentCPU);
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-			for (INT32 j = 0; j < 133; j++) {
-				if (i == MSMIRQSlice[j]) {
-					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-					nCyclesDone[nCurrentCPU] += ZetRun((avengers) ? 500 : 1000);
-				}
-			}
+			ZetOpen(2);
+			nCyclesDone[2] += ZetRun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			MSM5205UpdateScanline(i);
 			ZetClose();
 		}
 	}
@@ -1772,24 +1742,24 @@ static INT32 FballFrame()
 	}
 
 	{
-		memset (DrvInp, 0xff, 5);
+		memset (DrvInputs, 0xff, 5);
 
 		for (INT32 i = 0; i < 8; i++) {
-			DrvInp[0] ^= (DrvJoy1[i] & 1) << i;
-			DrvInp[1] ^= (DrvJoy2[i] & 1) << i;
-			DrvInp[2] ^= (DrvJoy3[i] & 1) << i;
-			DrvInp[3] ^= (DrvJoy4[i] & 1) << i;
-			DrvInp[4] ^= (DrvJoy5[i] & 1) << i;
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
+			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
 
-		if ((DrvInp[1] & 0x03) == 0) DrvInp[1] |= 0x03;
-		if ((DrvInp[1] & 0x0c) == 0) DrvInp[1] |= 0x0c;
-		if ((DrvInp[2] & 0x03) == 0) DrvInp[2] |= 0x03;
-		if ((DrvInp[2] & 0x0c) == 0) DrvInp[2] |= 0x0c;
-		if ((DrvInp[3] & 0x03) == 0) DrvInp[3] |= 0x03;
-		if ((DrvInp[3] & 0x0c) == 0) DrvInp[3] |= 0x0c;
-		if ((DrvInp[4] & 0x03) == 0) DrvInp[4] |= 0x03;
-		if ((DrvInp[4] & 0x0c) == 0) DrvInp[4] |= 0x0c;
+		if ((DrvInputs[1] & 0x03) == 0) DrvInputs[1] |= 0x03;
+		if ((DrvInputs[1] & 0x0c) == 0) DrvInputs[1] |= 0x0c;
+		if ((DrvInputs[2] & 0x03) == 0) DrvInputs[2] |= 0x03;
+		if ((DrvInputs[2] & 0x0c) == 0) DrvInputs[2] |= 0x0c;
+		if ((DrvInputs[3] & 0x03) == 0) DrvInputs[3] |= 0x03;
+		if ((DrvInputs[3] & 0x0c) == 0) DrvInputs[3] |= 0x0c;
+		if ((DrvInputs[4] & 0x03) == 0) DrvInputs[4] |= 0x03;
+		if ((DrvInputs[4] & 0x0c) == 0) DrvInputs[4] |= 0x0c;
 	}
 
 	INT32 nInterleave = 100;
@@ -1873,9 +1843,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(trojan_bg2_image);
 	}
 
-	ZetOpen(0);
-	lwings_bankswitch_w(DrvZ80Bank);
-	ZetClose();
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		lwings_bankswitch_w(DrvZ80Bank);
+		ZetClose();
+	}
 
 	return 0;
 }
@@ -2224,7 +2196,7 @@ struct BurnDriver BurnDrvTrojan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, trojanRomInfo, trojanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanlsDIPInfo,
-	TrojanInit, TrojanExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -2278,7 +2250,7 @@ struct BurnDriver BurnDrvTrojana = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, trojanaRomInfo, trojanaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanlsDIPInfo,
-	TrojanInit, TrojanExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -2332,7 +2304,7 @@ struct BurnDriver BurnDrvTrojanr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, trojanrRomInfo, trojanrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
-	TrojanInit, TrojanExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -2386,7 +2358,7 @@ struct BurnDriver BurnDrvTrojanb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, trojanbRomInfo, trojanbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanlsDIPInfo,
-	TrojanInit, TrojanExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -2440,7 +2412,7 @@ struct BurnDriver BurnDrvTrojanj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, trojanjRomInfo, trojanjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
-	TrojanInit, TrojanExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -2501,7 +2473,7 @@ struct BurnDriver BurnDrvAvengers = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
 	NULL, avengersRomInfo, avengersRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
-	AvengersInit, TrojanExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
@@ -2555,7 +2527,7 @@ struct BurnDriver BurnDrvAvenger2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
 	NULL, avenger2RomInfo, avenger2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
-	AvengersInit, TrojanExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
@@ -2609,7 +2581,7 @@ struct BurnDriver BurnDrvBuraiken = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
 	NULL, buraikenRomInfo, buraikenRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
-	AvengersInit, TrojanExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 

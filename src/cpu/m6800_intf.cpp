@@ -285,6 +285,7 @@ void M6800SetIRQLine(INT32 vector, INT32 status)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800SetIRQLine called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6800SetIRQLine called when no CPU open\n"));
 	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6800) bprintf(PRINT_ERROR, _T("M6800SetIRQLine called with invalid CPU Type\n"));
 #endif
 
@@ -312,6 +313,7 @@ void HD63701SetIRQLine(INT32 vector, INT32 status)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("HD63701SetIRQLine called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD63701SetIRQLine called when no CPU open\n"));
 	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_HD63701) bprintf(PRINT_ERROR, _T("HD63701SetIRQLine called with invalid CPU Type\n"));
 #endif
 
@@ -339,6 +341,7 @@ void M6803SetIRQLine(INT32 vector, INT32 status)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6803SetIRQLine called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6803SetIRQLine called when no CPU open\n"));
 	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6803) bprintf(PRINT_ERROR, _T("M6803SetIRQLine called with invalid CPU Type\n"));
 #endif
 
@@ -366,6 +369,7 @@ void M6801SetIRQLine(INT32 vector, INT32 status)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6801SetIRQLine called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6801SetIRQLine called when no CPU open\n"));
 	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6801) bprintf(PRINT_ERROR, _T("M6800SetIRQLine called with invalid CPU Type\n"));
 #endif
 
@@ -393,6 +397,7 @@ void NSC8105SetIRQLine(INT32 vector, INT32 status)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called when no CPU open\n"));
 	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6801) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called with invalid CPU Type\n"));
 #endif
 
@@ -420,6 +425,7 @@ INT32 M6800Run(INT32 cycles)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800Run called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6800Run called when no CPU open\n"));
 	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6800) bprintf(PRINT_ERROR, _T("M6800Run called with invalid CPU Type\n"));
 #endif
 
@@ -434,6 +440,7 @@ INT32 HD63701Run(INT32 cycles)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("HD63701Run called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD63701Run called when no CPU open\n"));
 	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_HD63701) bprintf(PRINT_ERROR, _T("HD63701Run called with invalid CPU Type\n"));
 #endif
 
@@ -448,6 +455,7 @@ INT32 M6803Run(INT32 cycles)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6803Run called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6803Run called when no CPU open\n"));
 	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6803 && M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6801) bprintf(PRINT_ERROR, _T("M6803Run called with invalid CPU Type\n"));
 #endif
 
@@ -462,6 +470,7 @@ INT32 NSC8105Run(INT32 cycles)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("NSC8105Run called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("NSC8105Run called when no CPU open\n"));
 	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_NSC8105) bprintf(PRINT_ERROR, _T("NSC8105Run called with invalid CPU Type\n"));
 #endif
 
@@ -492,6 +501,7 @@ INT32 M6800MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800MapMemory called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6800MapMemory called when no CPU open\n"));
 #endif
 
 	UINT8 cStart = (nStart >> 8);

@@ -2111,7 +2111,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		sound_bankswitch(sound_bank);
 		M6809Close();
 
-		mcu_bankswitch(mcu_bank);
+        HD63701Open(0);
+        mcu_bankswitch(mcu_bank);
+        HD63701Close();
 	}
 
 	if (nAction & ACB_NVRAM) {

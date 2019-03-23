@@ -760,6 +760,8 @@ INT32 ZetScan(INT32 nAction)
 	
 	SCAN_VAR(nZetCyclesTotal);
 
+    Z80Scan(nAction); // for daisy-chain
+
 	return 0;
 }
 

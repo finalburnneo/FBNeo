@@ -4,8 +4,6 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "z80daisy.h"
-#include "z80pio.h"
-#include "z80ctc.h"
 #include "sn76496.h"
 #include "dac.h"
 #include "burn_pal.h"
@@ -538,20 +536,14 @@ static void MachineInit()
 	ZetSetReadHandler(senjyo_main_read);
 	ZetClose();
 
-	z80pio_init(pioctc_intr, NULL, NULL, NULL, NULL, NULL, NULL);
-	z80ctc_init(2000000, 0, pioctc_intr, ctc_trigger, NULL, ctc_clockdac);
-
 	ZetInit(1);
 	ZetOpen(1);
 
-	static const z80_irq_daisy_chain senjyo_daisy[] = {
-		{ z80pio_reset, z80pio_irq_state, z80pio_irq_ack, z80pio_irq_reti, 0 },
-		{ z80ctc_reset, z80ctc_irq_state, z80ctc_irq_ack, z80ctc_irq_reti, 0 },
-		{ 0, 0, 0, 0, -1 }
-	};
+    z80daisy_init(Z80_PIO, Z80_CTC);
+	z80pio_init(pioctc_intr, NULL, NULL, NULL, NULL, NULL, NULL);
+	z80ctc_init(2000000, 0, pioctc_intr, ctc_trigger, NULL, ctc_clockdac);
 
-	Z80SetDaisy((void *)&senjyo_daisy);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x1fff, MAP_ROM);
+    ZetMapMemory(DrvZ80ROM1,		0x0000, 0x1fff, MAP_ROM);
 	ZetMapMemory(DrvZ80RAM1,		0x4000, 0x43ff, MAP_RAM);
 	ZetSetWriteHandler(senjyo_sound_write);
 	ZetSetOutHandler(senjyo_sound_write_port);
@@ -697,8 +689,6 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	ZetExit();
-	z80pio_exit();
-	z80ctc_exit();
 
 	SN76496Exit();
 	DACExit();
@@ -1004,8 +994,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
-		z80pio_scan(nAction);
-		z80ctc_scan(nAction);
 
 		SN76496Scan(nAction, pnMin);
 		DACScan(nAction, pnMin);

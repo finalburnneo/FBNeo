@@ -11,7 +11,9 @@ UINT8 PgmJoy4[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmBtn1[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmBtn2[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmInput[9] = {0,0,0,0,0,0,0,0,0};
+UINT8 PgmCoins = 0; // coin inputs (for hold logic)
 UINT8 PgmReset = 0;
+static INT32 hold_coin[4];
 
 INT32 nPGM68KROMLen = 0;
 INT32 nPGMTileROMLen = 0;
@@ -537,6 +539,8 @@ INT32 PgmDoReset()
 		pPgmResetCallback();
 	}
 
+    memset (hold_coin, 0, sizeof(hold_coin));
+
 	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
 
 	return 0;
@@ -837,13 +841,16 @@ INT32 pgmFrame()
 
 	// compile inputs
 	{
-		memset (PgmInput, 0, 6);
+        INT32 previous_coin = PgmCoins & 0xf;
+        PgmCoins = 0;
+
+        memset (PgmInput, 0, 6);
 		for (INT32 i = 0; i < 8; i++) {
 			PgmInput[0] |= (PgmJoy1[i] & 1) << i;
 			PgmInput[1] |= (PgmJoy2[i] & 1) << i;
 			PgmInput[2] |= (PgmJoy3[i] & 1) << i;
 			PgmInput[3] |= (PgmJoy4[i] & 1) << i;
-			PgmInput[4] |= (PgmBtn1[i] & 1) << i;
+			PgmCoins    |= (PgmBtn1[i] & 1) << i;
 			PgmInput[5] |= (PgmBtn2[i] & 1) << i;
 		}
 
@@ -856,6 +863,22 @@ INT32 pgmFrame()
 		if ((PgmInput[2] & 0x18) == 0x18) PgmInput[2] &= 0xe7;
 		if ((PgmInput[3] & 0x06) == 0x06) PgmInput[3] &= 0xf9;
 		if ((PgmInput[3] & 0x18) == 0x18) PgmInput[3] &= 0xe7;
+
+        // silly hold coin logic
+        for (INT32 i = 0; i < 4; i++) {
+            if ((previous_coin != (PgmCoins & 0xf)) && PgmBtn1[i] && !hold_coin[i]) {
+                hold_coin[i] = 11; // frames to hold coin + 1
+            }
+            if (hold_coin[i]) {
+                hold_coin[i]--;
+                PgmInput[4] |= 1<<i;
+            }
+            if (!hold_coin[i]) {
+                PgmInput[4] &= ~(1<<i);
+			}
+		}
+
+        PgmInput[4] |= PgmCoins & ~0xf; // add non-coin buttons
 	}
 
 	INT32 nCyclesNext[3] = {0, 0, 0};

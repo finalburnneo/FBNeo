@@ -44,11 +44,14 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[2];
-static UINT8 DrvInputs[3];
+static UINT8 DrvInputs[3+1]; // extra for hold logic
 static UINT8 DrvReset;
+
+static INT32 hold_coin[4];
 
 static INT32 is_senjyo = 0;
 static INT32 is_starforc_encrypted = 0;
+static INT32 starforce_small_sprites = 0;
 
 static struct BurnInputInfo SenjyoInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -425,6 +428,8 @@ static INT32 DrvDoReset()
 	soundclock = 0;
 	soundstop = 0;
 
+    memset (hold_coin, 0, sizeof(hold_coin));
+
 	return 0;
 }
 
@@ -667,9 +672,18 @@ static INT32 StarforcInit()
 		if (BurnLoadRom(DrvGfxROM3 + 0x02000, k++, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x04000, k++, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM4 + 0x00000, k++, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM4 + 0x04000, k++, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM4 + 0x08000, k++, 1)) return 1;
+        if (starforce_small_sprites) {
+            if (BurnLoadRom(DrvGfxROM4 + 0x00000, k++, 1)) return 1;
+            if (BurnLoadRom(DrvGfxROM4 + 0x02000, k++, 1)) return 1;
+            if (BurnLoadRom(DrvGfxROM4 + 0x04000, k++, 1)) return 1;
+            if (BurnLoadRom(DrvGfxROM4 + 0x06000, k++, 1)) return 1;
+            if (BurnLoadRom(DrvGfxROM4 + 0x08000, k++, 1)) return 1;
+            if (BurnLoadRom(DrvGfxROM4 + 0x0a000, k++, 1)) return 1;
+        } else {
+            if (BurnLoadRom(DrvGfxROM4 + 0x00000, k++, 1)) return 1;
+            if (BurnLoadRom(DrvGfxROM4 + 0x04000, k++, 1)) return 1;
+            if (BurnLoadRom(DrvGfxROM4 + 0x08000, k++, 1)) return 1;
+        }
 
 		DrvGfxDecode();
 	}
@@ -697,6 +711,7 @@ static INT32 DrvExit()
 
 	is_senjyo = 0;
 	is_starforc_encrypted = 0;
+    starforce_small_sprites = 0;
 
 	return 0;
 }
@@ -921,13 +936,32 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0, 3);
+        INT32 previous_coin = DrvInputs[3] & 3;
+
+        memset (DrvInputs, 0, 4);
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
-			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy3[i] & 1) << i; // [3],DrvJoy3 for hold logic
 		}
-	}
+
+        // silly hold coin logic
+        for (INT32 i = 0; i < 2; i++) {
+            if ((previous_coin != (DrvInputs[3]&3)) && DrvJoy3[i] && !hold_coin[i]) {
+                hold_coin[i] = 5; // frames to hold coin + 1
+            }
+
+            if (hold_coin[i]) {
+                hold_coin[i]--;
+                DrvInputs[2] |= 1<<i;
+            }
+            if (!hold_coin[i]) {
+                DrvInputs[2] &= ~(1<<i);
+			}
+		}
+
+        DrvInputs[2] |= DrvInputs[3] & 0xc; // start buttons
+    }
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 4000000 / 60, 2000000 / 60 };
@@ -1277,6 +1311,7 @@ static INT32 StarforceInit()
 
 static INT32 StarforcaInit()
 {
+    starforce_small_sprites = 1;
 	is_starforc_encrypted = 1;
 
 	INT32 rc = StarforcInit();
@@ -1289,6 +1324,13 @@ static INT32 StarforcaInit()
 	}
 
 	return rc;
+}
+
+static INT32 StarforcbInit()
+{
+    starforce_small_sprites = 1;
+
+    return StarforceInit();
 }
 
 // Star Force (encrypted, bootleg)
@@ -1336,7 +1378,7 @@ struct BurnDriver BurnDrvStarforcb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, starforcbRomInfo, starforcbRomName, NULL, NULL, NULL, NULL, SenjyoInputInfo, StarforcDIPInfo,
-	StarforceInit, DrvExit, DrvFrame, StarforceDraw, DrvScan, &DrvRecalc, 0x200,
+	StarforcbInit, DrvExit, DrvFrame, StarforceDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
 

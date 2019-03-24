@@ -41,9 +41,9 @@ static double DariusMSM5205RouteMasterVol;
 static UINT16 VolfiedVidCtrl;
 static UINT16 VolfiedVidMask;
 
-static UINT8 z80ctc_load;
-static INT32 z80ctc_constant;
-static INT32 z80ctc_ctr;
+static UINT8 z80ctcmini_load;
+static INT32 z80ctcmini_constant;
+static INT32 z80ctcmini_ctr;
 
 static INT32 banked_z80 = 0;
 
@@ -2498,7 +2498,7 @@ static INT32 VolfiedDoReset()
 	return 0;
 }
 
-static void z80ctc_reset();
+static void z80ctcmini_reset();
 
 static INT32 TopspeedDoReset()
 {
@@ -2506,7 +2506,7 @@ static INT32 TopspeedDoReset()
 
 	BurnShiftReset();
 
-	z80ctc_reset();
+	z80ctcmini_reset();
 	RastanADPCMPos = 0;
 	RastanADPCMData = -1;
 	RastanADPCMInReset = 1;
@@ -3701,54 +3701,54 @@ static void __fastcall DariusZ802WritePort(UINT16 a, UINT8 d)
 	}
 }
 
-static void z80ctc_reset()
+static void z80ctcmini_reset()
 {
-	z80ctc_load = 0;
-	z80ctc_constant = 0;
-	z80ctc_ctr = 0;
+	z80ctcmini_load = 0;
+	z80ctcmini_constant = 0;
+	z80ctcmini_ctr = 0;
 }
 
-static void z80ctc_scan()
+static void z80ctcmini_scan()
 {
-	SCAN_VAR(z80ctc_load);
-	SCAN_VAR(z80ctc_constant);
-	SCAN_VAR(z80ctc_ctr);
+	SCAN_VAR(z80ctcmini_load);
+	SCAN_VAR(z80ctcmini_constant);
+	SCAN_VAR(z80ctcmini_ctr);
 }
 
-static void z80ctc_write(UINT8 data)
+static void z80ctcmini_write(UINT8 data)
 {
-	if (z80ctc_load) {
-		z80ctc_constant = 0xb0 - data;
-		z80ctc_load = 0;
+	if (z80ctcmini_load) {
+		z80ctcmini_constant = 0xb0 - data;
+		z80ctcmini_load = 0;
 	}
 
-	if (data == 5) z80ctc_load = 1;
+	if (data == 5) z80ctcmini_load = 1;
 }
 
 static void TopspeedMSM5205Vck2();
 
-static void z80ctc_execute(INT32 cyc)
+static void z80ctcmini_execute(INT32 cyc)
 {
-	if (z80ctc_constant == 0) return;
+	if (z80ctcmini_constant == 0) return;
 	// mini-z80ctc emulation
 
-	while (z80ctc_ctr <= 0) {
+	while (z80ctcmini_ctr <= 0) {
 		INT32 remainder = 0;
-		if (z80ctc_ctr < 0)
-			remainder = -z80ctc_ctr;
+		if (z80ctcmini_ctr < 0)
+			remainder = -z80ctcmini_ctr;
 
-		z80ctc_ctr = 4000000/16/60; // 4mhz, 16 prescale, 1 frame
-		z80ctc_ctr -= remainder;
+		z80ctcmini_ctr = 4000000/16/60; // 4mhz, 16 prescale, 1 frame
+		z80ctcmini_ctr -= remainder;
 		TopspeedMSM5205Vck2();
 	}
-	z80ctc_ctr -= (cyc * z80ctc_constant);
+	z80ctcmini_ctr -= (cyc * z80ctcmini_constant);
 }
 
 static void __fastcall TopspeedZ80WritePort(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	if (a==0) {
-		z80ctc_write(d);
+		z80ctcmini_write(d);
 	}
 }
 
@@ -6065,7 +6065,7 @@ static INT32 TopspeedFrame()
 			nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
 			nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
 
-			z80ctc_execute(4000000/16/60/nInterleave);
+			z80ctcmini_execute(4000000/16/60/nInterleave);
 
 			if (TaitoNumMSM5205) MSM5205Update();
 			ZetClose();
@@ -6160,7 +6160,7 @@ static INT32 TaitoMiscScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DariusPan);
 		SCAN_VAR(PC090OJSpriteCtrl);	// for jumping
 
-		z80ctc_scan();
+		z80ctcmini_scan();
 		BurnRandomScan(nAction);
 	}
 

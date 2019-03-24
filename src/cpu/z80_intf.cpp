@@ -765,6 +765,16 @@ INT32 ZetScan(INT32 nAction)
 	return 0;
 }
 
+void ZetDaisyInit(INT32 dev0, INT32 dev1)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetDaisyInit called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetDaisyInit called when no CPU open\n"));
+#endif
+
+    z80daisy_init(dev0, dev1);
+}
+
 void ZetSetIRQLine(const INT32 line, const INT32 status)
 {
 #if defined FBA_DEBUG

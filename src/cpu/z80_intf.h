@@ -12,6 +12,7 @@ void ZetWriteByte(UINT16 address, UINT8 data);
 UINT8 ZetReadByte(UINT16 address);
 void ZetWriteRom(UINT16 address, UINT8 data);
 INT32 ZetInit(INT32 nCount);
+void ZetDaisyInit(INT32 dev0, INT32 dev1);
 void ZetExit();
 void ZetNewFrame();
 void ZetOpen(INT32 nCPU);

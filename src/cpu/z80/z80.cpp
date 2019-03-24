@@ -95,7 +95,6 @@
 
 #include "burnint.h"
 #include "z80.h"
-#include "z80daisy.h"
 #include <stddef.h>
 
 #define	FALSE			0
@@ -3669,23 +3668,9 @@ void Z80SetContext (void *src)
 
 int Z80Scan(int nAction)
 {
-    z80daisy_scan(nAction);
-
-#if 0
-    bprintf(0, _T("Z80Scan() should not be used. depreciated.\n"));
-
-	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 0;
-	}
-
-	struct BurnArea ba;
-
-	memset(&ba, 0, sizeof(ba));
-	ba.Data	  = &Z80;
-	ba.nLen	  = STRUCT_SIZE_HELPER(Z80_Regs, hold_irq);
-	ba.szName = "Z80 Registers";
-	BurnAcb(&ba);
-#endif
+    if (Z80.daisy) {
+        z80daisy_scan(nAction);
+    }
 
 	return 0;
 }

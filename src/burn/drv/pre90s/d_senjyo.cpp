@@ -3,7 +3,6 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-#include "z80daisy.h"
 #include "sn76496.h"
 #include "dac.h"
 #include "burn_pal.h"
@@ -544,7 +543,7 @@ static void MachineInit()
 	ZetInit(1);
 	ZetOpen(1);
 
-    z80daisy_init(Z80_PIO, Z80_CTC);
+    ZetDaisyInit(Z80_PIO, Z80_CTC);
 	z80pio_init(pioctc_intr, NULL, NULL, NULL, NULL, NULL, NULL);
 	z80ctc_init(2000000, 0, pioctc_intr, ctc_trigger, NULL, ctc_clockdac);
 

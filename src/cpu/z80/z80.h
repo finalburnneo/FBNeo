@@ -6,6 +6,8 @@
 #define Z80_ASSERT_LINE		1
 #define Z80_INPUT_LINE_NMI	32
 
+#include "z80daisy.h"
+
 typedef union
 {
 #ifdef LSB_FIRST

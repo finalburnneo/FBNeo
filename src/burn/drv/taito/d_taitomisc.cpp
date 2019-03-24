@@ -1,6 +1,14 @@
 // PC080SN & PC090OJ based games
 // Based on MAME drivers by Bryan McPhail, Nicola Salmoria, Jarek Burczynski, and David Graves
 
+// Notes:
+//  TopSpeed uses a timer on the Z80 CTC chip to modulate the msm5205 for a
+//  semi-realistic engine sound.  Before we had actual Z80 CTC support, I wrote
+//  a "mini ctc" device just for this game. I decided to leave it in instead
+//  of switching to the actual CTC emulation because it's good timer reference
+//  code, and it works & sounds great. -dink 2019
+//
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

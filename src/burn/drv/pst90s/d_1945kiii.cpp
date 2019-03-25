@@ -410,9 +410,9 @@ static INT32 DrvInit(INT32 game_select)
 		SekSetWriteWordHandler(1, k1945iiiWriteWordPalette);
 		SekClose();
 	}
-	
-	MSM6295Init(0, 7500, 1);
-	MSM6295Init(1, 7500, 1);
+
+    MSM6295Init(0, (nGameSelect == 2) ? 8000 : 7500, 1);
+	MSM6295Init(1, (nGameSelect == 2) ? 8000 : 7500, 1);
 	MSM6295SetBank(0, MSM6295ROM + 0x000000, 0, 0x3ffff);
 	MSM6295SetBank(1, MSM6295ROM + 0x080000, 0, 0x3ffff);
 	if (nGameSelect < 2) { // 1945kiii

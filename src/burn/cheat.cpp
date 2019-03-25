@@ -299,9 +299,9 @@ void CheatExit()
 		do {
 			pNextCheat = pCurrentCheat->pNext;
 			for (INT32 i = 0; i < CHEAT_MAX_OPTIONS; i++) {
-				BurnFree(pCurrentCheat->pOption[i]);
+				free(pCurrentCheat->pOption[i]); // do not replace with BurnFree.
 			}
-			BurnFree(pCurrentCheat);
+			free(pCurrentCheat); // do not replace with BurnFree.
 		} while ((pCurrentCheat = pNextCheat) != 0);
 	}
 

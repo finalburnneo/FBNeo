@@ -1955,7 +1955,7 @@ static struct BurnRomInfo Gaunt2RomDesc[] = {
 	{ "136043-1120.16r",      0x04000, 0x5c731006, 2 | BRF_PRG | BRF_ESS }, //  8	M6502 Program 
 	{ "136043-1119.16s",      0x08000, 0xdc3591e7, 2 | BRF_PRG | BRF_ESS }, //  9
 	
-	{ "136043-1104.6p",       0x02000, 0x1343cf6f, 3 | BRF_GRA },           //  10	Characters
+	{ "136043-1104.6p",       0x04000, 0xbddc3dfc, 3 | BRF_GRA },           //  10	Characters
 	
 	{ "136043-1111.1a",       0x08000, 0x09df6e23, 4 | BRF_GRA },           //  11	Motion Objects
 	{ "136037-112.1b",        0x08000, 0x869330be, 4 | BRF_GRA },           //  12
@@ -1972,7 +1972,7 @@ static struct BurnRomInfo Gaunt2RomDesc[] = {
 		
 	{ "74s472-136037-101.7u", 0x00200, 0x2964f76f, 0 | BRF_OPT },           //  23	PROM (Motion Timing)
 	{ "74s472-136037-102.5l", 0x00200, 0x4d4fec6c, 0 | BRF_OPT },           //  24	PROM (Motion Flip Control)
-	{ "74s287-136037-103.4r", 0x00100, 0x6c5ccf08, 0 | BRF_OPT },           //  25	PROM (Motion Position/Size)
+	{ "82s129-136043-1103.4r",0x00100, 0x32ae1fa9, 0 | BRF_OPT },           //  25	PROM (Motion Position/Size)
 };
 
 STD_ROM_PICK(Gaunt2)
@@ -2004,7 +2004,7 @@ static struct BurnRomInfo Gaunt2gRomDesc[] = {
 	{ "136043-1120.16r",      0x04000, 0x5c731006, 2 | BRF_PRG | BRF_ESS }, //  8	M6502 Program 
 	{ "136043-1119.16s",      0x08000, 0xdc3591e7, 2 | BRF_PRG | BRF_ESS }, //  9
 	
-	{ "136043-1104.6p",       0x02000, 0x1343cf6f, 3 | BRF_GRA },           //  10	Characters
+	{ "136043-1104.6p",       0x04000, 0xbddc3dfc, 3 | BRF_GRA },           //  10	Characters
 	
 	{ "136043-1111.1a",       0x08000, 0x09df6e23, 4 | BRF_GRA },           //  11	Motion Objects
 	{ "136037-112.1b",        0x08000, 0x869330be, 4 | BRF_GRA },           //  12
@@ -2021,7 +2021,7 @@ static struct BurnRomInfo Gaunt2gRomDesc[] = {
 		
 	{ "74s472-136037-101.7u", 0x00200, 0x2964f76f, 0 | BRF_OPT },           //  23	PROM (Motion Timing)
 	{ "74s472-136037-102.5l", 0x00200, 0x4d4fec6c, 0 | BRF_OPT },           //  24	PROM (Motion Flip Control)
-	{ "74s287-136037-103.4r", 0x00100, 0x6c5ccf08, 0 | BRF_OPT },           //  25	PROM (Motion Position/Size)
+	{ "82s129-136043-1103.4r",0x00100, 0x32ae1fa9, 0 | BRF_OPT },           //  25	PROM (Motion Position/Size)
 };
 
 STD_ROM_PICK(Gaunt2g)
@@ -2053,7 +2053,7 @@ static struct BurnRomInfo Gaunt22pRomDesc[] = {
 	{ "136043-1120.16r",      0x04000, 0x5c731006, 2 | BRF_PRG | BRF_ESS }, //  8	M6502 Program 
 	{ "136043-1119.16s",      0x08000, 0xdc3591e7, 2 | BRF_PRG | BRF_ESS }, //  9
 	
-	{ "136043-1104.6p",       0x02000, 0x1343cf6f, 3 | BRF_GRA },           //  10	Characters
+	{ "136043-1104.6p",       0x04000, 0xbddc3dfc, 3 | BRF_GRA },           //  10	Characters
 	
 	{ "136043-1111.1a",       0x08000, 0x09df6e23, 4 | BRF_GRA },           //  11	Motion Objects
 	{ "136037-112.1b",        0x08000, 0x869330be, 4 | BRF_GRA },           //  12
@@ -2070,7 +2070,7 @@ static struct BurnRomInfo Gaunt22pRomDesc[] = {
 		
 	{ "74s472-136037-101.7u", 0x00200, 0x2964f76f, 0 | BRF_OPT },           //  23	PROM (Motion Timing)
 	{ "74s472-136037-102.5l", 0x00200, 0x4d4fec6c, 0 | BRF_OPT },           //  24	PROM (Motion Flip Control)
-	{ "74s287-136037-103.4r", 0x00100, 0x6c5ccf08, 0 | BRF_OPT },           //  25	PROM (Motion Position/Size)
+	{ "82s129-136043-1103.4r",0x00100, 0x32ae1fa9, 0 | BRF_OPT },           //  25	PROM (Motion Position/Size)
 };
 
 STD_ROM_PICK(Gaunt22p)
@@ -2102,7 +2102,7 @@ static struct BurnRomInfo Gaunt22p1RomDesc[] = {
 	{ "136043-1120.16r",      0x04000, 0x5c731006, 2 | BRF_PRG | BRF_ESS }, //  8	M6502 Program 
 	{ "136043-1119.16s",      0x08000, 0xdc3591e7, 2 | BRF_PRG | BRF_ESS }, //  9
 	
-	{ "136043-1104.6p",       0x02000, 0x1343cf6f, 3 | BRF_GRA },           //  10	Characters
+	{ "136043-1104.6p",       0x04000, 0xbddc3dfc, 3 | BRF_GRA },           //  10	Characters
 	
 	{ "136043-1111.1a",       0x08000, 0x09df6e23, 4 | BRF_GRA },           //  11	Motion Objects
 	{ "136037-112.1b",        0x08000, 0x869330be, 4 | BRF_GRA },           //  12
@@ -2119,7 +2119,7 @@ static struct BurnRomInfo Gaunt22p1RomDesc[] = {
 		
 	{ "74s472-136037-101.7u", 0x00200, 0x2964f76f, 0 | BRF_OPT },           //  23	PROM (Motion Timing)
 	{ "74s472-136037-102.5l", 0x00200, 0x4d4fec6c, 0 | BRF_OPT },           //  24	PROM (Motion Flip Control)
-	{ "74s287-136037-103.4r", 0x00100, 0x6c5ccf08, 0 | BRF_OPT },           //  25	PROM (Motion Position/Size)
+	{ "82s129-136043-1103.4r",0x00100, 0x32ae1fa9, 0 | BRF_OPT },           //  25	PROM (Motion Position/Size)
 };
 
 STD_ROM_PICK(Gaunt22p1)
@@ -2151,7 +2151,7 @@ static struct BurnRomInfo Gaunt22pgRomDesc[] = {
 	{ "136043-1120.16r",      0x04000, 0x5c731006, 2 | BRF_PRG | BRF_ESS }, //  8	M6502 Program 
 	{ "136043-1119.16s",      0x08000, 0xdc3591e7, 2 | BRF_PRG | BRF_ESS }, //  9
 	
-	{ "136043-1104.6p",       0x02000, 0x1343cf6f, 3 | BRF_GRA },           //  10	Characters
+	{ "136043-1104.6p",       0x04000, 0xbddc3dfc, 3 | BRF_GRA },           //  10	Characters
 	
 	{ "136043-1111.1a",       0x08000, 0x09df6e23, 4 | BRF_GRA },           //  11	Motion Objects
 	{ "136037-112.1b",        0x08000, 0x869330be, 4 | BRF_GRA },           //  12
@@ -2168,7 +2168,7 @@ static struct BurnRomInfo Gaunt22pgRomDesc[] = {
 		
 	{ "74s472-136037-101.7u", 0x00200, 0x2964f76f, 0 | BRF_OPT },           //  23	PROM (Motion Timing)
 	{ "74s472-136037-102.5l", 0x00200, 0x4d4fec6c, 0 | BRF_OPT },           //  24	PROM (Motion Flip Control)
-	{ "74s287-136037-103.4r", 0x00100, 0x6c5ccf08, 0 | BRF_OPT },           //  25	PROM (Motion Position/Size)
+	{ "82s129-136043-1103.4r",0x00100, 0x32ae1fa9, 0 | BRF_OPT },           //  25	PROM (Motion Position/Size)
 };
 
 STD_ROM_PICK(Gaunt22pg)

@@ -3964,6 +3964,9 @@ static struct BurnRomInfo FootchmpRomDesc[] = {
 	{ "c80-02.10",          0x100000, 0x060a8b61, BRF_GRA | TAITO_SPRITESA },
 	
 	{ "c80-03.57",          0x100000, 0x609938d5, BRF_SND | TAITO_YM2610A },
+	
+	{ "c80-09.ic46",        0x000104, 0x4ca48869, BRF_OPT },
+	{ "c80-08.ic45",        0x000104, 0x6137dd15, BRF_OPT },
 };
 
 STD_ROM_PICK(Footchmp)

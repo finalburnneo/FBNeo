@@ -690,20 +690,20 @@ struct BurnDriver BurnDrvPiratesb = {
 // Genix Family
 
 static struct BurnRomInfo genixRomDesc[] = {
-	{ "1.15",	0x80000, 0xd26abfb0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "2.16",	0x80000, 0xa14a25b4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "11.u15.15c",	0x80000, 0xd26abfb0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "12.u16.16c",	0x80000, 0xa14a25b4, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "7.34",	0x40000, 0x58da8aac, 2 | BRF_GRA },           //  2 Tiles
-	{ "9.35",	0x40000, 0x96bad9a8, 2 | BRF_GRA },           //  3
-	{ "8.48",	0x40000, 0x0ddc58b6, 2 | BRF_GRA },           //  4
-	{ "10.49",	0x40000, 0x2be308c5, 2 | BRF_GRA },           //  5
+	{ "17.u34.12g",	0x40000, 0x58da8aac, 2 | BRF_GRA },           //  2 Tiles
+	{ "19.u35.12h",	0x40000, 0x96bad9a8, 2 | BRF_GRA },           //  3
+	{ "18.u48.13g",	0x40000, 0x0ddc58b6, 2 | BRF_GRA },           //  4
+	{ "20.u49.13h",	0x40000, 0x2be308c5, 2 | BRF_GRA },           //  5
 
-	{ "6.69",	0x40000, 0xb8422af7, 3 | BRF_GRA },           //  6 Sprites
-	{ "5.70",	0x40000, 0xe46125c5, 3 | BRF_GRA },           //  7
-	{ "4.71",	0x40000, 0x7a8ed21b, 3 | BRF_GRA },           //  8
-	{ "3.72",	0x40000, 0xf78bd6ca, 3 | BRF_GRA },           //  9
+	{ "16.u69.6g",	0x40000, 0xb8422af7, 3 | BRF_GRA },           //  6 Sprites
+	{ "15.u70.4g",	0x40000, 0xe46125c5, 3 | BRF_GRA },           //  7
+	{ "14.u71.3g",	0x40000, 0x7a8ed21b, 3 | BRF_GRA },           //  8
+	{ "13.u72.1g",	0x40000, 0xf78bd6ca, 3 | BRF_GRA },           //  9
 
-	{ "0.31",	0x80000, 0x80d087bc, 4 | BRF_SND },           // 10 Oki Samples
+	{ "10.u31.1b",	0x80000, 0x80d087bc, 4 | BRF_SND },           // 10 Oki Samples
 };
 
 STD_ROM_PICK(genix)

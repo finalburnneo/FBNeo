@@ -4330,6 +4330,9 @@ static struct BurnRomInfo pastelisRomDesc[] = {
 
 	{ "snd_0.u29",	0x200000, 0x8bc0dde9, 4 | BRF_SND },           // 11 ensoniq.0
 	{ "snd_1.u33",	0x200000, 0xf958e0ea, 4 | BRF_SND },           // 12
+	
+	{ "u36.bin",	0x000117, 0x6b5d083e, 0 | BRF_OPT },
+	{ "u25.bin",	0x000117, 0xe9d28bdf, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(pastelis)

@@ -1658,11 +1658,11 @@ struct BurnDriver BurnDrvbackfirt = {
 };
 
 
-// Gemini Wing (Japan)
+// Gemini Wing (World)
 
 static struct BurnRomInfo geminiRomDesc[] = {
-	{ "gw04-5s.rom",	0x10000, 0xff9de855, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
-	{ "gw05-6s.rom",	0x10000, 0x5a6947a9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "5-6s",			0x10000, 0x216784a9, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "4-5s",			0x10000, 0xce71e27a, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "gw03-5h.rom",	0x08000, 0x9bc79596, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
 
@@ -1691,10 +1691,52 @@ STD_ROM_FN(gemini)
 
 struct BurnDriver BurnDrvGemini = {
 	"gemini", NULL, NULL, NULL, "1987",
-	"Gemini Wing (Japan)\0", NULL, "Tecmo", "Miscellaneous",
+	"Gemini Wing (World)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, geminiRomInfo, geminiRomName, NULL, NULL, NULL, NULL, GeminiInputInfo, GeminiDIPInfo,
+	GeminiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	224, 256, 3, 4
+};
+
+
+// Gemini Wing (Japan)
+
+static struct BurnRomInfo geminijRomDesc[] = {
+	{ "gw04-5s.rom",	0x10000, 0xff9de855, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "gw05-6s.rom",	0x10000, 0x5a6947a9, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gw03-5h.rom",	0x08000, 0x9bc79596, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+
+	{ "gw02-3h.rom",	0x08000, 0x7acc8d35, 3 | BRF_GRA },	      //  3 - Characters
+
+	{ "gw06-1c.rom",	0x10000, 0x4ea51631, 4 | BRF_GRA },	      //  4 - Sprites
+	{ "gw07-1d.rom",	0x10000, 0xda42637e, 4 | BRF_GRA },	      //  5
+	{ "gw08-1f.rom",	0x10000, 0x0b4e8d70, 4 | BRF_GRA },	      //  6
+	{ "gw09-1h.rom",	0x10000, 0xb65c5e4c, 4 | BRF_GRA },	      //  7
+
+	{ "gw10-1n.rom",	0x10000, 0x5e84cd4f, 5 | BRF_GRA },	      //  8 - Foreground Tiles
+	{ "gw11-2na.rom",	0x10000, 0x08b458e1, 5 | BRF_GRA },	      //  9
+	{ "gw12-2nb.rom",	0x10000, 0x229c9714, 5 | BRF_GRA },	      // 10
+	{ "gw13-3n.rom",	0x10000, 0xc5dfaf47, 5 | BRF_GRA },	      // 11
+
+	{ "gw14-1r.rom",	0x10000, 0x9c10e5b5, 6 | BRF_GRA },	      // 12 - Background Tiles
+	{ "gw15-2ra.rom",	0x10000, 0x4cd18cfa, 6 | BRF_GRA },	      // 13
+	{ "gw16-2rb.rom",	0x10000, 0xf911c7be, 6 | BRF_GRA },	      // 14
+	{ "gw17-3r.rom",	0x10000, 0x79a9ce25, 6 | BRF_GRA },	      // 15
+
+	{ "gw01-6a.rom",	0x08000, 0xd78afa05, 7 | BRF_SND },	      // 16 - Samples
+};
+
+STD_ROM_PICK(geminij)
+STD_ROM_FN(geminij)
+
+struct BurnDriver BurnDrvGeminij = {
+	"geminij", "gemini", NULL, NULL, "1987",
+	"Gemini Wing (Japan)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, geminijRomInfo, geminijRomName, NULL, NULL, NULL, NULL, GeminiInputInfo, GeminiDIPInfo,
 	GeminiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
 };

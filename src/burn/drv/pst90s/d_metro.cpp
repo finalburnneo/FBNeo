@@ -5318,21 +5318,21 @@ struct BurnDriver BurnDrvSkyalert = {
 // Pang Pom's
 
 static struct BurnRomInfo pangpomsRomDesc[] = {
-	{ "ppoms09.bin",		0x020000, 0x0c292dbc, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ppoms10.bin",		0x020000, 0x0bc18853, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ppoms09.9.f7",		0x020000, 0x0c292dbc, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ppoms10.10.f8",		0x020000, 0x0bc18853, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ppoms12.bin",		0x020000, 0xa749357b, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+	{ "pj_a12.12.a7",		0x020000, 0xa749357b, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
 
-	{ "ppoms02.bin",		0x020000, 0x88f902f7, 3 | BRF_GRA },           //  3 Graphics
+	{ "pj_e_02.i7",			0x020000, 0x88f902f7, 3 | BRF_GRA },           //  3 Graphics
 	{ "ppoms04.bin",		0x020000, 0x9190c2a0, 3 | BRF_GRA },           //  4
 	{ "ppoms06.bin",		0x020000, 0xed15c93d, 3 | BRF_GRA },           //  5
-	{ "ppoms08.bin",		0x020000, 0x9a3408b9, 3 | BRF_GRA },           //  6
-	{ "ppoms01.bin",		0x020000, 0x11ac3810, 3 | BRF_GRA },           //  7
+	{ "pj_e_08.i16",		0x020000, 0x9a3408b9, 3 | BRF_GRA },           //  6
+	{ "pj_e_01.i6",			0x020000, 0x11ac3810, 3 | BRF_GRA },           //  7
 	{ "ppoms03.bin",		0x020000, 0xe595529e, 3 | BRF_GRA },           //  8
 	{ "ppoms05.bin",		0x020000, 0x02226214, 3 | BRF_GRA },           //  9
-	{ "ppoms07.bin",		0x020000, 0x48471c87, 3 | BRF_GRA },           // 10
+	{ "pj_e_07.i14",		0x020000, 0x48471c87, 3 | BRF_GRA },           // 10
 
-	{ "ppoms11.bin",		0x020000, 0xe89bd565, 4 | BRF_SND },           // 11 MSM6295 Samples
+	{ "pj_a11.11.e1",		0x020000, 0xe89bd565, 4 | BRF_SND },           // 11 MSM6295 Samples
 };
 
 STD_ROM_PICK(pangpoms)
@@ -5352,21 +5352,21 @@ struct BurnDriver BurnDrvPangpoms = {
 // Pang Pom's (Mitchell)
 
 static struct BurnRomInfo pangpomsmRomDesc[] = {
-	{ "pa.c09",			0x020000, 0xe01a7a08, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "pa.c10",			0x020000, 0x5e509cee, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pa_c_09.9.f7",		0x020000, 0xe01a7a08, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "pa_c_10.10.f8",		0x020000, 0x5e509cee, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ppoms12.bin",		0x020000, 0xa749357b, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+	{ "pj_a12.12.a7",		0x020000, 0xa749357b, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
 
-	{ "ppoms02.bin",		0x020000, 0x88f902f7, 3 | BRF_GRA },           //  3 Graphics
-	{ "pj.e04",			0x020000, 0x54bf2f10, 3 | BRF_GRA },           //  4
-	{ "pj.e06",			0x020000, 0xc8b6347d, 3 | BRF_GRA },           //  5
-	{ "ppoms08.bin",		0x020000, 0x9a3408b9, 3 | BRF_GRA },           //  6
-	{ "ppoms01.bin",		0x020000, 0x11ac3810, 3 | BRF_GRA },           //  7
-	{ "pj.e03",			0x020000, 0xd126e774, 3 | BRF_GRA },           //  8
-	{ "pj.e05",			0x020000, 0x79c0ec1e, 3 | BRF_GRA },           //  9
-	{ "ppoms07.bin",		0x020000, 0x48471c87, 3 | BRF_GRA },           // 10
+	{ "pj_e_02.i7",			0x020000, 0x88f902f7, 3 | BRF_GRA },           //  3 Graphics
+	{ "pj_e_04.i10",		0x020000, 0x54bf2f10, 3 | BRF_GRA },           //  4
+	{ "pj_e_06.i13",		0x020000, 0xc8b6347d, 3 | BRF_GRA },           //  5
+	{ "pj_e_08.i16",		0x020000, 0x9a3408b9, 3 | BRF_GRA },           //  6
+	{ "pj_e_01.i6",			0x020000, 0x11ac3810, 3 | BRF_GRA },           //  7
+	{ "pj_e_03.i9",			0x020000, 0xd126e774, 3 | BRF_GRA },           //  8
+	{ "pj_e_05.i12",		0x020000, 0x79c0ec1e, 3 | BRF_GRA },           //  9
+	{ "pj_e_07.i14",		0x020000, 0x48471c87, 3 | BRF_GRA },           // 10
 
-	{ "ppoms11.bin",		0x020000, 0xe89bd565, 4 | BRF_SND },           // 11 MSM6295 Samples
+	{ "pj_a11.11.e1",		0x020000, 0xe89bd565, 4 | BRF_SND },           // 11 MSM6295 Samples
 };
 
 STD_ROM_PICK(pangpomsm)

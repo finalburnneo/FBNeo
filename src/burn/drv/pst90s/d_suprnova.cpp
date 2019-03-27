@@ -2344,6 +2344,12 @@ static struct BurnRomInfo galpani4RomDesc[] = {
 	{ "gp4-201-00.u18",	0x200000, 0x10c4b183, 3 | BRF_GRA },           //  5
 
 	{ "gp4-300-00.u4",	0x200000, 0x8374663a, 5 | BRF_SND },           //  6 YMZ280b Samples
+	
+	
+	{ "gp4-301-00.u7",	0x200000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "skns-r11.u11",	0x000117, 0xa9f05af4, 0 | BRF_OPT },
+	{ "skns-r09.u9",	0x000117, 0xb02058d9, 0 | BRF_OPT },
+	
 };
 
 STDROMPICKEXT(galpani4, galpani4, skns)

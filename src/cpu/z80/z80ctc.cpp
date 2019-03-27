@@ -129,7 +129,7 @@ void timer_reset()
 void timer_start(INT32 timernum, INT32 time, void (*callback)(INT32), INT32 tparam, INT32 running)
 {
 	if (timernum >= TIMERS_MAX) return;
-	timers[timernum].running = 1;
+	timers[timernum].running = running;
 	timers[timernum].time_trig = time; // cycle to execute @
 	timers[timernum].time_current = 0;
 	timer_exec[timernum] = callback;
@@ -141,6 +141,12 @@ void timer_stop(INT32 timernum)
 	if (timernum >= TIMERS_MAX) return;
 	timers[timernum].running = 0;
 	timers[timernum].time_current = 0;
+}
+
+INT32 timer_isrunning(INT32 timernum)
+{
+    if (timernum >= TIMERS_MAX) return 0;
+    return timers[timernum].running;
 }
 
 INT32 timer_timeleft(INT32 timernum)
@@ -360,7 +366,10 @@ UINT8 z80ctc_read(int offset)
 
 		//VPRINTF(("CTC clock %f\n",ATTOSECONDS_TO_HZ(period.attoseconds)));
 
-		return ((int)(timer_timeleft(ch) * period) + 1) & 0xff;
+        if (timer_isrunning(ch))
+            return ((int)timer_timeleft(ch) / period + 1) & 0xff;
+        else
+            return 0;
 #if 0
 		if (channel->timer != NULL)
 			return ((int)(attotime_to_double(timer_timeleft(channel->timer)) * attotime_to_double(period)) + 1) & 0xff;

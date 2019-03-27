@@ -3529,10 +3529,7 @@ void Z80SetDaisy(void *dptr)
 
 void Z80Reset()
 {
-	//struct z80_irq_daisy_chain *daisy;
-	//int (*irq_callback)(int irqline);
-
-	memset(&Z80, 0, STRUCT_SIZE_HELPER(Z80_Regs, hold_irq)); // don't clear the callback's
+	memset(&Z80, 0, STRUCT_SIZE_HELPER(Z80_Regs, hold_irq)); // don't clear the callback pointers
 	Z80.hold_irq = 0;
 
 	PC = 0x0000;

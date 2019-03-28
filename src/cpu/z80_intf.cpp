@@ -711,7 +711,11 @@ INT32 ZetScan(INT32 nAction)
 	
 	SCAN_VAR(nZetCyclesTotal);
 
-    Z80Scan(nAction); // for daisy-chain
+    for (INT32 i = 0; i < nCPUCount; i++) {
+        ZetOpen(i);
+        Z80Scan(nAction); // scan daisy chain & peripherals attached to this cpu.
+        ZetClose();
+    }
 
 	return 0;
 }

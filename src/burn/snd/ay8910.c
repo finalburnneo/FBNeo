@@ -42,6 +42,8 @@
 #define BURN_SND_ROUTE_LEFT			1
 #define BURN_SND_ROUTE_RIGHT		2
 #define BURN_SND_ROUTE_BOTH			(BURN_SND_ROUTE_LEFT | BURN_SND_ROUTE_RIGHT)
+#define BURN_SND_ROUTE_PANLEFT      4
+#define BURN_SND_ROUTE_PANRIGHT     8
 
 static void (*AYStreamUpdate)(void);
 
@@ -916,10 +918,14 @@ void AY8910Scan(INT32 nAction, INT32* pnMin)
 
 #define AY8910_ADD_SOUND(route, output)												\
 	if ((AY8910RouteDirs[route] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {	\
-		nLeftSample += (INT32)(output[n] * AY8910Volumes[route]);						\
+		nLeftSample += (INT32)(output[n] * AY8910Volumes[route]);					\
 	}																				\
 	if ((AY8910RouteDirs[route] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {	\
 		nRightSample += (INT32)(output[n] * AY8910Volumes[route]);					\
+	}                                                                               \
+    if ((AY8910RouteDirs[route] & (BURN_SND_ROUTE_PANLEFT|BURN_SND_ROUTE_PANRIGHT))) { \
+    	nRightSample += (INT32)(output[n] * ((AY8910RouteDirs[route] & BURN_SND_ROUTE_PANLEFT) ? AY8910Volumes[route]/3 : AY8910Volumes[route]) );	 \
+		nLeftSample  += (INT32)(output[n] * ((AY8910RouteDirs[route] & BURN_SND_ROUTE_PANRIGHT) ? AY8910Volumes[route]/3 : AY8910Volumes[route]) );	 \
 	}
 
 void AY8910RenderInternal(INT32 length)

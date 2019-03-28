@@ -168,6 +168,9 @@ void BurnExitMemoryManager();
 #define BURN_SND_ROUTE_LEFT			1
 #define BURN_SND_ROUTE_RIGHT		2
 #define BURN_SND_ROUTE_BOTH			(BURN_SND_ROUTE_LEFT | BURN_SND_ROUTE_RIGHT)
+// the following 2 are only supported in ay8910 and flt_rc
+#define BURN_SND_ROUTE_PANLEFT      4
+#define BURN_SND_ROUTE_PANRIGHT     8
 
 // ---------------------------------------------------------------------------
 // Debug Tracker

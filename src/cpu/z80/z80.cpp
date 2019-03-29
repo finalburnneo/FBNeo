@@ -3541,6 +3541,7 @@ void Z80Reset()
 	Z80.nmi_pending = FALSE;
 	Z80.irq_state = Z80_CLEAR_LINE;
 	Z80.after_ei = FALSE;
+	IX = IY = 0xffff; /* IX and IY are FFFF after a reset! */
 	IFF1 = 0;
 	IFF2 = 0;
 	WZ = PCD;

@@ -330,7 +330,8 @@ bool mips3_x64::compile_cop1(uint32_t opcode)
             static const size_t d_mask = 0x7FFFFFFFFFFFFFFFULL;
             if (SP) {
                 movss(xmm0, FS_x);
-                movss(xmm2, ptr[&s_mask]);
+                mov(rax, (size_t)&s_mask);
+				movss(xmm2, dword[rax]); 
                 andps(xmm0, xmm2);
                 movss(FD_x, xmm0);
             }
@@ -360,7 +361,8 @@ bool mips3_x64::compile_cop1(uint32_t opcode)
             static const size_t d_mask = 0x8000000000000000ULL;
             if (SP) {
                 movss(xmm0, FS_x);
-                movss(xmm2, ptr[&s_mask]);
+                mov(rax, (size_t)&s_mask);
+				movss(xmm2, dword[rax]); 
                 xorps(xmm0, xmm2);
                 movss(FD_x, xmm0);
             }

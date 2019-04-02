@@ -756,7 +756,6 @@ static void __fastcall mcr_90010_write(UINT16 address, UINT8 data)
 
 static void __fastcall mcr_91490_write(UINT16 address, UINT8 data)
 {
-    //bprintf (0, _T("MW: %4.4x, %2.2x\n"), address, data);
 	if ((address & 0xf800) == 0xf800) {
 		address &= 0x7f;
 		DrvPalRAM16[address/2] = data | ((address & 1) << 8);
@@ -777,7 +776,7 @@ static void __fastcall twotiger_vidram_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 _fastcall twotiger_vidram_read(UINT16 address)
+static UINT8 __fastcall twotiger_vidram_read(UINT16 address)
 {
 	if ((address & 0xe800) == 0xe800) {
 		INT32 offs = ((address & 0x3ff) << 1) | ((address & 0x400) >> 10);
@@ -789,7 +788,6 @@ static UINT8 _fastcall twotiger_vidram_read(UINT16 address)
 
 static void __fastcall mcr_write_port(UINT16 address, UINT8 data)
 {
-//	if ((address & 0xf0) != 0xe0) bprintf (0, _T("MWP: %2.2x, %2.2x\n"), address & 0xff, data);
 	switch (address & 0xff)
 	{
 		case 0x00:
@@ -798,7 +796,7 @@ static void __fastcall mcr_write_port(UINT16 address, UINT8 data)
 		case 0x03:
 			flipscreen = (data >> 6) & 1;
 			// coin cointers..
-		break; // use ssio_write_ports
+		break; // use ssio_write_ports (below)
 
 		case 0xe0:
 			BurnWatchdogWrite();
@@ -820,7 +818,6 @@ static void __fastcall mcr_write_port(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall mcr_read_port(UINT16 address)
 {
-//	bprintf (0, _T("MRP: %2.2x\n"), address & 0xff);
 	switch (address & 0xff)
 	{
 		case 0xf0:
@@ -835,12 +832,12 @@ static UINT8 __fastcall mcr_read_port(UINT16 address)
 
 static UINT8 solarfox_ip0_read(UINT8)
 {
-	return DrvInputs[0]; // wrong!
+    return DrvInputs[0]; // wrong! (hint: mux)
 }
 
 static UINT8 solarfox_ip1_read(UINT8)
 {
-	return DrvInputs[1]; // wrong! 
+    return DrvInputs[1]; // wrong!
 }
 
 static void solarfox_op0_write(UINT8 , UINT8 data)
@@ -887,8 +884,6 @@ static tilemap_callback( bg91490 )
 static void ctc_interrupt(INT32 state)
 {
     ZetSetIRQLine(0, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-//    bprintf(0, _T("ctc state %X\n"), state);
-//    if (state) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 }
 
 static void ctc_trigger(INT32 , UINT8 data)
@@ -989,8 +984,6 @@ static INT32 DrvGfxDecode()
 
 static void map_90009()
 {
-//	ZetInit(0);
-//	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM0,		0x0000, 0x6fff, MAP_ROM);
 	ZetMapMemory(DrvNVRAM,			0x7000, 0x77ff, MAP_RAM);
 	ZetMapMemory(DrvNVRAM,			0x7800, 0x7fff, MAP_RAM);
@@ -1000,21 +993,17 @@ static void map_90009()
 	ZetSetWriteHandler(mcr_90009_write);
 	ZetSetOutHandler(mcr_write_port);
 	ZetSetInHandler(mcr_read_port);
-//	ZetClose();
 
 	nMainClock = 2496000;
 }
 
-static UINT8 __fastcall mcr_read_test(UINT16 address)
+static UINT8 __fastcall mcr_read_unmapped(UINT16 address)
 {
-	//bprintf (0, _T("RT: %4.4x\n"), address);
 	return 0xff;
 }
 
 static void map_90010()
 {
-//	ZetInit(0);
-//	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM0,		0x0000, 0xbfff, MAP_ROM);
     for (INT32 i = 0; i < 0x2000; i+=0x0800) {
 		ZetMapMemory(DrvNVRAM,		0xc000 + i + 0, 0xc7ff + i + 0, MAP_RAM);
@@ -1026,28 +1015,24 @@ static void map_90010()
 		ZetMapMemory(DrvVidRAM,		0xe800 + i + 0, 0xefff + i + 0, MAP_ROM);
     }
 	ZetSetWriteHandler(mcr_90010_write);
-	ZetSetReadHandler(mcr_read_test);
+	ZetSetReadHandler(mcr_read_unmapped);
 	ZetSetOutHandler(mcr_write_port);
 	ZetSetInHandler(mcr_read_port);
-//	ZetClose();
 
 	nMainClock = 2496000;
 }
 
 static void map_91490()
 {
-    //	ZetInit(0);
-//	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM0,		0x0000, 0xdfff, MAP_ROM);
 	ZetMapMemory(DrvNVRAM,			0xe000, 0xe7ff, MAP_RAM);
     ZetMapMemory(DrvSprRAM,			0xe800, 0xe9ff, MAP_RAM);
 	ZetMapMemory(DrvSprRAM,			0xea00, 0xebff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM,			0xf000, 0xf7ff, MAP_RAM);
 	ZetSetWriteHandler(mcr_91490_write);
-	ZetSetReadHandler(mcr_read_test);
+	ZetSetReadHandler(mcr_read_unmapped);
 	ZetSetOutHandler(mcr_write_port);
 	ZetSetInHandler(mcr_read_port);
-//	ZetClose();
 
 	nMainClock = 5000000;
 }
@@ -1302,7 +1287,7 @@ static void render_sprites_91399()
 				{
 					INT32 tx = (sx + x) & 0x1ff;
 					if (tx >= nScreenWidth) continue;
-					INT32 pix = 0x10 | src[x ^ hflip];
+					INT32 pix = pri[tx] | src[x ^ hflip];
 
 					pri[tx] = pix;
 
@@ -1399,10 +1384,10 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0x0 | TMAP_SET_GROUP(0));
-	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0x1 | TMAP_SET_GROUP(1));
-	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, 0x2 | TMAP_SET_GROUP(2));
-	if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0x3 | TMAP_SET_GROUP(3));
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0x00 | TMAP_SET_GROUP(0));
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0x10 | TMAP_SET_GROUP(1));
+	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, 0x20 | TMAP_SET_GROUP(2));
+	if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0x30 | TMAP_SET_GROUP(3));
 
 	if (sprite_config == 0)
 	{
@@ -1594,7 +1579,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnTrackballScan();
 
-		//SCAN_VAR();
+        SCAN_VAR(input_playernum);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -1620,6 +1605,19 @@ static struct BurnRomInfo SsiopromRomDesc[] = {
 #else
 	{ "",  0x000000, 0x00000000, BRF_ESS | BRF_PRG | BRF_BIOS },
 #endif
+};
+
+STD_ROM_PICK(Ssioprom)
+STD_ROM_FN(Ssioprom)
+
+struct BurnDriver BurnDrvSsioprom = {
+    "midssio", NULL, NULL, NULL, "1981",
+    "Midway SSIO Sound Board Internal pROM\0", "Internal pROM only", "Midway", "SSIO",
+    NULL, NULL, NULL, NULL,
+    BDF_BOARDROM, 0, HARDWARE_MISC_PRE90S, GBF_BIOS, 0,
+    NULL, SsiopromRomInfo, SsiopromRomName, NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL, NULL, NULL, 0,
+    480, 512, 3, 4
 };
 
 
@@ -1942,7 +1940,6 @@ struct BurnDriver BurnDrvShollow2 = {
 	NULL, shollow2RomInfo, shollow2RomName, NULL, NULL, NULL, NULL, ShollowInputInfo, ShollowDIPInfo,
 	ShollowInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
     480, 512, 3, 4
-
 };
 
 
@@ -2211,7 +2208,13 @@ STD_ROM_FN(domino)
 
 static INT32 DominoInit()
 {
-	return DrvInit(90010);
+    INT32 nRet = DrvInit(90010);
+
+    if (!nRet) {
+        ssio_basevolume(0.15);
+    }
+
+    return nRet;
 }
 
 struct BurnDriver BurnDrvDomino = {

@@ -20,13 +20,13 @@ static input_func input_handlers[5] = { NULL, NULL, NULL, NULL, NULL };
 static INT32 output_mask[2] = { 0xff, 0xff };
 static INT32 input_mask[5] = { 0, 0, 0, 0, 0 };
 
+static double ssio_basevol = 0.0;
+
 UINT8 *ssio_inputs; // 5
 UINT8 ssio_dips; // 1
 
 static void __fastcall ssio_cpu_write(UINT16 address, UINT8 data)
 {
-//	bprintf (0, _T("SW: %4.4x, %2.2x!!!!!!\n"), address, data);
-
 	if ((address & 0xf000) == 0xc000) {
 #ifdef SSIODEBUG
         bprintf (0, _T("SSIO Status Write: %2.2x\n"), data);
@@ -62,8 +62,6 @@ static void __fastcall ssio_cpu_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall ssio_cpu_read(UINT16 address)
 {
-//	bprintf (0, _T("SR: %4.4x!!!!!!\n"), address);
-
 	if ((address & 0xf000) == 0xc000) {
 		return 0; // nop
 	}
@@ -99,13 +97,13 @@ static UINT8 __fastcall ssio_cpu_read(UINT16 address)
 
 static void ssio_update_volumes()
 {
-    AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_1, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[0][0]], BURN_SND_ROUTE_PANLEFT);
-    AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_2, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[0][1]], BURN_SND_ROUTE_PANLEFT);
-    AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_3, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[0][2]], BURN_SND_ROUTE_PANLEFT);
+    AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_1, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[0][0]]+ssio_basevol, BURN_SND_ROUTE_PANLEFT);
+    AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_2, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[0][1]]+ssio_basevol, BURN_SND_ROUTE_PANLEFT);
+    AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_3, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[0][2]]+ssio_basevol, BURN_SND_ROUTE_PANLEFT);
 
-    AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_1, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][0]], BURN_SND_ROUTE_PANRIGHT);
-    AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_2, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][1]], BURN_SND_ROUTE_PANRIGHT);
-    AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_3, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][2]], BURN_SND_ROUTE_PANRIGHT);
+    AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_1, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][0]]+ssio_basevol, BURN_SND_ROUTE_PANRIGHT);
+    AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_2, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][1]]+ssio_basevol, BURN_SND_ROUTE_PANRIGHT);
+    AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_3, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][2]]+ssio_basevol, BURN_SND_ROUTE_PANRIGHT);
 }
 
 static void AY8910_write_0A(UINT32 /*addr*/, UINT32 data)
@@ -187,7 +185,6 @@ static void ssio_compute_ay8910_modulation(UINT8 *prom)
 static UINT8 ssio_input_port_read(UINT8 offset)
 {
 	offset &= 7;
-//	static const char *port[] = { "SSIO.IP0", "SSIO.IP1", "SSIO.IP2", "SSIO.IP3", "SSIO.IP4" };
 
 	UINT8 result = ssio_inputs[offset & 7];
 
@@ -200,8 +197,7 @@ static UINT8 ssio_input_port_read(UINT8 offset)
 static void ssio_output_port_write(UINT8 offset, UINT8 data)
 {
 	offset &= 7;
-	int which = offset >> 2;
-//	if (which == 0)	mcr_control_port_w(offset, data);
+    UINT8 which = offset >> 2;
 
 	if (output_handlers[which])
 		(*output_handlers[which])(offset, data & output_mask[which]);
@@ -276,6 +272,14 @@ void ssio_reset()
 	AY8910Reset(1);
 }
 
+void ssio_basevolume(double vol)
+{
+    ssio_basevol = vol;
+
+	AY8910SetAllRoutes(0, vol, BURN_SND_ROUTE_PANLEFT);
+    AY8910SetAllRoutes(1, vol, BURN_SND_ROUTE_PANRIGHT);
+}
+
 void ssio_init(UINT8 *rom, UINT8 *ram, UINT8 *prom)
 {
 	ssio_compute_ay8910_modulation(prom);
@@ -302,8 +306,8 @@ void ssio_init(UINT8 *rom, UINT8 *ram, UINT8 *prom)
 	AY8910Init(1, 2000000, 0);
 	AY8910SetPorts(0, NULL, NULL, AY8910_write_0A, AY8910_write_0B);
 	AY8910SetPorts(1, NULL, NULL, AY8910_write_1A, AY8910_write_1B);
-	AY8910SetAllRoutes(0, 0.05, BURN_SND_ROUTE_PANLEFT);
-	AY8910SetAllRoutes(1, 0.05, BURN_SND_ROUTE_PANRIGHT);
+
+    ssio_basevolume(0.05);
 }
 
 void ssio_scan(INT32 nAction, INT32 *pnMin)

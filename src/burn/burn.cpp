@@ -945,6 +945,15 @@ void logerror(char* szFormat, ...)
 }
 #endif
 
+#if defined (FBA_DEBUG)
+void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize)
+{
+    FILE *f = fopen(filename, "wb+");
+    fwrite(buffer, 1, bufsize, f);
+    fclose(f);
+}
+#endif
+
 // ----------------------------------------------------------------------------
 // Wrapper for MAME state_save_register_* calls
 

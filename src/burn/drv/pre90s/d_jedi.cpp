@@ -441,7 +441,7 @@ static INT32 DrvInit()
 	PokeySetRoute(2, 0.15, BURN_SND_ROUTE_LEFT);
 	PokeySetRoute(3, 0.15, BURN_SND_ROUTE_RIGHT);
 
-	tms5220_init();
+	tms5220_init(M6502TotalCycles, 1512000);
 	tms5220_set_frequency(672000);
 
 	GenericTilesInit();
@@ -677,6 +677,8 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 	}
+
+    M6502NewFrame();
 
 	INT32 nInterleave = 262; // for scanlines
 	INT32 nCyclesTotal[2] = { 2500000 / 60, 1512000 / 60 };

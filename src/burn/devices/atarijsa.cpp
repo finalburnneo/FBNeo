@@ -340,7 +340,7 @@ void AtariJSAInit(UINT8 *rom, void (*int_cb)(), UINT8 *samples0, UINT8 *samples1
 	PokeyInit(3579545/2, 1, 0.40, 1);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 
-	tms5220_init();
+	tms5220_init(M6502TotalCycles, 1789773);
 	tms5220_set_frequency((3579545*2)/11);
 }
 

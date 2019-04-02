@@ -2,6 +2,7 @@
 #define tms5220_h
 
 void tms5220_init();
+void tms5220_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ); // init for buffered.
 void tms5220_exit();
 void tms5220_reset();
 void tms5220_scan(INT32 nAction, INT32 *pnMin);

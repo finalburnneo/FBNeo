@@ -15,6 +15,8 @@
 #include "tms5220.h"
 
 
+#define DINK_DEBUG 0
+
 /* Pull in the ROM tables */
 #include "tms5220_tables.h"
 
@@ -140,6 +142,11 @@ static INT32 nFractionalPosition;
 static INT32 nPosition;
 static INT32 our_freq = 0; // for tms5220_set_frequency()
 
+// for stream-sync
+static INT32 tms5220_buffered = 0;
+static INT32 (*pCPUTotalCycles)() = NULL;
+static UINT32  nDACCPUMHZ = 0;
+
 static void *tms5220_create(void)
 {
 	struct tms5220 *tms;
@@ -155,6 +162,46 @@ static void tms5220_destroy(void *chip)
 	free(chip);
 }
 
+// Streambuffer handling
+static INT32 SyncInternal()
+{
+    if (!tms5220_buffered) return 0;
+	return (INT32)(float)(nBurnSoundLen * (pCPUTotalCycles() / (nDACCPUMHZ / (nBurnFPS / 100.0000))));
+}
+
+static void tms5220_process(void *chip, INT16 *buffer, UINT32 size);
+
+void UpdateStream(INT32 samples_len)
+{
+    if (!tms5220_buffered) return;
+    if (samples_len > nBurnSoundLen) samples_len = nBurnSoundLen;
+
+	INT32 nSamplesNeeded = ((((((our_freq * 1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10) + 1;
+	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition below
+
+    nSamplesNeeded -= nPosition;
+    if (nSamplesNeeded <= 0) return;
+
+	INT16 *mix = soundbuf + 5 + nPosition;
+	memset(mix, 0, nSamplesNeeded * sizeof(INT16));
+    if (DINK_DEBUG) bprintf(0, _T("tms5220_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
+    tms5220_process(our_chip, mix, nSamplesNeeded);
+
+    nPosition += nSamplesNeeded;
+}
+
+
+void tms5220_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
+{
+    bprintf(0, _T("*** Using BUFFERED tms5220-mode.\n"));
+    tms5220_buffered = 1;
+
+    tms5220_init();
+
+    pCPUTotalCycles = pCPUCyclesCB;
+	nDACCPUMHZ = nCpuMHZ;
+}
+
 void tms5220_init()
 {
 	our_chip = (tms5220 *)tms5220_create();
@@ -164,7 +211,11 @@ void tms5220_init()
 void tms5220_exit()
 {
 	tms5220_destroy(our_chip);
-	free(soundbuf);
+    free(soundbuf);
+
+    tms5220_buffered = 0;
+    pCPUTotalCycles = NULL;
+    nDACCPUMHZ = 0;
 }
 
 void tms5220_scan(INT32 nAction, INT32 *pnMin)
@@ -317,10 +368,12 @@ static void tms5220_data_write(void *chip, INT32 data)
 		if (tms->speak_external)
 			tms->buffer_empty = 0;
 
+        if (DINK_DEBUG) bprintf(0, _T("Added byte to FIFO (size=%2d)\n"), tms->fifo_count);
         if (DEBUG_5220) logerror("Added byte to FIFO (size=%2d)\n", tms->fifo_count);
     }
     else
     {
+        if (DINK_DEBUG) bprintf(0, _T("Ran out of room in the FIFO!\n"));
         if (DEBUG_5220) logerror("Ran out of room in the FIFO!\n");
     }
 
@@ -334,6 +387,9 @@ static void tms5220_data_write(void *chip, INT32 data)
 
 void tms5220_write(UINT8 data)
 {
+    if (DINK_DEBUG) bprintf(0, _T("tms5220_write: %d cycles    frame %d\n"), pCPUTotalCycles(), nCurrentFrame);
+
+    UpdateStream(SyncInternal());
 	tms5220_data_write(our_chip, data);
 }
 
@@ -384,6 +440,7 @@ static UINT8 tms5220_status_read(void *chip)
 
 UINT8 tms5220_status()
 {
+    UpdateStream(SyncInternal());
 	return tms5220_status_read(our_chip);
 }
 
@@ -401,6 +458,8 @@ static UINT8 tms5220_ready_read(void *chip)
 
 UINT8 tms5220_ready()
 {
+    if (DINK_DEBUG) bprintf(0, _T("tms5220_ready?: %d cycles    frame %d\n"), pCPUTotalCycles(), nCurrentFrame);
+    UpdateStream(SyncInternal());
 	return tms5220_ready_read(our_chip);
 }
 
@@ -476,7 +535,8 @@ UINT8 tms5220_irq()
 void tms5220_set_frequency(UINT32 freq)
 {
 	our_freq = freq/80;
-	nSampleSize = (UINT32)our_freq * (1 << 16) / nBurnSoundRate;
+    nSampleSize = (UINT32)our_freq * (1 << 16) / nBurnSoundRate;
+
 	nFractionalPosition = 0;
 	nPosition = 0;
 }

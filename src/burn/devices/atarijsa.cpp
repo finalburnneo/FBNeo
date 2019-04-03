@@ -45,7 +45,6 @@ static void update_6502_irq()
 static void bankswitch(INT32 data)
 {
 	atarijsa_bank = data & 3;
-
 	M6502MapMemory(atarijsa_rom + (data & 3) * 0x1000, 0x3000, 0x3fff, MAP_ROM);
 }
 
@@ -110,7 +109,7 @@ static void atarijsa_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x2a00:
-			speech_data = data;
+            speech_data = data;
 			if (samples[0]) MSM6295Write(0, data); // jsaii, jsaiii
 		return;
 
@@ -131,15 +130,16 @@ static void atarijsa_write(UINT16 address, UINT8 data)
 		case 0x2a04:
 		case 0x2a05:
 		{
-			// mame resets YM2151, but it completely breaks sound for FBA
-	//		if (data & 0x01) BurnYM2151Reset();
+            if (~data & 0x01) BurnYM2151Reset();
 
 			if (has_tms5220)
 			{
-				if (((data ^ last_ctl) & 0x02) && (data & 0x02))
-					tms5220_write(speech_data);
-				INT32 count = 5 | ((data >> 2) & 2);
-				tms5220_set_frequency(3579545*2 / (16 - count));
+                if (((data ^ last_ctl) & 0x02) && (data & 0x02)) {
+                    tms5220_write(speech_data);
+                }
+
+                INT32 count = 5 | ((data >> 2) & 2);
+                tms5220_set_frequency((3579545*2) / (16 - count));
 			}
 
 			// coin counter = data & 0x30
@@ -155,8 +155,9 @@ static void atarijsa_write(UINT16 address, UINT8 data)
 			oki_banks[0] = (oki_banks[0] & 2) | ((data >> 1) & 1);
 			if (samples[0]) oki_bankswitch(0, oki_banks[0]);
 
-			bankswitch(data >> 6);
-		}	
+            bankswitch(data >> 6);
+            last_ctl = data;
+        }
 		return;
 
 		case 0x2a06:
@@ -222,12 +223,12 @@ static UINT8 atarijsa_read(UINT16 address)
 		case 0x2804:
 		case 0x280c:
 		{
-			UINT8 result = (atarijsa_input_port) | 0x10;
-			if (!(atarijsa_test_port & atarijsa_test_mask)) result ^= 0x80;
+            UINT8 result = (atarijsa_input_port) | 0x10;
+            if (!(atarijsa_test_port & atarijsa_test_mask)) result ^= 0x80;
 			if (atarigen_cpu_to_sound_ready) result ^= 0x40;
 			if (atarigen_sound_to_cpu_ready) result ^= 0x20;
-			if (has_tms5220 && tms5220_ready() == 0) result ^= 0x10;
-			return result;
+            if (has_tms5220 && tms5220_ready() == 0) result ^= 0x10;
+            return result;
 		}
 
 		case 0x2806:
@@ -412,7 +413,7 @@ void AtariJSAInterruptUpdate(INT32 interleave)
 	if (modr == 0) modr = 63;
 
 	if ((atarijsa_sound_timer % modr) == (modr-1))
-	{
+    {
 		timed_int = 1;
 		update_6502_irq();
 	}
@@ -427,7 +428,7 @@ void AtariJSAUpdate(INT16 *output, INT32 length)
 	if (has_pokey) pokey_update(output, length);
 
 	if ((output + (length*2)) == (pBurnSoundOut + (nBurnSoundLen*2))) {
-		if (has_tms5220) tms5220_update(pBurnSoundOut, nBurnSoundLen);
+        if (has_tms5220) tms5220_update(pBurnSoundOut, nBurnSoundLen);
 	}
 }
 

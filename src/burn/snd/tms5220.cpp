@@ -534,11 +534,12 @@ UINT8 tms5220_irq()
 
 void tms5220_set_frequency(UINT32 freq)
 {
-	our_freq = freq/80;
-    nSampleSize = (UINT32)our_freq * (1 << 16) / nBurnSoundRate;
+    if ((freq/80) != our_freq) {
+        UpdateStream(SyncInternal());
 
-	nFractionalPosition = 0;
-	nPosition = 0;
+        our_freq = freq/80;
+        nSampleSize = (UINT32)our_freq * (1 << 16) / nBurnSoundRate;
+    }
 }
 
 

@@ -98,7 +98,13 @@ static void update_interrupts()
 		SekSetIRQLine(7, CPU_IRQSTATUS_NONE);
 	}
 
-	if (atarijsa_int_state != 0 && cpu == 1) return;
+	if (atarijsa_int_state != 0 && (cpu^1) == 1) return;
+
+    state = 0;
+	if (video_int_state) state = 4;
+	if (atarijsa_int_state && (cpu^1) == 0) {
+		state = 6;
+	}
 
 	SekClose();
 	SekOpen(cpu^1);
@@ -227,11 +233,10 @@ static void __fastcall eprom_main_write_byte(UINT32 address, UINT8 data)
 			AtariJSAResetWrite(0);
 		return;
 
-		case 0x360030:
 		case 0x360031:
 			AtariJSAWrite(data);
 		return;
-	}
+    }
 }
 
 static UINT16 special_port_read()
@@ -287,8 +292,8 @@ static UINT8 __fastcall eprom_main_read_byte(UINT32 address)
 	}
 
 	if ((address & 0xfffffe) == 0x260030) {
-		return AtariJSARead();
-	}
+		return AtariJSARead() >> (8 * (~address & 1));
+    }
 
 	return 0;
 }
@@ -800,10 +805,6 @@ static INT32 DrvFrame()
 			update_interrupts();
 			SekClose();
 
-			SekOpen(1);
-			update_interrupts();
-			SekClose();
-
 			if (pBurnDraw) {
 				BurnDrvRedraw();
 			}
@@ -822,7 +823,7 @@ static INT32 DrvFrame()
 		INT32 nSegment = nBurnSoundLen - nSoundBufferPos;
 		if (nSegment > 0) {
 			AtariJSAUpdate(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-		}
+        }
 	}
 
 	M6502Close();

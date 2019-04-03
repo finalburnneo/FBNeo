@@ -136,6 +136,8 @@ static void set_interrupt_state(struct tms5220 *tms, INT32 state);
 static struct tms5220 *our_chip;
 static INT16 *soundbuf;
 
+static double tms5220_vol;
+
 // for resampling
 static UINT32 nSampleSize;
 static INT32 nFractionalPosition;
@@ -197,9 +199,15 @@ void tms5220_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
     tms5220_buffered = 1;
 
     tms5220_init();
+    tms5220_volume(1.00);
 
     pCPUTotalCycles = pCPUCyclesCB;
 	nDACCPUMHZ = nCpuMHZ;
+}
+
+void tms5220_volume(double vol)
+{
+    tms5220_vol = vol;
 }
 
 void tms5220_init()
@@ -797,8 +805,7 @@ void tms5220_update(INT16 *buffer, INT32 samples_len)
 		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition >> 16) - 0]);
 
 		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
-
-		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample);
+		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * tms5220_vol);
 
 		buffer[i + 0] = BURN_SND_CLIP(buffer[i + 0] + nTotalLeftSample);
 		buffer[i + 1] = BURN_SND_CLIP(buffer[i + 1] + nTotalLeftSample);

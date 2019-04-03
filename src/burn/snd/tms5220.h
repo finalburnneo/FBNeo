@@ -6,6 +6,7 @@ void tms5220_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ); // init for buffered.
 void tms5220_exit();
 void tms5220_reset();
 void tms5220_scan(INT32 nAction, INT32 *pnMin);
+void tms5220_volume(double vol);
 
 void tms5220_write(UINT8 data);
 UINT8 tms5220_status(); // read

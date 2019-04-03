@@ -15,7 +15,7 @@ static INT32 ym2151_ct1;
 
 static double pokey_volume;
 static double ym2151_volume;
-static double tms5220_volume;
+//static double tms5220_volume;
 static double oki6295_volume;
 
 INT32 atarigen_cpu_to_sound;
@@ -287,7 +287,7 @@ void AtariJSAReset()
 
 	pokey_volume = 1.0;
 	ym2151_volume = 1.0;
-	tms5220_volume = 1.0;
+	//tms5220_volume = 1.0;
 
 	atarigen_cpu_to_sound = 0;
 	atarigen_cpu_to_sound_ready = 0;
@@ -342,7 +342,8 @@ void AtariJSAInit(UINT8 *rom, void (*int_cb)(), UINT8 *samples0, UINT8 *samples1
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 
 	tms5220_init(M6502TotalCycles, 1789773);
-	tms5220_set_frequency((3579545*2)/11);
+    tms5220_set_frequency((3579545*2)/11);
+    tms5220_volume(1.50);
 }
 
 void AtariJSAExit()

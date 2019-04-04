@@ -350,12 +350,15 @@ static void mhavoc_sub_write(UINT16 address, UINT8 data)
 			gamma_xmtd = 1;
 			gamma_data = data;
 		return;
+    }
 
+    switch (address)
+    {
 		case 0x5800:
 			speech_data = data;
 		return;
 
-		case 0x5900:
+        case 0x5900:
 			tms5220_write(speech_data);
 		return;
 	}
@@ -376,7 +379,7 @@ static UINT8 mhavoc_sub_read(UINT16 address)
 			UINT8 ret = (DrvInputs[1] & 0xf8);
 			ret |= alpha_xmtd ? 0x01 : 0;
 			ret |= alpha_rcvd ? 0x02 : 0;
-			ret |= tms5220_ready()  ? 0x04 : 0;
+            ret |= tms5220_ready() ? 0x00 : 0x04;
 			return ret;
 		}
 

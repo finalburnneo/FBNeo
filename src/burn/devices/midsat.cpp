@@ -152,7 +152,7 @@ void midsat_init(UINT8 *rom)
 	pia_config(0, 0, &pia_0);
 	pia_config(1, 0, &pia_1);
 
-	tms5220_init(M6800TotalCycles, 3579545/4);
+	tms5200_init(M6800TotalCycles, 3579545/4);
     tms5220_set_frequency(640000);
     midsat_initialized = 1;
 }

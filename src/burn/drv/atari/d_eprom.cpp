@@ -8,6 +8,7 @@
 #include "atariic.h"
 #include "atarimo.h"
 #include "atarijsa.h"
+#include "burn_ym2151.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -522,6 +523,7 @@ static INT32 DrvInit()
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	AtariJSAInit(DrvM6502ROM, &update_interrupts, NULL, NULL);
+    BurnYM2151SetInterleave((262/2)+1);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_COLS, eprbg_map_callback, 8, 8, 64, 64);

@@ -110,6 +110,7 @@ static void atarijsa_write(UINT16 address, UINT8 data)
 
 		case 0x2a00:
             speech_data = data;
+            tms5220_write(data);
 			if (samples[0]) MSM6295Write(0, data); // jsaii, jsaiii
 		return;
 
@@ -134,9 +135,8 @@ static void atarijsa_write(UINT16 address, UINT8 data)
 
 			if (has_tms5220)
 			{
-                if (((data ^ last_ctl) & 0x02) && (data & 0x02)) {
-                    tms5220_write(speech_data);
-                }
+                tms5220_wsq_w((data >> 1) & 1);
+                tms5220_rsq_w((data >> 2) & 1);
 
                 INT32 count = 5 | ((data >> 2) & 2);
                 tms5220_set_frequency((3579545*2) / (16 - count));
@@ -341,7 +341,7 @@ void AtariJSAInit(UINT8 *rom, void (*int_cb)(), UINT8 *samples0, UINT8 *samples1
 	PokeyInit(3579545/2, 1, 0.40, 1);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 
-	tms5220_init(M6502TotalCycles, 1789773);
+	tms5220c_init(M6502TotalCycles, 1789773);
     tms5220_set_frequency((3579545*2)/11);
     tms5220_volume(1.50);
 }

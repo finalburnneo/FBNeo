@@ -36,8 +36,6 @@ static INT32 video_off;
 static INT32 scrollx;
 static INT32 scrolly;
 static INT32 soundlatch[2];
-static INT32 speech_strobe;
-static INT32 speech_data;
 static INT32 smoothing_table;
 static INT32 audio_in_reset;
 
@@ -242,13 +240,7 @@ static void jedi_sound_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xfe00) == 0x1200) {
-		address = (~address >> 8) & 1;
-
-		if ((address ^ speech_strobe) && address)
-		{
-			tms5220_write(speech_data);
-		}
-		speech_strobe = address;
+        tms5220_wsq_w((address >> 8) & 1);
 		return;
 	}
 
@@ -261,15 +253,15 @@ static void jedi_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x1100:
-			speech_data = data;
+            tms5220_write(data);
 		return;
 
 		case 0x1400:
 			soundlatch[1] = data | 0x100;
 		return;
 
-		case 0x1500:
-			// speech_reset_w (ignore for now - iq_132)
+        case 0x1500:
+            tms5220_volume((data & 1) ? 1.00 : 0.00);
 		return;
 	}
 
@@ -331,8 +323,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		scrolly = 0;
 		soundlatch[0] = 0;
 		soundlatch[1] = 0;
-		speech_strobe = 0;
-		speech_data = 0;
 		smoothing_table = 0;
 	}
 
@@ -434,12 +424,12 @@ static INT32 DrvInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	PokeyInit(12096000/8, 4, 0.15, 0);
+	PokeyInit(12096000/8, 4, 0.30, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
-	PokeySetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
-	PokeySetRoute(1, 0.15, BURN_SND_ROUTE_BOTH);
-	PokeySetRoute(2, 0.15, BURN_SND_ROUTE_LEFT);
-	PokeySetRoute(3, 0.15, BURN_SND_ROUTE_RIGHT);
+	PokeySetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
+	PokeySetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
+	PokeySetRoute(2, 0.30, BURN_SND_ROUTE_LEFT);
+	PokeySetRoute(3, 0.30, BURN_SND_ROUTE_RIGHT);
 
 	tms5220_init(M6502TotalCycles, 1512000);
 	tms5220_set_frequency(672000);
@@ -690,15 +680,15 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6502Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6502Close();
 
 		M6502Open(1);
 		if (audio_in_reset == 0) {
-			nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
+            nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		} else {
-			nCyclesDone[1] += nCyclesTotal[1] / nInterleave;
+            nCyclesDone[1] += M6502Idle(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		}
 		if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6502Close();
@@ -762,8 +752,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(scrollx);
 		SCAN_VAR(scrolly);
 		SCAN_VAR(soundlatch);
-		SCAN_VAR(speech_strobe);
-		SCAN_VAR(speech_data);
 		SCAN_VAR(smoothing_table);
 		SCAN_VAR(audio_in_reset);
 	}

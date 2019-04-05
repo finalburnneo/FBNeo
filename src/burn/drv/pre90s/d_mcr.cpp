@@ -1,11 +1,6 @@
 // FB Alpha Midway MCR driver module
 // Based on MAME driver by Aaron Giles
 
-// dink NOTE:
-// nvram is really work-ram.  for states to work, we need to treat it as
-// such. (leave in ram-section of memindex)
-// todo(maybe?): figure out where actual nvram is stored in that ram-block
-
 /*
 twotigerc	- <<-- todo (alt.inpt) (marked not working/BurnDriverD for now)
 demoderb	- <<-- todo sound (turbo cheap squeak)
@@ -16,7 +11,7 @@ nflfoot		- don't bother with this (laserdisc)
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "midssio.h"
-#include "midsat.h" // for dotron
+#include "midsat.h" // for dotrone
 #include "ay8910.h"
 #include "samples.h"
 #include "watchdog.h"
@@ -897,8 +892,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (AllRam, 0x00, RamEnd - AllRam);
 	}
 
-    memset (DrvNVRAM, 0xff, 0x800); // dink.
-
     ZetOpen(0);
 	ZetReset();
 	ZetClose();
@@ -927,9 +920,10 @@ static INT32 MemIndex()
 
 	DrvPalette		= (UINT32*)Next; Next += 0x80 * sizeof(UINT32);
 
+    DrvNVRAM		= Next; Next += 0x000800; // this is work-ram and nvram (HS, service mode options)
+
 	AllRam			= Next;
 
-	DrvNVRAM		= Next; Next += 0x000800; // this is really work-ram
 	DrvSprRAM		= Next; Next += 0x000200;
 	DrvVidRAM		= Next; Next += 0x000800;
 	DrvZ80RAM1		= Next; Next += 0x000400;
@@ -1570,6 +1564,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
+        ScanVar(DrvNVRAM, 0x800, "WORK RAM"); // also nv...
+
         ZetScan(nAction);
 
         ssio_scan(nAction, pnMin);
@@ -1582,17 +1578,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
         SCAN_VAR(input_playernum);
 	}
 
-	if (nAction & ACB_WRITE) {
+    if (nAction & ACB_NVRAM) {
+        ScanVar(DrvNVRAM, 0x800, "NV RAM");
 	}
 
 	return 0;
 }
 
-
-#if 0
-	m_mcr12_sprite_xoffs_flip = 0;
-	m_mcr12_sprite_xoffs = 16;
-#endif
 
 
 static struct BurnRomInfo emptyRomDesc[] = {
@@ -1846,8 +1838,8 @@ static INT32 DpokerInit()
 
 	if (nRet == 0)
 	{
-	//	ssio_set_custom_input(1, 0xff, kick_ip1_read);
-	//	ssio_set_custom_output(0, 0xff, solarfox_op0_write);
+	//	ssio_set_custom_input(1, 0xff, dpoker_ip1_read);
+	//	ssio_set_custom_output(0, 0xff, dpoker_op0_write);
 	}
 
 	return nRet;
@@ -2349,7 +2341,8 @@ static INT32 TwotigerInit()
         BurnSampleSetRoute(1, BURN_SND_SAMPLE_ROUTE_1, 0.50, BURN_SND_ROUTE_RIGHT);
         BurnSampleSetRoute(1, BURN_SND_SAMPLE_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 		ssio_set_custom_output(4, 0xff, twotiger_op4_write);
-		ZetOpen(0);
+
+        ZetOpen(0);
 		ZetUnmapMemory(0xe800, 0xefff, MAP_RAM);
 		ZetUnmapMemory(0xf800, 0xffff, MAP_RAM);
 		ZetSetWriteHandler(twotiger_vidram_write);

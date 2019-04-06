@@ -1,9 +1,6 @@
 // FB Alpha Incredible technologies (32-bit blitter) driver module
 // Based on MAME driver by Aaron Giles and Brian Troha
 
-// todo/etc:
-//  wcbowl140 has issues booting
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "m6809_intf.h"
@@ -2049,8 +2046,8 @@ static UINT8 __fastcall common16_main_read_byte(UINT32 address)
 
 static void __fastcall common32_main_write_long(UINT32 address, UINT32 data)
 {
-	if ((address & 0xfff800) == 0x681000) {
-		bprintf (0, _T("MWL: %5.5x, %8.8x\n"), address, data);
+	if ((address & 0xfff800) == 0x681000) { // timekeeper (in bytehandler)
+        SEK_DEF_WRITE_LONG(0, address, data);
 		return;
 	}
 
@@ -2098,10 +2095,8 @@ static void __fastcall common32_main_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if ((address & 0xfff800) == 0x681000) {
-	//	bprintf (0, _T("MWW: %5.5x, %4.4x\n"), address, data);
-		TimeKeeperWrite((address & 0x7fe)|0, data >> 8);
-		TimeKeeperWrite((address & 0x7ff)|1, data);
+	if ((address & 0xfff800) == 0x681000) { // timekeeper (in bytehandler)
+        SEK_DEF_WRITE_WORD(0, address, data);
 		return;
 	}
 
@@ -2154,8 +2149,7 @@ static void __fastcall common32_main_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xfff800) == 0x681000) {
-	//	bprintf (0, _T("MWB: %5.5x, %2.2x\n"), address, data);
-		TimeKeeperWrite(address & 0x7ff, data);
+        TimeKeeperWrite(address & 0x7ff, data);
 		return;
 	}
 
@@ -2279,16 +2273,12 @@ static UINT32 track_read_4bit_both()
 
 static UINT32 __fastcall common32_main_read_long(UINT32 address)
 {
-//	bprintf (0, _T("MRL: %5.5x\n"), address);
-
 	if ((address & 0xffff00) == 0x500000) {
 		return itech32_video_read((address / 4) & 0x3f) | (itech32_video_read((address / 4) & 0x3f) << 16);
 	}
 
-	if ((address & 0xfff800) == 0x681000) {
-		bprintf (0, _T("MRL: %5.5x\n"), address);
-		return (TimeKeeperRead(address & 0x7fc)<<24)+(TimeKeeperRead((address & 0x7fc)|1)<<16)
-			  +(TimeKeeperRead((address & 0x7fc)|2)<<8)+(TimeKeeperRead((address & 0x7fc)|4)<<0);
+    if ((address & 0xfff800) == 0x681000) { // timekeeper (in bytehandler)
+        SEK_DEF_READ_LONG(0, address);
 	}
 
 	// wcbowl trackball
@@ -2357,15 +2347,12 @@ static UINT32 __fastcall common32_main_read_long(UINT32 address)
 
 static UINT16 __fastcall common32_main_read_word(UINT32 address)
 {
-//	bprintf (0, _T("MRW: %5.5x\n"), address);
-
 	if ((address & 0xffff00) == 0x500000) {
 		return itech32_video_read((address / 4) & 0x3f);
 	}
 
-	if ((address & 0xfff800) == 0x681000) {
-		bprintf (0, _T("MRW: %5.5x\n"), address);
-		return (TimeKeeperRead(address & 0x7fe)*256)+TimeKeeperRead((address & 0x7fe)|1);
+    if ((address & 0xfff800) == 0x681000) { // timekeeper (in bytehandler)
+        SEK_DEF_READ_WORD(0, address);
 	}
 
 	// wcbowl trackball
@@ -2443,14 +2430,11 @@ static UINT16 __fastcall common32_main_read_word(UINT32 address)
 
 static UINT8 __fastcall common32_main_read_byte(UINT32 address)
 {
-//	bprintf (0, _T("MRB: %5.5x\n"), address);
-
 	if ((address & 0xffff00) == 0x500000) {
 		return itech32_video_read((address / 4) & 0x3f) >> ((~address & 1) * 8);
 	}
 
 	if ((address & 0xfff800) == 0x681000) {
-	//	bprintf (0, _T("MRB: %5.5x\n"), address);
 		return TimeKeeperRead(address & 0x7ff);
 	}
 
@@ -4026,7 +4010,7 @@ static struct BurnRomInfo wcbowl140RomDesc[] = {
 STD_ROM_PICK(wcbowl140)
 STD_ROM_FN(wcbowl140)
 
-static INT32 Wcbowl140Init() // needs timekeeper!! (something else? not booting right..)
+static INT32 Wcbowl140Init()
 {
 	Trackball_Type = TB_TYPE0;
 

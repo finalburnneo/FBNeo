@@ -1,7 +1,7 @@
 extern UINT8 *ssio_inputs; // 5 - point to inputs
 extern UINT8 ssio_dips; // 1 - dips for ssio board
 
-void ssio_14024_clock(); // interrupt generator (480x per frame!)
+void ssio_14024_clock(INT32 interleave); // interrupt generator
 
 void ssio_reset_write(INT32 state);
 void ssio_write_ports(UINT8 offset, UINT8 data);
@@ -14,4 +14,4 @@ void ssio_init(UINT8 *rom, UINT8 *ram, UINT8 *prom);
 void ssio_basevolume(double vol);
 void ssio_exit();
 void ssio_scan(INT32 nAction, INT32 *pnMin);
-
+INT32 ssio_initialized();

@@ -1511,7 +1511,7 @@ static INT32 DrvFrame()
 		{
 			ZetOpen(1);
             nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
-			ssio_14024_clock();
+			ssio_14024_clock(nInterleave);
 			ZetClose();
 		}
 

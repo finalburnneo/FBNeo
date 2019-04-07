@@ -1,9 +1,13 @@
+// Midway SSIO audio / input module
+// Based on MAME sources by Aaron Giles
+
 #include "burnint.h"
 #include "z80_intf.h"
 #include "ay8910.h"
 
 // #define SSIODEBUG
 
+static INT32 ssio_is_initialized = 0;
 static INT32 ssio_14024_count;
 static INT32 ssio_data[4];
 static INT32 ssio_status;
@@ -135,10 +139,12 @@ static void AY8910_write_1B(UINT32 /*addr*/, UINT32 data)
 	ssio_update_volumes();
 }
 
-void ssio_14024_clock() // interrupt generator
+void ssio_14024_clock(INT32 interleave) // interrupt generator
 {
+	if (ssio_is_initialized == 0) return;
+
 	// ~26x per frame
-    if (++ssio_14024_count >= 18) {
+    if (++ssio_14024_count >= (interleave/26)) {
         ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
         ssio_14024_count = 0;
     }
@@ -146,6 +152,8 @@ void ssio_14024_clock() // interrupt generator
 
 void ssio_reset_write(INT32 state)
 {
+	if (ssio_is_initialized == 0) return;
+
 	if (state)
 	{
 		ZetSetRESETLine(1, 1);
@@ -265,6 +273,8 @@ void ssio_set_custom_output(INT32 which, INT32 mask, void (*handler)(UINT8 offse
 
 void ssio_reset()
 {
+	if (ssio_is_initialized == 0) return;
+
 	ssio_reset_write(1);
 	ssio_reset_write(0);
 
@@ -274,6 +284,8 @@ void ssio_reset()
 
 void ssio_basevolume(double vol)
 {
+	if (ssio_is_initialized == 0) return;
+
     ssio_basevol = vol;
 
 	AY8910SetAllRoutes(0, vol, BURN_SND_ROUTE_PANLEFT);
@@ -308,10 +320,13 @@ void ssio_init(UINT8 *rom, UINT8 *ram, UINT8 *prom)
 	AY8910SetPorts(1, NULL, NULL, AY8910_write_1A, AY8910_write_1B);
 
     ssio_basevolume(0.05);
+	ssio_is_initialized = 1;
 }
 
 void ssio_scan(INT32 nAction, INT32 *pnMin)
 {
+	if (ssio_is_initialized == 0) return;
+
     if (nAction & ACB_VOLATILE) {
         AY8910Scan(nAction, pnMin);
 
@@ -326,13 +341,22 @@ void ssio_scan(INT32 nAction, INT32 *pnMin)
 
 void ssio_exit()
 {
-	AY8910Exit(0);
-	AY8910Exit(1);
-
 	ssio_set_custom_output(0, 0xff, NULL);
 	ssio_set_custom_output(1, 0xff, NULL);
 
 	for (INT32 i = 0; i < 5; i++ ){
 		ssio_set_custom_input(i, 0, NULL);
 	}
+
+	if (ssio_is_initialized == 0) return;
+
+	AY8910Exit(0);
+	AY8910Exit(1);
+
+	ssio_is_initialized = 0;
+}
+
+INT32 ssio_initialized()
+{
+	return ssio_is_initialized;
 }

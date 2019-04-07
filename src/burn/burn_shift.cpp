@@ -301,7 +301,7 @@ void BurnShiftSetStatus(UINT32 status)
 				BurnGearRender[(y * 8) + x] = source[(y * 8) + x];
 			}
 		}
-	lhtimer = 19; // for color effects
+    lhtimer = (nBurnFPS < 4500) ? 10 : 19; // for color effects
 }
 
 void BurnShiftExit()
@@ -368,6 +368,62 @@ void BurnShiftRender()
 							ptr[0] = t >> 0;
 						}
 						else if (nBurnBpp == 2 && BurnGearRender[(y*8)+x] == 1) // alpha blend not supported for 16-bit
+						{
+							*((UINT16*)ptr) =  color;
+						}
+					}
+					ptr += nBurnBpp;
+				}
+			}
+		}
+
+		xpos += shift_xadv;
+		ypos += shift_yadv;
+	}
+	if (lhtimer > 0) lhtimer--;
+}
+
+void BurnShiftRenderDoubleSize()
+{
+#if defined FBA_DEBUG
+	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftRender called without init\n"));
+#endif
+
+	if (!BurnShiftEnabled) return;
+
+    if (shift_size == 8) { // need to re-init some things for 16x16 mode
+        shift_size = 16;
+        set_shift_draw_position();
+    }
+
+	INT32 xpos = shift_xpos;
+	INT32 ypos = shift_ypos;
+	INT32 color = BurnHighCol((shift_color >> 16) & 0xff, (shift_color >> 8) & 0xff, (shift_color >> 0) & 0xff, 0);
+
+	{
+		if (xpos < 0 || xpos > (nScreenWidth - shift_size)) return;
+
+		{
+			for (INT32 y = 0; y < 16; y++)
+			{
+				UINT8 *ptr = pBurnDraw + (((ypos + y) * nScreenWidth) + xpos) * nBurnBpp;
+
+				for (INT32 x = 0; x < 16; x++) {
+					if (BurnGearRender[((y/2)*8)+(x/2)])
+					{
+						if (nBurnBpp >= 4)
+						{
+							*((UINT32*)ptr) = alpha_blend32(*((UINT32*)ptr), BurnGearRender[((y/2)*8)+(x/2)]);
+						}
+						else if (nBurnBpp == 3)
+						{
+							UINT32 t = alpha_blend32((ptr[2] << 16) | (ptr[1] << 8) | ptr[0], BurnGearRender[((y/2)*8)+(x/2)]);
+
+							ptr[2] = t >> 16;
+							ptr[1] = t >> 8;
+							ptr[0] = t >> 0;
+						}
+						else if (nBurnBpp == 2 && BurnGearRender[((y/2)*8)+(x/2)] == 1) // alpha blend not supported for 16-bit
 						{
 							*((UINT16*)ptr) =  color;
 						}

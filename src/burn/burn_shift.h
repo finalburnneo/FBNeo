@@ -17,6 +17,7 @@ void BurnShiftInitDefault();
 void BurnShiftReset();
 void BurnShiftSetFlipscreen(INT32 flip);
 void BurnShiftRender();
+void BurnShiftRenderDoubleSize();
 void BurnShiftSetStatus(UINT32 status);
 INT32 BurnShiftInputCheckToggle(UINT8 shiftinput);
 void BurnShiftExit();

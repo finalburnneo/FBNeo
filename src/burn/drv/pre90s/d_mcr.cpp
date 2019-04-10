@@ -3,15 +3,17 @@
 
 /*
 twotigerc	- <<-- todo (alt.inpt) (marked not working/BurnDriverD for now)
-demoderb	- <<-- todo sound (turbo cheap squeak)
 dpoker		- don't bother with this (uses light panel/special buttons/etc)
 nflfoot		- don't bother with this (laserdisc)
 */
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
+#include "m6809_intf.h"
 #include "midssio.h"
 #include "midsat.h" // for dotrone
+#include "midtcs.h" // demoderb
+#include "dac.h"
 #include "ay8910.h"
 #include "samples.h"
 #include "watchdog.h"
@@ -899,6 +901,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	BurnSampleReset();
 	ssio_reset();
     if (has_squak) midsat_reset();
+    tcs_reset();
 
 	flipscreen = 0;
 
@@ -926,7 +929,7 @@ static INT32 MemIndex()
 
 	DrvSprRAM		= Next; Next += 0x000200;
 	DrvVidRAM		= Next; Next += 0x000800;
-	DrvZ80RAM1		= Next; Next += 0x000400;
+	DrvZ80RAM1		= Next; Next += 0x001000; // 0x400 ssio, 0x1000 tcs
 	DrvPalRAM16		= (UINT16*)Next; Next += 0x40 * sizeof(UINT16);
 
 	RamEnd			= Next;
@@ -1163,6 +1166,7 @@ static INT32 DrvExit()
 	ssio_exit();
 
     if (has_squak) midsat_exit();
+	tcs_exit();
 
 	BurnSampleExit();
 
@@ -1421,6 +1425,8 @@ static INT32 DrvFrame()
 
 	ZetNewFrame();
     if (has_squak) midsatNewFrame();
+    INT32 has_tcs = tcs_initialized();
+    if (has_tcs) M6809NewFrame();
 
 	{
 		memset (DrvInputs, 0xff, 6);
@@ -1493,7 +1499,7 @@ static INT32 DrvFrame()
         }
 	}
 
-	INT32 nInterleave = 480;
+    INT32 nInterleave = 480;
 	INT32 nCyclesTotal[3] = { nMainClock / 30, 2000000 / 30, 3579545 / 4 / 30 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	INT32 nSoundBufferPos = 0;
@@ -1519,6 +1525,19 @@ static INT32 DrvFrame()
             nCyclesDone[2] += midsat_run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
         }
 
+        if (has_tcs) {
+            M6809Open(0);
+            if (tcs_reset_status())
+            {
+                nCyclesDone[1] += M6809Idle(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+            }
+            else
+            {
+                nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+            }
+            M6809Close();
+        }
+
         // Render Sound Segment
 		if (pBurnSoundOut && (i%4)==3) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/4);
@@ -1539,7 +1558,10 @@ static INT32 DrvFrame()
         if (has_squak) {
             midsat_update(pBurnSoundOut, nBurnSoundLen);
         }
-	}
+        if (has_tcs) {
+            DACUpdate(pBurnSoundOut, nBurnSoundLen);
+        }
+    }
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -1570,6 +1592,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
         ssio_scan(nAction, pnMin);
         if (has_squak) midsat_scan(nAction, pnMin);
+        if (tcs_initialized()) tcs_scan(nAction, pnMin);
 
 		BurnSampleScan(nAction, pnMin);
 
@@ -2993,8 +3016,8 @@ static struct BurnRomInfo demoderbRomDesc[] = {
 	{ "demo_drby_pro_2",							0x4000, 0xfa93b9d9, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "demo_drby_pro_3",							0x4000, 0x4e964883, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tcs_u5.bin",									0x2000, 0xeca33b2c, 5 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
-	{ "tcs_u4.bin",									0x2000, 0x3490289a, 5 | BRF_PRG | BRF_ESS }, //  5
+	{ "tcs_u5.bin",									0x2000, 0xeca33b2c, 3 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "tcs_u4.bin",									0x2000, 0x3490289a, 3 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "demo_derby_bg_06f.6f",						0x2000, 0xcf80be19, 3 | BRF_GRA },           //  6 Background Tiles
 	{ "demo_derby_bg_15f.5f",						0x2000, 0x4e173e52, 3 | BRF_GRA },           //  7
@@ -3017,7 +3040,11 @@ static void demoderb_op4_write(UINT8, UINT8 data)
 	if (data & 0x40) input_playernum = 1;
 	if (data & 0x80) input_playernum = 0;
 
-    //turbo_cheap_squeak(data);
+    INT32 cycles = (ZetTotalCycles() * 2) / 5;
+    M6809Open(0);
+    M6809Run(cycles - M6809TotalCycles());
+    tcs_data_write(data);
+    M6809Close();
 }
 
 static UINT8 demoderb_ip1_read(UINT8)
@@ -3049,7 +3076,9 @@ static INT32 DemoderbInit()
         is_demoderb = 1;
         ssio_set_custom_input(1, 0xff, demoderb_ip1_read);
         ssio_set_custom_input(2, 0xff, demoderb_ip2_read);
-		ssio_set_custom_output(4, 0xff, demoderb_op4_write);
+        ssio_set_custom_output(4, 0xff, demoderb_op4_write);
+        memmove(DrvTCSROM + 0xc000, DrvTCSROM, 0x4000);
+        tcs_init(DrvTCSROM, DrvZ80RAM1); // actually m6809
 	}
 
 	return nRet;
@@ -3073,8 +3102,8 @@ static struct BurnRomInfo demoderbcRomDesc[] = {
 	{ "dd_pro1",		0x4000, 0x4c713bfe, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "dd_pro2",		0x4000, 0xc2cbd2a4, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "tcs_u5.bin",		0x2000, 0xeca33b2c, 2 | BRF_PRG | BRF_ESS }, //  3 tcs:cpu
-	{ "tcs_u4.bin",		0x2000, 0x3490289a, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "tcs_u5.bin",		0x2000, 0xeca33b2c, 3 | BRF_PRG | BRF_ESS }, //  3 tcs:cpu
+	{ "tcs_u4.bin",		0x2000, 0x3490289a, 3 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "demo_derby_bg_06f.6f",	0x2000, 0xcf80be19, 3 | BRF_GRA },           //  5 gfx1
 	{ "demo_derby_bg_15f.5f",	0x2000, 0x4e173e52, 3 | BRF_GRA },           //  6

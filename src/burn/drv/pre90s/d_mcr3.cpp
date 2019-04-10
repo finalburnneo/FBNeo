@@ -1199,6 +1199,8 @@ static INT32 DrvDraw()
 		DrvRecalc = 1;
 	}
 
+    BurnTransferClear();
+
 	GenericTilemapSetFlip(0, flipscreen ? (TMAP_FLIPX | TMAP_FLIPY) : 0);
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 1/*must be this!*/);
@@ -1216,6 +1218,8 @@ static INT32 SpyhuntDraw()
 		DrvPaletteUpdate();
 		DrvRecalc = 1;
 	}
+
+    BurnTransferClear();
 
 	GenericTilemapSetFlip(TMAP_GLOBAL, (flipscreen ? (TMAP_FLIPX | TMAP_FLIPY) : 0) ^ flip_screen_x);
 	GenericTilemapSetScrollX(0, scrollx * 2);
@@ -2214,7 +2218,7 @@ static INT32 CraterInit()
 }
 
 struct BurnDriver BurnDrvCrater = {
-	"crater", NULL, NULL, "midssio", "1984",
+	"crater", NULL, "midssio", NULL, "1984",
 	"Crater Raider\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,

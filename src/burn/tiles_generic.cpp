@@ -6001,8 +6001,8 @@ void RenderPrioMaskTranstabSpriteOffset(UINT16 *dest, UINT8 *gfx, INT32 code, IN
 
 			if ((priority & (1 << pPrioDraw[sy * nScreenWidth + sx])) == 0) {
 				dest[sy * nScreenWidth + sx] = pxl + color_offset;
-				pPrioDraw[sy * nScreenWidth + sx] = 0x1f;
 			}
+            pPrioDraw[sy * nScreenWidth + sx] = 0x1f;
 		}
 
 		sx -= width;

@@ -30,7 +30,7 @@ void  z80ctc_scan(INT32 nAction);
 
 // driver stuff:
 void  z80ctc_init(INT32 clock, INT32 notimer, void (*intr)(INT32), void (*zc0)(int, UINT8), void (*zc1)(int, UINT8), void (*zc2)(int, UINT8));
-void  z80ctc_timer_update(INT32 cycles);
+void  z80ctc_timer_update(INT32 cycles); // internal-use only (z80.cpp!)
 void  z80ctc_trg_write(int ch, UINT8 data);
 UINT8 z80ctc_read(int offset);
 void  z80ctc_write(int offset, UINT8 data);

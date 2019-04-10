@@ -975,9 +975,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		INT32 cyc_ran = ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
-		nCyclesDone[1] += cyc_ran;
-		z80ctc_timer_update(cyc_ran);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		ZetClose();
 
 		// Render Sound Segment

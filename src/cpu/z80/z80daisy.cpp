@@ -17,6 +17,8 @@
 static z80_irq_daisy_chain *main_chain = NULL;
 static z80_irq_daisy_chain *daisy_end = NULL;
 
+INT32 z80daisy_has_ctc = 0;
+
 static void add_dev(int dev)
 {
 	switch (dev) {
@@ -28,6 +30,8 @@ static void add_dev(int dev)
             daisy_end->dev_exit  = z80ctc_exit;
             daisy_end->dev_scan  = z80ctc_scan;
             daisy_end->param     = 0;
+
+            z80daisy_has_ctc = 1;
             break;
 
         case Z80_PIO:
@@ -60,6 +64,8 @@ void z80daisy_init(int dev0, int dev1)
     daisy_end = main_chain;
     memset(main_chain, 0, sizeof(z80_irq_daisy_chain) * 4);
 
+    z80daisy_has_ctc = 0;
+
     add_dev(dev0);
     add_dev(dev1);
     add_dev(0); // end of list
@@ -77,6 +83,8 @@ void z80daisy_exit()
 
     BurnFree(main_chain);
     daisy_end = NULL;
+
+    z80daisy_has_ctc = 0;
 }
 
 void z80daisy_scan(int nAction)

@@ -35,6 +35,7 @@ struct z80_irq_daisy_chain
 #define Z80_DAISY_INT 	0x01		/* interrupt request mask */
 #define Z80_DAISY_IEO 	0x02		/* interrupt disable mask (IEO) */
 
+extern INT32 z80daisy_has_ctc; // status for internal-use (z80.cpp)
 
 /* prototypes */
 // this are called automatically by the z80 core, after the daisy has been

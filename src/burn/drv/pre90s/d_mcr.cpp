@@ -1507,9 +1507,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-        INT32 cyc_ran = ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-        nCyclesDone[0] += cyc_ran;
-        z80ctc_timer_update(cyc_ran);
+        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
         mcr_interrupt(i);
 		ZetClose();
 

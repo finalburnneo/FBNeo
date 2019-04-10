@@ -3607,6 +3607,10 @@ int Z80Execute(int cycles)
 
 	Z80.cycles_left = z80_ICount = 0;
 
+    if (Z80.daisy && z80daisy_has_ctc) {
+        z80ctc_timer_update(cycles);
+    }
+
 	return cycles;
 }
 

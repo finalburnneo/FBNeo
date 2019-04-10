@@ -1329,7 +1329,7 @@ static INT32 DrvFrame()
 
 	build_inputs();
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 480;
 	INT32 nCyclesTotal[2] = { 5000000 / 30, 8000000 / 30 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -1338,9 +1338,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-        INT32 cyc_ran = ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-        nCyclesDone[0] += cyc_ran;
-        z80ctc_timer_update(cyc_ran);
+        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		mcr_interrupt(i);
 
 		INT32 nCycles = (((i * 1) * nCyclesTotal[1]) / nInterleave) - SekTotalCycles();
@@ -1383,7 +1381,7 @@ static INT32 TcsFrame()
 
 	build_inputs();
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 480;
 	INT32 nCyclesTotal[2] = { 5000000 / 30, 2000000 / 30 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -1392,10 +1390,8 @@ static INT32 TcsFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-        INT32 cyc_ran = ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-        nCyclesDone[0] += cyc_ran;
-        z80ctc_timer_update(cyc_ran);
-		mcr_interrupt(i);
+        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+        mcr_interrupt(i);
 
 		if (tcs_reset_status())
 		{
@@ -1438,7 +1434,7 @@ static INT32 CSDSSIOFrame()
 
 	build_inputs();
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 480;
 	INT32 nCyclesTotal[3] = { 5000000 / 30, 8000000 / 30, 2000000 / 30 };
 	INT32 nCyclesDone[3] = { 0, 0, 0};
 
@@ -1447,10 +1443,8 @@ static INT32 CSDSSIOFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-        INT32 cyc_ran = ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-        nCyclesDone[0] += cyc_ran;
-        z80ctc_timer_update(cyc_ran);
-		mcr_interrupt(i);
+        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+        mcr_interrupt(i);
 
 		if (has_csd)
 		{

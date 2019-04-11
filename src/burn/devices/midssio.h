@@ -1,5 +1,6 @@
 extern UINT8 *ssio_inputs; // 5 - point to inputs
 extern UINT8 ssio_dips; // 1 - dips for ssio board
+extern INT32 ssio_spyhunter;
 
 void ssio_14024_clock(INT32 interleave); // interrupt generator
 

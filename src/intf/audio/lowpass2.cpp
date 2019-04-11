@@ -72,7 +72,31 @@ void LowPass2::Filter(INT16 *Buff, INT32 Tam)
       o2b = o1b;
       o1b = Tmp2;
 
-     // Buff[a] = (short)SATURATE(-32768, 32767, Tmp + Tmp2);
+      Buff[a] = (INT16)SATURATE(-32768, 32767, Tmp + Tmp2)*(1-bRunPause);
+    }
+}
+
+void LowPass2::FilterMono(INT16 *Buff, INT32 Tam)
+{
+  INT32 a;
+  INT32 Tmp, Tmp2;
+
+  for (a = 0; a < Tam; a++)
+    {
+      Tmp = (b0*Buff[a] + b1*i1 + b2*i2
+			 - a1*o1 - a2*o2) / (1 << FixBits);
+
+      Tmp2 = (b0b*Buff[a] + b1b*i1 + b2b*i2
+			  - a1b*o1b - a2b*o2b) / (1 << FixBits);
+
+      i2 = i1;
+      i1 = Buff[a];
+      o2 = o1;
+      o1 = Tmp;
+
+      o2b = o1b;
+      o1b = Tmp2;
+
       Buff[a] = (INT16)SATURATE(-32768, 32767, Tmp + Tmp2)*(1-bRunPause);
     }
 }

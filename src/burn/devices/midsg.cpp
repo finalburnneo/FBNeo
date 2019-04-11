@@ -14,12 +14,14 @@ static INT32 soundsgood_is_initialized;
 static void soundsgood_porta_w(UINT16, UINT8 data)
 {
 	dacvalue = (dacvalue & 3) | (data << 2);
+   // if (dacvalue !=0) bprintf(0, _T("%X,"), dacvalue);
 	DACWrite16Signed(0, dacvalue << 6);
 }
 
 static void soundsgood_portb_w(UINT16, UINT8 data)
 {
     dacvalue = (dacvalue & ~3) | (data >> 6);
+   // if (dacvalue !=0) bprintf(0, _T("%X,"), dacvalue);
 	DACWrite16Signed(0, dacvalue << 6);
 
 	if (pia_get_ddr_b(0) & 0x30) soundsgood_status = (data >> 4) & 3;

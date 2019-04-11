@@ -27,6 +27,8 @@
 #include "burn_pal.h"
 #include "burn_gun.h" // for dial (crater) etc.
 #include "burn_shift.h"
+#include "flt_rc.h" // spyhunt mixing
+#include "lowpass2.h" // fur spyhunt beefy-engine v1.0 -dink
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -90,6 +92,16 @@ static INT16 DrvAnalogPort1 = 0;
 static INT16 DrvAnalogPort2 = 0;
 static INT16 DrvAnalogPort3 = 0;
 
+// For spyhunt's engine effect
+static class LowPass2 *LP1 = NULL;
+#define SampleFreq 44100.0
+#define CutFreq 1000.0
+#define Q 0.4
+#define Gain 1.3
+#define CutFreq2 1000.0
+#define Q2 0.3
+#define Gain2 1.475
+
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo RampageInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -108,12 +120,12 @@ static struct BurnInputInfo RampageInputList[] = {
 	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"P3 Up",				BIT_DIGITAL,	DrvJoy4 + 0,	"p3 up"		},
-	{"P3 Down",				BIT_DIGITAL,	DrvJoy4 + 2,	"p3 down"	},
-	{"P3 Left",				BIT_DIGITAL,	DrvJoy4 + 3,	"p3 left"	},
-	{"P3 Right",			BIT_DIGITAL,	DrvJoy4 + 1,	"p3 right"	},
-	{"P3 Button 1",			BIT_DIGITAL,	DrvJoy4 + 4,	"p3 fire 1"	},
-	{"P3 Button 2",			BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"	},
+	{"P3 Up",				BIT_DIGITAL,	DrvJoy5 + 0,	"p3 up"		},
+	{"P3 Down",				BIT_DIGITAL,	DrvJoy5 + 2,	"p3 down"	},
+	{"P3 Left",				BIT_DIGITAL,	DrvJoy5 + 3,	"p3 left"	},
+	{"P3 Right",			BIT_DIGITAL,	DrvJoy5 + 1,	"p3 right"	},
+	{"P3 Button 1",			BIT_DIGITAL,	DrvJoy5 + 4,	"p3 fire 1"	},
+	{"P3 Button 2",			BIT_DIGITAL,	DrvJoy5 + 5,	"p3 fire 2"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",				BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
@@ -1072,7 +1084,26 @@ static INT32 SpyhuntCommonInit(INT32 sound_system)
 	z80ctc_init(5000000, 0, ctc_interrupt, ctc_trigger, NULL, NULL);
 	ZetClose();
 
-	sound_system_init(sound_system);
+    if (is_spyhunt) {
+        ssio_spyhunter = 1;
+        filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
+        filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+        filter_rc_init(2, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+        filter_rc_init(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+        filter_rc_init(4, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+        filter_rc_init(5, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+
+        filter_rc_set_route(0, 1.00, FLT_RC_PANNEDLEFT);
+        filter_rc_set_route(1, 1.00, FLT_RC_PANNEDLEFT);
+        filter_rc_set_route(2, 1.00, FLT_RC_PANNEDLEFT);
+        filter_rc_set_route(3, 1.00, FLT_RC_PANNEDRIGHT);
+        filter_rc_set_route(4, 1.00, FLT_RC_PANNEDRIGHT);
+        filter_rc_set_route(5, 1.00, FLT_RC_PANNEDRIGHT);
+
+        LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain, CutFreq2, Q2, Gain2);
+    }
+
+    sound_system_init(sound_system);
 
 	BurnWatchdogInit(DrvDoReset, -1);
 
@@ -1112,6 +1143,12 @@ static INT32 DrvExit()
 	tcs_exit();
 	soundsgood_exit();
 	ssio_exit();
+
+    if (is_spyhunt) {
+        filter_rc_exit();
+        delete LP1;
+        LP1 = NULL;
+    }
 
 	BurnWatchdogExit();
 
@@ -1441,6 +1478,7 @@ static INT32 CSDSSIOFrame()
 	INT32 nInterleave = 480;
 	INT32 nCyclesTotal[3] = { 5000000 / 30, 8000000 / 30, 2000000 / 30 };
 	INT32 nCyclesDone[3] = { 0, 0, 0};
+	INT32 nSoundBufferPos = 0;
 
 	if (has_csd) SekOpen(0);
 
@@ -1472,12 +1510,49 @@ static INT32 CSDSSIOFrame()
 			ssio_14024_clock(nInterleave);
 			ZetClose();
 		}
+		// Render Sound Segment
+		if (is_spyhunt && pBurnSoundOut && (i%32)==31) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 32);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			AY8910RenderInternal(nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+
+            filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
+			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
+			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
+			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
+			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
+            if (LP1) {
+                LP1->FilterMono(pAY8910Buffer[5], nSegmentLength); // Engine
+            }
+            filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
+        }
 	}
 
     if (pBurnSoundOut) {
-        BurnSoundClear();
-		if (has_ssio) AY8910Render(pBurnSoundOut, nBurnSoundLen);
-        if (has_csd) DACUpdate(pBurnSoundOut, nBurnSoundLen);
+        if (is_spyhunt) {
+            INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+            INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+            if (nSegmentLength) {
+                AY8910RenderInternal(nSegmentLength);
+
+                filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
+                filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
+                filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
+                filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
+                filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
+                if (LP1) {
+                    LP1->FilterMono(pAY8910Buffer[5], nSegmentLength); // Engine
+                }
+                filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
+            }
+
+            DACUpdate(pBurnSoundOut, nBurnSoundLen);
+        } else {
+            BurnSoundClear();
+            if (has_ssio) AY8910Render(pBurnSoundOut, nBurnSoundLen);
+            if (has_csd) DACUpdate(pBurnSoundOut, nBurnSoundLen);
+        }
 	}
 
 	if (has_csd) SekClose();

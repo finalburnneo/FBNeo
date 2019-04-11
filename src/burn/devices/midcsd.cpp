@@ -16,7 +16,7 @@ static void csd_porta_w(UINT16, UINT8 data)
 	dacvalue = (data << 2) | (dacvalue & 3);
    // if (dacvalue !=0) bprintf(0, _T("%X,"), dacvalue);
     if (dacvalue == 0x02 || dacvalue == 0x03) dacvalue = 0xFE; // silly hack gets rid of pops in spyhunter when the music starts/stops
-	DACWrite16Signed(0, dacvalue << 6);
+	DACWrite16Signed(0, 0x4000 + (dacvalue << 6));
 }
 
 static void csd_portb_w(UINT16, UINT8 data)
@@ -24,7 +24,7 @@ static void csd_portb_w(UINT16, UINT8 data)
 	dacvalue = (dacvalue & ~0x3) | (data >> 6);
    // if (dacvalue !=0) bprintf(0, _T("%X,"), dacvalue);
     if (dacvalue == 0x02 || dacvalue == 0x03) dacvalue = 0xFE; // see "silly hack", above
-	DACWrite16Signed(0, dacvalue << 6);
+	DACWrite16Signed(0, 0x4000 + (dacvalue << 6));
 
     //if (~pia_get_ddr_b(0) & 0x30) csd_status = (data >> 4) & 3;
     UINT8 z_mask = pia_get_ddr_b(0);

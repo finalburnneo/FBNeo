@@ -4,6 +4,7 @@
 #include "burnint.h"
 #include "z80_intf.h"
 #include "ay8910.h"
+#include "flt_rc.h"
 
 // #define SSIODEBUG
 
@@ -14,6 +15,8 @@ static INT32 ssio_status;
 static INT32 ssio_duty_cycle[2][3];
 static INT32 ssio_mute;
 static INT32 ssio_overall[2];
+
+INT32 ssio_spyhunter = 0;
 
 typedef void (*output_func)(UINT8 offset, UINT8 data);
 typedef UINT8 (*input_func)(UINT8 offset);
@@ -71,8 +74,8 @@ static UINT8 __fastcall ssio_cpu_read(UINT16 address)
 	}
 
 	if ((address & 0xf000) == 0xe000) {
-		ssio_14024_count = 0;
-		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		//ssio_14024_count = 0;
+        //ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return 0xff;
 	}
 
@@ -108,6 +111,15 @@ static void ssio_update_volumes()
     AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_1, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][0]]+ssio_basevol, BURN_SND_ROUTE_PANRIGHT);
     AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_2, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][1]]+ssio_basevol, BURN_SND_ROUTE_PANRIGHT);
     AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_3, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][2]]+ssio_basevol, BURN_SND_ROUTE_PANRIGHT);
+
+    if (ssio_spyhunter) {
+        filter_rc_set_src_gain(0, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[0][0]]+ssio_basevol);
+        filter_rc_set_src_gain(1, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[0][1]]+ssio_basevol);
+        filter_rc_set_src_gain(2, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[0][2]]+ssio_basevol);
+        filter_rc_set_src_gain(3, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][0]]+ssio_basevol);
+        filter_rc_set_src_gain(4, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][1]]+ssio_basevol);
+        filter_rc_set_src_gain(5, ssio_mute ? 0 : ssio_ayvolume_lookup[ssio_duty_cycle[1][2]]+ssio_basevol);
+    }
 }
 
 static void AY8910_write_0A(UINT32 /*addr*/, UINT32 data)
@@ -143,7 +155,7 @@ void ssio_14024_clock(INT32 interleave) // interrupt generator
 {
 	if (ssio_is_initialized == 0) return;
 
-	// ~26x per frame
+    // ~26x per frame
     if (++ssio_14024_count >= (interleave/26)) {
         ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
         ssio_14024_count = 0;
@@ -290,6 +302,15 @@ void ssio_basevolume(double vol)
 
 	AY8910SetAllRoutes(0, vol, BURN_SND_ROUTE_PANLEFT);
     AY8910SetAllRoutes(1, vol, BURN_SND_ROUTE_PANRIGHT);
+
+    if (ssio_spyhunter) {
+        filter_rc_set_src_gain(0, vol);
+        filter_rc_set_src_gain(1, vol);
+        filter_rc_set_src_gain(2, vol);
+        filter_rc_set_src_gain(3, vol);
+        filter_rc_set_src_gain(4, vol);
+        filter_rc_set_src_gain(5, vol);
+    }
 }
 
 void ssio_init(UINT8 *rom, UINT8 *ram, UINT8 *prom)
@@ -319,8 +340,9 @@ void ssio_init(UINT8 *rom, UINT8 *ram, UINT8 *prom)
 	AY8910SetPorts(0, NULL, NULL, AY8910_write_0A, AY8910_write_0B);
 	AY8910SetPorts(1, NULL, NULL, AY8910_write_1A, AY8910_write_1B);
 
-    ssio_basevolume(0.05);
 	ssio_is_initialized = 1;
+
+    ssio_basevolume(0.05);
 }
 
 void ssio_scan(INT32 nAction, INT32 *pnMin)
@@ -353,7 +375,8 @@ void ssio_exit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	ssio_is_initialized = 0;
+    ssio_is_initialized = 0;
+    ssio_spyhunter = 0;
 }
 
 INT32 ssio_initialized()

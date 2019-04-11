@@ -1000,6 +1000,10 @@ static INT32 DrvLoadRoms(bool bLoad)
 	nGraphicsLen[1] = gLoad[1] - DrvGfxROM1;
 	nGraphicsLen[2] = gLoad[2] - DrvGfxROM2;
 
+    if (is_spyhunt && nGraphicsLen[2] == 0x800) { // spyhuntp missing text fix
+        nGraphicsLen[2] = 0x1000;
+    }
+
 	return 0;
 }
 

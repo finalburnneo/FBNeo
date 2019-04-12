@@ -251,7 +251,7 @@ static struct BurnInputInfo SpyhuntInputList[] = {
 	{"Smoke Screen",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 5"	},
 	{"Machine Gun",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 6"	},
 
-	A("P1 Wheel",       	BIT_ANALOG_REL, &DrvAnalogPort0, "mouse x-axis"),
+	A("P1 Wheel",       	BIT_ANALOG_REL, &DrvAnalogPort0, "p1 x-axis"),
 	A("P1 Accelerator", 	BIT_ANALOG_REL, &DrvAnalogPort1, "p1 fire 1"),
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},

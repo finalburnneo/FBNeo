@@ -1284,7 +1284,7 @@ static INT32 SpyhuntDraw()
         }
         if (lamp&0x08) {
             // smoke
-            RenderZoomedTile(pTransDraw, DrvGfxROM1, 0x02f, 0, 0, nScreenWidth-16, 80, 0, 0, 32, 32, 0x10000/2, 0x10000/2);
+            RenderZoomedTile(pTransDraw, DrvGfxROM1, 0x019, 0, 0, nScreenWidth-16, 80, 0, 0, 32, 32, 0x10000/2, 0x10000/2);
         }
         if (lamp&0x02) {
             // missile (pre-rotated)

@@ -10,27 +10,36 @@ static UINT16 dacvalue;
 static UINT16 csd_status;
 static INT32 csd_in_reset;
 static INT32 csd_is_intialized = 0;
+static UINT16 *csd_ram = NULL;
+
+extern INT32 ssio_spyhunter;
 
 static void csd_porta_w(UINT16, UINT8 data)
 {
-	dacvalue = (data << 2) | (dacvalue & 3);
-   // if (dacvalue !=0) bprintf(0, _T("%X,"), dacvalue);
-    if (dacvalue == 0x02 || dacvalue == 0x03) dacvalue = 0xFE; // silly hack gets rid of pops in spyhunter when the music starts/stops
+    dacvalue = (data << 2) | (dacvalue & 3);
+
+    if (ssio_spyhunter) {
+        static UINT16 cm = 0;
+        // csd_ram[0x30/2] continuously counts down as music is playing
+        // if its stopped, or 0 - nothing is playing.  Let's zero-out the dac
+        // so that we don't get loud clicks or pops before or after the music.
+        // 0x4000 + (0x100 << 6) ends up being 0 in the dac.
+        // extra notes:
+        // porta is called every sample, playing or not.
+        // portb is only called when music is playing (if needed)
+        if (cm == csd_ram[0x30/2] || csd_ram[0x30/2] == 0) dacvalue = 0x100;
+        cm = csd_ram[0x30/2];
+    }
+
 	DACWrite16Signed(0, 0x4000 + (dacvalue << 6));
 }
 
 static void csd_portb_w(UINT16, UINT8 data)
 {
 	dacvalue = (dacvalue & ~0x3) | (data >> 6);
-   // if (dacvalue !=0) bprintf(0, _T("%X,"), dacvalue);
-    if (dacvalue == 0x02 || dacvalue == 0x03) dacvalue = 0xFE; // see "silly hack", above
 	DACWrite16Signed(0, 0x4000 + (dacvalue << 6));
 
-    //if (~pia_get_ddr_b(0) & 0x30) csd_status = (data >> 4) & 3;
-    UINT8 z_mask = pia_get_ddr_b(0);
-    if (~z_mask & 0x10)  csd_status = (csd_status & ~1) | ((data >> 4) & 1);
-    if (~z_mask & 0x20)  csd_status = (csd_status & ~2) | ((data >> 4) & 2);
-
+    if (~pia_get_ddr_b(0) & 0x30) csd_status = (data >> 4) & 3;
 }
 
 static void csd_irq(int state)
@@ -138,6 +147,7 @@ static const pia6821_interface pia_intf = {
 
 void csd_init(UINT8 *rom, UINT8 *ram)
 {
+    csd_ram = (UINT16*)ram;
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(rom,			0x000000, 0x007fff, MAP_ROM);
@@ -165,7 +175,8 @@ void csd_exit()
 	SekExit();
 	pia_init();
 	DACExit();
-	csd_is_intialized = 0;
+    csd_is_intialized = 0;
+    csd_ram = NULL;
 }
 
 void csd_scan(INT32 nAction, INT32 *pnMin)

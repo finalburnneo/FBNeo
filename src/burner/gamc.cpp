@@ -543,7 +543,7 @@ static void SetSliderKey(struct GameInp* pgi, INT32 k0, INT32 k1, INT32 nSlide)
 		pgi->Input.Slider.nSliderCenter = 0;
 	} else {
 		// Sliding (centering)
-		pgi->Input.Slider.nSliderSpeed = 0x0E00;
+		pgi->Input.Slider.nSliderSpeed = 0x0800;
 		pgi->Input.Slider.nSliderCenter = 10;
 	}
 }
@@ -635,7 +635,7 @@ INT32 GamcAnalogJoy(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nJoy, I
 		case 1:								// Sliding (centering)
 			pgi->nInput = GIT_JOYSLIDER;
 			pgi->Input.Slider.nSliderValue = 0x8000;		// Put slider in the middle
-			pgi->Input.Slider.nSliderSpeed = 0x0E00;
+			pgi->Input.Slider.nSliderSpeed = 0x0800;
 			pgi->Input.Slider.nSliderCenter = 10;
 			pgi->Input.Slider.JoyAxis.nAxis = nAxis;
 			pgi->Input.Slider.JoyAxis.nJoy = (UINT8)nJoy;

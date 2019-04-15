@@ -8,3 +8,5 @@ void soundsgood_exit();
 void soundsgood_scan(INT32 nAction, INT32 *pnMin);
 INT32 soundsgood_reset_status();
 INT32 soundsgood_initialized();
+
+extern INT32 soundsgood_rampage;

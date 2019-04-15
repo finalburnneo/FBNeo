@@ -71,6 +71,8 @@ static INT32 sprite_color_mask = 0;
 static INT32 flip_screen_x = 0;
 static INT32 nGraphicsLen[3];
 
+static INT32 nExtraCycles[3];
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -707,7 +709,8 @@ static UINT8 __fastcall spyhunt_read_port(UINT16 address)
 
 static void ctc_interrupt(INT32 state)
 {
-	ZetSetIRQLine(0, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+    if (state) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+    //ZetSetIRQLine(0, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static tilemap_callback( bg )
@@ -763,7 +766,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
     lamp = 0;
     last_op4 = 0;
 
-	return 0;
+    nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
+
+    return 0;
 }
 
 static INT32 MemIndex()
@@ -1372,7 +1377,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 480;
 	INT32 nCyclesTotal[2] = { 5000000 / 30, 8000000 / 30 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	ZetOpen(0);
 	SekOpen(0);
@@ -1402,6 +1407,8 @@ static INT32 DrvFrame()
 	SekClose();
 	ZetClose();
 
+    nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -1424,7 +1431,7 @@ static INT32 TcsFrame()
 
 	INT32 nInterleave = 480;
 	INT32 nCyclesTotal[2] = { 5000000 / 30, 2000000 / 30 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	ZetOpen(0);
 	M6809Open(0);
@@ -1452,6 +1459,8 @@ static INT32 TcsFrame()
 	M6809Close();
 	ZetClose();
 
+    nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -1477,10 +1486,14 @@ static INT32 CSDSSIOFrame()
 
 	INT32 nInterleave = 480;
 	INT32 nCyclesTotal[3] = { 5000000 / 30, 8000000 / 30, 2000000 / 30 };
-	INT32 nCyclesDone[3] = { 0, 0, 0};
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 	INT32 nSoundBufferPos = 0;
 
-	if (has_csd) SekOpen(0);
+    if (has_csd) {
+        SekOpen(0);
+        SekIdle(nExtraCycles[1]);
+        nExtraCycles[1] = 0;
+    }
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1506,7 +1519,7 @@ static INT32 CSDSSIOFrame()
 		if (has_ssio)
 		{
 			ZetOpen(1);
-			nCyclesDone[2] += ZetRun(nCyclesTotal[2] / nInterleave);
+            nCyclesDone[2] += ZetRun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
 			ssio_14024_clock(nInterleave);
 			ZetClose();
 		}
@@ -1555,7 +1568,13 @@ static INT32 CSDSSIOFrame()
         }
 	}
 
-	if (has_csd) SekClose();
+    if (has_csd) {
+        nExtraCycles[1] = nCyclesDone[1] - SekTotalCycles();
+        SekClose();
+    }
+
+    nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+    nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -1580,8 +1599,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
+        ScanVar(DrvNVRAM, 0x800, "WORK RAM"); // also nv...
+
 		ZetScan(nAction);
-		z80ctc_scan(nAction);
 
 		tcs_scan(nAction, pnMin);
 		csd_scan(nAction, pnMin);
@@ -1602,14 +1622,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
         SCAN_VAR(lamp);
         SCAN_VAR(last_op4);
+
+        SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_NVRAM) {
-		ba.Data		= DrvNVRAM;
-		ba.nLen		= 0x00800;
-		ba.nAddress	= 0;
-		ba.szName	= "NV RAM";
-		BurnAcb(&ba);
+        ScanVar(DrvNVRAM, 0x800, "NV RAM");
 	}
 
 	return 0;
@@ -1895,7 +1913,9 @@ static INT32 RampageInit()
 	sound_input_bank = 4;
 	port_write_handler = rampage_write_callback;
 
-	return DrvInit(0);
+    soundsgood_rampage = 1; // for sound-cleanup in soundsgood
+
+    return DrvInit(0);
 }
 
 struct BurnDriver BurnDrvRampage = {

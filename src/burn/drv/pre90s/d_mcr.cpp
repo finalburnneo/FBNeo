@@ -1681,7 +1681,7 @@ struct BurnDriver BurnDrvSolarfox = {
 	"solarfox", NULL, "midssio", NULL, "1981",
 	"Solar Fox (upright)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, solarfoxRomInfo, solarfoxRomName, NULL, NULL, NULL, NULL, SolarfoxInputInfo, SolarfoxDIPInfo,
 	SolarfoxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	480, 512, 3, 4
@@ -1744,7 +1744,7 @@ struct BurnDriver BurnDrvKick = {
 	"kick", NULL, "midssio", NULL, "1981",
 	"Kick (upright)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, kickRomInfo, kickRomName, NULL, NULL, NULL, NULL, KickInputInfo, KickDIPInfo,
     KickInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
     480, 512, 3, 4
@@ -1782,7 +1782,7 @@ struct BurnDriver BurnDrvKickman = {
 	"kickman", "kick", "ssio", NULL, "1981",
 	"Kickman (upright)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, kickmanRomInfo, kickmanRomName, NULL, NULL, NULL, NULL, KickInputInfo, KickDIPInfo,
 	KickInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
     480, 512, 3, 4
@@ -1820,7 +1820,7 @@ struct BurnDriver BurnDrvKickc = {
 	"kickc", "kick", "ssio", NULL, "1981",
 	"Kick (cocktail)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, kickcRomInfo, kickcRomName, NULL, NULL, NULL, NULL, KickInputInfo, KickDIPInfo,//, KickcInputInfo, KickcDIPInfo,
 	KickcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
     480, 512, 3, 4
@@ -1870,7 +1870,7 @@ struct BurnDriverD BurnDrvDpoker = {
 	"dpoker", NULL, "midssio", NULL, "1985",
 	"Draw Poker (Bally, 03-20)\0", NULL, "Bally", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_CASINO, 0,
 	NULL, dpokerRomInfo, dpokerRomName, NULL, NULL, NULL, NULL, KickInputInfo, KickDIPInfo,//DpokerInputInfo, DpokerDIPInfo,
 	DpokerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	512, 480, 4, 3
@@ -1912,7 +1912,7 @@ struct BurnDriver BurnDrvShollow = {
 	"shollow", NULL, "midssio", NULL, "1981",
 	"Satan's Hollow (set 1)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, shollowRomInfo, shollowRomName, NULL, NULL, NULL, NULL, ShollowInputInfo, ShollowDIPInfo,
 	ShollowInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
     480, 512, 3, 4
@@ -1949,7 +1949,7 @@ struct BurnDriver BurnDrvShollow2 = {
 	"shollow2", "shollow", "midssio", NULL, "1981",
 	"Satan's Hollow (set 2)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, shollow2RomInfo, shollow2RomName, NULL, NULL, NULL, NULL, ShollowInputInfo, ShollowDIPInfo,
 	ShollowInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
     480, 512, 3, 4
@@ -2015,7 +2015,7 @@ struct BurnDriver BurnDrvTron = {
 	"tron", NULL, "midssio", NULL, "1982",
 	"Tron (8/9)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tronRomInfo, tronRomName, NULL, NULL, NULL, NULL, TronInputInfo, TronDIPInfo,
 	TronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 512, 3, 4
@@ -2058,7 +2058,7 @@ struct BurnDriver BurnDrvTron2 = {
 	"tron2", "tron", "midssio", NULL, "1982",
 	"Tron (6/25)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tron2RomInfo, tron2RomName, NULL, NULL, NULL, NULL, TronInputInfo, TronDIPInfo,
 	TronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 512, 3, 4
@@ -2101,7 +2101,7 @@ struct BurnDriver BurnDrvTron3 = {
 	"tron3", "tron", "midssio", NULL, "1982",
 	"Tron (6/17)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tron3RomInfo, tron3RomName, NULL, NULL, NULL, NULL, TronInputInfo, TronDIPInfo,// Tron3InputInfo, Tron3DIPInfo,
 	TronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 512, 3, 4
@@ -2144,7 +2144,7 @@ struct BurnDriver BurnDrvTron4 = {
 	"tron4", "tron", "midssio", NULL, "1982",
 	"Tron (6/15)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tron4RomInfo, tron4RomName, NULL, NULL, NULL, NULL, TronInputInfo, TronDIPInfo,//, Tron3InputInfo, Tron3DIPInfo,
 	TronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 512, 3, 4
@@ -2187,7 +2187,7 @@ struct BurnDriver BurnDrvTronger = {
 	"tronger", "tron", "midssio", NULL, "1982",
 	"Tron (Germany)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, trongerRomInfo, trongerRomName, NULL, NULL, NULL, NULL, TronInputInfo, TronDIPInfo,//, Tron3InputInfo, Tron3DIPInfo,
 	TronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 512, 3, 4
@@ -2234,7 +2234,7 @@ struct BurnDriver BurnDrvDomino = {
 	"domino", NULL, "midssio", NULL, "1982",
 	"Domino Man\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, dominoRomInfo, dominoRomName, NULL, NULL, NULL, NULL, DominoInputInfo, DominoDIPInfo,
 	DominoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2298,7 +2298,7 @@ struct BurnDriver BurnDrvWacko = {
 	"wacko", NULL, "ssio", NULL, "1982",
 	"Wacko\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, wackoRomInfo, wackoRomName, NULL, NULL, NULL, NULL, WackoInputInfo, WackoDIPInfo,
 	WackoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2378,7 +2378,7 @@ struct BurnDriver BurnDrvTwotiger = {
 	"twotiger", NULL, "midssio", "twotiger", "1984",
 	"Two Tigers (dedicated)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, twotigerRomInfo, twotigerRomName, NULL, NULL, TwotigerSampleInfo, TwotigerSampleName, TwotigerInputInfo, TwotigerDIPInfo,
 	TwotigerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2418,7 +2418,7 @@ struct BurnDriverD BurnDrvTwotigerc = {
 	"twotigerc", "twotiger", "midssio", NULL, "1984",
 	"Two Tigers (Tron conversion)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, twotigercRomInfo, twotigercRomName, NULL, NULL, NULL, NULL, TronInputInfo, TronDIPInfo,//, TwotigrcInputInfo, TwotigrcDIPInfo,
 	TwotigercInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2463,7 +2463,7 @@ struct BurnDriver BurnDrvTapper = {
 	"tapper", NULL, "midssio", NULL, "1983",
 	"Tapper (Budweiser, 1/27/84)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tapperRomInfo, tapperRomName, NULL, NULL, NULL, NULL, TapperInputInfo, TapperDIPInfo,
 	TapperInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2503,7 +2503,7 @@ struct BurnDriver BurnDrvTapperg = {
 	"tapperg", "tapper", "midssio", NULL, "1983",
 	"Tapper (Budweiser, 1/27/84 - Alternate graphics)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tappergRomInfo, tappergRomName, NULL, NULL, NULL, NULL, TapperInputInfo, TapperDIPInfo,
 	TapperInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2543,7 +2543,7 @@ struct BurnDriver BurnDrvTappera = {
 	"tappera", "tapper", "midssio", NULL, "1983",
 	"Tapper (Budweiser, 12/9/83)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tapperaRomInfo, tapperaRomName, NULL, NULL, NULL, NULL, TapperInputInfo, TapperDIPInfo,
 	TapperInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2583,7 +2583,7 @@ struct BurnDriver BurnDrvTapperb = {
 	"tapperb", "tapper", "midssio", NULL, "1983",
 	"Tapper (Budweiser, Date Unknown)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tapperbRomInfo, tapperbRomName, NULL, NULL, NULL, NULL, TapperInputInfo, TapperDIPInfo,
 	TapperInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2623,7 +2623,7 @@ struct BurnDriver BurnDrvSutapper = {
 	"sutapper", "tapper", "midssio", NULL, "1983",
 	"Tapper (Suntory)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, sutapperRomInfo, sutapperRomName, NULL, NULL, NULL, NULL, TapperInputInfo, TapperDIPInfo,
 	TapperInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2663,7 +2663,7 @@ struct BurnDriver BurnDrvRbtapper = {
 	"rbtapper", "tapper", "midssio", NULL, "1984",
 	"Tapper (Root Beer)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, rbtapperRomInfo, rbtapperRomName, NULL, NULL, NULL, NULL, TapperInputInfo, TapperDIPInfo,
 	TapperInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2713,7 +2713,7 @@ struct BurnDriver BurnDrvKroozr = {
 	"kroozr", NULL, "midssio", NULL, "1982",
 	"Kozmik Kroozr\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, kroozrRomInfo, kroozrRomName, NULL, NULL, NULL, NULL, KroozrInputInfo, KroozrDIPInfo,
 	KroozrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2784,7 +2784,7 @@ struct BurnDriver BurnDrvJourney = {
 	"journey", NULL, "midssio", "journey", "1983",
 	"Journey\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, journeyRomInfo, journeyRomName, NULL, NULL, JourneySampleInfo, JourneySampleName, JourneyInputInfo, JourneyDIPInfo,
 	JourneyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	480, 512, 3, 4
@@ -2828,7 +2828,7 @@ struct BurnDriver BurnDrvTimber = {
 	"timber", NULL, "midssio", NULL, "1984",
 	"Timber\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, timberRomInfo, timberRomName, NULL, NULL, NULL, NULL, TimberInputInfo, TimberDIPInfo,
 	TimberInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2913,7 +2913,7 @@ struct BurnDriver BurnDrvDotron = {
 	"dotron", NULL, "midssio", NULL, "1983",
 	"Discs of Tron (Upright)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, dotronRomInfo, dotronRomName, NULL, NULL, NULL, NULL, DotronInputInfo, DotronDIPInfo,
 	DotronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2953,7 +2953,7 @@ struct BurnDriver BurnDrvDotrona = {
 	"dotrona", "dotron", "midssio", NULL, "1983",
 	"Discs of Tron (Upright alternate)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, dotronaRomInfo, dotronaRomName, NULL, NULL, NULL, NULL, DotronInputInfo, DotronDIPInfo,
 	DotronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2999,7 +2999,7 @@ struct BurnDriver BurnDrvDotrone = {
 	"dotrone", "dotron", "midssio", NULL, "1983",
 	"Discs of Tron (Environmental)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, dotroneRomInfo, dotroneRomName, NULL, NULL, NULL, NULL, DotronInputInfo, DotroneDIPInfo,
 	DotroneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -3086,7 +3086,7 @@ struct BurnDriver BurnDrvDemoderb = {
 	"demoderb", NULL, NULL, NULL, "1984",
 	"Demolition Derby\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, demoderbRomInfo, demoderbRomName, NULL, NULL, NULL, NULL, DemoderbInputInfo, DemoderbDIPInfo,
 	DemoderbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -3123,7 +3123,7 @@ struct BurnDriver BurnDrvDemoderbc = {
 	"demoderbc", "demoderb", NULL, NULL, "1984",
 	"Demolition Derby (cocktail)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, demoderbcRomInfo, demoderbcRomName, NULL, NULL, NULL, NULL, DemoderbInputInfo, DemoderbDIPInfo,
 	DemoderbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3

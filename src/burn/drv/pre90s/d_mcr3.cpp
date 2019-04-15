@@ -1732,7 +1732,7 @@ struct BurnDriver BurnDrvDemoderm = {
 	"demoderm", "demoderb", NULL, NULL, "1984",
 	"Demolition Derby (MCR-3 Mono Board Version)\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, demodermRomInfo, demodermRomName, NULL, NULL, NULL, NULL, DemodermInputInfo, DemodermDIPInfo,
 	DemodermInit, DrvExit, TcsFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -1779,7 +1779,7 @@ struct BurnDriver BurnDrvSarge = {
 	"sarge", NULL, NULL, NULL, "1985",
 	"Sarge\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sargeRomInfo, sargeRomName, NULL, NULL, NULL, NULL, SargeInputInfo, SargeDIPInfo,
 	SargeInit, DrvExit, TcsFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -1858,7 +1858,7 @@ struct BurnDriver BurnDrvMaxrpm = {
 	"maxrpm", NULL, NULL, NULL, "1986",
 	"Max RPM (ver 2)\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, maxrpmRomInfo, maxrpmRomName, NULL, NULL, NULL, NULL, RampageInputInfo, RampageDIPInfo, //MaxrpmInputInfo, MaxrpmDIPInfo,
 	MaxrpmInit, DrvExit, TcsFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -1922,7 +1922,7 @@ struct BurnDriver BurnDrvRampage = {
 	"rampage", NULL, NULL, NULL, "1986",
 	"Rampage (Rev 3, 8/27/86)\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 3, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, rampageRomInfo, rampageRomName, NULL, NULL, NULL, NULL, RampageInputInfo, RampageDIPInfo,
 	RampageInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -1958,7 +1958,7 @@ struct BurnDriver BurnDrvRampage2 = {
 	"rampage2", "rampage", NULL, NULL, "1986",
 	"Rampage (Rev 2, 8/4/86)\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, rampage2RomInfo, rampage2RomName, NULL, NULL, NULL, NULL, RampageInputInfo, RampageDIPInfo,
 	RampageInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2001,7 +2001,7 @@ struct BurnDriver BurnDrvPowerdrv = {
 	"powerdrv", NULL, NULL, NULL, "1986",
 	"Power Drive\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 3, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, powerdrvRomInfo, powerdrvRomName, NULL, NULL, NULL, NULL, PowerdrvInputInfo, PowerdrvDIPInfo,
 	PowerdrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2084,7 +2084,7 @@ struct BurnDriver BurnDrvStargrds = {
 	"stargrds", NULL, NULL, NULL, "1987",
 	"Star Guards\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, stargrdsRomInfo, stargrdsRomName, NULL, NULL, NULL, NULL, StargrdsInputInfo, StargrdsDIPInfo,
 	StargrdsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
@@ -2199,7 +2199,7 @@ struct BurnDriver BurnDrvSpyhunt = {
 	"spyhunt", NULL, "midssio", NULL, "1983",
 	"Spy Hunter\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, spyhuntRomInfo, spyhuntRomName, NULL, NULL, NULL, NULL, SpyhuntInputInfo, SpyhuntDIPInfo,
 	SpyhuntInit, DrvExit, CSDSSIOFrame, SpyhuntDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 480, 3, 4
@@ -2248,7 +2248,7 @@ struct BurnDriver BurnDrvSpyhuntp = {
 	"spyhuntp", "spyhunt", "midssio", NULL, "1983",
 	"Spy Hunter (Playtronic license)\0", NULL, "Bally Midway (Playtronic license)", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, spyhuntpRomInfo, spyhuntpRomName, NULL, NULL, NULL, NULL, SpyhuntInputInfo, SpyhuntDIPInfo,
 	SpyhuntInit, DrvExit, CSDSSIOFrame, SpyhuntDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 480, 3, 4
@@ -2316,7 +2316,7 @@ struct BurnDriver BurnDrvCrater = {
 	"crater", NULL, "midssio", NULL, "1984",
 	"Crater Raider\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, craterRomInfo, craterRomName, NULL, NULL, NULL, NULL, CraterInputInfo, CraterDIPInfo,
 	CraterInit, DrvExit, CSDSSIOFrame, SpyhuntDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 480, 4, 3

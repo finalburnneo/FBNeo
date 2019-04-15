@@ -932,8 +932,8 @@ static void sound_system_init(INT32 sound_system)
 
 	switch (sound_system)
 	{
-		case 0: soundsgood_init(Drv68KROM, Drv68KRAM); break;
-		case 1: tcs_init(DrvSndROM, DrvSndRAM); break;
+		case 0: soundsgood_init(0, 0, Drv68KROM, Drv68KRAM); break;
+		case 1: tcs_init(0, 0, 0, DrvSndROM, DrvSndRAM); break;
 
 		case 2:
 		{

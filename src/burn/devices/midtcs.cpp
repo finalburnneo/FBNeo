@@ -11,16 +11,20 @@ static INT32 tcs_status;
 static INT32 tcs_in_reset;
 static INT32 tcs_is_initialized = 0;
 
+static INT32 cpu_select;
+static INT32 pia_select;
+static INT32 dac_select;
+
 static void tcs_porta_w(UINT16, UINT8 data)
 {
 	dacvalue = (dacvalue & 3) | (data << 2);
-	DACWrite16Signed(0, dacvalue << 6);
+	DACWrite16Signed(dac_select, dacvalue << 6);
 }
 
 static void tcs_portb_w(UINT16, UINT8 data)
 {
 	dacvalue = (dacvalue & ~3) | (data >> 6);
-	DACWrite16Signed(0, dacvalue << 6);
+	DACWrite16Signed(dac_select, dacvalue << 6);
 	tcs_status = (data >> 4) & 3;
 }
 
@@ -33,8 +37,27 @@ void tcs_data_write(UINT16 data)
 {
 	if (tcs_is_initialized == 0) return;
 
-	pia_set_input_b(0, (data >> 1) & 0xf);
-	pia_set_input_ca1(0, ~data & 0x01);
+	INT32 cpunum = M6809GetActive();
+	if (cpunum == -1) {
+		M6809Open(cpu_select);
+	}
+	else if (cpunum != cpu_select)
+	{
+		M6809Close();
+		M6809Open(cpu_select);
+	}
+
+	pia_set_input_b(pia_select, (data >> 1) & 0xf);
+	pia_set_input_ca1(pia_select, ~data & 0x01);
+
+	if (cpunum == -1) {
+		M6809Close();
+	}
+	else if (cpunum != cpu_select)
+	{
+		M6809Close();
+		M6809Open(cpunum);
+	}
 }
 
 UINT8 tcs_status_read()
@@ -50,14 +73,31 @@ void tcs_reset_write(int state)
 	tcs_in_reset = state;
 
 	if (state) {
+		INT32 cpunum = M6809GetActive();
+		if (cpunum == -1) {
+			M6809Open(cpu_select);
+		}
+		else if (cpunum != cpu_select)
+		{
+			M6809Close();
+			M6809Open(cpu_select);
+		}
 		M6809Reset();
+		if (cpunum == -1) {
+			M6809Close();
+		}
+		else if (cpunum != cpu_select)
+		{
+			M6809Close();
+			M6809Open(cpunum);
+		}
 	}
 }
 
 static void tcs_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xc000) == 0x4000) {
-		pia_write(0, address & 3, data);
+		pia_write(pia_select, address & 3, data);
 		return;
 	}
 }
@@ -65,7 +105,7 @@ static void tcs_write(UINT16 address, UINT8 data)
 static UINT8 tcs_read(UINT16 address)
 {
 	if ((address & 0xc000) == 0x4000) {
-		return pia_read(0, address & 3);
+		return pia_read(pia_select, address & 3);
 	}
 
 	return 0;
@@ -75,13 +115,12 @@ void tcs_reset()
 {
 	if (tcs_is_initialized == 0) return;
 
-	M6809Open(0);
+	M6809Open(cpu_select);
 	M6809Reset();
 	M6809Close();
 
-	pia_reset();
-
-	DACReset();
+	if (pia_select == 0) pia_reset();
+	if (dac_select == 0) DACReset();
 
 	tcs_status = 0;
 	tcs_in_reset = 0;
@@ -94,10 +133,14 @@ static const pia6821_interface pia_intf = {
 	tcs_irq, tcs_irq
 };
 
-void tcs_init(UINT8 *rom, UINT8 *ram)
+void tcs_init(INT32 cpunum, INT32 pianum, INT32 dacnum, UINT8 *rom, UINT8 *ram)
 {
-	M6809Init(0);
-	M6809Open(0);
+	cpu_select = cpunum;
+	pia_select = pianum;
+	dac_select = dacnum;
+
+	M6809Init(cpu_select);
+	M6809Open(cpu_select);
 	for (INT32 i = 0; i < 0x4000; i+=0x800) {
 		M6809MapMemory(ram,	0x0000 + i, 0x07ff + i, MAP_RAM);
 	}
@@ -106,11 +149,11 @@ void tcs_init(UINT8 *rom, UINT8 *ram)
 	M6809SetReadHandler(tcs_read);
 	M6809Close();
 
-	pia_init();
-	pia_config(0, PIA_ALTERNATE_ORDERING, &pia_intf);
+	if (pia_select == 0) pia_init();
+	pia_config(pia_select, PIA_ALTERNATE_ORDERING, &pia_intf);
 	
-	DACInit(0, 0, 0, M6809TotalCycles, 2000000);
-    DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	DACInit(dacnum, 0, 0, M6809TotalCycles, 2000000);
+    DACSetRoute(dacnum, 1.00, BURN_SND_ROUTE_BOTH);
     DACDCBlock(1);
 
 	tcs_is_initialized = 1;
@@ -120,9 +163,9 @@ void tcs_exit()
 {
 	if (tcs_is_initialized == 0) return;
 
-	M6809Exit();
-	pia_init();
-	DACExit();
+	if (cpu_select == 0) M6809Exit();
+	if (pia_select == 0) pia_init();
+	if (dac_select == 0) DACExit();
 	tcs_is_initialized = 0;
 }
 
@@ -132,9 +175,9 @@ void tcs_scan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_VOLATILE)
 	{
-		M6809Scan(nAction);
-		DACScan(nAction, pnMin);
-		pia_scan(nAction, pnMin);
+		if (cpu_select == 0) M6809Scan(nAction);
+		if (dac_select == 0) DACScan(nAction, pnMin);
+		if (pia_select == 0) pia_scan(nAction, pnMin);
 
 		SCAN_VAR(tcs_status);
 		SCAN_VAR(tcs_in_reset);

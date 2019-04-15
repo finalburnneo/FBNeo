@@ -3076,7 +3076,7 @@ static INT32 DemoderbInit()
         ssio_set_custom_input(2, 0xff, demoderb_ip2_read);
         ssio_set_custom_output(4, 0xff, demoderb_op4_write);
         memmove(DrvTCSROM + 0xc000, DrvTCSROM, 0x4000);
-        tcs_init(DrvTCSROM, DrvZ80RAM1); // actually m6809
+        tcs_init(0, 0, 0, DrvTCSROM, DrvZ80RAM1); // actually m6809
 	}
 
 	return nRet;

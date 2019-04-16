@@ -4686,7 +4686,7 @@ INT32 NeoFrame()
 		uPD499ASetTicks((INT64)12000000 * nBurnCPUSpeedAdjust / 256);
 
 #if defined OVERCLOCK_CDZ
-		nNeoCDCyclesIRQPeriod = (int)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 300.0));
+		nNeoCDCyclesIRQPeriod = (int)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 225.0));
 #else
 		nNeoCDCyclesIRQPeriod = (int)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 150.0));
 #endif

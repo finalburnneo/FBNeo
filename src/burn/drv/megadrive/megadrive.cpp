@@ -1447,9 +1447,10 @@ static INT32 MegadriveResetDo()
 	BurnMD2612Reset();
 
 #if 0
-	FILE * f = fopen("Megadrive.bin", "wb+");
-	fwrite(RomMain, 1, 0x200000, f);
-	fclose(f);
+    BurnDump("Megadrive.bin", RomMain, 0x200000);
+    //FILE * f = fopen("Megadrive.bin", "wb+");
+	//fwrite(RomMain, 1, 0x200000, f);
+	//fclose(f);
 #endif
 
 	MegadriveCheckHardware();
@@ -1728,7 +1729,8 @@ static INT32 MegadriveLoadRoms(bool bLoad)
 
 				case SEGA_MD_ROM_LOAD16_WORD_SWAP: {
 					nRet = BurnLoadRom(RomMain + Offset, i, 1); if (nRet) return 1;
-					BurnByteswap(RomMain + Offset, ri.nLen);
+                    //BurnDump("derpy.bin", RomMain, (bDoIpsPatch && ri.nLen < nIpsMaxFileLen) ? nIpsMaxFileLen : ri.nLen);
+                    BurnByteswap(RomMain + Offset, (bDoIpsPatch && ri.nLen < nIpsMaxFileLen) ? nIpsMaxFileLen : ri.nLen);
 					break;
 				}
 
@@ -1758,10 +1760,16 @@ static INT32 MegadriveLoadRoms(bool bLoad)
 			if ((ri.nType & SEGA_MD_ROM_RELOAD_100000_300000) == SEGA_MD_ROM_RELOAD_100000_300000) {
 				memcpy(RomMain + 0x300000, RomMain + 0x000000, 0x100000);
 			}
+
+            if (bDoIpsPatch && ri.nLen < nIpsMaxFileLen) {
+                INT32 old = RomSize;
+                RomSize += nIpsMaxFileLen - ri.nLen;
+                bprintf(PRINT_NORMAL, _T("*** Megadrive: IPS Patch grew RomSize: %d  (was %d)\n"), RomSize, old);
+            }
 		}
 	}
 
-	return 0;
+    return 0;
 }
 
 // Custom Cartridge Mapping

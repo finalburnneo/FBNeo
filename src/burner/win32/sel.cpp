@@ -922,7 +922,7 @@ static void RefreshPanel()
 		EnableWindow(hInfoLabel[i], FALSE);
 	}
 
-	CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND, (nLoadMenuShowY & AUTOEXPAND) ? BST_CHECKED : BST_UNCHECKED);
+    CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND, (nLoadMenuShowY & AUTOEXPAND) ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLE, (nLoadMenuShowY & AVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_CHECKUNAVAILABLE, (nLoadMenuShowY & UNAVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
 
@@ -1885,15 +1885,17 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					}
 					break;
 				case IDC_SEL_IPSMANAGER:
-					if (bDrvSelected) {
+                    if (bDrvSelected) {
+                        int nOldnBurnDrvActive = nBurnDrvActive;
 						IpsManagerCreate(hSelDlg);
+                        nBurnDrvActive = nOldnBurnDrvActive; // due to some weird bug in sel.cpp, nBurnDrvActive can sometimes change when clicking in new dialogs.
 						LoadIpsActivePatches();
 						if (GetIpsNumActivePatches()) {
 							EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), TRUE);
 						} else {
 							EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
 						}
-						SetFocus(hSelList);
+                        SetFocus(hSelList);
 					} else {
 						MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 					}
@@ -2303,8 +2305,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 				}
 			}
-			
-			if (GetIpsNumPatches()) {
+
+            CheckDlgButton(hDlg, IDC_SEL_APPLYIPS, BST_UNCHECKED);
+
+            if (GetIpsNumPatches()) {
 				if (!nShowMVSCartsOnly) EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), TRUE);
 			} else {
 				EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), FALSE);

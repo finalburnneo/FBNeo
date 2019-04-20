@@ -359,6 +359,7 @@ INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka);
 void Reinitialise();
 
 extern bool bDoIpsPatch;
+extern INT32 nIpsMaxFileLen;
 void IpsApplyPatches(UINT8* base, char* rom_name);
 
 // ---------------------------------------------------------------------------

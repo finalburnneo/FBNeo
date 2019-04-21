@@ -760,6 +760,39 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 	fclose(f);
 }
 
+static char* stristr_int(const char* str1, const char* str2)
+{
+    const char* p1 = str1;
+    const char* p2 = str2;
+    const char* r = (!*p2) ? str1 : NULL;
+
+    while (*p1 && *p2) {
+        if (tolower((unsigned char)*p1) == tolower((unsigned char)*p2)) {
+            if (!r) {
+                r = p1;
+            }
+
+            p2++;
+        } else {
+            p2 = str2;
+            if (r) {
+                p1 = r + 1;
+            }
+
+            if (tolower((unsigned char)*p1) == tolower((unsigned char)*p2)) {
+                r = p1;
+                p2++;
+            } else {
+                r = NULL;
+            }
+        }
+
+        p1++;
+    }
+
+    return (*p2) ? NULL : (char*)r;
+}
+
 static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, INT32 readonly)
 {
 	char s[MAX_PATH];
@@ -786,6 +819,10 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
 				if (p[0] == '[')	// '['
 					break;
 
+                // Can support linetypes:
+                // "rom name.bin" "patch file.ips" CRC(abcd1234)
+                // romname.bin patchfile CRC(abcd1234)
+
                 if (p[0] == '\"') { // "quoted rom name with spaces.bin"
                     p++;
                     rom_name = strtok(p, "\"");
@@ -800,13 +837,31 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
 				if (_stricmp(rom_name, game_name))
 					continue;
 
-                ips_name = strtok(NULL, " \t\r\n");
+                ips_name = strtok(NULL, "\r\n");
 
 				if (!ips_name)
 					continue;
 
-				// skip CRC check
-				strtok(NULL, "\r\n");
+                // remove crc portion, and end quote/spaces from ips name
+                char *c = stristr_int(ips_name, "crc");
+                if (c) {
+                    c--; // "derp.ips" CRC(abcd1234)\n"
+                         //           ^ we're now here.
+                    while (*c && (*c == ' ' || *c == '\"'))
+                    {
+                        *c = '\0';
+                        c--;
+                    }
+                }
+
+                // clean-up IPS name beginning (could be quoted or not)
+                while (ips_name && (ips_name[0] == ' ' || ips_name[0] == '\"'))
+                    ips_name++;
+
+                char *has_ext = stristr_int(ips_name, ".ips");
+
+                bprintf(0, _T("ips name:[%S]\n"), ips_name);
+                bprintf(0, _T("rom name:[%S]\n"), rom_name);
 
 				char ips_path[MAX_PATH*2];
 				char ips_dir[MAX_PATH];
@@ -814,9 +869,9 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
 
 				if (strchr(ips_name, '\\')) {
 					// ips in parent's folder
-					sprintf(ips_path, "%s\\%s%s", ips_dir, ips_name, IPS_EXT);
+                    sprintf(ips_path, "%s\\%s%s", ips_dir, ips_name, (has_ext) ? "" : IPS_EXT);
 				} else {
-					sprintf(ips_path, "%s%s\\%s%s", ips_dir, BurnDrvGetTextA(DRV_NAME), ips_name, IPS_EXT);
+					sprintf(ips_path, "%s%s\\%s%s", ips_dir, BurnDrvGetTextA(DRV_NAME), ips_name, (has_ext) ? "" : IPS_EXT);
 				}
 
 				PatchFile(ips_path, base, readonly);

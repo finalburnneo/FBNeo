@@ -36,29 +36,29 @@ static UINT8 watchdog;
 
 static INT32 game_select = 0;
 
-static UINT8  DrvJoy1[8];
-static UINT8  DrvJoy2[8];
-static UINT8  DrvJoy3[8];
-static UINT8  DrvDips[5];
-static UINT8  DrvInputs[6];
-static UINT8  DrvReset;
+static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvJoy3[8];
+static UINT8 DrvDips[5];
+static UINT8 DrvInputs[6];
+static UINT8 DrvReset;
 
 static struct BurnInputInfo FriskytInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -68,24 +68,24 @@ STDINPUTINFO(Friskyt)
 
 static struct BurnInputInfo RadradInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 2"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 1"	},
+	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 2"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 2"	},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 1"	},
+	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -96,22 +96,22 @@ STDINPUTINFO(Radrad)
 
 static struct BurnInputInfo SeicrossInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 1"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 1"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -127,7 +127,11 @@ static struct BurnDIPInfo FriskytDIPList[]=
 	{0x0e, 0xff, 0xff, 0x00, NULL			},
 	{0x0f, 0xff, 0xff, 0xfc, NULL			},
 
-	{0   , 0xfe, 0   ,    2, "Counter Check"	},
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x0e, 0x01, 0x20, 0x00, "Off"			},
+	{0x0e, 0x01, 0x20, 0x20, "On"			},
+
+    {0   , 0xfe, 0   ,    2, "Counter Check"	},
 	{0x0e, 0x01, 0x80, 0x00, "Off"			},
 	{0x0e, 0x01, 0x80, 0x80, "On"			},
 
@@ -208,7 +212,11 @@ static struct BurnDIPInfo SeicrossDIPList[]=
 	{0x13, 0xff, 0xff, 0xf0, NULL			},
 	{0x14, 0xff, 0xff, 0xe0, NULL			},
 	
-	{0   , 0xfe, 0   ,    2, "Connection Error"	},
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x10, 0x01, 0x01, 0x00, "Off"			},
+	{0x10, 0x01, 0x01, 0x01, "On"			},
+
+    {0   , 0xfe, 0   ,    2, "Connection Error"	},
 	{0x10, 0x01, 0x02, 0x00, "Off"			},
 	{0x10, 0x01, 0x02, 0x02, "On"			},
 
@@ -386,14 +394,6 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	DACReset();
 
-	static const UINT8 nvram_data[32] = {
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,
-		0, 1, 0, 1, 0, 1, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0
-	};
-
-	memset (DrvNVRAM, 0, 0x100);
-	memcpy (DrvNVRAM, nvram_data, 32);
-
 	watchdog = 0;
 	irq_mask = 0;
 	flipscreen = 0;
@@ -509,8 +509,17 @@ static INT32 DrvInit(INT32 select)
 	NSC8105Init(0);
 	NSC8105Open(0);
 	NSC8105MapMemory(DrvMCURAM,	0x0000, 0x00ff, MAP_RAM); // 0-7f
-	if (game_select < 2)
-		NSC8105MapMemory(DrvNVRAM,	0x1000, 0x10ff, MAP_RAM);
+    if (game_select < 2) { // friskyt nvram
+        static const UINT8 nvram_data[32] = {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,
+            0, 1, 0, 1, 0, 1, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0
+        };
+
+        memset (DrvNVRAM, 0, 0x100);
+        memcpy (DrvNVRAM, nvram_data, 32);
+
+        NSC8105MapMemory(DrvNVRAM,	0x1000, 0x10ff, MAP_RAM);
+    }
 	NSC8105MapMemory(DrvZ80ROM,	0x8000, 0xf7ff, MAP_ROM);
 	if (game_select == 1)
 		NSC8105MapMemory(DrvMCUOps,	0x8000, 0xf7ff, MAP_ROM);
@@ -524,7 +533,8 @@ static INT32 DrvInit(INT32 select)
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, syncronize_dac);
-	DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+    DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+    DACDCBlock(1);
 
 	GenericTilesInit();
 
@@ -691,7 +701,7 @@ static INT32 DrvFrame()
 		{
 			case 0: // friskyt, friskyta
 			case 1: // friskytb
-				DrvInputs[1] = (DrvDips[0] & 0x80) | (DrvInputs[1] & 0x7f);
+				DrvInputs[1] = (DrvDips[0] & 0xa0) | (DrvInputs[1] & 0x1f);
 				DrvInputs[2] = DrvDips[1];
 			break;
 
@@ -710,19 +720,17 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal = 3072000 / 60;
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	ZetOpen(0);
 	NSC8105Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal / nInterleave;
-
-		nCyclesDone[0] += ZetRun(nSegment);
+        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone[0]);
 		if (i == 240 && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		if (mcu_halt) {
@@ -785,7 +793,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(portb_data);
 	}
 
-	if (nAction & ACB_NVRAM) {
+	if (nAction & ACB_NVRAM && (game_select < 2)) { // friskyt nvram
 		ba.Data		= DrvNVRAM;
 		ba.nLen		= 0x0100;
 		ba.nAddress	= 0;

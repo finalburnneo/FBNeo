@@ -847,7 +847,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
                 if (c) {
                     c--; // "derp.ips" CRC(abcd1234)\n"
                          //           ^ we're now here.
-                    while (*c && (*c == ' ' || *c == '\"'))
+                    while (*c && (*c == ' ' || *c == '\t' || *c == '\"'))
                     {
                         *c = '\0';
                         c--;

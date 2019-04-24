@@ -193,7 +193,8 @@ static void FillListBox()
 			_stprintf(szFileName, _T("%s%s"), szFilePath, wfd.cFileName);
 			
 			FILE *fp = _tfopen(szFileName, _T("r"));
-			if (fp) {
+            if (fp) {
+                bool AllocDesc = false;
 				PatchDesc = NULL;
 				memset(PatchName, '\0', 256 * sizeof(TCHAR));
 				
@@ -205,11 +206,22 @@ static void FillListBox()
 
 				bprintf(0, _T("PatchDesc [%s]\n"), PatchDesc);
 
+                if (PatchDesc == NULL) {
+                    PatchDesc = (TCHAR*)malloc(1024);
+                    memset(PatchDesc, 0, 1024);
+                    AllocDesc = true;
+                    _stprintf(PatchDesc, _T("%s"), wfd.cFileName);
+                }
+
 				for (unsigned int i = 0; i < _tcslen(PatchDesc); i++) {
 					if (PatchDesc[i] == '\r' || PatchDesc[i] == '\n') break;
 					PatchName[i] = PatchDesc[i];					
 				}
-				
+
+                if (AllocDesc) {
+                    free(PatchDesc);
+                }
+
 				// Check for categories
 				TCHAR *Tokens;
 				int nNumTokens = 0;

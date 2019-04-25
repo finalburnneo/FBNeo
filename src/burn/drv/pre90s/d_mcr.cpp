@@ -1537,8 +1537,8 @@ static INT32 DrvFrame()
         }
 
         // Render Sound Segment
-		if (pBurnSoundOut && (i%4)==3) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/4);
+		if (pBurnSoundOut && (i%8)==7) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;

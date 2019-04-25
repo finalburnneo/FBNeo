@@ -519,10 +519,10 @@ STD_ROM_PICK(Outrunra)
 STD_ROM_FN(Outrunra)
 
 static struct BurnRomInfo OutrunehRomDesc[] = {
-	{ "enhanced_110_epr-10380b.133",   0x10000, 0xdb563a0f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "enhanced_110_epr-10382b.118",   0x10000, 0xca324a4e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "enhanced_110_epr-10381b.132",   0x10000, 0xd60be71f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "enhanced_110_epr-10383b.117",   0x10000, 0xcc1f2f75, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_202_epr-10380b.133",   0x10000, 0xdb563a0f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_202_epr-10382b.118",   0x10000, 0xca324a4e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_202_epr-10381b.132",   0x10000, 0xd60be71f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_202_epr-10383b.117",   0x10000, 0xcc1f2f75, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
 	{ "epr-10327a.76",    0x10000, 0xe28a5baf, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
 	{ "epr-10329a.58",    0x10000, 0xda131c81, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
@@ -555,7 +555,7 @@ static struct BurnRomInfo OutrunehRomDesc[] = {
 	{ "opr-10191.68",     0x08000, 0x20a284ab, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "opr-10190.69",     0x08000, 0x7cab70e2, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "opr-10189.70",     0x08000, 0x01366b54, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "enhanced_103_opr-10188.71",     0x08000, 0x57d5c867, SYS16_ROM_PCMDATA | BRF_SND }, // unofficial replacement for factory defective opr-10188
+	{ "enhanced_202_opr-10188.71",     0x08000, 0x57d5c867, SYS16_ROM_PCMDATA | BRF_SND }, // unofficial replacement for factory defective opr-10188
 };
 
 

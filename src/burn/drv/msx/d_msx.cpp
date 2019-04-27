@@ -18946,18 +18946,18 @@ struct BurnDriver BurnDrvMSX_cowabduct = {
 	272, 228, 4, 3
 };
 
-// Deep Dungeon
+// Deep Dungeon Adventure
 
 static struct BurnRomInfo MSX_deepdunRomDesc[] = {
-	{ "DDUNGEON.ROM",	0x08000, 0x012e13d3, BRF_PRG | BRF_ESS },
+	{ "deepdung.rom",	0x0c000, 0x96bd10ee, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_deepdun, MSX_deepdun, msx_msx)
 STD_ROM_FN(MSX_deepdun)
 
 struct BurnDriver BurnDrvMSX_deepdun = {
-	"msx_deepdun", NULL, "msx_msx", NULL, "2008",
-	"Deep Dungeon\0", NULL, "Trilobyte", "MSX",
+	"msx_deepdun", NULL, "msx_msx", NULL, "2013",
+	"Deep Dungeon Adventure\0", NULL, "Trilobyte", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_deepdunRomInfo, MSX_deepdunRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

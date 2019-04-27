@@ -5206,7 +5206,6 @@ struct BurnDriver BurnDrvcv_frostbite = {
 	272, 228, 4, 3
 };
 
-
 // Cold Blood
 
 static struct BurnRomInfo cv_coldbloodRomDesc[] = {
@@ -5224,4 +5223,23 @@ struct BurnDriver BurnDrvcv_coldblood = {
 	CVGetZipName, cv_coldbloodRomInfo, cv_coldbloodRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
+};
+
+// Buck Rogers (SGM)
+
+static struct BurnRomInfo cv_buckrogsgmRomDesc[] = {
+    { "buck_rogers_super_game_colecovision_sgm",	0x40000, 0xc4f1a85a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_buckrogsgm, cv_buckrogsgm, cv_coleco)
+STD_ROM_FN(cv_buckrogsgm)
+
+struct BurnDriver BurnDrvcv_buckrogsgm = {
+    "cv_buckrogsgm", NULL, "cv_coleco", NULL, "2013",
+    "Buck Rogers SGM\0", NULL, "Coleco", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_buckrogsgmRomInfo, cv_buckrogsgmRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
 };

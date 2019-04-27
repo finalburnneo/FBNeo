@@ -2249,7 +2249,7 @@ struct BurnDriver BurnDrvTrojana = {
 	"Trojan (US set 2)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
-	NULL, trojanaRomInfo, trojanaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanlsDIPInfo,
+	NULL, trojanaRomInfo, trojanaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
 	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -2357,7 +2357,7 @@ struct BurnDriver BurnDrvTrojanb = {
 	"Trojan (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
-	NULL, trojanbRomInfo, trojanbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanlsDIPInfo,
+	NULL, trojanbRomInfo, trojanbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
 	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

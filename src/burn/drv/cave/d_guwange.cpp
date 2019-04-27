@@ -15,7 +15,6 @@ static UINT8 *Ram01;
 static UINT8 *DefaultEEPROM = NULL;
 
 static UINT8 DrvReset = 0;
-static UINT8 bDrawScreen;
 static bool bVBlank;
 
 static INT8 nVideoIRQ;
@@ -183,7 +182,6 @@ void __fastcall guwangeWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			nCaveYOffset = wordValue;
 			return;
 		case 0x300008:
-			CaveSpriteBuffer();
 			nCaveSpriteBank = wordValue;
 			return;
 
@@ -299,11 +297,7 @@ static INT32 DrvDraw()
 	CavePalUpdate8Bit(0, 128);				// Update the palette
 	CaveClearScreen(CavePalette[0x7F00]);
 
-	if (bDrawScreen) {
-//		CaveGetBitmap();
-
-		CaveTileRender(1);					// Render tiles
-	}
+    CaveTileRender(1);					// Render tiles
 
 	return 0;
 }
@@ -318,15 +312,10 @@ inline static void guwangeClearOpposites(UINT8* nJoystickInputs)
 	}
 }
 
-inline static INT32 CheckSleep(INT32)
-{
-	return 0;
-}
-
 static INT32 DrvFrame()
 {
 	INT32 nCyclesVBlank;
-	INT32 nInterleave = 8;
+	INT32 nInterleave = 32;
 
 	if (DrvReset) {														// Reset machine
 		DrvDoReset();
@@ -372,32 +361,22 @@ static INT32 DrvFrame()
 		nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
 
 		// See if we need to trigger the VBlank interrupt
-		if (!bVBlank && nNext > nCyclesVBlank) {
+		if (!bVBlank && nNext >= nCyclesVBlank) {
 			if (nCyclesDone[nCurrentCPU] < nCyclesVBlank) {
 				nCyclesSegment = nCyclesVBlank - nCyclesDone[nCurrentCPU];
-				if (!CheckSleep(nCurrentCPU)) {							// See if this CPU is busywaiting
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-				} else {
-					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-				}
-			}
-
-			if (pBurnDraw != NULL) {
-				DrvDraw();												// Draw screen if needed
+                nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 			}
 
 			bVBlank = true;
 			nVideoIRQ = 0;
 			UpdateIRQStatus();
+
+			CaveSpriteBuffer();
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment+nCyclesExtra);
-			nCyclesExtra = 0;
-		} else {
-			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
+        nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment - nCyclesExtra);
+        nCyclesExtra = 0;
 
 		nCurrentCPU = -1;
 	}
@@ -412,9 +391,13 @@ static INT32 DrvFrame()
 			}
 		}
 	}
-	nCyclesExtra = SekTotalCycles() - nCyclesTotal[0];
 
+    nCyclesExtra = SekTotalCycles() - nCyclesTotal[0];
 	SekClose();
+
+    if (pBurnDraw != NULL) {
+        DrvDraw();												// Draw screen if needed
+    }
 
 	return 0;
 }
@@ -483,26 +466,7 @@ static INT32 LoadRoms()
 	BurnLoadRom(CaveSpriteROM + 0x1000001, 5, 2);
 	NibbleSwap3(CaveSpriteROM, 0xC00000);
 
-#if 0
-	// I don't think this is needed anymore, dink aug 14 2016.
-	// note: if enabled-this causes the screen fade-in effect after starting
-	// a game @ the character selection screen to display garbage sprite data.
-	for (INT32 i = 0; i < 0x100000; i++) {
-		UINT16 nValue = rand() & 0x0101;
-		if (nValue & 0x0001) {
-			nValue |= 0x00FF;
-		}
-		if (nValue & 0x0100) {
-			nValue |= 0xFF00;
-		}
-		((UINT16*)(CaveSpriteROM + 0x1800000))[i] = nValue;
-		((UINT16*)(CaveSpriteROM + 0x1A00000))[i] = nValue;
-		((UINT16*)(CaveSpriteROM + 0x1C00000))[i] = nValue;
-		((UINT16*)(CaveSpriteROM + 0x1E00000))[i] = nValue;
-	}
-#else
 	memcpy(CaveSpriteROM + 0x1800000, CaveSpriteROM + 0x1000000, 0x800000);
-#endif
 
 	BurnLoadRom(CaveTileROM[0] + 0x000000, 6, 1);
 	NibbleSwap4(CaveTileROM[0], 0x400000);
@@ -548,8 +512,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bVBlank);
 
 		CaveScanGraphics();
-
-		SCAN_VAR(DrvInput);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -621,8 +583,6 @@ static INT32 DrvInit()
 	YMZ280BInit(16934400, &TriggerSoundIRQ, 0x400000);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-
-	bDrawScreen = true;
 
 	DrvDoReset(); // Reset machine
 

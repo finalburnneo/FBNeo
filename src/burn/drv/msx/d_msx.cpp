@@ -24546,3 +24546,22 @@ struct BurnDriver BurnDrvMSX_transball = {
 	272, 228, 4, 3
 };
 
+// Danger Tower
+
+static struct BurnRomInfo MSX_dangertowerRomDesc[] = {
+	{ "dangertower.rom",	0x08000, 0x02c3af4a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_dangertower, MSX_dangertower, msx_msx)
+STD_ROM_FN(MSX_dangertower)
+
+struct BurnDriver BurnDrvMSX_dangertower = {
+	"msx_dangertower", NULL, "msx_msx", NULL, "2009",
+	"Danger Tower\0", NULL, "Danger Team", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_dangertowerRomInfo, MSX_dangertowerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+

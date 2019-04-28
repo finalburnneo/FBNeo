@@ -30,9 +30,11 @@ static UINT8 DrvJoy4[16];
 static UINT8 DrvDips[2] = { 0, 0 };
 static UINT16 DrvInputs[4];
 static UINT8 DrvReset;
-static UINT32 MegaCart;
-static UINT32 MegaCartBank;
+static UINT32 MegaCart; // MegaCart size
+static UINT32 MegaCartBank; // current Bank
+static UINT32 MegaCartBanks; // total banks
 
+static INT32 use_EEPROM = 0;
 static INT32 use_SGM = 0;
 static INT32 SGM_map_24k;
 static INT32 SGM_map_8k;
@@ -376,19 +378,25 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-#if 0
 static void __fastcall main_write(UINT16 address, UINT8 data)
 {
 	// maybe we should support bankswitching on writes too?
-	//bprintf(0, _T("mw %X,"), address);
+
+    if (use_EEPROM) { // for boxxle
+        switch (address)
+        {
+            case 0xff90:
+            case 0xffa0:
+            case 0xffb0:
+                MegaCartBank = (address >> 4) & 3;
+                return;
+        }
+    }
 }
-#endif
 
 static UINT8 __fastcall main_read(UINT16 address)
 {
 	if (address >= 0xffc0/* && address <= 0xffff*/) {
-		UINT32 MegaCartBanks = MegaCart / 0x4000;
-
 		MegaCartBank = (0xffff - address) & (MegaCartBanks - 1);
 
 		MegaCartBank = (MegaCartBanks - MegaCartBank) - 1;
@@ -452,7 +460,7 @@ static INT32 DrvInit()
 			} else if ((ri.nType & BRF_PRG) && (i<10)) { // Load rom thats not in 0x2000 (8k) chunks
 				bprintf(0, _T("ColecoVision romload (unsegmented) #%d size: %X\n"), i, ri.nLen);
 				BurnLoadRom(DrvCartROM, i, 1);
-				if (ri.nLen >= 0x20000) MegaCart = ri.nLen;
+				if (ri.nLen >= 0x10000) MegaCart = ri.nLen;
 			}
 		}
 	}
@@ -465,9 +473,17 @@ static INT32 DrvInit()
 		ZetMapMemory(DrvZ80RAM, i + 0x0000, i + 0x03ff, MAP_RAM);
 	}
 
-	if (MegaCart) {
+    if (use_EEPROM) {  // similar to MegaCart but with diff. mapper addresses
+		// Boxxle
+		MegaCartBanks = MegaCart / 0x4000;
+		bprintf(0, _T("ColecoVision BoxxleCart mapping.\n"));
+		ZetMapMemory(DrvCartROM, 0x8000, 0xbfff, MAP_ROM);
+		ZetSetReadHandler(main_read);
+        ZetSetWriteHandler(main_write);
+    }
+    else if (MegaCart) {
 		// MegaCart
-		UINT32 MegaCartBanks = MegaCart / 0x4000;
+		MegaCartBanks = MegaCart / 0x4000;
 		UINT32 lastbank = (MegaCartBanks - 1) * 0x4000;
 		bprintf(0, _T("ColecoVision MegaCart: mapping cartrom[%X] to 0x8000 - 0xbfff.\n"), lastbank);
 		ZetMapMemory(DrvCartROM + lastbank, 0x8000, 0xbfff, MAP_ROM);
@@ -501,6 +517,14 @@ static INT32 DrvInitSGM() // w/SGM
     return DrvInit();
 }
 
+static INT32 DrvInitEEPROM() // w/EEPROM (boxxle)
+{
+    // 24cXX e2prom isn't actually supported, but the game works fine (minus highscore saving)
+    use_EEPROM = 1;
+
+    return DrvInit();
+}
+
 static INT32 DrvExit()
 {
 	TMS9928AExit();
@@ -511,6 +535,7 @@ static INT32 DrvExit()
 	BurnFree (AllMem);
 
     use_SGM = 0;
+    use_EEPROM = 0;
 
 	return 0;
 }
@@ -602,6 +627,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(joy_mode);
 		SCAN_VAR(joy_status);
 		SCAN_VAR(last_state);
+        SCAN_VAR(MegaCartBank);
+        SCAN_VAR(SGM_map_24k);
+        SCAN_VAR(SGM_map_8k);
 	}
 
 	return 0;
@@ -5243,3 +5271,61 @@ struct BurnDriver BurnDrvcv_buckrogsgm = {
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
+
+// Boxxle
+
+static struct BurnRomInfo cv_boxxleRomDesc[] = {
+	{ "boxxle_colecovision.rom",	0x10000, 0x62dacf07, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_boxxle, cv_boxxle, cv_coleco)
+STD_ROM_FN(cv_boxxle)
+
+struct BurnDriver BurnDrvcv_boxxle = {
+	"cv_boxxle", NULL, "cv_coleco", NULL, "2015",
+	"Boxxle\0", NULL, "Coleco", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_boxxleRomInfo, cv_boxxleRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInitEEPROM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Module Man
+
+static struct BurnRomInfo cv_modulemanRomDesc[] = {
+	{ "module-man-2013.rom",	0x08000, 0xeb6be8ec, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_moduleman, cv_moduleman, cv_coleco)
+STD_ROM_FN(cv_moduleman)
+
+struct BurnDriver BurnDrvcv_moduleman = {
+	"cv_moduleman", NULL, "cv_coleco", NULL, "2013",
+	"Module Man\0", NULL, "Coleco", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_modulemanRomInfo, cv_modulemanRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Star Fortress
+
+static struct BurnRomInfo cv_starfortressRomDesc[] = {
+	{ "star-fortress.rom",	0x04000, 0xf7f18e6f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_starfortress, cv_starfortress, cv_coleco)
+STD_ROM_FN(cv_starfortress)
+
+struct BurnDriver BurnDrvcv_starfortress = {
+	"cv_starfortress", NULL, "cv_coleco", NULL, "1997",
+	"Star Fortress\0", NULL, "Coleco", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_starfortressRomInfo, cv_starfortressRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+

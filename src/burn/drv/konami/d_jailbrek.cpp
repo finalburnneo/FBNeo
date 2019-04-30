@@ -390,6 +390,7 @@ static INT32 DrvInit()
 
 	SN76489AInit(0, 1536000, 0);
 	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(M6809TotalCycles, 1536000);
 
 	vlm5030Init(0, 3579545, DrvVLM5030Sync, DrvVLMROM, 0x2000, 1);
 	vlm5030SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -554,32 +555,20 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 9;
 	INT32 nCyclesTotal[1] = { 1536000 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
-	INT32 nSoundBufferPos = 0;
 
 	M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
 		if (i < 8 && nmi_enable) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
-		if (i == 8 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		if (i == 8 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-		}
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 

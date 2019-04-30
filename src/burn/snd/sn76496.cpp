@@ -36,6 +36,54 @@ struct SN76496
 static INT32 NumChips = 0;
 static struct SN76496 *Chips[MAX_SN76496_CHIPS] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
+
+// for stream-sync
+static INT32 sn76496_buffered = 0;
+static INT32 (*pCPUTotalCycles)() = NULL;
+static UINT32 nDACCPUMHZ = 0;
+static INT32 nPosition[MAX_SN76496_CHIPS];
+static INT16 *soundbuf[MAX_SN76496_CHIPS];
+
+// Streambuffer handling
+static INT32 SyncInternal()
+{
+    if (!sn76496_buffered) return 0;
+	return (INT32)(float)(nBurnSoundLen * (pCPUTotalCycles() / (nDACCPUMHZ / (nBurnFPS / 100.0000))));
+}
+
+void UpdateStream(INT32 chip, INT32 samples_len)
+{
+    if (!sn76496_buffered) return;
+    if (samples_len > nBurnSoundLen) samples_len = nBurnSoundLen;
+
+	INT32 nSamplesNeeded = samples_len;
+
+    nSamplesNeeded -= nPosition[chip];
+    if (nSamplesNeeded <= 0) return;
+
+	INT16 *mix = soundbuf[chip] + 5 + nPosition[chip];
+	memset(mix, 0, nSamplesNeeded * sizeof(INT16));
+    //bprintf(0, _T("sn76496_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
+
+    SN76496UpdateToBuffer(chip, mix, nSamplesNeeded);
+
+    nPosition[chip] += nSamplesNeeded;
+}
+
+void SN76496SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
+{
+    bprintf(0, _T("*** Using BUFFERED SN76496-mode.\n"));
+    for (INT32 i = 0; i < NumChips; i++) {
+        nPosition[i] = 0;
+        soundbuf[i] = (INT16*)BurnMalloc(0x1000);
+    }
+
+    sn76496_buffered = 1;
+
+    pCPUTotalCycles = pCPUCyclesCB;
+    nDACCPUMHZ = nCpuMHZ;
+}
+
 void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 {
 #if defined FBA_DEBUG
@@ -48,20 +96,47 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 	INT32 i;
 	struct SN76496 *R = Chips[Num];
 
-#if 0
-	// this hack breaks sounds in time pilot '84 (tp84)
-	/* If the volume is 0, increase the counter */
-	for (i = 0;i < 4;i++)
-	{
-		if (R->Volume[i] == 0)
-		{
-			/* note that I do count += length, NOT count = length + 1. You might think */
-			/* it's the same since the volume is 0, but doing the latter could cause */
-			/* interferencies when the program is rapidly modulating the volume. */
-			if (R->Count[i] <= Length*STEP) R->Count[i] += Length*STEP;
-		}
-	}
-#endif
+    if (sn76496_buffered) {
+        if (Length != nBurnSoundLen) {
+            bprintf(0, _T("SN76496Update() in buffered mode must be called once per frame!\n"));
+            return;
+        }
+
+        INT16 *pBufL = soundbuf[Num] + 5;
+        INT16 *pBufR = soundbuf[Num] + 5; // not impl yet for buffered! (stereo GG mode)
+
+        INT16 *mix = soundbuf[Num] + 5 + nPosition[Num];
+
+        SN76496UpdateToBuffer(Num, mix, nBurnSoundLen - nPosition[Num]); // fill to end
+
+        while (Length > 0) {
+            INT32 nLeftSample = 0, nRightSample = 0;
+            if ((R->nOutputDir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+                nLeftSample += (INT32)(pBufL[0] * R->nVolume);
+            }
+            if ((R->nOutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+                if (R->StereoMask != 0xFF)
+                    nRightSample += (INT32)(pBufR[0] * R->nVolume);
+                else
+                    nRightSample += (INT32)(pBufL[0] * R->nVolume);
+            }
+
+            if (R->bSignalAdd) {
+                pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + nLeftSample);
+                pSoundBuf[1] = BURN_SND_CLIP(pSoundBuf[1] + nRightSample);
+            } else {
+                pSoundBuf[0] = BURN_SND_CLIP(nLeftSample);
+                pSoundBuf[1] = BURN_SND_CLIP(nRightSample);
+            }
+
+            pBufL++; pBufR++;
+            pSoundBuf += 2;
+            Length--;
+        }
+
+        nPosition[Num] = 0;
+        return;
+    }
 
 	while (Length > 0)
 	{
@@ -197,6 +272,13 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 	}
 }
 
+void SN76496Update(INT16* pSoundBuf, INT32 Length)
+{
+    for (INT32 i = 0; i < NumChips; i++) {
+        SN76496Update(i, pSoundBuf, Length);
+    }
+}
+
 void SN76496UpdateToBuffer(INT32 Num, INT16* pSoundBuf, INT32 Length)
 {
 #if defined FBA_DEBUG
@@ -209,18 +291,6 @@ void SN76496UpdateToBuffer(INT32 Num, INT16* pSoundBuf, INT32 Length)
 	if (Num >= MAX_SN76496_CHIPS) return;
 
 	struct SN76496 *R = Chips[Num];
-
-	/* If the volume is 0, increase the counter */
-	for (i = 0;i < 4;i++)
-	{
-		if (R->Volume[i] == 0)
-		{
-			/* note that I do count += length, NOT count = length + 1. You might think */
-			/* it's the same since the volume is 0, but doing the latter could cause */
-			/* interferencies when the program is rapidly modulating the volume. */
-			if (R->Count[i] <= Length*STEP) R->Count[i] += Length*STEP;
-		}
-	}
 
 	while (Length > 0)
 	{
@@ -312,7 +382,7 @@ void SN76496UpdateToBuffer(INT32 Num, INT16* pSoundBuf, INT32 Length)
 
 		if (Out > MAX_OUTPUT * STEP) Out = MAX_OUTPUT * STEP;
 
-		pSoundBuf[0] = BURN_SND_CLIP(((INT32)((Out / STEP) * R->nVolume)));
+		pSoundBuf[0] = BURN_SND_CLIP(((INT32)(Out / STEP)));
 		pSoundBuf++;
 		Length--;
 	}
@@ -342,6 +412,8 @@ void SN76496Write(INT32 Num, INT32 Data)
 	INT32 n, r, c;
 
 	if (Num >= MAX_SN76496_CHIPS) return;
+
+    if (sn76496_buffered) UpdateStream(Num, SyncInternal());
 
 	struct SN76496 *R = Chips[Num];
 
@@ -464,6 +536,10 @@ static void GenericStart(INT32 Num, INT32 Clock, INT32 FeedbackMask, INT32 Noise
 
 	if (Num >= MAX_SN76496_CHIPS) return;
 
+    if (sn76496_buffered) {
+        bprintf(0, _T("*** ERROR: SN76496SetBuffered() must be called AFTER all chips have been initted!\n"));
+    }
+
 	NumChips = Num + 1;
 
 	Chips[Num] = (struct SN76496*)BurnMalloc(sizeof(struct SN76496));
@@ -524,9 +600,20 @@ void SN76496Exit()
 	for (INT32 i = 0; i < NumChips; i++) {
 		BurnFree(Chips[i]);
 		Chips[i] = NULL;
-	}
+
+        if (sn76496_buffered) {
+            BurnFree(soundbuf[i]);
+            nPosition[i] = 0;
+        }
+    }
 
 	NumChips = 0;
+
+    if (sn76496_buffered) {
+        sn76496_buffered = 0;
+        pCPUTotalCycles = NULL;
+        nDACCPUMHZ = 0;
+    }
 
 	DebugSnd_SN76496Initted = 0;
 }

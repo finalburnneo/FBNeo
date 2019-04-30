@@ -600,7 +600,8 @@ static INT32 CashquizInit()
 	ZetClose();
 
 	SN76496Init(0, 18432000/8, 0);
-	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+    SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 3072000);
 
 	nNMIMask = 0x1ff;
 
@@ -753,14 +754,15 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 262;
-	INT32 nCyclesTotal = 18432000 / 6 / 60;
+	INT32 nCyclesTotal = 3072000 / 60;
 	INT32 nCyclesDone  = 0;
 
+    ZetNewFrame();
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone += ZetRun(nCyclesTotal / nInterleave);
+		nCyclesDone += ZetRun(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone);
 
 		if (i == 240 && irq_enable) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		if ((i & nNMIMask) == 0 && nmi_enable) ZetNmi();
@@ -779,7 +781,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -787,7 +789,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029698;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+    if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

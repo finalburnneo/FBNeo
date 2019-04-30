@@ -222,8 +222,8 @@ static void paddle_callback()
 	else
 		joy_status[1] = 1;
 
-	if (joy_status[0] || joy_status[1]) {
-		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // ACK? -- lower when input read?
+    if (joy_status[0] || joy_status[1]) {
+		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // ACK? -- lower when input read?
 	}
 }
 
@@ -501,6 +501,7 @@ static INT32 DrvInit()
 	TMS9928AInit(TMS99x8A, 0x4000, 0, 0, coleco_vdp_interrupt);
 
 	SN76489AInit(0, 3579545, 0);
+    SN76496SetBuffered(ZetTotalCycles, 3579545);
 
     AY8910Init(0, 3579545, 1); // SGM
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
@@ -559,8 +560,8 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal = 3579545 / 60;
 	INT32 nCyclesDone  = 0;
-	INT32 nSoundBufferPos = 0;
 
+    ZetNewFrame();
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -570,27 +571,13 @@ static INT32 DrvFrame()
 		TMS9928AScanline(i);
 
 		if ((i%5)==4) paddle_callback(); // 50x / frame (3000x / sec)
-
-        // Render Sound Segment
-		if (pBurnSoundOut && (i%4)==3) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	ZetClose();
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+        SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

@@ -368,6 +368,8 @@ static INT32 DrvInit()
 	SN76489AInit(1, 3072000, 1);
 	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
 
+    SN76496SetBuffered(M6809TotalCycles, 1536000);
+
 	GenericTilesInit();
 
 	DrvDoReset(1);
@@ -489,38 +491,22 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { 1536000 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
-	INT32 nSoundBufferPos = 0;
 
 	M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
 		if (*nmi_enable && (i & 0x1f) == 0)
 			M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // 480x/second (8x/frame)
 
 		if (i == 240) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
-
-		// Render Sound Segment
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-		}
-	}
+    if (pBurnSoundOut) {
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
+    }
 
 	M6809Close();
 
@@ -531,7 +517,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -539,7 +525,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+    if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;

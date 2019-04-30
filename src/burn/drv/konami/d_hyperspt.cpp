@@ -629,6 +629,7 @@ static INT32 DrvInit(INT32 select)
 
 	SN76489AInit(0, 1789772, 0);
 	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 3579545);
 
 	vlm5030Init(0, 3579545, DrvVLMSync, DrvSndROM, 0x2000, 1);
 	vlm5030SetAllRoutes(0, (select != 0) ? 0 : 1.00, BURN_SND_ROUTE_BOTH);
@@ -769,37 +770,20 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0, nSegment = 0;
 
 	ZetOpen(0);
 	M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
-		if (i == 255 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
-
-		nSegment = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		if (i == 255 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-		}
-		// vlm5030 and DAC are buffered, so just run them at the end of frame.
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		if (game_select == 0) vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}

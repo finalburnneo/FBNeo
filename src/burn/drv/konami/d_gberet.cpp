@@ -661,8 +661,9 @@ static INT32 DrvInit(INT32 game_select)
 
 	SN76489AInit(0, 18432000 / 12, 0);
 	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, (BurnDrvGetFlags() & BDF_BOOTLEG) ? 5000000 : 3072000);
 
-	GenericTilesInit();
+    GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 64, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 4, 8, 8, 0x08000, 0, 0xf);
 	GenericTilemapSetScrollRows(0, 32);
@@ -865,13 +866,13 @@ static INT32 DrvFrame()
 	INT32 nInterleave = bootleg ? 10 : 16;
 	INT32 nCyclesTotal = bootleg ? (5000000 / 60) : (3072000 / 60);
 	INT32 nCyclesDone = 0;
-	INT32 nSoundBufferPos = 0;
 
+    ZetNewFrame();
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone += ZetRun(nCyclesTotal / nInterleave);
+		nCyclesDone += ZetRun(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone);
 
 		if (bootleg) {
 			if (i == 9) ZetSetIRQLine(0x00, CPU_IRQSTATUS_ACK);
@@ -879,24 +880,12 @@ static INT32 DrvFrame()
 		}
 		else
 			irq_timer_update();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-		}
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

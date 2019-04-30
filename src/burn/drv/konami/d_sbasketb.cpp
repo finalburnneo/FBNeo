@@ -454,6 +454,7 @@ static INT32 DrvInit(INT32 rom_load, INT32 encrypted)
 
 	SN76489AInit(0, 1789772, 0);
 	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 3579545);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -615,7 +616,6 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 1400000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -624,27 +624,15 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
 		if (i == 240 && irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
-
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		SN76496Update(0, pSoundBuf, nSegmentLength);
-
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-		// vlm5030 won't interlace, so just run it at the end of the frame..
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 

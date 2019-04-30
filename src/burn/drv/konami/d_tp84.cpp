@@ -596,6 +596,8 @@ static INT32 DrvInit()
 	SN76496SetRoute(1, 0.75, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(2, 0.75, BURN_SND_ROUTE_BOTH);
 
+    SN76496SetBuffered(ZetTotalCycles, 3579545);
+
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 2200, 1000, CAP_P(0), 0);
 	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 2200, 1000, CAP_P(0), 1);
 	filter_rc_init(2, FLT_RC_LOWPASS, 1000, 2200, 1000, CAP_P(0), 1);
@@ -683,6 +685,8 @@ static INT32 DrvbInit()
 	SN76496SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.75, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(2, 0.75, BURN_SND_ROUTE_BOTH);
+
+    SN76496SetBuffered(ZetTotalCycles, 3579545);
 
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 2200, 1000, CAP_P(0), 0);
 	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 2200, 1000, CAP_P(0), 1);
@@ -914,7 +918,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 1536000 / 60, 1536000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
@@ -942,38 +945,20 @@ static INT32 DrvFrame()
 
 		memcpy (DrvSprBuf + i * 0x60, DrvSprRAM + 0x7a0, 0x60);
 
-		if (pBurnSoundOut && (i%4)==3) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			memset (pSoundBuf, 0, nSegmentLength * sizeof(INT16) * 2);
-
-			SN76496Update(0, pSoundBuffer[0], nSegmentLength);
-			SN76496Update(1, pSoundBuffer[1], nSegmentLength);
-			SN76496Update(2, pSoundBuffer[2], nSegmentLength);
-
-			filter_rc_update(0, pSoundBuffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pSoundBuffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pSoundBuffer[2], pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			memset (pSoundBuf, 0, nSegmentLength * sizeof(INT16) * 2);
+    if (pBurnSoundOut) {
+        BurnSoundClear();
 
-			SN76496Update(0, pSoundBuffer[0], nSegmentLength);
-			SN76496Update(1, pSoundBuffer[1], nSegmentLength);
-			SN76496Update(2, pSoundBuffer[2], nSegmentLength);
+        SN76496Update(0, pSoundBuffer[0], nBurnSoundLen);
+        SN76496Update(1, pSoundBuffer[1], nBurnSoundLen);
+        SN76496Update(2, pSoundBuffer[2], nBurnSoundLen);
 
-			filter_rc_update(0, pSoundBuffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pSoundBuffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pSoundBuffer[2], pSoundBuf, nSegmentLength);
-		}
+        filter_rc_update(0, pSoundBuffer[0], pBurnSoundOut, nBurnSoundLen);
+        filter_rc_update(1, pSoundBuffer[1], pBurnSoundOut, nBurnSoundLen);
+        filter_rc_update(2, pSoundBuffer[2], pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	if (pBurnDraw) {
 		DrvDraw();
 	}

@@ -61,13 +61,13 @@ static INT32 game_select;
 static INT32 nSpriteMask, nCharMask;
 
 static struct BurnInputInfo TrackfldInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
@@ -83,61 +83,61 @@ static struct BurnInputInfo TrackfldInputList[] = {
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p4 fire 2"},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy3 + 4,	"p4 fire 3"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Trackfld)
 
 static struct BurnInputInfo YieartfInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
 };
 
 STDINPUTINFO(Yieartf)
 
 static struct BurnInputInfo ReaktorInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
+    {"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Reaktor)
 
 static struct BurnInputInfo WizzquizInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"},
@@ -145,33 +145,33 @@ static struct BurnInputInfo WizzquizInputList[] = {
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 4"},
 	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 5"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 3"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Wizzquiz)
 
 static struct BurnInputInfo MastkinInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Mastkin)
@@ -760,11 +760,6 @@ static UINT8 __fastcall trackfld_sound_read(UINT16 address)
 	return 0;
 }
 
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / (nBurnFPS / 100.000))));
-}
-
 static UINT32 DrvVLM5030Sync(INT32 samples_rate)
 {
 	return (samples_rate * ZetTotalCycles()) / (3579545 / 60);
@@ -918,8 +913,9 @@ static void CommonSoundInit()
 
 	SN76496Init(0, 1789772, 1);
 	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 3579545);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, 3579545);
 	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 }
 
@@ -1117,6 +1113,7 @@ static INT32 YieartfInit()
 
 	SN76496Init(0, 1536000, 0);
 	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(M6809TotalCycles, 1536000);
 
 	nSpriteMask = 0x1ff;
 	nCharMask = 0x1ff;
@@ -1547,16 +1544,15 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
 		if (i == (nInterleave-1) && irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
-
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 	}
 
 	if (pBurnSoundOut) {
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -1595,33 +1591,19 @@ static INT32 YieartfFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1536000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
 		if ((i & 0xff) == 0xff && irq_mask) M6809SetIRQLine(0x00, CPU_IRQSTATUS_AUTO);
 		if ((i & 0x1f) == 0x1f && nmi_mask) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-		}
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -1663,21 +1645,20 @@ static INT32 ReaktorFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if (i == (nInterleave-1) && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		ZetClose();
-
 	}
 
 	ZetOpen(1);
 
 	if (pBurnSoundOut) {
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -1723,11 +1704,11 @@ static INT32 WizzquizFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6800Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6800Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
 		if (i == 239 && irq_mask) M6800SetIRQLine(M6800_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 	}
 
 	if (pBurnSoundOut) {

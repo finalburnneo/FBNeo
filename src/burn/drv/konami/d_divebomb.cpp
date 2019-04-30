@@ -500,6 +500,7 @@ static INT32 DrvInit()
 	SN76496SetRoute(3, 0.15, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(4, 0.15, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(5, 0.15, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 6000000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, txt_map_callback, 8, 8, 32, 32);
@@ -601,7 +602,7 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-//	ZetNewFrame();
+    ZetNewFrame();
 
 	{
 		memset (DrvInputs, 0xff, 3);
@@ -620,18 +621,17 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if (i == 224*4) ZetNmi();
-		INT32 nCycles = ZetTotalCycles();
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCycles - ZetTotalCycles());
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		if (i == 224*4) ZetNmi();
 		ZetClose();
 
 		ZetOpen(2);
-		nCyclesDone[2] += ZetRun(nCycles - ZetTotalCycles());
+		nCyclesDone[2] += ZetRun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
 		if (i == 224*4) ZetNmi();
 		ZetClose();
 	}

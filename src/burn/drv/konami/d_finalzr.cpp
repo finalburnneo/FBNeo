@@ -470,6 +470,7 @@ static INT32 DrvInit()
 
 	SN76489AInit(0, 1536000, 0);
 	SN76496SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(M6809TotalCycles, 1536000);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
@@ -721,7 +722,6 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 9216000 / 15 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -732,32 +732,17 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
-		if (i == 240 && irq_enable) {
-			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6809Run(100);
-			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
-		}
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
+        if (i == 240 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240) vblank = 1;
 		if ((i % 32) == 31 && nmi_enable) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
-		if (i == 240) vblank = 1; // ?
-
-		INT32 nSegment = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesDone[1] += I8039Run(nSegment - nCyclesDone[1]);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		SN76496Update(0, pSoundBuf, nSegmentLength);
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

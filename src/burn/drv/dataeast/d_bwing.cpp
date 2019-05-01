@@ -530,6 +530,7 @@ static INT32 DrvInit()
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(M6502TotalCycles, 2000000);
 
 	DACInit(0, 0, 1, DrvDACSync);
 	DACSetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
@@ -737,7 +738,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 2000000 / 60, 2000000 / 60, 2000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	M6502Open(0);
 
@@ -746,34 +746,21 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		M6809Close();
 
 		M6809Open(1);
-		nCyclesDone[1] += M6809Run(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		M6809Close();
 
-		nCyclesDone[2] += M6502Run(nCyclesTotal[2] / nInterleave);
+		nCyclesDone[2] += M6502Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
 		if ((i & 0xf)==0xf && nmimask == 0) M6502SetIRQLine(CPU_IRQLINE_NMI, CPU_IRQSTATUS_ACK);
 
 		if (i == 240) vblank = 1;
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

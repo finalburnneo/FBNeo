@@ -563,6 +563,7 @@ static INT32 DrvInit()
 	AY8910Init(0, 1789772, 0);
 	AY8910SetPorts(0, &AY8910_0_port_A_Read, &AY8910_0_port_B_Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 1789772);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
@@ -688,7 +689,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[4] = { 3072000 / 60, 3072000 / 60, 1789772 / 60, 477272 / 60 };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
@@ -715,22 +715,10 @@ static INT32 DrvFrame()
 
 		nSegment = (nCyclesTotal[3] * (i + 1)) / nInterleave;
 		nCyclesDone[3] += I8039Run(nSegment - nCyclesDone[3]);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
-
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

@@ -1,6 +1,9 @@
 // FB Alpha 18 Holes Pro Golf driver module
 // Based on MAME driver by Angelo Salese and Roberto Zandona'
 
+// TOFIX:
+//   Little map is broken (on right side of playfield)
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "ay8910.h"
@@ -385,6 +388,7 @@ static INT32 DrvInit(INT32 cputype)
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.23, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.23, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(M6502TotalCycles, 500000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 8, 8, 128, 32);
@@ -460,6 +464,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+    M6502NewFrame();
+
 	{
 		UINT8 prev_coin = (DrvInputs[3] | DrvInputs[2]) & 0xc0;
 
@@ -488,11 +494,11 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6502Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		M6502Close();
 
 		M6502Open(1);
-		nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		M6502Close();
 
 		if (i == 248/8) vblank = 0x00;

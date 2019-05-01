@@ -2742,6 +2742,7 @@ static INT32 DecocassInit(UINT8 (*read)(UINT16),void (*write)(UINT16,UINT8))
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(M6502TotalCycles, 500000);
 
 	GenericTilesInit();
 	GenericTilemapInit(2, fg_map_scan, fg_map_callback, 8, 8, 32, 32);
@@ -3215,7 +3216,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 272;
 	INT32 nCyclesTotal[3] = { (INT32)((double)750000 / 57.444853), (INT32)((double)500000 / 57.444853), (INT32)((double)500000 / 57.444853) }; //1.5mhz -> .75mhz?
 	INT32 nCyclesDone[3]  = { 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	vblank = 1;
 
@@ -3270,20 +3270,10 @@ static INT32 DrvFrame()
 			tape_freerun += derp;
 
 		}
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	return 0;

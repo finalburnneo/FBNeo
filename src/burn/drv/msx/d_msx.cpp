@@ -1447,6 +1447,7 @@ static INT32 DrvInit()
 	AY8910Init(0, 3579545/2, 0);
 	AY8910SetPorts(0, ay8910portAread, NULL, ay8910portAwrite, ay8910portBwrite);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 3579545);
 
 	K051649Init(3579545/2);
 	K051649SetRoute(0.20, BURN_SND_ROUTE_BOTH);
@@ -1567,7 +1568,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { 3579545 / ((Hertz60) ? 60 : 50) };
 	INT32 nCyclesDone[1] = { 0 };
-	INT32 nSoundBufferPos = 0;
 
 	ZetNewFrame();
 	ZetOpen(0);
@@ -1579,30 +1579,16 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
-		TMS9928AScanline(i);
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			K051649Update(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+        TMS9928AScanline(i);
 	}
 
 	ZetClose();
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-			K051649Update(pSoundBuf, nSegmentLength);
-		}
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+        K051649Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

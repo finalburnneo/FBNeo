@@ -55,6 +55,7 @@ void AY8910Update(INT32 chip, INT16** buffer, INT32 length); // render a single 
 void AY8910RenderInternal(INT32 length); // render everything to internal buffers (pAY8910Buffer[])
 
 void AY8910SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
+void AY8910SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ);
 
 #define BURN_SND_AY8910_ROUTE_1		0
 #define BURN_SND_AY8910_ROUTE_2		1

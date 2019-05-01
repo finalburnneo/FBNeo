@@ -488,6 +488,7 @@ static INT32 KchampInit()
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 3579545);
 
 	DACInit(0, 0, 1, ZetTotalCycles, 3579545);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -584,6 +585,7 @@ static INT32 KchampvsInit()
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	MSM5205Init(0, SynchroniseStream, 375000, kchampvs_adpcm_interrupt, MSM5205_S96_4B, 1);
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -725,7 +727,7 @@ static INT32 KchampFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if (nmi_enable && i == 39) ZetNmi();
 		ZetClose();
 
@@ -787,12 +789,12 @@ static INT32 KchampvsFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if (nmi_enable && i == (nInterleave - 1)) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
 		MSM5205Update();
 

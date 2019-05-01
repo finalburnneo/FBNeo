@@ -7,7 +7,7 @@
 // I have tried to document as many lines as possible, and given hopefully enough details
 // 
 // original source:
-//	src\mame\drivers\skyarmy.c
+//	src\mame\drivers\skyarmy.c   (circa mame ~0.110)
 //
 
 #include "tiles_generic.h" // either this or burnint.h is required, but not both
@@ -211,7 +211,7 @@ static INT32 DrvDoReset()
 	ZetReset(); // reset it
 	ZetClose(); // close it
 
-	AY8910Reset(0); // reset ay8910 sound cpu
+	AY8910Reset(0); // reset ay8910 sound core
 
 	HiscoreReset();
 
@@ -346,10 +346,10 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvZ80RAM		= Next; Next += 0x000800; // ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM); <-- (0x87ff+1) - 0x8000
-	DrvVidRAM		= Next; Next += 0x000800; // ZetMapArea(0x8800, 0x8fff, 0, DrvVidRAM); <-- (0x8fff+1) - 0x8800
-	DrvColRAM		= Next; Next += 0x000400; // ZetMapArea(0x9000, 0x93ff, 2, DrvColRAM); <-- (0x93ff+1) - 0x9000
-	DrvSprRAM		= Next; Next += 0x000100; // ZetMapArea(0x9800, 0x98ff, 0, DrvSprRAM); <-- (0x98ff+1) - 0x9800
+	DrvZ80RAM		= Next; Next += 0x000800; // ZetMapMemory(DrvZ80RAM, 0x8000, 0x87ff, MAP_RAM); <-- (0x87ff+1) - 0x8000
+	DrvVidRAM		= Next; Next += 0x000800; // ZetMapMemory(DrvVidRAM, 0x8800, 0x8fff, MAP_RAM); <-- (0x8fff+1) - 0x8800
+	DrvColRAM		= Next; Next += 0x000400; // ZetMapMemory(DrvColRAM, 0x9000, 0x93ff, MAP_RAM); <-- (0x93ff+1) - 0x9000
+	DrvSprRAM		= Next; Next += 0x000100; // ZetMapMemory(DrvSprRAM, 0x9800, 0x98ff, MAP_RAM); <-- (0x98ff+1) - 0x9800
 
 	RamEnd			= Next;
 
@@ -423,24 +423,17 @@ static INT32 DrvInit()
 
 	ZetOpen(0); // open cpu #0 for modification
 
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM); //	AM_RANGE(0x0000, 0x7fff) AM_ROM
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, MAP_ROM); //	AM_RANGE(0x0000, 0x7fff) AM_ROM
 
-	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM); // 	AM_RANGE(0x8000, 0x87ff) AM_RAM
-	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80RAM, 0x8000, 0x87ff, MAP_RAM); // 	AM_RANGE(0x8000, 0x87ff) AM_RAM
 
-	ZetMapArea(0x8800, 0x8fff, 0, DrvVidRAM); //	AM_RANGE(0x8800, 0x8fff) AM_RAM_WRITE(skyarmy_videoram_w) < -- skyarmy_videoram_w does't do anything useful
-	ZetMapArea(0x8800, 0x8fff, 1, DrvVidRAM);
-	ZetMapArea(0x8800, 0x8fff, 2, DrvVidRAM);
+	ZetMapMemory(DrvVidRAM, 0x8800, 0x8fff, MAP_RAM); //	AM_RANGE(0x8800, 0x8fff) AM_RAM_WRITE(skyarmy_videoram_w) < -- skyarmy_videoram_w does't do anything useful
 
-	ZetMapArea(0x9000, 0x93ff, 0, DrvColRAM); //	AM_RANGE(0x9000, 0x93ff) AM_RAM_WRITE(skyarmy_colorram_w) < -- skyarmy_colorram_w doesn't do anything useful
-	ZetMapArea(0x9000, 0x93ff, 1, DrvColRAM);
-	ZetMapArea(0x9000, 0x93ff, 2, DrvColRAM);
+	ZetMapMemory(DrvColRAM, 0x9000, 0x93ff, MAP_RAM); //	AM_RANGE(0x9000, 0x93ff) AM_RAM_WRITE(skyarmy_colorram_w) < -- skyarmy_colorram_w doesn't do anything useful
 
-	ZetMapArea(0x9800, 0x98ff, 0, DrvSprRAM); // 	AM_RANGE(0x9800, 0x983f) AM_RAM AM_BASE_MEMBER(skyarmy_state,spriteram)
-	ZetMapArea(0x9800, 0x98ff, 1, DrvSprRAM); // 	AM_RANGE(0x9840, 0x985f) AM_RAM AM_BASE_MEMBER(skyarmy_state,scrollram)
-	ZetMapArea(0x9800, 0x98ff, 2, DrvSprRAM); // ZetMapArea( can only handle 0-ff sized areas, so we must combine these two writes scrollram = sprram + 0x40
+	ZetMapMemory(DrvSprRAM, 0x9800, 0x98ff, MAP_RAM); // 	AM_RANGE(0x9800, 0x983f) AM_RAM AM_BASE_MEMBER(skyarmy_state,spriteram)
+													  // 	AM_RANGE(0x9840, 0x985f) AM_RAM AM_BASE_MEMBER(skyarmy_state,scrollram)
+													  //	ZetMapMemory( can only handle 0-ff sized areas, so we must combine these two writes scrollram = sprram + 0x40
 
 	ZetSetWriteHandler(skyarmy_write);  // handle writes for skyarmy_map that aren't ram / rom
 	ZetSetReadHandler(skyarmy_read);    // handle reads for skyarmy_map that aren't ram / rom
@@ -452,6 +445,7 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 2500000, 0); // MDRV_SOUND_ADD("aysnd", AY8910, 2500000)
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit(); // this must be called for generic tile handling
 
@@ -594,8 +588,8 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 102/8; // MDRV_CPU_PERIODIC_INT(skyarmy_nmi_source,650) -> 4000000 / 60 -> 66666.67 / 650 -> 102 (add /8 to get the right timing -dink)
 	INT32 nCyclesTotal = 4000000 / 60; // MDRV_CPU_ADD("maincpu", Z80,4000000)
 	INT32 nCyclesDone  = 0;
-	INT32 nSoundBufferPos = 0;
 
+    ZetNewFrame(); // Needed when using buffered soundcores
 	ZetOpen(0); // open cpu for modification
 
 	for (INT32 i = 0; i < nInterleave; i++) // split the amount of cpu the z80 is running in 1/60th of a second into slices
@@ -610,28 +604,15 @@ static INT32 DrvFrame()
 		// don't call if the irq above is triggered...
 		// static INTERRUPT_GEN( skyarmy_nmi_source )
 		if (i != (nInterleave - 1) && nmi_enable) ZetNmi(); //if(state->nmi) cpu_set_input_line(device,INPUT_LINE_NMI, PULSE_LINE);
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	ZetClose(); // close the cpu to modifications
 
-// output the sound -- ay8910 is more complex than most
-// you can pretty much just copy and paste this from other drivers (this blob is from d_4enraya.cpp)
+// output the sound
 
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render( pSoundBuf, nSegmentLength);
-		}
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	// make sure the drawing surface is allocated and then draw!

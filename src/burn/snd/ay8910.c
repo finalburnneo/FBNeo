@@ -58,6 +58,53 @@ static INT32 AY8910AddSignal = 0;
 
 INT32 ay8910burgertime_mode = 0;
 
+// for stream-sync
+static INT32 ay8910_buffered = 0;
+static INT32 (*pCPUTotalCycles)() = NULL;
+static UINT32 nDACCPUMHZ = 0;
+static INT32 nPosition[MAX_8910];
+static INT16 *soundbuf[MAX_8910];
+
+// for as long as ay8910.c is .c:
+extern INT32 nBurnSoundLen;
+extern INT32 nBurnFPS;
+extern UINT32 nCurrentFrame;
+
+// Streambuffer handling
+static INT32 SyncInternal()
+{
+    if (!ay8910_buffered) return 0;
+	return (INT32)(float)(nBurnSoundLen * (pCPUTotalCycles() / (nDACCPUMHZ / (nBurnFPS / 100.0000))));
+}
+
+void UpdateStream(INT32 chip, INT32 samples_len)
+{
+    if (!ay8910_buffered) return;
+    if (samples_len > nBurnSoundLen) samples_len = nBurnSoundLen;
+
+	INT32 nSamplesNeeded = samples_len - nPosition[chip];
+    if (nSamplesNeeded <= 0) return;
+
+    bprintf(0, _T("ay8910_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
+
+    AY8910Update(chip, pAY8910Buffer + (chip * 3), nSamplesNeeded);
+    nPosition[chip] += nSamplesNeeded;
+}
+
+void AY8910SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
+{
+    bprintf(0, _T("*** Using BUFFERED AY8910-mode.\n"));
+    for (INT32 i = 0; i < num; i++) {
+        nPosition[i] = 0;
+    }
+
+    ay8910_buffered = 1;
+
+    pCPUTotalCycles = pCPUCyclesCB;
+    nDACCPUMHZ = nCpuMHZ;
+}
+
+
 struct AY8910
 {
 	INT32 register_latch;
@@ -295,9 +342,10 @@ static void AYWriteReg(INT32 chip, INT32 r, INT32 v)
 
 		if (r == AY_ESHAPE || PSG->Regs[r] != v)
 		{
-//			/* update the output buffer before changing the register */
-//			stream_update(PSG->Channel,0);
-			AYStreamUpdate();
+            /* update the output buffer before changing the register */
+            if (ay8910_buffered) UpdateStream(chip, SyncInternal());
+
+            AYStreamUpdate(); // for ym-cores
 		}
 	}
 
@@ -383,9 +431,16 @@ void AY8910Update(INT32 chip, INT16 **buffer, INT32 length)
 #endif
 #endif
 
-	buf1 = buffer[0];
-	buf2 = buffer[1];
-	buf3 = buffer[2];
+    if (ay8910_buffered) {
+        buf1 = buffer[0] + nPosition[chip];
+        buf2 = buffer[1] + nPosition[chip];
+        buf3 = buffer[2] + nPosition[chip];
+        if (length < 1) return;
+    } else {
+        buf1 = buffer[0];
+        buf2 = buffer[1];
+        buf3 = buffer[2];
+    }
 
 	/* The 8910 has three outputs, each output is the mix of one of the three */
 	/* tone generators and of the (single) noise generator. The two are mixed */
@@ -714,8 +769,6 @@ void AY8910Reset(INT32 chip)
 
 void AY8910Exit(INT32 chip)
 {
-	(void)chip;
-
 #if defined FBA_DEBUG
 #ifdef __GNUC__ 
 	if (!DebugSnd_AY8910Initted && !chip) bprintf(PRINT_ERROR, _T("AY8910Exit called without init\n"));
@@ -727,6 +780,13 @@ void AY8910Exit(INT32 chip)
 	AY8910AddSignal = 0;
 	nBurnSoundLenSave = 0;
 	ay8910_index_ym = 0;
+
+    if (ay8910_buffered) {
+        ay8910_buffered = 0;
+        pCPUTotalCycles = NULL;
+        nDACCPUMHZ = 0;
+        nPosition[chip] = 0;
+    }
 
 	{
 		INT32 i;
@@ -806,6 +866,10 @@ INT32 AY8910Init(INT32 chip, INT32 clock, INT32 add_signal)
 	if (chip != num) {
 		return 1;
 	}
+
+    if (ay8910_buffered) {
+        bprintf(0, _T("*** ERROR: AY8910SetBuffered() must be called AFTER all chips have been initted!\n"));
+    }
 
 	AYStreamUpdate = dummy_callback;
 	if (chip == 0) AY8910AddSignal = add_signal;
@@ -955,9 +1019,18 @@ void AY8910Render(INT16* dest, INT32 length)
 
 	INT32 i, n;
 
-	for (i = 0; i < num; i++) {
-		AY8910Update(i, pAY8910Buffer + (i * 3), length);
-	}
+    if (ay8910_buffered && length != nBurnSoundLen) {
+        bprintf(0, _T("AY8910Update() in buffered mode must be called once per frame!\n"));
+        return;
+    }
+
+    for (i = 0; i < num; i++) {
+        INT32 update_len = (ay8910_buffered) ? length - nPosition[i] : length;
+
+        AY8910Update(i, pAY8910Buffer + (i * 3), update_len);
+
+        nPosition[i] = 0; // clear for next frame
+    }
 
 	for (n = 0; n < length; n++) {
 		INT32 nLeftSample = 0, nRightSample = 0;

@@ -568,6 +568,7 @@ static INT32 DrvInit(INT32 game)
 	AY8910SetPorts(1, &ay8910_1_read_A, &ay8910_1_read_B, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, (game_select ? 5000000 : 3355700));
 
 	sp0256_init(DrvSndROM, 3355700);
 	sp0256_set_drq_cb(sp0256_drq_callback);
@@ -752,12 +753,13 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal = (game_select ? 5000000 : 3355700) / 60;
 	INT32 nCyclesDone = 0;
 
-	ZetOpen(0);
+    ZetNewFrame();
+
+    ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone += ZetRun((nCyclesTotal * (i + 1) / nInterleave) - nCyclesDone);
@@ -769,22 +771,11 @@ static INT32 DrvFrame()
 
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-
-		if (pBurnSoundOut && (i%16) == 15) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 16);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		ZetOpen(0);
 		if (game_select == 0) sp0256_update(pBurnSoundOut, nBurnSoundLen);
 		ZetClose();

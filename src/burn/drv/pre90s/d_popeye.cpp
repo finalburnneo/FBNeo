@@ -766,6 +766,7 @@ static INT32 DrvInit(INT32 (*LoadRoms)(UINT8 *DrvTempRom))
 	AY8910Init(0, 2000000, 0);
 	AY8910SetPorts(0, popeye_ayportA_read, NULL, NULL, popeye_ayportB_write);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -938,16 +939,18 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal = 4000000 / 60;
+    INT32 nCyclesDone = 0;
 
+    ZetNewFrame();
+
+    ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
-		ZetOpen(0);
-		ZetRun(nCyclesTotal / nInterleave);
+		nCyclesDone += ZetRun(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone);
 
 		if (i == nInterleave - 1 && (ZetI(-1) & 1))
 			ZetNmi();
-
-		ZetClose();
 	}
+    ZetClose();
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);

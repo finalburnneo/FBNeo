@@ -578,6 +578,7 @@ static void DrvCommonInit(INT32 gfxsize, INT32 bgsplit)
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.16, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(M6502TotalCycles, 1500000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, bg_map_scan, bg_map_callback, 16, 16, 32, 32);
@@ -1000,7 +1001,7 @@ static INT32 BoomrangDraw()
 
 static void take_interrupt()
 {
-	int p = ~DrvInputs[2] & 0x43; // coin & service buttons
+	INT32 p = ~DrvInputs[2] & 0x43; // coin & service buttons
 
 	*vblank = 0xff;
 	DrvMainROM[2] |= 0x80;
@@ -1037,6 +1038,8 @@ static INT32 DrvFrame()
 		}
 	}
 
+    M6502NewFrame();
+
 	DrvMainROM[0] = DrvInputs[0]; /* Player 1 controls */
 	DrvMainROM[1] = DrvInputs[1]; /* Player 2 controls */
 	DrvMainROM[2] = DrvInputs[2] & 0x7f; /* Vblank, coins */
@@ -1052,12 +1055,12 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6502Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if (i == 240) take_interrupt();
 		M6502Close();
 
 		M6502Open(1);
-		nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
 		if ((i & 0xf) == 0xf)
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // 16x per frame

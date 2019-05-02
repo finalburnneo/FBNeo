@@ -59,10 +59,10 @@ struct FlagDescription {
 };
 
 static FlagDescription genreDescription[] = {
-    { GBF_HORSHOOT,         QT_TR_NOOP("Shooter - Horizontal") },
-    { GBF_VERSHOOT,         QT_TR_NOOP("Shooter - Vertical") },
-    { GBF_SCRFIGHT,         QT_TR_NOOP("Fighter - Scrolling") },
-    { GBF_VSFIGHT,          QT_TR_NOOP("Fighter - Versus") },
+    { GBF_HORSHOOT,         QT_TR_NOOP("Shooter / Horizontal / Sh'mup") },
+    { GBF_VERSHOOT,         QT_TR_NOOP("Shooter / Vertical / Sh'mup") },
+    { GBF_SCRFIGHT,         QT_TR_NOOP("Fighter / Beat 'em Up") },
+    { GBF_VSFIGHT,          QT_TR_NOOP("Fighter / Versus") },
     { GBF_BIOS,             QT_TR_NOOP("BIOS") },
     { GBF_BREAKOUT,         QT_TR_NOOP("Breakout") },
     { GBF_CASINO,           QT_TR_NOOP("Casino") },
@@ -70,15 +70,15 @@ static FlagDescription genreDescription[] = {
     { GBF_MAZE,             QT_TR_NOOP("Maze") },
     { GBF_MINIGAMES,        QT_TR_NOOP("Mini-Games") },
     { GBF_PINBALL,          QT_TR_NOOP("Pinball") },
-    { GBF_PLATFORM,         QT_TR_NOOP("Platform") },
+    { GBF_PLATFORM,         QT_TR_NOOP("Platformer") },
     { GBF_PUZZLE,           QT_TR_NOOP("Puzzle") },
     { GBF_QUIZ,             QT_TR_NOOP("Quiz") },
-    { GBF_SPORTSFOOTBALL,   QT_TR_NOOP("Sports - Football") },
-    { GBF_SPORTSMISC,       QT_TR_NOOP("Sports - Misc") },
+    { GBF_SPORTSFOOTBALL,   QT_TR_NOOP("Sports / Football") },
+    { GBF_SPORTSMISC,       QT_TR_NOOP("Sports") },
     { GBF_MISC,             QT_TR_NOOP("Misc") },
     { GBF_MAHJONG,          QT_TR_NOOP("Mahjong") },
     { GBF_RACING,           QT_TR_NOOP("Racing") },
-    { GBF_SHOOT,            QT_TR_NOOP("Shooter - Other") },
+    { GBF_SHOOT,            QT_TR_NOOP("Shooter / Run 'n Gun") },
 };
 static const int genreDescriptionSize = sizeof(genreDescription) / sizeof(FlagDescription);
 

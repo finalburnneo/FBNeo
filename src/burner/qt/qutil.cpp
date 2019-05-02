@@ -92,6 +92,7 @@ static FlagDescription familyDescription[] = {
     { FBF_SAMSHO,       QT_TR_NOOP("Samurai Shodown") },
     { FBF_SF,           QT_TR_NOOP("Street Fighter") },
     { FBF_SONICWI,      QT_TR_NOOP("Aero Fighters") },
+	{ FBF_SONIC,   		QT_TR_NOOP("Sonic the Hedgehog") },
 };
 static const int familyDescriptionSize = sizeof(familyDescription) / sizeof(FlagDescription);
 

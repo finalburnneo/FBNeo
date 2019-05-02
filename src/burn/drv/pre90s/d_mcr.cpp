@@ -1779,7 +1779,7 @@ STDROMPICKEXT(kickman, kickman, Ssioprom)
 STD_ROM_FN(kickman)
 
 struct BurnDriver BurnDrvKickman = {
-	"kickman", "kick", "ssio", NULL, "1981",
+	"kickman", "kick", "midssio", NULL, "1981",
 	"Kickman (upright)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
@@ -1817,7 +1817,7 @@ STDROMPICKEXT(kickc, kickc, Ssioprom)
 STD_ROM_FN(kickc)
 
 struct BurnDriver BurnDrvKickc = {
-	"kickc", "kick", "ssio", NULL, "1981",
+	"kickc", "kick", "midssio", NULL, "1981",
 	"Kick (cocktail)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
@@ -2295,7 +2295,7 @@ static INT32 WackoInit()
 }
 
 struct BurnDriver BurnDrvWacko = {
-	"wacko", NULL, "ssio", NULL, "1982",
+	"wacko", NULL, "midssio", NULL, "1982",
 	"Wacko\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
@@ -3171,7 +3171,7 @@ static INT32 NflfootInit()
 }
 
 struct BurnDriverD BurnDrvNflfoot = {
-	"nflfoot", NULL, "ssio", NULL, "1983",
+	"nflfoot", NULL, "midssio", NULL, "1983",
 	"NFL Football\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,

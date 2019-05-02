@@ -3719,7 +3719,7 @@ static INT32 neogeoReset()
 	nSoundLatch = 0x00;
 	nSoundReply = 0x00;
 	nSoundStatus = 1;
-	bSoundNMIEnabled = 0;
+	bSoundNMIEnabled = 1;
 
 #if 1 && defined USE_SPEEDHACKS
 	nSoundPrevReply = -1;

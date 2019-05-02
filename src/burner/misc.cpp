@@ -358,6 +358,11 @@ TCHAR* DecorateGenreInfo()
 		if (nFamily & FBF_PWRINST) {
 			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_PWRINST, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
+		}
+
+		if (nFamily & FBF_SONIC) {
+			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_SONIC, true));
+			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}		
 		
 		szFamily[_tcslen(szFamily) - 2] = _T(')');

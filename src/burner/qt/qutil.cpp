@@ -61,8 +61,8 @@ struct FlagDescription {
 static FlagDescription genreDescription[] = {
     { GBF_HORSHOOT,         QT_TR_NOOP("Shooter / Horizontal / Sh'mup") },
     { GBF_VERSHOOT,         QT_TR_NOOP("Shooter / Vertical / Sh'mup") },
-    { GBF_SCRFIGHT,         QT_TR_NOOP("Fighter / Beat 'em Up") },
-    { GBF_VSFIGHT,          QT_TR_NOOP("Fighter / Versus") },
+    { GBF_SCRFIGHT,         QT_TR_NOOP("Fighting / Beat 'em Up") },
+    { GBF_VSFIGHT,          QT_TR_NOOP("Fighting / Versus") },
     { GBF_BIOS,             QT_TR_NOOP("BIOS") },
     { GBF_BREAKOUT,         QT_TR_NOOP("Breakout") },
     { GBF_CASINO,           QT_TR_NOOP("Casino") },

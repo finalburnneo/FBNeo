@@ -1218,7 +1218,7 @@ struct BurnDriver BurnDrvNeoGeoMVS = {
 	"neogeo", NULL, NULL, NULL, "1990",
 	"Neo Geo MVS system\0", "System - cartridges selected seperately", "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING /*| BDF_SYSTEM_ONLY*/, 2, HARDWARE_SNK_MVS, GBF_MISC, 0,
+	BDF_GAME_WORKING /*| BDF_SYSTEM_ONLY*/, 2, HARDWARE_SNK_MVS, GBF_BIOS, 0,
 	NULL, neoMVSRomInfo, neoMVSRomName, NULL, NULL, NULL, NULL, neoMVSInputInfo, neoMVSDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3

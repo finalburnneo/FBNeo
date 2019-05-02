@@ -1257,7 +1257,7 @@ void MenuEnableItems()
 #ifdef BUILD_A68K
 		EnableMenuItem(hMenu, MENU_ASSEMBLYCORE,		MF_GRAYED  | MF_BYCOMMAND);
 #endif
-		EnableMenuItem(hMenu, MENU_SAVEHISCORES,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_SAVEHISCORES,		MF_ENABLED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_USEBLEND,			MF_GRAYED  | MF_BYCOMMAND);
 		
 		EnableMenuItem(hMenu, MENU_CDIMAGE,				MF_GRAYED | MF_BYCOMMAND);

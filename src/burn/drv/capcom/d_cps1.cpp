@@ -18779,7 +18779,7 @@ struct BurnDriver BurnDrvCps3wondersb = {
 
 struct BurnDriver BurnDrvCpsCaptcomm = {
 	"captcomm", NULL, NULL, NULL, "1991",
-	"Captain Commando (911202 other country)\0", NULL, "Capcom", "CPS1",
+	"Captain Commando (911202 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, CaptcommRomInfo, CaptcommRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
@@ -18789,7 +18789,7 @@ struct BurnDriver BurnDrvCpsCaptcomm = {
 
 struct BurnDriver BurnDrvCpsCaptcommr1 = {
 	"captcommr1", "captcomm", NULL, NULL, "1991",
-	"Captain Commando (911014 other country)\0", NULL, "Capcom", "CPS1",
+	"Captain Commando (911014 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommr1RomInfo, Captcommr1RomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
@@ -18959,7 +18959,7 @@ struct BurnDriver BurnDrvCpsCworld2jb = {
 
 struct BurnDriver BurnDrvCpsDino = {
 	"dino", NULL, NULL, NULL, "1993",
-	"Cadillacs & Dinosaurs (930201 etc)\0", NULL, "Capcom", "CPS1 / QSound",
+	"Cadillacs & Dinosaurs (930201 World)\0", NULL, "Capcom", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinoRomInfo, DinoRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -18979,8 +18979,8 @@ struct BurnDriver BurnDrvCpsDinoa = {
 
 struct BurnDriver BurnDrvCpsDinoj = {
 	"dinoj", "dino", NULL, NULL, "1993",
-	"Cadillacs Kyouryuu-Shinseiki (Cadillacs 930201 Japan)\0", NULL, "Capcom", "CPS1 / QSound",
-	L"Cadillacs \u6050\u7ADC\u65B0\u4E16\u7D00\0Cadillacs Kyouryuu-Shinseiki (Cadillacs 930201 Japan)\0", NULL, NULL, NULL,
+	"Cadillacs Kyouryuu-Shinseiki (930201 Japan)\0", NULL, "Capcom", "CPS1 / QSound",
+	L"Cadillacs \u6050\u7ADC\u65B0\u4E16\u7D00\0Cadillacs Kyouryuu-Shinseiki (930201 Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinojRomInfo, DinojRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19559,7 +19559,7 @@ struct BurnDriver BurnDrvCpsKnightsh2 = {
 
 struct BurnDriver BurnDrvCpsKod = {
 	"kod", NULL, NULL, NULL, "1991",
-	"The King of Dragons (910805 etc)\0", NULL, "Capcom", "CPS1",
+	"The King of Dragons (World 910805)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, KodRomInfo, KodRomName, NULL, NULL, NULL, NULL, KodInputInfo, KodDIPInfo,
@@ -19569,7 +19569,7 @@ struct BurnDriver BurnDrvCpsKod = {
 
 struct BurnDriver BurnDrvCpsKodr1 = {
 	"kodr1", "kod", NULL, NULL, "1991",
-	"The King of Dragons (910711 etc)\0", NULL, "Capcom", "CPS1",
+	"The King of Dragons (World 910711)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Kodr1RomInfo, Kodr1RomName, NULL, NULL, NULL, NULL, KodInputInfo, Kodr1DIPInfo,
@@ -19909,7 +19909,7 @@ struct BurnDriver BurnDrvPokonyan = {
 
 struct BurnDriver BurnDrvCpsPunisher = {
 	"punisher", NULL, NULL, NULL, "1993",
-	"The Punisher (930422 etc)\0", NULL, "Capcom", "CPS1 / QSound",
+	"The Punisher (930422 World)\0", NULL, "Capcom", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, PunisherRomInfo, PunisherRomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
@@ -20029,7 +20029,7 @@ struct BurnDriver BurnDrvCpsQtono2j = {
 
 struct BurnDriver BurnDrvCpsSf2 = {
 	"sf2", NULL, NULL, NULL, "1991",
-	"Street Fighter II - The World Warrior (910522 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910522 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2RomInfo, Sf2RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -20039,7 +20039,7 @@ struct BurnDriver BurnDrvCpsSf2 = {
 
 struct BurnDriver BurnDrvCpsSf2ea = {
 	"sf2ea", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - The World Warrior (910204 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910204 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2eaRomInfo, Sf2eaRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -20049,7 +20049,7 @@ struct BurnDriver BurnDrvCpsSf2ea = {
 
 struct BurnDriver BurnDrvCpsSf2eb = {
 	"sf2eb", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - The World Warrior (910214 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910214 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ebRomInfo, Sf2ebRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -20059,7 +20059,7 @@ struct BurnDriver BurnDrvCpsSf2eb = {
 
 struct BurnDriver BurnDrvCpsSf2ed = {
 	"sf2ed", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - The World Warrior (910318 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910318 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2edRomInfo, Sf2edRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -20069,7 +20069,7 @@ struct BurnDriver BurnDrvCpsSf2ed = {
 
 struct BurnDriver BurnDrvCpsSf2ee = {
 	"sf2ee", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - The World Warrior (910228 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910228 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2eeRomInfo, Sf2eeRomName, NULL, NULL, NULL, NULL, Sf2ueInputInfo, Sf2DIPInfo,
@@ -20079,7 +20079,7 @@ struct BurnDriver BurnDrvCpsSf2ee = {
 
 struct BurnDriver BurnDrvCpsSf2em = {
 	"sf2em", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - The World Warrior (910129 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910129 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2emRomInfo, Sf2emRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -20089,7 +20089,7 @@ struct BurnDriver BurnDrvCpsSf2em = {
 
 struct BurnDriver BurnDrvCpsSf2en = {
 	"sf2en", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - The World Warrior (910204 etc, conversion)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910204 World, conversion)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2enRomInfo, Sf2enRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -20409,7 +20409,7 @@ struct BurnDriver BurnDrvCpsSf2rules = {
 
 struct BurnDriver BurnDrvCpsSf2ce = {
 	"sf2ce", NULL, NULL, NULL, "1992",
-	"Street Fighter II' - Champion Edition (street fighter 2' 920513 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920513 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceRomInfo, Sf2ceRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -20419,7 +20419,7 @@ struct BurnDriver BurnDrvCpsSf2ce = {
 
 struct BurnDriver BurnDrvCpsSf2ceea = {
 	"sf2ceea", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - Champion Edition (street fighter 2' 920313 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920313 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceeaRomInfo, Sf2ceeaRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -20679,7 +20679,7 @@ struct BurnDriver BurnDrvCpsSf2bhh = {
 
 struct BurnDriver BurnDrvCpsSf2hf = {
 	"sf2hf", NULL, NULL, NULL, "1992",
-	"Street Fighter II' - Hyper Fighting (street fighter 2' T 921209 ETC)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Hyper Fighting (street fighter 2' T 921209 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2hfRomInfo, Sf2hfRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -21209,7 +21209,7 @@ struct BurnDriver BurnDrvCpsSfzch = {
 
 struct BurnDriver BurnDrvCpsSlammast = {
 	"slammast", NULL, NULL, NULL, "1993",
-	"Saturday Night Slam Masters (Slam Masters 930713 etc)\0", NULL, "Capcom", "CPS1",
+	"Saturday Night Slam Masters (Slam Masters 930713 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
 	NULL, SlammastRomInfo, SlammastRomName, NULL, NULL, NULL, NULL, SlammastInputInfo, SlammastDIPInfo,
@@ -21239,7 +21239,7 @@ struct BurnDriver BurnDrvCpsMbomberj = {
 
 struct BurnDriver BurnDrvCpsMbombrd = {
 	"mbombrd", NULL, NULL, NULL, "1993",
-	"Muscle Bomber Duo - ultimate team battle (931206 etc)\0", NULL, "Capcom", "CPS1",
+	"Muscle Bomber Duo - ultimate team battle (931206 World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
 	NULL, MbombrdRomInfo, MbombrdRomName, NULL, NULL, NULL, NULL, SlammastInputInfo, SlammastDIPInfo,
@@ -21449,7 +21449,7 @@ struct BurnDriver BurnDrvCpsWillowj = {
 
 struct BurnDriver BurnDrvCpsWof = {
 	"wof", NULL, NULL, NULL, "1992",
-	"Warriors of Fate (921031 etc)\0", NULL, "Capcom", "CPS1 / QSound",
+	"Warriors of Fate (921031 World)\0", NULL, "Capcom", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofRomInfo, WofRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,

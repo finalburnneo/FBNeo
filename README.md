@@ -1,4 +1,4 @@
-# FBAlpha
+# FBAlphaFB
 http://neo-source.com
 
 This is the official repository of the FBAlphaFB Emulator.

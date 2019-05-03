@@ -204,7 +204,7 @@ static struct BurnDIPInfo FghtbsktDIPList[]=
 
 STDDIPINFO(Fghtbskt)
 
-void __fastcall m63_main_write(UINT16 address, UINT8 data)
+static void __fastcall m63_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -238,7 +238,7 @@ void __fastcall m63_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall m63_main_read(UINT16 address)
+static UINT8 __fastcall m63_main_read(UINT16 address)
 {
 	switch (address)
 	{	
@@ -264,7 +264,7 @@ UINT8 __fastcall m63_main_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall fghtbskt_main_write(UINT16 address, UINT8 data)
+static void __fastcall fghtbskt_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -302,12 +302,12 @@ void __fastcall fghtbskt_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall m63_sound_read(UINT32 address)
+static UINT8 __fastcall m63_sound_read(UINT32 address)
 {
 	return DrvI8039ROM[address & 0x0fff];
 }
 
-void __fastcall m63_sound_write_port(UINT32 port, UINT8 data)
+static void __fastcall m63_sound_write_port(UINT32 port, UINT8 data)
 {
 	if ((port & 0xff00) == 0x0000) {
 		if ((m63_sound_p2 & 0xf0) == 0xe0)
@@ -347,7 +347,7 @@ void __fastcall m63_sound_write_port(UINT32 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall m63_sound_read_port(UINT32 port)
+static UINT8 __fastcall m63_sound_read_port(UINT32 port)
 {
 	if ((port & 0xff00) == 0x0000) {
 		if ((m63_sound_p2 & 0xf0) == 0x60) {
@@ -609,6 +609,7 @@ static INT32 DrvInit(void (*pMapMainCPU)(), INT32 (*pRomLoadCallback)(), INT32 s
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(I8039TotalCycles, 3000000);
 
 	sy_offset = syoffset;
 	char_color_offset = charcoloroff;
@@ -822,7 +823,7 @@ static INT32 DrvDraw()
 
 	draw_bg_layer();
 	draw_sprites();
-	draw_fg_layer();	
+    draw_fg_layer();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -861,6 +862,9 @@ static INT32 DrvFrame()
 		}
 	}
 
+    I8039NewFrame();
+    ZetNewFrame();
+
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2]  = { 0, 0 };
 	INT32 nInterleave = 100;
@@ -869,12 +873,12 @@ static INT32 DrvFrame()
 	I8039Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
-	{
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += I8039Run(nCyclesTotal[1] / nInterleave);
+    {
+        CPU_RUN(0, Zet);
+        CPU_RUN(1, I8039);
 	}
 
-	if (sound_interrupt_count == 30) {
+	if (sound_interrupt_count == 30) { // some games, every other frame
 		if (nCurrentFrame & 1) sound_irq = 1;
 	} else {
 		sound_irq = 1;
@@ -897,7 +901,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -905,7 +909,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+    if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

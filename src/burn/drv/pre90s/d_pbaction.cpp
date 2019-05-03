@@ -48,14 +48,14 @@ static struct BurnInputInfo PbactionInputList[] = {
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
 	{"P1 Button 1 (L.Flipper)",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
 	{"P1 Button 2 (R.Flipper)",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
-	{"P1 Button 3 (Plunger)",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 3"	},
+	{"P1 Button 3 (Plunger/Start)",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 3"	},
 	{"P1 Button 4 (Shake)",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 4"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
 	{"P2 Button 1 (L.Flipper)",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
 	{"P2 Button 2 (R.Flipper)",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 2"	},
-	{"P2 Button 3 (Plunger)",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 3"	},
+	{"P2 Button 3 (Plunger/Start)",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 3"	},
 	{"P2 Button 4 (Shake)",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 4"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
@@ -483,6 +483,7 @@ static INT32 DrvInit(INT32 type)
 	AY8910SetAllRoutes(0, 0.13, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.13, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.13, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -614,43 +615,30 @@ static INT32 DrvFrame()
 		}
 	}
 
+    ZetNewFrame();
+
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 4000000 / 60, 3072000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+        CPU_RUN(0, Zet);
 		if (nmi_mask && i == (nInterleave - 1)) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+        CPU_RUN(1, Zet);
 		if (i == ((nInterleave / 2) - 1) || i == (nInterleave - 1)) {
 			ZetSetVector(2);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
-
-		// Render Sound Segment
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
-		//AY8910Render(pBurnSoundOut, nBurnSoundLen);
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

@@ -4,21 +4,13 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 
-#define USE_SOUND_DEVICE
-#ifdef USE_SOUND_DEVICE
 #include "irem_sound.h"
-#else
-#include "m6800_intf.h"
-#include "msm5205.h"
-#include "ay8910.h"
-#endif
 
 #define USE_SAMPLE_HACK // allow use of sampled drumkit on Kid Niki, Spelunker 1 & 2, Battle-Road, Horizon
 
 #ifdef USE_SAMPLE_HACK
 #include "samples.h"
 #endif
-
 
 static UINT8 M62InputPort0[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 M62InputPort1[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -50,9 +42,6 @@ static UINT8 *M62CharRam            = NULL;
 static UINT8 *M62ScrollRam          = NULL;
 static UINT8 *M62Z80Ram             = NULL;
 
-#ifndef USE_SOUND_DEVICE
-static UINT8 *M62M6803Ram           = NULL;
-#endif
 static UINT8 *M62Tiles              = NULL;
 static UINT8 *M62Sprites            = NULL;
 static UINT8 *M62Chars              = NULL;
@@ -66,12 +55,7 @@ static INT32 M62CharHScroll;
 static INT32 M62CharVScroll;
 static INT32 M62FlipScreen;
 static INT32 M62SpriteHeightPromOffset;
-#ifndef USE_SOUND_DEVICE
-static UINT8 M62SoundLatch;
-static UINT8 M62Port1;
-static UINT8 M62Port2;
-static UINT8 M62SlaveMSM5205VClckReset;
-#endif
+
 static UINT32 M62PaletteEntries;
 static INT32 M62Z80Clock = 0;
 static INT32 M62M6803Clock = 0;
@@ -1808,10 +1792,6 @@ static INT32 M62MemIndex()
 	if (M62CharRamSize)   { M62CharRam   = Next; Next += M62CharRamSize; }
 	if (M62ScrollRamSize) { M62ScrollRam = Next; Next += M62ScrollRamSize; }
 	M62Z80Ram              = Next; Next += 0x01000;
-	
-#ifndef USE_SOUND_DEVICE
-	M62M6803Ram            = Next; Next += 0x00080;
-#endif
 
 	RamEnd                 = Next;
 
@@ -1832,18 +1812,7 @@ static INT32 M62DoReset()
 	ZetReset();
 	ZetClose();
 
-#ifdef USE_SOUND_DEVICE
 	IremSoundReset();
-#else
-	M6803Open(0);
-	M6803Reset();
-	M6803Close();
-
-	AY8910Reset(0);
-	AY8910Reset(1);
-
-	MSM5205Reset();
-#endif
 
 #ifdef USE_SAMPLE_HACK
 	BurnSampleReset();
@@ -1857,12 +1826,6 @@ static INT32 M62DoReset()
 	M62CharVScroll = 0;
 	M62FlipScreen = 0;
 
-#ifndef USE_SOUND_DEVICE
-	M62SoundLatch = 0;
-	M62Port1 = 0;
-	M62Port2 = 0;
-	M62SlaveMSM5205VClckReset = 0;
-#endif
 	M62BankControl[0] = M62BankControl[1] = 0;
 	Ldrun2BankSwap = 0;
 	Ldrun3TopBottomMask = 0;
@@ -1872,7 +1835,7 @@ static INT32 M62DoReset()
 	return 0;
 }
 
-UINT8 __fastcall M62Z80Read(UINT16 a)
+static UINT8 __fastcall M62Z80Read(UINT16 a)
 {
 	switch (a) {
 		default: {
@@ -1883,7 +1846,7 @@ UINT8 __fastcall M62Z80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall M62Z80Write(UINT16 a, UINT8 d)
+static void __fastcall M62Z80Write(UINT16 a, UINT8 d)
 {
 	if (a <= 0xbfff) return;
 
@@ -1894,7 +1857,7 @@ void __fastcall M62Z80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall KungfumZ80Read(UINT16 a)
+static UINT8 __fastcall KungfumZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xf000:
@@ -1913,7 +1876,7 @@ UINT8 __fastcall KungfumZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall KungfumZ80Write(UINT16 a, UINT8 d)
+static void __fastcall KungfumZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xa000: {
@@ -1932,7 +1895,7 @@ void __fastcall KungfumZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall Ldrun3Z80Read(UINT16 a)
+static UINT8 __fastcall Ldrun3Z80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xc800: {
@@ -1955,7 +1918,7 @@ UINT8 __fastcall Ldrun3Z80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall Ldrun4Z80Write(UINT16 a, UINT8 d)
+static void __fastcall Ldrun4Z80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc800: {
@@ -1971,7 +1934,7 @@ void __fastcall Ldrun4Z80Write(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall SpelunkrZ80Write(UINT16 a, UINT8 d)
+static void __fastcall SpelunkrZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xd000: {
@@ -2012,7 +1975,7 @@ void __fastcall SpelunkrZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall Spelunk2Z80Write(UINT16 a, UINT8 d)
+static void __fastcall Spelunk2Z80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xd000: {
@@ -2048,7 +2011,7 @@ void __fastcall Spelunk2Z80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall M62Z80PortRead(UINT16 a)
+static UINT8 __fastcall M62Z80PortRead(UINT16 a)
 {
 	a &= 0xff;
 
@@ -2081,21 +2044,13 @@ UINT8 __fastcall M62Z80PortRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall M62Z80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall M62Z80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 
 	switch (a) {
 		case 0x00: {
-#ifdef USE_SOUND_DEVICE
 			IremSoundWrite(d);
-#else
-			if ((d & 0x80) == 0) {
-				M62SoundLatch = d & 0x7f;
-			} else {
-				M6803SetIRQLine(M6803_IRQ_LINE, CPU_IRQSTATUS_ACK);
-			}
-#endif
 			return;
 		}
 
@@ -2111,7 +2066,7 @@ void __fastcall M62Z80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall BattroadZ80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall BattroadZ80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 
@@ -2149,7 +2104,7 @@ void __fastcall BattroadZ80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall Ldrun2Z80PortRead(UINT16 a)
+static UINT8 __fastcall Ldrun2Z80PortRead(UINT16 a)
 {
 	a &= 0xff;
 
@@ -2175,7 +2130,7 @@ UINT8 __fastcall Ldrun2Z80PortRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall Ldrun2Z80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall Ldrun2Z80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 
@@ -2214,7 +2169,7 @@ void __fastcall Ldrun2Z80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall Ldrun3Z80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall Ldrun3Z80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 
@@ -2240,7 +2195,7 @@ void __fastcall Ldrun3Z80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall Ldrun4Z80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall Ldrun4Z80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 
@@ -2276,7 +2231,7 @@ void __fastcall Ldrun4Z80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall KidnikiZ80PortRead(UINT16 a)
+static UINT8 __fastcall KidnikiZ80PortRead(UINT16 a)
 {
 	a &= 0xff;
 
@@ -2291,7 +2246,7 @@ UINT8 __fastcall KidnikiZ80PortRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall KidnikiZ80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall KidnikiZ80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 
@@ -2339,7 +2294,7 @@ void __fastcall KidnikiZ80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall YoujyudnZ80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall YoujyudnZ80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 
@@ -2372,109 +2327,6 @@ void __fastcall YoujyudnZ80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
-#ifndef USE_SOUND_DEVICE
-UINT8 M62M6803ReadByte(UINT16 a)
-{
-	if (a <= 0x001f) {
-		return m6803_internal_registers_r(a);
-	}
-
-	if (a >= 0x0080 && a <= 0x00ff) {
-		return M62M6803Ram[a - 0x0080];
-	}
-
-	bprintf(PRINT_NORMAL, _T("M6803 Read Byte -> %04X\n"), a);
-
-	return 0;
-}
-
-void M62M6803WriteByte(UINT16 a, UINT8 d)
-{
-	if (a <= 0x001f) {
-		m6803_internal_registers_w(a, d);
-		return;
-	}
-
-	if (a >= 0x0080 && a <= 0x00ff) {
-		M62M6803Ram[a - 0x0080] = d;
-		return;
-	}
-
-	switch (a) {
-		case 0x0800: {
-			M6803SetIRQLine(M6803_IRQ_LINE, CPU_IRQSTATUS_NONE);
-			return;
-		}
-
-		case 0x0801: {
-			MSM5205DataWrite(0, d);
-			return;
-		}
-
-		case 0x0802: {
-			MSM5205DataWrite(1, d);
-			return;
-		}
-	}
-
-	bprintf(PRINT_NORMAL, _T("M6803 Write Byte -> %04X, %02X\n"), a, d);
-}
-
-UINT8 M62M6803ReadPort(UINT16 a)
-{
-	switch (a) {
-		case M6803_PORT1: {
-  			if (M62Port2 & 0x08) return AY8910Read(0);
-			if (M62Port2 & 0x10) return AY8910Read(1);
-			return 0xff;
-		}
-
-		case M6803_PORT2: {
-			return 0;
-		}
-	}
-
-	bprintf(PRINT_NORMAL, _T("M6803 Read Port -> %04X\n"), a);
-
-	return 0;
-}
-
-void M62M6803WritePort(UINT16 a, UINT8 d)
-{
-	switch (a) {
-		case M6803_PORT1: {
-			M62Port1 = d;
-			return;
-		}
-
-		case M6803_PORT2: {
-			if ((M62Port2 & 0x01) && !(d & 0x01)) {
-				if (M62Port2 & 0x04) {
-					if (M62Port2 & 0x08) {
-						AY8910Write(0, 0, M62Port1);
-					}
-					if (M62Port2 & 0x10) {
-						AY8910Write(1, 0, M62Port1);
-					}
-				} else {
-					if (M62Port2 & 0x08) {
-						AY8910Write(0, 1, M62Port1);
-					}
-					if (M62Port2 & 0x10) {
-						AY8910Write(1, 1, M62Port1);
-					}
-				}
-			}
-
-			M62Port2 = d;
-			return;
-		}
-	}
-
-	bprintf(PRINT_NORMAL, _T("M6803 Write Port -> %04X, %02X\n"), a, d);
-}
-#endif
-
 static INT32 Tile1024PlaneOffsets[3]       = { 0x20000, 0x10000, 0 };
 static INT32 Tile2048PlaneOffsets[3]       = { 0x40000, 0x20000, 0 };
 static INT32 Tile4096PlaneOffsets[3]       = { 0x80000, 0x40000, 0 };
@@ -2500,7 +2352,6 @@ static INT32 YoujyudnTilePlaneOffsets[3]   = { 0x40000, 0x20000, 0 };
 static INT32 YoujyudnTileXOffsets[8]       = { 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 YoujyudnTileYOffsets[16]      = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120 };
 
-#ifdef USE_SOUND_DEVICE
 static void AY8910_1PortAWrite(UINT8 data)
 {
 	if (data == 0xff) {
@@ -2519,51 +2370,6 @@ static void AY8910_1PortAWrite(UINT8 data)
 			BurnSamplePlay(0);
 	}
 }
-#else
-UINT8 M62SoundLatchRead(UINT32)
-{
-	return M62SoundLatch;
-}
-
-static void AY8910_0PortBWrite(UINT32, UINT32 d)
-{
-	MSM5205PlaymodeWrite(0, (d >> 2) & 0x07);
-	MSM5205PlaymodeWrite(1, ((d >> 2) & 0x04) | 0x03);
-
-	MSM5205ResetWrite(0, d & 0x01);
-	MSM5205ResetWrite(1, d & 0x02);
-}
-
-static void AY8910_1PortAWrite(UINT32, UINT32 data)
-{
-	if (data == 0xff) {
-		//bprintf(0, _T("M62 Analog drumkit init.\n"));
-		return;
-	}
-
-	if (data > 0) {
-		if (data & 0x01) // bass drum
-			BurnSamplePlay(2);
-		if (data & 0x02) // snare drum
-			BurnSamplePlay(1);
-		if (data & 0x04) // open hat
-			BurnSamplePlay(3);
-		if (data & 0x08) // closed hat
-			BurnSamplePlay(0);
-	}
-}
-
-inline static INT32 M62SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)((double)ZetTotalCycles() * nSoundRate / M62Z80Clock);
-}
-
-static void M62MSM5205Vck0()
-{
-	M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
-	M62SlaveMSM5205VClckReset = 1;
-}
-#endif
 
 static INT32 M62MemInit()
 {
@@ -3440,34 +3246,15 @@ static void M62MachineInit()
 	ZetMapArea(0xe000, 0xefff, 2, M62Z80Ram   );
 	ZetClose();
 
-#ifdef USE_SOUND_DEVICE
+    if (M62Z80Clock == 0) M62Z80Clock = 4000000;
+	M62M6803Clock = 894886;
+
 	IremSoundInit(M62M6803Rom, 1, M62Z80Clock, AY8910_1PortAWrite);
 	MSM5205SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 	MSM5205SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
-#else
-	M6803Init(0);
-	M6803Open(0);
-	M6803MapMemory(M62M6803Rom, 0x4000, 0xffff, MAP_ROM);
-	M6803SetReadHandler(M62M6803ReadByte);
-	M6803SetWriteHandler(M62M6803WriteByte);
-	M6803SetReadPortHandler(M62M6803ReadPort);
-	M6803SetWritePortHandler(M62M6803WritePort);
-	M6803Close();
-
-	MSM5205Init(0, M62SynchroniseStream, 384000, M62MSM5205Vck0, MSM5205_S96_4B, 1);
-	MSM5205Init(1, M62SynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
-	MSM5205SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
-	MSM5205SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
-
-	AY8910Init(0, 894886, 0);
-	AY8910Init(1, 894886, 1);
-	AY8910SetPorts(0, &M62SoundLatchRead, NULL, NULL, &AY8910_0PortBWrite);
-	AY8910SetPorts(1, NULL, NULL, &AY8910_1PortAWrite, NULL);
-	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
-#endif
+    AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, M62Z80Clock);
 
 #ifdef USE_SAMPLE_HACK
 	BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
@@ -3496,9 +3283,6 @@ static void M62MachineInit()
 #endif
 
 	GenericTilesInit();
-
-	if (M62Z80Clock == 0) M62Z80Clock = 4000000;
-	M62M6803Clock = 894886;
 
 	M62SpriteHeightPromOffset = (M62PaletteEntries & 0xf00) * 3;
 }
@@ -4028,15 +3812,9 @@ static INT32 HorizonInit()
 static INT32 M62Exit()
 {
 	ZetExit();
-#ifdef USE_SOUND_DEVICE
-	IremSoundExit();
-#else
-	M6800Exit();
-	AY8910Exit(0);
-	AY8910Exit(1);
-	MSM5205Exit();
-#endif
-	
+
+    IremSoundExit();
+
 #ifdef USE_SAMPLE_HACK
 	BurnSampleExit();
 #endif
@@ -4059,13 +3837,8 @@ static INT32 M62Exit()
 	M62CharHScroll = 0;
 	M62CharVScroll = 0;
 	M62FlipScreen = 0;
-#ifndef USE_SOUND_DEVICE
-	M62SoundLatch = 0;
-	M62Port1 = 0;
-	M62Port2 = 0;
-	M62SlaveMSM5205VClckReset = 0;
-#endif
-	M62PaletteEntries = 0;
+
+    M62PaletteEntries = 0;
 	M62Z80Clock = 0;
 	M62M6803Clock = 0;
 	M62ExtendTileInfoFunction = NULL;
@@ -4818,70 +4591,38 @@ static INT32 HorizonDraw()
 
 static INT32 M62Frame()
 {
-	INT32 nInterleave = MSM5205CalcInterleave(0, M62Z80Clock);
-	INT32 nSoundBufferPos = 0;
-
 	if (M62Reset) M62DoReset();
 
 	M62MakeInputs();
 
+	INT32 nInterleave = MSM5205CalcInterleave(0, M62Z80Clock);
 	INT32 nCyclesTotal[2] = { M62Z80Clock / 60, M62M6803Clock / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nCyclesSegment;
 
 	ZetNewFrame();
 	M6803NewFrame();
 
 	ZetOpen(0);
-	M6803Open(0);
+    M6803Open(0);
+
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
+        CPU_RUN(0, Zet);
+        if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-
-		nCurrentCPU = 1;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = M6803Run(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-#ifdef USE_SAMPLE_HACK
-			if(bHasSamples)
-				BurnSampleRender(pSoundBuf, nSegmentLength);
-#endif
-			nSoundBufferPos += nSegmentLength;
-		}
+        CPU_RUN(1, M6803);
 
 		MSM5205Update();
-#ifdef USE_SOUND_DEVICE
-		IremSoundClockSlave();
-#else
-		if (M62SlaveMSM5205VClckReset) {
-			MSM5205VCLKWrite(1, 1);
-			MSM5205VCLKWrite(1, 0);
-			M62SlaveMSM5205VClckReset = 0;
-		}
-#endif
+
+        IremSoundClockSlave();
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+
 #ifdef USE_SAMPLE_HACK
-			if(bHasSamples)
-				BurnSampleRender(pSoundBuf, nSegmentLength);
+        if(bHasSamples)
+            BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 #endif
-		}
 
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
@@ -4916,13 +4657,7 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 
-#ifdef USE_SOUND_DEVICE
 		IremSoundScan(nAction, pnMin);
-#else
-		M6803Scan(nAction);
-		AY8910Scan(nAction, pnMin);
-		MSM5205Scan(nAction, pnMin);
-#endif
 
 #ifdef USE_SAMPLE_HACK
 		BurnSampleScan(nAction, pnMin);
@@ -4932,13 +4667,8 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(M62CharHScroll);
 		SCAN_VAR(M62CharVScroll);
 		SCAN_VAR(M62FlipScreen);
-#ifndef USE_SOUND_DEVICE
-		SCAN_VAR(M62SoundLatch);
-		SCAN_VAR(M62Port1);
-		SCAN_VAR(M62Port2);
-		SCAN_VAR(M62SlaveMSM5205VClckReset);
-#endif
-		SCAN_VAR(M62BankControl);
+
+        SCAN_VAR(M62BankControl);
 		SCAN_VAR(Ldrun2BankSwap);
 		SCAN_VAR(Ldrun3TopBottomMask);
 		SCAN_VAR(KidnikiBackgroundBank);

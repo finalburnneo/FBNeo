@@ -594,6 +594,7 @@ static INT32 DrvInit()
 	AY8910Init(0, 1250000, 0);
 	AY8910SetPorts(0, NULL, NULL, &stratvox_sn76477_write, NULL);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 2500000);
 
 	DACInit(0, 0, 1, DrvDACSync);
 	DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
@@ -746,41 +747,24 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 2500000 / (nBurnFPS / 100), 2500000 / (nBurnFPS / 100) };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSegment;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nSegment = ((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0];
-		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+        CPU_RUN(0, Zet);
+        if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nSegment = ((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1];
-		nCyclesDone[1] += ZetRun(nSegment);
-		ZetClose();
-
-		if (pBurnSoundOut && (i%8) == 7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			SN76477_sound_update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+        CPU_RUN(1, Zet);
+        ZetClose();
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-			SN76477_sound_update(0, pSoundBuf, nSegmentLength);
-		}
-
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+        SN76477_sound_update(0, pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

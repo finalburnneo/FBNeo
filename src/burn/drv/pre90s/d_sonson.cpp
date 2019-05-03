@@ -415,6 +415,7 @@ static INT32 DrvInit()
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(M6809TotalCycles, 2000000);
 
 	DrvDoReset();
 
@@ -539,8 +540,6 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 16;
-	
 	if (DrvReset) {
 		DrvDoReset();
 	}
@@ -555,52 +554,34 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nCyclesSegment = 0;
-	INT32 nSoundBufferPos = 0;
+    M6809NewFrame();
+
+    INT32 nInterleave = 16;
 	INT32 nCyclesTotal[2] =  { 2000000 / 60, 2000000 / 60 };
 	INT32 nCyclesDone[2] =  { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-		
-		nCurrentCPU = 0;
-		M6809Open(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
-		if (i == (nInterleave - 1)) {
+		M6809Open(0);
+        CPU_RUN(0, M6809);
+        if (i == (nInterleave - 1)) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		M6809Close();
 
-		nCurrentCPU = 1;
-		M6809Open(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+		M6809Open(1);
 		if (DrvSoundIrqTrigger) {
 			M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			DrvSoundIrqTrigger = 0;
 		}
-		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
-		if (i == 3 || i == 7 || i == 11 || i == 15) {
+        CPU_RUN(1, M6809);
+        if (i == 3 || i == 7 || i == 11 || i == 15) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		M6809Close();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -618,7 +599,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029695;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+    if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

@@ -85,7 +85,9 @@ void UpdateStream(INT32 chip, INT32 samples_len)
 	INT32 nSamplesNeeded = samples_len - nPosition[chip];
     if (nSamplesNeeded <= 0) return;
 
+#if defined FBA_DEBUG
     bprintf(0, _T("ay8910_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
+#endif
 
     AY8910Update(chip, pAY8910Buffer + (chip * 3), nSamplesNeeded);
     nPosition[chip] += nSamplesNeeded;
@@ -93,7 +95,9 @@ void UpdateStream(INT32 chip, INT32 samples_len)
 
 void AY8910SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 {
+#if defined FBA_DEBUG
     bprintf(0, _T("*** Using BUFFERED AY8910-mode.\n"));
+#endif
     for (INT32 i = 0; i < num; i++) {
         nPosition[i] = 0;
     }
@@ -868,7 +872,9 @@ INT32 AY8910Init(INT32 chip, INT32 clock, INT32 add_signal)
 	}
 
     if (ay8910_buffered) {
+#if defined FBA_DEBUG
         bprintf(0, _T("*** ERROR: AY8910SetBuffered() must be called AFTER all chips have been initted!\n"));
+#endif
     }
 
 	AYStreamUpdate = dummy_callback;
@@ -1020,7 +1026,9 @@ void AY8910Render(INT16* dest, INT32 length)
 	INT32 i, n;
 
     if (ay8910_buffered && length != nBurnSoundLen) {
+#if defined FBA_DEBUG
         bprintf(0, _T("AY8910Update() in buffered mode must be called once per frame!\n"));
+#endif
         return;
     }
 

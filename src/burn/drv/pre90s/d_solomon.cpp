@@ -33,13 +33,8 @@ static UINT8 *SolomonSprites      = NULL;
 static UINT8 *SolomonTempRom      = NULL;
 
 static INT32 SolomonIrqFire = 0;
-
 static INT32 SolomonFlipScreen = 0;
-
 static INT32 SolomonSoundLatch = 0;
-
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
 
 static struct BurnInputInfo SolomonInputList[] =
 {
@@ -353,15 +348,15 @@ static INT32 SolomonMemIndex()
 	return 0;
 }
 
-static INT32 TilePlaneOffsets[4]   = { 0, 1, 2, 3 };
-static INT32 TileXOffsets[8]       = { 0, 4, 8, 12, 16, 20, 24, 28 };
-static INT32 TileYOffsets[8]       = { 0, 32, 64, 96, 128, 160, 192, 224 };
-static INT32 SpritePlaneOffsets[4] = { 0, 131072, 262144, 393216 };
-static INT32 SpriteXOffsets[16]    = { 0, 1, 2, 3, 4, 5, 6, 7, 64, 65, 66, 67, 68, 69, 70, 71 };
-static INT32 SpriteYOffsets[16]    = { 0, 8, 16, 24, 32, 40, 48, 56, 128, 136, 144, 152, 160, 168, 176, 184 };
-
 static INT32 SolomonInit()
 {
+    INT32 TilePlaneOffsets[4]   = { 0, 1, 2, 3 };
+    INT32 TileXOffsets[8]       = { 0, 4, 8, 12, 16, 20, 24, 28 };
+    INT32 TileYOffsets[8]       = { 0, 32, 64, 96, 128, 160, 192, 224 };
+    INT32 SpritePlaneOffsets[4] = { 0, 131072, 262144, 393216 };
+    INT32 SpriteXOffsets[16]    = { 0, 1, 2, 3, 4, 5, 6, 7, 64, 65, 66, 67, 68, 69, 70, 71 };
+    INT32 SpriteYOffsets[16]    = { 0, 8, 16, 24, 32, 40, 48, 56, 128, 136, 144, 152, 160, 168, 176, 184 };
+
 	INT32 nRet = 0, nLen;
 
 	// Allocate and Blank all required memory
@@ -404,7 +399,6 @@ static INT32 SolomonInit()
 	nRet = BurnLoadRom(SolomonTempRom + 0x4000,  9, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(SolomonTempRom + 0x8000, 10, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(SolomonTempRom + 0xc000, 11, 1); if (nRet != 0) return 1;
-//	SolomonDecodeSprites(SolomonSprites, 2048, 0x0000, 0x4000, 0x8000, 0xc000);
 	GfxDecode(512, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, SolomonTempRom, SolomonSprites);
 
 	// Setup the Z80 emulation
@@ -412,42 +406,23 @@ static INT32 SolomonInit()
 	ZetOpen(0);
 	ZetSetReadHandler(SolomonRead1);
 	ZetSetWriteHandler(SolomonWrite1);
-	ZetMapArea(0x0000, 0xbfff, 0, SolomonZ80Rom1         );
-	ZetMapArea(0x0000, 0xbfff, 2, SolomonZ80Rom1         );
-	ZetMapArea(0xc000, 0xcfff, 0, SolomonZ80Ram1         );
-	ZetMapArea(0xc000, 0xcfff, 1, SolomonZ80Ram1         );
-	ZetMapArea(0xc000, 0xcfff, 2, SolomonZ80Ram1         );
-	ZetMapArea(0xd000, 0xd3ff, 0, SolomonColourRam       );
-	ZetMapArea(0xd000, 0xd3ff, 1, SolomonColourRam       );
-	ZetMapArea(0xd000, 0xd3ff, 2, SolomonColourRam       );
-	ZetMapArea(0xd400, 0xd7ff, 0, SolomonVideoRam        );
-	ZetMapArea(0xd400, 0xd7ff, 1, SolomonVideoRam        );
-	ZetMapArea(0xd400, 0xd7ff, 2, SolomonVideoRam        );
-	ZetMapArea(0xd800, 0xdbff, 0, SolomonBgColourRam     );
-	ZetMapArea(0xd800, 0xdbff, 1, SolomonBgColourRam     );
-	ZetMapArea(0xd800, 0xdbff, 2, SolomonBgColourRam     );
-	ZetMapArea(0xdc00, 0xdfff, 0, SolomonBgVideoRam      );
-	ZetMapArea(0xdc00, 0xdfff, 1, SolomonBgVideoRam      );
-	ZetMapArea(0xdc00, 0xdfff, 2, SolomonBgVideoRam      );
-	ZetMapArea(0xe000, 0xe07f, 0, SolomonSpriteRam       );
-	ZetMapArea(0xe000, 0xe07f, 1, SolomonSpriteRam       );
-	ZetMapArea(0xe000, 0xe07f, 2, SolomonSpriteRam       );
-	ZetMapArea(0xe400, 0xe5ff, 0, SolomonPaletteRam      );
-	ZetMapArea(0xe400, 0xe5ff, 1, SolomonPaletteRam      );
-	ZetMapArea(0xe400, 0xe5ff, 2, SolomonPaletteRam      );
-	ZetMapArea(0xf000, 0xffff, 0, SolomonZ80Rom1 + 0xf000);
-	ZetMapArea(0xf000, 0xffff, 2, SolomonZ80Rom1 + 0xf000);
+	ZetMapMemory(SolomonZ80Rom1,     0x0000, 0xbfff, MAP_ROM);
+    ZetMapMemory(SolomonZ80Ram1,     0xc000, 0xcfff, MAP_RAM);
+    ZetMapMemory(SolomonColourRam,   0xd000, 0xd3ff, MAP_RAM);
+    ZetMapMemory(SolomonVideoRam,    0xd400, 0xd7ff, MAP_RAM);
+    ZetMapMemory(SolomonBgColourRam, 0xd800, 0xdbff, MAP_RAM);
+    ZetMapMemory(SolomonBgVideoRam,  0xdc00, 0xdfff, MAP_RAM);
+    ZetMapMemory(SolomonSpriteRam,   0xe000, 0xe07f, MAP_RAM);
+    ZetMapMemory(SolomonPaletteRam,  0xe400, 0xe5ff, MAP_RAM);
+    ZetMapMemory(SolomonZ80Rom1 + 0xf000, 0xf000, 0xffff, MAP_ROM);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(SolomonRead2);
 	ZetSetOutHandler(SolomonPortWrite2);
-	ZetMapArea(0x0000, 0x3fff, 0, SolomonZ80Rom2         );
-	ZetMapArea(0x0000, 0x3fff, 2, SolomonZ80Rom2         );
-	ZetMapArea(0x4000, 0x47ff, 0, SolomonZ80Ram2         );
-	ZetMapArea(0x4000, 0x47ff, 1, SolomonZ80Ram2         );
-	ZetMapArea(0x4000, 0x47ff, 2, SolomonZ80Ram2         );
+	ZetMapMemory(SolomonZ80Rom2, 0x0000, 0x3fff, MAP_ROM);
+    ZetMapMemory(SolomonZ80Ram2, 0x4000, 0x47ff, MAP_RAM);
 	ZetClose();
 
 	BurnFree(SolomonTempRom);
@@ -458,6 +433,7 @@ static INT32 SolomonInit()
 	AY8910SetAllRoutes(0, 0.12, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.12, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.12, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 
@@ -665,55 +641,30 @@ static INT32 SolomonDraw()
 
 static INT32 SolomonFrame()
 {
-	INT32 nInterleave = 2;
-	INT32 nSoundBufferPos = 0;
-
 	if (SolomonReset) SolomonDoReset();
 
 	SolomonMakeInputs();
 
-	nCyclesTotal[0] = 4000000 / 60;
-	nCyclesTotal[1] = 3072000 / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nInterleave = 8;
+    INT32 nCyclesTotal[2] = { 4000000 / 60, 3072000 / 60 };
+    INT32 nCyclesDone[2] = { 0, 0 };
+
+    ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run Z80 #1
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 1) if(SolomonIrqFire) ZetNmi();
+		ZetOpen(0);
+        CPU_RUN(0, Zet);
+        if (i == nInterleave-1 && SolomonIrqFire) ZetNmi();
 		ZetClose();
 
-		// Run Z80 #2
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		ZetOpen(1);
+        CPU_RUN(1, Zet);
+        if ((i%4) == 3) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // 2x/frame
 		ZetClose();
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) SolomonDraw();
@@ -721,7 +672,7 @@ static INT32 SolomonFrame()
 	return 0;
 }
 
-static INT32 SolomonScan(INT32 nAction,INT32 *pnMin)
+static INT32 SolomonScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 

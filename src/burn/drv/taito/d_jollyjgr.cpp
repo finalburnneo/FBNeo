@@ -27,10 +27,6 @@ static UINT8 tilemap_bank;
 static UINT8 bitmap_disable;
 static UINT8 nmi_enable;
 
-static INT16 *dcbuf; // for dc offset removal, fspiderb has a huge dc offset (ay8910)
-static INT16 dc_lastin;
-static INT16 dc_lastout;
-
 static INT32 jollyjgrmode = 0;
 
 static UINT8 DrvJoy1[8];
@@ -291,9 +287,6 @@ static INT32 DrvDoReset()
 	bitmap_disable = 0;
 	nmi_enable = 0;
 
-	dc_lastin = 0;
-	dc_lastout = 0;
-
 	return 0;
 }
 
@@ -318,8 +311,6 @@ static INT32 MemIndex()
 	DrvBmpRAM		= Next; Next += 0x006000;
 
 	RamEnd			= Next;
-
-	dcbuf          = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -599,21 +590,6 @@ static INT32 FspiderbDraw()
 	return 0;
 }
 
-static void dcfilter()
-{
-	for (INT32 i = 0; i < nBurnSoundLen; i++) {
-		INT16 r = dcbuf[i*2+0]; // stream is mono, ignore 'l'.
-		//INT16 l = dcbuf[i*2+1];
-
-		INT16 out = r - dc_lastin + 0.995 * dc_lastout;
-
-		dc_lastin = r;
-		dc_lastout = out;
-		pBurnSoundOut[i*2+0] = out;
-		pBurnSoundOut[i*2+1] = out;
-	}
-}
-
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -640,10 +616,10 @@ static INT32 DrvFrame()
 	if (nmi_enable) ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 	ZetClose();
 
-	if (pBurnSoundOut) {
-		AY8910Render(dcbuf, nBurnSoundLen);
-		dcfilter();
-	}
+    if (pBurnSoundOut) {
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+        BurnSoundDCFilter();
+    }
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -676,9 +652,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(tilemap_bank);
 		SCAN_VAR(bitmap_disable);
 		SCAN_VAR(nmi_enable);
-
-		SCAN_VAR(dc_lastin);
-		SCAN_VAR(dc_lastout);
 	}
 
 	return 0;

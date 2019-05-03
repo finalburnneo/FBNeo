@@ -85,7 +85,7 @@ typedef void (*MakeInputs)();
 static MakeInputs MakeInputsFunction;
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
+
 /*==============================================================================================
 Input Definitions
 ===============================================================================================*/
@@ -4408,12 +4408,12 @@ Reset Functions
 static INT32 System1DoReset()
 {
 	if (IsSystem2 || Sys1UsePPI) {
-		ppi8255_init(1); // this resets the 8255ppi, needed or wbml reset fails (bad sound, or rom errors)
+		ppi8255_reset(); // this resets the 8255ppi, needed or wbml reset fails (bad sound, or rom errors)
 	}
 
 	memset (RamStart, 0, RamEnd - RamStart);
 
-	ZetReset(0);
+    ZetReset(0);
 	ZetReset(1);
 
 	SN76496Reset();
@@ -5101,6 +5101,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	SN76489AInit(1, 4000000, 1);
 	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -5268,6 +5269,7 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	SN76489AInit(1, 4000000, 1);
 	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -6291,7 +6293,6 @@ Frame functions
 INT32 System1Frame()
 {
 	INT32 nInterleave = 10;
-	INT32 nSoundBufferPos = 0;
 
 	if (System1Reset)
 	{
@@ -6303,45 +6304,19 @@ INT32 System1Frame()
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run Z80 #1
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 9) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		ZetOpen(0);
+        CPU_RUN(0, Zet);
+        if (i == 9) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 2 || i == 4 || i == 6 || i == 8) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		ZetOpen(1);
+        CPU_RUN(1, Zet);
+        if (i == 2 || i == 4 || i == 6 || i == 8) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-		}
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) System1Draw();

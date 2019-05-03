@@ -76,10 +76,6 @@ void system_frame(INT32 skip_render)
 
                 if(vdp.reg[0x00] & 0x10)
 				{
-					/*if (!(ZetTotalCycles() % CYCLES_PER_LINE)) {
-						ZetRun(1);
-						z80cnt++;
-						}*/
 					ZetRun(16);
 					ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
                 }
@@ -113,8 +109,7 @@ void system_frame(INT32 skip_render)
 			} else {
 				memset(pSoundBuf, 0, nSegmentLength * 2 * sizeof(INT16));
 			}
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			
+
 			nSoundBufferPos += nSegmentLength;
 		}
 
@@ -134,9 +129,9 @@ void system_frame(INT32 skip_render)
 			} else {
 				memset(pSoundBuf, 0, nSegmentLength * 2 * sizeof(INT16));
 			}
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-		}
-	}
+        }
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
+    }
 }
 
 

@@ -1481,11 +1481,11 @@ static INT32 DrvFrame()
 
 	ZetOpen(1);
 
-	if (pBurnSoundOut) {
-		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		MSM5232Update(pBurnSoundOut, nBurnSoundLen);
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-	}
+    if (pBurnSoundOut) {
+        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+        MSM5232Update(pBurnSoundOut, nBurnSoundLen);
+        DACUpdate(pBurnSoundOut, nBurnSoundLen);
+    }
 
 	ZetClose();
 

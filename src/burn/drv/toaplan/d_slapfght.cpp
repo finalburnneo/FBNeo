@@ -895,8 +895,8 @@ static void sound_init(INT32 sound_clock)
 	AY8910SetPorts(0, &read_input0, &read_input1, NULL, NULL);
 	AY8910SetPorts(1, &read_dip0, &read_dip1, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-    AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(ZetTotalCycles, cpu_clock / 2);
+	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, cpu_clock / 2);
 }
 
 static INT32 PerfrmanInit()
@@ -1175,9 +1175,9 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-        CPU_RUN(0, Zet);
+		CPU_RUN(0, Zet);
 
-        if (i == 15) {
+		if (i == 15) {
 			vblank = 0;
 		}
 
@@ -1189,22 +1189,22 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-        CPU_RUN(1, Zet);
+		CPU_RUN(1, Zet);
 
 		if (((i % (nInterleave / nSndIrqFrame)) == ((nInterleave / nSndIrqFrame) - 1)) && sound_nmi_enable) {
 			ZetNmi();
 		}
 		ZetClose();
 
-        if (has_mcu) {
-            CPU_RUN_SYNCINT(2, m6805);
+		if (has_mcu) {
+			CPU_RUN_SYNCINT(2, m6805);
 		}
 	}
 
 	if (has_mcu) m6805Close();
 
 	if (pBurnSoundOut) {
-        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

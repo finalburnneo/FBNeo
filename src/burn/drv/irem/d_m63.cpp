@@ -823,7 +823,7 @@ static INT32 DrvDraw()
 
 	draw_bg_layer();
 	draw_sprites();
-    draw_fg_layer();
+	draw_fg_layer();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -862,8 +862,8 @@ static INT32 DrvFrame()
 		}
 	}
 
-    I8039NewFrame();
-    ZetNewFrame();
+	I8039NewFrame();
+	ZetNewFrame();
 
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2]  = { 0, 0 };
@@ -873,9 +873,9 @@ static INT32 DrvFrame()
 	I8039Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
-    {
-        CPU_RUN(0, Zet);
-        CPU_RUN(1, I8039);
+	{
+		CPU_RUN(0, Zet);
+		CPU_RUN(1, I8039);
 	}
 
 	if (sound_interrupt_count == 30) { // some games, every other frame

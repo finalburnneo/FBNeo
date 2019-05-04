@@ -483,7 +483,7 @@ static INT32 DrvInit(INT32 type)
 	AY8910SetAllRoutes(0, 0.13, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.13, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.13, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(ZetTotalCycles, 3072000);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -615,7 +615,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-    ZetNewFrame();
+	ZetNewFrame();
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 4000000 / 60, 3072000 / 60 };
@@ -624,12 +624,12 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-        CPU_RUN(0, Zet);
+		CPU_RUN(0, Zet);
 		if (nmi_mask && i == (nInterleave - 1)) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);
-        CPU_RUN(1, Zet);
+		CPU_RUN(1, Zet);
 		if (i == ((nInterleave / 2) - 1) || i == (nInterleave - 1)) {
 			ZetSetVector(2);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -638,7 +638,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

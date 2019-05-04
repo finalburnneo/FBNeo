@@ -597,7 +597,7 @@ static INT32 DrvInit()
 	AY8910Init(0, 1250000, 0);
 	AY8910SetPorts(0, NULL, NULL, &stratvox_sn76477_write, NULL);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(ZetTotalCycles, 2500000);
+	AY8910SetBuffered(ZetTotalCycles, 2500000);
 
 	DACInit(0, 0, 1, DrvDACSync);
 	DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
@@ -756,18 +756,18 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-        CPU_RUN(0, Zet);
-        if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		CPU_RUN(0, Zet);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-        CPU_RUN(1, Zet);
-        ZetClose();
+		CPU_RUN(1, Zet);
+		ZetClose();
 	}
 
 	if (pBurnSoundOut) {
-        AY8910Render(pBurnSoundOut, nBurnSoundLen);
-        SN76477_sound_update(0, pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		SN76477_sound_update(0, pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

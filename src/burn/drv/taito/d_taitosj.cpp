@@ -2424,19 +2424,19 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-        ZetOpen(0);
-        CPU_RUN(0, Zet);
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-        CPU_RUN(1, Zet);
+		CPU_RUN(1, Zet);
 		if (sound_irq_timer == 419) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // 36HZ
 		ZetClose();
 
 		if (has_mcu) {
-            ZetOpen(0);
-            CPU_RUN(2, m6805);
+			ZetOpen(0);
+			CPU_RUN(2, m6805);
 			ZetClose();
 		}
 
@@ -2450,7 +2450,7 @@ static INT32 DrvFrame()
 	ZetOpen(1);
 
 	if (pBurnSoundOut) {
-        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

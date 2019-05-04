@@ -915,7 +915,7 @@ static INT32 PkunwarInit()
 	AY8910SetPorts(1, &pkunwar_port_2, &pkunwar_port_3, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(ZetTotalCycles, 3000000);
+	AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	GenericTilesInit();
 
@@ -971,7 +971,7 @@ static INT32 NovaInit()
 	AY8910SetPorts(1, &nova2001_port_3, &nova2001_port_4, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(ZetTotalCycles, 3000000);
+	AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	GenericTilesInit();
 
@@ -1058,7 +1058,7 @@ static INT32 NinjakunInit()
 	AY8910SetPorts(0, &nova2001_port_3, &nova2001_port_4, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(ZetTotalCycles, 3000000);
+	AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	GenericTilesInit();
 
@@ -1122,7 +1122,7 @@ static INT32 Raiders5Init()
 	AY8910SetPorts(1, &nova2001_port_3, &nova2001_port_4, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(ZetTotalCycles, 3000000);
+	AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	GenericTilesInit();
 
@@ -1489,17 +1489,17 @@ static INT32 NovaFrame()
 	}
 
 	vblank = 0;
-    ZetNewFrame();
+	ZetNewFrame();
 
-    INT32 nInterleave = 256;
-    INT32 nCyclesTotal[1] = { 3000000 / 60 };
-    INT32 nCyclesDone[1]  = { 0 };
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[1] = { 3000000 / 60 };
+	INT32 nCyclesDone[1]  = { 0 };
 
-    ZetOpen(0);
+	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, Zet);
 
-        if (i == 240) {
+		if (i == 240) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			vblank = 0x80;
 		}
@@ -1531,17 +1531,17 @@ static INT32 PkunwarFrame()
 	}
 
 	vblank = 0;
-    ZetNewFrame();
+	ZetNewFrame();
 
-    INT32 nInterleave = 256;
-    INT32 nCyclesTotal[1] = { 3000000 / 60 };
-    INT32 nCyclesDone[1]  = { 0 };
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[1] = { 3000000 / 60 };
+	INT32 nCyclesDone[1]  = { 0 };
 
-    ZetOpen(0);
+	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, Zet);
 
-        if (i == 240) {
+		if (i == 240) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			vblank = 1;
 		}
@@ -1574,15 +1574,15 @@ static INT32 Raiders5Frame()
 	}
 
 	vblank = 0;
-    ZetNewFrame();
+	ZetNewFrame();
 
 	INT32 nInterleave = 2000; // needs high interleave
-    INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
-    INT32 nCyclesDone[2]  = { 0, 0 };
+	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
+	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
-        CPU_RUN(0, Zet);
+		CPU_RUN(0, Zet);
 
 		if (i == 1880) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -1591,7 +1591,7 @@ static INT32 Raiders5Frame()
 		ZetClose();
 
 		ZetOpen(1);
-        CPU_RUN(1, Zet);
+		CPU_RUN(1, Zet);
 
 		if (i%(nInterleave/4) == (nInterleave/4)-10) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -1625,33 +1625,33 @@ static INT32 NinjakunFrame()
 	}
 
 	vblank = 0;
-    ZetNewFrame();
+	ZetNewFrame();
 
-    INT32 nInterleave = 256;
-    INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
-    INT32 nCyclesDone[2]  = { 0, 0 };
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
+	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
-        CPU_RUN(0, Zet);
+		CPU_RUN(0, Zet);
 
-        if (i == 224) {
+		if (i == 224) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			vblank = 1;
 		}
 		ZetClose();
 
 		ZetOpen(1);
-        CPU_RUN(1, Zet);
+		CPU_RUN(1, Zet);
 
 		if (i == 32 || i == 96 || i == 160 || i == 224) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-        ZetClose();
+		ZetClose();
 
-        if (i == 224 && pBurnDraw) {
-            NinjakunDraw();
-        }
+		if (i == 224 && pBurnDraw) {
+			NinjakunDraw();
+		}
 	}
 
 	if (pBurnSoundOut) {

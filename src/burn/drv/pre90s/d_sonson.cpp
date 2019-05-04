@@ -415,7 +415,7 @@ static INT32 DrvInit()
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(M6809TotalCycles, 2000000);
+	AY8910SetBuffered(M6809TotalCycles, 2000000);
 
 	DrvDoReset();
 
@@ -554,16 +554,16 @@ static INT32 DrvFrame()
 		}
 	}
 
-    M6809NewFrame();
+	M6809NewFrame();
 
-    INT32 nInterleave = 16;
+	INT32 nInterleave = 16;
 	INT32 nCyclesTotal[2] =  { 2000000 / 60, 2000000 / 60 };
 	INT32 nCyclesDone[2] =  { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		M6809Open(0);
-        CPU_RUN(0, M6809);
-        if (i == (nInterleave - 1)) {
+		CPU_RUN(0, M6809);
+		if (i == (nInterleave - 1)) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		M6809Close();
@@ -573,15 +573,15 @@ static INT32 DrvFrame()
 			M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			DrvSoundIrqTrigger = 0;
 		}
-        CPU_RUN(1, M6809);
-        if (i == 3 || i == 7 || i == 11 || i == 15) {
+		CPU_RUN(1, M6809);
+		if (i == 3 || i == 7 || i == 11 || i == 15) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		M6809Close();
 	}
 
 	if (pBurnSoundOut) {
-        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

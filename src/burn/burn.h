@@ -190,9 +190,12 @@ struct BurnDIPInfo {
 
 
 // ---------------------------------------------------------------------------
-// Common CPU definitions 
+// Common CPU definitions
 
+// sync to nCyclesDone[]
 #define CPU_RUN(num,proc) do { nCyclesDone[num] += proc ## Run(((i + 1) * nCyclesTotal[num] / nInterleave) - nCyclesDone[num]); } while (0)
+// sync to cpuTotalCycles()
+#define CPU_RUN_SYNCINT(num,proc) do { nCyclesDone[num] += proc ## Run(((i + 1) * nCyclesTotal[num] / nInterleave) - proc ## TotalCycles()); } while (0)
 
 #define CPU_IRQSTATUS_NONE	0
 #define CPU_IRQSTATUS_ACK	1

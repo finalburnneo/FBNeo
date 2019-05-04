@@ -2,7 +2,6 @@
 // Based on MAME driver by Zsolt Vasvari
 
 // To do:
-//  figure out why it needs to be overclocked for the music to sound right.
 //	verify bootleg set 2 sound
 
 #include "tiles_generic.h"
@@ -39,20 +38,20 @@ static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo AtetrisInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 right"	},
 	{"P1 Button",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 right"	},
 	{"P2 Button",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dips",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dips",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Atetris)
@@ -121,39 +120,44 @@ static inline void DrvPaletteUpdate(UINT16 offset)
 	DrvPalette[offset] = BurnHighCol(r, g, b, 0);
 }
 
+static INT32 allpot0(INT32 offs)
+{
+    return (DrvInputs[0] & ~0x40) | (vblank << 6);
+}
+
+static INT32 allpot1(INT32 offs)
+{
+    return DrvInputs[1];
+}
+
 static UINT8 atetris_read(UINT16 address)
 {
 	if ((address & 0xc000) == 0x4000) {
 		return atetris_slapstic_read(address);
 	}
 
-// The following should be read through the Pokey, but.. not for now.
-#if 0
 	if (is_Bootleg)
-#endif
 	{
 		switch (address & ~0x03e0)
 		{
 			case 0x2808:
-				return DrvInputs[0] | vblank;
+                return (DrvInputs[0] & ~0x40) | (vblank << 6);
 
 			case 0x2818:
 				return DrvInputs[1];
 		}
 	}
-#if 0
 	else
 	{
 		switch (address & ~0x03ef)
 		{
 			case 0x2800:
-				return 0; // pokey1
+				return pokey_read(0, address & 0xf);
 
 			case 0x2810:
-				return 0; // pokey2
+				return pokey_read(1, address & 0xf);
 		}
 	}
-#endif
 	return 0;
 }
 
@@ -194,15 +198,15 @@ static void atetris_write(UINT16 address, UINT8 data)
 	{
 		switch (address & ~0x03ef)
 		{
-			case 0x2800: // pokey1
-				pokey1_w(address - 0x2800, data);
+			case 0x2800:
+				pokey1_w(address & 0xf, data);
 			return;
 
-			case 0x2810: // pokey2
-				pokey2_w(address - 0x2800, data);
+			case 0x2810:
+				pokey2_w(address & 0xf, data);
 			return;
 		}
-	}			
+    }
 
 	switch (address & ~0x03ff)
 	{
@@ -222,7 +226,6 @@ static void atetris_write(UINT16 address, UINT8 data)
 			// coin counter - (data & 0x20) -> 0, (data & 0x10) -> 1
 		return;
 	}
-	bprintf(0, _T("unmapped %X data %X\n"), address, data);
 }
 
 static INT32 DrvDoReset(INT32 full_reset)
@@ -332,7 +335,9 @@ static INT32 CommonInit(INT32 boot)
 		SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 		SN76496SetRoute(2, 0.50, BURN_SND_ROUTE_BOTH);
 	} else {
-		PokeyInit(0, 2, 1.00, 0);
+        PokeyInit(master_clock, 2, 1.00, 0);
+        PokeyAllPotCallback(0, allpot0);
+        PokeyAllPotCallback(1, allpot1);
 	}
 
 	GenericTilesInit();
@@ -363,24 +368,6 @@ static INT32 DrvExit()
 
 	return 0;
 }
-
-#if 0
-static void DrawLayer()
-{
-	for (INT32 offs = 0; offs < 64 * 32; offs++)
-	{
-		INT32 sx = (offs & 0x3f) * 8;
-		INT32 sy = (offs / 0x40) * 8;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		INT32 code  = DrvVidRAM[offs * 2 + 0] | ((DrvVidRAM[offs * 2 + 1] & 0x07) << 8);
-		INT32 color = DrvVidRAM[offs * 2 + 1] >> 4;
-
-		Render8x8Tile(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM);
-	}
-}
-#endif
 
 static INT32 DrvDraw()
 {
@@ -420,31 +407,29 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 262;
-	INT32 nCyclesTotal[1] = { master_clock*8 / 60 };
+	INT32 nCyclesTotal[1] = { master_clock / 60 };
 	INT32 nCyclesDone[1] = { 0 };
 
 	M6502Open(0);
 
-	vblank = 0;
+	vblank = 1;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
+        CPU_RUN(0, M6502);
 
-		if (i%6==0) {
-			M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
-		}
+        if (i == 48 || i == 112 || i == 176 || i == 240) {
+            M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+        }
 
-		if (i == 240) vblank = 0x40;
+		if (i == 240) vblank = 0;
 	}
 
 	M6502Close();
 
 	if (pBurnSoundOut) {
 		if (is_Bootleg) { // Bootleg set 2 sound system
-			SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-			SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
-			SN76496Update(2, pBurnSoundOut, nBurnSoundLen);
+			SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		} else {
 			pokey_update(pBurnSoundOut, nBurnSoundLen);
 		}

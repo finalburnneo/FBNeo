@@ -51,52 +51,52 @@ static UINT8 DrvReset;
 static UINT8 fourwaymode     = 0;        // enabled or disabled (per-game)
 
 static struct BurnInputInfo LadybugInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 7,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 7,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Ladybug)
 
 static struct BurnInputInfo SraiderInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Sraider)
@@ -395,7 +395,7 @@ static struct BurnDIPInfo SraiderDIPList[]=
 
 STDDIPINFO(Sraider)
 
-void __fastcall ladybug_write(UINT16 address, UINT8 data)
+static void __fastcall ladybug_write(UINT16 address, UINT8 data)
 {
 	switch (address & 0xf000)
 	{
@@ -413,7 +413,7 @@ void __fastcall ladybug_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall ladybug_read(UINT16 address)
+static UINT8 __fastcall ladybug_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -448,7 +448,7 @@ UINT8 __fastcall ladybug_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall sraider_main_write(UINT16 address, UINT8 data)
+static void __fastcall sraider_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -462,7 +462,7 @@ void __fastcall sraider_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-void __fastcall sraider_sub_write(UINT16 address, UINT8 data)
+static void __fastcall sraider_sub_write(UINT16 address, UINT8 data)
 {
 	if (address == 0xe800) {
 		*flipscreen 	= data & 0x80;
@@ -472,7 +472,7 @@ void __fastcall sraider_sub_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall sraider_sub_read(UINT16 address)
+static UINT8 __fastcall sraider_sub_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -486,7 +486,7 @@ UINT8 __fastcall sraider_sub_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall sraider_sub_out(UINT16 port, UINT8 data)
+static void __fastcall sraider_sub_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -514,8 +514,6 @@ void __fastcall sraider_sub_out(UINT16 port, UINT8 data)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	ZetReset(0);
@@ -692,13 +690,13 @@ static INT32 DrvInit(INT32 game_select)
 				if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  4, 1)) return 1;
 				if (BurnLoadRom(DrvZ80ROM0 + 0x05000,  5, 1)) return 1;
 				memcpy (DrvZ80Ops0, DrvZ80ROM0, 0x10000);
-		
+
 				if (BurnLoadRom(DrvGfxROM0 + 0x00000,  6, 1)) return 1;
 				if (BurnLoadRom(DrvGfxROM0 + 0x01000,  7, 1)) return 1;
-		
+
 				if (BurnLoadRom(DrvGfxROM1 + 0x00000,  8, 1)) return 1;
 				if (BurnLoadRom(DrvGfxROM1 + 0x01000,  9, 1)) return 1;
-		
+
 				if (BurnLoadRom(DrvColPROM + 0x00000, 10, 1)) return 1;
 				if (BurnLoadRom(DrvColPROM + 0x00020, 11, 1)) return 1;
 
@@ -715,12 +713,12 @@ static INT32 DrvInit(INT32 game_select)
 				if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  4, 1)) return 1;
 				if (BurnLoadRom(DrvZ80ROM0 + 0x05000,  5, 1)) return 1;
 				memcpy (DrvZ80Ops0, DrvZ80ROM0, 0x10000);
-		
+
 				if (BurnLoadRom(DrvGfxROM0 + 0x00000,  6, 1)) return 1;
 				if (BurnLoadRom(DrvGfxROM0 + 0x01000,  7, 1)) return 1;
-		
+
 				if (BurnLoadRom(DrvGfxROM1 + 0x00000,  8, 1)) return 1;
-		
+
 				if (BurnLoadRom(DrvColPROM + 0x00000,  9, 1)) return 1;
 				if (BurnLoadRom(DrvColPROM + 0x00020, 10, 1)) return 1;
 			}
@@ -731,10 +729,10 @@ static INT32 DrvInit(INT32 game_select)
 				if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 				if (BurnLoadRom(DrvZ80ROM0 + 0x02000,  1, 1)) return 1;
 				if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  2, 1)) return 1;
-		
+
 				if (BurnLoadRom(DrvGfxROM0 + 0x00000,  3, 1)) return 1;
 				if (BurnLoadRom(DrvGfxROM0 + 0x01000,  4, 1)) return 1;
-		
+
 				if (BurnLoadRom(DrvGfxROM1 + 0x00000,  5, 1)) return 1;
 				if (BurnLoadRom(DrvGfxROM1 + 0x01000,  6, 1)) return 1;
 
@@ -768,6 +766,7 @@ static INT32 DrvInit(INT32 game_select)
 	SN76489Init(1, 4000000, 1);
 	SN76496SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -840,6 +839,7 @@ static INT32 SraiderInit()
 	SN76496SetRoute(2, 0.60, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(3, 0.60, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(4, 0.60, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -1139,8 +1139,8 @@ static INT32 DrvFrame()
 	{
 		INT32 previous = DrvInputs[3] ^ 0xff;
 
-		DrvInputs[0] = 0x00; // p1. active=low conv. happens after the 4-way conv.
-		DrvInputs[1] = 0x00; // p2. ""
+		DrvInputs[0] = 0xff;
+		DrvInputs[1] = 0xff;
 		DrvInputs[2] = 0xff;
 		DrvInputs[3] = 0xff;
 
@@ -1150,40 +1150,39 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
-		if ((previous & 1) != (~DrvInputs[3] & 1)) coin |= 1;
-		if ((previous & 2) != (~DrvInputs[3] & 2)) coin |= 2;
+		if ((~previous & 1) && (~DrvInputs[3] & 1)) coin |= 1;
+		if ((~previous & 2) && (~DrvInputs[3] & 2)) coin |= 2;
 		DrvInputs[1] &= 0x7f;
 	}
 
 	if (fourwaymode) {
 		// Convert to 4-way
-		ProcessJoystick(&DrvInputs[0], 0, 3,1,0,2, INPUT_4WAY);
-		ProcessJoystick(&DrvInputs[1], 1, 3,1,0,2, INPUT_4WAY);
+		ProcessJoystick(&DrvInputs[0], 0, 3,1,0,2, INPUT_4WAY | INPUT_ISACTIVELOW);
+		ProcessJoystick(&DrvInputs[1], 1, 3,1,0,2, INPUT_4WAY | INPUT_ISACTIVELOW);
 	}
 
-	DrvInputs[0] = ~DrvInputs[0]; // convert to active=low
-	DrvInputs[1] = ~DrvInputs[1];
-
 	ZetOpen(0);
-	if (coin & 1) Z80SetIrqLine(0x20, DrvJoy4[0] ? Z80_ASSERT_LINE : Z80_CLEAR_LINE);
-	if (coin & 2) Z80SetIrqLine(0x00, DrvJoy4[1] ? Z80_ASSERT_LINE : Z80_CLEAR_LINE);
+
+    if (coin & 1) ZetNmi();
+	if (coin & 2) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 	vblank = 0xc0;
 
-	for (INT32 i = 0; i < 32; i++) {
-		if (i ==  5) vblank = 0;
-		if (i == 31) vblank = 0xc0;
+	INT32 nInterleave = 100;
+	INT32 nCyclesTotal[1] = { 4000000 / 60 };
+    INT32 nCyclesDone[1] = { 0 };
 
-		INT32 nSegment = (4000000 / 60) / 32;
+	for (INT32 i = 0; i < nInterleave; i++) {
+        CPU_RUN(0, Zet);
 
-		ZetRun(nSegment);
+        if (i == 15) vblank = 0;
+		if (i == nInterleave-1) vblank = 0xc0;
 	}
 
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -1208,46 +1207,24 @@ static INT32 SraiderFrame()
 	}
 
 	INT32 nInterleave = 100;
-	INT32 nTotalCycles[2] = { 4000000 / 60, 4000000 / 60 };
-	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[2] = { 4000000 / 60, 4000000 / 60 };
+    INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
-		ZetRun(nTotalCycles[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		ZetRun(nTotalCycles[1] / nInterleave);
+		CPU_RUN(1, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-			SN76496Update(2, pSoundBuf, nSegmentLength);
-			SN76496Update(3, pSoundBuf, nSegmentLength);
-			SN76496Update(4, pSoundBuf, nSegmentLength);
-
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-			SN76496Update(2, pSoundBuf, nSegmentLength);
-			SN76496Update(3, pSoundBuf, nSegmentLength);
-			SN76496Update(4, pSoundBuf, nSegmentLength);
-		}
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
 
 	if (pBurnDraw) {
 		SraiderDraw();

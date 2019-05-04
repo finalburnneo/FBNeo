@@ -1196,8 +1196,8 @@ static INT32 DrvFrame()
 		}
 		ZetClose();
 
-		if (has_mcu) {
-			m6805Run((((i + 1) * nCyclesTotal[2]) / nInterleave) - m6805TotalCycles());
+        if (has_mcu) {
+            CPU_RUN_SYNCINT(2, m6805);
 		}
 	}
 

@@ -2424,19 +2424,19 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+        ZetOpen(0);
+        CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+        CPU_RUN(1, Zet);
 		if (sound_irq_timer == 419) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // 36HZ
 		ZetClose();
 
 		if (has_mcu) {
-			ZetOpen(0);
-            nCyclesDone[2] += m6805Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+            ZetOpen(0);
+            CPU_RUN(2, m6805);
 			ZetClose();
 		}
 

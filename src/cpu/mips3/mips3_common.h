@@ -1,6 +1,7 @@
 #ifndef COMMON
 #define COMMON
 
+#include "stdint.h" // for the *int*_t types
 #include "burnint.h"
 
 #ifdef __GNUC__

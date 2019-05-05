@@ -43059,7 +43059,7 @@ struct BurnDriver BurnDrvmd_tnglwdd = {
 // Bare Knuckle III (Hack By Twilight Translations)
 // Source: https://www.romhacking.net/translations/1375/
 static struct BurnRomInfo md_bk3eRomDesc[] = {
-	{ "bare knuckle iii (english translation).bin", 0x300000, 68917751, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "bare knuckle iii (english translation).bin", 0x300000, 0x68917751, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_bk3e)

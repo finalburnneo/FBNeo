@@ -235,7 +235,7 @@ void write_ioreg(cpu_state *cpu, dword addr, word value)
     const int reg = (addr >> 4) & 0x1F;
     cpu->io_regs[reg] = value;
     switch (reg) {
-    case PSIZE:  cpu->pshift = log2(value); break;
+    case PSIZE:  cpu->pshift = log2((double)value); break;
     case CONVDP: cpu->convdp = 1 << (~value & 0x1F); break;
     case CONVSP: cpu->convsp = 1 << (~value & 0x1F); break;
     case INTPEND:

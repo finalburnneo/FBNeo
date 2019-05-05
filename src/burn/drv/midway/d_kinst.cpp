@@ -6,7 +6,6 @@
 #include "mips3_intf.h"
 #include "ide.h"
 #include "dcs2k.h"
-#include <stdio.h>
 
 #define IDE_IRQ     1
 #define VBLANK_IRQ  0

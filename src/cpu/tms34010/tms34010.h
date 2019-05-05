@@ -5,7 +5,7 @@
 #ifndef TMS34010_H
 #define TMS34010_H
 
-#include "stdint.h"
+#include "burnint.h"
 #include <string>
 //#include <list>
 //#include <fstream>

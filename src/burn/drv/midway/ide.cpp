@@ -339,12 +339,11 @@ unsigned ide_disk::read_alternate(unsigned offset)
     return 0;
 }
 
-bool ide_disk::load_disk_image(const string &filename)
+bool ide_disk::load_disk_image(const char *filename)
 {
 	char szFilePath[MAX_PATH];
-	const char *szFileName = filename.c_str();
 
-	sprintf(szFilePath, "%s%s", _TtoA(szAppHDDPath), szFileName);
+	sprintf(szFilePath, "%s%s", _TtoA(szAppHDDPath), filename);
 
 	m_disk_image = fopen(szFilePath, "r+b");
 	if (!m_disk_image) {

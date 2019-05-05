@@ -1,7 +1,6 @@
 #ifndef IDE
 #define IDE
 
-#include <string>
 #include "burnint.h"
 
 namespace ide
@@ -17,7 +16,7 @@ public:
     void write_alternate(unsigned offset, unsigned value);
     unsigned read(unsigned offset);
     unsigned read_alternate(unsigned offset);
-    bool load_disk_image(const string &filename);
+    bool load_disk_image(const char *filename);
 	void close_disk_image();
 	int load_hdd_image(int idx);
     ide_disk();

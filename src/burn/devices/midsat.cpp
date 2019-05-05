@@ -178,7 +178,7 @@ void midsatNewFrame()
     M6800NewFrame();
 }
 
-INT32 midsat_run(INT32 cycles)
+INT32 midsatRun(INT32 cycles)
 {
     if (midsat_in_reset) {
 		return cycles;

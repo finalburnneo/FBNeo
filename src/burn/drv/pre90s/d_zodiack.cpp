@@ -586,6 +586,7 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1536000, 0);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -750,21 +751,22 @@ static INT32 DrvFrame()
 	}
 
 	DrvMakeInputs();
+	ZetNewFrame();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 3072000 / 60;
+	INT32 nCyclesTotal[2] = { 3072000 / 60, 3072000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		ZetRun(nCyclesTotal / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == nInterleave-1 && nmi_mask) ZetNmi();
 		if (i == 0) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		ZetRun(nCyclesTotal / nInterleave);
-
+		CPU_RUN(1, Zet);
 		if ((i % (nInterleave / 8) == (nInterleave / 8) - 1) && sub_nmi_mask)
 			ZetNmi();
 

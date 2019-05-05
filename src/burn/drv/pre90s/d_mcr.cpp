@@ -1502,56 +1502,42 @@ static INT32 DrvFrame()
     INT32 nInterleave = 480;
 	INT32 nCyclesTotal[3] = { nMainClock / 30, 2000000 / 30, 3579545 / 4 / 30 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
         mcr_interrupt(i);
 		ZetClose();
 
         if (has_ssio)
 		{
 			ZetOpen(1);
-            nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_RUN(1, Zet);
 			ssio_14024_clock(nInterleave);
 			ZetClose();
 		}
 
-        if (has_squak) {
-            nCyclesDone[2] += midsat_run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+		if (has_squak) {
+			CPU_RUN(2, midsat);
         }
 
         if (has_tcs) {
             M6809Open(0);
             if (tcs_reset_status())
             {
-                nCyclesDone[1] += M6809Idle(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+				CPU_IDLE(1, M6809);
             }
             else
-            {
-                nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			{
+				CPU_RUN(1, M6809);
             }
             M6809Close();
         }
-
-        // Render Sound Segment
-		if (pBurnSoundOut && (i%8)==7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/8);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
         BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
         if (has_squak) {
             midsat_update(pBurnSoundOut, nBurnSoundLen);

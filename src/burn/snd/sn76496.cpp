@@ -61,8 +61,8 @@ void UpdateStream(INT32 chip, INT32 samples_len)
     nSamplesNeeded -= nPosition[chip];
     if (nSamplesNeeded <= 0) return;
 
-	INT16 *mix = soundbuf[chip] + 5 + nPosition[chip];
-	memset(mix, 0, nSamplesNeeded * sizeof(INT16));
+	INT16 *mix = soundbuf[chip] + 5 + (nPosition[chip] * 2); // * 2 (stereo stream)
+	//memset(mix, 0, nSamplesNeeded * sizeof(INT16) * 2);
     //bprintf(0, _T("sn76496_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
 
     SN76496UpdateToBuffer(chip, mix, nSamplesNeeded);
@@ -75,7 +75,6 @@ void SN76496SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
     bprintf(0, _T("*** Using BUFFERED SN76496-mode.\n"));
     for (INT32 i = 0; i < NumChips; i++) {
         nPosition[i] = 0;
-        soundbuf[i] = (INT16*)BurnMalloc(0x1000);
     }
 
     sn76496_buffered = 1;
@@ -93,50 +92,59 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 
 	if (Num >= MAX_SN76496_CHIPS) return;
 
-	INT32 i;
 	struct SN76496 *R = Chips[Num];
 
-    if (sn76496_buffered) {
-        if (Length != nBurnSoundLen) {
-            bprintf(0, _T("SN76496Update() in buffered mode must be called once per frame!\n"));
-            return;
-        }
+	if (sn76496_buffered) {
+		if (Length != nBurnSoundLen) {
+			bprintf(0, _T("SN76496Update() in buffered mode must be called once per frame!\n"));
+			return;
+		}
+	} else {
+		nPosition[Num] = 0;
+	}
 
-        INT16 *pBufL = soundbuf[Num] + 5;
-        INT16 *pBufR = soundbuf[Num] + 5; // not impl yet for buffered! (stereo GG mode)
+	INT16 *mix = soundbuf[Num] + 5 + (nPosition[Num] * 2);
 
-        INT16 *mix = soundbuf[Num] + 5 + nPosition[Num];
+	SN76496UpdateToBuffer(Num, mix, Length - nPosition[Num]); // fill to end
 
-        SN76496UpdateToBuffer(Num, mix, nBurnSoundLen - nPosition[Num]); // fill to end
+	INT16 *pBuf = soundbuf[Num] + 5;
 
-        while (Length > 0) {
-            INT32 nLeftSample = 0, nRightSample = 0;
-            if ((R->nOutputDir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-                nLeftSample += (INT32)(pBufL[0] * R->nVolume);
-            }
-            if ((R->nOutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-                if (R->StereoMask != 0xFF)
-                    nRightSample += (INT32)(pBufR[0] * R->nVolume);
-                else
-                    nRightSample += (INT32)(pBufL[0] * R->nVolume);
-            }
+	while (Length > 0) {
+		if (R->bSignalAdd) {
+			pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + pBuf[0]);
+			pSoundBuf[1] = BURN_SND_CLIP(pSoundBuf[1] + pBuf[1]);
+		} else {
+			pSoundBuf[0] = BURN_SND_CLIP(pBuf[0]);
+			pSoundBuf[1] = BURN_SND_CLIP(pBuf[1]);
+		}
 
-            if (R->bSignalAdd) {
-                pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + nLeftSample);
-                pSoundBuf[1] = BURN_SND_CLIP(pSoundBuf[1] + nRightSample);
-            } else {
-                pSoundBuf[0] = BURN_SND_CLIP(nLeftSample);
-                pSoundBuf[1] = BURN_SND_CLIP(nRightSample);
-            }
+		pBuf += 2;
+		pSoundBuf += 2;
+		Length--;
+	}
 
-            pBufL++; pBufR++;
-            pSoundBuf += 2;
-            Length--;
-        }
+	nPosition[Num] = 0;
+}
 
-        nPosition[Num] = 0;
-        return;
+void SN76496Update(INT16* pSoundBuf, INT32 Length)
+{
+    for (INT32 i = 0; i < NumChips; i++) {
+        SN76496Update(i, pSoundBuf, Length);
     }
+}
+
+void SN76496UpdateToBuffer(INT32 Num, INT16* pSoundBuf, INT32 Length)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Update called without init\n"));
+	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496Update called with invalid chip %x\n"), Num);
+#endif
+
+	INT32 i;
+
+	if (Num >= MAX_SN76496_CHIPS) return;
+
+	struct SN76496 *R = Chips[Num];
 
 	while (Length > 0)
 	{
@@ -259,131 +267,10 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 				nRightSample += (INT32)(Out * R->nVolume);
 		}
 
-		if (R->bSignalAdd) {
-			pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + nLeftSample);
-			pSoundBuf[1] = BURN_SND_CLIP(pSoundBuf[1] + nRightSample);
-		} else {
-			pSoundBuf[0] = BURN_SND_CLIP(nLeftSample);
-			pSoundBuf[1] = BURN_SND_CLIP(nRightSample);
-		}
+		pSoundBuf[0] = BURN_SND_CLIP(nLeftSample);
+		pSoundBuf[1] = BURN_SND_CLIP(nRightSample);
 
 		pSoundBuf += 2;
-		Length--;
-	}
-}
-
-void SN76496Update(INT16* pSoundBuf, INT32 Length)
-{
-    for (INT32 i = 0; i < NumChips; i++) {
-        SN76496Update(i, pSoundBuf, Length);
-    }
-}
-
-void SN76496UpdateToBuffer(INT32 Num, INT16* pSoundBuf, INT32 Length)
-{
-#if defined FBA_DEBUG
-	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Update called without init\n"));
-	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496Update called with invalid chip %x\n"), Num);
-#endif
-
-	INT32 i;
-
-	if (Num >= MAX_SN76496_CHIPS) return;
-
-	struct SN76496 *R = Chips[Num];
-
-	while (Length > 0)
-	{
-		INT32 Vol[4];
-		UINT32 Out;
-		INT32 Left;
-
-
-		/* vol[] keeps track of how long each square wave stays */
-		/* in the 1 position during the sample period. */
-		Vol[0] = Vol[1] = Vol[2] = Vol[3] = 0;
-
-		for (i = 0;i < 3;i++)
-		{
-			if (R->Output[i]) Vol[i] += R->Count[i];
-			R->Count[i] -= STEP;
-			/* Period[i] is the half period of the square wave. Here, in each */
-			/* loop I add Period[i] twice, so that at the end of the loop the */
-			/* square wave is in the same status (0 or 1) it was at the start. */
-			/* vol[i] is also incremented by Period[i], since the wave has been 1 */
-			/* exactly half of the time, regardless of the initial position. */
-			/* If we exit the loop in the middle, Output[i] has to be inverted */
-			/* and vol[i] incremented only if the exit status of the square */
-			/* wave is 1. */
-			while (R->Count[i] <= 0)
-			{
-				R->Count[i] += R->Period[i];
-				if (R->Count[i] > 0)
-				{
-					R->Output[i] ^= 1;
-					if (R->Output[i]) Vol[i] += R->Period[i];
-					break;
-				}
-				R->Count[i] += R->Period[i];
-				Vol[i] += R->Period[i];
-			}
-			if (R->Output[i]) Vol[i] -= R->Count[i];
-		}
-
-		Left = STEP;
-		do
-		{
-			INT32 NextEvent;
-
-
-			if (R->Count[3] < Left) NextEvent = R->Count[3];
-			else NextEvent = Left;
-
-			if (R->Output[3]) Vol[3] += R->Count[3];
-			R->Count[3] -= NextEvent;
-			if (R->Count[3] <= 0)
-			{
-		        if (R->NoiseMode == 1) /* White Noise Mode */
-		        {
-			        if (((R->RNG & R->WhitenoiseTaps) != R->WhitenoiseTaps) && ((R->RNG & R->WhitenoiseTaps) != 0)) /* crappy xor! */
-					{
-				        R->RNG >>= 1;
-				        R->RNG |= R->FeedbackMask;
-					}
-					else
-					{
-				        R->RNG >>= 1;
-					}
-					R->Output[3] = R->WhitenoiseInvert ? !(R->RNG & 1) : R->RNG & 1;
-				}
-				else /* Periodic noise mode */
-				{
-			        if (R->RNG & 1)
-					{
-				        R->RNG >>= 1;
-				        R->RNG |= R->FeedbackMask;
-					}
-					else
-					{
-				        R->RNG >>= 1;
-					}
-					R->Output[3] = R->RNG & 1;
-				}
-				R->Count[3] += R->Period[3];
-				if (R->Output[3]) Vol[3] += R->Period[3];
-			}
-			if (R->Output[3]) Vol[3] -= R->Count[3];
-
-			Left -= NextEvent;
-		} while (Left > 0);
-
-		Out = Vol[0] * R->Volume[0] + Vol[1] * R->Volume[1] +
-				Vol[2] * R->Volume[2] + Vol[3] * R->Volume[3];
-
-		if (Out > MAX_OUTPUT * STEP) Out = MAX_OUTPUT * STEP;
-
-		pSoundBuf[0] = BURN_SND_CLIP(((INT32)(Out / STEP)));
-		pSoundBuf++;
 		Length--;
 	}
 }
@@ -548,6 +435,8 @@ static void GenericStart(INT32 Num, INT32 Clock, INT32 FeedbackMask, INT32 Noise
 	SN76496Init(Chips[Num], Clock);
 	SN76496SetGain(Chips[Num], 0);
 
+	soundbuf[Num] = (INT16*)BurnMalloc(0x1000);
+
 	Chips[Num]->FeedbackMask = FeedbackMask;
 	Chips[Num]->WhitenoiseTaps = NoiseTaps;
 	Chips[Num]->WhitenoiseInvert = NoiseInvert;
@@ -599,10 +488,10 @@ void SN76496Exit()
 
 	for (INT32 i = 0; i < NumChips; i++) {
 		BurnFree(Chips[i]);
+		BurnFree(soundbuf[i]);
 		Chips[i] = NULL;
 
         if (sn76496_buffered) {
-            BurnFree(soundbuf[i]);
             nPosition[i] = 0;
         }
     }

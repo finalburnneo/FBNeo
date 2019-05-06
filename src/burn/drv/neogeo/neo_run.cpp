@@ -196,7 +196,6 @@ static INT32 nSpriteFrameTimer;
 static UINT8 nSoundLatch;
 static UINT8 nSoundReply;
 static UINT32 nSoundStatus;
-static INT32 bSoundNMIEnabled;
 
 #if 1 && defined USE_SPEEDHACKS
 static INT32 nSoundPrevReply;
@@ -1491,7 +1490,6 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(nSoundLatch);
 		SCAN_VAR(nSoundReply);
 		SCAN_VAR(nSoundStatus);
-		SCAN_VAR(bSoundNMIEnabled);
 
 #if 1 && defined USE_SPEEDHACKS
 		SCAN_VAR(nSoundPrevReply);
@@ -1723,11 +1721,9 @@ static void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 			break;
 
 		case 0x08:
-			bSoundNMIEnabled = 1;
-			break;
-
-		case 0x18:
-			//bSoundNMIEnabled = 0; // this breaks sound in sonicwi3 (cd and aes/mvs version)
+        case 0x18:
+            // sound nmi enable/disable bit.  causes too many problems, so we ignore it.
+			// (breaks sound in irrmaze, sonicwi3 (cd and aes/mvs version), and possibly others
 			break;
 
 		case 0x0C:									// Write reply to sound commands
@@ -1859,7 +1855,7 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 	nSoundStatus &= ~1;
 	nSoundLatch = nCommand;
 
-	if (bSoundNMIEnabled) ZetNmi();
+	ZetNmi();
 
 #if 1 && defined USE_SPEEDHACKS
 	neogeoSynchroniseZ80(0x64);
@@ -3719,7 +3715,6 @@ static INT32 neogeoReset()
 	nSoundLatch = 0x00;
 	nSoundReply = 0x00;
 	nSoundStatus = 1;
-	bSoundNMIEnabled = 0;
 
 #if 1 && defined USE_SPEEDHACKS
 	nSoundPrevReply = -1;
@@ -4686,9 +4681,9 @@ INT32 NeoFrame()
 		uPD499ASetTicks((INT64)12000000 * nBurnCPUSpeedAdjust / 256);
 
 #if defined OVERCLOCK_CDZ
-		nNeoCDCyclesIRQPeriod = (int)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 225.0));
+		nNeoCDCyclesIRQPeriod = (INT32)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 225.0));
 #else
-		nNeoCDCyclesIRQPeriod = (int)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 150.0));
+		nNeoCDCyclesIRQPeriod = (INT32)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 150.0));
 #endif
 
 		nPrevBurnCPUSpeedAdjust = nBurnCPUSpeedAdjust;
@@ -4761,8 +4756,8 @@ INT32 NeoFrame()
 		}
 	}
 
-	// NeoCDZ: Automatically enable raster rendering for gameID's that need it.
-	if (IsNeoGeoCD()) { //xxdinkx experimental
+	// NeoCDZ: Automatically enable raster/line-rendering for gameID's that need it.
+	if (IsNeoGeoCD()) {
 		INT32 nGameID = SekReadWord(0x108);
 		INT32 bRenderMode = 0;
 

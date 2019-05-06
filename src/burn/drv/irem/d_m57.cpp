@@ -282,6 +282,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	IremSoundInit(DrvM6803ROM, 0, 3072000);
+    AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -463,11 +464,11 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+        CPU_RUN(0, Zet);
 
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
-		nCyclesDone[1] = M6803Run(nCyclesTotal[1] / nInterleave);
+        CPU_RUN(1, M6803);
 
 		MSM5205Update();
 		IremSoundClockSlave();

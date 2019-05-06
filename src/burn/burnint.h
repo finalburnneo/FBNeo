@@ -10,15 +10,7 @@
 #include <string.h>
 #include <assert.h>
 
-#if defined(__LIBRETRO__) && defined(_MSC_VER)
-#include <tchar.h>
-#else
 #include "tchar.h"
-#endif
-
-#ifdef __LIBRETRO__
-#include "burn_libretro_opts.h"
-#endif
 
 #include "burn.h"
 #include "burn_sound.h"

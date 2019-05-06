@@ -340,6 +340,7 @@ static INT32 DrvInit()
 	AY8910SetPorts(1, &ay8910_soundcontrol_read, &ay8910_soundcontrol_read,
 				      NULL,                      &ay8910_1_write_B);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(M6800TotalCycles, 3579500 / 4);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, layer0_map_callback, 8, 8, 32, 32);
@@ -463,6 +464,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	M6800NewFrame();
+
 	{
 		DrvInputs[0] = 0xff;
 		DrvInputs[1] = 0xff;
@@ -481,38 +484,24 @@ static INT32 DrvFrame()
 
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 3579500 / 4 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	ZetOpen(0);
 	M6800Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 
 		if (i == 240) ZetNmi();
 
-		nCyclesDone[1] += M6800Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, M6800);
 		if (i%m6800I == m6800I-1) {
 			M6800SetIRQLine(0, CPU_IRQSTATUS_HOLD); // should be 7.27 per frame (we do 7.)
 		}
-
-		// Render Sound Segment
-		if (pBurnSoundOut && (i%8)==7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/8);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	M6800Close();

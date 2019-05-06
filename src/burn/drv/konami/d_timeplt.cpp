@@ -62,7 +62,7 @@ static struct BurnInputInfo TimepltInputList[] = {
 	{"P2 Right",	BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -81,7 +81,7 @@ static struct BurnInputInfo ChkunInputList[] = {
 	{"Bet HR",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 5"	},
 	{"Keyout",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 6"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -98,7 +98,7 @@ static struct BurnInputInfo BikkuricInputList[] = {
 	{"Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"Keyout",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -687,9 +687,11 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_layer(0);
-	draw_sprites();
-	draw_layer(1);
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_layer(0);
+	if (nSpriteEnable & 1) draw_sprites();
+	if (nBurnLayer & 2) draw_layer(1);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -721,14 +723,12 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 1789772 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 	INT32 scanline = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		INT32 nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
-		nCyclesDone[0] += ZetRun(nSegment - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1) && nmi_enable) ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 		if (i == (nInterleave - 1) && game_select == 2) ZetNmi();
 		ZetClose();
@@ -740,24 +740,12 @@ static INT32 DrvFrame()
 		}
 
 		ZetOpen(1);
-		nSegment = (nCyclesTotal[1] * i) / nInterleave;
-		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 		ZetClose();
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			TimepltSndUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		TimepltSndUpdate(pSoundBuf, nSegmentLength);
+		TimepltSndUpdate(pBurnSoundOut, nBurnSoundLen);
 //		tc8830fUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

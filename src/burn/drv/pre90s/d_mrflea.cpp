@@ -36,19 +36,19 @@ static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"Start 1"  ,     BIT_DIGITAL  , DrvJoy1 + 3,	"p1 start" },
-	{"Start 2"  ,     BIT_DIGITAL  , DrvJoy1 + 2,	"p2 start" },
-	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy2 + 2,	"p1 coin"  },
+	{"Start 1",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"Start 2",			BIT_DIGITAL,	DrvJoy1 + 2,	"p2 start"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 coin"	},
 
-	{"P1 Right"     , BIT_DIGITAL  , DrvJoy1 + 4, 	"p1 right" },
-	{"P1 Left"      , BIT_DIGITAL  , DrvJoy1 + 5, 	"p1 left"  },
-	{"P1 Up",	  BIT_DIGITAL,   DrvJoy1 + 6,   "p1 up", },
-	{"P1 Down",	  BIT_DIGITAL,   DrvJoy1 + 7,   "p1 down", },
-	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 1,	"p1 fire 1"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 4, 	"p1 right"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 5, 	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"    },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips+0,	"dip"	   },
-	{"Dip 2",	  BIT_DIPSWITCH, DrvDips+1,	"dip"	   },
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip 1",			BIT_DIPSWITCH,	DrvDips+0,		"dip"		},
+	{"Dip 2",			BIT_DIPSWITCH,	DrvDips+1,		"dip"		},
 };
 
 STDINPUTINFO(Drv)
@@ -370,6 +370,7 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 6000000);
 
 	GenericTilesInit();
 
@@ -463,40 +464,22 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 200;
 	INT32 nCyclesTotal[2] = { 4000000 / 60, 6000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesDone[nCurrentCPU] += ZetRun(nNext - nCyclesDone[nCurrentCPU]);
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesDone[nCurrentCPU] += ZetRun(nNext - nCyclesDone[nCurrentCPU]);
+		ZetOpen(1);
+		CPU_RUN(1, Zet);
 		if ((i == (nInterleave/2) && (mrflea_status&0x08)) || i == (nInterleave-1))
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
-
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

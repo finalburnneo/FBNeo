@@ -3083,7 +3083,7 @@ struct BurnDriver BurnDrvAirduelm72 = {
 };
 
 
-// R-Type II
+// R-Type II (World)
 
 static struct BurnRomInfo rtype2RomDesc[] = {
 	{ "rt2-a-h0-d.54",	0x20000, 0xd8ece6f4, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -3120,7 +3120,7 @@ static INT32 rtype2Init()
 
 struct BurnDriver BurnDrvRtype2 = {
 	"rtype2", NULL, NULL, NULL, "1989",
-	"R-Type II\0", NULL, "Irem", "Irem M82",
+	"R-Type II (World)\0", NULL, "Irem", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtype2RomInfo, rtype2RomName, NULL, NULL, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,

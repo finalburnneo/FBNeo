@@ -85,7 +85,9 @@ void UpdateStream(INT32 chip, INT32 samples_len)
 	INT32 nSamplesNeeded = samples_len - nPosition[chip];
     if (nSamplesNeeded <= 0) return;
 
+#if defined FBA_DEBUG
     bprintf(0, _T("ay8910_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
+#endif
 
     AY8910Update(chip, pAY8910Buffer + (chip * 3), nSamplesNeeded);
     nPosition[chip] += nSamplesNeeded;
@@ -93,7 +95,9 @@ void UpdateStream(INT32 chip, INT32 samples_len)
 
 void AY8910SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 {
+#if defined FBA_DEBUG
     bprintf(0, _T("*** Using BUFFERED AY8910-mode.\n"));
+#endif
     for (INT32 i = 0; i < num; i++) {
         nPosition[i] = 0;
     }
@@ -868,7 +872,9 @@ INT32 AY8910Init(INT32 chip, INT32 clock, INT32 add_signal)
 	}
 
     if (ay8910_buffered) {
+#if defined FBA_DEBUG
         bprintf(0, _T("*** ERROR: AY8910SetBuffered() must be called AFTER all chips have been initted!\n"));
+#endif
     }
 
 	AYStreamUpdate = dummy_callback;
@@ -1003,8 +1009,19 @@ void AY8910RenderInternal(INT32 length)
 
 	INT32 i;
 
+	if (ay8910_buffered && length != nBurnSoundLen) {
+#if defined FBA_DEBUG
+        bprintf(0, _T("AY8910RenderInternal() in buffered mode must be called once per frame!\n"));
+#endif
+        return;
+    }
+
 	for (i = 0; i < num; i++) {
-		AY8910Update(i, pAY8910Buffer + (i * 3), length);
+        INT32 update_len = (ay8910_buffered) ? length - nPosition[i] : length;
+
+        AY8910Update(i, pAY8910Buffer + (i * 3), update_len);
+
+        nPosition[i] = 0; // clear for next frame
 	}
 }
 
@@ -1019,18 +1036,7 @@ void AY8910Render(INT16* dest, INT32 length)
 
 	INT32 i, n;
 
-    if (ay8910_buffered && length != nBurnSoundLen) {
-        bprintf(0, _T("AY8910Update() in buffered mode must be called once per frame!\n"));
-        return;
-    }
-
-    for (i = 0; i < num; i++) {
-        INT32 update_len = (ay8910_buffered) ? length - nPosition[i] : length;
-
-        AY8910Update(i, pAY8910Buffer + (i * 3), update_len);
-
-        nPosition[i] = 0; // clear for next frame
-    }
+	AY8910RenderInternal(length);
 
 	for (n = 0; n < length; n++) {
 		INT32 nLeftSample = 0, nRightSample = 0;
@@ -1054,45 +1060,6 @@ void AY8910Render(INT16* dest, INT32 length)
 		}
 	}
 }
-
-#if 0 // old, depreciated
-void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal)
-{
-#if defined FBA_DEBUG
-#ifdef __GNUC__ 
-	if (!DebugSnd_AY8910Initted) bprintf(PRINT_ERROR, _T("AY8910Render called without init\n"));
-	if (num >= 7) bprintf(PRINT_ERROR, _T("AY8910Render called with invalid number of chips %i (max is 6)\n"), num);
-#endif
-#endif
-
-	INT32 i, n;
-	
-	for (i = 0; i < num; i++) {
-		AY8910Update(i, buffer + (i * 3), length);
-	}
-
-	for (n = 0; n < length; n++) {
-		INT32 nLeftSample = 0, nRightSample = 0;
-
-		for (i = 0; i < num*3; i+=3) {
-			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_1, buffer[i + 0])
-			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_2, buffer[i + 1])
-			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_3, buffer[i + 2])
-		}
-
-		nLeftSample = BURN_SND_CLIP(nLeftSample);
-		nRightSample = BURN_SND_CLIP(nRightSample);
-
-		if (bAddSignal) {
-			dest[(n << 1) + 0] = BURN_SND_CLIP(dest[(n << 1) + 0] + nLeftSample);
-			dest[(n << 1) + 1] = BURN_SND_CLIP(dest[(n << 1) + 1] + nRightSample);
-		} else {
-			dest[(n << 1) + 0] = nLeftSample;
-			dest[(n << 1) + 1] = nRightSample;
-		}
-	}
-}
-#endif
 
 void AY8910SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {

@@ -10,7 +10,7 @@ You may freely use, modify, and distribute both the FB Alpha source code and bin
 
 FB Alpha can currently be obtained from https://www.fbalpha.com.
 
-FB Alpha would not exist without a lot of code from the MAME project. The MAME project is subject to it's own license, which can be found at http://mamedev.org/legal.html. Due to the use of MAME code in FB Alpha, FB Alpha is also subject to the terms of the MAME license.
+FB Alpha would not exist without a lot of code from the MAME project. The MAME project is subject to it's own license, which can be found at https://raw.githubusercontent.com/mamedev/mame/5cef4e1f91010f0d573bbd662208979fa39e73ec/docs/mamelicense.txt. Due to the use of MAME code in FB Alpha, FB Alpha is also subject to the terms of the MAME license.
 
 FB Alpha is based on Final Burn (formally at http://www.finalburn.com), see additional text below.
 Musashi MC68000/MC68010/MC68EC020 CPU core by Karl Stenerud (http://www.mamedev.org).
@@ -70,7 +70,7 @@ Some graphics effects provided by the Scale2x, 2xPM, Eagle Graphics, 2xSaI, hq2x
 
 Miscellaneous other components from various sources. Copyright and license information are contained in the relevant parts of the source code.
 
-All material not covered above © 2004-2019 Team FB Alpha.
+All material not covered above Â© 2004-2019 Team FB Alpha.
 
 DISCLAIMER: The authors of FB Alpha don't guarantee its fitness for any purpose, implied or otherwise, and do not accept responsibility for any damages whatsoever that might occur when using FB Alpha. All games emulated by FB Alpha, including any images and sounds therein, are copyrighted by their respective copyright holders. FB Alpha DOES NOT INCLUDE any ROM images of emulated games.
 

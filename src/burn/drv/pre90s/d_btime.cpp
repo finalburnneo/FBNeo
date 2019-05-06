@@ -1540,6 +1540,7 @@ static INT32 MmonkeyInit() // and lnc
 	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(M6502TotalCycles, 500000);
 	M6502Close();
 
 	audio_nmi_type = AUDIO_ENABLE_AY8910;
@@ -1618,6 +1619,7 @@ static INT32 DiscoInit()
 	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(M6502TotalCycles, 500000);
 	M6502Close();
 
 	audio_nmi_type = AUDIO_ENABLE_AY8910;
@@ -1717,6 +1719,7 @@ static INT32 BnjInit()
 	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(M6502TotalCycles, 500000);
 	M6502Close();
 
 	audio_nmi_type = AUDIO_ENABLE_DIRECT;
@@ -1812,6 +1815,7 @@ static INT32 BtimeInit()
 	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(M6502TotalCycles, 500000);
 
 	audio_nmi_type = AUDIO_ENABLE_DIRECT;
 
@@ -1914,6 +1918,7 @@ static INT32 ZoarInit()
 	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(M6502TotalCycles, 500000);
 
 	//audio_nmi_type = AUDIO_ENABLE_AY8910; // this doesn't work always.
 	audio_nmi_type =  AUDIO_ENABLE_DIRECT;
@@ -2345,7 +2350,6 @@ static INT32 BtimeFrame()
 
 	INT32 nCyclesTotal[2] = { (INT32)((double)((discomode|bnjskew) ? 750000 : 1500000) / 57.444853), (INT32)((double)((zippysoundinit) ? 6500000 : 500000) / 57.444853) };
 	INT32 nCyclesDone[2]  = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	if (zippysoundinit) zippysoundinit--;
 
@@ -2366,16 +2370,14 @@ static INT32 BtimeFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		INT32 nSegment = ((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0];
-		nCyclesDone[0] += M6502Run(nSegment);
+		CPU_RUN(0, M6502);
 		M6502Close();
 
 		if (i == 248) vblank = 0x80;
 		if (i == 8)   vblank = 0x00;
 
 		M6502Open(1);
-		nSegment = ((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1];
-		nCyclesDone[1] += M6502Run(nSegment);
+		CPU_RUN(1, M6502);
 
 		if ((i%8) == 7)
 		{
@@ -2384,47 +2386,23 @@ static INT32 BtimeFrame()
 		}
 
 		M6502Close();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910RenderInternal(nSegmentLength);
-
-			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
-
-			if (btimemode) {
-				filter_rc_update(6, pSoundBuf, hpfiltbuffer, nSegmentLength);
-				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
-			}
-
-			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
-			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
-			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910RenderInternal(nSegmentLength);
+		AY8910RenderInternal(nBurnSoundLen);
 
-			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
+		filter_rc_update(0, pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(1, pAY8910Buffer[1], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(2, pAY8910Buffer[2], pBurnSoundOut, nBurnSoundLen);
 
-			if (btimemode) {
-				filter_rc_update(6, pSoundBuf, hpfiltbuffer, nSegmentLength);
-				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
-			}
-
-			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
-			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
-			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
+		if (btimemode) {
+			filter_rc_update(6, pBurnSoundOut, hpfiltbuffer, nBurnSoundLen);
+			memmove(pBurnSoundOut, hpfiltbuffer, nBurnSoundLen*4);
 		}
+
+		filter_rc_update(3, pAY8910Buffer[3], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(4, pAY8910Buffer[4], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(5, pAY8910Buffer[5], pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

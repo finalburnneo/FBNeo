@@ -1,7 +1,8 @@
 #ifndef COMMON
 #define COMMON
 
-#include <stdint.h>
+#include "stdint.h" // for the *int*_t types
+#include "burnint.h"
 
 #ifdef __GNUC__
 #define ALIGN_DECL(n)   __attribute__ ((aligned (n)))

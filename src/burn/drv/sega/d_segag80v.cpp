@@ -1251,12 +1251,13 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+        CPU_RUN(0, Zet);
+
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		if (has_speech) {
-			I8039Open(0);
-			nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+            I8039Open(0);
+            CPU_RUN(1, I8039);
 			sp0250_tick();
 			I8039Close();
 		}

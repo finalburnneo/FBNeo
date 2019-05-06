@@ -1251,6 +1251,7 @@ static INT32 DrvFreeKickInit()
 	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(2, 1.00, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(3, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetBuffered(ZetTotalCycles, (countrunbmode) ? 6000000 / 60 : 3072000 / 60);
 
 	GenericTilesInit();
 
@@ -1327,6 +1328,7 @@ static INT32 DrvInit()
 	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(2, 1.00, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(3, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetBuffered(ZetTotalCycles, (countrunbmode) ? 6000000 / 60 : 3072000 / 60);
 
 	GenericTilesInit();
 
@@ -1364,6 +1366,8 @@ static INT32 DrvFrame()
 		DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 	}
 
+	ZetNewFrame();
+
 	{ // spinner calculation stuff.
 		if (DrvJoy1[2]) DrvDial1 -= 0x04;
 		if (DrvJoy1[3]) DrvDial1 += 0x04;
@@ -1377,11 +1381,12 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = nCyclesTotal = (countrunbmode) ? 6000000 / 60 : 3072000 / 60;
+	INT32 nCyclesTotal[1] = { (countrunbmode) ? 6000000 / 60 : 3072000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
-		ZetRun(nCyclesTotal / nInterleave);
+		CPU_RUN(0, Zet);
 
 		if (i % 128 == 127)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // audio irq
@@ -1394,10 +1399,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(2, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(3, pBurnSoundOut, nBurnSoundLen);
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

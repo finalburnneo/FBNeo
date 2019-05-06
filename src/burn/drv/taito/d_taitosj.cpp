@@ -1781,6 +1781,7 @@ static INT32 CommonInit(INT32 coinstate, INT32 charramxor, INT32 kikstart)
 	AY8910SetAllRoutes(1, 0.12, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.12, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(3, 0.18, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	coin_state = (coinstate) ? 0 : 0x10;
 	charram_xor = charramxor;
@@ -2418,39 +2419,30 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 3000000 / 60, 3000000 / 4 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	m6805Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		INT32 cycles = (ZetTotalCycles() * 3) / 4;
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(cycles - ZetTotalCycles());
+		CPU_RUN(1, Zet);
 		if (sound_irq_timer == 419) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // 36HZ
 		ZetClose();
 
 		if (has_mcu) {
 			ZetOpen(0);
-			nCyclesDone[2] += m6805Run((cycles / 4) - m6805TotalCycles());
+			CPU_RUN(2, m6805);
 			ZetClose();
 		}
 
 		sound_irq_timer++;
 		if (sound_irq_timer == 420)
 			sound_irq_timer = 0;
-
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	m6805Close();
@@ -2458,11 +2450,7 @@ static INT32 DrvFrame()
 	ZetOpen(1);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

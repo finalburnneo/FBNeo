@@ -37,7 +37,7 @@ static UINT8 DrvReset;
 static INT32 watchdog;
 
 static struct BurnInputInfo TutankhmInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
 	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
@@ -47,7 +47,7 @@ static struct BurnInputInfo TutankhmInputList[] = {
 	{"P1 Right Stick Right",BIT_DIGITAL,	DrvJoy2 + 5,	"p3 right"	},
 	{"P1 Flash Bomb",	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
 	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
@@ -57,10 +57,10 @@ static struct BurnInputInfo TutankhmInputList[] = {
 	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy3 + 5,	"p4 right"	},
 	{"P2 Flash Bomb",	BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Tutankhm)
@@ -208,7 +208,7 @@ static UINT8 tutankhm_read(UINT16 address)
 			return 0;
 
 		case 0x8160:
-			return DrvDips[1];
+			return DrvDips[0];
 
 		case 0x8180:
 			return DrvInputs[0];
@@ -220,7 +220,7 @@ static UINT8 tutankhm_read(UINT16 address)
 			return DrvInputs[2];
 
 		case 0x81e0:
-			return DrvDips[0];
+			return DrvDips[1];
 
 		case 0x8200:
 			return 0;
@@ -418,39 +418,26 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 1789772 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	M6809Open(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
-		nCyclesDone[0] += M6809Run(nSegment - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		if (i == (nInterleave - 1) && irq_enable && (nCurrentFrame & 1)) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 
-		nSegment = (nCyclesTotal[1] * i) / nInterleave;
-		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			if (!sound_mute) TimepltSndUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		CPU_RUN(1, Zet);
 	}
 
 	ZetClose();
 	M6809Close();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
 		if (sound_mute) {
 			BurnSoundClear();
 		} else {
-			TimepltSndUpdate(pSoundBuf, nSegmentLength);
+			TimepltSndUpdate(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
 
@@ -461,7 +448,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 

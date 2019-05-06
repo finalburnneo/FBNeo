@@ -27,7 +27,7 @@ static INT32 DrvGfxROM0Len;
 static UINT8 *nmi_mask;
 static INT32 pcm_adr;
 
-static UINT8 flipscreen = 0;
+static UINT8 flipscreen;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -38,29 +38,26 @@ static UINT8 DrvDips[2] = { 0, 0 };
 static UINT8 DrvInput[2];
 static UINT8 DrvReset;
 
-static INT32 nCyclesTotal = 3072000;
-
-
 static struct BurnInputInfo DrmicroInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 6,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Drmicro)
@@ -150,14 +147,12 @@ static void DrvPaletteInit()
 
 inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)((double)ZetTotalCycles() * nSoundRate / nCyclesTotal);
+	return (INT64)((double)ZetTotalCycles() * nSoundRate / 3072000);
 }
 
-static void pcm_w()
+static void pcm_clock_data_in()
 {
-	UINT8 *PCM = DrvSndROM;
-
-	int data = PCM[pcm_adr / 2];
+	UINT8 data = DrvSndROM[pcm_adr / 2];
 
 	if (data != 0x70)
 	{
@@ -175,7 +170,6 @@ static void pcm_w()
 	{
 		MSM5205ResetWrite(0, 1);
 	}
-
 }
 
 static void __fastcall main_out(UINT16 port, UINT8 data)
@@ -191,12 +185,12 @@ static void __fastcall main_out(UINT16 port, UINT8 data)
 
 		case 0x03:
 			pcm_adr = ((data & 0x3f) << 9);
-			pcm_w();
+			pcm_clock_data_in();
 		return;
 
 		case 0x04:
 			*nmi_mask = data & 1;
-			flipscreen = (data & 2) ? 1 : 0;
+			flipscreen = (data & 2) >> 1;
 		return;
 	}
 
@@ -391,8 +385,9 @@ static INT32 DrvInit()
 	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 	SN76496Init(2, 4608000, 1);
 	SN76496SetRoute(2, 0.50, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 3072000);
 
-	MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, pcm_w, MSM5205_S64_4B, 1);
+	MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, pcm_clock_data_in, MSM5205_S64_4B, 1);
 	MSM5205SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -559,8 +554,8 @@ static void DrvMakeInputs()
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] |= (DrvJoy1[i] & 1) << i;
-		DrvInput[1] |= (DrvJoy2[i] & 1) << i;
+		DrvInput[0] ^= (DrvJoy1[i] & 1) << i;
+		DrvInput[1] ^= (DrvJoy2[i] & 1) << i;
 	}
 }
 
@@ -571,44 +566,29 @@ static INT32 DrvFrame()
 	}
 
 	DrvMakeInputs();
-
-	INT32 nInterleave = MSM5205CalcInterleave(0, nCyclesTotal);
 	ZetNewFrame();
-	ZetOpen(0);
 
-	INT32 nSoundBufferPos = 0;
+    INT32 nInterleave = MSM5205CalcInterleave(0, 3072000);
+    INT32 nCyclesTotal[1] = { 3072000 / 60 };
+    INT32 nCyclesDone[1] = { 0 };
+
+    ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		ZetRun(nCyclesTotal / 60 / nInterleave);
+        CPU_RUN(0, Zet);
 
 		if (*nmi_mask && i == (nInterleave - 1))
 			ZetNmi();
 
 		MSM5205Update();
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-			SN76496Update(2, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-			SN76496Update(2, pSoundBuf, nSegmentLength);
-		}
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	ZetClose();
+
+    ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -637,7 +617,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SN76496Scan(nAction, pnMin);
 		MSM5205Scan(nAction, pnMin);
 
-		SCAN_VAR(pcm_adr);
+        SCAN_VAR(pcm_adr);
+        SCAN_VAR(flipscreen);
 	}
 
 	return 0;
@@ -680,5 +661,4 @@ struct BurnDriver BurnDrvDrmicro = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
-
 

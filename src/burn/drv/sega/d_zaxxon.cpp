@@ -1122,6 +1122,7 @@ static INT32 CongoInit()
 
 	SN76489AInit(0, 4000000,     0);
 	SN76489AInit(1, 4000000 / 4, 1);
+    SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -1414,42 +1415,25 @@ static INT32 CongoFrame()
 		zaxxon_coin_lockout();
 	}
 
-	INT32 nCyclesSegment;
 	INT32 nInterleave = 32;
 	INT32 nCyclesTotal[2] = { 3041250 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += ZetRun(nCyclesSegment);
-		if (i == nInterleave-1 && *interrupt_enable) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+        CPU_RUN(0, Zet);
+        if (i == nInterleave-1 && *interrupt_enable) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesSegment = nCyclesTotal[1] / nInterleave;
-		nCyclesDone[1] += ZetRun(nCyclesSegment);
-		if ((i%7)==0) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+        CPU_RUN(1, Zet);
+        if ((i%7)==0) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-		}
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
 

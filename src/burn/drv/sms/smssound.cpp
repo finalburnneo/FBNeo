@@ -4,6 +4,7 @@
 */
 #include "smsshared.h"
 #include "sn76496.h"
+#include "z80_intf.h"
 
 snd_t snd;
 
@@ -21,6 +22,7 @@ INT32 sound_init(void)
     // Init sound emulation
 	SN76489Init(0, snd.psg_clock, 1);
 	SN76496SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 3644444); // avg cyc/frame. should be 3579545
 
 	FM_Init();
 

@@ -41,9 +41,6 @@ static UINT8 DrvBgScroll[2];
 static UINT8 DrvFlipScreen;
 static UINT8 DrvSoundLatch;
 
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
-
 static struct BurnInputInfo DrvInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 coin"   },
@@ -668,6 +665,7 @@ static void MachineInit()
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH); // Plane Noise/Bass/Shot
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH); // Whistle/Snare
+	AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 32, 16);
@@ -868,23 +866,21 @@ static void DrvCalcPalette()
 
 static void DrvRenderSpriteLayer()
 {
-	INT32 Offset;
-	
-	for (Offset = 0x80 - 4; Offset >= 0; Offset -= 4) {
+	for (INT32 Offset = 0x80 - 4; Offset >= 0; Offset -= 4) {
 		INT32 i, Code, Colour, sx, sy, Dir;
-		
+
 		Code = (DrvSpriteRam[Offset] & 0x7f) + (4 * (DrvSpriteRam[Offset + 1] & 0x20)) + (2 * (DrvSpriteRam[Offset] & 0x80));
 		Colour = DrvSpriteRam[Offset + 1] & 0x0f;
 		sx = DrvSpriteRam[Offset + 3] - (0x10 * (DrvSpriteRam[Offset + 1] & 0x10));
 		sy = DrvSpriteRam[Offset + 2];
 		Dir = 1;
-		
+
 		i = (DrvSpriteRam[Offset + 1] & 0xc0) >> 6;
 		if (i == 2) i = 3;
-		
+
 		do {
 			Render16x16Tile_Mask_Clip(pTransDraw, Code + i, sx, (sy + (16 * i) * Dir) - 16, Colour, 4, 15, 1280, DrvSprites);
-		
+
 			i--;
 		} while (i >= 0);
 	}
@@ -912,60 +908,35 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 8;
-	INT32 nSoundBufferPos = 0;
-
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
 
-	nCyclesTotal[0] = 4000000 / 60;
-	nCyclesTotal[1] = 3000000 / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
-	
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
+	ZetNewFrame();
 
-		// Run Z80 #1
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+	INT32 nInterleave = 8;
+	INT32 nCyclesTotal[2] = { 4000000 / 60, 3000000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+
+	for (INT32 i = 0; i < nInterleave; i++) {
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
 		if (i == 0 || i == 7) {
 			ZetSetVector((i == 0) ? 0xcf : 0xd7);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
-		// Run Z80 #2
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
+		ZetOpen(1);
+		CPU_RUN(1, Zet);
 		if (i & 1) { // 4 times per frame
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
-		
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
-	
-	// Make sure the buffer is entirely filled.
+
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -996,21 +967,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		AY8910Scan(nAction, pnMin);
 
 		// Scan critical driver variables
-		SCAN_VAR(nCyclesDone);
-		SCAN_VAR(nCyclesSegment);
 		SCAN_VAR(DrvRomBank);
 		SCAN_VAR(DrvPaletteBank);
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(DrvBgScroll);
 		SCAN_VAR(DrvFlipScreen);
-		SCAN_VAR(DrvDip);
-		SCAN_VAR(DrvInput);
 	}
 	
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x4000 );
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x4000 );
+		ZetMapMemory(DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x4000, 0x8000, 0xbfff, MAP_ROM);
 		ZetClose();
 	}
 

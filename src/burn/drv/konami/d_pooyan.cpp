@@ -36,23 +36,23 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",	BIT_DIGITAL  , DrvJoy1 + 0, "p1 coin"	},
-	{"P1 Start",	BIT_DIGITAL  , DrvJoy1 + 3, "p1 start"	},
-	{"P1 Up",	BIT_DIGITAL  , DrvJoy2 + 2, "p1 up"	},
-	{"P1 Down",	BIT_DIGITAL  , DrvJoy2 + 3, "p1 down"	},
-	{"P1 Button",	BIT_DIGITAL  , DrvJoy2 + 4, "p1 fire 1"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Button",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",	BIT_DIGITAL  , DrvJoy1 + 1, "p2 coin"	},
-	{"P2 Start",	BIT_DIGITAL  , DrvJoy1 + 4, "p2 start"	},
-	{"P2 Up",	BIT_DIGITAL  , DrvJoy3 + 2, "p2 up"	},
-	{"P2 Down",	BIT_DIGITAL  , DrvJoy3 + 3, "p2 down"	},
-	{"P2 Button",	BIT_DIGITAL  , DrvJoy3 + 4, "p2 fire 1"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Button",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 
-	{"Service",	BIT_DIGITAL  , DrvJoy1 + 2, "service"	},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
 
-	{"Reset",	BIT_DIGITAL  , &DrvReset  , "reset"	},
-	{"Dip 1",	BIT_DIPSWITCH, DrvDips + 0, "dip"	},
-	{"Dip 2",	BIT_DIPSWITCH, DrvDips + 1, "dip"	},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip 1",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip 2",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
@@ -460,8 +460,10 @@ static INT32 DrvDraw()
 		DrvPaletteInit();
 	}
 
+	BurnTransferClear();
+
 	if (nBurnLayer & 1) draw_layer();
-	if (nBurnLayer & 2) draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -483,44 +485,26 @@ static INT32 DrvFrame()
 		}
 	}
 
+	ZetNewFrame();
+
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 1789772 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
-
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
 		if (irq_enable && i == (nInterleave - 1)) ZetNmi();
 		ZetClose();
 
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+		ZetOpen(1);
+		CPU_RUN(1, Zet);
 		ZetClose();
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			TimepltSndUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		TimepltSndUpdate(pSoundBuf, nSegmentLength);
+		TimepltSndUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

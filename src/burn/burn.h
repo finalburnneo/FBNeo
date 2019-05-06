@@ -190,7 +190,14 @@ struct BurnDIPInfo {
 
 
 // ---------------------------------------------------------------------------
-// Common CPU definitions 
+// Common CPU definitions
+
+// sync to nCyclesDone[]
+#define CPU_RUN(num,proc) do { nCyclesDone[num] += proc ## Run(((i + 1) * nCyclesTotal[num] / nInterleave) - nCyclesDone[num]); } while (0)
+#define CPU_IDLE(num,proc) do { nCyclesDone[num] += proc ## Idle(((i + 1) * nCyclesTotal[num] / nInterleave) - nCyclesDone[num]); } while (0)
+// sync to cpuTotalCycles()
+#define CPU_RUN_SYNCINT(num,proc) do { nCyclesDone[num] += proc ## Run(((i + 1) * nCyclesTotal[num] / nInterleave) - proc ## TotalCycles()); } while (0)
+#define CPU_IDLE_SYNCINT(num,proc) do { nCyclesDone[num] += proc ## Idle(((i + 1) * nCyclesTotal[num] / nInterleave) - proc ## TotalCycles()); } while (0)
 
 #define CPU_IRQSTATUS_NONE	0
 #define CPU_IRQSTATUS_ACK	1
@@ -677,6 +684,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define FBF_19XX										(1 << 6)
 #define FBF_SONICWI										(1 << 7)
 #define FBF_PWRINST										(1 << 8)
+#define FBF_SONIC										(1 << 9)
 
 #ifdef __cplusplus
  } // End of extern "C"

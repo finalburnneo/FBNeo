@@ -702,7 +702,7 @@ STD_ROM_FN(Jungler)
 
 static struct BurnSampleInfo RallyxSampleDesc[] = {
 	{ "bang", SAMPLE_NOLOOP },
-   { "", 0 }
+	{ "", 0 }
 };
 
 STD_SAMPLE_PICK(Rallyx)
@@ -712,7 +712,7 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
 
-	DrvZ80Rom1             = Next; Next += 0x04000;	
+	DrvZ80Rom1             = Next; Next += 0x04000;
 	DrvPromPalette         = Next; Next += 0x00020;
 	DrvPromLookup          = Next; Next += 0x00100;
 	DrvPromVidLayout       = Next; Next += 0x00020;
@@ -721,7 +721,7 @@ static INT32 MemIndex()
 	
 	RamStart               = Next;
 
-	DrvZ80Ram1             = Next; Next += 0x00800;	
+	DrvZ80Ram1             = Next; Next += 0x00800;
 	DrvVideoRam            = Next; Next += 0x01000;
 	DrvRadarAttrRam        = Next; Next += 0x00010;
 	
@@ -750,9 +750,9 @@ static INT32 JunglerMemIndex()
 	
 	RamStart               = Next;
 
-	DrvZ80Ram1             = Next; Next += 0x00800;	
+	DrvZ80Ram1             = Next; Next += 0x00800;
 	DrvZ80Ram1_weird       = Next; Next += 0x00800;
-	DrvZ80Ram2             = Next; Next += 0x00400;	
+	DrvZ80Ram2             = Next; Next += 0x00400;
 	DrvVideoRam            = Next; Next += 0x01000;
 	DrvRadarAttrRam        = Next; Next += 0x00010;
 	
@@ -831,7 +831,7 @@ static UINT8 __fastcall RallyxZ80ProgRead(UINT16 a)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 Read %04x\n"), a);
+			//bprintf(PRINT_NORMAL, _T("Z80 Read %04x\n"), a);
 		}
 	}
 	
@@ -1520,7 +1520,7 @@ static void DrvCalcPaletteJungler()
 	double rWeightsSTAR[3], gWeightsSTAR[3], bWeightsSTAR[2];
 	UINT32 Palette[0x60];
 	UINT32 i;
-	
+
 	double scale =
 		compute_resistor_weights(0, 255, -1.0,
 							   2, &ResistancesSTAR[0], rWeightsSTAR, 0, 0,
@@ -1531,7 +1531,7 @@ static void DrvCalcPaletteJungler()
 						   3, &ResistancesRG[0], rWeights, 1000, 0,
 						   3, &ResistancesRG[0], gWeights, 1000, 0,
 						   2, &ResistancesB[0],  bWeights, 1000, 0);
-	
+
 	for (i = 0; i < 0x20; i++) { // create palette
 		INT32 Bit0, Bit1, Bit2;
 		INT32 r, g, b;
@@ -1913,54 +1913,29 @@ static INT32 DrvDrawJungler()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = nBurnSoundLen;
-	
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
 	
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal = { (18432000 / 6) / 60 };
-	INT32 nCyclesDone = 0;
-	INT32 nCyclesSegment;
-	
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[1] = { (18432000 / 6) / 60 };
+	INT32 nCyclesDone[1] = { 0 };
+
 	ZetNewFrame();
-	
+
+	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext;
-		
-		// Run Z80 #1
-		ZetOpen(0);
-		nNext = (i + 1) * nCyclesTotal / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone;
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone += nCyclesSegment;
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1) && DrvCPUFireIRQ) {
 			ZetSetVector(DrvCPUIRQVector);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
-		ZetClose();
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			
-			if (nSegmentLength) {
-				NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-				BurnSampleRender(pSoundBuf, nSegmentLength);
-			}
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
-	
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+	ZetClose();
 
-		if (nSegmentLength) {
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
+	if (pBurnSoundOut) {
+		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) DrvDraw();
@@ -1970,54 +1945,31 @@ static INT32 DrvFrame()
 
 static INT32 JunglerFrame()
 {
-	INT32 nInterleave = 256;
-	
 	if (DrvReset) JunglerDoReset();
 
 	JunglerMakeInputs();
-	
-	INT32 nSoundBufferPos = 0;
 
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { (18432000 / 6) / 60, (14318180 / 8) / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nCyclesSegment;
-	
+
 	ZetNewFrame();
-	
+
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-		
-		// Run Z80 #1
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1) && DrvCPUFireIRQ) {
 			ZetNmi();
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesDone[1] += ZetRun(nNext - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 		ZetClose();
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			TimepltSndUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
-	
-	// Make sure the buffer is entirely filled.
+
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		TimepltSndUpdate(pSoundBuf, nSegmentLength);
+		TimepltSndUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) DrvDrawJungler();
@@ -2415,5 +2367,4 @@ struct BurnDriver BurnDrvCommsega = {
 	CommsegaDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };
-
 

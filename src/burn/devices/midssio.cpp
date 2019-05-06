@@ -339,6 +339,7 @@ void ssio_init(UINT8 *rom, UINT8 *ram, UINT8 *prom)
 	AY8910Init(1, 2000000, 0);
 	AY8910SetPorts(0, NULL, NULL, AY8910_write_0A, AY8910_write_0B);
 	AY8910SetPorts(1, NULL, NULL, AY8910_write_1A, AY8910_write_1B);
+	AY8910SetBuffered(ZetTotalCycles, 2000000);
 
 	ssio_is_initialized = 1;
 

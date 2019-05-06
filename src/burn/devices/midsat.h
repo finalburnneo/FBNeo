@@ -12,6 +12,6 @@ void midsat_exit();
 INT32 has_midsat();
 
 void midsatNewFrame();
-INT32 midsat_run(INT32 cycles);
+INT32 midsatRun(INT32 cycles);
 void midsat_update(INT16 *samples, INT32 length);
 void midsat_scan(INT32 nAction, INT32 *pnMin);

@@ -92,7 +92,6 @@ static struct BurnInputInfo StrnskilInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy3 + 7,	"service"	},
-	//{"Service",			BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,  DrvDips + 2,    "dip"		},
@@ -119,7 +118,6 @@ static struct BurnInputInfo BanbamInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy3 + 7,	"service"	},
-	{"Service",			BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -257,56 +255,56 @@ STDDIPINFO(Strnskil)
 
 static struct BurnDIPInfo BanbamDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x02, NULL					},
-	{0x12, 0xff, 0xff, 0x70, NULL					},
+	{0x10, 0xff, 0xff, 0x02, NULL					},
+	{0x11, 0xff, 0xff, 0x70, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Lives"				},
-	{0x11, 0x01, 0x01, 0x00, "3"					},
-	{0x11, 0x01, 0x01, 0x01, "5"					},
+	{0x10, 0x01, 0x01, 0x00, "3"					},
+	{0x10, 0x01, 0x01, 0x01, "5"					},
 
 	{0   , 0xfe, 0   ,    1, "Cabinet"				},
-	{0x11, 0x01, 0x02, 0x02, "Upright"				},
-//	{0x11, 0x01, 0x02, 0x00, "Cocktail"				},
+	{0x10, 0x01, 0x02, 0x02, "Upright"				},
+//	{0x10, 0x01, 0x02, 0x00, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    1, "Flip Screen"			},
-	{0x11, 0x01, 0x04, 0x00, "Off"					},
-//	{0x11, 0x01, 0x04, 0x04, "On"					},
+	{0x10, 0x01, 0x04, 0x00, "Off"					},
+//	{0x10, 0x01, 0x04, 0x04, "On"					},
 
 	{0   , 0xfe, 0   ,    16, "Coin1 / Coin2"		},
-	{0x11, 0x01, 0xf0, 0x00, "1C 1C / 1C 1C"		},
-	{0x11, 0x01, 0xf0, 0x10, "2C 1C / 2C 1C"		},
-	{0x11, 0x01, 0xf0, 0x20, "2C 1C / 1C 3C"		},
-	{0x11, 0x01, 0xf0, 0x30, "1C 1C / 1C 2C"		},
-	{0x11, 0x01, 0xf0, 0x40, "1C 1C / 1C 3C"		},
-	{0x11, 0x01, 0xf0, 0x50, "1C 1C / 1C 4C"		},
-	{0x11, 0x01, 0xf0, 0x60, "1C 1C / 1C 5C"		},
-	{0x11, 0x01, 0xf0, 0x70, "1C 1C / 1C 6C"		},
-	{0x11, 0x01, 0xf0, 0x80, "1C 2C / 1C 2C"		},
-	{0x11, 0x01, 0xf0, 0x90, "1C 2C / 1C 4C"		},
-	{0x11, 0x01, 0xf0, 0xa0, "1C 2C / 1C 5C"		},
-	{0x11, 0x01, 0xf0, 0xb0, "1C 2C / 1C 10C"		},
-	{0x11, 0x01, 0xf0, 0xc0, "1C 2C / 1C 11C"		},
-	{0x11, 0x01, 0xf0, 0xd0, "1C 2C / 1C 12C"		},
-	{0x11, 0x01, 0xf0, 0xe0, "1C 2C / 1C 6C"		},
-	{0x11, 0x01, 0xf0, 0xf0, "Free Play"			},
+	{0x10, 0x01, 0xf0, 0x00, "1C 1C / 1C 1C"		},
+	{0x10, 0x01, 0xf0, 0x10, "2C 1C / 2C 1C"		},
+	{0x10, 0x01, 0xf0, 0x20, "2C 1C / 1C 3C"		},
+	{0x10, 0x01, 0xf0, 0x30, "1C 1C / 1C 2C"		},
+	{0x10, 0x01, 0xf0, 0x40, "1C 1C / 1C 3C"		},
+	{0x10, 0x01, 0xf0, 0x50, "1C 1C / 1C 4C"		},
+	{0x10, 0x01, 0xf0, 0x60, "1C 1C / 1C 5C"		},
+	{0x10, 0x01, 0xf0, 0x70, "1C 1C / 1C 6C"		},
+	{0x10, 0x01, 0xf0, 0x80, "1C 2C / 1C 2C"		},
+	{0x10, 0x01, 0xf0, 0x90, "1C 2C / 1C 4C"		},
+	{0x10, 0x01, 0xf0, 0xa0, "1C 2C / 1C 5C"		},
+	{0x10, 0x01, 0xf0, 0xb0, "1C 2C / 1C 10C"		},
+	{0x10, 0x01, 0xf0, 0xc0, "1C 2C / 1C 11C"		},
+	{0x10, 0x01, 0xf0, 0xd0, "1C 2C / 1C 12C"		},
+	{0x10, 0x01, 0xf0, 0xe0, "1C 2C / 1C 6C"		},
+	{0x10, 0x01, 0xf0, 0xf0, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x12, 0x01, 0x01, 0x01, "Off"					},
-	{0x12, 0x01, 0x01, 0x00, "On"					},
+	{0x11, 0x01, 0x01, 0x01, "Off"					},
+	{0x11, 0x01, 0x01, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x12, 0x01, 0x06, 0x00, "20000 50000"			},
-	{0x12, 0x01, 0x06, 0x02, "20000 80000"			},
-	{0x12, 0x01, 0x06, 0x04, "20000"				},
-	{0x12, 0x01, 0x06, 0x06, "None"					},
+	{0x11, 0x01, 0x06, 0x00, "20000 50000"			},
+	{0x11, 0x01, 0x06, 0x02, "20000 80000"			},
+	{0x11, 0x01, 0x06, 0x04, "20000"				},
+	{0x11, 0x01, 0x06, 0x06, "None"					},
 
 	{0   , 0xfe, 0   ,    2, "Second Practice"		},
-	{0x12, 0x01, 0x08, 0x08, "Off"					},
-	{0x12, 0x01, 0x08, 0x00, "On"					},
+	{0x11, 0x01, 0x08, 0x08, "Off"					},
+	{0x11, 0x01, 0x08, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Freeze"				},
-	{0x12, 0x01, 0x80, 0x00, "Off"					},
-	{0x12, 0x01, 0x80, 0x80, "On"					},
+	{0x11, 0x01, 0x80, 0x00, "Off"					},
+	{0x11, 0x01, 0x80, 0x80, "On"					},
 };
 
 STDDIPINFO(Banbam)
@@ -587,7 +585,7 @@ static INT32 DrvDoReset()
 	ZetReset(1);
 
 	BurnRandomSetSeed(0x0132013201320132ull);
-	
+
 	irq_source = 0;
 	flipscreen = 0;
 	scroll_control = 0;
@@ -752,6 +750,7 @@ static INT32 CommonInit(INT32 game)
 	SN76489Init(1, 15468000 / 6, 1);
 	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, scan_cols_map_scan, markham_map_callback, 8, 8, 32, 32);
@@ -818,23 +817,24 @@ static INT32 IkkiInit()
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x5fff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x1fff, MAP_ROM);
 	ZetMapMemory(DrvSprRAM,			0xc000, 0xc7ff, MAP_RAM);
 	ZetMapMemory(DrvShareRAM,		0xc800, 0xcfff, MAP_RAM);
 	ZetSetWriteHandler(strnskil_sound_write);
 	ZetClose();
 	
-	SN76489Init(0, 15468000 / 6, 0);
-	SN76489Init(1, 15468000 / 6, 1);
+	SN76496Init(0, 8000000 / 4, 0);
+	SN76496Init(1, 8000000 / 2, 1);
 	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
 	irq_scanline[0] = 120;
 	irq_scanline[1] = 240;
-	irq_scanline[2] = 120;
-	irq_scanline[3] = 240;
+	irq_scanline[2] = 12;
+	irq_scanline[3] = 120;
 
 	DrvDoReset();
 
@@ -897,6 +897,7 @@ static INT32 MarkhamInit()
 	SN76496Init(1, 4000000, 1);
 	SN76496SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.75, BURN_SND_ROUTE_BOTH);
+	SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, scan_cols_map_scan, markham_map_callback, 8, 8, 32, 32);
@@ -1112,43 +1113,27 @@ static INT32 DrvFrame()
 		if (DrvJoy2[1] && DrvJoy2[0]) DrvInputs[1] &= ~0x03;
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 262*16;
 	INT32 nCyclesTotal[2] = { 4000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == irq_scanline[0]) { ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); irq_source = 0; };
-		if (i == irq_scanline[1]) { ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); irq_source = 1; };
+		CPU_RUN(0, Zet);
+		if (i == irq_scanline[0]*16) { ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); irq_source = 1; };
+		if (i == irq_scanline[1]*16) { ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); irq_source = 0; };
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-		if (i == irq_scanline[2]) { ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); };
-		if (i == irq_scanline[3]) {	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); };
+		CPU_RUN(1, Zet);
+		if (i == irq_scanline[2]*16) { ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); };
+		if (i == irq_scanline[3]*16) { ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); };
 		ZetClose();
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			SN76496Update(1, pSoundBuf, nSegmentLength);
-		}
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

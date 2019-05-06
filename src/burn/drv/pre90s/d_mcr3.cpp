@@ -1384,18 +1384,16 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		mcr_interrupt(i);
-
-		INT32 nCycles = (((i * 1) * nCyclesTotal[1]) / nInterleave) - SekTotalCycles();
 
 		if (soundsgood_reset_status())
 		{
-            nCyclesDone[1] += SekIdle(nCycles);
+			CPU_IDLE_SYNCINT(1, Sek);
 		}
 		else
 		{
-			nCyclesDone[1] += SekRun(nCycles);
+			CPU_RUN_SYNCINT(1, Sek);
 		}
 	}
 
@@ -1438,16 +1436,16 @@ static INT32 TcsFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
         mcr_interrupt(i);
 
 		if (tcs_reset_status())
 		{
-            nCyclesDone[1] += M6809Idle(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_IDLE(1, M6809);
 		}
 		else
 		{
-            nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_RUN(1, M6809);
 		}
 	}
 
@@ -1487,7 +1485,6 @@ static INT32 CSDSSIOFrame()
 	INT32 nInterleave = 480;
 	INT32 nCyclesTotal[3] = { 5000000 / 30, 8000000 / 30, 2000000 / 30 };
 	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
-	INT32 nSoundBufferPos = 0;
 
     if (has_csd) {
         SekOpen(0);
@@ -1498,20 +1495,18 @@ static INT32 CSDSSIOFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
         mcr_interrupt(i);
 
 		if (has_csd)
 		{
-			INT32 nCycles = (((i * 1) * nCyclesTotal[1]) / nInterleave) - SekTotalCycles();
 			if (csd_reset_status())
 			{
-				SekIdle(nCycles);
-				nCyclesDone[1] += nCyclesTotal[1] / nInterleave;
+				CPU_IDLE_SYNCINT(1, Sek);
 			}
 			else
 			{
-				nCyclesDone[1] += SekRun(nCycles);
+				CPU_RUN_SYNCINT(1, Sek);
 			}
 		}
 		ZetClose();
@@ -1519,53 +1514,31 @@ static INT32 CSDSSIOFrame()
 		if (has_ssio)
 		{
 			ZetOpen(1);
-            nCyclesDone[2] += ZetRun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			CPU_RUN(2, Zet);
 			ssio_14024_clock(nInterleave);
 			ZetClose();
 		}
-		// Render Sound Segment
-		if (is_spyhunt && pBurnSoundOut && (i%32)==31) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 32);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910RenderInternal(nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-
-            filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
-			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
-			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
-            if (LP1) {
-                LP1->FilterMono(pAY8910Buffer[5], nSegmentLength); // Engine
-            }
-            filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
-        }
 	}
 
     if (pBurnSoundOut) {
         if (is_spyhunt) {
-            INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-            INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-            if (nSegmentLength) {
-                AY8910RenderInternal(nSegmentLength);
+			AY8910RenderInternal(nBurnSoundLen);
+			filter_rc_update(0, pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen); // filter just used as a mixer
+			filter_rc_update(1, pAY8910Buffer[1], pBurnSoundOut, nBurnSoundLen);
+			filter_rc_update(2, pAY8910Buffer[2], pBurnSoundOut, nBurnSoundLen);
+			filter_rc_update(3, pAY8910Buffer[3], pBurnSoundOut, nBurnSoundLen);
+			filter_rc_update(4, pAY8910Buffer[4], pBurnSoundOut, nBurnSoundLen);
+			if (LP1) { // this filter actually does the filtering
+				LP1->FilterMono(pAY8910Buffer[5], nBurnSoundLen); // Engine
+			}
+			filter_rc_update(5, pAY8910Buffer[5], pBurnSoundOut, nBurnSoundLen);
 
-                filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-                filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-                filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
-                filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
-                filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
-                if (LP1) {
-                    LP1->FilterMono(pAY8910Buffer[5], nSegmentLength); // Engine
-                }
-                filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
-            }
-
-            DACUpdate(pBurnSoundOut, nBurnSoundLen);
-        } else {
-            BurnSoundClear();
-            if (has_ssio) AY8910Render(pBurnSoundOut, nBurnSoundLen);
-            if (has_csd) DACUpdate(pBurnSoundOut, nBurnSoundLen);
-        }
+			DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		} else {
+			BurnSoundClear();
+			if (has_ssio) AY8910Render(pBurnSoundOut, nBurnSoundLen);
+			if (has_csd) DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		}
 	}
 
     if (has_csd) {

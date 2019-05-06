@@ -118,7 +118,7 @@ void mips3_x64::epilog(bool do_ret)
     mov(rax, ADR(m_icounter));
     mov(ptr[rax], r15);
     pop(r15);
-#if _WIN32
+#ifdef _WIN32
     pop(rdi);
     pop(rsi);
 #endif

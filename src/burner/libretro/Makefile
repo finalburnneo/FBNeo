@@ -638,11 +638,11 @@ endif
 
 # Disabling file_stream_transform for those files
 # In the following file, it's messing with the cdda playback
-src/burner/libretro/retro_cdemu.o: src/burner/libretro/retro_cdemu.cpp
+$(MAIN_FBA_DIR)/burner/libretro/retro_cdemu.o: $(MAIN_FBA_DIR)/burner/libretro/retro_cdemu.cpp
 	$(CXX) -c $(OBJOUT)$@ $< $(CXXFLAGS) $(INCFLAGS) -DSKIP_STDIO_REDEFINES
 
 # In the following file, it's lacking a stdout implementation
-src/cpu/mips3/x64/mips3_x64.o: src/cpu/mips3/x64/mips3_x64.cpp
+$(MAIN_FBA_DIR)/cpu/mips3/x64/mips3_x64.o: $(MAIN_FBA_DIR)/cpu/mips3/x64/mips3_x64.cpp
 	$(CXX) -c $(OBJOUT)$@ $< $(CXXFLAGS) $(INCFLAGS) -DSKIP_STDIO_REDEFINES
 
 %.o: %.cpp

@@ -867,7 +867,7 @@ INT32 pgmFrame()
         // silly hold coin logic
         for (INT32 i = 0; i < 4; i++) {
             if ((previous_coin != (PgmCoins & 0xf)) && PgmBtn1[i] && !hold_coin[i]) {
-                hold_coin[i] = 11; // frames to hold coin + 1
+                hold_coin[i] = 7 + 1; // frames to hold coin + 1
             }
             if (hold_coin[i]) {
                 hold_coin[i]--;

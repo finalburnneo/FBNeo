@@ -815,6 +815,7 @@ static INT32 DrvInit()
 	SN76496SetRoute(2, 0.20, BURN_SND_ROUTE_BOTH);
 	SN76489AInit(3, 4000000, 1);
 	SN76496SetRoute(3, 0.20, BURN_SND_ROUTE_BOTH);
+	SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -964,8 +965,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
-		if (cpu0frozen == 0) {
-			nCyclesDone[0] += ZetRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		if (!cpu0frozen) {
+			CPU_RUN(0, Zet);
 		}
 		if (i == 192*16) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -973,7 +974,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
@@ -981,17 +982,14 @@ static INT32 DrvFrame()
 
 #if 0
 		ZetOpen(2); // this z80 drives the crt controller, useless for emulation
-		ZetRun(nCyclesTotal[2] / nInterleave);
+		CPU_RUN(2, Zet);
 		if (i == (nInterleave - 1)) ZetNmi();
 		ZetClose();
 #endif
 	}
 
 	if (pBurnSoundOut) {
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(2, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(3, pBurnSoundOut, nBurnSoundLen);
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

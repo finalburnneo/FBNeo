@@ -38,28 +38,28 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo BogeymanInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 7,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 7,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Bogeyman)
@@ -314,6 +314,7 @@ static INT32 DrvInit()
 	AY8910SetPorts(0, NULL, NULL, &color_bank_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(M6502TotalCycles, 1500000);
 
 	GenericTilesInit();
 
@@ -486,6 +487,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	M6502NewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 3);
 		for (INT32 i = 0; i < 8; i++) {
@@ -496,9 +499,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 272;
-	INT32 nCyclesTotal = 1500000 / 60;
-	INT32 nCyclesDone = 0;
-	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[1] = { 1500000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	vblank = 1;
 
@@ -506,28 +508,17 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone += M6502Run(nCyclesTotal / nInterleave);
+		CPU_RUN(0, M6502);
 
 		if (i == 8) vblank = 0;
 		if (i == 248) vblank = 1;
 		if ((i & 0x0f) == 0xf) M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_AUTO);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	M6502Close();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

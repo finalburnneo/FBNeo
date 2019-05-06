@@ -63,7 +63,7 @@ void UpdateStream(INT32 chip, INT32 samples_len)
 
 	INT16 *mix = soundbuf[chip] + 5 + (nPosition[chip] * 2); // * 2 (stereo stream)
 	//memset(mix, 0, nSamplesNeeded * sizeof(INT16) * 2);
-    //bprintf(0, _T("sn76496_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
+    bprintf(0, _T("sn76496_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
 
     SN76496UpdateToBuffer(chip, mix, nSamplesNeeded);
 

@@ -38,25 +38,25 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo BombjackInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Bombjack)
@@ -386,6 +386,7 @@ static INT32 DrvInit(INT32 load_type)
 	AY8910SetAllRoutes(0, 0.13, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.13, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.13, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 16, 16, 16, 4096);
@@ -556,6 +557,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		DrvInputs[0] = 0x00;
 		DrvInputs[1] = 0x00;
@@ -575,12 +578,12 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (nmi_mask && i == (nInterleave - 1)) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Zet);
 		if (i == (nInterleave - 1)) ZetNmi();
 		ZetClose();
 	}

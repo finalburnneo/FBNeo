@@ -45,23 +45,23 @@ static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo PaclandInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 left"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 1,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 1,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Pacland)
@@ -512,6 +512,7 @@ static INT32 DrvInit()
 
 	NamcoSoundInit(49152000/2/1024, 8, 0);
 	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetBuffered(M6809TotalCycles, 1536000);
 
 	BurnLEDInit(2, LED_POSITION_BOTTOM_RIGHT, LED_SIZE_2x2, LED_COLOR_GREEN, 80);
 
@@ -741,6 +742,8 @@ static INT32 DrvFrame()
 		DrvDoReset(1);
 	}
 
+	M6809NewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 2);
 		for (INT32 i = 0; i < 8; i++) {
@@ -753,7 +756,6 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 49152000 / 32 / 60, 49152000 / 8 / 4 / 60 }; // refresh 60.606060
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
@@ -762,27 +764,14 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-
-		nCyclesDone[0] += M6809Run(nSegment);
+		CPU_RUN(0, M6809);
 		if (i == (nInterleave - 1) && interrupt_enable[0]) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		nSegment = nCyclesTotal[1] / nInterleave;
 
 		if (mcu_reset) {
-			nCyclesDone[1] += nSegment;
+			CPU_IDLE(1, HD63701);
 		} else {
-			nCyclesDone[1] += HD63701Run(nSegment);
+			CPU_RUN(1, HD63701);
 			if (i == (nInterleave - 1) && interrupt_enable[1]) HD63701SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		}
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			
-			if (nSegmentLength) {
-				NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-			}
-			nSoundBufferPos += nSegmentLength;
 		}
 	}
 
@@ -790,12 +779,7 @@ static INT32 DrvFrame()
 	M6809Close();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-		}
+		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -829,7 +813,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(watchdog);
 		SCAN_VAR(mcu_reset);
-		DrvRecalc = 1;
 
 		if (nAction & ACB_WRITE) {
 			M6809Open(0);

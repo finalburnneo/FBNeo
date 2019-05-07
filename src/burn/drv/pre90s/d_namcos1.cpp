@@ -1,6 +1,8 @@
 // FB Alpha Namco System 1 driver module
 // Based on MAME driver by Ernesto Corvi
 
+// TODO: rompers is broken, investigate
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"
@@ -1624,6 +1626,8 @@ static INT32 DrvInit()
 
 	NamcoSoundInit(24000/2, 8, 1);
 	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetStereo(1);
+	NamcoSoundSetBuffered(M6809TotalCycles, 1536000);
 
 	DACInit(0, 0, 1, DrvDACSync);
 
@@ -1941,7 +1945,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSegment;
+	INT32 nSegment = 0;
 	INT32 nInterleave = 640; // mame interleave
 	INT32 S1VBL = ((nInterleave * 240) / 256);
 	INT32 nSoundBufferPos = 0;
@@ -1954,40 +1958,39 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, M6809);
 		if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		nSegment = M6809TotalCycles();
 		M6809Close();
 
 		if (sub_cpu_in_reset == 0)
 		{
 			M6809Open(1);
-			nCyclesDone[1] += M6809Run(nSegment - M6809TotalCycles());
+			CPU_RUN(1, M6809);
 			if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 
 			M6809Open(2);
-			nCyclesDone[2] += M6809Run(nSegment - M6809TotalCycles());
+			CPU_RUN(2, M6809);
 			if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 
 			HD63701Open(0);
-			nCyclesDone[3] += HD63701Run(nSegment - nCyclesDone[3]);
+			CPU_RUN(3, HD63701);
 			if (i == S1VBL) HD63701SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			HD63701Close();
 		}
 		else
 		{
 			M6809Open(1);
-			nCyclesDone[1] += M6809Idle(nSegment - M6809TotalCycles());
+			CPU_IDLE(1, M6809);
 			M6809Close();
 
 			M6809Open(2);
-			nCyclesDone[2] += M6809Idle(nSegment - M6809TotalCycles());
+			CPU_IDLE(2, M6809);
 			M6809Close();
 
 			HD63701Open(0);
-			nCyclesDone[3] += HD63701Idle(nSegment - HD63701TotalCycles());
+			CPU_IDLE(3, HD63701);
 			HD63701Close();
 		}
 
@@ -2020,7 +2023,8 @@ static INT32 DrvFrame()
 		if (nSegment > 0) {
 			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 		}
-		NamcoSoundUpdateStereo(pBurnSoundOut , nBurnSoundLen);
+
+		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 
 		HD63701Open(0);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);

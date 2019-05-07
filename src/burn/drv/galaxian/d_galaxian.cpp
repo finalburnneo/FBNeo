@@ -19450,36 +19450,36 @@ STD_ROM_PICK(Calipso)
 STD_ROM_FN(Calipso)
 
 static struct BurnRomInfo MoonwarRomDesc[] = {
-	{ "mw2.2c",        0x01000, 0x7c11b4d9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "mw2.2e",        0x01000, 0x1b6362be, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "mw2.2f",        0x01000, 0x4fd8ba4b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "mw2.2h",        0x01000, 0x56879f0d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	
-	{ "mw2.5c",        0x00800, 0xc26231eb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "mw2.5d",        0x00800, 0xbb48a646, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-			
-	{ "mw2.5f",        0x00800, 0xc5fa1aa0, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "mw2.5h",        0x00800, 0xa6ccc652, BRF_GRA | GAL_ROM_TILES_SHARED },
-		
-	{ "mw2.clr",       0x00020, 0x99614c6c, BRF_GRA | GAL_ROM_PROM },
+	{ "mw2.2c",                   0x01000, 0x7c11b4d9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mw2.2e",                   0x01000, 0x1b6362be, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mw2.2f",                   0x01000, 0x4fd8ba4b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mw2.2h",                   0x01000, 0x56879f0d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "moon_war_ii_ra20_5c.5c",   0x00800, 0xc26231eb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "moon_war_ii_ra20_5d.5d",   0x00800, 0xbb48a646, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "moon_war_ii_ra20_5f.5f",   0x00800, 0xc5fa1aa0, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "moon_war_ii_ra20_5h.5h",   0x00800, 0xa6ccc652, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "moonwar_ii_color_6ea1.6e", 0x00020, 0x99614c6c, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Moonwar)
 STD_ROM_FN(Moonwar)
 
 static struct BurnRomInfo MoonwaraRomDesc[] = {
-	{ "2c",            0x01000, 0xbc20b734, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2e",            0x01000, 0xdb6ffec2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2f",            0x01000, 0x378931b8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2h",            0x01000, 0x031dbc2c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	
-	{ "mw2.5c",        0x00800, 0xc26231eb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "mw2.5d",        0x00800, 0xbb48a646, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-			
-	{ "mw2.5f",        0x00800, 0xc5fa1aa0, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "mw2.5h",        0x00800, 0xa6ccc652, BRF_GRA | GAL_ROM_TILES_SHARED },
-		
-	{ "moonwara.clr",  0x00020, 0xf58d4f58, BRF_GRA | GAL_ROM_PROM },
+	{ "moon_war_ii_ra22_2c.2c",   0x01000, 0xbc20b734, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "moon_war_ii_ra22_2e.2e",   0x01000, 0xdb6ffec2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "moon_war_ii_rxa22_2f.2f",  0x01000, 0x378931b8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "moon_war_ii_rxa22_2h.2h",  0x01000, 0x031dbc2c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "moon_war_ii_ra20_5c.5c",   0x00800, 0xc26231eb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "moon_war_ii_ra20_5d.5d",   0x00800, 0xbb48a646, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "moon_war_ii_ra20_5f.5f",   0x00800, 0xc5fa1aa0, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "moon_war_ii_ra20_5h.5h",   0x00800, 0xa6ccc652, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "moonwar_ii_color_6ea1.6e", 0x00020, 0x99614c6c, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Moonwara)

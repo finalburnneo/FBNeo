@@ -536,11 +536,8 @@ void m6800_init()
 //	state_register("m6800", index);
 }
 
-void m6800_reset(void)
+void m6800_reset_soft(void)
 {
-	// clear context
-	memset(&m6800, 0, STRUCT_SIZE_HELPER(m6800_Regs, timer_over));
-
 	m6800.cc = 0xc0;
 	SEI;				/* IRQ disabled */
 	PCD = RM16( 0xfffe );
@@ -561,6 +558,14 @@ void m6800_reset(void)
 	OCD = 0xffff;
 	TOD = 0xffff;
 	m6800.ram_ctrl |= 0x40;
+}
+
+void m6800_reset(void)
+{
+	// clear context
+	memset(&m6800, 0, STRUCT_SIZE_HELPER(m6800_Regs, timer_over));
+
+	m6800_reset_soft();
 }
 
 int m6800_get_pc()

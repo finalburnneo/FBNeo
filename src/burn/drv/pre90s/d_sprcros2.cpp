@@ -334,6 +334,7 @@ static INT32 DrvInit()
 	SN76496SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(2, 0.30, BURN_SND_ROUTE_BOTH);
+	SN76496SetBuffered(ZetTotalCycles, 3500000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -445,6 +446,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0, 3);
 
@@ -462,21 +465,19 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		if (i == 232 && nmi_enable[0]) ZetNmi();
 		if (i == 0 && irq_enable) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 		if (i == 232 && nmi_enable[1]) ZetNmi();
 		ZetClose();
 	}
 
 	if (pBurnSoundOut) {
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(2, pBurnSoundOut, nBurnSoundLen);
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

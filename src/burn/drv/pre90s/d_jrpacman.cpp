@@ -40,24 +40,24 @@ static INT32 charbank = 0;
 static INT32 scrolly = 0;
 
 static struct BurnInputInfo JrpacmanInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip c",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip c",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Jrpacman)
@@ -107,7 +107,7 @@ static struct BurnDIPInfo JrpacmanDIPList[]=
 
 STDDIPINFO(Jrpacman)
 
-void __fastcall jrpacman_write(UINT16 address, UINT8 data)
+static void __fastcall jrpacman_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -116,7 +116,7 @@ void __fastcall jrpacman_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x5001:
-			// pacman_sound_enable_w
+			// sound_enable
 		return;
 
 		case 0x5003:
@@ -163,7 +163,7 @@ void __fastcall jrpacman_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall jrpacman_read(UINT16 address)
+static UINT8 __fastcall jrpacman_read(UINT16 address)
 {
 	if ((address & 0xff00) == 0x5000) address &= 0xffc0;
 
@@ -182,7 +182,7 @@ UINT8 __fastcall jrpacman_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall jrpacman_out(UINT16 port, UINT8 data)
+static void __fastcall jrpacman_out(UINT16 port, UINT8 data)
 {
 	if ((port & 0xff) == 0) {
 		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
@@ -385,6 +385,7 @@ static INT32 DrvInit()
 
 	NamcoSoundInit(18432000 / 6 / 32, 3, 0);
 	NacmoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 
@@ -524,6 +525,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0, 2);
 
@@ -537,39 +540,21 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 264;
-	INT32 nSoundBufferPos = 0;
-	
-	INT32 nCyclesTotal = (18432000 / 6) / 60;
-	INT32 nCyclesDone = 0, nSegment = 0;
+	INT32 nCyclesTotal[1] = { 3072000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nSegment = (nCyclesTotal - nCyclesDone) / (nInterleave - i);
-		nCyclesDone += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 
 		if (i == 223 && interrupt_enable) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		}
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			
-			if (nSegmentLength) {
-				NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-			}
-			nSoundBufferPos += nSegmentLength;
 		}
 	}
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-		}
+		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

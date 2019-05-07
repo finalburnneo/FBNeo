@@ -49,29 +49,29 @@ static INT32 drgnbstr = 0;
 static INT32 nCyclesDone[2];
 
 static struct BurnInputInfo SkykidInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy4 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Skykid)
@@ -261,7 +261,7 @@ STDDIPINFO(Drgnbstr)
 
 static inline void sync_HD63701(INT32 run)
 {
-	INT32 nNext = nM6809CyclesTotal - nCyclesDone[1];
+	INT32 nNext = M6809TotalCycles() - nCyclesDone[1];
 
 	if (nNext > 0)
 	{
@@ -532,7 +532,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvM6809ROM		= Next; Next += 0x014000;
-	DrvHD63701ROM		= Next; Next += 0x010000;
+	DrvHD63701ROM	= Next; Next += 0x010000;
 
 	DrvGfxROM0		= Next; Next += 0x010000;
 	DrvGfxROM1		= Next; Next += 0x010000;
@@ -544,18 +544,18 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvHD63701RAM1		= Next; Next += 0x000080;
-	DrvHD63701RAM		= Next; Next += 0x000800;
+	DrvHD63701RAM1	= Next; Next += 0x000080;
+	DrvHD63701RAM	= Next; Next += 0x000800;
 
 	DrvVidRAM		= Next; Next += 0x001000;
 	DrvTxtRAM		= Next; Next += 0x000800;
 	DrvSprRAM		= Next; Next += 0x001800;
 
 	m6809_bank		= Next; Next += 0x000001;
-	interrupt_enable	= Next; Next += 0x000002;
+	interrupt_enable= Next; Next += 0x000002;
 	flipscreen		= Next; Next += 0x000001;
 	priority		= Next; Next += 0x000001;
-	coin_lockout		= Next; Next += 0x000001;
+	coin_lockout	= Next; Next += 0x000001;
 	ip_select		= Next; Next += 0x000001;
 
 	scroll			= (UINT16*)Next; Next += 0x0002 * sizeof(UINT16);
@@ -626,6 +626,7 @@ static INT32 DrvInit()
 
 	NamcoSoundInit(49152000/2048, 8, 0);
 	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH); // MAME uses 1.00, which is way too loud
+	NamcoSoundSetBuffered(M6809TotalCycles, 1536000);
 
 	GenericTilesInit();
 
@@ -816,7 +817,6 @@ static INT32 DrvFrame()
 	HD63701NewFrame();
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 1536000 / 60 };
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
@@ -825,10 +825,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nNext;
-
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += M6809Run(nNext - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		if (i == (nInterleave - 1) && interrupt_enable[0]) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
@@ -842,25 +839,13 @@ static INT32 DrvFrame()
 		} else {
 			sync_HD63701(0);
 		}
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	HD63701Close();
 	M6809Close();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-		}
+		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

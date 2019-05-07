@@ -3797,8 +3797,8 @@ static struct BurnRomInfo assaultRomDesc[] = {
 
 	{ "atshape.bin",	0x20000, 0xdfcad82b, 0x08 | BRF_GRA },           // 25 Layer Tiles Mask Data
 
-	{ "at1dat0.bin",	0x20000, 0x844890f4, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
-	{ "at1dat1.bin",	0x20000, 0x21715313, 0x09 | BRF_PRG | BRF_ESS }, // 27
+	{ "at1dat0.13s",	0x20000, 0x844890f4, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
+	{ "at1dat1.13p",	0x20000, 0x21715313, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "atvoi1.bin",		0x80000, 0xd36a649e, 0x0a | BRF_SND },           // 28 C140 Samples
 };
@@ -3861,8 +3861,8 @@ static struct BurnRomInfo assaultjRomDesc[] = {
 
 	{ "atshape.bin",	0x20000, 0xdfcad82b, 0x08 | BRF_GRA },           // 25 Layer Tiles Mask Data
 
-	{ "at1dat0.bin",	0x20000, 0x844890f4, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
-	{ "at1dat1.bin",	0x20000, 0x21715313, 0x09 | BRF_PRG | BRF_ESS }, // 27
+	{ "at1dat0.13s",	0x20000, 0x844890f4, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
+	{ "at1dat1.13p",	0x20000, 0x21715313, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "atvoi1.bin",		0x80000, 0xd36a649e, 0x0a | BRF_SND },           // 28 C140 Samples
 };
@@ -3920,8 +3920,8 @@ static struct BurnRomInfo assaultpRomDesc[] = {
 
 	{ "atshape.bin",	0x20000, 0xdfcad82b, 0x08 | BRF_GRA },           // 25 Layer Tiles Mask Data
 
-	{ "at1dat0.bin",	0x20000, 0x844890f4, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
-	{ "at1dat1.bin",	0x20000, 0x21715313, 0x09 | BRF_PRG | BRF_ESS }, // 27
+	{ "at1dat0.13s",	0x20000, 0x844890f4, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
+	{ "at1dat1.13p",	0x20000, 0x21715313, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "atvoi1.bin",		0x80000, 0xd36a649e, 0x0a | BRF_SND },           // 28 C140 Samples Samples
 };
@@ -3985,8 +3985,8 @@ static struct BurnRomInfo ordyneRomDesc[] = {
 
 	{ "or_shape.shape",	0x20000, 0x7aec9dee, 0x08 | BRF_GRA },           // 26 Layer Tiles Mask Data
 
-	{ "or1_d0.data0",	0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
-	{ "or1_d1.data1",	0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
+	{ "or1_d0.13s",		0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
+	{ "or1_d1.13p",		0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
 
 	{ "or_voi1.voice1",	0x80000, 0x369e0bca, 0x0a | BRF_SND },           // 29 C140 Samples
 	{ "or_voi2.voice2",	0x80000, 0x9f4cd7b5, 0x0a | BRF_SND },           // 30
@@ -4085,8 +4085,8 @@ static struct BurnRomInfo ordynejRomDesc[] = {
 
 	{ "or_shape.shape",	0x20000, 0x7aec9dee, 0x08 | BRF_GRA },           // 26 Layer Tiles Mask Data
 
-	{ "or1_d0.data0",	0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
-	{ "or1_d1.data1",	0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
+	{ "or1_d0.13s",		0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
+	{ "or1_d1.13p",		0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
 
 	{ "or_voi1.voice1",	0x80000, 0x369e0bca, 0x0a | BRF_SND },           // 29 C140 Samples
 	{ "or_voi2.voice2",	0x80000, 0x9f4cd7b5, 0x0a | BRF_SND },           // 30
@@ -4148,8 +4148,8 @@ static struct BurnRomInfo ordynejeRomDesc[] = {
 
 	{ "or_shape.shape",	0x20000, 0x7aec9dee, 0x08 | BRF_GRA },           // 26 Layer Tiles Mask Data
 
-	{ "or1_d0.data0",	0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
-	{ "or1_d1.data1",	0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
+	{ "or1_d0.13s",		0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
+	{ "or1_d1.13p",		0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
 
 	{ "or_voi1.voice1",	0x80000, 0x369e0bca, 0x0a | BRF_SND },           // 29 C140 Samples
 	{ "or_voi2.voice2",	0x80000, 0x9f4cd7b5, 0x0a | BRF_SND },           // 30
@@ -4201,8 +4201,8 @@ static struct BurnRomInfo cosmogngRomDesc[] = {
 
 	{ "co1sha0.bin",	0x80000, 0x063a70cc, 0x08 | BRF_GRA },           // 16 Layer Tiles Mask Data
 
-	{ "co1dat0.bin",	0x20000, 0xb53da2ae, 0x09 | BRF_PRG | BRF_ESS }, // 17 Shared 68K Data
-	{ "co1dat1.bin",	0x20000, 0xd21ad10b, 0x09 | BRF_PRG | BRF_ESS }, // 18
+	{ "co1dat0.13s",	0x20000, 0xb53da2ae, 0x09 | BRF_PRG | BRF_ESS }, // 17 Shared 68K Data
+	{ "co1dat1.13p",	0x20000, 0xd21ad10b, 0x09 | BRF_PRG | BRF_ESS }, // 18
 
 	{ "co2voi1.bin",	0x80000, 0x5a301349, 0x0a | BRF_SND },           // 19 C140 Samples
 	{ "co2voi2.bin",	0x80000, 0xa27cb45a, 0x0a | BRF_SND },           // 20
@@ -4273,8 +4273,8 @@ static struct BurnRomInfo mirninjaRomDesc[] = {
 
 	{ "mn_sha.bin",		0x20000, 0xc28af90f, 0x08 | BRF_GRA },           // 25 Layer Tiles Mask Data
 
-	{ "mn1_dat0.bin",	0x20000, 0x104bcca8, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
-	{ "mn1_dat1.bin",	0x20000, 0xd2a918fb, 0x09 | BRF_PRG | BRF_ESS }, // 27
+	{ "mn1_dat0.13s",	0x20000, 0x104bcca8, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
+	{ "mn1_dat1.13p",	0x20000, 0xd2a918fb, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "mn_voi1.bin",	0x80000, 0x2ca3573c, 0x0a | BRF_SND },           // 28 C140 Samples
 	{ "mn_voi2.bin",	0x80000, 0x466c3b47, 0x0a | BRF_SND },           // 29
@@ -4349,8 +4349,8 @@ static struct BurnRomInfo pheliosRomDesc[] = {
 
 	{ "ps_shape.shape",	0x20000, 0x58e26fcf, 0x08 | BRF_GRA },           // 29 Layer Tiles Mask Data
 
-	{ "ps2_dat0.data0",	0x20000, 0xee4194b0, 0x09 | BRF_PRG | BRF_ESS }, // 30 Shared 68K Data
-	{ "ps2_dat1.data1",	0x20000, 0x5b22d714, 0x09 | BRF_PRG | BRF_ESS }, // 31
+	{ "ps2_dat0.13s",	0x20000, 0xee4194b0, 0x09 | BRF_PRG | BRF_ESS }, // 30 Shared 68K Data
+	{ "ps2_dat1.13p",	0x20000, 0x5b22d714, 0x09 | BRF_PRG | BRF_ESS }, // 31
 
 	{ "ps_voi-1.voice1",	0x80000, 0xf67376ed, 0x0a | BRF_SND },           // 32 C140 Samples
 };
@@ -4433,8 +4433,8 @@ static struct BurnRomInfo pheliosjRomDesc[] = {
 
 	{ "ps_shape.shape",	0x20000, 0x58e26fcf, 0x08 | BRF_GRA },           // 29 Layer Tiles Mask Data
 
-	{ "ps1_dat0.data0",	0x20000, 0xee4194b0, 0x09 | BRF_PRG | BRF_ESS }, // 30 Shared 68K Data
-	{ "ps1_dat1.data1",	0x20000, 0x5b22d714, 0x09 | BRF_PRG | BRF_ESS }, // 31
+	{ "ps1_dat0.13s",	0x20000, 0xee4194b0, 0x09 | BRF_PRG | BRF_ESS }, // 30 Shared 68K Data
+	{ "ps1_dat1.13p",	0x20000, 0x5b22d714, 0x09 | BRF_PRG | BRF_ESS }, // 31
 
 	{ "ps_voi-1.voice1",	0x80000, 0xf67376ed, 0x0a | BRF_SND },           // 32 C140 Samples
 };
@@ -4488,10 +4488,10 @@ static struct BurnRomInfo marvlandRomDesc[] = {
 
 	{ "mv1-sha.bin",	0x40000, 0xa47db5d3, 0x08 | BRF_GRA },           // 20 Layer Tiles Mask Data
 
-	{ "mv2_dat0",		0x20000, 0x62e6318b, 0x09 | BRF_PRG | BRF_ESS }, // 21 Shared 68K Data
-	{ "mv2_dat1",		0x20000, 0x8a6902ca, 0x09 | BRF_PRG | BRF_ESS }, // 22
-	{ "mv2_dat2",		0x20000, 0xf5c6408c, 0x09 | BRF_PRG | BRF_ESS }, // 23
-	{ "mv2_dat3",		0x20000, 0x6df76955, 0x09 | BRF_PRG | BRF_ESS }, // 24
+	{ "mv2_dat0.13s",	0x20000, 0x62e6318b, 0x09 | BRF_PRG | BRF_ESS }, // 21 Shared 68K Data
+	{ "mv2_dat1.13p",	0x20000, 0x8a6902ca, 0x09 | BRF_PRG | BRF_ESS }, // 22
+	{ "mv2_dat2.13r",	0x20000, 0xf5c6408c, 0x09 | BRF_PRG | BRF_ESS }, // 23
+	{ "mv2_dat3.13n",	0x20000, 0x6df76955, 0x09 | BRF_PRG | BRF_ESS }, // 24
 
 	{ "mv1-voi1.bin",	0x80000, 0xde5cac09, 0x0a | BRF_SND },           // 25 C140 Samples Samples
 };
@@ -4570,8 +4570,8 @@ static struct BurnRomInfo marvlandjRomDesc[] = {
 
 	{ "mv1-sha.bin",	0x40000, 0xa47db5d3, 0x08 | BRF_GRA },           // 20 Layer Tiles Mask Data
 
-	{ "mv1-dat0.bin",	0x20000, 0xe15f412e, 0x09 | BRF_PRG | BRF_ESS }, // 21 Shared 68K Data
-	{ "mv1-dat1.bin",	0x20000, 0x73e1545a, 0x09 | BRF_PRG | BRF_ESS }, // 22
+	{ "mv1-dat0.13s",	0x20000, 0xe15f412e, 0x09 | BRF_PRG | BRF_ESS }, // 21 Shared 68K Data
+	{ "mv1-dat1.13p",	0x20000, 0x73e1545a, 0x09 | BRF_PRG | BRF_ESS }, // 22
 
 	{ "mv1-voi1.bin",	0x80000, 0xde5cac09, 0x0a | BRF_SND },           // 23 C140 Samples Samples
 };
@@ -4629,8 +4629,8 @@ static struct BurnRomInfo valkyrieRomDesc[] = {
 
 	{ "wdshape.bin",	0x20000, 0x3b5e0249, 0x08 | BRF_GRA },           // 25 Layer Tiles Mask Data
 
-	{ "wd1dat0.bin",	0x20000, 0xea209f48, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
-	{ "wd1dat1.bin",	0x20000, 0x04b48ada, 0x09 | BRF_PRG | BRF_ESS }, // 27
+	{ "wd1dat0.13s",	0x20000, 0xea209f48, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
+	{ "wd1dat1.13p",	0x20000, 0x04b48ada, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "wd1voi1.bin",	0x40000, 0xf1ace193, 0x0a | BRF_SND },           // 28 C140 Samples Samples
 	{ "wd1voi2.bin",	0x20000, 0xe95c5cf3, 0x0a | BRF_SND },           // 29
@@ -4693,9 +4693,9 @@ static struct BurnRomInfo rthun2RomDesc[] = {
 
 	{ "shape.bin",			0x80000, 0xcf58fbbe, 0x08 | BRF_GRA },           // 15 Layer Tiles Mask Data
 
-	{ "rst1_data0.bin",		0x20000, 0x0baf44ee, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
-	{ "rst1_data1.bin",		0x20000, 0x58a8daac, 0x09 | BRF_PRG | BRF_ESS }, // 17
-	{ "rst1_data2.bin",		0x20000, 0x8e850a2a, 0x09 | BRF_PRG | BRF_ESS }, // 18
+	{ "rst1_data0.13s",		0x20000, 0x0baf44ee, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
+	{ "rst1_data1.13p",		0x20000, 0x58a8daac, 0x09 | BRF_PRG | BRF_ESS }, // 17
+	{ "rst1_data2.13r",		0x20000, 0x8e850a2a, 0x09 | BRF_PRG | BRF_ESS }, // 18
 
 	{ "rst1_voi1.bin",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
 	{ "rst1_voi2.bin",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
@@ -4772,13 +4772,13 @@ static struct BurnRomInfo rthun2jRomDesc[] = {
 
 	{ "shape.bin",		0x80000, 0xcf58fbbe, 0x08 | BRF_GRA },           // 15 Layer Tiles Mask Data
 
-	{ "rst1_data0.bin",		0x20000, 0x0baf44ee, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
-	{ "rst1_data1.bin",		0x20000, 0x58a8daac, 0x09 | BRF_PRG | BRF_ESS }, // 17
-	{ "rst1_data2.bin",		0x20000, 0x8e850a2a, 0x09 | BRF_PRG | BRF_ESS }, // 18
+	{ "rst1_data0.13s",		0x20000, 0x0baf44ee, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
+	{ "rst1_data1.13p",		0x20000, 0x58a8daac, 0x09 | BRF_PRG | BRF_ESS }, // 17
+	{ "rst1_data2.13r",		0x20000, 0x8e850a2a, 0x09 | BRF_PRG | BRF_ESS }, // 18
 
 	{ "rst1_voi1.bin",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
 	{ "rst1_voi2.bin",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
-	
+
 	{ "pal12l10.8d",		0x00040, 0xd3ae64a6, 0x00 | BRF_OPT },
 	{ "plhs18p8a.2p",		0x00149, 0x28c634a4, 0x00 | BRF_OPT },
 	{ "plhs18p8a.4g",		0x00149, 0x1932dd5e, 0x00 | BRF_OPT },
@@ -4829,8 +4829,8 @@ static struct BurnRomInfo dsaberRomDesc[] = {
 
 	{ "shape.bin",		0x80000, 0x698e7a3e, 0x08 | BRF_GRA },           // 15 Layer Tiles Mask Data
 
-	{ "do1 dat0.data0",	0x20000, 0x3e53331f, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
-	{ "do1 dat1.data1",	0x20000, 0xd5427f11, 0x09 | BRF_PRG | BRF_ESS }, // 17
+	{ "do1 dat0.13s",	0x20000, 0x3e53331f, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
+	{ "do1 dat1.13p",	0x20000, 0xd5427f11, 0x09 | BRF_PRG | BRF_ESS }, // 17
 
 	{ "do voi-1a.voice1",	0x80000, 0xdadf6a57, 0x0a | BRF_SND },           // 18 C140 Samples Samples
 	{ "do voi-2a.voice2",	0x80000, 0x81078e01, 0x0a | BRF_SND },           // 19
@@ -4897,8 +4897,8 @@ static struct BurnRomInfo dsaberaRomDesc[] = {
 
 	{ "shape.bin",		0x80000, 0x698e7a3e, 0x08 | BRF_GRA },           // 15 Layer Tiles Mask Data
 
-	{ "do1 dat0.data0",	0x20000, 0x3e53331f, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
-	{ "do1 dat1.data1",	0x20000, 0xd5427f11, 0x09 | BRF_PRG | BRF_ESS }, // 17
+	{ "do1 dat0.13s",	0x20000, 0x3e53331f, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
+	{ "do1 dat1.13p",	0x20000, 0xd5427f11, 0x09 | BRF_PRG | BRF_ESS }, // 17
 
 	{ "do voi-1a.voice1",	0x80000, 0xdadf6a57, 0x0a | BRF_SND },           // 18 C140 Samples Samples
 	{ "do voi-2a.voice2",	0x80000, 0x81078e01, 0x0a | BRF_SND },           // 19
@@ -4951,8 +4951,8 @@ static struct BurnRomInfo dsaberjRomDesc[] = {
 
 	{ "shape.bin",		0x80000, 0x698e7a3e, 0x08 | BRF_GRA },           // 15 Layer Tiles Mask Data
 
-	{ "do1 dat0.data0",	0x20000, 0x3e53331f, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
-	{ "do1 dat1.data1",	0x20000, 0xd5427f11, 0x09 | BRF_PRG | BRF_ESS }, // 17
+	{ "do1 dat0.13s",	0x20000, 0x3e53331f, 0x09 | BRF_PRG | BRF_ESS }, // 16 Shared 68K Data
+	{ "do1 dat1.13p",	0x20000, 0xd5427f11, 0x09 | BRF_PRG | BRF_ESS }, // 17
 
 	{ "do voi-1a.voice1",	0x80000, 0xdadf6a57, 0x0a | BRF_SND },           // 18 C140 Samples Samples
 	{ "do voi-2a.voice2",	0x80000, 0x81078e01, 0x0a | BRF_SND },           // 19
@@ -5014,8 +5014,8 @@ static struct BurnRomInfo burnforcRomDesc[] = {
 
 	{ "bu_shape.bin",	0x20000, 0x80a6b722, 0x08 | BRF_GRA },           // 24 Layer Tiles Mask Data
 
-	{ "bu1_dat0.bin",	0x20000, 0xe0a9d92f, 0x09 | BRF_PRG | BRF_ESS }, // 25 Shared 68K Data
-	{ "bu1_dat1.bin",	0x20000, 0x5fe54b73, 0x09 | BRF_PRG | BRF_ESS }, // 26
+	{ "bu1_dat0.13s",	0x20000, 0xe0a9d92f, 0x09 | BRF_PRG | BRF_ESS }, // 25 Shared 68K Data
+	{ "bu1_dat1.13p",	0x20000, 0x5fe54b73, 0x09 | BRF_PRG | BRF_ESS }, // 26
 
 	{ "bu_voi-1.bin",	0x80000, 0x99d8a239, 0x0a | BRF_SND },           // 27 C140 Samples Samples
 };
@@ -5090,8 +5090,8 @@ static struct BurnRomInfo burnforcoRomDesc[] = {
 
 	{ "bu_shape.bin",	0x20000, 0x80a6b722, 0x08 | BRF_GRA },           // 24 Layer Tiles Mask Data
 
-	{ "bu1_dat0.bin",	0x20000, 0xe0a9d92f, 0x09 | BRF_PRG | BRF_ESS }, // 25 Shared 68K Data
-	{ "bu1_dat1.bin",	0x20000, 0x5fe54b73, 0x09 | BRF_PRG | BRF_ESS }, // 26
+	{ "bu1_dat0.13s",	0x20000, 0xe0a9d92f, 0x09 | BRF_PRG | BRF_ESS }, // 25 Shared 68K Data
+	{ "bu1_dat1.13p",	0x20000, 0x5fe54b73, 0x09 | BRF_PRG | BRF_ESS }, // 26
 
 	{ "bu_voi-1.bin",	0x80000, 0x99d8a239, 0x0a | BRF_SND },           // 27 C140 Samples Samples
 };
@@ -5148,10 +5148,10 @@ static struct BurnRomInfo finehourRomDesc[] = {
 
 	{ "fh1_sha.bin",	0x40000, 0x15875eb0, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
 
-	{ "fh1_dt0.bin",	0x20000, 0x2441c26f, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
-	{ "fh1_dt1.bin",	0x20000, 0x48154deb, 0x09 | BRF_PRG | BRF_ESS }, // 25
-	{ "fh1_dt2.bin",	0x20000, 0x12453ba4, 0x09 | BRF_PRG | BRF_ESS }, // 26
-	{ "fh1_dt3.bin",	0x20000, 0x50bab9da, 0x09 | BRF_PRG | BRF_ESS }, // 27
+	{ "fh1_dt0.13s",	0x20000, 0x2441c26f, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
+	{ "fh1_dt1.13p",	0x20000, 0x48154deb, 0x09 | BRF_PRG | BRF_ESS }, // 25
+	{ "fh1_dt2.13r",	0x20000, 0x12453ba4, 0x09 | BRF_PRG | BRF_ESS }, // 26
+	{ "fh1_dt3.13n",	0x20000, 0x50bab9da, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "fh1_vo1.bin",	0x80000, 0x07560fc7, 0x0a | BRF_SND },           // 28 C140 Samples Samples
 };
@@ -5283,8 +5283,8 @@ static struct BurnRomInfo sws92RomDesc[] = {
 
 	{ "sss_sha0.bin",	0x80000, 0xb71a731a, 0x08 | BRF_GRA },           // 17 Layer Tiles Mask Data
 
-	{ "sss1dat0.bin",	0x40000, 0xdb3e6aec, 0x09 | BRF_PRG | BRF_ESS }, // 18 Shared 68K Data
-	{ "sss1dat1.bin",	0x40000, 0x463b5ba8, 0x09 | BRF_PRG | BRF_ESS }, // 19
+	{ "sss1dat0.13s",	0x40000, 0xdb3e6aec, 0x09 | BRF_PRG | BRF_ESS }, // 18 Shared 68K Data
+	{ "sss1dat1.13p",	0x40000, 0x463b5ba8, 0x09 | BRF_PRG | BRF_ESS }, // 19
 
 	{ "ss_voi1.bin",	0x80000, 0x503e51b7, 0x0a | BRF_SND },           // 20 C140 Samples Samples
 };
@@ -5346,10 +5346,10 @@ static struct BurnRomInfo sws92gRomDesc[] = {
 
 	{ "sss_sha0.bin",	0x80000, 0xb71a731a, 0x08 | BRF_GRA },           // 17 Layer Tiles Mask Data
 
-	{ "sss1dat0.bin",	0x40000, 0xdb3e6aec, 0x09 | BRF_PRG | BRF_ESS }, // 18 Shared 68K Data
-	{ "sss1dat1.bin",	0x40000, 0x463b5ba8, 0x09 | BRF_PRG | BRF_ESS }, // 19
-	{ "ssg1dat2.bin",	0x40000, 0x754128aa, 0x09 | BRF_PRG | BRF_ESS }, // 20
-	{ "ssg1dat3.bin",	0x40000, 0xcb3fed01, 0x09 | BRF_PRG | BRF_ESS }, // 21
+	{ "sss1dat0.13s",	0x40000, 0xdb3e6aec, 0x09 | BRF_PRG | BRF_ESS }, // 18 Shared 68K Data
+	{ "sss1dat1.13p",	0x40000, 0x463b5ba8, 0x09 | BRF_PRG | BRF_ESS }, // 19
+	{ "ssg1dat2.13r",	0x40000, 0x754128aa, 0x09 | BRF_PRG | BRF_ESS }, // 20
+	{ "ssg1dat3.13n",	0x40000, 0xcb3fed01, 0x09 | BRF_PRG | BRF_ESS }, // 21
 
 	{ "ss_voi1.bin",	0x80000, 0x503e51b7, 0x0a | BRF_SND },           // 22 C140 Samples Samples
 };
@@ -5411,8 +5411,8 @@ static struct BurnRomInfo sws93RomDesc[] = {
 
 	{ "sst_sha0.bin",	0x80000, 0x4f64d4bd, 0x08 | BRF_GRA },           // 17 Layer Tiles Mask Data
 
-	{ "sst1dat0.bin",	0x80000, 0xb99c9656, 0x09 | BRF_PRG | BRF_ESS }, // 18 Shared 68K Data
-	{ "sst1dat1.bin",	0x80000, 0x60cf6281, 0x09 | BRF_PRG | BRF_ESS }, // 19
+	{ "sst1dat0.13s",	0x80000, 0xb99c9656, 0x09 | BRF_PRG | BRF_ESS }, // 18 Shared 68K Data
+	{ "sst1dat1.13p",	0x80000, 0x60cf6281, 0x09 | BRF_PRG | BRF_ESS }, // 19
 
 	{ "ss_voi1.bin",	0x80000, 0x503e51b7, 0x0a | BRF_SND },           // 20 C140 Samples Samples
 };
@@ -5476,10 +5476,10 @@ static struct BurnRomInfo kyukaidkRomDesc[] = {
 
 	{ "ky1_sha.bin",	0x20000, 0x380a20d7, 0x08 | BRF_GRA },           // 19 Layer Tiles Mask Data
 
-	{ "ky1_d0.bin",		0x20000, 0xc9cf399d, 0x09 | BRF_PRG | BRF_ESS }, // 20 Shared 68K Data
-	{ "ky1_d1.bin",		0x20000, 0x6d4f21b9, 0x09 | BRF_PRG | BRF_ESS }, // 21
-	{ "ky1_d2.bin",		0x20000, 0xeb6d19c8, 0x09 | BRF_PRG | BRF_ESS }, // 22
-	{ "ky1_d3.bin",		0x20000, 0x95674701, 0x09 | BRF_PRG | BRF_ESS }, // 23
+	{ "ky1_d0.13s",		0x20000, 0xc9cf399d, 0x09 | BRF_PRG | BRF_ESS }, // 20 Shared 68K Data
+	{ "ky1_d1.13p",		0x20000, 0x6d4f21b9, 0x09 | BRF_PRG | BRF_ESS }, // 21
+	{ "ky1_d2.13r",		0x20000, 0xeb6d19c8, 0x09 | BRF_PRG | BRF_ESS }, // 22
+	{ "ky1_d3.13n",		0x20000, 0x95674701, 0x09 | BRF_PRG | BRF_ESS }, // 23
 
 	{ "ky1_v1.bin",		0x80000, 0x5ff81aec, 0x0a | BRF_SND },           // 24 C140 Samples Samples
 };
@@ -5536,10 +5536,10 @@ static struct BurnRomInfo kyukaidkoRomDesc[] = {
 
 	{ "ky1_sha.bin",	0x20000, 0x380a20d7, 0x08 | BRF_GRA },           // 19 Layer Tiles Mask Data
 
-	{ "ky1_d0.bin",		0x20000, 0xc9cf399d, 0x09 | BRF_PRG | BRF_ESS }, // 20 Shared 68K Data
-	{ "ky1_d1.bin",		0x20000, 0x6d4f21b9, 0x09 | BRF_PRG | BRF_ESS }, // 21
-	{ "ky1_d2.bin",		0x20000, 0xeb6d19c8, 0x09 | BRF_PRG | BRF_ESS }, // 22
-	{ "ky1_d3.bin",		0x20000, 0x95674701, 0x09 | BRF_PRG | BRF_ESS }, // 23
+	{ "ky1_d0.13s",		0x20000, 0xc9cf399d, 0x09 | BRF_PRG | BRF_ESS }, // 20 Shared 68K Data
+	{ "ky1_d1.13p",		0x20000, 0x6d4f21b9, 0x09 | BRF_PRG | BRF_ESS }, // 21
+	{ "ky1_d2.13r",		0x20000, 0xeb6d19c8, 0x09 | BRF_PRG | BRF_ESS }, // 22
+	{ "ky1_d3.13n",		0x20000, 0x95674701, 0x09 | BRF_PRG | BRF_ESS }, // 23
 
 	{ "ky1_v1.bin",		0x80000, 0x5ff81aec, 0x0a | BRF_SND },           // 24 C140 Samples Samples
 };
@@ -5702,10 +5702,10 @@ static struct BurnRomInfo sgunner2RomDesc[] = {
 
 	{ "sns_sha0.bin",	0x80000, 0x0374fd67, 0x08 | BRF_GRA },           // 20 Layer Tiles Mask Data
 
-	{ "sns_dat0.bin",	0x20000, 0x48295d93, 0x09 | BRF_PRG | BRF_ESS }, // 21 Shared 68K Data
-	{ "sns_dat1.bin",	0x20000, 0xb44cc656, 0x09 | BRF_PRG | BRF_ESS }, // 22
-	{ "sns_dat2.bin",	0x20000, 0xca2ae645, 0x09 | BRF_PRG | BRF_ESS }, // 23
-	{ "sns_dat3.bin",	0x20000, 0x203bb018, 0x09 | BRF_PRG | BRF_ESS }, // 24
+	{ "sns_dat0.13s",	0x20000, 0x48295d93, 0x09 | BRF_PRG | BRF_ESS }, // 21 Shared 68K Data
+	{ "sns_dat1.13p",	0x20000, 0xb44cc656, 0x09 | BRF_PRG | BRF_ESS }, // 22
+	{ "sns_dat2.13r",	0x20000, 0xca2ae645, 0x09 | BRF_PRG | BRF_ESS }, // 23
+	{ "sns_dat3.13n",	0x20000, 0x203bb018, 0x09 | BRF_PRG | BRF_ESS }, // 24
 
 	{ "sns_voi1.bin",	0x80000, 0x219c97f7, 0x0a | BRF_SND },           // 25 C140 Samples
 	{ "sns_voi2.bin",	0x80000, 0x562ec86b, 0x0a | BRF_SND },           // 26
@@ -5774,10 +5774,10 @@ static struct BurnRomInfo sgunner2jRomDesc[] = {
 
 	{ "sns_sha0.bin",	0x80000, 0x0374fd67, 0x08 | BRF_GRA },           // 20 Layer Tiles Mask Data
 
-	{ "sns_dat0.bin",	0x20000, 0x48295d93, 0x09 | BRF_PRG | BRF_ESS }, // 21 Shared 68K Data
-	{ "sns_dat1.bin",	0x20000, 0xb44cc656, 0x09 | BRF_PRG | BRF_ESS }, // 22
-	{ "sns_dat2.bin",	0x20000, 0xca2ae645, 0x09 | BRF_PRG | BRF_ESS }, // 23
-	{ "sns_dat3.bin",	0x20000, 0x203bb018, 0x09 | BRF_PRG | BRF_ESS }, // 24
+	{ "sns_dat0.13s",	0x20000, 0x48295d93, 0x09 | BRF_PRG | BRF_ESS }, // 21 Shared 68K Data
+	{ "sns_dat1.13p",	0x20000, 0xb44cc656, 0x09 | BRF_PRG | BRF_ESS }, // 22
+	{ "sns_dat2.13r",	0x20000, 0xca2ae645, 0x09 | BRF_PRG | BRF_ESS }, // 23
+	{ "sns_dat3.13n",	0x20000, 0x203bb018, 0x09 | BRF_PRG | BRF_ESS }, // 24
 
 	{ "sns_voi1.bin",	0x80000, 0x219c97f7, 0x0a | BRF_SND },           // 25 C140 Samples
 	{ "sns_voi2.bin",	0x80000, 0x562ec86b, 0x0a | BRF_SND },           // 26
@@ -5836,8 +5836,8 @@ static struct BurnRomInfo dirtfoxjRomDesc[] = {
 
 	{ "df1_sha.bin",	0x20000, 0x9a7c9a9b, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
 
-	{ "df1_dat0.bin",	0x40000, 0xf5851c85, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
-	{ "df1_dat1.bin",	0x40000, 0x1a31e46b, 0x09 | BRF_PRG | BRF_ESS }, // 25
+	{ "df1_dat0.13s",	0x40000, 0xf5851c85, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
+	{ "df1_dat1.13p",	0x40000, 0x1a31e46b, 0x09 | BRF_PRG | BRF_ESS }, // 25
 
 	{ "df1_voi1.bin",	0x80000, 0x15053904, 0x0a | BRF_SND },           // 26 C140 Samples Samples
 	

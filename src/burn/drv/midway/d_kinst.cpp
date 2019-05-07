@@ -707,7 +707,7 @@ static struct BurnRomInfo kinstRomDesc[] = {
     { "u35-l1",             0x80000, 0x0aaef4fc, 2 | BRF_SND | BRF_ESS }, //  7
     { "u36-l1",             0x80000, 0x0577bb60, 2 | BRF_SND | BRF_ESS }, //  8
 
-#if defined ROM_VERIFY	
+#if defined ROM_VERIFY
 	{ "ki-p47.u98",			0x80000, 0x05e67bcb, 0 | BRF_OPT },
 	{ "ki_l15di.u98",		0x80000, 0x230f55fb, 0 | BRF_OPT },
 	{ "ki-l13.u98",			0x80000, 0x65f7ea31, 0 | BRF_OPT },
@@ -851,7 +851,7 @@ static struct BurnRomInfo kinst2RomDesc[] = {
     { "ki2_l1.u35",			0x80000, 0x7245ce69, 2 | BRF_SND | BRF_ESS }, //  7
     { "ki2_l1.u36",			0x80000, 0x8920acbb, 2 | BRF_SND | BRF_ESS }, //  8
 	
-#if defined ROM_VERIFY	
+#if defined ROM_VERIFY
 	{ "ki2-l11.u98",		0x80000, 0x0cb8de1e, 0 | BRF_OPT },
 	{ "ki2-l13.u98",		0x80000, 0x25ebde3b, 0 | BRF_OPT },
 	{ "ki2-l10.u98",		0x80000, 0xb17b4b3d, 0 | BRF_OPT },

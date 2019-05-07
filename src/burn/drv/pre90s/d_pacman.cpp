@@ -2631,14 +2631,17 @@ static INT32 DrvInit(void (*mapCallback)(), void (*pInitCallback)(), INT32 selec
 	AY8910Init(0, 1789750, 0);
 	AY8910SetAllRoutes(0, 0.75, BURN_SND_ROUTE_BOTH);
 	if (game_select == DREMSHPR) AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	SN76496Init(0, 1789750, 0);
 	SN76496Init(1, 1789750, 1);	
 	SN76496SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.75, BURN_SND_ROUTE_BOTH);
+	SN76496SetBuffered(ZetTotalCycles, 3072000);
 
-	NamcoSoundInit(18432000 / 6 / 32, 3, 0);
+	NamcoSoundInit(3072000 / 32, 3, 0);
 	NacmoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 
@@ -2753,6 +2756,8 @@ static INT32 DrvFrame()
 		DrvDoReset(1);
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0, 2);
 
@@ -2783,21 +2788,18 @@ static INT32 DrvFrame()
 	}
 
 	ZetOpen(0);
-	
+
 	INT32 nInterleave = 264;
-	INT32 nSoundBufferPos = 0;
-	
-	INT32 nCyclesTotal = (18432000 / 6) / 60;
-	INT32 nCyclesDone = 0, nSegment = 0;
-	
+	INT32 nCyclesTotal[1] = { 3072000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
+
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nSegment = (nCyclesTotal - nCyclesDone) / (nInterleave - i);
-		nCyclesDone += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 
 		if (game_select == BIGBUCKS) {
 			INT32 nInterleaveIRQFire = nInterleave / 20;
 			for (INT32 j = 0; j < 20; j++) {
-				if (i == (nInterleaveIRQFire * j) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				if (i == (nInterleaveIRQFire * j) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
 		} else {
 			if (game_select == DREMSHPR || game_select == VANVAN) {
@@ -2809,42 +2811,16 @@ static INT32 DrvFrame()
 				}
 			}
 		}
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			
-			if (nSegmentLength) {
-				if (game_select == DREMSHPR || game_select == CRUSHS) {
-					AY8910Render(pSoundBuf, nSegmentLength);
-				} else {
-					if (game_select == VANVAN) {
-						SN76496Update(0, pSoundBuf, nSegmentLength);
-						SN76496Update(1, pSoundBuf, nSegmentLength);
-					} else {
-						NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-					}
-				}
-			}
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
-	
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
-		if (nSegmentLength) {
-			if (game_select == DREMSHPR || game_select == CRUSHS) {
-				AY8910Render(pSoundBuf, nSegmentLength);
-			} else {
-				if (game_select == VANVAN) {
-					SN76496Update(0, pSoundBuf, nSegmentLength);
-					SN76496Update(1, pSoundBuf, nSegmentLength);
-				} else {
-					NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-				}
-			}
+	if (pBurnSoundOut) {
+		if (!(game_select == DREMSHPR || game_select == CRUSHS || game_select == VANVAN)) {
+			NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
+		}
+		if (game_select == DREMSHPR || game_select == CRUSHS) {
+			AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		} else if (game_select == VANVAN) {
+			SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
 

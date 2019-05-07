@@ -90,6 +90,7 @@ void nsc8105_init();
 int m6800_get_segmentcycles();
 
 void m6800_reset(void);
+void m6800_reset_soft(void);
 int m6800_get_pc();
 void m6800_get_context(void *dst);
 void m6800_set_context(void *src);

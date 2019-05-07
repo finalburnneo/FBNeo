@@ -796,6 +796,8 @@ static INT32 DrvInit(INT32 game)
 
 	NamcoSoundInit(24000, 8, 1);
 	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetStereo(1);
+	NamcoSoundSetBuffered(M6809TotalCycles, 1536000);
 
 	DACInit(0, 0, 1, M6502TotalCycles, 2048000);
 	DACSetRoute(0, 0.65, BURN_SND_ROUTE_BOTH);
@@ -1005,8 +1007,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nNext = ((i + 1) * nCyclesTotal[0]) / nInterleave;
-		nCyclesDone[0] += M6809Run(nNext - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		if (i == (nInterleave - 1)) {
 			if (m6809_irq_enable) {
 				M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -1016,24 +1017,20 @@ static INT32 DrvFrame()
 		}
 
 		M6502Open(0);
-		nNext = ((i + 1) * nCyclesTotal[1]) / nInterleave;
-		nCyclesDone[1] += M6502Run(nNext - nCyclesDone[1]);
+		CPU_RUN(1, M6502);
 		M6502Close();
 
 		M6502Open(1);
-		nNext = ((i + 1) * nCyclesTotal[2]) / nInterleave;
-		nCyclesDone[2] += M6502Run(nNext - nCyclesDone[2]);
+		CPU_RUN(2, M6502);
 		M6502Close();
 
-		nNext = ((i + 1) * nCyclesTotal[3]) / nInterleave;
-		nCyclesDone[3] += SekRun(nNext - nCyclesDone[3]);
+		CPU_RUN(3, Sek);
 		if (i == (nInterleave - 1) && m68000_irq_enable) {
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 
 		HD63701Open(0);
-		nNext = ((i + 1) * nCyclesTotal[4]) / nInterleave;
-		nCyclesDone[4] += HD63701Run(nNext - nCyclesDone[4]);
+		CPU_RUN(4, HD63701);
 		if (i == (nInterleave - 1)) {
 			if (mcu_irq_enable) {
 				HD63701SetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -1047,7 +1044,6 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			NamcoSoundUpdateStereo(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -1058,8 +1054,9 @@ static INT32 DrvFrame()
 
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			NamcoSoundUpdateStereo(pSoundBuf, nSegmentLength);
 		}
+
+		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

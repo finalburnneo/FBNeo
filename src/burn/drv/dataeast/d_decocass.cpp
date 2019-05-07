@@ -3430,7 +3430,7 @@ static struct BurnRomInfo decocassRomDesc[] = {
 
 	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xa0 - MCU BIOS (Shared)
 
-#ifdef ROM_VERIFY	
+#ifdef ROM_VERIFY
 	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xa1 - handcrafted (single byte changed) because ctisland3 requires region D
 #endif
 };

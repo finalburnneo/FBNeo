@@ -43,27 +43,27 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[8];
 
 static struct BurnInputInfo BaradukeInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 0,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 0,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Baraduke)
@@ -336,7 +336,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvM6809ROM		= Next; Next += 0x010000;
-	DrvHD63701ROM		= Next; Next += 0x010000;
+	DrvHD63701ROM	= Next; Next += 0x010000;
 
 	DrvGfxROM0		= Next; Next += 0x008000;
 	DrvGfxROM1		= Next; Next += 0x020000;
@@ -348,17 +348,17 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvHD63701RAM1		= Next; Next += 0x000080;
-	DrvHD63701RAM		= Next; Next += 0x000800;
+	DrvHD63701RAM1	= Next; Next += 0x000080;
+	DrvHD63701RAM	= Next; Next += 0x000800;
 
 	DrvVidRAM		= Next; Next += 0x002000;
 	DrvTxtRAM		= Next; Next += 0x000800;
 	DrvSprRAM		= Next; Next += 0x002000;
 
-	coin_lockout		= Next; Next += 0x000001;
 	kludge1105      = (INT32*)Next; Next += 0x000004;
+	coin_lockout	= Next; Next += 0x000001;
 	ip_select		= Next; Next += 0x000001;
-	buffer_sprites		= Next; Next += 0x000001;
+	buffer_sprites	= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
 
 	scroll			= Next; Next += 0x000008;
@@ -498,7 +498,7 @@ static INT32 DrvInit(INT32 type)
 	HD63701Init(0);
 	HD63701Open(0);
 	HD63701MapMemory(DrvHD63701ROM + 0x8000,	0x8000, 0xbfff, MAP_ROM);
-	HD63701MapMemory(DrvHD63701RAM,			0xc000, 0xc7ff, MAP_RAM);
+	HD63701MapMemory(DrvHD63701RAM,				0xc000, 0xc7ff, MAP_RAM);
 	HD63701MapMemory(DrvHD63701ROM + 0xf000,	0xf000, 0xffff, MAP_ROM);
 	HD63701SetReadHandler(baraduke_mcu_read);
 	HD63701SetWriteHandler(baraduke_mcu_write);
@@ -508,6 +508,7 @@ static INT32 DrvInit(INT32 type)
 
 	NamcoSoundInit(49152000/2048, 8, 0);
 	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetBuffered(HD63701TotalCycles, 1536000);
 
 	BurnLEDInit(2, LED_POSITION_BOTTOM_RIGHT, LED_SIZE_5x5, LED_COLOR_GREEN, 100);
 
@@ -734,44 +735,28 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 1536000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
+
+	M6809Open(0);
+	HD63701Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nNext;
-
-		M6809Open(0);
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += M6809Run(nNext - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		if (i == (nInterleave - 1)) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
-		M6809Close();
 
-		HD63701Open(0);
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesDone[1] += HD63701Run(nNext - nCyclesDone[1]);
+		CPU_RUN(1, HD63701);
 		if (i == (nInterleave - 1)) {
 			HD63701SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
-		HD63701Close();
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-
 	}
-	// Make sure the buffer is entirely filled.
+
+	HD63701Close();
+	M6809Close();
+
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-		}
+		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

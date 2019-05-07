@@ -64,7 +64,6 @@ static UINT8 Config1[4], Config2[4], Config3[5];
 // Dig Dug playfield stuff
 static INT32 playfield, alphacolor, playenable, playcolor;
 static INT32 digdugmode;
-static UINT8 bHasSamples = 0;
 
 static INT32 DrvButtonHold[2] = { 0, 0 }; // Fire button must be held for 1 frame
 static INT32 DrvButtonHeld[2] = { 0, 0 }; // otherwise Dig Dug acts strangely.
@@ -1110,9 +1109,10 @@ static void MachineInit()
 	
 	NamcoSoundInit(18432000 / 6 / 32, 3, 0);
 	NacmoSoundSetAllRoutes(0.90 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetBuffered(ZetTotalCycles, 3072000);
+
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.25, BURN_SND_ROUTE_BOTH);
-	bHasSamples = BurnSampleGetStatus(0) != -1;
 
 	GenericTilesInit();
 
@@ -1846,28 +1846,20 @@ static void DrvMakeInputs()
 
 static INT32 DrvFrame()
 {
-	
 	if (DrvReset) DrvDoReset();
 
 	DrvPreMakeInputs();
 	DrvMakeInputs();
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 400;
-	INT32 nCyclesTotal[3];
+	INT32 nCyclesTotal[3] = { 3072000 / 60, 3072000 / 60, 3072000 / 60 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
-	nCyclesTotal[0] = (18432000 / 6) / 60;
-	nCyclesTotal[1] = (18432000 / 6) / 60;
-	nCyclesTotal[2] = (18432000 / 6) / 60;
-	
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU;
-		
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave-1) && DrvCPU1FireIRQ) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
@@ -1877,9 +1869,8 @@ static INT32 DrvFrame()
 		ZetClose();
 		
 		if (!DrvCPU2Halt) {
-			nCurrentCPU = 1;
-			ZetOpen(nCurrentCPU);
-			ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+			ZetOpen(1);
+			CPU_RUN(1, Zet);
 			if (i == (nInterleave-1) && DrvCPU2FireIRQ) {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
@@ -1887,38 +1878,19 @@ static INT32 DrvFrame()
 		}
 		
 		if (!DrvCPU3Halt) {
-			nCurrentCPU = 2;
-			ZetOpen(nCurrentCPU);
-			ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+			ZetOpen(2);
+			CPU_RUN(2, Zet);
 			if (((i == ((64 + 000) * nInterleave) / 272) ||
 				 (i == ((64 + 128) * nInterleave) / 272)) && DrvCPU3FireIRQ) {
 				ZetNmi();
 			}
 			ZetClose();
 		}
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			
-			if (nSegmentLength) {
-				NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-				if (bHasSamples)
-					BurnSampleRender(pSoundBuf, nSegmentLength);
-			}
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
-	
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
-		if (nSegmentLength) {
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-			if (bHasSamples)
-				BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
+	if (pBurnSoundOut) {
+		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw)

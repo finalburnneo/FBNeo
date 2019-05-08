@@ -25,7 +25,7 @@
 #undef AY8910_CORE
 
 #if defined FBA_DEBUG
-#ifdef __GNUC__ 
+#ifdef __GNUC__
 	// MSVC doesn't like this - this module only supports debug tracking with GCC only
 	#include <tchar.h>
 	extern UINT8 DebugSnd_AY8910Initted;
@@ -86,7 +86,9 @@ static void UpdateStream(INT32 chip, INT32 samples_len)
     if (nSamplesNeeded <= 0) return;
 
 #if defined FBA_DEBUG
+#ifdef __GNUC__ 
     bprintf(0, _T("ay8910_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
+#endif
 #endif
 
     AY8910Update(chip, pAY8910Buffer + (chip * 3), nSamplesNeeded);
@@ -96,7 +98,9 @@ static void UpdateStream(INT32 chip, INT32 samples_len)
 void AY8910SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 {
 #if defined FBA_DEBUG
+#ifdef __GNUC__ 
     bprintf(0, _T("*** Using BUFFERED AY8910-mode.\n"));
+#endif
 #endif
     for (INT32 i = 0; i < num; i++) {
         nPosition[i] = 0;
@@ -873,7 +877,9 @@ INT32 AY8910Init(INT32 chip, INT32 clock, INT32 add_signal)
 
     if (ay8910_buffered) {
 #if defined FBA_DEBUG
+#ifdef __GNUC__ 
         bprintf(0, _T("*** ERROR: AY8910SetBuffered() must be called AFTER all chips have been initted!\n"));
+#endif
 #endif
     }
 
@@ -1011,7 +1017,9 @@ void AY8910RenderInternal(INT32 length)
 
 	if (ay8910_buffered && length != nBurnSoundLen) {
 #if defined FBA_DEBUG
+#ifdef __GNUC__ 
         bprintf(0, _T("AY8910RenderInternal() in buffered mode must be called once per frame!\n"));
+#endif
 #endif
         return;
     }

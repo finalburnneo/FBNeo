@@ -4080,6 +4080,9 @@
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp">
       <Filter>Burn\drv\dataeast</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\mips3\x64\mips3_x64.cpp">
+      <Filter>cpus\mips</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

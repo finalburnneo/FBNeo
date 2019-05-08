@@ -468,13 +468,6 @@ static UINT8 __fastcall gyruss_i8039_read_port(UINT32 port)
 	return 0;
 }
 
-
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (I8039TotalCycles() / ((8000000 / 15) / (nBurnFPS / 100.0000))));
-}
-
-
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
@@ -703,7 +696,7 @@ static INT32 DrvInit()
 	I8039SetIOWriteHandler(gyruss_i8039_write_port);
 	I8039Close();
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, I8039TotalCycles, (8000000 / 15));
 	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1789772, 0); // these hz are intentional! -dink
@@ -714,6 +707,7 @@ static INT32 DrvInit()
 	AY8910SetPorts(0, NULL, NULL, NULL, &AY8910_0_portBwrite);
 	AY8910SetPorts(1, NULL, NULL, NULL, &AY8910_1_portBwrite);
 	AY8910SetPorts(2, AY8910_3_portA, NULL, NULL, NULL);
+	AY8910SetBuffered(ZetTotalCycles, 3579545);
 
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
 	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
@@ -913,7 +907,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[4] = { 3072000 / 60, 2000000 / 60, 3579545 / 60, 8000000 / 15 / 60 };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -926,76 +919,49 @@ static INT32 DrvFrame()
 		scanline = i;
 
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 248) && *interrupt_enable0) {
 			ZetSetIRQLine(Z80_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 		}
 		ZetClose();
 		
 		M6809Open(0);
-		nCyclesDone[1] += M6809Run((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, M6809);
 		if (i == (nInterleave - 248) && *interrupt_enable1) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		M6809Close();
 
 		ZetOpen(1);
-		nCyclesDone[2] += ZetRun((nCyclesTotal[2] * (i + 1) / nInterleave) - nCyclesDone[2]);
+		CPU_RUN(2, Zet);
 		ZetClose();
 
-		nCyclesDone[3] += I8039Run((nCyclesTotal[3] * (i + 1) / nInterleave) - nCyclesDone[3]);
+		CPU_RUN(3, I8039);
 
 		if (pBurnDraw && scanline >= 16 && scanline < 240) {
 			if (nBurnLayer & 2) draw_sprites(scanline);
 		}
-		// Render Sound Segment
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910RenderInternal(nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-
-			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
-			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
-			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
-			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
-		    filter_rc_update(6, pAY8910Buffer[6], pSoundBuf, nSegmentLength);
-			filter_rc_update(7, pAY8910Buffer[7], pSoundBuf, nSegmentLength);
-			filter_rc_update(6, pAY8910Buffer[8], pSoundBuf, nSegmentLength);
-			filter_rc_update(7, pAY8910Buffer[9], pSoundBuf, nSegmentLength);
-			filter_rc_update(6, pAY8910Buffer[10], pSoundBuf, nSegmentLength);
-			filter_rc_update(7, pAY8910Buffer[11], pSoundBuf, nSegmentLength);
-			filter_rc_update(6, pAY8910Buffer[12], pSoundBuf, nSegmentLength);
-			filter_rc_update(7, pAY8910Buffer[13], pSoundBuf, nSegmentLength);
-			filter_rc_update(6, pAY8910Buffer[14], pSoundBuf, nSegmentLength);
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910RenderInternal(nSegmentLength);
+		AY8910RenderInternal(nBurnSoundLen);
 
-			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
-			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
-			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
-			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
-		    filter_rc_update(6, pAY8910Buffer[6], pSoundBuf, nSegmentLength);
-			filter_rc_update(7, pAY8910Buffer[7], pSoundBuf, nSegmentLength);
-			filter_rc_update(6, pAY8910Buffer[8], pSoundBuf, nSegmentLength);
-			filter_rc_update(7, pAY8910Buffer[9], pSoundBuf, nSegmentLength);
-			filter_rc_update(6, pAY8910Buffer[10], pSoundBuf, nSegmentLength);
-			filter_rc_update(7, pAY8910Buffer[11], pSoundBuf, nSegmentLength);
-			filter_rc_update(6, pAY8910Buffer[12], pSoundBuf, nSegmentLength);
-			filter_rc_update(7, pAY8910Buffer[13], pSoundBuf, nSegmentLength);
-			filter_rc_update(6, pAY8910Buffer[14], pSoundBuf, nSegmentLength);
-		}
+		filter_rc_update(0, pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(1, pAY8910Buffer[1], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(2, pAY8910Buffer[2], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(3, pAY8910Buffer[3], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(4, pAY8910Buffer[4], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(5, pAY8910Buffer[5], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(6, pAY8910Buffer[6], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(7, pAY8910Buffer[7], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(6, pAY8910Buffer[8], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(7, pAY8910Buffer[9], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(6, pAY8910Buffer[10], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(7, pAY8910Buffer[11], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(6, pAY8910Buffer[12], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(7, pAY8910Buffer[13], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(6, pAY8910Buffer[14], pBurnSoundOut, nBurnSoundLen);
+
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

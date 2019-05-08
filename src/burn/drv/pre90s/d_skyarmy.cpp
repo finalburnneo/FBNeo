@@ -586,17 +586,15 @@ static INT32 DrvFrame()
 	// MDRV_SCREEN_REFRESH_RATE(60) ! 60!!
 
 	INT32 nInterleave = 102/8; // MDRV_CPU_PERIODIC_INT(skyarmy_nmi_source,650) -> 4000000 / 60 -> 66666.67 / 650 -> 102 (add /8 to get the right timing -dink)
-	INT32 nCyclesTotal = 4000000 / 60; // MDRV_CPU_ADD("maincpu", Z80,4000000)
-	INT32 nCyclesDone  = 0;
+	INT32 nCyclesTotal[1] = { 4000000 / 60 }; // MDRV_CPU_ADD("maincpu", Z80,4000000)
+	INT32 nCyclesDone[1]  = { 0 };
 
     ZetNewFrame(); // Needed when using buffered soundcores
 	ZetOpen(0); // open cpu for modification
 
 	for (INT32 i = 0; i < nInterleave; i++) // split the amount of cpu the z80 is running in 1/60th of a second into slices
 	{
-		INT32 nSegment = nCyclesTotal / nInterleave;
-
-		nCyclesDone += ZetRun(nSegment); // actually run the cpu
+		CPU_RUN(0, Zet); // run the cpu.  0 = index in nCyclesTotal/nCyclesDone, Zet = Z80 cpu
 
 		if (i == (nInterleave - 1)) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // MDRV_CPU_VBLANK_INT("screen", irq0_line_hold)
@@ -608,9 +606,7 @@ static INT32 DrvFrame()
 
 	ZetClose(); // close the cpu to modifications
 
-// output the sound
-
-	// Make sure the buffer is entirely filled.
+	// output the sound
 	if (pBurnSoundOut) {
         AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -640,7 +636,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029708; // use current version number
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));	// save all ram
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;

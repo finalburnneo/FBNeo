@@ -1,8 +1,6 @@
 // FB Alpha Namco System 1 driver module
 // Based on MAME driver by Ernesto Corvi
 
-// TODO: rompers is broken, investigate
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"
@@ -101,74 +99,73 @@ static INT16 Paddle[2]; // quester
 static UINT8 quester = 0; // use paddle?
 
 static UINT8 sixtyhz = 0; // some games only like 60hz
-static UINT8 dac_kludge = 0; // dac is fine-tuned to each game, due to cycle-inaccuracy of our m680x cores.
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo Tankfrce4InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy4 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy4 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 left"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy4 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy4 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy4 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy6 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy6 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy6 + 1,	"p2 left"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy6 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy6 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy6 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy6 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy6 + 4,	"p2 fire 1"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p3 coin"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy5 + 3,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy5 + 2,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy5 + 1,	"p3 left"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p3 coin"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy5 + 3,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy5 + 2,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy5 + 1,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy5 + 0,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy5 + 4,	"p3 fire 1"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p4 coin"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy7 + 3,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy7 + 2,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy7 + 1,	"p4 left"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p4 coin"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy7 + 3,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy7 + 2,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy7 + 1,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy7 + 0,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy7 + 4,	"p4 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Tankfrce4)
 
 static struct BurnInputInfo FaceoffInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
 	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy4 + 3,	"p1 up"		},
 	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy4 + 2,	"p1 down"	},
@@ -181,7 +178,7 @@ static struct BurnInputInfo FaceoffInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
 	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy6 + 3,	"p2 up"		},
 	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy6 + 2,	"p2 down"	},
@@ -194,18 +191,18 @@ static struct BurnInputInfo FaceoffInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy6 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy7 + 4,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Faceoff)
 static struct BurnInputInfo BerabohmInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy5 + 1,	"p1 fire 2"	},
@@ -214,11 +211,11 @@ static struct BurnInputInfo BerabohmInputList[] = {
 	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 fire 5"	},
 	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy4 + 2,	"p1 fire 6"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy7 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy7 + 1,	"p2 fire 2"	},
@@ -227,9 +224,9 @@ static struct BurnInputInfo BerabohmInputList[] = {
 	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy6 + 1,	"p2 fire 5"	},
 	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy6 + 2,	"p2 fire 6"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Berabohm)
@@ -954,7 +951,7 @@ static void subres_callback(INT32 state)
 		M6809Open(0);
 
 		HD63701Open(0);
-		HD63701Reset();
+		HD63701ResetSoft();
 		HD63701Close();
 	}
 }
@@ -1302,11 +1299,6 @@ static UINT8 mcu_read_port(UINT16 port)
 	return 0;
 }
 
-static INT32 DrvDACSync() // sync to hd63701 (m6800 core)
-{
-	return (INT32)(float)(nBurnSoundLen * (HD63701TotalCycles() / (1536000.0000 / ((nBurnFPS / 100.0000) - dac_kludge))));
-}
-
 static void YM2151IrqHandler(INT32 status)
 {
 	if (M6809GetActive() == -1) return;
@@ -1374,9 +1366,10 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6809Close();
 
 	HD63701Open(0);
-	HD63701Reset();
+	HD63701ResetSoft();
 	if (clear_mem) {
 		HD63701MapMemory(NULL, 0x4000, 0xbfff, MAP_ROM);
+		HD63701Reset();
 	}
 	HD63701Close();
 
@@ -1416,7 +1409,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x100000;
 	DrvGfxROM2		= Next; Next += 0x200000;
 
-	DrvTransTable		= Next; Next += 0x020000 / 8;
+	DrvTransTable	= Next; Next += 0x020000 / 8;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x2001 * sizeof(UINT32);
 
@@ -1629,9 +1622,8 @@ static INT32 DrvInit()
 	NamcoSoundSetStereo(1);
 	NamcoSoundSetBuffered(M6809TotalCycles, 1536000);
 
-	DACInit(0, 0, 1, DrvDACSync);
-
-	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	DACInit(0, 0, 1, HD63701TotalCycles, 1536000);
+	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1649,7 +1641,6 @@ static INT32 DrvExit()
 	key_write_callback = NULL;
 
 	sixtyhz = 0;
-	dac_kludge = 0;
 	quester = 0;
 
 	M6809Exit();
@@ -2176,7 +2167,6 @@ STD_ROM_FN(shadowld)
 static INT32 ShadowldInit()
 {
 	sixtyhz = 1;
-	dac_kludge = 4;
 
 	return DrvInit();
 }
@@ -2516,8 +2506,6 @@ static INT32 BlazerInit()
 	namcos1_key_init(1, 0x013, -1, -1, -1, -1, -1, -1);
 
 	INT32 nRet = DrvInit();
-
-	dac_kludge = 4;
 
 	if (nRet == 0) {
 		// transparent sprites in empty space, otherwise the explosions look bad.
@@ -2935,7 +2923,6 @@ STD_ROM_FN(ws)
 static INT32 WsInit()
 {
 	namcos1_key_init(2, 0x007, -1, -1, -1, -1, -1, -1);
-	dac_kludge = 3;
 
 	return DrvInit();
 }
@@ -2993,7 +2980,6 @@ STD_ROM_FN(berabohm)
 static INT32 BerabohmInit()
 {
 	input_read_callback = berabohm_buttons_read;
-	dac_kludge = 4;
 
 	return DrvInit();
 }
@@ -3099,7 +3085,6 @@ STD_ROM_FN(mmaze)
 static INT32 MmazeInit()
 {
 	namcos1_key_init(2, 0x025, -1, -1, -1, -1, -1, -1);
-	dac_kludge = 2;
 
 	return DrvInit();
 }
@@ -3204,7 +3189,6 @@ STD_ROM_FN(bakutotu)
 static INT32 BakutotuInit()
 {
 	namcos1_key_init(2, 0x022, -1, -1, -1, -1, -1, -1);
-	dac_kludge = 2;
 
 	return DrvInit();
 }
@@ -3314,7 +3298,6 @@ STD_ROM_FN(splatter)
 static INT32 SplatterInit()
 {
 	namcos1_key_init(3, 0x0b5, 3,  4, -1, -1, -1, -1);
-	dac_kludge = 1;
 
 	return DrvInit();
 }
@@ -3473,7 +3456,6 @@ STD_ROM_FN(faceoff)
 static INT32 FaceoffInit()
 {
 	input_read_callback = faceoff_inputs_read;
-	dac_kludge = 1;
 
 	return DrvInit();
 }
@@ -3526,7 +3508,6 @@ static INT32 RompersInit()
 {
 	namcos1_key_init(3, 0x0b6, 7, -1, -1, -1, -1, -1);
 	sixtyhz = 1;
-	dac_kludge = 3;
 
 	return DrvInit();
 }
@@ -3624,7 +3605,6 @@ STD_ROM_FN(blastoff)
 static INT32 BlastoffInit()
 {
 	namcos1_key_init(3, 0x0b7, 0,  7,  3,  5, -1, -1);
-	dac_kludge = 1;
 
 	return DrvInit();
 }
@@ -3830,7 +3810,6 @@ STD_ROM_FN(pistoldm)
 static INT32 PistoldmInit()
 {
 	namcos1_key_init(3, 0x135, 1,  2,  0, -1,  4, -1);
-	dac_kludge = 3;
 
 	return DrvInit();
 }

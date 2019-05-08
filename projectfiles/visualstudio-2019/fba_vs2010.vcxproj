@@ -524,8 +524,8 @@ del %(Filename).exe</Command>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 
 %(Filename).exe &gt; generated\ctv.h 
-rm %(Filename).obj
-rm %(Filename).exe</Command>
+del %(Filename).obj
+del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\generated\ctv.h</Outputs>
     </CustomBuild>
     <ClCompile Include="..\..\src\burn\drv\capcom\d_cps1.cpp" />
@@ -740,8 +740,8 @@ del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pgm_sprite.h</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp 
 %(Filename).exe &gt; generated\pgm_sprite.h 
-rm %(Filename).obj
-rm %(Filename).exe</Command>
+del %(Filename).obj
+del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pgm_sprite.h</Outputs>
     </CustomBuild>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_1942.cpp" />
@@ -1294,8 +1294,8 @@ del %(Filename).exe
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl /DINLINE="__inline static" ..\..\src\cpu\m68k\%(Filename).c
 
 %(Filename).exe generated/ ..\..\src\cpu\m68k\m68k_in.c
-rm %(Filename).obj
-rm %(Filename).exe
+del %(Filename).obj
+del %(Filename).exe
 
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">m68kmake.exe</Outputs>
@@ -1418,8 +1418,8 @@ cd dep
 cd scripts
 "cl" build_details.cpp
 build_details &gt;../../../projectfiles/visualstudio-2010/generated/build_details.h
-rm build_details.obj
-rm build_details.exe
+del build_details.obj
+del build_details.exe
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build_details.h</Outputs>
     </CustomBuild>
@@ -1597,6 +1597,9 @@ rm build_details.exe
       <IgnoreSpecificDefaultLibraries>winspool.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</IgnoreSpecificDefaultLibraries>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <PreBuildEvent>
+      <Command>$(MSBuildProjectDirectory)/../../src/dep/vs2010/pre2019.bat "$(VCInstallDir)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

@@ -321,16 +321,42 @@ if ( $Listfile ) {
 	print OUTFILE "D = included in debug build only; ";
 	print OUTFILE "NW = not working\x0d\x0a\x0d\x0a";
 
-	print OUTFILE "| name | status | full name | parent | year | company | hardware | remarks |\x0d\x0a";
-	print OUTFILE "| - | - | - | - | - | - | - | - |\x0d\x0a";
+	print OUTFILE "  name\t\t  status  full name\t\t\t\t\t\t  parent\t  year\t  company\t  hardware\t  remarks\x0d\x0a";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "+-------";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "+-------";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------+\x0d\x0a";
 
 	my $Text;
 
 	foreach my $name ( @Driverlist ) {
 
 		print OUTFILE "| $Drivers{$name}[1]";
+		my $column = int( (2 + length( $Drivers{$name}[1] )) / 8 );
+		while ( $column < 2 ) {
+			print OUTFILE "\t";
+			$column++;
+		}
 
-		print OUTFILE " | ";
+		print OUTFILE "| ";
 		if ( $Drivers{$name}[0] ) {
 			print OUTFILE "$Drivers{$name}[0]";
 		} else {
@@ -339,21 +365,78 @@ if ( $Listfile ) {
 		if ( $Drivers{$name}[8] ) {
 			print OUTFILE " NW";
 		}
+		print OUTFILE "\t";
+		$column++;
 
-		print OUTFILE " | $Drivers{$name}[2]";
+		$Text = substr( $Drivers{$name}[2], 0, 54);
+		print OUTFILE "| $Text";
+		$column += int( (2 + length( $Text )) / 8 );
+		while ( $column < 10 ) {
+			print OUTFILE "\t";
+			$column++;
+		}
 
-		print OUTFILE " | $Drivers{$name}[7]";
+		print OUTFILE "| $Drivers{$name}[7]";
+		$column += int( (2 + length( $Drivers{$name}[7] )) / 8 );
+		while ( $column < 12 ) {
+			print OUTFILE "\t";
+			$column++;
+		}
+		print OUTFILE "| $Drivers{$name}[6]";
+		$column += int( (2 + length( $Drivers{$name}[6] )) / 8 );
+		while ( $column < 13 ) {
+			print OUTFILE "\t";
+			$column++;
+		}
 
-		print OUTFILE " | $Drivers{$name}[6]";
+		$Text = substr( $Drivers{$name}[4], 0, 14);
+		print OUTFILE "| $Text";
+		$column += int( (2 + length( $Text )) / 8 );
+		while ( $column < 15 ) {
+			print OUTFILE "\t";
+			$column++;
+		}
 
-		print OUTFILE " | $Drivers{$name}[4]";
+		$Text = substr( $Drivers{$name}[5], 0, 14);
+		print OUTFILE "| $Text";
+		$column += int( (2 + length( $Text )) / 8 );
+		while ( $column < 17 ) {
+			print OUTFILE "\t";
+			$column++;
+		}
 
-		print OUTFILE " | $Drivers{$name}[5]";
-
-		print OUTFILE " | $Drivers{$name}[3]";
-
-		print OUTFILE " |\x0d\x0a";
+		$Text = substr( $Drivers{$name}[3], 0, 38);
+		print OUTFILE "| $Text";
+		$column += int( ( 2 + length( $Text )) / 8 );
+		while ( $column < 22 ) {
+			print OUTFILE "\t";
+			$column++;
+		}
+		print OUTFILE "|\x0d\x0a";
 	}
+
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "+-------";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "+-------";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "+-------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------";
+	print OUTFILE "--------+\x0d\x0a";
 
 	close( OUTFILE );
 }

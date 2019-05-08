@@ -559,13 +559,13 @@ generate-files-clean:
 	rm -rf $(FBA_GENERATED_DIR)/
 	rm -rf $(FBA_CPU_DIR)/m68k/m68kops.c
 	rm -rf $(FBA_CPU_DIR)/m68k/m68kops.h
-	rm -rf $(MAIN_FBA_DIR)/../GAMELIST.md
+	rm -rf $(MAIN_FBA_DIR)/../gamelist.txt
 
 generate-files:
 	@mkdir -p $(FBA_GENERATED_DIR) 2>/dev/null || /bin/true
 	@echo "Generating $(FBA_GENERATED_DIR)/driverlist.h..."
 	@echo ""
-	$(PERL) $(FBA_SCRIPTS_DIR)/gamelist.pl -o $(FBA_GENERATED_DIR)/driverlist.h -l $(MAIN_FBA_DIR)/../GAMELIST.md $(FBA_BURN_DRIVERS_DIRS)
+	$(PERL) $(FBA_SCRIPTS_DIR)/gamelist.pl -o $(FBA_GENERATED_DIR)/driverlist.h -l $(MAIN_FBA_DIR)/../gamelist.txt $(FBA_BURN_DRIVERS_DIRS)
 	@echo ""
 	@echo "Generating $(FBA_GENERATED_DIR)/neo_sprite_func.h..."
 	@echo ""

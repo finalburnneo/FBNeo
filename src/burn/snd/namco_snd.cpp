@@ -747,11 +747,11 @@ void NamcoSoundInit(INT32 clock, INT32 num_voices, INT32 bAdd)
 	chip->output_dir[BURN_SND_NAMCOSND_ROUTE_2] = BURN_SND_ROUTE_BOTH;
 }
 
-void NacmoSoundSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
+void NamcoSoundSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
 #if defined FBA_DEBUG
-	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NacmoSoundSetRoute called without init\n"));
-	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("NacmoSoundSetRoute called with invalid index %i\n"), nIndex);
+	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundSetRoute called without init\n"));
+	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("NamcoSoundSetRoute called with invalid index %i\n"), nIndex);
 #endif
 
 	chip->gain[nIndex] = nVolume;

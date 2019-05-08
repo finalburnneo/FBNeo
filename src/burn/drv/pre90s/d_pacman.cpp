@@ -2640,7 +2640,7 @@ static INT32 DrvInit(void (*mapCallback)(), void (*pInitCallback)(), INT32 selec
 	SN76496SetBuffered(ZetTotalCycles, 3072000);
 
 	NamcoSoundInit(3072000 / 32, 3, 0);
-	NacmoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 	NamcoSoundSetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();

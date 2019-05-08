@@ -46,7 +46,7 @@ static UINT8 DrvInputs[7];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo LiblrablInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy6 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy6 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy5 + 2,	"p1 start"	},
 	{"P1 Left Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 up"		},
 	{"P1 Left Down",	BIT_DIGITAL,	DrvJoy3 + 2,	"p1 down"	},
@@ -58,7 +58,7 @@ static struct BurnInputInfo LiblrablInputList[] = {
 	{"P1 Right Right",	BIT_DIGITAL,	DrvJoy1 + 1,	"p3 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy6 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy6 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy5 + 3,	"p2 start"	},
 	{"P2 Left Up",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 up"		},
 	{"P2 Left Down",	BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"	},
@@ -70,36 +70,36 @@ static struct BurnInputInfo LiblrablInputList[] = {
 	{"P2 Right Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p4 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy5 + 1,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Liblrabl)
 
 static struct BurnInputInfo ToypopInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy6 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy6 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy5 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy6 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy6 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy5 + 3,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy5 + 1,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy6 + 3,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy6 + 3,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Toypop)
@@ -482,8 +482,8 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvM6809ROM0		= Next; Next += 0x008000;
-	DrvM6809ROM1		= Next; Next += 0x002000;
+	DrvM6809ROM0	= Next; Next += 0x008000;
+	DrvM6809ROM1	= Next; Next += 0x002000;
 	Drv68KROM		= Next; Next += 0x008000;
 
 	DrvGfxROM0		= Next; Next += 0x008000;
@@ -491,7 +491,7 @@ static INT32 MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000600;
 
-	NamcoSoundProm		= Next;
+	NamcoSoundProm	= Next;
 	DrvSndPROM		= Next; Next += 0x000100;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0320 * sizeof(UINT32);
@@ -572,8 +572,8 @@ static INT32 DrvInit(INT32 addr_xor)
 
 	M6809Init(0);
 	M6809Open(0);
-	M6809MapMemory(DrvFgRAM,	0x0000, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvShareRAM,	0x2800, 0x2fff, MAP_RAM);
+	M6809MapMemory(DrvFgRAM,		0x0000, 0x1fff, MAP_RAM);
+	M6809MapMemory(DrvShareRAM,		0x2800, 0x2fff, MAP_RAM);
 	M6809MapMemory(DrvM6809ROM0,	0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(toypop_main_write);
 	M6809SetReadHandler(toypop_main_read);
@@ -598,7 +598,7 @@ static INT32 DrvInit(INT32 addr_xor)
 	M6809Close();
 
 	NamcoSoundInit(24000, 8, 0);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	namcoio_init(0, NAMCO58xx, nio0_i0, nio0_i1, nio0_i2, nio0_i3, NULL,    NULL);
 	namcoio_init(1, NAMCO56xx, nio1_i0, nio1_i1, nio1_i2, nio1_i3, nio1_o0, NULL);
@@ -752,7 +752,7 @@ static INT32 DrvDraw()
 static void master_scanline_callback(INT32 scanline)
 {
 	if (scanline == 224 && master_irq_enable)
-		M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 	if (scanline == 0)
 	{
@@ -797,27 +797,24 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = 0;
-
 		M6809Open(0);
 		master_scanline_callback(i);
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
-		nSegment = M6809TotalCycles();
+		CPU_RUN(0, M6809);
 		M6809Close();
 
 		if (slave_in_reset) {
-			SekIdle((nSegment * 4) - SekTotalCycles());
+			CPU_IDLE(1, Sek);
 		} else {
-			nCyclesDone[1] += SekRun(nCyclesTotal[1] / nInterleave);
+			CPU_RUN(1, Sek);
 			if (i == 223 && slave_irq_enable) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (sound_in_reset) {
-			nCyclesDone[2] += nSegment - nCyclesDone[2];
+			CPU_IDLE(2, M6809);
 		} else {
 			M6809Open(1);
-			nCyclesDone[2] += M6809Run(nCyclesTotal[2] / nInterleave);
-			if (i == 223) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			CPU_RUN(2, M6809);
+			if (i == 223) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			M6809Close();
 		}
 	}
@@ -874,17 +871,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Libble Rabble
 
 static struct BurnRomInfo liblrablRomDesc[] = {
-	{ "5b.rom",	0x4000, 0xda7a93c2, 1 | BRF_GRA },           //  0 M6809 Code (master)
-	{ "5c.rom",	0x4000, 0x6cae25dc, 1 | BRF_GRA },           //  1
+	{ "5b.rom",		0x4000, 0xda7a93c2, 1 | BRF_GRA },           //  0 M6809 Code (master)
+	{ "5c.rom",		0x4000, 0x6cae25dc, 1 | BRF_GRA },           //  1
 
-	{ "2c.rom",	0x2000, 0x7c09e50a, 2 | BRF_GRA },           //  2 M6809 Code (sound)
+	{ "2c.rom",		0x2000, 0x7c09e50a, 2 | BRF_GRA },           //  2 M6809 Code (sound)
 
-	{ "8c.rom",	0x4000, 0xa00cd959, 3 | BRF_GRA },           //  3 M68000 Code (slave)
+	{ "8c.rom",		0x4000, 0xa00cd959, 3 | BRF_GRA },           //  3 M68000 Code (slave)
 	{ "10c.rom",	0x4000, 0x09ce209b, 3 | BRF_GRA },           //  4
 
-	{ "5p.rom",	0x2000, 0x3b4937f0, 4 | BRF_GRA },           //  5 Foreground Tiles
+	{ "5p.rom",		0x2000, 0x3b4937f0, 4 | BRF_GRA },           //  5 Foreground Tiles
 
-	{ "9t.rom",	0x4000, 0xa88e24ca, 5 | BRF_GRA },           //  6 Sprites
+	{ "9t.rom",		0x4000, 0xa88e24ca, 5 | BRF_GRA },           //  6 Sprites
 
 	{ "lr1-3.1r",	0x0100, 0xf3ec0d07, 6 | BRF_GRA },           //  7 Color Data
 	{ "lr1-2.1s",	0x0100, 0x2ae4f702, 6 | BRF_GRA },           //  8

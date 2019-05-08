@@ -77,7 +77,7 @@ static INT32 SyncInternal()
 	return (INT32)(float)(nBurnSoundLen * (pCPUTotalCycles() / (nDACCPUMHZ / (nBurnFPS / 100.0000))));
 }
 
-void UpdateStream(INT32 chip, INT32 samples_len)
+static void UpdateStream(INT32 chip, INT32 samples_len)
 {
     if (!ay8910_buffered) return;
     if (samples_len > nBurnSoundLen) samples_len = nBurnSoundLen;

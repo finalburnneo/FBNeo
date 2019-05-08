@@ -1625,7 +1625,7 @@ static INT32 DrvInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
 	NamcoSoundInit(24000/2, 8, 1);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 	NamcoSoundSetStereo(1);
 	NamcoSoundSetBuffered(M6809TotalCycles, 1536000);
 

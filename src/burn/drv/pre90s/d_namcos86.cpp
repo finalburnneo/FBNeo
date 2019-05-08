@@ -60,62 +60,62 @@ struct voice_63701x
 struct voice_63701x m_voices[2];
 
 static struct BurnInputInfo CommonInputList[] = {
-	{"P1 coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Common)
 
 static struct BurnInputInfo HopmappyInputList[] = {
-	{"P1 coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Hopmappy)
 
 static struct BurnInputInfo RoishtarInputList[] = {
-	{"Coin A",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
-	{"Coin B",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
-	{"Start 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"Start 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"Coin A",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"Coin B",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
+	{"Start 1",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"Start 2",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
 
 	{"P1 Left Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
 	{"P1 Left Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
@@ -128,11 +128,11 @@ static struct BurnInputInfo RoishtarInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Roishtar)
@@ -1418,7 +1418,7 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
 	NamcoSoundInit(24000, 8, 1);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	has_pcm = pcmdata;
 
@@ -1628,7 +1628,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 800;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[3] = { 1536000 / 60, 1536000 / 60, 1536000 / 60 };
@@ -1637,24 +1636,23 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
-		nSegment = M6809TotalCycles();
+		CPU_RUN(0, M6809);
 		if (i == 725) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6809Close();
 
 		M6809Open(1);
-		nCyclesDone[1] += M6809Run(nSegment - M6809TotalCycles());
+		CPU_RUN(1, M6809);
 		if (i == 725) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6809Close();
 
 		HD63701Open(0);
-		nCyclesDone[2] += HD63701Run(nSegment - HD63701TotalCycles());
+		CPU_RUN(2, HD63701);
 		if (i == 725) HD63701SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		HD63701Close();
 
 		if ((i % 8) == 7) {
 			if (pBurnSoundOut) {
-				nSegment = nBurnSoundLen / (nInterleave / 8);
+				INT32 nSegment = nBurnSoundLen / (nInterleave / 8);
 				BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 				nSoundBufferPos += nSegment;
 			}
@@ -1662,7 +1660,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		nSegment = nBurnSoundLen - nSoundBufferPos;
+		INT32 nSegment = nBurnSoundLen - nSoundBufferPos;
 		if (nSegment > 0) {
 			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 		}

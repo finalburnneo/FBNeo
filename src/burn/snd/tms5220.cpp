@@ -489,7 +489,7 @@ static INT32 SyncInternal()
 
 static void tms5220_process(tms5220_state *tms, INT16 *buffer, UINT32 size);
 
-void UpdateStream(INT32 samples_len)
+static void UpdateStream(INT32 samples_len)
 {
     if (!tms5220_buffered) return;
     if (samples_len > nBurnSoundLen) samples_len = nBurnSoundLen;

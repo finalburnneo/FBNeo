@@ -1255,12 +1255,15 @@ void SekBurnUntilInt()
 }
 
 // Set the status of an IRQ line on the active CPU
-void SekSetIRQLine(const INT32 line, const INT32 nstatus)
+void SekSetIRQLine(const INT32 line, INT32 nstatus)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetIRQLine called without init\n"));
 	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetIRQLine called when no CPU open\n"));
 #endif
+
+	if (nstatus == CPU_IRQSTATUS_HOLD)
+		nstatus = CPU_IRQSTATUS_AUTO; // on sek, AUTO is HOLD.
 
 	INT32 status = nstatus << 12; // needed for compatibility
 

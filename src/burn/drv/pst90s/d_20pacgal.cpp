@@ -295,7 +295,7 @@ static INT32 DrvInit()
 	Z180Close();
 
 	NamcoSoundInit(73728000 / 4 / 6 / 32, 3, 0);
-	NacmoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);

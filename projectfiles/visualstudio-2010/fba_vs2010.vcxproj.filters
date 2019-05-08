@@ -457,9 +457,6 @@
     <ClInclude Include="..\..\src\intf\cd\cd_interface.h">
       <Filter>interfaces\cd</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\intf\cd\win32\cdsound.h">
-      <Filter>interfaces\cd\win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\intf\input\inp_keys.h">
       <Filter>interfaces\input</Filter>
     </ClInclude>
@@ -981,6 +978,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\burn\snd\ymf262.h">
       <Filter>Burn\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\midcsd.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\midsat.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\midsg.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\midssio.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\midtcs.h">
+      <Filter>Burn\devices</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2486,12 +2498,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\intf\cd\cd_interface.cpp">
       <Filter>interfaces\cd</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\intf\cd\win32\cd_isowav.cpp">
-      <Filter>interfaces\cd\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\intf\cd\win32\cdsound.cpp">
-      <Filter>interfaces\cd\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\intf\input\inp_interface.cpp">
       <Filter>interfaces\input</Filter>
@@ -4016,6 +4022,63 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp">
       <Filter>Burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp">
+      <Filter>Burn\drv\dataeast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_groundfx.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_gunbuster.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_mexico86.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_qix.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\intf\cd\win32\cd_img.cpp">
+      <Filter>interfaces\cd\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\z80\z80ctc.cpp">
+      <Filter>cpus\z80</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\z80\z80pio.cpp">
+      <Filter>cpus\z80</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\midcsd.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\midsat.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\midsg.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\midssio.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\midtcs.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

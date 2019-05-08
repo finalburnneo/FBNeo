@@ -61,6 +61,11 @@
     <ClInclude Include="..\..\src\burn\devices\mathbox.h" />
     <ClInclude Include="..\..\src\burn\devices\mb87078.h" />
     <ClInclude Include="..\..\src\burn\devices\mermaid.h" />
+    <ClInclude Include="..\..\src\burn\devices\midcsd.h" />
+    <ClInclude Include="..\..\src\burn\devices\midsat.h" />
+    <ClInclude Include="..\..\src\burn\devices\midsg.h" />
+    <ClInclude Include="..\..\src\burn\devices\midssio.h" />
+    <ClInclude Include="..\..\src\burn\devices\midtcs.h" />
     <ClInclude Include="..\..\src\burn\devices\namcoio.h" />
     <ClInclude Include="..\..\src\burn\devices\namco_c45.h" />
     <ClInclude Include="..\..\src\burn\devices\nb1414m4.h" />
@@ -328,7 +333,6 @@
     <ClInclude Include="..\..\src\intf\audio\lowpass2.h" />
     <ClInclude Include="..\..\src\intf\audio\win32\dsound_core.h" />
     <ClInclude Include="..\..\src\intf\cd\cd_interface.h" />
-    <ClInclude Include="..\..\src\intf\cd\win32\cdsound.h" />
     <ClInclude Include="..\..\src\intf\input\inp_keys.h" />
     <ClInclude Include="..\..\src\intf\input\win32\dinput_core.h" />
     <ClInclude Include="..\..\src\intf\interface.h" />
@@ -438,6 +442,11 @@
     <ClCompile Include="..\..\src\burn\devices\mathbox.cpp" />
     <ClCompile Include="..\..\src\burn\devices\mb87078.cpp" />
     <ClCompile Include="..\..\src\burn\devices\mermaid.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\midcsd.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\midsat.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\midsg.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\midssio.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\midtcs.cpp" />
     <ClCompile Include="..\..\src\burn\devices\namcoio.cpp" />
     <ClCompile Include="..\..\src\burn\devices\namco_c45.cpp" />
     <ClCompile Include="..\..\src\burn\devices\nb1414m4.cpp" />
@@ -489,14 +498,28 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\cps_rw.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\cps_scr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\ctv.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_groundfx.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_gunbuster.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_mexico86.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_qix.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf262.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
+    <ClCompile Include="..\..\src\cpu\z80\z80ctc.cpp" />
+    <ClCompile Include="..\..\src\cpu\z80\z80pio.cpp" />
+    <ClCompile Include="..\..\src\intf\cd\win32\cd_img.cpp" />
     <ClCompile Include="generated\m68kops.c" />
     <CustomBuild Include="..\..\src\burn\drv\capcom\ctv_make.cpp">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 
 %(Filename).exe &gt; generated\ctv.h 
-rm %(Filename).obj
-rm %(Filename).exe</Command>
+del %(Filename).obj
+del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\generated\ctv.h</Outputs>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 
@@ -712,8 +735,8 @@ rm %(Filename).exe</Command>
     <CustomBuild Include="..\..\src\burn\drv\pgm\pgm_sprite_create.cpp">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp 
 %(Filename).exe &gt; generated\pgm_sprite.h 
-rm %(Filename).obj
-rm %(Filename).exe</Command>
+del %(Filename).obj
+del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pgm_sprite.h</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp 
 %(Filename).exe &gt; generated\pgm_sprite.h 
@@ -1384,8 +1407,8 @@ cd dep
 cd scripts
 "cl" build_details.cpp
 build_details &gt;../../../projectfiles/visualstudio-2010/generated/build_details.h
-rm build_details.obj
-rm build_details.exe
+del build_details.obj
+del build_details.exe
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build_details.h</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cd ..
@@ -1407,8 +1430,6 @@ rm build_details.exe
     <ClCompile Include="..\..\src\intf\audio\win32\aud_xaudio2.cpp" />
     <ClCompile Include="..\..\src\intf\audio\win32\dsound_core.cpp" />
     <ClCompile Include="..\..\src\intf\cd\cd_interface.cpp" />
-    <ClCompile Include="..\..\src\intf\cd\win32\cdsound.cpp" />
-    <ClCompile Include="..\..\src\intf\cd\win32\cd_isowav.cpp" />
     <ClCompile Include="..\..\src\intf\input\inp_interface.cpp" />
     <ClCompile Include="..\..\src\intf\input\win32\dinput_core.cpp" />
     <ClCompile Include="..\..\src\intf\input\win32\inp_dinput.cpp" />

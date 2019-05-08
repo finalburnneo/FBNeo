@@ -141,7 +141,7 @@ void SekBurnUntilInt();
 #define SEK_IRQSTATUS_AUTO (0x2000)
 #define SEK_IRQSTATUS_ACK  (0x1000)
 
-void SekSetIRQLine(const INT32 line, const INT32 status);
+void SekSetIRQLine(const INT32 line, INT32 status);
 void SekReset();
 
 void SekRunEnd();

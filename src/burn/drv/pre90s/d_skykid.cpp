@@ -625,7 +625,7 @@ static INT32 DrvInit()
 	HD63701Close();
 
 	NamcoSoundInit(49152000/2048, 8, 0);
-	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH); // MAME uses 1.00, which is way too loud
+	NamcoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH); // MAME uses 1.00, which is way too loud
 	NamcoSoundSetBuffered(M6809TotalCycles, 1536000);
 
 	GenericTilesInit();

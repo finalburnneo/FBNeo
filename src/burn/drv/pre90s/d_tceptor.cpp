@@ -795,7 +795,7 @@ static INT32 DrvInit(INT32 game)
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
 
 	NamcoSoundInit(24000, 8, 1);
-	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 	NamcoSoundSetStereo(1);
 	NamcoSoundSetBuffered(M6809TotalCycles, 1536000);
 

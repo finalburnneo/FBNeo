@@ -1113,16 +1113,16 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvM6809ROM0		= Next; Next += 0x008000;
-	DrvM6809ROM1		= Next; Next += 0x002000;
-	DrvM6809ROM2		= Next; Next += 0x002000;
+	DrvM6809ROM0	= Next; Next += 0x008000;
+	DrvM6809ROM1	= Next; Next += 0x002000;
+	DrvM6809ROM2	= Next; Next += 0x002000;
 
 	DrvGfxROM0		= Next; Next += 0x008000;
 	DrvGfxROM1		= Next; Next += 0x020000;
 
 	DrvColPROM		= Next; Next += 0x000520;
 
-	NamcoSoundProm		= Next;
+	NamcoSoundProm	= Next;
 	DrvSndPROM		= Next; Next += 0x000100;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0500 * sizeof(UINT32);
@@ -1131,7 +1131,7 @@ static INT32 MemIndex()
 
 	DrvVidRAM		= Next; Next += 0x001000;
 	DrvSprRAM		= Next; Next += 0x001800;
-	DrvM6809RAM2		= Next; Next += 0x000800;
+	DrvM6809RAM2	= Next; Next += 0x000800;
 
 	RamEnd			= Next;
 
@@ -1203,14 +1203,14 @@ static INT32 MappyInit()
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x0fff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x1000, 0x27ff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM0,		0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM0,	0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(mappy_main_write);
 	M6809SetReadHandler(mappy_main_read);
 	M6809Close();
 
 	M6809Init(1);
 	M6809Open(1);
-	M6809MapMemory(DrvM6809ROM1,		0xe000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM1,	0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(mappy_sub_write);
 	M6809SetReadHandler(mappy_sub_read);
 	M6809Close();
@@ -1219,7 +1219,7 @@ static INT32 MappyInit()
 	// not used
 
 	NamcoSoundInit(24000, 8, 0);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, M6809TotalCycles, 1536000); // not used on this hardware
 	DACSetRoute(0, 0.0, BURN_SND_ROUTE_BOTH);
@@ -1274,14 +1274,14 @@ static INT32 Digdug2Init()
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x0fff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x1000, 0x27ff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM0,		0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM0,	0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(mappy_main_write);
 	M6809SetReadHandler(mappy_main_read);
 	M6809Close();
 
 	M6809Init(1);
 	M6809Open(1);
-	M6809MapMemory(DrvM6809ROM1,		0xe000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM1,	0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(mappy_sub_write);
 	M6809SetReadHandler(mappy_sub_read);
 	M6809Close();
@@ -1289,7 +1289,7 @@ static INT32 Digdug2Init()
 	M6809Init(2); // not used
 
 	NamcoSoundInit(24000, 8, 0);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, M6809TotalCycles, 1536000); // not used on this hardware
 	DACSetRoute(0, 0.0, BURN_SND_ROUTE_BOTH);
@@ -1346,14 +1346,14 @@ static INT32 MotosInit()
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x0fff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x1000, 0x27ff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM0,		0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM0,	0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(mappy_main_write);
 	M6809SetReadHandler(mappy_main_read);
 	M6809Close();
 
 	M6809Init(1);
 	M6809Open(1);
-	M6809MapMemory(DrvM6809ROM1,		0xe000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM1,	0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(mappy_sub_write);
 	M6809SetReadHandler(mappy_sub_read);
 	M6809Close();
@@ -1361,7 +1361,7 @@ static INT32 MotosInit()
 	M6809Init(2); // not used
 
 	NamcoSoundInit(24000, 8, 0);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, M6809TotalCycles, 1536000); // not used on this hardware
 	DACSetRoute(0, 0.0, BURN_SND_ROUTE_BOTH);
@@ -1415,14 +1415,14 @@ static INT32 SuperpacInit()
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x0800, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM0,		0xa000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM0,	0xa000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(superpac_main_write);
 	M6809SetReadHandler(superpac_main_read);
 	M6809Close();
 
 	M6809Init(1);
 	M6809Open(1);
-	M6809MapMemory(DrvM6809ROM1,		0xe000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM1,	0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(superpac_sub_write);
 	M6809SetReadHandler(mappy_sub_read);
 	M6809Close();
@@ -1430,7 +1430,7 @@ static INT32 SuperpacInit()
 	M6809Init(2); // not used
 
 	NamcoSoundInit(24000, 8, 0);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, M6809TotalCycles, 1536000); // not used on this hardware
 	DACSetRoute(0, 0.0, BURN_SND_ROUTE_BOTH);
@@ -1482,14 +1482,14 @@ static INT32 PacnpalInit()
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x0800, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM0,		0xa000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM0,	0xa000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(superpac_main_write);
 	M6809SetReadHandler(superpac_main_read);
 	M6809Close();
 
 	M6809Init(1);
 	M6809Open(1);
-	M6809MapMemory(DrvM6809ROM1,		0xe000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM1,	0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(superpac_sub_write);
 	M6809SetReadHandler(mappy_sub_read);
 	M6809Close();
@@ -1497,7 +1497,7 @@ static INT32 PacnpalInit()
 	M6809Init(2); // not used
 
 	NamcoSoundInit(24000, 8, 0);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, M6809TotalCycles, 1536000); // not used on this hardware
 	DACSetRoute(0, 0.0, BURN_SND_ROUTE_BOTH);
@@ -1550,14 +1550,14 @@ static INT32 GrobdaInit()
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x0800, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM0,		0xa000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM0,	0xa000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(superpac_main_write);
 	M6809SetReadHandler(superpac_main_read);
 	M6809Close();
 
 	M6809Init(1);
 	M6809Open(1);
-	M6809MapMemory(DrvM6809ROM1,		0xe000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM1,	0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(grobda_sub_write);
 	M6809SetReadHandler(mappy_sub_read);
 	M6809Close();
@@ -1565,7 +1565,7 @@ static INT32 GrobdaInit()
 	M6809Init(2); // not used
 
 	NamcoSoundInit(24000, 8, 0);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, M6809TotalCycles, 1536000);
 	DACSetRoute(0, 2.6, BURN_SND_ROUTE_BOTH);
@@ -1624,14 +1624,14 @@ static INT32 PhozonInit()
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x0800, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM0,		0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM0,	0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(phozon_main_write);
 	M6809SetReadHandler(phozon_main_read);
 	M6809Close();
 
 	M6809Init(1);
 	M6809Open(1);
-	M6809MapMemory(DrvM6809ROM1,		0xe000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM1,	0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(mappy_sub_write);
 	M6809SetReadHandler(mappy_sub_read);
 	M6809Close();
@@ -1640,14 +1640,14 @@ static INT32 PhozonInit()
 	M6809Open(2);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x0800, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvM6809RAM2,		0xa000, 0xa7ff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM2,		0xe000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809RAM2,	0xa000, 0xa7ff, MAP_RAM);
+	M6809MapMemory(DrvM6809ROM2,	0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(mappy_main_write);
 	M6809SetReadHandler(mappy_main_read);
 	M6809Close();
 
 	NamcoSoundInit(24000, 8, 0);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, M6809TotalCycles, 1536000); // not used on this hardware
 	DACSetRoute(0, 0.0, BURN_SND_ROUTE_BOTH);
@@ -1976,10 +1976,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = 0;
-
 		M6809Open(0);
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		if (i == nInterleave-1) {
 			if (main_irq_mask)
 				M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
@@ -1990,23 +1988,22 @@ static INT32 DrvFrame()
 			if (!namcoio_read_reset_line(1))
 				namcoio_run(1);
 		}
-		nSegment = M6809TotalCycles();
 		M6809Close();
 
 		if (sub_cpu_in_reset) {
-			nCyclesDone[1] += ((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1];
+			CPU_IDLE(1, M6809);
 		} else {
 			M6809Open(1);
-			nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_RUN(1, M6809);
 			if (i == nInterleave-1 && sub_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 		}
 
 		if (sub2_cpu_in_reset) {
-			nCyclesDone[2] += ((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2];
+			CPU_IDLE(2, M6809);
 		} else {
 			M6809Open(2);
-			nCyclesDone[2] += M6809Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			CPU_RUN(2, M6809);
 			if (i == nInterleave-1 && sub2_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 		}

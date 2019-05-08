@@ -496,7 +496,7 @@ static INT32 DrvInit(INT32 gaplusd)
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x0800, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM0,		0xa000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM0,	0xa000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(gaplus_main_write);
 	M6809SetReadHandler(gaplus_main_read);
 	M6809Close();
@@ -505,19 +505,20 @@ static INT32 DrvInit(INT32 gaplusd)
 	M6809Open(1);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x0800, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM1,		0xa000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM1,	0xa000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(gaplus_sub_write);
 	M6809Close();
 
 	M6809Init(2);
 	M6809Open(2);
-	M6809MapMemory(DrvM6809ROM2,		0xe000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM2,	0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(gaplus_sub2_write);
 	M6809SetReadHandler(gaplus_sub2_read);
 	M6809Close();
 
 	NamcoSoundInit(24000, 8, 0);
-	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetBuffered(M6809TotalCycles, 1536000);
 
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.25, BURN_SND_ROUTE_BOTH);
@@ -723,7 +724,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		if (i == (nInterleave - 1))
 		{
 			if (main_irq_mask)
@@ -740,19 +741,19 @@ static INT32 DrvFrame()
 		M6809Close();
 
 		if (sub_cpu_in_reset) {
-			nCyclesDone[1] += ((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1];
+			CPU_IDLE(1, M6809);
 		} else {
 			M6809Open(1);
-			nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_RUN(1, M6809);
 			if (i == nInterleave-1 && sub_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 		}
 
 		if (sub2_cpu_in_reset) {
-			nCyclesDone[2] += ((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2];
+			CPU_IDLE(2, M6809);
 		} else {
 			M6809Open(2);
-			nCyclesDone[2] += M6809Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			CPU_RUN(2, M6809);
 			if (i == nInterleave-1 && sub_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 		}

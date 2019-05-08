@@ -113,6 +113,15 @@ void M6800Reset()
 	m6800_reset();
 }
 
+void M6800ResetSoft()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800ResetSoft called without init\n"));
+#endif
+
+	m6800_reset_soft();
+}
+
 void M6800NewFrame()
 {
 #if defined FBA_DEBUG

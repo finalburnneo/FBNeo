@@ -511,7 +511,7 @@ static INT32 DrvInit()
 	HD63701Close();
 
 	NamcoSoundInit(49152000/2/1024, 8, 0);
-	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 	NamcoSoundSetBuffered(M6809TotalCycles, 1536000);
 
 	BurnLEDInit(2, LED_POSITION_BOTTOM_RIGHT, LED_SIZE_2x2, LED_COLOR_GREEN, 80);

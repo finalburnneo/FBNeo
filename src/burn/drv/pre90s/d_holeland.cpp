@@ -754,15 +754,15 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = (game_select ? 5000000 : 3355700) / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { (game_select ? 5000000 : 3355700) / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
     ZetNewFrame();
 
     ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone += ZetRun((nCyclesTotal * (i + 1) / nInterleave) - nCyclesDone);
+		CPU_RUN(0, Zet);
 
 		if (i == 240) {
 			if (pBurnDraw) {

@@ -47,30 +47,30 @@ static UINT8 DrvReset;
 static INT32 watchdog;
 
 static struct BurnInputInfo JunofrstInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Junofrst)
@@ -359,11 +359,6 @@ static void AY8910_0_portBwrite(UINT32 /*port*/, UINT32 data)
 	filter_write(2, (data >> 4) & 3);
 }
 
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (1789750.0000 / (nBurnFPS / 100.0000))));
-}
-
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
@@ -498,12 +493,13 @@ static INT32 DrvInit()
 	I8039SetIOWriteHandler(junofrst_i8039_write_port);
 	I8039Close();
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, 1789750);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1789750, 0);
 	AY8910SetPorts(0, &AY8910_0_portA, NULL, NULL, &AY8910_0_portBwrite);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 1789750);
 
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 2200, 200, CAP_P(0), 0);
 	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 2200, 200, CAP_P(0), 1);
@@ -615,7 +611,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 1536000 / 60, 1789750 / 60, 8000000 / 15 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	M6809Open(0);
 	ZetOpen(0);
@@ -623,40 +618,22 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nNext;
-
-		nNext = (nCyclesTotal[0] * (i + 1)) / nInterleave;
-		nCyclesDone[0] += M6809Run(nNext - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		if (i == 240-1 && (irq_toggle ^= 1) && irq_enable) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 
-		nNext = (nCyclesTotal[1] * (i + 1)) / nInterleave;
-		nCyclesDone[1] += ZetRun(nNext - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 
-		nNext = (nCyclesTotal[2] * (i + 1)) / nInterleave;
-		nCyclesDone[2] += I8039Run(nNext - nCyclesDone[2]);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
-		}
+		CPU_RUN(2, I8039);
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
-			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
-		}
+		AY8910RenderInternal(nBurnSoundLen);
+		filter_rc_update(0, pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(1, pAY8910Buffer[1], pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(2, pAY8910Buffer[2], pBurnSoundOut, nBurnSoundLen);
+
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

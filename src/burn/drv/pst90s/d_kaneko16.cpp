@@ -111,7 +111,6 @@ static INT32 Kaneko16ParseSpriteType1(INT32 i, struct tempsprite *s);
 static INT32 Kaneko16ParseSpriteType2(INT32 i, struct tempsprite *s);
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
 static INT32 nSoundBufferPos;
 
 static INT32 Kaneko16Watchdog;
@@ -4555,6 +4554,7 @@ static INT32 BerlwallInit()
 	AY8910SetPorts(0, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(SekTotalCycles, 12000000);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 6) / 132, 1);
@@ -4644,6 +4644,7 @@ static INT32 PackbangInit()
 	AY8910SetPorts(0, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(SekTotalCycles, 12000000);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 6) / 132, 1);
@@ -5081,6 +5082,7 @@ static INT32 ExplbrkrInit()
 	AY8910Init(0, 2000000, 0);
 	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(1, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
+	AY8910SetBuffered(SekTotalCycles, 12000000);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 6) / 132, 1);
@@ -5474,6 +5476,7 @@ static INT32 MgcrystlInit()
 	AY8910Init(0, 2000000, 0);
 	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(1, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
+	AY8910SetBuffered(SekTotalCycles, 12000000);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 4) / 165, 1);
@@ -7123,47 +7126,27 @@ Frame functions
 
 static INT32 ExplbrkrFrame()
 {
-	INT32 nInterleave = 256;
-	nSoundBufferPos = 0;
-
 	if (Kaneko16Reset) ExplbrkrDoReset();
 
 	Kaneko16MakeInputs();
 
+	SekNewFrame();
+
+	INT32 nInterleave = 256;
 	nCyclesTotal[0] = 12000000 / 60;
 	nCyclesDone[0] = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		nCurrentCPU = 0;
-		SekOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		SekOpen(0);
+		CPU_RUN(0, Sek);
 		if (i == 144) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 64) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		if (i == 224) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
-
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -7174,37 +7157,26 @@ static INT32 ExplbrkrFrame()
 
 static INT32 BlazeonFrame()
 {
-	INT32 nInterleave = 10;
-	nSoundBufferPos = 0;
-
 	if (Kaneko16Reset) BlazeonDoReset();
 
 	Kaneko16MakeInputs();
 
+	INT32 nInterleave = 10;
 	nCyclesTotal[0] = 12000000 / 60;
 	nCyclesTotal[1] = 4000000 / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		nCurrentCPU = 0;
-		SekOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		SekOpen(0);
+		CPU_RUN(0, Sek);
 		if (i == 3) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 6) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		if (i == 9) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		// Run Z80
-		nCurrentCPU = 1;
 		ZetOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
+		CPU_RUN(1, Zet);
 		ZetClose();
 
 		// Render Sound Segment
@@ -7237,37 +7209,26 @@ static INT32 BlazeonFrame()
 
 static INT32 WingforcFrame()
 {
-	INT32 nInterleave = 256;
-	nSoundBufferPos = 0;
-
 	if (Kaneko16Reset) WingforcDoReset();
 
 	Kaneko16MakeInputs();
 
+	INT32 nInterleave = 256;
 	nCyclesTotal[0] = ((UINT64)16000000 * (UINT64)10000) / 591854;
 	nCyclesTotal[1] = ((UINT64)4000000 * (UINT64)10000) / 591854;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		nCurrentCPU = 0;
-		SekOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		SekOpen(0);
+		CPU_RUN(0, Sek);
 		if (i == 144) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 64) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		if (i == 224) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		// Run Z80
-		nCurrentCPU = 1;
 		ZetOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
+		CPU_RUN(1, Zet);
 		ZetClose();
 
 		// Render Sound Segment
@@ -7338,26 +7299,23 @@ static INT32 ShogwarrFrame()
 
 	Kaneko16MakeInputs();
 
-	SekOpen(0);
 	SekNewFrame();
 
 	INT32 nInterleave = 256;
 	nCyclesTotal[0] = (12000000 * 100) / 5918;
 	nCyclesDone[0] = 0;
-	INT32 nSegment = 0;
+	SekOpen(0);
 
-	for (INT32 nScanline = 0; nScanline < nInterleave; nScanline++)
-	{
-		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - nScanline);
-		nCyclesDone[0] += SekRun(nSegment);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		CPU_RUN(0, Sek);
 
-		if (nScanline ==  64) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-		if (nScanline == 144) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (nScanline == 223-16) {
+		if (i ==  64) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 144) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 223-16) {
 			shogwarr_calc3_mcu_run();
 		}
 
-		if (nScanline == 224-16) { // needs -16 otherwise sprite flicker in some shogunwarriors levels.
+		if (i == 224-16) { // needs -16 otherwise sprite flicker in some shogunwarriors levels.
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 	}

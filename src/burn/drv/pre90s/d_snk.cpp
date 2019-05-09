@@ -4686,6 +4686,7 @@ static INT32 MarvinsInit()
 
 	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	snkwave_volume = 0.50;
 
@@ -4749,6 +4750,7 @@ static INT32 MadcrashInit()
 
 	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	snkwave_volume = 0.30; // for vangrd2
 
@@ -4812,6 +4814,7 @@ static INT32 MadcrushInit()
 
 	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.35, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -4868,6 +4871,7 @@ static INT32 JcrossInit()
 
 	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -4925,6 +4929,7 @@ static INT32 SgladiatInit()
 
 	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.35, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -4981,6 +4986,7 @@ static INT32 Hal21Init()
 
 	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
@@ -6139,20 +6145,17 @@ static INT32 MarvinsFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += ZetRun(nSegment);
-		nSegment = ZetTotalCycles();
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment - ZetTotalCycles());
+		CPU_RUN(1, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		nSegment = nCyclesTotal[2] / nInterleave;
-		nCyclesDone[2] += ZetRun(nSegment);
+		CPU_RUN(2, Zet);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1))
 			ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 		ZetClose();
@@ -6191,25 +6194,21 @@ static INT32 JcrossFrame()
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += ZetRun(nSegment);
-		nSegment = ZetTotalCycles();
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment - ZetTotalCycles());
+		CPU_RUN(1, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		nSegment = nCyclesTotal[2] / nInterleave;
-		nCyclesDone[2] += ZetRun(nSegment);
+		CPU_RUN(2, Zet);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
 			if (hal21mode) {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -6218,23 +6217,10 @@ static INT32 JcrossFrame()
 			}
 		}
 		ZetClose();
-
-		// Render Sound Segment
-		if (pBurnSoundOut && i%8==7) {
-			INT32 nSegmentLength = nBurnSoundLen / 100; //nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -6308,23 +6294,21 @@ static INT32 GwarFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nSegment = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		nSegment = ZetTotalCycles();
-		if (i == 240/*(nInterleave - 1)*/) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		CPU_RUN(0, Zet);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[1] / nInterleave);//nSegment);
-		if (i == 240/*(nInterleave - 1)*/) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[1] / nInterleave);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateY8950((i + 1) * nCyclesTotal[2] / nInterleave);//nSegment);
+		BurnTimerUpdateY8950((i + 1) * nCyclesTotal[2] / nInterleave);
 		ZetClose();
 	}
 
@@ -6405,20 +6389,19 @@ static INT32 AthenaFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		INT32 nSegment = ZetTotalCycles();
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateYM3526(nSegment);
+		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[1] / nInterleave);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		if ((i&7)==7) // update 100x per frame
 		{
 			ZetOpen(2);
-			BurnTimerUpdateY8950(nSegment);
+			BurnTimerUpdateY8950((i + 1) * nCyclesTotal[2] / nInterleave);
 			ZetClose();
 		}
 	}
@@ -6478,18 +6461,17 @@ static INT32 Tnk3Frame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		INT32 nSegment = ZetTotalCycles();
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment - ZetTotalCycles());
+		CPU_RUN(1, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateYM3526(nSegment);
+		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[2] / nInterleave);
 		ZetClose();
 	}
 
@@ -6536,19 +6518,18 @@ static INT32 FitegolfFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		INT32 nSegment = ZetTotalCycles();
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment - ZetTotalCycles());
+		CPU_RUN(1, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		if ((i&7)==7) { // update 100x per frame
 			ZetOpen(2);
-			BurnTimerUpdateYM3812(nSegment);
+			BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[2] / nInterleave);
 			ZetClose();
 		}
 	}
@@ -6596,7 +6577,7 @@ static INT32 ChopperFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 

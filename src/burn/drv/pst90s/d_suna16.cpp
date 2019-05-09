@@ -29,8 +29,6 @@ static UINT8 *DrvPalRAM2;
 static UINT32 *Palette;
 static UINT32 *DrvPalette;
 
-static INT16 *pSoundBuffer;
-
 static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[16];
@@ -1293,8 +1291,6 @@ static INT32 MemIndex()
 
 	DrvPalette	= (UINT32*)Next; Next += 0x01000 * sizeof(UINT32);
 
-	pSoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
-
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x0010000;
@@ -1476,7 +1472,7 @@ static INT32 BestbestInit()
 	ZetSetOutHandler(bestbest_sound1_out);
 	ZetClose();
 
-	BurnYM3526Init(3000000, &bestbestFMIRQHandler, &bestbestSynchroniseStream, 0);
+	BurnYM3526Init(3000000, &bestbestFMIRQHandler, &bestbestSynchroniseStream, 1);
 	BurnTimerAttachYM3526(&ZetConfig, 6000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -1893,67 +1889,41 @@ static inline void AssembleInputs()
 
 static INT32 BestbestFrame()
 {
-	INT32 nCyclesTotal[3];
-
-	INT32 nInterleave = 50;
-	INT32 nSoundBufferPos = 0;
-
 	if (DrvReset) {
 		DrvDoReset();
 	}
 
 	AssembleInputs();
 
-	nCyclesTotal[0] = 6000000 / 60;
-	nCyclesTotal[1] = 6000000 / 60;
-	nCyclesTotal[2] = 6000000 / 60;
-
 	SekNewFrame();
 	ZetNewFrame();
+
+	INT32 nInterleave = 50;
+	INT32 nCyclesTotal[3] = { 6000000 / 60, 6000000 / 60, 6000000 / 60 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	SekOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
 
-		SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave / 2)-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		if (i == (nInterleave    )-1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		ZetOpen(0);
-		BurnTimerUpdateYM3526(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
 		ZetClose();
 
 		ZetOpen(1);
-		ZetRun(nCyclesTotal[2] / nInterleave);
+		CPU_RUN(1, Zet);
 		ZetClose();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pSoundBuffer + (nSoundBufferPos << 1);
-
-			AY8910Render(pSoundBuf, nSegmentLength);
-
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	SekClose();
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pSoundBuffer + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
-	}
 
 	ZetOpen(0);
 	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-		for (INT32 i = 0; i < nBurnSoundLen; i++) {
-			pBurnSoundOut[(i << 1) + 0] += pSoundBuffer[(i << 1) + 0];
-			pBurnSoundOut[(i << 1) + 1] += pSoundBuffer[(i << 1) + 1];
-		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
@@ -1967,35 +1937,34 @@ static INT32 BestbestFrame()
 
 static INT32 SunaqFrame()
 {
-	INT32 nInterleave = 50;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[3];
-
 	if (DrvReset) {
 		DrvDoReset();
 	}
 
 	AssembleInputs();
 
-	nCyclesTotal[0] = 6000000 / 60;
-	nCyclesTotal[1] = 3579500 / 60;
-	nCyclesTotal[2] = 6000000 / 60;
-
 	SekNewFrame();
 	ZetNewFrame();
+
+	INT32 nInterleave = 50;
+	INT32 nCyclesTotal[3] = { 6000000 / 60, 3579500 / 60, 6000000 / 60 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave    )-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, Sek);
+		if (i == nInterleave-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-		for (INT32 j = 0; j < 2; j++) {
-			ZetOpen(j);
-			ZetRun(nCyclesTotal[j+1] / nInterleave);
-			ZetClose();
-		}
+		ZetOpen(0);
+		CPU_RUN(1, Zet);
+		ZetClose();
+
+		ZetOpen(1);
+		CPU_RUN(2, Zet);
+		ZetClose();
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
@@ -2028,37 +1997,33 @@ static INT32 SunaqFrame()
 
 static INT32 UballoonFrame()
 {
-	INT32 nInterleave = 50;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[3];
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
-
 	if (DrvReset) {
 		DrvDoReset();
 	}
 
 	AssembleInputs();
 
-	nCyclesTotal[0] = 8000000 / 60;
-	nCyclesTotal[1] = 3579500 / 60;
-	nCyclesTotal[2] = 5333333 / 60;
-
 	SekNewFrame();
 	ZetNewFrame();
+
+	INT32 nInterleave = 50;
+	INT32 nCyclesTotal[3] = { 8000000 / 60, 3579500 / 60, 5333333 / 60 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave    )-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, Sek);
+		if (i == nInterleave-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		ZetOpen(0);
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[2] += ZetRun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+		CPU_RUN(2, Zet);
 		ZetClose();
 
 		if (pBurnSoundOut) {
@@ -2096,21 +2061,16 @@ static INT32 UballoonFrame()
 
 static INT32 BssoccerFrame()
 {
-	INT32 nInterleave = 50;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[4];
-	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
-
 	if (DrvReset) {
 		DrvDoReset();
 	}
 
 	AssembleInputs();
 
-	nCyclesTotal[0] = 8000000 / 60;
-	nCyclesTotal[1] = 3579500 / 60;
-	nCyclesTotal[2] = 5333333 / 60;
-	nCyclesTotal[3] = 5333333 / 60;
+	INT32 nInterleave = 50;
+	INT32 nCyclesTotal[4] = { 8000000 / 60, 3579500 / 60, 5333333 / 60, 5333333 / 60 };
+	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	SekNewFrame();
 	ZetNewFrame();
@@ -2119,18 +2079,20 @@ static INT32 BssoccerFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave / 2)-1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		if (i == (nInterleave    )-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		ZetOpen(0);
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 		ZetClose();
+
 		ZetOpen(1);
-		nCyclesDone[2] += ZetRun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+		CPU_RUN(2, Zet);
 		ZetClose();
+
 		ZetOpen(2);
-		nCyclesDone[3] += ZetRun(((i + 1) * nCyclesTotal[3] / nInterleave) - nCyclesDone[3]);
+		CPU_RUN(3, Zet);
 		ZetClose();
 
 		if (pBurnSoundOut) {

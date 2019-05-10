@@ -117,6 +117,7 @@ typedef struct
 	INT32	sh2_icount;
 	INT32   sh2_total_cycles; // used externally (drivers/etc)
 	INT32   sh2_eat_cycles;
+	INT32   end_run;
 
 	int 	(*irq_callback)(int irqline);
 } SH2;
@@ -3275,6 +3276,7 @@ int Sh2Run(int cycles)
 
 	sh2->sh2_icount = cycles;
 	sh2->sh2_cycles_to_run = cycles;
+	sh2->end_run = 0;
 
 	do
 	{
@@ -3328,7 +3330,7 @@ int Sh2Run(int cycles)
 		sh2->sh2_total_cycles++;
 		sh2->sh2_icount -= sh2->sh2_eat_cycles;
 		
-		// timer check 
+		// timer check
 		
 		{
 			unsigned int cy = sh2_GetTotalCycles();
@@ -3341,20 +3343,22 @@ int Sh2Run(int cycles)
 			if (sh2->dma_timer_active[1])
 				if ((cy - sh2->dma_timer_base[1]) >= sh2->dma_timer_cycles[1])
 					sh2_dmac_callback(1);
-	
+
 			if ( sh2->timer_active )
 				if ((cy - sh2->timer_base) >= sh2->timer_cycles)
 					sh2_timer_callback();
 		}
 		
 		
-	} while( sh2->sh2_icount > 0 );
-	
-	sh2->cycle_counts += cycles - (UINT32)sh2->sh2_icount;
-	
-	sh2->sh2_cycles_to_run = sh2->sh2_icount;
+	} while( sh2->sh2_icount > 0 && !sh2->end_run );
 
-	return cycles - sh2->sh2_icount;
+	cycles = cycles - sh2->sh2_icount;
+
+	sh2->cycle_counts += cycles;
+	
+	sh2->sh2_cycles_to_run = sh2->sh2_icount = 0;
+
+	return cycles;
 }
 
 static void Sh2SetIRQLine_Internal(const int line, const int state)
@@ -3430,9 +3434,7 @@ void Sh2StopRun()
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2StopRun called without init\n"));
 #endif
 
-	sh2->sh2_total_cycles += sh2->sh2_icount;
-	sh2->sh2_icount = 0;
-	sh2->sh2_cycles_to_run = 0;
+	sh2->end_run = 1;
 }
 
 INT32 Sh2TotalCycles()

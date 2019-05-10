@@ -505,6 +505,8 @@ void konami_set_irq_line(int irqline, int state)
 /* includes the actual opcode implementations */
 #include "konamops.c"
 
+static int end_run = 0;
+
 /* execute instructions on this CPU until icount expires */
 int konamiRun(int cycles)
 {
@@ -513,8 +515,10 @@ int konamiRun(int cycles)
 #endif
 
 	konami_ICount = cycles - konami.extra_cycles;
-	nCyclesToDo = konami_ICount;
+	nCyclesToDo = cycles;
 	konami.extra_cycles = 0;
+
+	end_run = 0;
 
 	if( konami.int_state & (KONAMI_CWAI | KONAMI_SYNC) )
 	{
@@ -533,14 +537,17 @@ int konamiRun(int cycles)
 
 			konami_ICount -= cycles1[konami.ireg];
 
-		} while( konami_ICount > 0 );
+		} while( konami_ICount > 0 && !end_run );
 
 		konami_ICount -= konami.extra_cycles;
 		konami.extra_cycles = 0;
 	}
 
-	konami.nTotalCycles += cycles - konami_ICount;
-	return cycles - konami_ICount;
+	cycles = cycles - konami_ICount;
+	konami.nTotalCycles += cycles;
+	nCyclesToDo = konami_ICount = 0;
+
+	return cycles;
 }
 
 int konamiCpuScan(int nAction)
@@ -570,7 +577,7 @@ void konamiRunEnd()
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiRunEnd called without init\n"));
 #endif
 
-	konami_ICount = 0;
+	end_run = 1;
 }
 
 INT32 konamiIdle(INT32 cycles)
@@ -598,7 +605,7 @@ int konamiTotalCycles()
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiTotalCycles called without init\n"));
 #endif
 
-	return konami.nTotalCycles;
+	return konami.nTotalCycles + (nCyclesToDo - konami_ICount);
 }
 
 void konamiNewFrame()

@@ -37,8 +37,6 @@ extern INT32 s2650_get_pc();
 
 static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 {
-return; // iq_132
-
 	INT32 active = nActiveS2650;
 	if (active != cpu)
 	{
@@ -46,6 +44,7 @@ return; // iq_132
 		s2650Open(cpu);
 	}
 
+	s2650SetIRQLine(line, state);
 
 	if (active != cpu)
 	{

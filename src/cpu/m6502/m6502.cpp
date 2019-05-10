@@ -243,6 +243,7 @@ int m6502_releaseslice()
 }
 
 static int segmentcycles = 0;
+static int end_run = 0;
 
 int m6502_get_segmentcycles()
 {
@@ -253,6 +254,8 @@ int m6502_execute(int cycles)
 {
 	segmentcycles = cycles;
 	m6502_ICount = cycles;
+
+	end_run = 0;
 
 	change_pc(PCD);
 
@@ -300,7 +303,7 @@ int m6502_execute(int cycles)
 			}
 		}
 
-	} while (m6502_ICount > 0);
+	} while (m6502_ICount > 0 && !end_run);
 
 	cycles = cycles - m6502_ICount;
 
@@ -313,6 +316,8 @@ int decocpu7_execute(int cycles)
 {
 	segmentcycles = cycles;
 	m6502_ICount = cycles;
+
+	end_run = 0;
 
 	change_pc(PCD);
 
@@ -367,7 +372,7 @@ int decocpu7_execute(int cycles)
 			}
 		}
 
-	} while (m6502_ICount > 0);
+	} while (m6502_ICount > 0 && !end_run);
 
 	cycles = cycles - m6502_ICount;
 
@@ -560,6 +565,8 @@ int m65c02_execute(int cycles)
 	segmentcycles = cycles;
 	m6502_ICount = cycles;
 
+	end_run = 0;
+
 	change_pc(PCD);
 
 	do
@@ -598,7 +605,7 @@ int m65c02_execute(int cycles)
 		if( m6502.pending_irq )
 			m65c02_take_irq();
 
-	} while (m6502_ICount > 0);
+	} while (m6502_ICount > 0 && !end_run);
 
 	cycles = cycles - m6502_ICount;
 
@@ -744,6 +751,8 @@ int deco16_execute(int cycles)
 	segmentcycles = cycles;
 	m6502_ICount = cycles;
 
+	end_run = 0;
+
 	change_pc(PCD);
 
 	do
@@ -781,7 +790,7 @@ int deco16_execute(int cycles)
 		if( m6502.pending_irq )
 			deco16_take_irq();
 
-	} while (m6502_ICount > 0);
+	} while (m6502_ICount > 0 && !end_run);
 
 	cycles = cycles - m6502_ICount;
 
@@ -798,7 +807,7 @@ void M6502RunEnd()
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502RunEnd called without init\n"));
 #endif
 
-	m6502_ICount = 0;
+	end_run = 1;
 }
 
 #if 0

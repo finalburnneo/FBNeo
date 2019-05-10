@@ -51,6 +51,8 @@ typedef struct {
     UINT16  ras[8]; /* 8 return address stack entries */
 	UINT8	irq_state;
 	UINT32	total_cycles;
+	INT32   end_run;
+
 }   s2650_Regs;
 
 static s2650_Regs S;
@@ -860,6 +862,8 @@ int s2650Run(int cycles)
 
 	s2650_ICount = cycles_slice = cycles;
 
+	S.end_run = 0;
+
 	do
 	{
 		S.ppc = S.page + S.iar;
@@ -1462,7 +1466,7 @@ int s2650Run(int cycles)
 				M_BRA( --S.reg[S.r] );
 				break;
 		}
-	} while( s2650_ICount > 0 );
+	} while( s2650_ICount > 0 && !S.end_run );
 
 	INT32 ret = cycles - s2650_ICount;
 
@@ -1486,7 +1490,7 @@ void s2650NewFrame()
 
 void s2650RunEnd()
 {
-	s2650_ICount = 0;
+	S.end_run = 1;
 }
 
 INT32 s2650Idle(INT32 cycles)

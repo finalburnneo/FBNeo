@@ -2051,13 +2051,12 @@ INT32 tlcs90Run(INT32 nCycles)
 
 	} while( cpustate->icount > 0 && cpustate->run_end == 0 );
 
-	cpustate->total_cycles += cpustate->nCycles - cpustate->icount;
-
-	INT32 ret = cpustate->nCycles - cpustate->icount;
+	nCycles = cpustate->nCycles - cpustate->icount;
+	cpustate->total_cycles += nCycles;
 
 	cpustate->nCycles = cpustate->icount = 0;
 
-	return ret;
+	return nCycles;
 }
 
 INT32 tlcs90Idle(INT32 cycles)

@@ -519,6 +519,7 @@ int v25_execute(int cycles)
 
 	nec_state->icount = cycles;
 	nec_state->cycles_remaining = cycles;
+	nec_state->stop_run = 0;
 
 	while(nec_state->icount>0 && !nec_state->stop_run) {
 		/* Dispatch IRQ */
@@ -555,10 +556,11 @@ int v25_execute(int cycles)
 		}
 	}
 
-	nec_state->stop_run = 0;
-	nec_state->cycles_total += cycles - nec_state->icount;
+	cycles = cycles - nec_state->icount;
+	nec_state->cycles_total += cycles;
+	nec_state->icount = nec_state->cycles_remaining = 0;
 
-	return cycles - nec_state->icount;
+	return cycles;
 }
 
 void v25Init(int cpu, int type, int clock)

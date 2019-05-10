@@ -410,6 +410,7 @@ int nec_execute(int cycles)
 
 	nec_state->icount = cycles;
 	nec_state->cycles_remaining = cycles;
+	nec_state->stop_run = 0;
 
 	if (nec_state->halted)
 	{
@@ -438,11 +439,11 @@ int nec_execute(int cycles)
 		do_prefetch(nec_state, prev_ICount);
 	}
 
-	nec_state->cycles_total += cycles - nec_state->icount;
-	nec_state->cycles_remaining = 0;
-	nec_state->stop_run = 0;
+	cycles = cycles - nec_state->icount;
+	nec_state->cycles_total += cycles;
+	nec_state->cycles_remaining = nec_state->icount = 0;
 
-	return (cycles - nec_state->icount);
+	return cycles;
 }
 
 void necInit(int cpu, int type)

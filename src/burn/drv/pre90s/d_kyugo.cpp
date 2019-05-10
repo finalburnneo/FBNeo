@@ -34,7 +34,6 @@ static UINT8 *KyugoTiles            = NULL;
 static UINT8 *KyugoSprites          = NULL;
 static UINT8 *KyugoTempRom          = NULL;
 static UINT32 *KyugoPalette         = NULL;
-static INT16* pFMBuffer;
 
 static UINT8 KyugoIRQEnable;
 static UINT8 KyugoSubCPUEnable;
@@ -44,9 +43,6 @@ static UINT8 KyugoBgScrollXHi;
 static UINT8 KyugoBgScrollXLo;
 static UINT8 KyugoBgScrollY;
 static UINT8 KyugoFlipScreen;
-
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
 
 static INT32 KyugoNumZ80Rom1;
 static INT32 KyugoNumZ80Rom2;
@@ -1250,7 +1246,7 @@ static INT32 MemIndex()
 	KyugoChars               = Next; Next += 0x100 * 8 * 8;
 	KyugoTiles               = Next; Next += 0x400 * 8 * 8;
 	KyugoSprites             = Next; Next += 0x400 * 16 * 16;
-	pFMBuffer              = (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16);
+
 	KyugoPalette             = (UINT32*)Next; Next += 256 * sizeof(UINT32);
 
 	MemEnd                 = Next;
@@ -2023,6 +2019,7 @@ static INT32 KyugoInit()
 	AY8910SetPorts(0, &KyugoDip0Read, &KyugoDip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 
@@ -2144,6 +2141,7 @@ static INT32 Skywolf3Init()
 	AY8910SetPorts(0, &KyugoDip0Read, &KyugoDip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
 	
 	GenericTilesInit();
 
@@ -2432,58 +2430,31 @@ static INT32 KyugoDraw()
 
 static INT32 KyugoFrame()
 {
-	INT32 nInterleave = 10;
-	INT32 nSoundBufferPos = 0;
-
 	if (KyugoReset) KyugoDoReset();
 
 	KyugoMakeInputs();
+	ZetNewFrame();
 
-	nCyclesTotal[0] = (18432000 / 6) / 60;
-	nCyclesTotal[1] = (18432000 / 6) / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nInterleave = 10;
+	INT32 nCyclesTotal[2] = { 3072000 / 60, 3072000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run Z80 #1
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
 		if (i == 9 && KyugoIRQEnable) ZetNmi();
 		ZetClose();
-		
-		// Run Z80 #2
-		nCurrentCPU = 1;
+
 		if (KyugoSubCPUEnable) {
-			ZetOpen(nCurrentCPU);
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesSegment = ZetRun(nCyclesSegment);
-			nCyclesDone[nCurrentCPU] += nCyclesSegment;
-			if (i == 2 || i == 4 || i == 6 || i == 8) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetOpen(1);
+			CPU_RUN(1, Zet);
+			if (i == 2 || i == 4 || i == 6 || i == 8) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
 		}
-		
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-
 	}
-	
-	// Make sure the buffer is entirely filled.
+
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) KyugoDraw();
@@ -2506,16 +2477,12 @@ static INT32 KyugoScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
-	
-		if (nAction & ACB_DRIVER_DATA) {
+
+	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);			// Scan Z80
 		AY8910Scan(nAction, pnMin);
 
 		// Scan critical driver variables
-		SCAN_VAR(nCyclesDone);
-		SCAN_VAR(nCyclesSegment);
-		SCAN_VAR(KyugoDip);
-		SCAN_VAR(KyugoInput);
 		SCAN_VAR(KyugoIRQEnable);
 		SCAN_VAR(KyugoSubCPUEnable);
 		SCAN_VAR(KyugoFgColour);
@@ -2525,7 +2492,6 @@ static INT32 KyugoScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(KyugoBgScrollY);
 		SCAN_VAR(KyugoFlipScreen);
 	}
-
 
 	return 0;
 }

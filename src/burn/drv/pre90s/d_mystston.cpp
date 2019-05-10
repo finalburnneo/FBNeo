@@ -39,67 +39,67 @@ static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 6,	"p1 coin"  },
-	{"P1 start"  ,    BIT_DIGITAL  , DrvJoy2 + 6,	"p1 start" },
-	{"P1 Right"     , BIT_DIGITAL  , DrvJoy1 + 0, 	"p1 right" },
-	{"P1 Left"      , BIT_DIGITAL  , DrvJoy1 + 1, 	"p1 left"  },
-	{"P1 Up",	  BIT_DIGITAL,   DrvJoy1 + 2,   "p1 up",   },
-	{"P1 Down",	  BIT_DIGITAL,   DrvJoy1 + 3,   "p1 down", },
-	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0, 	"p1 right"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1, 	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy1 + 7,	"p2 coin"  },
-	{"P2 start"  ,    BIT_DIGITAL  , DrvJoy2 + 7,	"p2 start" },
-	{"P2 Right"     , BIT_DIGITAL  , DrvJoy2 + 0, 	"p2 right" },
-	{"P2 Left"      , BIT_DIGITAL  , DrvJoy2 + 1, 	"p2 left"  },
-	{"P2 Up",	  BIT_DIGITAL,   DrvJoy2 + 2,   "p2 up",   },
-	{"P2 Down",	  BIT_DIGITAL,   DrvJoy2 + 3,   "p2 down", },
-	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 4,	"p2 fire 1"},
-	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 5,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0, 	"p2 right"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1, 	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"    },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip 1"	   },
-	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	"dip 2"	   },
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip 1",			BIT_DIPSWITCH,	DrvDips + 0,	"dip 1"		},
+	{"Dip 2",			BIT_DIPSWITCH,	DrvDips + 1,	"dip 2"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xfb, NULL                     },
-	{0x12, 0xff, 0xff, 0x1f, NULL                     },
+	{0x11, 0xff, 0xff, 0xfb, NULL			},
+	{0x12, 0xff, 0xff, 0x1f, NULL			},
 
-	{0   , 0xfe, 0   , 2   , "Lives"	          },
-	{0x11, 0x01, 0x01, 0x01, "3"     		  },
-	{0x11, 0x01, 0x01, 0x00, "5"			  },
+	{0   , 0xfe, 0   , 2   , "Lives"		},
+	{0x11, 0x01, 0x01, 0x01, "3"			},
+	{0x11, 0x01, 0x01, 0x00, "5"			},
 
-	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x11, 0x01, 0x02, 0x02, "Easy"       		  },
-	{0x11, 0x01, 0x02, 0x00, "Hard"       		  },
+	{0   , 0xfe, 0   , 2   , "Difficulty"	},
+	{0x11, 0x01, 0x02, 0x02, "Easy"			},
+	{0x11, 0x01, 0x02, 0x00, "Hard"			},
 
-	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x11, 0x01, 0x04, 0x04, "Off"     		  },
-	{0x11, 0x01, 0x04, 0x00, "On"    		  },
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"	},
+	{0x11, 0x01, 0x04, 0x04, "Off"			},
+	{0x11, 0x01, 0x04, 0x00, "On"			},
 
-	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x12, 0x01, 0x03, 0x00, "2C 1C"     		  },
-	{0x12, 0x01, 0x03, 0x03, "1C 1C"    		  },
-	{0x12, 0x01, 0x03, 0x02, "1C 2C"     		  },
-	{0x12, 0x01, 0x03, 0x01, "1C 3C"    		  },
+	{0   , 0xfe, 0   , 4   , "Coin A"		},
+	{0x12, 0x01, 0x03, 0x00, "2C 1C"		},
+	{0x12, 0x01, 0x03, 0x03, "1C 1C"		},
+	{0x12, 0x01, 0x03, 0x02, "1C 2C"		},
+	{0x12, 0x01, 0x03, 0x01, "1C 3C"		},
 
-	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x12, 0x01, 0x0c, 0x00, "2C 1C"     		  },
-	{0x12, 0x01, 0x0c, 0x0c, "1C 1C"    		  },
-	{0x12, 0x01, 0x0c, 0x08, "1C 2C"     		  },
-	{0x12, 0x01, 0x0c, 0x04, "1C 3C"    		  },
+	{0   , 0xfe, 0   , 4   , "Coin B"		},
+	{0x12, 0x01, 0x0c, 0x00, "2C 1C"		},
+	{0x12, 0x01, 0x0c, 0x0c, "1C 1C"		},
+	{0x12, 0x01, 0x0c, 0x08, "1C 2C"		},
+	{0x12, 0x01, 0x0c, 0x04, "1C 3C"		},
 
-	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x12, 0x01, 0x20, 0x00, "Off"       		  },
-	{0x12, 0x01, 0x20, 0x20, "On"       		  },
+	{0   , 0xfe, 0   , 2   , "Flip Screen"	},
+	{0x12, 0x01, 0x20, 0x00, "Off"			},
+	{0x12, 0x01, 0x20, 0x20, "On"			},
 
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x12, 0x01, 0x40, 0x00, "Upright"     		  },
-	{0x12, 0x01, 0x40, 0x40, "Cocktail"    		  },
+	{0   , 0xfe, 0   , 2   , "Cabinet"		},
+	{0x12, 0x01, 0x40, 0x00, "Upright"		},
+	{0x12, 0x01, 0x40, 0x40, "Cocktail"		},
 };
 
 STDDIPINFO(Drv)
@@ -267,7 +267,7 @@ static INT32 MemIndex()
 	flipscreen		= Next; Next += 0x000001;
 	soundlatch		= Next; Next += 0x000001;
 	scrolly			= Next; Next += 0x000001;
-	video_control		= Next; Next += 0x000001;
+	video_control	= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 
@@ -332,6 +332,7 @@ static INT32 DrvInit()
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(M6502TotalCycles, 1500000);
 
 	GenericTilesInit();
 
@@ -505,6 +506,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	M6502NewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 2);
 		for (INT32 i = 0; i < 8; i++) {
@@ -513,10 +516,9 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nTotalCycles = (INT32)((double)(1500000 / 57.45));
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 272;
-	INT32 nCyclesRun = 0;
+	INT32 nCyclesTotal[1] = { (INT32)((double)(1500000 / 57.445)) };
+	INT32 nCyclesDone[1] = { 0 };
 
 	vblank = 0x80;
 
@@ -524,25 +526,14 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesRun += M6502Run(nTotalCycles / nInterleave);
+		CPU_RUN(0, M6502);
 		mystston_interrupt_handler(i);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	M6502Close();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -552,7 +543,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 

@@ -186,6 +186,18 @@ typedef struct
 static SH2EXT * pSh2Ext;
 static SH2EXT * Sh2Ext = NULL;
 
+static INT32 core_idle(INT32 cycles)
+{
+	Sh2Idle(cycles);
+
+	return cycles;
+}
+
+static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
+{
+	Sh2SetIRQLine(line, state);
+}
+
 cpu_core_config Sh2Config =
 {
 	Sh2Open,
@@ -195,6 +207,8 @@ cpu_core_config Sh2Config =
 	Sh2GetActive,
 	Sh2TotalCycles,
 	Sh2NewFrame,
+	core_idle,
+	core_set_irq,
 	Sh2Run,
 	Sh2StopRun,
 	Sh2Reset,

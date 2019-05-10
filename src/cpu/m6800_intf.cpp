@@ -12,6 +12,25 @@ static M6800Ext *M6800CPUContext = NULL;
 static INT32 nM6800CyclesDone[MAX_CPU];
 INT32 nM6800CyclesTotal;
 
+static void m6800_core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = nActiveCPU;
+
+	if (active != cpu)
+	{
+		if (active != -1) M6800Close();
+		M6800Open(cpu);
+	}
+
+	M6800SetIRQLine(line, state);
+
+	if (active != cpu)
+	{
+		M6800Close();
+		if (active != -1) M6800Open(active);
+	}
+}
+
 cpu_core_config M6800Config =  // M6802, M6808
 {
 	M6800Open,
@@ -21,12 +40,33 @@ cpu_core_config M6800Config =  // M6802, M6808
 	M6800GetActive,
 	M6800TotalCycles,
 	M6800NewFrame,
+	M6800Idle,
+	m6800_core_set_irq,
 	M6800Run,		// different
 	M6800RunEnd,
 	M6800Reset,
 	0x10000,
 	0
 };
+
+static void hd63701_core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = nActiveCPU;
+
+	if (active != cpu)
+	{
+		if (active != -1) M6800Close();
+		M6800Open(cpu);
+	}
+
+	HD63701SetIRQLine(line, state);
+
+	if (active != cpu)
+	{
+		M6800Close();
+		if (active != -1) M6800Open(active);
+	}
+}
 
 cpu_core_config HD63701Config =
 {
@@ -37,12 +77,33 @@ cpu_core_config HD63701Config =
 	M6800GetActive,
 	M6800TotalCycles,
 	M6800NewFrame,
+	M6800Idle,
+	hd63701_core_set_irq, // different
 	HD63701Run,		// different
 	M6800RunEnd,
 	M6800Reset,
 	0x10000,
 	0
 };
+
+static void m6803_core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = nActiveCPU;
+
+	if (active != cpu)
+	{
+		if (active != -1) M6800Close();
+		M6800Open(cpu);
+	}
+
+	M6803SetIRQLine(line, state);
+
+	if (active != cpu)
+	{
+		M6800Close();
+		if (active != -1) M6800Open(active);
+	}
+}
 
 cpu_core_config M6803Config =  // M6801, M6803
 {
@@ -53,12 +114,71 @@ cpu_core_config M6803Config =  // M6801, M6803
 	M6800GetActive,
 	M6800TotalCycles,
 	M6800NewFrame,
+	M6800Idle,
+	m6803_core_set_irq,
 	M6803Run,		// different
 	M6800RunEnd,
 	M6800Reset,
 	0x10000,
 	0
 };
+
+static void m6801_core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = nActiveCPU;
+
+	if (active != cpu)
+	{
+		if (active != -1) M6800Close();
+		M6800Open(cpu);
+	}
+
+	M6801SetIRQLine(line, state);
+
+	if (active != cpu)
+	{
+		M6800Close();
+		if (active != -1) M6800Open(active);
+	}
+}
+
+cpu_core_config M6801Config =
+{
+	M6800Open,
+	M6800Close,
+	M6800CheatRead,
+	M6800WriteRom,
+	M6800GetActive,
+	M6800TotalCycles,
+	M6800NewFrame,
+	M6800Idle,
+	m6801_core_set_irq,
+	M6803Run,		// different
+	M6800RunEnd,
+	M6800Reset,
+	0x10000,
+	0
+};
+
+
+static void msc8105_core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = nActiveCPU;
+
+	if (active != cpu)
+	{
+		if (active != -1) M6800Close();
+		M6800Open(cpu);
+	}
+
+	NSC8105SetIRQLine(line, state);
+
+	if (active != cpu)
+	{
+		M6800Close();
+		if (active != -1) M6800Open(active);
+	}
+}
 
 cpu_core_config NSC8105Config =
 {
@@ -69,6 +189,8 @@ cpu_core_config NSC8105Config =
 	M6800GetActive,
 	M6800TotalCycles,
 	M6800NewFrame,
+	M6800Idle,
+	msc8105_core_set_irq,
 	NSC8105Run,		// different
 	M6800RunEnd,
 	M6800Reset,
@@ -235,7 +357,7 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 	if (type == CPU_TYPE_M6801) {
 		m6801_init();
 
-		CpuCheatRegister(num, &M6803Config);
+		CpuCheatRegister(num, &M6801Config);
 	}
 
 	if (type == CPU_TYPE_NSC8105) {
@@ -488,13 +610,6 @@ INT32 NSC8105Run(INT32 cycles)
 	nM6800CyclesTotal += cycles;
 	
 	return cycles;
-}
-
-void M6800RunEnd()
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800RunEnd called without init\n"));
-#endif
 }
 
 UINT32 M6800GetPC(INT32)

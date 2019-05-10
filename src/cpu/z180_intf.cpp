@@ -24,6 +24,32 @@ static INT32 DebugCPU_Z180Initted = 0;
 #define PORT_RANGE		(1 << PORT_ADDRESS_BITS)
 #define PORT_MASK		(PORT_RANGE - 1)
 
+static INT32 core_idle(INT32 cycles)
+{
+	Z180BurnCycles(cycles);
+
+	return cycles;
+}
+
+static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = Z180GetActive();
+
+	if (active != cpu)
+	{
+		if (active != -1) Z180Close();
+		Z180Open(cpu);
+	}
+
+	Z180SetIRQLine(line, state);
+
+	if (active != cpu)
+	{
+		Z180Close();
+		if (active != -1) Z180Open(active);
+	}
+}
+
 cpu_core_config Z180Config =
 {
 	Z180Open,
@@ -33,6 +59,8 @@ cpu_core_config Z180Config =
 	Z180GetActive,
 	Z180TotalCycles,
 	Z180NewFrame,
+	core_idle,
+	core_set_irq,
 	Z180Run,
 	Z180RunEnd,
 	Z180Reset,

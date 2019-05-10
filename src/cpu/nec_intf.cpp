@@ -8,22 +8,6 @@
 
 #define MAX_VEZ		4
 
-cpu_core_config VezConfig =
-{
-	VezOpen,
-	VezClose,
-	cpu_readmem20,
-	VezCheatWrite,
-	VezGetActive,
-	VezTotalCycles,
-	VezNewFrame,
-	VezRun,
-	VezRunEnd,
-	VezReset,
-	0x100000,
-	0
-};
-
 //----------------------------------------------------------------------------------
 // nec.cpp
 void necInit(INT32 cpu, INT32 type);
@@ -303,6 +287,49 @@ void VezSetDecode(UINT8 *table)
 		VezCurrentCPU->decode(table);
 	}
 }
+
+static INT32 core_idle(INT32 cycles)
+{
+	VezCurrentCPU->idle(cycles);
+
+	return cycles;
+}
+
+static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = nOpenedCPU;
+	if (active != cpu)
+	{
+		if (active != -1) VezClose();
+		VezOpen(cpu);
+	}
+
+	VezCurrentCPU->cpu_set_irq_line(line & 0xffff, line >> 16, state);
+
+	if (active != cpu)
+	{
+		VezClose();
+		if (active != -1) VezOpen(active);
+	}
+}
+
+cpu_core_config VezConfig =
+{
+	VezOpen,
+	VezClose,
+	cpu_readmem20,
+	VezCheatWrite,
+	VezGetActive,
+	VezTotalCycles,
+	VezNewFrame,
+	core_idle,
+	core_set_irq,
+	VezRun,
+	VezRunEnd,
+	VezReset,
+	0x100000,
+	0
+};
 
 INT32 VezInit(INT32 cpu, INT32 type, INT32 clock)
 {

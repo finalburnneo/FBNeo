@@ -27,6 +27,11 @@ void konami_set_irq_line(INT32 irqline, INT32 state);
 void konami_init(INT32 (*irqcallback)(INT32));
 void konami_set_irq_hold(INT32 irq);
 
+static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
+{
+	konamiSetIrqLine(line, state);
+}
+
 cpu_core_config konamiCPUConfig =
 {
 	konamiOpen,
@@ -36,6 +41,8 @@ cpu_core_config konamiCPUConfig =
 	konamiGetActive,
 	konamiTotalCycles,
 	konamiNewFrame,
+	konamiIdle,
+	core_set_irq,
 	konamiRun,
 	konamiRunEnd,
 	konamiReset,
@@ -175,11 +182,6 @@ void konamiSetIrqLine(INT32 line, INT32 state)
 	} else {
 		konami_set_irq_line(line, state);
 	}
-}
-
-void konamiRunEnd()
-{
-	// nothing atm
 }
 
 UINT8 konami_cheat_read(UINT32 a)

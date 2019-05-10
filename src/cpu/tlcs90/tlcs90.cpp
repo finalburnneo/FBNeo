@@ -2055,6 +2055,15 @@ INT32 tlcs90Run(INT32 nCycles)
 	return nCycles;
 }
 
+INT32 tlcs90Idle(INT32 cycles)
+{
+	t90_Regs *cpustate = &tlcs90_data[0];
+
+	cpustate->total_cycles += cycles;
+
+	return cycles;
+}
+
 void tlcs90NewFrame()
 {
 	t90_Regs *cpustate = &tlcs90_data[0];

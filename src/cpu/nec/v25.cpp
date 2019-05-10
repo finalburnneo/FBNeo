@@ -599,7 +599,7 @@ void v25RunEnd()
 
 void v25Idle(int cycles)
 {
-	sChipsPtr->icount -= cycles;
+	sChipsPtr->cycles_total += cycles;
 }
 
 int v25GetPC(int n)

@@ -400,7 +400,7 @@ void necRunEnd()
 
 void necIdle(int cycles)
 {
-	sChipsPtr->icount -= cycles;
+	sChipsPtr->cycles_total += cycles;
 }
 
 int nec_execute(int cycles)

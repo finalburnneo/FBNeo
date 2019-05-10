@@ -12,6 +12,30 @@ static M6809Ext *m6809CPUContext = NULL;
 static INT32 nM6809CyclesDone[MAX_CPU];
 INT32 nM6809CyclesTotal;
 
+static INT32 core_idle(INT32 cycles)
+{
+	return M6809Idle(cycles);
+}
+
+static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = nActiveCPU;
+
+	if (active != cpu)
+	{
+		if (active != -1) M6809Close();
+		M6809Open(cpu);
+	}
+
+	M6809SetIRQLine(line, state);
+
+	if (active != cpu)
+	{
+		M6809Close();
+		if (active != -1) M6809Open(active);
+	}
+}
+
 cpu_core_config M6809Config =
 {
 	M6809Open,
@@ -21,6 +45,8 @@ cpu_core_config M6809Config =
 	M6809GetActive,
 	M6809TotalCycles,
 	M6809NewFrame,
+	core_idle,	
+	core_set_irq,
 	M6809Run,
 	M6809RunEnd,
 	M6809Reset,

@@ -29,7 +29,8 @@ INT32 konamiCpuScan(INT32 nAction);
 
 INT32 konamiTotalCycles();
 void konamiNewFrame();
-void konamiRunEnd(); // not hooked up
+void konamiRunEnd();
+INT32 konamiIdle(INT32 cycles);
 INT32 konamiGetActive();
 
 UINT8 konami_cheat_read(UINT32 a);					// cheat

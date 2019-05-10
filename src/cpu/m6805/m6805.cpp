@@ -887,3 +887,15 @@ void hd63705SetIrqLine(int irqline, int state)
 		if (state != CLEAR_LINE) m6805.pending_interrupts |= 1<<irqline;
 	}
 }
+
+void m6805_core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
+{
+	if (m6805.subtype == SUBTYPE_HD63705)
+	{
+		hd63705SetIrqLine(line, state);
+	}
+	else
+	{
+		m6805SetIrqLine(line, state);
+	}
+}

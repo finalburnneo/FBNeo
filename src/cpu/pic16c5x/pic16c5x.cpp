@@ -103,6 +103,7 @@ typedef struct
 	UINT16	prescaler;	/* Note: this is really an 8-bit register */
 	PAIR	opcode;
 	UINT8	internalram[8];
+	UINT32 total_cycles;
 } pic16C5x_Regs;
 
 static pic16C5x_Regs R;
@@ -115,6 +116,7 @@ static int    delay_timer;
 static int    picmodel;
 static int    pic16C5x_reset_vector;
 static int    pic16C5x_icount;
+static INT32  slice_cycles;
 typedef void (*opcode_fn) (void);
 
 static const unsigned cycles_000_other[16]=
@@ -829,6 +831,7 @@ static void pic16C5x_update_timer(int counts)
 int pic16c5xRun(int cycles)
 {
 	UINT8 T0_in;
+	slice_cycles = cycles;
 	pic16C5x_icount = cycles;
 	
 	do
@@ -890,7 +893,13 @@ int pic16c5xRun(int cycles)
 
 	} while (pic16C5x_icount>0);
 
-	return (cycles - pic16C5x_icount);
+	INT32 ret = cycles - pic16C5x_icount;
+
+	R.total_cycles += ret;
+	slice_cycles = 0;
+	pic16C5x_icount = 0;
+
+	return ret;
 }
 
 
@@ -981,9 +990,26 @@ void pic16c5xDoReset(int type, int *romlen, int *ramlen)
 	}
 }
 
+INT32 pic16c5xTotalCycles()
+{
+	return R.total_cycles + (slice_cycles - pic16C5x_icount);
+}
+
+void pic16c5xNewFrame()
+{
+	R.total_cycles = 0;
+}
+
 void pic16c5xRunEnd()
 {
 	pic16C5x_icount = 0;
+}
+
+INT32 pic16c5xIdle(INT32 cycles)
+{
+	R.total_cycles += cycles;
+
+	return cycles;
 }
 
 int pic16c5xScanCpu(int nAction,int */*pnMin*/)
@@ -1004,6 +1030,7 @@ int pic16c5xScanCpu(int nAction,int */*pnMin*/)
 		SCAN_VAR(R.STACK[1]);
 		SCAN_VAR(R.prescaler);
 		SCAN_VAR(R.opcode);
+		SCAN_VAR(R.total_cycles);
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {

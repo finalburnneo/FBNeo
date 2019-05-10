@@ -44,6 +44,8 @@ cpu_core_config ZetConfig =
 	ZetGetActive,
 	ZetTotalCycles,
 	ZetNewFrame,
+	ZetIdle,
+	ZetSetIRQLine,
 	ZetRun,
 	ZetRunEnd,
 	ZetReset,

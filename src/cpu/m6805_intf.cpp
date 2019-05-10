@@ -16,6 +16,8 @@ static void (*m6805WriteFunction)(UINT16 address, UINT8 data) = NULL;
 
 static UINT8 *mem[3][0x100];
 
+void m6805_core_set_irq(INT32 cpu, INT32 line, INT32 state);
+
 cpu_core_config M6805Config =
 {
 	m6805Open,
@@ -25,6 +27,8 @@ cpu_core_config M6805Config =
 	m6805GetActive,
 	m6805TotalCycles,
 	m6805NewFrame,
+	m6805Idle,
+	m6805_core_set_irq,
 	m6805Run,
 	m6805RunEnd,
 	m6805Reset,

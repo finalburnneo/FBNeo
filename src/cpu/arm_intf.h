@@ -33,6 +33,7 @@ UINT32 ArmGetPC(INT32);
 
 UINT32 ArmRemainingCycles();
 INT32 ArmGetTotalCycles();
+INT32 ArmIdle(INT32 cycles);
 void ArmRunEnd();
 void ArmNewFrame();
 INT32 ArmGetActive();

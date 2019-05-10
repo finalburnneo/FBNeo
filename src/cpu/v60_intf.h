@@ -23,6 +23,7 @@ INT32 v60TotalCycles();
 void v60RunEnd();
 void v60NewFrame();
 INT32 v60GetActive();
+INT32 v60Idle(INT32 cycles);
 
 INT32 v60Scan(INT32 nAction);
 

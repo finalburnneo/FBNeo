@@ -50,11 +50,13 @@ typedef struct {
     UINT8   ir;     /* instruction register */
     UINT16  ras[8]; /* 8 return address stack entries */
 	UINT8	irq_state;
+	UINT32	total_cycles;
 }   s2650_Regs;
 
 static s2650_Regs S;
 static s2650_Regs Store[MAX_S2650];
 int nActiveS2650 = -1;
+static INT32 cycles_slice;
 
 /* condition code changes for a byte */
 static const UINT8 ccc[0x200] = {
@@ -856,7 +858,8 @@ int s2650Run(int cycles)
 	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650Run called when no CPU open\n"));
 #endif
 
-	s2650_ICount = cycles;
+	s2650_ICount = cycles_slice = cycles;
+
 	do
 	{
 		S.ppc = S.page + S.iar;
@@ -1461,7 +1464,36 @@ int s2650Run(int cycles)
 		}
 	} while( s2650_ICount > 0 );
 
-	return cycles - s2650_ICount;
+	INT32 ret = cycles - s2650_ICount;
+
+	S.total_cycles += ret;
+
+	cycles_slice = 0;
+	s2650_ICount = 0;
+
+	return ret;
+}
+
+INT32 s2650TotalCycles()
+{
+	return S.total_cycles + (cycles_slice - s2650_ICount);
+}
+
+void s2650NewFrame()
+{
+	S.total_cycles = 0;
+}
+
+void s2650RunEnd()
+{
+	s2650_ICount = 0;
+}
+
+INT32 s2650Idle(INT32 cycles)
+{
+	S.total_cycles += cycles;
+
+	return cycles;
 }
 
 int s2650Scan(int nAction)

@@ -25,6 +25,33 @@ struct h6280_handler
 	h6280_Regs *h6280;
 };
 
+static struct h6280_handler sHandler[MAX_H6280];
+static struct h6280_handler *sPointer;
+
+INT32 nh6280CpuCount = 0;
+INT32 nh6280CpuActive = -1;
+
+void h6280_set_irq_line(INT32 irqline, INT32 state);
+
+static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = nh6280CpuActive;
+
+	if (cpu != active)
+	{
+		h6280Close();
+		h6280Open(cpu);
+	}
+
+	h6280SetIRQLine(line, state);
+
+	if (cpu != active)
+	{
+		h6280Close();
+		h6280Open(active);
+	}
+}
+
 cpu_core_config H6280Config =
 {
 	h6280Open,
@@ -34,20 +61,14 @@ cpu_core_config H6280Config =
 	h6280GetActive,
 	h6280TotalCycles,
 	h6280NewFrame,
+	h6280Idle,
+	core_set_irq,
 	h6280Run,
 	h6280RunEnd,
 	h6280Reset,
 	0x200000,
 	0
 };
-
-static struct h6280_handler sHandler[MAX_H6280];
-static struct h6280_handler *sPointer;
-
-INT32 nh6280CpuCount = 0;
-INT32 nh6280CpuActive = -1;
-
-void h6280_set_irq_line(INT32 irqline, INT32 state);
 
 void h6280MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type)
 {

@@ -31,6 +31,7 @@ INT32 h6280Scan(INT32 nAction);
 INT32 h6280TotalCycles();
 void h6280NewFrame();
 void h6280RunEnd();
+INT32 h6280Idle(INT32 cycles);
 
 INT32 h6280GetActive();
 

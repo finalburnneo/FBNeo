@@ -12,6 +12,11 @@ extern void t90_internal_registers_w(UINT16 offset, UINT8 data);
 extern UINT8 t90_internal_registers_r(UINT16 offset);
 INT32 tlcs90_init(INT32 clock);
 
+static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
+{
+	tlcs90SetIRQLine(line, state);
+}
+
 cpu_core_config tlcs90Config =
 {
 	tlcs90Open,
@@ -21,6 +26,8 @@ cpu_core_config tlcs90Config =
 	tlcs90GetActive,
 	tlcs90TotalCycles,
 	tlcs90NewFrame,
+	tlcs90Idle,
+	core_set_irq,
 	tlcs90Run,
 	tlcs90RunEnd,
 	tlcs90Reset,

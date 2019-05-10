@@ -564,6 +564,25 @@ int konamiCpuScan(int nAction)
 	return 0;
 }
 
+void konamiRunEnd()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiRunEnd called without init\n"));
+#endif
+
+	konami_ICount = 0;
+}
+
+INT32 konamiIdle(INT32 cycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiIdle called without init\n"));
+#endif
+	konami_ICount -= cycles;
+
+	return konami_ICount;
+}
+
 void konamiSetlinesCallback(void  (*setlines_callback)(int lines))
 {
 #if defined FBA_DEBUG

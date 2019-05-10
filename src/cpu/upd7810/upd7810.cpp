@@ -403,6 +403,11 @@ STOP            01001000  10111011          12  stop
 //#include "mamedbg.h"
 #include "upd7810_intf.h"
 
+static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
+{
+	upd7810SetIRQLine(line, state);
+}
+
 cpu_core_config upd7810Config =
 {
 	upd7810Open,
@@ -412,6 +417,8 @@ cpu_core_config upd7810Config =
 	upd7810GetActive,
 	upd7810TotalCycles,
 	upd7810NewFrame,
+	upd7810Idle,
+	core_set_irq,
 	upd7810Run,
 	upd7810RunEnd,
 	upd7810Reset,
@@ -1991,7 +1998,15 @@ void upd7810NewFrame()
 
 void upd7810RunEnd()
 {
-	run_end = 1;
+	upd7810_total_cycles += (upd7810_current_cycles - upd7810_icount);
+	upd7810_current_cycles = 0;
+	upd7810_icount = 0;	
+}
+
+INT32 upd7810Idle(INT32 cycles)
+{
+	upd7810_total_cycles += cycles;
+	return cycles;
 }
 
 #if 0

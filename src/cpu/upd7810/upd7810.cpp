@@ -1889,6 +1889,8 @@ INT32 upd7810Run(INT32 cycles)
 	upd7810_current_cycles = cycles;
 	upd7810_icount = cycles;
 
+	run_end = 0;
+
 	do
 	{
 		int cc = 0;
@@ -1998,9 +2000,7 @@ void upd7810NewFrame()
 
 void upd7810RunEnd()
 {
-	upd7810_total_cycles += (upd7810_current_cycles - upd7810_icount);
-	upd7810_current_cycles = 0;
-	upd7810_icount = 0;	
+	run_end = 1;
 }
 
 INT32 upd7810Idle(INT32 cycles)

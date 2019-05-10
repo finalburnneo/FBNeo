@@ -320,6 +320,18 @@ void h6280RunEnd()
 	h6280_ICount = 0;
 }
 
+INT32 h6280Idle(INT32 cycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280Idle called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280Idle called with no CPU open\n"));
+#endif
+
+	h6280.h6280_totalcycles += cycles;
+
+	return cycles;
+}
+
 /*****************************************************************************/
 
 void h6280_set_irq_line(int irqline, int state)

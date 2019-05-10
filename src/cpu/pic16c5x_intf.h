@@ -18,9 +18,11 @@ void pic16c5xClose();
 extern INT32 pic16c5xScan(INT32 nAction);
 
 void pic16c5xRunEnd();
-INT32 pic16c5xGetActive();	// not hooked up
-INT32 pic16c5xTotalCycles(); // not hooked up
-void pic16c5xNewFrame();	// not hooked up
+INT32 pic16c5xIdle();
+INT32 pic16c5xGetActive();
+INT32 pic16c5xTotalCycles();
+void pic16c5xNewFrame();
+INT32 pic16c5xIdle(INT32);
 
 INT32 BurnLoadPicROM(UINT8 *src, INT32 offset, INT32 len);
 

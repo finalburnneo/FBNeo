@@ -919,6 +919,16 @@ int hd6309_execute(int cycles)	/* NS 970908 */
 	return cycles - hd6309_ICount;	 /* NS 970908 */
 }
 
+void HD6309RunEnd()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309RunEnd called without init\n"));
+//	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309RunEnd called when no CPU open\n"));
+#endif
+
+	hd6309_ICount = 0;
+}
+
 HD6309_INLINE void fetch_effective_address( void )
 {
 	UINT8 postbyte = ROP_ARG(PCD);

@@ -414,6 +414,11 @@ static void program_write_byte_32le(UINT32 a, UINT8 d)
 	}
 }
 
+static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
+{
+	v60SetIRQLine(line, state);
+}
+
 cpu_core_config v60Config =
 {
 	v60Open,
@@ -423,6 +428,8 @@ cpu_core_config v60Config =
 	v60GetActive,
 	v60TotalCycles,
 	v60NewFrame,
+	v60Idle,
+	core_set_irq,
 	v60Run,
 	v60RunEnd,
 	v60Reset,
@@ -988,6 +995,13 @@ INT32 v60TotalCycles()
 void v60RunEnd()
 {
 	v60_ICount = 0;
+}
+
+INT32 v60Idle(INT32 cycles)
+{
+	v60.current_cycles += cycles;
+
+	return cycles;
 }
 
 void v60NewFrame()

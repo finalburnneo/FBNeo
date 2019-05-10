@@ -28,6 +28,11 @@ static void (*pArmSpeedHackCallback)();
 
 extern void arm_set_irq_line(INT32 irqline, INT32 state);
 
+static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
+{
+	arm_set_irq_line(line, state);
+}
+
 cpu_core_config ArmConfig =
 {
 	ArmOpen,
@@ -37,6 +42,8 @@ cpu_core_config ArmConfig =
 	ArmGetActive,
 	ArmGetTotalCycles,
 	ArmNewFrame,
+	ArmIdle,
+	core_set_irq,
 	ArmRun,
 	ArmRunEnd,
 	ArmReset,

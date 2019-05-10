@@ -1407,6 +1407,13 @@ void ArmRunEnd()
 	arm_icount = 0;
 }
 
+INT32 ArmIdle(INT32 cycles)
+{
+	arm.ArmTotalCycles += cycles;
+
+	return cycles;
+}
+
 // start a new frame
 void ArmNewFrame()
 {

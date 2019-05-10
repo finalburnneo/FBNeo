@@ -20,6 +20,7 @@ void tlcs90MapMemory(UINT8 *rom, UINT32 start, UINT32 end, INT32 flags);
 void tlcs90NewFrame();
 void tlcs90RunEnd();
 INT32 tlcs90TotalCycles();
+INT32 tlcs90Idle(INT32 cycles);
 INT32 tlcs90GetActive();
 
 INT32 tlcs90Scan(INT32 nAction);

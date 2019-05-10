@@ -15,6 +15,11 @@ static UINT8 *pic16c5x_ram = NULL;
 static UINT8 (*pPic16c5xReadPort)(UINT16 port) = NULL;
 static void (*pPic16c5xWritePort)(UINT16 port, UINT8 data) = NULL;
 
+static void core_set_irq(INT32,INT32,INT32)
+{
+	// not for this hardware
+}
+
 cpu_core_config pic16c5xConfig =
 {
 	pic16c5xOpen,
@@ -24,6 +29,8 @@ cpu_core_config pic16c5xConfig =
 	pic16c5xGetActive,
 	pic16c5xTotalCycles,
 	pic16c5xNewFrame,
+	pic16c5xIdle,
+	core_set_irq,
 	pic16c5xRun,
 	pic16c5xRunEnd,
 	pic16c5xReset,
@@ -127,16 +134,6 @@ void pic16c5xReset()
 INT32 pic16c5xGetActive()
 {
 	return 0; // only one cpu supported atm
-}
-
-INT32 pic16c5xTotalCycles() // not functional
-{
-	return 0;
-}
-
-void pic16c5xNewFrame() // not functional
-{
-	// 
 }
 
 UINT8 pic16c5xCheatRead(UINT32 address)

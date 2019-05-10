@@ -1410,6 +1410,8 @@ INT32 tlcs90Run(INT32 nCycles)
 	}
 	cpustate->extra_cycles = 0;
 
+	cpustate->run_end = 0;
+
 	do
 	{
 		INT32 prev_cycles = cpustate->icount; // for timers
@@ -2049,10 +2051,22 @@ INT32 tlcs90Run(INT32 nCycles)
 
 	} while( cpustate->icount > 0 && cpustate->run_end == 0 );
 
-	cpustate->run_end = 0;
-	cpustate->total_cycles += nCycles;
+	cpustate->total_cycles += cpustate->nCycles - cpustate->icount;
 
-	return nCycles;
+	INT32 ret = cpustate->nCycles - cpustate->icount;
+
+	cpustate->nCycles = cpustate->icount = 0;
+
+	return ret;
+}
+
+INT32 tlcs90Idle(INT32 cycles)
+{
+	t90_Regs *cpustate = &tlcs90_data[0];
+
+	cpustate->total_cycles += cycles;
+
+	return cycles;
 }
 
 void tlcs90NewFrame()
@@ -2070,7 +2084,7 @@ void tlcs90RunEnd()
 
 	cpustate->run_end = 1;
 }
-	
+
 
 INT32 tlcs90TotalCycles()
 {
@@ -2078,7 +2092,7 @@ INT32 tlcs90TotalCycles()
 
 //	bprintf (0, _T("TotalCycles: %d\n"), cpustate->total_cycles + (cpustate->nCycles - cpustate->icount));
 
-	return cpustate->total_cycles;// + (cpustate->nCycles - cpustate->icount);
+	return cpustate->total_cycles + (cpustate->nCycles - cpustate->icount);
 }
 
 void tlcs90Reset()

@@ -30,6 +30,11 @@ static UINT32 Arm7IdleLoop = ~0;
 
 extern void arm7_set_irq_line(INT32 irqline, INT32 state);
 
+static void core_set_irq(INT32 /*cpu*/, INT32 irqline, INT32 state)
+{
+	arm7_set_irq_line(irqline, state);
+}
+
 cpu_core_config Arm7Config =
 {
 	Arm7Open,
@@ -39,6 +44,8 @@ cpu_core_config Arm7Config =
 	Arm7GetActive,
 	Arm7TotalCycles,
 	Arm7NewFrame,
+	Arm7Idle,
+	core_set_irq,
 	Arm7Run,
 	Arm7RunEnd,
 	Arm7Reset,

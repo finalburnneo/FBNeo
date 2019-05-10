@@ -2064,6 +2064,8 @@ void z180_write_internal_io(UINT32 port, UINT8 data)
 	}
 }
 
+static INT32 end_run;
+
 /****************************************************************************
  * Execute 'cycles' T-states. Return number of T-states really executed
  ****************************************************************************/
@@ -2072,6 +2074,8 @@ int z180_execute(int cycles)
 	int old_icount = cycles;
 	z180_icount = cycles;
 	current_cycles = cycles;
+
+	end_run = 0;
 
 	/* check for NMIs on the way in; they can only be set externally */
 	/* via timers, and can't be dynamically enabled, so it is safe */
@@ -2125,11 +2129,11 @@ again:
 				/* If DMA is done break out to the faster loop */
 				if ((IO_DSTAT & Z180_DSTAT_DME) != Z180_DSTAT_DME)
 					break;
-			} while( z180_icount > 0 );
+			} while( z180_icount > 0 && !end_run);
 		}
     }
 
-    if (z180_icount > 0)
+    if (z180_icount > 0 && !end_run)
     {
         do
 		{
@@ -2146,17 +2150,21 @@ again:
 			if ((IO_DSTAT & Z180_DSTAT_DME) == Z180_DSTAT_DME)
 				goto again;
 
-        } while( z180_icount > 0 );
+        } while( z180_icount > 0 && !end_run );
 	}
 
 	total_cycles += cycles - z180_icount;
 
-	return cycles - z180_icount;
+	INT32 ret = cycles - z180_icount;
+
+	z180_icount = current_cycles = 0;
+
+	return ret;
 }
 
 void z180_run_end()
 {
-	z180_icount = 0;
+	end_run = 1;
 }
 
 INT32 z180_total_cycles()

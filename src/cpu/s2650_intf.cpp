@@ -35,6 +35,25 @@ extern void s2650_exit();
 extern void s2650_reset(void);
 extern INT32 s2650_get_pc();
 
+static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+return; // iq_132
+
+	INT32 active = nActiveS2650;
+	if (active != cpu)
+	{
+		if (active != -1) s2650Close();
+		s2650Open(cpu);
+	}
+
+
+	if (active != cpu)
+	{
+		s2650Close();
+		if (active != -1) s2650Open(active);
+	}
+}
+
 cpu_core_config s2650Config =
 {
 	s2650Open,
@@ -44,6 +63,8 @@ cpu_core_config s2650Config =
 	s2650GetActive,
 	s2650TotalCycles,
 	s2650NewFrame,
+	s2650Idle,
+	core_set_irq,
 	s2650Run,
 	s2650RunEnd,
 	s2650Reset,
@@ -213,21 +234,6 @@ void s2650SetIrqCallback(INT32 (*irqcallback)(INT32))
 UINT8 s2650ReadCheat(UINT32 a)
 {
 	return s2650Read(a);
-}
-
-INT32 s2650TotalCycles()
-{
-	return 0;		// unimplemented
-}
-
-void s2650NewFrame()
-{
-	// unimplemented
-}
-
-void s2650RunEnd()
-{
-	// unimplemented
 }
 
 void s2650Init(INT32 num)

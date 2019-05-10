@@ -133,7 +133,10 @@ struct cpu_core_config {
 	void (*write)(UINT32, UINT8);	// write
 	INT32 (*active)();		// active cpu
 	INT32 (*totalcycles)();		// total cycles
-	void (*newframe)();		// new frame
+	void (*newframe)();		// new frame'
+	INT32 (*idle)(INT32);	// idle cycles
+
+	void (*irq)(INT32, INT32, INT32);	// set irq, cpu, line, status
 
 	INT32 (*run)(INT32);		// execute cycles
 	void (*runend)();		// end run

@@ -36,6 +36,9 @@ static UINT8 DrvReset;
 
 static INT32 watchdog;
 
+static INT32 StarsEnabled;
+static INT32 StarScrollX, StarScrollY;
+
 static struct BurnInputInfo TutankhmInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
@@ -171,6 +174,7 @@ static void tutankhm_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x8204:
+			StarsEnabled = data & 1;
 		return;
 
 		case 0x8205:
@@ -249,7 +253,90 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	flipscreenx = 0;
 	flipscreeny = 0;
 
+	StarsEnabled = 0;
+	StarScrollX = StarScrollY = 0;
+
 	return 0;
+}
+
+struct Star {
+	UINT16 x, y;
+	UINT8 Colour, Set;
+};
+
+#define MAX_STARS 252
+static struct Star StarSeedTab[MAX_STARS];
+
+static void DrvInitStars()
+{
+	/*
+	  Galaga star line and pixel locations pulled directly from
+	  a clocked stepping of the 05 starfield. The chip was clocked
+	  on a test rig with hblank and vblank simulated, each X & Y
+	  location of a star being recorded along with it's color value.
+
+	  The lookup table is generated using a reverse engineered
+	  linear feedback shift register + XOR boolean expression.
+
+	  Because the starfield begins generating stars at the point
+	  in time it's enabled the exact horiz location of the stars
+	  on Galaga depends on the length of time of the POST for the
+	  original board.
+
+	  Two control bits determine which of two sets are displayed
+	  set 0 or 1 and simultaneously 2 or 3.
+
+	  There are 63 stars in each set, 126 displayed at any one time
+	  Code: jmakovicka, based on info from http://www.pin4.at/pro_custom_05xx.php
+	*/
+
+	const UINT16 feed = 0x9420;
+
+	INT32 idx = 0;
+	for (UINT16 sf = 0; sf < 4; ++sf)
+	{
+		// starfield select flags
+		UINT16 sf1 = (sf >> 1) & 1;
+		UINT16 sf2 = sf & 1;
+
+		UINT16 i = 0x70cc;
+		for (INT32 cnt = 0; cnt < 65535; ++cnt)
+		{
+			// output enable lookup
+			UINT16 xor1 = i ^ (i >> 3);
+			UINT16 xor2 = xor1 ^ (i >> 2);
+			UINT16 oe = (sf1 ? 0 : 0x4000) | ((sf1 ^ sf2) ? 0 : 0x1000);
+			if ((i & 0x8007) == 0x8007
+			    && (~i & 0x2008) == 0x2008
+			    && (xor1 & 0x0100) == (sf1 ? 0 : 0x0100)
+			    && (xor2 & 0x0040) == (sf2 ? 0 : 0x0040)
+			    && (i & 0x5000) == oe
+			    && cnt >= 256 * 4)
+			{
+				// color lookup
+				UINT16 xor3 = (i >> 1) ^ (i >> 6);
+				UINT16 clr =
+					(((i >> 9) & 0x07)
+					 | ((xor3 ^ (i >> 4) ^ (i >> 7)) & 0x08)
+					 | (~xor3 & 0x10)
+					 | (((i >> 2) ^ (i >> 5)) & 0x20))
+					^ ((i & 0x4000) ? 0 : 0x24)
+					^ ((((i >> 2) ^ i) & 0x1000) ? 0x21 : 0);
+
+				StarSeedTab[idx].x = cnt % 256;
+				StarSeedTab[idx].y = cnt / 256;
+				StarSeedTab[idx].Colour = clr;
+				StarSeedTab[idx].Set = sf;
+				++idx;
+			}
+
+			// update the LFSR
+			if (i & 1)
+				i = (i >> 1) ^ feed;
+			else
+				i = (i >> 1);
+		}
+	}
 }
 
 static INT32 MemIndex()
@@ -259,7 +346,7 @@ static INT32 MemIndex()
 	DrvM6809ROM		= Next; Next += 0x020000;
 	DrvZ80ROM		= Next; Next += 0x003000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0010 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += (0x0010 + 0x0080) * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -319,6 +406,8 @@ static INT32 DrvInit()
 
 	GenericTilesInit();
 
+	DrvInitStars();
+
 	DrvDoReset(1);
 
 	return 0;
@@ -350,6 +439,19 @@ static void DrvPaletteUpdate()
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
+
+	for (INT32 i = 0; i < 0x40; i++) { // starfield palette
+		static const INT32 map[4] = { 0x00, 0x47, 0x97, 0xde };
+
+		INT32 bits = (i >> 0) & 0x03;
+		INT32 r = map[bits];
+		bits = (i >> 2) & 0x03;
+		INT32 g = map[bits];
+		bits = (i >> 4) & 0x03;
+		INT32 b = map[bits];
+
+		DrvPalette[0x20 + i] = BurnHighCol(r, g, b, 0);
+	}
 }
 
 static void draw_layer()
@@ -371,6 +473,32 @@ static void draw_layer()
 	}
 }
 
+static void render_stars()
+{
+	if (StarsEnabled) {
+		INT32 StarCounter;
+		INT32 SetA, SetB;
+
+		SetA = ((nCurrentFrame+0x40) & 0x80) ? 1 : 0;
+		SetB = (nCurrentFrame & 0x80) ? 2 : 3;
+
+		for (StarCounter = 0; StarCounter < 252; StarCounter++) {
+			INT32 x, y;
+
+			if ((SetA == StarSeedTab[StarCounter].Set) || (SetB == StarSeedTab[StarCounter].Set)) {
+				x = (StarSeedTab[StarCounter].x + StarScrollX) % 256 + 16;
+				y = (112 + StarSeedTab[StarCounter].y + StarScrollY) % 256;
+
+				if (x >= 0 && x < nScreenWidth && y >= 0 && y < nScreenHeight) {
+					if (!pTransDraw[(y * nScreenWidth) + x])
+						pTransDraw[(y * nScreenWidth) + x] = StarSeedTab[StarCounter].Colour + 0x20;
+				}
+			}
+
+		}
+	}
+}
+
 static INT32 DrvDraw()
 {
 //	if (DrvRecalc) {
@@ -378,7 +506,11 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 //	}
 
-	draw_layer();
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_layer();
+
+	if (nBurnLayer & 2) render_stars();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -473,6 +605,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreenx);
 		SCAN_VAR(flipscreeny);
 		SCAN_VAR(nRomBank);
+		SCAN_VAR(StarsEnabled);
 	}
 
 	if (nAction & ACB_WRITE) {

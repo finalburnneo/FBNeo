@@ -11,6 +11,25 @@ static HD6309Ext *HD6309CPUContext = NULL;
 static INT32 nHD6309CyclesDone[MAX_CPU];
 INT32 nHD6309CyclesTotal;
 
+static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = nActiveCPU;
+
+	if (active != cpu)
+	{
+		HD6309Close();
+		HD6309Open(cpu);
+	}
+
+	HD6309SetIRQLine(line, state);
+
+	if (active != cpu)
+	{
+		HD6309Close();
+		HD6309Open(active);
+	}
+}
+
 cpu_core_config HD6309Config =
 {
 	HD6309Open,
@@ -20,6 +39,8 @@ cpu_core_config HD6309Config =
 	HD6309GetActive,
 	HD6309TotalCycles,
 	HD6309NewFrame,
+	HD6309Idle,
+	core_set_irq,
 	HD6309Run,
 	HD6309RunEnd,
 	HD6309Reset,
@@ -67,6 +88,16 @@ void HD6309NewFrame()
 	nHD6309CyclesTotal = 0;
 }
 
+INT32 HD6309Idle(INT32 cycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309Idle called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309Idle called when no CPU open\n"));
+#endif
+	nHD6309CyclesTotal += cycles;
+
+	return cycles;
+}
 
 UINT8 HD6309CheatRead(UINT32 a)
 {
@@ -212,14 +243,6 @@ INT32 HD6309Run(INT32 cycles)
 	nHD6309CyclesTotal += cycles;
 	
 	return cycles;
-}
-
-void HD6309RunEnd()
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309RunEnd called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309RunEnd called when no CPU open\n"));
-#endif
 }
 
 UINT32 HD6309GetPC(INT32)

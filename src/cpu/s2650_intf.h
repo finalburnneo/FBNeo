@@ -39,9 +39,10 @@ INT32 s2650Scan(INT32 nAction);
 #define S2650_SENSE_PORT 0x102
 
 INT32 s2650GetActive();
-INT32 s2650TotalCycles(); // not functional
-void s2650NewFrame(); // not functional
-void s2650RunEnd(); // not functional
+INT32 s2650TotalCycles();
+void s2650NewFrame();
+void s2650RunEnd();
+INT32 s2650Idle(INT32 cycles);
 
 void s2650WriteROM(UINT32 address, UINT8 data); // cheat core
 UINT8 s2650ReadCheat(UINT32 a);

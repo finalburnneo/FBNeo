@@ -947,6 +947,14 @@ int nsc8105_execute(int cycles)
 }
 #endif
 
+void M6800RunEnd()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800RunEnd called without init\n"));
+#endif
+
+	m6800_ICount = 0;
+}
 
 #if (HAS_M6803||HAS_HD63701)
 

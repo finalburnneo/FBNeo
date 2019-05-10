@@ -23,6 +23,7 @@ INT32 upd7810TotalCycles();
 void upd7810NewFrame();
 void upd7810RunEnd();
 INT32 upd7810GetActive();
+INT32 upd7810Idle(INT32 cycles);
 
 INT32 upd7810Scan(INT32 nAction);
 

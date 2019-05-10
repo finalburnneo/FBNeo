@@ -12,6 +12,24 @@ static M6502Ext *pCurrentCPU;
 static INT32 nM6502CyclesDone[MAX_CPU];
 INT32 nM6502CyclesTotal;
 
+static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
+{
+	INT32 active = nActiveCPU;
+	if (cpu != active)
+	{
+		if (active != -1) M6502Close();
+		M6502Open(cpu);
+	}
+
+	M6502SetIRQLine(line, state);
+
+	if (cpu != active)
+	{
+		M6502Close();
+		if (active != -1) M6502Open(active);
+	}
+}
+
 cpu_core_config M6502Config =
 {
 	M6502Open,
@@ -21,6 +39,8 @@ cpu_core_config M6502Config =
 	M6502GetActive,
 	M6502TotalCycles,
 	M6502NewFrame,
+	M6502Idle,
+	core_set_irq,
 	M6502Run,
 	M6502RunEnd,
 	M6502Reset,
@@ -76,6 +96,17 @@ void M6502NewFrame()
 		nM6502CyclesDone[i] = 0;
 	}
 	nM6502CyclesTotal = 0;
+}
+
+INT32 M6502Idle(INT32 nCycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Idle called without init\n"));
+#endif
+
+	nM6502CyclesTotal += nCycles;
+
+	return nCycles;
 }
 
 UINT8 M6502CheatRead(UINT32 a)
@@ -281,17 +312,6 @@ INT32 M6502GetActive()
 	return nActiveCPU;
 }
 
-INT32 M6502Idle(INT32 nCycles)
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Idle called without init\n"));
-#endif
-
-	nM6502CyclesTotal += nCycles;
-
-	return nCycles;
-}
-
 void M6502ReleaseSlice()
 {
 #if defined FBA_DEBUG
@@ -351,14 +371,6 @@ INT32 M6502Run(INT32 cycles)
 	nM6502CyclesTotal += cycles;
 	
 	return cycles;
-}
-
-void M6502RunEnd()
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502RunEnd called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502RunEnd called with no CPU open\n"));
-#endif
 }
 
 INT32 M6502MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)

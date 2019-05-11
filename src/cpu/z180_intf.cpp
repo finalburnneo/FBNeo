@@ -24,13 +24,6 @@ static INT32 DebugCPU_Z180Initted = 0;
 #define PORT_RANGE		(1 << PORT_ADDRESS_BITS)
 #define PORT_MASK		(PORT_RANGE - 1)
 
-static INT32 core_idle(INT32 cycles)
-{
-	Z180BurnCycles(cycles);
-
-	return cycles;
-}
-
 static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 {
 	INT32 active = Z180GetActive();
@@ -59,7 +52,7 @@ cpu_core_config Z180Config =
 	Z180GetActive,
 	Z180TotalCycles,
 	Z180NewFrame,
-	core_idle,
+	Z180Idle,
 	core_set_irq,
 	Z180Run,
 	Z180RunEnd,
@@ -236,6 +229,16 @@ void Z180BurnCycles(INT32 cycles)
 #endif
 
 	z180_burn(cycles);
+}
+
+INT32 Z180Idle(INT32 cycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Idle called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180Idle called when no CPU open\n"));
+#endif
+
+	return z180_idle(cycles);
 }
 
 void Z180SetIRQLine(INT32 irqline, INT32 state)

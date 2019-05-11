@@ -97,6 +97,11 @@ void i8x41_init(int (*irqcallback)(int));
 void i8x41_reset();
 void i8x41_exit();
 INT32 i8x41_run(INT32 cycles);
+void i8x41RunEnd();
+INT32 i8x41TotalCycles();
+void i8x41NewFrame();
+INT32 i8x41Idle(INT32 cycles);
+
 UINT8 i8x41_get_register(UINT32 reg);
 void i8x41_set_register(UINT32 reg, UINT8 data);
 void i8x41_scan(INT32 nAction);

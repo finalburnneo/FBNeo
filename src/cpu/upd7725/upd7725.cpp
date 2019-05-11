@@ -394,11 +394,17 @@ INT32 upd96050Scan(INT32 /*nAction*/)
 	return 0;
 }
 
+static INT32 total_cycles = 0;
+static INT32 cycle_start = 0;
+static INT32 end_run = 0;
+
 INT32 upd96050Run(INT32 cycles)
 {
 	UINT32 opcode;
 
+	cycle_start = cycles;
 	m_icount = cycles;
+	end_run = 0;
 
 	do
 	{
@@ -420,7 +426,33 @@ INT32 upd96050Run(INT32 cycles)
 
 	} while (m_icount > 0);
 
-	return cycles - m_icount;
+	cycles = cycles - m_icount;
+	m_icount = cycle_start = 0;
+	total_cycles += cycles;
+
+	return cycles;
+}
+
+INT32 upd96050Idle(INT32 cycles)
+{
+	total_cycles += cycles;
+
+	return cycles;
+}
+
+void upd96050RunEnd()
+{
+	end_run = 1;
+}
+
+INT32 upd96050TotalCycles()
+{
+	return total_cycles + (cycle_start - m_icount);
+}
+
+void upd96050NewFrame()
+{
+	total_cycles = 0;
 }
 
 UINT8 snesdsp_read(bool mode)

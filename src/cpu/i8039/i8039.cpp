@@ -913,6 +913,8 @@ void I8039Exit()
 	DebugCPU_I8039Initted = 0;
 }
 
+static int end_run = 0;
+
 int I8039Run(int cycles)
 {
 #if defined FBA_DEBUG
@@ -925,6 +927,7 @@ int I8039Run(int cycles)
 	i8039_ICount_cycles = cycles;
 	i8039_ICount = (cycles - R.irq_extra_cycles);
 	R.irq_extra_cycles = 0;
+	end_run = 0;
 
 	do
 	{
@@ -973,7 +976,7 @@ int I8039Run(int cycles)
 			i8039_ICount -= count;
 		}
 
-	} while (i8039_ICount>0);
+	} while (i8039_ICount>0 && !end_run);
 
 	i8039_ICount -= R.irq_extra_cycles;
 	R.total_cycles += cycles - i8039_ICount;
@@ -988,6 +991,13 @@ int I8039Run(int cycles)
 INT32 I8039TotalCycles()
 {
 	return (INT32)R.total_cycles + (i8039_ICount_cycles - i8039_ICount);
+}
+
+INT32 I8039Idle(INT32 cycles)
+{
+	R.total_cycles += cycles;
+
+	return cycles;
 }
 
 void I8039NewFrame()

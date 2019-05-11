@@ -160,6 +160,7 @@ void z180_init(int index, int clock, /*const void *config,*/ int (*irqcallback)(
 void z180_exit();
 void z180_reset(void);
 int z180_execute(int cycles);
+INT32 z180_idle(INT32 cyc);
 void z180_burn(int cycles);
 void z180_set_irq_line(int irqline, int state);
 void z180_write_iolines(UINT32 data);

@@ -35,6 +35,8 @@ INT32 M6809GetActive();
 void M6809SetIRQLine(INT32 vector, INT32 status);
 INT32 M6809Run(INT32 cycles);
 void M6809RunEnd();
+INT32 M6809TotalCycles();
+INT32 M6809Idle(INT32 cycles);
 INT32 M6809MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType);
 INT32 M6809UnmapMemory(UINT16 nStart, UINT16 nEnd, INT32 nType);
 void M6809SetReadHandler(UINT8 (*pHandler)(UINT16));
@@ -47,27 +49,6 @@ UINT16 M6809GetPrevPC();
 
 UINT8 M6809ReadByte(UINT16 Address);
 void M6809WriteByte(UINT16 Address, UINT8 Data);
-
-
-inline static INT32 M6809TotalCycles()
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809TotalCycles called without init\n"));
-#endif
-
-	return nM6809CyclesTotal + m6809_get_segmentcycles();
-}
-
-inline static INT32 M6809Idle(INT32 cycles)
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Idle called without init\n"));
-#endif
-
-	nM6809CyclesTotal += cycles;
-
-	return cycles;
-}
 
 void M6809WriteRom(UINT32 Address, UINT8 Data); // cheat core
 UINT8 M6809CheatRead(UINT32 Address);

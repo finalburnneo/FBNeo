@@ -31030,9 +31030,10 @@ struct BurnDriver BurnDrvmd_sor3k = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Streets of Rage 3 - The Bare Knuckle 3 Project by Gsaurus July 1, 2017
+// Bare Knuckle 3 Project (World) (Hack by Gsaurus, April 25, 2019)
+// Source: https://steamcommunity.com/sharedfiles/filedetails/?id=675893652
 static struct BurnRomInfo md_sor3bk3pRomDesc[] = {
-	{ "The Bare Knuckle 3 Project.bin", 0x3b3eca, 0x3f8f40b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "The Bare Knuckle 3 Project.bin", 0x3b3eca, 0xaa7e7937, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sor3bk3p)
@@ -31040,10 +31041,48 @@ STD_ROM_FN(md_sor3bk3p)
 
 struct BurnDriver BurnDrvmd_sor3bk3p = {
 	"md_sor3bk3p", "md_sor3", NULL, NULL, "1994",
-	"Streets of Rage 3 - The Bare Knuckle 3 Project (Hack, July 1, 2017)\0", NULL, "2017 Gsaurus", "Sega Megadrive",
+	"Bare Knuckle 3 Project (World) (Hack, 2019)\0", NULL, "2019 Gsaurus", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_sor3bk3pRomInfo, md_sor3bk3pRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 3 Project (USA) (Hack by Gsaurus, version 0.3)
+// Source: https://www.romhacking.net/hacks/1346/
+static struct BurnRomInfo md_sor3proRomDesc[] = {
+	{ "The Streets of Rage 3 Project.bin", 0x3011C4, 0x06b93815, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor3pro)
+STD_ROM_FN(md_sor3pro)
+
+struct BurnDriver BurnDrvmd_sor3pro = {
+	"md_sor3pro", "md_sor3", NULL, NULL, "1994",
+	"Streets of Rage 3 Project (USA) (Hack, 0.3)\0", NULL, "2018 Gsaurus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor3proRomInfo, md_sor3proRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Bare Knuckle III Project (Japan) (Hack by Gsaurus, version 0.3)
+// Source: https://www.romhacking.net/hacks/1346/
+static struct BurnRomInfo md_bk3proRomDesc[] = {
+	{ "The Bare Knuckle III Project.bin", 0x3014C4, 0x5aa71c8b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bk3pro)
+STD_ROM_FN(md_bk3pro)
+
+struct BurnDriver BurnDrvmd_bk3pro = {
+	"md_bk3pro", "md_sor3", NULL, NULL, "1994",
+	"Bare Knuckle III Project (Japan) (Hack, 0.3)\0", NULL, "2018 Gsaurus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_bk3proRomInfo, md_bk3proRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

@@ -25,6 +25,7 @@ static HWND hSelList			= NULL;
 static HWND hParent				= NULL;
 static HWND hInfoLabel[6]		= { NULL, NULL, NULL, NULL, NULL };			// 4 things in our Info-box
 static HWND hInfoText[6]		= { NULL, NULL, NULL, NULL, NULL };			// 4 things in our Info-box
+
 TCHAR szSearchString[256]       = { _T("") };                               // Stores the search text between game loads
 bool bSearchStringInit          = false;                                    // Used (internally) while dialog is initting
 
@@ -71,12 +72,12 @@ static int nDlgSearchGrpInitialPos[4];
 static int nDlgSearchTxtInitialPos[4];
 static int nDlgCancelBtnInitialPos[4];
 static int nDlgPlayBtnInitialPos[4];
-static int nDlgPreviewGrpInitialPos[4];
-static int nDlgPreviewImgHInitialPos[4];
-static int nDlgPreviewImgVInitialPos[4];
 static int nDlgTitleGrpInitialPos[4];
 static int nDlgTitleImgHInitialPos[4];
 static int nDlgTitleImgVInitialPos[4];
+static int nDlgPreviewGrpInitialPos[4];
+static int nDlgPreviewImgHInitialPos[4];
+static int nDlgPreviewImgVInitialPos[4];
 static int nDlgWhiteBoxInitialPos[4];
 static int nDlgGameInfoLblInitialPos[4];
 static int nDlgRomNameLblInitialPos[4];
@@ -168,6 +169,8 @@ HTREEITEM hFilter19xx				= NULL;
 HTREEITEM hFilterSonicwi			= NULL;
 HTREEITEM hFilterPwrinst			= NULL;
 HTREEITEM hFilterSonic				= NULL;
+HTREEITEM hFilterCapcomGrp			= NULL;
+HTREEITEM hFilterSegaGrp			= NULL;
 
 HTREEITEM hRoot						= NULL;
 HTREEITEM hBoardType				= NULL;
@@ -272,12 +275,17 @@ static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 |
 #define MASKALLFAMILY			(MASKFAMILYOTHER | FBF_MSLUG | FBF_SF | FBF_KOF | FBF_DSTLK | FBF_FATFURY | FBF_SAMSHO | FBF_19XX | FBF_SONICWI | FBF_PWRINST | FBF_SONIC)
 #define MASKALLBOARD			(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE)
 
+#define MASKCAPGRP				(MASKCAPMISC | MASKCPS | MASKCPS2 | MASKCPS3)
+#define MASKSEGAGRP				(MASKSEGA | MASKSG1000 | MASKSMS | MASKMEGADRIVE | MASKGG)
+
 int nLoadMenuShowY				= 0;
 int nLoadMenuShowX				= 0;
 int nLoadMenuBoardTypeFilter	= 0;
 int nLoadMenuGenreFilter		= 0;
 int nLoadMenuFavoritesFilter	= 0;
 int nLoadMenuFamilyFilter		= 0;
+int nLoadMenuCapcomGrpFilter	= 0;
+int nLoadMenuSegaGrpFilter		= 0;
 
 struct NODEINFO {
 	int nBurnDrvNo;
@@ -320,7 +328,7 @@ static void RebuildEverything();
 	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0], b[1] - yDelta, b[2] - xDelta, b[3], SWP_NOZORDER | SWP_NOSENDCHANGING);
 	
 #define SetControlPosAlignTopRightResizeVert(a, b)				\
-	xScrollBarDelta = (a == IDC_TREE2) ? -18 : 0;				\
+	xScrollBarDelta = (a == IDC_TREE2) ? -12 : 0;				\
 	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0] - xDelta, b[1], b[2] - xScrollBarDelta, b[3] - yDelta, SWP_NOZORDER | SWP_NOSENDCHANGING);
 	
 #define SetControlPosAlignTopLeftResizeHorVert(a, b)			\
@@ -356,12 +364,12 @@ static void GetInitialPositions()
 	GetInititalControlPos(IDC_SEL_SEARCH, nDlgSearchTxtInitialPos);	
 	GetInititalControlPos(IDCANCEL, nDlgCancelBtnInitialPos);
 	GetInititalControlPos(IDOK, nDlgPlayBtnInitialPos);
+	GetInititalControlPos(IDC_STATIC3, nDlgTitleGrpInitialPos);
+	GetInititalControlPos(IDC_SCREENSHOT2_H, nDlgTitleImgHInitialPos);
+	GetInititalControlPos(IDC_SCREENSHOT2_V, nDlgTitleImgVInitialPos);	
 	GetInititalControlPos(IDC_STATIC2, nDlgPreviewGrpInitialPos);
 	GetInititalControlPos(IDC_SCREENSHOT_H, nDlgPreviewImgHInitialPos);
 	GetInititalControlPos(IDC_SCREENSHOT_V, nDlgPreviewImgVInitialPos);
-	GetInititalControlPos(IDC_STATIC3, nDlgTitleGrpInitialPos);
-	GetInititalControlPos(IDC_SCREENSHOT2_H, nDlgTitleImgHInitialPos);
-	GetInititalControlPos(IDC_SCREENSHOT2_V, nDlgTitleImgVInitialPos);
 	GetInititalControlPos(IDC_STATIC_INFOBOX, nDlgWhiteBoxInitialPos);
 	GetInititalControlPos(IDC_LABELCOMMENT, nDlgGameInfoLblInitialPos);
 	GetInititalControlPos(IDC_LABELROMNAME, nDlgRomNameLblInitialPos);
@@ -1161,11 +1169,27 @@ static void RebuildEverything()
 	_TreeView_SetCheckState(hFilterList, c, (d) ? FALSE : TRUE);	\
 }
 
-#define _TVCreateFiltersB(a, b, c)									\
+#define _TVCreateFiltersB(a, b, c)								\
+{																\
+	TvItem.hParent = a;												\
+	TvItem.item.pszText = FBALoadStringEx(hAppInst, b, true);		\
+	c = TreeView_InsertItem(hFilterList, &TvItem);					\
+}
+
+#define _TVCreateFiltersC(a, b, c, d)								\
 {																	\
 	TvItem.hParent = a;												\
 	TvItem.item.pszText = FBALoadStringEx(hAppInst, b, true);		\
 	c = TreeView_InsertItem(hFilterList, &TvItem);					\
+	_TreeView_SetCheckState(hFilterList, c, (d) ? FALSE : TRUE);	\
+}
+
+#define _TVCreateFiltersD(a, b, c, d)								\
+{																	\
+	TvItem.hParent = a;												\
+	TvItem.item.pszText = FBALoadStringEx(hAppInst, b, true);		\
+	c = TreeView_InsertItem(hFilterList, &TvItem);					\
+	_TreeView_SetCheckState(hFilterList, c, (d) ? FALSE : TRUE);	\
 }
 
 static void CreateFilters()
@@ -1177,9 +1201,12 @@ static void CreateFilters()
 
 	TvItem.item.mask	= TVIF_TEXT | TVIF_PARAM;
 	TvItem.hInsertAfter = TVI_LAST;
+
+	_TVCreateFiltersA(TVI_ROOT		, IDS_FAVORITES			, hFavorites            , !nLoadMenuFavoritesFilter                         );
 	
-	_TVCreateFiltersB(TVI_ROOT		, IDS_SEL_FILTERS		, hRoot			);	
-	_TVCreateFiltersB(hRoot			, IDS_SEL_BOARDTYPE		, hBoardType	);
+	_TVCreateFiltersB(TVI_ROOT		, IDS_SEL_FILTERS		, hRoot						);	
+
+	_TVCreateFiltersC(hRoot			, IDS_SEL_BOARDTYPE		, hBoardType			, nLoadMenuBoardTypeFilter & MASKALLBOARD	);
 
 	_TVCreateFiltersA(hBoardType	, IDS_SEL_GENUINE		, hFilterGenuine		, nLoadMenuBoardTypeFilter & MASKBOARDTYPEGENUINE	);
 	_TVCreateFiltersA(hBoardType	, IDS_SEL_BOOTLEG		, hFilterBootleg		, nLoadMenuBoardTypeFilter & BDF_BOOTLEG			);
@@ -1188,9 +1215,8 @@ static void CreateFilters()
 	_TVCreateFiltersA(hBoardType	, IDS_SEL_HOMEBREW		, hFilterHomebrew		, nLoadMenuBoardTypeFilter & BDF_HOMEBREW			);
 	_TVCreateFiltersA(hBoardType	, IDS_SEL_PROTOTYPE		, hFilterPrototype		, nLoadMenuBoardTypeFilter & BDF_PROTOTYPE			);
 	
-	_TVCreateFiltersB(hRoot			, IDS_FAMILY			, hFamily		);
+	_TVCreateFiltersC(hRoot			, IDS_FAMILY			, hFamily				, nLoadMenuFamilyFilter & MASKALLFAMILY	);
 	
-	_TVCreateFiltersA(hFamily		, IDS_FAMILY_OTHER		, hFilterOtherFamily	, nLoadMenuFamilyFilter & MASKFAMILYOTHER			);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_19XX		, hFilter19xx			, nLoadMenuFamilyFilter & FBF_19XX					);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_SONICWI	, hFilterSonicwi		, nLoadMenuFamilyFilter & FBF_SONICWI				);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_DSTLK		, hFilterDstlk			, nLoadMenuFamilyFilter & FBF_DSTLK					);
@@ -1199,16 +1225,14 @@ static void CreateFilters()
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_MSLUG		, hFilterMslug			, nLoadMenuFamilyFilter & FBF_MSLUG					);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_PWRINST	, hFilterPwrinst		, nLoadMenuFamilyFilter & FBF_PWRINST				);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_SAMSHO		, hFilterSamsho			, nLoadMenuFamilyFilter & FBF_SAMSHO				);
-	_TVCreateFiltersA(hFamily		, IDS_FAMILY_SF			, hFilterSf				, nLoadMenuFamilyFilter & FBF_SF					);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_SONIC		, hFilterSonic			, nLoadMenuFamilyFilter & FBF_SONIC					);
+	_TVCreateFiltersA(hFamily		, IDS_FAMILY_SF			, hFilterSf				, nLoadMenuFamilyFilter & FBF_SF					);
+	_TVCreateFiltersA(hFamily		, IDS_FAMILY_OTHER		, hFilterOtherFamily	, nLoadMenuFamilyFilter & MASKFAMILYOTHER			);
 	
-	_TVCreateFiltersA(hRoot			, IDS_FAVORITES			, hFavorites            , !nLoadMenuFavoritesFilter                         );
-
-	_TVCreateFiltersB(hRoot			, IDS_GENRE				, hGenre		);
+	_TVCreateFiltersC(hRoot			, IDS_GENRE				, hGenre				, nLoadMenuGenreFilter & MASKALLGENRE	);
 	
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_ACTION		, hFilterAction			, nLoadMenuGenreFilter & GBF_ACTION					);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_BALLPADDLE	, hFilterBallpaddle		, nLoadMenuGenreFilter & GBF_BALLPADDLE				);
-	_TVCreateFiltersA(hGenre		, IDS_GENRE_BIOS		, hFilterBios			, nLoadMenuGenreFilter & GBF_BIOS					);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_BREAKOUT	, hFilterBreakout		, nLoadMenuGenreFilter & GBF_BREAKOUT				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_CASINO		, hFilterCasino			, nLoadMenuGenreFilter & GBF_CASINO					);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_SCRFIGHT	, hFilterScrfight		, nLoadMenuGenreFilter & GBF_SCRFIGHT				);
@@ -1223,20 +1247,24 @@ static void CreateFilters()
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_QUIZ		, hFilterQuiz			, nLoadMenuGenreFilter & GBF_QUIZ					);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_RACING		, hFilterRacing			, nLoadMenuGenreFilter & GBF_RACING					);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_RUNGUN		, hFilterRungun			, nLoadMenuGenreFilter & GBF_RUNGUN 				);
-	_TVCreateFiltersA(hGenre		, IDS_GENRE_HORSHOOT	, hFilterHorshoot		, nLoadMenuGenreFilter & GBF_HORSHOOT				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_SHOOT		, hFilterShoot			, nLoadMenuGenreFilter & GBF_SHOOT					);
+	_TVCreateFiltersA(hGenre		, IDS_GENRE_HORSHOOT	, hFilterHorshoot		, nLoadMenuGenreFilter & GBF_HORSHOOT				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_VERSHOOT	, hFilterVershoot		, nLoadMenuGenreFilter & GBF_VERSHOOT				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_SPORTSMISC	, hFilterSportsmisc		, nLoadMenuGenreFilter & GBF_SPORTSMISC				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_SPORTSFOOTBALL, hFilterSportsfootball, nLoadMenuGenreFilter & GBF_SPORTSFOOTBALL		);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_STRATEGY	, hFilterStrategy   	, nLoadMenuGenreFilter & GBF_STRATEGY   			);
+	_TVCreateFiltersA(hGenre		, IDS_GENRE_BIOS		, hFilterBios			, nLoadMenuGenreFilter & GBF_BIOS					);
 
-	_TVCreateFiltersB(hRoot			, IDS_SEL_HARDWARE, hHardware			);
+	_TVCreateFiltersC(hRoot			, IDS_SEL_HARDWARE		, hHardware				, nLoadMenuShowX & MASKALL					);
 	
-	_TVCreateFiltersA(hHardware		, IDS_SEL_CAPCOM_MISC	, hFilterCapcomMisc		, nLoadMenuShowX & MASKCAPMISC						);
+	_TVCreateFiltersD(hHardware		, IDS_SEL_CAPCOM_GRP	, hFilterCapcomGrp			, nLoadMenuCapcomGrpFilter & MASKCAPGRP				);
+
+	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CPS1			, hFilterCps1			, nLoadMenuShowX & MASKCPS							);
+	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CPS2			, hFilterCps2			, nLoadMenuShowX & MASKCPS2							);
+	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CPS3			, hFilterCps3			, nLoadMenuShowX & MASKCPS3							);
+	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CAPCOM_MISC	, hFilterCapcomMisc		, nLoadMenuShowX & MASKCAPMISC						);
+
 	_TVCreateFiltersA(hHardware		, IDS_SEL_CAVE			, hFilterCave			, nLoadMenuShowX & MASKCAVE							);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_CPS1			, hFilterCps1			, nLoadMenuShowX & MASKCPS							);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_CPS2			, hFilterCps2			, nLoadMenuShowX & MASKCPS2							);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_CPS3			, hFilterCps3			, nLoadMenuShowX & MASKCPS3							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_DATAEAST		, hFilterDataeast		, nLoadMenuShowX & MASKDATAEAST						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_GALAXIAN		, hFilterGalaxian		, nLoadMenuShowX & MASKGALAXIAN						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_IREM			, hFilterIrem			, nLoadMenuShowX & MASKIREM							);
@@ -1247,27 +1275,32 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PACMAN		, hFilterPacman			, nLoadMenuShowX & MASKPACMAN						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PGM			, hFilterPgm			, nLoadMenuShowX & MASKPGM							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PSIKYO		, hFilterPsikyo			, nLoadMenuShowX & MASKPSIKYO						);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_SEGA			, hFilterSega			, nLoadMenuShowX & MASKSEGA							);
+
+	_TVCreateFiltersD(hHardware		, IDS_SEL_SEGA_GRP		, hFilterSegaGrp				, nLoadMenuSegaGrpFilter & MASKSEGAGRP				);	
+
+	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SG1000		, hFilterSg1000			, nLoadMenuShowX & MASKSG1000						);
+	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SMS			, hFilterSms			, nLoadMenuShowX & MASKSMS							);
+	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_MEGADRIVE		, hFilterMegadrive		, nLoadMenuShowX & MASKMEGADRIVE					);
+	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_GG			, hFilterGg				, nLoadMenuShowX & MASKGG							);
+	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SEGA			, hFilterSega			, nLoadMenuShowX & MASKSEGA							);
+
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SETA			, hFilterSeta			, nLoadMenuShowX & MASKSETA							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_TAITO			, hFilterTaito			, nLoadMenuShowX & MASKTAITO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_TECHNOS		, hFilterTechnos		, nLoadMenuShowX & MASKTECHNOS						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_TOAPLAN		, hFilterToaplan		, nLoadMenuShowX & MASKTOAPLAN						);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPRE90S	, hFilterMiscPre90s		, nLoadMenuShowX & MASKMISCPRE90S					);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPOST90S	, hFilterMiscPost90s	, nLoadMenuShowX & MASKMISCPOST90S					);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_SMS			, hFilterSms			, nLoadMenuShowX & MASKSMS							);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_GG			, hFilterGg				, nLoadMenuShowX & MASKGG							);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_MEGADRIVE		, hFilterMegadrive		, nLoadMenuShowX & MASKMEGADRIVE					);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PCE			, hFilterPce			, nLoadMenuShowX & MASKPCENGINE						);
 //	_TVCreateFiltersA(hHardware		, IDS_SEL_SNES			, hFilterSnes			, nLoadMenuShowX & MASKSNES							);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_SG1000		, hFilterSg1000			, nLoadMenuShowX & MASKSG1000						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_COLECO		, hFilterColeco			, nLoadMenuShowX & MASKCOLECO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MSX			, hFilterMsx			, nLoadMenuShowX & MASKMSX							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SPECTRUM		, hFilterSpectrum		, nLoadMenuShowX & MASKSPECTRUM						);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPRE90S	, hFilterMiscPre90s		, nLoadMenuShowX & MASKMISCPRE90S					);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPOST90S	, hFilterMiscPost90s	, nLoadMenuShowX & MASKMISCPOST90S					);
+
 	
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hRoot);
-	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
+	//SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
 	//SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hFavorites);
-	TreeView_SelectSetFirstVisible(hFilterList, hRoot);
+	TreeView_SelectSetFirstVisible(hFilterList, hFavorites);
 }
 
 #define ICON_MAXCONSOLES 7
@@ -1548,7 +1581,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hHardware) {
 			if ((nLoadMenuShowX & MASKALL) == 0) {
 				_TreeView_SetCheckState(hFilterList, hItemChanged, FALSE);
-			
+	
+				_TreeView_SetCheckState(hFilterList, hFilterSegaGrp, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterCapcomGrp, FALSE);	
 				_TreeView_SetCheckState(hFilterList, hFilterCapcomMisc, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterCave, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterCps1, FALSE);
@@ -1585,6 +1620,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			} else {
 				_TreeView_SetCheckState(hFilterList, hItemChanged, TRUE);
 			
+				_TreeView_SetCheckState(hFilterList, hFilterSegaGrp, TRUE);			
+				_TreeView_SetCheckState(hFilterList, hFilterCapcomGrp, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterCapcomMisc, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterCave, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterCps1, TRUE);
@@ -1694,6 +1731,52 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				nLoadMenuFavoritesFilter = 0xff;
 			}
 		}
+		
+				if (hItemChanged == hFilterSegaGrp) {
+			if ((nLoadMenuSegaGrpFilter & MASKSEGAGRP) == 0) {
+				_TreeView_SetCheckState(hFilterList, hItemChanged, FALSE);
+
+				_TreeView_SetCheckState(hFilterList, hFilterSega, FALSE);	
+				_TreeView_SetCheckState(hFilterList, hFilterSg1000, FALSE);	
+				_TreeView_SetCheckState(hFilterList, hFilterSms, FALSE);	
+				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, FALSE);	
+				_TreeView_SetCheckState(hFilterList, hFilterGg, FALSE);
+
+				nLoadMenuSegaGrpFilter = MASKSEGAGRP;
+			} else {
+				_TreeView_SetCheckState(hFilterList, hItemChanged, TRUE);
+
+				_TreeView_SetCheckState(hFilterList, hFilterSega, TRUE);	
+				_TreeView_SetCheckState(hFilterList, hFilterSg1000, TRUE);	
+				_TreeView_SetCheckState(hFilterList, hFilterSms, TRUE);	
+				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, TRUE);	
+				_TreeView_SetCheckState(hFilterList, hFilterGg, TRUE);	
+
+				nLoadMenuSegaGrpFilter = 0;
+			}
+		}		
+
+				if (hItemChanged == hFilterCapcomGrp) {
+			if ((nLoadMenuCapcomGrpFilter & MASKCAPGRP) == 0) {
+				_TreeView_SetCheckState(hFilterList, hItemChanged, FALSE);
+
+				_TreeView_SetCheckState(hFilterList, hFilterCapcomMisc, FALSE);	
+				_TreeView_SetCheckState(hFilterList, hFilterCps1, FALSE);	
+				_TreeView_SetCheckState(hFilterList, hFilterCps2, FALSE);	
+				_TreeView_SetCheckState(hFilterList, hFilterCps3, FALSE);
+
+				nLoadMenuCapcomGrpFilter = MASKCAPGRP;
+			} else {
+				_TreeView_SetCheckState(hFilterList, hItemChanged, TRUE);
+
+				_TreeView_SetCheckState(hFilterList, hFilterCapcomMisc, TRUE);	
+				_TreeView_SetCheckState(hFilterList, hFilterCps1, TRUE);	
+				_TreeView_SetCheckState(hFilterList, hFilterCps2, TRUE);	
+				_TreeView_SetCheckState(hFilterList, hFilterCps3, TRUE);	
+
+				nLoadMenuCapcomGrpFilter = 0;
+			}
+		}
 
 		if (hItemChanged == hGenre) {
 			if ((nLoadMenuGenreFilter & MASKALLGENRE) == 0) {
@@ -1755,6 +1838,17 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 		}
 
+		if (hItemChanged == hFilterCapcomGrp)		_ToggleGameListing(nLoadMenuShowX, MASKCAPMISC);		
+		if (hItemChanged == hFilterCapcomGrp)		_ToggleGameListing(nLoadMenuShowX, MASKCPS);
+		if (hItemChanged == hFilterCapcomGrp)		_ToggleGameListing(nLoadMenuShowX, MASKCPS2);
+		if (hItemChanged == hFilterCapcomGrp)		_ToggleGameListing(nLoadMenuShowX, MASKCPS3);
+		
+		if (hItemChanged == hFilterSegaGrp)			_ToggleGameListing(nLoadMenuShowX, MASKSG1000);		
+		if (hItemChanged == hFilterSegaGrp)			_ToggleGameListing(nLoadMenuShowX, MASKSMS);
+		if (hItemChanged == hFilterSegaGrp)			_ToggleGameListing(nLoadMenuShowX, MASKMEGADRIVE);
+		if (hItemChanged == hFilterSegaGrp)			_ToggleGameListing(nLoadMenuShowX, MASKGG);
+		if (hItemChanged == hFilterSegaGrp)			_ToggleGameListing(nLoadMenuShowX, MASKSEGA);
+		
 		if (hItemChanged == hFilterCapcomMisc)		_ToggleGameListing(nLoadMenuShowX, MASKCAPMISC);
 		if (hItemChanged == hFilterCave)			_ToggleGameListing(nLoadMenuShowX, MASKCAVE);
 		if (hItemChanged == hFilterCps1)			_ToggleGameListing(nLoadMenuShowX, MASKCPS);
@@ -1805,7 +1899,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterSonicwi)			_ToggleGameListing(nLoadMenuFamilyFilter, FBF_SONICWI);
 		if (hItemChanged == hFilterPwrinst)			_ToggleGameListing(nLoadMenuFamilyFilter, FBF_PWRINST);
 		if (hItemChanged == hFilterSonic)			_ToggleGameListing(nLoadMenuFamilyFilter, FBF_SONIC);
-		
+	
 		if (hItemChanged == hFilterHorshoot)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_HORSHOOT);
 		if (hItemChanged == hFilterVershoot)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_VERSHOOT);
 		if (hItemChanged == hFilterScrfight)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_SCRFIGHT);
@@ -2023,13 +2117,13 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		SetControlPosAlignBottomRight(IDC_SEL_SEARCH, nDlgSearchTxtInitialPos);	
 		SetControlPosAlignBottomRight(IDCANCEL, nDlgCancelBtnInitialPos);
 		SetControlPosAlignBottomRight(IDOK, nDlgPlayBtnInitialPos);
-		
+
+		SetControlPosAlignTopLeft(IDC_STATIC3, nDlgTitleGrpInitialPos);
+		SetControlPosAlignTopLeft(IDC_SCREENSHOT2_H, nDlgTitleImgHInitialPos);
+		SetControlPosAlignTopLeft(IDC_SCREENSHOT2_V, nDlgTitleImgVInitialPos);		
 		SetControlPosAlignTopLeft(IDC_STATIC2, nDlgPreviewGrpInitialPos);
 		SetControlPosAlignTopLeft(IDC_SCREENSHOT_H, nDlgPreviewImgHInitialPos);
 		SetControlPosAlignTopLeft(IDC_SCREENSHOT_V, nDlgPreviewImgVInitialPos);
-		SetControlPosAlignTopLeft(IDC_STATIC3, nDlgTitleGrpInitialPos);
-		SetControlPosAlignTopLeft(IDC_SCREENSHOT2_H, nDlgTitleImgHInitialPos);
-		SetControlPosAlignTopLeft(IDC_SCREENSHOT2_V, nDlgTitleImgVInitialPos);
 		
 		SetControlPosAlignBottomLeftResizeHor(IDC_STATIC_INFOBOX, nDlgWhiteBoxInitialPos);
 		SetControlPosAlignBottomLeftResizeHor(IDC_LABELCOMMENT, nDlgGameInfoLblInitialPos);

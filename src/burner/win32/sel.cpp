@@ -284,8 +284,6 @@ int nLoadMenuBoardTypeFilter	= 0;
 int nLoadMenuGenreFilter		= 0;
 int nLoadMenuFavoritesFilter	= 0;
 int nLoadMenuFamilyFilter		= 0;
-int nLoadMenuCapcomGrpFilter	= 0;
-int nLoadMenuSegaGrpFilter		= 0;
 
 struct NODEINFO {
 	int nBurnDrvNo;
@@ -1257,7 +1255,7 @@ static void CreateFilters()
 
 	_TVCreateFiltersC(hRoot			, IDS_SEL_HARDWARE		, hHardware				, nLoadMenuShowX & MASKALL					);
 	
-	_TVCreateFiltersD(hHardware		, IDS_SEL_CAPCOM_GRP	, hFilterCapcomGrp			, nLoadMenuCapcomGrpFilter & MASKCAPGRP				);
+	_TVCreateFiltersD(hHardware		, IDS_SEL_CAPCOM_GRP	, hFilterCapcomGrp			, nLoadMenuShowX & MASKCAPGRP				);
 
 	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CPS1			, hFilterCps1			, nLoadMenuShowX & MASKCPS							);
 	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CPS2			, hFilterCps2			, nLoadMenuShowX & MASKCPS2							);
@@ -1276,7 +1274,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PGM			, hFilterPgm			, nLoadMenuShowX & MASKPGM							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PSIKYO		, hFilterPsikyo			, nLoadMenuShowX & MASKPSIKYO						);
 
-	_TVCreateFiltersD(hHardware		, IDS_SEL_SEGA_GRP		, hFilterSegaGrp				, nLoadMenuSegaGrpFilter & MASKSEGAGRP				);	
+	_TVCreateFiltersD(hHardware		, IDS_SEL_SEGA_GRP		, hFilterSegaGrp				, nLoadMenuShowX & MASKSEGAGRP				);	
 
 	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SG1000		, hFilterSg1000			, nLoadMenuShowX & MASKSG1000						);
 	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SMS			, hFilterSms			, nLoadMenuShowX & MASKSMS							);
@@ -1298,7 +1296,7 @@ static void CreateFilters()
 
 	
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hRoot);
-	//SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
+	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
 	//SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hFavorites);
 	TreeView_SelectSetFirstVisible(hFilterList, hFavorites);
 }
@@ -1731,41 +1729,46 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				nLoadMenuFavoritesFilter = 0xff;
 			}
 		}
-		
-				if (hItemChanged == hFilterSegaGrp) {
-			if ((nLoadMenuSegaGrpFilter & MASKSEGAGRP) == 0) {
+
+		if (hItemChanged == hFilterSegaGrp) {
+			if ((nLoadMenuShowX & MASKSEGAGRP) == 0) {
 				_TreeView_SetCheckState(hFilterList, hItemChanged, FALSE);
 
-				_TreeView_SetCheckState(hFilterList, hFilterSega, FALSE);	
+				_TreeView_SetCheckState(hFilterList, hFilterSega, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterSg1000, FALSE);	
 				_TreeView_SetCheckState(hFilterList, hFilterSms, FALSE);	
 				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, FALSE);	
 				_TreeView_SetCheckState(hFilterList, hFilterGg, FALSE);
 
-				nLoadMenuSegaGrpFilter = MASKSEGAGRP;
+				// this block is also toggled above, which is why the following
+				// line does not make sense ((nLoadMenuShowX & MASKSEGAGRP) == 0)
+				nLoadMenuShowX &= ~MASKSEGAGRP;
 			} else {
 				_TreeView_SetCheckState(hFilterList, hItemChanged, TRUE);
 
-				_TreeView_SetCheckState(hFilterList, hFilterSega, TRUE);	
+
+				_TreeView_SetCheckState(hFilterList, hFilterSega, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSg1000, TRUE);	
 				_TreeView_SetCheckState(hFilterList, hFilterSms, TRUE);	
 				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, TRUE);	
 				_TreeView_SetCheckState(hFilterList, hFilterGg, TRUE);	
 
-				nLoadMenuSegaGrpFilter = 0;
+				nLoadMenuShowX |= MASKSEGAGRP;
 			}
-		}		
+		}
 
-				if (hItemChanged == hFilterCapcomGrp) {
-			if ((nLoadMenuCapcomGrpFilter & MASKCAPGRP) == 0) {
+		if (hItemChanged == hFilterCapcomGrp) {
+			if ((nLoadMenuShowX & MASKCAPGRP) == 0) {
 				_TreeView_SetCheckState(hFilterList, hItemChanged, FALSE);
 
-				_TreeView_SetCheckState(hFilterList, hFilterCapcomMisc, FALSE);	
+				_TreeView_SetCheckState(hFilterList, hFilterCapcomMisc, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterCps1, FALSE);	
 				_TreeView_SetCheckState(hFilterList, hFilterCps2, FALSE);	
 				_TreeView_SetCheckState(hFilterList, hFilterCps3, FALSE);
 
-				nLoadMenuCapcomGrpFilter = MASKCAPGRP;
+				// this block is also toggled above, which is why the following
+				// line does not make sense ((nLoadMenuShowX & MASKSEGAGRP) == 0)
+				nLoadMenuShowX &= ~MASKCAPGRP;
 			} else {
 				_TreeView_SetCheckState(hFilterList, hItemChanged, TRUE);
 
@@ -1774,7 +1777,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterCps2, TRUE);	
 				_TreeView_SetCheckState(hFilterList, hFilterCps3, TRUE);	
 
-				nLoadMenuCapcomGrpFilter = 0;
+				nLoadMenuShowX |= MASKCAPGRP;
 			}
 		}
 
@@ -1838,12 +1841,12 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 		}
 
-		if (hItemChanged == hFilterCapcomGrp)		_ToggleGameListing(nLoadMenuShowX, MASKCAPMISC);		
+		if (hItemChanged == hFilterCapcomGrp)		_ToggleGameListing(nLoadMenuShowX, MASKCAPMISC);
 		if (hItemChanged == hFilterCapcomGrp)		_ToggleGameListing(nLoadMenuShowX, MASKCPS);
 		if (hItemChanged == hFilterCapcomGrp)		_ToggleGameListing(nLoadMenuShowX, MASKCPS2);
 		if (hItemChanged == hFilterCapcomGrp)		_ToggleGameListing(nLoadMenuShowX, MASKCPS3);
 		
-		if (hItemChanged == hFilterSegaGrp)			_ToggleGameListing(nLoadMenuShowX, MASKSG1000);		
+		if (hItemChanged == hFilterSegaGrp)			_ToggleGameListing(nLoadMenuShowX, MASKSG1000);
 		if (hItemChanged == hFilterSegaGrp)			_ToggleGameListing(nLoadMenuShowX, MASKSMS);
 		if (hItemChanged == hFilterSegaGrp)			_ToggleGameListing(nLoadMenuShowX, MASKMEGADRIVE);
 		if (hItemChanged == hFilterSegaGrp)			_ToggleGameListing(nLoadMenuShowX, MASKGG);

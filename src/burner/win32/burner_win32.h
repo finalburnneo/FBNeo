@@ -302,8 +302,6 @@ extern int nLoadMenuBoardTypeFilter;
 extern int nLoadMenuGenreFilter;
 extern int nLoadMenuFavoritesFilter;
 extern int nLoadMenuFamilyFilter;
-extern int nLoadMenuCapcomGrpFilter;
-extern int nLoadMenuSegaGrpFilter;
 extern int nSelDlgWidth;
 extern int nSelDlgHeight;
 int SelDialog(int nMVSCartsOnly, HWND hParentWND);

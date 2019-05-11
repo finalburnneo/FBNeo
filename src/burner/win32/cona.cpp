@@ -195,8 +195,6 @@ int ConfigAppLoad()
 		VAR(nLoadMenuGenreFilter);
 		VAR(nLoadMenuFavoritesFilter);
 		VAR(nLoadMenuFamilyFilter);
-		VAR(nLoadMenuCapcomGrpFilter);
-		VAR(nLoadMenuSegaGrpFilter);
 
 		STR(szAppRomPaths[0]);
 		STR(szAppRomPaths[1]);
@@ -577,12 +575,6 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// Load game dialog family filter options\n"));
 	VAR(nLoadMenuFamilyFilter);
 	
-	_ftprintf(h, _T("\n// Load game dialog capcom filter options\n"));
-	VAR(nLoadMenuCapcomGrpFilter);
-	
-	_ftprintf(h, _T("\n// Load game dialog sega filter options\n"));	
-	VAR(nLoadMenuSegaGrpFilter);
-
 	_ftprintf(h, _T("\n// The paths to search for rom zips (include trailing backslash)\n"));
 	STR(szAppRomPaths[0]);
 	STR(szAppRomPaths[1]);

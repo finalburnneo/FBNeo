@@ -2076,7 +2076,7 @@ INT32 i8x41_run(INT32 cycles)
 
 	i8x41.total_cycles += cycles;
 
-	return cycles; //xxxdinkx
+	return cycles;
 }
 
 void i8x41RunEnd()

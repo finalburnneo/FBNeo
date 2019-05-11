@@ -424,7 +424,7 @@ INT32 upd96050Run(INT32 cycles)
 
 		m_icount--;
 
-	} while (m_icount > 0);
+	} while (m_icount > 0 && !end_run);
 
 	cycles = cycles - m_icount;
 	m_icount = cycle_start = 0;

@@ -208,7 +208,8 @@ static PAIR ea; 		/* effective address */
 #define HD6309_LDS		32	/* set when LDS occured at least once */
 
 /* public globals */
-static int hd6309_ICount;
+static int hd6309_ICount = 0;
+static int hd6309_startcycles = 0;
 
 /* these are re-defined in hd6309.h TO RAM, ROM or functions in cpuintrf.c */
 #define RM(mAddr)		HD6309_RDMEM(mAddr)
@@ -622,11 +623,21 @@ void hd6309_set_irq_line(int irqline, int state)
 /* includes the actual opcode implementations */
 #include "6309ops.c"
 
+static int end_run = 0;
+
+int hd6309_segmentcycles()
+{
+	return hd6309_startcycles - hd6309_ICount;
+}
+
 /* execute instructions on this CPU until icount expires */
 int hd6309_execute(int cycles)	/* NS 970908 */
 {
+	hd6309_startcycles = cycles;
 	hd6309_ICount = cycles - hd6309.extra_cycles;
 	hd6309.extra_cycles = 0;
+
+	end_run = 0;
 
 	if (hd6309.int_state & (HD6309_CWAI | HD6309_SYNC))
 	{
@@ -910,13 +921,16 @@ int hd6309_execute(int cycles)	/* NS 970908 */
 
 			hd6309_ICount -= cycle_counts_page0[hd6309.ireg];
 
-		} while( hd6309_ICount > 0 );
+		} while( hd6309_ICount > 0 && !end_run );
 
 		hd6309_ICount -= hd6309.extra_cycles;
 		hd6309.extra_cycles = 0;
 	}
 
-	return cycles - hd6309_ICount;	 /* NS 970908 */
+	cycles = hd6309_startcycles - hd6309_ICount;
+	hd6309_ICount = hd6309_startcycles = 0;
+
+	return cycles;
 }
 
 void HD6309RunEnd()
@@ -926,7 +940,7 @@ void HD6309RunEnd()
 //	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309RunEnd called when no CPU open\n"));
 #endif
 
-	hd6309_ICount = 0;
+	end_run = 1;
 }
 
 HD6309_INLINE void fetch_effective_address( void )

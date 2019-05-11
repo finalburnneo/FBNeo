@@ -76,6 +76,15 @@ void HD6309Reset()
 	hd6309_reset();
 }
 
+INT32 HD6309TotalCycles()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309TotalCycles called without init\n"));
+#endif
+
+	return nHD6309CyclesTotal + hd6309_segmentcycles();
+}
+
 void HD6309NewFrame()
 {
 #if defined FBA_DEBUG
@@ -462,9 +471,6 @@ INT32 HD6309Scan(INT32 nAction)
 		ba.szName = szName;
 		BurnAcb(&ba);
 		
-		SCAN_VAR(HD6309CPUContext[i].nCyclesTotal);
-		SCAN_VAR(HD6309CPUContext[i].nCyclesSegment);
-		SCAN_VAR(HD6309CPUContext[i].nCyclesLeft);
 		SCAN_VAR(nHD6309CyclesDone[i]);
 	}
 	

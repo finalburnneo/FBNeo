@@ -226,6 +226,8 @@ static void h6280_exit(void)
 }
 #endif
 
+static int end_run = 0;
+
 int h6280Run(int cycles)
 {
 #if defined FBA_DEBUG
@@ -236,6 +238,8 @@ int h6280Run(int cycles)
 	int in;
 	h6280_ICount = cycles;
 	h6280.h6280_iCycles = cycles;
+
+	end_run = 0;
 
 	if ( h6280.irq_pending == 2 ) {
 		h6280.irq_pending--;
@@ -278,13 +282,15 @@ int h6280Run(int cycles)
 				set_irq_line(2,ASSERT_LINE);
 			}
 		}
-	} while (h6280_ICount > 0);
+	} while (h6280_ICount > 0 && !end_run);
 
-	h6280.h6280_totalcycles += cycles - h6280_ICount;
+	cycles = cycles - h6280_ICount;
+
+	h6280.h6280_totalcycles += cycles;
 	h6280_ICount = 0;
 	h6280.h6280_iCycles = 0;
 
-	return cycles - h6280_ICount;
+	return cycles;
 }
 
 void h6280_get_context(void *dst)
@@ -307,7 +313,7 @@ int h6280TotalCycles()
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280TotalCycles called with no CPU open\n"));
 #endif
 
-	return h6280.h6280_totalcycles + (h6280.h6280_iCycles - h6280_ICount);;
+	return h6280.h6280_totalcycles + (h6280.h6280_iCycles - h6280_ICount);
 }
 
 void h6280RunEnd()
@@ -317,7 +323,7 @@ void h6280RunEnd()
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280RunEnd called with no CPU open\n"));
 #endif
 
-	h6280_ICount = 0;
+	end_run = 1;
 }
 
 INT32 h6280Idle(INT32 cycles)

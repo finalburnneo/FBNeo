@@ -90,6 +90,7 @@ static ARM7_REGS arm7;
 static int ARM7_ICOUNT;
 static int total_cycles = 0;
 static int curr_cycles = 0;
+static int end_run = 0;
 
 void Arm7Open(int ) 
 {
@@ -107,7 +108,7 @@ int Arm7TotalCycles()
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7TotalCycles called without init\n"));
 #endif
 
-	return total_cycles;
+	return total_cycles + (curr_cycles - ARM7_ICOUNT);
 }
 
 void Arm7RunEnd()
@@ -116,7 +117,7 @@ void Arm7RunEnd()
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7RunEnd called without init\n"));
 #endif
 
-	arm7_icount = 0;
+	end_run = 1;
 }
 
 void Arm7BurnCycles(int cycles)
@@ -125,7 +126,7 @@ void Arm7BurnCycles(int cycles)
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7BurnCycles called without init\n"));
 #endif
 
-	arm7_icount -= cycles;
+	ARM7_ICOUNT -= cycles;
 }
 
 INT32 Arm7Idle(int cycles)

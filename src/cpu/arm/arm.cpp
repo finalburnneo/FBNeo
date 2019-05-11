@@ -329,6 +329,8 @@ void ArmReset(void)
 	R15 = eARM_MODE_SVC|I_MASK|F_MASK;
 }
 
+static int end_run = 0;
+
 int ArmRun( int cycles )
 {
 	UINT32 pc;
@@ -336,6 +338,7 @@ int ArmRun( int cycles )
 
 	arm_icount = cycles;
 	arm.ArmLeftCycles = cycles;
+	end_run = 0;
 
 	do
 	{
@@ -436,11 +439,16 @@ int ArmRun( int cycles )
 
 		arm_check_irq_state();
 
-	} while( arm_icount > 0 );
+	} while( arm_icount > 0 && !end_run );
 
-	arm.ArmTotalCycles += (cycles - arm_icount);
+	cycles = cycles - arm_icount;
 
-	return cycles - arm_icount;
+	arm.ArmTotalCycles += cycles;
+
+	arm_icount = 0;
+	arm.ArmLeftCycles = 0;
+
+	return cycles;
 } /* arm_execute */
 
 static void arm_check_irq_state(void)
@@ -1404,7 +1412,7 @@ void ArmRunEnd()
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmRunEnd called without init\n"));
 #endif
 
-	arm_icount = 0;
+	end_run = 1;
 }
 
 INT32 ArmIdle(INT32 cycles)
@@ -1422,8 +1430,6 @@ void ArmNewFrame()
 #endif
 
 	arm.ArmTotalCycles = 0;
-	arm_icount = 0;
-	arm.ArmLeftCycles = 0;
 }
 
 int ArmScan(int nAction)

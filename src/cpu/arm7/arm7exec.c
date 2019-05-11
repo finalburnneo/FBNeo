@@ -45,7 +45,8 @@
     UINT32 insn;
 
     ARM7_ICOUNT = cycles;
-    curr_cycles = total_cycles;
+    curr_cycles = cycles;
+	end_run = 0;
 
     do
     {
@@ -1359,8 +1360,11 @@
 
         /* All instructions remove 3 cycles.. Others taking less / more will have adjusted this # prior to here */
         ARM7_ICOUNT -= 3;
-    	total_cycles = curr_cycles + cycles - ARM7_ICOUNT;
-    } while (ARM7_ICOUNT > 0);
+    } while (ARM7_ICOUNT > 0 && !end_run);
 
-    return cycles - ARM7_ICOUNT;
+	cycles = curr_cycles - ARM7_ICOUNT;
+	total_cycles += cycles;
+	curr_cycles = ARM7_ICOUNT = 0;
+
+    return cycles;
 }

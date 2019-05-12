@@ -1,0 +1,2502 @@
+// translation template for FB Alpha
+
+version 0x029743
+
+// codepage 1252
+
+menu    100 {
+        //-- "Game"
+  popup    0 "Játék" {
+          //-- "Load game..."
+    10001    1 "Játék betöltés..."
+          //-- "Play via Kaillera..."
+    10002    2 "Netes játék indítása..."
+          //-- "Most recent games..."
+    popup    3 "Legutóbbi játékok..." {
+            //-- "no game selected"
+      10617    4 "nincs választott játék"
+            //-- "no game selected"
+      10618    5 "nincs választott játék"
+            //-- "no game selected"
+      10619    6 "nincs választott játék"
+            //-- "no game selected"
+      10620    7 "nincs választott játék"
+            //-- "no game selected"
+      10621    8 "nincs választott játék"
+            //-- "no game selected"
+      10622    9 "nincs választott játék"
+            //-- "no game selected"
+      10623   10 "nincs választott játék"
+            //-- "no game selected"
+      10624   11 "nincs választott játék"
+            //-- "no game selected"
+      10625   12 "nincs választott játék"
+            //-- "no game selected"
+      10626   13 "nincs választott játék"
+    }
+          //-- "Start Neo Geo Multi-slot..."
+    10711   15 "Neo Geo Multi-slot indítás..."
+          //-- "Load Neo Geo CDZ game..."
+    10713   17 "Neo Geo CDZ játék betöltés..."
+          //-- "Select CD image (ISO/CUE)..."
+    10710   18 "CD képfájl (ISO/CUE) választás..."
+          //-- "Start Neo Geo CDZ..."
+    10712   19 "Neo Geo CDZ indítás..."
+          //-- "Exit game"
+    10006   21 "Kilépés a játékból"
+          //-- "Pause game"
+    10008   22 "Játék szüneteltetése"
+          //-- "Adjust CPU speed..."
+    10010   24 "Processzor órajel beállítás..."
+          //-- "Reset CPU speed to 100%"
+    10011   25 "Processzor órajel visszaállítása 100%-ra"
+          //-- "Memory Card..."
+    popup   27 "Memória kártya" {
+            //-- "Create new memory card..."
+      10020   28 "Új memória kártya létrehozása..."
+            //-- "Select memory card..."
+      10021   29 "Memória kártya kiválasztása..."
+            //-- "Insert memory card"
+      10022   30 "Memória kártya behelyezése"
+            //-- "Eject memory card"
+      10023   31 "Memória kártya leválasztása"
+    }
+          //-- "Replay..."
+    popup   33 "Visszajátszás..." {
+            //-- "Replay input..."
+      10003   34 "Rögzített videó visszajátszása"
+            //-- "Record input..."
+      10004   35 "Bemeneti videó rögzítése"
+            //-- "Stop replay/record"
+      10005   36 "Visszajátszás/rögzítés leállítása"
+    }
+          //-- "Save states..."
+    popup   38 "Állás mentések" {
+            //-- "Load state..."
+      10030   39 "Állás betöltés"
+            //-- "Save state..."
+      10031   40 "Állás mentés"
+            //-- "State slots..."
+      popup   41 "Állás mentések..." {
+              //-- "Activate previous slot"
+        10034   42 "Elõzõ mentési hely bekapcsolása"
+              //-- "Activate next slot"
+        10035   43 "Következõ mentési hely bekapcsolása"
+              //-- "MENU_STATE_LOAD_SLOT"
+        10032   44 "Mentés betöltés"
+              //-- "MENU_STATE_SAVE_SLOT"
+        10033   45 "Mentés indítás"
+              //-- "Undo last state save"
+        10037   46 "Undo last state save"
+      }
+            //-- "Restore full state on load"
+      10036   47 "Teljes mentés visszaállítása betöltéskor"
+    }
+          //-- "Record AVI"
+    11827   49 ""
+          //-- "Stop recording"
+    11828   50 ""
+          //-- "Exit emulator"
+    10012   52 "Kilépés az emulátorból"
+  }
+        //-- "Video"
+  popup   53 "Kép" {
+          //-- "&Select blitter"
+    popup   54 "Grafikus gyorsító választás" {
+            //-- "Basic"
+      10121   55 "Alap"
+            //-- "SoftFX"
+      10123   56 "SoftFX"
+            //-- "Enhanced"
+      10122   57 "Kiterjesztett"
+            //-- "Experimental"
+      10124   58 "Kísérleti"
+            //-- "DirectX9 Alt"
+      10125   59 "DirectX9 alt."
+    }
+          //-- "&Blitter options"
+    10643   60 "Gyorsító beállításai"
+          //-- "&Stretch"
+    popup   61 "Nyújtás" {
+            //-- "&Normal stretch"
+      10110   62 "Normál nyújtás"
+            //-- "&Full stretch"
+      10111   63 "Teljes nyújtás"
+            //-- "Correct &aspect ratio"
+      10112   64 "Képarány javítása"
+    }
+          //-- "&Enable gamma correction"
+    10150   66 "Gamma javítás használata"
+          //-- "&Gamma correction settings"
+    popup   67 "Gamma javítás beállításai" {
+            //-- "&Darken midtones"
+      10151   68 "Sötétebb középtónusok"
+            //-- "&Lighten midtones"
+      10152   69 "Világosabb középtónusok"
+            //-- "MENU_GAMMA_OTHER"
+      10153   70 "Egyéb gamma"
+            //-- "Use video &hardware when possible"
+      10154   72 "Kép hardveres gyorsítása amikor lehet"
+            //-- "Use video hardware &exclusively"
+      10155   73 "Kép hardveres gyorsítása minden esetben"
+            //-- "Use &software exclusively"
+      10156   74 "Kép szoftveres gyorsítása minden esetben"
+    }
+          //-- "&Window size"
+    popup   76 "Ablak méret" {
+            //-- "&Auto"
+      10170   77 "Automata"
+            //-- "&Single size"
+      10171   79 "Egyszeres méret"
+            //-- "&Double size"
+      10172   80 "Kétszeres méret"
+            //-- "&Triple size"
+      10173   81 "Háromszoros méret"
+            //-- "&Quadruple size"
+      10174   82 "Négyszeres méret"
+            //-- "&Maximum size"
+      10175   83 "Maximális méret"
+    }
+          //-- "Toggle &fullscreen mode"
+    10102   85 "Váltás teljes képernyõs módra"
+          //-- "Auto Switch to Fullscreen after loading"
+    10613   86 "Váltás teljes képernyõre játék betöltést követõen"
+          //-- "Fullscreen Resolution (Horizontal)"
+    popup   87 "Teljes képernyõs felbontás (vízszintes)" {
+            //-- "MENU_RES_ARCADE"
+      10130   88 "Arcade felbontás"
+            //-- "&Single size"
+      10136   90 "Egyszeres méret"
+            //-- "&Double size"
+      10137   91 "Kétszeres méret"
+            //-- "&Triple size"
+      10138   92 "Háromszoros méret"
+            //-- "&Quadruple size"
+      10139   93 "Négyszeres méret"
+            //-- "MENU_RES_1"
+      10131   95 ""
+            //-- "MENU_RES_2"
+      10132   96 ""
+            //-- "MENU_RES_3"
+      10133   97 ""
+            //-- "MENU_RES_4"
+      10134   98 ""
+            //-- "MENU_RES_OTHER"
+      10135  100 ""
+    }
+          //-- "Fullscreen Resolution (Vertical)"
+    popup  101 "Teljes képernyõs felbontás (függõleges)" {
+            //-- "MENU_RES_ARCADE_VERTICAL"
+      10700  102 ""
+            //-- "&Single size"
+      10706  104 "Egyszeres méret"
+            //-- "&Double size"
+      10707  105 "Kétszeres méret"
+            //-- "&Triple size"
+      10708  106 "Háromszoros méret"
+            //-- "&Quadruple size"
+      10709  107 "Négyszeres méret"
+            //-- "MENU_RES_1_VERTICAL"
+      10701  109 ""
+            //-- "MENU_RES_2_VERTICAL"
+      10702  110 ""
+            //-- "MENU_RES_3_VERTICAL"
+      10703  111 ""
+            //-- "MENU_RES_4_VERTICAL"
+      10704  112 ""
+            //-- "MENU_RES_OTHER_VERTICAL"
+      10705  114 ""
+    }
+          //-- "Fullscreen bit&depth"
+    popup  115 "Teljes képernyõs színmélység" {
+            //-- "&16bit"
+      10141  116 "16 bites"
+            //-- "&24bit"
+      10142  117 "24 bites"
+            //-- "&32bit"
+      10143  118 "32 bites"
+    }
+          //-- "Choose Fullscreen Monitor"
+    10728  119 ""
+          //-- "&Monitor properties"
+    popup  121 "Monitor tulajdonságai" {
+            //-- "Automatically detect aspect ratio"
+      10650  122 "Automatikus képarány észlelés"
+            //-- "Normal CRT aspect ratio"
+      10190  124 "Normál CRT képarány"
+            //-- "Normal LCD aspect ratio"
+      10191  125 "Normál LCD képarány"
+            //-- "Widescreen CRT aspect ratio"
+      10192  126 "Szélesvásznú CRT képarány"
+            //-- "Widescreen LCD aspect ratio"
+      10193  127 "Szélesvásznú LCD képarány"
+            //-- "Mirrored vertical alignment"
+      10194  129 "Tükrözött függõleges igazítás"
+    }
+          //-- "&Rotate vertically aligned games"
+    10181  131 "Függõleges helyzetû játékok forgatása"
+          //-- "Force 60Hz refresh rate"
+    10176  132 "60 Hz kényszerített képfrissítés"
+          //-- "Enable &Triple Buffering (Fullscreen)"
+    10100  133 "Háromszoros letárolás használata (teljes kijelzõ)"
+          //-- "Enable VSync (Windowed)"
+    10646  134 "Függõleges szinkron használata (ablak)"
+          //-- "Enable DWM Sync (Windowed)"
+    10103  135 "Win7 DWM javítás használata (ablak)"
+          //-- "Auto Frameskip"
+    10177  136 "Automatikus képkocka kihagyás"
+  }
+        //-- "Audio"
+  popup  137 "Hang" {
+          //-- "Select &plugin"
+    popup  138 "Plugin választás" {
+            //-- "DirectSound"
+      10655  139 "DirectSound"
+            //-- "XAudio2"
+      10656  140 "XAudio2"
+    }
+          //-- "Plugin &options"
+    10663  141 "Plugin beállítások"
+          //-- "2-point 1st order sample interpolation"
+    10231  143 "Kétpontos elsõ utasítású egyszerû interpoláció"
+          //-- "4-point 3rd order sample interpolation"
+    10233  144 "Négypontos harmadik utasítású egyszerû interpoláció"
+          //-- "Disable FM interpolation"
+    10240  146 "FM interpoláció kikapcsolása"
+          //-- "4-point 3rd order FM interpolation"
+    10243  147 "Négypontos harmadik utasítású FM interpoláció"
+          //-- "&Sound logging"
+    popup  149 "Hang naplózás" {
+            //-- "Log to file..."
+      10606  150 "Naplózás fájlba..."
+            //-- "Stop logging"
+      10607  151 "Naplózás leállítása"
+    }
+          //-- "Buffer size..."
+    10200  152 "Tároló mérete..."
+  }
+        //-- "Input"
+  popup  153 "Bemenet" {
+          //-- "Select &plugin"
+    popup  154 "Plugin választás" {
+            //-- "DirectInput"
+      10664  155 "DirectInput"
+    }
+          //-- "&Auto-Fire Rate"
+    popup  157 "Egyéb" {
+            //-- "Slow"
+      10260  158 "Slow"
+            //-- "Medium"
+      10261  159 "Medium"
+            //-- "Fast"
+      10262  160 "Fast"
+            //-- "Very Fast"
+      10263  161 "Very Fast"
+    }
+          //-- "Map game inputs..."
+    10007  163 "Játék irányítás beállítása..."
+          //-- "Set dipswitches..."
+    10009  164 "Dip-kapcsolók beállítása..."
+  }
+        //-- "Misc"
+  popup  165 "Beállítások" {
+          //-- "Options"
+    popup  166 "Folyamat prioritás beállítása" {
+            //-- "Auto pause"
+      10300  167 "Automata szünet"
+            //-- "Always process keyboard input"
+      10301  168 "Billentyûzet használata minden esetben"
+            //-- "Display mode indicator"
+      10302  169 "Megjelenítési mód kijelzõ"
+            //-- "Modeless menu"
+      10303  170 "Üzemmód nélküli menü"
+            //-- "Don\'t change Num Lock status"
+      10616  171 "Ne változtassa a Num Lock állapotát"
+            //-- "Create support folders at runtime"
+      10719  172 "Create support folders at runtime"
+            //-- "Set application thread priority"
+      popup  174 "Adatfájl létrehozása" {
+              //-- "High"
+        10311  175 "Magas"
+              //-- "Above normal"
+        10312  176 "Normál feletti"
+              //-- "Normal"
+        10313  177 "Normál"
+              //-- "Below normal"
+        10314  178 "Normál alatti"
+              //-- "Low"
+        10315  179 "Alacsony"
+      }
+            //-- "Enable high resolution system timer"
+      10319  180 ""
+            //-- "Save High Scores when supported"
+      10654  182 "Eredmények mentése ha támogatott"
+            //-- "Use alpha blend effects when supported"
+      10720  183 "Use alpha blend effects when supported"
+            //-- "Display Gear-Shift Indicator when supported"
+      10727  184 ""
+            //-- "AVI Writer Output size"
+      popup  185 "Felület nyelve" {
+              //-- "1x"
+        10724  186 ""
+              //-- "2x"
+        10725  187 ""
+              //-- "3x"
+        10726  188 ""
+      }
+            //-- "Generate dat file"
+      popup  190 "Csalás keresés" {
+              //-- "Generate dat (Arcade only)..."
+        10651  191 "Adatfájl létrehozása (csak arcade)..."
+              //-- "Generate dat (Megadrive only)..."
+        10653  192 "Adatfájl létrehozása (csak Megadrive)..."
+              //-- "Generate dat (PC-Engine only)..."
+        10714  193 "Generate dat (PC-Engine only)..."
+              //-- "Generate dat (TurboGrafx16 only)..."
+        10715  194 "Generate dat (TurboGrafx16 only)..."
+              //-- "Generate dat (SuprGrafx only)..."
+        10716  195 "Generate dat (SuprGrafx only)..."
+              //-- "Generate dat (Sega SG-1000 only)..."
+        10717  196 "Generate dat (Sega SG-1000 only)..."
+              //-- "Generate dat (ColecoVision only)..."
+        10718  197 "Generate dat (ColecoVision only)..."
+              //-- "Generate dat (Master System only)..."
+        10721  198 "Generate dat (Master System only)..."
+              //-- "Generate dat (Game Gear only)..."
+        10722  199 "Generate dat (Game Gear only)..."
+              //-- "Generate dat (MSX 1 Games only)..."
+        10723  200 ""
+              //-- "Generate all dats..."
+        10729  202 ""
+      }
+            //-- "Configure ROM paths..."
+      10614  204 "ROM könyvtárak beállítása..."
+            //-- "Configure support file paths..."
+      10615  205 "Kiegészítõ fájl könyvtárak beállítása..."
+            //-- "UI language"
+      popup  207 "Súgó" {
+              //-- "Select UI language..."
+        10307  208 "Felület nyelvének kiválasztása"
+              //-- "Export UI translation template..."
+        10308  209 "Felület fordítási sablon létrehozása..."
+              //-- "Reset UI default language"
+        10635  210 "Felület alap nyelvének visszaállítása"
+              //-- "Download UI language..."
+        10309  211 ""
+      }
+            //-- "Gamelist language"
+      popup  212 "Icons" {
+              //-- "Select gamelist language..."
+        10673  213 "Select gamelist language..."
+              //-- "Export gamelist translation template..."
+        10674  214 "Export gamelist translation template..."
+              //-- "Reset gamelist default language"
+        10675  215 "Reset gamelist default language"
+      }
+            //-- "Icons"
+      popup  217 "Icon size" {
+              //-- "Enable driver icons display"
+        10676  218 "Enable driver icons display"
+              //-- "Parents only (use if you have problems)"
+        10677  219 "16 x 16 pixels"
+              //-- "Icon size"
+        popup  220 "Cheat search" {
+                //-- "16 x 16 pixels"
+          10678  221 "24 x 24 pixels"
+                //-- "24 x 24 pixels"
+          10679  222 "32 x 32 pixels"
+                //-- "32 x 32 pixels"
+          10680  223 ""
+        }
+              //-- "Save snapshot"
+        10318  225 "Pillanatkép mentése"
+              //-- "Shot factory.."
+        10317  226 "Pillanatkép készítõ..."
+              //-- "Enable cheats..."
+        10306  228 "Csalások használata..."
+              //-- "Cheat search"
+        popup  229 "Help" {
+                //-- "Start New Search"
+          10628  230 "Új keresés indítása"
+                //-- "Target value has not changed"
+          10629  232 "Várt érték nem változott"
+                //-- "Target value has changed"
+          10630  233 "Várt érték megváltozott"
+                //-- "Target value has decreased"
+          10631  234 "Várt érték csökkent"
+                //-- "Target value has increased"
+          10632  235 "Várt érték növekedett"
+                //-- "Dump search to file"
+          10633  237 "Keresés mentése fájlba"
+                //-- "Exit Cheat Search"
+          10634  239 "Kilépés a csalás keresésbõl"
+        }
+              //-- "Invoke 68K debugger..."
+        10392  241 "Hibakeresõ elõhívása..."
+              //-- "Palette Viewer..."
+        10672  243 "Paltetta nézõke..."
+              //-- "Associate with .fs and .fr files"
+        10330  245 "Az .fs és .fr kiterjesztésû fájlok társítása"
+              //-- "Disassociate from .fs and .fr files"
+        10331  246 "Az .fs és .fr kiterjesztésû fájl társítás törlése"
+              //-- "Save input mapping now"
+        10332  248 "Irányító beállítások mentése most"
+              //-- "Auto-save input mapping"
+        10333  249 "Irányító beállítások automata mentése"
+              //-- "Save settings to .ini now"
+        10334  251 "Beállítások mentése .ini fájlba most"
+              //-- "Reload settings from .ini"
+        10335  252 "Beállítások visszatöltése .ini fájlból"
+      }
+            //-- "Help"
+      popup  253 "" {
+              //-- "&Help"
+        10503  254 "&Súgó"
+              //-- "&What\'s New"
+        10505  256 "&Verzió változások"
+              //-- "&FB Alpha homepage"
+        10504  258 "&FB Alpha honlapja"
+              //-- "&Neo-Source forums"
+        10506  259 "&Neo-Source fórum"
+              //-- "&System information"
+        10502  261 "&Rendszer információk"
+              //-- "&About FB Alpha"
+        10501  262 "&Az FB Alpha névjegye"
+      }
+    }
+  }
+}
+
+menu    110 {
+        //-- "Basic"
+  popup    0 "Alap" {
+          //-- "&No effects"
+    11001    1 "Nincs effektus"
+          //-- "&Scanlines"
+    11002    2 "Képsorok"
+          //-- "Scanlines &50%"
+    11003    3 "50 % képsor"
+          //-- "&Rotate scanlines"
+    11106    5 "&Képsorok forgatása"
+          //-- "Force &Flip"
+    11143    7 "Kényszerített forgatás"
+          //-- "Buffering &method"
+    popup    9 "Letárolási (pufferelési) eljárás" {
+            //-- "&Autodetect"
+      10160   10 "Automatikus"
+            //-- "&Video memory"
+      10161   11 "Videó memória"
+            //-- "&System memory"
+      10162   12 "Rendszer memória"
+    }
+  }
+}
+
+menu    111 {
+        //-- "Enhanced"
+  popup    0 "Fejlett" {
+          //-- "Disable all effects"
+    11101    1 "Összes effektus kikapcsolása"
+          //-- "Enable &bi-linear filtering"
+    11102    3 "Kettõs lineáris szûrés bekapcsolása"
+          //-- "&Rotate scanlines and RGB effects"
+    11113    4 "Képsorok és RGB effektusok forgatása"
+          //-- "Enable &Pre-scale"
+    11107    6 "Elõosztás bekapcsolása"
+          //-- "Pre-scale using Soft&FX"
+    11108    7 "Elõosztás SoftFX használatával"
+          //-- "SoftFX algorithm"
+    popup    8 "SoftFX algoritmus" {
+            //-- "Double pixels (3D hardware)"
+      11201    9 "Dupla képpontok (3D hardver)"
+            //-- "AdvanceMAME Scale2x"
+      11202   10 "AdvanceMAME Scale2x"
+            //-- "AdvanceMAME Scale3x"
+      11203   11 "AdvanceMAME Scale3x"
+            //-- "2xPM LQ"
+      11204   12 "2xPM LQ"
+            //-- "2xPM HQ"
+      11205   13 "2xPM HQ"
+            //-- "Eagle Graphics"
+      11206   14 "Eagle Graphics"
+            //-- "Super Eagle"
+      11207   15 "Super Eagle"
+            //-- "2xSaI"
+      11208   16 "2xSaI"
+            //-- "Super 2xSaI"
+      11209   17 "Super 2xSaI"
+            //-- "Super Eagle (VBA)"
+      11210   18 "Super Eagle (VBA)"
+            //-- "2xSaI (VBA)"
+      11211   19 "2xSaI (VBA)"
+            //-- "Super 2xSaI (VBA)"
+      11212   20 "Super 2xSaI (VBA)"
+            //-- "SuperScale"
+      11213   21 "SuperScale"
+            //-- "SuperScale (75% Scanlines)"
+      11214   22 "SuperScale (75 % képsor)"
+            //-- "hq2x Filter"
+      11215   23 "hq2x szûrõ"
+            //-- "hq3x Filter"
+      11216   24 "hq3x szûrõ"
+            //-- "hq4x Filter"
+      11217   25 "hq4x szûrõ"
+            //-- "hq2xS (VBA) Filter"
+      11218   26 "hq2xS (VBA) szûrõ"
+            //-- "hq3xS (VBA) Filter"
+      11219   27 "hq3xS (VBA) szûrõ"
+            //-- "hq2xS (SNES9X) Filter"
+      11220   28 "hq2xS (SNES9X) szûrõ"
+            //-- "hq3xS (SNEX9X) Filter"
+      11221   29 "hq3xS (SNES9X) szûrõ"
+            //-- "hq2xBold Filter"
+      11222   30 "hq2xBold szûrõ"
+            //-- "hq3xBold Filter"
+      11223   31 "hq3xBold szûrõ"
+            //-- "EPXB Filter"
+      11224   32 "EPXB szûrõ"
+            //-- "EPXC Filter"
+      11225   33 "EPXC szûrõ"
+            //-- "2xBR Squared"
+      11226   34 "2xBR Squared"
+            //-- "2xBR Semi-Rounded"
+      11227   35 "2xBR Semi-Rounded"
+            //-- "2xBR Rounded"
+      11228   36 "2xBR Rounded"
+            //-- "3xBR Squared"
+      11229   37 "3xBR Squared"
+            //-- "3xBR Semi-Rounded"
+      11230   38 "3xBR Semi-Rounded"
+            //-- "3xBR Rounded"
+      11231   39 "3xBR Rounded"
+            //-- "4xBR Squared"
+      11232   40 "4xBR Squared"
+            //-- "4xBR Semi-Rounded"
+      11233   41 "4xBR Semi-Rounded"
+            //-- "4xBR Rounded"
+      11234   42 "4xBR Rounded"
+            //-- "DDT3x"
+      11235   43 "DDT3x"
+            //-- "Force image to SoftFX size"
+      11290   45 "Kép kényszerítése SoftFX méretre"
+    }
+          //-- "Enable &Scanlines"
+    11005   47 "Képsorok megjelenítése"
+          //-- "Set scanline &intensity..."
+    11109   48 "Képsorok intenzitásának beállítása..."
+          //-- "Enable phosphor &feedback"
+    11103   50 "Phosphor visszacsatolás használata"
+          //-- "Set &phosphor feedback intensity..."
+    11110   51 "Phosphor visszacsatolás intenzitásának beállítása..."
+          //-- "&No effects"
+    11004   53 "Nincsenek effektek"
+          //-- "RGB &effects"
+    11104   54 "RGB effektek"
+          //-- "&3D projection"
+    11105   55 "3D megjelenítés"
+          //-- "&Auto size scanlined RGB preset"
+    11121   57 "Automata méretû képsoros RGB beállítás"
+          //-- "Manually select RGB preset"
+    popup   58 "RGB beállítás kézi választása" {
+            //-- "Small faint RGB mask"
+      11122   59 "Kis halvány RGB maszk"
+            //-- "Large faint RGB dot mask"
+      11123   60 "Nagy halvány RGB pont maszk"
+            //-- "Large faint RGB mask"
+      11124   61 "Nagy halvány RGB maszk"
+            //-- "MAME rgbmicro"
+      11125   63 "MAME RGB mikró"
+            //-- "MAME rgbtiny"
+      11126   64 "MAME RGB tiny"
+            //-- "Aperture grille"
+      11127   65 "Aperture grille"
+            //-- "Large oversaturated RGB dot"
+      11128   67 "Nagy túltelített RGB pont"
+            //-- "Huge oversaturated pattern"
+      11129   68 "Hatalmas túltelített minta"
+    }
+          //-- "Set 3&D projection properties..."
+    11111   70 "3D megjelenítés beállításai..."
+          //-- "Advanced settings"
+    popup   72 "Haladó beállítások" {
+            //-- "Force &16-bit emulation"
+      11141   73 "16 bites emuláció kényszerítése"
+            //-- "Use DirectX texture &management"
+      11142   74 "DirectX grafikai megjelenítõ használata"
+    }
+  }
+}
+
+menu    112 {
+        //-- "SoftFX"
+  popup    0 "SoftFX" {
+          //-- "&Double pixels (Software)"
+    11301    1 "Dupla képpontok (szoftver)"
+          //-- "AdvanceMAME Scale2x"
+    11302    2 "AdvanceMAME Scale2x"
+          //-- "AdvanceMAME Scale3x"
+    11303    3 "AdvanceMAME Scale3x"
+          //-- "2xPM LQ"
+    11304    4 "2xPM LQ"
+          //-- "2xPM HQ"
+    11305    5 "2xPM HQ"
+          //-- "Eagle Graphics"
+    11306    6 "Eagle Graphics"
+          //-- "Super Eagle"
+    11307    7 "Super Eagle"
+          //-- "2xSaI"
+    11308    8 "2xSaI"
+          //-- "Super 2xSaI"
+    11309    9 "Super 2xSaI"
+          //-- "Super Eagle (VBA)"
+    11310   10 "Super Eagle (VBA)"
+          //-- "2xSaI (VBA)"
+    11311   11 "2xSaI (VBA)"
+          //-- "Super 2xSaI (VBA)"
+    11312   12 "Super 2xSaI (VBA)"
+          //-- "SuperScale"
+    11313   13 "SuperScale"
+          //-- "SuperScale (75% Scanlines)"
+    11314   14 "SuperScale (75 % képsor)"
+          //-- "hq2x filter"
+    11315   15 "hq2x szûrõ"
+          //-- "hq3x filter"
+    11316   16 "hq3x szûrõ"
+          //-- "hq4x filter"
+    11317   17 "hq4x szûrõ"
+          //-- "hq2xS (VBA) filter"
+    11318   18 "hq2xS (VBA) szûrõ"
+          //-- "hq3xS (VBA) filter"
+    11319   19 "hq3xS (VBA) szûrõ"
+          //-- "hq2xS (SNES9X) Filter"
+    11320   20 "hq2xS (SNES9X) szûrõ"
+          //-- "hq3xS (SNEX9X) Filter"
+    11321   21 "hq3xS (SNEX9X) szûrõ"
+          //-- "hq2xBold Filter"
+    11322   22 "hq2xBold szûrõ"
+          //-- "hq3xBold Filter"
+    11323   23 "hq3xBold szûrõ"
+          //-- "EPXB Filter"
+    11324   24 "EPXB szûrõ"
+          //-- "EPXC Filter"
+    11325   25 "EPXC szûrõ"
+          //-- "2xBR Squared"
+    11326   26 "2xBR Squared"
+          //-- "2xBR Semi-Rounded"
+    11327   27 "2xBR Semi-Rounded"
+          //-- "2xBR Rounded"
+    11328   28 "2xBR Rounded"
+          //-- "3xBR Squared"
+    11329   29 "3xBR Squared"
+          //-- "3xBR Semi-Rounded"
+    11330   30 "3xBR Semi-Rounded"
+          //-- "3xBR Rounded"
+    11331   31 "3xBR Rounded"
+          //-- "4xBR Squared"
+    11332   32 "4xBR Squared"
+          //-- "4xBR Semi-Rounded"
+    11333   33 "4xBR Semi-Rounded"
+          //-- "4xBR Rounded"
+    11334   34 "4xBR Rounded"
+          //-- "DDT3x"
+    11335   35 "DDT3x"
+          //-- "&Force image to SoftFX size"
+    11390   37 "Kép kényszerítése SoftFX méretre"
+          //-- "Buffering &method"
+    popup   38 "Pufferelési eljárás" {
+            //-- "&Autodetect"
+      10163   39 "Automatikus"
+            //-- "&Video memory"
+      10164   40 "Videó memória"
+            //-- "&System memory"
+      10165   41 "Rendszer memória"
+            //-- "Directly access video memory"
+      11391   43 "Közvetlen írható videó memória"
+    }
+  }
+}
+
+menu    113 {
+        //-- "Experimental"
+  popup    0 "Kísérleti" {
+          //-- "Enable point filtering"
+    11601    1 "Pont szûrés használata"
+          //-- "Enable linear filtering"
+    11602    2 "Lineáris szûrés használata"
+          //-- "Enable cubic filtering"
+    11603    3 "Köbös szûrés használata"
+          //-- "Cubic filter quality"
+    popup    4 "Köbös szûrõ minõsége" {
+            //-- "Lightly filtered"
+      11610    5 "Enyhén szûrt"
+            //-- "Smoothened strongly"
+      11612    7 "Erõsen simított"
+            //-- "Smoothened lightly"
+      11611    8 "Enyhén simított"
+            //-- "Perceptual compromise"
+      11613    9 "Elfogadható középérték"
+            //-- "Sharpened lightly"
+      11614   10 "Enyhén élesített"
+            //-- "Sharpened strongly"
+      11615   11 "Erõsen élesített"
+            //-- "Duff\'s tensioned B-splines..."
+      11616   13 "Duff feszített B-sp vonalak..."
+            //-- "Mitchell-Netravali 2C + B = 1..."
+      11617   14 "Mitchell-Netravali 2C + B = 1..."
+            //-- "Cardinal cubic splines..."
+      11618   15 "Legfõbb köbös sp vonalak..."
+            //-- "Mitchell-Netravali free..."
+      11619   16 "Mitchell-Netravali nyílt..."
+    }
+          //-- "Enable &Scanlines"
+    11010   18 "Képsoros megjelenítés használata"
+          //-- "Set scanline &intensity..."
+    11144   19 "Képsorok intenzitásának beállítása..."
+          //-- "Advanced settings"
+    popup   21 "Haladó beállítások" {
+            //-- "Single-pass"
+      11623   22 "Egy menet"
+            //-- "Multi-pass"
+      11625   23 "Több menet"
+            //-- "High-performance"
+      11626   24 "Magas teljesítmény"
+            //-- "Use PS1.4"
+      11621   26 "PS1.4 használat"
+            //-- "Use floating-point textures"
+      11620   27 "Lebegõpontos textúra használata"
+    }
+  }
+}
+
+menu    114 {
+        //-- "DirectX9 Alt"
+  popup    0 "DirectX9 alt." {
+          //-- "Point filtering"
+    11701    1 "Pont szûrés"
+          //-- "Linear filtering"
+    11702    2 "Lineáris szûrés"
+          //-- "SoftFX algorithm"
+    popup    4 "SoftFX algoritmus" {
+            //-- "Double pixels (3D hardware)"
+      11401    5 "Dupla képkocka (3D-s hardver)"
+            //-- "AdvanceMAME Scale2x"
+      11402    6 "AdvanceMAME Scale2x"
+            //-- "AdvanceMAME Scale3x"
+      11403    7 "AdvanceMAME Scale3x"
+            //-- "2xPM LQ"
+      11404    8 "2xPM LQ"
+            //-- "2xPM HQ"
+      11405    9 "2xPM HQ"
+            //-- "Eagle Graphics"
+      11406   10 "Eagle Graphics"
+            //-- "Super Eagle"
+      11407   11 "Super Eagle"
+            //-- "2xSaI"
+      11408   12 "2xSaI"
+            //-- "Super 2xSaI"
+      11409   13 "Super 2xSaI"
+            //-- "Super Eagle (VBA)"
+      11410   14 "Super Eagle (VBA)"
+            //-- "2xSaI (VBA)"
+      11411   15 "2xSaI (VBA)"
+            //-- "Super 2xSaI (VBA)"
+      11412   16 "Super 2xSaI (VBA)"
+            //-- "SuperScale"
+      11413   17 "SuperScale"
+            //-- "SuperScale (75% Scanlines)"
+      11414   18 "SuperScale (75 % képsor)"
+            //-- "hq2x Filter"
+      11415   19 "hq2x szûrõ"
+            //-- "hq3x Filter"
+      11416   20 "hq3x szûrõ"
+            //-- "hq4x Filter"
+      11417   21 "hq4x szûrõ"
+            //-- "hq2xS (VBA) Filter"
+      11418   22 "hq2xS (VBA) szûrõ"
+            //-- "hq3xS (VBA) Filter"
+      11419   23 "hq3xS (VBA) szûrõ"
+            //-- "hq2xS (SNES9X) Filter"
+      11420   24 "hq2xS (SNES9X) szûrõ"
+            //-- "hq3xS (SNEX9X) Filter"
+      11421   25 "hq3xS (SNEX9X) szûrõ"
+            //-- "hq2xBold Filter"
+      11422   26 "hq2xBold szûrõ"
+            //-- "hq3xBold Filter"
+      11423   27 "hq3xBold szûrõ"
+            //-- "EPXB Filter"
+      11424   28 "EPXB szûrõ"
+            //-- "EPXC Filter"
+      11425   29 "EPXC szûrõ"
+            //-- "2xBR Squared"
+      11426   30 "2xBR Squared"
+            //-- "2xBR Semi-Rounded"
+      11427   31 "2xBR Semi-Rounded"
+            //-- "2xBR Rounded"
+      11428   32 "2xBR Rounded"
+            //-- "3xBR Squared"
+      11429   33 "3xBR Squared"
+            //-- "3xBR Semi-Rounded"
+      11430   34 "3xBR Semi-Rounded"
+            //-- "3xBR Rounded"
+      11431   35 "3xBR Rounded"
+            //-- "4xBR Squared"
+      11432   36 "4xBR Squared"
+            //-- "4xBR Semi-Rounded"
+      11433   37 "4xBR Semi-Rounded"
+            //-- "4xBR Rounded"
+      11434   38 "4xBR Rounded"
+            //-- "DDT3x"
+      11435   39 "DDT3x"
+            //-- "Force image to SoftFX size"
+      11490   41 "Kép kényszerítése SoftFX méretre"
+    }
+          //-- "Advanced settings"
+    popup   43 "Haladó beállítások" {
+            //-- "Force &16-bit emulation"
+      11491   44 ""
+            //-- "Hardware vertex processing"
+      11703   45 "Hardveres vertex feldolgozás"
+            //-- "Motion blur"
+      11704   46 "Motion blur"
+    }
+  }
+}
+
+menu    130 {
+        //-- "DirectSound plugin"
+  popup    0 "DirectSound plugin" {
+          //-- "Use Low-pass filter"
+    10201    1 "Aluláteresztõ szûrõ használata"
+          //-- "Sound disabled"
+    10210    3 "Hang kikapcsolva"
+          //-- "11025Hz samplerate"
+    10211    4 "11025 Hz-es mintavétel"
+          //-- "22050Hz samplerate"
+    10212    5 "22050 Hz-es mintavétel"
+          //-- "44100Hz samplerate"
+    10213    6 "44100 Hz-es mintavétel"
+          //-- "48000Hz samplerate"
+    10214    7 "48000 Hz-es mintavétel"
+  }
+}
+
+menu    131 {
+        //-- "XAudio2 plugin"
+  popup    0 "XAudio2 plugin" {
+          //-- "Use Low-pass filter"
+    10202    1 "Aluláteresztõ szûrõ használata"
+          //-- "Use reverb"
+    10203    2 "Visszhang használata"
+          //-- "Sound disabled"
+    10220    4 "Hang kikapcsolva"
+          //-- "11025Hz samplerate"
+    10221    5 "11025 Hz-es mintavétel"
+          //-- "22050Hz samplerate"
+    10222    6 "22050 Hz-es mintavétel"
+          //-- "44100Hz samplerate"
+    10223    7 "44100 Hz-es mintavétel"
+          //-- "48000Hz samplerate"
+    10224    8 "48000 Hz-es mintavétel"
+  }
+}
+
+menu    140 {
+        //-- "Game Selection Menu"
+  popup    0 "" {
+          //-- "Play"
+    11900    1 ""
+          //-- "View Game Information"
+    11901    3 ""
+          //-- "View in Progetto EMMA"
+    11902    5 ""
+          //-- "Favorite"
+    11903    7 ""
+  }
+}
+
+        //-- "Map Game Inputs"
+dialog	  51 "Játék irányítás beállítás" {
+        //-- "OK"
+      2	   0 "Rendben"
+        //-- "Double-click an input to change its mapping"
+  65535	   2 "Dupla kattintás egy beállításra a megváltoztatásához"
+        //-- "Make selection in all three drop-down boxes, click apropriate button"
+  65535	   5 "Választás a lenti lenyíló ablakokban a megfelelõ gombra kattintva"
+        //-- "Save preset"
+  20127	   9 "Elmentés"
+        //-- "Make default"
+  20006	  10 "Legyen alap"
+        //-- "Use preset"
+  20005	  11 "Használat"
+}
+
+        //-- "Select control"
+dialog	  52 "Irányító választás" {
+        //-- "Grab mouse"
+  20007	   0 "Egér húzás"
+        //-- "Activate"
+  20011	   1 "Aktiválás"
+        //-- "Clear Input"
+      3	   2 "Mégse"
+        //-- "Clear Lock"
+  20021	   3 "Clear Lock"
+}
+
+        //-- "Edit cheat settings"
+dialog	  53 "Csalás beállítások szerkesztése" {
+        //-- "Select a cheat to change it."
+  65535	   1 "Megváltoztatandó csalás kiválasztása."
+        //-- "Defaults"
+  20013	   4 "Alapértékek"
+        //-- "OK"
+      1	   5 "Rendben"
+        //-- "Cancel"
+      2	   6 "Mégse"
+}
+
+        //-- "Edit Constant"
+dialog	  54 "Állandó szerkesztése" {
+        //-- "Close"
+      2	   1 "Bezárás"
+}
+
+        //-- "Edit DIPswitch settings"
+dialog	  55 "DIP-kapcsoló beállítások szerkesztése" {
+        //-- "Select a setting to change it."
+  65535	   1 "Megváltoztatandó beállítás kiválasztása"
+        //-- "Defaults"
+  20013	   4 "Alapértékek"
+        //-- "OK"
+      1	   5 "Rendben"
+        //-- "Cancel"
+      2	   6 "Mégse"
+}
+
+        //-- ""
+dialog	  56 "" {
+        //-- "Progress1"
+  20015	   1 "Haladás 1"
+        //-- "Cancel"
+      2	   5 "Mégse"
+}
+
+        //-- ""
+dialog	  57 "" {
+        //-- "FB Alpha contains parts of MAME && Final Burn.\n© 2004-2018, Team FB Alpha."
+  65535	   3 "FB Alpha MAME és Final Burn összetevõket tartalmaz.                           © 2004-2011, Team FB Alpha, Magyarítás: Delirious"
+        //-- "OK"
+      1	   4 "Rendben"
+        //-- "License"
+  20052	   5 "Licensz"
+}
+
+        //-- ""
+dialog	  58 "" {
+        //-- "OK"
+      1	   4 "Rendben"
+        //-- " I understand and agree to be bound by the terms of the above license agreement"
+  20054	   5 "Elfogadom és betartom a fenti végfelhasználói szerzõdést"
+}
+
+        //-- ""
+dialog	  59 "" {
+        //-- "Close"
+  20019	   0 "Close"
+}
+
+        //-- "Edit ROMs paths"
+dialog	  60 "ROM könyvtárak szerkesztése" {
+        //-- "Tab2"
+  20502	   0 ""
+        //-- "OK"
+      1	   1 "Rendben"
+        //-- "Cancel"
+      2	   2 "Mégse"
+        //-- "Browse..."
+  21140	   5 "Browse..."
+        //-- "Browse..."
+  21141	   7 "Browse..."
+        //-- "Browse..."
+  21142	   9 "Browse..."
+        //-- "Browse..."
+  21143	  11 "Browse..."
+        //-- "Browse..."
+  21144	  13 "Browse..."
+        //-- "Browse..."
+  21145	  15 "Browse..."
+        //-- "Browse..."
+  21146	  17 "Browse..."
+        //-- "Browse..."
+  21147	  19 "Browse..."
+        //-- "Browse..."
+  21148	  21 "Browse..."
+        //-- "Browse..."
+  21149	  23 "Browse..."
+        //-- "Browse..."
+  21150	  25 "Browse..."
+        //-- "Browse..."
+  21151	  27 "Browse..."
+        //-- "Browse..."
+  21152	  29 "Browse..."
+        //-- "Browse..."
+  21153	  31 "Browse..."
+        //-- "Browse..."
+  21154	  33 "Browse..."
+        //-- "Browse..."
+  21155	  35 "Browse..."
+        //-- "Browse..."
+  21156	  37 "Browse..."
+        //-- "Browse..."
+  21157	  39 "Browse..."
+        //-- "Browse..."
+  21158	  41 "Browse..."
+        //-- "Browse..."
+  21159	  43 "Browse..."
+}
+
+        //-- "Select Game"
+dialog	  61 "Játék választás" {
+        //-- "Preview"
+  20303	   2 "Elõnézet"
+        //-- "Title"
+  20304	   3 "Kezdõkép"
+        //-- "Select Game"
+  20302	   8 "Játék választás"
+        //-- "Game info:"
+  20065	  10 "Kiválasztott szín:"
+        //-- "ROM name:"
+  20063	  11 "ROM név:"
+        //-- "ROM info:"
+  20064	  12 "ROM infó:"
+        //-- "Released by:"
+  20067	  13 "Kiadó:"
+        //-- "Genre:"
+  20066	  14 "Mûfaj:"
+        //-- "Notes:"
+  20124	  15 "Megjegyzés:"
+        //-- "Filters"
+  20300	  22 "Szûrõk"
+        //-- "Game Info"
+  20602	  24 "ROM infó"
+        //-- "Options"
+  20301	  25 "Lehetõségek"
+        //-- "Show available"
+  20060	  26 "Csak a mûködõk"
+        //-- "Show unavailable"
+  20137	  27 "Show unavailable"
+        //-- "Always show clones"
+  20055	  28 "Klónok látszanak"
+        //-- "Use zipnames"
+  20074	  29 "ZIP nevek használata"
+        //-- "Latin text only"
+  20075	  30 "Csak latin szöveg"
+        //-- "ROMs Dirs..."
+  20600	  31 "ROM mappák..."
+        //-- "Scan ROMs"
+  20601	  32 "ROM keresés"
+        //-- "Cancel"
+      2	  33 "Mégse"
+        //-- "Play"
+      1	  34 "Indítás"
+        //-- "IPS"
+  20133	  35 "IPS"
+        //-- "Apply Patches"
+  20132	  36 "Javítások"
+        //-- "IPS Manager"
+  20131	  37 "IPS intézõ"
+        //-- "Search"
+  20135	  38 "Keresés"
+}
+
+        //-- "Shots Factory"
+dialog	  62 "Pillanatkép készítõ" {
+        //-- "&Capture"
+  20061	   0 "Kép mentése"
+        //-- "OK"
+      1	   1 "Kész"
+        //-- "&Advance Frame"
+  20062	   2 "Kocka léptetés"
+        //-- "Layer &1"
+  20202	   3 "Minden sprite"
+        //-- "Layer &2"
+  20203	   4 "2. réteg"
+        //-- "Layer &3"
+  20204	   5 "3. réteg"
+        //-- "Layer &4"
+  20205	   6 "4. réteg"
+        //-- "Show"
+  20206	   7 "Show"
+        //-- "Sprite Priority 1"
+  20077	   8 "Sprite prioritás 1"
+        //-- "Sprite Priority 2"
+  20078	   9 "Sprite prioritás 2"
+        //-- "Sprite Priority 3"
+  20080	  10 "Sprite prioritás 3"
+        //-- "Sprite Priority 4"
+  20079	  11 "Sprite prioritás 4"
+        //-- "Sprite Priority 5"
+  20081	  12 "Sprite prioritás 5"
+        //-- "Sprite Priority 6"
+  20082	  13 "Sprite prioritás 6"
+        //-- "Sprite Priority 7"
+  20083	  14 "Sprite prioritás 7"
+        //-- "Sprite Priority 8"
+  20084	  15 "Sprite prioritás 8"
+}
+
+        //-- "Select desired Gamma value"
+dialog	  63 "A kívánt gamma érték kiválasztása" {
+        //-- "OK"
+      1	   0 "Rendben"
+        //-- "Gamma value"
+  20085	   2 "Gamma érték"
+        //-- "Cancel"
+      2	   4 "Mégse"
+}
+
+        //-- "Select desired resolution"
+dialog	  64 "A kívánt felbontás kiválasztása" {
+        //-- "OK"
+      1	   0 "Rendben"
+        //-- "Resolution:"
+  20136	   2 "Resolution:"
+        //-- "Cancel"
+      2	   4 "Mégse"
+}
+
+        //-- "Select desired scanline intensity"
+dialog	  65 "A kívánt képsor intenzitás kiválasztása" {
+        //-- "OK"
+      1	   0 "Rendben"
+        //-- "Scanline intensity"
+  20088	   2 "Képsor intenzitás"
+        //-- "Cancel"
+      2	   4 "Mégse"
+}
+
+        //-- "Select desired feedback intensity"
+dialog	  66 "A kívánt visszacsatolás intenzitás kiválasztása" {
+        //-- "OK"
+      1	   0 "Rendben"
+        //-- "Feedback strength"
+  20090	   2 "Visszacsatolás erõssége"
+        //-- "Feedback oversaturation"
+  20092	   5 "Visszacsatolás túltelítettsége"
+        //-- "Cancel"
+      2	   7 "Mégse"
+}
+
+        //-- "Select desired 3D projection properties"
+dialog	  67 "A kívánt 3D megjelenítési tulajdonságok kiválasztása" {
+        //-- "OK"
+      1	   0 "Rendben"
+        //-- "Screen Angle"
+  20094	   3 "Látószög"
+        //-- "Fishbowl Factor"
+  20096	   6 "Gömbölyûségi tényezõ"
+        //-- "Cancel"
+      2	   8 "Mégse"
+}
+
+        //-- "Adjust speed of the emulated CPU"
+dialog	  68 "Az emulált processzor órajelének beállítása" {
+        //-- "OK"
+      1	   0 "Rendben"
+        //-- "CPU speed"
+  20098	   2 "Processzor órajele"
+        //-- "%"
+  65535	   4 " %"
+        //-- "Cancel"
+      2	   5 "Mégse"
+}
+
+        //-- "FB Alpha system information report"
+dialog	  69 "FB Alpha rendszer információs jelentés" {
+        //-- "OK"
+      1	   0 "Rendben"
+        //-- "Save..."
+  20138	   1 "Save..."
+}
+
+        //-- "FB Alpha has encountered an unrecoverable problem and will be terminated"
+dialog	  70 "FB Alpha egy javíthatatlan hibát észlelt, ezért leáll" {
+        //-- "OK"
+      1	   1 "Rendben"
+        //-- "Debug"
+  20102	   2 "Hibakeresés"
+        //-- "Details"
+  20103	   3 "Részletek"
+        //-- "Log"
+  20104	   4 "Napló"
+}
+
+        //-- "FB Alpha debugger"
+dialog	  71 "FB Alpha hibakeresõje" {
+        //-- "Disassembly"
+  65535	   3 "Lebontás"
+        //-- "Internal CPU state"
+  65535	   8 "Belsõ processzor állapota"
+        //-- "Memory map"
+  65535	  11 "Memória térkép"
+        //-- "Debugger messages"
+  65535	  16 "Hibakeresõ üzenetei"
+        //-- "Execute"
+      1	  20 "Végrehajtás"
+        //-- "Exit"
+      2	  22 "Kilépés"
+        //-- "Go!"
+  20114	  23 "Indítás!"
+        //-- "Step frame"
+  20118	  24 "Képkocka léptetés"
+        //-- "Step"
+  20115	  25 "Léptetés"
+        //-- "Step into"
+  20116	  26 "Belépés"
+        //-- "Skip"
+  20117	  27 "Kihagyás"
+        //-- "Screenshot"
+  20119	  28 "Pillanatkép"
+}
+
+        //-- "FB Alpha debugger"
+dialog	  72 "FB Alpha hibakeresõje" {
+        //-- "Execute"
+      1	  10 "Végrehajtás"
+        //-- "Exit"
+      2	  12 "Kilépés"
+        //-- "Go!"
+  20114	  13 "Indítás!"
+        //-- "Step frame"
+  20118	  14 "Képkocka léptetés"
+        //-- "Step"
+  20115	  15 "Léptetés"
+        //-- "Step into"
+  20116	  16 "Belépés"
+        //-- "Skip"
+  20117	  17 "Kihagyás"
+        //-- "Screenshot"
+  20119	  18 "Pillanatkép"
+}
+
+        //-- "FB Alpha message"
+dialog	  73 "FB Alpha üzenet" {
+        //-- "OK"
+      1	   0 "Rendben"
+}
+
+        //-- "Edit support file paths"
+dialog	  74 "Kiegészítõ fájl könyvtárak szerkesztése" {
+        //-- "Tab2"
+  20501	   0 "Tab2"
+        //-- "OK"
+      1	   1 "Rendben"
+        //-- "Cancel"
+      2	   2 "Mégse"
+        //-- "Browse..."
+  20950	   5 "Browse..."
+        //-- "Browse..."
+  20951	   7 "Browse..."
+        //-- "Browse..."
+  20952	   9 "Browse..."
+        //-- "Browse..."
+  20953	  11 "Browse..."
+        //-- "Browse..."
+  20954	  13 "Browse..."
+        //-- "Browse..."
+  20955	  15 "Browse..."
+        //-- "Browse..."
+  20956	  17 "Browse..."
+        //-- "Browse..."
+  20957	  19 "Browse..."
+        //-- "Browse..."
+  20958	  21 "Browse..."
+        //-- "Browse..."
+  20959	  23 "Browse..."
+        //-- "Browse..."
+  20960	  25 "Browse..."
+        //-- "Browse..."
+  20961	  27 "Browse..."
+        //-- "Browse..."
+  20962	  29 "Browse..."
+        //-- "Browse..."
+  20963	  31 "Browse..."
+        //-- "Browse..."
+  20964	  33 "Browse..."
+        //-- "Browse..."
+  20965	  35 "Browse..."
+        //-- "Browse..."
+  20966	  37 "Browse..."
+        //-- "Browse..."
+  20967	  39 "Browse..."
+        //-- "Browse..."
+  20968	  41 "Browse..."
+        //-- "Browse..."
+  20969	  43 "Browse..."
+        //-- "Browse..."
+  20970	  45 "Browse..."
+        //-- "Browse..."
+  20971	  47 "Browse..."
+        //-- "Browse..."
+  20972	  49 ""
+}
+
+        //-- "Palette Viewer"
+dialog	  75 "Paletta nézõke" {
+        //-- "0"
+  20400	  16 "0"
+        //-- "1"
+  20401	  17 "1"
+        //-- "2"
+  20402	  18 "2"
+        //-- "3"
+  20403	  19 "3"
+        //-- "4"
+  20404	  20 "4"
+        //-- "5"
+  20405	  21 "5"
+        //-- "6"
+  20406	  22 "6"
+        //-- "7"
+  20407	  23 "7"
+        //-- "8"
+  20408	  24 "8"
+        //-- "9"
+  20409	  25 "9"
+        //-- "A"
+  20410	  26 "A"
+        //-- "B"
+  20411	  27 "B"
+        //-- "C"
+  20412	  28 "C"
+        //-- "D"
+  20413	  29 "D"
+        //-- "E"
+  20414	  30 "E"
+        //-- "F"
+  20415	  31 "F"
+        //-- "Selected colour: "
+  20434	  32 "Selected colour: "
+        //-- "Close"
+      2	  33 "Bezárás"
+        //-- "Previous..."
+  20432	  34 "Elõzõ..."
+        //-- "Next..."
+  20433	  35 "Következõ"
+}
+
+        //-- "IPS Patch Manager"
+dialog	  77 "IPS patch intézõ" {
+        //-- "Deselect All"
+  20130	   6 "Kiválasztás visszavonása"
+        //-- "Cancel"
+      2	   8 "Mégse"
+        //-- "OK"
+      1	   9 "Rendben"
+}
+
+        //-- "Select cartridges to load..."
+dialog	  78 "Kazetta kiválasztása betöltéshez..." {
+        //-- "OK"
+      1	   1 "Rendben"
+        //-- "Cancel"
+      2	   2 "Mégse"
+        //-- "Slot 1"
+  20736	   4 "1. hely"
+        //-- "Clear"
+  20730	   8 "Törlés"
+        //-- "Select..."
+  20724	   9 "Választás..."
+        //-- "Slot 2"
+  20737	  11 "2. hely"
+        //-- "Clear"
+  20731	  15 "Törlés"
+        //-- "Select..."
+  20725	  16 "Választás..."
+        //-- "Slot 3"
+  20738	  18 "3. hely"
+        //-- "Clear"
+  20732	  22 "Törlés"
+        //-- "Select..."
+  20726	  23 "Választás..."
+        //-- "Slot 4"
+  20739	  25 "4. hely"
+        //-- "Clear"
+  20733	  29 "Törlés"
+        //-- "Select..."
+  20727	  30 "Választás..."
+        //-- "Slot 5"
+  20740	  32 "5. hely"
+        //-- "Clear"
+  20734	  36 "Törlés"
+        //-- "Select..."
+  20728	  37 "Választás..."
+        //-- "Slot 6"
+  20741	  39 "6. hely"
+        //-- "Clear"
+  20735	  43 "Törlés"
+        //-- "Select..."
+  20729	  44 "Választás..."
+}
+
+        //-- "NeoGeo CDZ Game List"
+dialog	  79 "NeoGeo CDZ játék lista" {
+        //-- "Play"
+  20813	   1 "Indítás"
+        //-- "Cancel"
+  20814	   2 "Mégse"
+        //-- "Scan Games"
+  20811	   3 "Játékok keresése"
+        //-- "Directories..."
+  20812	   4 "Könyvtárak..."
+        //-- "Scan sub-dirs"
+  20809	   5 "Alkönyvtárakban is"
+        //-- "Front Cover"
+  65535	   6 "Borító"
+        //-- "Back Cover"
+  65535	   7 "Hátlap"
+        //-- "Options"
+  65535	   9 "Beállítások"
+        //-- "Short name:"
+  20816	  14 "Rövid név"
+        //-- "Released by:"
+  20817	  15 "Kiadó:"
+        //-- "Disc Image:"
+  20818	  16 "Képfájl"
+        //-- "Audio Tracks:"
+  20819	  17 "Hangsávok:"
+        //-- "Scan for ISO only"
+  20810	  22 "Csak ISO keresése"
+}
+
+        //-- "Game Information"
+dialog	  81 "Game Information" {
+        //-- "Tab1"
+  20500	   0 "Tab1"
+        //-- "Game info:"
+  20065	   2 "Kiválasztott szín:"
+        //-- "ROM name:"
+  20063	   3 "ROM név:"
+        //-- "ROM info:"
+  20064	   4 "ROM infó:"
+        //-- "Released by:"
+  20067	   5 "Kiadó:"
+        //-- "Genre:"
+  20066	   6 "Mûfaj:"
+        //-- "Notes:"
+  20124	   7 "Megjegyzés:"
+        //-- "Favorite"
+  20604	  19 ""
+        //-- "Rescan Romset"
+  20603	  20 "Rescan Romset"
+        //-- "Close"
+      2	  21 "Close"
+}
+
+        //-- "Download Localisation Template"
+dialog	  82 "" {
+        //-- "Language:"
+  20139	   1 ""
+        //-- "Cancel"
+      2	   3 ""
+        //-- "OK"
+      1	   4 ""
+}
+
+        //-- "Choose Monitor for Full Screen"
+dialog	  83 "" {
+        //-- "These only apply to the DirectX Graphics 9 blitters."
+  20145	   1 ""
+        //-- "Horizontal Games:"
+  20141	   2 ""
+        //-- "Vertical Games:"
+  20143	   4 ""
+        //-- "Cancel"
+      2	   6 ""
+        //-- "OK"
+      1	   7 ""
+}
+
+        //-- "Replay input"
+dialog	 233 "" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Cancel"
+      2	   4 ""
+        //-- "00:00:00"
+  20255	  10 ""
+        //-- "0"
+  20256	  11 ""
+        //-- "0"
+  20257	  12 ""
+        //-- "Open Read-Only"
+  20259	  15 ""
+        //-- "Show Joystick Movement"
+  20263	  16 ""
+}
+
+        //-- "Record input"
+dialog	 234 "" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Cancel"
+      2	   3 ""
+        //-- "..."
+  20261	   6 ""
+        //-- "Record From Power-On"
+  20262	   8 ""
+}
+
+        //-- "This appears to be the first time you run %s v%.20s.\n\n"
+string   200 "Úgy tûnik elsõ alkalommal indította el %s v%.20s.\n\n"
+
+        //-- "Please take some time to match the audio/video settings to your system capabilities and personal preferences. If you continue to use and/or distribute this software, you must agree to be bound by the terms of license agreement, which is always accessible via the about dialog.\n\n"
+string   202 "Kérem fordítson idõt rendszerének leginkább megfelelõ kép és hang beállításokra valamint személyes beállításaira. Amennyiben használja vagy terjeszti ezt a szoftvert el kell fogadnia és be kell tartania a végfelhasználó szerzõdést, amit bármikor elérhet az FB Alpha súgójánál.\n\n"
+
+        //-- "Note that this is alpha quality software. As such, it likely will exhibit problems, including audio/video options not behaving correctly, the emulation of some games misses some features, and may exhibit stability problems. CAVEAT LECTOR!"
+string   204 "Vegye figyelembe, hogy ez egy korai fejlesztési stádiumban lévõ program. Elõfordulhatnak kép és hang hibák valamint néhány játék emulációjából hiányozhatnak összetevõk. Stabilitási problémák is felléphetnek. ÓVAKODJON AZ OLVASÓ!"
+
+        //-- "Note that this is beta quality software. As such, it likely may be missing some features, or exhibit some problems with your system."
+string   206 "Vegye figyelembe, hogy ez egy fejlesztési stádiumban lévõ program. Hiányozhat néhány összetevõ vagy rendszer problémák léphetnek fel."
+
+        //-- "Cheat name"
+string   220 "Csalás név"
+
+        //-- "Status"
+string   222 "Állapot"
+
+        //-- "Game input"
+string   240 "Játék irányítás"
+
+        //-- "Mapped to"
+string   242 "Gomb"
+
+        //-- "State"
+string   244 "Állapot"
+
+        //-- "Player %i"
+string   246 "%i. játékos"
+
+        //-- "Keyboard"
+string   248 "Billentyûzet"
+
+        //-- "Joystick %i"
+string   250 "%i. irányító"
+
+        //-- "X-Arcade (left side)"
+string   252 "X-Arcade (bal oldali)"
+
+        //-- "X-Arcade (right side)"
+string   254 "X-Arcade (jobb oldali)"
+
+        //-- "Hot Rod (left side)"
+string   256 "Hot Rod (bal oldali)"
+
+        //-- "Hot Rod (right side)"
+string   258 "Hot Rod (jobb oldali)"
+
+        //-- "Absolute"
+string   260 "Korlátlan"
+
+        //-- "Auto-center"
+string   262 "Automata középpont"
+
+        //-- "Normal"
+string   264 "Normál"
+
+        //-- "DIPSwitch group"
+string   280 "DIP-kapcsoló csoport"
+
+        //-- "Setting"
+string   282 "Beállítás"
+
+        //-- "Move control or press key for %.100hs"
+string   300 "Az irányító mozgatása vagy egy billentyû lenyomása ehhez: %.100hs"
+
+        //-- "Move control or press key"
+string   302 "Az irányító mozgatása vagy egy billentyû lenyomása"
+
+        //-- "Waiting for %.80s to be released..."
+string   304 "%.80s várakozás a feloldáshoz..."
+
+        //-- "Create new memory card"
+string   320 "Új memória kártya létrehozása"
+
+        //-- "Select new memory card"
+string   322 "Új memória kártya választás"
+
+        //-- "Loading and initialising %s..."
+string   340 "%s betöltése és iniciálása..."
+
+        //-- "Loading"
+string   342 "Loading"
+
+        //-- "Record Input to File"
+string   350 "Bemenet rögzítése fájlba"
+
+        //-- "Replay Input from File"
+string   352 "Bemenet visszajátszása fájlból"
+
+        //-- "Select Directory:"
+string   360 "Könyvtár választás:"
+
+        //-- "Load State"
+string   380 "Állás betöltés"
+
+        //-- "Save State"
+string   382 "Állás mentés"
+
+        //-- "slot %d active"
+string   384 "%d hely aktív"
+
+        //-- "state loaded"
+string   386 "állás betöltve"
+
+        //-- "load error"
+string   388 "betöltési hiba"
+
+        //-- "state saved"
+string   390 "állás elmentve"
+
+        //-- "save error"
+string   392 "mentési hiba"
+
+        //-- "Generate %s dat"
+string   420 "%s adatfájl készítés"
+
+        //-- "no game loaded"
+string   422 "nincs betöltött játék"
+
+        //-- "*** Starting netplay: "
+string   440 "*** Netes játék indítása: "
+
+        //-- "*** You are player %i. "
+string   442 "*** Te vagy %i játékos. "
+
+        //-- "There are %i total players."
+string   444 "Összesen %i játékos van."
+
+        //-- "*** Player %1i <%.32hs> dropped from the game."
+string   446 "*** Játékos %1i «%.32hs» kidobva a játékból."
+
+        //-- "too much text"
+string   448 "túl hosszú szöveg"
+
+        //-- "PNG saved"
+string   460 "PNG elmentve"
+
+        //-- "PNG error %1d"
+string   462 "PNG hiba %1d"
+
+        //-- "Rec AVI ON"
+string   464 ""
+
+        //-- "Rec AVI OFF"
+string   466 ""
+
+        //-- "No volume control"
+string   480 "Nincs hangerõ szabályzás"
+
+        //-- "volume %03i %%"
+string   482 "%03i %% hangerõ"
+
+        //-- "Silence"
+string   484 "Némítás"
+
+        //-- "Sound Restored"
+string   486 "Hang visszaállítva"
+
+        //-- "This input recording"
+string   500 "Ennek a bemenetnek a rögzítése"
+
+        //-- "input recording."
+string   502 "bemenet rögzítés."
+
+        //-- "%s Input Recording Files"
+string   504 "%s bemeneti fájlok rögzítése"
+
+        //-- "state file"
+string   506 "mentett állás"
+
+        //-- "This state file"
+string   508 "Ez a mentett állás"
+
+        //-- "%s State Files"
+string   510 "%s mentett állások"
+
+        //-- "sound recording"
+string   512 "hang rögzítés"
+
+        //-- "This sound recording"
+string   514 "Ez a hangrögzítés"
+
+        //-- "%s Sound Recording Files"
+string   516 "% hangrögzítési fájlok"
+
+        //-- "%s Memory Card Files"
+string   518 "%s memóriakártya fájlok"
+
+        //-- "All Memory Card Files"
+string   520 "Minden memóriakártya fájl"
+
+        //-- "All Dat Files"
+string   522 "Minden adatfájl"
+
+        //-- "Text Files"
+string   524 "Szöveg fájlok"
+
+        //-- "%s Patch Files"
+string   526 "%s javítás fájlok"
+
+        //-- "Save system information report"
+string   540 "Rendszer információ jelentés mentése"
+
+        //-- "Select game list localisation template"
+string   560 "Játék lista fordítási sablon kiválasztása"
+
+        //-- "Create game list localisation template"
+string   562 "Játék lista fordítási sablon létrehozása"
+
+        //-- "Rom Information"
+string   600 "Rom információk"
+
+        //-- "Rom Info"
+string   602 "Rom infó"
+
+        //-- "Sample Info"
+string   604 "Hangminta infó"
+
+        //-- "Name"
+string   606 "Név"
+
+        //-- "Size (bytes)"
+string   608 "Méret (bájt)"
+
+        //-- "CRC32"
+string   610 "CRC32"
+
+        //-- "Type"
+string   612 "Típus"
+
+        //-- "Flags"
+string   614 "Jelzõk"
+
+        //-- "%s, Essential"
+string   616 "%s, alap"
+
+        //-- "%s, Optional"
+string   618 "%s, választható"
+
+        //-- "%s, Program"
+string   620 "%s, program"
+
+        //-- "%s, Graphics"
+string   622 "%s, grafikai"
+
+        //-- "%s, Sound"
+string   624 "%s, hang"
+
+        //-- "%s, BIOS"
+string   626 "%s, BIOS"
+
+        //-- "No Dump"
+string   628 "%s, nincs letárolás"
+
+        //-- "Previews"
+string   630 "Previews"
+
+        //-- "Titles"
+string   632 "Titles"
+
+        //-- "Icons"
+string   634 "Icons"
+
+        //-- "Cheats"
+string   636 "Cheats"
+
+        //-- "High Scores"
+string   638 "High Scores"
+
+        //-- "Samples"
+string   640 "Samples"
+
+        //-- "IPS"
+string   642 "IPS"
+
+        //-- "Neo Geo CDZ Games"
+string   644 "Neo Geo CDZ Games"
+
+        //-- "Neo Geo CDZ Covers"
+string   646 "Neo Geo CDZ Covers"
+
+        //-- "Blend Files"
+string   648 "Blend Files"
+
+        //-- "Select Previews"
+string   650 "Elõnézetek"
+
+        //-- "Versus Previews"
+string   652 "Kezdõképek"
+
+        //-- "HowTo Previews"
+string   654 "Csalások"
+
+        //-- "Scores Previews"
+string   656 "Eredmények"
+
+        //-- "Bosses Previews"
+string   658 "Hangminták"
+
+        //-- "Game Over Previews"
+string   660 "IPS"
+
+        //-- "Flyers"
+string   662 "Neo Geo CDZ játékok"
+
+        //-- "Marquees"
+string   664 "Neo Geo CDZ borítók"
+
+        //-- "Control Panels"
+string   666 "Control Panels"
+
+        //-- "Cabinets"
+string   668 "Cabinets"
+
+        //-- "PCBs"
+string   670 "PCBs"
+
+        //-- "History.dat"
+string   672 "History.dat"
+
+        //-- "EEPROM Saves"
+string   674 ""
+
+        //-- "Path #1"
+string   680 "1. hely"
+
+        //-- "Path #2"
+string   682 "2. hely"
+
+        //-- "Path #3"
+string   684 "3. hely"
+
+        //-- "Path #4"
+string   686 "4. hely"
+
+        //-- "Path #5"
+string   688 "5. hely"
+
+        //-- "Path #6"
+string   690 "6. hely"
+
+        //-- "Path #7"
+string   692 "7. hely"
+
+        //-- "Path #8"
+string   694 "8. hely"
+
+        //-- "Path #9"
+string   696 "Path #9"
+
+        //-- "Path #10"
+string   698 "Path #10"
+
+        //-- "Path #11"
+string   700 "Path #11"
+
+        //-- "Path #12"
+string   702 "Path #12"
+
+        //-- "Path #13"
+string   704 "Path #13"
+
+        //-- "Path #14"
+string   706 "Path #14"
+
+        //-- "Path #15"
+string   708 "Path #15"
+
+        //-- "Path #16"
+string   710 "Path #16"
+
+        //-- "Path #17"
+string   712 "Path #17"
+
+        //-- "Path #18"
+string   714 "Path #18"
+
+        //-- "Path #19"
+string   716 "Path #19"
+
+        //-- "Path #20"
+string   718 "Path #20"
+
+        //-- "The preset file was saved to %s."
+string   720 "Beállítás fájl elmentve ide: %s."
+
+        //-- "Create gamelist localisation template"
+string   730 "Create gamelist localisation template"
+
+        //-- "Select gamelist localisation template"
+string   732 "Select gamelist localisation template"
+
+        //-- "FB Alpha gamelist localisation templates"
+string   734 "FB Alpha gamelist localisation templates"
+
+        //-- "Select CD-ROM image..."
+string   740 "CD-ROM képfájl választás..."
+
+        //-- "Select CD-ROM image"
+string   742 "CD-ROM képfájl választás"
+
+        //-- "CD images"
+string   744 "CD képfájlok%s"
+
+        //-- "Create localisation template"
+string   750 "Create localisation template"
+
+        //-- "Select localisation template"
+string   752 "Select localisation template"
+
+        //-- "FB Alpha localisation templates"
+string   754 "FB Alpha localisation templates"
+
+        //-- "Filters"
+string   760 "Szûrõk"
+
+        //-- "Hardware"
+string   762 "Hardver"
+
+        //-- "Cave"
+string   764 "Cave"
+
+        //-- "CPS-1"
+string   766 "CPS-1"
+
+        //-- "CPS-2"
+string   768 "CPS-2"
+
+        //-- "CPS-3"
+string   770 "CPS-3"
+
+        //-- "Neo Geo"
+string   772 "Neo Geo"
+
+        //-- "PGM"
+string   774 "PGM"
+
+        //-- "Psikyo"
+string   776 "Psikyo"
+
+        //-- "Sega"
+string   778 "Sega"
+
+        //-- "Taito"
+string   780 "Taito"
+
+        //-- "Toaplan"
+string   782 "Toaplan"
+
+        //-- "Misc (pre 90s)"
+string   784 "Egyéb (korai '90)"
+
+        //-- "Misc (post 90s)"
+string   786 "Egyéb (késõi '90)"
+
+        //-- "Megadrive"
+string   788 "Megadrive"
+
+        //-- "Pacman"
+string   790 "Pacman"
+
+        //-- "Konami"
+string   792 "Konami"
+
+        //-- "Galaxian"
+string   794 "Galaxian"
+
+        //-- "Irem"
+string   796 "Irem"
+
+        //-- "Board Type"
+string   798 "Táblajáték"
+
+        //-- "Bootleg"
+string   800 "Bootleg"
+
+        //-- "Prototype"
+string   802 "Prototípus"
+
+        //-- "Hack"
+string   804 "Hack"
+
+        //-- "Homebrew"
+string   806 "Házi"
+
+        //-- "Demo"
+string   808 "Demó"
+
+        //-- "Genuine"
+string   810 "Eredeti"
+
+        //-- "Showing %i of %i sets [%i Unavailable sets]"
+string   812 "Megjelenítve: %i az összes: %i játékból [%i hiányzik]"
+
+        //-- "Kaneko"
+string   814 "Kaneko"
+
+        //-- "SNES"
+string   816 "SNES"
+
+        //-- "Data East"
+string   818 "Data East"
+
+        //-- "Capcom (Other)"
+string   820 "Capcom (Other)"
+
+        //-- "Seta"
+string   822 "Seta"
+
+        //-- "Technos"
+string   824 "Technos"
+
+        //-- "PC-Engine"
+string   826 "PC-Engine"
+
+        //-- "Master System"
+string   828 "Master System"
+
+        //-- "SG-1000"
+string   830 "SG-1000"
+
+        //-- "ColecoVision"
+string   832 "ColecoVision"
+
+        //-- "Game Gear"
+string   834 "Game Gear"
+
+        //-- "MSX"
+string   836 ""
+
+        //-- "Genre"
+string   850 "Általános"
+
+        //-- "Shooter - Horizontal"
+string   852 "Lövöldözés - vízszintes"
+
+        //-- "Shooter - Vertical"
+string   854 "Lövöldözés - függõleges"
+
+        //-- "Fighter - Scrolling"
+string   856 "Verekedõs - görgetõs"
+
+        //-- "Fighter - Versus"
+string   858 "Verekedõs - ellenféllel"
+
+        //-- "BIOS"
+string   860 "BIOS"
+
+        //-- "Breakout"
+string   862 "Faltörõ"
+
+        //-- "Casino"
+string   864 "Kaszinó"
+
+        //-- "Ball & Paddle"
+string   866 "Labda és ütõ"
+
+        //-- "Maze"
+string   868 "Labirintus"
+
+        //-- "Mini-Games"
+string   870 "Mini játékok"
+
+        //-- "Pinball"
+string   872 "Flipper"
+
+        //-- "Platform"
+string   874 "Platform"
+
+        //-- "Puzzle"
+string   876 "Kirakó"
+
+        //-- "Quiz"
+string   878 "Kvíz"
+
+        //-- "Sports - Misc"
+string   880 "Sport - vegyes"
+
+        //-- "Sports - Football"
+string   882 "Sport - foci"
+
+        //-- "Misc"
+string   884 "Különféle"
+
+        //-- "Mahjong"
+string   886 "Madzsong"
+
+        //-- "Racing"
+string   888 "Verseny"
+
+        //-- "Shooter - Other"
+string   890 "Lövöldözõs - egyéb"
+
+        //-- "Family"
+string   940 "Családi"
+
+        //-- "Metal Slug"
+string   942 "Metal Slug"
+
+        //-- "Street Fighter"
+string   944 "Street Fighter"
+
+        //-- "King of Fighters"
+string   946 "King of Fighters"
+
+        //-- "Darkstalkers"
+string   948 "Darkstalkers"
+
+        //-- "Fatal Fury"
+string   950 "Fatal Fury"
+
+        //-- "Samurai Shodown"
+string   952 "Samurai Shodown"
+
+        //-- "19XX"
+string   954 "19XX"
+
+        //-- "Aero Fighters"
+string   956 "Aero Fighters"
+
+        //-- "Power Instinct"
+string   958 "Power Instinct"
+
+        //-- "Other"
+string   960 "Egyéb"
+
+        //-- "Favorites"
+string   990 ""
+
+        //-- "IPS Patch Manager"
+string  1000 "IPS javítás intézõ"
+
+        //-- "%s%sNeo Geo CDZ%sSelect Game"
+string  1010 "%s%sNeo Geo CDZ%sjáték választás"
+
+        //-- "Title"
+string  1012 "Kezdõkép"
+
+        //-- "NGCD-ID"
+string  1014 "NGCD azonosító"
+
+        //-- "&Arcade"
+string  1040 "&Arcade"
+
+        //-- "&Other..."
+string  1042 "&Egyéb..."
+
+        //-- "&Other Gamma value..."
+string  1044 "&Más gamma érték..."
+
+        //-- "Adjust &CPU speed..."
+string  1046 "Processzor &órajel beállítása..."
+
+        //-- "Load state from active slot (no %d)\tF9"
+string  1048 "Állás betöltés aktív helyrõl (szám %d)\tF9"
+
+        //-- "Save state to active slot (no %d)\tF10"
+string  1050 "Állás mentés aktív helyre (szám %d)\tF10"
+
+        //-- "no game selected"
+string  1052 "nincs kiválasztott játék"
+
+        //-- "Number of Frames"
+string  1070 "Képkockák száma"
+
+        //-- "Select desired filter sharpness"
+string  1072 "A kiválasztott szûrõ élességének megadása"
+
+        //-- "Scanning ROMs..."
+string  1076 "Scanning ROMs..."
+
+        //-- "New cheat search started"
+string  1080 "Új csalás keresés elindítva"
+
+        //-- "%i Addresses Matched"
+string  1082 "%i cím egyezik"
+
+        //-- "Address %08X Value %02X"
+string  1084 "Cím: %08X Érték: %02X"
+
+        //-- "Cheat search exited"
+string  1086 "Csalás keresés befejezve"
+
+        //-- "English (US)"
+string  1100 "Angol (EÁ)"
+
+        //-- "Simplified Chinese"
+string  1102 "Egyszerûsített kínai"
+
+        //-- "Traditional Chinese"
+string  1104 "Hagyományos kínai"
+
+        //-- "Japanese"
+string  1106 "Japán"
+
+        //-- "Korean"
+string  1108 "Koreai"
+
+        //-- "French"
+string  1110 "Francia"
+
+        //-- "Spanish"
+string  1112 "Spanyol"
+
+        //-- "Italian"
+string  1114 "Olasz"
+
+        //-- "German"
+string  1116 "Német"
+
+        //-- "Portuguese"
+string  1118 "Portugál"
+
+        //-- "Polish"
+string  1120 "Lengyel"
+
+        //-- "Hungarian"
+string  1122 "Magyar"
+
+        //-- "Game Information"
+string  1200 "Game Information"
+
+        //-- "In Game"
+string  1202 "In Game"
+
+        //-- "Title"
+string  1204 "Title"
+
+        //-- "Select"
+string  1206 "Select"
+
+        //-- "Versus"
+string  1208 "Versus"
+
+        //-- "How To"
+string  1210 "How To"
+
+        //-- "Scores"
+string  1212 "Scores"
+
+        //-- "Bosses"
+string  1214 "Bosses"
+
+        //-- "Game Over"
+string  1216 "Game Over"
+
+        //-- "Flyer"
+string  1218 "Flyer"
+
+        //-- "Cabinet"
+string  1220 "Cabinet"
+
+        //-- "Marquee"
+string  1222 "Marquee"
+
+        //-- "Controls"
+string  1224 "Controls"
+
+        //-- "PCB"
+string  1226 "PCB"
+
+        //-- "Rom Info"
+string  1228 "Rom Info"
+
+        //-- "History"
+string  1230 "History"
+
+        //-- "Sample Info"
+string  1232 "Sample Info"
+
+        //-- " (clone of %s"
+string  1600 " (klónja ennek: %s"
+
+        //-- ", uses ROMs from %s"
+string  1602 ", a következõ ROM fájljait használja: %s"
+
+        //-- "%suses ROMs from %s"
+string  1604 "%sa következõ ROM fájljait használja: %s"
+
+        //-- "%suses board-ROMs from %s"
+string  1606 "%sa következõ tábla ROM fájljait használja: %s"
+
+        //-- "%suses samples from %s"
+string  1608 "%sa következõ hangmintáit használja %s"
+
+        //-- "%s%i player%s"
+string  1610 "%s%i játékos%s"
+
+        //-- "s max"
+string  1612 " max."
+
+        //-- "%s (%s, %s hardware)"
+string  1614 "%s (%s, %s hardver)"
+
+        //-- "Neo Geo MVS Cartidge"
+string  1616 "Neo Geo MVS kazetta"
+
+        //-- "%shigh scores supported"
+string  1618 "%stámogatott eredmény fajták"
+
+        //-- "cartridge"
+string  1620 "kazetta"
+
+        //-- "hardware"
+string  1622 "hardver"
+
+        //-- "Empty"
+string  1624 "Üres"
+
+        //-- "Unidentified CD"
+string  1626 "Unidentified CD"
+
+        //-- "Error"
+string  1800 "Hiba"
+
+        //-- "Warning"
+string  1802 "Figyelem"
+
+        //-- "Information"
+string  1804 "Információk"
+
+        //-- "Unknown"
+string  1806 "Ismeretlen"
+
+        //-- "The ROMset is OK."
+string  1810 "A ROM készlet megfelelõ."
+
+        //-- "The ROMset exhibits the following problems:"
+string  1812 "A ROM készletnél a következõ hibák jelentkeznek:"
+
+        //-- "No data was found, the game will not run!"
+string  1814 "Adatok hiányoznak, a játék nem fog mûködni!"
+
+        //-- "essential data is missing, the game will not run!"
+string  1816 "alapvetõ adatok hiányoznak, a játék nem fog mûködni!"
+
+        //-- "essential data is invalid, the game might not run!"
+string  1818 "alapvetõ adatok nem megfelelõek, a játék nem mûködhet!"
+
+        //-- "data is missing."
+string  1820 "adatok hiányoznak"
+
+        //-- "data is invalid."
+string  1822 "érvénytelen adatok"
+
+        //-- "%.32hs was found (%.512s).\n"
+string  1824 "%.32hs található (%.512s).\n"
+
+        //-- "%.32hs was not found.\n"
+string  1826 "%.32hs nem található.\n"
+
+        //-- "The following ROMs are invalid:\n"
+string  1828 "A következõ ROM fájlok nem megfelelõek:\n"
+
+        //-- "%.32hs has a CRC of %.8X (correct is %.8X).\n"
+string  1830 "%.32hs kapott ellenõrzõ összes %.8X (a helyes %.8X).\n"
+
+        //-- "%.32hs is %dk which is too small (correct is %dkB).\n"
+string  1832 "%.32hs is %dk ami túl kicsi (a helyes %dkB).\n"
+
+        //-- "%.32hs is %dk which is too large (correct is %dkB).\n"
+string  1834 "%.32hs is %dk ami túl nagy (a helyes %dkB).\n"
+
+        //-- "essential "
+string  1836 "alap"
+
+        //-- "program "
+string  1838 "program"
+
+        //-- "BIOS "
+string  1840 "BIOS"
+
+        //-- "graphics "
+string  1842 "grafikai"
+
+        //-- "sound "
+string  1844 "hang"
+
+        //-- "ROM "
+string  1846 "ROM"
+
+        //-- "Error loading %.32hs, requested by %.128s.\nThe emulation will likely suffer problems."
+string  1848 "Hiba a %.32hs betöltéskor, elvárt %.128s.\nAz emuláció valószínûleg problémás lesz."
+
+        //-- "Error reading %.32hs from %.512s"
+string  1850 "Hiba beolvasáskor %.32hs ettõl: %.512s"
+
+        //-- "CRC mismatch reading %.32hs from %.512s"
+string  1852 "CRC eltérés beolvasáskor %.32hs ettõl: %.512s"
+
+        //-- "There was a problem starting \'%.128s\'.\n"
+string  1860 "Indításkor probléma jelentkezett \'%.128s\'.\n"
+
+        //-- "%.32s is not supported by %.32s."
+string  1870 "%.32s nincs támogatva ez által: %.32s."
+
+        //-- "Couldn\'t create main window."
+string  1872 "Fõablak létrehozása sikertelen."
+
+        //-- "Couldn\'t intialise \'%s\' module."
+string  1874 "A\'%s\' modul iniciálása sikertelen."
+
+        //-- "Couldn\'t create a triple buffer."
+string  1876 "Háromszoros puffer létrehozása sikertelen"
+
+        //-- "No appropriate display mode supported. Please adjust your full-screen settings."
+string  1878 "A kívánt kijelzõ mód nem támogatott. Szükséges megváltoztatni a teljes képernyõs beállításokat."
+
+        //-- "Problem setting \'%dx%dx%dbpp (%dHz)\' display mode"
+string  1880 "Probléma a \'%dx%dx%dbpp (%dHz)\' kijelzõ mód bállításakor"
+
+        //-- "\n\nThis is not a standard VGA resolution; please make sure it is supported by your video card."
+string  1882 "\n\nEz nem szabványos VGA monitor felbontás; szükséges meggyõzõdni arról, hogy a számítógép videókártyája támogatja-e."
+
+        //-- "Couldn\'t intialise \'%s\' module. Try installing the Direct X End User runtimes (June 2010)."
+string  1884 ""
+
+        //-- "Error creating "
+string  1890 "Létrehozási hiba "
+
+        //-- "Error loading "
+string  1892 "Betöltési hiba "
+
+        //-- " is for an unavailable game."
+string  1894 " egy nem mûködõ játékhoz tartozik."
+
+        //-- " does not work with this version of %s."
+string  1896 " %s ezen verziójával nem mûködik."
+
+        //-- " requires a more recent version of %s, please upgrade."
+string  1898 " %s újabb verziója szükséges, célszerû frissíteni."
+
+        //-- "Error finding \'kailleraclient.dll\'."
+string  1910 "Hiba: a 'kailleraclient.dll' nem található."
+
+        //-- "No driver has been selected from the list."
+string  1912 "Nincs illesztõprogram kiválasztva a listából"
+
+        //-- "No driver has been selected for slot 1."
+string  1914 "Nincs illesztõprogram kiválasztva az elsõ helynek."
+
+        //-- "This game isn\'t working. Load it anyway?"
+string  1916 "Ez a játék nem mûködik. Mégis legyen betöltve?"
+
+        //-- "Couldn\'t initialise CD emulation."
+string  1918 "A CD emuláció iniciálása sikertelen."
+
+        //-- "Failed to connect to Internet"
+string  1950 ""
+
+        //-- "Failed to access FB Alpha website"
+string  1952 ""
+

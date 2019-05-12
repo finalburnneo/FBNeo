@@ -1,0 +1,2502 @@
+// translation template for FB Alpha
+
+version 0x029743
+
+// codepage 1252
+
+menu    100 {
+        //-- "Game"
+  popup    0 "게임" {
+          //-- "Load game..."
+    10001    1 "게임 불러오기..."
+          //-- "Play via Kaillera..."
+    10002    2 "넷플레이 시작..."
+          //-- "Most recent games..."
+    popup    3 "실행된 게임들..." {
+            //-- "no game selected"
+      10617    4 "선택된 게임 없음"
+            //-- "no game selected"
+      10618    5 "선택된 게임 없음"
+            //-- "no game selected"
+      10619    6 "선택된 게임 없음"
+            //-- "no game selected"
+      10620    7 "선택된 게임 없음"
+            //-- "no game selected"
+      10621    8 "선택된 게임 없음"
+            //-- "no game selected"
+      10622    9 "선택된 게임 없음"
+            //-- "no game selected"
+      10623   10 "선택된 게임 없음"
+            //-- "no game selected"
+      10624   11 "선택된 게임 없음"
+            //-- "no game selected"
+      10625   12 "선택된 게임 없음"
+            //-- "no game selected"
+      10626   13 "선택된 게임 없음"
+    }
+          //-- "Start Neo Geo Multi-slot..."
+    10711   15 "네오지오 멀티-슬롯 시작..."
+          //-- "Load Neo Geo CDZ game..."
+    10713   17 "네오지오 CDZ 게임..."
+          //-- "Select CD image (ISO/CUE)..."
+    10710   18 "CD 이미지 선택 (ISO/CUE)"
+          //-- "Start Neo Geo CDZ..."
+    10712   19 "네오지오 CDZ..."
+          //-- "Exit game"
+    10006   21 "게임 종료"
+          //-- "Pause game"
+    10008   22 "일시 정지"
+          //-- "Adjust CPU speed..."
+    10010   24 "CPU 속도 조절..."
+          //-- "Reset CPU speed to 100%"
+    10011   25 "CPU 속도 100%로 재설정"
+          //-- "Memory Card..."
+    popup   27 "메모리 카드..." {
+            //-- "Create new memory card..."
+      10020   28 "새 메모리 카드 생성..."
+            //-- "Select memory card..."
+      10021   29 "메모리 카드 선택..."
+            //-- "Insert memory card"
+      10022   30 "메모리 카드 넣기"
+            //-- "Eject memory card"
+      10023   31 "메모리 카드 빼기"
+    }
+          //-- "Replay..."
+    popup   33 "재생..." {
+            //-- "Replay input..."
+      10003   34 "입력 재생..."
+            //-- "Record input..."
+      10004   35 "입력 기록..."
+            //-- "Stop replay/record"
+      10005   36 "재생/기록 중지"
+    }
+          //-- "Save states..."
+    popup   38 "상태 저장..." {
+            //-- "Load state..."
+      10030   39 "상태 불러오기..."
+            //-- "Save state..."
+      10031   40 "상태 저장..."
+            //-- "State slots..."
+      popup   41 "위치 상태..." {
+              //-- "Activate previous slot"
+        10034   42 "이전 위치 활성"
+              //-- "Activate next slot"
+        10035   43 "다음 위치 활성"
+              //-- "MENU_STATE_LOAD_SLOT"
+        10032   44 ""
+              //-- "MENU_STATE_SAVE_SLOT"
+        10033   45 ""
+              //-- "Undo last state save"
+        10037   46 "마지막 상태 저장으로 되돌리기"
+      }
+            //-- "Restore full state on load"
+      10036   47 "로딩 후 완전한 상태로 복구"
+    }
+          //-- "Record AVI"
+    11827   49 "AVI 녹화 시작"
+          //-- "Stop recording"
+    11828   50 "AVI 녹화 중지"
+          //-- "Exit emulator"
+    10012   52 "에뮬레이터 종료"
+  }
+        //-- "Video"
+  popup   53 "비디오" {
+          //-- "&Select blitter"
+    popup   54 "Blitter 선택" {
+            //-- "Basic"
+      10121   55 "기본형"
+            //-- "SoftFX"
+      10123   56 ""
+            //-- "Enhanced"
+      10122   57 "강화형"
+            //-- "Experimental"
+      10124   58 "시범형"
+            //-- "DirectX9 Alt"
+      10125   59 "DirectX9 대체형"
+    }
+          //-- "&Blitter options"
+    10643   60 "&Blitter 옵션"
+          //-- "&Stretch"
+    popup   61 "늘림" {
+            //-- "&Normal stretch"
+      10110   62 "기본 늘림"
+            //-- "&Full stretch"
+      10111   63 "전체 늘림"
+            //-- "Correct &aspect ratio"
+      10112   64 "가로 비율에 맞춰"
+    }
+          //-- "&Enable gamma correction"
+    10150   66 "감마 교정 활성"
+          //-- "&Gamma correction settings"
+    popup   67 "감마 교정 설정" {
+            //-- "&Darken midtones"
+      10151   68 "중간 색조를 어둡게"
+            //-- "&Lighten midtones"
+      10152   69 "중간 색조를 밝게"
+            //-- "MENU_GAMMA_OTHER"
+      10153   70 ""
+            //-- "Use video &hardware when possible"
+      10154   72 "가능할경우 비디오 하드웨어 사용"
+            //-- "Use video hardware &exclusively"
+      10155   73 "비디오 하드웨어만 사용"
+            //-- "Use &software exclusively"
+      10156   74 "소프트웨어만 사용"
+    }
+          //-- "&Window size"
+    popup   76 "창 크기" {
+            //-- "&Auto"
+      10170   77 "자동"
+            //-- "&Single size"
+      10171   79 "기본 크기"
+            //-- "&Double size"
+      10172   80 "두배 크기"
+            //-- "&Triple size"
+      10173   81 "세배 크기"
+            //-- "&Quadruple size"
+      10174   82 "네배 크기"
+            //-- "&Maximum size"
+      10175   83 "최대 크기"
+    }
+          //-- "Toggle &fullscreen mode"
+    10102   85 "전체화면 모드로"
+          //-- "Auto Switch to Fullscreen after loading"
+    10613   86 "불러온 후 전체화면으로 자동 전환"
+          //-- "Fullscreen Resolution (Horizontal)"
+    popup   87 "전체화면 해상도 (수평)" {
+            //-- "MENU_RES_ARCADE"
+      10130   88 ""
+            //-- "&Single size"
+      10136   90 "기본 크기"
+            //-- "&Double size"
+      10137   91 "두배 크기"
+            //-- "&Triple size"
+      10138   92 "세배 크기"
+            //-- "&Quadruple size"
+      10139   93 "네배 크기"
+            //-- "MENU_RES_1"
+      10131   95 ""
+            //-- "MENU_RES_2"
+      10132   96 ""
+            //-- "MENU_RES_3"
+      10133   97 ""
+            //-- "MENU_RES_4"
+      10134   98 ""
+            //-- "MENU_RES_OTHER"
+      10135  100 ""
+    }
+          //-- "Fullscreen Resolution (Vertical)"
+    popup  101 "전체화면 해상도 (수직)" {
+            //-- "MENU_RES_ARCADE_VERTICAL"
+      10700  102 ""
+            //-- "&Single size"
+      10706  104 "기본 크기"
+            //-- "&Double size"
+      10707  105 "두배 크기"
+            //-- "&Triple size"
+      10708  106 "세배 크기"
+            //-- "&Quadruple size"
+      10709  107 "네배 크기"
+            //-- "MENU_RES_1_VERTICAL"
+      10701  109 ""
+            //-- "MENU_RES_2_VERTICAL"
+      10702  110 ""
+            //-- "MENU_RES_3_VERTICAL"
+      10703  111 ""
+            //-- "MENU_RES_4_VERTICAL"
+      10704  112 ""
+            //-- "MENU_RES_OTHER_VERTICAL"
+      10705  114 ""
+    }
+          //-- "Fullscreen bit&depth"
+    popup  115 "전체화면 비트 수" {
+            //-- "&16bit"
+      10141  116 "&16비트"
+            //-- "&24bit"
+      10142  117 "&24비트"
+            //-- "&32bit"
+      10143  118 "&32비트"
+    }
+          //-- "Choose Fullscreen Monitor"
+    10728  119 "전체화면 모니터 선택"
+          //-- "&Monitor properties"
+    popup  121 "모니터 속성" {
+            //-- "Automatically detect aspect ratio"
+      10650  122 "자동으로 화면 비율 검출"
+            //-- "Normal CRT aspect ratio"
+      10190  124 "일반적인 CRT 화면 비율"
+            //-- "Normal LCD aspect ratio"
+      10191  125 "일반적인 LCD 화면 비율"
+            //-- "Widescreen CRT aspect ratio"
+      10192  126 "와이드스크린 CRT 화면 비율"
+            //-- "Widescreen LCD aspect ratio"
+      10193  127 "와이드스크린 LCD 화면 비율"
+            //-- "Mirrored vertical alignment"
+      10194  129 "반전된 수직 정렬"
+    }
+          //-- "&Rotate vertically aligned games"
+    10181  131 "회전된 수직 정렬 게임"
+          //-- "Force 60Hz refresh rate"
+    10176  132 "강제 60Hz 주사율"
+          //-- "Enable &Triple Buffering (Fullscreen)"
+    10100  133 "삼중 버퍼링 활성 (전체화면)"
+          //-- "Enable VSync (Windowed)"
+    10646  134 "VSync 활성 (윈도우)"
+          //-- "Enable DWM Sync (Windowed)"
+    10103  135 "DWM 싱크 활성 (윈도우)"
+          //-- "Auto Frameskip"
+    10177  136 "자동 프레임스킵"
+  }
+        //-- "Audio"
+  popup  137 "오디오" {
+          //-- "Select &plugin"
+    popup  138 "플러그인 선택" {
+            //-- "DirectSound"
+      10655  139 ""
+            //-- "XAudio2"
+      10656  140 ""
+    }
+          //-- "Plugin &options"
+    10663  141 "플러그인 옵션"
+          //-- "2-point 1st order sample interpolation"
+    10231  143 "2-점형 1순위 견본 채우기"
+          //-- "4-point 3rd order sample interpolation"
+    10233  144 "4-점형 3순위 견본 채우기"
+          //-- "Disable FM interpolation"
+    10240  146 "FM 채우기 비활성"
+          //-- "4-point 3rd order FM interpolation"
+    10243  147 "4-점형 3순위 FM 채우기"
+          //-- "&Sound logging"
+    popup  149 "사운드 저장" {
+            //-- "Log to file..."
+      10606  150 "파일로 저장..."
+            //-- "Stop logging"
+      10607  151 "저장 중지"
+    }
+          //-- "Buffer size..."
+    10200  152 "버퍼 크기..."
+  }
+        //-- "Input"
+  popup  153 "입력" {
+          //-- "Select &plugin"
+    popup  154 "플러그인 선택" {
+            //-- "DirectInput"
+      10664  155 ""
+    }
+          //-- "&Auto-Fire Rate"
+    popup  157 "자동 연사율" {
+            //-- "Slow"
+      10260  158 "느림"
+            //-- "Medium"
+      10261  159 "보통"
+            //-- "Fast"
+      10262  160 "빠름"
+            //-- "Very Fast"
+      10263  161 "매우 빠름"
+    }
+          //-- "Map game inputs..."
+    10007  163 "게임 입력 변경..."
+          //-- "Set dipswitches..."
+    10009  164 "딥스위치 설정..."
+  }
+        //-- "Misc"
+  popup  165 "기타" {
+          //-- "Options"
+    popup  166 "옵션" {
+            //-- "Auto pause"
+      10300  167 "자동 중지"
+            //-- "Always process keyboard input"
+      10301  168 "키보드 입력을 항상 처리"
+            //-- "Display mode indicator"
+      10302  169 "화면 모드 표시자"
+            //-- "Modeless menu"
+      10303  170 "간소화 메뉴"
+            //-- "Don\'t change Num Lock status"
+      10616  171 "넘버락 상태 변경하지 않음"
+            //-- "Create support folders at runtime"
+      10719  172 "실행시 지원 폴더 생성하기"
+            //-- "Set application thread priority"
+      popup  174 "프로그램 우선 순위 설정" {
+              //-- "High"
+        10311  175 "높음"
+              //-- "Above normal"
+        10312  176 "약간 높음"
+              //-- "Normal"
+        10313  177 "보통"
+              //-- "Below normal"
+        10314  178 "약간 낮음"
+              //-- "Low"
+        10315  179 "낮음"
+      }
+            //-- "Enable high resolution system timer"
+      10319  180 "고해상도 시스템 타이머 활성"
+            //-- "Save High Scores when supported"
+      10654  182 "지원될 경우 최고 득점 저장"
+            //-- "Use alpha blend effects when supported"
+      10720  183 "지원될 경우 반투명 효과 사용"
+            //-- "Display Gear-Shift Indicator when supported"
+      10727  184 "기어 변속 표시자가 지원될 때 표시"
+            //-- "AVI Writer Output size"
+      popup  185 "AVI 기록시 출력 크기" {
+              //-- "1x"
+        10724  186 ""
+              //-- "2x"
+        10725  187 ""
+              //-- "3x"
+        10726  188 ""
+      }
+            //-- "Generate dat file"
+      popup  190 "dat 파일 생성" {
+              //-- "Generate dat (Arcade only)..."
+        10651  191 "dat 생성 (아케이드 전용)..."
+              //-- "Generate dat (Megadrive only)..."
+        10653  192 "dat 생성 (메가드라이브 전용)..."
+              //-- "Generate dat (PC-Engine only)..."
+        10714  193 "dat 생성 (PC-엔진 전용)..."
+              //-- "Generate dat (TurboGrafx16 only)..."
+        10715  194 "dat 생성 (터보 그래픽스 16 전용)..."
+              //-- "Generate dat (SuprGrafx only)..."
+        10716  195 "dat 생성 (슈퍼 그래픽스 전용)..."
+              //-- "Generate dat (Sega SG-1000 only)..."
+        10717  196 "dat 생성 (세가 SG-1000 전용)..."
+              //-- "Generate dat (ColecoVision only)..."
+        10718  197 "dat 생성 (콜레코비젼 전용)..."
+              //-- "Generate dat (Master System only)..."
+        10721  198 "dat 생성 (마스터 시스템 전용)..."
+              //-- "Generate dat (Game Gear only)..."
+        10722  199 "dat 생성 (게임 기어 전용)..."
+              //-- "Generate dat (MSX 1 Games only)..."
+        10723  200 "dat 생성 (MSX 1 게임 전용)..."
+              //-- "Generate all dats..."
+        10729  202 "모든 dat 생성..."
+      }
+            //-- "Configure ROM paths..."
+      10614  204 "롬 경로 설정..."
+            //-- "Configure support file paths..."
+      10615  205 "지원 파일 경로 설정..."
+            //-- "UI language"
+      popup  207 "UI 언어" {
+              //-- "Select UI language..."
+        10307  208 "UI 언어 선택..."
+              //-- "Export UI translation template..."
+        10308  209 "번역 형식 UI 내보내기..."
+              //-- "Reset UI default language"
+        10635  210 "기본 언어로 UI 재설정"
+              //-- "Download UI language..."
+        10309  211 "UI 언어 다운로드..."
+      }
+            //-- "Gamelist language"
+      popup  212 "게임목록 언어" {
+              //-- "Select gamelist language..."
+        10673  213 "게임목록 언어 선택..."
+              //-- "Export gamelist translation template..."
+        10674  214 "게임목록 번역 형식 내보내기..."
+              //-- "Reset gamelist default language"
+        10675  215 "게임목록 기본 언어로 재설정"
+      }
+            //-- "Icons"
+      popup  217 "아이콘" {
+              //-- "Enable driver icons display"
+        10676  218 "드라이버 아이콘 보여주기 활성"
+              //-- "Parents only (use if you have problems)"
+        10677  219 "부모 아이콘만 보여주기 (문제가 생길 경우 사용)"
+              //-- "Icon size"
+        popup  220 "아이콘 크기" {
+                //-- "16 x 16 pixels"
+          10678  221 "16 x 16 픽셀"
+                //-- "24 x 24 pixels"
+          10679  222 "24 x 24 픽셀"
+                //-- "32 x 32 pixels"
+          10680  223 "32 x 32 픽셀"
+        }
+              //-- "Save snapshot"
+        10318  225 "스냅샷 저장"
+              //-- "Shot factory.."
+        10317  226 "샷 공작소..."
+              //-- "Enable cheats..."
+        10306  228 "치트 활성..."
+              //-- "Cheat search"
+        popup  229 "치트 찾기" {
+                //-- "Start New Search"
+          10628  230 "새 검색 시작"
+                //-- "Target value has not changed"
+          10629  232 "목표에서 변하지 않은 값"
+                //-- "Target value has changed"
+          10630  233 "목표에서 변경된 값"
+                //-- "Target value has decreased"
+          10631  234 "목표보다 감소된 값"
+                //-- "Target value has increased"
+          10632  235 "목표보다 증가된 값"
+                //-- "Dump search to file"
+          10633  237 "덤프된 파일 찾기"
+                //-- "Exit Cheat Search"
+          10634  239 "치트 찾기 종료"
+        }
+              //-- "Invoke 68K debugger..."
+        10392  241 "68k 디버거 호출..."
+              //-- "Palette Viewer..."
+        10672  243 "팔렛트 보기..."
+              //-- "Associate with .fs and .fr files"
+        10330  245 ".fs 와 .fr 파일 합침"
+              //-- "Disassociate from .fs and .fr files"
+        10331  246 ".fs 와 .fr 파일 분리"
+              //-- "Save input mapping now"
+        10332  248 "현재 변경된 입력 저장"
+              //-- "Auto-save input mapping"
+        10333  249 "변경된 입력 자동 저장"
+              //-- "Save settings to .ini now"
+        10334  251 ".ini 로 설정 저장하기"
+              //-- "Reload settings from .ini"
+        10335  252 ".ini 설정 불러오기"
+      }
+            //-- "Help"
+      popup  253 "도움말" {
+              //-- "&Help"
+        10503  254 "도움말"
+              //-- "&What\'s New"
+        10505  256 "바뀐 사항"
+              //-- "&FB Alpha homepage"
+        10504  258 "&FB Alpha 홈페이지"
+              //-- "&Neo-Source forums"
+        10506  259 "&Neo-Source 포럼"
+              //-- "&System information"
+        10502  261 "시스템 정보"
+              //-- "&About FB Alpha"
+        10501  262 "FB Alpha 대해서"
+      }
+    }
+  }
+}
+
+menu    110 {
+        //-- "Basic"
+  popup    0 "기본형" {
+          //-- "&No effects"
+    11001    1 "효과 없음"
+          //-- "&Scanlines"
+    11002    2 "스캔라인"
+          //-- "Scanlines &50%"
+    11003    3 "50% 스캔라인"
+          //-- "&Rotate scanlines"
+    11106    5 "회전된 스캔라인"
+          //-- "Force &Flip"
+    11143    7 "강제 뒤집기"
+          //-- "Buffering &method"
+    popup    9 "버퍼링 속성" {
+            //-- "&Autodetect"
+      10160   10 "자동 검출"
+            //-- "&Video memory"
+      10161   11 "비디오 메모리"
+            //-- "&System memory"
+      10162   12 "시스템 메모리"
+    }
+  }
+}
+
+menu    111 {
+        //-- "Enhanced"
+  popup    0 "강화형" {
+          //-- "Disable all effects"
+    11101    1 "모든 효과 끄기"
+          //-- "Enable &bi-linear filtering"
+    11102    3 "쌍선형 필터링 활성"
+          //-- "&Rotate scanlines and RGB effects"
+    11113    4 "회전된 스캔라인과 RGB 효과"
+          //-- "Enable &Pre-scale"
+    11107    6 "자유 비율 활성"
+          //-- "Pre-scale using Soft&FX"
+    11108    7 "자유 비율의 SoftFX 사용"
+          //-- "SoftFX algorithm"
+    popup    8 "SoftFX 알고리즘" {
+            //-- "Double pixels (3D hardware)"
+      11201    9 "이중 픽셀 (3D 하드웨어)"
+            //-- "AdvanceMAME Scale2x"
+      11202   10 "AdvanceMAME 스케일2x"
+            //-- "AdvanceMAME Scale3x"
+      11203   11 "AdvanceMAME 스케일3x"
+            //-- "2xPM LQ"
+      11204   12 ""
+            //-- "2xPM HQ"
+      11205   13 ""
+            //-- "Eagle Graphics"
+      11206   14 "이글 그래픽"
+            //-- "Super Eagle"
+      11207   15 "슈퍼 이글"
+            //-- "2xSaI"
+      11208   16 ""
+            //-- "Super 2xSaI"
+      11209   17 "슈퍼 2xSaI"
+            //-- "Super Eagle (VBA)"
+      11210   18 "슈퍼 이글 (VBA)"
+            //-- "2xSaI (VBA)"
+      11211   19 ""
+            //-- "Super 2xSaI (VBA)"
+      11212   20 "슈퍼 2xSaI (VBA)"
+            //-- "SuperScale"
+      11213   21 "슈퍼스케일"
+            //-- "SuperScale (75% Scanlines)"
+      11214   22 "슈퍼스케일 (75% 스캔라인)"
+            //-- "hq2x Filter"
+      11215   23 "hq2x 필터"
+            //-- "hq3x Filter"
+      11216   24 "hq3x 필터"
+            //-- "hq4x Filter"
+      11217   25 "hq4x 필터"
+            //-- "hq2xS (VBA) Filter"
+      11218   26 "hq2xS (VBA) 필터"
+            //-- "hq3xS (VBA) Filter"
+      11219   27 "hq3xS (VBA) 필터"
+            //-- "hq2xS (SNES9X) Filter"
+      11220   28 "hq2xS (SNES9X) 필터"
+            //-- "hq3xS (SNEX9X) Filter"
+      11221   29 "hq3xS (SNEX9X) 필터"
+            //-- "hq2xBold Filter"
+      11222   30 "hq2xBold 필터"
+            //-- "hq3xBold Filter"
+      11223   31 "hq3xBold 필터"
+            //-- "EPXB Filter"
+      11224   32 "EPXB 필터"
+            //-- "EPXC Filter"
+      11225   33 "EPXC 필터 "
+            //-- "2xBR Squared"
+      11226   34 "2xBR 스쿼드"
+            //-- "2xBR Semi-Rounded"
+      11227   35 "2xBR 세미-라운디드"
+            //-- "2xBR Rounded"
+      11228   36 "2xBR 라운디드"
+            //-- "3xBR Squared"
+      11229   37 "3xBR 스쿼드"
+            //-- "3xBR Semi-Rounded"
+      11230   38 "3xBR 세미-라운디드"
+            //-- "3xBR Rounded"
+      11231   39 "3xBR 라운디드"
+            //-- "4xBR Squared"
+      11232   40 "4xBR 스쿼드"
+            //-- "4xBR Semi-Rounded"
+      11233   41 "4xBR 세미-라운디드"
+            //-- "4xBR Rounded"
+      11234   42 "4xBR 라운디드"
+            //-- "DDT3x"
+      11235   43 ""
+            //-- "Force image to SoftFX size"
+      11290   45 "강제 SoftFX 크기의 이미지"
+    }
+          //-- "Enable &Scanlines"
+    11005   47 "스캔라인 활성"
+          //-- "Set scanline &intensity..."
+    11109   48 "스캔라인 강도 설정..."
+          //-- "Enable phosphor &feedback"
+    11103   50 "인광체 반사 활성"
+          //-- "Set &phosphor feedback intensity..."
+    11110   51 "인광체 반사 강도 설정..."
+          //-- "&No effects"
+    11004   53 "효과 없음"
+          //-- "RGB &effects"
+    11104   54 "RGB 효과"
+          //-- "&3D projection"
+    11105   55 "3D 영상"
+          //-- "&Auto size scanlined RGB preset"
+    11121   57 "자동 크기의 RGB 프리셋 스캔라인"
+          //-- "Manually select RGB preset"
+    popup   58 "수동으로 RGB 프리셋 선택" {
+            //-- "Small faint RGB mask"
+      11122   59 "작고 희미한 RGB 가리기"
+            //-- "Large faint RGB dot mask"
+      11123   60 "크고 희미한 RGB 점 가리기"
+            //-- "Large faint RGB mask"
+      11124   61 "크고 희미한 RGB 가리기"
+            //-- "MAME rgbmicro"
+      11125   63 ""
+            //-- "MAME rgbtiny"
+      11126   64 ""
+            //-- "Aperture grille"
+      11127   65 "격자형 무늬"
+            //-- "Large oversaturated RGB dot"
+      11128   67 "크고 과포장된 RGB 점"
+            //-- "Huge oversaturated pattern"
+      11129   68 "넓고 과포장된 패턴"
+    }
+          //-- "Set 3&D projection properties..."
+    11111   70 "3D 영상 속성 설정..."
+          //-- "Advanced settings"
+    popup   72 "세부 설정" {
+            //-- "Force &16-bit emulation"
+      11141   73 "강제 16-비트 에뮬레이션"
+            //-- "Use DirectX texture &management"
+      11142   74 "DirectX 텍스쳐 관리 사용"
+    }
+  }
+}
+
+menu    112 {
+        //-- "SoftFX"
+  popup    0 "" {
+          //-- "&Double pixels (Software)"
+    11301    1 "이중 픽셀 (소프트웨어)"
+          //-- "AdvanceMAME Scale2x"
+    11302    2 "AdvanceMAME 스케일2x"
+          //-- "AdvanceMAME Scale3x"
+    11303    3 "AdvanceMAME 스케일3x"
+          //-- "2xPM LQ"
+    11304    4 ""
+          //-- "2xPM HQ"
+    11305    5 ""
+          //-- "Eagle Graphics"
+    11306    6 "이글 그래픽"
+          //-- "Super Eagle"
+    11307    7 "슈퍼 이글"
+          //-- "2xSaI"
+    11308    8 ""
+          //-- "Super 2xSaI"
+    11309    9 "슈퍼 2xSaI"
+          //-- "Super Eagle (VBA)"
+    11310   10 "슈퍼 이글 (VBA)"
+          //-- "2xSaI (VBA)"
+    11311   11 ""
+          //-- "Super 2xSaI (VBA)"
+    11312   12 "슈퍼 2xSaI (VBA)"
+          //-- "SuperScale"
+    11313   13 "슈퍼스케일"
+          //-- "SuperScale (75% Scanlines)"
+    11314   14 "슈퍼스케일 (75% 스캔라인)"
+          //-- "hq2x filter"
+    11315   15 "hq2x 필터"
+          //-- "hq3x filter"
+    11316   16 "hq3x 필터"
+          //-- "hq4x filter"
+    11317   17 "hq4x 필터"
+          //-- "hq2xS (VBA) filter"
+    11318   18 "hq2xS (VBA) 필터"
+          //-- "hq3xS (VBA) filter"
+    11319   19 "hq3xS (VBA) 필터"
+          //-- "hq2xS (SNES9X) Filter"
+    11320   20 "hq2xS (SNES9X) 필터"
+          //-- "hq3xS (SNEX9X) Filter"
+    11321   21 "hq3xS (SNEX9X) 필터"
+          //-- "hq2xBold Filter"
+    11322   22 "hq2xBold 필터"
+          //-- "hq3xBold Filter"
+    11323   23 "hq3xBold 필터"
+          //-- "EPXB Filter"
+    11324   24 "EPXB 필터"
+          //-- "EPXC Filter"
+    11325   25 "EPXC 필터"
+          //-- "2xBR Squared"
+    11326   26 "2xBR 스쿼디드"
+          //-- "2xBR Semi-Rounded"
+    11327   27 "2xBR 세미-라운디드"
+          //-- "2xBR Rounded"
+    11328   28 "2xBR 라운디드"
+          //-- "3xBR Squared"
+    11329   29 "3xBR 스퀘드"
+          //-- "3xBR Semi-Rounded"
+    11330   30 "3xBR 세미-라운디드"
+          //-- "3xBR Rounded"
+    11331   31 "3xBR 라운디드"
+          //-- "4xBR Squared"
+    11332   32 "4xBR 스쿼드"
+          //-- "4xBR Semi-Rounded"
+    11333   33 "4xBR 세미-라운디드"
+          //-- "4xBR Rounded"
+    11334   34 "4xBR 라운디드"
+          //-- "DDT3x"
+    11335   35 ""
+          //-- "&Force image to SoftFX size"
+    11390   37 "강제 SoftFX 크기의 이미지"
+          //-- "Buffering &method"
+    popup   38 "버퍼링 속성" {
+            //-- "&Autodetect"
+      10163   39 "자동 검출"
+            //-- "&Video memory"
+      10164   40 "비디오 메모리"
+            //-- "&System memory"
+      10165   41 "시스템 메모리"
+            //-- "Directly access video memory"
+      11391   43 "비디오 메모리에 직접 접근"
+    }
+  }
+}
+
+menu    113 {
+        //-- "Experimental"
+  popup    0 "시범형" {
+          //-- "Enable point filtering"
+    11601    1 "점형 필터링 활성"
+          //-- "Enable linear filtering"
+    11602    2 "선형 필터링 활성"
+          //-- "Enable cubic filtering"
+    11603    3 "입방형 필터링 활성"
+          //-- "Cubic filter quality"
+    popup    4 "입방형 필터 품질" {
+            //-- "Lightly filtered"
+      11610    5 "부드럽게"
+            //-- "Smoothened strongly"
+      11612    7 "약간 부드럽게"
+            //-- "Smoothened lightly"
+      11611    8 "좀 더 부드럽게"
+            //-- "Perceptual compromise"
+      11613    9 "공간 타협"
+            //-- "Sharpened lightly"
+      11614   10 "약간 날카롭게"
+            //-- "Sharpened strongly"
+      11615   11 "좀 더 날카롭게"
+            //-- "Duff\'s tensioned B-splines..."
+      11616   13 ""
+            //-- "Mitchell-Netravali 2C + B = 1..."
+      11617   14 ""
+            //-- "Cardinal cubic splines..."
+      11618   15 ""
+            //-- "Mitchell-Netravali free..."
+      11619   16 ""
+    }
+          //-- "Enable &Scanlines"
+    11010   18 "스캔라인 활성"
+          //-- "Set scanline &intensity..."
+    11144   19 "스캔라인 강도 설정..."
+          //-- "Advanced settings"
+    popup   21 "세부 설정" {
+            //-- "Single-pass"
+      11623   22 "싱글-패스"
+            //-- "Multi-pass"
+      11625   23 "다중-패스"
+            //-- "High-performance"
+      11626   24 "높은 퍼포먼스"
+            //-- "Use PS1.4"
+      11621   26 "PS1.4 사용"
+            //-- "Use floating-point textures"
+      11620   27 "부동소숫점 텍스쳐 사용"
+    }
+  }
+}
+
+menu    114 {
+        //-- "DirectX9 Alt"
+  popup    0 "기타 DirectX9" {
+          //-- "Point filtering"
+    11701    1 "점형 필터링"
+          //-- "Linear filtering"
+    11702    2 "선형 필터링"
+          //-- "SoftFX algorithm"
+    popup    4 "SoftFX 알고리즘" {
+            //-- "Double pixels (3D hardware)"
+      11401    5 "이중 픽셀 (3D 하드웨어)"
+            //-- "AdvanceMAME Scale2x"
+      11402    6 "AdvanceMAME 스케일2x"
+            //-- "AdvanceMAME Scale3x"
+      11403    7 "AdvanceMAME 스케일3x"
+            //-- "2xPM LQ"
+      11404    8 ""
+            //-- "2xPM HQ"
+      11405    9 ""
+            //-- "Eagle Graphics"
+      11406   10 "이글 그래픽스"
+            //-- "Super Eagle"
+      11407   11 "슈퍼 이글"
+            //-- "2xSaI"
+      11408   12 ""
+            //-- "Super 2xSaI"
+      11409   13 "슈퍼 2xSaI"
+            //-- "Super Eagle (VBA)"
+      11410   14 "슈퍼 이글 (VBA)"
+            //-- "2xSaI (VBA)"
+      11411   15 ""
+            //-- "Super 2xSaI (VBA)"
+      11412   16 "슈퍼 2xSaI (VBA)"
+            //-- "SuperScale"
+      11413   17 "슈퍼스케일"
+            //-- "SuperScale (75% Scanlines)"
+      11414   18 "슈퍼스케일 (75% 스캔라인)"
+            //-- "hq2x Filter"
+      11415   19 "hq2x 필터"
+            //-- "hq3x Filter"
+      11416   20 "hq3x 필터"
+            //-- "hq4x Filter"
+      11417   21 "hq4x 필터"
+            //-- "hq2xS (VBA) Filter"
+      11418   22 "hq2xS (VBA) 필터"
+            //-- "hq3xS (VBA) Filter"
+      11419   23 "hq3xS (VBA) 필터"
+            //-- "hq2xS (SNES9X) Filter"
+      11420   24 "hq2xS (SNES9X) 필터"
+            //-- "hq3xS (SNEX9X) Filter"
+      11421   25 "hq3xS (SNEX9X) 필터"
+            //-- "hq2xBold Filter"
+      11422   26 "hq2xBold 필터"
+            //-- "hq3xBold Filter"
+      11423   27 "hq3xBold 필터"
+            //-- "EPXB Filter"
+      11424   28 "EPXB 필터"
+            //-- "EPXC Filter"
+      11425   29 "EPXC 필터"
+            //-- "2xBR Squared"
+      11426   30 "2xBR 스쿼드"
+            //-- "2xBR Semi-Rounded"
+      11427   31 "2xBR 세미-라운디드"
+            //-- "2xBR Rounded"
+      11428   32 "2xBR 라운디드"
+            //-- "3xBR Squared"
+      11429   33 "3xBR 스쿼드"
+            //-- "3xBR Semi-Rounded"
+      11430   34 "3xBR 세미-라운디드"
+            //-- "3xBR Rounded"
+      11431   35 "3xBR 라운디드"
+            //-- "4xBR Squared"
+      11432   36 "4xBR 스쿼드"
+            //-- "4xBR Semi-Rounded"
+      11433   37 "4xBR 세미-라운디드"
+            //-- "4xBR Rounded"
+      11434   38 "4xBR 라운디드"
+            //-- "DDT3x"
+      11435   39 ""
+            //-- "Force image to SoftFX size"
+      11490   41 "강제 SoftFX 크기의 이미지"
+    }
+          //-- "Advanced settings"
+    popup   43 "세부 설정" {
+            //-- "Force &16-bit emulation"
+      11491   44 "강제 &16-비트 에뮬레이션"
+            //-- "Hardware vertex processing"
+      11703   45 "하드웨어 최대로 처리"
+            //-- "Motion blur"
+      11704   46 "모션 블러"
+    }
+  }
+}
+
+menu    130 {
+        //-- "DirectSound plugin"
+  popup    0 "DirectSound 플러그인" {
+          //-- "Use Low-pass filter"
+    10201    1 "로우-패스 필터 사용"
+          //-- "Sound disabled"
+    10210    3 "사운드 끄기"
+          //-- "11025Hz samplerate"
+    10211    4 "11025Hz 주사율"
+          //-- "22050Hz samplerate"
+    10212    5 "22050Hz 주사율"
+          //-- "44100Hz samplerate"
+    10213    6 "44100Hz 주사율"
+          //-- "48000Hz samplerate"
+    10214    7 "48000Hz 주사율"
+  }
+}
+
+menu    131 {
+        //-- "XAudio2 plugin"
+  popup    0 "XAudio2 플러그인" {
+          //-- "Use Low-pass filter"
+    10202    1 "로우-패스 필터 사용"
+          //-- "Use reverb"
+    10203    2 "좌/우 뒤집기"
+          //-- "Sound disabled"
+    10220    4 "사운드 끄기"
+          //-- "11025Hz samplerate"
+    10221    5 "11025Hz 주사율"
+          //-- "22050Hz samplerate"
+    10222    6 "22050Hz 주사율"
+          //-- "44100Hz samplerate"
+    10223    7 "44100Hz 주사율"
+          //-- "48000Hz samplerate"
+    10224    8 "48000Hz 주사율"
+  }
+}
+
+menu    140 {
+        //-- "Game Selection Menu"
+  popup    0 "게임 선택 메뉴" {
+          //-- "Play"
+    11900    1 "실행"
+          //-- "View Game Information"
+    11901    3 "게임 정보 보기"
+          //-- "View in Progetto EMMA"
+    11902    5 "Progetto EMMA 사이트에서 보기"
+          //-- "Favorite"
+    11903    7 "즐겨찾기"
+  }
+}
+
+        //-- "Map Game Inputs"
+dialog	  51 "게임 입력 변경" {
+        //-- "OK"
+      2	   0 "확인"
+        //-- "Double-click an input to change its mapping"
+  65535	   2 "교체할 입력을 변경하기 위해 더블 클릭하세요"
+        //-- "Make selection in all three drop-down boxes, click apropriate button"
+  65535	   5 "모든 세개의 드롭다운 박스를 선택하여 적절한 버튼을 클릭하세요"
+        //-- "Save preset"
+  20127	   9 "프리셋 저장"
+        //-- "Make default"
+  20006	  10 "기본값으로"
+        //-- "Use preset"
+  20005	  11 "프리셋 사용"
+}
+
+        //-- "Select control"
+dialog	  52 "컨트롤 선택" {
+        //-- "Grab mouse"
+  20007	   0 "마우스 입력"
+        //-- "Activate"
+  20011	   1 "활성화"
+        //-- "Clear Input"
+      3	   2 "입력 지우기"
+        //-- "Clear Lock"
+  20021	   3 "지우기 잠금"
+}
+
+        //-- "Edit cheat settings"
+dialog	  53 "치트 설정 변경" {
+        //-- "Select a cheat to change it."
+  65535	   1 "선택된 치트로 변경합니다."
+        //-- "Defaults"
+  20013	   4 "기본값"
+        //-- "OK"
+      1	   5 "확인"
+        //-- "Cancel"
+      2	   6 "취소"
+}
+
+        //-- "Edit Constant"
+dialog	  54 "상수 변경" {
+        //-- "Close"
+      2	   1 "닫기"
+}
+
+        //-- "Edit DIPswitch settings"
+dialog	  55 "딥스위치 설정 변경" {
+        //-- "Select a setting to change it."
+  65535	   1 "선택된 설정으로 변경합니다."
+        //-- "Defaults"
+  20013	   4 "기본값"
+        //-- "OK"
+      1	   5 "확인"
+        //-- "Cancel"
+      2	   6 "취소"
+}
+
+        //-- ""
+dialog	  56 "" {
+        //-- "Progress1"
+  20015	   1 ""
+        //-- "Cancel"
+      2	   5 "취소"
+}
+
+        //-- ""
+dialog	  57 "" {
+        //-- "FB Alpha contains parts of MAME && Final Burn.\n� 2004-2018, Team FB Alpha."
+  65535	   3 "FB Alpha에는 MAME와 Final Burn의 일부분이 포함되어 있습니다.   ⓒ 2004-2017, 팀 FB Alpha."
+        //-- "OK"
+      1	   4 "확인"
+        //-- "License"
+  20052	   5 "라이센스"
+}
+
+        //-- ""
+dialog	  58 "" {
+        //-- "OK"
+      1	   4 "확인"
+        //-- " I understand and agree to be bound by the terms of the above license agreement"
+  20054	   5 "나는 라이센스 규칙의 협약에 동의하며 준수합니다"
+}
+
+        //-- ""
+dialog	  59 "" {
+        //-- "Close"
+  20019	   0 "닫기"
+}
+
+        //-- "Edit ROMs paths"
+dialog	  60 "롬 경로 수정" {
+        //-- "Tab2"
+  20502	   0 ""
+        //-- "OK"
+      1	   1 "확인"
+        //-- "Cancel"
+      2	   2 "취소"
+        //-- "Browse..."
+  21140	   5 "찾기..."
+        //-- "Browse..."
+  21141	   7 "찾기..."
+        //-- "Browse..."
+  21142	   9 "찾기..."
+        //-- "Browse..."
+  21143	  11 "찾기..."
+        //-- "Browse..."
+  21144	  13 "찾기..."
+        //-- "Browse..."
+  21145	  15 "찾기..."
+        //-- "Browse..."
+  21146	  17 "찾기..."
+        //-- "Browse..."
+  21147	  19 "찾기..."
+        //-- "Browse..."
+  21148	  21 "찾기..."
+        //-- "Browse..."
+  21149	  23 "찾기..."
+        //-- "Browse..."
+  21150	  25 "찾기..."
+        //-- "Browse..."
+  21151	  27 "찾기..."
+        //-- "Browse..."
+  21152	  29 "찾기..."
+        //-- "Browse..."
+  21153	  31 "찾기..."
+        //-- "Browse..."
+  21154	  33 "찾기..."
+        //-- "Browse..."
+  21155	  35 "찾기..."
+        //-- "Browse..."
+  21156	  37 "찾기..."
+        //-- "Browse..."
+  21157	  39 "찾기..."
+        //-- "Browse..."
+  21158	  41 "찾기..."
+        //-- "Browse..."
+  21159	  43 "찾기..."
+}
+
+        //-- "Select Game"
+dialog	  61 "게임 선택" {
+        //-- "Preview"
+  20303	   2 "미리보기"
+        //-- "Title"
+  20304	   3 "제목"
+        //-- "Select Game"
+  20302	   8 "선택 게임"
+        //-- "Game info:"
+  20065	  10 "게임 정보:"
+        //-- "ROM name:"
+  20063	  11 "롬 이름:"
+        //-- "ROM info:"
+  20064	  12 "롬 정보:"
+        //-- "Released by:"
+  20067	  13 "제작사:"
+        //-- "Genre:"
+  20066	  14 "장르:"
+        //-- "Notes:"
+  20124	  15 "기록:"
+        //-- "Filters"
+  20300	  22 "필터"
+        //-- "Game Info"
+  20602	  24 "게임 정보"
+        //-- "Options"
+  20301	  25 "옵션"
+        //-- "Show available"
+  20060	  26 "실행 가능 보기"
+        //-- "Show unavailable"
+  20137	  27 "실행 불가능 보기"
+        //-- "Always show clones"
+  20055	  28 "항상 자식롬 보기"
+        //-- "Use zipnames"
+  20074	  29 "zip 파일 보기"
+        //-- "Latin text only"
+  20075	  30 "영문자만 표시"
+        //-- "ROMs Dirs..."
+  20600	  31 "롬 경로..."
+        //-- "Scan ROMs"
+  20601	  32 "롬셋 재검색"
+        //-- "Cancel"
+      2	  33 "취소"
+        //-- "Play"
+      1	  34 "실행"
+        //-- "IPS"
+  20133	  35 ""
+        //-- "Apply Patches"
+  20132	  36 "패치 적용"
+        //-- "IPS Manager"
+  20131	  37 "IPS 관리자"
+        //-- "Search"
+  20135	  38 "찾기"
+}
+
+        //-- "Shots Factory"
+dialog	  62 "샷 공작소" {
+        //-- "&Capture"
+  20061	   0 "찍기"
+        //-- "OK"
+      1	   1 "확인"
+        //-- "&Advance Frame"
+  20062	   2 "다음 프레임"
+        //-- "Layer &1"
+  20202	   3 "레이어 &1"
+        //-- "Layer &2"
+  20203	   4 "레이어 &2"
+        //-- "Layer &3"
+  20204	   5 "레이어 &3"
+        //-- "Layer &4"
+  20205	   6 "레이어 &4"
+        //-- "Show"
+  20206	   7 "보기"
+        //-- "Sprite Priority 1"
+  20077	   8 "스프라이트 순위 1"
+        //-- "Sprite Priority 2"
+  20078	   9 "스프라이트 순위 2"
+        //-- "Sprite Priority 3"
+  20080	  10 "스프라이트 순위 3"
+        //-- "Sprite Priority 4"
+  20079	  11 "스프라이트 순위 4"
+        //-- "Sprite Priority 5"
+  20081	  12 "스프라이트 순위 5"
+        //-- "Sprite Priority 6"
+  20082	  13 "스프라이트 순위 6"
+        //-- "Sprite Priority 7"
+  20083	  14 "스프라이트 순위 7"
+        //-- "Sprite Priority 8"
+  20084	  15 "스프라이트 순위 8"
+}
+
+        //-- "Select desired Gamma value"
+dialog	  63 "원하는 감마 값 선택" {
+        //-- "OK"
+      1	   0 "확인"
+        //-- "Gamma value"
+  20085	   2 "감마 값"
+        //-- "Cancel"
+      2	   4 "취소"
+}
+
+        //-- "Select desired resolution"
+dialog	  64 "원하는 해상도 선택" {
+        //-- "OK"
+      1	   0 "확인"
+        //-- "Resolution:"
+  20136	   2 "해상도:"
+        //-- "Cancel"
+      2	   4 "취소"
+}
+
+        //-- "Select desired scanline intensity"
+dialog	  65 "원하는 스캔라인 강도 선택" {
+        //-- "OK"
+      1	   0 "확인"
+        //-- "Scanline intensity"
+  20088	   2 "스캔라인 강도"
+        //-- "Cancel"
+      2	   4 "취소"
+}
+
+        //-- "Select desired feedback intensity"
+dialog	  66 "원하는 반사음향 강도 선택" {
+        //-- "OK"
+      1	   0 "확인"
+        //-- "Feedback strength"
+  20090	   2 "반사음향 강도"
+        //-- "Feedback oversaturation"
+  20092	   5 "반사음향 한계돌파"
+        //-- "Cancel"
+      2	   7 "취소"
+}
+
+        //-- "Select desired 3D projection properties"
+dialog	  67 "원하는 3D 영상 속성 선택" {
+        //-- "OK"
+      1	   0 "확인"
+        //-- "Screen Angle"
+  20094	   3 "화면 각도"
+        //-- "Fishbowl Factor"
+  20096	   6 "어항 요소"
+        //-- "Cancel"
+      2	   8 "취소"
+}
+
+        //-- "Adjust speed of the emulated CPU"
+dialog	  68 "에뮬레이트 된 CPU 속도 조절" {
+        //-- "OK"
+      1	   0 "확인"
+        //-- "CPU speed"
+  20098	   2 "CPU 속도"
+        //-- "%"
+  65535	   4 ""
+        //-- "Cancel"
+      2	   5 "취소"
+}
+
+        //-- "FB Alpha system information report"
+dialog	  69 "FB Alpha 시스템 정보 보고서" {
+        //-- "OK"
+      1	   0 "확인"
+        //-- "Save..."
+  20138	   1 "저장..."
+}
+
+        //-- "FB Alpha has encountered an unrecoverable problem and will be terminated"
+dialog	  70 "FB Alpha 복구할 수 없는 문제점들로 인해 종료될 것 입니다" {
+        //-- "OK"
+      1	   1 "확인"
+        //-- "Debug"
+  20102	   2 "디버그"
+        //-- "Details"
+  20103	   3 "상세"
+        //-- "Log"
+  20104	   4 "로그"
+}
+
+        //-- "FB Alpha debugger"
+dialog	  71 "FB Alpha 디버거" {
+        //-- "Disassembly"
+  65535	   3 "디스어셈블리"
+        //-- "Internal CPU state"
+  65535	   8 "내부 CPU 상태"
+        //-- "Memory map"
+  65535	  11 "메모리 맵"
+        //-- "Debugger messages"
+  65535	  16 "디버거 메시지"
+        //-- "Execute"
+      1	  20 "실행"
+        //-- "Exit"
+      2	  22 "종료"
+        //-- "Go!"
+  20114	  23 "시작!"
+        //-- "Step frame"
+  20118	  24 "다음 프레임"
+        //-- "Step"
+  20115	  25 "다음"
+        //-- "Step into"
+  20116	  26 "계속하기"
+        //-- "Skip"
+  20117	  27 "건너뜀"
+        //-- "Screenshot"
+  20119	  28 "스크린샷"
+}
+
+        //-- "FB Alpha debugger"
+dialog	  72 "FB Alpha 디버거" {
+        //-- "Execute"
+      1	  10 "실행"
+        //-- "Exit"
+      2	  12 "종료"
+        //-- "Go!"
+  20114	  13 "시작!"
+        //-- "Step frame"
+  20118	  14 "다음 프레임"
+        //-- "Step"
+  20115	  15 "다음"
+        //-- "Step into"
+  20116	  16 "계속하기"
+        //-- "Skip"
+  20117	  17 "건너뜀"
+        //-- "Screenshot"
+  20119	  18 "스크린샷"
+}
+
+        //-- "FB Alpha message"
+dialog	  73 "FB Alpha 메시지" {
+        //-- "OK"
+      1	   0 "확인"
+}
+
+        //-- "Edit support file paths"
+dialog	  74 "지원 파일 경로 수정" {
+        //-- "Tab2"
+  20501	   0 ""
+        //-- "OK"
+      1	   1 "확인"
+        //-- "Cancel"
+      2	   2 "취소"
+        //-- "Browse..."
+  20950	   5 "찾기..."
+        //-- "Browse..."
+  20951	   7 "찾기..."
+        //-- "Browse..."
+  20952	   9 "찾기..."
+        //-- "Browse..."
+  20953	  11 "찾기..."
+        //-- "Browse..."
+  20954	  13 "찾기..."
+        //-- "Browse..."
+  20955	  15 "찾기..."
+        //-- "Browse..."
+  20956	  17 "찾기..."
+        //-- "Browse..."
+  20957	  19 "찾기..."
+        //-- "Browse..."
+  20958	  21 "찾기..."
+        //-- "Browse..."
+  20959	  23 "찾기..."
+        //-- "Browse..."
+  20960	  25 "찾기..."
+        //-- "Browse..."
+  20961	  27 "찾기..."
+        //-- "Browse..."
+  20962	  29 "찾기..."
+        //-- "Browse..."
+  20963	  31 "찾기..."
+        //-- "Browse..."
+  20964	  33 "찾기..."
+        //-- "Browse..."
+  20965	  35 "찾기..."
+        //-- "Browse..."
+  20966	  37 "찾기..."
+        //-- "Browse..."
+  20967	  39 "찾기..."
+        //-- "Browse..."
+  20968	  41 "찾기..."
+        //-- "Browse..."
+  20969	  43 "찾기..."
+        //-- "Browse..."
+  20970	  45 "찾기..."
+        //-- "Browse..."
+  20971	  47 "찾기..."
+        //-- "Browse..."
+  20972	  49 "찾기..."
+}
+
+        //-- "Palette Viewer"
+dialog	  75 "팔렛트 뷰어" {
+        //-- "0"
+  20400	  16 ""
+        //-- "1"
+  20401	  17 ""
+        //-- "2"
+  20402	  18 ""
+        //-- "3"
+  20403	  19 ""
+        //-- "4"
+  20404	  20 ""
+        //-- "5"
+  20405	  21 ""
+        //-- "6"
+  20406	  22 ""
+        //-- "7"
+  20407	  23 ""
+        //-- "8"
+  20408	  24 ""
+        //-- "9"
+  20409	  25 ""
+        //-- "A"
+  20410	  26 ""
+        //-- "B"
+  20411	  27 ""
+        //-- "C"
+  20412	  28 ""
+        //-- "D"
+  20413	  29 ""
+        //-- "E"
+  20414	  30 ""
+        //-- "F"
+  20415	  31 ""
+        //-- "Selected colour: "
+  20434	  32 "선택된 색상: "
+        //-- "Close"
+      2	  33 "닫기"
+        //-- "Previous..."
+  20432	  34 "이전..."
+        //-- "Next..."
+  20433	  35 "다음..."
+}
+
+        //-- "IPS Patch Manager"
+dialog	  77 "IPS 패치 관리자" {
+        //-- "Deselect All"
+  20130	   6 "전부 선택안함"
+        //-- "Cancel"
+      2	   8 "취소"
+        //-- "OK"
+      1	   9 "확인"
+}
+
+        //-- "Select cartridges to load..."
+dialog	  78 "불러올 카트릿지를 선택..." {
+        //-- "OK"
+      1	   1 "확인"
+        //-- "Cancel"
+      2	   2 "취소"
+        //-- "Slot 1"
+  20736	   4 "슬롯 1"
+        //-- "Clear"
+  20730	   8 "제거"
+        //-- "Select..."
+  20724	   9 "선택..."
+        //-- "Slot 2"
+  20737	  11 "슬롯 2"
+        //-- "Clear"
+  20731	  15 "제거"
+        //-- "Select..."
+  20725	  16 "선택..."
+        //-- "Slot 3"
+  20738	  18 "슬롯 3"
+        //-- "Clear"
+  20732	  22 "제거"
+        //-- "Select..."
+  20726	  23 "선택..."
+        //-- "Slot 4"
+  20739	  25 "슬롯 4"
+        //-- "Clear"
+  20733	  29 "제거"
+        //-- "Select..."
+  20727	  30 "선택..."
+        //-- "Slot 5"
+  20740	  32 "슬롯 5"
+        //-- "Clear"
+  20734	  36 "제거"
+        //-- "Select..."
+  20728	  37 "선택..."
+        //-- "Slot 6"
+  20741	  39 "슬롯 6"
+        //-- "Clear"
+  20735	  43 "제거"
+        //-- "Select..."
+  20729	  44 "선택..."
+}
+
+        //-- "NeoGeo CDZ Game List"
+dialog	  79 "네오지오 CDZ 게임 목록" {
+        //-- "Play"
+  20813	   1 "실행"
+        //-- "Cancel"
+  20814	   2 "취소"
+        //-- "Scan Games"
+  20811	   3 "게임 검색"
+        //-- "Directories..."
+  20812	   4 "디렉토리..."
+        //-- "Scan sub-dirs"
+  20809	   5 "하위 폴더 검색"
+        //-- "Front Cover"
+  65535	   6 "전면 표지"
+        //-- "Back Cover"
+  65535	   7 "뒷면 표지"
+        //-- "Options"
+  65535	   9 "옵션"
+        //-- "Short name:"
+  20816	  14 "간략 제목:"
+        //-- "Released by:"
+  20817	  15 "제작사:"
+        //-- "Disc Image:"
+  20818	  16 "디스크 파일:"
+        //-- "Audio Tracks:"
+  20819	  17 "오디오 트랙:"
+        //-- "Scan for ISO only"
+  20810	  22 "ISO 파일만 검색"
+}
+
+        //-- "Game Information"
+dialog	  81 "게임 정보" {
+        //-- "Tab1"
+  20500	   0 ""
+        //-- "Game info:"
+  20065	   2 "게임 정보:"
+        //-- "ROM name:"
+  20063	   3 "롬 이름:"
+        //-- "ROM info:"
+  20064	   4 "롬 정보:"
+        //-- "Released by:"
+  20067	   5 "제작사:"
+        //-- "Genre:"
+  20066	   6 "장르:"
+        //-- "Notes:"
+  20124	   7 "기록:"
+        //-- "Favorite"
+  20604	  19 "즐겨찾기"
+        //-- "Rescan Romset"
+  20603	  20 "롬셋 재검색"
+        //-- "Close"
+      2	  21 "닫기"
+}
+
+        //-- "Download Localisation Template"
+dialog	  82 "번역 형식 다운로드" {
+        //-- "Language:"
+  20139	   1 "언어:"
+        //-- "Cancel"
+      2	   3 "취소"
+        //-- "OK"
+      1	   4 "확인"
+}
+
+        //-- "Choose Monitor for Full Screen"
+dialog	  83 "전체화면 모니터 선택하세요" {
+        //-- "These only apply to the DirectX Graphics 9 blitters."
+  20145	   1 "이것은 오직 DirectX 그래픽스 9 블리터에만 적용됩니다."
+        //-- "Horizontal Games:"
+  20141	   2 "수평 화면 게임:"
+        //-- "Vertical Games:"
+  20143	   4 "수직 화면 게임:"
+        //-- "Cancel"
+      2	   6 "취소"
+        //-- "OK"
+      1	   7 "확인"
+}
+
+        //-- "Replay input"
+dialog	 233 "" {
+        //-- "OK"
+      1	   0 "확인"
+        //-- "Cancel"
+      2	   4 "취소"
+        //-- "00:00:00"
+  20255	  10 ""
+        //-- "0"
+  20256	  11 ""
+        //-- "0"
+  20257	  12 ""
+        //-- "Open Read-Only"
+  20259	  15 "읽기 전용 열기"
+        //-- "Show Joystick Movement"
+  20263	  16 "조이스틱 입력 보기"
+}
+
+        //-- "Record input"
+dialog	 234 "" {
+        //-- "OK"
+      1	   0 "확인"
+        //-- "Cancel"
+      2	   3 "취소"
+        //-- "..."
+  20261	   6 ""
+        //-- "Record From Power-On"
+  20262	   8 "실행시 자동으로 기록"
+}
+
+        //-- "This appears to be the first time you run %s v%.20s.\n\n"
+string   200 "이 창은 처음 시작할 때 나타납니다. %s v%.20s.\n\n"
+
+        //-- "Please take some time to match the audio/video settings to your system capabilities and personal preferences. If you continue to use and/or distribute this software, you must agree to be bound by the terms of license agreement, which is always accessible via the about dialog.\n\n"
+string   202 "자신이 보유한 시스템과 호환되는 오디오/비디오를 설정 하십시오. 계속해서 사용하시거나 배포하시려면 최종 라이센스 협정의 규칙에 동의해야 하며, 항상 규약에 위배되지 않아야 합니다.\n\n"
+
+        //-- "Note that this is alpha quality software. As such, it likely will exhibit problems, including audio/video options not behaving correctly, the emulation of some games misses some features, and may exhibit stability problems. CAVEAT LECTOR!"
+string   204 "이것은 알파 품질의 소프트웨어 입니다. 올바른 오디오/비디오를 설정하지 않는다면 문제점은 상시 나타날 것이고, 일부 특성을 가진 게임들의 에뮬레이션은 불안정한 문제들이 발생합니다. CAVEAT LECTOR!"
+
+        //-- "Note that this is beta quality software. As such, it likely may be missing some features, or exhibit some problems with your system."
+string   206 "이것은 베타 품질의 소프트웨어 입니다. 일부 특성이 제외될 경우 당신의 시스템에 문제가 발생할 것 입니다."
+
+        //-- "Cheat name"
+string   220 "치트 이름"
+
+        //-- "Status"
+string   222 "상황"
+
+        //-- "Game input"
+string   240 "게임 입력"
+
+        //-- "Mapped to"
+string   242 "변경함"
+
+        //-- "State"
+string   244 "상태"
+
+        //-- "Player %i"
+string   246 "유저 %i"
+
+        //-- "Keyboard"
+string   248 "키보드"
+
+        //-- "Joystick %i"
+string   250 "조이스틱 %i"
+
+        //-- "X-Arcade (left side)"
+string   252 "X-Arcade (왼편)"
+
+        //-- "X-Arcade (right side)"
+string   254 "X-Arcade (오른편)"
+
+        //-- "Hot Rod (left side)"
+string   256 "Hot Rod (왼편)"
+
+        //-- "Hot Rod (right side)"
+string   258 "Hot Rod (오른편)"
+
+        //-- "Absolute"
+string   260 "완전함"
+
+        //-- "Auto-center"
+string   262 "자동 중앙"
+
+        //-- "Normal"
+string   264 "기본"
+
+        //-- "DIPSwitch group"
+string   280 "딥스위치 목록"
+
+        //-- "Setting"
+string   282 "설정"
+
+        //-- "Move control or press key for %.100hs"
+string   300 "%.100hs용 이동 조절 또는 키를 누름"
+
+        //-- "Move control or press key"
+string   302 "이동 조절 또는 키를 누름"
+
+        //-- "Waiting for %.80s to be released..."
+string   304 "배포하기 위해 %.80s 를 기다립니다..."
+
+        //-- "Create new memory card"
+string   320 "새 메모리 카드 생성"
+
+        //-- "Select new memory card"
+string   322 "새 메모리 카드 선택"
+
+        //-- "Loading and initialising %s..."
+string   340 "%s 불러온 뒤 초기화..."
+
+        //-- "Loading"
+string   342 "불러오는 중"
+
+        //-- "Record Input to File"
+string   350 "입력 파일 저장"
+
+        //-- "Replay Input from File"
+string   352 "입력 파일 재생"
+
+        //-- "Select Directory:"
+string   360 "디렉토리 선택:"
+
+        //-- "Load State"
+string   380 "상태 불러오기"
+
+        //-- "Save State"
+string   382 "상태 저장"
+
+        //-- "slot %d active"
+string   384 "%d번 위치 활성"
+
+        //-- "state loaded"
+string   386 "상태 불러옴"
+
+        //-- "load error"
+string   388 "불러오기 에러"
+
+        //-- "state saved"
+string   390 "상태 저장"
+
+        //-- "save error"
+string   392 "저장 에러"
+
+        //-- "Generate %s dat"
+string   420 "%s dat 생성"
+
+        //-- "no game loaded"
+string   422 "불러온 게임 없음"
+
+        //-- "*** Starting netplay: "
+string   440 "*** 넷플을 시작중: "
+
+        //-- "*** You are player %i. "
+string   442 "*** 유저 %i 입니다. "
+
+        //-- "There are %i total players."
+string   444 "총 %i명의 유저가 있습니다."
+
+        //-- "*** Player %1i <%.32hs> dropped from the game."
+string   446 "*** 유저 %1i <%.32hs>가 종료 되었습니다."
+
+        //-- "too much text"
+string   448 "너무 많은 문자"
+
+        //-- "PNG saved"
+string   460 "PNG 저장"
+
+        //-- "PNG error %1d"
+string   462 "PNG 에러 %1d"
+
+        //-- "Rec AVI ON"
+string   464 "AVI 녹화 시작"
+
+        //-- "Rec AVI OFF"
+string   466 "AVI 녹화 종료"
+
+        //-- "No volume control"
+string   480 "음량 조절 불가"
+
+        //-- "volume %03i %%"
+string   482 "음량 %03i %%"
+
+        //-- "Silence"
+string   484 "소리 끔"
+
+        //-- "Sound Restored"
+string   486 "사운드 복구됨"
+
+        //-- "This input recording"
+string   500 "현재 입력 저장"
+
+        //-- "input recording."
+string   502 "입력 저장"
+
+        //-- "%s Input Recording Files"
+string   504 "%s 입력 저장 파일"
+
+        //-- "state file"
+string   506 "상태 파일"
+
+        //-- "This state file"
+string   508 "현재 상태 파일"
+
+        //-- "%s State Files"
+string   510 "%s 상태 파일"
+
+        //-- "sound recording"
+string   512 "사운드 기록중"
+
+        //-- "This sound recording"
+string   514 "현재 사운드 기록중"
+
+        //-- "%s Sound Recording Files"
+string   516 "%s 사운드 기록 파일"
+
+        //-- "%s Memory Card Files"
+string   518 "%s 메모리 카드 파일"
+
+        //-- "All Memory Card Files"
+string   520 "모든 메모리 카드 파일"
+
+        //-- "All Dat Files"
+string   522 "모든 Dat 파일"
+
+        //-- "Text Files"
+string   524 "문서 파일"
+
+        //-- "%s Patch Files"
+string   526 "%s 패치 파일"
+
+        //-- "Save system information report"
+string   540 "시스템 정보 보고서 저장"
+
+        //-- "Select game list localisation template"
+string   560 "게임 목록 번역본 형식 선택합니다"
+
+        //-- "Create game list localisation template"
+string   562 "게임 목록 번역본 형식 생성합니다"
+
+        //-- "Rom Information"
+string   600 "롬 정보"
+
+        //-- "Rom Info"
+string   602 "롬 정보"
+
+        //-- "Sample Info"
+string   604 "견본 정보"
+
+        //-- "Name"
+string   606 "이름"
+
+        //-- "Size (bytes)"
+string   608 "크기 (바이트)"
+
+        //-- "CRC32"
+string   610 ""
+
+        //-- "Type"
+string   612 "형식"
+
+        //-- "Flags"
+string   614 "플래그"
+
+        //-- "%s, Essential"
+string   616 "%s, 필수요소"
+
+        //-- "%s, Optional"
+string   618 "%s, 선택요소"
+
+        //-- "%s, Program"
+string   620 "%s, 프로그램"
+
+        //-- "%s, Graphics"
+string   622 "%s, 그래픽"
+
+        //-- "%s, Sound"
+string   624 "%s, 사운드"
+
+        //-- "%s, BIOS"
+string   626 "%s, 바이오스"
+
+        //-- "No Dump"
+string   628 "덤프안됨"
+
+        //-- "Previews"
+string   630 "미리보기"
+
+        //-- "Titles"
+string   632 "제목"
+
+        //-- "Icons"
+string   634 "아이콘"
+
+        //-- "Cheats"
+string   636 "치트"
+
+        //-- "High Scores"
+string   638 "최고 득점"
+
+        //-- "Samples"
+string   640 "견본"
+
+        //-- "IPS"
+string   642 ""
+
+        //-- "Neo Geo CDZ Games"
+string   644 "네오지오 CDZ 게임"
+
+        //-- "Neo Geo CDZ Covers"
+string   646 "네오지오 CDZ 표지"
+
+        //-- "Blend Files"
+string   648 "반투명 파일"
+
+        //-- "Select Previews"
+string   650 "선택 화면 미리보기"
+
+        //-- "Versus Previews"
+string   652 "대전 화면 미리보기"
+
+        //-- "HowTo Previews"
+string   654 "조작법 미리보기"
+
+        //-- "Scores Previews"
+string   656 "득점 순위 미리보기"
+
+        //-- "Bosses Previews"
+string   658 "보스 미리보기"
+
+        //-- "Game Over Previews"
+string   660 "게임 오버 미리보기"
+
+        //-- "Flyers"
+string   662 "광고지"
+
+        //-- "Marquees"
+string   664 "광고판"
+
+        //-- "Control Panels"
+string   666 "조종기판"
+
+        //-- "Cabinets"
+string   668 "오락기통"
+
+        //-- "PCBs"
+string   670 "기판"
+
+        //-- "History.dat"
+string   672 ""
+
+        //-- "EEPROM Saves"
+string   674 "EEPROM 저장"
+
+        //-- "Path #1"
+string   680 "경로 #1"
+
+        //-- "Path #2"
+string   682 "경로 #2"
+
+        //-- "Path #3"
+string   684 "경로 #3"
+
+        //-- "Path #4"
+string   686 "경로 #4"
+
+        //-- "Path #5"
+string   688 "경로 #5"
+
+        //-- "Path #6"
+string   690 "경로 #6"
+
+        //-- "Path #7"
+string   692 "경로 #7"
+
+        //-- "Path #8"
+string   694 "경로 #8"
+
+        //-- "Path #9"
+string   696 "경로 #9"
+
+        //-- "Path #10"
+string   698 "경로 #10"
+
+        //-- "Path #11"
+string   700 "경로 #11"
+
+        //-- "Path #12"
+string   702 "경로 #12"
+
+        //-- "Path #13"
+string   704 "경로 #13"
+
+        //-- "Path #14"
+string   706 "경로 #14"
+
+        //-- "Path #15"
+string   708 "경로 #15"
+
+        //-- "Path #16"
+string   710 "경로 #16"
+
+        //-- "Path #17"
+string   712 "경로 #17"
+
+        //-- "Path #18"
+string   714 "경로 #18"
+
+        //-- "Path #19"
+string   716 "경로 #19"
+
+        //-- "Path #20"
+string   718 "경로 #20"
+
+        //-- "The preset file was saved to %s."
+string   720 "%s 프리셋 파일 저장 완료."
+
+        //-- "Create gamelist localisation template"
+string   730 "게임목록 번역 형식 생성"
+
+        //-- "Select gamelist localisation template"
+string   732 "게임목록 번역 형식 선택"
+
+        //-- "FB Alpha gamelist localisation templates"
+string   734 "FB Alpha 게임목록 번역 형식"
+
+        //-- "Select CD-ROM image..."
+string   740 "시디롬 이미지 선택..."
+
+        //-- "Select CD-ROM image"
+string   742 "CD-ROM 이미지 선택"
+
+        //-- "CD images"
+string   744 "CD 이미지"
+
+        //-- "Create localisation template"
+string   750 "번역 양식 생성"
+
+        //-- "Select localisation template"
+string   752 "언어 양식 선택"
+
+        //-- "FB Alpha localisation templates"
+string   754 "FB Alpha 번역 양식"
+
+        //-- "Filters"
+string   760 "필터"
+
+        //-- "Hardware"
+string   762 "하드웨어"
+
+        //-- "Cave"
+string   764 "케이브"
+
+        //-- "CPS-1"
+string   766 ""
+
+        //-- "CPS-2"
+string   768 ""
+
+        //-- "CPS-3"
+string   770 ""
+
+        //-- "Neo Geo"
+string   772 "네오지오"
+
+        //-- "PGM"
+string   774 ""
+
+        //-- "Psikyo"
+string   776 "사이쿄"
+
+        //-- "Sega"
+string   778 "세가"
+
+        //-- "Taito"
+string   780 "타이토"
+
+        //-- "Toaplan"
+string   782 "토아플랜"
+
+        //-- "Misc (pre 90s)"
+string   784 "기타 (90년도 이전)"
+
+        //-- "Misc (post 90s)"
+string   786 "기타 (90년대 이후)"
+
+        //-- "Megadrive"
+string   788 "메가 드라이브"
+
+        //-- "Pacman"
+string   790 "팩맨"
+
+        //-- "Konami"
+string   792 "코나미"
+
+        //-- "Galaxian"
+string   794 "갤럭시안"
+
+        //-- "Irem"
+string   796 "아이렘"
+
+        //-- "Board Type"
+string   798 "보드 형식"
+
+        //-- "Bootleg"
+string   800 "복제판"
+
+        //-- "Prototype"
+string   802 "초기판"
+
+        //-- "Hack"
+string   804 "해킹판"
+
+        //-- "Homebrew"
+string   806 "홈브류"
+
+        //-- "Demo"
+string   808 "데모"
+
+        //-- "Genuine"
+string   810 "정품"
+
+        //-- "Showing %i of %i sets [%i Unavailable sets]"
+string   812 "구동가능 %i 개, 총 %i 세트 [구동불가 %i 세트]"
+
+        //-- "Kaneko"
+string   814 "카네코"
+
+        //-- "SNES"
+string   816 "슈퍼 패미컴"
+
+        //-- "Data East"
+string   818 "데이터 이스트"
+
+        //-- "Capcom (Other)"
+string   820 "캡콤 (기타)"
+
+        //-- "Seta"
+string   822 "세타"
+
+        //-- "Technos"
+string   824 "테크노스"
+
+        //-- "PC-Engine"
+string   826 "PC-엔진"
+
+        //-- "Master System"
+string   828 "마스터 시스템"
+
+        //-- "SG-1000"
+string   830 ""
+
+        //-- "ColecoVision"
+string   832 "콜레코비젼"
+
+        //-- "Game Gear"
+string   834 "게임 기어"
+
+        //-- "MSX"
+string   836 ""
+
+        //-- "Genre"
+string   850 "장르"
+
+        //-- "Shooter - Horizontal"
+string   852 "횡 방향 슈터"
+
+        //-- "Shooter - Vertical"
+string   854 "종 방향 슈터"
+
+        //-- "Fighter - Scrolling"
+string   856 "진행형 액션"
+
+        //-- "Fighter - Versus"
+string   858 "대전 격투"
+
+        //-- "BIOS"
+string   860 "바이오스"
+
+        //-- "Breakout"
+string   862 "탈옥"
+
+        //-- "Casino"
+string   864 "카지노"
+
+        //-- "Ball & Paddle"
+string   866 "볼 & 패들"
+
+        //-- "Maze"
+string   868 "미로"
+
+        //-- "Mini-Games"
+string   870 "미니 게임"
+
+        //-- "Pinball"
+string   872 "핀볼"
+
+        //-- "Platform"
+string   874 "기반"
+
+        //-- "Puzzle"
+string   876 "퍼즐"
+
+        //-- "Quiz"
+string   878 "퀴즈"
+
+        //-- "Sports - Misc"
+string   880 "스포츠 - 기타"
+
+        //-- "Sports - Football"
+string   882 "스포츠 - 풋볼"
+
+        //-- "Misc"
+string   884 "기타"
+
+        //-- "Mahjong"
+string   886 "마작"
+
+        //-- "Racing"
+string   888 "레이싱"
+
+        //-- "Shooter - Other"
+string   890 "슈팅 - 기타"
+
+        //-- "Family"
+string   940 "제품군"
+
+        //-- "Metal Slug"
+string   942 "메탈 슬러그"
+
+        //-- "Street Fighter"
+string   944 "스트리트 파이터"
+
+        //-- "King of Fighters"
+string   946 "킹 오브 파이터즈"
+
+        //-- "Darkstalkers"
+string   948 "다크스토커즈"
+
+        //-- "Fatal Fury"
+string   950 "아랑 전설"
+
+        //-- "Samurai Shodown"
+string   952 "사무라이 스피릿츠"
+
+        //-- "19XX"
+string   954 ""
+
+        //-- "Aero Fighters"
+string   956 "에어로 파이터즈"
+
+        //-- "Power Instinct"
+string   958 "호혈사일족"
+
+        //-- "Other"
+string   960 "기타"
+
+        //-- "Favorites"
+string   990 "즐겨찾기"
+
+        //-- "IPS Patch Manager"
+string  1000 "IPS 패치 관리자"
+
+        //-- "%s%sNeo Geo CDZ%sSelect Game"
+string  1010 "%s%s네오지오 CDZ%s게임 선택"
+
+        //-- "Title"
+string  1012 "제목"
+
+        //-- "NGCD-ID"
+string  1014 ""
+
+        //-- "&Arcade"
+string  1040 "아케이드"
+
+        //-- "&Other..."
+string  1042 "기타..."
+
+        //-- "&Other Gamma value..."
+string  1044 "기타 감마 값..."
+
+        //-- "Adjust &CPU speed..."
+string  1046 "CPU 속도 조절..."
+
+        //-- "Load state from active slot (no %d)\tF9"
+string  1048 "(번호 %d)번 위치에서 불러오기\tF9"
+
+        //-- "Save state to active slot (no %d)\tF10"
+string  1050 "(번호 %d)번 위치에 저장하기\tF10"
+
+        //-- "no game selected"
+string  1052 "선택된 게임 없음"
+
+        //-- "Number of Frames"
+string  1070 "프레임 번호"
+
+        //-- "Select desired filter sharpness"
+string  1072 "필터의 날카로운 강도 선택"
+
+        //-- "Scanning ROMs..."
+string  1076 "롬 검색중..."
+
+        //-- "New cheat search started"
+string  1080 "새로운 치트 검색이 시작됐습니다"
+
+        //-- "%i Addresses Matched"
+string  1082 "%i 주소가 일치합니다"
+
+        //-- "Address %08X Value %02X"
+string  1084 "주소 %08X 값 %02X"
+
+        //-- "Cheat search exited"
+string  1086 "치트 검색이 종료되었습니다"
+
+        //-- "English (US)"
+string  1100 "영어 (미국)"
+
+        //-- "Simplified Chinese"
+string  1102 "중국어 (간체)"
+
+        //-- "Traditional Chinese"
+string  1104 "중국어 (번체)"
+
+        //-- "Japanese"
+string  1106 "일본어"
+
+        //-- "Korean"
+string  1108 "한국어"
+
+        //-- "French"
+string  1110 "프랑스어"
+
+        //-- "Spanish"
+string  1112 "스페인어"
+
+        //-- "Italian"
+string  1114 "이탈리아어"
+
+        //-- "German"
+string  1116 "독일어"
+
+        //-- "Portuguese"
+string  1118 "포르투칼어"
+
+        //-- "Polish"
+string  1120 "폴란드어"
+
+        //-- "Hungarian"
+string  1122 "헝가리어"
+
+        //-- "Game Information"
+string  1200 "게임 정보"
+
+        //-- "In Game"
+string  1202 "게임 내용"
+
+        //-- "Title"
+string  1204 "제목"
+
+        //-- "Select"
+string  1206 "선택 화면"
+
+        //-- "Versus"
+string  1208 "대전 화면"
+
+        //-- "How To"
+string  1210 "조작법"
+
+        //-- "Scores"
+string  1212 "득점 순위"
+
+        //-- "Bosses"
+string  1214 "보스"
+
+        //-- "Game Over"
+string  1216 "게임 오버"
+
+        //-- "Flyer"
+string  1218 "광고지"
+
+        //-- "Cabinet"
+string  1220 "오락기통"
+
+        //-- "Marquee"
+string  1222 "광고판"
+
+        //-- "Controls"
+string  1224 "조종기"
+
+        //-- "PCB"
+string  1226 "기판"
+
+        //-- "Rom Info"
+string  1228 "롬 정보"
+
+        //-- "History"
+string  1230 "게임 역사"
+
+        //-- "Sample Info"
+string  1232 "견본 정보"
+
+        //-- " (clone of %s"
+string  1600 " (%s의 자식롬"
+
+        //-- ", uses ROMs from %s"
+string  1602 ", 사용중인 롬 %s"
+
+        //-- "%suses ROMs from %s"
+string  1604 "%s 사용중인 롬 %s"
+
+        //-- "%suses board-ROMs from %s"
+string  1606 "%s는 %s의 보드-롬을 사용"
+
+        //-- "%suses samples from %s"
+string  1608 "%s는 %s의 샘플을 사용"
+
+        //-- "%s%i player%s"
+string  1610 "%s%i 플레이어%s"
+
+        //-- "s max"
+string  1612 " 최대"
+
+        //-- "%s (%s, %s hardware)"
+string  1614 "%s (%s, %s 하드웨어)"
+
+        //-- "Neo Geo MVS Cartidge"
+string  1616 "네오지오 MVS 카트릿지"
+
+        //-- "%shigh scores supported"
+string  1618 "%s고득점 지원합니다"
+
+        //-- "cartridge"
+string  1620 "카트릿지"
+
+        //-- "hardware"
+string  1622 "하드웨어"
+
+        //-- "Empty"
+string  1624 "없음"
+
+        //-- "Unidentified CD"
+string  1626 "알 수 없는 CD"
+
+        //-- "Error"
+string  1800 "에러"
+
+        //-- "Warning"
+string  1802 "경고"
+
+        //-- "Information"
+string  1804 "정보"
+
+        //-- "Unknown"
+string  1806 "미확인"
+
+        //-- "The ROMset is OK."
+string  1810 "올바른 롬셋 입니다."
+
+        //-- "The ROMset exhibits the following problems:"
+string  1812 "현재 롬셋은 다음의 문제점이 있습니다:"
+
+        //-- "No data was found, the game will not run!"
+string  1814 "발견된 데이터가 없습니다. 실행되지 않습니다!"
+
+        //-- "essential data is missing, the game will not run!"
+string  1816 "필수 데이터가 없습니다. 실행되지 않습니다!"
+
+        //-- "essential data is invalid, the game might not run!"
+string  1818 "필수 데이터가 불일치 합니다. 실행되지 않습니다!"
+
+        //-- "data is missing."
+string  1820 "데이터가 없습니다."
+
+        //-- "data is invalid."
+string  1822 "데이터가 맞지 않습니다."
+
+        //-- "%.32hs was found (%.512s).\n"
+string  1824 "%.32hs 파일 발견. (%.512s).\n"
+
+        //-- "%.32hs was not found.\n"
+string  1826 "%.32hs가 없습니다."
+
+        //-- "The following ROMs are invalid:\n"
+string  1828 "다음의 롬파일은 불일치 합니다:\n"
+
+        //-- "%.32hs has a CRC of %.8X (correct is %.8X).\n"
+string  1830 "%.32hs의 CRC는 %.8X (정확한 CRC는 %.8X)"
+
+        //-- "%.32hs is %dk which is too small (correct is %dkB).\n"
+string  1832 "%.32hs은 %dk 만큼 작습니다. (정확한 크기 %dkB)"
+
+        //-- "%.32hs is %dk which is too large (correct is %dkB).\n"
+string  1834 "%.32hs은 %dk 만큼 큽니다. (정확한 크기 %dkB)"
+
+        //-- "essential "
+string  1836 "필수요소 "
+
+        //-- "program "
+string  1838 "프로그램 "
+
+        //-- "BIOS "
+string  1840 "바이오스 "
+
+        //-- "graphics "
+string  1842 "그래픽 "
+
+        //-- "sound "
+string  1844 "사운드 "
+
+        //-- "ROM "
+string  1846 "롬 "
+
+        //-- "Error loading %.32hs, requested by %.128s.\nThe emulation will likely suffer problems."
+string  1848 "%.32hs 읽는 중 에러. %.128s이 요구됨.\n에뮬레이션에 문제가 발생할 수 있습니다."
+
+        //-- "Error reading %.32hs from %.512s"
+string  1850 "%.512s의 %.32hs 불러오는 중 에러"
+
+        //-- "CRC mismatch reading %.32hs from %.512s"
+string  1852 "%.512s의 %.32hs파일 CRC가 맞지 않습니다"
+
+        //-- "There was a problem starting \'%.128s\'.\n"
+string  1860 "\'%.128s\' 시작 중 문제가 발생했습니다.\n"
+
+        //-- "%.32s is not supported by %.32s."
+string  1870 "%.32s는 %.32s을 지원하지 않습니다."
+
+        //-- "Couldn\'t create main window."
+string  1872 "메인 창이 생성 불가능 합니다."
+
+        //-- "Couldn\'t intialise \'%s\' module."
+string  1874 "\'%s\' 모듈을 초기화 불가능 합니다."
+
+        //-- "Couldn\'t create a triple buffer."
+string  1876 "삼중 버퍼를 생성할 수 없습니다."
+
+        //-- "No appropriate display mode supported. Please adjust your full-screen settings."
+string  1878 "적합하지 않은 디스플레이 모드입니다. 전체화면 설정을 해주세요."
+
+        //-- "Problem setting \'%dx%dx%dbpp (%dHz)\' display mode"
+string  1880 "\'%dx%dx%dbpp (%dHz)\' 디스플레이 모드 설정 문제"
+
+        //-- "\n\nThis is not a standard VGA resolution; please make sure it is supported by your video card."
+string  1882 "\n\n표준 VGA 해상도가 아닙니다. VGA가 지원되는지 확인해 주세요."
+
+        //-- "Couldn\'t intialise \'%s\' module. Try installing the Direct X End User runtimes (June 2010)."
+string  1884 "\'%s\' 모듈을 초기화할 수 없습니다. Direct X 최종 사용자 런타임 (2010년 6월)을 설치해주세요."
+
+        //-- "Error creating "
+string  1890 "생성하는 중 에러 "
+
+        //-- "Error loading "
+string  1892 "불러오는 중 에러 "
+
+        //-- " is for an unavailable game."
+string  1894 " 작동 불가능한 게임입니다."
+
+        //-- " does not work with this version of %s."
+string  1896 " %s 버전에서는 작동되지 않습니다."
+
+        //-- " requires a more recent version of %s, please upgrade."
+string  1898 " %s 최신 버전이 필요합니다. 업그레이드 해주세요."
+
+        //-- "Error finding \'kailleraclient.dll\'."
+string  1910 "\'kailleraclient.dll\' 에러 발견됨."
+
+        //-- "No driver has been selected from the list."
+string  1912 "목록에서 선택된 드라이버가 없습니다."
+
+        //-- "No driver has been selected for slot 1."
+string  1914 "슬롯 1번에 선택된 드라이버가 없습니다."
+
+        //-- "This game isn\'t working. Load it anyway?"
+string  1916 "이것은 작동하지 않습니다. 그래도 실행합니까?"
+
+        //-- "Couldn\'t initialise CD emulation."
+string  1918 "CD 에뮬레이션을 초기화할 수 없습니다."
+
+        //-- "Failed to connect to Internet"
+string  1950 "인터넷 연결이 실패했습니다"
+
+        //-- "Failed to access FB Alpha website"
+string  1952 "FB Alpha 웹사이트로 접근이 실패했습니다"
+

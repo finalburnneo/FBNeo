@@ -1,0 +1,2502 @@
+// translation template for FB Alpha
+
+version 0x029743
+
+// codepage 1252
+
+menu    100 {
+        //-- "Game"
+  popup    0 "Gioco" {
+          //-- "Load game..."
+    10001    1 "Carica gioco..."
+          //-- "Play via Kaillera..."
+    10002    2 "Gioca via Kaillera..."
+          //-- "Most recent games..."
+    popup    3 "Giochi piu' recenti..." {
+            //-- "no game selected"
+      10617    4 "nessun gioco selezionato"
+            //-- "no game selected"
+      10618    5 "nessun gioco selezionato"
+            //-- "no game selected"
+      10619    6 "nessun gioco selezionato"
+            //-- "no game selected"
+      10620    7 "nessun gioco selezionato"
+            //-- "no game selected"
+      10621    8 "nessun gioco selezionato"
+            //-- "no game selected"
+      10622    9 "nessun gioco selezionato"
+            //-- "no game selected"
+      10623   10 "nessun gioco selezionato"
+            //-- "no game selected"
+      10624   11 "nessun gioco selezionato"
+            //-- "no game selected"
+      10625   12 "nessun gioco selezionato"
+            //-- "no game selected"
+      10626   13 "nessun gioco selezionato"
+    }
+          //-- "Start Neo Geo Multi-slot..."
+    10711   15 "Avvia Neo Geo slot multiplo"
+          //-- "Load Neo Geo CDZ game..."
+    10713   17 "Carica gioco del Neo Geo CDZ"
+          //-- "Select CD image (ISO/CUE)..."
+    10710   18 "Seleziona un'immagine CD (ISO/CUE)"
+          //-- "Start Neo Geo CDZ..."
+    10712   19 "Avvia Neo Geo CDZ..."
+          //-- "Exit game"
+    10006   21 "Esci dal gioco"
+          //-- "Pause game"
+    10008   22 "Metti in pausa il gioco"
+          //-- "Adjust CPU speed..."
+    10010   24 "Regola la velocita' della CPU"
+          //-- "Reset CPU speed to 100%"
+    10011   25 "Ripristina la velocita' della CPU al 100%"
+          //-- "Memory Card..."
+    popup   27 "Scheda di memoria..." {
+            //-- "Create new memory card..."
+      10020   28 "Crea nuova scheda di memoria"
+            //-- "Select memory card..."
+      10021   29 "Seleziona scheda di memoria"
+            //-- "Insert memory card"
+      10022   30 "Inserisci scheda di memoria"
+            //-- "Eject memory card"
+      10023   31 "Espelli scheda di memoria"
+    }
+          //-- "Replay..."
+    popup   33 "Replay/Registra input del giocatore..." {
+            //-- "Replay input..."
+      10003   34 "Replay input..."
+            //-- "Record input..."
+      10004   35 "Registra input..."
+            //-- "Stop replay/record"
+      10005   36 "Ferma replay/registrazione"
+    }
+          //-- "Save states..."
+    popup   38 "Gestione stati (progressi nel gioco)..." {
+            //-- "Load state..."
+      10030   39 "Carica stato..."
+            //-- "Save state..."
+      10031   40 "Salva stato..."
+            //-- "State slots..."
+      popup   41 "Controllo slot..." {
+              //-- "Activate previous slot"
+        10034   42 "Attiva slot precedente"
+              //-- "Activate next slot"
+        10035   43 "Attiva slot successivo"
+              //-- "MENU_STATE_LOAD_SLOT"
+        10032   44 "MENU_STATE_LOAD_SLOT"
+              //-- "MENU_STATE_SAVE_SLOT"
+        10033   45 "MENU_STATE_SAVE_SLOT"
+              //-- "Undo last state save"
+        10037   46 "Scarta l'ultimo stato salvato"
+      }
+            //-- "Restore full state on load"
+      10036   47 "Ripristina lo stato completo"
+    }
+          //-- "Record AVI"
+    11827   49 "Registra AVI"
+          //-- "Stop recording"
+    11828   50 "Ferma la registrazione"
+          //-- "Exit emulator"
+    10012   52 "Esci dall'emulatore"
+  }
+        //-- "Video"
+  popup   53 "Video" {
+          //-- "&Select blitter"
+    popup   54 "&Seleziona il blitter" {
+            //-- "Basic"
+      10121   55 "Di base"
+            //-- "SoftFX"
+      10123   56 "SoftFX"
+            //-- "Enhanced"
+      10122   57 "Migliorato"
+            //-- "Experimental"
+      10124   58 "Sperimentale"
+            //-- "DirectX9 Alt"
+      10125   59 "DirectX9 alternativo"
+    }
+          //-- "&Blitter options"
+    10643   60 "&Opzioni del blitter"
+          //-- "&Stretch"
+    popup   61 "&Allarga immagine" {
+            //-- "&Normal stretch"
+      10110   62 "&Normale"
+            //-- "&Full stretch"
+      10111   63 "&A quadro intero"
+            //-- "Correct &aspect ratio"
+      10112   64 "Conservando &il rapporto di forma"
+    }
+          //-- "&Enable gamma correction"
+    10150   66 "&Abilita correzione di gamma"
+          //-- "&Gamma correction settings"
+    popup   67 "&Impostazioni correzione di gamma" {
+            //-- "&Darken midtones"
+      10151   68 "&Scurire i mezzi toni"
+            //-- "&Lighten midtones"
+      10152   69 "&Schiarire i mezzi toni"
+            //-- "MENU_GAMMA_OTHER"
+      10153   70 "MENU_GAMMA_OTHER"
+            //-- "Use video &hardware when possible"
+      10154   72 "Usa &l'hardware video quando possibile"
+            //-- "Use video hardware &exclusively"
+      10155   73 "Usa &solamente l'hardware video"
+            //-- "Use &software exclusively"
+      10156   74 "Usa &solamente le funzioni software"
+    }
+          //-- "&Window size"
+    popup   76 "&Dimensioni della finestra" {
+            //-- "&Auto"
+      10170   77 "&Auto"
+            //-- "&Single size"
+      10171   79 "&Dimensione singola"
+            //-- "&Double size"
+      10172   80 "&Dimensione doppia"
+            //-- "&Triple size"
+      10173   81 "&Dimensione tripla"
+            //-- "&Quadruple size"
+      10174   82 "&Dimensione quadrupla"
+            //-- "&Maximum size"
+      10175   83 "&Dimensione massima"
+    }
+          //-- "Toggle &fullscreen mode"
+    10102   85 "Alterna &modalita' a schermo intero"
+          //-- "Auto Switch to Fullscreen after loading"
+    10613   86 "Commuta a schermo intero dopo il caricamento"
+          //-- "Fullscreen Resolution (Horizontal)"
+    popup   87 "Risoluzione a schermo intero (orizzontale)" {
+            //-- "MENU_RES_ARCADE"
+      10130   88 "MENU_RES_ARCADE"
+            //-- "&Single size"
+      10136   90 "&Dimensione singola"
+            //-- "&Double size"
+      10137   91 "&Dimensione doppia"
+            //-- "&Triple size"
+      10138   92 "&Dimensione tripla"
+            //-- "&Quadruple size"
+      10139   93 "&Dimensione quadrupla"
+            //-- "MENU_RES_1"
+      10131   95 "MENU_RES_1"
+            //-- "MENU_RES_2"
+      10132   96 "MENU_RES_2"
+            //-- "MENU_RES_3"
+      10133   97 "MENU_RES_3"
+            //-- "MENU_RES_4"
+      10134   98 "MENU_RES_4"
+            //-- "MENU_RES_OTHER"
+      10135  100 "MENU_RES_OTHER"
+    }
+          //-- "Fullscreen Resolution (Vertical)"
+    popup  101 "Risoluzione a schermo intero (verticale)" {
+            //-- "MENU_RES_ARCADE_VERTICAL"
+      10700  102 "MENU_RES_ARCADE_VERTICAL"
+            //-- "&Single size"
+      10706  104 "&Dimensione singola"
+            //-- "&Double size"
+      10707  105 "&Dimensione doppia"
+            //-- "&Triple size"
+      10708  106 "&Dimensione tripla"
+            //-- "&Quadruple size"
+      10709  107 "&Dimensione quadrupla"
+            //-- "MENU_RES_1_VERTICAL"
+      10701  109 "MENU_RES_1_VERTICAL"
+            //-- "MENU_RES_2_VERTICAL"
+      10702  110 "MENU_RES_2_VERTICAL"
+            //-- "MENU_RES_3_VERTICAL"
+      10703  111 "MENU_RES_3_VERTICAL"
+            //-- "MENU_RES_4_VERTICAL"
+      10704  112 "MENU_RES_4_VERTICAL"
+            //-- "MENU_RES_OTHER_VERTICAL"
+      10705  114 "MENU_RES_OTHER_VERTICAL"
+    }
+          //-- "Fullscreen bit&depth"
+    popup  115 "Profondita' di colore a schermo intero" {
+            //-- "&16bit"
+      10141  116 "&16 bit"
+            //-- "&24bit"
+      10142  117 "&24 bit"
+            //-- "&32bit"
+      10143  118 "&32 bit"
+    }
+          //-- "Choose Fullscreen Monitor"
+    10728  119 "Scegli il monitor per lo schermo intero"
+          //-- "&Monitor properties"
+    popup  121 "&Caratteristiche del monitor" {
+            //-- "Automatically detect aspect ratio"
+      10650  122 "Rileva automaticamente l'aspetto di forma"
+            //-- "Normal CRT aspect ratio"
+      10190  124 "Aspetto di forma da CRT normale"
+            //-- "Normal LCD aspect ratio"
+      10191  125 "Aspetto di forma da LCD normale"
+            //-- "Widescreen CRT aspect ratio"
+      10192  126 "Aspetto di forma da CRT panoramico"
+            //-- "Widescreen LCD aspect ratio"
+      10193  127 "Aspetto di forma da LCD panoramico"
+            //-- "Mirrored vertical alignment"
+      10194  129 "Allineamento verticale riflesso"
+    }
+          //-- "&Rotate vertically aligned games"
+    10181  131 "&Ruota i giochi con allineamento verticale"
+          //-- "Force 60Hz refresh rate"
+    10176  132 "Forza la frequenza di refresh a 60Hz"
+          //-- "Enable &Triple Buffering (Fullscreen)"
+    10100  133 "Abilita &il buffer triplo (schermo intero)"
+          //-- "Enable VSync (Windowed)"
+    10646  134 "Abilita sincronismi verticali (finestra)"
+          //-- "Enable DWM Sync (Windowed)"
+    10103  135 "Enable DWM Sync (Windowed)"
+          //-- "Auto Frameskip"
+    10177  136 "Salto-fotogrammi automatico"
+  }
+        //-- "Audio"
+  popup  137 "Audio" {
+          //-- "Select &plugin"
+    popup  138 "Seleziona &plugin" {
+            //-- "DirectSound"
+      10655  139 "DirectSound"
+            //-- "XAudio2"
+      10656  140 "XAudio2"
+    }
+          //-- "Plugin &options"
+    10663  141 "&Opzioni del plugin"
+          //-- "2-point 1st order sample interpolation"
+    10231  143 "Interpolazione di 2-punti (1^ ordine)"
+          //-- "4-point 3rd order sample interpolation"
+    10233  144 "Interpolazione di 4-punti (3^ ordine)"
+          //-- "Disable FM interpolation"
+    10240  146 "Disabilita l'interpolazione FM"
+          //-- "4-point 3rd order FM interpolation"
+    10243  147 "Interpolazione FM di 4-punti (3^ ordine)"
+          //-- "&Sound logging"
+    popup  149 "&Registrazione del suono" {
+            //-- "Log to file..."
+      10606  150 "Registra su file..."
+            //-- "Stop logging"
+      10607  151 "Ferma la registrazione"
+    }
+          //-- "Buffer size..."
+    10200  152 "Dimensioni del buffer..."
+  }
+        //-- "Input"
+  popup  153 "Controlli" {
+          //-- "Select &plugin"
+    popup  154 "Seleziona &plugin" {
+            //-- "DirectInput"
+      10664  155 "DirectInput"
+    }
+          //-- "&Auto-Fire Rate"
+    popup  157 "&Cadenza auto-fuoco" {
+            //-- "Slow"
+      10260  158 "Bassa"
+            //-- "Medium"
+      10261  159 "Media"
+            //-- "Fast"
+      10262  160 "Alta"
+            //-- "Very Fast"
+      10263  161 "Molto alta"
+    }
+          //-- "Map game inputs..."
+    10007  163 "Configura i controlli di gioco"
+          //-- "Set dipswitches..."
+    10009  164 "Configura i dipswitches"
+  }
+        //-- "Misc"
+  popup  165 "Varie" {
+          //-- "Options"
+    popup  166 "Opzioni" {
+            //-- "Auto pause"
+      10300  167 "Pausa automatica"
+            //-- "Always process keyboard input"
+      10301  168 "Elaborare sempre l'input da tastiera"
+            //-- "Display mode indicator"
+      10302  169 "Mostra l'indicatore della modalita'"
+            //-- "Modeless menu"
+      10303  170 "Menu' Modeless"
+            //-- "Don\'t change Num Lock status"
+      10616  171 "Non cambiare lo stato del Bloc Num"
+            //-- "Create support folders at runtime"
+      10719  172 "Crea cartelle di supporto al runtime"
+            //-- "Set application thread priority"
+      popup  174 "Seleziona la priorita' dell'applicazione" {
+              //-- "High"
+        10311  175 "Alta"
+              //-- "Above normal"
+        10312  176 "Sopra al normale"
+              //-- "Normal"
+        10313  177 "Normale"
+              //-- "Below normal"
+        10314  178 "Sotto al normale"
+              //-- "Low"
+        10315  179 "Bassa"
+      }
+            //-- "Enable high resolution system timer"
+      10319  180 "Enable high resolution system timer"
+            //-- "Save High Scores when supported"
+      10654  182 "Salvare i migliori punteggi, se supportati"
+            //-- "Use alpha blend effects when supported"
+      10720  183 "Usa gli effetti di trasparenza, se supportati"
+            //-- "Display Gear-Shift Indicator when supported"
+      10727  184 "Visualizza l'indicatore di cambio marcia, se supportato"
+            //-- "AVI Writer Output size"
+      popup  185 "Dimensioni del video AVI" {
+              //-- "1x"
+        10724  186 "1x"
+              //-- "2x"
+        10725  187 "2x"
+              //-- "3x"
+        10726  188 "3x"
+      }
+            //-- "Generate dat file"
+      popup  190 "Genera file dati (.dat)" {
+              //-- "Generate dat (Arcade only)..."
+        10651  191 "Genera dat (solo Arcade)..."
+              //-- "Generate dat (Megadrive only)..."
+        10653  192 "Genera dat (solo Megadrive)..."
+              //-- "Generate dat (PC-Engine only)..."
+        10714  193 "Genera dat (solo PC-Engine)..."
+              //-- "Generate dat (TurboGrafx16 only)..."
+        10715  194 "Genera dat (solo TurboGrafx16)..."
+              //-- "Generate dat (SuprGrafx only)..."
+        10716  195 "Genera dat (solo SuprGrafx)..."
+              //-- "Generate dat (Sega SG-1000 only)..."
+        10717  196 "Genera dat (solo Sega SG-1000)..."
+              //-- "Generate dat (ColecoVision only)..."
+        10718  197 "Genera dat (solo ColecoVision)..."
+              //-- "Generate dat (Master System only)..."
+        10721  198 "Genera dat (solo Master System)..."
+              //-- "Generate dat (Game Gear only)..."
+        10722  199 "Genera dat (solo Game Gear)..."
+              //-- "Generate dat (MSX 1 Games only)..."
+        10723  200 "Genera dat (solo MSX)"
+              //-- "Generate all dats..."
+        10729  202 "Genera tutti i dats..."
+      }
+            //-- "Configure ROM paths..."
+      10614  204 "Configura i percorsi delle ROMs"
+            //-- "Configure support file paths..."
+      10615  205 "Configura i percorsi dei file di supporto"
+            //-- "UI language"
+      popup  207 "Lingua Interfaccia Utente" {
+              //-- "Select UI language..."
+        10307  208 "Seleziona lingua IU..."
+              //-- "Export UI translation template..."
+        10308  209 "Esporta modello di traduzione IU"
+              //-- "Reset UI default language"
+        10635  210 "Ripristina lingua IU predefinita"
+              //-- "Download UI language..."
+        10309  211 "Scarica lingua IU..."
+      }
+            //-- "Gamelist language"
+      popup  212 "Lingua della lista giochi" {
+              //-- "Select gamelist language..."
+        10673  213 "Seleziona lingua della lista giochi"
+              //-- "Export gamelist translation template..."
+        10674  214 "Esporta modello di traduzione della lista giochi"
+              //-- "Reset gamelist default language"
+        10675  215 "Ripristina lingua predefinita della lista giochi"
+      }
+            //-- "Icons"
+      popup  217 "Icone" {
+              //-- "Enable driver icons display"
+        10676  218 "Abilita il visualizzatore di icone"
+              //-- "Parents only (use if you have problems)"
+        10677  219 "Solamente icone principali (usare in caso di problemi)"
+              //-- "Icon size"
+        popup  220 "Dimensioni icona" {
+                //-- "16 x 16 pixels"
+          10678  221 "16x16 pixel"
+                //-- "24 x 24 pixels"
+          10679  222 "24x24 pixel"
+                //-- "32 x 32 pixels"
+          10680  223 "32x32 pixel"
+        }
+              //-- "Save snapshot"
+        10318  225 "Salva istantanea"
+              //-- "Shot factory.."
+        10317  226 "Interfaccia di cattura"
+              //-- "Enable cheats..."
+        10306  228 "Abilita i trucchi..."
+              //-- "Cheat search"
+        popup  229 "Aiuto" {
+                //-- "Start New Search"
+          10628  230 "Avvia una nuova ricerca"
+                //-- "Target value has not changed"
+          10629  232 "Valore dell'obiettivo invariato"
+                //-- "Target value has changed"
+          10630  233 "Valore dell'obiettivo cambiato"
+                //-- "Target value has decreased"
+          10631  234 "Valore dell'obiettivo diminuito"
+                //-- "Target value has increased"
+          10632  235 "Valore dell'obiettivo aumentato"
+                //-- "Dump search to file"
+          10633  237 "Salva la ricerca su file"
+                //-- "Exit Cheat Search"
+          10634  239 "Esci dalla ricerca trucco"
+        }
+              //-- "Invoke 68K debugger..."
+        10392  241 "Richiama debugger 68K..."
+              //-- "Palette Viewer..."
+        10672  243 "Visualizzatore della palette"
+              //-- "Associate with .fs and .fr files"
+        10330  245 "Associa con file .fs e .fr"
+              //-- "Disassociate from .fs and .fr files"
+        10331  246 "Dissocia da file .fs e .fr"
+              //-- "Save input mapping now"
+        10332  248 "Salva la configurazione dei controlli ora"
+              //-- "Auto-save input mapping"
+        10333  249 "Auto-salvataggio della configurazione dei controlli"
+              //-- "Save settings to .ini now"
+        10334  251 "Salva le regolazioni nel file .ini ora"
+              //-- "Reload settings from .ini"
+        10335  252 "Ricarica le regolazioni dal file .ini"
+      }
+            //-- "Help"
+      popup  253 "Aiuto" {
+              //-- "&Help"
+        10503  254 "&Aiuto"
+              //-- "&What\'s New"
+        10505  256 "&Le novita'"
+              //-- "&FB Alpha homepage"
+        10504  258 "&FB Alpha sito ufficiale"
+              //-- "&Neo-Source forums"
+        10506  259 "&Forum Neo-Source"
+              //-- "&System information"
+        10502  261 "&Informazioni sul sistema"
+              //-- "&About FB Alpha"
+        10501  262 "&circa FB Alpha"
+      }
+    }
+  }
+}
+
+menu    110 {
+        //-- "Basic"
+  popup    0 "Di base" {
+          //-- "&No effects"
+    11001    1 "&Nessun effetto"
+          //-- "&Scanlines"
+    11002    2 "&Linee di scansione"
+          //-- "Scanlines &50%"
+    11003    3 "Linee di scansione al &50%"
+          //-- "&Rotate scanlines"
+    11106    5 "&Ruota le linee di scansione"
+          //-- "Force &Flip"
+    11143    7 "Forza &capovolgimento"
+          //-- "Buffering &method"
+    popup    9 "&Metodo di buffering" {
+            //-- "&Autodetect"
+      10160   10 "&Automatico"
+            //-- "&Video memory"
+      10161   11 "&Memoria video"
+            //-- "&System memory"
+      10162   12 "&Memoria di sistema"
+    }
+  }
+}
+
+menu    111 {
+        //-- "Enhanced"
+  popup    0 "Migliorato" {
+          //-- "Disable all effects"
+    11101    1 "Disabilita tutti gli effetti"
+          //-- "Enable &bi-linear filtering"
+    11102    3 "Abilita filtraggio &bi-lineare"
+          //-- "&Rotate scanlines and RGB effects"
+    11113    4 "&Ruota linee di scansione ed effetti RGB"
+          //-- "Enable &Pre-scale"
+    11107    6 "Abilita &pre-ridimensionamento"
+          //-- "Pre-scale using Soft&FX"
+    11108    7 "Pre-ridimensionamento utilizzando Soft&FX"
+          //-- "SoftFX algorithm"
+    popup    8 "Algoritmo SoftFX" {
+            //-- "Double pixels (3D hardware)"
+      11201    9 "Raddoppio pixel (Hardware 3D)"
+            //-- "AdvanceMAME Scale2x"
+      11202   10 "Ridimensionamento2x AdvMAME"
+            //-- "AdvanceMAME Scale3x"
+      11203   11 "Ridimensionamento3x AdvMAME"
+            //-- "2xPM LQ"
+      11204   12 "2xPM bassa qualita'"
+            //-- "2xPM HQ"
+      11205   13 "2xPM alta qualita'"
+            //-- "Eagle Graphics"
+      11206   14 "Grafici Eagle"
+            //-- "Super Eagle"
+      11207   15 "Super Eagle"
+            //-- "2xSaI"
+      11208   16 "2xSaI"
+            //-- "Super 2xSaI"
+      11209   17 "Super 2xSaI"
+            //-- "Super Eagle (VBA)"
+      11210   18 "Super Eagle (VBA)"
+            //-- "2xSaI (VBA)"
+      11211   19 "2xSaI (VBA)"
+            //-- "Super 2xSaI (VBA)"
+      11212   20 "Super 2xSaI (VBA)"
+            //-- "SuperScale"
+      11213   21 "SuperRidimenzionamento"
+            //-- "SuperScale (75% Scanlines)"
+      11214   22 "SuperRidim. (LdS 75%)"
+            //-- "hq2x Filter"
+      11215   23 "Filtro hq2x"
+            //-- "hq3x Filter"
+      11216   24 "Filtro hq3x"
+            //-- "hq4x Filter"
+      11217   25 "Filtro hq4x"
+            //-- "hq2xS (VBA) Filter"
+      11218   26 "Filtro hq2xS (VBA)"
+            //-- "hq3xS (VBA) Filter"
+      11219   27 "Filtro hq3xS (VBA)"
+            //-- "hq2xS (SNES9X) Filter"
+      11220   28 "Filtro hq2xS (SNES9X)"
+            //-- "hq3xS (SNEX9X) Filter"
+      11221   29 "Filtro hq3xS (SNES9X)"
+            //-- "hq2xBold Filter"
+      11222   30 "Filtro hq2xBold"
+            //-- "hq3xBold Filter"
+      11223   31 "Filtro hq3xBold"
+            //-- "EPXB Filter"
+      11224   32 "Filtro EPXB"
+            //-- "EPXC Filter"
+      11225   33 "Filtro EPXC"
+            //-- "2xBR Squared"
+      11226   34 "2xBR quadrato"
+            //-- "2xBR Semi-Rounded"
+      11227   35 "2xBR semi-smussato"
+            //-- "2xBR Rounded"
+      11228   36 "2xBR smussato"
+            //-- "3xBR Squared"
+      11229   37 "3xBR quadrato"
+            //-- "3xBR Semi-Rounded"
+      11230   38 "3xBR semi-smussato"
+            //-- "3xBR Rounded"
+      11231   39 "3xBR smussato"
+            //-- "4xBR Squared"
+      11232   40 "4xBR quadrato"
+            //-- "4xBR Semi-Rounded"
+      11233   41 "4xBR semi-smussato"
+            //-- "4xBR Rounded"
+      11234   42 "4xBR smussato"
+            //-- "DDT3x"
+      11235   43 "DDT3x"
+            //-- "Force image to SoftFX size"
+      11290   45 "Forza l'immagine a dimensioni SoftFX"
+    }
+          //-- "Enable &Scanlines"
+    11005   47 "Abilita &le linee di scansione"
+          //-- "Set scanline &intensity..."
+    11109   48 "Regola &l'intensita' della linea di scansione"
+          //-- "Enable phosphor &feedback"
+    11103   50 "Abilita phosphor &feedback"
+          //-- "Set &phosphor feedback intensity..."
+    11110   51 "Regola l'intensita' &del phosphor feedback"
+          //-- "&No effects"
+    11004   53 "&Nessun effetto"
+          //-- "RGB &effects"
+    11104   54 "&Effetti RGB"
+          //-- "&3D projection"
+    11105   55 "&Proiezione 3D"
+          //-- "&Auto size scanlined RGB preset"
+    11121   57 "&Reg. auto dell'RGB con linee di scansione"
+          //-- "Manually select RGB preset"
+    popup   58 "Seleziona manualmente l'effetto RGB" {
+            //-- "Small faint RGB mask"
+      11122   59 "Maschera sfocatura RGB piccola"
+            //-- "Large faint RGB dot mask"
+      11123   60 "Maschera sfocatura RGB dot grande"
+            //-- "Large faint RGB mask"
+      11124   61 "Maschera sfocatura RGB grande"
+            //-- "MAME rgbmicro"
+      11125   63 "MAME rgb-micro"
+            //-- "MAME rgbtiny"
+      11126   64 "MAME rgb-mini"
+            //-- "Aperture grille"
+      11127   65 "Griglia di apertura"
+            //-- "Large oversaturated RGB dot"
+      11128   67 "RGB dot sovrasaturo grande"
+            //-- "Huge oversaturated pattern"
+      11129   68 "Schema sovrasaturo enorme"
+    }
+          //-- "Set 3&D projection properties..."
+    11111   70 "Regolazioni della proiezione 3&D..."
+          //-- "Advanced settings"
+    popup   72 "Regolazioni avanzate" {
+            //-- "Force &16-bit emulation"
+      11141   73 "Forza &l'emulazione a 16-bit"
+            //-- "Use DirectX texture &management"
+      11142   74 "Usa &il gestore DirectX delle texture"
+    }
+  }
+}
+
+menu    112 {
+        //-- "SoftFX"
+  popup    0 "SoftFX" {
+          //-- "&Double pixels (Software)"
+    11301    1 "&Raddoppio pixel (Software)"
+          //-- "AdvanceMAME Scale2x"
+    11302    2 "Ridimensionamento2x AdvMAME"
+          //-- "AdvanceMAME Scale3x"
+    11303    3 "Ridimensionamento3x AdvMAME"
+          //-- "2xPM LQ"
+    11304    4 "2xPM bassa qualita'"
+          //-- "2xPM HQ"
+    11305    5 "2xPM alta qualita'"
+          //-- "Eagle Graphics"
+    11306    6 "Grafici Eagle"
+          //-- "Super Eagle"
+    11307    7 "Super Eagle"
+          //-- "2xSaI"
+    11308    8 "2xSaI"
+          //-- "Super 2xSaI"
+    11309    9 "Super 2xSaI"
+          //-- "Super Eagle (VBA)"
+    11310   10 "Super Eagle (VBA)"
+          //-- "2xSaI (VBA)"
+    11311   11 "2xSaI (VBA)"
+          //-- "Super 2xSaI (VBA)"
+    11312   12 "Super 2xSaI (VBA)"
+          //-- "SuperScale"
+    11313   13 "SuperRidimenzionamento"
+          //-- "SuperScale (75% Scanlines)"
+    11314   14 "SuperRidim. (LdS 75%)"
+          //-- "hq2x filter"
+    11315   15 "Filtro hq2x"
+          //-- "hq3x filter"
+    11316   16 "Filtro hq3x"
+          //-- "hq4x filter"
+    11317   17 "Filtro hq4x"
+          //-- "hq2xS (VBA) filter"
+    11318   18 "Filtro hq2xs (VBA)"
+          //-- "hq3xS (VBA) filter"
+    11319   19 "Filtro hq3xs (VBA)"
+          //-- "hq2xS (SNES9X) Filter"
+    11320   20 "Filtro hq2xS (SNES9X)"
+          //-- "hq3xS (SNEX9X) Filter"
+    11321   21 "Filtro hq3xS (SNES9X)"
+          //-- "hq2xBold Filter"
+    11322   22 "Filtro hq2xBold"
+          //-- "hq3xBold Filter"
+    11323   23 "Filtro hq3xBold"
+          //-- "EPXB Filter"
+    11324   24 "Filtro EPXB"
+          //-- "EPXC Filter"
+    11325   25 "Filtro EPXC"
+          //-- "2xBR Squared"
+    11326   26 "2xBR quadrato"
+          //-- "2xBR Semi-Rounded"
+    11327   27 "2xBR semi-smussato"
+          //-- "2xBR Rounded"
+    11328   28 "2xBR smussato"
+          //-- "3xBR Squared"
+    11329   29 "3xBR quadrato"
+          //-- "3xBR Semi-Rounded"
+    11330   30 "3xBR semi-smussato"
+          //-- "3xBR Rounded"
+    11331   31 "3xBR smussato"
+          //-- "4xBR Squared"
+    11332   32 "4xBR quadrato"
+          //-- "4xBR Semi-Rounded"
+    11333   33 "4xBR semi-smussato"
+          //-- "4xBR Rounded"
+    11334   34 "4xBR smussato"
+          //-- "DDT3x"
+    11335   35 "DDT3x"
+          //-- "&Force image to SoftFX size"
+    11390   37 "&Forza l'immagine a dimensioni SoftFX"
+          //-- "Buffering &method"
+    popup   38 "&Metodo di buffering" {
+            //-- "&Autodetect"
+      10163   39 "Automatico"
+            //-- "&Video memory"
+      10164   40 "&Memoria video"
+            //-- "&System memory"
+      10165   41 "&Memoria di sistema"
+            //-- "Directly access video memory"
+      11391   43 "Accedere direttamente alla memoria video"
+    }
+  }
+}
+
+menu    113 {
+        //-- "Experimental"
+  popup    0 "Sperimentale" {
+          //-- "Enable point filtering"
+    11601    1 "Abilita filtraggio punto-campione"
+          //-- "Enable linear filtering"
+    11602    2 "Abilita filtraggio lineare"
+          //-- "Enable cubic filtering"
+    11603    3 "Abilita filtraggio cubico"
+          //-- "Cubic filter quality"
+    popup    4 "Qualita' del filtro cubico" {
+            //-- "Lightly filtered"
+      11610    5 "Leggermente filtrato"
+            //-- "Smoothened strongly"
+      11612    7 "Molto addolcito"
+            //-- "Smoothened lightly"
+      11611    8 "Leggermente addolcito"
+            //-- "Perceptual compromise"
+      11613    9 "Qualita' di compromesso"
+            //-- "Sharpened lightly"
+      11614   10 "Leggermente nitido"
+            //-- "Sharpened strongly"
+      11615   11 "Molto nitido"
+            //-- "Duff\'s tensioned B-splines..."
+      11616   13 "Duff\'s tensioned B-splines..."
+            //-- "Mitchell-Netravali 2C + B = 1..."
+      11617   14 "Mitchell-Netravali 2C + B = 1..."
+            //-- "Cardinal cubic splines..."
+      11618   15 "Cardinal cubic splines..."
+            //-- "Mitchell-Netravali free..."
+      11619   16 "Mitchell-Netravali free..."
+    }
+          //-- "Enable &Scanlines"
+    11010   18 "Abilita &le linee di scansione"
+          //-- "Set scanline &intensity..."
+    11144   19 "Regola &l'intensita' della linea di scansione"
+          //-- "Advanced settings"
+    popup   21 "Regolazioni avanzate" {
+            //-- "Single-pass"
+      11623   22 "Passo singolo"
+            //-- "Multi-pass"
+      11625   23 "Passo multiplo"
+            //-- "High-performance"
+      11626   24 "Alte prestazioni"
+            //-- "Use PS1.4"
+      11621   26 "Usa PS1.4"
+            //-- "Use floating-point textures"
+      11620   27 "Usa texture in virgola mobile"
+    }
+  }
+}
+
+menu    114 {
+        //-- "DirectX9 Alt"
+  popup    0 "DirectX9 Alternativo" {
+          //-- "Point filtering"
+    11701    1 "Filtraggio punto-campione"
+          //-- "Linear filtering"
+    11702    2 "Filtraggio lineare"
+          //-- "SoftFX algorithm"
+    popup    4 "Algoritmo SoftFX" {
+            //-- "Double pixels (3D hardware)"
+      11401    5 "Raddoppio pixel (hardware 3D)"
+            //-- "AdvanceMAME Scale2x"
+      11402    6 "Ridimensionamento2x AdvMAME"
+            //-- "AdvanceMAME Scale3x"
+      11403    7 "Ridimensionamento3x AdvMAME"
+            //-- "2xPM LQ"
+      11404    8 "2xPM bassa qualita'"
+            //-- "2xPM HQ"
+      11405    9 "2xPM alta qualita'"
+            //-- "Eagle Graphics"
+      11406   10 "Grafici Eagle"
+            //-- "Super Eagle"
+      11407   11 "Super Eagle"
+            //-- "2xSaI"
+      11408   12 "2xSaI"
+            //-- "Super 2xSaI"
+      11409   13 "Super 2xSaI"
+            //-- "Super Eagle (VBA)"
+      11410   14 "Super Eagle (VBA)"
+            //-- "2xSaI (VBA)"
+      11411   15 "2xSaI (VBA)"
+            //-- "Super 2xSaI (VBA)"
+      11412   16 "Super 2xSaI (VBA)"
+            //-- "SuperScale"
+      11413   17 "SuperRidimenzionamento"
+            //-- "SuperScale (75% Scanlines)"
+      11414   18 "SuperRidim. (LdS 75%)"
+            //-- "hq2x Filter"
+      11415   19 "Filtro hq2x"
+            //-- "hq3x Filter"
+      11416   20 "Filtro hq3x"
+            //-- "hq4x Filter"
+      11417   21 "Filtro hq4x"
+            //-- "hq2xS (VBA) Filter"
+      11418   22 "Filtro hq2x (VBA)"
+            //-- "hq3xS (VBA) Filter"
+      11419   23 "Filtro hq3x (VBA)"
+            //-- "hq2xS (SNES9X) Filter"
+      11420   24 "Filtro hq2xS (SNES9X)"
+            //-- "hq3xS (SNEX9X) Filter"
+      11421   25 "Filtro hq3xS (SNES9X)"
+            //-- "hq2xBold Filter"
+      11422   26 "Filtro hq2xBold"
+            //-- "hq3xBold Filter"
+      11423   27 "Filtro hq3xBold"
+            //-- "EPXB Filter"
+      11424   28 "Filtro EPXB"
+            //-- "EPXC Filter"
+      11425   29 "Filtro EPXC"
+            //-- "2xBR Squared"
+      11426   30 "2xBR quadrato"
+            //-- "2xBR Semi-Rounded"
+      11427   31 "2xBR semi-smussato"
+            //-- "2xBR Rounded"
+      11428   32 "2xBR smussato"
+            //-- "3xBR Squared"
+      11429   33 "3xBR quadrato"
+            //-- "3xBR Semi-Rounded"
+      11430   34 "3xBR semi-smussato"
+            //-- "3xBR Rounded"
+      11431   35 "3xBR smussato"
+            //-- "4xBR Squared"
+      11432   36 "4xBR quadrato"
+            //-- "4xBR Semi-Rounded"
+      11433   37 "4xBR semi-smussato"
+            //-- "4xBR Rounded"
+      11434   38 "4xBR smussato"
+            //-- "DDT3x"
+      11435   39 "DDT3x"
+            //-- "Force image to SoftFX size"
+      11490   41 "Forza l'immagine a dimensioni SoftFX"
+    }
+          //-- "Advanced settings"
+    popup   43 "Regolazioni avanzate" {
+            //-- "Force &16-bit emulation"
+      11491   44 "Forza &l'emulazione a 16-bit"
+            //-- "Hardware vertex processing"
+      11703   45 "Processamento hardware dei vertici"
+            //-- "Motion blur"
+      11704   46 "Effetto mosso"
+    }
+  }
+}
+
+menu    130 {
+        //-- "DirectSound plugin"
+  popup    0 "" {
+          //-- "Use Low-pass filter"
+    10201    1 "Usa filtro low-pass"
+          //-- "Sound disabled"
+    10210    3 "Suono disabilitato"
+          //-- "11025Hz samplerate"
+    10211    4 "F. di campionamento 11025Hz"
+          //-- "22050Hz samplerate"
+    10212    5 "F. di campionamento 22050Hz"
+          //-- "44100Hz samplerate"
+    10213    6 "F. di campionamento 44100Hz"
+          //-- "48000Hz samplerate"
+    10214    7 "F. di campionamento 48000Hz"
+  }
+}
+
+menu    131 {
+        //-- "XAudio2 plugin"
+  popup    0 "" {
+          //-- "Use Low-pass filter"
+    10202    1 "Usa filtro low-pass"
+          //-- "Use reverb"
+    10203    2 "Usa riverbero"
+          //-- "Sound disabled"
+    10220    4 "Suono disabilitato"
+          //-- "11025Hz samplerate"
+    10221    5 "F. di campionamento 11025Hz"
+          //-- "22050Hz samplerate"
+    10222    6 "F. di campionamento 22050Hz"
+          //-- "44100Hz samplerate"
+    10223    7 "F. di campionamento 44100Hz"
+          //-- "48000Hz samplerate"
+    10224    8 "F. di campionamento 48000Hz"
+  }
+}
+
+menu    140 {
+        //-- "Game Selection Menu"
+  popup    0 "Menu gioco selezionato" {
+          //-- "Play"
+    11900    1 "Gioca"
+          //-- "View Game Information"
+    11901    3 "Vizualizza le informazione del gioco"
+          //-- "View in Progetto EMMA"
+    11902    5 "Visualizza in Progetto EMMA"
+          //-- "Favorite"
+    11903    7 "Favorito"
+  }
+}
+
+        //-- "Map Game Inputs"
+dialog	  51 "Configura i controlli di gioco" {
+        //-- "OK"
+      2	   0 ""
+        //-- "Double-click an input to change its mapping"
+  65535	   2 "Doppio click su un'impostazione per modificarla"
+        //-- "Make selection in all three drop-down boxes, click apropriate button"
+  65535	   5 "Fare una selezione in tutte e tre le caselle con lista a cascata"
+        //-- "Save preset"
+  20127	   9 "Salva predefito"
+        //-- "Make default"
+  20006	  10 "Crea default"
+        //-- "Use preset"
+  20005	  11 "Usa predefinito"
+}
+
+        //-- "Select control"
+dialog	  52 "Seleziona il controllo" {
+        //-- "Grab mouse"
+  20007	   0 "mouse"
+        //-- "Activate"
+  20011	   1 "Attiva"
+        //-- "Clear Input"
+      3	   2 "Cancella Input"
+        //-- "Clear Lock"
+  20021	   3 "Cancella blocco"
+}
+
+        //-- "Edit cheat settings"
+dialog	  53 "Modifica i settaggi del trucco" {
+        //-- "Select a cheat to change it."
+  65535	   1 "Seleziona un trucco per modificarlo"
+        //-- "Defaults"
+  20013	   4 "Predefiniti"
+        //-- "OK"
+      1	   5 ""
+        //-- "Cancel"
+      2	   6 "Cancella"
+}
+
+        //-- "Edit Constant"
+dialog	  54 "Mod. costante" {
+        //-- "Close"
+      2	   1 "Chiudi"
+}
+
+        //-- "Edit DIPswitch settings"
+dialog	  55 "Modifica i settaggi del DIPswitch" {
+        //-- "Select a setting to change it."
+  65535	   1 "Seleziona un settaggio per modificarlo"
+        //-- "Defaults"
+  20013	   4 "Predefiniti"
+        //-- "OK"
+      1	   5 ""
+        //-- "Cancel"
+      2	   6 "Cancella"
+}
+
+        //-- ""
+dialog	  56 "" {
+        //-- "Progress1"
+  20015	   1 "Progresso1"
+        //-- "Cancel"
+      2	   5 "Cancella"
+}
+
+        //-- ""
+dialog	  57 "" {
+        //-- "FB Alpha contains parts of MAME && Final Burn.\n© 2004-2018, Team FB Alpha."
+  65535	   3 "FB Alpha contiene parti del MAME e del Final Burn.\n© 2004-2018, Team FB Alpha."
+        //-- "OK"
+      1	   4 ""
+        //-- "License"
+  20052	   5 "Licenza"
+}
+
+        //-- ""
+dialog	  58 "" {
+        //-- "OK"
+      1	   4 ""
+        //-- " I understand and agree to be bound by the terms of the above license agreement"
+  20054	   5 " Comprendo e accetto di seguire i termini concordati nella licenza di cui sopra"
+}
+
+        //-- ""
+dialog	  59 "" {
+        //-- "Close"
+  20019	   0 "Chiudi"
+}
+
+        //-- "Edit ROMs paths"
+dialog	  60 "Configura i percorsi delle ROMs" {
+        //-- "Tab2"
+  20502	   0 ""
+        //-- "OK"
+      1	   1 ""
+        //-- "Cancel"
+      2	   2 "Cancella"
+        //-- "Browse..."
+  21140	   5 "Naviga..."
+        //-- "Browse..."
+  21141	   7 "Naviga..."
+        //-- "Browse..."
+  21142	   9 "Naviga..."
+        //-- "Browse..."
+  21143	  11 "Naviga..."
+        //-- "Browse..."
+  21144	  13 "Naviga..."
+        //-- "Browse..."
+  21145	  15 "Naviga..."
+        //-- "Browse..."
+  21146	  17 "Naviga..."
+        //-- "Browse..."
+  21147	  19 "Naviga..."
+        //-- "Browse..."
+  21148	  21 "Naviga..."
+        //-- "Browse..."
+  21149	  23 "Naviga..."
+        //-- "Browse..."
+  21150	  25 "Naviga..."
+        //-- "Browse..."
+  21151	  27 "Naviga..."
+        //-- "Browse..."
+  21152	  29 "Naviga..."
+        //-- "Browse..."
+  21153	  31 "Naviga..."
+        //-- "Browse..."
+  21154	  33 "Naviga..."
+        //-- "Browse..."
+  21155	  35 "Naviga..."
+        //-- "Browse..."
+  21156	  37 "Naviga..."
+        //-- "Browse..."
+  21157	  39 "Naviga..."
+        //-- "Browse..."
+  21158	  41 "Naviga..."
+        //-- "Browse..."
+  21159	  43 "Naviga..."
+}
+
+        //-- "Select Game"
+dialog	  61 "Seleziona gioco" {
+        //-- "Preview"
+  20303	   2 "Anteprima"
+        //-- "Title"
+  20304	   3 "Titolo"
+        //-- "Select Game"
+  20302	   8 "Seleziona gioco"
+        //-- "Game info:"
+  20065	  10 "Gioco:"
+        //-- "ROM name:"
+  20063	  11 "Nome/ROM:"
+        //-- "ROM info:"
+  20064	  12 "Info:"
+        //-- "Released by:"
+  20067	  13 "Creato da:"
+        //-- "Genre:"
+  20066	  14 "Genere:"
+        //-- "Notes:"
+  20124	  15 "Note:"
+        //-- "Filters"
+  20300	  22 "Filtri"
+        //-- "Game Info"
+  20602	  24 "Info sul gioco"
+        //-- "Options"
+  20301	  25 "Opzioni"
+        //-- "Show available"
+  20060	  26 "Mostra disponibili"
+        //-- "Show unavailable"
+  20137	  27 "Mostra non dispon."
+        //-- "Always show clones"
+  20055	  28 "Mostra i cloni"
+        //-- "Use zipnames"
+  20074	  29 "Usa i zipnames"
+        //-- "Latin text only"
+  20075	  30 "Solo testo latino"
+        //-- "ROMs Dirs..."
+  20600	  31 "Cartelle ROMs..."
+        //-- "Scan ROMs"
+  20601	  32 "Scansiona ROMs"
+        //-- "Cancel"
+      2	  33 "Chiudi"
+        //-- "Play"
+      1	  34 "Gioca"
+        //-- "IPS"
+  20133	  35 "IPS"
+        //-- "Apply Patches"
+  20132	  36 "Applica gli aggiornamenti"
+        //-- "IPS Manager"
+  20131	  37 "Gestore IPS"
+        //-- "Search"
+  20135	  38 "Cerca"
+}
+
+        //-- "Shots Factory"
+dialog	  62 "Interfaccia di cattura" {
+        //-- "&Capture"
+  20061	   0 "&Cattura"
+        //-- "OK"
+      1	   1 ""
+        //-- "&Advance Frame"
+  20062	   2 "&Avanz. fotogramma"
+        //-- "Layer &1"
+  20202	   3 "Tutti gli sprite"
+        //-- "Layer &2"
+  20203	   4 "Strato &2"
+        //-- "Layer &3"
+  20204	   5 "Strato &3"
+        //-- "Layer &4"
+  20205	   6 "Strato &4"
+        //-- "Show"
+  20206	   7 "Mostra"
+        //-- "Sprite Priority 1"
+  20077	   8 "Priorita' sprite 1"
+        //-- "Sprite Priority 2"
+  20078	   9 "Priorita' sprite 2"
+        //-- "Sprite Priority 3"
+  20080	  10 "Priorita' sprite 3"
+        //-- "Sprite Priority 4"
+  20079	  11 "Priorita' sprite 4"
+        //-- "Sprite Priority 5"
+  20081	  12 "Priorita' sprite 5"
+        //-- "Sprite Priority 6"
+  20082	  13 "Priorita' sprite 6"
+        //-- "Sprite Priority 7"
+  20083	  14 "Priorita' sprite 7"
+        //-- "Sprite Priority 8"
+  20084	  15 "Priorita' sprite 8"
+}
+
+        //-- "Select desired Gamma value"
+dialog	  63 "Seleziona il valore di gamma" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Gamma value"
+  20085	   2 "Valore di gamma"
+        //-- "Cancel"
+      2	   4 "Cancella"
+}
+
+        //-- "Select desired resolution"
+dialog	  64 "Seleziona la risoluzione" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Resolution:"
+  20136	   2 "Risoluzione:"
+        //-- "Cancel"
+      2	   4 "Cancella"
+}
+
+        //-- "Select desired scanline intensity"
+dialog	  65 "Seleziona l'intensita' della linea di scansione" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Scanline intensity"
+  20088	   2 "Intensita' della linea di scansione"
+        //-- "Cancel"
+      2	   4 "Cancella"
+}
+
+        //-- "Select desired feedback intensity"
+dialog	  66 "Seleziona l'intensita' del feedback" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Feedback strength"
+  20090	   2 "Forza del feedback"
+        //-- "Feedback oversaturation"
+  20092	   5 "Sovrasaturazione del feedback"
+        //-- "Cancel"
+      2	   7 "Cancella"
+}
+
+        //-- "Select desired 3D projection properties"
+dialog	  67 "Seleziona le proprieta' della proiezione 3D" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Screen Angle"
+  20094	   3 "Inclinazione"
+        //-- "Fishbowl Factor"
+  20096	   6 "Effetto Fishbowl"
+        //-- "Cancel"
+      2	   8 "Chiudi"
+}
+
+        //-- "Adjust speed of the emulated CPU"
+dialog	  68 "Regola la velocita' della CPU emulata" {
+        //-- "OK"
+      1	   0 ""
+        //-- "CPU speed"
+  20098	   2 "Velocita' della CPU"
+        //-- "%"
+  65535	   4 ""
+        //-- "Cancel"
+      2	   5 "Chiudi"
+}
+
+        //-- "FB Alpha system information report"
+dialog	  69 "Rapporto FB Alpha - Informazioni di sistema" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Save..."
+  20138	   1 "Salva..."
+}
+
+        //-- "FB Alpha has encountered an unrecoverable problem and will be terminated"
+dialog	  70 "Si e' verificato un errore irreversibile, pertanto FB Alpha sara' terminato" {
+        //-- "OK"
+      1	   1 ""
+        //-- "Debug"
+  20102	   2 "Debug"
+        //-- "Details"
+  20103	   3 "Dettagli"
+        //-- "Log"
+  20104	   4 "Registro"
+}
+
+        //-- "FB Alpha debugger"
+dialog	  71 "Debugger di FB Alpha" {
+        //-- "Disassembly"
+  65535	   3 "Disassemblaggio"
+        //-- "Internal CPU state"
+  65535	   8 "Stato interno della CPU"
+        //-- "Memory map"
+  65535	  11 "Mappa della memoria"
+        //-- "Debugger messages"
+  65535	  16 "Messaggi del debugger"
+        //-- "Execute"
+      1	  20 "Esegui"
+        //-- "Exit"
+      2	  22 "Esci"
+        //-- "Go!"
+  20114	  23 "Vai!"
+        //-- "Step frame"
+  20118	  24 "Passo fotogramma"
+        //-- "Step"
+  20115	  25 "Passo"
+        //-- "Step into"
+  20116	  26 "Passo dentro"
+        //-- "Skip"
+  20117	  27 "Salta"
+        //-- "Screenshot"
+  20119	  28 "Schermata"
+}
+
+        //-- "FB Alpha debugger"
+dialog	  72 "Debugger di FB Alpha" {
+        //-- "Execute"
+      1	  10 "Esegui"
+        //-- "Exit"
+      2	  12 "Esci"
+        //-- "Go!"
+  20114	  13 "Vai!"
+        //-- "Step frame"
+  20118	  14 "Passo fotogramma"
+        //-- "Step"
+  20115	  15 "Passo"
+        //-- "Step into"
+  20116	  16 "Passo dentro"
+        //-- "Skip"
+  20117	  17 "Salta"
+        //-- "Screenshot"
+  20119	  18 "Schermata"
+}
+
+        //-- "FB Alpha message"
+dialog	  73 "Messaggio di FB Alpha" {
+        //-- "OK"
+      1	   0 ""
+}
+
+        //-- "Edit support file paths"
+dialog	  74 "Configura i percorsi dei file di supporto" {
+        //-- "Tab2"
+  20501	   0 ""
+        //-- "OK"
+      1	   1 ""
+        //-- "Cancel"
+      2	   2 "Cancella"
+        //-- "Browse..."
+  20950	   5 "Naviga..."
+        //-- "Browse..."
+  20951	   7 "Naviga..."
+        //-- "Browse..."
+  20952	   9 "Naviga..."
+        //-- "Browse..."
+  20953	  11 "Naviga..."
+        //-- "Browse..."
+  20954	  13 "Naviga..."
+        //-- "Browse..."
+  20955	  15 "Naviga..."
+        //-- "Browse..."
+  20956	  17 "Naviga..."
+        //-- "Browse..."
+  20957	  19 "Naviga..."
+        //-- "Browse..."
+  20958	  21 "Naviga..."
+        //-- "Browse..."
+  20959	  23 "Naviga..."
+        //-- "Browse..."
+  20960	  25 "Naviga..."
+        //-- "Browse..."
+  20961	  27 "Naviga..."
+        //-- "Browse..."
+  20962	  29 "Naviga..."
+        //-- "Browse..."
+  20963	  31 "Naviga..."
+        //-- "Browse..."
+  20964	  33 "Naviga..."
+        //-- "Browse..."
+  20965	  35 "Naviga..."
+        //-- "Browse..."
+  20966	  37 "Naviga..."
+        //-- "Browse..."
+  20967	  39 "Naviga..."
+        //-- "Browse..."
+  20968	  41 "Naviga..."
+        //-- "Browse..."
+  20969	  43 "Naviga..."
+        //-- "Browse..."
+  20970	  45 "Naviga..."
+        //-- "Browse..."
+  20971	  47 "Naviga..."
+        //-- "Browse..."
+  20972	  49 "Naviga..."
+}
+
+        //-- "Palette Viewer"
+dialog	  75 "Visualizzatore della palette" {
+        //-- "0"
+  20400	  16 ""
+        //-- "1"
+  20401	  17 ""
+        //-- "2"
+  20402	  18 ""
+        //-- "3"
+  20403	  19 ""
+        //-- "4"
+  20404	  20 ""
+        //-- "5"
+  20405	  21 ""
+        //-- "6"
+  20406	  22 ""
+        //-- "7"
+  20407	  23 ""
+        //-- "8"
+  20408	  24 ""
+        //-- "9"
+  20409	  25 ""
+        //-- "A"
+  20410	  26 ""
+        //-- "B"
+  20411	  27 ""
+        //-- "C"
+  20412	  28 ""
+        //-- "D"
+  20413	  29 ""
+        //-- "E"
+  20414	  30 ""
+        //-- "F"
+  20415	  31 ""
+        //-- "Selected colour: "
+  20434	  32 "Colore selezionato:"
+        //-- "Close"
+      2	  33 "Chiudi"
+        //-- "Previous..."
+  20432	  34 "Precedente..."
+        //-- "Next..."
+  20433	  35 "Successivo..."
+}
+
+        //-- "IPS Patch Manager"
+dialog	  77 "Gestore di aggiornamento IPS" {
+        //-- "Deselect All"
+  20130	   6 "Deseleziona tutto"
+        //-- "Cancel"
+      2	   8 "Cancella"
+        //-- "OK"
+      1	   9 ""
+}
+
+        //-- "Select cartridges to load..."
+dialog	  78 "Seleziona cartucce da caricare" {
+        //-- "OK"
+      1	   1 ""
+        //-- "Cancel"
+      2	   2 "Chiudi"
+        //-- "Slot 1"
+  20736	   4 "Slot 1"
+        //-- "Clear"
+  20730	   8 "Svuota"
+        //-- "Select..."
+  20724	   9 "Seleziona..."
+        //-- "Slot 2"
+  20737	  11 "Slot 2"
+        //-- "Clear"
+  20731	  15 "Svuota"
+        //-- "Select..."
+  20725	  16 "Seleziona..."
+        //-- "Slot 3"
+  20738	  18 "Slot 3"
+        //-- "Clear"
+  20732	  22 "Svuota"
+        //-- "Select..."
+  20726	  23 "Seleziona..."
+        //-- "Slot 4"
+  20739	  25 "Slot 4"
+        //-- "Clear"
+  20733	  29 "Svuota"
+        //-- "Select..."
+  20727	  30 "Seleziona..."
+        //-- "Slot 5"
+  20740	  32 "Slot 5"
+        //-- "Clear"
+  20734	  36 "Svuota"
+        //-- "Select..."
+  20728	  37 "Seleziona..."
+        //-- "Slot 6"
+  20741	  39 "Slot 6"
+        //-- "Clear"
+  20735	  43 "Svuota"
+        //-- "Select..."
+  20729	  44 "Seleziona..."
+}
+
+        //-- "NeoGeo CDZ Game List"
+dialog	  79 "Neo Geo CDZ - Lista dei giochi" {
+        //-- "Play"
+  20813	   1 "Gioca"
+        //-- "Cancel"
+  20814	   2 "Chiudi"
+        //-- "Scan Games"
+  20811	   3 "Scansione giochi"
+        //-- "Directories..."
+  20812	   4 "Cartelle..."
+        //-- "Scan sub-dirs"
+  20809	   5 "Scan. sottocartelle"
+        //-- "Front Cover"
+  65535	   6 "Prima di copertina"
+        //-- "Back Cover"
+  65535	   7 "Quarta di copertina"
+        //-- "Options"
+  65535	   9 "Opzioni"
+        //-- "Short name:"
+  20816	  14 "Nome breve:"
+        //-- "Released by:"
+  20817	  15 "Creato da:"
+        //-- "Disc Image:"
+  20818	  16 "Img disco:"
+        //-- "Audio Tracks:"
+  20819	  17 "Tracce audio:"
+        //-- "Scan for ISO only"
+  20810	  22 "Scan. solo ISO"
+}
+
+        //-- "Game Information"
+dialog	  81 "Informazioni sul gioco" {
+        //-- "Tab1"
+  20500	   0 ""
+        //-- "Game info:"
+  20065	   2 "Gioco:"
+        //-- "ROM name:"
+  20063	   3 "Nome/ROM:"
+        //-- "ROM info:"
+  20064	   4 "Info:"
+        //-- "Released by:"
+  20067	   5 "Creato da:"
+        //-- "Genre:"
+  20066	   6 "Genere:"
+        //-- "Notes:"
+  20124	   7 "Note:"
+        //-- "Favorite"
+  20604	  19 "Favorito"
+        //-- "Rescan Romset"
+  20603	  20 "Valuta ROMset"
+        //-- "Close"
+      2	  21 "Chiudi"
+}
+
+        //-- "Download Localisation Template"
+dialog	  82 "Download modello di localizzazione" {
+        //-- "Language:"
+  20139	   1 "Lingua:"
+        //-- "Cancel"
+      2	   3 "Cancella"
+        //-- "OK"
+      1	   4 "OK"
+}
+
+        //-- "Choose Monitor for Full Screen"
+dialog	  83 "Scegli il monitor per lo schermo intero" {
+        //-- "These only apply to the DirectX Graphics 9 blitters."
+  20145	   1 "Queste impostazioni sono valide solo con i Blitter DirectX 9"
+        //-- "Horizontal Games:"
+  20141	   2 "all. orizzontale:"
+        //-- "Vertical Games:"
+  20143	   4 "all. verticale:"
+        //-- "Cancel"
+      2	   6 "Chiudi"
+        //-- "OK"
+      1	   7 "OK"
+}
+
+        //-- "Replay input"
+dialog	 233 "" {
+        //-- "OK"
+      1	   0 "OK"
+        //-- "Cancel"
+      2	   4 "Chiudi"
+        //-- "00:00:00"
+  20255	  10 "00:00:00"
+        //-- "0"
+  20256	  11 "0"
+        //-- "0"
+  20257	  12 "0"
+        //-- "Open Read-Only"
+  20259	  15 "Apri solo-lettura"
+        //-- "Show Joystick Movement"
+  20263	  16 "Mostra movimenti joystick"
+}
+
+        //-- "Record input"
+dialog	 234 "" {
+        //-- "OK"
+      1	   0 "OK"
+        //-- "Cancel"
+      2	   3 "Chiudi"
+        //-- "..."
+  20261	   6 "..."
+        //-- "Record From Power-On"
+  20262	   8 "Registra dall'avvio"
+}
+
+        //-- "This appears to be the first time you run %s v%.20s.\n\n"
+string   200 "Questa sembra essere la prima volta che si esegue %s v%.20s.\n\n"
+
+        //-- "Please take some time to match the audio/video settings to your system capabilities and personal preferences. If you continue to use and/or distribute this software, you must agree to be bound by the terms of license agreement, which is always accessible via the about dialog.\n\n"
+string   202 "Si consiglia di regolare le impostazioni audio/video in base alle capacita' del proprio sistema e alle preferenze personali. Se si continua ad utilizzare e/o distribuire questo software e' necessario accettare i termini del contratto di licenza (sempre visionabile dalla relativa finestra).\n\n"
+
+        //-- "Note that this is alpha quality software. As such, it likely will exhibit problems, including audio/video options not behaving correctly, the emulation of some games misses some features, and may exhibit stability problems. CAVEAT LECTOR!"
+string   204 "Si noti che questo e' un software di qualita' alpha. Come tale potrebbe presentare problemi, come un comportamento anomalo delle opzioni audio/video, la mancanza di particolari caratteristiche in alcuni giochi e problemi di stabilita'. CAVEAT LECTOR!"
+
+        //-- "Note that this is beta quality software. As such, it likely may be missing some features, or exhibit some problems with your system."
+string   206 "Si noti che questo e' un software di qualita' beta. Come tale potrebbero mancare alcune funzioni o verificarsi problemi con il proprio sistema."
+
+        //-- "Cheat name"
+string   220 "Nome del trucco"
+
+        //-- "Status"
+string   222 "Stato"
+
+        //-- "Game input"
+string   240 "Controlli"
+
+        //-- "Mapped to"
+string   242 "Mappato con"
+
+        //-- "State"
+string   244 "Stato"
+
+        //-- "Player %i"
+string   246 "Giocatore %i"
+
+        //-- "Keyboard"
+string   248 "Tastiera"
+
+        //-- "Joystick %i"
+string   250 "Joystick %i"
+
+        //-- "X-Arcade (left side)"
+string   252 "X-Arcade (lato sinistro)"
+
+        //-- "X-Arcade (right side)"
+string   254 "X-Arcade (lato destro)"
+
+        //-- "Hot Rod (left side)"
+string   256 "Hot Rod (lato sinistro)"
+
+        //-- "Hot Rod (right side)"
+string   258 "Hot Rod (lato destro)"
+
+        //-- "Absolute"
+string   260 "Assoluto"
+
+        //-- "Auto-center"
+string   262 "Centrare-auto"
+
+        //-- "Normal"
+string   264 "Normale"
+
+        //-- "DIPSwitch group"
+string   280 "DIPSwitch"
+
+        //-- "Setting"
+string   282 "Regolazione"
+
+        //-- "Move control or press key for %.100hs"
+string   300 "Mappa controllo o tasto per: %.100hs"
+
+        //-- "Move control or press key"
+string   302 "Muovi il controller o premi un tasto"
+
+        //-- "Waiting for %.80s to be released..."
+string   304 "In attesa di %.80s per essere rilasciato..."
+
+        //-- "Create new memory card"
+string   320 "Crea nuova scheda di memoria"
+
+        //-- "Select new memory card"
+string   322 "Seleziona nuova scheda di memoria"
+
+        //-- "Loading and initialising %s..."
+string   340 "Caricamento e inizializzazione %s..."
+
+        //-- "Loading"
+string   342 "Caricamento"
+
+        //-- "Record Input to File"
+string   350 "Registra un file con le azioni del giocatore"
+
+        //-- "Replay Input from File"
+string   352 "Carica un file con le azioni del giocatore"
+
+        //-- "Select Directory:"
+string   360 "Seleziona cartella:"
+
+        //-- "Load State"
+string   380 "Carica stato"
+
+        //-- "Save State"
+string   382 "Salva stato"
+
+        //-- "slot %d active"
+string   384 "slot %d attivo"
+
+        //-- "state loaded"
+string   386 "stato caricato"
+
+        //-- "load error"
+string   388 "errore di caricamento"
+
+        //-- "state saved"
+string   390 "stato salvato"
+
+        //-- "save error"
+string   392 "errore di salvataggio"
+
+        //-- "Generate %s dat"
+string   420 "Generare %s dat"
+
+        //-- "no game loaded"
+string   422 "nessun gioco caricato"
+
+        //-- "*** Starting netplay: "
+string   440 "*** Inizio gioco di rete: "
+
+        //-- "*** You are player %i. "
+string   442 "*** Sei il giocatore %i. "
+
+        //-- "There are %i total players."
+string   444 "Ci sono %i giocatori in totale."
+
+        //-- "*** Player %1i <%.32hs> dropped from the game."
+string   446 "*** Giocatore %1i <%.32hs> uscito dal gioco."
+
+        //-- "too much text"
+string   448 "troppo testo"
+
+        //-- "PNG saved"
+string   460 "PNG salvato"
+
+        //-- "PNG error %1d"
+string   462 "PNG errore %1d"
+
+        //-- "Rec AVI ON"
+string   464 "Registrazione AVI ON"
+
+        //-- "Rec AVI OFF"
+string   466 "Registrazione AVI OFF"
+
+        //-- "No volume control"
+string   480 "Nessun controllo del volume"
+
+        //-- "volume %03i %%"
+string   482 "volume %03i %%"
+
+        //-- "Silence"
+string   484 "Silenzio"
+
+        //-- "Sound Restored"
+string   486 "Suono ripristinato"
+
+        //-- "This input recording"
+string   500 ""
+
+        //-- "input recording."
+string   502 ""
+
+        //-- "%s Input Recording Files"
+string   504 ""
+
+        //-- "state file"
+string   506 "file di stato"
+
+        //-- "This state file"
+string   508 "file di stato corrente"
+
+        //-- "%s State Files"
+string   510 "%s file di stato"
+
+        //-- "sound recording"
+string   512 ""
+
+        //-- "This sound recording"
+string   514 ""
+
+        //-- "%s Sound Recording Files"
+string   516 ""
+
+        //-- "%s Memory Card Files"
+string   518 "%s file della scheda di memoria"
+
+        //-- "All Memory Card Files"
+string   520 "Tutti i file della scheda di memoria"
+
+        //-- "All Dat Files"
+string   522 "Tutti i file dat"
+
+        //-- "Text Files"
+string   524 "File di testo"
+
+        //-- "%s Patch Files"
+string   526 "%s file di aggiornamento"
+
+        //-- "Save system information report"
+string   540 "Salva rapporto informazioni di sistema"
+
+        //-- "Select game list localisation template"
+string   560 "Seleziona modello di localizzazione della lista giochi"
+
+        //-- "Create game list localisation template"
+string   562 "Crea modello di localizzazione della lista giochi"
+
+        //-- "Rom Information"
+string   600 "Informazioni ROM"
+
+        //-- "Rom Info"
+string   602 "Info/ROM"
+
+        //-- "Sample Info"
+string   604 "Info/campionamento"
+
+        //-- "Name"
+string   606 "Nome"
+
+        //-- "Size (bytes)"
+string   608 "Dimensioni (bytes)"
+
+        //-- "CRC32"
+string   610 "CRC32"
+
+        //-- "Type"
+string   612 "Tipo"
+
+        //-- "Flags"
+string   614 "Bandiere"
+
+        //-- "%s, Essential"
+string   616 "%s, primario"
+
+        //-- "%s, Optional"
+string   618 "%s, opzionale"
+
+        //-- "%s, Program"
+string   620 "%s, programma"
+
+        //-- "%s, Graphics"
+string   622 "%s, grafica"
+
+        //-- "%s, Sound"
+string   624 "%s, suono"
+
+        //-- "%s, BIOS"
+string   626 "%s, BIOS"
+
+        //-- "No Dump"
+string   628 "Nessun Dump"
+
+        //-- "Previews"
+string   630 "Anteprime"
+
+        //-- "Titles"
+string   632 "Titoli"
+
+        //-- "Icons"
+string   634 "Icone"
+
+        //-- "Cheats"
+string   636 "Trucchi"
+
+        //-- "High Scores"
+string   638 "Migliori punteggi"
+
+        //-- "Samples"
+string   640 "Campionamenti"
+
+        //-- "IPS"
+string   642 "IPS"
+
+        //-- "Neo Geo CDZ Games"
+string   644 "Giochi Neo Geo CDZ"
+
+        //-- "Neo Geo CDZ Covers"
+string   646 "Copertine Neo Geo CDZ"
+
+        //-- "Blend Files"
+string   648 "File fusi"
+
+        //-- "Select Previews"
+string   650 "Anteprime selezione"
+
+        //-- "Versus Previews"
+string   652 "Anteprime Versus"
+
+        //-- "HowTo Previews"
+string   654 "Anteprime HowTo"
+
+        //-- "Scores Previews"
+string   656 "Anteprima punteggi"
+
+        //-- "Bosses Previews"
+string   658 "Anteprime Boss"
+
+        //-- "Game Over Previews"
+string   660 "Anteprime Game Over"
+
+        //-- "Flyers"
+string   662 "Locandine"
+
+        //-- "Marquees"
+string   664 "Tendine"
+
+        //-- "Control Panels"
+string   666 "Pannelli di controllo"
+
+        //-- "Cabinets"
+string   668 "Cabinati"
+
+        //-- "PCBs"
+string   670 "Circuiti stampati"
+
+        //-- "History.dat"
+string   672 "History.dat"
+
+        //-- "EEPROM Saves"
+string   674 "EEPROM Saves"
+
+        //-- "Path #1"
+string   680 "Percorso #1"
+
+        //-- "Path #2"
+string   682 "Percorso #2"
+
+        //-- "Path #3"
+string   684 "Percorso #3"
+
+        //-- "Path #4"
+string   686 "Percorso #4"
+
+        //-- "Path #5"
+string   688 "Percorso #5"
+
+        //-- "Path #6"
+string   690 "Percorso #6"
+
+        //-- "Path #7"
+string   692 "Percorso #7"
+
+        //-- "Path #8"
+string   694 "Percorso #8"
+
+        //-- "Path #9"
+string   696 "Percorso #9"
+
+        //-- "Path #10"
+string   698 "Percorso #10"
+
+        //-- "Path #11"
+string   700 "Percorso #11"
+
+        //-- "Path #12"
+string   702 "Percorso #12"
+
+        //-- "Path #13"
+string   704 "Percorso #13"
+
+        //-- "Path #14"
+string   706 "Percorso #14"
+
+        //-- "Path #15"
+string   708 "Percorso #15"
+
+        //-- "Path #16"
+string   710 "Percorso #16"
+
+        //-- "Path #17"
+string   712 "Percorso #17"
+
+        //-- "Path #18"
+string   714 "Percorso #18"
+
+        //-- "Path #19"
+string   716 "Percorso #19"
+
+        //-- "Path #20"
+string   718 "Percorso #20"
+
+        //-- "The preset file was saved to %s."
+string   720 "Il file predefinito e' stato salvato in %s."
+
+        //-- "Create gamelist localisation template"
+string   730 "Crea un modello di localizzazione della gamelist"
+
+        //-- "Select gamelist localisation template"
+string   732 "Seleziona un modello di localizzazione della gamelist"
+
+        //-- "FB Alpha gamelist localisation templates"
+string   734 "Modelli di localizzazione della gamelist"
+
+        //-- "Select CD-ROM image..."
+string   740 "Seleziona un'immagine CD..."
+
+        //-- "Select CD-ROM image"
+string   742 "Seleziona un'immagine CD"
+
+        //-- "CD images"
+string   744 "Immagini CD"
+
+        //-- "Create localisation template"
+string   750 "Crea un modello di localizzazione"
+
+        //-- "Select localisation template"
+string   752 "Seleziona un modello di localizzazione"
+
+        //-- "FB Alpha localisation templates"
+string   754 "Modelli di localizzazione di FB Alpha"
+
+        //-- "Filters"
+string   760 "Filtri"
+
+        //-- "Hardware"
+string   762 "Hardware"
+
+        //-- "Cave"
+string   764 "Cave"
+
+        //-- "CPS-1"
+string   766 "CPS-1"
+
+        //-- "CPS-2"
+string   768 "CPS-2"
+
+        //-- "CPS-3"
+string   770 "CPS-3"
+
+        //-- "Neo Geo"
+string   772 "Neo Geo"
+
+        //-- "PGM"
+string   774 "PGM"
+
+        //-- "Psikyo"
+string   776 "Psikyo"
+
+        //-- "Sega"
+string   778 "Sega"
+
+        //-- "Taito"
+string   780 "Taito"
+
+        //-- "Toaplan"
+string   782 "Toaplan"
+
+        //-- "Misc (pre 90s)"
+string   784 "Vari (pre 90s)"
+
+        //-- "Misc (post 90s)"
+string   786 "Vari (post 90s)"
+
+        //-- "Megadrive"
+string   788 "Megadrive"
+
+        //-- "Pacman"
+string   790 "Pacman"
+
+        //-- "Konami"
+string   792 "Konami"
+
+        //-- "Galaxian"
+string   794 "Galaxian"
+
+        //-- "Irem"
+string   796 "Irem"
+
+        //-- "Board Type"
+string   798 "Tipo di scheda"
+
+        //-- "Bootleg"
+string   800 "Non ufficiale"
+
+        //-- "Prototype"
+string   802 "Prototipo"
+
+        //-- "Hack"
+string   804 "Hack"
+
+        //-- "Homebrew"
+string   806 "Homebrew"
+
+        //-- "Demo"
+string   808 "Demo"
+
+        //-- "Genuine"
+string   810 "Originale"
+
+        //-- "Showing %i of %i sets [%i Unavailable sets]"
+string   812 "Visualizzazione di %i su %i ROMs [%i ROMs non disponibili]"
+
+        //-- "Kaneko"
+string   814 "Kaneko"
+
+        //-- "SNES"
+string   816 "SNES"
+
+        //-- "Data East"
+string   818 "Data East"
+
+        //-- "Capcom (Other)"
+string   820 "Capcom (altro)"
+
+        //-- "Seta"
+string   822 "Seta"
+
+        //-- "Technos"
+string   824 "Technos"
+
+        //-- "PC-Engine"
+string   826 "PC-Engine"
+
+        //-- "Master System"
+string   828 "Master System"
+
+        //-- "SG-1000"
+string   830 "SG-1000"
+
+        //-- "ColecoVision"
+string   832 "ColecoVision"
+
+        //-- "Game Gear"
+string   834 "Game Gear"
+
+        //-- "MSX"
+string   836 "MSX"
+
+        //-- "Genre"
+string   850 "Genere"
+
+        //-- "Shooter - Horizontal"
+string   852 "Sparatutto - orizzontale"
+
+        //-- "Shooter - Vertical"
+string   854 "Sparatutto - verticale"
+
+        //-- "Fighter - Scrolling"
+string   856 "Picchiaduro - a scorrimento"
+
+        //-- "Fighter - Versus"
+string   858 "Picchiaduro - ad incontri"
+
+        //-- "BIOS"
+string   860 "BIOS"
+
+        //-- "Breakout"
+string   862 "Rompi mattoni"
+
+        //-- "Casino"
+string   864 "Casino'"
+
+        //-- "Ball & Paddle"
+string   866 "Palla e Racchetta"
+
+        //-- "Maze"
+string   868 "Labirinto"
+
+        //-- "Mini-Games"
+string   870 "Mini-giochi"
+
+        //-- "Pinball"
+string   872 "Flipper"
+
+        //-- "Platform"
+string   874 "Piattaforme"
+
+        //-- "Puzzle"
+string   876 "Rompicapo"
+
+        //-- "Quiz"
+string   878 "Quiz"
+
+        //-- "Sports - Misc"
+string   880 "Sport - Vario"
+
+        //-- "Sports - Football"
+string   882 "Sport - Football"
+
+        //-- "Misc"
+string   884 "Vario"
+
+        //-- "Mahjong"
+string   886 "Mahjong"
+
+        //-- "Racing"
+string   888 "Corse"
+
+        //-- "Shooter - Other"
+string   890 "Sparatutto - altro"
+
+        //-- "Family"
+string   940 "Famiglia"
+
+        //-- "Metal Slug"
+string   942 "Metal Slug"
+
+        //-- "Street Fighter"
+string   944 "Street Fighter"
+
+        //-- "King of Fighters"
+string   946 "King of Fighters"
+
+        //-- "Darkstalkers"
+string   948 "Darkstalkers"
+
+        //-- "Fatal Fury"
+string   950 "Fatal Fury"
+
+        //-- "Samurai Shodown"
+string   952 "Samurai Shodown"
+
+        //-- "19XX"
+string   954 "19XX"
+
+        //-- "Aero Fighters"
+string   956 "Aero Fighters"
+
+        //-- "Power Instinct"
+string   958 "Power Instinct"
+
+        //-- "Other"
+string   960 "Altro"
+
+        //-- "Favorites"
+string   990 "Favoriti"
+
+        //-- "IPS Patch Manager"
+string  1000 "Gestore di aggiornamento IPS"
+
+        //-- "%s%sNeo Geo CDZ%sSelect Game"
+string  1010 "%s%sNeo Geo CDZ%sSelect Game"
+
+        //-- "Title"
+string  1012 "Titolo"
+
+        //-- "NGCD-ID"
+string  1014 "NGCD-ID"
+
+        //-- "&Arcade"
+string  1040 "&Arcade"
+
+        //-- "&Other..."
+string  1042 "&Altro..."
+
+        //-- "&Other Gamma value..."
+string  1044 "&Altro valore di gamma..."
+
+        //-- "Adjust &CPU speed..."
+string  1046 "Regola &la velocita' della CPU"
+
+        //-- "Load state from active slot (no %d)\tF9"
+string  1048 "Carica stato da uno slot attivo (no %d)\tF9"
+
+        //-- "Save state to active slot (no %d)\tF10"
+string  1050 "Salva stato su uno slot attivo (no %d)\tF10"
+
+        //-- "no game selected"
+string  1052 "Nessun gioco selezionato"
+
+        //-- "Number of Frames"
+string  1070 "Numero di fotogrammi"
+
+        //-- "Select desired filter sharpness"
+string  1072 "Seleziona il filtro di nitidezza"
+
+        //-- "Scanning ROMs..."
+string  1076 "Scansione ROMs..."
+
+        //-- "New cheat search started"
+string  1080 "Ricerca nuovo trucco iniziata"
+
+        //-- "%i Addresses Matched"
+string  1082 "%i indirizzi abbinati"
+
+        //-- "Address %08X Value %02X"
+string  1084 "Indirizzo %08X Valore %02X"
+
+        //-- "Cheat search exited"
+string  1086 "Ricerca trucco abbandonata"
+
+        //-- "English (US)"
+string  1100 "Inglese (USA)"
+
+        //-- "Simplified Chinese"
+string  1102 "Cinese semplificato"
+
+        //-- "Traditional Chinese"
+string  1104 "Cinese tradizionale"
+
+        //-- "Japanese"
+string  1106 "Giapponese"
+
+        //-- "Korean"
+string  1108 "Coreano"
+
+        //-- "French"
+string  1110 "Francese"
+
+        //-- "Spanish"
+string  1112 "Spagnolo"
+
+        //-- "Italian"
+string  1114 "Italiano"
+
+        //-- "German"
+string  1116 "Tedesco"
+
+        //-- "Portuguese"
+string  1118 "Portoghese"
+
+        //-- "Polish"
+string  1120 "Polacco"
+
+        //-- "Hungarian"
+string  1122 "Ungherese"
+
+        //-- "Game Information"
+string  1200 "Informazioni gioco"
+
+        //-- "In Game"
+string  1202 "In gioco"
+
+        //-- "Title"
+string  1204 "Titolo"
+
+        //-- "Select"
+string  1206 "Selezione"
+
+        //-- "Versus"
+string  1208 "Versus"
+
+        //-- "How To"
+string  1210 "How To"
+
+        //-- "Scores"
+string  1212 "Punteggi"
+
+        //-- "Bosses"
+string  1214 "Boss"
+
+        //-- "Game Over"
+string  1216 "Game Over"
+
+        //-- "Flyer"
+string  1218 "Locandina"
+
+        //-- "Cabinet"
+string  1220 "Cabinato"
+
+        //-- "Marquee"
+string  1222 "Tendina"
+
+        //-- "Controls"
+string  1224 "Controlli"
+
+        //-- "PCB"
+string  1226 "circuito stampato"
+
+        //-- "Rom Info"
+string  1228 "Info/ROM"
+
+        //-- "History"
+string  1230 "Storia"
+
+        //-- "Sample Info"
+string  1232 "Info/campionamento"
+
+        //-- " (clone of %s"
+string  1600 " (clone di %s"
+
+        //-- ", uses ROMs from %s"
+string  1602 ", usa ROMs da %s"
+
+        //-- "%suses ROMs from %s"
+string  1604 "%susa ROMs da %s"
+
+        //-- "%suses board-ROMs from %s"
+string  1606 "%susa scheda-ROMs da %s"
+
+        //-- "%suses samples from %s"
+string  1608 "%susa campionamenti da %s"
+
+        //-- "%s%i player%s"
+string  1610 "%s%i giocatore%s"
+
+        //-- "s max"
+string  1612 "s max"
+
+        //-- "%s (%s, %s hardware)"
+string  1614 "%s (%s, %s hardware)"
+
+        //-- "Neo Geo MVS Cartidge"
+string  1616 "Cartuccia Neo Geo MVS"
+
+        //-- "%shigh scores supported"
+string  1618 "%smigliori punteggi supportati"
+
+        //-- "cartridge"
+string  1620 "cartuccia"
+
+        //-- "hardware"
+string  1622 "hardware"
+
+        //-- "Empty"
+string  1624 "Vuoto"
+
+        //-- "Unidentified CD"
+string  1626 "CD non identificato"
+
+        //-- "Error"
+string  1800 "Errore"
+
+        //-- "Warning"
+string  1802 "Attenzione"
+
+        //-- "Information"
+string  1804 "Informazione"
+
+        //-- "Unknown"
+string  1806 "Sconosciuto"
+
+        //-- "The ROMset is OK."
+string  1810 "Il ROMset e' OK."
+
+        //-- "The ROMset exhibits the following problems:"
+string  1812 "Il ROMset presenta i seguenti problemi:"
+
+        //-- "No data was found, the game will not run!"
+string  1814 "Nessun dato trovato, il gioco non sara' avviato!"
+
+        //-- "essential data is missing, the game will not run!"
+string  1816 "dato/i essenziale mancante, il gioco non sara' avviato!"
+
+        //-- "essential data is invalid, the game might not run!"
+string  1818 "dato/i essenziale invalido, il gioco potrebbe non partire!"
+
+        //-- "data is missing."
+string  1820 "- dato/i mancante/i."
+
+        //-- "data is invalid."
+string  1822 "- dato/i invalido/i."
+
+        //-- "%.32hs was found (%.512s).\n"
+string  1824 "%.32hs trovato (%.512s).\n"
+
+        //-- "%.32hs was not found.\n"
+string  1826 "%.32hs non trovato.\n"
+
+        //-- "The following ROMs are invalid:\n"
+string  1828 "Le seguenti ROMs sono invalide:\n"
+
+        //-- "%.32hs has a CRC of %.8X (correct is %.8X).\n"
+string  1830 "%.32hs ha un CRC di %.8X (corretto e' %.8X).\n"
+
+        //-- "%.32hs is %dk which is too small (correct is %dkB).\n"
+string  1832 "%.32hs e' %dk che e' troppo piccolo (corretto e' %dkB).\n"
+
+        //-- "%.32hs is %dk which is too large (correct is %dkB).\n"
+string  1834 "%.32hs e' %dk che e' troppo grande (corretto e' %dkB).\n"
+
+        //-- "essential "
+string  1836 "(primario) "
+
+        //-- "program "
+string  1838 "programma "
+
+        //-- "BIOS "
+string  1840 "BIOS "
+
+        //-- "graphics "
+string  1842 "grafica "
+
+        //-- "sound "
+string  1844 "suono "
+
+        //-- "ROM "
+string  1846 "ROM "
+
+        //-- "Error loading %.32hs, requested by %.128s.\nThe emulation will likely suffer problems."
+string  1848 "Errore di caricamento %.32hs, richiesto da %.128s.\nProbabilmente l'emulazione avra' problemi."
+
+        //-- "Error reading %.32hs from %.512s"
+string  1850 "Errore di lettura %.32hs da %.512s"
+
+        //-- "CRC mismatch reading %.32hs from %.512s"
+string  1852 "Incompatibilita' CRC di lettura %.32hs da %.512s"
+
+        //-- "There was a problem starting \'%.128s\'.\n"
+string  1860 "C'e' stato un problema avviando \'%.128s\'.\n"
+
+        //-- "%.32s is not supported by %.32s."
+string  1870 "%.32s non e' supportato da %.32s."
+
+        //-- "Couldn\'t create main window."
+string  1872 "Impossibile creare la finestra principale."
+
+        //-- "Couldn\'t intialise \'%s\' module."
+string  1874 "Impossibile inizializzare \'%s\' modulo."
+
+        //-- "Couldn\'t create a triple buffer."
+string  1876 "Impossibile creare un buffer triplo."
+
+        //-- "No appropriate display mode supported. Please adjust your full-screen settings."
+string  1878 "Modalita' video idonea non supportata. Regolare le impostazioni a schermo intero"
+
+        //-- "Problem setting \'%dx%dx%dbpp (%dHz)\' display mode"
+string  1880 "Problema d'impostazione \'%dx%dx%dbpp (%dHz)\' modalita' di visualizzazione"
+
+        //-- "\n\nThis is not a standard VGA resolution; please make sure it is supported by your video card."
+string  1882 "\n\nQuesta non e' una risoluzione VGA standard; assicurarsi che sia supportata dalla propria scheda video."
+
+        //-- "Couldn\'t intialise \'%s\' module. Try installing the Direct X End User runtimes (June 2010)."
+string  1884 "Impossibile inizializzare \'%s\' modulo. Provare ad installare le Direct X End User runtimes (Giugno 2010)."
+
+        //-- "Error creating "
+string  1890 "Errore durante la creazione "
+
+        //-- "Error loading "
+string  1892 "Errore durante il caricamento"
+
+        //-- " is for an unavailable game."
+string  1894 " e' per un gioco non disponibile."
+
+        //-- " does not work with this version of %s."
+string  1896 " non funziona con questa versione di %s."
+
+        //-- " requires a more recent version of %s, please upgrade."
+string  1898 " richiede una versione piu' recente di "
+
+        //-- "Error finding \'kailleraclient.dll\'."
+string  1910 "Errore durante la ricerca \'kailleraclient.dll\'."
+
+        //-- "No driver has been selected from the list."
+string  1912 "Nessun gioco e' stato selezionato dalla lista."
+
+        //-- "No driver has been selected for slot 1."
+string  1914 "Nessun gioco e' stato selezionato per lo slot 1."
+
+        //-- "This game isn\'t working. Load it anyway?"
+string  1916 "Questo gioco non e' funzionante. Caricare ugualmente?"
+
+        //-- "Couldn\'t initialise CD emulation."
+string  1918 "Impossibile inizializzare l'emulazione CD."
+
+        //-- "Failed to connect to Internet"
+string  1950 "Connessione ad Internet fallita"
+
+        //-- "Failed to access FB Alpha website"
+string  1952 "Accesso al sito FB Alpha fallito"
+

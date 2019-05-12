@@ -1,0 +1,2502 @@
+// translation template for FB Alpha
+
+version 0x029743
+
+// codepage 1252
+
+menu    100 {
+        //-- "Game"
+  popup    0 "Игра" {
+          //-- "Load game..."
+    10001    1 "Открыть игру..."
+          //-- "Play via Kaillera..."
+    10002    2 "Играть по сети..."
+          //-- "Most recent games..."
+    popup    3 "Последние игры..." {
+            //-- "no game selected"
+      10617    4 "игра не выбрана"
+            //-- "no game selected"
+      10618    5 "игра не выбрана"
+            //-- "no game selected"
+      10619    6 "игра не выбрана"
+            //-- "no game selected"
+      10620    7 "игра не выбрана"
+            //-- "no game selected"
+      10621    8 "игра не выбрана"
+            //-- "no game selected"
+      10622    9 "игра не выбрана"
+            //-- "no game selected"
+      10623   10 "игра не выбрана"
+            //-- "no game selected"
+      10624   11 "игра не выбрана"
+            //-- "no game selected"
+      10625   12 "игра не выбрана"
+            //-- "no game selected"
+      10626   13 "игра не выбрана"
+    }
+          //-- "Start Neo Geo Multi-slot..."
+    10711   15 "Запустить NeoGeo Multi-slot..."
+          //-- "Load Neo Geo CDZ game..."
+    10713   17 "Открыть игру NeoGeo CDZ..."
+          //-- "Select CD image (ISO/CUE)..."
+    10710   18 "Выбрать образ CD (ISO/CUE)..."
+          //-- "Start Neo Geo CDZ..."
+    10712   19 "Запустить игру Neo Geo CDZ..."
+          //-- "Exit game"
+    10006   21 "Выйти из игры"
+          //-- "Pause game"
+    10008   22 "Пауза"
+          //-- "Adjust CPU speed..."
+    10010   24 "Настроить скорость CPU..."
+          //-- "Reset CPU speed to 100%"
+    10011   25 "Сбросить скорость CPU до 100%"
+          //-- "Memory Card..."
+    popup   27 "Карта памяти..." {
+            //-- "Create new memory card..."
+      10020   28 "Создать новую карту памяти..."
+            //-- "Select memory card..."
+      10021   29 "Выбрать карту памяти..."
+            //-- "Insert memory card"
+      10022   30 "Вставить карту памяти"
+            //-- "Eject memory card"
+      10023   31 "Извлечь карту памяти"
+    }
+          //-- "Replay..."
+    popup   33 "Повтор..." {
+            //-- "Replay input..."
+      10003   34 "Воспроизвести повтор..."
+            //-- "Record input..."
+      10004   35 "Записать повтор..."
+            //-- "Stop replay/record"
+      10005   36 "Остановить воспроизведение/запись"
+    }
+          //-- "Save states..."
+    popup   38 "Сохранить игру..." {
+            //-- "Load state..."
+      10030   39 "Загрузить сохранение..."
+            //-- "Save state..."
+      10031   40 "Сохранить..."
+            //-- "State slots..."
+      popup   41 "Состояние слотов сохранения..." {
+              //-- "Activate previous slot"
+        10034   42 "Активировать предыдущий слот"
+              //-- "Activate next slot"
+        10035   43 "Активировать следующий слот"
+              //-- "MENU_STATE_LOAD_SLOT"
+        10032   44 ""
+              //-- "MENU_STATE_SAVE_SLOT"
+        10033   45 ""
+              //-- "Undo last state save"
+        10037   46 "Отменить последнее состояние сохранения"
+      }
+            //-- "Restore full state on load"
+      10036   47 "Восстанавливать полное состояние при загрузке"
+    }
+          //-- "Record AVI"
+    11827   49 "Записать AVI"
+          //-- "Stop recording"
+    11828   50 "Остановить запись"
+          //-- "Exit emulator"
+    10012   52 "Выйти из эмулятора"
+  }
+        //-- "Video"
+  popup   53 "Видео" {
+          //-- "&Select blitter"
+    popup   54 "&Выбрать блиттер" {
+            //-- "Basic"
+      10121   55 "Базовый"
+            //-- "SoftFX"
+      10123   56 ""
+            //-- "Enhanced"
+      10122   57 "Расширенный"
+            //-- "Experimental"
+      10124   58 "Эксперементальный"
+            //-- "DirectX9 Alt"
+      10125   59 "DirectX9 Альтернативный"
+    }
+          //-- "&Blitter options"
+    10643   60 "&Опции блиттера"
+          //-- "&Stretch"
+    popup   61 "&Растягивать на весь экран" {
+            //-- "&Normal stretch"
+      10110   62 "&Нормальный размер"
+            //-- "&Full stretch"
+      10111   63 "Полный &размер"
+            //-- "Correct &aspect ratio"
+      10112   64 "Сохранять &соотношение сторон"
+    }
+          //-- "&Enable gamma correction"
+    10150   66 "&Включить гамма-коррекцию"
+          //-- "&Gamma correction settings"
+    popup   67 "&Настройки гамма-коррекции" {
+            //-- "&Darken midtones"
+      10151   68 "&Темнее"
+            //-- "&Lighten midtones"
+      10152   69 "&Светлее"
+            //-- "MENU_GAMMA_OTHER"
+      10153   70 ""
+            //-- "Use video &hardware when possible"
+      10154   72 "Использовать &аппаратное видеоускорение когда возможно"
+            //-- "Use video hardware &exclusively"
+      10155   73 "Использовать &только аппаратное видеоускорение"
+            //-- "Use &software exclusively"
+      10156   74 "Использовать только &программную обработку"
+    }
+          //-- "&Window size"
+    popup   76 "&Размер окна" {
+            //-- "&Auto"
+      10170   77 "&Авто"
+            //-- "&Single size"
+      10171   79 "&Оригинальный размер"
+            //-- "&Double size"
+      10172   80 "&Двойной размер"
+            //-- "&Triple size"
+      10173   81 "&Тройной размер"
+            //-- "&Quadruple size"
+      10174   82 "&Четырехкратный размер"
+            //-- "&Maximum size"
+      10175   83 "&Максимальный размер"
+    }
+          //-- "Toggle &fullscreen mode"
+    10102   85 "Запустить в &полноэкранном режиме"
+          //-- "Auto Switch to Fullscreen after loading"
+    10613   86 "Автозапуск в полноэкранном режиме после загрузки"
+          //-- "Fullscreen Resolution (Horizontal)"
+    popup   87 "Полноэкранное разрешение (по горизонтали)" {
+            //-- "MENU_RES_ARCADE"
+      10130   88 ""
+            //-- "&Single size"
+      10136   90 "Одинарный &размер"
+            //-- "&Double size"
+      10137   91 "Двойной &размер"
+            //-- "&Triple size"
+      10138   92 "Тройной &размер"
+            //-- "&Quadruple size"
+      10139   93 "Четырехкратный &размер"
+            //-- "MENU_RES_1"
+      10131   95 ""
+            //-- "MENU_RES_2"
+      10132   96 ""
+            //-- "MENU_RES_3"
+      10133   97 ""
+            //-- "MENU_RES_4"
+      10134   98 ""
+            //-- "MENU_RES_OTHER"
+      10135  100 ""
+    }
+          //-- "Fullscreen Resolution (Vertical)"
+    popup  101 "Полноэкранное разрешение (по вертикали)" {
+            //-- "MENU_RES_ARCADE_VERTICAL"
+      10700  102 ""
+            //-- "&Single size"
+      10706  104 "Одинарный &размер"
+            //-- "&Double size"
+      10707  105 "Двойной &размер"
+            //-- "&Triple size"
+      10708  106 "Тройной &размер"
+            //-- "&Quadruple size"
+      10709  107 "Четырехкратный &размер"
+            //-- "MENU_RES_1_VERTICAL"
+      10701  109 ""
+            //-- "MENU_RES_2_VERTICAL"
+      10702  110 ""
+            //-- "MENU_RES_3_VERTICAL"
+      10703  111 ""
+            //-- "MENU_RES_4_VERTICAL"
+      10704  112 ""
+            //-- "MENU_RES_OTHER_VERTICAL"
+      10705  114 ""
+    }
+          //-- "Fullscreen bit&depth"
+    popup  115 "Глубина &цвета в полноэкранном режиме" {
+            //-- "&16bit"
+      10141  116 "&16бит"
+            //-- "&24bit"
+      10142  117 "&24бита"
+            //-- "&32bit"
+      10143  118 "&32бита"
+    }
+          //-- "Choose Fullscreen Monitor"
+    10728  119 ""
+          //-- "&Monitor properties"
+    popup  121 "Свойства &монитора" {
+            //-- "Automatically detect aspect ratio"
+      10650  122 "Автоматически определять соотношение сторон"
+            //-- "Normal CRT aspect ratio"
+      10190  124 "Соотношение сторон CRT"
+            //-- "Normal LCD aspect ratio"
+      10191  125 "Соотношение сторон LCD"
+            //-- "Widescreen CRT aspect ratio"
+      10192  126 "Широкоформатный ЭЛТ"
+            //-- "Widescreen LCD aspect ratio"
+      10193  127 "Широкоформатный LCD"
+            //-- "Mirrored vertical alignment"
+      10194  129 "Зеркальное выравнивание по вертикали"
+    }
+          //-- "&Rotate vertically aligned games"
+    10181  131 "&Автоповорот вертикальных игр"
+          //-- "Force 60Hz refresh rate"
+    10176  132 "Форсировать частоту обновления 60Гц"
+          //-- "Enable &Triple Buffering (Fullscreen)"
+    10100  133 "Включить тройную буферизацию (Полный экран)"
+          //-- "Enable VSync (Windowed)"
+    10646  134 "Включить VSync (Оконный режим)"
+          //-- "Enable DWM Sync (Windowed)"
+    10103  135 "Включить Win7 DWM Fix (Оконный режим)"
+          //-- "Auto Frameskip"
+    10177  136 "Автоматический пропуск кадров"
+  }
+        //-- "Audio"
+  popup  137 "Звук" {
+          //-- "Select &plugin"
+    popup  138 "Выбрать звуковой &плагин" {
+            //-- "DirectSound"
+      10655  139 ""
+            //-- "XAudio2"
+      10656  140 ""
+    }
+          //-- "Plugin &options"
+    10663  141 "&Настройки плагина"
+          //-- "2-point 1st order sample interpolation"
+    10231  143 "2-точечная интерполяция первого порядка"
+          //-- "4-point 3rd order sample interpolation"
+    10233  144 "4-точечная интерполяция третьего порядка"
+          //-- "Disable FM interpolation"
+    10240  146 "Отключить FM интерполяцию"
+          //-- "4-point 3rd order FM interpolation"
+    10243  147 "4-точечная FM интерполяция третьего порядка"
+          //-- "&Sound logging"
+    popup  149 "Запись звука" {
+            //-- "Log to file..."
+      10606  150 "Сохранить в файл..."
+            //-- "Stop logging"
+      10607  151 "Остановить запись"
+    }
+          //-- "Buffer size..."
+    10200  152 "Размер буфера.."
+  }
+        //-- "Input"
+  popup  153 "Управление" {
+          //-- "Select &plugin"
+    popup  154 "Выбрать &плагин" {
+            //-- "DirectInput"
+      10664  155 ""
+    }
+          //-- "&Auto-Fire Rate"
+    popup  157 "Скорость Авто-Огня" {
+            //-- "Slow"
+      10260  158 "Медленная"
+            //-- "Medium"
+      10261  159 "Средняя"
+            //-- "Fast"
+      10262  160 "Быстрая"
+            //-- "Very Fast"
+      10263  161 "Очень быстрая"
+    }
+          //-- "Map game inputs..."
+    10007  163 "Переопределить кнопки управления..."
+          //-- "Set dipswitches..."
+    10009  164 "Настройка DIP-переключателей..."
+  }
+        //-- "Misc"
+  popup  165 "Разное" {
+          //-- "Options"
+    popup  166 "Опции" {
+            //-- "Auto pause"
+      10300  167 "Автопауза"
+            //-- "Always process keyboard input"
+      10301  168 "Всегда управлять вводом с клавиатуры"
+            //-- "Display mode indicator"
+      10302  169 "Отображать индикатор режима"
+            //-- "Modeless menu"
+      10303  170 "Прочее"
+            //-- "Don\'t change Num Lock status"
+      10616  171 "Не изменять статус NumLock"
+            //-- "Create support folders at runtime"
+      10719  172 "Создать папку поддержки во время выполнения"
+            //-- "Set application thread priority"
+      popup  174 "Установить приоритет приложения" {
+              //-- "High"
+        10311  175 "Высокий"
+              //-- "Above normal"
+        10312  176 "Выше нормы"
+              //-- "Normal"
+        10313  177 "Нормальный"
+              //-- "Below normal"
+        10314  178 "Ниже нормы"
+              //-- "Low"
+        10315  179 "Низкий"
+      }
+            //-- "Enable high resolution system timer"
+      10319  180 ""
+            //-- "Save High Scores when supported"
+      10654  182 "Сохранять лучшие результаты, если поддерживается"
+            //-- "Use alpha blend effects when supported"
+      10720  183 "Использовать эффекты альфа-смешивания, если поддерживается"
+            //-- "Display Gear-Shift Indicator when supported"
+      10727  184 ""
+            //-- "AVI Writer Output size"
+      popup  185 "Создание dat файлов" {
+              //-- "1x"
+        10724  186 ""
+              //-- "2x"
+        10725  187 ""
+              //-- "3x"
+        10726  188 ""
+      }
+            //-- "Generate dat file"
+      popup  190 "Язык интерфейса" {
+              //-- "Generate dat (Arcade only)..."
+        10651  191 "Создать dat (только Аркады)..."
+              //-- "Generate dat (Megadrive only)..."
+        10653  192 "Создать dat (только Megadrive)..."
+              //-- "Generate dat (PC-Engine only)..."
+        10714  193 "Создать dat (только PC-Engine)..."
+              //-- "Generate dat (TurboGrafx16 only)..."
+        10715  194 "Создать dat (только TurboGrafx16)..."
+              //-- "Generate dat (SuprGrafx only)..."
+        10716  195 "Создать dat (только SuprGrafx)..."
+              //-- "Generate dat (Sega SG-1000 only)..."
+        10717  196 "Создать dat (только Sega SG-1000)..."
+              //-- "Generate dat (ColecoVision only)..."
+        10718  197 "Создать dat (только ColecoVision)..."
+              //-- "Generate dat (Master System only)..."
+        10721  198 "Создать dat (только Master System)..."
+              //-- "Generate dat (Game Gear only)..."
+        10722  199 "Создать dat (только Game Gear)..."
+              //-- "Generate dat (MSX 1 Games only)..."
+        10723  200 "AVI Writer Выход 3x пикселей"
+              //-- "Generate all dats..."
+        10729  202 ""
+      }
+            //-- "Configure ROM paths..."
+      10614  204 "Настройка путей к РОМам..."
+            //-- "Configure support file paths..."
+      10615  205 "Настройка путей к Дополнениям ..."
+            //-- "UI language"
+      popup  207 "Язык Списка игр" {
+              //-- "Select UI language..."
+        10307  208 "Выбрать язык интерфейса..."
+              //-- "Export UI translation template..."
+        10308  209 "Экспортировать шаблон для перевода..."
+              //-- "Reset UI default language"
+        10635  210 "Сбросить язык интерфейса по умолчанию"
+              //-- "Download UI language..."
+        10309  211 "Загрузить язык UI..."
+      }
+            //-- "Gamelist language"
+      popup  212 "Иконки" {
+              //-- "Select gamelist language..."
+        10673  213 "Выбрать язык Списка игр..."
+              //-- "Export gamelist translation template..."
+        10674  214 "Экспортировать шаблон для перевода..."
+              //-- "Reset gamelist default language"
+        10675  215 "Сбросить язык Списка игр по умолчанию"
+      }
+            //-- "Icons"
+      popup  217 "Размер иконок" {
+              //-- "Enable driver icons display"
+        10676  218 "Включить иконки"
+              //-- "Parents only (use if you have problems)"
+        10677  219 "16 x 16 пикселей"
+              //-- "Icon size"
+        popup  220 "Поиск читов" {
+                //-- "16 x 16 pixels"
+          10678  221 "24 x 24 пикселей"
+                //-- "24 x 24 pixels"
+          10679  222 "32 x 32 пикселей"
+                //-- "32 x 32 pixels"
+          10680  223 ""
+        }
+              //-- "Save snapshot"
+        10318  225 "Сохранить снимок"
+              //-- "Shot factory.."
+        10317  226 "Сохранить снимок (с опциями...)"
+              //-- "Enable cheats..."
+        10306  228 "Включить читы..."
+              //-- "Cheat search"
+        popup  229 "Справка" {
+                //-- "Start New Search"
+          10628  230 "Начать новый поиск"
+                //-- "Target value has not changed"
+          10629  232 "Целевое значение не изменилось"
+                //-- "Target value has changed"
+          10630  233 "Целевое значение изменилось"
+                //-- "Target value has decreased"
+          10631  234 "Целевое значение уменьшилось"
+                //-- "Target value has increased"
+          10632  235 "Целевое значение увеличилось"
+                //-- "Dump search to file"
+          10633  237 "Дамп поиска в файл"
+                //-- "Exit Cheat Search"
+          10634  239 "Выход из поиска читов"
+        }
+              //-- "Invoke 68K debugger..."
+        10392  241 "Вызов отладчика 68K"
+              //-- "Palette Viewer..."
+        10672  243 "Просмотр палитры..."
+              //-- "Associate with .fs and .fr files"
+        10330  245 "Ассоциировать файлы .fs и .fr "
+              //-- "Disassociate from .fs and .fr files"
+        10331  246 "Снять ассоциации файлов .fs и .fr"
+              //-- "Save input mapping now"
+        10332  248 "Сохранить настройки клавиш сейчас"
+              //-- "Auto-save input mapping"
+        10333  249 "Автосохранение настроек клавиш"
+              //-- "Save settings to .ini now"
+        10334  251 "Сохранить настройки в .ini"
+              //-- "Reload settings from .ini"
+        10335  252 "Загрузить настройки из .ini "
+      }
+            //-- "Help"
+      popup  253 "" {
+              //-- "&Help"
+        10503  254 "&Справка"
+              //-- "&What\'s New"
+        10505  256 "&Что нового"
+              //-- "&FB Alpha homepage"
+        10504  258 "&Домашняя страница FB Alpha"
+              //-- "&Neo-Source forums"
+        10506  259 "&Форумы Neo-Source"
+              //-- "&System information"
+        10502  261 "&Информация о системе"
+              //-- "&About FB Alpha"
+        10501  262 "&О программе FB Alpha"
+      }
+    }
+  }
+}
+
+menu    110 {
+        //-- "Basic"
+  popup    0 "Основные" {
+          //-- "&No effects"
+    11001    1 "&Без эффекта"
+          //-- "&Scanlines"
+    11002    2 ""
+          //-- "Scanlines &50%"
+    11003    3 ""
+          //-- "&Rotate scanlines"
+    11106    5 "&Поворот Scanlines в вертикальных играх"
+          //-- "Force &Flip"
+    11143    7 "Форсировать отражение"
+          //-- "Buffering &method"
+    popup    9 "&Метод буферизации" {
+            //-- "&Autodetect"
+      10160   10 "&Автоопределение"
+            //-- "&Video memory"
+      10161   11 "&Видеопамять"
+            //-- "&System memory"
+      10162   12 "&Системная память"
+    }
+  }
+}
+
+menu    111 {
+        //-- "Enhanced"
+  popup    0 "Расширенные" {
+          //-- "Disable all effects"
+    11101    1 "Отключить все эффекты"
+          //-- "Enable &bi-linear filtering"
+    11102    3 "Включить билинейную &фильтрацию"
+          //-- "&Rotate scanlines and RGB effects"
+    11113    4 "&Поворачивать scanlines и RGB-эффекты"
+          //-- "Enable &Pre-scale"
+    11107    6 "Включить &Предварительный масштаб"
+          //-- "Pre-scale using Soft&FX"
+    11108    7 "Предварительный масштаб с использованием Soft&FX"
+          //-- "SoftFX algorithm"
+    popup    8 "Алгоритм SoftFX" {
+            //-- "Double pixels (3D hardware)"
+      11201    9 "Удвоение пикселей (аппаратное ускорение 3D)"
+            //-- "AdvanceMAME Scale2x"
+      11202   10 ""
+            //-- "AdvanceMAME Scale3x"
+      11203   11 ""
+            //-- "2xPM LQ"
+      11204   12 ""
+            //-- "2xPM HQ"
+      11205   13 ""
+            //-- "Eagle Graphics"
+      11206   14 ""
+            //-- "Super Eagle"
+      11207   15 ""
+            //-- "2xSaI"
+      11208   16 ""
+            //-- "Super 2xSaI"
+      11209   17 ""
+            //-- "Super Eagle (VBA)"
+      11210   18 ""
+            //-- "2xSaI (VBA)"
+      11211   19 ""
+            //-- "Super 2xSaI (VBA)"
+      11212   20 ""
+            //-- "SuperScale"
+      11213   21 ""
+            //-- "SuperScale (75% Scanlines)"
+      11214   22 ""
+            //-- "hq2x Filter"
+      11215   23 ""
+            //-- "hq3x Filter"
+      11216   24 ""
+            //-- "hq4x Filter"
+      11217   25 ""
+            //-- "hq2xS (VBA) Filter"
+      11218   26 ""
+            //-- "hq3xS (VBA) Filter"
+      11219   27 ""
+            //-- "hq2xS (SNES9X) Filter"
+      11220   28 ""
+            //-- "hq3xS (SNEX9X) Filter"
+      11221   29 ""
+            //-- "hq2xBold Filter"
+      11222   30 ""
+            //-- "hq3xBold Filter"
+      11223   31 ""
+            //-- "EPXB Filter"
+      11224   32 ""
+            //-- "EPXC Filter"
+      11225   33 ""
+            //-- "2xBR Squared"
+      11226   34 ""
+            //-- "2xBR Semi-Rounded"
+      11227   35 ""
+            //-- "2xBR Rounded"
+      11228   36 ""
+            //-- "3xBR Squared"
+      11229   37 ""
+            //-- "3xBR Semi-Rounded"
+      11230   38 ""
+            //-- "3xBR Rounded"
+      11231   39 ""
+            //-- "4xBR Squared"
+      11232   40 ""
+            //-- "4xBR Semi-Rounded"
+      11233   41 ""
+            //-- "4xBR Rounded"
+      11234   42 ""
+            //-- "DDT3x"
+      11235   43 ""
+            //-- "Force image to SoftFX size"
+      11290   45 "Форсировать размер изображения SoftFX"
+    }
+          //-- "Enable &Scanlines"
+    11005   47 "Включить &Scanlines"
+          //-- "Set scanline &intensity..."
+    11109   48 "Установить &интенсивность строк развертки..."
+          //-- "Enable phosphor &feedback"
+    11103   50 "Включить свечение фосфора"
+          //-- "Set &phosphor feedback intensity..."
+    11110   51 "&Установить интенсивность свечения фосфоора..."
+          //-- "&No effects"
+    11004   53 "&Без эффектов"
+          //-- "RGB &effects"
+    11104   54 "&Эффекты RGB"
+          //-- "&3D projection"
+    11105   55 "&3D проекция"
+          //-- "&Auto size scanlined RGB preset"
+    11121   57 "&Авто размер сканлиний установленных RGB"
+          //-- "Manually select RGB preset"
+    popup   58 "Ручной выбор установок RGB" {
+            //-- "Small faint RGB mask"
+      11122   59 "Малая тусклая маска RGB"
+            //-- "Large faint RGB dot mask"
+      11123   60 "Большая тусклая точка маски RGB"
+            //-- "Large faint RGB mask"
+      11124   61 "Большая тусклая маска RGB"
+            //-- "MAME rgbmicro"
+      11125   63 ""
+            //-- "MAME rgbtiny"
+      11126   64 ""
+            //-- "Aperture grille"
+      11127   65 "Размер аппертуры"
+            //-- "Large oversaturated RGB dot"
+      11128   67 "Большая перенасыщенная точка RGB"
+            //-- "Huge oversaturated pattern"
+      11129   68 "Огромная перенасыщенная схема"
+    }
+          //-- "Set 3&D projection properties..."
+    11111   70 "Установить совйства 3D-проекции..."
+          //-- "Advanced settings"
+    popup   72 "Дополнительные настройки" {
+            //-- "Force &16-bit emulation"
+      11141   73 "Форсировать 16-битную эмуляцию"
+            //-- "Use DirectX texture &management"
+      11142   74 "Использовать управление текстурами DirectX"
+    }
+  }
+}
+
+menu    112 {
+        //-- "SoftFX"
+  popup    0 "" {
+          //-- "&Double pixels (Software)"
+    11301    1 "&Удвоение пикселей (Программно)"
+          //-- "AdvanceMAME Scale2x"
+    11302    2 ""
+          //-- "AdvanceMAME Scale3x"
+    11303    3 ""
+          //-- "2xPM LQ"
+    11304    4 ""
+          //-- "2xPM HQ"
+    11305    5 ""
+          //-- "Eagle Graphics"
+    11306    6 ""
+          //-- "Super Eagle"
+    11307    7 ""
+          //-- "2xSaI"
+    11308    8 ""
+          //-- "Super 2xSaI"
+    11309    9 ""
+          //-- "Super Eagle (VBA)"
+    11310   10 ""
+          //-- "2xSaI (VBA)"
+    11311   11 ""
+          //-- "Super 2xSaI (VBA)"
+    11312   12 ""
+          //-- "SuperScale"
+    11313   13 ""
+          //-- "SuperScale (75% Scanlines)"
+    11314   14 ""
+          //-- "hq2x filter"
+    11315   15 ""
+          //-- "hq3x filter"
+    11316   16 ""
+          //-- "hq4x filter"
+    11317   17 ""
+          //-- "hq2xS (VBA) filter"
+    11318   18 ""
+          //-- "hq3xS (VBA) filter"
+    11319   19 ""
+          //-- "hq2xS (SNES9X) Filter"
+    11320   20 ""
+          //-- "hq3xS (SNEX9X) Filter"
+    11321   21 ""
+          //-- "hq2xBold Filter"
+    11322   22 ""
+          //-- "hq3xBold Filter"
+    11323   23 ""
+          //-- "EPXB Filter"
+    11324   24 ""
+          //-- "EPXC Filter"
+    11325   25 ""
+          //-- "2xBR Squared"
+    11326   26 ""
+          //-- "2xBR Semi-Rounded"
+    11327   27 ""
+          //-- "2xBR Rounded"
+    11328   28 ""
+          //-- "3xBR Squared"
+    11329   29 ""
+          //-- "3xBR Semi-Rounded"
+    11330   30 ""
+          //-- "3xBR Rounded"
+    11331   31 ""
+          //-- "4xBR Squared"
+    11332   32 ""
+          //-- "4xBR Semi-Rounded"
+    11333   33 ""
+          //-- "4xBR Rounded"
+    11334   34 ""
+          //-- "DDT3x"
+    11335   35 ""
+          //-- "&Force image to SoftFX size"
+    11390   37 "&Форсировать размер изображения SoftFX"
+          //-- "Buffering &method"
+    popup   38 "&Метод буферизации" {
+            //-- "&Autodetect"
+      10163   39 "&Автоопределение"
+            //-- "&Video memory"
+      10164   40 "&Видеопамять"
+            //-- "&System memory"
+      10165   41 "&Системная память"
+            //-- "Directly access video memory"
+      11391   43 "Прямой доступ к видеопамяти"
+    }
+  }
+}
+
+menu    113 {
+        //-- "Experimental"
+  popup    0 "Экспериментальный" {
+          //-- "Enable point filtering"
+    11601    1 "Использовать точечную фильтрацию"
+          //-- "Enable linear filtering"
+    11602    2 "Использовать линейную фильтрацию"
+          //-- "Enable cubic filtering"
+    11603    3 "Использовать кубическую фильтрацию"
+          //-- "Cubic filter quality"
+    popup    4 "Качество кубической фильтрации" {
+            //-- "Lightly filtered"
+      11610    5 "Легкая фильтрация"
+            //-- "Smoothened strongly"
+      11612    7 "Сильно сглаживать"
+            //-- "Smoothened lightly"
+      11611    8 "Легко сглаживать"
+            //-- "Perceptual compromise"
+      11613    9 "Компромисный вариант"
+            //-- "Sharpened lightly"
+      11614   10 "Немного увеличить резкость"
+            //-- "Sharpened strongly"
+      11615   11 "Сильно увеличить резкость"
+            //-- "Duff\'s tensioned B-splines..."
+      11616   13 ""
+            //-- "Mitchell-Netravali 2C + B = 1..."
+      11617   14 ""
+            //-- "Cardinal cubic splines..."
+      11618   15 ""
+            //-- "Mitchell-Netravali free..."
+      11619   16 ""
+    }
+          //-- "Enable &Scanlines"
+    11010   18 "Включить &Scanlines"
+          //-- "Set scanline &intensity..."
+    11144   19 "Установить интенсивность Scanline..."
+          //-- "Advanced settings"
+    popup   21 "Дополнительные настройки" {
+            //-- "Single-pass"
+      11623   22 "Один проход"
+            //-- "Multi-pass"
+      11625   23 "Несколько проходов"
+            //-- "High-performance"
+      11626   24 "Высокая производительность"
+            //-- "Use PS1.4"
+      11621   26 "Использовать PS1.4"
+            //-- "Use floating-point textures"
+      11620   27 "Использовать текстуры с плавающей точкой"
+    }
+  }
+}
+
+menu    114 {
+        //-- "DirectX9 Alt"
+  popup    0 "DirectX9 альтернативный" {
+          //-- "Point filtering"
+    11701    1 "Точечная фильтрация"
+          //-- "Linear filtering"
+    11702    2 "Линейная фильтрация"
+          //-- "SoftFX algorithm"
+    popup    4 "Алгоритм SoftFX" {
+            //-- "Double pixels (3D hardware)"
+      11401    5 "Удвоение пикселей (аппаратное ускорение 3D)"
+            //-- "AdvanceMAME Scale2x"
+      11402    6 ""
+            //-- "AdvanceMAME Scale3x"
+      11403    7 ""
+            //-- "2xPM LQ"
+      11404    8 ""
+            //-- "2xPM HQ"
+      11405    9 ""
+            //-- "Eagle Graphics"
+      11406   10 ""
+            //-- "Super Eagle"
+      11407   11 ""
+            //-- "2xSaI"
+      11408   12 ""
+            //-- "Super 2xSaI"
+      11409   13 ""
+            //-- "Super Eagle (VBA)"
+      11410   14 ""
+            //-- "2xSaI (VBA)"
+      11411   15 ""
+            //-- "Super 2xSaI (VBA)"
+      11412   16 ""
+            //-- "SuperScale"
+      11413   17 ""
+            //-- "SuperScale (75% Scanlines)"
+      11414   18 ""
+            //-- "hq2x Filter"
+      11415   19 ""
+            //-- "hq3x Filter"
+      11416   20 ""
+            //-- "hq4x Filter"
+      11417   21 ""
+            //-- "hq2xS (VBA) Filter"
+      11418   22 ""
+            //-- "hq3xS (VBA) Filter"
+      11419   23 ""
+            //-- "hq2xS (SNES9X) Filter"
+      11420   24 ""
+            //-- "hq3xS (SNEX9X) Filter"
+      11421   25 ""
+            //-- "hq2xBold Filter"
+      11422   26 ""
+            //-- "hq3xBold Filter"
+      11423   27 ""
+            //-- "EPXB Filter"
+      11424   28 ""
+            //-- "EPXC Filter"
+      11425   29 ""
+            //-- "2xBR Squared"
+      11426   30 ""
+            //-- "2xBR Semi-Rounded"
+      11427   31 ""
+            //-- "2xBR Rounded"
+      11428   32 ""
+            //-- "3xBR Squared"
+      11429   33 ""
+            //-- "3xBR Semi-Rounded"
+      11430   34 ""
+            //-- "3xBR Rounded"
+      11431   35 ""
+            //-- "4xBR Squared"
+      11432   36 ""
+            //-- "4xBR Semi-Rounded"
+      11433   37 ""
+            //-- "4xBR Rounded"
+      11434   38 ""
+            //-- "DDT3x"
+      11435   39 ""
+            //-- "Force image to SoftFX size"
+      11490   41 "Форсировать размер изображения SoftFX"
+    }
+          //-- "Advanced settings"
+    popup   43 "Дополнительные настройки" {
+            //-- "Force &16-bit emulation"
+      11491   44 ""
+            //-- "Hardware vertex processing"
+      11703   45 "Аппаратная обработка вершин"
+            //-- "Motion blur"
+      11704   46 "Размытие"
+    }
+  }
+}
+
+menu    130 {
+        //-- "DirectSound plugin"
+  popup    0 "Плагин DirectSound" {
+          //-- "Use Low-pass filter"
+    10201    1 "Использовать фильтр низких частот"
+          //-- "Sound disabled"
+    10210    3 "Выключить звук"
+          //-- "11025Hz samplerate"
+    10211    4 "11025Hz"
+          //-- "22050Hz samplerate"
+    10212    5 "22050Hz"
+          //-- "44100Hz samplerate"
+    10213    6 "44100Hz"
+          //-- "48000Hz samplerate"
+    10214    7 "48000Hz"
+  }
+}
+
+menu    131 {
+        //-- "XAudio2 plugin"
+  popup    0 "Плагин XAudio2" {
+          //-- "Use Low-pass filter"
+    10202    1 "Использовать фильтр низких частот"
+          //-- "Use reverb"
+    10203    2 "Использовать отражение"
+          //-- "Sound disabled"
+    10220    4 "Выключить звук"
+          //-- "11025Hz samplerate"
+    10221    5 "11025Hz"
+          //-- "22050Hz samplerate"
+    10222    6 "22050Hz"
+          //-- "44100Hz samplerate"
+    10223    7 "44100Hz"
+          //-- "48000Hz samplerate"
+    10224    8 "48000Hz"
+  }
+}
+
+menu    140 {
+        //-- "Game Selection Menu"
+  popup    0 "" {
+          //-- "Play"
+    11900    1 ""
+          //-- "View Game Information"
+    11901    3 ""
+          //-- "View in Progetto EMMA"
+    11902    5 ""
+          //-- "Favorite"
+    11903    7 ""
+  }
+}
+
+        //-- "Map Game Inputs"
+dialog	  51 "Выбор кнопок управления в игре" {
+        //-- "OK"
+      2	   0 ""
+        //-- "Double-click an input to change its mapping"
+  65535	   2 "Дважды кликните на строчку чтобы изменить значение"
+        //-- "Make selection in all three drop-down boxes, click apropriate button"
+  65535	   5 "Сделав выбор во всех трех списках, щелкните нужную кнопку"
+        //-- "Save preset"
+  20127	   9 "Сохранить установки"
+        //-- "Make default"
+  20006	  10 "По умолчанию"
+        //-- "Use preset"
+  20005	  11 "Загрузить установки"
+}
+
+        //-- "Select control"
+dialog	  52 "Выбор управления" {
+        //-- "Grab mouse"
+  20007	   0 "Захват мыши"
+        //-- "Activate"
+  20011	   1 "Активировать"
+        //-- "Clear Input"
+      3	   2 "Очистить ввод"
+        //-- "Clear Lock"
+  20021	   3 "Очистить блок"
+}
+
+        //-- "Edit cheat settings"
+dialog	  53 "Редактировать настройки читов" {
+        //-- "Select a cheat to change it."
+  65535	   1 "Выберите чит, чтобы изменить его"
+        //-- "Defaults"
+  20013	   4 "Сброс"
+        //-- "OK"
+      1	   5 ""
+        //-- "Cancel"
+      2	   6 "Отмена"
+}
+
+        //-- "Edit Constant"
+dialog	  54 "Изменить константы" {
+        //-- "Close"
+      2	   1 "Закрыть"
+}
+
+        //-- "Edit DIPswitch settings"
+dialog	  55 "Изменение настройки DIP-переключателей" {
+        //-- "Select a setting to change it."
+  65535	   1 "Выберите настройку, чтобы изменить ее."
+        //-- "Defaults"
+  20013	   4 "Сброс"
+        //-- "OK"
+      1	   5 ""
+        //-- "Cancel"
+      2	   6 "Отмена"
+}
+
+        //-- ""
+dialog	  56 "" {
+        //-- "Progress1"
+  20015	   1 "Прогресс1"
+        //-- "Cancel"
+      2	   5 "Отмена"
+}
+
+        //-- ""
+dialog	  57 "" {
+        //-- "FB Alpha contains parts of MAME && Final Burn.\n© 2004-2018, Team FB Alpha."
+  65535	   3 ""
+        //-- "OK"
+      1	   4 ""
+        //-- "License"
+  20052	   5 "Лицензия"
+}
+
+        //-- ""
+dialog	  58 "" {
+        //-- "OK"
+      1	   4 ""
+        //-- " I understand and agree to be bound by the terms of the above license agreement"
+  20054	   5 " Я понимаю и соглашаюсь соблюдать условия лицензионного соглашения"
+}
+
+        //-- ""
+dialog	  59 "" {
+        //-- "Close"
+  20019	   0 "Закрыть"
+}
+
+        //-- "Edit ROMs paths"
+dialog	  60 "Директории с РОМами" {
+        //-- "Tab2"
+  20502	   0 ""
+        //-- "OK"
+      1	   1 ""
+        //-- "Cancel"
+      2	   2 "Отмена"
+        //-- "Browse..."
+  21140	   5 "Обзор..."
+        //-- "Browse..."
+  21141	   7 "Обзор..."
+        //-- "Browse..."
+  21142	   9 "Обзор..."
+        //-- "Browse..."
+  21143	  11 "Обзор..."
+        //-- "Browse..."
+  21144	  13 "Обзор..."
+        //-- "Browse..."
+  21145	  15 "Обзор..."
+        //-- "Browse..."
+  21146	  17 "Обзор..."
+        //-- "Browse..."
+  21147	  19 "Обзор..."
+        //-- "Browse..."
+  21148	  21 "Обзор..."
+        //-- "Browse..."
+  21149	  23 "Обзор..."
+        //-- "Browse..."
+  21150	  25 "Обзор..."
+        //-- "Browse..."
+  21151	  27 "Обзор..."
+        //-- "Browse..."
+  21152	  29 "Обзор..."
+        //-- "Browse..."
+  21153	  31 "Обзор..."
+        //-- "Browse..."
+  21154	  33 "Обзор..."
+        //-- "Browse..."
+  21155	  35 "Обзор..."
+        //-- "Browse..."
+  21156	  37 "Обзор..."
+        //-- "Browse..."
+  21157	  39 "Обзор..."
+        //-- "Browse..."
+  21158	  41 "Обзор..."
+        //-- "Browse..."
+  21159	  43 "Обзор..."
+}
+
+        //-- "Select Game"
+dialog	  61 "Выбор игры" {
+        //-- "Preview"
+  20303	   2 "Предпросмотр"
+        //-- "Title"
+  20304	   3 "Название"
+        //-- "Select Game"
+  20302	   8 "Выбор игры"
+        //-- "Game info:"
+  20065	  10 "Выбрать цвет: "
+        //-- "ROM name:"
+  20063	  11 "ROM:"
+        //-- "ROM info:"
+  20064	  12 "Инфо:"
+        //-- "Released by:"
+  20067	  13 "Издатель:"
+        //-- "Genre:"
+  20066	  14 "Жанр:"
+        //-- "Notes:"
+  20124	  15 "Заметки:"
+        //-- "Filters"
+  20300	  22 "Фильтры"
+        //-- "Game Info"
+  20602	  24 "Инфо"
+        //-- "Options"
+  20301	  25 "Опции"
+        //-- "Show available"
+  20060	  26 "Доступные"
+        //-- "Show unavailable"
+  20137	  27 "Недоступные"
+        //-- "Always show clones"
+  20055	  28 "Показывать клоны"
+        //-- "Use zipnames"
+  20074	  29 "Имена zip архивов"
+        //-- "Latin text only"
+  20075	  30 "Только латиница"
+        //-- "ROMs Dirs..."
+  20600	  31 "Папки с РОМами"
+        //-- "Scan ROMs"
+  20601	  32 "Пересканировать"
+        //-- "Cancel"
+      2	  33 "Отмена"
+        //-- "Play"
+      1	  34 "Играть"
+        //-- "IPS"
+  20133	  35 ""
+        //-- "Apply Patches"
+  20132	  36 "Применить патчи"
+        //-- "IPS Manager"
+  20131	  37 "Менеджер IPS"
+        //-- "Search"
+  20135	  38 "Поиск"
+}
+
+        //-- "Shots Factory"
+dialog	  62 "Настройки скриншотов" {
+        //-- "&Capture"
+  20061	   0 "&Скриншот"
+        //-- "OK"
+      1	   1 ""
+        //-- "&Advance Frame"
+  20062	   2 "&Расширенный кадр"
+        //-- "Layer &1"
+  20202	   3 "Все спрайты"
+        //-- "Layer &2"
+  20203	   4 "Слой &2"
+        //-- "Layer &3"
+  20204	   5 "Слой &3"
+        //-- "Layer &4"
+  20205	   6 "Слой &4"
+        //-- "Show"
+  20206	   7 "Показать"
+        //-- "Sprite Priority 1"
+  20077	   8 "Приоритет 1"
+        //-- "Sprite Priority 2"
+  20078	   9 "Приоритет 2"
+        //-- "Sprite Priority 3"
+  20080	  10 "Приоритет 3"
+        //-- "Sprite Priority 4"
+  20079	  11 "Приоритет 4"
+        //-- "Sprite Priority 5"
+  20081	  12 "Приоритет 5"
+        //-- "Sprite Priority 6"
+  20082	  13 "Приоритет 6"
+        //-- "Sprite Priority 7"
+  20083	  14 "Приоритет 7"
+        //-- "Sprite Priority 8"
+  20084	  15 "Приоритет 8"
+}
+
+        //-- "Select desired Gamma value"
+dialog	  63 "Выбрать значение гаммы" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Gamma value"
+  20085	   2 "Значение гаммы"
+        //-- "Cancel"
+      2	   4 "Отмена"
+}
+
+        //-- "Select desired resolution"
+dialog	  64 "Выбрать разрешение" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Resolution:"
+  20136	   2 "Разрешение:"
+        //-- "Cancel"
+      2	   4 "Отмена"
+}
+
+        //-- "Select desired scanline intensity"
+dialog	  65 "Выбрать интенсивность scanline" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Scanline intensity"
+  20088	   2 "Интенсивность scanline"
+        //-- "Cancel"
+      2	   4 "Отмена"
+}
+
+        //-- "Select desired feedback intensity"
+dialog	  66 "Выбрать интенсивность вибрации" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Feedback strength"
+  20090	   2 "Сила вибрации"
+        //-- "Feedback oversaturation"
+  20092	   5 "Перенасыщение вибрации"
+        //-- "Cancel"
+      2	   7 "Отмена"
+}
+
+        //-- "Select desired 3D projection properties"
+dialog	  67 "Выбрать свойства 3D проекции" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Screen Angle"
+  20094	   3 "Угол экрана"
+        //-- "Fishbowl Factor"
+  20096	   6 "Фактор Fishbowl"
+        //-- "Cancel"
+      2	   8 "Отмена"
+}
+
+        //-- "Adjust speed of the emulated CPU"
+dialog	  68 "Настроить скорость эмулируемого процессора" {
+        //-- "OK"
+      1	   0 ""
+        //-- "CPU speed"
+  20098	   2 "Скорость CPU"
+        //-- "%"
+  65535	   4 ""
+        //-- "Cancel"
+      2	   5 "Отмена"
+}
+
+        //-- "FB Alpha system information report"
+dialog	  69 "FB Alpha информация о системе" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Save..."
+  20138	   1 "Сохранить..."
+}
+
+        //-- "FB Alpha has encountered an unrecoverable problem and will be terminated"
+dialog	  70 "FB Alpha столкнулся с неустранимой проблемой и будет закрыт" {
+        //-- "OK"
+      1	   1 ""
+        //-- "Debug"
+  20102	   2 "Отладка"
+        //-- "Details"
+  20103	   3 "Детали"
+        //-- "Log"
+  20104	   4 "Лог"
+}
+
+        //-- "FB Alpha debugger"
+dialog	  71 "Отладчик FB Alpha" {
+        //-- "Disassembly"
+  65535	   3 "Дизассемблирование"
+        //-- "Internal CPU state"
+  65535	   8 "Внутреннее состояние процессора"
+        //-- "Memory map"
+  65535	  11 "Карта памяти"
+        //-- "Debugger messages"
+  65535	  16 "Сообщения отладчика"
+        //-- "Execute"
+      1	  20 "Выполнить"
+        //-- "Exit"
+      2	  22 "Выход"
+        //-- "Go!"
+  20114	  23 "Начать!"
+        //-- "Step frame"
+  20118	  24 "Шаг кадра"
+        //-- "Step"
+  20115	  25 "Шаг"
+        //-- "Step into"
+  20116	  26 "Шаг в"
+        //-- "Skip"
+  20117	  27 "Пропустить"
+        //-- "Screenshot"
+  20119	  28 "Скриншот"
+}
+
+        //-- "FB Alpha debugger"
+dialog	  72 "Отладчик FB Alpha" {
+        //-- "Execute"
+      1	  10 "Выполнить"
+        //-- "Exit"
+      2	  12 "Выход"
+        //-- "Go!"
+  20114	  13 "Начать!"
+        //-- "Step frame"
+  20118	  14 "Шаг кадра"
+        //-- "Step"
+  20115	  15 "Шаг"
+        //-- "Step into"
+  20116	  16 "Шаг в"
+        //-- "Skip"
+  20117	  17 "Пропустить"
+        //-- "Screenshot"
+  20119	  18 "Скриншот"
+}
+
+        //-- "FB Alpha message"
+dialog	  73 "Сообщение FB Alpha" {
+        //-- "OK"
+      1	   0 ""
+}
+
+        //-- "Edit support file paths"
+dialog	  74 "Редактировать пути дополнительных файлов" {
+        //-- "Tab2"
+  20501	   0 ""
+        //-- "OK"
+      1	   1 ""
+        //-- "Cancel"
+      2	   2 "Отмена"
+        //-- "Browse..."
+  20950	   5 "Обзор..."
+        //-- "Browse..."
+  20951	   7 "Обзор..."
+        //-- "Browse..."
+  20952	   9 "Обзор..."
+        //-- "Browse..."
+  20953	  11 "Обзор..."
+        //-- "Browse..."
+  20954	  13 "Обзор..."
+        //-- "Browse..."
+  20955	  15 "Обзор..."
+        //-- "Browse..."
+  20956	  17 "Обзор..."
+        //-- "Browse..."
+  20957	  19 "Обзор..."
+        //-- "Browse..."
+  20958	  21 "Обзор..."
+        //-- "Browse..."
+  20959	  23 "Обзор..."
+        //-- "Browse..."
+  20960	  25 "Обзор..."
+        //-- "Browse..."
+  20961	  27 "Обзор..."
+        //-- "Browse..."
+  20962	  29 "Обзор..."
+        //-- "Browse..."
+  20963	  31 "Обзор..."
+        //-- "Browse..."
+  20964	  33 "Обзор..."
+        //-- "Browse..."
+  20965	  35 "Обзор..."
+        //-- "Browse..."
+  20966	  37 "Обзор..."
+        //-- "Browse..."
+  20967	  39 "Обзор..."
+        //-- "Browse..."
+  20968	  41 "Обзор..."
+        //-- "Browse..."
+  20969	  43 "Обзор..."
+        //-- "Browse..."
+  20970	  45 "Обзор..."
+        //-- "Browse..."
+  20971	  47 "Обзор..."
+        //-- "Browse..."
+  20972	  49 ""
+}
+
+        //-- "Palette Viewer"
+dialog	  75 "Просмотр палитры" {
+        //-- "0"
+  20400	  16 ""
+        //-- "1"
+  20401	  17 ""
+        //-- "2"
+  20402	  18 ""
+        //-- "3"
+  20403	  19 ""
+        //-- "4"
+  20404	  20 ""
+        //-- "5"
+  20405	  21 ""
+        //-- "6"
+  20406	  22 ""
+        //-- "7"
+  20407	  23 ""
+        //-- "8"
+  20408	  24 ""
+        //-- "9"
+  20409	  25 ""
+        //-- "A"
+  20410	  26 ""
+        //-- "B"
+  20411	  27 ""
+        //-- "C"
+  20412	  28 ""
+        //-- "D"
+  20413	  29 ""
+        //-- "E"
+  20414	  30 ""
+        //-- "F"
+  20415	  31 ""
+        //-- "Selected colour: "
+  20434	  32 "Выбранный цвет: "
+        //-- "Close"
+      2	  33 "Закрыть"
+        //-- "Previous..."
+  20432	  34 "Предыдущий..."
+        //-- "Next..."
+  20433	  35 "Следующий..."
+}
+
+        //-- "IPS Patch Manager"
+dialog	  77 "IPS Патч менеджер" {
+        //-- "Deselect All"
+  20130	   6 "Снять ВСЕ"
+        //-- "Cancel"
+      2	   8 "Отмена"
+        //-- "OK"
+      1	   9 ""
+}
+
+        //-- "Select cartridges to load..."
+dialog	  78 "Выберите картридж для загрузки..." {
+        //-- "OK"
+      1	   1 ""
+        //-- "Cancel"
+      2	   2 "Отмена"
+        //-- "Slot 1"
+  20736	   4 "Слот 1"
+        //-- "Clear"
+  20730	   8 "Очистить"
+        //-- "Select..."
+  20724	   9 "Выбор..."
+        //-- "Slot 2"
+  20737	  11 "Слот 2"
+        //-- "Clear"
+  20731	  15 "Очистить"
+        //-- "Select..."
+  20725	  16 "Выбор..."
+        //-- "Slot 3"
+  20738	  18 "Слот 3"
+        //-- "Clear"
+  20732	  22 "Очистить"
+        //-- "Select..."
+  20726	  23 "Выбор..."
+        //-- "Slot 4"
+  20739	  25 "Слот 4"
+        //-- "Clear"
+  20733	  29 "Очистить"
+        //-- "Select..."
+  20727	  30 "Выбор..."
+        //-- "Slot 5"
+  20740	  32 "Слот 5"
+        //-- "Clear"
+  20734	  36 "Очистить"
+        //-- "Select..."
+  20728	  37 "Выбор..."
+        //-- "Slot 6"
+  20741	  39 "Слот 6"
+        //-- "Clear"
+  20735	  43 "Очистить"
+        //-- "Select..."
+  20729	  44 "Выбор..."
+}
+
+        //-- "NeoGeo CDZ Game List"
+dialog	  79 "Список игр NeoGeo CDZ" {
+        //-- "Play"
+  20813	   1 "Играть"
+        //-- "Cancel"
+  20814	   2 "Отмена"
+        //-- "Scan Games"
+  20811	   3 "Сканировать игры"
+        //-- "Directories..."
+  20812	   4 "Директории..."
+        //-- "Scan sub-dirs"
+  20809	   5 "Сканировать подпапки"
+        //-- "Front Cover"
+  65535	   6 "Обложка игры"
+        //-- "Back Cover"
+  65535	   7 "Кадр игры"
+        //-- "Options"
+  65535	   9 "Опции"
+        //-- "Short name:"
+  20816	  14 "Короткое имя:"
+        //-- "Released by:"
+  20817	  15 "Издатель:"
+        //-- "Disc Image:"
+  20818	  16 "Образ диска:"
+        //-- "Audio Tracks:"
+  20819	  17 "Звуковые дорожки:"
+        //-- "Scan for ISO only"
+  20810	  22 "Сканировать только для ISO"
+}
+
+        //-- "Game Information"
+dialog	  81 "Информация об игре" {
+        //-- "Tab1"
+  20500	   0 ""
+        //-- "Game info:"
+  20065	   2 "Выбрать цвет: "
+        //-- "ROM name:"
+  20063	   3 "ROM:"
+        //-- "ROM info:"
+  20064	   4 "Инфо:"
+        //-- "Released by:"
+  20067	   5 "Издатель:"
+        //-- "Genre:"
+  20066	   6 "Жанр:"
+        //-- "Notes:"
+  20124	   7 "Заметки:"
+        //-- "Favorite"
+  20604	  19 ""
+        //-- "Rescan Romset"
+  20603	  20 "Пересканировать Romset"
+        //-- "Close"
+      2	  21 "Закрыть"
+}
+
+        //-- "Download Localisation Template"
+dialog	  82 "Загрузить шаблон локализации" {
+        //-- "Language:"
+  20139	   1 "Язык:"
+        //-- "Cancel"
+      2	   3 "Отмена"
+        //-- "OK"
+      1	   4 ""
+}
+
+        //-- "Choose Monitor for Full Screen"
+dialog	  83 "" {
+        //-- "These only apply to the DirectX Graphics 9 blitters."
+  20145	   1 ""
+        //-- "Horizontal Games:"
+  20141	   2 ""
+        //-- "Vertical Games:"
+  20143	   4 ""
+        //-- "Cancel"
+      2	   6 ""
+        //-- "OK"
+      1	   7 ""
+}
+
+        //-- "Replay input"
+dialog	 233 "" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Cancel"
+      2	   4 ""
+        //-- "00:00:00"
+  20255	  10 ""
+        //-- "0"
+  20256	  11 ""
+        //-- "0"
+  20257	  12 ""
+        //-- "Open Read-Only"
+  20259	  15 ""
+        //-- "Show Joystick Movement"
+  20263	  16 ""
+}
+
+        //-- "Record input"
+dialog	 234 "" {
+        //-- "OK"
+      1	   0 ""
+        //-- "Cancel"
+      2	   3 ""
+        //-- "..."
+  20261	   6 ""
+        //-- "Record From Power-On"
+  20262	   8 ""
+}
+
+        //-- "This appears to be the first time you run %s v%.20s.\n\n"
+string   200 "Это появляется первый раз при запуске %s v%.20s.\n\n"
+
+        //-- "Please take some time to match the audio/video settings to your system capabilities and personal preferences. If you continue to use and/or distribute this software, you must agree to be bound by the terms of license agreement, which is always accessible via the about dialog.\n\n"
+string   202 "Пожалуйста, потратьте немного времени, чтобы настроить аудио/видео для вашей системы и личных предпочтений. Если вы продолжите использовать и/или распространять это программное обеспечение, вы должны согласиться взять на себя обязательства в соответствии с условиями лицензионного соглашения, которое всегда доступно через меню Справка.\n\n"
+
+        //-- "Note that this is alpha quality software. As such, it likely will exhibit problems, including audio/video options not behaving correctly, the emulation of some games misses some features, and may exhibit stability problems. CAVEAT LECTOR!"
+string   204 "Внимание, это альфа версия программы. Возможны проблемы с аудио/видео, эмуляцией некоторых игр и пропущенными возможностями, а также проблемы со стабильностью! "
+
+        //-- "Note that this is beta quality software. As such, it likely may be missing some features, or exhibit some problems with your system."
+string   206 "Внимание, это бета версия программы. Поэтому некоторые возможности могут быть недоступны или вызывать проблемы на вашей системы."
+
+        //-- "Cheat name"
+string   220 "Название чита"
+
+        //-- "Status"
+string   222 "Статус"
+
+        //-- "Game input"
+string   240 "Управление"
+
+        //-- "Mapped to"
+string   242 "Назначено"
+
+        //-- "State"
+string   244 "Статус"
+
+        //-- "Player %i"
+string   246 "Игрок %i"
+
+        //-- "Keyboard"
+string   248 "Клавиатура"
+
+        //-- "Joystick %i"
+string   250 "Джойстик %i"
+
+        //-- "X-Arcade (left side)"
+string   252 "X-Аркада (Левша)"
+
+        //-- "X-Arcade (right side)"
+string   254 "X-Аркада (Правша)"
+
+        //-- "Hot Rod (left side)"
+string   256 "Hot Rod (Левша)"
+
+        //-- "Hot Rod (right side)"
+string   258 "Hot Rod (Правша)"
+
+        //-- "Absolute"
+string   260 "Абсолютный"
+
+        //-- "Auto-center"
+string   262 "Автоцентр"
+
+        //-- "Normal"
+string   264 "Обычный"
+
+        //-- "DIPSwitch group"
+string   280 "Группа DIP-переключателей"
+
+        //-- "Setting"
+string   282 "Установка"
+
+        //-- "Move control or press key for %.100hs"
+string   300 "Нажмите выбранную кнопку для %.100hs"
+
+        //-- "Move control or press key"
+string   302 "Нажмите кнопку"
+
+        //-- "Waiting for %.80s to be released..."
+string   304 "Ждите %.80s для сохранения..."
+
+        //-- "Create new memory card"
+string   320 "Создать новую карту памяти"
+
+        //-- "Select new memory card"
+string   322 "Выбрать новую карту памяти"
+
+        //-- "Loading and initialising %s..."
+string   340 "Загрузка и инициализация %s..."
+
+        //-- "Loading"
+string   342 "Загрузка"
+
+        //-- "Record Input to File"
+string   350 "Записать повтор в файл"
+
+        //-- "Replay Input from File"
+string   352 "Загрузить повтор из файла"
+
+        //-- "Select Directory:"
+string   360 "Выбрать директорию:"
+
+        //-- "Load State"
+string   380 "Загрузить сохранение"
+
+        //-- "Save State"
+string   382 "Сохранить"
+
+        //-- "slot %d active"
+string   384 "слот %d активен"
+
+        //-- "state loaded"
+string   386 "сохранение загружено"
+
+        //-- "load error"
+string   388 "ошибка загрузки"
+
+        //-- "state saved"
+string   390 "сохранено"
+
+        //-- "save error"
+string   392 "ошибка сохранения"
+
+        //-- "Generate %s dat"
+string   420 "Создать %s dat"
+
+        //-- "no game loaded"
+string   422 "игра не загружена"
+
+        //-- "*** Starting netplay: "
+string   440 "*** Запуск сетевой игры: "
+
+        //-- "*** You are player %i. "
+string   442 "*** Вы - игрок %i. "
+
+        //-- "There are %i total players."
+string   444 "Всего %i игроков."
+
+        //-- "*** Player %1i <%.32hs> dropped from the game."
+string   446 "*** Игрок %1i <%.32hs> покинул игру."
+
+        //-- "too much text"
+string   448 "слишком много текста"
+
+        //-- "PNG saved"
+string   460 "PNG сохранен"
+
+        //-- "PNG error %1d"
+string   462 "Ошибка PNG %1d"
+
+        //-- "Rec AVI ON"
+string   464 "Запись AVI Вкл."
+
+        //-- "Rec AVI OFF"
+string   466 "Запись AVI Выкл."
+
+        //-- "No volume control"
+string   480 "Нет управления громкостью"
+
+        //-- "volume %03i %%"
+string   482 "громкость %03i %%"
+
+        //-- "Silence"
+string   484 "Без звука"
+
+        //-- "Sound Restored"
+string   486 "Звук восстановлен"
+
+        //-- "This input recording"
+string   500 "Это прохождение записывается"
+
+        //-- "input recording."
+string   502 "прохождение записывается."
+
+        //-- "%s Input Recording Files"
+string   504 "%s Файлы записи прохождения"
+
+        //-- "state file"
+string   506 "файл сохранения"
+
+        //-- "This state file"
+string   508 "Этот файл сохранения"
+
+        //-- "%s State Files"
+string   510 "%s Файлы сохранений"
+
+        //-- "sound recording"
+string   512 "звукозапись"
+
+        //-- "This sound recording"
+string   514 "Идет звукозапись"
+
+        //-- "%s Sound Recording Files"
+string   516 "%s Файлы звукозаписи"
+
+        //-- "%s Memory Card Files"
+string   518 "%s Файлы карт памяти"
+
+        //-- "All Memory Card Files"
+string   520 "Все файлы карт памяти"
+
+        //-- "All Dat Files"
+string   522 "Все Dat Файлы"
+
+        //-- "Text Files"
+string   524 "Текстовые файлы"
+
+        //-- "%s Patch Files"
+string   526 "%s Файлы патчей"
+
+        //-- "Save system information report"
+string   540 "Сохранить информацию о системе"
+
+        //-- "Select game list localisation template"
+string   560 "Выбрать шаблон локализации списка игры"
+
+        //-- "Create game list localisation template"
+string   562 "Создать шаблон локализации списка игры"
+
+        //-- "Rom Information"
+string   600 "Rom Инфо"
+
+        //-- "Rom Info"
+string   602 "Rom Инфо"
+
+        //-- "Sample Info"
+string   604 "Пример"
+
+        //-- "Name"
+string   606 "Имя"
+
+        //-- "Size (bytes)"
+string   608 "Размер (байт)"
+
+        //-- "CRC32"
+string   610 ""
+
+        //-- "Type"
+string   612 "Тип"
+
+        //-- "Flags"
+string   614 "Флаги"
+
+        //-- "%s, Essential"
+string   616 "%s, Необходим"
+
+        //-- "%s, Optional"
+string   618 "%s, Необязателен"
+
+        //-- "%s, Program"
+string   620 "%s, Программа"
+
+        //-- "%s, Graphics"
+string   622 "%s, Графика"
+
+        //-- "%s, Sound"
+string   624 "%s, Звук"
+
+        //-- "%s, BIOS"
+string   626 ""
+
+        //-- "No Dump"
+string   628 "Нет дампа"
+
+        //-- "Previews"
+string   630 ""
+
+        //-- "Titles"
+string   632 ""
+
+        //-- "Icons"
+string   634 "Иконки"
+
+        //-- "Cheats"
+string   636 "Читы"
+
+        //-- "High Scores"
+string   638 "Рекорды"
+
+        //-- "Samples"
+string   640 "Примеры"
+
+        //-- "IPS"
+string   642 ""
+
+        //-- "Neo Geo CDZ Games"
+string   644 "Игры Neo Geo CDZ"
+
+        //-- "Neo Geo CDZ Covers"
+string   646 "Обложки Neo Geo CDZ"
+
+        //-- "Blend Files"
+string   648 "Смешанные файлы"
+
+        //-- "Select Previews"
+string   650 "Предпросмотр"
+
+        //-- "Versus Previews"
+string   652 "Название"
+
+        //-- "HowTo Previews"
+string   654 "Иконки"
+
+        //-- "Scores Previews"
+string   656 "Читы"
+
+        //-- "Bosses Previews"
+string   658 "Рекорды"
+
+        //-- "Game Over Previews"
+string   660 "Образцы"
+
+        //-- "Flyers"
+string   662 ""
+
+        //-- "Marquees"
+string   664 ""
+
+        //-- "Control Panels"
+string   666 ""
+
+        //-- "Cabinets"
+string   668 ""
+
+        //-- "PCBs"
+string   670 ""
+
+        //-- "History.dat"
+string   672 ""
+
+        //-- "EEPROM Saves"
+string   674 ""
+
+        //-- "Path #1"
+string   680 "Путь #1"
+
+        //-- "Path #2"
+string   682 "Путь #2"
+
+        //-- "Path #3"
+string   684 "Путь #3"
+
+        //-- "Path #4"
+string   686 "Путь #4"
+
+        //-- "Path #5"
+string   688 "Путь #5"
+
+        //-- "Path #6"
+string   690 "Путь #6"
+
+        //-- "Path #7"
+string   692 "Путь #7"
+
+        //-- "Path #8"
+string   694 "Путь #8"
+
+        //-- "Path #9"
+string   696 "Путь #9"
+
+        //-- "Path #10"
+string   698 "Путь #10"
+
+        //-- "Path #11"
+string   700 "Путь #11"
+
+        //-- "Path #12"
+string   702 "Путь #12"
+
+        //-- "Path #13"
+string   704 "Путь #13"
+
+        //-- "Path #14"
+string   706 "Путь #14"
+
+        //-- "Path #15"
+string   708 "Путь #15"
+
+        //-- "Path #16"
+string   710 "Путь #16"
+
+        //-- "Path #17"
+string   712 "Путь #17"
+
+        //-- "Path #18"
+string   714 "Путь #18"
+
+        //-- "Path #19"
+string   716 "Путь #19"
+
+        //-- "Path #20"
+string   718 "Путь #20"
+
+        //-- "The preset file was saved to %s."
+string   720 "Настройки были сохранены в %s."
+
+        //-- "Create gamelist localisation template"
+string   730 "Создать шаблон локализации списка игр"
+
+        //-- "Select gamelist localisation template"
+string   732 "Выбрать шаблон локализации списка игр"
+
+        //-- "FB Alpha gamelist localisation templates"
+string   734 "Шаблоны локализации списка игр FB Alpha"
+
+        //-- "Select CD-ROM image..."
+string   740 "Выбрать образ CD-ROM..."
+
+        //-- "Select CD-ROM image"
+string   742 "Выбрать образ CD-ROM"
+
+        //-- "CD images"
+string   744 "Образы CD"
+
+        //-- "Create localisation template"
+string   750 "Создать шаблон локализации"
+
+        //-- "Select localisation template"
+string   752 "Выбрать шаблон локализации"
+
+        //-- "FB Alpha localisation templates"
+string   754 "Шаблоны локализации FB Alpha"
+
+        //-- "Filters"
+string   760 "Фильтры"
+
+        //-- "Hardware"
+string   762 "Оборудование"
+
+        //-- "Cave"
+string   764 ""
+
+        //-- "CPS-1"
+string   766 ""
+
+        //-- "CPS-2"
+string   768 ""
+
+        //-- "CPS-3"
+string   770 ""
+
+        //-- "Neo Geo"
+string   772 ""
+
+        //-- "PGM"
+string   774 ""
+
+        //-- "Psikyo"
+string   776 ""
+
+        //-- "Sega"
+string   778 ""
+
+        //-- "Taito"
+string   780 ""
+
+        //-- "Toaplan"
+string   782 ""
+
+        //-- "Misc (pre 90s)"
+string   784 "Разные (до 90-х г.)"
+
+        //-- "Misc (post 90s)"
+string   786 "Разные (после 90-х г.)"
+
+        //-- "Megadrive"
+string   788 ""
+
+        //-- "Pacman"
+string   790 ""
+
+        //-- "Konami"
+string   792 ""
+
+        //-- "Galaxian"
+string   794 ""
+
+        //-- "Irem"
+string   796 ""
+
+        //-- "Board Type"
+string   798 "Тип платформы"
+
+        //-- "Bootleg"
+string   800 "Бутлег"
+
+        //-- "Prototype"
+string   802 "Прототипы"
+
+        //-- "Hack"
+string   804 "Хаки"
+
+        //-- "Homebrew"
+string   806 "Самопалы"
+
+        //-- "Demo"
+string   808 "Демо"
+
+        //-- "Genuine"
+string   810 "Оригинальные"
+
+        //-- "Showing %i of %i sets [%i Unavailable sets]"
+string   812 "Показано %i игр из %i (%i Игр отсутствует)"
+
+        //-- "Kaneko"
+string   814 ""
+
+        //-- "SNES"
+string   816 ""
+
+        //-- "Data East"
+string   818 ""
+
+        //-- "Capcom (Other)"
+string   820 "Capcom (Разные)"
+
+        //-- "Seta"
+string   822 ""
+
+        //-- "Technos"
+string   824 ""
+
+        //-- "PC-Engine"
+string   826 ""
+
+        //-- "Master System"
+string   828 ""
+
+        //-- "SG-1000"
+string   830 ""
+
+        //-- "ColecoVision"
+string   832 ""
+
+        //-- "Game Gear"
+string   834 ""
+
+        //-- "MSX"
+string   836 ""
+
+        //-- "Genre"
+string   850 "Жанр"
+
+        //-- "Shooter - Horizontal"
+string   852 "Стрелялка - Горизонт."
+
+        //-- "Shooter - Vertical"
+string   854 "Стрелялка - Вертик."
+
+        //-- "Fighter - Scrolling"
+string   856 "Файтинг - Скроллинг"
+
+        //-- "Fighter - Versus"
+string   858 "Файтинги - VS"
+
+        //-- "BIOS"
+string   860 ""
+
+        //-- "Breakout"
+string   862 "Бегалки"
+
+        //-- "Casino"
+string   864 "Казино"
+
+        //-- "Ball & Paddle"
+string   866 "Шарики"
+
+        //-- "Maze"
+string   868 "Лабиринты"
+
+        //-- "Mini-Games"
+string   870 "Мини игры"
+
+        //-- "Pinball"
+string   872 "Пинболл"
+
+        //-- "Platform"
+string   874 "Платформер"
+
+        //-- "Puzzle"
+string   876 "Пазлы"
+
+        //-- "Quiz"
+string   878 "Викторины"
+
+        //-- "Sports - Misc"
+string   880 "Спорт - Разные"
+
+        //-- "Sports - Football"
+string   882 "Спорт - Футбол"
+
+        //-- "Misc"
+string   884 "Разные"
+
+        //-- "Mahjong"
+string   886 "Маджонг"
+
+        //-- "Racing"
+string   888 "Гонки"
+
+        //-- "Shooter - Other"
+string   890 "Стрелялки - Разные"
+
+        //-- "Family"
+string   940 "Серии"
+
+        //-- "Metal Slug"
+string   942 ""
+
+        //-- "Street Fighter"
+string   944 ""
+
+        //-- "King of Fighters"
+string   946 ""
+
+        //-- "Darkstalkers"
+string   948 ""
+
+        //-- "Fatal Fury"
+string   950 ""
+
+        //-- "Samurai Shodown"
+string   952 ""
+
+        //-- "19XX"
+string   954 ""
+
+        //-- "Aero Fighters"
+string   956 ""
+
+        //-- "Power Instinct"
+string   958 ""
+
+        //-- "Other"
+string   960 "Другие"
+
+        //-- "Favorites"
+string   990 ""
+
+        //-- "IPS Patch Manager"
+string  1000 "IPS Патч менеджер"
+
+        //-- "%s%sNeo Geo CDZ%sSelect Game"
+string  1010 "%s%sNeo Geo CDZ%s Выбор игры"
+
+        //-- "Title"
+string  1012 "Название"
+
+        //-- "NGCD-ID"
+string  1014 ""
+
+        //-- "&Arcade"
+string  1040 "&Аркада"
+
+        //-- "&Other..."
+string  1042 "&Другое..."
+
+        //-- "&Other Gamma value..."
+string  1044 "&Другое значение Гаммы..."
+
+        //-- "Adjust &CPU speed..."
+string  1046 "Настроить скорость &CPU..."
+
+        //-- "Load state from active slot (no %d)\tF9"
+string  1048 "Загрузить сохранение из слота (номер %d)\tF9"
+
+        //-- "Save state to active slot (no %d)\tF10"
+string  1050 "Сохранить в слот (номер %d)\tF10"
+
+        //-- "no game selected"
+string  1052 "игра не выбрана"
+
+        //-- "Number of Frames"
+string  1070 "Количество фреймов"
+
+        //-- "Select desired filter sharpness"
+string  1072 "Выберите нужный фильтр резкости"
+
+        //-- "Scanning ROMs..."
+string  1076 "Сканирование РОМов..."
+
+        //-- "New cheat search started"
+string  1080 "Начался новый поиск читов"
+
+        //-- "%i Addresses Matched"
+string  1082 "%i Адресов совпало"
+
+        //-- "Address %08X Value %02X"
+string  1084 "Адреса %08X Значение %02X"
+
+        //-- "Cheat search exited"
+string  1086 "Выйти из поиска читов"
+
+        //-- "English (US)"
+string  1100 "Английский (US)"
+
+        //-- "Simplified Chinese"
+string  1102 "Китайский упрощенный"
+
+        //-- "Traditional Chinese"
+string  1104 "Китайский традиционный"
+
+        //-- "Japanese"
+string  1106 "Японский"
+
+        //-- "Korean"
+string  1108 "Корейский"
+
+        //-- "French"
+string  1110 "Французкий"
+
+        //-- "Spanish"
+string  1112 "Испанский"
+
+        //-- "Italian"
+string  1114 "Итальянский"
+
+        //-- "German"
+string  1116 "Немецкий"
+
+        //-- "Portuguese"
+string  1118 "Португальский"
+
+        //-- "Polish"
+string  1120 "Польский"
+
+        //-- "Hungarian"
+string  1122 "Венгерский"
+
+        //-- "Game Information"
+string  1200 "Информация об игре"
+
+        //-- "In Game"
+string  1202 ""
+
+        //-- "Title"
+string  1204 "Название"
+
+        //-- "Select"
+string  1206 ""
+
+        //-- "Versus"
+string  1208 ""
+
+        //-- "How To"
+string  1210 ""
+
+        //-- "Scores"
+string  1212 ""
+
+        //-- "Bosses"
+string  1214 ""
+
+        //-- "Game Over"
+string  1216 ""
+
+        //-- "Flyer"
+string  1218 ""
+
+        //-- "Cabinet"
+string  1220 ""
+
+        //-- "Marquee"
+string  1222 ""
+
+        //-- "Controls"
+string  1224 ""
+
+        //-- "PCB"
+string  1226 ""
+
+        //-- "Rom Info"
+string  1228 ""
+
+        //-- "History"
+string  1230 "История"
+
+        //-- "Sample Info"
+string  1232 ""
+
+        //-- " (clone of %s"
+string  1600 " (клон из %s"
+
+        //-- ", uses ROMs from %s"
+string  1602 ", использовать РОМы из %s"
+
+        //-- "%suses ROMs from %s"
+string  1604 "%sиспользовать РОМы из %s"
+
+        //-- "%suses board-ROMs from %s"
+string  1606 "%sиспользовать платформу из %s"
+
+        //-- "%suses samples from %s"
+string  1608 "%sиспользовать сэмплы из %s"
+
+        //-- "%s%i player%s"
+string  1610 "%s%i игрок%s"
+
+        //-- "s max"
+string  1612 "s макс."
+
+        //-- "%s (%s, %s hardware)"
+string  1614 "%s (%s, %s платформа)"
+
+        //-- "Neo Geo MVS Cartidge"
+string  1616 "Картридж Neo Geo MVS"
+
+        //-- "%shigh scores supported"
+string  1618 "%sподдерживаются рекорды"
+
+        //-- "cartridge"
+string  1620 "картридж"
+
+        //-- "hardware"
+string  1622 "платформа"
+
+        //-- "Empty"
+string  1624 "Пусто"
+
+        //-- "Unidentified CD"
+string  1626 "Неопознанный CD"
+
+        //-- "Error"
+string  1800 "Ошибка"
+
+        //-- "Warning"
+string  1802 "Внимание"
+
+        //-- "Information"
+string  1804 "Информация"
+
+        //-- "Unknown"
+string  1806 "Неизвестно"
+
+        //-- "The ROMset is OK."
+string  1810 "ROMset в порядке."
+
+        //-- "The ROMset exhibits the following problems:"
+string  1812 "ROMset выявил следующие проблемы:"
+
+        //-- "No data was found, the game will not run!"
+string  1814 "Данные не найдены, игра не будет работать!"
+
+        //-- "essential data is missing, the game will not run!"
+string  1816 "нет нужных данных, игра не будет работать!"
+
+        //-- "essential data is invalid, the game might not run!"
+string  1818 "нужные данные неверны, игра не будет работать!"
+
+        //-- "data is missing."
+string  1820 "данные отсутствуют."
+
+        //-- "data is invalid."
+string  1822 "неверные данные."
+
+        //-- "%.32hs was found (%.512s).\n"
+string  1824 "%.32hs был найден (%.512s).\n"
+
+        //-- "%.32hs was not found.\n"
+string  1826 "%.32hs не найден.\n"
+
+        //-- "The following ROMs are invalid:\n"
+string  1828 "Следующие РОМы неправильные:\n"
+
+        //-- "%.32hs has a CRC of %.8X (correct is %.8X).\n"
+string  1830 "%.32hs имеет CRC: %.8X (правильно: %.8X).\n"
+
+        //-- "%.32hs is %dk which is too small (correct is %dkB).\n"
+string  1832 "%.32hs %dk слишком маленький (правильно: %dkB).\n"
+
+        //-- "%.32hs is %dk which is too large (correct is %dkB).\n"
+string  1834 "%.32hs %dk слишком большой (правильно: %dkB).\n"
+
+        //-- "essential "
+string  1836 "нужный "
+
+        //-- "program "
+string  1838 "программа "
+
+        //-- "BIOS "
+string  1840 ""
+
+        //-- "graphics "
+string  1842 "видео "
+
+        //-- "sound "
+string  1844 "звук "
+
+        //-- "ROM "
+string  1846 ""
+
+        //-- "Error loading %.32hs, requested by %.128s.\nThe emulation will likely suffer problems."
+string  1848 "Ошибка загрузки %.32hs, требуемого %.128s.\nЭмуляция, скорее всего, будет иметь проблемы."
+
+        //-- "Error reading %.32hs from %.512s"
+string  1850 "Ошибка чтения %.32hs из %.512s"
+
+        //-- "CRC mismatch reading %.32hs from %.512s"
+string  1852 "Несовпадение CRC %.32hs из %.512s"
+
+        //-- "There was a problem starting \'%.128s\'.\n"
+string  1860 "Проблемы с запуском \'%.128s\'.\n"
+
+        //-- "%.32s is not supported by %.32s."
+string  1870 "%.32s не поддерживается %.32s."
+
+        //-- "Couldn\'t create main window."
+string  1872 "Не удалось создать главное окно."
+
+        //-- "Couldn\'t intialise \'%s\' module."
+string  1874 "Не удалось инициализировать модуль \'%s\'."
+
+        //-- "Couldn\'t create a triple buffer."
+string  1876 "Не удалось создать тройной буфер."
+
+        //-- "No appropriate display mode supported. Please adjust your full-screen settings."
+string  1878 "Режим дисплея не поддерживается. Пожалуйста, скорректируйте ваши настройки полноэкранного режима."
+
+        //-- "Problem setting \'%dx%dx%dbpp (%dHz)\' display mode"
+string  1880 "Проблема при установки режима дисплея \'%dx%dx%dbpp (%dHz)\'"
+
+        //-- "\n\nThis is not a standard VGA resolution; please make sure it is supported by your video card."
+string  1882 "\n\nЭто нестандартное разрешение VGA; пожалуйста удостоверитесь, что его поддерживает ваша видеокарта."
+
+        //-- "Couldn\'t intialise \'%s\' module. Try installing the Direct X End User runtimes (June 2010)."
+string  1884 ""
+
+        //-- "Error creating "
+string  1890 "Ошибка создания "
+
+        //-- "Error loading "
+string  1892 "Ошибки загрузки "
+
+        //-- " is for an unavailable game."
+string  1894 " для недоступной игры."
+
+        //-- " does not work with this version of %s."
+string  1896 " не работает с версией %s."
+
+        //-- " requires a more recent version of %s, please upgrade."
+string  1898 " требуется новая версия %s, пожалуйста обновитесь."
+
+        //-- "Error finding \'kailleraclient.dll\'."
+string  1910 "Ошибка! Не найден файл \'kailleraclient.dll\'."
+
+        //-- "No driver has been selected from the list."
+string  1912 "Игра не была выбрана из списка."
+
+        //-- "No driver has been selected for slot 1."
+string  1914 "Игра не была выбрана для слота 1."
+
+        //-- "This game isn\'t working. Load it anyway?"
+string  1916 "Эта игра не работает. Попытаться запустить?"
+
+        //-- "Couldn\'t initialise CD emulation."
+string  1918 "Не удалось инициализировать эмуляцию CD"
+
+        //-- "Failed to connect to Internet"
+string  1950 "Отсутствует соединение с Интернетом"
+
+        //-- "Failed to access FB Alpha website"
+string  1952 "Не удалось получить доступ к сайту FB Alpha"
+

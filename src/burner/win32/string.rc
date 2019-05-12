@@ -174,7 +174,7 @@ BEGIN
 	IDS_SEL_NEOGEO				"Neo Geo"
 	IDS_SEL_PGM					"PGM"
 	IDS_SEL_PSIKYO				"Psikyo"
-	IDS_SEL_SEGA				"Sega (Other)"
+	IDS_SEL_SEGA				"Sega Arcade"
 	IDS_SEL_TAITO				"Taito"
 	IDS_SEL_TOAPLAN				"Toaplan"
 	IDS_SEL_MISCPRE90S			"Misc (Pre-90s)"

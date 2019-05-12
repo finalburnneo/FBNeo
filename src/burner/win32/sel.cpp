@@ -285,6 +285,8 @@ int nLoadMenuGenreFilter		= 0;
 int nLoadMenuFavoritesFilter	= 0;
 int nLoadMenuFamilyFilter		= 0;
 
+int nLoadMenuExpand             = 0; // expanded/collapsed state of filter nodes
+
 struct NODEINFO {
 	int nBurnDrvNo;
 	bool bIsParent;
@@ -1159,6 +1161,34 @@ static void RebuildEverything()
 	TreeBuilding = 0;
 }
 
+static int TvhFilterToBitmask(HTREEITEM hHandle)
+{
+	if (hHandle == hRoot)				return (1 << 0);
+	if (hHandle == hBoardType)			return (1 << 1);
+	if (hHandle == hFamily)				return (1 << 2);
+	if (hHandle == hGenre)				return (1 << 3);
+	if (hHandle == hHardware)			return (1 << 4);
+	if (hHandle == hFilterCapcomGrp)	return (1 << 5);
+	if (hHandle == hFilterSegaGrp)		return (1 << 6);
+
+	return 0;
+}
+
+static HTREEITEM TvBitTohFilter(int nBit)
+{
+	switch (nBit) {
+		case (1 << 0): return hRoot;
+		case (1 << 1): return hBoardType;
+		case (1 << 2): return hFamily;
+		case (1 << 3): return hGenre;
+		case (1 << 4): return hHardware;
+		case (1 << 5): return hFilterCapcomGrp;
+		case (1 << 6): return hFilterSegaGrp;
+	}
+
+	return 0;
+}
+
 #define _TVCreateFiltersA(a, b, c, d)								\
 {																	\
 	TvItem.hParent = a;												\
@@ -1294,9 +1324,14 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPRE90S	, hFilterMiscPre90s		, nLoadMenuShowX & MASKMISCPRE90S					);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPOST90S	, hFilterMiscPost90s	, nLoadMenuShowX & MASKMISCPOST90S					);
 
-	
-	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hRoot);
-	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
+	// restore expanded filter nodes
+	for (INT32 i = 0; i < 16; i++)
+	{
+		if (nLoadMenuExpand & (1 << i))
+			SendMessage(hFilterList, TVM_EXPAND, TVE_EXPAND, (LPARAM)TvBitTohFilter(1 << i));
+	}
+	//SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hRoot);
+	//SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
 	//SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hFavorites);
 	TreeView_SelectSetFirstVisible(hFilterList, hFavorites);
 }
@@ -2173,7 +2208,23 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	NMHDR* pNmHdr = (NMHDR*)lParam;
 	if (Msg == WM_NOTIFY) 
 	{
-		if ((pNmHdr->code == NM_CLICK) && (pNmHdr->idFrom == IDC_TREE2)) 
+		if ((pNmHdr->code == TVN_ITEMEXPANDED) && (pNmHdr->idFrom == IDC_TREE2))
+		{
+			// save the expanded state of the filter nodes
+			NM_TREEVIEW *pnmtv = (NM_TREEVIEW *)lParam;
+			TV_ITEM curItem = pnmtv->itemNew;
+
+			if (pnmtv->action == TVE_COLLAPSE)
+			{
+				nLoadMenuExpand &= ~TvhFilterToBitmask(curItem.hItem);
+			}
+            else if (pnmtv->action == TVE_EXPAND)
+            {
+				nLoadMenuExpand |= TvhFilterToBitmask(curItem.hItem);
+			}
+		}
+
+		if ((pNmHdr->code == NM_CLICK) && (pNmHdr->idFrom == IDC_TREE2))
 		{
 			TVHITTESTINFO thi;
 			DWORD dwpos = GetMessagePos();

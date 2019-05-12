@@ -298,6 +298,7 @@ void MenuRemoveTheme();
 // sel.cpp
 extern int nLoadMenuShowX;
 extern int nLoadMenuShowY;
+extern int nLoadMenuExpand;
 extern int nLoadMenuBoardTypeFilter;
 extern int nLoadMenuGenreFilter;
 extern int nLoadMenuFavoritesFilter;

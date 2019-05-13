@@ -523,13 +523,17 @@
     <CustomBuild Include="..\..\src\burn\drv\capcom\ctv_make.cpp">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 
 %(Filename).exe &gt; generated\ctv.h 
+
 del %(Filename).obj
+
 del %(Filename).exe</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\generated\ctv.h</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ctv.h</Outputs>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 
 %(Filename).exe &gt; generated\ctv.h 
+
 del %(Filename).obj
+
 del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\generated\ctv.h</Outputs>
     </CustomBuild>
@@ -1421,13 +1425,21 @@ del build_details.exe
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build_details.h</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cd ..
+
 cd ..
+
 cd src
+
 cd dep
+
 cd scripts
+
 "cl" build_details.cpp
+
 build_details &gt;../../../projectfiles/visualstudio-2010/generated/build_details.h
+
 del build_details.obj
+
 del build_details.exe
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build_details.h</Outputs>

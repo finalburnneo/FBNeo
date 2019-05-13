@@ -87,7 +87,7 @@ static void UpdateStream(INT32 chip, INT32 samples_len)
 
 #if defined FBA_DEBUG
 #ifdef __GNUC__ 
-    bprintf(0, _T("ay8910_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
+    //bprintf(0, _T("ay8910_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
 #endif
 #endif
 

@@ -407,7 +407,7 @@ int OpenDebugLog()
 
 		_ftprintf(DebugLog, _T("<div style=\"font-size:16px;font-weight:bold;\">"));
 		_ftprintf(DebugLog, _T("Debug log created by ") _T(APP_TITLE) _T(" v%.20s on %s"), szAppBurnVer, _tasctime(tmTime));
-		
+
 		_ftprintf(DebugLog, _T("</div><div style=\"margin-top:12px;\"><input type=\"checkbox\" id=\"chb_all\" onclick=\"$('input:checkbox').not(this).prop('checked', this.checked);\" checked>&nbsp;<label for=\"chb_all\">(Un)check All</label>"));
 		_ftprintf(DebugLog, _T("</div><div style=\"margin-top:12px;\"><input type=\"checkbox\" id=\"chb_ui\" onclick=\"if(this.checked==true){$(\'.ui\').show();}else{$(\'.ui\').hide();}\" checked>&nbsp;<label for=\"chb_ui\" class=\"ui_chb\">UI</label>"));
 		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_normal\" onclick=\"if(this.checked==true){$(\'.normal\').show();}else{$(\'.normal\').hide();}\" checked>&nbsp;<label for=\"chb_normal\" class=\"normal_chb\">Normal</label>"));
@@ -508,13 +508,13 @@ void MonitorAutoCheck()
 
 	x = GetSystemMetrics(SM_CXSCREEN);
 	y = GetSystemMetrics(SM_CYSCREEN);
-	
+
 	// default full-screen resolution to this size
 	nVidHorWidth = x;
 	nVidHorHeight = y;
 	nVidVerWidth = x;
 	nVidVerHeight = y;
-	
+
 	// also add this to the presets
 	VidPreset[3].nWidth = x;
 	VidPreset[3].nHeight = y;
@@ -525,34 +525,34 @@ void MonitorAutoCheck()
 	_stprintf(szResXY, _T("%dx%d"), x, y);
 
 	// Normal CRT (4:3) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("320x240"))	|| 
+	if( !_tcscmp(szResXY, _T("320x240"))	||
 		!_tcscmp(szResXY, _T("512x384"))	||
-		!_tcscmp(szResXY, _T("640x480"))	|| 
+		!_tcscmp(szResXY, _T("640x480"))	||
 		!_tcscmp(szResXY, _T("800x600"))	||
 		!_tcscmp(szResXY, _T("832x624"))	||
 		!_tcscmp(szResXY, _T("1024x768"))	||
-		!_tcscmp(szResXY, _T("1120x832"))	|| 
-		!_tcscmp(szResXY, _T("1152x864"))	|| 
+		!_tcscmp(szResXY, _T("1120x832"))	||
+		!_tcscmp(szResXY, _T("1152x864"))	||
 		!_tcscmp(szResXY, _T("1280x960"))	||
-		!_tcscmp(szResXY, _T("1280x1024"))	|| 
-		!_tcscmp(szResXY, _T("1400x1050"))	||  
+		!_tcscmp(szResXY, _T("1280x1024"))	||
+		!_tcscmp(szResXY, _T("1400x1050"))	||
 		!_tcscmp(szResXY, _T("1600x1200"))	||
 		!_tcscmp(szResXY, _T("2048x1536"))	||
 		!_tcscmp(szResXY, _T("2800x2100"))	||
-		!_tcscmp(szResXY, _T("3200x2400"))	|| 
+		!_tcscmp(szResXY, _T("3200x2400"))	||
 		!_tcscmp(szResXY, _T("4096x3072"))	||
 		!_tcscmp(szResXY, _T("6400x4800")) ){
-		nVidScrnAspectX = 4; 
+		nVidScrnAspectX = 4;
 		nVidScrnAspectY = 3;
 	}
 
 	// Normal LCD (5:4) ( Verified at Wikipedia.Org )
 	if( !_tcscmp(szResXY, _T("320x256"))	||
 		!_tcscmp(szResXY, _T("640x512"))	||
-		!_tcscmp(szResXY, _T("1280x1024"))	|| 
+		!_tcscmp(szResXY, _T("1280x1024"))	||
 		!_tcscmp(szResXY, _T("2560x2048"))	||
 		!_tcscmp(szResXY, _T("5120x4096")) ){
-		nVidScrnAspectX = 5; 
+		nVidScrnAspectX = 5;
 		nVidScrnAspectY = 4;
 	}
 
@@ -562,21 +562,21 @@ void MonitorAutoCheck()
 		!_tcscmp(szResXY, _T("1360x768")) ||
 		!_tcscmp(szResXY, _T("1366x768")) ||
 		!_tcscmp(szResXY, _T("1920x1080"))) {
-		nVidScrnAspectX = 16; 
+		nVidScrnAspectX = 16;
 		nVidScrnAspectY = 9;
 	}
 
 	// LCD Widescreen (16:10) ( Verified at Wikipedia.Org )
-	if(	!_tcscmp(szResXY, _T("320x200"))	|| 
+	if(	!_tcscmp(szResXY, _T("320x200"))	||
 		!_tcscmp(szResXY, _T("1280x800"))	||
-		!_tcscmp(szResXY, _T("1440x900"))	|| 
+		!_tcscmp(szResXY, _T("1440x900"))	||
 		!_tcscmp(szResXY, _T("1680x1050"))	||
 		!_tcscmp(szResXY, _T("1920x1200"))	||
 		!_tcscmp(szResXY, _T("2560x1600"))	||
 		!_tcscmp(szResXY, _T("3840x2400"))	||
 		!_tcscmp(szResXY, _T("5120x3200"))	||
 		!_tcscmp(szResXY, _T("7680x4800")) ){
-		nVidScrnAspectX = 16; 
+		nVidScrnAspectX = 16;
 		nVidScrnAspectY = 10;
 	}
 }
@@ -584,7 +584,7 @@ void MonitorAutoCheck()
 bool SetNumLock(bool bState)
 {
 	BYTE keyState[256];
-	
+
 	if (bNoChangeNumLock) return 0;
 
 	GetKeyboardState(keyState);
@@ -613,10 +613,10 @@ static int AppInit()
 
 	// Create a handle to the main thread of execution
 	DuplicateHandle(GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(), &hMainThread, 0, false, DUPLICATE_SAME_ACCESS);
-	
+
 	// Init the Burn library
 	BurnLibInit();
-	
+
 	// Load config for the application
 	ConfigAppLoad();
 
@@ -656,14 +656,14 @@ static int AppInit()
 
 	// Build the ROM information
 	CreateROMInfo(NULL);
-	
+
 	// Write a clrmame dat file if we are verifying roms
 #if defined (ROM_VERIFY)
-	create_datfile(_T("fba.dat"), 0);	
+	create_datfile(_T("fba.dat"), 0);
 #endif
 
 	bNumlockStatus = SetNumLock(false);
-	
+
 	if(bEnableIcons && !bIconsLoaded) {
 		// load driver icons
 		LoadDrvIcons();
@@ -680,7 +680,7 @@ static int AppExit()
 		UnloadDrvIcons();
 		bIconsLoaded = 0;
 	}
-	
+
 	SetNumLock(bNumlockStatus);
 
 	DrvExit();						// Make sure any game driver is exitted
@@ -777,22 +777,22 @@ int ProcessCmdLine()
 			write_datfile(DAT_ARCADE_ONLY, stdout);
 			return 1;
 		}
-		
+
 		if (_tcscmp(szName, _T("-listinfomdonly")) == 0) {
 			write_datfile(DAT_MEGADRIVE_ONLY, stdout);
 			return 1;
 		}
-		
+
 		if (_tcscmp(szName, _T("-listinfopceonly")) == 0) {
 			write_datfile(DAT_PCENGINE_ONLY, stdout);
 			return 1;
 		}
-		
+
 		if (_tcscmp(szName, _T("-listinfotg16only")) == 0) {
 			write_datfile(DAT_TG16_ONLY, stdout);
 			return 1;
 		}
-		
+
 		if (_tcscmp(szName, _T("-listinfosgxonly")) == 0) {
 			write_datfile(DAT_SGX_ONLY, stdout);
 			return 1;
@@ -807,12 +807,12 @@ int ProcessCmdLine()
 			write_datfile(DAT_COLECO_ONLY, stdout);
 			return 1;
 		}
-		
+
 		if (_tcscmp(szName, _T("-listinfosmsonly")) == 0) {
 			write_datfile(DAT_MASTERSYSTEM_ONLY, stdout);
 			return 1;
 		}
-		
+
 		if (_tcscmp(szName, _T("-listinfoggonly")) == 0) {
 			write_datfile(DAT_GAMEGEAR_ONLY, stdout);
 			return 1;
@@ -822,12 +822,12 @@ int ProcessCmdLine()
 			write_datfile(DAT_MSX_ONLY, stdout);
 			return 1;
 		}
-		
+
 		if (_tcscmp(szName, _T("-listinfospectrumonly")) == 0) {
 			write_datfile(DAT_SPECTRUM_ONLY, stdout);
 			return 1;
 		}
-		
+
 		if (_tcscmp(szName, _T("-listextrainfo")) == 0) {
 			int nWidth;
 			int nHeight;
@@ -838,7 +838,7 @@ int ProcessCmdLine()
 				BurnDrvGetVisibleSize(&nWidth, &nHeight);
 				BurnDrvGetAspect(&nAspectX, &nAspectY);
 				printf("%s\t%ix%i\t%i:%i\t0x%08X\t\"%s\"\t%i\t%i\t%x\t%x\t\"%s\"\n", BurnDrvGetTextA(DRV_NAME), nWidth, nHeight, nAspectX, nAspectY, BurnDrvGetHardwareCode(), BurnDrvGetTextA(DRV_SYSTEM), BurnDrvIsWorking(), BurnDrvGetMaxPlayers(), BurnDrvGetGenreFlags(), BurnDrvGetFamilyFlags(), BurnDrvGetTextA(DRV_COMMENT));
-			}			
+			}
 			return 1;
 		}
 	}
@@ -955,7 +955,7 @@ static void CreateSupportFolders()
 		{_T("msx/")},
 		{_T("spectrum/")},
 	};
-	
+
 	for(int x = 0; x < 34; x++) {
 		CreateDirectory(szSupportDirs[x], NULL);
 	}
@@ -982,7 +982,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		// public version
 		_stprintf(szAppBurnVer, _T("%x.%x.%x"), nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF);
 	}
-	
+
 #if !defined (DONT_DISPLAY_SPLASH)
 //	if (lpCmdLine[0] == 0) SplashCreate();
 #endif
@@ -1018,7 +1018,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 #undef DIRCNT
 
 	//
-	
+
 	{
 		INITCOMMONCONTROLSEX initCC = {
 			sizeof(INITCOMMONCONTROLSEX),
@@ -1047,7 +1047,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 
 	ConfigAppSave();							// Save config for the application
 
-	AppExit();									// Exit the application	
+	AppExit();									// Exit the application
 
 	return 0;
 }

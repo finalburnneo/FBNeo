@@ -448,8 +448,8 @@ int RunMessageLoop()
 								break;
 							}
 #endif
-							
-              				// 'Silence' & 'Sound Restored' Code (added by CaptainCPS-X) 
+
+              				// 'Silence' & 'Sound Restored' Code (added by CaptainCPS-X)
 							case 'S': {
 								TCHAR buffer[60];
 								bMute = !bMute;
@@ -469,7 +469,7 @@ int RunMessageLoop()
 								}
 								break;
 							}
-							
+
 							case VK_OEM_PLUS: {
 								if (bMute) break; // if mute, not do this
 								nOldAudVolume = nAudVolume;

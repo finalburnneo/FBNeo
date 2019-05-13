@@ -44,7 +44,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			// Setup the tabs
 			hTabControl = GetDlgItem(hDlg, IDC_ROMPATH_TAB);
 
-			TC_ITEM tcItem; 
+			TC_ITEM tcItem;
 			tcItem.mask = TCIF_TEXT;
 
 			UINT idsString[20] = { IDS_ROMPATH_1,IDS_ROMPATH_2,IDS_ROMPATH_3,IDS_ROMPATH_4,IDS_ROMPATH_5,IDS_ROMPATH_6,IDS_ROMPATH_7,IDS_ROMPATH_8,IDS_ROMPATH_9,IDS_ROMPATH_10,IDS_ROMPATH_11,IDS_ROMPATH_12,IDS_ROMPATH_13,IDS_ROMPATH_14,IDS_ROMPATH_15,IDS_ROMPATH_16,IDS_ROMPATH_17,IDS_ROMPATH_18,IDS_ROMPATH_19,IDS_ROMPATH_20 };
@@ -55,7 +55,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 
 			int TabPage = TabCtrl_GetCurSel(hTabControl);
-			
+
 			// hide all controls excluding the selected controls
 			for(int x = 0; x < 20; x++) {
 				if(x != TabPage) {
@@ -80,7 +80,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (pNmHdr->code == TCN_SELCHANGE) {
 
 				int TabPage = TabCtrl_GetCurSel(hTabControl);
-				
+
 				// hide all controls excluding the selected controls
 				for(int x = 0; x < 20; x++) {
 					if(x != TabPage) {
@@ -92,7 +92,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				// Show the proper controls
 				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + TabPage), SW_SHOW);		// browse buttons
 				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + TabPage), SW_SHOW);		// edit controls
-				
+
 				UpdateWindow(hDlg);
 
 				return FALSE;
@@ -172,7 +172,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 int RomsDirCreate(HWND hParentWND)
 {
 	hParent = hParentWND;
-	
+
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_ROMSDIR), hParent, (DLGPROC)DefInpProc);
 	return 1;
 }
@@ -276,7 +276,7 @@ int CheckGameAvb()
 	CreateRomDatName(szRomDat);
 
 	if ((h = _tfopen(szRomDat, _T("r"))) == NULL) {
-		if (buffer) 
+		if (buffer)
 		{
 			free(buffer);
 			buffer = NULL;
@@ -390,7 +390,7 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 			hScanThread = (HANDLE)_beginthreadex(NULL, 0, AnalyzingRoms, NULL, 0, &ScanThreadId);
 
 			hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-			
+
 			if (hParent == NULL) {
 				RECT rect;
 				int x, y;

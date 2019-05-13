@@ -16,13 +16,13 @@ BOOL DetectWindowsVersion()
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 
     GetVersionEx(&osvi);
-    
+
 	// osvi.dwMajorVersion returns the windows version: 5 = XP 6 = Vista/7
     // osvi.dwMinorVersion returns the minor version, XP and 7 = 1, Vista = 0
     bIsWindowsXPorLater = ((osvi.dwMajorVersion > 5) || ( (osvi.dwMajorVersion == 5) && (osvi.dwMinorVersion >= 1)));
 	bIsWindowsXP = (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1);
 	bIsWindows8OrGreater = ((osvi.dwMajorVersion > 6) || ((osvi.dwMajorVersion == 6) && (osvi.dwMinorVersion >= 2)));
-	
+
 	return bIsWindowsXPorLater;
 }
 
@@ -270,7 +270,7 @@ void EnableHighResolutionTiming()
 	TIMECAPS hTCaps;
 
 	bHighResolutionTimerActive = 0;
-	
+
 	if (bEnableHighResTimer) {
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T(" ** Enabling High-Resolution system timer.\n"));

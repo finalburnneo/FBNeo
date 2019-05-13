@@ -160,10 +160,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (!kNetGame && bAutoPause) {
 			bRunPause = 1;
 		}
-		
+
 		WndInMid(hDlg, hScrnWnd);
 		SetFocus(hDlg);											// Enable Esc=close
-		
+
 		return TRUE;
 	}
 
@@ -230,7 +230,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 			return 0;
 		}
-		
+
 		if (Id == IDC_INPCHEAT_LIST && ((pnm->code == NM_DBLCLK) || (pnm->code == NM_RDBLCLK))) {
 			// Select the next item of the currently selected one.
 			int nSel_Dbl = SendMessage(GetDlgItem(hInpCheatDlg, IDC_INPCX1_VALUE), CB_GETCURSEL, 0, 0);

@@ -112,7 +112,7 @@ static INT32 img_process(IMAGE* img, UINT32 width, UINT32 height, INT32 /*preset
 	};*/
 
 	IMAGE sized_img;
-	
+
 	double ratio = (double)(height * width) / (img->height * img->width);
 
 /*	{
@@ -245,17 +245,17 @@ static INT32 img_process(IMAGE* img, UINT32 width, UINT32 height, INT32 /*preset
 			for (y1 = y1 + 1; y1 < img->height * (y + 1) / sized_img.height; y1++) {
 				x1 = img->width * x / sized_img.width;
 				xf = (double)img->width * x / sized_img.width - x1;
-	
+
 				r1 = (double)img->rowptr[y1][x1 * 3 + 0] * (1.0 - xf);
 				g1 = (double)img->rowptr[y1][x1 * 3 + 1] * (1.0 - xf);
 				b1 = (double)img->rowptr[y1][x1 * 3 + 2] * (1.0 - xf);
-	
+
 				for (x1 = x1 + 1; x1 < img->width * (x + 1) / sized_img.width; x1++) {
 					r1 += (double)img->rowptr[y1][x1 * 3 + 0];
 					g1 += (double)img->rowptr[y1][x1 * 3 + 1];
 					b1 += (double)img->rowptr[y1][x1 * 3 + 2];
 				}
-	
+
 				if (x1 < img->width) {
 					xf = (double)img->width * (x + 1) / sized_img.width - x1;
 					r1 += (double)img->rowptr[y1][x1 * 3 + 0] * xf;
@@ -270,26 +270,26 @@ static INT32 img_process(IMAGE* img, UINT32 width, UINT32 height, INT32 /*preset
 
 			if (y1 < img->height) {
 				yf = (double)img->height * (y + 1) / sized_img.height - y1;
-	
+
 				x1 = img->width * x / sized_img.width;
 				xf = (double)img->width * x / sized_img.width - x1;
 				r1 = (double)img->rowptr[y1][x1 * 3 + 0] * (1.0 - xf);
 				g1 = (double)img->rowptr[y1][x1 * 3 + 1] * (1.0 - xf);
 				b1 = (double)img->rowptr[y1][x1 * 3 + 2] * (1.0 - xf);
-	
+
 				for (x1 = x1 + 1; x1 < img->width * (x + 1) / sized_img.width; x1++) {
 					r1 += (double)img->rowptr[y1][x1 * 3 + 0];
 					g1 += (double)img->rowptr[y1][x1 * 3 + 1];
 					b1 += (double)img->rowptr[y1][x1 * 3 + 2];
 				}
-	
+
 				if (x1 < img->width) {
 					xf = (double)img->width * (x + 1) / sized_img.width - x1;
 					r1 += (double)img->rowptr[y1][x1 * 3 + 0] * xf;
 					g1 += (double)img->rowptr[y1][x1 * 3 + 1] * xf;
 					b1 += (double)img->rowptr[y1][x1 * 3 + 2] * xf;
 				}
-	
+
 				r0 += r1 * yf;
 				g0 += g1 * yf;
 				b0 += b1 * yf;
@@ -333,7 +333,7 @@ static INT32 img_process(IMAGE* img, UINT32 width, UINT32 height, INT32 /*preset
 		for (INT32 y = -4; y < 5; y++) {
 
 			double c = sqrt(double(x * x + y * y));
-			
+
 			matrix[y + 4][x + 4] = 1.0 / exp(-c * -c / b);
 		}
 	}
@@ -425,7 +425,7 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 	IMAGE temp_img;
 	png_uint_32 width = 0, height = 0;
 	INT32 bit_depth, color_type;
-	
+
 	if (fp) {
 		// check signature
 		UINT8 pngsig[PNG_SIG_CHECK_BYTES];
@@ -433,29 +433,29 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 		if (png_sig_cmp(pngsig, 0, PNG_SIG_CHECK_BYTES)) {
 			return 1;
 		}
-		
+
 		png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 		if (!png_ptr) {
 			return 1;
 		}
-	
+
 		png_infop info_ptr = png_create_info_struct(png_ptr);
 		if (!info_ptr) {
 			png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
 			return 1;
 		}
-		
+
 		memset(&temp_img, 0, sizeof(IMAGE));
 		png_init_io(png_ptr, fp);
 		png_set_sig_bytes(png_ptr, PNG_SIG_CHECK_BYTES);
 		png_read_info(png_ptr, info_ptr);
 		png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, NULL, NULL, NULL);
-	
+
 		if (setjmp(png_jmpbuf(png_ptr))) {
 			png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 			return 1;
 		}
-		
+
 		// Instruct libpng to convert the image to 24-bit RGB format
 		if (color_type == PNG_COLOR_TYPE_PALETTE) {
 			png_set_palette_to_rgb(png_ptr);
@@ -469,23 +469,23 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 		if (color_type & PNG_COLOR_MASK_ALPHA) {
 			png_set_strip_alpha(png_ptr);
 		}
-	
+
 		temp_img.width  = width;
 		temp_img.height = height;
-		
+
 		// Initialize our img structure
 		if (img_alloc(&temp_img)) {
 			//longjmp(png_ptr->jmpbuf, 1);
 			png_jmpbuf(png_ptr);
 		}
-		
+
 		// If bad things happen in libpng we need to do img_free(&temp_img) as well
 		if (setjmp(png_jmpbuf(png_ptr))) {
 			png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 			img_free(&temp_img);
 			return 1;
 		}
-	
+
 		// Read the .PNG image
 		png_set_bgr(png_ptr);
 		png_read_update_info(png_ptr, info_ptr);
@@ -501,28 +501,28 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 		BYTE* pResourceData = (BYTE*)LockResource(hglobal);
 
 		BITMAPINFOHEADER* pbmih = (BITMAPINFOHEADER*)LockResource(hglobal);
-		
+
 		// Allocate a new image
 		memset(&temp_img, 0, sizeof(IMAGE));
 		temp_img.width   = pbmih->biWidth;
 		temp_img.height  = pbmih->biHeight;
 		temp_img.bmpbits = pResourceData + pbmih->biSize;
 		img_alloc(&temp_img);
-		
+
 #else
 		return 1;
 #endif
 
 	}
-	
+
 	if (img_process(&temp_img, img->width ? img->width : temp_img.width, img->height ? img->height : temp_img.height, nPreset, false)) {
 		img_free(&temp_img);
 		return 1;
 	}
-	
+
 	bPngImageOrientation = 0;
 	if (height && width && height > width) bPngImageOrientation = 1;
-	
+
 	memcpy(img, &temp_img, sizeof(IMAGE));
 
 	return 0;
@@ -533,7 +533,7 @@ INT32 PNGGetInfo(IMAGE* img, FILE *fp)
 	IMAGE temp_img;
 	png_uint_32 width = 0, height = 0;
 	INT32 bit_depth, color_type;
-	
+
 	if (fp) {
 		// check signature
 		UINT8 pngsig[PNG_SIG_CHECK_BYTES];
@@ -541,42 +541,42 @@ INT32 PNGGetInfo(IMAGE* img, FILE *fp)
 		if (png_sig_cmp(pngsig, 0, PNG_SIG_CHECK_BYTES)) {
 			return 1;
 		}
-		
+
 		png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 		if (!png_ptr) {
 			return 1;
 		}
-	
+
 		png_infop info_ptr = png_create_info_struct(png_ptr);
 		if (!info_ptr) {
 			png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
 			return 1;
 		}
-		
+
 		memset(&temp_img, 0, sizeof(IMAGE));
 		png_init_io(png_ptr, fp);
 		png_set_sig_bytes(png_ptr, PNG_SIG_CHECK_BYTES);
 		png_read_info(png_ptr, info_ptr);
 		png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, NULL, NULL, NULL);
-		
+
 		if (setjmp(png_jmpbuf(png_ptr))) {
 			png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 			return 1;
 		}
-		
+
 		temp_img.width = width;
 		temp_img.height = height;
-		
+
 		if (setjmp(png_jmpbuf(png_ptr))) {
 			png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 			return 1;
 		}
-		
+
 		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 	}
-	
+
 	memcpy(img, &temp_img, sizeof(IMAGE));
 	img_free(&temp_img);
-	
+
 	return 0;
 }

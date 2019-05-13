@@ -31,7 +31,7 @@
 
 // fix for shlwapi.h
 #ifndef _In_
-#define _In_ 
+#define _In_
 #endif
 
 #include <shlwapi.h>

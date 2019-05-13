@@ -160,9 +160,9 @@ int PrintOSInfo()
 		osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 		GetVersionEx((OSVERSIONINFO*)&osvi);
 	}
-	
+
 //	bprintf(PRINT_NORMAL, _T("%i, %i\n"), osvi.dwMajorVersion, osvi.dwMinorVersion);
-	
+
 	AddText(_T("OS:  "));
 	{
 		if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT) {
@@ -261,7 +261,7 @@ int PrintOSInfo()
 int PrintCPUInfo()
 {
 	AddText(_T("CPU: "));
-	
+
 	char CPUBrandStringFinal[0x40] = { 0 };
 
 #if defined _MSC_VER
@@ -289,12 +289,12 @@ int PrintCPUInfo()
 			memcpy(CPUBrandString + 32, CPUInfo, sizeof(CPUInfo));
 		}
 	}
-	
+
 	// trim the leading white space
 	int nCheckForSpace = 1;
 	for (i = 0; CPUBrandString[i] != '\0'; i++) {
 		if (!isspace(CPUBrandString[i])) nCheckForSpace = 0;
-		
+
 		if (nCheckForSpace) {
 			if (!isspace(CPUBrandString[i])) {
 				CPUBrandStringFinal[j++] = CPUBrandString[i];

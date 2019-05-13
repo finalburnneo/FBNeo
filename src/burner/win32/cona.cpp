@@ -33,7 +33,7 @@ int ConfigAppLoad()
 	TCHAR szConfig[MAX_PATH];
 	TCHAR szLine[1024];
 	FILE* h;
-	
+
 #ifdef _UNICODE
 	setlocale(LC_ALL, "");
 #endif
@@ -104,7 +104,7 @@ int ConfigAppLoad()
 		FLT(nGamma);
 		VAR(bVidFullStretch);
 		VAR(bVidCorrectAspect);
-		
+
 		VAR(bVidAutoSwitchFull);
 		STR(HorScreen);
 		STR(VerScreen);
@@ -147,7 +147,7 @@ int ConfigAppLoad()
 		// DirectX Graphics blitter
 		FLT(dVidCubicB);
 		FLT(dVidCubicC);
-		
+
 		// DirectX Graphics 9 Alt blitter
 		VAR(bVidDX9Bilinear);
 		VAR(bVidHardwareVertex);
@@ -183,7 +183,7 @@ int ConfigAppLoad()
 		VAR(bAlwaysProcessKeyboardInput);
 		VAR(bAutoPause);
 		VAR(bSaveInputs);
-		
+
 		VAR(nCDEmuSelect);
 		PAT(CDEmuImage);
 
@@ -217,9 +217,9 @@ int ConfigAppLoad()
 		STR(szAppRomPaths[17]);
 		STR(szAppRomPaths[18]);
 		STR(szAppRomPaths[19]);
-		
+
 		STR(szNeoCDGamesDir);
-		
+
 		STR(szAppPreviewsPath);
 		STR(szAppTitlesPath);
 		STR(szAppCheatsPath);
@@ -242,14 +242,14 @@ int ConfigAppLoad()
 		STR(szAppPCBsPath);
 		STR(szAppHistoryPath);
 		STR(szAppEEPROMPath);
-		
+
 		VAR(bEnableHighResTimer);
 		VAR(bNoChangeNumLock);
 		VAR(bAlwaysCreateSupportFolders);
 		VAR(bAutoLoadGameList);
-		
+
 		VAR(nAutoFireRate);
-		
+
 		VAR(EnableHiscores);
 		VAR(bBurnUseBlend);
 		VAR(BurnShiftEnabled);
@@ -258,13 +258,13 @@ int ConfigAppLoad()
 #ifdef INCLUDE_AVI_RECORDING
 		VAR(nAvi3x);
 #endif
-		
+
 		VAR(nIpsSelectedLanguage);
-		
+
 		VAR(bEnableIcons);
 		VAR(bIconsOnlyParents);
 		VAR(nIconsSize);
-		
+
 		STR(szPrevGames[0]);
 		STR(szPrevGames[1]);
 		STR(szPrevGames[2]);
@@ -275,7 +275,7 @@ int ConfigAppLoad()
 		STR(szPrevGames[7]);
 		STR(szPrevGames[8]);
 		STR(szPrevGames[9]);
-		
+
 		// MVS cartridges
 		DRV(nBurnDrvSelect[0]);
 		DRV(nBurnDrvSelect[1]);
@@ -283,7 +283,7 @@ int ConfigAppLoad()
 		DRV(nBurnDrvSelect[3]);
 		DRV(nBurnDrvSelect[4]);
 		DRV(nBurnDrvSelect[5]);
-		
+
 		VAR(bNeoCDListScanSub);
 		VAR(bNeoCDListScanOnlyISO);
 
@@ -318,7 +318,7 @@ int ConfigAppSave()
 	if (bCmdOptUsed & 1) {
 		return 1;
 	}
-	
+
 #ifdef _UNICODE
 	setlocale(LC_ALL, "");
 #endif
@@ -359,7 +359,7 @@ int ConfigAppSave()
 
 	// Horizontal oriented
 	_ftprintf(h, _T("\n// (Horizontal Oriented) The display mode to use for fullscreen\n"));
-	VAR(nVidHorWidth); VAR(nVidHorHeight);	
+	VAR(nVidHorWidth); VAR(nVidHorHeight);
 	_ftprintf(h, _T("\n// (Horizontal Oriented) If non-zero, use the same fullscreen resolution as the original arcade game\n"));
 	VAR(bVidArcaderesHor);
 	_ftprintf(h, _T("\n// (Horizontal Oriented) The preset resolutions appearing in the menu\n"));
@@ -510,19 +510,19 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- UI ---------------------------------------------------------------------\n"));
-	
+
 	_ftprintf(h, _T("\n// The filename of the placeholder image to use (empty filename = use built-in)\n"));
 	STR(szPlaceHolder);
 
 	_ftprintf(h, _T("\n// Filename of the active UI translation template\n"));
 	STR(szLocalisationTemplate);
-	
+
 	_ftprintf(h, _T("\n// Filename of the active gamelist translation template\n"));
 	STR(szGamelistLocalisationTemplate);
-	
+
 	_ftprintf(h, _T("\n// If non-zero, enable gamelist localisation\n"));
 	VAR(nGamelistLocalisationActive);
-	
+
 	_ftprintf(h, _T("\n// 1 = display pause/record/replay/kaillera icons in the upper right corner of the display\n"));
 	VAR(nVidSDisplayStatus);
 	_ftprintf(h, _T("\n// Minimum height (in pixels) of the font used for the Kaillera chat function (used for arcade resolution)\n"));
@@ -546,37 +546,37 @@ int ConfigAppSave()
 	VAR(bAutoPause);
 	_ftprintf(h, _T("\n// If non-zero, save the inputs for each game\n"));
 	VAR(bSaveInputs);
-	
+
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- CD emulation -----------------------------------------------------------\n"));
 	_ftprintf(h, _T("\n // The selected CD emulation module\n"));
 	VAR(nCDEmuSelect);
 	_ftprintf(h, _T("\n // The path to the CD image to use (.cue or .iso)\n"));
 	STR(CDEmuImage);
-	
+
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- Load Game Dialogs ------------------------------------------------------\n"));
 	_ftprintf(h, _T("\n// Load game dialog dimensions (in win32 client co-ordinates)\n"));
 	VAR(nSelDlgWidth);
 	VAR(nSelDlgHeight);
-	
+
 	_ftprintf(h, _T("\n// Load game dialog options\n"));
 	VAR(nLoadMenuShowX);
 	VAR(nLoadMenuShowY);
 	VAR(nLoadMenuExpand);
-	
+
 	_ftprintf(h, _T("\n// Load game dialog board type filter options\n"));
 	VAR(nLoadMenuBoardTypeFilter);
-	
+
 	_ftprintf(h, _T("\n// Load game dialog genre filter options\n"));
 	VAR(nLoadMenuGenreFilter);
 
 	_ftprintf(h, _T("\n// Load game dialog favorites filter options\n"));
 	VAR(nLoadMenuFavoritesFilter);
-	
+
 	_ftprintf(h, _T("\n// Load game dialog family filter options\n"));
 	VAR(nLoadMenuFamilyFilter);
-	
+
 	_ftprintf(h, _T("\n// The paths to search for rom zips (include trailing backslash)\n"));
 	STR(szAppRomPaths[0]);
 	STR(szAppRomPaths[1]);
@@ -598,10 +598,10 @@ int ConfigAppSave()
 	STR(szAppRomPaths[17]);
 	STR(szAppRomPaths[18]);
 	STR(szAppRomPaths[19]);
-	
+
 	_ftprintf(h, _T("\n// The path to search for Neo Geo CDZ isos\n"));
 	STR(szNeoCDGamesDir);
-	
+
 	_ftprintf(h, _T("\n// The paths to search for support files (include trailing backslash)\n"));
 	STR(szAppPreviewsPath);
 	STR(szAppTitlesPath);
@@ -625,7 +625,7 @@ int ConfigAppSave()
 	STR(szAppPCBsPath);
 	STR(szAppHistoryPath);
 	STR(szAppEEPROMPath);
-	
+
 	_ftprintf(h, _T("\n// The cartridges to use for emulation of an MVS system\n"));
 	DRV(nBurnDrvSelect[0]);
 	DRV(nBurnDrvSelect[1]);
@@ -633,7 +633,7 @@ int ConfigAppSave()
 	DRV(nBurnDrvSelect[3]);
 	DRV(nBurnDrvSelect[4]);
 	DRV(nBurnDrvSelect[5]);
-	
+
 	_ftprintf(h, _T("\n// Neo Geo CD Load Game Dialog options\n"));
 	VAR(bNeoCDListScanSub);
 	VAR(bNeoCDListScanOnlyISO);
@@ -646,19 +646,19 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, don't change the status of the Num Lock key.\n"));
 	VAR(bNoChangeNumLock);
-	
+
 	_ftprintf(h, _T("\n// If non-zero, create support folders at program start.\n"));
 	VAR(bAlwaysCreateSupportFolders);
-	
+
 	_ftprintf(h, _T("\n// If non-zero, load game selection dialog at program start.\n"));
 	VAR(bAutoLoadGameList);
-	
+
 	_ftprintf(h, _T("\n// Auto-Fire Rate, non-linear - use the GUI to change this setting!\n"));
 	VAR(nAutoFireRate);
-	
+
 	_ftprintf(h, _T("\n// If non-zero, enable high score saving support.\n"));
 	VAR(EnableHiscores);
-	
+
 	_ftprintf(h, _T("\n// If non-zero, enable alpha blending support.\n"));
 	VAR(bBurnUseBlend);
 
@@ -667,15 +667,15 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, DISABLE start-up rom scan (if needed).\n"));
 	VAR(bSkipStartupCheck);
-	
+
 #ifdef INCLUDE_AVI_RECORDING
 	_ftprintf(h, _T("\n// If non-zero, enable 1x - 3x pixel output for the AVI writer.\n"));
 	VAR(nAvi3x);
 #endif
-	
+
 	_ftprintf(h, _T("\n// The language index to use for the IPS Patch Manager dialog.\n"));
 	VAR(nIpsSelectedLanguage);
-	
+
 	_ftprintf(h, _T("\n// If non-zero, display drivers icons.\n"));
 	VAR(bEnableIcons);
 
@@ -684,7 +684,7 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// Specify icons display size, 0 = 16x16 , 1 = 24x24, 2 = 32x32.\n"));
 	VAR(nIconsSize);
-	
+
 	_ftprintf(h, _T("\n// Previous games list.\n"));
 	STR(szPrevGames[0]);
 	STR(szPrevGames[1]);
@@ -696,7 +696,7 @@ int ConfigAppSave()
 	STR(szPrevGames[7]);
 	STR(szPrevGames[8]);
 	STR(szPrevGames[9]);
-	
+
 	_ftprintf(h, _T("\n// Player default controls, number is the index of the configuration in the input dialog\n"));
 	VAR(nPlayerDefaultControls[0]);
 	STR(szPlayerDefaultIni[0]);

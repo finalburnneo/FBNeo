@@ -33,7 +33,7 @@ int SelectPlaceHolder()
 
 	szPlaceHolder[0] = _T('\0');
 	memcpy(szPlaceHolder, szChoice, sizeof(szChoice));
-	
+
 	return nRet;
 }
 

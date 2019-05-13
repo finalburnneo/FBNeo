@@ -433,7 +433,7 @@ static INT32 ConfigParseMAMEFile()
 
 	TCHAR szFileName[MAX_PATH] = _T("");
 	_stprintf(szFileName, _T("%scheat.dat"), szAppCheatsPath);
-	
+
 	FILE *fz = _tfopen(szFileName, _T("rt"));
 	if (fz == NULL) {
 		return 1;
@@ -592,7 +592,7 @@ static INT32 ConfigParseMAMEFile()
 
 			OptionName(tmp);
 			AddressInfo();
-			
+
 			continue;
 		}
 	}

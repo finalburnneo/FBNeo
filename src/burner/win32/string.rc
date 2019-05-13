@@ -246,6 +246,8 @@ BEGIN
 	IDS_FAMILY_SONICWI			"Aero Fighters"
 	IDS_FAMILY_PWRINST			"Power Instinct"
 	IDS_FAMILY_SONIC			"Sonic the Hedgehog"
+	IDS_FAMILY_DONPACHI			"DonPachi"
+	IDS_FAMILY_MAHOU			"Mahou Daisakusen"
 	IDS_FAMILY_OTHER			"Other"
 	
 	IDS_IPSMANAGER_TITLE		"IPS Patch Manager"

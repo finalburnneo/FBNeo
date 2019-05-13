@@ -169,6 +169,8 @@ HTREEITEM hFilter19xx				= NULL;
 HTREEITEM hFilterSonicwi			= NULL;
 HTREEITEM hFilterPwrinst			= NULL;
 HTREEITEM hFilterSonic				= NULL;
+HTREEITEM hFilterDonpachi			= NULL;
+HTREEITEM hFilterMahou				= NULL;
 HTREEITEM hFilterCapcomGrp			= NULL;
 HTREEITEM hFilterSegaGrp			= NULL;
 
@@ -272,7 +274,7 @@ static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 |
 #define MASKFAMILYOTHER			0x10000000
 
 #define MASKALLGENRE			(GBF_HORSHOOT | GBF_VERSHOOT | GBF_SCRFIGHT | GBF_VSFIGHT | GBF_BIOS | GBF_BREAKOUT | GBF_CASINO | GBF_BALLPADDLE | GBF_MAZE | GBF_MINIGAMES | GBF_PINBALL | GBF_PLATFORM | GBF_PUZZLE | GBF_QUIZ | GBF_SPORTSMISC | GBF_SPORTSFOOTBALL | GBF_MISC | GBF_MAHJONG | GBF_RACING | GBF_SHOOT | GBF_ACTION | GBF_RUNGUN | GBF_STRATEGY)
-#define MASKALLFAMILY			(MASKFAMILYOTHER | FBF_MSLUG | FBF_SF | FBF_KOF | FBF_DSTLK | FBF_FATFURY | FBF_SAMSHO | FBF_19XX | FBF_SONICWI | FBF_PWRINST | FBF_SONIC)
+#define MASKALLFAMILY			(MASKFAMILYOTHER | FBF_MSLUG | FBF_SF | FBF_KOF | FBF_DSTLK | FBF_FATFURY | FBF_SAMSHO | FBF_19XX | FBF_SONICWI | FBF_PWRINST | FBF_SONIC | FBF_DONPACHI | FBF_MAHOU)
 #define MASKALLBOARD			(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE)
 
 #define MASKCAPGRP				(MASKCAPMISC | MASKCPS | MASKCPS2 | MASKCPS3)
@@ -301,7 +303,7 @@ static unsigned int nTmpDrvCount;
 // prototype  -----------------------
 static void RebuildEverything();
 // ----------------------------------
-
+extern int counter;
 // Dialog sizing support functions and macros (everything working in client co-ords)
 #define GetInititalControlPos(a, b)								\
 	GetWindowRect(GetDlgItem(hSelDlg, a), &rect);				\
@@ -328,7 +330,7 @@ static void RebuildEverything();
 	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0], b[1] - yDelta, b[2] - xDelta, b[3], SWP_NOZORDER | SWP_NOSENDCHANGING);
 	
 #define SetControlPosAlignTopRightResizeVert(a, b)				\
-	xScrollBarDelta = (a == IDC_TREE2) ? -12 : 0;				\
+	xScrollBarDelta = (a == IDC_TREE2) ? -18 : 0;				\
 	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0] - xDelta, b[1], b[2] - xScrollBarDelta, b[3] - yDelta, SWP_NOZORDER | SWP_NOSENDCHANGING);
 	
 #define SetControlPosAlignTopLeftResizeHorVert(a, b)			\
@@ -387,6 +389,20 @@ static void GetInitialPositions()
 	GetInititalControlPos(IDGAMEINFO, nDlgDrvRomInfoBtnInitialPos);
 	GetInititalControlPos(IDC_STATIC1, nDlgSelectGameGrpInitialPos);
 	GetInititalControlPos(IDC_TREE1, nDlgSelectGameLstInitialPos);
+
+	// Deal with missing vertical scrollbars in the game list and filter list
+	// When the window is created with too few entries for TreeView to warrant the
+	// use of a vertical scrollbar, the right side will be slightly askew.
+
+	if (nDlgSelectGameGrpInitialPos[2] - nDlgSelectGameLstInitialPos[2] < 30 ) {
+		bprintf(0, _T("Gamelist Scrollbar patch\n"));
+		nDlgSelectGameLstInitialPos[2] = nDlgSelectGameGrpInitialPos[2] - 34;
+	}
+
+	if (nDlgFilterGrpInitialPos[2] - nDlgFilterTreeInitialPos[2] < 30 ) {
+		bprintf(0, _T("FilterTree Scrollbar patch\n"));
+		nDlgFilterTreeInitialPos[2] = nDlgFilterGrpInitialPos[2] - 34;
+	}
 }
 
 // Check if a specified driver is working
@@ -485,6 +501,8 @@ static int DoExtraFilters()
 	if ((nLoadMenuFamilyFilter & FBF_SONICWI)				&& (BurnDrvGetFamilyFlags() & FBF_SONICWI))			return 1;
 	if ((nLoadMenuFamilyFilter & FBF_PWRINST)				&& (BurnDrvGetFamilyFlags() & FBF_PWRINST))			return 1;
 	if ((nLoadMenuFamilyFilter & FBF_SONIC)					&& (BurnDrvGetFamilyFlags() & FBF_SONIC))			return 1;
+	if ((nLoadMenuFamilyFilter & FBF_DONPACHI)				&& (BurnDrvGetFamilyFlags() & FBF_DONPACHI))		return 1;
+	if ((nLoadMenuFamilyFilter & FBF_MAHOU)					&& (BurnDrvGetFamilyFlags() & FBF_MAHOU))			return 1;
 	
 	if ((nLoadMenuFamilyFilter & MASKFAMILYOTHER)			&& (!(BurnDrvGetFamilyFlags() & FBF_MSLUG)) 
 															&& (!(BurnDrvGetFamilyFlags() & FBF_SF)) 
@@ -495,7 +513,10 @@ static int DoExtraFilters()
 															&& (!(BurnDrvGetFamilyFlags() & FBF_19XX)) 
 															&& (!(BurnDrvGetFamilyFlags() & FBF_SONICWI)) 
 															&& (!(BurnDrvGetFamilyFlags() & FBF_PWRINST))
-															&& (!(BurnDrvGetFamilyFlags() & FBF_SONIC)))		return 1;
+															&& (!(BurnDrvGetFamilyFlags() & FBF_SONIC))
+															&& (!(BurnDrvGetFamilyFlags() & FBF_DONPACHI))
+															&& (!(BurnDrvGetFamilyFlags() & FBF_MAHOU)) )		return 1;
+
 
 	// This filter supports multiple genre's per game
 	int bGenreOk = 0;
@@ -524,32 +545,6 @@ static int DoExtraFilters()
 	if ((~nLoadMenuGenreFilter & GBF_STRATEGY)				&& (BurnDrvGetGenreFlags() & GBF_STRATEGY))			bGenreOk = 1;
 	if (bGenreOk == 0) return 1;
 
-#if 0
-	// This (old) filter does not support multiple genre's per game
-	if ((nLoadMenuGenreFilter & GBF_HORSHOOT)				&& (BurnDrvGetGenreFlags() & GBF_HORSHOOT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_VERSHOOT)				&& (BurnDrvGetGenreFlags() & GBF_VERSHOOT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_SCRFIGHT)				&& (BurnDrvGetGenreFlags() & GBF_SCRFIGHT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_VSFIGHT)				&& (BurnDrvGetGenreFlags() & GBF_VSFIGHT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_BIOS)					&& (BurnDrvGetGenreFlags() & GBF_BIOS))				return 1;
-	if ((nLoadMenuGenreFilter & GBF_BREAKOUT)				&& (BurnDrvGetGenreFlags() & GBF_BREAKOUT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_CASINO)					&& (BurnDrvGetGenreFlags() & GBF_CASINO))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_BALLPADDLE)				&& (BurnDrvGetGenreFlags() & GBF_BALLPADDLE))		return 1;
-	if ((nLoadMenuGenreFilter & GBF_MAZE)					&& (BurnDrvGetGenreFlags() & GBF_MAZE))				return 1;
-	if ((nLoadMenuGenreFilter & GBF_MINIGAMES)				&& (BurnDrvGetGenreFlags() & GBF_MINIGAMES))		return 1;
-	if ((nLoadMenuGenreFilter & GBF_PINBALL)				&& (BurnDrvGetGenreFlags() & GBF_PINBALL))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_PLATFORM)				&& (BurnDrvGetGenreFlags() & GBF_PLATFORM))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_PUZZLE)					&& (BurnDrvGetGenreFlags() & GBF_PUZZLE))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_QUIZ)					&& (BurnDrvGetGenreFlags() & GBF_QUIZ))				return 1;
-	if ((nLoadMenuGenreFilter & GBF_SPORTSMISC)				&& (BurnDrvGetGenreFlags() & GBF_SPORTSMISC))		return 1;
-	if ((nLoadMenuGenreFilter & GBF_SPORTSFOOTBALL) 		&& (BurnDrvGetGenreFlags() & GBF_SPORTSFOOTBALL))	return 1;
-	if ((nLoadMenuGenreFilter & GBF_MISC)					&& (BurnDrvGetGenreFlags() & GBF_MISC))				return 1;
-	if ((nLoadMenuGenreFilter & GBF_MAHJONG)				&& (BurnDrvGetGenreFlags() & GBF_MAHJONG))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_RACING)					&& (BurnDrvGetGenreFlags() & GBF_RACING))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_SHOOT)					&& (BurnDrvGetGenreFlags() & GBF_SHOOT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_ACTION)					&& (BurnDrvGetGenreFlags() & GBF_ACTION))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_RUNGUN)					&& (BurnDrvGetGenreFlags() & GBF_RUNGUN))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_STRATEGY)				&& (BurnDrvGetGenreFlags() & GBF_STRATEGY))			return 1;
-#endif
 	return 0;
 }
 
@@ -1246,11 +1241,13 @@ static void CreateFilters()
 	_TVCreateFiltersC(hRoot			, IDS_FAMILY			, hFamily				, nLoadMenuFamilyFilter & MASKALLFAMILY	);
 	
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_19XX		, hFilter19xx			, nLoadMenuFamilyFilter & FBF_19XX					);
+	_TVCreateFiltersA(hFamily		, IDS_FAMILY_DONPACHI	, hFilterDonpachi		, nLoadMenuFamilyFilter & FBF_DONPACHI				);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_SONICWI	, hFilterSonicwi		, nLoadMenuFamilyFilter & FBF_SONICWI				);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_DSTLK		, hFilterDstlk			, nLoadMenuFamilyFilter & FBF_DSTLK					);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_FATFURY	, hFilterFatfury		, nLoadMenuFamilyFilter & FBF_FATFURY				);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_KOF		, hFilterKof			, nLoadMenuFamilyFilter & FBF_KOF					);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_MSLUG		, hFilterMslug			, nLoadMenuFamilyFilter & FBF_MSLUG					);
+	_TVCreateFiltersA(hFamily		, IDS_FAMILY_MAHOU		, hFilterMahou			, nLoadMenuFamilyFilter & FBF_MAHOU					);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_PWRINST	, hFilterPwrinst		, nLoadMenuFamilyFilter & FBF_PWRINST				);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_SAMSHO		, hFilterSamsho			, nLoadMenuFamilyFilter & FBF_SAMSHO				);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_SONIC		, hFilterSonic			, nLoadMenuFamilyFilter & FBF_SONIC					);
@@ -1732,6 +1729,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterSonicwi, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterPwrinst, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterSonic, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterDonpachi, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterMahou, FALSE);
 				
 				nLoadMenuFamilyFilter = MASKALLFAMILY;
 			} else {
@@ -1748,6 +1747,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterSonicwi, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterPwrinst, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSonic, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterDonpachi, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterMahou, TRUE);
 				
 				nLoadMenuFamilyFilter = 0;
 			}
@@ -1927,6 +1928,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterGenuine)			_ToggleGameListing(nLoadMenuBoardTypeFilter, MASKBOARDTYPEGENUINE);
 		
 		if (hItemChanged == hFilterOtherFamily)		_ToggleGameListing(nLoadMenuFamilyFilter, MASKFAMILYOTHER);
+		if (hItemChanged == hFilterMahou)			_ToggleGameListing(nLoadMenuFamilyFilter, FBF_MAHOU);
+		if (hItemChanged == hFilterDonpachi)		_ToggleGameListing(nLoadMenuFamilyFilter, FBF_DONPACHI);
 		if (hItemChanged == hFilterMslug)			_ToggleGameListing(nLoadMenuFamilyFilter, FBF_MSLUG);
 		if (hItemChanged == hFilterSf)				_ToggleGameListing(nLoadMenuFamilyFilter, FBF_SF);
 		if (hItemChanged == hFilterKof)				_ToggleGameListing(nLoadMenuFamilyFilter, FBF_KOF);

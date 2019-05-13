@@ -685,6 +685,8 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define FBF_SONICWI										(1 << 7)
 #define FBF_PWRINST										(1 << 8)
 #define FBF_SONIC										(1 << 9)
+#define FBF_DONPACHI                                    (1 << 10)
+#define FBF_MAHOU                                       (1 << 11)
 
 #ifdef __cplusplus
  } // End of extern "C"

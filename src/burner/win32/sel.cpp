@@ -303,7 +303,7 @@ static unsigned int nTmpDrvCount;
 // prototype  -----------------------
 static void RebuildEverything();
 // ----------------------------------
-extern int counter;
+
 // Dialog sizing support functions and macros (everything working in client co-ords)
 #define GetInititalControlPos(a, b)								\
 	GetWindowRect(GetDlgItem(hSelDlg, a), &rect);				\

@@ -595,7 +595,7 @@ $(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generat
 	@echo Compiling Musashi MC680x0 core \(m68kops.c\)...
 	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kops.c -o $(objdir)cpu/m68k/m68kops.o
 
-$(objdir)dep/generated/m68kops.h: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c
+$(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c
 	$(objdir)/cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
 
 $(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c

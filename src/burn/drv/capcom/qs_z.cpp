@@ -61,8 +61,8 @@ void __fastcall QsndZWrite(UINT16 a, UINT8 d)
 
 UINT8 __fastcall QsndZRead(UINT16 a)
 {
-	if (a == 0xd007) {						// return ready all the time
-		return 0x80;
+	if (a == 0xd007) {						// DSP status
+		return QscRead();
 	}
 	return 0;
 }

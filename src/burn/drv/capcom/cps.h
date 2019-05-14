@@ -261,7 +261,6 @@ extern INT32 Cawingb;
 extern INT32 Wofh;
 extern INT32 Sf2thndr;
 extern INT32 Pzloop2;
-extern INT32 Mmatrix;
 extern INT32 Sfa2ObjHack;
 extern INT32 Ssf2tb;
 extern INT32 Dinohunt;

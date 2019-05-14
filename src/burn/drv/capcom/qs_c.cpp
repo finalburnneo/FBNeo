@@ -19,10 +19,6 @@ static const INT32 nQscClock = 60000000;
 static const INT32 nQscClockDivider = 2496;
 
 static INT32 nQscRate = 0;
-INT32 Mmatrix; // global
-
-static INT32 Tams = -1;
-static INT32* Qs_s = NULL;
 
 static INT32 nPos;
 static INT32 nDelta;
@@ -109,7 +105,7 @@ struct qsound_chip {
 };
 
 static UINT16 *register_map[256];
-INT16 pan_tables[2][2][98];
+static INT16 pan_tables[2][2][98];
 
 static INT16 interpolate_buffer[2][4];
 
@@ -743,9 +739,6 @@ void QscReset()
 void QscExit()
 {
 	nQscRate = 0;
-
-	BurnFree(Qs_s);
-	Tams = -1;
 }
 
 INT32 QscInit(INT32 nRate)
@@ -889,12 +882,12 @@ INT32 QscUpdate(INT32 nEnd)
 			nDelta -= 0x1000;
 		}
 
-		nLeftOut = INTERPOLATE4PS_16BIT((nDelta >> 2),
+		nLeftOut = INTERPOLATE4PS_16BIT(nDelta,
 								  interpolate_buffer[0][0],
 								  interpolate_buffer[0][1],
 								  interpolate_buffer[0][2],
 								  interpolate_buffer[0][3]);
-		nRightOut = INTERPOLATE4PS_16BIT((nDelta >> 2),
+		nRightOut = INTERPOLATE4PS_16BIT(nDelta,
 								  interpolate_buffer[1][0],
 								  interpolate_buffer[1][1],
 								  interpolate_buffer[1][2],

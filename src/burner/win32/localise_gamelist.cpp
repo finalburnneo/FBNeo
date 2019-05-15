@@ -106,7 +106,7 @@ static void BurnerGameListCreateTemplate()
 
 	FILE* fp = _tfopen(szGamelistLocalisationTemplate, _T("wt"));
 	if (fp) {
-		_ftprintf(fp, _T("// game list translation template for FB Alpha version 0x%06X\n\n"), nBurnVer);
+		_ftprintf(fp, _T("// game list translation template for FB Alpha FB version 0x%06X\n\n"), nBurnVer);
 		_ftprintf(fp, _T("// codepage=1252\n\n"));
 
 		for (unsigned int i = 0; i < nBurnDrvCount; i++) {

@@ -105,7 +105,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	UINT32 nParentSelect,nBoardROMSelect;
 
 	fprintf(fDat, "<?xml version=\"1.0\"?>\n");
-	fprintf(fDat, "<!DOCTYPE datafile PUBLIC \"-//FB Alpha//DTD ROM Management Datafile//EN\" \"http://www.logiqx.com/Dats/datafile.dtd\">\n\n");
+	fprintf(fDat, "<!DOCTYPE datafile PUBLIC \"-//FB Alpha FB//DTD ROM Management Datafile//EN\" \"http://www.logiqx.com/Dats/datafile.dtd\">\n\n");
 	fprintf(fDat, "<datafile>\n");
 	fprintf(fDat, "\t<header>\n");
 	if (bType == DAT_ARCADE_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Arcade Games</name>\n");

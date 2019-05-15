@@ -1,4 +1,4 @@
-// FB Alpha - Emulator for MC68000/Z80 based arcade games
+// FB Alpha FB - Emulator for MC68000/Z80 based arcade games
 //            Refer to the "license.txt" file for more info
 
 // Main module

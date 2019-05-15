@@ -24,7 +24,7 @@ bool bHasFocus = false;
 
 int nSavestateSlot = 1;
 
-static TCHAR* szClass = _T("FB Alpha");					// Window class name
+static TCHAR* szClass = _T("FB Alpha FB");					// Window class name
 HWND hScrnWnd = NULL;									// Handle to the screen window
 HWND hRebar = NULL;										// Handle to the Rebar control containing the menu
 

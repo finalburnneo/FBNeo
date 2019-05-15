@@ -223,14 +223,14 @@ enum {
 	STATE_REFRESH1	= 0x039,
 	STATE_REFRESH2	= 0x04f,
 	STATE_NORMAL1	= 0x314,
-	STATE_NORMAL2 	= 0x6b2,
+	STATE_NORMAL2 	= 0x6b2
 };
 
 enum {
 	PANTBL_LEFT		= 0,
 	PANTBL_RIGHT	= 1,
 	PANTBL_DRY		= 0,
-	PANTBL_WET		= 1,
+	PANTBL_WET		= 1
 };
 
 static void init_pan_tables()

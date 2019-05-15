@@ -645,6 +645,9 @@ $(MAIN_FBA_DIR)/burner/libretro/retro_cdemu.o: $(MAIN_FBA_DIR)/burner/libretro/r
 $(MAIN_FBA_DIR)/cpu/mips3/x64/mips3_x64.o: $(MAIN_FBA_DIR)/cpu/mips3/x64/mips3_x64.cpp
 	$(CXX) -c $(OBJOUT)$@ $< $(CXXFLAGS) $(INCFLAGS) -DSKIP_STDIO_REDEFINES
 
+$(MAIN_FBA_DIR)/cpu/mips3_intf.o: $(MAIN_FBA_DIR)/cpu/mips3_intf.cpp
+	$(CXX) -c $(OBJOUT)$@ $< $(CXXFLAGS) $(INCFLAGS) -DSKIP_STDIO_REDEFINES
+
 %.o: %.cpp
 	$(CXX) -c $(OBJOUT)$@ $< $(CXXFLAGS) $(INCFLAGS)
 

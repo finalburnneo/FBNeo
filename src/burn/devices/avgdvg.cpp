@@ -384,6 +384,8 @@ static INT32 dvg_generate_vector_list(void)
 	INT32 x, y, z, temp, a;
 	INT32 deltax, deltay;
 
+	memset(stack, 0, sizeof(stack));
+
 	/* reset the vector list */
 	vector_reset();
 

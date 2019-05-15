@@ -304,7 +304,7 @@ static void DrvPaletteInit()
 
 static INT32 DrvInit()
 {
-//	BurnSetRefreshRate(60.58);
+	BurnSetRefreshRate(60.58);
 
 	AllMem = NULL;
 	MemIndex();

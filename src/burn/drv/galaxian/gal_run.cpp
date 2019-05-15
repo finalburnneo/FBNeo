@@ -1916,7 +1916,7 @@ INT32 GalScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		if (GalZ80Rom1Size) ZetScan(nAction);
-		ppi8255_scan();
+
 		if (GalS2650Rom1Size) s2650Scan(nAction);
 		
 		GalSoundScan(nAction, pnMin);

@@ -1,7 +1,6 @@
 // FB Alpha Haunted Castle / Akuma-Jou Dracula driver module
 // Based on MAME driver by Bryan McPhail
 //
-// Todo: figure out crash on game-exit when refresh rate is set @ 59 in DrvInit()
 
 #include "tiles_generic.h"
 #include "z80_intf.h"

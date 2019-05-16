@@ -1303,6 +1303,8 @@ static void Deco222Decode()
 
 static INT32 DrvInit()
 {
+	BurnSetRefreshRate(58.00);
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -1404,8 +1406,6 @@ static INT32 DrvInit()
 
 	realMCU = 1;
 	DrvMCUInit();
-
-	BurnSetRefreshRate(58.00);
 
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachYM3812(&M6502Config, 1500000);
@@ -2196,6 +2196,8 @@ static INT32 CobraGfxDecode()
 
 static INT32 CobraInit()
 {
+	BurnSetRefreshRate(58.00);
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -2307,8 +2309,6 @@ static INT32 CobraInit()
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(ghostb_sound_write);
 	M6502Close();
-
-	BurnSetRefreshRate(58.00);
 
 	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachM6809(2000000);
@@ -2917,6 +2917,8 @@ static INT32 SrdarwinGfxDecode()
 
 static INT32 SrdarwinInit()
 {
+	BurnSetRefreshRate(58.00);
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -2980,8 +2982,6 @@ static INT32 SrdarwinInit()
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(ghostb_sound_write);
 	M6502Close();
-
-	BurnSetRefreshRate(58.00);
 
 	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachM6809(2000000);
@@ -3544,6 +3544,8 @@ static INT32 GondoGfxDecode()
 
 static INT32 GondoInit()
 {
+	BurnSetRefreshRate(58.00);
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -3660,8 +3662,6 @@ static INT32 GondoInit()
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(gondo_sound_write);
 	M6502Close();
-
-	BurnSetRefreshRate(58.00);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachYM3526(&M6502Config, 1500000);
@@ -4216,6 +4216,8 @@ static INT32 OscarGfxDecode()
 
 static INT32 OscarInit()
 {
+	BurnSetRefreshRate(58.00);
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -4277,8 +4279,6 @@ static INT32 OscarInit()
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(gondo_sound_write);
 	M6502Close();
-
-	BurnSetRefreshRate(58.00);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachYM3526(&M6502Config, 1500000);
@@ -4820,6 +4820,8 @@ static INT32 LastmissGfxDecode()
 
 static INT32 LastmissInit()
 {
+	BurnSetRefreshRate(58.00);
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -4919,8 +4921,6 @@ static INT32 LastmissInit()
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(gondo_sound_write);
 	M6502Close();
-
-	BurnSetRefreshRate(58.00);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachYM3526(&M6502Config, 1500000);
@@ -5625,6 +5625,8 @@ static INT32 CsilverDoReset()
 
 static INT32 CsilverInit()
 {
+	BurnSetRefreshRate(58.00);
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -5693,8 +5695,6 @@ static INT32 CsilverInit()
 	M6502SetReadHandler(csilver_sound_read);
 	M6502SetWriteHandler(csilver_sound_write);
 	M6502Close();
-
-	BurnSetRefreshRate(58.00);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachYM3526(&M6502Config, 1500000);

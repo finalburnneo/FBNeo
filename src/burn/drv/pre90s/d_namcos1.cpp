@@ -1564,7 +1564,7 @@ static INT32 Namcos1GetRoms()
 
 static INT32 DrvInit()
 {
-	//BurnSetRefreshRate((sixtyhz) ? 60.00 : 60.6060); above 60hz is a no-go, causes horrible sound issues on some systems (ym2151)
+	BurnSetRefreshRate((sixtyhz) ? 60.00 : 60.6060); // above 60hz is a no-go, causes horrible sound issues on some systems (ym2151)
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;

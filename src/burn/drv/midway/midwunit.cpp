@@ -384,6 +384,8 @@ static void WolfDoReset()
 
 INT32 WolfUnitInit()
 {
+	BurnSetRefreshRate(54.71);
+
     MemIndex();
     INT32 nLen = MemEnd - (UINT8 *)0;
 
@@ -467,8 +469,6 @@ INT32 WolfUnitInit()
 	Dcs2kResetWrite(0);
 
 	GenericTilesInit();
-	
-	BurnSetRefreshRate(54.71);
 	
 	WolfDoReset();
 	

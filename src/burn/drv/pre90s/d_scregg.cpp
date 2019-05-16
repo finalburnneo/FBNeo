@@ -388,6 +388,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit(void (*m6502Init)(), INT32 (*pLoadCB)())
 {
+	BurnSetRefreshRate(57);
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -405,8 +406,6 @@ static INT32 DrvInit(void (*m6502Init)(), INT32 (*pLoadCB)())
 	if (m6502Init) {
 		m6502Init();
 	}
-
-	BurnSetRefreshRate(57);
 
 	AY8910Init(0, 1500000, 0);
 	AY8910Init(1, 1500000, 1);

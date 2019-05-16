@@ -940,7 +940,9 @@ static void JdreddpProtWrite(UINT32 address, UINT16 value)
 // init, exit, etc.
 INT32 TUnitInit()
 {
-    nSoundType = SOUND_ADPCM;
+	BurnSetRefreshRate(54.71);
+
+	nSoundType = SOUND_ADPCM;
 	bGfxRomLarge = false;
 
 	MemIndex();
@@ -981,8 +983,6 @@ INT32 TUnitInit()
 
     nRet = LoadGfxBanks();
     if (nRet != 0) return 1;
-	
-	BurnSetRefreshRate(54.71);
 
     TMS34010MapReset();
     TMS34010Init();

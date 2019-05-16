@@ -189,7 +189,7 @@ INT32 BurnTimerAttachYM3526(cpu_core_config *ptr, INT32 nClockspeed)
 
 static INT32 YM3526SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(pCPUTotalCycles() * nSoundRate / nCPUClockspeed);
+	return (INT64)pCPUTotalCycles() * nSoundRate / nCPUClockspeed;
 }
 
 

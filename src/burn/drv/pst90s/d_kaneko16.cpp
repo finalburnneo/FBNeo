@@ -4744,7 +4744,7 @@ static INT32 WingforcInit()
 {
 	INT32 nRet = 0, nLen;
 	
-	BurnSetRefreshRate(59.1854); // hmm, this causes clicks in audio. let's just give it the cycles/per frame it wants instead. (see WingforcFrame())
+	//BurnSetRefreshRate(59.1854); // hmm, this causes clicks in audio. let's just give it the cycles/per frame it wants instead. (see WingforcFrame())
 	
 	Kaneko16NumSprites = 0x4000;
 	Kaneko16NumTiles = 0x4000;
@@ -7214,11 +7214,9 @@ static INT32 WingforcFrame()
 	Kaneko16MakeInputs();
 
 	INT32 nInterleave = 256;
-	nCyclesTotal[0] = 12000000 / 59.1854;
-	nCyclesTotal[1] = 4000000 / 59.1854;
+	nCyclesTotal[0] = (INT32)(16000000 / 59.1854);
+	nCyclesTotal[1] = (INT32)(4000000 / 59.1854);
 
-	//nCyclesTotal[0] = ((UINT64)16000000 * (UINT64)10000) / 591854;
-	//nCyclesTotal[1] = ((UINT64)4000000 * (UINT64)10000) / 591854;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	nSoundBufferPos = 0;
 

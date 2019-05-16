@@ -40,28 +40,28 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo MetlclshInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Metlclsh)
@@ -173,12 +173,12 @@ static void bankswitch(INT32 data)
 
 	if (data & 1)
 	{
-		M6809MapMemory(DrvBgRAM,		0xd000,	0xd7ff, MAP_RAM);
+		M6809MapMemory(DrvBgRAM,			0xd000,	0xd7ff, MAP_RAM);
 	}
 	else
 	{
 		M6809MapMemory(DrvBgRAM + 0x800,	0xd000,	0xd7ff, MAP_ROM);
-		M6809UnmapMemory(			0xd000, 0xd7ff, MAP_WRITE);
+		M6809UnmapMemory(					0xd000, 0xd7ff, MAP_WRITE);
 
 		write_mask = 1 << (data >> 1);
 	}
@@ -278,7 +278,7 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex()
 {
-	UINT8 *Next;		Next = AllMem;
+	UINT8 *Next; Next = AllMem;
 
 	DrvMainROM		= Next; Next += 0x00c000;
 	DrvSubROM		= Next; Next += 0x008000;
@@ -344,7 +344,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-//	BurnSetRefreshRate(58.00); // locks up with this...
+	BurnSetRefreshRate(58.00);
 
 	AllMem = NULL;
 	MemIndex();
@@ -371,24 +371,25 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvMainROM + 0x0000,	0x0000, 0x7fff, MAP_ROM);
-	M6809MapMemory(DrvShareRAM,		0x8000, 0x9fff, MAP_RAM);
+	M6809MapMemory(DrvShareRAM,			0x8000, 0x9fff, MAP_RAM);
 	M6809MapMemory(DrvMainROM + 0xa000,	0xa000, 0xbfff, MAP_ROM);
 	M6809MapMemory(DrvPalRAM + 0x000,	0xc800, 0xc8ff, MAP_RAM);
 	M6809MapMemory(DrvPalRAM + 0x100,	0xcc00, 0xccff, MAP_RAM);
-	M6809MapMemory(DrvFgRAM,		0xd800,	0xdfff, MAP_RAM);
-	M6809MapMemory(DrvSprRAM,		0xe800, 0xe9ff, MAP_RAM);
+	M6809MapMemory(DrvFgRAM,			0xd800,	0xdfff, MAP_RAM);
+	M6809MapMemory(DrvSprRAM,			0xe800, 0xe9ff, MAP_RAM);
 	M6809MapMemory(DrvMainROM + 0x7f00,	0xff00, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(metlclsh_main_write);
 	M6809SetReadHandler(metlclsh_main_read);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvSubROM + 0x0000,	0x0000, 0x7fff, MAP_ROM);
-	M6809MapMemory(DrvShareRAM,		0x8000, 0x9fff, MAP_RAM);
-	M6809MapMemory(DrvBgRAM,		0xd000,	0xd7ff, MAP_RAM);
+	M6809MapMemory(DrvShareRAM,			0x8000, 0x9fff, MAP_RAM);
+	M6809MapMemory(DrvBgRAM,			0xd000,	0xd7ff, MAP_RAM);
 	M6809MapMemory(DrvSubROM + 0x7f00,	0xff00, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(metlclsh_sub_write);
 	M6809SetReadHandler(metlclsh_main_read);
@@ -566,14 +567,14 @@ static INT32 DrvFrame()
 		M6809Close();
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 256*2; // game prefers high interleave for main/sub shared ram communication
 	INT32 nCyclesTotal[2] =  { (1500000 * 100) / nBurnFPS, (1500000 * 100) / nBurnFPS };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		vblank = (i >= 240) ? 1 : 0;
+		vblank = (i >= 240*2) ? 1 : 0;
 
-		M6809Open(0);	
+		M6809Open(0);
 		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[0] / nInterleave));
 		M6809Close();
 

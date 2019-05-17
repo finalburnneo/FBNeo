@@ -11,7 +11,7 @@ struct x1_010_info * x1_010_chip = NULL;
 
 void x1010_sound_bank_w(UINT32 offset, UINT16 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_sound_bank_w called without init\n"));
 #endif
 
@@ -28,7 +28,7 @@ void x1010_sound_bank_w(UINT32 offset, UINT16 data)
 
 UINT8 x1010_sound_read(UINT32 offset)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_sound_read called without init\n"));
 #endif
 
@@ -38,7 +38,7 @@ UINT8 x1010_sound_read(UINT32 offset)
 
 UINT16 x1010_sound_read_word(UINT32 offset)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_sound_read_word called without init\n"));
 #endif
 
@@ -52,7 +52,7 @@ UINT16 x1010_sound_read_word(UINT32 offset)
 
 void x1010_sound_update()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_sound_update called without init\n"));
 #endif
 
@@ -225,7 +225,7 @@ void x1010_sound_init(UINT32 base_clock, INT32 address)
 
 void x1010_set_route(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_set_route called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("x1010_set_route called with invalid index %i\n"), nIndex);
 #endif
@@ -236,7 +236,7 @@ void x1010_set_route(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void x1010_scan(INT32 nAction,INT32 *pnMin)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_scan called without init\n"));
 #endif
 
@@ -257,7 +257,7 @@ void x1010_scan(INT32 nAction,INT32 *pnMin)
 
 void x1010_exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_exit called without init\n"));
 #endif
 

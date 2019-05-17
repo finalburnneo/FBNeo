@@ -2353,7 +2353,7 @@ UINT16 __fastcall System16AReadWord(UINT32 a)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
 #endif
 
@@ -2399,7 +2399,7 @@ UINT8 __fastcall System16AReadByte(UINT32 a)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -2427,7 +2427,7 @@ void __fastcall System16AWriteWord(UINT32 a, UINT16 d)
 		}
 	}		
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -2449,7 +2449,7 @@ void __fastcall System16AWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -2673,7 +2673,7 @@ static UINT8 __fastcall AceattacaReadByte(UINT32 a)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -2919,7 +2919,7 @@ static UINT8 __fastcall Passsht16aReadByte(UINT32 a)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 

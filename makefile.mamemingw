@@ -1,4 +1,4 @@
-# Makefile for FBA, for use with GNU make & GCC (MinGW)
+# Makefile for FBNeo, for use with GNU make & GCC (MinGW)
 #
 # The first pass makes sure all intermediary targets are present. The second pass updates
 # any targets, if necessary. (Intermediary) targets which have their own unique rules
@@ -20,7 +20,7 @@ DEPEND = 1
 #
 
 # Specify the name of the executable file, without ".exe"
-NAME = fba
+NAME = fbneo
 COMPILENAME = 3
 
 ifdef BUILD_X64_EXE
@@ -212,7 +212,7 @@ ifdef FASTCALL
 endif
 
 ifdef DEBUG
-	DEF	:= $(DEF) -DFBA_DEBUG
+	DEF	:= $(DEF) -DFBNEO_DEBUG
 endif
 
 ifdef ROM_VERIFY

@@ -95,7 +95,7 @@ static c6280_t chip[1];
 
 void c6280_reset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_reset called without init\n"));
 #endif
 
@@ -157,7 +157,7 @@ void c6280_init(double clk, INT32 bAdd)
 	stream_buffer = (INT16*)BurnMalloc(nBurnSoundLen * 2 * sizeof(INT16));
 
 	if (stream_buffer == NULL) {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 		bprintf (0, _T("Stream buffer allocation failed!\n"));
 #endif
 		return;
@@ -166,7 +166,7 @@ void c6280_init(double clk, INT32 bAdd)
 
 void c6280_set_route(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_set_route called without init\n"));
 #endif
 
@@ -178,7 +178,7 @@ void c6280_set_route(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void c6280_exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_exit called without init\n"));
 #endif
 
@@ -191,7 +191,7 @@ void c6280_exit()
 
 static INT32 c6280_sync_get_offset_end()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_sync_get_offset_end called without init\n"));
 #endif
 
@@ -392,7 +392,7 @@ static void c6280_write_internal(INT32 offset, INT32 data)
 
 void c6280_update(INT16 *pBuffer, INT32 samples)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_update called without init\n"));
 #endif
 
@@ -430,7 +430,7 @@ void c6280_update(INT16 *pBuffer, INT32 samples)
 
 UINT8 c6280_read()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_read called without init\n"));
 #endif
 
@@ -439,7 +439,7 @@ UINT8 c6280_read()
 
 void c6280_write(UINT8 offset, UINT8 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_write called without init\n"));
 #endif
 
@@ -449,7 +449,7 @@ void c6280_write(UINT8 offset, UINT8 data)
 
 void c6280_scan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_scan called without init\n"));
 #endif
 

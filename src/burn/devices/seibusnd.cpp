@@ -114,7 +114,7 @@ static void update_irq_lines(INT32 param)
 
 UINT8 seibu_main_word_read(INT32 offset)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_main_word_read called without init\n"));
 #endif
 
@@ -134,7 +134,7 @@ UINT8 seibu_main_word_read(INT32 offset)
 
 void seibu_main_word_write(INT32 offset, UINT8 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_main_word_write called without init\n"));
 #endif
 
@@ -164,7 +164,7 @@ void seibu_main_word_write(INT32 offset, UINT8 data)
 
 void seibu_sound_mustb_write_word(INT32 /*offset*/, UINT16 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_mustb_write_word called without init\n"));
 #endif
 
@@ -184,7 +184,7 @@ static void seibu_z80_bank(INT32 data)
 
 void __fastcall seibu_sound_write(UINT16 address, UINT8 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_write called without init\n"));
 #endif
 
@@ -304,7 +304,7 @@ void __fastcall seibu_sound_write(UINT16 address, UINT8 data)
 
 UINT8 __fastcall seibu_sound_read(UINT16 address)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_read called without init\n"));
 #endif
 
@@ -410,7 +410,7 @@ static void Drv2151FMIRQHandler(INT32 nStatus)
 
 void seibu_sound_reset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_reset called without init\n"));
 #endif
 
@@ -514,7 +514,7 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 
 void seibu_sound_exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_exit called without init\n"));
 #endif
 
@@ -658,7 +658,7 @@ static void adpcm_update(INT32 chip, INT16 *pbuf, INT32 samples)
 
 void seibu_sound_update(INT16 *pbuf, INT32 nLen)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_update called without init\n"));
 #endif
 
@@ -684,7 +684,7 @@ void seibu_sound_update(INT16 *pbuf, INT32 nLen)
 
 void seibu_sound_update_cabal(INT16 *pbuf, INT32 nLen)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_update called without init\n"));
 #endif
 
@@ -713,7 +713,7 @@ void seibu_sound_update_cabal(INT16 *pbuf, INT32 nLen)
 
 void seibu_sound_scan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_scan called without init\n"));
 #endif
 

@@ -1,4 +1,4 @@
-#	Main Makefile for FB Alpha, execute an appropriate system-specific makefile
+#	Main Makefile for FB Neo, execute an appropriate system-specific makefile
 
 export
 

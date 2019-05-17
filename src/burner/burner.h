@@ -1,4 +1,4 @@
-// FB Alpha FB - Emulator for MC68000/Z80 based arcade games
+// FinalBurn Neo - Emulator for MC68000/Z80 based arcade games
 //            Refer to the "license.txt" file for more info
 #pragma once
 #include <limits.h>

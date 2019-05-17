@@ -55,7 +55,7 @@ int KailleraInitInput()
 	nDIPOffset = i;
 	nDIPInputs = nGameInpCount - nDIPOffset;
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	dprintf(_T("  * Kaillera inputs configured as follows --\n"));
 	for (int j = 0; j < MAXPLAYER; j++) {
 		dprintf(_T("    p%d offset %d, inputs %d.\n"), j + 1, nPlayerOffset[j], nPlayerInputs[j]);

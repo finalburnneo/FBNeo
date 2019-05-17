@@ -86,7 +86,7 @@ static void gate_update()
 
 void MSM5232SetGateCallback(void (*callback)(INT32))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232SetGateCallback called without init\n"));
 #endif
 
@@ -100,7 +100,7 @@ void MSM5232SetGateCallback(void (*callback)(INT32))
 
 void MSM5232Reset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Reset called without init\n"));
 #endif
 
@@ -134,7 +134,7 @@ void MSM5232Reset()
 
 void MSM5232SetCapacitors(double cap1, double cap2, double cap3, double cap4, double cap5, double cap6, double cap7, double cap8)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232SetCapacitors called without init\n"));
 #endif
 
@@ -295,7 +295,7 @@ void MSM5232Init(INT32 clock, INT32 bAdd)
 
 void MSM5232Exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Exit called without init\n"));
 #endif
 
@@ -313,7 +313,7 @@ void MSM5232Exit()
 
 void MSM5232SetRoute(double vol, INT32 route)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232SetRoute called without init\n"));
 #endif
 
@@ -322,7 +322,7 @@ void MSM5232SetRoute(double vol, INT32 route)
 
 void MSM5232Write(INT32 offset, UINT8 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Write called without init\n"));
 #endif
 
@@ -637,7 +637,7 @@ static void TG_group_advance(INT32 groupidx)
 
 void MSM5232SetClock(INT32 clock)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232SetClock called without init\n"));
 #endif
 
@@ -662,7 +662,7 @@ void MSM5232SetClock(INT32 clock)
 
 void MSM5232Update(INT16 *buffer, INT32 samples)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Update called without init\n"));
 #endif
 
@@ -773,7 +773,7 @@ void MSM5232Update(INT16 *buffer, INT32 samples)
 
 void MSM5232Scan(INT32 nAction, INT32 *)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Scan called without init\n"));
 #endif
 

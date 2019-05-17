@@ -6389,7 +6389,7 @@ UINT8 __fastcall BootlegZ80PortRead(UINT16 a)
 		}
 	}
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
 #endif
 
@@ -6413,7 +6413,7 @@ void __fastcall BootlegZ80PortWrite(UINT16 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write Port -> %02X, %02X\n"), a, d);
 #endif
 }
@@ -6428,14 +6428,14 @@ UINT8 __fastcall BootlegZ80Read(UINT16 a)
 		}
 	}
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
 #endif
 
 	return 0;
 }
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 void __fastcall BootlegZ80Write(UINT16 a, UINT8 d)
 {
 
@@ -6453,7 +6453,7 @@ void BootlegMapZ80()
 	ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
 	
 	ZetSetReadHandler(BootlegZ80Read);
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	ZetSetWriteHandler(BootlegZ80Write);
 #endif
 	ZetSetInHandler(BootlegZ80PortRead);
@@ -6492,7 +6492,7 @@ static UINT8 __fastcall System16BReadByte(UINT32 a)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -6522,7 +6522,7 @@ static void __fastcall System16BWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -6534,7 +6534,7 @@ static void __fastcall System16BWriteWord(UINT32 a, UINT16 d)
 		return;
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -6720,7 +6720,7 @@ static UINT8 __fastcall AfighterAnalogReadByte(UINT32 a)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -6788,7 +6788,7 @@ static void __fastcall AltbeastblGfxWriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 	}
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X, 0x%04X\n"), a, d, d ^ 0xffff);
 #endif
 }
@@ -6821,7 +6821,7 @@ static void __fastcall DduxblGfxWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -6850,7 +6850,7 @@ static void __fastcall DduxblGfxWriteWord(UINT32 a, UINT16 d)
 		}
 	}
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -6895,7 +6895,7 @@ static void __fastcall DduxblWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -7070,7 +7070,7 @@ static void __fastcall EswatblGfxWriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 	}
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -7178,7 +7178,7 @@ static UINT8 __fastcall FpointblReadByte(UINT32 a)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -7204,7 +7204,7 @@ static void __fastcall FpointblWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -7248,7 +7248,7 @@ static void __fastcall FpointblGfxWriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 	}
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X, 0x%04X\n"), a, d, d ^ 0xffff);
 #endif
 }
@@ -7500,7 +7500,7 @@ static void __fastcall PassshtbGfxWriteWord(UINT32 a, UINT16 d)
 			return;
 		}*/
 	}
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X, 0x%04X\n"), a, d, (d ^ 0xffff) & 0x1ff);
 #endif
 }
@@ -7697,7 +7697,7 @@ static void __fastcall TetrisblGfxWriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 	}
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X, 0x%04X\n"), a, d, (d ^ 0xffff) & 0x3ff);
 #endif
 }
@@ -7754,7 +7754,7 @@ static void __fastcall Wb3bblGfxWriteWord(UINT32 a, UINT16 d)
 			return;
 		}*/
 	}
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X, 0x%04X\n"), a, d, d ^ 0xffff);
 #endif
 }
@@ -10698,7 +10698,7 @@ UINT8 __fastcall IsgsmReadByte(UINT32 a)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -10921,7 +10921,7 @@ void __fastcall IsgsmWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -10938,7 +10938,7 @@ UINT16 __fastcall IsgsmReadWord(UINT32 a)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
 #endif
 
@@ -10990,7 +10990,7 @@ void __fastcall IsgsmWriteWord(UINT32 a, UINT16 d)
 		}
 	}
 	
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }

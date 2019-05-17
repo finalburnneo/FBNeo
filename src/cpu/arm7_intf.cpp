@@ -60,7 +60,7 @@ INT32 Arm7GetActive()
 
 void Arm7Exit() // only one cpu supported
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Exit called without init\n"));
 #endif
 
@@ -78,7 +78,7 @@ void Arm7Exit() // only one cpu supported
 
 void Arm7MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7MapMemory called without init\n"));
 	if (start >= MAX_MEMORY || finish >= MAX_MEMORY) bprintf (PRINT_ERROR, _T("Arm7MapMemory memory range unsupported 0x%8.8x-0x%8.8x\n"), start, finish);
 #endif
@@ -96,7 +96,7 @@ void Arm7MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type)
 
 void Arm7SetWriteByteHandler(void (*write)(UINT32, UINT8))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetWriteByteHandler called without init\n"));
 #endif
 
@@ -105,7 +105,7 @@ void Arm7SetWriteByteHandler(void (*write)(UINT32, UINT8))
 
 void Arm7SetWriteWordHandler(void (*write)(UINT32, UINT16))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetWriteWordHandler called without init\n"));
 #endif
 
@@ -114,7 +114,7 @@ void Arm7SetWriteWordHandler(void (*write)(UINT32, UINT16))
 
 void Arm7SetWriteLongHandler(void (*write)(UINT32, UINT32))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetWriteLongHandler called without init\n"));
 #endif
 
@@ -123,7 +123,7 @@ void Arm7SetWriteLongHandler(void (*write)(UINT32, UINT32))
 
 void Arm7SetReadByteHandler(UINT8 (*read)(UINT32))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetReadByteHandler called without init\n"));
 #endif
 
@@ -132,7 +132,7 @@ void Arm7SetReadByteHandler(UINT8 (*read)(UINT32))
 
 void Arm7SetReadWordHandler(UINT16 (*read)(UINT32))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetReadWordHandler called without init\n"));
 #endif
 
@@ -141,7 +141,7 @@ void Arm7SetReadWordHandler(UINT16 (*read)(UINT32))
 
 void Arm7SetReadLongHandler(UINT32 (*read)(UINT32))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetReadLongHandler called without init\n"));
 #endif
 
@@ -150,7 +150,7 @@ void Arm7SetReadLongHandler(UINT32 (*read)(UINT32))
 
 void Arm7WriteByte(UINT32 addr, UINT8 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7WriteByte called without init\n"));
 #endif
 
@@ -172,7 +172,7 @@ void Arm7WriteByte(UINT32 addr, UINT8 data)
 
 void Arm7WriteWord(UINT32 addr, UINT16 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7WriteWord called without init\n"));
 #endif
 
@@ -194,7 +194,7 @@ void Arm7WriteWord(UINT32 addr, UINT16 data)
 
 void Arm7WriteLong(UINT32 addr, UINT32 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7WriteLong called without init\n"));
 #endif
 
@@ -217,7 +217,7 @@ void Arm7WriteLong(UINT32 addr, UINT32 data)
 
 UINT8 Arm7ReadByte(UINT32 addr)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7ReadByte called without init\n"));
 #endif
 
@@ -240,7 +240,7 @@ UINT8 Arm7ReadByte(UINT32 addr)
 
 UINT16 Arm7ReadWord(UINT32 addr)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7ReadWord called without init\n"));
 #endif
 
@@ -263,7 +263,7 @@ UINT16 Arm7ReadWord(UINT32 addr)
 
 UINT32 Arm7ReadLong(UINT32 addr)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7ReadLong called without init\n"));
 #endif
 
@@ -286,7 +286,7 @@ UINT32 Arm7ReadLong(UINT32 addr)
 
 UINT16 Arm7FetchWord(UINT32 addr)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7FetchWord called without init\n"));
 #endif
 
@@ -315,7 +315,7 @@ UINT16 Arm7FetchWord(UINT32 addr)
 
 UINT32 Arm7FetchLong(UINT32 addr)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7FetchLong called without init\n"));
 #endif
 
@@ -344,7 +344,7 @@ UINT32 Arm7FetchLong(UINT32 addr)
 
 void Arm7SetIRQLine(INT32 line, INT32 state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetIRQLine called without init\n"));
 #endif
 
@@ -361,7 +361,7 @@ void Arm7SetIRQLine(INT32 line, INT32 state)
 // Set address of idle loop start - speed hack
 void Arm7SetIdleLoopAddress(UINT32 address)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetIdleLoopAddress called without init\n"));
 #endif
 
@@ -373,7 +373,7 @@ void Arm7SetIdleLoopAddress(UINT32 address)
 
  void Arm7_write_rom_byte(UINT32 addr, UINT8 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_write_rom_byte called without init\n"));
 #endif
 	addr &= MAX_MEMORY_AND;

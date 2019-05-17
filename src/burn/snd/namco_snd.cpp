@@ -112,7 +112,7 @@ void NamcoSoundSetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 
 void NamcoSoundUpdate(INT16* pSoundBuf, INT32 Length)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundUpdate called without init\n"));
 #endif
 
@@ -416,7 +416,7 @@ static void NamcoSoundUpdateStereo_INT(INT16* buffer, INT32 length)
 
 void NamcoSoundWrite(UINT32 offset, UINT8 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundWrite called without init\n"));
 #endif
 
@@ -584,7 +584,7 @@ void namco_15xx_sound_enable(INT32 value)
 
 void namcos1_custom30_write(INT32 offset, INT32 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("namcos1_custom30_write called without init\n"));
 #endif
 
@@ -607,7 +607,7 @@ void namcos1_custom30_write(INT32 offset, INT32 data)
 
 UINT8 namcos1_custom30_read(INT32 offset)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("namcos1_custom30_read called without init\n"));
 #endif
 
@@ -667,7 +667,7 @@ static INT32 build_decoded_waveform()
 
 void NamcoSoundReset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundReset called without init\n"));
 #endif
 
@@ -749,7 +749,7 @@ void NamcoSoundInit(INT32 clock, INT32 num_voices, INT32 bAdd)
 
 void NamcoSoundSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundSetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("NamcoSoundSetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -760,7 +760,7 @@ void NamcoSoundSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void NamcoSoundExit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundExit called without init\n"));
 #endif
 

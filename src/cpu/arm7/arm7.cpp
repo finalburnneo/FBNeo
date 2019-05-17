@@ -104,7 +104,7 @@ void Arm7Close()
 
 int Arm7TotalCycles()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7TotalCycles called without init\n"));
 #endif
 
@@ -113,7 +113,7 @@ int Arm7TotalCycles()
 
 void Arm7RunEnd()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7RunEnd called without init\n"));
 #endif
 
@@ -122,7 +122,7 @@ void Arm7RunEnd()
 
 void Arm7BurnCycles(int cycles)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7BurnCycles called without init\n"));
 #endif
 
@@ -131,7 +131,7 @@ void Arm7BurnCycles(int cycles)
 
 INT32 Arm7Idle(int cycles)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Idle called without init\n"));
 #endif
 
@@ -142,7 +142,7 @@ INT32 Arm7Idle(int cycles)
 
 void Arm7NewFrame()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7NewFrame called without init\n"));
 #endif
 
@@ -163,7 +163,7 @@ static void arm7_init(int )
 
 void Arm7Reset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Reset called without init\n"));
 #endif
 
@@ -179,7 +179,7 @@ static void arm7_exit()
 
 int Arm7Run(int cycles)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Run called without init\n"));
 #endif
 
@@ -189,7 +189,7 @@ int Arm7Run(int cycles)
 
 void arm7_set_irq_line(int irqline, int state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("arm7_set_irq_line called without init\n"));
 #endif
 
@@ -199,7 +199,7 @@ void arm7_set_irq_line(int irqline, int state)
 
 int Arm7Scan(int nAction)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Scan called without init\n"));
 #endif
 

@@ -1941,7 +1941,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 640; // mame interleave
 	INT32 S1VBL = ((nInterleave * 240) / 256);
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[4] = { (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060) };
+	INT32 nCyclesTotal[4] = { (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.00/*6060*/) }; // run dac cpu @ 60hz for better dac sound quality
 	if (sixtyhz) {
 		nCyclesTotal[0] = nCyclesTotal[1] = nCyclesTotal[2] = nCyclesTotal[3] = 1536000 / 60;
 	}

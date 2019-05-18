@@ -910,11 +910,15 @@ static UINT8 namco51xxWrite(UINT8 offset, UINT8 dta)
 	return 0;
 }
 
+#define n54xxDebug 0
+
 static INT32 n54xxCheckBuffer(UINT8 *n54xxBuffer, UINT32 bufferSize)
 {
 	INT32 retVal = -1;
 
+#if n54xxDebug
 	char bufCheck[32];
+#endif
 
 	struct N54XX_Sample_Info_Def *sampleEntry = machine.config->n54xxSampleList;
 
@@ -926,7 +930,7 @@ static INT32 n54xxCheckBuffer(UINT8 *n54xxBuffer, UINT32 bufferSize)
 			{
 				retVal = sampleEntry->sampleNo;
 			}
-#if 0
+#if n54xxDebug
 			sprintf(bufCheck, "%d, %d %02x,%02x,%02x,%02x : %02x,%02x,%02x,%02x",
 					retVal,
 					sampleEntry->sampleNo,
@@ -943,7 +947,7 @@ static INT32 n54xxCheckBuffer(UINT8 *n54xxBuffer, UINT32 bufferSize)
 #endif
 			sampleEntry ++;
 		}
-#if 0
+#if n54xxDebug
 		bprintf(PRINT_NORMAL, _T("  %d (%d)\n"), retVal, sampleEntry->sampleNo);
 #endif
 	}
@@ -2088,21 +2092,21 @@ static struct N54XX_Sample_Info_Def galagaN54xxSampleList[] =
 
 static struct Machine_Config_Def galagaMachineConfig =
 {
-	.cpus                   = galagaCPU,
-	.wrAddrList             = galagaWriteTable,
-	.rdAddrList             = galagaReadTable,
-	.memMapTable            = galagaMemTable,
-	.sizeOfMemMapTable      = GALAGA_MEM_TBL_SIZE,
-	.romLayoutTable         = galagaROMTable,
-	.sizeOfRomLayoutTable   = GALAGA_ROM_TBL_SIZE,
-	.tempRomSize            = 0x2000,
-	.tilemapsConfig         = galagaTilemapConfig,
-	.drawLayerTable         = galagaDrawFuncs,
-	.drawTableSize          = GALAGA_DRAW_TBL_SIZE,
-	.getSpriteParams        = galagaGetSpriteParams,
-	.reset                  = galagaReset,
-	.customRWTable          = galagaCustomICRW,
-	.n54xxSampleList        = galagaN54xxSampleList
+	/*cpus                   */ galagaCPU,
+	/*wrAddrList             */ galagaWriteTable,
+	/*rdAddrList             */ galagaReadTable,
+	/*memMapTable            */ galagaMemTable,
+	/*sizeOfMemMapTable      */ GALAGA_MEM_TBL_SIZE,
+	/*romLayoutTable         */ galagaROMTable,
+	/*sizeOfRomLayoutTable   */ GALAGA_ROM_TBL_SIZE,
+	/*tempRomSize            */ 0x2000,
+	/*tilemapsConfig         */ galagaTilemapConfig,
+	/*drawLayerTable         */ galagaDrawFuncs,
+	/*drawTableSize          */ GALAGA_DRAW_TBL_SIZE,
+	/*getSpriteParams        */ galagaGetSpriteParams,
+	/*reset                  */ galagaReset,
+	/*customRWTable          */ galagaCustomICRW,
+	/*n54xxSampleList        */ galagaN54xxSampleList
 };
 
 static INT32 galagaInit(void)
@@ -2117,21 +2121,21 @@ static INT32 galagaInit(void)
 
 static struct Machine_Config_Def gallagMachineConfig =
 {
-	.cpus                   = galagaCPU,
-	.wrAddrList             = galagaWriteTable,
-	.rdAddrList             = galagaReadTable,
-	.memMapTable            = galagaMemTable,
-	.sizeOfMemMapTable      = GALAGA_MEM_TBL_SIZE,
-	.romLayoutTable         = gallagROMTable,
-	.sizeOfRomLayoutTable   = GALLAG_ROM_TBL_SIZE,
-	.tempRomSize            = 0x2000,
-	.tilemapsConfig         = galagaTilemapConfig,
-	.drawLayerTable         = galagaDrawFuncs,
-	.drawTableSize          = GALAGA_DRAW_TBL_SIZE,
-	.getSpriteParams        = galagaGetSpriteParams,
-	.reset                  = galagaReset,
-	.customRWTable          = galagaCustomICRW,
-	.n54xxSampleList        = galagaN54xxSampleList
+	/*cpus                   */ galagaCPU,
+	/*wrAddrList             */ galagaWriteTable,
+	/*rdAddrList             */ galagaReadTable,
+	/*memMapTable            */ galagaMemTable,
+	/*sizeOfMemMapTable      */ GALAGA_MEM_TBL_SIZE,
+	/*romLayoutTable         */ gallagROMTable,
+	/*sizeOfRomLayoutTable   */ GALLAG_ROM_TBL_SIZE,
+	/*tempRomSize            */ 0x2000,
+	/*tilemapsConfig         */ galagaTilemapConfig,
+	/*drawLayerTable         */ galagaDrawFuncs,
+	/*drawTableSize          */ GALAGA_DRAW_TBL_SIZE,
+	/*getSpriteParams        */ galagaGetSpriteParams,
+	/*reset                  */ galagaReset,
+	/*customRWTable          */ galagaCustomICRW,
+	/*n54xxSampleList        */ galagaN54xxSampleList
 };
 
 static INT32 gallagInit(void)
@@ -3115,21 +3119,21 @@ static struct Namco_Custom_RW_Entry digdugCustomRWTable[] =
 
 static struct Machine_Config_Def digdugMachineConfig =
 {
-	.cpus                   = digdugCPU,
-	.wrAddrList             = digdugWriteTable,
-	.rdAddrList             = digdugReadTable,
-	.memMapTable            = digdugMemTable,
-	.sizeOfMemMapTable      = DIGDUG_MEM_TBL_SIZE,
-	.romLayoutTable         = digdugROMTable,
-	.sizeOfRomLayoutTable   = DIGDUG_ROM_TBL_SIZE,
-	.tempRomSize            = 0x4000,
-	.tilemapsConfig         = digdugTilemapConfig,
-	.drawLayerTable         = digdugDrawFuncs,
-	.drawTableSize          = DIGDUG_DRAW_TBL_SIZE,
-	.getSpriteParams        = digdugGetSpriteParams,
-	.reset                  = digdugReset,
-	.customRWTable          = digdugCustomRWTable,
-	.n54xxSampleList        = NULL
+	/*cpus                   */ digdugCPU,
+	/*wrAddrList             */ digdugWriteTable,
+	/*rdAddrList             */ digdugReadTable,
+	/*memMapTable            */ digdugMemTable,
+	/*sizeOfMemMapTable      */ DIGDUG_MEM_TBL_SIZE,
+	/*romLayoutTable         */ digdugROMTable,
+	/*sizeOfRomLayoutTable   */ DIGDUG_ROM_TBL_SIZE,
+	/*tempRomSize            */ 0x4000,
+	/*tilemapsConfig         */ digdugTilemapConfig,
+	/*drawLayerTable         */ digdugDrawFuncs,
+	/*drawTableSize          */ DIGDUG_DRAW_TBL_SIZE,
+	/*getSpriteParams        */ digdugGetSpriteParams,
+	/*reset                  */ digdugReset,
+	/*customRWTable          */ digdugCustomRWTable,
+	/*n54xxSampleList        */ NULL
 };
 
 static INT32 digdugInit(void)
@@ -3218,7 +3222,7 @@ static INT32 digdugBGTilesDecode(void)
 			 );
 
 	return 0;
-};
+}
 
 static INT32 digdugSpriteDecode(void)
 {
@@ -4063,21 +4067,21 @@ static struct N54XX_Sample_Info_Def xeviousN54xxSampleList[] =
 
 static struct Machine_Config_Def xeviousMachineConfig =
 {
-	.cpus                   = xeviousCPU,
-	.wrAddrList             = xeviousZ80WriteTable,
-	.rdAddrList             = xeviousZ80ReadTable,
-	.memMapTable            = xeviousMemTable,
-	.sizeOfMemMapTable      = XEVIOUS_MEM_TBL_SIZE,
-	.romLayoutTable         = xeviousROMTable,
-	.sizeOfRomLayoutTable   = XEVIOUS_ROM_TBL_SIZE,
-	.tempRomSize            = 0x8000,
-	.tilemapsConfig         = xeviousTilemapConfig,
-	.drawLayerTable         = xeviousDrawFuncs,
-	.drawTableSize          = XEVIOUS_DRAW_TBL_SIZE,
-	.getSpriteParams        = xeviousGetSpriteParams,
-	.reset                  = DrvDoReset,
-	.customRWTable          = xeviousCustomRWTable,
-	.n54xxSampleList        = xeviousN54xxSampleList
+	/*cpus                   */ xeviousCPU,
+	/*wrAddrList             */ xeviousZ80WriteTable,
+	/*rdAddrList             */ xeviousZ80ReadTable,
+	/*memMapTable            */ xeviousMemTable,
+	/*sizeOfMemMapTable      */ XEVIOUS_MEM_TBL_SIZE,
+	/*romLayoutTable         */ xeviousROMTable,
+	/*sizeOfRomLayoutTable   */ XEVIOUS_ROM_TBL_SIZE,
+	/*tempRomSize            */ 0x8000,
+	/*tilemapsConfig         */ xeviousTilemapConfig,
+	/*drawLayerTable         */ xeviousDrawFuncs,
+	/*drawTableSize          */ XEVIOUS_DRAW_TBL_SIZE,
+	/*getSpriteParams        */ xeviousGetSpriteParams,
+	/*reset                  */ DrvDoReset,
+	/*customRWTable          */ xeviousCustomRWTable,
+	/*n54xxSampleList        */ xeviousN54xxSampleList
 };
 
 static INT32 xeviousInit(void)

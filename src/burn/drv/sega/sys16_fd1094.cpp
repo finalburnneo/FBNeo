@@ -117,7 +117,7 @@ static void fd1094_setstate_and_decrypt(INT32 state)
 
 	if (fd1094_current_cacheposition>=S16_NUMCACHE)
 	{
-#if 1 && defined FBA_DEBUG
+#if 1 && defined FBNEO_DEBUG
 		bprintf(PRINT_NORMAL, _T("out of cache, performance may suffer, increase S16_NUMCACHE!\n"));
 #endif
 		fd1094_current_cacheposition=0;

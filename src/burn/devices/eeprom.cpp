@@ -65,7 +65,7 @@ static INT32 eeprom_command_match(const char *buf, const char *cmd, INT32 len)
 
 INT32 EEPROMAvailable()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMAvailable called without init\n"));
 #endif
 
@@ -110,7 +110,7 @@ void EEPROMInit(const eeprom_interface *interface)
 
 void EEPROMExit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMExit called without init\n"));
 #endif
 
@@ -240,7 +240,7 @@ static void eeprom_write(INT32 bit)
 
 void EEPROMReset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMReset called without init\n"));
 #endif
 
@@ -251,7 +251,7 @@ void EEPROMReset()
 
 void EEPROMWriteBit(INT32 bit)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMWriteBit called without init\n"));
 #endif
 
@@ -260,7 +260,7 @@ void EEPROMWriteBit(INT32 bit)
 
 INT32 EEPROMRead()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMRead called without init\n"));
 #endif
 
@@ -285,7 +285,7 @@ INT32 EEPROMRead()
 
 void EEPROMSetCSLine(INT32 state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMSetCSLine called without init\n"));
 #endif
 
@@ -297,7 +297,7 @@ void EEPROMSetCSLine(INT32 state)
 
 void EEPROMSetClockLine(INT32 state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMSetClockLine called without init\n"));
 #endif
 
@@ -329,7 +329,7 @@ void EEPROMSetClockLine(INT32 state)
 
 void EEPROMFill(const UINT8 *data, INT32 offset, INT32 length)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMFill called without init\n"));
 #endif
 
@@ -338,7 +338,7 @@ void EEPROMFill(const UINT8 *data, INT32 offset, INT32 length)
 
 void EEPROMScan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMScan called without init\n"));
 #endif
 

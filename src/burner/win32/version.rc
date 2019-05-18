@@ -48,14 +48,14 @@ BEGIN
         BLOCK "040904B0"
         BEGIN
             VALUE "Comments", "built on " MAKE_STRING(BUILD_DATE) ", " MAKE_STRING(BUILD_TIME) " (" MAKE_STRING(BUILD_CHAR) ", " MAKE_STRING(BUILD_COMP) ", " MAKE_STRING(BUILD_CPU) MMX_VER ").\0"
-            VALUE "CompanyName", "Team FB Alpha\0"
+            VALUE "CompanyName", "Team FB Neo\0"
             VALUE "FileDescription", APP_DESCRIPTION "\0"
             VALUE "FileVersion", MAKE_STRING(VER_MAJOR) "," MAKE_STRING(VER_MINOR) "," MAKE_STRING(VER_BETA) "," MAKE_STRING(VER_ALPHA) "\0"
             VALUE "InternalName", MAKE_STRING(FILENAME) "\0"
-            VALUE "LegalCopyright", "© 2004-2011 Team FB Alpha\0"
+            VALUE "LegalCopyright", "© 2004-2019 Team FB Neo\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", MAKE_STRING(FILENAME) ".exe\0"
- #ifdef FBA_DEBUG
+ #ifdef FBNEO_DEBUG
  #if VER_ALPHA != 0
             VALUE "PrivateBuild", "Pre-release debug build\0"
  #else

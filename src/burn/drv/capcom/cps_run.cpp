@@ -469,7 +469,7 @@ INT32 Cps2Frame()
 
 //	bprintf(PRINT_NORMAL, _T("    -\n"));
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 	if (nInterrupt) {
 		bprintf(PRINT_IMPORTANT, _T("Beam synchronized interrupt at line %2X.\r"), nRasterline[nInterrupt]);
 	} else {

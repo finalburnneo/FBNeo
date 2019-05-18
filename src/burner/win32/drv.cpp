@@ -26,7 +26,7 @@ static int DrvBzipOpen()
 		case BZIP_STATUS_ERROR: {
 			FBAPopupDisplay(PUF_TYPE_ERROR);
 
-#if 0 || !defined FBA_DEBUG
+#if 0 || !defined FBNEO_DEBUG
 			// Don't even bother trying to start the game if we know it won't work
 			BzipClose();
 			return 1;
@@ -36,7 +36,7 @@ static int DrvBzipOpen()
 		}
 		default: {
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 			FBAPopupDisplay(PUF_TYPE_INFO);
 #else
 			FBAPopupDisplay(PUF_TYPE_INFO | PUF_TYPE_LOGONLY);

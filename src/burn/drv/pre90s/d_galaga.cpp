@@ -4645,4 +4645,3 @@ struct BurnDriver BurnDrvSxevious =
 	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
 	/* xAspect, yAspect = */   	               3, 4
 };
-

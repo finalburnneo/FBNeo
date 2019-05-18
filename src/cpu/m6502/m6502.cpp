@@ -803,7 +803,7 @@ int deco16_execute(int cycles)
 
 void M6502RunEnd()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502RunEnd called without init\n"));
 #endif
 

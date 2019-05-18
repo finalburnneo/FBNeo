@@ -16,7 +16,7 @@ unexport
 #
 
 # Specify the name of the executable file, without ".exe"
-NAME = fba
+NAME = fbneo
 COMPILENAME = 3
 
 ifdef BUILD_X64_EXE
@@ -194,7 +194,7 @@ ifdef FASTCALL
 endif
 
 ifdef DEBUG
-	DEF	:= $(DEF) /DFBA_DEBUG
+	DEF	:= $(DEF) /DFBNEO_DEBUG
 endif
 
 ifdef ROM_VERIFY

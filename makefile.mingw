@@ -20,7 +20,7 @@ DEPEND = 1
 #
 
 # Specify the name of the executable file, without ".exe"
-NAME = fba
+NAME = fbneo
 COMPILENAME = 3
 
 ifdef BUILD_X64_EXE
@@ -319,7 +319,7 @@ endif
 ifdef GCC452
 	CFLAGS  += -mconsole
 endif
-	DEF	:= $(DEF) -DFBA_DEBUG
+	DEF	:= $(DEF) -DFBNEO_DEBUG
 endif
 
 ifdef ROM_VERIFY

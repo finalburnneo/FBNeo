@@ -416,7 +416,7 @@ void konami_init(int (*irqcallback)(int))
 
 void konamiReset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiReset called without init\n"));
 #endif
 
@@ -452,7 +452,7 @@ void konami_set_irq_hold(INT32 irq)
 
 void konami_set_irq_line(int irqline, int state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konami_set_irq_line called without init\n"));
 #endif
 
@@ -510,7 +510,7 @@ static int end_run = 0;
 /* execute instructions on this CPU until icount expires */
 int konamiRun(int cycles)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiRun called without init\n"));
 #endif
 
@@ -552,7 +552,7 @@ int konamiRun(int cycles)
 
 int konamiCpuScan(int nAction)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiCpuScan called without init\n"));
 #endif
 
@@ -573,7 +573,7 @@ int konamiCpuScan(int nAction)
 
 void konamiRunEnd()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiRunEnd called without init\n"));
 #endif
 
@@ -582,7 +582,7 @@ void konamiRunEnd()
 
 INT32 konamiIdle(INT32 cycles)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiIdle called without init\n"));
 #endif
 	konami_ICount -= cycles;
@@ -592,7 +592,7 @@ INT32 konamiIdle(INT32 cycles)
 
 void konamiSetlinesCallback(void  (*setlines_callback)(int lines))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiSetlinesCallback called without init\n"));
 #endif
 
@@ -601,7 +601,7 @@ void konamiSetlinesCallback(void  (*setlines_callback)(int lines))
 
 int konamiTotalCycles()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiTotalCycles called without init\n"));
 #endif
 
@@ -610,7 +610,7 @@ int konamiTotalCycles()
 
 void konamiNewFrame()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiNewFrame called without init\n"));
 #endif
 

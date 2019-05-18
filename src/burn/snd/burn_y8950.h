@@ -21,7 +21,7 @@ void BurnY8950Scan(INT32 nAction, INT32* pnMin);
 
 #define BurnY8950Read(i, a) Y8950Read(i, a)
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	#define BurnY8950Write(i, a, n) if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Write called without init\n")); Y8950Write(i, a, n)
 #else
 	#define BurnY8950Write(i, a, n) Y8950Write(i, a, n)

@@ -85,7 +85,7 @@ static void make_mixer_table(INT32 voices)
 /* generate sound to the mix buffer */
 void K051649Update(INT16 *pBuf, INT32 samples)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Update called without init\n"));
 #endif
 
@@ -182,7 +182,7 @@ void K051649SetRoute(double nVolume, INT32 nRouteDir)
 
 void K051649Exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Exit called without init\n"));
 #endif
 
@@ -200,7 +200,7 @@ void K051649Exit()
 
 void K051649Reset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Reset called without init\n"));
 #endif
 
@@ -220,7 +220,7 @@ void K051649Reset()
 
 void K051649Scan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Scan called without init\n"));
 #endif
 
@@ -246,7 +246,7 @@ void K051649Scan(INT32 nAction, INT32 *pnMin)
 
 void K051649WaveformWrite(INT32 offset, INT32 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649WaveformWrite called without init\n"));
 #endif
 
@@ -259,7 +259,7 @@ void K051649WaveformWrite(INT32 offset, INT32 data)
 
 UINT8 K051649WaveformRead(INT32 offset)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649WaveformRead called without init\n"));
 #endif
 
@@ -270,7 +270,7 @@ UINT8 K051649WaveformRead(INT32 offset)
 /* SY 20001114: Channel 5 doesn't share the waveform with channel 4 on this chip */
 void K052539WaveformWrite(INT32 offset, INT32 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K052539WaveformWrite called without init\n"));
 #endif
 
@@ -281,7 +281,7 @@ void K052539WaveformWrite(INT32 offset, INT32 data)
 
 void K051649VolumeWrite(INT32 offset, INT32 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649VolumeWrite called without init\n"));
 #endif
 
@@ -292,7 +292,7 @@ void K051649VolumeWrite(INT32 offset, INT32 data)
 
 void K051649FrequencyWrite(INT32 offset, INT32 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649FrequencyWrite called without init\n"));
 #endif
 	INT32 freq_hi = offset & 1;
@@ -311,7 +311,7 @@ void K051649FrequencyWrite(INT32 offset, INT32 data)
 
 void K051649KeyonoffWrite(INT32 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649KeyonoffWrite called without init\n"));
 #endif
 

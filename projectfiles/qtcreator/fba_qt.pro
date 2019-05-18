@@ -43,7 +43,7 @@ GEN = $$SRC/dep/generated
 
 # We need ld
 FBA_LD = ld
-DEFINES += FBA_DEBUG
+DEFINES += FBNEO_DEBUG
 
 #-------------------------------------------------------------------------------
 # Dynamic recompilers

@@ -1917,7 +1917,7 @@ UINT16 __fastcall Tumbleb68KReadWord(UINT32 a)
 
 void __fastcall Tumbleb68KWriteWord(UINT32 a, UINT16 d)
 {
-#if 1 && defined FBA_DEBUG
+#if 1 && defined FBNEO_DEBUG
 	if (a >= 0x160800 && a <= 0x160807) return;
 	if (a >= 0x198000 && a <= 0x1a8015) return;
 	if (a >= 0x321000 && a <= 0x321fff) return;

@@ -12,7 +12,7 @@ static struct bitmap_struct bitmaps[MAX_BITMAPS];
 // allocate bitmap and optionally allocate priority map - memory allicated is nWidth * nHeight * sizeof(UINT16)
 void BurnBitmapAllocate(INT32 nBitmapNumber, INT32 nWidth, INT32 nHeight, bool use_primap)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapAllocate(UINT16 **, INT32, INT32) too many bitmaps allocated %d, max: (^d)\n"), nBitmapNumber, MAX_BITMAPS);
@@ -27,7 +27,7 @@ void BurnBitmapAllocate(INT32 nBitmapNumber, INT32 nWidth, INT32 nHeight, bool u
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify this entry in the struct hasn't been initialized already!
 	if (ptr->nFlags & FLAG_INITIALIZED)
 	{
@@ -61,7 +61,7 @@ void BurnBitmapAllocate(INT32 nBitmapNumber, INT32 nWidth, INT32 nHeight, bool u
 // get pointer to clip dimensions
 clip_struct *BurnBitmapClipDims(INT32 nBitmapNumber)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapClipdims(%d) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -71,7 +71,7 @@ clip_struct *BurnBitmapClipDims(INT32 nBitmapNumber)
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify this entry in the struct has been initialized!
 	if ((ptr->nFlags & FLAG_INITIALIZED) == 0) {
 		bprintf (0, _T("BurnBitmapClipDims(%d) called without itialized bitmap!\n"), nBitmapNumber); 
@@ -85,7 +85,7 @@ clip_struct *BurnBitmapClipDims(INT32 nBitmapNumber)
 // set clip dimensions
 void BurnBitmapSetClipDims(INT32 nBitmapNumber, INT32 nMinx, INT32 nMaxx, INT32 nMiny, INT32 nMaxy)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapSetClipDims(%d, INT32, INT32, INT32, INT32) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -95,7 +95,7 @@ void BurnBitmapSetClipDims(INT32 nBitmapNumber, INT32 nMinx, INT32 nMaxx, INT32 
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify this entry in the struct has been initialized!
 	if ((ptr->nFlags & FLAG_INITIALIZED) == 0) {
 		bprintf (0, _T("BurnBitmapSetClipDims(%d, INT32, INT32, INT32, INT32) called without itialized bitmap!\n"), nBitmapNumber); 
@@ -118,7 +118,7 @@ void BurnBitmapSetClipDims(INT32 nBitmapNumber, INT32 nMinx, INT32 nMaxx, INT32 
 // get bitmap clips
 void BurnBitmapGetClipDims(INT32 nBitmapNumber, INT32 *nMinx, INT32 *nMaxx, INT32 *nMiny, INT32 *nMaxy)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapGetClipDims(%d, INT32*, INT32*, INT32* INT32*) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -128,7 +128,7 @@ void BurnBitmapGetClipDims(INT32 nBitmapNumber, INT32 *nMinx, INT32 *nMaxx, INT3
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify this entry in the struct has been initialized!
 	if ((ptr->nFlags & FLAG_INITIALIZED) == 0) {
 		bprintf (0, _T("BurnBitmapGetClipDims(%d, INT32*, INT32*, INT32* INT32*) called without itialized bitmap!\n"), nBitmapNumber); 
@@ -145,7 +145,7 @@ void BurnBitmapGetClipDims(INT32 nBitmapNumber, INT32 *nMinx, INT32 *nMaxx, INT3
 // get pointer to bitmap memory
 UINT16 *BurnBitmapGetBitmap(INT32 nBitmapNumber)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapGetBitmap(%d) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -155,7 +155,7 @@ UINT16 *BurnBitmapGetBitmap(INT32 nBitmapNumber)
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify this entry in the struct has been initialized!
 	if ((ptr->nFlags & FLAG_INITIALIZED) == 0) {
 		bprintf (0, _T("BurnBitmapGetBitmap(%d) called without itialized bitmap!\n"), nBitmapNumber); 
@@ -170,7 +170,7 @@ UINT16 *BurnBitmapGetBitmap(INT32 nBitmapNumber)
 // get pointer to priority map memory
 UINT8 *BurnBitmapGetPriomap(INT32 nBitmapNumber)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapGetPriomap(%d) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -180,7 +180,7 @@ UINT8 *BurnBitmapGetPriomap(INT32 nBitmapNumber)
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify this bitmap has a priority map
 	if ((ptr->nFlags & FLAG_HAS_PRIMAP) == 0) {
 		bprintf (0, _T("BurnBitmapGetPriomap(%d) called without initialized Primap!\n"), nBitmapNumber);
@@ -195,7 +195,7 @@ UINT8 *BurnBitmapGetPriomap(INT32 nBitmapNumber)
 // get dimensions of the bitmap
 void BurnBitmapGetDimensions(INT32 nBitmapNumber, INT32 *nWidth, INT32 *nHeight)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapGetDimensions(%d, INT32, INT32) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -205,7 +205,7 @@ void BurnBitmapGetDimensions(INT32 nBitmapNumber, INT32 *nWidth, INT32 *nHeight)
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify this entry in the struct has been initialized!
 	if ((ptr->nFlags & FLAG_INITIALIZED) == 0) {
 		bprintf (0, _T("BurnBitmapGetDimensions(%d, INT32 *, INT32 *) called without itialized bitmap!\n"), nBitmapNumber); 
@@ -221,7 +221,7 @@ void BurnBitmapGetDimensions(INT32 nBitmapNumber, INT32 *nWidth, INT32 *nHeight)
 // get bitmap pointer at a set position, has bounds checking
 UINT16 *BurnBitmapGetPosition(INT32 nBitmapNumber, INT32 nStartX, INT32 nStartY)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapGetPosition(%d, INT32, INT32) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -231,7 +231,7 @@ UINT16 *BurnBitmapGetPosition(INT32 nBitmapNumber, INT32 nStartX, INT32 nStartY)
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify this entry in the struct has been initialized!
 	if ((ptr->nFlags & FLAG_INITIALIZED) == 0) {
 		bprintf (0, _T("BurnBitmapGetPosition(%d, INT32, INT32) called without itialized bitmap!\n"), nBitmapNumber); 
@@ -250,7 +250,7 @@ UINT16 *BurnBitmapGetPosition(INT32 nBitmapNumber, INT32 nStartX, INT32 nStartY)
 // get bitmap pointer at a set position, has bounds checking
 UINT8 *BurnBitmapGetPrimapPosition(INT32 nBitmapNumber, INT32 nStartX, INT32 nStartY)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapGetPrimapPosition(%d, INT32, INT32) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -260,7 +260,7 @@ UINT8 *BurnBitmapGetPrimapPosition(INT32 nBitmapNumber, INT32 nStartX, INT32 nSt
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify this bitmap has a priority map
 	if ((ptr->nFlags & FLAG_HAS_PRIMAP) == 0) {
 		bprintf (0, _T("BurnBitmapGetPrimapPosition(%d, INT32, INT32) called without initialized Primap!\n"), nBitmapNumber);
@@ -279,7 +279,7 @@ UINT8 *BurnBitmapGetPrimapPosition(INT32 nBitmapNumber, INT32 nStartX, INT32 nSt
 // fill bitmap with a value (use for clearing)
 void BurnBitmapFill(INT32 nBitmapNumber, INT32 nFillValue)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapFill(%d, INT32) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -289,7 +289,7 @@ void BurnBitmapFill(INT32 nBitmapNumber, INT32 nFillValue)
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if ((ptr->nFlags & FLAG_INITIALIZED) == 0) {
 		bprintf (0, _T("BurnBitmapFill(%d, INT32) called without itialized bitmap!\n"), nBitmapNumber); 
 		return;
@@ -305,7 +305,7 @@ void BurnBitmapFill(INT32 nBitmapNumber, INT32 nFillValue)
 // zero-fill priority bitmap
 void BurnBitmapPrimapClear(INT32 nBitmapNumber)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapPrimapClear(%d) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -315,7 +315,7 @@ void BurnBitmapPrimapClear(INT32 nBitmapNumber)
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if ((ptr->nFlags & FLAG_HAS_PRIMAP) == 0) {
 		bprintf (0, _T("BurnBitmapPrimapClear(%d) called without initialized Primap!\n"), nBitmapNumber);
 		return;
@@ -328,7 +328,7 @@ void BurnBitmapPrimapClear(INT32 nBitmapNumber)
 // copy bitmap with scrolling and transparency
 void BurnBitmapCopy(INT32 nBitmapNumber, UINT16 *pDest, UINT8 *pPrio, INT32 nScrollX, INT32 nScrollY, INT32 nPixelMask, INT32 nTransColor)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if (nBitmapNumber >= MAX_BITMAPS) {
 		bprintf (0, _T("BurnBitmapCopy(%d, ...) called with invalid bitmap number. Max (%d)\n"), nBitmapNumber, MAX_BITMAPS); 
@@ -338,7 +338,7 @@ void BurnBitmapCopy(INT32 nBitmapNumber, UINT16 *pDest, UINT8 *pPrio, INT32 nScr
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	// verify nBitmapNumber is a sane number
 	if ((ptr->nFlags & FLAG_INITIALIZED) == 0) {
 		bprintf (0, _T("BurnBitmapFill(%d, INT32) called without itialized bitmap!\n"), nBitmapNumber); 

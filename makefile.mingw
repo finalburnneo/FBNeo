@@ -711,6 +711,9 @@ endif
 #
 #	Generic rules for C/C++ files
 #
+# Note: require init to complete before assembling anything (see "| init" below)
+# to avoid parallization issues on fresh builds.
+#
 
 ifeq ($(MAKELEVEL),1)
 
@@ -722,7 +725,7 @@ ifeq ($(MAKELEVEL),1)
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) -c $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F)
 
-%.o:	%.asm
+%.o:	%.asm | init
 	@echo Assembling $<...
 	@$(AS) $(ASFLAGS) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F)
 
@@ -732,7 +735,7 @@ else
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-%.o:	%.asm
+%.o:	%.asm | init
 	@echo Assembling $<...
 	@$(AS) $(ASFLAGS) $< -o $@
 

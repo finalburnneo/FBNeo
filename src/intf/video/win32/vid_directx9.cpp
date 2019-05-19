@@ -7,7 +7,7 @@
 //#pragma comment(lib, "d3dx9")
 
 
-// #define ENABLE_PROFILING FBA_DEBUG
+// #define ENABLE_PROFILING FBNEO_DEBUG
 // #define LOAD_EFFECT_FROM_FILE
 
 #include <InitGuid.h>

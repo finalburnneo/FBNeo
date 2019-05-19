@@ -523,7 +523,7 @@ static int FBALocaliseWriteTemplate(TCHAR* pszTemplate)
 		return 1;
 	}
 
-	_ftprintf(fp, _T("// translation template for FB Alpha FB\n\n"));
+	_ftprintf(fp, _T("// translation template for FinalBurn Neo\n\n"));
 	_ftprintf(fp, _T("version 0x%06X\n\n"), nBurnVer);
 
 	_ftprintf(fp, _T("// codepage 1252\n\n"));

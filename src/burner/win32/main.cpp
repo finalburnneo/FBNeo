@@ -1,4 +1,4 @@
-// FB Alpha FB - Emulator for MC68000/Z80 based arcade games
+// FinalBurn Neo - Emulator for MC68000/Z80 based arcade games
 //            Refer to the "license.txt" file for more info
 
 // Main module
@@ -181,7 +181,7 @@ char *utf8_from_wstring(const WCHAR *wstring)
 	return result;
 }
 
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
  static TCHAR szConsoleBuffer[1024];
  static int nPrevConsoleStatus = -1;
 
@@ -223,7 +223,7 @@ void tcharstrreplace(TCHAR *pszSRBuffer, const TCHAR *pszFind, const TCHAR *pszR
 	}
 }
 
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 // Debug printf to a file
 static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 {
@@ -322,7 +322,7 @@ static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 
 int dprintf(TCHAR* pszFormat, ...)
 {
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 	va_list vaFormat;
 	va_start(vaFormat, pszFormat);
 
@@ -353,7 +353,7 @@ int dprintf(TCHAR* pszFormat, ...)
 
 void CloseDebugLog()
 {
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 	if (DebugLog) {
 
 		_ftprintf(DebugLog, _T("</pre></body></html>"));
@@ -373,7 +373,7 @@ void CloseDebugLog()
 
 int OpenDebugLog()
 {
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
  #if defined (APP_DEBUG_LOG)
 
     time_t nTime;
@@ -607,7 +607,7 @@ static int AppInit()
 	_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF);				//
 #endif
 
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 	OpenDebugLog();
 #endif
 
@@ -625,7 +625,7 @@ static int AppInit()
 
 	if (bMonitorAutoCheck) MonitorAutoCheck();
 
-#if 1 || !defined (FBA_DEBUG)
+#if 1 || !defined (FBNEO_DEBUG)
 	// print a warning if we're running for the 1st time
 	if (nIniVersion < nBurnVer) {
 		ScrnInit();

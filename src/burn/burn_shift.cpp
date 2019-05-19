@@ -206,7 +206,7 @@ static void set_shift_draw_position()
 
 void BurnShiftSetFlipscreen(INT32 flip)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftSetFlipscreen called without init\n"));
 #endif
 
@@ -220,7 +220,7 @@ void BurnShiftSetFlipscreen(INT32 flip)
 
 void BurnShiftReset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftReset called without init\n"));
 #endif
 
@@ -273,7 +273,7 @@ INT32 BurnShiftInputCheckToggle(UINT8 shiftinput)
 
 void BurnShiftSetStatus(UINT32 status)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftSetStatus called without init\n"));
 #endif
 
@@ -306,7 +306,7 @@ void BurnShiftSetStatus(UINT32 status)
 
 void BurnShiftExit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftExit called without init\n"));
 #endif
 
@@ -334,7 +334,7 @@ void BurnShiftExit()
 
 void BurnShiftRender()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftRender called without init\n"));
 #endif
 
@@ -385,7 +385,7 @@ void BurnShiftRender()
 
 void BurnShiftRenderDoubleSize()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftRender called without init\n"));
 #endif
 
@@ -441,7 +441,7 @@ void BurnShiftRenderDoubleSize()
 
 INT32 BurnShiftScan(INT32 nAction)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftScan called without init\n"));
 #endif
 

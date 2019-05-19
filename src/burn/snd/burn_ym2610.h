@@ -32,7 +32,7 @@ extern INT32 bYM2610UseSeperateVolumes;
 	
 #define BurnYM2610Read(a) YM2610Read(0, a)
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	#define BurnYM2610Write(a, n) if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610Write called without init\n")); YM2610Write(0, a, n)
 #else
 	#define BurnYM2610Write(a, n) YM2610Write(0, a, n)

@@ -208,7 +208,7 @@ foreach my $name ( @Driverlist ) {
 		if ( $Drivers{$name}[0] eq "D" ) {
 			unless ( $Debug == 1) {
 				$Debug = 1;
-				print OUTFILE "#if defined FBA_DEBUG\n";
+				print OUTFILE "#if defined FBNEO_DEBUG\n";
 			}
 		} else {
 			if ( $Debug == 1 ) {
@@ -259,7 +259,7 @@ foreach my $name ( @Driverlist ) {
 		if ( $Drivers{$name}[0] eq "D" ) {
 			unless ( $Debug == 1) {
 				$Debug = 1;
-				print OUTFILE "#if defined FBA_DEBUG\n";
+				print OUTFILE "#if defined FBNEO_DEBUG\n";
 			}
 		} else {
 			if ( $Debug == 1 ) {

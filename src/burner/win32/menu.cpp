@@ -1321,7 +1321,7 @@ void MenuEnableItems()
 				EnableMenuItem(hMenu, MENU_CHEATSEARCH_START, MF_ENABLED | MF_BYCOMMAND);
 			}
 
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 			extern UINT8 DebugCPU_SekInitted;
 			if (DebugCPU_SekInitted) {
 				EnableMenuItem(hMenu, MENU_DEBUG,		MF_ENABLED | MF_BYCOMMAND);

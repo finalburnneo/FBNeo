@@ -10,7 +10,7 @@
 #include <InitGuid.h>
 #include "vid_softfx.h"
 
-// #define ENABLE_PROFILING FBA_DEBUG
+// #define ENABLE_PROFILING FBNEO_DEBUG
 
 #define DIRECT3D_VERSION 0x0700							// Use this Direct3D version
 #define D3D_OVERLOADS

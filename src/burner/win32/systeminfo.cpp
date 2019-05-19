@@ -608,7 +608,7 @@ int PrintFBAInfo()
 #else
 	AddLine(_T("    Using multi-byte characters for all text, active codepage is %d."), GetACP());
 #endif
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 	AddLine(_T("    Debug functionality present."));
 #else
 	AddLine(_T("    Debug functionality absent."));

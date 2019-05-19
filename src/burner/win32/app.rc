@@ -252,7 +252,7 @@ BEGIN
     CONTROL         BMP_ABOUT,IDC_STATIC,"Static",SS_BITMAP | SS_REALSIZEIMAGE | SS_SUNKEN,3,3,100,50
     CONTROL         "version",IDC_FBA_VER,"Static",SS_OWNERDRAW | WS_GROUP,83,65,269,10
     CONTROL         "specialbuild",IDC_SPECIALSTRING,"Static",SS_OWNERDRAW | WS_GROUP,83,73,269,10
-    LTEXT           "FB Alpha contains parts of MAME && Final Burn.\n© 2004-2019, Team FB Alpha.",IDC_STATIC,6,88,235,16,WS_DISABLED
+    LTEXT           "Finalburn Neo contains parts of MAME && Final Burn.\n© 2004-2019, Team FBNeo.",IDC_STATIC,6,88,235,16,WS_DISABLED
     DEFPUSHBUTTON   "OK",IDOK,305,90,50,14
     PUSHBUTTON      "License",IDC_SHOWLICENSE,251,90,50,14
     CONTROL         "",IDC_LICENSE,"RICHEDIT20A",ES_MULTILINE | ES_READONLY | WS_VSCROLL | ES_NOIME,3,109,353,77, WS_EX_STATICEDGE | ES_EX_NOCALLOLEINIT
@@ -459,7 +459,7 @@ END
 
 IDD_EXCEPTION DIALOGEX 0, 0, 349, 69
 STYLE DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "FB Alpha has encountered an unrecoverable problem and will be terminated"
+CAPTION "Finalburn Neo has encountered an unrecoverable problem and will be terminated"
 #ifdef USE_SEGOE
 FONT 8, "Segoe UI"
 #else
@@ -476,7 +476,7 @@ END
 
 IDD_SYSINFO DIALOGEX 0, 0, 349, 151
 STYLE DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "FB Alpha system information report"
+CAPTION "Finalburn Neo system information report"
 #ifdef USE_SEGOE
 FONT 8, "Segoe UI"
 #else
@@ -490,7 +490,7 @@ END
 
 IDD_DEBUG_LRG DIALOGEX 0, 0, 582, 442
 STYLE DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "FB Alpha debugger"
+CAPTION "Finalburn Neo debugger"
 #ifdef USE_SEGOE
 FONT 8, "Segoe UI"
 #else
@@ -532,7 +532,7 @@ END
 IDD_DEBUG_SML DIALOGEX 0, 0, 592, 356
 STYLE DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW
-CAPTION "FB Alpha debugger"
+CAPTION "Finalburn Neo debugger"
 #ifdef USE_SEGOE
 FONT 6, "Segoe UI"
 #else
@@ -563,7 +563,7 @@ END
 
 IDD_POPUP DIALOGEX 0, 0, 45, 36
 STYLE DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "FB Alpha message"
+CAPTION "Finalburn Neo message"
 #ifdef USE_SEGOE
 FONT 8, "Segoe UI"
 #else
@@ -1293,11 +1293,11 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&What's New",					MENU_WHATSNEW
         MENUITEM SEPARATOR
-        MENUITEM "&FB Alpha homepage",					MENU_WWW_HOME
+        MENUITEM "&Finalburn Neo homepage",					MENU_WWW_HOME
         MENUITEM "&Neo-Source forums",					MENU_WWW_NSFORUM
         MENUITEM SEPARATOR
         MENUITEM "&System information",				MENU_SYSINFO
-        MENUITEM "&About FB Alpha",					MENU_ABOUT
+        MENUITEM "&About Finalburn Neo",					MENU_ABOUT
     END
 END
 

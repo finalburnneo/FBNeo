@@ -19,10 +19,10 @@ export
 UNICODE = 1
 
 # Use Segoe Fonts (installed by default on Windows Vista and newer)
-#USE_SEGOE = 1
+USE_SEGOE = 1
 
 # Build A68K ASM 68000 core
-BUILD_A68K = 1
+#BUILD_A68K = 1
 
 # Include x86 Assembly routines
 BUILD_X86_ASM = 1
@@ -40,7 +40,7 @@ INCLUDE_7Z_SUPPORT = 1
 INCLUDE_AVI_RECORDING = 1
 
 # Include symbols and other debug information in the executable
-SYMBOL  = 1
+#SYMBOL = 1
 
 # Include features for debugging drivers
 DEBUG	= 1

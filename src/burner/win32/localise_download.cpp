@@ -68,9 +68,12 @@ static int LocaliseDownloadOkay()
 {
 	TCHAR szTitle[256];
 	TCHAR szFilter[256];
+	TCHAR szSelected[256];
 
 	int nIndex = SendMessage(GetDlgItem(hLocalDownDlg, IDC_CHOOSE_LIST), CB_GETCURSEL, 0, 0);
 	SendMessage(GetDlgItem(hLocalDownDlg, IDC_CHOOSE_LIST), CB_GETLBTEXT, (WPARAM)nIndex, (LPARAM)szChoice);
+	_sntprintf(szSelected, 256, szChoice);
+
 
 	_sntprintf(szTitle, 256, FBALoadStringEx(hAppInst, IDS_LOCAL_GL_SELECT, true));
 
@@ -103,7 +106,7 @@ static int LocaliseDownloadOkay()
 	}
 
 	TCHAR url[256];
-	_sntprintf(url, 256, _T("https://finalburnneo.github.io/FBNeo-translations/localisationinfo/%i/"), langCodes[nIndex]);
+	_sntprintf(url, 256, _T("https://finalburnneo.github.io/FBNeo-translations/localisationinfo/%s.flt"), szSelected);
 
 	HINTERNET OpenAddress = InternetOpenUrl(connect, url, NULL, 0, INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_KEEP_CONNECTION, 0);
 	if (!OpenAddress) {

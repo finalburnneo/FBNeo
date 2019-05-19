@@ -40,8 +40,8 @@ struct CPU_Memory_Map_Def
 struct CPU_Config_Def
 {
 	UINT32   id;
-	UINT8 __fastcall (*z80ProgRead)(UINT16 addr);
-	void __fastcall (*z80ProgWrite)(UINT16 addr, UINT8 dta);
+	UINT8 (__fastcall *z80ProgRead)(UINT16 addr);
+	void (__fastcall *z80ProgWrite)(UINT16 addr, UINT8 dta);
 	void (*z80MemMap)(void);
 };
 

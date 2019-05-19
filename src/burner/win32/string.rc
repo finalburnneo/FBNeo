@@ -155,7 +155,7 @@ BEGIN
 
 	IDS_LOCAL_GL_CREATE			"Create gamelist localisation template"
 	IDS_LOCAL_GL_SELECT			"Select gamelist localisation template"
-	IDS_LOCAL_GL_FILTER			"FB Alpha gamelist localisation templates"
+	IDS_LOCAL_GL_FILTER			"FB Neo gamelist localisation templates"
 
 	IDS_CD_SELECT_IMAGE			"Select CD-ROM image..."
 	IDS_CD_SELECT_IMAGE_TITLE	"Select CD-ROM image"
@@ -163,7 +163,7 @@ BEGIN
 
 	IDS_LOCAL_CREATE			"Create localisation template"
 	IDS_LOCAL_SELECT			"Select localisation template"
-	IDS_LOCAL_FILTER			"FB Alpha localisation templates"
+	IDS_LOCAL_FILTER			"FB Neo localisation templates"
 
 	IDS_SEL_FILTERS				"Filters"
 	IDS_SEL_HARDWARE			"Hardware"
@@ -376,5 +376,5 @@ BEGIN
 	IDS_ERR_CDEMU_INI_FAIL		"Couldn't initialise CD emulation."
 
 	IDS_ERR_LOCAL_FAIL_CONNECT	"Failed to connect to Internet"
-	IDS_ERR_LOCAL_FAIL_OPEN_URL	"Failed to access FB Alpha website"
+	IDS_ERR_LOCAL_FAIL_OPEN_URL	"Failed to access FB Neo website"
 END

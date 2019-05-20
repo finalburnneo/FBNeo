@@ -1187,6 +1187,9 @@ BEGIN
               MENUITEM "Low",						MENU_PRIORITY_LOW
            END
            MENUITEM "Enable high resolution system timer",		MENU_HIGHRESTIMER
+#ifdef FBNEO_DEBUG
+           MENUITEM "Show Debug console (requires restart)",						MENU_DEBUGCONSOLE
+#endif
            MENUITEM SEPARATOR
 #ifdef BUILD_A68K
            MENUITEM "Use assembly MC68000 core (this session only)",				MENU_ASSEMBLYCORE

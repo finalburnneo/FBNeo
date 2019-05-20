@@ -20,6 +20,10 @@
  #endif
 #endif
 
+#if defined (FBNEO_DEBUG)
+bool bDisableDebugConsole = true;
+#endif
+
 #include "version.h"
 
 HINSTANCE hAppInst = NULL;			// Application Instance
@@ -279,7 +283,7 @@ static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 		fflush(DebugLog);
 	}
 
-	if (!DebugLog || bEchoLog) {
+	if (!bDisableDebugConsole && (!DebugLog || bEchoLog)) {
 		_vsntprintf(szConsoleBuffer, 1024, pszFormat, vaFormat);
 
 		if (nStatus != nPrevConsoleStatus) {
@@ -332,7 +336,9 @@ int dprintf(TCHAR* pszFormat, ...)
 		if (DebugLog) {
 			_ftprintf(DebugLog, _T("</div><div class=\"ui\">"));
 		}
-		SetConsoleTextAttribute(DebugBuffer, FOREGROUND_INTENSITY);
+		if (!bDisableDebugConsole) {
+			SetConsoleTextAttribute(DebugBuffer, FOREGROUND_INTENSITY);
+		}
 		nPrevConsoleStatus = PRINT_UI;
 	}
 
@@ -342,7 +348,9 @@ int dprintf(TCHAR* pszFormat, ...)
 	}
 
 	tcharstrreplace(szConsoleBuffer, _T(SEPERATOR_1), _T(" * "));
-	WriteConsole(DebugBuffer, szConsoleBuffer, _tcslen(szConsoleBuffer), NULL, NULL);
+	if (!bDisableDebugConsole) {
+		WriteConsole(DebugBuffer, szConsoleBuffer, _tcslen(szConsoleBuffer), NULL, NULL);
+	}
 	va_end(vaFormat);
 #else
 	(void)pszFormat;
@@ -362,12 +370,14 @@ void CloseDebugLog()
 		DebugLog = NULL;
 	}
 
-	if (DebugBuffer) {
-		CloseHandle(DebugBuffer);
-		DebugBuffer = NULL;
-	}
+	if (!bDisableDebugConsole) {
+		if (DebugBuffer) {
+			CloseHandle(DebugBuffer);
+			DebugBuffer = NULL;
+		}
 
-	FreeConsole();
+		FreeConsole();
+	}
 #endif
 }
 
@@ -426,6 +436,7 @@ int OpenDebugLog()
 	}
  #endif
 
+	if (!bDisableDebugConsole)
 	{
 		// Initialise the debug console
 
@@ -607,10 +618,6 @@ static int AppInit()
 	_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF);				//
 #endif
 
-#if defined (FBNEO_DEBUG)
-	OpenDebugLog();
-#endif
-
 	// Create a handle to the main thread of execution
 	DuplicateHandle(GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(), &hMainThread, 0, false, DUPLICATE_SAME_ACCESS);
 
@@ -619,6 +626,10 @@ static int AppInit()
 
 	// Load config for the application
 	ConfigAppLoad();
+
+#if defined (FBNEO_DEBUG)
+	OpenDebugLog();
+#endif
 
 	FBALocaliseInit(szLocalisationTemplate);
 	BurnerDoGameListLocalisation();

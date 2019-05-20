@@ -553,6 +553,7 @@
 #define MENU_SNAPFACT                   	10317
 #define MENU_SAVESNAP                   	10318
 #define MENU_HIGHRESTIMER                   10319
+#define MENU_DEBUGCONSOLE                   10320
 #define MENU_ASSOCIATE						10330
 #define MENU_DISASSOCIATE					10331
 #define MENU_SAVEGAMEINPUTNOW				10332

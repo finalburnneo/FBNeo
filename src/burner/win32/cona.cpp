@@ -178,6 +178,10 @@ int ConfigAppLoad()
 
 		VAR(nSplashTime);
 
+#if defined (FBNEO_DEBUG)
+		VAR(bDisableDebugConsole);
+#endif
+
 		VAR(bDrvSaveAll);
 		VAR(nAppThreadPriority);
 		VAR(bAlwaysProcessKeyboardInput);
@@ -535,6 +539,11 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// Minimum length of time to display the splash screen (in milliseconds)\n"));
 	VAR(nSplashTime);
+
+#if defined (FBNEO_DEBUG)
+	_ftprintf(h, _T("\n// Disable the text-debug console (hint: needed for debugging with gdb!)\n"));
+	VAR(bDisableDebugConsole);
+#endif
 
 	_ftprintf(h, _T("\n// If non-zero, load and save all ram (the state)\n"));
 	VAR(bDrvSaveAll);

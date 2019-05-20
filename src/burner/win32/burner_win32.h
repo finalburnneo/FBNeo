@@ -91,6 +91,9 @@ INT32 Dx9Core_Init();
 // ---------------------------------------------------------------------------
 
 // main.cpp
+#if defined (FBNEO_DEBUG)
+extern bool bDisableDebugConsole;                   // Disable debug console?
+#endif
 extern HINSTANCE hAppInst;							// Application Instance
 extern HANDLE hMainThread;							// Handle to the main thread
 extern long int nMainThreadID;						// ID of the main thread

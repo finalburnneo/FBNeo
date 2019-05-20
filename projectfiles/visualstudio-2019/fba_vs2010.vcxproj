@@ -759,7 +759,8 @@ del %(Filename).exe</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp 
 %(Filename).exe &gt; generated\pgm_sprite.h 
 del %(Filename).obj
-del %(Filename).exe</Command>
+del %(Filename).exe
+</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pgm_sprite.h</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp 
 %(Filename).exe &gt; generated\pgm_sprite.h 

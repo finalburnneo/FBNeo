@@ -620,6 +620,8 @@ static INT32 SpectrumInit(INT32 nSnapshotType)
 	
 	INT32 nRet = 0, nLen;
 	
+	BurnSetRefreshRate(50.0);
+
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
@@ -649,8 +651,6 @@ static INT32 SpectrumInit(INT32 nSnapshotType)
 	
 	DACInit(0, 0, 0, ZetTotalCycles, 3500000);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	
-	BurnSetRefreshRate(50.0);
 
 	GenericTilesInit();
 	
@@ -704,13 +704,13 @@ static INT32 Spectrum128Init(INT32 nSnapshotType)
 	ZetMapArea(0x8000, 0xbfff, 2, SpecZ80Ram + (2 << 14) );
 	ZetClose();
 	
+	BurnSetRefreshRate(50.0);
+
 	DACInit(0, 0, 0, ZetTotalCycles, 3500000);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	AY8910Init(0, 17734475 / 10, 0);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	
-	BurnSetRefreshRate(50.0);
 
 	GenericTilesInit();
 	

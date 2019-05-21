@@ -478,7 +478,7 @@ static void render_stars()
 	if (StarsEnabled) {
 		INT32 StarCounter;
 		INT32 SetA, SetB;
-
+		INT32 transloc;
 		SetA = ((nCurrentFrame+0x40) & 0x80) ? 1 : 0;
 		SetB = (nCurrentFrame & 0x80) ? 2 : 3;
 
@@ -490,8 +490,9 @@ static void render_stars()
 				y = (112 + StarSeedTab[StarCounter].y + StarScrollY) % 256;
 
 				if (x >= 0 && x < nScreenWidth && y >= 0 && y < nScreenHeight) {
-					if (!pTransDraw[(y * nScreenWidth) + x])
-						pTransDraw[(y * nScreenWidth) + x] = StarSeedTab[StarCounter].Colour + 0x20;
+					transloc = (y * nScreenWidth) + x;
+					if (!pTransDraw[transloc])
+						pTransDraw[transloc] = StarSeedTab[StarCounter].Colour + 0x20;
 				}
 			}
 

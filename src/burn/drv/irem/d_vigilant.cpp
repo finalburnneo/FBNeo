@@ -1467,6 +1467,8 @@ static INT32 DrvInit()
 {
 	INT32 nRet = 0, nLen;
 
+	BurnSetRefreshRate(55.0);
+
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
@@ -1552,8 +1554,7 @@ static INT32 DrvInit()
 	ZetMapArea(0xf000, 0xffff, 1, DrvZ80Ram2             );
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80Ram2             );
 	ZetClose();
-	
-	BurnSetRefreshRate(55.0);
+
 	nCyclesTotal[0] = 3579645 / 55;
 	nCyclesTotal[1] = 3579645 / 55;
 	
@@ -1573,6 +1574,8 @@ static INT32 DrvInit()
 static INT32 DrvcInit()
 {
 	INT32 nRet = 0, nLen;
+
+	BurnSetRefreshRate(55.0);
 
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -1659,7 +1662,6 @@ static INT32 DrvcInit()
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80Ram2             );
 	ZetClose();
 	
-	BurnSetRefreshRate(55.0);
 	nCyclesTotal[0] = 3579645 / 55;
 	nCyclesTotal[1] = 3579645 / 55;
 	
@@ -1679,6 +1681,8 @@ static INT32 DrvcInit()
 static INT32 DrvbInit()
 {
 	INT32 nRet = 0, nLen;
+
+	BurnSetRefreshRate(55.0);
 
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -1760,7 +1764,6 @@ static INT32 DrvbInit()
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80Ram2             );
 	ZetClose();
 	
-	BurnSetRefreshRate(55.0);
 	nCyclesTotal[0] = 3579645 / 55;
 	nCyclesTotal[1] = 3579645 / 55;
 	
@@ -1780,6 +1783,8 @@ static INT32 DrvbInit()
 static INT32 BuccanrsInit()
 {
 	INT32 nRet = 0, nLen;
+
+	BurnSetRefreshRate(55.0);
 
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -1859,7 +1864,6 @@ static INT32 BuccanrsInit()
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80Ram2             );
 	ZetClose();
 	
-	BurnSetRefreshRate(55.0);
 	nCyclesTotal[0] = 5688800 / 55;
 	nCyclesTotal[1] = (18432000 / 6) / 55;
 	
@@ -1888,6 +1892,7 @@ static INT32 BuccanrsInit()
 static INT32 KikcubicInit()
 {
 	INT32 nRet = 0, nLen;
+	BurnSetRefreshRate(55.0);
 
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -1991,7 +1996,6 @@ static INT32 KikcubicInit()
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80Ram2             );
 	ZetClose();
 	
-	BurnSetRefreshRate(55.0);
 	nCyclesTotal[0] = 3579645 / 55;
 	nCyclesTotal[1] = 3579645 / 55;
 	

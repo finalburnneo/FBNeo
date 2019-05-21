@@ -17,7 +17,7 @@ void BurnYM2151SetInterleave(INT32 nInterleave);
 
 inline static void BurnYM2151Write(INT32 offset, const UINT8 nData)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Write called without init\n"));
 #endif
 
@@ -32,7 +32,7 @@ inline static void BurnYM2151Write(INT32 offset, const UINT8 nData)
 
 static inline void BurnYM2151SelectRegister(const UINT8 nRegister)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SelectRegister called without init\n"));
 #endif
 
@@ -43,7 +43,7 @@ static inline void BurnYM2151SelectRegister(const UINT8 nRegister)
 
 static inline void BurnYM2151WriteRegister(const UINT8 nValue)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151WriteRegister called without init\n"));
 #endif
 
@@ -54,7 +54,7 @@ static inline void BurnYM2151WriteRegister(const UINT8 nValue)
 
 #define BurnYM2151Read() YM2151ReadStatus(0)
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	#define BurnYM2151SetIrqHandler(h) if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SetIrqHandler called without init\n")); YM2151SetIrqHandler(0, h)
 	#define BurnYM2151SetPortHandler(h) if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SetPortHandler called without init\n")); YM2151SetPortWriteHandler(0, h)
 #else

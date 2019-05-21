@@ -148,12 +148,15 @@ typedef struct {
 	UINT8	p1;
 	UINT8	p2;
 	UINT8	p2_hs;
+	INT32   total_cycles;
 
 	UINT8	*ram;
 	INT32 	(*irq_callback)(INT32 irqline);
 }	I8X41;
 
-int i8x41_ICount;
+int i8x41_ICount = 0;
+int i8x41_cycle_start = 0;
+int i8x41_end_run = 0;
 
 static I8X41 i8x41;
 
@@ -163,7 +166,7 @@ void i8x41_scan(INT32 nAction)
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = &i8x41;
-		ba.nLen	  = STRUCT_SIZE_HELPER(I8X41, p2_hs);
+		ba.nLen	  = STRUCT_SIZE_HELPER(I8X41, total_cycles);
 		ba.szName = "i8x41 Regs";
 		BurnAcb(&ba);
 	}
@@ -1428,7 +1431,9 @@ INT32 i8x41_run(INT32 cycles)
 {
 	int inst_cycles, T1_level;
 
+	i8x41_cycle_start = cycles;
 	i8x41_ICount = cycles;
+	i8x41_end_run = 0;
 
 	do
 	{
@@ -2064,11 +2069,37 @@ INT32 i8x41_run(INT32 cycles)
 		}
 
 
-	} while( i8x41_ICount > 0 );
+	} while( i8x41_ICount > 0 && !i8x41_end_run );
 
-	return cycles - i8x41_ICount;
+	cycles = cycles - i8x41_ICount;
+	i8x41_ICount = i8x41_cycle_start = 0;
+
+	i8x41.total_cycles += cycles;
+
+	return cycles;
 }
 
+void i8x41RunEnd()
+{
+	i8x41_end_run = 1;
+}
+
+INT32 i8x41TotalCycles()
+{
+	return i8x41.total_cycles + (i8x41_cycle_start - i8x41_ICount);
+}
+
+void i8x41NewFrame()
+{
+	i8x41.total_cycles = 0;
+}
+
+INT32 i8x41Idle(INT32 cycles)
+{
+	i8x41.total_cycles += cycles;
+
+	return cycles;
+}
 
 /****************************************************************************
  *  Get all registers in given buffer

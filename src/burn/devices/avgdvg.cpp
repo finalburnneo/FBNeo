@@ -371,7 +371,7 @@ static INT32 dvg_generate_vector_list(void)
 		"jsrl", "rtsl", "jmpl", "svec"
 	};
 
-	INT32 stack[MAXSTACK];
+	INT32 stack[MAXSTACK] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 	INT32 pc = 0;
 	INT32 sp = 0;
 	INT32 scale = 0;
@@ -700,7 +700,7 @@ static INT32 avg_generate_vector_list(void)
 		"jsrl", "rtsl", "jmpl", "scal"
 	};
 
-	INT32 stack[MAXSTACK] = {0,0};
+	INT32 stack[MAXSTACK] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 	INT32 pc = 0;
 	INT32 sp = 0;
 	INT32 scale = 0;

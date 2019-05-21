@@ -31,7 +31,7 @@
 
 // fix for shlwapi.h
 #ifndef _In_
-#define _In_ 
+#define _In_
 #endif
 
 #include <shlwapi.h>
@@ -91,6 +91,9 @@ INT32 Dx9Core_Init();
 // ---------------------------------------------------------------------------
 
 // main.cpp
+#if defined (FBNEO_DEBUG)
+extern bool bDisableDebugConsole;                   // Disable debug console?
+#endif
 extern HINSTANCE hAppInst;							// Application Instance
 extern HANDLE hMainThread;							// Handle to the main thread
 extern long int nMainThreadID;						// ID of the main thread
@@ -298,6 +301,7 @@ void MenuRemoveTheme();
 // sel.cpp
 extern int nLoadMenuShowX;
 extern int nLoadMenuShowY;
+extern int nLoadMenuExpand;
 extern int nLoadMenuBoardTypeFilter;
 extern int nLoadMenuGenreFilter;
 extern int nLoadMenuFavoritesFilter;

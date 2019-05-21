@@ -658,6 +658,8 @@ int m6800_get_segmentcycles()
 	return m6800.segmentcycles - m6800_ICount;
 }
 
+static INT32 end_run;
+
 /****************************************************************************
  * Execute cycles CPU cycles. Return number of cycles really executed
  ****************************************************************************/
@@ -672,6 +674,8 @@ int m6800_execute(int cycles)
 	CLEANUP_conters;
 	INCREMENT_COUNTER(m6800.extra_cycles);
 	m6800.extra_cycles = 0;
+
+	end_run = 0;
 
 	do
 	{
@@ -689,7 +693,7 @@ int m6800_execute(int cycles)
 			INCREMENT_COUNTER(cycles_6800[ireg]);
 		}
 
-	} while( m6800_ICount>0 );
+	} while( m6800_ICount>0 && !end_run );
 
 	INCREMENT_COUNTER(m6800.extra_cycles);
 	m6800.extra_cycles = 0;
@@ -758,6 +762,8 @@ int m6803_execute(int cycles)
 	INCREMENT_COUNTER(m6803.extra_cycles);
 	m6803.extra_cycles = 0;
 
+	end_run = 0;
+
 	do
 	{
 		if( m6803.wai_state & M6800_WAI )
@@ -774,7 +780,7 @@ int m6803_execute(int cycles)
 			INCREMENT_COUNTER(cycles_6803[ireg]);
 		}
 
-	} while( m6800_ICount>0 );
+	} while( m6800_ICount>0 && !end_run );
 
 	INCREMENT_COUNTER(m6803.extra_cycles);
 	m6803.extra_cycles = 0;
@@ -840,6 +846,8 @@ int hd63701_execute(int cycles)
 	INCREMENT_COUNTER(hd63701.extra_cycles);
 	hd63701.extra_cycles = 0;
 
+	end_run = 0;
+
 	do
 	{
 		if( hd63701.wai_state & (HD63701_WAI|HD63701_SLP) )
@@ -855,7 +863,7 @@ int hd63701_execute(int cycles)
 			(*hd63701.insn[ireg])();
 			INCREMENT_COUNTER(cycles_63701[ireg]);
 		}
-	} while( m6800_ICount>0 );
+	} while( m6800_ICount>0 && !end_run );
 
 	INCREMENT_COUNTER(hd63701.extra_cycles);
 	hd63701.extra_cycles = 0;
@@ -905,6 +913,8 @@ void nsc8105_init()
 	m6800.cycles = cycles_nsc8105;
 	//state_register("nsc8105", index);
 }
+
+
 /****************************************************************************
  * Execute cycles CPU cycles. Return number of cycles really executed
  ****************************************************************************/
@@ -918,6 +928,8 @@ int nsc8105_execute(int cycles)
 	CLEANUP_conters;
 	INCREMENT_COUNTER(nsc8105.extra_cycles);
 	nsc8105.extra_cycles = 0;
+
+	end_run = 0;
 
 	do
 	{
@@ -934,7 +946,7 @@ int nsc8105_execute(int cycles)
 			(*nsc8105.insn[ireg])();
 			INCREMENT_COUNTER(cycles_nsc8105[ireg]);
 		}
-	} while( m6800_ICount>0 );
+	} while( m6800_ICount>0 && !end_run );
 
 	INCREMENT_COUNTER(nsc8105.extra_cycles);
 	nsc8105.extra_cycles = 0;
@@ -949,11 +961,11 @@ int nsc8105_execute(int cycles)
 
 void M6800RunEnd()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800RunEnd called without init\n"));
 #endif
 
-	m6800_ICount = 0;
+	end_run = 1;
 }
 
 #if (HAS_M6803||HAS_HD63701)

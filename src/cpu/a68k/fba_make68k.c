@@ -615,7 +615,7 @@ void Completed(void)
 
 #endif
 
-#ifdef FBA_DEBUG
+#ifdef FBNEO_DEBUG
 
 	fprintf(fp, "\n\t\t test    byte [%smame_debug],byte 0xff\n", PREF);
 	fprintf(fp, "\t\t jns  near .NoDebug\n");
@@ -7738,7 +7738,7 @@ void CodeSegmentBegin(void)
 	fprintf(fp, "\t\t test  dword [%s],-1\n",ICOUNT);
 	fprintf(fp, "\t\t js    short MainExit\n\n");
 
-#ifdef FBA_DEBUG
+#ifdef FBNEO_DEBUG
 
 	fprintf(fp, "\n\t\t test    byte [%smame_debug],byte 0xff\n", PREF);
 	fprintf(fp, "\t\t jns  near .NoDebug\n");
@@ -7955,7 +7955,7 @@ void CodeSegmentBegin(void)
 
 	fprintf(fp, "\t\t ret\n");
 
-#ifdef FBA_DEBUG
+#ifdef FBNEO_DEBUG
 
 	fprintf(fp,"\n; Call FBA debugging callback\n\n");
 	fprintf(fp, "FBADebugActive:");

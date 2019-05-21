@@ -62,6 +62,7 @@ typedef struct
 	INT32 	irq_state[9];		/* KW Additional lines for HD63705 */
 	INT32   nmi_state;
 	INT32   nTotalCycles;
+	INT32   end_run;
 	int 	(*irq_callback)(int irqline);
 } m6805_Regs;
 
@@ -428,7 +429,7 @@ static void m6805_reset()
 }
 
 void m6805Reset() {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Reset called without init\n"));
 #endif
 
@@ -448,7 +449,7 @@ void m6805Reset() {
 
 void m6805SetIrqLine(int , int state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805SetIrqLine called without init\n"));
 #endif
 
@@ -468,13 +469,15 @@ void m6805SetIrqLine(int , int state)
 /* execute instructions on this CPU until icount expires */
 int m6805Run(int cycles)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Run called without init\n"));
 #endif
 
 	UINT8 ireg;
 	m6805_ICount = cycles;
 	S = SP_ADJUST( S );     /* Taken from CPU_SET_CONTEXT when pointer'afying */
+
+	m6805.end_run = 0;
 
 	do
 	{
@@ -757,7 +760,7 @@ int m6805Run(int cycles)
 		}
 		m6805_ICount -= cycles1[ireg];
 		m6805.nTotalCycles += cycles1[ireg];
-	} while( m6805_ICount > 0 );
+	} while( m6805_ICount > 0 && !m6805.end_run);
 
 	return cycles - m6805_ICount;
 }
@@ -771,16 +774,16 @@ int m6805Idle(int cycles)
 
 void m6805RunEnd()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805RunEnd called without init\n"));
 #endif
 
-	m6805_ICount = 0;
+	m6805.end_run = 1;
 }
 
 void m6805NewFrame()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805NewFrame called without init\n"));
 #endif
 
@@ -789,16 +792,16 @@ void m6805NewFrame()
 
 int m6805TotalCycles()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805TotalCycles called without init\n"));
 #endif
 
-	return m6805.nTotalCycles;
+	return m6805.nTotalCycles; // segment cycles taken care of! (search nTotalCycles)
 }
 
 int m6805Scan(int nAction)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Scan called without init\n"));
 #endif
 
@@ -823,7 +826,7 @@ int m6805Scan(int nAction)
 
 void m68705Reset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m68705Reset called without init\n"));
 #endif
 
@@ -835,7 +838,7 @@ void m68705Reset()
 
 void m68705SetIrqLine(int irqline, int state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m68705SetIrqLine called without init\n"));
 #endif
 	if (m6805.irq_state[irqline] == state ) return;
@@ -852,7 +855,7 @@ void m68705SetIrqLine(int irqline, int state)
 
 void hd63705Reset(void)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("hd63705Reset called without init\n"));
 #endif
 
@@ -868,7 +871,7 @@ void hd63705Reset(void)
 
 void hd63705SetIrqLine(int irqline, int state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("hd63705SetIrqLine called without init\n"));
 #endif
 

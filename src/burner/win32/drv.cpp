@@ -4,8 +4,8 @@
 
 int bDrvOkay = 0;						// 1 if the Driver has been initted okay, and it's okay to use the BurnDrv functions
 
-TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = { { _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("") }, 
-											{ _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("spectrum") }, 
+TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = { { _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("") },
+											{ _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("spectrum") },
 											{ _T("msx/") }, { _T("sms/") }, { _T("gamegear/") }, { _T("sg1000/") }, { _T("coleco/") },
 											{ _T("tg16/") }, { _T("sgx/") }, { _T("pce/") }, { _T("megadriv/") }, { _T("roms/") } };
 
@@ -26,7 +26,7 @@ static int DrvBzipOpen()
 		case BZIP_STATUS_ERROR: {
 			FBAPopupDisplay(PUF_TYPE_ERROR);
 
-#if 0 || !defined FBA_DEBUG
+#if 0 || !defined FBNEO_DEBUG
 			// Don't even bother trying to start the game if we know it won't work
 			BzipClose();
 			return 1;
@@ -36,7 +36,7 @@ static int DrvBzipOpen()
 		}
 		default: {
 
-#if 0 && defined FBA_DEBUG
+#if 0 && defined FBNEO_DEBUG
 			FBAPopupDisplay(PUF_TYPE_INFO);
 #else
 			FBAPopupDisplay(PUF_TYPE_INFO | PUF_TYPE_LOGONLY);
@@ -46,7 +46,7 @@ static int DrvBzipOpen()
 	}
 
 	return 0;
-}	
+}
 
 static int DoLibInit()					// Do Init of Burn library driver
 {
@@ -55,7 +55,7 @@ static int DoLibInit()					// Do Init of Burn library driver
 	if (DrvBzipOpen()) {
 		return 1;
 	}
-	
+
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_MVS) {
 		if (!bQuietLoading) ProgressCreate();
 	}
@@ -85,7 +85,7 @@ static int __cdecl DrvLoadRom(unsigned char* Dest, int* pnWrote, int i)
 		char* pszFilename;
 
 		BurnDrvGetRomName(&pszFilename, i, 0);
-		
+
 		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_REQUEST), pszFilename, BurnDrvGetText(DRV_NAME));
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 	}
@@ -142,12 +142,12 @@ static void NeoCDZRateChange()
 int DrvInit(int nDrvNum, bool bRestore)
 {
 	int nStatus;
-	
+
 	DrvExit();						// Make sure exitted
 	MediaExit();
 
 	nBurnDrvActive = nDrvNum;		// Set the driver number
-	
+
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_MVS) {
 
 		BurnExtCartridgeSetupCallback = DrvCartridgeAccess;
@@ -184,7 +184,7 @@ int DrvInit(int nDrvNum, bool bRestore)
 
 	if(ConfigGameLoad(true)) {
 		ConfigGameLoadHardwareDefaults();
-	}	
+	}
 	InputMake(true);
 	GameInpDefault();
 
@@ -240,7 +240,7 @@ int DrvInit(int nDrvNum, bool bRestore)
 	}
 
 	nBurnLayer = 0xFF;				// show all layers
-	
+
 	// Reset the speed throttling code, so we don't 'jump' after the load
 	RunReset();
 
@@ -282,7 +282,7 @@ int DrvExit()
 			ConfigGameSave(bSaveInputs);
 
 			GameInpExit();				// Exit game input
-			
+
 			BurnDrvExit();				// Exit the driver
 		}
 	}
@@ -297,7 +297,7 @@ int DrvExit()
 		// Write silence into the sound buffer on exit, and for drivers which don't use pBurnSoundOut
 		memset(nAudNextSound, 0, nAudSegLen << 2);
 	}
-	
+
 	CDEmuExit();
 
 	BurnExtCartridgeSetupCallback = NULL;

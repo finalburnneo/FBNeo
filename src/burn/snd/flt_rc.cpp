@@ -37,7 +37,7 @@ static INT32 num_filters;
 
 void filter_rc_update(INT32 num, INT16 *src, INT16 *pSoundBuf, INT32 length)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_FilterRCInitted) bprintf(PRINT_ERROR, _T("filter_rc_update called without init\n"));
 	if (num > num_filters) bprintf(PRINT_ERROR, _T("filter_rc_update called with invalid num %i\n"), num);
 #endif
@@ -179,7 +179,7 @@ static void set_RC_info(INT32 num, INT32 type, double R1, double R2, double R3, 
 
 void filter_rc_set_RC(INT32 num, INT32 type, double R1, double R2, double R3, double C)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_FilterRCInitted) bprintf(PRINT_ERROR, _T("filter_rc_set_RC called without init\n"));
 	if (num > num_filters) bprintf(PRINT_ERROR, _T("filter_rc_set_RC called with invalid num %i\n"), num);
 #endif
@@ -189,7 +189,7 @@ void filter_rc_set_RC(INT32 num, INT32 type, double R1, double R2, double R3, do
 
 void filter_rc_init(INT32 num, INT32 type, double R1, double R2, double R3, double C, INT32 add_signal)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (num >= FLT_RC_NUM) bprintf (PRINT_ERROR, _T("filter_rc_init called for too many chips (%d)! Change FLT_RC_NUM (%d)!\n"), num, FLT_RC_NUM);
 #endif
 
@@ -213,7 +213,7 @@ void filter_rc_init(INT32 num, INT32 type, double R1, double R2, double R3, doub
 
 void filter_rc_set_src_gain(INT32 num, double gain)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_FilterRCInitted) bprintf(PRINT_ERROR, _T("filter_rc_set_src_gain called without init\n"));
 	if (num > num_filters) bprintf(PRINT_ERROR, _T("filter_rc_set_src_gain called with invalid num %i\n"), num);
 #endif
@@ -227,7 +227,7 @@ void filter_rc_set_src_gain(INT32 num, double gain)
 
 void filter_rc_set_src_stereo(INT32 num)
 { // allows for processing a mono (but stereo) stream
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_FilterRCInitted) bprintf(PRINT_ERROR, _T("filter_rc_set_src_stereo called without init\n"));
 	if (num > num_filters) bprintf(PRINT_ERROR, _T("filter_rc_set_src_stereo called with invalid num %i\n"), num);
 #endif
@@ -241,7 +241,7 @@ void filter_rc_set_src_stereo(INT32 num)
 
 void filter_rc_set_route(INT32 num, double nVolume, INT32 nRouteDir)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_FilterRCInitted) bprintf(PRINT_ERROR, _T("filter_rc_set_route called without init\n"));
 	if (num > num_filters) bprintf(PRINT_ERROR, _T("filter_rc_set_route called with invalid num %i\n"), num);
 #endif
@@ -256,7 +256,7 @@ void filter_rc_set_route(INT32 num, double nVolume, INT32 nRouteDir)
 
 void filter_rc_set_limit(INT32 num, double nVolume)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_FilterRCInitted) bprintf(PRINT_ERROR, _T("filter_rc_set_limit called without init\n"));
 	if (num > num_filters) bprintf(PRINT_ERROR, _T("filter_rc_set_limit called with invalid num %i\n"), num);
 #endif
@@ -271,7 +271,7 @@ void filter_rc_set_limit(INT32 num, double nVolume)
 
 void filter_rc_exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_FilterRCInitted) bprintf(PRINT_ERROR, _T("filter_rc_exit called without init\n"));
 #endif
 

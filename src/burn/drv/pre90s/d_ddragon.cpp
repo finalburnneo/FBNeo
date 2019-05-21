@@ -2101,6 +2101,8 @@ static INT32 DrvMachineInit()
 
 static INT32 Drv2MachineInit()
 {
+	BurnSetRefreshRate(57.444853);
+
 	// Setup the HD6309 emulation
 	HD6309Init(0);
 	HD6309Open(0);
@@ -2143,8 +2145,6 @@ static INT32 Drv2MachineInit()
 
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
-
-	BurnSetRefreshRate(57.444853);
 
 	nCyclesTotal[0] = (INT32)((double)3000000 / 57.44853);
 	nCyclesTotal[1] = (INT32)((double)4000000 / 57.44853);

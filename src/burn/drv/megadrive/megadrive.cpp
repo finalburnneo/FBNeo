@@ -1456,6 +1456,7 @@ static INT32 MegadriveResetDo()
 	MegadriveCheckHardware();
 
 	if (Hardware & 0x40) {
+
 		BurnSetRefreshRate(50.0);
 		Reinitialise();
 

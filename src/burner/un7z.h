@@ -41,7 +41,7 @@
 
 /***************************************************************************
 	Above notices are from MAME
-	
+
 	Updated Feb 2012
 	Adapted for use outside MAME by Barry Harris (FB Alpha)
 ***************************************************************************/

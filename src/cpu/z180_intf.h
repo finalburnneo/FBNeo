@@ -14,6 +14,7 @@ void Z180Init(UINT32 nCPU);
 void Z180Exit();
 void Z180Reset();
 INT32 Z180Run(INT32 cycles);
+INT32 Z180Idle(INT32 cycles);
 void Z180BurnCycles(INT32 cycles);
 void Z180SetIRQLine(INT32 irqline, INT32 state);
 void Z180Scan(INT32 nAction);

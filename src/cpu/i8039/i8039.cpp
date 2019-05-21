@@ -782,7 +782,7 @@ void N7751Init(INT32 nCpu)
 
 void I8039SetIOReadHandler(i8039ReadIoHandler handler)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetIOReadHandler called without init\n"));
 	
 	if (nI8039Active == -1) {
@@ -801,7 +801,7 @@ void I8039SetIOReadHandler(i8039ReadIoHandler handler)
 
 void I8039SetIOWriteHandler(i8039WriteIoHandler handler)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetIOWriteHandler called without init\n"));
 	
 	if (nI8039Active == -1) {
@@ -820,7 +820,7 @@ void I8039SetIOWriteHandler(i8039WriteIoHandler handler)
 
 void I8039SetProgramReadHandler(i8039ReadProgHandler handler)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetProgramReadHandler called without init\n"));
 	
 	if (nI8039Active == -1) {
@@ -839,7 +839,7 @@ void I8039SetProgramReadHandler(i8039ReadProgHandler handler)
 
 void I8039SetProgramWriteHandler(i8039WriteProgHandler handler)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetProgramWriteHandler called without init\n"));
 	
 	if (nI8039Active == -1) {
@@ -858,7 +858,7 @@ void I8039SetProgramWriteHandler(i8039WriteProgHandler handler)
 
 void I8039SetCPUOpReadHandler(i8039ReadOpHandler handler)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetCPUOpReadHandler called without init\n"));
 	
 	if (nI8039Active == -1) {
@@ -877,7 +877,7 @@ void I8039SetCPUOpReadHandler(i8039ReadOpHandler handler)
 
 void I8039SetCPUOpReadArgHandler(i8039ReadOpArgHandler handler)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetCPUOpArgReadHandler called without init\n"));
 	
 	if (nI8039Active == -1) {
@@ -896,7 +896,7 @@ void I8039SetCPUOpReadArgHandler(i8039ReadOpArgHandler handler)
 
 void I8039Exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Exit called without init\n"));
 #endif
 
@@ -913,9 +913,11 @@ void I8039Exit()
 	DebugCPU_I8039Initted = 0;
 }
 
+static int end_run = 0;
+
 int I8039Run(int cycles)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Run called without init\n"));
 #endif
 
@@ -925,6 +927,7 @@ int I8039Run(int cycles)
 	i8039_ICount_cycles = cycles;
 	i8039_ICount = (cycles - R.irq_extra_cycles);
 	R.irq_extra_cycles = 0;
+	end_run = 0;
 
 	do
 	{
@@ -973,7 +976,7 @@ int I8039Run(int cycles)
 			i8039_ICount -= count;
 		}
 
-	} while (i8039_ICount>0);
+	} while (i8039_ICount>0 && !end_run);
 
 	i8039_ICount -= R.irq_extra_cycles;
 	R.total_cycles += cycles - i8039_ICount;
@@ -988,6 +991,13 @@ int I8039Run(int cycles)
 INT32 I8039TotalCycles()
 {
 	return (INT32)R.total_cycles + (i8039_ICount_cycles - i8039_ICount);
+}
+
+INT32 I8039Idle(INT32 cycles)
+{
+	R.total_cycles += cycles;
+
+	return cycles;
 }
 
 void I8039NewFrame()
@@ -1005,7 +1015,7 @@ void I8039NewFrame()
 
 void I8039Reset (void)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Reset called without init\n"));
 #endif
 
@@ -1035,7 +1045,7 @@ void I8039Reset (void)
 
 void I8039SetIrqState(int state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetIrqState called without init\n"));
 #endif
 
@@ -1050,7 +1060,7 @@ void I8039SetIrqState(int state)
 
 int I8039Scan(int nAction, int *pnMin)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Scan called without init\n"));
 #endif
 

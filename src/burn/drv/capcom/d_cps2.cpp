@@ -8460,13 +8460,6 @@ STD_ROM_FN(Xmvsfur2)
 
 // Driver functions
 
-static INT32 MmatrixInit()
-{
-	Mmatrix = 1;
-	
-	return Cps2Init();
-}
-
 static INT32 MvscjsingInit()
 {
 	// The case has a volume knob, and the digital switches are missing and the slider is missing from the test screen
@@ -8537,7 +8530,6 @@ static INT32 DrvExit()
 	Ssf2t = 0;
 	Ssf2tb = 0;
 	Xmcota = 0;
-	Mmatrix = 0;
 
 	Cps2Volume = 39;
 	Cps2DisableDigitalVolume = 0;
@@ -9168,7 +9160,7 @@ struct BurnDriver BurnDrvCpsDimahoo = {
 	"dimahoo", NULL, NULL, NULL, "2000",
 	"Dimahoo (000121 Euro)\0", NULL, "8ing / Raizing / Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_MAHOU,
 	NULL, DimahooRomInfo, DimahooRomName, NULL, NULL, NULL, NULL, DimahooInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
@@ -9178,7 +9170,7 @@ struct BurnDriver BurnDrvCpsGreatMahouDaiJ = {
 	"gmahou", "dimahoo", NULL, NULL, "2000",
 	"Great Mahou Daisakusen (000121 Japan)\0", NULL, "8ing / Raizing / Capcom", "CPS2",
 	L"\u30B0\u30EC\u30FC\u30C8\u9B54\u6CD5\u5927\u4F5C\u6226 (Great Mahou Daisakusen 000121 Japan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_MAHOU,
 	NULL, GmdjRomInfo, GmdjRomName, NULL, NULL, NULL, NULL, DimahooInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
@@ -9188,7 +9180,7 @@ struct BurnDriver BurnDrvCpsDimahoou = {
 	"dimahoou", "dimahoo", NULL, NULL, "2000",
 	"Dimahoo (000121 USA)\0", NULL, "8ing / Raizing / Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_MAHOU,
 	NULL, DimahoouRomInfo, DimahoouRomName, NULL, NULL, NULL, NULL, DimahooInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
@@ -9510,7 +9502,7 @@ struct BurnDriver BurnDrvCpsMarsMatrix = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, MmatrixRomInfo, MmatrixRomName, NULL, NULL, NULL, NULL, MmatrixInputInfo, NULL,
-	MmatrixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -9520,7 +9512,7 @@ struct BurnDriver BurnDrvCpsMarsMatrixJ = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, MmatrixjRomInfo, MmatrixjRomName, NULL, NULL, NULL, NULL, MmatrixInputInfo, NULL,
-	MmatrixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -12639,13 +12631,6 @@ static INT32 PhoenixInit()
 	return nRet;
 }
 
-static INT32 MmatrixPhoenixInit()
-{
-	Mmatrix = 1;
-	
-	return PhoenixInit();
-}
-
 static INT32 Ssf2PhoenixInit()
 {
 	INT32 nRet = PhoenixInit();
@@ -12789,7 +12774,7 @@ struct BurnDriver BurnDrvCpsDimahoud = {
 	"dimahoud", "dimahoo", NULL, NULL, "2000",
 	"Dimahoo (000121 USA Phoenix Edition)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_MAHOU,
 	NULL, DimahoudRomInfo, DimahoudRomName, NULL, NULL, NULL, NULL, DimahooInputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
@@ -12871,7 +12856,7 @@ struct BurnDriver BurnDrvCpsMarsMatrixd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, MmatrixdRomInfo, MmatrixdRomName, NULL, NULL, NULL, NULL, MmatrixInputInfo, NULL,
-	MmatrixPhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

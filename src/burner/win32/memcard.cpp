@@ -35,7 +35,7 @@ static int MemCardRead(TCHAR* szFilename, unsigned char* pData, int nSize)
 	if (fp == NULL) {
 		return 1;
 	}
-	
+
 	fread(szReadHeader, 1, 8, fp);					// Read identifiers
 	if (memcmp(szReadHeader, szHeader, 8) == 0) {
 

@@ -1,4 +1,4 @@
-// FB Alpha - Emulator for MC68000/Z80 based arcade games
+// FinalBurn Neo - Emulator for MC68000/Z80 based arcade games
 //            Refer to the "license.txt" file for more info
 
 // Burner emulation library
@@ -312,7 +312,7 @@ INT32 BurnSynchroniseStream(INT32 nSoundRate);
 double BurnGetTime();
 
 // Handy debug binary-file dumper
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize);
 #define BurnDump(fn, b, bs) do { \
     bprintf(0, _T("Dumping %S (0x%x bytes) to %S\n"), #b, bs, #fn); \
@@ -685,6 +685,8 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define FBF_SONICWI										(1 << 7)
 #define FBF_PWRINST										(1 << 8)
 #define FBF_SONIC										(1 << 9)
+#define FBF_DONPACHI                                    (1 << 10)
+#define FBF_MAHOU                                       (1 << 11)
 
 #ifdef __cplusplus
  } // End of extern "C"

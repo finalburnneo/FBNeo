@@ -270,11 +270,11 @@ static int __cdecl BzipBurnLoadRom(unsigned char* Dest, int* pnWrote, int i)
 		_stprintf(szTempName, _T("%s"), FBALoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
 		sprintf(pszRomName, "%s", TCHARToANSI(szTempName, NULL, 0));
 	}
-	
+
 	TCHAR szTempLoading[100];
 	_stprintf(szTempLoading, _T("%s"), FBALoadStringEx(hAppInst, IDS_PROGRESS_LOADING_ONLY, true));
 	_stprintf(szText, _T("%s"), szTempLoading);
-	
+
 	if (ri.nType & (BRF_PRG | BRF_GRA | BRF_SND | BRF_BIOS)) {
 		if (ri.nType & BRF_BIOS) {
 			TCHAR szTempBios[100];
@@ -513,7 +513,7 @@ int BzipOpen(bool bootApp)
 		ZipClose();														// Close the last zip file if open
 		nCurrentZip = -1;
 	}
-	
+
 	if (!bootApp) {
 		// Check the roms to see if the code, graphics etc are complete
 		CheckRoms();
@@ -577,30 +577,30 @@ int BzipOpen(bool bootApp)
 			FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n"));
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
 		}
-		
+
 		// check for hard drive images (assumed max one per game)
 		char *szHDDNameTmp = NULL;
 		BurnDrvGetHDDName(&szHDDNameTmp, 0, 0);
-		
+
 		if (szHDDNameTmp) {
 			char *szHddFolderName = NULL;
-		
+
 			if (BurnDrvGetTextA(DRV_PARENT)) {
 				szHddFolderName = BurnDrvGetTextA(DRV_PARENT);
 			} else {
 				szHddFolderName = BurnDrvGetTextA(DRV_NAME);
 			}
-			
+
 			char szHDDPath[MAX_PATH];
 			sprintf(szHDDPath, "%s%s/%s", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
-			
+
 			FILE *test = fopen(szHDDPath, "rb");
 			if (test) {
 				fclose(test);
 			} else {
 				FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n"));
 				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOHDDDATA));
-				
+
 				nBzipError = 1;
 			}
 		}
@@ -611,19 +611,19 @@ int BzipOpen(bool bootApp)
 		// check for hard drive images (assumed max one per game)
 		char *szHDDNameTmp = NULL;
 		BurnDrvGetHDDName(&szHDDNameTmp, 0, 0);
-		
+
 		if (szHDDNameTmp) {
 			char *szHddFolderName = NULL;
-		
+
 			if (BurnDrvGetTextA(DRV_PARENT)) {
 				szHddFolderName = BurnDrvGetTextA(DRV_PARENT);
 			} else {
 				szHddFolderName = BurnDrvGetTextA(DRV_NAME);
 			}
-			
+
 			char szHDDPath[MAX_PATH];
 			sprintf(szHDDPath, "%s%s/%s", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
-			
+
 			FILE *test = fopen(szHDDPath, "rb");
 			if (test) {
 				fclose(test);
@@ -631,7 +631,7 @@ int BzipOpen(bool bootApp)
 				return 1;
 			}
 		}
-		
+
 		return CheckRomsBoot();
 	}
 

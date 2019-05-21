@@ -38,7 +38,7 @@ cpu_core_config M6805Config =
 
 void m6805MapMemory(UINT8 *ptr, INT32 nStart, INT32 nEnd, INT32 nType)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805MapMemory called without init\n"));
 #endif
 
@@ -52,7 +52,7 @@ void m6805MapMemory(UINT8 *ptr, INT32 nStart, INT32 nEnd, INT32 nType)
 
 void m6805SetWriteHandler(void (*write)(UINT16, UINT8))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805SetWriteHandler called without init\n"));
 #endif
 
@@ -61,7 +61,7 @@ void m6805SetWriteHandler(void (*write)(UINT16, UINT8))
 
 void m6805SetReadHandler(UINT8 (*read)(UINT16))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805SetReadHandler called without init\n"));
 #endif
 
@@ -113,7 +113,7 @@ UINT8 m6805Fetch(UINT16 address)
 
 void m6805_write_rom(UINT32 address, UINT8 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805_write_rom called without init\n"));
 #endif
 
@@ -170,7 +170,7 @@ void m6805Init(INT32 num, INT32 max)
 
 void m6805Exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Exit called without init\n"));
 #endif
 
@@ -185,14 +185,14 @@ void m6805Exit()
 
 void m6805Open(INT32)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Open called without init\n"));
 #endif
 }
 
 void m6805Close()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Close called without init\n"));
 #endif
 }

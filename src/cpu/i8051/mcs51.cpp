@@ -318,12 +318,15 @@ struct _mcs51_state_t
 	UINT8	irq_prio[8];		/* interrupt priority */
 
 	int		icount;
+	int		cycle_start;
+	int		end_run;
 
 	mcs51_uart uart;			/* internal uart */
 
 	/* Internal Ram */
 	UINT8	internal_ram[0xff+1];	/* 128 RAM (8031/51) + 128 RAM in second bank (8032/52) */
 	UINT8	sfr_ram[0xff];			/* 128 SFR - these are in 0x80 - 0xFF */
+	INT32   total_cycles;
 
 	/* DS5002FP */
 	struct {
@@ -1973,6 +1976,9 @@ INT32 mcs51Run(int cycles) // divide cycles by 12! -dink
 	UINT8 op;
 
 	mcs51_state.icount = cycles;
+	mcs51_state.cycle_start = cycles;
+	mcs51_state.end_run = 0;
+
 	/* external interrupts may have been set since we last checked */
 	mcs51_state.inst_cycles = 0;
 	check_irqs();
@@ -2026,14 +2032,35 @@ INT32 mcs51Run(int cycles) // divide cycles by 12! -dink
 		if ((mcs51_state.features & FEATURE_CMOS) && GET_IDL)
 			return 0;
 
-	} while( mcs51_state.icount > 0 );
+	} while( mcs51_state.icount > 0 && !mcs51_state.end_run );
 
-	return cycles - mcs51_state.icount;
+	cycles = cycles - mcs51_state.icount;
+	mcs51_state.cycle_start = mcs51_state.icount = 0;
+	mcs51_state.total_cycles += cycles;
+
+	return cycles;
+}
+
+INT32 mcs51Idle(INT32 cycles)
+{
+	mcs51_state.total_cycles += cycles;
+
+	return cycles;
+}
+
+INT32 mcs51TotalCycles()
+{
+	return mcs51_state.total_cycles + (mcs51_state.cycle_start - mcs51_state.icount);
+}
+
+void mcs51NewFrame()
+{
+	mcs51_state.total_cycles = 0;
 }
 
 void mcs51RunEnd(void)
 {
-	mcs51_state.icount = 0;
+	mcs51_state.end_run = 1;
 }
 
 void mcs51_scan(INT32 nAction)

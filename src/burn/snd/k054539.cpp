@@ -74,7 +74,7 @@ static INT32 nPosition[2];
 
 void K054539_init_flags(INT32 chip, INT32 flags)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_init_flags called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539_init_flags called with invalid chip %x\n"), chip);
 #endif
@@ -85,7 +85,7 @@ void K054539_init_flags(INT32 chip, INT32 flags)
 
 void K054539_set_gain(INT32 chip, INT32 channel, double gain)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_set_gain called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539_set_gain called with invalid chip %x\n"), chip);
 #endif
@@ -96,7 +96,7 @@ void K054539_set_gain(INT32 chip, INT32 channel, double gain)
 
 static INT32 k054539_regupdate()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_regupdate called without init\n"));
 #endif
 
@@ -105,7 +105,7 @@ static INT32 k054539_regupdate()
 
 static void k054539_keyon(INT32 channel)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_keyon called without init\n"));
 #endif
 
@@ -115,7 +115,7 @@ static void k054539_keyon(INT32 channel)
 
 static void k054539_keyoff(INT32 channel)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_keyoff called without init\n"));
 #endif
 
@@ -125,7 +125,7 @@ static void k054539_keyoff(INT32 channel)
 
 void K054539Write(INT32 chip, INT32 offset, UINT8 data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Write called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539Write called with invalid chip %x\n"), chip);
 #endif
@@ -217,7 +217,7 @@ void K054539Write(INT32 chip, INT32 offset, UINT8 data)
 
 UINT8 K054539Read(INT32 chip, INT32 offset)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Read called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539Read called with invalid chip %x\n"), chip);
 #endif
@@ -247,7 +247,7 @@ UINT8 K054539Read(INT32 chip, INT32 offset)
 
 void K054539Reset(INT32 chip)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Reset called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539Reset called with invalid chip %x\n"), chip);
 #endif
@@ -339,7 +339,7 @@ void K054539Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 
 void K054539SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539SetRoute called without init\n"));
 	if (chip >nNumChips) bprintf(PRINT_ERROR, _T("K054539SetRoute called with invalid chip %x\n"), chip);
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("K054539SetRoute called with invalid index %i\n"), nIndex);
@@ -353,7 +353,7 @@ void K054539SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void K054539Exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Exit called without init\n"));
 #endif
 
@@ -380,7 +380,7 @@ static INT32 signdiff(INT32 a, INT32 b)
 
 void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Update called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539Update called with invalid chip %x\n"), chip);
 #endif
@@ -673,7 +673,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 
 void K054539Scan(INT32 nAction, INT32 *)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Scan called without init\n"));
 #endif
 

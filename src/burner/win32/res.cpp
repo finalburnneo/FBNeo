@@ -64,7 +64,7 @@ static INT_PTR CALLBACK ResProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)	// L
 				if(nOrientation == HORIZONTAL_ORIENTED_RES) {
 					nVidHorWidth	= nItemValue >> 16;
 					nVidHorHeight	= nItemValue & 0xFFFF;
-				} 
+				}
 				if(nOrientation == VERTICAL_ORIENTED_RES)	{
 					nVidVerWidth	= nItemValue >> 16;
 					nVidVerHeight	= nItemValue & 0xFFFF;

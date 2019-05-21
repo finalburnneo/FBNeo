@@ -1,7 +1,6 @@
 // FB Alpha Haunted Castle / Akuma-Jou Dracula driver module
 // Based on MAME driver by Bryan McPhail
 //
-// Todo: figure out crash on game-exit when refresh rate is set @ 59 in DrvInit()
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -441,6 +440,8 @@ static void DrvPaletteInit()
 
 static INT32 DrvInit()
 {
+	BurnSetRefreshRate(59);
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -511,8 +512,6 @@ static INT32 DrvInit()
 
 	K051649Init(3579545/2);
 	K051649SetRoute(0.45, BURN_SND_ROUTE_BOTH);
-
-	//BurnSetRefreshRate(59);  Causes crash-on-exit.  weird? hmm.
 
 	GenericTilesInit();
 

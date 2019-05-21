@@ -763,10 +763,12 @@ This list contains all games supported by FB Alpha.
 | gg_barbie	|  	| Barbie Super Model (Prototype)			| 		| 199?	| Unknown	| Sega Game Gear| 					|
 | md_barbiesm	|  	| Barbie Super Model (USA)				| 		| 1992	| Hi Tech Expres| Sega Megadrive| 					|
 | md_barbvac	|  	| Barbie Vacation Adventure (USA, Prototype)		| 		| 1994	| Hi Tech Expres| Sega Megadrive| 					|
+| md_sor3bk3p	|  	| Bare Knuckle 3 Project (World) (Hack, 2019)		| md_sor3	| 1994	| 2019 Gsaurus	| Sega Megadrive| 					|
 | md_bk2p	|  	| Bare Knuckle II (Jpn, Prototype)			| md_sor2	| 1992	| Sega		| Sega Megadrive| 					|
 | md_bk3e	|  	| Bare Knuckle III (Hack, English)			| md_sor3	| 2009	| 2009 Twilight | Sega Megadrive| 					|
 | md_bk3	|  	| Bare Knuckle III (Jpn)				| md_sor3	| 1994	| Sega		| Sega Megadrive| 					|
 | md_bk3p	|  	| Bare Knuckle III (Jpn, Prototype)			| md_sor3	| 1994	| Sega		| Sega Megadrive| 					|
+| md_bk3pro	|  	| Bare Knuckle III Project (Japan) (Hack, 0.3)		| md_sor3	| 1994	| 2018 Gsaurus	| Sega Megadrive| 					|
 | pce_baribari	|  	| Bari Bari Densetsu					| 		| 1989	| Taito		| PC Engine	| 					|
 | md_barkley	|  	| Barkley Shut Up and Jam! (Euro, USA)			| 		| 1993	| Accolade	| Sega Megadrive| 					|
 | md_barkley2	|  	| Barkley Shut Up and Jam! 2 (USA)			| 		| 1995	| Accolade	| Sega Megadrive| 					|
@@ -6600,6 +6602,7 @@ This list contains all games supported by FB Alpha.
 | msx_nightcity	|  	| Night City						| 		| 2006	| German Gomez H| MSX		| 					|
 | tg_nightcr	|  	| Night Creatures					| 		| 1992	| NEC		| TurboGrafx 16	| 					|
 | nitedrvr	|  	| Night Driver						| 		| 1976	| Atari		| Miscellaneous	| 					|
+| msx_nightknight|  	| Night Knight (v1.0.3)					| 		| 2019	| Juan J. Martin| MSX		| 					|
 | msx_nightshd	|  	| Night Shade (Jpn)					| 		| 1986	| Nihon Dexter	| MSX		| 					|
 | nslasherj	|  	| Night Slashers (Japan Rev 1.2, DE-0397-0 PCB)		| nslasher	| 1994	| Data East Corp| DECO 32	| 					|
 | nslasher	|  	| Night Slashers (Korea Rev 1.3, DE-0397-0 PCB)		| 		| 1994	| Data East Corp| DECO 32	| 					|
@@ -8718,16 +8721,11 @@ This list contains all games supported by FB Alpha.
 | pce_sonson2	|  	| Son Son II						| 		| 1989	| NEC		| PC Engine	| 					|
 | sonson	|  	| Son Son						| 		| 1984	| Capcom	| Miscellaneous	| 					|
 | md_skp12	|  	| Sonic & Knuckles (Prototype 0525, 19940525, 15.28)	| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
-| md_skp11	|   NW	| Sonic & Knuckles (Prototype 0606, 19940605, 22.25, S2K| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
 | md_skp10	|  	| Sonic & Knuckles (Prototype 0606, 19940606, 10.02)	| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
-| md_skp09	|   NW	| Sonic & Knuckles (Prototype 0608, 19940608, 03.35, S2K| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
 | md_skp08	|  	| Sonic & Knuckles (Prototype 0608, 19940608, 05.03)	| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
-| md_skp07	|   NW	| Sonic & Knuckles (Prototype 0610, 19940610, 03.11, S2K| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
 | md_skp06	|  	| Sonic & Knuckles (Prototype 0610, 19940610, 07.49)	| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
-| md_skp05	|   NW	| Sonic & Knuckles (Prototype 0612, 19940612, 18.18, S2K| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
 | md_skp04	|  	| Sonic & Knuckles (Prototype 0612, 19940612, 18.27)	| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
 | md_skp02	|  	| Sonic & Knuckles (Prototype 0618, 19940618, 09.15)	| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
-| md_skp03	|   NW	| Sonic & Knuckles (Prototype 0618, 19940618, 9.07, S2K | md_sk		| 1994	| Sega		| Sega Megadrive| 					|
 | md_skp01	|  	| Sonic & Knuckles (Prototype 0619, 19940619, 08.18)	| md_sk		| 1994	| Sega		| Sega Megadrive| 					|
 | md_sk		|  	| Sonic & Knuckles (World)				| 		| 1994	| Sega		| Sega Megadrive| 					|
 | md_sks1	|  	| Sonic & Knuckles + Sonic the Hedgehog (World)		| 		| 1994 + 1991| Sega		| Sega Megadrive| Lock-On Technology			|
@@ -9480,7 +9478,7 @@ This list contains all games supported by FB Alpha.
 | md_sor3up01	|  	| Streets of Rage 3 (Prototype, 19940413)		| md_sor3	| 1994	| Sega		| Sega Megadrive| 					|
 | md_sor3u	|  	| Streets of Rage 3 (USA)				| md_sor3	| 1994	| Sega		| Sega Megadrive| 					|
 | md_sor3ex	|  	| Streets of Rage 3 - Extreme Edition (V0.42) (Hack)	| md_sor3	| 2012	| 2012 Gsaurus	| Sega Megadrive| 					|
-| md_sor3bk3p	|  	| Streets of Rage 3 - The Bare Knuckle 3 Project (Hack, | md_sor3	| 1994	| 2017 Gsaurus	| Sega Megadrive| 					|
+| md_sor3pro	|  	| Streets of Rage 3 Project (USA) (Hack, 0.3)		| md_sor3	| 1994	| 2018 Gsaurus	| Sega Megadrive| 					|
 | md_sor2	|  	| Streets of Rage II (Euro) ~ Bare Knuckle II - Shitou e| 		| 1993	| Sega		| Sega Megadrive| 					|
 | sms_sor2	|  	| Streets of Rage II (Euro, Bra)			| 		| 1993	| Sega		| Sega Master Sy| 					|
 | gg_sor2	|  	| Streets of Rage II (World) ~ Bare Knuckle II - Shitou | 		| 1993	| Sega		| Sega Game Gear| 					|
@@ -9879,6 +9877,7 @@ This list contains all games supported by FB Alpha.
 | sws92g	|  	| Super World Stadium '92 Gekitouban (Japan)		| sws92		| 1992	| Namco		| System 2	| 					|
 | sws93		|  	| Super World Stadium '93 (Japan)			| 		| 1993	| Namco		| System 2	| 					|
 | sws		|  	| Super World Stadium (Japan)				| 		| 1992	| Namco		| System 2	| 					|
+| sxevious	|  	| Super Xevious (Namco)					| xevious	| 1984	| Namco		| Miscellaneous	| 					|
 | szaxxon	|  	| Super Zaxxon						| 		| 1982	| Sega		| Zaxxon	| 					|
 | superxm	|  	| Super-X (Mitchell)					| superx	| 1994	| Dooyong (Mitch| Miscellaneous	| 					|
 | superx	|  	| Super-X (NTC)						| 		| 1994	| Dooyong (NTC l| Miscellaneous	| 					|
@@ -11887,6 +11886,7 @@ This list contains all games supported by FB Alpha.
 | sms_xenon2v	|  	| Xenon 2 - Megablast (Virgin) (Euro)			| sms_xenon2	| 1991	| Virgin Interac| Sega Master Sy| 					|
 | 3in1semi	|  	| XESS - The New Revolution (SemiCom 3-in-1)		| 		| 1997	| SemiCom	| Kaneko Pandora| 					|
 | spec_xevious	|  	| Xevious (48K)						| 		| 1987	| U.S. Gold	| ZX Spectrum	| 					|
+| xevious	|  	| Xevious (Namco)					| 		| 1982	| Namco		| Miscellaneous	| 					|
 | pce_xevious	|  	| Xevious - Fardraut Densetsu				| 		| 1990	| Namcot	| PC Engine	| 					|
 | xexexa	|  	| Xexex (ver AAA)					| xexex		| 1991	| Konami	| GX067		| 					|
 | xexex		|  	| Xexex (ver EAA)					| 		| 1991	| Konami	| GX067		| 					|

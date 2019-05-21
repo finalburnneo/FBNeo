@@ -10,7 +10,7 @@
 	// file_stream_transforms due to conflicting declarations.
 	// It also seems one of those includes provide math on msvc2017, so
 	// we'll lack M_PI if we don't define _USE_MATH_DEFINES right now.
-	// Furthermore, <string> breaks FBA_DEBUG while <string.h> breaks
+	// Furthermore, <string> breaks FBNEO_DEBUG while <string.h> breaks
 	// msvc2017 x86 builds...
 	#define _USE_MATH_DEFINES
 	#include <wchar.h>

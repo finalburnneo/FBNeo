@@ -1,4 +1,4 @@
-# FBAlphaFB-libretro
+# FBNeo-libretro
 
 ## How to build
 
@@ -26,11 +26,11 @@ You can emulate consoles (with specific romsets, dats are also in the [dats](/da
 
 ## Samples
 
-Samples should be put under `SYSTEM_DIRECTORY/fba/samples`
+Samples should be put under `SYSTEM_DIRECTORY/fbneo/samples`
 
 ## hiscore.dat
 
-Copy [hiscore.dat](/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fba/`
+Copy [hiscore.dat](/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/`
 
 ## Mapping
 

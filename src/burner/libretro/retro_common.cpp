@@ -77,22 +77,22 @@ static UINT8 diag_input_select_l_r[] =  {RETRO_DEVICE_ID_JOYPAD_SELECT, RETRO_DE
 
 // Global core options
 static const struct retro_variable var_empty = { NULL, NULL };
-static const struct retro_variable var_fba_allow_depth_32 = { "fba-allow-depth-32", "Use 32-bits color depth when available; disabled|enabled" };
-static const struct retro_variable var_fba_vertical_mode = { "fba-vertical-mode", "Vertical mode; disabled|enabled" };
-static const struct retro_variable var_fba_frameskip = { "fba-frameskip", "Frameskip; 0|1|2|3|4|5" };
-static const struct retro_variable var_fba_cpu_speed_adjust = { "fba-cpu-speed-adjust", "CPU overclock; 100|110|120|130|140|150|160|170|180|190|200" };
-static const struct retro_variable var_fba_diagnostic_input = { "fba-diagnostic-input", "Diagnostic Input; None|Hold Start|Start + A + B|Hold Start + A + B|Start + L + R|Hold Start + L + R|Hold Select|Select + A + B|Hold Select + A + B|Select + L + R|Hold Select + L + R" };
-static const struct retro_variable var_fba_hiscores = { "fba-hiscores", "Hiscores; enabled|disabled" };
-static const struct retro_variable var_fba_samplerate = { "fba-samplerate", "Samplerate (need to quit retroarch); 48000|44100|22050|11025" };
-static const struct retro_variable var_fba_sample_interpolation = { "fba-sample-interpolation", "Sample Interpolation; 4-point 3rd order|2-point 1st order|disabled" };
-static const struct retro_variable var_fba_fm_interpolation = { "fba-fm-interpolation", "FM Interpolation; 4-point 3rd order|disabled" };
-static const struct retro_variable var_fba_analog_speed = { "fba-analog-speed", "Analog Speed; 10|9|8|7|6|5|4|3|2|1" };
+static const struct retro_variable var_fbneo_allow_depth_32 = { "fbneo-allow-depth-32", "Use 32-bits color depth when available; disabled|enabled" };
+static const struct retro_variable var_fbneo_vertical_mode = { "fbneo-vertical-mode", "Vertical mode; disabled|enabled" };
+static const struct retro_variable var_fbneo_frameskip = { "fbneo-frameskip", "Frameskip; 0|1|2|3|4|5" };
+static const struct retro_variable var_fbneo_cpu_speed_adjust = { "fbneo-cpu-speed-adjust", "CPU overclock; 100|110|120|130|140|150|160|170|180|190|200" };
+static const struct retro_variable var_fbneo_diagnostic_input = { "fbneo-diagnostic-input", "Diagnostic Input; None|Hold Start|Start + A + B|Hold Start + A + B|Start + L + R|Hold Start + L + R|Hold Select|Select + A + B|Hold Select + A + B|Select + L + R|Hold Select + L + R" };
+static const struct retro_variable var_fbneo_hiscores = { "fbneo-hiscores", "Hiscores; enabled|disabled" };
+static const struct retro_variable var_fbneo_samplerate = { "fbneo-samplerate", "Samplerate (need to quit retroarch); 48000|44100|22050|11025" };
+static const struct retro_variable var_fbneo_sample_interpolation = { "fbneo-sample-interpolation", "Sample Interpolation; 4-point 3rd order|2-point 1st order|disabled" };
+static const struct retro_variable var_fbneo_fm_interpolation = { "fbneo-fm-interpolation", "FM Interpolation; 4-point 3rd order|disabled" };
+static const struct retro_variable var_fbneo_analog_speed = { "fbneo-analog-speed", "Analog Speed; 10|9|8|7|6|5|4|3|2|1" };
 #ifdef USE_CYCLONE
-static const struct retro_variable var_fba_cyclone = { "fba-cyclone", "Cyclone (need to quit retroarch, change savestate format, use at your own risk); disabled|enabled" };
+static const struct retro_variable var_fbneo_cyclone = { "fbneo-cyclone", "Cyclone (need to quit retroarch, change savestate format, use at your own risk); disabled|enabled" };
 #endif
 
 // Neo Geo core options
-static const struct retro_variable var_fba_neogeo_mode = { "fba-neogeo-mode", "Force Neo Geo mode (if available); MVS|AES|UNIBIOS|DIPSWITCH" };
+static const struct retro_variable var_fbneo_neogeo_mode = { "fbneo-neogeo-mode", "Force Neo Geo mode (if available); MVS|AES|UNIBIOS|DIPSWITCH" };
 
 // Replace the char c_find by the char c_replace in the destination c string
 char* str_char_replace(char* destination, char c_find, char c_replace)
@@ -226,30 +226,30 @@ void set_environment()
 #endif
 
 	// Add the Global core options
-	vars_systems.push_back(&var_fba_allow_depth_32);
-	vars_systems.push_back(&var_fba_vertical_mode);
-	vars_systems.push_back(&var_fba_frameskip);
-	vars_systems.push_back(&var_fba_cpu_speed_adjust);
-	vars_systems.push_back(&var_fba_hiscores);
+	vars_systems.push_back(&var_fbneo_allow_depth_32);
+	vars_systems.push_back(&var_fbneo_vertical_mode);
+	vars_systems.push_back(&var_fbneo_frameskip);
+	vars_systems.push_back(&var_fbneo_cpu_speed_adjust);
+	vars_systems.push_back(&var_fbneo_hiscores);
 	if (nGameType != RETRO_GAME_TYPE_NEOCD)
-		vars_systems.push_back(&var_fba_samplerate);
-	vars_systems.push_back(&var_fba_sample_interpolation);
-	vars_systems.push_back(&var_fba_fm_interpolation);
-	vars_systems.push_back(&var_fba_analog_speed);
+		vars_systems.push_back(&var_fbneo_samplerate);
+	vars_systems.push_back(&var_fbneo_sample_interpolation);
+	vars_systems.push_back(&var_fbneo_fm_interpolation);
+	vars_systems.push_back(&var_fbneo_analog_speed);
 #ifdef USE_CYCLONE
-	vars_systems.push_back(&var_fba_cyclone);
+	vars_systems.push_back(&var_fbneo_cyclone);
 #endif
 
 	if (pgi_diag)
 	{
-		vars_systems.push_back(&var_fba_diagnostic_input);
+		vars_systems.push_back(&var_fbneo_diagnostic_input);
 	}
 
 	if (is_neogeo_game)
 	{
 		// Add the Neo Geo core options
 		if (allow_neogeo_mode)
-			vars_systems.push_back(&var_fba_neogeo_mode);
+			vars_systems.push_back(&var_fbneo_neogeo_mode);
 	}
 
 	int nbr_vars = vars_systems.size();
@@ -307,7 +307,7 @@ void check_variables(void)
 {
 	struct retro_variable var = {0};
 
-	var.key = var_fba_cpu_speed_adjust.key;
+	var.key = var_fbneo_cpu_speed_adjust.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		if (strcmp(var.value, "110") == 0)
@@ -334,7 +334,7 @@ void check_variables(void)
 			nBurnCPUSpeedAdjust = 0x0100;
 	}
 
-	var.key = var_fba_allow_depth_32.key;
+	var.key = var_fbneo_allow_depth_32.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		if (strcmp(var.value, "enabled") == 0)
@@ -343,7 +343,7 @@ void check_variables(void)
 			bAllowDepth32 = false;
 	}
 
-	var.key = var_fba_vertical_mode.key;
+	var.key = var_fbneo_vertical_mode.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		if (strcmp(var.value, "enabled") == 0)
@@ -352,7 +352,7 @@ void check_variables(void)
 			bVerticalMode = false;
 	}
 
-	var.key = var_fba_frameskip.key;
+	var.key = var_fbneo_frameskip.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		if (strcmp(var.value, "0") == 0)
@@ -371,7 +371,7 @@ void check_variables(void)
 
 	if (pgi_diag)
 	{
-		var.key = var_fba_diagnostic_input.key;
+		var.key = var_fbneo_diagnostic_input.key;
 		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 		{
 			diag_input = NULL;
@@ -433,7 +433,7 @@ void check_variables(void)
 	{
 		if (allow_neogeo_mode)
 		{
-			var.key = var_fba_neogeo_mode.key;
+			var.key = var_fbneo_neogeo_mode.key;
 			if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 			{
 				if (strcmp(var.value, "MVS") == 0)
@@ -448,7 +448,7 @@ void check_variables(void)
 		}
 	}
 
-	var.key = var_fba_hiscores.key;
+	var.key = var_fbneo_hiscores.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		if (strcmp(var.value, "enabled") == 0)
@@ -459,7 +459,7 @@ void check_variables(void)
 
 	if (nGameType != RETRO_GAME_TYPE_NEOCD)
 	{
-		var.key = var_fba_samplerate.key;
+		var.key = var_fbneo_samplerate.key;
 		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 		{
 			if (strcmp(var.value, "48000") == 0)
@@ -480,7 +480,7 @@ void check_variables(void)
 		g_audio_samplerate = 44100;
 	}
 
-	var.key = var_fba_sample_interpolation.key;
+	var.key = var_fbneo_sample_interpolation.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		if (strcmp(var.value, "4-point 3rd order") == 0)
@@ -493,7 +493,7 @@ void check_variables(void)
 			nInterpolation = 3;
 	}
 
-	var.key = var_fba_fm_interpolation.key;
+	var.key = var_fbneo_fm_interpolation.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		if (strcmp(var.value, "4-point 3rd order") == 0)
@@ -504,7 +504,7 @@ void check_variables(void)
 			nFMInterpolation = 3;
 	}
 
-	var.key = var_fba_analog_speed.key;
+	var.key = var_fbneo_analog_speed.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		if (strcmp(var.value, "10") == 0)
@@ -532,7 +532,7 @@ void check_variables(void)
 	}
 
 #ifdef USE_CYCLONE
-	var.key = var_fba_cyclone.key;
+	var.key = var_fbneo_cyclone.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		if (strcmp(var.value, "enabled") == 0)

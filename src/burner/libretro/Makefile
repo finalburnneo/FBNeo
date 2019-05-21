@@ -4,7 +4,7 @@ DEBUG_UBSAN = 0
 HAVE_GRIFFIN = 0
 # fastcall only works on x86_32
 FASTCALL = 0
-# fastmath should improve performance with every arch, and there is no known issue with fbalpha
+# fastmath should improve performance with every arch, and there is no known issue with fbneo
 FASTMATH = 1
 USE_SPEEDHACKS = 1
 EXTERNAL_ZLIB = 0
@@ -47,8 +47,8 @@ else ifneq (,$(findstring rpi,$(platform)))
    override platform += unix
 endif
 
-MAIN_FBA_DIR	:= ../..
-VERSION_SCRIPT	:= $(MAIN_FBA_DIR)/burner/libretro/link.T
+MAIN_FBNEO_DIR	:= ../..
+VERSION_SCRIPT	:= $(MAIN_FBNEO_DIR)/burner/libretro/link.T
 
 INLINE_LIMIT=-finline-limit=1200
 
@@ -64,7 +64,7 @@ ifneq (, $(findstring clang,$(CXX)))
 endif
 
 # TARGET
-TARGET_NAME := fbalpha
+TARGET_NAME := fbneo
 
 # Unix
 ifneq (,$(findstring unix,$(platform)))
@@ -273,19 +273,7 @@ else ifeq ($(platform), classic_armv7_a7)
 	TARGET := $(TARGET_NAME)_libretro.so
 	fpic := -fPIC
 	SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(VERSION_SCRIPT)
-	# There is already stuff for -Ox below, if Ofast is safe for fbalpha,
-	# it needs to be properly tested and added for all platforms
-	# PLATFORM_FLAGS += -Ofast
 	PLATFORM_FLAGS = -marm -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard
-	# The following c++11 stuff makes no sense, fbalpha is gnu99/gnu++98 compliant
-	# it was probably just overriding a faulty flag above
-	# CXXFLAGS := -std=gnu++11
-	# CFLAGS := -std=gnu11
-	# The following is definitely unneeded
-	# BUILTIN_GPU = neon
-	# USE_DYNAREC = 1
-	# CPPFLAGS += $(CFLAGS)
-	# ASFLAGS += $(CFLAGS)
 	USE_EXPERIMENTAL_FLAGS = 1
 	HAVE_NEON = 1
 	USE_CYCLONE = 1
@@ -449,13 +437,13 @@ CXX_SYSTEM = g++
 
 include Makefile.common
 
-FBA_CXXOBJ := $(SOURCES_CXX:.cpp=.o)
-FBA_COBJ := $(SOURCES_C:.c=.o)
-FBA_SOBJ := $(SOURCES_S:.S=.o)
+FBNEO_CXXOBJ := $(SOURCES_CXX:.cpp=.o)
+FBNEO_COBJ := $(SOURCES_C:.c=.o)
+FBNEO_SOBJ := $(SOURCES_S:.S=.o)
 
-OBJS := $(FBA_COBJ) $(FBA_CXXOBJ) $(FBA_SOBJ)
+OBJS := $(FBNEO_COBJ) $(FBNEO_CXXOBJ) $(FBNEO_SOBJ)
 
-FBA_DEFINES += -D__LIBRETRO__ \
+FBNEO_DEFINES += -D__LIBRETRO__ \
 	$(ENDIANNESS_DEFINES) \
 	$(PLATFORM_DEFINES) \
 	$(NEON_FLAGS) \
@@ -464,11 +452,11 @@ FBA_DEFINES += -D__LIBRETRO__ \
 INCFLAGS := $(foreach dir,$(INCLUDE_DIRS),-I$(dir))
 
 ifeq ($(USE_SPEEDHACKS), 1)
-   FBA_DEFINES += -DUSE_SPEEDHACKS
+   FBNEO_DEFINES += -DUSE_SPEEDHACKS
 endif
 
 ifeq ($(FASTCALL), 1)
-   FBA_DEFINES += -DFASTCALL
+   FBNEO_DEFINES += -DFASTCALL
 endif
 
 ifeq ($(FASTMATH), 1)
@@ -505,8 +493,8 @@ ifeq ($(DEBUG_UBSAN), 1)
 endif
 
 ifeq ($(DEBUG), 1)
-   CFLAGS += -O1 -g -DFBA_DEBUG
-   CXXFLAGS += -O1 -g -DFBA_DEBUG
+   CFLAGS += -O1 -g -DFBNEO_DEBUG
+   CXXFLAGS += -O1 -g -DFBNEO_DEBUG
 else
    ifeq (,$(findstring msvc,$(platform)))
       CFLAGS += -O3 -DNDEBUG
@@ -517,8 +505,8 @@ else
    endif
 endif
 
-CFLAGS += $(fpic) $(FBA_DEFINES)
-CXXFLAGS += $(fpic) $(FBA_DEFINES)
+CFLAGS += $(fpic) $(FBNEO_DEFINES)
+CXXFLAGS += $(fpic) $(FBNEO_DEFINES)
 LDFLAGS += $(fpic)
 
 ifeq (,$(findstring msvc,$(platform)))
@@ -556,50 +544,50 @@ all: $(TARGET)
 
 
 generate-files-clean:
-	rm -rf $(FBA_GENERATED_DIR)/
-	rm -rf $(FBA_CPU_DIR)/m68k/m68kops.c
-	rm -rf $(FBA_CPU_DIR)/m68k/m68kops.h
-	rm -rf $(MAIN_FBA_DIR)/../gamelist.txt
+	rm -rf $(FBNEO_GENERATED_DIR)/
+	rm -rf $(FBNEO_CPU_DIR)/m68k/m68kops.c
+	rm -rf $(FBNEO_CPU_DIR)/m68k/m68kops.h
+	rm -rf $(MAIN_FBNEO_DIR)/../gamelist.txt
 
 generate-files:
-	@mkdir -p $(FBA_GENERATED_DIR) 2>/dev/null || /bin/true
-	@echo "Generating $(FBA_GENERATED_DIR)/driverlist.h..."
+	@mkdir -p $(FBNEO_GENERATED_DIR) 2>/dev/null || /bin/true
+	@echo "Generating $(FBNEO_GENERATED_DIR)/driverlist.h..."
 	@echo ""
-	$(PERL) $(FBA_SCRIPTS_DIR)/gamelist.pl -o $(FBA_GENERATED_DIR)/driverlist.h -l $(MAIN_FBA_DIR)/../gamelist.txt $(FBA_BURN_DRIVERS_DIRS)
+	$(PERL) $(FBNEO_SCRIPTS_DIR)/gamelist.pl -o $(FBNEO_GENERATED_DIR)/driverlist.h -l $(MAIN_FBNEO_DIR)/../gamelist.txt $(FBNEO_BURN_DRIVERS_DIRS)
 	@echo ""
-	@echo "Generating $(FBA_GENERATED_DIR)/neo_sprite_func.h..."
+	@echo "Generating $(FBNEO_GENERATED_DIR)/neo_sprite_func.h..."
 	@echo ""
-	@echo "Generating $(FBA_GENERATED_DIR)/neo_sprite_func_table.h..."
+	@echo "Generating $(FBNEO_GENERATED_DIR)/neo_sprite_func_table.h..."
 	@echo ""
-	$(PERL) $(FBA_SCRIPTS_DIR)/neo_sprite_func.pl -o $(FBA_GENERATED_DIR)/neo_sprite_func.h
+	$(PERL) $(FBNEO_SCRIPTS_DIR)/neo_sprite_func.pl -o $(FBNEO_GENERATED_DIR)/neo_sprite_func.h
 	@echo ""
-	@echo "Generating $(FBA_GENERATED_DIR)/psikyo_tile_func.h..."
+	@echo "Generating $(FBNEO_GENERATED_DIR)/psikyo_tile_func.h..."
 	@echo ""
-	@echo "Generating $(FBA_GENERATED_DIR)/psikyo_tile_func_table.h..."
+	@echo "Generating $(FBNEO_GENERATED_DIR)/psikyo_tile_func_table.h..."
 	@echo ""
-	$(PERL) $(FBA_SCRIPTS_DIR)/psikyo_tile_func.pl -o $(FBA_GENERATED_DIR)/psikyo_tile_func.h
-	@echo "Generating $(FBA_GENERATED_DIR)/cave_sprite_func.h..."
+	$(PERL) $(FBNEO_SCRIPTS_DIR)/psikyo_tile_func.pl -o $(FBNEO_GENERATED_DIR)/psikyo_tile_func.h
+	@echo "Generating $(FBNEO_GENERATED_DIR)/cave_sprite_func.h..."
 	@echo ""
-	@echo "Generating[ $(FBA_GENERATED_DIR)/cave_tile_func_table.h"
+	@echo "Generating[ $(FBNEO_GENERATED_DIR)/cave_tile_func_table.h"
 	@echo ""
-	$(PERL) $(FBA_SCRIPTS_DIR)/cave_sprite_func.pl -o $(FBA_GENERATED_DIR)/cave_sprite_func.h
-	$(PERL) $(FBA_SCRIPTS_DIR)/cave_tile_func.pl -o $(FBA_GENERATED_DIR)/cave_tile_func.h
+	$(PERL) $(FBNEO_SCRIPTS_DIR)/cave_sprite_func.pl -o $(FBNEO_GENERATED_DIR)/cave_sprite_func.h
+	$(PERL) $(FBNEO_SCRIPTS_DIR)/cave_tile_func.pl -o $(FBNEO_GENERATED_DIR)/cave_tile_func.h
 	@echo ""
-	@echo "Generate $(FBA_GENERATED_DIR)/toa_gp9001_func_table.h"
+	@echo "Generate $(FBNEO_GENERATED_DIR)/toa_gp9001_func_table.h"
 	@echo ""
-	$(PERL) $(FBA_SCRIPTS_DIR)/toa_gp9001_func.pl -o $(FBA_GENERATED_DIR)/toa_gp9001_func.h
-	$(CXX_SYSTEM) $(GENERATE_OPTS) -o $(PGM_SPRITE_CREATE_EXE) $(FBA_BURN_DRIVERS_DIR)/pgm/pgm_sprite_create.cpp
+	$(PERL) $(FBNEO_SCRIPTS_DIR)/toa_gp9001_func.pl -o $(FBNEO_GENERATED_DIR)/toa_gp9001_func.h
+	$(CXX_SYSTEM) $(GENERATE_OPTS) -o $(PGM_SPRITE_CREATE_EXE) $(FBNEO_BURN_DRIVERS_DIR)/pgm/pgm_sprite_create.cpp
 	@echo ""
-	@echo "Generating $(FBA_GENERATED_DIR)/pgm_sprite.h..."
+	@echo "Generating $(FBNEO_GENERATED_DIR)/pgm_sprite.h..."
 	@echo ""
-	$(EXE_PREFIX)$(PGM_SPRITE_CREATE_EXE) > $(FBA_GENERATED_DIR)/pgm_sprite.h
-	$(CC_SYSTEM) $(GENERATE_OPTS) -o $(M68KMAKE_EXE) $(FBA_CPU_DIR)/m68k/m68kmake.c
-	$(EXE_PREFIX)$(M68KMAKE_EXE) $(FBA_CPU_DIR)/m68k/ $(FBA_CPU_DIR)/m68k/m68k_in.c
-	$(CXX_SYSTEM) $(GENERATE_OPTS) -o $(CTVMAKE_EXE) $(FBA_BURN_DRIVERS_DIR)/capcom/ctv_make.cpp
+	$(EXE_PREFIX)$(PGM_SPRITE_CREATE_EXE) > $(FBNEO_GENERATED_DIR)/pgm_sprite.h
+	$(CC_SYSTEM) $(GENERATE_OPTS) -o $(M68KMAKE_EXE) $(FBNEO_CPU_DIR)/m68k/m68kmake.c
+	$(EXE_PREFIX)$(M68KMAKE_EXE) $(FBNEO_CPU_DIR)/m68k/ $(FBNEO_CPU_DIR)/m68k/m68k_in.c
+	$(CXX_SYSTEM) $(GENERATE_OPTS) -o $(CTVMAKE_EXE) $(FBNEO_BURN_DRIVERS_DIR)/capcom/ctv_make.cpp
 	@echo ""
-	@echo "Generating $(FBA_GENERATED_DIR)/ctv.h..."
+	@echo "Generating $(FBNEO_GENERATED_DIR)/ctv.h..."
 	@echo ""
-	$(EXE_PREFIX)$(CTVMAKE_EXE) > $(FBA_GENERATED_DIR)/ctv.h
+	$(EXE_PREFIX)$(CTVMAKE_EXE) > $(FBNEO_GENERATED_DIR)/ctv.h
 
 OBJOUT   = -o
 LINKOUT  = -o
@@ -638,14 +626,14 @@ endif
 
 # Disabling file_stream_transform for those files
 # In the following file, it's messing with the cdda playback
-$(MAIN_FBA_DIR)/burner/libretro/retro_cdemu.o: $(MAIN_FBA_DIR)/burner/libretro/retro_cdemu.cpp
+$(MAIN_FBNEO_DIR)/burner/libretro/retro_cdemu.o: $(MAIN_FBNEO_DIR)/burner/libretro/retro_cdemu.cpp
 	$(CXX) -c $(OBJOUT)$@ $< $(CXXFLAGS) $(INCFLAGS) -DSKIP_STDIO_REDEFINES
 
 # In the following file, it's lacking a stdout implementation
-$(MAIN_FBA_DIR)/cpu/mips3/x64/mips3_x64.o: $(MAIN_FBA_DIR)/cpu/mips3/x64/mips3_x64.cpp
+$(MAIN_FBNEO_DIR)/cpu/mips3/x64/mips3_x64.o: $(MAIN_FBNEO_DIR)/cpu/mips3/x64/mips3_x64.cpp
 	$(CXX) -c $(OBJOUT)$@ $< $(CXXFLAGS) $(INCFLAGS) -DSKIP_STDIO_REDEFINES
 
-$(MAIN_FBA_DIR)/cpu/mips3_intf.o: $(MAIN_FBA_DIR)/cpu/mips3_intf.cpp
+$(MAIN_FBNEO_DIR)/cpu/mips3_intf.o: $(MAIN_FBNEO_DIR)/cpu/mips3_intf.cpp
 	$(CXX) -c $(OBJOUT)$@ $< $(CXXFLAGS) $(INCFLAGS) -DSKIP_STDIO_REDEFINES
 
 %.o: %.cpp

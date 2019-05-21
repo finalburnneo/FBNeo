@@ -1,5 +1,5 @@
-#ifndef _FBA_ENDIAN_H
-#define _FBA_ENDIAN_H
+#ifndef _FBNEO_ENDIAN_H
+#define _FBNEO_ENDIAN_H
 
 #ifndef _XBOX
 #define NO_64BIT_BYTESWAP

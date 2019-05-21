@@ -11,4 +11,4 @@ Please raise an issue on the [project GitHub](https://github.com/finalburnneo/FB
 
 # What about FB Alpha?
 
-Many of the developers of this project also worked on FB Alpha. Due to a ["controversy"](https://www.google.com/search?q=capcom+home+arcade+illegal&oq=capcom+home+arcade+illegal), and would recommend that everyone to use this emulator instead. 
+Many of the developers of this project also worked on FB Alpha. Due to a ["controversy"](https://www.google.com/search?q=capcom+home+arcade+illegal&oq=capcom+home+arcade+illegal), we no longer do, and would recommend that everyone to use this emulator instead. 

@@ -734,9 +734,9 @@ static INT32 DrvDraw()
 
 	INT32 shift = (cpu_clock == 9000000) ? 1 : 0;
 
-	draw_sprites(2, 0x800, shift);
-	draw_sprites(3, 0xc00, shift);
-	draw_sprites(1, 0x400, shift);
+	if (nSpriteEnable & 1) draw_sprites(2, 0x800, shift);
+	if (nSpriteEnable & 2) draw_sprites(3, 0xc00, shift);
+	if (nSpriteEnable & 4) draw_sprites(1, 0x400, shift);
 
 	BurnTransferCopy(DrvPalette);
 

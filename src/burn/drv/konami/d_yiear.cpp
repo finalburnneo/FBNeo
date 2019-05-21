@@ -440,8 +440,10 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_layer();
-	draw_sprites();
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_layer();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 

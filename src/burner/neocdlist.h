@@ -31,10 +31,10 @@ struct iso9660_date
 {
 	unsigned char Year;		// Number of year since 1900
 	unsigned char Month;	// Month (1 to 12)
-	unsigned char Day;		// Day (1 to 31) 
-	unsigned char Hour;		// Hour (0 to 23) 
-	unsigned char Minute;	// Minute (0 to 59) 
-	unsigned char Second;	// Second (0 to 59) 
+	unsigned char Day;		// Day (1 to 31)
+	unsigned char Hour;		// Hour (0 to 23)
+	unsigned char Minute;	// Minute (0 to 59)
+	unsigned char Second;	// Second (0 to 59)
 	unsigned char Zone;		// Offset related to GMT, by 15-min interval (from -48 to +52)
 };
 
@@ -58,7 +58,7 @@ struct iso9660_DirectoryRecord
     unsigned char location_of_extent[8];	// [8] [LEF / BEF] LBN / Sector location of the file data
     unsigned char data_lenth[8];			// [8] [LEF / BEF] Length of the file section (bytes)
 	iso9660_date rec_date_time;				// [7] Recording Date and Time
-	unsigned char file_flags;				// [1] 8-bit flags 
+	unsigned char file_flags;				// [1] 8-bit flags
 												// [bit 0] File is Hidden if this bit is 1
 												// [bit 1] Entry is a Directory if this bit is 1
 												// [bit 2] Entry is an Associated file is this bit is 1
@@ -74,7 +74,7 @@ struct iso9660_DirectoryRecord
     char* file_id;							// [LEN_FI] File Identifier
 };
 
-struct iso9660_PathTableRecord 
+struct iso9660_PathTableRecord
 {
 	unsigned char len_di;					// [1] Length of Directory Identifier
 	unsigned char extended_attr_len;		// [1] Extended Attribute Record Length
@@ -84,7 +84,7 @@ struct iso9660_PathTableRecord
 };
 
 // Volume Descriptor Header (Sector 16)
-struct iso9660_VDH 
+struct iso9660_VDH
 {
 	char vdtype;	// [1] Volume Descriptor Type
 	unsigned char stdid[5];	// [5] ISO9660 Standard Identifier
@@ -116,12 +116,12 @@ struct iso9660_PVD
 	unsigned char type_m_path_table[4];
 	unsigned char opt_type_m_path_table[4];
 	iso9660_DirectoryRecord root_directory_record;
-	unsigned char volume_set_id[128]; 
+	unsigned char volume_set_id[128];
 	unsigned char publisher_id[128];
 	unsigned char preparer_id[128];
-	unsigned char application_id[128]; 
-	unsigned char copyright_file_id[37]; 
-	unsigned char abstract_file_id[37]; 
+	unsigned char application_id[128];
+	unsigned char copyright_file_id[37];
+	unsigned char abstract_file_id[37];
 	unsigned char bibliographic_file_id[37];
 
 	iso9660_bcd_date creation_date;		// [17]

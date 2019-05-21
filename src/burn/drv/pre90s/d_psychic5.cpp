@@ -525,6 +525,8 @@ static INT32 DrvInit()
 {
 	INT32 nRet = 0, nLen;
 
+	BurnSetRefreshRate(54);
+
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
@@ -596,8 +598,6 @@ static INT32 DrvInit()
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.08, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
-	
-	BurnSetRefreshRate(54);
 
 	// Reset the driver
 	DrvDoReset();

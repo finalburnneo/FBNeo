@@ -2162,6 +2162,13 @@ again:
 	return ret;
 }
 
+INT32 z180_idle(INT32 cyc)
+{
+	total_cycles += cyc;
+
+	return cyc;
+}
+
 void z180_run_end()
 {
 	end_run = 1;

@@ -69,7 +69,7 @@ static INT32 nNumChips = 0;
 
 void K007232Update(INT32 chip, INT16* pSoundBuf, INT32 nLength)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Update called without init\n"));
 	if (chip >nNumChips) bprintf(PRINT_ERROR, _T("K007232Update called with invalid chip %x\n"), chip);
 #endif
@@ -150,7 +150,7 @@ void K007232Update(INT32 chip, INT16* pSoundBuf, INT32 nLength)
 
 UINT8 K007232ReadReg(INT32 chip, INT32 r)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232ReadReg called without init\n"));
 	if (chip >nNumChips) bprintf(PRINT_ERROR, _T("K007232ReadReg called with invalid chip %x\n"), chip);
 #endif
@@ -177,7 +177,7 @@ UINT8 K007232ReadReg(INT32 chip, INT32 r)
 
 void K007232WriteReg(INT32 chip, INT32 r, INT32 v)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232WriteReg called without init\n"));
 	if (chip >nNumChips) bprintf(PRINT_ERROR, _T("K007232WriteReg called with invalid chip %x\n"), chip);
 #endif
@@ -231,7 +231,7 @@ void K007232WriteReg(INT32 chip, INT32 r, INT32 v)
 
 void K007232SetPortWriteHandler(INT32 chip, void (*Handler)(INT32 v))
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232SetPortWriteHandler called without init\n"));
 	if (chip >nNumChips) bprintf(PRINT_ERROR, _T("K007232SetPortWriteHandler called with invalid chip %x\n"), chip);
 #endif
@@ -288,7 +288,7 @@ void K007232Init(INT32 chip, INT32 clock, UINT8 *pPCMData, INT32 PCMDataSize)
 
 void K007232Reset(INT32 chip)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Reset called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K007232Reset called with invalid chip %x\n"), chip);
 #endif
@@ -311,7 +311,7 @@ void K007232Reset(INT32 chip)
 
 void K007232SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232SetRoute called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K007232SetRoute called with invalid chip %x\n"), chip);
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("K007232SetRoute called with invalid index %i\n"), nIndex);
@@ -325,7 +325,7 @@ void K007232SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void K007232Exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Exit called without init\n"));
 #endif
 
@@ -338,7 +338,7 @@ void K007232Exit()
 
 void K007232Scan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Scan called without init\n"));
 #endif
 
@@ -355,7 +355,7 @@ void K007232Scan(INT32 nAction, INT32 *pnMin)
 
 void K007232SetVolume(INT32 chip, INT32 channel,INT32 volumeA,INT32 volumeB)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232SetVolume called without init\n"));
 	if (chip >nNumChips) bprintf(PRINT_ERROR, _T("K007232SetVolume called with invalid chip %x\n"), chip);
 #endif
@@ -369,7 +369,7 @@ void K007232SetVolume(INT32 chip, INT32 channel,INT32 volumeA,INT32 volumeB)
 
 void K007232SetVolumeF(INT32 chip, INT32 channel,INT32 volumeA,INT32 volumeB)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232SetVolumeF called without init\n"));
 	if (chip >nNumChips) bprintf(PRINT_ERROR, _T("K007232SetVolumeF called with invalid chip %x\n"), chip);
 #endif
@@ -381,7 +381,7 @@ void K007232SetVolumeF(INT32 chip, INT32 channel,INT32 volumeA,INT32 volumeB)
 
 void k007232_set_bank(INT32 chip, INT32 chABank, INT32 chBBank )
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("k007232_set_bank called without init\n"));
 	if (chip >nNumChips) bprintf(PRINT_ERROR, _T("k007232_set_bank called with invalid chip %x\n"), chip);
 #endif

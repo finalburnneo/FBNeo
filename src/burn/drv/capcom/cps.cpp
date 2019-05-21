@@ -2028,7 +2028,7 @@ static INT32 CpsGetROMs(bool bLoad)
 			nCpsGfxLen = nGfxNum * nGfxMaxSize;
 		}
 		
-#if 1 && defined FBA_DEBUG
+#if 1 && defined FBNEO_DEBUG
 		if (!nCpsCodeLen) {
 			bprintf(PRINT_IMPORTANT, _T("  - 68K ROM size:\t0x%08X (Decrypted with key)\n"), nCpsRomLen);
 		} else {

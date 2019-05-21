@@ -327,7 +327,7 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 			}
 		}
 
-#if 1 && defined FBA_DEBUG
+#if 1 && defined FBNEO_DEBUG
 		if (Taito68KRom1Size) bprintf(PRINT_IMPORTANT, _T("68K #1 Rom Length %06X, (%i roms)\n"), Taito68KRom1Size, Taito68KRom1Num);
 		if (Taito68KRom2Size) bprintf(PRINT_IMPORTANT, _T("68K #2 Rom Length %06X, (%i roms)\n"), Taito68KRom2Size, Taito68KRom2Num);
 		if (Taito68KRom3Size) bprintf(PRINT_IMPORTANT, _T("68K #3 Rom Length %06X, (%i roms)\n"), Taito68KRom3Size, Taito68KRom3Num);

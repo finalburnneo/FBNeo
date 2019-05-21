@@ -24,13 +24,6 @@ static INT32 DebugCPU_Z180Initted = 0;
 #define PORT_RANGE		(1 << PORT_ADDRESS_BITS)
 #define PORT_MASK		(PORT_RANGE - 1)
 
-static INT32 core_idle(INT32 cycles)
-{
-	Z180BurnCycles(cycles);
-
-	return cycles;
-}
-
 static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 {
 	INT32 active = Z180GetActive();
@@ -59,7 +52,7 @@ cpu_core_config Z180Config =
 	Z180GetActive,
 	Z180TotalCycles,
 	Z180NewFrame,
-	core_idle,
+	Z180Idle,
 	core_set_irq,
 	Z180Run,
 	Z180RunEnd,
@@ -113,7 +106,7 @@ void Z180SetReadPortHandler(UINT8 (__fastcall *read)(UINT32))
 
 void Z180MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180MapMemory called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180MapMemory called when no CPU open\n"));
 	if (end <= start || start >= PROG_RANGE || end >= PROG_RANGE || flags == 0)
@@ -138,7 +131,7 @@ static INT32 dummy_irq_callback(INT32)
 
 void Z180Reset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Reset called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180Reset called when no CPU open\n"));
 #endif
@@ -148,7 +141,7 @@ void Z180Reset()
 
 void Z180Exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Exit called without init\n"));
 #endif
 
@@ -159,7 +152,7 @@ void Z180Exit()
 
 INT32 Z180GetActive()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180GetActive called without init\n"));
 #endif
 
@@ -168,7 +161,7 @@ INT32 Z180GetActive()
 
 void Z180Open(INT32 nCPU)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Open called without init\n"));
 	if (nCPU >= NUM_CPUS) bprintf(PRINT_ERROR, _T("Z180Open called with invalid index %x\n"), nCPU);
 	if (nActiveCPU != -1) bprintf(PRINT_ERROR, _T("Z180Open called when CPU already open with index %x\n"), nCPU);
@@ -179,7 +172,7 @@ void Z180Open(INT32 nCPU)
 
 void Z180Close()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Close called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180Close called when no CPU open\n"));
 #endif
@@ -191,7 +184,7 @@ INT32 Z180Run(INT32 cycles)
 {
 	if (cycles <= 0) return 0;
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Run called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180Run called when no CPU open\n"));
 //	if (cycles <= 0) bprintf(PRINT_ERROR, _T("Z180Run called with invalid cycles (%d)\n"), cycles);
@@ -202,7 +195,7 @@ INT32 Z180Run(INT32 cycles)
 
 INT32 Z180TotalCycles()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180TotalCycles called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180TotalCycles called when no CPU open\n"));
 #endif
@@ -212,7 +205,7 @@ INT32 Z180TotalCycles()
 
 void Z180RunEnd()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180RunEnd called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180RunEnd called when no CPU open\n"));
 #endif
@@ -222,7 +215,7 @@ void Z180RunEnd()
 
 void Z180NewFrame()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180NewFrame called without init\n"));
 #endif
 	z180_new_frame();
@@ -230,7 +223,7 @@ void Z180NewFrame()
 
 void Z180BurnCycles(INT32 cycles)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180BurnCycles called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180BurnCycles called when no CPU open\n"));
 #endif
@@ -238,9 +231,19 @@ void Z180BurnCycles(INT32 cycles)
 	z180_burn(cycles);
 }
 
+INT32 Z180Idle(INT32 cycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Idle called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180Idle called when no CPU open\n"));
+#endif
+
+	return z180_idle(cycles);
+}
+
 void Z180SetIRQLine(INT32 irqline, INT32 state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180SetIRQLine called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180SetIRQLine called when no CPU open\n"));
 	if (irqline != 0 && irqline != Z180_INPUT_LINE_NMI) bprintf(PRINT_ERROR, _T("Z180SetIRQLine called with invalid line %d\n"), irqline);
@@ -253,7 +256,7 @@ void Z180SetIRQLine(INT32 irqline, INT32 state)
 
 void Z180Scan(INT32 nAction)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Scan called without init\n"));
 #endif
 	z180_scan(nAction);
@@ -427,7 +430,7 @@ void Z180Init(UINT32 nCPU)
 {
 	DebugCPU_Z180Initted = 1;
 
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (nCPU >= NUM_CPUS) bprintf(PRINT_ERROR, _T("Z180Init called with invalid nCPU (%d), max is %d\n"), nCPU, NUM_CPUS-1);
 	if (nCPU >= NUM_CPUS) nCPU = 0;
 #endif

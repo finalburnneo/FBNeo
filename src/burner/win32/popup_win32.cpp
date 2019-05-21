@@ -339,7 +339,7 @@ int FBAPopupDestroyText()
 int FBAPopupDisplay(int nFlags)
 {
 	HMODULE hRiched = NULL;
-	
+
 #if defined (_UNICODE)
 	hRiched = LoadLibrary(L"RICHED20.DLL");
 #else

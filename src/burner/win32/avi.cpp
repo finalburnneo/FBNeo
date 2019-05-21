@@ -111,7 +111,7 @@ static struct FBAVI {
 	// compression options
 	COMPVARS compvar;        // compression options
 	AVICOMPRESSOPTIONS opts; // compression options
-	// other 
+	// other
 	UINT32 nFrameNum; // frame number for each compressed frame
 	LONG nAviSize;    // current bytes written, used to break up the avi @ the 2gig mark
 	INT32 nWidth;
@@ -430,7 +430,7 @@ static INT32 AviCreateVidStream()
 	stream in the file because fccHandler is unknown until the
 	compressor is chosen.  However, AVISaveOptions() requires
 	the stream to be created prior to the function call.
-	
+
 	Solution:
 	Use ICCompressorChoose() to set the	COMPVARS, create the
 	video stream in the file using the returned fccHandler,
@@ -440,7 +440,7 @@ static INT32 AviCreateVidStream()
 
 	// initialize COMPVARS
 	memset(&FBAvi.compvar, 0, sizeof(COMPVARS));
-	FBAvi.compvar.cbSize = sizeof(COMPVARS); 
+	FBAvi.compvar.cbSize = sizeof(COMPVARS);
 	FBAvi.compvar.dwFlags = ICMF_COMPVARS_VALID;
 	//FBAvi.compvar.fccHandler = comptypeDIB; // default compressor = uncompressed full frames
 	FBAvi.compvar.fccHandler = 0; // default compressor = uncompressed full frames
@@ -509,14 +509,14 @@ static INT32 AviCreateVidStream()
 	FBAvi.opts.dwKeyFrameEvery = FBAvi.compvar.lKey;
 	FBAvi.opts.dwQuality = FBAvi.compvar.lQ;
 	FBAvi.opts.dwBytesPerSecond = FBAvi.compvar.lDataRate * 1024L;
-	FBAvi.opts.dwFlags = AVICOMPRESSF_VALID | 
+	FBAvi.opts.dwFlags = AVICOMPRESSF_VALID |
 		(FBAvi.compvar.lDataRate ? AVICOMPRESSF_DATARATE:0L) |
 		(FBAvi.compvar.lKey ? AVICOMPRESSF_KEYFRAMES:0L);
 	FBAvi.opts.lpFormat = &FBAvi.bih;
 	FBAvi.opts.cbFormat = FBAvi.bih.biSize + FBAvi.bih.biClrUsed * sizeof(RGBQUAD);
 	FBAvi.opts.lpParms = FBAvi.compvar.lpState;
-	FBAvi.opts.cbParms = FBAvi.compvar.cbState; 
-	FBAvi.opts.dwInterleaveEvery = 0; 
+	FBAvi.opts.cbParms = FBAvi.compvar.cbState;
+	FBAvi.opts.dwInterleaveEvery = 0;
 
 	// make the compressed video stream
 	hRet = AVIMakeCompressedStream(
@@ -572,7 +572,7 @@ static INT32 AviCreateAudStream()
 	// - dwInitialFrames specifies how much to skew the
 	//   audio data ahead of the video frames in interleaved
 	//   files (typically 0.75 sec).
-	//  
+	//
 	memset(&FBAvi.audh, 0, sizeof(FBAvi.audh));
 	FBAvi.audh.fccType                = streamtypeAUDIO;    // stream type
 	FBAvi.audh.dwScale                = FBAvi.wfx.nBlockAlign;
@@ -605,7 +605,7 @@ static INT32 AviCreateAudStream()
 #endif
 		return 1;
 	}
-				
+
 	return 0;
 }
 

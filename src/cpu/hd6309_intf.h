@@ -15,10 +15,6 @@ struct HD6309Ext {
 	pWriteByteHandler WriteByte;
 	pReadOpHandler ReadOp;
 	pReadOpArgHandler ReadOpArg;
-	
-	INT32 nCyclesTotal;
-	INT32 nCyclesSegment;
-	INT32 nCyclesLeft;
 };
 
 extern INT32 nHD6309Count;
@@ -26,6 +22,7 @@ extern INT32 nHD6309Count;
 extern INT32 nHD6309CyclesTotal;
 
 void HD6309Reset();
+INT32 HD6309TotalCycles();
 void HD6309NewFrame();
 INT32 HD6309Init(INT32 nCPU);
 void HD6309Exit();
@@ -46,15 +43,6 @@ void HD6309SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 HD6309Scan(INT32 nAction);
 
 void HD6309WriteRom(UINT16 Address, UINT8 Data);
-
-inline static INT32 HD6309TotalCycles()
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309TotalCycles called without init\n"));
-#endif
-
-	return nHD6309CyclesTotal;
-}
 
 void HD6309CheatWriteRom(UINT32 a, UINT8 d); // cheat core
 UINT8 HD6309CheatRead(UINT32 a); // cheat core

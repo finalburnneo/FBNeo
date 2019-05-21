@@ -51,6 +51,8 @@ typedef struct {
     UINT16  ras[8]; /* 8 return address stack entries */
 	UINT8	irq_state;
 	UINT32	total_cycles;
+	INT32   end_run;
+
 }   s2650_Regs;
 
 static s2650_Regs S;
@@ -807,7 +809,7 @@ static void s2650_set_context(void *src)
 */
 void s2650SetIRQLine(int irqline, int state)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650SetIRQLine called without init\n"));
 	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650SetIRQLine called when no CPU open\n"));
 #endif
@@ -853,12 +855,14 @@ static int s2650_get_sense(void)
 
 int s2650Run(int cycles)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650Run called without init\n"));
 	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650Run called when no CPU open\n"));
 #endif
 
 	s2650_ICount = cycles_slice = cycles;
+
+	S.end_run = 0;
 
 	do
 	{
@@ -1462,7 +1466,7 @@ int s2650Run(int cycles)
 				M_BRA( --S.reg[S.r] );
 				break;
 		}
-	} while( s2650_ICount > 0 );
+	} while( s2650_ICount > 0 && !S.end_run );
 
 	INT32 ret = cycles - s2650_ICount;
 
@@ -1486,7 +1490,7 @@ void s2650NewFrame()
 
 void s2650RunEnd()
 {
-	s2650_ICount = 0;
+	S.end_run = 1;
 }
 
 INT32 s2650Idle(INT32 cycles)
@@ -1498,7 +1502,7 @@ INT32 s2650Idle(INT32 cycles)
 
 int s2650Scan(int nAction)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650Scan called without init\n"));
 	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650Scan called when no CPU open\n"));
 #endif

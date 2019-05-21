@@ -46,7 +46,7 @@ static INT32 YM2610StreamCallbackDummy(INT32)
 
 static void AY8910Render(INT32 nSegmentLength)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610 AY8910Render called without init\n"));
 #endif
 
@@ -67,7 +67,7 @@ static void AY8910Render(INT32 nSegmentLength)
 
 static void YM2610Render(INT32 nSegmentLength)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("YM2610Render called without init\n"));
 #endif
 
@@ -90,7 +90,7 @@ static void YM2610Render(INT32 nSegmentLength)
 
 static void YM2610UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("YM2610UpdateResample called without init\n"));
 #endif
 
@@ -238,7 +238,7 @@ static void YM2610UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 static void YM2610UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("YM2610UpdateNormal called without init\n"));
 #endif
 
@@ -343,7 +343,7 @@ static void YM2610UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnYM2610UpdateRequest()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("YM2610UpdateRequest called without init\n"));
 #endif
 
@@ -352,7 +352,7 @@ void BurnYM2610UpdateRequest()
 
 static void BurnAY8910UpdateRequest()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610 BurnAY8910UpdateRequest called without init\n"));
 #endif
 
@@ -364,7 +364,7 @@ static void BurnAY8910UpdateRequest()
 
 void BurnYM2610Reset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610Reset called without init\n"));
 #endif
 
@@ -375,7 +375,7 @@ void BurnYM2610Reset()
 
 void BurnYM2610Exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610Exit called without init\n"));
 #endif
 
@@ -397,7 +397,7 @@ void BurnYM2610Exit()
 
 void BurnYM2610MapADPCMROM(UINT8* YM2610ADPCMAROM, INT32 nYM2610ADPCMASize, UINT8* YM2610ADPCMBROM, INT32 nYM2610ADPCMBSize)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610MapADPCMROM called without init\n"));
 #endif
 
@@ -480,7 +480,7 @@ INT32 BurnYM2610Init(INT32 nClockFrequency, UINT8* YM2610ADPCMAROM, INT32* nYM26
 
 void BurnYM2610SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 2) bprintf(PRINT_ERROR, _T("BurnYM2610SetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -491,7 +491,7 @@ void BurnYM2610SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void BurnYM2610SetLeftVolume(INT32 nIndex, double nLeftVolume)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610SetLeftVolume called without init\n"));
 	if (nIndex < 0 || nIndex > 2) bprintf(PRINT_ERROR, _T("BurnYM2610SetLeftVolume called with invalid index %i\n"), nIndex);
 #endif
@@ -501,7 +501,7 @@ void BurnYM2610SetLeftVolume(INT32 nIndex, double nLeftVolume)
 
 void BurnYM2610SetRightVolume(INT32 nIndex, double nRightVolume)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610SetRightVolume called without init\n"));
 	if (nIndex < 0 || nIndex > 2) bprintf(PRINT_ERROR, _T("BurnYM2610SetRightVolume called with invalid index %i\n"), nIndex);
 #endif
@@ -511,7 +511,7 @@ void BurnYM2610SetRightVolume(INT32 nIndex, double nRightVolume)
 
 void BurnYM2610Scan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610Scan called without init\n"));
 #endif
 

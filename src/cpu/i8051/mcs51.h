@@ -88,12 +88,16 @@ struct _ds5002fp_config
 /***************************************************************************
     FUNCTION PROTOTYPES
 ***************************************************************************/
-extern void mcs51_init(void);			/* Initialize cpu */
-extern void mcs51_reset(void);			/* Reset registers to the initial values */
-extern void mcs51_exit(void); 			/* Shut down CPU core */
+extern void  mcs51_init(void);			/* Initialize cpu */
+extern void  mcs51_reset(void);			/* Reset registers to the initial values */
+extern void  mcs51_exit(void); 			/* Shut down CPU core */
 extern INT32 mcs51Run(int cycles);		/* /12 ! Execute cycles - returns number of cycles actually run */
-extern void mcs51RunEnd(void);			/* stop execution */
-extern void mcs51_set_irq_line(int irqline, int state);
+extern void  mcs51RunEnd(void);			/* stop execution */
+extern INT32 mcs51TotalCycles();
+extern void  mcs51NewFrame();
+extern INT32 mcs51Idle(INT32 cycles);
+
+extern void  mcs51_set_irq_line(int irqline, int state);
 void mcs51_iram_fill(UINT8 *src, UINT32 size);
 void mcs51_iram_get(UINT8 *dst, UINT32 size);
 void mcs51_set_write_handler(void (*pointer)(INT32,UINT8));
@@ -106,6 +110,9 @@ extern void ds5002fp_init(UINT8 mcon, UINT8 rpctl, UINT8 crc); // default: 0, 0,
 #define ds5002fp_exit                   mcs51_exit
 #define ds5002fpRun                     mcs51Run
 #define ds5002fpRunEnd                  mcs51RunEnd
+#define ds5002fpTotalCycles             mcs51TotalCycles
+#define ds5002fpNewFrame                mcs51NewFrame
+#define ds5002fpIdle                    mcs51Idle
 #define ds5002fp_set_irq_line           mcs51_set_irq_line
 #define ds5002fp_set_write_handler      mcs51_set_write_handler
 #define ds5002fp_set_read_handler       mcs51_set_read_handler

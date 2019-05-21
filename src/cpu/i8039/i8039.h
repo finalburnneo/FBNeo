@@ -54,6 +54,7 @@ extern void I8039Open(INT32 nCpu);
 extern void I8039Close();
 extern INT32 I8039GetActive();
 extern INT32 I8039TotalCycles();
+extern INT32 I8039Idle(INT32 cycles);
 extern void I8039NewFrame();
 
 extern void N7751Init(INT32 nCpu);
@@ -73,7 +74,7 @@ extern void N7751Init(INT32 nCpu);
 #define N7751GetActive				I8039GetActive
 #define N7751TotalCycles			I8039TotalCycles
 #define N7751NewFrame				I8039NewFrame
-
+#define N7751Idle                   I8039Idle
 
 extern void I8035Init(INT32 nCpu);
 #define I8035Run                    I8039Run
@@ -92,6 +93,7 @@ extern void I8035Init(INT32 nCpu);
 #define I8035GetActive				I8039GetActive
 #define I8035TotalCycles			I8039TotalCycles
 #define I8035NewFrame				I8039NewFrame
+#define I8035Idle                   I8039Idle
 
 /*
  *   Input a UINT8 from given I/O port

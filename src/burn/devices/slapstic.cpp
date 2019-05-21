@@ -789,7 +789,7 @@ static struct slapstic_data slapstic;
 
 void SlapsticReset(void)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SlapsticInitted) bprintf(PRINT_ERROR, _T("SlapsticReset called without init\n"));
 #endif
 
@@ -825,7 +825,7 @@ void SlapsticInit(INT32 chip)
 
 void SlapsticExit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SlapsticInitted) bprintf(PRINT_ERROR, _T("SlapsticExit called without init\n"));
 #endif
 
@@ -840,7 +840,7 @@ void SlapsticExit()
 
 INT32 SlapsticBank(void)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SlapsticInitted) bprintf(PRINT_ERROR, _T("SlapsticBank called without init\n"));
 #endif
 
@@ -904,7 +904,7 @@ static INT32 alt2_kludge(UINT32 /*offset*/)
 
 INT32 SlapsticTweak(INT32 offset)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SlapsticInitted) bprintf(PRINT_ERROR, _T("SlapsticTweak called without init\n"));
 #endif
 
@@ -1121,7 +1121,7 @@ INT32 SlapsticTweak(INT32 offset)
 
 void SlapsticScan(INT32 nAction)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugDev_SlapsticInitted) bprintf(PRINT_ERROR, _T("SlapsticScan called without init\n"));
 #endif
 

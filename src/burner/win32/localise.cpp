@@ -523,7 +523,7 @@ static int FBALocaliseWriteTemplate(TCHAR* pszTemplate)
 		return 1;
 	}
 
-	_ftprintf(fp, _T("// translation template for FB Alpha\n\n"));
+	_ftprintf(fp, _T("// translation template for FinalBurn Neo\n\n"));
 	_ftprintf(fp, _T("version 0x%06X\n\n"), nBurnVer);
 
 	_ftprintf(fp, _T("// codepage 1252\n\n"));
@@ -1650,7 +1650,7 @@ static void MakeOfn()
 {
 	_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_FILTER, true));
 	memcpy(szFilter + _tcslen(szFilter), _T(" (*.flt)\0*.flt\0\0"), 16 * sizeof(TCHAR));
-			
+
 	memset(&ofn, 0, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = hScrnWnd;

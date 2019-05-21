@@ -1,5 +1,5 @@
 #pragma once
-#ifdef FBA_DEBUG
+#ifdef FBNEO_DEBUG
  #define PRINT_DEBUG_INFO
 #endif
 #include <vector>

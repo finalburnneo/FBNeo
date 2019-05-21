@@ -1945,7 +1945,7 @@ static INT32 DokabenInit()
 static INT32 PangInit()
 {
 	INT32 nRet = 0, nLen;
-	
+	BurnSetRefreshRate(57);
 	Mem = NULL;
 	PangMemIndex();
 	nLen = MemEnd - (UINT8 *)0;
@@ -1977,7 +1977,7 @@ static INT32 PangInit()
 	pang_decode();
 	
 	MitchellMachineInit();
-	BurnSetRefreshRate(57);
+
 	DrvDoReset();
 
 	return 0;

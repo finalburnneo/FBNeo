@@ -1917,7 +1917,7 @@ UINT16 __fastcall Tumbleb68KReadWord(UINT32 a)
 
 void __fastcall Tumbleb68KWriteWord(UINT32 a, UINT16 d)
 {
-#if 1 && defined FBA_DEBUG
+#if 1 && defined FBNEO_DEBUG
 	if (a >= 0x160800 && a <= 0x160807) return;
 	if (a >= 0x198000 && a <= 0x1a8015) return;
 	if (a >= 0x321000 && a <= 0x321fff) return;
@@ -3057,7 +3057,8 @@ static void SemicomYM2151IrqHandler(INT32 Irq)
 static INT32 DrvInit(bool bReset, INT32 SpriteRamSize, INT32 SpriteMask, INT32 SpriteXOffset, INT32 SpriteYOffset, INT32 NumSprites, INT32 NumChars, INT32 NumTiles, double Refresh, INT32 OkiFreq)
 {
 	INT32 nRet = 0, nLen;
-	
+	BurnSetRefreshRate(Refresh);
+
 	DrvSpriteRamSize = SpriteRamSize;
 	DrvNumSprites = NumSprites,
 	DrvNumChars = NumChars,
@@ -3098,7 +3099,7 @@ static INT32 DrvInit(bool bReset, INT32 SpriteRamSize, INT32 SpriteMask, INT32 S
 		MSM6295SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
 	}
 	
-	BurnSetRefreshRate(Refresh);
+
 	
 	nCyclesTotal[0] = 14000000 / 60;
 	
@@ -3473,7 +3474,9 @@ inline static INT32 JumppopSynchroniseStream(INT32 nSoundRate)
 static INT32 JumppopInit()
 {
 	INT32 nRet = 0, nLen;
-	
+
+	BurnSetRefreshRate(60.0);
+
 	DrvSpriteRamSize = 0x1000;
 	DrvNumSprites = 0x4000,
 	DrvNumChars = 0x8000,
@@ -3580,8 +3583,6 @@ static INT32 JumppopInit()
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 875000 / 132, 1);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	
-	BurnSetRefreshRate(60.0);
 	
 	nCyclesTotal[0] = 16000000 / 60;
 	nCyclesTotal[1] = 3500000 / 60;

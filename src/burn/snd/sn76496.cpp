@@ -63,7 +63,7 @@ static void UpdateStream(INT32 chip, INT32 samples_len)
 
 	INT16 *mix = soundbuf[chip] + 5 + (nPosition[chip] * 2); // * 2 (stereo stream)
 	//memset(mix, 0, nSamplesNeeded * sizeof(INT16) * 2);
-    bprintf(0, _T("sn76496_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
+    //bprintf(0, _T("sn76496_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
 
     SN76496UpdateToBuffer(chip, mix, nSamplesNeeded);
 
@@ -85,7 +85,7 @@ void SN76496SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 
 void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Update called without init\n"));
 	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496Update called with invalid chip %x\n"), Num);
 #endif
@@ -135,7 +135,7 @@ void SN76496Update(INT16* pSoundBuf, INT32 Length)
 
 void SN76496UpdateToBuffer(INT32 Num, INT16* pSoundBuf, INT32 Length)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Update called without init\n"));
 	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496Update called with invalid chip %x\n"), Num);
 #endif
@@ -277,7 +277,7 @@ void SN76496UpdateToBuffer(INT32 Num, INT16* pSoundBuf, INT32 Length)
 
 void SN76496StereoWrite(INT32 Num, INT32 Data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496StereoWrite called without init\n"));
 	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496StereoWrite called with invalid chip %x\n"), Num);
 #endif
@@ -291,7 +291,7 @@ void SN76496StereoWrite(INT32 Num, INT32 Data)
 
 void SN76496Write(INT32 Num, INT32 Data)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Write called without init\n"));
 	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496Write called with invalid chip %x\n"), Num);
 #endif
@@ -378,7 +378,7 @@ static void SN76496SetGain(struct SN76496 *R,INT32 Gain)
 
 void SN76496Reset()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Reset called without init\n"));
 #endif
 
@@ -467,7 +467,7 @@ void SN76496Init(INT32 Num, INT32 Clock, INT32 SignalAdd)
 
 void SN76496SetRoute(INT32 Num, double nVolume, INT32 nRouteDir)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496SetRoute called without init\n"));
 	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496SetRoute called with invalid chip %i\n"), Num);
 #endif
@@ -482,7 +482,7 @@ void SN76496SetRoute(INT32 Num, double nVolume, INT32 nRouteDir)
 
 void SN76496Exit()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Exit called without init\n"));
 #endif
 
@@ -509,7 +509,7 @@ void SN76496Exit()
 
 void SN76496Scan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Scan called without init\n"));
 #endif
 

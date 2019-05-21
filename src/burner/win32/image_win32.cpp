@@ -36,7 +36,7 @@ HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img)
 HBITMAP PNGLoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset)
 {
 	IMAGE img = { nWidth, nHeight, 0, 0, NULL, NULL, 0};
-	
+
 	if (PNGLoad(&img, fp, nPreset)) {
 		return NULL;
 	}

@@ -860,7 +860,7 @@ int tms32010_Ext_IRQ(void)
 	return (0*CLK);
 }
 
-
+static INT32 end_run = 0;
 
 /****************************************************************************
  *  Execute IPeriod. Return 0 if emulation should be stopped
@@ -868,8 +868,9 @@ int tms32010_Ext_IRQ(void)
 int tms32010_execute(int cycles)
 {
 	tms32010_icount = cycles;
-
 	tms32010_current_cycles = cycles;
+
+	end_run = 0;
 
 	do
 	{
@@ -894,12 +895,15 @@ int tms32010_execute(int cycles)
 			tms32010_icount -= cycles_7F_other[(R.opcode.b.l & 0x1f)];
 			(*(opcode_7F_other[(R.opcode.b.l & 0x1f)]))();
 		}
-	} while (tms32010_icount>0);
+	} while (tms32010_icount>0 && !end_run);
+
+	cycles = cycles - tms32010_icount;
+	tms32010_cycles += cycles;
 
 	tms32010_current_cycles = 0;
-	tms32010_cycles += cycles - tms32010_icount;
+	tms32010_icount = 0;
 
-	return cycles - tms32010_icount;
+	return cycles;
 }
 
 UINT32 tms32010TotalCycles()
@@ -914,7 +918,7 @@ void tms32010NewFrame()
 
 void tms32010RunEnd()
 {
-	tms32010_icount = 0;
+	end_run = 1;
 }
 
 void tms32010_scan(INT32 nAction)

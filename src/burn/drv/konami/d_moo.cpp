@@ -233,7 +233,7 @@ static void moo_objdma()
 	}
 }
 
-#ifdef FBA_DEBUG
+#ifdef FBNEO_DEBUG
 extern int counter;
 #endif
 

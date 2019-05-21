@@ -24551,3 +24551,22 @@ struct BurnDriver BurnDrvMSX_dangertower = {
 	272, 228, 4, 3
 };
 
+// Night Knight
+
+static struct BurnRomInfo MSX_nightknightRomDesc[] = {
+	{ "nightk.rom",	0x08000, 0x3a7965de, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_nightknight, MSX_nightknight, msx_msx)
+STD_ROM_FN(MSX_nightknight)
+
+struct BurnDriver BurnDrvMSX_nightknight = {
+	"msx_nightknight", NULL, "msx_msx", NULL, "2019",
+	"Night Knight (v1.0.3)\0", NULL, "Juan J. Martinez/usebox.net", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_nightknightRomInfo, MSX_nightknightRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+

@@ -104,6 +104,7 @@ typedef struct
 	PAIR	opcode;
 	UINT8	internalram[8];
 	UINT32 total_cycles;
+	INT32   end_run;
 } pic16C5x_Regs;
 
 static pic16C5x_Regs R;
@@ -833,7 +834,8 @@ int pic16c5xRun(int cycles)
 	UINT8 T0_in;
 	slice_cycles = cycles;
 	pic16C5x_icount = cycles;
-	
+	R.end_run = 0;
+
 	do
 	{
 		if (PD == 0)						/* Sleep Mode */
@@ -891,15 +893,15 @@ int pic16c5xRun(int cycles)
 
 		pic16C5x_icount -= inst_cycles;
 
-	} while (pic16C5x_icount>0);
+	} while (pic16C5x_icount>0 && !R.end_run);
 
-	INT32 ret = cycles - pic16C5x_icount;
+	cycles = cycles - pic16C5x_icount;
 
-	R.total_cycles += ret;
+	R.total_cycles += cycles;
 	slice_cycles = 0;
 	pic16C5x_icount = 0;
 
-	return ret;
+	return cycles;
 }
 
 
@@ -1002,7 +1004,7 @@ void pic16c5xNewFrame()
 
 void pic16c5xRunEnd()
 {
-	pic16C5x_icount = 0;
+	R.end_run = 1;
 }
 
 INT32 pic16c5xIdle(INT32 cycles)

@@ -20,7 +20,7 @@ DEPEND = 1
 #
 
 # Specify the name of the executable file, without ".exe"
-NAME = fba
+NAME = fbneo
 COMPILENAME = 3
 
 ifdef BUILD_X64_EXE
@@ -319,7 +319,7 @@ endif
 ifdef GCC452
 	CFLAGS  += -mconsole
 endif
-	DEF	:= $(DEF) -DFBA_DEBUG
+	DEF	:= $(DEF) -DFBNEO_DEBUG
 endif
 
 ifdef ROM_VERIFY
@@ -595,7 +595,7 @@ $(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generat
 	@echo Compiling Musashi MC680x0 core \(m68kops.c\)...
 	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kops.c -o $(objdir)cpu/m68k/m68kops.o
 
-$(objdir)dep/generated/m68kops.h: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c
+$(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c
 	$(objdir)/cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
 
 $(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c
@@ -711,6 +711,9 @@ endif
 #
 #	Generic rules for C/C++ files
 #
+# Note: require init to complete before assembling anything (see "| init" below)
+# to avoid parallization issues on fresh builds.
+#
 
 ifeq ($(MAKELEVEL),1)
 
@@ -722,7 +725,7 @@ ifeq ($(MAKELEVEL),1)
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) -c $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F)
 
-%.o:	%.asm
+%.o:	%.asm | init
 	@echo Assembling $<...
 	@$(AS) $(ASFLAGS) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F)
 
@@ -732,7 +735,7 @@ else
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-%.o:	%.asm
+%.o:	%.asm | init
 	@echo Assembling $<...
 	@$(AS) $(ASFLAGS) $< -o $@
 

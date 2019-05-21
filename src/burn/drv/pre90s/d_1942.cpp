@@ -888,18 +888,20 @@ static void DrvRenderSpriteLayer()
 
 static INT32 DrvDraw()
 {
+	BurnTransferClear();
+
 	if (DrvRecalc) {
 		DrvCalcPalette();
 		DrvRecalc = 0;
 	}
-
+	
 	GenericTilemapSetScrollX(0, DrvBgScroll[0] | (DrvBgScroll[1] << 8));
 
-	GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-	DrvRenderSpriteLayer();
+	if (nSpriteEnable & 1) DrvRenderSpriteLayer();
 
-	GenericTilemapDraw(1, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
 

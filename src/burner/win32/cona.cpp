@@ -319,7 +319,7 @@ int ConfigAppSave()
 	TCHAR szConfig[MAX_PATH];
 	FILE *h;
 
-	if (bCmdOptUsed & 1) {
+	if (nCmdOptUsed & 1) {
 		return 1;
 	}
 

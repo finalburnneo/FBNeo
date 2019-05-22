@@ -88,6 +88,7 @@ static unsigned g_rom_count;
 INT32 nAudSegLen = 0;
 
 static UINT8* pVidImage = NULL;
+static bool bVidImageNeedRealloc = false;
 static int16_t *g_audio_buf;
 
 // Mapping of PC inputs to game inputs
@@ -430,7 +431,7 @@ void Reinitialise(void)
 	nBurnPitch = nGameWidth * nBurnBpp;
 	struct retro_system_av_info av_info;
 	retro_get_system_av_info(&av_info);
-	environ_cb(RETRO_ENVIRONMENT_SET_SYSTEM_AV_INFO, &av_info);
+	environ_cb(RETRO_ENVIRONMENT_SET_GEOMETRY, &av_info);
 }
 
 static void ForceFrameStep(int bDraw)
@@ -867,6 +868,14 @@ void retro_run()
 	audio_batch_cb(g_audio_buf, nBurnSoundLen);
 	bool updated = false;
 
+	if (bVidImageNeedRealloc)
+	{
+		bVidImageNeedRealloc = false;
+		if (pVidImage)
+			free(pVidImage);
+		pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
+	}
+
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE, &updated) && updated)
 	{
 		neo_geo_modes old_g_opt_neo_geo_mode = g_opt_neo_geo_mode;
@@ -987,9 +996,7 @@ void retro_cheat_set(unsigned, bool, const char*) {}
 void retro_get_system_av_info(struct retro_system_av_info *info)
 {
 	int game_aspect_x, game_aspect_y;
-	if (pVidImage)
-		free(pVidImage);
-	pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
+	bVidImageNeedRealloc = true;
 	BurnDrvGetAspect(&game_aspect_x, &game_aspect_y);
 
 	int maximum = nGameWidth > nGameHeight ? nGameWidth : nGameHeight;

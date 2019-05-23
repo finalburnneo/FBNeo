@@ -39,10 +39,10 @@ static INT32 stream_pos;
 static INT32 stream_data;
 static INT32 eeprom_addr;
 
-static UINT8 m_bank[3];
-static INT32 m_rdcnt;
+static UINT8 bank[3];
+static INT32 rdcnt;
 
-static UINT16 *m_rom;
+static UINT16 *game_rom;
 
 static void set_cs_line(INT32 state)
 {
@@ -183,10 +183,10 @@ void md_eeprom_stm95_reset()
 	stream_pos = 0;
 	stm_state = IDLE;
 
-	m_rdcnt = 0;
-	m_bank[0] = 0;
-	m_bank[1] = 0;
-	m_bank[2] = 0;
+	rdcnt = 0;
+	bank[0] = 0;
+	bank[1] = 0;
+	bank[2] = 0;
 }
 
 /*-------------------------------------------------
@@ -204,9 +204,9 @@ static UINT16 __fastcall read_word(UINT32 offset)
 		UINT16 res;
 		offset -= 0x0015e6/2;
 
-		if (m_rdcnt < 6)
+		if (rdcnt < 6)
 		{
-			m_rdcnt++;
+			rdcnt++;
 			res = offset ? 0x10 : 0;
 		}
 		else
@@ -214,11 +214,11 @@ static UINT16 __fastcall read_word(UINT32 offset)
 		return res;
 	}
 	if (offset < 0x280000/2)
-		return m_rom[offset];
+		return game_rom[offset];
 	else    // last 0x180000 are bankswitched
 	{
-		UINT8 bank = (offset - 0x280000/2) >> 18;
-		return m_rom[(offset & 0x7ffff/2) + (m_bank[bank] * 0x80000)/2];
+		UINT8 banksel = (offset - 0x280000/2) >> 18;
+		return game_rom[(offset & 0x7ffff/2) + (bank[banksel] * 0x80000)/2];
 	}
 }
 
@@ -257,7 +257,9 @@ static void __fastcall write_a13_word(UINT32 offset, UINT16 data)
 
 	if (offset < 0x08/2)
 	{
-		m_bank[offset - 1] = data & 0x0f;
+		if (offset != 0) {
+			bank[offset - 1] = data & 0x0f;
+		}
 	}
 	else if (offset < 0x0a/2)
 	{
@@ -270,13 +272,13 @@ static void __fastcall write_a13_word(UINT32 offset, UINT16 data)
 
 static void __fastcall write_a13_byte(UINT32 offset, UINT8 data)
 {
-	write_a13_word(offset,data);
+	write_a13_word(offset, data);
 }
 
 
 void md_eeprom_stm95_init(UINT8 *rom)
 {
-	m_rom = (UINT16*)rom;
+	game_rom = (UINT16*)rom;
 
 	SekOpen(0);
 
@@ -321,9 +323,7 @@ void md_eeprom_stm95_scan(INT32 nAction)
 		SCAN_VAR(stream_data);
 		SCAN_VAR(eeprom_addr);
 
-		SCAN_VAR(m_bank[0]);
-		SCAN_VAR(m_bank[1]);
-		SCAN_VAR(m_bank[2]);
-		SCAN_VAR(m_rdcnt);
+		SCAN_VAR(bank);
+		SCAN_VAR(rdcnt);
 	}
 }

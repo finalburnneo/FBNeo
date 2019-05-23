@@ -1,18 +1,17 @@
-You may freely use, modify, and distribute both the FB Alpha source code and binary, however the following restrictions apply to the FB Alpha original material (see below for a list of libraries with differing licenses, please consult their respective documentation for more information):
+You may freely use, modify, and distribute both the FB Neo source code and binary, however the following restrictions apply to the FB Neo original material (see below for a list of libraries with differing licenses, please consult their respective documentation for more information):
 
- - You may not sell, lease, rent or otherwise seek to gain monetary profit from FB Alpha;
+ - You may not sell, lease, rent or otherwise seek to gain monetary profit from FB Neo;
  - You must make public any changes you make to the source code;
  - You must include, verbatim, the full text of this license;
  - You may not distribute binaries which support games with copyright dates less then three years old;
- - You may not distribute FB Alpha with ROM images unless you have the legal right to distribute them;
- - You may use dynamic linked libraries (dlls) for network play only (all other use is prohibited);
- - You may not ask for donations to support your work on any project that uses the FB Alpha source code.
+ - You may not distribute FB Neo with ROM images unless you have the legal right to distribute them;
+ - You may not ask for donations to support your work on any project that uses the FB Neo source code.
 
-FB Alpha can currently be obtained from https://www.fbalpha.com.
+FB Neo can currently be obtained from https://neo-source.com.
 
-FB Alpha would not exist without a lot of code from the MAME project. The MAME project is subject to it's own license, which can be found at https://raw.githubusercontent.com/mamedev/mame/5cef4e1f91010f0d573bbd662208979fa39e73ec/docs/mamelicense.txt. Due to the use of MAME code in FB Alpha, FB Alpha is also subject to the terms of the MAME license.
+FB Neo would not exist without a lot of code from the MAME project. The MAME project is subject to it's own license, which can be found at https://raw.githubusercontent.com/mamedev/mame/5cef4e1f91010f0d573bbd662208979fa39e73ec/docs/mamelicense.txt. Due to the use of MAME code in FB Neo, FB Neo is also subject to the terms of the MAME license.
 
-FB Alpha is based on Final Burn (formally at http://www.finalburn.com), see additional text below.
+FB Neo is based on Final Burn (formally at http://www.finalburn.com), see additional text below.
 Musashi MC68000/MC68010/MC68EC020 CPU core by Karl Stenerud (http://www.mamedev.org).
 A68K MC68000 CPU core by Mike Coates & Darren Olafson (http://www.mamedev.org).
 Z80 CPU core by Juergen Buchmueller (http://www.mamedev.org).
@@ -70,11 +69,11 @@ Some graphics effects provided by the Scale2x, 2xPM, Eagle Graphics, 2xSaI, hq2x
 
 Miscellaneous other components from various sources. Copyright and license information are contained in the relevant parts of the source code.
 
-All material not covered above © 2004-2019 Team FB Alpha.
+All material not covered above © 2004-2019 Team FB Neo.
 
-DISCLAIMER: The authors of FB Alpha don't guarantee its fitness for any purpose, implied or otherwise, and do not accept responsibility for any damages whatsoever that might occur when using FB Alpha. All games emulated by FB Alpha, including any images and sounds therein, are copyrighted by their respective copyright holders. FB Alpha DOES NOT INCLUDE any ROM images of emulated games.
+DISCLAIMER: The authors of FB Neo don't guarantee its fitness for any purpose, implied or otherwise, and do not accept responsibility for any damages whatsoever that might occur when using FB Neo. All games emulated by FB Neo, including any images and sounds therein, are copyrighted by their respective copyright holders. FB Neo DOES NOT INCLUDE any ROM images of emulated games.
 
-The following information and license conditions accompanied the original Final Burn emulator. They also apply to FB Alpha:
+The following information and license conditions accompanied the original Final Burn emulator. They also apply to FB Neo:
 
 "Copyright (c)2001 Dave (formally of www.finalburn.com), all rights reserved. This refers to all code except where stated otherwise (e.g. unzip and zlib code)."
 

@@ -1093,9 +1093,9 @@ static INT32 SstingryDraw()
 	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
 		pTransDraw[i] = 0x100;
 	}
-	SstingryDrawSprites(2, 0x0800);
-	SstingryDrawSprites(3, 0x0c00);
-	SstingryDrawSprites(1, 0x0400);
+	if (nSpriteEnable & 1) SstingryDrawSprites(2, 0x0800);
+	if (nSpriteEnable & 2) SstingryDrawSprites(3, 0x0c00);
+	if (nSpriteEnable & 4) SstingryDrawSprites(1, 0x0400);
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -1108,9 +1108,9 @@ static INT32 KyrosDraw()
 	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
 		pTransDraw[i] = 0x100;
 	}
-	KyrosDrawSprites(2, 0x0800);
-	KyrosDrawSprites(3, 0x0c00);
-	KyrosDrawSprites(1, 0x0400);
+	if (nSpriteEnable & 1) KyrosDrawSprites(2, 0x0800);
+	if (nSpriteEnable & 2) KyrosDrawSprites(3, 0x0c00);
+	if (nSpriteEnable & 4) KyrosDrawSprites(1, 0x0400);
 	BurnTransferCopy(DrvPalette);
 
 	return 0;

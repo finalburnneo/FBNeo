@@ -408,7 +408,7 @@ int RunMessageLoop()
 			SuperWaitVBlankInit();
 		}
 
-		if (bAutoLoadGameList && !bCmdOptUsed) {
+		if (bAutoLoadGameList && !nCmdOptUsed) {
 			static INT32 bLoaded = 0; // only do this once (at startup!)
 
 			if (bLoaded == 0)
@@ -547,7 +547,7 @@ int RunMessageLoop()
 								if (hwndChat) {
 									DeActivateChat();
 								} else {
-									if (bCmdOptUsed & 1) {
+									if (nCmdOptUsed & 1) {
 										PostQuitMessage(0);
 									} else {
 										if (nVidFullscreen) {

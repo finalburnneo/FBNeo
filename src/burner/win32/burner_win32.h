@@ -108,7 +108,7 @@ extern int nAppVirtualFps;							// virtual fps
 extern TCHAR szAppExeName[EXE_NAME_SIZE + 1];
 extern TCHAR szAppBurnVer[16];
 
-extern bool bCmdOptUsed;
+extern int  nCmdOptUsed;
 extern bool bAlwaysProcessKeyboardInput;
 extern bool bAlwaysCreateSupportFolders;
 

@@ -269,11 +269,11 @@ void render_line(INT16 line)
     else
     {
         /* Draw background */
-        if(render_bg != NULL)
+        if(render_bg != NULL && (nBurnLayer & 1))
             render_bg(line);
 
         /* Draw sprites */
-		if(render_obj != NULL)
+		if(render_obj != NULL && (nSpriteEnable & 1))
 			render_obj(line);
 
         /* Blank leftmost column of display & center screen */

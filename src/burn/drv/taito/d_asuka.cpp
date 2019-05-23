@@ -1613,6 +1613,20 @@ static struct BurnRomInfo cchipRomDesc[] = {
 #endif
 };
 
+STD_ROM_PICK(cchip)
+STD_ROM_FN(cchip)
+
+struct BurnDriver BurnDrvCCHIP = {
+	"cchip", NULL, NULL, NULL, "1989",
+	"C-Chip Internal ROM\0", "Internal ROM only", "Taito Corporation Japan", "C-Chip Internal ROM",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_BOARDROM, 0, HARDWARE_TAITO_MISC, GBF_BIOS, 0,
+	NULL, cchipRomInfo, cchipRomName, NULL, NULL, NULL, NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL, NULL, NULL, 0x1000,
+	320, 240, 4, 3
+};
+
+
 // Cadash (World)
 
 static struct BurnRomInfo cadashRomDesc[] = {

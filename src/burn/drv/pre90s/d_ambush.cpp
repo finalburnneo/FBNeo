@@ -436,9 +436,11 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	draw_layer(0x00);
-	draw_sprites();
-	draw_layer(0x10);
+	if (nBurnLayer & 1) draw_layer(0x00);
+
+	if (nSpriteEnable & 1) draw_sprites();
+
+	if (nBurnLayer & 2) draw_layer(0x10);
 
 	BurnTransferCopy(DrvPalette);
 

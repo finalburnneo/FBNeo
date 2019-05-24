@@ -232,6 +232,25 @@ void GenericTilemapSetTransparent(INT32 which, UINT32 transparent)
 	cur_map->flags |= TMAP_TRANSPARENT;
 }
 
+void GenericTilemapSetTransSplit(INT32 which, INT32 category, UINT16 layer0, UINT16 layer1)
+{
+#if defined FBNEO_DEBUG
+	if (which < 0 || which >= MAX_TILEMAPS) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetTransSplit(%d, %d, 0x%4.4x, 0x%4.4x); called with impossible tilemap number!\n"), which, category, layer0, layer1);
+		return;
+	}
+#endif
+
+	cur_map = &maps[which];
+
+	if (category == 0) {
+		GenericTilemapCategoryConfig(0, 4);
+	}
+
+	GenericTilemapSetTransMask(0, 0 | (category & 1), layer0); // TMAP_DRAWLAYER0
+	GenericTilemapSetTransMask(0, 2 | (category & 1), layer1); // TMAP_DRAWLAYER1
+}
+
 void GenericTilemapSetTransMask(INT32 which, INT32 category, UINT16 transmask)
 {
 #if defined FBNEO_DEBUG

@@ -5,6 +5,7 @@
 #include "z80_intf.h"
 #include "m6809_intf.h"
 #include "burn_ym2203.h"
+#include "burn_pal.h"
 
 static UINT8 DrvInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -46,24 +47,23 @@ static INT32 Diamond;
 
 static struct BurnInputInfo DrvInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 7, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 start"  },
-
-	{"Up"                , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 up"     },
-	{"Down"              , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 down"   },
-	{"Left"              , BIT_DIGITAL  , DrvInputPort1 + 1, "p1 left"   },
-	{"Right"             , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 right"  },
-	{"Fire 1"            , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 2" },
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 start"  },
+	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 1, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 2" },
 	
-	{"Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 up"     },
-	{"Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 down"   },
-	{"Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 left"   },
-	{"Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 right"  },
-	{"Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort2 + 4, "p2 fire 1" },
-	{"Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 fire 2" },
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 7, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 start"  },
+	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort2 + 4, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 fire 2" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL  , DrvInputPort0 + 5, "service"   },
@@ -124,7 +124,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 {
 	// Default Values
 	{0x12, 0xff, 0xff, 0xdf, NULL                     },
-	{0x13, 0xff, 0xff, 0xfb, NULL                     },
+	{0x13, 0xff, 0xff, 0xff, NULL                     },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 16  , "Coinage"                },
@@ -132,7 +132,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 	{0x12, 0x01, 0x0f, 0x05, "3 Coins 1 Play"         },
 	{0x12, 0x01, 0x0f, 0x08, "2 Coins 1 Play"         },
 	{0x12, 0x01, 0x0f, 0x04, "3 Coins 2 Plays"        },
-	{0x12, 0x01, 0x0f, 0x01, "4 Coins 3 Plays"        },	
+	{0x12, 0x01, 0x0f, 0x01, "4 Coins 3 Plays"        },
 	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
 	{0x12, 0x01, 0x0f, 0x03, "3 Coins 4 Plays"        },
 	{0x12, 0x01, 0x0f, 0x07, "2 Coins 3 Plays"        },
@@ -199,7 +199,7 @@ static struct BurnDIPInfo DrvjDIPList[]=
 	{0x12, 0x01, 0x0f, 0x05, "3 Coins 1 Play"         },
 	{0x12, 0x01, 0x0f, 0x08, "2 Coins 1 Play"         },
 	{0x12, 0x01, 0x0f, 0x04, "3 Coins 2 Plays"        },
-	{0x12, 0x01, 0x0f, 0x01, "4 Coins 3 Plays"        },	
+	{0x12, 0x01, 0x0f, 0x01, "4 Coins 3 Plays"        },
 	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
 	{0x12, 0x01, 0x0f, 0x03, "3 Coins 4 Plays"        },
 	{0x12, 0x01, 0x0f, 0x07, "2 Coins 3 Plays"        },
@@ -732,7 +732,7 @@ static void bank_switch(UINT8 bank)
 	DrvRomBank = bank & 3;
 	if (bank == 4) {
 		DrvRomBank = 4;
-		M6809MapMemory(DrvM6809Rom, 0x4000, 0x5fff, MAP_ROM);
+		M6809MapMemory(DrvM6809Rom, 								 0x4000, 0x5fff, MAP_ROM);
 	} else {
 		M6809MapMemory(DrvM6809Rom + 0xc000 + (DrvRomBank * 0x2000), 0x4000, 0x5fff, MAP_ROM);
 	}
@@ -881,15 +881,32 @@ static void DrvRandPalette()
 	}
 }
 
+static tilemap_callback( bg )
+{
+	INT32 Attr = DrvBgVideoRam[offs + 0x400];
+	INT32 Code = DrvBgVideoRam[offs] + ((Attr & 0xc0) << 2);
+
+	TILE_SET_INFO(0, Code, Attr/*&7*/, TILE_FLIPYX(Attr >> 4));
+	*category = (Attr >> 3) & 1;
+}
+
+static tilemap_callback( fg )
+{
+	INT32 Attr = DrvFgVideoRam[offs + 0x400];
+	INT32 Code = DrvFgVideoRam[offs] + ((Attr & 0xc0) << 2);
+
+	TILE_SET_INFO(1, Code, Attr/*&f*/, TILE_FLIPYX(Attr >> 4));
+}
+
 static INT32 CharPlaneOffsets[2]   = { 4, 0 };
-static INT32 CharXOffsets[8]       = { 0, 1, 2, 3, 8, 9, 10, 11 };
-static INT32 CharYOffsets[8]       = { 0, 16, 32, 48, 64, 80, 96, 112 };
+static INT32 CharXOffsets[8]       = { STEP4(0,1), STEP4(8,1) };
+static INT32 CharYOffsets[8]       = { STEP8(0, 16) };
 static INT32 TilePlaneOffsets[3]   = { 0x80000, 0x40000, 0 };
-static INT32 TileXOffsets[16]      = { 0, 1, 2, 3, 4, 5, 6, 7, 128, 129, 130, 131, 132, 133, 134, 135 };
-static INT32 TileYOffsets[16]      = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120 };
+static INT32 TileXOffsets[16]      = { STEP8(0,1), STEP8(128,1) };
+static INT32 TileYOffsets[16]      = { STEP16(0,8) };
 static INT32 SpritePlaneOffsets[4] = { 0x80004, 0x80000, 4, 0 };
-static INT32 SpriteXOffsets[16]    = { 0, 1, 2, 3, 8, 9, 10, 11, 256, 257, 258, 259, 264, 265, 266, 267 };
-static INT32 SpriteYOffsets[16]    = { 0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240 };
+static INT32 SpriteXOffsets[16]    = { STEP4(0,1), STEP4(8,1), STEP4(256,1), STEP4(256+8,1) };
+static INT32 SpriteYOffsets[16]    = { STEP16(0,16) };
 
 static INT32 DrvInit()
 {
@@ -969,11 +986,8 @@ static INT32 DrvInit()
 	ZetOpen(0);
 	ZetSetReadHandler(DrvGngZ80Read);
 	ZetSetWriteHandler(DrvGngZ80Write);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom             );
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram             );
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram             );
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram             );
+	ZetMapMemory(DrvZ80Rom,				0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80Ram,				0xc000, 0xc7ff, MAP_RAM);
 	ZetClose();	
 	
 	BurnYM2203Init(2, 1500000, NULL, 0);
@@ -988,6 +1002,15 @@ static INT32 DrvInit()
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 32, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, fg_map_callback,  8,  8, 32, 32);
+	GenericTilemapSetGfx(0, DrvTiles, 3, 16, 16, 0x400*16*16, 0x00, 0x07);
+	GenericTilemapSetGfx(1, DrvChars, 2,  8,  8, 0x400 *8 *8, 0x80, 0x0f);
+	GenericTilemapSetTransSplit(0, 0, 0xff, 0x00);
+	GenericTilemapSetTransSplit(0, 1, 0x41, 0xbe);
+	GenericTilemapSetTransparent(1, 3);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
+
 	DrvRandPalette();
 
 	// Reset the driver
@@ -1063,11 +1086,8 @@ static INT32 DiamondInit()
 	ZetOpen(0);
 	ZetSetReadHandler(DrvGngZ80Read);
 	ZetSetWriteHandler(DrvGngZ80Write);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom             );
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram             );
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram             );
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram             );
+	ZetMapMemory(DrvZ80Rom,				0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80Ram,				0xc000, 0xc7ff, MAP_RAM);
 	ZetClose();	
 	
 	BurnYM2203Init(2, 1500000, NULL, 0);
@@ -1082,6 +1102,14 @@ static INT32 DiamondInit()
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 32, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, fg_map_callback,  8,  8, 32, 32);
+	GenericTilemapSetGfx(0, DrvTiles, 3, 16, 16, 0x400*16*16, 0x00, 0x07);
+	GenericTilemapSetGfx(1, DrvChars, 2,  8,  8, 0x400 *8 *8, 0x80, 0x0f);
+	GenericTilemapSetTransSplit(0, 0, 0xff, 0x00);
+	GenericTilemapSetTransSplit(0, 1, 0x41, 0xbe);
+	GenericTilemapSetTransparent(1, 3);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 	
 	DrvM6809Rom[0x2000] = 0;
 
@@ -1120,242 +1148,53 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static inline UINT8 pal4bit(UINT8 bits)
-{
-	bits &= 0x0f;
-	return (bits << 4) | bits;
-}
-
-inline static UINT32 CalcCol(UINT16 nColour)
-{
-	INT32 r, g, b;
-
-	r = pal4bit(nColour >> 12);
-	g = pal4bit(nColour >>  8);
-	b = pal4bit(nColour >>  4);
-
-	return BurnHighCol(r, g, b, 0);
-}
-
 static void DrvCalcPalette()
 {
-	for (INT32 i = 0; i < 0x100; i++) {
+	for (INT32 i = 0; i < 0x100; i++)
+	{
 		INT32 Val = DrvPaletteRam1[i] + (DrvPaletteRam2[i] << 8);
-		
-		DrvPalette[i] = CalcCol(Val);
-	}
-}
 
-static void DrvRenderBgLayer(INT32 Priority, INT32 Opaque)
-{
-	INT32 mx, my, Code, Attr, Colour, x, y, TileIndex, xScroll, yScroll, Split, Flip, xFlip, yFlip;
-	
-	xScroll = DrvBgScrollX[0] | (DrvBgScrollX[1] << 8);
-	xScroll &= 0x1ff;
-	
-	yScroll = DrvBgScrollY[0] | (DrvBgScrollY[1] << 8);
-	yScroll &= 0x1ff;
-	
-	for (mx = 0; mx < 32; mx++) {
-		for (my = 0; my < 32; my++) {
-			TileIndex = (my * 32) + mx;
-			
-			Attr = DrvBgVideoRam[TileIndex + 0x400];
-			Code = DrvBgVideoRam[TileIndex + 0x000];
-			
-			Code += (Attr & 0xc0) << 2;
-			Colour = Attr & 0x07;
-			
-			Split = (Attr & 0x08) >> 3;
-			
-			if (Split != Priority) continue;
-			
-			Flip = (Attr & 0x30) >> 4;
-			xFlip = (Flip >> 0) & 0x01;
-			yFlip = (Flip >> 1) & 0x01;
-			
-			y = 16 * mx;
-			x = 16 * my;
+		INT32 r = pal4bit(Val >> 12);
+		INT32 g = pal4bit(Val >>  8);
+		INT32 b = pal4bit(Val >>  4);
 
-			x -= xScroll;
-			if (x < -16) x += 512;
-			y -= yScroll;
-			if (y < -16) y += 512;
-			
-			y -= 16;
-
-			if (Opaque) {
-				if (x > 16 && x < 240 && y > 16 && y < 208) {
-					if (xFlip) {
-						if (yFlip) {
-							Render16x16Tile_FlipXY(pTransDraw, Code, x, y, Colour, 3, 0, DrvTiles);
-						} else {
-							Render16x16Tile_FlipX(pTransDraw, Code, x, y, Colour, 3, 0, DrvTiles);
-						}
-					} else {
-						if (yFlip) {
-							Render16x16Tile_FlipY(pTransDraw, Code, x, y, Colour, 3, 0, DrvTiles);
-						} else {
-							Render16x16Tile(pTransDraw, Code, x, y, Colour, 3, 0, DrvTiles);
-						}
-					}
-				} else {
-					if (xFlip) {
-						if (yFlip) {
-							Render16x16Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 3, 0, DrvTiles);
-						} else {
-							Render16x16Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 3, 0, DrvTiles);
-						}
-					} else {
-						if (yFlip) {
-							Render16x16Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 3, 0, DrvTiles);
-						} else {
-							Render16x16Tile_Clip(pTransDraw, Code, x, y, Colour, 3, 0, DrvTiles);
-						}
-					}
-				}
-			} else {
-				if (x > 16 && x < 240 && y > 16 && y < 208) {
-					if (xFlip) {
-						if (yFlip) {
-							Render16x16Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 3, 0, 0, DrvTiles);
-						} else {
-							Render16x16Tile_Mask_FlipX(pTransDraw, Code, x, y, Colour, 3, 0, 0, DrvTiles);
-						}
-					} else {
-						if (yFlip) {
-							Render16x16Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 3, 0, 0, DrvTiles);
-						} else {
-							Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 3, 0, 0, DrvTiles);
-						}
-					}
-				} else {
-					if (xFlip) {
-						if (yFlip) {
-							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 3, 0, 0, DrvTiles);
-						} else {
-							Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, x, y, Colour, 3, 0, 0, DrvTiles);
-						}
-					} else {
-						if (yFlip) {
-							Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, x, y, Colour, 3, 0, 0, DrvTiles);
-						} else {
-							Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 3, 0, 0, DrvTiles);
-						}
-					}
-				}
-			}
-		}
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 }
 
 static void DrvRenderSprites()
 {
-	for (INT32 Offs = 0x200 - 4; Offs >= 0; Offs -= 4) {
+	for (INT32 Offs = 0x200 - 4; Offs >= 0; Offs -= 4)
+	{
 		UINT8 Attr = DrvSpriteRamBuffer[Offs + 1];
 		INT32 sx = DrvSpriteRamBuffer[Offs + 3] - (0x100 * (Attr & 0x01));
 		INT32 sy = DrvSpriteRamBuffer[Offs + 2];
 		INT32 xFlip = Attr & 0x04;
 		INT32 yFlip = Attr & 0x08;
-		INT32 Code = DrvSpriteRamBuffer[Offs + 0] + ((Attr << 2) & 0x300);
+		INT32 Code  = DrvSpriteRamBuffer[Offs + 0] + ((Attr << 2) & 0x300);
 		INT32 Colour = (Attr >> 4) & 3;
 
-		if (sx > 16 && sx < 240 && sy > 16 && sy < 208) {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipXY(pTransDraw, Code, sx, sy - 16, Colour, 4, 15, 0x40, DrvSprites);
-				} else {
-					Render16x16Tile_Mask_FlipX(pTransDraw, Code, sx, sy - 16, Colour, 4, 15, 0x40, DrvSprites);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipY(pTransDraw, Code, sx, sy - 16, Colour, 4, 15, 0x40, DrvSprites);
-				} else {
-					Render16x16Tile_Mask(pTransDraw, Code, sx, sy - 16, Colour, 4, 15, 0x40, DrvSprites);
-				}
-			}
-		} else {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, sx, sy - 16, Colour, 4, 15, 0x40, DrvSprites);
-				} else {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, sx, sy - 16, Colour, 4, 15, 0x40, DrvSprites);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, sx, sy - 16, Colour, 4, 15, 0x40, DrvSprites);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, Code, sx, sy - 16, Colour, 4, 15, 0x40, DrvSprites);
-				}
-			}
-		}
-	}
-}
-
-static void DrvRenderCharLayer()
-{
-	INT32 mx, my, Code, Attr, Colour, x, y, TileIndex = 0, Flip, xFlip, yFlip;
-
-	for (my = 0; my < 32; my++) {
-		for (mx = 0; mx < 32; mx++) {
-			Attr = DrvFgVideoRam[TileIndex + 0x400];
-			Code = DrvFgVideoRam[TileIndex + 0x000];
-			
-			Code += (Attr & 0xc0) << 2;
-			Colour = Attr & 0x0f;
-			
-			Flip = (Attr & 0x30) >> 4;
-			xFlip = (Flip >> 0) & 0x01;
-			yFlip = (Flip >> 1) & 0x01;
-			
-			x = 8 * mx;
-			y = 8 * my;
-			
-			y -= 16;
-			
-			if (x > 8 && x < 248 && y > 8 && y < 216) {
-				if (xFlip) {
-					if (yFlip) {
-						Render8x8Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 2, 3, 0x80, DrvChars);
-					} else {
-						Render8x8Tile_Mask_FlipX(pTransDraw, Code, x, y, Colour, 2, 3, 0x80, DrvChars);
-					}
-				} else {
-					if (yFlip) {
-						Render8x8Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 2, 3, 0x80, DrvChars);
-					} else {
-						Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, 2, 3, 0x80, DrvChars);
-					}
-				}
-			} else {
-				if (xFlip) {
-					if (yFlip) {
-						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 2, 3, 0x80, DrvChars);
-					} else {
-						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, Code, x, y, Colour, 2, 3, 0x80, DrvChars);
-					}
-				} else {
-					if (yFlip) {
-						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, Code, x, y, Colour, 2, 3, 0x80, DrvChars);
-					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 2, 3, 0x80, DrvChars);
-					}
-				}
-			}
-
-			TileIndex++;
-		}
+		Draw16x16MaskTile(pTransDraw, Code, sx, sy - 16, xFlip, yFlip, Colour, 4, 0xf, 0x40, DrvSprites);
 	}
 }
 
 static INT32 DrvDraw()
 {
-	BurnTransferClear();
 	DrvCalcPalette();
-	if (nBurnLayer & 2)     DrvRenderBgLayer(0, 1);
-	if (nSpriteEnable & 1)  DrvRenderSprites();
-	if (nBurnLayer & 4)     DrvRenderBgLayer(1, 0);
-	if (nBurnLayer & 8)     DrvRenderCharLayer();
+
+	GenericTilemapSetScrollX(0, DrvBgScrollX[0] | (DrvBgScrollX[1] << 8));
+	GenericTilemapSetScrollY(0, DrvBgScrollY[0] | (DrvBgScrollY[1] << 8));
+
+	BurnTransferClear();
+
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1);
+
+	if (nSpriteEnable & 1) DrvRenderSprites();
+
+	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0);
+
+	if (nBurnLayer & 8) GenericTilemapDraw(1, pTransDraw, 0);
+
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -1380,7 +1219,7 @@ static INT32 DrvFrame()
 		CPU_RUN(0, M6809);
 		if (i == 239) {
 			memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x200);
-			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		M6809Close();
 
@@ -1392,6 +1231,7 @@ static INT32 DrvFrame()
 	}
 
 	ZetOpen(0);
+
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
@@ -1399,6 +1239,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
+
 	ZetClose();
 
 	if (pBurnDraw) DrvDraw();

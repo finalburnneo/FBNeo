@@ -9589,6 +9589,7 @@ static void ZigzagInstallHandler()
 {
 	ZetOpen(0);
 	ZetSetWriteHandler(ZigzagZ80Write);
+	ZetMapMemory(GalZ80Ram1, 0x4000, 0x47ff, MAP_RAM);
 	ZetClose();
 }
 

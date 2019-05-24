@@ -473,6 +473,8 @@ static UINT8 __fastcall MegadriveReadByte(UINT32 sekAddress)
 	return 0;
 }
 
+static void __fastcall MegadriveZ80ProgWrite(UINT16 a, UINT8 d); // forward
+
 static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	if(sekAddress >= 0xA13004 && sekAddress < 0xA13040) {
@@ -516,6 +518,11 @@ static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			}
 			return;
 		}
+
+		case 0xA06000: { // banking (TecToy Bomber uses this)
+			MegadriveZ80ProgWrite(sekAddress, byteValue);
+		}
+		return;
 
 		case 0xA11100: {
 			if (byteValue & 1) {

@@ -658,14 +658,14 @@ static INT32 DrvDraw()
 	GenericTilemapSetEnable(0, bg_enable);
 	GenericTilemapSetEnable(1, fg_enable);
 
-	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(2));
-	GenericTilemapDraw(0, pTransDraw, 0);
-	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(0));
+	if (nBurnLayer & 1) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(2));
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(0));
 
-	draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites();
 
-	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1));
-	GenericTilemapDraw(2, pTransDraw, 0);
+	if (nSpriteEnable & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1));
+	if (nSpriteEnable & 4) GenericTilemapDraw(2, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
 

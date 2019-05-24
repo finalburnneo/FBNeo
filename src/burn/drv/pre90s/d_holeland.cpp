@@ -582,11 +582,8 @@ static INT32 DrvInit(INT32 game)
 		GenericTilemapInit(0, TILEMAP_SCAN_ROWS, holeland_map_callback, 16, 16, 32, 32);
 		GenericTilemapSetGfx(0, DrvGfxROM0, 2, 16, 16, 0x40000, 0, 0x3f);
 		GenericTilemapSetOffsets(0, 0, -32);
-		GenericTilemapCategoryConfig(0, 4);
-		GenericTilemapSetTransMask(0, 0, 0xff); // fg TMAP_DRAWLAYER0 category 0
-		GenericTilemapSetTransMask(0, 1, 0x01); // "" category 1
-		GenericTilemapSetTransMask(0, 2, 0x00); // bg TMAP_DRAWLAYER1 category 0
-		GenericTilemapSetTransMask(0, 3, 0xfe); // "" category 1
+		GenericTilemapSetTransSplit(0, 0, 0xff, 0x00); // tmap, category, layer0, layer1
+		GenericTilemapSetTransSplit(0, 1, 0x01, 0xfe);
 	}
 	else
 	{

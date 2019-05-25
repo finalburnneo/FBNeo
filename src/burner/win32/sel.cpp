@@ -287,7 +287,8 @@ int nLoadMenuGenreFilter		= 0;
 int nLoadMenuFavoritesFilter	= 0;
 int nLoadMenuFamilyFilter		= 0;
 
-int nLoadMenuExpand             = 0; // expanded/collapsed state of filter nodes
+// expanded/collapsed state of filter nodes. default: expand main (0x01) & hardware (0x10)
+int nLoadMenuExpand             = 0x10 | 0x01;
 
 struct NODEINFO {
 	int nBurnDrvNo;

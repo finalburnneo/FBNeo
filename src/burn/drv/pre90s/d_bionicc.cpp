@@ -6,6 +6,9 @@
 #include "z80_intf.h"
 #include "burn_ym2151.h"
 
+// coctail flipping disabled, so 2 players can play via netgame (kaillera, etc)
+#define COCTAIL_FLIPPING 0
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -39,7 +42,7 @@ static UINT8 *soundlatch;
 
 static INT32 flipscreen;
 
-static INT32 fg_scroll_x; 
+static INT32 fg_scroll_x;
 static INT32 fg_scroll_y;
 static INT32 bg_scroll_x;
 static INT32 bg_scroll_y;
@@ -48,28 +51,27 @@ static INT32 fg_enable;
 static INT32 bg_enable;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 6,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy1 + 7,	"p2 coin"  },
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"  },
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start" },
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 3, 	"p1 left"  },
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 2, 	"p1 right" },
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down", },
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up",   },
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 2"},
 
-	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 5,	"p1 start" },
-	{"P1 Left"      , BIT_DIGITAL  , DrvJoy2 + 3, 	"p1 left"  },
-	{"P1 Right"     , BIT_DIGITAL  , DrvJoy2 + 2, 	"p1 right" },
-	{"P1 Down",	  BIT_DIGITAL  , DrvJoy2 + 4,   "p1 down", },
-	{"P1 Up",	  BIT_DIGITAL  , DrvJoy2 + 5,   "p1 up",   },
-	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 1,	"p1 fire 1"},
-	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"  },
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start" },
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 3, 	"p2 left"  },
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 2, 	"p2 right" },
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down", },
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up",   },
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 2"},
 
-	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 4,	"p2 start" },
-	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 3, 	"p2 left"  },
-	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 2, 	"p2 right" },
-	{"P2 Down",	  BIT_DIGITAL,   DrvJoy3 + 4,   "p2 down", },
-	{"P2 Up",	  BIT_DIGITAL,   DrvJoy3 + 5,   "p2 up",   },
-	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy3 + 1,	"p2 fire 1"},
-	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy3 + 0,	"p2 fire 2"},
-
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"    },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip"	   },
-	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	"dip"	   },
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"    },
+	{"Dip 1",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"	   },
+	{"Dip 2",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"	   },
 };
 
 STDINPUTINFO(Drv)
@@ -77,7 +79,7 @@ STDINPUTINFO(Drv)
 static struct BurnDIPInfo DrvDIPList[]=
 {
 	{0x11, 0xff, 0xff, 0xff, NULL			},
-	{0x12, 0xff, 0xff, 0xff, NULL			},
+	{0x12, 0xff, 0xff, 0xfb, NULL			},
 
 	{0   , 0xfe, 0   , 8   , "Coin_A"		},
 	{0x11, 0x01, 0x07, 0x00, "4 Coins 1 Credit "	},
@@ -138,16 +140,13 @@ STDDIPINFO(Drv)
 
 static void bionicc_palette_write(INT32 offset)
 {
-	offset >>= 1;
+	INT32 data = *((UINT16*)(DrvPalRAM + (offset & 0x7fe)));
 
-	INT32 r, g, b, bright;
-	INT32 data =  *((UINT16*)(DrvPalRAM + (offset << 1)));
+	INT32 bright = (data&0x0f);
 
-	bright = (data&0x0f);
-
-	r = ((data>>12)&0x0f) * 0x11;
-	g = ((data>>8 )&0x0f) * 0x11;
-	b = ((data>>4 )&0x0f) * 0x11;
+	INT32 r = ((data>>12)&0x0f) * 0x11;
+	INT32 g = ((data>>8 )&0x0f) * 0x11;
+	INT32 b = ((data>>4 )&0x0f) * 0x11;
 
 	if ((bright & 0x08) == 0)
 	{
@@ -156,10 +155,10 @@ static void bionicc_palette_write(INT32 offset)
 		b = b * (0x07 + bright) / 0x0e;
 	}
 
-	DrvPalette[offset] = BurnHighCol(r, g, b, 0);
+	DrvPalette[offset >> 1] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall bionicc_write_byte(UINT32 address, UINT8 data)
+static void __fastcall bionicc_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfffff800) == 0xff8000) {
 		address &= 0x7ff;
@@ -179,10 +178,10 @@ void __fastcall bionicc_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall bionicc_write_word(UINT32 address, UINT16 data)
+static void __fastcall bionicc_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff800) == 0xff8000) {
-		address &= 0x7ff;
+		address &= 0x7fe;
 
 		*((UINT16*)(DrvPalRAM + address)) = data;
 
@@ -218,7 +217,7 @@ void __fastcall bionicc_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT8 __fastcall bionicc_read_byte(UINT32 address)
+static UINT8 __fastcall bionicc_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -226,7 +225,7 @@ UINT8 __fastcall bionicc_read_byte(UINT32 address)
 			return DrvInputs[0];
 
 		case 0xfe4001:
-			return 0xff; 
+			return 0xff;
 
 		case 0xfe4002:
 			return DrvDips[0];
@@ -238,7 +237,7 @@ UINT8 __fastcall bionicc_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall bionicc_read_word(UINT32 address)
+static UINT16 __fastcall bionicc_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -252,7 +251,7 @@ UINT16 __fastcall bionicc_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall bionicc_sound_read(UINT16 address)
+static UINT8 __fastcall bionicc_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -266,7 +265,7 @@ UINT8 __fastcall bionicc_sound_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall bionicc_sound_write(UINT16 address, UINT8 data)
+static void __fastcall bionicc_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -419,7 +418,7 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
-static INT32 DrvInit()
+static INT32 CommonDrvInit(INT32 game)
 {
 	Mem = NULL;
 	MemIndex();
@@ -428,6 +427,7 @@ static INT32 DrvInit()
 	memset(Mem, 0, nLen);
 	MemIndex();
 
+	if (game == 0)
 	{
 		if (BurnLoadRom(Drv68KROM + 0x00001, 0, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM + 0x00000, 1, 2)) return 1;
@@ -445,65 +445,8 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM2 + i * 0x8000, i +  8, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM3 + i * 0x8000, i + 16, 1)) return 1;
 		}
-
-		if (DrvGfxDecode()) return 1;
 	}
-
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM0,	0xfe0000, 0xfe3fff, MAP_RAM);
-	SekMapMemory(DrvTextRAM,	0xfec000, 0xfecfff, MAP_RAM);
-	SekMapMemory(DrvVidRAM0,	0xff0000, 0xff3fff, MAP_RAM);
-	SekMapMemory(DrvVidRAM1,	0xff4000, 0xff7fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0xff8000, 0xff87ff, MAP_ROM);
-	SekMapMemory(Drv68KRAM1,	0xffc000, 0xffffff, MAP_RAM); 
-	SekSetReadByteHandler(0,	bionicc_read_byte);
-	SekSetReadWordHandler(0,	bionicc_read_word);
-	SekSetWriteByteHandler(0,	bionicc_write_byte);
-	SekSetWriteWordHandler(0,	bionicc_write_word);
-	SekClose();
-
-	ZetInit(0);
-	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM);
-	ZetSetWriteHandler(bionicc_sound_write);
-	ZetSetReadHandler(bionicc_sound_read);
-	ZetClose();
-
-	BurnYM2151Init(3579545);
-	BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
-
-	GenericTilesInit();
-	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, background_map_callback,  8,  8, 64, 64);
-	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, foreground_map_callback, 16, 16, 64, 64);
-	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, text_map_callback,        8,  8, 32, 32);
-	GenericTilemapSetGfx(0, DrvGfxROM1, 4,  8,  8, 0x20000, 0x000, 0x03);
-	GenericTilemapSetGfx(1, DrvGfxROM2, 4, 16, 16, 0x80000, 0x100, 0x03);
-	GenericTilemapSetGfx(2, DrvGfxROM0, 2,  8,  8, 0x20000, 0x300, 0x3f);
-	GenericTilemapSetTransparent(0, 0x0f);
-	GenericTilemapSetTransparent(1, 0x0f);
-	GenericTilemapSetTransparent(2, 0x03);
-	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
-
-	DrvDoReset();
-
-	return 0;
-}
-
-static INT32 DrvbInit()
-{
-	Mem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
-
+	else
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x00001,  0, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM  + 0x00000,  1, 2)) return 1;
@@ -530,9 +473,9 @@ static INT32 DrvbInit()
 		if (BurnLoadRom(DrvGfxROM3 + 0x10000, 17, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x20000, 18, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x30000, 19, 1)) return 1;
-		
-		if (DrvGfxDecode()) return 1;
 	}
+
+	if (DrvGfxDecode()) return 1;
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -542,7 +485,7 @@ static INT32 DrvbInit()
 	SekMapMemory(DrvVidRAM0,	0xff0000, 0xff3fff, MAP_RAM);
 	SekMapMemory(DrvVidRAM1,	0xff4000, 0xff7fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0xff8000, 0xff87ff, MAP_ROM);
-	SekMapMemory(Drv68KRAM1,	0xffc000, 0xffffff, MAP_RAM); 
+	SekMapMemory(Drv68KRAM1,	0xffc000, 0xffffff, MAP_RAM);
 	SekSetReadByteHandler(0,	bionicc_read_byte);
 	SekSetReadWordHandler(0,	bionicc_read_word);
 	SekSetWriteByteHandler(0,	bionicc_write_byte);
@@ -551,17 +494,14 @@ static INT32 DrvbInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(bionicc_sound_write);
 	ZetSetReadHandler(bionicc_sound_read);
 	ZetClose();
 
 	BurnYM2151Init(3579545);
-	BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.25, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, background_map_callback,  8,  8, 64, 64);
@@ -578,6 +518,16 @@ static INT32 DrvbInit()
 	DrvDoReset();
 
 	return 0;
+}
+
+static INT32 DrvInit()
+{
+	return CommonDrvInit(0);
+}
+
+static INT32 DrvbInit()
+{
+	return CommonDrvInit(1);
 }
 
 static INT32 DrvExit()
@@ -601,39 +551,28 @@ static void draw_sprites()
 	{
 		INT32 code = ram[offs] & 0x7ff;
 
-		if (code != 0x7ff)
-		{
-			INT32 attr = ram[offs+1];
-			INT32 color = (attr & 0x3c) >> 2;
-			INT32 flipx = attr & 0x02;
-			INT32 flipy = 0;
-			INT32 sx = (INT16)ram[offs+3];
-			INT32 sy = (INT16)ram[offs+2];
-			if (sy > 496) sy -= 512;
+		if (code == 0x7ff) continue;
 
-			if (sx < -15 || sx > 255 || sy < 1 || sy > 239) continue;
+		INT32 attr = ram[offs+1];
+		INT32 color = (attr & 0x3c) >> 2;
+		INT32 flipx = attr & 0x02;
+		INT32 flipy = 0;
+		INT32 sx = (INT16)ram[offs+3];
+		INT32 sy = (INT16)ram[offs+2];
+		if (sy > 496) sy -= 512;
 
-			if (flipscreen) {
-				flipx ^= 2;
-				flipy = 1;
-				sx = (256 - 16) - sx;
-				sy = (256 - 16) - sy;
-			}
+		if (sx < -15 || sx > 255 || sy < 1 || sy > 239) continue;
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0x200, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0x200, DrvGfxROM3);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0x200, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0x200, DrvGfxROM3);
-				}
-			}
+#if COCTAIL_FLIPPING
+		if (flipscreen) {
+			flipx ^= 2;
+			flipy = 1;
+			sx = (256 - 16) - sx;
+			sy = (256 - 16) - sy;
 		}
+#endif
+
+		Draw16x16MaskTile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 4, 15, 0x200, DrvGfxROM3);
 	}
 }
 
@@ -648,7 +587,9 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
+#if COCTAIL_FLIPPING
 	GenericTilemapSetFlip(TMAP_GLOBAL, flipscreen ? (TMAP_FLIPY | TMAP_FLIPX) : 0);
+#endif
 
 	GenericTilemapSetScrollX(0, bg_scroll_x);
 	GenericTilemapSetScrollY(0, bg_scroll_y);
@@ -688,9 +629,10 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 8;
-	INT32 nTotalCycles[2] = { 12000000 / 60, 3579545 / 60 };
+	INT32 nCyclesTotal[2] = { 12000000 / 60, 3579545 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	ZetNewFrame();
 
@@ -699,10 +641,10 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nTotalCycles[0] -= SekRun(nTotalCycles[0] / (nInterleave - i));
+		CPU_RUN(0, Sek);
 		if (i != (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		nTotalCycles[1] -= ZetRun(nTotalCycles[1] / (nInterleave - i));
+		CPU_RUN(1, Zet);
 		if ((i & 1) == 1) ZetNmi();
 
 		if (pBurnSoundOut) {
@@ -735,7 +677,7 @@ static INT32 DrvFrame()
 }
 
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 

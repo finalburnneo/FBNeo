@@ -227,6 +227,21 @@ else ifeq ($(platform), vita)
    STATIC_LINKING = 1
    USE_CYCLONE = 1
 
+# CTR (3DS)
+else ifeq ($(platform), ctr)
+   TARGET := $(TARGET_NAME)_libretro_$(platform).a
+   CC = $(DEVKITARM)/bin/arm-none-eabi-gcc$(EXE_EXT)
+   CXX = $(DEVKITARM)/bin/arm-none-eabi-g++$(EXE_EXT)
+   AR = $(DEVKITARM)/bin/arm-none-eabi-ar$(EXE_EXT)
+   PLATFORM_DEFINES += -D_3DS
+   ENDIANNESS_DEFINES := -DLSB_FIRST
+   CFLAGS += -march=armv6k -mtune=mpcore -mfloat-abi=hard
+   CXXFLAGS += -march=armv6k -mtune=mpcore -mfloat-abi=hard -fno-rtti -fno-exceptions
+   EXTERNAL_ZLIB = 1
+   STATIC_LINKING = 1
+   USE_CYCLONE = 1
+   INCLUDE_7Z_SUPPORT = 0
+
 # Xbox 360
 else ifeq ($(platform), xenon)
    TARGET := $(TARGET_NAME)_libretro_xenon360.a

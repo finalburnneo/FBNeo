@@ -1858,7 +1858,10 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 	ZetNmi();
 
 #if 1 && defined USE_SPEEDHACKS
-	neogeoSynchroniseZ80(0x64);
+	// notes: value too high, and breaks nam1975 voice after coin up
+	// stikers 1945p: goes really slow
+	// pulstar: music/bonus count noise at end of level
+	neogeoSynchroniseZ80(0x24);
 #endif
 }
 

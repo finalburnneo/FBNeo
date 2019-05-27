@@ -535,7 +535,7 @@ static inline void sei()
 
 static inline void xce()
 {
-	int temp = p.c;
+	INT16 temp = p.c;
 	p.c = p.e;
 	p.e = temp;
 	snes_readmem(p.pbr | p.pc);
@@ -2944,7 +2944,7 @@ static inline void cpyAbs16()
 /*Branch group*/
 static inline void bcc()
 {
-	signed char temp = (signed char)snes_readmem(p.pbr | p.pc); p.pc++;
+	INT8 temp = (INT8)snes_readmem(p.pbr | p.pc); p.pc++;
 	if (!p.c)
 	{
 		p.pc += temp;
@@ -2955,7 +2955,7 @@ static inline void bcc()
 
 static inline void bcs()
 {
-	signed char temp = (signed char)snes_readmem(p.pbr | p.pc); p.pc++;
+	INT8 temp = (INT8)snes_readmem(p.pbr | p.pc); p.pc++;
 	if (p.c)
 	{
 		p.pc += temp;
@@ -2966,7 +2966,7 @@ static inline void bcs()
 
 static inline void beq()
 {
-	signed char temp = (signed char)snes_readmem(p.pbr | p.pc); p.pc++;
+	INT8 temp = (INT8)snes_readmem(p.pbr | p.pc); p.pc++;
 	if (p.z)
 	{
 		p.pc += temp;
@@ -2977,7 +2977,7 @@ static inline void beq()
 
 static inline void bne()
 {
-	signed char temp = (signed char)snes_readmem(p.pbr | p.pc); p.pc++;
+	INT8 temp = (INT8)snes_readmem(p.pbr | p.pc); p.pc++;
 
 	if (!p.z)
 	{
@@ -2989,7 +2989,7 @@ static inline void bne()
 
 static inline void bpl()
 {
-	signed char temp = (signed char)snes_readmem(p.pbr | p.pc); p.pc++;
+	INT8 temp = (INT8)snes_readmem(p.pbr | p.pc); p.pc++;
 	if (!p.n)
 	{
 		p.pc += temp;
@@ -2999,7 +2999,7 @@ static inline void bpl()
 
 static inline void bmi()
 {
-	signed char temp = (signed char)snes_readmem(p.pbr | p.pc); p.pc++;
+	INT8 temp = (INT8)snes_readmem(p.pbr | p.pc); p.pc++;
 	if (p.n)
 	{
 		p.pc += temp;
@@ -3009,7 +3009,7 @@ static inline void bmi()
 
 static inline void bvc()
 {
-	signed char temp = (signed char)snes_readmem(p.pbr | p.pc); p.pc++;
+	INT8 temp = (INT8)snes_readmem(p.pbr | p.pc); p.pc++;
 	if (!p.v)
 	{
 		p.pc += temp;
@@ -3019,7 +3019,7 @@ static inline void bvc()
 
 static inline void bvs()
 {
-	signed char temp = (signed char)snes_readmem(p.pbr | p.pc); p.pc++;
+	INT8 temp = (INT8)snes_readmem(p.pbr | p.pc); p.pc++;
 	if (p.v)
 	{
 		p.pc += temp;
@@ -3029,7 +3029,7 @@ static inline void bvs()
 
 static inline void bra()
 {
-	signed char temp = (signed char)snes_readmem(p.pbr | p.pc); p.pc++;
+	INT8 temp = (INT8)snes_readmem(p.pbr | p.pc); p.pc++;
 	p.pc += temp;
 	p.cycles -= 6; clockspc(6);
 }
@@ -3450,7 +3450,7 @@ static inline void rola16()
 static inline void rolZp8()
 {
 	UINT8 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = zeropage();
 	temp = snes_readmem(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3465,7 +3465,7 @@ static inline void rolZp8()
 static inline void rolZp16()
 {
 	UINT16 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = zeropage();
 	temp = readmemw(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3480,7 +3480,7 @@ static inline void rolZp16()
 static inline void rolZpx8()
 {
 	UINT8 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = zeropagex();
 	temp = snes_readmem(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3494,7 +3494,7 @@ static inline void rolZpx8()
 static inline void rolZpx16()
 {
 	UINT16 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = zeropagex();
 	temp = readmemw(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3509,7 +3509,7 @@ static inline void rolZpx16()
 static inline void rolAbs8()
 {
 	UINT8 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = absolute();
 	temp = snes_readmem(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3523,7 +3523,7 @@ static inline void rolAbs8()
 static inline void rolAbs16()
 {
 	UINT16 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = absolute();
 	temp = readmemw(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3538,7 +3538,7 @@ static inline void rolAbs16()
 static inline void rolAbsx8()
 {
 	UINT8 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = absolutex();
 	temp = snes_readmem(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3552,7 +3552,7 @@ static inline void rolAbsx8()
 static inline void rolAbsx16()
 {
 	UINT16 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = absolutex();
 	temp = readmemw(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3586,7 +3586,7 @@ static inline void rora16()
 static inline void rorZp8()
 {
 	UINT8 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = zeropage();
 	temp = snes_readmem(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3600,7 +3600,7 @@ static inline void rorZp8()
 static inline void rorZp16()
 {
 	UINT16 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = zeropage();
 	temp = readmemw(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3615,7 +3615,7 @@ static inline void rorZp16()
 static inline void rorZpx8()
 {
 	UINT8 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = zeropagex();
 	temp = snes_readmem(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3629,7 +3629,7 @@ static inline void rorZpx8()
 static inline void rorZpx16()
 {
 	UINT16 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = zeropagex();
 	temp = readmemw(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3644,7 +3644,7 @@ static inline void rorZpx16()
 static inline void rorAbs8()
 {
 	UINT8 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = absolute();
 	temp = snes_readmem(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3658,7 +3658,7 @@ static inline void rorAbs8()
 static inline void rorAbs16()
 {
 	UINT16 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = absolute();
 	temp = readmemw(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3673,7 +3673,7 @@ static inline void rorAbs16()
 static inline void rorAbsx8()
 {
 	UINT8 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = absolutex();
 	temp = snes_readmem(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3687,7 +3687,7 @@ static inline void rorAbsx8()
 static inline void rorAbsx16()
 {
 	UINT16 temp;
-	int tempc;
+	INT16 tempc;
 	p.tempAddr = absolutex();
 	temp = readmemw(p.tempAddr);
 	p.cycles -= 6; clockspc(6);
@@ -3900,7 +3900,7 @@ static inline void badopcode()
 
 void makeopcodetable()
 {
-	int c, d;
+	INT16 c, d;
 	for (c = 0; c < 256; c++)
 	{
 		for (d = 0; d < 5; d++)

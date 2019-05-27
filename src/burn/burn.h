@@ -225,6 +225,17 @@ struct BurnDIPInfo {
 #define MAP_ROM			(MAP_READ|MAP_FETCH)
 #define MAP_RAM			(MAP_ROM|MAP_WRITE)
 
+// Macros to Allocate and Free MemIndex
+#define BurnAllocMemIndex() do {                				\
+	AllMem = NULL;                                 				\
+	MemIndex();                                 				\
+	INT32 nLen = MemEnd - (UINT8 *)0;           				\
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;	\
+	memset(AllMem, 0, nLen);                       				\
+	MemIndex();                                 				\
+} while (0)
+
+#define BurnFreeMemIndex() do { BurnFree(AllMem); } while (0)
 
 // ---------------------------------------------------------------------------
 

@@ -492,12 +492,7 @@ static INT32 DrvInit(INT32 game)
 {
 	game_select = game;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	memset (DrvNVRAM, 0xff, 0x800);
 
@@ -604,7 +599,7 @@ static INT32 DrvExit()
 	AY8910Exit(1);
 	sp0256_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }

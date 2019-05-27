@@ -1239,6 +1239,40 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 	
+	// Mortal Kombat 1, 2 & 3
+	// snes-like mapping seems more convenient than original arcade mapping (with the block in the middle), even on arcade sticks
+	if ((parentrom && strcmp(parentrom, "mk") == 0) ||
+		(drvname && strcmp(drvname, "mk") == 0) ||
+		(parentrom && strcmp(parentrom, "mk2") == 0) ||
+		(drvname && strcmp(drvname, "mk2") == 0) ||
+		(parentrom && strcmp(parentrom, "mk3") == 0) ||
+		(drvname && strcmp(drvname, "mk3") == 0)
+	) {
+		if (strcmp("High Punch", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
+		}
+		if (strcmp("Low Punch", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("High Kick", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
+		}
+		if (strcmp("Low Kick", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+		}
+		if (strcmp("Block", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_R : RETRO_DEVICE_ID_JOYPAD_L), description);
+		}
+		// mk1 & mk2
+		if (strcmp("Block 2", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_R2 : RETRO_DEVICE_ID_JOYPAD_R), description);
+		}
+		// mk3
+		if (strcmp("Run", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_R2 : RETRO_DEVICE_ID_JOYPAD_R), description);
+		}
+	}
+	
 	// Handle megadrive
 	if ((systemname && strcmp(systemname, "Sega Megadrive") == 0)) {
 		// Street Fighter 2 mapping (which is the only 6 button megadrive game ?)

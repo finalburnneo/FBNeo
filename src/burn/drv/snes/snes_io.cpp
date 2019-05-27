@@ -278,7 +278,7 @@ unsigned char readio(unsigned short addr)
 	case 0x12: /*VBL*/
 		if (vbl) temp|=0x80;
 		if (joyscan) temp|=1;
-		if (cycles<340) temp|=0x40; /*340=1364-(256 pixels * 4)*/
+		if (p.cycles<340) temp|=0x40; /*340=1364-(256 pixels * 4)*/
 		return temp;
 
 	case 0x13: /*I/O port*/

@@ -8,26 +8,22 @@ PPU emulation
 
 #define SNES_INLINE
 
-#define uint unsigned int
-#define uint16 unsigned short
-#define uint32 unsigned int
 
+INT32 nmi,vbl,joyscan;
+INT32 nmienable;
 
-int nmi,vbl,joyscan;
-int nmienable;
-
-int yirq,xirq,irqenable,irq;
-int lines;
+INT32 yirq,xirq,irqenable,irq;
+INT32 lines;
 
 
 int global_pal;
 
 /*DMA registers*/
-unsigned short dmadest[8],dmasrc[8],dmalen[8];
-unsigned long hdmaaddr[8],hdmaaddr2[8];
-unsigned char dmabank[8],dmaibank[8],dmactrl[8],hdmastat[8],hdmadat[8];
-int hdmacount[8];
-unsigned char hdmaena;
+UINT16 dmadest[8],dmasrc[8],dmalen[8];
+UINT32 hdmaaddr[8],hdmaaddr2[8];
+UINT8 dmabank[8],dmaibank[8],dmactrl[8],hdmastat[8],hdmadat[8];
+INT32 hdmacount[8];
+UINT8 hdmaena;
 
 
 /* layers */
@@ -1577,7 +1573,7 @@ static void snes_update_offsets( void )
 	snes_ppu.update_offsets = 0;
 }
 
-static SNES_INLINE unsigned char pal5bit(unsigned char bits)
+static SNES_INLINE UINT8 pal5bit(UINT8 bits)
 {
 	bits &= 0x1f;
 	return (bits << 3);
@@ -1591,7 +1587,7 @@ static SNES_INLINE unsigned char pal5bit(unsigned char bits)
 
 
 #if 0
-SNES_INLINE static unsigned int CalcCol(unsigned short nColour)
+SNES_INLINE static unsigned int CalcCol(UINT16 nColour)
 {
 	int r, g, b;
 
@@ -1619,7 +1615,7 @@ static void snes_refresh_scanline(UINT16 curline )
 	int fade;
 	struct SCANLINE *scanline1, *scanline2;
 	UINT16 c;
-	unsigned short * dstbitmap = (unsigned short * )pBurnDraw;
+	UINT16 * dstbitmap = (UINT16 * )pBurnDraw;
 
 	if (snes_ppu.screen_disabled) /* screen is forced blank */
 		for (xpos = 0; xpos < SNES_SCR_WIDTH * 2; xpos++)
@@ -1971,7 +1967,7 @@ void dumphdma()
 
 
 
-void writeppu(unsigned short offset, unsigned char data)
+void writeppu(UINT16 offset, UINT8 data)
 {
 
 	if (offset >= APU00 && offset < WMDATA)
@@ -1985,7 +1981,7 @@ void writeppu(unsigned short offset, unsigned char data)
 
 		case SLHV:
 			vcount=lines;
-			hcount=(1364-cycles)>>2;
+			hcount=(1364-p.cycles)>>2;
 			break;
 		case INIDISP:	/* Initial settings for screen */
 			if ((snes_ppu.screen_disabled & 0x80) && (!(data & 0x80))) //a 1->0 force blank transition causes a reset OAM address
@@ -2481,7 +2477,7 @@ void writeppu(unsigned short offset, unsigned char data)
 static UINT8 read_ophct =0;
 static UINT8 read_opvct =0;
 static UINT8 temp=0;
-unsigned char readppu(unsigned short offset)
+UINT8 readppu(UINT16 offset)
 {
 //	snes_state *state = (snes_state *)space->machine->driver_data;
 	UINT8 value = 0;

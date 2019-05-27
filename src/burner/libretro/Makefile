@@ -236,7 +236,7 @@ else ifeq ($(platform), ctr)
    PLATFORM_DEFINES += -D_3DS
    ENDIANNESS_DEFINES := -DLSB_FIRST
    CFLAGS += -march=armv6k -mtune=mpcore -mfloat-abi=hard
-   CXXFLAGS += -march=armv6k -mtune=mpcore -mfloat-abi=hard -fno-rtti -fno-exceptions
+   CXXFLAGS += -march=armv6k -mtune=mpcore -mfloat-abi=hard -fpermissive -fno-rtti -fno-exceptions
    EXTERNAL_ZLIB = 1
    STATIC_LINKING = 1
    USE_CYCLONE = 1

@@ -1482,6 +1482,8 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 		if (strncmp("y-axis", szb, 6) == 0)
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 1, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
+		if (strncmp("z-axis", szb, 6) == 0)
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 1, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
 		// Some gun games have their default mapping set to mouse upstream, let's handle them
 		if (strcmp("mouse x-axis", szi) == 0)
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);

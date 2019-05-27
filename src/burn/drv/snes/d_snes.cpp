@@ -101,3 +101,22 @@ struct BurnDriverD BurnDrvrSuperMarioWorldUSA = {
 	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
 	NULL,0x6000,512 , 244, 4, 3
 };
+
+static struct BurnRomInfo rtest_adcRomDesc[] = {
+	{ "test_adc.smc",          65536, 0xc74b2012, BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(rtest_adc)
+STD_ROM_FN(rtest_adc)
+
+struct BurnDriverD BurnDrvrtest_adc = {
+	"test_adc", NULL, NULL, NULL, "1986",
+	"test_adc\0", NULL, "Nintendo", "Miscellaneous",
+	L"test_adc", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
+	NULL, rtest_adcRomInfo, rtest_adcRomName,NULL,NULL,NULL,NULL, SnesInputInfo, SnesDIPInfo,
+	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
+	NULL,0x6000,512 , 244, 4, 3
+};
+

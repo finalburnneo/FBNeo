@@ -128,7 +128,7 @@ typedef union
 } reg;
 
 
-extern unsigned long pbr,dbr;
+extern UINT32 pbr,dbr;
 extern UINT16 pc,dp;
 
 
@@ -146,8 +146,6 @@ extern void (*opcodes[256][5])();
 4 = emulation*/
 extern INT32 cpumode;
 
-/*Current opcode*/
-extern UINT8 global_opcode;
 /*Global cycles count*/
 extern INT32 cycles;
 
@@ -209,12 +207,21 @@ unsigned char readjoyold(unsigned short addr);
 void writeio(unsigned short addr, unsigned char val);
 void writejoyold(unsigned short addr, unsigned char val);
 
-struct CPU_P
+struct CPU_65816
 {
-	int c,z,i,d,b,v,n,m,x,e;
+	UINT8 b; // the break flag
+	UINT8 c; // the carry flag
+	UINT8 d; // the decimal mode flag
+	UINT8 e; // the emulation mode flag
+	UINT8 i; // the interrupt disable flag
+	UINT8 m; // the accumulator and memory width flag
+	UINT8 n; // the negative flag
+	UINT8 v; // the overflow flag
+	UINT8 x; // the index register width flag
+	UINT8 z; // the zero flag
 };
 
-extern CPU_P p;
+extern CPU_65816 p;
 
 // spc stuff
 unsigned char readfromspc(unsigned short addr);

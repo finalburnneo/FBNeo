@@ -433,7 +433,7 @@ INT32 SnesFrame()
 		intthisline=0;
 		while (cycles>0)
 		{
-			global_opcode=snes_readmem(pbr|pc); 
+			UINT8 global_opcode=snes_readmem(pbr|pc); 
 			pc++;
 			opcodes[global_opcode ][cpumode]();
 			if ((((irqenable==3) && (lines==yirq)) || (irqenable==1)) && !intthisline)

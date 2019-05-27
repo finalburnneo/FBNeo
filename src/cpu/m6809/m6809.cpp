@@ -431,6 +431,7 @@ void m6809_reset(void)
 	m6809.nmi_state = M6809_CLEAR_LINE;
 	m6809.irq_state[0] = M6809_CLEAR_LINE;
 	m6809.irq_state[1] = M6809_CLEAR_LINE;
+	m6809.extra_cycles = 0;
 
 	DPD = 0;			/* Reset direct page register */
 

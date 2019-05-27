@@ -746,12 +746,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 BagmanCommonInit(INT32 game, INT32 memmap)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		switch (game)
@@ -943,8 +938,8 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	tms5110_exit();
 
-	BurnFree(AllMem);
-	
+	BurnFreeMemIndex();
+
 	botanic_input_xor = 0;
 	squaitsamode = 0;
 

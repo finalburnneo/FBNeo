@@ -797,13 +797,15 @@ INT32 BurnUpdateProgress(double fProgress, const TCHAR* pszText, bool bAbs)
 }
 
 // ----------------------------------------------------------------------------
-// NOTE: Make sure this is called before any sound emulation!!
+// NOTE: Make sure this is called before any soundcore init!
 INT32 BurnSetRefreshRate(double dFrameRate)
 {
 	if (!bForce60Hz) {
 		nBurnFPS = (INT32)(100.0 * dFrameRate);
 	}
-	nBurnSoundLen = nBurnSoundRate / (nBurnFPS / 100.0000);
+
+	nBurnSoundLen = (nBurnSoundRate * 100 + (nBurnFPS >> 1)) / nBurnFPS;
+
 	return 0;
 }
 

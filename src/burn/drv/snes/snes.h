@@ -164,14 +164,35 @@ struct CPU_65816
 
 extern CPU_65816 snes_cpu;
 
+#define REG_AL() (snes_cpu.regA.b.l)
+#define REG_AH() (snes_cpu.regA.b.h)
+#define REG_AW() (snes_cpu.regA.w)
+
+#define REG_XL() (snes_cpu.regX.b.l)
+#define REG_XH() (snes_cpu.regX.b.h)
+#define REG_XW() (snes_cpu.regX.w)
+
+#define REG_YL() (snes_cpu.regY.b.l)
+#define REG_YH() (snes_cpu.regY.b.h)
+#define REG_YW() (snes_cpu.regY.w)
+
+#define REG_SL() (snes_cpu.regS.b.l)
+#define REG_SH() (snes_cpu.regS.b.h)
+#define REG_SW() (snes_cpu.regS.w)
+
+#define REG_PL() (snes_cpu.regP.b.l)
+#define REG_PH() (snes_cpu.regP.b.h)
+#define REG_PW() (snes_cpu.regP.w)
+
 #define CARRY_FLAG   0x01
 #define ZERO_FLAG	 0x02
 #define IRQ_FLAG     0x04
 #define DECIMAL_FLAG 0x08
 #define INDEX_FLAG   0x10
-#define OVERFLOW_FLAG 0x20
-#define MEMORY_FLAG  0x40
+#define MEMORY_FLAG  0x20
+#define OVERFLOW_FLAG 0x40
 #define NEGATIVE_FLAG 0x80
+
 
 #define CLEAR_CARRY() (snes_cpu.regP.b.l &= ~CARRY_FLAG)
 #define SET_CARRY() (snes_cpu.regP.b.l |= CARRY_FLAG)
@@ -204,6 +225,8 @@ extern CPU_65816 snes_cpu;
 #define CLEAR_NEGATIVE() (snes_cpu.regP.b.l &= ~NEGATIVE_FLAG)
 #define SET_NEGATIVE() (snes_cpu.regP.b.l |= NEGATIVE_FLAG)
 #define CHECK_NEGATIVE() (snes_cpu.regP.b.l & NEGATIVE_FLAG)
+
+
 
 extern void (*opcodes[256][5])();
 // cpu stuff

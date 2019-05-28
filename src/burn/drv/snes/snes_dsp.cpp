@@ -50,13 +50,7 @@ void writedsp(UINT16 a, UINT8 v)
 	unsigned long templ;
 	if (a & 1)
 	{
-		//                if (curdspreg==0x62) spcoutput=1;
-		//                if (curdspreg==0x4C) spcoutput=0;
 		dspregs[curdspreg] = v;
-		//                if (!(curdspreg&0xE)) printf("Write DSP %02X %02X %04X\n",curdspreg,v,getspcpc());
-		//                if (curdspreg==4) spcoutput=1;
-		//                if (curdspreg==0x14) spcoutput=0;
-		//                if (v) printf("Write DSP %02X %02X %04X\n",curdspreg,v,getspcpc());
 		switch (curdspreg)
 		{
 		case 0x00: case 0x10: case 0x20: case 0x30:
@@ -69,12 +63,10 @@ void writedsp(UINT16 a, UINT8 v)
 			break;
 		case 0x02: case 0x12: case 0x22: case 0x32:
 		case 0x42: case 0x52: case 0x62: case 0x72:
-			//                                printf("Write pitchl %02X %04X\n",v,getspcpc());
 			dsp.pitch[curdspreg >> 4] = (dsp.pitch[curdspreg >> 4] & 0x3F00) | v;
 			break;
 		case 0x03: case 0x13: case 0x23: case 0x33:
 		case 0x43: case 0x53: case 0x63: case 0x73:
-			//                                printf("Write pitchh %02X %04X\n",v,getspcpc());
 			dsp.pitch[curdspreg >> 4] = (dsp.pitch[curdspreg >> 4] & 0xFF) | ((v & 0x3F) << 8);
 			break;
 		case 0x04: case 0x14: case 0x24: case 0x34:
@@ -182,7 +174,6 @@ int range[8], filter[8];
 inline INT16 decodebrr(int v, int c)
 {
 	INT16 temp = v & 0xF;
-	float tempf;
 	if (temp & 8) temp |= 0xFFF0;
 	if (range[c] <= 12) temp <<= range[c];
 	else              temp = (temp & 8) ? 0xF800 : 0;
@@ -224,10 +215,8 @@ INT16 getbrr(int c)
 	else
 	{
 		temp = spcram[dsp.voiceaddr[c]++] & 0xF;
-		//                if (temp&8) (unsigned long)temp|=0xFFFFFFF0;
 		dsp.brrstat[c]++;
 		sample = decodebrr(temp, c);
-		//                sample=(temp<<(dsp.brrctrl[c]>>4))>>1;
 		if (dsp.brrstat[c] == 17)
 		{
 			dsp.brrstat[c] = 0;
@@ -255,13 +244,10 @@ INT16 dspbuffer[20000];
 INT16 dsprealbuffer[8][20000];
 int dsppos = 0;
 int dspwsel = 0, dsprsel = 0;
-//AUDIOSTREAM* as;
 
 int bufferready = 0;
 void initdsp()
 {
-	//install_sound(DIGI_AUTODETECT, MIDI_NONE, 0);
-	//as = play_audio_stream(3200 / 5, 16, TRUE, 32000, 255, 128);
 }
 
 int dspqlen = 0;
@@ -299,7 +285,6 @@ void polldsp()
 	short totalsamplel = 0, totalsampler = 0;
 	for (c = 0; c < 8; c++)
 	{
-		//                if (dsp.voiceon[0]) printf("Pitch %i %i\n",dsp.pitchcounter[c],dsp.pitch[c]);
 		dsp.pitchcounter[c] += dsp.pitch[c];
 		if (dsp.pitchcounter[c] < 0)// || dsp.voiceend[c])
 			sample = dspsamples[c];
@@ -308,7 +293,6 @@ void polldsp()
 			s = (INT16)getbrr(c);
 			sample = (int)s;
 			dspsamples[c] = sample;
-			//                        if (sample && dsp.evol[c]) printf(":%i %i ",s,sample);
 			dsp.pitchcounter[c] -= 0x1000;
 		}
 		if (dsp.non & (1 << c))
@@ -317,19 +301,14 @@ void polldsp()
 			if (dsp.noise & 0x4000)
 				sample |= 0xFFFF8000;
 		}
-		//                if (totalsamplel<-15000 || totalsamplel>15000) printf("Overflow - %i %i %i\n",c,sample,totalsamplel);
-		//                if (sample && dsp.evol[c]) printf("%i %04X %04X ",c,sample,dsp.evol[c]);
 		sample *= dsp.evol[c];
 		sample >>= 11;
 		dsp.outx[c] = sample >> 8;
-		//                if (sample) printf("%04X %i %i ",sample,dsp.volumel[c],dsp.volumer[c]);
 		if (dsp.volumel[c]) totalsamplel += (((sample * dsp.volumel[c]) >> 7) >> 3);
 		if (dsp.volumer[c]) totalsampler += (((sample * dsp.volumer[c]) >> 7) >> 3);
-		//                if (sample) printf("%04X %04X\n",totalsamplel,totalsampler);
 		dsp.edelay[c]--;
 		if (dsp.edelay[c] <= 0)
 		{
-			//                        if (c==7) printf("%i %i\n",dsp.etype[c],dsp.adsrstat[c]);
 			if (dsp.adsrstat[c] == RELEASE)
 			{
 				dsp.edelay[c] = 1;

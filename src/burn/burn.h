@@ -89,7 +89,6 @@ __extension__ typedef long long				INT64;
 #include "state.h"
 #include "cheat.h"
 #include "hiscore.h"
-#include "joyprocess.h"
 
 extern INT32 nBurnVer;						// Version number of the library
 

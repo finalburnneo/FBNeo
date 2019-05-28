@@ -14,6 +14,7 @@
 
 #include "burn.h"
 #include "burn_sound.h"
+#include "joyprocess.h"
 
 #ifdef LSB_FIRST
 typedef union

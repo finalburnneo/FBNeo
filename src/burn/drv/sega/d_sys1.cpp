@@ -6301,6 +6301,8 @@ INT32 System1Frame()
 
 	MakeInputsFunction();
 
+	ZetNewFrame();
+
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {

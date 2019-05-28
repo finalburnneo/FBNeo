@@ -132,13 +132,11 @@ typedef union
 struct CPU_65816
 {
 	INT16 b; // the break flag
-	INT16 c; // the carry flag
-
+	//INT16 c; // the carry flag
 	INT16 e; // the emulation mode flag
 	INT16 m; // the accumulator and memory width flag
 	INT16 n; // the negative flag
 	INT16 v; // the overflow flag
-	//INT16 x; // the index register width flag
 	INT16 z; // the zero flag
 
 	/*CPU modes : 0 = X1M1
@@ -146,7 +144,7 @@ struct CPU_65816
 2 = X0M1
 3 = X0M0
 4 = emulation*/
-	INT32 cpumode;
+	INT32 cpumode = 0;
 	INT8 inwai = 0; // Set when WAI is called
 
 	reg regA; // The Accumulator(16 bits wide)
@@ -171,10 +169,16 @@ struct CPU_65816
 
 extern CPU_65816 snes_cpu;
 
-
+#define CARRY_FLAG   0x01
 #define IRQ_FLAG     0x04
 #define DECIMAL_FLAG 0x08
 #define INDEX_FLAG   0x10
+
+
+#define CLEAR_CARRY() (snes_cpu.regP.b.l &= ~CARRY_FLAG)
+#define SET_CARRY() (snes_cpu.regP.b.l |= CARRY_FLAG)
+#define CHECK_CARRY() (snes_cpu.regP.b.l & CARRY_FLAG)
+
 
 
 #define CLEAR_IRQ() (snes_cpu.regP.b.l &= ~IRQ_FLAG)

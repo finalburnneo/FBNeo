@@ -37,65 +37,65 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[5];
 
 static struct BurnInputInfo BlockoutInputList[] = {
-	{"Coin 1",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 coin"  },
-	{"Coin 2",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"  },
-	{"Coin 3",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 coin"  },
-
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p1 coin"  },
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start" },
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"    },
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"  },
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"  },
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"    },
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"  },
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"  },
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right" },
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy5 + 6,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 4"},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"  },
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start" },
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"    },
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"  },
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"  },
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"    },
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"  },
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"  },
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right" },
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy5 + 7,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 4"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"    },
-	{"Dip 1",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"      },
-	{"Dip 2",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"      },
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p3 coin"  },
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"    },
+	{"Dip 1",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"      },
+	{"Dip 2",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"      },
 };
 
 STDINPUTINFO(Blockout)
 
 static struct BurnInputInfo BlckoutjInputList[] = {
-	{"Coin 1",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 coin"  },
-	{"Coin 2",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"  },
-	{"Coin 3",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 coin"  },
-
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p1 coin"  },
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start" },
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"    },
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"  },
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"  },
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"    },
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"  },
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"  },
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right" },
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy5 + 6,	"p1 fire 4"},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"  },
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start" },
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"    },
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"  },
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"  },
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"    },
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"  },
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"  },
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right" },
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy5 + 7,	"p2 fire 4"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"    },
-	{"Dip 1",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"      },
-	{"Dip 2",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"      },
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p3 coin"  },
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"    },
+	{"Dip 1",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"      },
+	{"Dip 2",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"      },
 };
 
 STDINPUTINFO(Blckoutj)
@@ -196,12 +196,14 @@ static void palette_write(INT32 offset)
 
 static void update_pixels(INT32 offset)
 {
+	const INT32 y_offs = 10;
+
 	INT32 x = (offset & 0xff);
 	INT32 y = (offset >> 8) & 0xff;
-	if (x >= 320 || y < 8 || y > 247) return;
+	if (x >= nScreenWidth || y < y_offs || y >= nScreenHeight+y_offs) return;
 
 	UINT16 *src = (UINT16*)DrvVidRAM0 + ((y << 8) | x);
-	UINT16 *dst = DrvTmpBmp + (y-8) * 320 + x * 2;
+	UINT16 *dst = DrvTmpBmp + (y-y_offs) * 320 + x * 2;
 
 	INT32 front = src[0x00000];
 	INT32 back  = src[0x10000];
@@ -213,7 +215,7 @@ static void update_pixels(INT32 offset)
 	else              dst[1] = (back & 0xff) | 0x100;
 }
 
-void __fastcall blockout_write_byte(UINT32 address, UINT8 data)
+static void __fastcall blockout_write_byte(UINT32 address, UINT8 data)
 {
 	if (address >= 0x180000 && address <= 0x1bffff) {
 		address = (address & 0x3ffff) ^ 1;
@@ -233,7 +235,7 @@ void __fastcall blockout_write_byte(UINT32 address, UINT8 data)
 	return;
 }
 
-void __fastcall blockout_write_word(UINT32 address, UINT16 data)
+static void __fastcall blockout_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0x280200 && address <= 0x2805ff) {
 		*((UINT16*)(DrvPalRAM + (address - 0x280200))) = data;
@@ -264,7 +266,7 @@ void __fastcall blockout_write_word(UINT32 address, UINT16 data)
 	return;
 }
 
-UINT8 __fastcall blockout_read_byte(UINT32 address)
+static UINT8 __fastcall blockout_read_byte(UINT32 address)
 {
 	switch (address^1)
 	{
@@ -287,7 +289,7 @@ UINT8 __fastcall blockout_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall blockout_read_word(UINT32 address)
+static UINT16 __fastcall blockout_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -310,7 +312,7 @@ UINT16 __fastcall blockout_read_word(UINT32 address)
 	return 0;
 }
 
-void __fastcall blockout_sound_write(UINT16 address, UINT8 data)
+static void __fastcall blockout_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -328,7 +330,7 @@ void __fastcall blockout_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall blockout_sound_read(UINT16 address)
+static UINT8 __fastcall blockout_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -345,13 +347,9 @@ UINT8 __fastcall blockout_sound_read(UINT16 address)
 	return 0;
 }
 
-void BlockoutYM2151IrqHandler(INT32 Irq)
+static void BlockoutYM2151IRQHandler(INT32 nStatus)
 {
-	if (Irq) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -440,7 +438,7 @@ static INT32 DrvInit()
 	SekSetWriteByteHandler(0,	blockout_write_byte);
 	SekSetWriteWordHandler(0,	blockout_write_word);
 	SekSetReadByteHandler(0,	blockout_read_byte);
-	SekSetReadWordHandler(0,	blockout_read_word);	
+	SekSetReadWordHandler(0,	blockout_read_word);
 	SekClose();
 
 	ZetInit(0);
@@ -458,7 +456,7 @@ static INT32 DrvInit()
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2151Init(3579545);
-	BurnYM2151SetIrqHandler(&BlockoutYM2151IrqHandler);
+	BurnYM2151SetIrqHandler(&BlockoutYM2151IRQHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
@@ -492,22 +490,27 @@ static INT32 DrvDraw()
 		for (INT32 i = 0; i < 0x402; i+=2) {
 			palette_write(i);
 		}
+
+		DrvRecalc = 0;
 	}
 
 	memcpy (pTransDraw, DrvTmpBmp, 320 * 240 * sizeof(UINT16));
 
 	{
+		const INT32 y_offs = 10;
+
 		UINT16 *vram = (UINT16*)DrvVidRAM1;
 
-		for (INT32 y = 0; y < 240;y++)
+		for (INT32 y = y_offs; y < nScreenHeight+y_offs; y++)
 		{
-			for (INT32 x = 0; x < 320; x+=8)
+			for (INT32 x = 0; x < nScreenWidth; x+=8)
 			{
-				INT32 d = vram[((y + 8) << 6) + (x >> 3)];
+				INT32 d = vram[(y << 6) + (x >> 3)];
 
-				if (d) {
-					for (INT32 v = 0x80, c = 0; v > 0; v >>= 1, c++)
-						if (d & v) pTransDraw[(y * 320) + x + c] = 512;
+				for (INT32 xi = 0; xi < 8; xi++)
+				{
+					if (d & 1 << (7-xi))
+						pTransDraw[((y-y_offs) * nScreenWidth) + x + xi] = 512;
 				}
 			}
 		}
@@ -526,7 +529,7 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 5); 
+		memset (DrvInputs, 0xff, 5);
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -535,42 +538,36 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 10;
 	INT32 nSoundBufferPos = 0;
-	INT32 nTotalCycles[2] = { 10000000 / 58, 3579545 / 58 };
+	INT32 nCyclesTotal[2] = { 10000000 / 58, 3579545 / 58 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-
-		nSegment = nTotalCycles[0] / nInterleave;
-
-		SekRun(nSegment);
-
-		nSegment = nTotalCycles[1] / nInterleave;
-
-		ZetRun(nSegment);
-		nSegment = nBurnSoundLen / nInterleave;
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, Zet);
 
 		if (pBurnSoundOut) {
-			INT16 *pSoundBuf = pBurnSoundOut + nSoundBufferPos * 2;
-			BurnYM2151Render(pSoundBuf, nSegment);
-			MSM6295Render(0, pSoundBuf, nSegment);
-			nSoundBufferPos += nSegment;
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
 		}
 
 		if (i == (nInterleave / 2)-1) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 	}
 
 	if (pBurnSoundOut) {
-		INT16 *pSoundBuf = pBurnSoundOut + nSoundBufferPos * 2;
-		nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment) {
-			BurnYM2151Render(pSoundBuf, nSegment);
-			MSM6295Render(0, pSoundBuf, nSegment);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
 		}
 	}
 

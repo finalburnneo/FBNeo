@@ -1981,7 +1981,7 @@ void writeppu(UINT16 offset, UINT8 data)
 
 		case SLHV:
 			vcount=lines;
-			hcount=(1364-p.cycles)>>2;
+			hcount=(1364 - snes_cpu.cycles)>>2;
 			break;
 		case INIDISP:	/* Initial settings for screen */
 			if ((snes_ppu.screen_disabled & 0x80) && (!(data & 0x80))) //a 1->0 force blank transition causes a reset OAM address

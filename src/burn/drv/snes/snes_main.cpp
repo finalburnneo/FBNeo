@@ -172,7 +172,7 @@ void snes_mapmem()
 
 UINT8 snes_readmem(UINT32 addr)
 {
-	p.cycles-=accessspeed[(addr>>13)&0x7FF];
+	snes_cpu.cycles-=accessspeed[(addr>>13)&0x7FF];
 	clockspc(accessspeed[(addr>>13)&0x7FF]);
 	if (memread[(addr>>13)&0x7FF])
 	{
@@ -236,7 +236,7 @@ UINT8 snes_readmem(UINT32 addr)
 
 void snes_writemem(UINT32 addr, UINT8 val)
 {
-	p.cycles-=accessspeed[(addr>>13)&0x7FF];
+	snes_cpu.cycles-=accessspeed[(addr>>13)&0x7FF];
 	clockspc(accessspeed[(addr>>13)&0x7FF]);
 	if (memwrite[(addr>>13)&0x7FF])
 	{
@@ -429,16 +429,16 @@ INT32 SnesFrame()
 		{
 			drawline(lines);
 		}
-		p.cycles+=1364;
+		snes_cpu.cycles+=1364;
 		intthisline=0;
-		while (p.cycles>0)
+		while (snes_cpu.cycles>0)
 		{
-			UINT8 global_opcode=snes_readmem(p.pbr|p.pc); 
-			p.pc++;
-			opcodes[global_opcode ][p.cpumode]();
+			UINT8 global_opcode=snes_readmem(snes_cpu.pbr | snes_cpu.pc);
+			snes_cpu.pc++;
+			opcodes[global_opcode ][snes_cpu.cpumode]();
 			if ((((irqenable==3) && (lines==yirq)) || (irqenable==1)) && !intthisline)
 			{
-				if (((1364-p.cycles)>>2)>=xirq)
+				if (((1364 - snes_cpu.cycles)>>2)>=xirq)
 				{
 					irq=1;
 					intthisline=1;
@@ -450,7 +450,7 @@ INT32 SnesFrame()
 			{
 				nmi65816();
 			}
-			else if (irq && (!p.i || p.inwai))
+			else if (irq && (!CHECK_IRQ() || snes_cpu.inwai))
 			{
 				irq65816();
 			}

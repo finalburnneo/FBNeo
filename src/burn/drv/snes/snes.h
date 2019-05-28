@@ -133,13 +133,12 @@ struct CPU_65816
 {
 	INT16 b; // the break flag
 	INT16 c; // the carry flag
-	INT16 d; // the decimal mode flag
+
 	INT16 e; // the emulation mode flag
-	INT16 i; // the interrupt disable flag
 	INT16 m; // the accumulator and memory width flag
 	INT16 n; // the negative flag
 	INT16 v; // the overflow flag
-	INT16 x; // the index register width flag
+	//INT16 x; // the index register width flag
 	INT16 z; // the zero flag
 
 	/*CPU modes : 0 = X1M1
@@ -154,6 +153,7 @@ struct CPU_65816
 	reg regX; // The X index register (16 bits wide)
 	reg regY; // The Y index register (16 bits wide)
 	reg regS; // The Stack pointer(16 bits wide)
+	reg regP; // The Processor Status
 
 	UINT32 pbr; // program banK register (8 bits wide) 
 	UINT32 dbr; //Data Bank Register(8 bits wide)
@@ -169,7 +169,26 @@ struct CPU_65816
 
 };
 
-extern CPU_65816 p;
+extern CPU_65816 snes_cpu;
+
+
+#define IRQ_FLAG     0x04
+#define DECIMAL_FLAG 0x08
+#define INDEX_FLAG   0x10
+
+
+#define CLEAR_IRQ() (snes_cpu.regP.b.l &= ~IRQ_FLAG)
+#define SET_IRQ() (snes_cpu.regP.b.l |= IRQ_FLAG)
+#define CHECK_IRQ() (snes_cpu.regP.b.l & IRQ_FLAG)
+
+#define CLEAR_DECIMAL() (snes_cpu.regP.b.l &= ~DECIMAL_FLAG)
+#define SET_DECIMAL() (snes_cpu.regP.b.l |= DECIMAL_FLAG)
+#define CHECK_DECIMAL() (snes_cpu.regP.b.l & DECIMAL_FLAG)
+
+#define CLEAR_INDEX() (snes_cpu.regP.b.l &= ~INDEX_FLAG)
+#define SET_INDEX() (snes_cpu.regP.b.l |= INDEX_FLAG)
+#define CHECK_INDEX() (snes_cpu.regP.b.l & INDEX_FLAG)
+
 extern void (*opcodes[256][5])();
 // cpu stuff
 void irq65816();

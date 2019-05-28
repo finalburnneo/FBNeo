@@ -183,12 +183,13 @@ static inline UINT32 indirectly()
 #define setzn16(v) if(!(v)) SET_ZERO(); else CLEAR_ZERO(); \
 					if ((v) & 0x8000) SET_NEGATIVE(); else CLEAR_NEGATIVE();
 
-/*ADC/SBC macros*/
-#define ADC8() tempw=REG_AL()+temp+((CHECK_CARRY())?1:0);                          \
-	if(!((REG_AL()^temp)&0x80)&&((REG_AL()^tempw)&0x80)) SET_OVERFLOW(); else CLEAR_OVERFLOW();       \
+#define ADC8() tempw=REG_AL()+temp+CHECK_CARRY();                          \
+	if (tempw>=0x100) SET_CARRY(); else CLEAR_CARRY(); \
+	if (~(REG_AL() ^ temp) & (temp ^ (UINT8)tempw) & 0x80) SET_OVERFLOW(); else CLEAR_OVERFLOW();       \
 	REG_AL()=tempw&0xFF;                                       \
 	setzn8(REG_AL());                                          \
-	if (tempw&0x100) SET_CARRY(); else CLEAR_CARRY();
+
+
 
 #define ADC16() templ=REG_AW()+tempw+((CHECK_CARRY())?1:0);                           \
 	if (!((REG_AW()^tempw)&0x8000)&&((REG_AW()^templ)&0x8000)) SET_OVERFLOW(); else CLEAR_OVERFLOW();     \
@@ -196,21 +197,22 @@ static inline UINT32 indirectly()
 	setzn16(REG_AW());                                           \
 	if (templ&0x10000) SET_CARRY(); else CLEAR_CARRY();
 
-#define ADCBCD8()                                                       \
-	tempw=(REG_AL()&0xF)+(temp&0xF)+(CHECK_CARRY()?1:0);                 \
-	if (tempw>9)                                            \
-{                                                       \
-	tempw+=6;                                       \
-}                                                       \
-	tempw+=((REG_AL()&0xF0)+(temp&0xF0));                      \
+#define ADCBCD8() INT8 carry = CHECK_CARRY();   \
+	tempw=(REG_AL()&0x0F)+(temp&0xF)+carry;     \
+	if (tempw> 0x09)                            \
+	{                                                       \
+		tempw+=0x06;                                       \
+	}                                                       \
+	carry = tempw > 0x0f; \
+	tempw=((REG_AL()&0xF0)+(temp&0xF0)+(tempw &0x0f) + (carry*0x10));                      \
+	if ((REG_AL()&0x80) == (temp &0x80) &&  (REG_AL() & 0x80) != (tempw & 0x80)) SET_OVERFLOW(); else CLEAR_OVERFLOW();       \
 	if (tempw>0x9F)                                         \
-{                                                       \
-	tempw+=0x60;                                    \
-}                                                       \
-	if (!((REG_AL()^temp)&0x80)&&((REG_AL()^tempw)&0x80)) SET_OVERFLOW(); else CLEAR_OVERFLOW();       \
-	REG_AL()=tempw&0xFF;                                       \
-	setzn8(REG_AL());                                          \
+	{                                                       \
+		tempw+=0x60;                                    \
+	}    \
 	if (tempw>0xFF) SET_CARRY(); else CLEAR_CARRY();                    \
+	REG_AL() = tempw & 0xFF;                                       \
+	setzn8(REG_AL());                                          \
 	snes_cpu.cycles-=6; clockspc(6);
 
 #define ADCBCD16()                                                      \
@@ -5710,8 +5712,8 @@ void nmi65816()
 		REG_SW()--;
 		snes_writemem(REG_SW(), snes_cpu.pc & 0xFF);
 		REG_SW()--;
-		
-		snes_writemem(REG_SW(), REG_PL());    
+
+		snes_writemem(REG_SW(), REG_PL());
 		REG_SW()--;
 		snes_cpu.pc = readmemw(0xFFEA);
 		snes_cpu.pbr = 0;
@@ -5740,7 +5742,7 @@ void irq65816()
 		REG_SW()--;
 		snes_writemem(REG_SW(), snes_cpu.pc & 0xFF);
 		REG_SW()--;
-		
+
 		snes_writemem(REG_SW(), REG_PL());
 		REG_SW()--;
 		snes_cpu.pc = readmemw(0xFFEE);

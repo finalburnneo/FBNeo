@@ -13,15 +13,15 @@ struct SPC_Struct
 {
 	union
 	{
-		unsigned short w;
+		UINT16 w;
 		struct
 		{
-			unsigned char a,y;
+			UINT8 a,y;
 		} b;
 	} ya;
-	unsigned char x;
-	unsigned char s;
-	unsigned short pc;
+	UINT8 x;
+	UINT8 s;
+	UINT16 pc;
 	struct SPC_P
 	{
 		int n,v,p,b,h,i,z,c;
@@ -29,8 +29,8 @@ struct SPC_Struct
 } spc;
 
 
-unsigned char *spcram;
-unsigned char spcrom[64]=
+UINT8 *spcram;
+UINT8 spcrom[64]=
 {
 	0xCD,0xEF,0xBD,0xE8,0x00,0xC6,0x1D,0xD0,
 	0xFC,0x8F,0xAA,0xF4,0x8F,0xBB,0xF5,0x78,
@@ -42,25 +42,25 @@ unsigned char spcrom[64]=
 	0x5D,0xD0,0xDB,0x1F,0x00,0x00,0xC0,0xFF
 };
 
-unsigned char *spcreadhigh;
-unsigned char spctocpu[4];
-unsigned char dspaddr;
-unsigned char voiceon;
+UINT8 *spcreadhigh;
+UINT8 spctocpu[4];
+UINT8 dspaddr;
+UINT8 voiceon;
 int spctimer[3],spctimer2[3],spclimit[3];
 
-unsigned char readfromspc(unsigned short addr)
+UINT8 readfromspc(UINT16 addr)
 {
 	return spctocpu[addr&3];
 }
 
-void writetospc(unsigned short addr, unsigned char val)
+void writetospc(UINT16 addr, UINT8 val)
 {
 	spcram[(addr&3)+0xF4]=val;
 }
 
 
 
-void writespcregs(unsigned short a, unsigned char v)
+void writespcregs(UINT16 a, UINT8 v)
 {
 	switch (a)
 	{
@@ -86,13 +86,13 @@ void writespcregs(unsigned short a, unsigned char v)
 	}
 }
 
-unsigned short getspcpc() 
+UINT16 getspcpc() 
 { 
 	return spc.pc; 
 }
-unsigned char readspcregs(unsigned short a)
+UINT8 readspcregs(UINT16 a)
 {
-	unsigned char v;
+	UINT8 v;
 	switch (a)
 	{
 	case 0xFD: case 0xFE: case 0xFF:
@@ -153,12 +153,12 @@ void resetspc()
 	setspczn(ac);                                  \
 	spc.p.c=tempw<=0xFF;
 
-unsigned short spc2,spc3;
+UINT16 spc2,spc3;
 void execspc()
 {
-	unsigned char opcode,temp,temp2;
-	unsigned short addr,addr2,tempw;
-	unsigned long templ;
+	UINT8 opcode,temp,temp2;
+	UINT16 addr,addr2,tempw;
+	UINT32 templ;
 	int spccount;
 	//        snemlog("ExecSPC %i\n",spccycles);
 	while (spccycles>0)

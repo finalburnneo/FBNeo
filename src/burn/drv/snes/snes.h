@@ -233,7 +233,7 @@ extern void (*opcodes[256][5])();
 void irq65816();
 void nmi65816();
 void reset65816();
-
+void makeopcodetable();
 
 /*Memory*/
 extern UINT8* SNES_ram;
@@ -273,15 +273,13 @@ extern UINT8 dmabank[8], dmaibank[8], dmactrl[8], hdmastat[8], hdmadat[8];
 extern int hdmacount[8];
 extern UINT8 hdmaena;
 
-// debugging
-void snemlog(TCHAR* format, ...);
 
 // ppu stuff
 void resetppu();
 void initppu();
 void initspc();
 void exitspc();
-void makeopcodetable();
+
 UINT8 readppu(UINT16 addr);
 void writeppu(UINT16 addr, UINT8 val);
 void drawline(int line);
@@ -289,16 +287,13 @@ void drawline(int line);
 // io stuff
 void readjoy();
 UINT8 readio(UINT16 addr);
-UINT8 readjoyold(UINT16 addr);
 void writeio(UINT16 addr, UINT8 val);
 void writejoyold(UINT16 addr, UINT8 val);
-
-
+UINT8 readjoyold(UINT16 addr);
 // spc stuff
+void resetspc();
 UINT8 readfromspc(UINT16 addr);
 void writetospc(UINT16 addr, UINT8 val);
-void resetspc();
-
 extern UINT8 voiceon;
 
 //snes.cpp stuff
@@ -306,16 +301,8 @@ extern UINT8 voiceon;
 
 
 //mem stuff
-
-void allocmem();
-
-void initsnem();
-void resetsnem();
-void execframe();
-void loadrom(char* fn);
-
 void snes_mapmem();
-void freemem();
+
 extern UINT16 srammask;
 extern UINT8* SNES_sram;
 extern INT32 spctotal;

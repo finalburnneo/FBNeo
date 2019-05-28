@@ -191,7 +191,7 @@ static inline UINT32 indirectly()
 
 
 
-#define ADC16() templ=REG_AW()+tempw+((CHECK_CARRY())?1:0);                           \
+#define ADC16() templ=REG_AW()+tempw+CHECK_CARRY();                           \
 	if (!((REG_AW()^tempw)&0x8000)&&((REG_AW()^templ)&0x8000)) SET_OVERFLOW(); else CLEAR_OVERFLOW();     \
 	REG_AW()=templ&0xFFFF;                                       \
 	setzn16(REG_AW());                                           \
@@ -216,7 +216,7 @@ static inline UINT32 indirectly()
 	snes_cpu.cycles-=6; clockspc(6);
 
 #define ADCBCD16()                                                      \
-	templ=(REG_AW()&0xF)+(tempw&0xF)+(CHECK_CARRY()?1:0);                  \
+	templ=(REG_AW()&0xF)+(tempw&0xF)+CHECK_CARRY();                  \
 	if (templ>9)                                            \
 {                                                       \
 	templ+=6;                                       \

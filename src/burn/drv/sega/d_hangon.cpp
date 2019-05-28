@@ -1465,13 +1465,14 @@ static UINT8 HangonProcessAnalogControls(UINT16 value)
 
 static UINT8 SharrierProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
+	//UINT8 temp = 0;
 	
 	switch (value) {
 
 		// Left / Right
 		case 0: {
-
+			return ProcessAnalog(System16AnalogPort0, 1, 1, 0x20, 0xe0);
+#if 0
 			// Prevent CHAR data overflow
 			if((System16AnalogPort0 >> 4) < 0xf82 && (System16AnalogPort0 >> 4) > 0x80) {
 				temp = (UINT8)(0x80 - 0xf82);
@@ -1482,11 +1483,13 @@ static UINT8 SharrierProcessAnalogControls(UINT16 value)
 			if (temp < 0x20) temp = 0x20;
 			if (temp > 0xe0) temp = 0xe0;
 			return temp;
+#endif
 		}
 
 		// Up / Down
 		case 1: {
-
+			return ProcessAnalog(System16AnalogPort1, 1, 1, 0x20, 0xe0);
+#if 0
 			// Prevent CHAR data overflow
 			if((System16AnalogPort1 >> 4) < 0xf82 && (System16AnalogPort1 >> 4) > 0x80) {
 				temp = (UINT8)(0x80 - 0xf82);
@@ -1497,6 +1500,7 @@ static UINT8 SharrierProcessAnalogControls(UINT16 value)
 			if (temp < 0x60) temp = 0x60;
 			if (temp > 0xa0) temp = 0xa0;
 			return temp;
+#endif
 		}
 	}
 	

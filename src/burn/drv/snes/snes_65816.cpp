@@ -17,7 +17,10 @@ void updatecpumode()
 	else
 	{
 		snes_cpu.cpumode = 0;
-		if (!snes_cpu.m) snes_cpu.cpumode |= 1;
+		if (!CHECK_MEMORYACC())
+		{
+			snes_cpu.cpumode |= 1;
+		}
 		if (!CHECK_INDEX())
 		{
 			snes_cpu.cpumode |= 2;
@@ -182,13 +185,13 @@ static inline UINT32 indirectly()
 
 /*ADC/SBC macros*/
 #define ADC8() tempw=snes_cpu.regA.b.l+temp+((CHECK_CARRY())?1:0);                          \
-	snes_cpu.v=(!((snes_cpu.regA.b.l^temp)&0x80)&&((snes_cpu.regA.b.l^tempw)&0x80));       \
+	if(!((snes_cpu.regA.b.l^temp)&0x80)&&((snes_cpu.regA.b.l^tempw)&0x80)) SET_OVERFLOW(); else CLEAR_OVERFLOW();       \
 	snes_cpu.regA.b.l=tempw&0xFF;                                       \
 	setzn8(snes_cpu.regA.b.l);                                          \
 	if (tempw&0x100) SET_CARRY(); else CLEAR_CARRY();
 
 #define ADC16() templ=snes_cpu.regA.w+tempw+((CHECK_CARRY())?1:0);                           \
-	snes_cpu.v=(!((snes_cpu.regA.w^tempw)&0x8000)&&((snes_cpu.regA.w^templ)&0x8000));      \
+	if (!((snes_cpu.regA.w^tempw)&0x8000)&&((snes_cpu.regA.w^templ)&0x8000)) SET_OVERFLOW(); else CLEAR_OVERFLOW();     \
 	snes_cpu.regA.w=templ&0xFFFF;                                       \
 	setzn16(snes_cpu.regA.w);                                           \
 	if (templ&0x10000) SET_CARRY(); else CLEAR_CARRY();
@@ -204,7 +207,7 @@ static inline UINT32 indirectly()
 {                                                       \
 	tempw+=0x60;                                    \
 }                                                       \
-	snes_cpu.v=(!((snes_cpu.regA.b.l^temp)&0x80)&&((snes_cpu.regA.b.l^tempw)&0x80));       \
+	if (!((snes_cpu.regA.b.l^temp)&0x80)&&((snes_cpu.regA.b.l^tempw)&0x80)) SET_OVERFLOW(); else CLEAR_OVERFLOW();       \
 	snes_cpu.regA.b.l=tempw&0xFF;                                       \
 	setzn8(snes_cpu.regA.b.l);                                          \
 	if (tempw>0xFF) SET_CARRY(); else CLEAR_CARRY();                    \
@@ -231,19 +234,19 @@ static inline UINT32 indirectly()
 {                                                       \
 	templ+=0x6000;                                  \
 }                                                       \
-	snes_cpu.v=(!((snes_cpu.regA.w^tempw)&0x8000)&&((snes_cpu.regA.w^templ)&0x8000));      \
+	if (!((snes_cpu.regA.w^tempw)&0x8000)&&((snes_cpu.regA.w^templ)&0x8000)) SET_OVERFLOW(); else CLEAR_OVERFLOW();      \
 	snes_cpu.regA.w=templ&0xFFFF;                                       \
 	setzn16(snes_cpu.regA.w);                                           \
 	if (templ>0xFFFF) SET_CARRY(); else CLEAR_CARRY();                                  \
 	snes_cpu.cycles-=6; clockspc(6);
 
 #define SBC8()  tempw=snes_cpu.regA.b.l-temp-((CHECK_CARRY())?0:1);                          \
-	snes_cpu.v=(((snes_cpu.regA.b.l^temp)&0x80)&&((snes_cpu.regA.b.l^tempw)&0x80));        \
+	if (((snes_cpu.regA.b.l^temp)&0x80)&&((snes_cpu.regA.b.l^tempw)&0x80)) SET_OVERFLOW(); else CLEAR_OVERFLOW();        \
 	snes_cpu.regA.b.l=tempw&0xFF;                                       \
 	setzn8(snes_cpu.regA.b.l);                                          \
 	if (tempw<=0xFF) SET_CARRY(); else CLEAR_CARRY();
 #define SBC16() templ=snes_cpu.regA.w-tempw-((CHECK_CARRY())?0:1);                           \
-	snes_cpu.v=(((snes_cpu.regA.w^tempw)&(snes_cpu.regA.w^templ))&0x8000);                 \
+	if (((snes_cpu.regA.w^tempw)&(snes_cpu.regA.w^templ))&0x8000) SET_OVERFLOW(); else CLEAR_OVERFLOW();                 \
 	snes_cpu.regA.w=templ&0xFFFF;                                       \
 	setzn16(snes_cpu.regA.w);                                           \
 	if (templ<=0xFFFF) SET_CARRY(); else CLEAR_CARRY();
@@ -259,7 +262,7 @@ static inline UINT32 indirectly()
 {                                                       \
 	tempw-=0x60;                                    \
 }                                                       \
-	snes_cpu.v=(((snes_cpu.regA.b.l^temp)&0x80)&&((snes_cpu.regA.b.l^tempw)&0x80));        \
+	if (((snes_cpu.regA.b.l^temp)&0x80)&&((snes_cpu.regA.b.l^tempw)&0x80)) SET_OVERFLOW(); else CLEAR_OVERFLOW();        \
 	snes_cpu.regA.b.l=tempw&0xFF;                                       \
 	setzn8(snes_cpu.regA.b.l);                                          \
 	if (tempw<=0xFF) SET_CARRY(); else CLEAR_CARRY();                                        \
@@ -286,7 +289,7 @@ static inline UINT32 indirectly()
 {                                                       \
 	templ-=0x6000;                                  \
 }                                                       \
-	snes_cpu.v=(((snes_cpu.regA.w^tempw)&0x8000)&&((snes_cpu.regA.w^templ)&0x8000));       \
+	if (((snes_cpu.regA.w^tempw)&0x8000)&&((snes_cpu.regA.w^templ)&0x8000)) SET_OVERFLOW(); else CLEAR_OVERFLOW();        \
 	snes_cpu.regA.w=templ&0xFFFF;                                       \
 	setzn16(snes_cpu.regA.w);                                           \
 	if (templ<=0xFFFF) SET_CARRY(); else CLEAR_CARRY();                                    \
@@ -574,7 +577,7 @@ static inline void cli()
 static inline void clv()
 {
 	snes_readmem(snes_cpu.pbr | snes_cpu.pc);
-	snes_cpu.v = 0;
+	CLEAR_OVERFLOW();
 }
 
 static inline void sec()
@@ -618,12 +621,12 @@ static inline void sep()
 	if (temp & 2) SET_ZERO();
 	if (temp & 4) SET_IRQ();
 	if (temp & 8) SET_DECIMAL();
-	if (temp & 0x40) snes_cpu.v = 1;
+	if (temp & 0x40) SET_OVERFLOW();
 	if (temp & 0x80) SET_NEGATIVE();
 	if (!snes_cpu.e)
 	{
 		if (temp & 0x10) SET_INDEX();
-		if (temp & 0x20) snes_cpu.m = 1;
+		if (temp & 0x20) SET_MEMORYACC();
 		updatecpumode();
 	}
 }
@@ -635,12 +638,12 @@ static inline void rep()
 	if (temp & 2) CLEAR_ZERO();
 	if (temp & 4) CLEAR_IRQ();
 	if (temp & 8) CLEAR_DECIMAL();
-	if (temp & 0x40) snes_cpu.v = 0;
+	if (temp & 0x40) CLEAR_OVERFLOW();
 	if (temp & 0x80) CLEAR_NEGATIVE();
 	if (!snes_cpu.e)
 	{
 		if (temp & 0x10) CLEAR_INDEX();
-		if (temp & 0x20) snes_cpu.m = 0;
+		if (temp & 0x20) CLEAR_MEMORYACC();
 		updatecpumode();
 	}
 }
@@ -2480,7 +2483,14 @@ static inline void bitZp8()
 	{
 		CLEAR_ZERO();
 	}
-	snes_cpu.v = temp & 0x40;
+	if (temp & 0x40)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 	if (temp & 0x80)
 	{
 		SET_NEGATIVE();
@@ -2504,7 +2514,14 @@ static inline void bitZp16()
 	{
 		CLEAR_ZERO();
 	}
-	snes_cpu.v = temp & 0x4000;
+	if (temp & 0x4000)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 	if (temp & 0x8000)
 	{
 		SET_NEGATIVE();
@@ -2530,7 +2547,14 @@ static inline void bitZpx8()
 		CLEAR_ZERO();
 	}
 
-	snes_cpu.v = temp & 0x40;
+	if (temp & 0x40)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 	if (temp & 0x80)
 	{
 		SET_NEGATIVE();
@@ -2553,7 +2577,14 @@ static inline void bitZpx16()
 	{
 		CLEAR_ZERO();
 	}
-	snes_cpu.v = temp & 0x4000;
+	if (temp & 0x4000)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 	if (temp & 0x8000)
 	{
 		SET_NEGATIVE();
@@ -2579,7 +2610,14 @@ static inline void bitAbs8()
 		CLEAR_ZERO();
 	}
 
-	snes_cpu.v = temp & 0x40;
+	if (temp & 0x40)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 	if (temp & 0x80)
 	{
 		SET_NEGATIVE();
@@ -2604,7 +2642,14 @@ static inline void bitAbs16()
 		CLEAR_ZERO();
 	}
 
-	snes_cpu.v = temp & 0x4000;
+	if (temp & 0x4000)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 	if (temp & 0x8000)
 	{
 		SET_NEGATIVE();
@@ -2628,7 +2673,14 @@ static inline void bitAbsx8()
 	{
 		CLEAR_ZERO();
 	}
-	snes_cpu.v = temp & 0x40;
+	if (temp & 0x40)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 	if (temp & 0x80)
 	{
 		SET_NEGATIVE();
@@ -2652,7 +2704,14 @@ static inline void bitAbsx16()
 	{
 		CLEAR_ZERO();
 	}
-	snes_cpu.v = temp & 0x4000;
+	if (temp & 0x4000)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 	if (temp & 0x8000)
 	{
 		SET_NEGATIVE();
@@ -3369,8 +3428,22 @@ static inline void plp()
 	{
 		CLEAR_INDEX();
 	}
-	snes_cpu.m = temp & 0x20;
-	snes_cpu.v = temp & 0x40;
+	if (temp & 0x20)
+	{
+		SET_MEMORYACC();
+	}
+	else
+	{
+		CLEAR_MEMORYACC();
+	}
+	if (temp & 0x40)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 
 	if (temp & 0x80)
 	{
@@ -3422,7 +3495,14 @@ static inline void plpe()
 	{
 		CLEAR_DECIMAL();
 	}
-	snes_cpu.v = temp & 0x40;
+	if (temp & 0x40)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 	if (temp & 0x80)
 	{
 		SET_NEGATIVE();
@@ -3441,10 +3521,10 @@ static inline void php()
 	if (CHECK_ZERO()) temp |= 2;
 	if (CHECK_IRQ()) temp |= 4;
 	if (CHECK_DECIMAL()) temp |= 8;
-	if (snes_cpu.v) temp |= 0x40;
+	if (CHECK_OVERFLOW()) temp |= 0x40;
 	if (CHECK_NEGATIVE()) temp |= 0x80;
 	if (CHECK_INDEX()) temp |= 0x10;
-	if (snes_cpu.m) temp |= 0x20;
+	if (CHECK_MEMORYACC()) temp |= 0x20;
 	snes_readmem(snes_cpu.pbr | snes_cpu.pc);
 	snes_writemem(snes_cpu.regS.w, temp); snes_cpu.regS.w--;
 }
@@ -3454,7 +3534,7 @@ static inline void phpe()
 	if (CHECK_ZERO()) temp |= 2;
 	if (CHECK_IRQ()) temp |= 4;
 	if (CHECK_DECIMAL()) temp |= 8;
-	if (snes_cpu.v) temp |= 0x40;
+	if (CHECK_OVERFLOW()) temp |= 0x40;
 	if (CHECK_NEGATIVE()) temp |= 0x80;
 	temp |= 0x30;
 	snes_readmem(snes_cpu.pbr | snes_cpu.pc);
@@ -3725,7 +3805,7 @@ static inline void bmi()
 static inline void bvc()
 {
 	INT8 temp = (INT8)snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
-	if (!snes_cpu.v)
+	if (!CHECK_OVERFLOW())
 	{
 		snes_cpu.pc += temp;
 		snes_cpu.cycles -= 6; clockspc(6);
@@ -3735,7 +3815,7 @@ static inline void bvc()
 static inline void bvs()
 {
 	INT8 temp = (INT8)snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
-	if (snes_cpu.v)
+	if (CHECK_OVERFLOW())
 	{
 		snes_cpu.pc += temp;
 		snes_cpu.cycles -= 6; clockspc(6);
@@ -3927,8 +4007,22 @@ static inline void rti()
 		CLEAR_INDEX();
 	}
 
-	snes_cpu.m = temp & 0x20;
-	snes_cpu.v = temp & 0x40;
+	if (temp & 0x20)
+	{
+		SET_MEMORYACC();
+	}
+	else
+	{
+		CLEAR_MEMORYACC();
+	}
+	if (temp & 0x40)
+	{
+		SET_OVERFLOW();
+	}
+	else
+	{
+		CLEAR_OVERFLOW();
+	}
 	if (temp & 0x80)
 	{
 		SET_NEGATIVE();
@@ -4999,8 +5093,8 @@ static inline void brk()
 	if (CHECK_IRQ()) temp |= 4;
 	if (CHECK_DECIMAL()) temp |= 8;
 	if (CHECK_INDEX()) temp |= 0x10;
-	if (snes_cpu.m) temp |= 0x20;
-	if (snes_cpu.v) temp |= 0x40;
+	if (CHECK_MEMORYACC()) temp |= 0x20;
+	if (CHECK_OVERFLOW()) temp |= 0x40;
 	if (CHECK_NEGATIVE()) temp |= 0x80;
 	snes_writemem(snes_cpu.regS.w, temp);
 	snes_cpu.regS.w--;
@@ -5021,7 +5115,7 @@ void reset65816()
 	snes_cpu.pc = readmemw(0xFFFC);
 	snes_cpu.regA.w = snes_cpu.regX.w = snes_cpu.regY.w = 0;
 	SET_INDEX();
-	snes_cpu.m = 1;
+	SET_MEMORYACC();
 }
 
 static inline void badopcode()
@@ -5626,8 +5720,8 @@ void nmi65816()
 		if (CHECK_IRQ()) temp |= 4;
 		if (CHECK_DECIMAL()) temp |= 8;
 		if (CHECK_INDEX()) temp |= 0x10;
-		if (snes_cpu.m) temp |= 0x20;
-		if (snes_cpu.v) temp |= 0x40;
+		if (CHECK_MEMORYACC()) temp |= 0x20;
+		if (CHECK_OVERFLOW()) temp |= 0x40;
 		if (CHECK_NEGATIVE()) temp |= 0x80;
 		//                //printf("%02X -> %04X\n",temp,s.w);
 		snes_writemem(snes_cpu.regS.w, temp);    snes_cpu.regS.w--;
@@ -5671,8 +5765,8 @@ void irq65816()
 		if (CHECK_IRQ()) temp |= 4;
 		if (CHECK_DECIMAL()) temp |= 8;
 		if (CHECK_INDEX()) temp |= 0x10;
-		if (snes_cpu.m) temp |= 0x20;
-		if (snes_cpu.v) temp |= 0x40;
+		if (CHECK_MEMORYACC()) temp |= 0x20;
+		if (CHECK_OVERFLOW()) temp |= 0x40;
 		if (CHECK_NEGATIVE()) temp |= 0x80;
 		snes_writemem(snes_cpu.regS.w, temp);
 		snes_cpu.regS.w--;

@@ -133,8 +133,6 @@ struct CPU_65816
 {
 	INT16 b; // the break flag
 	INT16 e; // the emulation mode flag
-	INT16 m; // the accumulator and memory width flag
-	INT16 v; // the overflow flag
 
 	/*CPU modes : 0 = X1M1
 1 = X1M0
@@ -171,9 +169,9 @@ extern CPU_65816 snes_cpu;
 #define IRQ_FLAG     0x04
 #define DECIMAL_FLAG 0x08
 #define INDEX_FLAG   0x10
+#define OVERFLOW_FLAG 0x20
+#define MEMORY_FLAG  0x40
 #define NEGATIVE_FLAG 0x80
-
-
 
 #define CLEAR_CARRY() (snes_cpu.regP.b.l &= ~CARRY_FLAG)
 #define SET_CARRY() (snes_cpu.regP.b.l |= CARRY_FLAG)
@@ -182,7 +180,6 @@ extern CPU_65816 snes_cpu;
 #define CLEAR_ZERO() (snes_cpu.regP.b.l &= ~ZERO_FLAG)
 #define SET_ZERO() (snes_cpu.regP.b.l |= ZERO_FLAG)
 #define CHECK_ZERO() (snes_cpu.regP.b.l & ZERO_FLAG)
-
 
 #define CLEAR_IRQ() (snes_cpu.regP.b.l &= ~IRQ_FLAG)
 #define SET_IRQ() (snes_cpu.regP.b.l |= IRQ_FLAG)
@@ -196,11 +193,17 @@ extern CPU_65816 snes_cpu;
 #define SET_INDEX() (snes_cpu.regP.b.l |= INDEX_FLAG)
 #define CHECK_INDEX() (snes_cpu.regP.b.l & INDEX_FLAG)
 
+#define CLEAR_OVERFLOW() (snes_cpu.regP.b.l &= ~OVERFLOW_FLAG)
+#define SET_OVERFLOW() (snes_cpu.regP.b.l |= OVERFLOW_FLAG)
+#define CHECK_OVERFLOW() (snes_cpu.regP.b.l & OVERFLOW_FLAG)
+
+#define CLEAR_MEMORYACC() (snes_cpu.regP.b.l &= ~MEMORY_FLAG)
+#define SET_MEMORYACC() (snes_cpu.regP.b.l |= MEMORY_FLAG)
+#define CHECK_MEMORYACC() (snes_cpu.regP.b.l & MEMORY_FLAG)
+
 #define CLEAR_NEGATIVE() (snes_cpu.regP.b.l &= ~NEGATIVE_FLAG)
 #define SET_NEGATIVE() (snes_cpu.regP.b.l |= NEGATIVE_FLAG)
 #define CHECK_NEGATIVE() (snes_cpu.regP.b.l & NEGATIVE_FLAG)
-
-
 
 extern void (*opcodes[256][5])();
 // cpu stuff

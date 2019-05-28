@@ -132,20 +132,13 @@ static void AnalyzeGameLayout()
 
 INT32 GameInpInit()
 {
-	INT32 nRet = 0;
 	// Count the number of inputs
 	nGameInpCount = 0;
-
-	for (UINT32 i = 0; i < 0x1000; i++) {
-		nRet = BurnDrvGetInputInfo(NULL,i);
-		if (nRet) {														// end of input list
-			nGameInpCount = i;
-			break;
-		}
-	}
+	while (BurnDrvGetInputInfo(NULL,nGameInpCount) == 0)
+		nGameInpCount++;
 
 	// Allocate space for all the inputs
-	INT32 nSize = (nGameInpCount) * sizeof(struct GameInp);
+	INT32 nSize = nGameInpCount * sizeof(struct GameInp);
 	GameInp = (struct GameInp*)malloc(nSize);
 	if (GameInp == NULL) {
 		return 1;
@@ -1863,12 +1856,54 @@ static void SetInputDescriptors()
 	free(input_descriptors);
 }
 
+void (*cBurnerKeyCallback)(UINT8 code, UINT8 KeyType, UINT8 down) = NULL;
+
+static void BurnerHandlerKeyCallback()
+{
+	UINT8 KeyType = 0;
+	INT32 i = 0;
+
+	// TODO : complete this list
+	INT32 keyMatrix[][2] = {
+		{'0', RETROK_0}, {'1', RETROK_1}, {'2', RETROK_2}, {'3', RETROK_3}, {'4', RETROK_4},
+		{'5', RETROK_5}, {'6', RETROK_6}, {'7', RETROK_7}, {'8', RETROK_8}, {'9', RETROK_9},
+		{'a', RETROK_a}, {'b', RETROK_b}, {'c', RETROK_c}, {'d', RETROK_d}, {'e', RETROK_e},
+		{'f', RETROK_f}, {'g', RETROK_g}, {'h', RETROK_h}, {'i', RETROK_i}, {'j', RETROK_j},
+		{'k', RETROK_k}, {'l', RETROK_l}, {'m', RETROK_m}, {'n', RETROK_n}, {'o', RETROK_o},
+		{'p', RETROK_p}, {'q', RETROK_q}, {'r', RETROK_r}, {'s', RETROK_s}, {'t', RETROK_t},
+		{'u', RETROK_u}, {'v', RETROK_v}, {'w', RETROK_w}, {'x', RETROK_x}, {'y', RETROK_y},
+		{'z', RETROK_z},
+		{0x0d, RETROK_RETURN}, {0x1b, RETROK_ESCAPE}, {' ', RETROK_SPACE},
+		{0xf1, RETROK_F1}, {0xf2, RETROK_F2}, {0xf3, RETROK_F3},
+		{0xf4, RETROK_F4}, {0xf5, RETROK_F5}, {0xf6, RETROK_F6},
+		{'\0', 0}
+	};
+
+	// Check if shift is pressed
+	if(input_cb(0, RETRO_DEVICE_KEYBOARD, 0, RETROK_LSHIFT) == 1 || input_cb(0, RETRO_DEVICE_KEYBOARD, 0, RETROK_RSHIFT) == 1)
+		KeyType = 0xf0|0;
+	else
+		KeyType = 0;
+
+	// Send inputs
+	while (keyMatrix[i][0] != '\0') {
+		if(input_cb(0, RETRO_DEVICE_KEYBOARD, 0, keyMatrix[i][1]) == 1)
+			cBurnerKeyCallback(keyMatrix[i][0], KeyType, 1);
+		else
+			cBurnerKeyCallback(keyMatrix[i][0], KeyType, 0);
+		i++;
+	}
+}
+
 void InputMake(void)
 {
 	poll_cb();
 
 	if (PollDiagInput())
 		return;
+
+	if (cBurnerKeyCallback)
+		BurnerHandlerKeyCallback();
 
 	struct GameInp* pgi;
 	UINT32 i;

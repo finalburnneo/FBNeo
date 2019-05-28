@@ -106,6 +106,11 @@ extern double spctotal2;
 extern double spctotal3;
 void execspc();
 
+extern int intthisline;
+extern int framenum;
+extern int oldnmi;
+
+
 static inline void clockspc(int cyc)
 {
 	spccycles += cyc;
@@ -227,13 +232,19 @@ extern CPU_65816 snes_cpu;
 #define CHECK_NEGATIVE() (snes_cpu.regP.b.l & NEGATIVE_FLAG)
 
 
-
 extern void (*opcodes[256][5])();
 // cpu stuff
 void irq65816();
 void nmi65816();
 void reset65816();
 void makeopcodetable();
+
+//DSP
+
+void polldsp();
+void writedsp(UINT16 a, UINT8 v);
+void resetdsp();
+UINT8 readdsp(UINT16 a);
 
 /*Memory*/
 extern UINT8* SNES_ram;
@@ -306,7 +317,7 @@ void snes_mapmem();
 extern UINT16 srammask;
 extern UINT8* SNES_sram;
 extern INT32 spctotal;
-
+extern UINT8* spcram;
 // snes_main.cpp
 INT32 SnesInit();
 INT32 SnesExit();
@@ -315,3 +326,4 @@ INT32 SnesScan(INT32 nAction, INT32* pnMin);
 extern UINT8 DoSnesReset;
 
 extern UINT8 SnesJoy1[12];
+void pollsound();

@@ -3,13 +3,11 @@ I/O, or $42xx*/
 
 #include "snes.h"
 
-extern int intthisline;
 int dmaops = 0;
-extern int framenum;
-extern int oldnmi;
-
 int padpos, padstat;
 UINT16 pad[4];
+UINT16 mulr, divc, divr;
+UINT8 mula, mulb, divb;
 
 void readjoy()
 {
@@ -60,15 +58,13 @@ void writejoyold(UINT16 addr, UINT8 val)
 {
 	if (addr == 0x4016)
 	{
-		//                printf("Write 4016 %02X\n",val);
 		if ((val & 1) && !(padstat & 1))
 			padpos = 0;
 		padstat = val;
 	}
 }
 
-UINT16 mulr, divc, divr;
-UINT8 mula, mulb, divb;
+
 
 void writeio(UINT16 addr, UINT8 val)
 {
@@ -141,14 +137,12 @@ void writeio(UINT16 addr, UINT8 val)
 				{
 					if (dmactrl[d] & 0x80)
 					{
-						//                                                printf("Dest %04X+%04X SRC %06X %04X\n",dmadest[d],offset,dmabank[d],dmasrc[d]);
 						temp = readppu(dmadest[d] + offset);
 						snes_writemem((dmabank[d] << 16) | dmasrc[d], temp);
 					}
 					else
 					{
 						temp = snes_readmem((dmabank[d] << 16) | dmasrc[d]);
-						//                                                if (dmabank[d]==0 && dmasrc[d]<0x2000) printf("%02X %06X %04X\n",temp,dmabank[d]|dmasrc[d],dmalen[d]);
 						writeppu(dmadest[d] + offset, temp);
 					}
 					if (!(dmactrl[d] & 8))
@@ -178,7 +172,6 @@ void writeio(UINT16 addr, UINT8 val)
 		break;
 	case 0x0C: /*HDMA enable*/
 		hdmaena = val;
-		//                printf("HDMA ena : %02X %06X %i %i\n",val,pbr|pc,framenum,lines);
 		break;
 	case 0x0D: /*ROM speed select*/
 		if (val & 1) speed = 6;
@@ -199,7 +192,6 @@ void writeio(UINT16 addr, UINT8 val)
 	case 0x100: case 0x110: case 0x120: case 0x130: /*DMA control*/
 	case 0x140: case 0x150: case 0x160: case 0x170:
 		dmactrl[(addr >> 4) & 7] = val;
-		//                printf("Write ctrl %i %02X %06X\n",(addr>>4)&7,val,pbr|pc);
 		break;
 	case 0x101: case 0x111: case 0x121: case 0x131: /*DMA dest*/
 	case 0x141: case 0x151: case 0x161: case 0x171:
@@ -232,12 +224,10 @@ void writeio(UINT16 addr, UINT8 val)
 	case 0x108: case 0x118: case 0x128: case 0x138:
 	case 0x148: case 0x158: case 0x168: case 0x178:
 		hdmaaddr[(addr >> 4) & 7] = (hdmaaddr[(addr >> 4) & 7] & 0xFF00) | val;
-		//                printf("HDMA addr %i now %04X %06X\n",(addr>>4)&7,hdmaaddr[(addr>>4)&7],pbr|pc);
 		break;
 	case 0x109: case 0x119: case 0x129: case 0x139:
 	case 0x149: case 0x159: case 0x169: case 0x179:
 		hdmaaddr[(addr >> 4) & 7] = (hdmaaddr[(addr >> 4) & 7] & 0xFF) | (val << 8);
-		//                printf("HDMA addr %i now %04X %06X\n",(addr>>4)&7,hdmaaddr[(addr>>4)&7],pbr|pc);
 		break;
 	case 0x10A: case 0x11A: case 0x12A: case 0x13A: /*HDMA lines left*/
 	case 0x14A: case 0x15A: case 0x16A: case 0x17A:
@@ -249,13 +239,6 @@ void writeio(UINT16 addr, UINT8 val)
 UINT8 readio(UINT16 addr)
 {
 	int temp = 0;
-	if (addr == 0x4016 || addr == 0x4017)
-	{
-		//                printf("Read oldstyle joypad\n");
-		//                dumpregs();
-		//                exit(-1);
-	}
-	//        if (addr!=0x4218 && addr!=0x4219) snemlog("Read IO %04X %02X:%04X %04X\n",addr,pbr>>16,pc,dp);
 	switch (addr & 0x1FF)
 	{
 	case 0:
@@ -286,23 +269,17 @@ UINT8 readio(UINT16 addr)
 		return 0;
 
 	case 0x14: /*Division Result Low*/
-		//                printf("Read div low\n");
 		return divr;
 	case 0x15: /*Division Result High*/
-		//                printf("Read div high\n");
 		return divr >> 8;
 	case 0x16: /*Multiplication Result Low*/
-		//                printf("Read mul low\n");
 		return mulr;
 	case 0x17: /*Multiplication Result High*/
-		//                printf("Read mul high\n");
 		return mulr >> 8;
 
 	case 0x18: /*Joypad #1*/
-		//                printf("Read joy low %02X %06X %i\n",pad[0]>>8,pbr|pc,ins);
 		return pad[0] & 0xFF;
 	case 0x19:
-		//                printf("Read joy high %02X %06X\n",pad[0]&0xFF,pbr|pc);
 		return pad[0] >> 8;
 
 	case 0x1A: case 0x1B: /*Joypad #2*/

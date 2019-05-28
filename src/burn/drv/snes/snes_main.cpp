@@ -300,6 +300,7 @@ void SnesReset()
 	memset(AllRam, 0, RamEnd - AllRam);
 	resetppu();
 	resetspc();
+	resetdsp();
 	reset65816();
 	frames = 0;
 }
@@ -459,6 +460,9 @@ INT32 SnesFrame()
 			joyscan = 0;
 		}
 
+	}
+	if (pBurnSoundOut) {
+		pollsound();
 	}
 	frames++;
 

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "snes.h"
 
-int spcoutput;
 
 int spctotal,dsptotal;
 
@@ -29,7 +28,7 @@ struct SPC_Struct
 } spc;
 
 
-UINT8 *spcram;
+
 UINT8 spcrom[64]=
 {
 	0xCD,0xEF,0xBD,0xE8,0x00,0xC6,0x1D,0xD0,
@@ -72,6 +71,8 @@ void writespcregs(UINT16 a, UINT8 v)
 		else        spcreadhigh=spcram+0xFFC0;
 		//                printf("Write F1 %02X %04X\n",v,spc.pc);
 		break;
+	case 0xF2: case 0xF3:
+		writedsp(a, v);
 	case 0xF4: case 0xF5: case 0xF6: case 0xF7:
 		spctocpu[a&3]=v;
 		//                printf("SPC writes %02X to %02X\n",v,a);
@@ -95,6 +96,8 @@ UINT8 readspcregs(UINT16 a)
 	UINT8 v;
 	switch (a)
 	{
+	case 0xF2: case 0xF3:
+		return readdsp(a);
 	case 0xFD: case 0xFE: case 0xFF:
 		//              printf("Read timer %04X\n",spc.pc);
 		v=spcram[a];
@@ -1912,12 +1915,7 @@ void execspc()
 		if (dsptotal<=0)
 		{
 			dsptotal+=32;
-			//                        snemlog("PollDSP\n");
-		//	polldsp();
+			polldsp();
 		}
-		//                spctotal+=spccount;
-		//                if (spcoutput) printf("%04X : %04X %02X %02X %02X\n",spc.pc,spc.ya.w,spc.x,spc.s,opcode);
-		//                if (spc.pc==0x12F7) printf("12F7 from %04X %04X\n",spc2,spc3);
 	}
-	//        snemlog("End of execSPC\n");
 }

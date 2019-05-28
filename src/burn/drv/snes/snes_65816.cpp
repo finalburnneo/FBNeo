@@ -7,10 +7,6 @@
 CPU_65816 snes_cpu;
 void (*opcodes[256][5])();
 
-
-
-
-
 void updatecpumode()
 {
 	if (snes_cpu.e)
@@ -36,114 +32,153 @@ void updatecpumode()
 /*Addressing modes*/
 static inline UINT32 absolute()
 {
-	UINT32 temp = readmemw(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc += 2;
+	UINT32 temp = readmemw(snes_cpu.pbr | snes_cpu.pc); 
+	snes_cpu.pc += 2;
 	return temp | snes_cpu.dbr;
 }
 
 static inline UINT32 absolutex()
 {
-	UINT32 temp = (readmemw(snes_cpu.pbr | snes_cpu.pc)) + snes_cpu.regX.w + snes_cpu.dbr; snes_cpu.pc += 2;
+	UINT32 temp = (readmemw(snes_cpu.pbr | snes_cpu.pc)) + snes_cpu.regX.w + snes_cpu.dbr; 
+	snes_cpu.pc += 2;
 	return temp;
 }
 
 static inline UINT32 absolutey()
 {
-	UINT32 temp = (readmemw(snes_cpu.pbr | snes_cpu.pc)) + snes_cpu.regY.w + snes_cpu.dbr; snes_cpu.pc += 2;
+	UINT32 temp = (readmemw(snes_cpu.pbr | snes_cpu.pc)) + snes_cpu.regY.w + snes_cpu.dbr; 
+	snes_cpu.pc += 2;
 	return temp;
 }
 
 static inline UINT32 absolutelong()
 {
-	UINT32 temp = readmemw(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc += 2;
-	temp |= (snes_readmem(snes_cpu.pbr | snes_cpu.pc) << 16); snes_cpu.pc++;
+	UINT32 temp = readmemw(snes_cpu.pbr | snes_cpu.pc); 
+	snes_cpu.pc += 2;
+	temp |= (snes_readmem(snes_cpu.pbr | snes_cpu.pc) << 16); 
+	snes_cpu.pc++;
 	return temp;
 }
 
 static inline UINT32 absolutelongx()
 {
-	UINT32 temp = (readmemw(snes_cpu.pbr | snes_cpu.pc)) + snes_cpu.regX.w; snes_cpu.pc += 2;
-	temp += (snes_readmem(snes_cpu.pbr | snes_cpu.pc) << 16); snes_cpu.pc++;
+	UINT32 temp = (readmemw(snes_cpu.pbr | snes_cpu.pc)) + snes_cpu.regX.w; 
+	snes_cpu.pc += 2;
+	temp += (snes_readmem(snes_cpu.pbr | snes_cpu.pc) << 16);
+	snes_cpu.pc++;
 	return temp;
 }
 
 static inline UINT32 zeropage() /*It's actually direct page, but I'm used to calling it zero page*/
 {
-	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
+	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc);
+	snes_cpu.pc++;
 	temp += snes_cpu.dp;
-	if (snes_cpu.dp & 0xFF) { snes_cpu.cycles -= 6; clockspc(6); }
+	if (snes_cpu.dp & 0xFF) 
+	{ 
+		snes_cpu.cycles -= 6; 
+		clockspc(6); 
+	}
 	return temp & 0xFFFF;
 }
 
 static inline UINT32 zeropagex()
 {
-	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.regX.w; snes_cpu.pc++;
-	if (snes_cpu.e) temp &= 0xFF;
+	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.regX.w; 
+	snes_cpu.pc++;
+	if (snes_cpu.e)
+	{
+		temp &= 0xFF;
+	}
 	temp += snes_cpu.dp;
-	if (snes_cpu.dp & 0xFF) { snes_cpu.cycles -= 6; clockspc(6); }
+	if (snes_cpu.dp & 0xFF) 
+	{ 
+		snes_cpu.cycles -= 6; 
+		clockspc(6); 
+	}
 	return temp & 0xFFFF;
 }
 
 static inline UINT32 zeropagey()
 {
-	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.regY.w; snes_cpu.pc++;
-	if (snes_cpu.e) temp &= 0xFF;
+	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.regY.w; 
+	snes_cpu.pc++;
+	if (snes_cpu.e)
+	{
+		temp &= 0xFF;
+	}
 	temp += snes_cpu.dp;
-	if (snes_cpu.dp & 0xFF) { snes_cpu.cycles -= 6; clockspc(6); }
+	if (snes_cpu.dp & 0xFF) 
+	{ 
+		snes_cpu.cycles -= 6; 
+		clockspc(6); 
+	}
 	return temp & 0xFFFF;
 }
 
 static inline UINT32 stack()
 {
-	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
+	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc); 
+	snes_cpu.pc++;
 	temp += snes_cpu.regS.w;
 	return temp & 0xFFFF;
 }
 
 static inline UINT32 indirect()
 {
-	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF; snes_cpu.pc++;
+	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF; 
+	snes_cpu.pc++;
 	return (readmemw(temp)) + snes_cpu.dbr;
 }
 
 static inline UINT32 indirectx()
 {
-	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp + snes_cpu.regX.w) & 0xFFFF; snes_cpu.pc++;
+	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp + snes_cpu.regX.w) & 0xFFFF; 
+	snes_cpu.pc++;
 	return (readmemw(temp)) + snes_cpu.dbr;
 }
 static inline UINT32 jindirectx() /*JSR (,x) uses p.pbr instead of p.dbr, and 2 byte address insted of 1 + p.dp*/
 {
-	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + (snes_readmem((snes_cpu.pbr | snes_cpu.pc) + 1) << 8) + snes_cpu.regX.w) + snes_cpu.pbr; snes_cpu.pc += 2;
+	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + (snes_readmem((snes_cpu.pbr | snes_cpu.pc) + 1) << 8) + snes_cpu.regX.w) + snes_cpu.pbr; 
+	snes_cpu.pc += 2;
 	return temp;
 }
 
 static inline UINT32 indirecty()
 {
-	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF; snes_cpu.pc++;
+	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF; 
+	snes_cpu.pc++;
 	return (readmemw(temp)) + snes_cpu.regY.w + snes_cpu.dbr;
 }
 static inline UINT32 sindirecty()
 {
-	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.regS.w) & 0xFFFF; snes_cpu.pc++;
+	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.regS.w) & 0xFFFF; 
+	snes_cpu.pc++;
 	return (readmemw(temp)) + snes_cpu.regY.w + snes_cpu.dbr;
 }
 
 static inline UINT32 indirectl()
 {
-	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF; snes_cpu.pc++;
+	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF; 
+	snes_cpu.pc++;
 	UINT32 address = readmemw(temp) | (snes_readmem(temp + 2) << 16);
 	return address;
 }
 
 static inline UINT32 indirectly()
 {
-	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF; snes_cpu.pc++;
+	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF; 
+	snes_cpu.pc++;
 	UINT32 address = (readmemw(temp) | (snes_readmem(temp + 2) << 16)) + snes_cpu.regY.w;
 	return address;
 }
 
 /*Flag setting*/
-#define setzn8(v)  snes_cpu.z=!(v); snes_cpu.n=(v)&0x80
-#define setzn16(v) snes_cpu.z=!(v); snes_cpu.n=(v)&0x8000
+#define setzn8(v)	if(!(v)) SET_ZERO(); else CLEAR_ZERO(); \
+					if ((v) & 0x80) SET_NEGATIVE(); else CLEAR_NEGATIVE();
+
+#define setzn16(v) if(!(v)) SET_ZERO(); else CLEAR_ZERO(); \
+					if ((v) & 0x8000) SET_NEGATIVE(); else CLEAR_NEGATIVE();
 
 /*ADC/SBC macros*/
 #define ADC8() tempw=snes_cpu.regA.b.l+temp+((CHECK_CARRY())?1:0);                          \
@@ -338,7 +373,8 @@ static inline void incZp8()
 	UINT8 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp++;
 	setzn8(temp);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -348,7 +384,8 @@ static inline void incZp16()
 	UINT16 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp++;
 	setzn16(temp);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -359,7 +396,8 @@ static inline void incZpx8()
 	UINT8 temp;
 	snes_cpu.tempAddr = zeropagex();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp++;
 	setzn8(temp);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -369,7 +407,8 @@ static inline void incZpx16()
 	UINT16 temp;
 	snes_cpu.tempAddr = zeropagex();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp++;
 	setzn16(temp);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -380,7 +419,8 @@ static inline void incAbs8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp++;
 	setzn8(temp);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -390,7 +430,8 @@ static inline void incAbs16()
 	UINT16 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp++;
 	setzn16(temp);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -401,7 +442,8 @@ static inline void incAbsx8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolutex();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp++;
 	setzn8(temp);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -411,7 +453,8 @@ static inline void incAbsx16()
 	UINT16 temp;
 	snes_cpu.tempAddr = absolutex();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp++;
 	setzn16(temp);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -423,7 +466,8 @@ static inline void decZp8()
 	UINT8 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp--;
 	setzn8(temp);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -433,7 +477,8 @@ static inline void decZp16()
 	UINT16 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp--;
 	setzn16(temp);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -444,7 +489,8 @@ static inline void decZpx8()
 	UINT8 temp;
 	snes_cpu.tempAddr = zeropagex();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp--;
 	setzn8(temp);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -454,7 +500,8 @@ static inline void decZpx16()
 	UINT16 temp;
 	snes_cpu.tempAddr = zeropagex();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp--;
 	setzn16(temp);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -465,7 +512,8 @@ static inline void decAbs8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp--;
 	setzn8(temp);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -476,7 +524,8 @@ static inline void decAbs16()
 	UINT16 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp--;
 	setzn16(temp);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -487,7 +536,8 @@ static inline void decAbsx8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolutex();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp--;
 	setzn8(temp);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -498,7 +548,8 @@ static inline void decAbsx16()
 	UINT16 temp;
 	snes_cpu.tempAddr = absolutex();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; clockspc(6);
+	snes_cpu.cycles -= 6; 
+	clockspc(6);
 	temp--;
 	setzn16(temp);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -545,7 +596,7 @@ static inline void sei()
 static inline void xce()
 {
 	INT16 temp = CHECK_CARRY();
-	
+
 	if (snes_cpu.e)
 	{
 		SET_CARRY();
@@ -564,11 +615,11 @@ static inline void sep()
 {
 	UINT8 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
 	if (temp & 1) SET_CARRY();
-	if (temp & 2) snes_cpu.z = 1;
+	if (temp & 2) SET_ZERO();
 	if (temp & 4) SET_IRQ();
 	if (temp & 8) SET_DECIMAL();
 	if (temp & 0x40) snes_cpu.v = 1;
-	if (temp & 0x80) snes_cpu.n = 1;
+	if (temp & 0x80) SET_NEGATIVE();
 	if (!snes_cpu.e)
 	{
 		if (temp & 0x10) SET_INDEX();
@@ -581,11 +632,11 @@ static inline void rep()
 {
 	UINT8 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
 	if (temp & 1) CLEAR_CARRY();
-	if (temp & 2) snes_cpu.z = 0;
+	if (temp & 2) CLEAR_ZERO();
 	if (temp & 4) CLEAR_IRQ();
 	if (temp & 8) CLEAR_DECIMAL();
 	if (temp & 0x40) snes_cpu.v = 0;
-	if (temp & 0x80) snes_cpu.n = 0;
+	if (temp & 0x80) CLEAR_NEGATIVE();
 	if (!snes_cpu.e)
 	{
 		if (temp & 0x10) CLEAR_INDEX();
@@ -696,7 +747,8 @@ static inline void tyx16()
 /*LDX group*/
 static inline void ldxImm8()
 {
-	snes_cpu.regX.b.l = snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
+	snes_cpu.regX.b.l = snes_readmem(snes_cpu.pbr | snes_cpu.pc); 
+	snes_cpu.pc++;
 	setzn8(snes_cpu.regX.b.l);
 }
 
@@ -729,7 +781,8 @@ static inline void ldxAbsy8()
 
 static inline void ldxImm16()
 {
-	snes_cpu.regX.w = readmemw(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc += 2;
+	snes_cpu.regX.w = readmemw(snes_cpu.pbr | snes_cpu.pc); 
+	snes_cpu.pc += 2;
 	setzn16(snes_cpu.regX.w);
 }
 static inline void ldxZp16()
@@ -760,7 +813,8 @@ static inline void ldxAbsy16()
 /*LDY group*/
 static inline void ldyImm8()
 {
-	snes_cpu.regY.b.l = snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
+	snes_cpu.regY.b.l = snes_readmem(snes_cpu.pbr | snes_cpu.pc);
+	snes_cpu.pc++;
 	setzn8(snes_cpu.regY.b.l);
 }
 static inline void ldyZp8()
@@ -822,7 +876,8 @@ static inline void ldyAbsx16()
 /*LDA group*/
 static inline void ldaImm8()
 {
-	snes_cpu.regA.b.l = snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
+	snes_cpu.regA.b.l = snes_readmem(snes_cpu.pbr | snes_cpu.pc); 
+	snes_cpu.pc++;
 	setzn8(snes_cpu.regA.b.l);
 }
 static inline void ldaZp8()
@@ -912,7 +967,8 @@ static inline void ldaIndirectLongy8()
 
 static inline void ldaImm16()
 {
-	snes_cpu.regA.w = readmemw(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc += 2;
+	snes_cpu.regA.w = readmemw(snes_cpu.pbr | snes_cpu.pc); 
+	snes_cpu.pc += 2;
 	setzn16(snes_cpu.regA.w);
 }
 static inline void ldaZp16()
@@ -1256,9 +1312,16 @@ static inline void stzAbsx16()
 static inline void adcImm8()
 {
 	UINT16 tempw;
-	UINT8 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	UINT8 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc); 
+	snes_cpu.pc++;
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcZp8()
 {
@@ -1266,8 +1329,14 @@ static inline void adcZp8()
 	UINT8 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcZpx8()
 {
@@ -1275,8 +1344,14 @@ static inline void adcZpx8()
 	UINT8 temp;
 	snes_cpu.tempAddr = zeropagex();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcSp8()
 {
@@ -1284,8 +1359,14 @@ static inline void adcSp8()
 	UINT8 temp;
 	snes_cpu.tempAddr = stack();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcAbs8()
 {
@@ -1293,8 +1374,14 @@ static inline void adcAbs8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcAbsx8()
 {
@@ -1302,8 +1389,14 @@ static inline void adcAbsx8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolutex();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcAbsy8()
 {
@@ -1311,8 +1404,14 @@ static inline void adcAbsy8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolutey();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcLong8()
 {
@@ -1320,8 +1419,14 @@ static inline void adcLong8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolutelong();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcLongx8()
 {
@@ -1329,8 +1434,14 @@ static inline void adcLongx8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolutelongx();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcIndirect8()
 {
@@ -1338,8 +1449,14 @@ static inline void adcIndirect8()
 	UINT8 temp;
 	snes_cpu.tempAddr = indirect();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcIndirectx8()
 {
@@ -1347,8 +1464,14 @@ static inline void adcIndirectx8()
 	UINT8 temp;
 	snes_cpu.tempAddr = indirectx();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcIndirecty8()
 {
@@ -1356,8 +1479,14 @@ static inline void adcIndirecty8()
 	UINT8 temp;
 	snes_cpu.tempAddr = indirecty();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcsIndirecty8()
 {
@@ -1365,8 +1494,14 @@ static inline void adcsIndirecty8()
 	UINT8 temp;
 	snes_cpu.tempAddr = sindirecty();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8(); 
+	}
+	else 
+	{ 
+		ADC8(); 
+	}
 }
 static inline void adcIndirectLong8()
 {
@@ -1374,8 +1509,14 @@ static inline void adcIndirectLong8()
 	UINT8 temp;
 	snes_cpu.tempAddr = indirectl();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	if (CHECK_DECIMAL()) { ADCBCD8(); }
-	else { ADC8(); }
+	if (CHECK_DECIMAL()) 
+	{ 
+		ADCBCD8();
+	}
+	else 
+	{
+		ADC8(); 
+	}
 }
 static inline void adcIndirectLongy8()
 {
@@ -2301,12 +2442,28 @@ static inline void oraIndirectLongy16()
 static inline void bitImm8()
 {
 	UINT8 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
-	snes_cpu.z = !(temp & snes_cpu.regA.b.l);
+
+	if (!(temp & snes_cpu.regA.b.l))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 }
 static inline void bitImm16()
 {
 	UINT16 temp = readmemw(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc += 2;
-	snes_cpu.z = !(temp & snes_cpu.regA.w);
+
+	if (!(temp & snes_cpu.regA.w))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 }
 
 static inline void bitZp8()
@@ -2314,18 +2471,48 @@ static inline void bitZp8()
 	UINT8 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.z = !(temp & snes_cpu.regA.b.l);
+
+	if (!(temp & snes_cpu.regA.b.l))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	snes_cpu.v = temp & 0x40;
-	snes_cpu.n = temp & 0x80;
+	if (temp & 0x80)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
 }
 static inline void bitZp16()
 {
 	UINT16 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.z = !(temp & snes_cpu.regA.w);
+
+	if (!(temp & snes_cpu.regA.w))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	snes_cpu.v = temp & 0x4000;
-	snes_cpu.n = temp & 0x8000;
+	if (temp & 0x8000)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
 }
 
 static inline void bitZpx8()
@@ -2333,18 +2520,48 @@ static inline void bitZpx8()
 	UINT8 temp;
 	snes_cpu.tempAddr = zeropagex();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.z = !(temp & snes_cpu.regA.b.l);
+
+	if (!(temp & snes_cpu.regA.b.l))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
+
 	snes_cpu.v = temp & 0x40;
-	snes_cpu.n = temp & 0x80;
+	if (temp & 0x80)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
 }
 static inline void bitZpx16()
 {
 	UINT16 temp;
 	snes_cpu.tempAddr = zeropagex();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.z = !(temp & snes_cpu.regA.w);
+	if (!(temp & snes_cpu.regA.w))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	snes_cpu.v = temp & 0x4000;
-	snes_cpu.n = temp & 0x8000;
+	if (temp & 0x8000)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
 }
 
 static inline void bitAbs8()
@@ -2352,18 +2569,50 @@ static inline void bitAbs8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.z = !(temp & snes_cpu.regA.b.l);
+
+	if (!(temp & snes_cpu.regA.b.l))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
+
 	snes_cpu.v = temp & 0x40;
-	snes_cpu.n = temp & 0x80;
+	if (temp & 0x80)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
 }
 static inline void bitAbs16()
 {
 	UINT16 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.z = !(temp & snes_cpu.regA.w);
+
+	if (!(temp & snes_cpu.regA.w))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
+
 	snes_cpu.v = temp & 0x4000;
-	snes_cpu.n = temp & 0x8000;
+	if (temp & 0x8000)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
 }
 
 static inline void bitAbsx8()
@@ -2371,18 +2620,47 @@ static inline void bitAbsx8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolutex();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.z = !(temp & snes_cpu.regA.b.l);
+	if (!(temp & snes_cpu.regA.b.l))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	snes_cpu.v = temp & 0x40;
-	snes_cpu.n = temp & 0x80;
+	if (temp & 0x80)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
 }
 static inline void bitAbsx16()
 {
 	UINT16 temp;
 	snes_cpu.tempAddr = absolutex();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.z = !(temp & snes_cpu.regA.w);
+
+	if (!(temp & snes_cpu.regA.w))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	snes_cpu.v = temp & 0x4000;
-	snes_cpu.n = temp & 0x8000;
+	if (temp & 0x8000)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
 }
 
 /*CMP group*/
@@ -2399,7 +2677,7 @@ static inline void cmpImm8()
 	{
 		CLEAR_CARRY();
 	}
-	
+
 }
 static inline void cmpZp8()
 {
@@ -2407,7 +2685,7 @@ static inline void cmpZp8()
 	snes_cpu.tempAddr = zeropage();
 	temp = snes_readmem(snes_cpu.tempAddr);
 	setzn8(snes_cpu.regA.b.l - temp);
-	
+
 	if (snes_cpu.regA.b.l >= temp)
 	{
 		SET_CARRY();
@@ -2650,7 +2928,7 @@ static inline void cmpSp16()
 	snes_cpu.tempAddr = stack();
 	temp = readmemw(snes_cpu.tempAddr);
 	setzn16(snes_cpu.regA.w - temp);
-	
+
 	if (snes_cpu.regA.w >= temp)
 	{
 		SET_CARRY();
@@ -3056,7 +3334,14 @@ static inline void plp()
 		CLEAR_CARRY();
 	}
 
-	snes_cpu.z = temp & 2;
+	if (temp & 2)
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 
 	if (temp & 4)
 	{
@@ -3086,7 +3371,16 @@ static inline void plp()
 	}
 	snes_cpu.m = temp & 0x20;
 	snes_cpu.v = temp & 0x40;
-	snes_cpu.n = temp & 0x80;
+
+	if (temp & 0x80)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
+
 	snes_cpu.cycles -= 12;
 	clockspc(12);
 	updatecpumode();
@@ -3104,7 +3398,14 @@ static inline void plpe()
 		CLEAR_CARRY();
 	}
 
-	snes_cpu.z = temp & 2;
+	if (temp & 2)
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	if (temp & 4)
 	{
 		SET_IRQ();
@@ -3122,7 +3423,14 @@ static inline void plpe()
 		CLEAR_DECIMAL();
 	}
 	snes_cpu.v = temp & 0x40;
-	snes_cpu.n = temp & 0x80;
+	if (temp & 0x80)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
 	snes_cpu.cycles -= 12;
 	clockspc(12);
 }
@@ -3130,11 +3438,11 @@ static inline void plpe()
 static inline void php()
 {
 	UINT8 temp = (CHECK_CARRY()) ? 1 : 0;
-	if (snes_cpu.z) temp |= 2;
+	if (CHECK_ZERO()) temp |= 2;
 	if (CHECK_IRQ()) temp |= 4;
 	if (CHECK_DECIMAL()) temp |= 8;
 	if (snes_cpu.v) temp |= 0x40;
-	if (snes_cpu.n) temp |= 0x80;
+	if (CHECK_NEGATIVE()) temp |= 0x80;
 	if (CHECK_INDEX()) temp |= 0x10;
 	if (snes_cpu.m) temp |= 0x20;
 	snes_readmem(snes_cpu.pbr | snes_cpu.pc);
@@ -3143,11 +3451,11 @@ static inline void php()
 static inline void phpe()
 {
 	UINT8 temp = (CHECK_CARRY()) ? 1 : 0;
-	if (snes_cpu.z) temp |= 2;
+	if (CHECK_ZERO()) temp |= 2;
 	if (CHECK_IRQ()) temp |= 4;
 	if (CHECK_DECIMAL()) temp |= 8;
 	if (snes_cpu.v) temp |= 0x40;
-	if (snes_cpu.n) temp |= 0x80;
+	if (CHECK_NEGATIVE()) temp |= 0x80;
 	temp |= 0x30;
 	snes_readmem(snes_cpu.pbr | snes_cpu.pc);
 	snes_writemem(snes_cpu.regS.w, temp);
@@ -3175,7 +3483,7 @@ static inline void cpxImm16()
 {
 	UINT16 temp = readmemw(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc += 2;
 	setzn16(snes_cpu.regX.w - temp);
-	
+
 	if (snes_cpu.regX.w >= temp)
 	{
 		SET_CARRY();
@@ -3374,7 +3682,7 @@ static inline void bcs()
 static inline void beq()
 {
 	INT8 temp = (INT8)snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
-	if (snes_cpu.z)
+	if (CHECK_ZERO())
 	{
 		snes_cpu.pc += temp;
 		snes_cpu.cycles -= 6;
@@ -3386,7 +3694,7 @@ static inline void bne()
 {
 	INT8 temp = (INT8)snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
 
-	if (!snes_cpu.z)
+	if (!CHECK_ZERO())
 	{
 		snes_cpu.pc += temp;
 		snes_cpu.cycles -= 6; clockspc(6);
@@ -3397,7 +3705,7 @@ static inline void bne()
 static inline void bpl()
 {
 	INT8 temp = (INT8)snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
-	if (!snes_cpu.n)
+	if (!CHECK_NEGATIVE())
 	{
 		snes_cpu.pc += temp;
 		snes_cpu.cycles -= 6; clockspc(6);
@@ -3407,7 +3715,7 @@ static inline void bpl()
 static inline void bmi()
 {
 	INT8 temp = (INT8)snes_readmem(snes_cpu.pbr | snes_cpu.pc); snes_cpu.pc++;
-	if (snes_cpu.n)
+	if (CHECK_NEGATIVE())
 	{
 		snes_cpu.pc += temp;
 		snes_cpu.cycles -= 6; clockspc(6);
@@ -3586,7 +3894,14 @@ static inline void rti()
 	{
 		CLEAR_CARRY();
 	}
-	snes_cpu.z = temp & 2;
+	if (temp & 2)
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	if (temp & 4)
 	{
 		SET_IRQ();
@@ -3614,7 +3929,15 @@ static inline void rti()
 
 	snes_cpu.m = temp & 0x20;
 	snes_cpu.v = temp & 0x40;
-	snes_cpu.n = temp & 0x80;
+	if (temp & 0x80)
+	{
+		SET_NEGATIVE();
+	}
+	else
+	{
+		CLEAR_NEGATIVE();
+	}
+
 	snes_cpu.regS.w++;
 	snes_cpu.pc = snes_readmem(snes_cpu.regS.w);
 	snes_cpu.regS.w++;
@@ -4054,7 +4377,7 @@ static inline void rolZp8()
 	snes_cpu.tempAddr = zeropage();
 	temp = snes_readmem(snes_cpu.tempAddr);
 	snes_cpu.cycles -= 6; clockspc(6);
-	tempc =CHECK_CARRY();
+	tempc = CHECK_CARRY();
 
 	if (temp & 0x80)
 	{
@@ -4420,7 +4743,7 @@ static inline void rorAbsx16()
 	INT16 tempc;
 	snes_cpu.tempAddr = absolutex();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.cycles -= 6; 
+	snes_cpu.cycles -= 6;
 	clockspc(6);
 	tempc = CHECK_CARRY();
 	if (temp & 1)
@@ -4432,7 +4755,7 @@ static inline void rorAbsx16()
 		CLEAR_CARRY();
 	}
 	temp >>= 1;
-	if (tempc) 
+	if (tempc)
 		temp |= 0x8000;
 	setzn16(temp);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -4482,7 +4805,15 @@ static inline void trbZp8()
 	UINT8 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.z = !(snes_cpu.regA.b.l & temp);
+	
+	if (!(snes_cpu.regA.b.l & temp))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	temp &= ~snes_cpu.regA.b.l;
 	snes_cpu.cycles -= 6; clockspc(6);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -4492,7 +4823,15 @@ static inline void trbZp16()
 	UINT16 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.z = !(snes_cpu.regA.w & temp);
+
+	if (!(snes_cpu.regA.w & temp))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	temp &= ~snes_cpu.regA.w;
 	snes_cpu.cycles -= 6; clockspc(6);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -4503,7 +4842,15 @@ static inline void trbAbs8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.z = !(snes_cpu.regA.b.l & temp);
+
+	if (!(snes_cpu.regA.b.l & temp))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	temp &= ~snes_cpu.regA.b.l;
 	snes_cpu.cycles -= 6; clockspc(6);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -4513,7 +4860,14 @@ static inline void trbAbs16()
 	UINT16 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.z = !(snes_cpu.regA.w & temp);
+	if (!(snes_cpu.regA.w & temp))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	temp &= ~snes_cpu.regA.w;
 	snes_cpu.cycles -= 6; clockspc(6);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -4524,7 +4878,16 @@ static inline void tsbZp8()
 	UINT8 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.z = !(snes_cpu.regA.b.l & temp);
+
+	if (!(snes_cpu.regA.b.l & temp))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
+
 	temp |= snes_cpu.regA.b.l;
 	snes_cpu.cycles -= 6; clockspc(6);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -4534,7 +4897,15 @@ static inline void tsbZp16()
 	UINT16 temp;
 	snes_cpu.tempAddr = zeropage();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.z = !(snes_cpu.regA.w & temp);
+
+	if (!(snes_cpu.regA.w & temp))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	temp |= snes_cpu.regA.w;
 	snes_cpu.cycles -= 6; clockspc(6);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -4545,7 +4916,15 @@ static inline void tsbAbs8()
 	UINT8 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = snes_readmem(snes_cpu.tempAddr);
-	snes_cpu.z = !(snes_cpu.regA.b.l & temp);
+
+	if (!(snes_cpu.regA.b.l & temp))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	temp |= snes_cpu.regA.b.l;
 	snes_cpu.cycles -= 6; clockspc(6);
 	snes_writemem(snes_cpu.tempAddr, temp);
@@ -4555,7 +4934,15 @@ static inline void tsbAbs16()
 	UINT16 temp;
 	snes_cpu.tempAddr = absolute();
 	temp = readmemw(snes_cpu.tempAddr);
-	snes_cpu.z = !(snes_cpu.regA.w & temp);
+
+	if (!(snes_cpu.regA.w & temp))
+	{
+		SET_ZERO();
+	}
+	else
+	{
+		CLEAR_ZERO();
+	}
 	temp |= snes_cpu.regA.w;
 	snes_cpu.cycles -= 6; clockspc(6);
 	writememw2(snes_cpu.tempAddr, temp);
@@ -4600,22 +4987,22 @@ static inline void mvn()
 static inline void brk()
 {
 	UINT8 temp = 0;
-	snes_writemem(snes_cpu.regS.w, snes_cpu.pbr >> 16); 
+	snes_writemem(snes_cpu.regS.w, snes_cpu.pbr >> 16);
 	snes_cpu.regS.w--;
-	snes_writemem(snes_cpu.regS.w, snes_cpu.pc >> 8);   
+	snes_writemem(snes_cpu.regS.w, snes_cpu.pc >> 8);
 	snes_cpu.regS.w--;
-	snes_writemem(snes_cpu.regS.w, snes_cpu.pc & 0xFF);  
+	snes_writemem(snes_cpu.regS.w, snes_cpu.pc & 0xFF);
 	snes_cpu.regS.w--;
-	
+
 	if (CHECK_CARRY()) temp |= 1;
-	if (snes_cpu.z) temp |= 2;
+	if (CHECK_ZERO()) temp |= 2;
 	if (CHECK_IRQ()) temp |= 4;
 	if (CHECK_DECIMAL()) temp |= 8;
 	if (CHECK_INDEX()) temp |= 0x10;
 	if (snes_cpu.m) temp |= 0x20;
 	if (snes_cpu.v) temp |= 0x40;
-	if (snes_cpu.n) temp |= 0x80;
-	snes_writemem(snes_cpu.regS.w, temp);    
+	if (CHECK_NEGATIVE()) temp |= 0x80;
+	snes_writemem(snes_cpu.regS.w, temp);
 	snes_cpu.regS.w--;
 	snes_cpu.pc = readmemw(0xFFE6);
 	snes_cpu.pbr = 0;
@@ -5226,22 +5613,22 @@ void nmi65816()
 	if (!snes_cpu.e)
 	{
 		//                //printf("%02X -> %04X\n",p.pbr>>16,s.w);
-		snes_writemem(snes_cpu.regS.w, snes_cpu.pbr >> 16); 
+		snes_writemem(snes_cpu.regS.w, snes_cpu.pbr >> 16);
 		snes_cpu.regS.w--;
 		//                //printf("%02X -> %04X\n",pc>>8,s.w);
-		snes_writemem(snes_cpu.regS.w, snes_cpu.pc >> 8);   
+		snes_writemem(snes_cpu.regS.w, snes_cpu.pc >> 8);
 		snes_cpu.regS.w--;
 		//                //printf("%02X -> %04X\n",pc&0xFF,s.w);
-		snes_writemem(snes_cpu.regS.w, snes_cpu.pc & 0xFF);  
+		snes_writemem(snes_cpu.regS.w, snes_cpu.pc & 0xFF);
 		snes_cpu.regS.w--;
 		if (CHECK_CARRY()) temp |= 1;
-		if (snes_cpu.z) temp |= 2;
+		if (CHECK_ZERO()) temp |= 2;
 		if (CHECK_IRQ()) temp |= 4;
 		if (CHECK_DECIMAL()) temp |= 8;
 		if (CHECK_INDEX()) temp |= 0x10;
 		if (snes_cpu.m) temp |= 0x20;
 		if (snes_cpu.v) temp |= 0x40;
-		if (snes_cpu.n) temp |= 0x80;
+		if (CHECK_NEGATIVE()) temp |= 0x80;
 		//                //printf("%02X -> %04X\n",temp,s.w);
 		snes_writemem(snes_cpu.regS.w, temp);    snes_cpu.regS.w--;
 		snes_cpu.pc = readmemw(0xFFEA);
@@ -5272,22 +5659,22 @@ void irq65816()
 	snes_cpu.inwai = 0;
 	if (!snes_cpu.e)
 	{
-		snes_writemem(snes_cpu.regS.w, snes_cpu.pbr >> 16); 
+		snes_writemem(snes_cpu.regS.w, snes_cpu.pbr >> 16);
 		snes_cpu.regS.w--;
-		snes_writemem(snes_cpu.regS.w, snes_cpu.pc >> 8);   
+		snes_writemem(snes_cpu.regS.w, snes_cpu.pc >> 8);
 		snes_cpu.regS.w--;
-		snes_writemem(snes_cpu.regS.w, snes_cpu.pc & 0xFF);  
+		snes_writemem(snes_cpu.regS.w, snes_cpu.pc & 0xFF);
 		snes_cpu.regS.w--;
 		if (CHECK_CARRY()) temp |= 1;
 		if (CHECK_CARRY()) temp |= 1;
-		if (snes_cpu.z) temp |= 2;
+		if (CHECK_ZERO()) temp |= 2;
 		if (CHECK_IRQ()) temp |= 4;
 		if (CHECK_DECIMAL()) temp |= 8;
 		if (CHECK_INDEX()) temp |= 0x10;
 		if (snes_cpu.m) temp |= 0x20;
 		if (snes_cpu.v) temp |= 0x40;
-		if (snes_cpu.n) temp |= 0x80;
-		snes_writemem(snes_cpu.regS.w, temp);    
+		if (CHECK_NEGATIVE()) temp |= 0x80;
+		snes_writemem(snes_cpu.regS.w, temp);
 		snes_cpu.regS.w--;
 		snes_cpu.pc = readmemw(0xFFEE);
 		snes_cpu.pbr = 0;

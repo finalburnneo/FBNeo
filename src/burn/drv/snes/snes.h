@@ -132,12 +132,9 @@ typedef union
 struct CPU_65816
 {
 	INT16 b; // the break flag
-	//INT16 c; // the carry flag
 	INT16 e; // the emulation mode flag
 	INT16 m; // the accumulator and memory width flag
-	INT16 n; // the negative flag
 	INT16 v; // the overflow flag
-	INT16 z; // the zero flag
 
 	/*CPU modes : 0 = X1M1
 1 = X1M0
@@ -170,15 +167,21 @@ struct CPU_65816
 extern CPU_65816 snes_cpu;
 
 #define CARRY_FLAG   0x01
+#define ZERO_FLAG	 0x02
 #define IRQ_FLAG     0x04
 #define DECIMAL_FLAG 0x08
 #define INDEX_FLAG   0x10
+#define NEGATIVE_FLAG 0x80
+
 
 
 #define CLEAR_CARRY() (snes_cpu.regP.b.l &= ~CARRY_FLAG)
 #define SET_CARRY() (snes_cpu.regP.b.l |= CARRY_FLAG)
 #define CHECK_CARRY() (snes_cpu.regP.b.l & CARRY_FLAG)
 
+#define CLEAR_ZERO() (snes_cpu.regP.b.l &= ~ZERO_FLAG)
+#define SET_ZERO() (snes_cpu.regP.b.l |= ZERO_FLAG)
+#define CHECK_ZERO() (snes_cpu.regP.b.l & ZERO_FLAG)
 
 
 #define CLEAR_IRQ() (snes_cpu.regP.b.l &= ~IRQ_FLAG)
@@ -192,6 +195,12 @@ extern CPU_65816 snes_cpu;
 #define CLEAR_INDEX() (snes_cpu.regP.b.l &= ~INDEX_FLAG)
 #define SET_INDEX() (snes_cpu.regP.b.l |= INDEX_FLAG)
 #define CHECK_INDEX() (snes_cpu.regP.b.l & INDEX_FLAG)
+
+#define CLEAR_NEGATIVE() (snes_cpu.regP.b.l &= ~NEGATIVE_FLAG)
+#define SET_NEGATIVE() (snes_cpu.regP.b.l |= NEGATIVE_FLAG)
+#define CHECK_NEGATIVE() (snes_cpu.regP.b.l & NEGATIVE_FLAG)
+
+
 
 extern void (*opcodes[256][5])();
 // cpu stuff

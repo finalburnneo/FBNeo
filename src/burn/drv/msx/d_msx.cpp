@@ -22,6 +22,10 @@ extern INT32 nReplayExternalDataCount;
 extern UINT8 *ReplayExternalData;
 #endif
 
+#ifdef __LIBRETRO__
+extern void (*cBurnerKeyCallback)(UINT8 code, UINT8 KeyType, UINT8 down);
+#endif
+
 #ifndef BUILD_WIN32
 INT32 nReplayExternalDataCount = 0;
 UINT8 *ReplayExternalData = NULL;
@@ -1433,6 +1437,9 @@ static INT32 DrvInit()
 	nReplayExternalDataCount = sizeof(keyRows);
 	ReplayExternalData = &keyRows[0];
 #endif
+#ifdef __LIBRETRO__
+	cBurnerKeyCallback = msxKeyCallback;
+#endif
 	BurnSetRefreshRate((Hertz60) ? 60.0 : 50.0);
 
 	ZetInit(0);
@@ -1493,6 +1500,9 @@ static INT32 DrvExit()
 	cBurnerKeyCallback = NULL;
 	nReplayExternalDataCount = 0;
 	ReplayExternalData = NULL;
+#endif
+#ifdef __LIBRETRO__
+	cBurnerKeyCallback = NULL;
 #endif
 	return 0;
 }

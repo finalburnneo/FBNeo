@@ -9,6 +9,7 @@ UINT16 Arm7FetchWord(UINT32 addr);
 UINT32 Arm7FetchLong(UINT32 addr);
 
 void Arm7RunEnd();
+void Arm7RunEndEatCycles();
 void Arm7BurnCycles(INT32 cycles);
 INT32 Arm7Idle(int cycles);
 INT32 Arm7TotalCycles();

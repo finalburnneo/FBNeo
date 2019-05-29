@@ -111,6 +111,15 @@ int Arm7TotalCycles()
 	return total_cycles + (curr_cycles - ARM7_ICOUNT);
 }
 
+void Arm7RunEndEatCycles()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7RunEndEatCycles called without init\n"));
+#endif
+
+	arm7_icount = 0;
+}
+
 void Arm7RunEnd()
 {
 #if defined FBNEO_DEBUG

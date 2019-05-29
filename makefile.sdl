@@ -283,7 +283,7 @@ depobj	+= \
 		\
 		sms.o smspio.o smssystem.o smsvdp.o smsfmintf.o smsrender.o smssound.o smstms.o \
 		\
-		snes_65816.o snes_io.o snes_main.o snes_ppu.o snes_spc700.o
+		snes_65816.o snes_io.o snes_main.o snes_ppu.o snes_spc700.o snes_dsp.o
 
 autobj += $(depobj)
 

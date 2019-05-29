@@ -2,27 +2,27 @@
 
 unsigned char DoSnesReset = 0;
 
-unsigned char SnesJoy1[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+unsigned char SnesJoy1[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 static struct BurnInputInfo SnesInputList[] =
 {
-	{"P1 Start",	  BIT_DIGITAL,   SnesJoy1 +  7, "p1 start"  },
-	{"P1 Up",	  	  BIT_DIGITAL,   SnesJoy1 +  0, "p1 up"     },
-	{"P1 Down",	  	  BIT_DIGITAL,   SnesJoy1 +  1, "p1 down"   },
-	{"P1 Left",		  BIT_DIGITAL,   SnesJoy1 +  2, "p1 left"   },
-	{"P1 Right",	  BIT_DIGITAL,   SnesJoy1 +  3, "p1 right"  },
-	{"P1 Button A",	  BIT_DIGITAL,   SnesJoy1 +  6, "p1 fire 1" },
-	{"P1 Button B",	  BIT_DIGITAL,   SnesJoy1 +  4, "p1 fire 2" },
-	{"P1 Button C",	  BIT_DIGITAL,   SnesJoy1 +  5, "p1 fire 3" },
+	{"P1 Start",	  BIT_DIGITAL,   SnesJoy1 + 7, "p1 start"  },
+	{"P1 Up",	  	  BIT_DIGITAL,   SnesJoy1 + 0, "p1 up"     },
+	{"P1 Down",	  	  BIT_DIGITAL,   SnesJoy1 + 1, "p1 down"   },
+	{"P1 Left",		  BIT_DIGITAL,   SnesJoy1 + 2, "p1 left"   },
+	{"P1 Right",	  BIT_DIGITAL,   SnesJoy1 + 3, "p1 right"  },
+	{"P1 Button A",	  BIT_DIGITAL,   SnesJoy1 + 6, "p1 fire 1" },
+	{"P1 Button B",	  BIT_DIGITAL,   SnesJoy1 + 4, "p1 fire 2" },
+	{"P1 Button C",	  BIT_DIGITAL,   SnesJoy1 + 5, "p1 fire 3" },
 	{"P1 Button X",	  BIT_DIGITAL,   SnesJoy1 + 10, "p1 fire 4" },
-	{"P1 Button Y",	  BIT_DIGITAL,   SnesJoy1 +  9, "p1 fire 5" },
-	{"P1 Button Z",	  BIT_DIGITAL,   SnesJoy1 +  8, "p1 fire 6" },
+	{"P1 Button Y",	  BIT_DIGITAL,   SnesJoy1 + 9, "p1 fire 5" },
+	{"P1 Button Z",	  BIT_DIGITAL,   SnesJoy1 + 8, "p1 fire 6" },
 	{"P1 Mode",	 	  BIT_DIGITAL,   SnesJoy1 + 11, "p1 select" },
 	{"Reset"             , BIT_DIGITAL  , &DoSnesReset        , "reset"     },
 };
 
 STDINPUTINFO(Snes)
 
-static struct BurnDIPInfo SnesDIPList[]=
+static struct BurnDIPInfo SnesDIPList[] =
 {
 	// Default Values
 	{0x11, 0xff, 0xff, 0x02, NULL                     },
@@ -42,7 +42,7 @@ struct BurnDriverD BurnDrvrSMW = {
 	"smw", NULL, NULL, NULL, "1986",
 	"Super Mario World (Europe) (Rev 1)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (Europe) (Rev 1)", NULL, NULL, NULL,
-	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
 	NULL, rSuperMarioWorldEuropeRev1RomInfo, rSuperMarioWorldEuropeRev1RomName,NULL,NULL,NULL,NULL, SnesInputInfo, SnesDIPInfo,
 	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
 	NULL,0x6000,512 , 244, 4, 3
@@ -60,7 +60,7 @@ struct BurnDriverD BurnDrvrSuperMarioWorldEurope = {
 	"smwa", NULL, NULL, NULL, "1986",
 	"Super Mario World (Europe)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (Europe)", NULL, NULL, NULL,
-	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
 	NULL, rSuperMarioWorldEuropeRomInfo, rSuperMarioWorldEuropeRomName,NULL,NULL,NULL,NULL, SnesInputInfo, SnesDIPInfo,
 	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
 	NULL,0x6000,512 , 244, 4, 3
@@ -78,7 +78,7 @@ struct BurnDriverD BurnDrvrSuperMarioWorldJapan = {
 	"smwj", NULL, NULL, NULL, "1986",
 	"Super Mario World (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (Japan)", NULL, NULL, NULL,
-	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
 	NULL, rSuperMarioWorldJapanRomInfo, rSuperMarioWorldJapanRomName,NULL,NULL,NULL,NULL, SnesInputInfo, SnesDIPInfo,
 	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
 	NULL,0x6000,512 , 244, 4, 3
@@ -96,8 +96,27 @@ struct BurnDriverD BurnDrvrSuperMarioWorldUSA = {
 	"smwu", NULL, NULL, NULL, "1986",
 	"Super Mario World (USA)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (USA)", NULL, NULL, NULL,
-	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
 	NULL, rSuperMarioWorldUSARomInfo, rSuperMarioWorldUSARomName,NULL,NULL,NULL,NULL, SnesInputInfo, SnesDIPInfo,
 	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
 	NULL,0x6000,512 , 244, 4, 3
 };
+
+static struct BurnRomInfo rtest_adcRomDesc[] = {
+	{ "test_adc.smc",          65536, 0xc74b2012, BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(rtest_adc)
+STD_ROM_FN(rtest_adc)
+
+struct BurnDriverD BurnDrvrtest_adc = {
+	"test_adc", NULL, NULL, NULL, "1986",
+	"test_adc\0", NULL, "Nintendo", "Miscellaneous",
+	L"test_adc", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY , 2, HARDWARE_PREFIX_MISC_POST90S, GBF_SHOOT,0 ,
+	NULL, rtest_adcRomInfo, rtest_adcRomName,NULL,NULL,NULL,NULL, SnesInputInfo, SnesDIPInfo,
+	SnesInit, SnesExit, SnesFrame, NULL, SnesScan,
+	NULL,0x6000,512 , 244, 4, 3
+};
+

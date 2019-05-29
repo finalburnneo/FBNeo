@@ -155,7 +155,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			\
 			sms.o smspio.o smssystem.o smsvdp.o smsfmintf.o smsrender.o smssound.o smstms.o \
 			\
-			snes_65816.o snes_io.o snes_main.o snes_ppu.o snes_spc700.o \
+			snes_65816.o snes_io.o snes_main.o snes_ppu.o snes_spc700.o snes_dsp.o \
 			\
 			spectrum_states.o
 			

@@ -429,12 +429,12 @@ static inline void bbakraidSynchroniseZ80(INT32 nExtraCycles)
 static INT32 bbakraidTimerOver(INT32, INT32)
 {
 //	bprintf(PRINT_NORMAL, _T("  - IRQ -> 1.\n"));
-	ZetSetIRQLine(0xFF, CPU_IRQSTATUS_AUTO);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 	return 0;
 }
 
-UINT8 __fastcall bbakraidZIn(UINT16 nAddress)
+static UINT8 __fastcall bbakraidZIn(UINT16 nAddress)
 {
 	nAddress &= 0xFF;
 	switch (nAddress) {
@@ -453,7 +453,7 @@ UINT8 __fastcall bbakraidZIn(UINT16 nAddress)
 	return 0;
 }
 
-void __fastcall bbakraidZOut(UINT16 nAddress, UINT8 nValue)
+static void __fastcall bbakraidZOut(UINT16 nAddress, UINT8 nValue)
 {
 	nAddress &= 0xFF;
 	switch (nAddress) {
@@ -531,7 +531,7 @@ static void Map68KTextROM(bool bMapTextROM)
 	}
 }
 
-UINT8 __fastcall bbakraidReadByte(UINT32 sekAddress)
+static UINT8 __fastcall bbakraidReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 
@@ -565,7 +565,7 @@ UINT8 __fastcall bbakraidReadByte(UINT32 sekAddress)
 	return 0;
 }
 
-UINT16 __fastcall bbakraidReadWord(UINT32 sekAddress)
+static UINT16 __fastcall bbakraidReadWord(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 
@@ -598,7 +598,7 @@ UINT16 __fastcall bbakraidReadWord(UINT32 sekAddress)
 	return 0;
 }
 
-void __fastcall bbakraidWriteByte(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall bbakraidWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress) {
 
@@ -615,22 +615,24 @@ void __fastcall bbakraidWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	}
 }
 
-void __fastcall bbakraidWriteWord(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall bbakraidWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	switch (sekAddress) {
 		case 0x500014:
+			bbakraidSynchroniseZ80(0);
 			nSoundlatchAck &= ~1;
 			nSoundData[0] = wordValue;
+			ZetNmi();
 			return;
 		case 0x500016:
+			bbakraidSynchroniseZ80(0);
 			nSoundlatchAck &= ~2;
 			nSoundData[1] = wordValue;
+			ZetNmi();
 			return;
 
-		// This register is always written to after writing (sound) commands for the Z80
+		// This register is always written to after [~10 cycles] writing (sound) commands for the Z80
 		case 0x50001A:
-			bbakraidSynchroniseZ80(0);
-			ZetNmi();
 			return;
 
 		// Serial EEPROM command
@@ -674,7 +676,7 @@ void __fastcall bbakraidWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	}
 }
 
-UINT16 __fastcall bbakraidReadWordGP9001(UINT32 sekAddress)
+static UINT16 __fastcall bbakraidReadWordGP9001(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 		case 0x400008:
@@ -687,7 +689,7 @@ UINT16 __fastcall bbakraidReadWordGP9001(UINT32 sekAddress)
 	return 0;
 }
 
-void __fastcall bbakraidWriteWordGP9001(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall bbakraidWriteWordGP9001(UINT32 sekAddress, UINT16 wordValue)
 {
 	switch (sekAddress) {
 
@@ -710,12 +712,12 @@ void __fastcall bbakraidWriteWordGP9001(UINT32 sekAddress, UINT16 wordValue)
 	}
 }
 
-UINT8 __fastcall bbakraidReadByteZ80ROM(UINT32 sekAddress)
+static UINT8 __fastcall bbakraidReadByteZ80ROM(UINT32 sekAddress)
 {
 	return RomZ80[(sekAddress & 0x7FFFF) >> 1];
 }
 
-UINT16 __fastcall bbakraidReadWordZ80ROM(UINT32 sekAddress)
+static UINT16 __fastcall bbakraidReadWordZ80ROM(UINT32 sekAddress)
 {
 	return RomZ80[(sekAddress & 0x7FFFF) >> 1];
 }

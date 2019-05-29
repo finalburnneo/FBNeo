@@ -1,6 +1,9 @@
 #include "burnint.h"
 #include "joyprocess.h"
 
+// TODO:
+//   ProcessAnalog w/INPUT_LINEAR & reversed-mode doesn't work yet -dink
+
 // Digital Processing
 void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, INT8 left_bit, INT8 right_bit, UINT8 flags)
 { // limitations: 4 players max., processes 8-bit inputs only!
@@ -112,6 +115,7 @@ UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, U
 	if (flags & INPUT_DEADZONE) { // deadzones
 		if (flags & INPUT_LINEAR) {
 			if (Temp < DeadZone) Temp = 0;
+			DeadZone = 0; // this is all the DZ handling INPUT_LINEAR needs
 		} else {
 			// 0x7f is center, 0x3f right, 0xbf left.  0x7f +-10 is noise.
 			if (!(Temp < centerval-DeadZone || Temp > centerval+DeadZone)) {
@@ -129,7 +133,7 @@ UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, U
 	Temp = scalerange(Temp, 0x3f + DeadZone, 0xbf - DeadZone, scalemin, scalemax);
 
 	if (flags & INPUT_LINEAR) {
-		Temp -= 0x80;
+		Temp -= centerval;
 		Temp = scalerange(Temp, 0, centerval, linear_min, linear_max);
 	}
 

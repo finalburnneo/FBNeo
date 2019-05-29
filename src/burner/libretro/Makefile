@@ -305,6 +305,28 @@ else ifeq ($(platform), classic_armv7_a7)
 	endif
 	CFLAGS += $(PLATFORM_FLAGS)
 	CXXFLAGS += $(PLATFORM_FLAGS)
+	
+# (armv8 a35, hard point, neon based) ###
+# Playstation Classic
+else ifeq ($(platform), classic_armv8_a35)
+	TARGET := $(TARGET_NAME)_libretro.so
+	fpic := -fPIC
+	SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(VERSION_SCRIPT)
+	# Ofast safe for this platform and tested. Maybe can be tested on other platforms
+	PLATFORM_FLAGS += -Ofast
+	PLATFORM_FLAGS = -marm -mtune=cortex-a35 -mfpu=neon-fp-armv8 -mfloat-abi=hard
+	FASTMATH = 1
+	USE_SPEEDHACKS = 1
+	USE_EXPERIMENTAL_FLAGS = 1
+	A8A35_FLAGS = 1
+	HAVE_NEON = 1
+	USE_CYCLONE = 1
+	ARCH = arm
+	ENDIANNESS_DEFINES := -DLSB_FIRST
+	PLATFORM_FLAGS += -march=armv8-a
+	LDFLAGS += -static-libgcc -static-libstdc++
+	CFLAGS += $(PLATFORM_FLAGS)
+	CXXFLAGS += $(PLATFORM_FLAGS)
 #######################################
 
 # Nintendo Game Cube / Wii / WiiU

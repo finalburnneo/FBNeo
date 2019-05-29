@@ -611,15 +611,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
-
-	// Fix issue #133 (Night striker)
-	if ((parentrom && strcmp(parentrom, "nightstr") == 0) ||
-		(drvname && strcmp(drvname, "nightstr") == 0)
-	) {
-		if (strcmp("Stick Y", description) == 0) {
-			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 1, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_LEFT, description, GIT_JOYSLIDER);
-		}
-	}
 	
 	// Fix part of issue #102 (Hang On Junior)
 	if ((parentrom && strcmp(parentrom, "hangonjr") == 0) ||
@@ -1409,17 +1400,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		(strcmp("Right Right", description) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Left / Right (Right Stick)");
-	}
-	
-	// Default racing games's Steering control to the joyslider type of analog control
-	// Joyslider is some sort of "wheel" emulation
-	if ((BurnDrvGetGenreFlags() & GBF_RACING)) {
-		if (strcmp("x-axis", szi + 3) == 0) {
-			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description, GIT_JOYSLIDER);
-		}
-		if (strcmp("mouse x-axis", szi) == 0) {
-			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description, GIT_JOYSLIDER);
-		}
 	}
 
 	return 0;

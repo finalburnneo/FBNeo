@@ -1227,6 +1227,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 	f3_speedhack_init(speedhack_addr);
 
 	TaitoF3SoundInit(1);
+	TaitoF3SoundIRQConfig(1);
 
 	EEPROMInit(&eeprom_interface_93C46);
 	EEPROMIgnoreErrMessage(1);
@@ -1870,13 +1871,7 @@ STD_ROM_FN(ridingf)
 
 static INT32 ridingfInit()
 {
-	INT32 rc = DrvInit(NULL, f3_12bit_palette_update, 1, RIDINGF, 1, 0x417FE4);
-
-	if (!rc) {
-		TaitoF3SoundIRQConfig(1);
-	}
-
-	return rc;
+	return DrvInit(NULL, f3_12bit_palette_update, 1, RIDINGF, 1, 0x417FE4);
 }
 
 struct BurnDriver BurnDrvRidingf = {

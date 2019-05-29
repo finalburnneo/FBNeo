@@ -81,11 +81,16 @@ INT16 AnalogDeadZone(INT16 anaval)
 	return (negative) ? -anaval : anaval;
 }
 
-static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, UINT8 scalemax)
+{
+	return ProcessAnalog(anaval, reversed, flags, scalemin, scalemax, 0x7f);
+}
+
+UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, UINT8 scalemax, UINT8 centerval)
 {
     UINT8 linear_min = 0, linear_max = 0;
 
@@ -102,30 +107,30 @@ UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, U
     }
 
 	INT32 DeadZone = (flags & INPUT_DEADZONE) ? 10 : 0;
-	INT16 Temp = (reversed) ? (0x7f - (anaval / 16)) : (0x7f + (anaval / 16));  // - for reversed, + for normal
+	INT16 Temp = (reversed) ? (centerval - (anaval / 16)) : (centerval + (anaval / 16));  // - for reversed, + for normal
 
 	if (flags & INPUT_DEADZONE) { // deadzones
 		if (flags & INPUT_LINEAR) {
 			if (Temp < DeadZone) Temp = 0;
 		} else {
-			// 0x7f is center, 0x3f right, 0xbe left.  0x7f +-10 is noise.
-			if (!(Temp < 0x7f-DeadZone || Temp > 0x7f+DeadZone)) {
-				Temp = 0x7f; // we hit a dead-zone, return mid-range
+			// 0x7f is center, 0x3f right, 0xbf left.  0x7f +-10 is noise.
+			if (!(Temp < centerval-DeadZone || Temp > centerval+DeadZone)) {
+				Temp = centerval; // we hit a dead-zone, return mid-range
 			} else {
 				// so we don't jump between 0x7f (center) and next value after deadzone
-				if (Temp < 0x7f-DeadZone) Temp += DeadZone;
-				else if (Temp > 0x7f+DeadZone) Temp -= DeadZone;
+				if (Temp < centerval-DeadZone) Temp += DeadZone;
+				else if (Temp > centerval+DeadZone) Temp -= DeadZone;
 			}
 		}
     }
 
 	if (Temp < 0x3f + DeadZone) Temp = 0x3f + DeadZone; // clamping for happy scalerange()
-	if (Temp > 0xbe - DeadZone) Temp = 0xbe - DeadZone;
-	Temp = scalerange(Temp, 0x3f + DeadZone, 0xbe - DeadZone, scalemin, scalemax);
+	if (Temp > 0xbf - DeadZone) Temp = 0xbf - DeadZone;
+	Temp = scalerange(Temp, 0x3f + DeadZone, 0xbf - DeadZone, scalemin, scalemax);
 
 	if (flags & INPUT_LINEAR) {
 		Temp -= 0x80;
-		Temp = scalerange(Temp, 0, 0x7f, linear_min, linear_max);
+		Temp = scalerange(Temp, 0, centerval, linear_min, linear_max);
 	}
 
 	return Temp;

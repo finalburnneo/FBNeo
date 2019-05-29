@@ -130,7 +130,7 @@ depobj	:= 	main.o drv.o load.o misc.o \
 			\
 			megadrive.o \
 			\
-			snes_65816.o snes_io.o snes_main.o snes_mem.o snes_ppu.o snes_spc700.o
+			snes_65816.o snes_io.o snes_main.o snes_mem.o snes_ppu.o snes_spc700.o snes_dsp.o
 			
 			
 

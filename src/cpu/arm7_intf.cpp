@@ -298,7 +298,7 @@ UINT16 Arm7FetchWord(UINT32 addr)
 
 	// speed hack -- skip idle loop...
 	if (addr == Arm7IdleLoop) {
-		Arm7RunEnd();
+		Arm7RunEndEatCycles();
 	}
 
 	if (membase[FETCH][addr >> PAGE_SHIFT] != NULL) {
@@ -327,7 +327,7 @@ UINT32 Arm7FetchLong(UINT32 addr)
 
 	// speed hack - skip idle loop...
 	if (addr == Arm7IdleLoop) {
-		Arm7RunEnd();
+		Arm7RunEndEatCycles();
 	}
 
 	if (membase[FETCH][addr >> PAGE_SHIFT] != NULL) {

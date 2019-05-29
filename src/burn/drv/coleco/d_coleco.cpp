@@ -505,6 +505,7 @@ static INT32 DrvInit()
 
     AY8910Init(0, 3579545, 1); // SGM
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+    AY8910SetBuffered(ZetTotalCycles, 3579545);
 
 	DrvDoReset();
 

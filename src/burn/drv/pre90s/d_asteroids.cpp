@@ -687,10 +687,6 @@ static UINT8 astdelux_read(UINT16 address)
 	return 0;
 }
 
-// Analog Processing
-static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
 static UINT8 ProcessAnalogLinear(INT16 anaval, INT32 reversed, INT32 deadzone, UINT8 scalemin, UINT8 scalemax)
 {
 	INT32 DeadZone = (deadzone) ? 10 : 0;

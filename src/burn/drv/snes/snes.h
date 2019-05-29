@@ -106,10 +106,15 @@ extern double spctotal2;
 extern double spctotal3;
 void execspc();
 
+extern int intthisline;
+extern int framenum;
+extern int oldnmi;
+
+
 static inline void clockspc(int cyc)
 {
-	spccycles+=cyc;
-	if (spccycles>0) execspc();
+	spccycles += cyc;
+	if (spccycles > 0) execspc();
 }
 
 /*65816*/
@@ -120,62 +125,152 @@ typedef union
 	struct
 	{
 #ifndef BIG_ENDIAN
-		UINT8 l,h;
+		UINT8 l, h;
 #else
-		UINT8 h,l;
+		UINT8 h, l;
 #endif
 	} b;
 } reg;
 
 
-extern unsigned long pbr,dbr;
-extern UINT16 pc,dp;
 
+struct CPU_65816
+{
+	INT16 b; // the break flag
+	INT16 e; // the emulation mode flag
 
-
-extern INT32 ins,output;
-extern INT32 timetolive;
-extern INT32 inwai;
-/*Opcode table*/
-extern void (*opcodes[256][5])();
-
-/*CPU modes : 0 = X1M1
+	/*CPU modes : 0 = X1M1
 1 = X1M0
 2 = X0M1
 3 = X0M0
 4 = emulation*/
-extern INT32 cpumode;
+	INT32 cpumode = 0;
+	INT8 inwai = 0; // Set when WAI is called
 
-/*Current opcode*/
-extern UINT8 global_opcode;
-/*Global cycles count*/
-extern INT32 cycles;
+	reg regA; // The Accumulator(16 bits wide)
+	reg regX; // The X index register (16 bits wide)
+	reg regY; // The Y index register (16 bits wide)
+	reg regS; // The Stack pointer(16 bits wide)
+	reg regP; // The Processor Status
+
+	UINT32 pbr; // program banK register (8 bits wide) 
+	UINT32 dbr; //Data Bank Register(8 bits wide)
+	UINT16 pc;  // program counter
+	UINT16 dp; // Direct register
+
+	/*Global cycles count*/
+	INT32 cycles;
+
+	/*Temporary variables*/
+	UINT32 tempAddr;
+
+
+};
+
+extern CPU_65816 snes_cpu;
+
+#define REG_AL() (snes_cpu.regA.b.l)
+#define REG_AH() (snes_cpu.regA.b.h)
+#define REG_AW() (snes_cpu.regA.w)
+
+#define REG_XL() (snes_cpu.regX.b.l)
+#define REG_XH() (snes_cpu.regX.b.h)
+#define REG_XW() (snes_cpu.regX.w)
+
+#define REG_YL() (snes_cpu.regY.b.l)
+#define REG_YH() (snes_cpu.regY.b.h)
+#define REG_YW() (snes_cpu.regY.w)
+
+#define REG_SL() (snes_cpu.regS.b.l)
+#define REG_SH() (snes_cpu.regS.b.h)
+#define REG_SW() (snes_cpu.regS.w)
+
+#define REG_PL() (snes_cpu.regP.b.l)
+#define REG_PH() (snes_cpu.regP.b.h)
+#define REG_PW() (snes_cpu.regP.w)
+
+#define CARRY_FLAG   0x01
+#define ZERO_FLAG	 0x02
+#define IRQ_FLAG     0x04
+#define DECIMAL_FLAG 0x08
+#define INDEX_FLAG   0x10
+#define MEMORY_FLAG  0x20
+#define OVERFLOW_FLAG 0x40
+#define NEGATIVE_FLAG 0x80
+
+
+#define CLEAR_CARRY() (snes_cpu.regP.b.l &= ~CARRY_FLAG)
+#define SET_CARRY() (snes_cpu.regP.b.l |= CARRY_FLAG)
+#define CHECK_CARRY() (snes_cpu.regP.b.l & CARRY_FLAG)
+
+#define CLEAR_ZERO() (snes_cpu.regP.b.l &= ~ZERO_FLAG)
+#define SET_ZERO() (snes_cpu.regP.b.l |= ZERO_FLAG)
+#define CHECK_ZERO() (snes_cpu.regP.b.l & ZERO_FLAG)
+
+#define CLEAR_IRQ() (snes_cpu.regP.b.l &= ~IRQ_FLAG)
+#define SET_IRQ() (snes_cpu.regP.b.l |= IRQ_FLAG)
+#define CHECK_IRQ() (snes_cpu.regP.b.l & IRQ_FLAG)
+
+#define CLEAR_DECIMAL() (snes_cpu.regP.b.l &= ~DECIMAL_FLAG)
+#define SET_DECIMAL() (snes_cpu.regP.b.l |= DECIMAL_FLAG)
+#define CHECK_DECIMAL() (snes_cpu.regP.b.l & DECIMAL_FLAG)
+
+#define CLEAR_INDEX() (snes_cpu.regP.b.l &= ~INDEX_FLAG)
+#define SET_INDEX() (snes_cpu.regP.b.l |= INDEX_FLAG)
+#define CHECK_INDEX() (snes_cpu.regP.b.l & INDEX_FLAG)
+
+#define CLEAR_OVERFLOW() (snes_cpu.regP.b.l &= ~OVERFLOW_FLAG)
+#define SET_OVERFLOW() (snes_cpu.regP.b.l |= OVERFLOW_FLAG)
+#define CHECK_OVERFLOW() (snes_cpu.regP.b.l & OVERFLOW_FLAG)
+
+#define CLEAR_MEMORYACC() (snes_cpu.regP.b.l &= ~MEMORY_FLAG)
+#define SET_MEMORYACC() (snes_cpu.regP.b.l |= MEMORY_FLAG)
+#define CHECK_MEMORYACC() (snes_cpu.regP.b.l & MEMORY_FLAG)
+
+#define CLEAR_NEGATIVE() (snes_cpu.regP.b.l &= ~NEGATIVE_FLAG)
+#define SET_NEGATIVE() (snes_cpu.regP.b.l |= NEGATIVE_FLAG)
+#define CHECK_NEGATIVE() (snes_cpu.regP.b.l & NEGATIVE_FLAG)
+
+
+extern void (*opcodes[256][5])();
+// cpu stuff
+void irq65816();
+void nmi65816();
+void reset65816();
+void makeopcodetable();
+
+//DSP
+
+void polldsp();
+void writedsp(UINT16 a, UINT8 v);
+void resetdsp();
+UINT8 readdsp(UINT16 a);
 
 /*Memory*/
-extern UINT8 *SNES_ram;
-extern UINT8 *SNES_rom;
-extern UINT8 *memlookup[2048];
-extern UINT8 *memread;
-extern UINT8 *memwrite;
-extern UINT8 *accessspeed;
+extern UINT8* SNES_ram;
+extern UINT8* SNES_rom;
+extern UINT8* memlookup[2048];
+extern UINT8* memread;
+extern UINT8* memwrite;
+extern UINT8* accessspeed;
 
 extern INT32 lorom;
 
 
-unsigned char snes_readmem(unsigned long adress);
-void snes_writemem(unsigned long ad, unsigned char v);
+UINT8 snes_readmem(UINT32 adress);
+void snes_writemem(UINT32 ad, UINT8 v);
 
 #define readmemw(a) (snes_readmem(a))|((snes_readmem((a)+1))<<8)
 #define writememw(a,v)  snes_writemem(a,(v)&0xFF); snes_writemem((a)+1,(v)>>8)
 #define writememw2(a,v) snes_writemem((a)+1,(v)>>8); snes_writemem(a,(v)&0xFF)
 
 /*Video*/
-extern INT32 nmi,vbl,joyscan;
+extern INT32 nmi, vbl, joyscan;
 extern INT32 nmienable;
 
 extern INT32 ppumask;
 
-extern INT32 yirq,xirq,irqenable,irq;
+extern INT32 yirq, xirq, irqenable, irq;
 extern INT32 lines;
 
 
@@ -183,75 +278,52 @@ extern INT32 lines;
 extern int global_pal;
 
 /*DMA registers*/
-extern unsigned short dmadest[8],dmasrc[8],dmalen[8];
-extern unsigned long hdmaaddr[8],hdmaaddr2[8];
-extern unsigned char dmabank[8],dmaibank[8],dmactrl[8],hdmastat[8],hdmadat[8];
+extern UINT16 dmadest[8], dmasrc[8], dmalen[8];
+extern UINT32 hdmaaddr[8], hdmaaddr2[8];
+extern UINT8 dmabank[8], dmaibank[8], dmactrl[8], hdmastat[8], hdmadat[8];
 extern int hdmacount[8];
-extern unsigned char hdmaena;
+extern UINT8 hdmaena;
 
-// debugging
-void snemlog( TCHAR *format, ...);
 
 // ppu stuff
 void resetppu();
 void initppu();
 void initspc();
 void exitspc();
-void makeopcodetable();
-unsigned char readppu(unsigned short addr);
-void writeppu(unsigned short addr, unsigned char val);
+
+UINT8 readppu(UINT16 addr);
+void writeppu(UINT16 addr, UINT8 val);
 void drawline(int line);
 
 // io stuff
 void readjoy();
-unsigned char readio(unsigned short addr);
-unsigned char readjoyold(unsigned short addr);
-void writeio(unsigned short addr, unsigned char val);
-void writejoyold(unsigned short addr, unsigned char val);
-
-struct CPU_P
-{
-	int c,z,i,d,b,v,n,m,x,e;
-};
-
-extern CPU_P p;
-
+UINT8 readio(UINT16 addr);
+void writeio(UINT16 addr, UINT8 val);
+void writejoyold(UINT16 addr, UINT8 val);
+UINT8 readjoyold(UINT16 addr);
 // spc stuff
-unsigned char readfromspc(unsigned short addr);
-void writetospc(unsigned short addr, unsigned char val);
 void resetspc();
-
-extern unsigned char voiceon;
+UINT8 readfromspc(UINT16 addr);
+void writetospc(UINT16 addr, UINT8 val);
+extern UINT8 voiceon;
 
 //snes.cpp stuff
 
 
 
-// cpu stuff
-void irq65816();
-void nmi65816();
-void reset65816();
-extern int skipz,setzf;
 //mem stuff
-
-void allocmem();
-
-void initsnem();
-void resetsnem();
-void execframe();
-void loadrom(char *fn);
-
 void snes_mapmem();
-void freemem();
-extern unsigned short srammask;
-extern unsigned char *SNES_sram;
-extern INT32 spctotal;
 
+extern UINT16 srammask;
+extern UINT8* SNES_sram;
+extern INT32 spctotal;
+extern UINT8* spcram;
 // snes_main.cpp
 INT32 SnesInit();
 INT32 SnesExit();
 INT32 SnesFrame();
-INT32 SnesScan(INT32 nAction,INT32 *pnMin);
-extern unsigned char DoSnesReset;
+INT32 SnesScan(INT32 nAction, INT32* pnMin);
+extern UINT8 DoSnesReset;
 
-extern unsigned char SnesJoy1[12];
+extern UINT8 SnesJoy1[12];
+void pollsound();

@@ -81,7 +81,7 @@ INT16 AnalogDeadZone(INT16 anaval)
 	return (negative) ? -anaval : anaval;
 }
 
-static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 

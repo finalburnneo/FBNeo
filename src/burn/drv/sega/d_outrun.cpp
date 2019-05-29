@@ -1991,23 +1991,11 @@ Driver Inits
 
 UINT8 OutrunProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-	
 	switch (value) {
 
 		// Steering
 		case 0: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) > 0x7f && (System16AnalogPort0 >> 4) <= 0x80) {
-				temp = 0x80 + 0x7f;
-			} else {
-				temp = 0x80 + (System16AnalogPort0 >> 4);
-			}
-
-			if (temp < 0x20) temp = 0x20;
-			if (temp > 0xe0) temp = 0xe0;
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x20, 0xe0);
 		}
 
 		// Accelerate
@@ -2028,23 +2016,11 @@ UINT8 OutrunProcessAnalogControls(UINT16 value)
 
 UINT8 ShangonProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-	
 	switch (value) {
 
 		// Steering
 		case 0: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) < 0xf82 && (System16AnalogPort0 >> 4) > 0x80) {
-				temp = (UINT8)(0x80 - 0xf82);
-			} else {
-				temp = 0x80 - (System16AnalogPort0 >> 4);
-			}
-
-			if (temp < 0x20) temp = 0x20;
-			if (temp > 0xe0) temp = 0xe0;
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 1, INPUT_DEADZONE, 0x20, 0xe0);
 		}
 
 		// Accelerate

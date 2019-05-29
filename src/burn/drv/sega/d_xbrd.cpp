@@ -3039,29 +3039,10 @@ Driver Inits
 
 static UINT8 AbcopProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-	
 	switch (value) {
 		// Left / Right
 		case 0: {
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) < 0xf82 && (System16AnalogPort0 >> 4) > 0x80) {
-				temp = (UINT8)(0x80 - 0xf82);
-			} else {
-				temp = 0x80 - (System16AnalogPort0 >> 4);
-			}
-			
-			if (temp < 0x20) {
-				temp = 0x20;
-				return temp;
-			}
-
-			if (temp > 0xe0) {
-				temp = 0xe0;
-				return temp;
-			}
-
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 1, INPUT_DEADZONE, 0x20, 0xe0);
 		}
 		
 		// Accelerate 
@@ -3083,76 +3064,20 @@ static INT32 AbcopInit()
 
 static UINT8 AburnerProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-
 	switch (value) {
 		// Left / Right
 		case 0: {
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) > 0x7f && (System16AnalogPort0 >> 4) <= 0x80) {
-				temp = 0x80 + 0x7f;
-			} else {
-				temp = 0x80 + (System16AnalogPort0 >> 4);
-			}
-
-			if (temp < 0x45) {
-				temp = 0x20;
-				return temp;
-			}
-
-			if (temp > 0xb0) {
-				temp = 0xe0;
-				return temp;
-			}
-//                        bprintf(PRINT_NORMAL, _T("[%X,%X]"), temp, System16AnalogPort0 >> 4);
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x20, 0xe0);
 		}
 		
 		// Up / Down 
 		case 1: {
-			// Prevent CHAR data overflow
-			if((System16AnalogPort1 >> 4) < 0xf82 && (System16AnalogPort1 >> 4) > 0x80) {
-				temp = (UINT8)(0x80 - 0xf82);
-			} else {
-				temp = 0x80 - (System16AnalogPort1 >> 4);
-			}
-
-			if (temp < 0x40) {
-				temp = 0x40;
-				return temp;
-			}
-
-			if (temp > 0xc0) {
-				temp = 0xc0;
-				return temp;
-			}
-
-			return temp;
+			return ProcessAnalog(System16AnalogPort1, 1, INPUT_DEADZONE, 0x40, 0xc0);
 		}
 		
 		// Throttle
 		case 2: {
-			// Prevent CHAR data overflow
-			if((System16AnalogPort2 >> 4) > 0x7f && (System16AnalogPort2 >> 4) <= 0x80) {
-				temp = 0x80 + 0x7f;
-			} else {
-				temp = 0x80 + (System16AnalogPort2 >> 4);
-			}
-
-//                        bprintf(PRINT_NORMAL, _T("[%X,%X]"), temp, System16AnalogPort2 >> 4);
-			if (temp > 0xb0) {
-				temp = 0xff;
-				return temp;
-			}
-
-			if (temp < 0x45) {
-				temp = 0;
-				return temp;
-			}
-
-			temp = 0x80;
-			
-			return temp;
+			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE, 0x00, 0xff);
 		}
 	}	
 	
@@ -3177,12 +3102,7 @@ static UINT8 GpriderProcessAnalogControls(UINT16 value)
 	switch (value) {
 		// Left / Right
 		case 0: {
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) > 0x7f && (System16AnalogPort0 >> 4) <= 0x80) {
-				return 0x80 + 0x7f;
-			} else {
-				return 0x80 + (System16AnalogPort0 >> 4);
-			}
+			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x01, 0xff);
 		}
 
 		// Accelerate
@@ -3310,21 +3230,10 @@ static INT32 LoffireInit()
 
 static UINT8 RacheroProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-	
 	switch (value) {
 		// Left / Right
 		case 0: {
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) < 0xf82 && (System16AnalogPort0 >> 4) > 0x80) {
-				temp = (UINT8)(0x80 - 0xf82);
-			} else {
-				temp = 0x80 - (System16AnalogPort0 >> 4);
-			}
-			
-			if (temp < 0x20) temp = 0x20;
-			if (temp > 0xe0) temp = 0xe0;
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 1, INPUT_DEADZONE, 0x20, 0xe0);
 		}
 
 		// Accelerate
@@ -3370,21 +3279,10 @@ static INT32 RascotInit()
 
 static UINT8 SmgpProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-	
 	switch (value) {
 		// Left / Right
 		case 0: {
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) > 0x7f && (System16AnalogPort0 >> 4) <= 0x80) {
-				return 0x80 + 0x7f;
-			} else {
-				return 0x80 + (System16AnalogPort0 >> 4);
-			}
-
-			if (temp < 0x39) temp = 0x38;
-			if (temp > 0xc8) temp = 0xc8;
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x38, 0xc8);
 		}
 		
 		// Accelerate
@@ -3418,64 +3316,20 @@ static INT32 SmgpInit()
 
 static UINT8 ThndrbldProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-	
 	switch (value) {
 		// Left / Right
 		case 0: {
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) < 0xf82 && (System16AnalogPort0 >> 4) > 0x80) {
-				temp = (UINT8)(0x80 - 0xf82);
-			} else {
-				temp = 0x80 - (System16AnalogPort0 >> 4);
-			}
-
-			if (temp < 0x20) {
-				temp = 0x20;
-				return temp;
-			}
-
-			if (temp > 0xe0) {
-				temp = 0xe0;
-				return temp;
-			}
-
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 1, INPUT_DEADZONE, 0x01, 0xff);
 		}
 		
-		// Throttle
+		// Slottle :)
 		case 1: {
-			// Prevent CHAR data overflow
-			if((System16AnalogPort2 >> 4) > 0x7f && (System16AnalogPort2 >> 4) <= 0x80) {
-				temp = 0x80 + 0x7f;
-			} else {
-				temp = 0x80 + (System16AnalogPort2 >> 4);
-			}
-
-			if (temp == 1) temp = 0;
-			return temp;
+			return ProcessAnalog(System16AnalogPort2, 1, INPUT_DEADZONE, 0x01, 0xff);
 		}
 		
 		// Up / Down
 		case 2: {
-			// Prevent CHAR data overflow
-			if((System16AnalogPort1 >> 4) > 0x7f && (System16AnalogPort1 >> 4) <= 0x80) {
-				temp = 0x80 + 0x7f;
-			} else {
-				temp = 0x80 + (System16AnalogPort1 >> 4);
-			}
-
-			if (temp < 0x20) {
-				temp = 0x20;
-				return temp;
-			}
-
-			if (temp > 0xe0) {
-				temp = 0xe0;
-				return temp;
-			}
-
-			return temp;
+			return ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE, 0x01, 0xff);
 		}
 	}
 	

@@ -1819,63 +1819,21 @@ Driver Inits
 
 static UINT8 Gforce2ProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-	
 	switch (value) {
 		
 		// Left/Right
 		case 0: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) > 0x7f && (System16AnalogPort0 >> 4) <= 0x80) {
-				temp = 0x80 + 0x7f;
-			} else {
-				temp = 0x80 + (System16AnalogPort0 >> 4);
-			}
-
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x01, 0xff);
 		}
 
 		// Up/Down
 		case 1: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort1 >> 4) < 0xf82 && (System16AnalogPort1 >> 4) > 0x80) {
-				temp = (UINT8)(0x80 - 0xf82);
-			} else {
-				temp = 0x80 - (System16AnalogPort1 >> 4);
-			}
-
-			return temp;
+			return ProcessAnalog(System16AnalogPort1, 1, INPUT_DEADZONE, 0x01, 0xff);
 		}
 
 		// Throttle
 		case 2: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort2 >> 4) > 0x7f && (System16AnalogPort2 >> 4) <= 0x80) {
-				temp = 0x80 + 0x7f;
-			} else {
-				temp = 0x80 + (System16AnalogPort2 >> 4);
-			}
-
-			// full throttle
-			if(temp == 0) {
-				temp = 1;
-				return temp;
-			}
-
-			// throttle range
-			if(temp > 0 && temp < 128) {
-				return temp;
-			}
-
-			// normal speed
-			temp = 0;
-
-			//bprintf(0, _T("(0x80 - (System16AnalogPort1 >> 4)) int-> %d port-> %d char-> %d\n"), 0x80 - (System16AnalogPort1 >> 4), (System16AnalogPort1 >> 4), temp);
-			
-			return temp;
+			return ProcessAnalog(System16AnalogPort2, 1, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x01, 0x80);
 		}
 	}
 	
@@ -1884,46 +1842,21 @@ static UINT8 Gforce2ProcessAnalogControls(UINT16 value)
 
 static UINT8 GlocProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-	
 	switch (value) {
 
 		// Up/Down
 		case 3: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort1 >> 4) < 0xf82 && (System16AnalogPort1 >> 4) > 0x80) {
-				temp = (UINT8)(0x80 - 0xf82);
-			} else {
-				temp = 0x80 - (System16AnalogPort1 >> 4);
-			}
-
-			if (temp < 0x40) temp = 0x40;
-			if (temp > 0xc0) temp = 0xc0;
-			return temp;
+			return ProcessAnalog(System16AnalogPort1, 1, INPUT_DEADZONE, 0x40, 0xc0);
 		}
 
 		// Throttle [?]
 		case 4: {
-			temp = 0x80 + (System16AnalogPort2 >> 4);
-			if (temp > 0xc0) return 0xff;
-			if (temp < 0x40) return 0;
-			return 0x80;
+			return ProcessAnalog(System16AnalogPort2, 1, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x01, 0x80);
 		}
 
 		// Left/Right
 		case 5: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) > 0x7f && (System16AnalogPort0 >> 4) <= 0x80) {
-				temp = 0x80 + 0x7f;
-			} else {
-				temp = 0x80 + (System16AnalogPort0 >> 4);
-			}
-
-			if (temp < 0x20) temp = 0x20;
-			if (temp > 0xe0) temp = 0xe0;
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x20, 0xe0);
 		}
 	}
 	
@@ -1932,64 +1865,26 @@ static UINT8 GlocProcessAnalogControls(UINT16 value)
 
 static UINT8 Glocr360ProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-	
 	switch (value) {
 
 		// Moving Pitch
 		case 1: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort3 >> 4) > 0x7f && (System16AnalogPort3 >> 4) <= 0x80) {
-				temp = 0x7f + 0x7f;
-			} else {
-				temp = 0x7f + (System16AnalogPort3 >> 4);
-			}
-
-			if (temp == 0xfe) temp = 0xff;
-			return temp;
+			return ProcessAnalog(System16AnalogPort3, 0, INPUT_DEADZONE, 0x00, 0xff);
 		}
 
 		// Moving Roll
 		case 2: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort2 >> 4) > 0x7f && (System16AnalogPort2 >> 4) <= 0x80) {
-				temp = 0x7f + 0x7f;
-			} else {
-				temp = 0x7f + (System16AnalogPort2 >> 4);
-			}
-
-			if (temp == 0xfe) temp = 0xff;
-			return temp;
+			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE, 0x00, 0xff);
 		}
 
 		// Up/Down
 		case 3: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort1 >> 4) < 0xf82 && (System16AnalogPort1 >> 4) > 0x80) {
-				temp = (UINT8)(0x7f - 0xf82);
-			} else {
-				temp = 0x7f - (System16AnalogPort1 >> 4);
-			}
-
-			if (temp == 0xfe) temp = 0xff;
-			return temp;
+			return ProcessAnalog(System16AnalogPort1, 1, INPUT_DEADZONE, 0x00, 0xff);
 		}
 
 		// Left/Right
 		case 5: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) > 0x7f && (System16AnalogPort0 >> 4) <= 0x80) {
-				temp = 0x7f + 0x7f;
-			} else {
-				temp = 0x7f + (System16AnalogPort0 >> 4);
-			}
-
-			if (temp == 0xfe) temp = 0xff;
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x00, 0xff);
 		}
 	}
 	
@@ -1998,35 +1893,21 @@ static UINT8 Glocr360ProcessAnalogControls(UINT16 value)
 
 static UINT8 PdriftProcessAnalogControls(UINT16 value)
 {
-	UINT8 temp = 0;
-	
 	switch (value) {
 
 		// Brake
 		case 3: {
-			if (System16AnalogPort2 > 1) return 0xff;
-			return 0;
+			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 
 		// Accelerate
 		case 4: {
-			if (System16AnalogPort1 > 1) return 0xff;
-			return 0;
+			return ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 
 		// Steering
 		case 5: {
-
-			// Prevent CHAR data overflow
-			if((System16AnalogPort0 >> 4) > 0x7f && (System16AnalogPort0 >> 4) <= 0x80) {
-				temp = 0x80 + 0x7f;
-			} else {
-				temp = 0x80 + (System16AnalogPort0 >> 4);
-			}
-
-			if (temp < 0x20) temp = 0x20;
-			if (temp > 0xe0) temp = 0xe0;
-			return temp;
+			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x20, 0xe0);
 		}
 	}
 	

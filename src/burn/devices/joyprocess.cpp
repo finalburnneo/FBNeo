@@ -130,10 +130,11 @@ UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, U
 
 	if (Temp < 0x3f + DeadZone) Temp = 0x3f + DeadZone; // clamping for happy scalerange()
 	if (Temp > 0xbf - DeadZone) Temp = 0xbf - DeadZone;
+
 	Temp = scalerange(Temp, 0x3f + DeadZone, 0xbf - DeadZone, scalemin, scalemax);
 
 	if (flags & INPUT_LINEAR) {
-		Temp -= centerval;
+		if (!reversed) Temp -= centerval;
 		Temp = scalerange(Temp, 0, centerval, linear_min, linear_max);
 	}
 

@@ -1384,14 +1384,12 @@ static UINT8 EndurorProcessAnalogControls(UINT16 value)
 
 		// Accelerate
 		case 0: {
-			if (System16AnalogPort2 > 1) return 0xff;
-			return 0;
+			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 
 		// Brake
 		case 1: {
-			if (System16AnalogPort3 > 1) return 0xff;
-			return 0;
+			return ProcessAnalog(System16AnalogPort3, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 
 		// Bank Up / Down
@@ -1429,14 +1427,12 @@ static UINT8 HangonProcessAnalogControls(UINT16 value)
 		
 		// Accelerate
 		case 1: {
-			if (System16AnalogPort1 > 1) return 0xff;
-			return 0;
+			return ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 		
 		// Brake
 		case 2: {
-			if (System16AnalogPort2 > 1) return 0xff;
-			return 0;
+			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 	}
 	

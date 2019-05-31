@@ -227,7 +227,11 @@ static INT32 InputTick()
 		if (pgi->nInput == GIT_JOYSLIDER) {
 			// Get state of the axis
 			nAdd = CinpJoyAxis(pgi->Input.Slider.JoyAxis.nJoy, pgi->Input.Slider.JoyAxis.nAxis);
-			nAdd /= 0x100;
+			nAdd /= 0x80;
+			// May 30, 2019 -dink
+			// Was "nAdd /= 0x100;" - Current gamepads w/ thumbsticks
+			// register 0x3f <- 0x80  -> 0xbe, so we must account for that
+			// to be able to get the same range as GIT_KEYSLIDER.
 		}
 
 		// nAdd is now -0x100 to +0x100

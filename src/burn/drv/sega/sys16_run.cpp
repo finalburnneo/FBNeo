@@ -225,6 +225,8 @@ inline static void PdriftMakeInputs()
 	for (INT32 i = 0; i < 8; i++) {
 		System16Input[0] |= (System16InputPort0[i] & 1) << i;
 	}
+
+	Pdrift_analog_target = ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x20, 0xe0);
 }
 
 static void System16GunMakeInputs()

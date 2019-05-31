@@ -586,7 +586,7 @@ static void expand_tile_gfx()
 		PGMTileROM[i * 2 + 1] = d >> 4;
 	}
 
-	PGMTileROM = (UINT8*)realloc(PGMTileROM, 0x400000);
+	PGMTileROM = (UINT8*)BurnRealloc(PGMTileROM, 0x400000);
 }
 
 static void expand_colourdata()

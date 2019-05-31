@@ -18,8 +18,8 @@ static INT32 mem_allocated;
 
 void BurnInitMemoryManager()
 {
-	memset (memptr, 0, MAX_MEM_PTR * sizeof(UINT8 **));
-	memset (memsize, 0, MAX_MEM_PTR * sizeof(INT32));
+	memset (memptr, 0, sizeof(memptr));
+	memset (memsize, 0, sizeof(memsize));
 	mem_allocated = 0;
 }
 
@@ -64,7 +64,7 @@ void _BurnFree(void *ptr)
 
 	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
 	{
-		if (memptr[i] == mptr) {
+		if (mptr != NULL && memptr[i] == mptr) {
 			free (memptr[i]);
 			memptr[i] = NULL;
 

@@ -57,6 +57,24 @@ UINT8 *BurnMalloc(INT32 size)
 	return NULL; // Freak out!
 }
 
+UINT8 *BurnRealloc(void *ptr, INT32 size)
+{
+	UINT8 *mptr = (UINT8*)ptr;
+
+	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
+	{
+		if (memptr[i] == mptr) {
+			memptr[i] = (UINT8*)realloc(ptr, size);
+			mem_allocated -= memsize[i];
+			mem_allocated += size;
+			memsize[i] = size;
+			return memptr[i];
+		}
+	}
+
+	return NULL;
+}
+
 // call instead of "free"
 void _BurnFree(void *ptr)
 {

@@ -486,11 +486,12 @@ static struct BurnInputInfo HeadonnInputList[] = {
 STDINPUTINFO(Headonn)
 
 static struct BurnInputInfo SupcrashInputList[] = {
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -892,15 +893,15 @@ STDDIPINFO(Headonn)
 
 static struct BurnDIPInfo SupcrashDIPList[]=
 {
-	{0x06, 0xff, 0xff, 0x04, NULL						},
+	{0x07, 0xff, 0xff, 0x04, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
-	{0x06, 0x01, 0x40, 0x40, "Off"						},
-	{0x06, 0x01, 0x40, 0x00, "On"						},
+	{0x07, 0x01, 0x40, 0x40, "Off"						},
+	{0x07, 0x01, 0x40, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Rom Test"					},
-	{0x06, 0x01, 0x04, 0x04, "Off"						},
-	{0x06, 0x01, 0x04, 0x00, "On"						},
+	{0x07, 0x01, 0x04, 0x04, "Off"						},
+	{0x07, 0x01, 0x04, 0x00, "On"						},
 };
 
 STDDIPINFO(Supcrash)

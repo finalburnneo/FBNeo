@@ -202,7 +202,7 @@ static void update_pixels(INT32 offset)
 
 	INT32 x = (offset & 0xff);
 	INT32 y = (offset >> 8) & 0xff;
-	if (x >= nScreenWidth || y < y_offs || y >= nScreenHeight+y_offs) return;
+	if ((x * 2) >= nScreenWidth || y < y_offs || y >= nScreenHeight+y_offs) return;
 
 	UINT16 *src = (UINT16*)DrvVidRAM0 + ((y << 8) | x);
 	UINT16 *dst = DrvTmpBmp + (y-y_offs) * 320 + x * 2;

@@ -1891,8 +1891,28 @@ static UINT8 Glocr360ProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
+// Power Drift gets confused if there is a large change between steering
+// values - making the car very difficult to control.  To fix this, we use
+// a simple target/adder system to pseudo-interpolate the inbetween values
+// during the frame.  PdriftMakeInputs() -- called at the start of the frame
+// sets the target value.  -dink May 30, 2019
+
+INT32 Pdrift_analog_adder = 0;
+INT32 Pdrift_analog_target = 0;
+
+static void PdriftAnalogTick()
+{
+	if (Pdrift_analog_adder > Pdrift_analog_target)
+		Pdrift_analog_adder--;
+	else if (Pdrift_analog_adder < Pdrift_analog_target)
+		Pdrift_analog_adder++;
+	else Pdrift_analog_adder = Pdrift_analog_target;
+}
+
 static UINT8 PdriftProcessAnalogControls(UINT16 value)
 {
+	PdriftAnalogTick();
+
 	switch (value) {
 
 		// Brake
@@ -1907,7 +1927,7 @@ static UINT8 PdriftProcessAnalogControls(UINT16 value)
 
 		// Steering
 		case 5: {
-			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x20, 0xe0);
+			return Pdrift_analog_adder;
 		}
 	}
 	
@@ -1978,6 +1998,8 @@ static INT32 Glocr360Init()
 
 static INT32 PdriftInit()
 {
+	Pdrift_analog_adder = Pdrift_analog_target = 0x80;
+
 	System16ProcessAnalogControlsDo = PdriftProcessAnalogControls;
 	
 	System16HasGears = true;

@@ -239,6 +239,8 @@ void __fastcall YBoard2WriteWord(UINT32 a, UINT16 d);
 UINT16 __fastcall YBoard3ReadWord(UINT32 a);
 UINT8 __fastcall YBoard3ReadByte(UINT32 a);
 void __fastcall YBoard3WriteWord(UINT32 a, UINT16 d);
+extern INT32 Pdrift_analog_adder;
+extern INT32 Pdrift_analog_target;
 
 // sys16_gfx.cpp
 extern INT32 System16VideoEnable;

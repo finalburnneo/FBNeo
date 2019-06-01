@@ -3724,6 +3724,8 @@ static struct BurnRomInfo XeviousRomDesc[] = {
 
 	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, /* 24 */
 	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, /* 25 timing - not used */
+
+	{ "xvi-3.1f",      0x00117, 0x9192d57a, BRF_OPT             }, /* N82S153N */
 };
 
 STD_ROM_PICK(Xevious)

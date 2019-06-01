@@ -3826,14 +3826,14 @@ struct BurnDriver BurnDrvPistoldm = {
 };
 
 
-// Boxy Boy (SB?)
+// Boxy Boy (World, SB2)
 
 static struct BurnRomInfo boxyboyRomDesc[] = {
 	{ "sb1_snd0.bin",	0x10000, 0xbf46a106, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
 
 	{ "sb1_prg0.bin",	0x20000, 0x8af8cb73, 2 | BRF_PRG | BRF_ESS }, //  1 Main and Sub m6809 Code
 	{ "sb1_prg1.bin",	0x20000, 0x5d1fdd94, 2 | BRF_PRG | BRF_ESS }, //  2
-	{ "sbx_prg7.bin",	0x10000, 0x7787c72e, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "sb2_prg7.bin",	0x10000, 0xf570301b, 2 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "cus64-64a1.mcu",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
 
@@ -3861,10 +3861,47 @@ static INT32 BoxyboyInit()
 
 struct BurnDriver BurnDrvBoxyboy = {
 	"boxyboy", NULL, NULL, NULL, "1990",
-	"Boxy Boy (SB?)\0", NULL, "Namco", "System 1",
+	"Boxy Boy (World, SB2)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, boxyboyRomInfo, boxyboyRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BoxyboyDIPInfo,
+	BoxyboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	288, 224, 4, 3
+};
+
+
+// Boxy Boy (SB?)
+
+static struct BurnRomInfo boxyboyaRomDesc[] = {
+	{ "sb1_snd0.bin",	0x10000, 0xbf46a106, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
+
+	{ "sb1_prg0.bin",	0x20000, 0x8af8cb73, 2 | BRF_PRG | BRF_ESS }, //  1 Main and Sub m6809 Code
+	{ "sb1_prg1.bin",	0x20000, 0x5d1fdd94, 2 | BRF_PRG | BRF_ESS }, //  2
+	{ "sbx_prg7.bin",	0x10000, 0x7787c72e, 2 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "cus64-64a1.mcu",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
+
+	{ "sb1_voi0.bin",	0x10000, 0x63d9cedf, 4 | BRF_PRG | BRF_ESS }, //  5 External MCU Code
+
+	{ "sb1_chr8.bin",	0x10000, 0x5692b297, 5 | BRF_GRA },           //  6 Character Pixel Masks
+
+	{ "sb1_chr0.bin",	0x20000, 0x267f1331, 6 | BRF_GRA },           //  7 Characters
+	{ "sb1_chr1.bin",	0x20000, 0xe5ff61ad, 6 | BRF_GRA },           //  8
+	{ "sb1_chr2.bin",	0x20000, 0x099b746b, 6 | BRF_GRA },           //  9
+	{ "sb1_chr3.bin",	0x20000, 0x1551bb7c, 6 | BRF_GRA },           // 10
+
+	{ "sb1_obj0.bin",	0x10000, 0xed810da4, 7 | BRF_GRA },           // 11 Sprites
+};
+
+STD_ROM_PICK(boxyboya)
+STD_ROM_FN(boxyboya)
+
+struct BurnDriver BurnDrvBoxyboya = {
+	"boxyboya", "boxyboy", NULL, NULL, "1990",
+	"Boxy Boy (SB?)\0", NULL, "Namco", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, boxyboyaRomInfo, boxyboyaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BoxyboyDIPInfo,
 	BoxyboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };

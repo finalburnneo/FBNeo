@@ -975,15 +975,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 	
-	// Street Fighter Zero (CPS Changer) #245
-	if ((parentrom && strcmp(parentrom, "sfzch") == 0) ||
-		(drvname && strcmp(drvname, "sfzch") == 0)
-	) {
-		if (strcmp("Pause", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_SELECT, description);
-		}
-	}
-	
 	// Toobin' (reported on discord, layout suggestion by alfrix#8029)
 	if ((parentrom && strcmp(parentrom, "toobin") == 0) ||
 		(drvname && strcmp(drvname, "toobin") == 0)

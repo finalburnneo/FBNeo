@@ -1477,7 +1477,7 @@ static void PCM2DecryptP()
 
 static void PCM2DecryptV(INT32 size, INT32 bit)
 {
-	for (INT32 i = 0; i < size / 2; i += (2 << bit)) {
+	for (INT32 i = 0; i < (size / 2) - (2 << bit); i += (2 << bit)) {
 		UINT16 buffer[8];
 		memmove(buffer, ((UINT16*)(YM2610ADPCMAROM[nNeoActiveSlot])) + i, 16);
 		for (INT32 j = (2 << bit) - 1; j >= 0; j--) {

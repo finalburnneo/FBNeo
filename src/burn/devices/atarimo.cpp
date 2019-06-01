@@ -414,8 +414,8 @@ int atarimo_init(int map, const atarimo_desc *desc)
 	/* allocate dirty grid */
 	mo->dirtywidth = (mo->bitmapwidth >> mo->tilexshift) + 2;
 	mo->dirtyheight = (mo->bitmapheight >> mo->tileyshift) + 2;
-	mo->dirtygrid = BurnMalloc(mo->dirtywidth * mo->dirtyheight);
-	memset(mo->dirtygrid, 0x00, mo->dirtywidth * mo->dirtyheight);
+	mo->dirtygrid = BurnMalloc(mo->dirtywidth * mo->dirtyheight * 2);
+	memset(mo->dirtygrid, 0x00, mo->dirtywidth * mo->dirtyheight * 2);
 
 	/* allocate the gfx lookup */
 	mo->gfxlookup = BurnMalloc(sizeof(UINT8) * round_to_powerof2(mo->gfxmask.mask));

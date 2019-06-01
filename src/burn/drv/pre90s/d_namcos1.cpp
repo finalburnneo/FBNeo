@@ -3833,7 +3833,7 @@ static struct BurnRomInfo boxyboyRomDesc[] = {
 
 	{ "sb1_prg0.bin",	0x20000, 0x8af8cb73, 2 | BRF_PRG | BRF_ESS }, //  1 Main and Sub m6809 Code
 	{ "sb1_prg1.bin",	0x20000, 0x5d1fdd94, 2 | BRF_PRG | BRF_ESS }, //  2
-	{ "sbx_prg7.bin",	0x10000, 0x7787c72e, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "sb2_prg7.bin",	0x10000, 0xf570301b, 2 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "cus64-64a1.mcu",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
 

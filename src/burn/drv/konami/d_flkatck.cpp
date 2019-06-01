@@ -662,9 +662,9 @@ static struct BurnRomInfo mx5000RomDesc[] = {
 
 	{ "669_m02.16b",	0x08000, 0x7e11e6b9, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "mask2m.11a",		0x40000, 0x6d1ea61c, 3 | BRF_SND },           //  2 k007232 Samples
+	{ "gx669f04.11a",	0x40000, 0x6d1ea61c, 3 | BRF_SND },           //  2 k007232 Samples
 
-	{ "mask4m.5e",		0x80000, 0xff1d718b, 4 | BRF_GRA },           //  3 Graphics
+	{ "gx669f03.5e",	0x80000, 0xff1d718b, 4 | BRF_GRA },           //  3 Graphics
 };
 
 STD_ROM_PICK(mx5000)
@@ -693,9 +693,9 @@ static struct BurnRomInfo flkatckRomDesc[] = {
 
 	{ "669_m02.16b",	0x08000, 0x7e11e6b9, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "mask2m.11a",		0x40000, 0x6d1ea61c, 3 | BRF_SND },           //  2 k007232 Samples
+	{ "gx669f04.11a",	0x40000, 0x6d1ea61c, 3 | BRF_SND },           //  2 k007232 Samples
 
-	{ "mask4m.5e",		0x80000, 0xff1d718b, 4 | BRF_GRA },           //  3 Graphics
+	{ "gx669f03.5e",	0x80000, 0xff1d718b, 4 | BRF_GRA },           //  3 Graphics
 };
 
 STD_ROM_PICK(flkatck)
@@ -719,7 +719,7 @@ static struct BurnRomInfo flkatckaRomDesc[] = {
 
 	{ "669_m02.16b",	0x08000, 0x7e11e6b9, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "mask2m.11a",		0x40000, 0x6d1ea61c, 3 | BRF_GRA },           //  2 k007232 Samples
+	{ "gx669f04.11a",	0x40000, 0x6d1ea61c, 3 | BRF_GRA },           //  2 k007232 Samples
 
 	{ "669_f03a.4b",	0x10000, 0xf0ed4c1e, 4 | BRF_GRA },           //  3 Graphics
 	{ "669_f03e.4d",	0x10000, 0x95a57a26, 4 | BRF_GRA },           //  4

@@ -3272,7 +3272,7 @@ static struct BurnRomInfo carnivalRomDesc[] = {
 
 	{ "316-633",			0x0020, 0xf0084d80, 1 | BRF_GRA },           // 16 Color data
 
-	{ "epr-412",			0x0400, 0x0dbaa2b0, 3 | BRF_PRG | BRF_ESS }, // 17 I8039 Code
+	{ "epr-412.u5",			0x0400, 0x0dbaa2b0, 3 | BRF_PRG | BRF_ESS }, // 17 I8039 Code
 
 	{ "316-0206.u14",		0x0020, 0x9617d796, 0 | BRF_OPT },           // 18 Unused PROM
 };
@@ -3413,7 +3413,7 @@ static struct BurnRomInfo carnivalcRomDesc[] = {
 
 	{ "316-633",			0x0020, 0xf0084d80, 1 | BRF_GRA },           // 16 Color data
 
-	{ "epr-412",			0x0400, 0x0dbaa2b0, 3 | BRF_PRG | BRF_ESS }, // 17 I8039 Code
+	{ "epr-412.u5",			0x0400, 0x0dbaa2b0, 3 | BRF_PRG | BRF_ESS }, // 17 I8039 Code
 
 	{ "316-0206.u14",		0x0020, 0x9617d796, 0 | BRF_OPT },           // 18 Unused PROM
 };

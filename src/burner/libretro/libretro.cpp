@@ -1172,6 +1172,18 @@ static bool retro_load_game_common()
 
 	nBurnDrvActive = BurnDrvGetIndexByName(g_driver_name);
 	if (nBurnDrvActive < nBurnDrvCount) {
+		// If the game is marked as not working, let's stop here
+		if (!(BurnDrvIsWorking())) {
+			log_cb(RETRO_LOG_ERROR, "[FBNEO] Can't launch this game, it is marked as not working\n");
+			return false;
+		}
+
+		// If the game is a bios, let's stop here
+		if ((BurnDrvGetFlags() & BDF_BOARDROM)) {
+			log_cb(RETRO_LOG_ERROR, "[FBNEO] Can't launch a bios this way\n");
+			return false;
+		}
+
 		const char * boardrom = BurnDrvGetTextA(DRV_BOARDROM);
 		is_neogeo_game = (boardrom && strcmp(boardrom, "neogeo") == 0);
 
@@ -1196,7 +1208,7 @@ static bool retro_load_game_common()
 		// Some game drivers won't initialize with an undefined nBurnSoundLen
 		init_audio_buffer(nBurnSoundRate, 6000);
 
-		// Initizalize inputs
+		// Initialize inputs
 		InputInit();
 
 		// Start CD reader emulation if needed
@@ -1211,12 +1223,6 @@ static bool retro_load_game_common()
 
 		// Initialize game driver
 		BurnDrvInit();
-
-		// If the game is marked as not working, let's stop here
-		if (!(BurnDrvIsWorking())) {
-			log_cb(RETRO_LOG_ERROR, "[FBNEO] Can't launch this game, it is marked as not working\n");
-			return false;
-		}
 
 		// Now we know real game fps, let's initialize sound buffer again
 		init_audio_buffer(nBurnSoundRate, nBurnFPS);

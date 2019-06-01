@@ -3992,8 +3992,8 @@ static struct BurnDIPInfo HunchbksDIPList[]=
 	{0x13, 0x01, 0x06, 0x00, "80000"                  },
 	
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x14, 0x01, 0x08, 0x08, "Upright"                },
-	{0x14, 0x01, 0x08, 0x00, "Cocktail"               },
+	{0x13, 0x01, 0x08, 0x08, "Upright"                },
+	{0x13, 0x01, 0x08, 0x00, "Cocktail"               },
 };
 
 STDDIPINFO(Hunchbks)
@@ -5629,7 +5629,7 @@ static struct BurnDIPInfo SmooncrsDIPList[]=
 	// Default Values
 	{0x08, 0xff, 0xff, 0x00, NULL                     },
 	{0x09, 0xff, 0xff, 0xc0, NULL                     },
-	{0x10, 0xff, 0xff, 0x00, NULL                     },
+	{0x0a, 0xff, 0xff, 0x00, NULL                     },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
@@ -5647,16 +5647,16 @@ static struct BurnDIPInfo SmooncrsDIPList[]=
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x10, 0x01, 0x03, 0x03, "4 Coins 1 Play"         },
-	{0x10, 0x01, 0x03, 0x02, "3 Coins 1 Play"         },
-	{0x10, 0x01, 0x03, 0x01, "2 Coins 1 Play"         },
-	{0x10, 0x01, 0x03, 0x00, "1 Coin  1 Play"         },
+	{0x0a, 0x01, 0x03, 0x03, "4 Coins 1 Play"         },
+	{0x0a, 0x01, 0x03, 0x02, "3 Coins 1 Play"         },
+	{0x0a, 0x01, 0x03, 0x01, "2 Coins 1 Play"         },
+	{0x0a, 0x01, 0x03, 0x00, "1 Coin  1 Play"         },
 	
 	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x10, 0x01, 0x0c, 0x00, "1 Coin 1 Play"          },
-	{0x10, 0x01, 0x0c, 0x04, "1 Coin 2 Plays"         },
-	{0x10, 0x01, 0x0c, 0x08, "1 Coin 3 Plays"         },
-	{0x10, 0x01, 0x0c, 0x0c, "Freeplay"               },
+	{0x0a, 0x01, 0x0c, 0x00, "1 Coin 1 Play"          },
+	{0x0a, 0x01, 0x0c, 0x04, "1 Coin 2 Plays"         },
+	{0x0a, 0x01, 0x0c, 0x08, "1 Coin 3 Plays"         },
+	{0x0a, 0x01, 0x0c, 0x0c, "Freeplay"               },
 };
 
 STDDIPINFO(Smooncrs)
@@ -5666,7 +5666,7 @@ static struct BurnDIPInfo MooncptcDIPList[]=
 	// Default Values
 	{0x08, 0xff, 0xff, 0x00, NULL                     },
 	{0x09, 0xff, 0xff, 0xc0, NULL                     },
-	{0x10, 0xff, 0xff, 0x03, NULL                     },
+	{0x0a, 0xff, 0xff, 0x03, NULL                     },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
@@ -5684,16 +5684,16 @@ static struct BurnDIPInfo MooncptcDIPList[]=
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x10, 0x01, 0x03, 0x00, "1 Coin  2 Plays"        },
-	{0x10, 0x01, 0x03, 0x01, "2 Coins 3 Plays"        },
-	{0x10, 0x01, 0x03, 0x02, "3 Coins 4 Plays"        },
-	{0x10, 0x01, 0x03, 0x03, "4 Coins 5 Plays"        },
+	{0x0a, 0x01, 0x03, 0x00, "1 Coin  2 Plays"        },
+	{0x0a, 0x01, 0x03, 0x01, "2 Coins 3 Plays"        },
+	{0x0a, 0x01, 0x03, 0x02, "3 Coins 4 Plays"        },
+	{0x0a, 0x01, 0x03, 0x03, "4 Coins 5 Plays"        },
 	
 	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x10, 0x01, 0x0c, 0x00, "1 Coin 1 Play"          },
-	{0x10, 0x01, 0x0c, 0x04, "1 Coin 2 Plays"         },
-	{0x10, 0x01, 0x0c, 0x08, "1 Coin 3 Plays"         },
-	{0x10, 0x01, 0x0c, 0x0c, "Freeplay"               },
+	{0x0a, 0x01, 0x0c, 0x00, "1 Coin 1 Play"          },
+	{0x0a, 0x01, 0x0c, 0x04, "1 Coin 2 Plays"         },
+	{0x0a, 0x01, 0x0c, 0x08, "1 Coin 3 Plays"         },
+	{0x0a, 0x01, 0x0c, 0x0c, "Freeplay"               },
 };
 
 STDDIPINFO(Mooncptc)
@@ -11338,7 +11338,7 @@ struct BurnDriver BurnDrvMooncrstso = {
 	"Moon Cresta (SegaSA / Sonic)\0", NULL, "Nichibutsu (Sonic license)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
-	NULL, MooncrstsoRomInfo, MooncrstsoRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncptcDIPInfo,
+	NULL, MooncrstsoRomInfo, MooncrstsoRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
 	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

@@ -87,6 +87,7 @@ static struct BurnInputInfo CclimberInputList[] = {
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset    , "reset"    },
 	{"Dip"               , BIT_DIPSWITCH, DrvDips + 0  , "dip"      },
+	{"Dip"               , BIT_DIPSWITCH, DrvDips + 1  , "dip"      },
 };
 
 STDINPUTINFO(Cclimber)

@@ -349,7 +349,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 1; i <= nInterleave; i++) {
 		INT32 nNext;
-
+#if 0
 		// Render sound segment
 		if ((i & 1) == 0) {
 			if (pBurnSoundOut) {
@@ -359,7 +359,7 @@ static INT32 DrvFrame()
 				nSoundBufferPos = nSegmentEnd;
 			}
 		}
-
+#endif
 		// Run 68000
     	nCurrentCPU = 0;
 		nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
@@ -388,11 +388,14 @@ static INT32 DrvFrame()
     // Make sure the buffer is entirely filled.
 	{
 		if (pBurnSoundOut) {
+#if 0
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			if (nSegmentLength) {
 				YMZ280BRender(pSoundBuf, nSegmentLength);
 			}
+#endif
+			YMZ280BRender(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
 

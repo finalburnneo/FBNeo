@@ -1079,7 +1079,7 @@ STDINPUTINFO(Sf2ceuabl)
 
 static struct BurnInputInfo SfzchInputList[] =
 {
-	{"P1 Pause"         , BIT_DIGITAL  , CpsInp018+2, ""          },
+	{"P1 Pause"         , BIT_DIGITAL  , CpsInp018+2, "p1 coin"   },
  	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
  	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
  	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
@@ -1092,7 +1092,7 @@ static struct BurnInputInfo SfzchInputList[] =
  	{"P1 Medium Kick"   , BIT_DIGITAL  , CpsInp018+0, "p1 fire 5" },
  	{"P1 Strong Kick"   , BIT_DIGITAL  , CpsInp018+6, "p1 fire 6" },
 
- 	{"P2 Pause"         , BIT_DIGITAL  , CpsInp018+3, ""          },
+ 	{"P2 Pause"         , BIT_DIGITAL  , CpsInp018+3, "p2 coin"   },
  	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
  	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
  	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },

@@ -267,7 +267,6 @@ static struct BurnInputInfo MeosismInputList[] = {
 	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 5,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Meosism)

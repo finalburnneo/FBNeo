@@ -343,23 +343,11 @@ static INT32 DrvFrame()
 	nCyclesVBlank = nCyclesTotal[0] - (INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
 	bVBlank = false;
 
-	INT32 nSoundBufferPos = 0;
-
 	SekOpen(0);
 
 	for (INT32 i = 1; i <= nInterleave; i++) {
 		INT32 nNext;
-#if 0
-		// Render sound segment
-		if ((i & 1) == 0) {
-			if (pBurnSoundOut) {
-				INT32 nSegmentEnd = nBurnSoundLen * i / nInterleave;
-				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				YMZ280BRender(pSoundBuf, nSegmentEnd - nSoundBufferPos);
-				nSoundBufferPos = nSegmentEnd;
-			}
-		}
-#endif
+
 		// Run 68000
     	nCurrentCPU = 0;
 		nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
@@ -388,13 +376,6 @@ static INT32 DrvFrame()
     // Make sure the buffer is entirely filled.
 	{
 		if (pBurnSoundOut) {
-#if 0
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			if (nSegmentLength) {
-				YMZ280BRender(pSoundBuf, nSegmentLength);
-			}
-#endif
 			YMZ280BRender(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
@@ -585,10 +566,10 @@ static INT32 DrvInit()
 	CaveTileInitLayer(1, 0x800000, 8, 0x4000);
 	CaveTileInitLayer(2, 0x400000, 8, 0x4000);
 
+	bESPRaDeMixerKludge = true;
 	YMZ280BInit(16934400, &TriggerSoundIRQ, 0x400000);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-	bESPRaDeMixerKludge = true;
 
 	DrvDoReset(); // Reset machine
 

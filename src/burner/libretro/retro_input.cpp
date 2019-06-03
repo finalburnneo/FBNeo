@@ -1483,6 +1483,14 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 		GameInpSpecialOne(pgi, nPlayer, szi, szn, description);
 		if(bButtonMapped) return 0;
 
+		// Don't map neogeo select button anywhere
+		// See https://neo-source.com/index.php?topic=3490.0
+		if (strncmp("select", szb, 6) == 0 && is_neogeo_game) {
+			pgi->nInput = GIT_SWITCH;
+			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
+			return 0;
+		}
+
 		if (strncmp("select", szb, 6) == 0)
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_SELECT, description);
 		if (strncmp("coin", szb, 4) == 0)

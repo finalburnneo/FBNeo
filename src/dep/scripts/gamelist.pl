@@ -314,7 +314,7 @@ if ( $Listfile ) {
 
 	print "Generating gamelist.txt...\n";
 
-	print OUTFILE "This list contains all games supported by FB Alpha.\x0d\x0a\x0d\x0a";
+	print OUTFILE "This list contains all games supported by FinalBurn Neo.\x0d\x0a\x0d\x0a";
 
 	print OUTFILE scalar @Driverlist . " games supported in total; ";
 	print OUTFILE "X = excluded from build; ";

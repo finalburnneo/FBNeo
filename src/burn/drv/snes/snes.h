@@ -144,8 +144,8 @@ struct CPU_65816
 2 = X0M1
 3 = X0M0
 4 = emulation*/
-	INT32 cpumode = 0;
-	INT8 inwai = 0; // Set when WAI is called
+	INT32 cpumode;
+	INT8 inwai; // Set when WAI is called
 
 	reg regA; // The Accumulator(16 bits wide)
 	reg regX; // The X index register (16 bits wide)

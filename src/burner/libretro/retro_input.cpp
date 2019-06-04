@@ -284,8 +284,8 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
 			descriptor.port = port;
-			descriptor.device = RETRO_DEVICE_ANALOG;
-			descriptor.index = index;
+			descriptor.device = (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON ? RETRO_DEVICE_JOYPAD : RETRO_DEVICE_ANALOG);
+			descriptor.index = (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON ? 0 : index);
 			descriptor.id = id;
 			descriptor.description = szn;
 			normal_input_descriptors.push_back(descriptor);
@@ -303,8 +303,8 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
 			descriptor.port = port;
-			descriptor.device = RETRO_DEVICE_ANALOG;
-			descriptor.index = index;
+			descriptor.device = (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON ? RETRO_DEVICE_JOYPAD : RETRO_DEVICE_ANALOG);
+			descriptor.index = (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON ? 0 : index);
 			descriptor.id = id;
 			descriptor.description = szn;
 			normal_input_descriptors.push_back(descriptor);
@@ -694,27 +694,27 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 	
-	// Fix part of issue #102 (Major League)
+	// Major League
 	if ((parentrom && strcmp(parentrom, "mjleague") == 0) ||
 		(drvname && strcmp(drvname, "mjleague") == 0)
 	) {
 		if (strcmp("Bat Swing", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
 		}
 		if (strcmp("Fire 1", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
 		}
 		if (strcmp("Fire 2", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 		if (strcmp("Fire 3", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
 		}
 		if (strcmp("Fire 4", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
 		}
 		if (strcmp("Fire 5", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
 	
@@ -928,30 +928,41 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 	
-	// Fix part of issue #102 (VS Block Breaker)
+	// VS Block Breaker
 	if ((parentrom && strcmp(parentrom, "vblokbrk") == 0) ||
 		(drvname && strcmp(drvname, "vblokbrk") == 0)
 	) {
 		if (strcmp("Paddle", description) == 0) {
-			GameInpAnalog2RetroInpDualKeys(pgi, nPlayer, 0, RETRO_DEVICE_ID_JOYPAD_R, RETRO_DEVICE_ID_JOYPAD_L, "Paddle Up", "Paddle Down");
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 		}
 	}
 	
-	// Fix part of issue #102 (Puzz Loop 2)
+	// Puzz Loop 2
 	if ((parentrom && strcmp(parentrom, "pzloop2") == 0) ||
 		(drvname && strcmp(drvname, "pzloop2") == 0)
 	) {
 		if (strcmp("Paddle", description) == 0) {
-			GameInpAnalog2RetroInpDualKeys(pgi, nPlayer, 0, RETRO_DEVICE_ID_JOYPAD_R, RETRO_DEVICE_ID_JOYPAD_L, "Paddle Up", "Paddle Down");
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 		}
 	}
 	
-	// Fix part of issue #102 (After burner 1 & 2)
-	if ((parentrom && strcmp(parentrom, "aburner2") == 0) ||
-		(drvname && strcmp(drvname, "aburner2") == 0)
+	// G-LOC Air Battle
+	// Galaxy Force 2
+	// After burner 1 & 2
+	// Thunder Blade
+	if ((parentrom && strcmp(parentrom, "gloc") == 0) ||
+		(drvname && strcmp(drvname, "gloc") == 0) ||
+		(parentrom && strcmp(parentrom, "gforce2") == 0) ||
+		(drvname && strcmp(drvname, "gforce2") == 0) ||
+		(parentrom && strcmp(parentrom, "aburner2") == 0) ||
+		(drvname && strcmp(drvname, "aburner2") == 0) ||
+		(parentrom && strcmp(parentrom, "thndrbld") == 0) ||
+		(drvname && strcmp(drvname, "thndrbld") == 0) ||
+		(parentrom && strcmp(parentrom, "rascot") == 0) ||
+		(drvname && strcmp(drvname, "rascot") == 0)
 	) {
 		if (strcmp("Throttle", description) == 0) {
-			GameInpAnalog2RetroInpDualKeys(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R, RETRO_DEVICE_ID_JOYPAD_L, "Speed Up", "Speed Down");
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
 		}
 	}
 	

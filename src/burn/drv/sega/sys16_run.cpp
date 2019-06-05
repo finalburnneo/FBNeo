@@ -225,6 +225,8 @@ inline static void PdriftMakeInputs()
 	for (INT32 i = 0; i < 8; i++) {
 		System16Input[0] |= (System16InputPort0[i] & 1) << i;
 	}
+
+	Pdrift_analog_target = ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x20, 0xe0);
 }
 
 static void System16GunMakeInputs()
@@ -3489,8 +3491,14 @@ INT32 XBoardFrameGPRider()
 	return 0;
 }
 
+
 INT32 YBoardFrame()
 {
+	// gforce2: to reduce player sprite jitters, we offset the first irq
+	// and draw @ vblank.  -dink
+
+	INT32 nYBoardFirstIRQOffs = -26;
+
 	INT32 nInterleaveBoost = 8;
 	INT32 nInterleave = 262 * nInterleaveBoost, i;
 
@@ -3524,8 +3532,8 @@ INT32 YBoardFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 170 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
-		if (i == 171 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
+		if (i == (170 + nYBoardFirstIRQOffs) * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		//if (i == (171 + nYBoardFirstIRQOffs) * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
 		if (i == 223 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
 		if (i == 224 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		SekClose();
@@ -3537,8 +3545,8 @@ INT32 YBoardFrame()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 170 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
-		if (i == 171 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
+		if (i == (170 + nYBoardFirstIRQOffs) * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		//if (i == (171 + nYBoardFirstIRQOffs) * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
 		if (i == 223 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
 		if (i == 224 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		SekClose();
@@ -3550,11 +3558,17 @@ INT32 YBoardFrame()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 170 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
-		if (i == 171 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
+		if (i == (170 + nYBoardFirstIRQOffs) * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		//if (i == (171 + nYBoardFirstIRQOffs) * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
 		if (i == 223 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
 		if (i == 224 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		SekClose();
+
+		if (i == 223 * nInterleaveBoost) { // draw on vbl
+			if (pBurnDraw) {
+				YBoardRender();
+			}
+		}
 
 		// Run Z80
 		nCurrentCPU = 3;
@@ -3588,10 +3602,6 @@ INT32 YBoardFrame()
 			ZetClose();
 			SegaPCMUpdate(pSoundBuf, nSegmentLength);
 		}
-	}
-
-	if (pBurnDraw) {
-		YBoardRender();
 	}
 
 	return 0;

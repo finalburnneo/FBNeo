@@ -687,32 +687,6 @@ static UINT8 astdelux_read(UINT16 address)
 	return 0;
 }
 
-static UINT8 ProcessAnalogLinear(INT16 anaval, INT32 reversed, INT32 deadzone, UINT8 scalemin, UINT8 scalemax)
-{
-	INT32 DeadZone = (deadzone) ? 10 : 0;
-	INT16 Temp = anaval / 16;
-	if (anaval == -1) Temp = 0x3f; // digital button mapped on analog (usually!)
-
-	if (deadzone) { // deadzones
-		// 0x7f is center, 0x3f right, 0xbe left.  0x7f +-10 is noise.
-	    if (!(Temp < 0x00-DeadZone || Temp > 0x00+DeadZone)) {
-			Temp = 0x00; // we hit a dead-zone, return mid-range
-		} else {
-			// so we don't jump between 0x7f (center) and next value after deadzone
-			if (Temp < 0x00-DeadZone) Temp += DeadZone;
-			else if (Temp > 0x00+DeadZone) Temp -= DeadZone;
-		}
-	}
-
-	Temp = abs(Temp); // math.h?
-
-	if (Temp < 0x00 + DeadZone) Temp = 0x00 + DeadZone; // clamping for happy scalerange()
-	if (Temp > 0x3f - DeadZone) Temp = 0x3f - DeadZone;
-	Temp = scalerange(Temp, 0x00 + DeadZone, 0x3f - DeadZone, scalemin, scalemax);
-
-	return Temp;
-}
-
 static UINT8 llander_read(UINT16 address)
 {
 	switch (address)
@@ -1037,13 +1011,13 @@ static INT32 DrvFrame()
 		}
 
 		if (llander) {
-			nThrustTarget = ProcessAnalogLinear(BurnGun0, 1, 1, 0, 0xfe);
+			nThrustTarget = ProcessAnalog(BurnGun0, 0, 1 | INPUT_LINEAR, 0x00, 0xfe);
 		}
 	}
 
 	INT32 nInterleave = 256; // nmi is 4x per frame!
-	INT32 nCyclesTotal = (1512000 * 100) / 6152; // 61.5234375 hz
-	INT32 nCyclesDone  = 0;
+	INT32 nCyclesTotal[1] = { (1512000 * 100) / 6152 }; // 61.5234375 hz
+	INT32 nCyclesDone[1]  = { 0 };
 	INT32 nSoundBufferPos = 0;
 	INT32 interrupts_enabled = (llander) ? (DrvDips[1] & 0x02) : (DrvInputs[0] & 0x80) == 0;
 
@@ -1051,7 +1025,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone += M6502Run(nCyclesTotal / nInterleave);
+		CPU_RUN(0, M6502);
 
 		if ((i % 64) == 63 && interrupts_enabled)
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);

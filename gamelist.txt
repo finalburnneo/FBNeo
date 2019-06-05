@@ -1,6 +1,6 @@
 This list contains all games supported by FB Alpha.
 
-12080 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12082 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1222,7 +1222,8 @@ This list contains all games supported by FB Alpha.
 | bowlrama	|  	| Bowl-O-Rama						| 		| 1991	| P&P Marketing	| Miscellaneous	| 					|
 | md_boxinglg	|  	| Boxing Legends of the Ring (USA)			| 		| 1993	| Electro Brain	| Sega Megadrive| 					|
 | cv_boxxle	|  	| Boxxle						| 		| 2015	| Coleco	| ColecoVision	| 					|
-| boxyboy	|  	| Boxy Boy (SB?)					| 		| 1990	| Namco		| System 1	| 					|
+| boxyboya	|  	| Boxy Boy (SB?)					| boxyboy	| 1990	| Namco		| System 1	| 					|
+| boxyboy	|  	| Boxy Boy (World, SB2)					| 		| 1990	| Namco		| System 1	| 					|
 | tg_boxyboy	|  	| Boxyboy						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | md_bsteam3	|  	| Boy Soccer Team III (Jpn, Pirate)			| md_tecmocup	| 199?	| <pirate>	| Sega Megadrive| 					|
 | bradley	|  	| Bradley Trainer					| 		| 1980	| Atari		| Miscellaneous	| GFX/Sound Issues			|
@@ -10188,6 +10189,7 @@ This list contains all games supported by FB Alpha.
 | gg_tesserae	|  	| Tesserae (Euro, USA)					| 		| 1993	| GameTek	| Sega Game Gear| 					|
 | md_td2	|  	| Test Drive II - The Duel (Euro, USA)			| 		| 1992	| Ballistic	| Sega Megadrive| 					|
 | ctsttape	|  	| Test Tape (DECO Cassette) (US)			| 		| 1981	| Data East Corp| Cassette Syste| 					|
+| test_adc	| D	| test_adc						| 		| 1986	| Nintendo	| Miscellaneous	| 					|
 | msx_tetrahor	|  	| Tetra Horror (Jpn)					| 		| 1983	| ASCII		| MSX		| 					|
 | msx_tetrahora	|  	| Tetra Horror (Jpn, Alt)				| msx_tetrahor	| 1983	| ASCII		| MSX		| 					|
 | atetrisb	|  	| Tetris (bootleg set 1)				| atetris	| 1988	| bootleg	| Miscellaneous	| 					|

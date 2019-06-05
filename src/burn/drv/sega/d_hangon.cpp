@@ -724,13 +724,13 @@ STD_ROM_PICK(Hangon1)
 STD_ROM_FN(Hangon1)
 
 static struct BurnRomInfo Hangon2RomDesc[] = {
-	{ "epr-6851a__,needs_verification.ic22",     0x08000, 0x1e4d2217, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
-	{ "epr-6849a__,needs_verification.ic8",      0x08000, 0x3793e50e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
-	{ "epr-6850a__,needs_verification.ic20",     0x08000, 0x5d715e3b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
-	{ "epr-6848a__,needs_verification.ic6",      0x08000, 0xf1439a30, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
+	{ "epr-6851a.ic22",   0x08000, 0x1e4d2217, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
+	{ "epr-6849a.ic8",    0x08000, 0x3793e50e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
+	{ "epr-6850a.ic20",   0x08000, 0x5d715e3b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
+	{ "epr-6848a.ic6",    0x08000, 0xf1439a30, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
 	
-	{ "epr-6838.ic63",    0x08000, 0x2747b794, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
-	{ "epr-6839.ic51",    0x08000, 0x73e9fa6e, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-6839.ic63",    0x08000, 0x2747b794, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-6838.ic51",    0x08000, 0x73e9fa6e, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
 
 	{ "epr-6841.ic38",    0x08000, 0x54d295dc, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-6842.ic23",    0x08000, 0xf677b568, SYS16_ROM_TILES | BRF_GRA },
@@ -1384,14 +1384,12 @@ static UINT8 EndurorProcessAnalogControls(UINT16 value)
 
 		// Accelerate
 		case 0: {
-			if (System16AnalogPort2 > 1) return 0xff;
-			return 0;
+			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 
 		// Brake
 		case 1: {
-			if (System16AnalogPort3 > 1) return 0xff;
-			return 0;
+			return ProcessAnalog(System16AnalogPort3, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 
 		// Bank Up / Down
@@ -1429,14 +1427,12 @@ static UINT8 HangonProcessAnalogControls(UINT16 value)
 		
 		// Accelerate
 		case 1: {
-			if (System16AnalogPort1 > 1) return 0xff;
-			return 0;
+			return ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 		
 		// Brake
 		case 2: {
-			if (System16AnalogPort2 > 1) return 0xff;
-			return 0;
+			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 	}
 	

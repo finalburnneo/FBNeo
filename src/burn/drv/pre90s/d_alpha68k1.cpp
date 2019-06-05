@@ -101,7 +101,6 @@ static struct BurnInputInfo TnextspcInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Tnextspc)

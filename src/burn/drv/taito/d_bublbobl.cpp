@@ -58,6 +58,7 @@ static UINT8 DrvMCUInUse;
 
 static INT32 bublbobl2 = 0;
 static INT32 tokiob = 0;
+static INT32 tokiosnd = 0;
 
 static INT32 mcu_address, mcu_latch;
 static UINT8 ddr1, ddr2, ddr3, ddr4;
@@ -2491,7 +2492,9 @@ static INT32 BublboblpInit()
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.08, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.08, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.08, BURN_SND_ROUTE_BOTH);
-	
+
+	tokiosnd = 1;
+
 	GenericTilesInit();
 
 	DrvVideoEnable = 1;
@@ -2616,7 +2619,9 @@ static INT32 TokioInit()
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.08, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.08, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.08, BURN_SND_ROUTE_BOTH);
-	
+
+	tokiosnd = 1;
+
 	GenericTilesInit();
 
 	DrvVideoEnable = 1;
@@ -2662,6 +2667,7 @@ static INT32 DrvExit()
 
 	bublbobl2 = 0;
 	tokiob = 0;
+	tokiosnd = 0;
 
 	mcu_latch = 0;
 	mcu_address = 0;
@@ -2792,12 +2798,12 @@ static void DrvVideoUpdate()
 
 static INT32 DrvDraw()
 {
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0x00ff;
-	}
-
 	DrvCalcPalette();
+
+	BurnTransferClear(0xff);
+
 	DrvVideoUpdate();
+
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -3001,7 +3007,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2203Scan(nAction, pnMin);
 
-		if (strncmp(BurnDrvGetTextA(DRV_NAME), "tokio", 5) != 0) {
+		if (tokiosnd == 0) {
 			BurnYM3526Scan(nAction, pnMin);
 		}
 

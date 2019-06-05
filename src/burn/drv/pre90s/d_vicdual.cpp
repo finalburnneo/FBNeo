@@ -486,11 +486,12 @@ static struct BurnInputInfo HeadonnInputList[] = {
 STDINPUTINFO(Headonn)
 
 static struct BurnInputInfo SupcrashInputList[] = {
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -518,7 +519,6 @@ STDINPUTINFO(Nsub)
 static struct BurnDIPInfo Invho2DIPList[]=
 {
 	{0x09, 0xff, 0xff, 0x0d, NULL						},
-	{0x0a, 0xff, 0xff, 0x03, NULL						},
 
 	{0   , 0xfe, 0   ,    3, "Head On 2 Lives"			},
 	{0x09, 0x01, 0x03, 0x00, "2"						},
@@ -892,15 +892,15 @@ STDDIPINFO(Headonn)
 
 static struct BurnDIPInfo SupcrashDIPList[]=
 {
-	{0x06, 0xff, 0xff, 0x04, NULL						},
+	{0x07, 0xff, 0xff, 0x04, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
-	{0x06, 0x01, 0x40, 0x40, "Off"						},
-	{0x06, 0x01, 0x40, 0x00, "On"						},
+	{0x07, 0x01, 0x40, 0x40, "Off"						},
+	{0x07, 0x01, 0x40, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Rom Test"					},
-	{0x06, 0x01, 0x04, 0x04, "Off"						},
-	{0x06, 0x01, 0x04, 0x00, "On"						},
+	{0x07, 0x01, 0x04, 0x04, "Off"						},
+	{0x07, 0x01, 0x04, 0x00, "On"						},
 };
 
 STDDIPINFO(Supcrash)
@@ -3272,7 +3272,7 @@ static struct BurnRomInfo carnivalRomDesc[] = {
 
 	{ "316-633",			0x0020, 0xf0084d80, 1 | BRF_GRA },           // 16 Color data
 
-	{ "epr-412",			0x0400, 0x0dbaa2b0, 3 | BRF_PRG | BRF_ESS }, // 17 I8039 Code
+	{ "epr-412.u5",			0x0400, 0x0dbaa2b0, 3 | BRF_PRG | BRF_ESS }, // 17 I8039 Code
 
 	{ "316-0206.u14",		0x0020, 0x9617d796, 0 | BRF_OPT },           // 18 Unused PROM
 };
@@ -3413,7 +3413,7 @@ static struct BurnRomInfo carnivalcRomDesc[] = {
 
 	{ "316-633",			0x0020, 0xf0084d80, 1 | BRF_GRA },           // 16 Color data
 
-	{ "epr-412",			0x0400, 0x0dbaa2b0, 3 | BRF_PRG | BRF_ESS }, // 17 I8039 Code
+	{ "epr-412.u5",			0x0400, 0x0dbaa2b0, 3 | BRF_PRG | BRF_ESS }, // 17 I8039 Code
 
 	{ "316-0206.u14",		0x0020, 0x9617d796, 0 | BRF_OPT },           // 18 Unused PROM
 };

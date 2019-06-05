@@ -822,6 +822,7 @@ static UINT8 __fastcall luckywld_68k_read_byte(UINT32 address)
 static void __fastcall metlhawk_68k_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffe0) == 0xd00000) {
+
 		*((UINT16*)(DrvRozCtrl + (address & 0x1e))) = data;
 		return;
 	}
@@ -1565,7 +1566,7 @@ static INT32 MemIndex()
 	DrvM6809RAM		= Next; Next += 0x002000;
 
 	DrvC123Ctrl		= Next; Next += 0x000040;
-	DrvRozCtrl		= Next; Next += 0x000010;
+	DrvRozCtrl		= Next; Next += 0x000020;
 
 	RamEnd			= Next;
 

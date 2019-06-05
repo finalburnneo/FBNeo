@@ -1242,6 +1242,7 @@ DRV		BurnDrvMSX_bounder;
 DRV		BurnDrvBowlrama;
 DRV		BurnDrvmd_boxinglg;
 DRV		BurnDrvcv_boxxle;
+DRV		BurnDrvBoxyboya;
 DRV		BurnDrvBoxyboy;
 DRV		BurnDrvtg_boxyboy;
 DRV		BurnDrvmd_bsteam3;
@@ -10410,6 +10411,9 @@ DRV		BurnDrvCterrani;
 DRV		BurnDrvgg_tesserae;
 DRV		BurnDrvmd_td2;
 DRV		BurnDrvCtsttape;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvrtest_adc;		// no comment
+#endif
 DRV		BurnDrvMSX_tetrahor;
 DRV		BurnDrvMSX_tetrahora;
 DRV		BurnDrvAtetrisb;
@@ -13597,7 +13601,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBowlrama,			// Bowl-O-Rama
 	&BurnDrvmd_boxinglg,		// Boxing Legends of the Ring (USA)
 	&BurnDrvcv_boxxle,			// Boxxle
-	&BurnDrvBoxyboy,			// Boxy Boy (SB?)
+	&BurnDrvBoxyboya,			// Boxy Boy (SB?)
+	&BurnDrvBoxyboy,			// Boxy Boy (World, SB2)
 	&BurnDrvtg_boxyboy,			// Boxyboy
 	&BurnDrvmd_bsteam3,			// Boy Soccer Team III (Jpn, Pirate)
 	&BurnDrvBradley,			// Bradley Trainer
@@ -22765,6 +22770,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_tesserae,		// Tesserae (Euro, USA)
 	&BurnDrvmd_td2,				// Test Drive II - The Duel (Euro, USA)
 	&BurnDrvCtsttape,			// Test Tape (DECO Cassette) (US)
+#if defined FBNEO_DEBUG
+	&BurnDrvrtest_adc,			// test_adc [no comment]
+#endif
 	&BurnDrvMSX_tetrahor,		// Tetra Horror (Jpn)
 	&BurnDrvMSX_tetrahora,		// Tetra Horror (Jpn, Alt)
 	&BurnDrvAtetrisb,			// Tetris (bootleg set 1)

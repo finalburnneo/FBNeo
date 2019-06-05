@@ -112,10 +112,6 @@ static struct BurnDIPInfo ms5pcbDIPList[] = {
 	// Fake DIPs
 	{0x02,	0xFF, 0xFF,	0x86, NULL},
 
-	{0,		0xFE, 0,	2,	  "Autofire"},
-	{0x0D,	0x01, 0x04,	0x00, "Off"},
-	{0x0D,	0x01, 0x04,	0x04, "On"},
-
 	// DIP 1
 	{0,		0xFE, 0,	2,	  "Setting mode"},
 	{0x00,	0x01, 0x01,	0x00, "Off"},
@@ -170,10 +166,6 @@ static struct BurnDIPInfo svcpcbDIPList[] = {
 	// Fake DIPs
 	{0x02,	0xFF, 0xFF,	0x86, NULL},
 
-	{0,		0xFE, 0,	2,	  "Autofire"},
-	{0x0D,	0x01, 0x04,	0x00, "Off"},
-	{0x0D,	0x01, 0x04,	0x04, "On"},
-
 	// DIP 1
 	{0,		0xFE, 0,	2,	  "Setting mode"},
 	{0x00,	0x01, 0x01,	0x00, "Off"},
@@ -227,10 +219,6 @@ static struct BurnDIPInfo kf2k3pcbDIPList[] = {
 	{0x01,	0xFF, 0x7F,	0x00, NULL},
 	// Fake DIPs
 	{0x02,	0xFF, 0xFF,	0x86, NULL},
-
-	{0,		0xFE, 0,	2,	  "Autofire"},
-	{0x0D,	0x01, 0x04,	0x00, "Off"},
-	{0x0D,	0x01, 0x04,	0x04, "On"},
 
 	// DIP 1
 	{0,		0xFE, 0,	2,	  "Setting mode"},
@@ -1477,9 +1465,9 @@ static void PCM2DecryptP()
 
 static void PCM2DecryptV(INT32 size, INT32 bit)
 {
-	for (INT32 i = 0; i < size / 2; i += (2 << bit)) {
+	for (INT32 i = 0; i < (size / 2) - (2 << bit); i += (2 << bit)) {
 		UINT16 buffer[8];
-		memmove(buffer, ((UINT16*)(YM2610ADPCMAROM[nNeoActiveSlot])) + i, 16);
+		memmove(buffer, ((UINT16*)(YM2610ADPCMAROM[nNeoActiveSlot])) + i, (2 << bit) * 2);
 		for (INT32 j = (2 << bit) - 1; j >= 0; j--) {
 			((UINT16*)(YM2610ADPCMAROM[nNeoActiveSlot]))[i + j] = buffer[j ^ (1 << bit)];
 		}

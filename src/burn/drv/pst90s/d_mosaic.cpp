@@ -456,17 +456,19 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Mosaic
 
 static struct BurnRomInfo mosaicRomDesc[] = {
-	{ "9.ua02",		0x10000, 0x5794dd39, 1 | BRF_PRG | BRF_ESS }, //  0 Z180 Code
+	{ "9.ua02",			0x10000, 0x5794dd39, 1 | BRF_PRG | BRF_ESS }, //  0 Z180 Code
 
-	{ "1.u505",		0x10000, 0x05f4cc70, 2 | BRF_GRA },           //  1 Foreground Tiles
-	{ "2.u506",		0x10000, 0x78907875, 2 | BRF_GRA },           //  2
-	{ "3.u507",		0x10000, 0xf81294cd, 2 | BRF_GRA },           //  3
-	{ "4.u508",		0x10000, 0xfff72536, 2 | BRF_GRA },           //  4
+	{ "1.u505",			0x10000, 0x05f4cc70, 2 | BRF_GRA },           //  1 Foreground Tiles
+	{ "2.u506",			0x10000, 0x78907875, 2 | BRF_GRA },           //  2
+	{ "3.u507",			0x10000, 0xf81294cd, 2 | BRF_GRA },           //  3
+	{ "4.u508",			0x10000, 0xfff72536, 2 | BRF_GRA },           //  4
 
-	{ "5.u305",		0x10000, 0x28513fbf, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "6.u306",		0x10000, 0x1b8854c4, 3 | BRF_GRA },           //  6
-	{ "7.u307",		0x10000, 0x35674ac2, 3 | BRF_GRA },           //  7
-	{ "8.u308",		0x10000, 0x6299c376, 3 | BRF_GRA },           //  8
+	{ "5.u305",			0x10000, 0x28513fbf, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "6.u306",			0x10000, 0x1b8854c4, 3 | BRF_GRA },           //  6
+	{ "7.u307",			0x10000, 0x35674ac2, 3 | BRF_GRA },           //  7
+	{ "8.u308",			0x10000, 0x6299c376, 3 | BRF_GRA },           //  8
+
+	{ "pic16c55.uc02",	0x00400, 0x62d1d85d, 0 | BRF_OPT },           //  decapped, presumed to be 16C55
 };
 
 STD_ROM_PICK(mosaic)
@@ -493,15 +495,17 @@ struct BurnDriver BurnDrvMosaic = {
 static struct BurnRomInfo mosaicaRomDesc[] = {
 	{ "mosaic_9.a02",	0x10000, 0xecb4f8aa, 1 | BRF_PRG | BRF_ESS }, //  0 Z180 Code
 
-	{ "1.u505",		0x10000, 0x05f4cc70, 2 | BRF_GRA },           //  1 Foreground Tiles
-	{ "2.u506",		0x10000, 0x78907875, 2 | BRF_GRA },           //  2
-	{ "3.u507",		0x10000, 0xf81294cd, 2 | BRF_GRA },           //  3
-	{ "4.u508",		0x10000, 0xfff72536, 2 | BRF_GRA },           //  4
+	{ "1.u505",			0x10000, 0x05f4cc70, 2 | BRF_GRA },           //  1 Foreground Tiles
+	{ "2.u506",			0x10000, 0x78907875, 2 | BRF_GRA },           //  2
+	{ "3.u507",			0x10000, 0xf81294cd, 2 | BRF_GRA },           //  3
+	{ "4.u508",			0x10000, 0xfff72536, 2 | BRF_GRA },           //  4
 
-	{ "5.u305",		0x10000, 0x28513fbf, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "6.u306",		0x10000, 0x1b8854c4, 3 | BRF_GRA },           //  6
-	{ "7.u307",		0x10000, 0x35674ac2, 3 | BRF_GRA },           //  7
-	{ "8.u308",		0x10000, 0x6299c376, 3 | BRF_GRA },           //  8
+	{ "5.u305",			0x10000, 0x28513fbf, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "6.u306",			0x10000, 0x1b8854c4, 3 | BRF_GRA },           //  6
+	{ "7.u307",			0x10000, 0x35674ac2, 3 | BRF_GRA },           //  7
+	{ "8.u308",			0x10000, 0x6299c376, 3 | BRF_GRA },           //  8
+
+	{ "pic16c55.uc02",	0x00400, 0x62d1d85d, 0 | BRF_OPT },           //  decapped, presumed to be 16C55
 };
 
 STD_ROM_PICK(mosaica)

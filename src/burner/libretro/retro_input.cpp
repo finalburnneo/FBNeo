@@ -181,9 +181,18 @@ static inline int CinpJoyAxis(int port, int axis)
 {
 	int index = sAxiBinds[port][axis].index;
 	if(index != -1)
-		return input_cb(port, RETRO_DEVICE_ANALOG, index, sAxiBinds[port][axis].id);
+	{
+		int ret;
+		ret = input_cb(port, RETRO_DEVICE_ANALOG, index, sAxiBinds[port][axis].id);
+		// Fallback if analog trigger requested but not supported
+		if (ret == 0 && index == RETRO_DEVICE_INDEX_ANALOG_BUTTON)
+			ret = input_cb(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id) ? 0x7FFF : 0;
+		return ret;
+	}
 	else
-		return (input_cb(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id_pos) - input_cb(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id_neg)) * 32768;
+	{
+		return (input_cb(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id_pos) - input_cb(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id_neg)) * 0x7FFF;
+	}
 	return 0;
 }
 
@@ -227,7 +236,11 @@ static INT32 InputTick()
 		if (pgi->nInput == GIT_JOYSLIDER) {
 			// Get state of the axis
 			nAdd = CinpJoyAxis(pgi->Input.Slider.JoyAxis.nJoy, pgi->Input.Slider.JoyAxis.nAxis);
-			nAdd /= 0x100;
+			nAdd /= 0x80;
+			// May 30, 2019 -dink
+			// Was "nAdd /= 0x100;" - Current gamepads w/ thumbsticks
+			// register 0x3f <- 0x80  -> 0xbe, so we must account for that
+			// to be able to get the same range as GIT_KEYSLIDER.
 		}
 
 		// nAdd is now -0x100 to +0x100
@@ -271,8 +284,8 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
 			descriptor.port = port;
-			descriptor.device = RETRO_DEVICE_ANALOG;
-			descriptor.index = index;
+			descriptor.device = (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON ? RETRO_DEVICE_JOYPAD : RETRO_DEVICE_ANALOG);
+			descriptor.index = (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON ? 0 : index);
 			descriptor.id = id;
 			descriptor.description = szn;
 			normal_input_descriptors.push_back(descriptor);
@@ -290,8 +303,8 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
 			descriptor.port = port;
-			descriptor.device = RETRO_DEVICE_ANALOG;
-			descriptor.index = index;
+			descriptor.device = (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON ? RETRO_DEVICE_JOYPAD : RETRO_DEVICE_ANALOG);
+			descriptor.index = (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON ? 0 : index);
 			descriptor.id = id;
 			descriptor.description = szn;
 			normal_input_descriptors.push_back(descriptor);
@@ -420,7 +433,6 @@ static INT32 GameInpAnalog2RetroInpDualKeys(struct GameInp* pgi, unsigned port, 
 
 // [WIP]
 // All inputs which needs special handling need to go in the next function
-// TODO : move analog accelerators to R2
 static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, char *szn, char *description)
 {
 	const char * parentrom	= BurnDrvGetTextA(DRV_PARENT);
@@ -599,33 +611,69 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
-
-	// Car steer a little too much with default setting + use L/R for Shift Down/Up (Super Monaco GP)
-	if ((parentrom && strcmp(parentrom, "smgp") == 0) ||
-		(drvname && strcmp(drvname, "smgp") == 0)
+	
+	// Out Run
+	// Super Hang-On
+	// Turbo Out Run
+	// Power Drift
+	// A.B. Cop
+	// Super Monaco GP
+	// GP Rider
+	// Racing Hero
+	// Hang-On
+	// Enduro Racer
+	// Hang-On Jr.
+	if ((parentrom && strcmp(parentrom, "outrun") == 0) ||
+		(drvname && strcmp(drvname, "outrun") == 0) ||
+		(parentrom && strcmp(parentrom, "shangon") == 0) ||
+		(drvname && strcmp(drvname, "shangon") == 0) ||
+		(parentrom && strcmp(parentrom, "toutrun") == 0) ||
+		(drvname && strcmp(drvname, "toutrun") == 0) ||
+		(parentrom && strcmp(parentrom, "pdrift") == 0) ||
+		(drvname && strcmp(drvname, "pdrift") == 0) ||
+		(parentrom && strcmp(parentrom, "abcop") == 0) ||
+		(drvname && strcmp(drvname, "abcop") == 0) ||
+		(parentrom && strcmp(parentrom, "smgp") == 0) ||
+		(drvname && strcmp(drvname, "smgp") == 0) ||
+		(parentrom && strcmp(parentrom, "gprider") == 0) ||
+		(drvname && strcmp(drvname, "gprider") == 0) ||
+		(parentrom && strcmp(parentrom, "rachero") == 0) ||
+		(drvname && strcmp(drvname, "rachero") == 0) ||
+		(parentrom && strcmp(parentrom, "hangon") == 0) ||
+		(drvname && strcmp(drvname, "hangon") == 0) ||
+		(parentrom && strcmp(parentrom, "enduror") == 0) ||
+		(drvname && strcmp(drvname, "enduror") == 0) ||
+		(parentrom && strcmp(parentrom, "hangonjr") == 0) ||
+		(drvname && strcmp(drvname, "hangonjr") == 0)
 	) {
+		if (strcmp("Accelerate", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Brake", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 3, RETRO_DEVICE_ID_JOYPAD_L2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Gear", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("Super Charger", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("Jump", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("Move to centre", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("Nitro", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+		}
+		if (strcmp("Suicide", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+		}
 		if (strcmp("Shift Down", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
 		}
 		if (strcmp("Shift Up", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
-		}
-	}
-	
-	// Fix part of issue #102 (Hang On Junior)
-	if ((parentrom && strcmp(parentrom, "hangonjr") == 0) ||
-		(drvname && strcmp(drvname, "hangonjr") == 0)
-	) {
-		if (strcmp("Accelerate", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
-		}
-	}
-	
-	// Fix part of issue #102 (Out Run)
-	if ((parentrom && strcmp(parentrom, "outrun") == 0) ||
-		(drvname && strcmp(drvname, "outrun") == 0)
-	) {
-		if (strcmp("Gear", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
@@ -646,27 +694,27 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 	
-	// Fix part of issue #102 (Major League)
+	// Major League
 	if ((parentrom && strcmp(parentrom, "mjleague") == 0) ||
 		(drvname && strcmp(drvname, "mjleague") == 0)
 	) {
 		if (strcmp("Bat Swing", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
 		}
 		if (strcmp("Fire 1", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
 		}
 		if (strcmp("Fire 2", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 		if (strcmp("Fire 3", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
 		}
 		if (strcmp("Fire 4", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
 		}
 		if (strcmp("Fire 5", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
 	
@@ -880,30 +928,41 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 	
-	// Fix part of issue #102 (VS Block Breaker)
+	// VS Block Breaker
 	if ((parentrom && strcmp(parentrom, "vblokbrk") == 0) ||
 		(drvname && strcmp(drvname, "vblokbrk") == 0)
 	) {
 		if (strcmp("Paddle", description) == 0) {
-			GameInpAnalog2RetroInpDualKeys(pgi, nPlayer, 0, RETRO_DEVICE_ID_JOYPAD_R, RETRO_DEVICE_ID_JOYPAD_L, "Paddle Up", "Paddle Down");
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 		}
 	}
 	
-	// Fix part of issue #102 (Puzz Loop 2)
+	// Puzz Loop 2
 	if ((parentrom && strcmp(parentrom, "pzloop2") == 0) ||
 		(drvname && strcmp(drvname, "pzloop2") == 0)
 	) {
 		if (strcmp("Paddle", description) == 0) {
-			GameInpAnalog2RetroInpDualKeys(pgi, nPlayer, 0, RETRO_DEVICE_ID_JOYPAD_R, RETRO_DEVICE_ID_JOYPAD_L, "Paddle Up", "Paddle Down");
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 		}
 	}
 	
-	// Fix part of issue #102 (After burner 1 & 2)
-	if ((parentrom && strcmp(parentrom, "aburner2") == 0) ||
-		(drvname && strcmp(drvname, "aburner2") == 0)
+	// G-LOC Air Battle
+	// Galaxy Force 2
+	// After burner 1 & 2
+	// Thunder Blade
+	if ((parentrom && strcmp(parentrom, "gloc") == 0) ||
+		(drvname && strcmp(drvname, "gloc") == 0) ||
+		(parentrom && strcmp(parentrom, "gforce2") == 0) ||
+		(drvname && strcmp(drvname, "gforce2") == 0) ||
+		(parentrom && strcmp(parentrom, "aburner2") == 0) ||
+		(drvname && strcmp(drvname, "aburner2") == 0) ||
+		(parentrom && strcmp(parentrom, "thndrbld") == 0) ||
+		(drvname && strcmp(drvname, "thndrbld") == 0) ||
+		(parentrom && strcmp(parentrom, "rascot") == 0) ||
+		(drvname && strcmp(drvname, "rascot") == 0)
 	) {
 		if (strcmp("Throttle", description) == 0) {
-			GameInpAnalog2RetroInpDualKeys(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R, RETRO_DEVICE_ID_JOYPAD_L, "Speed Up", "Speed Down");
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
 		}
 	}
 	
@@ -968,15 +1027,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 		if (strcmp("Rotate Right", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
-		}
-	}
-	
-	// Street Fighter Zero (CPS Changer) #245
-	if ((parentrom && strcmp(parentrom, "sfzch") == 0) ||
-		(drvname && strcmp(drvname, "sfzch") == 0)
-	) {
-		if (strcmp("Pause", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_SELECT, description);
 		}
 	}
 	
@@ -1046,29 +1096,128 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 	
-	// Thunder Ceptor & Thunder Ceptor II (#33)
+	// Thunder Ceptor & Thunder Ceptor II
 	if ((parentrom && strcmp(parentrom, "tceptor") == 0) ||
 		(drvname && strcmp(drvname, "tceptor") == 0)
 	) {
-		if (strcmp("X Axis", description) == 0) {
-			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
-		}
-		if (strcmp("Y Axis", description) == 0) {
-			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 1, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
-		}
 		if (strcmp("Accelerator", description) == 0) {
-			// It would be nice to have this control working as analog on R2
-			//GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R2, description);
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Boost", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
+		}
+		if (strcmp("Right Thumb", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("Left Thumb", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+		}
+		if (strcmp("Right Trigger", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
+		}
+		if (strcmp("Left Trigger", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
 		}
 	}
 	
-	// Hydra (reported on discord, layout suggestion by alfrix#8029)
+	// Heavyweight Champ
+	if ((parentrom && strcmp(parentrom, "hwchamp") == 0) ||
+		(drvname && strcmp(drvname, "hwchamp") == 0)
+	) {
+		if (strcmp("Right", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Left", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 3, RETRO_DEVICE_ID_JOYPAD_L2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+	}
+	
+	// Chequered Flag
+	if ((parentrom && strcmp(parentrom, "chqflag") == 0) ||
+		(drvname && strcmp(drvname, "chqflag") == 0)
+	) {
+		if (strcmp("Accelerator", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Button 1", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("Button 2", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+		}
+	}
+	
+	// Lucky & Wild
+	// Dirt Fox
+	if ((parentrom && strcmp(parentrom, "luckywld") == 0) ||
+		(drvname && strcmp(drvname, "luckywld") == 0) ||
+		(parentrom && strcmp(parentrom, "dirtfoxj") == 0) ||
+		(drvname && strcmp(drvname, "dirtfoxj") == 0) ||
+		(parentrom && strcmp(parentrom, "groundfx") == 0) ||
+		(drvname && strcmp(drvname, "groundfx") == 0)
+	) {
+		if (strcmp("Accelerator", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Break", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 3, RETRO_DEVICE_ID_JOYPAD_L2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Gear Up", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
+		}
+		if (strcmp("Gear Down", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
+		}
+	}
+	
+	// Ground Effects / Super Ground Effects
+	if ((parentrom && strcmp(parentrom, "groundfx") == 0) ||
+		(drvname && strcmp(drvname, "groundfx") == 0)
+	) {
+		if (strcmp("Accelerator", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Brake", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L2, description);
+		}
+		if (strcmp("Shift Hi", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
+		}
+		if (strcmp("Shift Lo", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
+		}
+	}
+	
+	// Spy Hunter
+	if ((parentrom && strcmp(parentrom, "spyhunt") == 0) ||
+		(drvname && strcmp(drvname, "spyhunt") == 0)
+	) {
+		if (strcmp("Accelerator", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Gear Shift", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
+		}
+		if (strcmp("Missiles", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("Oil Slick", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+		}
+		if (strcmp("Machine Gun", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
+		}
+		if (strcmp("Smoke Screen", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
+		}
+	}
+	
+	// Hydra
 	if ((parentrom && strcmp(parentrom, "hydra") == 0) ||
 		(drvname && strcmp(drvname, "hydra") == 0)
 	) {
 		if (strcmp("Accelerator", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R2, description);
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
 		}
 		if (strcmp("Boost", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L2, description);
@@ -1437,6 +1586,14 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 		GameInpSpecialOne(pgi, nPlayer, szi, szn, description);
 		if(bButtonMapped) return 0;
 
+		// Don't map neogeo select button anywhere
+		// See https://neo-source.com/index.php?topic=3490.0
+		if (strncmp("select", szb, 6) == 0 && is_neogeo_game) {
+			pgi->nInput = GIT_SWITCH;
+			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
+			return 0;
+		}
+
 		if (strncmp("select", szb, 6) == 0)
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_SELECT, description);
 		if (strncmp("coin", szb, 4) == 0)
@@ -1456,7 +1613,7 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 		if (strncmp("y-axis", szb, 6) == 0)
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 1, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 		if (strncmp("z-axis", szb, 6) == 0)
-			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 1, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
 		// Some gun games have their default mapping set to mouse upstream, let's handle them
 		if (strcmp("mouse x-axis", szi) == 0)
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);

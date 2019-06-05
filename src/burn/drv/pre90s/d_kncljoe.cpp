@@ -41,27 +41,27 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo KncljoeInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Kncljoe)
@@ -147,7 +147,7 @@ static void __fastcall kncljoe_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xd801: {
-			*flipscreen = (data & 0x01) >> 0;
+			*flipscreen = 0; //(data & 0x01) >> 0;  // avoid flipping screen w/2players
 
 			if (((data & 0x04) >> 2) != *sprite_bank) {
 				memset (DrvZ80RAM + 0x0100, 0, 0x180);
@@ -446,11 +446,13 @@ static INT32 DrvInit()
 	AY8910Init(0, 894886, 0);
 	AY8910SetPorts(0, &ay8910_port_A_read, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(M6803TotalCycles, 3579545);
 
 	SN76489Init(0, 3579545, 1);
 	SN76489Init(1, 3579545, 1);
 	SN76496SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
+	SN76496SetBuffered(ZetTotalCycles, 6000000);
 
 	GenericTilesInit();
 
@@ -523,12 +525,12 @@ static void draw_layer()
 
 static void draw_sprites()
 {
-	UINT16 *pDraw = pTransDraw;
 
-	if (*flipscreen == 0) {
-		pDraw += 64 * nScreenWidth;
+	if (*flipscreen) {
+		GenericTilesSetClip(0, nScreenWidth, 0, nScreenHeight-64);
+	} else {
+		GenericTilesSetClip(0, nScreenWidth, 64, nScreenHeight);
 	}
-	nScreenHeight -= 64;
 
 	for (INT32 i = 0; i < 4; i++)
 	{
@@ -536,7 +538,7 @@ static void draw_sprites()
 		{
 			INT32 offs = ((~i & 1) << 8) | ((~i & 2) << 6) | j;
 
-			INT32 sy    = DrvSprRAM[offs + 0] - 64;
+			INT32 sy    = DrvSprRAM[offs + 0];
 			INT32 attr  = DrvSprRAM[offs + 1];
 			INT32 code  = DrvSprRAM[offs + 2] | ((attr & 0x10) << 5) | ((attr & 0x20) << 3) | (*sprite_bank << 10);
 			INT32 sx    = DrvSprRAM[offs + 3];
@@ -558,21 +560,20 @@ static void draw_sprites()
 
 			if (flipy) {
 				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
+					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
 				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
+					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
 				}
 			} else {
 				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
+					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
 				} else {
-					Render16x16Tile_Mask_Clip(pDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
+					Render16x16Tile_Mask_Clip(pTransDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
 				}
 			}
 		}
 	}
-
-	nScreenHeight += 64;
+	GenericTilesClearClip();
 }
 
 static INT32 DrvDraw()
@@ -582,9 +583,11 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_layer();
+	BurnTransferClear();
 
-	draw_sprites();
+	if (nBurnLayer & 1) draw_layer();
+
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -615,14 +618,10 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment;
-
-		nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 		if (i == 60) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
-		nSegment = nCyclesTotal[1] / nInterleave;
-		nCyclesDone[1] += M6803Run(nSegment);
+		CPU_RUN(1, M6803);
 		M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 	}
 
@@ -709,7 +708,7 @@ struct BurnDriver BurnDrvKncljoe = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, kncljoeRomInfo, kncljoeRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	240, 256, 3, 4
+	240, 256, 4, 3
 };
 
 
@@ -750,7 +749,7 @@ struct BurnDriver BurnDrvKncljoea = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, kncljoeaRomInfo, kncljoeaRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	240, 256, 3, 4
+	240, 256, 4, 3
 };
 
 
@@ -791,5 +790,5 @@ struct BurnDriver BurnDrvBcrusher = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, bcrusherRomInfo, bcrusherRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	240, 256, 3, 4
+	240, 256, 4, 3
 };

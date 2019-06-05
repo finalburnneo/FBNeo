@@ -16,7 +16,7 @@ int ratetable[] = {
 #define SUSTAIN 3
 #define RELEASE 4
 
-struct
+struct DSP
 {
 	int pitchcounter[8], pitch[8];
 	int volumer[8], volumel[8];
@@ -39,7 +39,9 @@ struct
 
 	UINT8 envx[8], outx[8];
 	UINT8 endx;
-} dsp;
+};
+
+DSP dsp;
 int spcoutput;
 
 

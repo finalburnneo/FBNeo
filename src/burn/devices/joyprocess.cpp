@@ -112,6 +112,7 @@ UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, U
 	if (flags & INPUT_DEADZONE) { // deadzones
 		if (flags & INPUT_LINEAR) {
 			if (Temp < DeadZone) Temp = 0;
+			DeadZone = 0; // this is all the DZ handling INPUT_LINEAR needs
 		} else {
 			// 0x7f is center, 0x3f right, 0xbf left.  0x7f +-10 is noise.
 			if (!(Temp < centerval-DeadZone || Temp > centerval+DeadZone)) {
@@ -126,10 +127,11 @@ UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, U
 
 	if (Temp < 0x3f + DeadZone) Temp = 0x3f + DeadZone; // clamping for happy scalerange()
 	if (Temp > 0xbf - DeadZone) Temp = 0xbf - DeadZone;
+
 	Temp = scalerange(Temp, 0x3f + DeadZone, 0xbf - DeadZone, scalemin, scalemax);
 
 	if (flags & INPUT_LINEAR) {
-		Temp -= 0x80;
+		if (!reversed) Temp -= centerval;
 		Temp = scalerange(Temp, 0, centerval, linear_min, linear_max);
 	}
 

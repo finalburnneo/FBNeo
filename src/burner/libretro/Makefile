@@ -312,8 +312,6 @@ else ifeq ($(platform), classic_armv8_a35)
 	TARGET := $(TARGET_NAME)_libretro.so
 	fpic := -fPIC
 	SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(VERSION_SCRIPT)
-	# Ofast safe for this platform and tested. Maybe can be tested on other platforms
-	PLATFORM_FLAGS += -Ofast
 	PLATFORM_FLAGS = -marm -mtune=cortex-a35 -mfpu=neon-fp-armv8 -mfloat-abi=hard
 	FASTMATH = 1
 	USE_SPEEDHACKS = 1
@@ -680,13 +678,11 @@ $(MAIN_FBNEO_DIR)/cpu/mips3_intf.o: $(MAIN_FBNEO_DIR)/cpu/mips3_intf.cpp
 	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
 $(TARGET): $(OBJS)
-	@echo "** BUILDING $(TARGET) FOR PLATFORM $(platform) **"
 ifeq ($(STATIC_LINKING), 1)
 	$(AR) rcs $@ $(OBJS)
 else
 	$(LD) $(LINKOUT)$@ $(SHARED) $^ $(LDFLAGS) $(LIBS)
 endif
-	@echo "** BUILD SUCCESSFUL! **"
 
 clean-objs:
 	rm -f $(OBJS)

@@ -61,6 +61,29 @@ static TCHAR* GetFilenameW(TCHAR* szFull)
 	return szFull;
 }
 
+static int FileExists(TCHAR *szName)
+{
+    return GetFileAttributes(szName) != INVALID_FILE_ATTRIBUTES;
+}
+
+static int RomArchiveExists(TCHAR *szName)
+{
+	TCHAR szFileName[MAX_PATH];
+	int ret = 0;
+
+	_stprintf(szFileName, _T("%s.zip"), szName);
+	ret = FileExists(szFileName);
+
+	if (ret) return ret;
+
+#ifdef INCLUDE_7Z_SUPPORT
+	_stprintf(szFileName, _T("%s.7z"), szName);
+	ret = FileExists(szFileName);
+#endif
+
+	return ret;
+}
+
 static int FindRomByName(TCHAR* szName)
 {
 	struct ZipEntry* pl;
@@ -402,8 +425,7 @@ int BzipOpen(bool bootApp)
 
 			_stprintf(szFullName, _T("%s%hs"), szAppRomPaths[d], szName);
 
-			if (ZipOpen(TCHARToANSI(szFullName, NULL, 0)) == 0) {		// Open the rom zip file
-				ZipClose();
+			if (RomArchiveExists(szFullName)) { // Check existence of the rom zip/7z archive file
 
 				bFound = true;
 

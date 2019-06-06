@@ -1692,7 +1692,7 @@ INT32 MSXGetZipName(char** pszName, UINT32 i)
 		}
 	}
 
-	if (pszGameName == NULL) {
+	if (pszGameName == NULL || i > 2) {
 		*pszName = NULL;
 		return 1;
 	}

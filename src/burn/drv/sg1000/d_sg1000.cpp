@@ -389,7 +389,7 @@ INT32 SG1KGetZipName(char** pszName, UINT32 i)
 		pszGameName = BurnDrvGetTextA(DRV_PARENT);
 	}
 
-	if (pszGameName == NULL) {
+	if (pszGameName == NULL || i > 1) {
 		*pszName = NULL;
 		return 1;
 	}

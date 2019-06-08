@@ -1,6 +1,6 @@
-This list contains all games supported by FB Alpha.
+This list contains all games supported by FinalBurn Neo.
 
-12082 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12089 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -942,6 +942,11 @@ This list contains all games supported by FB Alpha.
 | bermudatj	|  	| Bermuda Triangle (Japan)				| bermudat	| 1987	| SNK		| Miscellaneous	| 					|
 | bermudata	|  	| Bermuda Triangle (World Wars) (US)			| worldwar	| 1987	| SNK		| Miscellaneous	| 					|
 | bermudat	|  	| Bermuda Triangle (World?)				| 		| 1987	| SNK		| Miscellaneous	| 					|
+| berzerkf	|  	| Berzerk (French Speech)				| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
+| berzerkg	|  	| Berzerk (German Speech)				| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
+| berzerk	|  	| Berzerk (set 1)					| 		| 1980	| Stern Electron| Miscellaneous	| 					|
+| berzerk1	|  	| Berzerk (set 2)					| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
+| berzerks	|  	| Berzerk (Spanish Speech)				| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
 | bestleag	|  	| Best League (bootleg of Big Striker, Italian Serie A)	| bigstrik	| 1993	| bootleg	| Miscellaneous	| 					|
 | bestleaw	|  	| Best League (bootleg of Big Striker, World Cup)	| bigstrik	| 1993	| bootleg	| Miscellaneous	| 					|
 | bestbest	|  	| Best Of Best						| 		| 1994	| SunA		| Miscellaneous	| 					|
@@ -3493,6 +3498,7 @@ This list contains all games supported by FB Alpha.
 | cv_frenzya	|  	| Frenzy (Alt 1)					| cv_frenzy	| 1983	| Coleco	| ColecoVision	| 					|
 | cv_frenzya2	|  	| Frenzy (Alt 2)					| cv_frenzy	| 1983	| Coleco	| ColecoVision	| 					|
 | cv_frenzy	|  	| Frenzy						| 		| 1983	| Coleco	| ColecoVision	| 					|
+| frenzy	|  	| Frenzy						| 		| 1981	| Stern Electron| Miscellaneous	| 					|
 | friskyt	|  	| Frisky Tom (set 1)					| 		| 1981	| Nichibutsu	| Miscellaneous	| 					|
 | friskyta	|  	| Frisky Tom (set 2)					| friskyt	| 1981	| Nichibutsu	| Miscellaneous	| 					|
 | friskytb	|   NW	| Frisky Tom (set 3, encrypted)				| friskyt	| 1981	| Nichibutsu	| Miscellaneous	| Broken, please use parent romset!	|
@@ -6065,6 +6071,7 @@ This list contains all games supported by FB Alpha.
 | mshuttle	|  	| Moon Shuttle (US? set 1)				| 		| 1981	| Nichibutsu	| Galaxian	| Incomplete Sound			|
 | mshuttle2	|  	| Moon Shuttle (US? set 2)				| mshuttle	| 1981	| Nichibutsu	| Galaxian	| Incomplete Sound			|
 | mooncmw	|  	| Moon War (Moon Cresta bootleg)			| mooncrst	| 198?	| bootleg	| Galaxian	| 					|
+| moonwarp	|  	| Moon War (prototype on Frenzy hardware)		| 		| 1981	| Stern Electron| Miscellaneous	| 					|
 | cv_moonswpra	|  	| Moonsweeper (Alt)					| cv_moonswpr	| 1983	| Imagic	| ColecoVision	| 					|
 | msx_moonswep	|  	| Moonsweeper (Jpn)					| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | cv_moonswpr	|  	| Moonsweeper						| 		| 1983	| Imagic	| ColecoVision	| 					|

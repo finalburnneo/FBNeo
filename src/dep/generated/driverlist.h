@@ -958,6 +958,11 @@ DRV		BurnDrvgg_berlin;
 DRV		BurnDrvBermudatj;
 DRV		BurnDrvBermudata;
 DRV		BurnDrvBermudat;
+DRV		BurnDrvBerzerkf;
+DRV		BurnDrvBerzerkg;
+DRV		BurnDrvBerzerk;
+DRV		BurnDrvBerzerk1;
+DRV		BurnDrvBerzerks;
 DRV		BurnDrvBestleag;
 DRV		BurnDrvBestleaw;
 DRV		BurnDrvBestbest;
@@ -3571,6 +3576,7 @@ DRV		BurnDrvFreeze;
 DRV		BurnDrvcv_frenzya;
 DRV		BurnDrvcv_frenzya2;
 DRV		BurnDrvcv_frenzy;
+DRV		BurnDrvFrenzy;
 DRV		BurnDrvFriskyt;
 DRV		BurnDrvFriskyta;
 DRV		BurnDrvFriskytb;
@@ -6199,6 +6205,7 @@ DRV		BurnDrvMshuttlea;
 DRV		BurnDrvMshuttle;
 DRV		BurnDrvMshuttle2;
 DRV		BurnDrvMooncmw;
+DRV		BurnDrvMoonwarp;
 DRV		BurnDrvcv_moonswpra;
 DRV		BurnDrvMSX_moonswep;
 DRV		BurnDrvcv_moonswpr;
@@ -13317,6 +13324,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBermudatj,			// Bermuda Triangle (Japan)
 	&BurnDrvBermudata,			// Bermuda Triangle (World Wars) (US)
 	&BurnDrvBermudat,			// Bermuda Triangle (World?)
+	&BurnDrvBerzerkf,			// Berzerk (French Speech)
+	&BurnDrvBerzerkg,			// Berzerk (German Speech)
+	&BurnDrvBerzerk,			// Berzerk (set 1)
+	&BurnDrvBerzerk1,			// Berzerk (set 2)
+	&BurnDrvBerzerks,			// Berzerk (Spanish Speech)
 	&BurnDrvBestleag,			// Best League (bootleg of Big Striker, Italian Serie A)
 	&BurnDrvBestleaw,			// Best League (bootleg of Big Striker, World Cup)
 	&BurnDrvBestbest,			// Best Of Best
@@ -15930,6 +15942,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_frenzya,			// Frenzy (Alt 1)
 	&BurnDrvcv_frenzya2,		// Frenzy (Alt 2)
 	&BurnDrvcv_frenzy,			// Frenzy
+	&BurnDrvFrenzy,				// Frenzy
 	&BurnDrvFriskyt,			// Frisky Tom (set 1)
 	&BurnDrvFriskyta,			// Frisky Tom (set 2)
 	&BurnDrvFriskytb,			// Frisky Tom (set 3, encrypted) [Broken, please use parent romset!, NOT WORKING]
@@ -18558,6 +18571,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMshuttle,			// Moon Shuttle (US? set 1)
 	&BurnDrvMshuttle2,			// Moon Shuttle (US? set 2)
 	&BurnDrvMooncmw,			// Moon War (Moon Cresta bootleg)
+	&BurnDrvMoonwarp,			// Moon War (prototype on Frenzy hardware)
 	&BurnDrvcv_moonswpra,		// Moonsweeper (Alt)
 	&BurnDrvMSX_moonswep,		// Moonsweeper (Jpn)
 	&BurnDrvcv_moonswpr,		// Moonsweeper

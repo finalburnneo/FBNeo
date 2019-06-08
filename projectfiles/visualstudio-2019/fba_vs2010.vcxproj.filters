@@ -994,6 +994,9 @@
     <ClInclude Include="..\..\src\burn\devices\midtcs.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\snd\s14001a.h">
+      <Filter>Burn\snd</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4085,6 +4088,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\snes\snes_dsp.cpp">
       <Filter>Burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\s14001a.cpp">
+      <Filter>Burn\snd</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

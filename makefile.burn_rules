@@ -51,7 +51,7 @@ drvsrc	= 	d_arcadecl.cpp d_atarig1.cpp d_badlands.cpp d_batman.cpp d_blstroid.cp
 			d_shippumd.o d_slapfght.o d_snowbro2.o d_tekipaki.o d_toaplan1.o d_truxton2.o d_twincobr.o d_vfive.o d_wardner.o \
 			\
 			d_4enraya.o d_1942.o d_1943.o d_aeroboto.o d_alinvade.o d_alpha68k.o d_alpha68k1.o d_alpha68k2.o d_ambush.o d_amspdwy.o d_arabian.o d_argus.o d_armedf.o \
-			d_asteroids.o d_atetris.o d_aztarac.o d_bagman.o d_baraduke.o d_battlane.o d_battlex.o d_bbusters.o d_beaminv.o d_bionicc.o d_blktiger.o \
+			d_asteroids.o d_atetris.o d_aztarac.o d_bagman.o d_baraduke.o d_battlane.o d_battlex.o d_bbusters.o d_beaminv.o d_berzerk.o d_bionicc.o d_blktiger.o \
 			d_blockade.o d_blockout.o d_blueprnt.o d_bogeyman.o d_bombjack.o d_btime.o d_bwidow.o d_bzone.o d_cabal.o d_calorie.o d_canyon.o d_capbowl.o \
 			d_carjmbre.o d_ccastles.o d_cclimber.o d_cheekyms.o d_chinagat.o d_citycon.o d_cloak.o d_cloud9.o d_clshroad.o d_commando.o d_cop01.o d_copsnrob.o \
 			d_cybertnk.o d_dacholer.o d_dday.o d_ddayjlc.o d_ddragon.o d_djboy.o d_dkong.o d_docastle.o d_dogfgt.o d_dorachan.o d_dribling.o d_drmicro.o \
@@ -106,7 +106,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			asteroids.o ay8910.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o burn_md2612.o \
 			burn_ym3526.o burn_ym3812.o burn_ymf262.o burn_ymf278b.o bzone.o c6280.o dac.o es5506.o es8712.o flower.o flt_rc.o fm.o fmopl.o ym2612.o gaelco.o hc55516.o \
 			ics2115.o iremga20.o k005289.o k007232.o k051649.o k053260.o k054539.o llander.o msm5205.o msm5232.o msm6295.o namco_snd.o c140.o nes_apu.o \
-			tms5110.o tms5220.o tms36xx.o phoenixsound.o pleiadssound.o pokey.o redbaron.o rf5c68.o saa1099.o samples.o segapcm.o sn76477.o sn76496.o \
+			tms5110.o tms5220.o tms36xx.o phoenixsound.o pleiadssound.o pokey.o redbaron.o rf5c68.o s14001a.o saa1099.o samples.o segapcm.o sn76477.o sn76496.o \
 			upd7759.o vlm5030.o wiping.o x1010.o ym2151.o ym2413.o ymdeltat.o ymf262.o ymf278b.o ymz280b.o snk6502_sound.o sp0250.o sp0256.o \
 			\
 			adsp2100.o adsp2100_intf.o arm7_intf.o arm_intf.o h6280_intf.o hd6309_intf.o konami_intf.o m6502_intf.o m6800_intf.o m6805_intf.o m6809_intf.o \

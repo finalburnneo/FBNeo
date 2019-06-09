@@ -1529,7 +1529,10 @@ static void tms5220_init_int(INT32 chipvariant)
 
     tms5220_volume(1.00);
 
-    soundbuf = (INT16*)BurnMalloc(0x1000);
+	soundbuf = (INT16*)BurnMalloc(0x1000);
+
+	nPosition = 0;
+	nFractionalPosition = 0;
 }
 
 void tms5200_init()

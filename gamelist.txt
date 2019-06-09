@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12089 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12090 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7207,6 +7207,7 @@ This list contains all games supported by FinalBurn Neo.
 | pitfight	|  	| Pit Fighter (rev 9)					| 		| 1990	| Atari Games	| Miscellaneous	| 					|
 | md_pitfight1	|  	| Pit-Fighter (World)					| md_pitfight	| 1991	| Tengen	| Sega Megadrive| 					|
 | md_pitfight	|  	| Pit-Fighter (World, Rev. A)				| 		| 1991	| Tengen	| Sega Megadrive| 					|
+| pitapat	|  	| Pitapat Puzzle					| 		| 1997	| F2 System	| Miscellaneous	| 					|
 | md_pitfall	|  	| Pitfall - The Mayan Adventure (Euro)			| 		| 1994	| Activision	| Sega Megadrive| 					|
 | md_pitfallu	|  	| Pitfall - The Mayan Adventure (USA)			| md_pitfall	| 1994	| Activision	| Sega Megadrive| 					|
 | pitfall2	|  	| Pitfall II (315-5093)					| 		| 1985	| Sega		| System 1	| 					|

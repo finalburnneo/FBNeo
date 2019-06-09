@@ -7369,6 +7369,7 @@ DRV		BurnDrvPitnruna;
 DRV		BurnDrvPitfight;
 DRV		BurnDrvmd_pitfight1;
 DRV		BurnDrvmd_pitfight;
+DRV		BurnDrvPitapat;
 DRV		BurnDrvmd_pitfall;
 DRV		BurnDrvmd_pitfallu;
 DRV		BurnDrvPitfall2;
@@ -19735,6 +19736,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPitfight,			// Pit Fighter (rev 9)
 	&BurnDrvmd_pitfight1,		// Pit-Fighter (World)
 	&BurnDrvmd_pitfight,		// Pit-Fighter (World, Rev. A)
+	&BurnDrvPitapat,			// Pitapat Puzzle
 	&BurnDrvmd_pitfall,			// Pitfall - The Mayan Adventure (Euro)
 	&BurnDrvmd_pitfallu,		// Pitfall - The Mayan Adventure (USA)
 	&BurnDrvPitfall2,			// Pitfall II (315-5093)

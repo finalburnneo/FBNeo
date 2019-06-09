@@ -485,7 +485,7 @@ static void __fastcall berzerk_write(UINT16 address, UINT8 data)
 	}
 }
 
-// --- berzerk/exidy sound custom, code by Aaron Giles ---
+// --- berzerk/exidy sound custom, original code by Aaron Giles ---
 #define CRYSTAL_OSC				(3579545)
 #define SH8253_CLOCK			(CRYSTAL_OSC / 2)
 #define SH6840_CLOCK			(CRYSTAL_OSC / 4)
@@ -523,13 +523,19 @@ static UINT32 sh6840_clock_count;
 
 static UINT8 exidy_sfxctrl;
 
-static INT32 samples_from; // "re"sampler
+static UINT32 nSampleSize;
+static INT32 samples_from; // samples per frame
 static INT16 *mixer_buffer;
+static INT32 nCurrentPosition;
+static INT32 nFractionalPosition;
 
 static void exidy_sound_init()
 {
 	samples_from = (INT32)((double)((SH8253_CLOCK * 100) / nBurnFPS) + 0.5);
+	nSampleSize = (UINT64)SH8253_CLOCK * (1 << 16) / nBurnSoundRate;
 	mixer_buffer = (INT16*)BurnMalloc(2 * sizeof(INT16) * SH8253_CLOCK);
+	nCurrentPosition = 0;
+	nFractionalPosition = 0;
 
 	sh6840_clocks_per_sample = (int)((double)SH6840_CLOCK / (double)SH8253_CLOCK * (double)(1 << 24));
 	s14001a_init(DrvSndROM, ZetTotalCycles, 2500000);
@@ -554,6 +560,7 @@ static void exidy_sound_scan()
 }
 
 static void berzerk_sound_write(UINT8 offset, UINT8 data); //forward
+static void exidy_sync_stream(); // forward
 
 static void exidy_sound_reset()
 {
@@ -577,6 +584,8 @@ static void exidy_sound_reset()
 
 static void exidy_sound_write(UINT8 offset, UINT8 data)
 {
+	exidy_sync_stream();
+
 	switch (offset)
 	{
 		/* offset 0 writes to either channel 0 control or channel 2 control */
@@ -605,7 +614,7 @@ static void exidy_sound_write(UINT8 offset, UINT8 data)
 		case 7:
 		{
 			/* latch the timer value */
-			int ch = (offset - 3) / 2;
+			INT32 ch = (offset - 3) / 2;
 			sh6840_timer[ch].timer = (sh6840_MSB << 8) | (data & 0xff);
 
 			/* if CR4 is clear, the value is loaded immediately */
@@ -618,6 +627,8 @@ static void exidy_sound_write(UINT8 offset, UINT8 data)
 
 static void exidy_sfx_write(UINT8 offset, UINT8 data)
 {
+	exidy_sync_stream();
+
 	switch (offset)
 	{
 		case 0:
@@ -632,7 +643,7 @@ static void exidy_sfx_write(UINT8 offset, UINT8 data)
 	}
 }
 
-static void sh6840_apply_clock(struct sh6840_timer_channel *t, int clocks)
+static void sh6840_apply_clock(struct sh6840_timer_channel *t, INT32 clocks)
 {
 	/* dual 8-bit case */
 	if (t->cr & 0x04)
@@ -679,22 +690,19 @@ static void sh6840_apply_clock(struct sh6840_timer_channel *t, int clocks)
 	}
 }
 
-
-
 /*************************************
  *
  *  Noise generation helper
  *
  *************************************/
 
-static int sh6840_update_noise(int clocks)
+static INT32 sh6840_update_noise(INT32 clocks)
 {
 	UINT32 newxor;
-	int noise_clocks = 0;
-	int i;
+	INT32 noise_clocks = 0;
 
 	/* loop over clocks */
-	for (i = 0; i < clocks; i++)
+	for (INT32 i = 0; i < clocks; i++)
 	{
 		/* shift the LFSR. its a LOOOONG LFSR, so we need
         * four longs to hold it all!
@@ -729,16 +737,16 @@ static int sh6840_update_noise(int clocks)
  *
  *************************************/
 
-static void exidy_update(INT16 *buffer, int length)
+static void exidy_update(INT16 *buffer, INT32 length)
 {
-	int noisy = ((sh6840_timer[0].cr & sh6840_timer[1].cr & sh6840_timer[2].cr & 0x02) == 0);
+	INT32 noisy = ((sh6840_timer[0].cr & sh6840_timer[1].cr & sh6840_timer[2].cr & 0x02) == 0);
 
 	/* loop over samples */
 	while (length--)
 	{
 		struct sh6840_timer_channel *t;
 		//struct sh8253_timer_channel *c;
-		int clocks_this_sample;
+		INT32 clocks_this_sample;
 		INT16 sample = 0;
 
 		/* determine how many 6840 clocks this sample */
@@ -749,7 +757,7 @@ static void exidy_update(INT16 *buffer, int length)
 		/* skip if nothing enabled */
 		if ((sh6840_timer[0].cr & 0x01) == 0)
 		{
-			int noise_clocks_this_sample = 0;
+			INT32 noise_clocks_this_sample = 0;
 			UINT32 chan0_clocks;
 
 			/* generate E-clocked noise if configured to do so */
@@ -761,7 +769,7 @@ static void exidy_update(INT16 *buffer, int length)
 			chan0_clocks = t->clocks;
 			if (t->cr & 0x80)
 			{
-				int clocks = (t->cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
+				INT32 clocks = (t->cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
 				sh6840_apply_clock(t, clocks);
 				if (t->state && !(exidy_sfxctrl & 0x02))
 					sample += sh6840_volume[0];
@@ -775,7 +783,7 @@ static void exidy_update(INT16 *buffer, int length)
 			t = &sh6840_timer[1];
 			if (t->cr & 0x80)
 			{
-				int clocks = (t->cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
+				INT32 clocks = (t->cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
 				sh6840_apply_clock(t, clocks);
 				if (t->state)
 					sample += sh6840_volume[1];
@@ -785,7 +793,7 @@ static void exidy_update(INT16 *buffer, int length)
 			t = &sh6840_timer[2];
 			if (t->cr & 0x80)
 			{
-				int clocks = (t->cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
+				INT32 clocks = (t->cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
 
 				/* prescale */
 				if (t->cr & 0x01)
@@ -805,23 +813,68 @@ static void exidy_update(INT16 *buffer, int length)
 	}
 }
 
-static void exidy_render(INT16 *buffer, int length)
+// Streambuffer handling
+static INT32 SyncInternal()
 {
-	INT32 samples = (samples_from * length) / nBurnSoundLen;
+	return (INT32)(float)(samples_from * (ZetTotalCycles() / (2500000 / (nBurnFPS / 100.0000))));
+}
 
-	exidy_update(mixer_buffer, samples);
+static void UpdateStream(INT32 length)
+{
+	length -= nCurrentPosition;
+	if (length <= 0) return;
 
-	INT16 *mix = mixer_buffer;
+	INT16 *mix = mixer_buffer + 5 + nCurrentPosition;
+	memset(mix, 0, length * sizeof(INT16));
+	exidy_update(mix, length);
+	nCurrentPosition += length;
+}
 
-	for (INT32 j = 0; j < length; j++)
-	{
-		INT32 k = (samples_from * j) / nBurnSoundLen;
+static void exidy_sync_stream()
+{
+	UpdateStream(SyncInternal());
+}
 
-		INT32 l = mix[k];
-		INT32 r = mix[k];
-		buffer[0] = BURN_SND_CLIP(l);
-		buffer[1] = BURN_SND_CLIP(r);
-		buffer += 2;
+void exidy_render(INT16 *buffer, INT32 length)
+{
+	if (mixer_buffer == NULL || samples_from == 0) return;
+
+	if (length != nBurnSoundLen) {
+		bprintf(0, _T("exidy_render(): once per frame, please!\n"));
+		return;
+	}
+
+	UpdateStream(samples_from);
+
+	INT16 *pBufL = mixer_buffer + 5;
+
+	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < (length << 1); i += 2, nFractionalPosition += nSampleSize) {
+		INT32 nLeftSample[4] = {0, 0, 0, 0};
+		INT32 nTotalLeftSample; // it's mono!
+
+		nLeftSample[0] += (INT32)(pBufL[(nFractionalPosition >> 16) - 3]);
+		nLeftSample[1] += (INT32)(pBufL[(nFractionalPosition >> 16) - 2]);
+		nLeftSample[2] += (INT32)(pBufL[(nFractionalPosition >> 16) - 1]);
+		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition >> 16) - 0]);
+
+		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * 0.45);
+
+		buffer[i + 0] = nTotalLeftSample;
+		buffer[i + 1] = nTotalLeftSample;
+	}
+	nCurrentPosition = 0;
+
+	if (length >= nBurnSoundLen) {
+		INT32 nExtraSamples = samples_from - (nFractionalPosition >> 16);
+
+		for (INT32 i = -4; i < nExtraSamples; i++) {
+			pBufL[i] = pBufL[(nFractionalPosition >> 16) + i];
+		}
+
+		nFractionalPosition &= 0xFFFF;
+
+		nCurrentPosition = nExtraSamples;
 	}
 }
 
@@ -995,6 +1048,7 @@ static INT32 DrvDoReset()
 
 	// sound
 	exidy_sound_reset();
+	s14001a_reset();
 
 	magicram_control = 0xff;
 	magicram_latch = 0xff;
@@ -1265,6 +1319,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		exidy_sound_scan();
+		s14001a_scan(nAction, pnMin);
 
 		SCAN_VAR(magicram_control);
 		SCAN_VAR(magicram_latch);

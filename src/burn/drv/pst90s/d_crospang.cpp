@@ -32,6 +32,7 @@ static UINT32 *DrvPalette;
 
 static UINT8 *soundlatch;
 static UINT8 *tile_bank;
+static UINT8 *tile_banksel;
 static UINT16 *fg_scroll_x;
 static UINT16 *fg_scroll_y;
 static UINT16 *bg_scroll_x;
@@ -40,32 +41,83 @@ static UINT16 *bg_scroll_y;
 static UINT8 DrvRecalc;
 
 static INT32 bestri = 0;
+static INT32 pitapat = 0;
 
 static struct BurnInputInfo CrospangInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 8,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 9,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Crospang)
+
+static struct BurnInputInfo PitapatInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 8,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 9,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Pitapat)
+
+static struct BurnDIPInfo PitapatDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xff, NULL						},
+	{0x14, 0xff, 0xff, 0xff, NULL						},
+
+	{0   , 0xfe, 0   ,    4, "Coinage"					},
+	{0x13, 0x01, 0x03, 0x01, "3 Coins 1 Credits"		},
+	{0x13, 0x01, 0x03, 0x02, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x03, 0x03, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x03, 0x00, "1 Coin  2 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Boxes to Marvels"			},
+	{0x13, 0x01, 0x04, 0x04, "1"						},
+	{0x13, 0x01, 0x04, 0x00, "2"						},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"				},
+	{0x13, 0x01, 0x80, 0x00, "Off"						},
+	{0x13, 0x01, 0x80, 0x80, "On"						},
+};
+
+STDDIPINFO(Pitapat)
 
 static struct BurnDIPInfo CrospangDIPList[]=
 {
@@ -140,19 +192,21 @@ static struct BurnDIPInfo BestriDIPList[]=
 
 STDDIPINFO(Bestri)
 
-void __fastcall crospang_write_byte(UINT32 address, UINT8 data)
+static void __fastcall crospang_write_byte(UINT32 address, UINT8 data)
 {
-	if (bestri == 0) return;
-
 	switch (address)
 	{
+		case 0x100000:
+			*tile_banksel = data & 0x03;
+		return;
+
 		case 0x10000e:
-			*tile_bank = (data >> 2) & 0x0f;
+			tile_bank[*tile_banksel] = data & 0x0f;
 		return;
 	}
 }
 
-void __fastcall crospang_write_word(UINT32 address, UINT16 data)
+static void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 {
 	if (bestri == 0) {
 		switch (address)
@@ -160,19 +214,19 @@ void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 			case 0x100002:
 				*fg_scroll_y = (data + 8) & 0x1ff;
 			return;
-	
+
 			case 0x100004:
 				*bg_scroll_x = (data + 4) & 0x1ff;
 			return;
-	
+
 			case 0x100006:
 				*bg_scroll_y = (data + 8) & 0x1ff;
 			return;
-	
+
 			case 0x100008:
 				*fg_scroll_x = (data + 0) & 0x1ff;
 			return;
-			
+
 			case 0x270000:
 				*soundlatch = data & 0xff;
 			return;
@@ -183,19 +237,19 @@ void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 			case 0x100004:
 				*fg_scroll_x = ((data ^ 0x0000) + 32) & 0x1ff;
 			return;
-	
+
 			case 0x100006:
 				*fg_scroll_y = ((data ^ 0xff54) +  7) & 0x1ff;
 			return;
-	
+
 			case 0x10000a:
 				*bg_scroll_y = ((data ^ 0xfeaa) +  7) & 0x1ff;
 			return;
-	
+
 			case 0x10000c:
 				*bg_scroll_x = ((data ^ 0x0000) - 60) & 0x1ff;
 			return;
-	
+
 			case 0x270000:
 				*soundlatch = data & 0xff;
 			return;
@@ -203,7 +257,7 @@ void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT8 __fastcall crospang_read_byte(UINT32 address)
+static UINT8 __fastcall crospang_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -214,7 +268,7 @@ UINT8 __fastcall crospang_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall crospang_read_word(UINT32 address)
+static UINT16 __fastcall crospang_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -227,7 +281,7 @@ UINT16 __fastcall crospang_read_word(UINT32 address)
 	return 0;
 }
 
-void __fastcall crospang_sound_out(UINT16 port, UINT8 data)
+static void __fastcall crospang_sound_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -245,7 +299,7 @@ void __fastcall crospang_sound_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall crospang_sound_in(UINT16 port)
+static UINT8 __fastcall crospang_sound_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -267,13 +321,9 @@ inline static INT32 crospangSynchroniseStream(INT32 nSoundRate)
 	return (INT64)(ZetTotalCycles() * nSoundRate / 3579545);
 }
 
-void crospangYM3812IrqHandler(INT32, INT32 nStatus)
+static void crospangYM3812IrqHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -292,6 +342,12 @@ static INT32 DrvDoReset()
 
 	BurnYM3812Reset();
 	MSM6295Reset(0);
+
+	*tile_banksel = 0;
+	tile_bank[0] = 0;
+	tile_bank[1] = 1;
+	tile_bank[2] = 2;
+	tile_bank[3] = 3;
 
 	return 0;
 }
@@ -323,7 +379,8 @@ static INT32 MemIndex()
 
 	soundlatch	= Next; Next += 0x000001;
 
-	tile_bank	= Next; Next += 0x000001;
+	tile_bank	= Next; Next += 0x000004;
+	tile_banksel= Next; Next += 0x000004;
 
 	fg_scroll_x	= (UINT16*)Next; Next += 0x0001 * sizeof (UINT16);
 	bg_scroll_x	= (UINT16*)Next; Next += 0x0001 * sizeof (UINT16);
@@ -341,10 +398,8 @@ static INT32 DrvGfxDecode(INT32 gfx0len, INT32 gfx1len, INT32 type)
 {
 	INT32 Plane0[4] = { ((gfx0len / 2) * 8) + 8,  ((gfx0len / 2) * 8) + 0,  8,  0 };
 	INT32 Plane1[4] = { ((gfx1len / 2) * 8) + 8,  ((gfx1len / 2) * 8) + 0,  8,  0 };
-	INT32 XOffs[16] = { 32*8+0, 32*8+1, 32*8+2, 32*8+3, 32*8+4, 32*8+5, 32*8+6, 32*8+7,
-			       0,      1,      2,      3,      4,      5,      6,      7 };
-	INT32 YOffs[16] = { 0*16, 1*16,  2*16,  3*16,  4*16,  5*16,  6*16,  7*16,
-			  8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 };
+	INT32 XOffs[16] = { STEP8(32*8, 1), STEP8(0, 1) };
+	INT32 YOffs[16] = { STEP16(0, 16) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(((gfx0len - 1) | (gfx1len - 1)) + 1);
 	if (tmp == NULL) {
@@ -406,6 +461,18 @@ static INT32 bestriLoadRoms()
 	return 0;
 }
 
+static INT32 pitapatLoadRoms()
+{
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,	6, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x000001,	7, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x080000,	8, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x080001,	9, 2)) return 1;
+
+	DrvGfxDecode(0x200000, 0x100000, 1);
+
+	return 0;
+}
+
 static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 {
 	AllMem = NULL;
@@ -418,9 +485,9 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 	{
 		if (BurnLoadRom(Drv68KROM + 0x000000,	0, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM + 0x000001,	1, 2)) return 1;
-	
+
 		if (BurnLoadRom(DrvZ80ROM,		2, 1)) return 1;
-	
+
 		if (BurnLoadRom(DrvSndROM,		3, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM0 + 0x000000,	4, 2)) return 1;
@@ -440,6 +507,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 	SekMapMemory(DrvSprRAM,		0x210000, 0x2107ff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,		0x320000, 0x32ffff, MAP_RAM); // crospang, heuksun
 	SekMapMemory(Drv68KRAM,		0x3a0000, 0x3affff, MAP_RAM); // bestri
+	SekMapMemory(Drv68KRAM,		0x300000, 0x30ffff, MAP_RAM); // pitapat
 	SekSetWriteByteHandler(0,	crospang_write_byte);
 	SekSetWriteWordHandler(0,	crospang_write_word);
 	SekSetReadByteHandler(0,	crospang_read_byte);
@@ -448,11 +516,8 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM);
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0xc000, 0xc7ff, MAP_RAM);
 	ZetSetOutHandler(crospang_sound_out);
 	ZetSetInHandler(crospang_sound_in);
 	ZetClose();
@@ -485,6 +550,7 @@ static INT32 DrvExit()
 	MSM6295ROM = NULL;
 
 	bestri = 0;
+	pitapat = 0;
 
 	return 0;
 }
@@ -506,7 +572,7 @@ static void draw_layer(UINT8 *src, INT32 coloffs, INT32 scrollx, INT32 scrolly, 
 		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
 		INT32 data  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
-		INT32 code  = (data & 0xfff) + (*tile_bank << 12);
+		INT32 code  = (data & 0x3ff) + (tile_bank[(data & 0x0c00) >> 10] << 10);
 		INT32 color = (data >> 12) + coloffs;
 
 		if (transp) {
@@ -555,25 +621,13 @@ static void draw_sprites()
 
 		while (multi >= 0)
 		{
-			if (fy) {
-				if (fx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color, 4, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color, 4, 0, 0, DrvGfxROM1);
-				}
-			} else {
-				if (fx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color, 4, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color, 4, 0, 0, DrvGfxROM1);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, sprite - multi * inc, x, y - 16 * multi, fx, fy, color, 4, 0, 0, DrvGfxROM1);
 
 			multi--;
 		}
 	}
 }
-	
+
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -592,10 +646,12 @@ static INT32 DrvDraw()
 		}
 	}
 
-	draw_layer(DrvBgRAM, 0x20, *bg_scroll_x, *bg_scroll_y, 0);
-	draw_layer(DrvFgRAM, 0x10, *fg_scroll_x, *fg_scroll_y, 1);
+	BurnTransferClear();
 
-	draw_sprites();
+	if (nBurnLayer & 1) draw_layer(DrvBgRAM, 0x20, *bg_scroll_x, *bg_scroll_y, 0);
+	if (nBurnLayer & 2) draw_layer(DrvFgRAM, 0x10, *fg_scroll_x, *fg_scroll_y, 1);
+
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -619,7 +675,7 @@ static INT32 DrvFrame()
 		DrvInputs[2] = (DrvDips[1] << 8) | DrvDips[0];
 	}
 
-	INT32 nTotalCycles[2] = { 7159090 / 60, 3579545 / 60 };
+	INT32 nTotalCycles[2] = { (pitapat) ? (14318181 / 60) : (7159090 / 60), 3579545 / 60 };
 
 	SekNewFrame();
 	ZetNewFrame();
@@ -629,9 +685,9 @@ static INT32 DrvFrame()
 
 	SekRun(nTotalCycles[0]);
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+	BurnTimerEndFrameYM3812(nTotalCycles[1]);
 
 	if (pBurnSoundOut) {
-		BurnTimerEndFrameYM3812(nTotalCycles[1]);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
@@ -646,7 +702,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -654,7 +710,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029698;
 	}
 
-	if (nAction & ACB_VOLATILE) {	
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -676,12 +732,12 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Cross Pang
 
 static struct BurnRomInfo crospangRomDesc[] = {
-	{ "p1.bin",	0x20000, 0x0bcbbaad, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "p2.bin",	0x20000, 0x0947d204, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "p1.bin",		0x20000, 0x0bcbbaad, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "p2.bin",		0x20000, 0x0947d204, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "s1.bin",	0x10000, 0xd61a224c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "s1.bin",		0x10000, 0xd61a224c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "s2.bin",	0x20000, 0x9f9ecd22, 3 | BRF_SND },           //  3 Oki Samples
+	{ "s2.bin",		0x20000, 0x9f9ecd22, 3 | BRF_SND },           //  3 Oki Samples
 
 	{ "rom1.bin",	0x40000, 0x905042bb, 4 | BRF_GRA },           //  4 Background Tiles
 	{ "rom2.bin",	0x40000, 0xbc4381e9, 4 | BRF_GRA },           //  5
@@ -787,5 +843,45 @@ struct BurnDriver BurnDrvBestri = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, bestriRomInfo, bestriRomName, NULL, NULL, NULL, NULL, CrospangInputInfo, BestriDIPInfo,
 	bestriInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	320, 240, 4, 3
+};
+
+
+// Pitapat Puzzle
+
+static struct BurnRomInfo pitapatRomDesc[] = {
+	{ "ua02",	0x40000, 0xb3d3ac7e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ua03",	0x40000, 0xeda85635, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "us02",	0x10000, 0xc7cc05fa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "us08",	0x40000, 0xdab99a43, 3 | BRF_SND },           //  3 Oki Samples
+
+	{ "uc07",	0x80000, 0xf4a529c1, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "uc08",	0x80000, 0x3f827218, 4 | BRF_GRA },           //  5
+
+	{ "ud14",	0x40000, 0x92e23e92, 5 | BRF_GRA },           //  6 Sprites
+	{ "ud15",	0x40000, 0x7d3d6dba, 5 | BRF_GRA },           //  7
+	{ "ud16",	0x40000, 0x5c09dff8, 5 | BRF_GRA },           //  8
+	{ "ud17",	0x40000, 0xd4c67e2e, 5 | BRF_GRA },           //  9
+};
+
+STD_ROM_PICK(pitapat)
+STD_ROM_FN(pitapat)
+
+static INT32 pitapatInit()
+{
+	pitapat = 1;
+
+	return DrvInit(pitapatLoadRoms);
+}
+
+struct BurnDriver BurnDrvPitapat = {
+	"pitapat", NULL, NULL, NULL, "1997",
+	"Pitapat Puzzle\0", NULL, "F2 System", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, pitapatRomInfo, pitapatRomName, NULL, NULL, NULL, NULL, PitapatInputInfo, PitapatDIPInfo,
+	pitapatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };

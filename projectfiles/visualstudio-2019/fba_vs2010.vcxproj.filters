@@ -997,6 +997,9 @@
     <ClInclude Include="..\..\src\burn\snd\s14001a.h">
       <Filter>Burn\snd</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\seibucop.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4094,6 +4097,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\snd\s14001a.cpp">
       <Filter>Burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\seibucop.cpp">
+      <Filter>Burn\devices</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

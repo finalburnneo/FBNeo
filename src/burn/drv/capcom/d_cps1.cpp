@@ -1040,7 +1040,7 @@ static struct BurnInputInfo Sf2ceeablInputList[] = {
 
 STDINPUTINFO(Sf2ceeabl)
 
-static struct BurnInputInfo Sf2ceuablInputList[] = {
+static struct BurnInputInfo Sf2m3InputList[] = {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp029+0, "p1 coin"   },
 	{"P1 Start"         , BIT_DIGITAL  , CpsInp029+4, "p1 start"  },
 	{"P1 Up"            , BIT_DIGITAL  , CpsInp011+3, "p1 up"     },
@@ -1075,7 +1075,7 @@ static struct BurnInputInfo Sf2ceuablInputList[] = {
  	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
 };
 
-STDINPUTINFO(Sf2ceuabl)
+STDINPUTINFO(Sf2m3)
 
 static struct BurnInputInfo SfzchInputList[] =
 {
@@ -10426,7 +10426,7 @@ static struct BurnRomInfo Sf2rb3RomDesc[] = {
 STD_ROM_PICK(Sf2rb3)
 STD_ROM_FN(Sf2rb3)
 
-static struct BurnRomInfo Sf2rb4RomDesc[] = {
+static struct BurnRomInfo Sf2m4RomDesc[] = {
 	// this set was previously known as sf2m4
 	{ "u222ne",       0x0080000, 0x7133489e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "u196ne",       0x0080000, 0xb07a4f90, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -10451,8 +10451,8 @@ static struct BurnRomInfo Sf2rb4RomDesc[] = {
 	{ "s92_19.bin",   0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
-STD_ROM_PICK(Sf2rb4)
-STD_ROM_FN(Sf2rb4)
+STD_ROM_PICK(Sf2m4)
+STD_ROM_FN(Sf2m4)
 
 static struct BurnRomInfo Sf2rb5RomDesc[] = {
 	// this set was previously known as sf2m12
@@ -11645,7 +11645,7 @@ static struct BurnRomInfo Sf2ceeablRomDesc[] = {
 STD_ROM_PICK(Sf2ceeabl)
 STD_ROM_FN(Sf2ceeabl)
 
-static struct BurnRomInfo Sf2ceeab2RomDesc[] = {
+static struct BurnRomInfo Sf2m1RomDesc[] = {
 	// this set was previously known as sf2m1
 	{ "222e",         0x0080000, 0x1e20d0a3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "196e",         0x0080000, 0x88cc38a3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -11670,8 +11670,8 @@ static struct BurnRomInfo Sf2ceeab2RomDesc[] = {
 	{ "s92_19.bin",   0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
-STD_ROM_PICK(Sf2ceeab2)
-STD_ROM_FN(Sf2ceeab2)
+STD_ROM_PICK(Sf2m1)
+STD_ROM_FN(Sf2m1)
 
 static struct BurnRomInfo Sf2ceeab3RomDesc[] = {
 	// f205v id 1395
@@ -11845,7 +11845,7 @@ static struct BurnRomInfo Sf2ceuplRomDesc[] = {
 STD_ROM_PICK(Sf2ceupl)
 STD_ROM_FN(Sf2ceupl)
 
-static struct BurnRomInfo Sf2ceuablRomDesc[] = {
+static struct BurnRomInfo Sf2m3RomDesc[] = {
 	// this set was previously known as sf2m3
 	{ "u222chp",      0x0080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "u196chp",      0x0080000, 0x95ea597e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -11870,8 +11870,8 @@ static struct BurnRomInfo Sf2ceuablRomDesc[] = {
 	{ "s92_19.bin",   0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
-STD_ROM_PICK(Sf2ceuabl)
-STD_ROM_FN(Sf2ceuabl)
+STD_ROM_PICK(Sf2m3)
+STD_ROM_FN(Sf2m3)
 
 static struct BurnRomInfo Sf2ceuab2RomDesc[] = {
 	// this set was previously known as sf2m8
@@ -11905,7 +11905,7 @@ static struct BurnRomInfo Sf2ceuab2RomDesc[] = {
 STD_ROM_PICK(Sf2ceuab2)
 STD_ROM_FN(Sf2ceuab2)
 
-static struct BurnRomInfo Sf2ceuab3RomDesc[] = {
+static struct BurnRomInfo Sf2m8RomDesc[] = {
 	// this set was previously known as sf2m8a
 	{ "yyc-2.2",  0x0080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
 	{ "yyc-3.4",  0x0080000, 0x95ea597e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
@@ -11931,10 +11931,10 @@ static struct BurnRomInfo Sf2ceuab3RomDesc[] = {
 	{ "c-27.7",   0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
 };
 
-STD_ROM_PICK(Sf2ceuab3)
-STD_ROM_FN(Sf2ceuab3)
+STD_ROM_PICK(Sf2m8)
+STD_ROM_FN(Sf2m8)
 
-static struct BurnRomInfo Sf2ceuab4RomDesc[] = {
+static struct BurnRomInfo Sf2cems6aRomDesc[] = {
 	{ "ms6.u196",       0x0100000, 0x596609d4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "ms6.u10",        0x0080000, 0xed4186bd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
@@ -11955,8 +11955,8 @@ static struct BurnRomInfo Sf2ceuab4RomDesc[] = {
 	{ "ms6.u133",       0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
 };
 
-STD_ROM_PICK(Sf2ceuab4)
-STD_ROM_FN(Sf2ceuab4)
+STD_ROM_PICK(Sf2cems6a)
+STD_ROM_FN(Sf2cems6a)
 
 static struct BurnRomInfo Sf2ceuab5RomDesc[] = {
 	{ "7.bin",         0x080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
@@ -12047,7 +12047,7 @@ static struct BurnRomInfo Sf2ceuab6RomDesc[] = {
 STD_ROM_PICK(Sf2ceuab6)
 STD_ROM_FN(Sf2ceuab6)
 
-static struct BurnRomInfo Sf2ceuab7RomDesc[] = {
+static struct BurnRomInfo Sf2ceblpRomDesc[] = {
 	// this set is known as sf2ceblp in MAME 0.153
 	{ "1k.31.e13",    0x0020000, 0xea78f9b4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "se.36.j13",    0x0020000, 0xd30c263e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -12091,8 +12091,8 @@ static struct BurnRomInfo Sf2ceuab7RomDesc[] = {
     { "pic16c55",     0x0002000, 0xf22e2311, BRF_OPT }, // PIC
 };
 
-STD_ROM_PICK(Sf2ceuab7)
-STD_ROM_FN(Sf2ceuab7)
+STD_ROM_PICK(Sf2ceblp)
+STD_ROM_FN(Sf2ceblp)
 
 static struct BurnRomInfo Sf2ceuab8RomDesc[] = {
 	// f205v id 1404 & 1405
@@ -12160,7 +12160,7 @@ static struct BurnRomInfo Sf2ceuab9RomDesc[] = {
 STD_ROM_PICK(Sf2ceuab9)
 STD_ROM_FN(Sf2ceuab9)
 
-static struct BurnRomInfo Sf2ceuab10RomDesc[] = {
+static struct BurnRomInfo Sf2m10RomDesc[] = {
 	// this set is known as sf2m10 in MAME
 	{ "sf2h14.7",          	0x080000, 0x74803532, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf2h14.5",          	0x080000, 0x66c91972, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -12193,8 +12193,8 @@ static struct BurnRomInfo Sf2ceuab10RomDesc[] = {
 	{ "27c512.8",          	0x010000, 0x13ea1c44, BRF_OPT }, // unknown
 };
 
-STD_ROM_PICK(Sf2ceuab10)
-STD_ROM_FN(Sf2ceuab10)
+STD_ROM_PICK(Sf2m10)
+STD_ROM_FN(Sf2m10)
 
 static struct BurnRomInfo Sf2ceucblRomDesc[] = {
 	{ "s92u_23c.8f",   0x080000, 0x0a8b6aa2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // not included in dump (matches first half of ym.u23)
@@ -14206,7 +14206,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2b3"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2b4"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2rules"    , CPS_B_17    , mapper_STF29 , 0, NULL                },
-	{ "sf2bhh"  	, CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2bhh"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ce"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceea"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceua"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -14219,7 +14219,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2rb"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2rb2"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2rb3"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
-	{ "sf2rb4"      , HACK_B_1    , mapper_S9263B, 0, NULL                },
+	{ "sf2m4"       , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2rb5"      , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2rb6"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2red"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -14233,7 +14233,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2acca"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2accp2"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2dkot2"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
-	{ "sf2md"   	, CPS_B_21_DEF, mapper_S9263B, 0, NULL                }, // game controls layers at 0x98000c
+	{ "sf2md"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                }, // game controls layers at 0x98000c
 	{ "sf2mdt"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mdta"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mdtb"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -14258,23 +14258,23 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2mega"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mega2"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceeabl"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                }, // game controls layers at 0x98000c
-	{ "sf2ceeab2"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                }, // game controls layers at 0x98000c
+	{ "sf2m1"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                }, // game controls layers at 0x98000c
 	{ "sf2ceeab3"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceeab4"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceeab5"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2cejabl"   , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2cejab2"   , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceupl"    , HACK_B_1    , mapper_S9263B, 0, NULL                },
-	{ "sf2ceuabl"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
+	{ "sf2m3"       , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab2"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
-	{ "sf2ceuab3"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
-	{ "sf2ceuab4"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
+	{ "sf2m8"       , HACK_B_2    , mapper_S9263B, 0, NULL                },
+	{ "sf2cems6a"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab5"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab6"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
-	{ "sf2ceuab7"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2ceblp"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab8"   , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab9"   , HACK_B_1    , mapper_S9263B, 0, NULL                },
-	{ "sf2ceuab10"  , HACK_B_1    , mapper_S9263B, 0, NULL                },
+	{ "sf2m10"      , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceucbl"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2level"    , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2cebltw"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -17243,7 +17243,7 @@ void __fastcall Sf2ceeablScrollWrite(UINT32 a, UINT16 d)
 	}
 }
 
-static INT32 Sf2ceeab2Init()
+static INT32 Sf2m1Init()
 {
 	Port6SoundWrite = 1;
 	bCpsUpdatePalEveryFrame = 1;
@@ -17268,7 +17268,7 @@ static INT32 Sf2ceeablInit()
 {
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2ceeabl;
 	
-	return Sf2ceeab2Init();
+	return Sf2m1Init();
 }
 
 static INT32 Sf2cejablInit()
@@ -17281,7 +17281,7 @@ static INT32 Sf2cejablInit()
 	return TwelveMhzInit();
 }
 
-UINT8 __fastcall Sf2ceuablReadByte(UINT32 a)
+UINT8 __fastcall Sf2m3ReadByte(UINT32 a)
 {
 	UINT8 d = 0xff;
 	
@@ -17327,7 +17327,7 @@ UINT8 __fastcall Sf2ceuablReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Sf2ceuablWriteByte(UINT32 a, UINT8 d)
+void __fastcall Sf2m3WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x800191: {
@@ -17341,7 +17341,7 @@ void __fastcall Sf2ceuablWriteByte(UINT32 a, UINT8 d)
 //	bprintf(PRINT_NORMAL, _T("Write byte %x, %x\n"), a, d);
 }
 
-void __fastcall Sf2ceuablWriteWord(UINT32 a, UINT16 d)
+void __fastcall Sf2m3WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x800100: {
@@ -17471,7 +17471,7 @@ void __fastcall Sf2ceuablWriteWord(UINT32 a, UINT16 d)
 //	bprintf(PRINT_NORMAL, _T("Write word %x, %x\n"), a, d);
 }
 
-static INT32 Sf2ceuablInit()
+static INT32 Sf2m3Init()
 {
 	INT32 nRet = 0;
 	
@@ -17484,9 +17484,9 @@ static INT32 Sf2ceuablInit()
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x800000, 0x800200, MAP_RAM);
-	SekSetReadByteHandler(1, Sf2ceuablReadByte);
-	SekSetWriteByteHandler(1, Sf2ceuablWriteByte);
-	SekSetWriteWordHandler(1, Sf2ceuablWriteWord);
+	SekSetReadByteHandler(1, Sf2m3ReadByte);
+	SekSetWriteByteHandler(1, Sf2m3WriteByte);
+	SekSetWriteWordHandler(1, Sf2m3WriteWord);
 	
 	SekClose();
 	
@@ -17498,21 +17498,21 @@ static INT32 Sf2ceuab2Init()
 	Scroll1TileMask = 0x4fff;
 	Scroll3TileMask = 0x1fff;
 	
-	return Sf2ceuablInit();
+	return Sf2m3Init();
 }
 
-static INT32 Sf2ceuab3Init()
+static INT32 Sf2m8Init()
 {
-	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2ceuab3;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2m8;
 	
-	return Sf2ceuablInit();
+	return Sf2m3Init();
 }
 
-static INT32 Sf2ceuab4Init()
+static INT32 Sf2cems6aInit()
 {
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2koryu;
 	
-	return Sf2ceuablInit();
+	return Sf2m3Init();
 }
 
 static void Sf2ceuab6Callback()
@@ -17528,9 +17528,9 @@ static INT32 Sf2ceuab6Init()
 	return TwelveMhzInit();
 }
 
-static UINT16 Sf2ceuab7ProtValue = 0;
+static UINT16 Sf2ceblpProtValue = 0;
 
-UINT16 __fastcall Sf2ceuab7ProtReadWord(UINT32 a)
+UINT16 __fastcall Sf2ceblpProtReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x5762b0: {
@@ -17538,8 +17538,8 @@ UINT16 __fastcall Sf2ceuab7ProtReadWord(UINT32 a)
 		}
 		
 		case 0x57a2b0: {
-			if (Sf2ceuab7ProtValue == 0x00) return 0x1992;
-			if (Sf2ceuab7ProtValue == 0x04) return 0x0408;
+			if (Sf2ceblpProtValue == 0x00) return 0x1992;
+			if (Sf2ceblpProtValue == 0x04) return 0x0408;
 			return 0xffff;
 		}
 	}
@@ -17547,26 +17547,26 @@ UINT16 __fastcall Sf2ceuab7ProtReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Sf2ceuab7ProtWriteWord(UINT32 a, UINT16 d)
+void __fastcall Sf2ceblpProtWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x5762b0: {
-			Sf2ceuab7ProtValue = d;
+			Sf2ceblpProtValue = d;
 			return;
 		}
 	}
 }
 
-static INT32 Sf2ceuab7Init()
+static INT32 Sf2ceblpInit()
 {
-	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2ceuab7;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2ceblp;
 	
 	INT32 nRet = DrvInit();
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x570000, 0x57ffff, MAP_READ | MAP_WRITE);
-	SekSetReadWordHandler(1, Sf2ceuab7ProtReadWord);
-	SekSetWriteWordHandler(1, Sf2ceuab7ProtWriteWord);
+	SekSetReadWordHandler(1, Sf2ceblpProtReadWord);
+	SekSetWriteWordHandler(1, Sf2ceblpProtWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -20567,12 +20567,12 @@ struct BurnDriver BurnDrvCpsSf2rb3 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2rb4 = {
-	"sf2rb4", "sf2ce", NULL, NULL, "1992",
+struct BurnDriver BurnDrvCpsSf2m4 = {
+	"sf2m4", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - Champion Edition (Rainbow bootleg set 4, 920322 Japan)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2rb4RomInfo, Sf2rb4RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
+	NULL, Sf2m4RomInfo, Sf2m4RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
 	Sf2cejablInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -20957,13 +20957,13 @@ struct BurnDriver BurnDrvCpsSf2ceeabl = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2ceeab2 = {
-	"sf2ceeab2", "sf2ce", NULL, NULL, "1992",
+struct BurnDriver BurnDrvCpsSf2m1 = {
+	"sf2m1", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - Champion Edition (920313 etc bootleg set 2)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2ceeab2RomInfo, Sf2ceeab2RomName, NULL, NULL, NULL, NULL, Sf2ceeablInputInfo, Sf2DIPInfo,
-	Sf2ceeab2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Sf2m1RomInfo, Sf2m1RomName, NULL, NULL, NULL, NULL, Sf2ceeablInputInfo, Sf2DIPInfo,
+	Sf2m1Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -21027,13 +21027,13 @@ struct BurnDriver BurnDrvCpsSf2ceupl = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2ceuabl = {
-	"sf2ceuabl", "sf2ce", NULL, NULL, "1992",
+struct BurnDriver BurnDrvCpsSf2m3 = {
+	"sf2m3", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - Champion Edition (920313 USA bootleg set 1)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2ceuablRomInfo, Sf2ceuablRomName, NULL, NULL, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
-	Sf2ceuablInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Sf2m3RomInfo, Sf2m3RomName, NULL, NULL, NULL, NULL, Sf2m3InputInfo, Sf2DIPInfo,
+	Sf2m3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -21042,28 +21042,28 @@ struct BurnDriver BurnDrvCpsSf2ceuab2 = {
 	"Street Fighter II' - Champion Edition (920313 USA bootleg set 2)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2ceuab2RomInfo, Sf2ceuab2RomName, NULL, NULL, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
+	NULL, Sf2ceuab2RomInfo, Sf2ceuab2RomName, NULL, NULL, NULL, NULL, Sf2m3InputInfo, Sf2DIPInfo,
 	Sf2ceuab2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2ceuab3 = {
-	"sf2ceuab3", "sf2ce", NULL, NULL, "1992",
+struct BurnDriver BurnDrvCpsSf2m8 = {
+	"sf2m8", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - Champion Edition (920313 USA bootleg set 3)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2ceuab3RomInfo, Sf2ceuab3RomName, NULL, NULL, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
-	Sf2ceuab3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Sf2m8RomInfo, Sf2m8RomName, NULL, NULL, NULL, NULL, Sf2m3InputInfo, Sf2DIPInfo,
+	Sf2m8Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2ceuab4 = {
-	"sf2ceuab4", "sf2ce", NULL, NULL, "1992",
+struct BurnDriver BurnDrvCpsSf2cems6a = {
+	"sf2cems6a", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - Champion Edition (920313 USA bootleg set 4)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2ceuab4RomInfo, Sf2ceuab4RomName, NULL, NULL, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
-	Sf2ceuab4Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Sf2cems6aRomInfo, Sf2cems6aRomName, NULL, NULL, NULL, NULL, Sf2m3InputInfo, Sf2DIPInfo,
+	Sf2cems6aInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -21072,8 +21072,8 @@ struct BurnDriver BurnDrvCpsSf2ceuab5 = {
 	"Street Fighter II' - Champion Edition (920313 USA bootleg set 5)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2ceuab5RomInfo, Sf2ceuab5RomName, NULL, NULL, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
-	Sf2ceuablInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Sf2ceuab5RomInfo, Sf2ceuab5RomName, NULL, NULL, NULL, NULL, Sf2m3InputInfo, Sf2DIPInfo,
+	Sf2m3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -21087,13 +21087,13 @@ struct BurnDriver BurnDrvCpsSf2ceuab6 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2ceuab7 = {
-	"sf2ceuab7", "sf2ce", NULL, NULL, "1992",
+struct BurnDriver BurnDrvCpsSf2ceblp = {
+	"sf2ceblp", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - Champion Edition (920313 USA bootleg set 7)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2ceuab7RomInfo, Sf2ceuab7RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	Sf2ceuab7Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Sf2ceblpRomInfo, Sf2ceblpRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2ceblpInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -21117,12 +21117,12 @@ struct BurnDriver BurnDrvCpsSf2ceuab9 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2ceuab10 = {
-	"sf2ceuab10", "sf2ce", NULL, NULL, "1992",
+struct BurnDriver BurnDrvCpsSf2m10 = {
+	"sf2m10", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - Champion Edition (920313 USA bootleg set 10)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2ceuab10RomInfo, Sf2ceuab10RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	NULL, Sf2m10RomInfo, Sf2m10RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
 	Sf2ceuab9Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -21142,8 +21142,8 @@ struct BurnDriver BurnDrvCpsSf2level = {
 	"Street Fighter II' - Champion Edition (Level Select bootleg, 920322  USA)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2levelRomInfo, Sf2levelRomName, NULL, NULL, NULL, NULL, Sf2ceuablInputInfo, Sf2levelDIPInfo,
-	Sf2ceuablInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Sf2levelRomInfo, Sf2levelRomName, NULL, NULL, NULL, NULL, Sf2m3InputInfo, Sf2levelDIPInfo,
+	Sf2m3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

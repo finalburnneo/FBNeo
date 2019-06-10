@@ -295,7 +295,11 @@ void BurnShiftSetStatus(UINT32 status)
 				}
 			} else if (screen_vertical)
 			{ // vertical
-				BurnGearRender[(y * 8) + x] = source[(x * 8) + y];
+				if (screen_flipped) {
+					BurnGearRender[(y * 8) + x] = source[(x * 8) + y];
+				} else {
+					BurnGearRender[(y * 8) + x] = source[((7-x) * 8) + y];
+				}
 			} else
 			{ // normal
 				BurnGearRender[(y * 8) + x] = source[(y * 8) + x];

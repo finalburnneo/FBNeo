@@ -1,3 +1,8 @@
+#if defined (_MSC_VER)
+#define _USE_MATH_DEFINES
+#endif
+
+
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "nec_intf.h"

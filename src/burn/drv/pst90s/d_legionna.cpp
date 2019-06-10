@@ -2101,10 +2101,10 @@ struct BurnDriver BurnDrvHeatbrlu = {
 // Heated Barrel (Electronic Devices license)
 
 static struct BurnRomInfo heatbrleRomDesc[] = {
-	{ "2.u025",						0x020000, 0xb34dc60c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "1.u024",						0x020000, 0x16a3754f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "4.u026",						0x020000, 0xfae85c88, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "3.u023",						0x020000, 0x3b035081, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "2.u025",						0x040000, 0xb34dc60c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "1.u024",						0x040000, 0x16a3754f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.u026",						0x040000, 0xfae85c88, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.u023",						0x040000, 0x3b035081, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "barrel_7.u1110",				0x010000, 0x0784dbd8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 

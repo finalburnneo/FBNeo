@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12090 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12105 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1331,6 +1331,8 @@ This list contains all games supported by FinalBurn Neo.
 | buckyuab	|  	| Bucky O'Hare (ver UAB)				| bucky		| 1992	| Konami	| GX173		| 					|
 | md_budokan	|  	| Budokan - The Martial Spirit (Euro)			| 		| 1990	| Electronic Art| Sega Megadrive| 					|
 | md_budokanu	|  	| Budokan - The Martial Spirit (USA)			| md_budokan	| 1990	| Electronic Art| Sega Megadrive| 					|
+| buggychlt	|  	| Buggy Challenge (Tecfri)				| buggychl	| 1984	| Taito Corporat| Miscellaneous	| 					|
+| buggychl	|  	| Buggy Challenge					| 		| 1984	| Taito Corporat| Miscellaneous	| 					|
 | sms_buggyrun	|  	| Buggy Run (Euro, Bra)					| 		| 1993	| Sega		| Sega Master Sy| 					|
 | md_bugsbun	|  	| Bugs Bunny in Double Trouble (Euro)			| 		| 1996	| Sega		| Sega Megadrive| 					|
 | gg_bugsbun	|  	| Bugs Bunny in Double Trouble (Euro, USA)		| 		| 1996	| Sega		| Sega Game Gear| 					|
@@ -2367,6 +2369,7 @@ This list contains all games supported by FinalBurn Neo.
 | demonwld3	|  	| Demon's World / Horror Story (set 4)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | demonwld4	|  	| Demon's World / Horror Story (set 5)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | msx_demonia	|  	| Demonia						| 		| 1986	| Microids	| MSX		| 					|
+| denjinmk	|  	| Denjin Makai						| 		| 1994	| Winkysoft (Ban| Miscellaneous	| 					|
 | depthcho	| D	| Depthcharge (older)					| depthch	| 1977	| Gremlin	| Vic Dual	| No sound				|
 | depthch	| D	| Depthcharge						| 		| 1977	| Gremlin	| Vic Dual	| No sound				|
 | deroona	|  	| Deroon DeroDero (alt set)				| deroon	| 1995	| Tecmo		| Miscellaneous	| 					|
@@ -3883,6 +3886,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_godsj	|  	| Gods (Jpn)						| md_gods	| 1993	| PCM Complete	| Sega Megadrive| 					|
 | md_godsu	|  	| Gods (USA)						| md_gods	| 1992	| Mindscape	| Sega Megadrive| 					|
 | md_godsup	|  	| Gods (USA, Prototype)					| md_gods	| 1992	| Mindscape	| Sega Megadrive| 					|
+| godzilla	|  	| Godzilla (Japan)					| 		| 1993	| Banpresto	| Miscellaneous	| 					|
 | msx_godzilla	|  	| Godzilla (Jpn)					| 		| 1984	| Bandai	| MSX		| 					|
 | msx_godzillaa	|  	| Godzilla (Jpn, Hacked?)				| msx_godzilla	| 1984	| Bandai	| MSX		| 					|
 | gg_godzilla	|  	| Godzilla - Kaijuu Daishingeki (Jpn)			| 		| 1995	| Sega		| Sega Game Gear| 					|
@@ -4266,6 +4270,12 @@ This list contains all games supported by FinalBurn Neo.
 | hedpanica	|  	| Head Panic (ver. 0702, 02/07/1999)			| hedpanic	| 1999	| ESD / Fuuki	| Miscellaneous	| Story line & game instructions in Engl|
 | md_headon	|  	| Head-On Soccer (USA)					| md_feverpit	| 1995	| U.S. Gold	| Sega Megadrive| 					|
 | msx_heatseek	|  	| Heat Seeker - Missil (Spa)				| 		| 1986	| Mind Games Esp| MSX		| 					|
+| heatbrle	|  	| Heated Barrel (Electronic Devices license)		| heatbrl	| 1992	| TAD Corporatio| Miscellaneous	| 					|
+| heatbrlu	|  	| Heated Barrel (US)					| heatbrl	| 1992	| TAD Corporatio| Miscellaneous	| 					|
+| heatbrlo	|  	| Heated Barrel (World old version)			| heatbrl	| 1992	| TAD Corporatio| Miscellaneous	| 					|
+| heatbrl2	|  	| Heated Barrel (World version 2)			| heatbrl	| 1992	| TAD Corporatio| Miscellaneous	| 					|
+| heatbrl	|  	| Heated Barrel (World version 3)			| 		| 1992	| TAD Corporatio| Miscellaneous	| 					|
+| heatbrl3	|  	| Heated Barrel (World version ?)			| heatbrl	| 1992	| TAD Corporatio| Miscellaneous	| 					|
 | hbarrel	|  	| Heavy Barrel (US)					| 		| 1987	| Data East USA	| DEC0		| 					|
 | hbarrelw	|  	| Heavy Barrel (World)					| hbarrel	| 1987	| Data East USA	| DEC0		| 					|
 | hvymetal	|  	| Heavy Metal (315-5135)				| 		| 1985	| Sega		| System 1	| 					|
@@ -5258,6 +5268,9 @@ This list contains all games supported by FinalBurn Neo.
 | msx_legendk	|  	| Legendly Knight - Daemaseong (Kor)			| 		| 1988	| Topia		| MSX		| 					|
 | msx_legendka	|  	| Legendly Knight - Daemaseong (Kor, Alt)		| msx_legendk	| 1988	| Topia		| MSX		| 					|
 | legion	|  	| Legion - Spinner-87 (World ver 2.03)			| 		| 1987	| Nichibutsu	| Miscellaneous	| 					|
+| legionnaj	|  	| Legionnaire (Japan)					| legionna	| 1992	| TAD Corporatio| Miscellaneous	| 					|
+| legionnau	|  	| Legionnaire (US)					| legionna	| 1992	| TAD Corporatio| Miscellaneous	| 					|
+| legionna	|  	| Legionnaire (World)					| 		| 1992	| TAD Corporatio| Miscellaneous	| 					|
 | md_legobatman	|  	| Lego Batman						| 		| 2014	| Russia	| Sega Megadrive| 					|
 | bgareggabla	|  	| Lei Shen Zhuan Thunder Deity Biography (Chinese hack o| bgaregga	| 1996	| hack		| Toaplan GP9001| 					|
 | md_lemmings	|  	| Lemmings (Euro)					| 		| 1992	| Sega		| Sega Megadrive| 					|
@@ -8315,6 +8328,8 @@ This list contains all games supported by FinalBurn Neo.
 | gg_sdgundam	|  	| SD Gundam - Winner's History (Jpn)			| 		| 1995	| Bandai	| Sega Game Gear| 					|
 | neobattl	|  	| SD Gundam Neo Battling (Japan)			| 		| 1992	| Banpresto / So| Seta		| 					|
 | sdgndmps	|  	| SD Gundam Psycho Salamander no Kyoui			| 		| 1991	| Banpresto / Ba| Miscellaneous	| 					|
+| grainbow	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)	| 		| 1993	| Banpresto	| Miscellaneous	| 					|
+| grainbowk	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)	| grainbow	| 1993	| Banpresto	| Miscellaneous	| 					|
 | md_sdvalis	|  	| SD Valis (Jpn)					| md_sydvalis	| 1992	| Laser Soft	| Sega Megadrive| 					|
 | sms_sdi	|  	| SDI (Jpn)						| sms_globald	| 1987	| Sega		| Sega Master Sy| 					|
 | sdibl		|  	| SDI - Strategic Defense Initiative (bootleg, original | sdi		| 1987	| Sega		| System 16B	| 					|
@@ -9315,18 +9330,18 @@ This list contains all games supported by FinalBurn Neo.
 | sf2thndr2	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
 | sf2cebltw	|  	| Street Fighter II' - Champion Edition (920313 'Taiwan'| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeabl	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2ceeab2	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2m1		|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab3	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab4	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab5	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2ceuabl	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2ceuab10	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2m3		|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2m10	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab2	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2ceuab3	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2ceuab4	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2m8		|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2cems6a	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab5	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab6	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2ceuab7	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceblp	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab8	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| Some graphic issues due to roms	|
 | sf2ceuab9	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| Some graphic issues due to roms	|
 | sf2cejabl	|  	| Street Fighter II' - Champion Edition (920322 Japan bo| sf2ce		| 1992	| bootleg	| CPS1		| 					|
@@ -9346,7 +9361,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2rb		|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb2	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb3	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2rb4	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2m4		|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb5	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb6	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2red	|  	| Street Fighter II' - Champion Edition (Red Wave bootle| sf2ce		| 1992	| bootleg	| CPS1		| 					|

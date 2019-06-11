@@ -5,6 +5,7 @@ This is the official repository of FinalBurn Neo, an Emulator for Arcade Games &
 
 Use of this program and its source code is subject to the license conditions provided in the [license.txt](/src/license.txt) file in the src folder.
 
+
 VS2019 [![Build status](https://ci.appveyor.com/api/projects/status/8rkefxtvxd3cllag/branch/master?svg=true)](https://ci.appveyor.com/project/tmaul/fbneo-kbhgd/branch/master)
 
 

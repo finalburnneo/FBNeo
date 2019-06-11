@@ -53,6 +53,8 @@ static UINT16 DrvInputs[4];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
+static INT32 denjinmk_hack = 0;
+
 static struct BurnInputInfo LegionnaInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
@@ -651,7 +653,10 @@ static UINT16 __fastcall legionna_main_read_word(UINT32 address)
 	}
 
 	if (address >= 0x100700 && address <= 0x10071f) {
-		if (address == 0x100714 && SekGetPC(-1) == 0x5fe0) return 1; // denjinmk hack
+		if (denjinmk_hack) {
+			if (address == 0x100714) return 1;
+			return seibu_main_word_read(((address & 0x1f)/2) & 7);
+		}
 		return seibu_main_word_read((address & 0x1f)/2);
 	}
 
@@ -1112,7 +1117,7 @@ static INT32 HeatbrlInit()
 	GenericTilemapSetTransparent(2, 0xf);
 	GenericTilemapSetTransparent(3, 0xf);
 
-	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, 0);
 
 	DrvDoReset();
 
@@ -1197,6 +1202,7 @@ static INT32 GodzillaInit()
 	GenericTilemapSetTransparent(3, 0xf);
 
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, 0);
+	GenericTilemapSetOffsets(3, 4, 4); // text layer offset
 
 	*((UINT16*)(Drv68KROM + 0xbe0e + 0x0a)) = 0xb000; // fix collisions (hack)
 	*((UINT16*)(Drv68KROM + 0xbe0e + 0x1a)) = 0xb800;
@@ -1274,6 +1280,7 @@ static INT32 DenjinmkInit()
 
 	seibu_sound_init(1, 0x20000, 3579545, 3579545, 1000000 / 132);
 	coin_hold_length = 2; // this game only likes coin held for 2 frames
+	denjinmk_hack = 1; // special handling for seibusnd reads
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 16, 16, 32, 32);
@@ -1302,7 +1309,6 @@ static INT32 DenjinmkInit()
 static INT32 GrainbowInit()
 {
 	sprite_size = 0x200000;
-	BurnSetRefreshRate(61.00);
 
 	AllMem = NULL;
 	MemIndex();
@@ -1386,6 +1392,8 @@ static INT32 DrvExit()
 	seibu_sound_exit();
 
 	coin_hold_length = 4;
+
+	denjinmk_hack = 0;
 
 	BurnFree(AllMem);
 
@@ -1509,7 +1517,7 @@ static INT32 HeatbrlDraw()
 	if ((layer_disable & 0x0001) == 0 && (nBurnLayer & 4)) GenericTilemapDraw(0, pTransDraw, 2);
 	if ((layer_disable & 0x0008) == 0 && (nBurnLayer & 8)) GenericTilemapDraw(3, pTransDraw, 4);
 
-	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x3000-0x800, pri_masks, 0, -16);
+	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x3000-0x800, pri_masks, 0, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1534,7 +1542,7 @@ static INT32 GodzillaDraw()
 	GenericTilemapSetScrollY(1, scroll[3]);
 	GenericTilemapSetScrollX(2, scroll[4]);
 	GenericTilemapSetScrollY(2, scroll[5]);
-	GenericTilemapSetScrollX(3, 0x1ef - scroll[6]);
+	GenericTilemapSetScrollX(3, (0x1ef) - scroll[6]);
 
 	BurnTransferClear(0xff);
 
@@ -1643,7 +1651,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 400;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -1701,9 +1709,10 @@ static INT32 DrvYM2151Frame()
 		}
 	}
 
-	INT32 nInterleave = 400;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { (10000000 * 100) / nBurnFPS, (3579545 * 100) / nBurnFPS };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -1714,6 +1723,13 @@ static INT32 DrvYM2151Frame()
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		CPU_RUN(1, Zet);
+
+		if (pBurnSoundOut && ((i%4)==3)) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			seibu_sound_update(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	if (pBurnDraw) {
@@ -1721,7 +1737,11 @@ static INT32 DrvYM2151Frame()
 	}
 
 	if (pBurnSoundOut) {
-		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength > 0) {
+			seibu_sound_update(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	ZetClose();
@@ -1922,7 +1942,7 @@ struct BurnDriver BurnDrvHeatbrl = {
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrlRomInfo, heatbrlRomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
-	256, 224, 4, 3
+	256, 256, 4, 3
 };
 
 
@@ -1965,7 +1985,7 @@ struct BurnDriver BurnDrvHeatbrl2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrl2RomInfo, heatbrl2RomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
-	256, 224, 4, 3
+	256, 256, 4, 3
 };
 
 
@@ -2008,7 +2028,7 @@ struct BurnDriver BurnDrvHeatbrl3 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrl3RomInfo, heatbrl3RomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
-	256, 224, 4, 3
+	256, 256, 4, 3
 };
 
 
@@ -2051,7 +2071,7 @@ struct BurnDriver BurnDrvHeatbrlo = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrloRomInfo, heatbrloRomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
-	256, 224, 4, 3
+	256, 256, 4, 3
 };
 
 
@@ -2094,7 +2114,7 @@ struct BurnDriver BurnDrvHeatbrlu = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrluRomInfo, heatbrluRomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
-	256, 224, 4, 3
+	256, 256, 4, 3
 };
 
 
@@ -2137,7 +2157,7 @@ struct BurnDriver BurnDrvHeatbrle = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrleRomInfo, heatbrleRomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
-	256, 224, 4, 3
+	256, 256, 4, 3
 };
 
 
@@ -2225,7 +2245,7 @@ struct BurnDriver BurnDrvDenjinmk = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, denjinmkRomInfo, denjinmkRomName, NULL, NULL, NULL, NULL, DenjinmkInputInfo, DenjinmkDIPInfo,
 	DenjinmkInit, DrvExit, DrvYM2151Frame, DenjinmkDraw, DrvScan, &DrvRecalc, 0x801,
-	320, 224, 4, 3
+	320, 256, 4, 3
 };
 
 

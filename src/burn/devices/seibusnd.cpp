@@ -507,7 +507,8 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 	}
 
 	// init kludge for sdgndmps
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "sdgndmps")) {
+	if ( (!strcmp(BurnDrvGetTextA(DRV_NAME), "sdgndmps")) || (!strncmp(BurnDrvGetTextA(DRV_NAME), "denjinmk", 8)) ) {
+		bprintf(0, _T("seibusnd: init kludge for sdgndmps / denjinmk..\n"));
 		is_sdgndmps = 1;
 	}
 }

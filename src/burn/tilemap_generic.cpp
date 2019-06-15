@@ -723,7 +723,7 @@ INT32 GenericTilemapGetTileDirty(INT32 which, UINT32 offset)
 	return cur_map->dirty_tiles[offset % (cur_map->mwidth * cur_map->mheight)];
 }
 
-void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
+void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 priority_mask)
 {
 #if defined FBNEO_DEBUG
 	if (Bitmap == NULL) {
@@ -758,6 +758,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		if (miny < 0) miny = 0;
 		if (maxy >= nScreenHeight) maxy = nScreenHeight;
 	}
+
+	GenericTilesPRIMASK = priority_mask;
 
 	INT32 category_or = (priority & TMAP_DRAWLAYER1) ? 2 : 0;
 	INT32 opaque = priority & TMAP_FORCEOPAQUE;
@@ -855,7 +857,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				if (trans_ptr[*gfxsrc] == 0)
 				{
 					Bitmap[y * bitmap_width + x] = *gfxsrc + color;
-					pPrioDraw[y * bitmap_width + x] = priority;
+					pPrioDraw[y * bitmap_width + x] = priority | (pPrioDraw[y * bitmap_width + x] & GenericTilesPRIMASK);
 				}
 			}
 		}
@@ -969,7 +971,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 						if (trans_ptr[gfxsrc[flip_wide - dx]] == 0) {
 							dest[dst] = color + gfxsrc[flip_wide - dx];
-							prio[dst] = priority;
+							prio[dst] = priority | (prio[dst] & GenericTilesPRIMASK);
 						}
 					}
 				}
@@ -980,9 +982,9 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 						INT32 dst = (sx + dx) - scrx;
 						if (dst < minx || dst >= maxx) continue;
 
-						if (cur_map->transparent[0][gfxsrc[dx]] == 0) {
+						if (trans_ptr[gfxsrc[dx]] == 0) {
 							dest[dst] = color + gfxsrc[dx];
-							prio[dst] = priority;
+							prio[dst] = priority | (prio[dst] & GenericTilesPRIMASK);
 						}
 					}
 				}

@@ -18,7 +18,6 @@ static UINT8 *DrvGfxROM4;
 static UINT8 *DrvSndROM;
 static UINT8 *AllRam;
 static UINT8 *DrvZ80RAM;
-static UINT8 *DrvCopRAM;
 static UINT8 *Drv1KRAM;
 static UINT8 *DrvAllRAM;
 static UINT8 *DrvBgBuf;
@@ -531,6 +530,7 @@ static inline void legionna_ctc_write(INT32 offset, UINT16 data)
 
 	if (offset == 0x1a) flipscreen = data & 1;
 	if (offset == 0x1c) layer_disable = data;
+
 	if (offset >= 0x20 && offset <= 0x2b) {
 		scroll[(offset - 0x20) / 2] = data;
 		return;
@@ -544,10 +544,6 @@ static inline void legionna_ctc_write(INT32 offset, UINT16 data)
 
 static inline void legionna_common_write_word(UINT32 address, UINT16 data)
 {
-	if (address >= 0x100400 && address <= 0x1006ff) {
-		*((UINT16*)(DrvCopRAM + (address & 0x3fe))) = data;
-	}
-
 	switch (address)
 	{
 		case 0x100470: // tile bank?
@@ -561,16 +557,14 @@ static inline void legionna_common_write_word(UINT32 address, UINT16 data)
 	}
 
 	if (address >= 0x100400 && address <= 0x1006ff) {
-		seibu_cop_write(address & 0x3fe);
+		seibu_cop_write(address & 0x3ff, data);
+		return;
 	}
+	bprintf(0, _T("ww: %X  %x   PC:%X\n"), address, data, SekGetPC(-1));
 }
 
 static inline void legionna_common_write_byte(UINT32 address, UINT8 data)
 {
-	if (address >= 0x100400 && address <= 0x1006ff) {
-		DrvCopRAM[(address & 0x3ff) ^ 1] = data;
-	}
-
 	switch (address)
 	{
 		case 0x100470:
@@ -583,9 +577,7 @@ static inline void legionna_common_write_byte(UINT32 address, UINT8 data)
 		break;
 	}
 
-	if (address >= 0x100400 && address <= 0x1006ff) {
-		seibu_cop_write(address & 0x3fe);
-	}
+	bprintf(0, _T("wB: %X  %x   PC:%X\n"), address, data, SekGetPC(-1));
 }
 
 static inline UINT16 legionna_common_read_word(UINT32 address)
@@ -633,7 +625,7 @@ static void __fastcall legionna_main_write_word(UINT32 address, UINT16 data)
 static void __fastcall legionna_main_write_byte(UINT32 address, UINT8 data)
 {
 	if (address >= 0x100600 && address <= 0x10064f) {
-		bprintf (0, _T("CTC WB: %5.5x, %2.2x\n"), address, data);
+	//	bprintf (0, _T("CTC WB: %5.5x, %2.2x\n"), address, data);
 		return;
 	}
 
@@ -648,6 +640,10 @@ static void __fastcall legionna_main_write_byte(UINT32 address, UINT8 data)
 static UINT16 __fastcall legionna_main_read_word(UINT32 address)
 {
 	if (address >= 0x100600 && address <= 0x10064f) {
+	//	bprintf (0, _T("CTC RW: %5.x\n"));
+		return 0;
+	}
+	if (address >= 0x100640 && address <= 0x10068f) {
 	//	bprintf (0, _T("CTC RW: %5.x\n"));
 		return 0;
 	}
@@ -692,9 +688,10 @@ static void __fastcall heatbrl_main_write_byte(UINT32 address, UINT8 data)
 
 	if (address >= 0x1007c0 && address <= 0x1007df) {
 		seibu_main_word_write((address-0x1007c0)/2, data);
+		bprintf(0, _T("sound wb? %X\n"), address);
 		return;
 	}
-
+	bprintf(0, _T("wb: %X  %X  PC:%X\n"), address, data, SekGetPC(-1));
 	legionna_common_write_byte(address, data);
 }
 
@@ -883,7 +880,6 @@ static INT32 MemIndex()
 	SeibuZ80RAM			= Next;
 	DrvZ80RAM			= Next; Next += 0x000800;
 
-	DrvCopRAM			= Next; Next += 0x000400;
 	Drv1KRAM			= Next; Next += 0x000400;
 	DrvAllRAM			= Next; Next += 0x020000;
 
@@ -1018,7 +1014,7 @@ static INT32 LegionnaInit()
 	SekSetReadByteHandler(0,	legionna_main_read_byte);
 	SekClose();
 
-	seibu_cop_config(1, DrvCopRAM, videowrite_cb_w, palette_write_xbgr555);
+	seibu_cop_config(1, videowrite_cb_w, palette_write_xbgr555);
 
 	seibu_sound_init(0, 0x20000, 3579545, 3579545, 1000000 / 132);
 
@@ -1098,7 +1094,7 @@ static INT32 HeatbrlInit()
 	SekSetReadByteHandler(0,	legionna_main_read_byte);
 	SekClose();
 
-	seibu_cop_config(1, DrvCopRAM, videowrite_cb_w, palette_write_xbgr555);
+	seibu_cop_config(1, videowrite_cb_w, palette_write_xbgr555);
 
 	seibu_sound_init(0, 0x20000, 3579545, 3579545, 1000000 / 132);
 
@@ -1127,6 +1123,7 @@ static INT32 HeatbrlInit()
 static INT32 GodzillaInit()
 {
 	sprite_size = 0x600000;
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -1178,7 +1175,7 @@ static INT32 GodzillaInit()
 	SekSetReadByteHandler(0,	legionna_main_read_byte);
 	SekClose();
 
-	seibu_cop_config(1, DrvCopRAM, videowrite_cb_w, palette_write_xbgr555);
+	seibu_cop_config(1, videowrite_cb_w, palette_write_xbgr555);
 
 	seibu_sound_init(1, 0x20000, 3579545, 3579545, 1000000 / 132);
 
@@ -1218,6 +1215,7 @@ static INT32 GodzillaInit()
 static INT32 DenjinmkInit()
 {
 	sprite_size = 0x500000;
+
 	BurnSetRefreshRate(56.00);
 
 	AllMem = NULL;
@@ -1276,7 +1274,7 @@ static INT32 DenjinmkInit()
 	SekSetWriteWordHandler(1,	denjinmk_palette_write_word);
 	SekClose();
 
-	seibu_cop_config(1, DrvCopRAM, videowrite_cb_w, palette_write_xbgr555);
+	seibu_cop_config(1, videowrite_cb_w, palette_write_xbgr555);
 
 	seibu_sound_init(1, 0x20000, 3579545, 3579545, 1000000 / 132);
 	coin_hold_length = 2; // this game only likes coin held for 2 frames
@@ -1359,7 +1357,7 @@ static INT32 GrainbowInit()
 	SekSetReadByteHandler(0,	legionna_main_read_byte);
 	SekClose();
 
-	seibu_cop_config(1, DrvCopRAM, videowrite_cb_w, palette_write_xbgr555);
+	seibu_cop_config(1, videowrite_cb_w, palette_write_xbgr555);
 
 	seibu_sound_init(1, 0x20000, 3579545, 3579545, 1000000 / 132);
 
@@ -1400,7 +1398,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_sprites(INT32 ram_offset, UINT16 *pri_masks, INT32 sprite_xoffs, INT32 sprite_yoffs)
+static void draw_sprites(INT32 ram_offset, UINT16 *pri_masks, INT32 ext_bank, INT32 sprite_xoffs, INT32 sprite_yoffs)
 {
 	GenericTilesGfx *gfx = &GenericGfxData[2];
 	INT32 screen_mask = (nScreenWidth < 320) ? 0x200 : 0x1000;
@@ -1419,11 +1417,11 @@ static void draw_sprites(INT32 ram_offset, UINT16 *pri_masks, INT32 sprite_xoffs
 
 			switch (cur_pri)
 			{
-				case 0: pri_mask = -256; break; // gumdam swamp monster l2
-				case 1: pri_mask = -256; break; // cupsoc
-				case 2: pri_mask = -4; break; // masking effect for gundam l2 monster
-				case 3: pri_mask = -4; break; // cupsoc (not sure what..)
-				case 4: pri_mask = -32; break; // gundam level 2/3 player
+				case 0: pri_mask = 0xff00; break; // gumdam swamp monster l2
+				case 1: pri_mask = 0xff00; break; // cupsoc
+				case 2: pri_mask = 0xfffc; break; // masking effect for gundam l2 monster
+				case 3: pri_mask = 0xfffc; break; // cupsoc (not sure what..)
+				case 4: pri_mask = 0xffe0; break; // gundam level 2/3 player
 				case 6: pri_mask = 0; break; // insert coin in gundam
 			}
 		}
@@ -1432,7 +1430,8 @@ static void draw_sprites(INT32 ram_offset, UINT16 *pri_masks, INT32 sprite_xoffs
 			pri_mask = pri_masks[spriteram[offs+1] >> 14];
 		}
 
-		INT32 sprite = (spriteram[offs+1] & 0x3fff) | ((data & 0x0040) << 8) | (spriteram[offs+3] & 0x8000);
+		INT32 sprite = (spriteram[offs+1] & 0x3fff);
+		if (ext_bank) sprite |= ((data & 0x0040) << 8) | (spriteram[offs+3] & 0x8000);
 
 		INT32 y = spriteram[offs+3] & (screen_mask - 1);
 		INT32 x = spriteram[offs+2] & (screen_mask - 1);
@@ -1484,7 +1483,7 @@ static INT32 LegionnaDraw()
 	if ((layer_disable & 0x0004) == 0 && (nBurnLayer & 4)) GenericTilemapDraw(2, pTransDraw, 2);
 	if ((layer_disable & 0x0008) == 0 && (nBurnLayer & 8)) GenericTilemapDraw(3, pTransDraw, 4);
 
-	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x5000 - 0x1000, pri_masks, 0, -16);
+	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x5000 - 0x1000, pri_masks, 0, 0, -16);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1517,7 +1516,7 @@ static INT32 HeatbrlDraw()
 	if ((layer_disable & 0x0001) == 0 && (nBurnLayer & 4)) GenericTilemapDraw(0, pTransDraw, 2);
 	if ((layer_disable & 0x0008) == 0 && (nBurnLayer & 8)) GenericTilemapDraw(3, pTransDraw, 4);
 
-	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x3000-0x800, pri_masks, 0, 0);
+	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x3000-0x800, pri_masks, 0, 0, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1551,7 +1550,7 @@ static INT32 GodzillaDraw()
 	if ((layer_disable & 0x0004) == 0 && (nBurnLayer & 4)) GenericTilemapDraw(2, pTransDraw, 2);
 	if ((layer_disable & 0x0008) == 0 && (nBurnLayer & 8)) GenericTilemapDraw(3, pTransDraw, 4);
 
-	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x5000-0x800, pri_masks, 0, 0);
+	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x5000-0x800, pri_masks, 1, 0, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1584,7 +1583,7 @@ static INT32 DenjinmkDraw()
 	if ((layer_disable & 0x0004) == 0 && (nBurnLayer & 4)) GenericTilemapDraw(2, pTransDraw, 2);
 	if ((layer_disable & 0x0008) == 0 && (nBurnLayer & 8)) GenericTilemapDraw(3, pTransDraw, 4);
 
-	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x5000-0x800, pri_masks, 0, 0);
+	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x5000-0x800, pri_masks, 1, 0, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1610,12 +1609,12 @@ static INT32 GrainbowDraw()
 
 	BurnTransferClear(0x800);
 
-	if ((layer_disable & 0x0001) == 0 && (nBurnLayer & 1)) GenericTilemapDraw(0, pTransDraw, 1);
-	if ((layer_disable & 0x0002) == 0 && (nBurnLayer & 2)) GenericTilemapDraw(1, pTransDraw, 2);
-	if ((layer_disable & 0x0004) == 0 && (nBurnLayer & 4)) GenericTilemapDraw(2, pTransDraw, 4);
-	if ((layer_disable & 0x0008) == 0 && (nBurnLayer & 8)) GenericTilemapDraw(3, pTransDraw, 8);
+	if ((layer_disable & 0x0001) == 0 && (nBurnLayer & 1)) GenericTilemapDraw(0, pTransDraw, 1, 0xff);
+	if ((layer_disable & 0x0002) == 0 && (nBurnLayer & 2)) GenericTilemapDraw(1, pTransDraw, 2, 0xff);
+	if ((layer_disable & 0x0004) == 0 && (nBurnLayer & 4)) GenericTilemapDraw(2, pTransDraw, 4, 0xff);
+	if ((layer_disable & 0x0008) == 0 && (nBurnLayer & 8)) GenericTilemapDraw(3, pTransDraw, 8, 0xff);
 
-	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x7000-0x800, NULL, -16, 0);
+	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x7000-0x800, NULL, 0, 0, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1651,7 +1650,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 288;
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -2279,7 +2278,7 @@ STD_ROM_FN(grainbow)
 
 struct BurnDriver BurnDrvGrainbow = {
 	"grainbow", NULL, NULL, NULL, "1993",
-	"SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)\0", NULL, "Banpresto", "Miscellaneous",
+	"SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)\0", "Game has emulation/graphics issues", "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, grainbowRomInfo, grainbowRomName, NULL, NULL, NULL, NULL, GrainbowInputInfo, GrainbowDIPInfo,
@@ -2318,7 +2317,7 @@ STD_ROM_FN(grainbowk)
 
 struct BurnDriver BurnDrvGrainbowk = {
 	"grainbowk", "grainbow", NULL, NULL, "1993",
-	"SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)\0", NULL, "Banpresto", "Miscellaneous",
+	"SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)\0", "Game has emulation/graphics issues", "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, grainbowkRomInfo, grainbowkRomName, NULL, NULL, NULL, NULL, GrainbowInputInfo, GrainbowDIPInfo,

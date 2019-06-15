@@ -18,18 +18,19 @@
 // force the tilemap to ignore transparency, but do not skip tiles
 #define TMAP_DRAWOPAQUE		(1 << 25)
 
-// set tilemap to use transparent color (is set when using GenericTilemapSetTransparent())
-#define TMAP_TRANSPARENT	(1 <<  9)
-
-// set tilemap to use a transparency mask (is set when using GenericTilemapSetTransMask())
-#define TMAP_TRANSMASK		(1 << 10)
-
 // set tilemap to use layer 0 or layer 1 (category |= 2 for layer1 |= 0 for layer 0)
 #define TMAP_DRAWLAYER0		(0)
 #define TMAP_DRAWLAYER1		(1 << 26)
 
 // select which group to use in the tilemap (group is set in the tilemap_callback)
 #define TMAP_SET_GROUP(x)	((x) << 8)
+
+// Used Internally
+// set tilemap to use transparent color (is set when using GenericTilemapSetTransparent())
+#define TMAP_TRANSPARENT	(1 <<  9)
+
+// set tilemap to use a transparency mask (is set when using GenericTilemapSetTransMask())
+#define TMAP_TRANSMASK		(1 << 10)
 
 // Tile defines (used in tilemap_callback)
 
@@ -157,7 +158,7 @@ INT32 GenericTilemapGetTileDirty(INT32 which, UINT32 offset);
 // which 	- select which tilemap to draw
 // Bitmap	- pointer to the bitmap to draw the tilemap
 // priority	- this will be used to set priority data, and/or draw flags
-void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority);
+void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 priority_mask = 0x00);
 
 // Draw using the bitmap manager (uses clipping and bitmap dimensions)
 void GenericTilemapDraw(INT32 which, INT32 bitmap, INT32 priority);

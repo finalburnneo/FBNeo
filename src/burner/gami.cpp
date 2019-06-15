@@ -25,6 +25,8 @@ UINT8 macroSystemSaveState = 0;
 UINT8 macroSystemLoadState = 0;
 UINT8 macroSystemUNDOState = 0;
 
+#define HW_NEOGEO ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOCD) )
+
 // ---------------------------------------------------------------------------
 
 // Check if the left alt (menu) key is mapped
@@ -227,7 +229,7 @@ static void GameInpInitMacros()
 				nKickInputs[nPlayer][2] = i;
 			}
 
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (HW_NEOGEO) {
 				if (_stricmp(" Button A", bii.szName + 2) == 0) {
 					nNeogeoButtons[nPlayer][0] = i;
 				}
@@ -335,7 +337,7 @@ static void GameInpInitMacros()
 					} else {
 						sprintf(pgi->Macro.szName, "P%d Auto-Fire Button %d", nPlayer+1, i+1);
 					}
-					if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+					if (HW_NEOGEO) {
 						BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][i]);
 					} else {
 						BurnDrvGetInputInfo(&bii, nPgmButtons[nPlayer][i]);
@@ -381,7 +383,7 @@ static void GameInpInitMacros()
 			pgi++;
 		}
 
-		if (nFireButtons == 4 && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+		if (nFireButtons == 4 && HW_NEOGEO) {
 			pgi->nInput = GIT_MACRO_AUTO;
 			pgi->nType = BIT_DIGITAL;
 			pgi->Macro.nMode = 0;
@@ -1651,7 +1653,7 @@ INT32 ConfigGameLoadHardwareDefaults()
 		nApplyHardwareDefaults = 1;
 	}
 
-	if (nHardwareFlag == HARDWARE_SNK_NEOGEO) {
+	if (nHardwareFlag == HARDWARE_SNK_NEOGEO || nHardwareFlag == HARDWARE_SNK_NEOCD) {
 		szFileName = szDefaultNeogeoFile;
 		nApplyHardwareDefaults = 1;
 	}

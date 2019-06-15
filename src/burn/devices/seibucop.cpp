@@ -1,11 +1,10 @@
-#if defined (_MSC_VER)
-#define _USE_MATH_DEFINES
-#endif
-
-
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "nec_intf.h"
+
+#if defined (_MSC_VER)
+#define _USE_MATH_DEFINES
+#endif
 #include <math.h>
 
 //#define HARDSEK - hard-config seibucop to use 68k only!
@@ -29,22 +28,21 @@ static UINT16 (*cpu_read_word)(UINT32);
 static UINT8 (*cpu_read_byte)(UINT32);
 #endif
 
-static INT32 m_host_endian = 0;
+static INT32 host_endian = 0;
 static INT32 byte_endian_val = 0;
 static INT32 word_endian_val = 0;
-static UINT16 *cop_ram16;
 
 // variables!!
 static UINT32 cop_sprite_dma_param;
-static UINT16 cop_sprite_dma_size;
+static INT32  cop_sprite_dma_size;
 static UINT32 cop_sprite_dma_src;
-static UINT16 cop_sprite_dma_abs_y;
-static UINT16 cop_sprite_dma_abs_x;
+static INT32 cop_sprite_dma_abs_y;
+static INT32 cop_sprite_dma_abs_x;
 static UINT16 cop_status;
 static UINT16 cop_angle_target;
 static UINT16 cop_angle_step;
-static UINT32 cop_angle;
-static UINT32 cop_dist;
+static UINT16 cop_angle;
+static UINT16 cop_dist;
 static UINT32 cop_itoa;
 static UINT16 cop_itoa_mode;
 static UINT8 cop_itoa_digits[10];
@@ -77,7 +75,7 @@ static UINT16 cop_dma_dst[0x200];
 
 static UINT16 cop_hit_status;
 static UINT16 cop_hit_val_stat;
-static UINT16 cop_hit_val[3];
+static INT16 cop_hit_val[3];
 
 static UINT16 cop_latch_value;
 static UINT16 cop_latch_addr;
@@ -88,25 +86,13 @@ static UINT16 cop_func_mask[256/8];
 static UINT16 cop_func_trigger[256/8];
 static UINT16 cop_program[256];
 
-static INT32 m_LEGACY_r0;
-static INT32 m_LEGACY_r1;
+static INT32 LEGACY_r0;
+static INT32 LEGACY_r1;
 
 struct colinfo {
-	colinfo()
-	{
-		pos[0] = pos[1] = pos[2] = 0;
-		dx[0] = dx[1] = dx[2] = 0;
-		size[0] = size[1] = size[2] = 0;
-		allow_swap = false;
-		flags_swap = 0;
-		spradr = 0;
-		min[0] = min[1] = min[2] = 0;
-		max[0] = max[1] = max[2] = 0;
-	}
-
 	INT16 pos[3];
-	INT16 dx[3];
-	UINT16 size[3];
+	INT8 dx[3];
+	UINT8 size[3];
 	bool allow_swap;
 	UINT16 flags_swap;
 	UINT32 spradr;
@@ -173,8 +159,8 @@ static void LEGACY_execute_130e_cupsoc(int , UINT16 data)
 		cop_angle &= 0xff;
 	}
 
-	m_LEGACY_r0 = dy;
-	m_LEGACY_r1 = dx;
+	LEGACY_r0 = dy;
+	LEGACY_r1 = dx;
 
 	if (data & 0x80)
 		cop_write_byte(cop_regs[0] + (0x34), cop_angle);
@@ -219,7 +205,7 @@ static void execute_338e(int , UINT16 data, bool is_yflip)
 		cop_angle = 0;
 	}
 	else {
-		cop_angle = (int)(atan(double(dx) / double(dy)) * 128 / M_PI);
+		cop_angle = (int)((double)atan(double(dx) / double(dy)) * 128 / M_PI);
 		if (dy < 0)
 			cop_angle += 0x80;
 
@@ -251,7 +237,7 @@ static void execute_3b30(int , UINT16 data)
 
 	dx = dx >> 16;
 	dy = dy >> 16;
-	cop_dist = (INT32)sqrt((double)(dx*dx + dy*dy));
+	cop_dist = (UINT16)sqrt((double)(dx*dx + dy*dy));
 
 	if (data & 0x0080)
 		cop_write_word(cop_regs[0] + (data & 0x200 ? 0x3a : 0x38), cop_dist);
@@ -331,7 +317,7 @@ static void execute_6200(int , UINT16 )
 
 	cop_write_word(cop_regs[primary_reg], flags);
 
-	if (!m_host_endian)
+	if (!host_endian)
 		cop_write_byte(cop_regs[primary_reg] + primary_offset, angle);
 	else // angle is a byte, but grainbow (cave mid-boss) is only happy with write-word, could be more endian weirdness, or it always writes a word?
 		cop_write_word(cop_regs[primary_reg] + primary_offset, angle);
@@ -372,7 +358,7 @@ static void LEGACY_execute_6200(int , UINT16 ) // this is for cupsoc, different 
 
 	cop_write_word(cop_regs[primary_reg], flags);
 
-	if (!m_host_endian)
+	if (!host_endian)
 		cop_write_byte(cop_regs[primary_reg] + primary_offset, angle);
 	else // angle is a byte, but grainbow (cave mid-boss) is only happy with write-word, could be more endian weirdness, or it always writes a word?
 		cop_write_word(cop_regs[primary_reg] + primary_offset, angle);
@@ -414,6 +400,7 @@ static void execute_8100(int , UINT16 )
 	if (raw_angle == 0xc0)
 		amp *= 2;
 	res = int(amp*sin(angle)) << cop_scale;
+
 	cpu_write_long(cop_regs[0] + 16, res);
 }
 
@@ -427,6 +414,7 @@ static void execute_8900(int , UINT16 )
 	if (raw_angle == 0x80)
 		amp *= 2;
 	res = int(amp*cos(angle)) << cop_scale;
+
 	cpu_write_long(cop_regs[0] + 20, res);
 }
 
@@ -444,7 +432,7 @@ static void cop_collision_update_hitbox(UINT16 data, int slot, UINT32 hitadr)
 	UINT32 hitadr2 = cpu_read_word(hitadr) | (cop_hit_baseadr << 16); // DON'T use cop_read_word here, doesn't need endian fixing?!
 	int num_axis = 2;
 	int extraxor = 0;
-	if (m_host_endian) extraxor = 1;
+	if (host_endian) extraxor = 1;
 
 	if (data & 0x0100) num_axis = 3;
 
@@ -465,7 +453,7 @@ static void cop_collision_update_hitbox(UINT16 data, int slot, UINT32 hitadr)
 	for (i = 0; i < num_axis; i++)
 	{
 		size[i] = UINT8(cop_collision_info[slot].size[i]);
-		dx[i] = int8_t(cop_collision_info[slot].dx[i]);
+		dx[i] = INT8(cop_collision_info[slot].dx[i]);
 	}
 
 	int j = slot;
@@ -755,7 +743,7 @@ static void LEGACY_cop_cmd_write(INT32 offset, UINT16 data)
 	}
 }
 
-static void cop_cmd_write(INT32 offset, UINT16 data)
+void cop_cmd_write(INT32 offset, UINT16 data)
 {
 	find_trigger_match(data, 0xf800);
 
@@ -866,9 +854,6 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 		execute_b900(offset, data); // collisions
 		break;
 	}
-
-//	default:
-//		logerror("pcall %04x [%x %x %x %x]\n", data, /*rps(), rpc(),*/ cop_regs[0], cop_regs[1], cop_regs[2], cop_regs[3]);
 	}
 }
 
@@ -1013,14 +998,14 @@ static void cop_dma_trigger()
 			UINT32 src = (cop_dma_src[cop_dma_mode] << 6);
 			UINT32 dst = (cop_dma_dst[cop_dma_mode] << 6);
 			UINT32 size = ((cop_dma_size[cop_dma_mode] << 5) - (cop_dma_dst[cop_dma_mode] << 6) + 0x20) / 2;
-	
+
 			for (UINT32 i = 0; i < size; i++)
 			{
 				cpu_write_word(dst, cpu_read_word(src));
 				src += 2;
 				dst += 2;
 			}
-	
+
 			break;
 		}
 
@@ -1068,7 +1053,7 @@ static void dma_zsorting(UINT16 sort_size)
 	for(INT32 i = 2;i < sort_size;i+=2)
 	{
 		UINT16 vali = cpu_read_word(cop_sort_ram_addr+cpu_read_word(cop_sort_lookup+i));
-		
+
 		for(INT32 j = i-2;j<sort_size;j+=2)
 		{
 			UINT16 valj = cpu_read_word(cop_sort_ram_addr+cpu_read_word(cop_sort_lookup+j));
@@ -1109,10 +1094,8 @@ static void bcd_update()
 	cop_itoa_digits[9] = 0;
 }
 
-void seibu_cop_write(UINT16 offset)
+void seibu_cop_write(UINT16 offset, UINT16 data)
 {
-	UINT16 data = cop_ram16[(offset & 0x3fe)/2];
-
 	switch (offset & 0x3fe)
 	{
 		case 0x000: // 400
@@ -1140,11 +1123,11 @@ void seibu_cop_write(UINT16 offset)
 					cop_status |= 2;
 			}
 		return;
-			
+
 		case 0x012: // 412
 			cop_sprite_dma_src = (cop_sprite_dma_src & 0x0000ffff) | (data << 16);
 		return;
-			
+
 		case 0x014: // 414
 			cop_sprite_dma_src = (cop_sprite_dma_src & 0xffff0000) | data;
 		return;
@@ -1166,7 +1149,7 @@ void seibu_cop_write(UINT16 offset)
 			cop_itoa = (cop_itoa & 0x0000ffff) | (data << 16);
 			bcd_update();
 		return;
- 
+
 		case 0x024: // 424
 			cop_itoa_mode = data;
 		return;
@@ -1193,7 +1176,8 @@ void seibu_cop_write(UINT16 offset)
 		}
 		return;
 
-		case 0x034: // 432
+		case 0x034: // 434
+			if (data > 0xff) bprintf(0, _T("seibucop latch data overflow: %X\n"), data);
 			cop_latch_addr = data & 0xff;
 		return;
 
@@ -1213,10 +1197,10 @@ void seibu_cop_write(UINT16 offset)
 			cop_latch_trigger = data;
 		return;
 
-		case 0x040: // 440 - cop_unk_param_a_w
+		case 0x040: // 440 - (unknown)
 		return;
 
-		case 0x042: // 442 - cop_unk_param_B_w
+		case 0x042: // 442 - (unknown)
 		return;
 
 		case 0x044: // 444
@@ -1377,7 +1361,7 @@ UINT16 seibu_cop_read(UINT16 offset)
 		case 0x1a2:
 		case 0x1a4:
 		case 0x1a6:
-			return SekTotalCycles() % (cop_rng_max_value + 1);
+			return BurnRandom() % (cop_rng_max_value + 1);
 
 		case 0x1b0: // 5b0
 			return cop_status;
@@ -1389,7 +1373,9 @@ UINT16 seibu_cop_read(UINT16 offset)
 			return cop_angle;
 	}
 
-	return cop_ram16[(offset & 0x3fe)/2];
+	bprintf(0, _T("unmapped cop read: %X\n"), offset);
+
+	return 0;
 }
 
 void seibu_cop_reset()
@@ -1444,8 +1430,8 @@ void seibu_cop_reset()
 	memset (cop_func_trigger, 0, sizeof(cop_func_trigger)); //[256/8];
 	memset (cop_program, 0, sizeof(cop_program)); //[256];
 
-	m_LEGACY_r0 = 0;
-	m_LEGACY_r1 = 0;
+	LEGACY_r0 = 0;
+	LEGACY_r1 = 0;
 
 	memset (cop_collision_info, 0, sizeof(cop_collision_info));
 }
@@ -1455,25 +1441,23 @@ static UINT16 _68k_read_word(UINT32 a) { return SekReadWord(a); }
 static UINT8 _68k_read_byte(UINT32 a) { return SekReadByte(a); }
 #endif
 
-void seibu_cop_config(INT32 is_68k, UINT8 *copram, void (*vidram_write)(INT32,UINT16,UINT16), void (*pal_write)(INT32,UINT16))
+void seibu_cop_config(INT32 is_68k, void (*vidram_write)(INT32,UINT16,UINT16), void (*pal_write)(INT32,UINT16))
 {
-	m_host_endian = is_68k;
+	host_endian = is_68k;
 #ifdef HARDSEK
 	if (is_68k == 0) bprintf (0, _T("seibu_cop_config - cannot use any cpu type but 68k! HARDSEK defined!\n"));
 #endif
-	byte_endian_val = m_host_endian ? 3 : 0;
-	word_endian_val = m_host_endian ? 2 : 0;
-	
-#ifndef HARDSEK
-	cpu_write_long = (m_host_endian) ? SekWriteLong : VezWriteLong;
-	cpu_write_word = (m_host_endian) ? SekWriteWord : VezWriteWord;
-	cpu_write_byte = (m_host_endian) ? SekWriteByte : VezWriteByte;
-	cpu_read_long = (m_host_endian) ? SekReadLong : VezReadLong;
-	cpu_read_word = (m_host_endian) ? _68k_read_word : VezReadWord; // ??
-	cpu_read_byte = (m_host_endian) ? _68k_read_byte : VezReadByte; // ?
-#endif
+	byte_endian_val = host_endian ? 3 : 0;
+	word_endian_val = host_endian ? 2 : 0;
 
-	cop_ram16 = (UINT16*)copram;
+#ifndef HARDSEK
+	cpu_write_long = (host_endian) ? SekWriteLong : VezWriteLong;
+	cpu_write_word = (host_endian) ? SekWriteWord : VezWriteWord;
+	cpu_write_byte = (host_endian) ? SekWriteByte : VezWriteByte;
+	cpu_read_long = (host_endian) ? SekReadLong : VezReadLong;
+	cpu_read_word = (host_endian) ? _68k_read_word : VezReadWord; // ??
+	cpu_read_byte = (host_endian) ? _68k_read_byte : VezReadByte; // ?
+#endif
 
 	cop_paletteram_cb = pal_write;
 	cop_videoram_cb = vidram_write;
@@ -1533,10 +1517,12 @@ INT32 seibu_cop_scan(INT32 nAction,INT32 *)
 		SCAN_VAR(cop_func_trigger); //[256/8];
 		SCAN_VAR(cop_program); //[256];
 
-		SCAN_VAR(m_LEGACY_r0);
-		SCAN_VAR(m_LEGACY_r1);
+		SCAN_VAR(LEGACY_r0);
+		SCAN_VAR(LEGACY_r1);
 
 		SCAN_VAR(cop_collision_info);
+
+		BurnRandomScan(nAction);
 	}
 
 	return 0;

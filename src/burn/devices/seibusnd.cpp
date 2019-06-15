@@ -418,7 +418,6 @@ void seibu_sound_reset()
 	ZetReset();
 	update_irq_lines(VECTOR_INIT);
 	seibu_z80_bank(0); // default banking. (fix for raiden2/dx coin-up)
-	ZetClose();
 
 	switch (seibu_snd_type & 3)
 	{
@@ -434,6 +433,8 @@ void seibu_sound_reset()
 			BurnYM2203Reset();
 		break;
 	}
+
+	ZetClose();
 
 	if ((seibu_snd_type & 8) == 0) MSM6295Reset();
 

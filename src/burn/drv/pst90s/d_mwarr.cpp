@@ -869,10 +869,10 @@ static INT32 DrvDraw()
 	GenericTilemapSetScrollY(2, scroll[3] + 1);
 	GenericTilemapSetScrollY(3, scroll[4] + 1);
 
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0x01);
-	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0x02);
-	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0x08); // this should be 0x04, but something is wrong somewhere. -dink
-	if (nBurnLayer & 8) GenericTilemapDraw(3, pTransDraw, 0x10);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0x01, 0xff);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0x02, 0xff);
+	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0x04, 0xff);
+	if (nBurnLayer & 8) GenericTilemapDraw(3, pTransDraw, 0x10, 0xff);
 
 	if (nSpriteEnable & 1) draw_sprites((game_select) ? 0 : 1);
 

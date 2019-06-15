@@ -1614,7 +1614,7 @@ static INT32 GrainbowDraw()
 	if ((layer_disable & 0x0004) == 0 && (nBurnLayer & 4)) GenericTilemapDraw(2, pTransDraw, 4, 0xff);
 	if ((layer_disable & 0x0008) == 0 && (nBurnLayer & 8)) GenericTilemapDraw(3, pTransDraw, 8, 0xff);
 
-	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x7000-0x800, NULL, 0, -16, 0);
+	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x7000-0x800, NULL, 0, 0, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2278,7 +2278,7 @@ STD_ROM_FN(grainbow)
 
 struct BurnDriver BurnDrvGrainbow = {
 	"grainbow", NULL, NULL, NULL, "1993",
-	"SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)\0", NULL, "Banpresto", "Miscellaneous",
+	"SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)\0", "Game has emulation/graphics issues", "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, grainbowRomInfo, grainbowRomName, NULL, NULL, NULL, NULL, GrainbowInputInfo, GrainbowDIPInfo,
@@ -2317,7 +2317,7 @@ STD_ROM_FN(grainbowk)
 
 struct BurnDriver BurnDrvGrainbowk = {
 	"grainbowk", "grainbow", NULL, NULL, "1993",
-	"SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)\0", NULL, "Banpresto", "Miscellaneous",
+	"SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)\0", "Game has emulation/graphics issues", "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, grainbowkRomInfo, grainbowkRomName, NULL, NULL, NULL, NULL, GrainbowInputInfo, GrainbowDIPInfo,

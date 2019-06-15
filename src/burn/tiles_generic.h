@@ -20,6 +20,7 @@ void GenericTilesSetGfx(INT32 nNum, UINT8 *GfxBase, INT32 nDepth, INT32 nTileWid
 
 extern UINT8* pTileData;
 extern INT32 nScreenWidth, nScreenHeight;
+extern UINT8 GenericTilesPRIMASK;
 
 INT32 GenericTilesInit();
 INT32 GenericTilesExit();

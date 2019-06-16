@@ -2349,6 +2349,7 @@ DRV		BurnDrvMSX_dawnpatr;
 DRV		BurnDrvmd_dazexmas;
 DRV		BurnDrvmd_dazexmasp;
 DRV		BurnDrvsms_deadang;
+DRV		BurnDrvDeadang;
 DRV		BurnDrvDeadconxj;
 DRV		BurnDrvDeadconx;
 DRV		BurnDrvpce_deadmoon;
@@ -3779,6 +3780,8 @@ DRV		BurnDrvGangonta;
 DRV		BurnDrvCpsGanbare;
 DRV		BurnDrvGbusters;
 DRV		BurnDrvGbustera;
+DRV		BurnDrvGhunters;
+DRV		BurnDrvGhunter;
 DRV		BurnDrvMSX_gangman;
 DRV		BurnDrvMSX_gangmanj;
 DRV		BurnDrvGangwarsb;
@@ -5360,6 +5363,7 @@ DRV		BurnDrvMSX_lazyjones;
 DRV		BurnDrvBagnardi;
 DRV		BurnDrvBagnard;
 DRV		BurnDrvBagnarda;
+DRV		BurnDrvLeadang;
 DRV		BurnDrvLbowling;
 DRV		BurnDrvcv_leeper;
 DRV		BurnDrvMadgearu;
@@ -14731,6 +14735,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dazexmas,		// Daze Before Christmas (Oceania)
 	&BurnDrvmd_dazexmasp,		// Daze Before Christmas (Oceania, Prototype)
 	&BurnDrvsms_deadang,		// Dead Angle (Euro, USA)
+	&BurnDrvDeadang,			// Dead Angle
 	&BurnDrvDeadconxj,			// Dead Connection (Japan)
 	&BurnDrvDeadconx,			// Dead Connection (World)
 	&BurnDrvpce_deadmoon,		// Dead Moon - Tsuki Sekai no Akumu
@@ -16161,6 +16166,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsGanbare,			// Ganbare! Marine Kun (Marine 2K0411 JPN)
 	&BurnDrvGbusters,			// Gang Busters (set 1)
 	&BurnDrvGbustera,			// Gang Busters (set 2)
+	&BurnDrvGhunters,			// Gang Hunter / Dead Angle (Spain)
+	&BurnDrvGhunter,			// Gang Hunter / Dead Angle
 	&BurnDrvMSX_gangman,		// Gang Man (Euro)
 	&BurnDrvMSX_gangmanj,		// Gang Man (Jpn)
 	&BurnDrvGangwarsb,			// Gang Wars (bootleg)
@@ -17742,6 +17749,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBagnardi,			// Le Bagnard (Itisa, Spain)
 	&BurnDrvBagnard,			// Le Bagnard (set 1)
 	&BurnDrvBagnarda,			// Le Bagnard (set 2)
+	&BurnDrvLeadang,			// Lead Angle (Japan)
 	&BurnDrvLbowling,			// League Bowling (NGM-019)(NGH-019)
 	&BurnDrvcv_leeper,			// Learning with Leeper
 	&BurnDrvMadgearu,			// Led Storm (US)

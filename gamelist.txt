@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12105 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12109 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2307,6 +2307,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_dazexmas	|  	| Daze Before Christmas (Oceania)			| 		| 1994	| Sunsoft	| Sega Megadrive| 					|
 | md_dazexmasp	|  	| Daze Before Christmas (Oceania, Prototype)		| md_dazexmas	| 1994	| Sunsoft	| Sega Megadrive| 					|
 | sms_deadang	|  	| Dead Angle (Euro, USA)				| 		| 1989	| Sega		| Sega Master Sy| 					|
+| deadang	|  	| Dead Angle						| 		| 1988	| Seibu Kaihatsu| Miscellaneous	| 					|
 | deadconxj	|  	| Dead Connection (Japan)				| deadconx	| 1992	| Taito Corporat| Taito F2	| 					|
 | deadconx	|  	| Dead Connection (World)				| 		| 1992	| Taito Corporat| Taito F2	| 					|
 | pce_deadmoon	|  	| Dead Moon - Tsuki Sekai no Akumu			| 		| 1990	| B.S.S.	| PC Engine	| 					|
@@ -3695,6 +3696,8 @@ This list contains all games supported by FinalBurn Neo.
 | ganbare	|  	| Ganbare! Marine Kun (Marine 2K0411 JPN)		| 		| 2000	| Capcom	| CPS1		| 					|
 | gbusters	|  	| Gang Busters (set 1)					| 		| 1988	| Konami	| GX878		| 					|
 | gbustersa	|  	| Gang Busters (set 2)					| gbusters	| 1988	| Konami	| GX878		| 					|
+| ghunters	|  	| Gang Hunter / Dead Angle (Spain)			| deadang	| 1988	| Seibu Kaihatsu| Miscellaneous	| 					|
+| ghunter	|  	| Gang Hunter / Dead Angle				| deadang	| 1988	| Seibu Kaihatsu| Miscellaneous	| 					|
 | msx_gangman	|  	| Gang Man (Euro)					| 		| 1988	| Armati Softwar| MSX		| 					|
 | msx_gangmanj	|  	| Gang Man (Jpn)					| msx_gangman	| 1983	| Hudson Soft	| MSX		| 					|
 | gangwarsb	|  	| Gang Wars (bootleg)					| gangwars	| 1989	| bootleg	| Miscellaneous	| 					|
@@ -5240,6 +5243,7 @@ This list contains all games supported by FinalBurn Neo.
 | bagnardi	|  	| Le Bagnard (Itisa, Spain)				| bagman	| 1982	| Valadon Automa| Miscellaneous	| 					|
 | bagnard	|  	| Le Bagnard (set 1)					| bagman	| 1982	| Valadon Automa| Miscellaneous	| 					|
 | bagnarda	|  	| Le Bagnard (set 2)					| bagman	| 1982	| Valadon Automa| Miscellaneous	| 					|
+| leadang	|  	| Lead Angle (Japan)					| deadang	| 1988	| Seibu Kaihatsu| Miscellaneous	| 					|
 | lbowling	|  	| League Bowling (NGM-019)(NGH-019)			| 		| 1990	| SNK		| Neo Geo MVS	| 					|
 | cv_leeper	|  	| Learning with Leeper					| 		| 1983	| Sierra On-Line| ColecoVision	| 					|
 | ledstorm	|  	| Led Storm (US)					| madgear	| 1988	| Capcom	| Miscellaneous	| 					|
@@ -8328,8 +8332,8 @@ This list contains all games supported by FinalBurn Neo.
 | gg_sdgundam	|  	| SD Gundam - Winner's History (Jpn)			| 		| 1995	| Bandai	| Sega Game Gear| 					|
 | neobattl	|  	| SD Gundam Neo Battling (Japan)			| 		| 1992	| Banpresto / So| Seta		| 					|
 | sdgndmps	|  	| SD Gundam Psycho Salamander no Kyoui			| 		| 1991	| Banpresto / Ba| Miscellaneous	| 					|
-| grainbow	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)	| 		| 1993	| Banpresto	| Miscellaneous	| 					|
-| grainbowk	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)	| grainbow	| 1993	| Banpresto	| Miscellaneous	| 					|
+| grainbow	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)	| 		| 1993	| Banpresto	| Miscellaneous	| Game has emulation/graphics issues	|
+| grainbowk	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)	| grainbow	| 1993	| Banpresto	| Miscellaneous	| Game has emulation/graphics issues	|
 | md_sdvalis	|  	| SD Valis (Jpn)					| md_sydvalis	| 1992	| Laser Soft	| Sega Megadrive| 					|
 | sms_sdi	|  	| SDI (Jpn)						| sms_globald	| 1987	| Sega		| Sega Master Sy| 					|
 | sdibl		|  	| SDI - Strategic Defense Initiative (bootleg, original | sdi		| 1987	| Sega		| System 16B	| 					|

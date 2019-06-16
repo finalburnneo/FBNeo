@@ -340,23 +340,23 @@ static INT32 MemIndex()
 	SeibuADPCMData[1] 	= Next;
 	DrvSndROM1		= Next; Next += 0x010000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x08018 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x0801 * sizeof(UINT32);
 
 	AllRam			= Next;
 
-	DrvMainRAM		= Next; Next += 0x0038000;
-	DrvSubRAM		= Next; Next += 0x0038000;
-	DrvShareRAM		= Next; Next += 0x0010000;
+	DrvMainRAM		= Next; Next += 0x003800;
+	DrvSubRAM		= Next; Next += 0x003800;
+	DrvShareRAM		= Next; Next += 0x001000;
 
-	DrvTxtRAM		= Next; Next += 0x0008000;
-	DrvFgRAM		= Next; Next += 0x0008000;
-	DrvScrollRAM	= Next; Next += 0x0002000;
+	DrvTxtRAM		= Next; Next += 0x000800;
+	DrvFgRAM		= Next; Next += 0x000800;
+	DrvScrollRAM	= Next; Next += 0x000200;
 
-	DrvSprRAM		= Next; Next += 0x0008000;
+	DrvSprRAM		= Next; Next += 0x000800;
 
-	DrvPalRAM		= Next; Next += 0x0010000;
+	DrvPalRAM		= Next; Next += 0x001000;
 
-	SeibuZ80RAM		= Next; Next += 0x0008000;
+	SeibuZ80RAM		= Next; Next += 0x000800;
 
 	RamEnd			= Next;
 

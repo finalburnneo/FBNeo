@@ -2,7 +2,7 @@
 
 UINT8* NeoZoomROM;
 
-UINT8* NeoSpriteROM[MAX_SLOT] = { NULL, };
+UINT8* NeoSpriteROM[MAX_SLOT] = { NULL, NULL, };
 
 UINT32 nNeoTileMask[MAX_SLOT];
 INT32 nNeoMaxTile[MAX_SLOT];
@@ -122,6 +122,8 @@ INT32 NeoRenderSprites()
 
 void NeoUpdateSprites(INT32 nOffset, INT32 nSize)
 {
+	if (!NeoSpriteROMActive) return;
+
 	for (INT32 i = nOffset & ~127; i < nOffset + nSize; i += 128) {
 		bool bTransparent = true;
 		for (INT32 j = i; j < i + 128; j++) {

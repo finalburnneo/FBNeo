@@ -72,6 +72,10 @@ static INT32 IsSystem2 = 0;
 
 static INT32 Sys1UsePPI = 0; // For regulus/regulusu
 
+// Set to 1 before init for doubled X (Sys1 only!), allows for smoother h-scrolling
+// used in Wonder Boy (WboyInit(), etc)
+static INT32 wide_mode = 0;
+
 typedef void (*Decode)();
 static Decode DecodeFunction;
 static Decode TileDecodeFunction;
@@ -4388,12 +4392,12 @@ static INT32 MemIndex()
 	System1efRam           = Next; Next += 0x000100;
 	System1f4Ram           = Next; Next += 0x000400;
 	System1fcRam           = Next; Next += 0x000400;
-	SpriteOnScreenMap      = Next; Next += (256 * 256);
+	SpriteOnScreenMap      = Next; Next += (((wide_mode) ? 512 : 256) * 256);
 
 	RamEnd = Next;
 
 	System1Sprites         = Next; Next += System1SpriteRomSize;
-	System1Tiles           = Next; Next += (System1NumTiles * 8 * 8);
+	System1Tiles           = Next; Next += (System1NumTiles * ((wide_mode) ? 16 : 8) * 8);
 	System1TilesPenUsage   = (UINT32*)Next; Next += System1NumTiles * sizeof(UINT32);
 	System1Palette         = (UINT32*)Next; Next += 0x000800 * sizeof(UINT32);
 	MemEnd = Next;
@@ -4939,14 +4943,14 @@ static void CalcPenUsage()
 	UINT8 *dp = NULL;
 
 	for (i = 0; i < System1NumTiles; i++) {
-		dp = System1Tiles + (i * 64);
+		dp = System1Tiles + (i * ((wide_mode) ? 128 : 64)); // 16x8, 8x8
 		Usage = 0;
 		for (y = 0; y < 8; y++) {
-			for (x = 0; x < 8; x++) {
+			for (x = 0; x < ((wide_mode) ? 16 : 8); x++) {
 				Usage |= 1 << dp[x];
 			}
 
-			dp += 8;
+			dp += ((wide_mode) ? 16 : 8);
 		}
 
 		System1TilesPenUsage[i] = Usage;
@@ -4954,6 +4958,7 @@ static void CalcPenUsage()
 }
 
 static INT32 TileXOffsets[8]      = { 0, 1, 2, 3, 4, 5, 6, 7 };
+static INT32 TileXOffsetsWide[16] = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
 static INT32 TileYOffsets[8]      = { 0, 8, 16, 24, 32, 40, 48, 56 };
 
 static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Num, INT32 nZ80Rom2Size, INT32 nTileRomNum, INT32 nTileRomSize, INT32 nSpriteRomNum, INT32 nSpriteRomSize, bool bReset)
@@ -5005,7 +5010,11 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	}
 	if (TileDecodeFunction) TileDecodeFunction();
 
-	GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
+	if (wide_mode) {
+		GfxDecode(System1NumTiles, 3, 16, 8, TilePlaneOffsets, TileXOffsetsWide, TileYOffsets, 0x40, System1TempRom, System1Tiles);
+	} else {
+		GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
+	}
 
 	CalcPenUsage();
 	BurnFree(System1TempRom);
@@ -5090,7 +5099,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 		ppi8255_set_write_ports(0, System2PPI0WriteA, NULL, System2PPI0WriteC);
 	}
 
-	memset(SpriteOnScreenMap, 255, 256 * 256);
+	memset(SpriteOnScreenMap, 255, ((wide_mode) ? 512 : 256) * 256);
 
 	System1SpriteXOffset = 1;
 
@@ -5708,6 +5717,7 @@ static INT32 UpndownuInit()
 
 static INT32 WboyInit()
 {
+	wide_mode = 1;
 	DecodeFunction = astrofl_decode;
 
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
@@ -5715,6 +5725,7 @@ static INT32 WboyInit()
 
 static INT32 WboyoInit()
 {
+	wide_mode = 1;
 	DecodeFunction = hvymetal_decode;
 
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
@@ -5722,6 +5733,7 @@ static INT32 WboyoInit()
 
 static INT32 Wboy2Init()
 {
+	wide_mode = 1;
 	DecodeFunction = wboy2_decode;
 
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
@@ -5729,11 +5741,14 @@ static INT32 Wboy2Init()
 
 static INT32 Wboy2uInit()
 {
+	wide_mode = 1;
+
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
 static INT32 Wboy4Init()
 {
+	wide_mode = 1;
 	DecodeFunction = fdwarrio_decode;
 
 	return System1Init(2, 0x8000, 1, 0x8000, 3, 0x4000, 2, 0x8000, 1);
@@ -5741,6 +5756,8 @@ static INT32 Wboy4Init()
 
 static INT32 WboyuInit()
 {
+	wide_mode = 1;
+
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
@@ -5904,6 +5921,8 @@ static INT32 System1Exit()
 	IsSystem2 = 0;
 	Sys1UsePPI = 0;
 
+	wide_mode = 0;
+
 	return 0;
 }
 
@@ -5914,19 +5933,20 @@ Graphics Rendering
 static void DrawPixel(INT32 x, INT32 y, INT32 SpriteNum, INT32 Colour)
 {
 	INT32 xr, yr, SpriteOnScreen, dx, dy;
+	INT32 width = (wide_mode) ? 512 : 256;
 
 	dx = x;
 	dy = y;
 	if (nScreenWidth == 240) dx -= 8;
 
-	if (x < 0 || x > 255  || y < 0 || y > 255) return;
+	if (x < 0 || x > (width-1)  || y < 0 || y > 255) return;
 
-	if (SpriteOnScreenMap[(y * 256) + x] != 255) {
-		SpriteOnScreen = SpriteOnScreenMap[(y * 256) + x];
+	if (SpriteOnScreenMap[(y * width) + x] != 255) {
+		SpriteOnScreen = SpriteOnScreenMap[(y * width) + x];
 		System1SprCollisionRam[SpriteOnScreen + (32 * SpriteNum)] = 0xff;
 	}
 
-	SpriteOnScreenMap[(y * 256) + x] = SpriteNum;
+	SpriteOnScreenMap[(y * width) + x] = SpriteNum;
 
 	if (dx >= 0 && dx < nScreenWidth && dy >= 0 && dy < nScreenHeight) {
 		UINT16 *pPixel = pTransDraw + (dy * nScreenWidth);
@@ -5968,7 +5988,7 @@ static void DrawSprite(INT32 Num)
 		x = ((SpriteBase[3] & 0x01) << 8) + SpriteBase[2] + System1SpriteXOffset;
 		y = sy + Row;
 
-		x /= 2;
+		if (!wide_mode) x /= 2;
 
 		while(1) {
 			INT32 Colour1, Colour2, Data;
@@ -5989,9 +6009,21 @@ static void DrawSprite(INT32 Num)
 			if (Colour1) DrawPixel(x, y, Num, Colour1 + (0x10 * Num));
 			x++;
 
+			if (wide_mode) {
+				if (Colour1 == 0x0f) break;
+				if (Colour1) DrawPixel(x, y, Num, Colour1 + (0x10 * Num));
+				x++;
+			}
+
 			if (Colour2 == 0x0f) break;
 			if (Colour2) DrawPixel(x, y, Num, Colour2 + (0x10 * Num));
 			x++;
+
+			if (wide_mode) {
+				if (Colour2 == 0x0f) break;
+				if (Colour2) DrawPixel(x, y, Num, Colour2 + (0x10 * Num));
+				x++;
+			}
 		}
 	}
 }
@@ -6003,7 +6035,7 @@ static void System1DrawSprites()
 
 	if (System1SpriteRam[0] == 0xff) return; // 0xff in first byte of spriteram is all-sprite-disable mode
 
-	memset(SpriteOnScreenMap, 255, 256 * 256);
+	memset(SpriteOnScreenMap, 255, ((wide_mode) ? 512 : 256) * 256);
 
 	for (i = 0; i < 32; i++) {
 		SpriteBase = System1SpriteRam + (0x10 * i);
@@ -6019,7 +6051,11 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 {
 	INT32 Offs, sx, sy;
 
-	System1BgScrollX = ((System1ScrollX[0] >> 1) + ((System1ScrollX[1] & 1) << 7) + 14) & 0xff;
+	if (wide_mode) {
+		System1BgScrollX = ((System1ScrollX[0] | (System1ScrollX[1] << 8)) & 0x1ff) + 28;
+	} else {
+		System1BgScrollX = ((System1ScrollX[0] >> 1) + ((System1ScrollX[1] & 1) << 7) + 14) & 0xff;
+	}
 	System1BgScrollY = (-System1ScrollY & 0xff);
 
 	if (PriorityDraw == -1) {
@@ -6035,17 +6071,24 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 
 			if (System1RowScroll)
 				System1BgScrollX = (System1ScrollXRam[(Offs/32) & ~1] >> 1) + ((System1ScrollXRam[(Offs/32) | 1] & 1) << 7) ;
-			sx = 8 * sx + System1BgScrollX;
+			sx = ((wide_mode) ? 16 : 8) * sx + System1BgScrollX;
 			sy = 8 * sy + System1BgScrollY;
 
 			if (nScreenWidth == 240) sx -= 8;
 
 			Code &= (System1NumTiles - 1);
 
-			Render8x8Tile_Clip(pTransDraw, Code, sx      , sy      , Colour, 3, 512 * 2, System1Tiles);
-			Render8x8Tile_Clip(pTransDraw, Code, sx - 256, sy      , Colour, 3, 512 * 2, System1Tiles);
-			Render8x8Tile_Clip(pTransDraw, Code, sx      , sy - 256, Colour, 3, 512 * 2, System1Tiles);
-			Render8x8Tile_Clip(pTransDraw, Code, sx - 256, sy - 256, Colour, 3, 512 * 2, System1Tiles);
+			if (wide_mode) {
+				RenderCustomTile_Clip(pTransDraw, 16, 8, Code, sx      , sy      , Colour, 3, 512 * 2, System1Tiles);
+				RenderCustomTile_Clip(pTransDraw, 16, 8, Code, sx - 512, sy      , Colour, 3, 512 * 2, System1Tiles);
+				RenderCustomTile_Clip(pTransDraw, 16, 8, Code, sx      , sy - 256, Colour, 3, 512 * 2, System1Tiles);
+				RenderCustomTile_Clip(pTransDraw, 16, 8, Code, sx - 512, sy - 256, Colour, 3, 512 * 2, System1Tiles);
+			} else {
+				Render8x8Tile_Clip(pTransDraw, Code, sx      , sy      , Colour, 3, 512 * 2, System1Tiles);
+				Render8x8Tile_Clip(pTransDraw, Code, sx - 256, sy      , Colour, 3, 512 * 2, System1Tiles);
+				Render8x8Tile_Clip(pTransDraw, Code, sx      , sy - 256, Colour, 3, 512 * 2, System1Tiles);
+				Render8x8Tile_Clip(pTransDraw, Code, sx - 256, sy - 256, Colour, 3, 512 * 2, System1Tiles);
+			}
 		}
 	} else {
 		PriorityDraw <<= 3;
@@ -6069,17 +6112,24 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 				if(System1RowScroll)
 					System1BgScrollX = (System1ScrollXRam[(Offs/32) & ~1] >> 1) + ((System1ScrollXRam[(Offs/32) | 1] & 1) << 7) ;
 
-				sx = 8 * sx + System1BgScrollX;
+				sx = ((wide_mode) ? 16 : 8) * sx + System1BgScrollX;
 				sy = 8 * sy + System1BgScrollY;
 
 				if (nScreenWidth == 240) sx -= 8;
 
 				Code &= (System1NumTiles - 1);
 
-				Render8x8Tile_Mask_Clip(pTransDraw, Code, sx      , sy      , Colour, 3, 0, 512 * 2, System1Tiles);
-				Render8x8Tile_Mask_Clip(pTransDraw, Code, sx - 256, sy      , Colour, 3, 0, 512 * 2, System1Tiles);
-				Render8x8Tile_Mask_Clip(pTransDraw, Code, sx      , sy - 256, Colour, 3, 0, 512 * 2, System1Tiles);
-				Render8x8Tile_Mask_Clip(pTransDraw, Code, sx - 256, sy - 256, Colour, 3, 0, 512 * 2, System1Tiles);
+				if (wide_mode) {
+					RenderCustomTile_Mask_Clip(pTransDraw, 16, 8, Code, sx      , sy      , Colour, 3, 0, 512 * 2, System1Tiles);
+					RenderCustomTile_Mask_Clip(pTransDraw, 16, 8, Code, sx - 512, sy      , Colour, 3, 0, 512 * 2, System1Tiles);
+					RenderCustomTile_Mask_Clip(pTransDraw, 16, 8, Code, sx      , sy - 256, Colour, 3, 0, 512 * 2, System1Tiles);
+					RenderCustomTile_Mask_Clip(pTransDraw, 16, 8, Code, sx - 512, sy - 256, Colour, 3, 0, 512 * 2, System1Tiles);
+				} else {
+					Render8x8Tile_Mask_Clip(pTransDraw, Code, sx      , sy      , Colour, 3, 0, 512 * 2, System1Tiles);
+					Render8x8Tile_Mask_Clip(pTransDraw, Code, sx - 256, sy      , Colour, 3, 0, 512 * 2, System1Tiles);
+					Render8x8Tile_Mask_Clip(pTransDraw, Code, sx      , sy - 256, Colour, 3, 0, 512 * 2, System1Tiles);
+					Render8x8Tile_Mask_Clip(pTransDraw, Code, sx - 256, sy - 256, Colour, 3, 0, 512 * 2, System1Tiles);
+				}
 			}
 		}
 	}
@@ -6102,7 +6152,7 @@ static void System1DrawFgLayer(INT32 PriorityDraw)
 			sx = (Offs >> 1) % 32;
 			sy = (Offs >> 1) / 32;
 
-			sx *= 8;
+			sx *= ((wide_mode) ? 16 : 8);
 			sy *= 8;
 
 			if (nScreenWidth == 240) sx -= 8;
@@ -6111,7 +6161,7 @@ static void System1DrawFgLayer(INT32 PriorityDraw)
 			Code &= (System1NumTiles - 1);
 
 			if (System1TilesPenUsage[Code] & ~1) {
-				Render8x8Tile_Mask_Clip(pTransDraw, Code, sx, sy, Colour, 3, 0, 512, System1Tiles);
+				RenderCustomTile_Mask_Clip(pTransDraw, (wide_mode) ? 16 : 8, 8, Code, sx, sy, Colour, 3, 0, 512, System1Tiles);
 			}
 		}
 	}
@@ -6184,12 +6234,12 @@ static INT32 System1Render()
 {
 	BurnTransferClear();
 	System1CalcPalette();
-	System1DrawBgLayer(-1);
-	System1DrawFgLayer(0);
-	System1DrawBgLayer(0);
-	System1DrawSprites();
-	System1DrawBgLayer(1);
-	System1DrawFgLayer(1);
+	if (nBurnLayer & 1) System1DrawBgLayer(-1);
+	if (nBurnLayer & 2) System1DrawFgLayer(0);
+	if (nBurnLayer & 4) System1DrawBgLayer(0);
+	if (nSpriteEnable & 1) System1DrawSprites();
+	if (nBurnLayer & 8) System1DrawBgLayer(1);
+	if (nSpriteEnable & 2) System1DrawFgLayer(1);
 	if (System1VideoMode & 0x010) BurnTransferClear();
 	BurnTransferCopy(System1Palette);
 
@@ -6931,7 +6981,7 @@ struct BurnDriver BurnDrvWboy = {
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyRomInfo, WboyRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	WboyInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboyo = {

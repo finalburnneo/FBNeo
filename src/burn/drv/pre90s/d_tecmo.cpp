@@ -1661,8 +1661,8 @@ struct BurnDriver BurnDrvbackfirt = {
 // Gemini Wing (World)
 
 static struct BurnRomInfo geminiRomDesc[] = {
-	{ "5-6s",			0x10000, 0x216784a9, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
-	{ "4-5s",			0x10000, 0xce71e27a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4-5s",			0x10000, 0xce71e27a, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "5-6s",			0x10000, 0x216784a9, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "gw03-5h.rom",	0x08000, 0x9bc79596, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
 

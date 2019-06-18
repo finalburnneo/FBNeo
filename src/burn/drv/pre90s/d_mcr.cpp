@@ -1469,11 +1469,12 @@ static INT32 DrvFrame()
             }
 
             if (is_dotron) { // dotron up/down "aim" analog
-                UINT8 an = ProcessAnalog(DrvAnalogPortY, 0, INPUT_DEADZONE, 0x00, 0xff);
-                if (an != 0x80) {
+				UINT8 an = ProcessAnalog(DrvAnalogPortY, 0, INPUT_DEADZONE, 0x00, 0xff);
+
+				if (an > (0x80+10) || an < (0x80-10)) {
                     DrvInputs[2] |= 0x30; // processing analog: ignore digital buttons
-                    if (an < 0x80) DrvInputs[2] &= ( 1 << 4 ); // down
-                    if (an > 0x80) DrvInputs[2] &= ( 1 << 5 ); // up
+                    if (an < (0x80-10)) DrvInputs[2] ^= ( 1 << 4 ); // down
+                    if (an > (0x80+10)) DrvInputs[2] ^= ( 1 << 5 ); // up
                 }
             }
 

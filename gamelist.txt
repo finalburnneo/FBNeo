@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12109 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12115 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4930,6 +4930,8 @@ This list contains all games supported by FinalBurn Neo.
 | kingball	|  	| King & Balloon (US)					| 		| 1980	| Namco		| Galaxian	| 					|
 | sms_kingball	|  	| King and Balloon (Kor)				| 		| 19??	| Unknown	| Sega Master Sy| 					|
 | msx_kingleon	|  	| King Leonard (Spa)					| 		| 1986	| Mind Games Esp| MSX		| 					|
+| kingofbj	|  	| King of Boxer (Japan)					| kingofb	| 1985	| Wood Place Inc| Miscellaneous	| 					|
+| kingofb	|  	| King of Boxer (World)					| 		| 1985	| Wood Place Inc| Miscellaneous	| 					|
 | pce_kingcasn	|  	| King of Casino					| 		| 1990	| Victor Interac| PC Engine	| 					|
 | tg_kingcasn	|  	| King of Casino					| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | kog		|  	| King of Gladiator (The King of Fighters '97 bootleg)	| kof97		| 1997	| bootleg	| Neo Geo MVS	| 					|
@@ -7933,6 +7935,10 @@ This list contains all games supported by FinalBurn Neo.
 | ridheroh	|  	| Riding Hero (set 2)					| ridhero	| 1990	| SNK		| Neo Geo MVS	| 					|
 | ringfgt	|  	| Ring Fighter (set 1)					| vsgongf	| 1984	| Kaneko (Taito | Miscellaneous	| 					|
 | ringfgt2	|  	| Ring Fighter (set 2)					| vsgongf	| 1984	| Kaneko (Taito | Miscellaneous	| 					|
+| ringking2	|  	| Ring King (US set 2)					| kingofb	| 1985	| Wood Place Inc| Miscellaneous	| 					|
+| ringking3	|  	| Ring King (US set 3)					| kingofb	| 1985	| Wood Place Inc| Miscellaneous	| 					|
+| ringking	|  	| Ring King (US, Wood Place Inc.)			| kingofb	| 1985	| Wood Place Inc| Miscellaneous	| 					|
+| ringkingw	|  	| Ring King (US, Wood Place Inc.)			| kingofb	| 1985	| Wood Place Inc| Miscellaneous	| 					|
 | ringohja	|  	| Ring no Ohja (Japan 2 Players ver. N)			| mainevt	| 1988	| Konami	| GX799		| 					|
 | ringdesta	|  	| Ring of Destruction - slammasters II (940831 Asia)	| ringdest	| 1994	| Capcom	| CPS2		| 					|
 | ringdstd	|  	| Ring of Destruction - slammasters II (940902 Euro Phoe| ringdest	| 1994	| bootleg	| CPS2		| 					|

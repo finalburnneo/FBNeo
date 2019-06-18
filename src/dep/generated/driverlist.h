@@ -5046,6 +5046,8 @@ DRV		BurnDrvMSX_kingballa;
 DRV		BurnDrvKingball;
 DRV		BurnDrvsms_kingball;
 DRV		BurnDrvMSX_kingleon;
+DRV		BurnDrvKingofbj;
+DRV		BurnDrvKingofb;
 DRV		BurnDrvpce_kingcasn;
 DRV		BurnDrvtg_kingcasn;
 DRV		BurnDrvKog;
@@ -8109,6 +8111,10 @@ DRV		BurnDrvRidhero;
 DRV		BurnDrvRidheroh;
 DRV		BurnDrvRingfgt;
 DRV		BurnDrvRingfgt2;
+DRV		BurnDrvRingking2;
+DRV		BurnDrvRingking3;
+DRV		BurnDrvRingking;
+DRV		BurnDrvRingkingw;
 DRV		BurnDrvRingohja;
 DRV		BurnDrvCpsRingdesta;
 DRV		BurnDrvCpsRingdstd;
@@ -17432,6 +17438,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKingball,			// King & Balloon (US)
 	&BurnDrvsms_kingball,		// King and Balloon (Kor)
 	&BurnDrvMSX_kingleon,		// King Leonard (Spa)
+	&BurnDrvKingofbj,			// King of Boxer (Japan)
+	&BurnDrvKingofb,			// King of Boxer (World)
 	&BurnDrvpce_kingcasn,		// King of Casino
 	&BurnDrvtg_kingcasn,		// King of Casino
 	&BurnDrvKog,				// King of Gladiator (The King of Fighters '97 bootleg)
@@ -20495,6 +20503,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRidheroh,			// Riding Hero (set 2)
 	&BurnDrvRingfgt,			// Ring Fighter (set 1)
 	&BurnDrvRingfgt2,			// Ring Fighter (set 2)
+	&BurnDrvRingking2,			// Ring King (US set 2)
+	&BurnDrvRingking3,			// Ring King (US set 3)
+	&BurnDrvRingking,			// Ring King (US, Wood Place Inc.)
+	&BurnDrvRingkingw,			// Ring King (US, Wood Place Inc.)
 	&BurnDrvRingohja,			// Ring no Ohja (Japan 2 Players ver. N)
 	&BurnDrvCpsRingdesta,		// Ring of Destruction - slammasters II (940831 Asia)
 	&BurnDrvCpsRingdstd,		// Ring of Destruction - slammasters II (940902 Euro Phoenix Edition)

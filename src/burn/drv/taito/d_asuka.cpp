@@ -14,87 +14,88 @@
 static UINT8 TaitoInputConfig;
 static INT32 AsukaADPCMPos;
 static INT32 AsukaADPCMData;
+static INT32 coin_inserted_counter[2];
 
 static struct BurnInputInfo CadashInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	TC0220IOCInputPort0 + 7,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	TC0220IOCInputPort0 + 6,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	TC0220IOCInputPort0 + 7,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	TC0220IOCInputPort0 + 6,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	TC0220IOCInputPort0 + 4,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	TC0220IOCInputPort1 + 7,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	TC0220IOCInputPort1 + 6,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	TC0220IOCInputPort1 + 5,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	TC0220IOCInputPort1 + 7,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	TC0220IOCInputPort1 + 6,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	TC0220IOCInputPort1 + 5,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 3,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	TC0220IOCInputPort1 + 2,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"		},
-	{"Service",		BIT_DIGITAL,	TC0220IOCInputPort2 + 4,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	TC0220IOCInputPort2 + 5,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	TC0220IOCDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	TC0220IOCDip + 1,		"dip"		},
+	{"Reset",			BIT_DIGITAL,	&TaitoReset,				"reset"		},
+	{"Service",			BIT_DIGITAL,	TC0220IOCInputPort2 + 4,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	TC0220IOCInputPort2 + 5,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	TC0220IOCDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	TC0220IOCDip + 1,			"dip"		},
 };
 
 STDINPUTINFO(Cadash)
 
 static struct BurnInputInfo AsukaInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	TC0220IOCInputPort0 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	TC0220IOCInputPort0 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	TC0220IOCInputPort0 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	TC0220IOCInputPort0 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort0 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	TC0220IOCInputPort2 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	TC0220IOCInputPort1 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	TC0220IOCInputPort1 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	TC0220IOCInputPort1 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	TC0220IOCInputPort1 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	TC0220IOCInputPort1 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	TC0220IOCInputPort1 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"},
-	{"Service",		BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	TC0220IOCDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	TC0220IOCDip + 1,		"dip"		},
+	{"Reset",			BIT_DIGITAL,	&TaitoReset,				"reset"		},
+	{"Service",			BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	TC0220IOCDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	TC0220IOCDip + 1,			"dip"		},
 };
 
 STDINPUTINFO(Asuka)
 
 static struct BurnInputInfo BonzeadvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	TaitoInputPort1 + 0,		"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	TaitoInputPort0 + 6,		"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	TaitoInputPort2 + 2,		"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	TaitoInputPort2 + 3,		"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	TaitoInputPort2 + 4,		"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	TaitoInputPort2 + 5,		"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	TaitoInputPort2 + 6,		"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	TaitoInputPort2 + 7,		"p1 fire 2"	},
+	{"P1 Coin",			BIT_DIGITAL,	TaitoInputPort1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	TaitoInputPort0 + 6,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	TaitoInputPort2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	TaitoInputPort2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	TaitoInputPort2 + 4,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	TaitoInputPort2 + 5,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	TaitoInputPort2 + 6,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	TaitoInputPort2 + 7,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	TaitoInputPort1 + 1,		"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	TaitoInputPort0 + 5,		"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	TaitoInputPort3 + 1,		"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	TaitoInputPort3 + 2,		"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	TaitoInputPort3 + 7,		"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	TaitoInputPort3 + 4,		"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	TaitoInputPort3 + 5,		"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	TaitoInputPort3 + 6,		"p2 fire 2"	},
+	{"P2 Coin",			BIT_DIGITAL,	TaitoInputPort1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	TaitoInputPort0 + 5,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	TaitoInputPort3 + 1,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	TaitoInputPort3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	TaitoInputPort3 + 7,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	TaitoInputPort3 + 4,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	TaitoInputPort3 + 5,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	TaitoInputPort3 + 6,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"		},
-	{"Service",		BIT_DIGITAL,	TaitoInputPort0 + 7,		"service"	},
-	{"Tilt",		BIT_DIGITAL,	TaitoInputPort2 + 0,		"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	TaitoDip + 0,			"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	TaitoDip + 1,			"dip"		},
+	{"Reset",			BIT_DIGITAL,	&TaitoReset,			"reset"		},
+	{"Service",			BIT_DIGITAL,	TaitoInputPort0 + 7,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	TaitoInputPort2 + 0,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	TaitoDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	TaitoDip + 1,			"dip"		},
 };
 
 STDINPUTINFO(Bonzeadv)
@@ -1140,6 +1141,8 @@ static INT32 DrvDoReset()
 	AsukaADPCMPos = 0;
 	AsukaADPCMData = -1;
 
+	memset (coin_inserted_counter, 0, sizeof(coin_inserted_counter));
+
 	return 0;
 }
 
@@ -1517,6 +1520,16 @@ static INT32 BonzeFrame()
 			TaitoInput[1] ^= (TaitoInputPort1[i] & 1) << i;
 			TaitoInput[2] ^= (TaitoInputPort2[i] & 1) << i;
 			TaitoInput[3] ^= (TaitoInputPort3[i] & 1) << i;
+		}
+
+		// coin pulser
+		for (INT32 i = 0; i < 2; i++) {
+			if (TaitoInput[1] & (1 << i)) {
+				coin_inserted_counter[i]++;
+				if (coin_inserted_counter[i] >= 2) TaitoInput[1] &= ~(1 << i);
+			} else {
+				coin_inserted_counter[i] = 0;
+			}
 		}
 
 		cchip_loadports(TaitoInput[0], TaitoInput[1], TaitoInput[2], TaitoInput[3]);

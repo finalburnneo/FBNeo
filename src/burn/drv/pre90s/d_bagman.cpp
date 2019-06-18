@@ -923,7 +923,7 @@ static INT32 BagmanCommonInit(INT32 game, INT32 memmap)
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 2, 8, 8, 0x10000, 0, 0xf);
-	GenericTilemapSetOffsets(0, 0, -16);
+	GenericTilemapSetOffsets(0, 0, 16);
 
 	DrvDoReset();
 
@@ -1012,23 +1012,12 @@ static INT32 DrvDraw()
 	}
 
 	BurnTransferClear();
-	
-//	if (video_enable)
+
 	{
 		GenericTilemapSetFlip(0, (flipscreen[0] ? TMAP_FLIPX : 0) | (flipscreen[1] ? TMAP_FLIPY : 0));
-		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-#if 0 // if ((sx && sy) == 0) fixes the need for this in draw_sprites. maybe
-		if (!squaitsamode) {
-			if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
-				GenericTilesSetClip(16, -1, -1, -1);
-			} else {
-				GenericTilesSetClip(-1, nScreenWidth - 16, -1, -1);
-			}
-		}
-#endif
+		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 		if (nBurnLayer & 2) draw_sprites();
-		GenericTilesClearClip();
 	}
 
 	BurnTransferCopy(DrvPalette);

@@ -2307,7 +2307,7 @@ static void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 #endif
 
 				if (nIRQCycles < nCyclesSegment) {
-					SekRunAdjust(nIRQCycles - nCyclesSegment);
+					//SekRunAdjust(nIRQCycles - nCyclesSegment);
 				}
 			}
 
@@ -2363,7 +2363,7 @@ static void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 					nIRQCycles = NO_IRQ_PENDING;
 				}
 				if (nIRQCycles < nCyclesSegment) {
-					SekRunAdjust(nIRQCycles - nCyclesSegment);
+					//SekRunAdjust(nIRQCycles - nCyclesSegment);
 				}
 			}
 
@@ -2849,7 +2849,7 @@ static void NeoCDDoDMA()
 			//  - DMA controller program[12] -> 0x2E02 (PC: 0xC07D0C)
 			//  - DMA controller program[14] -> 0xFDFF (PC: 0xC07D12)
 
-			SekIdle(NeoCDDMACount * 4);
+			//SekIdle(NeoCDDMACount * 4);
 
 			while (NeoCDDMACount--) {
 				SekWriteWord(NeoCDDMAAddress1 + 0, NeoCDDMAAddress1 >> 24);
@@ -2875,7 +2875,7 @@ static void NeoCDDoDMA()
 			//  - DMA controller program[12] -> 0x02FD (PC: 0xC0A19E)
 			//  - DMA controller program[14] -> 0xFFFF (PC: 0xC0A1A0)
 
-			SekIdle(NeoCDDMACount * 1);
+			//SekIdle(NeoCDDMACount * 1);
 
 			while (NeoCDDMACount--) {
 				SekWriteWord(NeoCDDMAAddress2 + 0, SekReadByte(NeoCDDMAAddress1 + 0));
@@ -2905,7 +2905,7 @@ static void NeoCDDoDMA()
 				break;
 			}
 
-			SekIdle(NeoCDDMACount * 4);
+			//SekIdle(NeoCDDMACount * 4);
 
 			while (NeoCDDMACount--) {
 				SekWriteByte(NeoCDDMAAddress1 + 0, data[0]);
@@ -2954,7 +2954,7 @@ static void NeoCDDoDMA()
 				bprintf(0, _T("(DMA) Inhibit blank vector table write into 68k ram-vectspace\n"));
 			}
 
-			SekIdle(NeoCDDMACount * 1);
+			//SekIdle(NeoCDDMACount * 1);
 
 			while (NeoCDDMACount--) {
 				if (OkWriteVect || NeoCDDMAAddress2 >= 0x80) {
@@ -2981,7 +2981,7 @@ static void NeoCDDoDMA()
 			//  - DMA controller program[12] -> 0xFC3D (PC: 0xC07D0C)
 			//  - DMA controller program[14] -> 0xFCF5 (PC: 0xC07D12)
 
-			SekIdle(NeoCDDMACount * 2);
+			//SekIdle(NeoCDDMACount * 2);
 
 			while (NeoCDDMACount--) {
 				SekWriteWord(NeoCDDMAAddress1 + 0, NeoCDDMAAddress1 >> 16);
@@ -3010,7 +3010,7 @@ static void NeoCDDoDMA()
 				break;
 			}
 
-			SekIdle(NeoCDDMACount * 4);
+			//SekIdle(NeoCDDMACount * 4);
 
 			while (NeoCDDMACount--) {
 				SekWriteByte(NeoCDDMAAddress1 + 0, data[0]);
@@ -3049,7 +3049,7 @@ static void NeoCDDoDMA()
 			//  - DMA controller program[12] -> 0x8AF0 (PC: 0xC07D0C)
 			//  - DMA controller program[14] -> 0x1609 (PC: 0xC07D12)
 
-			SekIdle(NeoCDDMACount * 1);
+			//SekIdle(NeoCDDMACount * 1);
 
 			while (NeoCDDMACount--) {
 				SekWriteWord(NeoCDDMAAddress1, NeoCDDMAValue1);

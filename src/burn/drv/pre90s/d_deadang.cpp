@@ -486,9 +486,9 @@ static INT32 DrvInit()
 	SeibuADPCMDataLen[1] = 0x10000;
 
 	seibu_sound_init(2|8, 0x2000, 14318181/4, 14318181/4, 8000);
-	BurnYM2203SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetAllRoutes(0, 0.45, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.25);
-	BurnYM2203SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetAllRoutes(1, 0.45, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(1, 0.25);
 
 	BurnWatchdogInit(DrvDoReset, 180);

@@ -505,6 +505,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_kingofbox.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />

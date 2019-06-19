@@ -30,6 +30,7 @@ static INT32 palette_bank;
 static INT32 soundlatch;
 static INT32 flipscreen;
 static INT32 extra_cycles[4];
+static INT32 vblank;
 
 static UINT8 input_state = 0;
 
@@ -169,8 +170,8 @@ static struct BurnDIPInfo RingkingDIPList[]=
 	{0x14, 0x01, 0x20, 0x20, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x12, 0x01, 0x80, 0x00, "Off"					},
-	{0x12, 0x01, 0x80, 0x80, "On"					},
+	{0x14, 0x01, 0x80, 0x80, "Off"					},
+	{0x14, 0x01, 0x80, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x15, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
@@ -267,19 +268,21 @@ static UINT8 __fastcall kingobox_main_read(UINT16 address)
 		case 0xfc01: // kingobox
 			return DrvDips[1];
 
-		case 0xe802: // ringking
+		case 0xe002: // ringking
 		case 0xfc02: // kingobox
 			return DrvInputs[0];
 
-		case 0xe803: // ringking
+		case 0xe003: // ringking
 		case 0xfc03: // kingobox
 			return DrvInputs[1];
 
-		case 0xe804: // ringking
+		case 0xe004: // ringking
+			return (DrvInputs[2] & ~0x20) | (vblank ? 0x00 : 0x20); // system
+
 		case 0xfc04: // kingobox
 			return DrvInputs[2]; // system
 
-		case 0xe805: // ringking
+		case 0xe005: // ringking
 		case 0xfc05: // kingobox
 			return DrvInputs[3]; // extra
 	}
@@ -457,9 +460,16 @@ static INT32 KingoboxInit()
 	BurnAllocMemIndex();
 
 	{
-		INT32 k =0;
-		if (BurnLoadRom(DrvZ80ROM[0] + 0x00000, k++, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM[0] + 0x04000, k++, 1)) return 1;
+		INT32 k = 0;
+
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "ringking3")) {
+			if (BurnLoadRom(DrvZ80ROM[0] + 0x00000, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM[0] + 0x04000, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM[0] + 0x08000, k++, 1)) return 1;
+		} else {
+			if (BurnLoadRom(DrvZ80ROM[0] + 0x00000, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM[0] + 0x04000, k++, 1)) return 1;
+		}
 
 		if (BurnLoadRom(DrvZ80ROM[1] + 0x00000, k++, 1)) return 1;
 
@@ -645,8 +655,8 @@ static INT32 RingkingInit()
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM[0],		0x0000, 0xbfff, MAP_ROM);
 	ZetMapMemory(DrvZ80RAM[0],		0xc000, 0xc3ff, MAP_RAM);
-	ZetMapMemory(DrvShareRAM[1],	0xc800, 0xcfff, MAP_RAM);
-	ZetMapMemory(DrvShareRAM[0],	0xd000, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvShareRAM[1],	0xc800, 0xcfff, MAP_RAM); // spr
+	ZetMapMemory(DrvShareRAM[0],	0xd000, 0xd7ff, MAP_RAM); // vid
 	ZetMapMemory(DrvUnkRAM,			0xf000, 0xf7ff, MAP_RAM);
 	ZetSetWriteHandler(kingobox_main_write);
 	ZetSetReadHandler(kingobox_main_read);
@@ -682,11 +692,12 @@ static INT32 RingkingInit()
 
 	AY8910Init(0, 1500000, 0);
 	AY8910SetPorts(0, &AY8910_0_port0, &AY8910_0_port0, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	DACInit(0, 0, 1, ZetTotalCycles, 4000000);
 	DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 16, 16);
@@ -828,8 +839,11 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal[4] = { 4000000 / 60, 4000000 / 60, 4000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
+	vblank = 1;
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		if (i == 7) vblank = 0;
 		ZetOpen(0);
 		CPU_RUN(0, Zet);
 		if (i == 99 && nmi_enable) ZetNmi();
@@ -1175,7 +1189,7 @@ struct BurnDriver BurnDrvRingking = {
 	"Ring King (US, Wood Place Inc.)\0", NULL, "Wood Place Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, ringkingRomInfo, ringkingRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
+	NULL, ringkingRomInfo, ringkingRomName, NULL, NULL, NULL, NULL, RingkingInputInfo, RingkingDIPInfo,
 	RingkingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x108,
 	224, 256, 3, 4
 };

@@ -31,6 +31,7 @@ static UINT8 *DrvTxtRAM;
 static UINT8 *DrvFgRAM;
 static UINT8 *DrvScrollRAM;
 static UINT8 *DrvSprRAM;
+static UINT8 *DrvSprRAMBuf;
 static UINT8 *DrvPalRAM;
 
 static UINT32 *DrvPalette;
@@ -234,13 +235,13 @@ static UINT8 __fastcall deadang_main_read(UINT32 address)
 
 		case 0x80000:
 		case 0x80001:
-			return 0xff; // trackball low
+			return 0x00; // trackball low
 
 		case 0xb0000:
 		case 0xb0001:
-			return 0xff; // trackball high
+			return 0x00; // trackball high
 	}
-	
+
 	return 0;
 }
 
@@ -353,6 +354,7 @@ static INT32 MemIndex()
 	DrvScrollRAM	= Next; Next += 0x000200;
 
 	DrvSprRAM		= Next; Next += 0x000800;
+	DrvSprRAMBuf	= Next; Next += 0x000800;
 
 	DrvPalRAM		= Next; Next += 0x001000;
 
@@ -467,7 +469,7 @@ static INT32 DrvInit()
 	VezMapMemory(DrvShareRAM,			0x04000, 0x04fff, MAP_RAM);
 	VezMapMemory(DrvTxtRAM,				0x08000, 0x087ff, MAP_RAM);
 	VezMapMemory(DrvPalRAM,				0x0c000, 0x0cfff, MAP_RAM);
-	VezMapMemory(DrvScrollRAM,			0x0e000, 0x0e1ff, MAP_WRITE); //0-ff, page size is 200
+	VezMapMemory(DrvScrollRAM,			0x0e000, 0x0e1ff, MAP_RAM); //0-ff, page size is 200
 	VezMapMemory(DrvMainROM,			0xc0000, 0xfffff, MAP_ROM);
 	VezSetWriteHandler(deadang_main_write);
 	VezSetReadHandler(deadang_main_read);
@@ -541,7 +543,7 @@ static void DrvPaletteUpdate()
 
 static void draw_sprites(INT32 /*flipscreen*/)
 {
-	UINT16 *ram = (UINT16*)DrvSprRAM;
+	UINT16 *ram = (UINT16*)DrvSprRAMBuf;
 
 	for (INT32 offs = 0; offs < 0x800/2; offs+=4)
 	{
@@ -602,9 +604,9 @@ static INT32 DrvDraw()
 
 	BurnTransferClear(0x800); // black
 
-	if (nBurnLayer & 1) GenericTilemapDraw(3, pTransDraw, 1);
-	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 2);
-	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 4);
+	if (nBurnLayer & 1) GenericTilemapDraw(3, pTransDraw, 1, 0xff);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 2, 0xff);
+	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 4, 0xff);
 
 	if ((layer_enable & 0x10) && (nSpriteEnable & 1))
 		draw_sprites(flipscreen);
@@ -638,28 +640,52 @@ static INT32 DrvFrame()
 		seibu_coin_input = (DrvJoy3[0] & 1) | ((DrvJoy3[1] & 1) << 1);
 	}
 
+	// any changes to this timing will pretty much break the game.
+	// most bugs appear in the 3rd level, incl. guy walking off the second
+	// floor into the air & foreground objects not blocking shots.  - dink
+
+	INT32 nInterleave = 10;
 	INT32 nCyclesTotal[3] = { 8000000 / 60, 8000000 / 60, 3579545 / 60 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	ZetOpen(0);
 
-	BurnTimerUpdate(nCyclesTotal[2] * 1 / 2);
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		VezOpen(0);
+		CPU_RUN(0, Vez);
+		if (i == 0) {
+			VezSetIRQLineAndVector(0,  0xc8/4, CPU_IRQSTATUS_ACK);
+			VezRun(1);
+			VezSetIRQLineAndVector(0,  0xc8/4, CPU_IRQSTATUS_NONE);
+		}
+		if (i == 2) {
+			VezSetIRQLineAndVector(0,  0xc4/4, CPU_IRQSTATUS_ACK);
+			VezRun(1);
+			VezSetIRQLineAndVector(0,  0xc4/4, CPU_IRQSTATUS_NONE);
+		}
+		VezClose();
 
-	// this is weird, but it's the only way to avoid contentions between cpus
-	VezOpen(0);
-	VezRun(nCyclesTotal[0] * 240 / 256);
-	VezSetIRQLineAndVector(0,  0xc8/4, CPU_IRQSTATUS_AUTO);
-	VezRun(nCyclesTotal[0] * 16 / 256);
-	VezSetIRQLineAndVector(0, 0xc4/4, CPU_IRQSTATUS_AUTO);
-	VezClose();
+		VezOpen(1);
+		CPU_RUN(1, Vez);
+		if (i == 0) {
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+			memcpy(DrvSprRAMBuf, DrvSprRAM, 0x800);
+			VezSetIRQLineAndVector(0,  0xc8/4, CPU_IRQSTATUS_ACK);
+			VezRun(1);
+			VezSetIRQLineAndVector(0,  0xc8/4, CPU_IRQSTATUS_NONE);
+		}
+		if (i == 2) {
+			VezSetIRQLineAndVector(0,  0xc4/4, CPU_IRQSTATUS_ACK);
+			VezRun(1);
+			VezSetIRQLineAndVector(0,  0xc4/4, CPU_IRQSTATUS_NONE);
+		}
+		VezClose();
 
-	BurnTimerUpdate(nCyclesTotal[2] * 1 / 2);
-
-	VezOpen(1);
-	VezRun(nCyclesTotal[1] * 240 / 256);
-	VezSetIRQLineAndVector(0,  0xc8/4, CPU_IRQSTATUS_AUTO);
-	VezRun(nCyclesTotal[1] * 16 / 256);
-	VezSetIRQLineAndVector(0, 0xc4/4, CPU_IRQSTATUS_AUTO);
-	VezClose();
+		BurnTimerUpdate(nCyclesTotal[2] * (i + 1) / nInterleave);
+	}
 
 	BurnTimerEndFrame(nCyclesTotal[2]);
 
@@ -670,9 +696,6 @@ static INT32 DrvFrame()
 
 	ZetClose();
 
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
 	return 0;
 }
@@ -680,7 +703,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029719;
 	}
@@ -692,7 +715,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA)
 	{
 		VezScan(nAction);
@@ -726,7 +749,7 @@ static struct BurnRomInfo deadangRomDesc[] = {
 	{ "8.21l",		0x04000, 0x905d6b27, 0x04 | BRF_GRA },           //  9
 
 	{ "l12",		0x80000, 0xc94d5cd2, 0x05 | BRF_GRA },           // 10 Sprites
-	
+
 	{ "16n",		0x80000, 0xfd70e1a5, 0x06 | BRF_GRA },           // 11 Midground Tiles
 	{ "16r",		0x80000, 0x92f5e382, 0x06 | BRF_GRA },           // 12
 

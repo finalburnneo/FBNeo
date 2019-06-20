@@ -4542,7 +4542,7 @@ static INT32 NMK004Init(INT32 (*pLoadCallback)(), INT32 nCpuSpeed)
 	nNMK004CpuSpeed = nCpuSpeed;
 
 	if (pLoadCallback) {
-		pLoadCallback();
+		if (pLoadCallback()) return 1;
 	}
 
 	if (BurnLoadRom(NMK004PROGROM + 0x0000, 0x80, 1)) return 1; // load nmk004 rom ^^

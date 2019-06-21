@@ -5705,7 +5705,7 @@ static void marvins_draw_sprites(INT32 scrollx, INT32 scrolly, INT32 from, INT32
 		{
 			color <<= 3;
 
-			INT32 flip = ((flipx ? 0x0f : 0) | (flipy ? 0x0f : 0));
+			INT32 flip = ((flipx ? 0x0f : 0) | (flipy ? 0xf0 : 0));
 			UINT8 *gfxbase = DrvGfxROM2 + ((tile_number * 0x100) /*& DrvGfxMask[2]*/); // this mask causes the sprites to not animate in marvins & vanguard II
 
 			for (INT32 y = 0; y < 16; y++)

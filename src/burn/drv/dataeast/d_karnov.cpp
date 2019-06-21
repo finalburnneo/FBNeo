@@ -1165,7 +1165,7 @@ static INT32 DrvFrame()
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	if (i8751_reset == 0) {
+	if (i8751_reset == 0 && (microcontroller_id==CHELNOV || microcontroller_id==CHELNOVJ || microcontroller_id==CHELNOVW)) {
 		chelnov_i8751_w(0);
 		i8751_reset = 1;
 	}

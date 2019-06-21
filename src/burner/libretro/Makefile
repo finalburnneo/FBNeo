@@ -312,16 +312,12 @@ else ifeq ($(platform), classic_armv8_a35)
 	TARGET := $(TARGET_NAME)_libretro.so
 	fpic := -fPIC
 	SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(VERSION_SCRIPT)
-	PLATFORM_FLAGS = -marm -mtune=cortex-a35 -mfpu=neon-fp-armv8 -mfloat-abi=hard
-	FASTMATH = 1
-	USE_SPEEDHACKS = 1
+	PLATFORM_FLAGS = -marm -mtune=cortex-a35 -mfpu=neon-fp-armv8 -mfloat-abi=hard -march=armv8-a
 	USE_EXPERIMENTAL_FLAGS = 1
-	A8A35_FLAGS = 1
 	HAVE_NEON = 1
 	USE_CYCLONE = 1
 	ARCH = arm
 	ENDIANNESS_DEFINES := -DLSB_FIRST
-	PLATFORM_FLAGS += -march=armv8-a
 	LDFLAGS += -static-libgcc -static-libstdc++
 	CFLAGS += $(PLATFORM_FLAGS)
 	CXXFLAGS += $(PLATFORM_FLAGS)

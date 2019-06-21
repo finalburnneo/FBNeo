@@ -399,8 +399,10 @@ static INT32 GameInpDigital2RetroInpAnalogRight(struct GameInp* pgi, unsigned po
 	return 0;
 }
 
+#if 0
 // 1 analog to 2 digital mapping
 // Needs pgi, player, axis, 2 buttons retropad id and 2 descriptions
+// Is this function still useful ? We are now making better use of retropad analog controls
 static INT32 GameInpAnalog2RetroInpDualKeys(struct GameInp* pgi, unsigned port, unsigned axis, unsigned id_pos, unsigned id_neg, char *szn_pos, char *szn_neg)
 {
 	if(bButtonMapped) return 0;
@@ -430,6 +432,7 @@ static INT32 GameInpAnalog2RetroInpDualKeys(struct GameInp* pgi, unsigned port, 
 	bButtonMapped = true;
 	return 0;
 }
+#endif
 
 // [WIP]
 // All inputs which needs special handling need to go in the next function
@@ -550,7 +553,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
-	// Fix part of issue #102 (Crazy Fight)
+	// Crazy Fight
 	// Can't really manage to have a decent mapping on this one if you don't have a stick/pad with the following 2 rows of 3 buttons :
 	// Y X R1
 	// B A R2
@@ -577,7 +580,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
-	// Fix part of issue #102 (Bikkuri Card)
+	// Bikkuri Card
 	// Coin 2 overwrited Coin 1, which is probably part of the issue
 	// I managed to pass the payout tests once, but i don't know how
 	if ((parentrom && strcmp(parentrom, "bikkuric") == 0) ||
@@ -588,7 +591,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
-	// Fix part of issue #102 (Jackal)
+	// Jackal
 	if ((parentrom && strcmp(parentrom, "jackal") == 0) ||
 		(drvname && strcmp(drvname, "jackal") == 0)
 	) {
@@ -600,7 +603,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
-	// Fix part of issue #102 (Last Survivor)
+	// Last Survivor
 	if ((parentrom && strcmp(parentrom, "lastsurv") == 0) ||
 		(drvname && strcmp(drvname, "lastsurv") == 0)
 	) {
@@ -611,7 +614,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
-	
+
 	// Out Run
 	// Super Hang-On
 	// Turbo Out Run
@@ -677,8 +680,8 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
-	
-	// Fix part of issue #102 (Golden Axe)
+
+	// Golden Axe
 	// Use same layout as megadrive cores
 	if ((parentrom && strcmp(parentrom, "goldnaxe") == 0) ||
 		(drvname && strcmp(drvname, "goldnaxe") == 0)
@@ -693,7 +696,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, "Jump");
 		}
 	}
-	
+
 	// Major League
 	if ((parentrom && strcmp(parentrom, "mjleague") == 0) ||
 		(drvname && strcmp(drvname, "mjleague") == 0)
@@ -717,8 +720,8 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
-	
-	// Fix part of issue #102 (Chase HQ)
+
+	// Chase HQ
 	if ((parentrom && strcmp(parentrom, "chasehq") == 0) ||
 		(drvname && strcmp(drvname, "chasehq") == 0)
 	) {
@@ -735,8 +738,8 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
-	
-	// Fix part of issue #102 (SDI - Strategic Defense Initiative)
+
+	// SDI - Strategic Defense Initiative
 	if ((parentrom && strcmp(parentrom, "sdi") == 0) ||
 		(drvname && strcmp(drvname, "sdi") == 0)
 	) {
@@ -750,8 +753,8 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
-	
-	// Fix part of issue #102 (Blades of Steel)
+
+	// Blades of Steel
 	if ((parentrom && strcmp(parentrom, "bladestl") == 0) ||
 		(drvname && strcmp(drvname, "bladestl") == 0)
 	) {
@@ -771,8 +774,8 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
 		}
 	}
-	
-	// Fix part of issue #102 (Forgotten Worlds)
+
+	// Forgotten Worlds
 	if ((parentrom && strcmp(parentrom, "forgottn") == 0) ||
 		(drvname && strcmp(drvname, "forgottn") == 0)
 	) {
@@ -789,7 +792,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 	}
-	
+
 	// Pop 'n Bounce / Gapporin
 	if ((parentrom && strcmp(parentrom, "popbounc") == 0) ||
 		(drvname && strcmp(drvname, "popbounc") == 0)
@@ -801,7 +804,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
 		}
 	}
-	
+
 	// The Irritating Maze / Ultra Denryu Iraira Bou, Shoot the Bull
 	if ((parentrom && strcmp(parentrom, "irrmaze") == 0) ||
 		(drvname && strcmp(drvname, "irrmaze") == 0) ||
@@ -821,7 +824,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 	}
-	
+
 	// Laser Ghost
 	if ((parentrom && strcmp(parentrom, "lghost") == 0) ||
 		(drvname && strcmp(drvname, "lghost") == 0) ||
@@ -841,7 +844,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 	}
-	
+
 	// Lord of Gun, ...
 	if ((parentrom && strcmp(parentrom, "lordgun") == 0) ||
 		(drvname && strcmp(drvname, "lordgun") == 0) ||
@@ -869,7 +872,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 	}
-	
+
 	// Lethal Enforcers, Beast Busters, Bang!, Zero Point 1 & 2, Operation Thunderbolt, Operation Wolf 1 & 3, Space Gun
 	if ((parentrom && strcmp(parentrom, "lethalen") == 0) ||
 		(drvname && strcmp(drvname, "lethalen") == 0) ||
@@ -927,7 +930,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
 		}
 	}
-	
+
 	// VS Block Breaker
 	if ((parentrom && strcmp(parentrom, "vblokbrk") == 0) ||
 		(drvname && strcmp(drvname, "vblokbrk") == 0)
@@ -936,7 +939,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 		}
 	}
-	
+
 	// Puzz Loop 2
 	if ((parentrom && strcmp(parentrom, "pzloop2") == 0) ||
 		(drvname && strcmp(drvname, "pzloop2") == 0)
@@ -945,7 +948,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 0, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 		}
 	}
-	
+
 	// G-LOC Air Battle
 	// Galaxy Force 2
 	// After burner 1 & 2
@@ -965,8 +968,8 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
 		}
 	}
-	
-	// Fix part of issue #156 (Alien vs Predator)
+
+	// Alien vs Predator
 	// Use a layout more similar to the cabinet, with jump in the middle
 	if ((parentrom && strcmp(parentrom, "avsp") == 0) ||
 		(drvname && strcmp(drvname, "avsp") == 0)
@@ -981,7 +984,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 	}
-	
+
 	// Dragon Gun
 	if ((parentrom && strcmp(parentrom, "dragngun") == 0) ||
 		(drvname && strcmp(drvname, "dragngun") == 0)
@@ -993,7 +996,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 1, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 		}
 	}
-	
+
 	// Beraboh Man
 	if ((parentrom && strcmp(parentrom, "berabohm") == 0) ||
 		(drvname && strcmp(drvname, "berabohm") == 0)
@@ -1017,7 +1020,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_R : RETRO_DEVICE_ID_JOYPAD_L), description);
 		}
 	}
-	
+
 	// Mad Planets
 	if ((parentrom && strcmp(parentrom, "mplanets") == 0) ||
 		(drvname && strcmp(drvname, "mplanets") == 0)
@@ -1029,7 +1032,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
-	
+
 	// Toobin' (reported on discord, layout suggestion by alfrix#8029)
 	if ((parentrom && strcmp(parentrom, "toobin") == 0) ||
 		(drvname && strcmp(drvname, "toobin") == 0)
@@ -1050,7 +1053,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R2, description);
 		}
 	}
-	
+
 	// Vindicators (reported on discord, layout suggestion by alfrix#8029)
 	if ((parentrom && strcmp(parentrom, "vindictr") == 0) ||
 		(drvname && strcmp(drvname, "vindictr") == 0)
@@ -1071,7 +1074,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L3, description);
 		}
 	}
-	
+
 	// Vindicators Part II (reported on discord, layout suggestion by alfrix#8029)
 	if ((parentrom && strcmp(parentrom, "vindctr2") == 0) ||
 		(drvname && strcmp(drvname, "vindctr2") == 0)
@@ -1095,7 +1098,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
 		}
 	}
-	
+
 	// Thunder Ceptor & Thunder Ceptor II
 	if ((parentrom && strcmp(parentrom, "tceptor") == 0) ||
 		(drvname && strcmp(drvname, "tceptor") == 0)
@@ -1119,7 +1122,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
 		}
 	}
-	
+
 	// Heavyweight Champ
 	if ((parentrom && strcmp(parentrom, "hwchamp") == 0) ||
 		(drvname && strcmp(drvname, "hwchamp") == 0)
@@ -1131,7 +1134,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 3, RETRO_DEVICE_ID_JOYPAD_L2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
 		}
 	}
-	
+
 	// Chequered Flag
 	if ((parentrom && strcmp(parentrom, "chqflag") == 0) ||
 		(drvname && strcmp(drvname, "chqflag") == 0)
@@ -1146,7 +1149,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 	}
-	
+
 	// Lucky & Wild
 	// Dirt Fox
 	if ((parentrom && strcmp(parentrom, "luckywld") == 0) ||
@@ -1169,7 +1172,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
 		}
 	}
-	
+
 	// Ground Effects / Super Ground Effects
 	if ((parentrom && strcmp(parentrom, "groundfx") == 0) ||
 		(drvname && strcmp(drvname, "groundfx") == 0)
@@ -1187,7 +1190,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
 		}
 	}
-	
+
 	// Spy Hunter
 	if ((parentrom && strcmp(parentrom, "spyhunt") == 0) ||
 		(drvname && strcmp(drvname, "spyhunt") == 0)
@@ -1211,7 +1214,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
 		}
 	}
-	
+
 	// Hydra
 	if ((parentrom && strcmp(parentrom, "hydra") == 0) ||
 		(drvname && strcmp(drvname, "hydra") == 0)
@@ -1323,7 +1326,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpAnalogRight(pgi, 0, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Fire Left / Right");
 		}
 	}
-	
+
 	// Battle Zone
 	if ((parentrom && strcmp(parentrom, "bzone") == 0) ||
 		(drvname && strcmp(drvname, "bzone") == 0)
@@ -1344,7 +1347,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R2, description);
 		}
 	}
-	
+
 	// Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion
 	// Pac-Man - 25th Anniversary Edition
 	if ((parentrom && strcmp(parentrom, "20pacgal") == 0) ||
@@ -1359,7 +1362,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 	}
-	
+
 	// Discs of Tron
 	if ((parentrom && strcmp(parentrom, "dotron") == 0) ||
 		(drvname && strcmp(drvname, "dotron") == 0)
@@ -1371,7 +1374,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 1, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
 		}
 	}
-	
+
 	// Mortal Kombat 1, 2 & 3
 	// snes-like mapping seems more convenient than original arcade mapping (with the block in the middle), even on arcade sticks
 	if ((parentrom && strcmp(parentrom, "mk") == 0) ||
@@ -1405,7 +1408,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_R2 : RETRO_DEVICE_ID_JOYPAD_R), description);
 		}
 	}
-	
+
 	// Handle megadrive
 	if ((systemname && strcmp(systemname, "Sega Megadrive") == 0)) {
 		// Street Fighter 2 mapping (which is the only 6 button megadrive game ?)
@@ -1444,7 +1447,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 	}
-	
+
 	// Handle MSX
 	if ((systemname && strcmp(systemname, "MSX") == 0)) {
 		if (strcmp("Button 1", description) == 0) {
@@ -1484,7 +1487,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Key LEFT / Key RIGHT");
 		}
 	}
-	
+
 	// Handle Coleco
 	if ((systemname && strcmp(systemname, "ColecoVision") == 0)) {
 		if (strcmp("1", description) == 0) {
@@ -1525,28 +1528,32 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
-	// Fix part of issue #102 (Twin stick games)
+	// Handle Twin stick games
 	if ((strcmp("Up 2", description) == 0) ||
 		(strcmp("Up (right)", description) == 0) ||
-		(strcmp("Right Up", description) == 0)
+		(strcmp("Right Up", description) == 0) ||
+		(strcmp("up 2", szi + 3) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "Up / Down (Right Stick)");
 	}
 	if ((strcmp("Down 2", description) == 0) ||
 		(strcmp("Down (right)", description) == 0) ||
-		(strcmp("Right Down", description) == 0)
+		(strcmp("Right Down", description) == 0) ||
+		(strcmp("down 2", szi + 3) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "Up / Down (Right Stick)");
 	}
 	if ((strcmp("Left 2", description) == 0) ||
 		(strcmp("Left (right)", description) == 0) ||
-		(strcmp("Right Left", description) == 0)
+		(strcmp("Right Left", description) == 0) ||
+		(strcmp("left 2", szi + 3) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Left / Right (Right Stick)");
 	}
 	if ((strcmp("Right 2", description) == 0) ||
 		(strcmp("Right (right)", description) == 0) ||
-		(strcmp("Right Right", description) == 0)
+		(strcmp("Right Right", description) == 0) ||
+		(strcmp("right 2", szi + 3) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Left / Right (Right Stick)");
 	}
@@ -1702,6 +1709,8 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 	}
 
 	const char * systemname = BurnDrvGetTextA(DRV_SYSTEM);
+	const char * parentrom	= BurnDrvGetTextA(DRV_PARENT);
+	const char * drvname	= BurnDrvGetTextA(DRV_NAME);
 
 	// Handle Spectrum
 	if ((systemname && strcmp(systemname, "ZX Spectrum") == 0)) {
@@ -1817,6 +1826,25 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 			GameInpDigital2RetroInpKey(pgi, 0, RETROK_PERIOD, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_comma", szi) == 0)
 			GameInpDigital2RetroInpKey(pgi, 0, RETROK_COMMA, szn, RETRO_DEVICE_KEYBOARD);
+	}
+
+	// Qix service buttons are somehow needed
+	// We can't handle this in GameInpSpecialOne (fails to compute nPlayer)
+	if ((parentrom && strcmp(parentrom, "qix") == 0) ||
+		(drvname && strcmp(drvname, "qix") == 0)
+	) {
+		if (strcmp("Test Advance", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_Y, szn);
+		}
+		if (strcmp("Test Next Line", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_X, szn);
+		}
+		if (strcmp("Test Slew Up", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R, szn);
+		}
+		if (strcmp("Test Slew Down", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_L, szn);
+		}
 	}
 
 	// Store the pgi that controls the reset input

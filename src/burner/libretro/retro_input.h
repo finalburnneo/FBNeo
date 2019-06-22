@@ -4,6 +4,9 @@
 #include "burner.h"
 #include "burn_gun.h"
 
+// Stuff we don't need anymore but want to keep in the code
+//#define RETRO_INPUT_DEPRECATED
+
 struct KeyBind
 {
 	unsigned id;
@@ -16,8 +19,10 @@ struct KeyBind
 struct AxiBind
 {
 	unsigned id;
+#ifdef RETRO_INPUT_DEPRECATED
 	unsigned id_pos;
 	unsigned id_neg;
+#endif
 	int index;
 };
 
@@ -37,5 +42,7 @@ void InputMake(void);
 void InputInit();
 void InputDeInit();
 void SetControllerInfo();
+
+extern bool bLibretroSupportsBitmasks;
 
 #endif

@@ -824,6 +824,9 @@ void retro_init()
 	else
 		log_cb = log_dummy;
 
+	if (environ_cb(RETRO_ENVIRONMENT_GET_INPUT_BITMASKS, NULL))
+		bLibretroSupportsBitmasks = true;
+
 	snprintf(szAppBurnVer, sizeof(szAppBurnVer), "%x.%x.%x.%02x", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF);
 	BurnLibInit();
 #ifdef AUTOGEN_DATS
@@ -834,6 +837,7 @@ void retro_init()
 void retro_deinit()
 {
 	BurnLibExit();
+	bLibretroSupportsBitmasks = true;
 }
 
 void retro_reset()

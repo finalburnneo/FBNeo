@@ -66,20 +66,17 @@ static void rxml_free_node(struct rxml_node *node)
    {
       struct rxml_attrib_node *next_attrib = NULL;
 
-      if (!attrib_node_head)
-         continue;
-
       next_attrib = (struct rxml_attrib_node*)attrib_node_head->next;
 
-      if (!next_attrib)
-         continue;
-
-      if (attrib_node_head->attrib)
-         free(attrib_node_head->attrib);
-      if (attrib_node_head->value)
-         free(attrib_node_head->value);
-      if (attrib_node_head)
-         free(attrib_node_head);
+      if (next_attrib)
+      {
+         if (attrib_node_head->attrib)
+            free(attrib_node_head->attrib);
+         if (attrib_node_head->value)
+            free(attrib_node_head->value);
+         if (attrib_node_head)
+            free(attrib_node_head);
+      }
 
       attrib_node_head = next_attrib;
    }
@@ -116,7 +113,7 @@ static bool range_is_space(const char *begin, const char *end)
    return true;
 }
 
-static void skip_spaces(const char **ptr_)
+static void rxml_skip_spaces(const char **ptr_)
 {
    const char *ptr = *ptr_;
    while (isspace(*ptr))
@@ -146,28 +143,31 @@ static char *strdup_range_escape(const char *begin, const char *end)
 
 static struct rxml_attrib_node *rxml_parse_attrs(const char *str)
 {
-   char *copy = strdup(str);
+   const char *elem;
+   struct rxml_attrib_node *list = NULL;
+   struct rxml_attrib_node *tail = NULL;
+   char *attrib                  = NULL;
+   char *value                   = NULL;
+   char *last_char               = NULL;
+   char *save                    = NULL;
+   char *copy                    = strdup(str);
    if (!copy)
       return NULL;
 
-   char *last_char = copy + strlen(copy) - 1;
+   last_char = copy + strlen(copy) - 1;
    if (*last_char == '/')
       *last_char = '\0';
 
-   struct rxml_attrib_node *list = NULL;
-   struct rxml_attrib_node *tail = NULL;
-
-   char *attrib = NULL;
-   char *value = NULL;
-   char *save;
-   const char *elem = strtok_r(copy, " \n\t\f\v\r", &save);
+   elem = strtok_r(copy, " \n\t\f\v\r", &save);
    while (elem)
    {
+      const char *end;
+      struct rxml_attrib_node *new_node;
       const char *eq = strstr(elem, "=\"");
       if (!eq)
          goto end;
 
-      const char *end = strrchr(eq + 2, '\"');
+      end = strrchr(eq + 2, '\"');
       if (!end || end != (elem + strlen(elem) - 1))
          goto end;
 
@@ -176,15 +176,15 @@ static struct rxml_attrib_node *rxml_parse_attrs(const char *str)
       if (!attrib || !value)
          goto end;
 
-      struct rxml_attrib_node *new_node =
+      new_node =
          (struct rxml_attrib_node*)calloc(1, sizeof(*new_node));
       if (!new_node)
          goto end;
 
       new_node->attrib = attrib;
       new_node->value  = value;
-      attrib = NULL;
-      value = NULL;
+      attrib           = NULL;
+      value            = NULL;
 
       if (tail)
       {
@@ -217,10 +217,11 @@ static char *find_first_space(const char *str)
 
 static bool rxml_parse_tag(struct rxml_node *node, const char *str)
 {
+   const char *name_end;
    const char *str_ptr = str;
-   skip_spaces(&str_ptr);
+   rxml_skip_spaces(&str_ptr);
 
-   const char *name_end = find_first_space(str_ptr);
+   name_end = find_first_space(str_ptr);
    if (name_end)
    {
       node->name = strdup_range(str_ptr, name_end);
@@ -248,7 +249,7 @@ static struct rxml_node *rxml_parse_node(const char **ptr_)
    if (!node)
       return NULL;
 
-   skip_spaces(ptr_);
+   rxml_skip_spaces(ptr_);
 
    ptr = *ptr_;
    if (*ptr != '<')
@@ -304,7 +305,7 @@ static struct rxml_node *rxml_parse_node(const char **ptr_)
          }
 
          node->data = strdup_range(cdata_start +
-               strlen("<![CDATA["), cdata_end);
+               STRLEN_CONST("<![CDATA["), cdata_end);
       }
       else if (closing_start && closing_start == child_start) /* Simple Data */
          node->data = strdup_range(closing + 1, closing_start);
@@ -375,15 +376,18 @@ error:
 
 static char *purge_xml_comments(const char *str)
 {
-   size_t len = strlen(str);
+   char *copy_dest;
+   const char *copy_src;
+   size_t len    = strlen(str);
    char *new_str = (char*)malloc(len + 1);
    if (!new_str)
       return NULL;
 
-   new_str[len] = '\0';
+   new_str[len]          = '\0';
 
-   char *copy_dest       = new_str;
-   const char *copy_src  = str;
+   copy_dest             = new_str;
+   copy_src              = str;
+
    for (;;)
    {
       ptrdiff_t copy_len;
@@ -397,7 +401,7 @@ static char *purge_xml_comments(const char *str)
       memcpy(copy_dest, copy_src, copy_len);
 
       copy_dest += copy_len;
-      copy_src   = comment_end + strlen("-->");
+      copy_src   = comment_end + STRLEN_CONST("-->");
    }
 
    /* Avoid strcpy() as OpenBSD is anal and hates you
@@ -411,19 +415,14 @@ static char *purge_xml_comments(const char *str)
 
 rxml_document_t *rxml_load_document(const char *path)
 {
+   rxml_document_t *doc;
    char *memory_buffer     = NULL;
-   char *new_memory_buffer = NULL;
-   const char *mem_ptr     = NULL;
    long len                = 0;
    RFILE *file             = filestream_open(path,
          RETRO_VFS_FILE_ACCESS_READ,
          RETRO_VFS_FILE_ACCESS_HINT_NONE);
    if (!file)
       return NULL;
-
-   rxml_document_t *doc = (rxml_document_t*)calloc(1, sizeof(*doc));
-   if (!doc)
-      goto error;
 
    len           = filestream_get_size(file);
    memory_buffer = (char*)malloc(len + 1);
@@ -437,17 +436,38 @@ rxml_document_t *rxml_load_document(const char *path)
    filestream_close(file);
    file = NULL;
 
-   mem_ptr = memory_buffer;
+   doc = rxml_load_document_string(memory_buffer);
+
+   free(memory_buffer);
+   return doc;
+
+error:
+   free(memory_buffer);
+   if(file)
+      filestream_close(file);
+   return NULL;
+}
+
+rxml_document_t *rxml_load_document_string(const char *str)
+{
+   rxml_document_t *doc;
+   char *memory_buffer = NULL;
+   const char *mem_ptr = NULL;
+
+   doc = (rxml_document_t*)calloc(1, sizeof(*doc));
+   if (!doc)
+      goto error;
+
+   mem_ptr = str;
 
    if (!validate_header(&mem_ptr))
       goto error;
 
-   new_memory_buffer = purge_xml_comments(mem_ptr);
-   if (!new_memory_buffer)
+   memory_buffer = purge_xml_comments(mem_ptr);
+   if (!memory_buffer)
       goto error;
 
-   free(memory_buffer);
-   mem_ptr = memory_buffer = new_memory_buffer;
+   mem_ptr = memory_buffer;
 
    doc->root_node = rxml_parse_node(&mem_ptr);
    if (!doc->root_node)
@@ -458,7 +478,6 @@ rxml_document_t *rxml_load_document(const char *path)
 
 error:
    free(memory_buffer);
-   filestream_close(file);
    rxml_free_document(doc);
    return NULL;
 }
@@ -474,7 +493,7 @@ void rxml_free_document(rxml_document_t *doc)
    free(doc);
 }
 
-char *rxml_node_attrib(struct rxml_node *node, const char *attrib)
+const char *rxml_node_attrib(struct rxml_node *node, const char *attrib)
 {
    struct rxml_attrib_node *attribs = NULL;
    for (attribs = node->attrib; attribs; attribs = attribs->next)

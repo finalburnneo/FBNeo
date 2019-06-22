@@ -119,11 +119,11 @@ uint32_t file_crc32(uint32_t crc, const char *path)
 
    for(i = 0; i < CRC32_MAX_MB; i++)
    {
-      int nread = filestream_read(file, buf, CRC32_BUFFER_SIZE);
-      if (nread < 0)
+      int64_t nread = filestream_read(file, buf, CRC32_BUFFER_SIZE);
+      if (nread < 0)		
          goto error;
 
-      crc = encoding_crc32(crc, buf, nread);
+      crc = encoding_crc32(crc, buf, (size_t)nread);
       if (filestream_eof(file))
          break;
    }

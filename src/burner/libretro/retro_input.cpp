@@ -3,14 +3,16 @@
 #include "retro_input.h"
 
 bool bStreetFighterLayout = false;
+bool bLibretroSupportsBitmasks = false;
 
 static retro_input_state_t input_cb;
 static retro_input_poll_t poll_cb;
 
 static unsigned nDiagInputComboStartFrame = 0;
 static unsigned nDiagInputHoldFrameDelay = 0;
-static unsigned nDeviceType[5] = { -1, -1, -1, -1, -1 };
 static unsigned nSwitchCode = 0;
+static int nDeviceType[5] = { -1, -1, -1, -1, -1 };
+static int nLibretroInputBitmask[5] = { -1, -1, -1, -1, -1};
 static std::vector<retro_input_descriptor> normal_input_descriptors;
 static struct KeyBind sKeyBinds[255];
 static struct AxiBind sAxiBinds[5][8]; // 5 players with up to 8 axis
@@ -154,6 +156,18 @@ INT32 GameInpInit()
 	return 0;
 }
 
+static inline int input_cb_wrapper(unsigned port, unsigned device, unsigned index, unsigned id)
+{
+	if (bLibretroSupportsBitmasks && device == RETRO_DEVICE_JOYPAD)
+	{
+		if (nLibretroInputBitmask[port] == -1)
+			nLibretroInputBitmask[port] = input_cb(port, RETRO_DEVICE_JOYPAD, index, RETRO_DEVICE_ID_JOYPAD_MASK);
+		return (nLibretroInputBitmask[port] & (1 << id));
+	}
+	else
+		return input_cb(port, device, index, id);
+}
+
 static inline int CinpState(int nCode)
 {
 	unsigned id = sKeyBinds[nCode].id;
@@ -161,11 +175,11 @@ static inline int CinpState(int nCode)
 	int index = sKeyBinds[nCode].index;
 	if (index == -1)
 	{
-		return input_cb(port, sKeyBinds[nCode].device, 0, id);
+		return input_cb_wrapper(port, sKeyBinds[nCode].device, 0, id);
 	}
 	else
 	{
-		int s = input_cb(port, sKeyBinds[nCode].device, index, id);
+		int s = input_cb_wrapper(port, sKeyBinds[nCode].device, index, id);
 		unsigned position = sKeyBinds[nCode].position;
 		// Using a large deadzone when mapping microswitches to analog axis
 		// Or said axis become way too sensitive and some game become unplayable (assault)
@@ -180,27 +194,31 @@ static inline int CinpState(int nCode)
 static inline int CinpJoyAxis(int port, int axis)
 {
 	int index = sAxiBinds[port][axis].index;
+#ifdef RETRO_INPUT_DEPRECATED
 	if(index != -1)
 	{
+#endif
 		int ret;
-		ret = input_cb(port, RETRO_DEVICE_ANALOG, index, sAxiBinds[port][axis].id);
+		ret = input_cb_wrapper(port, RETRO_DEVICE_ANALOG, index, sAxiBinds[port][axis].id);
 		// Fallback if analog trigger requested but not supported
 		if (ret == 0 && index == RETRO_DEVICE_INDEX_ANALOG_BUTTON)
-			ret = input_cb(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id) ? 0x7FFF : 0;
+			ret = input_cb_wrapper(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id) ? 0x7FFF : 0;
 		return ret;
+#ifdef RETRO_INPUT_DEPRECATED
 	}
 	else
 	{
-		return (input_cb(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id_pos) - input_cb(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id_neg)) * 0x7FFF;
+		return (input_cb_wrapper(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id_pos) - input_cb_wrapper(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id_neg)) * 0x7FFF;
 	}
 	return 0;
+#endif
 }
 
 static INT32 pointerValues[5][2];
 
 static inline void CinpDirectCoord(int port, int axis)
 {
-	UINT16 val = (32767 + input_cb(port, nDeviceType[port], 0, sAxiBinds[port][axis].id));
+	UINT16 val = (32767 + input_cb_wrapper(port, nDeviceType[port], 0, sAxiBinds[port][axis].id));
 	INT32 width, height;
 	BurnDrvGetVisibleSize(&width, &height);
 	pointerValues[port][axis] = (INT32)((axis == 0 ? width : height) * (double(val)/double(65536)));
@@ -209,9 +227,10 @@ static inline void CinpDirectCoord(int port, int axis)
 
 static inline int CinpMouseAxis(int port, int axis)
 {
-	return input_cb(port, RETRO_DEVICE_MOUSE, 0, sAxiBinds[port][axis].id);
+	return input_cb_wrapper(port, RETRO_DEVICE_MOUSE, 0, sAxiBinds[port][axis].id);
 }
 
+#ifdef RETRO_INPUT_DEPRECATED
 static INT32 InputTick()
 {
 	struct GameInp *pgi;
@@ -268,6 +287,7 @@ static INT32 InputTick()
 	}
 	return 0;
 }
+#endif
 
 // Analog to analog mapping
 static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, unsigned axis, unsigned id, int index, char *szn, UINT8 nInput = GIT_JOYAXIS_FULL, INT32 nSliderValue = 0x8000, INT16 nSliderSpeed = 0x0800, INT16 nSliderCenter = 10)
@@ -291,6 +311,7 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			normal_input_descriptors.push_back(descriptor);
 			break;
 		}
+#ifdef RETRO_INPUT_DEPRECATED
 		case GIT_JOYSLIDER:
 		{
 			pgi->nInput = GIT_JOYSLIDER;
@@ -310,6 +331,7 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			normal_input_descriptors.push_back(descriptor);
 			break;
 		}
+#endif
 		case GIT_MOUSEAXIS:
 		{
 			pgi->nInput = GIT_MOUSEAXIS;
@@ -399,7 +421,7 @@ static INT32 GameInpDigital2RetroInpAnalogRight(struct GameInp* pgi, unsigned po
 	return 0;
 }
 
-#if 0
+#ifdef RETRO_INPUT_DEPRECATED
 // 1 analog to 2 digital mapping
 // Needs pgi, player, axis, 2 buttons retropad id and 2 descriptions
 // Is this function still useful ? We are now making better use of retropad analog controls
@@ -1929,7 +1951,7 @@ static bool PollDiagInput()
 
 		for (int combo_idx = 0; diag_input[combo_idx] != RETRO_DEVICE_ID_JOYPAD_EMPTY; combo_idx++)
 		{
-			if (input_cb(0, RETRO_DEVICE_JOYPAD, 0, diag_input[combo_idx]) == false)
+			if (input_cb_wrapper(0, RETRO_DEVICE_JOYPAD, 0, diag_input[combo_idx]) == false)
 				bAllDiagInputPressed = false;
 			else
 				bOneDiagInputPressed = true;
@@ -2045,14 +2067,14 @@ static void BurnerHandlerKeyCallback()
 	};
 
 	// Check if shift is pressed
-	if(input_cb(0, RETRO_DEVICE_KEYBOARD, 0, RETROK_LSHIFT) == 1 || input_cb(0, RETRO_DEVICE_KEYBOARD, 0, RETROK_RSHIFT) == 1)
+	if(input_cb_wrapper(0, RETRO_DEVICE_KEYBOARD, 0, RETROK_LSHIFT) == 1 || input_cb_wrapper(0, RETRO_DEVICE_KEYBOARD, 0, RETROK_RSHIFT) == 1)
 		KeyType = 0xf0|0;
 	else
 		KeyType = 0;
 
 	// Send inputs
 	while (keyMatrix[i][0] != '\0') {
-		if(input_cb(0, RETRO_DEVICE_KEYBOARD, 0, keyMatrix[i][1]) == 1)
+		if(input_cb_wrapper(0, RETRO_DEVICE_KEYBOARD, 0, keyMatrix[i][1]) == 1)
 			cBurnerKeyCallback(keyMatrix[i][0], KeyType, 1);
 		else
 			cBurnerKeyCallback(keyMatrix[i][0], KeyType, 0);
@@ -2062,6 +2084,9 @@ static void BurnerHandlerKeyCallback()
 
 void InputMake(void)
 {
+	for (int i = 0; i < 5; i++)
+		nLibretroInputBitmask[i] = -1;
+
 	poll_cb();
 
 	if (PollDiagInput())
@@ -2073,7 +2098,9 @@ void InputMake(void)
 	struct GameInp* pgi;
 	UINT32 i;
 
+#ifdef RETRO_INPUT_DEPRECATED
 	InputTick();
+#endif
 
 	for (i = 0, pgi = GameInp; i < nGameInpCount; i++, pgi++) {
 		if (pgi->Input.pVal == NULL) {
@@ -2115,6 +2142,7 @@ void InputMake(void)
 
 				break;
 			}
+#ifdef RETRO_INPUT_DEPRECATED
 			case GIT_KEYSLIDER:						// Keyboard slider
 			case GIT_JOYSLIDER:	{					// Joystick slider
 				INT32 nSlider = pgi->Input.Slider.nSliderValue;
@@ -2131,6 +2159,7 @@ void InputMake(void)
 #endif
 				break;
 			}
+#endif
 			case GIT_MOUSEAXIS:						// Mouse axis
 				pgi->Input.nVal = (UINT16)(CinpMouseAxis(pgi->Input.MouseAxis.nMouse, pgi->Input.MouseAxis.nAxis) * nAnalogSpeed);
 #ifdef LSB_FIRST
@@ -2178,6 +2207,7 @@ void InputMake(void)
 
 				break;
 			}
+#ifdef RETRO_INPUT_DEPRECATED
 			case GIT_JOYAXIS_NEG:	{				// Joystick axis Lo
 				INT32 nJoy = CinpJoyAxis(pgi->Input.JoyAxis.nJoy, pgi->Input.JoyAxis.nAxis);
 				if (nJoy < 32767) {
@@ -2225,6 +2255,7 @@ void InputMake(void)
 #endif
 				break;
 			}
+#endif
 		}
 	}
 }

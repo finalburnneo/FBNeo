@@ -16358,7 +16358,7 @@ static INT32 QadInit()
 
 static INT32 Sf2ebblInit()
 {
-	INT32 nRet = DrvInit();
+	INT32 nRet = Cps1RasterInit();
 	
 	Cps1LockSpriteList910000 = 1;
 	
@@ -16377,7 +16377,7 @@ static INT32 Sf2ebbl2Init()
 {
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2koryu;
 	
-	INT32 nRet = DrvInit();
+	INT32 nRet = Cps1RasterInit();
 	
 	Cps1LockSpriteList910000 = 1;
 	
@@ -16400,7 +16400,7 @@ static INT32 Sf2sttInit()
 {
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2stt;
 	
-	INT32 nRet = DrvInit();
+	INT32 nRet = Cps1RasterInit();
 	
 	Cps1LockSpriteList910000 = 1;
 	
@@ -16419,7 +16419,7 @@ static INT32 Sf2jcInit()
 {
 	Cps1DisableBgHi = 1;
 
-	return DrvInit();
+	return Cps1RasterInit();
 }
 
 static void Sf2qp1Callback()
@@ -16440,14 +16440,14 @@ static INT32 Sf2qp1Init()
 {
 	AmendProgRomCallback = Sf2qp1Callback;
 	
-	return DrvInit();
+	return Cps1RasterInit();
 }
 
 static INT32 Sf2thndrInit()
 {
 	Sf2thndr = 1;
 	
-	return DrvInit();
+	return Cps1RasterInit();
 }
 
 UINT8 __fastcall Sf2bReadByte(UINT32 a)
@@ -16594,7 +16594,7 @@ static INT32 Sf2bInit()
 	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
 	CpsMemScanCallbackFunction = Sf2mdtScanCallback;
 	
-	INT32 nRet = DrvInit();
+	INT32 nRet = Cps1RasterInit();
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -20040,7 +20040,7 @@ struct BurnDriver BurnDrvCpsSf2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2RomInfo, Sf2RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20050,7 +20050,7 @@ struct BurnDriver BurnDrvCpsSf2ea = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2eaRomInfo, Sf2eaRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20060,7 +20060,7 @@ struct BurnDriver BurnDrvCpsSf2eb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ebRomInfo, Sf2ebRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20070,7 +20070,7 @@ struct BurnDriver BurnDrvCpsSf2ed = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2edRomInfo, Sf2edRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20080,7 +20080,7 @@ struct BurnDriver BurnDrvCpsSf2ee = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2eeRomInfo, Sf2eeRomName, NULL, NULL, NULL, NULL, Sf2ueInputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20090,7 +20090,7 @@ struct BurnDriver BurnDrvCpsSf2em = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2emRomInfo, Sf2emRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20100,7 +20100,7 @@ struct BurnDriver BurnDrvCpsSf2en = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2enRomInfo, Sf2enRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20150,7 +20150,7 @@ struct BurnDriver BurnDrvCpsSf2ua = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2uaRomInfo, Sf2uaRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20160,7 +20160,7 @@ struct BurnDriver BurnDrvCpsSf2ub = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ubRomInfo, Sf2ubRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20170,7 +20170,7 @@ struct BurnDriver BurnDrvCpsSf2uc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ucRomInfo, Sf2ucRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20180,7 +20180,7 @@ struct BurnDriver BurnDrvCpsSf2ud = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2udRomInfo, Sf2udRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20190,7 +20190,7 @@ struct BurnDriver BurnDrvCpsSf2ue = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ueRomInfo, Sf2ueRomName, NULL, NULL, NULL, NULL, Sf2ueInputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20200,7 +20200,7 @@ struct BurnDriver BurnDrvCpsSf2uf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ufRomInfo, Sf2ufRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20210,7 +20210,7 @@ struct BurnDriver BurnDrvCpsSf2ug = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ugRomInfo, Sf2ugRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20220,7 +20220,7 @@ struct BurnDriver BurnDrvCpsSf2uh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2uhRomInfo, Sf2uhRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20230,7 +20230,7 @@ struct BurnDriver BurnDrvCpsSf2ui = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2uiRomInfo, Sf2uiRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20240,7 +20240,7 @@ struct BurnDriver BurnDrvCpsSf2uk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ukRomInfo, Sf2ukRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20250,7 +20250,7 @@ struct BurnDriver BurnDrvCpsSf2j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jRomInfo, Sf2jRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20260,7 +20260,7 @@ struct BurnDriver BurnDrvCpsSf2j17 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2j17RomInfo, Sf2j17RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20270,7 +20270,7 @@ struct BurnDriver BurnDrvCpsSf2ja = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jaRomInfo, Sf2jaRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20290,7 +20290,7 @@ struct BurnDriver BurnDrvCpsSf2jf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jfRomInfo, Sf2jfRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20300,7 +20300,7 @@ struct BurnDriver BurnDrvCpsSf2jh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jhRomInfo, Sf2jhRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20310,7 +20310,7 @@ struct BurnDriver BurnDrvCpsSf2jl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jlRomInfo, Sf2jlRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20320,7 +20320,7 @@ struct BurnDriver BurnDrvCpsSf2jla = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jlaRomInfo, Sf2jlaRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -20400,7 +20400,7 @@ struct BurnDriver BurnDrvCpsSf2b4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2b4RomInfo, Sf2b4RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

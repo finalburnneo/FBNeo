@@ -194,6 +194,7 @@ extern INT32 nIrqLine50, nIrqLine52;								// The scanlines at which the interr
 extern INT32 nCpsNumScanlines;
 extern INT32 Cps1VBlankIRQLine;
 extern INT32 CpsDrawSpritesInReverse;
+extern INT32 Cps1DrawAtVblank;
 INT32 CpsRunInit();
 INT32 CpsRunExit();
 INT32 Cps1Frame();

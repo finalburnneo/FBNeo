@@ -20,6 +20,8 @@ INT32 nIrqLine50, nIrqLine52;
 INT32 nCpsNumScanlines = 262;
 INT32 Cps1VBlankIRQLine = 2;
 
+INT32 Cps1DrawAtVblank = 0;
+
 CpsRunInitCallback CpsRunInitCallbackFunction = NULL;
 CpsRunInitCallback CpsRunExitCallbackFunction = NULL;
 CpsRunResetCallback CpsRunResetCallbackFunction = NULL;
@@ -203,6 +205,8 @@ INT32 CpsRunExit()
 	Cps2DisableQSnd = 0;
 	CpsBootlegEEPROM = 0;
 
+	Cps1DrawAtVblank = 0;
+
 	return 0;
 }
 
@@ -335,12 +339,16 @@ INT32 Cps1Frame()
 
 			SekSetIRQLine(Cps1VBlankIRQLine, CPU_IRQSTATUS_AUTO);				// Trigger VBlank interrupt
 
-			if (pBurnDraw) {
+			if (Cps1DrawAtVblank && pBurnDraw) {
 				CpsDraw();										// Draw frame
 			}
 		}
 
 		SekRun(nNext - SekTotalCycles());						// run 68K
+	}
+
+	if (pBurnDraw && !Cps1DrawAtVblank) {
+		CpsDraw();												// Draw frame
 	}
 
 	if (Cps1Qs == 1) {

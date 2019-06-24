@@ -973,8 +973,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 
 	// G-LOC Air Battle
 	// Galaxy Force 2
-	// After burner 1 & 2
-	// Thunder Blade
 	if ((parentrom && strcmp(parentrom, "gloc") == 0) ||
 		(drvname && strcmp(drvname, "gloc") == 0) ||
 		(parentrom && strcmp(parentrom, "gforce2") == 0) ||

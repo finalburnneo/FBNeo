@@ -837,7 +837,7 @@ void retro_init()
 void retro_deinit()
 {
 	BurnLibExit();
-	bLibretroSupportsBitmasks = true;
+	bLibretroSupportsBitmasks = false;
 }
 
 void retro_reset()

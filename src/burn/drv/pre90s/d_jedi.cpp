@@ -366,6 +366,12 @@ static INT32 MemIndex()
 	return 0;
 }
 
+static void nvram_defaults()
+{
+	memset(DrvNVRAM, 0, 0x100);
+	memcpy(DrvNVRAM + 0x58, "\xfd\x01\xfd\x05\x02\x00\xfc", 7);
+}
+
 static INT32 DrvInit()
 {
 	AllMem = NULL;
@@ -435,6 +441,8 @@ static INT32 DrvInit()
 	tms5220_set_frequency(672000);
 
 	GenericTilesInit();
+
+	nvram_defaults();
 
 	DrvDoReset(1);
 

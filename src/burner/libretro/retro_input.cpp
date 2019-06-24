@@ -979,10 +979,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		(drvname && strcmp(drvname, "gloc") == 0) ||
 		(parentrom && strcmp(parentrom, "gforce2") == 0) ||
 		(drvname && strcmp(drvname, "gforce2") == 0) ||
-		(parentrom && strcmp(parentrom, "aburner2") == 0) ||
-		(drvname && strcmp(drvname, "aburner2") == 0) ||
-		(parentrom && strcmp(parentrom, "thndrbld") == 0) ||
-		(drvname && strcmp(drvname, "thndrbld") == 0) ||
 		(parentrom && strcmp(parentrom, "rascot") == 0) ||
 		(drvname && strcmp(drvname, "rascot") == 0)
 	) {

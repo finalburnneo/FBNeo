@@ -43023,3 +43023,41 @@ struct BurnDriver BurnDrvmd_bk3e = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Misplaced (English)
+// https://retrosouls.itch.io/misplaced
+static struct BurnRomInfo md_misplacedRomDesc[] = {
+	{ "Misplaced-EN.bin", 0x0e0000, 0xd79fd3ec, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_misplaced)
+STD_ROM_FN(md_misplaced)
+
+struct BurnDriver BurnDrvmd_misplaced = {
+	"md_misplaced", NULL, NULL, NULL, "2019",
+	"Misplaced (English)\0", NULL, "2019 RetroSouls", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_misplacedRomInfo, md_misplacedRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Misplaced (Russian)
+// https://retrosouls.itch.io/misplaced
+static struct BurnRomInfo md_misplacedrRomDesc[] = {
+	{ "Misplaced-RU.bin", 0x0e0000, 0x1997b949, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_misplacedr)
+STD_ROM_FN(md_misplacedr)
+
+struct BurnDriver BurnDrvmd_misplacedr = {
+	"md_misplacedr", "md_misplaced", NULL, NULL, "2019",
+	"Misplaced (Russian)\0", NULL, "2019 RetroSouls", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_misplacedrRomInfo, md_misplacedrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

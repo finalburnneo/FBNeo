@@ -985,7 +985,9 @@ void m68k_init(void)
 
 	/* The first call to this function initializes the opcode handler jump table */
 	if(!emulation_initialized)
-		{
+	{
+		memset(&m68ki_cpu, 0, sizeof(m68ki_cpu));
+		memset(&m68ki_cycles, 0, 0x10000 * 4);
 		m68ki_build_opcode_table();
 		emulation_initialized = 1;
 	}

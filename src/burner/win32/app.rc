@@ -1298,6 +1298,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&FB Neo homepage",					MENU_WWW_HOME
         MENUITEM "&Neo-Source forums",					MENU_WWW_NSFORUM
+		MENUITEM "FB Neo &Github",					MENU_WWW_GITHUB
         MENUITEM SEPARATOR
         MENUITEM "&System information",				MENU_SYSINFO
         MENUITEM "&About FB Neo",					MENU_ABOUT

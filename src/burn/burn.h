@@ -328,6 +328,11 @@ void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize);
     bprintf(0, _T("Dumping %S (0x%x bytes) to %S\n"), #b, bs, #fn); \
     BurnDump_(fn, b, bs); } while (0)
 
+void BurnDumpLoad_(char *filename, UINT8 *buffer, INT32 bufsize);
+#define BurnDumpLoad(fn, b, bs) do { \
+    bprintf(0, _T("Loading Dump %S (0x%x bytes) to %S\n"), #fn, bs, #b); \
+    BurnDumpLoad_(fn, b, bs); } while (0)
+
 #endif
 
 // ---------------------------------------------------------------------------

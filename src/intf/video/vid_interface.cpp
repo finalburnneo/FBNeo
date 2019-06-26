@@ -229,7 +229,7 @@ INT32 VidInit()
 #if defined (BUILD_WIN32) && defined (ENABLE_PREVIEW)
 	if (bVidOkay && hbitmap) {
 		BITMAPINFO bitmapinfo;
-		UINT8* pLineBuffer = (UINT8*)malloc(bitmap.bmWidth * 4);
+		UINT8* pLineBuffer = (UINT8*)malloc((bitmap.bmWidth + 3) * 4); // add + 3 safetynet
 		HDC hDC = GetDC(hVidWnd);
 
 		if (hDC && pLineBuffer) {
@@ -489,9 +489,9 @@ InterfaceInfo* VidGetInfo()
 		GetClientScreenRect(hVidWnd, &rect);
 		if (nVidFullscreen == 0) {
 			rect.top += nMenuHeight;
-			_sntprintf(szString, MAX_PATH, _T("Running in windowed mode, $ix%i, %ibpp"), rect.right - rect.left, rect.bottom - rect.top, nVidScrnDepth);
+			_sntprintf(szString, MAX_PATH, _T("Running in windowed mode, %ix%i, %ibpp"), rect.right - rect.left, rect.bottom - rect.top, nVidScrnDepth);
 		} else {
-			_sntprintf(szString, MAX_PATH, _T("Running fullscreen, $ix$i, %ibpp"), nVidScrnWidth, nVidScrnHeight, nVidScrnDepth);
+			_sntprintf(szString, MAX_PATH, _T("Running fullscreen, %ix%i, %ibpp"), nVidScrnWidth, nVidScrnHeight, nVidScrnDepth);
 		}
 #elif defined (BUILD_SDL)
 		_sntprintf(szString, MAX_PATH, _T("Filler for fullscreen/windowed mode & image size"));

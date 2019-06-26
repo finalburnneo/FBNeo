@@ -960,6 +960,13 @@ void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize)
     fwrite(buffer, 1, bufsize, f);
     fclose(f);
 }
+
+void BurnDumpLoad_(char *filename, UINT8 *buffer, INT32 bufsize)
+{
+    FILE *f = fopen(filename, "rb+");
+    fread(buffer, 1, bufsize, f);
+    fclose(f);
+}
 #endif
 
 // ----------------------------------------------------------------------------

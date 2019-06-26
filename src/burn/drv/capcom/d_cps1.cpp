@@ -1327,6 +1327,7 @@ STDINPUTINFO(Wof)
 
 static struct BurnInputInfo WofchInputList[] =
 {
+	{"P1 Pause"         , BIT_DIGITAL  , CpsInp018+2, "p1 coin"   },
  	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
  	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
  	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
@@ -1336,6 +1337,7 @@ static struct BurnInputInfo WofchInputList[] =
  	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
  	{"P1 Fire"          , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
 
+	{"P2 Pause"         , BIT_DIGITAL  , CpsInp018+3, "p2 coin"   },
  	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
  	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
  	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
@@ -21519,7 +21521,7 @@ struct BurnDriver BurnDrvCpsWofchdx = {
 	"Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)\0", NULL, "Capcom", "CPS Changer",
 	L"\u4E09\u56FD\u5FD7 III \u5916\u4F20: \u590F\u4FAF\u6069\u7684\u590D\u4EC7\0Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_CAPCOM_CPSCHANGER, GBF_SCRFIGHT, 0,
-	NULL, WofchdxRomInfo, WofchdxRomName, NULL, NULL, NULL, NULL, WofInputInfo, NULL,
+	NULL, WofchdxRomInfo, WofchdxRomName, NULL, NULL, NULL, NULL, WofchInputInfo, NULL,
 	WofchInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

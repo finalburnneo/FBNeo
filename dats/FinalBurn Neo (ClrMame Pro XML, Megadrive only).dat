@@ -6268,6 +6268,18 @@
 		<manufacturer>Data East</manufacturer>
 		<rom name="minnesota fats - pool legend (usa).bin" size="1048576" crc="38174f40"/>
 	</game>
+	<game name="misplaced">
+		<description>Misplaced (English)</description>
+		<year>2019</year>
+		<manufacturer>2019 RetroSouls</manufacturer>
+		<rom name="Misplaced-EN.bin" size="917504" crc="d79fd3ec"/>
+	</game>
+	<game name="misplacedr" cloneof="misplaced" romof="misplaced">
+		<description>Misplaced (Russian)</description>
+		<year>2019</year>
+		<manufacturer>2019 RetroSouls</manufacturer>
+		<rom name="Misplaced-RU.bin" size="917504" crc="1997b949"/>
+	</game>
 	<game name="mk5a" cloneof="mk5" romof="mk5">
 		<description>MK 5 - Mortal Combat - SubZero (Pirate)</description>
 		<year>199?</year>

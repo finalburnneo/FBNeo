@@ -6096,6 +6096,8 @@ DRV		BurnDrvMSX_mirai;
 DRV		BurnDrvMirninja;
 DRV		BurnDrvMirax;
 DRV		BurnDrvMiraxa;
+DRV		BurnDrvmd_misplaced;
+DRV		BurnDrvmd_misplacedr;
 DRV		BurnDrvMsbingo;
 DRV		BurnDrvMissb2;
 DRV		BurnDrvMissmw96;
@@ -18488,6 +18490,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMirninja,			// Mirai Ninja (Japan)
 	&BurnDrvMirax,				// Mirax (set 1)
 	&BurnDrvMiraxa,				// Mirax (set 2)
+	&BurnDrvmd_misplaced,		// Misplaced (English)
+	&BurnDrvmd_misplacedr,		// Misplaced (Russian)
 	&BurnDrvMsbingo,			// Miss Bingo
 	&BurnDrvMissb2,				// Miss Bubble II
 	&BurnDrvMissmw96,			// Miss Mister World '96 (Nude)

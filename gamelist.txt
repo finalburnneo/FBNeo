@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12115 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12117 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -5851,15 +5851,15 @@ This list contains all games supported by FinalBurn Neo.
 | metrocrsa	|  	| Metro-Cross (set 2)					| metrocrs	| 1985	| Namco		| Miscellaneous	| 					|
 | mexico86	|  	| Mexico 86 (bootleg of Kick and Run) (set 1)		| kicknrun	| 1986	| bootleg	| Miscellaneous	| 					|
 | mexico86a	| D NW	| Mexico 86 (bootleg of Kick and Run) (set 2)		| kicknrun	| 1986	| bootleg	| Miscellaneous	| 					|
-| mwalkbl2	|  	| Michael Jackson's Moonwalker (bootleg)		| mwalk		| 1990	| bootleg	| System 18	| 					|
+| mwalkbl2	|  	| Michael Jackson's Moonwalker (bootleg)		| mwalk		| 1990	| bootleg	| System 18	| Graphics issues			|
 | sms_mwalk	|  	| Michael Jackson's Moonwalker (Euro, USA, Bra, Kor)	| 		| 1990	| Sega		| Sega Master Sy| 					|
-| mwalkjd	|  	| Michael Jackson's Moonwalker (Japan) (bootleg of FD109| mwalk		| 1990	| Sega		| System 18	| 					|
-| mwalkj	|  	| Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-| mwalk		| 1990	| Sega		| System 18	| 					|
-| mwalk		|  	| Michael Jackson's Moonwalker (set 3, World, FD1094/875| 		| 1990	| Sega		| System 18	| 					|
-| mwalkud	|  	| Michael Jackson's Moonwalker (US) (bootleg of FD1094/8| mwalk		| 1990	| Sega		| System 18	| 					|
-| mwalku	|  	| Michael Jackson's Moonwalker (US) (FD1094/8751 317-015| mwalk		| 1990	| Sega		| System 18	| 					|
+| mwalkjd	|  	| Michael Jackson's Moonwalker (Japan) (bootleg of FD109| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
+| mwalkj	|  	| Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
+| mwalk		|  	| Michael Jackson's Moonwalker (set 3, World, FD1094/875| 		| 1990	| Sega		| System 18	| Graphics issues			|
+| mwalkud	|  	| Michael Jackson's Moonwalker (US) (bootleg of FD1094/8| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
+| mwalku	|  	| Michael Jackson's Moonwalker (US) (FD1094/8751 317-015| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
 | sms_mwalkp	|  	| Michael Jackson's Moonwalker (USA, Prototype)		| sms_mwalk	| 1990	| Sega		| Sega Master Sy| 					|
-| mwalkd	|  	| Michael Jackson's Moonwalker (World) (bootleg of FD109| mwalk		| 1990	| Sega		| System 18	| 					|
+| mwalkd	|  	| Michael Jackson's Moonwalker (World) (bootleg of FD109| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
 | md_mwalk1	|  	| Michael Jackson's Moonwalker (World)			| md_mwalk	| 1990	| Sega		| Sega Megadrive| 					|
 | md_mwalk	|  	| Michael Jackson's Moonwalker (World, Rev. A)		| 		| 1990	| Sega		| Sega Megadrive| 					|
 | md_mickmack	|  	| Mick & Mack as the Global Gladiators (Euro)		| 		| 1993	| Virgin Games	| Sega Megadrive| 					|
@@ -5966,6 +5966,8 @@ This list contains all games supported by FinalBurn Neo.
 | mirninja	|  	| Mirai Ninja (Japan)					| 		| 1988	| Namco		| System 2	| 					|
 | mirax		|  	| Mirax (set 1)						| 		| 1985	| Current Techno| Miscellaneous	| 					|
 | miraxa	|  	| Mirax (set 2)						| mirax		| 1985	| Current Techno| Miscellaneous	| 					|
+| md_misplaced	|  	| Misplaced (English)					| 		| 2019	| 2019 RetroSoul| Sega Megadrive| 					|
+| md_misplacedr	|  	| Misplaced (Russian)					| md_misplaced	| 2019	| 2019 RetroSoul| Sega Megadrive| 					|
 | msbingo	|  	| Miss Bingo						| 		| 1994	| Min Corp.	| Miscellaneous	| 					|
 | missb2	|  	| Miss Bubble II					| 		| 1996	| Alpha Co.	| Miscellaneous	| 					|
 | missmw96	|  	| Miss Mister World '96 (Nude)				| missw96	| 1996	| Comad		| Miscellaneous	| 					|

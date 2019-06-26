@@ -616,6 +616,7 @@ void SekNewFrame()
 		nSekCycles[i] = 0;
 	}
 
+	nSekCyclesToDo = c68k[nSekActive].cycles = 0;
 	nSekCyclesTotal = 0;
 }
 
@@ -1051,7 +1052,7 @@ INT32 SekRun(const INT32 nCycles)
 		} while (nSekCyclesDone < nSekCyclesSegment);
 
 		nSekCyclesSegment = nSekCyclesDone;
-		nSekCyclesToDo = c68k[nSekActive].cycles = -1;
+		nSekCyclesToDo = c68k[nSekActive].cycles = 0; // was -1; changed june26, 2019 -dink
 		nSekCyclesDone = 0;
 
 		return nSekCyclesSegment;								// Return the number of cycles actually done

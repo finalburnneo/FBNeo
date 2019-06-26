@@ -1,4 +1,7 @@
 // 680x0 (Sixty Eight K) Interface
+
+// todo: (I think!) if SekRunEnd() is called while running, wrong cycles get returned by SekRun() for m68k -dink
+
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "m68000_debug.h"
@@ -949,6 +952,7 @@ void SekNewFrame()
 		nSekCycles[i] = 0;
 	}
 
+	nSekCyclesToDo = m68k_ICount = 0;
 	nSekCyclesTotal = 0;
 }
 
@@ -1436,7 +1440,7 @@ INT32 SekRun(const INT32 nCycles)
 		nSekCyclesSegment = m68k_execute(nCycles);
 
 		nSekCyclesTotal += nSekCyclesSegment;
-		nSekCyclesToDo = m68k_ICount = -1;
+		nSekCyclesToDo = m68k_ICount = 0; // was -1; changed june26, 2019 -dink
 
 		return nSekCyclesSegment;
 #else

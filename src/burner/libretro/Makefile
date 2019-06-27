@@ -50,7 +50,7 @@ endif
 MAIN_FBNEO_DIR	:= ../..
 VERSION_SCRIPT	:= $(MAIN_FBNEO_DIR)/burner/libretro/link.T
 
-INLINE_LIMIT=-finline-limit=1200
+INLINE_LIMIT=-finline-limit=1200 -fcheck-new
 
 # GCC < 4.9 and clang does not support -fno-tree-loop-vectorize
 ifeq ($(shell expr `gcc -dumpversion | cut -f1` \< 4.9), 1)
@@ -474,6 +474,7 @@ FBNEO_SOBJ := $(SOURCES_S:.S=.o)
 OBJS := $(FBNEO_COBJ) $(FBNEO_CXXOBJ) $(FBNEO_SOBJ)
 
 FBNEO_DEFINES += -D__LIBRETRO__ \
+	-DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=32 \
 	$(ENDIANNESS_DEFINES) \
 	$(PLATFORM_DEFINES) \
 	$(NEON_FLAGS) \
@@ -502,7 +503,7 @@ endif
 ifeq ($(USE_EXPERIMENTAL_FLAGS), 1)
 	EXPERIMENTAL_FLAGS = -flto=4 -fwhole-program -fuse-linker-plugin \
 		-fdata-sections -ffunction-sections -Wl,--gc-sections \
-		-fno-stack-protector -fno-ident -fomit-frame-pointer \
+		-fno-stack-protector -fno-ident \
 		-falign-functions=1 -falign-jumps=1 -falign-loops=1 \
 		-fno-unwind-tables -fno-asynchronous-unwind-tables -fno-unroll-loops \
 		-fmerge-all-constants -fno-math-errno
@@ -530,8 +531,8 @@ ifeq ($(DEBUG), 1)
 	CXXFLAGS += -O1 -g -DFBNEO_DEBUG
 else
 	ifeq (,$(findstring msvc,$(platform)))
-		CFLAGS += -O3 -DNDEBUG
-		CXXFLAGS += -O3 -DNDEBUG
+		CFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
+		CXXFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
 	else
 		CFLAGS += -O2 -DNDEBUG
 		CXXFLAGS += -O2 -DNDEBUG
@@ -543,10 +544,10 @@ CXXFLAGS += $(fpic) $(FBNEO_DEFINES)
 LDFLAGS += $(fpic)
 
 ifeq (,$(findstring msvc,$(platform)))
-	CFLAGS += -funroll-loops -fforce-addr $(INLINE_LIMIT)  \
+	CFLAGS += -ffloat-store -fforce-addr $(INLINE_LIMIT)  \
 		-Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
 		-Wno-sequence-point -Wno-strict-aliasing
-	CXXFLAGS += -funroll-loops -fforce-addr $(INLINE_LIMIT) \
+	CXXFLAGS += -ffloat-store -fforce-addr $(INLINE_LIMIT) \
 		-Wall -W -Wshadow -Wno-long-long -Wno-write-strings \
 		-Wunknown-pragmas -Wundef -Wno-conversion -Wno-missing-braces -Wno-multichar \
 		-Wuninitialized -Wpointer-arith -Wno-inline -Wno-unused-value \

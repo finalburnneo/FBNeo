@@ -186,8 +186,8 @@ AS	= nasm
 LDFLAGS	= -static
 
 ifdef GCC345
-CFLAGS	 = -pipe \
-	   -std=gnu99 -march=$(CPUTYPE) -O1 \
+CFLAGS = -pipe \
+	   -std=gnu99 -march=$(CPUTYPE) -O3 -ffloat-store \
 	   -mno-cygwin -mwindows \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \
@@ -195,7 +195,7 @@ CFLAGS	 = -pipe \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -march=$(CPUTYPE) -O1 \
+	   -march=$(CPUTYPE) -O3 -ffloat-store \
 	   -mno-cygwin -mwindows \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \
@@ -206,8 +206,8 @@ CXXFLAGS = -pipe \
 	   $(DEF) $(incdir)
 endif
 ifdef GCC452
-CFLAGS	 = -pipe \
-	   -std=gnu99 -march=$(CPUTYPE) -O1 \
+CFLAGS = -pipe \
+	   -std=gnu99 -march=$(CPUTYPE) -O3 -ffloat-store \
 	   -mno-cygwin -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations \
@@ -216,7 +216,7 @@ CFLAGS	 = -pipe \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -march=$(CPUTYPE) -O1 \
+	   -march=$(CPUTYPE) -O3 -ffloat-store \
 	   -mno-cygwin -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations -fcheck-new \
@@ -227,8 +227,8 @@ CXXFLAGS = -pipe \
 	   $(DEF) $(incdir)
 endif
 ifdef GCC471
-CFLAGS	 = -pipe \
-	   -std=gnu99 -O1 \
+CFLAGS = -pipe \
+	   -std=gnu99 -O3 -ffloat-store \
 	   -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations \
@@ -237,7 +237,7 @@ CFLAGS	 = -pipe \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -std=gnu++11 -O1 \
+	   -std=gnu++11 -O3 -ffloat-store \
 	   -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations -fcheck-new \
@@ -259,8 +259,8 @@ endif
 endif
 
 ifdef GCC510
-CFLAGS	 = -pipe \
-	   -std=gnu99 -O1 \
+CFLAGS = -pipe \
+	   -std=gnu99 -O3 -ffloat-store \
 	   -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations \
@@ -269,7 +269,7 @@ CFLAGS	 = -pipe \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -std=gnu++11 -O1 \
+	   -std=gnu++11 -O3 -ffloat-store \
 	   -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations -fcheck-new \

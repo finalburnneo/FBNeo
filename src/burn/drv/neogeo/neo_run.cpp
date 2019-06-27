@@ -7,7 +7,6 @@
 //   Audio Hz rate must be 44100 for proper CDDA speed (auto-handled in fba-ui)
 //
 //   Ninja Commando: glitching "logo" during demo play.
-//   CD Access is slow when line-by-line raster rendering is on, investigate (verify sekrunadj etc)
 
 /*
  * FB Alpha Neo Geo module
@@ -81,6 +80,8 @@
 // #define LOG_IRQ
 // #define LOG_DRAW
 
+//#define CYCLE_LOG
+
 #define NEO_HREFRESH (15625.0)
 #define NEO_VREFRESH (NEO_HREFRESH / 264.0)
 #define NEO_CDVREFRESH (6041957.0 / (264 * 384))
@@ -126,23 +127,29 @@ UINT8 nNeoNumSlots = 1;
 UINT32 nNeoActiveSlot = 0;
 
 UINT8 NeoButton1[32] = { 0, };
-UINT8 NeoButton2[8]  = { 0, };
-UINT8 NeoButton3[8]  = { 0, };
-UINT8 NeoButton4[8]  = { 0, };
-UINT8 NeoJoy1[8]	 = { 0, };
-UINT8 NeoJoy2[8]     = { 0, };
-UINT8 NeoJoy3[8]     = { 0, };
-UINT8 NeoJoy4[8]     = { 0, };
-UINT16 NeoAxis[2]	 = { 0, };
+UINT8 NeoButton2[8]  = { 0, 0, 0, 0, 0, 0, 0, 0 };
+UINT8 NeoButton3[8]  = { 0, 0, 0, 0, 0, 0, 0, 0 };
+UINT8 NeoButton4[8]  = { 0, 0, 0, 0, 0, 0, 0, 0 };
+UINT8 NeoJoy1[8]	 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+UINT8 NeoJoy2[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
+UINT8 NeoJoy3[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
+UINT8 NeoJoy4[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
+UINT16 NeoAxis[2]	 = { 0, 0 };
 UINT8 NeoInput[32]   = { 0, };
-UINT8 NeoDiag[2]	 = { 0, };
-UINT8 NeoDebugDip[2] = { 0, };
+UINT8 NeoDiag[2]	 = { 0, 0 };
+UINT8 NeoDebugDip[2] = { 0, 0 };
 UINT8 NeoReset = 0, NeoSystem = 0;
 
-static UINT8 OldDebugDip[2];
+static UINT8 OldDebugDip[2] = { 0, 0 };
 
 // Which 68K BIOS to use
 INT32 nBIOS;
+
+#if defined CYCLE_LOG
+// for debugging -dink (will be removed later)
+static INT32 cycderp[16384+1];
+static INT32 derpframe;
+#endif
 
 // Joyports are multiplexed
 static INT32 nJoyport0[8] = { 0, };
@@ -208,7 +215,7 @@ INT32 vlinermode = 0;
 
 static INT32 nInputSelect;
 static UINT8* NeoInputBank;
-static UINT32 nAnalogAxis[2];
+static UINT32 nAnalogAxis[2] = { 0, 0 };
 
 static UINT32 nuPD4990ATicks;
 
@@ -254,20 +261,20 @@ UINT8 *NeoSpriteRAM, *NeoTextRAM;
 UINT8 *Neo68KBIOS, *NeoZ80BIOS;
 static UINT8 *Neo68KRAM, *NeoZ80RAM, *NeoNVRAM, *NeoNVRAM2, *NeoMemoryCard;
 
-static UINT32 nSpriteSize[MAX_SLOT] = { 0, };
-static UINT32 nCodeSize[MAX_SLOT] = { 0, };
+static UINT32 nSpriteSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+static UINT32 nCodeSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 UINT8* NeoGraphicsRAM;
 
-UINT8* YM2610ADPCMAROM[MAX_SLOT] = { NULL, };
-UINT8* YM2610ADPCMBROM[MAX_SLOT] = { NULL, };
+UINT8* YM2610ADPCMAROM[MAX_SLOT] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+UINT8* YM2610ADPCMBROM[MAX_SLOT] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
-static INT32 nYM2610ADPCMASize[MAX_SLOT] = { 0, };
-static INT32 nYM2610ADPCMBSize[MAX_SLOT] = { 0, };
+static INT32 nYM2610ADPCMASize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+static INT32 nYM2610ADPCMBSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 static bool bIRQEnabled;
-static INT32 nVBLankIRQ;
-static INT32 nScanlineIRQ;
+static INT32 nVBLankIRQ; // init setting
+static INT32 nScanlineIRQ; // init setting
 
 static bool bRenderImage;
 
@@ -296,7 +303,7 @@ static INT32 nActiveTransferArea;
 static INT32 nSpriteTransferBank;
 static INT32 nADPCMTransferBank;
 
-static UINT8 nTransferWriteEnable;
+static UINT8 nTransferWriteEnable; // not used
 
 static bool NeoCDOBJBankUpdate[4];
 
@@ -1555,11 +1562,19 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 
 			SCAN_VAR(NeoCDVectorSwitch);
 
+			SCAN_VAR(nNeoCDCyclesIRQ);
 			SCAN_VAR(nNeoCDMode);
 			SCAN_VAR(nff0002);
 			SCAN_VAR(nff0004);
 
 			CDEmuScan(nAction, pnMin);
+
+#if defined CYCLE_LOG
+			SCAN_VAR(derpframe);
+#else
+			INT32 dframe = 0; // keep compatibility with CYCLE_LOG on or off
+			SCAN_VAR(dframe);
+#endif
 		}
 
 		if (nAction & ACB_WRITE) {
@@ -2741,7 +2756,7 @@ static void NeoCDProcessCommand()
 			if (LC8951RegistersW[10] & 4) {
 
 				if (CDEmuGetStatus() == playing) {
-					bprintf(PRINT_ERROR, _T("*** Switching CD mode to CD-ROM while in audio mode!(PC: 0x%06X)\n"), SekGetPC(-1));
+					//bprintf(PRINT_ERROR, _T("*** Switching CD mode to CD-ROM while in audio mode!(PC: 0x%06X)\n"), SekGetPC(-1));
 				}
 
 				NeoCDSectorLBA  = NeoCDCommsCommandFIFO[2] * (10 * CD_FRAMES_MINUTE);
@@ -2756,7 +2771,7 @@ static void NeoCDProcessCommand()
 			} else {
 
 				if (CDEmuGetStatus() == reading) {
-					bprintf(PRINT_ERROR, _T("*** Switching CD mode to audio while in CD-ROM mode!(PC: 0x%06X)\n"), SekGetPC(-1));
+					//bprintf(PRINT_ERROR, _T("*** Switching CD mode to audio while in CD-ROM mode!(PC: 0x%06X)\n"), SekGetPC(-1));
 				}
 
 				CDEmuPlay((NeoCDCommsCommandFIFO[2] * 16) + NeoCDCommsCommandFIFO[3], (NeoCDCommsCommandFIFO[4] * 16) + NeoCDCommsCommandFIFO[5], (NeoCDCommsCommandFIFO[6] * 16) + NeoCDCommsCommandFIFO[7]);
@@ -3420,8 +3435,10 @@ static void __fastcall neogeoWriteWordCDROM(UINT32 sekAddress, UINT16 wordValue)
 	switch (sekAddress & 0xFFFE) {
 		case 0x0002:
 //			bprintf(PRINT_IMPORTANT, _T("  - NGCD Interrupt mask -> 0x%04X (PC: 0x%06X)\n"), wordValue, SekGetPC(-1));
-			if ((wordValue & 0x0500) && !(nff0002 & 0x0500))
-				nNeoCDCyclesIRQ = nNeoCDCyclesIRQPeriod;
+			if ((wordValue & 0x0500) && !(nff0002 & 0x0500)) {
+				//bprintf(0, _T("cd period: old %d new %d\n"), nNeoCDCyclesIRQ);
+				//nNeoCDCyclesIRQ = nNeoCDCyclesIRQPeriod;
+			}
 
 			nff0002 = wordValue;
 
@@ -3714,6 +3731,9 @@ static INT32 neogeoReset()
 
 	nIRQAcknowledge = ~0;
 	bIRQEnabled = false;
+	nIRQOffset = 0;
+	nIRQControl = 0;
+	nIRQCycles = NO_IRQ_PENDING;
 
 	nSoundLatch = 0x00;
 	nSoundReply = 0x00;
@@ -3723,8 +3743,16 @@ static INT32 neogeoReset()
 	nSoundPrevReply = -1;
 #endif
 
-	nIRQOffset = 0;
-	nIRQControl = 0;
+	NeoGraphicsRAMBank = NeoGraphicsRAM;
+	NeoGraphicsRAMPointer = 0;
+	nNeoGraphicsModulo = 0;
+
+	nNeo68KROMBank = 0;
+
+	nAnalogAxis[0] = nAnalogAxis[1] = 0;
+
+	nuPD4990ATicks = 0;
+	nCycles68KSync = 0;
 
 	nInputSelect = 0;
 	NeoInputBank = NeoInput;
@@ -3774,6 +3802,22 @@ static INT32 neogeoReset()
 			nSpriteTransferBank = -1;
 			nADPCMTransferBank  = -1;
 
+			bNeoCDIRQEnabled = false;
+			nNeoCDIRQVector = 0;
+			nNeoCDCyclesIRQ = 0;
+			nff0002 = 0;
+			nff0004 = 0;
+
+			NeoCDDMAAddress1 = 0;
+			NeoCDDMAAddress2 = 0;
+			NeoCDDMAValue1 = 0;
+			NeoCDDMAValue2 = 0;
+			NeoCDDMACount = 0;
+			NeoCDDMAMode = 0;
+
+			NeoCDVectorSwitch = 0;
+			nNeoCDMode = 0;
+
 			NeoCDCommsReset();
 
 			nTransferWriteEnable = 0;
@@ -3810,12 +3854,10 @@ static INT32 neogeoReset()
 
 	HiscoreReset();
 
-	nIRQCycles = NO_IRQ_PENDING;
-
-	bNeoCDIRQEnabled = false;
-	nNeoCDIRQVector = 0;
-	nff0002 = 0;
-	nff0004 = 0;
+#if defined CYCLE_LOG
+	derpframe = 0;
+	bprintf(0, _T("reset! derpframe = %d  ncextra:%d\n"), derpframe, nCyclesExtra[0]);
+#endif
 
 	return 0;
 }
@@ -4469,24 +4511,23 @@ static void NeoStandardInputs(INT32 nBank)
 
 static INT32 NeoSekRun(const INT32 nCycles)
 {
-	INT32 nCyclesExecutedTotal = 0, nOldCyclesSegment = nCyclesSegment;
+	INT32 nCyclesExecutedTotal = 0;
 
-	if (!(nNeoSystemType & NEO_SYS_CD) /*|| !(nff0002 & 0x0050)*/ )
+	if (!(nNeoSystemType & NEO_SYS_CD))
 		return SekRun(nCycles);
 
 	while (nCyclesExecutedTotal < nCycles) {
 
-		INT32 nCyclesExecuted;
 		INT32 nIRQCyc = 0;
 
 		if (nNeoCDCyclesIRQ <= 0) {
 			nNeoCDCyclesIRQ += nNeoCDCyclesIRQPeriod;
 
-			if ((nff0002 & 0x0500) /*&& (LC8951RegistersR[1] & 0x20)*/ )
+			if ((nff0002 & 0x0500) && bNeoCDIRQEnabled)
 				NeoCDReadSector();
 
-			if (nff0002 & 0x0050) {
-				nIRQCyc += SekRun(100); // Allow cpu to ack Decoder irq
+			if (nff0002 & 0x0050 && bNeoCDIRQEnabled) {
+				nIRQCyc += SekRun(4); // Allow cpu to ack Decoder irq
 
 				// Trigger CD mechanism communication interrupt
 				//bprintf(PRINT_NORMAL, _T("    DECI status %i\n"), (LC8951RegistersR[1] & 0x20) >> 5);
@@ -4495,16 +4536,14 @@ static INT32 NeoSekRun(const INT32 nCycles)
 			}
 		}
 
-		nCyclesSegment = (nNeoCDCyclesIRQ < (nCycles - nCyclesExecutedTotal)) ? nNeoCDCyclesIRQ : (nCycles - nCyclesExecutedTotal);
-		nCyclesExecuted = SekRun(nCyclesSegment - nIRQCyc);
+		INT32 nCDCyclesSegment = (nNeoCDCyclesIRQ < (nCycles - nCyclesExecutedTotal)) ? nNeoCDCyclesIRQ : (nCycles - nCyclesExecutedTotal);
+		INT32 nCyclesExecuted = SekRun(nCDCyclesSegment);
 		nCyclesExecuted += nIRQCyc;
 		nIRQCyc = 0;
 
 		nCyclesExecutedTotal += nCyclesExecuted;
 		nNeoCDCyclesIRQ      -= nCyclesExecuted;
 	}
-
-	nCyclesSegment = nOldCyclesSegment;
 
 	return nCyclesExecutedTotal;
 }
@@ -4663,13 +4702,13 @@ INT32 NeoFrame()
 	}
 
 	if (nPrevBurnCPUSpeedAdjust != nBurnCPUSpeedAdjust) {
+		bprintf(0, _T("\n---init cycles etc ---\n"));
 		// 68K CPU clock is 12MHz, modified by nBurnCPUSpeedAdjust
-		nCyclesTotal[0] = (INT32)((INT64)12000000 * nBurnCPUSpeedAdjust / (256.0 * NEO_VREFRESH));
-
+		nCyclesTotal[0] = (INT32)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * NEO_VREFRESH));
 #if defined Z80_SPEED_ADJUST
 		// Z80 CPU clock always 68K / 3
 		nCyclesTotal[1] = nCyclesTotal[0] / 3;
-		nZ80Clockspeed = (INT32)((INT64)4000000 * nBurnCPUSpeedAdjust / 256);
+		nZ80Clockspeed = (INT32)(4000000.0 * nBurnCPUSpeedAdjust / 256);
 		BurnTimerAttachZet(nZ80Clockspeed);
 #else
 		// Z80 CPU clock is always 4MHz
@@ -4681,7 +4720,7 @@ INT32 NeoFrame()
 		SekClose();
 
 		// uPD499A ticks per second (same as 68K clock)
-		uPD499ASetTicks((INT64)12000000 * nBurnCPUSpeedAdjust / 256);
+		uPD499ASetTicks((INT32)(12000000.0 * nBurnCPUSpeedAdjust / 256));
 
 #if defined OVERCLOCK_CDZ
 		nNeoCDCyclesIRQPeriod = (INT32)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * 225.0));
@@ -4690,6 +4729,9 @@ INT32 NeoFrame()
 #endif
 
 		nPrevBurnCPUSpeedAdjust = nBurnCPUSpeedAdjust;
+
+		bprintf(0, _T("\n68k cycles total: %d\n"), nCyclesTotal[0]);
+		bprintf(0, _T("\nz80 cycles total: %d / %d\n"), nCyclesTotal[1], nZ80Clockspeed);
 	}
 
 #if defined EMULATE_WATCHDOG
@@ -4994,6 +5036,27 @@ INT32 NeoFrame()
 	nCyclesExtra[0] = SekTotalCycles() - nCyclesTotal[0];
 	nCyclesExtra[1] = ZetTotalCycles() - nCyclesTotal[1];
 
+#if defined CYCLE_LOG
+	extern int counter;
+	if (counter == 0) {
+		if (derpframe < 16384) {
+			//bprintf(0, _T("r:%d - %d.   "), derpframe, nCyclesExtra[0]);
+			cycderp[derpframe++] = nCyclesExtra[0];
+		}
+	} else {
+		if (derpframe == 0) {
+			memset(&cycderp, 0, sizeof(cycderp));
+			BurnDumpLoad("cycderp_r.dat", (UINT8*)&cycderp, sizeof(cycderp));
+		}
+		if (counter == 2) BurnDump("cycderp.dat", (UINT8*)&cycderp, sizeof(cycderp));
+		if (derpframe < 16384) {
+			//bprintf(0, _T("p:%d - %d %d.   "), derpframe, nCyclesExtra[0], cycderp[derpframe]);
+			if (cycderp[derpframe] != nCyclesExtra[0])
+				bprintf(0, _T("CYCLE OFFSET @ frame %d   is %X   shouldbe %X\n"), derpframe, nCyclesExtra[0], cycderp[derpframe]);
+			derpframe++;
+		}
+	}
+#endif
 //	bprintf(PRINT_NORMAL, _T("    Z80 PC 0x%04X\n"), Doze.pc);
 //	bprintf(PRINT_NORMAL, _T("  - %i\n"), SekTotalCycles());
 

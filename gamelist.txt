@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12117 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12119 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2267,8 +2267,9 @@ This list contains all games supported by FinalBurn Neo.
 | dariusgx	|  	| Darius Gaiden - Silver Hawk Extra Version (Ver 2.7J 19| 		| 1994	| Taito Corporat| Taito F3 Syste| 					|
 | darius2do	|  	| Darius II (dual screen) (Japan old version)		| darius2	| 1989	| Taito Corporat| Taito Misc	| 					|
 | darius2d	|  	| Darius II (dual screen) (Japan)			| darius2	| 1989	| Taito Corporat| Taito Misc	| 					|
-| darius2	|  	| Darius II (Japan)					| 		| 1989	| Taito Corporat| Taito Misc	| 					|
+| sagaia	|  	| Darius II (dual screen) (World)			| darius2	| 1989	| Taito Corporat| Taito Misc	| 					|
 | md_darius2	|  	| Darius II (Jpn)					| md_sagaia	| 1990	| Taito		| Sega Megadrive| 					|
+| darius2	|  	| Darius II (triple screen) (Japan)			| 		| 1989	| Taito Corporat| Taito Misc	| 					|
 | pce_dariusp	|  	| Darius Plus						| 		| 1990	| NEC Avenue	| SuperGrafx Enh| 					|
 | darkadv	|  	| Dark Adventure					| devilw	| 1987	| Konami	| GX687		| 					|
 | md_darkcast	|  	| Dark Castle (Euro, USA)				| 		| 1991	| Electronic Art| Sega Megadrive| 					|
@@ -8146,8 +8147,9 @@ This list contains all games supported by FinalBurn Neo.
 | rygar3	|  	| Rygar (US set 3 Old Version)				| rygar		| 1986	| Tecmo		| Miscellaneous	| 					|
 | rygarb	|  	| Rygar (US, bootleg)					| rygar		| 1986	| Tecmo		| Miscellaneous	| 					|
 | ryujin	|  	| Ryu Jin (Japan)					| 		| 1993	| Taito Corporat| Taito B System| 					|
+| ryukyua	|  	| RyuKyu (Japan) (FD1094 317-5023)			| ryukyu	| 1990	| Success / Sega| System 16B	| 					|
 | ryukyud	|  	| RyuKyu (Japan, FD1094 317-5023 decrypted)		| ryukyu	| 1990	| Success / Sega| System 16B	| 					|
-| ryukyu	|  	| RyuKyu (Japan, FD1094 317-5023)			| 		| 1990	| Success / Sega| System 16B	| 					|
+| ryukyu	|  	| RyuKyu (Rev A, Japan) (FD1094 317-5023A)		| 		| 1990	| Success / Sega| System 16B	| 					|
 | md_ryukoken	|  	| Ryuuko no Ken (Jpn)					| md_aof	| 1994	| Sega		| Sega Megadrive| 					|
 | gg_ryukyu	|  	| Ryuukyuu (Jpn)					| gg_solitarp	| 1991	| Face		| Sega Game Gear| 					|
 | pce_ryukyu	|  	| Ryuukyuu						| 		| 1990	| Face		| PC Engine	| 					|

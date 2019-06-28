@@ -2309,8 +2309,9 @@ DRV		BurnDrvDariusg;
 DRV		BurnDrvDariusgx;
 DRV		BurnDrvDarius2do;
 DRV		BurnDrvDarius2d;
-DRV		BurnDrvDarius2;
+DRV		BurnDrvSagaia;
 DRV		BurnDrvmd_darius2;
+DRV		BurnDrvDarius2;
 DRV		BurnDrvpce_dariusp;
 DRV		BurnDrvDarkadv;
 DRV		BurnDrvmd_darkcast;
@@ -8326,6 +8327,7 @@ DRV		BurnDrvRygar2;
 DRV		BurnDrvRygar3;
 DRV		BurnDrvRygarb;
 DRV		BurnDrvRyujin;
+DRV		BurnDrvRyukyua;
 DRV		BurnDrvRyukyud;
 DRV		BurnDrvRyukyu;
 DRV		BurnDrvmd_ryukoken;
@@ -14703,8 +14705,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDariusgx,			// Darius Gaiden - Silver Hawk Extra Version (Ver 2.7J 1995/03/06) (Official Hack)
 	&BurnDrvDarius2do,			// Darius II (dual screen) (Japan old version)
 	&BurnDrvDarius2d,			// Darius II (dual screen) (Japan)
-	&BurnDrvDarius2,			// Darius II (Japan)
+	&BurnDrvSagaia,				// Darius II (dual screen) (World)
 	&BurnDrvmd_darius2,			// Darius II (Jpn)
+	&BurnDrvDarius2,			// Darius II (triple screen) (Japan)
 	&BurnDrvpce_dariusp,		// Darius Plus
 	&BurnDrvDarkadv,			// Dark Adventure
 	&BurnDrvmd_darkcast,		// Dark Castle (Euro, USA)
@@ -20720,8 +20723,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRygar3,				// Rygar (US set 3 Old Version)
 	&BurnDrvRygarb,				// Rygar (US, bootleg)
 	&BurnDrvRyujin,				// Ryu Jin (Japan)
+	&BurnDrvRyukyua,			// RyuKyu (Japan) (FD1094 317-5023)
 	&BurnDrvRyukyud,			// RyuKyu (Japan, FD1094 317-5023 decrypted)
-	&BurnDrvRyukyu,				// RyuKyu (Japan, FD1094 317-5023)
+	&BurnDrvRyukyu,				// RyuKyu (Rev A, Japan) (FD1094 317-5023A)
 	&BurnDrvmd_ryukoken,		// Ryuuko no Ken (Jpn)
 	&BurnDrvgg_ryukyu,			// Ryuukyuu (Jpn)
 	&BurnDrvpce_ryukyu,			// Ryuukyuu

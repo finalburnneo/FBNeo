@@ -536,6 +536,35 @@ static struct BurnRomInfo Darius2doRomDesc[] = {
 STD_ROM_PICK(Darius2do)
 STD_ROM_FN(Darius2do)
 
+static struct BurnRomInfo SagaiaRomDesc[] = {
+	{ "c07_44.74",     0x20000, 0xd0ca72d8, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c07_43.73",     0x20000, 0xa34ea5ba, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c07_45.76",     0x20000, 0x8a043c14, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c07_42.71",     0x20000, 0xb6cb642f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c07-09.75",     0x80000, 0xcc69c2ce, BRF_ESS | BRF_PRG | TAITO_68KROM1          },
+
+	{ "c07_41.69",     0x20000, 0xb50256ea, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "c07-03.12",     0x80000, 0x189bafce, BRF_GRA | TAITO_CHARS },
+	{ "c07-04.11",     0x80000, 0x50421e81, BRF_GRA | TAITO_CHARS },
+	
+	{ "c07-06.27",     0x80000, 0x5eebbcd6, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c07-05.24",     0x80000, 0xfb6d0550, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c07-08.25",     0x80000, 0xa07dc846, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c07-07.26",     0x80000, 0xfd9f9e74, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	
+	{ "c07-10.95",     0x80000, 0x4bbe0ed9, BRF_SND | TAITO_YM2610A },
+	{ "c07-11.96",     0x80000, 0x3c815699, BRF_SND | TAITO_YM2610A },
+	
+	{ "c07-12.107",    0x80000, 0xe0b71258, BRF_SND | TAITO_YM2610B },
+	
+	{ "c07-13.37",     0x00400, 0x3ca18eb3, BRF_OPT },
+	{ "c07-14.38",     0x00400, 0xbaf2a193, BRF_OPT },
+};
+
+STD_ROM_PICK(Sagaia)
+STD_ROM_FN(Sagaia)
+
 static struct BurnRomInfo NinjawRomDesc[] = {
 	{ "b31_45.35",     0x10000, 0x107902c3, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b31_47.32",     0x10000, 0xbd536b1e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -2049,7 +2078,7 @@ static INT32 Darius2Scan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvDarius2 = {
 	"darius2", NULL, NULL, NULL, "1989",
-	"Darius II (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Darius II (triple screen) (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, Darius2RomInfo, Darius2RomName, NULL, NULL, NULL, NULL, Darius2InputInfo, Darius2DIPInfo,
@@ -2073,6 +2102,16 @@ struct BurnDriver BurnDrvDarius2do = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, Darius2doRomInfo, Darius2doRomName, NULL, NULL, NULL, NULL, Darius2dInputInfo, Darius2dDIPInfo,
+	Darius2dInit, Darius2Exit, Darius2dFrame, Darius2dDraw, Darius2Scan,
+	NULL, 0x2000, 640, 224, 8, 3
+};
+
+struct BurnDriver BurnDrvSagaia = {
+	"sagaia", "darius2", NULL, NULL, "1989",
+	"Darius II (dual screen) (World)\0", NULL, "Taito Corporation", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	NULL, SagaiaRomInfo, SagaiaRomName, NULL, NULL, NULL, NULL, Darius2dInputInfo, Darius2dDIPInfo,
 	Darius2dInit, Darius2Exit, Darius2dFrame, Darius2dDraw, Darius2Scan,
 	NULL, 0x2000, 640, 224, 8, 3
 };

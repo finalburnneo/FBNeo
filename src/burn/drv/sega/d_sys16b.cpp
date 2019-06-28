@@ -5157,6 +5157,30 @@ STD_ROM_PICK(Riotcity)
 STD_ROM_FN(Riotcity)
 
 static struct BurnRomInfo RyukyuRomDesc[] = {
+	{ "epr-13348a.a7",  0x10000, 0x64f6ada9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13347a.a5",  0x10000, 0xfade1f50, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "opr-13351.a14",  0x20000, 0xa68a4e6d, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-13352.a15",  0x20000, 0x5e5531e4, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-13353.a16",  0x20000, 0x6d23dfd8, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "opr-13354.b1",   0x20000, 0xf07aad99, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13356.b5",   0x20000, 0x5498290b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13355.b2",   0x20000, 0x67890019, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13357.b6",   0x20000, 0xf9e7cf03, SYS16_ROM_SPRITES | BRF_GRA },
+		
+	{ "epr-13349.a10",  0x08000, 0xb83183f8, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-13350.a11",  0x20000, 0x3c59a658, SYS16_ROM_UPD7759DATA | BRF_SND },
+		
+	{ "317-5023a.key",  0x02000, 0x5e372b89, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Ryukyu)
+STD_ROM_FN(Ryukyu)
+
+static struct BurnRomInfo RyukyuaRomDesc[] = {
 	{ "epr-13348.a7",   0x10000, 0x5f0e0c86, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13347.a5",   0x10000, 0x398031fa, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
@@ -5177,8 +5201,8 @@ static struct BurnRomInfo RyukyuRomDesc[] = {
 };
 
 
-STD_ROM_PICK(Ryukyu)
-STD_ROM_FN(Ryukyu)
+STD_ROM_PICK(Ryukyua)
+STD_ROM_FN(Ryukyua)
 
 static struct BurnRomInfo RyukyudRomDesc[] = {
 	{ "bootleg_epr-13348.a7",   0x10000, 0x3a96bdcd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -10100,10 +10124,20 @@ struct BurnDriver BurnDrvRiotcity = {
 
 struct BurnDriver BurnDrvRyukyu = {
 	"ryukyu", NULL, NULL, NULL, "1990",
-	"RyuKyu (Japan, FD1094 317-5023)\0", NULL, "Success / Sega", "System 16B",
+	"RyuKyu (Rev A, Japan) (FD1094 317-5023A)\0", NULL, "Success / Sega", "System 16B",
 	L"RyuKyu \u7409\u7403 (Japan, FD1094 317-5023)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, RyukyuRomInfo, RyukyuRomName, NULL, NULL, NULL, NULL, RyukyuInputInfo, RyukyuDIPInfo,
+	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvRyukyua = {
+	"ryukyua", "ryukyu", NULL, NULL, "1990",
+	"RyuKyu (Japan) (FD1094 317-5023)\0", NULL, "Success / Sega", "System 16B",
+	L"RyuKyu \u7409\u7403 (Japan, FD1094 317-5023 decrypted)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
+	NULL, RyukyuaRomInfo, RyukyuaRomName, NULL, NULL, NULL, NULL, RyukyuInputInfo, RyukyuDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

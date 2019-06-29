@@ -3955,7 +3955,7 @@ static INT32 spcinvdjInit()
 
 struct BurnDriver BurnDrvSpcinvdj = {
 	"spcinvdj", "spacedx", NULL, NULL, "1994",
-	"Space Invaders DX (Ver 2.6J 1994/09/14) (F3 Version)\0", NULL, "Taito Corporation", "Taito F3 System",
+	"Space Invaders DX (Ver 2.6J 1994/09/14) (F3 Version)\0", "Graphics issues in Cellophane mode - use parent!", "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, spcinvdjRomInfo, spcinvdjRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,

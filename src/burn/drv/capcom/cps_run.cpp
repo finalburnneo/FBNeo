@@ -320,7 +320,10 @@ INT32 Cps1Frame()
 
 	SekOpen(0);
 
-	SekRun((nCpsCycles * nFirstLine / nCpsNumScanlines) + nCpsCyclesExtra);					// run 68K for the first few lines
+	SekIdle(nCpsCyclesExtra);
+	nCpsCyclesExtra = 0;
+
+	SekRun((nCpsCycles * nFirstLine / nCpsNumScanlines));					// run 68K for the first few lines
 
 	CpsObjGet();											// Get objects
 
@@ -429,9 +432,11 @@ INT32 Cps2Frame()
 	}
 	ScheduleIRQ();
 
+	SekIdle(nCpsCyclesExtra);
+	nCpsCyclesExtra = 0;
+
 	if (nIrqCycles < nCpsCycles * nFirstLine / nCpsNumScanlines) {
-		SekRun(nIrqCycles + nCpsCyclesExtra);
-		nCpsCyclesExtra = 0;
+		SekRun(nIrqCycles);
 		DoIRQ();
 	}
 	nNext = nCpsCycles * nFirstLine / nCpsNumScanlines;
@@ -467,7 +472,7 @@ INT32 Cps2Frame()
 	if (pBurnDraw) {
 		CpsDraw();
 	}
-	SekRun(nCpsCycles - SekTotalCycles());	
+	SekRun(nCpsCycles - SekTotalCycles());
 
 	nCpsCyclesExtra = SekTotalCycles() - nCpsCycles;
 

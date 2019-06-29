@@ -1869,6 +1869,20 @@ UINT32 SekGetPC(INT32)
 
 }
 
+UINT32 SekGetPPC(INT32)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekGetPC called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekGetPC called when no CPU open\n"));
+#endif
+
+#ifdef EMU_M68K
+		return m68k_get_reg(NULL, M68K_REG_PPC);
+#else
+		return 0;
+#endif
+}
+
 INT32 SekDbgGetCPUType()
 {
 #if defined FBNEO_DEBUG

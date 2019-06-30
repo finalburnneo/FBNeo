@@ -202,7 +202,7 @@ static void __fastcall atarig1_main_write_byte(UINT32 address, UINT8 data)
 		if (moaddress < 0x1000)
 			atarirle_0_spriteram_w(moaddress/2);
 
-		if (address != 0xff2000 || address != 0xff2001) return;
+		if (address != 0xff2000 && address != 0xff2001) return;
 	}
 
 	switch (address)

@@ -1015,7 +1015,7 @@ static INT32 DrvDoReset()
 
 static void DrvBootlegCharDecode(UINT8 *gfx, INT32 len)
 {
-	UINT8 *dst = (UINT8*)BurnMalloc(len);
+	UINT8 *dst = (UINT8*)BurnMalloc(len+4);
 
 	memcpy (dst, gfx, len);
 

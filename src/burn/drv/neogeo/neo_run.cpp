@@ -2737,9 +2737,8 @@ static void NeoCDProcessCommand()
 				}
 
 				case 7: {
-					// must be 02, 0E, 0F, or 05
 					NeoCDCommsStatusFIFO[2] = 0;
-					NeoCDCommsStatusFIFO[3] = NeoCDAssyStatus;
+					NeoCDCommsStatusFIFO[3] = 2; // must be 02, 0E, 0F, or 05
 
 					NeoCDCommsStatusFIFO[4] = 0;
 					NeoCDCommsStatusFIFO[5] = 0;
@@ -4523,14 +4522,16 @@ static INT32 NeoSekRun(const INT32 nCycles)
 		if (nNeoCDCyclesIRQ <= 0) {
 			nNeoCDCyclesIRQ += nNeoCDCyclesIRQPeriod;
 
-			if ((nff0002 & 0x0500) && bNeoCDIRQEnabled)
+			if ((nff0002 & 0x0500) && bNeoCDIRQEnabled) {
 				NeoCDReadSector();
 
-			if (nff0002 & 0x0050 && bNeoCDIRQEnabled) {
-				nIRQCyc += SekRun(4); // Allow cpu to ack Decoder irq
+				if (nff0002 & 0x0050) {
+					nIRQCyc += SekRun(4); // Allow cpu to ack Decoder irq
+				}
+			}
 
+			if (nff0002 & 0x0050 && bNeoCDIRQEnabled) {
 				// Trigger CD mechanism communication interrupt
-				//bprintf(PRINT_NORMAL, _T("    DECI status %i\n"), (LC8951RegistersR[1] & 0x20) >> 5);
 				nIRQAcknowledge &= ~0x10;
 				NeoCDIRQUpdate(0);
 			}

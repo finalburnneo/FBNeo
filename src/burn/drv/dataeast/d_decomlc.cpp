@@ -476,7 +476,7 @@ static void set_sprite_config(INT32 len, INT32 bpp)
 	sprite_color_mask = 0x7f >> (bpp - 4);
 	sprite_mask = (((len * 8) / ((bpp + 1) & 6)) / (16 * 16));
 
-	for (INT32 i = 1; i < (1 << 31); i<<=1) {
+	for (INT32 i = 1; i < (1 << 31); i<=1) {
 		if (i >= sprite_mask) {
 			sprite_mask = i;
 			break;

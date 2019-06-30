@@ -2455,7 +2455,7 @@ static int vidGetSettings(InterfaceInfo* pInfo)
 	if (nVidTransferMethod > 0) {
 		TCHAR szString[MAX_PATH] = _T("");
 
-		_sntprintf(szString, MAX_PATH, _T("Using Direct3D texture management"), VidSoftFXGetEffect(nPreScaleEffect), nPreScaleZoom);
+		_sntprintf(szString, MAX_PATH, _T("Using Direct3D texture management %s (%ix zoom)"), VidSoftFXGetEffect(nPreScaleEffect), nPreScaleZoom);
 		IntInfoAddStringModule(pInfo, szString);
 	}
 

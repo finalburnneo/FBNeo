@@ -72,11 +72,11 @@ static UINT32 nSampleSize;
 static INT32 nFractionalPosition[2];
 static INT32 nPosition[2];
 
-void K054539_init_flags(INT32 chip, INT32 flags)
+void K054539SetFlags(INT32 chip, INT32 flags)
 {
 #if defined FBNEO_DEBUG
-	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_init_flags called without init\n"));
-	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539_init_flags called with invalid chip %x\n"), chip);
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539SetFlags called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539SetFlags called with invalid chip %x\n"), chip);
 #endif
 
 	info = &Chips[chip];
@@ -606,6 +606,12 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 				rval += chan->val * chan->rvol;
 			}
 		info->reverb_pos = (info->reverb_pos + 1) & 0x1fff;
+
+		if (info->k054539_flags & K054539_REVERSE_STEREO) {
+			double temp = rval;
+			rval = lval;
+			lval = temp;
+		}
 
 		INT32 nLeftSample = 0, nRightSample = 0;
 

@@ -54,29 +54,29 @@ static UINT16 control_data;
 static INT32 enable_alpha;
 
 static struct BurnInputInfo XexexInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"		},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 start"		},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"			},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"		},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"		},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"		},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"		},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"		},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"		},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"		},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"			},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"		},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"		},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"		},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"		},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"		},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"},
-	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"},
-	{"Service Mode",		BIT_DIGITAL,	DrvJoy4 + 3,	"diagnostics"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"			},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"		},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy4 + 3,	"diagnostics"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"			},
 };
 
 STDINPUTINFO(Xexex)
@@ -406,11 +406,11 @@ static void xexex_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority
 {
 	INT32 pri = (*color & 0x3e0) >> 4;
 
-	if (pri <= layerpri[3])					*priority = 0x0000;
+	if (pri <= layerpri[3])								*priority = 0x0000;
 	else if (pri > layerpri[3] && pri <= layerpri[2])	*priority = 0xff00;
 	else if (pri > layerpri[2] && pri <= layerpri[1])	*priority = 0xfff0;
 	else if (pri > layerpri[1] && pri <= layerpri[0])	*priority = 0xfffc;
-	else							*priority = 0xfffe;
+	else												*priority = 0xfffe;
 
 	*color = sprite_colorbase | (*color & 0x001f);
 }
@@ -480,17 +480,17 @@ static INT32 MemIndex()
 	DrvZ80ROM		= Next; Next += 0x020000;
 
 	DrvGfxROM0		= Next; Next += 0x200000;
-	DrvGfxROMExp0		= Next; Next += 0x400000;
+	DrvGfxROMExp0	= Next; Next += 0x400000;
 	DrvGfxROM1		= Next; Next += 0x400000;
-	DrvGfxROMExp1		= Next; Next += 0x800000;
+	DrvGfxROMExp1	= Next; Next += 0x800000;
 	DrvGfxROM2		= Next; Next += 0x080000;
-	DrvGfxROMExp2		= Next; Next += 0x100000;
+	DrvGfxROMExp2	= Next; Next += 0x100000;
 
 	DrvSndROM		= Next; Next += 0x400000;
 
 	DrvEeprom		= Next; Next += 0x000080;
 
-	konami_palette32	= (UINT32*)Next;
+	konami_palette32= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -513,7 +513,7 @@ static INT32 MemIndex()
 
 static void XexexApanCallback(double one, double two)
 {
-	//bprintf(0, _T("apan %f, %f. "), one, two); - wip
+	//bprintf(0, _T("apan left %f, right %f. "), one, two); // not needed, never changes from init value.
 }
 
 static INT32 DrvInit()
@@ -600,6 +600,7 @@ static INT32 DrvInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
 
 	K054539Init(0, 48000, DrvSndROM, 0x300000);
+	K054539SetFlags(0, K054539_REVERSE_STEREO);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, (DrvDips[0] & 0x08) ? 1.40 : 1.10, BURN_SND_ROUTE_BOTH);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, (DrvDips[0] & 0x08) ? 1.40 : 1.10, BURN_SND_ROUTE_BOTH);
 	K054539SetApanCallback(0, XexexApanCallback);
@@ -729,11 +730,7 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext, nCyclesSegment;
-
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesDone[0] += SekRun(nCyclesSegment);
+		CPU_RUN(0, Sek);
 
 		if (i == 0 && control_data & 0x20) {
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
@@ -758,9 +755,7 @@ static INT32 DrvFrame()
 				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesDone[1] += ZetRun(nCyclesSegment);
+		CPU_RUN(1, Zet);
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;

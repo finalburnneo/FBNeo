@@ -35,8 +35,8 @@ static int AddLine(TCHAR* pszFormat, ...)
 	va_list vaFormat;
 	va_start(vaFormat, pszFormat);
 
-	int nLen = _vsntprintf(szString, 70, pszFormat, vaFormat);
-	nLen = (nLen >= 0 && nLen < 70) ? nLen : 70;
+	int nLen = _vsntprintf(szString, 170, pszFormat, vaFormat);
+	nLen = (nLen >= 0 && nLen < 170) ? nLen : 170;
 	nLen += _stprintf(szString + nLen, _T("\r\n"));
 	TCHAR* pszNewBuffer = (TCHAR*)realloc(pszTextBuffer, (nLen + nTextBufferSize + 1) * sizeof(TCHAR));
 	if (pszNewBuffer) {

@@ -507,6 +507,11 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			}
 		}
 
+		if (BurnDrvGetFlags() & BDF_GAME_WORKING)
+			fprintf(fDat, "\t\t<driver status=\"good\"/>\n");
+		else
+			fprintf(fDat, "\t\t<driver status=\"preliminary\"/>\n");
+
 		fprintf(fDat, "\t</game>\n");
 	}
 

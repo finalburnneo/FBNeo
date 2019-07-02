@@ -850,6 +850,39 @@ INT32 BurnByteswap(UINT8* pMem, INT32 nLen)
 	return 0;
 }
 
+// useful for expanding 4bpp pixels packed into one byte using little to-no
+// extra memory.
+// use 'swap' to swap whether the high or low nibble goes into byte 0 or 1
+// 'nxor' is useful for inverting the data
+// this is an example of a graphics decode that can be converted to use this
+// function:
+//	INT32 Plane[4] = { STEP4(0,1) }; - 0,1,2,3
+//	INT32 XOffs[8] = { STEP8(0,4) }; - 0,4,8,12,16,20,24,28 (swap is useful for when this is 4,0,12,8...)
+//	INT32 YOffs[8] = { STEP8(0,32) }; - 0, 32, 64, 96, 128, 160, 192, 224
+//
+void BurnNibbleExpand(UINT8 *source, UINT8 *dst, INT32 length, INT32 swap, UINT8 nxor)
+{
+	if (source == NULL) {
+		bprintf (0, _T("BurnNibbleExpand() source passed as NULL!\n"));
+		return;
+	}
+
+	if (length <= 0) {
+		bprintf (0, _T("BurnNibbleExpand() length passed as <= 0 (%d)!\n"), length);
+		return;
+	}
+
+	swap = swap ? 1 : 0;
+	if (dst == NULL) dst = source;
+
+	for (INT32 i = length - 1; i >= 0; i--)
+	{
+		INT32 t = source[i] ^ nxor;
+		dst[(i * 2 + 0) ^ swap] = t >> 4;
+		dst[(i * 2 + 1) ^ swap] = t & 0xf;
+	}
+}
+
 // Application-defined rom loading function:
 INT32 (__cdecl *BurnExtLoadRom)(UINT8 *Dest, INT32 *pnWrote, INT32 i) = NULL;
 

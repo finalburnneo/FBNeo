@@ -644,7 +644,7 @@ static bool open_archive()
 
 			bool bad_crc = false;
 
-			if (index < 0)
+			if (index < 0 && strncmp("uni-bios_", rom_name, 9) == 0)
 			{
 				index = find_rom_by_name(rom_name, list, count);
 				if (index >= 0)

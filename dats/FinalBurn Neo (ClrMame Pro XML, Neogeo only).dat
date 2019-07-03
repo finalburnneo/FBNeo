@@ -62,6 +62,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="2020bba" cloneof="2020bb" romof="2020bb">
 		<description>2020 Super Baseball (set 2)</description>
@@ -113,6 +114,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="2020bbh" cloneof="2020bb" romof="2020bb">
 		<description>2020 Super Baseball (set 3)</description>
@@ -164,6 +166,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="3countb" romof="neogeo">
 		<description>3 Count Bout / Fire Suplex (NGM-043)(NGH-043)</description>
@@ -215,6 +218,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="3countba" cloneof="3countb" romof="3countb">
 		<description>3 Count Bout / Fire Suplex (NGM-043)</description>
@@ -267,6 +271,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="4play" romof="neogeo">
 		<description>4 player input test [Demo, 4 player  input test cartridge]</description>
@@ -315,6 +320,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="sonicwi2" romof="neogeo">
 		<description>Aero Fighters 2 / Sonic Wings 2</description>
@@ -366,6 +372,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="sonicwi3" romof="neogeo">
 		<description>Aero Fighters 3 / Sonic Wings 3</description>
@@ -417,6 +424,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="aodk" romof="neogeo">
 		<description>Aggressors of Dark Kombat / Tsuukai GANGAN Koushinkyoku (ADM-008)(ADH-008)</description>
@@ -472,6 +480,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="alpham2" romof="neogeo">
 		<description>Alpha Mission II / ASO II - Last Guardian (NGM-007)(NGH-007)</description>
@@ -524,6 +533,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="alpham2p" cloneof="alpham2" romof="alpham2">
 		<description>Alpha Mission II / ASO II - Last Guardian (prototype) [Prototype]</description>
@@ -582,6 +592,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="androdun" romof="neogeo">
 		<description>Andro Dunos (NGM-049)(NGH-049)</description>
@@ -631,6 +642,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="aof" romof="neogeo">
 		<description>Art of Fighting / Ryuuko no Ken (NGM-044)(NGH-044)</description>
@@ -682,6 +694,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="aof2a" cloneof="aof2" romof="aof2">
 		<description>Art of Fighting 2 / Ryuuko no Ken 2 (NGH-056)</description>
@@ -739,6 +752,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="aof2" romof="neogeo">
 		<description>Art of Fighting 2 / Ryuuko no Ken 2 (NGM-056)</description>
@@ -795,6 +809,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="aof3k" cloneof="aof3" romof="aof3">
 		<description>Art of Fighting 3 - The Path of the Warrior (Korean release)</description>
@@ -852,6 +867,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="aof3" romof="neogeo">
 		<description>Art of Fighting 3 - The Path of the Warrior / Art of Fighting - Ryuuko no Ken Gaiden</description>
@@ -909,6 +925,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="bakatono" romof="neogeo">
 		<description>Bakatonosama Mahjong Manyuuki (MOM-002)(MOH-002)</description>
@@ -960,6 +977,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="b2b" romof="neogeo">
 		<description>Bang Bang Busters (2010 NCI release) [Prototype]</description>
@@ -1008,6 +1026,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="bangbedp" cloneof="bangbead" romof="bangbead">
 		<description>Bang Bead (Prototype?) [Prototype]</description>
@@ -1060,6 +1079,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="bangbead" romof="neogeo">
 		<description>Bang Bead</description>
@@ -1108,6 +1128,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="bstars2" romof="neogeo">
 		<description>Baseball Stars 2</description>
@@ -1160,6 +1181,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="bstarsh" cloneof="bstars" romof="bstars">
 		<description>Baseball Stars Professional (NGH-002)</description>
@@ -1216,6 +1238,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="bstars" romof="neogeo">
 		<description>Baseball Stars Professional (NGM-002)</description>
@@ -1272,6 +1295,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="flipshot" romof="neogeo">
 		<description>Battle Flip Shot</description>
@@ -1320,6 +1344,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="blazstar" romof="neogeo">
 		<description>Blazing Star</description>
@@ -1376,6 +1401,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="bjourneyh" cloneof="bjourney" romof="bjourney">
 		<description>Blue's Journey / Raguy (ALH-001)</description>
@@ -1427,6 +1453,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="bjourney" romof="neogeo">
 		<description>Blue's Journey / Raguy (ALM-001)(ALH-001)</description>
@@ -1478,6 +1505,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="breakrev" romof="neogeo">
 		<description>Breakers Revenge</description>
@@ -1531,6 +1559,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="breakers" romof="neogeo">
 		<description>Breakers</description>
@@ -1582,6 +1611,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="burningfh" cloneof="burningf" romof="burningf">
 		<description>Burning Fight (NGH-018)(US)</description>
@@ -1633,6 +1663,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="burningf" romof="neogeo">
 		<description>Burning Fight (NGM-018)(NGH-018)</description>
@@ -1684,6 +1715,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="burningfp" cloneof="burningf" romof="burningf">
 		<description>Burning Fight (prototype, older) [Prototype]</description>
@@ -1741,6 +1773,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="burningfpa" cloneof="burningf" romof="burningf">
 		<description>Burning Fight (prototype, ver 23.3, 910326) [Prototype]</description>
@@ -1799,6 +1832,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ctomaday" romof="neogeo">
 		<description>Captain Tomaday</description>
@@ -1848,6 +1882,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neodemo" romof="neogeo">
 		<description>Chaos Demo (Neo Geo) [Demo]</description>
@@ -1896,6 +1931,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="marukodq" romof="neogeo">
 		<description>Chibi Marukochan Deluxe Quiz</description>
@@ -1947,6 +1983,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="cndi" romof="neogeo">
 		<description>Chip n Dale (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
@@ -2001,6 +2038,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ironclad" romof="neogeo">
 		<description>Choutetsu Brikin'ger - Iron clad (Prototype) [Prototype]</description>
@@ -2051,6 +2089,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ironclado" cloneof="ironclad" romof="ironclad">
 		<description>Choutetsu Brikin'ger - Iron clad (Prototype, older) [Prototype]</description>
@@ -2101,6 +2140,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="cnbe" romof="neogeo">
 		<description>Codename - Blut Engel (2006-01-19) [Homebrew]</description>
@@ -2149,6 +2189,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="columnsn" romof="neogeo">
 		<description>Columns (Neo Geo) [Homebrew]</description>
@@ -2197,6 +2238,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="crsword" romof="neogeo">
 		<description>Crossed Swords (ALM-002)(ALH-002)</description>
@@ -2247,6 +2289,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="crswd2bl" romof="neogeo">
 		<description>Crossed Swords 2 (bootleg CD to cartridge conversion)</description>
@@ -2295,6 +2338,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="cphd" romof="neogeo">
 		<description>Crouching Poney Hidden Dragon (DEMO) [Homebrew]</description>
@@ -2347,6 +2391,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="cthd2003" cloneof="kof2001" romof="kof2001">
 		<description>Crouching Tiger Hidden Dragon 2003 (set 1) [Bootleg, Hack of "The King of Fighters 2001"]</description>
@@ -2405,6 +2450,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="cthd2k3a" cloneof="kof2001" romof="kof2001">
 		<description>Crouching Tiger Hidden Dragon 2003 (set 2) [Bootleg]</description>
@@ -2463,6 +2509,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ct2k3sp" cloneof="kof2001" romof="kof2001">
 		<description>Crouching Tiger Hidden Dragon 2003 Super Plus [Bootleg]</description>
@@ -2521,6 +2568,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ct2k3sa" cloneof="kof2001" romof="kof2001">
 		<description>Crouching Tiger Hidden Dragon 2003 Super Plus alternate [Bootleg]</description>
@@ -2579,6 +2627,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="cyberlip" romof="neogeo">
 		<description>Cyber-Lip (NGM-010)</description>
@@ -2635,6 +2684,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="dwi" romof="neogeo">
 		<description>DarkWing Duck (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
@@ -2689,6 +2739,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="dwia" cloneof="dwi" romof="dwi">
 		<description>DarkWing Duck (Intro demo, alt) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
@@ -2743,6 +2794,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="diggerma" romof="neogeo">
 		<description>Digger Man [Homebrew]</description>
@@ -2791,6 +2843,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="doubledr" romof="neogeo">
 		<description>Double Dragon (Neo-Geo)</description>
@@ -2846,6 +2899,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="dragonsh" romof="neogeo">
 		<description>Dragon's Heaven (development board)</description>
@@ -2895,6 +2949,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ducki" romof="neogeo">
 		<description>Duck Tales (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
@@ -2949,6 +3004,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="eightman" romof="neogeo">
 		<description>Eight Man (NGM-025)(NGH-025)</description>
@@ -3000,6 +3056,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kabukikl" romof="neogeo">
 		<description>Far East of Eden - Kabuki Klash / Tengai Makyou - Shin Den</description>
@@ -3053,6 +3110,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fatfury1" romof="neogeo">
 		<description>Fatal Fury - King of Fighters / Garou Densetsu - shukumei no tatakai (NGM-033)(NGH-033)</description>
@@ -3105,6 +3163,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fatfury2" romof="neogeo">
 		<description>Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (NGM-047)(NGH-047)</description>
@@ -3156,6 +3215,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fatfury2a" cloneof="fatfury2" romof="fatfury2">
 		<description>Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (NGM-047)</description>
@@ -3208,6 +3268,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fatfury3a" cloneof="fatfury3" romof="fatfury3">
 		<description>Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (NGM-069)(NGH-069) (alternate set)</description>
@@ -3263,6 +3324,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fatfury3" romof="neogeo">
 		<description>Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (NGM-069)(NGH-069)</description>
@@ -3318,6 +3380,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fatfursp" romof="neogeo">
 		<description>Fatal Fury Special / Garou Densetsu Special (set 1)(NGM-058)(NGH-058)</description>
@@ -3373,6 +3436,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fatfurspa" cloneof="fatfursp" romof="fatfursp">
 		<description>Fatal Fury Special / Garou Densetsu Special (set 2)(NGM-058)(NGH-058)</description>
@@ -3429,6 +3493,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fightfev" romof="neogeo">
 		<description>Fight Fever (set 1)</description>
@@ -3480,6 +3545,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fightfeva" cloneof="fightfev" romof="fightfev">
 		<description>Fight Fever (set 2)</description>
@@ -3532,6 +3598,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fswords" cloneof="samsho3" romof="samsho3">
 		<description>Fighters Swords (Korean release of Samurai Shodown III)</description>
@@ -3588,6 +3655,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="fbfrenzy" romof="neogeo">
 		<description>Football Frenzy (NGM-034)(NGH-034)</description>
@@ -3639,6 +3707,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ngfrog" romof="neogeo">
 		<description>Frog Feast (Neo Geo) [Homebrew]</description>
@@ -3690,6 +3759,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neogalag" romof="neogeo">
 		<description>Galaga Demo (set 1) [Homebrew]</description>
@@ -3738,6 +3808,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neogalaga" cloneof="neogalag" romof="neogalag">
 		<description>Galaga Demo (set 2) [Homebrew]</description>
@@ -3786,6 +3857,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="galaxyfg" romof="neogeo">
 		<description>Galaxy Fight - Universal Warriors</description>
@@ -3842,6 +3914,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ganryu" romof="neogeo">
 		<description>Ganryu / Musashi Ganryuki</description>
@@ -3889,6 +3962,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="garoubl" cloneof="garou" romof="garou">
 		<description>Garou - Mark of the Wolves (bootleg) [Bootleg]</description>
@@ -3943,6 +4017,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="garouha" cloneof="garou" romof="garou">
 		<description>Garou - Mark of the Wolves (NGH-2530)</description>
@@ -4003,6 +4078,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="garouh" cloneof="garou" romof="garou">
 		<description>Garou - Mark of the Wolves (NGM-2530) (NGH-2530)</description>
@@ -4061,6 +4137,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="garou" romof="neogeo">
 		<description>Garou - Mark of the Wolves (NGM-2530)</description>
@@ -4121,6 +4198,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="garoup" cloneof="garou" romof="garou">
 		<description>Garou - Mark of the Wolves (prototype) [Prototype]</description>
@@ -4179,6 +4257,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ghostbi" romof="neogeo">
 		<description>Ghost Busters (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
@@ -4232,6 +4311,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="gpilotsh" cloneof="gpilots" romof="gpilots">
 		<description>Ghost Pilots (NGH-020)(US)</description>
@@ -4285,6 +4365,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="gpilots" romof="neogeo">
 		<description>Ghost Pilots (NGM-020)(NGH-020)</description>
@@ -4338,6 +4419,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="gpilotsp" cloneof="gpilots" romof="gpilots">
 		<description>Ghost Pilots (prototype) [Prototype]</description>
@@ -4396,6 +4478,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ghostlop" romof="neogeo">
 		<description>Ghostlop (prototype) [Prototype]</description>
@@ -4444,6 +4527,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="goalx3" romof="neogeo">
 		<description>Goal! Goal! Goal!</description>
@@ -4494,6 +4578,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="gururin" romof="neogeo">
 		<description>Gururin</description>
@@ -4542,6 +4627,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="froman2b" romof="neogeo">
 		<description>Idol Mahjong - final romance 2 (Neo CD Conversion) [Hack]</description>
@@ -4590,6 +4676,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="jockeygp" romof="neogeo">
 		<description>Jockey Grand Prix (set 1)</description>
@@ -4637,6 +4724,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="jockeygpa" cloneof="jockeygp" romof="jockeygp">
 		<description>Jockey Grand Prix (set 2)</description>
@@ -4684,6 +4772,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ltorb1" romof="neogeo">
 		<description>Jonas Indiana and the Lost Temple of RA (20050717) [Homebrew]</description>
@@ -4732,6 +4821,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="janshin" romof="neogeo">
 		<description>Jyanshin Densetsu - Quest of Jongmaster</description>
@@ -4780,6 +4870,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="karnovr" romof="neogeo">
 		<description>Karnov's Revenge / Fighter's History Dynamite</description>
@@ -4832,6 +4923,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kog" cloneof="kof97" romof="kof97">
 		<description>King of Gladiator (The King of Fighters '97 bootleg) [Bootleg]</description>
@@ -4887,6 +4979,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kogplus" cloneof="kof97" romof="kof97">
 		<description>King of Gladiator Plus (The King of Fighters '97 bootleg) [Bootleg]</description>
@@ -4942,6 +5035,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kotm" romof="neogeo">
 		<description>King of the Monsters (set 1)</description>
@@ -4994,6 +5088,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kotmh" cloneof="kotm" romof="kotm">
 		<description>King of the Monsters (set 2)</description>
@@ -5046,6 +5141,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kotm2" romof="neogeo">
 		<description>King of the Monsters 2 - The Next Thing (NGM-039)(NGH-039)</description>
@@ -5098,6 +5194,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kotm2a" cloneof="kotm2" romof="kotm2">
 		<description>King of the Monsters 2 - The Next Thing (older)</description>
@@ -5150,6 +5247,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kotm2p" cloneof="kotm2" romof="kotm2">
 		<description>King of the Monsters 2 - The Next Thing (prototype) [Prototype]</description>
@@ -5210,6 +5308,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kizuna" romof="neogeo">
 		<description>Kizuna Encounter - Super Tag Battle / Fu'un Super Tag Battle</description>
@@ -5267,6 +5366,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof10thd" cloneof="kof2002" romof="kof2002">
 		<description>Kof 10th Anniversary (The King of Fighters 2002 bootleg / Fully Decrypted) [Hack]</description>
@@ -5330,6 +5430,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof98pfe" cloneof="kof98" romof="kof98">
 		<description>Kof'98 (Plus Final Edition)(2017-07-23)(Korean board) [Hack]</description>
@@ -5389,6 +5490,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof98mix" cloneof="kof98" romof="kof98">
 		<description>Kof'98 Mix (2011-10-01)</description>
@@ -5449,6 +5551,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg" cloneof="kof2002" romof="kof2002">
 		<description>Kof2002 (hack omg) [Bootleg]</description>
@@ -5507,6 +5610,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg8" cloneof="kof2002" romof="kof2002">
 		<description>Kof2002 (Omega v0.8) [Bootleg]</description>
@@ -5563,6 +5667,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg9b" cloneof="kof2002" romof="kof2002">
 		<description>Kof2002 (Omega v0.9 beta) [Bootleg]</description>
@@ -5621,6 +5726,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg9" cloneof="kof2002" romof="kof2002">
 		<description>Kof2002 (Omega v0.9) [Bootleg]</description>
@@ -5679,6 +5785,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lans2004" cloneof="shocktr2" romof="shocktr2">
 		<description>Lansquenet 2004 (Shock Troopers - 2nd Squad bootleg) [Bootleg]</description>
@@ -5735,6 +5842,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lasthope" romof="neogeo">
 		<description>Last Hope (bootleg AES to MVS conversion, no coin support)</description>
@@ -5787,6 +5895,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lhcdb" romof="neogeo">
 		<description>Last Hope CD Beta (Neo CD conversion) [Hack, Imperfect graphics]</description>
@@ -5839,6 +5948,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lresortp" cloneof="lresort" romof="lresort">
 		<description>Last Resort (prototype) [Prototype]</description>
@@ -5897,6 +6007,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lresort" romof="neogeo">
 		<description>Last Resort</description>
@@ -5948,6 +6059,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lbowling" romof="neogeo">
 		<description>League Bowling (NGM-019)(NGH-019)</description>
@@ -5999,6 +6111,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="legendos" romof="neogeo">
 		<description>Legend of Success Joe / Ashitano Joe Densetsu</description>
@@ -6049,6 +6162,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="magdrop3" romof="neogeo">
 		<description>Magical Drop III</description>
@@ -6100,6 +6214,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="magdrop2" romof="neogeo">
 		<description>Magical Drop II</description>
@@ -6148,6 +6263,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="maglordh" cloneof="maglord" romof="maglord">
 		<description>Magician Lord (NGH-005)</description>
@@ -6202,6 +6318,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="maglord" romof="neogeo">
 		<description>Magician Lord (NGM-005)</description>
@@ -6256,6 +6373,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mahretsu" romof="neogeo">
 		<description>Mahjong Kyo Retsuden (NGM-004)(NGH-004)</description>
@@ -6310,6 +6428,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="matrimbl" cloneof="matrim" romof="matrim">
 		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (bootleg) [Bootleg]</description>
@@ -6367,6 +6486,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="matrim" romof="neogeo">
 		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (NGM-2660) (NGH-2660)</description>
@@ -6422,6 +6542,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug" romof="neogeo">
 		<description>Metal Slug - Super Vehicle-001</description>
@@ -6473,6 +6594,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug2" romof="neogeo">
 		<description>Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-2410)</description>
@@ -6525,6 +6647,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug2t" cloneof="mslug2" romof="mslug2">
 		<description>Metal Slug 2 Turbo (NGM-9410)</description>
@@ -6577,6 +6700,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug3v" cloneof="mslug3" romof="mslug3">
 		<description>Metal Slug 3 (NGH-2560) (Enhanced Violence Version hack by EEZEZY)</description>
@@ -6634,6 +6758,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug3h" cloneof="mslug3" romof="mslug3">
 		<description>Metal Slug 3 (NGH-2560)</description>
@@ -6691,6 +6816,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug3" romof="neogeo">
 		<description>Metal Slug 3 (NGM-2560)</description>
@@ -6749,6 +6875,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug3a" cloneof="mslug3" romof="mslug3">
 		<description>Metal Slug 3 (NGM-2560, earlier)</description>
@@ -6807,6 +6934,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug4h" cloneof="mslug4" romof="mslug4">
 		<description>Metal Slug 4 (NGH-2630)</description>
@@ -6860,6 +6988,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug4" romof="neogeo">
 		<description>Metal Slug 4 (NGM-2630)</description>
@@ -6913,6 +7042,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ms4plus" cloneof="mslug4" romof="mslug4">
 		<description>Metal Slug 4 Plus (bootleg) [Bootleg]</description>
@@ -6967,6 +7097,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug5b" cloneof="mslug5" romof="mslug5">
 		<description>Metal Slug 5 (bootleg)</description>
@@ -7021,6 +7152,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug5h" cloneof="mslug5" romof="mslug5">
 		<description>Metal Slug 5 (NGH-2680)</description>
@@ -7076,6 +7208,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug5" romof="neogeo">
 		<description>Metal Slug 5 (NGM-2680)</description>
@@ -7131,6 +7264,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug5w" cloneof="mslug5" romof="mslug5">
 		<description>Metal Slug 5 (W)</description>
@@ -7188,6 +7322,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ms5plus" cloneof="mslug5" romof="mslug5">
 		<description>Metal Slug 5 Plus (bootleg) [Bootleg]</description>
@@ -7245,6 +7380,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslug3b6" cloneof="mslug3" romof="mslug3">
 		<description>Metal Slug 6 (Metal Slug 3 bootleg) [Bootleg]</description>
@@ -7303,6 +7439,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mslugx" romof="neogeo">
 		<description>Metal Slug X - Super Vehicle-001 (NGM-2500)(NGH-2500)</description>
@@ -7358,6 +7495,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="minasan" romof="neogeo">
 		<description>Minasanno Okagesamadesu! Daisugorokutaikai (MOM-001)(MOH-001)</description>
@@ -7409,6 +7547,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="miexchng" romof="neogeo">
 		<description>Money Puzzle Exchanger / Money Idol Exchanger</description>
@@ -7459,6 +7598,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="mutnat" romof="neogeo">
 		<description>Mutation Nation (NGM-014)(NGH-014)</description>
@@ -7510,6 +7650,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="nam1975" romof="neogeo">
 		<description>NAM-1975 (NGM-001)(NGH-001)</description>
@@ -7565,6 +7706,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neo2500" romof="neogeo">
 		<description>Neo 2500 Demo [Demo]</description>
@@ -7613,6 +7755,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neobombe" romof="neogeo">
 		<description>Neo Bomberman</description>
@@ -7664,6 +7807,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neocstlv" romof="neogeo">
 		<description>Neo CastleVania Demo [Homebrew]</description>
@@ -7712,6 +7856,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neodrift" romof="neogeo">
 		<description>Neo Drift Out - New Technology</description>
@@ -7761,6 +7906,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neomrdo" romof="neogeo">
 		<description>Neo Mr. Do!</description>
@@ -7809,6 +7955,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neonopon" romof="neogeo">
 		<description>Neo No Panepon (beta) [Homebrew]</description>
@@ -7857,6 +8004,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neoponga" cloneof="neopong" romof="neopong">
 		<description>Neo Pong (ver 1.0) [Homebrew]</description>
@@ -7905,6 +8053,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neopong" romof="neogeo">
 		<description>Neo Pong (ver 1.1) [Homebrew]</description>
@@ -7953,6 +8102,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="syscheck" romof="neogeo">
 		<description>Neo System Check (ver 1.0b) [Demo]</description>
@@ -8001,6 +8151,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neothndr" romof="neogeo">
 		<description>Neo Thunder [Homebrew, sebastianmihai.com]</description>
@@ -8049,6 +8200,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="turfmast" romof="neogeo">
 		<description>Neo Turf Masters / Big Tournament Golf</description>
@@ -8100,6 +8252,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neocup98" romof="neogeo">
 		<description>Neo-Geo Cup '98 - The Road to the Victory</description>
@@ -8149,6 +8302,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neotet" romof="neogeo">
 		<description>NeoGeo 2-Player Tetris [Homebrew]</description>
@@ -8197,6 +8351,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neo3ddmo" romof="neogeo">
 		<description>NeoGeo 3D! Demo [Homebrew]</description>
@@ -8245,6 +8400,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ngem2k" romof="neogeo">
 		<description>NGEM2K (beta 2006-01-18) [Homebrew]</description>
@@ -8293,6 +8449,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ngftdemo" romof="neogeo">
 		<description>NGF Transparency Demo [Homebrew, redarmor.net]</description>
@@ -8341,6 +8498,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="nitdbl" cloneof="nitd" romof="nitd">
 		<description>Nightmare in the Dark (bootleg) [Bootleg]</description>
@@ -8392,6 +8550,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="nitd" romof="neogeo">
 		<description>Nightmare in the Dark</description>
@@ -8439,6 +8598,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ncombath" cloneof="ncombat" romof="ncombat">
 		<description>Ninja Combat (NGH-009)</description>
@@ -8494,6 +8654,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ncombat" romof="neogeo">
 		<description>Ninja Combat (NGM-009)</description>
@@ -8549,6 +8710,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ncommand" romof="neogeo">
 		<description>Ninja Commando</description>
@@ -8600,6 +8762,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ninjamas" romof="neogeo">
 		<description>Ninja Master's - haoh-ninpo-cho</description>
@@ -8656,6 +8819,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="overtop" romof="neogeo">
 		<description>Over Top</description>
@@ -8708,6 +8872,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho4k" cloneof="samsho4" romof="samsho4">
 		<description>Pae Wang Jeon Seol / Legend of a Warrior (Korean censored Samurai Shodown IV)</description>
@@ -8765,6 +8930,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="panicbom" romof="neogeo">
 		<description>Panic Bomber</description>
@@ -8814,6 +8980,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="pgoal" romof="neogeo">
 		<description>Pleasure Goal / Futsal - 5 on 5 Mini Soccer (NGM-219)</description>
@@ -8864,6 +9031,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="pnyaa" romof="neogeo">
 		<description>Pochi and Nyaa (Ver 2.00)</description>
@@ -8911,6 +9079,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="pnyaaa" cloneof="pnyaa" romof="pnyaa">
 		<description>Pochi and Nyaa (Ver 2.02)</description>
@@ -8958,6 +9127,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="poknight" romof="neogeo">
 		<description>Poker Night [Homebrew]</description>
@@ -9006,6 +9176,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="popbounc" romof="neogeo">
 		<description>Pop 'n Bounce / Gapporin</description>
@@ -9054,6 +9225,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="pspikes2" romof="neogeo">
 		<description>Power Spikes II (NGM-068)</description>
@@ -9108,6 +9280,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="preisle2" romof="neogeo">
 		<description>Prehistoric Isle 2</description>
@@ -9161,6 +9334,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neoprimo" romof="neogeo">
 		<description>Primo Demo [Homebrew]</description>
@@ -9209,6 +9383,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="pulstar" romof="neogeo">
 		<description>Pulstar</description>
@@ -9265,6 +9440,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="pbobblenb" cloneof="pbobblen" romof="pbobblen">
 		<description>Puzzle Bobble / Bust-A-Move (Neo-Geo) (bootleg) [Bootleg]</description>
@@ -9314,6 +9490,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="pbobblen" romof="neogeo">
 		<description>Puzzle Bobble / Bust-A-Move (Neo-Geo) (NGM-083)</description>
@@ -9369,6 +9546,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="pbobbl2n" romof="neogeo">
 		<description>Puzzle Bobble 2 / Bust-A-Move Again (Neo-Geo)</description>
@@ -9420,6 +9598,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="puzzldpr" cloneof="puzzledp" romof="puzzledp">
 		<description>Puzzle De Pon! R!</description>
@@ -9468,6 +9647,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="puzzledp" romof="neogeo">
 		<description>Puzzle De Pon!</description>
@@ -9516,6 +9696,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="joyjoy" romof="neogeo">
 		<description>Puzzled / Joy Joy Kid (NGM-021)(NGH-021)</description>
@@ -9565,6 +9746,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="quizdaisk" cloneof="quizdais" romof="quizdais">
 		<description>Quiz Daisousa Sen - The Last Count Down (Korean release)</description>
@@ -9613,6 +9795,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="quizdais" romof="neogeo">
 		<description>Quiz Daisousa Sen - The Last Count Down (NGM-023)(NGH-023)</description>
@@ -9661,6 +9844,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="quizkofk" cloneof="quizkof" romof="quizkof">
 		<description>Quiz King of Fighters (Korean release)</description>
@@ -9713,6 +9897,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="quizkof" romof="neogeo">
 		<description>Quiz King of Fighters (SAM-080)(SAH-080)</description>
@@ -9765,6 +9950,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="quizdai2" romof="neogeo">
 		<description>Quiz Meitantei Neo &amp; Geo - Quiz Daisousa Sen part 2 (NGM-042)(NGH-042)</description>
@@ -9816,6 +10002,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="rotdh" cloneof="rotd" romof="rotd">
 		<description>Rage of the Dragons (NGH-2640)</description>
@@ -9871,6 +10058,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="rotd" romof="neogeo">
 		<description>Rage of the Dragons (NGM-264?)</description>
@@ -9925,6 +10113,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ragnagrd" romof="neogeo">
 		<description>Ragnagard / Shin-Oh-Ken</description>
@@ -9980,6 +10169,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="rbff1a" cloneof="rbff1" romof="rbff1">
 		<description>Real Bout Fatal Fury / Real Bout Garou Densetsu (bug fix revision)</description>
@@ -10038,6 +10228,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="rbff1k" cloneof="rbff1" romof="rbff1">
 		<description>Real Bout Fatal Fury / Real Bout Garou Densetsu (Korean release)</description>
@@ -10095,6 +10286,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="rbff1" romof="neogeo">
 		<description>Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-095)(NGH-095)</description>
@@ -10152,6 +10344,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="rbff2k" cloneof="rbff2" romof="rbff2">
 		<description>Real Bout Fatal Fury 2 - The Newcomers (Korean release)</description>
@@ -10208,6 +10401,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="rbff2h" cloneof="rbff2" romof="rbff2">
 		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGH-2400)</description>
@@ -10264,6 +10458,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="rbff2" romof="neogeo">
 		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGM-2400)</description>
@@ -10320,6 +10515,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="rbffspeck" cloneof="rbffspec" romof="rbffspec">
 		<description>Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Korean release)</description>
@@ -10377,6 +10573,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="rbffspec" romof="neogeo">
 		<description>Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special</description>
@@ -10434,6 +10631,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ridhero" romof="neogeo">
 		<description>Riding Hero (NGM-006)(NGH-006)</description>
@@ -10490,6 +10688,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ridheroh" cloneof="ridhero" romof="ridhero">
 		<description>Riding Hero (set 2)</description>
@@ -10546,6 +10745,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="roboarmy" romof="neogeo">
 		<description>Robo Army (set 1)</description>
@@ -10597,6 +10797,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="roboarma" cloneof="roboarmy" romof="roboarmy">
 		<description>Robo Army (set 2)</description>
@@ -10648,6 +10849,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="robocopi" romof="neogeo">
 		<description>Robocop (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
@@ -10702,6 +10904,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samshoh" cloneof="samsho" romof="samsho">
 		<description>Samurai Shodown / Samurai Spirits (NGH-045)</description>
@@ -10756,6 +10959,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho" romof="neogeo">
 		<description>Samurai Shodown / Samurai Spirits (NGM-045)</description>
@@ -10810,6 +11014,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samshoa" cloneof="samsho" romof="samsho">
 		<description>Samurai Shodown / Samurai Spirits (NGM-045, alternate board)</description>
@@ -10865,6 +11070,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho2" romof="neogeo">
 		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (NGM-063)(NGH-063)</description>
@@ -10922,6 +11128,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho2sp" cloneof="samsho2" romof="samsho2">
 		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017, hack) [Hack]</description>
@@ -10981,6 +11188,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho3h" cloneof="samsho3" romof="samsho3">
 		<description>Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGH-087)</description>
@@ -11037,6 +11245,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho3" romof="neogeo">
 		<description>Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGM-087)</description>
@@ -11096,6 +11305,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho4" romof="neogeo">
 		<description>Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (NGM-222)(NGH-222)</description>
@@ -11153,6 +11363,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho4sp" cloneof="samsho4" romof="samsho4">
 		<description>Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Special 2017, hack) [Hack]</description>
@@ -11210,6 +11421,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho5b" cloneof="samsho5" romof="samsho5">
 		<description>Samurai Shodown V / Samurai Spirits Zero (bootleg) [Bootleg]</description>
@@ -11264,6 +11476,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho5x" cloneof="samsho5" romof="samsho5">
 		<description>Samurai Shodown V / Samurai Spirits Zero (hack of XBOX version) [Hack]</description>
@@ -11319,6 +11532,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho5h" cloneof="samsho5" romof="samsho5">
 		<description>Samurai Shodown V / Samurai Spirits Zero (NGH-2700)</description>
@@ -11374,6 +11588,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho5" romof="neogeo">
 		<description>Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 1)</description>
@@ -11429,6 +11644,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho5a" cloneof="samsho5" romof="samsho5">
 		<description>Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 2)</description>
@@ -11484,6 +11700,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsh5spho" cloneof="samsh5sp" romof="samsh5sp">
 		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720) (1st release, censored)</description>
@@ -11539,6 +11756,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsh5sph" cloneof="samsh5sp" romof="samsh5sp">
 		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720) (2nd release, less censored)</description>
@@ -11594,6 +11812,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsh5sp" romof="neogeo">
 		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-2720)</description>
@@ -11649,6 +11868,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho2k" cloneof="samsho2" romof="samsho2">
 		<description>Saulabi Spirits / Jin Saulabi Tu Hon (Korean release of Samurai Shodown II)</description>
@@ -11708,6 +11928,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="samsho2ka" cloneof="samsho2" romof="samsho2">
 		<description>Saulabi Spirits / Jin Saulabi Tu Hon (Korean release of Samurai Shodown II, set 2)</description>
@@ -11765,6 +11986,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="savagere" romof="neogeo">
 		<description>Savage Reign / Fu'un Mokushiroku - kakutou sousei</description>
@@ -11821,6 +12043,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="sengokuh" cloneof="sengoku" romof="sengoku">
 		<description>Sengoku / Sengoku Denshou (NGH-017)(US)</description>
@@ -11873,6 +12096,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="sengoku" romof="neogeo">
 		<description>Sengoku / Sengoku Denshou (NGM-017)(NGH-017)</description>
@@ -11925,6 +12149,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="sengoku2" romof="neogeo">
 		<description>Sengoku 2 / Sengoku Denshou 2</description>
@@ -11976,6 +12201,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="sengoku3s" cloneof="sengoku3" romof="sengoku3">
 		<description>Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT hack) [Hack]</description>
@@ -12029,6 +12255,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="sengoku3" romof="neogeo">
 		<description>Sengoku 3 / Sengoku Densho 2001 (set 1)</description>
@@ -12081,6 +12308,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="sengoku3a" cloneof="sengoku3" romof="sengoku3">
 		<description>Sengoku 3 / Sengoku Densho 2001 (Set 2)</description>
@@ -12133,6 +12361,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="beast" romof="neogeo">
 		<description>Shadow of the Beast (Neo Geo demo) [Demo]</description>
@@ -12181,6 +12410,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="shocktro" romof="neogeo">
 		<description>Shock Troopers (set 1)</description>
@@ -12237,6 +12467,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="shocktroa" cloneof="shocktro" romof="shocktro">
 		<description>Shock Troopers (set 2)</description>
@@ -12293,6 +12524,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="shocktr2" romof="neogeo">
 		<description>Shock Troopers - 2nd Squad</description>
@@ -12348,6 +12580,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="svcboot" cloneof="svc" romof="svc">
 		<description>SNK vs. Capcom - SVC Chaos (bootleg) [Bootleg]</description>
@@ -12405,6 +12638,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="svc" romof="neogeo">
 		<description>SNK vs. Capcom - SVC Chaos (NGM-2690)(NGH-2690)</description>
@@ -12460,6 +12694,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="svcplus" cloneof="svc" romof="svc">
 		<description>SNK vs. Capcom - SVC Chaos Plus (bootleg set 1) [Bootleg]</description>
@@ -12519,6 +12754,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="svcplusa" cloneof="svc" romof="svc">
 		<description>SNK vs. Capcom - SVC Chaos Plus (bootleg set 2) [Bootleg]</description>
@@ -12577,6 +12813,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="svcsplus" cloneof="svc" romof="svc">
 		<description>SNK vs. Capcom - SVC Chaos Super Plus (bootleg) [Bootleg]</description>
@@ -12635,6 +12872,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="socbrawlh" cloneof="socbrawl" romof="socbrawl">
 		<description>Soccer Brawl (NGH-031)</description>
@@ -12686,6 +12924,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="socbrawl" romof="neogeo">
 		<description>Soccer Brawl (NGM-031)</description>
@@ -12737,6 +12976,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="spidermi" romof="neogeo">
 		<description>Spiderman (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
@@ -12790,6 +13030,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="spinmast" romof="neogeo">
 		<description>Spin Master / Miracle Adventure</description>
@@ -12845,6 +13086,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="stakwin" romof="neogeo">
 		<description>Stakes Winner / Stakes Winner - GI kinzen seiha e no michi</description>
@@ -12895,6 +13137,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="stakwin2" romof="neogeo">
 		<description>Stakes Winner 2</description>
@@ -12946,6 +13189,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="strhoop" romof="neogeo">
 		<description>Street Hoop / Street Slam / Dunk Dream (DEM-004) (DEH-004)</description>
@@ -12997,6 +13241,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="s1945p" romof="neogeo">
 		<description>Strikers 1945 Plus</description>
@@ -13054,6 +13299,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="sdodgeb" romof="neogeo">
 		<description>Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu</description>
@@ -13104,6 +13350,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ssideki" romof="neogeo">
 		<description>Super Sidekicks / Tokuten Ou</description>
@@ -13152,6 +13399,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ssideki2" romof="neogeo">
 		<description>Super Sidekicks 2 - The World Championship / Tokuten Ou 2 - real fight football (NGM-061)(NGH-061)</description>
@@ -13203,6 +13451,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ssideki3" romof="neogeo">
 		<description>Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - eikou e no michi</description>
@@ -13257,6 +13506,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="moshougi" romof="neogeo">
 		<description>Syougi No Tatsujin - Master of Shougi</description>
@@ -13305,6 +13555,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="twsoc96" romof="neogeo">
 		<description>Tecmo World Soccer '96</description>
@@ -13356,6 +13607,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="tmnti" romof="neogeo">
 		<description>Teenage Mutant Ninja Turtles (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
@@ -13410,6 +13662,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="tmntia" cloneof="tmnti" romof="tmnti">
 		<description>Teenage Mutant Ninja Turtles (Intro demo, alt) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
@@ -13464,6 +13717,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="irrmaze" romof="neogeo">
 		<description>The Irritating Maze / Ultra Denryu Iraira Bou</description>
@@ -13479,6 +13733,7 @@
 		<rom name="236-bios.sp1" size="131072" crc="853e6b96"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof94" romof="neogeo">
 		<description>The King of Fighters '94 (NGM-055)(NGH-055)</description>
@@ -13535,6 +13790,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof95h" cloneof="kof95" romof="kof95">
 		<description>The King of Fighters '95 (NGH-084)</description>
@@ -13591,6 +13847,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof95a" cloneof="kof95" romof="kof95">
 		<description>The King of Fighters '95 (NGH-084, alternate board)</description>
@@ -13650,6 +13907,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof95" romof="neogeo">
 		<description>The King of Fighters '95 (NGM-084)</description>
@@ -13706,6 +13964,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof95sp" cloneof="kof95" romof="kof95">
 		<description>The King of Fighters '95 (Special 2017, hack) [Hack]</description>
@@ -13764,6 +14023,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof96ae20" cloneof="kof96" romof="kof96">
 		<description>The King of Fighters '96 (Anniversary Edition 2.0.0430, EGHT hack) [Hack]</description>
@@ -13825,6 +14085,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof96ae" cloneof="kof96" romof="kof96">
 		<description>The King of Fighters '96 (Anniversary Edition, EGHT hack) [Hack]</description>
@@ -13886,6 +14147,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof96ep" cloneof="kof96" romof="kof96">
 		<description>The King of Fighters '96 (bootleg / hack) [Bootleg]</description>
@@ -13944,6 +14206,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof96cn" cloneof="kof96" romof="kof96">
 		<description>The King of Fighters '96 (Chinese Edition ver 1.0, hack) [Hack]</description>
@@ -14004,6 +14267,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof96h" cloneof="kof96" romof="kof96">
 		<description>The King of Fighters '96 (NGH-214)</description>
@@ -14061,6 +14325,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof96" romof="neogeo">
 		<description>The King of Fighters '96 (NGM-214)</description>
@@ -14118,6 +14383,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof96a" cloneof="kof96" romof="kof96">
 		<description>The King of Fighters '96 (NGM-214, alternate board)</description>
@@ -14178,6 +14444,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof97cn" cloneof="kof97" romof="kof97">
 		<description>The King of Fighters '97 (10th Anniversary Chinese Edition, EGHT hack) [Hack]</description>
@@ -14233,6 +14500,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof97k" cloneof="kof97" romof="kof97">
 		<description>The King of Fighters '97 (Korean release)</description>
@@ -14288,6 +14556,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof97h" cloneof="kof97" romof="kof97">
 		<description>The King of Fighters '97 (NGH-2320)</description>
@@ -14343,6 +14612,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof97" romof="neogeo">
 		<description>The King of Fighters '97 (NGM-2320)</description>
@@ -14398,6 +14668,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof97xt" cloneof="kof97" romof="kof97">
 		<description>The King of Fighters '97 - Final Battle (hack) [Hack]</description>
@@ -14453,6 +14724,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof97oro" cloneof="kof97" romof="kof97">
 		<description>The King of Fighters '97 oroshi plus 2003 [Bootleg]</description>
@@ -14509,6 +14781,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof97pls" cloneof="kof97" romof="kof97">
 		<description>The King of Fighters '97 Plus (bootleg) [Bootleg]</description>
@@ -14564,6 +14837,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof97pla" cloneof="kof97" romof="kof97">
 		<description>The King of Fighters '97 Plus 2003 (bootleg / hack) [Bootleg]</description>
@@ -14619,6 +14893,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof98ae2016" cloneof="kof98" romof="kof98">
 		<description>The King of Fighters '98 (Anniversary Edition build 1.2.0827) [Hack]</description>
@@ -14682,6 +14957,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof98ae" cloneof="kof98" romof="kof98">
 		<description>The King of Fighters '98 (Anniversary Edition, EGHT hack) [Hack]</description>
@@ -14745,6 +15021,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof98cb" cloneof="kof98" romof="kof98">
 		<description>The King of Fighters '98 (Combo, hack) [Hack]</description>
@@ -14803,6 +15080,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof98k" cloneof="kof98" romof="kof98">
 		<description>The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 1)</description>
@@ -14861,6 +15139,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof98ka" cloneof="kof98" romof="kof98">
 		<description>The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 2)</description>
@@ -14919,6 +15198,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof98h" cloneof="kof98" romof="kof98">
 		<description>The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGH-2420)</description>
@@ -14977,6 +15257,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof98" romof="neogeo">
 		<description>The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420)</description>
@@ -15035,6 +15316,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof98a" cloneof="kof98" romof="kof98">
 		<description>The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420, alternate board)</description>
@@ -15094,6 +15376,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof99e" cloneof="kof99" romof="kof99">
 		<description>The King of Fighters '99 - Millennium Battle (earlier)</description>
@@ -15154,6 +15437,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof99k" cloneof="kof99" romof="kof99">
 		<description>The King of Fighters '99 - Millennium Battle (Korean release)</description>
@@ -15212,6 +15496,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof99ka" cloneof="kof99" romof="kof99">
 		<description>The King of Fighters '99 - Millennium Battle (Korean release, non-encrypted program)</description>
@@ -15269,6 +15554,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof99h" cloneof="kof99" romof="kof99">
 		<description>The King of Fighters '99 - Millennium Battle (NGH-2510)</description>
@@ -15327,6 +15613,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof99" romof="neogeo">
 		<description>The King of Fighters '99 - Millennium Battle (NGM-2510)</description>
@@ -15385,6 +15672,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof99p" cloneof="kof99" romof="kof99">
 		<description>The King of Fighters '99 - Millennium Battle (prototype) [Prototype]</description>
@@ -15443,6 +15731,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof99ae" cloneof="kof99" romof="kof99">
 		<description>The King of Fighters '99 Anniversary Edition (hack) [Prototype]</description>
@@ -15506,6 +15795,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof10th" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 10th Anniversary (bootleg) [Bootleg]</description>
@@ -15568,6 +15858,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k5uni" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 10th Anniversary 2005 Unique (bootleg) [Bootleg]</description>
@@ -15632,6 +15923,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf10thep" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 10th Anniversary Extra Plus (bootleg) [Bootleg]</description>
@@ -15697,6 +15989,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2000" romof="neogeo">
 		<description>The King of Fighters 2000 (NGM-2570) (NGH-2570)</description>
@@ -15755,6 +16048,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2000n" cloneof="kof2000" romof="kof2000">
 		<description>The King of Fighters 2000 (not encrypted)</description>
@@ -15812,6 +16106,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2000ps2" cloneof="kof2000" romof="kof2000">
 		<description>The King of Fighters 2000 (Playstation 2 ver. , EGHT hack) [hack only enable in AES mode]</description>
@@ -15869,6 +16164,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2001h" cloneof="kof2001" romof="kof2001">
 		<description>The King of Fighters 2001 (NGH-2621)</description>
@@ -15926,6 +16222,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2001" romof="neogeo">
 		<description>The King of Fighters 2001 (NGM-262?)</description>
@@ -15983,6 +16280,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k1pls" cloneof="kof2001" romof="kof2001">
 		<description>The King of Fighters 2001 Plus (set 1, bootleg / hack) [Bootleg]</description>
@@ -16041,6 +16339,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k1pa" cloneof="kof2001" romof="kof2001">
 		<description>The King of Fighters 2001 Plus (set 2, bootleg / hack) [Bootleg]</description>
@@ -16099,6 +16398,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2002b" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 (bootleg) [Bootleg]</description>
@@ -16155,6 +16455,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2002" romof="neogeo">
 		<description>The King of Fighters 2002 (NGM-2650)(NGH-2650)</description>
@@ -16210,6 +16511,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k2ps2" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack) [Hack]</description>
@@ -16268,6 +16570,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k2mp" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 Magic Plus (bootleg) [Bootleg]</description>
@@ -16324,6 +16627,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k2mp2" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 Magic Plus II (bootleg) [Bootleg]</description>
@@ -16380,6 +16684,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k2pls" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 Plus (bootleg set 1) [Bootleg]</description>
@@ -16436,6 +16741,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k2pla" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 Plus (bootleg set 2) [Bootleg]</description>
@@ -16492,6 +16798,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k2plb" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 Plus (bootleg set 3) [Bootleg]</description>
@@ -16548,6 +16855,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k2plc" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 Super (bootleg) [Bootleg]</description>
@@ -16604,6 +16912,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k3bl" cloneof="kof2003" romof="kof2003">
 		<description>The King of Fighters 2003 (bootleg set 1) [Bootleg]</description>
@@ -16660,6 +16969,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k3bla" cloneof="kof2003" romof="kof2003">
 		<description>The King of Fighters 2003 (bootleg set 2) [Bootleg]</description>
@@ -16717,6 +17027,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2003h" cloneof="kof2003" romof="kof2003">
 		<description>The King of Fighters 2003 (NGH-2710)</description>
@@ -16773,6 +17084,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2003" romof="neogeo">
 		<description>The King of Fighters 2003 (NGM-2710)</description>
@@ -16829,6 +17141,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k3pl" cloneof="kof2003" romof="kof2003">
 		<description>The King of Fighters 2004 Plus / Hero (bootleg) [Bootleg]</description>
@@ -16886,6 +17199,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k3upl" cloneof="kof2003" romof="kof2003">
 		<description>The King of Fighters 2004 Ultra Plus (bootleg) [Bootleg]</description>
@@ -16941,6 +17255,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kof2k4se" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters Special Edition 2004 (bootleg) [Bootleg]</description>
@@ -16998,6 +17313,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="kf2k4pls" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters Special Edition 2004 Plus (bootleg) [Bootleg]</description>
@@ -17054,6 +17370,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lastbladh" cloneof="lastblad" romof="lastblad">
 		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGH-2340)</description>
@@ -17110,6 +17427,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lastblad" romof="neogeo">
 		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340)</description>
@@ -17166,6 +17484,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lastblada" cloneof="lastblad" romof="lastblad">
 		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340, alternate board)</description>
@@ -17224,6 +17543,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lastbladsp" cloneof="lastblad" romof="lastblad">
 		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)</description>
@@ -17281,6 +17601,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lastbld2eh" cloneof="lastbld2" romof="lastbld2">
 		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enhanced Hack)</description>
@@ -17337,6 +17658,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lastbld2" romof="neogeo">
 		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (NGM-2430)(NGH-2430)</description>
@@ -17393,6 +17715,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="lastsold" cloneof="lastblad" romof="lastblad">
 		<description>The Last Soldier (Korean release of The Last Blade)</description>
@@ -17449,6 +17772,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="superspy" romof="neogeo">
 		<description>The Super Spy (NGM-011)(NGH-011)</description>
@@ -17502,6 +17826,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="ssideki4" romof="neogeo">
 		<description>The Ultimate 11 - The SNK Football Championship / Tokuten Ou - Honoo no Libero</description>
@@ -17555,6 +17880,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="trally" romof="neogeo">
 		<description>Thrash Rally (ALM-003)(ALH-003)</description>
@@ -17608,6 +17934,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="timesupd" romof="neogeo">
 		<description>Time's Up Demo [Homebrew]</description>
@@ -17657,6 +17984,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="tophuntrh" cloneof="tophuntr" romof="tophuntr">
 		<description>Top Hunter - Roddy &amp; Cathy (NGH-046)</description>
@@ -17715,6 +18043,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="tophuntr" romof="neogeo">
 		<description>Top Hunter - Roddy &amp; Cathy (NGM-046)</description>
@@ -17773,6 +18102,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="tpgolf" romof="neogeo">
 		<description>Top Player's Golf (NGM-003)(NGH-003)</description>
@@ -17832,6 +18162,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="totc" romof="neogeo">
 		<description>Treasure of the Caribbean</description>
@@ -17882,6 +18213,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="twinspri" romof="neogeo">
 		<description>Twinkle Star Sprites</description>
@@ -17933,6 +18265,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="vliner53" cloneof="vliner" romof="vliner">
 		<description>V-Liner (v0.53)</description>
@@ -17980,6 +18313,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="vliner54" cloneof="vliner" romof="vliner">
 		<description>V-Liner (v0.54)</description>
@@ -18027,6 +18361,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="vliner6e" cloneof="vliner" romof="vliner">
 		<description>V-Liner (v0.6e)</description>
@@ -18074,6 +18409,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="vliner" romof="neogeo">
 		<description>V-Liner (v0.7a)</description>
@@ -18121,6 +18457,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="vliner7e" cloneof="vliner" romof="vliner">
 		<description>V-Liner (v0.7e)</description>
@@ -18168,6 +18505,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="viewpoin" romof="neogeo">
 		<description>Viewpoint</description>
@@ -18217,6 +18555,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="gowcaizr" romof="neogeo">
 		<description>Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer</description>
@@ -18273,6 +18612,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="wakuwak7" romof="neogeo">
 		<description>Waku Waku 7</description>
@@ -18327,6 +18667,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="wjammers" romof="neogeo">
 		<description>Windjammers / Flying Power Disc</description>
@@ -18380,6 +18721,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="wh1h" cloneof="wh1" romof="wh1">
 		<description>World Heroes (ALH-005)</description>
@@ -18432,6 +18774,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="wh1" romof="neogeo">
 		<description>World Heroes (ALM-005)</description>
@@ -18484,6 +18827,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="wh1ha" cloneof="wh1" romof="wh1">
 		<description>World Heroes (set 3)</description>
@@ -18536,6 +18880,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="wh2h" cloneof="wh2" romof="wh2">
 		<description>World Heroes 2 (ALH-006)</description>
@@ -18589,6 +18934,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="wh2" romof="neogeo">
 		<description>World Heroes 2 (ALM-006)(ALH-006)</description>
@@ -18642,6 +18988,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="wh2j" romof="neogeo">
 		<description>World Heroes 2 Jet (ADM-007)(ADH-007)</description>
@@ -18697,6 +19044,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="wh2ja" cloneof="wh2j" romof="wh2j">
 		<description>World Heroes 2 Jet (ADM-007)</description>
@@ -18748,6 +19096,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="whp" romof="neogeo">
 		<description>World Heroes Perfect</description>
@@ -18804,6 +19153,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="neoww2" romof="neogeo">
 		<description>WW2 Demo - Arcade Development Project [Homebrew]</description>
@@ -18852,6 +19202,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="zedblade" romof="neogeo">
 		<description>Zed Blade / Operation Ragnarok</description>
@@ -18904,6 +19255,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="zintrckb" romof="neogeo">
 		<description>Zintrick / Oshidashi Zentrix (hack / bootleg) [Bootleg]</description>
@@ -18952,6 +19304,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="zintrkcd" cloneof="zintrckb" romof="zintrckb">
 		<description>Zintrick / Oshidashi Zentrix (Neo CD conversion) [Hack]</description>
@@ -19000,6 +19353,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game name="zupapa" romof="neogeo">
 		<description>Zupapa!</description>
@@ -19047,6 +19401,7 @@
 		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
 	</game>
 	<game isbios="yes" name="neogeo">
 		<description>Neo Geo [BIOS only]</description>

@@ -24,6 +24,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="2010p" cloneof="2010" romof="2010">
 		<description>2010: The Graphic Action Game (Prototype v54)</description>
@@ -37,6 +38,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="2010" romof="coleco">
 		<description>2010: The Graphic Action Game</description>
@@ -50,6 +52,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="alcazar" romof="coleco">
 		<description>Alcazar: The Forgotten Fortress</description>
@@ -63,6 +66,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="alphazoo" romof="coleco">
 		<description>Alphabet Zoo</description>
@@ -74,6 +78,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="amazing" romof="coleco">
 		<description>Amazing Bumpman</description>
@@ -85,6 +90,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="antarct" romof="coleco">
 		<description>Antarctic Adventure</description>
@@ -96,6 +102,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="aquatacka" cloneof="aquatack" romof="aquatack">
 		<description>Aquattack (Alt)</description>
@@ -107,6 +114,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="aquatack" romof="coleco">
 		<description>Aquattack</description>
@@ -118,6 +126,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="artduel" romof="coleco">
 		<description>Artillery Duel</description>
@@ -129,6 +138,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="bcquest2ca" cloneof="bcquest2" romof="bcquest2">
 		<description>BC's Quest for Tires II: Grog's Revenge (Can)</description>
@@ -141,6 +151,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="bcquest2" romof="coleco">
 		<description>BC's Quest for Tires II: Grog's Revenge</description>
@@ -153,6 +164,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="bcquest" romof="coleco">
 		<description>BC's Quest for Tires</description>
@@ -164,6 +176,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="beamridr" romof="coleco">
 		<description>Beamrider</description>
@@ -175,6 +188,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="blockrun" romof="coleco">
 		<description>Blockade Runner</description>
@@ -186,6 +200,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="bdash" romof="coleco">
 		<description>Boulder Dash</description>
@@ -197,6 +212,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="boxxle" romof="coleco">
 		<description>Boxxle</description>
@@ -207,6 +223,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="brainstr" romof="coleco">
 		<description>Brain Strainers</description>
@@ -218,6 +235,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="buckrogsgm" romof="coleco">
 		<description>Buck Rogers SGM</description>
@@ -228,6 +246,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="buckrog" romof="coleco">
 		<description>Buck Rogers: Planet of Zoom</description>
@@ -240,6 +259,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="bnj" romof="coleco">
 		<description>Bump 'n' Jump</description>
@@ -252,6 +272,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="btimem" cloneof="btime" romof="btime">
 		<description>Burgertime (Prototype)</description>
@@ -263,6 +284,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="btime" romof="coleco">
 		<description>Burgertime</description>
@@ -274,6 +296,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="cabbshow" romof="coleco">
 		<description>Cabbage Patch Kids Picture Show</description>
@@ -287,6 +310,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="cabbagep1" cloneof="cabbage" romof="cabbage">
 		<description>Cabbage Patch Kids: Adventure in the Park (Prototype)</description>
@@ -298,6 +322,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="cabbagep2" cloneof="cabbage" romof="cabbage">
 		<description>Cabbage Patch Kids: Adventure in the Park (Prototype, Alt)</description>
@@ -309,6 +334,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="cabbage" romof="coleco">
 		<description>Cabbage Patch Kids: Adventure in the Park</description>
@@ -320,6 +346,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="campaign" romof="coleco">
 		<description>Campaign '84</description>
@@ -331,6 +358,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="carnival" romof="coleco">
 		<description>Carnival</description>
@@ -342,6 +370,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="castelo" romof="coleco">
 		<description>Castelo</description>
@@ -352,6 +381,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="cbsmon" romof="coleco">
 		<description>CBS Colecovision Monitor Test</description>
@@ -363,6 +393,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="centiped" romof="coleco">
 		<description>Centipede</description>
@@ -374,6 +405,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="choplift" romof="coleco">
 		<description>Choplifter!</description>
@@ -385,6 +417,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="chucknor" romof="coleco">
 		<description>Chuck Norris Superkicks</description>
@@ -396,6 +429,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="coldblood" romof="coleco">
 		<description>Cold Blood</description>
@@ -406,6 +440,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="cvjoytest" romof="coleco">
 		<description>ColecoVision Joystick Test</description>
@@ -416,6 +451,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="sgmtest" romof="coleco">
 		<description>ColecoVision SuperGame Module (SGM) Test</description>
@@ -426,6 +462,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="congo" romof="coleco">
 		<description>Congo Bongo</description>
@@ -438,6 +475,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="cavengera" cloneof="cavenger" romof="cavenger">
 		<description>Cosmic Avenger (Alt)</description>
@@ -449,6 +487,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="cavenger" romof="coleco">
 		<description>Cosmic Avenger</description>
@@ -460,6 +499,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="ccrisis" romof="coleco">
 		<description>Cosmic Crisis</description>
@@ -471,6 +511,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="dncfntsy" romof="coleco">
 		<description>Dance Fantasy</description>
@@ -482,6 +523,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="decathln" romof="coleco">
 		<description>Decathlon</description>
@@ -493,6 +535,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="defender" romof="coleco">
 		<description>Defender</description>
@@ -505,6 +548,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="destruct" romof="coleco">
 		<description>Destructor</description>
@@ -518,6 +562,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="digdug" romof="coleco">
 		<description>Dig Dug (Prototype)</description>
@@ -530,6 +575,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="digger" romof="coleco">
 		<description>Digger</description>
@@ -540,6 +586,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="dkonga" cloneof="dkong" romof="dkong">
 		<description>Donkey Kong (Earlier Version)</description>
@@ -552,6 +599,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="dkongjr" romof="coleco">
 		<description>Donkey Kong Junior</description>
@@ -563,6 +611,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="dkong" romof="coleco">
 		<description>Donkey Kong</description>
@@ -574,6 +623,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="drseuss" romof="coleco">
 		<description>Dr. Seuss's Fix-Up the Mix-Up Puzzler</description>
@@ -585,6 +635,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="dlair" cloneof="dlairsgm" romof="dlairsgm">
 		<description>Dragon's Lair (Prototype, 0416)</description>
@@ -597,6 +648,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="dlairsgm" romof="coleco">
 		<description>Dragon's Lair SGM</description>
@@ -607,6 +659,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="drgnfire" romof="coleco">
 		<description>DragonFire</description>
@@ -618,6 +671,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mindmstr" romof="coleco">
 		<description>Escape from the Mindmaster (Prototype)</description>
@@ -629,6 +683,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="evolutio" romof="coleco">
 		<description>Evolution</description>
@@ -640,6 +695,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="facemakr" romof="coleco">
 		<description>Facemaker</description>
@@ -651,6 +707,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="fallguy" romof="coleco">
 		<description>Fall Guy (Prototype)</description>
@@ -662,6 +719,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="fathom" romof="coleco">
 		<description>Fathom</description>
@@ -673,6 +731,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="finaltst" romof="coleco">
 		<description>Final Test Cartridge (Prototype)</description>
@@ -683,6 +742,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="flipslip" romof="coleco">
 		<description>Flipper Slipper</description>
@@ -694,6 +754,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="fortune" romof="coleco">
 		<description>Fortune Builder</description>
@@ -707,6 +768,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="fracfevr" romof="coleco">
 		<description>Fraction Fever</description>
@@ -718,6 +780,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="ffreddy" romof="coleco">
 		<description>Frantic Freddy</description>
@@ -729,6 +792,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="frenzya" cloneof="frenzy" romof="frenzy">
 		<description>Frenzy (Alt 1)</description>
@@ -741,6 +805,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="frenzya2" cloneof="frenzy" romof="frenzy">
 		<description>Frenzy (Alt 2)</description>
@@ -753,6 +818,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="frenzy" romof="coleco">
 		<description>Frenzy</description>
@@ -765,6 +831,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="frogger2" romof="coleco">
 		<description>Frogger II: Threedeep!</description>
@@ -776,6 +843,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="frogger" romof="coleco">
 		<description>Frogger</description>
@@ -787,6 +855,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="frontlina" cloneof="frontlin" romof="frontlin">
 		<description>Front Line (Alt)</description>
@@ -799,6 +868,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="frontlin" romof="coleco">
 		<description>Front Line</description>
@@ -811,6 +881,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="frostbite" romof="coleco">
 		<description>Frost Bite</description>
@@ -821,6 +892,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="galaxiana" cloneof="galaxian" romof="galaxian">
 		<description>Galaxian (Alt)</description>
@@ -834,6 +906,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="galaxian" romof="coleco">
 		<description>Galaxian</description>
@@ -847,6 +920,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="apshai" romof="coleco">
 		<description>Gateway to Apshai</description>
@@ -858,6 +932,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="gorf" romof="coleco">
 		<description>Gorf</description>
@@ -869,6 +944,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="gustbust" romof="coleco">
 		<description>Gust Buster</description>
@@ -880,6 +956,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="gyruss" romof="coleco">
 		<description>Gyruss</description>
@@ -891,6 +968,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="hero" romof="coleco">
 		<description>H.E.R.O.</description>
@@ -902,6 +980,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="illusion" romof="coleco">
 		<description>Illusions</description>
@@ -913,6 +992,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="onlyrock" romof="coleco">
 		<description>It's Only Rock 'n' Roll</description>
@@ -924,6 +1004,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="jbond" romof="coleco">
 		<description>James Bond 007</description>
@@ -935,6 +1016,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="joust" romof="coleco">
 		<description>Joust (Prototype)</description>
@@ -947,6 +1029,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="jukebox" romof="coleco">
 		<description>Juke Box</description>
@@ -958,6 +1041,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="jmpmanjra" cloneof="jmpmanjr" romof="jmpmanjr">
 		<description>Jumpman Junior (Alt)</description>
@@ -969,6 +1053,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="jmpmanjr" romof="coleco">
 		<description>Jumpman Junior</description>
@@ -980,6 +1065,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="jungleh" romof="coleco">
 		<description>Jungle Hunt</description>
@@ -992,6 +1078,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="kaboom" romof="coleco">
 		<description>Kaboom!</description>
@@ -1002,6 +1089,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="kubjpok" romof="coleco">
 		<description>Ken Uston Blackjack-Poker</description>
@@ -1013,6 +1101,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="keykaper" romof="coleco">
 		<description>Keystone Kapers</description>
@@ -1024,6 +1113,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="ladybug" romof="coleco">
 		<description>Lady Bug</description>
@@ -1035,6 +1125,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="leeper" romof="coleco">
 		<description>Learning with Leeper</description>
@@ -1046,6 +1137,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="linklogc" romof="coleco">
 		<description>Linking Logic</description>
@@ -1057,6 +1149,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="logiclvl" romof="coleco">
 		<description>Logic Levels</description>
@@ -1068,6 +1161,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="looping" romof="coleco">
 		<description>Looping</description>
@@ -1079,6 +1173,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mash" romof="coleco">
 		<description>M*A*S*H (Prototype)</description>
@@ -1090,6 +1185,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mecha8" romof="coleco">
 		<description>Mecha-8</description>
@@ -1100,6 +1196,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="memmanor" romof="coleco">
 		<description>Memory Manor</description>
@@ -1111,6 +1208,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="meteosho" romof="coleco">
 		<description>Meteoric Shower</description>
@@ -1122,6 +1220,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mine2049a" cloneof="mine2049" romof="mine2049">
 		<description>Miner 2049er (Alt)</description>
@@ -1134,6 +1233,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mine2049" romof="coleco">
 		<description>Miner 2049er</description>
@@ -1146,6 +1246,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="moduleman" romof="coleco">
 		<description>Module Man</description>
@@ -1156,6 +1257,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="monkey" romof="coleco">
 		<description>Monkey Academy</description>
@@ -1169,6 +1271,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="montezum" romof="coleco">
 		<description>Montezuma's Revenge</description>
@@ -1180,6 +1283,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="moonswpra" cloneof="moonswpr" romof="moonswpr">
 		<description>Moonsweeper (Alt)</description>
@@ -1191,6 +1295,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="moonswpr" romof="coleco">
 		<description>Moonsweeper</description>
@@ -1202,6 +1307,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mtcracera" cloneof="mtcracer" romof="mtcracer">
 		<description>Motocross Racer (Alt)</description>
@@ -1213,6 +1319,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mtcracer" romof="coleco">
 		<description>Motocross Racer</description>
@@ -1224,6 +1331,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mkinga" cloneof="mking" romof="mking">
 		<description>Mountain King (Alt)</description>
@@ -1235,6 +1343,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mking" romof="coleco">
 		<description>Mountain King</description>
@@ -1246,6 +1355,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mtrapa" cloneof="mtrap" romof="mtrap">
 		<description>Mousetrap (Alt)</description>
@@ -1257,6 +1367,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mtrap" romof="coleco">
 		<description>Mousetrap</description>
@@ -1268,6 +1379,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mrdoa" cloneof="mrdo" romof="mrdo">
 		<description>Mr. Do! (Alt)</description>
@@ -1280,6 +1392,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="docastle" romof="coleco">
 		<description>Mr. Do!'s Castle</description>
@@ -1291,6 +1404,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="mrdo" romof="coleco">
 		<description>Mr. Do!</description>
@@ -1303,6 +1417,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="musicbox" romof="coleco">
 		<description>Music Box (Demo)</description>
@@ -1315,6 +1430,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="novablst" romof="coleco">
 		<description>Nova Blast</description>
@@ -1326,6 +1442,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="numbump" cloneof="amazing" romof="amazing">
 		<description>Number Bumper</description>
@@ -1337,6 +1454,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="oilswella" cloneof="oilswell" romof="oilswell">
 		<description>Oil's Well (Alt)</description>
@@ -1348,6 +1466,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="oilswell" romof="coleco">
 		<description>Oil's Well</description>
@@ -1359,6 +1478,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="omegrace" romof="coleco">
 		<description>Omega Race</description>
@@ -1370,6 +1490,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="1on1" romof="coleco">
 		<description>One on One</description>
@@ -1382,6 +1503,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="orbit" romof="coleco">
 		<description>Orbit (Prototype)</description>
@@ -1392,6 +1514,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="pacman" romof="coleco">
 		<description>Pac-Man (Prototype)</description>
@@ -1403,6 +1526,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="pepper2" romof="coleco">
 		<description>Pepper II</description>
@@ -1414,6 +1538,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="pitfall2" romof="coleco">
 		<description>Pitfall II: Lost Caverns</description>
@@ -1425,6 +1550,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="pitfall" romof="coleco">
 		<description>Pitfall!</description>
@@ -1436,6 +1562,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="pitstopa" cloneof="pitstop" romof="pitstop">
 		<description>Pitstop (Alt)</description>
@@ -1447,6 +1574,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="pitstop" romof="coleco">
 		<description>Pitstop</description>
@@ -1458,6 +1586,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="popeyea" cloneof="popeye" romof="popeye">
 		<description>Popeye (Alt)</description>
@@ -1469,6 +1598,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="popeye" romof="coleco">
 		<description>Popeye</description>
@@ -1480,6 +1610,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="porkys" romof="coleco">
 		<description>Porky's (Prototype)</description>
@@ -1491,6 +1622,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="power" romof="coleco">
 		<description>Power Lords: Quest for Volcan (Prototype)</description>
@@ -1504,6 +1636,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="pquest" romof="coleco">
 		<description>Princess Quest</description>
@@ -1514,6 +1647,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="qberta" cloneof="qbert" romof="qbert">
 		<description>Q*bert (Alt)</description>
@@ -1524,6 +1658,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="qbertqub" romof="coleco">
 		<description>Q*bert Qubes</description>
@@ -1535,6 +1670,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="qbert" romof="coleco">
 		<description>Q*bert</description>
@@ -1545,6 +1681,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="quintanaa" cloneof="quintana" romof="quintana">
 		<description>Quest for Quintana Roo (Alt)</description>
@@ -1556,6 +1693,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="quintana" romof="coleco">
 		<description>Quest for Quintana Roo</description>
@@ -1567,6 +1705,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="questgc" romof="coleco">
 		<description>Quest for the Golden Chalice</description>
@@ -1577,6 +1716,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="riveraid" romof="coleco">
 		<description>River Raid</description>
@@ -1588,6 +1728,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="robinha" cloneof="robinh" romof="robinh">
 		<description>Robin Hood (Alt)</description>
@@ -1599,6 +1740,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="robinh" romof="coleco">
 		<description>Robin Hood</description>
@@ -1610,6 +1752,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="rocnrope" romof="coleco">
 		<description>Roc 'n Rope</description>
@@ -1622,6 +1765,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="rockbolta" cloneof="rockbolt" romof="rockbolt">
 		<description>Rock 'n Bolt (Alt)</description>
@@ -1633,6 +1777,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="rockbolt" romof="coleco">
 		<description>Rock 'n Bolt</description>
@@ -1644,6 +1789,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="rocky" romof="coleco">
 		<description>Rocky: Super Action Boxing</description>
@@ -1656,6 +1802,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="rollover" romof="coleco">
 		<description>Rolloverture</description>
@@ -1667,6 +1814,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="sammylfa" cloneof="sammylf" romof="sammylf">
 		<description>Sammy Lightfoot (Alt)</description>
@@ -1678,6 +1826,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="sammylf" romof="coleco">
 		<description>Sammy Lightfoot</description>
@@ -1689,6 +1838,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="secalpha" romof="coleco">
 		<description>Sector Alpha</description>
@@ -1701,6 +1851,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="sewersam" romof="coleco">
 		<description>Sewer Sam</description>
@@ -1713,6 +1864,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="lancelot" romof="coleco">
 		<description>Sir Lancelot</description>
@@ -1724,6 +1876,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="skiing" romof="coleco">
 		<description>Skiing</description>
@@ -1735,6 +1888,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="danslither" cloneof="slither" romof="slither">
 		<description>Slither (Joystick Version)</description>
@@ -1745,6 +1899,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="slither" romof="coleco">
 		<description>Slither</description>
@@ -1756,6 +1911,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="slurpy" romof="coleco">
 		<description>Slurpy</description>
@@ -1767,6 +1923,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="smurfpnt" romof="coleco">
 		<description>Smurf Paint 'n' Play Workshop</description>
@@ -1780,6 +1937,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="smurfply" romof="coleco">
 		<description>Smurf Play and Learn (Prototype)</description>
@@ -1791,6 +1949,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="smurfa" cloneof="smurf" romof="smurf">
 		<description>Smurf Rescue in Gargamel's Castle (Alt)</description>
@@ -1802,6 +1961,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="smurf" romof="coleco">
 		<description>Smurf Rescue in Gargamel's Castle</description>
@@ -1813,6 +1973,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="spacfury" romof="coleco">
 		<description>Space Fury</description>
@@ -1824,6 +1985,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="panic" romof="coleco">
 		<description>Space Panic</description>
@@ -1835,6 +1997,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="spectron" romof="coleco">
 		<description>Spectron</description>
@@ -1846,6 +2009,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="spyhuntp1" cloneof="spyhunt" romof="spyhunt">
 		<description>Spy Hunter (Prototype, v13)</description>
@@ -1859,6 +2023,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="spyhuntp" cloneof="spyhunt" romof="spyhunt">
 		<description>Spy Hunter (Prototype, v22)</description>
@@ -1872,6 +2037,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="spyhunt" romof="coleco">
 		<description>Spy Hunter</description>
@@ -1885,6 +2051,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="squishem" romof="coleco">
 		<description>Squish 'em Sam!</description>
@@ -1896,6 +2063,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="starfortress" romof="coleco">
 		<description>Star Fortress</description>
@@ -1906,6 +2074,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="startrek" romof="coleco">
 		<description>Star Trek: Strategic Operations Simulator </description>
@@ -1918,6 +2087,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="starwars" romof="coleco">
 		<description>Star Wars: The Arcade Game</description>
@@ -1929,6 +2099,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="steam" romof="coleco">
 		<description>Steamroller (Prototype)</description>
@@ -1940,6 +2111,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="strikeit" romof="coleco">
 		<description>Strike It!</description>
@@ -1951,6 +2123,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="subroc" romof="coleco">
 		<description>Subroc</description>
@@ -1963,6 +2136,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="sabaseb" romof="coleco">
 		<description>Super Action Baseball</description>
@@ -1976,6 +2150,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="saftsocc" cloneof="sasoccer" romof="sasoccer">
 		<description>Super Action Football (Super Action Soccer clone)</description>
@@ -1989,6 +2164,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="safootb" romof="coleco">
 		<description>Super Action Football</description>
@@ -2002,6 +2178,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="sasoccer" romof="coleco">
 		<description>Super Action Soccer</description>
@@ -2015,6 +2192,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="scobraa" cloneof="scobra" romof="scobra">
 		<description>Super Cobra (Alt)</description>
@@ -2025,6 +2203,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="scobra" romof="coleco">
 		<description>Super Cobra</description>
@@ -2035,6 +2214,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="suprtest" romof="coleco">
 		<description>Super Controller Test Cartridge</description>
@@ -2045,6 +2225,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="sprcrossa" cloneof="sprcross" romof="sprcross">
 		<description>Super Cross Force (Alt)</description>
@@ -2056,6 +2237,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="sprcross" romof="coleco">
 		<description>Super Cross Force</description>
@@ -2067,6 +2249,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="superdk" romof="coleco">
 		<description>Super DK! (Prototype)</description>
@@ -2080,6 +2263,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="suprdkjr" romof="coleco">
 		<description>Super DK! Junior (Prototype)</description>
@@ -2093,6 +2277,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="ssketch" romof="coleco">
 		<description>Super Sketch</description>
@@ -2103,6 +2288,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="sword" romof="coleco">
 		<description>Sword and Sorcerer (Prototype)</description>
@@ -2114,6 +2300,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="tankwars" romof="coleco">
 		<description>Tank Wars</description>
@@ -2125,6 +2312,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="tapper" romof="coleco">
 		<description>Tapper</description>
@@ -2138,6 +2326,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="tarzan" romof="coleco">
 		<description>Tarzan: From out of the Jungle</description>
@@ -2150,6 +2339,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="telly" romof="coleco">
 		<description>Telly Turtle</description>
@@ -2161,6 +2351,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="bbears" romof="coleco">
 		<description>The Berenstain Bears (Prototype)</description>
@@ -2171,6 +2362,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="dambust" romof="coleco">
 		<description>The Dam Busters</description>
@@ -2184,6 +2376,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="hazzard" romof="coleco">
 		<description>The Dukes of Hazzard</description>
@@ -2197,6 +2390,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="yolk" romof="coleco">
 		<description>The Yolks on You (Prototype)</description>
@@ -2208,6 +2402,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="threshld" romof="coleco">
 		<description>Threshold</description>
@@ -2219,6 +2414,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="timeplt" romof="coleco">
 		<description>Time Pilot</description>
@@ -2230,6 +2426,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="tomarc" romof="coleco">
 		<description>Tomarc the Barbarian</description>
@@ -2241,6 +2438,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="ttennis" romof="coleco">
 		<description>Tournament Tennis</description>
@@ -2254,6 +2452,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="tunnels" romof="coleco">
 		<description>Tunnels and Trolls (Demo)</description>
@@ -2267,6 +2466,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="turbo" romof="coleco">
 		<description>Turbo</description>
@@ -2278,6 +2478,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="tutankhma" cloneof="tutankhm" romof="tutankhm">
 		<description>Tutankham (Alt)</description>
@@ -2289,6 +2490,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="tutankhm" romof="coleco">
 		<description>Tutankham</description>
@@ -2300,6 +2502,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="upndown" romof="coleco">
 		<description>Up'n Down</description>
@@ -2311,6 +2514,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="venture" romof="coleco">
 		<description>Venture</description>
@@ -2322,6 +2526,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="victory" romof="coleco">
 		<description>Victory</description>
@@ -2334,6 +2539,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="hustler" romof="coleco">
 		<description>Video Hustler (Prototype)</description>
@@ -2344,6 +2550,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="hustler1" cloneof="hustler" romof="hustler">
 		<description>Video Hustler (Prototype, 19840727)</description>
@@ -2354,6 +2561,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="wargamesp" cloneof="wargames" romof="wargames">
 		<description>War Games (Prototype, 0417)</description>
@@ -2366,6 +2574,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="wargames" romof="coleco">
 		<description>War Games</description>
@@ -2378,6 +2587,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="warroom" romof="coleco">
 		<description>War Room</description>
@@ -2391,6 +2601,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="wingwar" romof="coleco">
 		<description>Wing War</description>
@@ -2402,6 +2613,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="wizmath" romof="coleco">
 		<description>Wizard of Id's Wizmath</description>
@@ -2413,6 +2625,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="wordfeud" romof="coleco">
 		<description>Word Feud</description>
@@ -2424,6 +2637,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="zaxxonsgm" romof="coleco">
 		<description>Zaxxon Super Game</description>
@@ -2434,6 +2648,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="zaxxon" romof="coleco">
 		<description>Zaxxon</description>
@@ -2446,6 +2661,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game name="zenji" romof="coleco">
 		<description>Zenji</description>
@@ -2457,6 +2673,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
 	</game>
 	<game isbios="yes" name="coleco">
 		<description>ColecoVision System BIOS [BIOS only]</description>

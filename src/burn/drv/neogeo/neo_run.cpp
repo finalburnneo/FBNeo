@@ -208,7 +208,6 @@ static UINT32 nSoundStatus;
 static INT32 nSoundPrevReply;
 #endif
 
-INT32 ssideki2mode = 0;
 INT32 s1945pmode = 0;
 INT32 fatfury2mode = 0; // fatfury2 protection active (fatfury2, ssideki)
 INT32 vlinermode = 0;
@@ -1841,7 +1840,7 @@ static inline void NeoCDIRQUpdate(UINT8 byteValue)
 			return;
 		}
 
-		if (!bNeoCDIRQEnabled) return;
+		//if (!bNeoCDIRQEnabled) return;
 
 		if ((nIRQAcknowledge & 0x08) == 0) {
 			nNeoCDIRQVector = 0x5c / 4;
@@ -2322,7 +2321,7 @@ static void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 #endif
 
 				if (nIRQCycles < nCyclesSegment) {
-					//SekRunAdjust(nIRQCycles - nCyclesSegment);
+					SekRunAdjust(nIRQCycles - nCyclesSegment);
 				}
 			}
 
@@ -2353,22 +2352,13 @@ static void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 #endif
 
 			if (nIRQControl & 0x20) {
+				// when implimented incorrectly:
+				//   turfmast: pixels glitch in the water
+				//   ssideki2: turf glitches like maddness
 
-#if 0
-//				nIRQCycles = SekTotalCycles() - 64 + NeoConvertIRQPosition(nIRQOffset);
-				nIRQCycles = SekTotalCycles() + NeoConvertIRQPosition(nIRQOffset);
-#else
-				// Turfmast uses this to set the timing of the raster interrupts. Using the code below,
-				// all raster effects in turfmast are correctly aligned and exhibit no flicker.
-				// (this sets the offset of the IRQ to the start of the current scanline instead of the actual beam position)
+				// note: not sure about the "+ 8", but it's needed for turfmast (otherwise flickery pixels)
 
-				// ssideki2 has some problems with this
-				nIRQCycles = SekCurrentScanline() * nSekCyclesScanline + NeoConvertIRQPosition(nIRQOffset + 8);
-
-				if (ssideki2mode) // kludge for ssideki2
-					nIRQCycles = SekTotalCycles() + NeoConvertIRQPosition(nIRQOffset);
-//				bprintf(PRINT_NORMAL, _T("   %i - %i\n"), SekCurrentScanline(), SekTotalCycles() % nSekCyclesScanline);
-#endif
+				nIRQCycles = SekTotalCycles() + NeoConvertIRQPosition(nIRQOffset + 8);
 
 #if 0 || defined LOG_IRQ
 				bprintf(PRINT_NORMAL, _T("    IRQ Line -> %3i (at line %3i, relative).\n"), nIRQCycles / nSekCyclesScanline, SekCurrentScanline());
@@ -2378,7 +2368,7 @@ static void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 					nIRQCycles = NO_IRQ_PENDING;
 				}
 				if (nIRQCycles < nCyclesSegment) {
-					//SekRunAdjust(nIRQCycles - nCyclesSegment);
+					SekRunAdjust(nIRQCycles - nCyclesSegment);
 				}
 			}
 
@@ -2570,8 +2560,14 @@ static char* LC8951InitTransfer()
 		return NULL;
 	}
 	if (((LC8951RegistersW[5] << 8) | LC8951RegistersW[4]) + (NeoCDDMACount << 1) > 2352) {
-		bprintf(PRINT_ERROR, _T("    DMA transfer exceeds current sector in LC8951 external buffer\n"));
-		return NULL;
+		if (SekReadWord(0x108) == 0x044) { // aof bonus round fix (aof bug 1/2)
+			bprintf(0, _T("NeoGeoCD: aof-bonus round patch. dmacnt %X\n"), NeoCDDMACount);
+			SekWriteLong(0x10FEFC, 0x800);
+			NeoCDDMACount = 0x400;
+		} else {
+			bprintf(PRINT_ERROR, _T("    DMA transfer exceeds current sector in LC8951 external buffer\n"));
+			return NULL;
+		}
 	}
 
 	return NeoCDSectorData + 12 + ((LC8951RegistersW[5] << 8) | LC8951RegistersW[4]);
@@ -2750,8 +2746,36 @@ static void NeoCDProcessCommand()
 			 }
 			break;
 
-		case 3: {
+		case 3: { // play (audio) / start read (data)
+			NeoCDSectorLBA  = NeoCDCommsCommandFIFO[2] * (10 * CD_FRAMES_MINUTE);
+			NeoCDSectorLBA += NeoCDCommsCommandFIFO[3] * ( 1 * CD_FRAMES_MINUTE);
+			NeoCDSectorLBA += NeoCDCommsCommandFIFO[4] * (10 * CD_FRAMES_SECOND);
+			NeoCDSectorLBA += NeoCDCommsCommandFIFO[5] * ( 1 * CD_FRAMES_SECOND);
+			NeoCDSectorLBA += NeoCDCommsCommandFIFO[6] * (10                   );
+			NeoCDSectorLBA += NeoCDCommsCommandFIFO[7] * ( 1                   );
 
+			CDEmuPlay((NeoCDCommsCommandFIFO[2] * 16) + NeoCDCommsCommandFIFO[3], (NeoCDCommsCommandFIFO[4] * 16) + NeoCDCommsCommandFIFO[5], (NeoCDCommsCommandFIFO[6] * 16) + NeoCDCommsCommandFIFO[7]);
+
+			// aof has a bug that happens before the bonus stage. (aof bug 2/2)
+			// depending on the buttons pressed during the motorcycle cut-scene
+			// (or just randomness) it will:
+			// make bad dma request (99.9% of the time)
+			// load bad values into the lc8951 (buttons pressed)
+			// Here we make a little fix to the registers just incase... -dink july.1.2019
+
+			if (CDEmuGetStatus() != playing) { // its not audio
+				bprintf(0, _T("         - data read\n"));
+				LC8951RegistersW[10] |= 4; // data mode
+				CDEmuStartRead();
+			} else {
+				LC8951RegistersW[10] &= ~4; // audio mode
+			}
+
+			NeoCDAssyStatus = 1;
+			bNeoCDLoadSector = true;
+			break;
+
+#if 0
 			if (LC8951RegistersW[10] & 4) {
 
 				if (CDEmuGetStatus() == playing) {
@@ -2780,6 +2804,7 @@ static void NeoCDProcessCommand()
 			bNeoCDLoadSector = true;
 
 			break;
+#endif
 		}
 		case 4:
 //			bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
@@ -4429,7 +4454,6 @@ INT32 NeoExit()
 	// release the NeoGeo CD information object if needed
 	NeoCDInfo_Exit();
 
-	ssideki2mode = 0;
 	s1945pmode = 0;
 	fatfury2mode = 0;
 	vlinermode = 0;

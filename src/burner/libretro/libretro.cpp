@@ -1238,6 +1238,10 @@ static bool retro_load_game_common()
 		if (BurnStateLoad(g_autofs_path, 0, NULL) == 0)
 			log_cb(RETRO_LOG_INFO, "[FBNEO] EEPROM succesfully loaded from %s\n", g_autofs_path);
 
+		if (BurnDrvGetTextA(DRV_COMMENT) && strlen(BurnDrvGetTextA(DRV_COMMENT)) > 0) {
+			log_cb(RETRO_LOG_WARN, "[FBNEO] %s\n", BurnDrvGetTextA(DRV_COMMENT));
+		}
+
 		// Initializing display, autorotate if needed
 		BurnDrvGetFullSize(&nGameWidth, &nGameHeight);
 		SetRotation();

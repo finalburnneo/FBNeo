@@ -77,7 +77,8 @@ struct BurnDriver {
 
 // burn.cpp
 INT32 BurnSetRefreshRate(double dRefreshRate);
-INT32 BurnByteswap(UINT8* pm,INT32 nLen);
+INT32 BurnByteswap(UINT8* pMem, INT32 nLen);
+void BurnNibbleExpand(UINT8 *source, UINT8 *dst, INT32 length, INT32 swap, UINT8 nxor);
 INT32 BurnClearScreen();
 
 // load.cpp

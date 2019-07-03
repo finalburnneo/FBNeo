@@ -1611,12 +1611,9 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 
 		// Don't map neogeo select button anywhere
 		// See https://neo-source.com/index.php?topic=3490.0
+		// 2019-07-03 : actually, map it to L3, it allows access to a menu in last blade training mode
 		if (strncmp("select", szb, 6) == 0 && is_neogeo_game)
-		{
-			pgi->nInput = GIT_SWITCH;
-			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
-			return 0;
-		}
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L3, description);
 
 		// Don't map volume buttons
 		if (strncmp("Volume", description, 6) == 0)

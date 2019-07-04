@@ -616,7 +616,15 @@ void SekNewFrame()
 		nSekCycles[i] = 0;
 	}
 
-	nSekCyclesToDo = c68k[nSekActive].cycles = 0;
+#ifdef EMU_C68K
+	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
+		nSekCyclesToDo = c68k[nSekActive].cycles = 0;
+	} else {
+#endif
+		nSekCyclesToDo = m68k_ICount = 0;
+#ifdef EMU_C68K
+	}
+#endif
 	nSekCyclesTotal = 0;
 }
 

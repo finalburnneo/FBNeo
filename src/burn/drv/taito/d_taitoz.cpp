@@ -3571,9 +3571,9 @@ void __fastcall Bshark68K2WriteWord(UINT32 a, UINT16 d)
 static UINT8 ChasehqInputBypassRead()
 {
 	UINT8 Port = TC0220IOCPortRead();
-	
-	INT32 Steer = (TaitoAnalogPort0 >> 4);
-	
+
+	INT32 Steer = 0xFF80 + ProcessAnalog(TaitoAnalogPort0, 0, 1, 0x20, 0xe0);
+
 	switch (Port) {
 		case 0x08:
 		case 0x09:

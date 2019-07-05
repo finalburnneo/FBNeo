@@ -1186,7 +1186,7 @@ STD_ROM_FN(ringking)
 
 struct BurnDriver BurnDrvRingking = {
 	"ringking", "kingofb", NULL, NULL, "1985",
-	"Ring King (US, Wood Place Inc.)\0", NULL, "Wood Place Inc.", "Miscellaneous",
+	"Ring King (US set 1)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringkingRomInfo, ringkingRomName, NULL, NULL, NULL, NULL, RingkingInputInfo, RingkingDIPInfo,

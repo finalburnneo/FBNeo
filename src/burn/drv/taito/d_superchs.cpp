@@ -13,7 +13,6 @@
 #include "taito.h"
 #include "taito_ic.h"
 #include "eeprom.h"
-//#include "es5506.h"
 #include "burn_shift.h"
 
 struct SpriteEntry {
@@ -32,7 +31,6 @@ static struct SpriteEntry *SpriteList;
 
 static UINT8 SuperchsCoinWord;
 static UINT16 SuperchsCpuACtrl;
-static UINT8 SuperchsSteer = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo SuperchsInputList[] =
@@ -41,12 +39,11 @@ static struct BurnInputInfo SuperchsInputList[] =
 	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort1 + 7, "p1 start"  },
 	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort2 + 6, "p2 coin"   },
 
-	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis"      ),
+	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0  , "p1 x-axis" ),
 	{"P1 Accelerate"     , BIT_DIGITAL   , TaitoInputPort3 + 0, "p1 fire 1" },
 	{"P1 Fire 2 (Brake)" , BIT_DIGITAL   , TaitoInputPort1 + 6, "p1 fire 2" },
 	{"P1 Fire 3 (Nitro)" , BIT_DIGITAL   , TaitoInputPort1 + 4, "p1 fire 3" },
 	{"P1 Fire 4 (Shift)" , BIT_DIGITAL   , TaitoInputPort1 + 5, "p1 fire 4" },
-	{"P1 Fire 5 (Brake?)", BIT_DIGITAL   , TaitoInputPort1 + 0, "p1 fire 5" },
 
 	{"Reset"             , BIT_DIGITAL   , &TaitoReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TaitoInputPort2 + 5, "service"   },
@@ -246,7 +243,6 @@ static INT32 SuperchsDoReset()
 
 	SuperchsCoinWord = 0;
 	SuperchsCpuACtrl = 0;
-	SuperchsSteer = 0;
 
 	BurnShiftReset();
 
@@ -255,7 +251,7 @@ static INT32 SuperchsDoReset()
 	return 0;
 }
 
-UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
+static UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x300000: {
@@ -263,7 +259,7 @@ UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
 		}
 
 		case 0x300001: {
-			return TaitoInput[2] | TaitoDip[0];
+			return TaitoInput[2];
 		}
 
 		case 0x300002: {
@@ -279,12 +275,7 @@ UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
 		}
 
 		case 0x340000: {
-			SuperchsSteer = (0xff - (TaitoAnalogPort0 >> 4)) + 0x80; // Inverted.
-
-			if (SuperchsSteer < 0x20) SuperchsSteer = 0x20;
-			if (SuperchsSteer > 0xe0) SuperchsSteer = 0xe0;
-
-			return SuperchsSteer;
+			return ProcessAnalog(TaitoAnalogPort0, 1, 1, 0x20, 0xe0);
 		}
 
 		case 0x340001: {
@@ -308,7 +299,7 @@ UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
 	return 0xff;
 }
 
-void __fastcall Superchs68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Superchs68K1WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x300000: {
@@ -354,7 +345,7 @@ void __fastcall Superchs68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Superchs68K1ReadWord(UINT32 a)
+static UINT16 __fastcall Superchs68K1ReadWord(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -365,7 +356,7 @@ UINT16 __fastcall Superchs68K1ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Superchs68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Superchs68K1WriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x140000 && a <= 0x141fff) {
 		UINT16 *Ram = (UINT16*)TaitoSpriteRam;
@@ -398,7 +389,7 @@ void __fastcall Superchs68K1WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT32 __fastcall Superchs68K1ReadLong(UINT32 a)
+static UINT32 __fastcall Superchs68K1ReadLong(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -409,7 +400,7 @@ UINT32 __fastcall Superchs68K1ReadLong(UINT32 a)
 	return 0;
 }
 
-void __fastcall Superchs68K1WriteLong(UINT32 a, UINT32 d)
+static void __fastcall Superchs68K1WriteLong(UINT32 a, UINT32 d)
 {
 	if (a >= 0x140000 && a <= 0x141fff) {
 		UINT16 *Ram = (UINT16*)TaitoSpriteRam;
@@ -427,7 +418,7 @@ void __fastcall Superchs68K1WriteLong(UINT32 a, UINT32 d)
 	}
 }
 
-UINT8 __fastcall Superchs68K2ReadByte(UINT32 a)
+static UINT8 __fastcall Superchs68K2ReadByte(UINT32 a)
 {
 	if (a >= 0x800000 && a <= 0x80ffff) {
 		INT32 Offset = (a & 0xffff);
@@ -445,7 +436,7 @@ UINT8 __fastcall Superchs68K2ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Superchs68K2WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Superchs68K2WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		default: {
@@ -454,7 +445,7 @@ void __fastcall Superchs68K2WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Superchs68K2ReadWord(UINT32 a)
+static UINT16 __fastcall Superchs68K2ReadWord(UINT32 a)
 {
 	if (a >= 0x800000 && a <= 0x80ffff) {
 		INT32 Offset = (a & 0xffff);
@@ -472,7 +463,7 @@ UINT16 __fastcall Superchs68K2ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Superchs68K2WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Superchs68K2WriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x800000 && a <= 0x80ffff) {
 		INT32 Offset = (a & 0xffff);
@@ -601,6 +592,7 @@ static INT32 SuperchsInit()
 	SekClose();
 
 	TaitoF3SoundInit(2);
+	TaitoF3SoundIRQConfig(1);
 	TaitoF3VolumeOffset = 0.40;
 
 	EEPROMInit(&superchs_eeprom_interface);
@@ -613,7 +605,7 @@ static INT32 SuperchsInit()
 	return 0;
 }
 
-static int SuperchsExit()
+static INT32 SuperchsExit()
 {
 	TaitoExit();
 	TaitoF3SoundExit();
@@ -621,7 +613,6 @@ static int SuperchsExit()
 
 	SuperchsCoinWord = 0;
 	SuperchsCpuACtrl = 0;
-	SuperchsSteer = 0;
 
 	return 0;
 }
@@ -786,7 +777,7 @@ static INT32 SuperchsDraw()
 
 static INT32 SuperchsFrame()
 {
-	INT32 nInterleave = 64;
+	INT32 nInterleave = 256;
 
 	if (TaitoReset) SuperchsDoReset();
 
@@ -853,7 +844,6 @@ static INT32 SuperchsScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(SuperchsCoinWord);
 		SCAN_VAR(SuperchsCpuACtrl);
-		SCAN_VAR(SuperchsSteer);
 	}
 
 	return 0;

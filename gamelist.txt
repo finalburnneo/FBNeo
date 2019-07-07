@@ -7938,9 +7938,9 @@ This list contains all games supported by FinalBurn Neo.
 | ridheroh	|  	| Riding Hero (set 2)					| ridhero	| 1990	| SNK		| Neo Geo MVS	| 					|
 | ringfgt	|  	| Ring Fighter (set 1)					| vsgongf	| 1984	| Kaneko (Taito | Miscellaneous	| 					|
 | ringfgt2	|  	| Ring Fighter (set 2)					| vsgongf	| 1984	| Kaneko (Taito | Miscellaneous	| 					|
+| ringking	|  	| Ring King (US set 1)					| kingofb	| 1985	| Wood Place Inc| Miscellaneous	| 					|
 | ringking2	|  	| Ring King (US set 2)					| kingofb	| 1985	| Wood Place Inc| Miscellaneous	| 					|
 | ringking3	|  	| Ring King (US set 3)					| kingofb	| 1985	| Wood Place Inc| Miscellaneous	| 					|
-| ringking	|  	| Ring King (US, Wood Place Inc.)			| kingofb	| 1985	| Wood Place Inc| Miscellaneous	| 					|
 | ringkingw	|  	| Ring King (US, Wood Place Inc.)			| kingofb	| 1985	| Wood Place Inc| Miscellaneous	| 					|
 | ringohja	|  	| Ring no Ohja (Japan 2 Players ver. N)			| mainevt	| 1988	| Konami	| GX799		| 					|
 | ringdesta	|  	| Ring of Destruction - slammasters II (940831 Asia)	| ringdest	| 1994	| Capcom	| CPS2		| 					|
@@ -8980,7 +8980,7 @@ This list contains all games supported by FinalBurn Neo.
 | spacedxo	|  	| Space Invaders DX (Japan, v2.0)			| spacedx	| 1994	| Taito Corporat| Taito B System| 					|
 | spacedxj	|  	| Space Invaders DX (Japan, v2.1)			| spacedx	| 1994	| Taito Corporat| Taito B System| 					|
 | spacedx	|  	| Space Invaders DX (US, v2.1)				| 		| 1994	| Taito Corporat| Taito B System| 					|
-| spcinvdj	|  	| Space Invaders DX (Ver 2.6J 1994/09/14) (F3 Version)	| spacedx	| 1994	| Taito Corporat| Taito F3 Syste| 					|
+| spcinvdj	|  	| Space Invaders DX (Ver 2.6J 1994/09/14) (F3 Version)	| spacedx	| 1994	| Taito Corporat| Taito F3 Syste| Graphics issues in Cellophane mode - u|
 | galap1	|  	| Space Invaders Galactica (galaxiaj hack)		| galaxian	| 1979	| hack		| Galaxian	| 					|
 | sinvasnb	|  	| Space Invasion (bootleg)				| commando	| 1985	| bootleg	| Miscellaneous	| 					|
 | sinvasn	|  	| Space Invasion (Europe)				| commando	| 1985	| Capcom	| Miscellaneous	| 					|

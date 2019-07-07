@@ -8114,9 +8114,9 @@ DRV		BurnDrvRidhero;
 DRV		BurnDrvRidheroh;
 DRV		BurnDrvRingfgt;
 DRV		BurnDrvRingfgt2;
+DRV		BurnDrvRingking;
 DRV		BurnDrvRingking2;
 DRV		BurnDrvRingking3;
-DRV		BurnDrvRingking;
 DRV		BurnDrvRingkingw;
 DRV		BurnDrvRingohja;
 DRV		BurnDrvCpsRingdesta;
@@ -20510,9 +20510,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRidheroh,			// Riding Hero (set 2)
 	&BurnDrvRingfgt,			// Ring Fighter (set 1)
 	&BurnDrvRingfgt2,			// Ring Fighter (set 2)
+	&BurnDrvRingking,			// Ring King (US set 1)
 	&BurnDrvRingking2,			// Ring King (US set 2)
 	&BurnDrvRingking3,			// Ring King (US set 3)
-	&BurnDrvRingking,			// Ring King (US, Wood Place Inc.)
 	&BurnDrvRingkingw,			// Ring King (US, Wood Place Inc.)
 	&BurnDrvRingohja,			// Ring no Ohja (Japan 2 Players ver. N)
 	&BurnDrvCpsRingdesta,		// Ring of Destruction - slammasters II (940831 Asia)

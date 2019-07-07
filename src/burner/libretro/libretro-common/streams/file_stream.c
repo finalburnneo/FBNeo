@@ -221,6 +221,9 @@ int filestream_scanf(RFILE *stream, const char* format, ...)
    int        ret       = 0;
    int64_t maxlen       = filestream_read(stream, buf, sizeof(buf)-1);
 
+   if (maxlen <= 0)
+      return EOF;
+
    buf[maxlen] = '\0';
 
    va_start(args, format);
@@ -608,4 +611,9 @@ char *filestream_getline(RFILE *stream)
 
    newline[idx]      = '\0';
    return newline;
+}
+
+const libretro_vfs_implementation_file* filestream_get_vfs_handle(RFILE *stream)
+{
+   return (const libretro_vfs_implementation_file*)stream->hfile;
 }

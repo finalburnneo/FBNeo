@@ -326,7 +326,7 @@
 <li>Hooked-up / ported Z80 CTC and PIO chip emulation for Senjyo and MCR [dink]</li>
 <li>Fixed erratic coin inputs with some PGM games [dink]</li>
 <li>Sync romsets with MAME 0.208 [Barry]</li>
-<li>Add handy BurnDump(fn, buf, bufsize); to debug builds for driver-dev [dink]</li>
+<li>Add handy BurnDump(fn, buf, bufsize); &amp; BurnDumpLoad(fn, buf, bufsize); to debug builds for driver-dev [dink]</li>
 <li>Sync romsets with MAME 0.209 [barbudreadmon]</li>
 <li>IPS: fix UI bugs, support patches which grow the romsize on Megadrive [dink]</li>
 <li>Added Enhanced versions of Super Hangon and Outrun v2.0.2 [dink]</li>
@@ -370,7 +370,21 @@
 <li>dink vs. barbudreadmon: "Super-Massive Memory Hole" aka address sanitized FBN [dink, barbudreadmon]</li>
 <li>Speed up rom scanning [dink]</li>
 <li>Generic Tilemaps: fix flipping and clipping and add priority OR mask [iq_132, dink]</li>
-<li>Add the multi-button macros for Neo Geo CD [dink]</li>
+<li>Add the Neo Geo multi-button macros for Neo Geo CD [dink]</li>
+<li>Reduce input lag for most CPS1 games (sf2, etc) [dink, barbudreadmon]</li>
+<li>Mark Michael Jackson's Moonwalker on System18 w/imperfect graphics (sprite/tmap pri system needs rewrite) [dink]</li>
+<li>Fix inputs for wofch and wofchdx [barbudreadmon]</li>
+<li>Sync romsets with MAME .211 [barbudreadmon]</li>
+<li>Improve input recordings with CPS1 &amp; CPS2 games [dink]</li>
+<li>Fix audio issue (swapped pcm l/r channels) in Konami's Xexex [dink]</li>
+<li>Fix music in Sand Scorpion [dink]</li>
+<li>Hook-up proper C-Chip dump for Rainbow Islands Extra.  Thanks to Kevin Escbach for donating the chip and Caps0ff for dumping it. [Kevin Escbach, Caps0ff]</li>
+<li>Fixed Wonder Planet boot issue [dink]</li>
+<li>Fixed flipped sprite issue in Vanguard 2 [dink]</li>
+<li>Fixed Art of Fighting (Neo Geo CD) freezeup after bonus stage [dink]</li>
+<li>Improve analog inputs for ChaseHQ, Battle Shark and Contental Circus [dink]</li>
+<li>Taito's Super Chase improvements - sync music, improve steering, cleanup driver [dink]</li>
+<li>Include driver status (good/preliminary) when generating .DAT files [barbudreadmon]</li>
 <li> []</li>
 </ul>
 <!-- new drivers -->
@@ -460,6 +474,8 @@
 <li>Added driver for Berzerk and Frenzy on Stern HW [iq_132, dink]</li>
 <li>Added driver for Buggy Challenge by Taito [iq_132]</li>
 <li>Added driver for Legionnaire, Heated Barrel, Denjin Makai, Godzilla and SD Gundam Sangokushi Rainbow Tairiku Senki on TAD/Seibu HW [iq_132, dink]</li>
+<li>Added driver for Dead Angle [iq_132, dink]</li>
+<li>Added driver for King of Boxer / Ring King [iq_132]</li>
 </ul>
 <!-- new game additions to existing drivers -->
 <h4>New additions / updates to existing drivers</h4>

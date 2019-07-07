@@ -180,6 +180,9 @@ bool bNeoEnableGraphics;
 bool bNeoEnableSprites;
 bool bNeoEnableText;
 
+static INT32 nNeoCDSpriteSlot;	// for "blank sprites / text" during transfer (needs to be separate from bNeoEnableSprite/Text!
+static INT32 nNeoCDTextSlot;	// ""
+
 UINT32 nNeo68KROMBank;
 
 static INT32 nIRQAcknowledge;
@@ -1566,6 +1569,9 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			SCAN_VAR(nff0002);
 			SCAN_VAR(nff0004);
 
+			SCAN_VAR(nNeoCDTextSlot);
+			SCAN_VAR(nNeoCDSpriteSlot);
+
 			CDEmuScan(nAction, pnMin);
 
 #if defined CYCLE_LOG
@@ -1581,6 +1587,9 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			INT32 nBank;
 
 			if (nNeoSystemType & NEO_SYS_CD) {
+				NeoSetSpriteSlot(nNeoCDSpriteSlot);
+				NeoSetTextSlot(nNeoCDTextSlot);
+
 				for (INT32 i = 0; i < 4; i++) {
 					NeoCDOBJBankUpdate[i] = 1;
 					if (NeoCDOBJBankUpdate[i]) {
@@ -3364,6 +3373,7 @@ static void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 		case 0x0121:
 //			bprintf(PRINT_NORMAL, _T("  - NGCD OBJ BUSREQ -> 1 (PC: 0x%06X)\n"), SekGetPC(-1));
 			NeoSetSpriteSlot(1);
+			nNeoCDSpriteSlot = 1;
 			memset(NeoCDOBJBankUpdate, 0, sizeof(NeoCDOBJBankUpdate));
 			break;
 		case 0x0123:
@@ -3377,11 +3387,13 @@ static void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 		case 0x0129:
 //			bprintf(PRINT_NORMAL, _T("  - NGCD FIX BUSREQ -> 1 (PC: 0x%06X)\n"), SekGetPC(-1));
 			NeoSetTextSlot(1);
+			nNeoCDTextSlot = 1;
 			break;
 
 		case 0x0141:
 //			bprintf(PRINT_NORMAL, _T("  - NGCD OBJ BUSREQ -> 0 (PC: 0x%06X)\n"), SekGetPC(-1));
 			NeoSetSpriteSlot(0);
+			nNeoCDSpriteSlot = 0;
 			for (INT32 i = 0; i < 4; i++) {
 				if (NeoCDOBJBankUpdate[i]) {
 					NeoDecodeSpritesCD(NeoSpriteRAM + (i << 20), NeoSpriteROM[0] + (i << 20), 0x100000);
@@ -3401,6 +3413,7 @@ static void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 		case 0x0149:
 //			bprintf(PRINT_NORMAL, _T("  - NGCD FIX BUSREQ -> 0 (PC: 0x%06X)\n"), SekGetPC(-1));
 			NeoSetTextSlot(0);
+			nNeoCDTextSlot = 0;
 			NeoUpdateText(0, 0x020000, NeoTextRAM, NeoTextROM[0]);
 			break;
 
@@ -3848,6 +3861,9 @@ static INT32 neogeoReset()
 
 			NeoSetTextSlot(0);
 			NeoSetSpriteSlot(0);
+
+			nNeoCDSpriteSlot = 0;
+			nNeoCDTextSlot = 0;
 
 			memset(NeoCDOBJBankUpdate, 0, sizeof(NeoCDOBJBankUpdate));
 

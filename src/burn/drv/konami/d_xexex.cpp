@@ -35,6 +35,8 @@ static UINT8 *soundlatch3;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nExtraCycles[2];
+
 static INT32 layerpri[4];
 static INT32 layer_colorbase[4];
 static INT32 sprite_colorbase;
@@ -469,6 +471,8 @@ static INT32 DrvDoReset()
 	sound_nmi_enable = 0;
 	z80_bank = 0;
 
+	nExtraCycles[0] = nExtraCycles[1] = 0;
+
 	return 0;
 }
 
@@ -724,7 +728,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 120;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { (16000000 * 100) / 5425, (8000000 * 100) / 5425 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -748,11 +752,17 @@ static INT32 DrvFrame()
 		if (i == ((nInterleave/2)-1)) {
 			if (K053246_is_IRQ_enabled()) {
 				xexex_objdma();
-				irq5_timer = 5; // lots of testing led to this number.
+				irq5_timer = 5;
 			}
 
 			if (control_data & 0x0800)
 				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		}
+
+		if (i == 106) {
+			if (pBurnDraw) {
+				DrvDraw();
+			}
 		}
 
 		CPU_RUN(1, Zet);
@@ -777,9 +787,8 @@ static INT32 DrvFrame()
 	ZetClose();
 	SekClose();
 
-	if (pBurnDraw) {
-		DrvDraw();
-	}
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	return 0;
 }
@@ -815,6 +824,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(control_data);
 		SCAN_VAR(enable_alpha);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

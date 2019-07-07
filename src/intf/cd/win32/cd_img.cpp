@@ -557,7 +557,7 @@ static int cdimgFindTrack(int LBA)
 	return trk;
 }
 
-static int cdimgPlayLBA(int LBA)
+static int cdimgPlayLBA(int LBA) // audio play start
 {
 	cdimgStop();
 
@@ -612,10 +612,9 @@ static int cdimgPlay(UINT8 M, UINT8 S, UINT8 F)
 
 static int cdimgLoadSector(int LBA, char* pBuffer)
 {
-	//dprintf(_T("    read LBA %i\n"), LBA);
-	if (CDEmuStatus == playing) return 0; // this might cause problems? - dink
+	if (CDEmuStatus == playing) return 0; // data loading
 
-	if (LBA != cdimgLBA)
+	if (LBA != cdimgLBA || cdimgFile == NULL)
 	{
 		if (cdimgFile == NULL)
 		{

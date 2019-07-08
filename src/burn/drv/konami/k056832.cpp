@@ -495,17 +495,12 @@ static void draw_layer_internal(INT32 layer, INT32 pageIndex, INT32 *clip, INT32
 	for (INT32 offs = 0; offs < 64 * 32; offs++)
 	{
 		INT32 sx = (offs & 0x3f) * 8;
-		INT32 sy = (offs / 0x40) * 8;
+		INT32 sy = (offs / 0x40) * 8; // sy handling in blitter (down below...)
 
 		sx -= scrollx;
 		if (sx < -7) sx += 512;
-		sy -= scrolly;
-		if (sy < -7) sy += 256;
-
 		if (tilemap_flip & 1) sx = (512 - 8) - sx;
-		if (tilemap_flip & 2) sy = (256 - 8) - sy;
-
-		if (sy < (miny-7) || sy > maxy || sx < (minx-7) || sx > maxx) continue;
+		if (sx < (minx-7) || sx > maxx) continue;
 
 		UINT16 *pMem = &K056832VideoRAM[(pageIndex << 12) + (offs << 1)];
 
@@ -554,46 +549,36 @@ static void draw_layer_internal(INT32 layer, INT32 pageIndex, INT32 *clip, INT32
 			if (g_flags & 0x01) flip_tile |= 0x07;
 			if (g_flags & 0x02) flip_tile |= 0x38;
 
-			UINT8 *pri = konami_priority_bitmap + ((sy -  CLIP_MINY) * nScreenWidth) - CLIP_MINX;
-			UINT32 *dst = konami_bitmap32 + ((sy -  CLIP_MINY) * nScreenWidth) - CLIP_MINX;
+			{ // blitter
+				for (INT32 iy = 0; iy < 8; iy++) {
+					INT32 yy = sy + iy;
 
-			{
-				if (alpha_enable) {
-					for (INT32 iy = 0; iy < 8; iy++, dst += nScreenWidth, pri += nScreenWidth) {
-						INT32 yy = sy+iy;
-		
-						if (yy < miny || yy > maxy) continue;
-	
-						for (INT32 ix = 0; ix < 8; ix++) {
-							INT32 xx = sx+ix;
-		
-							if (xx < minx || xx > maxx) continue;
-		
-							INT32 pxl = rom[((iy*8)+ix)^flip_tile];
-		
-							if (pxl || opaque) {
-								dst[xx] = alpha_blend(dst[xx], pal[pxl], alpha);
-								pri[xx] = priority;
-							}
-						}
+					if (tilemap_flip & 2) {
+						yy = (256 - 8) - (sy - iy);
+						yy = (yy + scrolly) & 0xff;
+					} else {
+						yy = (yy - scrolly) & 0xff;
 					}
-				} else {
-					for (INT32 iy = 0; iy < 8; iy++, dst += nScreenWidth, pri += nScreenWidth) {
-						INT32 yy = sy+iy;
-		
-						if (yy < miny || yy > maxy) continue;
-			
-						for (INT32 ix = 0; ix < 8; ix++) {
-							INT32 xx = sx+ix;
-		
-							if (xx < minx || xx > maxx) continue;
-		
-							INT32 pxl = rom[((iy*8)+ix)^flip_tile];
-		
-							if (pxl || opaque) {
+
+					UINT32 *dst = konami_bitmap32 + ((yy - CLIP_MINY) * nScreenWidth) - CLIP_MINX;
+					UINT8 *pri = konami_priority_bitmap + ((yy - CLIP_MINY) * nScreenWidth) - CLIP_MINX;
+
+					if (yy < miny || yy > maxy) continue;
+
+					for (INT32 ix = 0; ix < 8; ix++) {
+						INT32 xx = sx+ix;
+
+						if (xx < minx || xx > maxx) continue;
+
+						INT32 pxl = rom[((iy*8)+ix)^flip_tile];
+
+						if (pxl || opaque) {
+							if (alpha_enable) {
+								dst[xx] = alpha_blend(dst[xx], pal[pxl], alpha);
+							} else {
 								dst[xx] = pal[pxl];
-								pri[xx] = priority;
 							}
+							pri[xx] = priority;
 						}
 					}
 				}

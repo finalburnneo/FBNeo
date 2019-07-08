@@ -40,7 +40,11 @@ static INT32 __cdecl libretro_bprintf(INT32 nStatus, TCHAR* szFormat, ...)
 
 	if (rc >= 0)
 	{
+#ifdef FBNEO_DEBUG
+		retro_log_level retro_log = RETRO_LOG_INFO;
+#else
 		retro_log_level retro_log = RETRO_LOG_DEBUG;
+#endif
 		if (nStatus == PRINT_UI)
 			retro_log = RETRO_LOG_INFO;
 		else if (nStatus == PRINT_IMPORTANT)

@@ -18,6 +18,8 @@
 
 #define FBNEO_VERSION "v0.2.97.44"
 
+int counter;           // General purpose variable used when debugging
+
 static void log_dummy(enum retro_log_level level, const char *fmt, ...) { }
 
 static bool apply_dipswitch_from_variables();

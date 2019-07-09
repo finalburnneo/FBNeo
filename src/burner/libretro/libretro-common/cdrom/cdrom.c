@@ -30,6 +30,7 @@
 #include <string.h>
 #include <compat/strl.h>
 #include <retro_math.h>
+#include <retro_timers.h>
 #include <streams/file_stream.h>
 #include <retro_endianness.h>
 #include <retro_miscellaneous.h>
@@ -39,7 +40,11 @@
 #include <string/stdstring.h>
 
 #include <math.h>
+#ifdef _WIN32
+#include <direct.h>
+#else
 #include <unistd.h>
+#endif
 
 #if defined(__linux__) && !defined(ANDROID)
 #include <stropts.h>
@@ -391,8 +396,9 @@ retry:
    {
       cdrom_print_sense_data(sense, sizeof(sense));
 
-      /* INQUIRY/TEST should never fail, don't retry */
-      if (cmd[0] != 0x0 && cmd[0] != 0x12)
+      /* INQUIRY/TEST should never fail, don't retry. */
+      /* READ ATIP seems to fail outright on some drives (BW-16D1HT) with pressed discs, skip retries. */
+      if (cmd[0] != 0x0 && cmd[0] != 0x12 && !(cmd[0] == 0x43 && cmd[2] == 0x4))
       {
          unsigned char key = sense[2] & 0xF;
 
@@ -410,7 +416,7 @@ retry:
                   fflush(stdout);
 #endif
                   retries_left--;
-                  usleep(1000 * 1000);
+	              retro_sleep(1000);
                   goto retry;
                }
                else
@@ -680,7 +686,6 @@ void cdrom_get_current_config_profiles(const libretro_vfs_implementation_file *s
    for (i = 0; i < buf[8 + 3] / 4; i++)
    {
       unsigned short profile = (buf[8 + (4 * (i + 1))] << 8) | buf[8 + (4 * (i + 1)) + 1];
-      profile = swap_if_big32(profile);
 
       printf("Profile Number: %04X (%s) ", profile, get_profile(profile));
 
@@ -729,8 +734,6 @@ void cdrom_get_current_config_core(const libretro_vfs_implementation_file *strea
    printf("\n");
 
    intf_std = buf[8 + 4] << 24 | buf[8 + 5] << 16 | buf[8 + 6] << 8 | buf[8 + 7];
-
-   intf_std = swap_if_big32(intf_std);
 
    switch (intf_std)
    {
@@ -832,11 +835,17 @@ int cdrom_read_subq(libretro_vfs_implementation_file *stream, unsigned char *buf
 static int cdrom_read_track_info(libretro_vfs_implementation_file *stream, unsigned char track, cdrom_toc_t *toc)
 {
    /* MMC Command: READ TRACK INFORMATION */
-   unsigned char cdb[] = {0x52, 0x1, 0, 0, 0, track, 0, 0x1, 0x80, 0};
+   unsigned char cdb[] = {0x52, 0x1, 0, 0, 0, 0, 0, 0x1, 0x80, 0};
    unsigned char buf[384] = {0};
+   unsigned char mode = 0;
    unsigned lba = 0;
    unsigned track_size = 0;
-   int rv = cdrom_send_command(stream, DIRECTION_IN, buf, sizeof(buf), cdb, sizeof(cdb), 0);
+   int rv;
+   ssize_t pregap_lba_len;
+
+   cdb[5] = track;
+
+   rv = cdrom_send_command(stream, DIRECTION_IN, buf, sizeof(buf), cdb, sizeof(cdb), 0);
 
    if (rv)
      return 1;
@@ -851,10 +860,15 @@ static int cdrom_read_track_info(libretro_vfs_implementation_file *stream, unsig
    toc->track[track - 1].lba_start = lba;
    toc->track[track - 1].track_size = track_size;
 
+   pregap_lba_len = (toc->track[track - 1].audio ? 0 : (toc->track[track - 1].lba - toc->track[track - 1].lba_start));
+
+   toc->track[track - 1].track_bytes = (track_size - pregap_lba_len) * 2352;
+   toc->track[track - 1].mode = buf[6] & 0xF;
+
 #ifdef CDROM_DEBUG
    printf("Track %d Info: ", track);
    printf("Copy: %d ", (buf[5] & 0x10) > 0);
-   printf("Data Mode: %d ", buf[6] & 0xF);
+   printf("Data Mode: %d ", mode);
    printf("LBA Start: %d (%d) ", lba, toc->track[track - 1].lba);
    printf("Track Size: %d\n", track_size);
    fflush(stdout);
@@ -865,9 +879,13 @@ static int cdrom_read_track_info(libretro_vfs_implementation_file *stream, unsig
 
 int cdrom_set_read_speed(libretro_vfs_implementation_file *stream, unsigned speed)
 {
-   unsigned new_speed = swap_if_big32(speed);
    /* MMC Command: SET CD SPEED */
-   unsigned char cmd[] = {0xBB, 0, (new_speed >> 24) & 0xFF, (new_speed >> 16) & 0xFF, (new_speed >> 8) & 0xFF, new_speed & 0xFF, 0, 0, 0, 0, 0, 0 };
+   unsigned char cmd[] = {0xBB, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+   cmd[2] = (speed >> 24) & 0xFF;
+   cmd[3] = (speed >> 16) & 0xFF;
+   cmd[4] = (speed >> 8) & 0xFF;
+   cmd[5] = speed & 0xFF;
 
    return cdrom_send_command(stream, DIRECTION_NONE, NULL, 0, cmd, sizeof(cmd), 0);
 }
@@ -938,25 +956,26 @@ int cdrom_write_cue(libretro_vfs_implementation_file *stream, char **out_buf, si
       unsigned char control = buf[4 + (i * 11) + 1] & 0xF;
       unsigned char tno = buf[4 + (i * 11) + 2];
       unsigned char point = buf[4 + (i * 11) + 3];
+      /*unsigned char amin = buf[4 + (i * 11) + 4];
+      unsigned char asec = buf[4 + (i * 11) + 5];
+      unsigned char aframe = buf[4 + (i * 11) + 6];*/
       unsigned char pmin = buf[4 + (i * 11) + 8];
       unsigned char psec = buf[4 + (i * 11) + 9];
       unsigned char pframe = buf[4 + (i * 11) + 10];
       unsigned lba = cdrom_msf_to_lba(pmin, psec, pframe);
 
-      /*printf("i %d control %d adr %d tno %d point %d: ", i, control, adr, tno, point);*/
+      /*printf("i %d control %d adr %d tno %d point %d: amin %d asec %d aframe %d pmin %d psec %d pframe %d\n", i, control, adr, tno, point, amin, asec, aframe, pmin, psec, pframe);*/
       /* why is control always 0? */
 
       if (/*(control == 4 || control == 6) && */adr == 1 && tno == 0 && point >= 1 && point <= 99)
       {
-         unsigned char mode = 1;
          bool audio = false;
          const char *track_type = "MODE1/2352";
 
-         mode = adr;
          audio = (!(control & 0x4) && !(control & 0x5));
 
 #ifdef CDROM_DEBUG
-         printf("Track %02d CONTROL %01X ADR %01X MODE %d AUDIO? %d\n", point, control, adr, mode, audio);
+         printf("Track %02d CONTROL %01X ADR %01X AUDIO? %d\n", point, control, adr, audio);
          fflush(stdout);
 #endif
 
@@ -965,20 +984,19 @@ int cdrom_write_cue(libretro_vfs_implementation_file *stream, char **out_buf, si
          toc->track[point - 1].sec = psec;
          toc->track[point - 1].frame = pframe;
          toc->track[point - 1].lba = lba;
-         toc->track[point - 1].mode = mode;
          toc->track[point - 1].audio = audio;
-
-         if (audio)
-            track_type = "AUDIO";
-         else if (mode == 1)
-            track_type = "MODE1/2352";
-         else if (mode == 2)
-            track_type = "MODE2/2352";
 
          cdrom_read_track_info(stream, point, toc);
 
+         if (audio)
+            track_type = "AUDIO";
+         else if (toc->track[point - 1].mode == 1)
+            track_type = "MODE1/2352";
+         else if (toc->track[point - 1].mode == 2)
+            track_type = "MODE2/2352";
+
 #if defined(_WIN32) && !defined(_XBOX)
-         pos += snprintf(*out_buf + pos, len - pos, "FILE \"cdrom://%c://drive-track%02d.bin\" BINARY\n", cdrom_drive, point);
+         pos += snprintf(*out_buf + pos, len - pos, "FILE \"cdrom://%c:/drive-track%02d.bin\" BINARY\n", cdrom_drive, point);
 #else
          pos += snprintf(*out_buf + pos, len - pos, "FILE \"cdrom://drive%c-track%02d.bin\" BINARY\n", cdrom_drive, point);
 #endif
@@ -1048,11 +1066,15 @@ int cdrom_get_inquiry(const libretro_vfs_implementation_file *stream, char *mode
    return 0;
 }
 
-int cdrom_read(libretro_vfs_implementation_file *stream, unsigned char min, unsigned char sec, unsigned char frame, void *s, size_t len, size_t skip)
+int cdrom_read(libretro_vfs_implementation_file *stream, cdrom_group_timeouts_t *timeouts, unsigned char min, unsigned char sec, unsigned char frame, void *s, size_t len, size_t skip)
 {
    /* MMC Command: READ CD MSF */
-   unsigned char cdb[] = {0xB9, 0, 0, min, sec, frame, 0, 0, 0, 0xF8, 0, 0};
+   unsigned char cdb[] = {0xB9, 0, 0, 0, 0, 0, 0, 0, 0, 0xF8, 0, 0};
    int rv;
+
+   cdb[3] = min;
+   cdb[4] = sec;
+   cdb[5] = frame;
 
    if (len + skip <= 2352)
    {
@@ -1071,9 +1093,17 @@ int cdrom_read(libretro_vfs_implementation_file *stream, unsigned char min, unsi
    }
    else
    {
-      unsigned frames = cdrom_msf_to_lba(min, sec, frame) + ceil((len + skip) / 2352.0);
+      double frames = (len + skip) / 2352.0;
+      unsigned frame_end = cdrom_msf_to_lba(min, sec, frame) + ceil(frames);
 
-      cdrom_lba_to_msf(frames, &cdb[6], &cdb[7], &cdb[8]);
+      if (timeouts->g1_timeout && frames > timeouts->g1_timeout)
+      {
+         printf("multi-frame read of %d seconds is longer than group 1 timeout of %d seconds\n", (int)frames, timeouts->g1_timeout);
+         fflush(stdout);
+         return 1;
+      }
+
+      cdrom_lba_to_msf(frame_end, &cdb[6], &cdb[7], &cdb[8]);
 
 #ifdef CDROM_DEBUG
       printf("multi-frame read: from %d %d %d to %d %d %d skip %" PRId64 "\n", cdb[3], cdb[4], cdb[5], cdb[6], cdb[7], cdb[8], skip);
@@ -1101,8 +1131,6 @@ int cdrom_read_lba(libretro_vfs_implementation_file *stream, unsigned lba, void 
    unsigned lba_orig = lba;
    int rv;
 
-   lba = swap_if_big32(lba);
-
    cdb[2] = (lba >> 24) & 0xFF;
    cdb[3] = (lba >> 16) & 0xFF;
    cdb[4] = (lba >> 8) & 0xFF;
@@ -1121,8 +1149,6 @@ int cdrom_read_lba(libretro_vfs_implementation_file *stream, unsigned lba, void 
    {
       unsigned frames = lba_orig + ceil((len + skip) / 2352.0);
       unsigned lba_count = frames - lba_orig;
-
-      lba_count = swap_if_big32(lba_count);
 
       cdb[6] = (lba_count >> 16) & 0xFF;
       cdb[7] = (lba_count >> 8) & 0xFF;
@@ -1237,7 +1263,6 @@ struct string_list* cdrom_get_available_drives(void)
    struct string_list *list = string_list_new();
 #if defined(__linux__) && !defined(ANDROID)
    struct string_list *dir_list = dir_list_new("/dev", NULL, false, false, false, false);
-   int drive_index = 0;
    int i;
 
    if (!dir_list)
@@ -1248,7 +1273,7 @@ struct string_list* cdrom_get_available_drives(void)
       if (strstr(dir_list->elems[i].data, "/dev/sg"))
       {
          char drive_model[32] = {0};
-         char drive_string[64] = {0};
+         char drive_string[33] = {0};
          union string_list_elem_attr attr = {0};
          int dev_index = 0;
          RFILE *file = filestream_open(dir_list->elems[i].data, RETRO_VFS_FILE_ACCESS_READ, 0);
@@ -1267,9 +1292,8 @@ struct string_list* cdrom_get_available_drives(void)
 
          sscanf(dir_list->elems[i].data + strlen("/dev/sg"), "%d", &dev_index);
 
+         dev_index = '0' + dev_index;
          attr.i = dev_index;
-
-         snprintf(drive_string, sizeof(drive_string), "Drive %d: ", drive_index + 1);
 
          if (!string_is_empty(drive_model))
             strlcat(drive_string, drive_model, sizeof(drive_string));
@@ -1277,7 +1301,6 @@ struct string_list* cdrom_get_available_drives(void)
             strlcat(drive_string, "Unknown Drive", sizeof(drive_string));
 
          string_list_append(list, drive_string, attr);
-         drive_index++;
       }
    }
 
@@ -1305,7 +1328,7 @@ struct string_list* cdrom_get_available_drives(void)
       else
       {
          char drive_model[32] = {0};
-         char drive_string[64] = {0};
+         char drive_string[33] = {0};
          union string_list_elem_attr attr = {0};
          RFILE *file = filestream_open(cdrom_path, RETRO_VFS_FILE_ACCESS_READ, 0);
          const libretro_vfs_implementation_file *stream;
@@ -1323,15 +1346,12 @@ struct string_list* cdrom_get_available_drives(void)
 
          attr.i = path[0];
 
-         snprintf(drive_string, sizeof(drive_string), "Drive %d: ", drive_index + 1);
-
          if (!string_is_empty(drive_model))
             strlcat(drive_string, drive_model, sizeof(drive_string));
          else
             strlcat(drive_string, "Unknown Drive", sizeof(drive_string));
 
          string_list_append(list, drive_string, attr);
-         drive_index++;
       }
    }
 #endif
@@ -1430,4 +1450,127 @@ bool cdrom_set_read_cache(const libretro_vfs_implementation_file *stream, bool e
       return false;
 
    return true;
+}
+
+bool cdrom_get_timeouts(libretro_vfs_implementation_file *stream, cdrom_group_timeouts_t *timeouts)
+{
+   /* MMC Command: MODE SENSE (10) */
+   int rv, i;
+   unsigned char cdb[]   = {0x5A, 0, 0x1D, 0, 0, 0, 0, 0, 0x14, 0};
+   unsigned char buf[20] = {0};
+   unsigned short g1     = 0;
+   unsigned short g2     = 0;
+   unsigned short g3     = 0;
+
+   if (!timeouts)
+      return false;
+
+   rv = cdrom_send_command(stream, DIRECTION_IN, buf, sizeof(buf), cdb, sizeof(cdb), 0);
+
+#ifdef CDROM_DEBUG
+   printf("get timeouts status code %d\n", rv);
+   fflush(stdout);
+#endif
+
+   if (rv)
+      return false;
+
+   g1 = buf[14] << 8 | buf[15];
+   g2 = buf[16] << 8 | buf[17];
+   g3 = buf[18] << 8 | buf[19];
+
+#ifdef CDROM_DEBUG
+   printf("Mode sense data for timeout groups: ");
+
+   for (i = 0; i < sizeof(buf); i++)
+   {
+      printf("%02X ", buf[i]);
+   }
+
+   printf("\n");
+
+   printf("Group 1 Timeout: %d\n", g1);
+   printf("Group 2 Timeout: %d\n", g2);
+   printf("Group 3 Timeout: %d\n", g3);
+
+   fflush(stdout);
+#endif
+
+   timeouts->g1_timeout = g1;
+   timeouts->g2_timeout = g2;
+   timeouts->g3_timeout = g3;
+
+   return true;
+}
+
+bool cdrom_has_atip(const libretro_vfs_implementation_file *stream)
+{
+   /* MMC Command: READ TOC/PMA/ATIP */
+   unsigned char cdb[] = {0x43, 0x2, 0x4, 0, 0, 0, 0, 0x9, 0x30, 0};
+   unsigned char buf[32] = {0};
+   unsigned short atip_len = 0;
+   int rv = cdrom_send_command(stream, DIRECTION_IN, buf, sizeof(buf), cdb, sizeof(cdb), 0);
+
+   if (rv)
+     return false;
+
+   atip_len = buf[0] << 8 | buf[1];
+
+#ifdef CDROM_DEBUG
+   printf("ATIP Length %d, Disc Type %d, Disc Sub-Type %d\n", atip_len, (buf[6] >> 6) & 0x1, ((buf[6] >> 5) & 0x1) << 2 | ((buf[6] >> 4) & 0x1) << 1 | ((buf[6] >> 3) & 0x1) << 0);
+#endif
+
+   if (atip_len < 5)
+      return false;
+
+   return true;
+}
+
+void cdrom_device_fillpath(char *path, size_t len, char drive, unsigned char track, bool is_cue)
+{
+   size_t pos = 0;
+
+   if (!path || len == 0)
+      return;
+
+   if (is_cue)
+   {
+#ifdef _WIN32
+      pos = strlcpy(path, "cdrom://", len);
+
+      if (len > pos)
+         path[pos++] = drive;
+
+      pos = strlcat(path, ":/drive.cue", len);
+#else
+#ifdef __linux__
+      pos = strlcpy(path, "cdrom://drive", len);
+
+      if (len > pos)
+         path[pos++] = drive;
+
+      pos = strlcat(path, ".cue", len);
+#endif
+#endif
+   }
+   else
+   {
+#ifdef _WIN32
+      pos = strlcpy(path, "cdrom://", len);
+
+      if (len > pos)
+         path[pos++] = drive;
+
+      pos += snprintf(path + pos, len - pos, ":/drive-track%02d.bin", track);
+#else
+#ifdef __linux__
+      pos = strlcpy(path, "cdrom://drive", len);
+
+      if (len > pos)
+         path[pos++] = drive;
+
+      pos += snprintf(path + pos, len - pos, "-track%02d.bin", track);
+#endif
+#endif
+   }
 }

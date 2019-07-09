@@ -752,7 +752,7 @@ static INT32 DrvFrame()
 		if (i == ((nInterleave/2)-1)) {
 			if (K053246_is_IRQ_enabled()) {
 				xexex_objdma();
-				irq5_timer = 5;
+				irq5_timer = 2;
 			}
 
 			if (control_data & 0x0800)

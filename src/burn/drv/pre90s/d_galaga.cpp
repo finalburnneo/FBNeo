@@ -3454,7 +3454,8 @@ struct BurnDriver BurnDrvDigdug =
 	/* System = */                               NULL,
 	/* Flags = */                                BDF_GAME_WORKING |
 	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED,
+	BDF_ORIENTATION_FLIPPED |
+	BDF_HISCORE_SUPPORTED,
 	/* No of Players = */                        2,
 	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
 	/* Genre = */                                GBF_MAZE | GBF_ACTION,

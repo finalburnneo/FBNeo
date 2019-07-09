@@ -21,6 +21,41 @@ static struct cheat_core cpus[CHEAT_MAXCPU];
 static cheat_core *cheat_ptr;
 static cpu_core_config *cheat_subptr;
 
+static void dummy_open(INT32) {}
+static void dummy_close() {}
+static UINT8 dummy_read(UINT32) { return 0; }
+static void dummy_write(UINT32, UINT8) {}
+static INT32 dummy_active() { return -1; }
+static INT32 dummy_total_cycles() { return 0; }
+static void dummy_newframe() {}
+static INT32 dummy_idle(INT32) { return 0; }
+static void dummy_irq(INT32, INT32, INT32) {}
+static INT32 dummy_run(INT32) { return 0; }
+static void dummy_runend() {}
+static void dummy_reset() {}
+
+static cpu_core_config dummy_config  = {
+	dummy_open,
+	dummy_close,
+	dummy_read,
+	dummy_write,
+	dummy_active,
+	dummy_total_cycles,
+	dummy_newframe,
+	dummy_idle,
+	dummy_irq,
+	dummy_run,
+	dummy_runend,
+	dummy_reset,
+	~0UL,
+	0
+};
+
+cheat_core *GetCpuCheatRegister(INT32 nCPU)
+{
+	return &cpus[nCPU];
+}
+
 void CpuCheatRegister(INT32 nCPU, cpu_core_config *config)
 {
 	cheat_core *s_ptr = &cpus[cheat_core_init_pointer];
@@ -28,7 +63,19 @@ void CpuCheatRegister(INT32 nCPU, cpu_core_config *config)
 	s_ptr->cpuconfig = config;
 	s_ptr->nCPU = nCPU;
 
+	bprintf(0, _T("CPU-registry: cpu #%d ...\n"), nCPU);
+
 	cheat_core_init_pointer++;
+}
+
+static void CpuCheatRegisterInit()
+{
+	for (INT32 i = 0; i < CHEAT_MAXCPU; i++) {
+		cheat_core *s_ptr = &cpus[i];
+		s_ptr->cpuconfig = &dummy_config;
+		s_ptr->nCPU = i;
+	}
+	cheat_core_init_pointer = 0;
 }
 
 INT32 CheatUpdate()
@@ -284,8 +331,11 @@ INT32 CheatApply()
 INT32 CheatInit()
 {
 	CheatExit();
+	CpuCheatRegisterInit();
 
 	bCheatsEnabled = false;
+
+	bprintf(0, _T("Cheat cpu-register INIT.\n"));
 
 	return 0;
 }

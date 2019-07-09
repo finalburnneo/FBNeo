@@ -686,9 +686,9 @@ extern "C" INT32 BurnDrvExit()
 	}
 #endif
 
+	HiscoreExit(); // must come before CheatExit() (uses cheat cpu-registry)
 	CheatExit();
 	CheatSearchExit();
-	HiscoreExit();
 	BurnStateExit();
 	
 	nBurnCPUSpeedAdjust = 0x0100;

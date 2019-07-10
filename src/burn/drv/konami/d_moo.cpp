@@ -1173,9 +1173,11 @@ static void DrvPaletteRecalc()
 static INT32 DrvDraw()
 {
 	DrvPaletteRecalc();
-
+	
+#ifdef FBNEO_DEBUG
 	extern int counter;
 	K056832SetLayerOffsets(1,  3, 0+counter);
+#endif
 
 	KonamiClearBitmaps(0);
 

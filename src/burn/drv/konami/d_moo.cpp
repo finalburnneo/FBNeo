@@ -233,10 +233,6 @@ static void moo_objdma()
 	}
 }
 
-#ifdef FBNEO_DEBUG
-extern int counter;
-#endif
-
 static void moo_prot_write(INT32 offset)
 {
 	UINT16 *m_protram = (UINT16*)DrvProtRAM;
@@ -993,7 +989,7 @@ static INT32 MooInit()
 	K056832Init(DrvGfxROM0, DrvGfxROMExp0, 0x200000, moo_tile_callback);
 	K056832SetGlobalOffsets(40, 16);
 	K056832SetLayerOffsets(0, -1, 0);
-	K056832SetLayerOffsets(1,  3, 1);
+	K056832SetLayerOffsets(1,  3, 1); // y+1 for intro fix
 	K056832SetLayerOffsets(2,  5, 0);
 	K056832SetLayerOffsets(3,  7, 0);
 
@@ -1173,11 +1169,6 @@ static void DrvPaletteRecalc()
 static INT32 DrvDraw()
 {
 	DrvPaletteRecalc();
-	
-#ifdef FBNEO_DEBUG
-	extern int counter;
-	K056832SetLayerOffsets(1,  3, 0+counter);
-#endif
 
 	KonamiClearBitmaps(0);
 

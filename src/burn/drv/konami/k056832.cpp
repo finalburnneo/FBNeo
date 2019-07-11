@@ -507,15 +507,7 @@ static void draw_layer_internal(INT32 layer, INT32 pageIndex, INT32 *clip, INT32
 			for (INT32 x = 0; x < nScreenWidth; x++)
 			{
 				INT32 sx = (x + scrollx + CLIP_MINX) & 0x1ff;
-				if (tilemap_flip & 1) sx = (512 - 1) - sx;
-
-				INT32 sy = (y + CLIP_MINY) & 0xff;
-				if (tilemap_flip & 2) {
-					sy = (256 - 1) - sy;
-					sy = (sy + scrolly) & 0xff;
-				} else {
-					sy = (sy - scrolly) & 0xff;
-				}
+				INT32 sy = (y + scrolly + CLIP_MINY) & 0xff;
 
 				if (x < (minx - CLIP_MINX) || x > (maxx - CLIP_MINX)) continue;
 				if (y < (miny - CLIP_MINY) || y > (maxy - CLIP_MINY)) continue;
@@ -691,9 +683,10 @@ static int update_linemap(INT32 layer, INT32 pageIndex, INT32 flags, INT32 prior
 			for (INT32 zz = 0; zz < 8; zz++) {
 				if (pix[zz]) {
 					dst[(x - 512) + zz] = pal[pix[zz]];
-					pri[(x - 512) + zz] |= priority;
+					pri[(x - 512) + zz] = priority;
 				} else {
 					dst[(x - 512) + zz] = 0;
+					pri[(x - 512) + zz] = 0;
 				}
 			}
 		}

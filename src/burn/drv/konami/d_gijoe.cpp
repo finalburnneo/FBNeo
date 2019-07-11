@@ -548,7 +548,7 @@ static INT32 DrvInit()
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, gijoe_sprite_callback, 1);
 	K053247SetSpriteOffset(-61, -46+10);
 
-	konami_set_layer3_shadow_inhibit_mode(1);
+	konami_set_layer_shadow_inhibit_mode(1);
 
 	K054539Init(0, 48000, DrvSndROM, 0x200000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
@@ -647,6 +647,13 @@ static INT32 DrvDraw()
 	layerpri[3] = K053251GetPriority(4);
 
 	konami_sortlayers4(layers, layerpri);
+
+	// find layer 3's pri, tell renderer to inhibit shadows on that pri
+	for (INT32 i = 0; i < 4; i++) {
+		if (layers[i] == 3) {
+			konami_set_layer_shadow_inhibit_mode(1 << i);
+		}
+	}
 
 	if (nBurnLayer & 1) K056832Draw(layers[0], K056832_DRAW_FLAG_MIRROR, 1);
 	if (nBurnLayer & 2) K056832Draw(layers[1], K056832_DRAW_FLAG_MIRROR, 2);

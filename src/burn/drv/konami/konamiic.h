@@ -42,7 +42,7 @@ void konami_render_zoom_shadow_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 col
 // game-specific modes
 void konami_set_highlight_mode(INT32 mode);
 void konami_set_highlight_over_sprites_mode(INT32 mode);
-void konami_set_layer3_shadow_inhibit_mode(INT32 mode);
+void konami_set_layer_shadow_inhibit_mode(INT32 mode);
 
 // k051960 / k052109 shared
 //---------------------------------------------------------------------------------------------------------------

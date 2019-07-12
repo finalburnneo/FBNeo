@@ -23,6 +23,7 @@ static UINT16 *palette_lut = NULL;
 
 static INT32 highlight_mode = 0;  // set in driver init.
 static INT32 highlight_over_sprites_mode = 0; // ""
+static INT32 konamiic_shadow_inhibit_layer = 0;
 
 void konami_sortlayers3( int *layer, int *pri )
 {
@@ -190,6 +191,7 @@ void KonamiICExit()
 
 	highlight_over_sprites_mode = 0;
 	highlight_mode = 0;
+	konamiic_shadow_inhibit_layer = 0;
 
 	K05324xZRejection = -1;
 }
@@ -425,6 +427,11 @@ void konami_set_highlight_over_sprites_mode(INT32 mode)
 	highlight_over_sprites_mode = mode;
 }
 
+void konami_set_layer_shadow_inhibit_mode(INT32 mode)
+{
+	konamiic_shadow_inhibit_layer = mode;
+}
+
 static inline UINT32 shadow_blend(UINT32 d)
 {
 	return ((((d & 0xff00ff) * 0x9d) & 0xff00ff00) + (((d & 0x00ff00) * 0x9d) & 0x00ff0000)) / 0x100;
@@ -602,11 +609,20 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32
 
 							if (pxl) {
 								if (pxl == shadow_color) {
-									if ((priority & (1 << (pri[x]&0x1f)))==0 && (pri[x] & 0x80) == 0) {
-										dst[x] = highlight_mode ? highlight_blend(dst[x]) : shadow_blend(dst[x]);
-										pri[x] |= 0x80; // 0x80 - shadow/hilight "drawn here".  Nov.16, 2018, changed to |= to fix player shadow issue @ end of level in The Simpsons
-										if (highlight_over_sprites_mode)
-											pri[x] |= 0x20;
+									if (konamiic_shadow_inhibit_layer) {
+										if ((priority & (1 << (pri[x]&0x1f)))==0 && (pri[x] & 0x80) == 0 && (~pri[x] & konamiic_shadow_inhibit_layer)) {
+											dst[x] = highlight_mode ? highlight_blend(dst[x]) : shadow_blend(dst[x]);
+											pri[x] |= 0x80; // 0x80 - shadow/hilight "drawn here".  Nov.16, 2018, changed to |= to fix player shadow issue @ end of level in The Simpsons
+											if (highlight_over_sprites_mode)
+												pri[x] |= 0x20;
+										}
+									} else {
+										if ((priority & (1 << (pri[x]&0x1f)))==0 && (pri[x] & 0x80) == 0) {
+											dst[x] = highlight_mode ? highlight_blend(dst[x]) : shadow_blend(dst[x]);
+											pri[x] |= 0x80; // 0x80 - shadow/hilight "drawn here".  Nov.16, 2018, changed to |= to fix player shadow issue @ end of level in The Simpsons
+											if (highlight_over_sprites_mode)
+												pri[x] |= 0x20;
+										}
 									}
 								} else {
 									if ((priority & (1 << (pri[x]&0x1f)))==0) {

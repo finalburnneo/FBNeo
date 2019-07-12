@@ -756,7 +756,7 @@ static void draw_sprites()
 		if (zoomx == 0x100 && zoomy == 0x100) {
 			DrawCustomMaskTile(DrvTmpSprites, xsize, ysize, 0/*addr*/, x, y, flipx, flipy, color + prio, 0/*8*/, 0, 0, DrvSprROM + addr);
 		} else {
-			RenderZoomedTile(DrvTmpSprites, DrvSprROM + addr, 0/*addr*/, color + prio, 0, x, y, flipx, flipy, xsize, ysize, zoomx, zoomy);
+			RenderZoomedTile(DrvTmpSprites, DrvSprROM + addr, 0/*addr*/, color + prio, 0, x, y, flipx, flipy, xsize, ysize, zoomx << 8, zoomy << 8);
 		}
 	}
 }
@@ -816,10 +816,10 @@ static INT32 DrvDraw()
 
 	GenericTilemapSetScrollX(1, *((UINT16*)(DrvC8Regs + 0)) + 104);
 	GenericTilemapSetScrollY(1, *((UINT16*)(DrvC8Regs + 2)) + 16);
-	GenericTilemapSetScrollX(2, *((UINT16*)(DrvA8Regs + 0)) + 104);
-	GenericTilemapSetScrollY(2, *((UINT16*)(DrvA8Regs + 2)) + 16);
-	GenericTilemapSetScrollX(3, *((UINT16*)(DrvB0Regs + 0)) + 104);
-	GenericTilemapSetScrollY(3, *((UINT16*)(DrvB0Regs + 2)) + 16);
+	GenericTilemapSetScrollX(2, *((UINT16*)(DrvA8Regs + 0)) + 106);
+	GenericTilemapSetScrollY(2, *((UINT16*)(DrvA8Regs + 2)) + 17);
+	GenericTilemapSetScrollX(3, *((UINT16*)(DrvB0Regs + 0)) + 106);
+	GenericTilemapSetScrollY(3, *((UINT16*)(DrvB0Regs + 2)) + 17);
 
 	GenericTilemapDraw(1, pTransDraw, 0);
 	GenericTilemapDraw(2, pTransDraw, 0);

@@ -187,7 +187,7 @@ LDFLAGS	= -static
 
 ifdef GCC345
 CFLAGS = -pipe \
-	   -std=gnu99 -march=$(CPUTYPE) -O3 -ffloat-store \
+	   -std=gnu99 -march=$(CPUTYPE) -O1 -ffloat-store \
 	   -mno-cygwin -mwindows \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \
@@ -195,7 +195,7 @@ CFLAGS = -pipe \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -march=$(CPUTYPE) -O3 -ffloat-store \
+	   -march=$(CPUTYPE) -O1 -ffloat-store \
 	   -mno-cygwin -mwindows \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \

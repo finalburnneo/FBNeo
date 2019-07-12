@@ -646,8 +646,8 @@ static int update_linemap(INT32 layer, INT32 pageIndex, INT32 flags, INT32 prior
 	if (!K056832_Linemap_Enabled) return 1; // linemap not enabled? ignore this page.
 	if (~nSpriteEnable & 8) return 0;
 
-	UINT32 *dst = linemap_bitmap + 512;
-	UINT8  *pri = linemap_primap + 512;
+	UINT32 *dst = linemap_bitmap;
+	UINT8  *pri = linemap_primap;
 
 	for (INT32 line = 0; line < 256; line++)
 	{
@@ -677,21 +677,24 @@ static int update_linemap(INT32 layer, INT32 pageIndex, INT32 flags, INT32 prior
 
 		UINT8  *pix = K056832RomExp + ((code & ~7) * 0x40);
 		UINT32 *pal = konami_palette32 + (color * 16); // if > 4 bit, adjust in tilemap callback
+		INT32 flipx = (g_flags & 1) ? 0x1ff : 0;
 
-		for (INT32 x = 0; x < 512; x += 8, pix += 8)
+		for (INT32 x = 0; x < 512; x++)
 		{
-			for (INT32 zz = 0; zz < 8; zz++) {
-				if (pix[zz]) {
-					dst[(x - 512) + zz] = pal[pix[zz]];
-					pri[(x - 512) + zz] = priority;
-				} else {
-					dst[(x - 512) + zz] = 0;
-					pri[(x - 512) + zz] = 0;
-				}
+			INT32 pixel = pix[x ^ flipx];
+
+			if (pixel) {
+				dst[x] = pal[pixel];
+				pri[x] = priority;
+			} else {
+				dst[x] = 0;
+				pri[x] = 0;
 			}
 		}
+
 		dst += 512;
 		pri += 512;
+		pix += 512;
 	}
 
 	return 0;

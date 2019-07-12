@@ -367,7 +367,7 @@ static void gijoe_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority
 	*color = sprite_colorbase | (*color & 0x001f);
 }
 
-static void gijoe_tile_callback(int layer, int *code, int *color, int */*flags*/)
+static void gijoe_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
 {
 	INT32 tile = *code;
 
@@ -546,13 +546,11 @@ static INT32 DrvInit()
 	K056832SetLinemap();
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, gijoe_sprite_callback, 1);
-	K053247SetSpriteOffset(-61, -46+10);
-
-	konami_set_layer_shadow_inhibit_mode(1);
+	K053247SetSpriteOffset(-61, -47+10);
 
 	K054539Init(0, 48000, DrvSndROM, 0x200000);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 2.10, BURN_SND_ROUTE_LEFT);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 2.10, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
 

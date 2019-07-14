@@ -4301,6 +4301,7 @@ static INT32 ddp3Init()
 {
 	pPgmInitCallback = pgm_decrypt_py2k2;
 	pPgmProtCallback = install_protection_asic27a_ddp3; // simulation
+	pgm_cave_refresh = 1;
 
 	return pgmInit();
 }
@@ -4452,6 +4453,7 @@ static INT32 ddp3blkInit()
 {
 	pPgmInitCallback = pgm_decrypt_py2k2;
 	pPgmProtCallback = install_protection_asic27a_ddp3; // simulation
+	pgm_cave_refresh = 1;
 
 	INT32 nRet = pgmInit();
 

@@ -264,6 +264,7 @@ void DeActivateChat();
 int BurnerLoadDriver(TCHAR *szDriverName);
 int StartFromReset(TCHAR *szDriverName);
 void PausedRedraw(void);
+INT32 is_netgame_or_recording();
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)
@@ -431,6 +432,7 @@ int KailleraGetInput();
 extern int nReplayStatus;
 extern bool bReplayReadOnly;
 extern bool bReplayFrameCounterDisplay;
+extern INT32 movieFlags;
 int RecordInput();
 int ReplayInput();
 int StartRecord();

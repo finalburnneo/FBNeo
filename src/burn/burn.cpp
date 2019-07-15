@@ -916,15 +916,50 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 }
 
 // ----------------------------------------------------------------------------
+// Get the local time - make tweaks if netgame or input recording/playback
+// tweaks are needed for the game to to remain in-sync! (pgm, neogeo, etc)
+struct MovieExtInfo
+{
+	// date & time
+	UINT32 year, month, day;
+	UINT32 hour, minute, second;
+};
+
+extern struct MovieExtInfo MovieInfo; // from replay.cpp
+
+void BurnGetLocalTime(tm *nTime)
+{
+	if (is_netgame_or_recording()) {
+		if (is_netgame_or_recording() & 2) { // recording/playback
+			nTime->tm_sec = MovieInfo.second;
+			nTime->tm_min = MovieInfo.minute;
+			nTime->tm_hour = MovieInfo.hour;
+			nTime->tm_mday = MovieInfo.day;
+			nTime->tm_mon = MovieInfo.month;
+			nTime->tm_year = MovieInfo.year;
+		} else {
+			nTime->tm_sec = 0; // defaults for netgame
+			nTime->tm_min = 0;
+			nTime->tm_hour = 0;
+			nTime->tm_mday = 1;
+			nTime->tm_wday = 3;
+			nTime->tm_mon = 6 - 1;
+			nTime->tm_year = 2018;
+		}
+	} else {
+		time_t nLocalTime = time(NULL); // query current time from this machine
+		tm* tmLocalTime = localtime(&nLocalTime);
+		memcpy(nTime, tmLocalTime, sizeof(tm));
+	}
+}
+
+
+// ----------------------------------------------------------------------------
 // State-able random generator, based on early BSD LCG rand
 static UINT64 nBurnRandSeed = 0;
 
 UINT16 BurnRandom()
 {
-	if (!nBurnRandSeed) { // for the rare rollover-to-0 occurance
-		nBurnRandSeed = 0x2d1e0f;
-	}
-
 	nBurnRandSeed = nBurnRandSeed * 1103515245 + 12345;
 
 	return (UINT32)(nBurnRandSeed / 65536) % 0x10000;
@@ -944,7 +979,11 @@ void BurnRandomSetSeed(UINT64 nSeed)
 
 void BurnRandomInit()
 { // for states & input recordings - init before emulation starts
-	nBurnRandSeed = time(NULL);
+	if (is_netgame_or_recording()) {
+		BurnRandomSetSeed(0x303808909313ULL);
+	} else {
+		BurnRandomSetSeed(time(NULL));
+	}
 }
 
 // ----------------------------------------------------------------------------

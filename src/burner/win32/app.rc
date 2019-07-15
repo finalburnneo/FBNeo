@@ -899,11 +899,13 @@ BEGIN
     RTEXT           "Undo Count:",IDC_STATIC,10,62,59,8
     RTEXT           "Author Info:",IDC_STATIC,10,71,59,8
     RTEXT           "Recorded From:",IDC_STATIC,10,80,59,8
+    RTEXT           "Recorded On:",IDC_STATIC,10,89,59,8
     LTEXT           "00:00:00",IDC_LENGTH,76,44,59,8
     LTEXT           "0",IDC_FRAMES,76,53,59,8
     LTEXT           "0",IDC_UNDO,76,62,59,8
     LTEXT           "",IDC_METADATA,76,71,190,30
     LTEXT           "",IDC_REPLAYRESET,76,80,190,30
+    LTEXT           "",IDC_REPLAYTIME,76,89,190,30
     CONTROL         "Open Read-Only",IDC_READONLY,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,35,25,69,10
     CONTROL         "Show Joystick Movement",IDC_SHOWMOVEMENT,"Button",BS_AUTOCHECKBOX | 

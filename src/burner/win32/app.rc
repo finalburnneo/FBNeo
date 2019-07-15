@@ -904,8 +904,8 @@ BEGIN
     LTEXT           "0",IDC_FRAMES,76,53,59,8
     LTEXT           "0",IDC_UNDO,76,62,59,8
     LTEXT           "",IDC_METADATA,76,71,190,30
-    LTEXT           "",IDC_REPLAYRESET,76,80,190,30
-    LTEXT           "",IDC_REPLAYTIME,76,89,190,30
+    LTEXT           "",IDC_REPLAYRESET,76,80,190,8
+    LTEXT           "",IDC_REPLAYTIME,76,89,190,8
     CONTROL         "Open Read-Only",IDC_READONLY,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,35,25,69,10
     CONTROL         "Show Joystick Movement",IDC_SHOWMOVEMENT,"Button",BS_AUTOCHECKBOX | 

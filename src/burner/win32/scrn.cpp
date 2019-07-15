@@ -195,6 +195,11 @@ int ActivateChat()
 	return 0;
 }
 
+INT32 is_netgame_or_recording() // returns: 1 = netgame, 2 = recording/playback
+{
+	return (kNetGame | (movieFlags & (1<<1))); // netgame or recording from power_on
+}
+
 static int WINAPI gameCallback(char* game, int player, int numplayers)
 {
 	bool bFound = false;

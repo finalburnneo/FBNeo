@@ -272,8 +272,7 @@ void TimeKeeperInit(INT32 type, UINT8 *data)
 {
 	DebugDev_TimeKprInitted = 1;
 	
-	time_t rawtime;
-	struct tm *timeinfo;
+	struct tm timeinfo;
 	
 	Chip.type = type;
 
@@ -354,18 +353,17 @@ void TimeKeeperInit(INT32 type, UINT8 *data)
 	}
 	Chip.data = data;
 
-	time(&rawtime);
-	timeinfo = localtime(&rawtime);
+	BurnGetLocalTime(&timeinfo);
 	
 	Chip.control = 0;
-	Chip.seconds = make_bcd(timeinfo->tm_sec);
-	Chip.minutes = make_bcd(timeinfo->tm_min);
-	Chip.hours = make_bcd(timeinfo->tm_hour);
-	Chip.day = make_bcd(timeinfo->tm_wday + 1 );
-	Chip.date = make_bcd(timeinfo->tm_mday );
-	Chip.month = make_bcd(timeinfo->tm_mon + 1 );
-	Chip.year = make_bcd(timeinfo->tm_year % 100 );
-	Chip.century = make_bcd(timeinfo->tm_year / 100 );
+	Chip.seconds = make_bcd(timeinfo.tm_sec);
+	Chip.minutes = make_bcd(timeinfo.tm_min);
+	Chip.hours = make_bcd(timeinfo.tm_hour);
+	Chip.day = make_bcd(timeinfo.tm_wday + 1 );
+	Chip.date = make_bcd(timeinfo.tm_mday );
+	Chip.month = make_bcd(timeinfo.tm_mon + 1 );
+	Chip.year = make_bcd(timeinfo.tm_year % 100 );
+	Chip.century = make_bcd(timeinfo.tm_year / 100 );
 }
 
 void TimeKeeperExit()

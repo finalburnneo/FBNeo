@@ -23,8 +23,6 @@ static struct {
 
 static UINT32 nOneSecond;
 
-extern int kNetGame; // if compiling this causes an error, set up a global variable and make it '1' if running a net game (0 otherwise).
-
 INT32 uPD4990AInit(UINT32 nTicksPerSecond)
 {
 	nOneSecond = nTicksPerSecond;
@@ -42,26 +40,16 @@ INT32 uPD4990AInit(UINT32 nTicksPerSecond)
 	uPD4990A.TP = 0;
 
 	// Set the time of the uPD4990A to the current local time
-	time_t nLocalTime = time(NULL);
-	tm* tmLocalTime = localtime(&nLocalTime);
+	tm tmLocalTime;
+	BurnGetLocalTime(&tmLocalTime);
 
-	if (kNetGame) { // read note above on the extern int kNetGame declaration.
-		uPD4990A.nSeconds = 0;
-		uPD4990A.nMinutes = 0;
-		uPD4990A.nHours   = 0;
-		uPD4990A.nDay     = 1;
-		uPD4990A.nWeekDay = 3;
-		uPD4990A.nMonth   = 6;
-		uPD4990A.nYear    = 2018 % 100;
-	} else {
-		uPD4990A.nSeconds = tmLocalTime->tm_sec;
-		uPD4990A.nMinutes = tmLocalTime->tm_min;
-		uPD4990A.nHours   = tmLocalTime->tm_hour;
-		uPD4990A.nDay     = tmLocalTime->tm_mday;
-		uPD4990A.nWeekDay = tmLocalTime->tm_wday;
-		uPD4990A.nMonth   = tmLocalTime->tm_mon + 1;
-		uPD4990A.nYear    = tmLocalTime->tm_year % 100;
-	}
+	uPD4990A.nSeconds = tmLocalTime.tm_sec;
+	uPD4990A.nMinutes = tmLocalTime.tm_min;
+	uPD4990A.nHours   = tmLocalTime.tm_hour;
+	uPD4990A.nDay     = tmLocalTime.tm_mday;
+	uPD4990A.nWeekDay = tmLocalTime.tm_wday;
+	uPD4990A.nMonth   = tmLocalTime.tm_mon + 1;
+	uPD4990A.nYear    = tmLocalTime.tm_year % 100;
 
 	return 0;
 }

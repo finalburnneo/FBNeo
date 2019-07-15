@@ -81,6 +81,18 @@ INT32 BurnByteswap(UINT8* pMem, INT32 nLen);
 void BurnNibbleExpand(UINT8 *source, UINT8 *dst, INT32 length, INT32 swap, UINT8 nxor);
 INT32 BurnClearScreen();
 
+
+// recording / netgame helper
+#ifndef __LIBRETRO__
+INT32 is_netgame_or_recording();
+#else
+INT32 is_netgame_or_recording()
+{
+	return kNetGame;
+}
+#endif
+
+
 // load.cpp
 
 /*

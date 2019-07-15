@@ -28,8 +28,9 @@ void v3021Write(UINT16 data)
 	if (!DebugDev_V3021Initted) bprintf(PRINT_ERROR, _T("v3021Write called without init\n"));
 #endif
 
-	time_t nLocalTime = time(NULL);
-	tm* tmLocalTime = localtime(&nLocalTime);
+	tm time;
+	tm* tmLocalTime = &time;
+	BurnGetLocalTime(&time);
 
 	CalCom <<= 1;
 	CalCom |= data & 1;
@@ -79,7 +80,7 @@ void v3021Write(UINT16 data)
 				break;
 
 			case 0xf: // Load Date
-				tmLocalTime = localtime(&nLocalTime);
+				// done by default
 				break;
 		}
 	}
@@ -88,6 +89,11 @@ void v3021Write(UINT16 data)
 void v3021Init()
 {
 	DebugDev_V3021Initted = 1;
+
+	CalVal = 0;
+	CalMask = 0;
+	CalCom = 0;
+	CalCnt = 0;
 }
 
 void v3021Exit()

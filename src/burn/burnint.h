@@ -86,7 +86,7 @@ INT32 BurnClearScreen();
 #ifndef __LIBRETRO__
 INT32 is_netgame_or_recording();
 #else
-INT32 is_netgame_or_recording()
+inline static INT32 is_netgame_or_recording()
 {
 	return kNetGame;
 }

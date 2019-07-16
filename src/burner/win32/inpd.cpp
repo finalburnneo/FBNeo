@@ -3,7 +3,7 @@
 
 HWND hInpdDlg = NULL;							// Handle to the Input Dialog
 static HWND hInpdList = NULL;
-static unsigned char *LastVal = NULL;			// Last input values/defined
+static unsigned short *LastVal = NULL;			// Last input values/defined
 static int bLastValDefined = 0;					//
 
 static HWND hInpdGi = NULL, hInpdPci = NULL, hInpdAnalog = NULL;	// Combo boxes
@@ -71,7 +71,7 @@ int InpdUpdate()
 {
 	unsigned int i, j = 0;
 	struct GameInp* pgi = NULL;
-	unsigned char* plv = NULL;
+	unsigned short* plv = NULL;
 	unsigned short nThisVal;
 	if (hInpdList == NULL) {
 		return 1;
@@ -96,12 +96,12 @@ int InpdUpdate()
 				nThisVal = *pgi->Input.pShortVal;
 			}
 
-			if (bLastValDefined && (pgi->nType != BIT_ANALOG_REL || nThisVal) && pgi->Input.nVal == *((unsigned short*)plv)) {
+			if (bLastValDefined && (pgi->nType != BIT_ANALOG_REL || nThisVal) && pgi->Input.nVal == *plv) {
 				j++;
 				continue;
 			}
 
-			*((unsigned short*)plv) = nThisVal;
+			*plv = nThisVal;
 		} else {
 			if (bRunPause) {														// Update LastVal
 				nThisVal = pgi->Input.nVal;
@@ -310,11 +310,11 @@ static int InpdInit()
 
 	// Allocate a last val array for the last input values
 	nMemLen = nGameInpCount * sizeof(char);
-	LastVal = (unsigned char*)malloc(nMemLen);
+	LastVal = (unsigned short*)malloc(nMemLen * sizeof(unsigned short));
 	if (LastVal == NULL) {
 		return 1;
 	}
-	memset(LastVal, 0, nMemLen);
+	memset(LastVal, 0, nMemLen * sizeof(unsigned short));
 
 	InpdListBegin();
 	InpdListMake(1);

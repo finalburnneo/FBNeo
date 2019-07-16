@@ -67,20 +67,14 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 
 static int GetInput(bool bCopy)
 {
-	static int i = 0;
+	static unsigned int i = 0;
 	InputMake(bCopy); 						// get input
 
 	CheckSystemMacros();
 
-	// Update Input dialog ever 3 frames
-	if (i == 0) {
+	// Update Input dialog every 3rd frame
+	if ((i%3) == 0) {
 		InpdUpdate();
-	}
-
-	i++;
-
-	if (i >= 3) {
-		i = 0;
 	}
 
 	// Update Input Set dialog

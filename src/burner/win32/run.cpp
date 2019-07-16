@@ -222,9 +222,13 @@ static int RunGetNextSound(int bDraw)
 		return 0;
 	}
 
+	int bBrokeOutOfFFWD = 0;
 	if (bAppDoFast) {									// do more frames
 		for (int i = 0; i < nFastSpeed; i++) {
-			if (!bAppDoFast) break;                     // break out if no longer in ffwd
+			if (!bAppDoFast) {
+				bBrokeOutOfFFWD = 1; // recording ended, etc.
+				break;
+			}                     // break out if no longer in ffwd
 #ifdef INCLUDE_AVI_RECORDING
 			if (nAviStatus) {
 				// Render frame with sound
@@ -239,17 +243,20 @@ static int RunGetNextSound(int bDraw)
 		}
 	}
 
-	// Render frame with sound
-	pBurnSoundOut = nAudNextSound;
-	RunFrame(bDraw, 0);
+	if (!bBrokeOutOfFFWD) {
+		// Render frame with sound
+		pBurnSoundOut = nAudNextSound;
+		RunFrame(bDraw, 0);
+	}
 
 	if (WaveLog != NULL && pBurnSoundOut != NULL) {		// log to the file
 		fwrite(pBurnSoundOut, 1, nBurnSoundLen << 2, WaveLog);
 		pBurnSoundOut = NULL;
 	}
 
-	if (bAppDoStep) {
+	if (bAppDoStep || (bBrokeOutOfFFWD && bRunPause)) {
 		memset(nAudNextSound, 0, nAudSegLen << 2);		// Write silence into the buffer
+		AudBlankSound();
 	}
 	bAppDoStep = 0;										// done one step
 

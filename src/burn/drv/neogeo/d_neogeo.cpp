@@ -15124,28 +15124,22 @@ struct BurnDriver BurnDrvkof96ae = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters '96 (Anniversary Edition 2.0.0430, EGHT hack)
+// The King of Fighters '96 (The Aniversary Edition 2.0 Final Version 2019-05-30)
 
 static struct BurnRomInfo kof96ae20RomDesc[] = {
-	{ "214ae-p1.p1",  0x100000, 0xc038e932, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "214ae-p2.p2",  0x400000, 0x66da868f, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "214ae-p1.p1",  0x100000, 0x0de08cc3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "214ae-p2.p2",  0x400000, 0x221d1d54, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "214ae-s1.s1",  0x020000, 0x0f902790, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "214ae-s1.s1",  0x020000, 0xb9626494, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "214ae-c1.c1",  0x400000, 0xb308c1f9, 3 | BRF_GRA },           //  3 Sprite data
-	{ "214ae-c2.c2",  0x400000, 0x220a92b2, 3 | BRF_GRA },           //  4 
-	{ "214-c3.bin",   0x400000, 0x64989a65, 3 | BRF_GRA },           //  5 
-	{ "214-c4.bin",   0x400000, 0xafbea515, 3 | BRF_GRA },           //  6 
-	{ "214ae-c5.c5",  0x400000, 0x41dbd677, 3 | BRF_GRA },           //  7 
-	{ "214ae-c6.c6",  0x400000, 0x1e6a3961, 3 | BRF_GRA },           //  8 
-	{ "214ae-c7.c7",  0x400000, 0x08021fd6, 3 | BRF_GRA },           //  9 
-	{ "214ae-c8.c8",  0x400000, 0xbbd21b08, 3 | BRF_GRA },           // 10 
-	{ "214ae-c9.c9",  0x400000, 0x2efceab8, 3 | BRF_GRA },           // 11
-	{ "214ae-c10.c10",0x400000, 0x9f7e1492, 3 | BRF_GRA },           // 12 
-	{ "214ae-c11.c11",0x400000, 0x183cd8fd, 3 | BRF_GRA },           // 13
-	{ "214ae-c12.c12",0x400000, 0xb3d30499, 3 | BRF_GRA },           // 14  
+	{ "214-c1ae2.c1",  0x800000, 0xa7466eea, 3 | BRF_GRA },           //  3 Sprite data
+	{ "214-c2ae2.c2",  0x800000, 0x6ff22256, 3 | BRF_GRA },           //  4
+	{ "214-c1ae2.c3",  0x800000, 0x48d81318, 3 | BRF_GRA },           //  5
+	{ "214-c1ae2.c4",  0x800000, 0xd69836e6, 3 | BRF_GRA },           //  6
+	{ "214-c1ae2.c5",  0x800000, 0xed71e6bb, 3 | BRF_GRA },           //  7
+	{ "214-c1ae2.c6",  0x800000, 0x059fa364, 3 | BRF_GRA },           //  8
 
-	{ "214ae-m1.m1",  0x020000, 0xc9dd0348, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
+	{ "214-m1ae2.m1",  0x020000, 0x3a4a7c21, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
 	{ "214-v1.bin",   0x400000, 0x63f7b045, 5 | BRF_SND },           // 16 Sound data
 	{ "214-v2.bin",   0x400000, 0x25929059, 5 | BRF_SND },           // 17 
@@ -15156,8 +15150,8 @@ STDROMPICKEXT(kof96ae20, kof96ae20, neogeo)
 STD_ROM_FN(kof96ae20)
 
 struct BurnDriver BurnDrvkof96ae20 = {
-	"kof96ae20", "kof96", "neogeo", NULL, "2009",
-	"The King of Fighters '96 (Anniversary Edition 2.0.0430, EGHT hack)\0", NULL, "hack", "Neo Geo MVS",
+	"kof96ae20", "kof96", "neogeo", NULL, "2019",
+	"The King of Fighters '96 (The Aniversary Edition 2.0 Final Version 2019-05-30)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof96ae20RomInfo, kof96ae20RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -15560,11 +15554,11 @@ struct BurnDriver BurnDrvkof98ae2016 = {
 };
 
 // The King of Fighters '98 (Combo)
-/* Ivex hack - 2017/06/12 version */
+/* Ivex hack - 2018/05/05 version */
 
 static struct BurnRomInfo kof98cbRomDesc[] = {
-	{ "242cb-p1.p1", 	0x100000, 0xb00433fb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242cb-p2.sp2", 	0x400000, 0x69b7f51c, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242cb-p1.p1", 	0x100000, 0x2565e431, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242cb-p2.sp2", 	0x400000, 0xd34a4d38, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242cb-s1.s1", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -15589,7 +15583,7 @@ STDROMPICKEXT(kof98cb, kof98cb, neogeo)
 STD_ROM_FN(kof98cb)
 
 struct BurnDriver BurnDrvkof98cb = {
-	"kof98cb", "kof98", "neogeo", NULL, "2015",
+	"kof98cb", "kof98", "neogeo", NULL, "2018",
 	"The King of Fighters '98 (Combo, hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
@@ -15599,23 +15593,23 @@ struct BurnDriver BurnDrvkof98cb = {
 };
 
 // The King of Fighters '99 Anniversary Edition
-/* hack by Yashional - 2017/09/09 Final Version*/
+/* hack by Yashional - 2017/11/12 Final Version*/
 
 static struct BurnRomInfo kof99aeRomDesc[] = {
 	{ "kof99ae_p1.bin",   	   0x100000, 0x3dad12db, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "kof99ae_p2.bin",        0x400000, 0xf8566133, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "kof99ae_p3.bin",        0x400000, 0xbc85cf02, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "kof99ae_p2.bin",        0x400000, 0x23193920, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "kof99ae_p3.bin",        0x400000, 0xe3847545, 1 | BRF_ESS | BRF_PRG }, //  2
 	
 	{ "kof99ae_s1.bin",        0x020000, 0x3c31ee43, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "kof99ae_c1.bin",   	   0x800000, 0x497c2e83, 3 | BRF_GRA },           //  4 Sprite data
-	{ "kof99ae_c2.bin",   	   0x800000, 0x0a13eeb7, 3 | BRF_GRA },           //  5 
+	{ "kof99ae_c1.bin",   	   0x800000, 0x7eabea6c, 3 | BRF_GRA },           //  4 Sprite data
+	{ "kof99ae_c2.bin",   	   0x800000, 0xe5a5bc5c, 3 | BRF_GRA },           //  5 
 	{ "kof99ae_c3.bin",   	   0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  6 
 	{ "kof99ae_c4.bin",   	   0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  7 
 	{ "kof99ae_c5.bin",   	   0x800000, 0x9746268c, 3 | BRF_GRA },           //  8 
 	{ "kof99ae_c6.bin",   	   0x800000, 0x238b3e71, 3 | BRF_GRA },           //  9 
-	{ "kof99ae_c7.bin",   	   0x800000, 0xf22760ad, 3 | BRF_GRA },           // 10 
-	{ "kof99ae_c8.bin",   	   0x800000, 0x396c3a70, 3 | BRF_GRA },           // 11 
+	{ "kof99ae_c7.bin",   	   0x800000, 0x963c28ab, 3 | BRF_GRA },           // 10 
+	{ "kof99ae_c8.bin",   	   0x800000, 0x43f1e92e, 3 | BRF_GRA },           // 11 
 	{ "kof99ae_c9.bin",   	   0x800000, 0x86a3550d, 3 | BRF_GRA },           // 12 
 	{ "kof99ae_c91.bin",       0x800000, 0x986bb897, 3 | BRF_GRA },           // 13 
 	{ "kof99ae_c92.bin",       0x800000, 0x7fe785c2, 3 | BRF_GRA },           // 14 

@@ -119,7 +119,7 @@ void ToggleLayer(unsigned char thisLayer)
 
 // With or without sound, run one frame.
 // If bDraw is true, it's the last frame before we are up to date, and so we should draw the screen
-static int RunFrame(int bDraw, int bPause)
+int RunFrame(int bDraw, int bPause)
 {
 	static int bPrevPause = 0;
 	static int bPrevDraw = 0;

@@ -3,6 +3,7 @@
 // rev 0.00: hacked together code
 // rev 0.01: Added sprite toggle.
 // rev 0.02: now uses VidRedraw()
+// rev 0.03: now uses RunFrame() instead of VidRedraw() - prevents input playback desync if playing back..
 //
 // Known Problems:
 // Swiching anything causes the frame to advance.
@@ -76,11 +77,8 @@ static int SFactdExit()
 
 static void FrameAdvance()
 {
-	VidFrame();
+	RunFrame(1, 0);
 	VidPaint(0);
-	nFramesEmulated++;
-	nCurrentFrame++;
-	nFramesRendered++;
 }
 
 static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lParam)

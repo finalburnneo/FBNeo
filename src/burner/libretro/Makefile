@@ -337,7 +337,7 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
 
 	# Nintendo WiiU
 	ifneq (,$(findstring wiiu,$(platform)))
-		PLATFORM_DEFINES += -DGEKKO -DWIIU -DHW_RVL -mwup -mcpu=750 -meabi -mhard-float
+		PLATFORM_DEFINES += -DGEKKO -DWIIU -DHW_RVL -mcpu=750 -meabi -mhard-float
 
 	# Nintendo Wii
 	else ifneq (,$(findstring wii,$(platform)))

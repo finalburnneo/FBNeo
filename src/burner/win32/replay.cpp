@@ -34,6 +34,9 @@ UINT8 *ReplayExternalData = NULL;
 #define MOVIE_FLAG_FROM_POWERON (1<<1)
 
 const UINT32 nMovieVersion = 0x0401;
+UINT32 nThisMovieVersion = 0;
+UINT32 nThisFBVersion = 0;
+
 UINT32 nStartFrame = 0;
 static UINT32 nEndFrame;
 
@@ -282,9 +285,9 @@ INT32 ReplayInput()
 		PrintInputs();
 	}
 
-#if 1
+#if 0
 	if ( (GetCurrentFrame()-nStartFrame) == (nTotalFrames-1) ) {
-		bRunPause = 1; // pause at the last recorded frame? *needs testing*
+		bRunPause = 1; // pause at the last recorded frame? causes weird issues when pauses.  investigate later.. -dink
 	}
 #endif
 
@@ -371,6 +374,8 @@ INT32 StartRecord()
 
 				fwrite(&nZero, 1, 4, fp);				// undo count
 				fwrite(&nMovieVersion, 1, 4, fp);		// ThisMovieVersion
+
+				memset(&MovieInfo, 0, sizeof(MovieInfo));
 				if (nMovieVersion >= 0x0401) {
 					bprintf(0, _T("nMovieVersion %X .. writing date stuff!\n"), nMovieVersion);
 					time_t nLocalTime = time(NULL);
@@ -385,7 +390,7 @@ INT32 StartRecord()
 
 					fwrite(&MovieInfo, 1, sizeof(MovieInfo), fp);
 				}
-				fwrite(&nZero, 1, 4, fp);				// reserved
+				fwrite(&nBurnVer, 1, 4, fp);			// fb version#
 
 				nRet = EmbedCompressedFile(fp, -1);
 			}
@@ -507,7 +512,6 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 					nRet = 2;
 				} else {
 					INT32 nChunkSize = 0;
-					INT32 nReserved = 0;
 					// Open the recording itself
 					nSizeOffset = ftell(fp);				// Save chunk size offset in case the file is re-recorded
 					fread(&nChunkSize, 1, 0x04, fp);		// Read chunk size
@@ -519,14 +523,15 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 					bReplayDontClose = 0; // we don't need it anymore from this point
 					nEndFrame += nStartFrame;
 					fread(&nReplayUndoCount, 1, 4, fp);
-					UINT32 ThisMovieVersion = 0;
-					fread(&ThisMovieVersion, 1, 4, fp);
-					if (ThisMovieVersion >= 0x0401) {
+					fread(&nThisMovieVersion, 1, 4, fp);
+
+					memset(&MovieInfo, 0, sizeof(MovieInfo));
+					if (nThisMovieVersion >= 0x0401) {
 						bprintf(0, _T("loading ext movie version!!\n"));
 						fread(&MovieInfo, 1, sizeof(MovieInfo), fp);
 						bprintf(0, _T("Ext Info: %d:%d:%d %d/%d/%d\n"), MovieInfo.hour, MovieInfo.minute, MovieInfo.second, MovieInfo.year, MovieInfo.month, MovieInfo.day);
 					}
-					fread(&nReserved, 1, 4, fp);
+					fread(&nThisFBVersion, 1, 4, fp);
 					INT32 nEmbedPosition = ftell(fp);
 
 					// Read metadata
@@ -700,6 +705,7 @@ void StopReplay()
 		}
 		nReplayStatus = 0;
 		nStartFrame = 0;
+		memset(&MovieInfo, 0, sizeof(MovieInfo));
 		CheckRedraw();
 		MenuEnableItems();
 	}
@@ -977,14 +983,15 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 	fread(&nFrames, 1, 4, fd);
 	fread(&nUndoCount, 1, 4, fd);
 
-	UINT32 ThisMovieVersion = 0;
-	fread(&ThisMovieVersion, 1, 4, fd);
+	fread(&nThisMovieVersion, 1, 4, fd);
 
-	if (ThisMovieVersion >= 0x0401) {
+	memset(&MovieInfo, 0, sizeof(MovieInfo));
+	if (nThisMovieVersion >= 0x0401) {
 		fread(&MovieInfo, 1, sizeof(MovieInfo), fd);
-		bprintf(0, _T("Movie Version %X\n"), ThisMovieVersion);
+		bprintf(0, _T("Movie Version %X\n"), nThisMovieVersion);
 		bprintf(0, _T("Ext Info: %d:%d:%d %d/%d/%d\n"), MovieInfo.hour, MovieInfo.minute, MovieInfo.second, MovieInfo.year, MovieInfo.month, MovieInfo.day);
 	}
+	fread(&nThisFBVersion, 1, 4, fd);
 
 	// read metadata
 	fseek(fd, nChunkDataPosition + nChunkSize, SEEK_SET);
@@ -1038,17 +1045,20 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		char szLengthString[32];
 		char szUndoCountString[32];
 		char szRecordedFrom[32];
-		char szRecordedTime[32];
+		char szRecordedTime[32] = { 0 };
 
 		sprintf(szFramesString, "%d", nFrames);
 		sprintf(szLengthString, "%02d:%02d:%02d", nHours, nMinutes % 60, nSeconds % 60);
 		sprintf(szUndoCountString, "%d", nUndoCount);
+		if (nThisFBVersion && !nFileVer) nFileVer = nThisFBVersion;
 		if (nFileVer)
-			sprintf(szRecordedFrom, "v%x.%x.%x.%02x, %s", nFileVer >> 20, (nFileVer >> 16) & 0x0F, (nFileVer >> 8) & 0xFF, nFileVer & 0xFF, (bStartFromReset) ? "Power-On" : "Savestate");
+			sprintf(szRecordedFrom, "%s, v%x.%x.%x.%02x", (bStartFromReset) ? "Power-On" : "Savestate", nFileVer >> 20, (nFileVer >> 16) & 0x0F, (nFileVer >> 8) & 0xFF, nFileVer & 0xFF);
 		else
 			sprintf(szRecordedFrom, "%s", (bStartFromReset) ? "Power-On" : "Savestate");
 
-		sprintf(szRecordedTime, "%02d/%02d/%04d @ %02d:%02d:%02d%s\n", MovieInfo.month+1, MovieInfo.day, 2000 + (MovieInfo.year%100), (MovieInfo.hour>12) ? MovieInfo.hour-12 : MovieInfo.hour, MovieInfo.minute, MovieInfo.second, (MovieInfo.hour>12) ? "pm" : "am");
+		if (nThisMovieVersion >= 0x0401) {
+			sprintf(szRecordedTime, "%02d/%02d/%04d @ %02d:%02d:%02d%s", MovieInfo.month+1, MovieInfo.day, 2000 + (MovieInfo.year%100), (MovieInfo.hour>12) ? MovieInfo.hour-12 : MovieInfo.hour, MovieInfo.minute, MovieInfo.second, (MovieInfo.hour>12) ? "pm" : "am");
+		}
 
 		SetDlgItemTextA(hDlg, IDC_LENGTH, szLengthString);
 		SetDlgItemTextA(hDlg, IDC_FRAMES, szFramesString);

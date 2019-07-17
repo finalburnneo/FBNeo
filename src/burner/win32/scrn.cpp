@@ -688,11 +688,15 @@ void PausedRedraw(void)
 {
     if (bVidOkay && bRunPause && bDrvOkay && (hSelDlg == NULL)) { // Redraw the screen to show certain messages while paused. - dink
         INT16 *pBtemp = pBurnSoundOut;
-        pBurnSoundOut = NULL; // Mute the sound as VidRedraw() draws the frame (if no driver Redraw function is available)
+        pBurnSoundOut = NULL;
+
+		INT32 oldOk = bDrvOkay;                     // Redraw w/o running a frame.
+		bDrvOkay = 0;
 
 		VidRedraw();
 		VidPaint(0);
 
+		bDrvOkay = oldOk;
         pBurnSoundOut = pBtemp;
     }
 }

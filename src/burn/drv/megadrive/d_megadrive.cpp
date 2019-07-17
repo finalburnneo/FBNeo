@@ -18679,6 +18679,7 @@ struct BurnDriver BurnDrvmd_rockman = {
 };
 
 // Rockman Mega World (Jpn, Alt)
+// Note: Impossible to win game due to broken sram in this version.
 static struct BurnRomInfo md_rockman1RomDesc[] = {
 	{ "rockman mega world (jpn) (alt).bin", 0x200000, 0x85c956ef, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -18688,7 +18689,7 @@ STD_ROM_FN(md_rockman1)
 
 struct BurnDriver BurnDrvmd_rockman1 = {
 	"md_rockman1", "md_megaman", NULL, NULL, "1994",
-	"Rockman Mega World (Jpn, Alt)\0", NULL, "Capcom", "Sega Megadrive",
+	"Rockman Mega World (Jpn, Alt)\0", "Play md_rockman or md_megaman instead!", "Capcom", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_rockman1RomInfo, md_rockman1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

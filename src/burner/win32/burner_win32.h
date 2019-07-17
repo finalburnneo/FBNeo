@@ -238,6 +238,7 @@ extern int bAltPause;
 extern int bAlwaysDrawFrames;
 extern int kNetGame;
 int RunIdle();
+int RunFrame(int bDraw, int bPause);
 int RunMessageLoop();
 int RunReset();
 void ToggleLayer(unsigned char thisLayer);

@@ -580,3 +580,180 @@ INT32 PNGGetInfo(IMAGE* img, FILE *fp)
 
 	return 0;
 }
+
+// ----- Memory PNG v.00001
+
+struct ImageSource
+{
+	UINT8 *data;
+	int size;
+	int offset;
+};
+
+bool PNGIsImageBuffer(unsigned char* buffer, int bufferLength)
+{
+	if (buffer && bufferLength >= PNG_SIG_CHECK_BYTES && png_sig_cmp(buffer, 0, PNG_SIG_CHECK_BYTES) == 0) {
+		return true;
+	}
+
+	return false;
+}
+
+static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
+{
+	ImageSource* isource = (ImageSource*)png_get_io_ptr(png_ptr);
+
+	if (isource == NULL) {
+		return;
+	}
+
+	if ((int)(isource->offset + length) <= isource->size)
+	{
+		memcpy(data, isource->data + isource->offset, length);
+		isource->offset += length;
+	}
+	else
+		png_error(png_ptr, "pngReaderCallback failed");
+}
+
+
+INT32 PNGLoadBuffer(IMAGE* img, unsigned char* buffer, int bufferLength, INT32 nPreset)
+{
+	IMAGE temp_img;
+	png_uint_32 width = 0, height = 0;
+	INT32 bit_depth, color_type;
+
+	if (png_sig_cmp(buffer, 0, PNG_SIG_CHECK_BYTES)) {
+		return 1;
+	}
+
+	png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	if (!png_ptr) {
+		return 1;
+	}
+
+	png_infop info_ptr = png_create_info_struct(png_ptr);
+	if (!info_ptr) {
+		png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
+		return 1;
+	}
+
+	static ImageSource imgsource;
+	imgsource.data = buffer;
+	imgsource.size = bufferLength;
+	imgsource.offset = 0;
+	png_set_read_fn(png_ptr, &imgsource, pngReadCallback);
+
+	memset(&temp_img, 0, sizeof(IMAGE));
+	png_read_info(png_ptr, info_ptr);
+	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, NULL, NULL, NULL);
+
+	if (setjmp(png_jmpbuf(png_ptr))) {
+		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+		return 1;
+	}
+
+	// Instruct libpng to convert the image to 24-bit RGB format
+	if (color_type == PNG_COLOR_TYPE_PALETTE) {
+		png_set_palette_to_rgb(png_ptr);
+	}
+	if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA) {
+		png_set_gray_to_rgb(png_ptr);
+	}
+	if (bit_depth == 16) {
+		png_set_strip_16(png_ptr);
+	}
+	if (color_type & PNG_COLOR_MASK_ALPHA) {
+		png_set_strip_alpha(png_ptr);
+	}
+
+	temp_img.width = width;
+	temp_img.height = height;
+
+	// Initialize our img structure
+	if (img_alloc(&temp_img)) {
+		//longjmp(png_ptr->jmpbuf, 1);
+		png_jmpbuf(png_ptr);
+	}
+
+	// If bad things happen in libpng we need to do img_free(&temp_img) as well
+	if (setjmp(png_jmpbuf(png_ptr))) {
+		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+		img_free(&temp_img);
+		return 1;
+	}
+
+	// Read the .PNG image
+	png_set_bgr(png_ptr);
+	png_read_update_info(png_ptr, info_ptr);
+	png_read_image(png_ptr, temp_img.rowptr);
+	png_read_end(png_ptr, (png_infop)NULL);
+	png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+
+	if (img_process(&temp_img, img->width ? img->width : temp_img.width, img->height ? img->height : temp_img.height, nPreset, false)) {
+		img_free(&temp_img);
+		return 1;
+	}
+
+	bPngImageOrientation = 0;
+	if (height && width && height > width) bPngImageOrientation = 1;
+
+	memcpy(img, &temp_img, sizeof(IMAGE));
+
+	return 0;
+}
+
+INT32 PNGGetInfoBuffer(IMAGE* img, unsigned char* buffer, int bufferLength)
+{
+	IMAGE temp_img;
+	png_uint_32 width = 0, height = 0;
+	INT32 bit_depth, color_type;
+	
+	if (png_sig_cmp(buffer, 0, PNG_SIG_CHECK_BYTES)) {
+		return 1;
+	}
+
+	png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	if (!png_ptr) {
+		return 1;
+	}
+
+	png_infop info_ptr = png_create_info_struct(png_ptr);
+	if (!info_ptr) {
+		png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
+		return 1;
+	}
+
+	ImageSource imgsource;
+	imgsource.data = buffer;
+	imgsource.size = bufferLength;
+	imgsource.offset = 0;
+	png_set_read_fn(png_ptr, &imgsource, pngReadCallback);
+
+	memset(&temp_img, 0, sizeof(IMAGE));
+
+	png_set_sig_bytes(png_ptr, PNG_SIG_CHECK_BYTES);
+	png_read_info(png_ptr, info_ptr);
+	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, NULL, NULL, NULL);
+
+	if (setjmp(png_jmpbuf(png_ptr))) {
+		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+		return 1;
+	}
+
+	temp_img.width = width;
+	temp_img.height = height;
+
+	if (setjmp(png_jmpbuf(png_ptr))) {
+		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+		return 1;
+	}
+
+	png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+
+
+	memcpy(img, &temp_img, sizeof(IMAGE));
+	img_free(&temp_img);
+
+	return 0;
+}

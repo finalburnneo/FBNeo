@@ -8069,7 +8069,7 @@ This list contains all games supported by FinalBurn Neo.
 | rockmanj	|  	| Rockman - the power battle (950922 Japan)		| megaman	| 1995	| Capcom	| CPS1		| 					|
 | rockman2j	|  	| Rockman 2 - the power fighters (960708 Japan)		| megaman2	| 1996	| Capcom	| CPS2		| 					|
 | md_rockman	|  	| Rockman Mega World (Jpn)				| md_megaman	| 1994	| Capcom	| Sega Megadrive| 					|
-| md_rockman1	|   NW	| Rockman Mega World (Jpn, Alt)				| md_megaman	| 1994	| Capcom	| Sega Megadrive| 					|
+| md_rockman1	|   NW	| Rockman Mega World (Jpn, Alt)				| md_megaman	| 1994	| Capcom	| Sega Megadrive| Play md_rockman or md_megaman instead!|
 | md_rockmnx3	|  	| Rockman X3						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | rmancp2j	|  	| Rockman: The Power Battle (950922 Japan)		| megaman	| 1999	| Capcom	| CPS2		| 					|
 | sms_rocky	|  	| Rocky (World)						| 		| 1987	| Sega		| Sega Master Sy| 					|
@@ -10477,13 +10477,13 @@ This list contains all games supported by FinalBurn Neo.
 | kof95a	|  	| The King of Fighters '95 (NGH-084, alternate board)	| kof95		| 1995	| SNK		| Neo Geo MVS	| 					|
 | kof95		|  	| The King of Fighters '95 (NGM-084)			| 		| 1995	| SNK		| Neo Geo MVS	| 					|
 | kof95sp	|  	| The King of Fighters '95 (Special 2017, hack)		| kof95		| 2017	| hack		| Neo Geo MVS	| 					|
-| kof96ae20	|  	| The King of Fighters '96 (Anniversary Edition 2.0.0430| kof96		| 2009	| hack		| Neo Geo MVS	| 					|
 | kof96ae	|  	| The King of Fighters '96 (Anniversary Edition, EGHT ha| kof96		| 2007	| hack		| Neo Geo MVS	| 					|
 | kof96ep	|  	| The King of Fighters '96 (bootleg / hack)		| kof96		| 1996	| bootleg	| Neo Geo MVS	| 					|
 | kof96cn	|  	| The King of Fighters '96 (Chinese Edition ver 1.0, hac| kof96		| 200?	| hack		| Neo Geo MVS	| 					|
 | kof96h	|  	| The King of Fighters '96 (NGH-214)			| kof96		| 1996	| SNK		| Neo Geo AES	| 					|
 | kof96		|  	| The King of Fighters '96 (NGM-214)			| 		| 1996	| SNK		| Neo Geo MVS	| 					|
 | kof96a	|  	| The King of Fighters '96 (NGM-214, alternate board)	| kof96		| 1996	| SNK		| Neo Geo MVS	| 					|
+| kof96ae20	|  	| The King of Fighters '96 (The Aniversary Edition 2.0 F| kof96		| 2019	| hack		| Neo Geo MVS	| 					|
 | kof97cn	|  	| The King of Fighters '97 (10th Anniversary Chinese Edi| kof97		| 2007	| hack		| Neo Geo MVS	| 					|
 | kof97k	|  	| The King of Fighters '97 (Korean release)		| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97h	|  	| The King of Fighters '97 (NGH-2320)			| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
@@ -10494,7 +10494,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof97pla	|  	| The King of Fighters '97 Plus 2003 (bootleg / hack)	| kof97		| 2003	| bootleg	| Neo Geo MVS	| 					|
 | kof98ae2016	|  	| The King of Fighters '98 (Anniversary Edition build 1.| kof98		| 2016	| hack		| Neo Geo MVS	| 					|
 | kof98ae	|  	| The King of Fighters '98 (Anniversary Edition, EGHT ha| kof98		| 2007	| hack		| Neo Geo MVS	| 					|
-| kof98cb	|  	| The King of Fighters '98 (Combo, hack)		| kof98		| 2015	| hack		| Neo Geo MVS	| 					|
+| kof98cb	|  	| The King of Fighters '98 (Combo, hack)		| kof98		| 2018	| hack		| Neo Geo MVS	| 					|
 | kof98k	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98ka	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98h	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|

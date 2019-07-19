@@ -10164,7 +10164,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rockman1" cloneof="megaman" romof="megaman">
-		<description>Rockman Mega World (Jpn, Alt)</description>
+		<description>Rockman Mega World (Jpn, Alt) [Play md_rockman or md_megaman instead!]</description>
 		<year>1994</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="rockman mega world (jpn) (alt).bin" size="2097152" crc="85c956ef"/>

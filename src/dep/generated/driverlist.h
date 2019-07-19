@@ -10701,13 +10701,13 @@ DRV		BurnDrvKof95h;
 DRV		BurnDrvKof95a;
 DRV		BurnDrvKof95;
 DRV		BurnDrvKof95sp;
-DRV		BurnDrvkof96ae20;
 DRV		BurnDrvkof96ae;
 DRV		BurnDrvkof96ep;
 DRV		BurnDrvkof96cn;
 DRV		BurnDrvKof96h;
 DRV		BurnDrvKof96;
 DRV		BurnDrvKof96a;
+DRV		BurnDrvkof96ae20;
 DRV		BurnDrvkof97cn;
 DRV		BurnDrvKof97k;
 DRV		BurnDrvKof97h;
@@ -20641,7 +20641,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsRockmanj,		// Rockman - the power battle (950922 Japan)
 	&BurnDrvCpsRockman2j,		// Rockman 2 - the power fighters (960708 Japan)
 	&BurnDrvmd_rockman,			// Rockman Mega World (Jpn)
-	&BurnDrvmd_rockman1,		// Rockman Mega World (Jpn, Alt) [no comment, NOT WORKING]
+	&BurnDrvmd_rockman1,		// Rockman Mega World (Jpn, Alt) [Play md_rockman or md_megaman instead!, NOT WORKING]
 	&BurnDrvmd_rockmnx3,		// Rockman X3
 	&BurnDrvCpsRmancp2j,		// Rockman: The Power Battle (950922 Japan)
 	&BurnDrvsms_rocky,			// Rocky (World)
@@ -23097,13 +23097,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKof95a,				// The King of Fighters '95 (NGH-084, alternate board)
 	&BurnDrvKof95,				// The King of Fighters '95 (NGM-084)
 	&BurnDrvKof95sp,			// The King of Fighters '95 (Special 2017, hack)
-	&BurnDrvkof96ae20,			// The King of Fighters '96 (Anniversary Edition 2.0.0430, EGHT hack)
 	&BurnDrvkof96ae,			// The King of Fighters '96 (Anniversary Edition, EGHT hack)
 	&BurnDrvkof96ep,			// The King of Fighters '96 (bootleg / hack)
 	&BurnDrvkof96cn,			// The King of Fighters '96 (Chinese Edition ver 1.0, hack)
 	&BurnDrvKof96h,				// The King of Fighters '96 (NGH-214)
 	&BurnDrvKof96,				// The King of Fighters '96 (NGM-214)
 	&BurnDrvKof96a,				// The King of Fighters '96 (NGM-214, alternate board)
+	&BurnDrvkof96ae20,			// The King of Fighters '96 (The Aniversary Edition 2.0 Final Version 2019-05-30)
 	&BurnDrvkof97cn,			// The King of Fighters '97 (10th Anniversary Chinese Edition, EGHT hack)
 	&BurnDrvKof97k,				// The King of Fighters '97 (Korean release)
 	&BurnDrvKof97h,				// The King of Fighters '97 (NGH-2320)

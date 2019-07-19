@@ -401,6 +401,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 			sample_ptr->flags = si.nFlags;
 			bprintf(0, _T("Loading \"%S\": "), szSampleName);
 			make_raw((UINT8*)destination, length);
+			free(destination); // ZipLoadOneFile uses malloc()
 		} else {
 			sample_ptr->flags = SAMPLE_IGNORE;
 		}
@@ -410,8 +411,6 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->playback_rate = 100;
-
-		BurnFree (destination);
 
 		BurnSetProgressRange(1.0 / nTotalSamples);
 		BurnUpdateProgress((double)1.0 / i * nTotalSamples, _T("Loading samples..."), 0);
@@ -482,7 +481,7 @@ void BurnSampleInitOne(INT32 sample)
 		make_raw((UINT8*)destination, length);
 	}
 
-	BurnFree (destination);
+	free(destination); // ZipLoadOneFile uses malloc()
 }
 
 void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir)

@@ -1820,7 +1820,7 @@ static struct BurnRomInfo BullfgtRomDesc[] = {
 	{ "epr-6069.86",       0x004000, 0xfe691e41, BRF_GRA },		  	  // 13 Sprites
 	{ "epr-6070.93",       0x004000, 0x34f080df, BRF_GRA },		  	  // 14 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
 };
 
 STD_ROM_PICK(Bullfgt)
@@ -1843,7 +1843,7 @@ static struct BurnRomInfo ThetogyuRomDesc[] = {
 	{ "epr-6069.117",      0x004000, 0xfe691e41, BRF_GRA },		  	  // 13 Sprites
 	{ "epr-6070.110",      0x004000, 0x34f080df, BRF_GRA },		  	  // 14 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
 };
 
 STD_ROM_PICK(Thetogyu)
@@ -2093,6 +2093,9 @@ static struct BurnRomInfo GardiajRomDesc[] = {
 	{ "pr-7344.ic14",       0x0100, 0x3e7babd7, BRF_GRA }, 			// 12
 	{ "pr-7343.ic8",        0x0100, 0x371c44a6, BRF_GRA }, 			// 13
 	{ "pr5317.ic28",        0x0100, 0x648350b8, BRF_OPT }, 			// 14 Timing proms
+	
+	{ "315-5137.bin",       0x0104, 0x6ffd9e6f, BRF_OPT }, 			// 15 Plds
+	{ "315-5138.bin",       0x0104, 0xdd223015, BRF_OPT }, 			// 16
 };
 
 STD_ROM_PICK(Gardiaj)
@@ -2667,7 +2670,7 @@ static struct BurnRomInfo NprincesRomDesc[] = {
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  15 Sprites
 	{ "epr-6549.05",       0x004000, 0xd2057668, BRF_GRA },		  //  16 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
 };
 
 STD_ROM_PICK(Nprinces)
@@ -2692,7 +2695,7 @@ static struct BurnRomInfo NprincesoRomDesc[] = {
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  12 Sprites
 	{ "epr-6549.05",       0x004000, 0xd2057668, BRF_GRA },		  //  13 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
 };
 
 STD_ROM_PICK(Nprinceso)
@@ -2772,7 +2775,7 @@ static struct BurnRomInfo SpatterRomDesc[] = {
 	{ "epr-6307.05",       0x004000, 0x0a5ad543, BRF_GRA },		  //  12 Sprites
 	{ "epr-6309.110",      0x004000, 0x7423ad98, BRF_GRA },		  //  13 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
 };
 
 STD_ROM_PICK(Spatter)
@@ -2797,7 +2800,7 @@ static struct BurnRomInfo SsanchanRomDesc[] = {
 	{ "epr-6307.05",       0x004000, 0x0a5ad543, BRF_GRA },		  //  12 Sprites
 	{ "epr-6309.110",      0x004000, 0x7423ad98, BRF_GRA },		  //  13 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
 };
 
 STD_ROM_PICK(Ssanchan)
@@ -2946,7 +2949,7 @@ static struct BurnRomInfo TeddybboblRomDesc[] = {
 	{ "4.f3",	           0x004000, 0x1be35a97, BRF_GRA },		  //  7 Sprites
 	{ "6.k3",        	   0x004000, 0x6b53aa7a, BRF_GRA },		  //  8 Sprites
 	{ "5.h3",	           0x004000, 0x565c25d0, BRF_GRA },		  //  9 Sprites
-	{ "7.m3",        	   0x004000, 0xe116285f, BRF_GRA },		  //  10 Sprites
+	{ "7.m3",        	   0x004000, 0xe116285f, BRF_GRA },		  // 10 Sprites
 
 	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
 
@@ -3190,7 +3193,7 @@ static struct BurnRomInfo Wboy2uRomDesc[] = {
 	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  15 Sprites
 	{ "epr-7488.05",       0x004000, 0x007c2f1b, BRF_GRA },		  //  16 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
 };
 
 STD_ROM_PICK(Wboy2u)
@@ -3312,7 +3315,7 @@ static struct BurnRomInfo WbdeluxeRomDesc[] = {
 	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  15 Sprites
 	{ "epr-7488.05",       0x004000, 0x007c2f1b, BRF_GRA },		  //  16 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
 };
 
 STD_ROM_PICK(Wbdeluxe)
@@ -6856,7 +6859,7 @@ struct BurnDriver BurnDrvNprincesb = {
 
 struct BurnDriver BurnDrvSpatter = {
 	"spatter", NULL, NULL, NULL, "1984",
-	"Spatter\0", NULL, "Sega", "System 1",
+	"Spatter (315-5xxx)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
 	NULL, SpatterRomInfo, SpatterRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, SpatterDIPInfo,

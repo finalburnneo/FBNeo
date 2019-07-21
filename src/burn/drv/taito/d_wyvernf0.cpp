@@ -703,7 +703,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Wyvern F-0
+// Wyvern F-0 (Rev 1)
 
 static struct BurnRomInfo wyvernf0RomDesc[] = {
 	{ "a39_01-1.ic37",	0x4000, 0xa94887ec, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -720,12 +720,12 @@ static struct BurnRomInfo wyvernf0RomDesc[] = {
 	{ "a39_09.ic96",	0x4000, 0xc0cee243, 3 | BRF_GRA },           //  9
 	{ "a39_08.ic75",	0x4000, 0x0ad69501, 3 | BRF_GRA },           // 10
 
-	{ "a39_14.ic99",	0x2000, 0x90a66147, 4 | BRF_GRA },           // 11 Tiles
+	{ "a39_15.ic99",	0x2000, 0x90a66147, 4 | BRF_GRA },           // 11 Tiles
 	{ "a39_14.ic73",	0x2000, 0xa31f3507, 4 | BRF_GRA },           // 12
 	{ "a39_13.ic100",	0x2000, 0xbe708238, 4 | BRF_GRA },           // 13
 	{ "a39_12.ic74",	0x2000, 0x1cc389de, 4 | BRF_GRA },           // 14
 
-	{ "a39_mcu.icxx",	0x0800, 0x00000000, 4 | BRF_OPT | BRF_PRG | BRF_NODUMP }, //  15 MCU Code (not dumped)
+	{ "a39_mcu.ic23",	0x0800, 0x00000000, 4 | BRF_OPT | BRF_PRG | BRF_NODUMP }, //  15 MCU Code (not dumped)
 };
 
 STD_ROM_PICK(wyvernf0)
@@ -733,10 +733,50 @@ STD_ROM_FN(wyvernf0)
 
 struct BurnDriver BurnDrvWyvernf0 = {
 	"wyvernf0", NULL, NULL, NULL, "1985",
-	"Wyvern F-0\0", NULL, "Taito", "Miscellaneous",
+	"Wyvern F-0 (Rev 1)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2,  HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, wyvernf0RomInfo, wyvernf0RomName, NULL, NULL, NULL, NULL, Wyvernf0InputInfo, Wyvernf0DIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Wyvern F-0 
+/* Possibly the first version or even an earlier development version as A39 06 above isn't labeled as A39 06-1 */
+
+static struct BurnRomInfo wyvernf0aRomDesc[] = {
+	{ "soft1_c2a0.ic37",	0x4000, 0x15f0beb8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "soft2_7b60.ic36",	0x4000, 0x569a40c4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ext1.ic35",			0x4000, 0x50314281, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ext2.ic34",			0x4000, 0x7a225bf9, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ext3.ic33",			0x4000, 0x41f21a67, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ext4_8ca8.ic32",		0x4000, 0xdeb2d850, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "sound_4182.ic26",	0x4000, 0x5a681fb4, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
+
+	{ "obj4_d779.ic99",		0x4000, 0xaf70e1dc, 3 | BRF_GRA },           //  7 Sprites
+	{ "obj3_5852.ic78",		0x4000, 0xa84380fb, 3 | BRF_GRA },           //  8
+	{ "obj2_50fd.ic96",		0x4000, 0xc0cee243, 3 | BRF_GRA },           //  9
+	{ "obj1_bd50.ic75",		0x4000, 0x0ad69501, 3 | BRF_GRA },           // 10
+
+	{ "sch_4.ic99",			0x2000, 0x90a66147, 4 | BRF_GRA },           // 11 Tiles
+	{ "sch_3.ic73",			0x2000, 0xa31f3507, 4 | BRF_GRA },           // 12
+	{ "sch_2.ic100",		0x2000, 0xbe708238, 4 | BRF_GRA },           // 13
+	{ "sch_1.ic74",		0x2000, 0x1cc389de, 4 | BRF_GRA },           // 14
+
+	{ "mc68705p5s.ic23",	0x0800, 0x00000000, 4 | BRF_OPT | BRF_PRG | BRF_NODUMP }, //  15 MCU Code (not dumped)
+};
+
+STD_ROM_PICK(wyvernf0a)
+STD_ROM_FN(wyvernf0a)
+
+struct BurnDriver BurnDrvWyvernf0a = {
+	"wyvernf0a", "wyvernf0", NULL, NULL, "1985",
+	"Wyvern F-0\0", NULL, "Taito Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2,  HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	NULL, wyvernf0aRomInfo, wyvernf0aRomName, NULL, NULL, NULL, NULL, Wyvernf0InputInfo, Wyvernf0DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

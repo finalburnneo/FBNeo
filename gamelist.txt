@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12119 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12128 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2733,6 +2733,7 @@ This list contains all games supported by FinalBurn Neo.
 | drgw3		| D NW	| Dragon World 3 (V106, Korea)				| 		| 1998	| IGS		| PolyGameMaster| 					|
 | drgw3105	| D NW	| Dragon World 3 (ver. 105)				| drgw3		| 1998	| IGS		| PolyGameMaster| 					|
 | dwex		| D NW	| Dragon World 3 EX (ver. 100)				| 		| 1998	| IGS		| PolyGameMaster| 					|
+| dwex101cn	| D NW	| Dragon World 3 EX (ver. 101, China)			| dwex		| 1998	| IGS		| PolyGameMaster| 					|
 | drgw2hk	|  	| Dragon World II (V100H, Hong Kong)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | dw2v100x	|  	| Dragon World II (V100X, World)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | drgw2		|  	| Dragon World II (V110X, World)			| 		| 1997	| IGS		| PolyGameMaster| 					|
@@ -4217,6 +4218,7 @@ This list contains all games supported by FinalBurn Neo.
 | hangzo	|  	| Hangzo (Japan, prototype)				| 		| 1992	| Hot-B		| DECO IC16	| 					|
 | pce_haniisky	|  	| Hanii in the Sky					| 		| 1989	| Face		| PC Engine	| 					|
 | pce_haniirod	|  	| Hanii on the Road					| 		| 1990	| Face		| PC Engine	| 					|
+| happy6100hk	|  	| Happy 6-in-1 (V100HK - V100MK, Hong Kong)		| happy6	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | happy6101	|  	| Happy 6-in-1 (V101 - V100MK, China)			| happy6	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | happy6	|  	| Happy 6-in-1 (V102 - V101MK, China)			| 		| 2004	| IGS		| PolyGameMaster| 					|
 | msx_happyfret	|  	| Happy Fret						| 		| 1985	| Micro Cabin	| MSX		| Uses joyport #2			|
@@ -7169,6 +7171,7 @@ This list contains all games supported by FinalBurn Neo.
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105)			| 		| 1999	| IGS		| PolyGameMaster| 					|
 | pgm3in1	| D NW	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
+| py2k2100	| D NW	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
 | py2k2		| D NW	| Photo Y2K 2 (VM101XX, Taiwan)				| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
 | phozon	|  	| Phozon (Japan)					| 		| 1983	| Namco		| Miscellaneous	| 					|
 | phozons	|  	| Phozon (Sidam)					| phozon	| 1983	| Namco (Sidam l| Miscellaneous	| 					|
@@ -7549,6 +7552,7 @@ This list contains all games supported by FinalBurn Neo.
 | puzzloopk	|  	| Puzz Loop (Korea)					| puzzloop	| 1998	| Mitchell	| Super Kaneko N| 					|
 | puzzloopu	|  	| Puzz Loop (USA)					| puzzloop	| 1998	| Mitchell	| Super Kaneko N| 					|
 | pzloop2jr1	|  	| Puzz Loop 2 (010205 Japan)				| pzloop2	| 2001	| Mitchell, dist| CPS2		| 					|
+| pzloop2jd	|  	| Puzz Loop 2 (010226 Japan Phoenix Edition)		| pzloop2	| 2001	| bootleg	| CPS2		| 					|
 | pzloop2j	|  	| Puzz Loop 2 (010226 Japan)				| pzloop2	| 2001	| Mitchell, dist| CPS2		| 					|
 | pzloop2	|  	| Puzz Loop 2 (010302 Euro)				| 		| 2001	| Mitchell, dist| CPS2		| 					|
 | md_ichir	|  	| Puzzle & Action - Ichidant-R (Jpn)			| 		| 1995	| Sega		| Sega Megadrive| 					|
@@ -7854,6 +7858,7 @@ This list contains all games supported by FinalBurn Neo.
 | razmataz	|   NW	| Razzmatazz						| 		| 1983	| Sega		| Zaxxon	| 					|
 | reaktor	|  	| Reaktor (Track & Field conversion)			| 		| 1987	| Zilec		| Miscellaneous	| 					|
 | photoy2k102	|  	| Real and Fake\0Photo Y2K (V102, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
+| photoy2k103j	|  	| Real and Fake\0Photo Y2K (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | rbff1a	|  	| Real Bout Fatal Fury / Real Bout Garou Densetsu (bug f| rbff1		| 1995	| SNK		| Neo Geo MVS	| 					|
 | rbff1k	|  	| Real Bout Fatal Fury / Real Bout Garou Densetsu (Korea| rbff1		| 1995	| SNK		| Neo Geo MVS	| 					|
 | rbff1		|  	| Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-0| 		| 1995	| SNK		| Neo Geo MVS	| 					|
@@ -9011,7 +9016,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_sparkstru	|  	| Sparkster (USA)					| md_sparkstr	| 1994	| Konami	| Sega Megadrive| 					|
 | sparkz	|  	| Sparkz (prototype)					| 		| 1992	| Atari Games	| Miscellaneous	| 					|
 | spartanx	|  	| Spartan X (Japan)					| kungfum	| 1984	| Irem		| Irem M62	| 					|
-| spatter	|  	| Spatter						| 		| 1984	| Sega		| System 1	| 					|
+| spatter	|  	| Spatter (315-5xxx)					| 		| 1984	| Sega		| System 1	| 					|
 | speakresb	|  	| Speak & Rescue (bootleg)				| speakres	| 1980	| bootleg	| Route 16	| 					|
 | speakres	|  	| Speak & Rescue					| 		| 1980	| Sun Electronic| Route 16	| 					|
 | sms_sci	|  	| Special Criminal Investigation (Euro)			| 		| 1992	| Sega		| Sega Master Sy| 					|
@@ -10161,6 +10166,7 @@ This list contains all games supported by FinalBurn Neo.
 | tmnt22pu	|  	| Teenage Mutant Ninja Turtles - Turtles in Time (2 Play| tmnt2		| 1991	| Konami	| GX063		| 					|
 | tmnt2a	|  	| Teenage Mutant Ninja Turtles - Turtles in Time (4 Play| tmnt2		| 1991	| Konami	| GX063		| 					|
 | tmnt2		|  	| Teenage Mutant Ninja Turtles - Turtles in Time (4 Play| 		| 1991	| Konami	| GX063		| 					|
+| tmnt24pu	|  	| Teenage Mutant Ninja Turtles - Turtles in Time (4 Play| tmnt2		| 1991	| Konami	| GX063		| 					|
 | md_tmntru	|  	| Teenage Mutant Ninja Turtles - Vozvrashchenie Legendy | 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_teiketsu	|  	| Teitoku no Ketsudan (Jpn)				| md_pto	| 1992	| Koei		| Sega Megadrive| 					|
 | tekipakit	|  	| Teki Paki (location test)				| tekipaki	| 1991	| Toaplan	| Toaplan GP9001| 					|
@@ -10460,6 +10466,7 @@ This list contains all games supported by FinalBurn Neo.
 | karatour	|  	| The Karate Tournament					| 		| 1992	| Mitchell	| Miscellaneous	| 					|
 | md_kickbox	|  	| The Kick Boxing (Jpn, Kor)				| md_bestof	| 1993	| Micro World	| Sega Megadrive| 					|
 | killbld104	|  	| The Killing Blade (V104)				| killbld	| 1998	| IGS		| PolyGameMaster| 					|
+| killbld106	|  	| The Killing Blade (V106)				| killbld	| 1998	| IGS		| PolyGameMaster| 					|
 | killbld	|  	| The Killing Blade (V109, China)			| 		| 1998	| IGS		| PolyGameMaster| 					|
 | killbldp	|  	| The Killing Blade Plus (V300)				| 		| 2005	| IGS		| PolyGameMaster| 					|
 | md_killshow	|  	| The Killing Game Show (Jpn)				| md_fatalrew	| 1993	| Electronic Art| Sega Megadrive| 					|
@@ -10544,6 +10551,7 @@ This list contains all games supported by FinalBurn Neo.
 | lastbladsp	|  	| The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Sp| lastblad	| 2017	| SNK		| Neo Geo MVS	| 					|
 | lastbld2eh	|  	| The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka| lastbld2	| 1998	| SNK		| Neo Geo MVS	| 					|
 | lastbld2	|  	| The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka| 		| 1998	| SNK		| Neo Geo MVS	| 					|
+| lastbld2te	|  	| The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka| lastbld2	| 1998	| SNK		| Neo Geo MVS	| 					|
 | lastday	|  	| The Last Day (set 1)					| 		| 1990	| Dooyong	| Miscellaneous	| 					|
 | lastdaya	|  	| The Last Day (set 2)					| lastday	| 1990	| Dooyong	| Miscellaneous	| 					|
 | lastsold	|  	| The Last Soldier (Korean release of The Last Blade)	| lastblad	| 1997	| SNK		| Neo Geo MVS	| 					|
@@ -11829,7 +11837,8 @@ This list contains all games supported by FinalBurn Neo.
 | wwfmaniac	| D	| WWF: Wrestlemania (rev 1.1 07/11/95)			| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
 | wwfmaniab	| D	| WWF: Wrestlemania (rev 1.20 08/02/95)			| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
 | wwfmania	| D	| WWF: Wrestlemania (rev 1.30 08/10/95)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
-| wyvernf0	|  	| Wyvern F-0						| 		| 1985	| Taito		| Miscellaneous	| 					|
+| wyvernf0	|  	| Wyvern F-0 (Rev 1)					| 		| 1985	| Taito Corporat| Miscellaneous	| 					|
+| wyvernf0a	|  	| Wyvern F-0						| wyvernf0	| 1985	| Taito Corporat| Miscellaneous	| 					|
 | xmultiplm72	|  	| X Multiply (Japan, M72)				| xmultipl	| 1989	| Irem		| Irem M72	| 					|
 | xmultipl	|  	| X Multiply (World, M81)				| 		| 1989	| Irem		| Irem M81	| 					|
 | xsedae	| D NW	| X Se Dae Quiz (Korea)					| 		| 1993	| Dream Island	| Miscellaneous	| 					|

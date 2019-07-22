@@ -2796,6 +2796,7 @@ DRV		BurnDrvDw2001;
 DRV		BurnDrvDrgw3;			// no comment [NOT WORKING]
 DRV		BurnDrvDrgw3105;		// no comment [NOT WORKING]
 DRV		BurnDrvDwex;			// no comment [NOT WORKING]
+DRV		BurnDrvDwex101cn;		// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvDrgw2hk;
 DRV		BurnDrvDrgw2x;
@@ -4307,6 +4308,7 @@ DRV		BurnDrvhangly3;
 DRV		BurnDrvHangzo;
 DRV		BurnDrvpce_haniisky;
 DRV		BurnDrvpce_haniirod;
+DRV		BurnDrvhappy6100hk;
 DRV		BurnDrvhappy6101;
 DRV		BurnDrvhappy6;
 DRV		BurnDrvMSX_happyfret;
@@ -7330,6 +7332,7 @@ DRV		BurnDrvPhotoy2k104;
 DRV		BurnDrvPhotoy2k;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvPgm3in1;			// Incomplete dump [NOT WORKING]
+DRV		BurnDrvPy2k2100;		// Incomplete dump [NOT WORKING]
 DRV		BurnDrvPy2k2;			// Incomplete dump [NOT WORKING]
 #endif
 DRV		BurnDrvPhozon;
@@ -7719,6 +7722,7 @@ DRV		BurnDrvPuzzloopj;
 DRV		BurnDrvPuzzloopk;
 DRV		BurnDrvPuzzloopu;
 DRV		BurnDrvCpsPzloop2jr1;
+DRV		BurnDrvCpsPzloop2jd;
 DRV		BurnDrvCpsPzloop2j;
 DRV		BurnDrvCpsPzloop2;
 DRV		BurnDrvmd_ichir;
@@ -8030,6 +8034,7 @@ DRV		BurnDrvRayforcej;
 DRV		BurnDrvRazmataz;
 DRV		BurnDrvReaktor;
 DRV		BurnDrvphotoy2k102;
+DRV		BurnDrvphotoy2k103j;
 DRV		BurnDrvrbff1a;
 DRV		BurnDrvrbff1k;
 DRV		BurnDrvrbff1;
@@ -10381,6 +10386,7 @@ DRV		BurnDrvmd_tmnttfu;
 DRV		BurnDrvTmnt22pu;
 DRV		BurnDrvTmnt2a;
 DRV		BurnDrvTmnt2;
+DRV		BurnDrvTmnt24pu;
 DRV		BurnDrvmd_tmntru;
 DRV		BurnDrvmd_teiketsu;
 DRV		BurnDrvTekiPakit;
@@ -10684,6 +10690,7 @@ DRV		BurnDrvKaratourj;
 DRV		BurnDrvKaratour;
 DRV		BurnDrvmd_kickbox;
 DRV		BurnDrvKillbld104;
+DRV		BurnDrvKillbld106;
 DRV		BurnDrvKillbld;
 DRV		BurnDrvKillbldp;
 DRV		BurnDrvmd_killshow;
@@ -10768,6 +10775,7 @@ DRV		BurnDrvlastblada;
 DRV		BurnDrvlastbladsp;
 DRV		BurnDrvDlastbld2eh;
 DRV		BurnDrvlastbld2;
+DRV		BurnDrvDlastbld2te;
 DRV		BurnDrvLastday;
 DRV		BurnDrvLastdaya;
 DRV		BurnDrvlastsold;
@@ -12088,6 +12096,7 @@ DRV		BurnDrvWwfmaniab;		// no comment
 DRV		BurnDrvWwfmania;		// no comment
 #endif
 DRV		BurnDrvWyvernf0;
+DRV		BurnDrvWyvernf0a;
 DRV		BurnDrvXmultiplm72;
 DRV		BurnDrvXmultipl;
 #if defined FBNEO_DEBUG
@@ -15192,6 +15201,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDrgw3,				// Dragon World 3 (V106, Korea) [no comment, NOT WORKING]
 	&BurnDrvDrgw3105,			// Dragon World 3 (ver. 105) [no comment, NOT WORKING]
 	&BurnDrvDwex,				// Dragon World 3 EX (ver. 100) [no comment, NOT WORKING]
+	&BurnDrvDwex101cn,			// Dragon World 3 EX (ver. 101, China) [no comment, NOT WORKING]
 #endif
 	&BurnDrvDrgw2hk,			// Dragon World II (V100H, Hong Kong)
 	&BurnDrvDrgw2x,				// Dragon World II (V100X, World)
@@ -16703,6 +16713,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHangzo,				// Hangzo (Japan, prototype)
 	&BurnDrvpce_haniisky,		// Hanii in the Sky
 	&BurnDrvpce_haniirod,		// Hanii on the Road
+	&BurnDrvhappy6100hk,		// Happy 6-in-1 (V100HK - V100MK, Hong Kong)
 	&BurnDrvhappy6101,			// Happy 6-in-1 (V101 - V100MK, China)
 	&BurnDrvhappy6,				// Happy 6-in-1 (V102 - V101MK, China)
 	&BurnDrvMSX_happyfret,		// Happy Fret
@@ -19726,6 +19737,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPhotoy2k,			// Photo Y2K / Real and Fake (V105)
 #if defined FBNEO_DEBUG
 	&BurnDrvPgm3in1,			// Photo Y2K 2 (3-in-1) [Incomplete dump, NOT WORKING]
+	&BurnDrvPy2k2100,			// Photo Y2K 2 (V100, japan) [Incomplete dump, NOT WORKING]
 	&BurnDrvPy2k2,				// Photo Y2K 2 (VM101XX, Taiwan) [Incomplete dump, NOT WORKING]
 #endif
 	&BurnDrvPhozon,				// Phozon (Japan)
@@ -20115,6 +20127,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPuzzloopk,			// Puzz Loop (Korea)
 	&BurnDrvPuzzloopu,			// Puzz Loop (USA)
 	&BurnDrvCpsPzloop2jr1,		// Puzz Loop 2 (010205 Japan)
+	&BurnDrvCpsPzloop2jd,		// Puzz Loop 2 (010226 Japan Phoenix Edition)
 	&BurnDrvCpsPzloop2j,		// Puzz Loop 2 (010226 Japan)
 	&BurnDrvCpsPzloop2,			// Puzz Loop 2 (010302 Euro)
 	&BurnDrvmd_ichir,			// Puzzle & Action - Ichidant-R (Jpn)
@@ -20426,6 +20439,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRazmataz,			// Razzmatazz [no comment, NOT WORKING]
 	&BurnDrvReaktor,			// Reaktor (Track & Field conversion)
 	&BurnDrvphotoy2k102,		// Real and Fake\0Photo Y2K (V102, Japan)
+	&BurnDrvphotoy2k103j,		// Real and Fake\0Photo Y2K (V103, Japan)
 	&BurnDrvrbff1a,				// Real Bout Fatal Fury / Real Bout Garou Densetsu (bug fix revision)
 	&BurnDrvrbff1k,				// Real Bout Fatal Fury / Real Bout Garou Densetsu (Korean release)
 	&BurnDrvrbff1,				// Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-095)(NGH-095)
@@ -21605,7 +21619,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_sparkstru,		// Sparkster (USA)
 	&BurnDrvSparkz,				// Sparkz (prototype)
 	&BurnDrvSpartanx,			// Spartan X (Japan)
-	&BurnDrvSpatter,			// Spatter
+	&BurnDrvSpatter,			// Spatter (315-5xxx)
 	&BurnDrvspeakresb,			// Speak & Rescue (bootleg)
 	&BurnDrvspeakres,			// Speak & Rescue
 	&BurnDrvsms_sci,			// Special Criminal Investigation (Euro)
@@ -22777,6 +22791,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTmnt22pu,			// Teenage Mutant Ninja Turtles - Turtles in Time (2 Players ver. UDA)
 	&BurnDrvTmnt2a,				// Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver. ADA)
 	&BurnDrvTmnt2,				// Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver. UAA)
+	&BurnDrvTmnt24pu,			// Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver. UEA)
 	&BurnDrvmd_tmntru,			// Teenage Mutant Ninja Turtles - Vozvrashchenie Legendy (Rus)
 	&BurnDrvmd_teiketsu,		// Teitoku no Ketsudan (Jpn)
 	&BurnDrvTekiPakit,			// Teki Paki (location test)
@@ -23080,6 +23095,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKaratour,			// The Karate Tournament
 	&BurnDrvmd_kickbox,			// The Kick Boxing (Jpn, Kor)
 	&BurnDrvKillbld104,			// The Killing Blade (V104)
+	&BurnDrvKillbld106,			// The Killing Blade (V106)
 	&BurnDrvKillbld,			// The Killing Blade (V109, China)
 	&BurnDrvKillbldp,			// The Killing Blade Plus (V300)
 	&BurnDrvmd_killshow,		// The Killing Game Show (Jpn)
@@ -23164,6 +23180,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvlastbladsp,			// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)
 	&BurnDrvDlastbld2eh,		// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enhanced Hack)
 	&BurnDrvlastbld2,			// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (NGM-2430)(NGH-2430)
+	&BurnDrvDlastbld2te,		// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Team Edition Hack)
 	&BurnDrvLastday,			// The Last Day (set 1)
 	&BurnDrvLastdaya,			// The Last Day (set 2)
 	&BurnDrvlastsold,			// The Last Soldier (Korean release of The Last Blade)
@@ -24483,7 +24500,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWwfmaniab,			// WWF: Wrestlemania (rev 1.20 08/02/95) [no comment]
 	&BurnDrvWwfmania,			// WWF: Wrestlemania (rev 1.30 08/10/95) [no comment]
 #endif
-	&BurnDrvWyvernf0,			// Wyvern F-0
+	&BurnDrvWyvernf0,			// Wyvern F-0 (Rev 1)
+	&BurnDrvWyvernf0a,			// Wyvern F-0
 	&BurnDrvXmultiplm72,		// X Multiply (Japan, M72)
 	&BurnDrvXmultipl,			// X Multiply (World, M81)
 #if defined FBNEO_DEBUG

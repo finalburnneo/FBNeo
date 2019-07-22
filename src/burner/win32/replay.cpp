@@ -103,11 +103,8 @@ INT32 RecordInput()
 static void CheckRedraw()
 {
 	if (bRunPause) {
-		INT32 oldOk = bDrvOkay;                     // Redraw w/o running a frame.
-		bDrvOkay = 0;
 		VidRedraw();                                // Redraw screen so status doesn't get clobbered
 		VidPaint(0);                                // ""
-		bDrvOkay = oldOk;
 	}
 }
 

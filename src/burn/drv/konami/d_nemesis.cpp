@@ -3878,7 +3878,7 @@ static struct BurnRomInfo lifefrcejRomDesc[] = {
 
 	{ "587-n09.11j",	0x08000, 0xe8496150, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "587-k08.8g",		0x04000, 0x7f0e9b41, 4 | BRF_SND },           //  5 VLM5030 Samples
+	{ "587-n08.8g",		0x04000, 0x7f0e9b41, 4 | BRF_SND },           //  5 VLM5030 Samples
 
 	{ "587-c01.10a",	0x20000, 0x09fe0632, 5 | BRF_SND },           //  6 K007232 Samples
 };

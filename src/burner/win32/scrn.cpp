@@ -690,13 +690,9 @@ void PausedRedraw(void)
         INT16 *pBtemp = pBurnSoundOut;
         pBurnSoundOut = NULL;
 
-		INT32 oldOk = bDrvOkay;                     // Redraw w/o running a frame.
-		bDrvOkay = 0;
-
 		VidRedraw();
 		VidPaint(0);
 
-		bDrvOkay = oldOk;
         pBurnSoundOut = pBtemp;
     }
 }

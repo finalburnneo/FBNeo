@@ -11915,6 +11915,32 @@ static struct BurnRomInfo ProgearjdRomDesc[] = {
 STD_ROM_PICK(Progearjd)
 STD_ROM_FN(Progearjd)
 
+static struct BurnRomInfo Pzloop2jdRomDesc[] = {
+	{ "pl2j_d.03a",    0x080000, 0x1f5d41c9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pl2j_d.04a",    0x080000, 0x60721b73, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pl2j_d.05a",    0x080000, 0x51081ea4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pl2j_d.06a",    0x080000, 0x51c68494, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "pl2-simm.01c",  0x200000, 0x137b13a7, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pl2-simm.01d",  0x200000, 0xa2db1507, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pl2-simm.01a",  0x200000, 0x7e80ff8e, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pl2-simm.01b",  0x200000, 0xcd93e6ed, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pl2-simm.03c",  0x200000, 0x0f52bbca, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pl2-simm.03d",  0x200000, 0xa62712c3, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pl2-simm.03a",  0x200000, 0xb60c9f8e, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pl2-simm.03b",  0x200000, 0x83fef284, CPS2_GFX_SIMM | BRF_GRA },
+
+	{ "pl2.01",        0x020000, 0x35697569, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "pl2-simm.05a",  0x200000, 0x85d8fbe8, CPS2_QSND_SIMM | BRF_SND },
+	{ "pl2-simm.05b",  0x200000, 0x1ed62584, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Pzloop2jd)
+STD_ROM_FN(Pzloop2jd)
+
 static struct BurnRomInfo RingdstdRomDesc[] = {
 	{ "smbed.03b",     0x080000, 0xf6fba4cd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "smbed.04b",     0x080000, 0x193bc493, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -12926,6 +12952,16 @@ struct BurnDriver BurnDrvCpsProgearjd = {
 	L"\u30D7\u30ED\u30AE\u30A2\u306E\u5D50 (Progear No Arashi 010117 Japan Phoenix Edition)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_HORSHOOT, 0,
 	NULL, ProgearjdRomInfo, ProgearjdRomName, NULL, NULL, NULL, NULL, ProgearInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsPzloop2jd = {
+	"pzloop2jd", "pzloop2", NULL, NULL, "2001",
+	"Puzz Loop 2 (010226 Japan Phoenix Edition)\0", NULL, "bootleg", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_PUZZLE, 0,
+	NULL, Pzloop2jdRomInfo, Pzloop2jdRomName, NULL, NULL, NULL, NULL, Pzloop2InputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

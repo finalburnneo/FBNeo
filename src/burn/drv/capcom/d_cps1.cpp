@@ -9891,6 +9891,32 @@ theguru@emuunlim.com*/
 STD_ROM_PICK(Sf2b4)
 STD_ROM_FN(Sf2b4)
 
+static struct BurnRomInfo Sf2rkRomDesc[] = {
+	{ "w6.u222",       0x080000, 0x49422b6f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "w5.u196",       0x080000, 0x7e9c8c2f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "01 rk098",      0x100000, 0x4296de4d, BRF_GRA | CPS1_TILES },
+	{ "03 rk097",      0x100000, 0x16cf11d0, BRF_GRA | CPS1_TILES },
+	{ "02 rk037",      0x100000, 0x68ca7fce, BRF_GRA | CPS1_TILES },
+	{ "04 rk033",      0x100000, 0x9f46f926, BRF_GRA | CPS1_TILES },
+	{ "05 rk116",      0x100000, 0x4c161fa9, BRF_GRA | CPS1_TILES },
+	{ "06 rk077",      0x100000, 0xec949f8c, BRF_GRA | CPS1_TILES },
+
+	{ "1.rk",    	   0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "w7.u210",       0x040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+
+	{ "grp1.u31",      0x020000, 0x6de44671, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "grp3.u29",      0x020000, 0xe8f14362, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "grp2.u30",      0x020000, 0xbf0cd819, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "grp4.u28",      0x020000, 0x76f9f91f, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+
+	{ "2.rk",     	   0x010000, 0x13ea1c44, BRF_OPT }, // unknown
+};
+
+STD_ROM_PICK(Sf2rk)
+STD_ROM_FN(Sf2rk)
+
 static struct BurnRomInfo Sf2rulesRomDesc[] = {
     { "prh2.u222",     0x080000, 0xfff85f9b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "prl1.u196",     0x080000, 0x65c28bc9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -14202,6 +14228,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2b2"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2b3"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2b4"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
+	{ "sf2rk"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2rules"    , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2bhh"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ce"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -16627,6 +16654,29 @@ static INT32 Sf2rulesInit()
 	CpsDrawSpritesInReverse = 1;
 	
 	return DrvInit();
+}
+
+static INT32 Sf2rkInit()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2koryu;
+
+	CpsLayer1XOffs = -12;
+	CpsLayer2XOffs = -14;
+	CpsLayer3XOffs = -16;
+	CpsDrawSpritesInReverse = 1;
+
+	INT32 nRet = DrvInit();
+
+	if (!nRet) {
+		INT32 *qGFX = (INT32*)CpsGfx;
+		for (INT32 i = 0; i < 0x600000/4; i++) {
+			if (i >= 0x400000/4 && i < 0x480000/4) continue; // unscramble range
+
+			qGFX[i] = ((qGFX[i] >> 28) & 0xf) | ((qGFX[i] << 28) & 0xf0000000) | (qGFX[i] & 0x0ffffff0);
+		}
+	}
+
+	return nRet;
 }
 
 static void Sf2accp2Callback()
@@ -20398,6 +20448,16 @@ struct BurnDriver BurnDrvCpsSf2b4 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2b4RomInfo, Sf2b4RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2rk = {
+	"sf2rk", "sf2", NULL, NULL, "1991",
+	"Street Fighter II - The World Warrior (RK bootleg, 910214 etc)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2rkRomInfo, Sf2rkRomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	Sf2rkInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

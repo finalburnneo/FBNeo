@@ -2092,7 +2092,7 @@ STD_ROM_FN(photoy2k103j)
 
 struct BurnDriver BurnDrvphotoy2k103j = {
 	"photoy2k103j", "photoy2k", "pgm", NULL, "1999",
-	"Real and Fake\0Photo Y2K (V103, Japan)\0", NULL, "IGS", "PolyGameMaster",
+	"Photo Y2K / Real and Fake (V103, Japan)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u30EA\u30A2\u30EB\u30A2\u30F3\u30C9 \u30D5\u30A7\u30A4\u30AF\0Photo Y2K\0\u5927\u5BB6\u6765 \u627E\u78B4\0\u8D85\u7EA7 \u6BD4\u4E00\u6BD4 (V103, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING  | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
 	NULL, photoy2k103jRomInfo, photoy2k103jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, photoy2kDIPInfo,
@@ -2131,7 +2131,7 @@ STD_ROM_FN(photoy2k102)
 
 struct BurnDriver BurnDrvphotoy2k102 = {
 	"photoy2k102", "photoy2k", "pgm", NULL, "1999",
-	"Real and Fake\0Photo Y2K (V102, Japan)\0", NULL, "IGS", "PolyGameMaster",
+	"Photo Y2K / Real and Fake (V102, Japan)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u30EA\u30A2\u30EB\u30A2\u30F3\u30C9 \u30D5\u30A7\u30A4\u30AF\0Photo Y2K\0\u5927\u5BB6\u6765 \u627E\u78B4\0\u8D85\u7EA7 \u6BD4\u4E00\u6BD4 (V102, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING  | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
 	NULL, photoy2k102RomInfo, photoy2k102RomName, NULL, NULL, NULL, NULL, pgmInputInfo, photoy2kDIPInfo,

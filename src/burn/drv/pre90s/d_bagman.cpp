@@ -1579,7 +1579,13 @@ STD_ROM_FN(botanic)
 static INT32 BotanicInit()
 {
 	botanic_input_xor = 0x02;
-	return BagmanCommonInit(4, 1);
+	INT32 nRet = BagmanCommonInit(4, 1);
+
+	if (!nRet) {
+		GenericTilemapSetOffsets(0, 0, -16);
+	}
+
+	return nRet;
 }
 
 struct BurnDriver BurnDrvBotanic = {

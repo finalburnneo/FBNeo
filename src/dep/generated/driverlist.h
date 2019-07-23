@@ -5947,18 +5947,23 @@ DRV		BurnDrvmd_mgs;
 DRV		BurnDrvMetlhawkj;
 DRV		BurnDrvMetlhawk;
 DRV		BurnDrvMetlsavr;
+DRV		BurnDrvmslugdg;
 DRV		BurnDrvmslug;
+DRV		BurnDrvmslug2dg;
 DRV		BurnDrvMSlug2;
 DRV		BurnDrvMSlug2t;
+DRV		BurnDrvmslug3g;
 DRV		BurnDrvmslug3v;
 DRV		BurnDrvmslug3h;
 DRV		BurnDrvmslug3;
 DRV		BurnDrvmslug3a;
+DRV		BurnDrvmslug4dg;
 DRV		BurnDrvmslug4h;
 DRV		BurnDrvmslug4;
 DRV		BurnDrvms4plus;
 DRV		BurnDrvmslug5b;
 DRV		BurnDrvms5pcb;
+DRV		BurnDrvmslug5g;
 DRV		BurnDrvmslug5h;
 DRV		BurnDrvmslug5;
 DRV		BurnDrvMslug5w;
@@ -7328,6 +7333,8 @@ DRV		BurnDrvPhoenixj;
 DRV		BurnDrvPhoenixt;
 DRV		BurnDrvPhoenxp2;
 DRV		BurnDrvPhotof;
+DRV		BurnDrvphotoy2k102;
+DRV		BurnDrvphotoy2k103j;
 DRV		BurnDrvPhotoy2k104;
 DRV		BurnDrvPhotoy2k;
 #if defined FBNEO_DEBUG
@@ -8033,8 +8040,6 @@ DRV		BurnDrvRayforce;
 DRV		BurnDrvRayforcej;
 DRV		BurnDrvRazmataz;
 DRV		BurnDrvReaktor;
-DRV		BurnDrvphotoy2k102;
-DRV		BurnDrvphotoy2k103j;
 DRV		BurnDrvrbff1a;
 DRV		BurnDrvrbff1k;
 DRV		BurnDrvrbff1;
@@ -9541,6 +9546,7 @@ DRV		BurnDrvCpsSf2b3;
 DRV		BurnDrvCpsSf2b4;
 DRV		BurnDrvCpsSf2qp2;
 DRV		BurnDrvCpsSf2qp1;
+DRV		BurnDrvCpsSf2rk;
 DRV		BurnDrvCpsSf2stt;
 DRV		BurnDrvCpsSf2ebbl2;
 DRV		BurnDrvCpsSf2ebbl3;
@@ -18352,18 +18358,23 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMetlhawkj,			// Metal Hawk (Japan, Rev F)
 	&BurnDrvMetlhawk,			// Metal Hawk (Rev C)
 	&BurnDrvMetlsavr,			// Metal Saver
+	&BurnDrvmslugdg,			// Metal Slug (Multifunction Hack)
 	&BurnDrvmslug,				// Metal Slug - Super Vehicle-001
+	&BurnDrvmslug2dg,			// Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack)
 	&BurnDrvMSlug2,				// Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-2410)
 	&BurnDrvMSlug2t,			// Metal Slug 2 Turbo (NGM-9410)
+	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction Hack)
 	&BurnDrvmslug3v,			// Metal Slug 3 (NGH-2560) (Enhanced Violence Version hack by EEZEZY)
 	&BurnDrvmslug3h,			// Metal Slug 3 (NGH-2560)
 	&BurnDrvmslug3,				// Metal Slug 3 (NGM-2560)
 	&BurnDrvmslug3a,			// Metal Slug 3 (NGM-2560, earlier)
+	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction Hack)
 	&BurnDrvmslug4h,			// Metal Slug 4 (NGH-2630)
 	&BurnDrvmslug4,				// Metal Slug 4 (NGM-2630)
 	&BurnDrvms4plus,			// Metal Slug 4 Plus (bootleg)
 	&BurnDrvmslug5b,			// Metal Slug 5 (bootleg)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
+	&BurnDrvmslug5g,			// Metal Slug 5 (Multifunction Hack)
 	&BurnDrvmslug5h,			// Metal Slug 5 (NGH-2680)
 	&BurnDrvmslug5,				// Metal Slug 5 (NGM-2680)
 	&BurnDrvMslug5w,			// Metal Slug 5 (W)
@@ -19733,6 +19744,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPhoenixt,			// Phoenix (Taito)
 	&BurnDrvPhoenxp2,			// Phoenix Part 2
 	&BurnDrvPhotof,				// Photo Finish (bootleg?)
+	&BurnDrvphotoy2k102,		// Photo Y2K / Real and Fake (V102, Japan)
+	&BurnDrvphotoy2k103j,		// Photo Y2K / Real and Fake (V103, Japan)
 	&BurnDrvPhotoy2k104,		// Photo Y2K / Real and Fake (V104)
 	&BurnDrvPhotoy2k,			// Photo Y2K / Real and Fake (V105)
 #if defined FBNEO_DEBUG
@@ -20438,8 +20451,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRayforcej,			// Ray Force (Ver 2.3J 1994/01/20)
 	&BurnDrvRazmataz,			// Razzmatazz [no comment, NOT WORKING]
 	&BurnDrvReaktor,			// Reaktor (Track & Field conversion)
-	&BurnDrvphotoy2k102,		// Real and Fake\0Photo Y2K (V102, Japan)
-	&BurnDrvphotoy2k103j,		// Real and Fake\0Photo Y2K (V103, Japan)
 	&BurnDrvrbff1a,				// Real Bout Fatal Fury / Real Bout Garou Densetsu (bug fix revision)
 	&BurnDrvrbff1k,				// Real Bout Fatal Fury / Real Bout Garou Densetsu (Korean release)
 	&BurnDrvrbff1,				// Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-095)(NGH-095)
@@ -21946,6 +21957,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2b4,			// Street Fighter II - The World Warrior (bootleg, 910214 etc, set 4)
 	&BurnDrvCpsSf2qp2,			// Street Fighter II - The World Warrior (Quicken bootleg, 910522 USA)
 	&BurnDrvCpsSf2qp1,			// Street Fighter II - The World Warrior (Quicken Pt-I bootleg, 910214 USA)
+	&BurnDrvCpsSf2rk,			// Street Fighter II - The World Warrior (RK bootleg, 910214 etc)
 	&BurnDrvCpsSf2stt,			// Street Fighter II - The World Warrior (STT, TAB Austria bootleg, 910214 etc)
 	&BurnDrvCpsSf2ebbl2,		// Street Fighter II - The World Warrior (TAB Austria bootleg set 2, 910214 etc)
 	&BurnDrvCpsSf2ebbl3,		// Street Fighter II - The World Warrior (TAB Austria bootleg set 3, 910214 etc)

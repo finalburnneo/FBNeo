@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12128 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12134 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -5819,18 +5819,23 @@ This list contains all games supported by FinalBurn Neo.
 | metlhawkj	|  	| Metal Hawk (Japan, Rev F)				| metlhawk	| 1988	| Namco		| System 2	| 					|
 | metlhawk	|  	| Metal Hawk (Rev C)					| 		| 1988	| Namco		| System 2	| 					|
 | metlsavr	|  	| Metal Saver						| 		| 1994	| First Amusemen| Miscellaneous	| 					|
+| mslugdg	|  	| Metal Slug (Multifunction Hack)			| mslug		| 2018	| hack		| Neo Geo MVS	| 					|
 | mslug		|  	| Metal Slug - Super Vehicle-001			| 		| 1996	| Nazca		| Neo Geo MVS	| 					|
+| mslug2dg	|  	| Metal Slug 2 - Super Vehicle-001/II (Multifunction Hac| mslug2	| 2017	| hack		| Neo Geo MVS	| 					|
 | mslug2	|  	| Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-24| 		| 1998	| SNK		| Neo Geo MVS	| 					|
 | mslug2t	|  	| Metal Slug 2 Turbo (NGM-9410)				| mslug2	| 2015	| Hack		| Neo Geo MVS	| 					|
+| mslug3g	|  	| Metal Slug 3 (Multifunction Hack)			| mslug3	| 2019	| hack		| Neo Geo MVS	| 					|
 | mslug3v	|  	| Metal Slug 3 (NGH-2560) (Enhanced Violence Version hac| mslug3	| 2012	| SNK		| Neo Geo MVS	| 					|
 | mslug3h	|  	| Metal Slug 3 (NGH-2560)				| mslug3	| 2000	| SNK		| Neo Geo MVS	| 					|
 | mslug3	|  	| Metal Slug 3 (NGM-2560)				| 		| 2000	| SNK		| Neo Geo MVS	| 					|
 | mslug3a	|  	| Metal Slug 3 (NGM-2560, earlier)			| mslug3	| 2000	| SNK		| Neo Geo MVS	| 					|
+| mslug4dg	|  	| Metal Slug 4 (Multifunction Hack)			| mslug4	| 2017	| hack		| Neo Geo	| 					|
 | mslug4h	|  	| Metal Slug 4 (NGH-2630)				| mslug4	| 2002	| Mega		| Neo Geo MVS	| 					|
 | mslug4	|  	| Metal Slug 4 (NGM-2630)				| 		| 2002	| Mega		| Neo Geo MVS	| 					|
 | ms4plus	|  	| Metal Slug 4 Plus (bootleg)				| mslug4	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | mslug5b	|  	| Metal Slug 5 (bootleg)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | ms5pcb	|  	| Metal Slug 5 (JAMMA PCB)				| 		| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
+| mslug5g	|  	| Metal Slug 5 (Multifunction Hack)			| mslug5	| 2017	| hack		| Neo Geo MVS	| 					|
 | mslug5h	|  	| Metal Slug 5 (NGH-2680)				| mslug5	| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
 | mslug5	|  	| Metal Slug 5 (NGM-2680)				| 		| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
 | mslug5w	|  	| Metal Slug 5 (W)					| mslug5	| 2003	| C.B		| Miscellaneous	| 					|
@@ -7168,6 +7173,8 @@ This list contains all games supported by FinalBurn Neo.
 | phoenixt	|  	| Phoenix (Taito)					| phoenix	| 1980	| Amstar (Taito | Miscellaneous	| 					|
 | phoenxp2	|  	| Phoenix Part 2					| phoenix	| 1981	| bootleg	| Galaxian	| 					|
 | photof	|  	| Photo Finish (bootleg?)				| wwjgtin	| 1991	| Jaleco / Casio| Miscellaneous	| 					|
+| photoy2k102	|  	| Photo Y2K / Real and Fake (V102, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
+| photoy2k103j	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105)			| 		| 1999	| IGS		| PolyGameMaster| 					|
 | pgm3in1	| D NW	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
@@ -7857,8 +7864,6 @@ This list contains all games supported by FinalBurn Neo.
 | rayforcej	|  	| Ray Force (Ver 2.3J 1994/01/20)			| gunlock	| 1993	| Taito Corporat| Taito F3 Syste| 					|
 | razmataz	|   NW	| Razzmatazz						| 		| 1983	| Sega		| Zaxxon	| 					|
 | reaktor	|  	| Reaktor (Track & Field conversion)			| 		| 1987	| Zilec		| Miscellaneous	| 					|
-| photoy2k102	|  	| Real and Fake\0Photo Y2K (V102, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
-| photoy2k103j	|  	| Real and Fake\0Photo Y2K (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | rbff1a	|  	| Real Bout Fatal Fury / Real Bout Garou Densetsu (bug f| rbff1		| 1995	| SNK		| Neo Geo MVS	| 					|
 | rbff1k	|  	| Real Bout Fatal Fury / Real Bout Garou Densetsu (Korea| rbff1		| 1995	| SNK		| Neo Geo MVS	| 					|
 | rbff1		|  	| Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-0| 		| 1995	| SNK		| Neo Geo MVS	| 					|
@@ -9341,6 +9346,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2b4		|  	| Street Fighter II - The World Warrior (bootleg, 910214| sf2		| 1991	| Capcom	| CPS1		| 					|
 | sf2qp2	|  	| Street Fighter II - The World Warrior (Quicken bootleg| sf2		| 1991	| bootleg	| CPS1		| 					|
 | sf2qp1	|  	| Street Fighter II - The World Warrior (Quicken Pt-I bo| sf2		| 1991	| bootleg	| CPS1		| 					|
+| sf2rk		|  	| Street Fighter II - The World Warrior (RK bootleg, 910| sf2		| 1991	| Capcom	| CPS1		| 					|
 | sf2stt	|  	| Street Fighter II - The World Warrior (STT, TAB Austri| sf2		| 1992	| bootleg	| CPS1		| 					|
 | sf2ebbl2	|  	| Street Fighter II - The World Warrior (TAB Austria boo| sf2		| 1992	| bootleg	| CPS1		| 					|
 | sf2ebbl3	|  	| Street Fighter II - The World Warrior (TAB Austria boo| sf2		| 1992	| bootleg	| CPS1		| 					|

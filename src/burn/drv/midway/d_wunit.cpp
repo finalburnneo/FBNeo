@@ -911,6 +911,64 @@ struct BurnDriver BurnDrvUmk3te = {
 };
 
 
+// Ultimate Mortal Kombat 3 Cup Edition (2019-07-04)
+
+static struct BurnRomInfo umk3ucRomDesc[] = {
+	{ "umk3uc-u54.bin",	0x080000, 0xdeffaa0a, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "umk3uc-u63.bin",	0x080000, 0x75eb56e8, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "umk3uc-u2.bin",	0x100000, 0x3838cfe5, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "umk3uc-u3.bin",	0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "umk3uc-u4.bin",	0x100000, 0x428a406f, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "umk3uc-u5.bin",	0x100000, 0x3b98a09f, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "umk3uc-u133.bin",	0x100000, 0x62c6f8ab, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "umk3uc-u132.bin",	0x100000, 0x87d977dc, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "umk3uc-u131.bin",	0x100000, 0x483cbc7b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "umk3uc-u130.bin",	0x100000, 0xecf63628, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+
+	{ "umk3uc-u129.bin",	0x100000, 0xa8b41803, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "umk3uc-u128.bin",	0x100000, 0xb410d72f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "umk3uc-u127.bin",	0x100000, 0xbd985be7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "umk3uc-u126.bin",	0x100000, 0xe7c32cf4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+
+	{ "umk3uc-u125.bin",	0x100000, 0x78e8b9e5, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "umk3uc-u124.bin",	0x100000, 0x1137536c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "umk3uc-u123.bin",	0x100000, 0x6a65e954, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "umk3uc-u122.bin",	0x100000, 0xe6274718, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+
+	{ "umk3uc-u121.bin",	0x100000, 0x87c5e61c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "umk3uc-u120.bin",	0x100000, 0x921a5713, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "umk3uc-u119.bin",	0x100000, 0x973f2a46, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "umk3uc-u118.bin",	0x100000, 0x380c86e8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+	
+	{ "umk3uc-u117.bin",	0x100000, 0xfb7bd33f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 22
+	{ "umk3uc-u116.bin",	0x100000, 0xc97984cd, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
+	{ "umk3uc-u115.bin",	0x100000, 0x30cb27e2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
+	{ "umk3uc-u114.bin",	0x100000, 0xa00ef5ad, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "umk3uc-u113.bin",	0x100000, 0xb352019b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 26
+	{ "umk3uc-u112.bin",	0x100000, 0x71143b7c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 27
+	{ "umk3uc-u111.bin",	0x100000, 0x09821226, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 28
+	{ "umk3uc-u110.bin",	0x100000, 0x88f78828, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 29
+	
+	{ "463_mk3_ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(umk3uc)
+STD_ROM_FN(umk3uc)
+
+struct BurnDriver BurnDrvUmk3uc = {
+	"umk3uc", "umk3", NULL, NULL, "2018",
+	"Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2019-07-04)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	NULL, umk3ucRomInfo, umk3ucRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
+	WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+	400, 254, 4, 3
+};
+
+
 // 2 On 2 Open Ice Challenge (rev 1.21)
 
 static struct BurnRomInfo openiceRomDesc[] = {

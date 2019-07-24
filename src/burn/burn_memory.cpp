@@ -1,4 +1,4 @@
-// FB Alpha memory management module
+// FB Neo memory management module
 
 // The purpose of this module is to offer replacement functions for standard C/C++ ones 
 // that allocate and free memory.  This should help deal with the problem of memory
@@ -6,7 +6,7 @@
 
 #include "burnint.h"
 
-//#define LOG_MEMORY_USAGE
+#define LOG_MEMORY_USAGE 0
 
 #define MAX_MEM_PTR	0x400 // more than 1024 malloc calls should be insane...
 
@@ -23,11 +23,8 @@ void BurnInitMemoryManager()
 	mem_allocated = 0;
 }
 
-// should we pass the pointer as a variable here so that we can save a pointer to it
-// and then ensure it is NULL'd in BurnFree or BurnExitMemoryManager?
-
-// call instead of 'malloc'
-UINT8 *BurnMalloc(INT32 size)
+// call BurnMalloc() instead of 'malloc' (see macro in burnint.h)
+UINT8 *_BurnMalloc(INT32 size, char *file, INT32 line)
 {
 	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
 	{
@@ -44,8 +41,8 @@ UINT8 *BurnMalloc(INT32 size)
 			mem_allocated += size;
 			memsize[i] = size;
 
-#ifdef LOG_MEMORY_USAGE
-			bprintf (0, _T("BurnMalloc allocated %d bytes of memory (%d bytes total allocated)!\n"), size, mem_allocated);
+#if LOG_MEMORY_USAGE
+			bprintf (0, _T("(%S:%d) BurnMalloc(%d): index %d.  %d total!\n"), file, line, size, i, mem_allocated);
 #endif
 
 			return memptr[i];
@@ -75,7 +72,7 @@ UINT8 *BurnRealloc(void *ptr, INT32 size)
 	return NULL;
 }
 
-// call instead of "free"
+// call BurnFree() instead of "free" (see macro in burnint.h)
 void _BurnFree(void *ptr)
 {
 	UINT8 *mptr = (UINT8*)ptr;
@@ -88,7 +85,9 @@ void _BurnFree(void *ptr)
 
 			mem_allocated -= memsize[i];
 			memsize[i] = 0;
-
+#if LOG_MEMORY_USAGE
+			bprintf(0, _T("BurnFree(): index %d.  %d total!\n"), i, mem_allocated);
+#endif
 			break;
 		}
 	}

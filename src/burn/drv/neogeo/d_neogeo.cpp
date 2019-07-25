@@ -17777,3 +17777,49 @@ struct BurnDriver BurnDrvmslug5g = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+// The King of Fighters '97 (Optimized Hack)
+/* It is from GOTVG. */
+
+static struct BurnRomInfo kof97tRomDesc[] = {
+	{ "232t.p1",    0x100000, 0x45834e9b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "232t.p2",    0x400000, 0xd9e51750, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "232-s1.s1",    0x020000, 0x8514ecf5, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "232t.c1",	  0x800000, 0xb7f5a3b9, 3 | BRF_GRA },           //  3 Sprite data
+	{ "232t.c2",	  0x800000, 0x959d6d78, 3 | BRF_GRA },           //  4 
+	{ "232-c3.c3",    0x800000, 0x581d6618, 3 | BRF_GRA },           //  5 
+	{ "232-c4.c4",    0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6 
+	{ "232-c5.c5",    0x400000, 0x34fc4e51, 3 | BRF_GRA },           //  7 
+	{ "232-c6.c6",    0x400000, 0x4ff4d47b, 3 | BRF_GRA },           //  8 
+
+	{ "232-m1.m1",    0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "232-v1.v1",    0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
+	{ "232-v2.v2",    0x400000, 0x2304e744, 5 | BRF_SND },           // 11 
+	{ "232-v3.v3",    0x400000, 0x759eb954, 5 | BRF_SND },           // 12 
+};
+
+STDROMPICKEXT(kof97t, kof97t, neogeo)
+STD_ROM_FN(kof97t)
+
+static INT32 kof97tInit()
+{
+ 	INT32 nRet = NeoInit();
+
+	UINT8* rom = (UINT8*)Neo68KROMActive;
+	rom[0x70bd6] = 0x60; 
+	// More protections need to be removed! 
+	return nRet;
+}
+
+struct BurnDriver BurnDrvkof97t = {
+	"kof97t", "kof97", "neogeo", NULL, "1997",
+	"The King of Fighters '97 (Optimized Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof97tRomInfo, kof97tRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof97tInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};

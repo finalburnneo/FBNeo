@@ -33,9 +33,7 @@ artifacts:
   - path: fbn-win32-gcc.7z
     name: win32-bin-gcc  
   - path: fbn-win32-gcc-xp.7z
-    name: win32-bin-gcc-xp  
-	
-
+    name: win32-bin-gcc-xp
 # Test scripts
 test: off
 

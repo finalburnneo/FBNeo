@@ -306,6 +306,7 @@ DRV		BurnDrvAliencha;
 DRV		BurnDrvpce_acrush;
 DRV		BurnDrvtg_acrush;
 DRV		BurnDrvAlinvade;
+DRV		BurnDrvalienres;
 DRV		BurnDrvAliensec;
 DRV		BurnDrvmd_aliensol;
 DRV		BurnDrvmd_aliensolj;
@@ -2767,6 +2768,7 @@ DRV		BurnDrvpce_dragnegg;
 DRV		BurnDrvDragngunj;
 DRV		BurnDrvDragngun;
 DRV		BurnDrvDrgnmst;
+DRV		BurnDrvDrgnmst2;
 DRV		BurnSpecdninja;
 DRV		BurnDrvMSX_dninja;
 DRV		BurnDrvMSX_dquest;
@@ -5348,8 +5350,9 @@ DRV		BurnDrvLastduelo;
 DRV		BurnDrvLastfortea;
 DRV		BurnDrvLastforte;
 DRV		BurnDrvLastfortg;
-DRV		BurnDrvLastfortk;
 DRV		BurnDrvLastfort;
+DRV		BurnDrvLastfortj;
+DRV		BurnDrvLastfortk;
 DRV		BurnDrvlasthope;
 DRV		BurnDrvlhcdb;
 DRV		BurnDrvLastkm;
@@ -5601,6 +5604,7 @@ DRV		BurnDrvmd_mbubble;
 DRV		BurnDrvMagicbub;
 DRV		BurnDrvgg_rayearth;
 DRV		BurnDrvgg_rayeart2;
+DRV		BurnDrvMagipur;
 DRV		BurnDrvCpsMswordj;
 DRV		BurnDrvCpsMswordr1;
 DRV		BurnDrvCpsMsword;
@@ -6289,6 +6293,7 @@ DRV		BurnDrvmd_mk2wu;
 DRV		BurnDrvgg_mk2;
 DRV		BurnDrvmd_mk2;
 DRV		BurnDrvMk2chal;
+DRV		BurnDrvmk2p;
 DRV		BurnDrvMk2ute;
 DRV		BurnDrvmd_mkr;
 DRV		BurnDrvMosaica;
@@ -9877,6 +9882,7 @@ DRV		BurnDrvSuperchs;
 DRV		BurnDrvcv_scobraa;
 DRV		BurnDrvScobrab;
 DRV		BurnDrvScobrag;
+DRV		BurnDrvScobrae2;
 DRV		BurnDrvMSX_scobra;
 DRV		BurnDrvMSX_scobraa;
 DRV		BurnDrvScobrase;
@@ -11418,6 +11424,7 @@ DRV		BurnDrvUmk3r10;
 DRV		BurnDrvUmk3r11;
 DRV		BurnDrvUmk3;
 DRV		BurnDrvmd_umk3u;
+DRV		BurnDrvUmk3uc;
 DRV		BurnDrvmd_umk3mh;
 DRV		BurnDrvUmk3te;
 DRV		BurnDrvmd_umk3t;
@@ -12717,6 +12724,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_acrush,			// Alien Crush
 	&BurnDrvtg_acrush,			// Alien Crush
 	&BurnDrvAlinvade,			// Alien Invaders
+	&BurnDrvalienres,			// Alien Rescue (Homebrew, Test Build July 2019)
 	&BurnDrvAliensec,			// Alien Sector
 	&BurnDrvmd_aliensol,		// Alien Soldier (Euro)
 	&BurnDrvmd_aliensolj,		// Alien Soldier (Jpn)
@@ -15177,7 +15185,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_dragnegg,		// Dragon Egg!
 	&BurnDrvDragngunj,			// Dragon Gun (Japan)
 	&BurnDrvDragngun,			// Dragon Gun (US)
-	&BurnDrvDrgnmst,			// Dragon Master
+	&BurnDrvDrgnmst,			// Dragon Master (set 1)
+	&BurnDrvDrgnmst2,			// Dragon Master (set 2)
 	&BurnSpecdninja,			// Dragon Ninja (128K)
 	&BurnDrvMSX_dninja,			// Dragon Ninja (Euro)
 	&BurnDrvMSX_dquest,			// Dragon Quest (Jpn)
@@ -17759,8 +17768,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLastfortea,			// Last Fortress - Toride (Erotic, Rev A)
 	&BurnDrvLastforte,			// Last Fortress - Toride (Erotic, Rev C)
 	&BurnDrvLastfortg,			// Last Fortress - Toride (German)
+	&BurnDrvLastfort,			// Last Fortress - Toride (Japan, VG420 PCB)
+	&BurnDrvLastfortj,			// Last Fortress - Toride (Japan, VG460 PCB)
 	&BurnDrvLastfortk,			// Last Fortress - Toride (Korea)
-	&BurnDrvLastfort,			// Last Fortress - Toride
 	&BurnDrvlasthope,			// Last Hope (bootleg AES to MVS conversion, no coin support)
 	&BurnDrvlhcdb,				// Last Hope CD Beta (Neo CD conversion)
 	&BurnDrvLastkm,				// Last KM (Ver 1.0.0275)
@@ -18012,6 +18022,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMagicbub,			// Magic Bubble
 	&BurnDrvgg_rayearth,		// Magic Knight Rayearth (Jpn)
 	&BurnDrvgg_rayeart2,		// Magic Knight Rayearth 2 - Making of Magic Knight (Jpn)
+	&BurnDrvMagipur,			// Magic Purple
 	&BurnDrvCpsMswordj,			// Magic Sword (23.06.1990 Japan)
 	&BurnDrvCpsMswordr1,		// Magic Sword - heroic fantasy (23.06.1990 other country)
 	&BurnDrvCpsMsword,			// Magic Sword - heroic fantasy (25.07.1990 other country)
@@ -18700,6 +18711,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_mk2,				// Mortal Kombat II (World)
 	&BurnDrvmd_mk2,				// Mortal Kombat II (World)
 	&BurnDrvMk2chal,			// Mortal Kombat II Challenger (hack)
+	&BurnDrvmk2p,				// Mortal Kombat II Plus (Beta 2, Hack)
 	&BurnDrvMk2ute,				// Mortal Kombat II Ultimate Tournament Edition (hack, V5.0.052)
 	&BurnDrvmd_mkr,				// Mortal Kombat Revelations (Hack, Version 1.0)
 	&BurnDrvMosaica,			// Mosaic (Fuuki)
@@ -22288,11 +22300,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_scobraa,			// Super Cobra (Alt)
 	&BurnDrvScobrab,			// Super Cobra (bootleg, set 1)
 	&BurnDrvScobrag,			// Super Cobra (bootleg, set 2)
+	&BurnDrvScobrae2,			// Super Cobra (encrypted)
 	&BurnDrvMSX_scobra,			// Super Cobra (Jpn)
 	&BurnDrvMSX_scobraa,		// Super Cobra (Jpn, Alt)
 	&BurnDrvScobrase,			// Super Cobra (Sega)
-	&BurnDrvScobrae,			// Super Cobra (Stern) (encrypted, KONATEC XC-103SS CPU)
-	&BurnDrvScobras,			// Super Cobra (Stern)
+	&BurnDrvScobrae,			// Super Cobra (Stern Electronics) (encrypted, KONATEC XC-103SS CPU)
+	&BurnDrvScobras,			// Super Cobra (Stern Electronics)
 	&BurnDrvcv_scobra,			// Super Cobra
 	&BurnDrvScobra,				// Super Cobra
 	&BurnDrvgg_supercol,		// Super Columns (Euro, USA)
@@ -23829,6 +23842,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvUmk3r11,			// Ultimate Mortal Kombat 3 (rev 1.1)
 	&BurnDrvUmk3,				// Ultimate Mortal Kombat 3 (rev 1.2)
 	&BurnDrvmd_umk3u,			// Ultimate Mortal Kombat 3 (USA)
+	&BurnDrvUmk3uc,				// Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2019-07-04)
 	&BurnDrvmd_umk3mh,			// Ultimate Mortal Kombat 3 Mini V13 (Hack)
 	&BurnDrvUmk3te,				// Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.0.042/August 2018)
 	&BurnDrvmd_umk3t,			// Ultimate Mortal Kombat Trilogy Hack rev.5149

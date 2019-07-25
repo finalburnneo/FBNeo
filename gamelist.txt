@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12134 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12141 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -302,6 +302,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_acrush	|  	| Alien Crush						| 		| 1988	| Naxat		| PC Engine	| 					|
 | tg_acrush	|  	| Alien Crush						| 		| 1989	| NEC		| TurboGrafx 16	| 					|
 | alinvade	|  	| Alien Invaders					| 		| 198?	| Forbes?	| Miscellaneous	| preliminary sound			|
+| alienres	|  	| Alien Rescue (Homebrew, Test Build July 2019)		| 		| 2019	| MonstersGoBoom| Pac-man	| monstersgoboom.itch.io		|
 | aliensec	|  	| Alien Sector						| 		| 1985	| Namco		| Miscellaneous	| 					|
 | md_aliensol	|  	| Alien Soldier (Euro)					| 		| 1995	| Sega		| Sega Megadrive| 					|
 | md_aliensolj	|  	| Alien Soldier (Jpn)					| md_aliensol	| 1995	| Sega		| Sega Megadrive| 					|
@@ -2706,7 +2707,8 @@ This list contains all games supported by FinalBurn Neo.
 | pce_dragnegg	|  	| Dragon Egg!						| 		| 1991	| Masiya	| PC Engine	| 					|
 | dragngunj	|  	| Dragon Gun (Japan)					| dragngun	| 1993	| Data East Corp| DECO 32	| 					|
 | dragngun	|  	| Dragon Gun (US)					| 		| 1993	| Data East Corp| DECO 32	| 					|
-| drgnmst	|  	| Dragon Master						| 		| 1994	| Unico		| Misc		| 					|
+| drgnmst	|  	| Dragon Master (set 1)					| 		| 1994	| Unico		| Misc		| 					|
+| drgnmst2	|  	| Dragon Master (set 2)					| drgnmst	| 1994	| Unico		| Misc		| 					|
 | spec_dninja	|  	| Dragon Ninja (128K)					| 		| 1988	| Imagine Softwa| ZX Spectrum	| 					|
 | msx_dninja	|  	| Dragon Ninja (Euro)					| 		| 1988	| Imagine Softwa| MSX		| 					|
 | msx_dquest	|  	| Dragon Quest (Jpn)					| 		| 1986	| Enix		| MSX		| 					|
@@ -5228,8 +5230,9 @@ This list contains all games supported by FinalBurn Neo.
 | lastfortea	|  	| Last Fortress - Toride (Erotic, Rev A)		| lastfort	| 1994	| Metro		| Miscellaneous	| 					|
 | lastforte	|  	| Last Fortress - Toride (Erotic, Rev C)		| lastfort	| 1994	| Metro		| Miscellaneous	| 					|
 | lastfortg	|  	| Last Fortress - Toride (German)			| lastfort	| 1994	| Metro		| Miscellaneous	| 					|
+| lastfort	|  	| Last Fortress - Toride (Japan, VG420 PCB)		| 		| 1994	| Metro		| Miscellaneous	| 					|
+| lastfortj	|  	| Last Fortress - Toride (Japan, VG460 PCB)		| lastfort	| 1994	| Metro		| Miscellaneous	| 					|
 | lastfortk	|  	| Last Fortress - Toride (Korea)			| lastfort	| 1994	| Metro		| Miscellaneous	| 					|
-| lastfort	|  	| Last Fortress - Toride				| 		| 1994	| Metro		| Miscellaneous	| 					|
 | lasthope	|  	| Last Hope (bootleg AES to MVS conversion, no coin supp| 		| 2005	| NG:Dev.Team	| Neo Geo MVS	| 					|
 | lhcdb		|  	| Last Hope CD Beta (Neo CD conversion)			| 		| 2007	| NG:Dev.Team	| Neo Geo MVS	| Imperfect graphics			|
 | lastkm	|  	| Last KM (Ver 1.0.0275)				| 		| 1995	| Gaelco	| Miscellaneous	| 					|
@@ -5475,6 +5478,7 @@ This list contains all games supported by FinalBurn Neo.
 | magicbub	|  	| Magic Bubble						| 		| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
 | gg_rayearth	|  	| Magic Knight Rayearth (Jpn)				| 		| 1994	| Sega		| Sega Game Gear| 					|
 | gg_rayeart2	|  	| Magic Knight Rayearth 2 - Making of Magic Knight (Jpn)| 		| 1995	| Sega		| Sega Game Gear| 					|
+| magipur	|  	| Magic Purple						| 		| 1996	| Unico		| Miscellaneous	| 					|
 | mswordj	|  	| Magic Sword (23.06.1990 Japan)			| msword	| 1990	| Capcom	| CPS1		| 					|
 | mswordr1	|  	| Magic Sword - heroic fantasy (23.06.1990 other country| msword	| 1990	| Capcom	| CPS1		| 					|
 | msword	|  	| Magic Sword - heroic fantasy (25.07.1990 other country| 		| 1990	| Capcom	| CPS1		| 					|
@@ -6155,6 +6159,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_mk2	|  	| Mortal Kombat II (World)				| 		| 1994	| Acclaim Entert| Sega Game Gear| 					|
 | md_mk2	|  	| Mortal Kombat II (World)				| 		| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | mk2chal	|  	| Mortal Kombat II Challenger (hack)			| mk2		| 1993	| hack		| Midway T-Unit	| 					|
+| mk2p		|  	| Mortal Kombat II Plus (Beta 2, Hack)			| mk2		| 1993	| hack		| Midway T-Unit	| 					|
 | mk2ute	|  	| Mortal Kombat II Ultimate Tournament Edition (hack, V5| mk2		| 2014	| hack		| Midway T-Unit	| 					|
 | md_mkr	|  	| Mortal Kombat Revelations (Hack, Version 1.0)		| md_umk3t	| 2012	| 2012 SMOKE	| Sega Megadrive| 					|
 | mosaica	|  	| Mosaic (Fuuki)					| mosaic	| 1990	| Space (Fuuki l| Miscellaneous	| 					|
@@ -9667,11 +9672,12 @@ This list contains all games supported by FinalBurn Neo.
 | cv_scobraa	|  	| Super Cobra (Alt)					| cv_scobra	| 1983	| Parker Brother| ColecoVision	| 					|
 | scobrab	|  	| Super Cobra (bootleg, set 1)				| scobra	| 1981	| bootleg (Karat| Galaxian	| 					|
 | scobrag	|  	| Super Cobra (bootleg, set 2)				| scobra	| 1981	| bootleg (A.V.G| Galaxian	| 					|
+| scobrae2	|  	| Super Cobra (encrypted)				| scobra	| 1981	| Konami	| Galaxian	| 					|
 | msx_scobra	|  	| Super Cobra (Jpn)					| 		| 1983	| Konami	| MSX		| 					|
 | msx_scobraa	|  	| Super Cobra (Jpn, Alt)				| msx_scobra	| 1983	| Konami	| MSX		| 					|
 | scobrase	|  	| Super Cobra (Sega)					| scobra	| 1981	| Konami (Sega l| Galaxian	| 					|
-| scobrae	|  	| Super Cobra (Stern) (encrypted, KONATEC XC-103SS CPU)	| scobra	| 1981	| Konami (Stern | Galaxian	| 					|
-| scobras	|  	| Super Cobra (Stern)					| scobra	| 1981	| Konami (Stern | Galaxian	| 					|
+| scobrae	|  	| Super Cobra (Stern Electronics) (encrypted, KONATEC XC| scobra	| 1981	| Konami (Stern | Galaxian	| 					|
+| scobras	|  	| Super Cobra (Stern Electronics)			| scobra	| 1981	| Konami (Stern | Galaxian	| 					|
 | cv_scobra	|  	| Super Cobra						| 		| 1983	| Parker Brother| ColecoVision	| 					|
 | scobra	|  	| Super Cobra						| 		| 1981	| Konami	| Galaxian	| 					|
 | gg_supercol	|  	| Super Columns (Euro, USA)				| 		| 1995	| Sega		| Sega Game Gear| 					|
@@ -11180,6 +11186,7 @@ This list contains all games supported by FinalBurn Neo.
 | umk3r11	|  	| Ultimate Mortal Kombat 3 (rev 1.1)			| umk3		| 1994	| Midway	| MIDWAY Wolf-Un| 					|
 | umk3		|  	| Ultimate Mortal Kombat 3 (rev 1.2)			| 		| 1994	| Midway	| MIDWAY Wolf-Un| 					|
 | md_umk3u	|  	| Ultimate Mortal Kombat 3 (USA)			| md_umk3	| 1996	| Williams	| Sega Megadrive| 					|
+| umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2019-| umk3		| 2018	| hack		| MIDWAY Wolf-Un| 					|
 | md_umk3mh	|  	| Ultimate Mortal Kombat 3 Mini V13 (Hack)		| md_umk3	| 2011	| 2011 Nemesis_c| Sega Megadrive| 					|
 | umk3te	|  	| Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.| umk3		| 2018	| Midway	| MIDWAY Wolf-Un| 					|
 | md_umk3t	|  	| Ultimate Mortal Kombat Trilogy Hack rev.5149		| 		| 2017	| 2017 KABAL_MK	| Sega Megadrive| 					|

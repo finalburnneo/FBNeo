@@ -13,12 +13,12 @@
 #define PFN(x)  (((x) >> PAGE_SHIFT) & 0xFFFFF)
 
 template<typename T>
-inline T fast_read(UINT8 *ptr, UINT32 adr) {
+inline T tms_fast_read(UINT8 *ptr, UINT32 adr) {
     return *((T*)  ((UINT8*) ptr + TOBYTE(adr & PAGE_MASK)));
 }
 
 template<typename T>
-inline void fast_write(UINT8 *xptr, UINT32 adr, T value) {
+inline void tms_fast_write(UINT8 *xptr, UINT32 adr, T value) {
     T *ptr = ((T*)  ((UINT8*) xptr + TOBYTE(adr & PAGE_MASK)));
     *ptr = value;
 }
@@ -139,7 +139,7 @@ UINT16 TMS34010ReadWord(UINT32 address)
     UINT8 *pr = g_mmap.map[PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
-        return fast_read<UINT16>(pr,address);
+        return tms_fast_read<UINT16>(pr,address);
     } else {
         return g_mmap.read[(uintptr_t)pr](address);
     }
@@ -150,7 +150,7 @@ void TMS34010WriteWord(UINT32 address, UINT16 value)
     UINT8 *pr = g_mmap.map[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
-        return fast_write<UINT16>(pr,address,value);
+        return tms_fast_write<UINT16>(pr,address,value);
     } else {
         return g_mmap.write[(uintptr_t)pr](address, value);
     }

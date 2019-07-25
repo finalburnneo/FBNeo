@@ -15,16 +15,18 @@ build_script:
   - 7z a fba-code-%APPVEYOR_REPO_NAME%.7z %APPVEYOR_BUILD_FOLDER%\*      
   - msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j20"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j20 -DRELEASEBUILD"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make clean -DRELEASEBUILD"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j20 -DRELEASEBUILD -DXPBUILD"
   - 7z a fba-win32-vs-%APPVEYOR_REPO_NAME%.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\Win32\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
   - 7z a fba-x64-vs-%APPVEYOR_REPO_NAME%.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\x64\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
    
 artifacts:
   - path: fba-code-%APPVEYOR_REPO_NAME%.7z
     name: source
-  - path: fba-win32-vc-%APPVEYOR_REPO_NAME%.7z
+  - path: fba-win32-vs-%APPVEYOR_REPO_NAME%.7z
     name: win32-bin
-  - path: fba-x64-vc-%APPVEYOR_REPO_NAME%.7z
+  - path: fba-x64-vs-%APPVEYOR_REPO_NAME%.7z
     name: x64-bin   
 
 # Test scripts

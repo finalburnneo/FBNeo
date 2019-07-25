@@ -960,7 +960,7 @@ STD_ROM_FN(umk3uc)
 
 struct BurnDriver BurnDrvUmk3uc = {
 	"umk3uc", "umk3", NULL, NULL, "2018",
-	"Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2019-07-04)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	"Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2019-07-04)\0", NULL, "hack", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3ucRomInfo, umk3ucRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,

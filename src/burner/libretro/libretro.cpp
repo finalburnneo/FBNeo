@@ -369,9 +369,6 @@ static int InpDIPSWInit()
 
 	evaluate_neogeo_bios_mode(drvname);
 
-	set_environment();
-	apply_dipswitch_from_variables();
-
 	return 0;
 }
 
@@ -1202,6 +1199,12 @@ static bool retro_load_game_common()
 		nMaxPlayers = BurnDrvGetMaxPlayers();
 		SetControllerInfo();
 
+		// Initialize inputs
+		InputInit();
+
+		// Initialize dipswitches
+		InpDIPSWInit();
+
 		set_environment();
 		check_variables();
 
@@ -1219,18 +1222,12 @@ static bool retro_load_game_common()
 		// Some game drivers won't initialize with an undefined nBurnSoundLen
 		init_audio_buffer(nBurnSoundRate, 6000);
 
-		// Initialize inputs
-		InputInit();
-
 		// Start CD reader emulation if needed
 		if (nGameType == RETRO_GAME_TYPE_NEOCD) {
 			if (CDEmuInit()) {
 				log_cb(RETRO_LOG_INFO, "[FBNEO] Starting neogeo CD\n");
 			}
 		}
-
-		// Initialize dipswitches
-		InpDIPSWInit();
 
 		// Initialize game driver
 		BurnDrvInit();

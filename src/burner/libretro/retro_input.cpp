@@ -2288,19 +2288,6 @@ void InputInit()
 	GameInpInit();
 	GameInpDefault();
 
-	// Update core option for diagnostic inputs
-	set_environment();
-	// Read the user core option values
-	check_variables();
-
-	// The list of input descriptors is filled, we can assign them to retroarch
-	//SetInputDescriptors();
-
-	/* serialization quirks for netplay, cps3 seems problematic, neogeo, cps1 and 2 seem to be good to go 
-	uint64_t serialization_quirks = RETRO_SERIALIZATION_QUIRK_SINGLE_SESSION;
-	if(!strcmp(systemname, "CPS-3"))
-	environ_cb(RETRO_ENVIRONMENT_SET_SERIALIZATION_QUIRKS, &serialization_quirks);*/
-
 	bInputInitialized = true;
 }
 

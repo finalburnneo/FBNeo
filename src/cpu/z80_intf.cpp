@@ -338,20 +338,26 @@ INT32 ZetGetActive()
 }
 
 // ## ZetCPUPush() / ZetCPUPop() ## internal helpers for sending signals to other Z80's
-static INT32 nHostCPU;
+static INT32 nHostCPU, nPushedCPU;
 
 static void ZetCPUPush(INT32 nCPU)
 {
-	nHostCPU = ZetGetActive();
-	if (nHostCPU != -1) ZetClose();
+	nPushedCPU = nCPU;
 
-	ZetOpen(nCPU);
+	nHostCPU = ZetGetActive();
+
+	if (nHostCPU != nPushedCPU) {
+		if (nHostCPU != -1) ZetClose();
+		ZetOpen(nPushedCPU);
+	}
 }
 
 static void ZetCPUPop()
 {
-	ZetClose();
-	if (nHostCPU != -1) ZetOpen(nHostCPU);
+	if (nHostCPU != nPushedCPU) {
+		ZetClose();
+		if (nHostCPU != -1) ZetOpen(nHostCPU);
+	}
 }
 
 INT32 ZetRun(INT32 nCycles)

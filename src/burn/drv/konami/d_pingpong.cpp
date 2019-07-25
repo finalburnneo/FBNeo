@@ -825,18 +825,19 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 // Konami's Ping-Pong
+/* GX555 - PWB200222A */
 
 static struct BurnRomInfo pingpongRomDesc[] = {
-	{ "pp_e04.rom",		0x4000, 0x18552f8f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 code
-	{ "pp_e03.rom",		0x4000, 0xae5f01e8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "555_e04.7a",		0x4000, 0x18552f8f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 code
+	{ "555_e03.6a",		0x4000, 0xae5f01e8, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "pp_e01.rom",		0x2000, 0xd1d6f090, 2 | BRF_GRA },           //  2 Background tiles
+	{ "555_e01.7h",		0x2000, 0xd1d6f090, 2 | BRF_GRA },           //  2 Background tiles
 
-	{ "pp_e02.rom",		0x2000, 0x33c687e0, 3 | BRF_GRA },           //  3 Sprites
+	{ "555_e02.12c",	0x2000, 0x33c687e0, 3 | BRF_GRA },           //  3 Sprites
 
-	{ "pingpong.3j",	0x0020, 0x3e04f06e, 4 | BRF_GRA },           //  4 Color data
-	{ "pingpong.5h",	0x0100, 0x8456046a, 4 | BRF_GRA },           //  5
-	{ "pingpong.11j",	0x0100, 0x09d96b08, 4 | BRF_GRA },           //  6
+	{ "555e06.3j",		0x0020, 0x3e04f06e, 4 | BRF_GRA },           //  4 Color data
+	{ "555e05.5h",		0x0100, 0x8456046a, 4 | BRF_GRA },           //  5
+	{ "555e07.11j",		0x0100, 0x09d96b08, 4 | BRF_GRA },           //  6
 };
 
 STD_ROM_PICK(pingpong)

@@ -11,8 +11,9 @@ unexport
 #
 
 # Check for changes in header files
+ifndef	SKIPDEPEND
 DEPEND = 1
-
+endif
 
 
 #

@@ -26,7 +26,7 @@ artifacts:
     name: win32-bin
   - path: fba-x64-vc.7z
     name: x64-bin   
-	
+
 # Test scripts
 test: off
 

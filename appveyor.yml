@@ -12,9 +12,32 @@ install:
   - set PATH="C:\Program Files\NASM";%PATH%
   
 build_script:
+  - 7z a fba-code.7z %APPVEYOR_BUILD_FOLDER%\*      
   - msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j20"
-  
+  - 7z a fba-win32-vs.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\Win32\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
+  - 7z a fba-x64-vs.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\x64\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
+   
+artifacts:
+  - path: fba-code.7z
+    name: source
+  - path: fba-win32-vc.7z
+    name: win32-bin
+  - path: fba-x64-vc.7z
+    name: x64-bin   
+	
 # Test scripts
 test: off
+
+deploy:
+- provider: GitHub
+  tag: appveyor-build
+  description: 'FB Neo Appveyor automatic build'
+  force_update: true
+  on:
+    branch: master                 # release from master branch only 
+  auth_token:
+    secure: cC6FjF22axzOF1Y1+B2DfieS+B3KAHeUTefa7k/iq7MJjqaj/OjQ01EWN+Ga5r6v
+  repository: tmaul/fbneo-releases
+  artifact: win32-bin, x64-bin, source

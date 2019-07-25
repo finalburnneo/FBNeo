@@ -11065,6 +11065,59 @@ struct BurnDriver BurnDrvviewpoin = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Viewpoint (prototype)
+/* crashes during stage 4 on real hardware (but stage 5 can be loaded with memcard) */
+/* AES AND MVS VERSION */
+
+static struct BurnRomInfo viewpoinpRomDesc[] = {
+	{ "p1",    			0x080000, 0x0adb5eee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "p2",    			0x080000, 0x31129194, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "s1",    			0x020000, 0x9fea5758, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "c1",   			0x080000, 0x97a3183b, 3 | BRF_GRA },           //  3 Sprite data
+	{ "c2",   			0x080000, 0xf637667a, 3 | BRF_GRA },           //  4 
+	{ "c3",   			0x080000, 0xb017d2d1, 3 | BRF_GRA },           //  5
+	{ "c4",   			0x080000, 0x10f1624a, 3 | BRF_GRA },           //  6 
+	{ "c5",   			0x080000, 0x714a8bc4, 3 | BRF_GRA },           //  7 
+	{ "c6",   			0x080000, 0x5bc32495, 3 | BRF_GRA },           //  8 
+	{ "c7",   			0x080000, 0x28a0a127, 3 | BRF_GRA },           //  9 
+	{ "c8",   			0x080000, 0x439c9036, 3 | BRF_GRA },           //  10 
+	
+	{ "m1",    			0x020000, 0x8e69f29a, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
+
+	{ "v1",  			0x100000, 0x7e9af736, 5 | BRF_SND },           //  12 Sound data
+	{ "v2",  			0x100000, 0x503a9c51, 5 | BRF_SND },           //  13 
+	{ "v3",  			0x100000, 0xdfa8d079, 5 | BRF_SND },           //  14 
+	{ "v4",  			0x100000, 0x612b9292, 5 | BRF_SND },           //  15
+};
+
+STDROMPICKEXT(viewpoinp, viewpoinp, neogeo)
+STD_ROM_FN(viewpoinp)
+
+static void ViewpoinpCallback()
+{
+	BurnLoadRom(Neo68KROMActive + 0x000000, 0, 2);
+	BurnLoadRom(Neo68KROMActive + 0x000001, 1, 2);
+}
+
+static INT32 ViewpoinpInit()
+{
+	NeoCallbackActive->pInitialise = ViewpoinpCallback;
+	
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvViewpoinp = {
+	"viewpoinp", "viewpoin", "neogeo", NULL, "1992",
+	"Viewpoint (prototype)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SPRITE32, GBF_SHOOT, 0,
+	NULL, viewpoinpRomInfo, viewpoinpRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	ViewpoinpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // Jyanshin Densetsu - Quest of Jongmaster
 /* MVS ONLY RELEASE */
 

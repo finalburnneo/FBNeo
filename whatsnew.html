@@ -236,7 +236,7 @@
 <li>Added Atari EEROM (x2212) device [dink]</li>
 <li>Fix distorted Kanji text in jojoba's (CPS3) service mode [dink]</li>
 <li>Enabled highscore saving for all CPS1/2 [barbudreadmon]</li>
-<li>Add Twins (booleg of Mega Twins) [barry, ClawGrip, Roberto Fresca, Recreativas.org, The Dumping Union]</li>
+<li>Add Twins (booleg of Mega Twins) [ClawGrip, Roberto Fresca, Recreativas.org, The Dumping Union, barry]</li>
 <li>Updates to Boulderdash Part 2's sound section to hopefully fix a hang [dink]</li>
 <li>Transfer FBAlpha project to GitHub [Barry]</li>
 <li>Added BurnSoundClear() to burn_sound.h, include burn_sound.h in burnint.h [dink]</li>
@@ -376,7 +376,7 @@
 <li>Fix inputs for wofch and wofchdx [barbudreadmon]</li>
 <li>Sync romsets with MAME .211 [barbudreadmon]</li>
 <li>Improve input recordings with CPS1 &amp; CPS2 games [dink]</li>
-<li>Fix audio issue (swapped pcm l/r channels) in Konami's Xexex [dink]</li>
+<li>Fix audio issue (swapped pcm l/r channels) and quirky vertical scrolling in Konami's Xexex [dink]</li>
 <li>Fix music in Sand Scorpion [dink]</li>
 <li>Hook-up proper C-Chip dump for Rainbow Islands Extra.  Thanks to Kevin Escbach for donating the chip and Caps0ff for dumping it. [Kevin Escbach, Caps0ff]</li>
 <li>Fixed Wonder Planet boot issue [dink]</li>
@@ -385,6 +385,14 @@
 <li>Improve analog inputs for ChaseHQ, Battle Shark and Contental Circus [dink]</li>
 <li>Taito's Super Chase improvements - sync music, improve steering, cleanup driver [dink]</li>
 <li>Include driver status (good/preliminary) when generating .DAT files [barbudreadmon]</li>
+<li>Re-work hiscore system using cpu registry [iq_132]</li>
+<li>Fix all emulation-related video bugs in Konami's G.I. Joe [dink]</li>
+<li>Add support for input recording games from power-on with RTC (clock) chip (PGM, NeoGeo, etc) [dink]</li>
+<li>Sync PGM driver with MAME 0.211 [JacKc]</li>
+<li>Asterix - fix Konami logo [dink]</li>
+<li>Rewrite Dragon Master driver [iq_132]</li>
+<li>BurnMalloc() Better debug logging - shows source location, etc when enabled [dink]</li>
+<li> []</li>
 <li> []</li>
 </ul>
 <!-- new drivers -->
@@ -480,24 +488,24 @@
 <!-- new game additions to existing drivers -->
 <h4>New additions / updates to existing drivers</h4>
 <ul>
-<li>Add World Heroes 2 (ALH-006) to the Neo Geo driver [Barry, Razoola]</li>
-<li>Add V-Liner (v0.54, v0.7a and 0.7e) to the Neo Geo driver [Barry, Razoola]</li>
+<li>Add World Heroes 2 (ALH-006) to the Neo Geo driver [Razoola, Barry]</li>
+<li>Add V-Liner (v0.54, v0.7a and 0.7e) to the Neo Geo driver [Razoola, Barry]</li>
 <li>Add English fan translations of the following Megadrive games: Battle Golfer Yui, Fushigi no Umi no Nadia, Psy-O-Blade, Rent a Hero, Bishoujo Senshi Sailor Moon and Vixen 357 [barbudreadmon]</li>
 <li>Add Streets of Rage 2 Puyo Wars Hack to Megadrive Driver [barbudreadmon]</li>
 <li>Add Star Chaser homebrew game to Megadrive Driver [barbudreadmon]</li>
 <li>Add Shining Tactics Absolute Final Edition (Hack) to Megadrive [barbudreadmon]</li>
 <li>Add English fan translations of the following GameGear games: Lunar - Sanposuru Gakuen, Madou Monogatari I - 3-Tsu no Madoukyuu, Megami Tensei Gaiden - Last Bible S, Phantasy Star Gaiden, Shining Force Gaiden - Final Conflict and Sylvan Tale [barbudreadmon]</li>
-<li>Add Ghost Pilots (prototype) to the Neo Geo driver [Barry, Razoola]</li>
+<li>Add Ghost Pilots (prototype) to the Neo Geo driver [Razoola, Barry]</li>
 <li>Add Royal Stone English translation the SMS/GameGear driver [barbudreadmon]</li>
 <li>Add Titan (Pac-Man hack) to the Pac-Man driver [Craig Anstett, CraftyMech, JacKc]</li>
 <li>Add Kabuki-Z to the public builds of FB Alpha - somehow this was overlooked, sorry about that! [dink]</li>
 <li>Add Ikki, Strength and Skill, and Banbam to the Markham driver [iq_132]</li>
 <li>Add Toki no Senshi - Chrono Soldier as parent, older version is actually a prototype [Barry]</li>
-<li>Add support for Neo-Geo Universe BIOS 3.3 [Barry, Razoola]</li>
-<li>Add Neo Geo BIOS (NEO-MVH MV1C, Japan) [Barry, Razoola]</li>
-<li>Add Neo Geo BIOS (sp1-u4, US) [Barry, ack]</li>
+<li>Add support for Neo-Geo Universe BIOS 3.3 [Razoola, Barry]</li>
+<li>Add Neo Geo BIOS (NEO-MVH MV1C, Japan) [Razoola, Barry]</li>
+<li>Add Neo Geo BIOS (sp1-u4, US) [ack, Barry]</li>
 <li>Add Vindicators II to the Gauntlet driver [iq_132]</li>
-<li>Add Street Fighter 2 Red Wave Pt II [Barry, okada yuko]</li>
+<li>Add Street Fighter 2 Red Wave Pt II [okada yuko, Barry]</li>
 <li>Add English translations for Sonic Eraser and Barver Battle Saga to the Megadrive driver [barbudreadmon]</li>
 <li>Add Tanglewood v1.0 and demo to the Megadrive driver [dink]</li>
 <li>Add Flight of Pigarus v1.0 by Kagesan to the SMS driver [dink]</li>
@@ -511,11 +519,20 @@
 <li>Add Bare Knuckle III (English Hack By Twilight Translations) [Ryuvius86]</li>
 <li>Add Xevious and Super Xevious to the Galaga driver [CupcakeFan]</li>
 <li>Add Pitapat Puzzle to the Cross Pang HW driver [dink, barbudreadmon, arnoldsecret]</li>
+<li>Update wofchdx to final edition on CPS-1. [SumavisionQ5]</li>
+<li>Update The King of Fighters '96 (The Aniversary Edition 2.0 Final Version 2019-05-30) [SumavisionQ5]</li>
+<li>Update The King of Fighters '98 (Combo) Ivex hack - 2018/05/05 version [SumavisionQ5]</li>
+<li>Update The King of Fighters '99 Anniversary Edition hack by Yashional - 2017/11/12 Final Version [SumavisionQ5]</li>
+<li>Add The Last Blade 2 Team Edition Hack [Combone]</li>
+<li>Add GOTVG Multifunction Hacks for Metal Slug 1-5 [SumavisionQ5]</li>
+<li>Add Mortal Kombat II Plus (Beta 2, Hack) [Combone]</li>
+<li>Add Ultimate Mortal Kombat 3 Cup Edition (Ver. 2019-07-04) (Hack) [Combone]</li>
+<li>Added Magic Purple to the Tumbleb driver [dink, iq_132]</li>
 </ul>
 <!-- clones and updated romsets in drivers -->
 <h4>Clones and updated romsets in existing drivers</h4>
 <ul>
-<li>Added clone of Marvel Super Heroes (951024 Brazil) to the CPS-2 driver [Barry, SHVB, The Dumping Union]</li>
+<li>Added clone of Marvel Super Heroes (951024 Brazil) to the CPS-2 driver [SHVB, The Dumping Union, Barry]</li>
 <li>Added clone of Sengoku 3 / Sengoku Densho 2001 (Set 2) to the Neo Geo driver [Barry, Razoola]</li>
 <li>Added clone of Final Fight (900405 Japan) to the CPS-1 driver [Barry, bonky0013, Manimani, The Dumping Union]</li>
 <li>Added clone of Street Fighter II' - Champion Edition (Level Select bootleg, 920322 USA) to the CPS-1 driver [Barry, hammy, The Dumping Union]</li>
@@ -557,6 +574,12 @@
 <li>Added 2 clones of Action Fighter to the Sega System 16A driver [Barry]</li>
 <li>Added 4 clones of Action Fighter to the Sega System 16B driver [Barry]</li>
 <li>Added clone of Fantasy Zone to the Sega System 16A driver [Barry]</li>
+<li>Added clone of Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver UEA) [Stephan Suys, JacKc]</li>
+<li>Added clone of Wyvern F-0 [jordigahan, ClawGrip, The Dumping Union, JacKc]</li>
+<li>Added bootleg of Puzz Loop 2 (Japan 010226 Phoenix Edition) [JacKc]</li>
+<li>Added bootleg of Street Fighter II - The World Warrior (RK bootleg, 910214 etc) [JacKc, dink]</li>
+<li>Added clone of Super Cobra (encrypted) [Team Europe, JacKc]</li>
+<li>Added clone of Last Fortress - Toride (Japan, VG460 PCB) [twistedsymphony, JacKc]</li>
 </ul>
 
 <h3>v0.2.97.43</h3>

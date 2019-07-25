@@ -84,13 +84,40 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"Reset",		  BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Service Mode",	  BIT_DIGITAL,	DrvJoy1 + 7,	"diag"},
 
-	{"Dip Switches 1 ",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
 	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip Switches 3",	BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 	{"Dip Switches 4",	BIT_DIPSWITCH,	DrvDips + 3,	"dip"},
 };
 
 STDINPUTINFO(Drv)
+
+static struct BurnInputInfo AlienresInputList[] = {
+	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
+
+	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, 	"p1 up"		},
+	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, 	"p1 left"	},
+	{"P1 Right",	  BIT_DIGITAL,	DrvJoy1 + 2, 	"p1 right"	},
+	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, 	"p1 down"	},
+	{"P1 Fire",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 1"	},
+
+	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right",	  BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
+	{"P2 Down",		  BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Fire",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 fire 1"	},
+
+	{"Reset",		  BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",  BIT_DIGITAL,	DrvJoy1 + 7,	"diag"		},
+
+	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"	},
+	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"	},
+	{"Dip Switches 3",	BIT_DIPSWITCH,	DrvDips + 1,	"dip"	},
+	{"Dip Switches 4",	BIT_DIPSWITCH,	DrvDips + 3,	"dip"	},
+};
+
+STDINPUTINFO(Alienres)
 
 static struct BurnInputInfo lizwizInputList[] = {
 	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
@@ -114,7 +141,7 @@ static struct BurnInputInfo lizwizInputList[] = {
 	{"Service Mode",	  BIT_DIGITAL,	DrvJoy1 + 4,	"diag"},
 	{"Tilt",	 	 BIT_DIGITAL,	DrvJoy1 + 6,	"tilt"},
 
-	{"Dip Switches 1 ",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
 	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip Switches 3",	BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 	{"Dip Switches 4",	BIT_DIPSWITCH,	DrvDips + 3,	"dip"},
@@ -7088,4 +7115,36 @@ struct BurnDriver BurnDrvpenta = {
 	224, 288, 3, 4
 };
 
+
+// Alien Rescue (Homebrew, Test Build)
+
+static struct BurnRomInfo alienresRomDesc[] = {
+	{ "pacman.6e",    0x1000, 0x4D94CE2A, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pacman.6f",    0x1000, 0x5F81D441, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pacman.6h",    0x1000, 0xC71C0011, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pacman.6j",    0x1000, 0xC71C0011, 1 | BRF_ESS | BRF_PRG },	//  3
+
+	{ "pacman.5e",    0x1000, 0xAB38F274, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0xCE1C6CB2, 2 | BRF_GRA },			//  5
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
+	{ "pacman.1k",	  0x0400, 0xB9D2E5E6, 0 | BRF_SND | BRF_OPT },	// 10 What's this?
+};
+
+STD_ROM_PICK(alienres)
+STD_ROM_FN(alienres)
+
+struct BurnDriver BurnDrvalienres = {
+	"alienres", NULL, NULL, NULL, "2019",
+	"Alien Rescue (Homebrew, Test Build July 2019)\0", "monstersgoboom.itch.io", "MonstersGoBoom", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, alienresRomInfo, alienresRomName, NULL, NULL, NULL, NULL, AlienresInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
 

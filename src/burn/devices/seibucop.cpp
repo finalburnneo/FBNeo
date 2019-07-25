@@ -38,6 +38,8 @@ static INT32  cop_sprite_dma_size;
 static UINT32 cop_sprite_dma_src;
 static INT32 cop_sprite_dma_abs_y;
 static INT32 cop_sprite_dma_abs_x;
+static INT32 cop_sprite_dma_rel_x;
+static INT32 cop_sprite_dma_rel_y;
 static UINT16 cop_status;
 static UINT16 cop_angle_target;
 static UINT16 cop_angle_step;
@@ -121,17 +123,17 @@ static UINT8 cop_read_byte(UINT32 offset)
 	return cpu_read_byte(offset ^ byte_endian_val);
 }
 
-static void execute_0205(int offset, UINT16 )
+static void execute_0205(INT32 offset, UINT16 )
 {
-	int ppos =        cpu_read_long(cop_regs[0] + 0x04 + offset * 4);
-	int npos = ppos + cpu_read_long(cop_regs[0] + 0x10 + offset * 4);
-	int delta = (npos >> 16) - (ppos >> 16);
+	INT32 ppos =        cpu_read_long(cop_regs[0] + 0x04 + offset * 4);
+	INT32 npos = ppos + cpu_read_long(cop_regs[0] + 0x10 + offset * 4);
+	INT32 delta = (npos >> 16) - (ppos >> 16);
 
 	cpu_write_long(cop_regs[0] + 4 + offset * 4, npos);
 	cop_write_word(cop_regs[0] + 0x1e + offset * 4, cop_read_word(cop_regs[0] + 0x1e + offset * 4) + delta);
 }
 
-static void execute_0904(int offset, UINT16 data)
+static void execute_0904(INT32 offset, UINT16 data)
 {
 	if (data&0x0001)
 		cpu_write_long(cop_regs[0] + 16 + offset * 4, cpu_read_long(cop_regs[0] + 16 + offset * 4) + cpu_read_long(cop_regs[0] + 0x28 + offset * 4));
@@ -139,10 +141,10 @@ static void execute_0904(int offset, UINT16 data)
 		cpu_write_long(cop_regs[0] + 16 + offset * 4, cpu_read_long(cop_regs[0] + 16 + offset * 4) - cpu_read_long(cop_regs[0] + 0x28 + offset * 4));
 }
 
-static void LEGACY_execute_130e_cupsoc(int , UINT16 data)
+static void LEGACY_execute_130e_cupsoc(INT32 , UINT16 data)
 {
-	int dy = cpu_read_long(cop_regs[1] + 4) - cpu_read_long(cop_regs[0] + 4);
-	int dx = cpu_read_long(cop_regs[1] + 8) - cpu_read_long(cop_regs[0] + 8);
+	INT32 dy = cpu_read_long(cop_regs[1] + 4) - cpu_read_long(cop_regs[0] + 4);
+	INT32 dx = cpu_read_long(cop_regs[1] + 8) - cpu_read_long(cop_regs[0] + 8);
 
 	cop_status = 7;
 
@@ -166,10 +168,10 @@ static void LEGACY_execute_130e_cupsoc(int , UINT16 data)
 		cop_write_byte(cop_regs[0] + (0x34), cop_angle);
 }
 
-static void execute_2288(int , UINT16 data)
+static void execute_2288(INT32 , UINT16 data)
 {
-	int dx = cpu_read_word(cop_regs[0] + 0x12);
-	int dy = cpu_read_word(cop_regs[0] + 0x16);
+	INT32 dx = cpu_read_word(cop_regs[0] + 0x12);
+	INT32 dy = cpu_read_word(cop_regs[0] + 0x16);
 
 	if (!dy) {
 		cop_status |= 0x8000;
@@ -186,17 +188,17 @@ static void execute_2288(int , UINT16 data)
 	}
 }
 
-static void execute_2a05(int offset, UINT16 )
+static void execute_2a05(INT32 offset, UINT16 )
 {
-	int delta = cpu_read_word(cop_regs[1] + 0x1e + offset * 4);
+	INT32 delta = cpu_read_word(cop_regs[1] + 0x1e + offset * 4);
 	cpu_write_long(cop_regs[0] + 4 + 2 + offset * 4, cpu_read_word(cop_regs[0] + 4 + 2 + offset * 4) + delta);
 	cpu_write_long(cop_regs[0] + 0x1e + offset * 4, cpu_read_word(cop_regs[0] + 0x1e + offset * 4) + delta);
 }
 
-static void execute_338e(int , UINT16 data, bool is_yflip)
+static void execute_338e(INT32 , UINT16 data, bool is_yflip)
 {
-	int dx = cpu_read_long(cop_regs[1] + 4) - cpu_read_long(cop_regs[0] + 4);
-	int dy = cpu_read_long(cop_regs[1] + 8) - cpu_read_long(cop_regs[0] + 8);
+	INT32 dx = cpu_read_long(cop_regs[1] + 4) - cpu_read_long(cop_regs[0] + 4);
+	INT32 dy = cpu_read_long(cop_regs[1] + 8) - cpu_read_long(cop_regs[0] + 8);
 
 	cop_status = 7;
 
@@ -221,16 +223,16 @@ static void execute_338e(int , UINT16 data, bool is_yflip)
 	}
 }
 
-static void execute_130e(int offset, UINT16 data, bool is_yflip)
+static void execute_130e(INT32 offset, UINT16 data, bool is_yflip)
 {
 	// this can't be right, or bits 15-12 from mask have different meaning ...
 	execute_338e(offset, data, is_yflip);
 }
 
-static void execute_3b30(int , UINT16 data)
+static void execute_3b30(INT32 , UINT16 data)
 {
 	/* TODO: these are actually internally loaded via 0x130e command */
-	int dx, dy;
+	INT32 dx, dy;
 
 	dx = cpu_read_long(cop_regs[1] + 4) - cpu_read_long(cop_regs[0] + 4);
 	dy = cpu_read_long(cop_regs[1] + 8) - cpu_read_long(cop_regs[0] + 8);
@@ -243,9 +245,9 @@ static void execute_3b30(int , UINT16 data)
 		cop_write_word(cop_regs[0] + (data & 0x200 ? 0x3a : 0x38), cop_dist);
 }
 
-static void execute_42c2(int , UINT16 )
+static void execute_42c2(INT32 , UINT16 )
 {
-	int div = cop_read_word(cop_regs[0] + (0x36));
+	INT32 div = cop_read_word(cop_regs[0] + (0x36));
 
 	if (!div)
 	{
@@ -261,9 +263,9 @@ static void execute_42c2(int , UINT16 )
 }
 
 
-static void execute_4aa0(int , UINT16 )
+static void execute_4aa0(INT32 , UINT16 )
 {
-	int div = cpu_read_word(cop_regs[0] + (0x38));
+	INT32 div = cpu_read_word(cop_regs[0] + (0x38));
 	if (!div)
 		div = 1;
 
@@ -273,27 +275,27 @@ static void execute_4aa0(int , UINT16 )
 	cpu_write_word(cop_regs[0] + (0x36), (cop_dist << (5 - cop_scale)) / div);
 }
 
-static void execute_5205(int , UINT16 )
+static void execute_5205(INT32 , UINT16 )
 {
 	cpu_write_long(cop_regs[1], cpu_read_long(cop_regs[0]));
 }
 
-static void execute_5a05(int , UINT16 )
+static void execute_5a05(INT32 , UINT16 )
 {
 	cpu_write_long(cop_regs[1], cpu_read_long(cop_regs[0]));
 }
 
-static void execute_6200(int , UINT16 )
+static void execute_6200(INT32 , UINT16 )
 {
-	int primary_reg = 0;
-	int primary_offset = 0x34;
+	INT32 primary_reg = 0;
+	INT32 primary_offset = 0x34;
 
 	UINT8 angle = cop_read_byte(cop_regs[primary_reg] + primary_offset);
 	UINT16 flags = cop_read_word(cop_regs[primary_reg]);
 	cop_angle_target &= 0xff;
 	cop_angle_step &= 0xff;
 	flags &= ~0x0004;
-	int delta = angle - cop_angle_target;
+	INT32 delta = angle - cop_angle_target;
 	if (delta >= 128)
 		delta -= 256;
 	else if (delta < -128)
@@ -324,17 +326,17 @@ static void execute_6200(int , UINT16 )
 
 }
 
-static void LEGACY_execute_6200(int , UINT16 ) // this is for cupsoc, different sequence, works on different registers
+static void LEGACY_execute_6200(INT32 , UINT16 ) // this is for cupsoc, different sequence, works on different registers
 {
-	int primary_reg = 1;
-	int primary_offset = 0xc;
+	INT32 primary_reg = 1;
+	INT32 primary_offset = 0xc;
 
 	UINT8 angle = cop_read_byte(cop_regs[primary_reg] + primary_offset);
 	UINT16 flags = cop_read_word(cop_regs[primary_reg]);
 	cop_angle_target &= 0xff;
 	cop_angle_step &= 0xff;
 	flags &= ~0x0004;
-	int delta = angle - cop_angle_target;
+	INT32 delta = angle - cop_angle_target;
 	if (delta >= 128)
 		delta -= 256;
 	else if (delta < -128)
@@ -365,37 +367,30 @@ static void LEGACY_execute_6200(int , UINT16 ) // this is for cupsoc, different 
 }
 
 
-static void LEGACY_execute_6980(int offset, UINT16 )
+static void LEGACY_execute_6980(INT32 offset, UINT16 )
 {
 	UINT8 offs;
-	int abs_x, abs_y, rel_xy;
+	INT32 rel_xy;
 
 	offs = (offset & 3) * 4;
 
-	/* TODO: I really suspect that following two are actually taken from the 0xa180 macro command then internally loaded */
-	abs_x = cpu_read_word(cop_regs[0] + 8) - cop_sprite_dma_abs_x;
-	abs_y = cpu_read_word(cop_regs[0] + 4) - cop_sprite_dma_abs_y;
 	rel_xy = cpu_read_word(cop_sprite_dma_src + 4 + offs);
 
-	if (rel_xy & 1)
-		cpu_write_word(cop_regs[4] + offs + 4, 0xc0 + abs_x - (rel_xy & 0xf8));
-	else
-		cpu_write_word(cop_regs[4] + offs + 4, (((rel_xy & 0x78) + (abs_x)-((rel_xy & 0x80) ? 0x80 : 0))));
-
-	cpu_write_word(cop_regs[4] + offs + 6, (((rel_xy & 0x7800) >> 8) + (abs_y)-((rel_xy & 0x8000) ? 0x80 : 0)));
+	cop_sprite_dma_rel_x = (rel_xy & 0xff);
+	cop_sprite_dma_rel_y = ((rel_xy & 0xff00) >> 8);
 }
 
-static void execute_7e05(int , UINT16 ) // raidendx
+static void execute_7e05(INT32 , UINT16 ) // raidendx
 {
 	cpu_write_byte(0x470, cpu_read_byte(cop_regs[4]));
 }
 
-static void execute_8100(int , UINT16 )
+static void execute_8100(INT32 , UINT16 )
 {
-	int raw_angle = (cop_read_word(cop_regs[0] + (0x34)) & 0xff);
+	INT32 raw_angle = (cop_read_word(cop_regs[0] + (0x34)) & 0xff);
 	double angle = raw_angle * M_PI / 128;
 	double amp = (65536 >> 5)*(cop_read_word(cop_regs[0] + (0x36)) & 0xff);
-	int res;
+	INT32 res;
 	// TODO: up direction needs to be doubled, happens on bootleg too, why is that?
 	if (raw_angle == 0xc0)
 		amp *= 2;
@@ -404,12 +399,12 @@ static void execute_8100(int , UINT16 )
 	cpu_write_long(cop_regs[0] + 16, res);
 }
 
-static void execute_8900(int , UINT16 )
+static void execute_8900(INT32 , UINT16 )
 {
-	int raw_angle = (cop_read_word(cop_regs[0] + (0x34)) & 0xff);
+	INT32 raw_angle = (cop_read_word(cop_regs[0] + (0x34)) & 0xff);
 	double angle = raw_angle * M_PI / 128;
 	double amp = (65536 >> 5)*(cop_read_word(cop_regs[0] + (0x36)) & 0xff);
-	int res;
+	INT32 res;
 	// TODO: left direction needs to be doubled, happens on bootleg too, why is that?
 	if (raw_angle == 0x80)
 		amp *= 2;
@@ -418,25 +413,25 @@ static void execute_8900(int , UINT16 )
 	cpu_write_long(cop_regs[0] + 20, res);
 }
 
-static void cop_collision_read_pos(int slot, UINT32 spradr, bool allow_swap)
+static void cop_collision_read_pos(INT32 slot, UINT32 spradr, bool allow_swap)
 {
 	cop_collision_info[slot].allow_swap = allow_swap;
 	cop_collision_info[slot].flags_swap = cop_read_word(spradr+2);
 	cop_collision_info[slot].spradr = spradr;
-	for(int i=0; i<3; i++)
+	for(INT32 i=0; i<3; i++)
 		cop_collision_info[slot].pos[i] = cop_read_word(spradr+6+4*i);
 }
 
-static void cop_collision_update_hitbox(UINT16 data, int slot, UINT32 hitadr)
+static void cop_collision_update_hitbox(UINT16 data, INT32 slot, UINT32 hitadr)
 {
 	UINT32 hitadr2 = cpu_read_word(hitadr) | (cop_hit_baseadr << 16); // DON'T use cop_read_word here, doesn't need endian fixing?!
-	int num_axis = 2;
-	int extraxor = 0;
+	INT32 num_axis = 2;
+	INT32 extraxor = 0;
 	if (host_endian) extraxor = 1;
 
 	if (data & 0x0100) num_axis = 3;
 
-	int i;
+	INT32 i;
 
 	for(i=0; i<3; i++) {
 		cop_collision_info[slot].dx[i] = 0;
@@ -456,7 +451,7 @@ static void cop_collision_update_hitbox(UINT16 data, int slot, UINT32 hitadr)
 		dx[i] = INT8(cop_collision_info[slot].dx[i]);
 	}
 
-	int j = slot;
+	INT32 j = slot;
 
 	UINT8 res;
 
@@ -490,39 +485,70 @@ static void cop_collision_update_hitbox(UINT16 data, int slot, UINT32 hitadr)
 	cop_hit_status = res;
 }
 
-static void execute_a100(int , UINT16 data)
+static void execute_a100(INT32 , UINT16 data)
 {
 	cop_collision_read_pos(0, cop_regs[0], data & 0x0080);
 }
 
-static void execute_a900(int , UINT16 data)
+static void execute_a900(INT32 , UINT16 data)
 {
 	cop_collision_read_pos(1, cop_regs[1], data & 0x0080);
 }
 
-static void execute_b100(int , UINT16 data)
+static void execute_b100(INT32 , UINT16 data)
 {
 	cop_collision_update_hitbox(data, 0, cop_regs[2]);
 }
 
-static void execute_b900(int , UINT16 data)
+static void execute_b900(INT32 , UINT16 data)
 {
 	cop_collision_update_hitbox(data, 1, cop_regs[3]);
 }
 
-static void LEGACY_execute_c480(int offset, UINT16 )
+static void LEGACY_execute_c480(INT32 offset, UINT16 )
 {
 	UINT8 offs;
+	UINT16 sprite_info;
+	UINT16 sprite_x, sprite_y;
+	INT32 abs_x, abs_y;
 
 	offs = (offset & 3) * 4;
 
-	cpu_write_word(cop_regs[4] + offs + 0, cpu_read_word(cop_sprite_dma_src + offs) + (cop_sprite_dma_param & 0x3f));
+	sprite_info = cpu_read_word(cop_sprite_dma_src + offs) + (cop_sprite_dma_param & 0x3f);
+	cpu_write_word(cop_regs[4] + offs + 0, sprite_info);
+
+	abs_x = cpu_read_word(cop_regs[0] + 8) - cop_sprite_dma_abs_x;
+	abs_y = cpu_read_word(cop_regs[0] + 4) - cop_sprite_dma_abs_y;
+
+	const UINT8 fx     =  (sprite_info & 0x4000) >> 14;
+	const UINT8 fy     =  (sprite_info & 0x2000) >> 13;
+	const UINT8 dx     = ((sprite_info & 0x1c00) >> 10) + 1;
+
+	if (fx)
+	{
+		sprite_x = (0x100 - (dx*16));
+		sprite_x += (abs_x)-(cop_sprite_dma_rel_x & 0x78);
+		if (cop_sprite_dma_rel_x & 0x80)
+			sprite_x -= 0x80;
+		else
+			sprite_x -= 0x100;
+	}
+	else
+		sprite_x = (cop_sprite_dma_rel_x & 0x78) + (abs_x)-((cop_sprite_dma_rel_x & 0x80) ? 0x80 : 0);
+
+	if (fy)
+		sprite_y = (abs_y)+((cop_sprite_dma_rel_y & 0x80) ? 0x80 : 0)-(cop_sprite_dma_rel_y & 0x78);
+	else
+		sprite_y = (cop_sprite_dma_rel_y & 0x78) + (abs_y)-((cop_sprite_dma_rel_y & 0x80) ? 0x80 : 0);
+
+	cpu_write_word(cop_regs[4] + offs + 4, sprite_x);
+	cpu_write_word(cop_regs[4] + offs + 6, sprite_y);
 }
 
-static void LEGACY_execute_dde5(int offset, UINT16 )
+static void LEGACY_execute_dde5(INT32 offset, UINT16 )
 {
 	UINT8 offs;
-	int div;
+	INT32 div;
 	INT16 dir_offset;
 
 	offs = (offset & 3) * 4;
@@ -536,10 +562,10 @@ static void LEGACY_execute_dde5(int offset, UINT16 )
 	cpu_write_word((cop_regs[6] + offs + 4), ((cpu_read_word(cop_regs[5] + offs + 4) + dir_offset) / div));
 }
 
-static void LEGACY_execute_e30e(int , UINT16 data)
+static void LEGACY_execute_e30e(INT32 , UINT16 data)
 {
-	int dy = cpu_read_long(cop_regs[2] + 4) - cpu_read_long(cop_regs[0] + 4);
-	int dx = cpu_read_long(cop_regs[2] + 8) - cpu_read_long(cop_regs[0] + 8);
+	INT32 dy = cpu_read_long(cop_regs[2] + 4) - cpu_read_long(cop_regs[0] + 4);
+	INT32 dx = cpu_read_long(cop_regs[2] + 8) - cpu_read_long(cop_regs[0] + 8);
 
 	cop_status = 7;
 	if (!dx)
@@ -560,17 +586,17 @@ static void LEGACY_execute_e30e(int , UINT16 data)
 		cop_write_byte(cop_regs[0] + 0x34, cop_angle);
 }
 
-static void execute_f205(int , UINT16 )
+static void execute_f205(INT32 , UINT16 )
 {
 	cpu_write_long(cop_regs[2], cpu_read_long(cop_regs[0]+4));
 }
 
 static INT32 find_trigger_match(UINT16 triggerval, UINT16 mask)
 {
-	int matched = 0;
-	int command = -1;
+	INT32 matched = 0;
+	INT32 command = -1;
 
-	for (int i = 0; i < 32; i++)
+	for (INT32 i = 0; i < 32; i++)
 	{
 		if ((triggerval & mask) == (cop_func_trigger[i] & mask) && cop_func_trigger[i] != 0)
 		{
@@ -587,7 +613,7 @@ static INT32 find_trigger_match(UINT16 triggerval, UINT16 mask)
 	return -1;
 }
 
-static INT32 check_command_matches(int command, UINT16 seq0, UINT16 seq1, UINT16 seq2, UINT16 seq3, UINT16 seq4, UINT16 seq5, UINT16 seq6, UINT16 seq7, UINT16 _funcval_, UINT16 _funcmask_)
+static INT32 check_command_matches(INT32 command, UINT16 seq0, UINT16 seq1, UINT16 seq2, UINT16 seq3, UINT16 seq4, UINT16 seq5, UINT16 seq6, UINT16 seq7, UINT16 _funcval_, UINT16 _funcmask_)
 {
 	command *= 8;
 
@@ -857,10 +883,10 @@ void cop_cmd_write(INT32 offset, UINT16 data)
 	}
 }
 
-static UINT8 fade_table(int v)
+static UINT8 fade_table(INT32 v)
 {
-	int low  = v & 0x001f;
-	int high = v & 0x03e0;
+	INT32 low  = v & 0x001f;
+	INT32 high = v & 0x03e0;
 
 	return (low * (high | (high >> 5)) + 0x210) >> 10;
 }
@@ -874,8 +900,8 @@ static void dma_palette_brightness()
 	for (UINT32 i = 0; i < size; i++)
 	{
 		UINT16 pal_val;
-		int r, g, b;
-		int rt, gt, bt;
+		INT32 r, g, b;
+		INT32 rt, gt, bt;
 
 		if (pal_brightness_mode == 5)
 		{
@@ -1472,6 +1498,9 @@ INT32 seibu_cop_scan(INT32 nAction,INT32 *)
 		SCAN_VAR(cop_sprite_dma_src);
 		SCAN_VAR(cop_sprite_dma_abs_y);
 		SCAN_VAR(cop_sprite_dma_abs_x);
+		SCAN_VAR(cop_sprite_dma_rel_y);
+		SCAN_VAR(cop_sprite_dma_rel_x);
+
 		SCAN_VAR(cop_status);
 		SCAN_VAR(cop_angle_target);
 		SCAN_VAR(cop_angle_step);

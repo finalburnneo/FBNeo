@@ -2039,9 +2039,9 @@ static struct BurnRomInfo GardiaRomDesc[] = {
 	{ "epr-10236.04",      0x008000, 0xb35ab227, BRF_GRA },		  	  //  9 Sprites
 	{ "epr-10235.5",       0x008000, 0x006a3151, BRF_GRA },		  	  // 10 Sprites
 
-	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  	  // 11 Red PROM
-	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  	  // 12 Green PROM
-	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  	  // 13 Blue PROM
+	{ "pr-7345.3",         0x000100, 0x8eee0f72, BRF_GRA },		  	  // 11 Red PROM
+	{ "pr-7344.2",         0x000100, 0x3e7babd7, BRF_GRA },		  	  // 12 Green PROM
+	{ "pr-7343.1",         0x000100, 0x371c44a6, BRF_GRA },		  	  // 13 Blue PROM
 	{ "pr5317.4",          0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 };
 
@@ -2053,20 +2053,20 @@ static struct BurnRomInfo GardiabRomDesc[] = {
 	{ "gardiabl.6",        0x008000, 0xb2ed05dc, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "gardiabl.7",        0x008000, 0x0a490588, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 
-	{ "epr10243.120",      0x004000, 0x87220660, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+	{ "epr-10243.120",     0x004000, 0x87220660, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 
 	{ "gardiabl.8",        0x004000, 0x367c9a17, BRF_GRA },		  	  //  4 Tiles
 	{ "gardiabl.9",        0x004000, 0x1540fd30, BRF_GRA },		  	  //  5 Tiles
 	{ "gardiabl.10",       0x004000, 0xe5c9af10, BRF_GRA },		  	  //  6 Tiles
 
-	{ "epr10234.117",      0x008000, 0x8a6aed33, BRF_GRA },		  	  //  7 Sprites
-	{ "epr10233.110",      0x008000, 0xc52784d3, BRF_GRA },		  	  //  8 Sprites
-	{ "epr10236.04",       0x008000, 0xb35ab227, BRF_GRA },		  	  //  9 Sprites
-	{ "epr10235.5",        0x008000, 0x006a3151, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-10234.117",     0x008000, 0x8a6aed33, BRF_GRA },		  	  //  7 Sprites
+	{ "epr-10233.110",     0x008000, 0xc52784d3, BRF_GRA },		  	  //  8 Sprites
+	{ "epr-10236.04",      0x008000, 0xb35ab227, BRF_GRA },		  	  //  9 Sprites
+	{ "epr-10235.5",       0x008000, 0x006a3151, BRF_GRA },		  	  // 10 Sprites
 
-	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  	  // 11 Red PROM
-	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  	  // 12 Green PROM
-	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  	  // 13 Blue PROM
+	{ "pr-7345.3",         0x000100, 0x8eee0f72, BRF_GRA },		  	  // 11 Red PROM
+	{ "pr-7344.2",         0x000100, 0x3e7babd7, BRF_GRA },		  	  // 12 Green PROM
+	{ "pr-7343.1",         0x000100, 0x371c44a6, BRF_GRA },		  	  // 13 Blue PROM
 	{ "pr5317.4",          0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 };
 

@@ -19183,6 +19183,28 @@ static struct BurnRomInfo ScobraeRomDesc[] = {
 STD_ROM_PICK(Scobrae)
 STD_ROM_FN(Scobrae)
 
+static struct BurnRomInfo Scobrae2RomDesc[] = {
+	// same encryption as scobrae
+	{ "2c", 		   0x01000, 0x5f38340b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2e", 		   0x01000, 0xa3edcdb4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2f", 		   0x01000, 0xc6291ea6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2h", 		   0x01000, 0xc2197fac, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2j", 		   0x01000, 0x80b8270f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2l", 		   0x01000, 0xf03475f6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "5c",            0x00800, 0xd4346959, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "5d",            0x00800, 0xcc025d95, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "5e",            0x00800, 0x1628c53f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+		
+	{ "5f", 		   0x00800, 0x64d113b4, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "5h", 		   0x00800, 0xa96316d3, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "82s123.6e",     0x00020, 0x9b87f90d, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Scobrae2)
+STD_ROM_FN(Scobrae2)
+
 static struct BurnRomInfo ScobragRomDesc[] = {
 	{ "2c_32.bin",     0x01000, 0x04ffab61, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2e_32.bin",     0x01000, 0xf82a52de, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -21284,7 +21306,7 @@ struct BurnDriver BurnDrvScobra = {
 
 struct BurnDriver BurnDrvScobras = {
 	"scobras", "scobra", NULL, NULL, "1981",
-	"Super Cobra (Stern)\0", NULL, "Konami (Stern license)", "Galaxian",
+	"Super Cobra (Stern Electronics)\0", NULL, "Konami (Stern Electronics license)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ScobrasRomInfo, ScobrasRomName, NULL, NULL, NULL, NULL, SfxInputInfo, ScobrasDIPInfo,
@@ -21314,10 +21336,20 @@ struct BurnDriver BurnDrvScobrab = {
 
 struct BurnDriver BurnDrvScobrae = {
 	"scobrae", "scobra", NULL, NULL, "1981",
-	"Super Cobra (Stern) (encrypted, KONATEC XC-103SS CPU)\0", NULL, "Konami (Stern license)", "Galaxian",
+	"Super Cobra (Stern Electronics) (encrypted, KONATEC XC-103SS CPU)\0", NULL, "Konami (Stern Electronics license)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ScobraeRomInfo, ScobraeRomName, NULL, NULL, NULL, NULL, SfxInputInfo, ScobrasDIPInfo,
+	ScobraeInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvScobrae2 = {
+	"scobrae2", "scobra", NULL, NULL, "1981",
+	"Super Cobra (encrypted)\0", NULL, "Konami", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, Scobrae2RomInfo, Scobrae2RomName, NULL, NULL, NULL, NULL, SfxInputInfo, ScobrasDIPInfo,
 	ScobraeInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

@@ -164,10 +164,11 @@ void CpuCheatRegister(INT32 type, cpu_core_config *config);
 
 // burn_memory.cpp
 void BurnInitMemoryManager();
-UINT8 *BurnMalloc(INT32 size);
+UINT8 *_BurnMalloc(INT32 size, char *file, INT32 line); // internal use only :)
 UINT8 *BurnRealloc(void *ptr, INT32 size);
-void _BurnFree(void *ptr);
+void _BurnFree(void *ptr); // internal use only :)
 #define BurnFree(x) do {_BurnFree(x); x = NULL; } while (0)
+#define BurnMalloc(x) _BurnMalloc(x, __FILE__, __LINE__)
 void BurnExitMemoryManager();
 
 // ---------------------------------------------------------------------------

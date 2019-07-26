@@ -19292,6 +19292,28 @@ static struct BurnRomInfo ScobragRomDesc[] = {
 STD_ROM_PICK(Scobrag)
 STD_ROM_FN(Scobrag)
 
+static struct BurnRomInfo ScobraggiRomDesc[] = {
+	// Super Cobra bootleg (Cocamatic). PCB by "GGI Corp."
+	{ "2c_b.bin",      0x01000, 0x04ffab61, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2e_b.bin",      0x01000, 0x4e29d35f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2f_b.bin",      0x01000, 0x9dee81cc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2h_b.bin",      0x01000, 0x99dee0c6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2j_b.bin",      0x01000, 0xdb7fb865, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2l_b.bin",      0x01000, 0x5825d73b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "1_13_a.bin",    0x00800, 0xd4346959, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "2_13_a.bin",    0x00800, 0xcc025d95, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "3_13_a.bin",    0x00800, 0x1628c53f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+		
+	{ "5h_b.bin",      0x00800, 0x64d113b4, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "5f_b.bin",      0x00800, 0xa96316d3, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "6e_b.bin",      0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Scobraggi)
+STD_ROM_FN(Scobraggi)
+
 static struct BurnRomInfo SuprheliRomDesc[] = {
 	{ "1.2c",          0x01000, 0xb25141d8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "scobra2e.bin",  0x01000, 0xa270e44d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -21426,6 +21448,16 @@ struct BurnDriver BurnDrvScobrag = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ScobragRomInfo, ScobragRomName, NULL, NULL, NULL, NULL, SfxInputInfo, ScobrasDIPInfo,
+	ScobraInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvScobraggi = {
+	"scobraggi", "scobra", NULL, NULL, "1981",
+	"Super Cobra (bootleg, set 3)\0", NULL, "bootleg (Cocamatic)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, ScobraggiRomInfo, ScobraggiRomName, NULL, NULL, NULL, NULL, SfxInputInfo, ScobrasDIPInfo,
 	ScobraInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

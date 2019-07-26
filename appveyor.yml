@@ -40,7 +40,7 @@ test: off
 deploy:
 - provider: GitHub
   tag: appveyor-build
-  description: 'FB Neo Appveyor automatic build'
+  description: appveyor-build-$(appveyor_build_version)
   force_update: true
   on:
     branch: master                 # release from master branch only 

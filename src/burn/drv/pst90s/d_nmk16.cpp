@@ -7445,6 +7445,43 @@ struct BurnDriver BurnDrvBubl2000 = {
 };
 
 
+// Bubble 2000 V1.2
+
+static struct BurnRomInfo bubl2000aRomDesc[] = {
+	{ "b-2000_n_v1.2.112",		0x020000, 0xda28624b, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "b-2000_n_v1.2.107",		0x020000, 0xc766c1fb, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "rom01.92",		0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "rom03.4",		0x010000, 0xf4c15588, 3 | BRF_GRA },           //  3 Characters
+
+	{ "rom06.6",		0x080000, 0xac1aabf5, 4 | BRF_GRA },           //  4 Tiles
+	{ "rom07.9",		0x080000, 0x69aff769, 4 | BRF_GRA },           //  5
+	{ "rom13.7",		0x080000, 0x3a5b7226, 4 | BRF_GRA },           //  6
+	{ "rom04.1",		0x080000, 0x46acd054, 4 | BRF_GRA },           //  7
+	{ "rom05.3",		0x080000, 0x37deb6a1, 4 | BRF_GRA },           //  8
+	{ "rom12.2",		0x080000, 0x1fdc59dd, 4 | BRF_GRA },           //  9
+
+	{ "rom08.11",		0x040000, 0x519dfd82, 5 | BRF_GRA },           // 10 Sprites
+	{ "rom09.14",		0x040000, 0x04fcb5c6, 5 | BRF_GRA },           // 11
+
+	{ "rom02.95",		0x040000, 0x859a86e5, 6 | BRF_SND },           // 12 OKI1 Samples
+};
+
+STD_ROM_PICK(bubl2000a)
+STD_ROM_FN(bubl2000a)
+
+struct BurnDriver BurnDrvBubl2000a = {
+	"bubl2000a", "bubl2000", NULL, NULL, "1998",
+	"Bubble 2000 V1.2\0", NULL, "Afega (Tuning license)", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, bubl2000aRomInfo, bubl2000aRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Bubl2000DIPInfo,
+	Bubl2000Init, AfegaExit, AfegaFrame, Bubl2000Draw, DrvScan, NULL, 0x300,
+	256, 224, 4, 3
+};
+
+
 // Hot Bubble (Korea, with adult pictures)
 /* Korean release - Nude images of women for backgrounds */
 
@@ -8190,6 +8227,140 @@ struct BurnDriver BurnDrvBjtwina = {
 };
 
 
+// Bombjack Twin (prototype? with adult pictures, set 1)
+
+static struct BurnRomInfo bjtwinpRomDesc[] = {
+	{ "ic76",			0x020000, 0xc2847f0d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "ic75",			0x020000, 0xdd8fdfce, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ic35",			0x010000, 0x45d67683, 3 | BRF_GRA },           //  2 Characters
+
+	{ "u1.ic32",		0x080000, 0xb4960ba0, 4 | BRF_GRA },           //  3 Tiles
+	{ "u2.ic32",		0x080000, 0x99ee571d, 4 | BRF_GRA },           //  4 
+	{ "u3.ic32",		0x080000, 0x25720ffb, 4 | BRF_GRA },           //  5 
+
+	{ "u4.ic100",		0x080000, 0x6501b1fb, 5 | BRF_GRA },           //  6 Sprites
+	{ "u5.ic100",		0x080000, 0x8394e2ba, 5 | BRF_GRA },           //  7
+
+	{ "bottom.ic30",	0x080000, 0xb5ef197f, 6 | BRF_SND },           //  8 OKI1 Samples
+	{ "top.ic30",		0x080000, 0xab50531d, 6 | BRF_SND },           //  9
+
+	{ "top.ic27",		0x080000, 0xadb2f256, 7 | BRF_SND },           // 10 OKI2 Samples
+	{ "bottom.ic27",	0x080000, 0x6ebeb9e4, 7 | BRF_SND },           // 11 
+};
+
+STD_ROM_PICK(bjtwinp)
+STD_ROM_FN(bjtwinp)
+
+static INT32 BjtwinpLoadCallback()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x080000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x100000,  5, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  6, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x000001,  7, 2)) return 1;
+
+	if (BurnLoadRom(DrvSndROM0 + 0x000000,  8, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM0 + 0x0c0000,  9, 1)) return 1;
+
+	if (BurnLoadRom(DrvSndROM1 + 0x000000, 10, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM1 + 0x0c0000, 11, 1)) return 1;
+
+	BjtwinGfxDecode(0x10000, 0x200000, 0x100000);
+
+	return 0;
+}
+
+static INT32 BjtwinpInit()
+{
+	return BjtwinInit(BjtwinpLoadCallback);
+}
+
+struct BurnDriver BurnDrvBjtwinp = {
+	"bjtwinp", "bjtwin", NULL, NULL, "1993",
+	"Bombjack Twin (prototype? with adult pictures, set 1)\0", NULL, "NMK", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, bjtwinpRomInfo, bjtwinpRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BjtwinDIPInfo,
+	BjtwinpInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
+	224, 384, 3, 4
+};
+
+
+// Bombjack Twin (prototype? with adult pictures, set 2)
+
+static struct BurnRomInfo bjtwinpaRomDesc[] = {
+	{ "ic76.bin",		0x020000, 0x81106d1e, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "ic75.bin",		0x020000, 0x7c99b97f, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ic35.bin",		0x010000, 0xaa13df7c, 3 | BRF_GRA },           //  2 Characters
+
+	{ "ic32_1.bin",		0x080000, 0xe2d2b331, 4 | BRF_GRA },           //  3 Tiles
+	{ "ic32_2.bin",		0x080000, 0x28a3a845, 4 | BRF_GRA },           //  4 
+	{ "ic32_3.bin",		0x080000, 0xecce80c9, 4 | BRF_GRA },           //  5 
+
+	{ "ic100_1.bin",	0x080000, 0x2ea7e460, 5 | BRF_GRA },           //  6 Sprites
+	{ "ic100_2.bin",	0x080000, 0xec85e1b7, 5 | BRF_GRA },           //  7
+
+	{ "bottom.ic30",	0x080000, 0xb5ef197f, 6 | BRF_SND },           //  8 OKI1 Samples
+	{ "top.ic30",		0x080000, 0xab50531d, 6 | BRF_SND },           //  9
+
+	{ "top.ic27",		0x080000, 0xadb2f256, 7 | BRF_SND },           // 10 OKI2 Samples
+	{ "bottom.ic27",	0x080000, 0x6ebeb9e4, 7 | BRF_SND },           // 11 
+};
+
+STD_ROM_PICK(bjtwinpa)
+STD_ROM_FN(bjtwinpa)
+
+static INT32 BjtwinpaLoadCallback()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x080000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x100000,  5, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  6, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x000001,  7, 2)) return 1;
+
+	if (BurnLoadRom(DrvSndROM0 + 0x000000,  8, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM0 + 0x0c0000,  9, 1)) return 1;
+
+	if (BurnLoadRom(DrvSndROM1 + 0x000000, 10, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM1 + 0x0c0000, 11, 1)) return 1;
+
+	decode_gfx(0x200000, 0x100000);
+	
+	BjtwinGfxDecode(0x10000, 0x200000, 0x100000);
+
+	return 0;
+}
+
+static INT32 BjtwinpaInit()
+{
+	return BjtwinInit(BjtwinpaLoadCallback);
+}
+
+struct BurnDriver BurnDrvBjtwinpa = {
+	"bjtwinpa", "bjtwin", NULL, NULL, "1993",
+	"Bombjack Twin (prototype? with adult pictures, set 2)\0", NULL, "NMK", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, bjtwinpaRomInfo, bjtwinpaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BjtwinDIPInfo,
+	BjtwinpaInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
+	224, 384, 3, 4
+};
+
+
 // Nouryoku Koujou Iinkai
 
 static struct BurnRomInfo nouryokuRomDesc[] = {
@@ -8245,6 +8416,78 @@ struct BurnDriver BurnDrvNouryoku = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, nouryokuRomInfo, nouryokuRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NouryokuDIPInfo,
 	NouryokuGameInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
+	384, 224, 4, 3
+};
+
+
+// Nouryoku Koujou Iinkai (prototype)
+
+static struct BurnRomInfo nouryokupRomDesc[] = {
+	{ "ic76.1",		0x040000, 0x26075988, 1 | BRF_PRG | BRF_ESS },   //  0 68k code
+	{ "ic75.2",		0x040000, 0x75ab82cd, 1 | BRF_PRG | BRF_ESS },   //  1
+
+	{ "ic35.3",		0x010000, 0x03d0c3b1, 3 | BRF_GRA },           	 //  2 Characters
+
+	{ "bg0.u1.ic32",		0x080000, 0x1fec8e14, 4 | BRF_GRA },   	 //  3 Tiles
+	{ "bg1.u2.ic32",		0x080000, 0x7b8ea3f0, 4 | BRF_GRA },   	 //  4
+	{ "bg2.u3.ic32",		0x080000, 0x6f4eb408, 4 | BRF_GRA },   	 //  5
+	{ "bg3.u4.ic32",		0x080000, 0xdea8c120, 4 | BRF_GRA },   	 //  6
+
+	{ "obj0even.u7.ic100",	0x080000, 0x7966ce07, 5 | BRF_GRA },     //  7 Sprites
+	{ "obj0odd.u6.ic100",	0x080000, 0xd4913a08, 5 | BRF_GRA },     //  8
+	{ "obj1even.u9.ic100",	0x080000, 0xe01567e8, 5 | BRF_GRA },     //  9
+	{ "obj1odd.u8.ic100",	0x080000, 0x4a383085, 5 | BRF_GRA },     // 10
+
+	{ "soundpcm0.bottom.ic30",	0x080000, 0x34ded136, 6 | BRF_SND }, // 11 OKI1 Samples
+	{ "soundpcm1.top.ic30",		0x080000, 0xa8d2abf7, 6 | BRF_SND }, // 12
+
+	{ "spoundpcm2.top.ic27",	0x080000, 0x29d0a15d, 7 | BRF_SND }, // 13 OKI2 Samples
+	{ "spoundpcm3.bottom.ic27",	0x080000, 0xc764e749, 7 | BRF_SND }, // 13 OKI2 Samples
+};
+
+STD_ROM_PICK(nouryokup)
+STD_ROM_FN(nouryokup)
+
+static INT32 NouryokupLoadCallback()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x080000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x100000,  5, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x180000,  6, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  7, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x000001,  8, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x100000,  9, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x100001, 10, 2)) return 1;
+
+	if (BurnLoadRom(DrvSndROM0 + 0x000000, 11, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM0 + 0x0c0000, 12, 1)) return 1;
+
+	if (BurnLoadRom(DrvSndROM1 + 0x000000, 13, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM1 + 0x0c0000, 14, 1)) return 1;
+
+	BjtwinGfxDecode(0x10000, 0x200000, 0x200000);
+
+	return 0;
+}
+
+static INT32 NouryokupInit()
+{
+	return BjtwinInit(NouryokupLoadCallback);
+}
+
+struct BurnDriver BurnDrvNouryokup = {
+	"nouryokup", "nouryoku", NULL, NULL, "1995",
+	"Nouryoku Koujou Iinkai (prototype)\0", NULL, "Tecmo", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
+	NULL, nouryokupRomInfo, nouryokupRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NouryokuDIPInfo,
+	NouryokupInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
 	384, 224, 4, 3
 };
 

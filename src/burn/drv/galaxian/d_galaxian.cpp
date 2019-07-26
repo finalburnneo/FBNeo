@@ -15747,6 +15747,29 @@ static struct BurnRomInfo ScramblebbRomDesc[] = {
 STD_ROM_PICK(Scramblebb)
 STD_ROM_FN(Scramblebb)
 
+static struct BurnRomInfo KamikazespRomDesc[] = {
+	{ "4-b.2c",        0x00800, 0xab0eef23, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5-b.2e",        0x00800, 0x43cb40a4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6-b.2f",        0x00800, 0xeec265ee, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7-b.2h",        0x00800, 0xdd380a22, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "8-b.2j",        0x00800, 0x92980e72, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "9-b.2l",        0x00800, 0x9fd96374, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "10-b.2m",       0x00800, 0x88ac07a0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "11-b.2p",       0x00800, 0x75232e09, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "1-a.5c",        0x00800, 0xbe037cf6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "2-a.5d",        0x00800, 0x31bb79e4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "3-a.5e",        0x00800, 0xba2fa933, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "12-b.5f",       0x00800, 0x4708845b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "13-b.5h",       0x00800, 0x11fd2887, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "prom.6e",       0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Kamikazesp)
+STD_ROM_FN(Kamikazesp)
+
 static struct BurnRomInfo StrfbombRomDesc[] = {
 	{ "1.2c",          0x00800, 0xb102aaa0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2.2e",          0x00800, 0xd4155703, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -17630,6 +17653,16 @@ struct BurnDriver BurnDrvScramblebb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ScramblebbRomInfo, ScramblebbRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
+	ScrambleInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvKamikazesp = {
+	"kamikazesp", "scramble", NULL, NULL, "1981",
+	"Kamikaze (Euromatic S.A., Spanish bootleg of Scramble)\0", NULL, "bootleg (Euromatic S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, KamikazespRomInfo, KamikazespRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
 	ScrambleInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

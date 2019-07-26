@@ -5383,6 +5383,40 @@ struct BurnDriver BurnDrvPangpomsm = {
 };
 
 
+// Pang Pom's (Nova)
+
+static struct BurnRomInfo pangpomsnRomDesc[] = {
+	{ "pn_e_09.9.f7",		0x020000, 0x2cc925aa, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "pn_e_10.10.f8",		0x020000, 0x6d7ad1d2, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "pj_a12.12.a7",		0x020000, 0xa749357b, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+
+	{ "pj_e_02.i7",			0x020000, 0x88f902f7, 3 | BRF_GRA },           //  3 Graphics
+	{ "pj_e_04.i10",		0x020000, 0x54bf2f10, 3 | BRF_GRA },           //  4
+	{ "pj_e_06.i13",		0x020000, 0xc8b6347d, 3 | BRF_GRA },           //  5
+	{ "pj_e_08.i16",		0x020000, 0x9a3408b9, 3 | BRF_GRA },           //  6
+	{ "pj_e_01.i6",			0x020000, 0x11ac3810, 3 | BRF_GRA },           //  7
+	{ "pj_e_03.i9",			0x020000, 0xd126e774, 3 | BRF_GRA },           //  8
+	{ "pj_e_05.i12",		0x020000, 0x79c0ec1e, 3 | BRF_GRA },           //  9
+	{ "pj_e_07.i14",		0x020000, 0x48471c87, 3 | BRF_GRA },           // 10
+
+	{ "pj_a11.11.e1",		0x020000, 0xe89bd565, 4 | BRF_SND },           // 11 MSM6295 Samples
+};
+
+STD_ROM_PICK(pangpomsn)
+STD_ROM_FN(pangpomsn)
+
+struct BurnDriver BurnDrvPangpomsn = {
+	"pangpomsn", "pangpoms", NULL, NULL, "1992",
+	"Pang Pom's (Nova)\0", NULL, "Nova", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, pangpomsnRomInfo, pangpomsnRomName, NULL, NULL, NULL, NULL, SkyalertInputInfo, PangpomsDIPInfo,
+	pangpomsInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	360, 224, 4, 3
+};
+
+
 // Poitto!
 
 static struct BurnRomInfo poittoRomDesc[] = {

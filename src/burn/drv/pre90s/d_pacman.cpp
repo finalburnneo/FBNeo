@@ -4282,7 +4282,7 @@ struct BurnDriver BurnDrvmspacpls = {
 };
 
 
-// Ms. Pac-Man ('Made in Greece' bootleg)
+// Ms. Pac-Man ('Made in Greece' bootleg, set 1)
 
 static struct BurnRomInfo mspacmanbgRomDesc[] = {
 	{ "9.g5",         0x8000, 0x97c64918, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -4306,10 +4306,39 @@ static INT32 mspacmanbgInit()
 
 struct BurnDriver BurnDrvmspacmanbg = {
 	"mspacmanbg", "mspacman", NULL, NULL, "198?",
-	"Ms. Pac-Man ('Made in Greece' bootleg)\0", NULL, "bootleg", "Pac-man",
+	"Ms. Pac-Man ('Made in Greece' bootleg, set 1)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mspacmanbgRomInfo, mspacmanbgRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspacmanbgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Ms. Pac-Man ('Made in Greece' bootleg, set 2)
+
+static struct BurnRomInfo mspacmanbg2RomDesc[] = {
+	{ "11-prg.bin",   0x8000, 0xe11d4132, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+
+	{ "13-chr.bin",   0x4000, 0x8ee4a3b0, 2 | BRF_GRA },			//  1 Graphics
+
+	// not dumped for this set
+	{ "82s123.h7",    0x0020, 0x3545e7e9, 3 | BRF_GRA },			//  2 Color Proms
+	{ "82s129-3.d1",  0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3
+
+	{ "82s129-1.a9",  0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  4 Sound Prom
+	{ "82s129-2.c9",  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
+};
+
+STD_ROM_PICK(mspacmanbg2)
+STD_ROM_FN(mspacmanbg2)
+
+struct BurnDriver BurnDrvmspacmanbg2 = {
+	"mspacmanbg2", "mspacman", NULL, NULL, "198?",
+	"Ms. Pac-Man ('Made in Greece' bootleg, set 2)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspacmanbg2RomInfo, mspacmanbg2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanbgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

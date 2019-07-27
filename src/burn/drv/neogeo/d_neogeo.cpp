@@ -12514,6 +12514,7 @@ struct BurnDriver BurnDrvpbobblenb = {
 
 // Puzzle Bobble 2 / Bust-A-Move Again (Neo-Geo)
 /* MVS ONLY RELEASE */
+// ported to Neo-Geo by SNK, original version is on Taito F3
 
 static struct BurnRomInfo pbobbl2nRomDesc[] = {
 	{ "248-p1.p1",    0x100000, 0x9d6c0754, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -13105,6 +13106,7 @@ struct BurnDriver BurnDrvb2b = {
 
 // Puzzle De Pon!
 /* MVS ONLY RELEASE */
+// game concept licensed from Taito
 
 static struct BurnRomInfo puzzledpRomDesc[] = {
 	{ "202-p1.p1",    0x080000, 0x2b61415b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC534200
@@ -13124,7 +13126,7 @@ STD_ROM_FN(puzzledp)
 
 struct BurnDriver BurnDrvpuzzledp = {
 	"puzzledp", NULL, "neogeo", NULL, "1995",
-	"Puzzle De Pon!\0", NULL, "Taito (Visco license)", "Neo Geo MVS",
+	"Puzzle De Pon!\0", NULL, "Visco", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
 	NULL, puzzledpRomInfo, puzzledpRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -13134,6 +13136,7 @@ struct BurnDriver BurnDrvpuzzledp = {
 
 // Neo Mr. Do!
 /* MVS ONLY RELEASE */
+// game concept licensed from Universal
 
 static struct BurnRomInfo neomrdoRomDesc[] = {
 	/* also found MVS set with PROG Board NEO-MVS PROG 4096 and CHA board NEO-MVS CHA42G-3B; same chip labels */
@@ -13256,6 +13259,7 @@ struct BurnDriver BurnDrvbreakers = {
 
 // Puzzle De Pon! R!
 /* MVS ONLY RELEASE */
+// game concept licensed from Taito
 
 static struct BurnRomInfo puzzldprRomDesc[] = {
 	{ "235-p1.p1",    0x080000, 0xafed5de2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -13275,7 +13279,7 @@ STD_ROM_FN(puzzldpr)
 
 struct BurnDriver BurnDrvpuzzldpr = {
 	"puzzldpr", "puzzledp", "neogeo", NULL, "1997",
-	"Puzzle De Pon! R!\0", NULL, "Taito (Visco license)", "Neo Geo MVS",
+	"Puzzle De Pon! R!\0", NULL, "Visco", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
 	NULL, puzzldprRomInfo, puzzldprRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

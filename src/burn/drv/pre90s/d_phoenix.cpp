@@ -1438,6 +1438,43 @@ struct BurnDriver BurnDrvPhoenixi = {
 };
 
 
+// Fenix (Niemer bootleg of Phoenix)
+// Fenix, bootleg from the Spanish company Niemer
+
+static struct BurnRomInfo fenixnRomDesc[] = {
+	{ "2201.bin",		0x0800, 0x2afa8e2c, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "1202.bin",		0x0800, 0x6527395e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1203.bin",		0x0800, 0x868e69ba, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1204.bin",		0x0800, 0x85d96d7c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1205.bin",		0x0800, 0xa105e4e7, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "1206.bin",		0x0800, 0x249a6f21, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "1207.bin",		0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "1208.bin",		0x0800, 0xb90efc28, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "1211.bin",		0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "1212.bin",		0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+
+	{ "1209.bin",		0x0800, 0xbb0525ed, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "1210.bin",		0x0800, 0x0be2ba91, 3 | BRF_GRA },           // 11
+
+	{ "prom1.bin",		0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
+	{ "prom2.bin",			0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(fenixn)
+STD_ROM_FN(fenixn)
+
+struct BurnDriver BurnDrvFenixn = {
+	"fenixn", "phoenix", NULL, NULL, "1981",
+	"Fenix (Niemer bootleg of Phoenix)\0", NULL, "bootleg (Niemer)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, fenixnRomInfo, fenixnRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
+	PhoenixInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	208, 256, 3, 4
+};
+
+
 // Condor (Sidam bootleg of Phoenix)
 
 static struct BurnRomInfo condorRomDesc[] = {

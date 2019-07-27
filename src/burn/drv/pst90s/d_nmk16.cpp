@@ -6092,7 +6092,8 @@ struct BurnDriver BurnDrvTharrier = {
 	224, 256, 3, 4
 };
 
-// Task Force Harrier (US?)
+// Task Force Harrier (US)
+// US version but no regional notice
 
 static struct BurnRomInfo tharrieruRomDesc[] = {
 	{ "2",			0x020000, 0x78923aaa, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -6124,7 +6125,7 @@ STD_ROM_FN(tharrieru)
 
 struct BurnDriver BurnDrvTharrieru = {
 	"tharrieru", "tharrier", NULL, NULL, "1989",
-	"Task Force Harrier (US?)\0", NULL, "UPL (American Sammy license)", "NMK16",
+	"Task Force Harrier (US)\0", NULL, "UPL (American Sammy license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tharrieruRomInfo, tharrieruRomName, NULL, NULL, NULL, NULL, TharrierInputInfo, TharrierDIPInfo,
@@ -6716,7 +6717,7 @@ struct BurnDriver BurnDrvStagger1 = {
 };
 
 
-// Red Hawk (US)
+// Red Hawk (USA, Canada & South America)
 
 static struct BurnRomInfo redhawkRomDesc[] = {
 	{ "2",			0x020000, 0x3ef5f326, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -6748,7 +6749,7 @@ static INT32 RedhawkInit()
 
 struct BurnDriver BurnDrvRedhawk = {
 	"redhawk", "stagger1", NULL, NULL, "1997",
-	"Red Hawk (US)\0", NULL, "Afega (New Vision Ent. license)", "NMK16",
+	"Red Hawk (USA, Canada & South America)\0", NULL, "Afega (New Vision Ent. license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redhawkRomInfo, redhawkRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
@@ -6758,6 +6759,7 @@ struct BurnDriver BurnDrvRedhawk = {
 
 
 // Red Hawk (Excellent Co., Ltd)
+// earlier revision? different afega logo and score and credit number fonts compared to other sets
 
 static struct BurnRomInfo redhawkeRomDesc[] = {
 	{ "rhawk2.bin",		0x020000, 0x6d2e23b4, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -6817,7 +6819,7 @@ struct BurnDriver BurnDrvRedhawkk = {
 };
 
 
-// Red Hawk (Italy)
+// Red Hawk (horizontal, Italy)
 
 static struct BurnRomInfo redhawkiRomDesc[] = {
 	{ "rhit-2.bin",		0x020000, 0x30cade0e, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -6849,7 +6851,7 @@ static INT32 RedhawkiInit()
 
 struct BurnDriver BurnDrvRedhawki = {
 	"redhawki", "stagger1", NULL, NULL, "1997",
-	"Red Hawk (Italy)\0", NULL, "Afega (Hea Dong Corp license)", "NMK16",
+	"Red Hawk (horizontal, Italy)\0", NULL, "Afega (Hea Dong Corp license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redhawkiRomInfo, redhawkiRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
@@ -6858,7 +6860,7 @@ struct BurnDriver BurnDrvRedhawki = {
 };
 
 
-// Red Hawk (Greece)
+// Red Hawk (horizontal, Greece)
 
 static struct BurnRomInfo redhawkgRomDesc[] = {
 	{ "2.bin",			0x020000, 0xccd459eb, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -6904,7 +6906,7 @@ static INT32 RedhawkgInit()
 
 struct BurnDriver BurnDrvRedhawkg = {
 	"redhawkg", "stagger1", NULL, NULL, "1997",
-	"Red Hawk (Greece)\0", NULL, "Afega (Hea Dong Corp license)", "NMK16",
+	"Red Hawk (horizontal, Greece)\0", NULL, "Afega", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redhawkgRomInfo, redhawkgRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
@@ -6913,7 +6915,7 @@ struct BurnDriver BurnDrvRedhawkg = {
 };
 
 
-// Vince (Redhawk bootleg)
+// Red Hawk (horizontal, bootleg)
 
 static struct BurnRomInfo redhawkbRomDesc[] = {
 	{ "rhb-1.bin",		0x020000, 0xe733ea07, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -6965,7 +6967,7 @@ static INT32 RedhawkbInit()
 
 struct BurnDriver BurnDrvRedhawkb = {
 	"redhawkb", "stagger1", NULL, NULL, "1997",
-	"Vince (Redhawk bootleg)\0", NULL, "bootleg", "NMK16",
+	"Red Hawk (horizontal, bootleg)\0", NULL, "bootleg (Vince)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redhawkbRomInfo, redhawkbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RedhawkbDIPInfo,
@@ -7305,8 +7307,7 @@ struct BurnDriver BurnDrvGrdnstrmau = {
 };
 
 
-
-// Red Fox War Planes II (China, set 1)
+// Hong Hu Zhanji II (China, set 1)
 
 static struct BurnRomInfo redfoxwp2RomDesc[] = {
 	{ "u112",	        	0x040000, 0x3f31600b, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -7329,8 +7330,8 @@ STD_ROM_FN(redfoxwp2)
 
 struct BurnDriver BurnDrvRedfoxwp2 = {
 	"redfoxwp2", "grdnstrm", NULL, NULL, "1998",
-	"Red Fox War Planes II (China, set 1)\0", NULL, "Afega", "NMK16",
-	L"\u7D05\u5B64\u6230\u6A5FII\0Red Fox War Planes II (China, set 1)\0", NULL, NULL, NULL,
+	"Hong Hu Zhanji II (China, set 1)\0", NULL, "Afega", "NMK16",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redfoxwp2RomInfo, redfoxwp2RomName, NULL, NULL, NULL, NULL, CommonInputInfo, GrdnstrkDIPInfo,
 	GrdnstrmkInit, AfegaExit, AfegaFrame, AfegaDraw, DrvScan, NULL, 0x300,
@@ -7338,7 +7339,7 @@ struct BurnDriver BurnDrvRedfoxwp2 = {
 };
 
 
-// Red Fox War Planes II (China, set 2)
+// Hong Hu Zhanji II (China, set 2)
 
 static struct BurnRomInfo redfoxwp2aRomDesc[] = {
 	{ "afega_4.u112",		0x040000, 0xe6e6682a, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -7374,8 +7375,8 @@ static INT32 Redfoxwp2Init()
 
 struct BurnDriver BurnDrvRedfoxwp2a = {
 	"redfoxwp2a", "grdnstrm", NULL, NULL, "1998",
-	"Red Fox War Planes II (China, set 2)\0", NULL, "Afega", "NMK16",
-	L"\u7D05\u5B64\u6230\u6A5FII\0Red Fox War Planes II (China, set 2)\0", NULL, NULL, NULL,
+	"Hong Hu Zhanji II (China, set 2)\0", NULL, "Afega", "NMK16",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redfoxwp2aRomInfo, redfoxwp2aRomName, NULL, NULL, NULL, NULL, CommonInputInfo, GrdnstrkDIPInfo,
 	Redfoxwp2Init, AfegaExit, AfegaFrame, AfegaDraw, DrvScan, NULL, 0x300,
@@ -7696,7 +7697,7 @@ struct BurnDriver BurnDrvMangchi = {
 };
 
 
-// Spectrum 2000 (vertical)
+// Spectrum 2000 (vertical, Korea)
 
 static struct BurnRomInfo spec2kRomDesc[] = {
 	{ "u124",		0x040000, 0xdbd6f65d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -7772,7 +7773,7 @@ static INT32 Spec2kInit()
 
 struct BurnDriver BurnDrvSpec2k = {
 	"spec2k", NULL, NULL, NULL, "2000",
-	"Spectrum 2000 (vertical)\0", NULL, "Yona Tech", "NMK16",
+	"Spectrum 2000 (vertical, Korea)\0", NULL, "Yona Tech", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, spec2kRomInfo, spec2kRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Spec2kDIPInfo,
@@ -7828,7 +7829,7 @@ struct BurnDriver BurnDrvSpec2kh = {
 };
 
 
-// Fire Hawk (horizontal)
+// Fire Hawk (World) / Huohu Chuanshuo (China) (horizontal)
 
 static struct BurnRomInfo firehawkRomDesc[] = {
 	{ "fhawk_p1.u59",	0x080000, 0xd6d71a50, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -7881,7 +7882,7 @@ static INT32 FirehawkInit()
 
 struct BurnDriver BurnDrvFirehawk = {
 	"firehawk", "spec2k", NULL, NULL, "2001",
-	"Fire Hawk (horizontal)\0", NULL, "ESD", "NMK16",
+	"Fire Hawk (World) / Huohu Chuanshuo (China) (horizontal)\0", NULL, "ESD", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, firehawkRomInfo, firehawkRomName, NULL, NULL, NULL, NULL, CommonInputInfo, FirehawkDIPInfo,
@@ -7891,6 +7892,7 @@ struct BurnDriver BurnDrvFirehawk = {
 
 
 // Twin Action
+// hacked from USSAF Mustang
 
 static struct BurnRomInfo twinactnRomDesc[] = {
 	{ "afega.uj13",		0x020000, 0x9187701d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -8302,6 +8304,7 @@ struct BurnDriver BurnDrvBjtwina = {
 
 
 // Bombjack Twin (prototype? with adult pictures, set 1)
+// Cheap looking PCB, but Genuine NMK PCB, GFX aren't encrypted (maybe Korean version not proto?)
 
 static struct BurnRomInfo bjtwinpRomDesc[] = {
 	{ "ic76",			0x020000, 0xc2847f0d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -8368,6 +8371,7 @@ struct BurnDriver BurnDrvBjtwinp = {
 
 
 // Bombjack Twin (prototype? with adult pictures, set 2)
+// same PCB as above, different program revision, GFX are encrypted
 
 static struct BurnRomInfo bjtwinpaRomDesc[] = {
 	{ "ic76.bin",		0x020000, 0x81106d1e, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -8815,7 +8819,7 @@ static INT32 Mustangb2Init()
 
 struct BurnDriver BurnDrvMustangb2 = {
 	"mustangb2", "mustang", NULL, NULL, "1990",
-	"US AAF Mustang (TAB Austria bootleg)\0", NULL, "bootleg", "NMK16",
+	"US AAF Mustang (TAB Austria bootleg)\0", NULL, "bootleg (TAB Austria)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, mustangb2RomInfo, mustangb2RomName, NULL, NULL, NULL, NULL, CommonInputInfo, MustangDIPInfo,
@@ -8824,7 +8828,7 @@ struct BurnDriver BurnDrvMustangb2 = {
 };
 
 
-// Thunder Dragon (9th Jan. 1992)
+// Thunder Dragon (8th Jan. 1992, unprotected)
 
 static struct BurnRomInfo tdragonRomDesc[] = {
 	{ "91070_68k.8",	0x020000, 0x121c3ae7, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -8904,7 +8908,7 @@ static INT32 TdragonInit()
 
 struct BurnDriver BurnDrvTdragon = {
 	"tdragon", NULL, "nmk004", NULL, "1991",
-	"Thunder Dragon (9th Jan. 1992)\0", NULL, "NMK (Tecmo license)", "NMK16",
+	"Thunder Dragon (8th Jan. 1992, unprotected)\0", NULL, "NMK (Tecmo license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragonRomInfo, tdragonRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TdragonDIPInfo,
@@ -8913,7 +8917,7 @@ struct BurnDriver BurnDrvTdragon = {
 };
 
 
-// Thunder Dragon (4th Jun. 1991)
+// Thunder Dragon (4th Jun. 1991, protected)
 
 static struct BurnRomInfo tdragon1RomDesc[] = {
 	{ "thund.8",		0x020000, 0xedd02831, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -8940,7 +8944,7 @@ STD_ROM_FN(tdragon1)
 
 struct BurnDriver BurnDrvTdragon1 = {
 	"tdragon1", "tdragon", "nmk004", NULL, "1991",
-	"Thunder Dragon (4th Jun. 1991)\0", NULL, "NMK (Tecmo license)", "NMK16",
+	"Thunder Dragon (4th Jun. 1991, protected)\0", NULL, "NMK (Tecmo license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragon1RomInfo, tdragon1RomName, NULL, NULL, NULL, NULL, CommonInputInfo, TdragonDIPInfo,
@@ -9643,7 +9647,7 @@ static INT32 VandykebInit()
 
 struct BurnDriver BurnDrvVandykeb = {
 	"vandykeb", "vandyke", NULL, NULL, "1990",
-	"Vandyke (bootleg with PIC16c57)\0", "No sound", "[UPL] (bootleg)", "NMK16",
+	"Vandyke (bootleg with PIC16c57)\0", "No sound", "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, vandykebRomInfo, vandykebRomName, NULL, NULL, NULL, NULL, CommonInputInfo, VandykeDIPInfo,
@@ -10105,6 +10109,7 @@ struct BurnDriver BurnDrvStrahlja = {
 
 
 // Bio-ship Paladin
+// US version but no regional notice
 
 static struct BurnRomInfo bioshipRomDesc[] = {
 	{ "2.ic14",			0x020000, 0xacf56afb, 1 | BRF_PRG | BRF_ESS }, //  0 68k code

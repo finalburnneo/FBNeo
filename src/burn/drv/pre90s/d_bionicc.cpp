@@ -867,7 +867,8 @@ struct BurnDriver BurnDrvbionicc2 = {
 };
 
 
-// Top Secret (Japan)
+// Top Secret (Japan, old revision)
+/* "Not for use outside of USA or Canada" 1st release */
 
 static struct BurnRomInfo topsecrtRomDesc[] = {
 	{ "ts_02.1a",		0x10000, 0xb2fe1ddb, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
@@ -911,10 +912,64 @@ STD_ROM_FN(topsecrt)
 
 struct BurnDriver BurnDrvtopsecrt = {
 	"topsecrt", "bionicc", NULL, NULL, "1987",
-	"Top Secret (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	"Top Secret (Japan, old revision)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
 	NULL, topsecrtRomInfo, topsecrtRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Top Secret (Japan, revision B)
+/* "Not for use in any other country but Japan" */
+
+static struct BurnRomInfo topsecrt2RomDesc[] = {
+	{ "ts_02b.1a",		0x10000, 0x0b84497f, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
+	{ "ts_04b.1b",		0x10000, 0x9ab6de8d, 1 | BRF_PRG | BRF_ESS },	//  1
+	{ "ts_03b.2a",		0x10000, 0x1b3f8a82, 1 | BRF_PRG | BRF_ESS },	//  2
+	{ "ts_05b.2b",		0x10000, 0x962a89d8, 1 | BRF_PRG | BRF_ESS },	//  3
+
+	{ "ts_01b.4e",		0x08000, 0xa9a6cafa, 2 | BRF_PRG | BRF_ESS },	//  4 Z80 Code
+
+	{ "ts_08.8l",		0x08000, 0x96ad379e, 3 | BRF_GRA },				//  5 Characters
+
+	{ "ts_07.5l",		0x08000, 0x25cdf8b2, 4 | BRF_GRA },				//  6 Background Tiles
+	{ "ts_06.4l",		0x08000, 0x314fb12d, 4 | BRF_GRA },				//  7
+
+	{ "ts_12.17f",		0x08000, 0xe4b4619e, 5 | BRF_GRA },				//  8 Foreground Tiles
+	{ "ts_11.15f",		0x08000, 0xab30237a, 5 | BRF_GRA },				//  9
+	{ "ts_17.17g", 		0x08000, 0xdeb657e4, 5 | BRF_GRA },				// 10
+	{ "ts_16.15g",		0x08000, 0xd363b5f9, 5 | BRF_GRA },				// 11 
+	{ "ts_13.18f",		0x08000, 0xa8f5a004, 5 | BRF_GRA },				// 12
+	{ "ts_18.18g",		0x08000, 0x3b36948c, 5 | BRF_GRA },				// 13
+	{ "ts_23.18j",		0x08000, 0xbbfbe58a, 5 | BRF_GRA },				// 14
+	{ "ts_24.18k",		0x08000, 0xf156e564, 5 | BRF_GRA },				// 15
+
+	{ "ts_10.13f",		0x08000, 0xc3587d05, 6 | BRF_GRA },				// 16 Sprites
+	{ "ts_09.11f",		0x08000, 0x6b63eef2, 6 | BRF_GRA },				// 17
+	{ "ts_15.13g",		0x08000, 0xdb8cebb0, 6 | BRF_GRA },				// 18
+	{ "ts_14.11g",		0x08000, 0xe2e41abf, 6 | BRF_GRA },				// 19
+	{ "ts_20.13j",		0x08000, 0xbfd1a695, 6 | BRF_GRA },				// 20
+	{ "ts_19.11j",		0x08000, 0x928b669e, 6 | BRF_GRA },				// 21
+	{ "ts_22.17j",		0x08000, 0x3fe05d9a, 6 | BRF_GRA },				// 22
+	{ "ts_21.15j",		0x08000, 0x27a9bb7c, 6 | BRF_GRA },				// 23
+
+	{ "63s141.18f",		0x00100, 0xb58d0023, 0 | BRF_OPT },				// 24 Priority (not used)
+	
+//	{ "c8751h-88",      0x01000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "ts.2f",     		0x01000, 0x3ed7f0be, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(topsecrt2)
+STD_ROM_FN(topsecrt2)
+
+struct BurnDriver BurnDrvtopsecrt2 = {
+	"topsecrt2", "bionicc", NULL, NULL, "1987",
+	"Top Secret (Japan, revision B)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	NULL, topsecrt2RomInfo, topsecrt2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

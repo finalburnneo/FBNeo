@@ -4453,6 +4453,28 @@ static struct BurnRomInfo PulirulaRomDesc[] = {
 STD_ROM_PICK(Pulirula)
 STD_ROM_FN(Pulirula)
 
+static struct BurnRomInfo PulirulaaRomDesc[] = {
+	// dumped from an original PCB without original ROM labels. The maincpu and audiocpu ROMs differ from the parent.
+	{ "ic46.bin",            0x040000, 0x584ae599, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "ic45.bin",            0x040000, 0x08024086, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "ic44.bin",            0x020000, 0xda9d31fd, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "ic43.bin",            0x020000, 0x1feea319, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "ic50.bin",            0x020000, 0xe8b68cb8, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "c98-04.rom",          0x100000, 0x0e1fe3b2, BRF_GRA | TAITO_CHARS },
+	
+	{ "c98-02.rom",          0x100000, 0x4a2ad2b3, BRF_GRA | TAITO_SPRITESA },
+	{ "c98-03.rom",          0x100000, 0x589a678f, BRF_GRA | TAITO_SPRITESA },
+	
+	{ "c98-01.rom",          0x100000, 0x197f66f5, BRF_SND | TAITO_YM2610A },
+	
+	{ "c98-05.rom",          0x080000, 0x9ddd9c39, BRF_GRA | TAITO_CHARS_PIVOT },
+};
+
+STD_ROM_PICK(Pulirulaa)
+STD_ROM_FN(Pulirulaa)
+
 static struct BurnRomInfo PulirulajRomDesc[] = {
 	{ "c98-12.rom",          0x040000, 0x816d6cde, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c98-13.rom",          0x040000, 0xb7d13d5b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -11206,6 +11228,16 @@ struct BurnDriver BurnDrvPulirula = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, PulirulaRomInfo, PulirulaRomName, NULL, NULL, NULL, NULL, PulirulaInputInfo, PulirulaDIPInfo,
+	PulirulaInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriRozDraw, TaitoF2Scan,
+	NULL, 0x2000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvPulirulaa = {
+	"pulirulaa", "pulirula", NULL, NULL, "1991",
+	"PuLiRuLa (World, earlier?)\0", NULL, "Taito Corporation", "Taito F2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
+	NULL, PulirulaaRomInfo, PulirulaaRomName, NULL, NULL, NULL, NULL, PulirulaInputInfo, PulirulaDIPInfo,
 	PulirulaInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriRozDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };

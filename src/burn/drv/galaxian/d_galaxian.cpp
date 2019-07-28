@@ -6624,6 +6624,7 @@ STD_ROM_FN(Zerotime)
 // Datamat is the old name of Datasat, a technical service and distributor of arcade PCB's from the 80's and 90's.
 // A lot of the bootleg PCB's around Spain have Datamat stickers on the roms. It was one of the most important PCB sellers/distributors in the country from the era.
 // Datamat still operate today as Datasat http://datasat.info/
+
 static struct BurnRomInfo ZerotimedRomDesc[] = {
 	{ "zerotime_datamat.bin",   0x04000, 0xbe60834b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 		
@@ -6635,6 +6636,23 @@ static struct BurnRomInfo ZerotimedRomDesc[] = {
 
 STD_ROM_PICK(Zerotimed)
 STD_ROM_FN(Zerotimed)
+
+static struct BurnRomInfo ZerotimemcRomDesc[] = {
+	{ "4_7k.bin",      0x00800, 0xac64aabe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5_7j.bin",      0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6_7h.bin",      0x00800, 0x7c86fc8a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7_7f.bin",      0x00800, 0x786d690a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3_7l.bin",      0x00800, 0xaf9260d7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "2_1hj.bin",     0x00800, 0xbc7d0985, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "1_1kl.bin",     0x00800, 0xc48b88d0, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	/* Not dumped on the Marti Colls PCB, taken from the parent set */
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Zerotimemc)
+STD_ROM_FN(Zerotimemc)
 
 static struct BurnRomInfo StarfghtRomDesc[] = {
 	{ "ja.1",          0x00400, 0xc6ab558b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -6911,6 +6929,16 @@ struct BurnDriver BurnDrvZerotimed = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, ZerotimedRomInfo, ZerotimedRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvZerotimemc = {
+	"zerotimemc", "galaxian", NULL, NULL, "1979",
+	"Zero Time (Marti Colls)\0", NULL, "bootleg (Marti Colls)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, ZerotimemcRomInfo, ZerotimemcRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

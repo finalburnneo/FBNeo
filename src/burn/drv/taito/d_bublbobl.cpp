@@ -880,6 +880,59 @@ static struct BurnRomInfo SboblbobldRomDesc[] = {
 STD_ROM_PICK(Sboblbobld)
 STD_ROM_FN(Sboblbobld)
 
+static struct BurnRomInfo SboblbobleRomDesc[] = {
+	// identical to sboblbobld but for the first program ROM
+	{ "1f",     			0x08000, 0xbde89043, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "1h",           		0x08000, 0x13118eb1, BRF_ESS | BRF_PRG }, //  1
+	{ "1l",     			0x08000, 0x13fe9baa, BRF_ESS | BRF_PRG }, //  2
+	
+	{ "b-1.3f",     		0x08000, 0xae11a07b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	
+	{ "b-2.1s",     		0x08000, 0x4f9a26e8, BRF_ESS | BRF_PRG }, //  4	Z80 #3 Program 
+	
+	{ "b-6.6b",     		0x08000, 0x20358c22, BRF_GRA },	     	  //  5	Tiles
+	{ "b-7.8b",     		0x08000, 0x930168a9, BRF_GRA },	     	  //  6
+	{ "b-8.9b",     		0x08000, 0x9773e512, BRF_GRA },	     	  //  7
+	{ "b-9.11b",     		0x08000, 0xd045549b, BRF_GRA },	     	  //  8
+	{ "b-10.12b",     		0x08000, 0xd0af35c5, BRF_GRA },	     	  //  9
+	{ "b-11.14b",     		0x08000, 0x7b5369a8, BRF_GRA },	     	  // 10
+	{ "b-12.6d",     		0x08000, 0x6b61a413, BRF_GRA },	     	  // 11
+	{ "b-13.8d",     		0x08000, 0xb5492d97, BRF_GRA },	     	  // 12
+	{ "b-14.9d",     		0x08000, 0xd69762d5, BRF_GRA },	     	  // 13
+	{ "b-15.11d",     		0x08000, 0x9f243b68, BRF_GRA },	     	  // 14
+	{ "b-16.12d",     		0x08000, 0x66e9438c, BRF_GRA },	     	  // 15
+	{ "b-17.14d",     		0x08000, 0x9ef863ad, BRF_GRA },	     	  // 16
+	
+	// not provided for this set
+	{ "a71-25.41",     		0x00100, 0x2d0f8545, BRF_GRA },	     	  // 17	PROMs
+};
+
+STD_ROM_PICK(Sboblboble)
+STD_ROM_FN(Sboblboble)
+
+static struct BurnRomInfo SboblboblfRomDesc[] = {
+	// single layer PCB '8001 AX'
+	{ "a2.bin",    			0x08000, 0x524cdc4f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "a4.bin",           	0x08000, 0x13118eb1, BRF_ESS | BRF_PRG }, //  1
+	{ "a3.bin",    			0x08000, 0x94c75591, BRF_ESS | BRF_PRG }, //  2
+	
+	{ "a5.bin",     		0x08000, 0xae11a07b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	
+	{ "a1.bin",     		0x08000, 0x4f9a26e8, BRF_ESS | BRF_PRG }, //  4	Z80 #3 Program 
+
+	{ "a11.bin",     		0x10000, 0x76f2b367, BRF_GRA },	     	  //  5	Tiles
+	{ "a10.bin",     		0x10000, 0xd370f499, BRF_GRA },	     	  //  6
+	{ "a9.bin",     		0x08000, 0x7b5369a8, BRF_GRA },	     	  //  7
+	{ "a8.bin",      		0x10000, 0x677840e8, BRF_GRA },	     	  //  8
+	{ "a7.bin",      		0x10000, 0x702f61c0, BRF_GRA },	     	  //  9
+	{ "a6.bin",     		0x08000, 0x9ef863ad, BRF_GRA },	     	  // 10
+
+	{ "a71-25.41",     		0x00100, 0x2d0f8545, BRF_GRA },	     	  // 11	PROMs
+};
+
+STD_ROM_PICK(Sboblboblf)
+STD_ROM_FN(Sboblboblf)
+
 static struct BurnRomInfo Bub68705RomDesc[] = {
 	{ "2.bin",         		0x08000, 0x32c8305b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "3-1.bin",       		0x08000, 0x980c2615, BRF_ESS | BRF_PRG }, //  1
@@ -2270,6 +2323,51 @@ static INT32 SboblboblCallback()
 	return 0;
 }
 
+static INT32 SboblboblfCallback()
+{
+	INT32 nRet = 0;
+
+	bublbobl2 = 1;
+	
+	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
+
+	// Load Z80 #1 Program Roms
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x00000, 0, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x10000, 1, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x18000, 2, 1); if (nRet != 0) return 1;
+	
+	// Load Z80 #2 Program Roms
+	nRet = BurnLoadRom(DrvZ80Rom2 + 0x00000, 3, 1); if (nRet != 0) return 1;
+	
+	// Load Z80 #3 Program Roms
+	nRet = BurnLoadRom(DrvZ80Rom3 + 0x00000, 4, 1); if (nRet != 0) return 1;
+	
+	// Load and decode the tiles
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000,  6, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x28000,  7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x40000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x50000,  9, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x68000, 10, 1); if (nRet != 0) return 1;
+	for (INT32 i = 0; i < 0x80000; i++) DrvTempRom[i] ^= 0xff;
+	GfxDecode(0x4000, 4, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x80, DrvTempRom, DrvTiles);
+	
+	// Load the PROM
+	nRet = BurnLoadRom(DrvProm + 0x00000,  11, 1); if (nRet != 0) return 1;
+	
+	BurnFree(DrvTempRom);
+	
+	ZetOpen(0);
+	ZetSetReadHandler(BoblboblRead1);
+	ZetSetWriteHandler(BoblboblWrite1);
+	ZetMemCallback(0xfe00, 0xffff, 0);
+	ZetMemCallback(0xfe00, 0xffff, 1);
+	ZetMemCallback(0xfe00, 0xffff, 2);
+	ZetClose();
+	
+	return 0;
+}
+
 static INT32 BoblboblInit()
 {
 	BublboblCallbackFunction = BoblboblCallback;
@@ -2280,6 +2378,13 @@ static INT32 BoblboblInit()
 static INT32 SboblboblInit()
 {
 	BublboblCallbackFunction = SboblboblCallback;
+	
+	return MachineInit();
+}
+
+static INT32 SboblboblfInit()
+{
+	BublboblCallbackFunction = SboblboblfCallback;
 	
 	return MachineInit();
 }
@@ -3178,6 +3283,26 @@ struct BurnDriver BurnDrvSboblbobld = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, SboblbobldRomInfo, SboblbobldRomName, NULL, NULL, NULL, NULL, BoblboblInputInfo, SboblbobDIPInfo,
 	BoblboblInit, BublboblExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 0x100, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSboblboble = {
+	"sboblboble", "bublbobl", NULL, NULL, "1986",
+	"Super Bobble Bobble (bootleg, set 5)\0", NULL, "bootleg", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, SboblbobleRomInfo, SboblbobleRomName, NULL, NULL, NULL, NULL, BoblboblInputInfo, SboblbobDIPInfo,
+	BoblboblInit, BublboblExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 0x100, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSboblboblf = {
+	"sboblboblf", "bublbobl", NULL, NULL, "1986",
+	"Super Bobble Bobble (bootleg, set 6)\0", NULL, "bootleg", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, SboblboblfRomInfo, SboblboblfRomName, NULL, NULL, NULL, NULL, BoblboblInputInfo, SboblbobDIPInfo,
+	SboblboblfInit, BublboblExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };
 

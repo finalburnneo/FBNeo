@@ -968,6 +968,41 @@ struct BurnDriver BurnDrvLethaleneab = {
 };
 
 
+// Lethal Enforcers (ver EAD, 11/11/92 10:52)
+
+static struct BurnRomInfo lethaleneadRomDesc[] = {
+	{ "191ead01.u4",	0x040000, 0xce2e13ce, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
+
+	{ "191a02.f4",		0x010000, 0x72b843cc, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+
+	{ "191a08",			0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
+	{ "191a10",			0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
+	{ "191a07",			0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
+	{ "191a09",			0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
+
+	{ "191a05",			0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
+	{ "191a04",			0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
+	{ "191a06",			0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
+
+	{ "191a03",			0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
+
+	{ "lethalenead.nv",	0x000080, 0xe1dc2bc0, 6 | BRF_OPT },           // 10 eeprom data
+};
+
+STD_ROM_PICK(lethalenead)
+STD_ROM_FN(lethalenead)
+
+struct BurnDriver BurnDrvLethalenead = {
+	"lethalenead", "lethalen", NULL, NULL, "1992",
+	"Lethal Enforcers (ver EAD, 11/11/92 10:52)\0", NULL, "Konami", "GX191",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	NULL, lethaleneadRomInfo, lethaleneadRomName, NULL, NULL, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
+	LethalenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	288, 224, 4, 3
+};
+
+
 // Lethal Enforcers (ver EAE, 11/19/92 16:24)
 
 static struct BurnRomInfo lethaleneaeRomDesc[] = {

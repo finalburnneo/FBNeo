@@ -702,6 +702,37 @@ static struct BurnRomInfo Drv2RomDesc[] = {
 STD_ROM_PICK(Drv2)
 STD_ROM_FN(Drv2)
 
+static struct BurnRomInfo Drv2jRomDesc[] = {
+	{ "26a9-0_j.ic38",  0x08000, 0x5e4fcdff, BRF_ESS | BRF_PRG }, //  0	HD6309 Program Code
+	{ "26aa-0_j.ic52",  0x08000, 0xbfb4ee04, BRF_ESS | BRF_PRG }, //  1
+	{ "26ab-0.ic53",    0x08000, 0x49ddddcd, BRF_ESS | BRF_PRG }, //  2
+	{ "26ac-0_j.ic63",  0x08000, 0x165858c7, BRF_ESS | BRF_PRG }, //  3
+
+	{ "26ae-0.ic37",    0x10000, 0xea437867, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
+
+	{ "26ad-0.ic41",    0x08000, 0x3788af3b, BRF_ESS | BRF_PRG }, //  5	Z80 #2 Program Code
+
+	{ "26a8-0e.19",    	0x10000, 0x4e80cd36, BRF_GRA },	     	  //  6	Characters
+
+	{ "26j0-0.bin",    	0x20000, 0xdb309c84, BRF_GRA },	     	  //  7	Sprites
+	{ "26j1-0.bin",    	0x20000, 0xc3081e0c, BRF_GRA },	     	  //  8
+	{ "26af-0.bin",    	0x20000, 0x3a615aad, BRF_GRA },	     	  //  9
+	{ "26j2-0.bin",    	0x20000, 0x589564ae, BRF_GRA },	     	  // 10
+	{ "26j3-0.bin",    	0x20000, 0xdaf040d6, BRF_GRA },	     	  // 11
+	{ "26a10-0.bin",   	0x20000, 0x6d16d889, BRF_GRA },	     	  // 12
+
+	{ "26j4-0.bin",    	0x20000, 0xa8c93e76, BRF_GRA },	     	  // 13	Tiles
+	{ "26j5-0.bin",    	0x20000, 0xee555237, BRF_GRA },	     	  // 14
+
+	{ "26j6-0.bin",    	0x20000, 0xa84b2a29, BRF_GRA },	     	  // 15	Samples
+	{ "26j7-0.bin",    	0x20000, 0xbc6a48d5, BRF_GRA },	     	  // 16
+
+	{ "prom.16",       	0x00200, 0x46339529, BRF_GRA },	     	  // 17	PROMs
+};
+
+STD_ROM_PICK(Drv2j)
+STD_ROM_FN(Drv2j)
+
 static struct BurnRomInfo Drv2uRomDesc[] = {
 	{ "26a9-04.bin",   	0x08000, 0xf2cfc649, BRF_ESS | BRF_PRG }, //  0	HD6309 Program Code
 	{ "26aa-03.bin",   	0x08000, 0x44dd5d4b, BRF_ESS | BRF_PRG }, //  1
@@ -2848,7 +2879,7 @@ struct BurnDriver BurnDrvDdragnba = {
 
 struct BurnDriver BurnDrvDdragon2 = {
 	"ddragon2", NULL, NULL, NULL, "1988",
-	"Double Dragon II - The Revenge (World)\0", NULL, "Technos", "Miscellaneous",
+	"Double Dragon II - The Revenge (World)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Drv2RomInfo, Drv2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
@@ -2856,9 +2887,19 @@ struct BurnDriver BurnDrvDdragon2 = {
 	NULL, 0x180, 256, 240, 4, 3
 };
 
+struct BurnDriver BurnDrvDdragon2j = {
+	"ddragon2j", "ddragon2", NULL, NULL, "1988",
+	"Double Dragon II - The Revenge (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
+	NULL, Drv2jRomInfo, Drv2jRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
+	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 0x180, 256, 240, 4, 3
+};
+
 struct BurnDriver BurnDrvDdragon2u = {
 	"ddragon2u", "ddragon2", NULL, NULL, "1988",
-	"Double Dragon II - The Revenge (US)\0", NULL, "Technos", "Miscellaneous",
+	"Double Dragon II - The Revenge (US)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Drv2uRomInfo, Drv2uRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Drv2DIPInfo,

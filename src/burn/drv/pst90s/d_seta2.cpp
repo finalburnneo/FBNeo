@@ -1133,6 +1133,21 @@ static struct BurnRomInfo deerhuneRomDesc[] = {
 STD_ROM_PICK(deerhune)
 STD_ROM_FN(deerhune)
 
+static struct BurnRomInfo deerhunjRomDesc[] = {
+	{ "as_0908e01_u6_jdh.u06",	0x100000, 0x52f037da, 1 }, //  0 68000 code
+	{ "as_0909e01_u7_jdh.u07",	0x100000, 0xb391bc87, 1 }, //  1
+
+	{ "as0901m01.u38",		0x800000, 0x1d6acf8f, 2 }, //  2 GFX
+	{ "as0902m01.u39",		0x800000, 0xc7ca2128, 2 }, //  3
+	{ "as0903m01.u40",		0x800000, 0xe8ef81b3, 2 }, //  4
+	{ "as0904m01.u41",		0x800000, 0xd0f97fdc, 2 }, //  5
+
+	{ "as0905m01.u18",		0x400000, 0x8d8165bb, 3 }, //  6 PCM
+};
+
+STD_ROM_PICK(deerhunj)
+STD_ROM_FN(deerhunj)
+
 static struct BurnRomInfo turkhuntRomDesc[] = {
 	{ "asx_906e01_th.u06",	0x100000, 0xc96266e1, 1 }, //  0 68000 code
 	{ "asx_907e01_th.u07",	0x100000, 0x7c67b502, 1 }, //  1
@@ -3451,6 +3466,16 @@ struct BurnDriver BurnDrvDeerhune = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhuneRomInfo, deerhuneRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvDeerhunj = {
+	"deerhuntj", "deerhunt", NULL, NULL, "2000",
+	"Deer Hunting USA V4.4.1 (Japan)\0", NULL, "Sammy USA Corporation", "Newer Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
+	NULL, deerhunjRomInfo, deerhunjRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
 	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };

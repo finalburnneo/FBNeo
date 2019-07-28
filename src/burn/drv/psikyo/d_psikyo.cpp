@@ -343,6 +343,90 @@ static struct BurnDIPInfo btlkroadDIPList[] = {
 	{0x1C,	0x00, 0x40, 0x00, NULL},
 };
 
+static struct BurnDIPInfo btlkroadkDIPList[] = {
+	// Defaults
+	{0x1B,	0xFF, 0xFF,	0x00, NULL},
+	{0x1C,	0xFF, 0xFF,	0x02, NULL},
+	{0x1D,	0xFF, 0xFF,	0x03, NULL},
+	{0x1E,	0xFF, 0xFF,	0x00, NULL},
+
+	// DIP 1
+	{0,		0xFE, 0,	2,	  "Coin slot"},
+	{0x1B,	0x82, 0x01,	0x00, "Same"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x82, 0x01,	0x01, "Individual"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0,		0xFE, 0,	9,	  "Coin 1"},
+	{0x1B,	0x01, 0x0E,	0x00, "1 coin = 1 credit"},
+	{0x1B,	0x01, 0x0E,	0x02, "2 coins = 1 credit"},
+	{0x1B,	0x01, 0x0E,	0x04, "3 coins = 1 credit"},
+	{0x1B,	0x01, 0x0E,	0x08, "1 coin = 2 credits"},
+	{0x1B,	0x01, 0x0E,	0x06, "1 coin = 3 credits"},
+	{0x1B,	0x01, 0x0E,	0x0A, "1 coin = 4 credits"},
+	{0x1B,	0x01, 0x0E,	0x0C, "1 coin = 5 credits"},
+	{0x1B,	0x82, 0x0E,	0x0E, "1 coin = 6 credits"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x01, 0xFF,	0xFF, "Free play"},
+	{0,		0xFE, 0,	9,	  "Coin 2"},
+	{0x1B,	0x82, 0x70,	0x00, "1 coin = 1 credit"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x82, 0x70,	0x10, "2 coins = 1 credit"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x82, 0x70,	0x20, "3 coins = 1 credit"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x82, 0x70,	0x40, "1 coin = 2 credits"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x82, 0x70,	0x30, "1 coin = 3 credits"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x82, 0x70,	0x50, "1 coin = 4 credits"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x82, 0x70,	0x60, "1 coin = 5 credits"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x82, 0x70,	0x70, "1 coin = 6 credits"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x82, 0xFF,	0xFF, "Free play"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0,		0xFE, 0,	2,	  "Continue coin"},
+	{0x1B,	0x82, 0x80,	0x00, "Normal mode"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	{0x1B,	0x82, 0x80,	0x80, "Continue mode"},
+	{0x1B,	0x00, 0xFF, 0xFF, NULL},
+	// DIP 2
+	{0,		0xFE, 0,	2,	  NULL},
+	{0x1C,	0x01, 0x01,	0x00, "Normal screen"},
+	{0x1C,	0x01, 0x01,	0x01, "Invert screen"},
+	{0,		0xFE, 0,	2,	  "Demo sounds"},
+	{0x1C,	0x01, 0x02,	0x00, "Disabled"},
+	{0x1C,	0x01, 0x02,	0x02, "Enabled"},
+	{0,		0xFE, 0,	4,	  "Difficulty"},
+	{0x1C,	0x01, 0x0C,	0x00, "Normal"},
+	{0x1C,	0x01, 0x0C,	0x04, "Easy"},
+	{0x1C,	0x01, 0x0C,	0x08, "Hard"},
+	{0x1C,	0x01, 0x0C,	0x0C, "Hardest"},
+	{0,		0xFE, 0,	2,	  "Enable debug dip"},
+	{0x1C,	0x01, 0x40,	0x00, "Off"},
+	{0x1C,	0x01, 0x40,	0x40, "On"},
+	{0,		0xFE, 0,	2,	  "Test mode"},
+	{0x1C,	0x01, 0x80,	0x00, "Off"},
+	{0x1C,	0x01, 0x80,	0x80, "On"},
+
+	// Region
+	{0,		0xFE, 0,	6,	  "Region"},
+	{0x1D,	0x01, 0xFF,	0x00, "Japan"},
+	{0x1D,	0x01, 0xFF,	0x01, "USA / Canada (Jaleco license)"},
+	{0x1D,	0x01, 0xFF,	0x03, "Korea"},
+	{0x1D,	0x01, 0xFF,	0x05, "Hong Kong"},
+	{0x1D,	0x01, 0xFF,	0x09, "Taiwan"},
+	{0x1D,	0x01, 0xFF,	0x0F, "World"},
+
+	// Debug Dip
+	{0,		0xFE, 0,	2,	  "Debug test menu"},
+	{0x1E,	0x82, 0x80,	0x00, "Off"},
+	{0x1C,	0x00, 0x40, 0x00, NULL},
+	{0x1E,	0x82, 0x80,	0x80, "On"},
+	{0x1C,	0x00, 0x40, 0x00, NULL},
+};
+
 static struct BurnDIPInfo s1945DIPList[] = {
 	// Defaults
 	{0x15,	0xFF, 0xFF,	0x00, NULL},
@@ -471,19 +555,6 @@ static struct BurnDIPInfo NoRegionDIPList[] = {
 	{0x17,	0xFF, 0xFF,	0x00, NULL},
 };
 
-static struct BurnDIPInfo samuraiaRegionDIPList[] = {
-	// Defaults
-	{0x17,	0xFF, 0xFF,	0x00, NULL},
-
-	// Region
-	{0,		0xFE, 0,	5,	  "Region"},
-	{0x17,	0x01, 0xFF,	0x00, "World"},
-	{0x17,	0x01, 0xFF,	0x10, "USA / Canada"},
-	{0x17,	0x01, 0xFF,	0x20, "Korea"},
-	{0x17,	0x01, 0xFF,	0x40, "Hong Kong"},
-	{0x17,	0x01, 0xFF,	0x80, "Taiwan"},
-};
-
 static struct BurnDIPInfo gunbirdRegionDIPList[] = {
 	// Defaults
 	{0x17,	0xFF, 0xFF,	0x00, NULL},
@@ -505,6 +576,19 @@ static struct BurnDIPInfo s1945aRegionDIPList[] = {
 	{0,		0xFE, 0,	2,	  "Region"},
 	{0x17,	0x01, 0xFF,	0x00, "Japan"},
 	{0x17,	0x01, 0xFF,	0x01, "World"},
+};
+
+static struct BurnDIPInfo samuraiaRegionDIPList[] = {
+	// Defaults
+	{0x17,	0xFF, 0xFF,	0x00, NULL},
+
+	// Region
+	{0,		0xFE, 0,	5,	  "Region"},
+	{0x17,	0x01, 0xFF,	0x00, "World"},
+	{0x17,	0x01, 0xFF,	0x10, "USA / Canada"},
+	{0x17,	0x01, 0xFF,	0x20, "Korea"},
+	{0x17,	0x01, 0xFF,	0x40, "Hong Kong"},
+	{0x17,	0x01, 0xFF,	0x80, "Taiwan"},
 };
 
 static struct BurnDIPInfo tengaiRegionDIPList[] = {
@@ -530,10 +614,8 @@ static struct BurnDIPInfo tengaijRegionDIPList[] = {
 	{0x17,	0x01, 0xFF,	0x0F, "World"},
 };
 
-STDDIPINFOEXT(samuraia, samuraia, samuraiaRegion)
-STDDIPINFOEXT(sngkace, samuraia, NoRegion)
-
 STDDIPINFO(btlkroad)
+STDDIPINFO(btlkroadk)
 
 STDDIPINFOEXT(gunbirdWorld, gunbird, gunbirdRegion)
 STDDIPINFOEXT(gunbird, gunbird, NoRegion)
@@ -541,6 +623,9 @@ STDDIPINFOEXT(gunbird, gunbird, NoRegion)
 STDDIPINFOEXT(s1945World, s1945, gunbirdRegion)
 STDDIPINFOEXT(s1945, s1945, NoRegion)
 STDDIPINFOEXT(s1945a, s1945, s1945aRegion)
+
+STDDIPINFOEXT(samuraia, samuraia, samuraiaRegion)
+STDDIPINFOEXT(sngkace, samuraia, NoRegion)
 
 //STDDIPINFO(tengai)
 STDDIPINFOEXT(tengai, tengai, tengaiRegion)
@@ -2241,8 +2326,9 @@ struct BurnDriver BurnDrvBtlKRoad = {
 	320, 224, 4, 3
 };
 
-// Battle K-Road (Korean PCB))
+// Battle K-Road (Korea)
 // f205v id 1266
+
 static struct BurnRomInfo btlkroadkRomDesc[] = {
 	{ "4,dot.u46",   0x040000, 0xe724d429, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "5,dot.u39",   0x040000, 0xc0d65765, BRF_ESS | BRF_PRG }, //  1
@@ -2270,10 +2356,10 @@ STD_ROM_FN(btlkroadk)
 
 struct BurnDriver BurnDrvBtlKRoadk = {
 	"btlkroadk", "btlkroad", NULL, NULL, "1994",
-	"Battle K-Road (Korean PCB)\0", NULL, "Psikyo", "Psikyo 68EC020",
-	L"Battle K-Road\0Battle K-Road \u30D0\u30C8\u30EB\u30AF\u30ED\u30FC\u30C9 (Korean PCB)\0", NULL, NULL, NULL,
+	"Battle K-Road (Korea)\0", NULL, "Psikyo", "Psikyo 68EC020",
+	L"Battle K-Road\0Battle K-Road \u30D0\u30C8\u30EB\u30AF\u30ED\u30FC\u30C9 (Korea)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VSFIGHT, 0,
-	NULL, btlkroadkRomInfo, btlkroadkRomName, NULL, NULL, NULL, NULL, btlkroadInputInfo, btlkroadDIPInfo,
+	NULL, btlkroadkRomInfo, btlkroadkRomName, NULL, NULL, NULL, NULL, btlkroadInputInfo, btlkroadkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	320, 224, 4, 3
 };
@@ -2442,7 +2528,7 @@ STD_ROM_FN(s1945a)
 
 struct BurnDriver BurnDrvS1945 = {
 	"s1945", NULL, NULL, NULL, "1995",
-	"Strikers 1945\0", NULL, "Psikyo", "Psikyo 68EC020",
+	"Strikers 1945 (World)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, s1945RomInfo, s1945RomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, s1945WorldDIPInfo,
@@ -2472,7 +2558,7 @@ struct BurnDriver BurnDrvS1945k = {
 
 struct BurnDriver BurnDrvS1945a = {
 	"s1945a", "s1945", NULL, NULL, "1995",
-	"Strikers 1945 (Alt)\0", NULL, "Psikyo", "Psikyo 68EC020",
+	"Strikers 1945 (Japan / World)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, s1945aRomInfo, s1945aRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, s1945aDIPInfo,
@@ -2540,8 +2626,8 @@ STD_ROM_FN(tengaij)
 
 struct BurnDriver BurnDrvTengaij = {
 	"tengaij", "tengai", NULL, NULL, "1996",
-	"Tengai\0Sengoku Blade - sengoku ace episode II\0", NULL, "Psikyo", "Psikyo 68EC020",
-	L"Tengai\0\u6226\u56FD\u30D6\u30EC\u30FC\u30C9 - sengoku ace episode II\0", NULL, NULL, NULL,
+	"Tengai\0Sengoku Blade - sengoku Ace episode II\0", NULL, "Psikyo", "Psikyo 68EC020",
+	L"Tengai\0\u6226\u56FD\u30D6\u30EC\u30FC\u30C9 - sengoku Ace episode II\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
 	NULL, tengaijRomInfo, tengaijRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, tengaijDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,

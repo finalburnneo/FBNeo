@@ -1345,7 +1345,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Tetris Plus 2 (World)
+// Tetris Plus 2 (World, V2.8)
 
 static struct BurnRomInfo tetrisp2RomDesc[] = {
 	{ "tet2_4_ver2.8.ic59",		0x080000, 0xe67f9c51, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1367,10 +1367,41 @@ STD_ROM_FN(tetrisp2)
 
 struct BurnDriver BurnDrvTetrisp2 = {
 	"tetrisp2", NULL, NULL, NULL, "1997",
-	"Tetris Plus 2 (World)\0", NULL, "Jaleco / The Tetris Company", "Miscellaneous",
+	"Tetris Plus 2 (World, V2.8)\0", NULL, "Jaleco / The Tetris Company", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, tetrisp2RomInfo, tetrisp2RomName, NULL, NULL, NULL, NULL, Tetrisp2InputInfo, Tetrisp2DIPInfo,
+	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
+	320, 224, 4, 3
+};
+
+
+// Tetris Plus 2 (World, V2.7)
+
+static struct BurnRomInfo tetrisp2aRomDesc[] = {
+	{ "tet2_4_ver2.7.ic59",		0x080000, 0x3070bfde, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tet2_1_ver2.7.ic65",		0x080000, 0xfe3eb1d2, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "96019-01.9",			0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
+	{ "96019-02.8",			0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
+
+	{ "96019-06.13",		0x400000, 0x16f7093c, 0x03 | BRF_GRA },           //  4 Background and Rotation tiles
+	{ "96019-04.6",			0x100000, 0xb849dec9, 0x03 | BRF_GRA },           //  5
+
+	{ "tetp2-10.ic27",		0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
+
+	{ "96019-07.7",			0x400000, 0xa8a61954, 0x05 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STD_ROM_PICK(tetrisp2a)
+STD_ROM_FN(tetrisp2a)
+
+struct BurnDriver BurnDrvTetrisp2a = {
+	"tetrisp2a", "tetrisp2", NULL, NULL, "1997",
+	"Tetris Plus 2 (World, V2.7)\0", NULL, "Jaleco / The Tetris Company", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, tetrisp2aRomInfo, tetrisp2aRomName, NULL, NULL, NULL, NULL, Tetrisp2InputInfo, Tetrisp2DIPInfo,
 	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
 };

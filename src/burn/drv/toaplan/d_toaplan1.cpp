@@ -3343,6 +3343,44 @@ struct BurnDriver BurnDrvSamesame2 = {
 };
 
 
+// Jiao! Jiao! Jiao! (China, 2P set)
+
+static struct BurnRomInfo samesamecnRomDesc[] = {
+	{ "o17_09-h2.8j",		0x08000, 0xfc8c2420, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "o17_10-h2.8l",		0x08000, 0xcc0ffbeb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "o17_11-2.7j",		0x20000, 0x6beac378, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "o17_12-2.7l",		0x20000, 0x6adb6eb5, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "hd647180.017",		0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
+
+	{ "o17_05.12j",			0x20000, 0x565315f8, 3 | BRF_GRA },           //  5 Layer Tiles
+	{ "o17_06.13j",			0x20000, 0x95262d4c, 3 | BRF_GRA },           //  6
+	{ "o17_07.12l",			0x20000, 0x4c4b735c, 3 | BRF_GRA },           //  7
+	{ "o17_08.13l",			0x20000, 0x95c6586c, 3 | BRF_GRA },           //  8
+
+	{ "o17_01.1d",			0x20000, 0xea12e491, 5 | BRF_GRA },           //  9 Sprites
+	{ "o17_02.3d",			0x20000, 0x32a13a9f, 5 | BRF_GRA },           // 10
+	{ "o17_03.5d",			0x20000, 0x68723dc9, 5 | BRF_GRA },           // 11
+	{ "o17_04.7d",			0x20000, 0xfe0ecb13, 5 | BRF_GRA },           // 12
+
+	{ "prom14.25b",			0x00020, 0xbc88cced, 0 | BRF_OPT },           // 13 PROMs
+	{ "prom15.20c",			0x00020, 0xa1e17492, 0 | BRF_OPT },           // 14
+};
+
+STD_ROM_PICK(samesamecn)
+STD_ROM_FN(samesamecn)
+
+struct BurnDriver BurnDrvSamesamecn = {
+	"samesamecn", "fireshrk", NULL, NULL, "1989",
+	"Jiao! Jiao! Jiao! (China, 2P set)\0", NULL, "Toaplan (Hong Kong Honest Trading license)", "Toaplan BCU-2 / FCU-2 based",
+	L"\u9BAB!\u9BAB!\u9BAB!\0Jiao! Jiao! Jiao! (China, 2P set)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	NULL, samesamecnRomInfo, samesamecnRomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, Samesame2DIPInfo,
+	SamesameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
 // Same! Same! Same! (1P set, NEW VER! hack)
 
 static struct BurnRomInfo samesamenhRomDesc[] = {

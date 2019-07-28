@@ -12647,6 +12647,13 @@
 		<rom name="super monaco gp (usa).bin" size="524288" crc="725018ee"/>
 		<driver status="good"/>
 	</game>
+	<game name="smgp2019" cloneof="smgp" romof="smgp">
+		<description>Super Monaco GP 2019 - HE Returns (Hack, Improvement)</description>
+		<year>2019</year>
+		<manufacturer>2019 TA_Marcos_Translations</manufacturer>
+		<rom name="Super_Monaco_GP2019.bin" size="524288" crc="12bcabb6"/>
+		<driver status="good"/>
+	</game>
 	<game name="superoff">
 		<description>Super Off Road (Euro, USA)</description>
 		<year>1994</year>

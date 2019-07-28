@@ -40,7 +40,7 @@ test: off
 deploy:
 - provider: GitHub
   tag: appveyor-build
-  description: appveyor-build-$(appveyor_build_version)
+  description: github-commit-$(appveyor_pull_request_head_commit)
   force_update: true
   on:
     branch: master                 # release from master branch only 

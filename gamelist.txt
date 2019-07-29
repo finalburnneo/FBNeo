@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12189 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12192 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -114,6 +114,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_688atsub	|  	| 688 Attack Sub (Euro, USA)				| 		| 1991	| Sega		| Sega Megadrive| 					|
 | 7ordi		|  	| 7 Ordi (Korea)					| 		| 2002	| Yun Sung	| Miscellaneous	| 					|
 | spec_720deg	|  	| 720 Degrees (48K)					| 		| 1986	| U.S. Gold	| ZX Spectrum	| 					|
+| 800fatha	|  	| 800 Fathoms (older)					| mariner	| 1981	| Amenip (US Bil| Galaxian	| 					|
 | 800fath	|  	| 800 Fathoms						| mariner	| 1981	| Amenip (US Bil| Galaxian	| 					|
 | sms_94swc	|  	| 94 Super World Cup Soccer (Kor)			| 		| 1994	| Daou Infosys	| Sega Master Sy| 					|
 | md_bugslifea	|  	| A Bug's Life (Alt?)					| md_bugslife	| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -4241,7 +4242,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_hardboil	|  	| Hard Boiled (Euro)					| 		| 1987	| Methodic Solut| MSX		| 					|
 | spec_harddriv	|  	| Hard Drivin' (128K)					| 		| 1989	| Domark	| ZX Spectrum	| 					|
 | md_harddriv	|  	| Hard Drivin' (World)					| 		| 1991	| Tengen	| Sega Megadrive| 					|
-| hardhea2	|  	| Hard Head 2 (v2.0)					| 		| 1991	| SunA		| Miscellaneous	| 					|
+| hardhea2a	|  	| Hard Head 2 (v2.0, Music Program v2.0)		| hardhea2	| 1991	| SunA		| Miscellaneous	| 					|
+| hardhea2	|  	| Hard Head 2 (v2.0, Music Program v2.4)		| 		| 1991	| SunA		| Miscellaneous	| 					|
 | hardhead	|  	| Hard Head						| 		| 1988	| SunA		| Miscellaneous	| 					|
 | hpuncher	|  	| Hard Puncher (Japan)					| fround	| 1988	| Konami	| GX870		| 					|
 | hardyard10	|  	| Hard Yardage (v1.00)					| hardyard	| 1993	| Strata/Incredi| Miscellaneous	| 					|
@@ -10252,6 +10254,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofch		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer,| 		| 1992	| Capcom	| CPS Changer	| 					|
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
+| wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
 | tengai	|  	| Tengai (world)					| 		| 1996	| Psikyo	| Psikyo 68EC020| 					|
 | tengaij	|  	| Tengai\0Sengoku Blade - sengoku Ace episode II	| tengai	| 1996	| Psikyo	| Psikyo 68EC020| 					|
 | gg_tengenwc	|  	| Tengen World Cup Soccer (Euro, USA)			| 		| 1993	| Tengen	| Sega Game Gear| 					|

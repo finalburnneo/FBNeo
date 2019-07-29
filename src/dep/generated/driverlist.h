@@ -116,6 +116,7 @@ DRV		BurnDrvStreet64;
 DRV		BurnDrvmd_688atsub;
 DRV		BurnDrvOrdi7;
 DRV		BurnSpec720deg;
+DRV		BurnDrvEighthundredfatha;
 DRV		BurnDrvEighthundredfath;
 DRV		BurnDrvsms_94swc;
 DRV		BurnDrvmd_bugslifea;
@@ -4331,6 +4332,7 @@ DRV		BurnDrvMSX_harapeko;
 DRV		BurnDrvMSX_hardboil;
 DRV		BurnSpecharddriv;
 DRV		BurnDrvmd_harddriv;
+DRV		BurnDrvHardhea2a;
 DRV		BurnDrvHardhea2;
 DRV		BurnDrvHardhead;
 DRV		BurnDrvHpuncher;
@@ -10472,6 +10474,7 @@ DRV		BurnDrvCpsDynwarj;
 DRV		BurnDrvCpsWofj;
 DRV		BurnDrvCpsWofch;
 DRV		BurnDrvCpsWofjh;
+DRV		BurnDrvCpswofchp;
 DRV		BurnDrvTengai;
 DRV		BurnDrvTengaij;
 DRV		BurnDrvgg_tengenwc;
@@ -12582,6 +12585,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_688atsub,		// 688 Attack Sub (Euro, USA)
 	&BurnDrvOrdi7,				// 7 Ordi (Korea)
 	&BurnSpec720deg,			// 720 Degrees (48K)
+	&BurnDrvEighthundredfatha,	// 800 Fathoms (older)
 	&BurnDrvEighthundredfath,	// 800 Fathoms
 	&BurnDrvsms_94swc,			// 94 Super World Cup Soccer (Kor)
 	&BurnDrvmd_bugslifea,		// A Bug's Life (Alt?)
@@ -16797,7 +16801,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_hardboil,		// Hard Boiled (Euro)
 	&BurnSpecharddriv,			// Hard Drivin' (128K)
 	&BurnDrvmd_harddriv,		// Hard Drivin' (World)
-	&BurnDrvHardhea2,			// Hard Head 2 (v2.0)
+	&BurnDrvHardhea2a,			// Hard Head 2 (v2.0, Music Program v2.0)
+	&BurnDrvHardhea2,			// Hard Head 2 (v2.0, Music Program v2.4)
 	&BurnDrvHardhead,			// Hard Head
 	&BurnDrvHpuncher,			// Hard Puncher (Japan)
 	&BurnDrvHardyard10,			// Hard Yardage (v1.00)
@@ -22938,6 +22943,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsWofj,			// Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan)
 	&BurnDrvCpsWofch,			// Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer, 921031 Japan)
 	&BurnDrvCpsWofjh,			// Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031 Japan)
+	&BurnDrvCpswofchp,			// Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Version)
 	&BurnDrvTengai,				// Tengai (world)
 	&BurnDrvTengaij,			// Tengai\0Sengoku Blade - sengoku Ace episode II
 	&BurnDrvgg_tengenwc,		// Tengen World Cup Soccer (Euro, USA)

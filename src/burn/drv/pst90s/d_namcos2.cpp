@@ -470,20 +470,12 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 
 		case 0x10000:
 			if (w) {
-				SekClose();
-				SekOpen((a) ? 0 : 1);
-				SekSetIRQLine(irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_ACK);
-				SekClose();
-				SekOpen(a);
+				SekSetIRQLine(a^1, irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_ACK);
 			}
 			return 0;
 
 		case 0x16000:
-			SekClose();
-			SekOpen((a) ? 0 : 1);
-			SekSetIRQLine(irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_NONE);
-			SekClose();
-			SekOpen(a);
+			SekSetIRQLine(a^1, irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_NONE);
 			return 0;
 
 		case 0x18000:
@@ -526,11 +518,7 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 				{
 					hd63705Reset();
 
-					SekClose();
-					SekOpen(1);
-					SekReset();
-					SekClose();
-					SekOpen(0);
+					SekReset(1);
 				}
 				else
 				{
@@ -1471,13 +1459,8 @@ static INT32 DrvDoReset()
 	memset (roz_dirty_tile, 1, 0x10000);
 	roz_update_tiles = 1;
 
-	SekOpen(0);
-	SekReset();
-	SekClose();
-
-	SekOpen(1);
-	SekReset();
-	SekClose();
+	SekReset(0);
+	SekReset(1);
 
 	M6809Open(0);
 	M6809Reset();

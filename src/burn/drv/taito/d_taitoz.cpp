@@ -3416,11 +3416,7 @@ static void TaitoZCpuAReset(UINT16 d)
 {
 	TaitoCpuACtrl = d;
 	if (!(TaitoCpuACtrl & 1)) {
-		SekClose();
-		SekOpen(1);
-		SekReset();
-		SekClose();
-		SekOpen(0);
+		SekReset(1);
 	}
 }
 

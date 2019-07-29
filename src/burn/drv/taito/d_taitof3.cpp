@@ -237,11 +237,7 @@ static void __fastcall f3_main_write_long(UINT32 a, UINT32 d)
 	}
 
 	if ((a & 0xfffffc) == 0xc80100) {
-		SekClose();
-		SekOpen(1);
-		SekReset();
-		SekClose();
-		SekOpen(0);
+		SekReset(1);
 		sound_cpu_in_reset = 1;
 		return;
 	}
@@ -270,11 +266,7 @@ static void __fastcall f3_main_write_word(UINT32 a, UINT16 d)
 	}
 
 	if ((a & 0xfffffc) == 0xc80100) {
-		SekClose();
-		SekOpen(1);
-		SekReset();
-		SekClose();
-		SekOpen(0);
+		SekReset(1);
 		sound_cpu_in_reset = 1;
 		return;
 	}
@@ -298,11 +290,7 @@ static void __fastcall f3_main_write_byte(UINT32 a, UINT8 d)
 	}
 
 	if ((a & 0xfffffc) == 0xc80100) {
-		SekClose();
-		SekOpen(1);
-		SekReset();
-		SekClose();
-		SekOpen(0);
+		SekReset(1);
 		sound_cpu_in_reset = 1;
 		return;
 	}

@@ -374,11 +374,7 @@ static void __fastcall Superchs68K1WriteWord(UINT32 a, UINT16 d)
 		case 0x240002: {
 			SuperchsCpuACtrl = d;
 			if (!(SuperchsCpuACtrl & 0x200)) {
-				SekClose();
-				SekOpen(1);
-				SekReset();
-				SekClose();
-				SekOpen(0);
+				SekReset(1);
 			}
 			return;
 		}

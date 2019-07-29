@@ -17967,6 +17967,24 @@ static struct BurnRomInfo EighthundredfathRomDesc[] = {
 STD_ROM_PICK(Eighthundredfath)
 STD_ROM_FN(Eighthundredfath)
 
+static struct BurnRomInfo EighthundredfathaRomDesc[] = {
+	{ "tq1.2h",        0x01000, 0xd858c242, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tm2.2k",        0x01000, 0xefe7ca28, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tm3.2l",        0x01000, 0x027881a6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tm4.2m",        0x01000, 0xa0fde7dc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tm5.2p",        0x01000, 0xd7ebcb8e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "tm8.5f",        0x01000, 0x70ae611f, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "tm9.5h",        0x01000, 0x8e4e999e, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "t4.6e",         0x00020, 0xca42b6dd, BRF_GRA | GAL_ROM_PROM },	
+	{ "t6.6p",         0x00100, 0xad208ccc, BRF_GRA | GAL_ROM_PROM },	// Background colour
+	{ "t5.7p",         0x00020, 0x1bd88cff, BRF_GRA | GAL_ROM_PROM },	// Char banking and star placement
+};
+
+STD_ROM_PICK(Eighthundredfatha)
+STD_ROM_FN(Eighthundredfatha)
+
 UINT8 __fastcall TriplepZ80PortRead(UINT16 a)
 {
 	a &= 0xff;
@@ -18166,6 +18184,16 @@ struct BurnDriver BurnDrvEighthundredfath = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE |BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, EighthundredfathRomInfo, EighthundredfathRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
+	MarinerInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvEighthundredfatha = {
+	"800fatha", "mariner", NULL, NULL, "1981",
+	"800 Fathoms (older)\0", NULL, "Amenip (US Billiards Inc. license)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE |BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, EighthundredfathaRomInfo, EighthundredfathaRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
 	MarinerInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

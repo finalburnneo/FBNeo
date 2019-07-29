@@ -36,78 +36,78 @@ static UINT8 DrvReset;
 static INT32 watchdog;
 
 static struct BurnInputInfo ShaolinsInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Shaolins)
 
 static struct BurnDIPInfo ShaolinsDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0x5a, NULL				},
-	{0x13, 0xff, 0xff, 0xff, NULL				},
-	{0x14, 0xff, 0xff, 0xff, NULL				},
+	{0x12, 0xff, 0xff, 0x5a, NULL						},
+	{0x13, 0xff, 0xff, 0xff, NULL						},
+	{0x14, 0xff, 0xff, 0xff, NULL						},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x12, 0x01, 0x03, 0x03, "2"				},
-	{0x12, 0x01, 0x03, 0x02, "3"				},
-	{0x12, 0x01, 0x03, 0x01, "5"				},
-	{0x12, 0x01, 0x03, 0x00, "7"				},
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x12, 0x01, 0x03, 0x03, "2"						},
+	{0x12, 0x01, 0x03, 0x02, "3"						},
+	{0x12, 0x01, 0x03, 0x01, "5"						},
+	{0x12, 0x01, 0x03, 0x00, "7"						},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x12, 0x01, 0x04, 0x00, "Upright"			},
-	{0x12, 0x01, 0x04, 0x04, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x12, 0x01, 0x04, 0x00, "Upright"					},
+	{0x12, 0x01, 0x04, 0x04, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"				},
 	{0x12, 0x01, 0x18, 0x18, "30000 and every 70000"	},
 	{0x12, 0x01, 0x18, 0x10, "40000 and every 80000"	},
-	{0x12, 0x01, 0x18, 0x08, "40000"			},
-	{0x12, 0x01, 0x18, 0x00, "50000"			},
+	{0x12, 0x01, 0x18, 0x08, "40000"					},
+	{0x12, 0x01, 0x18, 0x00, "50000"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x12, 0x01, 0x60, 0x60, "Easy"				},
-	{0x12, 0x01, 0x60, 0x40, "Medium"			},
-	{0x12, 0x01, 0x60, 0x20, "Hard"				},
-	{0x12, 0x01, 0x60, 0x00, "Hardest"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"				},
+	{0x12, 0x01, 0x60, 0x60, "Easy"						},
+	{0x12, 0x01, 0x60, 0x40, "Medium"					},
+	{0x12, 0x01, 0x60, 0x20, "Hard"						},
+	{0x12, 0x01, 0x60, 0x00, "Hardest"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x12, 0x01, 0x80, 0x80, "Off"				},
-	{0x12, 0x01, 0x80, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x12, 0x01, 0x80, 0x80, "Off"						},
+	{0x12, 0x01, 0x80, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x13, 0x01, 0x01, 0x01, "Off"				},
-	{0x13, 0x01, 0x01, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x13, 0x01, 0x01, 0x01, "Off"						},
+	{0x13, 0x01, 0x01, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Upright Controls"		},
-	{0x13, 0x01, 0x02, 0x02, "Single"			},
-	{0x13, 0x01, 0x02, 0x00, "Dual"				},
+	{0   , 0xfe, 0   ,    2, "Upright Controls"			},
+	{0x13, 0x01, 0x02, 0x02, "Single"					},
+	{0x13, 0x01, 0x02, 0x00, "Dual"						},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x13, 0x01, 0x04, 0x04, "Off"				},
-	{0x13, 0x01, 0x04, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"				},
+	{0x13, 0x01, 0x04, 0x04, "Off"						},
+	{0x13, 0x01, 0x04, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"			},
+	{0   , 0xfe, 0   ,    16, "Coin A"					},
 	{0x14, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"		},
 	{0x14, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"		},
 	{0x14, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"		},
@@ -123,9 +123,9 @@ static struct BurnDIPInfo ShaolinsDIPList[]=
 	{0x14, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
 	{0x14, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"		},
 	{0x14, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"		},
-	{0x14, 0x01, 0x0f, 0x00, "Free Play"			},
+	{0x14, 0x01, 0x0f, 0x00, "Free Play"				},
 
-	{0   , 0xfe, 0   ,    15, "Coin B"			},
+	{0   , 0xfe, 0   ,    15, "Coin B"					},
 	{0x14, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"		},
 	{0x14, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"		},
 	{0x14, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"		},
@@ -223,25 +223,25 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvM6809ROM		= Next; Next += 0x00c0000;
+	DrvM6809ROM		= Next; Next += 0x00c000;
 
-	DrvGfxROM0		= Next; Next += 0x0080000;
-	DrvGfxROM1		= Next; Next += 0x0100000;
+	DrvGfxROM0		= Next; Next += 0x008000;
+	DrvGfxROM1		= Next; Next += 0x010000;
 
-	DrvColPROM		= Next; Next += 0x0005000;
-;
-	DrvPalette		= (UINT32*)Next; Next += 0x10000 * sizeof(UINT32);
+	DrvColPROM		= Next; Next += 0x000500;
+
+	DrvPalette		= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
 
 	AllRam			= Next;
 
-	DrvM6809RAM		= Next; Next += 0x0009000;
-	DrvSprRAM		= Next; Next += 0x0003000;
-	DrvColRAM		= Next; Next += 0x0004000;
-	DrvVidRAM		= Next; Next += 0x0004000;
+	DrvM6809RAM		= Next; Next += 0x000900;
+	DrvSprRAM		= Next; Next += 0x000300;
+	DrvColRAM		= Next; Next += 0x000400;
+	DrvVidRAM		= Next; Next += 0x000400;
 
 	scroll			= (UINT16*)Next; Next += 0x000001 * sizeof(UINT16);
 	flipscreen		= Next; Next += 0x000001;
-	palette_bank		= Next; Next += 0x000001;
+	palette_bank	= Next; Next += 0x000001;
 	nmi_enable		= Next; Next += 0x000001;
 
 	RamEnd			= Next;
@@ -274,7 +274,7 @@ static void DrvPaletteInit()
 {
 	UINT32 pens[0x100];
 
-	INT32 weights[4] = { 2200,1000,470,220 };
+	INT32 weights[4] = { 2200, 1000, 470, 220 };
 
 	{
 		INT32 total = 0;
@@ -405,11 +405,7 @@ static void draw_layer()
 		INT32 color =(attr & 0x0f) + (*palette_bank << 4);
 		INT32 flipy = attr & 0x20;
 
-		if (flipy) {
-			Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-		} else {
-			Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, 0, flipy, color, 4, 0, DrvGfxROM0);
 	}
 }
 
@@ -435,19 +431,7 @@ static void draw_sprites()
 			flipy = !flipy;
 		}
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x800, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x800, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x800, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x800, DrvGfxROM1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 4, 0, 0x800, DrvGfxROM1);
 	}
 }
 
@@ -457,9 +441,10 @@ static INT32 DrvDraw()
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
+	BurnTransferClear();
 
-	draw_layer();
-	draw_sprites();
+	if (nBurnLayer    & 1) draw_layer();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -496,7 +481,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 
 		if (*nmi_enable && (i & 0x1f) == 0)
 			M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // 480x/second (8x/frame)

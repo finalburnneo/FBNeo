@@ -6107,9 +6107,11 @@ static void extdwnhl68kInit()
 	SekSetWriteByteHandler(1,		setaSoundRegWriteByte);
 	SekClose();
 
-	// swap halves of sound rom
-	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000);
+	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000); // temp storage
+
+	// swap halves of sound rom (extdwnhl & sokonuke)
 	memcpy (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x080000);
+	memcpy (DrvSndROM + 0x080000, DrvSndROM + 0x100000, 0x080000);
 }
 
 static void krzybowl68kInit()

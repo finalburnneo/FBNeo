@@ -70,7 +70,6 @@ static UINT8 DrvReset;
 static UINT16 DrvInputs[3];
 
 static INT32 system_select = 0;
-static INT32 sound_cpu_reset = 0;
 static UINT8 input_select_values[5];
 static INT32 ignore_oki_status_hack = 1;
 static INT32 layer_color_config[4] = { 0, 0x100, 0x200, 0x300 };
@@ -80,63 +79,63 @@ static INT32 tshingen = 0;
 static INT32 monkelf = 0;
 
 static struct BurnInputInfo CommonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Common)
 
 static struct BurnInputInfo Common3ButtonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"	},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"	},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Common3Button)
 
 static struct BurnInputInfo Hayaosi1InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 2"	},
@@ -144,7 +143,7 @@ static struct BurnInputInfo Hayaosi1InputList[] = {
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 4"	},
 	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 5"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 2"	},
@@ -159,30 +158,30 @@ static struct BurnInputInfo Hayaosi1InputList[] = {
 	{"P3 Button 4",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 fire 4"	},
 	{"P3 Button 5",		BIT_DIGITAL,	DrvJoy2 + 7,	"p3 fire 5"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Hayaosi1)
 
 static struct BurnInputInfo PeekabooInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
 	{"P1 Left",		    BIT_DIGITAL,	DrvJoy1 + 9,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 12,	"p1 right"	},
 	{"P1 Fire",		    BIT_DIGITAL,	DrvJoy1 + 8,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
 	{"P2 Left",		    BIT_DIGITAL,	DrvJoy1 + 11,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 right"	},
 	{"P2 Fire",		    BIT_DIGITAL,	DrvJoy1 + 10,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Peekaboo)
@@ -1612,18 +1611,11 @@ static void update_video_regs(INT32 offset)
 		case 0x300:
 		{
 			screen_flag = data;
-			sound_cpu_reset = data & 0x10;
 
-			if (sound_cpu_reset) {
-				if (system_select == 0) { // system Z
-					ZetReset();
-				} else {
-					SekClose();
-					SekOpen(1);
-					SekReset();
-					SekClose();
-					SekOpen(0);
-				}
+			if (system_select == 0) { // system Z
+				ZetSetRESETLine(data & 0x10);
+			} else {
+				SekSetRESETLine(1, data & 0x10);
 			}
 		}
 		return;
@@ -1635,11 +1627,7 @@ static void update_video_regs(INT32 offset)
 			if (system_select == 0) {	// system Z
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			} else {
-				SekClose();
-				SekOpen(1);
-				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-				SekClose();
-				SekOpen(0);
+				SekSetIRQLine(1, 4, CPU_IRQSTATUS_AUTO);
 			}
 		}
 		return;
@@ -1706,26 +1694,14 @@ static void update_video_regs2(INT32 offset)
 		{
 			screen_flag = data;
 
-			sound_cpu_reset = data & 0x10;
-
-			if (sound_cpu_reset) {
-				SekClose();
-				SekOpen(1);
-				SekReset();
-				SekClose();
-				SekOpen(0);
-			}
+			SekSetRESETLine(1, data & 0x10);
 		}
 		return;
 			
 		case 0x8000:
 		{
 			soundlatch = data;
-			SekClose();
-			SekOpen(1);
-			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO); // auto?
-			SekClose();
-			SekOpen(0);
+			SekSetIRQLine(1, 2, CPU_IRQSTATUS_AUTO); // auto?
 		}
 		return;
 	}	
@@ -2309,20 +2285,14 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	SekOpen(0);
-	SekReset();
-	SekClose();
+	SekReset(0);
 
 	if (system_select == 0) { // system Z
-		ZetOpen(0);
-		ZetReset();
-		ZetClose();
+		ZetReset(0);
 
 		BurnYM2203Reset();
 	} else {
-		SekOpen(1);
-		SekReset();
-		SekClose();
+		SekReset(1);
 
 		MSM6295Reset();
 		BurnYM2151Reset();
@@ -2921,7 +2891,8 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 		SekClose();
 
 		// not in system D
-		BurnYM2151Init(3500000);
+		BurnYM2151Init(3500000, 1);
+		BurnTimerAttachSek(7000000);
 		BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
@@ -3288,8 +3259,7 @@ static INT32 System1ZFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 		if (i ==   0) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		if (i == 128) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
@@ -3335,29 +3305,95 @@ static INT32 System1AFrame()
 		}
 	}
 
-	INT32 nSegment;
-	INT32 nInterleave = 262;
+	INT32 nInterleave = 263 * 8;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { ((tshingen) ? 8000000 : 6000000) / 56, 7000000 / 56 };
+	INT32 nCyclesTotal[2] = { (INT32)(((tshingen) ? 8000000 : 6000000) / 56.19), (INT32)(7000000 / 56.19) };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment - nCyclesDone[0]);
-		if (i ==  16) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		if (i == 128) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, Sek);
+		if (i ==  16*8) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i == 128*8) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 240*8) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		SekOpen(1);
-		nSegment = (nCyclesTotal[1] * (i + 1)) / nInterleave;
-		if (sound_cpu_reset) {
-			nCyclesDone[1] += SekIdle(nSegment - nCyclesDone[1]);
-		} else {
-			nCyclesDone[1] += SekRun(nSegment - nCyclesDone[1]);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[1]);
+
+		if (pBurnSoundOut && i%64 == 63) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 64);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
 		}
+
+		SekClose();
+	}
+
+	SekOpen(1);
+
+	if (pBurnSoundOut) {
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength > 0) {
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
+		}
+	}
+	nCyclesDone[1] = SekTotalCycles();
+
+	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+
+	if (pBurnDraw) {
+		DrvDraw();
+	}
+
+	DrvBufferSprites();
+
+	return 0;
+}
+
+static INT32 System1B_1CFrame(INT32 maincpu)
+{
+	if (DrvReset) {
+		DrvDoReset();
+	}
+
+	SekNewFrame();
+
+	{
+		memset (DrvInputs, 0xff, 6);
+		for (INT32 i = 0; i < 16; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+		}
+	}
+
+	INT32 nInterleave = 256;
+	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[2] = { maincpu, 7000000 / 60 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		SekOpen(0);
+		CPU_RUN(0, Sek);
+		if (i ==   0) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 128) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i == 240) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		SekClose();
+
+		SekOpen(1);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[1]);
 
 		if (pBurnSoundOut && i%8 == 7) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
@@ -3380,6 +3416,7 @@ static INT32 System1AFrame()
 			MSM6295Render(pSoundBuf, nSegmentLength);
 		}
 	}
+	nCyclesDone[1] = SekTotalCycles();
 
 	SekClose();
 
@@ -3397,156 +3434,12 @@ static INT32 System1AFrame()
 
 static INT32 System1BFrame()
 {
-	if (DrvReset) {
-		DrvDoReset();
-	}
-
-	SekNewFrame();
-
-	{
-		memset (DrvInputs, 0xff, 6);
-		for (INT32 i = 0; i < 16; i++) {
-			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
-			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
-			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
-		}
-	}
-
-	INT32 nSegment;
-	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 8000000 / 60, 7000000 / 60 };
-	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
-
-	for (INT32 i = 0; i < nInterleave; i++)
-	{
-		SekOpen(0);
-		nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment - nCyclesDone[0]);
-		if (i ==   0) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i == 128) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		if (i == 240) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		SekClose();
-
-		SekOpen(1);
-		nSegment = (nCyclesTotal[1] * (i + 1)) / nInterleave;
-		if (sound_cpu_reset) {
-			nCyclesDone[1] += SekIdle(nSegment - nCyclesDone[1]);
-		} else {
-			nCyclesDone[1] += SekRun(nSegment - nCyclesDone[1]);
-		}
-
-		if (pBurnSoundOut && i%8 == 7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-
-		SekClose();
-	}
-
-	SekOpen(1);
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength > 0) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(pSoundBuf, nSegmentLength);
-		}
-	}
-
-	SekClose();
-
-	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	DrvBufferSprites();
-
-	return 0;
+	return System1B_1CFrame(8000000 / 60);
 }
 
 static INT32 System1CFrame()
 {
-	if (DrvReset) {
-		DrvDoReset();
-	}
-
-	SekNewFrame();
-
-	{
-		memset (DrvInputs, 0xff, 6);
-		for (INT32 i = 0; i < 16; i++) {
-			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
-			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
-			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
-		}
-	}
-
-	INT32 nSegment;
-	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 60, 7000000 / 60 };
-	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
-
-	for (INT32 i = 0; i < nInterleave; i++)
-	{
-		SekOpen(0);
-		nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment - nCyclesDone[0]);
-		if (i ==   0) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i == 128) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		if (i == 240) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		SekClose();
-
-		SekOpen(1);
-		nSegment = (nCyclesTotal[1] * (i + 1)) / nInterleave;
-		if (sound_cpu_reset) {
-			nCyclesDone[1] += SekIdle(nSegment - nCyclesDone[1]);
-		} else {
-			nCyclesDone[1] += SekRun(nSegment - nCyclesDone[1]);
-		}
-
-		if (pBurnSoundOut && i%8 == 7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-
-		SekClose();
-	}
-
-	SekOpen(1);
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength > 0) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(pSoundBuf, nSegmentLength);
-		}
-	}
-
-	SekClose();
-
-	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	DrvBufferSprites();
-
-	return 0;
+	return System1B_1CFrame(12000000 / 60);
 }
 
 static INT32 System1DFrame() // peekaboo
@@ -3626,7 +3519,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(mcu_ram);
 		SCAN_VAR(mcu_hs);
 
-		SCAN_VAR(sound_cpu_reset);
 		SCAN_VAR(oki_bank);
 
 		SCAN_VAR(nExtraCycles);

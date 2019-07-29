@@ -2131,6 +2131,15 @@ static INT32 rpatrolInit()
 	return rc;
 }
 
+static INT32 rpatrolnInit()
+{
+	game_select = 1;
+	uses_sub = 0;
+	gfx0_cont800 = 1;
+
+	return DrvInit();
+}
+
 static INT32 rpatrolbInit()
 {
 	game_select = 1;
@@ -2148,7 +2157,7 @@ static INT32 silvlandInit()
 	return DrvInit();
 }
 
-// River Patrol (Orca)
+// River Patrol (Japan)
 
 static struct BurnRomInfo rpatrolRomDesc[] = {
 	{ "1.1h",		0x1000, 0x065197f0, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -2173,11 +2182,46 @@ STD_ROM_FN(rpatrol)
 
 struct BurnDriver BurnDrvRpatrol = {
 	"rpatrol", NULL, NULL, NULL, "1981",
-	"River Patrol (Orca)\0", NULL, "Orca", "Miscellaneous",
+	"River Patrol (Japan)\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, rpatrolRomInfo, rpatrolRomName, NULL, NULL, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
 	rpatrolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+
+// River Patrol (Japan, unprotected)
+/* located original ORCA OVG-51A PCB */
+
+static struct BurnRomInfo rpatrolnRomDesc[] = {
+	{ "1_2.3k",		0x1000, 0x33b01c90, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2_2.3l",		0x1000, 0x03f53340, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3_2.3n",		0x1000, 0x8fa300df, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4_2.3p",		0x1000, 0x74a8f1f4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5_2.3r",		0x1000, 0xd7ef6c87, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "6.6l.2732",	0x1000, 0xb38d8aca, 2 | BRF_GRA },           //  5 gfx1
+	{ "7.6p.2732",	0x1000, 0xbc2bddf9, 2 | BRF_GRA },           //  6
+
+	{ "9.2t",		0x0800, 0x065651a5, 3 | BRF_GRA },           //  7 gfx2
+	{ "8.2s",		0x0800, 0x59747c31, 3 | BRF_GRA },           //  8
+
+	{ "mb7051.1b",	0x0020, 0xf9a2383b, 6 | BRF_GRA },           //  9 proms
+	{ "mb7051.1c",	0x0020, 0x1743bd26, 6 | BRF_GRA },           // 10
+	{ "mb7051.1u",	0x0020, 0xee03bc96, 6 | BRF_GRA },           // 11
+};
+
+STD_ROM_PICK(rpatroln)
+STD_ROM_FN(rpatroln)
+
+struct BurnDriver BurnDrvRpatroln = {
+	"rpatroln", "rpatrol", NULL, NULL, "1981",
+	"River Patrol (Japan, unprotected)\0", NULL, "Orca", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, rpatrolnRomInfo, rpatrolnRomName, NULL, NULL, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
+	rpatrolnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 

@@ -9101,6 +9101,27 @@ static struct BurnRomInfo PacmanblaRomDesc[] = {
 STD_ROM_PICK(Pacmanbla)
 STD_ROM_FN(Pacmanbla)
 
+static struct BurnRomInfo PacmanblvRomDesc[] = {
+	{ "pacvideodens-1-2516.bin",    0x00800, 0x590de3f3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pacvideodens-2-2516.bin",    0x00800, 0x3954e41c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pacvideodens-3-2516.bin",    0x00800, 0xf98c0ceb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pacvideodens-4-2516.bin",    0x00800, 0xa9cd0082, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pacvideodens-9-2516.bin",    0x00800, 0x42f08538, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pacvideodens-10-2516.bin",   0x00800, 0x7aa90d69, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pacvideodens-11-2716.bin",   0x00800, 0x2bbed46e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "pacvideodens-15-2716.bin",   0x00800, 0xb2ed320b, BRF_GRA | GAL_ROM_TILES_CHARS },
+	{ "pacvideodens-14-2716.bin",   0x00800, 0xab88b2c4, BRF_GRA | GAL_ROM_TILES_CHARS },
+	
+	{ "pacvideodens-17-2716.bin",   0x00800, 0x44a45b72, BRF_GRA | GAL_ROM_TILES_SPRITES },
+	{ "pacvideodens-16-2716.bin",   0x00800, 0xfa84659f, BRF_GRA | GAL_ROM_TILES_SPRITES },
+	
+	{ "pacvideodens-im5610cpe.6l",  0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Pacmanblv)
+STD_ROM_FN(Pacmanblv)
+
 static struct BurnRomInfo GhostmunRomDesc[] = {
 	{ "pac1.bin",      0x01000, 0x19338c70, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "pac2.bin",      0x01000, 0x18db074d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -9315,6 +9336,16 @@ struct BurnDriver BurnDrvPacmanbla = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, PacmanblaRomInfo, PacmanblaRomName, NULL, NULL, NULL, NULL, PacmanblInputInfo, PacmanblDIPInfo,
 	PacmanblaInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvPacmanblv = {
+	"pacmanblv", "puckman", NULL, NULL, "1981",
+	"Pac-Man (Video Dens, Spanish bootleg on Galaxian hardware)\0", NULL, "bootleg (Video Dens)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	NULL, PacmanblvRomInfo, PacmanblvRomName, NULL, NULL, NULL, NULL, PacmanblInputInfo, PacmanblDIPInfo,
+	PacmanblInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

@@ -17898,3 +17898,41 @@ struct BurnDriver BurnDrvkof97cbt = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+// The King of Fighters '96 - Special Mix (Version 2019-07-30) (Hack)
+// KOF1996, oak2003, Ydmis, "Nine-headed dragon", Eddids[FGCH], yashional, DDJ
+
+static struct BurnRomInfo kof96smRomDesc[] = {
+	{ "214sm-p1.p1",    0x100000, 0x81E567EF, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
+	{ "214sm-p2.sp2",   0x200000, 0x02BDBCA6, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
+	
+	{ "214-s1.s1",      0x020000, 0x1254cbdb, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
+
+	{ "214-c1.c1",      0x400000, 0x7ecf4aa2, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332205
+	{ "214-c2.c2",      0x400000, 0x05b54f37, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "214-c3.c3",      0x400000, 0x64989a65, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "214-c4.c4",      0x400000, 0xafbea515, 3 | BRF_GRA },           //  6 					/ TC5332205
+	{ "214-c5.c5",      0x400000, 0x2a3bbd26, 3 | BRF_GRA },           //  7 					/ TC5332205
+	{ "214-c6.c6",      0x400000, 0x44d30dc7, 3 | BRF_GRA },           //  8 					/ TC5332205
+	{ "214sm-c7.c7",    0x400000, 0x3459297A, 3 | BRF_GRA },           //  9 					/ TC5332205
+	{ "214sm-c8.c8",    0x400000, 0x8266C111, 3 | BRF_GRA },           // 10 					/ TC5332205
+
+	{ "214-m1.m1",      0x020000, 0xdabc427c, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
+
+	{ "214-v1.v1",      0x400000, 0x63f7b045, 5 | BRF_SND },           // 12 Sound data		/ TC5332204
+	{ "214-v2.v2",      0x400000, 0x25929059, 5 | BRF_SND },           // 13 					/ TC5332204
+	{ "214-v3.v3",      0x200000, 0x92a2257d, 5 | BRF_SND },           // 14 					/ TC5316200
+};
+
+STDROMPICKEXT(kof96sm, kof96sm, neogeo)
+STD_ROM_FN(kof96sm)
+
+struct BurnDriver BurnDrvkof96sm = {
+	"kof96sm", "kof96", "neogeo", NULL, "2019",
+	"The King of Fighters '96 - Special Mix (Ver. 2019-07-30, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof96smRomInfo, kof96smRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

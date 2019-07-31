@@ -845,7 +845,7 @@ static void solarfox_op0_write(UINT8 , UINT8 data)
 static UINT8 kroozr_ip1_read(UINT8)
 {
     UINT8 tb = BurnTrackballRead(0, 0);
-    BurnTrackballUpdate(0);
+
 	return ((tb & 0x80) >> 1) | ((tb & 0x70) >> 4);
 }
 
@@ -1453,7 +1453,7 @@ static INT32 DrvFrame()
         {
             if (has_dial) { // kick, kroozr, tron, dotron
                 BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
-                BurnTrackballFrame(0, DrvAnalogPortZ, DrvAnalogPort2, (is_dotron) ? 2 : 7, (is_dotron) ? 5 : 10);
+				BurnTrackballFrame(0, DrvAnalogPortZ, DrvAnalogPort2, (DrvJoy4f[0] || DrvJoy4f[1]) ? 4 : 2, 7);
                 BurnTrackballUDLR(0, 0, 0, DrvJoy4f[0], DrvJoy4f[1]);
                 BurnTrackballUpdate(0);
             }
@@ -2861,7 +2861,6 @@ static void dotron_op4_write(UINT8, UINT8 data)
 static UINT8 dotron_ip1_read(UINT8)
 {
     UINT8 tb = (BurnTrackballRead(0, 0) ) & 0x7f;
-    BurnTrackballUpdate(0);
 
     return tb;
 }

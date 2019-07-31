@@ -224,7 +224,7 @@ static void __fastcall blacktiger_out(UINT16 port, UINT8 data)
 				ZetReset(1);
 			}
 
-			*flipscreen  =  data & 0x40;
+			*flipscreen  =  0; //data & 0x40; // ignore flipscreen
 			*DrvFgEnable = ~data & 0x80;
 
 		return;

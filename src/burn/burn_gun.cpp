@@ -108,59 +108,32 @@ UINT8 BurnGunReturnY(INT32 num)
 }
 
 // Paddle/Dial stuff
-static INT32 PaddleLastA[MAX_GUNS];
-static INT32 PaddleLastB[MAX_GUNS];
+static INT32 PaddleLast[MAX_GUNS * 2];
 
-BurnDialINF BurnPaddleReturnA(INT32 num)
+BurnDialINF BurnPaddleReturn(INT32 num, INT32 isB)
 {
 #if defined FBNEO_DEBUG
-	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnPaddleReturnA called without init\n"));
-	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnPaddleReturnA called with invalid player %x\n"), num);
+	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnPaddleReturn called without init\n"));
+	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnPaddleReturn called with invalid player %x\n"), num);
 #endif
 
 	BurnDialINF dial = { 0, 0, 0 };
 
 	if (num > MAX_GUNS - 1) return dial;
 
-	INT32 PaddleA = ((BurnGunX[num] >> 8) / 0x4);
+	INT32 Paddle = ((isB) ? BurnGunY[num] : BurnGunX[num]) >> 7;
+	INT32 device = (num * 2) + isB;
 
-	if (PaddleA < PaddleLastA[num]) {
-		dial.Velocity = (PaddleLastA[num] - PaddleA);
+	if (Paddle < PaddleLast[device]) {
+		dial.Velocity = (PaddleLast[device] - Paddle);
 		dial.Backward = 1;
 	}
-	else if (PaddleA > PaddleLastA[num]) {
-		dial.Velocity = (PaddleA - PaddleLastA[num]);
+	else if (Paddle > PaddleLast[device]) {
+		dial.Velocity = (Paddle - PaddleLast[device]);
 		dial.Forward = 1;
 	}
 
-	PaddleLastA[num] = PaddleA;
-
-	return dial;
-}
-
-BurnDialINF BurnPaddleReturnB(INT32 num)
-{
-#if defined FBNEO_DEBUG
-	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnPaddleReturnB called without init\n"));
-	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnPaddleReturnB called with invalid player %x\n"), num);
-#endif
-
-	BurnDialINF dial = { 0, 0, 0 };
-
-	if (num > MAX_GUNS - 1) return dial;
-
-	INT32 PaddleB = ((BurnGunY[num] >> 8) / 0x4);
-
-	if (PaddleB < PaddleLastB[num]) {
-		dial.Velocity = (PaddleLastB[num] - PaddleB);
-		dial.Backward = 1;
-	}
-	else if (PaddleB > PaddleLastB[num]) {
-		dial.Velocity = (PaddleB - PaddleLastB[num]);
-		dial.Forward = 1;
-	}
-
-	PaddleLastB[num] = PaddleB;
+	PaddleLast[device] = Paddle;
 
 	return dial;
 }
@@ -181,12 +154,12 @@ void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart
 	DIAL_INC[(dev*2) + 1] = VelocityStart;
 	BurnPaddleMakeInputs(dev, AnalogDeadZone(PortA), AnalogDeadZone(PortB));
 
-	BurnDialINF dial = BurnPaddleReturnA(dev);
+	BurnDialINF dial = BurnPaddleReturn(dev, 0);
 	if (dial.Backward) DrvJoyT[(dev*4) + 0] = 1;
 	if (dial.Forward)  DrvJoyT[(dev*4) + 1] = 1;
 	DIAL_INC[(dev*2) + 0] += ((dial.Velocity > VelocityMax) ? VelocityMax : dial.Velocity);
 
-	dial = BurnPaddleReturnB(dev);
+	dial = BurnPaddleReturn(dev, 1);
 	if (dial.Backward) DrvJoyT[(dev*4) + 2] = 1;
 	if (dial.Forward)  DrvJoyT[(dev*4) + 3] = 1;
 	DIAL_INC[(dev*2) + 1] += ((dial.Velocity > VelocityMax) ? VelocityMax : dial.Velocity);
@@ -314,23 +287,23 @@ void BurnPaddleMakeInputs(INT32 num, INT16 x, INT16 y)
 	if (BurnGunWrapInf[num].xmin != -1)
 		if (BurnGunX[num] < BurnGunWrapInf[num].xmin * 0x100) {
 			BurnGunX[num] = BurnGunWrapInf[num].xmax * 0x100;
-			BurnPaddleReturnA(num); // rebase PaddleLast* on wrap
+			BurnPaddleReturn(num, 0); // rebase PaddleLast* on wrap
 		}
 	if (BurnGunWrapInf[num].xmax != -1)
 		if (BurnGunX[num] > BurnGunWrapInf[num].xmax * 0x100) {
 			BurnGunX[num] = BurnGunWrapInf[num].xmin * 0x100;
-			BurnPaddleReturnA(num); // rebase PaddleLast* on wrap
+			BurnPaddleReturn(num, 0); // rebase PaddleLast* on wrap
 		}
 
 	if (BurnGunWrapInf[num].ymin != -1)
 		if (BurnGunY[num] < BurnGunWrapInf[num].ymin * 0x100) {
 			BurnGunY[num] = BurnGunWrapInf[num].ymax * 0x100;
-			BurnPaddleReturnB(num); // rebase PaddleLast* on wrap
+			BurnPaddleReturn(num, 1); // rebase PaddleLast* on wrap
 		}
 	if (BurnGunWrapInf[num].ymax != -1)
 		if (BurnGunY[num] > BurnGunWrapInf[num].ymax * 0x100) {
 			BurnGunY[num] = BurnGunWrapInf[num].ymin * 0x100;
-			BurnPaddleReturnB(num); // rebase PaddleLast* on wrap
+			BurnPaddleReturn(num, 1); // rebase PaddleLast* on wrap
 		}
 }
 
@@ -430,8 +403,7 @@ void BurnGunScan()
 		SCAN_VAR(TrackA);
 		SCAN_VAR(TrackB);
 
-		SCAN_VAR(PaddleLastA);
-		SCAN_VAR(PaddleLastB);
+		SCAN_VAR(PaddleLast);
 
 		SCAN_VAR(DIAL_INC);
 		SCAN_VAR(DrvJoyT);

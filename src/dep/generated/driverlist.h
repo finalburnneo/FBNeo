@@ -2077,7 +2077,9 @@ DRV		BurnDrvmd_crkdown;
 DRV		BurnDrvmd_crkdownu;
 DRV		BurnDrvHocrash;
 DRV		BurnDrvmd_crash;
-DRV		BurnDrvCrater;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvCrater;			// Graphics Issues [NOT WORKING]
+#endif
 DRV		BurnDrvtg_cratermz;
 DRV		BurnDrvmd_crayon;
 DRV		BurnDrvgg_crayon;
@@ -2388,6 +2390,7 @@ DRV		BurnDrvDeerhunt;
 DRV		BurnDrvDeerhunj;
 DRV		BurnDrvDefence;
 DRV		BurnDrvRedufob;
+DRV		BurnDrvRedufob2;
 DRV		BurnDrvRedufo;
 DRV		BurnDrvDefenderb;
 #if defined FBNEO_DEBUG
@@ -4612,6 +4615,7 @@ DRV		BurnDrvIkarijpb;
 DRV		BurnDrvikari3;
 DRV		BurnDrvikari3k;
 DRV		BurnDrvikari3u;
+DRV		BurnDrvikari3w;
 DRV		BurnDrvikari3j;
 DRV		BurnDrvIkari;
 DRV		BurnDrvIkarinc;
@@ -7103,6 +7107,7 @@ DRV		BurnDrvpacmanf;
 DRV		BurnDrvcv_pacman;
 DRV		BurnDrvpacmanso;
 DRV		BurnDrvgg_pacman;
+DRV		BurnDrvPacmanblv;
 DRV		BurnDrvPacman25o;
 DRV		BurnDrvPacman25;
 DRV		BurnDrvmd_pacman2;
@@ -8201,6 +8206,7 @@ DRV		BurnDrvgg_ristarp1;
 DRV		BurnDrvgg_ristar;
 DRV		BurnDrvRpatrolb;
 DRV		BurnDrvRpatrol;
+DRV		BurnDrvRpatroln;
 DRV		BurnDrvMSX_riveraid;
 DRV		BurnDrvcv_riveraid;
 DRV		BurnDrvMSX_riyadh;
@@ -9546,6 +9552,7 @@ DRV		BurnDrvCpsSfa3;
 DRV		BurnDrvCpsSfa3h;
 DRV		BurnDrvCpsSfa3ud;
 DRV		BurnDrvCpsSfa3u;
+DRV		BurnDrvCpsSfa3xl;
 DRV		BurnDrvsms_sf2;
 DRV		BurnDrvCpsSf2amf;
 DRV		BurnDrvCpsSf2amf2;
@@ -9721,6 +9728,7 @@ DRV		BurnDrvCpsSfz2alb;
 DRV		BurnDrvCpsSfz2alh;
 DRV		BurnDrvCpsSfz2ald;
 DRV		BurnDrvCpsSfz2al;
+DRV		BurnDrvCpsSfz2adl;
 DRV		BurnDrvCpsSfz3jr2d;
 DRV		BurnDrvCpsSfz3jr2;
 DRV		BurnDrvCpsSfz3ar1;
@@ -10959,6 +10967,7 @@ DRV		BurnDrvSimpsons2pj;
 DRV		BurnDrvSimpsons2p;
 DRV		BurnDrvSimpsons2p2;
 DRV		BurnDrvSimpsons2p3;
+DRV		BurnDrvSimpsons4pa;
 DRV		BurnDrvSimpsons;
 DRV		BurnDrvSimpsons4pe;
 DRV		BurnDrvmd_bartvssm1;
@@ -11240,6 +11249,7 @@ DRV		BurnDrvTouchgon;
 DRV		BurnDrvTouchgo;
 DRV		BurnDrvTdfeverj;
 DRV		BurnDrvTdfever;
+DRV		BurnDrvTdfever2b;
 DRV		BurnDrvTdfever2;
 DRV		BurnDrvTturfu;
 DRV		BurnDrvTturf;
@@ -14546,7 +14556,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_crkdownu,		// Crack Down (USA)
 	&BurnDrvHocrash,			// Crash (bootleg of Head On)
 	&BurnDrvmd_crash,			// Crash Bandicoot (Rus)
-	&BurnDrvCrater,				// Crater Raider
+#if defined FBNEO_DEBUG
+	&BurnDrvCrater,				// Crater Raider [Graphics Issues, NOT WORKING]
+#endif
 	&BurnDrvtg_cratermz,		// Cratermaze
 	&BurnDrvmd_crayon,			// Crayon Shin-chan - Arashi o Yobu Enji (Jpn)
 	&BurnDrvgg_crayon,			// Crayon Shin-chan - Taiketsu! Kantamu Panic!! (Jpn)
@@ -14856,7 +14868,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDeerhunt,			// Deer Hunting USA V4.3
 	&BurnDrvDeerhunj,			// Deer Hunting USA V4.4.1 (Japan)
 	&BurnDrvDefence,			// Defence Command (Defender bootleg)
-	&BurnDrvRedufob,			// Defend the Terra Attack on the Red UFO (bootleg)
+	&BurnDrvRedufob,			// Defend the Terra Attack on the Red UFO (bootleg, set 1)
+	&BurnDrvRedufob2,			// Defend the Terra Attack on the Red UFO (bootleg, set 2)
 	&BurnDrvRedufo,				// Defend the Terra Attack on the Red UFO
 	&BurnDrvDefenderb,			// Defender (Blue label)
 #if defined FBNEO_DEBUG
@@ -17081,6 +17094,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvikari3,				// Ikari III - The Rescue (8-Way Joystick)
 	&BurnDrvikari3k,			// Ikari III - The Rescue (Korea, 8-Way Joystick)
 	&BurnDrvikari3u,			// Ikari III - The Rescue (US, Rotary Joystick)
+	&BurnDrvikari3w,			// Ikari III - The Rescue (World, Rotary Joystick)
 	&BurnDrvikari3j,			// Ikari Three - The Rescue (Japan, Rotary Joystick)
 	&BurnDrvIkari,				// Ikari Warriors (US JAMMA)
 	&BurnDrvIkarinc,			// Ikari Warriors (US No Continues)
@@ -19572,6 +19586,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_pacman,			// Pac-Man (Prototype)
 	&BurnDrvpacmanso,			// Pac-Man (SegaSA / Sonic)
 	&BurnDrvgg_pacman,			// Pac-Man (USA)
+	&BurnDrvPacmanblv,			// Pac-Man (Video Dens, Spanish bootleg on Galaxian hardware)
 	&BurnDrvPacman25o,			// Pac-Man - 25th Anniversary Edition (Rev 2.00)
 	&BurnDrvPacman25,			// Pac-Man - 25th Anniversary Edition (Rev 3.00) [no comment, NOT WORKING]
 	&BurnDrvmd_pacman2,			// Pac-Man 2 - The New Adventures (USA)
@@ -20669,7 +20684,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_ristarp1,		// Ristar - The Shooting Star (Prototype, 19941102)
 	&BurnDrvgg_ristar,			// Ristar - The Shooting Star (World)
 	&BurnDrvRpatrolb,			// River Patrol (bootleg)
-	&BurnDrvRpatrol,			// River Patrol (Orca)
+	&BurnDrvRpatrol,			// River Patrol (Japan)
+	&BurnDrvRpatroln,			// River Patrol (Japan, unprotected)
 	&BurnDrvMSX_riveraid,		// River Raid (Jpn)
 	&BurnDrvcv_riveraid,		// River Raid
 	&BurnDrvMSX_riyadh,			// Riyadh (demo)
@@ -22015,6 +22031,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfa3h,			// Street Fighter Alpha 3 (980904 Hispanic)
 	&BurnDrvCpsSfa3ud,			// Street Fighter Alpha 3 (980904 USA Phoenix Edition)
 	&BurnDrvCpsSfa3u,			// Street Fighter Alpha 3 (980904 USA)
+	&BurnDrvCpsSfa3xl,			// Street Fighter Alpha 3 - Xiang Long Edition (Hack by pipi899, Ver.2009-05-10)
 	&BurnDrvsms_sf2,			// Street Fighter II (Bra)
 	&BurnDrvCpsSf2amf,			// Street Fighter II - Champion Edition (Alpha Magic-F bootleg set 1, 920313 etc)
 	&BurnDrvCpsSf2amf2,			// Street Fighter II - Champion Edition (Alpha Magic-F bootleg set 2, 920313 etc)
@@ -22190,6 +22207,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfz2alh,			// Street Fighter Zero 2 Alpha (960813 Hispanic)
 	&BurnDrvCpsSfz2ald,			// Street Fighter Zero 2 Alpha (960826 Asia Phoenix Edition)
 	&BurnDrvCpsSfz2al,			// Street Fighter Zero 2 Alpha (960826 Asia)
+	&BurnDrvCpsSfz2adl,			// Street Fighter Zero 2 Alpha - Dragon Level (Hack by pipi899, Ver.2009-04-24)
 	&BurnDrvCpsSfz3jr2d,		// Street Fighter Zero 3 (980629 Japan Phoenix Edition)
 	&BurnDrvCpsSfz3jr2,			// Street Fighter Zero 3 (980629 Japan)
 	&BurnDrvCpsSfz3ar1,			// Street Fighter Zero 3 (980701 Asia)
@@ -23428,6 +23446,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSimpsons2p,			// The Simpsons (2 Players World, set 1)
 	&BurnDrvSimpsons2p2,		// The Simpsons (2 Players World, set 2)
 	&BurnDrvSimpsons2p3,		// The Simpsons (2 Players World, set 3)
+	&BurnDrvSimpsons4pa,		// The Simpsons (4 Players Asia)
 	&BurnDrvSimpsons,			// The Simpsons (4 Players World, set 1)
 	&BurnDrvSimpsons4pe,		// The Simpsons (4 Players World, set 2)
 	&BurnDrvmd_bartvssm1,		// The Simpsons - Bart Vs The Space Mutants (Euro, USA)
@@ -23709,6 +23728,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTouchgo,			// Touch & Go (World)
 	&BurnDrvTdfeverj,			// TouchDown Fever (Japan) [no comment, NOT WORKING]
 	&BurnDrvTdfever,			// TouchDown Fever (US) [no comment, NOT WORKING]
+	&BurnDrvTdfever2b,			// TouchDown Fever 2 (bootleg) [no comment, NOT WORKING]
 	&BurnDrvTdfever2,			// TouchDown Fever 2 [no comment, NOT WORKING]
 	&BurnDrvTturfu,				// Tough Turf (set 1, US, 8751 317-0099)
 	&BurnDrvTturf,				// Tough Turf (set 2, Japan, 8751 317-0104)

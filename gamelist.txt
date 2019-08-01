@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12192 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12200 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2039,7 +2039,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_crkdownu	|  	| Crack Down (USA)					| md_crkdown	| 1991	| Sage's Creatio| Sega Megadrive| 					|
 | hocrash	|  	| Crash (bootleg of Head On)				| headon	| 1979	| bootleg (Frabe| Vic Dual	| No sound				|
 | md_crash	|  	| Crash Bandicoot (Rus)					| md_zero	| 199?	| <unknown>	| Sega Megadrive| 					|
-| crater	|  	| Crater Raider						| 		| 1984	| Bally Midway	| MCR3		| 					|
+| crater	| D NW	| Crater Raider						| 		| 1984	| Bally Midway	| MCR3		| Graphics Issues			|
 | tg_cratermz	|  	| Cratermaze						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | md_crayon	|  	| Crayon Shin-chan - Arashi o Yobu Enji (Jpn)		| 		| 1994	| Ma-Ba		| Sega Megadrive| 					|
 | gg_crayon	|  	| Crayon Shin-chan - Taiketsu! Kantamu Panic!! (Jpn)	| 		| 1995	| Bandai	| Sega Game Gear| 					|
@@ -2345,7 +2345,8 @@ This list contains all games supported by FinalBurn Neo.
 | deerhunt	|  	| Deer Hunting USA V4.3					| 		| 2000	| Sammy USA Corp| Newer Seta	| 					|
 | deerhuntj	|  	| Deer Hunting USA V4.4.1 (Japan)			| deerhunt	| 2000	| Sammy USA Corp| Newer Seta	| 					|
 | defence	|  	| Defence Command (Defender bootleg)			| defender	| 1981	| bootleg (Outer| 6809 System	| 					|
-| redufob	|  	| Defend the Terra Attack on the Red UFO (bootleg)	| redufo	| 1981	| bootleg	| Galaxian	| 					|
+| redufob	|  	| Defend the Terra Attack on the Red UFO (bootleg, set 1| redufo	| 1981	| bootleg	| Galaxian	| 					|
+| redufob2	|  	| Defend the Terra Attack on the Red UFO (bootleg, set 2| redufo	| 1981	| bootleg	| Galaxian	| 					|
 | redufo	|  	| Defend the Terra Attack on the Red UFO		| 		| 1981	| Artic		| Galaxian	| 					|
 | defenderb	|  	| Defender (Blue label)					| defender	| 1980	| Williams	| 6809 System	| 					|
 | defndjeu	| D NW	| Defender (bootleg)					| defender	| 1980	| bootleg (Jeute| 6809 System	| 					|
@@ -4514,6 +4515,7 @@ This list contains all games supported by FinalBurn Neo.
 | ikari3	|  	| Ikari III - The Rescue (8-Way Joystick)		| 		| 1989	| SNK		| Miscellaneous	| 					|
 | ikari3k	|  	| Ikari III - The Rescue (Korea, 8-Way Joystick)	| ikari3	| 1989	| SNK		| Miscellaneous	| 					|
 | ikari3u	|  	| Ikari III - The Rescue (US, Rotary Joystick)		| ikari3	| 1989	| SNK		| Miscellaneous	| 					|
+| ikari3w	|  	| Ikari III - The Rescue (World, Rotary Joystick)	| ikari3	| 1989	| SNK		| Miscellaneous	| 					|
 | ikari3j	|  	| Ikari Three - The Rescue (Japan, Rotary Joystick)	| ikari3	| 1989	| SNK		| Miscellaneous	| 					|
 | ikari		|  	| Ikari Warriors (US JAMMA)				| 		| 1986	| SNK		| Miscellaneous	| 					|
 | ikarinc	|  	| Ikari Warriors (US No Continues)			| ikari		| 1986	| SNK		| Miscellaneous	| 					|
@@ -6949,6 +6951,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_pacman	|  	| Pac-Man (Prototype)					| 		| 1983	| Atarisoft	| ColecoVision	| 					|
 | pacmanso	|  	| Pac-Man (SegaSA / Sonic)				| puckman	| 1980	| Namco (Sonic l| Pac-man	| 					|
 | gg_pacman	|  	| Pac-Man (USA)						| 		| 1991	| Namco		| Sega Game Gear| 					|
+| pacmanblv	|  	| Pac-Man (Video Dens, Spanish bootleg on Galaxian hardw| puckman	| 1981	| bootleg (Video| Galaxian	| 					|
 | 25pacmano	|  	| Pac-Man - 25th Anniversary Edition (Rev 2.00)		| 25pacman	| 2005	| Namco / Cosmod| Miscellaneous	| 					|
 | 25pacman	|   NW	| Pac-Man - 25th Anniversary Edition (Rev 3.00)		| 		| 2006	| Namco / Cosmod| Miscellaneous	| 					|
 | md_pacman2	|  	| Pac-Man 2 - The New Adventures (USA)			| 		| 1994	| Namco		| Sega Megadrive| 					|
@@ -8024,7 +8027,8 @@ This list contains all games supported by FinalBurn Neo.
 | gg_ristarp1	|  	| Ristar - The Shooting Star (Prototype, 19941102)	| gg_ristar	| 1994	| Sega		| Sega Game Gear| 					|
 | gg_ristar	|  	| Ristar - The Shooting Star (World)			| 		| 1995	| Sega		| Sega Game Gear| 					|
 | rpatrolb	|  	| River Patrol (bootleg)				| rpatrol	| 1981	| bootleg	| Miscellaneous	| 					|
-| rpatrol	|  	| River Patrol (Orca)					| 		| 1981	| Orca		| Miscellaneous	| 					|
+| rpatrol	|  	| River Patrol (Japan)					| 		| 1981	| Orca		| Miscellaneous	| 					|
+| rpatroln	|  	| River Patrol (Japan, unprotected)			| rpatrol	| 1981	| Orca		| Miscellaneous	| 					|
 | msx_riveraid	|  	| River Raid (Jpn)					| 		| 1985	| Pony Canyon	| MSX		| 					|
 | cv_riveraid	|  	| River Raid						| 		| 1984	| Activision	| ColecoVision	| 					|
 | msx_riyadh	|  	| Riyadh (demo)						| 		| 2001	| Bandwagon	| MSX		| 					|
@@ -9346,6 +9350,7 @@ This list contains all games supported by FinalBurn Neo.
 | sfa3h		|  	| Street Fighter Alpha 3 (980904 Hispanic)		| sfa3		| 1998	| Capcom	| CPS2		| 					|
 | sfa3ud	|  	| Street Fighter Alpha 3 (980904 USA Phoenix Edition)	| sfa3		| 1998	| bootleg	| CPS2		| 					|
 | sfa3u		|  	| Street Fighter Alpha 3 (980904 USA)			| sfa3		| 1998	| Capcom	| CPS2		| 					|
+| sfa3xl	|  	| Street Fighter Alpha 3 - Xiang Long Edition (Hack by p| sfa3		| 2009	| Hack		| CPS2		| 					|
 | sms_sf2	|  	| Street Fighter II (Bra)				| 		| 1997	| Tec Toy	| Sega Master Sy| 					|
 | sf2amf	|  	| Street Fighter II - Champion Edition (Alpha Magic-F bo| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2amf2	|  	| Street Fighter II - Champion Edition (Alpha Magic-F bo| sf2ce		| 1992	| bootleg	| CPS1		| 					|
@@ -9519,6 +9524,7 @@ This list contains all games supported by FinalBurn Neo.
 | sfz2alh	|  	| Street Fighter Zero 2 Alpha (960813 Hispanic)		| sfz2al	| 1996	| Capcom	| CPS2		| 					|
 | sfz2ald	|  	| Street Fighter Zero 2 Alpha (960826 Asia Phoenix Editi| sfz2al	| 1996	| bootleg	| CPS2		| 					|
 | sfz2al	|  	| Street Fighter Zero 2 Alpha (960826 Asia)		| 		| 1996	| Capcom	| CPS2		| 					|
+| Sfz2adl	|  	| Street Fighter Zero 2 Alpha - Dragon Level (Hack by pi| sfz2al	| 2009	| Hack		| CPS2		| 					|
 | sfz3jr2d	|  	| Street Fighter Zero 3 (980629 Japan Phoenix Edition)	| sfa3		| 1998	| bootleg	| CPS2		| 					|
 | sfz3jr2	|  	| Street Fighter Zero 3 (980629 Japan)			| sfa3		| 1998	| Capcom	| CPS2		| 					|
 | sfz3ar1	|  	| Street Fighter Zero 3 (980701 Asia)			| sfa3		| 1998	| Capcom	| CPS2		| 					|
@@ -10733,6 +10739,7 @@ This list contains all games supported by FinalBurn Neo.
 | simpsons2p	|  	| The Simpsons (2 Players World, set 1)			| simpsons	| 1991	| Konami	| GX072		| 					|
 | simpsons2p2	|  	| The Simpsons (2 Players World, set 2)			| simpsons	| 1991	| Konami	| GX072		| 					|
 | simpsons2p3	|  	| The Simpsons (2 Players World, set 3)			| simpsons	| 1991	| Konami	| GX072		| 					|
+| simpsons4pa	|  	| The Simpsons (4 Players Asia)				| simpsons	| 1991	| Konami	| GX072		| 					|
 | simpsons	|  	| The Simpsons (4 Players World, set 1)			| 		| 1991	| Konami	| GX072		| 					|
 | simpsons4pe	|  	| The Simpsons (4 Players World, set 2)			| simpsons	| 1991	| Konami	| GX072		| 					|
 | md_bartvssm1	|  	| The Simpsons - Bart Vs The Space Mutants (Euro, USA)	| md_bartvssm	| 1992	| Flying Edge	| Sega Megadrive| 					|
@@ -11010,6 +11017,7 @@ This list contains all games supported by FinalBurn Neo.
 | touchgo	|  	| Touch & Go (World)					| 		| 1995	| Gaelco	| Miscellaneous	| 					|
 | tdfeverj	|   NW	| TouchDown Fever (Japan)				| tdfever	| 1987	| SNK		| Miscellaneous	| 					|
 | tdfever	|   NW	| TouchDown Fever (US)					| 		| 1987	| SNK		| Miscellaneous	| 					|
+| tdfever2b	|   NW	| TouchDown Fever 2 (bootleg)				| tdfever	| 1988	| SNK		| Miscellaneous	| 					|
 | tdfever2	|   NW	| TouchDown Fever 2					| tdfever	| 1988	| SNK		| Miscellaneous	| 					|
 | tturfu	|  	| Tough Turf (set 1, US, 8751 317-0099)			| tturf		| 1989	| Sega / Sunsoft| System 16B	| 					|
 | tturf		|  	| Tough Turf (set 2, Japan, 8751 317-0104)		| 		| 1989	| Sega / Sunsoft| System 16B	| 					|

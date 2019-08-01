@@ -942,10 +942,10 @@ static struct BurnRomInfo umk3ucRomDesc[] = {
 	{ "umk3uc-u119.bin",	0x100000, 0x973f2a46, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "umk3uc-u118.bin",	0x100000, 0x380c86e8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 	
-	{ "umk3uc-u117.bin",	0x100000, 0xfb7bd33f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 22
-	{ "umk3uc-u116.bin",	0x100000, 0xc97984cd, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
-	{ "umk3uc-u115.bin",	0x100000, 0x30cb27e2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
-	{ "umk3uc-u114.bin",	0x100000, 0xa00ef5ad, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+	{ "umk3uc-u117.bin",	0x100000, 0xfb7bd33f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
+	{ "umk3uc-u116.bin",	0x100000, 0xc97984cd, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
+	{ "umk3uc-u115.bin",	0x100000, 0x30cb27e2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
+	{ "umk3uc-u114.bin",	0x100000, 0xa00ef5ad, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
 
 	{ "umk3uc-u113.bin",	0x100000, 0xb352019b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 26
 	{ "umk3uc-u112.bin",	0x100000, 0x71143b7c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 27
@@ -1401,7 +1401,6 @@ struct BurnDriverD BurnDrvWwfmaniab = {
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 254, 4, 3
 };
-
 
 
 // WWF: Wrestlemania (rev 1.1 07/11/95)

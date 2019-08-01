@@ -10,7 +10,7 @@
 // stargrds		- good
 // spyhunt		- good
 // spyhuntp		- good
-// crater		- good
+// crater		- graphics issues (unfixable offset? weird.)
 // turbotag		- should we bother? looks like a buggy mess
 
 #include "tiles_generic.h"
@@ -1118,8 +1118,8 @@ static INT32 SpyhuntCommonInit(INT32 sound_system)
 	GenericTilemapSetGfx(0, DrvGfxROM0, 4, 64, 32, 0x40000, 0x30, 0);
 	GenericTilemapSetGfx(1, DrvGfxROM2, 2, 16, 16, 0x10000, 0x40, 0);
 	GenericTilemapSetTransparent(1, 0);
-	GenericTilemapSetOffsets(0, (sound_system == 3) ? -96 : -16, 0); 
-	GenericTilemapSetOffsets(1, -16, 0);
+	GenericTilemapSetOffsets(0, (sound_system == 3) ? 96-16 : -16, 0);
+	GenericTilemapSetOffsets(1, (sound_system == 3) ? 16 : -16, 0);
 
     if (is_spyhunt) {
         copy_and_rotate(DrvGfxROM1 + 0x29*0x20*0x20, DrvGfxROM1 + (0x200*0x20*0x20)+(0x20*0x20*0));
@@ -2285,11 +2285,11 @@ static INT32 CraterInit()
     return nRet;
 }
 
-struct BurnDriver BurnDrvCrater = {
+struct BurnDriverD BurnDrvCrater = {
 	"crater", NULL, "midssio", NULL, "1984",
-	"Crater Raider\0", NULL, "Bally Midway", "MCR3",
+	"Crater Raider\0", "Graphics Issues", "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, craterRomInfo, craterRomName, NULL, NULL, NULL, NULL, CraterInputInfo, CraterDIPInfo,
 	CraterInit, DrvExit, CSDSSIOFrame, SpyhuntDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 480, 4, 3

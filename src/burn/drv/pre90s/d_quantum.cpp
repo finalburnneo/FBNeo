@@ -225,7 +225,7 @@ static UINT16 __fastcall quantum_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x940000:
-		case 0x940001: BurnTrackballUpdate(0);
+		case 0x940001:
 			return (BurnTrackballRead(0, 1)&0xf) | ((BurnTrackballRead(0, 0)&0xf) << 4);
 
 		case 0x948000:
@@ -249,7 +249,7 @@ static UINT8 __fastcall quantum_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x940000:
-		case 0x940001: BurnTrackballUpdate(0);
+		case 0x940001:
 			return (BurnTrackballRead(0, 1)&0xf) | ((BurnTrackballRead(0, 0)&0xf) << 4);
 
 		case 0x948000:
@@ -452,7 +452,7 @@ static INT32 DrvFrame()
 		}
 
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
-		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, (DrvInputs[1]) ? 2 : 1, 0x07); // Velocity: 2 digital, 1 analog
+		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, (DrvInputs[1]) ? 4 : 1, 7); // Velocity: 4 digital, 1 analog
 		BurnTrackballUDLR(0, DrvJoy2[0], DrvJoy2[1], DrvJoy2[2], DrvJoy2[3]);
 		BurnTrackballUpdate(0);
 	}
@@ -466,7 +466,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		if ((i % 5) == 4) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		// Render Sound Segment

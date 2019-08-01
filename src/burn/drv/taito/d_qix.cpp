@@ -1099,8 +1099,6 @@ static INT32 DrvFrame()
 			BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
 			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 2, 3);
 			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 2, 3);
-			//	BurnTrackballUDLR(0, DrvJoy2[0], DrvJoy2[1], DrvJoy2[2], DrvJoy2[3]);
-			//	BurnTrackballUDLR(0, DrvJoy2[0], DrvJoy2[1], DrvJoy2[2], DrvJoy2[3]);
 			BurnTrackballUpdateSlither(0);
 			BurnTrackballUpdateSlither(1);
 		}
@@ -1135,26 +1133,26 @@ static INT32 DrvFrame()
 				DrvDrawEnd();
 			}
 		}
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		M6809Close();
 
 		M6809Open(1);
-		nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, M6809);
 		M6809Close();
 
 		if (has_soundcpu) {
-			nCyclesDone[2] += M6800Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			CPU_RUN(2, M6800);
 		}
 
 		if (has_mcu) {
-			nCyclesDone[3] += m6805Run(((i + 1) * nCyclesTotal[3] / nInterleave) - m6805TotalCycles());
+			CPU_RUN_SYNCINT(3, m6805);
 		}
 
 		if (scanline - lastline >= 4) {
 			partial_update();
 		}
 
-		if ((i%(64*8)) == (64*8)-1) {
+		if (is_slither && (i%(120*8)) == (120*8)-1) {
 			BurnTrackballUpdateSlither(0);
 			BurnTrackballUpdateSlither(1);
 		}

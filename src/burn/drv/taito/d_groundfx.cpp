@@ -214,9 +214,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (TaitoRamStart, 0, TaitoRamEnd - TaitoRamStart);
 	}
 
-	SekOpen(0);
-	SekReset();
-	SekClose();
+	SekReset(0);
 
 	TaitoICReset();
 	TaitoF3SoundReset();

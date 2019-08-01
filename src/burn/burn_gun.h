@@ -26,17 +26,16 @@ void BurnGunSetCoords(INT32 player, INT32 x, INT32 y); // manually set the gun c
 
 // NOTE: *depreciated* BurnPaddle is now the lowlevel code for BurnTrackball!
 // Using BurnPaddle gives you 2 paddles (A & B) per player initted.
-// BurnPaddleReturn[A/B] returns Velocity and directional data, see
-BurnDialINF BurnPaddleReturnA(INT32 num);
-BurnDialINF BurnPaddleReturnB(INT32 num);
+// BurnPaddleReturn[A/B] returns Velocity and directional data.
+BurnDialINF BurnPaddleReturn(INT32 num, INT32 isB);
 void BurnPaddleSetWrap(INT32 num, INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax);
 void BurnPaddleMakeInputs(INT32 num, INT16 x, INT16 y);
 #define BurnPaddleInit BurnTrackballInit
 #define BurnPaddleExit BurnGunExit
 #define BurnPaddleScan BurnGunScan
 
-// Trackball helpers (extension of BurnPaddle)
-// see d_millipede.cpp or d_tempest.cpp for hook-up examples
+// Trackball Device (extension of BurnPaddle)
+// see d_millipede.cpp, d_cabal or d_tempest.cpp for hook-up examples
 
 void BurnTrackballInit(INT32 nNumPlayers);
 

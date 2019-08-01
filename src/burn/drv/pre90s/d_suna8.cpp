@@ -2492,7 +2492,7 @@ struct BurnDriver BurnDrvSranger = {
 };
 
 
-// Hard Head 2 (v2.0)
+// Hard Head 2 (v2.0, Music Program v2.4)
 
 static struct BurnRomInfo hardhea2RomDesc[] = {
 	{ "hrd-hd9",	0x08000, 0x69c4c307, 1 }, //  0 maincpu
@@ -2520,10 +2520,47 @@ STD_ROM_FN(hardhea2)
 
 struct BurnDriver BurnDrvHardhea2 = {
 	"hardhea2", NULL, NULL, NULL, "1991",
-	"Hard Head 2 (v2.0)\0", NULL, "SunA", "Miscellaneous",
+	"Hard Head 2 (v2.0, Music Program v2.4)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, hardhea2RomInfo, hardhea2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Hardhea2DIPInfo,
+	Hardhea2Init, Hardhea2Exit, Hardhea2Frame, Hardhea2Draw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+
+// Hard Head 2 (v2.0, Music Program v2.0)
+
+static struct BurnRomInfo hardhea2aRomDesc[] = {
+	{ "p9.f6",		0x08000, 0x69c4c307, 1 }, //  0 maincpu
+	{ "10.h6",		0x10000, 0x77ec5b0a, 1 }, //  1
+	{ "11.i6",		0x10000, 0x12af8f8e, 1 }, //  2
+	{ "12.f7",		0x10000, 0x35d13212, 1 }, //  3
+	{ "13.h7",		0x10000, 0x3225e7d7, 1 }, //  4
+
+	{ "14.c9",		0x08000, 0x92e1ae81, 2 }, //  5 audiocpu
+
+	{ "15.m10",		0x10000, 0xbcbd88c3, 3 }, //  6 pcm
+
+	{ "p1.n1",		0x10000, 0x7e7b7a58, 4 }, //  7 gfx1
+	{ "p2.o1",		0x10000, 0x303ec802, 4 }, //  8
+	{ "p3.q1",		0x10000, 0x3353b2c7, 4 }, //  9
+	{ "p4.n3",		0x10000, 0xdbc1f9c1, 4 }, // 10
+	{ "p5.n4",		0x10000, 0xf738c0af, 4 }, // 11
+	{ "p6.04",		0x10000, 0xbf90d3ca, 4 }, // 12
+	{ "p7.q4",		0x10000, 0x992ce8cb, 4 }, // 13
+	{ "p8.n6",		0x10000, 0x359597a4, 4 }, // 14
+};
+
+STD_ROM_PICK(hardhea2a)
+STD_ROM_FN(hardhea2a)
+
+struct BurnDriver BurnDrvHardhea2a = {
+	"hardhea2a", "hardhea2", NULL, NULL, "1991",
+	"Hard Head 2 (v2.0, Music Program v2.0)\0", NULL, "SunA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, hardhea2aRomInfo, hardhea2aRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Hardhea2DIPInfo,
 	Hardhea2Init, Hardhea2Exit, Hardhea2Frame, Hardhea2Draw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

@@ -2148,3 +2148,42 @@ struct BurnDriver BurnDrvikari3k = {
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
+
+// Ikari III - The Rescue (World, Rotary Joystick)
+/* Initial boot shows Ikari III The Rescue, then the title changes to the Japanese title - No demo play - proto or test set?? */
+
+static struct BurnRomInfo ikari3wRomDesc[] = {
+	{ "ik_2.c10", 		0x20000, 0xd0b690d3, 1 | BRF_PRG }, //  0 68k Code
+	{ "ik_3.c9",  		0x20000, 0x11a9e664, 1 | BRF_PRG }, //  1
+	{ "ik3-1.c8",       0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
+	{ "ik3-4.c12",      0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
+
+	{ "ik3-5.16d",      0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
+
+	{ "ik3-7.16l",      0x08000, 0x0b4804df, 3 | BRF_GRA }, //  5 Characters
+	{ "ik3-8.16m",      0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6
+	
+	{ "ikari-880c_t54.c2", 0x80000, 0x6d728362, 4 | BRF_GRA }, //  7 Sprites
+	{ "ik11.c1",           0x20000, 0xc33971c2, 4 | BRF_GRA }, //  8
+	{ "ikari-880b_t51.b2", 0x80000, 0xe25380e6, 4 | BRF_GRA }, //  9
+	{ "ik10.b1",           0x20000, 0xba106245, 4 | BRF_GRA }, //  10
+	{ "ikari-880d_t53.d2", 0x80000, 0x5855d95e, 4 | BRF_GRA }, //  11
+	{ "ik12.d1",           0x20000, 0x4ebdba89, 4 | BRF_GRA }, //  12
+	{ "ikari-880a_t52.a2", 0x80000, 0x87607772, 4 | BRF_GRA }, //  13
+	{ "ik9.a1",            0x20000, 0x711715ae, 4 | BRF_GRA }, //  14
+	
+	{ "ik3-6.18e",      0x20000, 0x59d256a4, 5 | BRF_SND }, // 15 upd7759 samples
+};
+
+STD_ROM_PICK(ikari3w)
+STD_ROM_FN(ikari3w)
+
+struct BurnDriver BurnDrvikari3w = {
+	"ikari3w", "ikari3", NULL, NULL, "1989",
+	"Ikari III - The Rescue (World, Rotary Joystick)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, ikari3wRomInfo, ikari3wRomName, NULL, NULL, NULL, NULL, IkariInputInfo, IkariDIPInfo,
+	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 256, 224, 4, 3
+};

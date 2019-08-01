@@ -541,7 +541,7 @@ static INT32 DrvInit()
 	K056832SetLinemap();
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, gijoe_sprite_callback, 1);
-	K053247SetSpriteOffset(-61, -47+10);
+	K053247SetSpriteOffset(-61, -46+10);
 
 	K054539Init(0, 48000, DrvSndROM, 0x200000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 2.10, BURN_SND_ROUTE_LEFT);

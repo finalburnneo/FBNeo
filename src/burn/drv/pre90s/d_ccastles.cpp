@@ -326,8 +326,6 @@ static void ccastles_write(UINT16 address, UINT8 data)
 		x2212_write(1, address & 0xff, data & 0xf);
 		return;
 	}
-	bprintf(0, _T("wb %X  %x.\n"), address, data);
-
 }
 
 static UINT8 ccastles_read(UINT16 address)
@@ -340,11 +338,11 @@ static UINT8 ccastles_read(UINT16 address)
 		return DrvVidRAM[address];
 	}
 
-	if ((address & 0xfff0) == 0x9800) {
+	if (((address &~0x1f0) & 0xfff0) == 0x9800) {
 		return pokey_read(0, address & 0xf);
 	}
 
-	if ((address & 0xfff0) == 0x9a00) {
+	if (((address &~0x1f0) & 0xfff0) == 0x9a00) {
 		return pokey_read(1, address & 0xf);
 	}
 
@@ -367,8 +365,6 @@ static UINT8 ccastles_read(UINT16 address)
 	if (address >= 0x9f80 && address <= 0x9fbf) {
 		return 0; // really, unmapped. (not pal)
 	}
-
-	bprintf(0, _T("rb %X.\n"), address);
 
 	return 0;
 }
@@ -674,8 +670,9 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nTotalCycles = 1250000 / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { 1250000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
+	INT32 nSoundBufferPos = 0;
 
 	M6502Open(0);
 
@@ -685,18 +682,32 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		vblank = DrvVidPROM[i & 0xff] & 1;
 
-		nCyclesDone += M6502Run(((i + 1) * nTotalCycles / nInterleave) - nCyclesDone);
+		CPU_RUN(0, M6502);
+
 		if ((i%64) == 63 && !irq_state) {
 			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			irq_state = 1;
 			DrvDrawLine(i);
 		}
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			pokey_update(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	M6502Close();
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		pokey_update(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			pokey_update(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	if (pBurnDraw) {

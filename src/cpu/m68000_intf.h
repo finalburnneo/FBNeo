@@ -142,11 +142,18 @@ void SekBurnUntilInt();
 #define SEK_IRQSTATUS_ACK  (0x1000)
 
 void SekSetIRQLine(const INT32 line, INT32 status);
+void SekSetIRQLine(INT32 nCPU, const INT32 line, INT32 status);
+
 void SekReset();
+void SekReset(INT32 nCPU);
 
 void SekRunEnd();
 void SekRunAdjust(const INT32 nCycles);
 INT32 SekRun(const INT32 nCycles);
+INT32 SekRun(INT32 nCPU, INT32 nCycles);
+void SekSetRESETLine(INT32 nStatus);
+void SekSetRESETLine(INT32 nCPU, INT32 nStatus);
+INT32 SekGetRESETLine();
 
 inline static INT32 SekIdle(INT32 nCycles)
 {

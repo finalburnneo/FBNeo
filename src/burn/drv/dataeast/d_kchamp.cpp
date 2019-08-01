@@ -1086,6 +1086,114 @@ struct BurnDriver BurnDrvKchampvs2 = {
 };
 
 
+// Karate Champ (US VS version, set 3)
+// This version has a mix of the "Karate Champ (US VS version, set 1)" ROMs and a few ROMs unique to "Taisen Karate Dou (Japan VS version)" along with 1 completely unique program ROM.
+// The only difference is instead of "My hero" as found in the later US sets it says "My hero deserves the fair".
+
+static struct BurnRomInfo kchampvs3RomDesc[] = {
+	{ "bs24.d13",	0x2000, 0x829da69b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
+	{ "bs23.d11",	0x2000, 0x091f810e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bs22.d10",	0x2000, 0xd4df2a52, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bs21.d8",	0x2000, 0x80839912, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "bs20.d7",	0x2000, 0x623a467b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "bs19.d6",	0x4000, 0x43e196c4, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "bs18.d4",	0x2000, 0xeaa646eb, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
+	{ "bs17.d2",	0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "bs16.d1",	0x2000, 0x6f811c43, 2 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "bs12.k1",	0x2000, 0x4c574ecd, 3 | BRF_GRA },           //  9 Characters
+	{ "bs13.k3",	0x2000, 0x750b66af, 3 | BRF_GRA },           // 10
+	{ "bs14.k5",	0x2000, 0x9ad6227c, 3 | BRF_GRA },           // 11
+	{ "bs15.k6",	0x2000, 0x3b6d5de5, 3 | BRF_GRA },           // 12
+
+	// 00, 06, 03 and 09 match the karatevs set
+	{ "bs00.a1",	0x2000, 0xc46a8b88, 4 | BRF_GRA },           // 13 Sprites
+	{ "bs06.c1",	0x2000, 0xcf8982ff, 4 | BRF_GRA },           // 14
+	{ "bs01.a3",	0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 15
+	{ "bs07.c3",	0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 16
+	{ "bs02.a5",	0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 17
+	{ "bs08.c5",	0x2000, 0x6be342a6, 4 | BRF_GRA },           // 18
+	{ "bs03.a6",	0x2000, 0xbde8a52b, 4 | BRF_GRA },           // 19
+	{ "bs09.c6",	0x2000, 0xe9a5f945, 4 | BRF_GRA },           // 20
+	{ "bs04.a8",	0x2000, 0x7346db8a, 4 | BRF_GRA },           // 21
+	{ "bs10.c8",	0x2000, 0xb78714fc, 4 | BRF_GRA },           // 22
+	{ "bs05.a10",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 23
+	{ "bs11.c10",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 24
+
+	{ "br27.k10",	0x0100, 0xf683c54a, 5 | BRF_GRA },           // 25 Color data
+	{ "br26.k9",	0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 26
+	{ "br25.k8",	0x0100, 0xba4a5651, 5 | BRF_GRA },           // 27
+};
+
+STD_ROM_PICK(kchampvs3)
+STD_ROM_FN(kchampvs3)
+
+struct BurnDriver BurnDrvKchampvs3 = {
+	"kchampvs3", "kchamp", NULL, NULL, "1984",
+	"Karate Champ (US VS version, set 3)\0", NULL, "Data East USA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	NULL, kchampvs3RomInfo, kchampvs3RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
+	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Karate Champ (US VS version, set 4)
+// This version has a mix of the "Karate Champ (US VS version, set 1)" ROMs and a few ROMs unique to "Taisen Karate Dou (Japan VS version)".
+// It displays the dialog balloon in red with a boat below it.
+
+static struct BurnRomInfo kchampvs4RomDesc[] = {
+	{ "bs24.d13",	0x2000, 0x829da69b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
+	{ "bs23.d11",	0x2000, 0x091f810e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bs22.d10",	0x2000, 0xd4df2a52, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bs21.d8",	0x2000, 0x3d4ef0da, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "bs20.d7",	0x2000, 0x623a467b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "bs19.d6",	0x4000, 0x43e196c4, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "bs18.d4",	0x2000, 0xeaa646eb, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
+	{ "bs17.d2",	0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "bs16.d1",	0x2000, 0x6f811c43, 2 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "bs12.k1",	0x2000, 0x4c574ecd, 3 | BRF_GRA },           //  9 Characters
+	{ "bs13.k3",	0x2000, 0x750b66af, 3 | BRF_GRA },           // 10
+	{ "bs14.k5",	0x2000, 0x9ad6227c, 3 | BRF_GRA },           // 11
+	{ "bs15.k6",	0x2000, 0x3b6d5de5, 3 | BRF_GRA },           // 12
+
+	// 00, 06, 03 and 09 match the karatevs set
+	{ "bs00.a1",	0x2000, 0xc46a8b88, 4 | BRF_GRA },           // 13 Sprites
+	{ "bs06.c1",	0x2000, 0xcf8982ff, 4 | BRF_GRA },           // 14
+	{ "bs01.a3",	0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 15
+	{ "bs07.c3",	0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 16
+	{ "bs02.a5",	0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 17
+	{ "bs08.c5",	0x2000, 0x6be342a6, 4 | BRF_GRA },           // 18
+	{ "bs03.a6",	0x2000, 0xbde8a52b, 4 | BRF_GRA },           // 19
+	{ "bs09.c6",	0x2000, 0xe9a5f945, 4 | BRF_GRA },           // 20
+	{ "bs04.a8",	0x2000, 0x7346db8a, 4 | BRF_GRA },           // 21
+	{ "bs10.c8",	0x2000, 0xb78714fc, 4 | BRF_GRA },           // 22
+	{ "bs05.a10",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 23
+	{ "bs11.c10",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 24
+
+	{ "br27.k10",	0x0100, 0xf683c54a, 5 | BRF_GRA },           // 25 Color data
+	{ "br26.k9",	0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 26
+	{ "br25.k8",	0x0100, 0xba4a5651, 5 | BRF_GRA },           // 27
+};
+
+STD_ROM_PICK(kchampvs4)
+STD_ROM_FN(kchampvs4)
+
+struct BurnDriver BurnDrvKchampvs4 = {
+	"kchampvs4", "kchamp", NULL, NULL, "1984",
+	"Karate Champ (US VS version, set 4)\0", NULL, "Data East USA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	NULL, kchampvs4RomInfo, kchampvs4RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
+	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Taisen Karate Dou (Japan VS version)
 
 static struct BurnRomInfo karatevsRomDesc[] = {

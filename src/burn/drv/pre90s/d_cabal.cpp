@@ -453,6 +453,8 @@ static INT32 DrvDoReset()
 
 	flipscreen = 0;
 
+	memset(TballPrev, 0, sizeof(TballPrev));
+
 	return 0;
 }
 
@@ -461,7 +463,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvMainROM		= Next; Next += 0x050000;
-	SeibuZ80DecROM		= Next; Next += 0x010000;
+	SeibuZ80DecROM	= Next; Next += 0x010000;
 	SeibuZ80ROM		= Next;
 	DrvZ80ROM		= Next; Next += 0x020000;
 
@@ -830,9 +832,9 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 
 		if ((i%64) == 63 && !is_joyver) {
 			BurnTrackballUpdate(0);

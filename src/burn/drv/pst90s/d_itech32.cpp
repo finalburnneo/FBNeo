@@ -4686,6 +4686,48 @@ struct BurnDriver BurnDrvSftm110 = {
 };
 
 
+// Street Fighter: The Movie (v1.14N, Japan)
+
+static struct BurnRomInfo sftmj114RomDesc[] = {
+	{ "sfmn_0_v1.14.prom0",					0x040000, 0x2a0c0bb7, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "sfmn_1_v1.14.prom1",					0x040000, 0x088aa12c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfmn_2_v1.14.prom2",					0x040000, 0x7120836e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfmn_3_v1.14.prom3",					0x040000, 0x84eb200d, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "sfm_snd_v1.11.u23",					0x040000, 0x004854ed, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+	{ "rm0-0.grm0_0",						0x400000, 0x09ef29cb, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "rm0-1.grm0_1",						0x400000, 0x6f5910fa, 3 | BRF_GRA },           //  6
+	{ "rm0-2.grm0_2",						0x400000, 0xb8a2add5, 3 | BRF_GRA },           //  7
+	{ "rm0-3.grm0_3",						0x400000, 0x6b6ff867, 3 | BRF_GRA },           //  8
+	{ "rm1-0.grm1_0",						0x400000, 0xd5d65f77, 3 | BRF_GRA },           //  9
+	{ "rm1-1.grm1_1",						0x400000, 0x90467e27, 3 | BRF_GRA },           // 10
+	{ "rm1-2.grm1_2",						0x400000, 0x903e56c2, 3 | BRF_GRA },           // 11
+	{ "rm1-3.grm1_3",						0x400000, 0xfac35686, 3 | BRF_GRA },           // 12
+	{ "sfm_grm3_0.grm3_0",					0x020000, 0x3e1f76f7, 3 | BRF_GRA },           // 13
+	{ "sfm_grm3_1.grm3_1",					0x020000, 0x578054b6, 3 | BRF_GRA },           // 14
+	{ "sfm_grm3_2.grm3_2",					0x020000, 0x9af2f698, 3 | BRF_GRA },           // 15
+	{ "sfm_grm3_3.grm3_3",					0x020000, 0xcd38d1d6, 3 | BRF_GRA },           // 16
+
+	{ "sfm_srom0.srom0",					0x200000, 0x6ca1d3fc, 4 | BRF_SND },           // 17 Ensoniq Bank 0
+
+	{ "sfm_srom3.srom3",					0x080000, 0x4f181534, 7 | BRF_SND },           // 18 Ensoniq Bank 3
+};
+
+STD_ROM_PICK(sftmj114)
+STD_ROM_FN(sftmj114)
+
+struct BurnDriver BurnDrvSftmj114 = {
+	"sftmj114", "sftm", NULL, NULL, "1995",
+	"Street Fighter: The Movie (v1.14N, Japan)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, sftmj114RomInfo, sftmj114RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
+	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
+	384, 256, 4, 3
+};
+
+
 // Street Fighter: The Movie (v1.12N, Japan)
 
 static struct BurnRomInfo sftmj112RomDesc[] = {

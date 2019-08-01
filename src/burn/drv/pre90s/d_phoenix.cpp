@@ -1326,6 +1326,80 @@ struct BurnDriver BurnDrvPhoenixc4 = {
 };
 
 
+// Phoenix (G. Universal Video bootleg)
+// verified 2 PCBs, 2 PROMs
+
+static struct BurnRomInfo phoenixguRomDesc[] = {
+	{ "phoenix.45",		0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "phoenix.46",		0x0800, 0xdbc942fa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "phoenix.47",		0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "48.bin",			0x0800, 0x75623a06, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "phoenixc.49",	0x0800, 0x1a1ce0d0, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "h6-ic50.6a",		0x0800, 0xac5e9ec1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "h7-ic51.7a",		0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "phoenixc.52",	0x0800, 0x8424d7c4, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "ic23.3d",		0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "ic24.4d",		0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+
+	{ "phoenixc.39",	0x0800, 0xbb0525ed, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "phoenixc.40",	0x0800, 0x4178aa4f, 3 | BRF_GRA },           // 11
+
+	{ "mmi6301.ic40",	0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
+	{ "mmi6301.ic41",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(phoenixgu)
+STD_ROM_FN(phoenixgu)
+
+struct BurnDriver BurnDrvPhoenixgu = {
+	"phoenixgu", "phoenix", NULL, NULL, "1981",
+	"Phoenix (G. Universal Video bootleg)\0", NULL, "bootleg? (G. Universal Video)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, phoenixguRomInfo, phoenixguRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
+	PhoenixInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	208, 256, 3, 4
+};
+
+
+// Phoenix (Hellomat Automaten bootleg)
+// verified 2 PROMs, number of boards unknown (probably 2)
+
+static struct BurnRomInfo phoenixhaRomDesc[] = {
+	{ "ic45",			0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "ic46",			0x0800, 0xdbc942fa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ic47",			0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ic48",			0x0800, 0xb2672265, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ic49",			0x0800, 0x1a1ce0d0, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ic50",			0x0800, 0xac5e9ec1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ic51",			0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "ic52",			0x0800, 0xf3f10ac5, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "ic23",			0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "ic24",			0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+
+	{ "ic39",			0x0800, 0xbb0525ed, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "ic40",			0x0800, 0x4178aa4f, 3 | BRF_GRA },           // 11
+
+	{ "ic40_b",			0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
+	{ "ic41_a",			0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(phoenixha)
+STD_ROM_FN(phoenixha)
+
+struct BurnDriver BurnDrvPhoenixha = {
+	"phoenixha", "phoenix", NULL, NULL, "1981",
+	"Phoenix (Hellomat Automaten bootleg)\0", NULL, "bootleg (Hellomat Automaten)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, phoenixhaRomInfo, phoenixhaRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
+	PhoenixInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	208, 256, 3, 4
+};
+
+
 // Phoenix (IDI bootleg)
 // verified single PCB, single PROM
 // Needs correct color PROM decode
@@ -1360,6 +1434,43 @@ struct BurnDriver BurnDrvPhoenixi = {
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, phoenixiRomInfo, phoenixiRomName, NULL, NULL, NULL, NULL, CondorInputInfo, CondorDIPInfo,
 	SinglePromInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	208, 256, 3, 4
+};
+
+
+// Fenix (Niemer bootleg of Phoenix)
+// Fenix, bootleg from the Spanish company Niemer
+
+static struct BurnRomInfo fenixnRomDesc[] = {
+	{ "2201.bin",		0x0800, 0x2afa8e2c, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "1202.bin",		0x0800, 0x6527395e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1203.bin",		0x0800, 0x868e69ba, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1204.bin",		0x0800, 0x85d96d7c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1205.bin",		0x0800, 0xa105e4e7, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "1206.bin",		0x0800, 0x249a6f21, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "1207.bin",		0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "1208.bin",		0x0800, 0xb90efc28, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "1211.bin",		0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "1212.bin",		0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+
+	{ "1209.bin",		0x0800, 0xbb0525ed, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "1210.bin",		0x0800, 0x0be2ba91, 3 | BRF_GRA },           // 11
+
+	{ "prom1.bin",		0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
+	{ "prom2.bin",			0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(fenixn)
+STD_ROM_FN(fenixn)
+
+struct BurnDriver BurnDrvFenixn = {
+	"fenixn", "phoenix", NULL, NULL, "1981",
+	"Fenix (Niemer bootleg of Phoenix)\0", NULL, "bootleg (Niemer)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, fenixnRomInfo, fenixnRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
+	PhoenixInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	208, 256, 3, 4
 };
 

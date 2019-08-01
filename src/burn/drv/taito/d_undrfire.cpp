@@ -85,11 +85,7 @@ static void __fastcall undrfire_main_write_long(UINT32 a, UINT32 d)
 			INT32 previous = subcpu_in_reset;
 			subcpu_in_reset = (~d >> 12) & 1;
 			if (!subcpu_in_reset && previous) {
-				SekClose();
-				SekOpen(2);
-				SekReset();
-				SekClose();
-				SekOpen(0);
+				SekReset(2);
 			}
 		}
 		return;
@@ -282,13 +278,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (TaitoRamStart, 0, TaitoRamEnd - TaitoRamStart);
 	}
 
-	SekOpen(0);
-	SekReset();
-	SekClose();
-
-	SekOpen(2);
-	SekReset();
-	SekClose();
+	SekReset(0);
+	SekReset(2);
 
 	TaitoICReset();
 	TaitoF3SoundReset();

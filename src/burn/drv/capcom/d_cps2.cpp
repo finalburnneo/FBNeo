@@ -5912,6 +5912,35 @@ static struct BurnRomInfo Sfz2aljRomDesc[] = {
 STD_ROM_PICK(Sfz2alj)
 STD_ROM_FN(Sfz2alj)
 
+static struct BurnRomInfo Sfz2adlRomDesc[] = {
+	{ "szaj-dl.03a",   0x080000, 0x67bc6f45, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaj-dl.04a",   0x080000, 0xb124800a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaj.05a",      0x080000, 0xc88ebf88, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaj.06a",      0x080000, 0x35ed5b7a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaj.07a",      0x080000, 0x975dcb3e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaj.08a",      0x080000, 0xdc73f2d7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sza.13m",       0x400000, 0x4d1f1f22, CPS2_GFX | BRF_GRA },
+	{ "sza.15m",       0x400000, 0x19cea680, CPS2_GFX | BRF_GRA },
+	{ "sza.17m",       0x400000, 0xe01b4588, CPS2_GFX | BRF_GRA },
+	{ "sza.19m",       0x400000, 0x0feeda64, CPS2_GFX | BRF_GRA },
+	{ "sza.14m",       0x100000, 0x0560c6aa, CPS2_GFX | BRF_GRA },
+	{ "sza.16m",       0x100000, 0xae940f87, CPS2_GFX | BRF_GRA },
+	{ "sza.18m",       0x100000, 0x4bc3c8bc, CPS2_GFX | BRF_GRA },
+	{ "sza.20m",       0x100000, 0x39e674c0, CPS2_GFX | BRF_GRA },
+
+	{ "sza.01",        0x020000, 0x1bc323cf, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sza.02",        0x020000, 0xba6a5013, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sza.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
+	{ "sza.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2alj.key",   0x000014, 0x4c42320f, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfz2adl)
+STD_ROM_FN(Sfz2adl)
+
 static struct BurnRomInfo Sfa3RomDesc[] = {
 	{ "sz3e.03c",      0x080000, 0x9762b206, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3e.04c",      0x080000, 0x5ad3f721, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -10342,6 +10371,16 @@ struct BurnDriver BurnDrvCpsSfz2alj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz2aljRomInfo, Sfz2aljRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Sfa2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSfz2adl = {
+	"Sfz2adl", "sfz2al", "sfz2alj", NULL, "2009",
+	"Street Fighter Zero 2 Alpha - Dragon Level (Hack by pipi899, Ver.2009-04-24)\0", NULL, "Hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz2adlRomInfo, Sfz2adlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Sfa2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

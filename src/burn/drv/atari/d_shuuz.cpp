@@ -529,7 +529,7 @@ static INT32 DrvFrame()
 
 		AtariVADTimerUpdate();
 
-		if ((i%64) == 63) {
+		if ((i%120) == 119) {
 			BurnTrackballUpdate(0);
 		}
 

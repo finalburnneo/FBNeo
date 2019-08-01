@@ -4763,7 +4763,8 @@ static struct BurnRomInfo rthun2jRomDesc[] = {
 	{ "rst1_voi1.bin",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
 	{ "rst1_voi2.bin",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
 
-	{ "pal12l10.8d",		0x00040, 0xd3ae64a6, 0x00 | BRF_OPT },
+	/* stuff below isn't used but loaded because it was on the board .. */
+	{ "pal12l10.8d",		0x00040, 0xd3ae64a6, 0x00 | BRF_OPT },			 // 21 plds
 	{ "plhs18p8a.2p",		0x00149, 0x28c634a4, 0x00 | BRF_OPT },
 	{ "plhs18p8a.4g",		0x00149, 0x1932dd5e, 0x00 | BRF_OPT },
 	{ "plhs18p8a.5f",		0x00149, 0xab2fd9c2, 0x00 | BRF_OPT },

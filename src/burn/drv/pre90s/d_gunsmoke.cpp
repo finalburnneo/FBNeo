@@ -77,7 +77,7 @@ STDINPUTINFO(Drv)
 static struct BurnDIPInfo DrvDIPList[]=
 {
 	// Default Values
-	{0x14, 0xff, 0xff, 0xf7, NULL               },
+	{0x14, 0xff, 0xff, 0xff, NULL               },
 
 	{0   , 0xfe, 0   , 4   , "Bonus Life"       },
 	{0x14, 0x01, 0x03, 0x01, "30k 80k 80k+"     },
@@ -93,7 +93,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 static struct BurnDIPInfo gunsmokeuDIPList[]=
 {
 	// Default Values
-	{0x14, 0xff, 0xff, 0xf7, NULL               },
+	{0x14, 0xff, 0xff, 0xff, NULL               },
 
 	{0   , 0xfe, 0   , 4   , "Bonus Life"       },
 	{0x14, 0x01, 0x03, 0x01, "30k 80k 80k+"     },
@@ -178,7 +178,7 @@ static void __fastcall gunsmoke_cpu0_write(UINT16 address, UINT8 data)
 
 		case 0xc804:
 			gunsmoke_bankswitch((data >> 2) & 3);
-			flipscreen = data & 0x40;
+			flipscreen = 0; // data & 0x40; ignore flipscreen
 			chon       = data & 0x80;
 		break;
 

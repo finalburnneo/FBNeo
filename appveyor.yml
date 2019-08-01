@@ -20,6 +20,8 @@ build_script:
  # - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 clean RELEASEBUILD=1 SKIPDEPEND=1"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j20 RELEASEBUILD=1 XPBUILD=1 SKIPDEPEND=1"
   - 7z a fbn-win32-gcc-xp.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html        
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j20 SKIPDEPEND=1"
+  - 7z a fbn-win32-debug-gcc.7z %APPVEYOR_BUILD_FOLDER%\fbnd.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html        
   - 7z a fbn-win32-vs.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\Win32\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
   - 7z a fbn-x64-vs.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\x64\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
    
@@ -34,6 +36,8 @@ artifacts:
     name: win32-bin-gcc  
   - path: fbn-win32-gcc-xp.7z
     name: win32-bin-gcc-xp
+  - path: fbn-win32-debug-gcc.7z
+    name: win32-bin-debug-gcc	
 # Test scripts
 test: off
 
@@ -47,4 +51,4 @@ deploy:
   auth_token:
     secure: cC6FjF22axzOF1Y1+B2DfieS+B3KAHeUTefa7k/iq7MJjqaj/OjQ01EWN+Ga5r6v
   repository: finalburnneo/FBNeo-WIP-Storage-Facility
-  artifact: win32-bin-vs, x64-bin-vs, source, win32-bin-gcc, win32-bin-gcc-xp
+  artifact: win32-bin-vs, x64-bin-vs, source, win32-bin-gcc, win32-bin-gcc-xp, win32-bin-debug-gcc

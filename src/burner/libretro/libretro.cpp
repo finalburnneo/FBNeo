@@ -871,8 +871,6 @@ void retro_run()
 
 	ForceFrameStep(nCurrentFrame % nFrameskip == 0);
 
-	video_cb(pVidImage, nGameWidth, nGameHeight, nBurnPitch);
-
 	audio_batch_cb(g_audio_buf, nBurnSoundLen);
 	bool updated = false;
 
@@ -883,6 +881,8 @@ void retro_run()
 			free(pVidImage);
 		pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
 	}
+
+	video_cb(pVidImage, nGameWidth, nGameHeight, nBurnPitch);
 
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE, &updated) && updated)
 	{

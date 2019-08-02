@@ -506,7 +506,7 @@ static INT32 DrvFrame()
 
 		{
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
-			BurnTrackballFrame(0, DrvAnalogPortX, DrvAnalogPortY, 0x09, 0x0a);
+			BurnTrackballFrame(0, DrvAnalogPortX, DrvAnalogPortY, 0x03, 0x0a);
 			BurnTrackballUpdate(0);
 		}
 	}

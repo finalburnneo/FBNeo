@@ -510,7 +510,7 @@ static INT32 DrvFrame()
 		}
 
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x04, 0x0a);
+		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x02, 0x07);
 		BurnTrackballUDLR(0, DrvJoy4f[2], DrvJoy4f[3], DrvJoy4f[0], DrvJoy4f[1]);
 		update_dial();
 

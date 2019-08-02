@@ -75,6 +75,7 @@ static INT32 is_wacko = 0;
 static INT32 is_twotiger = 0;
 static INT32 is_dotron = 0;
 static INT32 is_demoderb = 0;
+static INT32 is_kick = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo SolarfoxInputList[] = {
@@ -851,8 +852,8 @@ static UINT8 kroozr_ip1_read(UINT8)
 
 static UINT8 kick_ip1_read(UINT8)
 {
-    UINT8 tb = (BurnTrackballRead(0, 0) ) & 0x0f;
-    BurnTrackballUpdate(0);
+	UINT8 tb = (BurnTrackballRead(0, 0) & 0x0f) | 0xf0;
+	BurnTrackballUpdate(0);
 
     return tb;
 }
@@ -1186,6 +1187,7 @@ static INT32 DrvExit()
     is_twotiger = 0;
     is_dotron = 0;
     is_demoderb = 0;
+	is_kick = 0;
 
 	return 0;
 }
@@ -1452,8 +1454,12 @@ static INT32 DrvFrame()
 
         {
             if (has_dial) { // kick, kroozr, tron, dotron
-                BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
-				BurnTrackballFrame(0, DrvAnalogPortZ, DrvAnalogPort2, (DrvJoy4f[0] || DrvJoy4f[1]) ? 4 : 2, 7);
+				BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
+				if (is_kick) {
+					BurnTrackballFrame(0, DrvAnalogPortZ, DrvAnalogPort2, 1, 3);
+				} else {
+					BurnTrackballFrame(0, DrvAnalogPortZ, DrvAnalogPort2, 2, 7);
+				}
                 BurnTrackballUDLR(0, 0, 0, DrvJoy4f[0], DrvJoy4f[1]);
                 BurnTrackballUpdate(0);
             }
@@ -1490,11 +1496,11 @@ static INT32 DrvFrame()
 
             if (is_wacko) {
                 BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
-                BurnTrackballFrame(0, DrvAnalogPortX, DrvAnalogPortY, 0x06, 0x0a);
+                BurnTrackballFrame(0, DrvAnalogPortX, DrvAnalogPortY, 0x03, 0x07);
                 BurnTrackballUpdate(0);
 
                 BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
-                BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 0x06, 0x0a);
+                BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 0x03, 0x07);
                 BurnTrackballUpdate(1);
             }
         }
@@ -1709,7 +1715,8 @@ static INT32 KickInit()
 	nScreenFlip = TMAP_FLIPY;
 
 	if (nRet == 0)
-    {
+	{
+		is_kick = 1;
         has_dial = 1;
 		ssio_set_custom_input(1, 0xff, kick_ip1_read);
 		ssio_set_custom_output(0, 0xff, solarfox_op0_write);

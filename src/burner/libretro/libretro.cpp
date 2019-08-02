@@ -1229,6 +1229,9 @@ static bool retro_load_game_common()
 			}
 		}
 
+		// Apply dipswitches
+		apply_dipswitch_from_variables();
+
 		// Initialize game driver
 		BurnDrvInit();
 
@@ -1260,9 +1263,6 @@ static bool retro_load_game_common()
 		if (pVidImage)
 			free(pVidImage);
 		pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
-
-		// Apply dipswitches
-		apply_dipswitch_from_variables();
 
 		// Initialization done
 		log_cb(RETRO_LOG_INFO, "Driver %s was successfully started\n", g_driver_name);

@@ -1,6 +1,9 @@
 #define MAX_GUNS	4
 
 struct BurnDialINF {
+	INT32 VelocityStart;
+	INT32 VelocityMax;
+	INT32 VelocityMidpoint;
 	INT32 Velocity;
 	INT32 Backward;
 	INT32 Forward;
@@ -27,9 +30,9 @@ void BurnGunSetCoords(INT32 player, INT32 x, INT32 y); // manually set the gun c
 // NOTE: *depreciated* BurnPaddle is now the lowlevel code for BurnTrackball!
 // Using BurnPaddle gives you 2 paddles (A & B) per player initted.
 // BurnPaddleReturn[A/B] returns Velocity and directional data.
-BurnDialINF BurnPaddleReturn(INT32 num, INT32 isB);
+void BurnPaddleReturn(BurnDialINF &dial, INT32 num, INT32 isB);
 void BurnPaddleSetWrap(INT32 num, INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax);
-void BurnPaddleMakeInputs(INT32 num, INT16 x, INT16 y);
+void BurnPaddleMakeInputs(INT32 num, BurnDialINF &dial, INT16 x, INT16 y);
 #define BurnPaddleInit BurnTrackballInit
 #define BurnPaddleExit BurnGunExit
 #define BurnPaddleScan BurnGunScan

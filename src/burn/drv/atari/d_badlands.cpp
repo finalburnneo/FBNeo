@@ -558,7 +558,7 @@ static INT32 DrvFrame()
 		{
 			// Using trackball device as 2 steering wheel paddles
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-			BurnTrackballFrame(0, DrvAnalogPortA, DrvAnalogPortB, 0x04, 0x0a);
+			BurnTrackballFrame(0, DrvAnalogPortA, DrvAnalogPortB, 0x01, 0x06);
 			BurnTrackballUpdate(0);
 		}
 	}
@@ -575,10 +575,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
-
-		if ((i%64) == 63) BurnTrackballUpdate(0);
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, M6502);
 
 		if (i == 239) {
 			vblank = 1;

@@ -571,11 +571,7 @@ static int GameInfoInit()
 	char Temp[10000];
 	int inGame = 0;
 
-#ifdef USE_SEGOE
 	TCHAR szBuffer[50000] = _T("{\\rtf1\\ansi{\\fonttbl(\\f0\\fnil\\fcharset0 Verdana;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}");
-#else
-	TCHAR szBuffer[50000] = _T("{\\rtf1\\ansi{\\fonttbl(\\f0\\fnil\\fcharset0 Segoe UI;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}");
-#endif
 
 	if (fp) {
 		while (!feof(fp)) {

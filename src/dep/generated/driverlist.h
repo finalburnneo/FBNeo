@@ -10805,6 +10805,7 @@ DRV		BurnDrvkof99h;
 DRV		BurnDrvkof99;
 DRV		BurnDrvkof99p;
 DRV		BurnDrvkof99ae;
+DRV		BurnDrvkof99rp2f;
 DRV		BurnDrvmd_kof99;
 DRV		BurnDrvkof10th;
 DRV		BurnDrvkf2k5uni;
@@ -10819,6 +10820,7 @@ DRV		BurnDrvkf2k1pa;
 DRV		BurnDrvkof2002b;
 DRV		BurnDrvkof2002;
 DRV		BurnDrvkf2k2ps2;
+DRV		BurnDrvkf2k23rd;
 DRV		BurnDrvkf2k2mp;
 DRV		BurnDrvkf2k2mp2;
 DRV		BurnDrvkf2k2pls;
@@ -23284,6 +23286,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof99,				// The King of Fighters '99 - Millennium Battle (NGM-2510)
 	&BurnDrvkof99p,				// The King of Fighters '99 - Millennium Battle (prototype)
 	&BurnDrvkof99ae,			// The King of Fighters '99 Anniversary Edition (hack)
+	&BurnDrvkof99rp2f,			// The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT)
 	&BurnDrvmd_kof99,			// The King of Fighters '99
 	&BurnDrvkof10th,			// The King of Fighters 10th Anniversary (bootleg)
 	&BurnDrvkf2k5uni,			// The King of Fighters 10th Anniversary 2005 Unique (bootleg)
@@ -23298,6 +23301,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof2002b,			// The King of Fighters 2002 (bootleg)
 	&BurnDrvkof2002,			// The King of Fighters 2002 (NGM-2650)(NGH-2650)
 	&BurnDrvkf2k2ps2,			// The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack)
+	&BurnDrvkf2k23rd,			// The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT)
 	&BurnDrvkf2k2mp,			// The King of Fighters 2002 Magic Plus (bootleg)
 	&BurnDrvkf2k2mp2,			// The King of Fighters 2002 Magic Plus II (bootleg)
 	&BurnDrvkf2k2pls,			// The King of Fighters 2002 Plus (bootleg set 1)

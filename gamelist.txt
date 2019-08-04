@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12200 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12202 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -9524,7 +9524,7 @@ This list contains all games supported by FinalBurn Neo.
 | sfz2alh	|  	| Street Fighter Zero 2 Alpha (960813 Hispanic)		| sfz2al	| 1996	| Capcom	| CPS2		| 					|
 | sfz2ald	|  	| Street Fighter Zero 2 Alpha (960826 Asia Phoenix Editi| sfz2al	| 1996	| bootleg	| CPS2		| 					|
 | sfz2al	|  	| Street Fighter Zero 2 Alpha (960826 Asia)		| 		| 1996	| Capcom	| CPS2		| 					|
-| Sfz2adl	|  	| Street Fighter Zero 2 Alpha - Dragon Level (Hack by pi| sfz2al	| 2009	| Hack		| CPS2		| 					|
+| sfz2adl	|  	| Street Fighter Zero 2 Alpha - Dragon Level (Hack by pi| sfz2al	| 2009	| Hack		| CPS2		| 					|
 | sfz3jr2d	|  	| Street Fighter Zero 3 (980629 Japan Phoenix Edition)	| sfa3		| 1998	| bootleg	| CPS2		| 					|
 | sfz3jr2	|  	| Street Fighter Zero 3 (980629 Japan)			| sfa3		| 1998	| Capcom	| CPS2		| 					|
 | sfz3ar1	|  	| Street Fighter Zero 3 (980701 Asia)			| sfa3		| 1998	| Capcom	| CPS2		| 					|
@@ -10579,6 +10579,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof99		|  	| The King of Fighters '99 - Millennium Battle (NGM-2510| 		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99p	|  	| The King of Fighters '99 - Millennium Battle (prototyp| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99ae	|  	| The King of Fighters '99 Anniversary Edition (hack)	| kof99		| 2017	| hack		| Neo Geo MVS	| 					|
+| kof99rp2f	|  	| The King of Fighters '99 Remix Pro V2.0 Final (Hack By| kof99		| 2006	| hack		| Neo Geo MVS	| 					|
 | md_kof99	|  	| The King of Fighters '99				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | kof10th	|  	| The King of Fighters 10th Anniversary (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k5uni	|  	| The King of Fighters 10th Anniversary 2005 Unique (boo| kof2002	| 2004	| bootleg	| Neo Geo MVS	| 					|
@@ -10593,6 +10594,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof2002b	|  	| The King of Fighters 2002 (bootleg)			| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kof2002	|  	| The King of Fighters 2002 (NGM-2650)(NGH-2650)	| 		| 2002	| Eolith / Playm| Neo Geo MVS	| 					|
 | kf2k2ps2	|  	| The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT| kof2002	| 2007	| hack		| Neo Geo MVS	| 					|
+| kf2k23rd	|  	| The King of Fighters 2002 - 3rd Strike of Orochi (Hack| kof2002	| 200?	| hack		| Miscellaneous	| 					|
 | kf2k2mp	|  	| The King of Fighters 2002 Magic Plus (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k2mp2	|  	| The King of Fighters 2002 Magic Plus II (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k2pls	|  	| The King of Fighters 2002 Plus (bootleg set 1)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|

@@ -17920,7 +17920,7 @@ static struct BurnRomInfo kf2k23rdRomDesc[] = {
 	{ "kf2k23rd-v1.rom",      0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
 	{ "kf2k23rd-v2.rom",      0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
 	{ "kf2k23rd-v3.rom",      0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
-	{ "kf2k23rd-v4.rom",      0x400000, 0x067271b5, 5 | BRF_SND },           // 15                                             },           // 15
+	{ "kf2k23rd-v4.rom",      0x400000, 0x067271b5, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(kf2k23rd, kf2k23rd, neogeo)
@@ -17934,4 +17934,42 @@ struct BurnDriver BurnDrvkf2k23rd = {
 	NULL, kf2k23rdRomInfo, kf2k23rdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+// The King of Fighters '99 - Remix Pro V2.0 Final (Hack By FCHT - FightChina Hackteam)
+
+static struct BurnRomInfo kof99rp2fRomDesc[] = {
+	{ "kf99rp2f-p1.rom",   	   0x100000, 0x1c5fd0ad, 1 | BRF_ESS | BRF_PRG }, // 0 68K code
+	{ "kf99rp2f-p2.rom",       0x400000, 0x01E111B3, 1 | BRF_ESS | BRF_PRG }, // 1
+
+	{ "kf99rp2f-s1.rom",       0x020000, 0xca942904, 2 | BRF_GRA },           // 2 Text layer tiles
+
+	{ "kf99rp2f-c1.rom",   	   0x800000, 0xf0409101, 3 | BRF_GRA },           // 3 Sprite data
+	{ "kf99rp2f-c2.rom",   	   0x800000, 0x3a9eff54, 3 | BRF_GRA },           // 4
+	{ "kf99rp2f-c3.rom",   	   0x800000, 0xb047c9d5, 3 | BRF_GRA },           // 5
+	{ "kf99rp2f-c4.rom",   	   0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           // 6
+	{ "kf99rp2f-c5.rom",   	   0x800000, 0xdd023649, 3 | BRF_GRA },           // 7
+	{ "kf99rp2f-c6.rom",   	   0x800000, 0xb8f60a8c, 3 | BRF_GRA },           // 8
+	{ "kf99rp2f-c7.rom",   	   0x800000, 0x1dfd5103, 3 | BRF_GRA },           // 9
+	{ "kf99rp2f-c8.rom",   	   0x800000, 0x23fe3c43, 3 | BRF_GRA },           // 10
+
+	{ "kf99rp2f-m1.rom",       0x020000, 0x0cb24d46, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "kf99rp2f-v1.rom",       0x400000, 0xef2eecc8, 5 | BRF_SND },           // 12 Sound data
+	{ "kf99rp2f-v2.rom",       0x400000, 0x73e211ca, 5 | BRF_SND },           // 13
+	{ "kf99rp2f-v3.rom",       0x400000, 0x403628da, 5 | BRF_SND },           // 14
+	{ "kf99rp2f-v4.rom",       0x200000, 0xb49e6178, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(kof99rp2f, kof99rp2f, neogeo)
+STD_ROM_FN(kof99rp2f)
+
+struct BurnDriver BurnDrvkof99rp2f = {
+	"kof99rp2f", "kof99", "neogeo", NULL, "2006",
+	"The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof99rp2fRomInfo, kof99rp2fRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
 };

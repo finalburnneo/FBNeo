@@ -1,4 +1,4 @@
-// Burner Input Dialog module
+// Burner Input Editor Dialog module
 #include "burner.h"
 
 HWND hInpdDlg = NULL;							// Handle to the Input Dialog
@@ -701,11 +701,86 @@ int UsePreset(bool bMakeDefault)
 	return 0;
 }
 
+static void SliderInit() // Analog sensitivity slider
+{
+	// Initialise slider
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_ANSLIDER, TBM_SETRANGE, (WPARAM)0, (LPARAM)MAKELONG(0x40, 0x0400));
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_ANSLIDER, TBM_SETLINESIZE, (WPARAM)0, (LPARAM)0x05);
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_ANSLIDER, TBM_SETPAGESIZE, (WPARAM)0, (LPARAM)0x10);
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_ANSLIDER, TBM_SETTIC, (WPARAM)0, (LPARAM)0x0100);
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_ANSLIDER, TBM_SETTIC, (WPARAM)0, (LPARAM)0x0200);
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_ANSLIDER, TBM_SETTIC, (WPARAM)0, (LPARAM)0x0300);
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_ANSLIDER, TBM_SETTIC, (WPARAM)0, (LPARAM)0x0400);
+
+	// Set slider to current value
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_ANSLIDER, TBM_SETPOS, (WPARAM)true, (LPARAM)nAnalogSpeed);
+
+	// Set the edit control to current value
+	TCHAR szText[16];
+	_stprintf(szText, _T("%i"), nAnalogSpeed * 100 / 256);
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_ANEDIT, WM_SETTEXT, (WPARAM)0, (LPARAM)szText);
+}
+
+static void SliderUpdate()
+{
+	TCHAR szText[16] = _T("");
+	bool bValid = 1;
+	int nValue;
+
+	if (SendDlgItemMessage(hInpdDlg, IDC_INPD_ANEDIT, WM_GETTEXTLENGTH, (WPARAM)0, (LPARAM)0) < 16) {
+		SendDlgItemMessage(hInpdDlg, IDC_INPD_ANEDIT, WM_GETTEXT, (WPARAM)16, (LPARAM)szText);
+	}
+
+	// Scan string in the edit control for illegal characters
+	for (int i = 0; szText[i]; i++) {
+		if (!_istdigit(szText[i])) {
+			bValid = 0;
+			break;
+		}
+	}
+
+	if (bValid) {
+		nValue = _tcstol(szText, NULL, 0);
+		if (nValue < 25) {
+			nValue = 25;
+		} else {
+			if (nValue > 400) {
+				nValue = 400;
+			}
+		}
+
+		nValue = (int)((double)nValue * 256.0 / 100.0 + 0.5);
+
+		// Set slider to current value
+		SendDlgItemMessage(hInpdDlg, IDC_INPD_ANSLIDER, TBM_SETPOS, (WPARAM)true, (LPARAM)nValue);
+	}
+}
+
+static void SliderExit()
+{
+	TCHAR szText[16] = _T("");
+	INT32 nVal = 0;
+
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_ANEDIT, WM_GETTEXT, (WPARAM)16, (LPARAM)szText);
+	nVal = _tcstol(szText, NULL, 0);
+	if (nVal < 25) {
+		nVal = 25;
+	} else {
+		if (nVal > 400) {
+			nVal = 400;
+		}
+	}
+
+	nAnalogSpeed = (int)((double)nVal * 256.0 / 100.0 + 0.5);
+	bprintf(0, _T("  * Analog Speed: %X\n"), nAnalogSpeed);
+}
+
 static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	if (Msg == WM_INITDIALOG) {
 		hInpdDlg = hDlg;
 		InpdInit();
+		SliderInit();
 		if (!kNetGame && bAutoPause) {
 			bRunPause = 1;
 		}
@@ -714,6 +789,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	}
 
 	if (Msg == WM_CLOSE) {
+		SliderExit();
 		EnableWindow(hScrnWnd, TRUE);
 		DestroyWindow(hInpdDlg);
 		return 0;
@@ -763,6 +839,12 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			UsePreset(true);
 
 			InpdListMake(0);								// refresh view
+
+			return 0;
+		}
+
+		if (Notify == EN_UPDATE) {                          // analog slider update
+			SliderUpdate();
 
 			return 0;
 		}
@@ -838,6 +920,32 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			return 0;
 		}
 
+	}
+
+	if (Msg == WM_HSCROLL) { // Analog Slider updates
+		switch (LOWORD(wParam)) {
+			case TB_BOTTOM:
+			case TB_ENDTRACK:
+			case TB_LINEDOWN:
+			case TB_LINEUP:
+			case TB_PAGEDOWN:
+			case TB_PAGEUP:
+			case TB_THUMBPOSITION:
+			case TB_THUMBTRACK:
+			case TB_TOP: {
+				TCHAR szText[16] = _T("");
+				int nValue;
+
+				// Update the contents of the edit control
+				nValue = SendDlgItemMessage(hDlg, IDC_INPD_ANSLIDER, TBM_GETPOS, (WPARAM)0, (LPARAM)0);
+				nValue = (int)((double)nValue * 100.0 / 256.0 + 0.5);
+				_stprintf(szText, _T("%i"), nValue);
+				SendDlgItemMessage(hDlg, IDC_INPD_ANEDIT, WM_SETTEXT, (WPARAM)0, (LPARAM)szText);
+				break;
+			}
+		}
+
+		return 0;
 	}
 
 	if (Msg == WM_NOTIFY && lParam != 0) {

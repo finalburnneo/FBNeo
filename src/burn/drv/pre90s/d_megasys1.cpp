@@ -2699,6 +2699,7 @@ static INT32 DrvLoadRoms()
 
 static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 {
+	BurnSetRefreshRate(56.19);
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -3313,10 +3314,10 @@ static INT32 System1AFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		CPU_RUN(0, Sek);
-		if (i ==  16*8) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i ==   0*8) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		if (i == 128*8) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-		if (i == 240*8) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 240*8) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, Sek);
 		SekClose();
 
 		SekOpen(1);

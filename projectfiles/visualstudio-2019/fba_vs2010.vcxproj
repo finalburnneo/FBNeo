@@ -1705,6 +1705,9 @@ del build_details.exe
     <PreBuildEvent>
       <Command>$(MSBuildProjectDirectory)/../../src/dep/vs2010/pre2019.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
+    <ResourceCompile>
+      <PreprocessorDefinitions>FBNEO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -1728,6 +1731,9 @@ del build_details.exe
     <PreBuildEvent>
       <Command>$(MSBuildProjectDirectory)/../../src/dep/vs2010/pre2019.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
+    <ResourceCompile>
+      <PreprocessorDefinitions>FBNEO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

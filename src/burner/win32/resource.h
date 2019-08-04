@@ -94,6 +94,8 @@
 #define ID_VALUE_CLOSE                  	20019
 #define IDC_VALUE_EDIT                  	20020
                                        // 	20021 is used by IDC_INPS_CLEARLOCK.
+#define IDC_INPD_ANSLIDER					20022
+#define IDC_INPD_ANEDIT						20023
 
 #define IDC_FBA_VER                     	20050
 #define IDC_SPECIALSTRING               	20051

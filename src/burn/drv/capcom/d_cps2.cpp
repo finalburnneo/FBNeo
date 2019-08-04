@@ -10376,7 +10376,7 @@ struct BurnDriver BurnDrvCpsSfz2alj = {
 };
 
 struct BurnDriver BurnDrvCpsSfz2adl = {
-	"Sfz2adl", "sfz2al", "sfz2alj", NULL, "2009",
+	"sfz2adl", "sfz2al", "sfz2alj", NULL, "2009",
 	"Street Fighter Zero 2 Alpha - Dragon Level (Hack by pipi899, Ver.2009-04-24)\0", NULL, "Hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,

@@ -7994,6 +7994,7 @@ DRV		BurnDrvRaiden2nl;
 DRV		BurnDrvRaiden2hk;
 DRV		BurnDrvRaiden2i;
 DRV		BurnDrvRaiden2j;
+DRV		BurnDrvRaiden2k;
 DRV		BurnDrvRaiden2sw;
 DRV		BurnDrvRaiden2;
 DRV		BurnDrvRaiden2u;
@@ -10805,7 +10806,9 @@ DRV		BurnDrvkof99h;
 DRV		BurnDrvkof99;
 DRV		BurnDrvkof99p;
 DRV		BurnDrvkof99ae;
+DRV		BurnDrvkof99eur;
 DRV		BurnDrvkof99rp2f;
+DRV		BurnDrvkof99sr;
 DRV		BurnDrvmd_kof99;
 DRV		BurnDrvkof10th;
 DRV		BurnDrvkf2k5uni;
@@ -12025,6 +12028,7 @@ DRV		BurnDrvWc90b3;
 DRV		BurnDrvWc90b4;
 DRV		BurnDrvWc90a;
 DRV		BurnDrvWc90b;
+DRV		BurnDrvWc90c;
 DRV		BurnDrvWc90bb;
 DRV		BurnDrvWc90t;
 DRV		BurnDrvWc90;
@@ -20475,6 +20479,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRaiden2hk,			// Raiden II (Hong Kong)
 	&BurnDrvRaiden2i,			// Raiden II (Italy)
 	&BurnDrvRaiden2j,			// Raiden II (Japan)
+	&BurnDrvRaiden2k,			// Raiden II (Korea)
 	&BurnDrvRaiden2sw,			// Raiden II (Switzerland)
 	&BurnDrvRaiden2,			// Raiden II (US, set 1)
 	&BurnDrvRaiden2u,			// Raiden II (US, set 2)
@@ -23286,7 +23291,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof99,				// The King of Fighters '99 - Millennium Battle (NGM-2510)
 	&BurnDrvkof99p,				// The King of Fighters '99 - Millennium Battle (prototype)
 	&BurnDrvkof99ae,			// The King of Fighters '99 Anniversary Edition (hack)
+	&BurnDrvkof99eur,			// The King of Fighters '99 Evolution Ultra Remix (Hack By Yashional)
 	&BurnDrvkof99rp2f,			// The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT)
+	&BurnDrvkof99sr,			// The King of Fighters '99 Summer Revolution (Hack By FCHT)
 	&BurnDrvmd_kof99,			// The King of Fighters '99
 	&BurnDrvkof10th,			// The King of Fighters 10th Anniversary (bootleg)
 	&BurnDrvkf2k5uni,			// The King of Fighters 10th Anniversary 2005 Unique (bootleg)
@@ -24506,9 +24513,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWc90b4,				// World Cup '90 (bootleg, set 3)
 	&BurnDrvWc90a,				// World Cup '90 (Euro set 1)
 	&BurnDrvWc90b,				// World Cup '90 (Euro set 2)
+	&BurnDrvWc90c,				// World Cup '90 (Euro set 3)
 	&BurnDrvWc90bb,				// World Cup '90 (european hack, different title)
 	&BurnDrvWc90t,				// World Cup '90 (trackball)
-	&BurnDrvWc90,				// World Cup '90 (World)
+	&BurnDrvWc90,				// World Cup '90 (World, set 1)
 	&BurnDrvmd_wcup90,			// World Cup Italia '90 (Euro)
 	&BurnDrvsms_wcup90,			// World Cup Italia '90 (Euro, Bra)
 	&BurnDrvsms_wcup90d,		// World Cup Italia '90 (USA, Demo)

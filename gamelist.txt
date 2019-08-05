@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12202 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12206 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7820,6 +7820,7 @@ This list contains all games supported by FinalBurn Neo.
 | raiden2hk	|  	| Raiden II (Hong Kong)					| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2i	|  	| Raiden II (Italy)					| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2j	|  	| Raiden II (Japan)					| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
+| raiden2k	|  	| Raiden II (Korea)					| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2sw	|  	| Raiden II (Switzerland)				| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2	|  	| Raiden II (US, set 1)					| 		| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2u	|  	| Raiden II (US, set 2)					| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
@@ -10579,7 +10580,9 @@ This list contains all games supported by FinalBurn Neo.
 | kof99		|  	| The King of Fighters '99 - Millennium Battle (NGM-2510| 		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99p	|  	| The King of Fighters '99 - Millennium Battle (prototyp| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99ae	|  	| The King of Fighters '99 Anniversary Edition (hack)	| kof99		| 2017	| hack		| Neo Geo MVS	| 					|
+| kof99eur	|  	| The King of Fighters '99 Evolution Ultra Remix (Hack B| kof99		| 201?	| hack		| Neo Geo MVS	| 					|
 | kof99rp2f	|  	| The King of Fighters '99 Remix Pro V2.0 Final (Hack By| kof99		| 2006	| hack		| Neo Geo MVS	| 					|
+| kof99sr	|  	| The King of Fighters '99 Summer Revolution (Hack By FC| kof99		| 200?	| hack		| Neo Geo MVS	| 					|
 | md_kof99	|  	| The King of Fighters '99				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | kof10th	|  	| The King of Fighters 10th Anniversary (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k5uni	|  	| The King of Fighters 10th Anniversary 2005 Unique (boo| kof2002	| 2004	| bootleg	| Neo Geo MVS	| 					|
@@ -11769,9 +11772,10 @@ This list contains all games supported by FinalBurn Neo.
 | twcup90b4	|  	| World Cup '90 (bootleg, set 3)			| twcup90	| 1989	| bootleg	| Miscellaneous	| 					|
 | twcup90a	|  	| World Cup '90 (Euro set 1)				| twcup90	| 1989	| Tecmo		| Miscellaneous	| 					|
 | twcup90b	|  	| World Cup '90 (Euro set 2)				| twcup90	| 1989	| Tecmo		| Miscellaneous	| 					|
+| twcup90c	|  	| World Cup '90 (Euro set 3)				| twcup90	| 1989	| Tecmo		| Miscellaneous	| 					|
 | twcup90bb	|  	| World Cup '90 (european hack, different title)	| twcup90	| 1989	| bootleg	| Miscellaneous	| 					|
 | twcup90t	|  	| World Cup '90 (trackball)				| twcup90	| 1989	| Tecmo		| Miscellaneous	| 					|
-| twcup90	|  	| World Cup '90 (World)					| 		| 1989	| Tecmo		| Miscellaneous	| 					|
+| twcup90	|  	| World Cup '90 (World, set 1)				| 		| 1989	| Tecmo		| Miscellaneous	| 					|
 | md_wcup90	|  	| World Cup Italia '90 (Euro)				| 		| 1990	| Sega		| Sega Megadrive| 					|
 | sms_wcup90	|  	| World Cup Italia '90 (Euro, Bra)			| 		| 1990	| Sega		| Sega Master Sy| 					|
 | sms_wcup90d	|  	| World Cup Italia '90 (USA, Demo)			| sms_wcup90	| 1990	| Sega		| Sega Master Sy| 					|

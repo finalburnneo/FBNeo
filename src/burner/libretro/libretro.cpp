@@ -1265,7 +1265,7 @@ static bool retro_load_game_common()
 		pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
 
 		// Initialization done
-		log_cb(RETRO_LOG_INFO, "Driver %s was successfully started\n", g_driver_name);
+		log_cb(RETRO_LOG_INFO, "Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));
 		driver_inited = true;
 
 		return true;

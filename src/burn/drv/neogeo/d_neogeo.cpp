@@ -17968,8 +17968,84 @@ struct BurnDriver BurnDrvkof99rp2f = {
 	"kof99rp2f", "kof99", "neogeo", NULL, "2006",
 	"The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof99rp2fRomInfo, kof99rp2fRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// The King of Fighters '99 - Evolution Ultra Remix (Hack By Yashional)
+
+static struct BurnRomInfo kof99eurRomDesc[] = {
+	{ "kf99eur.p1",    0x100000, 0x66fa20fd, 1 | BRF_ESS | BRF_PRG }, //  0
+	{ "kf99eur.p2",    0x400000, 0xaec93904, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "kf99eur.s1",    0x020000, 0xa6747969, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "kf99eur.c1",    0x800000, 0xc7e8bf32, 3 | BRF_GRA },           //  3 Sprite data
+	{ "kf99eur.c2",    0x800000, 0x4e8f9f7d, 3 | BRF_GRA },           //  4
+	{ "kf99eur.c3",    0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  5
+	{ "kf99eur.c4",    0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  6
+	{ "kf99eur.c5",    0x800000, 0x9746268c, 3 | BRF_GRA },           //  7
+	{ "kf99eur.c6",    0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8
+	{ "kf99eur.c7",    0x800000, 0xf0b5ff02, 3 | BRF_GRA },           //  9
+	{ "kf99eur.c8",    0x800000, 0x7107b8d5, 3 | BRF_GRA },           //  10
+
+	{ "kf99eur.m1",    0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
+
+	{ "kf99eur.v1",    0x400000, 0x4ae46226, 5 | BRF_SND },           //  12 Sound data
+	{ "kf99eur.v2",    0x400000, 0x07d70650, 5 | BRF_SND },           //  13
+	{ "251-v3.v3",     0x400000, 0x821901da, 5 | BRF_SND },           //  14
+	{ "251-v4.v4",     0x200000, 0xb49e6178, 5 | BRF_SND },           //  15
+};
+
+STDROMPICKEXT(kof99eur, kof99eur, neogeo)
+STD_ROM_FN(kof99eur)
+
+struct BurnDriver BurnDrvkof99eur = {
+	"kof99eur", "kof99", "neogeo", NULL, "201?",
+	"The King of Fighters '99 Evolution Ultra Remix (Hack By Yashional)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof99eurRomInfo, kof99eurRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// The King of Fighters '99 - Summer Revolution (Hack By FCHT - FightChina Hackteam)
+
+static struct BurnRomInfo kof99srRomDesc[] = {
+	{ "kf99sr-p1.bin",    0x100000, 0xb96da0bf, 1 | BRF_ESS | BRF_PRG }, //  0
+	{ "kf99sr-p2.bin",    0x400000, 0x9f1d1660, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "kf99sr-s1.bin",    0x020000, 0x08055c7a, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "kf99sr-c1.bin",    0x800000, 0xb3d88546, 3 | BRF_GRA },           //  3 Sprite data
+	{ "kf99sr-c2.bin",    0x800000, 0x915c8634, 3 | BRF_GRA },           //  4
+	{ "kf99sr-c3.bin",    0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  5
+	{ "kf99sr-c4.bin",    0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  6
+	{ "kf99sr-c5.bin",    0x800000, 0x9746268c, 3 | BRF_GRA },           //  7
+	{ "kf99sr-c6.bin",    0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8
+	{ "kf99sr-c7.bin",    0x800000, 0x65de862c, 3 | BRF_GRA },           //  9
+	{ "kf99sr-c8.bin",    0x800000, 0x3ff457fe, 3 | BRF_GRA },           //  10
+
+	{ "kf99sr-m1.bin",    0x020000, 0x5e74539c, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
+
+	{ "kf99sr-v1.bin",    0x400000, 0xef2eecc8, 5 | BRF_SND },           //  12 Sound data
+	{ "kf99sr-v2.bin",    0x400000, 0x73e211ca, 5 | BRF_SND },           //  13
+	{ "kf99sr-v3.bin",    0x400000, 0x821901da, 5 | BRF_SND },           //  14
+	{ "kf99sr-v4.bin",    0x200000, 0xb49e6178, 5 | BRF_SND },           //  15
+};
+
+STDROMPICKEXT(kof99sr, kof99sr, neogeo)
+STD_ROM_FN(kof99sr)
+
+struct BurnDriver BurnDrvkof99sr = {
+	"kof99sr", "kof99", "neogeo", NULL, "200?",
+	"The King of Fighters '99 Summer Revolution (Hack By FCHT)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof99srRomInfo, kof99srRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

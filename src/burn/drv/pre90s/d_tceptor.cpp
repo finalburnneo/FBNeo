@@ -75,9 +75,9 @@ static INT32 DrvAnalogPort2 = 0;
 static struct BurnInputInfo TceptorInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
 
-	A("P1 X Axis",      BIT_ANALOG_REL, &DrvAnalogPort0, "mouse x-axis"),
-	A("P1 Y Axis",      BIT_ANALOG_REL, &DrvAnalogPort1, "mouse y-axis"),
-	A("P1 Accelerator", BIT_ANALOG_REL, &DrvAnalogPort2, "p1 x-axis"),
+	A("P1 X Axis",      BIT_ANALOG_REL, &DrvAnalogPort0, "p1 x-axis"),
+	A("P1 Y Axis",      BIT_ANALOG_REL, &DrvAnalogPort1, "p1 y-axis"),
+	A("P1 Accelerator", BIT_ANALOG_REL, &DrvAnalogPort2, "p1 z-axis"),
 
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},

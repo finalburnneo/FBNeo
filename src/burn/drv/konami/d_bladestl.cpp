@@ -615,7 +615,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Blades of Steel (version T)
+// Blades of Steel (version T, Joystick)
 
 static struct BurnRomInfo bladestlRomDesc[] = {
 	{ "797-t01.19c",	0x10000, 0x89d7185d, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
@@ -637,7 +637,7 @@ STD_ROM_FN(bladestl)
 
 struct BurnDriver BurnDrvBladestl = {
 	"bladestl", NULL, NULL, NULL, "1987",
-	"Blades of Steel (version T)\0", NULL, "Konami", "GX797",
+	"Blades of Steel (version T, Joystick)\0", NULL, "Konami", "GX797",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, bladestlRomInfo, bladestlRomName, NULL, NULL, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
@@ -646,7 +646,7 @@ struct BurnDriver BurnDrvBladestl = {
 };
 
 
-// Blades of Steel (version L)
+// Blades of Steel (version L, Trackball)
 
 static struct BurnRomInfo bladestllRomDesc[] = {
 	{ "797-l01.19c",	0x10000, 0x1ab14c40, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
@@ -668,7 +668,7 @@ STD_ROM_FN(bladestll)
 
 struct BurnDriver BurnDrvBladestll = {
 	"bladestll", "bladestl", NULL, NULL, "1987",
-	"Blades of Steel (version L)\0", NULL, "Konami", "GX797",
+	"Blades of Steel (version L, Trackball)\0", NULL, "Konami", "GX797",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, bladestllRomInfo, bladestllRomName, NULL, NULL, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
@@ -677,7 +677,7 @@ struct BurnDriver BurnDrvBladestll = {
 };
 
 
-// Blades of Steel (version E)
+// Blades of Steel (version E, Trackball)
 
 static struct BurnRomInfo bladestleRomDesc[] = {
 	{ "797-e01.19c",	0x10000, 0xf8472e95, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
@@ -699,7 +699,7 @@ STD_ROM_FN(bladestle)
 
 struct BurnDriver BurnDrvBladestle = {
 	"bladestle", "bladestl", NULL, NULL, "1987",
-	"Blades of Steel (version E)\0", NULL, "Konami", "GX797",
+	"Blades of Steel (version E, Trackball)\0", NULL, "Konami", "GX797",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, bladestleRomInfo, bladestleRomName, NULL, NULL, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,

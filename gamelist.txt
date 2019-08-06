@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12206 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12207 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -250,6 +250,7 @@ This list contains all games supported by FinalBurn Neo.
 | airwolf	|  	| Airwolf						| 		| 1987	| Kyugo		| Kyugo		| 					|
 | ajaxj		|  	| Ajax (Japan)						| ajax		| 1987	| Konami	| GX770		| 					|
 | ajax		|  	| Ajax							| 		| 1987	| Konami	| GX770		| 					|
+| akkaarrh	|  	| Akka Arrh (prototype)					| 		| 1982	| Atari		| Miscellaneous	| 					|
 | akkanvdr	|  	| Akkanbeder (Ver 2.5J 1995/06/14)			| spcinv95	| 1995	| Taito Corporat| Taito F3 Syste| 					|
 | akumajoun	|  	| Akuma-Jou Dracula (Japan ver. N)			| hcastle	| 1988	| Konami	| GX768		| 					|
 | akumajou	|  	| Akuma-Jou Dracula (Japan ver. P)			| hcastle	| 1988	| Konami	| GX768		| 					|
@@ -1022,9 +1023,9 @@ This list contains all games supported by FinalBurn Neo.
 | sms_bladeag1	|  	| Blade Eagle (USA, Prototype)				| sms_bladeag	| 1988	| Sega		| Sega Master Sy| 					|
 | sms_bladeag	|  	| Blade Eagle (World)					| 		| 1988	| Sega		| Sega Master Sy| 					|
 | bmaster	|  	| Blade Master (World)					| 		| 1991	| Irem		| Irem M92	| 					|
-| bladestle	|  	| Blades of Steel (version E)				| bladestl	| 1987	| Konami	| GX797		| 					|
-| bladestll	|  	| Blades of Steel (version L)				| bladestl	| 1987	| Konami	| GX797		| 					|
-| bladestl	|  	| Blades of Steel (version T)				| 		| 1987	| Konami	| GX797		| 					|
+| bladestle	|  	| Blades of Steel (version E, Trackball)		| bladestl	| 1987	| Konami	| GX797		| 					|
+| bladestll	|  	| Blades of Steel (version L, Trackball)		| bladestl	| 1987	| Konami	| GX797		| 					|
+| bladestl	|  	| Blades of Steel (version T, Joystick)			| 		| 1987	| Konami	| GX797		| 					|
 | md_bladeven	|  	| Blades of Vengeance (Euro, USA)			| 		| 1993	| Electronic Art| Sega Megadrive| 					|
 | msx_blaggerenh|  	| Blagger Enhanced					| 		| 2013	| MicroCabin / J| MSX		| 					|
 | msx_blagger	|  	| Blagger MSX (Jpn)					| 		| 1984	| MicroCabin	| MSX		| 					|

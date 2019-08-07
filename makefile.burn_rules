@@ -5,8 +5,8 @@ alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/atari burn/drv/capcom bur
 			cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec cpu/pic16c5x cpu/s2650 cpu/tlcs90 cpu/sh2 cpu/tms32010 cpu/tms34010 cpu/upd7725 cpu/upd7810 \
 			cpu/v60 cpu/z80 cpu/z180
 
-drvsrc	= 	d_arcadecl.cpp d_atarig1.cpp d_badlands.cpp d_batman.cpp d_blstroid.cpp d_eprom.cpp d_gauntlet.cpp d_klax.cpp d_offtwall.cpp d_rampart.cpp \
-			d_relief.cpp d_shuuz.cpp d_skullxbo.cpp d_thunderj.cpp d_toobin.cpp d_vindictr.cpp d_xybots.cpp \
+drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstroid.o d_eprom.o d_gauntlet.o d_klax.o d_offtwall.o d_rampart.o \
+			d_relief.o d_shuuz.o d_skullxbo.o d_thunderj.o d_toobin.o d_vindictr.o d_xybots.o \
 			\
 			d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwange.o d_hotdogst.o d_korokoro.o d_mazinger.o d_metmqstr.o d_pwrinst2.o \
 			d_sailormn.o d_tjumpman.o d_uopoko.o \

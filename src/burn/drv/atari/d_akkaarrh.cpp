@@ -49,7 +49,7 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Zoom",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 3"	},
 
 	A("P1 Trackball X", 	BIT_ANALOG_REL, &DrvAnalogPortX,"p1 x-axis"),
-	A("P1 Trackball Y", 	BIT_ANALOG_REL, &DrvAnalogPortY,"p1 x-axis"),
+	A("P1 Trackball Y", 	BIT_ANALOG_REL, &DrvAnalogPortY,"p1 y-axis"),
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 };

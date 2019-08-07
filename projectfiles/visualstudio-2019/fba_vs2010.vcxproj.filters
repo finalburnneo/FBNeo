@@ -4113,6 +4113,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_kingofbox.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\atari\d_akkaarrh.cpp">
+      <Filter>Burn\drv\atari</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

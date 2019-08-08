@@ -883,25 +883,40 @@ extern "C" INT32 M68KTASCallback()
 #endif
 
 // ## SekCPUPush() / SekCPUPop() ## internal helpers for sending signals to other 68k's
-static INT32 nHostCPU, nPushedCPU;
+struct m68kpstack {
+	INT32 nHostCPU;
+	INT32 nPushedCPU;
+};
+#define MAX_PSTACK 10
+
+static m68kpstack pstack[MAX_PSTACK];
+static INT32 pstacknum = 0;
 
 static void SekCPUPush(INT32 nCPU)
 {
-	nPushedCPU = nCPU;
+	m68kpstack *p = &pstack[pstacknum++];
 
-	nHostCPU = SekGetActive();
+	if (pstacknum + 1 >= MAX_PSTACK) {
+		bprintf(0, _T("SekCPUPush(): out of stack!  Possible infinite recursion?  Crash pending..\n"));
+	}
 
-	if (nHostCPU != nPushedCPU) {
-		if (nHostCPU != -1) SekClose();
-		SekOpen(nPushedCPU);
+	p->nPushedCPU = nCPU;
+
+	p->nHostCPU = SekGetActive();
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		if (p->nHostCPU != -1) SekClose();
+		SekOpen(p->nPushedCPU);
 	}
 }
 
 static void SekCPUPop()
 {
-	if (nHostCPU != nPushedCPU) {
+	m68kpstack *p = &pstack[--pstacknum];
+
+	if (p->nHostCPU != p->nPushedCPU) {
 		SekClose();
-		if (nHostCPU != -1) SekOpen(nHostCPU);
+		if (p->nHostCPU != -1) SekOpen(p->nHostCPU);
 	}
 }
 
@@ -1248,7 +1263,7 @@ void SekOpen(const INT32 i)
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekOpen called without init\n"));
 	if (i > nSekCount) bprintf(PRINT_ERROR, _T("SekOpen called with invalid index %x\n"), i);
-	if (nSekActive != -1) bprintf(PRINT_ERROR, _T("SekOpen called when CPU already open with index %x\n"), i);
+	if (nSekActive != -1) bprintf(PRINT_ERROR, _T("SekOpen called when CPU already open (%x) with index %x\n"), nSekActive, i);
 #endif
 
 	if (i != nSekActive) {

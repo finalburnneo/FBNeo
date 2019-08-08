@@ -17,7 +17,7 @@ struct SekExt *SekExt[SEK_MAX] = { NULL, }, *pSekExt = NULL;
 INT32 nSekActive = -1;								// The cpu which is currently being emulated
 INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nSekCyclesToDo;
 
-INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX], nSekRESETLine[SEK_MAX];
+INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX], nSekRESETLine[SEK_MAX], nSekHALT[SEK_MAX];
 
 static INT32 core_idle(INT32 cycles)
 {
@@ -1133,6 +1133,7 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	nSekCycles[nCount] = 0;
 	nSekIRQPending[nCount] = 0;
 	nSekRESETLine[nCount] = 0;
+	nSekHALT[nCount] = 0;
 
 	nSekCyclesTotal = 0;
 	nSekCyclesScanline = 0;
@@ -1370,6 +1371,53 @@ void SekSetRESETLine(INT32 nCPU, INT32 nStatus)
 	SekCPUPop();
 }
 
+INT32 SekGetHALT()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekGetHALT called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekGetHALT called when no CPU open\n"));
+#endif
+
+
+	if (nSekActive != -1)
+	{
+		return nSekHALT[nSekActive];
+	}
+
+	return 0;
+}
+
+void SekSetHALT(INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetHALT called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetHALT called when no CPU open\n"));
+#endif
+
+	if (nSekActive != -1)
+	{
+		if (nSekHALT[nSekActive] && nStatus == 0)
+		{
+			bprintf(0, _T("SEK: cleared HALT.\n"));
+		}
+
+		nSekHALT[nSekActive] = nStatus;
+	}
+}
+
+void SekSetHALT(INT32 nCPU, INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetHALT called without init\n"));
+#endif
+
+	SekCPUPush(nCPU);
+
+	SekSetHALT(nStatus);
+
+	SekCPUPop();
+}
+
 
 // Set the status of an IRQ line on the active CPU
 void SekSetIRQLine(const INT32 line, INT32 nstatus)
@@ -1536,9 +1584,9 @@ INT32 SekRun(const INT32 nCycles)
 #ifdef EMU_M68K
 		nSekCyclesToDo = nCycles;
 
-		if (nSekRESETLine[nSekActive])
+		if (nSekRESETLine[nSekActive] || nSekHALT[nSekActive])
 		{
-			nSekCyclesSegment = nCycles; // idle when RESET high
+			nSekCyclesSegment = nCycles; // idle when RESET high or halted
 		}
 		else
 		{
@@ -2267,6 +2315,7 @@ INT32 SekScan(INT32 nAction)
 		SCAN_VAR(nSekIRQPending[i]);
 		SCAN_VAR(nSekCycles[i]);
 		SCAN_VAR(nSekRESETLine[i]);
+		SCAN_VAR(nSekHALT[i]);
 
 #if defined EMU_A68K && defined EMU_M68K
 		// Switch to another core if needed

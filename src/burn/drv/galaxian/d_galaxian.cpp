@@ -7219,7 +7219,7 @@ static struct BurnRomInfo Redufob2RomDesc[] = {
 	{ "5049.1h",       0x00800, 0x8a422b0d, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "5049.1k",       0x00800, 0x1eb84cb1, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
-	{ "5049.61",       0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+	{ "5049.6l",       0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Redufob2)

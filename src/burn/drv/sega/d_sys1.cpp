@@ -1843,7 +1843,7 @@ static struct BurnRomInfo ThetogyuRomDesc[] = {
 	{ "epr-6069.117",      0x004000, 0xfe691e41, BRF_GRA },		  	  // 13 Sprites
 	{ "epr-6070.110",      0x004000, 0x34f080df, BRF_GRA },		  	  // 14 Sprites
 
-	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
 };
 
 STD_ROM_PICK(Thetogyu)
@@ -3193,7 +3193,7 @@ static struct BurnRomInfo Wboy2uRomDesc[] = {
 	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  15 Sprites
 	{ "epr-7488.05",       0x004000, 0x007c2f1b, BRF_GRA },		  //  16 Sprites
 
-	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
 };
 
 STD_ROM_PICK(Wboy2u)

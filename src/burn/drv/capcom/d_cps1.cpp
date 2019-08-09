@@ -9906,10 +9906,10 @@ static struct BurnRomInfo Sf2rkRomDesc[] = {
 
 	{ "w7.u210",       0x040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
 
-	{ "grp1.u31",      0x020000, 0x6de44671, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
-	{ "grp3.u29",      0x020000, 0xe8f14362, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
-	{ "grp2.u30",      0x020000, 0xbf0cd819, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
-	{ "grp4.u28",      0x020000, 0x76f9f91f, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "w-1",      	   0x020000, 0x6de44671, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "w-2",           0x020000, 0xe8f14362, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "w-3",           0x020000, 0xbf0cd819, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "w-4",           0x020000, 0x76f9f91f, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
 
 	{ "2.rk",     	   0x010000, 0x13ea1c44, BRF_OPT }, // unknown
 };

@@ -17,7 +17,7 @@ struct SekExt *SekExt[SEK_MAX] = { NULL, }, *pSekExt = NULL;
 INT32 nSekActive = -1;								// The cpu which is currently being emulated
 INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nSekCyclesToDo;
 
-INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX], nSekRESETLine[SEK_MAX];
+INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX], nSekRESETLine[SEK_MAX], nSekHALT[SEK_MAX];
 
 static INT32 core_idle(INT32 cycles)
 {
@@ -883,25 +883,40 @@ extern "C" INT32 M68KTASCallback()
 #endif
 
 // ## SekCPUPush() / SekCPUPop() ## internal helpers for sending signals to other 68k's
-static INT32 nHostCPU, nPushedCPU;
+struct m68kpstack {
+	INT32 nHostCPU;
+	INT32 nPushedCPU;
+};
+#define MAX_PSTACK 10
+
+static m68kpstack pstack[MAX_PSTACK];
+static INT32 pstacknum = 0;
 
 static void SekCPUPush(INT32 nCPU)
 {
-	nPushedCPU = nCPU;
+	m68kpstack *p = &pstack[pstacknum++];
 
-	nHostCPU = SekGetActive();
+	if (pstacknum + 1 >= MAX_PSTACK) {
+		bprintf(0, _T("SekCPUPush(): out of stack!  Possible infinite recursion?  Crash pending..\n"));
+	}
 
-	if (nHostCPU != nPushedCPU) {
-		if (nHostCPU != -1) SekClose();
-		SekOpen(nPushedCPU);
+	p->nPushedCPU = nCPU;
+
+	p->nHostCPU = SekGetActive();
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		if (p->nHostCPU != -1) SekClose();
+		SekOpen(p->nPushedCPU);
 	}
 }
 
 static void SekCPUPop()
 {
-	if (nHostCPU != nPushedCPU) {
+	m68kpstack *p = &pstack[--pstacknum];
+
+	if (p->nHostCPU != p->nPushedCPU) {
 		SekClose();
-		if (nHostCPU != -1) SekOpen(nHostCPU);
+		if (p->nHostCPU != -1) SekOpen(p->nHostCPU);
 	}
 }
 
@@ -1133,6 +1148,7 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	nSekCycles[nCount] = 0;
 	nSekIRQPending[nCount] = 0;
 	nSekRESETLine[nCount] = 0;
+	nSekHALT[nCount] = 0;
 
 	nSekCyclesTotal = 0;
 	nSekCyclesScanline = 0;
@@ -1247,7 +1263,7 @@ void SekOpen(const INT32 i)
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekOpen called without init\n"));
 	if (i > nSekCount) bprintf(PRINT_ERROR, _T("SekOpen called with invalid index %x\n"), i);
-	if (nSekActive != -1) bprintf(PRINT_ERROR, _T("SekOpen called when CPU already open with index %x\n"), i);
+	if (nSekActive != -1) bprintf(PRINT_ERROR, _T("SekOpen called when CPU already open (%x) with index %x\n"), nSekActive, i);
 #endif
 
 	if (i != nSekActive) {
@@ -1366,6 +1382,53 @@ void SekSetRESETLine(INT32 nCPU, INT32 nStatus)
 	SekCPUPush(nCPU);
 
 	SekSetRESETLine(nStatus);
+
+	SekCPUPop();
+}
+
+INT32 SekGetHALT()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekGetHALT called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekGetHALT called when no CPU open\n"));
+#endif
+
+
+	if (nSekActive != -1)
+	{
+		return nSekHALT[nSekActive];
+	}
+
+	return 0;
+}
+
+void SekSetHALT(INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetHALT called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetHALT called when no CPU open\n"));
+#endif
+
+	if (nSekActive != -1)
+	{
+		if (nSekHALT[nSekActive] && nStatus == 0)
+		{
+			bprintf(0, _T("SEK: cleared HALT.\n"));
+		}
+
+		nSekHALT[nSekActive] = nStatus;
+	}
+}
+
+void SekSetHALT(INT32 nCPU, INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetHALT called without init\n"));
+#endif
+
+	SekCPUPush(nCPU);
+
+	SekSetHALT(nStatus);
 
 	SekCPUPop();
 }
@@ -1536,9 +1599,9 @@ INT32 SekRun(const INT32 nCycles)
 #ifdef EMU_M68K
 		nSekCyclesToDo = nCycles;
 
-		if (nSekRESETLine[nSekActive])
+		if (nSekRESETLine[nSekActive] || nSekHALT[nSekActive])
 		{
-			nSekCyclesSegment = nCycles; // idle when RESET high
+			nSekCyclesSegment = nCycles; // idle when RESET high or halted
 		}
 		else
 		{
@@ -2267,6 +2330,7 @@ INT32 SekScan(INT32 nAction)
 		SCAN_VAR(nSekIRQPending[i]);
 		SCAN_VAR(nSekCycles[i]);
 		SCAN_VAR(nSekRESETLine[i]);
+		SCAN_VAR(nSekHALT[i]);
 
 #if defined EMU_A68K && defined EMU_M68K
 		// Switch to another core if needed

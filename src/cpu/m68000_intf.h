@@ -154,6 +154,9 @@ INT32 SekRun(INT32 nCPU, INT32 nCycles);
 void SekSetRESETLine(INT32 nStatus);
 void SekSetRESETLine(INT32 nCPU, INT32 nStatus);
 INT32 SekGetRESETLine();
+void SekSetHALT(INT32 nStatus);
+void SekSetHALT(INT32 nCPU, INT32 nStatus);
+INT32 SekGetHALT();
 
 inline static INT32 SekIdle(INT32 nCycles)
 {

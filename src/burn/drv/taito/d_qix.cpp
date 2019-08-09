@@ -1097,8 +1097,8 @@ static INT32 DrvFrame()
 		if (is_slither) {
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
 			BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
-			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 2, 3);
-			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 2, 3);
+			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 1, 2);
+			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 1, 2);
 			BurnTrackballUpdateSlither(0);
 			BurnTrackballUpdateSlither(1);
 		}

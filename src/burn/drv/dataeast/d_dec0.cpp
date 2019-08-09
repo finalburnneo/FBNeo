@@ -879,8 +879,8 @@ static struct BurnRomInfo BaddudesRomDesc[] = {
 	
 	{ "ei31.9a",            0x01000, 0x2a8745d2, BRF_OPT },			// 22	I8751
 	
-	{ "mb7116e.12c",	0x00400, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 23 PROMs
-	{ "mb7122e.17e",	0x00800, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 24
+	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 23 PROMs
+	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 24
 };
 
 STD_ROM_PICK(Baddudes)
@@ -1023,8 +1023,8 @@ static struct BurnRomInfo DrgninjaRomDesc[] = {
 	
 	{ "i8751",              0x01000, 0xc3f6bc70, BRF_OPT },			// 22	I8751
 	
-	{ "mb7116e.12c",	0x00400, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 23 PROMs
-	{ "mb7122e.17e",	0x00800, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 24
+	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 23 PROMs
+	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 24
 };
 
 STD_ROM_PICK(Drgninja)
@@ -1154,8 +1154,8 @@ static struct BurnRomInfo HbarrelRomDesc[] = {
 	
 	{ "heavy_barrel_31.9a", 	0x01000, 0x239d726f, BRF_PRG },		    // 30	I8751
 	
-	{ "mb7116e.12c",	0x00400, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 31 PROMs
-	{ "mb7122e.17e",	0x00800, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 32
+	{ "mb7116e.12c",			0x00200, 0x86e775f8, BRF_OPT }, 		// 31 PROMs
+	{ "mb7122e.17e",			0x00400, 0xa5cda23e, BRF_OPT }, 		// 32
 };
 
 STD_ROM_PICK(Hbarrel)
@@ -1201,8 +1201,8 @@ static struct BurnRomInfo HbarrelwRomDesc[] = {
 	
 	{ "ec31.9a",            0x01000, 0xaa14a2ae, BRF_PRG },         // 30	I8751
 	
-	{ "mb7116e.12c",	0x00400, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 31 PROMs
-	{ "mb7122e.17e",	0x00800, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 32
+	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 31 PROMs
+	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 32
 };
 
 STD_ROM_PICK(Hbarrelw)
@@ -1425,14 +1425,14 @@ static struct BurnRomInfo MidresRomDesc[] = {
 	
 	{ "fl17",               0x20000, 0x9029965d, BRF_SND },			// 17	Samples
 	
-	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT},			// 18	PROMs
+	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },			// 18	PROMs
 	
-	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT},			// 19	PLDs
-	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT},			// 20
-	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT},			// 21
-	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT},			// 22
-	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT},			// 23
-	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT},			// 24
+	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },			// 19	PLDs
+	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },			// 20
+	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },			// 21
+	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },			// 22
+	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },			// 23
+	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },			// 24
 };
 
 STD_ROM_PICK(Midres)
@@ -1464,14 +1464,14 @@ static struct BurnRomInfo MidresuRomDesc[] = {
 	
 	{ "fl17",               0x20000, 0x9029965d, BRF_SND },			// 17	Samples
 	
-	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT},			// 18	PROMs
+	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },			// 18	PROMs
 	
-	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT},			// 19	PLDs
-	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT},			// 20
-	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT},			// 21
-	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT},			// 22
-	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT},			// 23
-	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT},			// 24
+	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },			// 19	PLDs
+	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },			// 20
+	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },			// 21
+	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },			// 22
+	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },			// 23
+	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },			// 24
 };
 
 STD_ROM_PICK(Midresu)
@@ -1503,14 +1503,14 @@ static struct BurnRomInfo MidresjRomDesc[] = {
 	
 	{ "fh17",               0x20000, 0xc7b0a24e, BRF_SND },			// 17	Samples
 	
-	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT},			// 18	PROMs
+	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },			// 18	PROMs
 	
-	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT},			// 19	PLDs
-	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT},			// 20
-	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT},			// 21
-	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT},			// 22
-	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT},			// 23
-	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT},			// 24
+	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },			// 19	PLDs
+	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },			// 20
+	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },			// 21
+	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },			// 22
+	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },			// 23
+	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },			// 24
 };
 
 STD_ROM_PICK(Midresj)
@@ -1550,8 +1550,8 @@ static struct BurnRomInfo RobocopRomDesc[] = {
 	
 	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 24	Samples
 	
-	{ "mb7116e.12c",        0x00400, 0xc288a256, BRF_OPT},			// 25	PROMs
-	{ "mb7122e.17e",        0x00800, 0x64764ecf, BRF_OPT},			// 26
+	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Robocop)
@@ -1591,8 +1591,8 @@ static struct BurnRomInfo RobocopwRomDesc[] = {
 	
 	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 24	Samples
 	
-	{ "mb7116e.12c",        0x00400, 0xc288a256, BRF_OPT},			// 25	PROMs
-	{ "mb7122e.17e",        0x00800, 0x64764ecf, BRF_OPT},			// 26
+	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Robocopw)
@@ -1632,8 +1632,8 @@ static struct BurnRomInfo RobocopjRomDesc[] = {
 	
 	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 24	Samples
 	
-	{ "mb7116e.12c",        0x00400, 0xc288a256, BRF_OPT},			// 25	PROMs
-	{ "mb7122e.17e",        0x00800, 0x64764ecf, BRF_OPT},			// 26
+	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Robocopj)
@@ -1673,8 +1673,8 @@ static struct BurnRomInfo RobocopuRomDesc[] = {
 	
 	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 24	Samples
 	
-	{ "mb7116e.12c",        0x00400, 0xc288a256, BRF_OPT},			// 25	PROMs
-	{ "mb7122e.17e",        0x00800, 0x64764ecf, BRF_OPT},			// 26
+	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Robocopu)
@@ -1714,8 +1714,8 @@ static struct BurnRomInfo Robocopu0RomDesc[] = {
 	
 	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 24	Samples
 	
-	{ "mb7116e.12c",        0x00400, 0xc288a256, BRF_OPT},			// 25	PROMs
-	{ "mb7122e.17e",        0x00800, 0x64764ecf, BRF_OPT},			// 26
+	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Robocopu0)

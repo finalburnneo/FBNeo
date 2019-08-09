@@ -2670,7 +2670,7 @@ static struct BurnRomInfo NprincesRomDesc[] = {
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  15 Sprites
 	{ "epr-6549.05",       0x004000, 0xd2057668, BRF_GRA },		  //  16 Sprites
 
-	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
 };
 
 STD_ROM_PICK(Nprinces)
@@ -2695,7 +2695,7 @@ static struct BurnRomInfo NprincesoRomDesc[] = {
 	{ "epr-6547.110",      0x004000, 0x34451b08, BRF_GRA },		  //  12 Sprites
 	{ "epr-6549.05",       0x004000, 0xd2057668, BRF_GRA },		  //  13 Sprites
 
-	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
 };
 
 STD_ROM_PICK(Nprinceso)

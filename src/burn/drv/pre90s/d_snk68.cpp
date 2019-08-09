@@ -2164,13 +2164,13 @@ static struct BurnRomInfo ikari3wRomDesc[] = {
 	{ "ik3-8.16m",      	0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6
 	
 	{ "ikari-880c_t54.c2", 	0x80000, 0x6d728362, 4 | BRF_GRA }, //  7 Sprites
-	{ "ik11.c1",           	0x20000, 0xc33971c2, 4 | BRF_GRA }, //  8
+	{ "ik_11.c1",           0x20000, 0xc33971c2, 4 | BRF_GRA }, //  8
 	{ "ikari-880b_t51.b2", 	0x80000, 0xe25380e6, 4 | BRF_GRA }, //  9
-	{ "ik10.b1",           	0x20000, 0xba106245, 4 | BRF_GRA }, //  10
+	{ "ik_10.b1",           0x20000, 0xba106245, 4 | BRF_GRA }, //  10
 	{ "ikari-880d_t53.d2", 	0x80000, 0x5855d95e, 4 | BRF_GRA }, //  11
-	{ "ik12.d1",           	0x20000, 0x4ebdba89, 4 | BRF_GRA }, //  12
+	{ "ik_12.d1",           0x20000, 0x4ebdba89, 4 | BRF_GRA }, //  12
 	{ "ikari-880a_t52.a2", 	0x80000, 0x87607772, 4 | BRF_GRA }, //  13
-	{ "ik9.a1",            	0x20000, 0x711715ae, 4 | BRF_GRA }, //  14
+	{ "ik_9.a1",            0x20000, 0x711715ae, 4 | BRF_GRA }, //  14
 	
 	{ "ik3-6.18e",      	0x20000, 0x59d256a4, 5 | BRF_SND }, // 15 upd7759 samples
 	

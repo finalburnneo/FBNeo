@@ -5662,7 +5662,7 @@ static struct BurnRomInfo pacmanfmRomDesc[] = {
 	{ "pacfama_09.bin", 	0x0800, 0x7a7b48b3, 2 | BRF_GRA },			//  8 Graphics
 	{ "pacfama_11.bin",     0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
 	{ "pacfama_10.bin", 	0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
-	{ "crockmc_12.bin", 	0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
+	{ "pacfama_12.bin", 	0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
 
 	/* Undumped on the Famaresa PCB, taken from the parent set */
 	{ "pm1-1.7f",    		0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms

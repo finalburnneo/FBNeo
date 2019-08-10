@@ -851,11 +851,11 @@ static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fl
 		if (sy < 0 || sy >= nScreenHeight) continue;
 
 		for (INT32 x = 0; x < width; x++, sx++) {
-			if (sx < 0 || sx >= nScreenWidth) continue;
+			if (sx < 0 || sx >= nScreenWidth - 8) continue; // clip top 8px of sprites (top of screen)
 
 			INT32 pxl = gfx[((y * width) + x) ^ flip];
 
-			if (penmask[color & 0x3f] & (1 << pxl) || !pxl) continue; // is this right?
+			if (penmask[color & 0x3f] & (1 << pxl) || !pxl) continue;
 			dest[sy * nScreenWidth + sx] = pxl + (color << 2) + 0x100;
 		}
 		sx -= width;
@@ -885,7 +885,6 @@ static void draw_sprites()
 			flipx = !flipx;
 			flipy = !flipy;
 		}
-		if (x + 8 >= nScreenWidth) continue; // clip top 8px of sprites (top of screen)
 
 		RenderTileCPMP(code, color, x, y, flipx, flipy, 8, 16);
 	}

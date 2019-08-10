@@ -205,7 +205,7 @@ static struct BurnRomInfo DrvRomDesc[] = {
 	{ "bm4.12c",       0x00100, 0x91a8a2e1, BRF_GRA },	     	 //  35
 	{ "bm6.4b",        0x00100, 0x0eaf5158, BRF_GRA },	     	 //  36
 	
-	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
+	{ "bm.7k",         0x01000, 0xcf4781bf, BRF_OPT | BRF_PRG }, //  37	MCU
 };
 
 STD_ROM_PICK(Drv)
@@ -257,7 +257,7 @@ static struct BurnRomInfo DrvuRomDesc[] = {
 	{ "bm4.12c",       0x00100, 0x91a8a2e1, BRF_GRA },	     	 //  35
 	{ "bm6.4b",        0x00100, 0x0eaf5158, BRF_GRA },	     	 //  36
 	
-	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
+	{ "bm.7k",         0x01000, 0xcf4781bf, BRF_OPT | BRF_PRG }, //  37	MCU
 };
 
 STD_ROM_PICK(Drvu)
@@ -309,7 +309,7 @@ static struct BurnRomInfo DrvuaRomDesc[] = {
 	{ "bm4.12c",       0x00100, 0x91a8a2e1, BRF_GRA },	     	 //  35
 	{ "bm6.4b",        0x00100, 0x0eaf5158, BRF_GRA },	     	 //  36
 	
-	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
+	{ "bm.7k",         0x01000, 0xcf4781bf, BRF_OPT | BRF_PRG }, //  37	MCU
 };
 
 STD_ROM_PICK(Drvua)
@@ -361,7 +361,7 @@ static struct BurnRomInfo DrvjRomDesc[] = {
 	{ "bm4.12c",       0x00100, 0x91a8a2e1, BRF_GRA },	     	 //  35
 	{ "bm6.4b",        0x00100, 0x0eaf5158, BRF_GRA },	     	 //  36
 	
-	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
+	{ "bm.7k",         0x01000, 0xcf4781bf, BRF_OPT | BRF_PRG }, //  37	MCU
 };
 
 STD_ROM_PICK(Drvj)
@@ -413,7 +413,7 @@ static struct BurnRomInfo DrvjaRomDesc[] = {
 	{ "bm4.12c",       0x00100, 0x91a8a2e1, BRF_GRA },	     	 //  35
 	{ "bm6.4b",        0x00100, 0x0eaf5158, BRF_GRA },	     	 //  36
 	
-	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
+	{ "bm.7k",         0x01000, 0xcf4781bf, BRF_OPT | BRF_PRG }, //  37	MCU
 };
 
 STD_ROM_PICK(Drvja)
@@ -465,7 +465,7 @@ static struct BurnRomInfo DrvjahRomDesc[] = {
 	{ "bm4.12c",       0x00100, 0x91a8a2e1, BRF_GRA },	     	 //  35
 	{ "bm6.4b",        0x00100, 0x0eaf5158, BRF_GRA },	     	 //  36
 	
-	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
+	{ "bm.7k",         0x01000, 0xcf4781bf, BRF_OPT | BRF_PRG }, //  37	MCU
 };
 
 STD_ROM_PICK(Drvjah)
@@ -653,7 +653,7 @@ static struct BurnRomInfo DrvkaiRomDesc[] = {
 	{ "bm4.12c",       0x00100, 0x91a8a2e1, BRF_GRA },	     	 //  35
 	{ "bm6.4b",        0x00100, 0x0eaf5158, BRF_GRA },	     	 //  36
 	
-	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
+	{ "bm.7k",         0x01000, 0xcf4781bf, BRF_OPT | BRF_PRG }, //  37	MCU
 };
 
 STD_ROM_PICK(Drvkai)
@@ -709,7 +709,7 @@ static struct BurnRomInfo DrvmiiRomDesc[] = {
 	{ "4.12c",         0x00100, 0x91a8a2e1, BRF_GRA },	     	 //  35
 	{ "6.4b",          0x00100, 0x0eaf5158, BRF_GRA },	     	 //  36
 	
-	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
+	{ "bm.7k",         0x01000, 0xcf4781bf, BRF_OPT | BRF_PRG }, //  37	MCU
 };
 
 STD_ROM_PICK(Drvmii)

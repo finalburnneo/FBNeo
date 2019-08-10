@@ -2593,7 +2593,7 @@ struct BurnDriver BurnDrvGalpanisj = {
 
 static struct BurnRomInfo galpanisaRomDesc[] = {
 	{ "gps-000-a0_9abc.u10",	0x100000, 0x4e24b799, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
-	{ "gps-001-a00_bd64.u8",	0x100000, 0xaa4db8af, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gps-001-a0_bd64.u8",		0x100000, 0xaa4db8af, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "gps-100-00.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
 	{ "gps-101-00.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3

@@ -3346,10 +3346,10 @@ struct BurnDriver BurnDrvSamesame2 = {
 // Jiao! Jiao! Jiao! (China, 2P set)
 
 static struct BurnRomInfo samesamecnRomDesc[] = {
-	{ "o17_09-h2.8j",		0x08000, 0xfc8c2420, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "o17-09-h2.8j",		0x08000, 0xfc8c2420, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "o17_10-h2.8l",		0x08000, 0xcc0ffbeb, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "o17_11-2.7j",		0x20000, 0x6beac378, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "o17_12-2.7l",		0x20000, 0x6adb6eb5, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "o17-11-2.7j",		0x20000, 0x6beac378, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "o17-12-2.7l",		0x20000, 0x6adb6eb5, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "hd647180.017",		0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
 

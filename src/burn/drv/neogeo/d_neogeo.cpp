@@ -18049,3 +18049,113 @@ struct BurnDriver BurnDrvkof99sr = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+// The King of Fighters 2003 - PlayStation 2 (Hack By EGCG)
+
+static struct BurnRomInfo kf2k3ps2RomDesc[] = {
+	{ "kf2k3ps2-p1.bin",    0x800000, 0x8e66056d, 1 | BRF_ESS | BRF_PRG }, //  0
+
+	{ "kf2k3ps2-s1.bin",    0x020000, 0xc2e48e98, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "kf2k3ps2-c1.bin",    0x800000, 0xe42fc226, 3 | BRF_GRA },           //  2 Sprite data
+	{ "kf2k3ps2-c2.bin",    0x800000, 0x1b5e3b58, 3 | BRF_GRA },           //  3
+	{ "kf2k3ps2-c3.bin",    0x800000, 0xd334fdd9, 3 | BRF_GRA },           //  4
+	{ "kf2k3ps2-c4.bin",    0x800000, 0x0d457699, 3 | BRF_GRA },           //  5
+	{ "kf2k3ps2-c5.bin",    0x800000, 0x8a91aae4, 3 | BRF_GRA },           //  6
+	{ "kf2k3ps2-c6.bin",    0x800000, 0x9f8674b8, 3 | BRF_GRA },           //  7
+	{ "kf2k3ps2-c7.bin",    0x800000, 0x0ff993d7, 3 | BRF_GRA },           //  8
+	{ "kf2k3ps2-c8.bin",    0x800000, 0x22e36002, 3 | BRF_GRA },           //  9
+
+	{ "kf2k3ps2-m1.bin",    0x080000, 0x4374cb5c, 4 | BRF_ESS | BRF_PRG }, //  10 Z80 code
+
+	{ "kf2k3ps2-v1.bin",    0x800000, 0xdd6c6a85, 5 | BRF_SND },           //  11 Sound data
+	{ "kf2k3ps2-v2.bin",    0x800000, 0x0e84f8c1, 5 | BRF_SND },           //  12
+};
+
+STDROMPICKEXT(kf2k3ps2, kf2k3ps2, neogeo)
+STD_ROM_FN(kf2k3ps2)
+
+struct BurnDriver BurnDrvkf2k3ps2 = {
+	"kf2k3ps2", "kof2003", "neogeo", NULL, "2006",
+	"The King of Fighters 2003 PlayStation 2 (Hack By EGCG)\0", "Use AES (Console) mode!", "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kf2k3ps2RomInfo, kf2k3ps2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// The King of Fighters '98 - Easy Combo King 2014 (Versus Version)
+/* Hack by gunloc941 - Build 2019-02-17 */
+
+static struct BurnRomInfo kof98eckvsRomDesc[] = {
+	{ "98eckvs-p1.bin", 	0x100000, 0xb3afd80f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "98eckvs-p2.bin", 	0x400000, 0x5d59e3ae, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "98eckvs-s1.bin", 	0x020000, 0xf91c29d2, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "98eckvs-c1.bin", 	0x800000, 0xd3da4dc1, 3 | BRF_GRA },           //  3 Sprite data
+	{ "98eckvs-c2.bin", 	0x800000, 0xf5a5d149, 3 | BRF_GRA },           //  4
+	{ "98eckvs-c3.bin", 	0x800000, 0x0689e5b1, 3 | BRF_GRA },           //  5
+	{ "98eckvs-c4.bin",     0x800000, 0x5cc4d647, 3 | BRF_GRA },           //  6
+	{ "98eckvs-c5.bin",     0x800000, 0x1531b766, 3 | BRF_GRA },           //  7
+	{ "98eckvs-c6.bin",     0x800000, 0x04131307, 3 | BRF_GRA },           //  8
+	{ "98eckvs-c7.bin",     0x800000, 0x6f879c38, 3 | BRF_GRA },           //  9
+	{ "98eckvs-c8.bin",     0x800000, 0x89c797df, 3 | BRF_GRA },           // 10
+
+	{ "98eckvs-mg1.bin", 	0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "98eckvs-v1.bin",   	0x400000, 0x32da3c63, 5 | BRF_SND },           // 16 Sound data
+	{ "98eckvs-v2.bin",   	0x400000, 0x246edf6d, 5 | BRF_SND },           // 17
+	{ "98eckvs-v3.bin",   	0x400000, 0x308b0393, 5 | BRF_SND },           // 18
+	{ "98eckvs-v4.bin",   	0x400000, 0x00276d91, 5 | BRF_SND },           // 19
+};
+
+STDROMPICKEXT(kof98eckvs, kof98eckvs, neogeo)
+STD_ROM_FN(kof98eckvs)
+
+struct BurnDriver BurnDrvkof98eckvs = {
+	"kof98eckvs", "kof98", "neogeo", NULL, "2019",
+	"The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof98eckvsRomInfo, kof98eckvsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// The King of Fighters 10th Anniversary 2019 (Optimized Hack By ????)
+
+static struct BurnRomInfo kof10thuoRomDesc[] = {
+	{ "kf10udo-p1.p1",   0x800000, 0x956ac7f9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "kf10udo-s1.s1",   0x020000, 0x0EBE5645, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "kf10udo-c1.c1",   0x800000, 0x2491AF91, 3 | BRF_GRA },           //  3 Sprite data
+	{ "kf10udo-c2.c2",   0x800000, 0x47FF1D91, 3 | BRF_GRA },           //  4
+	{ "kf10udo-c3.c3",   0x800000, 0x959FAD0B, 3 | BRF_GRA },           //  5
+	{ "kf10udo-c4.c4",   0x800000, 0xEFE6A468, 3 | BRF_GRA },           //  6
+	{ "kf10udo-c5.c5",   0x800000, 0x74BBA7C6, 3 | BRF_GRA },           //  7
+	{ "kf10udo-c6.c6",   0x800000, 0xE20D2216, 3 | BRF_GRA },           //  8
+	{ "kf10udo-c7.c7",   0x800000, 0x8A5B561C, 3 | BRF_GRA },           //
+	{ "kf10udo-c8.c8",   0x800000, 0xBEF667A3, 3 | BRF_GRA },           //
+
+	{ "kf10udo-m1.m1",   0x020000, 0xF6FAB859, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "kf10udo-v1.v1",   0x800000, 0x0FC9A58D, 5 | BRF_SND },           // 10 Sound data
+	{ "kf10udo-v2.v2",   0x800000, 0xB8C475A4, 5 | BRF_SND },           // 11
+
+};
+
+STDROMPICKEXT(kof10thuo, kof10thuo, neogeo)
+STD_ROM_FN(kof10thuo)
+
+struct BurnDriver BurnDrvkof10thuo = {
+	"kof10thuo", "kof2002", "neogeo", NULL, "2019",
+	"The King of Fighters 10th Anniversary 2019 (Optimized, Hack)\0", NULL, "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof10thuoRomInfo, kof10thuoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

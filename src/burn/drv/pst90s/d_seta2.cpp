@@ -1134,8 +1134,8 @@ STD_ROM_PICK(deerhune)
 STD_ROM_FN(deerhune)
 
 static struct BurnRomInfo deerhunjRomDesc[] = {
-	{ "as_0908e01_u6_jdh.u06",	0x100000, 0x52f037da, 1 }, //  0 68000 code
-	{ "as_0909e01_u7_jdh.u07",	0x100000, 0xb391bc87, 1 }, //  1
+	{ "as0_0908e01_u6_jdh.u06",	0x100000, 0x52f037da, 1 }, //  0 68000 code
+	{ "as0_0909e01_u7_jdh.u07",	0x100000, 0xb391bc87, 1 }, //  1
 
 	{ "as0901m01.u38",		0x800000, 0x1d6acf8f, 2 }, //  2 GFX
 	{ "as0902m01.u39",		0x800000, 0xc7ca2128, 2 }, //  3

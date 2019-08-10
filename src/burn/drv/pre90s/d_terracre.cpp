@@ -520,7 +520,7 @@ static struct BurnRomInfo AmazontRomDesc[] = {
 	{ "5.4d",          0x08000, 0xae39432f, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "7.4b",          0x08000, 0xa74cdcea, BRF_ESS | BRF_PRG },	//  1
 	{ "4.6d",          0x08000, 0x0c6b0772, BRF_ESS | BRF_PRG },	//  2
-	{ "10.6b",         0x08000, 0xedbaad3f, BRF_ESS | BRF_PRG },	//  3
+	{ "6.6b",          0x08000, 0xedbaad3f, BRF_ESS | BRF_PRG },	//  3
 	
 	{ "1.15b",         0x04000, 0x55a8b5e7, BRF_ESS | BRF_PRG },	//  4	Z80 Program Code
 	{ "2.17b",         0x04000, 0x427a7cca, BRF_ESS | BRF_PRG },	//  5

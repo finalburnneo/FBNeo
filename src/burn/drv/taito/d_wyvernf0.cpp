@@ -725,7 +725,7 @@ static struct BurnRomInfo wyvernf0RomDesc[] = {
 	{ "a39_13.ic100",	0x2000, 0xbe708238, 4 | BRF_GRA },           // 13
 	{ "a39_12.ic74",	0x2000, 0x1cc389de, 4 | BRF_GRA },           // 14
 
-	{ "a39_mcu.ic23",	0x0800, 0x00000000, 4 | BRF_OPT | BRF_PRG | BRF_NODUMP }, //  15 MCU Code (not dumped)
+	{ "a39_mc68705p5s.ic23",	0x0800, 0x14bff574, 4 | BRF_OPT | BRF_PRG }, //  15 MCU Code 
 };
 
 STD_ROM_PICK(wyvernf0)
@@ -751,7 +751,7 @@ static struct BurnRomInfo wyvernf0aRomDesc[] = {
 	{ "ext1.ic35",			0x4000, 0x50314281, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "ext2.ic34",			0x4000, 0x7a225bf9, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "ext3.ic33",			0x4000, 0x41f21a67, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "ext4_8ca8.ic32",		0x4000, 0xdeb2d850, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ext4_8ca8.ic32",		0x4000, 0x793e36de, 1 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "sound_4182.ic26",	0x4000, 0x5a681fb4, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
 
@@ -763,9 +763,9 @@ static struct BurnRomInfo wyvernf0aRomDesc[] = {
 	{ "sch_4.ic99",			0x2000, 0x90a66147, 4 | BRF_GRA },           // 11 Tiles
 	{ "sch_3.ic73",			0x2000, 0xa31f3507, 4 | BRF_GRA },           // 12
 	{ "sch_2.ic100",		0x2000, 0xbe708238, 4 | BRF_GRA },           // 13
-	{ "sch_1.ic74",		0x2000, 0x1cc389de, 4 | BRF_GRA },           // 14
+	{ "sch_1.ic74",			0x2000, 0x1cc389de, 4 | BRF_GRA },           // 14
 
-	{ "mc68705p5s.ic23",	0x0800, 0x00000000, 4 | BRF_OPT | BRF_PRG | BRF_NODUMP }, //  15 MCU Code (not dumped)
+	{ "a39_mc68705p5s.ic23",	0x0800, 0x14bff574, 4 | BRF_OPT | BRF_PRG }, //  15 MCU Code 
 };
 
 STD_ROM_PICK(wyvernf0a)

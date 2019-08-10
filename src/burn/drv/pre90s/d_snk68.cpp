@@ -1696,24 +1696,24 @@ struct BurnDriver BurnDrvpowj = {
 // SAR - Search And Rescue (World)
 
 static struct BurnRomInfo searcharRomDesc[] = {
-	{ "bhw.2", 	 0x20000, 0xe1430138, 1 | BRF_PRG }, //  0 68k Code
-	{ "bhw.3", 	 0x20000, 0xee1f9374, 1 | BRF_PRG }, //  1
-	{ "bhw.1", 	 0x20000, 0x62b60066, 1 | BRF_PRG }, //  2
-	{ "bhw.4", 	 0x20000, 0x16d8525c, 1 | BRF_PRG }, //  3
+	{ "bhw.2", 	 	0x20000, 0xe1430138, 1 | BRF_PRG }, //  0 68k Code
+	{ "bhw.3", 	 	0x20000, 0xee1f9374, 1 | BRF_PRG }, //  1
+	{ "bhw.1", 	 	0x20000, 0x62b60066, 1 | BRF_PRG }, //  2
+	{ "bhw.4", 	 	0x20000, 0x16d8525c, 1 | BRF_PRG }, //  3
 
-	{ "bh.5",        0x10000, 0x53e2fa76, 2 | BRF_PRG }, //  4 Z80 Code
+	{ "bh.5",       0x10000, 0x53e2fa76, 2 | BRF_PRG }, //  4 Z80 Code
 
-	{ "bh.7",        0x08000, 0xb0f1b049, 3 | BRF_GRA }, //  5 Characters
-	{ "bh.8",        0x08000, 0x174ddba7, 3 | BRF_GRA }, //  6
+	{ "bh.7",       0x08000, 0xb0f1b049, 3 | BRF_GRA }, //  5 Characters
+	{ "bh.8",       0x08000, 0x174ddba7, 3 | BRF_GRA }, //  6
 
-	{ "bh.c1",       0x80000, 0x1fb8f0ae, 4 | BRF_GRA }, //  7 Sprites
-	{ "bh.c3",       0x80000, 0xfd8bc407, 4 | BRF_GRA }, //  8
-	{ "bh.c5",       0x80000, 0x1d30acc3, 4 | BRF_GRA }, //  9
-	{ "bh.c2",       0x80000, 0x7c803767, 4 | BRF_GRA }, // 10
-	{ "bh.c4",       0x80000, 0xeede7c43, 4 | BRF_GRA }, // 11
-	{ "bh.c6",       0x80000, 0x9f785cd9, 4 | BRF_GRA }, // 12
+	{ "bh.c1",      0x80000, 0x1fb8f0ae, 4 | BRF_GRA }, //  7 Sprites
+	{ "bh.c3",      0x80000, 0xfd8bc407, 4 | BRF_GRA }, //  8
+	{ "bh.c5",      0x80000, 0x1d30acc3, 4 | BRF_GRA }, //  9
+	{ "bh.c2",      0x80000, 0x7c803767, 4 | BRF_GRA }, // 10
+	{ "bh.c4",      0x80000, 0xeede7c43, 4 | BRF_GRA }, // 11
+	{ "bh.c6",      0x80000, 0x9f785cd9, 4 | BRF_GRA }, // 12
 
-	{ "bh.v1",       0x20000, 0x07a6114b, 5 | BRF_SND }, // 13 upd7759 samples
+	{ "bh.v1",      0x20000, 0x07a6114b, 5 | BRF_SND }, // 13 upd7759 samples
 };
 
 STD_ROM_PICK(searchar)
@@ -1738,24 +1738,24 @@ struct BurnDriver BurnDrvsearchar = {
 // SAR - Search And Rescue (US)
 
 static struct BurnRomInfo sercharuRomDesc[] = {
-	{ "bh.2",  	 0x20000, 0xc852e2e2, 1 | BRF_PRG }, //  0 68k Code
-	{ "bh.3",  	 0x20000, 0xbc04a4a1, 1 | BRF_PRG }, //  1
-	{ "bh.1",  	 0x20000, 0xba9ca70b, 1 | BRF_PRG }, //  2
-	{ "bh.4",  	 0x20000, 0xeabc5ddf, 1 | BRF_PRG }, //  3
+	{ "bh.2",  	 	0x20000, 0xc852e2e2, 1 | BRF_PRG }, //  0 68k Code
+	{ "bh.3",  	 	0x20000, 0xbc04a4a1, 1 | BRF_PRG }, //  1
+	{ "bh.1",  	 	0x20000, 0xba9ca70b, 1 | BRF_PRG }, //  2
+	{ "bh.4",  	 	0x20000, 0xeabc5ddf, 1 | BRF_PRG }, //  3
 
-	{ "bh.5",        0x10000, 0x53e2fa76, 2 | BRF_PRG }, //  4 Z80 Code
+	{ "bh.5",       0x10000, 0x53e2fa76, 2 | BRF_PRG }, //  4 Z80 Code
 
-	{ "bh.7",        0x08000, 0xb0f1b049, 3 | BRF_GRA }, //  5 Characters
-	{ "bh.8",        0x08000, 0x174ddba7, 3 | BRF_GRA }, //  6
+	{ "bh.7",       0x08000, 0xb0f1b049, 3 | BRF_GRA }, //  5 Characters
+	{ "bh.8",       0x08000, 0x174ddba7, 3 | BRF_GRA }, //  6
 
-	{ "bh.c1",       0x80000, 0x1fb8f0ae, 4 | BRF_GRA }, //  7 Sprites
-	{ "bh.c3",       0x80000, 0xfd8bc407, 4 | BRF_GRA }, //  8
-	{ "bh.c5",       0x80000, 0x1d30acc3, 4 | BRF_GRA }, //  9
-	{ "bh.c2",       0x80000, 0x7c803767, 4 | BRF_GRA }, // 10
-	{ "bh.c4",       0x80000, 0xeede7c43, 4 | BRF_GRA }, // 11
-	{ "bh.c6",       0x80000, 0x9f785cd9, 4 | BRF_GRA }, // 12
+	{ "bh.c1",      0x80000, 0x1fb8f0ae, 4 | BRF_GRA }, //  7 Sprites
+	{ "bh.c3",      0x80000, 0xfd8bc407, 4 | BRF_GRA }, //  8
+	{ "bh.c5",      0x80000, 0x1d30acc3, 4 | BRF_GRA }, //  9
+	{ "bh.c2",      0x80000, 0x7c803767, 4 | BRF_GRA }, // 10
+	{ "bh.c4",      0x80000, 0xeede7c43, 4 | BRF_GRA }, // 11
+	{ "bh.c6",      0x80000, 0x9f785cd9, 4 | BRF_GRA }, // 12
 
-	{ "bh.v1",       0x20000, 0x07a6114b, 5 | BRF_SND }, // 13 upd7759 samples
+	{ "bh.v1",      0x20000, 0x07a6114b, 5 | BRF_SND }, // 13 upd7759 samples
 };
 
 STD_ROM_PICK(sercharu)
@@ -1775,24 +1775,24 @@ struct BurnDriver BurnDrvsercharu = {
 // SAR - Search And Rescue (Japan)
 
 static struct BurnRomInfo sercharjRomDesc[] = {
-	{ "bh2ver3j.9c", 0x20000, 0x7ef7b172, 1 | BRF_PRG }, //  0 68k Code
-	{ "bh3ver3j.10c",0x20000, 0x3fdea793, 1 | BRF_PRG }, //  1
-	{ "bhw.1", 	 0x20000, 0x62b60066, 1 | BRF_PRG }, //  2
-	{ "bhw.4", 	 0x20000, 0x16d8525c, 1 | BRF_PRG }, //  3
+	{ "bh2ver3j.9c", 	0x20000, 0x7ef7b172, 1 | BRF_PRG }, //  0 68k Code
+	{ "bh3ver3j.10c",	0x20000, 0x3fdea793, 1 | BRF_PRG }, //  1
+	{ "bhw.1", 	 		0x20000, 0x62b60066, 1 | BRF_PRG }, //  2
+	{ "bhw.4", 	 		0x20000, 0x16d8525c, 1 | BRF_PRG }, //  3
 
-	{ "bh.5",        0x10000, 0x53e2fa76, 2 | BRF_PRG }, //  4 Z80 Code
+	{ "bh.5",        	0x10000, 0x53e2fa76, 2 | BRF_PRG }, //  4 Z80 Code
 
-	{ "bh.7",        0x08000, 0xb0f1b049, 3 | BRF_GRA }, //  5 Characters
-	{ "bh.8",        0x08000, 0x174ddba7, 3 | BRF_GRA }, //  6
+	{ "bh.7",        	0x08000, 0xb0f1b049, 3 | BRF_GRA }, //  5 Characters
+	{ "bh.8",        	0x08000, 0x174ddba7, 3 | BRF_GRA }, //  6
 
-	{ "bh.c1",       0x80000, 0x1fb8f0ae, 4 | BRF_GRA }, //  7 Sprites
-	{ "bh.c3",       0x80000, 0xfd8bc407, 4 | BRF_GRA }, //  8
-	{ "bh.c5",       0x80000, 0x1d30acc3, 4 | BRF_GRA }, //  9
-	{ "bh.c2",       0x80000, 0x7c803767, 4 | BRF_GRA }, // 10
-	{ "bh.c4",       0x80000, 0xeede7c43, 4 | BRF_GRA }, // 11
-	{ "bh.c6",       0x80000, 0x9f785cd9, 4 | BRF_GRA }, // 12
+	{ "bh.c1",       	0x80000, 0x1fb8f0ae, 4 | BRF_GRA }, //  7 Sprites
+	{ "bh.c3",       	0x80000, 0xfd8bc407, 4 | BRF_GRA }, //  8
+	{ "bh.c5",       	0x80000, 0x1d30acc3, 4 | BRF_GRA }, //  9
+	{ "bh.c2",       	0x80000, 0x7c803767, 4 | BRF_GRA }, // 10
+	{ "bh.c4",       	0x80000, 0xeede7c43, 4 | BRF_GRA }, // 11
+	{ "bh.c6",       	0x80000, 0x9f785cd9, 4 | BRF_GRA }, // 12
 
-	{ "bh.v1",       0x20000, 0x07a6114b, 5 | BRF_SND }, // 13 upd7759 samples
+	{ "bh.v1",       	0x20000, 0x07a6114b, 5 | BRF_SND }, // 13 upd7759 samples
 };
 
 STD_ROM_PICK(sercharj)
@@ -2114,26 +2114,26 @@ struct BurnDriver BurnDrvikari3j = {
 // Ikari III - The Rescue (Korea, 8-Way Joystick)
 
 static struct BurnRomInfo ikari3kRomDesc[] = {
-	{ "ik3-2k.c10", 	0x20000, 0xa15d2222, 1 | BRF_PRG }, //  0 68k Code
-	{ "ik3-3k.c9",  	0x20000, 0xe3fc006e, 1 | BRF_PRG }, //  1
-	{ "ik3-1.c8",       0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
-	{ "ik3-4.c12",      0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
+	{ "ik3-2k.c10", 		0x20000, 0xa15d2222, 1 | BRF_PRG }, //  0 68k Code
+	{ "ik3-3k.c9",  		0x20000, 0xe3fc006e, 1 | BRF_PRG }, //  1
+	{ "ik3-1.c8",       	0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
+	{ "ik3-4.c12",      	0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
 
-	{ "ik3-5.16d",      0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
+	{ "ik3-5.16d",      	0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
 
-	{ "ik3-7k.16l",     0x08000, 0x8bfb399b, 3 | BRF_GRA }, //  5 Characters
-	{ "ik3-8k.16m",     0x08000, 0x3f0fe576, 3 | BRF_GRA }, //  6
+	{ "ik3-7k.16l",     	0x08000, 0x8bfb399b, 3 | BRF_GRA }, //  5 Characters
+	{ "ik3-8k.16m",     	0x08000, 0x3f0fe576, 3 | BRF_GRA }, //  6
 	
-	{ "ikari-880c_t54.c2", 0x80000, 0x6d728362, 4 | BRF_GRA }, //  7 Sprites
-	{ "ik11.c1",           0x20000, 0xc33971c2, 4 | BRF_GRA }, //  8
-	{ "ikari-880d_t52.b2", 0x80000, 0xe25380e6, 4 | BRF_GRA }, //  9
-	{ "ik10.b1",           0x20000, 0xba106245, 4 | BRF_GRA }, //  10
-	{ "ikari-880d_t53.d2", 0x80000, 0x5855d95e, 4 | BRF_GRA }, //  11
-	{ "ik12.d1",           0x20000, 0x4ebdba89, 4 | BRF_GRA }, //  12
-	{ "ikari-880c_t51.a2", 0x80000, 0x87607772, 4 | BRF_GRA }, //  13
-	{ "ik9.a1",            0x20000, 0x711715ae, 4 | BRF_GRA }, //  14
+	{ "ikari-880c_t54.c2", 	0x80000, 0x6d728362, 4 | BRF_GRA }, //  7 Sprites
+	{ "ik11.c1",           	0x20000, 0xc33971c2, 4 | BRF_GRA }, //  8
+	{ "ikari-880d_t52.b2", 	0x80000, 0xe25380e6, 4 | BRF_GRA }, //  9
+	{ "ik10.b1",           	0x20000, 0xba106245, 4 | BRF_GRA }, //  10
+	{ "ikari-880d_t53.d2", 	0x80000, 0x5855d95e, 4 | BRF_GRA }, //  11
+	{ "ik12.d1",           	0x20000, 0x4ebdba89, 4 | BRF_GRA }, //  12
+	{ "ikari-880c_t51.a2", 	0x80000, 0x87607772, 4 | BRF_GRA }, //  13
+	{ "ik9.a1",            	0x20000, 0x711715ae, 4 | BRF_GRA }, //  14
 	
-	{ "ik3-6.18e",      0x20000, 0x59d256a4, 5 | BRF_SND }, // 15 upd7759 samples
+	{ "ik3-6.18e",      	0x20000, 0x59d256a4, 5 | BRF_SND }, // 15 upd7759 samples
 };
 
 STD_ROM_PICK(ikari3k)
@@ -2153,26 +2153,30 @@ struct BurnDriver BurnDrvikari3k = {
 /* Initial boot shows Ikari III The Rescue, then the title changes to the Japanese title - No demo play - proto or test set?? */
 
 static struct BurnRomInfo ikari3wRomDesc[] = {
-	{ "ik_2.c10", 		0x20000, 0xd0b690d3, 1 | BRF_PRG }, //  0 68k Code
-	{ "ik_3.c9",  		0x20000, 0x11a9e664, 1 | BRF_PRG }, //  1
-	{ "ik3-1.c8",       0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
-	{ "ik3-4.c12",      0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
+	{ "ik_2.c10", 			0x20000, 0xd0b690d3, 1 | BRF_PRG }, //  0 68k Code
+	{ "ik_3.c9",  			0x20000, 0x11a9e664, 1 | BRF_PRG }, //  1
+	{ "ik3-1.c8",       	0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
+	{ "ik3-4.c12",      	0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
 
-	{ "ik3-5.16d",      0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
+	{ "ik3-5.16d",      	0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
 
-	{ "ik3-7.16l",      0x08000, 0x0b4804df, 3 | BRF_GRA }, //  5 Characters
-	{ "ik3-8.16m",      0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6
+	{ "ik3-7.16l",      	0x08000, 0x0b4804df, 3 | BRF_GRA }, //  5 Characters
+	{ "ik3-8.16m",      	0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6
 	
-	{ "ikari-880c_t54.c2", 0x80000, 0x6d728362, 4 | BRF_GRA }, //  7 Sprites
-	{ "ik11.c1",           0x20000, 0xc33971c2, 4 | BRF_GRA }, //  8
-	{ "ikari-880b_t51.b2", 0x80000, 0xe25380e6, 4 | BRF_GRA }, //  9
-	{ "ik10.b1",           0x20000, 0xba106245, 4 | BRF_GRA }, //  10
-	{ "ikari-880d_t53.d2", 0x80000, 0x5855d95e, 4 | BRF_GRA }, //  11
-	{ "ik12.d1",           0x20000, 0x4ebdba89, 4 | BRF_GRA }, //  12
-	{ "ikari-880a_t52.a2", 0x80000, 0x87607772, 4 | BRF_GRA }, //  13
-	{ "ik9.a1",            0x20000, 0x711715ae, 4 | BRF_GRA }, //  14
+	{ "ikari-880c_t54.c2", 	0x80000, 0x6d728362, 4 | BRF_GRA }, //  7 Sprites
+	{ "ik_11.c1",           0x20000, 0xc33971c2, 4 | BRF_GRA }, //  8
+	{ "ikari-880b_t51.b2", 	0x80000, 0xe25380e6, 4 | BRF_GRA }, //  9
+	{ "ik_10.b1",           0x20000, 0xba106245, 4 | BRF_GRA }, //  10
+	{ "ikari-880d_t53.d2", 	0x80000, 0x5855d95e, 4 | BRF_GRA }, //  11
+	{ "ik_12.d1",           0x20000, 0x4ebdba89, 4 | BRF_GRA }, //  12
+	{ "ikari-880a_t52.a2", 	0x80000, 0x87607772, 4 | BRF_GRA }, //  13
+	{ "ik_9.a1",            0x20000, 0x711715ae, 4 | BRF_GRA }, //  14
 	
-	{ "ik3-6.18e",      0x20000, 0x59d256a4, 5 | BRF_SND }, // 15 upd7759 samples
+	{ "ik3-6.18e",      	0x20000, 0x59d256a4, 5 | BRF_SND }, // 15 upd7759 samples
+	
+	{ "a_pal20110a.ic1",	0x000cc, 0x1cadf26d, 0 | BRF_OPT }, // 16 plds
+	{ "b_pal20110a.ic3",	0x000cc, 0xc3d9e729, 0 | BRF_OPT }, // 17
+	{ "c_pal1618a.ic2",		0x00104, 0xe258b8d6, 0 | BRF_OPT }, // 18
 };
 
 STD_ROM_PICK(ikari3w)

@@ -1354,6 +1354,21 @@ INT32 SekGetRESETLine()
 	return 0;
 }
 
+INT32 SekGetRESETLine(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekGetRESETLine called without init\n"));
+#endif
+
+	SekCPUPush(nCPU);
+
+	INT32 rc = SekGetRESETLine();
+
+	SekCPUPop();
+
+	return rc;
+}
+
 void SekSetRESETLine(INT32 nStatus)
 {
 #if defined FBNEO_DEBUG
@@ -1400,6 +1415,32 @@ INT32 SekGetHALT()
 	}
 
 	return 0;
+}
+
+INT32 SekGetHALT(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekGetHALT called without init\n"));
+#endif
+
+	SekCPUPush(nCPU);
+
+	INT32 rc = SekGetHALT();
+
+	SekCPUPop();
+
+	return rc;
+}
+
+INT32 SekTotalCycles(INT32 nCPU)
+{
+	SekCPUPush(nCPU);
+
+	INT32 rc = SekTotalCycles();
+
+	SekCPUPop();
+
+	return rc;
 }
 
 void SekSetHALT(INT32 nStatus)
@@ -1503,6 +1544,51 @@ void SekSetIRQLine(INT32 nCPU, const INT32 line, INT32 status)
 
 	SekCPUPop();
 }
+
+void SekSetVIRQLine(const INT32 line, INT32 nstatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetIRQLine called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetIRQLine called when no CPU open\n"));
+#endif
+
+	if (nstatus != 0 && nstatus != 1) {
+		bprintf(0, _T("SekSetVIRQLine(%d, %d); only supports ACK or NONE! \n"), line, nstatus);
+		return;
+	}
+
+	INT32 status = nstatus << 12; // needed for compatibility
+
+	if (status) {
+		nSekIRQPending[nSekActive] = line | status;
+
+#ifdef EMU_M68K
+			m68k_set_virq(line, 1);
+#endif
+
+		return;
+	}
+
+	nSekIRQPending[nSekActive] = 0;
+
+#ifdef EMU_M68K
+	m68k_set_virq(line, 0);
+#endif
+}
+
+void SekSetVIRQLine(INT32 nCPU, const INT32 line, INT32 status)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetVIRQLine called without init\n"));
+#endif
+
+	SekCPUPush(nCPU);
+
+	SekSetVIRQLine(line, status);
+
+	SekCPUPop();
+}
+
 
 // Adjust the active CPU's timeslice
 void SekRunAdjust(const INT32 nCycles)

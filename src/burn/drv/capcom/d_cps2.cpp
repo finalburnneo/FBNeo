@@ -11957,8 +11957,8 @@ STD_ROM_FN(Progearjd)
 static struct BurnRomInfo Pzloop2jdRomDesc[] = {
 	{ "pl2j_d.03a",    0x080000, 0x1f5d41c9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "pl2j_d.04a",    0x080000, 0x60721b73, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "pl2j_d.05a",    0x080000, 0x51081ea4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "pl2j_d.06a",    0x080000, 0x51c68494, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pl2j_d.05a",    0x080000, 0x0c39799f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pl2j_d.06a",    0x080000, 0xf3974d76, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "pl2-simm.01c",  0x200000, 0x137b13a7, CPS2_GFX_SIMM | BRF_GRA },
 	{ "pl2-simm.01d",  0x200000, 0xa2db1507, CPS2_GFX_SIMM | BRF_GRA },

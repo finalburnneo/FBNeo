@@ -8989,11 +8989,11 @@ static struct BurnRomInfo tdfever2bRomDesc[] = {
 	{ "fa-22.c11",		0x10000, 0x34b4bce9, 15 | BRF_SND },          // 23
 	{ "fa-21.c10",		0x10000, 0x1b52357b, 15 | BRF_SND },          // 24
 
-	{ "pal1618a.c1",	0x00104, 0x9282d039, 0 | BRF_OPT },		  	  // 25 PLDs
-	{ "pal1618a.h3",	0x00104, 0x4ae59346, 0 | BRF_OPT },		  	  // 26
+	{ "pal16l8a.c1",	0x00104, 0x9282d039, 0 | BRF_OPT },		  	  // 25 PLDs
+	{ "pal16l8a.h3",	0x00104, 0x4ae59346, 0 | BRF_OPT },		  	  // 26
 	{ "pal16r8a.f2",	0x00104, 0x311e5ae6, 0 | BRF_OPT },		  	  // 27
 	{ "pal16l8a.e7",	0x00104, 0x4c2d02b3, 0 | BRF_OPT },		  	  // 28
-	{ "pal1618a.h11",	0x00104, 0xe9a0efca, 0 | BRF_OPT },		  	  // 29
+	{ "pal16l8a.h11",	0x00104, 0xe9a0efca, 0 | BRF_OPT },		  	  // 29
 };
 
 STD_ROM_PICK(tdfever2b)

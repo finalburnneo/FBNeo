@@ -847,6 +847,9 @@ static struct BurnDIPInfo SlyspyDIPList[]=
 
 STDDIPINFO(Slyspy)
 
+// Bad Dudes vs. Dragonninja (US)
+/* DE-0297-1 main board, DE-0299-1 sub/rom board */
+
 static struct BurnRomInfo BaddudesRomDesc[] = {
 	{ "ei04-1.3c",          0x10000, 0x4bf158a7, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "ei01-1.3a",          0x10000, 0x74f5110c, BRF_ESS | BRF_PRG },	//  1
@@ -855,77 +858,85 @@ static struct BurnRomInfo BaddudesRomDesc[] = {
 	
 	{ "ei07.8a",            0x08000, 0x9fb1ef4b, BRF_ESS | BRF_PRG },	//  4	6502 Program 
 	
-	{ "ei25.15h",           0x08000, 0xbcf59a69, BRF_GRA },			//  5	Characters
-	{ "ei26.16h",           0x08000, 0x9aff67b8, BRF_GRA },			//  6
+	{ "ei25.15h",           0x08000, 0xbcf59a69, BRF_GRA },				//  5	Characters
+	{ "ei26.16h",           0x08000, 0x9aff67b8, BRF_GRA },				//  6
 	
-	{ "ei18.14d",           0x10000, 0x05cfc3e5, BRF_GRA },			//  7	Tiles 1
-	{ "ei20.17d",           0x10000, 0xe11e988f, BRF_GRA },			//  8
-	{ "ei22.14f",           0x10000, 0xb893d880, BRF_GRA },			//  9
-	{ "ei24.17f",           0x10000, 0x6f226dda, BRF_GRA },			// 10
+	{ "ei18.14d",           0x10000, 0x05cfc3e5, BRF_GRA },				//  7	Tiles 1
+	{ "ei20.17d",           0x10000, 0xe11e988f, BRF_GRA },				//  8
+	{ "ei22.14f",           0x10000, 0xb893d880, BRF_GRA },				//  9
+	{ "ei24.17f",           0x10000, 0x6f226dda, BRF_GRA },				// 10
 	
-	{ "ei30.9h",            0x10000, 0x982da0d1, BRF_GRA },			// 11	Tiles 2
-	{ "ei28.9f",            0x10000, 0xf01ebb3b, BRF_GRA },			// 12
+	{ "ei30.9h",            0x10000, 0x982da0d1, BRF_GRA },				// 11	Tiles 2
+	{ "ei28.9f",            0x10000, 0xf01ebb3b, BRF_GRA },				// 12
 	
-	{ "ei15.16c",           0x10000, 0xa38a7d30, BRF_GRA },			// 13	Sprites
-	{ "ei16.17c",           0x08000, 0x17e42633, BRF_GRA },			// 14
-	{ "ei11.16a",           0x10000, 0x3a77326c, BRF_GRA },			// 15
-	{ "ei12.17a",           0x08000, 0xfea2a134, BRF_GRA },			// 16
-	{ "ei13.13c",           0x10000, 0xe5ae2751, BRF_GRA },			// 17
-	{ "ei14.14c",           0x08000, 0xe83c760a, BRF_GRA },			// 18
-	{ "ei09.13a",           0x10000, 0x6901e628, BRF_GRA },			// 19
-	{ "ei10.14a",           0x08000, 0xeeee8a1a, BRF_GRA },			// 20
+	{ "ei15.16c",           0x10000, 0xa38a7d30, BRF_GRA },				// 13	Sprites
+	{ "ei16.17c",           0x08000, 0x17e42633, BRF_GRA },				// 14
+	{ "ei11.16a",           0x10000, 0x3a77326c, BRF_GRA },				// 15
+	{ "ei12.17a",           0x08000, 0xfea2a134, BRF_GRA },				// 16
+	{ "ei13.13c",           0x10000, 0xe5ae2751, BRF_GRA },				// 17
+	{ "ei14.14c",           0x08000, 0xe83c760a, BRF_GRA },				// 18
+	{ "ei09.13a",           0x10000, 0x6901e628, BRF_GRA },				// 19
+	{ "ei10.14a",           0x08000, 0xeeee8a1a, BRF_GRA },				// 20
 	
-	{ "ei08.2c",            0x10000, 0x3c87463e, BRF_SND },			// 21	Samples
+	{ "ei08.2c",            0x10000, 0x3c87463e, BRF_SND },				// 21	Samples
 	
-	{ "ei31.9a",            0x01000, 0x2a8745d2, BRF_OPT },			// 22	I8751
+	{ "ei31.9a",            0x01000, 0x2a8745d2, BRF_OPT },				// 22	I8751
 	
-	{ "mb7116e.12c",	0x00400, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 23 PROMs
-	{ "mb7122e.17e",	0x00800, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 24
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 			// 23 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 			// 24
 };
 
 STD_ROM_PICK(Baddudes)
 STD_ROM_FN(Baddudes)
 
+
 // Birdie Try (Japan)
+/* DE-0311-0 main board, DE-0299-2 sub/rom board */
 
 static struct BurnRomInfo birdtryRomDesc[] = {
-	{ "ek-04.bin",	0x10000, 0x5f0f4686, 1 }, //  0 maincpu
-	{ "ek-01.bin",	0x10000, 0x47f470db, 1 }, //  1
-	{ "ek-05.bin",	0x10000, 0xb508cffd, 1 }, //  2
-	{ "ek-02.bin",	0x10000, 0x0195d989, 1 }, //  3
-	{ "ek-06.bin",	0x10000, 0x301d57d8, 1 }, //  4
-	{ "ek-03.bin",	0x10000, 0x73b0acc5, 1 }, //  5
+	{ "ek-04-2.3c",		0x10000, 0x5f0f4686, 1 }, //  0 maincpu
+	{ "ek-01-2.3a",		0x10000, 0x47f470db, 1 }, //  1
+	{ "ek-05-1.4c",		0x10000, 0xb508cffd, 1 }, //  2
+	{ "ek-02-1.4a",		0x10000, 0x0195d989, 1 }, //  3
+	{ "ek-06-1.6c",		0x10000, 0x301d57d8, 1 }, //  4
+	{ "ek-03-1.6a",		0x10000, 0x73b0acc5, 1 }, //  5
 
-	{ "ek-07.bin",	0x08000, 0x236549bc, 2 }, //  6 audiocpu
+	{ "ek-07.8a",		0x08000, 0x236549bc, 2 }, //  6 audiocpu
 
-	{ "i8751",	0x01000, 0x00000000, 3 | BRF_NODUMP }, //  7 mcu
+	{ "ek-31.9a",		0x01000, 0x68831ae9, 3 }, //  7 mcu
 
-	{ "ek-25.bin",	0x08000, 0x4df134ad, 4 }, //  8 gfx1
-	{ "ek-26.bin",	0x08000, 0xa00d3e8e, 4 }, //  9
+	{ "ek-25.15h",		0x08000, 0x4df134ad, 4 }, //  8 gfx1
+	{ "ek-26.16h",		0x08000, 0xa00d3e8e, 4 }, //  9
 
-	{ "ek-18.bin",	0x10000, 0x9886fb70, 5 }, // 10 gfx2
-	{ "ek-17.bin",	0x10000, 0xbed91bf7, 5 }, // 11
-	{ "ek-20.bin",	0x10000, 0x45d53965, 5 }, // 12
-	{ "ek-19.bin",	0x10000, 0xc2949dd2, 5 }, // 13
-	{ "ek-22.bin",	0x10000, 0x7f2cc80a, 5 }, // 14
-	{ "ek-21.bin",	0x10000, 0x281bc793, 5 }, // 15
-	{ "ek-24.bin",	0x10000, 0x2244cc75, 5 }, // 16
-	{ "ek-23.bin",	0x10000, 0xd0ed0116, 5 }, // 17
+	{ "ek-18.14d",		0x10000, 0x9886fb70, 5 }, // 10 gfx2
+	{ "ek-17.12d",		0x10000, 0xbed91bf7, 5 }, // 11
+	{ "ek-20.17d",		0x10000, 0x45d53965, 5 }, // 12
+	{ "ek-19.15d",		0x10000, 0xc2949dd2, 5 }, // 13
+	{ "ek-22.14f",		0x10000, 0x7f2cc80a, 5 }, // 14
+	{ "ek-21.12f",		0x10000, 0x281bc793, 5 }, // 15
+	{ "ek-24.17f",		0x10000, 0x2244cc75, 5 }, // 16
+	{ "ek-23.15f",		0x10000, 0xd0ed0116, 5 }, // 17
 
-	{ "ek-15.bin",	0x10000, 0xa6a041a3, 6 }, // 18 gfx4
-	{ "ek-16.bin",	0x08000, 0x784f62b0, 6 }, // 19
-	{ "ek-11.bin",	0x10000, 0x9224a6b9, 6 }, // 20
-	{ "ek-12.bin",	0x08000, 0x12deecfa, 6 }, // 21
-	{ "ek-13.bin",	0x10000, 0x1f023459, 6 }, // 22
-	{ "ek-14.bin",	0x08000, 0x57d54943, 6 }, // 23
-	{ "ek-09.bin",	0x10000, 0x6d2d488a, 6 }, // 24
-	{ "ek-10.bin",	0x08000, 0x580ba206, 6 }, // 25
+	{ "ek-15.16c",		0x10000, 0xa6a041a3, 6 }, // 18 gfx4
+	{ "ek-16.17c",		0x08000, 0x784f62b0, 6 }, // 19
+	{ "ek-11.16a",		0x10000, 0x9224a6b9, 6 }, // 20
+	{ "ek-12.17a",		0x08000, 0x12deecfa, 6 }, // 21
+	{ "ek-13.13c",		0x10000, 0x1f023459, 6 }, // 22
+	{ "ek-14.14c",		0x08000, 0x57d54943, 6 }, // 23
+	{ "ek-09.13a",		0x10000, 0x6d2d488a, 6 }, // 24
+	{ "ek-10.14a",		0x08000, 0x580ba206, 6 }, // 25
 
-	{ "ek-08.bin",	0x10000, 0xbe3db6cb, 7 }, // 26 oki
+	{ "ek-08.2c",		0x10000, 0xbe3db6cb, 7 }, // 26 oki
+	
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, 0 }, // 27 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, 0 }, // 28
 };
 
 STD_ROM_PICK(birdtry)
 STD_ROM_FN(birdtry)
+
+
+// Boulder Dash / Boulder Dash Part 2 (World)
 
 static struct BurnRomInfo BouldashRomDesc[] = {
 	{ "fw-15-2.17l",        0x10000, 0xca19a967, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -959,6 +970,9 @@ static struct BurnRomInfo BouldashRomDesc[] = {
 STD_ROM_PICK(Bouldash)
 STD_ROM_FN(Bouldash)
 
+
+// Boulder Dash / Boulder Dash Part 2 (Japan)
+
 static struct BurnRomInfo BouldashjRomDesc[] = {
 	{ "fn-15-1.17l",        0x10000, 0xd3ef20f8, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "fn-12-1.9l",         0x10000, 0xf4a10b45, BRF_ESS | BRF_PRG },	//  1
@@ -990,6 +1004,9 @@ static struct BurnRomInfo BouldashjRomDesc[] = {
 
 STD_ROM_PICK(Bouldashj)
 STD_ROM_FN(Bouldashj)
+
+
+// Dragonninja (Japan)
 
 static struct BurnRomInfo DrgninjaRomDesc[] = {
 	{ "eg04.3c",            0x10000, 0x41b8b3f8, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1023,12 +1040,15 @@ static struct BurnRomInfo DrgninjaRomDesc[] = {
 	
 	{ "i8751",              0x01000, 0xc3f6bc70, BRF_OPT },			// 22	I8751
 	
-	{ "mb7116e.12c",	0x00400, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 23 PROMs
-	{ "mb7122e.17e",	0x00800, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 24
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 23 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 24
 };
 
 STD_ROM_PICK(Drgninja)
 STD_ROM_FN(Drgninja)
+
+
+// Dragonninja (bootleg)
 
 static struct BurnRomInfo DrgninjabRomDesc[] = {
 	{ "n-12.d2",            0x10000, 0x5a70eb52, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1066,10 +1086,13 @@ static struct BurnRomInfo DrgninjabRomDesc[] = {
 STD_ROM_PICK(Drgninjab)
 STD_ROM_FN(Drgninjab)
 
-// f205v id 932
-// f205v's page shows that this uses an MSM5205 instead of the MSM6295, the MSM5205 data ROM isn't dumped yet, but the MSM6295 ROM is still
-// present on the board? For now I'm using the original M6502 program and MSM6295, pending getting a dump of the MSM5205 data
-// this set should also use a M68705 apparently, no dump available though
+
+// Dragonninja (bootleg with 68705)
+/* f205v id 932
+f205v's page shows that this uses an MSM5205 instead of the MSM6295, the MSM5205 data ROM isn't dumped yet, but the MSM6295 ROM is still
+present on the board? For now I'm using the original M6502 program and MSM6295, pending getting a dump of the MSM5205 data
+this set should also use a M68705 apparently, no dump available though */
+
 static struct BurnRomInfo Drgninjab2RomDesc[] = {
 	{ "a14.3e",             0x10000, 0xc4b9f4e7, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "a11.3b",             0x10000, 0xe4cc7c60, BRF_ESS | BRF_PRG },	//  1
@@ -1114,6 +1137,10 @@ static struct BurnRomInfo Drgninjab2RomDesc[] = {
 STD_ROM_PICK(Drgninjab2)
 STD_ROM_FN(Drgninjab2)
 
+
+// Heavy Barrel (US)
+/* DE-0297-1 main board, DE-0299-0 sub/rom board */
+
 static struct BurnRomInfo HbarrelRomDesc[] = {
 	{ "heavy_barrel_04.3c", 	0x10000, 0x4877b09e, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "heavy_barrel_01.3a", 	0x10000, 0x8b41c219, BRF_ESS | BRF_PRG },	//  1
@@ -1154,12 +1181,16 @@ static struct BurnRomInfo HbarrelRomDesc[] = {
 	
 	{ "heavy_barrel_31.9a", 	0x01000, 0x239d726f, BRF_PRG },		    // 30	I8751
 	
-	{ "mb7116e.12c",	0x00400, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 31 PROMs
-	{ "mb7122e.17e",	0x00800, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 32
+	{ "mb7116e_a-1.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 31 PROMs
+	{ "mb7122e_a-2.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 32
 };
 
 STD_ROM_PICK(Hbarrel)
 STD_ROM_FN(Hbarrel)
+
+
+// Heavy Barrel (World)
+/* DE-0289-2 main board, DE-0293-1 sub/rom board */
 
 static struct BurnRomInfo HbarrelwRomDesc[] = {
 	{ "ec04.3c",        	0x10000, 0xd01bc3db, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1201,12 +1232,15 @@ static struct BurnRomInfo HbarrelwRomDesc[] = {
 	
 	{ "ec31.9a",            0x01000, 0xaa14a2ae, BRF_PRG },         // 30	I8751
 	
-	{ "mb7116e.12c",	0x00400, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 31 PROMs
-	{ "mb7122e.17e",	0x00800, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 32
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 31 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 32
 };
 
 STD_ROM_PICK(Hbarrelw)
 STD_ROM_FN(Hbarrelw)
+
+
+// Hippodrome (US)
 
 static struct BurnRomInfo HippodrmRomDesc[] = {
 	{ "ew02",               0x10000, 0xdf0d7dc6, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1241,10 +1275,16 @@ static struct BurnRomInfo HippodrmRomDesc[] = {
 	{ "ew12",               0x10000, 0xa2d244bc, BRF_GRA },			// 23
 	
 	{ "ew03",               0x10000, 0xb606924d, BRF_SND },			// 24	Samples
+	
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Hippodrm)
 STD_ROM_FN(Hippodrm)
+
+
+// Fighting Fantasy (Japan revision 3)
 
 static struct BurnRomInfo FfantasyRomDesc[] = {
 	{ "ex02-3.4b",          0x10000, 0xdf0d7dc6, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1279,10 +1319,16 @@ static struct BurnRomInfo FfantasyRomDesc[] = {
 	{ "ew12",               0x10000, 0xa2d244bc, BRF_GRA },			// 23
 	
 	{ "ew03",               0x10000, 0xb606924d, BRF_SND },			// 24	Samples
+	
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Ffantasy)
 STD_ROM_FN(Ffantasy)
+
+
+// Fighting Fantasy (Japan revision 2)
 
 static struct BurnRomInfo FfantasyjRomDesc[] = {
 	{ "ff-02-2.bin",        0x10000, 0x29fc22a7, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1317,10 +1363,16 @@ static struct BurnRomInfo FfantasyjRomDesc[] = {
 	{ "ew12",               0x10000, 0xa2d244bc, BRF_GRA },			// 23
 	
 	{ "ew03",               0x10000, 0xb606924d, BRF_SND },			// 24	Samples
+	
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Ffantasyj)
 STD_ROM_FN(Ffantasyj)
+
+
+// Fighting Fantasy (Japan)
 
 static struct BurnRomInfo FfantasyaRomDesc[] = {
 	{ "ev02",               0x10000, 0x797a7860, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1355,13 +1407,19 @@ static struct BurnRomInfo FfantasyaRomDesc[] = {
 	{ "ew12",               0x10000, 0xa2d244bc, BRF_GRA },			// 23
 	
 	{ "ew03",               0x10000, 0xb606924d, BRF_SND },			// 24	Samples
+	
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Ffantasya)
 STD_ROM_FN(Ffantasya)
 
+
+// Fighting Fantasy (Japan revision ?)
+// DE-0297-3 PCB. All EX labels.
+
 static struct BurnRomInfo FfantasybRomDesc[] = {
-	// DE-0297-3 PCB. All EX labels.
 	{ "ex02-2",             0x10000, 0x4c26cda6, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "ex01",               0x10000, 0xd2c4ab91, BRF_ESS | BRF_PRG },	//  1
 	{ "ex05",               0x10000, 0xc76d65ec, BRF_ESS | BRF_PRG },	//  2
@@ -1394,10 +1452,16 @@ static struct BurnRomInfo FfantasybRomDesc[] = {
 	{ "ex12",               0x10000, 0xa2d244bc, BRF_GRA },			// 23
 	
 	{ "ex03",               0x10000, 0xb606924d, BRF_SND },			// 24	Samples
+	
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Ffantasyb)
 STD_ROM_FN(Ffantasyb)
+
+
+// Midnight Resistance (World)
 
 static struct BurnRomInfo MidresRomDesc[] = {
 	{ "fk_14.rom",          0x20000, 0xde7522df, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1425,18 +1489,21 @@ static struct BurnRomInfo MidresRomDesc[] = {
 	
 	{ "fl17",               0x20000, 0x9029965d, BRF_SND },			// 17	Samples
 	
-	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT},			// 18	PROMs
+	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },			// 18	PROMs
 	
-	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT},			// 19	PLDs
-	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT},			// 20
-	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT},			// 21
-	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT},			// 22
-	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT},			// 23
-	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT},			// 24
+	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },			// 19	PLDs
+	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },			// 20
+	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },			// 21
+	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },			// 22
+	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },			// 23
+	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },			// 24
 };
 
 STD_ROM_PICK(Midres)
 STD_ROM_FN(Midres)
+
+
+// Midnight Resistance (US)
 
 static struct BurnRomInfo MidresuRomDesc[] = {
 	{ "fl14",               0x20000, 0x2f9507a2, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1464,18 +1531,21 @@ static struct BurnRomInfo MidresuRomDesc[] = {
 	
 	{ "fl17",               0x20000, 0x9029965d, BRF_SND },			// 17	Samples
 	
-	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT},			// 18	PROMs
+	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },			// 18	PROMs
 	
-	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT},			// 19	PLDs
-	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT},			// 20
-	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT},			// 21
-	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT},			// 22
-	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT},			// 23
-	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT},			// 24
+	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },			// 19	PLDs
+	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },			// 20
+	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },			// 21
+	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },			// 22
+	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },			// 23
+	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },			// 24
 };
 
 STD_ROM_PICK(Midresu)
 STD_ROM_FN(Midresu)
+
+
+// Midnight Resistance (Japan)
 
 static struct BurnRomInfo MidresjRomDesc[] = {
 	{ "fh14",               0x20000, 0x6d632a51, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1503,18 +1573,22 @@ static struct BurnRomInfo MidresjRomDesc[] = {
 	
 	{ "fh17",               0x20000, 0xc7b0a24e, BRF_SND },			// 17	Samples
 	
-	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT},			// 18	PROMs
+	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },			// 18	PROMs
 	
-	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT},			// 19	PLDs
-	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT},			// 20
-	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT},			// 21
-	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT},			// 22
-	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT},			// 23
-	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT},			// 24
+	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },			// 19	PLDs
+	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },			// 20
+	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },			// 21
+	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },			// 22
+	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },			// 23
+	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },			// 24
 };
 
 STD_ROM_PICK(Midresj)
 STD_ROM_FN(Midresj)
+
+
+// Robocop (World revision 4)
+/* DE-0297-3 main board, DE-0316-3 sub/rom board */
 
 static struct BurnRomInfo RobocopRomDesc[] = {
 	{ "ep05-4.11c",         0x10000, 0x29c35379, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1550,12 +1624,16 @@ static struct BurnRomInfo RobocopRomDesc[] = {
 	
 	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 24	Samples
 	
-	{ "mb7116e.12c",        0x00400, 0xc288a256, BRF_OPT},			// 25	PROMs
-	{ "mb7122e.17e",        0x00800, 0x64764ecf, BRF_OPT},			// 26
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Robocop)
 STD_ROM_FN(Robocop)
+
+
+// Robocop (World revision 3)
+/* DE-0297-3 main board, DE-0316-3 sub/rom board */
 
 static struct BurnRomInfo RobocopwRomDesc[] = {
 	{ "ep05-3",             0x10000, 0xba69bf84, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1591,12 +1669,16 @@ static struct BurnRomInfo RobocopwRomDesc[] = {
 	
 	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 24	Samples
 	
-	{ "mb7116e.12c",        0x00400, 0xc288a256, BRF_OPT},			// 25	PROMs
-	{ "mb7122e.17e",        0x00800, 0x64764ecf, BRF_OPT},			// 26
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Robocopw)
 STD_ROM_FN(Robocopw)
+
+
+// Robocop (Japan)
+/* DE-0297-3 main board, DE-0316-3 sub/rom board */
 
 static struct BurnRomInfo RobocopjRomDesc[] = {
 	{ "em05-1.c11",         0x10000, 0x954ea8f4, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1632,12 +1714,16 @@ static struct BurnRomInfo RobocopjRomDesc[] = {
 	
 	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 24	Samples
 	
-	{ "mb7116e.12c",        0x00400, 0xc288a256, BRF_OPT},			// 25	PROMs
-	{ "mb7122e.17e",        0x00800, 0x64764ecf, BRF_OPT},			// 26
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Robocopj)
 STD_ROM_FN(Robocopj)
+
+
+// Robocop (US revision 1)
+/* DE-0297-3 main board, DE-0316-3 sub/rom board */
 
 static struct BurnRomInfo RobocopuRomDesc[] = {
 	{ "ep05-1",             0x10000, 0x8de5cb3d, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1673,12 +1759,16 @@ static struct BurnRomInfo RobocopuRomDesc[] = {
 	
 	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 24	Samples
 	
-	{ "mb7116e.12c",        0x00400, 0xc288a256, BRF_OPT},			// 25	PROMs
-	{ "mb7122e.17e",        0x00800, 0x64764ecf, BRF_OPT},			// 26
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Robocopu)
 STD_ROM_FN(Robocopu)
+
+
+// Robocop (US revision 0)
+/* DE-0297-3 main board, DE-0316-3 sub/rom board */
 
 static struct BurnRomInfo Robocopu0RomDesc[] = {
 	{ "ep05",               0x10000, 0xc465bdd8, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1714,12 +1804,15 @@ static struct BurnRomInfo Robocopu0RomDesc[] = {
 	
 	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 24	Samples
 	
-	{ "mb7116e.12c",        0x00400, 0xc288a256, BRF_OPT},			// 25	PROMs
-	{ "mb7122e.17e",        0x00800, 0x64764ecf, BRF_OPT},			// 26
+	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 25 PROMs
+	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 26
 };
 
 STD_ROM_PICK(Robocopu0)
 STD_ROM_FN(Robocopu0)
+
+
+// Robocop (World bootleg)
 
 static struct BurnRomInfo RobocopbRomDesc[] = {
 	{ "robop_05.rom",       0x10000, 0xbcef3e9b, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1757,6 +1850,9 @@ static struct BurnRomInfo RobocopbRomDesc[] = {
 STD_ROM_PICK(Robocopb)
 STD_ROM_FN(Robocopb)
 
+
+// Robocop (Red Corporation World bootleg)
+
 static struct BurnRomInfo Robocopb2RomDesc[] = {
 	{ "s-9.e3",       		0x10000, 0xbcef3e9b, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "s-11.c3",       		0x10000, 0xc9803685, BRF_ESS | BRF_PRG },	//  1
@@ -1793,6 +1889,10 @@ static struct BurnRomInfo Robocopb2RomDesc[] = {
 STD_ROM_PICK(Robocopb2)
 STD_ROM_FN(Robocopb2)
 
+
+// Secret Agent (World revision 3)
+/* DE-0322-2 PCB */
+
 static struct BurnRomInfo SecretagRomDesc[] = {
 	{ "fb14-3.17l",         0x10000, 0x9be6ac90, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "fb12-3.9l",          0x10000, 0x28904b6b, BRF_ESS | BRF_PRG },	//  1
@@ -1827,6 +1927,10 @@ static struct BurnRomInfo SecretagRomDesc[] = {
 
 STD_ROM_PICK(Secretag)
 STD_ROM_FN(Secretag)
+
+
+// Secret Agent (Japan revision 2)
+/* DE-0322-2 PCB */
 
 static struct BurnRomInfo SecretagjRomDesc[] = {
 	{ "fc14-2.17l",         0x10000, 0xe4cc767d, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1863,6 +1967,10 @@ static struct BurnRomInfo SecretagjRomDesc[] = {
 STD_ROM_PICK(Secretagj)
 STD_ROM_FN(Secretagj)
 
+
+// Sly Spy (US revision 4)
+/* DE-0322-3 PCB */
+
 static struct BurnRomInfo SlyspyRomDesc[] = {
 	{ "fa14-4.17l",         0x10000, 0x60f16e31, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "fa12-4.9l",          0x10000, 0xb9b9fdcf, BRF_ESS | BRF_PRG },	//  1
@@ -1897,6 +2005,10 @@ static struct BurnRomInfo SlyspyRomDesc[] = {
 
 STD_ROM_PICK(Slyspy)
 STD_ROM_FN(Slyspy)
+
+
+// Sly Spy (US revision 2)
+/* DE-0322-3 PCB */
 
 static struct BurnRomInfo Slyspy2RomDesc[] = {
 	{ "fa14-2.17l",         0x10000, 0x0e431e39, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1933,6 +2045,10 @@ static struct BurnRomInfo Slyspy2RomDesc[] = {
 STD_ROM_PICK(Slyspy2)
 STD_ROM_FN(Slyspy2)
 
+
+// Sly Spy (US revision 3)
+/* DE-0322-3 PCB */
+ 
 static struct BurnRomInfo Slyspy3RomDesc[] = {
 	{ "fa14-3.17l",         0x10000, 0x54353a84, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "fa12-2.9l",          0x10000, 0x1b534294, BRF_ESS | BRF_PRG },	//  1
@@ -5732,7 +5848,7 @@ struct BurnDriver BurnDrvDrgninja = {
 
 struct BurnDriver BurnDrvDrgninjab = {
 	"drgninjab", "baddudes", NULL, NULL, "1988",
-	"Dragonninja (bootleg set 1)\0", NULL, "bootleg", "DEC0",
+	"Dragonninja (bootleg)\0", NULL, "bootleg", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, DrgninjabRomInfo, DrgninjabRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
@@ -5742,7 +5858,7 @@ struct BurnDriver BurnDrvDrgninjab = {
 
 struct BurnDriver BurnDrvDrgninjab2 = {
 	"drgninjab2", "baddudes", NULL, NULL, "1988",
-	"Dragonninja (bootleg set 2)\0", NULL, "bootleg", "DEC0",
+	"Dragonninja (bootleg with 68705)\0", NULL, "bootleg", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, Drgninjab2RomInfo, Drgninjab2RomName, NULL, NULL, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,

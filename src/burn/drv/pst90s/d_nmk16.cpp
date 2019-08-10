@@ -8557,8 +8557,8 @@ static struct BurnRomInfo nouryokupRomDesc[] = {
 	{ "soundpcm0.bottom.ic30",	0x080000, 0x34ded136, 6 | BRF_SND }, // 11 OKI1 Samples
 	{ "soundpcm1.top.ic30",		0x080000, 0xa8d2abf7, 6 | BRF_SND }, // 12
 
-	{ "spoundpcm2.top.ic27",	0x080000, 0x29d0a15d, 7 | BRF_SND }, // 13 OKI2 Samples
-	{ "spoundpcm3.bottom.ic27",	0x080000, 0xc764e749, 7 | BRF_SND }, // 13 OKI2 Samples
+	{ "soundpcm2.top.ic27",		0x080000, 0x29d0a15d, 7 | BRF_SND }, // 13 OKI2 Samples
+	{ "soundpcm3.bottom.ic27",	0x080000, 0xc764e749, 7 | BRF_SND }, // 13 OKI2 Samples
 };
 
 STD_ROM_PICK(nouryokup)

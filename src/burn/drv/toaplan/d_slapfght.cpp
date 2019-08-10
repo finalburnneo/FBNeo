@@ -1500,9 +1500,9 @@ struct BurnDriver BurnDrvTigerhb1 = {
 // Tiger Heli (bootleg set 2)
 
 static struct BurnRomInfo tigerhb2RomDesc[] = {
-	{ "rom00_09",			0x4000, 0xef738c68, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "rom01_08",			0x4000, 0x65df2152, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "rom02_07",			0x4000, 0x36e250b9, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rom00_09.bin",		0x4000, 0xef738c68, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "a47_01.8n",			0x4000, 0x65df2152, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rom02_07.bin",		0x4000, 0x36e250b9, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "a47_03.12d",			0x2000, 0xd105260f, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
@@ -1543,7 +1543,7 @@ struct BurnDriver BurnDrvTigerhb2 = {
 static struct BurnRomInfo tigerhb3RomDesc[] = {
 	{ "14",					0x4000, 0xca59dd73, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "13",					0x4000, 0x38bd54db, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "12",					0x4000, 0x633d324b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a47_02.8k",			0x4000, 0x633d324b, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "a47_03.12d",			0x2000, 0xd105260f, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 

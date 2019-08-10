@@ -855,73 +855,77 @@ static struct BurnRomInfo BaddudesRomDesc[] = {
 	
 	{ "ei07.8a",            0x08000, 0x9fb1ef4b, BRF_ESS | BRF_PRG },	//  4	6502 Program 
 	
-	{ "ei25.15h",           0x08000, 0xbcf59a69, BRF_GRA },			//  5	Characters
-	{ "ei26.16h",           0x08000, 0x9aff67b8, BRF_GRA },			//  6
+	{ "ei25.15h",           0x08000, 0xbcf59a69, BRF_GRA },				//  5	Characters
+	{ "ei26.16h",           0x08000, 0x9aff67b8, BRF_GRA },				//  6
 	
-	{ "ei18.14d",           0x10000, 0x05cfc3e5, BRF_GRA },			//  7	Tiles 1
-	{ "ei20.17d",           0x10000, 0xe11e988f, BRF_GRA },			//  8
-	{ "ei22.14f",           0x10000, 0xb893d880, BRF_GRA },			//  9
-	{ "ei24.17f",           0x10000, 0x6f226dda, BRF_GRA },			// 10
+	{ "ei18.14d",           0x10000, 0x05cfc3e5, BRF_GRA },				//  7	Tiles 1
+	{ "ei20.17d",           0x10000, 0xe11e988f, BRF_GRA },				//  8
+	{ "ei22.14f",           0x10000, 0xb893d880, BRF_GRA },				//  9
+	{ "ei24.17f",           0x10000, 0x6f226dda, BRF_GRA },				// 10
 	
-	{ "ei30.9h",            0x10000, 0x982da0d1, BRF_GRA },			// 11	Tiles 2
-	{ "ei28.9f",            0x10000, 0xf01ebb3b, BRF_GRA },			// 12
+	{ "ei30.9h",            0x10000, 0x982da0d1, BRF_GRA },				// 11	Tiles 2
+	{ "ei28.9f",            0x10000, 0xf01ebb3b, BRF_GRA },				// 12
 	
-	{ "ei15.16c",           0x10000, 0xa38a7d30, BRF_GRA },			// 13	Sprites
-	{ "ei16.17c",           0x08000, 0x17e42633, BRF_GRA },			// 14
-	{ "ei11.16a",           0x10000, 0x3a77326c, BRF_GRA },			// 15
-	{ "ei12.17a",           0x08000, 0xfea2a134, BRF_GRA },			// 16
-	{ "ei13.13c",           0x10000, 0xe5ae2751, BRF_GRA },			// 17
-	{ "ei14.14c",           0x08000, 0xe83c760a, BRF_GRA },			// 18
-	{ "ei09.13a",           0x10000, 0x6901e628, BRF_GRA },			// 19
-	{ "ei10.14a",           0x08000, 0xeeee8a1a, BRF_GRA },			// 20
+	{ "ei15.16c",           0x10000, 0xa38a7d30, BRF_GRA },				// 13	Sprites
+	{ "ei16.17c",           0x08000, 0x17e42633, BRF_GRA },				// 14
+	{ "ei11.16a",           0x10000, 0x3a77326c, BRF_GRA },				// 15
+	{ "ei12.17a",           0x08000, 0xfea2a134, BRF_GRA },				// 16
+	{ "ei13.13c",           0x10000, 0xe5ae2751, BRF_GRA },				// 17
+	{ "ei14.14c",           0x08000, 0xe83c760a, BRF_GRA },				// 18
+	{ "ei09.13a",           0x10000, 0x6901e628, BRF_GRA },				// 19
+	{ "ei10.14a",           0x08000, 0xeeee8a1a, BRF_GRA },				// 20
 	
-	{ "ei08.2c",            0x10000, 0x3c87463e, BRF_SND },			// 21	Samples
+	{ "ei08.2c",            0x10000, 0x3c87463e, BRF_SND },				// 21	Samples
 	
-	{ "ei31.9a",            0x01000, 0x2a8745d2, BRF_OPT },			// 22	I8751
+	{ "ei31.9a",            0x01000, 0x2a8745d2, BRF_OPT },				// 22	I8751
 	
-	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 23 PROMs
-	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 24
+	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 			// 23 PROMs
+	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 			// 24
 };
 
 STD_ROM_PICK(Baddudes)
 STD_ROM_FN(Baddudes)
 
 // Birdie Try (Japan)
+/* DE-0311-0 main board, DE-0299-2 sub/rom board */
 
 static struct BurnRomInfo birdtryRomDesc[] = {
-	{ "ek-04.bin",	0x10000, 0x5f0f4686, 1 }, //  0 maincpu
-	{ "ek-01.bin",	0x10000, 0x47f470db, 1 }, //  1
-	{ "ek-05.bin",	0x10000, 0xb508cffd, 1 }, //  2
-	{ "ek-02.bin",	0x10000, 0x0195d989, 1 }, //  3
-	{ "ek-06.bin",	0x10000, 0x301d57d8, 1 }, //  4
-	{ "ek-03.bin",	0x10000, 0x73b0acc5, 1 }, //  5
+	{ "ek-04-2.3c",		0x10000, 0x5f0f4686, 1 }, //  0 maincpu
+	{ "ek-01-2.3a",		0x10000, 0x47f470db, 1 }, //  1
+	{ "ek-05-1.4c",		0x10000, 0xb508cffd, 1 }, //  2
+	{ "ek-02-1.4a",		0x10000, 0x0195d989, 1 }, //  3
+	{ "ek-06-1.6c",		0x10000, 0x301d57d8, 1 }, //  4
+	{ "ek-03-1.6a",		0x10000, 0x73b0acc5, 1 }, //  5
 
-	{ "ek-07.bin",	0x08000, 0x236549bc, 2 }, //  6 audiocpu
+	{ "ek-07.8a",		0x08000, 0x236549bc, 2 }, //  6 audiocpu
 
-	{ "i8751",	0x01000, 0x00000000, 3 | BRF_NODUMP }, //  7 mcu
+	{ "ek-31.9a",		0x01000, 0x68831ae9, 3 }, //  7 mcu
 
-	{ "ek-25.bin",	0x08000, 0x4df134ad, 4 }, //  8 gfx1
-	{ "ek-26.bin",	0x08000, 0xa00d3e8e, 4 }, //  9
+	{ "ek-25.15h",		0x08000, 0x4df134ad, 4 }, //  8 gfx1
+	{ "ek-26.16h",		0x08000, 0xa00d3e8e, 4 }, //  9
 
-	{ "ek-18.bin",	0x10000, 0x9886fb70, 5 }, // 10 gfx2
-	{ "ek-17.bin",	0x10000, 0xbed91bf7, 5 }, // 11
-	{ "ek-20.bin",	0x10000, 0x45d53965, 5 }, // 12
-	{ "ek-19.bin",	0x10000, 0xc2949dd2, 5 }, // 13
-	{ "ek-22.bin",	0x10000, 0x7f2cc80a, 5 }, // 14
-	{ "ek-21.bin",	0x10000, 0x281bc793, 5 }, // 15
-	{ "ek-24.bin",	0x10000, 0x2244cc75, 5 }, // 16
-	{ "ek-23.bin",	0x10000, 0xd0ed0116, 5 }, // 17
+	{ "ek-18.14d",		0x10000, 0x9886fb70, 5 }, // 10 gfx2
+	{ "ek-17.12d",		0x10000, 0xbed91bf7, 5 }, // 11
+	{ "ek-20.17d",		0x10000, 0x45d53965, 5 }, // 12
+	{ "ek-19.15d",		0x10000, 0xc2949dd2, 5 }, // 13
+	{ "ek-22.14f",		0x10000, 0x7f2cc80a, 5 }, // 14
+	{ "ek-21.12f",		0x10000, 0x281bc793, 5 }, // 15
+	{ "ek-24.17f",		0x10000, 0x2244cc75, 5 }, // 16
+	{ "ek-23.15f",		0x10000, 0xd0ed0116, 5 }, // 17
 
-	{ "ek-15.bin",	0x10000, 0xa6a041a3, 6 }, // 18 gfx4
-	{ "ek-16.bin",	0x08000, 0x784f62b0, 6 }, // 19
-	{ "ek-11.bin",	0x10000, 0x9224a6b9, 6 }, // 20
-	{ "ek-12.bin",	0x08000, 0x12deecfa, 6 }, // 21
-	{ "ek-13.bin",	0x10000, 0x1f023459, 6 }, // 22
-	{ "ek-14.bin",	0x08000, 0x57d54943, 6 }, // 23
-	{ "ek-09.bin",	0x10000, 0x6d2d488a, 6 }, // 24
-	{ "ek-10.bin",	0x08000, 0x580ba206, 6 }, // 25
+	{ "ek-15.16c",		0x10000, 0xa6a041a3, 6 }, // 18 gfx4
+	{ "ek-16.17c",		0x08000, 0x784f62b0, 6 }, // 19
+	{ "ek-11.16a",		0x10000, 0x9224a6b9, 6 }, // 20
+	{ "ek-12.17a",		0x08000, 0x12deecfa, 6 }, // 21
+	{ "ek-13.13c",		0x10000, 0x1f023459, 6 }, // 22
+	{ "ek-14.14c",		0x08000, 0x57d54943, 6 }, // 23
+	{ "ek-09.13a",		0x10000, 0x6d2d488a, 6 }, // 24
+	{ "ek-10.14a",		0x08000, 0x580ba206, 6 }, // 25
 
-	{ "ek-08.bin",	0x10000, 0xbe3db6cb, 7 }, // 26 oki
+	{ "ek-08.2c",		0x10000, 0xbe3db6cb, 7 }, // 26 oki
+	
+	{ "mb7116e.12c",	0x00200, 0x86e775f8, 0 }, // 27 PROMs
+	{ "mb7122e.17e",	0x00400, 0xa5cda23e, 0 }, // 28
 };
 
 STD_ROM_PICK(birdtry)

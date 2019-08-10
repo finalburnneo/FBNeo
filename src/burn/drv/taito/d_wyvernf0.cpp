@@ -725,7 +725,7 @@ static struct BurnRomInfo wyvernf0RomDesc[] = {
 	{ "a39_13.ic100",	0x2000, 0xbe708238, 4 | BRF_GRA },           // 13
 	{ "a39_12.ic74",	0x2000, 0x1cc389de, 4 | BRF_GRA },           // 14
 
-	{ "a39_mcu.ic23",	0x0800, 0x00000000, 4 | BRF_OPT | BRF_PRG | BRF_NODUMP }, //  15 MCU Code (not dumped)
+	{ "a39_mc68705p5s.ic23",	0x0800, 0x14bff574, 4 | BRF_OPT | BRF_PRG }, //  15 MCU Code 
 };
 
 STD_ROM_PICK(wyvernf0)
@@ -763,9 +763,9 @@ static struct BurnRomInfo wyvernf0aRomDesc[] = {
 	{ "sch_4.ic99",			0x2000, 0x90a66147, 4 | BRF_GRA },           // 11 Tiles
 	{ "sch_3.ic73",			0x2000, 0xa31f3507, 4 | BRF_GRA },           // 12
 	{ "sch_2.ic100",		0x2000, 0xbe708238, 4 | BRF_GRA },           // 13
-	{ "sch_1.ic74",		0x2000, 0x1cc389de, 4 | BRF_GRA },           // 14
+	{ "sch_1.ic74",			0x2000, 0x1cc389de, 4 | BRF_GRA },           // 14
 
-	{ "mc68705p5s.ic23",	0x0800, 0x00000000, 4 | BRF_OPT | BRF_PRG | BRF_NODUMP }, //  15 MCU Code (not dumped)
+	{ "a39_mc68705p5s.ic23",	0x0800, 0x14bff574, 4 | BRF_OPT | BRF_PRG }, //  15 MCU Code 
 };
 
 STD_ROM_PICK(wyvernf0a)

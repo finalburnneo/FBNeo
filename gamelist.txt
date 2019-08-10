@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12207 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12210 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2763,8 +2763,8 @@ This list contains all games supported by FinalBurn Neo.
 | dbz		|  	| Dragonball Z (rev B)					| 		| 1993	| Banpresto	| Miscellaneous	| 					|
 | dbz2		|  	| Dragonball Z 2 - Super Battle				| 		| 1994	| Banpresto	| Miscellaneous	| 					|
 | cv_drgnfire	|  	| DragonFire						| 		| 1984	| Imagic	| ColecoVision	| 					|
-| drgninjab	|  	| Dragonninja (bootleg set 1)				| baddudes	| 1988	| bootleg	| DEC0		| 					|
-| drgninjab2	|  	| Dragonninja (bootleg set 2)				| baddudes	| 1988	| bootleg	| DEC0		| 					|
+| drgninjab2	|  	| Dragonninja (bootleg with 68705)			| baddudes	| 1988	| bootleg	| DEC0		| 					|
+| drgninjab	|  	| Dragonninja (bootleg)					| baddudes	| 1988	| bootleg	| DEC0		| 					|
 | drgninja	|  	| Dragonninja (Japan)					| baddudes	| 1988	| Data East Corp| DEC0		| 					|
 | msx_drainer	|  	| Drainer (Jpn)						| 		| 1987	| Victor	| MSX		| 					|
 | drakton	|  	| Drakton (DK conversion)				| 		| 1984	| Epos Corporati| Miscellaneous	| No sound				|
@@ -10573,6 +10573,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof98h	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98		|  	| The King of Fighters '98 - The Slugfest / King of Figh| 		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98a	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
+| kof98eckvs	|  	| The King of Fighters '98 Easy Combo King 2014 (Versus | kof98		| 2019	| hack		| Neo Geo MVS	| 					|
 | md_kof99a	|  	| The King of Fighters '99 (Alt)			| md_kof99	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | kof99e	|  	| The King of Fighters '99 - Millennium Battle (earlier)| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99k	|  	| The King of Fighters '99 - Millennium Battle (Korean r| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
@@ -10587,6 +10588,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_kof99	|  	| The King of Fighters '99				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | kof10th	|  	| The King of Fighters 10th Anniversary (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k5uni	|  	| The King of Fighters 10th Anniversary 2005 Unique (boo| kof2002	| 2004	| bootleg	| Neo Geo MVS	| 					|
+| kof10thuo	|  	| The King of Fighters 10th Anniversary 2019 (Optimized,| kof2002	| 2019	| hack		| Miscellaneous	| 					|
 | kf10thep	|  	| The King of Fighters 10th Anniversary Extra Plus (boot| kof2002	| 2005	| bootleg	| Neo Geo MVS	| 					|
 | kof2000	|  	| The King of Fighters 2000 (NGM-2570) (NGH-2570)	| 		| 2000	| SNK		| Neo Geo MVS	| 					|
 | kof2000n	|  	| The King of Fighters 2000 (not encrypted)		| kof2000	| 2000	| SNK		| Neo Geo MVS	| 					|
@@ -10610,6 +10612,7 @@ This list contains all games supported by FinalBurn Neo.
 | kf2k3pcb	|  	| The King of Fighters 2003 (Japan, JAMMA PCB)		| 		| 2003	| Playmore / Cap| dedicated Neo | 					|
 | kof2003h	|  	| The King of Fighters 2003 (NGH-2710)			| kof2003	| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
 | kof2003	|  	| The King of Fighters 2003 (NGM-2710)			| 		| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
+| kf2k3ps2	|  	| The King of Fighters 2003 PlayStation 2 (Hack By EGCG)| kof2003	| 2006	| hack		| Neo Geo MVS	| Use AES (Console) mode!		|
 | kf2k3pl	|  	| The King of Fighters 2004 Plus / Hero (bootleg)	| kof2003	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | kf2k3upl	|  	| The King of Fighters 2004 Ultra Plus (bootleg)	| kof2003	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | kof2k4se	|  	| The King of Fighters Special Edition 2004 (bootleg)	| kof2002	| 2004	| bootleg	| Neo Geo MVS	| 					|

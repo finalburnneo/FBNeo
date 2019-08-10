@@ -2829,8 +2829,8 @@ DRV		BurnDrvDbza;
 DRV		BurnDrvDbz;
 DRV		BurnDrvDbz2;
 DRV		BurnDrvcv_drgnfire;
-DRV		BurnDrvDrgninjab;
 DRV		BurnDrvDrgninjab2;
+DRV		BurnDrvDrgninjab;
 DRV		BurnDrvDrgninja;
 DRV		BurnDrvMSX_drainer;
 DRV		BurnDrvDrakton;
@@ -10799,6 +10799,7 @@ DRV		BurnDrvKof98ka;
 DRV		BurnDrvKof98h;
 DRV		BurnDrvKof98;
 DRV		BurnDrvKof98a;
+DRV		BurnDrvkof98eckvs;
 DRV		BurnDrvmd_kof99a;
 DRV		BurnDrvkof99e;
 DRV		BurnDrvkof99k;
@@ -10813,6 +10814,7 @@ DRV		BurnDrvkof99sr;
 DRV		BurnDrvmd_kof99;
 DRV		BurnDrvkof10th;
 DRV		BurnDrvkf2k5uni;
+DRV		BurnDrvkof10thuo;
 DRV		BurnDrvkf10thep;
 DRV		BurnDrvkof2000;
 DRV		BurnDrvkof2000n;
@@ -10836,6 +10838,7 @@ DRV		BurnDrvkf2k3bla;
 DRV		BurnDrvkf2k3pcb;
 DRV		BurnDrvkof2003h;
 DRV		BurnDrvkof2003;
+DRV		BurnDrvkf2k3ps2;
 DRV		BurnDrvkf2k3pl;
 DRV		BurnDrvkf2k3upl;
 DRV		BurnDrvkof2k4se;
@@ -15315,8 +15318,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDbz,				// Dragonball Z (rev B)
 	&BurnDrvDbz2,				// Dragonball Z 2 - Super Battle
 	&BurnDrvcv_drgnfire,		// DragonFire
-	&BurnDrvDrgninjab,			// Dragonninja (bootleg set 1)
-	&BurnDrvDrgninjab2,			// Dragonninja (bootleg set 2)
+	&BurnDrvDrgninjab2,			// Dragonninja (bootleg with 68705)
+	&BurnDrvDrgninjab,			// Dragonninja (bootleg)
 	&BurnDrvDrgninja,			// Dragonninja (Japan)
 	&BurnDrvMSX_drainer,		// Drainer (Jpn)
 	&BurnDrvDrakton,			// Drakton (DK conversion)
@@ -23285,6 +23288,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKof98h,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGH-2420)
 	&BurnDrvKof98,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420)
 	&BurnDrvKof98a,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420, alternate board)
+	&BurnDrvkof98eckvs,			// The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack)
 	&BurnDrvmd_kof99a,			// The King of Fighters '99 (Alt)
 	&BurnDrvkof99e,				// The King of Fighters '99 - Millennium Battle (earlier)
 	&BurnDrvkof99k,				// The King of Fighters '99 - Millennium Battle (Korean release)
@@ -23299,6 +23303,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_kof99,			// The King of Fighters '99
 	&BurnDrvkof10th,			// The King of Fighters 10th Anniversary (bootleg)
 	&BurnDrvkf2k5uni,			// The King of Fighters 10th Anniversary 2005 Unique (bootleg)
+	&BurnDrvkof10thuo,			// The King of Fighters 10th Anniversary 2019 (Optimized, Hack)
 	&BurnDrvkf10thep,			// The King of Fighters 10th Anniversary Extra Plus (bootleg)
 	&BurnDrvkof2000,			// The King of Fighters 2000 (NGM-2570) (NGH-2570)
 	&BurnDrvkof2000n,			// The King of Fighters 2000 (not encrypted)
@@ -23322,6 +23327,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkf2k3pcb,			// The King of Fighters 2003 (Japan, JAMMA PCB)
 	&BurnDrvkof2003h,			// The King of Fighters 2003 (NGH-2710)
 	&BurnDrvkof2003,			// The King of Fighters 2003 (NGM-2710)
+	&BurnDrvkf2k3ps2,			// The King of Fighters 2003 PlayStation 2 (Hack By EGCG)
 	&BurnDrvkf2k3pl,			// The King of Fighters 2004 Plus / Hero (bootleg)
 	&BurnDrvkf2k3upl,			// The King of Fighters 2004 Ultra Plus (bootleg)
 	&BurnDrvkof2k4se,			// The King of Fighters Special Edition 2004 (bootleg)

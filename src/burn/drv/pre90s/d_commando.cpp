@@ -365,6 +365,40 @@ static struct BurnRomInfo Drvb2RomDesc[] = {
 STD_ROM_PICK(Drvb2)
 STD_ROM_FN(Drvb2)
 
+static struct BurnRomInfo Drvb3RomDesc[] = {
+	{ "b5.10n",        0x04000, 0xdf8f4e9a, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "b4.9n",         0x04000, 0xaca99905, BRF_ESS | BRF_PRG }, //	 1
+	{ "b3.8n",         0x04000, 0x35486542, BRF_ESS | BRF_PRG }, //	 1
+	
+	{ "b2.9f",         0x04000, 0xf9cc4a74, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program // 2c.9f
+	
+	{ "b1.5d",         0x04000, 0x505726e0, BRF_GRA },	     //  3	Characters
+	
+	{ "b12.5a",        0x04000, 0x7b2e1b48, BRF_GRA },	     //  4	Tiles   // 11c.5a
+	{ "b13.6a",        0x04000, 0x81b417d3, BRF_GRA },	     //  5	        // 12c.6a
+	{ "b14.7a",        0x04000, 0x5612dbd2, BRF_GRA },	     //  6		    // 13c.7a
+	{ "b15.8a",        0x04000, 0x2b2dee36, BRF_GRA },	     //  7          // 14c.8a
+	{ "b16.9a",        0x04000, 0xde70babf, BRF_GRA },	     //  8          // 15c.9a
+	{ "b17.10a",       0x04000, 0x14178237, BRF_GRA },	     //  9          // 16c.10a
+	
+	{ "b6.7e",         0x04000, 0x79f16e3d, BRF_GRA },	     //  10	Sprites // 5c.7e
+	{ "b7.8e",         0x04000, 0x26fee521, BRF_GRA },	     //  11         // 6c.8e
+	{ "b8.9e",         0x04000, 0xca88bdfd, BRF_GRA },	     //  12         // 7c.9e
+	{ "b9.7h",         0x04000, 0x2019c883, BRF_GRA },	     //  13         // 8c.7h
+	{ "b10.8h",        0x04000, 0x98703982, BRF_GRA },	     //  14         // 9c.8h
+	{ "b11.9h",        0x04000, 0xf069d2f8, BRF_GRA },	     //  15         // 10c.9h
+	
+	{ "vtb1.1d",       0x00100, 0x3aba15a1, BRF_GRA },	     //  16	PROMs
+	{ "vtb2.2d",       0x00100, 0x88865754, BRF_GRA },	     //  17
+	{ "vtb3.3d",       0x00100, 0x4c14c3f6, BRF_GRA },	     //  18
+	{ "vtb4.1h",       0x00100, 0xb388c246, BRF_GRA },	     //  19
+	{ "vtb5.6l",       0x00100, 0x712ac508, BRF_GRA },	     //  20
+	{ "vtb6.6e",       0x00100, 0x0eaf5158, BRF_GRA },	     //  21
+};
+
+STD_ROM_PICK(Drvb3)
+STD_ROM_FN(Drvb3)
+
 static struct BurnRomInfo SinvasnRomDesc[] = {
 	{ "sp04.9m",       0x08000, 0x33f9601e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "sp03.8m",       0x04000, 0xc7fb43b3, BRF_ESS | BRF_PRG }, //	 1
@@ -783,6 +817,118 @@ static INT32 DrvInit()
 	return 0;
 }
 
+static INT32 Drvb3Init()
+{
+	INT32 nRet = 0, nLen;
+
+	// Allocate and Blank all required memory
+	Mem = NULL;
+	MemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	MemIndex();
+
+	DrvTempRom = (UINT8 *)BurnMalloc(0x18000);
+
+	// Load Z80 #1 Program Roms
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x00000, 0, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x04000, 1, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x08000, 2, 1); if (nRet != 0) return 1;
+	
+	if (bFirstOpCodeEncrypted) {
+		for (INT32 A = 0; A < 0xc000; A++) {
+			INT32 src;
+
+			src = DrvZ80Rom1[A];
+			DrvZ80Rom1Op[A] = (src & 0x11) | ((src & 0xe0) >> 4) | ((src & 0x0e) << 4);
+		}
+	} else {
+		DrvZ80Rom1Op[0] = DrvZ80Rom1[0];
+		for (INT32 A = 1; A < 0xc000; A++) {
+			INT32 src;
+
+			src = DrvZ80Rom1[A];
+			DrvZ80Rom1Op[A] = (src & 0x11) | ((src & 0xe0) >> 4) | ((src & 0x0e) << 4);
+		}
+	}
+	
+	// Load Z80 #2 Program Roms
+	nRet = BurnLoadRom(DrvZ80Rom2 + 0x00000, 3, 1); if (nRet != 0) return 1;
+	
+	// Load and decode the chars
+	nRet = BurnLoadRom(DrvTempRom, 4, 1); if (nRet != 0) return 1;
+	GfxDecode(0x400, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x80, DrvTempRom, DrvChars);
+	
+	// Load and decode the tiles
+	memset(DrvTempRom, 0, 0x18000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x04000,  6, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x08000,  7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x0c000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000,  9, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x14000, 10, 1); if (nRet != 0) return 1;
+	GfxDecode(0x400, 3, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles);
+	
+	// Load and decode the sprites
+	memset(DrvTempRom, 0, 0x18000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x04000, 12, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x08000, 13, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x0c000, 14, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000, 15, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x14000, 16, 1); if (nRet != 0) return 1;
+	GfxDecode(0x300, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x200, DrvTempRom, DrvSprites);
+
+	// Load the PROMs
+	nRet = BurnLoadRom(DrvPromRed,           17, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvPromGreen,         18, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvPromBlue,          19, 1); if (nRet != 0) return 1;
+	
+	BurnFree(DrvTempRom);
+	
+	// Setup the Z80 emulation	
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvZ80Rom1,		0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80Rom1Op,		0x0000, 0xbfff, MAP_FETCHOP);
+	ZetMapMemory(DrvFgVideoRam,		0xd000, 0xd3ff, MAP_RAM);
+	ZetMapMemory(DrvFgColourRam,		0xd400, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvBgVideoRam,		0xd800, 0xdbff, MAP_RAM);
+	ZetMapMemory(DrvBgColourRam,		0xdc00, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80Ram1,		0xe000, 0xfdff, MAP_RAM);
+	ZetMapMemory(DrvSpriteRam,		0xfe00, 0xffff, MAP_RAM);
+	ZetSetReadHandler(CommandoRead1);
+	ZetSetWriteHandler(CommandoWrite1);
+	ZetClose();
+	
+	ZetInit(1);
+	ZetOpen(1);
+	ZetMapMemory(DrvZ80Rom2,		0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvZ80Ram2,		0x4000, 0x47ff, MAP_RAM);
+	ZetSetReadHandler(CommandoRead2);
+	ZetSetWriteHandler(CommandoWrite2);
+	ZetClose();
+	
+	BurnYM2203Init(2, 1500000, NULL, 0);
+	BurnTimerAttachZet(3000000);
+	BurnYM2203SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	
+	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 32, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, fg_map_callback,  8,  8, 32, 32);
+	GenericTilemapSetGfx(0, DrvTiles, 3, 16, 16, 0x40000, 0x00, 0xf);
+	GenericTilemapSetGfx(1, DrvChars, 2,  8,  8, 0x10000, 0xc0, 0xf);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
+	GenericTilemapSetTransparent(1, 3);
+
+	// Reset the driver
+	DrvDoReset();
+
+	return 0;
+}
+
 static INT32 MercenarioInit()
 {
 	INT32 nRet = 0, nLen;
@@ -1138,7 +1284,7 @@ struct BurnDriver BurnDrvCommandj = {
 
 struct BurnDriver BurnDrvCommandb = {
 	"commandob", "commando", NULL, NULL, "1985",
-	"Commando (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Commando (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -1148,11 +1294,21 @@ struct BurnDriver BurnDrvCommandb = {
 
 struct BurnDriver BurnDrvCommandb2 = {
 	"commandob2", "commando", NULL, NULL, "1985",
-	"Commando (bootleg 2)\0", NULL, "bootleg", "Miscellaneous",
+	"Commando (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x100, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvCommandb3 = {
+	"commandob3", "commando", NULL, NULL, "1985",
+	"Commando (bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
+	NULL, Drvb3RomInfo, Drvb3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	Drvb3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
 

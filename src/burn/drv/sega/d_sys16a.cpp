@@ -2803,8 +2803,8 @@ static void MjleagueMakeAnalogInputs()
 	if (MjleagueTrack2Y >= 0x100) MjleagueTrack2Y = 0;
 	if (MjleagueTrack2Y < 0) MjleagueTrack2Y = 0xfc;
 	
-	MjleagueBat1 = 0x80 + (System16AnalogPort0 >> 4);
-	MjleagueBat2 = 0x80 + (System16AnalogPort1 >> 4);
+	MjleagueBat1 = ProcessAnalog(System16AnalogPort0, 1, INPUT_DEADZONE | INPUT_LINEAR, 0x00, 0x80);
+	MjleagueBat2 = ProcessAnalog(System16AnalogPort1, 1, INPUT_DEADZONE | INPUT_LINEAR, 0x00, 0x80);
 }
 
 static UINT8 __fastcall MjleagueReadByte(UINT32 a)

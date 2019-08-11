@@ -1177,6 +1177,8 @@ DRV		BurnDrvBjtwinpa;
 DRV		BurnDrvBjtwin;
 DRV		BurnDrvBjtwina;
 DRV		BurnDrvmd_bomboy;
+DRV		BurnDrvBnzabrosj;
+DRV		BurnDrvBnzabros;
 DRV		BurnDrvsms_bnzabros;
 DRV		BurnDrvmd_bnzabros1;
 DRV		BurnDrvmd_bnzabros;
@@ -1970,8 +1972,9 @@ DRV		BurnDrvmd_comixup04;
 DRV		BurnDrvmd_comixup02;
 DRV		BurnDrvmd_commconq;
 DRV		BurnDrvCommandw;
-DRV		BurnDrvCommandb2;
 DRV		BurnDrvCommandb;
+DRV		BurnDrvCommandb2;
+DRV		BurnDrvCommandb3;
 DRV		BurnSpeccommando;
 DRV		BurnSpeccommandof;
 DRV		BurnSpeccommandop;
@@ -2075,7 +2078,10 @@ DRV		BurnDrvCountryc;
 DRV		BurnDrvMSX_cowabduct;
 DRV		BurnDrvmd_crkdown1;
 DRV		BurnDrvmd_crkdown;
+DRV		BurnDrvCrkdownj;
+DRV		BurnDrvCrkdownu;
 DRV		BurnDrvmd_crkdownu;
+DRV		BurnDrvCrkdown;
 DRV		BurnDrvHocrash;
 DRV		BurnDrvmd_crash;
 #if defined FBNEO_DEBUG
@@ -2924,6 +2930,9 @@ DRV		BurnDrvmd_dynabr2;
 DRV		BurnDrvmd_dynabr2sp;
 DRV		BurnDrvDynagear;
 DRV		BurnDrvDynablst;
+DRV		BurnDrvDcclubj;
+DRV		BurnDrvDcclubfd;
+DRV		BurnDrvDcclub;
 DRV		BurnDrvMSX_dynabowl;
 DRV		BurnDrvMSX_dynadan;
 DRV		BurnDrvsms_dynduke;
@@ -3693,8 +3702,10 @@ DRV		BurnDrvGaiapolsu;
 DRV		BurnDrvmd_gaiares;
 DRV		BurnDrvsms_gground;
 DRV		BurnDrvsms_ggroundp;
+DRV		BurnDrvGgroundj;
 DRV		BurnDrvmd_gground1p;
 DRV		BurnDrvmd_gground;
+DRV		BurnDrvGground;
 DRV		BurnDrvsms_galactpr;
 DRV		BurnDrvGwarrior;
 DRV		BurnDrvGalaga88a;
@@ -4516,6 +4527,10 @@ DRV		BurnDrvHotmemry11;
 DRV		BurnDrvHotmemry;
 DRV		BurnDrvHotmind;
 DRV		BurnDrvHotpinbl;
+DRV		BurnDrvHotrodja;
+DRV		BurnDrvHotrodj;
+DRV		BurnDrvHotrod;
+DRV		BurnDrvHotroda;
 DRV		BurnDrvHotshockb;
 DRV		BurnDrvHotshock;
 DRV		BurnDrvMSX_hotshoe;
@@ -4875,6 +4890,8 @@ DRV		BurnDrvJujuba;			// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvJujub;
 DRV		BurnDrvcv_jukebox;
+DRV		BurnDrvSgmastj;
+DRV		BurnDrvSgmastc;
 DRV		BurnDrvMSX_jump;
 DRV		BurnDrvJumpbugb;
 DRV		BurnDrvJumpbug;
@@ -7888,6 +7905,7 @@ DRV		BurnDrvQuizdais;
 DRV		BurnDrvHotdebut;
 DRV		BurnDrvQuizf1;
 DRV		BurnDrvQgakumon;
+DRV		BurnDrvQgh;
 DRV		BurnDrvQuizhq;
 DRV		BurnDrvQjinsei;
 DRV		BurnDrvquizkofk;
@@ -7895,12 +7913,15 @@ DRV		BurnDrvquizkof;
 DRV		BurnDrvQzkklgy2;
 DRV		BurnDrvQzkklogy;
 DRV		BurnDrvQuizdai2;
+DRV		BurnDrvQuizmeku;
 DRV		BurnDrvCpsQndream;
 DRV		BurnDrvQuizo;
 DRV		BurnDrvQuizoa;
 DRV		BurnDrvQzquest;
+DRV		BurnDrvQrouka;
 DRV		BurnDrvQsangoku;
 DRV		BurnDrvQzshowby;
+DRV		BurnDrvQsww;
 DRV		BurnDrvQtheater;
 DRV		BurnDrvQtono1;
 DRV		BurnDrvCpsQtono2j;
@@ -8355,6 +8376,7 @@ DRV		BurnDrvClapapa2;
 DRV		BurnDrvClapapa;
 DRV		BurnDrvRopeman;
 DRV		BurnDrvMSX_rotors;
+DRV		BurnDrvRoughrac;
 DRV		BurnDrvRoundup;
 DRV		BurnDrvroute16bl;
 DRV		BurnDrvroute16;
@@ -8576,6 +8598,9 @@ DRV		BurnDrvMSX_scramegg;
 DRV		BurnSpecscrspirt;
 DRV		BurnSpecscrspirt_48;
 DRV		BurnDrvsms_sspirits;
+DRV		BurnDrvSspiritj;
+DRV		BurnDrvSspirits;
+DRV		BurnDrvSspirtfc;
 DRV		BurnDrvscregg;
 DRV		BurnDrvScramble;
 DRV		BurnDrvgg_scratchgj;
@@ -9761,6 +9786,10 @@ DRV		BurnDrvgg_sor;
 DRV		BurnDrvmd_sor2usw;
 DRV		BurnDrvmd_sor2u;
 DRV		BurnDrvmd_sor2bk3b;
+DRV		BurnDrvmd_sor2sfv1;
+DRV		BurnDrvmd_sor2sfv2;
+DRV		BurnDrvmd_sor2sfv3;
+DRV		BurnDrvmd_sor2sfv4;
 DRV		BurnDrvmd_sor2tmnt;
 DRV		BurnDrvmd_sor2upw;
 DRV		BurnDrvmd_sor3;
@@ -10043,6 +10072,7 @@ DRV		BurnDrvmd_smb;
 DRV		BurnDrvmd_smbb;
 DRV		BurnDrvmd_smba;
 DRV		BurnDrvMarukin;
+DRV		BurnDrvSgmast;
 DRV		BurnDrvpce_smcrush;
 DRV		BurnDrvSupmodel;
 DRV		BurnDrvgg_smomo3;
@@ -10784,7 +10814,6 @@ DRV		BurnDrvkof97cn;
 DRV		BurnDrvKof97k;
 DRV		BurnDrvKof97h;
 DRV		BurnDrvKof97;
-DRV		BurnDrvkof97t;
 DRV		BurnDrvkof97cbt;
 DRV		BurnDrvkof97xt;
 DRV		BurnDrvkof97rc;
@@ -11190,6 +11219,10 @@ DRV		BurnDrvTokiob;
 DRV		BurnDrvTokio;
 DRV		BurnDrvTokioo;
 DRV		BurnDrvTokiou;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvMahmajn;			// no comment [NOT WORKING]
+DRV		BurnDrvMahmajn2;		// no comment [NOT WORKING]
+#endif
 DRV		BurnDrvJackalj;
 DRV		BurnDrvTndrcadej;
 DRV		BurnDrvsms_tomjerry;
@@ -13666,6 +13699,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBjtwin,				// Bombjack Twin (set 1)
 	&BurnDrvBjtwina,			// Bombjack Twin (set 2)
 	&BurnDrvmd_bomboy,			// Bomboy (Tw)
+	&BurnDrvBnzabrosj,			// Bonanza Bros (Japan, Floppy DS3-5000-07b Based)
+	&BurnDrvBnzabros,			// Bonanza Bros (US, Floppy DS3-5000-07d? Based)
 	&BurnDrvsms_bnzabros,		// Bonanza Bros. (Euro, Bra)
 	&BurnDrvmd_bnzabros1,		// Bonanza Bros. (Euro, Jpn)
 	&BurnDrvmd_bnzabros,		// Bonanza Bros. (Euro, Jpn, Rev. A)
@@ -14459,8 +14494,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_comixup02,		// Comix Zone (USA, Prototype, 19950603)
 	&BurnDrvmd_commconq,		// Command & Conquer (Prototype)
 	&BurnDrvCommandw,			// Command War - Super Special Battle & War Game (Ver 0.0J) (Prototype)
-	&BurnDrvCommandb2,			// Commando (bootleg 2)
-	&BurnDrvCommandb,			// Commando (bootleg)
+	&BurnDrvCommandb,			// Commando (bootleg set 1)
+	&BurnDrvCommandb2,			// Commando (bootleg set 2)
+	&BurnDrvCommandb3,			// Commando (bootleg set 3)
 	&BurnSpeccommando,			// Commando (Elite Systems) (48K)
 	&BurnSpeccommandof,			// Commando (fr) (48K)
 	&BurnSpeccommandop,			// Commando (Pocket Money Software) (48K)
@@ -14564,7 +14600,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_cowabduct,		// Cow Abductors
 	&BurnDrvmd_crkdown1,		// Crack Down (Euro, Jpn)
 	&BurnDrvmd_crkdown,			// Crack Down (Euro, Jpn, Rev. A)
+	&BurnDrvCrkdownj,			// Crack Down (Japan, Floppy Based, FD1094 317-0058-04b Rev A)
+	&BurnDrvCrkdownu,			// Crack Down (US, Floppy Based, FD1094 317-0058-04d)
 	&BurnDrvmd_crkdownu,		// Crack Down (USA)
+	&BurnDrvCrkdown,			// Crack Down (World, Floppy Based, FD1094 317-0058-04c)
 	&BurnDrvHocrash,			// Crash (bootleg of Head On)
 	&BurnDrvmd_crash,			// Crash Bandicoot (Rus)
 #if defined FBNEO_DEBUG
@@ -15413,6 +15452,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dynabr2sp,		// Dyna Brothers 2 - Sega Channel Special (Jpn, Sega Channel)
 	&BurnDrvDynagear,			// Dyna Gear
 	&BurnDrvDynablst,			// Dynablaster / Bomber Man
+	&BurnDrvDcclubj,			// Dynamic Country Club (Japan, ROM Based)
+	&BurnDrvDcclubfd,			// Dynamic Country Club (US, Floppy Based, FD1094 317-0058-09d)
+	&BurnDrvDcclub,				// Dynamic Country Club (World, ROM Based)
 	&BurnDrvMSX_dynabowl,		// Dynamite Bowl (Jpn)
 	&BurnDrvMSX_dynadan,		// Dynamite Dan (Euro)
 	&BurnDrvsms_dynduke,		// Dynamite Duke (Euro, Bra)
@@ -16182,8 +16224,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_gaiares,			// Gaiares (Jpn, USA)
 	&BurnDrvsms_gground,		// Gain Ground (Euro, Bra)
 	&BurnDrvsms_ggroundp,		// Gain Ground (Euro, Prototype)
+	&BurnDrvGgroundj,			// Gain Ground (Japan, 2 Players, Floppy Based, FD1094 317-0058-03b)
 	&BurnDrvmd_gground1p,		// Gain Ground (USA, Prototype)
 	&BurnDrvmd_gground,			// Gain Ground (World)
+	&BurnDrvGground,			// Gain Ground (World, 3 Players, Floppy Based, FD1094 317-0058-03d Rev A)
 	&BurnDrvsms_galactpr,		// Galactic Protector (Jpn)
 	&BurnDrvGwarrior,			// Galactic Warriors
 	&BurnDrvGalaga88a,			// Galaga '88 (02-03-88)
@@ -17005,6 +17049,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHotmemry,			// Hot Memory (V1.2, Germany, 12/28/94)
 	&BurnDrvHotmind,			// Hot Mind (Hard Times hardware)
 	&BurnDrvHotpinbl,			// Hot Pinball
+	&BurnDrvHotrodja,			// Hot Rod (Japan, 4 Players, Floppy Based, Rev B)
+	&BurnDrvHotrodj,			// Hot Rod (Japan, 4 Players, Floppy Based, Rev C)
+	&BurnDrvHotrod,				// Hot Rod (World, 3 Players, Turbo set 1, Floppy Based)
+	&BurnDrvHotroda,			// Hot Rod (World, 3 Players, Turbo set 2, Floppy Based)
 	&BurnDrvHotshockb,			// Hot Shocker (bootleg)
 	&BurnDrvHotshock,			// Hot Shocker
 	&BurnDrvMSX_hotshoe,		// Hot Shoe (Euro)
@@ -17364,6 +17412,8 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvJujub,				// JuJu Densetsu (Playmark bootleg)
 	&BurnDrvcv_jukebox,			// Juke Box
+	&BurnDrvSgmastj,			// Jumbo Ozaki Super Masters Golf (Japan, Floppy Based, FD1094 317-0058-05b)
+	&BurnDrvSgmastc,			// Jumbo Ozaki Super Masters Golf (World, Floppy Based, FD1094 317-0058-05c)
 	&BurnDrvMSX_jump,			// Jump (Jpn)
 	&BurnDrvJumpbugb,			// Jump Bug (bootleg)
 	&BurnDrvJumpbug,			// Jump Bug
@@ -20377,6 +20427,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHotdebut,			// Quiz de Idol! Hot Debut (Japan)
 	&BurnDrvQuizf1,				// Quiz F1 1-2 Finish (Japan)
 	&BurnDrvQgakumon,			// Quiz Gakumon no Susume (Japan ver. JA2 Type L)
+	&BurnDrvQgh,				// Quiz Ghost Hunter (Japan, ROM Based)
 	&BurnDrvQuizhq,				// Quiz H.Q. (Japan)
 	&BurnDrvQjinsei,			// Quiz Jinsei Gekijoh (Japan)
 	&BurnDrvquizkofk,			// Quiz King of Fighters (Korean release)
@@ -20384,12 +20435,15 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvQzkklgy2,			// Quiz Kokology 2
 	&BurnDrvQzkklogy,			// Quiz Kokology
 	&BurnDrvQuizdai2,			// Quiz Meitantei Neo & Geo - Quiz Daisousa Sen part 2 (NGM-042)(NGH-042)
+	&BurnDrvQuizmeku,			// Quiz Mekurumeku Story (Japan, ROM Based)
 	&BurnDrvCpsQndream,			// Quiz Nanairo Dreams - nijiirochou no kiseki (nanairo dreams 960826 Japan)
 	&BurnDrvQuizo,				// Quiz Olympic (set 1)
 	&BurnDrvQuizoa,				// Quiz Olympic (set 2)
 	&BurnDrvQzquest,			// Quiz Quest - Hime to Yuusha no Monogatari (Japan)
+	&BurnDrvQrouka,				// Quiz Rouka Ni Tattenasai (Japan, ROM Based)
 	&BurnDrvQsangoku,			// Quiz Sangokushi (Japan)
 	&BurnDrvQzshowby,			// Quiz Sekai wa SHOW by shobai (Japan)
+	&BurnDrvQsww,				// Quiz Syukudai wo Wasuremashita (Japan, Floppy Based, FD1094 317-0058-08b)
 	&BurnDrvQtheater,			// Quiz Theater - 3tsu no Monogatari (Ver 2.3J 1994/11/10)
 	&BurnDrvQtono1,				// Quiz Tonosama no Yabou (Japan)
 	&BurnDrvCpsQtono2j,			// Quiz Tonosama no Yabou 2 Zenkoku-ban (tonosama 2 950123 Japan)
@@ -20844,6 +20898,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvClapapa,			// Rootin' Tootin' / La-Pa-Pa (DECO Cassette) (US)
 	&BurnDrvRopeman,			// Ropeman (bootleg of Roc'n Rope)
 	&BurnDrvMSX_rotors,			// Rotors (Jpn)
+	&BurnDrvRoughrac,			// Rough Racer (Japan, Floppy Based, FD1094 317-0058-06b)
 	&BurnDrvRoundup,			// Round-Up
 	&BurnDrvroute16bl,			// Route 16 (bootleg)
 	&BurnDrvroute16,			// Route 16 (set 1)
@@ -21065,6 +21120,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecscrspirt,			// Scramble Spirits (128K)
 	&BurnSpecscrspirt_48,		// Scramble Spirits (48K)
 	&BurnDrvsms_sspirits,		// Scramble Spirits (Euro, Bra)
+	&BurnDrvSspiritj,			// Scramble Spirits (Japan, Floppy DS3-5000-02-REV-A Based)
+	&BurnDrvSspirits,			// Scramble Spirits (World, Floppy Based)
+	&BurnDrvSspirtfc,			// Scramble Spirits (World, Floppy Based, FD1094 317-0058-02c) [no comment, NOT WORKING]
 	&BurnDrvscregg,				// Scrambled Egg
 	&BurnDrvScramble,			// Scramble
 	&BurnDrvgg_scratchgj,		// Scratch Golf (Jpn)
@@ -22250,6 +22308,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_sor2usw,			// Streets of Rage 2 (USA) Syndicate Wars 2016 (Hack, April 30, 2016)
 	&BurnDrvmd_sor2u,			// Streets of Rage 2 (USA)
 	&BurnDrvmd_sor2bk3b,		// Streets of Rage 2 - Bare Knuckle 3 Boss Edition (V1.1) (Hack)
+	&BurnDrvmd_sor2sfv1,		// Streets of Rage 2 - Street Fighter Version 1 (Dhalsim/Ryu/Guile/Ken, Hack)
+	&BurnDrvmd_sor2sfv2,		// Streets of Rage 2 - Street Fighter Version 2 (Cammy/DeeJay/ChunLi/FeiLong, Hack)
+	&BurnDrvmd_sor2sfv3,		// Streets of Rage 2 - Street Fighter Version 3 (Blanka/Honda/Zangief/T.Hawk, Hack)
+	&BurnDrvmd_sor2sfv4,		// Streets of Rage 2 - Street Fighter Version 4 (Balrog/Bison/Sagat/Vega, Hack)
 	&BurnDrvmd_sor2tmnt,		// Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack)
 	&BurnDrvmd_sor2upw,			// Streets of Rage 2 Puyo Wars (Hack)
 	&BurnDrvmd_sor3,			// Streets of Rage 3 (Euro)
@@ -22532,6 +22594,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_smbb,			// Super Mario World ~ Super Mario Bros. (Pirate, Alt 2)
 	&BurnDrvmd_smba,			// Super Mario World ~ Super Mario Bros. (Pirate, Alt)
 	&BurnDrvMarukin,			// Super Marukin-Ban (Japan 901017)
+	&BurnDrvSgmast,				// Super Masters Golf (World?, Floppy Based, FD1094 317-0058-05d?)
 	&BurnDrvpce_smcrush,		// Super Metal Crusher
 	&BurnDrvSupmodel,			// Super Model
 	&BurnDrvgg_smomo3,			// Super Momotarou Dentetsu III (Jpn)
@@ -23273,7 +23336,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKof97k,				// The King of Fighters '97 (Korean release)
 	&BurnDrvKof97h,				// The King of Fighters '97 (NGH-2320)
 	&BurnDrvKof97,				// The King of Fighters '97 (NGM-2320)
-	&BurnDrvkof97t,				// The King of Fighters '97 (Optimized Hack)
 	&BurnDrvkof97cbt,			// The King of Fighters '97 - Combo Training (Hack, Ver. 2018)
 	&BurnDrvkof97xt,			// The King of Fighters '97 - Final Battle (hack)
 	&BurnDrvkof97rc,			// The King of Fighters '97 - Random Combo (Hack, Ver. 2010)
@@ -23679,6 +23741,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTokio,				// Tokio / Scramble Formation (newer)
 	&BurnDrvTokioo,				// Tokio / Scramble Formation (older)
 	&BurnDrvTokiou,				// Tokio / Scramble Formation (US)
+#if defined FBNEO_DEBUG
+	&BurnDrvMahmajn,			// Tokoro San no MahMahjan (Japan, ROM Based) [no comment, NOT WORKING]
+	&BurnDrvMahmajn2,			// Tokoro San no MahMahjan 2 (Japan, ROM Based) [no comment, NOT WORKING]
+#endif
 	&BurnDrvJackalj,			// Tokushu Butai Jackal (Japan, 8-way Joystick)
 	&BurnDrvTndrcadej,			// Tokusyu Butai U.A.G. (Japan)
 	&BurnDrvsms_tomjerry,		// Tom and Jerry (Prototype)

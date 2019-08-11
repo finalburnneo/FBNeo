@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12210 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12241 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1159,6 +1159,8 @@ This list contains all games supported by FinalBurn Neo.
 | bjtwin	|  	| Bombjack Twin (set 1)					| 		| 1993	| NMK		| NMK16		| 					|
 | bjtwina	|  	| Bombjack Twin (set 2)					| bjtwin	| 1993	| NMK		| NMK16		| 					|
 | md_bomboy	|  	| Bomboy (Tw)						| 		| 1993	| Gamtec	| Sega Megadrive| 					|
+| bnzabrosj	|  	| Bonanza Bros (Japan, Floppy DS3-5000-07b Based)	| bnzabros	| 1990	| Sega		| System 24	| 					|
+| bnzabros	|  	| Bonanza Bros (US, Floppy DS3-5000-07d? Based)		| 		| 1990	| Sega		| System 24	| 					|
 | sms_bnzabros	|  	| Bonanza Bros. (Euro, Bra)				| 		| 1991	| Sega		| Sega Master Sy| 					|
 | md_bnzabros1	|  	| Bonanza Bros. (Euro, Jpn)				| md_bnzabros	| 1991	| Sega		| Sega Megadrive| 					|
 | md_bnzabros	|  	| Bonanza Bros. (Euro, Jpn, Rev. A)			| 		| 1991	| Sega		| Sega Megadrive| 					|
@@ -1936,8 +1938,9 @@ This list contains all games supported by FinalBurn Neo.
 | md_comixup02	|  	| Comix Zone (USA, Prototype, 19950603)			| md_comix	| 1995	| Sega		| Sega Megadrive| 					|
 | md_commconq	|  	| Command & Conquer (Prototype)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | commandw	|  	| Command War - Super Special Battle & War Game (Ver 0.0| 		| 1992	| Taito Corporat| Taito F3 Syste| 					|
-| commandob2	|  	| Commando (bootleg 2)					| commando	| 1985	| bootleg	| Miscellaneous	| 					|
-| commandob	|  	| Commando (bootleg)					| commando	| 1985	| bootleg	| Miscellaneous	| 					|
+| commandob	|  	| Commando (bootleg set 1)				| commando	| 1985	| bootleg	| Miscellaneous	| 					|
+| commandob2	|  	| Commando (bootleg set 2)				| commando	| 1985	| bootleg	| Miscellaneous	| 					|
+| commandob3	|  	| Commando (bootleg set 3)				| commando	| 1985	| bootleg	| Miscellaneous	| 					|
 | spec_commando	|  	| Commando (Elite Systems) (48K)			| 		| 1985	| Elite Systems	| ZX Spectrum	| 					|
 | spec_commandof|  	| Commando (fr) (48K)					| spec_commando	| 1984	| Loriciels	| ZX Spectrum	| 					|
 | spec_commandop|  	| Commando (Pocket Money Software) (48K)		| spec_commando	| 1984	| Pocket Money S| ZX Spectrum	| 					|
@@ -2037,7 +2040,10 @@ This list contains all games supported by FinalBurn Neo.
 | msx_cow	|  	| Cow Abductors						| 		| 2009	| Paxanga Soft	| MSX		| 					|
 | md_crkdown1	|  	| Crack Down (Euro, Jpn)				| md_crkdown	| 1990	| Sega		| Sega Megadrive| 					|
 | md_crkdown	|  	| Crack Down (Euro, Jpn, Rev. A)			| 		| 1990	| Sega		| Sega Megadrive| 					|
+| crkdownj	|  	| Crack Down (Japan, Floppy Based, FD1094 317-0058-04b R| crkdown	| 1989	| Sega		| System 24	| 					|
+| crkdownu	|  	| Crack Down (US, Floppy Based, FD1094 317-0058-04d)	| crkdown	| 1989	| Sega		| System 24	| 					|
 | md_crkdownu	|  	| Crack Down (USA)					| md_crkdown	| 1991	| Sage's Creatio| Sega Megadrive| 					|
+| crkdown	|  	| Crack Down (World, Floppy Based, FD1094 317-0058-04c)	| 		| 1989	| Sega		| System 24	| 					|
 | hocrash	|  	| Crash (bootleg of Head On)				| headon	| 1979	| bootleg (Frabe| Vic Dual	| No sound				|
 | md_crash	|  	| Crash Bandicoot (Rus)					| md_zero	| 199?	| <unknown>	| Sega Megadrive| 					|
 | crater	| D NW	| Crater Raider						| 		| 1984	| Bally Midway	| MCR3		| Graphics Issues			|
@@ -2854,6 +2860,9 @@ This list contains all games supported by FinalBurn Neo.
 | md_dynabr2sp	|  	| Dyna Brothers 2 - Sega Channel Special (Jpn, Sega Chan| md_dynabr2	| 1991	| Sega		| Sega Megadrive| 					|
 | dynagear	|  	| Dyna Gear						| 		| 1993	| Sammy		| SSV		| 					|
 | dynablst	|  	| Dynablaster / Bomber Man				| 		| 1991	| Irem (licensed| Irem M90	| 					|
+| dcclubj	|  	| Dynamic Country Club (Japan, ROM Based)		| dcclub	| 1991	| Sega		| System 24	| 					|
+| dcclubfd	|  	| Dynamic Country Club (US, Floppy Based, FD1094 317-005| dcclub	| 1991	| Sega		| System 24	| 					|
+| dcclub	|  	| Dynamic Country Club (World, ROM Based)		| 		| 1991	| Sega		| System 24	| 					|
 | msx_dynabowl	|  	| Dynamite Bowl (Jpn)					| 		| 1988	| Toshiba EMI	| MSX		| 					|
 | msx_dynadan	|  	| Dynamite Dan (Euro)					| 		| 1986	| Mirrorsoft	| MSX		| 					|
 | sms_dynduke	|  	| Dynamite Duke (Euro, Bra)				| 		| 1991	| Sega		| Sega Master Sy| 					|
@@ -3609,8 +3618,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_gaiares	|  	| Gaiares (Jpn, USA)					| 		| 1990	| Renovation	| Sega Megadrive| 					|
 | sms_gground	|  	| Gain Ground (Euro, Bra)				| 		| 1990	| Sega		| Sega Master Sy| 					|
 | sms_ggroundp	|  	| Gain Ground (Euro, Prototype)				| sms_gground	| 1990	| Sega		| Sega Master Sy| 					|
+| ggroundj	|  	| Gain Ground (Japan, 2 Players, Floppy Based, FD1094 31| gground	| 1988	| Sega		| System 24	| 					|
 | md_gground1p	|  	| Gain Ground (USA, Prototype)				| md_gground	| 1991	| Renovation	| Sega Megadrive| 					|
 | md_gground	|  	| Gain Ground (World)					| 		| 1991	| Sega		| Sega Megadrive| 					|
+| gground	|  	| Gain Ground (World, 3 Players, Floppy Based, FD1094 31| 		| 1988	| Sega		| System 24	| 					|
 | sms_galactpr	|  	| Galactic Protector (Jpn)				| 		| 1988	| Sega		| Sega Master Sy| 					|
 | gwarrior	|  	| Galactic Warriors					| 		| 1985	| Konami	| GX578		| 					|
 | galaga88a	|  	| Galaga '88 (02-03-88)					| galaga88	| 1987	| Namco		| System 1	| 					|
@@ -4418,6 +4429,10 @@ This list contains all games supported by FinalBurn Neo.
 | hotmemry	|  	| Hot Memory (V1.2, Germany, 12/28/94)			| pairs		| 1994	| Incredible Tec| Miscellaneous	| 					|
 | hotmind	|  	| Hot Mind (Hard Times hardware)			| 		| 1996	| Playmark	| Misc		| 					|
 | hotpinbl	|  	| Hot Pinball						| 		| 1995	| Comad & New Ja| Miscellaneous	| 					|
+| hotrodja	|  	| Hot Rod (Japan, 4 Players, Floppy Based, Rev B)	| hotrod	| 1988	| Sega		| System 24	| 					|
+| hotrodj	|  	| Hot Rod (Japan, 4 Players, Floppy Based, Rev C)	| hotrod	| 1988	| Sega		| System 24	| 					|
+| hotrod	|  	| Hot Rod (World, 3 Players, Turbo set 1, Floppy Based)	| 		| 1988	| Sega		| System 24	| 					|
+| hotroda	|  	| Hot Rod (World, 3 Players, Turbo set 2, Floppy Based)	| hotrod	| 1988	| Sega		| System 24	| 					|
 | hotshockb	|  	| Hot Shocker (bootleg)					| hotshock	| 1982	| bootleg	| Galaxian	| 					|
 | hotshock	|  	| Hot Shocker						| 		| 1982	| E.G. Felaco (D| Galaxian	| 					|
 | msx_hotshoe	|  	| Hot Shoe (Euro)					| 		| 1984	| Longman Softwa| MSX		| 					|
@@ -4763,6 +4778,8 @@ This list contains all games supported by FinalBurn Neo.
 | jujuba	| D NW	| JuJu Densetsu (Japan, bootleg)			| toki		| 1989	| bootleg	| Miscellaneous	| 					|
 | jujub		|  	| JuJu Densetsu (Playmark bootleg)			| toki		| 1989	| bootleg (Playm| Miscellaneous	| 					|
 | cv_jukebox	|  	| Juke Box						| 		| 1984	| Spinnaker Soft| ColecoVision	| 					|
+| sgmastj	|  	| Jumbo Ozaki Super Masters Golf (Japan, Floppy Based, F| sgmast	| 1989	| Sega		| System 24	| 					|
+| sgmastc	|  	| Jumbo Ozaki Super Masters Golf (World, Floppy Based, F| sgmast	| 1989	| Sega		| System 24	| 					|
 | msx_jump	|  	| Jump (Jpn)						| 		| 1985	| ASCII		| MSX		| 					|
 | jumpbugb	|  	| Jump Bug (bootleg)					| jumpbug	| 1981	| bootleg	| Galaxian	| 					|
 | jumpbug	|  	| Jump Bug						| 		| 1981	| Rock-ola	| Galaxian	| 					|
@@ -7714,6 +7731,7 @@ This list contains all games supported by FinalBurn Neo.
 | hotdebut	|  	| Quiz de Idol! Hot Debut (Japan)			| 		| 2000	| Psikyo / Moss	| PS4		| 					|
 | quizf1	|  	| Quiz F1 1-2 Finish (Japan)				| 		| 1992	| Irem		| Irem M90	| 					|
 | qgakumon	|  	| Quiz Gakumon no Susume (Japan ver. JA2 Type L)	| 		| 1993	| Konami	| GX248		| 					|
+| qgh		|  	| Quiz Ghost Hunter (Japan, ROM Based)			| 		| 1994	| Sega		| System 24	| 					|
 | quizhq	|  	| Quiz H.Q. (Japan)					| 		| 1990	| Taito Corporat| Taito F2	| 					|
 | qjinsei	|  	| Quiz Jinsei Gekijoh (Japan)				| 		| 1992	| Taito Corporat| Taito F2	| 					|
 | quizkofk	|  	| Quiz King of Fighters (Korean release)		| quizkof	| 1995	| Saurus	| Neo Geo MVS	| 					|
@@ -7721,12 +7739,15 @@ This list contains all games supported by FinalBurn Neo.
 | qzkklgy2	|  	| Quiz Kokology 2					| 		| 1993	| Tecmo		| Seta		| 					|
 | qzkklogy	|  	| Quiz Kokology						| 		| 1992	| Tecmo		| Seta		| 					|
 | quizdai2	|  	| Quiz Meitantei Neo & Geo - Quiz Daisousa Sen part 2 (N| 		| 1992	| SNK		| Neo Geo MVS	| 					|
+| quizmeku	|  	| Quiz Mekurumeku Story (Japan, ROM Based)		| 		| 1992	| Sega		| System 24	| 					|
 | qndream	|  	| Quiz Nanairo Dreams - nijiirochou no kiseki (nanairo d| 		| 1996	| Capcom	| CPS2		| 					|
 | quizo		|  	| Quiz Olympic (set 1)					| 		| 1985	| Seoul Coin Cor| Miscellaneous	| 					|
 | quizoa	|  	| Quiz Olympic (set 2)					| quizo		| 1985	| Seoul Coin Cor| Miscellaneous	| 					|
 | qzquest	|  	| Quiz Quest - Hime to Yuusha no Monogatari (Japan)	| 		| 1991	| Taito Corporat| Taito F2	| 					|
+| qrouka	|  	| Quiz Rouka Ni Tattenasai (Japan, ROM Based)		| 		| 1991	| Sega		| System 24	| 					|
 | qsangoku	|  	| Quiz Sangokushi (Japan)				| 		| 1991	| Capcom	| Miscellaneous	| 					|
 | qzshowby	|  	| Quiz Sekai wa SHOW by shobai (Japan)			| 		| 1993	| Taito Corporat| Taito B System| 					|
+| qsww		|  	| Quiz Syukudai wo Wasuremashita (Japan, Floppy Based, F| 		| 1991	| Sega		| System 24	| 					|
 | qtheater	|  	| Quiz Theater - 3tsu no Monogatari (Ver 2.3J 1994/11/10| 		| 1994	| Taito Corporat| Taito F3 Syste| 					|
 | qtono1	|  	| Quiz Tonosama no Yabou (Japan)			| 		| 1991	| Capcom	| Miscellaneous	| 					|
 | qtono2j	|  	| Quiz Tonosama no Yabou 2 Zenkoku-ban (tonosama 2 95012| 		| 1995	| Capcom	| CPS1		| 					|
@@ -8175,6 +8196,7 @@ This list contains all games supported by FinalBurn Neo.
 | clapapa	|  	| Rootin' Tootin' / La-Pa-Pa (DECO Cassette) (US)	| 		| 1983	| Data East Corp| Cassette Syste| 					|
 | ropeman	|  	| Ropeman (bootleg of Roc'n Rope)			| rocnrope	| 1983	| bootleg	| GX364		| 					|
 | msx_rotors	|  	| Rotors (Jpn)						| 		| 1984	| ASCII		| MSX		| 					|
+| roughrac	|  	| Rough Racer (Japan, Floppy Based, FD1094 317-0058-06b)| 		| 1990	| Sega		| System 24	| 					|
 | roundup	|  	| Round-Up						| 		| 1981	| Taito Corporat| Miscellaneous	| 					|
 | route16bl	|  	| Route 16 (bootleg)					| route16	| 1981	| bootleg (Leisu| Route 16	| 					|
 | route16	|  	| Route 16 (set 1)					| 		| 1981	| Tehkan/Sun (Ce| Route 16	| 					|
@@ -8388,6 +8410,9 @@ This list contains all games supported by FinalBurn Neo.
 | spec_scrspirt	|  	| Scramble Spirits (128K)				| 		| 1990	| Grandslam Ente| ZX Spectrum	| 					|
 | spec_scrspirt_48|  	| Scramble Spirits (48K)				| spec_scrspirt	| 1990	| Grandslam Ente| ZX Spectrum	| 					|
 | sms_sspirits	|  	| Scramble Spirits (Euro, Bra)				| 		| 1989	| Sega		| Sega Master Sy| 					|
+| sspiritj	|  	| Scramble Spirits (Japan, Floppy DS3-5000-02-REV-A Base| sspirits	| 1988	| Sega		| System 24	| 					|
+| sspirits	|  	| Scramble Spirits (World, Floppy Based)		| 		| 1988	| Sega		| System 24	| 					|
+| sspirtfc	|   NW	| Scramble Spirits (World, Floppy Based, FD1094 317-0058| sspirits	| 1988	| Sega		| System 24	| 					|
 | scregg	|  	| Scrambled Egg						| 		| 1983	| Technos	| Miscellaneous	| 					|
 | scramble	|  	| Scramble						| 		| 1981	| Konami	| Galaxian	| 					|
 | gg_scratchgj	|  	| Scratch Golf (Jpn)					| gg_scratchg	| 1994	| Vic Tokai	| Sega Game Gear| 					|
@@ -9557,6 +9582,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_sor2usw	|  	| Streets of Rage 2 (USA) Syndicate Wars 2016 (Hack, Apr| md_sor2	| 1992	| 2016 Gsaurus	| Sega Megadrive| 					|
 | md_sor2u	|  	| Streets of Rage 2 (USA)				| md_sor2	| 1992	| Sega		| Sega Megadrive| 					|
 | md_sor2bk3b	|  	| Streets of Rage 2 - Bare Knuckle 3 Boss Edition (V1.1)| md_sor2	| 2017	| 2017 Kratus	| Sega Megadrive| 					|
+| md_sor2sfv1	|  	| Streets of Rage 2 - Street Fighter Version 1 (Dhalsim/| md_sor2	| 2017	| 2017 Kratus	| Sega Megadrive| 					|
+| md_sor2sfv2	|  	| Streets of Rage 2 - Street Fighter Version 2 (Cammy/De| md_sor2	| 2017	| 2017 Kratus	| Sega Megadrive| 					|
+| md_sor2sfv3	|  	| Streets of Rage 2 - Street Fighter Version 3 (Blanka/H| md_sor2	| 2017	| 2017 Kratus	| Sega Megadrive| 					|
+| md_sor2sfv4	|  	| Streets of Rage 2 - Street Fighter Version 4 (Balrog/B| md_sor2	| 2017	| 2017 Kratus	| Sega Megadrive| 					|
 | md_sor2tmnt	|  	| Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack| md_sor2	| 2017	| 2017, Hack By | Sega Megadrive| 					|
 | md_sor2upw	|  	| Streets of Rage 2 Puyo Wars (Hack)			| md_sor2	| 2014	| Candra Softwar| Sega Megadrive| 					|
 | md_sor3	|  	| Streets of Rage 3 (Euro)				| 		| 1994	| Sega		| Sega Megadrive| 					|
@@ -9825,6 +9854,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_smbb	|  	| Super Mario World ~ Super Mario Bros. (Pirate, Alt 2)	| md_smb	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_smba	|  	| Super Mario World ~ Super Mario Bros. (Pirate, Alt)	| md_smb	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | marukin	|  	| Super Marukin-Ban (Japan 901017)			| 		| 1990	| Yuga		| Miscellaneous	| 					|
+| sgmast	|  	| Super Masters Golf (World?, Floppy Based, FD1094 317-0| 		| 1989	| Sega		| System 24	| 					|
 | pce_smcrush	|  	| Super Metal Crusher					| 		| 1991	| Pack-In-Video	| PC Engine	| 					|
 | supmodel	|  	| Super Model						| 		| 1994	| Comad / New Ja| Miscellaneous	| 					|
 | gg_smomo3	|  	| Super Momotarou Dentetsu III (Jpn)			| 		| 1995	| Hudson	| Sega Game Gear| 					|
@@ -10558,7 +10588,6 @@ This list contains all games supported by FinalBurn Neo.
 | kof97k	|  	| The King of Fighters '97 (Korean release)		| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97h	|  	| The King of Fighters '97 (NGH-2320)			| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97		|  	| The King of Fighters '97 (NGM-2320)			| 		| 1997	| SNK		| Neo Geo MVS	| 					|
-| kof97t	|  	| The King of Fighters '97 (Optimized Hack)		| kof97		| 1997	| hack		| Neo Geo MVS	| 					|
 | kof97cbt	|  	| The King of Fighters '97 - Combo Training (Hack, Ver. | kof97		| 2019	| hack		| Neo Geo MVS	| 					|
 | kof97xt	|  	| The King of Fighters '97 - Final Battle (hack)	| kof97		| 2007	| hack		| Neo Geo MVS	| 					|
 | kof97rc	|  	| The King of Fighters '97 - Random Combo (Hack, Ver. 20| kof97		| 2019	| hack		| Neo Geo MVS	| 					|
@@ -10960,6 +10989,8 @@ This list contains all games supported by FinalBurn Neo.
 | tokio		|  	| Tokio / Scramble Formation (newer)			| 		| 1986	| Taito Corporat| Taito Misc	| 					|
 | tokioo	|  	| Tokio / Scramble Formation (older)			| tokio		| 1986	| Taito Corporat| Taito Misc	| 					|
 | tokiou	|  	| Tokio / Scramble Formation (US)			| tokio		| 1986	| Taito America | Taito Misc	| 					|
+| mahmajn	| D NW	| Tokoro San no MahMahjan (Japan, ROM Based)		| 		| 1992	| Sega		| System 24	| 					|
+| mahmajn2	| D NW	| Tokoro San no MahMahjan 2 (Japan, ROM Based)		| 		| 1994	| Sega		| System 24	| 					|
 | jackalj	|  	| Tokushu Butai Jackal (Japan, 8-way Joystick)		| jackal	| 1986	| Konami	| Miscellaneous	| 					|
 | tndrcadej	|  	| Tokusyu Butai U.A.G. (Japan)				| tndrcade	| 1987	| Seta (Taito li| Seta		| 					|
 | sms_tomjerry	|  	| Tom and Jerry (Prototype)				| sms_tomjermv	| 1992	| Sega		| Sega Master Sy| 					|

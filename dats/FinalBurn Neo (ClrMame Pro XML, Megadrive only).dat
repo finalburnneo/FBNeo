@@ -12129,6 +12129,34 @@
 		<rom name="SoR2_BK3Boss_Hack.bin" size="3500098" crc="5c152787"/>
 		<driver status="good"/>
 	</game>
+	<game name="sor2sfv1" cloneof="sor2" romof="sor2">
+		<description>Streets of Rage 2 - Street Fighter Version 1 (Dhalsim/Ryu/Guile/Ken, Hack)</description>
+		<year>2017</year>
+		<manufacturer>2017 Kratus</manufacturer>
+		<rom name="SoR2_StreetFighter_v1.bin" size="3395462" crc="e03f0c6b"/>
+		<driver status="good"/>
+	</game>
+	<game name="sor2sfv2" cloneof="sor2" romof="sor2">
+		<description>Streets of Rage 2 - Street Fighter Version 2 (Cammy/DeeJay/ChunLi/FeiLong, Hack)</description>
+		<year>2017</year>
+		<manufacturer>2017 Kratus</manufacturer>
+		<rom name="SoR2_StreetFighter_v2.bin" size="3560088" crc="828786e2"/>
+		<driver status="good"/>
+	</game>
+	<game name="sor2sfv3" cloneof="sor2" romof="sor2">
+		<description>Streets of Rage 2 - Street Fighter Version 3 (Blanka/Honda/Zangief/T.Hawk, Hack)</description>
+		<year>2017</year>
+		<manufacturer>2017 Kratus</manufacturer>
+		<rom name="SoR2_StreetFighter_v3.bin" size="3532794" crc="d2ecf98f"/>
+		<driver status="good"/>
+	</game>
+	<game name="sor2sfv4" cloneof="sor2" romof="sor2">
+		<description>Streets of Rage 2 - Street Fighter Version 4 (Balrog/Bison/Sagat/Vega, Hack)</description>
+		<year>2017</year>
+		<manufacturer>2017 Kratus</manufacturer>
+		<rom name="SoR2_StreetFighter_v4.bin" size="3757608" crc="59aa116d"/>
+		<driver status="good"/>
+	</game>
 	<game name="sor2tmnt" cloneof="sor2" romof="sor2">
 		<description>Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack)</description>
 		<year>2017</year>

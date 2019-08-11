@@ -1000,6 +1000,9 @@
     <ClInclude Include="..\..\src\burn\devices\seibucop.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\drv\sega\fd1094_intf.h">
+      <Filter>Burn\drv\sega</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4115,6 +4118,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\atari\d_akkaarrh.cpp">
       <Filter>Burn\drv\atari</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp">
+      <Filter>Burn\drv\sega</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp">
+      <Filter>Burn\drv\sega</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

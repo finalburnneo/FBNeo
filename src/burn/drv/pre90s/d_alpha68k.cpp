@@ -1123,7 +1123,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvSstingry = {
 	"sstingry", NULL, NULL, NULL, "1986",
-	"Super Stingray (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
+	"Super Stingray (Japan)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, SstingryRomInfo, SstingryRomName, NULL, NULL, NULL, NULL, SstingryInputInfo, SstingryDIPInfo,
@@ -1133,7 +1133,7 @@ struct BurnDriver BurnDrvSstingry = {
 
 struct BurnDriver BurnDrvKyros = {
 	"kyros", NULL, NULL, NULL, "1987",
-	"Kyros\0", NULL, "Alpha Denshi Co. (World Games Inc. license)", "Miscellaneous",
+	"Kyros\0", NULL, "Alpha Denshi Co. (World Games Inc. license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, KyrosRomInfo, KyrosRomName, NULL, NULL, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,
@@ -1143,7 +1143,7 @@ struct BurnDriver BurnDrvKyros = {
 
 struct BurnDriver BurnDrvKyrosj = {
 	"kyrosj", "kyros", NULL, NULL, "1986",
-	"Kyros No Yakata (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
+	"Kyros No Yakata (Japan)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, KyrosjRomInfo, KyrosjRomName, NULL, NULL, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,

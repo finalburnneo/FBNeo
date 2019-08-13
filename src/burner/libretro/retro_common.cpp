@@ -86,7 +86,7 @@ static const struct retro_variable var_fbneo_hiscores = { "fbneo-hiscores", "His
 static const struct retro_variable var_fbneo_samplerate = { "fbneo-samplerate", "Samplerate (need to quit retroarch); 48000|44100|22050|11025" };
 static const struct retro_variable var_fbneo_sample_interpolation = { "fbneo-sample-interpolation", "Sample Interpolation; 4-point 3rd order|2-point 1st order|disabled" };
 static const struct retro_variable var_fbneo_fm_interpolation = { "fbneo-fm-interpolation", "FM Interpolation; 4-point 3rd order|disabled" };
-static const struct retro_variable var_fbneo_analog_speed = { "fbneo-analog-speed", "Analog Speed; 10|9|8|7|6|5|4|3|2|1" };
+static const struct retro_variable var_fbneo_analog_speed = { "fbneo-analog-speed", "Analog Speed; 100%|95%|90%|85%|80%|75%|70%|65%|60%|55%|50%|45%|40%|35%|30%|25%" };
 #ifdef USE_CYCLONE
 static const struct retro_variable var_fbneo_cyclone = { "fbneo-cyclone", "Cyclone (need to quit retroarch, change savestate format, use at your own risk); disabled|enabled" };
 #endif
@@ -507,28 +507,41 @@ void check_variables(void)
 	var.key = var_fbneo_analog_speed.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
-		if (strcmp(var.value, "10") == 0)
-			nAnalogSpeed = 0x0100;
-		else if (strcmp(var.value, "9") == 0)
-			nAnalogSpeed = 0x00F0;
-		else if (strcmp(var.value, "8") == 0)
-			nAnalogSpeed = 0x00E0;
-		else if (strcmp(var.value, "7") == 0)
-			nAnalogSpeed = 0x00C0;
-		else if (strcmp(var.value, "6") == 0)
-			nAnalogSpeed = 0x00B0;
-		else if (strcmp(var.value, "5") == 0)
-			nAnalogSpeed = 0x00A0;
-		else if (strcmp(var.value, "4") == 0)
-			nAnalogSpeed = 0x0090;
-		else if (strcmp(var.value, "3") == 0)
-			nAnalogSpeed = 0x0080;
-		else if (strcmp(var.value, "2") == 0)
-			nAnalogSpeed = 0x0070;
-		else if (strcmp(var.value, "1") == 0)
-			nAnalogSpeed = 0x0060;
-		else
-			nAnalogSpeed = 0x0100;
+		INT32 nVal = 100;
+		if (strcmp(var.value, "100%") == 0)
+			nVal = 100;
+		else if (strcmp(var.value, "95%") == 0)
+			nVal = 95;
+		else if (strcmp(var.value, "90%") == 0)
+			nVal = 90;
+		else if (strcmp(var.value, "85%") == 0)
+			nVal = 85;
+		else if (strcmp(var.value, "80%") == 0)
+			nVal = 80;
+		else if (strcmp(var.value, "75%") == 0)
+			nVal = 75;
+		else if (strcmp(var.value, "70%") == 0)
+			nVal = 70;
+		else if (strcmp(var.value, "65%") == 0)
+			nVal = 65;
+		else if (strcmp(var.value, "60%") == 0)
+			nVal = 60;
+		else if (strcmp(var.value, "55%") == 0)
+			nVal = 55;
+		else if (strcmp(var.value, "50%") == 0)
+			nVal = 50;
+		else if (strcmp(var.value, "45%") == 0)
+			nVal = 45;
+		else if (strcmp(var.value, "40%") == 0)
+			nVal = 40;
+		else if (strcmp(var.value, "35%") == 0)
+			nVal = 35;
+		else if (strcmp(var.value, "30%") == 0)
+			nVal = 30;
+		else if (strcmp(var.value, "25%") == 0)
+			nVal = 25;
+
+		nAnalogSpeed = (int)((double)nVal * 256.0 / 100.0 + 0.5);
 	}
 
 #ifdef USE_CYCLONE

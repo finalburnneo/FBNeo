@@ -57,15 +57,13 @@ static UINT16 *pCharLayerDraw       = NULL;
 static UINT16 *pTile1LayerDraw      = NULL;
 static UINT16 *pTile2LayerDraw      = NULL;
 
-// i8751 MCU (hbarrel) & MCU Simulation
+// i8751 MCU emulation (hbarrel, birdtry) & MCU Simulation
 static INT32 realMCU = 0;
-static INT32 i8751RetVal;
-static INT32 i8751Command;
+static UINT16 i8751RetVal;
+static UINT16 i8751Command;
 static UINT8 i8751PortData[4] = { 0, 0, 0, 0 };
 
 static INT32 bTimerNullCPU = 0;
-
-static INT32 nExtraCycles[3];
 
 static UINT8 DrvVBlank;
 static UINT8 DrvSoundLatch;
@@ -98,15 +96,13 @@ static INT32  nRotateTry[2]         = {0, 0};
 static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
 
-static INT32 nCyclesDone[3], nCyclesTotal[3];
+static INT32 nCyclesDone[3], nCyclesTotal[3], nExtraCycles[3];
 
 static INT32 slyspy_mode = 0;
 
 static INT32 Dec0Game = 0;
 
 #define DEC0_GAME_BADDUDES	1
-#define DEC0_GAME_HBARREL	2
-#define DEC0_GAME_BIRDTRY	3
 #define DEC1_GAME_MIDRES    4
 
 static struct BurnInputInfo Dec0InputList[] =
@@ -1179,7 +1175,7 @@ static struct BurnRomInfo HbarrelRomDesc[] = {
 	
 	{ "heavy_barrel_08.2c",     0x10000, 0x645c5b68, BRF_SND },			// 29	Samples
 	
-	{ "heavy_barrel_31.9a", 	0x01000, 0x239d726f, BRF_PRG },		    // 30	I8751
+	{ "heavy_barrel_31.9a", 	0x01000, 0x239d726f, BRF_ESS | BRF_PRG },	// 30	I8751
 	
 	{ "mb7116e_a-1.12c",		0x00200, 0x86e775f8, BRF_OPT }, 		// 31 PROMs
 	{ "mb7122e_a-2.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 		// 32
@@ -1230,7 +1226,7 @@ static struct BurnRomInfo HbarrelwRomDesc[] = {
 	
 	{ "ec08.2c",        	0x10000, 0x2159a609, BRF_SND },			// 29	Samples
 	
-	{ "ec31.9a",            0x01000, 0xaa14a2ae, BRF_PRG },         // 30	I8751
+	{ "ec31.9a",            0x01000, 0xaa14a2ae, BRF_ESS | BRF_PRG },	// 30	I8751
 	
 	{ "mb7116e_a-1.12c",	0x00200, 0x86e775f8, BRF_OPT }, 		// 31 PROMs
 	{ "mb7122e_a-2.17e",	0x00400, 0xa5cda23e, BRF_OPT }, 		// 32
@@ -2139,6 +2135,7 @@ static INT32 MemIndex()
 
 static void RotateReset(); // forward -dink
 static void DrvMCUReset(); // forward
+static void DrvMCUCPUReset(); // forward
 static void DrvMCUSync(); // ""
 
 static INT32 DrvDoReset()
@@ -2174,8 +2171,9 @@ static INT32 BaddudesDoReset()
 	M6502Reset();
 	M6502Close();
 
-	if (realMCU)
-		DrvMCUReset();
+	if (realMCU) {
+		DrvMCUCPUReset();
+	}
 
 	return nRet;
 }
@@ -2227,75 +2225,6 @@ static void BaddudesI8751Write(UINT16 Data)
 		case 0x761: i8751RetVal = 0x70d; break;
 		case 0x753: i8751RetVal = 0x70e; break;
 		case 0x75b: i8751RetVal = 0x70f; break;
-	}
-}
-
-static void BirdtryI8751Write(UINT16 Data)
-{
-	static INT32 pwr, hgt;
-
-	i8751RetVal = 0;
-
-	switch(Data&0xffff) {
-		/*"Sprite control"*/
-		case 0x22a:	i8751RetVal = 0x200;	  break;
-
-		/* Gives an O.B. otherwise (it must be > 0xb0 )*/
-		case 0x3c7:	i8751RetVal = 0x7ff;	  break;
-
-		/*Enables shot checks*/
-		case 0x33c: i8751RetVal  = 0x200;     break;
-
-		/*Used on the title screen only(???)*/
-		case 0x31e: i8751RetVal  = 0x200;     break;
-
-/*  0x100-0x10d values are for club power meters(1W=0x100<<-->>PT=0x10d).    *
- *  Returned value to i8751 doesn't matter,but send the result to 0x481.     *
- *  Lower the value,stronger is the power.                                   */
-		case 0x100: pwr = 0x30; 			break; /*1W*/
-		case 0x101: pwr = 0x34; 			break; /*3W*/
-		case 0x102: pwr = 0x38; 			break; /*4W*/
-		case 0x103: pwr = 0x3c; 			break; /*1I*/
-		case 0x104: pwr = 0x40; 			break; /*3I*/
-		case 0x105: pwr = 0x44; 			break; /*4I*/
-		case 0x106: pwr = 0x48; 			break; /*5I*/
-		case 0x107: pwr = 0x4c; 			break; /*6I*/
-		case 0x108: pwr = 0x50; 			break; /*7I*/
-		case 0x109: pwr = 0x54; 			break; /*8I*/
-		case 0x10a: pwr = 0x58; 			break; /*9I*/
-		case 0x10b: pwr = 0x5c; 			break; /*PW*/
-		case 0x10c: pwr = 0x60; 			break; /*SW*/
-		case 0x10d: pwr = 0x80; 			break; /*PT*/
-		case 0x481: i8751RetVal  = pwr;     break; /*Power meter*/
-
-/*  0x200-0x20f values are for shot height(STRONG=0x200<<-->>WEAK=0x20f).    *
- *  Returned value to i8751 doesn't matter,but send the result to 0x534.     *
- *  Higher the value,stronger is the height.                                 */
-		case 0x200: hgt = 0x5c0;  			break; /*H*/
-		case 0x201: hgt = 0x580; 			break; /*|*/
-		case 0x202: hgt = 0x540; 			break; /*|*/
-		case 0x203: hgt = 0x500; 			break; /*|*/
-		case 0x204: hgt = 0x4c0; 			break; /*|*/
-		case 0x205: hgt = 0x480; 			break; /*|*/
-		case 0x206: hgt = 0x440; 			break; /*|*/
-		case 0x207: hgt = 0x400; 			break; /*M*/
-		case 0x208: hgt = 0x3c0; 			break; /*|*/
-		case 0x209: hgt = 0x380; 			break; /*|*/
-		case 0x20a: hgt = 0x340; 			break; /*|*/
-		case 0x20b: hgt = 0x300; 			break; /*|*/
-		case 0x20c: hgt = 0x2c0; 			break; /*|*/
-		case 0x20d: hgt = 0x280; 			break; /*|*/
-		case 0x20e: hgt = 0x240; 			break; /*|*/
-		case 0x20f: hgt = 0x200; 			break; /*L*/
-		case 0x534: i8751RetVal = hgt; 	break; /*Shot height*/
-
-		/*At the ending screen(???)*/
-		//case 0x3b4: i8751_return = 0;		  break;
-
-		/*These are activated after a shot (???)*/
-		case 0x6ca: i8751RetVal  = 0xff;      break;
-		case 0x7ff: i8751RetVal  = 0x200;     break;
-		//default: logerror("%04x: warning - write unknown command %02x to 8571\n",activecpu_get_pc(),data);
 	}
 }
 
@@ -2502,25 +2431,22 @@ static void SuperJoy2Rotate() {
 
 // end Rotation-handler
 
-// i8751 MCU, currently only for hbarrel.
+// i8751 MCU, currently only for hbarrel & birdtry.
 
 static UINT8 mcu_read_port(INT32 port)
 {
 	if (!(port >= MCS51_PORT_P0 && port <= MCS51_PORT_P3))
-		return 0;
-	port &= 0x3;
+		return 0xff;
 
-	INT32 latchEnable = i8751PortData[2] >> 4;
-
-	if (port == 0)
+	if ((port & 0x3) == 0)
 	{
-		if ((latchEnable & 1) == 0)
+		if (~i8751PortData[2] & 0x10)
 			return i8751Command >> 8;
-		else if ((latchEnable & 2) == 0)
+		if (~i8751PortData[2] & 0x20)
 			return i8751Command & 0xff;
-		else if ((latchEnable & 4) == 0)
+		if (~i8751PortData[2] & 0x40)
 			return i8751RetVal >> 8;
-		else if ((latchEnable & 8) == 0)
+		if (~i8751PortData[2] & 0x80)
 			return i8751RetVal & 0xff;
 	}
 
@@ -2534,20 +2460,23 @@ static void mcu_write_port(INT32 port, UINT8 data)
 
 	port &= 0x3;
 
-	i8751PortData[port] = data;
-
 	if (port == 2)
 	{
-		if ((data & 0x4) == 0) {
+		if (~data & 0x4 && i8751PortData[2] & 0x4) {
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		}
-		if ((data & 0x8) == 0)
+		if (~data & 0x8) {
 			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
-		if ((data & 0x40) == 0)
+		}
+		if (data & 0x40 && ~i8751PortData[2] & 0x40) {
 			i8751RetVal = (i8751RetVal & 0xff00) | (i8751PortData[0]);
-		if ((data & 0x80) == 0)
+		}
+		if (data & 0x80 && ~i8751PortData[2] & 0x80) {
 			i8751RetVal = (i8751RetVal & 0xff) | (i8751PortData[0] << 8);
+		}
 	}
+
+	i8751PortData[port] = data;
 }
 
 static void DrvMCUInit()
@@ -2566,32 +2495,46 @@ static void DrvMCUExit() {
 
 INT32 DrvMCURun(INT32 cycles)
 {
-	cycles = mcs51Run(cycles);
-
-	return cycles;
+	return mcs51Run(cycles);
 }
 
 static INT32 DrvMCUScan(INT32 nAction)
 {
 	mcs51_scan(nAction);
 
-	//SCAN_VAR(i8751RetVal); // in DrvScan (also used by MCU Simulations)
+	//SCAN_VAR(i8751RetVal); // in DrvScan (also used by MCU Simulation)
 	SCAN_VAR(i8751Command);
 	SCAN_VAR(i8751PortData);
 
 	return 0;
 }
 
+static void DrvMCUWrite(UINT16 data)
+{
+	DrvMCUSync();
+
+	i8751Command = data;
+
+	if (i8751PortData[2] & 8) {
+		mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
+	}
+}
+
 static void DrvMCUSync()
 {
-	INT32 todo = (((SekTotalCycles() * ((double)8/12)) / 10) - nCyclesDone[2]);
-	//bprintf(0, _T("Sek %d\nMCU %d  - todo: %d\n"), SekTotalCycles(), nCyclesDone[2], todo);
-	if (todo > 0) nCyclesDone[2] += DrvMCURun(todo);
+	INT32 todo = ((double)SekTotalCycles() * (8000000/12) / 10000000) - nCyclesDone[2];
+
+	nCyclesDone[2] += DrvMCURun((todo > 0) ? todo : 0);
 }
 
 static void DrvMCUReset()
-{
+{ // game calls this!
 	i8751RetVal = i8751Command = 0;
+}
+
+static void DrvMCUCPUReset()
+{ // boot & f3 resets this!
+	DrvMCUReset();
 	memset(&i8751PortData, 0, sizeof(i8751PortData));
 	mcs51_reset();
 }
@@ -2689,9 +2632,11 @@ static void __fastcall Dec068KWriteByte(UINT32 a, UINT8 d)
 		}
 		
 		case 0x30c01f: {
-			i8751RetVal = 0;
-			if (realMCU)
+			if (realMCU) {
+				DrvMCUSync();
 				DrvMCUReset();
+			}
+			i8751RetVal = 0;
 			return;
 		}
 		
@@ -2743,6 +2688,7 @@ static UINT16 __fastcall Dec068KReadWord(UINT32 a)
 		
 		case 0x30c008: {
 			if (realMCU) DrvMCUSync();
+
 			return i8751RetVal;
 		}
 		
@@ -2782,6 +2728,11 @@ static void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 	
 	if (a >= 0x31c000 && a <= 0x31c7ff) {
 		// ???
+		return;
+	}
+
+	if (a >= 0x249800 && a <= 0x249fff) {
+		// birdtry unmapped writes
 		return;
 	}
 	
@@ -2875,12 +2826,9 @@ static void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 		
 		case 0x30c016: {
 			if (Dec0Game == DEC0_GAME_BADDUDES) BaddudesI8751Write(d);
-			if (Dec0Game == DEC0_GAME_HBARREL) {
-				DrvMCUSync();
-				i8751Command = d;
-				mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
+			if (realMCU) {
+				DrvMCUWrite(d);
 			}
-			if (Dec0Game == DEC0_GAME_BIRDTRY) BirdtryI8751Write(d);
 
 			if (!realMCU) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
@@ -2898,8 +2846,10 @@ static void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 		}
 		
 		case 0x30c01e: {
-			if (realMCU)
+			if (realMCU) {
+				DrvMCUSync();
 				DrvMCUReset();
+			}
 
 			i8751RetVal = 0;
 			return;
@@ -4144,7 +4094,9 @@ static INT32 BirdtryInit()
 	
 	BurnFree(DrvTempRom);
 	
-	Dec0Game = DEC0_GAME_BIRDTRY;
+	realMCU = 1;
+	nRet = BurnLoadRom(DrvMCURom + 0x00000, 7, 1); if (nRet != 0) return 1;
+	DrvMCUInit();
 
 	BaddudesDoReset();
 
@@ -4263,8 +4215,6 @@ static INT32 HbarrelInit()
 	bTimerNullCPU = 1;
 
 	BurnFree(DrvTempRom);
-
-	Dec0Game = DEC0_GAME_HBARREL;
 
 	RotateSetGunPosRAM(Drv68KRam + (0x66+1), Drv68KRam + (0xaa+1), 4);
 	game_rotates = 1;
@@ -5567,15 +5517,12 @@ static INT32 DrvFrame()
 
 	nCyclesTotal[0] = (INT32)((double)10000000 / 57.41);
 	nCyclesTotal[1] = (INT32)((double)1500000 / 57.41);
-	nCyclesTotal[2] = (INT32)((double)8000000 / 57.41);
+	nCyclesTotal[2] = (INT32)((double)8000000 / 57.41 / 12);
 	nCyclesDone[0] = nExtraCycles[0]; nCyclesDone[1] = nExtraCycles[1]; nCyclesDone[2] = nExtraCycles[2];
-
-	if (realMCU) {
-		nCyclesTotal[2] /= 12; // i8751 divider
-	}
 
 	SekNewFrame();
 	M6502NewFrame();
+	mcs51NewFrame();
 	NullNewFrame();
 
 	SekOpen(0);
@@ -5591,12 +5538,12 @@ static INT32 DrvFrame()
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
 
 		if (bTimerNullCPU)
-			nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+			CPU_RUN(0, Sek);
 
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 
 		if (realMCU) {
-			nCyclesDone[2] += DrvMCURun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			CPU_RUN(2, DrvMCU);
 		}
 	}
 
@@ -5644,24 +5591,16 @@ static INT32 RobocopFrame()
 	h6280Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
-
-		nCurrentCPU = 0;
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
 		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
 			DrvVBlank = 1;
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 		}
-		
-		nCurrentCPU = 2;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = h6280Run(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 
-		nCurrentCPU = 1;
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		CPU_RUN(2, h6280);
+
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 	
 	BurnTimerEndFrame(nCyclesTotal[0]);

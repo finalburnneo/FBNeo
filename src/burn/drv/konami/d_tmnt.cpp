@@ -2182,6 +2182,24 @@ static struct BurnRomInfo punkshot2RomDesc[] = {
 STD_ROM_PICK(punkshot2)
 STD_ROM_FN(punkshot2)
 
+static struct BurnRomInfo punkshot2eRomDesc[] = {
+	{ "907_02.i7",		0x020000, 0xaa55516c, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "907_03.i10",		0x020000, 0x0d3aa3d5, BRF_ESS | BRF_PRG }, //  1
+
+	{ "907f01.e8",		0x008000, 0xf040c484, BRF_ESS | BRF_PRG }, //  2	Z80 Program
+
+	{ "907d06.e23",		0x040000, 0xf5cc38f4, BRF_GRA },	       //  3	Tiles
+	{ "907d05.e22",		0x040000, 0xe25774c1, BRF_GRA },	       //  4
+
+	{ "907d07.k2",		0x100000, 0xb0fe4543, BRF_GRA },	       //  5	Sprites
+	{ "907d08.k7",		0x100000, 0xd5ac8d9d, BRF_GRA },	       //  6
+
+	{ "907d04.d3",		0x080000, 0x090feb5e, BRF_SND },	       //  7	K053260 Samples
+};
+
+STD_ROM_PICK(punkshot2e)
+STD_ROM_FN(punkshot2e)
+
 static struct BurnRomInfo punkshotjRomDesc[] = {
 	{ "907z02.i7",		0x020000, 0x7a3a5c89, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "907z03.i10",		0x020000, 0x22a3d9d6, BRF_ESS | BRF_PRG }, //  1
@@ -6974,6 +6992,16 @@ struct BurnDriver BurnDrvPunkshot2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
 	NULL, punkshot2RomInfo, punkshot2RomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, Punkshot2DIPInfo,
+	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
+	NULL, 0x800, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvPunkshot2e = {
+	"punkshot2e", "punkshot", NULL, NULL, "1990",
+	"Punk Shot (World 2 Players)\0", NULL, "Konami", "GX907",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
+	NULL, punkshot2eRomInfo, punkshot2eRomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, Punkshot2DIPInfo,
 	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
 	NULL, 0x800, 288, 224, 4, 3
 };

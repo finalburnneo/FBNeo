@@ -35,6 +35,7 @@ static void dummy_runend() {}
 static void dummy_reset() {}
 
 static cpu_core_config dummy_config  = {
+	"dummy",
 	dummy_open,
 	dummy_close,
 	dummy_read,
@@ -63,7 +64,11 @@ void CpuCheatRegister(INT32 nCPU, cpu_core_config *config)
 	s_ptr->cpuconfig = config;
 	s_ptr->nCPU = nCPU;
 
-	bprintf(0, _T("CPU-registry: cpu #%d ...\n"), nCPU);
+#ifndef __LIBRETRO__
+	bprintf(0, _T("CPU-registry: %S cpu #%d ...\n"), s_ptr->cpuconfig->cpu_name, nCPU);
+#else
+	bprintf(0, _T("CPU-registry: %s cpu #%d ...\n"), s_ptr->cpuconfig->cpu_name, nCPU);
+#endif
 
 	cheat_core_init_pointer++;
 }

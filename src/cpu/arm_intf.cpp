@@ -35,6 +35,7 @@ static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
 
 cpu_core_config ArmConfig =
 {
+	"Arm",
 	ArmOpen,
 	ArmClose,
 	ArmReadByte,

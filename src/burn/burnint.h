@@ -140,6 +140,7 @@ inline static void PutPix(UINT8* pPix, UINT32 c)
 // Setting up cpus for cheats
 
 struct cpu_core_config {
+	char cpu_name[32];
 	void (*open)(INT32);		// cpu open
 	void (*close)();		// cpu close
 

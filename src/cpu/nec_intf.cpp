@@ -315,6 +315,7 @@ static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config VezConfig =
 {
+	"nec v20-v35",
 	VezOpen,
 	VezClose,
 	cpu_readmem20,

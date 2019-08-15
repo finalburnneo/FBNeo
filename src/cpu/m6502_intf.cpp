@@ -32,6 +32,7 @@ static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config M6502Config =
 {
+	"M6502",
 	M6502Open,
 	M6502Close,
 	M6502CheatRead,

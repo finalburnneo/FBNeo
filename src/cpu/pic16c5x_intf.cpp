@@ -22,6 +22,7 @@ static void core_set_irq(INT32,INT32,INT32)
 
 cpu_core_config pic16c5xConfig =
 {
+	"pic16c5x",
 	pic16c5xOpen,
 	pic16c5xClose,
 	pic16c5xCheatRead,

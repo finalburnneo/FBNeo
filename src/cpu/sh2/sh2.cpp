@@ -201,6 +201,7 @@ static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
 
 cpu_core_config Sh2Config =
 {
+	"SH-2",
 	Sh2Open,
 	Sh2Close,
 	Sh2CheatReadByte,

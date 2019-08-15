@@ -631,7 +631,7 @@ STD_ROM_FN(blockout)
 
 struct BurnDriver BurnDrvBlockout = {
 	"blockout", NULL, NULL, NULL, "1989",
-	"Block Out (set 1)\0", NULL, "Technos + California Dreams", "Miscellaneous",
+	"Block Out (set 1)\0", NULL, "Technos Japan / California Dreams", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
 	NULL, blockoutRomInfo, blockoutRomName, NULL, NULL, NULL, NULL, BlockoutInputInfo, BlockoutDIPInfo,
@@ -658,10 +658,37 @@ STD_ROM_FN(blckout2)
 
 struct BurnDriver BurnDrvBlckout2 = {
 	"blockout2", "blockout", NULL, NULL, "1989",
-	"Block Out (set 2)\0", NULL, "Technos + California Dreams", "Miscellaneous",
+	"Block Out (set 2)\0", NULL, "Technos Japan / California Dreams", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
 	NULL, blckout2RomInfo, blckout2RomName, NULL, NULL, NULL, NULL, BlockoutInputInfo, BlockoutDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
+	320, 240, 4, 3
+};
+
+
+// Block Out (Europe and Oceania)
+
+static struct BurnRomInfo blckout3RomDesc[] = {
+	{ "blockout-1-27c010-ic81.bin",		0x20000, 0x36fc13a0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "blockout-2-27c010-ic91.bin",		0x20000, 0x48916a07, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "blockout-3-27256-ic73.bin",		0x08000, 0x3ea01f78, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "blockout-4-27c010-ic78.bin",		0x20000, 0x15c5a99d, 3 | BRF_SND },           //  3 Samples
+
+	{ "blockout-82s129-ic25.bin",		0x00100, 0xb25bbda7, 0 | BRF_OPT },           //  4 Unused Prom
+};
+
+STD_ROM_PICK(blckout3)
+STD_ROM_FN(blckout3)
+
+struct BurnDriver BurnDrvBlckout3 = {
+	"blockout3", "blockout", NULL, NULL, "1989",
+	"Block Out (Europe and Oceania)\0", NULL, "Technos Japan / California Dreams", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
+	NULL, blckout3RomInfo, blckout3RomName, NULL, NULL, NULL, NULL, BlockoutInputInfo, BlockoutDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
 	320, 240, 4, 3
 };
@@ -685,7 +712,7 @@ STD_ROM_FN(blckoutj)
 
 struct BurnDriver BurnDrvBlckoutj = {
 	"blockoutj", "blockout", NULL, NULL, "1989",
-	"Block Out (Japan)\0", NULL, "Technos + California Dreams", "Miscellaneous",
+	"Block Out (Japan)\0", NULL, "Technos Japan / California Dreams", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
 	NULL, blckoutjRomInfo, blckoutjRomName, NULL, NULL, NULL, NULL, BlckoutjInputInfo, BlockoutDIPInfo,

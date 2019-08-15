@@ -829,6 +829,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 // Bionic Commando (Euro)
+/* "Not for use in Japan" */
 
 static struct BurnRomInfo bioniccRomDesc[] = {
 	{ "tse_02.1a",		 0x10000, 0xe4aeefaa, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
@@ -863,7 +864,7 @@ static struct BurnRomInfo bioniccRomDesc[] = {
 
 	{ "63s141.18f",		 0x00100, 0xb58d0023, 0 | BRF_OPT },				// 24 Priority (not used)
 
-	{ "d8751h.bin",      0x01000, 0x3ed7f0be, 7 | BRF_PRG | BRF_ESS },	// 25 MCU Code
+	{ "ts.2f",      	 0x01000, 0x3ed7f0be, 7 | BRF_PRG | BRF_ESS },	// 25 MCU Code
 };
 
 STD_ROM_PICK(bionicc)
@@ -881,6 +882,7 @@ struct BurnDriver BurnDrvbionicc = {
 
 
 // Bionic Commando (US set 1)
+/* "Not for use outside of USA or Canada" revision B */
 
 static struct BurnRomInfo bionicc1RomDesc[] = {
 	{ "tsu_02b.1a",		 0x10000, 0xcf965a0a, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
@@ -915,7 +917,7 @@ static struct BurnRomInfo bionicc1RomDesc[] = {
 
 	{ "63s141.18f",		 0x00100, 0xb58d0023, 0 | BRF_OPT },				// 24 Priority (not used)
 
-	{ "d8751h.bin",      0x01000, 0x3ed7f0be, 7 | BRF_PRG | BRF_ESS },	// 25 MCU Code
+	{ "ts.2f",      	 0x01000, 0x3ed7f0be, 7 | BRF_PRG | BRF_ESS },	// 25 MCU Code
 };
 
 STD_ROM_PICK(bionicc1)
@@ -933,6 +935,7 @@ struct BurnDriver BurnDrvbionicc1 = {
 
 
 // Bionic Commando (US set 2)
+/* "Not for use outside of USA or Canada" 1st release */
 
 static struct BurnRomInfo bionicc2RomDesc[] = {
 	{ "tsu_02.1a",		 0x10000, 0xf2528f08, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
@@ -967,7 +970,7 @@ static struct BurnRomInfo bionicc2RomDesc[] = {
 
 	{ "63s141.18f",		 0x00100, 0xb58d0023, 0 | BRF_OPT },				// 24 Priority (not used)
 
-	{ "d8751h.bin",      0x01000, 0x3ed7f0be, 7 | BRF_PRG | BRF_ESS },	// 25 MCU Code
+	{ "ts.2f",      	 0x01000, 0x3ed7f0be, 7 | BRF_PRG | BRF_ESS },	// 25 MCU Code
 };
 
 STD_ROM_PICK(bionicc2)
@@ -985,7 +988,7 @@ struct BurnDriver BurnDrvbionicc2 = {
 
 
 // Top Secret (Japan, old revision)
-/* "Not for use outside of USA or Canada" 1st release */
+/* "Not for use in any other country but Japan" */
 
 static struct BurnRomInfo topsecrtRomDesc[] = {
 	{ "ts_02.1a",		0x10000, 0xb2fe1ddb, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
@@ -1020,7 +1023,7 @@ static struct BurnRomInfo topsecrtRomDesc[] = {
 
 	{ "63s141.18f",		0x00100, 0xb58d0023, 0 | BRF_OPT },				// 24 Priority (not used)
 
-	{ "d8751h.bin",     0x01000, 0x3ed7f0be, 7 | BRF_PRG | BRF_ESS },	// 25 MCU Code
+	{ "ts.2f",     		0x01000, 0x3ed7f0be, 7 | BRF_PRG | BRF_ESS },	// 25 MCU Code
 };
 
 STD_ROM_PICK(topsecrt)
@@ -1073,7 +1076,7 @@ static struct BurnRomInfo topsecrt2RomDesc[] = {
 
 	{ "63s141.18f",		0x00100, 0xb58d0023, 0 | BRF_OPT },				// 24 Priority (not used)
 
-	{ "d8751h.bin",     0x01000, 0x3ed7f0be, 7 | BRF_PRG | BRF_ESS },	// 25 MCU Code
+	{ "ts.2f",     		0x01000, 0x3ed7f0be, 7 | BRF_PRG | BRF_ESS },	// 25 MCU Code
 };
 
 STD_ROM_PICK(topsecrt2)

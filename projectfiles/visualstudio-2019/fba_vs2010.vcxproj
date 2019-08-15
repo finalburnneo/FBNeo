@@ -124,6 +124,7 @@
     <ClInclude Include="..\..\src\burn\drv\psikyo\psikyo_sprite_func.h" />
     <ClInclude Include="..\..\src\burn\drv\pst90s\kanekotb.h" />
     <ClInclude Include="..\..\src\burn\drv\sega\fd1094.h" />
+    <ClInclude Include="..\..\src\burn\drv\sega\fd1094_intf.h" />
     <ClInclude Include="..\..\src\burn\drv\sega\genesis_vid.h" />
     <ClInclude Include="..\..\src\burn\drv\sega\mc8123.h" />
     <ClInclude Include="..\..\src\burn\drv\sega\sys16.h" />
@@ -512,6 +513,8 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\snes_dsp.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_groundfx.cpp" />

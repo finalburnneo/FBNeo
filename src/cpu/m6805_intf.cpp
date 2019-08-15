@@ -20,6 +20,7 @@ void m6805_core_set_irq(INT32 cpu, INT32 line, INT32 state);
 
 cpu_core_config M6805Config =
 {
+	"m6805",
 	m6805Open,
 	m6805Close,
 	m6805CheatRead,

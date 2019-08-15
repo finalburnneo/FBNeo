@@ -55,6 +55,7 @@ static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config s2650Config =
 {
+	"s2650",
 	s2650Open,
 	s2650Close,
 	s2650ReadCheat,

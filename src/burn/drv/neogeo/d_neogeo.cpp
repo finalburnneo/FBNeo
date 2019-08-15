@@ -18113,3 +18113,39 @@ struct BurnDriver BurnDrvkof10thuo = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+// The King of Fighters 2002 Remix Ultra 3.5 - Hack By FCHT
+
+static struct BurnRomInfo kf2k2ru35RomDesc[] = {
+	{ "kf2k2ru35-p1.bin",   0x100000, 0x8da72d5c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "kf2k2ru35-p2.bin",   0x400000, 0x75185760, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "kf2k2ru35-s1.bin",   0x020000, 0xbd19c308, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "kf2k2ru35-c1.bin",   0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
+	{ "kf2k2ru35-c2.bin",   0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4
+	{ "kf2k2ru35-c3.bin",   0x800000, 0xca656090, 3 | BRF_GRA },           //  5
+	{ "kf2k2ru35-c4.bin",   0x800000, 0xeb898849, 3 | BRF_GRA },           //  6
+	{ "kf2k2ru35-c5.bin",   0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7
+	{ "kf2k2ru35-c6.bin",   0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8
+	{ "kf2k2ru35-c7.bin",   0x800000, 0x2a9d505c, 3 | BRF_GRA },           //  9
+	{ "kf2k2ru35-c8.bin",   0x800000, 0x93d8501f, 3 | BRF_GRA },           // 10
+
+	{ "kf2k2ru35-m1.bin",   0x020000, 0x9956ccd8, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "kf2k2ru35-v1.bin",   0x800000, 0x6e7e3508, 5 | BRF_SND },           // 12 Sound data
+	{ "kf2k2ru35-v2.bin",   0x800000, 0x2157b90f, 5 | BRF_SND },           // 13
+};
+
+STDROMPICKEXT(kf2k2ru35, kf2k2ru35, neogeo)
+STD_ROM_FN(kf2k2ru35)
+
+struct BurnDriver BurnDrvkf2k2ru35 = {
+	"kf2k2ru35", "kof2002", "neogeo", NULL, "2006",
+	"The King of Fighters 2002 Remix Ultra 3.5 (Hack By FCHT)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kf2k2ru35RomInfo, kf2k2ru35RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};

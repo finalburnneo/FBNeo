@@ -853,7 +853,7 @@ STD_ROM_FN(paddlema)
 
 struct BurnDriver BurnDrvPaddlema = {
 	"paddlema", NULL, NULL, NULL, "1988",
-	"Paddle Mania\0", NULL, "SNK", "Miscellaneous",
+	"Paddle Mania\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BALLPADDLE, 0,
 	NULL, paddlemaRomInfo, paddlemaRomName, NULL, NULL, NULL, NULL, PaddlemaInputInfo, PaddlemaDIPInfo,
@@ -887,7 +887,7 @@ STD_ROM_FN(tnextspc)
 
 struct BurnDriver BurnDrvTnextspc = {
 	"tnextspc", NULL, NULL, NULL, "1989",
-	"The Next Space (set 1)\0", NULL, "SNK", "Miscellaneous",
+	"The Next Space (set 1)\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tnextspcRomInfo, tnextspcRomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
@@ -928,7 +928,7 @@ STD_ROM_FN(tnextspc2)
 
 struct BurnDriver BurnDrvTnextspc2 = {
 	"tnextspc2", "tnextspc", NULL, NULL, "1989",
-	"The Next Space (set 2)\0", NULL, "SNK", "Miscellaneous",
+	"The Next Space (set 2)\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tnextspc2RomInfo, tnextspc2RomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
@@ -962,7 +962,7 @@ STD_ROM_FN(tnextspcj)
 
 struct BurnDriver BurnDrvTnextspcj = {
 	"tnextspcj", "tnextspc", NULL, NULL, "1989",
-	"The Next Space (Japan)\0", NULL, "SNK (Pasadena International Corp. license)", "Miscellaneous",
+	"The Next Space (Japan)\0", NULL, "SNK (Pasadena International Corp. license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tnextspcjRomInfo, tnextspcjRomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,

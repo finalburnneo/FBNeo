@@ -34,6 +34,7 @@ static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
 
 cpu_core_config konamiCPUConfig =
 {
+	"konami",
 	konamiOpen,
 	konamiClose,
 	konami_cheat_read,

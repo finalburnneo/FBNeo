@@ -410,6 +410,7 @@ static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
 
 cpu_core_config upd7810Config =
 {
+	"upd7810",
 	upd7810Open,
 	upd7810Close,
 	upd7810CheatRead,

@@ -33,6 +33,7 @@ static void m6800_core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config M6800Config =  // M6802, M6808
 {
+	"M6800",
 	M6800Open,
 	M6800Close,
 	M6800CheatRead,
@@ -70,6 +71,7 @@ static void hd63701_core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config HD63701Config =
 {
+	"HD63701",
 	M6800Open,
 	M6800Close,
 	M6800CheatRead,
@@ -107,6 +109,7 @@ static void m6803_core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config M6803Config =  // M6801, M6803
 {
+	"M6803",
 	M6800Open,
 	M6800Close,
 	M6800CheatRead,
@@ -144,6 +147,7 @@ static void m6801_core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config M6801Config =
 {
+	"M6801",
 	M6800Open,
 	M6800Close,
 	M6800CheatRead,
@@ -182,6 +186,7 @@ static void msc8105_core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config NSC8105Config =
 {
+	"NSC8015",
 	M6800Open,
 	M6800Close,
 	M6800CheatRead,

@@ -275,14 +275,14 @@ OPHANDLER( da_a )
  If the carry is set, OR the four high bits 4-7 exceed nine, six is added to the value of these bits.
  The carry flag will be set if the result is > 0x99, but not cleared otherwise */
 
- UINT16 new_acc = ACC & 0xff;
- if(GET_AC || (new_acc & 0x0f) > 0x09)
-	 new_acc += 0x06;
- if(GET_CY || ((new_acc & 0xf0) > 0x90) || (new_acc & ~0xff))
-	 new_acc += 0x60;
- SET_ACC(new_acc&0xff);
- if(new_acc & ~0xff)
-	SET_CY(1);
+	UINT16 new_acc = ACC & 0xff;
+	if(GET_AC || (new_acc & 0x0f) > 0x09)
+		new_acc += 0x06;
+	if(GET_CY || ((new_acc & 0xf0) > 0x90) || (new_acc & ~0xff))
+		new_acc += 0x60;
+	SET_ACC(new_acc&0xff);
+	if(new_acc & ~0xff)
+		SET_CY(1);
 }
 
 //DEC A                                     /* 1: 0001 0100 */
@@ -303,7 +303,7 @@ OPHANDLER( dec_mem )
 OPHANDLER( dec_ir )
 {
 	UINT8 data = IRAM_IR(R_REG(r));
-	IRAM_W(R_REG(r),data-1);
+	IRAM_IW(R_REG(r),data-1);
 }
 
 //DEC R0 to R7                              /* 1: 0001 1rrr */
@@ -376,7 +376,7 @@ OPHANDLER( inc_mem )
 OPHANDLER( inc_ir )
 {
 	UINT8 data = IRAM_IR(R_REG(r));
-	IRAM_W(R_REG(r),data+1);
+	IRAM_IW(R_REG(r),data+1);
 }
 
 //INC R0 to R7                              /* 1: 0000 1rrr */
@@ -905,7 +905,7 @@ OPHANDLER( xch_a_ir )
 	UINT8 data = IRAM_IR(R_REG(r));			//Grab data pointed to by R0 or R1
 	UINT8 oldACC = ACC;					//Hold value of ACC
 	SET_ACC(data);						//Sets ACC to data
-	IRAM_W(R_REG(r),oldACC);					//Sets data address to old value of ACC
+	IRAM_IW(R_REG(r),oldACC);					//Sets data address to old value of ACC
 }
 
 //XCH A, RO to R7                           /* 1: 1100 1rrr */

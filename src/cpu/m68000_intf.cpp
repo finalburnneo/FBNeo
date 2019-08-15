@@ -46,6 +46,7 @@ static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config SekConfig =
 {
+	"68k",
 	SekOpen,
 	SekClose,
 	SekCheatRead,
@@ -1381,7 +1382,7 @@ void SekSetRESETLine(INT32 nStatus)
 		if (nSekRESETLine[nSekActive] && nStatus == 0)
 		{
 			SekReset();
-			bprintf(0, _T("SEK: cleared resetline.\n"));
+			//bprintf(0, _T("SEK: cleared resetline.\n"));
 		}
 
 		nSekRESETLine[nSekActive] = nStatus;
@@ -1454,7 +1455,7 @@ void SekSetHALT(INT32 nStatus)
 	{
 		if (nSekHALT[nSekActive] && nStatus == 0)
 		{
-			bprintf(0, _T("SEK: cleared HALT.\n"));
+			//bprintf(0, _T("SEK: cleared HALT.\n"));
 		}
 
 		nSekHALT[nSekActive] = nStatus;

@@ -38,6 +38,7 @@ static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config M6809Config =
 {
+	"M6809",
 	M6809Open,
 	M6809Close,
 	M6809CheatRead,

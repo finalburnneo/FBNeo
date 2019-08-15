@@ -77,6 +77,7 @@ static UINT32 m_layers_order[0x10];
 static INT32 scroll_factor_8x8[3] = { 1, 1, 1 };
 static INT32 tshingen = 0;
 static INT32 monkelf = 0;
+static INT32 stdragon = 0;
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
@@ -2654,6 +2655,13 @@ static INT32 DrvLoadRoms()
 			Gfx0Load += ri.nLen;
 		}
 
+		if ((ri.nType & 0x0f) == 11) { // stdragonb
+			if (BurnLoadRom(Gfx0Load, i, 1)) return 1;
+			Gfx0Load += ri.nLen;
+			if (Gfx0Load - DrvGfxROM[0] == 0x30000)
+				Gfx0Load += 0x10000;
+		}
+
 		if ((ri.nType & 0x0f) == 4) {
 			if (BurnLoadRom(Gfx1Load, i, 1)) return 1;
 			Gfx1Load += ri.nLen;
@@ -2939,6 +2947,7 @@ static INT32 DrvExit()
 
 	monkelf = 0;
 	tshingen = 0;
+	stdragon = 0;
 
 	BurnFree (AllMem);
 
@@ -3314,9 +3323,15 @@ static INT32 System1AFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		if (i ==   0*8) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i == 128*8) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-		if (i == 240*8) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (stdragon) {
+			if (i ==  16*8) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+			if (i == 128*8) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+			if (i == 240*8) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		} else {
+			if (i ==   0*8) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+			if (i == 128*8) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+			if (i == 240*8) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		}
 		CPU_RUN(0, Sek);
 		SekClose();
 
@@ -4314,6 +4329,7 @@ static INT32 stdragonInit()
 	INT32 nRet = SystemInit(0xA, phantasm_rom_decode);
 
 	if (nRet == 0) {
+		stdragon = 1;
 		install_mcu_protection(mcu_config_type2, 0x23ff0);
 	}
 
@@ -4390,6 +4406,7 @@ static INT32 stdragonaInit()
 	INT32 nRet = SystemInit(0xA, stdragonaCallback);
 
 	if (nRet == 0) {
+		stdragon = 1;
 		install_mcu_protection(mcu_config_type2, 0x23ff0);
 	}
 
@@ -4430,13 +4447,13 @@ static struct BurnRomInfo stdragonbRomDesc[] = {
 	{ "b-20.bin",		0x10000, 0x8c04feaa, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
 	{ "b-19.bin",		0x10000, 0x0bb62f3a, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "a-15.bin",		0x10000, 0x42f7d2cd, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
-	{ "a-16.bin",		0x10000, 0x4f519a97, 3 | BRF_GRA },           //  7
-	{ "a-14.bin",		0x10000, 0xd8ba8d4c, 3 | BRF_GRA },           //  8
-	{ "a-18.bin",		0x10000, 0x5e35f269, 3 | BRF_GRA },           //  9
-	{ "a-19.bin",		0x10000, 0xb818db20, 3 | BRF_GRA },           // 10
-	{ "a-17.bin",		0x10000, 0x0f6094f9, 3 | BRF_GRA },           // 11
-	{ "a-20.bin",		0x10000, 0xe8849b15, 3 | BRF_GRA },           // 12
+	{ "a-15.bin",		0x10000, 0x42f7d2cd, 11 | BRF_GRA },          //  6 Tilemap #0 Tiles
+	{ "a-16.bin",		0x10000, 0x4f519a97, 11 | BRF_GRA },          //  7
+	{ "a-14.bin",		0x10000, 0xd8ba8d4c, 11 | BRF_GRA },          //  8
+	{ "a-18.bin",		0x10000, 0x5e35f269, 11 | BRF_GRA },          //  9
+	{ "a-19.bin",		0x10000, 0xb818db20, 11 | BRF_GRA },          // 10
+	{ "a-17.bin",		0x10000, 0x0f6094f9, 11 | BRF_GRA },          // 11
+	{ "a-20.bin",		0x10000, 0xe8849b15, 11 | BRF_GRA },          // 12
 
 	{ "a-9.bin",		0x10000, 0x135c2e0e, 4 | BRF_GRA },           // 13 Tilemap #1 Tiles
 	{ "a-10.bin",		0x10000, 0x19cec47a, 4 | BRF_GRA },           // 14
@@ -4477,6 +4494,8 @@ static void stdragonbCallback()
 
 static INT32 stdragonbInit()
 {
+	stdragon = 1;
+
 	return SystemInit(0xA, stdragonbCallback);
 }
 

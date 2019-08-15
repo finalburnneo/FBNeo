@@ -45,6 +45,7 @@ static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config Z180Config =
 {
+	"Z180",
 	Z180Open,
 	Z180Close,
 	z180_cheat_read,

@@ -421,6 +421,7 @@ static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
 
 cpu_core_config v60Config =
 {
+	"nec v60",
 	v60Open,
 	v60Close,
 	v60CheatRead,

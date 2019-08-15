@@ -1078,6 +1078,7 @@ DRV		BurnDrvBlockgal;
 DRV		BurnDrvMSX_blockhol;
 DRV		BurnDrvsms_blockhol;
 DRV		BurnDrvBlockhl;
+DRV		BurnDrvBlckout3;
 DRV		BurnDrvBlckoutj;
 DRV		BurnDrvBlockout;
 DRV		BurnDrvBlckout2;
@@ -2110,7 +2111,12 @@ DRV		BurnDrvCkongg;
 DRV		BurnDrvCkongmc;
 DRV		BurnDrvCkongs;
 #if defined FBNEO_DEBUG
+DRV		BurnDrvCkongpt2b;		// no comment [NOT WORKING]
+DRV		BurnDrvCkongpt2b2;		// no comment
+DRV		BurnDrvCkongpt2j;		// no comment
+DRV		BurnDrvCkongpt2jeu;		// no comment
 DRV		BurnDrvCkongpt2;		// no comment
+DRV		BurnDrvCkongpt2a;		// no comment
 #endif
 DRV		BurnDrvCkong;
 DRV		BurnDrvCrzrallyg;
@@ -7768,6 +7774,7 @@ DRV		BurnDrvMSX_punchy;
 DRV		BurnDrvPunkshotj;
 DRV		BurnDrvPunkshot2;
 DRV		BurnDrvPunkshot;
+DRV		BurnDrvPunkshot2e;
 DRV		BurnDrvPururun;
 DRV		BurnDrvPushmans;
 DRV		BurnDrvPushman;
@@ -10861,6 +10868,7 @@ DRV		BurnDrvkf2k2mp2;
 DRV		BurnDrvkf2k2pls;
 DRV		BurnDrvkf2k2pla;
 DRV		BurnDrvkf2k2plb;
+DRV		BurnDrvkf2k2ru35;
 DRV		BurnDrvkf2k2plc;
 DRV		BurnDrvkf2k3bl;
 DRV		BurnDrvkf2k3bla;
@@ -13600,6 +13608,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_blockhol,		// Block Hole (Kor)
 	&BurnDrvsms_blockhol,		// Block Hole (Kor)
 	&BurnDrvBlockhl,			// Block Hole
+	&BurnDrvBlckout3,			// Block Out (Europe and Oceania)
 	&BurnDrvBlckoutj,			// Block Out (Japan)
 	&BurnDrvBlockout,			// Block Out (set 1)
 	&BurnDrvBlckout2,			// Block Out (set 2)
@@ -14632,7 +14641,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCkongmc,			// Crazy Kong (bootleg on Moon Cresta hardware)
 	&BurnDrvCkongs,				// Crazy Kong (Scramble hardware)
 #if defined FBNEO_DEBUG
+	&BurnDrvCkongpt2b,			// Crazy Kong Part II (alternative levels) [no comment, NOT WORKING]
+	&BurnDrvCkongpt2b2,			// Crazy Kong Part II (bootleg) [no comment]
+	&BurnDrvCkongpt2j,			// Crazy Kong Part II (Japan) [no comment]
+	&BurnDrvCkongpt2jeu,		// Crazy Kong Part II (Jeutel bootleg) [no comment]
 	&BurnDrvCkongpt2,			// Crazy Kong Part II (set 1) [no comment]
+	&BurnDrvCkongpt2a,			// Crazy Kong Part II (set 2) [no comment]
 #endif
 	&BurnDrvCkong,				// Crazy Kong
 	&BurnDrvCrzrallyg,			// Crazy Rally (Gecas license)
@@ -20290,6 +20304,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPunkshotj,			// Punk Shot (Japan 2 Players)
 	&BurnDrvPunkshot2,			// Punk Shot (US 2 Players)
 	&BurnDrvPunkshot,			// Punk Shot (US 4 Players)
+	&BurnDrvPunkshot2e,			// Punk Shot (World 2 Players)
 	&BurnDrvPururun,			// Pururun
 	&BurnDrvPushmans,			// Pushman (American Sammy license)
 	&BurnDrvPushman,			// Pushman (Korea, set 1)
@@ -23383,6 +23398,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkf2k2pls,			// The King of Fighters 2002 Plus (bootleg set 1)
 	&BurnDrvkf2k2pla,			// The King of Fighters 2002 Plus (bootleg set 2)
 	&BurnDrvkf2k2plb,			// The King of Fighters 2002 Plus (bootleg set 3)
+	&BurnDrvkf2k2ru35,			// The King of Fighters 2002 Remix Ultra 3.5 (Hack By FCHT)
 	&BurnDrvkf2k2plc,			// The King of Fighters 2002 Super (bootleg)
 	&BurnDrvkf2k3bl,			// The King of Fighters 2003 (bootleg set 1)
 	&BurnDrvkf2k3bla,			// The King of Fighters 2003 (bootleg set 2)

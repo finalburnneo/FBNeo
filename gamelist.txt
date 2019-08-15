@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12241 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12249 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -835,8 +835,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_battlex	|  	| Battle Cross (Jpn)					| 		| 1984	| Sony		| MSX		| 					|
 | battlex	|  	| Battle Cross						| 		| 1982	| Omori Electric| Miscellaneous	| 					|
 | bcruzm12	|  	| Battle Cruiser M-12					| 		| 1983	| Sigma Enterpri| Miscellaneous	| 					|
-| btlfieldb	|  	| Battle Field (bootleg)				| timesold	| 1987	| bootleg	| Miscellaneous	| no-rotation joystick ver		|
-| btlfield	|  	| Battle Field (Japan)					| timesold	| 1987	| Alpha Denshi C| Miscellaneous	| 					|
+| btlfieldb	|  	| Battle Field (bootleg)				| timesold	| 1987	| bootleg	| Alpha 68k	| no-rotation joystick ver		|
+| btlfield	|  	| Battle Field (Japan)					| timesold	| 1987	| Alpha Denshi C| Alpha 68k	| 					|
 | flipshot	|  	| Battle Flip Shot					| 		| 1998	| Visco		| Neo Geo MVS	| 					|
 | bgareggahk	|  	| Battle Garegga (Austria / Hong Kong) (Sat Feb 3 1996)	| bgaregga	| 1996	| Raizing / 8ing| Toaplan GP9001| 					|
 | bgaregga	|  	| Battle Garegga (Europe / USA / Japan / Asia) (Sat Feb | 		| 1996	| Raizing / 8ing| Toaplan GP9001| 					|
@@ -1060,9 +1060,10 @@ This list contains all games supported by FinalBurn Neo.
 | msx_blockhol	|  	| Block Hole (Kor)					| 		| 1990	| Zemina	| MSX		| 					|
 | sms_blockhol	|  	| Block Hole (Kor)					| 		| 1990	| Zemina	| Sega Master Sy| 					|
 | blockhl	|  	| Block Hole						| 		| 1989	| Konami	| GX973		| 					|
-| blockoutj	|  	| Block Out (Japan)					| blockout	| 1989	| Technos + Cali| Miscellaneous	| 					|
-| blockout	|  	| Block Out (set 1)					| 		| 1989	| Technos + Cali| Miscellaneous	| 					|
-| blockout2	|  	| Block Out (set 2)					| blockout	| 1989	| Technos + Cali| Miscellaneous	| 					|
+| blockout3	|  	| Block Out (Europe and Oceania)			| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
+| blockoutj	|  	| Block Out (Japan)					| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
+| blockout	|  	| Block Out (set 1)					| 		| 1989	| Technos Japan | Miscellaneous	| 					|
+| blockout2	|  	| Block Out (set 2)					| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
 | msx_blockrun	|  	| Blockade Runner (Jpn)					| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | cv_blockrun	|  	| Blockade Runner					| 		| 1984	| Interphase	| ColecoVision	| 					|
 | blockade	|  	| Blockade						| 		| 1976	| Gremlin	| Miscellaneous	| 					|
@@ -2069,7 +2070,12 @@ This list contains all games supported by FinalBurn Neo.
 | ckongg	|  	| Crazy Kong (bootleg on Galaxian hardware)		| ckong		| 1981	| bootleg	| Galaxian	| 					|
 | ckongmc	|  	| Crazy Kong (bootleg on Moon Cresta hardware)		| ckong		| 1981	| bootleg	| Galaxian	| 					|
 | ckongs	|  	| Crazy Kong (Scramble hardware)			| ckong		| 1981	| bootleg	| Galaxian	| 					|
+| ckongpt2b	| D NW	| Crazy Kong Part II (alternative levels)		| ckongpt2	| 1981	| bootleg	| Miscellaneous	| 					|
+| ckongpt2b2	| D	| Crazy Kong Part II (bootleg)				| ckongpt2	| 1981	| bootleg	| Miscellaneous	| 					|
+| ckongpt2j	| D	| Crazy Kong Part II (Japan)				| ckongpt2	| 1981	| Falcon	| Miscellaneous	| 					|
+| ckongpt2jeu	| D	| Crazy Kong Part II (Jeutel bootleg)			| ckongpt2	| 1981	| bootleg (Jeute| Miscellaneous	| 					|
 | ckongpt2	| D	| Crazy Kong Part II (set 1)				| 		| 1981	| Falcon	| Miscellaneous	| 					|
+| ckongpt2a	| D	| Crazy Kong Part II (set 2)				| ckongpt2	| 1981	| Falcon	| Miscellaneous	| 					|
 | ckong		|  	| Crazy Kong						| 		| 1981	| Kyoei / Falcon| Miscellaneous	| 					|
 | crzrallyg	|  	| Crazy Rally (Gecas license)				| crzrally	| 1985	| Tecfri (Gecas | Miscellaneous	| Graphics issues on some levels	|
 | crzrally	|  	| Crazy Rally (set 1)					| 		| 1985	| Tecfri	| Miscellaneous	| Graphics issues on some levels	|
@@ -3730,10 +3736,10 @@ This list contains all games supported by FinalBurn Neo.
 | ghunter	|  	| Gang Hunter / Dead Angle				| deadang	| 1988	| Seibu Kaihatsu| Miscellaneous	| 					|
 | msx_gangman	|  	| Gang Man (Euro)					| 		| 1988	| Armati Softwar| MSX		| 					|
 | msx_gangmanj	|  	| Gang Man (Jpn)					| msx_gangman	| 1983	| Hudson Soft	| MSX		| 					|
-| gangwarsb	|  	| Gang Wars (bootleg)					| gangwars	| 1989	| bootleg	| Miscellaneous	| 					|
-| gangwarsj	|  	| Gang Wars (Japan)					| gangwars	| 1989	| Alpha Denshi C| Miscellaneous	| 					|
-| gangwarsu	|  	| Gang Wars (US)					| gangwars	| 1989	| Alpha Denshi C| Miscellaneous	| 					|
-| gangwars	|  	| Gang Wars						| 		| 1989	| Alpha Denshi C| Miscellaneous	| 					|
+| gangwarsb	|  	| Gang Wars (bootleg)					| gangwars	| 1989	| bootleg	| Alpha 68k	| 					|
+| gangwarsj	|  	| Gang Wars (Japan)					| gangwars	| 1989	| Alpha Denshi C| Alpha 68k	| 					|
+| gangwarsu	|  	| Gang Wars (US)					| gangwars	| 1989	| Alpha Denshi C| Alpha 68k	| 					|
+| gangwars	|  	| Gang Wars						| 		| 1989	| Alpha Denshi C| Alpha 68k	| 					|
 | sms_robocop	|  	| Gangcheol RoboCop (Kor)				| 		| 1992	| Sieco		| Sega Master Sy| 					|
 | sms_gangster	|  	| Gangster Town (Euro, USA, Bra)			| 		| 1987	| Sega		| Sega Master Sy| 					|
 | ganryu	|  	| Ganryu / Musashi Ganryuki				| 		| 1999	| Visco		| Neo Geo MVS	| 					|
@@ -3931,9 +3937,9 @@ This list contains all games supported by FinalBurn Neo.
 | msx_gokiburi	|  	| Gokiburi Daisakusen. Bug Bomb (Jpn)			| 		| 1983	| Magicsoft	| MSX		| 					|
 | sms_dumpmats	|  	| Gokuaku Doumei Dump Matsumoto (Jpn)			| sms_prowres	| 1986	| Sega		| Sega Master Sy| 					|
 | pce_chukatai	|  	| Gokuraku! Chuka Taisen				| 		| 1992	| Taito		| PC Engine	| 					|
-| goldmedlb	|  	| Gold Medalist (bootleg)				| goldmedl	| 1988	| bootleg	| Miscellaneous	| 					|
-| goldmedl	|  	| Gold Medalist (set 1)					| 		| 1988	| SNK		| Miscellaneous	| 					|
-| goldmedla	|  	| Gold Medalist (set 2)					| goldmedl	| 1988	| SNK		| Miscellaneous	| 					|
+| goldmedlb	|  	| Gold Medalist (bootleg)				| goldmedl	| 1988	| bootleg	| Alpha 68k	| 					|
+| goldmedl	|  	| Gold Medalist (set 1)					| 		| 1988	| SNK		| Alpha 68k	| 					|
+| goldmedla	|  	| Gold Medalist (set 2)					| goldmedl	| 1988	| SNK		| Alpha 68k	| 					|
 | md_golden10	|   NW	| Golden 10 in 1 (Incomplete Dump)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | sms_goldnaxe	|  	| Golden Axe (Euro, USA)				| 		| 1989	| Sega		| Sega Master Sy| 					|
 | goldnaxe1d	|  	| Golden Axe (set 1, World, FD1094 317-0110 decrypted)	| goldnaxe	| 1989	| Sega		| System 16B	| 					|
@@ -5206,8 +5212,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_ksdizzy	|  	| Kwik Snax Dizzy (128K)				| 		| 1990	| Codemasters	| ZX Spectrum	| 					|
 | spec_ksdizzy_48|  	| Kwik Snax Dizzy (48K)					| spec_ksdizzy	| 1990	| Codemasters	| ZX Spectrum	| 					|
 | brkthruj	|  	| Kyohkoh-Toppa (Japan)					| brkthru	| 1986	| Data East Corp| Miscellaneous	| 					|
-| kyrosj	|  	| Kyros No Yakata (Japan)				| kyros		| 1986	| Alpha Denshi C| Miscellaneous	| 					|
-| kyros		|  	| Kyros							| 		| 1987	| Alpha Denshi C| Miscellaneous	| 					|
+| kyrosj	|  	| Kyros No Yakata (Japan)				| kyros		| 1986	| Alpha Denshi C| Alpha 68k	| 					|
+| kyros		|  	| Kyros							| 		| 1987	| Alpha Denshi C| Alpha 68k	| 					|
 | dadandrn	|  	| Kyukyoku Sentai Dadandarn (ver JAA)			| mmaulers	| 1993	| Konami	| GX170		| 					|
 | ktiger	|  	| Kyukyoku Tiger (Japan)				| twincobr	| 1987	| Toaplan / Tait| Miscellaneous	| 					|
 | ktiger2	|  	| Kyukyoku Tiger II (Ver 2.1J 1995/11/30)		| tcobra2	| 1995	| Taito Corporat| Taito F3 Syste| 					|
@@ -7003,7 +7009,7 @@ This list contains all games supported by FinalBurn Neo.
 | paddle2	|  	| Paddle 2 (bootleg on Block hardware)			| arkanoid	| 1986	| bootleg	| Arkanoid	| 					|
 | md_paddlegnk	|  	| Paddle Fighter (Jpn, Game no Kandume MegaCD Rip)	| md_paddle	| 1991	| Sega		| Sega Megadrive| 					|
 | md_paddle	|  	| Paddle Fighter (Jpn, SegaNet)				| 		| 1991	| Sega		| Sega Megadrive| 					|
-| paddlema	|  	| Paddle Mania						| 		| 1988	| SNK		| Miscellaneous	| 					|
+| paddlema	|  	| Paddle Mania						| 		| 1988	| SNK		| Alpha 68k	| 					|
 | samsho4k	|  	| Pae Wang Jeon Seol / Legend of a Warrior (Korean censo| samsho4	| 1996	| SNK		| Neo Geo MVS	| 					|
 | msx_paipanic	|  	| Pai Panic (Jpn)					| 		| 1983	| ASCII		| MSX		| 					|
 | paintrlr	|  	| Paint Roller						| crush		| 1981	| bootleg	| Pac-man	| 					|
@@ -7596,6 +7602,7 @@ This list contains all games supported by FinalBurn Neo.
 | punkshotj	|  	| Punk Shot (Japan 2 Players)				| punkshot	| 1990	| Konami	| GX907		| 					|
 | punkshot2	|  	| Punk Shot (US 2 Players)				| punkshot	| 1990	| Konami	| GX907		| 					|
 | punkshot	|  	| Punk Shot (US 4 Players)				| 		| 1990	| Konami	| GX907		| 					|
+| punkshot2e	|  	| Punk Shot (World 2 Players)				| punkshot	| 1990	| Konami	| GX907		| 					|
 | pururun	|  	| Pururun						| 		| 1995	| Metro / Banpre| Miscellaneous	| 					|
 | pushmans	|  	| Pushman (American Sammy license)			| pushman	| 1990	| Comad (America| Miscellaneous	| 					|
 | pushman	|  	| Pushman (Korea, set 1)				| 		| 1990	| Comad		| Miscellaneous	| 					|
@@ -8713,9 +8720,9 @@ This list contains all games supported by FinalBurn Neo.
 | skullfng	|  	| Skull Fang (World)					| 		| 1996	| Data East Corp| DECO MLC	| 					|
 | gg_skweek	|  	| Skweek (Jpn)						| gg_slider	| 1991	| Victor Musical| Sega Game Gear| 					|
 | pce_skweek	|  	| Skweek						| 		| 1991	| Victor Interac| PC Engine	| 					|
-| skyadvntj	|  	| Sky Adventure (Japan)					| skyadvnt	| 1989	| Alpha Denshi C| Miscellaneous	| 					|
-| skyadvntu	|  	| Sky Adventure (US)					| skyadvnt	| 1989	| Alpha Denshi C| Miscellaneous	| 					|
-| skyadvnt	|  	| Sky Adventure (World)					| 		| 1989	| Alpha Denshi C| Miscellaneous	| 					|
+| skyadvntj	|  	| Sky Adventure (Japan)					| skyadvnt	| 1989	| Alpha Denshi C| Alpha 68k	| 					|
+| skyadvntu	|  	| Sky Adventure (US)					| skyadvnt	| 1989	| Alpha Denshi C| Alpha 68k	| 					|
+| skyadvnt	|  	| Sky Adventure (World)					| 		| 1989	| Alpha Denshi C| Alpha 68k	| 					|
 | skyalert	|  	| Sky Alert						| 		| 1992	| Metro		| Miscellaneous	| 					|
 | skyarmy	|  	| Sky Army						| 		| 1982	| Shoei		| Miscellaneous	| 					|
 | skybase	|  	| Sky Base						| 		| 1982	| Omori Electric| Galaxian	| 					|
@@ -8738,8 +8745,8 @@ This list contains all games supported by FinalBurn Neo.
 | skysharka	|  	| Sky Shark (US, set 2)					| fshark	| 1987	| Toaplan / Tait| Miscellaneous	| 					|
 | skyskipr	|  	| Sky Skipper						| 		| 1981	| Nintendo	| Miscellaneous	| 					|
 | skysmash	|  	| Sky Smasher						| 		| 1990	| Nihon System	| Miscellaneous	| 					|
-| skysoldrbl	|  	| Sky Soldiers (bootleg)				| skysoldr	| 1988	| bootleg	| Miscellaneous	| 					|
-| skysoldr	|  	| Sky Soldiers (US)					| 		| 1988	| Alpha Denshi C| Miscellaneous	| 					|
+| skysoldrbl	|  	| Sky Soldiers (bootleg)				| skysoldr	| 1988	| bootleg	| Alpha 68k	| 					|
+| skysoldr	|  	| Sky Soldiers (US)					| 		| 1988	| Alpha Denshi C| Alpha 68k	| 					|
 | skywolf	|  	| Sky Wolf (set 1)					| airwolf	| 1987	| bootleg	| Kyugo		| 					|
 | skywolf2	|  	| Sky Wolf (set 2)					| airwolf	| 1987	| bootleg	| Kyugo		| 					|
 | skywolf3	|  	| Sky Wolf (set 3)					| airwolf	| 1987	| bootleg	| Kyugo		| 					|
@@ -9740,8 +9747,8 @@ This list contains all games supported by FinalBurn Neo.
 | sbbros	|  	| Super Buster Bros. (USA 901001)			| spang		| 1990	| Mitchell (Capc| Miscellaneous	| 					|
 | sucasino	|  	| Super Casino						| 		| 1984	| Data Amusement| Jack the Giant| 					|
 | pce_scdsys	| D NW	| Super CD-Rom System Card (v3.0)			| 		| 19??	| Hudson	| PC Engine	| 					|
-| sbasebalj	|  	| Super Champion Baseball (Japan)			| sbasebal	| 1989	| Alpha Denshi C| Miscellaneous	| 					|
-| sbasebal	|  	| Super Champion Baseball (US)				| 		| 1989	| Alpha Denshi C| Miscellaneous	| 					|
+| sbasebalj	|  	| Super Champion Baseball (Japan)			| sbasebal	| 1989	| Alpha Denshi C| Alpha 68k	| 					|
+| sbasebal	|  	| Super Champion Baseball (US)				| 		| 1989	| Alpha Denshi C| Alpha 68k	| 					|
 | superchsj	|  	| Super Chase - Criminal Termination (Japan)		| superchs	| 1992	| Taito Corporat| Taito Misc	| 					|
 | superchsu	|  	| Super Chase - Criminal Termination (US)		| superchs	| 1992	| Taito America | Taito Misc	| 					|
 | superchs	|  	| Super Chase - Criminal Termination (World)		| 		| 1992	| Taito Corporat| Taito Misc	| 					|
@@ -9947,7 +9954,7 @@ This list contains all games supported by FinalBurn Neo.
 | sstarcrs	|  	| Super Star Crest					| mooncrst	| 1980?	| Nichibutsu (Ta| Galaxian	| 					|
 | pce_sssoldr	|  	| Super Star Soldier					| 		| 1990	| Hudson	| PC Engine	| 					|
 | tg_sssoldr	|  	| Super Star Soldier					| 		| 1990	| NEC		| TurboGrafx 16	| 					|
-| sstingry	|  	| Super Stingray (Japan)				| 		| 1986	| Alpha Denshi C| Miscellaneous	| 					|
+| sstingry	|  	| Super Stingray (Japan)				| 		| 1986	| Alpha Denshi C| Alpha 68k	| 					|
 | md_ssf2ics	|  	| Super Street Fighter II (Hack, Color and Sound)	| md_ssf2	| 2014	| 2014 Pyron (co| Sega Megadrive| 					|
 | md_ssf2	|  	| Super Street Fighter II - The New Challengers (Euro)	| 		| 1994	| Capcom	| Sega Megadrive| 					|
 | md_ssf2j	|  	| Super Street Fighter II - The New Challengers (Jpn)	| md_ssf2	| 1994	| Capcom	| Sega Megadrive| 					|
@@ -10635,6 +10642,7 @@ This list contains all games supported by FinalBurn Neo.
 | kf2k2pls	|  	| The King of Fighters 2002 Plus (bootleg set 1)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k2pla	|  	| The King of Fighters 2002 Plus (bootleg set 2)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k2plb	|  	| The King of Fighters 2002 Plus (bootleg set 3)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
+| kf2k2ru35	|  	| The King of Fighters 2002 Remix Ultra 3.5 (Hack By FCH| kof2002	| 2006	| hack		| Neo Geo MVS	| 					|
 | kf2k2plc	|  	| The King of Fighters 2002 Super (bootleg)		| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k3bl	|  	| The King of Fighters 2003 (bootleg set 1)		| kof2003	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | kf2k3bla	|  	| The King of Fighters 2003 (bootleg set 2)		| kof2003	| 2003	| bootleg	| Neo Geo MVS	| 					|
@@ -10708,9 +10716,9 @@ This list contains all games supported by FinalBurn Neo.
 | tnzso		|  	| The NewZealand Story (World, old version) (older PCB)	| tnzs		| 1988	| Taito Corporat| Miscellaneous	| 					|
 | tnzsop	|  	| The NewZealand Story (World, prototype) (older PCB)	| tnzs		| 1988	| Taito Corporat| Miscellaneous	| 					|
 | tnzsoa	|  	| The NewZealand Story (World, unknown version) (older P| tnzs		| 1988	| Taito Corporat| Miscellaneous	| 					|
-| tnextspcj	|  	| The Next Space (Japan)				| tnextspc	| 1989	| SNK (Pasadena | Miscellaneous	| 					|
-| tnextspc	|  	| The Next Space (set 1)				| 		| 1989	| SNK		| Miscellaneous	| 					|
-| tnextspc2	|  	| The Next Space (set 2)				| tnextspc	| 1989	| SNK		| Miscellaneous	| 					|
+| tnextspcj	|  	| The Next Space (Japan)				| tnextspc	| 1989	| SNK (Pasadena | Alpha 68k	| 					|
+| tnextspc	|  	| The Next Space (set 1)				| 		| 1989	| SNK		| Alpha 68k	| 					|
+| tnextspc2	|  	| The Next Space (set 2)				| tnextspc	| 1989	| SNK		| Alpha 68k	| 					|
 | sms_ninja	|  	| The Ninja (Euro, USA)					| 		| 1986	| Sega		| Sega Master Sy| 					|
 | sms_ninjaj	|  	| The Ninja (Jpn)					| sms_ninja	| 1986	| Sega		| Sega Master Sy| 					|
 | ninjakj	|  	| The Ninja Kids (Japan)				| ninjak	| 1990	| Taito Corporat| Taito F2	| 					|
@@ -10945,8 +10953,8 @@ This list contains all games supported by FinalBurn Neo.
 | timescan1	|  	| Time Scanner (set 1, System 16A, FD1089B 317-0024)	| timescan	| 1987	| Sega		| System 16A	| 					|
 | timescan	|  	| Time Scanner (set 2, System 16B)			| 		| 1987	| Sega		| System 16B	| 					|
 | sms_timesold	|  	| Time Soldiers (Euro, USA, Bra)			| 		| 1989	| Sega		| Sega Master Sy| 					|
-| timesold1	|  	| Time Soldiers (US Rev 1)				| timesold	| 1987	| Alpha Denshi C| Miscellaneous	| 					|
-| timesold	|  	| Time Soldiers (US Rev 3)				| 		| 1987	| Alpha Denshi C| Miscellaneous	| 					|
+| timesold1	|  	| Time Soldiers (US Rev 1)				| timesold	| 1987	| Alpha Denshi C| Alpha 68k	| 					|
+| timesold	|  	| Time Soldiers (US Rev 3)				| 		| 1987	| Alpha Denshi C| Alpha 68k	| 					|
 | msx_timetrax	|  	| Time Trax (Euro)					| 		| 1986	| Bug-Byte Softw| MSX		| 					|
 | timetunl	|  	| Time Tunnel						| 		| 1982	| Taito Corporat| Taito SJ Syste| 					|
 | timesupd	|  	| Time's Up Demo					| 		| 2012	| NGF Dev. Inc.	| Neo Geo	| 					|

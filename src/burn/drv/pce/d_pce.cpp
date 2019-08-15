@@ -8682,3 +8682,24 @@ struct BurnDriver BurnDrvpce_contranes = {
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
+
+
+// PC-Engine CPU Timing Test by Chris Covell (http://www.chrismcovell.com/CPUTest/)
+
+static struct BurnRomInfo pce_cputestRomDesc[] = {
+	{ "CPU_Test_10.pce", 0x8000, 0x46D79BBE, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_cputest)
+STD_ROM_FN(pce_cputest)
+
+struct BurnDriverD BurnDrvpce_cputest = {
+	"pce_CPU_Test", NULL, NULL, NULL, "2019",
+	"PC-Engine CPU Timing Test by Chris Covell\0", NULL, "Homebrew", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	PceGetZipName, pce_cputestRomInfo, pce_cputestRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+

@@ -205,7 +205,7 @@
 <li>Upgraded Zodiack driver to use Generic Tilemaps, fixed sound-comms issue, and added bounty2 [iq_132]</li>
 <li>Fixed dips and improved timing in Mr. Do's Castle [dink]</li>
 <li>Improve soundcpu sync in Nostradamus / remove rom patch [dink]</li>
-<li>Added fix for Laser Ghost gun positioning problems []</li>
+<li>Added fix for Laser Ghost gun positioning problems [derpy]</li>
 <li>Added UI Feature "Show Game list at start-up" under Misc -> Options [dink]</li>
 <li>Un-break Twin Hawk / Daisenpu (regression from C-Chip updates) [dink]</li>
 <li>Hot-fix Sega MasterSystem's Rainbow Islands to work around a crash in the ending sequence (happens on real HW, too) [dink]</li>
@@ -236,9 +236,7 @@
 <li>Added Atari EEROM (x2212) device [dink]</li>
 <li>Fix distorted Kanji text in jojoba's (CPS3) service mode [dink]</li>
 <li>Enabled highscore saving for all CPS1/2 [barbudreadmon]</li>
-<li>Add Twins (booleg of Mega Twins) [ClawGrip, Roberto Fresca, Recreativas.org, The Dumping Union, barry]</li>
 <li>Updates to Boulderdash Part 2's sound section to hopefully fix a hang [dink]</li>
-<li>Transfer FBAlpha project to GitHub [Barry]</li>
 <li>Added BurnSoundClear() to burn_sound.h, include burn_sound.h in burnint.h [dink]</li>
 <li>Fix for Driftout titlescreen fade-effect (garbage on screen) [dink]</li>
 <li>Fix Metal Freezer Difficulty DIP [gamez fan]</li>
@@ -294,7 +292,6 @@
 <li>Fix Taito F3 states, missing graphics after state load from a cold-boot [dink]</li>
 <li>Added missing player 2 button #3 to Violence Fight [dink]</li>
 <li>Fix NeoGeo memory cards [Barry]</li>
-<li>Update FD1089 games to use Sega-style format [Barry] *update your romsets!!*</li>
 <li>Improved JoJo/JoJoba inputs [barbudreadmon]</li>
 <li>Fix 1943 bootlegs protection issue (flashing screen) [dink]</li>
 <li>Dragonball Z/Dragonball Z 2, impliment sprite dma - fixes missing/flickering sprites &amp; text, fix service mode (F2) [dink]</li>
@@ -329,14 +326,9 @@
 <li>Add handy BurnDump(fn, buf, bufsize); &amp; BurnDumpLoad(fn, buf, bufsize); to debug builds for driver-dev [dink]</li>
 <li>Sync romsets with MAME 0.209 [barbudreadmon]</li>
 <li>IPS: fix UI bugs, support patches which grow the romsize on Megadrive [dink]</li>
-<li>Added Enhanced versions of Super Hangon and Outrun v2.0.2 [dink]</li>
-<li>Added Wing Warriors (April 18 2019 version) to SMS [dink]</li>
 <li>Support added for Coleco Super Game Module, adding Cold Blood, Frost Bite, Kaboom!, Dragon's Lair SGM, Buck Rogers, Zaxxon SuperGame and Mecha-8 [dink]</li>
 <li>Guwange and EspRaDe removed an extra frame of lag [dink]</li>
-<li>Update Deep Dungeon to the latest version on MSX [dink]</li>
 <li>Fixed level selection DIPs in Trojan clones [dink]</li>
-<li>Added Danger Tower on MSX [dink]</li>
-<li>Added Boxxle, Star Fortress and Module Man on Coleco [dink]</li>
 <li>Buffered AY8910 &amp; SN76496/SN76489 sound cores, leading to better fidelity when used as a DAC, nicer driver-frame code and less cpu usage [dink]</li>
 <li>Added Sonic to the UI Family Filter [Ryvius86]</li>
 <li>Default High-Score saving to ON [Ryvius86]</li>
@@ -352,7 +344,6 @@
 <li>Fixed regional/DIP issue with Lethal Enforcers [dink]</li>
 <li>Rewrote the Galaga HW driver &amp; added Xevious [CupcakeFan]</li>
 <li>Added option to show/hide Debug Console in Debug builds (Misc -> Options -> Show Debug Console) [dink]</li>
-<li>Added Night Knight v1.0.3 to MSX [dink]</li>
 <li>Added support for compiling in Visual Studio 2019 [Kev]</li>
 <li>Shot Factory support added to 1942, Bionic Commando, Yie Ar Kung-Fu and SMS [Kev]</li>
 <li>Fix sound in Tek-Toy's Bomber on Megadrive [dink]</li>
@@ -392,6 +383,23 @@
 <li>Asterix - fix Konami logo [dink]</li>
 <li>Rewrite Dragon Master driver [iq_132]</li>
 <li>BurnMalloc() Better debug logging - shows source location, etc when enabled [dink]</li>
+<li>Hook-up protection MCU for Bionic Commando [iq_132]</li>
+<li>Fix analog batting input in Major League on System 16 [dink]</li>
+<li>Improve MCU emulation for Heavy Barrel on dec0, and hook up Birdie Try's MCU.  Special thanks to Team Europe and Ivan Vangelista for decapping and dumping Birdie Try's protection MCU [dink]</li>
+<li>Make the lightgun gunsight nicer and symmetric [fastpop72]</li>
+<li>Hook-up trackball device for Blades of Steel [dink]</li>
+<li>Add Analog sensitivity slider/config in inputs editor [dink]</li>
+<li>Netgame improvements for: blktiger, gunsmoke, centi/millipede, srumbler: fix bad graphics and disable p2 screen flipping in coctail mode [dink]</li>
+<li>Z80/68K cpu interfaces / behind the scenes changes to simplify sending signals to other cpus [dink]</li>
+<li>Jaleco Megasystem 1 re-work (st.dragon, rodland and p45 improvement) [dink]</li>
+<li>Sync romsets with MAME 0.212 [JacKc]</li>
+<li> []</li>
+<li> []</li>
+<li> []</li>
+<li> []</li>
+<li> []</li>
+<li> []</li>
+<li> []</li>
 <li> []</li>
 <li> []</li>
 </ul>
@@ -484,6 +492,8 @@
 <li>Added driver for Legionnaire, Heated Barrel, Denjin Makai, Godzilla and SD Gundam Sangokushi Rainbow Tairiku Senki on TAD/Seibu HW [iq_132, dink]</li>
 <li>Added driver for Dead Angle [iq_132, dink]</li>
 <li>Added driver for King of Boxer / Ring King [iq_132]</li>
+<li>Added driver for Akka Arrh [iq_132]</li>
+<li>Added driver for Hot-Rod, Gain Ground, Scramble Spirits, Crack Down, Super Masters Golf, Rough Racer, Bonanza Bros., Dynamic Country Club &amp; more on Sega System 24 [iq_132, dink]</li>
 </ul>
 <!-- new game additions to existing drivers -->
 <h4>New additions / updates to existing drivers</h4>
@@ -499,6 +509,7 @@
 <li>Add Royal Stone English translation the SMS/GameGear driver [barbudreadmon]</li>
 <li>Add Titan (Pac-Man hack) to the Pac-Man driver [Craig Anstett, CraftyMech, JacKc]</li>
 <li>Add Kabuki-Z to the public builds of FB Alpha - somehow this was overlooked, sorry about that! [dink]</li>
+<li>Add Twins (booleg of Mega Twins) [ClawGrip, Roberto Fresca, Recreativas.org, The Dumping Union, barry]</li>
 <li>Add Ikki, Strength and Skill, and Banbam to the Markham driver [iq_132]</li>
 <li>Add Toki no Senshi - Chrono Soldier as parent, older version is actually a prototype [Barry]</li>
 <li>Add support for Neo-Geo Universe BIOS 3.3 [Razoola, Barry]</li>
@@ -507,6 +518,11 @@
 <li>Add Vindicators II to the Gauntlet driver [iq_132]</li>
 <li>Add Street Fighter 2 Red Wave Pt II [okada yuko, Barry]</li>
 <li>Add English translations for Sonic Eraser and Barver Battle Saga to the Megadrive driver [barbudreadmon]</li>
+<li>Update Deep Dungeon to the latest version on MSX [dink]</li>
+<li>Add Danger Tower on MSX [dink]</li>
+<li>Add Boxxle, Star Fortress and Module Man on Coleco [dink]</li>
+<li>Add Enhanced versions of Super Hangon and Outrun v2.0.2 [dink]</li>
+<li>Add Wing Warriors (April 18 2019 version) to SMS [dink]</li>
 <li>Add Tanglewood v1.0 and demo to the Megadrive driver [dink]</li>
 <li>Add Flight of Pigarus v1.0 by Kagesan to the SMS driver [dink]</li>
 <li>Add Blaze On (World), making it the new parent [rtw, The Dumping Union]</li>
@@ -519,6 +535,7 @@
 <li>Add Bare Knuckle III (English Hack By Twilight Translations) [Ryuvius86]</li>
 <li>Add Xevious and Super Xevious to the Galaga driver [CupcakeFan]</li>
 <li>Add Pitapat Puzzle to the Cross Pang HW driver [dink, barbudreadmon, arnoldsecret]</li>
+<li>Added Night Knight v1.0.3 to MSX [dink]</li>
 <li>Update wofchdx to final edition on CPS-1. [SumavisionQ5]</li>
 <li>Update The King of Fighters '96 (The Aniversary Edition 2.0 Final Version 2019-05-30) [SumavisionQ5]</li>
 <li>Update The King of Fighters '98 (Combo) Ivex hack - 2018/05/05 version [SumavisionQ5]</li>
@@ -529,6 +546,18 @@
 <li>Add Ultimate Mortal Kombat 3 Cup Edition (Ver. 2019-07-04) (Hack) [Combone]</li>
 <li>Added Magic Purple to the Tumbleb driver [dink, iq_132]</li>
 <li>Add The King of Fighters '97 (Optimized Hack) from HBMAME [SumavisionQ5]</li>
+<li>Add KOF 97 Combo hack with Random Select [Combone]</li>
+<li>Add The King of Fighters '97 - Combo Training Version 2018 (Hack) [Combone]</li>
+<li>Add Super Monaco GP 2019 - HE Returns (30th Anniversary Edition) (Hack By TA_Marcos_Translations) [Combone]</li>
+<li>Add Street Fighter Alpha 3 - Xiang Long Edition (Hack by pipi899, Ver.2009-05-10) [Combone]</li>
+<li>Add Street Fighter Zero 2 Alpha - Dragon Level (Hack by pipi899) [Combone]</li>
+<li>Add The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT) [Combone]</li>
+<li>Add The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT) [Combone]</li>
+<li>Add The King of Fighters '99 - Remix Pro V2.0 Final (Hack By FCHT - FightChina Hackteam) [Combone]</li>
+<li>Add The King of Fighters '99 - Evolution Ultra Remix (Hack By Yashional) [Combone]</li>
+<li>Add The King of Fighters '99 - Summer Revolution (Hack By FCHT - FightChina Hack team) [Combone]</li>
+<li>Add Streets of Rage 2 - Street Fighter Version 1-4 hacks [Combone]</li>
+<li>Add The King of Fighters 2002 Remix Ultra 3.5 - Hack By FCHT [Combone]</li>
 </ul>
 <!-- clones and updated romsets in drivers -->
 <h4>Clones and updated romsets in existing drivers</h4>
@@ -602,6 +631,33 @@
 <li>Added Guardian Storm (horizontal, Australia) [xodaraP, dink]</li>
 <li>Added Top Secret (Japan, revision B) [FabC, JacKc]</li> 
 <li>Added Tetris Plus 2 (World, V2.7) [Team Japump!!!, JacKc]</li> 
+<li>Added Street Fighter: The Movie (v1.14N, Japan) [Jorge Silva, JacKc]</li>
+<li>Added Eagle Shot Golf (Japan, bootleg?) [Joshua Inman, JacKc]</li>
+<li>Added Klax (Japan, version 4) [farzeno, The Dumping Union, JacKc]</li>
+<li>Added U.N. Defense Force: Earth Joker (US / Japan, set 2) [Phil Bennett, JacKc]</li>
+<li>Added Ms. Pac-Man ('Made in Greece' bootleg, set 2) [Michael Moffitt, The Dumping Union, JacKc]</li>
+<li>Added PuLiRuLa (World, earlier?) [Jorge Silva, JacKc]</li>
+<li>Added Soldier Girl Amazon (Tecfri license) [Fredric Sjoholm, JacKc]</li>
+<li>Added Phoenix (G. Universal Video bootleg) [VectorGlow, JacKc]</li>
+<li>Added Phoenix (Hellomat Automaten bootleg) [unknown, JacKc]</li>
+<li>Added Niemer Fenix (Phoenix bootleg) [Clawgrip, JacKc]</li>
+<li>Added Marti Colls Zero Time [Clawgrip, JacKc]</li>
+<li>Added Add Pac-Man Spanish bootlegs / hacks [Clawgrip, JacKc]</li>
+<li>Added Pocket Gal Deluxe (Asia v3.00) [Jorge Silva, JacKc]</li>
+<li>Added Vendetta (World, 4 Players, ver. ?) [Jorge Silva, JacKc]</li>
+<li>Added Hard Head 2 (v2.0, Music Program v2.0) [Clawgrip, JacKc]</li>
+<li>Added 800 Fathoms (older) [ShouTime, The Dumping Union, JacKc]</li>
+<li>Added Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Version) [SumavisionQ5]</li>
+<li>Added Defend the Terra Attack on the Red UFO (bootleg, set 2) [anonymous, JacKc]</li>
+<li>Added River Patrol (Japan, unprotected) [ShouTime, Henrique Areias Pontes, Dane Biegert, Evan Korzon, Mario Mantese, Smitdogg, The Dumping Union, JacKc]</li>
+<li>Added The Simpsons (4 Players Asia) [Leonard S. Oliveira, JacKc]</li>
+<li>Added Pac-Man (Video Dens, Spanish bootleg on Galaxian hardware) [Tomas Garcia-Meras (ClawGrip), Roberto Fresca, Recreativas.org, The Dumping Union, JacKc]</li>
+<li>Added TouchDown Fever 2 (bootleg) [ClawGrip, Roberto Fresca, Recreativas.org, Dumping Union, JacKc]</li>
+<li>Added Ikari III - The Rescue (World, Rotary Joystick) [ClawGrip, Roberto Fresca, Recreativas.org, Dumping Union, JacKc]</li>
+<li>Added Raiden II (Korea) [Jorge Silva, JacKc]</li>
+<li>Added Tecmo World Cup '90 (Euro set 3) [coolmod, The Dumping Union, JacKc]</li>
+<li>Added Commando (bootleg set 3) [Guru, JacKc]</li>
+<li>Added Crazy Kong Part II (bootleg) [Corrado Tomaselli, The Dumping Union, JacKc]</li>
 </ul>
 
 <h3>v0.2.97.43</h3>

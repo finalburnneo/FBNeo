@@ -337,26 +337,41 @@ INT32 ZetGetActive()
 	return nOpenedCPU;
 }
 
-// ## ZetCPUPush() / ZetCPUPop() ## internal helpers for sending signals to other Z80's
-static INT32 nHostCPU, nPushedCPU;
+// ## ZetCPUPush() / ZetCPUPop() ## internal helpers for sending signals to other 68k's
+struct z80pstack {
+	INT32 nHostCPU;
+	INT32 nPushedCPU;
+};
+#define MAX_PSTACK 10
+
+static z80pstack pstack[MAX_PSTACK];
+static INT32 pstacknum = 0;
 
 static void ZetCPUPush(INT32 nCPU)
 {
-	nPushedCPU = nCPU;
+	z80pstack *p = &pstack[pstacknum++];
 
-	nHostCPU = ZetGetActive();
+	if (pstacknum + 1 >= MAX_PSTACK) {
+		bprintf(0, _T("ZetCPUPush(): out of stack!  Possible infinite recursion?  Crash pending..\n"));
+	}
 
-	if (nHostCPU != nPushedCPU) {
-		if (nHostCPU != -1) ZetClose();
-		ZetOpen(nPushedCPU);
+	p->nPushedCPU = nCPU;
+
+	p->nHostCPU = ZetGetActive();
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		if (p->nHostCPU != -1) ZetClose();
+		ZetOpen(p->nPushedCPU);
 	}
 }
 
 static void ZetCPUPop()
 {
-	if (nHostCPU != nPushedCPU) {
+	z80pstack *p = &pstack[--pstacknum];
+
+	if (p->nHostCPU != p->nPushedCPU) {
 		ZetClose();
-		if (nHostCPU != -1) ZetOpen(nHostCPU);
+		if (p->nHostCPU != -1) ZetOpen(p->nHostCPU);
 	}
 }
 
@@ -811,6 +826,21 @@ UINT8 ZetGetVector()
 	return ActiveZ80GetVector();
 }
 
+UINT8 ZetGetVector(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetVector called without init\n"));
+#endif
+
+	ZetCPUPush(nCPU);
+
+	INT32 nRet = ZetGetVector();
+
+	ZetCPUPop();
+
+	return nRet;
+}
+
 INT32 ZetNmi()
 {
 #if defined FBNEO_DEBUG
@@ -853,6 +883,21 @@ INT32 ZetIdle(INT32 nCycles)
 	return nCycles;
 }
 
+INT32 ZetIdle(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetIdle called without init\n"));
+#endif
+
+	ZetCPUPush(nCPU);
+
+	INT32 nRet = ZetIdle(nCycles);
+
+	ZetCPUPop();
+
+	return nRet;
+}
+
 INT32 ZetSegmentCycles()
 {
 #if defined FBNEO_DEBUG
@@ -873,11 +918,26 @@ INT32 ZetTotalCycles()
 	return nZetCyclesTotal + z80TotalCycles();
 }
 
-void ZetSetBUSREQLine(INT32 nStatus)
+INT32 ZetTotalCycles(INT32 nCPU)
 {
 #if defined FBNEO_DEBUG
-	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetBUSREQLine called without init\n"));
-	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetBUSREQLine called when no CPU open\n"));
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetTotalCycles called without init\n"));
+#endif
+
+	ZetCPUPush(nCPU);
+
+	INT32 nRet = ZetTotalCycles();
+
+	ZetCPUPop();
+
+	return nRet;
+}
+
+void ZetSetHALT(INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetHALT called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetHALT called when no CPU open\n"));
 #endif
 
 	if (nOpenedCPU < 0) return;
@@ -885,14 +945,42 @@ void ZetSetBUSREQLine(INT32 nStatus)
 	ZetCPUContext[nOpenedCPU]->BusReq = nStatus;
 }
 
-INT32 ZetGetBUSREQLine()
+void ZetSetHALT(INT32 nCPU, INT32 nStatus)
 {
 #if defined FBNEO_DEBUG
-	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetBUSREQ called without init\n"));
-	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetBUSREQ called when no CPU open\n"));
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetHALT called without init\n"));
+#endif
+
+	ZetCPUPush(nCPU);
+
+	ZetSetHALT(nStatus);
+
+	ZetCPUPop();
+}
+
+INT32 ZetGetHALT()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetHALT called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetHALT called when no CPU open\n"));
 #endif
 
 	return ZetCPUContext[nOpenedCPU]->BusReq;
+}
+
+INT32 ZetGetHALT(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetHALT called without init\n"));
+#endif
+
+	ZetCPUPush(nCPU);
+
+	INT32 nRet = ZetGetHALT();
+
+	ZetCPUPop();
+
+	return nRet;
 }
 
 void ZetSetRESETLine(INT32 nStatus)
@@ -927,11 +1015,26 @@ void ZetSetRESETLine(INT32 nCPU, INT32 nStatus)
 INT32 ZetGetRESETLine()
 {
 #if defined FBNEO_DEBUG
-	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetRESET called without init\n"));
-	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetRESET called when no CPU open\n"));
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetRESETLine called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetRESETLine called when no CPU open\n"));
 #endif
 
 	return ZetCPUContext[nOpenedCPU]->ResetLine;
+}
+
+INT32 ZetGetRESETLine(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetRESETLine called without init\n"));
+#endif
+
+	ZetCPUPush(nCPU);
+
+	INT32 nRet = ZetGetRESETLine();
+
+	ZetCPUPop();
+
+	return nRet;
 }
 
 void ZetSetAF(INT32 n, UINT16 value)

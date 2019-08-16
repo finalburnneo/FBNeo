@@ -8694,7 +8694,7 @@ STD_ROM_PICK(pce_cputest)
 STD_ROM_FN(pce_cputest)
 
 struct BurnDriverD BurnDrvpce_cputest = {
-	"pce_CPU_Test", NULL, NULL, NULL, "2019",
+	"pce_cputest", NULL, NULL, NULL, "2019",
 	"PC-Engine CPU Timing Test by Chris Covell\0", NULL, "Homebrew", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,

@@ -1,7 +1,7 @@
-/* Copyright  (C) 2010-2015 The RetroArch team
+/* Copyright  (C) 2010-2019 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
- * The following license statement only applies to this file (rsemaphore.h).
+ * The following license statement only applies to this file (media_detect_cd.h).
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
@@ -20,35 +20,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __LIBRETRO_SDK_SEMAPHORE_H
-#define __LIBRETRO_SDK_SEMAPHORE_H
+#ifndef __LIBRETRO_SDK_MEDIA_DETECT_CD_H
+#define __LIBRETRO_SDK_MEDIA_DETECT_CD_H
 
-#ifdef __cplusplus
-extern "C" {
+#include <retro_common_api.h>
+#include <boolean.h>
+
+RETRO_BEGIN_DECLS
+
+enum media_detect_cd_system
+{
+   MEDIA_CD_SYSTEM_MEGA_CD,
+   MEDIA_CD_SYSTEM_SATURN,
+   MEDIA_CD_SYSTEM_DREAMCAST,
+   MEDIA_CD_SYSTEM_PSX,
+   MEDIA_CD_SYSTEM_3DO,
+   MEDIA_CD_SYSTEM_PC_ENGINE_CD
+};
+
+typedef struct
+{
+   char title[256];
+   char system[128];
+   char region[128];
+   char serial[64];
+   char maker[64];
+   char version[32];
+   char release_date[32];
+   enum media_detect_cd_system system_id;
+} media_detect_cd_info_t;
+
+/* Fill in "info" with detected CD info. Use this when you want to open a specific track file directly, and the pregap is known. */
+bool media_detect_cd_info(const char *path, uint64_t pregap_bytes, media_detect_cd_info_t *info);
+
+/* Fill in "info" with detected CD info. Use this when you have a cue file and want it parsed to find the first data track and any pregap info. */
+bool media_detect_cd_info_cue(const char *path, media_detect_cd_info_t *info);
+
+RETRO_END_DECLS
+
 #endif
-
-typedef struct ssem ssem_t;
-
-/**
- * ssem_create:
- * @value                   : initial value for the semaphore
- *
- * Create a new semaphore.
- *
- * Returns: pointer to new semaphore if successful, otherwise NULL.
- */
-ssem_t *ssem_new(int value);
-
-void ssem_free(ssem_t *semaphore);
-
-int ssem_get(ssem_t *semaphore);
-
-void ssem_wait(ssem_t *semaphore);
-
-void ssem_signal(ssem_t *semaphore);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __LIBRETRO_SDK_SEMAPHORE_H */

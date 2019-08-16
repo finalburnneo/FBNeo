@@ -339,8 +339,8 @@ static bool parse_line(config_file_t *conf,
       comment++;
       if (strstr(comment, "include ") == comment)
       {
-         char *line = comment + STRLEN_CONST("include ");
-         char *path = extract_value(line, false);
+         char *include_line = comment + STRLEN_CONST("include ");
+         char *path         = extract_value(include_line, false);
 
          if (!path)
             return false;
@@ -396,17 +396,7 @@ static config_file_t *config_file_new_internal(
       const char *path, unsigned depth, config_file_cb_t *cb)
 {
    RFILE              *file = NULL;
-   struct config_file *conf = (struct config_file*)malloc(sizeof(*conf));
-   if (!conf)
-      return NULL;
-
-   conf->path                     = NULL;
-   conf->entries                  = NULL;
-   conf->tail                     = NULL;
-   conf->last                     = NULL;
-   conf->includes                 = NULL;
-   conf->include_depth            = 0;
-   conf->guaranteed_no_duplicates = false ;
+   struct config_file *conf = config_file_new_alloc();
 
    if (!path || !*path)
       return conf;
@@ -525,7 +515,7 @@ void config_file_free(config_file_t *conf)
 
 bool config_append_file(config_file_t *conf, const char *path)
 {
-   config_file_t *new_conf = config_file_new(path);
+   config_file_t *new_conf = config_file_new_from_path_to_string(path);
    if (!new_conf)
       return false;
 
@@ -540,7 +530,8 @@ bool config_append_file(config_file_t *conf, const char *path)
    return true;
 }
 
-config_file_t *config_file_new_from_string(const char *from_string)
+config_file_t *config_file_new_from_string(const char *from_string,
+      const char *path)
 {
    size_t i;
    struct string_list *lines = NULL;
@@ -558,6 +549,9 @@ config_file_t *config_file_new_from_string(const char *from_string)
    conf->includes                 = NULL;
    conf->include_depth            = 0;
    conf->guaranteed_no_duplicates = false ;
+
+   if (!string_is_empty(path))
+      conf->path                  = strdup(path);
 
    lines                          = string_split(from_string, "\n");
    if (!lines)
@@ -603,6 +597,26 @@ config_file_t *config_file_new_from_string(const char *from_string)
    return conf;
 }
 
+config_file_t *config_file_new_from_path_to_string(const char *path)
+{
+   int64_t length                = 0;
+   uint8_t *ret_buf              = NULL;
+   config_file_t *conf           = NULL;
+
+   if (path_is_valid(path))
+   {
+      if (filestream_read_file(path, (void**)&ret_buf, &length))
+      {
+         if (length >= 0)
+            conf = config_file_new_from_string((const char*)ret_buf, path);
+         if ((void*)ret_buf)
+            free((void*)ret_buf);
+      }
+   }
+
+   return conf;
+}
+
 config_file_t *config_file_new_with_callback(
       const char *path, config_file_cb_t *cb)
 {
@@ -612,6 +626,23 @@ config_file_t *config_file_new_with_callback(
 config_file_t *config_file_new(const char *path)
 {
    return config_file_new_internal(path, 0, NULL);
+}
+
+config_file_t *config_file_new_alloc(void)
+{
+   struct config_file *conf = (struct config_file*)malloc(sizeof(*conf));
+   if (!conf)
+      return NULL;
+
+   conf->path                     = NULL;
+   conf->entries                  = NULL;
+   conf->tail                     = NULL;
+   conf->last                     = NULL;
+   conf->includes                 = NULL;
+   conf->include_depth            = 0;
+   conf->guaranteed_no_duplicates = false ;
+
+   return conf;
 }
 
 static struct config_entry_list *config_get_entry(
@@ -1118,7 +1149,7 @@ static void test_config_file_parse_contains(
       const char * cfgtext,
       const char *key, const char *val)
 {
-   config_file_t *cfg = config_file_new_from_string(cfgtext);
+   config_file_t *cfg = config_file_new_from_string(cfgtext, NULL);
    char          *out = NULL;
    bool            ok = false;
 

@@ -2974,7 +2974,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="popeye">
-		<description>Popeye no Beach Volleyball (Jpn) [Graphics issues on map screen]</description>
+		<description>Popeye no Beach Volleyball (Jpn)</description>
 		<year>1994</year>
 		<manufacturer>Technos Japan</manufacturer>
 		<rom name="popeye no beach volleyball (japan).bin" size="524288" crc="3ef66810"/>

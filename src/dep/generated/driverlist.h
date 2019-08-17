@@ -7264,6 +7264,9 @@ DRV		BurnDrvpce_pcgenj2;
 DRV		BurnDrvpce_pcgenj3t;
 DRV		BurnDrvpce_pcgenj3;
 DRV		BurnDrvpce_pcpachi;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvpce_cputest;		// no comment
+#endif
 DRV		BurnDrvmd_pebble;
 DRV		BurnDrvmd_pebbleu;
 DRV		BurnDrvPeekaboou;
@@ -9671,6 +9674,7 @@ DRV		BurnDrvCpsSf2rb3;
 DRV		BurnDrvCpsSf2m4;
 DRV		BurnDrvCpsSf2rb5;
 DRV		BurnDrvCpsSf2rb6;
+DRV		BurnDrvCpsSf2re;
 DRV		BurnDrvCpsSf2red;
 DRV		BurnDrvCpsSf2red2;
 DRV		BurnDrvCpsSf2redp2;
@@ -13541,7 +13545,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvbioniccbl,			// Bionic Commandos (bootleg, set 1)
 	&BurnDrvbioniccbl2,			// Bionic Commandos (bootleg, set 2)
 	&BurnDrvBioplayc,			// Bioplaything Cop (Ver. 1.0.1823, prototype)
-	&BurnDrvBirdtry,			// Birdie Try (Japan)
+	&BurnDrvBirdtry,			// Birdie Try (Japan revision 2)
 	&BurnDrvbirdiy,				// Birdiy
 	&BurnDrvBishi,				// Bishi Bashi Championship Mini Game Senshuken (ver JAA, 3 Players)
 	&BurnDrvmd_sailormne,		// Bishoujo Senshi Sailor Moon (Hack, English)
@@ -19794,6 +19798,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_pcgenj3t,		// PC Genjin 3 - Pithecanthropus Computerurus (Taikenban)
 	&BurnDrvpce_pcgenj3,		// PC Genjin 3 - Pithecanthropus Computerurus
 	&BurnDrvpce_pcpachi,		// PC Pachi-slot
+#if defined FBNEO_DEBUG
+	&BurnDrvpce_cputest,		// PC-Engine CPU Timing Test by Chris Covell [no comment]
+#endif
 	&BurnDrvmd_pebble,			// Pebble Beach Golf Links (Euro)
 	&BurnDrvmd_pebbleu,			// Pebble Beach Golf Links (USA)
 	&BurnDrvPeekaboou,			// Peek-a-Boo! (North America, ver 1.0)
@@ -22201,6 +22208,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2m4,			// Street Fighter II' - Champion Edition (Rainbow bootleg set 4, 920322 Japan)
 	&BurnDrvCpsSf2rb5,			// Street Fighter II' - Champion Edition (Rainbow bootleg set 5, 920322 Japan)
 	&BurnDrvCpsSf2rb6,			// Street Fighter II' - Champion Edition (Rainbow bootleg set 6, 920313 etc)
+	&BurnDrvCpsSf2re,			// Street Fighter II' - Champion Edition (RE, bootleg)
 	&BurnDrvCpsSf2red,			// Street Fighter II' - Champion Edition (Red Wave bootleg set 1, 920313 etc)
 	&BurnDrvCpsSf2red2,			// Street Fighter II' - Champion Edition (Red Wave bootleg set 2, 920313 etc)
 	&BurnDrvCpsSf2redp2,		// Street Fighter II' - Champion Edition (Red Wave PtII bootleg, 920313 etc)

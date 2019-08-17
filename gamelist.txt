@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12249 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12251 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -995,7 +995,7 @@ This list contains all games supported by FinalBurn Neo.
 | bioniccbl	|  	| Bionic Commandos (bootleg, set 1)			| bionicc	| 1987	| bootleg	| Miscellaneous	| 					|
 | bioniccbl2	|  	| Bionic Commandos (bootleg, set 2)			| bionicc	| 1987	| bootleg	| Miscellaneous	| 					|
 | bioplayc	|  	| Bioplaything Cop (Ver. 1.0.1823, prototype)		| biomtoy	| 1995	| Gaelco	| Miscellaneous	| 					|
-| birdtry	|  	| Birdie Try (Japan)					| 		| 1988	| Data East Corp| DEC0		| 					|
+| birdtry	|  	| Birdie Try (Japan revision 2)				| 		| 1988	| Data East Corp| DEC0		| 					|
 | birdiy	|  	| Birdiy						| 		| 1982	| Mama Top	| Pac-man	| 					|
 | bishi		|  	| Bishi Bashi Championship Mini Game Senshuken (ver JAA,| 		| 1996	| Konami	| Miscellaneous	| Imperfect gfx (one gfx rom bad, bad pr|
 | md_sailormne	|  	| Bishoujo Senshi Sailor Moon (Hack, English)		| md_sailormn	| 2018	| Ma-Ba		| Sega Megadrive| 					|
@@ -7102,6 +7102,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_pcgenj3t	|  	| PC Genjin 3 - Pithecanthropus Computerurus (Taikenban)| 		| 1993	| Hudson	| PC Engine	| 					|
 | pce_pcgenj3	|  	| PC Genjin 3 - Pithecanthropus Computerurus		| 		| 1993	| Hudson	| PC Engine	| 					|
 | pce_pcpachi	|  	| PC Pachi-slot						| 		| 1992	| Game Express	| PC Engine	| 					|
+| pce_cputest	| D	| PC-Engine CPU Timing Test by Chris Covell		| 		| 2019	| Homebrew	| PC Engine	| 					|
 | md_pebble	|  	| Pebble Beach Golf Links (Euro)			| 		| 1993	| Sega		| Sega Megadrive| 					|
 | md_pebbleu	|  	| Pebble Beach Golf Links (USA)				| md_pebble	| 1993	| Sega		| Sega Megadrive| 					|
 | peekaboou	|  	| Peek-a-Boo! (North America, ver 1.0)			| peekaboo	| 1993	| Jaleco	| Mega System 1	| 					|
@@ -7413,7 +7414,7 @@ This list contains all games supported by FinalBurn Neo.
 | popeyeu	|  	| Popeye (revision D not protected)			| popeye	| 1982	| Nintendo	| Miscellaneous	| 					|
 | popeye	|  	| Popeye (revision D)					| 		| 1982	| Nintendo	| Miscellaneous	| 					|
 | popeyef	|  	| Popeye (revision F)					| popeye	| 1982	| Nintendo	| Miscellaneous	| 					|
-| gg_popeye	|  	| Popeye no Beach Volleyball (Jpn)			| 		| 1994	| Technos Japan	| Sega Game Gear| Graphics issues on map screen		|
+| gg_popeye	|  	| Popeye no Beach Volleyball (Jpn)			| 		| 1994	| Technos Japan	| Sega Game Gear| 					|
 | popeyeman	|  	| Popeye-Man						| puckman	| 1981	| hack		| Pac-man	| 					|
 | cv_popeye	|  	| Popeye						| 		| 1983	| Parker Brother| ColecoVision	| 					|
 | msx_poppaq	|  	| Poppaq the Fish (Jpn)					| 		| 1984	| ASCII		| MSX		| 					|
@@ -9469,6 +9470,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2m4		|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb5	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb6	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2re		|  	| Street Fighter II' - Champion Edition (RE, bootleg)	| sf2ce		| 1992	| bootleg	| CPS1		| imperfect graphics			|
 | sf2red	|  	| Street Fighter II' - Champion Edition (Red Wave bootle| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2red2	|  	| Street Fighter II' - Champion Edition (Red Wave bootle| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2redp2	|  	| Street Fighter II' - Champion Edition (Red Wave PtII b| sf2ce		| 1992	| bootleg	| CPS1		| 					|

@@ -11981,6 +11981,34 @@ static struct BurnRomInfo Sf2cems6aRomDesc[] = {
 STD_ROM_PICK(Sf2cems6a)
 STD_ROM_FN(Sf2cems6a)
 
+static struct BurnRomInfo Sf2reRomDesc[] = {
+	// combines sf2m8 program ROMs with sf2cems6a ROMs for most GFX and common ROMs for sound
+	{ "4.u222",   		0x0080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
+	{ "3.u196",   		0x0080000, 0x95ea597e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
+	{ "2.u221",   		0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
+	{ "1.u195",   		0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
+	
+	{ "1mre125.u70",    0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
+	{ "3mre121.u68",  	0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
+	{ "5mre148.u69",  	0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
+	{ "7mrd413.u64",    0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
+	{ "sfiire143.u19",  0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
+	{ "sfiire073.u18",  0x0100000, 0x93ec42ae, BRF_GRA | CPS1_TILES },	
+
+	{ "csicat27c512.u191", 	0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	{ "27c010.u210",   0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+		
+	{ "27c010.u31",    0x020000, 0x6de44671, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "27c010.u29",    0x020000, 0xe8f14362, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "27c010.u30",    0x020000, 0xbf0cd819, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "27c010.u28",    0x020000, 0x76f9f91f, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	
+};
+
+STD_ROM_PICK(Sf2re)
+STD_ROM_FN(Sf2re)
+
 static struct BurnRomInfo Sf2ceuab5RomDesc[] = {
 	{ "7.bin",         0x080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
 	{ "5.bin",         0x080000, 0x95ea597e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
@@ -14293,6 +14321,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceuab2"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2m8"       , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2cems6a"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
+	{ "sf2re"   	, HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab5"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab6"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceblp"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -17564,6 +17593,13 @@ static INT32 Sf2m8Init()
 }
 
 static INT32 Sf2cems6aInit()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2koryu;
+	
+	return Sf2m3Init();
+}
+
+static INT32 Sf2reInit()
 {
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2koryu;
 	
@@ -21129,6 +21165,16 @@ struct BurnDriver BurnDrvCpsSf2cems6a = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2cems6aRomInfo, Sf2cems6aRomName, NULL, NULL, NULL, NULL, Sf2m3InputInfo, Sf2DIPInfo,
 	Sf2cems6aInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2re = {
+	"sf2re", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - Champion Edition (RE, bootleg)\0", "imperfect graphics", "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2reRomInfo, Sf2reRomName, NULL, NULL, NULL, NULL, Sf2m3InputInfo, Sf2DIPInfo,
+	Sf2reInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -201,17 +201,21 @@ static INT32 load_rom()
 	BurnDrvGetRomInfo(&ri, 0);
 	size = ri.nLen;
 
-	/* Don't load games smaller than 16K */
-    if(size < 0x2000) return 0;
+	/* If less than 16K pad up to 16K */
+	if (size < 0x2000)
+		size = 0x2000;
 
-	cart.rom = (UINT8 *)BurnMalloc(0x100000);
-	if (BurnLoadRom(cart.rom + 0x0000, 0, 1)) return 0;
+	cart.rom = (UINT8 *)BurnMalloc(size);
+	if (BurnLoadRom(cart.rom + 0x0000, 0, 1)) 
+		return 0;
 
     /* Take care of image header, if present */
-    if((size / 512) & 1)
-    {   bprintf(0, _T("Removed SMS Cart header.\n"));
+	// TODO: I am not sure this is needed! it messes up some homebrew where they don't / 512 and have no header
+    if(((size / 512) & 1) && ((BurnDrvGetHardwareCode() & HARDWARE_SMS_NO_CART_HEADER) != HARDWARE_SMS_NO_CART_HEADER))
+    {  
+		bprintf(0, _T("Removed SMS Cart header.\n"));
         size -= 512;
-        memmove(cart.rom, cart.rom + 512, size);
+        memcpy(cart.rom, cart.rom + 512, size);
     }
 
     cart.pages = (size / 0x4000);
@@ -304,7 +308,8 @@ INT32 SMSInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) 
+		return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -27662,3 +27667,25 @@ struct BurnDriver BurnDrvsms_wingwarriors = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };
+
+
+// pcmenc demo 1 - https://github.com/maxim-zhao/pcmenc
+
+static struct BurnRomInfo sms_novdmvdpRomDesc[] = {
+	{ "novdmvdp.sms", 0x3FBA7B, 0xD0EABE60, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_novdmvdp)
+STD_ROM_FN(sms_novdmvdp)
+
+struct BurnDriver BurnDrvsms_novdmvdp = {
+	"sms_novdmvdp", NULL, NULL, NULL, "2019",
+	"New Order vs Depeche Mode vs Daft Punk - (Sterbinszky and Coddie Mashup)\0", NULL, "Maxim", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_NO_CART_HEADER, GBF_MISC, 0,
+	SMSGetZipName, sms_novdmvdpRomInfo, sms_novdmvdpRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+

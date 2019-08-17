@@ -30,7 +30,7 @@ void system_frame(INT32 skip_render)
 {
     static INT32 iline_table[] = {0xC0, 0xE0, 0xF0};
     INT32 lpf = (sms.display == DISPLAY_NTSC) ? 262 : 313;
-    INT32 iline, z80cnt = 0;;
+    INT32 iline;
 	INT32 nSoundBufferPos = 0;
 
     /* Debounce pause key */
@@ -59,7 +59,6 @@ void system_frame(INT32 skip_render)
     for(vdp.line = 0; vdp.line < lpf;)
     {
         iline = iline_table[vdp.extended];
-		z80cnt = 0;
 
         if(!skip_render)
         {
@@ -86,7 +85,7 @@ void system_frame(INT32 skip_render)
             vdp.left = vdp.reg[0x0A];
         }
 
-		ZetRun(228 - z80cnt);
+		ZetRun(CYCLES_PER_LINE);
 
         if(vdp.line == iline)
         {

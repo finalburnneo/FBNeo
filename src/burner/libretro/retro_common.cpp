@@ -76,23 +76,157 @@ static UINT8 diag_input_select_a_b[] =  {RETRO_DEVICE_ID_JOYPAD_SELECT, RETRO_DE
 static UINT8 diag_input_select_l_r[] =  {RETRO_DEVICE_ID_JOYPAD_SELECT, RETRO_DEVICE_ID_JOYPAD_L, RETRO_DEVICE_ID_JOYPAD_R, RETRO_DEVICE_ID_JOYPAD_EMPTY };
 
 // Global core options
-static const struct retro_variable var_empty = { NULL, NULL };
-static const struct retro_variable var_fbneo_allow_depth_32 = { "fbneo-allow-depth-32", "Use 32-bits color depth when available; disabled|enabled" };
-static const struct retro_variable var_fbneo_vertical_mode = { "fbneo-vertical-mode", "Vertical mode; disabled|enabled" };
-static const struct retro_variable var_fbneo_frameskip = { "fbneo-frameskip", "Frameskip; 0|1|2|3|4|5" };
-static const struct retro_variable var_fbneo_cpu_speed_adjust = { "fbneo-cpu-speed-adjust", "CPU overclock; 100|110|120|130|140|150|160|170|180|190|200" };
-static const struct retro_variable var_fbneo_diagnostic_input = { "fbneo-diagnostic-input", "Diagnostic Input; None|Hold Start|Start + A + B|Hold Start + A + B|Start + L + R|Hold Start + L + R|Hold Select|Select + A + B|Hold Select + A + B|Select + L + R|Hold Select + L + R" };
-static const struct retro_variable var_fbneo_hiscores = { "fbneo-hiscores", "Hiscores; enabled|disabled" };
-static const struct retro_variable var_fbneo_samplerate = { "fbneo-samplerate", "Samplerate (need to quit retroarch); 48000|44100|22050|11025" };
-static const struct retro_variable var_fbneo_sample_interpolation = { "fbneo-sample-interpolation", "Sample Interpolation; 4-point 3rd order|2-point 1st order|disabled" };
-static const struct retro_variable var_fbneo_fm_interpolation = { "fbneo-fm-interpolation", "FM Interpolation; 4-point 3rd order|disabled" };
-static const struct retro_variable var_fbneo_analog_speed = { "fbneo-analog-speed", "Analog Speed; 100%|95%|90%|85%|80%|75%|70%|65%|60%|55%|50%|45%|40%|35%|30%|25%" };
+static const struct retro_core_option_definition var_empty = { NULL, NULL, NULL, {{0}}, NULL };
+static const struct retro_core_option_definition var_fbneo_allow_depth_32 = {
+	"fbneo-allow-depth-32",
+	"Use 32-bits color depth when available",
+	"Change pixel format, some games require this to render properly, it could impact performances on some platforms",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_vertical_mode = {
+	"fbneo-vertical-mode",
+	"Vertical mode",
+	"Rotate display for vertical screens",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"disabled"
+};
+static const struct retro_core_option_definition var_fbneo_frameskip = {
+	"fbneo-frameskip",
+	"Frameskip",
+	"Skip rendering of X frames out of X+1",
+	{
+		{ "0", "No skipping" },
+		{ "1", "Skip rendering of 1 frames out of 2" },
+		{ "2", "Skip rendering of 2 frames out of 3" },
+		{ "3", "Skip rendering of 3 frames out of 4" },
+		{ "4", "Skip rendering of 4 frames out of 5" },
+		{ "5", "Skip rendering of 5 frames out of 6" },
+		{ NULL, NULL },
+	},
+	"0"
+};
+static const struct retro_core_option_definition var_fbneo_cpu_speed_adjust = {
+	"fbneo-cpu-speed-adjust",
+	"CPU clock",
+	"Change emulated cpu frequency for various systems, by increasing you can fix native slowdowns in some games, by decreasing you can help performance on low-end devices",
+	{
+		PERCENT_VALUES
+	},
+	"100%"
+};
+static const struct retro_core_option_definition var_fbneo_diagnostic_input = {
+	"fbneo-diagnostic-input",
+	"Diagnostic Input",
+	"Configure button combination to enter cabinet service menu",
+	{
+		{ "None", NULL },
+		{ "Hold Start", NULL },
+		{ "Start + A + B", NULL },
+		{ "Hold Start + A + B", NULL },
+		{ "Start + L + R", NULL },
+		{ "Hold Start + L + R", NULL },
+		{ "Hold Select", NULL },
+		{ "Select + A + B", NULL },
+		{ "Hold Select + A + B", NULL },
+		{ "Select + L + R", NULL },
+		{ "Hold Select + L + R", NULL },
+		{ NULL, NULL },
+	},
+	"Hold Start"
+};
+static const struct retro_core_option_definition var_fbneo_hiscores = {
+	"fbneo-hiscores",
+	"Hiscores",
+	"Enable high scores support, you also need the file hiscore.dat in your system/fbneo/ folder",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_samplerate = {
+	"fbneo-samplerate",
+	"Samplerate",
+	"Configure samplerate, it could impact performances, closing & starting game again is required",
+	{
+		{ "11025", NULL },
+		{ "22050", NULL },
+		{ "44100", NULL },
+		{ "48000", NULL },
+		{ NULL, NULL },
+	},
+	"48000"
+};
+static const struct retro_core_option_definition var_fbneo_sample_interpolation = {
+	"fbneo-sample-interpolation",
+	"Sample Interpolation",
+	"Configure sample interpolation, it could impact performances",
+	{
+		{ "disabled", NULL },
+		{ "2-point 1st order", NULL },
+		{ "4-point 3rd order", NULL },
+		{ NULL, NULL },
+	},
+	"4-point 3rd order"
+};
+static const struct retro_core_option_definition var_fbneo_fm_interpolation = {
+	"fbneo-fm-interpolation",
+	"FM Interpolation",
+	"Configure FM interpolation, it could impact performances",
+	{
+		{ "disabled", NULL },
+		{ "4-point 3rd order", NULL },
+		{ NULL, NULL },
+	},
+	"4-point 3rd order"
+};
+static const struct retro_core_option_definition var_fbneo_analog_speed = {
+	"fbneo-analog-speed",
+	"Analog Speed",
+	"Mitigate analog controls speed, some games might require low values to be playable",
+	{
+		PERCENT_VALUES
+	},
+	"100%"
+};
 #ifdef USE_CYCLONE
-static const struct retro_variable var_fbneo_cyclone = { "fbneo-cyclone", "Cyclone (need to quit retroarch, change savestate format, use at your own risk); disabled|enabled" };
+static const struct retro_core_option_definition var_fbneo_cyclone = {
+	"fbneo-cyclone",
+	"Enable cyclone",
+	"Use at your own risk, it could improve performance on some emulated systems for low-end devices, but there are known side effects : savestates won't be compatible with normal interpreter, and some systems won't work",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"disabled"
+};
 #endif
 
 // Neo Geo core options
-static const struct retro_variable var_fbneo_neogeo_mode = { "fbneo-neogeo-mode", "Force Neo Geo mode (if available); MVS|AES|UNIBIOS|DIPSWITCH" };
+static const struct retro_core_option_definition var_fbneo_neogeo_mode = {
+	"fbneo-neogeo-mode",
+	"Neo-Geo mode",
+	"Load appropriate bios depending on your choice, under the condition such a bios is compatible with the running game, changing this will restart your game",
+	{
+		{ "DIPSWITCH", "Use bios specified in BIOS dipswitch below" },
+		{ "MVS", "Use MVS bios" },
+		{ "AES", "Use AES bios" },
+		{ "UNIBIOS", "Use UNIBIOS bios" },
+		{ NULL, NULL },
+	},
+	"DIPSWITCH"
+};
 
 // Replace the char c_find by the char c_replace in the destination c string
 char* str_char_replace(char* destination, char c_find, char c_replace)
@@ -217,8 +351,8 @@ void evaluate_neogeo_bios_mode(const char* drvname)
 
 void set_environment()
 {
-	std::vector<const retro_variable*> vars_systems;
-	struct retro_variable *vars;
+	std::vector<const retro_core_option_definition*> vars_systems;
+	struct retro_core_option_definition *vars;
 #ifdef _MSC_VER
 #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
 	struct retro_vfs_interface_info vfs_iface_info;
@@ -259,7 +393,7 @@ void set_environment()
 	log_cb(RETRO_LOG_INFO, "set_environment: SYSTEM: %d, DIPSWITCH: %d\n", nbr_vars, nbr_dips);
 #endif
 
-	vars = (struct retro_variable*)calloc(nbr_vars + nbr_dips + 1, sizeof(struct retro_variable));
+	vars = (struct retro_core_option_definition*)calloc(nbr_vars + nbr_dips + 1, sizeof(struct retro_core_option_definition));
 
 	int idx_var = 0;
 
@@ -267,9 +401,6 @@ void set_environment()
 	for (int i = 0; i < nbr_vars; i++, idx_var++)
 	{
 		vars[idx_var] = *vars_systems[i];
-#if 0
-		log_cb(RETRO_LOG_INFO, "retro_variable (SYSTEM)    { '%s', '%s' }\n", vars[idx_var].key, vars[idx_var].value);
-#endif
 	}
 
 	// Add the DIP switches core options
@@ -279,17 +410,147 @@ void set_environment()
 		if (!is_neogeo_game || allow_neogeo_mode || strcasecmp(dipswitch_core_options[dip_idx].friendly_name, "BIOS") != 0)
 		{
 			vars[idx_var].key = dipswitch_core_options[dip_idx].option_name;
-			vars[idx_var].value = dipswitch_core_options[dip_idx].values_str.c_str();
-#if 0
-			log_cb(RETRO_LOG_INFO, "retro_variable (DIPSWITCH) { '%s', '%s' }\n", vars[idx_var].key, vars[idx_var].value);
-#endif
+			vars[idx_var].desc = dipswitch_core_options[dip_idx].friendly_name;
+			vars[idx_var].info = "Dipswitch setting, setting is specific to the running romset";
+			for (int dip_value_idx = 0; dip_value_idx < dipswitch_core_options[dip_idx].values.size(); dip_value_idx++)
+			{
+				vars[idx_var].values[dip_value_idx].value = dipswitch_core_options[dip_idx].values[dip_value_idx].friendly_name;
+			}
+			vars[idx_var].values[dipswitch_core_options[dip_idx].values.size()].value = NULL;
+			vars[idx_var].default_value = dipswitch_core_options[dip_idx].default_value;
 			idx_var++;
 		}
 	}
 
 	vars[idx_var] = var_empty;
-	environ_cb(RETRO_ENVIRONMENT_SET_VARIABLES, (void*)vars);
-	free(vars);
+
+	unsigned version = 0;
+
+	if (environ_cb(RETRO_ENVIRONMENT_GET_CORE_OPTIONS_VERSION, &version) && (version == 1))
+	{
+		struct retro_core_options_intl core_options_intl;
+
+		core_options_intl.us    = vars;
+		core_options_intl.local = NULL;
+
+		environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_INTL, &core_options_intl);
+	}
+	else
+	{
+		size_t i;
+		size_t num_options               = 0;
+		struct retro_variable *variables = NULL;
+		char **values_buf                = NULL;
+
+		/* Determine number of options */
+		while (true)
+		{
+			if (vars[num_options].key)
+				num_options++;
+			else
+				break;
+		}
+
+		/* Allocate arrays */
+		variables  = (struct retro_variable *)calloc(num_options + 1, sizeof(struct retro_variable));
+		values_buf = (char **)calloc(num_options, sizeof(char *));
+
+		if (!variables || !values_buf)
+			goto error;
+
+		/* Copy parameters from option_defs_us array */
+		for (i = 0; i < num_options; i++)
+		{
+			const char *key                        = vars[i].key;
+			const char *desc                       = vars[i].desc;
+			const char *default_value              = vars[i].default_value;
+			struct retro_core_option_value *values = vars[i].values;
+			size_t buf_len                         = 3;
+			size_t default_index                   = 0;
+
+			values_buf[i] = NULL;
+
+			if (desc)
+			{
+				size_t num_values = 0;
+
+				/* Determine number of values */
+				while (true)
+				{
+					if (values[num_values].value)
+					{
+						/* Check if this is the default value */
+						if (default_value)
+							if (strcmp(values[num_values].value, default_value) == 0)
+								default_index = num_values;
+
+						buf_len += strlen(values[num_values].value);
+						num_values++;
+					}
+					else
+						break;
+				}
+
+				if (num_values > 0)
+				{
+					size_t j;
+
+					buf_len += num_values - 1;
+					buf_len += strlen(desc);
+
+					values_buf[i] = (char *)calloc(buf_len, sizeof(char));
+					if (!values_buf[i])
+						goto error;
+
+					strcpy(values_buf[i], desc);
+					strcat(values_buf[i], "; ");
+
+					/* Default value goes first */
+					strcat(values_buf[i], values[default_index].value);
+
+					/* Add remaining values */
+					for (j = 0; j < num_values; j++)
+					{
+						if (j != default_index)
+						{
+							strcat(values_buf[i], "|");
+							strcat(values_buf[i], values[j].value);
+						}
+					}
+				}
+			}
+
+			variables[i].key   = key;
+			variables[i].value = values_buf[i];
+		}
+
+		/* Set variables */
+		environ_cb(RETRO_ENVIRONMENT_SET_VARIABLES, variables);
+
+error:
+
+		/* Clean up */
+		if (values_buf)
+		{
+			for (i = 0; i < num_options; i++)
+			{
+				if (values_buf[i])
+				{
+					free(values_buf[i]);
+					values_buf[i] = NULL;
+				}
+			}
+
+			free(values_buf);
+			values_buf = NULL;
+		}
+
+		if (variables)
+		{
+			free(variables);
+			variables = NULL;
+		}
+	}
 
 	// Initialize VFS
 	// Only on UWP for now, since EEPROM saving is not VFS aware
@@ -303,6 +564,65 @@ void set_environment()
 #endif
 }
 
+static int percent_parser(const char *value)
+{
+	INT32 nVal = 100;
+	if (strcmp(value, "100%") == 0)
+		nVal = 100;
+	else if (strcmp(value, "110%") == 0)
+		nVal = 110;
+	else if (strcmp(value, "120%") == 0)
+		nVal = 120;
+	else if (strcmp(value, "130%") == 0)
+		nVal = 130;
+	else if (strcmp(value, "140%") == 0)
+		nVal = 140;
+	else if (strcmp(value, "150%") == 0)
+		nVal = 150;
+	else if (strcmp(value, "160%") == 0)
+		nVal = 160;
+	else if (strcmp(value, "170%") == 0)
+		nVal = 170;
+	else if (strcmp(value, "180%") == 0)
+		nVal = 180;
+	else if (strcmp(value, "190%") == 0)
+		nVal = 190;
+	else if (strcmp(value, "200%") == 0)
+		nVal = 200;
+	else if (strcmp(value, "95%") == 0)
+		nVal = 95;
+	else if (strcmp(value, "90%") == 0)
+		nVal = 90;
+	else if (strcmp(value, "85%") == 0)
+		nVal = 85;
+	else if (strcmp(value, "80%") == 0)
+		nVal = 80;
+	else if (strcmp(value, "75%") == 0)
+		nVal = 75;
+	else if (strcmp(value, "70%") == 0)
+		nVal = 70;
+	else if (strcmp(value, "65%") == 0)
+		nVal = 65;
+	else if (strcmp(value, "60%") == 0)
+		nVal = 60;
+	else if (strcmp(value, "55%") == 0)
+		nVal = 55;
+	else if (strcmp(value, "50%") == 0)
+		nVal = 50;
+	else if (strcmp(value, "45%") == 0)
+		nVal = 45;
+	else if (strcmp(value, "40%") == 0)
+		nVal = 40;
+	else if (strcmp(value, "35%") == 0)
+		nVal = 35;
+	else if (strcmp(value, "30%") == 0)
+		nVal = 30;
+	else if (strcmp(value, "25%") == 0)
+		nVal = 25;
+
+	return (int)((double)nVal * 256.0 / 100.0 + 0.5);
+}
+
 void check_variables(void)
 {
 	struct retro_variable var = {0};
@@ -310,28 +630,7 @@ void check_variables(void)
 	var.key = var_fbneo_cpu_speed_adjust.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
-		if (strcmp(var.value, "110") == 0)
-			nBurnCPUSpeedAdjust = 0x0110;
-		else if (strcmp(var.value, "120") == 0)
-			nBurnCPUSpeedAdjust = 0x0120;
-		else if (strcmp(var.value, "130") == 0)
-			nBurnCPUSpeedAdjust = 0x0130;
-		else if (strcmp(var.value, "140") == 0)
-			nBurnCPUSpeedAdjust = 0x0140;
-		else if (strcmp(var.value, "150") == 0)
-			nBurnCPUSpeedAdjust = 0x0150;
-		else if (strcmp(var.value, "160") == 0)
-			nBurnCPUSpeedAdjust = 0x0160;
-		else if (strcmp(var.value, "170") == 0)
-			nBurnCPUSpeedAdjust = 0x0170;
-		else if (strcmp(var.value, "180") == 0)
-			nBurnCPUSpeedAdjust = 0x0180;
-		else if (strcmp(var.value, "190") == 0)
-			nBurnCPUSpeedAdjust = 0x0190;
-		else if (strcmp(var.value, "200") == 0)
-			nBurnCPUSpeedAdjust = 0x0200;
-		else
-			nBurnCPUSpeedAdjust = 0x0100;
+		nBurnCPUSpeedAdjust = percent_parser(var.value);
 	}
 
 	var.key = var_fbneo_allow_depth_32.key;
@@ -507,41 +806,7 @@ void check_variables(void)
 	var.key = var_fbneo_analog_speed.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
-		INT32 nVal = 100;
-		if (strcmp(var.value, "100%") == 0)
-			nVal = 100;
-		else if (strcmp(var.value, "95%") == 0)
-			nVal = 95;
-		else if (strcmp(var.value, "90%") == 0)
-			nVal = 90;
-		else if (strcmp(var.value, "85%") == 0)
-			nVal = 85;
-		else if (strcmp(var.value, "80%") == 0)
-			nVal = 80;
-		else if (strcmp(var.value, "75%") == 0)
-			nVal = 75;
-		else if (strcmp(var.value, "70%") == 0)
-			nVal = 70;
-		else if (strcmp(var.value, "65%") == 0)
-			nVal = 65;
-		else if (strcmp(var.value, "60%") == 0)
-			nVal = 60;
-		else if (strcmp(var.value, "55%") == 0)
-			nVal = 55;
-		else if (strcmp(var.value, "50%") == 0)
-			nVal = 50;
-		else if (strcmp(var.value, "45%") == 0)
-			nVal = 45;
-		else if (strcmp(var.value, "40%") == 0)
-			nVal = 40;
-		else if (strcmp(var.value, "35%") == 0)
-			nVal = 35;
-		else if (strcmp(var.value, "30%") == 0)
-			nVal = 30;
-		else if (strcmp(var.value, "25%") == 0)
-			nVal = 25;
-
-		nAnalogSpeed = (int)((double)nVal * 256.0 / 100.0 + 0.5);
+		nAnalogSpeed = percent_parser(var.value);
 	}
 
 #ifdef USE_CYCLONE

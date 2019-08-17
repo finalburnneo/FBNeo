@@ -17,6 +17,45 @@
 #define RETRO_GAME_TYPE_SPEC	10
 #define RETRO_GAME_TYPE_NEOCD	11
 
+#define PERCENT_VALUES \
+      {"25%", NULL }, \
+      {"30%", NULL }, \
+      {"35%", NULL }, \
+      {"40%", NULL }, \
+      {"45%", NULL }, \
+      {"50%", NULL }, \
+      {"55%", NULL }, \
+      {"60%", NULL }, \
+      {"65%", NULL }, \
+      {"70%", NULL }, \
+      {"75%", NULL }, \
+      {"80%", NULL }, \
+      {"85%", NULL }, \
+      {"90%", NULL }, \
+      {"95%", NULL }, \
+      {"100%", NULL }, \
+      {"105%", NULL }, \
+      {"110%", NULL }, \
+      {"115%", NULL }, \
+      {"120%", NULL }, \
+      {"125%", NULL }, \
+      {"130%", NULL }, \
+      {"135%", NULL }, \
+      {"140%", NULL }, \
+      {"145%", NULL }, \
+      {"150%", NULL }, \
+      {"155%", NULL }, \
+      {"160%", NULL }, \
+      {"165%", NULL }, \
+      {"170%", NULL }, \
+      {"175%", NULL }, \
+      {"180%", NULL }, \
+      {"185%", NULL }, \
+      {"190%", NULL }, \
+      {"195%", NULL }, \
+      {"200%", NULL }, \
+      { NULL, NULL },
+
 struct dipswitch_core_option_value
 {
 	struct GameInp *pgi;
@@ -28,7 +67,7 @@ struct dipswitch_core_option
 {
 	char option_name[100];
 	char friendly_name[100];
-	std::string values_str;
+	char default_value[100];
 	std::vector<dipswitch_core_option_value> values;
 };
 

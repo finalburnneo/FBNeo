@@ -274,9 +274,8 @@ static int InpDIPSWInit()
 				}
 			}
 
-			// Reserve space for the default value
-			dip_option->values.reserve(bdi.nSetting + 1); // + 1 for default value
-			dip_option->values.assign(bdi.nSetting + 1, dipswitch_core_option_value());
+			dip_option->values.reserve(bdi.nSetting);
+			dip_option->values.assign(bdi.nSetting, dipswitch_core_option_value());
 
 			int values_count = 0;
 			bool skip_unusable_option = false;
@@ -311,7 +310,7 @@ static int InpDIPSWInit()
 					continue;
 				}
 
-				dipswitch_core_option_value *dip_value = &dip_option->values[values_count + 1]; // + 1 to skip the default value
+				dipswitch_core_option_value *dip_value = &dip_option->values[values_count];
 
 				BurnDrvGetDIPInfo(&(dip_value->bdi), k + i + 1);
 				dip_value->pgi = pgi_value;
@@ -321,12 +320,7 @@ static int InpDIPSWInit()
 
 				if (is_default_value)
 				{
-					dipswitch_core_option_value *default_dip_value = &dip_option->values[0];
-
-					default_dip_value->bdi = dip_value->bdi;
-					default_dip_value->pgi = dip_value->pgi;
-
-					snprintf(default_dip_value->friendly_name, sizeof(default_dip_value->friendly_name), "%s %s", "(Default)", default_dip_value->bdi.szText);
+					snprintf(dip_option->default_value, sizeof(dip_option->default_value), "%s", dip_value->bdi.szText);
 				}
 
 				values_count++;
@@ -335,7 +329,7 @@ static int InpDIPSWInit()
 			if (bdi.nSetting > values_count)
 			{
 				// Truncate the list at the values_count found to not have empty values
-				dip_option->values.resize(values_count + 1); // +1 for default value
+				dip_option->values.resize(values_count); // +1 for default value
 				log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': '%d' values were intended and only '%d' were found\n", drvname, dip_option->friendly_name, bdi.nSetting, values_count);
 			}
 
@@ -347,21 +341,6 @@ static int InpDIPSWInit()
 			}
 
 			pgi = GameInp + bdi.nInput + nDIPOffset;
-
-			// Create the string values for the core option
-			dip_option->values_str.assign(dip_option->friendly_name);
-			dip_option->values_str.append("; ");
-
-			log_cb(RETRO_LOG_INFO, "'%s' (%d)\n", dip_option->friendly_name, dip_option->values.size() - 1); // -1 to exclude the Default from the DIP Switch count
-			for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
-			{
-				dip_option->values_str.append(dip_option->values[dip_value_idx].friendly_name);
-				if (dip_value_idx != dip_option->values.size() - 1)
-					dip_option->values_str.append("|");
-
-				log_cb(RETRO_LOG_INFO, "   '%s'\n", dip_option->values[dip_value_idx].friendly_name);
-			}
-			std::basic_string<char>(dip_option->values_str).swap(dip_option->values_str);
 
 			j++;
 		}

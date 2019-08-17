@@ -205,17 +205,17 @@ static INT32 load_rom()
 	if (size < 0x2000)
 		size = 0x2000;
 
-	cart.rom = (UINT8 *)BurnMalloc(size);
+	cart.rom = (UINT8 *)BurnMalloc((size < 0x100000) ? 0x100000 : size);
 	if (BurnLoadRom(cart.rom + 0x0000, 0, 1)) 
 		return 0;
 
     /* Take care of image header, if present */
 	// TODO: I am not sure this is needed! it messes up some homebrew where they don't / 512 and have no header
     if(((size / 512) & 1) && ((BurnDrvGetHardwareCode() & HARDWARE_SMS_NO_CART_HEADER) != HARDWARE_SMS_NO_CART_HEADER))
-    {  
+	{
 		bprintf(0, _T("Removed SMS Cart header.\n"));
         size -= 512;
-        memcpy(cart.rom, cart.rom + 512, size);
+        memmove(cart.rom, cart.rom + 512, size);
     }
 
     cart.pages = (size / 0x4000);

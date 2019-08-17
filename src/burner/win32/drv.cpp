@@ -152,9 +152,11 @@ int DrvInit(int nDrvNum, bool bRestore)
 
 		BurnExtCartridgeSetupCallback = DrvCartridgeAccess;
 
-		if (SelMVSDialog()) {
-			POST_INITIALISE_MESSAGE;
-			return 0;
+		if (!bQuietLoading) {		// not from cmdline - show slot selector
+			if (SelMVSDialog()) {
+				POST_INITIALISE_MESSAGE;
+				return 0;
+			}
 		}
 	}
 

@@ -886,7 +886,7 @@ STD_ROM_PICK(Baddudes)
 STD_ROM_FN(Baddudes)
 
 
-// Birdie Try (Japan)
+// Birdie Try (Japan revision 2)
 /* DE-0311-0 main board, DE-0299-2 sub/rom board */
 
 static struct BurnRomInfo birdtryRomDesc[] = {
@@ -5767,7 +5767,7 @@ struct BurnDriver BurnDrvBaddudes = {
 
 struct BurnDriver BurnDrvBirdtry = {
 	"birdtry", NULL, NULL, NULL, "1988",
-	"Birdie Try (Japan)\0", NULL, "Data East Corporation", "DEC0",
+	"Birdie Try (Japan revision 2)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, NULL, NULL, BirdtryInputInfo, BirdtryDIPInfo,

@@ -1960,8 +1960,8 @@ STDDIPINFO(Choppera)
 
 static struct BurnDIPInfo BermudatDIPList[]=
 {
-	{0x19, 0xff, 0xff, 0x3a, NULL		},
-	{0x1a, 0xff, 0xff, 0x8a, NULL		},
+	{0x19, 0xff, 0xff, 0x3b, NULL		},
+	{0x1a, 0xff, 0xff, 0x8b, NULL		},
 	{0x1b, 0xff, 0xff, 0x34, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
@@ -4315,6 +4315,16 @@ static INT32 BermudatInit()
 	DrvDoReset();
 
 	return 0;
+}
+
+static INT32 BermudatwwInit()
+{
+	INT32 nRet = BermudatInit();
+	if (!nRet) {
+		RotateSetGunPosRAM(&DrvSprRAM[0x041], &DrvSprRAM[0x049], 1);
+	}
+
+	return nRet;
 }
 
 static INT32 GwarInit()
@@ -7295,7 +7305,7 @@ struct BurnDriver BurnDrvWorldwar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, worldwarRomInfo, worldwarRomName, NULL, NULL, NULL, NULL, BermudatInputInfo, BermudatDIPInfo,
-	BermudatInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
+	BermudatwwInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 400, 3, 4
 };
 
@@ -7349,7 +7359,7 @@ struct BurnDriver BurnDrvBermudata = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, bermudataRomInfo, bermudataRomName, NULL, NULL, NULL, NULL, BermudatInputInfo, BermudatDIPInfo,
-	BermudatInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
+	BermudatwwInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 400, 3, 4
 };
 

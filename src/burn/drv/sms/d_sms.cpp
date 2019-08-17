@@ -21449,7 +21449,7 @@ STD_ROM_FN(gg_popeye)
 
 struct BurnDriver BurnDrvgg_popeye = {
 	"gg_popeye", NULL, NULL, NULL, "1994",
-	"Popeye no Beach Volleyball (Jpn)\0", "Graphics issues on map screen", "Technos Japan", "Sega Game Gear",
+	"Popeye no Beach Volleyball (Jpn)\0", NULL, "Technos Japan", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_popeyeRomInfo, gg_popeyeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,

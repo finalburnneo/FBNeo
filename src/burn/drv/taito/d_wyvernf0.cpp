@@ -6,6 +6,7 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
+#include "taito_m68705.h"
 #include "ay8910.h"
 #include "msm5232.h"
 
@@ -18,6 +19,8 @@ static UINT8 *DrvZ80ROM1;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvZ80RAM0;
+static UINT8 *DrvMcuROM;
+static UINT8 *DrvMcuRAM;
 static UINT8 *DrvFgRAM;
 static UINT8 *DrvBgRAM;
 static UINT8 *DrvSprRAM;
@@ -33,7 +36,6 @@ static UINT8 *pending_nmi;
 static UINT8 *nmi_enable;
 static UINT8 *DrvZ80ROMBank;
 static UINT8 *DrvZ80RAMBank;
-static UINT8 *mcu_value;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -48,67 +50,67 @@ static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo Wyvernf0InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy4 + 5,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy4 + 4,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy4 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy5 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy5 + 4,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy5 + 3,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Wyvernf0)
 
 static struct BurnDIPInfo Wyvernf0DIPList[]=
 {
-	{0x15, 0xff, 0xff, 0x6f, NULL			},
-	{0x16, 0xff, 0xff, 0x00, NULL			},
-	{0x17, 0xff, 0xff, 0xdc, NULL			},
+	{0x15, 0xff, 0xff, 0x6f, NULL					},
+	{0x16, 0xff, 0xff, 0x00, NULL					},
+	{0x17, 0xff, 0xff, 0xdc, NULL					},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x15, 0x01, 0x03, 0x00, "?? 0"			},
-	{0x15, 0x01, 0x03, 0x01, "?? 1"			},
-	{0x15, 0x01, 0x03, 0x02, "?? 2"			},
-	{0x15, 0x01, 0x03, 0x03, "?? 3"			},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x15, 0x01, 0x03, 0x00, "?? 0"					},
+	{0x15, 0x01, 0x03, 0x01, "?? 1"					},
+	{0x15, 0x01, 0x03, 0x02, "?? 2"					},
+	{0x15, 0x01, 0x03, 0x03, "?? 3"					},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"		},
-	{0x15, 0x01, 0x04, 0x04, "Off"			},
-	{0x15, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Free Play"			},
+	{0x15, 0x01, 0x04, 0x04, "Off"					},
+	{0x15, 0x01, 0x04, 0x00, "On"					},
 	
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x15, 0x01, 0x18, 0x00, "2"			},
-	{0x15, 0x01, 0x18, 0x08, "3"			},
-	{0x15, 0x01, 0x18, 0x10, "4"			},
-	{0x15, 0x01, 0x18, 0x18, "5"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x15, 0x01, 0x18, 0x00, "2"					},
+	{0x15, 0x01, 0x18, 0x08, "3"					},
+	{0x15, 0x01, 0x18, 0x10, "4"					},
+	{0x15, 0x01, 0x18, 0x18, "5"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x15, 0x01, 0x40, 0x40, "Off"			},
-	{0x15, 0x01, 0x40, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x15, 0x01, 0x40, 0x40, "Off"					},
+	{0x15, 0x01, 0x40, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x15, 0x01, 0x80, 0x00, "Upright"		},
-	{0x15, 0x01, 0x80, 0x80, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x15, 0x01, 0x80, 0x00, "Upright"				},
+	{0x15, 0x01, 0x80, 0x80, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
+	{0   , 0xfe, 0   ,    16, "Coin A"				},
 	{0x16, 0x01, 0x0f, 0x0f, "9 Coins 1 Credits"	},
 	{0x16, 0x01, 0x0f, 0x0e, "8 Coins 1 Credits"	},
 	{0x16, 0x01, 0x0f, 0x0d, "7 Coins 1 Credits"	},
@@ -126,7 +128,7 @@ static struct BurnDIPInfo Wyvernf0DIPList[]=
 	{0x16, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
 	{0x16, 0x01, 0x0f, 0x07, "1 Coin  8 Credits"	},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0   , 0xfe, 0   ,    16, "Coin B"				},
 	{0x16, 0x01, 0xf0, 0xf0, "9 Coins 1 Credits"	},
 	{0x16, 0x01, 0xf0, 0xe0, "8 Coins 1 Credits"	},
 	{0x16, 0x01, 0xf0, 0xd0, "7 Coins 1 Credits"	},
@@ -144,21 +146,21 @@ static struct BurnDIPInfo Wyvernf0DIPList[]=
 	{0x16, 0x01, 0xf0, 0x60, "1 Coin  7 Credits"	},
 	{0x16, 0x01, 0xf0, 0x70, "1 Coin  8 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Coinage Display"	},
-	{0x17, 0x01, 0x10, 0x00, "No"			},
-	{0x17, 0x01, 0x10, 0x10, "Yes"			},
+	{0   , 0xfe, 0   ,    2, "Coinage Display"		},
+	{0x17, 0x01, 0x10, 0x00, "No"					},
+	{0x17, 0x01, 0x10, 0x10, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Copyright"		},
+	{0   , 0xfe, 0   ,    2, "Copyright"			},
 	{0x17, 0x01, 0x20, 0x00, "Taito Corporation"	},
-	{0x17, 0x01, 0x20, 0x20, "Taito Corp. 1985"	},
+	{0x17, 0x01, 0x20, 0x20, "Taito Corp. 1985"		},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"	},
-	{0x17, 0x01, 0x40, 0x40, "Off"			},
-	{0x17, 0x01, 0x40, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
+	{0x17, 0x01, 0x40, 0x40, "Off"					},
+	{0x17, 0x01, 0x40, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Coin Slots"		},
-	{0x17, 0x01, 0x80, 0x00, "1"			},
-	{0x17, 0x01, 0x80, 0x80, "2"			},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
+	{0x17, 0x01, 0x80, 0x00, "1"					},
+	{0x17, 0x01, 0x80, 0x80, "2"					},
 };
 
 STDDIPINFO(Wyvernf0)
@@ -169,7 +171,7 @@ static inline void palette_update(INT32 i)
 	INT32 g = DrvPalRAM[i+1] >> 4;
 	INT32 b = DrvPalRAM[i+1] & 0x0f;
 
-	DrvPalette[i/2] = BurnHighCol(r | (r << 4), g | (g << 4) ,b | (b << 4), 0);
+	DrvPalette[i/2] = BurnHighCol(r | (r << 4), g | (g << 4), b | (b << 4), 0);
 }
 
 static void rambankswitch(INT32 data)
@@ -223,7 +225,7 @@ static void __fastcall wyvernf0_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xd400:
-			*mcu_value = data;
+			standard_taito_mcu_write(data);
 		return;
 
 		case 0xd610:
@@ -247,10 +249,10 @@ static UINT8 __fastcall wyvernf0_main_read(UINT16 address)
 	switch (address)
 	{
 		case 0xd400:
-			return ((*mcu_value & 0x73) == 0x73) ? 0x42: 0;
+			return standard_taito_mcu_read();
 
 		case 0xd401:
-			return 0x03; // mcu status
+			return ( (!main_sent ? 1 : 0) | (mcu_sent ? 2 : 0) );
 
 		case 0xd600:
 		case 0xd601:
@@ -345,6 +347,8 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	m67805_taito_reset();
+
 	AY8910Reset(0);
 	AY8910Reset(1);
 
@@ -359,6 +363,7 @@ static INT32 MemIndex()
 
 	DrvZ80ROM0		= Next; Next += 0x020000;
 	DrvZ80ROM1		= Next; Next += 0x010000;
+	DrvMcuROM       = Next; Next += 0x000800;
 
 	DrvGfxROM0		= Next; Next += 0x020000;
 	DrvGfxROM1		= Next; Next += 0x010000;
@@ -376,15 +381,16 @@ static INT32 MemIndex()
 
 	DrvZ80RAM1		= Next; Next += 0x000800;
 
+	DrvMcuRAM       = Next; Next += 0x000800;
+
 	soundlatch		= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
-	coin_lockout		= Next; Next += 0x000001;
+	coin_lockout	= Next; Next += 0x000001;
 	pending_nmi		= Next; Next += 0x000001;
 	nmi_enable		= Next; Next += 0x000001;
 	scroll			= Next; Next += 0x000004;
-	DrvZ80ROMBank		= Next; Next += 0x000001;
-	DrvZ80RAMBank		= Next; Next += 0x000001;
-	mcu_value		= Next; Next += 0x000001;
+	DrvZ80ROMBank	= Next; Next += 0x000001;
+	DrvZ80RAMBank	= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 
@@ -441,6 +447,8 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM1 + 0x04000, 13, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x06000, 14, 1)) return 1;
 
+		if (BurnLoadRom(DrvMcuROM  + 0x00000, 15, 1)) return 1;
+
 		DrvGfxDecode(DrvGfxROM0, 0x10000);
 		DrvGfxDecode(DrvGfxROM1, 0x08000);
 	}
@@ -465,6 +473,8 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(wyvernf0_sound_write);
 	ZetSetReadHandler(wyvernf0_sound_read);
 	ZetClose();
+
+	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &standard_m68705_interface);
 
 	AY8910Init(0, 3000000, 0);
 	AY8910Init(1, 3000000, 1);
@@ -494,6 +504,8 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	ZetExit();
+
+	m67805_taito_exit();
 
 	AY8910Exit(0);
 	AY8910Exit(1);
@@ -637,23 +649,25 @@ static INT32 DrvFrame()
 		DrvInputs[0] = (DrvInputs[0] & *coin_lockout);// | 0xc0;
 	}
 
-	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[2] = { 6000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2]  = { 0 , 0 };
+	INT32 nInterleave = 100;
+	INT32 nCyclesTotal[3] = { 6000000 / 60, 4000000 / 60, 4000000 / 60 };
+	INT32 nCyclesDone[3]  = { 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, Zet);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nSegment = nCyclesTotal[1] / nInterleave;
-		nCyclesDone[1] += ZetRun(nSegment);
-		if (i == (nInterleave - 1) || i == (nInterleave / 2) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(1, Zet);
+		if (i == (nInterleave - 1) || i == (nInterleave / 2) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
+
+		m6805Open(0);
+		CPU_RUN(2, m6805);
+		m6805Close();
 	}
 
 	if (pBurnSoundOut) {
@@ -668,7 +682,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -695,8 +709,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		rambankswitch(*DrvZ80RAMBank);
 		rombankswitch(*DrvZ80ROMBank);
 		ZetClose();
-
-		DrvRecalc = 1;
 	}
 
 	return 0;
@@ -725,7 +737,7 @@ static struct BurnRomInfo wyvernf0RomDesc[] = {
 	{ "a39_13.ic100",	0x2000, 0xbe708238, 4 | BRF_GRA },           // 13
 	{ "a39_12.ic74",	0x2000, 0x1cc389de, 4 | BRF_GRA },           // 14
 
-	{ "a39_mc68705p5s.ic23",	0x0800, 0x14bff574, 4 | BRF_OPT | BRF_PRG }, //  15 MCU Code 
+	{ "a39_mc68705p5s.ic23",	0x0800, 0x14bff574, 4 | BRF_ESS | BRF_PRG }, //  15 MCU Code
 };
 
 STD_ROM_PICK(wyvernf0)
@@ -765,7 +777,7 @@ static struct BurnRomInfo wyvernf0aRomDesc[] = {
 	{ "sch_2.ic100",		0x2000, 0xbe708238, 4 | BRF_GRA },           // 13
 	{ "sch_1.ic74",			0x2000, 0x1cc389de, 4 | BRF_GRA },           // 14
 
-	{ "a39_mc68705p5s.ic23",	0x0800, 0x14bff574, 4 | BRF_OPT | BRF_PRG }, //  15 MCU Code 
+	{ "a39_mc68705p5s.ic23",	0x0800, 0x14bff574, 4 | BRF_ESS | BRF_PRG }, //  15 MCU Code
 };
 
 STD_ROM_PICK(wyvernf0a)

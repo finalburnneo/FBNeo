@@ -440,7 +440,7 @@ void h6280_timer_w(unsigned int offset, unsigned char data)
 	h6280.io_buffer=data;
 	switch (offset&1) {
 		case 0: /* Counter preload */
-			h6280.timer_load=h6280.timer_value=((data&127)+1)*1024;
+			h6280.timer_load=((data&127)+1)*1024;
 			return;
 
 		case 1: /* Counter enable */

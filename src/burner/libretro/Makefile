@@ -266,10 +266,15 @@ else ifeq ($(platform), switch)
 # Nintendo Switch (libnx)
 else ifeq ($(platform), libnx)
 	include $(DEVKITPRO)/libnx/switch_rules
-	TARGET := $(TARGET_NAME)_libretro_$(platform).a
-	PLATFORM_DEFINES := -U__INT32_TYPE__ -U __UINT32_TYPE__ -D__INT32_TYPE__=int
-	PLATFORM_DEFINES += -D__SWITCH__ -DHAVE_LIBNX -DARM -march=armv8-a -mtune=cortex-a57 -mtp=soft
-	PLATFORM_DEFINES += -I$(LIBNX)/include/ -specs=$(LIBNX)/switch.specs
+	EXT=a
+	TARGET := $(TARGET_NAME)_libretro_$(platform).$(EXT)
+	DEFINES := -DSWITCH=1 -U__linux__ -U__linux -DRARCH_INTERNAL
+	CFLAGS	:=	$(DEFINES) -g \
+		-fPIE -I$(LIBNX)/include/ -ffunction-sections -fdata-sections -ftls-model=local-exec -Wl,--allow-multiple-definition -specs=$(LIBNX)/switch.specs
+	CFLAGS += $(INCDIRS)
+	CFLAGS	+=	$(INCLUDE)  -D__SWITCH__ -DHAVE_LIBNX
+	CXXFLAGS := $(ASFLAGS) $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
+	CFLAGS += -std=gnu11
 	STATIC_LINKING = 1
 	ENDIANNESS_DEFINES := -DLSB_FIRST
 
@@ -332,7 +337,7 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
 
 	# Nintendo WiiU
 	ifneq (,$(findstring wiiu,$(platform)))
-		PLATFORM_DEFINES += -DGEKKO -DWIIU -DHW_RVL -mcpu=750 -meabi -mhard-float
+		PLATFORM_DEFINES += -DGEKKO -DWIIU -DHW_RVL -mwup -mcpu=750 -meabi -mhard-float
 
 	# Nintendo Wii
 	else ifneq (,$(findstring wii,$(platform)))
@@ -452,8 +457,8 @@ else ifneq (,$(findstring windows_msvc2017,$(platform)))
 # Windows
 else
 	TARGET := $(TARGET_NAME)_libretro.dll
-	CC ?= gcc
-	CXX ?= g++
+	CC = gcc
+	CXX = g++
 	SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(VERSION_SCRIPT)
 	LDFLAGS += -static-libgcc -static-libstdc++
 	ENDIANNESS_DEFINES := -DLSB_FIRST

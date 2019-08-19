@@ -44,12 +44,17 @@ typedef struct
     UINT8 vint_pending;
     UINT8 hint_pending;
     UINT16 cram_latch;
-    UINT8 bd;
+	UINT16 spr_col;
+	UINT8 spr_ovr;
+	UINT8 bd;
+	INT32 lpf;
 } vdp_t;
 
 /* Global data */
 extern vdp_t vdp;
 extern UINT32 smsvdp_tmsmode;
+extern UINT8 hc_ntsc_256[];
+extern UINT8 *vc_table[2][4];
 
 /* Function prototypes */
 void vdp_init(void);

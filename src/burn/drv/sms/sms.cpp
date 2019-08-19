@@ -297,6 +297,7 @@ void sms_reset(void)
     sms.fm_detect   = 0x00;
     sms.memctrl     = 0xAB;
     sms.ioctrl      = 0xFF;
+	sms.cyc         = 0x00;
 
 	if (IS_SMS)
 		sms.wram[0] = 0xA8; // BIOS usually sets this. (memory control register)
@@ -362,7 +363,7 @@ void sms_reset(void)
 	if (IS_SMS) {
 		// Z80 Stack Pointer set by SMS Bios, fix for Shadow Dancer and Ace of Aces
 		// ZetSetSP() Must be called after ZetReset() when the cpu is in a closed state.
-		ZetSetSP(0, 0xdff0);
+		ZetSetSP(0, 0xdff0); // note: doesn't need cpu open!
 	}
 }
 

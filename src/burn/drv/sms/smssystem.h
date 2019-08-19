@@ -77,7 +77,7 @@ extern cart_t cart;         /* Game cartridge data */
 extern input_t input;       /* Controller input */
 
 /* Function prototypes */
-void system_frame(INT32 skip_render);
+void system_frame();
 void system_init(void);
 void system_shutdown(void);
 void system_reset(void);

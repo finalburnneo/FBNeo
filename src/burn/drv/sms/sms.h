@@ -73,9 +73,12 @@ typedef struct
     UINT8 console;
     UINT8 display;
     UINT8 fm_detect;
-    UINT8 use_fm;
+	UINT8 use_fm;
+	UINT8 hlatch;
     UINT8 memctrl;
-    UINT8 ioctrl;
+	UINT8 ioctrl;
+	INT32 cyc;
+
     struct {
         UINT8 pdr;      /* Parallel data register */
         UINT8 ddr;      /* Data direction register */

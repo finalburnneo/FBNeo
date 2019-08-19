@@ -487,8 +487,15 @@ void render_obj_sms(INT16 line)
     
                         /* Update collision buffer */
                         collision_buffer |= bg;
-                    }
-                }
+						/* Check sprite collision */
+						if ((bg & 0x40) && !(vdp.status & 0x20))
+						{
+							/* pixel-accurate SPR_COL flag */
+							vdp.status |= 0x20;
+							vdp.spr_col = (line << 8) | ((xp + x + 13) >> 1);
+						}
+					}
+				}
             }
             else /* Regular size sprite (8x8 / 8x16) */
             {
@@ -512,9 +519,16 @@ void render_obj_sms(INT16 line)
     
                         /* Update collision buffer */
                         collision_buffer |= bg;
-                    }
-                }
-            }
+						/* Check sprite collision */
+						if ((bg & 0x40) && !(vdp.status & 0x20))
+						{
+							/* pixel-accurate SPR_COL flag */
+							vdp.status |= 0x20;
+							vdp.spr_col = (line << 8) | ((xp + x + 13) >> 1);
+						}
+					}
+				}
+			}
         }
     }
 end:

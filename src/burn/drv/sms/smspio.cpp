@@ -3,6 +3,7 @@
     I/O chip and peripheral emulation.
 */
 #include "smsshared.h"
+#include "z80_intf.h"
 
 io_state io_lut[2][256];
 io_state *io_current;
@@ -42,7 +43,9 @@ void pio_init(void)
     }
 
     // hack dos code doesn't call system_reset
-    pio_reset();
+	pio_reset();
+
+	UINT8 vc = vc_table[0][0][0]; vc++; // avoid warning (this does nothing)
 }
 
 
@@ -55,8 +58,10 @@ void pio_reset(void)
     sms.sio.rxdata  = 0xFF;
     sms.sio.sctrl   = 0x00;
 
-    /* SMS I/O power-on defaults */
-    ioctrl_w(0xFF);
+	/* SMS I/O power-on defaults */
+	ZetOpen(0);
+	ioctrl_w(0xFF);
+	ZetClose();
 }
 
 
@@ -73,8 +78,18 @@ void system_assign_device(INT32 port, INT32 type)
 
 void ioctrl_w(UINT8 data)
 {
-    sms.ioctrl = data;
-    io_current = &io_lut[sms.territory][data];
+	UINT8 th_level_previous = (io_current) ? io_current->th_level[0] : 0;
+
+	io_current = &io_lut[sms.territory][data];
+
+	if ( (io_current->th_dir[0]   == PIN_DIR_IN) &&
+		 (io_current->th_level[0] == PIN_LVL_HI) &&
+		 (th_level_previous 	  == PIN_LVL_LO) )
+	{
+		sms.hlatch = hc_ntsc_256[ZetTotalCycles() % CYCLES_PER_LINE];
+	}
+
+	sms.ioctrl = data;
 }
 
 UINT8 device_r(INT32 offset)

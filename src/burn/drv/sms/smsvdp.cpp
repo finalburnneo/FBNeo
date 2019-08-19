@@ -52,6 +52,8 @@ void vdp_shutdown(void)
 void vdp_reset(void)
 {
 	memset(&vdp, 0, sizeof(vdp_t));
+
+	vdp.lpf = (sms.display == DISPLAY_NTSC) ? 262 : 313;
 	vdp.extended = 0;
 	vdp.height = 192;
 
@@ -66,6 +68,14 @@ void vdp_reset(void)
 		vdp.reg[6]  = 0xFB;
 		vdp.reg[10] = 0xFF;
 	}
+
+	/* reset VDP internals */
+	vdp.ct    = (vdp.reg[3] <<  6) & 0x3FC0;
+	vdp.pg    = (vdp.reg[4] << 11) & 0x3800;
+	vdp.satb  = (vdp.reg[5] << 7) & 0x3F00;
+	vdp.sa    = (vdp.reg[5] <<  7) & 0x3F80;
+	vdp.sg    = (vdp.reg[6] << 11) & 0x3800;
+	vdp.bd    = (vdp.reg[7] & 0x0F);
 
 	bitmap.viewport.x = (IS_GG) ? 48 : 0;    // 44 for (vdp.reg[0] & 0x20 && IS_GG)
 	bitmap.viewport.y = (IS_GG) ? 24 : 0;
@@ -260,7 +270,13 @@ void vdp_write(INT32 offset, UINT8 data)
 {
     INT32 index;
 
-    switch(offset & 1)
+	if (((ZetTotalCycles() + 1) / CYCLES_PER_LINE) > vdp.line)
+	{
+		/* render next line now BEFORE updating register */
+		render_line((vdp.line+1)%vdp.lpf);
+	}
+
+	switch(offset & 1)
     {
         case 0: /* Data port */
 
@@ -336,14 +352,39 @@ UINT8 vdp_read(INT32 offset)
             vdp.addr = (vdp.addr + 1) & 0x3FFF;
             return temp;
 
-        case 1: /* Status flags */
-            temp = vdp.status | 0x1f;
-            vdp.pending = 0;
-            vdp.status = 0;
-            vdp.vint_pending = 0;
-            vdp.hint_pending = 0;
+		case 1: { /* Status flags */
+			INT32 cyc   = ZetTotalCycles();
+			INT32 line  = vdp.line;
+			if ((cyc / CYCLES_PER_LINE) > line)
+			{
+				if (line == vdp.height) vdp.status |= 0x80;
+				line = (line + 1)%vdp.lpf;
+				render_line(line);
+			}
+
+			/* low 5 bits return non-zero data (fixes PGA Tour Golf course map introduction) */
+			temp = vdp.status | 0x1f;
+
+			/* clear flags */
+			vdp.status = 0;
+			vdp.pending = 0;
+			vdp.vint_pending = 0;
+			vdp.hint_pending = 0;
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-            return temp;
+
+			/* cycle-accurate SPR_COL flag */
+			if (temp & 0x20)
+			{
+				UINT8 hc = hc_ntsc_256[(cyc + 1) % CYCLES_PER_LINE];
+				if ((line == (vdp.spr_col >> 8)) && ((hc < (vdp.spr_col & 0xff)) || (hc > 0xf3)))
+				{
+					vdp.status |= 0x20;
+					temp &= ~0x20;
+				}
+			}
+
+			return temp;
+		}
     }
 
     /* Just to please the compiler */
@@ -352,17 +393,13 @@ UINT8 vdp_read(INT32 offset)
 
 UINT8 vdp_counter_r(INT32 offset)
 {
-    //INT32 cpixel;
-
     switch(offset & 1)
     {
         case 0: /* V Counter */
-            return vc_table[sms.display][vdp.extended][vdp.line & 0x1FF];
+            return vc_table[sms.display][vdp.extended][ZetTotalCycles() / CYCLES_PER_LINE];
 
         case 1: /* H Counter */
-            //cpixel = (((ZetTotalCycles() % CYCLES_PER_LINE) / 4) * 3) * 2;
-			//return hc_table[0][(cpixel >> 1) & 0x01FF];
-			return hc_table[0][ZetTotalCycles() % CYCLES_PER_LINE];
+			return sms.hlatch; //hc_ntsc_256[ZetTotalCycles() % CYCLES_PER_LINE];
     }
 
     /* Just to please the compiler */
@@ -378,7 +415,13 @@ void gg_vdp_write(INT32 offset, UINT8 data)
 {
     INT32 index;
 
-    switch(offset & 1)
+	if (((ZetTotalCycles() + 1) / CYCLES_PER_LINE) > vdp.line)
+	{
+		/* render next line now BEFORE updating register */
+		render_line((vdp.line+1)%vdp.lpf);
+	}
+
+	switch(offset & 1)
     {
         case 0: /* Data port */
             vdp.pending = 0;

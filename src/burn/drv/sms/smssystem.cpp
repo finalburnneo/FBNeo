@@ -56,6 +56,7 @@ void system_frame()
 	vdp.lpf = (sms.display == DISPLAY_NTSC) ? 262 : 313;
 	vdp.left = vdp.reg[0x0A];
 	vdp.spr_col = 0xff00;
+	sms.cyc = 0;
 
 	/* End of frame, parse sprites for line 0 on line 261 (VCount=$FF) */
 	if (vdp.mode <= 7) parse_line(0);
@@ -114,8 +115,6 @@ void system_frame()
 		if (vdp.mode <= 7)
 			parse_line(vdp.line);
 	}
-
-	sms.cyc = ZetTotalCycles() - sms.cyc; // roll extra cycles over to next frame
 
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {

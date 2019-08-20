@@ -219,7 +219,7 @@ unsigned int m68k_read16(unsigned int a)
 	{
 		if (a & 1)
 		{
-			return BURN_ENDIAN_SWAP_INT16((M68KReadByte(a + 0) * 256) + M68KReadByte(a + 1));
+			return BURN_ENDIAN_SWAP_INT16((m68k_read8(a + 0) * 256) + m68k_read8(a + 1));
 		}
 		else
 		{
@@ -259,8 +259,8 @@ void m68k_write16(unsigned int a, unsigned short d)
 		{
 			//	bprintf(PRINT_NORMAL, _T("write16 0x%08X\n"), a);
 			d = BURN_ENDIAN_SWAP_INT16(d);
-			M68KWriteByte(a + 0, d / 0x100);
-			M68KWriteByte(a + 1, d);
+			m68k_write8(a + 0, d / 0x100);
+			m68k_write8(a + 1, d);
 			return;
 		}
 		else
@@ -301,10 +301,10 @@ unsigned int m68k_read32(unsigned int a)
 
 		if (a & 1)
 		{
-			r  = M68KReadByte((a + 0)) * 0x1000000;
-			r += M68KReadByte((a + 1)) * 0x10000;
-			r += M68KReadByte((a + 2)) * 0x100;
-			r += M68KReadByte((a + 3));
+			r  = m68k_read8((a + 0)) * 0x1000000;
+			r += m68k_read8((a + 1)) * 0x10000;
+			r += m68k_read8((a + 2)) * 0x100;
+			r += m68k_read8((a + 3));
 
 			return BURN_ENDIAN_SWAP_INT32(r);
 		}
@@ -316,6 +316,7 @@ unsigned int m68k_read32(unsigned int a)
 			return BURN_ENDIAN_SWAP_INT32(r);
 		}
 	}
+
 	return pSekExt->ReadLong[(uintptr_t)pr](a);
 }
 
@@ -353,10 +354,10 @@ void m68k_write32(unsigned int a, unsigned int d)
 
 			d = BURN_ENDIAN_SWAP_INT32(d);
 
-			M68KWriteByte((a + 0), d / 0x1000000);
-			M68KWriteByte((a + 1), d / 0x10000);
-			M68KWriteByte((a + 2), d / 0x100);
-			M68KWriteByte((a + 3), d);
+			m68k_write8((a + 0), d / 0x1000000);
+			m68k_write8((a + 1), d / 0x10000);
+			m68k_write8((a + 2), d / 0x100);
+			m68k_write8((a + 3), d);
 
 			return;
 		}
@@ -1128,8 +1129,16 @@ void SekSetHALT(INT32 nCPU, INT32 nStatus)
 }
 
 // Set the status of an IRQ line on the active CPU
-void SekSetIRQLine(const INT32 line, const INT32 nstatus)
+void SekSetIRQLine(const INT32 line, INT32 nstatus)
 {
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetIRQLine called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetIRQLine called when no CPU open\n"));
+#endif
+
+	if (nstatus == CPU_IRQSTATUS_HOLD)
+		nstatus = CPU_IRQSTATUS_AUTO; // on sek, AUTO is HOLD.
+
 	INT32 status = nstatus << 12; // needed for compatibility
 
 	if (status) {

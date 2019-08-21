@@ -24,6 +24,10 @@ static struct BurnDIPInfo SMSDIPList[] = {
 	{0   , 0xfe, 0   ,    2, "FM Unit Emulation"},
 	{0x0e, 0x01, 0x04, 0x04, "On (Change needs restart!)"},
 	{0x0e, 0x01, 0x04, 0x00, "Off"			},
+
+	{0   , 0xfe, 0   ,    2, "Disable Sprite Limit"},
+	{0x0e, 0x01, 0x01, 0x01, "On"},
+	{0x0e, 0x01, 0x01, 0x00, "Off"			},
 };
 
 STDDIPINFO(SMS)
@@ -35,6 +39,10 @@ static struct BurnDIPInfo GGDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Display full screen (overscan mode)"},
 	{0x0e, 0x01, 0x08, 0x08, "On"			},
 	{0x0e, 0x01, 0x08, 0x00, "Off"			},
+
+	{0   , 0xfe, 0   ,    2, "Disable Sprite Limit"},
+	{0x0e, 0x01, 0x01, 0x01, "On"},
+	{0x0e, 0x01, 0x01, 0x00, "Off"			},
 };
 
 STDDIPINFO(GG)
@@ -165,6 +173,7 @@ INT32 SMSFrame()
 		if(SMSJoy1[1]) input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;
 
 		gg_overscanmode = (SMSDips[0] & 0x08);
+		vdp.no_spr_limit = (SMSDips[0] & 0x01);
 
 	}
 

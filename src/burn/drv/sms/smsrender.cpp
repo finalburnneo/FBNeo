@@ -434,7 +434,7 @@ void render_obj_sms(INT16 line)
             count++;
 
             /* Too many sprites on this line ? */
-            if(count == 9)
+            if(count == 9 && !vdp.no_spr_limit)
             {
                 vdp.status |= 0x40;                
                 goto end;

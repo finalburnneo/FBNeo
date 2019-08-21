@@ -48,6 +48,7 @@ typedef struct
 	UINT8 spr_ovr;
 	UINT8 bd;
 	INT32 lpf;
+	INT32 no_spr_limit;
 } vdp_t;
 
 /* Global data */

@@ -337,7 +337,7 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
 
 	# Nintendo WiiU
 	ifneq (,$(findstring wiiu,$(platform)))
-		PLATFORM_DEFINES += -DGEKKO -DWIIU -DHW_RVL -mwup -mcpu=750 -meabi -mhard-float
+		PLATFORM_DEFINES += -DGEKKO -DWIIU -DHW_RVL -mcpu=750 -meabi -mhard-float
 
 	# Nintendo Wii
 	else ifneq (,$(findstring wii,$(platform)))
@@ -457,8 +457,8 @@ else ifneq (,$(findstring windows_msvc2017,$(platform)))
 # Windows
 else
 	TARGET := $(TARGET_NAME)_libretro.dll
-	CC = gcc
-	CXX = g++
+	CC ?= gcc
+	CXX ?= g++
 	SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(VERSION_SCRIPT)
 	LDFLAGS += -static-libgcc -static-libstdc++
 	ENDIANNESS_DEFINES := -DLSB_FIRST

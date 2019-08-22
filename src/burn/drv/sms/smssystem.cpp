@@ -104,7 +104,7 @@ void system_frame()
 
 				if (vdp.reg[0x00] & 0x10)
 				{
-					if (ZetTotalCycles() % CYCLES_PER_LINE == 0)
+					if ((ZetTotalCycles() % CYCLES_PER_LINE) == 0)
 						ZetRun(1);
 					ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				}

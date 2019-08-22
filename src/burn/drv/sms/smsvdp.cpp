@@ -273,7 +273,7 @@ void vdp_write(INT32 offset, UINT8 data)
 	if (((ZetTotalCycles() + 1) / CYCLES_PER_LINE) > vdp.line)
 	{
 		/* render next line now BEFORE updating register */
-		render_line((vdp.line+1)%vdp.lpf);
+		if (vdp.line+1 < vdp.lpf) render_line((vdp.line+1)%vdp.lpf);
 	}
 
 	switch(offset & 1)
@@ -418,7 +418,7 @@ void gg_vdp_write(INT32 offset, UINT8 data)
 	if (((ZetTotalCycles() + 1) / CYCLES_PER_LINE) > vdp.line)
 	{
 		/* render next line now BEFORE updating register */
-		render_line((vdp.line+1)%vdp.lpf);
+		if (vdp.line+1 < vdp.lpf) render_line((vdp.line+1)%vdp.lpf);
 	}
 
 	switch(offset & 1)

@@ -19,13 +19,13 @@
 #define MASTER_CLOCK        3579545
 #define LINES_PER_FRAME     262
 #define FRAMES_PER_SECOND   60
-#define CYCLES_PER_LINE     228//((MASTER_CLOCK / FRAMES_PER_SECOND) / LINES_PER_FRAME)
+#define CYCLES_PER_LINE     228//((MASTER_CLOCK / FRAMES_PER_SECOND) / LINES_PER_FRAME) == 227.7 -> round up to 228
 
 /* VDP context */
 typedef struct
 {
     UINT8 vram[0x4000];
-    UINT8 cram[0x40]; 
+    UINT8 cram[0x40];
     UINT8 reg[0x10];
     UINT8 status;     
     UINT8 latch;      

@@ -1,19 +1,41 @@
 /*
-    Copyright (C) 1998-2004  Charles MacDonald
+Unless otherwise explicitly stated, all code in SMS Plus is released under
+the following license:
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+Copyright Charles MacDonald
+Copyright R. Danbrook
+Some portions copyright Nicola Salmoria and the MAME team
+All rights reserved.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+Redistribution and use of this code or any derivative works are permitted
+provided that the following conditions are met:
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+* Redistributions may not be sold, nor may they be used in a commercial
+product or activity.
+
+* Redistributions that are modified from the original source must include the
+complete source code, including the source code for all components used by a
+binary built from the modified sources. However, as a special exception, the
+source code distributed need not include anything that is normally distributed
+(in either source or binary form) with the major components (compiler, kernel,
+and so on) of the operating system on which the executable runs, unless that
+component itself accompanies the executable.
+
+* Redistributions must reproduce the above copyright notice, this list of
+conditions and the following disclaimer in the documentation and/or other
+materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "smsshared.h"
@@ -24,6 +46,8 @@
 bitmap_t bitmap;
 cart_t cart;
 input_t input;
+
+
 
 /* Run the virtual console emulation for one frame */
 void system_frame()
@@ -56,6 +80,8 @@ void system_frame()
 	vdp.lpf = (sms.display == DISPLAY_NTSC) ? 262 : 313;
 	vdp.left = vdp.reg[0x0A];
 	vdp.spr_col = 0xff00;
+
+	ZetIdle(sms.cyc);
 	sms.cyc = 0;
 
 	/* End of frame, parse sprites for line 0 on line 261 (VCount=$FF) */
@@ -78,7 +104,7 @@ void system_frame()
 
 				if (vdp.reg[0x00] & 0x10)
 				{
-					if ((ZetTotalCycles()%CYCLES_PER_LINE) == 0)
+					if (ZetTotalCycles() % CYCLES_PER_LINE == 0)
 						ZetRun(1);
 					ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				}
@@ -115,6 +141,8 @@ void system_frame()
 		if (vdp.mode <= 7)
 			parse_line(vdp.line);
 	}
+
+	sms.cyc = ZetTotalCycles() - sms.cyc;
 
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {

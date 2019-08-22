@@ -221,7 +221,7 @@ void render_reset(void)
     INT32 i;
 
     /* Clear display bitmap */
-    memset(bitmap.data, 0, bitmap.width * bitmap.height);
+    memset(bitmap.data, 0, bitmap.width * bitmap.height * bitmap.granularity);
 
     /* Clear palette */
     for(i = 0; i < PALETTE_SIZE; i++)
@@ -244,12 +244,15 @@ void render_reset(void)
 /* Draw a line of the display */
 void render_line(INT16 line)
 {
-    /* Ensure we're within the viewport range */
-    if(line >= vdp.height)
-        return;
+	static INT32 last_line = -1;
+
+	if (line >= vdp.lpf || line == last_line)
+		return;
+
+	last_line = line;
 
     /* Point to current line in output buffer */
-    linebuf = (bitmap.depth == 8) ? &bitmap.data[(line * bitmap.pitch)] : &internal_buffer[0];
+    linebuf = &internal_buffer[0];
 
     /* Update pattern cache */
     update_bg_pattern_cache();
@@ -263,8 +266,14 @@ void render_line(INT16 line)
 		// GG: If overscan mode is enabled, only blank the top 8 lines (which are the most corrupted).
 	} else
 	if(!(vdp.reg[1] & 0x40))
-	{   // Blank line with backdrop color (full width)
-        memset(linebuf, BACKDROP_COLOR, bitmap.width);
+	{ // display disabled.
+		/* Draw sprites when disabled to set ovr flag */
+		if(render_obj != NULL && (nSpriteEnable & 1)) {
+			render_obj(line);
+		}
+
+		// Blank line with backdrop color (full width)
+		memset(linebuf, BACKDROP_COLOR, bitmap.width);
     }
     else
     {
@@ -292,7 +301,7 @@ void render_line(INT16 line)
 		}
     }
 
-    if(bitmap.depth != 8) remap_8_to_16(line, extend);
+    if(line < vdp.height) remap_8_to_16(line, extend);
 }
 
 
@@ -409,11 +418,11 @@ void render_obj_sms(INT16 line)
         if(vdp.extended == 0 && yp == 208)
             goto end;
 
-        /* Actual Y position is +1 */
-        yp++;
-
         /* Wrap Y coordinate for sprites > 240 */
         if(yp > 240) yp -= 256;
+
+		/* Actual Y position is +1 we're actually rendering for the next line -dink */
+        yp++;
 
         /* Check if sprite falls on current line */
         if((line >= yp) && (line < (yp + height)))
@@ -487,8 +496,8 @@ void render_obj_sms(INT16 line)
     
                         /* Update collision buffer */
                         collision_buffer |= bg;
-						/* Check sprite collision */
-						if ((bg & 0x40) && !(vdp.status & 0x20))
+						/* Check sprite collision when display enabled */
+						if ((bg & 0x40) && !(vdp.status & 0x20) && (vdp.reg[1] & 0x40))
 						{
 							/* pixel-accurate SPR_COL flag */
 							vdp.status |= 0x20;
@@ -519,8 +528,8 @@ void render_obj_sms(INT16 line)
     
                         /* Update collision buffer */
                         collision_buffer |= bg;
-						/* Check sprite collision */
-						if ((bg & 0x40) && !(vdp.status & 0x20))
+						/* Check sprite collision when display enabled */
+						if ((bg & 0x40) && !(vdp.status & 0x20) && (vdp.reg[1] & 0x40))
 						{
 							/* pixel-accurate SPR_COL flag */
 							vdp.status |= 0x20;
@@ -532,8 +541,8 @@ void render_obj_sms(INT16 line)
         }
     }
 end:
-    /* Set sprite collision flag */
-    if(collision_buffer & 0x40)
+    /* Set sprite collision flag (only when display enabled) */
+    if(collision_buffer & 0x40 && (vdp.reg[1] & 0x40))
         vdp.status |= 0x20;
 }
 

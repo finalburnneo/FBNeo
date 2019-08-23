@@ -19,7 +19,7 @@ UINT8 *linebuf;
 UINT8 internal_buffer[0x200];
 
 /* Precalculated pixel table */
-UINT16 pixel[PALETTE_SIZE];
+UINT16 pixel[PALETTE_SIZE+1];
 
 /* Dirty pattern info */
 UINT8 bg_name_dirty[0x200];     /* 1= This pattern is dirty */
@@ -220,8 +220,9 @@ void render_reset(void)
 {
     INT32 i;
 
-    /* Clear display bitmap */
-    memset(bitmap.data, 0, bitmap.width * bitmap.height * bitmap.granularity);
+	/* Clear display bitmap */
+	if (pBurnDraw)
+		memset(pBurnDraw, 0, bitmap.width * bitmap.height * bitmap.granularity);
 
     /* Clear palette */
     for(i = 0; i < PALETTE_SIZE; i++)
@@ -257,7 +258,7 @@ void render_line(INT16 line)
     /* Update pattern cache */
     update_bg_pattern_cache();
 
-	memset(linebuf, 0, bitmap.width);
+	memset(linebuf, BACKDROP_COLOR, bitmap.width);
 
 	INT32 extend = (vdp.extended && IS_GG) ? 16 : 0; // GG: in extended mode, the screen starts 16pixels lower than usual.
 
@@ -301,7 +302,7 @@ void render_line(INT16 line)
 		}
     }
 
-    if(line < vdp.height) remap_8_to_16(line, extend);
+	if(line < vdp.height) remap_8_to_16(line, extend);
 }
 
 
@@ -595,9 +596,28 @@ void palette_sync(INT16 index, INT16 force)
     // unless we are forcing an update,
     // if not in mode 4, exit
 
+	if(IS_SMS && ((vdp.reg[0] & 4) == 0) )
+	{
+		/* Load TMS9918 palette */
+		static UINT32 TMS9928A_palette[16] = {
+			0x000000, 0x000000, 0x21c842, 0x5edc78, 0x5455ed, 0x7d76fc, 0xd4524d, 0x42ebf5,
+			0xfc5554, 0xff7978, 0xd4c154, 0xe6ce80, 0x21b03b, 0xc95bba, 0xcccccc, 0xffffff
+		};
 
-    if(IS_SMS && !force && ((vdp.reg[0] & 4) == 0) )
+		r = TMS9928A_palette[index & 0x0f] >> 16;
+		g = TMS9928A_palette[index & 0x0f] >> 8;
+		b = TMS9928A_palette[index & 0x0f] >> 0;
+
+		bitmap.pal.color[index][0] = r;
+		bitmap.pal.color[index][1] = g;
+		bitmap.pal.color[index][2] = b;
+
+		pixel[index] = BurnHighCol(r, g, b, 0); //MAKE_PIXEL(r, g, b);
+
+		bitmap.pal.dirty[index] = bitmap.pal.update = 1;
+
         return;
+	}
 
     if(IS_GG)
     {
@@ -626,18 +646,20 @@ void palette_sync(INT16 index, INT16 force)
     bitmap.pal.color[index][1] = g;
     bitmap.pal.color[index][2] = b;
 
-    pixel[index] = MAKE_PIXEL(r, g, b);
-
+	pixel[index] = BurnHighCol(r,g,b,0);//MAKE_PIXEL(r, g, b);//(r||g||b) ? index : PALETTE_SIZE /*black*/;
+	bprintf(0, _T("line %03d   pal[%02x]  rgb  %X   %X   %X\n"), vdp.line, index, r,g,b);
     bitmap.pal.dirty[index] = bitmap.pal.update = 1;
 }
 
 void remap_8_to_16(INT16 line, INT16 extend)
 {
-	if (line > nScreenHeight || (line - extend) < 0) return;
+	line = line - extend;
 
-	UINT16 *p = (UINT16 *)&bitmap.data[((line - extend) * bitmap.pitch)];
+	if (line > nScreenHeight || line < 0) return;
+	if (!pBurnDraw) return;
+	UINT16 *p = (UINT16 *)&pBurnDraw[((line) * bitmap.pitch)];
     for (INT32 i = bitmap.viewport.x; i < bitmap.viewport.w + bitmap.viewport.x; i++)
-    {
-		p[i] = internal_buffer[i] & PIXEL_MASK;
+	{
+		p[i] = pixel[internal_buffer[i] & PIXEL_MASK];
     }
 }

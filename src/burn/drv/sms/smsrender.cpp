@@ -302,7 +302,7 @@ void render_line(INT16 line)
 		}
     }
 
-	if(line < vdp.height) remap_8_to_16(line, extend);
+	if (line < vdp.height) blit_linebuf(line, extend);
 }
 
 
@@ -612,7 +612,7 @@ void palette_sync(INT16 index, INT16 force)
 		bitmap.pal.color[index][1] = g;
 		bitmap.pal.color[index][2] = b;
 
-		pixel[index] = BurnHighCol(r, g, b, 0); //MAKE_PIXEL(r, g, b);
+		pixel[index] = BurnHighCol(r, g, b, 0);
 
 		bitmap.pal.dirty[index] = bitmap.pal.update = 1;
 
@@ -646,17 +646,24 @@ void palette_sync(INT16 index, INT16 force)
     bitmap.pal.color[index][1] = g;
     bitmap.pal.color[index][2] = b;
 
-	pixel[index] = BurnHighCol(r,g,b,0);//MAKE_PIXEL(r, g, b);//(r||g||b) ? index : PALETTE_SIZE /*black*/;
-	bprintf(0, _T("line %03d   pal[%02x]  rgb  %X   %X   %X\n"), vdp.line, index, r,g,b);
-    bitmap.pal.dirty[index] = bitmap.pal.update = 1;
+	pixel[index] = BurnHighCol(r,g,b,0);
+
+	bitmap.pal.dirty[index] = bitmap.pal.update = 1;
 }
 
-void remap_8_to_16(INT16 line, INT16 extend)
+void blit_linebuf(INT16 line, INT16 extend)
 {
 	line = line - extend;
 
-	if (line > nScreenHeight || line < 0) return;
-	if (!pBurnDraw) return;
+	if (!pBurnDraw || line > nScreenHeight || line < 0) return;
+
+	if (line == 0) { // clear screen
+		UINT16 *p = (UINT16 *)pBurnDraw;
+		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+			p[i] = pixel[BACKDROP_COLOR];
+		}
+	}
+
 	UINT16 *p = (UINT16 *)&pBurnDraw[((line) * bitmap.pitch)];
     for (INT32 i = bitmap.viewport.x; i < bitmap.viewport.w + bitmap.viewport.x; i++)
 	{

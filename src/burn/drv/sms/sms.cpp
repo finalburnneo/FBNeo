@@ -20,24 +20,24 @@ void __fastcall writemem_mapper_sega(UINT16 offset, UINT8 data)
 {
 	sms.wram[offset & 0x1fff] = data;
 
-    if(offset >= 0xFFFC)
-        sms_mapper_w(offset & 3, data);
+	if(offset >= 0xFFFC)
+		sms_mapper_w(offset & 3, data);
 }
 
 void __fastcall writemem_mapper_codies(UINT16 offset, UINT8 data)
 {
-    switch(offset & 0xC000)
-    {
-        case 0x0000:
-            sms_mapper_w(1, data);
-            return;
-        case 0x4000:
-            sms_mapper_w(2, data);
-            return;
-        case 0x8000:
-            sms_mapper_w(3, data);
-            return;
-    }
+	switch(offset & 0xC000)
+	{
+		case 0x0000:
+			sms_mapper_w(1, data);
+			return;
+		case 0x4000:
+			sms_mapper_w(2, data);
+			return;
+		case 0x8000:
+			sms_mapper_w(3, data);
+			return;
+	}
 }
 
 void __fastcall writemem_mapper_msx(UINT16 offset, UINT8 data)
@@ -103,9 +103,9 @@ UINT8 __fastcall readmem_mapper_xin1(UINT16 offset) // HiCom Xin1
 	if(offset >= 0xc000 /*&& offset <= 0xffff*/)
 		return sms.wram[offset & 0x1fff];
 	else
-	if (offset >= 0x8000) {
-		return cart.rom[offset & 0x3fff];
-	}
+		if (offset >= 0x8000) {
+			return cart.rom[offset & 0x3fff];
+		}
 
 	return cart.rom[(cart.fcr[0] * 0x8000) + offset];
 }
@@ -152,20 +152,20 @@ UINT8 __fastcall readmem_mapper_korea8k(UINT16 offset) // aka Janggun
 	if(offset >= 0xc000 /*&& offset <= 0xffff*/)
 		data = sms.wram[offset & 0x1fff];
 	else
-	if(/*offset >= 0x0000 &&*/ offset <= 0x3fff)
-		data = cart.rom[offset];
-	else
-	if(offset >= 0x4000 && offset <= 0x5fff)
-		data = korean8kmap4000_5fff[offset & 0x1fff];
-	else
-	if(offset >= 0x6000 && offset <= 0x7fff)
-		data = korean8kmap6000_7fff[offset & 0x1fff];
-	else
-	if(offset >= 0x8000 && offset <= 0x9fff)
-		data = korean8kmap8000_9fff[offset & 0x1fff];
-	else
-	if(offset >= 0xa000 && offset <= 0xbfff)
-		data = korean8kmapa000_bfff[offset & 0x1fff];
+		if(/*offset >= 0x0000 &&*/ offset <= 0x3fff)
+			data = cart.rom[offset];
+		else
+			if(offset >= 0x4000 && offset <= 0x5fff)
+				data = korean8kmap4000_5fff[offset & 0x1fff];
+			else
+				if(offset >= 0x6000 && offset <= 0x7fff)
+					data = korean8kmap6000_7fff[offset & 0x1fff];
+				else
+					if(offset >= 0x8000 && offset <= 0x9fff)
+						data = korean8kmap8000_9fff[offset & 0x1fff];
+					else
+						if(offset >= 0xa000 && offset <= 0xbfff)
+							data = korean8kmapa000_bfff[offset & 0x1fff];
 
 	/* 16k page */
 	UINT8 page = offset >> 14;
@@ -188,11 +188,11 @@ void sms_init(void)
 	ZetOpen(0);
 
 	/* Default: open bus */
-    data_bus_pullup     = 0x00;
-    data_bus_pulldown   = 0x00;
+	data_bus_pullup     = 0x00;
+	data_bus_pulldown   = 0x00;
 
 	bprintf(0, _T("Cart mapper: "));
-    /* Assign mapper */
+	/* Assign mapper */
 	if(cart.mapper == MAPPER_CODIES) {
 		bprintf(0, _T("Codemasters\n"));
 		ZetSetWriteHandler(writemem_mapper_codies);
@@ -234,53 +234,53 @@ void sms_init(void)
 		ZetSetWriteHandler(writemem_mapper_sega);
 	}
 
-    /* Force SMS (J) console type if FM sound enabled */
-    if(sms.use_fm)
+	/* Force SMS (J) console type if FM sound enabled */
+	if(sms.use_fm)
 	{
 		bprintf(0, _T("Emulating FM\n"));
-        sms.console = CONSOLE_SMSJ;
-        sms.territory = TERRITORY_DOMESTIC;
+		sms.console = CONSOLE_SMSJ;
+		sms.territory = TERRITORY_DOMESTIC;
 		sms.display = DISPLAY_NTSC;
-    }
+	}
 
-    /* Initialize selected console emulation */
-    switch(sms.console)
-    {
+	/* Initialize selected console emulation */
+	switch(sms.console)
+	{
 		case CONSOLE_SMS:
 			ZetSetOutHandler(sms_port_w);
 			ZetSetInHandler(sms_port_r);
-            break;
+			break;
 
-        case CONSOLE_SMSJ:
+		case CONSOLE_SMSJ:
 			ZetSetOutHandler(sms_port_w);
 			ZetSetInHandler(sms_port_r);
-            break;
+			break;
 
-        case CONSOLE_SMS2:
+		case CONSOLE_SMS2:
 			ZetSetOutHandler(sms_port_w);
 			ZetSetInHandler(sms_port_r);
-            data_bus_pullup = 0xFF;
-            break;
+			data_bus_pullup = 0xFF;
+			break;
 
-        case CONSOLE_GG:
+		case CONSOLE_GG:
 			ZetSetOutHandler(gg_port_w);
 			ZetSetInHandler(gg_port_r);
-            data_bus_pullup = 0xFF;
-            break;
+			data_bus_pullup = 0xFF;
+			break;
 
-        case CONSOLE_GGMS:
+		case CONSOLE_GGMS:
 			ZetSetOutHandler(ggms_port_w);
 			ZetSetInHandler(ggms_port_r);
-            data_bus_pullup = 0xFF;
-            break;
+			data_bus_pullup = 0xFF;
+			break;
 	}
 	ZetClose();
-    sms_reset();
+	sms_reset();
 }
 
 void sms_shutdown(void)
 {
-    /* Nothing to do */
+	/* Nothing to do */
 }
 
 void sms_reset(void)
@@ -288,15 +288,15 @@ void sms_reset(void)
 	ZetOpen(0);
 
 	/* Clear SMS context */
-    memset(&dummy_write, 0, sizeof(dummy_write));
-    memset(&sms.wram,    0, sizeof(sms.wram));
-    memset(cart.sram,    0, sizeof(cart.sram));
+	memset(&dummy_write, 0, sizeof(dummy_write));
+	memset(&sms.wram,    0, sizeof(sms.wram));
+	memset(cart.sram,    0, sizeof(cart.sram));
 
-    sms.paused      = 0x00;
-    sms.save        = 0x00;
-    sms.fm_detect   = 0x00;
-    sms.memctrl     = 0xAB;
-    sms.ioctrl      = 0xFF;
+	sms.paused      = 0x00;
+	sms.save        = 0x00;
+	sms.fm_detect   = 0x00;
+	sms.memctrl     = 0xAB;
+	sms.ioctrl      = 0xFF;
 	sms.cyc         = 0x00;
 
 	if (IS_SMS)
@@ -318,32 +318,32 @@ void sms_reset(void)
 		korean8kmapa000_bfff = cart.rom + 0xa000;
 		cart.fcr[2] = 0x00; cart.fcr[3] = 0x00;
 	} else
-	if (cart.mapper == MAPPER_XIN1) {
-		// HiCom Xin1 Carts
-		// Nothing here (uses virtual mapping, see readmem/writemem_mapper_xin1())
-	} else {
-		ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
-		ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
-		ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
-		ZetMapMemory(cart.rom + 0x8000, 0x8000, 0xbfff, MAP_ROM);
-	}
+		if (cart.mapper == MAPPER_XIN1) {
+			// HiCom Xin1 Carts
+			// Nothing here (uses virtual mapping, see readmem/writemem_mapper_xin1())
+		} else {
+			ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
+			ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
+			ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
+			ZetMapMemory(cart.rom + 0x8000, 0x8000, 0xbfff, MAP_ROM);
+		}
 
 	// Work Ram (0xc000 - 0xffff) mappings:
 	if(cart.mapper == MAPPER_CODIES || cart.mapper == MAPPER_4PAK) {
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
 	} else
-	if(cart.mapper == MAPPER_SEGA || cart.mapper == MAPPER_KOREA8K || cart.mapper == MAPPER_XIN1) {
-		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
-		ZetMapMemory((UINT8 *)&dummy_write, 0x0000, 0xbfff, MAP_WRITE);
-		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_READ);
-	} else
-	{ // MSX & Korea Mappers
-		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
-		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
-		memset(&sms.wram[1], 0xf0, sizeof(sms.wram) - 1); // this memory pattern fixes booting of a few korean games
-		cart.fcr[2] = 0x00; cart.fcr[3] = 0x00;
-	}
+		if(cart.mapper == MAPPER_SEGA || cart.mapper == MAPPER_KOREA8K || cart.mapper == MAPPER_XIN1) {
+			ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
+			ZetMapMemory((UINT8 *)&dummy_write, 0x0000, 0xbfff, MAP_WRITE);
+			ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_READ);
+		} else
+		{ // MSX & Korea Mappers
+			ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
+			ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
+			memset(&sms.wram[1], 0xf0, sizeof(sms.wram) - 1); // this memory pattern fixes booting of a few korean games
+			cart.fcr[2] = 0x00; cart.fcr[3] = 0x00;
+		}
 	ZetReset();
 	ZetClose();
 
@@ -369,11 +369,11 @@ void sms_reset(void)
 
 void sms_mapper8kvirt_w(INT32 address, UINT8 data)
 {
-    /* Calculate ROM page index */
+	/* Calculate ROM page index */
 	UINT32 poffset = (data % (cart.pages8k)) << 13;
 
-    /* Save frame control register data */
-    cart.fcr[address & 3] = data;
+	/* Save frame control register data */
+	cart.fcr[address & 3] = data;
 	//bprintf(0, _T("pof(%X)a%X = %X,"), poffset, address, data);
 
 	/* 4 x 8k banks */
@@ -399,11 +399,11 @@ void sms_mapper8kvirt_w(INT32 address, UINT8 data)
 
 void sms_mapper8k_w(INT32 address, UINT8 data)
 {
-    /* Calculate ROM page index */
+	/* Calculate ROM page index */
 	UINT32 poffset = (data % (cart.pages8k)) << 13;
 
-    /* Save frame control register data */
-    cart.fcr[address & 3] = data;
+	/* Save frame control register data */
+	cart.fcr[address & 3] = data;
 	//bprintf(0, _T("pof(%X)a%X = %X,"), poffset, address, data);
 
 	/* 4 x 8k banks */
@@ -429,55 +429,55 @@ void sms_mapper8k_w(INT32 address, UINT8 data)
 
 void sms_mapper_w(INT32 address, UINT8 data)
 {
-    /* Calculate ROM page index */
+	/* Calculate ROM page index */
 	UINT32 poffset = (data % cart.pages) << 14;
-   	//bprintf(0, _T("address[%X] pof(%X) data[%X],"), address, poffset, data);
+	//bprintf(0, _T("address[%X] pof(%X) data[%X],"), address, poffset, data);
 
-    /* Save frame control register data */
-    cart.fcr[address & 3] = data;
+	/* Save frame control register data */
+	cart.fcr[address & 3] = data;
 
-    switch(address & 3)
-    {
-        case 0: // page 2
-            if(data & 8)
-            {
-                UINT32 offset = (data & 4) ? 0x4000 : 0x0000;
-                sms.save = 1;
+	switch(address & 3)
+	{
+		case 0: // page 2
+			if(data & 8)
+			{
+				UINT32 offset = (data & 4) ? 0x4000 : 0x0000;
+				sms.save = 1;
 				ZetMapMemory((UINT8 *)&cart.sram + offset, 0x8000, 0xbfff, MAP_RAM);
-            }
-            else
-            {
+			}
+			else
+			{
 				poffset = ((cart.fcr[3] % cart.pages) << 14);
 				ZetMapMemory(cart.rom + poffset, 0x8000, 0xbfff, MAP_ROM);
 				if (cart.mapper == MAPPER_SEGA)
 					ZetMapMemory((UINT8 *)&dummy_write, 0x8000, 0xbfff, MAP_WRITE);
-            }
-            break;
+			}
+			break;
 
-        case 1: // page 0
+		case 1: // page 0
 			ZetMapMemory(cart.rom + poffset, 0x0000, 0x3fff, MAP_ROM);
 			if(cart.mapper != MAPPER_CODIES && cart.mapper != MAPPER_4PAK && cart.mapper != MAPPER_XIN1) // first 1k is in the Sega mapper
 				ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
-            break;
+			break;
 
-        case 2: // page 1
+		case 2: // page 1
 			ZetMapMemory(cart.rom + poffset, 0x4000, 0x7fff, MAP_ROM);
-            break;
+			break;
 
-        case 3: // page 2
-            if(!(cart.fcr[0] & 0x08))
-            {
+		case 3: // page 2
+			if(!(cart.fcr[0] & 0x08))
+			{
 				ZetMapMemory(cart.rom + poffset, 0x8000, 0xbfff, MAP_ROM);
-            }
-            break;
-    }
+			}
+			break;
+	}
 }
 
 /* Read unmapped memory */
 UINT8 z80_read_unmapped(void)
 {
-    INT32 pc = ZetGetPC(-1);
-    UINT8 data;
+	INT32 pc = ZetGetPC(-1);
+	UINT8 data;
 	pc = (pc - 1) & 0xFFFF;
 	data = ZetReadByte(pc);
 
@@ -486,7 +486,7 @@ UINT8 z80_read_unmapped(void)
 
 void memctrl_w(UINT8 data)
 {
-    sms.memctrl = data;
+	sms.memctrl = data;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -495,76 +495,76 @@ void memctrl_w(UINT8 data)
 
 void __fastcall sms_port_w(UINT16 port, UINT8 data)
 {
-    port &= 0xFF;
+	port &= 0xFF;
 
-    if(port >= 0xF0)
-    {
-        switch(port)
-        {
-            case 0xF0:
-                fmunit_write(0, data);
-                return;
+	if(port >= 0xF0)
+	{
+		switch(port)
+		{
+			case 0xF0:
+				fmunit_write(0, data);
+				return;
 
-            case 0xF1:
-                fmunit_write(1, data);
-                return;
+			case 0xF1:
+				fmunit_write(1, data);
+				return;
 
-            case 0xF2:
-                fmunit_detect_w(data);
-                return;
-        }
-    }
+			case 0xF2:
+				fmunit_detect_w(data);
+				return;
+		}
+	}
 
-    switch(port & 0xC1)
-    {
-        case 0x00:
-            memctrl_w(data);
-            return;
+	switch(port & 0xC1)
+	{
+		case 0x00:
+			memctrl_w(data);
+			return;
 
-        case 0x01:
-            ioctrl_w(data);
-            return;
+		case 0x01:
+			ioctrl_w(data);
+			return;
 
-        case 0x40:
-        case 0x41:
-            psg_write(data);
-            return;
+		case 0x40:
+		case 0x41:
+			psg_write(data);
+			return;
 
-        case 0x80:
-        case 0x81:
-            vdp_write(port, data);
-            return;
+		case 0x80:
+		case 0x81:
+			vdp_write(port, data);
+			return;
 
-        case 0xC0:
-        case 0xC1:
-            return;
-    }
+		case 0xC0:
+		case 0xC1:
+			return;
+	}
 }
 
 UINT8 __fastcall sms_port_r(UINT16 port)
 {
-    port &= 0xFF;
+	port &= 0xFF;
 
-    if(port == 0xF2 && sms.use_fm)
-        return fmunit_detect_r();
+	if(port == 0xF2 && sms.use_fm)
+		return fmunit_detect_r();
 
-    switch(port & 0xC0)
-    {
-        case 0x00:
-            return z80_read_unmapped();
+	switch(port & 0xC0)
+	{
+		case 0x00:
+			return z80_read_unmapped();
 
-        case 0x40:
-            return vdp_counter_r(port);
+		case 0x40:
+			return vdp_counter_r(port);
 
-        case 0x80:
-            return vdp_read(port);
+		case 0x80:
+			return vdp_read(port);
 
-        case 0xC0:
-            return input_r(port);
-    }
+		case 0xC0:
+			return input_r(port);
+	}
 
-    /* Just to please the compiler */
-    return 0;
+	/* Just to please the compiler */
+	return 0;
 }
 
 
@@ -575,68 +575,68 @@ UINT8 __fastcall sms_port_r(UINT16 port)
 
 void __fastcall gg_port_w(UINT16 port, UINT8 data)
 {
-    port &= 0xFF;
+	port &= 0xFF;
 
-    if(port <= 0x06) {
-        sio_w(port, data);
-        return;
-    }
+	if(port <= 0x06) {
+		sio_w(port, data);
+		return;
+	}
 
-    switch(port & 0xC1)
-    {
-        case 0x00:
-            memctrl_w(data);
-            return;
+	switch(port & 0xC1)
+	{
+		case 0x00:
+			memctrl_w(data);
+			return;
 
-        case 0x01:
-            ioctrl_w(data);
-            return;
+		case 0x01:
+			ioctrl_w(data);
+			return;
 
-        case 0x40:
-        case 0x41:
-            psg_write(data);
-            return;
+		case 0x40:
+		case 0x41:
+			psg_write(data);
+			return;
 
-        case 0x80:
-        case 0x81:
-            gg_vdp_write(port, data);
-            return;
-    }
+		case 0x80:
+		case 0x81:
+			gg_vdp_write(port, data);
+			return;
+	}
 }
 
 
 UINT8 __fastcall gg_port_r(UINT16 port)
 {
-    port &= 0xFF;
+	port &= 0xFF;
 
-    if(port <= 0x06)
-        return sio_r(port);
+	if(port <= 0x06)
+		return sio_r(port);
 
-    switch(port & 0xC0)
-    {
-        case 0x00:
-            return z80_read_unmapped();
+	switch(port & 0xC0)
+	{
+		case 0x00:
+			return z80_read_unmapped();
 
-        case 0x40:
-            return vdp_counter_r(port);
+		case 0x40:
+			return vdp_counter_r(port);
 
-        case 0x80:
-            return vdp_read(port);
+		case 0x80:
+			return vdp_read(port);
 
-        case 0xC0:
-            switch(port)
-            {
-                case 0xC0:
-                case 0xC1:
-                case 0xDC:
-                case 0xDD:
-                    return input_r(port);
-            }
-            return z80_read_unmapped();
-    }
+		case 0xC0:
+			switch(port)
+			{
+				case 0xC0:
+				case 0xC1:
+				case 0xDC:
+				case 0xDD:
+					return input_r(port);
+			}
+			return z80_read_unmapped();
+	}
 
-    /* Just to please the compiler */
-    return 0;
+	/* Just to please the compiler */
+	return 0;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -645,57 +645,57 @@ UINT8 __fastcall gg_port_r(UINT16 port)
 
 void __fastcall ggms_port_w(UINT16 port, UINT8 data)
 {
-    port &= 0xFF;
+	port &= 0xFF;
 
-    switch(port & 0xC1)
-    {
-        case 0x00:
-            memctrl_w(data);
-            return;
+	switch(port & 0xC1)
+	{
+		case 0x00:
+			memctrl_w(data);
+			return;
 
-        case 0x01:
-            ioctrl_w(data);
-            return;
+		case 0x01:
+			ioctrl_w(data);
+			return;
 
-        case 0x40:
-        case 0x41:
-            psg_write(data);
-            return;
+		case 0x40:
+		case 0x41:
+			psg_write(data);
+			return;
 
-        case 0x80:
-        case 0x81:
-            gg_vdp_write(port, data);
-            return;
-    }
+		case 0x80:
+		case 0x81:
+			gg_vdp_write(port, data);
+			return;
+	}
 }
 
 UINT8 __fastcall ggms_port_r(UINT16 port)
 {
-    port &= 0xFF;
+	port &= 0xFF;
 
-    switch(port & 0xC0)
-    {
-        case 0x00:
-            return z80_read_unmapped();
+	switch(port & 0xC0)
+	{
+		case 0x00:
+			return z80_read_unmapped();
 
-        case 0x40:
-            return vdp_counter_r(port);
+		case 0x40:
+			return vdp_counter_r(port);
 
-        case 0x80:
-            return vdp_read(port);
+		case 0x80:
+			return vdp_read(port);
 
-        case 0xC0:
-            switch(port)
-            {
-                case 0xC0:
-                case 0xC1:
-                case 0xDC:
-                case 0xDD:
-                    return input_r(port);
-            }
-            return z80_read_unmapped();
-    }
+		case 0xC0:
+			switch(port)
+			{
+				case 0xC0:
+				case 0xC1:
+				case 0xDC:
+				case 0xDD:
+					return input_r(port);
+			}
+			return z80_read_unmapped();
+	}
 
-    /* Just to please the compiler */
-    return 0;
+	/* Just to please the compiler */
+	return 0;
 }

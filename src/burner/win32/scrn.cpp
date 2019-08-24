@@ -1808,6 +1808,38 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bMonitorAutoCheck = false; nVidScrnAspectX = 16; nVidScrnAspectY = 10;
 			POST_INITIALISE_MESSAGE;
 			break;
+		case MENU_ASPECTNORMALVERL:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 4; nVidVerScrnAspectY = 3;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTLCDVERL:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 5; nVidVerScrnAspectY = 4;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTWIDEVERL:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 16; nVidVerScrnAspectY = 9;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTWIDELCDVERL:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 16; nVidVerScrnAspectY = 10;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTNORMALVERP:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 3; nVidVerScrnAspectY = 4;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTLCDVERP:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 4; nVidVerScrnAspectY = 5;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTWIDEVERP:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 9; nVidVerScrnAspectY = 16;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTWIDELCDVERP:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 10; nVidVerScrnAspectY = 16;
+			POST_INITIALISE_MESSAGE;
+			break;
 		case MENU_MONITORMIRRORVERT:
 			nVidRotationAdjust ^= 2;
 			POST_INITIALISE_MESSAGE;

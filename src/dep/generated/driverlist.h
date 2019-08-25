@@ -6728,6 +6728,7 @@ DRV		BurnDrvsms_newbogl2;
 DRV		BurnDrvNewfanta;
 DRV		BurnDrvNewfant;
 DRV		BurnDrvmd_newhoriz;
+DRV		BurnDrvsms_novdmvdp;
 DRV		BurnDrvnewpuckx;
 DRV		BurnDrvNrallyx;
 DRV		BurnDrvNewsin7;
@@ -11686,6 +11687,8 @@ DRV		BurnDrvMSX_vestron;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvVictnine;		// no comment [NOT WORKING]
 #endif
+DRV		BurnDrvVictorycb;
+DRV		BurnDrvVictoryc;
 DRV		BurnDrvVictroad;
 DRV		BurnDrvpce_victoryr;
 DRV		BurnDrvtg_victoryr;
@@ -19262,6 +19265,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNewfanta,			// New Fantasia (1994 copyright)
 	&BurnDrvNewfant,			// New Fantasia (1995 copyright)
 	&BurnDrvmd_newhoriz,		// New Horizons (USA)
+	&BurnDrvsms_novdmvdp,		// New Order vs Depeche Mode vs Daft Punk - (Sterbinszky and Coddie Mashup)
 	&BurnDrvnewpuckx,			// New Puck-X
 	&BurnDrvNrallyx,			// New Rally X
 	&BurnDrvNewsin7,			// New Sinbad 7
@@ -24220,6 +24224,8 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvVictnine,			// Victorious Nine [no comment, NOT WORKING]
 #endif
+	&BurnDrvVictorycb,			// Victory (Comsoft) (bootleg)
+	&BurnDrvVictoryc,			// Victory (Comsoft)
 	&BurnDrvVictroad,			// Victory Road
 	&BurnDrvpce_victoryr,		// Victory Run
 	&BurnDrvtg_victoryr,		// Victory Run

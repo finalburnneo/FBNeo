@@ -2259,6 +2259,13 @@
 		<rom name="new boggle boggle (kr).bin" size="32768" crc="dbbf4dd1"/>
 		<driver status="good"/>
 	</game>
+	<game name="novdmvdp">
+		<description>New Order vs Depeche Mode vs Daft Punk - (Sterbinszky and Coddie Mashup)</description>
+		<year>2019</year>
+		<manufacturer>Maxim</manufacturer>
+		<rom name="novdmvdp.sms" size="4176507" crc="d0eabe60"/>
+		<driver status="good"/>
+	</game>
 	<game name="ngaiden">
 		<description>Ninja Gaiden (Euro, Bra)</description>
 		<year>1992</year>

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12251 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12254 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6578,6 +6578,7 @@ This list contains all games supported by FinalBurn Neo.
 | newfanta	|  	| New Fantasia (1994 copyright)				| newfant	| 1995	| Comad / New Ja| Miscellaneous	| 					|
 | newfant	|  	| New Fantasia (1995 copyright)				| 		| 1995	| Comad / New Ja| Miscellaneous	| 					|
 | md_newhoriz	|  	| New Horizons (USA)					| 		| 1994	| Koei		| Sega Megadrive| 					|
+| sms_novdmvdp	|  	| New Order vs Depeche Mode vs Daft Punk - (Sterbinszky | 		| 2019	| Maxim		| Sega Master Sy| 					|
 | newpuckx	|  	| New Puck-X						| puckman	| 1980	| hack		| Pac-man	| 					|
 | nrallyx	|  	| New Rally X						| 		| 1981	| Namco		| Miscellaneous	| 					|
 | newsin7	|  	| New Sinbad 7						| 		| 1983	| ATW USA, Inc.	| Galaxian	| 					|
@@ -8218,7 +8219,7 @@ This list contains all games supported by FinalBurn Neo.
 | rugrats	|  	| Rug Rats						| wiping	| 1983	| Nichibutsu	| Miscellaneous	| 					|
 | md_rugbywc	|  	| Rugby World Cup 1995 (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | rumba		|  	| Rumba Lumber						| 		| 1984	| Taito		| Miscellaneous	| 					|
-| rundeep	|  	| Run Deep						| thedeep	| 1988	| bootleg (Cream| Miscellaneous	| 					|
+| rundeep	|  	| Run Deep						| thedeep	| 1988	| Cream Co., Ltd| Miscellaneous	| 					|
 | spec_rungaunt	|  	| Run the Gauntlet (128K)				| 		| 1989	| Ocean		| ZX Spectrum	| 					|
 | runark	|  	| Runark (Japan)					| growl		| 1990	| Taito Corporat| Taito F2	| 					|
 | md_runark	|  	| Runark (Jpn, Kor)					| md_growl	| 1991	| Taito		| Sega Megadrive| 					|
@@ -10396,7 +10397,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_mightmax	|  	| The Adventures of Mighty Max (Euro)			| 		| 1994	| Ocean		| Sega Megadrive| 					|
 | md_mightmaxu	|  	| The Adventures of Mighty Max (USA)			| md_mightmax	| 1994	| Ocean		| Sega Megadrive| 					|
 | md_rockybw	|  	| The Adventures of Rocky and Bullwinkle and Friends (US| 		| 1993	| Absolute Enter| Sega Megadrive| 					|
-| alphaxz	|  	| The Alphax Z (Japan)					| m660		| 1986	| Ed Co. Ltd. (W| Miscellaneous	| 					|
+| alphaxz	|  	| The Alphax Z (Japan)					| m660		| 1986	| Ed Co., Ltd. (| Miscellaneous	| 					|
 | mrflea	|  	| The Amazing Adventures of Mr. F. Lea			| 		| 1982	| Pacific Novelt| Miscellaneous	| 					|
 | anteateruk	|  	| The Anteater (UK)					| anteater	| 1983	| Free Enterpris| Galaxian	| 					|
 | msx_apeman	|  	| The Apeman Strikes Again				| 		| 1985	| Bytebusters	| MSX		| 					|
@@ -10489,7 +10490,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_dambust	|  	| The Dam Busters					| 		| 1984	| Coleco	| ColecoVision	| 					|
 | dealer	|  	| The Dealer						| 		| 198?	| Epos Corporati| EPOS Tristar	| Incorrect Colors			|
 | md_deathret	|  	| The Death and Return of Superman (USA)		| 		| 1995	| Sunsoft	| Sega Megadrive| 					|
-| thedeep	|  	| The Deep (Japan)					| 		| 1987	| Wood Place Inc| Miscellaneous	| 					|
+| thedeep	|  	| The Deep (Japan)					| 		| 1987	| Woodplace Inc.| Miscellaneous	| 					|
 | msx_dcrystal	|  	| The Demon Crystal (Jpn)				| 		| 1986	| Dempa		| MSX		| 					|
 | sms_dinodool	|  	| The Dinosaur Dooley (Kor)				| 		| 19??	| Unknown	| Sega Master Sy| 					|
 | md_disneycl	|  	| The Disney Collection - Mickey and Donald (Euro)	| 		| 1996	| Sega		| Sega Megadrive| 					|
@@ -11440,6 +11441,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_vesikauhu	|  	| Vesikauhu (demo)					| 		| 2000	| Bandwagon	| MSX		| 					|
 | msx_vestron	|  	| Vestron (Euro)					| 		| 1986	| Players Softwa| MSX		| 					|
 | victnine	| D NW	| Victorious Nine					| 		| 1984	| Taito		| Miscellaneous	| 					|
+| victorycb	|  	| Victory (Comsoft) (bootleg)				| victoryc	| 1982	| bootleg	| Galaxian	| 					|
+| victoryc	|  	| Victory (Comsoft)					| 		| 1982	| Comsoft	| Galaxian	| 					|
 | victroad	|  	| Victory Road						| 		| 1986	| SNK		| Miscellaneous	| 					|
 | pce_victoryr	|  	| Victory Run						| 		| 1987	| Hudson	| PC Engine	| 					|
 | tg_victoryr	|  	| Victory Run						| 		| 1989	| NEC		| TurboGrafx 16	| 					|

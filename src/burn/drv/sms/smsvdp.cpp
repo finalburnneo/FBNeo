@@ -67,13 +67,13 @@ void vdp_reset(void)
 	/* reset VDP internals */
 	vdp.ct    = (vdp.reg[3] <<  6) & 0x3FC0;
 	vdp.pg    = (vdp.reg[4] << 11) & 0x3800;
-	vdp.satb  = (vdp.reg[5] << 7) & 0x3F00;
+	vdp.satb  = (vdp.reg[5] <<  7) & 0x3F00;
 	vdp.sa    = (vdp.reg[5] <<  7) & 0x3F80;
 	vdp.sg    = (vdp.reg[6] << 11) & 0x3800;
 	vdp.bd    = (vdp.reg[7] & 0x0F);
 
-	bitmap.viewport.x = (IS_GG) ? 48 : 0;    // 44 for (vdp.reg[0] & 0x20 && IS_GG)
-	bitmap.viewport.y = (IS_GG) ? 24 : 0;
+	bitmap.viewport.x = (IS_GG) ?  48 : 0;    // 44 for (vdp.reg[0] & 0x20 && IS_GG)
+	bitmap.viewport.y = (IS_GG) ?  24 : 0;
 	bitmap.viewport.w = (IS_GG) ? 160 : 256;
 	bitmap.viewport.h = (IS_GG) ? 144 : 192;
 	bitmap.viewport.changed = 1;

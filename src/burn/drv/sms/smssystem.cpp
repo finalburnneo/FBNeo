@@ -84,9 +84,6 @@ void system_frame()
 	ZetIdle(sms.cyc);
 	sms.cyc = 0;
 
-	/* End of frame, parse sprites for line 0 on line 261 (VCount=$FF) */
-	if (vdp.mode <= 7) parse_line(0);
-
 	if (pBurnSoundOut) BurnSoundClear();
 
 	for (vdp.line = 0; vdp.line < vdp.lpf;)
@@ -137,9 +134,6 @@ void system_frame()
 		}
 
 		vdp.line++;
-
-		if (vdp.mode <= 7)
-			parse_line(vdp.line);
 	}
 
 	sms.cyc = ZetTotalCycles() - sms.cyc;

@@ -765,6 +765,31 @@ static struct BurnInputInfo FroggermcInputList[] =
 
 STDINPUTINFO(Froggermc)
 
+static struct BurnInputInfo VictorycInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	GalInputPort0 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	GalInputPort1 + 0,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	GalInputPort0 + 7,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	GalInputPort0 + 5,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	GalInputPort0 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	GalInputPort0 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	GalInputPort0 + 4,	"p1 fire 1"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	GalInputPort1 + 5,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	GalInputPort1 + 1,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	GalInputPort0 + 6,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	GalInputPort0 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	GalInputPort1 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	GalInputPort1 + 3,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	GalInputPort1 + 4,	"p2 fire 1"	},
+
+	{"Reset",			BIT_DIGITAL,	&GalReset,			"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	GalDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	GalDip + 1,			"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	GalDip + 2,			"dip"		},
+};
+
+STDINPUTINFO(Victoryc)
+
 static struct BurnInputInfo GalaxianInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 0, "p1 coin"   },
@@ -3547,6 +3572,39 @@ static struct BurnDIPInfo FroggermcDIPList[]=
 };
 
 STDDIPINFO(Froggermc)
+
+static struct BurnDIPInfo VictorycDIPList[]=
+{
+	{0x0f, 0xff, 0xff, 0x00, NULL						},
+	{0x10, 0xff, 0xff, 0xc0, NULL						},
+	{0x11, 0xff, 0xff, 0xf7, NULL						},
+
+	{0   , 0xfe, 0   ,    2, "Coinage"					},
+	{0x10, 0x01, 0x40, 0x00, "A: 2C/1C B: 1C/3C"		},
+	{0x10, 0x01, 0x40, 0x40, "A: 1C/1C B: 1C/6C"		},
+#if 0
+	{0   , 0xfe, 0   ,    2, "Unknown"					},
+	{0x10, 0x01, 0x80, 0x80, "Off"						},
+	{0x10, 0x01, 0x80, 0x00, "On"						},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"					},
+	{0x11, 0x01, 0x01, 0x01, "Off"						},
+	{0x11, 0x01, 0x01, 0x00, "On"						},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"					},
+	{0x11, 0x01, 0x02, 0x02, "Off"						},
+	{0x11, 0x01, 0x02, 0x00, "On"						},
+#endif
+	{0   , 0xfe, 0   ,    2, "Lives"					},
+	{0x11, 0x01, 0x04, 0x04, "2"						},
+	{0x11, 0x01, 0x04, 0x00, "3"						},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		   		 	},
+	{0x11, 0x01, 0x08, 0x00, "Upright"					},
+	{0x11, 0x01, 0x08, 0x08, "Cocktail"					},
+};
+
+STDDIPINFO(Victoryc)
 
 static struct BurnDIPInfo GalaxianDIPList[]=
 {
@@ -8038,6 +8096,101 @@ static INT32 TazzmangInit()
 	
 	return GalInit();
 }
+
+void __fastcall GalaxianZ80Write(UINT16 a, UINT8 d); // forward
+
+void __fastcall VictorycZ80Write(UINT16 a, UINT8 d)
+{
+	if (a == 0x7004) return; // ignore stars
+
+	GalaxianZ80Write(a, d);
+}
+
+static void VictorycPostLoad()
+{
+	ZetOpen(0);
+	ZetSetWriteHandler(VictorycZ80Write);
+	ZetMapArea(0x8000, 0x87ff, 0, GalZ80Ram1 + 0x800);
+	ZetMapArea(0x8000, 0x87ff, 1, GalZ80Ram1 + 0x800);
+	ZetMapArea(0x8000, 0x87ff, 2, GalZ80Ram1 + 0x800);
+	ZetClose();
+
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "victoryc")) {
+		bprintf(0, _T("non-bootleg victory!!\n"));
+		for (INT32 i = 0; i < GalZ80Rom1Size; i++)
+		{
+			if (i & 0x80) GalZ80Rom1[i] ^= 0x80;
+			if (i & 0x20) GalZ80Rom1[i] ^= 0x04;
+			if (i & 0x04) GalZ80Rom1[i] ^= 0x40;
+			if (i & 0x01) GalZ80Rom1[i] ^= 0x08;
+
+			GalZ80Rom1[i] = BITSWAP08(GalZ80Rom1[i], 6, 3, 5, 4, 2, 7, 1, 0);
+		}
+	}
+}
+
+static INT32 VictorycInit()
+{
+	GalPostLoadCallbackFunction = VictorycPostLoad;
+
+	return GalInit();
+}
+
+// Victory (Comsoft)
+
+static struct BurnRomInfo victorycRomDesc[] = {
+	{ "1.1",	0x0800, 0x8a590687, BRF_PRG | BRF_ESS | GAL_ROM_Z80_PROG1 }, //  0 maincpu
+	{ "2.2",	0x0800, 0x575ac583, BRF_PRG | BRF_ESS | GAL_ROM_Z80_PROG1 }, //  1
+	{ "3.3",	0x0800, 0xcbe67cfb, BRF_PRG | BRF_ESS | GAL_ROM_Z80_PROG1 }, //  2
+	{ "4.4",	0x0800, 0x025b6626, BRF_PRG | BRF_ESS | GAL_ROM_Z80_PROG1 }, //  3
+
+	{ "df.1k",	0x0800, 0x15e98c93, BRF_GRA | GAL_ROM_TILES_SHARED },           //  4 gfx1
+	{ "a4.1h",	0x0800, 0xcd35a7e2, BRF_GRA | GAL_ROM_TILES_SHARED },           //  5
+
+	{ "prom.6l",	0x0020, 0x25329e5a, BRF_GRA | GAL_ROM_PROM },           //  6 proms
+};
+
+STD_ROM_PICK(victoryc)
+STD_ROM_FN(victoryc)
+
+struct BurnDriver BurnDrvVictoryc = {
+	"victoryc", NULL, NULL, NULL, "1982",
+	"Victory (Comsoft)\0", NULL, "Comsoft", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, victorycRomInfo, victorycRomName, NULL, NULL, NULL, NULL, VictorycInputInfo, VictorycDIPInfo,
+	VictorycInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+
+// Victory (Comsoft) (bootleg)
+
+static struct BurnRomInfo victorycbRomDesc[] = {
+	{ "v1.bin",	0x0800, 0xde985696, BRF_PRG | BRF_ESS | BRF_ESS | GAL_ROM_Z80_PROG1 }, //  0 maincpu
+	{ "v2.bin",	0x0800, 0x59042c1e, BRF_PRG | BRF_ESS | BRF_ESS | GAL_ROM_Z80_PROG1 }, //  1
+	{ "v3.bin",	0x0800, 0xca3a6965, BRF_PRG | BRF_ESS | BRF_ESS | GAL_ROM_Z80_PROG1 }, //  2
+	{ "v4.bin",	0x0800, 0x16b47fad, BRF_PRG | BRF_ESS | BRF_ESS | GAL_ROM_Z80_PROG1 }, //  3
+	{ "v5.bin",	0x0800, 0xf60be3be, BRF_PRG | BRF_ESS | BRF_ESS | GAL_ROM_Z80_PROG1 }, //  4
+
+	{ "v6.bin",	0x0800, 0x15e98c93, BRF_GRA | GAL_ROM_TILES_SHARED },           //  5 gfx1
+	{ "v7.bin",	0x0800, 0xcd35a7e2, BRF_GRA | GAL_ROM_TILES_SHARED },           //  6
+
+	{ "prom.6l",	0x0020, 0x25329e5a, BRF_GRA | GAL_ROM_PROM },           //  7 proms
+};
+
+STD_ROM_PICK(victorycb)
+STD_ROM_FN(victorycb)
+
+struct BurnDriver BurnDrvVictorycb = {
+	"victorycb", "victoryc", NULL, NULL, "1982",
+	"Victory (Comsoft) (bootleg)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, victorycbRomInfo, victorycbRomName, NULL, NULL, NULL, NULL, VictorycInputInfo, VictorycDIPInfo,
+	VictorycInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
 
 static void MapScramblb()
 {

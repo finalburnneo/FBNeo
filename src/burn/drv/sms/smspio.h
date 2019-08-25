@@ -21,21 +21,21 @@
 #define PIN_DIR_IN  1       /* Pin is in active-low input mode */
 
 enum {
-    PORT_A          = 0,    /* I/O port A */
-    PORT_B          = 1     /* I/O port B */
+	PORT_A          = 0,    /* I/O port A */
+	PORT_B          = 1     /* I/O port B */
 };
 
 enum {
-    DEVICE_NONE     = 0,    /* No peripheral */
-    DEVICE_PAD2B    = 1,    /* Standard 2-button digital joystick/gamepad */
-    DEVICE_PADDLE   = 2     /* Paddle controller; rotary dial with fire button */
+	DEVICE_NONE     = 0,    /* No peripheral */
+	DEVICE_PAD2B    = 1,    /* Standard 2-button digital joystick/gamepad */
+	DEVICE_PADDLE   = 2     /* Paddle controller; rotary dial with fire button */
 };
 
 typedef struct {
-    UINT8 tr_level[2];  /* TR pin output level */
-    UINT8 th_level[2];  /* TH pin output level */
-    UINT8 tr_dir[2];    /* TR pin direction */
-    UINT8 th_dir[2];    /* TH pin direction */
+	UINT8 tr_level[2];  /* TR pin output level */
+	UINT8 th_level[2];  /* TH pin output level */
+	UINT8 tr_dir[2];    /* TR pin direction */
+	UINT8 th_dir[2];    /* TH pin direction */
 } io_state;
 
 /* Global variables */

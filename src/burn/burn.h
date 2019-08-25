@@ -555,6 +555,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_SMS_MAPPER_XIN1     					(0x08)
 #define HARDWARE_SMS_MAPPER_NONE     					(0x0F)
 
+#define HARDWARE_SMS_NO_CART_HEADER						(0x1000)
 #define HARDWARE_SMS_GG_SMS_MODE						(0x2000)
 #define HARDWARE_SMS_DISPLAY_PAL						(0x4000)
 #define HARDWARE_SMS_JAPANESE							(0x8000)

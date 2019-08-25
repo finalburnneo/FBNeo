@@ -117,7 +117,8 @@ wchar_t VerScreen[32] = L"";
 INT32 nVidScrnWidth = 0, nVidScrnHeight = 0;		// Actual Screen dimensions (0 if in windowed mode)
 INT32 nVidScrnDepth = 0;							// Actual screen depth
 
-INT32 nVidScrnAspectX = 4, nVidScrnAspectY = 3;	// Aspect ratio of the display screen
+INT32 nVidScrnAspectX = 4, nVidScrnAspectY = 3;	        // Aspect ratio of the horizontally orientated display screen
+INT32 nVidVerScrnAspectX = 4, nVidVerScrnAspectY = 3;   // Aspect ratio of the vertically orientated display screen
 
 UINT8* pVidImage = NULL;				// Memory buffer
 INT32 nVidImageWidth = DEFAULT_IMAGE_WIDTH;		// Memory buffer size

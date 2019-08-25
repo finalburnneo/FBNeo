@@ -1723,23 +1723,23 @@ struct BurnDriver BurnDrvYamagchi = {
 // Mission 660 (US)
 
 static struct BurnRomInfo m660RomDesc[] = {
-	{ "660l.bin",		0x4000, 0x57c0d1cc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "660m.bin",		0x4000, 0x628c6686, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "660n.bin",		0x4000, 0x1b418a97, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "660l.bin",	0x4000, 0x57c0d1cc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "660m.bin",	0x4000, 0x628c6686, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "660n.bin",	0x4000, 0x1b418a97, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "14.4n",		0x4000, 0x5734db5a, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
 	{ "13.4j",		0x4000, 0xfba51cf7, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "660x.bin",		0x8000, 0xb82f0cfa, 4 | BRF_PRG | BRF_ESS }, //  5 Z80 #3 Code
+	{ "660x.bin",	0x8000, 0xb82f0cfa, 4 | BRF_PRG | BRF_ESS }, //  5 Z80 #3 Code
 
 	{ "4.7k",		0x4000, 0xe24e431a, 5 | BRF_GRA },           //  6 Background Tiles
 	{ "5.6k",		0x4000, 0xb2c93d46, 5 | BRF_GRA },           //  7
 	{ "6.5k",		0x4000, 0x763c5983, 5 | BRF_GRA },           //  8
 
-	{ "660u.bin",		0x2000, 0x030af716, 6 | BRF_GRA },           //  9 Foreground Tiles
-	{ "660v.bin",		0x2000, 0x51a6e160, 6 | BRF_GRA },           // 10
-	{ "660w.bin",		0x2000, 0x8a45b469, 6 | BRF_GRA },           // 11
+	{ "660u.bin",	0x2000, 0x030af716, 6 | BRF_GRA },           //  9 Foreground Tiles
+	{ "660v.bin",	0x2000, 0x51a6e160, 6 | BRF_GRA },           // 10
+	{ "660w.bin",	0x2000, 0x8a45b469, 6 | BRF_GRA },           // 11
 
 	{ "7.15e",		0x4000, 0x990c0cee, 7 | BRF_GRA },           // 12 Sprites
 	{ "8.15d",		0x4000, 0xd9aa7834, 7 | BRF_GRA },           // 13
@@ -1822,31 +1822,31 @@ struct BurnDriver BurnDrvM660j = {
 // Mission 660 (bootleg)
 
 static struct BurnRomInfo m660bRomDesc[] = {
-	{ "m660-1.bin",		0x4000, 0x18f6c4be, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "2.3d",		0x4000, 0xe6661504, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.3f",		0x4000, 0x3a389ccd, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "m660-1.bin",	 0x4000, 0x18f6c4be, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.3d",		 0x4000, 0xe6661504, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.3f",		 0x4000, 0x3a389ccd, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "14.4n",		0x4000, 0x5734db5a, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "14.4n",		 0x4000, 0x5734db5a, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "13.4j",		0x4000, 0xfba51cf7, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+	{ "13.4j",		 0x4000, 0xfba51cf7, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "660x.bin",		0x8000, 0xb82f0cfa, 4 | BRF_PRG | BRF_ESS }, //  5 Z80 #3 Code
+	{ "660x.bin",	 0x8000, 0xb82f0cfa, 4 | BRF_PRG | BRF_ESS }, //  5 Z80 #3 Code
 
-	{ "4.7k",		0x4000, 0xe24e431a, 5 | BRF_GRA },           //  6 Background Tiles
-	{ "5.6k",		0x4000, 0xb2c93d46, 5 | BRF_GRA },           //  7
-	{ "6.5k",		0x4000, 0x763c5983, 5 | BRF_GRA },           //  8
+	{ "4.7k",		 0x4000, 0xe24e431a, 5 | BRF_GRA },           //  6 Background Tiles
+	{ "5.6k",		 0x4000, 0xb2c93d46, 5 | BRF_GRA },           //  7
+	{ "6.5k",		 0x4000, 0x763c5983, 5 | BRF_GRA },           //  8
 
-	{ "m660-10.bin",	0x2000, 0xb11405a6, 6 | BRF_GRA },           //  9 Foreground Tiles
-	{ "b.16k",		0x2000, 0x94b8b69f, 6 | BRF_GRA },           // 10
-	{ "c.16m",		0x2000, 0xd6768c68, 6 | BRF_GRA },           // 11
+	{ "m660-10.bin", 0x2000, 0xb11405a6, 6 | BRF_GRA },           //  9 Foreground Tiles
+	{ "b.16k",		 0x2000, 0x94b8b69f, 6 | BRF_GRA },           // 10
+	{ "c.16m",		 0x2000, 0xd6768c68, 6 | BRF_GRA },           // 11
 
-	{ "7.15e",		0x4000, 0x990c0cee, 7 | BRF_GRA },           // 12 Sprites
-	{ "8.15d",		0x4000, 0xd9aa7834, 7 | BRF_GRA },           // 13
-	{ "9.15b",		0x4000, 0x27b26905, 7 | BRF_GRA },           // 14
+	{ "7.15e",		 0x4000, 0x990c0cee, 7 | BRF_GRA },           // 12 Sprites
+	{ "8.15d",		 0x4000, 0xd9aa7834, 7 | BRF_GRA },           // 13
+	{ "9.15b",		 0x4000, 0x27b26905, 7 | BRF_GRA },           // 14
 
-	{ "4r.bpr",		0x0100, 0xcd16d0f1, 8 | BRF_GRA },           // 15 Color Proms
-	{ "4p.bpr",		0x0100, 0x22e8b22c, 8 | BRF_GRA },           // 16
-	{ "5r.bpr",		0x0100, 0xb7d6fdb5, 8 | BRF_GRA },           // 17
+	{ "4r.bpr",		 0x0100, 0xcd16d0f1, 8 | BRF_GRA },           // 15 Color Proms
+	{ "4p.bpr",		 0x0100, 0x22e8b22c, 8 | BRF_GRA },           // 16
+	{ "5r.bpr",		 0x0100, 0xb7d6fdb5, 8 | BRF_GRA },           // 17
 };
 
 STD_ROM_PICK(m660b)
@@ -1870,9 +1870,9 @@ static struct BurnRomInfo alphaxzRomDesc[] = {
 	{ "az-02.bin",		0x4000, 0xa0779b6b, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "az-03.bin",		0x4000, 0x2797bc7b, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "14.4n",		0x4000, 0x5734db5a, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "14.4n",			0x4000, 0x5734db5a, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "13.4j",		0x4000, 0xfba51cf7, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+	{ "13.4j",			0x4000, 0xfba51cf7, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
 	{ "660x.bin",		0x8000, 0xb82f0cfa, 4 | BRF_PRG | BRF_ESS }, //  5 Z80 #3 Code
 
@@ -1888,9 +1888,9 @@ static struct BurnRomInfo alphaxzRomDesc[] = {
 	{ "az-08.bin",		0x4000, 0x23e3a6ba, 7 | BRF_GRA },           // 13
 	{ "az-09.bin",		0x4000, 0x7096fa71, 7 | BRF_GRA },           // 14
 
-	{ "4r.bpr",		0x0100, 0xcd16d0f1, 8 | BRF_GRA },           // 15 Color Proms
-	{ "4p.bpr",		0x0100, 0x22e8b22c, 8 | BRF_GRA },           // 16
-	{ "5r.bpr",		0x0100, 0xb7d6fdb5, 8 | BRF_GRA },           // 17
+	{ "4r.bpr",			0x0100, 0xcd16d0f1, 8 | BRF_GRA },           // 15 Color Proms
+	{ "4p.bpr",			0x0100, 0x22e8b22c, 8 | BRF_GRA },           // 16
+	{ "5r.bpr",			0x0100, 0xb7d6fdb5, 8 | BRF_GRA },           // 17
 };
 
 STD_ROM_PICK(alphaxz)
@@ -1898,7 +1898,7 @@ STD_ROM_FN(alphaxz)
 
 struct BurnDriver BurnDrvAlphaxz = {
 	"alphaxz", "m660", NULL, NULL, "1986",
-	"The Alphax Z (Japan)\0", NULL, "Ed Co. Ltd. (Wood Place Inc. license)", "Miscellaneous",
+	"The Alphax Z (Japan)\0", NULL, "Ed Co., Ltd. (Wood Place Co., Ltd. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, alphaxzRomInfo, alphaxzRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, M660DIPInfo,

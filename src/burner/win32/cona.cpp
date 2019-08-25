@@ -80,6 +80,8 @@ int ConfigAppLoad()
 
 		// horizontal oriented
 		VAR(nVidHorWidth); VAR(nVidHorHeight);
+		VAR(nVidScrnAspectX);
+		VAR(nVidScrnAspectY);
 		VAR(bVidArcaderesHor);
 		VAR(VidPreset[0].nWidth); VAR(VidPreset[0].nHeight);
 		VAR(VidPreset[1].nWidth); VAR(VidPreset[1].nHeight);
@@ -89,6 +91,8 @@ int ConfigAppLoad()
 
 		// vertical oriented
 		VAR(nVidVerWidth); VAR(nVidVerHeight);
+		VAR(nVidVerScrnAspectX);
+		VAR(nVidVerScrnAspectY);
 		VAR(bVidArcaderesVer);
 		VAR(VidPresetVer[0].nWidth); VAR(VidPresetVer[0].nHeight);
 		VAR(VidPresetVer[1].nWidth); VAR(VidPresetVer[1].nHeight);
@@ -116,8 +120,6 @@ int ConfigAppLoad()
 		VAR(bVidScanlines);
 		VAR(nVidScanIntensity);
 		VAR(bMonitorAutoCheck);
-		VAR(nVidScrnAspectX);
-		VAR(nVidScrnAspectY);
 		VAR(bForce60Hz);
 		VAR(bAlwaysDrawFrames);
 
@@ -364,6 +366,9 @@ int ConfigAppSave()
 	// Horizontal oriented
 	_ftprintf(h, _T("\n// (Horizontal Oriented) The display mode to use for fullscreen\n"));
 	VAR(nVidHorWidth); VAR(nVidHorHeight);
+	_ftprintf(h, _T("\n// The aspect ratio of the (Horizontal Oriented) monitor\n"));
+	VAR(nVidScrnAspectX);
+	VAR(nVidScrnAspectY);
 	_ftprintf(h, _T("\n// (Horizontal Oriented) If non-zero, use the same fullscreen resolution as the original arcade game\n"));
 	VAR(bVidArcaderesHor);
 	_ftprintf(h, _T("\n// (Horizontal Oriented) The preset resolutions appearing in the menu\n"));
@@ -377,6 +382,9 @@ int ConfigAppSave()
 	// Vertical oriented
 	_ftprintf(h, _T("\n// (Vertical Oriented) The display mode to use for fullscreen\n"));
 	VAR(nVidVerWidth); VAR(nVidVerHeight);
+	_ftprintf(h, _T("\n// The aspect ratio of the (Vertical Oriented) monitor\n"));
+	VAR(nVidVerScrnAspectX);
+	VAR(nVidVerScrnAspectY);
 	_ftprintf(h, _T("\n// (Vertical Oriented) If non-zero, use the same fullscreen resolution as the original arcade game\n"));
 	VAR(bVidArcaderesVer);
 	_ftprintf(h, _T("\n// (Vertical Oriented) The preset resolutions appearing in the menu\n"));
@@ -439,11 +447,8 @@ int ConfigAppSave()
 	VAR(nVidBlitterOpt[2]);
 	VAR(nVidBlitterOpt[3]);
 	VAR(nVidBlitterOpt[4]);
-	_ftprintf(h, _T("\n// If non-zero, attempt to auto-detect the monitor aspect ratio\n"));
+	_ftprintf(h, _T("\n// If non-zero, attempt to auto-detect the monitor resolution and aspect ratio\n"));
 	VAR(bMonitorAutoCheck);
-	_ftprintf(h, _T("\n// The aspect ratio of the monitor\n"));
-	VAR(nVidScrnAspectX);
-	VAR(nVidScrnAspectY);
 	_ftprintf(h, _T("\n// If non-zero, force all games to use a 60Hz refresh rate\n"));
 	VAR(bForce60Hz);
 	_ftprintf(h, _T("\n// If zero, skip frames when needed to keep the emulation running at full speed\n"));

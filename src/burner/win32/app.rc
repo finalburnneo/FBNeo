@@ -974,12 +974,26 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "&Monitor properties"
         BEGIN
-            MENUITEM "Automatically detect aspect ratio",		MENU_MONITORAUTOCHECK
+            MENUITEM "Automatically detect fullscreen resolution and aspect ratio",		MENU_MONITORAUTOCHECK
             MENUITEM SEPARATOR
-            MENUITEM "Normal CRT aspect ratio\t(4:3)",			MENU_ASPECTNORMAL
-            MENUITEM "Normal LCD aspect ratio\t(5:4)",			MENU_ASPECTLCD
-            MENUITEM "Widescreen CRT aspect ratio\t(16:9)",		MENU_ASPECTWIDE
-            MENUITEM "Widescreen LCD aspect ratio\t(16:10)",	MENU_ASPECTWIDELCD
+            POPUP "Select aspect ratio (Horizontal)"
+            BEGIN
+                MENUITEM "Normal CRT aspect ratio\t(4:3)",		MENU_ASPECTNORMAL
+                MENUITEM "Normal LCD aspect ratio\t(5:4)",		MENU_ASPECTLCD
+                MENUITEM "Widescreen CRT aspect ratio\t(16:9)",	MENU_ASPECTWIDE
+                MENUITEM "Widescreen LCD aspect ratio\t(16:10)",MENU_ASPECTWIDELCD
+            END
+            POPUP "Select aspect ratio (Vertical)"
+            BEGIN
+                MENUITEM "Normal CRT aspect ratio (landscape)\t(4:3)",		MENU_ASPECTNORMALVERL
+                MENUITEM "Normal LCD aspect ratio (landscape)\t(5:4)",		MENU_ASPECTLCDVERL
+                MENUITEM "Widescreen CRT aspect ratio (landscape)\t(16:9)",	MENU_ASPECTWIDEVERL
+                MENUITEM "Widescreen LCD aspect ratio (landscape)\t(16:10)",MENU_ASPECTWIDELCDVERL
+                MENUITEM "Normal CRT aspect ratio (portrait)\t(3:4)",		MENU_ASPECTNORMALVERP
+                MENUITEM "Normal LCD aspect ratio (portrait)\t(4:5)",		MENU_ASPECTLCDVERP
+                MENUITEM "Widescreen CRT aspect ratio (portrait)\t(9:16)",	MENU_ASPECTWIDEVERP
+                MENUITEM "Widescreen LCD aspect ratio (portrait)\t(10:16)", MENU_ASPECTWIDELCDVERP
+            END
             MENUITEM SEPARATOR
             MENUITEM "Mirrored vertical alignment",				MENU_MONITORMIRRORVERT
         END

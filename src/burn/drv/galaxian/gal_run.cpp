@@ -408,14 +408,17 @@ UINT8 __fastcall GalaxianZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0x6000: {
+			//bprintf(0, _T("in0: %X\n"), GalInput[0] | GalDip[0]);
 			return GalInput[0] | GalDip[0];
 		}
 		
 		case 0x6800: {
+			//bprintf(0, _T("in1: %X\n"), GalInput[1] | GalDip[1]);
 			return GalInput[1] | GalDip[1];
 		}
 		
 		case 0x7000: {
+			//bprintf(0, _T("in2: %X\n"), GalInput[2] | GalDip[2]);
 			return GalInput[2] | GalDip[2];
 		}
 		
@@ -425,7 +428,7 @@ UINT8 __fastcall GalaxianZ80Read(UINT16 a)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #1 Read => %04X\n"), a);
+			//bprintf(PRINT_NORMAL, _T("Z80 #1 Read => %04X\n"), a);
 		}
 	}
 

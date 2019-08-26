@@ -192,7 +192,7 @@ void system_manage_sram(UINT8 */*sram*/, INT32 /*slot*/, INT32 /*mode*/)
 
 // Notes:
 // *FIXED* Back to the Future II - bottom of the screen is corrupt, playable
-// Street Fighter II - reboots @ game start.  mapper? -dink
+// *FIXED* Street Fighter II - reboots @ game start.  (executes code from ram, but ram was not FETCHable)
 
 // GG:
 // *FIXED* Surf ninjas - weird graphics at boot, playable
@@ -319,8 +319,11 @@ INT32 SMSInit()
 		bprintf(0, _T("Error loading SMS/GG rom!\n"));
 		return 1;
 	} else {
-		bprintf(0, _T("SMS/GG rom loaded ok!\n"));
+		bprintf(0, _T("%s @ "), (sms.console == CONSOLE_GG) ? _T("Game Gear") : _T("Master System"));
+		bprintf(0, _T("%s - rom loaded ok!\n"), (sms.display == DISPLAY_NTSC) ? _T("NTSC / 60hz") : _T("Pal / 50hz"));
 	}
+
+	BurnSetRefreshRate((sms.display == DISPLAY_NTSC) ? 60.0 : 50.0);
 
 	/* Set up bitmap structure */
     memset(&bitmap, 0, sizeof(bitmap_t));
@@ -359,21 +362,21 @@ static INT32 rbislandInit()
 static void system_load_state()
 {
 	if(cart.mapper == MAPPER_MSX || cart.mapper == MAPPER_MSX_NEMESIS) {
-		if (cart.fcr[3]) sms_mapper8k_w(3, cart.fcr[3]);
-		if (cart.fcr[2]) sms_mapper8k_w(2, cart.fcr[2]);
-		if (cart.fcr[1]) sms_mapper8k_w(1, cart.fcr[1]);
 		if (cart.fcr[0]) sms_mapper8k_w(0, cart.fcr[0]);
+		if (cart.fcr[1]) sms_mapper8k_w(1, cart.fcr[1]);
+		if (cart.fcr[2]) sms_mapper8k_w(2, cart.fcr[2]);
+		if (cart.fcr[3]) sms_mapper8k_w(3, cart.fcr[3]);
 	} else {
 		if(cart.mapper == MAPPER_KOREA8K) {
-			if (cart.fcr[3]) sms_mapper8kvirt_w(3, cart.fcr[3]);
-			if (cart.fcr[2]) sms_mapper8kvirt_w(2, cart.fcr[2]);
-			if (cart.fcr[1]) sms_mapper8kvirt_w(1, cart.fcr[1]);
 			if (cart.fcr[0]) sms_mapper8kvirt_w(0, cart.fcr[0]);
+			if (cart.fcr[1]) sms_mapper8kvirt_w(1, cart.fcr[1]);
+			if (cart.fcr[2]) sms_mapper8kvirt_w(2, cart.fcr[2]);
+			if (cart.fcr[3]) sms_mapper8kvirt_w(3, cart.fcr[3]);
 		} else if (cart.mapper != MAPPER_XIN1 && cart.mapper != MAPPER_NONE) {
-			sms_mapper_w(3, cart.fcr[3]);
-			sms_mapper_w(2, cart.fcr[2]);
-			sms_mapper_w(1, cart.fcr[1]);
 			sms_mapper_w(0, cart.fcr[0]);
+			sms_mapper_w(1, cart.fcr[1]);
+			sms_mapper_w(2, cart.fcr[2]);
+			sms_mapper_w(3, cart.fcr[3]);
 		}
 
 		invalidate_bg_pattern_cache();
@@ -8625,7 +8628,7 @@ struct BurnDriver BurnDrvsms_sf2 = {
 	"sms_sf2", NULL, NULL, NULL, "1997",
 	"Street Fighter II (Bra)\0", NULL, "Tec Toy", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_sf2RomInfo, sms_sf2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3

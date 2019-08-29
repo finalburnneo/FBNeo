@@ -23,7 +23,7 @@ typedef struct {
 	UINT8 sg[2];
 } tms_sprite;
 
-tms_sprite sprites[4];
+tms_sprite sprites[32];
 INT16 sprites_found;
 
 void parse_line(INT16 line)
@@ -38,10 +38,12 @@ void parse_line(INT16 line)
 	/* Reset # of sprites found */
 	sprites_found = 0;
 
+	if (line >= vdp.height) return; // avoid glitches (3dragon story)
+
 	/* Parse sprites */
 	for(i = 0; i < 32; i++)
 	{
-		/* PoINT16 to current sprite in SA and our current sprite record */
+		/* Point to current sprite in SA and our current sprite record */
 		p = &sprites[sprites_found];
 		sa = &vdp.vram[vdp.sa + (i << 2)];
 
@@ -60,7 +62,7 @@ void parse_line(INT16 line)
 		if(line >= yp && line < (yp + size))
 		{
 			/* Sprite overflow on this line */
-			if(sprites_found == 4)
+			if(sprites_found == 4 && !vdp.no_spr_limit)
 			{
 				/* Set 5S and abort parsing */
 				vdp.status |= 0x40;
@@ -97,16 +99,15 @@ void parse_line(INT16 line)
 		}
 	}
 parse_end:
-
 	/* Insert number of last sprite entry processed */
 	vdp.status = (vdp.status & 0xE0) | (i & 0x1F);
 }
 
-void render_obj_tms(INT16 /*line*/)
+void render_obj_tms(INT16 line)
 {
 	INT16 i, x = 0;
 	INT16 size, start, end, mode;
-	UINT8 *lb, *lutp, *ex[2];
+	UINT8 *lb, *lut, *ex[2];
 	tms_sprite *p;
 
 	mode = vdp.reg[1] & 3;
@@ -117,9 +118,9 @@ void render_obj_tms(INT16 /*line*/)
 	{
 		p = &sprites[i];
 		lb = &linebuf[p->xpos];
-		lutp = &tms_obj_lut[(p->attr & 0x0F) << 8];
+		lut = &tms_obj_lut[(p->attr & 0x0F) << 8];
 
-		/* PoINT16 to expanded PG data */
+		/* Point to expanded PG data */
 		ex[0] = bp_expand[p->sg[0]];
 		ex[1] = bp_expand[p->sg[1]];
 
@@ -141,28 +142,64 @@ void render_obj_tms(INT16 /*line*/)
 			case 0: /* 8x8 */
 				for(x = start; x < end; x++) {
 					if(ex[0][x])
-						lb[x] = lutp[lb[x]];
+					{
+						/* Check sprite collision */
+						if ((lb[x] & 0x40) && !(vdp.status & 0x20))
+						{
+							/* pixel-accurate SPR_COL flag */
+							vdp.status |= 0x20;
+							vdp.spr_col = (line << 8) | ((p->xpos + x + 13) >> 1);
+						}
+						lb[x] = lut[lb[x]];
+					}
 				}
 				break;
 
 			case 1: /* 8x8 zoomed */
 				for(x = start; x < end; x++) {
 					if(ex[0][x >> 1])
-						lb[x] = lutp[lb[x]];
+					{
+						/* Check sprite collision */
+						if ((lb[x] & 0x40) && !(vdp.status & 0x20))
+						{
+							/* pixel-accurate SPR_COL flag */
+							vdp.status |= 0x20;
+							vdp.spr_col = (line << 8) | ((p->xpos + x + 13) >> 1);
+						}
+						lb[x] = lut[lb[x]];
+					}
 				}
 				break;
 
 			case 2: /* 16x16 */
 				for(x = start; x < end; x++) {
 					if(ex[(x >> 3) & 1][x & 7])
-						lb[x] = lutp[lb[x]];
+					{
+						/* Check sprite collision */
+						if ((lb[x] & 0x40) && !(vdp.status & 0x20))
+						{
+							/* pixel-accurate SPR_COL flag */
+							vdp.status |= 0x20;
+							vdp.spr_col = (line << 8) | ((p->xpos + x + 13) >> 1);
+						}
+						lb[x] = lut[lb[x]];
+					}
 				}
 				break;
 
 			case 3: /* 16x16 zoomed */
 				for(x = start; x < end; x++) {
 					if(ex[(x >> 4) & 1][(x >> 1) & 7])
-						lb[x] = lutp[lb[x]];
+					{
+						/* Check sprite collision */
+						if ((lb[x] & 0x40) && !(vdp.status & 0x20))
+						{
+							/* pixel-accurate SPR_COL flag */
+							vdp.status |= 0x20;
+							vdp.spr_col = (line << 8) | ((p->xpos + x + 13) >> 1);
+						}
+						lb[x] = lut[lb[x]];
+					}
 				}
 				break;
 		}

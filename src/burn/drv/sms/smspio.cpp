@@ -235,7 +235,7 @@ UINT8 sio_r(INT32 offset)
 	}
 
 	/* Just to please compiler */
-	return 0;
+	return 0xff;
 }
 
 void sio_w(INT32 offset, INT32 data)

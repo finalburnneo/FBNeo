@@ -43152,3 +43152,21 @@ struct BurnDriver BurnDrvmd_ssonicbror2 = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Old Towers v1.2
+static struct BurnRomInfo md_oldtowersRomDesc[] = {
+	{ "ot12.bin", 0xc0000, 0xd875e97d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_oldtowers)
+STD_ROM_FN(md_oldtowers)
+
+struct BurnDriver BurnDrvmd_oldtowers = {
+	"md_oldtowers", NULL, NULL, NULL, "2019",
+	"Old Towers (Rev 1.2)\0", NULL, "2019 RetroSouls", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_oldtowersRomInfo, md_oldtowersRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

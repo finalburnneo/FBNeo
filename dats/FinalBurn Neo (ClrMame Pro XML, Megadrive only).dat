@@ -8530,6 +8530,13 @@
 		<rom name="Oh Mummy Genesis.bin" size="1048576" crc="b7f68b29"/>
 		<driver status="good"/>
 	</game>
+	<game name="oldtowers">
+		<description>Old Towers (Rev 1.2)</description>
+		<year>2019</year>
+		<manufacturer>2019 RetroSouls</manufacturer>
+		<rom name="ot12.bin" size="786432" crc="d875e97d"/>
+		<driver status="good"/>
+	</game>
 	<game name="olympgld">
 		<description>Olympic Gold (Euro)</description>
 		<year>1992</year>
@@ -10490,6 +10497,13 @@
 		<year>2014</year>
 		<manufacturer>2014 Bonaf</manufacturer>
 		<rom name="SMSBrawl.bin" size="1543722" crc="7e4a52f3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ssonicbror2">
+		<description>Sega Sonic Bros. (Rev.2)</description>
+		<year>2018</year>
+		<manufacturer>2018 Dustin O'Dell</manufacturer>
+		<rom name="SegaSonicBrosMDRev2.bin" size="786432" crc="91537567"/>
 		<driver status="good"/>
 	</game>
 	<game name="segasprt">
@@ -13275,13 +13289,6 @@
 		<year>1994</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="addams family, the (usa) (beta).bin" size="1048576" crc="2803a5ca"/>
-		<driver status="good"/>
-	</game>
-	<game name="addfamp2" cloneof="addfam" romof="addfam">
-		<description>The Addams Family (USA, Prototype, Alt)</description>
-		<year>1994</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="addams family, the (usa) (beta) (alt).bin" size="1048576" crc="3a173e1f"/>
 		<driver status="good"/>
 	</game>
 	<game name="advbatr">

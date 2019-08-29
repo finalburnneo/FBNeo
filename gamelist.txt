@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12254 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12255 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6811,6 +6811,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_matchpg	|  	| Okamoto Ayako no Match Play Golf (Jpn, OMV)		| 		| 1984?	| Tsukuda Origin| Sega SG-1000	| 					|
 | sg1k_matchpga	|  	| Okamoto Ayako no Match Play Golf (Jpn, OMV, Alt)	| sg1k_matchpg	| 1984?	| Tsukuda Origin| Sega SG-1000	| 					|
 | sg1k_matchpgt	|  	| Okamoto Ayako no Match Play Golf (Tw)			| sg1k_matchpg	| 1984?	| Aaronix	| Sega SG-1000	| 					|
+| md_oldtowers	|  	| Old Towers (Rev 1.2)					| 		| 2019	| 2019 RetroSoul| Sega Megadrive| 					|
 | olibochu	|  	| Oli-Boo-Chu						| 		| 1981	| Irem / GDI	| Miscellaneous	| 					|
 | md_olympgld	|  	| Olympic Gold (Euro)					| 		| 1992	| U.S. Gold	| Sega Megadrive| 					|
 | sms_olympgld	|  	| Olympic Gold (Euro)					| 		| 1992	| U.S. Gold	| Sega Master Sy| 					|
@@ -8475,6 +8476,7 @@ This list contains all games supported by FinalBurn Neo.
 | seganinj	|  	| Sega Ninja (315-5102)					| 		| 1985	| Sega		| System 1	| 					|
 | seganinja	|   NW	| Sega Ninja (315-5113)					| seganinj	| 1985	| Sega		| System 1	| needs decrypting			|
 | seganinju	|  	| Sega Ninja (not encrypted)				| seganinj	| 1985	| Sega		| System 1	| 					|
+| md_ssonicbror2|  	| Sega Sonic Bros. (Rev.2)				| 		| 2018	| 2018 Dustin O'| Sega Megadrive| 					|
 | md_segasprt	|  	| Sega Sports 1 (Euro)					| 		| 1995	| Sega		| Sega Megadrive| 					|
 | md_segatop	|  	| Sega Top Five (Bra)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | sms_segawtg	|  	| Sega World Tournament Golf (Euro, Bra, Kor)		| 		| 1993	| Sega		| Sega Master Sy| 					|
@@ -10377,7 +10379,6 @@ This list contains all games supported by FinalBurn Neo.
 | sms_addfam	|  	| The Addams Family (Euro)				| 		| 1993	| Flying Edge	| Sega Master Sy| 					|
 | md_addfam	|  	| The Addams Family (Euro, USA)				| 		| 1994	| Flying Edge	| Sega Megadrive| 					|
 | md_addfamp1	|  	| The Addams Family (USA, Prototype)			| md_addfam	| 1994	| Flying Edge	| Sega Megadrive| 					|
-| md_addfamp2	|  	| The Addams Family (USA, Prototype, Alt)		| md_addfam	| 1994	| Flying Edge	| Sega Megadrive| 					|
 | gg_addfam	|  	| The Addams Family (World)				| 		| 1993	| Flying Edge	| Sega Game Gear| 					|
 | md_advbatr	|  	| The Adventures of Batman & Robin (Euro)		| 		| 1995	| Sega		| Sega Megadrive| 					|
 | md_advbatrp12	|  	| The Adventures of Batman & Robin (Prototype, 19950406)| md_advbatr	| 1995	| Sega		| Sega Megadrive| 					|

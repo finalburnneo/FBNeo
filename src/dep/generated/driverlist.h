@@ -6967,6 +6967,7 @@ DRV		BurnDrvOisipuzl;
 DRV		BurnDrvsg1k_matchpg;
 DRV		BurnDrvsg1k_matchpga;
 DRV		BurnDrvsg1k_matchpgt;
+DRV		BurnDrvmd_oldtowers;
 DRV		BurnDrvOlibochu;
 DRV		BurnDrvmd_olympgld;
 DRV		BurnDrvsms_olympgld;
@@ -8665,6 +8666,7 @@ DRV		BurnDrvsg1k_music;
 DRV		BurnDrvSeganinj;
 DRV		BurnDrvSeganinja;
 DRV		BurnDrvSeganinju;
+DRV		BurnDrvmd_ssonicbror2;
 DRV		BurnDrvmd_segasprt;
 DRV		BurnDrvmd_segatop;
 DRV		BurnDrvsms_segawtg;
@@ -10605,7 +10607,6 @@ DRV		BurnDrvsms_sn_ateam;
 DRV		BurnDrvsms_addfam;
 DRV		BurnDrvmd_addfam;
 DRV		BurnDrvmd_addfamp1;
-DRV		BurnDrvmd_addfamp2;
 DRV		BurnDrvgg_addfam;
 DRV		BurnDrvmd_advbatr;
 DRV		BurnDrvmd_advbatrp12;
@@ -19504,6 +19505,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_matchpg,		// Okamoto Ayako no Match Play Golf (Jpn, OMV)
 	&BurnDrvsg1k_matchpga,		// Okamoto Ayako no Match Play Golf (Jpn, OMV, Alt)
 	&BurnDrvsg1k_matchpgt,		// Okamoto Ayako no Match Play Golf (Tw)
+	&BurnDrvmd_oldtowers,		// Old Towers (Rev 1.2)
 	&BurnDrvOlibochu,			// Oli-Boo-Chu
 	&BurnDrvmd_olympgld,		// Olympic Gold (Euro)
 	&BurnDrvsms_olympgld,		// Olympic Gold (Euro)
@@ -21202,6 +21204,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSeganinj,			// Sega Ninja (315-5102)
 	&BurnDrvSeganinja,			// Sega Ninja (315-5113) [needs decrypting, NOT WORKING]
 	&BurnDrvSeganinju,			// Sega Ninja (not encrypted)
+	&BurnDrvmd_ssonicbror2,		// Sega Sonic Bros. (Rev.2)
 	&BurnDrvmd_segasprt,		// Sega Sports 1 (Euro)
 	&BurnDrvmd_segatop,			// Sega Top Five (Bra)
 	&BurnDrvsms_segawtg,		// Sega World Tournament Golf (Euro, Bra, Kor)
@@ -23142,7 +23145,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_addfam,			// The Addams Family (Euro)
 	&BurnDrvmd_addfam,			// The Addams Family (Euro, USA)
 	&BurnDrvmd_addfamp1,		// The Addams Family (USA, Prototype)
-	&BurnDrvmd_addfamp2,		// The Addams Family (USA, Prototype, Alt)
 	&BurnDrvgg_addfam,			// The Addams Family (World)
 	&BurnDrvmd_advbatr,			// The Adventures of Batman & Robin (Euro)
 	&BurnDrvmd_advbatrp12,		// The Adventures of Batman & Robin (Prototype, 19950406)

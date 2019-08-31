@@ -837,16 +837,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 // Dacholer
+/* AM-1-A & AM-1-B two board stack */
 
 static struct BurnRomInfo dacholerRomDesc[] = {
-	{ "dc_1.5k",	0x2000, 0x8b73a441, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "dc_2.5l",	0x2000, 0x9499289f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "dc_3.5m",	0x2000, 0x39d37281, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "dc_4.5n",	0x2000, 0xbb781ea4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "dp_1.5k",	0x2000, 0x8b73a441, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "dp_2.5l",	0x2000, 0x9499289f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dp_3.5m",	0x2000, 0x39d37281, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dp_4.5n",	0x2000, 0xbb781ea4, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "dc_1.6g",	0x2000, 0xcc3a4b68, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
-	{ "dc_2.6h",	0x2000, 0xaa18e126, 2 | BRF_PRG | BRF_ESS }, //  5
-	{ "dc_3.6j",	0x2000, 0x3b0131c7, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "ds_1.6g",	0x2000, 0xcc3a4b68, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+	{ "ds_2.6h",	0x2000, 0xaa18e126, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ds_3.6j",	0x2000, 0x3b0131c7, 2 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "dc_7.12j",	0x2000, 0xfd649d36, 3 | BRF_GRA },           //  7 Characters
 

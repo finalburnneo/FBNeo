@@ -1177,8 +1177,8 @@ static struct BurnRomInfo popeyeblRomDesc[] = {
 	{ "4.2s.24s10",		0x0100, 0xcab9bc53, 4 | BRF_GRA }, // 12
 	
 	{ "7.11s.24s10",	0x0100, 0x1c5c8dea, 0 | BRF_OPT },
-	{ "2.1e.24s10",		0x0100, 0x29d7bd87, 0 | BRF_OPT },
-	{ "1.1d.24s10",		0x0100, 0xbb63b2a6, 0 | BRF_OPT },
+	{ "2.1e.24s10",		0x0100, 0x978b1c63, 0 | BRF_OPT },
+	{ "1.1d.24s10",		0x0100, 0x2e1b143a, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(popeyebl)

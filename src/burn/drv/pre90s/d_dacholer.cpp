@@ -835,26 +835,26 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Dacholer
 
 static struct BurnRomInfo dacholerRomDesc[] = {
-	{ "dacholer8.rom",	0x2000, 0x8b73a441, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "dacholer9.rom",	0x2000, 0x9499289f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "dacholer10.rom",	0x2000, 0x39d37281, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "dacholer11.rom",	0x2000, 0xbb781ea4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "dc1.5k",		0x2000, 0x8b73a441, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "dc2.5l",		0x2000, 0x9499289f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dc3.5m",		0x2000, 0x39d37281, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dc4.5n",		0x2000, 0xbb781ea4, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "dacholer12.rom",	0x2000, 0xcc3a4b68, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
-	{ "dacholer13.rom",	0x2000, 0xaa18e126, 2 | BRF_PRG | BRF_ESS }, //  5
-	{ "dacholer14.rom",	0x2000, 0x3b0131c7, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "dc1.6g",		0x2000, 0xcc3a4b68, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+	{ "dc2.6h",		0x2000, 0xaa18e126, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "dc3.6j",		0x2000, 0x3b0131c7, 2 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "dacholer7.rom",	0x2000, 0xfd649d36, 3 | BRF_GRA },           //  7 Characters
+	{ "dc7.12j",	0x2000, 0xfd649d36, 3 | BRF_GRA },           //  7 Characters
 
-	{ "dacholer1.rom",	0x2000, 0x9cca0fd2, 4 | BRF_GRA },           //  8 Background tiles
-	{ "dacholer2.rom",	0x2000, 0xc1322b27, 4 | BRF_GRA },           //  9
-	{ "dacholer3.rom",	0x2000, 0x9e1e7198, 4 | BRF_GRA },           // 10
+	{ "dc3.13a",	0x2000, 0x9cca0fd2, 4 | BRF_GRA },           //  8 Background tiles
+	{ "dc2.12a",	0x2000, 0xc1322b27, 4 | BRF_GRA },           //  9
+	{ "dc1.11a",	0x2000, 0x9e1e7198, 4 | BRF_GRA },           // 10
 
-	{ "dacholer5.rom",	0x2000, 0xdd4818f0, 5 | BRF_GRA },           // 11 Sprites
-	{ "dacholer4.rom",	0x2000, 0x7f338ae0, 5 | BRF_GRA },           // 12
-	{ "dacholer6.rom",	0x2000, 0x0a6d4ec4, 5 | BRF_GRA },           // 13
+	{ "dc5.2d",		0x2000, 0xdd4818f0, 5 | BRF_GRA },           // 11 Sprites
+	{ "dc4.1d",		0x2000, 0x7f338ae0, 5 | BRF_GRA },           // 12
+	{ "dc6.3d",		0x2000, 0x0a6d4ec4, 5 | BRF_GRA },           // 13
 
-	{ "k.13d",		0x0020, 0x82f87a36, 6 | BRF_GRA },           // 14 Color data
+	{ "dc.13d",		0x0020, 0xd273abe5, 6 | BRF_GRA },           // 14 Color data
 };
 
 STD_ROM_PICK(dacholer)

@@ -43170,3 +43170,21 @@ struct BurnDriver BurnDrvmd_oldtowers = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// L'Abbaye Des Morts
+static struct BurnRomInfo md_labbayeRomDesc[] = {
+	{ "20170907 - AbbayeMD.bin", 0x3c0000, 0x8865ee24, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_labbaye)
+STD_ROM_FN(md_labbaye)
+
+struct BurnDriver BurnDrvmd_labbaye = {
+	"md_labbaye", NULL, NULL, NULL, "2010",
+	"L'Abbaye Des Morts\0", NULL, "2010 Locomalito and Gryzor", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_labbayeRomInfo, md_labbayeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

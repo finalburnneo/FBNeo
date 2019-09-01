@@ -4412,8 +4412,8 @@ DRV		BurnDrvHeatbrlo;
 DRV		BurnDrvHeatbrl2;
 DRV		BurnDrvHeatbrl;
 DRV		BurnDrvHeatbrl3;
+DRV		BurnDrvHbarrelu;
 DRV		BurnDrvHbarrel;
-DRV		BurnDrvHbarrelw;
 DRV		BurnDrvHvymetal;
 DRV		BurnDrvmd_heavynov;
 DRV		BurnDrvHvysmsha;
@@ -5347,6 +5347,7 @@ DRV		BurnDrvpce_kyukyomj;
 DRV		BurnDrvpce_kyukyom2;
 DRV		BurnDrvmd_ktiger;
 DRV		BurnDrvpce_ktiger;
+DRV		BurnDrvmd_labbaye;
 DRV		BurnDrvMSX_abadcrim;
 DRV		BurnDrvMSX_lacorona;
 DRV		BurnDrvLagirl;
@@ -16950,8 +16951,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHeatbrl2,			// Heated Barrel (World version 2)
 	&BurnDrvHeatbrl,			// Heated Barrel (World version 3)
 	&BurnDrvHeatbrl3,			// Heated Barrel (World version ?)
-	&BurnDrvHbarrel,			// Heavy Barrel (US)
-	&BurnDrvHbarrelw,			// Heavy Barrel (World)
+	&BurnDrvHbarrelu,			// Heavy Barrel (US)
+	&BurnDrvHbarrel,			// Heavy Barrel (World)
 	&BurnDrvHvymetal,			// Heavy Metal (315-5135)
 	&BurnDrvmd_heavynov,		// Heavy Nova (USA)
 	&BurnDrvHvysmsha,			// Heavy Smash (Asia version -4)
@@ -17885,6 +17886,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_kyukyom2,		// Kyuukyoku Mahjong II
 	&BurnDrvmd_ktiger,			// Kyuukyoku Tiger (Jpn)
 	&BurnDrvpce_ktiger,			// Kyuukyoku Tiger
+	&BurnDrvmd_labbaye,			// L'Abbaye Des Morts
 	&BurnDrvMSX_abadcrim,		// La Abadia del Crimen (Spa)
 	&BurnDrvMSX_lacorona,		// La Corona Encantada
 	&BurnDrvLagirl,				// LA Girl
@@ -18587,10 +18589,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMWalkjd,			// Michael Jackson's Moonwalker (Japan) (bootleg of FD1094/8751 317-0157 set)
 	&BurnDrvMWalkj,				// Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-0157)
 	&BurnDrvMWalk,				// Michael Jackson's Moonwalker (set 3, World, FD1094/8751 317-0159)
-	&BurnDrvMWalkud,			// Michael Jackson's Moonwalker (US) (bootleg of FD1094/8751 317-0158)
+	&BurnDrvMWalkud,			// Michael Jackson's Moonwalker (US) (bootleg of FD1094/8751 317-0158 set)
 	&BurnDrvMWalku,				// Michael Jackson's Moonwalker (US) (FD1094/8751 317-0158)
 	&BurnDrvsms_mwalkp,			// Michael Jackson's Moonwalker (USA, Prototype)
-	&BurnDrvMWalkd,				// Michael Jackson's Moonwalker (World) (bootleg of FD1094/8751 317-0159)
+	&BurnDrvMWalkd,				// Michael Jackson's Moonwalker (World) (bootleg of FD1094/8751 317-0159 set)
 	&BurnDrvmd_mwalk1,			// Michael Jackson's Moonwalker (World)
 	&BurnDrvmd_mwalk,			// Michael Jackson's Moonwalker (World, Rev. A)
 	&BurnDrvmd_mickmack,		// Mick & Mack as the Global Gladiators (Euro)

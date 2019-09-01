@@ -6098,6 +6098,13 @@
 		<rom name="kyuukyoku tiger (jpn).bin" size="655360" crc="61276d21"/>
 		<driver status="good"/>
 	</game>
+	<game name="labbaye">
+		<description>L'Abbaye Des Morts</description>
+		<year>2010</year>
+		<manufacturer>2010 Locomalito and Gryzor</manufacturer>
+		<rom name="20170907 - AbbayeMD.bin" size="3932160" crc="8865ee24"/>
+		<driver status="good"/>
+	</game>
 	<game name="laruss95">
 		<description>La Russa Baseball 95 (USA, Oceania)</description>
 		<year>1994</year>

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12255 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12256 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4318,8 +4318,8 @@ This list contains all games supported by FinalBurn Neo.
 | heatbrl2	|  	| Heated Barrel (World version 2)			| heatbrl	| 1992	| TAD Corporatio| Miscellaneous	| 					|
 | heatbrl	|  	| Heated Barrel (World version 3)			| 		| 1992	| TAD Corporatio| Miscellaneous	| 					|
 | heatbrl3	|  	| Heated Barrel (World version ?)			| heatbrl	| 1992	| TAD Corporatio| Miscellaneous	| 					|
-| hbarrel	|  	| Heavy Barrel (US)					| 		| 1987	| Data East USA	| DEC0		| 					|
-| hbarrelw	|  	| Heavy Barrel (World)					| hbarrel	| 1987	| Data East USA	| DEC0		| 					|
+| hbarrelu	|  	| Heavy Barrel (US)					| hbarrel	| 1987	| Data East USA	| DEC0		| 					|
+| hbarrel	|  	| Heavy Barrel (World)					| 		| 1987	| Data East Corp| DEC0		| 					|
 | hvymetal	|  	| Heavy Metal (315-5135)				| 		| 1985	| Sega		| System 1	| 					|
 | md_heavynov	|  	| Heavy Nova (USA)					| 		| 1992	| Micronet	| Sega Megadrive| 					|
 | hvysmsha	|  	| Heavy Smash (Asia version -4)				| hvysmsh	| 1993	| Data East Corp| DECO 156	| 					|
@@ -5225,6 +5225,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_kyukyom2	|  	| Kyuukyoku Mahjong II					| 		| 1993	| Game Express	| PC Engine	| 					|
 | md_ktiger	|  	| Kyuukyoku Tiger (Jpn)					| md_twincobr	| 1991	| Treco		| Sega Megadrive| 					|
 | pce_ktiger	|  	| Kyuukyoku Tiger					| 		| 1989	| Taito		| PC Engine	| 					|
+| md_labbaye	|  	| L'Abbaye Des Morts					| 		| 2010	| 2010 Locomalit| Sega Megadrive| 					|
 | msx_abadcrim	|  	| La Abadia del Crimen (Spa)				| 		| 1988	| Opera Soft	| MSX		| 					|
 | msx_lacorona	|  	| La Corona Encantada					| 		| 2009	| Karoshi	| MSX		| 					|
 | lagirl	|  	| LA Girl						| plgirls	| 1992	| bootleg	| Taito L System| 					|
@@ -5914,13 +5915,13 @@ This list contains all games supported by FinalBurn Neo.
 | mexico86a	| D NW	| Mexico 86 (bootleg of Kick and Run) (set 2)		| kicknrun	| 1986	| bootleg	| Miscellaneous	| 					|
 | mwalkbl2	|  	| Michael Jackson's Moonwalker (bootleg)		| mwalk		| 1990	| bootleg	| System 18	| Graphics issues			|
 | sms_mwalk	|  	| Michael Jackson's Moonwalker (Euro, USA, Bra, Kor)	| 		| 1990	| Sega		| Sega Master Sy| 					|
-| mwalkjd	|  	| Michael Jackson's Moonwalker (Japan) (bootleg of FD109| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
+| mwalkjd	|  	| Michael Jackson's Moonwalker (Japan) (bootleg of FD109| mwalk		| 1990	| bootleg	| System 18	| Graphics issues			|
 | mwalkj	|  	| Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
 | mwalk		|  	| Michael Jackson's Moonwalker (set 3, World, FD1094/875| 		| 1990	| Sega		| System 18	| Graphics issues			|
-| mwalkud	|  	| Michael Jackson's Moonwalker (US) (bootleg of FD1094/8| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
+| mwalkud	|  	| Michael Jackson's Moonwalker (US) (bootleg of FD1094/8| mwalk		| 1990	| bootleg	| System 18	| Graphics issues			|
 | mwalku	|  	| Michael Jackson's Moonwalker (US) (FD1094/8751 317-015| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
 | sms_mwalkp	|  	| Michael Jackson's Moonwalker (USA, Prototype)		| sms_mwalk	| 1990	| Sega		| Sega Master Sy| 					|
-| mwalkd	|  	| Michael Jackson's Moonwalker (World) (bootleg of FD109| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
+| mwalkd	|  	| Michael Jackson's Moonwalker (World) (bootleg of FD109| mwalk		| 1990	| bootleg	| System 18	| Graphics issues			|
 | md_mwalk1	|  	| Michael Jackson's Moonwalker (World)			| md_mwalk	| 1990	| Sega		| Sega Megadrive| 					|
 | md_mwalk	|  	| Michael Jackson's Moonwalker (World, Rev. A)		| 		| 1990	| Sega		| Sega Megadrive| 					|
 | md_mickmack	|  	| Mick & Mack as the Global Gladiators (Euro)		| 		| 1993	| Virgin Games	| Sega Megadrive| 					|
@@ -11558,7 +11559,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_WaimanuSMS|  	| Waimanu: Scary Monsters Saga				| 		| 2015	| Disjointed Stu| Sega Master Sy| 					|
 | mj4simai	|  	| Wakakusamonogatari Mahjong Yonshimai (Japan)		| 		| 1996	| Maboroshi Ware| Newer Seta	| 					|
 | wakuwak7	|  	| Waku Waku 7						| 		| 1996	| Sunsoft	| Neo Geo MVS	| 					|
-| ultracin	|  	| Waku Waku Ultraman Racing				| 		| 1996	| Sega		| System 16B	| 					|
+| ultracin	|  	| Waku Waku Ultraman Racing				| 		| 1996	| Sega		| System 16B	| Emulation not complete		|
 | pce_valkyrie	|  	| Walkuere no Densetsu					| 		| 1990	| Namcot	| PC Engine	| 					|
 | wallc		|  	| Wall Crash (set 1)					| 		| 1984	| Midcoin	| Miscellaneous	| 					|
 | wallca	|  	| Wall Crash (set 2)					| wallc		| 1984	| Midcoin	| Miscellaneous	| 					|

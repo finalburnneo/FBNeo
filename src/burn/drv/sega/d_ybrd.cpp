@@ -1063,8 +1063,8 @@ static struct BurnRomInfo PdriftRomDesc[] = {
 	{ "epr-11899.102",    0x10000, 0xed9fa889, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "mpr-11754.107",    0x80000, 0xebeb8484, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11756.105",    0x20000, 0x12e43f8a, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11755.106",    0x20000, 0xc2db1244, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11756.106",    0x20000, 0x12e43f8a, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11755.105",    0x20000, 0xc2db1244, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "epr-11895.ic1",    0x20000, 0xee99a6fd, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11896.ic2",    0x20000, 0x4bebc015, SYS16_ROM_PROM | BRF_OPT },
@@ -1132,8 +1132,8 @@ static struct BurnRomInfo PdriftaRomDesc[] = {
 	{ "epr-11899.102",    0x10000, 0xed9fa889, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "mpr-11754.107",    0x80000, 0xebeb8484, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11756.105",    0x20000, 0x12e43f8a, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11755.106",    0x20000, 0xc2db1244, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11756.106",    0x20000, 0x12e43f8a, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11755.105",    0x20000, 0xc2db1244, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "epr-11895.ic1",    0x20000, 0xee99a6fd, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11896.ic2",    0x20000, 0x4bebc015, SYS16_ROM_PROM | BRF_OPT },
@@ -1201,8 +1201,8 @@ static struct BurnRomInfo PdrifteRomDesc[] = {
 	{ "epr-11899.102",    0x10000, 0xed9fa889, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "mpr-11754.107",    0x80000, 0xebeb8484, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11756.105",    0x20000, 0x12e43f8a, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11755.106",    0x20000, 0xc2db1244, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11756.106",    0x20000, 0x12e43f8a, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11755.105",    0x20000, 0xc2db1244, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "epr-11895.ic1",    0x20000, 0xee99a6fd, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11896.ic2",    0x20000, 0x4bebc015, SYS16_ROM_PROM | BRF_OPT },
@@ -1270,8 +1270,8 @@ static struct BurnRomInfo PdriftjRomDesc[] = {
 	{ "epr-11899.102",    0x10000, 0xed9fa889, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "mpr-11754.107",    0x80000, 0xebeb8484, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11756.105",    0x20000, 0x12e43f8a, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11755.106",    0x20000, 0xc2db1244, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11756.106",    0x20000, 0x12e43f8a, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11755.105",    0x20000, 0xc2db1244, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "epr-11895.ic1",    0x20000, 0xee99a6fd, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11896.ic2",    0x20000, 0x4bebc015, SYS16_ROM_PROM | BRF_OPT },

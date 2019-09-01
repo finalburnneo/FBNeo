@@ -500,6 +500,8 @@ static INT32 DrvInit(INT32 type)
 		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 13, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM + 0x00000, 14, 1)) return 1;
+	//	if (BurnLoadRom(DrvColPROM + 0x00020, 15, 1)) return 1;
+	//	if (BurnLoadRom(DrvColPROM + 0x00040, 16, 1)) return 1;
 
 		dacholer = 1;
 	}
@@ -524,6 +526,8 @@ static INT32 DrvInit(INT32 type)
 		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 12, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM + 0x00000, 13, 1)) return 1;
+	//	if (BurnLoadRom(DrvColPROM + 0x00020, 14, 1)) return 1;
+	//	if (BurnLoadRom(DrvColPROM + 0x00040, 15, 1)) return 1;
 
 		dacholer = 1; // kickboy (dacholer clone)
 	}
@@ -833,28 +837,32 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 // Dacholer
+/* AM-1-A & AM-1-B two board stack */
 
 static struct BurnRomInfo dacholerRomDesc[] = {
-	{ "dacholer8.rom",	0x2000, 0x8b73a441, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "dacholer9.rom",	0x2000, 0x9499289f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "dacholer10.rom",	0x2000, 0x39d37281, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "dacholer11.rom",	0x2000, 0xbb781ea4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "dp_1.5k",	0x2000, 0x8b73a441, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "dp_2.5l",	0x2000, 0x9499289f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dp_3.5m",	0x2000, 0x39d37281, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dp_4.5n",	0x2000, 0xbb781ea4, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "dacholer12.rom",	0x2000, 0xcc3a4b68, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
-	{ "dacholer13.rom",	0x2000, 0xaa18e126, 2 | BRF_PRG | BRF_ESS }, //  5
-	{ "dacholer14.rom",	0x2000, 0x3b0131c7, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "ds_1.6g",	0x2000, 0xcc3a4b68, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+	{ "ds_2.6h",	0x2000, 0xaa18e126, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ds_3.6j",	0x2000, 0x3b0131c7, 2 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "dacholer7.rom",	0x2000, 0xfd649d36, 3 | BRF_GRA },           //  7 Characters
+	{ "dc_7.12j",	0x2000, 0xfd649d36, 3 | BRF_GRA },           //  7 Characters
 
-	{ "dacholer1.rom",	0x2000, 0x9cca0fd2, 4 | BRF_GRA },           //  8 Background tiles
-	{ "dacholer2.rom",	0x2000, 0xc1322b27, 4 | BRF_GRA },           //  9
-	{ "dacholer3.rom",	0x2000, 0x9e1e7198, 4 | BRF_GRA },           // 10
+	{ "dc_3.13a",	0x2000, 0x9cca0fd2, 4 | BRF_GRA },           //  8 Background tiles
+	{ "dc_2.12a",	0x2000, 0xc1322b27, 4 | BRF_GRA },           //  9
+	{ "dc_1.11a",	0x2000, 0x9e1e7198, 4 | BRF_GRA },           // 10
 
-	{ "dacholer5.rom",	0x2000, 0xdd4818f0, 5 | BRF_GRA },           // 11 Sprites
-	{ "dacholer4.rom",	0x2000, 0x7f338ae0, 5 | BRF_GRA },           // 12
-	{ "dacholer6.rom",	0x2000, 0x0a6d4ec4, 5 | BRF_GRA },           // 13
+	{ "dc_5.2d",	0x2000, 0xdd4818f0, 5 | BRF_GRA },           // 11 Sprites
+	{ "dc_4.1d",	0x2000, 0x7f338ae0, 5 | BRF_GRA },           // 12
+	{ "dc_6.3d",	0x2000, 0x0a6d4ec4, 5 | BRF_GRA },           // 13
 
-	{ "k.13d",		0x0020, 0x82f87a36, 6 | BRF_GRA },           // 14 Color data
+	{ "dc.13d",		0x0020, 0xd273abe5, 6 | BRF_GRA },           // 14 Color data
+	
+	{ "af-2.1h",	0x0020, 0xe1cac297, 0 | BRF_OPT },           // 15 Unknown data
+	{ "af-1.3n",	0x0020, 0x5638e485, 0 | BRF_OPT },           // 16
 };
 
 STD_ROM_PICK(dacholer)
@@ -888,16 +896,19 @@ static struct BurnRomInfo kickboyRomDesc[] = {
 	{ "k_2.6h",		0x2000, 0xaa18e126, 2 | BRF_PRG | BRF_ESS }, //  5
 	{ "k_3.6j",		0x2000, 0x3b0131c7, 2 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "k_7.12j",		0x2000, 0x22be46e8, 3 | BRF_GRA },           //  7 Characters
+	{ "k_7.12j",	0x2000, 0x22be46e8, 3 | BRF_GRA },           //  7 Characters
 
-	{ "k_3.13a",		0x2000, 0x7eac2a64, 4 | BRF_GRA },           //  8 Background tiles
-	{ "k_2.12a",		0x2000, 0xb8829572, 4 | BRF_GRA },           //  9
+	{ "k_3.13a",	0x2000, 0x7eac2a64, 4 | BRF_GRA },           //  8 Background tiles
+	{ "k_2.12a",	0x2000, 0xb8829572, 4 | BRF_GRA },           //  9
 
 	{ "k_5.2d",		0x2000, 0x4b769a1c, 5 | BRF_GRA },           // 10 Sprites
 	{ "k_4.1d",		0x2000, 0x45199750, 5 | BRF_GRA },           // 11
 	{ "k_6.3d",		0x2000, 0xd1795506, 5 | BRF_GRA },           // 12
 
 	{ "k.13d",		0x0020, 0x82f87a36, 6 | BRF_GRA },           // 13 Color data
+	
+	{ "af-2.1h",	0x0020, 0xe1cac297, 0 | BRF_OPT },           // 14 Unknown data
+	{ "af-1.3n",	0x0020, 0x5638e485, 0 | BRF_OPT },           // 15
 };
 
 STD_ROM_PICK(kickboy)
@@ -943,10 +954,10 @@ static struct BurnRomInfo itatenRomDesc[] = {
 	{ "14.3d",		0x2000, 0x8c532c74, 5 | BRF_GRA },           // 14
 	{ "15.4d",		0x2000, 0xd119b483, 5 | BRF_GRA },           // 15
 
-	{ "af-3.13d",		0x0020, 0x875429ba, 6 | BRF_GRA },           // 16 Color data
+	{ "af-3.13d",	0x0020, 0x875429ba, 6 | BRF_GRA },           // 16 Color data
 
-	{ "af-2.1h",		0x0020, 0xe1cac297, 0 | BRF_OPT },           // 17 Uknown data
-	{ "af-1.3n",		0x0020, 0x5638e485, 0 | BRF_OPT },           // 18
+	{ "af-2.1h",	0x0020, 0xe1cac297, 0 | BRF_OPT },           // 17 Unknown data
+	{ "af-1.3n",	0x0020, 0x5638e485, 0 | BRF_OPT },           // 18
 };
 
 STD_ROM_PICK(itaten)

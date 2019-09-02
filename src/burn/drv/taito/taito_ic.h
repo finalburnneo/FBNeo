@@ -75,6 +75,7 @@ void TC0100SCNInit(INT32 Chip, INT32 nNumTiles, INT32 xOffset, INT32 yOffset, IN
 void TC0100SCNSetColourDepth(INT32 Chip, INT32 ColourDepth);
 void TC0100SCNSetGfxMask(INT32 Chip, INT32 Mask);
 void TC0100SCNSetGfxBank(INT32 Chip, INT32 Bank);
+void TC0100SCNSetCharLayerGranularity(INT32 nGranularity);
 void TC0100SCNSetClipArea(INT32 Chip, INT32 ClipWidth, INT32 ClipHeight, INT32 ClipStartX);
 void TC0100SCNSetPaletteOffset(INT32 Chip, INT32 PaletteOffset);
 void TC0100SCNExit();

@@ -1224,7 +1224,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 // Karnov (US, rev 6)
-/* DE-0248-1 main board + unknnown video board */
+/* DE-0248-1 main board + unknown video board */
 
 static struct BurnRomInfo karnovRomDesc[] = {
 	{ "dn08-6.j15",		0x10000, 0x4c60837f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1281,7 +1281,7 @@ struct BurnDriver BurnDrvKarnov = {
 
 
 // Karnov (US, rev 5)
-/* DE-0248-1 main board + unknnown video board */
+/* DE-0248-1 main board + unknown video board */
 
 static struct BurnRomInfo karnovaRomDesc[] = {
 	{ "dn08-5.j15",		0x10000, 0xdb92c264, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1330,7 +1330,7 @@ struct BurnDriver BurnDrvKarnova = {
 
 
 // Karnov (Japan)
-/* DE-0248-1 main board + unknnown video board */
+/* DE-0248-1 main board + unknown video board */
 
 static struct BurnRomInfo karnovjRomDesc[] = {
 	{ "kar8.j15",		0x10000, 0x3e17e268, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1443,7 +1443,7 @@ struct BurnDriver BurnDrvWndrplnt = {
 
 
 // Chelnov - Atomic Runner (World)
-/* DE-0248-1 main board + unknnown video board */
+/* DE-0248-1 main board + unknown video board */
 
 static struct BurnRomInfo chelnovRomDesc[] = {
 	{ "ee08-e.j16",		0x10000, 0x8275cc3a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1497,7 +1497,7 @@ struct BurnDriver BurnDrvChelnov = {
 
 
 // Chelnov - Atomic Runner (US)
-/* DE-0248-1 main board + unknnown video board */
+/* DE-0248-1 main board + unknown video board */
 
 static struct BurnRomInfo chelnovuRomDesc[] = {
 	{ "ee08-a.j15",		0x10000, 0x2f2fb37b, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1550,7 +1550,7 @@ struct BurnDriver BurnDrvChelnovu = {
 
 
 // Chelnov - Atomic Runner (Japan)
-/* DE-0248-1 main board + unknnown video board */
+/* DE-0248-1 main board + unknown video board */
 
 static struct BurnRomInfo chelnovjRomDesc[] = {
 	{ "a-j15.j15",		0x10000, 0x1978cb52, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code

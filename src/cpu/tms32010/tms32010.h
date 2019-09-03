@@ -30,6 +30,8 @@ int tms32010_Ext_IRQ(void);
 void tms32010_set_irq_line(int irqline, int state);
 void tms32010_scan(INT32 nAction);
 
+UINT16 tms32010_get_pc();
+
 UINT32 tms32010TotalCycles();
 void tms32010NewFrame();
 

@@ -1127,10 +1127,6 @@ static INT32 powerinsInit()
 		game_drv = GAME_POWERINS; // correct machine
 	}
 	
-	FILE *fp = fopen("Rom68K.bin", "wb");
-	fwrite (Rom68K, 0x100000, 1, fp);
-	fclose (fp);
-
 	BurnFree(tmp);
 
 	{

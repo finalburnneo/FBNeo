@@ -843,7 +843,7 @@ static struct BurnDIPInfo SlyspyDIPList[]=
 
 STDDIPINFO(Slyspy)
 
-// Bad Dudes vs. Dragonninja (US)
+// Bad Dudes vs. Dragonninja (US revision 1)
 /* DE-0297-1 main board, DE-0299-1 sub/rom board */
 
 static struct BurnRomInfo BaddudesRomDesc[] = {
@@ -1002,17 +1002,18 @@ STD_ROM_PICK(Bouldashj)
 STD_ROM_FN(Bouldashj)
 
 
-// Dragonninja (Japan)
+// Dragonninja (Japan revision 1)
+/* DE-0297-0 main board, DE-0299-0 sub/rom board */
 
 static struct BurnRomInfo DrgninjaRomDesc[] = {
-	{ "eg04.3c",            0x10000, 0x41b8b3f8, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
-	{ "eg01.3a",            0x10000, 0xe08e6885, BRF_ESS | BRF_PRG },	//  1
+	{ "eg04-1.3c",          0x10000, 0x41b8b3f8, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "eg01-1.3a",          0x10000, 0xe08e6885, BRF_ESS | BRF_PRG },	//  1
 	{ "eg06.6c",            0x10000, 0x2b81faf7, BRF_ESS | BRF_PRG },	//  2
 	{ "eg03.6a",            0x10000, 0xc52c2e9d, BRF_ESS | BRF_PRG },	//  3
 	
 	{ "eg07.8a",            0x08000, 0x001d2f51, BRF_ESS | BRF_PRG },	//  4	6502 Program 
 	
-	{ "eg25.15h",           0x08000, 0xdd557b19, BRF_GRA },				//  5	Characters
+	{ "eg25.15h",           0x08000, 0x6791bc20, BRF_GRA },				//  5	Characters
 	{ "eg26.16h",           0x08000, 0x5d75fc8f, BRF_GRA },				//  6
 	
 	{ "eg18.14d",           0x10000, 0x05cfc3e5, BRF_GRA },				//  7	Tiles 1
@@ -1054,7 +1055,7 @@ static struct BurnRomInfo DrgninjabRomDesc[] = {
 	
 	{ "eg07.8a",            0x08000, 0x001d2f51, BRF_ESS | BRF_PRG },	//  4	6502 Program 
 	
-	{ "eg25.15h",           0x08000, 0xdd557b19, BRF_GRA },				//  5	Characters
+	{ "eg25.bin",           0x08000, 0xdd557b19, BRF_GRA },				//  5	Characters
 	{ "eg26.16h",           0x08000, 0x5d75fc8f, BRF_GRA },				//  6
 	
 	{ "eg18.14d",           0x10000, 0x05cfc3e5, BRF_GRA },				//  7	Tiles 1

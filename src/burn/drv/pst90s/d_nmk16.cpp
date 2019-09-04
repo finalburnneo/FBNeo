@@ -5158,6 +5158,7 @@ static void draw_screen_yflip()
 static inline void common_draw(INT32 spriteflip, INT32 bgscrollx, INT32 bgscrolly, INT32 txscrollx, INT32 txscrolly, INT32 tx_coloff, INT32 wide)
 {
 	DrvPaletteRecalc();
+	BurnTransferClear();
 
 	if (nBurnLayer & 1) draw_macross_background(DrvBgRAM0, bgscrollx, bgscrolly, 0, 0);
 

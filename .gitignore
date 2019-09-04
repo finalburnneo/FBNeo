@@ -4,3 +4,10 @@
 
 /.vs
 /projectfiles/visualstudio-2019/enc_temp_folder
+
+# libretro
+*.so
+*.o
+src/burner/libretro/ctvmake
+src/burner/libretro/m68kmake
+src/burner/libretro/pgmspritecreate

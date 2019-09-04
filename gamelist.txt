@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12256 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12265 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4020,6 +4020,7 @@ This list contains all games supported by FinalBurn Neo.
 | plegends	|  	| Gouketsuji Gaiden Legends (USA, ver. 95/06/20)	| 		| 1995	| Atlus / KM Int| Cave		| 					|
 | plegendsj	|  	| Gouketsuji Gaiden Saikyou Densetsu (Japan, ver. 95/06/| plegends	| 1995	| Atlus		| Cave		| 					|
 | powerinsj	|  	| Gouketsuji Ichizoku (Japan)				| powerins	| 1993	| Atlus		| Miscellaneous	| 					|
+| powerinspj	|  	| Gouketsuji Ichizoku (Japan, prototype)		| powerins	| 1993	| Atlus		| Miscellaneous	| 					|
 | md_gouketsu	|  	| Gouketsuji Ichizoku (Jpn)				| 		| 1994	| Atlus		| Sega Megadrive| 					|
 | pwrinst2j	|  	| Gouketsuji Ichizoku 2 (Japan, ver. 94/04/08)		| pwrinst2	| 1994	| Atlus		| Cave		| 					|
 | ryorioh	|  	| Gourmet Battle Quiz Ryohrioh CooKing (Japan)		| 		| 1998	| Visco		| SSV		| 					|
@@ -6396,6 +6397,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_naruto	|  	| Naruto (Rus)						| md_3ninja	| 199?	| <unknown>	| Sega Megadrive| 					|
 | nastar	|  	| Nastar (World)					| 		| 1988	| Taito Corporat| Taito B System| 					|
 | nastarw	|  	| Nastar Warrior (US)					| nastar	| 1988	| Taito America | Taito B System| 					|
+| natodefa	|  	| NATO Defense (alternate mazes)			| natodef	| 1982	| Pacific Novelt| Miscellaneous	| 					|
+| natodef	|  	| NATO Defense						| 		| 1982	| Pacific Novelt| Miscellaneous	| 					|
 | naughtyba	|  	| Naughty Boy (bootleg, set 1)				| naughtyb	| 1982	| bootleg	| Miscellaneous	| 					|
 | naughtybb	|  	| Naughty Boy (bootleg, set 2)				| naughtyb	| 1982	| bootleg	| Miscellaneous	| 					|
 | naughtybc	|  	| Naughty Boy (Cinematronics)				| naughtyb	| 1982	| Jaleco (Cinema| Miscellaneous	| 					|
@@ -6948,6 +6951,7 @@ This list contains all games supported by FinalBurn Neo.
 | pacnpal2	|  	| Pac & Pal (older)					| pacnpal	| 1983	| Namco		| Miscellaneous	| 					|
 | pacnpal	|  	| Pac & Pal						| 		| 1983	| Namco		| Miscellaneous	| 					|
 | pacmanfm	|  	| Pac Man (FAMARE S.A. bootleg of Puck Man)		| puckman	| 1980	| bootleg (FAMAR| Pac-man	| 					|
+| pacmanug	|  	| Pac Man (U.G. bootleg of Puck Man)			| puckman	| 1980	| bootleg (U.G.)| Pac-man	| 					|
 | gg_pacattak	|  	| Pac-Attack (Euro, USA)				| 		| 1994	| Namco		| Sega Game Gear| 					|
 | md_pacattak	|  	| Pac-Attack (USA)					| md_pacpanic	| 1993	| Namco		| Sega Megadrive| 					|
 | pacgal	|  	| Pac-Gal						| mspacman	| 1981	| hack		| Pac-man	| 					|
@@ -7456,6 +7460,8 @@ This list contains all games supported by FinalBurn Neo.
 | powerins	|  	| Power Instinct (USA)					| 		| 1993	| Atlus		| Miscellaneous	| 					|
 | powerinsa	|  	| Power Instinct (USA, bootleg set 1)			| powerins	| 1993	| Atlus		| Miscellaneous	| 					|
 | powerinsb	|  	| Power Instinct (USA, bootleg set 2)			| powerins	| 1993	| Atlus		| Miscellaneous	| 					|
+| powerinsc	|   NW	| Power Instinct (USA, bootleg set 3)			| powerins	| 1993	| bootleg	| Miscellaneous	| 					|
+| powerinspu	|  	| Power Instinct (USA, prototype)			| powerins	| 1993	| Atlus		| Miscellaneous	| 					|
 | pwrinst2	|  	| Power Instinct 2 (USA, ver. 94/04/08)			| 		| 1994	| Atlus		| Cave		| 					|
 | pce_pleag93	|  	| Power League '93					| 		| 1993	| Hudson	| PC Engine	| 					|
 | pce_pleagas	|  	| Power League (All Star Version)			| 		| 19??	| Hudson	| PC Engine	| 					|
@@ -8563,6 +8569,7 @@ This list contains all games supported by FinalBurn Neo.
 | shaolinb	|  	| Shao-lin's Road (set 2)				| kicker	| 1985	| Konami	| GX477		| 					|
 | gg_shaqfu	|  	| Shaq Fu (Euro, USA)					| 		| 1995	| Electronic Art| Sega Game Gear| 					|
 | md_shaqfu	|  	| Shaq Fu (Euro, USA)					| 		| 1994	| Electronic Art| Sega Megadrive| 					|
+| sharkatt	|  	| Shark Attack						| 		| 1980	| Pacific Novelt| Miscellaneous	| 					|
 | msx_sharkh	|  	| Shark Hunter (Euro)					| 		| 1984	| Electric Softw| MSX		| 					|
 | md_shijie	|  	| Shi Jie Zhi Bang Zheng Ba Zhan - World Pro Baseball 94| 		| 1994	| C&E		| Sega Megadrive| 					|
 | md_labdeathgnk|  	| Shi no Meikyuu - Labyrinth of Death (Jpn, Game no Kand| md_fatallab	| 1991	| Sega		| Sega Megadrive| 					|
@@ -10854,6 +10861,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_thexder	|  	| Thexder (Jpn)						| 		| 1986	| Game Arts?	| MSX		| 					|
 | msx_thexderb	|  	| Thexder (Jpn, Alt 2)					| msx_thexder	| 1986	| Game Arts?	| MSX		| 					|
 | msx_thexdera	|  	| Thexder (Jpn, Alt)					| msx_thexder	| 1986	| Game Arts?	| MSX		| 					|
+| thief		|  	| Thief							| 		| 1981	| Pacific Novelt| Miscellaneous	| 					|
 | md_thomas	|  	| Thomas the Tank Engine & Friends (USA)		| 		| 1993	| THQ		| Sega Megadrive| 					|
 | trally	|  	| Thrash Rally (ALM-003)(ALH-003)			| 		| 1991	| Alpha Denshi C| Neo Geo MVS	| 					|
 | 3wondersh	|  	| Three Wonders (bootleg set 1, wonder 3 910520 etc)	| 3wonders	| 1991	| Capcom	| CPS1		| 					|
@@ -11016,6 +11024,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_dinohirep2	|  	| Tom Mason's Dinosaurs for Hire (Prototype, 19930427)	| md_dinohire	| 1993	| Sega		| Sega Megadrive| 					|
 | md_dinohirep1	|  	| Tom Mason's Dinosaurs for Hire (Prototype, 19930502)	| md_dinohire	| 1993	| Sega		| Sega Megadrive| 					|
 | md_dinohire	|  	| Tom Mason's Dinosaurs for Hire (USA)			| 		| 1993	| Sega		| Sega Megadrive| 					|
+| tomagic	|  	| Tom Tom Magic						| 		| 1997	| Hobbitron T.K.| Miscellaneous	| 					|
 | cv_tomarc	|  	| Tomarc the Barbarian					| 		| 1984	| Xonox		| ColecoVision	| 					|
 | msx_togk	|  	| Tomb of Genghis Khan					| 		| 2008	| impulse9	| MSX		| 					|
 | md_lasorda	|  	| Tommy Lasorda Baseball (USA)				| md_suprleag	| 1989	| Sega		| Sega Megadrive| 					|

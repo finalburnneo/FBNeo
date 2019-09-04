@@ -4110,6 +4110,7 @@ DRV		BurnDrvGotcha;
 DRV		BurnDrvPlegends;
 DRV		BurnDrvPlegendsj;
 DRV		BurnDrvPowerinj;
+DRV		BurnDrvPowerinspj;
 DRV		BurnDrvmd_gouketsu;
 DRV		BurnDrvPwrinst2j;
 DRV		BurnDrvRyorioh;
@@ -6538,6 +6539,8 @@ DRV		BurnDrvmd_narnia3;
 DRV		BurnDrvmd_naruto;
 DRV		BurnDrvNastar;
 DRV		BurnDrvNastarw;
+DRV		BurnDrvNatodefa;
+DRV		BurnDrvNatodef;
 DRV		BurnDrvNaughtyba;
 DRV		BurnDrvNaughtybb;
 DRV		BurnDrvNaughtybc;
@@ -7104,6 +7107,7 @@ DRV		BurnDrvmd_pto;
 DRV		BurnDrvPacnpal2;
 DRV		BurnDrvPacnpal;
 DRV		BurnDrvpacmanfm;
+DRV		BurnDrvpacmanug;
 DRV		BurnDrvgg_pacattak;
 DRV		BurnDrvmd_pacattak;
 DRV		BurnDrvpacgal;
@@ -7624,6 +7628,8 @@ DRV		BurnDrvtg_pgolf;
 DRV		BurnDrvPowerins;
 DRV		BurnDrvPowerina;
 DRV		BurnDrvPowerinb;
+DRV		BurnDrvPowerinsc;
+DRV		BurnDrvPowerinspu;
 DRV		BurnDrvPwrinst2;
 DRV		BurnDrvpce_pleag93;
 DRV		BurnDrvpce_pleagas;
@@ -8755,6 +8761,7 @@ DRV		BurnDrvShaolins;
 DRV		BurnDrvShaolinb;
 DRV		BurnDrvgg_shaqfu;
 DRV		BurnDrvmd_shaqfu;
+DRV		BurnDrvSharkatt;
 DRV		BurnDrvMSX_sharkh;
 DRV		BurnDrvmd_shijie;
 DRV		BurnDrvmd_labdeathgnk;
@@ -11084,6 +11091,7 @@ DRV		BurnDrvMSX_theseusk;
 DRV		BurnDrvMSX_thexder;
 DRV		BurnDrvMSX_thexderb;
 DRV		BurnDrvMSX_thexdera;
+DRV		BurnDrvThief;
 DRV		BurnDrvmd_thomas;
 DRV		BurnDrvtrally;
 DRV		BurnDrvCps3wondersh;
@@ -11250,6 +11258,7 @@ DRV		BurnDrvmd_dinohirep3;
 DRV		BurnDrvmd_dinohirep2;
 DRV		BurnDrvmd_dinohirep1;
 DRV		BurnDrvmd_dinohire;
+DRV		BurnDrvTomagic;
 DRV		BurnDrvcv_tomarc;
 DRV		BurnDrvMSX_togk;
 DRV		BurnDrvmd_lasorda;
@@ -16649,6 +16658,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPlegends,			// Gouketsuji Gaiden Legends (USA, ver. 95/06/20)
 	&BurnDrvPlegendsj,			// Gouketsuji Gaiden Saikyou Densetsu (Japan, ver. 95/06/20)
 	&BurnDrvPowerinj,			// Gouketsuji Ichizoku (Japan)
+	&BurnDrvPowerinspj,			// Gouketsuji Ichizoku (Japan, prototype)
 	&BurnDrvmd_gouketsu,		// Gouketsuji Ichizoku (Jpn)
 	&BurnDrvPwrinst2j,			// Gouketsuji Ichizoku 2 (Japan, ver. 94/04/08)
 	&BurnDrvRyorioh,			// Gourmet Battle Quiz Ryohrioh CooKing (Japan)
@@ -19077,6 +19087,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_naruto,			// Naruto (Rus)
 	&BurnDrvNastar,				// Nastar (World)
 	&BurnDrvNastarw,			// Nastar Warrior (US)
+	&BurnDrvNatodefa,			// NATO Defense (alternate mazes)
+	&BurnDrvNatodef,			// NATO Defense
 	&BurnDrvNaughtyba,			// Naughty Boy (bootleg, set 1)
 	&BurnDrvNaughtybb,			// Naughty Boy (bootleg, set 2)
 	&BurnDrvNaughtybc,			// Naughty Boy (Cinematronics)
@@ -19643,6 +19655,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPacnpal2,			// Pac & Pal (older)
 	&BurnDrvPacnpal,			// Pac & Pal
 	&BurnDrvpacmanfm,			// Pac Man (FAMARE S.A. bootleg of Puck Man)
+	&BurnDrvpacmanug,			// Pac Man (U.G. bootleg of Puck Man)
 	&BurnDrvgg_pacattak,		// Pac-Attack (Euro, USA)
 	&BurnDrvmd_pacattak,		// Pac-Attack (USA)
 	&BurnDrvpacgal,				// Pac-Gal
@@ -20163,6 +20176,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPowerins,			// Power Instinct (USA)
 	&BurnDrvPowerina,			// Power Instinct (USA, bootleg set 1)
 	&BurnDrvPowerinb,			// Power Instinct (USA, bootleg set 2)
+	&BurnDrvPowerinsc,			// Power Instinct (USA, bootleg set 3) [no comment, NOT WORKING]
+	&BurnDrvPowerinspu,			// Power Instinct (USA, prototype)
 	&BurnDrvPwrinst2,			// Power Instinct 2 (USA, ver. 94/04/08)
 	&BurnDrvpce_pleag93,		// Power League '93
 	&BurnDrvpce_pleagas,		// Power League (All Star Version)
@@ -21294,6 +21309,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvShaolinb,			// Shao-lin's Road (set 2)
 	&BurnDrvgg_shaqfu,			// Shaq Fu (Euro, USA)
 	&BurnDrvmd_shaqfu,			// Shaq Fu (Euro, USA)
+	&BurnDrvSharkatt,			// Shark Attack
 	&BurnDrvMSX_sharkh,			// Shark Hunter (Euro)
 	&BurnDrvmd_shijie,			// Shi Jie Zhi Bang Zheng Ba Zhan - World Pro Baseball 94 (Chi)
 	&BurnDrvmd_labdeathgnk,		// Shi no Meikyuu - Labyrinth of Death (Jpn, Game no Kandume MegaCD Rip)
@@ -23623,6 +23639,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_thexder,		// Thexder (Jpn)
 	&BurnDrvMSX_thexderb,		// Thexder (Jpn, Alt 2)
 	&BurnDrvMSX_thexdera,		// Thexder (Jpn, Alt)
+	&BurnDrvThief,				// Thief
 	&BurnDrvmd_thomas,			// Thomas the Tank Engine & Friends (USA)
 	&BurnDrvtrally,				// Thrash Rally (ALM-003)(ALH-003)
 	&BurnDrvCps3wondersh,		// Three Wonders (bootleg set 1, wonder 3 910520 etc)
@@ -23789,6 +23806,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dinohirep2,		// Tom Mason's Dinosaurs for Hire (Prototype, 19930427)
 	&BurnDrvmd_dinohirep1,		// Tom Mason's Dinosaurs for Hire (Prototype, 19930502)
 	&BurnDrvmd_dinohire,		// Tom Mason's Dinosaurs for Hire (USA)
+	&BurnDrvTomagic,			// Tom Tom Magic
 	&BurnDrvcv_tomarc,			// Tomarc the Barbarian
 	&BurnDrvMSX_togk,			// Tomb of Genghis Khan
 	&BurnDrvmd_lasorda,			// Tommy Lasorda Baseball (USA)

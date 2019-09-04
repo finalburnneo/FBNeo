@@ -70,6 +70,7 @@ static INT32 MSM6295x1_only = 0;
 static INT32 MSM6295x2_only = 0;
 static INT32 no_z80 = 0;
 static INT32 AFEGA_SYS = 0;
+static INT32 Tomagicmode = 0;
 static INT32 Tharriermode = 0; // use macross1/tharrier text draw & joy inputs
 static INT32 Macrossmode = 0; // use macross1 text draw
 static INT32 Strahlmode = 0;
@@ -298,6 +299,61 @@ static struct BurnInputInfo DolmenInputList[] = {
 };
 
 STDINPUTINFO(Dolmen)
+
+static struct BurnInputInfo TomagicInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 11,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 10,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 9,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 14,	"p2 fire 3"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Tomagic)
+
+static struct BurnDIPInfo TomagicDIPList[]=
+{
+	{0x12, 0xff, 0xff, 0xff, NULL				},
+	{0x13, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x12, 0x01, 0x10, 0x00, "Off"				},
+	{0x12, 0x01, 0x10, 0x10, "On"				},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"			},
+	{0x12, 0x01, 0xe0, 0x80, "4 Coins 1 Credits"		},
+	{0x12, 0x01, 0xe0, 0x40, "3 Coins 1 Credits"		},
+	{0x12, 0x01, 0xe0, 0xc0, "2 Coins 1 Credits"		},
+	{0x12, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"		},
+	{0x12, 0x01, 0xe0, 0x60, "1 Coin  2 Credits"		},
+	{0x12, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"		},
+	{0x12, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"		},
+	{0x12, 0x01, 0xe0, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    4, "Balls"			},
+	{0x13, 0x01, 0xc0, 0x40, "2"				},
+	{0x13, 0x01, 0xc0, 0xc0, "3"				},
+	{0x13, 0x01, 0xc0, 0x80, "4"				},
+	{0x13, 0x01, 0xc0, 0x00, "5"				},
+};
+
+STDDIPINFO(Tomagic)
 
 static struct BurnDIPInfo RedhawkbDIPList[]=
 {
@@ -3361,7 +3417,10 @@ static UINT8 __fastcall macross_main_read_byte(UINT32 address)
 
 		case 0x08000e:
 		case 0x08000f:
-			return NMK004Read();
+			return (Tomagicmode) ? 0 : NMK004Read();
+
+		case 0x094001:
+			return (Tomagicmode) ? MSM6295Read(0) : 0;
 	}
 
 	return 0;
@@ -3384,7 +3443,10 @@ static UINT16 __fastcall macross_main_read_word(UINT32 address)
 			return (DrvDips[1] << 8) | DrvDips[1];
 
 		case 0x08000e:
-			return NMK004Read();
+			return (Tomagicmode) ? 0 : NMK004Read();
+
+		case 0x094001:
+			return (Tomagicmode) ? MSM6295Read(0) : 0;
 	}
 
 	return 0;
@@ -3401,8 +3463,9 @@ static void __fastcall macross_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x080016:
-		//case 0x080017:
-			NMK004NmiWrite(data);
+			if (!Tomagicmode) {
+				NMK004NmiWrite(data);
+			}
 		return;
 
 		case 0x080018:
@@ -3412,12 +3475,21 @@ static void __fastcall macross_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x08001e:
-			NMK004Write(0, data);
+			if (Tomagicmode) {
+				*soundlatch = data & 0xff;
+				ZetNmi();
+			} else {
+				NMK004Write(0, data);
+			}
 		return;
 
 		case 0x084000:
 			if ((data & 0xff) != 0xff)
 				*tilebank = data; // bioship
+		return;
+
+		case 0x094000:
+			if (Tomagicmode) MSM6295Write(0, data & 0xff);
 		return;
 	}
 }
@@ -3435,7 +3507,9 @@ static void __fastcall macross_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x080016:
 		case 0x080017:
-			NMK004NmiWrite(data);
+			if (!Tomagicmode) {
+				NMK004NmiWrite(data);
+			}
 		return;
 
 		case 0x080018:
@@ -3447,7 +3521,12 @@ static void __fastcall macross_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x08001e:
 		case 0x08001f:
-			NMK004Write(0, data);
+			if (Tomagicmode) {
+				*soundlatch = data & 0xff;
+				ZetNmi();
+			} else {
+				NMK004Write(0, data);
+			}
 		return;
 
 		case 0x084000:
@@ -3455,6 +3534,10 @@ static void __fastcall macross_main_write_byte(UINT32 address, UINT8 data)
 			if ((data & 0xff) != 0xff) {
 				*tilebank = data; // bioship
 			}
+		return;
+
+		case 0x094001:
+			if (Tomagicmode) MSM6295Write(0, data & 0xff);
 		return;
 	}
 }
@@ -3861,8 +3944,7 @@ static void macross2_sound_bank(INT32 bank)
 {
 	bank = (bank & 7) * 0x4000;
 
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM + bank);
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM + bank);
+	ZetMapMemory(DrvZ80ROM + bank, 0x8000, 0xbfff, MAP_ROM);
 }
 
 static void __fastcall macross2_sound_write(UINT16 address, UINT8 data)
@@ -3882,6 +3964,36 @@ static void __fastcall macross2_sound_write(UINT16 address, UINT8 data)
 static UINT8 __fastcall macross2_sound_read(UINT16 address)
 {
 	if (address == 0xf000) return *soundlatch;
+
+	return 0;
+}
+
+static void __fastcall tomagic_sound_out(UINT16 port, UINT8 data)
+{
+	switch (port & 0xff)
+	{
+		case 0x00:
+			macross2_sound_bank(data);
+		return;
+
+		case 0x02:
+		case 0x03:
+			BurnYM3812Write(0, port&1, data);
+		return;
+	}
+}
+
+static UINT8 __fastcall tomagic_sound_in(UINT16 port)
+{
+	switch (port & 0xff)
+	{
+		case 0x02:
+		case 0x03:
+			return BurnYM3812Read(0, port&1);
+
+		case 0x06:
+			return *soundlatch;
+	}
 
 	return 0;
 }
@@ -5046,6 +5158,7 @@ static void draw_screen_yflip()
 static inline void common_draw(INT32 spriteflip, INT32 bgscrollx, INT32 bgscrolly, INT32 txscrollx, INT32 txscrolly, INT32 tx_coloff, INT32 wide)
 {
 	DrvPaletteRecalc();
+	BurnTransferClear();
 
 	if (nBurnLayer & 1) draw_macross_background(DrvBgRAM0, bgscrollx, bgscrolly, 0, 0);
 
@@ -5501,6 +5614,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			// Everything else
 			if (!MSM6295x1_only && !MSM6295x2_only)
 				BurnYM2203Scan(nAction, pnMin);
+		}
+
+		if (Tomagicmode) {
+			BurnYM3812Scan(nAction, pnMin);
 		}
 
 		MSM6295Scan(nAction, pnMin);
@@ -10748,3 +10865,190 @@ struct BurnDriver BurnDrvArcadian = {
 	RapheroInit, RapheroExit, RapheroFrame, RapheroDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
 };
+
+static void TomagicDoReset()
+{
+	memset (AllRam, 0, RamEnd - AllRam);
+
+	SekOpen(0);
+	SekReset();
+	SekClose();
+
+	ZetOpen(0);
+	ZetReset();
+	BurnYM3812Reset();
+	ZetClose();
+
+	MSM6295Reset();
+}
+
+static INT32 TomagicFrame()
+{
+	if (DrvReset) {
+		TomagicDoReset();
+	}
+
+	{
+		DrvInputs[0] = 0xffff;
+		DrvInputs[1] = 0xffff;
+		for (INT32 i = 0; i < 16; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+		}
+	}
+
+	SekNewFrame();
+	ZetNewFrame();
+
+	INT32 nInterleave = 256;
+	UINT32 nCyclesTotal[2] = { 12000000 / 56, 3000000 / 56 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+
+	SekOpen(0);
+	ZetOpen(0);
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		CPU_RUN(0, Sek);
+
+		if (i == 25 || i == 153) {
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		}
+		if (i == 0) {
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		}
+		if (i == 254) {
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
+			if (pBurnDraw) {
+				BurnDrvRedraw();
+			}
+			NMK16BufferSpriteRam();
+		}
+
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+	}
+
+	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+
+	if (pBurnSoundOut) {
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
+	}
+
+	ZetClose();
+	SekClose();
+
+	return 0;
+}
+
+static INT32 TomagicInit()
+{
+	BurnAllocMemIndex();
+
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  4, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x100001,  5, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x100000,  6, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x000001,  7, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  8, 2)) return 1;
+
+	for (INT32 i = 0; i < 0x200000; i++)
+		DrvGfxROM2[i] = BITSWAP08(DrvGfxROM2[i], 0,1,2,3,4,5,6,7);
+
+	if (BurnLoadRom(DrvSndROM0 + 0x000000,  9, 1)) return 1;
+
+	DrvGfxDecode(0x20000, 0x080000, 0x200000);
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(DrvPalRAM,		0x088000, 0x0887ff, MAP_RAM);
+	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c7ff, MAP_WRITE);
+	SekMapMemory(DrvBgRAM0,		0x090000, 0x093fff, MAP_RAM);
+	SekMapMemory(DrvTxRAM,		0x09c000, 0x09cfff, MAP_RAM);
+	SekMapMemory(DrvTxRAM,		0x09d000, 0x09dfff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, MAP_RAM);
+	SekSetWriteWordHandler(0,	macross_main_write_word);
+	SekSetWriteByteHandler(0,	macross_main_write_byte);
+	SekSetReadWordHandler(0,	macross_main_read_word);
+	SekSetReadByteHandler(0,	macross_main_read_byte);
+	SekClose();
+
+	Tomagicmode = 1;
+	MSM6295x1_only = 1;
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvZ80ROM, 			0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM + 0x8000, 	0x8000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 			0xc000, 0xdfff, MAP_RAM);
+	ZetSetOutHandler(tomagic_sound_out);
+	ZetSetInHandler(tomagic_sound_in);
+	ZetClose();
+
+	BurnSetRefreshRate(56.18);
+
+	BurnYM3812Init(1, 3000000, &DrvYM2203IrqHandler, 0);
+	BurnTimerAttachYM3812(&ZetConfig, 3000000);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+
+	MSM6295Init(0, 3000000 / MSM6295_PIN7_LOW, 1);
+	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+
+	GenericTilesInit();
+
+	TomagicDoReset();
+
+	return 0;
+}
+
+static INT32 TomagicExit()
+{
+	BurnYM3812Exit();
+
+	Tomagicmode = 0;
+
+	return DrvExit();
+}
+
+// Tom Tom Magic
+
+static struct BurnRomInfo tomagicRomDesc[] = {
+	{ "4.bin",	0x40000, 0x5055664a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "3.bin",	0x40000, 0x3731ecbb, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "2.bin",	0x20000, 0x10359b6a, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "9.bin",	0x20000, 0xfcceb24b, 3 | BRF_GRA },           //  3 fgtile
+
+	{ "10.bin",	0x80000, 0x14ef466c, 4 | BRF_GRA },           //  4 bgtile
+
+	{ "7.bin",	0x80000, 0x0a297c78, 5 | BRF_GRA },           //  5 sprites
+	{ "5.bin",	0x80000, 0x88ef65e0, 5 | BRF_GRA },           //  6
+	{ "8.bin",	0x80000, 0x1708d3fb, 5 | BRF_GRA },           //  7
+	{ "6.bin",	0x80000, 0x83ae90ba, 5 | BRF_GRA },           //  8
+
+	{ "1.bin",	0x40000, 0x02b042e3, 6 | BRF_SND },           //  9 oki1
+};
+
+STD_ROM_PICK(tomagic)
+STD_ROM_FN(tomagic)
+
+struct BurnDriver BurnDrvTomagic = {
+	"tomagic", NULL, NULL, NULL, "1997",
+	"Tom Tom Magic\0", NULL, "Hobbitron T.K.Trading Co. Ltd.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PINBALL, 0,
+	NULL, tomagicRomInfo, tomagicRomName, NULL, NULL, NULL, NULL, TomagicInputInfo, TomagicDIPInfo,
+	TomagicInit, TomagicExit, TomagicFrame, GunnailDraw, DrvScan, NULL, 0x400,
+	384, 224, 4, 3
+};
+

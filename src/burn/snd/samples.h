@@ -16,8 +16,8 @@ void BurnSampleSetLoop(INT32 sample, bool dothis);
 INT32  BurnSampleGetStatus(INT32 sample);
 #define SAMPLE_PLAYING		(1<<0) // playing
 #define SAMPLE_PAUSED		(1<<1) // paused
-#define SAMPLE_STOPPED		(  0 )
-#define SAMPLE_INVALID		( -1 ) // invalid /
+#define SAMPLE_STOPPED		(  0 ) // stopped
+#define SAMPLE_INVALID		( -1 ) // invalid
 
 INT32  BurnSampleGetPosition(INT32 sample);
 void BurnSampleSetPosition(INT32 sample, UINT32 position);

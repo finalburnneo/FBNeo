@@ -505,19 +505,7 @@ static void draw_sprites(INT32 priority)
 		sy -= 16;
 
 		if (!color_effect) {
-			if (yflip) {
-				if (xflip) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, number, sx - 0x0f, sy, color, 4, 0, 0x200, DrvGfxROM);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, number, sx - 0x0f, sy, color, 4, 0, 0x200, DrvGfxROM);
-				}
-			} else {
-				if (xflip) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, number, sx - 0x0f, sy, color, 4, 0, 0x200, DrvGfxROM);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, number, sx - 0x0f, sy, color, 4, 0, 0x200, DrvGfxROM);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, number, sx - 0x0f, sy, xflip, yflip, color, 4, 0, 0x200, DrvGfxROM);
 		} else {
 			UINT8 *gfx_src = DrvGfxROM + ((number & 0x3fff) * 16 * 16);
 

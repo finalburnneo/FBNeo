@@ -5659,17 +5659,17 @@ static struct BurnRomInfo pacmanfmRomDesc[] = {
 	{ "pacfama_04.bin",     0x0800, 0xb6289b26, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "pacfama_08.bin",     0x0800, 0x17a88c13, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "pacfama_09.bin", 	0x0800, 0x7a7b48b3, 2 | BRF_GRA },			//  8 Graphics
-	{ "pacfama_11.bin",     0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
-	{ "pacfama_10.bin", 	0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
-	{ "pacfama_12.bin", 	0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
+	{ "pacfama_09.bin", 	0x0800, 0x7a7b48b3, 2 | BRF_GRA },				//  8 Graphics
+	{ "pacfama_11.bin",     0x0800, 0x3591b89d, 2 | BRF_GRA },				//  9
+	{ "pacfama_10.bin", 	0x0800, 0x9e39323a, 2 | BRF_GRA },				// 10
+	{ "pacfama_12.bin", 	0x0800, 0x1b1d9096, 2 | BRF_GRA },				// 11
 
 	/* Undumped on the Famaresa PCB, taken from the parent set */
-	{ "pm1-1.7f",    		0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
-	{ "pm1-4.4a",    		0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
+	{ "pm1-1.7f",    		0x0020, 0x2fc650bd, 3 | BRF_GRA },				// 12 Color Proms
+	{ "pm1-4.4a",    		0x0100, 0x3eb3a8e4, 3 | BRF_GRA },				// 13
 
 	/* Undumped on the Famaresa PCB, taken from the parent set */
-	{ "pm1-3.1m",    		0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
+	{ "pm1-3.1m",    		0x0100, 0xa9cc86bf, 4 | BRF_SND },				// 14 Sound Prom
 	{ "pm1-2.3m",    		0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -5682,6 +5682,46 @@ struct BurnDriver BurnDrvpacmanfm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, pacmanfmRomInfo, pacmanfmRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Pac Man (U.G. bootleg of Puck Man)
+// PCB is marked "PUK" both on component side and on solder side. 
+// Code is identical to pacmanfm, only differences are in p9bfz.5e (adds U.G.) and in mmi63s141j.3m
+
+static struct BurnRomInfo pacmanugRomDesc[] = {
+	{ "1p.6e",  		0x0800, 0xf36e88ab, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "5p.6k",	   		0x0800, 0x618bd9b3, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "2p.6f",     		0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "6p.6m",     		0x0800, 0xd3e8914c, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "3p.6h",     		0x0800, 0x6bf4f625, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "7p.6n",     		0x0800, 0xa948ce83, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "4p.6j",     		0x0800, 0xb6289b26, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "8p.6p",     		0x0800, 0x17a88c13, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "p9bfz.5e", 		0x0800, 0x7a7b48b3, 2 | BRF_GRA },				//  8 Graphics
+	{ "11p.5h",     	0x0800, 0x3591b89d, 2 | BRF_GRA },				//  9
+	{ "10p.5f", 		0x0800, 0x9e39323a, 2 | BRF_GRA },				// 10
+	{ "12p.5j", 		0x0800, 0x1b1d9096, 2 | BRF_GRA },				// 11
+
+	{ "sig82s123.7f",   0x0020, 0x2fc650bd, 3 | BRF_GRA },				// 12 Color Proms
+	{ "mmi6301-1j.4a",  0x0100, 0x3eb3a8e4, 3 | BRF_GRA },				// 13
+
+	{ "mmi6301-1j.1m",  0x0100, 0xa9cc86bf, 4 | BRF_SND },				// 14 Sound Prom
+	{ "mmi63s141j.3m",  0x0100, 0xdeadc015, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(pacmanug)
+STD_ROM_FN(pacmanug)
+
+struct BurnDriver BurnDrvpacmanug = {
+	"pacmanug", "puckman", NULL, NULL, "1980",
+	"Pac Man (U.G. bootleg of Puck Man)\0", NULL, "bootleg (U.G.)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, pacmanugRomInfo, pacmanugRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

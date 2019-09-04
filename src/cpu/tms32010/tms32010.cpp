@@ -937,6 +937,11 @@ void tms32010_scan(INT32 nAction)
 	}
 }
 
+UINT16 tms32010_get_pc()
+{
+	return R.PC;
+}
+
 #if 0
 /****************************************************************************
  *  Get all registers in given buffer

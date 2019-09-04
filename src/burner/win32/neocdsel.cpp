@@ -442,233 +442,81 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 	return 1;
 }
 
-// Scan the specified directory for sub-directories that contain ISO / CUE files
-static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
+static int ScanDir_RecursionCount = 0;
+
+// Scan the specified directory for ISO / CUE files, recurse if desired.
+static void NeoCDList_ScanDir_Internal(HWND hList, TCHAR* pszDirectory)
 {
-//	bProcessingList = true;
-
-//	ListView_DeleteAllItems(hList);
-
-	WIN32_FIND_DATA ffdDirectory;
-
-	HANDLE hDirectory = NULL;
-	memset(&ffdDirectory, 0, sizeof(WIN32_FIND_DATA));
-
-	// Scan main dir for sub-directories
-	TCHAR szSearch[2048] = _T("\0");
-
-	_stprintf(szSearch, _T("%s*"), pszDirectory);
-
-	hDirectory = FindFirstFile(szSearch, &ffdDirectory);
-
-	if (hDirectory == INVALID_HANDLE_VALUE) {
-		// error
-	} else {
-
-		do
-		{
-			// DIRECTORY
-			if((ffdDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-			{
-				if(!_tcscmp(ffdDirectory.cFileName, _T(".")) || !_tcscmp(ffdDirectory.cFileName, _T("..")))
-				{
-					// lets ignore " . " and " .. "
-					continue;
-				}
-
-				bool bDone = false;
-
-				WIN32_FIND_DATA ffdSubDirectory;
-
-				HANDLE hSubDirectory = NULL;
-				memset(&ffdSubDirectory, 0, sizeof(WIN32_FIND_DATA));
-
-				TCHAR szSubSearch[512] = _T("\0");
-
-				if(!bNeoCDListScanOnlyISO)
-				{
-					// Scan sub-directory for CUE
-					_stprintf(szSubSearch, _T("%s%s/*.cue"), pszDirectory, ffdDirectory.cFileName);
-
-					hSubDirectory = FindFirstFile(szSubSearch, &ffdSubDirectory);
-
-					if (hSubDirectory == INVALID_HANDLE_VALUE) {
-						// error
-					} else {
-
-						do
-						{
-							// Sub-directories only
-							if(!(ffdSubDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-							{
-								// File is CUE
-								if(IsFileExt(ffdSubDirectory.cFileName, _T(".cue")))
-								{
-									// Parse CUE
-									TCHAR szParse[512] = _T("\0");
-									_stprintf(szParse, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
-
-									//MessageBox(NULL, szParse, _T(""), MB_OK);
-
-									TCHAR *pszISO = NeoCDList_ParseCUE( szParse );
-
-									TCHAR szISO[512] =_T("\0");
-									_stprintf(szISO, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName,  pszISO);
-
-									free(pszISO);
-
-									NeoCDList_CheckISO(hList, szISO);
-									bDone = true;
-
-									break; // no need to continue
-								}
-							}
-						} while(FindNextFile(hSubDirectory, &ffdSubDirectory));
-					}
-
-					if(bDone) {
-						FindClose(hSubDirectory);
-						continue;
-					}
-				} else {
-					if(!ngcd_list[nListItems].nAudioTracks) {
-						ngcd_list[nListItems].nAudioTracks = 0;
-					}
-				}
-
-				hSubDirectory = NULL;
-				memset(&ffdSubDirectory, 0, sizeof(WIN32_FIND_DATA));
-
-				// Scan sub-directory for ISO
-				_stprintf(szSubSearch, _T("%s%s/*.*"), pszDirectory, ffdDirectory.cFileName);
-
-				hSubDirectory = FindFirstFile(szSubSearch, &ffdSubDirectory);
-
-				if (hSubDirectory == INVALID_HANDLE_VALUE) {
-					// error
-				} else {
-
-					do
-					{
-						// Sub-directories only
-						if(!(ffdSubDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-						{
-							// File is ISO
-							if ( IsFileExt(ffdSubDirectory.cFileName, _T(".img")) || IsFileExt(ffdSubDirectory.cFileName, _T(".bin")) )
-							{
-								TCHAR szISO[512] = _T("\0");
-								_stprintf(szISO, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
-
-								NeoCDList_CheckISO(hList, szISO);
-
-								break; // no need to continue
-							}
-						}
-					} while(FindNextFile(hSubDirectory, &ffdSubDirectory));
-				}
-			} else {
-				// FILE
-			}
-		} while(FindNextFile(hDirectory, &ffdDirectory));
+	if (ScanDir_RecursionCount > 8) {
+		bprintf(PRINT_ERROR, _T("*** Recursion too deep, can't traverse \"%s\"!\n"), pszDirectory);
+		return;
 	}
-	FindClose(hDirectory);
 
-//	bProcessingList = false;
-}
+	ScanDir_RecursionCount++;
 
-// Scan the specified directory for ISO / CUE files
-static void NeoCDList_ScanSingleDir(HWND hList, TCHAR* pszDirectory)
-{
-//	bProcessingList = true;
-//	ListView_DeleteAllItems(hList);
-
-	//
 	WIN32_FIND_DATA ffdDirectory;
-
 	HANDLE hDirectory = NULL;
 	memset(&ffdDirectory, 0, sizeof(WIN32_FIND_DATA));
 
 	// Scan directory for CUE
 	TCHAR szSearch[512] = _T("\0");
 
-	if(!bNeoCDListScanOnlyISO)
-	{
-		_stprintf(szSearch, _T("%s*.cue"), pszDirectory);
-
-		hDirectory = FindFirstFile(szSearch, &ffdDirectory);
-
-		if (hDirectory == INVALID_HANDLE_VALUE) {
-			// error
-		} else {
-
-			do
-			{
-				// Files only
-				if(!(ffdDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-				{
-					// File is CUE
-					if(IsFileExt(ffdDirectory.cFileName, _T(".cue")))
-					{
-						// Parse CUE
-						TCHAR szParse[512] = _T("\0");
-						_stprintf(szParse, _T("%s%s"), pszDirectory, ffdDirectory.cFileName);
-
-						//MessageBox(NULL, szParse, _T(""), MB_OK);
-
-						TCHAR *pszISO = NeoCDList_ParseCUE( szParse );
-
-						TCHAR szISO[512] =_T("\0");
-						_stprintf(szISO, _T("%s%s"), pszDirectory, pszISO);
-						free(pszISO);
-
-						NeoCDList_CheckISO(hList, szISO);
-					}
-				}
-			} while(FindNextFile(hDirectory, &ffdDirectory));
-
-			FindClose(hDirectory);
-		}
-	} else {
-		if(!ngcd_list[nListItems].nAudioTracks) {
-			ngcd_list[nListItems].nAudioTracks = 0;
-		}
-	}
-
-	hDirectory = NULL;
-	memset(&ffdDirectory, 0, sizeof(WIN32_FIND_DATA));
-
-	// Scan directory for ISO
 	_stprintf(szSearch, _T("%s*.*"), pszDirectory);
 
 	hDirectory = FindFirstFile(szSearch, &ffdDirectory);
 
-	if (hDirectory == INVALID_HANDLE_VALUE) {
-		// error
-	} else {
-
+	if (hDirectory != INVALID_HANDLE_VALUE)
+	{
 		do
 		{
-			// Files only
-			if(!(ffdDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			// Directories only
+			if (ffdDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
-				// File is ISO
-				if ( IsFileExt(ffdDirectory.cFileName, _T(".img")) || IsFileExt(ffdDirectory.cFileName, _T(".bin")) )
+				if (!_tcscmp(ffdDirectory.cFileName, _T(".")) || !_tcscmp(ffdDirectory.cFileName, _T("..")))
 				{
-					TCHAR szISO[512] = _T("\0");
-					_stprintf(szISO, _T("%s%s"), pszDirectory, ffdDirectory.cFileName);
+					// lets ignore " . " and " .. "
+				}
+				else if (bNeoCDListScanSub)
+				{
+					// Traverse & recurse this subdir
+					TCHAR szNewDir[512] = _T("\0");
+					_stprintf(szNewDir, _T("%s%s\\"), pszDirectory, ffdDirectory.cFileName);
 
-					NeoCDList_CheckISO(hList, szISO);
-
+					NeoCDList_ScanDir_Internal(hList, szNewDir);
 				}
 			}
-		} while(FindNextFile(hDirectory, &ffdDirectory));
+			// Files only
+			if (!(ffdDirectory.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
+				if (IsFileExt(ffdDirectory.cFileName, _T(".cue")))
+				{
+					// Found CUE, Parse it
+					TCHAR szParse[512] = _T("\0");
+					_stprintf(szParse, _T("%s%s"), pszDirectory, ffdDirectory.cFileName);
+
+					TCHAR *pszISO = NeoCDList_ParseCUE( szParse );
+
+					TCHAR szISO[512] =_T("\0");
+					_stprintf(szISO, _T("%s%s"), pszDirectory, pszISO);
+					free(pszISO);
+
+					NeoCDList_CheckISO(hList, szISO);
+				}
+			}
+		} while (FindNextFile(hDirectory, &ffdDirectory));
 
 		FindClose(hDirectory);
 	}
 
-//	bProcessingList = false;
+	ScanDir_RecursionCount--;
 }
 
+static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
+{
+	ScanDir_RecursionCount = 0;
+
+	NeoCDList_ScanDir_Internal(hList, pszDirectory);
+}
 
 // This will parse the specified CUE file and return the ISO path, if found
 static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
@@ -1278,12 +1126,7 @@ static unsigned __stdcall NeoCDList_DoProc(void*)
 	bProcessingList = true;
 	ListView_DeleteAllItems(hListView);
 
-	if(bNeoCDListScanSub) {
-		NeoCDList_ScanSingleDir(hListView, szNeoCDGamesDir);
-		NeoCDList_ScanDir(hListView, szNeoCDGamesDir);
-	} else {
-		NeoCDList_ScanSingleDir(hListView, szNeoCDGamesDir);
-	}
+	NeoCDList_ScanDir(hListView, szNeoCDGamesDir);
 
 	bProcessingList = false;
 

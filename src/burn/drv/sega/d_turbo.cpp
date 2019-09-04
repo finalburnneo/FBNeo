@@ -1180,7 +1180,7 @@ static INT32 TurboInit(INT32 encrypted)
 	ppi8255_set_read_ports(3, turbo_ppi3a_read, turbo_ppi3b_read, NULL);
 
 	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.20, BURN_SND_ROUTE_BOTH);
 
 	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_WHITE, 80);
 
@@ -1268,7 +1268,7 @@ static INT32 Subroc3dInit()
 	ppi8255_set_write_ports(1, subroc3d_ppi1a_write, subroc3d_ppi1b_write, subroc3d_ppi1c_write);
 
 	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.20, BURN_SND_ROUTE_BOTH);
 
 	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_RED, 80); // not used in this game
 
@@ -1416,7 +1416,7 @@ static INT32 BuckrogInit(INT32 encrypted)
 	ppi8255_set_write_ports(1, buckrog_ppi1a_write, buckrog_ppi1b_write, buckrog_ppi1c_write);
 
 	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(0.40, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.20, BURN_SND_ROUTE_BOTH);
 
 	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_RED, 80); // not used in this game
 

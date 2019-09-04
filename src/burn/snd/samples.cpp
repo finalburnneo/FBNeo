@@ -102,6 +102,8 @@ static void make_raw(UINT8 *src, UINT32 len)
 		memset(buffer_l, 0, sizeof(buffer_l));
 		memset(buffer_r, 0, sizeof(buffer_r));
 
+#if 0
+		// this block causes clicks when the sample loops, disable for now
 		if (sample_ptr->flags & SAMPLE_AUTOLOOP)
 		{
 			UINT8* end = sample_ptr->data + data_length / (bits * channels);
@@ -127,7 +129,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 				buffer_r[3] = (INT16)(get_shorti(end - 2 * channels) + (channels & 2));
 			}
 		}
-
+#endif
 		UINT64 prev_offs = ~0;
 
 		for (UINT64 i = 0; i < converted_len; i++)
@@ -247,10 +249,14 @@ INT32 BurnSampleGetStatus(INT32 sample)
 {
 	// this is also used to see if samples initialized and/or the game has samples.
 
-	if (sample >= nTotalSamples) return -1;
+	if (sample >= nTotalSamples) return SAMPLE_INVALID;
 
 	sample_ptr = &samples[sample];
-	return (sample_ptr->playing);
+
+	if (!sample_ptr->playing && sample_ptr->position)
+		return SAMPLE_PAUSED;
+
+	return (sample_ptr->playing) ? SAMPLE_PLAYING : SAMPLE_STOPPED;
 }
 
 INT32 BurnSampleGetPosition(INT32 sample)

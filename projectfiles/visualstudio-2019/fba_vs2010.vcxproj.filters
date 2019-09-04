@@ -3570,6 +3570,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_thepit.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_thief.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_timelimt.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>

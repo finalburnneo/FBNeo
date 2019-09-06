@@ -9906,7 +9906,7 @@ This list contains all games supported by FinalBurn Neo.
 | smgp6		|  	| Super Monaco GP (World, Rev A, FD1094 317-0126a)	| smgp		| 1989	| Sega		| X-Board	| 					|
 | smgpd		|  	| Super Monaco GP (World, Rev B, FD1094 317-0126a decryp| smgp		| 1989	| Sega		| X-Board	| 					|
 | smgp		|  	| Super Monaco GP (World, Rev B, FD1094 317-0126a)	| 		| 1989	| Sega		| X-Board	| 					|
-| md_smgp2019	|  	| Super Monaco GP 2019 - HE Returns (Hack, Improvement)	| md_smgpu	| 2019	| 2019 TA_Marcos| Sega Megadrive| 					|
+| md_smgp2019	|  	| Super Monaco GP 2019 - HE Returns (Hack, Improvement)	| md_smgp	| 2019	| 2019 TA_Marcos| Sega Megadrive| 					|
 | smooncrs	|  	| Super Moon Cresta (Gremlin, bootleg)			| mooncrst	| 1981?	| bootleg (Greml| Galaxian	| 					|
 | suprmous	|  	| Super Mouse						| 		| 1982	| Taito Corporat| Miscellaneous	| 					|
 | smbombr1	|  	| Super Muscle Bomber - the international blowout (94080| ringdest	| 1994	| Capcom	| CPS2		| 					|

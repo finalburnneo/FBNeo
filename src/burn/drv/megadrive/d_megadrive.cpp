@@ -43054,7 +43054,7 @@ STD_ROM_PICK(md_smgp2019)
 STD_ROM_FN(md_smgp2019)
 
 struct BurnDriver BurnDrvmd_smgp2019 = {
-	"md_smgp2019", "md_smgpu", NULL, NULL, "2019",
+	"md_smgp2019", "md_smgp", NULL, NULL, "2019",
 	"Super Monaco GP 2019 - HE Returns (Hack, Improvement)\0", NULL, "2019 TA_Marcos_Translations", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,

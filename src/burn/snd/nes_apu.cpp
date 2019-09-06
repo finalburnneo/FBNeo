@@ -874,7 +874,7 @@ void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_p
 	info->bAdd = bAdd;
 
 	info->stream = NULL;
-	info->stream = (INT16*)BurnMalloc(info->samples_per_frame * sizeof(INT16));
+	info->stream = (INT16*)BurnMalloc(info->samples_per_frame * 2 * sizeof(INT16));
 	info->gain[BURN_SND_NESAPU_ROUTE_1] = 1.00;
 	info->gain[BURN_SND_NESAPU_ROUTE_2] = 1.00;
 	info->output_dir[BURN_SND_NESAPU_ROUTE_1] = BURN_SND_ROUTE_BOTH;

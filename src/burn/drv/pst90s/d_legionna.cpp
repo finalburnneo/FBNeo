@@ -2278,7 +2278,7 @@ STD_ROM_FN(grainbow)
 
 struct BurnDriver BurnDrvGrainbow = {
 	"grainbow", NULL, NULL, NULL, "1993",
-	"SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)\0", "Game has emulation/graphics issues", "Banpresto", "Miscellaneous",
+	"SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, grainbowRomInfo, grainbowRomName, NULL, NULL, NULL, NULL, GrainbowInputInfo, GrainbowDIPInfo,
@@ -2317,7 +2317,7 @@ STD_ROM_FN(grainbowk)
 
 struct BurnDriver BurnDrvGrainbowk = {
 	"grainbowk", "grainbow", NULL, NULL, "1993",
-	"SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)\0", "Game has emulation/graphics issues", "Banpresto", "Miscellaneous",
+	"SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, grainbowkRomInfo, grainbowkRomName, NULL, NULL, NULL, NULL, GrainbowInputInfo, GrainbowDIPInfo,

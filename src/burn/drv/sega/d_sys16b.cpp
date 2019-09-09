@@ -156,6 +156,27 @@ static struct BurnInputInfo System16bDip3InputList[] = {
 
 STDINPUTINFO(System16bDip3)
 
+static struct BurnInputInfo UltracinInputList[] = {
+	{"Coin 1"            , BIT_DIGITAL  , System16InputPort0 + 0, "p1 coin"   },
+	{"Coin 2"            , BIT_DIGITAL  , System16InputPort0 + 1, "p2 coin"   },
+
+	{"P1 Left"           , BIT_DIGITAL  , System16InputPort1 + 7, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , System16InputPort1 + 6, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , System16InputPort1 + 0, "p1 fire 1" },
+
+	{"P2 Left"           , BIT_DIGITAL  , System16InputPort2 + 7, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , System16InputPort2 + 6, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , System16InputPort2 + 0, "p2 fire 1" },
+
+	{"Service"           , BIT_DIGITAL  , System16InputPort0 + 3 , "service"  },
+	{"Diagnostics"       , BIT_DIGITAL  , System16InputPort0 + 2 , "diag"     },
+	{"Reset"             , BIT_DIGITAL  , &System16Reset         , "reset"    },
+	{"Dip 1"             , BIT_DIPSWITCH, System16Dip + 0        , "dip"      },
+	{"Dip 2"             , BIT_DIPSWITCH, System16Dip + 1        , "dip"      },
+};
+
+STDINPUTINFO(Ultracin)
+
 static struct BurnInputInfo AceattacInputList[] = {
 	{"Coin 1"            , BIT_DIGITAL  , System16InputPort0 + 0, "p1 coin"   },
 	{"Start 1"           , BIT_DIGITAL  , System16InputPort0 + 4, "p1 start"  },
@@ -2042,13 +2063,13 @@ STDDIPINFO(Tturf)
 static struct BurnDIPInfo UltracinDIPList[]=
 {
 	// Default Values
-	{0x15, 0xff, 0xff, 0xff, NULL                                 },
-	{0x16, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0b, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0c, 0xff, 0xff, 0xff, NULL                                 },
 
 	// Dip 1
 		
 	// Dip 2
-	SYSTEM16B_COINAGE(0x16)
+	SYSTEM16B_COINAGE(0x0c)
 };
 
 STDDIPINFO(Ultracin)
@@ -5960,23 +5981,23 @@ STD_ROM_PICK(Tturf)
 STD_ROM_FN(Tturf)
 
 static struct BurnRomInfo TturfuRomDesc[] = {
-	{ "epr-12266.a4",   0x10000, 0xf549def8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12264.a1",   0x10000, 0xf7cdb289, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12267.a5",   0x10000, 0x3c3ce191, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12265.a2",   0x10000, 0x8cdadd9a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12266.a1",   0x10000, 0xf549def8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12264.a4",   0x10000, 0xf7cdb289, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12267.a2",   0x10000, 0x3c3ce191, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12265.a5",   0x10000, 0x8cdadd9a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
-	{ "epr-12268.b9",   0x10000, 0xe0dac07f, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-12269.b10",  0x10000, 0x457a8790, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-12270.b11",  0x10000, 0x69fc025b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12268.a14",  0x10000, 0xe0dac07f, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12269.a15",  0x10000, 0x457a8790, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12270.a16",  0x10000, 0x69fc025b, SYS16_ROM_TILES | BRF_GRA },
 	
-	{ "epr-12276.b1",   0x10000, 0x838bd71f, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12280.b5",   0x10000, 0x639a57cb, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12277.b2",   0x10000, 0xf16b6ba2, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12281.b6",   0x10000, 0x1ef1077f, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12278.b3",   0x10000, 0x961d06b7, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12282.b7",   0x10000, 0xe8671ee1, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12279.b4",   0x10000, 0x7a169fb1, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12283.b8",   0x10000, 0xae0fa085, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12276.b4",   0x10000, 0x838bd71f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12280.b8",   0x10000, 0x639a57cb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12277.b3",   0x10000, 0xf16b6ba2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12281.b7",   0x10000, 0x1ef1077f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12278.b2",   0x10000, 0x961d06b7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12282.b6",   0x10000, 0xe8671ee1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12279.b1",   0x10000, 0x7a169fb1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12283.b5",   0x10000, 0xae0fa085, SYS16_ROM_SPRITES | BRF_GRA },
 	
 	{ "epr-12271.a7",   0x08000, 0x99671e52, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
@@ -8968,13 +8989,29 @@ static INT32 TturfuInit()
 	return nRet;
 }
 
+static void UltracinMakeAnalogInputs()
+{
+	static UINT8 clock = 0;
+
+	if (System16Input[1] & (0xc0)) {
+		clock ^= 0x08;
+		System16Input[1] |= clock;
+	}
+	if (System16Input[2] & (0xc0)) {
+		clock ^= 0x08;
+		System16Input[2] |= clock;
+	}
+}
+
 static INT32 UltracinInit()
 {
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1c0000 - 0x180000;
 	
 	INT32 nRet = System16Init();
-	
+
+	System16MakeAnalogInputsDo = UltracinMakeAnalogInputs;
+
 	if (!nRet) {
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
@@ -10434,10 +10471,10 @@ struct BurnDriver BurnDrvTturfu = {
 
 struct BurnDriver BurnDrvUltracin = {
 	"ultracin", NULL, NULL, NULL, "1996",
-	"Waku Waku Ultraman Racing\0", NULL, "Sega", "System 16B",
+	"Waku Waku Ultraman Racing\0", "Emulation not complete", "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_RACING, 0,
-	NULL, UltracinRomInfo, UltracinRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, UltracinDIPInfo,
+	NULL, UltracinRomInfo, UltracinRomName, NULL, NULL, NULL, NULL, UltracinInputInfo, UltracinDIPInfo,
 	UltracinInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

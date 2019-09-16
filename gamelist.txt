@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12265 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12266 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3395,8 +3395,8 @@ This list contains all games supported by FinalBurn Neo.
 | fireshrk	|  	| Fire Shark						| 		| 1990	| Toaplan	| Toaplan BCU-2 | 					|
 | firetrapbl	|  	| Fire Trap (Japan bootleg)				| firetrap	| 1986	| bootleg	| Miscellaneous	| 					|
 | firetrapj	|  	| Fire Trap (Japan)					| firetrap	| 1986	| Wood Place Inc| Miscellaneous	| 					|
-| firetrap	|  	| Fire Trap (US, set 1)					| 		| 1986	| Wood Place Inc| Miscellaneous	| 					|
-| firetrapa	|  	| Fire Trap (US, set 2)					| firetrap	| 1986	| Wood Place Inc| Miscellaneous	| 					|
+| firetrapa	|  	| Fire Trap (US)					| firetrap	| 1986	| Wood Place Inc| Miscellaneous	| 					|
+| firetrap	|  	| Fire Trap (US, rev A)					| 		| 1986	| Wood Place Inc| Miscellaneous	| 					|
 | firebeas	|  	| Firebeast (prototype)					| 		| 1983	| Atari		| Miscellaneous	| 					|
 | msx_firehawk	|  	| Firehawk (Euro)					| 		| 1987	| Players Softwa| MSX		| 					|
 | cfishing	|  	| Fishing (DECO Cassette) (Japan)			| cadanglr	| 1982	| Data East Corp| Cassette Syste| 					|
@@ -5204,6 +5204,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_kunichn2	|  	| Kuni-chan no Game Tengoku Part 2 (Jpn)		| 		| 1992	| Sega		| Sega Game Gear| 					|
 | kurikintj	|  	| Kuri Kinton (Japan)					| kurikint	| 1988	| Taito Corporat| Taito L System| 					|
 | kurikintu	|  	| Kuri Kinton (US)					| kurikint	| 1988	| Taito America | Taito L System| 					|
+| kurikintw	|  	| Kuri Kinton (US, World Games license)			| kurikint	| 1988	| Taito Corporat| Taito L System| 					|
 | kurikint	|  	| Kuri Kinton (World)					| 		| 1988	| Taito Corporat| Taito L System| 					|
 | kurikinta	|  	| Kuri Kinton (World, prototype?)			| kurikint	| 1988	| Taito Corporat| Taito L System| 					|
 | ksayakyu	|  	| Kusayakyuu						| 		| 1985	| Taito Corporat| Miscellaneous	| 					|
@@ -8440,8 +8441,8 @@ This list contains all games supported by FinalBurn Neo.
 | gg_sdgundam	|  	| SD Gundam - Winner's History (Jpn)			| 		| 1995	| Bandai	| Sega Game Gear| 					|
 | neobattl	|  	| SD Gundam Neo Battling (Japan)			| 		| 1992	| Banpresto / So| Seta		| 					|
 | sdgndmps	|  	| SD Gundam Psycho Salamander no Kyoui			| 		| 1991	| Banpresto / Ba| Miscellaneous	| 					|
-| grainbow	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)	| 		| 1993	| Banpresto	| Miscellaneous	| Game has emulation/graphics issues	|
-| grainbowk	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)	| grainbow	| 1993	| Banpresto	| Miscellaneous	| Game has emulation/graphics issues	|
+| grainbow	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)	| 		| 1993	| Banpresto	| Miscellaneous	| 					|
+| grainbowk	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)	| grainbow	| 1993	| Banpresto	| Miscellaneous	| 					|
 | md_sdvalis	|  	| SD Valis (Jpn)					| md_sydvalis	| 1992	| Laser Soft	| Sega Megadrive| 					|
 | sms_sdi	|  	| SDI (Jpn)						| sms_globald	| 1987	| Sega		| Sega Master Sy| 					|
 | sdibl		|  	| SDI - Strategic Defense Initiative (bootleg, original | sdi		| 1987	| Sega		| System 16B	| 					|

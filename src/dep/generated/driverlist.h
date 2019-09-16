@@ -3473,8 +3473,8 @@ DRV		BurnDrvmd_fireshrku1;
 DRV		BurnDrvFireshrk;
 DRV		BurnDrvFiretrapbl;
 DRV		BurnDrvFiretrapj;
-DRV		BurnDrvFiretrap;
 DRV		BurnDrvFiretrapa;
+DRV		BurnDrvFiretrap;
 DRV		BurnDrvFirebeas;
 DRV		BurnDrvMSX_firehawk;
 DRV		BurnDrvCfishing;
@@ -5326,6 +5326,7 @@ DRV		BurnDrvgg_kunichan;
 DRV		BurnDrvgg_kunichn2;
 DRV		BurnDrvKurikintj;
 DRV		BurnDrvKurikintu;
+DRV		BurnDrvKurikintw;
 DRV		BurnDrvKurikint;
 DRV		BurnDrvKurikinta;
 DRV		BurnDrvKsayakyu;
@@ -16021,8 +16022,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFireshrk,			// Fire Shark
 	&BurnDrvFiretrapbl,			// Fire Trap (Japan bootleg)
 	&BurnDrvFiretrapj,			// Fire Trap (Japan)
-	&BurnDrvFiretrap,			// Fire Trap (US, set 1)
-	&BurnDrvFiretrapa,			// Fire Trap (US, set 2)
+	&BurnDrvFiretrapa,			// Fire Trap (US)
+	&BurnDrvFiretrap,			// Fire Trap (US, rev A)
 	&BurnDrvFirebeas,			// Firebeast (prototype)
 	&BurnDrvMSX_firehawk,		// Firehawk (Euro)
 	&BurnDrvCfishing,			// Fishing (DECO Cassette) (Japan)
@@ -17874,6 +17875,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_kunichn2,		// Kuni-chan no Game Tengoku Part 2 (Jpn)
 	&BurnDrvKurikintj,			// Kuri Kinton (Japan)
 	&BurnDrvKurikintu,			// Kuri Kinton (US)
+	&BurnDrvKurikintw,			// Kuri Kinton (US, World Games license)
 	&BurnDrvKurikint,			// Kuri Kinton (World)
 	&BurnDrvKurikinta,			// Kuri Kinton (World, prototype?)
 	&BurnDrvKsayakyu,			// Kusayakyuu

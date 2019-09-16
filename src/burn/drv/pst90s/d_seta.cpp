@@ -9503,8 +9503,10 @@ static void gundhara68kInit()
 	wrofaero68kInit();
 
 	// swap halves of sound rom
-	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000);
+	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000); // temp storage
+
 	memcpy (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x080000);
+	memcpy (DrvSndROM + 0x080000, DrvSndROM + 0x100000, 0x080000);
 }
 
 static INT32 gundharaInit()
@@ -9619,8 +9621,8 @@ static INT32 gundharacRomCallback(INT32 bLoad)
 		if (BurnLoadRom(DrvGfxROM2 + 0x200000, 27, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x300000, 28, 2)) return 1;
 
-		if (BurnLoadRom(DrvSndROM  + 0x000000, 29, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM  + 0x080000, 30, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x080000, 29, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x000000, 30, 1)) return 1;
 	}
 
 	return 0;

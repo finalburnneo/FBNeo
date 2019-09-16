@@ -984,12 +984,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Fire Trap (US, set 1)
+// Fire Trap (US, rev A)
 
 static struct BurnRomInfo firetrapRomDesc[] = {
 	{ "di-02.4a",		0x8000, 0x3d1e4bf7, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
 	{ "di-01.3a",		0x8000, 0x9bbae38b, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "di-00.2a",		0x8000, 0xd0dad7de, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "di-00-a.2a",		0x8000, 0xf39e2cf4, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "di-17.10j",		0x8000, 0x8605f6b9, 2 | BRF_PRG | BRF_ESS }, //  3 Sound CPU Code
 	{ "di-18.12j",		0x8000, 0x49508c93, 2 | BRF_PRG | BRF_ESS }, //  4
@@ -1024,7 +1024,7 @@ STD_ROM_FN(firetrap)
 
 struct BurnDriver BurnDrvFiretrap = {
 	"firetrap", NULL, NULL, NULL, "1986",
-	"Fire Trap (US, set 1)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
+	"Fire Trap (US, rev A)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, firetrapRomInfo, firetrapRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapDIPInfo,
@@ -1033,12 +1033,12 @@ struct BurnDriver BurnDrvFiretrap = {
 };
 
 
-// Fire Trap (US, set 2)
+// Fire Trap (US)
 
 static struct BurnRomInfo firetrapaRomDesc[] = {
 	{ "di-02.4a",		0x8000, 0x3d1e4bf7, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
 	{ "di-01.3a",		0x8000, 0x9bbae38b, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "di-00-a.2a.bin",	0x8000, 0xf39e2cf4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "di-00.2a",		0x8000, 0xd0dad7de, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "di-17.10j",		0x8000, 0x8605f6b9, 2 | BRF_PRG | BRF_ESS }, //  3 Sound CPU Code
 	{ "di-18.12j",		0x8000, 0x49508c93, 2 | BRF_PRG | BRF_ESS }, //  4
@@ -1073,7 +1073,7 @@ STD_ROM_FN(firetrapa)
 
 struct BurnDriver BurnDrvFiretrapa = {
 	"firetrapa", "firetrap", NULL, NULL, "1986",
-	"Fire Trap (US, set 2)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
+	"Fire Trap (US)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, firetrapaRomInfo, firetrapaRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapDIPInfo,

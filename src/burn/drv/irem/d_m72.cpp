@@ -3824,7 +3824,7 @@ static struct BurnRomInfo lohtbRomDesc[] = {
 	{ "lohtb08.05",			0x10000, 0x34854262, 0x04 | BRF_GRA },           // 19
 	{ "lohtb06.03",			0x10000, 0xf923183c, 0x04 | BRF_GRA },           // 20
 
-	{ "gal16v8-25qp.ic3",	0x00117, 0x12d20edf, 0x00 | BRF_OPT },
+	{ "gal16v8-25qp.ic3",	0x00117, 0x6acdfafb, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(lohtb)

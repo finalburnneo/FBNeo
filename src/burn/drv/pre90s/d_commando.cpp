@@ -468,7 +468,7 @@ STD_ROM_FN(Sinvasnb)
 static struct BurnRomInfo MercenarioRomDesc[] = {
 	{ "4ac.bin",       0x04000, 0x59ebf408, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "4bc.bin",       0x04000, 0xaca99905, BRF_ESS | BRF_PRG }, //	 1
-	{ "3c.8m",         0x04000, 0xf998d08a, BRF_ESS | BRF_PRG }, //	 1
+	{ "b3.8n",         0x04000, 0xf998d08a, BRF_ESS | BRF_PRG }, //	 1
 	
 	{ "cm02.9f",       0x04000, 0xf9cc4a74, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program // 2c.9f
 	

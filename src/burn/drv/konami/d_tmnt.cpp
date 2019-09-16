@@ -2183,8 +2183,8 @@ STD_ROM_PICK(punkshot2)
 STD_ROM_FN(punkshot2)
 
 static struct BurnRomInfo punkshot2eRomDesc[] = {
-	{ "907_02.i7",		0x020000, 0xaa55516c, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "907_03.i10",		0x020000, 0x0d3aa3d5, BRF_ESS | BRF_PRG }, //  1
+	{ "907_2.i7",		0x020000, 0xaa55516c, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "907_3.i10",		0x020000, 0x0d3aa3d5, BRF_ESS | BRF_PRG }, //  1
 
 	{ "907f01.e8",		0x008000, 0xf040c484, BRF_ESS | BRF_PRG }, //  2	Z80 Program
 

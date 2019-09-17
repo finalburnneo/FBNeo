@@ -242,6 +242,13 @@ int m6502_releaseslice()
 	return 0;
 }
 
+int m6502_dec_icount(int todec)
+{
+	m6502_ICount -= todec;
+
+	return 0;
+}
+
 static int segmentcycles = 0;
 static int end_run = 0;
 

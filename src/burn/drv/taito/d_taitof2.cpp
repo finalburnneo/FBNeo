@@ -18,6 +18,7 @@ static INT32 MjnquestInput;
 static INT32 DriveoutSoundNibble;
 static INT32 DriveoutOkiBank;
 static INT32 Driftout = 0;
+static INT32 bNoClearOpposites = 0;
 
 INT32 TaitoF2SpriteType;
 INT32 TaitoF2SpritesFlipScreen;
@@ -927,6 +928,16 @@ STDINPUTINFO(Yuyugogo)
 
 #undef A
 
+static inline void DrvClearOppositesCommon(UINT8* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
+	}
+}
+
 static void TC0220IOCMakeInputs()
 {
 	// Reset Inputs
@@ -938,6 +949,11 @@ static void TC0220IOCMakeInputs()
 		TC0220IOCInput[0] -= (TC0220IOCInputPort0[i] & 1) << i;
 		TC0220IOCInput[1] -= (TC0220IOCInputPort1[i] & 1) << i;
 		TC0220IOCInput[2] -= (TC0220IOCInputPort2[i] & 1) << i;
+	}
+
+	if (bNoClearOpposites == 0) {
+		DrvClearOppositesCommon(&TC0220IOCInput[0]);
+		DrvClearOppositesCommon(&TC0220IOCInput[1]);
 	}
 }
 
@@ -952,6 +968,11 @@ static void TC0510NIOMakeInputs()
 		TC0510NIOInput[0] -= (TC0510NIOInputPort0[i] & 1) << i;
 		TC0510NIOInput[1] -= (TC0510NIOInputPort1[i] & 1) << i;
 		TC0510NIOInput[2] -= (TC0510NIOInputPort2[i] & 1) << i;
+	}
+
+	if (bNoClearOpposites == 0) {
+		DrvClearOppositesCommon(&TC0510NIOInput[0]);
+		DrvClearOppositesCommon(&TC0510NIOInput[1]);
 	}
 }
 
@@ -972,6 +993,13 @@ static void TaitoF2MakeInputs()
 		TaitoInput[3] -= (TaitoInputPort3[i] & 1) << i;
 		TaitoInput[4] -= (TaitoInputPort4[i] & 1) << i;
 		TaitoInput[5] -= (TaitoInputPort5[i] & 1) << i;
+	}
+
+	if (bNoClearOpposites == 0) {
+		DrvClearOppositesCommon(&TaitoInput[0]);
+		DrvClearOppositesCommon(&TaitoInput[1]);
+		DrvClearOppositesCommon(&TaitoInput[3]);
+		DrvClearOppositesCommon(&TaitoInput[4]);
 	}
 }
 
@@ -7626,6 +7654,7 @@ static INT32 CameltryInit()
 	TaitoXOffset = 3;
 
 	SpritePriWritebackMode = 0;
+	bNoClearOpposites = 1;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -7718,7 +7747,8 @@ static INT32 CamltryaInit()
 
 	TaitoXOffset = 3;
 	SpritePriWritebackMode = 0;
-	
+	bNoClearOpposites = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -8426,6 +8456,7 @@ static INT32 KoshienInit()
 	TaitoXOffset = 1;
 
 	SpritePriWritebackMode = 0;
+	bNoClearOpposites = 1;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -8670,7 +8701,9 @@ static INT32 MjnquestInit()
 	SekClose();
 	
 	TaitoF2SoundInit();
-	
+
+	bNoClearOpposites = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -8849,6 +8882,7 @@ static INT32 QcrayonInit()
 	TaitoXOffset = 3;
 	TaitoF2SpriteType = 3;
 	SpritePriWritebackMode = 0;
+	bNoClearOpposites = 1;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -8907,6 +8941,7 @@ static INT32 Qcrayon2Init()
 	TaitoXOffset = 3;
 	TaitoF2SpriteType = 3;
 	SpritePriWritebackMode = 0;
+	bNoClearOpposites = 1;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -8964,7 +8999,8 @@ static INT32 QjinseiInit()
 	
 	TaitoXOffset = 3;
 	TaitoF2SpriteType = 3;
-		
+	bNoClearOpposites = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -9016,6 +9052,7 @@ static INT32 QtorimonInit()
 	TaitoF2SoundInit();
 	
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
+	bNoClearOpposites = 1;
 	
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9072,6 +9109,7 @@ static INT32 QuizhqInit()
 	TaitoF2SoundInit();
 	
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
+	bNoClearOpposites = 1;
 	
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9126,7 +9164,8 @@ static INT32 QzchikyuInit()
 	TaitoF2SoundInit();
 	
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayedQzchikyu;
-		
+	bNoClearOpposites = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -9180,7 +9219,8 @@ static INT32 QzquestInit()
 	TaitoF2SoundInit();
 	
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
-		
+	bNoClearOpposites = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -9417,6 +9457,7 @@ static INT32 YesnojInit()
 	TaitoF2SoundInit();
 	
 	TaitoXOffset = 3;
+	bNoClearOpposites = 1;
 	
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9481,6 +9522,7 @@ static INT32 YuyugogoInit()
 	
 	TaitoF2SpriteType = 1;
 	TaitoXOffset = 3;
+	bNoClearOpposites = 1;
 	
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9503,6 +9545,8 @@ static INT32 TaitoF2Exit()
 	MjnquestInput = 0;
 	DriveoutSoundNibble = 0;
 	DriveoutOkiBank = 0;
+
+	bNoClearOpposites = 0;
 
 	Driftout = 0;
 
@@ -10643,7 +10687,7 @@ static INT32 TaitoF2Frame()
 			TaitoF2MakeInputs();
 		}
 	}
-	
+
 	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
 
 	SekNewFrame();

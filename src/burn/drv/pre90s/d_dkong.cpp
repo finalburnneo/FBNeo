@@ -405,7 +405,7 @@ static struct BurnDIPInfo PestplceDIPList[]=
 	{0x0e, 0x01, 0xc0, 0x00, "20000"		},
 	{0x0e, 0x01, 0xc0, 0x40, "30000"		},
 	{0x0e, 0x01, 0xc0, 0x80, "40000"		},
-	{0x0e, 0x01, 0xc0, 0xc0, "×"			},
+	{0x0e, 0x01, 0xc0, 0xc0, "Ã—"			},
 };
 
 STDDIPINFO(Pestplce)
@@ -2818,6 +2818,48 @@ struct BurnDriver BurnDrvDkongx11 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongx11RomInfo, dkongx11RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
+	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Spooky Remix (Hack)
+
+static struct BurnRomInfo dkspkyrmxRomDesc[] = {
+	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x01000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x01000, 0x1c97d324, 1 }, //  2
+	{ "c_5at_g.bin",	0x01000, 0xb9005ac0, 1 }, //  3
+
+	{ "dkspkyrmx.bin",	0x08000, 0xe68c6bfc, 2 }, //  4 braze
+
+	{ "s_3i_b.bin",		0x00800, 0x45a4ed06, 3 }, //  5 soundcpu
+	{ "s_3j_b.bin",		0x00800, 0x4743fe92, 3 }, //  6
+
+	{ "v_5h_b.sp",		0x00800, 0xb70b0904, 4 }, //  7 gfx1
+	{ "v_3pt.sp",		0x00800, 0xbe8c92c3, 4 }, //  8
+
+	{ "l_4m_b.sp",		0x00800, 0x1d0b3b77, 5 }, //  9 gfx2
+	{ "l_4n_b.sp",		0x00800, 0xcd717e7c, 5 }, // 10
+	{ "l_4r_b.sp",		0x00800, 0xd019732b, 5 }, // 11
+	{ "l_4s_b.sp",		0x00800, 0x04272273, 5 }, // 12
+
+	{ "c-2k.sp",		0x00100, 0xa837a227, 6 }, // 13 proms
+	{ "c-2j.sp",		0x00100, 0x244a89f9, 6 }, // 14
+	{ "v-5e.sp",		0x00100, 0xc70b6f9b, 6 }, // 15
+
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dkspkyrmx)
+STD_ROM_FN(dkspkyrmx)
+
+struct BurnDriver BurnDrvDkspkyrmx = {
+	"dkspkyrmx", "dkong", NULL, "dkong", "2018",
+	"Donkey Kong Spooky Remix (Hack)\0", NULL, "Sock Master", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkspkyrmxRomInfo, dkspkyrmxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
 	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

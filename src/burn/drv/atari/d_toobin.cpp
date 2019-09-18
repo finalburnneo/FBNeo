@@ -54,13 +54,13 @@ static struct BurnInputInfo ToobinInputList[] = {
 	{"Coin 3",						BIT_DIGITAL,	DrvJoy2 + 2,	"p3 coin"	},
 
 	{"P1 Throw",					BIT_DIGITAL,	DrvJoy1 + 8,	"p1 fire 1"	},
-	{"P1 Right.Paddle Forward",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
+	{"P1 Right Paddle Forward",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
 	{"P1 Left Paddle Forward",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 3"	},
 	{"P1 Left Paddle Backward",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 4"	},
 	{"P1 Right Paddle Backward",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 5"	},
 
 	{"P2 Throw",					BIT_DIGITAL,	DrvJoy1 + 9,	"p2 fire 1"	},
-	{"P2 Right.Paddle Forward",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 fire 2"	},
+	{"P2 Right Paddle Forward",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 fire 2"	},
 	{"P2 Left Paddle Forward",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 fire 3"	},
 	{"P2 Left Paddle Backward",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 fire 4"	},
 	{"P2 Right Paddle Backward",	BIT_DIGITAL,	DrvJoy1 + 3,	"p2 fire 5"	},

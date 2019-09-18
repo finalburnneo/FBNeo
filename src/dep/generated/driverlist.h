@@ -2681,6 +2681,7 @@ DRV		BurnDrvDkongjrpb;		// no comment [NOT WORKING]
 DRV		BurnDrvDkongjr;
 DRV		BurnDrvDkongjr2;
 DRV		BurnDrvcv_dkongjr;
+DRV		BurnDrvDkspkyrmx;
 DRV		BurnDrvcv_dkong;
 DRV		BurnDrvDonpachihk;
 DRV		BurnDrvDonpachij;
@@ -15230,6 +15231,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDkongjr,			// Donkey Kong Junior (US set F-2)
 	&BurnDrvDkongjr2,			// Donkey Kong Junior (US, bootleg?)
 	&BurnDrvcv_dkongjr,			// Donkey Kong Junior
+	&BurnDrvDkspkyrmx,			// Donkey Kong Spooky Remix (Hack)
 	&BurnDrvcv_dkong,			// Donkey Kong
 	&BurnDrvDonpachihk,			// DonPachi (Hong Kong, ver. 1.10, 95/05/17)
 	&BurnDrvDonpachij,			// DonPachi (Japan, ver. 1.01, 95/05/11)

@@ -633,7 +633,7 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 
 		case 0xa001:
 		case 0xa002:
-			flipscreen[address & 1] = data & 1;
+			flipscreen[address & 1] = 0; // data & 1; ignore flipscreen
 		return;
 
 		case 0xa003:

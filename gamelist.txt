@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12267 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12268 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2610,6 +2610,7 @@ This list contains all games supported by FinalBurn Neo.
 | dkong3b	|  	| Donkey Kong 3 (bootleg on Donkey Kong Jr. hardware)	| dkong3	| 1984	| bootleg	| Miscellaneous	| 					|
 | dkong3j	|  	| Donkey Kong 3 (Japan)					| dkong3	| 1983	| Nintendo	| Miscellaneous	| 					|
 | dkong3	|  	| Donkey Kong 3 (US)					| 		| 1983	| Nintendo of Am| Miscellaneous	| 					|
+| dkchrmx	|  	| Donkey Kong Christmas Remix (Hack)			| dkong		| 2017	| Sock Master	| Miscellaneous	| 					|
 | dkongf	|  	| Donkey Kong Foundry (hack)				| dkong		| 2004	| hack (Jeff Kul| Miscellaneous	| 					|
 | dkongx11	|  	| Donkey Kong II - Jumpman Returns (hack, V1.1)		| dkong		| 2006	| hack (Braze Te| Miscellaneous	| 					|
 | dkongx	|  	| Donkey Kong II - Jumpman Returns (hack, V1.2)		| dkong		| 2006	| hack (Braze Te| Miscellaneous	| 					|

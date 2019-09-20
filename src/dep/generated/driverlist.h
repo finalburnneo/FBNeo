@@ -2664,6 +2664,7 @@ DRV		BurnDrvDkongpe;
 DRV		BurnDrvDkong3b;
 DRV		BurnDrvDkong3j;
 DRV		BurnDrvDkong3;
+DRV		BurnDrvDkchrmx;
 DRV		BurnDrvDkongf;
 DRV		BurnDrvDkongx11;
 DRV		BurnDrvDkongx;
@@ -15214,6 +15215,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDkong3b,			// Donkey Kong 3 (bootleg on Donkey Kong Jr. hardware)
 	&BurnDrvDkong3j,			// Donkey Kong 3 (Japan)
 	&BurnDrvDkong3,				// Donkey Kong 3 (US)
+	&BurnDrvDkchrmx,			// Donkey Kong Christmas Remix (Hack)
 	&BurnDrvDkongf,				// Donkey Kong Foundry (hack)
 	&BurnDrvDkongx11,			// Donkey Kong II - Jumpman Returns (hack, V1.1)
 	&BurnDrvDkongx,				// Donkey Kong II - Jumpman Returns (hack, V1.2)

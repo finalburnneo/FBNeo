@@ -2823,6 +2823,48 @@ struct BurnDriver BurnDrvDkongx11 = {
 };
 
 
+// Donkey Kong Christmas Remix (Hack)
+
+static struct BurnRomInfo dkchrmxRomDesc[] = {
+	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x01000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x01000, 0x1c97d324, 1 }, //  2
+	{ "c_5at_g.bin",	0x01000, 0xb9005ac0, 1 }, //  3
+
+	{ "dkchrmx.bin",	0x10000, 0xe5273cee, 2 }, //  4 braze
+
+	{ "s_3i_b.bin",		0x00800, 0x45a4ed06, 3 }, //  5 soundcpu
+	{ "s_3j_b.bin",		0x00800, 0x4743fe92, 3 }, //  6
+
+	{ "v_5h_b.ch",		0x00800, 0x0b92cc7a, 4 }, //  7 gfx1
+	{ "v_3pt.ch",		0x00800, 0x6a04f93f, 4 }, //  8
+
+	{ "l_4m_b.ch",		0x00800, 0xc6ddc85f, 5 }, //  9 gfx2
+	{ "l_4n_b.ch",		0x00800, 0x2cd9cfdf, 5 }, // 10
+	{ "l_4r_b.ch",		0x00800, 0xc1ea6688, 5 }, // 11
+	{ "l_4s_b.ch",		0x00800, 0x9473d658, 5 }, // 12
+
+	{ "c-2k.ch",		0x00100, 0xc6cee97e, 6 }, // 13 proms
+	{ "c-2j.ch",		0x00100, 0x1f64ac3d, 6 }, // 14
+	{ "v-5e.ch",		0x00100, 0x5a8ca805, 6 }, // 15
+
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dkchrmx)
+STD_ROM_FN(dkchrmx)
+
+struct BurnDriver BurnDrvDkchrmx = {
+	"dkchrmx", "dkong", NULL, "dkong", "2017",
+	"Donkey Kong Christmas Remix (Hack)\0", NULL, "Sock Master", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkchrmxRomInfo, dkchrmxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
+	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Donkey Kong Spooky Remix (Hack)
 
 static struct BurnRomInfo dkspkyrmxRomDesc[] = {

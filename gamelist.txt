@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12268 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12269 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2597,6 +2597,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_donaldmw	|  	| Donald no Magical World (Jpn)				| 		| 1994	| Sega		| Sega Game Gear| 					|
 | md_dongguri	|  	| Dong Gu Ri Te Chi Jak Jeon (Kor)			| md_drrobotn	| 199?	| <unknown>	| Sega Megadrive| 					|
 | dkingjr	|  	| Donkey King Jr. (bootleg of Donkey Kong Jr.)		| dkongjr	| 1982	| bootleg	| Miscellaneous	| 					|
+| kong2600	|  	| Donkey Kong (2600 graphics, hack)			| dkong		| 1999	| Vic Twenty Geo| Miscellaneous	| 					|
 | spec_dkong	|  	| Donkey Kong (48K)					| 		| 1986	| Ocean		| ZX Spectrum	| 					|
 | cv_dkonga	|  	| Donkey Kong (Earlier Version)				| cv_dkong	| 1982	| Coleco	| ColecoVision	| 					|
 | dkongj	|  	| Donkey Kong (Japan set 1)				| dkong		| 1981	| Nintendo	| Miscellaneous	| 					|

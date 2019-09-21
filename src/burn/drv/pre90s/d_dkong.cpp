@@ -2696,6 +2696,44 @@ struct BurnDriver BurnDrvDkrainbow = {
 };
 
 
+// Donkey Kong (2600 graphics, hack)
+
+static struct BurnRomInfo kong2600RomDesc[] = {
+	{ "c_5et_g.bin",	0x1000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x1000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x1000, 0x1c97d324, 1 }, //  2
+	{ "c_5at_g.bin",	0x1000, 0xb9005ac0, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "k2600.3n",		0x0800, 0x0e6a2a6d, 3 }, //  6 gfx1
+	{ "k2600.3p",		0x0800, 0xca57e0f4, 3 }, //  7
+
+	{ "k2600.7c",		0x0800, 0xcf450a43, 4 }, //  8 gfx2
+	{ "k2600.7d",		0x0800, 0xd5046907, 4 }, //  9
+	{ "k2600.7e",		0x0800, 0x1539fe2a, 4 }, // 10
+	{ "k2600.7f",		0x0800, 0x77cc00ab, 4 }, // 11
+
+	{ "k2600.2k",		0x0100, 0x1e82d375, 5 }, // 12 proms
+	{ "k2600.2j",		0x0100, 0x2ab01dc8, 5 }, // 13
+	{ "k2600.5f",		0x0100, 0x44988665, 5 }, // 14
+};
+
+STD_ROM_PICK(kong2600)
+STD_ROM_FN(kong2600)
+
+struct BurnDriver BurnDrvKong2600 = {
+	"kong2600", "dkong", NULL, "dkong", "1999",
+	"Donkey Kong (2600 graphics, hack)\0", NULL, "Vic Twenty George", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, kong2600RomInfo, kong2600RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Donkey Kong II - Jumpman Returns (hack, V1.2)
 
 static struct BurnRomInfo dkongxRomDesc[] = {

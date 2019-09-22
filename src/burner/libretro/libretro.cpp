@@ -146,6 +146,7 @@ void retro_set_environment(retro_environment_t cb)
 
 char g_driver_name[128];
 char g_rom_dir[MAX_PATH];
+char g_rom_parent_dir[MAX_PATH];
 char g_save_dir[MAX_PATH];
 char g_system_dir[MAX_PATH];
 char g_autofs_path[MAX_PATH];
@@ -1256,9 +1257,64 @@ bool retro_load_game(const struct retro_game_info *info)
 {
 	if (!info)
 		return false;
-
+	
 	extract_basename(g_driver_name, info->path, sizeof(g_driver_name), "");
 	extract_directory(g_rom_dir, info->path, sizeof(g_rom_dir));
+	extract_basename(g_rom_parent_dir, g_rom_dir, sizeof(g_rom_parent_dir),"");
+	char * prefix="";
+	if (bLoadSubsystemByParent == true) {
+		if(strcmp(g_rom_parent_dir, "coleco")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem cv identified from parent folder\n");
+			prefix = "cv_";
+		}
+		if(strcmp(g_rom_parent_dir, "gamegear")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem gg identified from parent folder\n");
+			prefix = "gg_";
+		}
+		if(strcmp(g_rom_parent_dir, "megadriv")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem md identified from parent folder\n");
+			prefix = "md_";
+		}
+		if(strcmp(g_rom_parent_dir, "msx")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem msx identified from parent folder\n");
+			prefix = "msx_";
+		}
+		if(strcmp(g_rom_parent_dir, "pce")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem pce identified from parent folder\n");
+			prefix = "pce_";
+		}
+		if(strcmp(g_rom_parent_dir, "sg1000")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sg1k identified from parent folder\n");
+			prefix = "sg1k_";
+		}
+		if(strcmp(g_rom_parent_dir, "sgx")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sgx identified from parent folder\n");
+			prefix = "sgx_";
+		}
+		if(strcmp(g_rom_parent_dir, "sms")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sms identified from parent folder\n");
+			prefix = "sms_";
+		}
+		if(strcmp(g_rom_parent_dir, "spectrum")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem spec identified from parent folder\n");
+			prefix = "spec_";
+		}
+		if(strcmp(g_rom_parent_dir, "tg16")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem tg identified from parent folder\n");
+			prefix = "tg_";
+		}
+		if(strcmp(g_rom_parent_dir, "neocd")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem neocd identified from parent folder\n");
+			prefix = "";
+			nGameType = RETRO_GAME_TYPE_NEOCD;
+			strcpy(CDEmuImage, info->path);
+			extract_basename(g_driver_name, "neocdz", sizeof(g_driver_name), prefix);
+		} else {
+			extract_basename(g_driver_name, info->path, sizeof(g_driver_name), prefix);
+		}
+	} else {
+		extract_basename(g_driver_name, info->path, sizeof(g_driver_name), "");
+	}
 
 	return retro_load_game_common();
 }

@@ -1448,8 +1448,8 @@ struct BurnDriver BurnDrvWndrplnt = {
 static struct BurnRomInfo chelnovRomDesc[] = {
 	{ "ee08-e.j16",		0x10000, 0x8275cc3a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "ee11-e.j19",		0x10000, 0x889e40a0, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "a-j14.j14",		0x10000, 0x51465486, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "a-j18.j18",		0x10000, 0xd09dda33, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ee07.j14",		0x10000, 0x51465486, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ee10.j18",		0x10000, 0xd09dda33, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "ee06-e.j13",		0x10000, 0x55acafdb, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "ee09-e.j17",		0x10000, 0x303e252c, 1 | BRF_PRG | BRF_ESS }, //  5
 
@@ -1467,10 +1467,9 @@ static struct BurnRomInfo chelnovRomDesc[] = {
 	{ "ee14-.f13",		0x10000, 0xd8f4bbde, 5 | BRF_GRA},            // 14
 	{ "ee15-.f15",		0x10000, 0x81e3e68b, 5 | BRF_GRA},            // 15
 
-	{ "ee21.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA},            // 16 Color Proms
-	{ "ee20.l6",		0x00400, 0x41816132, 6 | BRF_GRA},            // 17
+	{ "ee-17.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA},            // 16 Color Proms
+	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA},            // 17
 	
-	/* exact label not verified */
 	{ "ee-e.k13",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
 };
 
@@ -1521,8 +1520,8 @@ static struct BurnRomInfo chelnovuRomDesc[] = {
 	{ "ee14-.f13",		0x10000, 0xd8f4bbde, 5 | BRF_GRA},            // 14
 	{ "ee15-.f15",		0x10000, 0x81e3e68b, 5 | BRF_GRA},            // 15
 
-	{ "ee21.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA},            // 16 Color Proms
-	{ "ee20.l6",		0x00400, 0x41816132, 6 | BRF_GRA},            // 17
+	{ "ee-17.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA},            // 16 Color Proms
+	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA},            // 17
 	
 	{ "ee-a.k13",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
 };
@@ -1553,16 +1552,16 @@ struct BurnDriver BurnDrvChelnovu = {
 /* DE-0248-1 main board + unknown video board */
 
 static struct BurnRomInfo chelnovjRomDesc[] = {
-	{ "a-j15.j15",		0x10000, 0x1978cb52, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "a-j20.j20",		0x10000, 0xe0ed3d99, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "a-j14.j14",		0x10000, 0x51465486, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "a-j18.j18",		0x10000, 0xd09dda33, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "a-j13.j13",		0x10000, 0xcd991507, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "a-j17.j17",		0x10000, 0x977f601c, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ee08.j15",		0x10000, 0x1978cb52, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ee11.j20",		0x10000, 0xe0ed3d99, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ee07.j14",		0x10000, 0x51465486, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ee10.j18",		0x10000, 0xd09dda33, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ee06.j13",		0x10000, 0xcd991507, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ee09.j17",		0x10000, 0x977f601c, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ee05-.f3",		0x08000, 0x6a8936b4, 2 | BRF_PRG | BRF_ESS }, //  6 m6502 Code
+	{ "ee05.f3",		0x08000, 0x6a8936b4, 2 | BRF_PRG | BRF_ESS }, //  6 m6502 Code
 
-	{ "a-c5.c5",		0x08000, 0x1abf2c6d, 3 | BRF_GRA},            //  7 Characters
+	{ "ee00.c5",		0x08000, 0x1abf2c6d, 3 | BRF_GRA},            //  7 Characters
 
 	{ "ee04-.d18",		0x10000, 0x96884f95, 4 | BRF_GRA},            //  8 Tiles
 	{ "ee01-.c15",		0x10000, 0xf4b54057, 4 | BRF_GRA},            //  9
@@ -1574,11 +1573,10 @@ static struct BurnRomInfo chelnovjRomDesc[] = {
 	{ "ee14-.f13",		0x10000, 0xd8f4bbde, 5 | BRF_GRA},            // 14
 	{ "ee15-.f15",		0x10000, 0x81e3e68b, 5 | BRF_GRA},            // 15
 
-	{ "a-k7.k8",		0x00400, 0x309c49d8, 6 | BRF_GRA},            // 16 Color Proms
-	{ "ee20.l6",		0x00400, 0x41816132, 6 | BRF_GRA},            // 17
+	{ "ee-17.k8",		0x00400, 0x309c49d8, 6 | BRF_GRA},            // 16 Color Proms
+	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA},            // 17
 	
-	/* exact label not verified */
-	{ "ee-j.k13",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
+	{ "ee.k13",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
 };
 
 STD_ROM_PICK(chelnovj)

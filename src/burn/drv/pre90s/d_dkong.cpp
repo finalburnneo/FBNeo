@@ -2792,7 +2792,7 @@ static INT32 dkongxRomLoad()
 
 static INT32 dkongxInit()
 {
-	INT32 ret = DrvInit(dkongxRomLoad, dkongPaletteInit, 0);
+	INT32 ret = DrvInit(dkongxRomLoad, dkongnewPaletteInit, 0);
 
 	if (ret == 0)
 	{

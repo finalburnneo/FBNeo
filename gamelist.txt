@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12269 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12270 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2625,6 +2625,7 @@ This list contains all games supported by FinalBurn Neo.
 | dkongjr	|  	| Donkey Kong Junior (US set F-2)			| 		| 1982	| Nintendo of Am| Miscellaneous	| 					|
 | dkongjr2	|  	| Donkey Kong Junior (US, bootleg?)			| dkongjr	| 1982	| Nintendo	| Miscellaneous	| 					|
 | cv_dkongjr	|  	| Donkey Kong Junior					| 		| 1983	| Coleco	| ColecoVision	| 					|
+| dkongrev	|  	| Donkey Kong Reverse (Hack)				| dkong		| 2019	| Hack (Paul Goe| Miscellaneous	| 					|
 | dkspkyrmx	|  	| Donkey Kong Spooky Remix (Hack)			| dkong		| 2018	| Sock Master	| Miscellaneous	| 					|
 | cv_dkong	|  	| Donkey Kong						| 		| 1982	| Coleco	| ColecoVision	| 					|
 | donpachihk	|  	| DonPachi (Hong Kong, ver. 1.10, 95/05/17)		| donpachi	| 1995	| Atlus / Cave	| Cave		| 					|

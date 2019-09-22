@@ -2734,6 +2734,46 @@ struct BurnDriver BurnDrvKong2600 = {
 };
 
 
+// Donkey Kong Reverse
+// Hack by Paul Goes (2019)
+
+static struct BurnRomInfo dkongrevRomDesc[] = {
+	{ "dkongrev.5et",	0x1000, 0xee02057e, 1 }, //  0 maincpu
+	{ "dkongrev.5ct",	0x1000, 0xe6fabd0f, 1 }, //  1
+	{ "dkongrev.5bt",	0x1000, 0x31c5bea3, 1 }, //  2
+	{ "dkongrev.5at",	0x1000, 0xc7d04ef3, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 }, //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 }, //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+
+};
+
+STD_ROM_PICK(dkongrev)
+STD_ROM_FN(dkongrev)
+
+struct BurnDriver BurnDrvDkongrev = {
+	"dkongrev", "dkong", NULL, "dkong", "2019",
+	"Donkey Kong Reverse (Hack)\0", NULL, "Hack (Paul Goes)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongrevRomInfo, dkongrevRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Donkey Kong II - Jumpman Returns (hack, V1.2)
 
 static struct BurnRomInfo dkongxRomDesc[] = {

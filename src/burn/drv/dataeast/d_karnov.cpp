@@ -1252,8 +1252,8 @@ static struct BurnRomInfo karnovRomDesc[] = {
 	{ "dn18-",			0x10000, 0x2ad53213, 5 | BRF_GRA},            // 18
 	{ "dn19-5",			0x08000, 0x8fd4fa40, 5 | BRF_GRA},            // 19
 
-	{ "karnprom.21",	0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Color Proms
-	{ "karnprom.20",	0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
+	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Color Proms
+	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
 	
 	{ "karnov_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
 };
@@ -1309,8 +1309,8 @@ static struct BurnRomInfo karnovaRomDesc[] = {
 	{ "dn18-",			0x10000, 0x2ad53213, 5 | BRF_GRA},            // 18
 	{ "dn19-5",			0x08000, 0x8fd4fa40, 5 | BRF_GRA},            // 19
 
-	{ "karnprom_21.k8",	0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Color Proms
-	{ "karnprom_20.l6",	0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
+	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Color Proms
+	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
 	
 	{ "karnov_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
 };
@@ -1358,8 +1358,8 @@ static struct BurnRomInfo karnovjRomDesc[] = {
 	{ "dn18-",			0x10000, 0x2ad53213, 5 | BRF_GRA},            // 18
 	{ "kar19",			0x08000, 0x7bc174bb, 5 | BRF_GRA},            // 19
 
-	{ "karnprom_21.k8",	0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Proms
-	{ "karnprom_20.l6",	0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
+	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Proms
+	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
 	
 	{ "karnovj_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
 };
@@ -1389,35 +1389,35 @@ struct BurnDriver BurnDrvKarnovj = {
 // Wonder Planet (Japan)
 
 static struct BurnRomInfo wndrplntRomDesc[] = {
-	{ "ea08.bin",		0x10000, 0xb0578a14, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ea11.bin",		0x10000, 0x271edc6c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ea07.bin",		0x10000, 0x7095a7d5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ea10.bin",		0x10000, 0x81a96475, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "ea06.bin",		0x10000, 0x5951add3, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "ea09.bin",		0x10000, 0xc4b3cb1e, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ea08.j16",		0x10000, 0xb0578a14, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ea11.j19",		0x10000, 0x271edc6c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ea07.j14",		0x10000, 0x7095a7d5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ea10.j18",		0x10000, 0x81a96475, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ea06.j13",		0x10000, 0x5951add3, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ea09.j17",		0x10000, 0xc4b3cb1e, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ea05.bin",		0x08000, 0x8dbb6231, 2 | BRF_PRG | BRF_ESS }, //  6 m6502 Code
+	{ "ea05.f3",		0x08000, 0x8dbb6231, 2 | BRF_PRG | BRF_ESS }, //  6 m6502 Code
 
-	{ "ea00.bin",		0x08000, 0x9f3cac4c, 3 | BRF_GRA},            //  7 Characters
+	{ "ea00.c5",		0x08000, 0x9f3cac4c, 3 | BRF_GRA},            //  7 Characters
 
-	{ "ea04.bin",		0x10000, 0x7d701344, 4 | BRF_GRA},            //  8 Tiles
-	{ "ea01.bin",		0x10000, 0x18df55fb, 4 | BRF_GRA},            //  9
-	{ "ea03.bin",		0x10000, 0x922ef050, 4 | BRF_GRA},            // 10
-	{ "ea02.bin",		0x10000, 0x700fde70, 4 | BRF_GRA},            // 11
+	{ "ea04.d18",		0x10000, 0x7d701344, 4 | BRF_GRA},            //  8 Tiles
+	{ "ea01.c18",		0x10000, 0x18df55fb, 4 | BRF_GRA},            //  9
+	{ "ea03.d15",		0x10000, 0x922ef050, 4 | BRF_GRA},            // 10
+	{ "ea02.c18",		0x10000, 0x700fde70, 4 | BRF_GRA},            // 11
 
-	{ "ea12.bin",		0x10000, 0xa6d4e99d, 5 | BRF_GRA},            // 12 Sprites
-	{ "ea14.bin",		0x10000, 0x915ffdc9, 5 | BRF_GRA},            // 13
-	{ "ea13.bin",		0x10000, 0xcd839f3a, 5 | BRF_GRA},            // 14
-	{ "ea15.bin",		0x10000, 0xa1f14f16, 5 | BRF_GRA},            // 15
+	{ "ea12.f8",		0x10000, 0xa6d4e99d, 5 | BRF_GRA},            // 12 Sprites
+	{ "ea14.f9",		0x10000, 0x915ffdc9, 5 | BRF_GRA},            // 13
+	{ "ea13.f13",		0x10000, 0xcd839f3a, 5 | BRF_GRA},            // 14
+	{ "ea15.f15",		0x10000, 0xa1f14f16, 5 | BRF_GRA},            // 15
 	{ "ea16.bin",		0x10000, 0x7a1d8a9c, 5 | BRF_GRA},            // 16
 	{ "ea17.bin",		0x10000, 0x21a3223d, 5 | BRF_GRA},            // 17
 	{ "ea18.bin",		0x10000, 0x3fb2cec7, 5 | BRF_GRA},            // 18
 	{ "ea19.bin",		0x10000, 0x87cf03b5, 5 | BRF_GRA},            // 19
 
-	{ "ea21.prm",		0x00400, 0xc8beab49, 6 | BRF_GRA},            // 20 Color Proms
-	{ "ea20.prm",		0x00400, 0x619f9d1e, 6 | BRF_GRA},            // 21
+	{ "ea-21.k8",		0x00400, 0xc8beab49, 6 | BRF_GRA},            // 20 Color Proms
+	{ "ea-20.l6",		0x00400, 0x619f9d1e, 6 | BRF_GRA},            // 21
 	
-	{ "wndrplnt_i8751",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
+	{ "wndrplnt_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
 };
 
 STD_ROM_PICK(wndrplnt)

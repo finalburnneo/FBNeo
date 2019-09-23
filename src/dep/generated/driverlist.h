@@ -1011,6 +1011,7 @@ DRV		BurnDrvbionicc2;
 DRV		BurnDrvbioniccbl;
 DRV		BurnDrvbioniccbl2;
 DRV		BurnDrvBioplayc;
+DRV		BurnDrvBirdtrya;
 DRV		BurnDrvBirdtry;
 DRV		BurnDrvbirdiy;
 DRV		BurnDrvBishi;
@@ -13564,7 +13565,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvbioniccbl,			// Bionic Commandos (bootleg, set 1)
 	&BurnDrvbioniccbl2,			// Bionic Commandos (bootleg, set 2)
 	&BurnDrvBioplayc,			// Bioplaything Cop (Ver. 1.0.1823, prototype)
-	&BurnDrvBirdtry,			// Birdie Try (Japan revision 2)
+	&BurnDrvBirdtrya,			// Birdie Try (Japan revision 2)
+	&BurnDrvBirdtry,			// Birdie Try (Japan revision 2, revision 1 MCU)
 	&BurnDrvbirdiy,				// Birdiy
 	&BurnDrvBishi,				// Bishi Bashi Championship Mini Game Senshuken (ver JAA, 3 Players)
 	&BurnDrvmd_sailormne,		// Bishoujo Senshi Sailor Moon (Hack, English)

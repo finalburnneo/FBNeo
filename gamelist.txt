@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12270 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12271 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -995,7 +995,8 @@ This list contains all games supported by FinalBurn Neo.
 | bioniccbl	|  	| Bionic Commandos (bootleg, set 1)			| bionicc	| 1987	| bootleg	| Miscellaneous	| 					|
 | bioniccbl2	|  	| Bionic Commandos (bootleg, set 2)			| bionicc	| 1987	| bootleg	| Miscellaneous	| 					|
 | bioplayc	|  	| Bioplaything Cop (Ver. 1.0.1823, prototype)		| biomtoy	| 1995	| Gaelco	| Miscellaneous	| 					|
-| birdtry	|  	| Birdie Try (Japan revision 2)				| 		| 1988	| Data East Corp| DEC0		| 					|
+| birdtrya	|  	| Birdie Try (Japan revision 2)				| birdtry	| 1988	| Data East Corp| DEC0		| 					|
+| birdtry	|  	| Birdie Try (Japan revision 2, revision 1 MCU)		| 		| 1988	| Data East Corp| DEC0		| 					|
 | birdiy	|  	| Birdiy						| 		| 1982	| Mama Top	| Pac-man	| 					|
 | bishi		|  	| Bishi Bashi Championship Mini Game Senshuken (ver JAA,| 		| 1996	| Konami	| Miscellaneous	| Imperfect gfx (one gfx rom bad, bad pr|
 | md_sailormne	|  	| Bishoujo Senshi Sailor Moon (Hack, English)		| md_sailormn	| 2018	| Ma-Ba		| Sega Megadrive| 					|

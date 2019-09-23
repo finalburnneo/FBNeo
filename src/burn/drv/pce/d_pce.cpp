@@ -91,7 +91,7 @@ static struct BurnDIPInfo pceDIPList[] = {
 	{0x3d, 0x01, 0x0c, 0x08, "6-buttons"			},
 
 	{0   , 0xfe, 0   ,    2, "Joystick Type Player 3"	},
-	{0xdd, 0x01, 0x30, 0x00, "2-buttons"			},
+	{0x3d, 0x01, 0x30, 0x00, "2-buttons"			},
 	{0x3d, 0x01, 0x30, 0x20, "6-buttons"			},
 
 	{0   , 0xfe, 0   ,    2, "Joystick Type Player 4"	},
@@ -3009,7 +3009,7 @@ struct BurnDriver BurnDrvpce_ldrun = {
 };
 
 
-// Märchen Maze
+// MÃ¤rchen Maze
 
 static struct BurnRomInfo pce_marchenRomDesc[] = {
 	{ "maerchen maze (japan).pce", 0x040000, 0xa15a1f37, BRF_PRG | BRF_ESS },

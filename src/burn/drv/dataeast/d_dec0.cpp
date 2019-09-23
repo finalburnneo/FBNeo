@@ -886,10 +886,56 @@ STD_ROM_PICK(Baddudes)
 STD_ROM_FN(Baddudes)
 
 
-// Birdie Try (Japan revision 2)
+// Birdie Try (Japan revision 2, revision 1 MCU)
 /* DE-0311-0 main board, DE-0299-2 sub/rom board */
 
 static struct BurnRomInfo birdtryRomDesc[] = {
+	{ "ek-04-2.3c",		0x10000, 0x5f0f4686, 1 }, //  0 maincpu
+	{ "ek-01-2.3a",		0x10000, 0x47f470db, 1 }, //  1
+	{ "ek-05-1.4c",		0x10000, 0xb508cffd, 1 }, //  2
+	{ "ek-02-1.4a",		0x10000, 0x0195d989, 1 }, //  3
+	{ "ek-06-1.6c",		0x10000, 0x301d57d8, 1 }, //  4
+	{ "ek-03-1.6a",		0x10000, 0x73b0acc5, 1 }, //  5
+
+	{ "ek-07.8a",		0x08000, 0x236549bc, 2 }, //  6 audiocpu
+
+	{ "ek-31-1.9a",		0x01000, 0x3bf41abb, 3 }, //  7 mcu
+
+	{ "ek-25.15h",		0x08000, 0x4df134ad, 4 }, //  8 gfx1
+	{ "ek-26.16h",		0x08000, 0xa00d3e8e, 4 }, //  9
+
+	{ "ek-18.14d",		0x10000, 0x9886fb70, 5 }, // 10 gfx2
+	{ "ek-17.12d",		0x10000, 0xbed91bf7, 5 }, // 11
+	{ "ek-20.17d",		0x10000, 0x45d53965, 5 }, // 12
+	{ "ek-19.15d",		0x10000, 0xc2949dd2, 5 }, // 13
+	{ "ek-22.14f",		0x10000, 0x7f2cc80a, 5 }, // 14
+	{ "ek-21.12f",		0x10000, 0x281bc793, 5 }, // 15
+	{ "ek-24.17f",		0x10000, 0x2244cc75, 5 }, // 16
+	{ "ek-23.15f",		0x10000, 0xd0ed0116, 5 }, // 17
+
+	{ "ek-15.16c",		0x10000, 0xa6a041a3, 6 }, // 18 gfx4
+	{ "ek-16.17c",		0x08000, 0x784f62b0, 6 }, // 19
+	{ "ek-11.16a",		0x10000, 0x9224a6b9, 6 }, // 20
+	{ "ek-12.17a",		0x08000, 0x12deecfa, 6 }, // 21
+	{ "ek-13.13c",		0x10000, 0x1f023459, 6 }, // 22
+	{ "ek-14.14c",		0x08000, 0x57d54943, 6 }, // 23
+	{ "ek-09.13a",		0x10000, 0x6d2d488a, 6 }, // 24
+	{ "ek-10.14a",		0x08000, 0x580ba206, 6 }, // 25
+
+	{ "ek-08.2c",		0x10000, 0xbe3db6cb, 7 }, // 26 oki
+	
+	{ "mb7116e.12c",	0x00200, 0x86e775f8, 0 }, // 27 PROMs
+	{ "mb7122e.17e",	0x00400, 0xa5cda23e, 0 }, // 28
+};
+
+STD_ROM_PICK(birdtry)
+STD_ROM_FN(birdtry)
+
+
+// Birdie Try (Japan revision 2)
+/* DE-0311-0 main board, DE-0299-2 sub/rom board */
+
+static struct BurnRomInfo birdtryaRomDesc[] = {
 	{ "ek-04-2.3c",		0x10000, 0x5f0f4686, 1 }, //  0 maincpu
 	{ "ek-01-2.3a",		0x10000, 0x47f470db, 1 }, //  1
 	{ "ek-05-1.4c",		0x10000, 0xb508cffd, 1 }, //  2
@@ -928,8 +974,8 @@ static struct BurnRomInfo birdtryRomDesc[] = {
 	{ "mb7122e.17e",	0x00400, 0xa5cda23e, 0 }, // 28
 };
 
-STD_ROM_PICK(birdtry)
-STD_ROM_FN(birdtry)
+STD_ROM_PICK(birdtrya)
+STD_ROM_FN(birdtrya)
 
 
 // Boulder Dash / Boulder Dash Part 2 (World)
@@ -5768,10 +5814,20 @@ struct BurnDriver BurnDrvBaddudes = {
 
 struct BurnDriver BurnDrvBirdtry = {
 	"birdtry", NULL, NULL, NULL, "1988",
-	"Birdie Try (Japan revision 2)\0", NULL, "Data East Corporation", "DEC0",
+	"Birdie Try (Japan revision 2, revision 1 MCU)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, NULL, NULL, BirdtryInputInfo, BirdtryDIPInfo,
+	BirdtryInit, BaddudesExit, DrvFrame, BirdtryDraw, BaddudesScan,
+	NULL, 0x400, 240, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvBirdtrya = {
+	"birdtrya", "birdtry", NULL, NULL, "1988",
+	"Birdie Try (Japan revision 2)\0", NULL, "Data East Corporation", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	NULL, birdtryaRomInfo, birdtryaRomName, NULL, NULL, NULL, NULL, BirdtryInputInfo, BirdtryDIPInfo,
 	BirdtryInit, BaddudesExit, DrvFrame, BirdtryDraw, BaddudesScan,
 	NULL, 0x400, 240, 256, 3, 4
 };

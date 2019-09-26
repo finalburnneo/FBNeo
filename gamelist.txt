@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12271 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12277 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2604,6 +2604,8 @@ This list contains all games supported by FinalBurn Neo.
 | dkongj	|  	| Donkey Kong (Japan set 1)				| dkong		| 1981	| Nintendo	| Miscellaneous	| 					|
 | dkongjo	|  	| Donkey Kong (Japan set 2)				| dkong		| 1981	| Nintendo	| Miscellaneous	| 					|
 | dkongjo1	|  	| Donkey Kong (Japan set 3)				| dkong		| 1981	| Nintendo	| Miscellaneous	| 					|
+| dkongpac	|  	| Donkey Kong (Pacman Graphics)				| dkong		| 2001	| Hack (Tim Appl| Miscellaneous	| 					|
+| dkongp	|  	| Donkey Kong (Patched)					| dkong		| 2007	| Hack (Don Hodg| Miscellaneous	| 					|
 | dkonghrd	|  	| Donkey Kong (US set 1) with Hard kit			| dkong		| 1981	| Nintendo	| Miscellaneous	| 					|
 | dkong		|  	| Donkey Kong (US set 1)				| 		| 1981	| Nintendo of Am| Miscellaneous	| 					|
 | dkongo	|  	| Donkey Kong (US set 2)				| dkong		| 1981	| Nintendo	| Miscellaneous	| 					|
@@ -2613,6 +2615,7 @@ This list contains all games supported by FinalBurn Neo.
 | dkong3j	|  	| Donkey Kong 3 (Japan)					| dkong3	| 1983	| Nintendo	| Miscellaneous	| 					|
 | dkong3	|  	| Donkey Kong 3 (US)					| 		| 1983	| Nintendo of Am| Miscellaneous	| 					|
 | dkchrmx	|  	| Donkey Kong Christmas Remix (Hack)			| dkong		| 2017	| Sock Master	| Miscellaneous	| 					|
+| dkcbarrel	|  	| Donkey Kong Crazy Barrels Edition			| dkong		| 2019	| Hack (Paul Goe| Miscellaneous	| 					|
 | dkongf	|  	| Donkey Kong Foundry (hack)				| dkong		| 2004	| hack (Jeff Kul| Miscellaneous	| 					|
 | dkongx11	|  	| Donkey Kong II - Jumpman Returns (hack, V1.1)		| dkong		| 2006	| hack (Braze Te| Miscellaneous	| 					|
 | dkongx	|  	| Donkey Kong II - Jumpman Returns (hack, V1.2)		| dkong		| 2006	| hack (Braze Te| Miscellaneous	| 					|
@@ -2626,8 +2629,11 @@ This list contains all games supported by FinalBurn Neo.
 | dkongjr	|  	| Donkey Kong Junior (US set F-2)			| 		| 1982	| Nintendo of Am| Miscellaneous	| 					|
 | dkongjr2	|  	| Donkey Kong Junior (US, bootleg?)			| dkongjr	| 1982	| Nintendo	| Miscellaneous	| 					|
 | cv_dkongjr	|  	| Donkey Kong Junior					| 		| 1983	| Coleco	| ColecoVision	| 					|
+| dkpace	|  	| Donkey Kong Pace					| dkong		| 2016	| Hack (Sock Mas| Miscellaneous	| 					|
+| dkrdemo	|  	| Donkey Kong Remix (Demo)				| dkong		| 2015	| Hack (Sockmast| Miscellaneous	| 					|
 | dkongrev	|  	| Donkey Kong Reverse (Hack)				| dkong		| 2019	| Hack (Paul Goe| Miscellaneous	| 					|
 | dkspkyrmx	|  	| Donkey Kong Spooky Remix (Hack)			| dkong		| 2018	| Sock Master	| Miscellaneous	| 					|
+| dktrainer	|  	| Donkey Kong Trainer 1.01				| dkong		| 2016	| Hack (Sock Mas| Miscellaneous	| 					|
 | cv_dkong	|  	| Donkey Kong						| 		| 1982	| Coleco	| ColecoVision	| 					|
 | donpachihk	|  	| DonPachi (Hong Kong, ver. 1.10, 95/05/17)		| donpachi	| 1995	| Atlus / Cave	| Cave		| 					|
 | donpachij	|  	| DonPachi (Japan, ver. 1.01, 95/05/11)			| donpachi	| 1995	| Atlus / Cave	| Cave		| 					|

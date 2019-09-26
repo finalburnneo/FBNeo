@@ -2658,6 +2658,8 @@ DRV		BurnDrvcv_dkonga;
 DRV		BurnDrvDkongj;
 DRV		BurnDrvDkongjo;
 DRV		BurnDrvDkongjo1;
+DRV		BurnDrvDkongpac;
+DRV		BurnDrvDkongp;
 DRV		BurnDrvDkonghrd;
 DRV		BurnDrvDkong;
 DRV		BurnDrvDkongo;
@@ -2667,6 +2669,7 @@ DRV		BurnDrvDkong3b;
 DRV		BurnDrvDkong3j;
 DRV		BurnDrvDkong3;
 DRV		BurnDrvDkchrmx;
+DRV		BurnDrvDkcbarrel;
 DRV		BurnDrvDkongf;
 DRV		BurnDrvDkongx11;
 DRV		BurnDrvDkongx;
@@ -2684,8 +2687,11 @@ DRV		BurnDrvDkongjrpb;		// no comment [NOT WORKING]
 DRV		BurnDrvDkongjr;
 DRV		BurnDrvDkongjr2;
 DRV		BurnDrvcv_dkongjr;
+DRV		BurnDrvDkpace;
+DRV		BurnDrvDkrdemo;
 DRV		BurnDrvDkongrev;
 DRV		BurnDrvDkspkyrmx;
+DRV		BurnDrvDktrainer;
 DRV		BurnDrvcv_dkong;
 DRV		BurnDrvDonpachihk;
 DRV		BurnDrvDonpachij;
@@ -15212,6 +15218,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDkongj,				// Donkey Kong (Japan set 1)
 	&BurnDrvDkongjo,			// Donkey Kong (Japan set 2)
 	&BurnDrvDkongjo1,			// Donkey Kong (Japan set 3)
+	&BurnDrvDkongpac,			// Donkey Kong (Pacman Graphics)
+	&BurnDrvDkongp,				// Donkey Kong (Patched)
 	&BurnDrvDkonghrd,			// Donkey Kong (US set 1) with Hard kit
 	&BurnDrvDkong,				// Donkey Kong (US set 1)
 	&BurnDrvDkongo,				// Donkey Kong (US set 2)
@@ -15221,6 +15229,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDkong3j,			// Donkey Kong 3 (Japan)
 	&BurnDrvDkong3,				// Donkey Kong 3 (US)
 	&BurnDrvDkchrmx,			// Donkey Kong Christmas Remix (Hack)
+	&BurnDrvDkcbarrel,			// Donkey Kong Crazy Barrels Edition
 	&BurnDrvDkongf,				// Donkey Kong Foundry (hack)
 	&BurnDrvDkongx11,			// Donkey Kong II - Jumpman Returns (hack, V1.1)
 	&BurnDrvDkongx,				// Donkey Kong II - Jumpman Returns (hack, V1.2)
@@ -15238,8 +15247,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDkongjr,			// Donkey Kong Junior (US set F-2)
 	&BurnDrvDkongjr2,			// Donkey Kong Junior (US, bootleg?)
 	&BurnDrvcv_dkongjr,			// Donkey Kong Junior
+	&BurnDrvDkpace,				// Donkey Kong Pace
+	&BurnDrvDkrdemo,			// Donkey Kong Remix (Demo)
 	&BurnDrvDkongrev,			// Donkey Kong Reverse (Hack)
 	&BurnDrvDkspkyrmx,			// Donkey Kong Spooky Remix (Hack)
+	&BurnDrvDktrainer,			// Donkey Kong Trainer 1.01
 	&BurnDrvcv_dkong,			// Donkey Kong
 	&BurnDrvDonpachihk,			// DonPachi (Hong Kong, ver. 1.10, 95/05/17)
 	&BurnDrvDonpachij,			// DonPachi (Japan, ver. 1.01, 95/05/11)

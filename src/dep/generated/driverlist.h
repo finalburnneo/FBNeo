@@ -7066,6 +7066,7 @@ DRV		BurnDrvOsman;
 DRV		BurnDrvmd_osomatsu;
 DRV		BurnDrvsg1k_othello;
 DRV		BurnDrvMSX_othello;
+DRV		BurnDrvottopz;
 DRV		BurnDrvpce_outlive;
 DRV		BurnDrvmd_ootwp;
 DRV		BurnDrvmd_ootw;
@@ -19626,6 +19627,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_osomatsu,		// Osomatsu-kun Hachamecha Gekijou (Jpn)
 	&BurnDrvsg1k_othello,		// Othello (Jpn)
 	&BurnDrvMSX_othello,		// Othello (Jpn, Pony Canyon)
+	&BurnDrvottopz,				// Otto Project PZ (hack)
 	&BurnDrvpce_outlive,		// Out Live
 	&BurnDrvmd_ootwp,			// Out of this World (Prototype)
 	&BurnDrvmd_ootw,			// Out of This World (USA)

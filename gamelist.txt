@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12277 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12278 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6910,6 +6910,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_osomatsu	|  	| Osomatsu-kun Hachamecha Gekijou (Jpn)			| 		| 1988	| Sega		| Sega Megadrive| 					|
 | sg1k_othello	|  	| Othello (Jpn)						| 		| 1985	| Sega		| Sega SG-1000	| 					|
 | msx_othello	|  	| Othello (Jpn, Pony Canyon)				| 		| 1985	| Pony Canyon	| MSX		| 					|
+| ottopz	|  	| Otto Project PZ (hack)				| mspacman	| 2014	| Scott Lawrence| Pac-man	| 					|
 | pce_outlive	|  	| Out Live						| 		| 1989	| Sunsoft	| PC Engine	| 					|
 | md_ootwp	|  	| Out of this World (Prototype)				| md_anotherw	| 1993	| Virgin Games	| Sega Megadrive| 					|
 | md_ootw	|  	| Out of This World (USA)				| md_anotherw	| 1993	| Virgin Games	| Sega Megadrive| 					|

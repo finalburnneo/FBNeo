@@ -60,6 +60,7 @@ void M6502Open(INT32 num);
 void M6502Close();
 INT32 M6502GetActive();
 INT32 M6502Idle(INT32 nCycles);
+INT32 M6502Stall(INT32 nCycles);
 void M6502ReleaseSlice();
 void M6502SetIRQLine(INT32 vector, INT32 status);
 INT32 M6502Run(INT32 cycles);

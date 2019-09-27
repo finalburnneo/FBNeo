@@ -10,6 +10,7 @@ static INT32 nActiveCPU = 0;
 static M6502Ext *m6502CPUContext[MAX_CPU] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 static M6502Ext *pCurrentCPU;
 static INT32 nM6502CyclesDone[MAX_CPU];
+static INT32 nM6502CyclesStall[MAX_CPU];
 INT32 nM6502CyclesTotal;
 
 static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
@@ -84,6 +85,8 @@ void M6502Reset()
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502Reset called with no CPU open\n"));
 #endif
 
+	memset(&nM6502CyclesStall, 0, sizeof(nM6502CyclesStall));
+
 	pCurrentCPU->reset();
 }
 
@@ -106,6 +109,17 @@ INT32 M6502Idle(INT32 nCycles)
 #endif
 
 	nM6502CyclesTotal += nCycles;
+
+	return nCycles;
+}
+
+INT32 M6502Stall(INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Stall called without init\n"));
+#endif
+
+	nM6502CyclesStall[nActiveCPU] += nCycles;
 
 	return nCycles;
 }
@@ -215,6 +229,7 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 	pCurrentCPU->ReadOpArg = M6502ReadOpArgDummyHandler;
 	
 	nM6502CyclesDone[cpu] = 0;
+	nM6502CyclesStall[cpu] = 0;
 
 	pCurrentCPU->AddressMask = (1 << 16) - 1; // cpu range
 	
@@ -367,11 +382,21 @@ INT32 M6502Run(INT32 cycles)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502Run called with no CPU open\n"));
 #endif
 
-	cycles = pCurrentCPU->execute(cycles);
-	
+	INT32 nDelayed = 0;  // handle delayed cycle counts (from M6502Stall())
+
+	while (nM6502CyclesStall[nActiveCPU] && cycles) {
+		nM6502CyclesStall[nActiveCPU]--;
+		cycles--;
+		nDelayed++;
+		nM6502CyclesTotal++;
+	}
+
+	if (cycles)
+		cycles = pCurrentCPU->execute(cycles);
+
 	nM6502CyclesTotal += cycles;
-	
-	return cycles;
+
+	return cycles + nDelayed;
 }
 
 INT32 M6502MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)

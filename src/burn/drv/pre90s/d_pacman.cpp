@@ -4394,6 +4394,40 @@ struct BurnDriver BurnDrvmspacpls = {
 };
 
 
+// Otto Project PZ (hack)
+
+static struct BurnRomInfo ottopzRomDesc[] = {
+	{ "ottopz.1",     0x1000, 0x35b94585, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "ottopz.2",     0x1000, 0x298dbd3d, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "ottopz.3",     0x1000, 0x6f0c25bd, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "ottopz.4",     0x1000, 0x3af7ef8c, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "ottopz.5",     0x1000, 0x098c2a09, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "ottopz.6",     0x1000, 0x367e5c05, 1 | BRF_ESS | BRF_PRG },	//  5
+
+	{ "ottopz.5e",    0x1000, 0x046d76fb, 2 | BRF_GRA },			//  6 Graphics
+	{ "ottopz.5f",    0x1000, 0x402e194d, 2 | BRF_GRA },			//  7
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
+};
+
+STD_ROM_PICK(ottopz)
+STD_ROM_FN(ottopz)
+
+struct BurnDriver BurnDrvottopz = {
+	"ottopz", "mspacman", NULL, NULL, "2014",
+	"Otto Project PZ (hack)\0", NULL, "Scott Lawrence", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, ottopzRomInfo, ottopzRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspacmanbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Ms. Pac-Man ('Made in Greece' bootleg, set 1)
 
 static struct BurnRomInfo mspacmanbgRomDesc[] = {

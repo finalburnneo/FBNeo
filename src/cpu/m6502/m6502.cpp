@@ -251,6 +251,7 @@ int m6502_dec_icount(int todec)
 
 static int segmentcycles = 0;
 static int end_run = 0;
+static int in_run = 0;
 
 int m6502_get_segmentcycles()
 {
@@ -263,6 +264,7 @@ int m6502_execute(int cycles)
 	m6502_ICount = cycles;
 
 	end_run = 0;
+	in_run = 1;
 
 	change_pc(PCD);
 
@@ -315,6 +317,7 @@ int m6502_execute(int cycles)
 	cycles = cycles - m6502_ICount;
 
 	segmentcycles = m6502_ICount = 0;
+	in_run = 0;
 
 	return cycles;
 }
@@ -325,6 +328,7 @@ int decocpu7_execute(int cycles)
 	m6502_ICount = cycles;
 
 	end_run = 0;
+	in_run = 1;
 
 	change_pc(PCD);
 
@@ -384,6 +388,7 @@ int decocpu7_execute(int cycles)
 	cycles = cycles - m6502_ICount;
 
 	segmentcycles = m6502_ICount = 0;
+	in_run = 0;
 
 	return cycles;
 }
@@ -407,6 +412,7 @@ void m6502_set_irq_line(int irqline, int state)
 			PCH = RDMEM(EAD+1);
 //			LOG(("M6502#%d takes NMI ($%04x)\n", cpu_getactivecpu(), PCD));
 			change_pc(PCD);
+			if (in_run == 0) m6502_ICount = 0; // otherwise get_segmentcycles() returns -7 here, messing up totalcycles...
 		}
 	}
 	else

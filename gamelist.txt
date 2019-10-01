@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12278 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12279 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -80,8 +80,8 @@ This list contains all games supported by FinalBurn Neo.
 | 19xxa		|  	| 19XX - the war against destiny (960104 Asia)		| 19xx		| 1995	| Capcom	| CPS2		| 					|
 | 19xxj		|  	| 19XX - the war against destiny (960104 Japan, yellow c| 19xx		| 1996	| Capcom	| CPS2		| 					|
 | md_2psymmac	|  	| 2 in 1 - Psycho Pinball & Micro Machines (Euro)	| 		| 1993	| Codemasters	| Sega Megadrive| 					|
-| openice	| D	| 2 On 2 Open Ice Challenge (rev 1.21)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
-| openicea	| D	| 2 On 2 Open Ice Challenge (rev 1.2A)			| openice	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| openice	| D NW	| 2 On 2 Open Ice Challenge (rev 1.21)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| openicea	| D NW	| 2 On 2 Open Ice Challenge (rev 1.2A)			| openice	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
 | sms_20em1	| D	| 20 em 1 (Bra)						| 		| 1995	| Tec Toy	| Sega Master Sy| 					|
 | cv_2010p1	|  	| 2010: The Graphic Action Game (Prototype v44)		| cv_2010	| 1984	| Coleco	| ColecoVision	| 					|
 | cv_2010p	|  	| 2010: The Graphic Action Game (Prototype v54)		| cv_2010	| 1984	| Coleco	| ColecoVision	| 					|
@@ -6497,7 +6497,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_nbaallst	|  	| NBA All-Star Challenge (Euro, USA)			| 		| 1992	| Flying Edge	| Sega Megadrive| 					|
 | md_nbahang	|  	| NBA Hang Time (Euro)					| 		| 1996	| Midway	| Sega Megadrive| Press P3 start for 2nd team		|
 | md_nbahangu	|  	| NBA Hang Time (USA)					| md_nbahang	| 1996	| Midway	| Sega Megadrive| Press P3 start for 2nd team		|
-| nbahangt	| D	| NBA Hangtime (rev L1.1 04/16/96)			| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbahangt	| D NW	| NBA Hangtime (rev L1.1 04/16/96)			| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
 | sms_nbajam	|  	| NBA Jam (Euro, Prototype)				| 		| 1994	| Acclaim	| Sega Master Sy| 					|
 | gg_nbajam1	|  	| NBA Jam (Euro, USA)					| gg_nbajam	| 1993	| Arena		| Sega Game Gear| 					|
 | md_nbajam1	|  	| NBA Jam (Euro, USA)					| md_nbajam	| 1993	| Arena		| Sega Megadrive| 					|
@@ -6522,8 +6522,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_nbaliv96	|  	| NBA Live 96 (Euro, USA)				| 		| 1995	| Electronic Art| Sega Megadrive| 					|
 | md_nbaliv97	|  	| NBA Live 97 (Euro, USA)				| 		| 1996	| Electronic Art| Sega Megadrive| 					|
 | md_nbaliv98	|  	| NBA Live 98 (USA)					| 		| 1997	| Electronic Art| Sega Megadrive| 					|
-| nbamht1	| D	| NBA Maximum Hangtime (rev 1.0 11/08/96)		| nbamht	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
-| nbamht	| D	| NBA Maximum Hangtime (rev 1.03 06/09/97)		| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbamht1	| D NW	| NBA Maximum Hangtime (rev 1.0 11/08/96)		| nbamht	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbamht	| D NW	| NBA Maximum Hangtime (rev 1.03 06/09/97)		| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
 | md_bullvsblj	|  	| NBA Playoffs - Bulls Vs Blazers (Jpn)			| md_bullvsbl	| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_bullvsblj1	|  	| NBA Playoffs - Bulls Vs Blazers (Jpn, Alt)		| md_bullvsbl	| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_nbapro94	|  	| NBA Pro Basketball '94 (Jpn)				| 		| 1994	| Electronic Art| Sega Megadrive| 					|
@@ -11319,6 +11319,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_umk3u	|  	| Ultimate Mortal Kombat 3 (USA)			| md_umk3	| 1996	| Williams	| Sega Megadrive| 					|
 | umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2019-| umk3		| 2018	| hack		| MIDWAY Wolf-Un| 					|
 | md_umk3mh	|  	| Ultimate Mortal Kombat 3 Mini V13 (Hack)		| md_umk3	| 2011	| 2011 Nemesis_c| Sega Megadrive| 					|
+| umk3pb1	|  	| Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)		| umk3		| 2019	| Midway	| MIDWAY Wolf-Un| 					|
 | umk3te	|  	| Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.| umk3		| 2018	| Midway	| MIDWAY Wolf-Un| 					|
 | md_umk3t	|  	| Ultimate Mortal Kombat Trilogy Hack rev.5149		| 		| 2017	| 2017 KABAL_MK	| Sega Megadrive| 					|
 | md_ultqix	|  	| Ultimate Qix (USA)					| 		| 1991	| Taito		| Sega Megadrive| 					|
@@ -11981,10 +11982,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_wwfag	|  	| WWF WrestleMania - The Arcade Game (Euro, USA)	| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | md_wwfagp	|  	| WWF WrestleMania - The Arcade Game (USA, Prototype)	| md_wwfag	| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | gg_wwfsteel	|  	| WWF Wrestlemania Steel Cage Challenge (Euro, SMS Mode)| 		| 1993	| Flying Edge	| Sega Game Gear| 					|
-| wwfmaniap	| D	| WWF: Wrestlemania (proto 2.01 06/07/95)		| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
-| wwfmaniac	| D	| WWF: Wrestlemania (rev 1.1 07/11/95)			| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
-| wwfmaniab	| D	| WWF: Wrestlemania (rev 1.20 08/02/95)			| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
-| wwfmania	| D	| WWF: Wrestlemania (rev 1.30 08/10/95)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| wwfmaniap	| D NW	| WWF: Wrestlemania (proto 2.01 06/07/95)		| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| wwfmaniac	| D NW	| WWF: Wrestlemania (rev 1.1 07/11/95)			| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| wwfmaniab	| D NW	| WWF: Wrestlemania (rev 1.20 08/02/95)			| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| wwfmania	| D NW	| WWF: Wrestlemania (rev 1.30 08/10/95)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
 | wyvernf0	|  	| Wyvern F-0 (Rev 1)					| 		| 1985	| Taito Corporat| Miscellaneous	| 					|
 | wyvernf0a	|  	| Wyvern F-0						| wyvernf0	| 1985	| Taito Corporat| Miscellaneous	| 					|
 | xmultiplm72	|  	| X Multiply (Japan, M72)				| xmultipl	| 1989	| Irem		| Irem M72	| 					|

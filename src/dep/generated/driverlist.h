@@ -81,8 +81,8 @@ DRV		BurnDrvCps19xxa;
 DRV		BurnDrvCps19xxj;
 DRV		BurnDrvmd_2psymmac;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvOpenice;			// no comment
-DRV		BurnDrvOpenicea;		// no comment
+DRV		BurnDrvOpenice;			// no comment [NOT WORKING]
+DRV		BurnDrvOpenicea;		// no comment [NOT WORKING]
 DRV		BurnDrvsms_20em1;		// no comment
 #endif
 DRV		BurnDrvcv_2010p1;
@@ -6640,7 +6640,7 @@ DRV		BurnDrvmd_nbaallst;
 DRV		BurnDrvmd_nbahang;
 DRV		BurnDrvmd_nbahangu;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvNbahangt;		// no comment
+DRV		BurnDrvNbahangt;		// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvsms_nbajam;
 DRV		BurnDrvgg_nbajam1;
@@ -6671,8 +6671,8 @@ DRV		BurnDrvmd_nbaliv96;
 DRV		BurnDrvmd_nbaliv97;
 DRV		BurnDrvmd_nbaliv98;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvNbamht1;			// no comment
-DRV		BurnDrvNbamht;			// no comment
+DRV		BurnDrvNbamht1;			// no comment [NOT WORKING]
+DRV		BurnDrvNbamht;			// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvmd_bullvsblj;
 DRV		BurnDrvmd_bullvsblj1;
@@ -11563,6 +11563,7 @@ DRV		BurnDrvUmk3;
 DRV		BurnDrvmd_umk3u;
 DRV		BurnDrvUmk3uc;
 DRV		BurnDrvmd_umk3mh;
+DRV		BurnDrvUmk3pb1;
 DRV		BurnDrvUmk3te;
 DRV		BurnDrvmd_umk3t;
 DRV		BurnDrvmd_ultqix;
@@ -12244,10 +12245,10 @@ DRV		BurnDrvmd_wwfag;
 DRV		BurnDrvmd_wwfagp;
 DRV		BurnDrvgg_wwfsteel;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvWwfmaniap;		// no comment
-DRV		BurnDrvWwfmaniac;		// no comment
-DRV		BurnDrvWwfmaniab;		// no comment
-DRV		BurnDrvWwfmania;		// no comment
+DRV		BurnDrvWwfmaniap;		// no comment [NOT WORKING]
+DRV		BurnDrvWwfmaniac;		// no comment [NOT WORKING]
+DRV		BurnDrvWwfmaniab;		// no comment [NOT WORKING]
+DRV		BurnDrvWwfmania;		// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvWyvernf0;
 DRV		BurnDrvWyvernf0a;
@@ -12642,8 +12643,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCps19xxj,			// 19XX - the war against destiny (960104 Japan, yellow case)
 	&BurnDrvmd_2psymmac,		// 2 in 1 - Psycho Pinball & Micro Machines (Euro)
 #if defined FBNEO_DEBUG
-	&BurnDrvOpenice,			// 2 On 2 Open Ice Challenge (rev 1.21) [no comment]
-	&BurnDrvOpenicea,			// 2 On 2 Open Ice Challenge (rev 1.2A) [no comment]
+	&BurnDrvOpenice,			// 2 On 2 Open Ice Challenge (rev 1.21) [no comment, NOT WORKING]
+	&BurnDrvOpenicea,			// 2 On 2 Open Ice Challenge (rev 1.2A) [no comment, NOT WORKING]
 	&BurnDrvsms_20em1,			// 20 em 1 (Bra) [no comment]
 #endif
 	&BurnDrvcv_2010p1,			// 2010: The Graphic Action Game (Prototype v44)
@@ -19201,7 +19202,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_nbahang,			// NBA Hang Time (Euro)
 	&BurnDrvmd_nbahangu,		// NBA Hang Time (USA)
 #if defined FBNEO_DEBUG
-	&BurnDrvNbahangt,			// NBA Hangtime (rev L1.1 04/16/96) [no comment]
+	&BurnDrvNbahangt,			// NBA Hangtime (rev L1.1 04/16/96) [no comment, NOT WORKING]
 #endif
 	&BurnDrvsms_nbajam,			// NBA Jam (Euro, Prototype)
 	&BurnDrvgg_nbajam1,			// NBA Jam (Euro, USA)
@@ -19232,8 +19233,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_nbaliv97,		// NBA Live 97 (Euro, USA)
 	&BurnDrvmd_nbaliv98,		// NBA Live 98 (USA)
 #if defined FBNEO_DEBUG
-	&BurnDrvNbamht1,			// NBA Maximum Hangtime (rev 1.0 11/08/96) [no comment]
-	&BurnDrvNbamht,				// NBA Maximum Hangtime (rev 1.03 06/09/97) [no comment]
+	&BurnDrvNbamht1,			// NBA Maximum Hangtime (rev 1.0 11/08/96) [no comment, NOT WORKING]
+	&BurnDrvNbamht,				// NBA Maximum Hangtime (rev 1.03 06/09/97) [no comment, NOT WORKING]
 #endif
 	&BurnDrvmd_bullvsblj,		// NBA Playoffs - Bulls Vs Blazers (Jpn)
 	&BurnDrvmd_bullvsblj1,		// NBA Playoffs - Bulls Vs Blazers (Jpn, Alt)
@@ -24124,6 +24125,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_umk3u,			// Ultimate Mortal Kombat 3 (USA)
 	&BurnDrvUmk3uc,				// Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2019-07-04)
 	&BurnDrvmd_umk3mh,			// Ultimate Mortal Kombat 3 Mini V13 (Hack)
+	&BurnDrvUmk3pb1,			// Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)
 	&BurnDrvUmk3te,				// Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.0.042/August 2018)
 	&BurnDrvmd_umk3t,			// Ultimate Mortal Kombat Trilogy Hack rev.5149
 	&BurnDrvmd_ultqix,			// Ultimate Qix (USA)
@@ -24805,10 +24807,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_wwfagp,			// WWF WrestleMania - The Arcade Game (USA, Prototype)
 	&BurnDrvgg_wwfsteel,		// WWF Wrestlemania Steel Cage Challenge (Euro, SMS Mode)
 #if defined FBNEO_DEBUG
-	&BurnDrvWwfmaniap,			// WWF: Wrestlemania (proto 2.01 06/07/95) [no comment]
-	&BurnDrvWwfmaniac,			// WWF: Wrestlemania (rev 1.1 07/11/95) [no comment]
-	&BurnDrvWwfmaniab,			// WWF: Wrestlemania (rev 1.20 08/02/95) [no comment]
-	&BurnDrvWwfmania,			// WWF: Wrestlemania (rev 1.30 08/10/95) [no comment]
+	&BurnDrvWwfmaniap,			// WWF: Wrestlemania (proto 2.01 06/07/95) [no comment, NOT WORKING]
+	&BurnDrvWwfmaniac,			// WWF: Wrestlemania (rev 1.1 07/11/95) [no comment, NOT WORKING]
+	&BurnDrvWwfmaniab,			// WWF: Wrestlemania (rev 1.20 08/02/95) [no comment, NOT WORKING]
+	&BurnDrvWwfmania,			// WWF: Wrestlemania (rev 1.30 08/10/95) [no comment, NOT WORKING]
 #endif
 	&BurnDrvWyvernf0,			// Wyvern F-0 (Rev 1)
 	&BurnDrvWyvernf0a,			// Wyvern F-0

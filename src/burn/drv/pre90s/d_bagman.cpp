@@ -1659,7 +1659,12 @@ STD_ROM_FN(squaitsa)
 static INT32 SquaitsaInit()
 {
 	squaitsamode = 1;
-	return BagmanCommonInit(5, 1);
+	INT32 nRet = BagmanCommonInit(5, 1);
+
+	if (!nRet) {
+		GenericTilemapSetOffsets(0, 0, -16);
+	}
+	return nRet;
 }
 
 struct BurnDriver BurnDrvSquaitsa = {

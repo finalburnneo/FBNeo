@@ -102,7 +102,7 @@ INT32 nAudSegLen = 0;
 
 static UINT8* pVidImage = NULL;
 static bool bVidImageNeedRealloc = false;
-static int16_t *g_audio_buf;
+static int16_t *g_audio_buf = NULL;
 
 // Mapping of PC inputs to game inputs
 struct GameInp* GameInp = NULL;
@@ -858,8 +858,9 @@ void retro_run()
 	{
 		bVidImageNeedRealloc = false;
 		if (pVidImage)
-			free(pVidImage);
-		pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
+			pVidImage = (UINT8*)realloc(pVidImage, nGameWidth * nGameHeight * nBurnBpp);
+		else
+			pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
 	}
 
 	video_cb(pVidImage, nGameWidth, nGameHeight, nBurnPitch);
@@ -1082,9 +1083,9 @@ static void init_audio_buffer(INT32 sample_rate, INT32 fps)
 		sample_rate = fps * 10;
 	nAudSegLen = (sample_rate * 100 + (fps >> 1)) / fps;
 	if (g_audio_buf)
-		free(g_audio_buf);
-	g_audio_buf = (int16_t*)malloc(nAudSegLen<<2 * sizeof(int16_t));
-	memset(g_audio_buf, 0, nAudSegLen<<2 * sizeof(int16_t));
+		g_audio_buf = (int16_t*)realloc(g_audio_buf, nAudSegLen<<2 * sizeof(int16_t));
+	else
+		g_audio_buf = (int16_t*)calloc(nAudSegLen<<2, sizeof(int16_t));
 	nBurnSoundLen = nAudSegLen;
 	pBurnSoundOut = g_audio_buf;
 }
@@ -1241,8 +1242,9 @@ static bool retro_load_game_common()
 		SetColorDepth();
 
 		if (pVidImage)
-			free(pVidImage);
-		pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
+			pVidImage = (UINT8*)realloc(pVidImage, nGameWidth * nGameHeight * nBurnBpp);
+		else
+			pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
 
 		// Initialization done
 		log_cb(RETRO_LOG_INFO, "Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));
@@ -1382,10 +1384,14 @@ void retro_unload_game(void)
 	{
 		if (BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
 			log_cb(RETRO_LOG_INFO, "[FBNEO] EEPROM succesfully saved to %s\n", g_autofs_path);
-		if (pVidImage)
+		if (pVidImage) {
 			free(pVidImage);
-		if (g_audio_buf)
+			pVidImage = NULL;
+		}
+		if (g_audio_buf) {
 			free(g_audio_buf);
+			g_audio_buf = NULL;
+		}
 		BurnDrvExit();
 		if (nGameType == RETRO_GAME_TYPE_NEOCD)
 			CDEmuExit();

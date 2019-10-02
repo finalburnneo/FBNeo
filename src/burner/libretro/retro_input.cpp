@@ -140,12 +140,10 @@ INT32 GameInpInit()
 		nGameInpCount++;
 
 	// Allocate space for all the inputs
-	INT32 nSize = nGameInpCount * sizeof(struct GameInp);
-	GameInp = (struct GameInp*)malloc(nSize);
+	GameInp = (struct GameInp*)calloc(nGameInpCount, sizeof(struct GameInp));
 	if (GameInp == NULL) {
 		return 1;
 	}
-	memset(GameInp, 0, nSize);
 
 	GameInpBlank(1);
 
@@ -2272,5 +2270,10 @@ void InputInit()
 
 void InputDeInit()
 {
+	if (GameInp) {
+		free(GameInp);
+		GameInp = NULL;
+	}
+
 	bInputInitialized = false;
 }

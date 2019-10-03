@@ -257,18 +257,22 @@ void m68k_write16(unsigned int a, unsigned short d)
 	{
 		if (a & 1)
 		{
-			//	bprintf(PRINT_NORMAL, _T("write16 0x%08X\n"), a);
+		//	bprintf(PRINT_NORMAL, _T("write16 0x%08X\n"), a);
+
 			d = BURN_ENDIAN_SWAP_INT16(d);
+
 			m68k_write8(a + 0, d / 0x100);
 			m68k_write8(a + 1, d);
+
 			return;
 		}
 		else
 		{
-			*((UINT16 *) (pr + (a & SEK_PAGEM))) = (UINT16) BURN_ENDIAN_SWAP_INT16(d);
+			*((UINT16*)(pr + (a & SEK_PAGEM))) = (UINT16)BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 	}
+
 	pSekExt->WriteWord[(uintptr_t)pr](a, d);
 }
 
@@ -350,7 +354,7 @@ void m68k_write32(unsigned int a, unsigned int d)
 	{
 		if (a & 1)
 		{
-			//	bprintf(PRINT_NORMAL, _T("write32 0x%08X 0x%8.8x\n"), a,d);
+		//	bprintf(PRINT_NORMAL, _T("write32 0x%08X 0x%8.8x\n"), a,d);
 
 			d = BURN_ENDIAN_SWAP_INT32(d);
 
@@ -460,7 +464,7 @@ extern "C" void C68KResetCallback()
 
 extern "C" int C68KUnrecognizedCallback()
 {
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 	bprintf(PRINT_NORMAL, _T("UnrecognizedCallback();\n"));
 #endif
 	return 0;
@@ -500,7 +504,7 @@ extern "C" INT32 M68KIRQAcknowledge(INT32 nIRQ)
 		m68k_set_irq(0);
 		nSekIRQPending[nSekActive] = 0;
 	}
-
+	
 	if (pSekExt->IrqCallback) {
 		return pSekExt->IrqCallback(nIRQ);
 	}
@@ -534,7 +538,7 @@ extern "C" INT32 M68KTASCallback()
 	if (pSekExt->TASCallback) {
 		return pSekExt->TASCallback();
 	}
-
+	
 	return 1; // enable by default
 }
 #endif
@@ -583,7 +587,7 @@ static void SekCPUPop()
 #ifdef EMU_C68K
 static INT32 SekInitCPUC68K(INT32 nCount, INT32 nCPUType)
 {
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 	bprintf(PRINT_NORMAL, _T("EMU_C68K: SekInitCPUC68K(%i, %x)\n"), nCount, nCPUType);
 #endif
 	if (nCPUType != 0x68000) {
@@ -593,11 +597,11 @@ static INT32 SekInitCPUC68K(INT32 nCount, INT32 nCPUType)
 	nSekCPUType[nCount] = nCPUType;
 
 	if (!bCycloneInited) {
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 		bprintf(PRINT_NORMAL, _T("EMU_C68K: CycloneInit\n"));
 #endif
 		CycloneInit();
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 		bprintf(PRINT_NORMAL, _T("EMU_C68K: CycloneInit OK\n"));
 #endif
 		bCycloneInited = true;
@@ -615,7 +619,7 @@ static INT32 SekInitCPUC68K(INT32 nCount, INT32 nCPUType)
 #ifdef EMU_M68K
 static INT32 SekInitCPUM68K(INT32 nCount, INT32 nCPUType)
 {
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 	bprintf(PRINT_NORMAL, _T("EMU_M68K: SekInitCPUM68K(%i, %x)\n"), nCount, nCPUType);
 #endif
 	nSekCPUType[nCount] = nCPUType;
@@ -648,7 +652,7 @@ static INT32 SekInitCPUM68K(INT32 nCount, INT32 nCPUType)
 
 void SekNewFrame()
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekNewFrame called without init\n"));
 #endif
 
@@ -670,7 +674,7 @@ void SekNewFrame()
 
 void SekSetCyclesScanline(INT32 nCycles)
 {
-#if defined FBA_DEBUG
+#if defined FBNEO_DEBUG
 	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetCyclesScanline called without init\n"));
 	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetCyclesScanline called when no CPU open\n"));
 #endif
@@ -844,19 +848,25 @@ static void SekCPUExitM68K(INT32 i)
 
 INT32 SekExit()
 {
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekExit called without init\n"));
+#endif
+
+	if (!DebugCPU_SekInitted) return 1;
+
 	// Deallocate cpu extenal data (memory map etc)
 	for (INT32 i = 0; i <= nSekCount; i++) {
 
-#ifdef EMU_M68K
+#ifdef EMU_C68K
 		if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[i] == 0x68000) {
-#if defined (FBA_DEBUG)
-			bprintf(PRINT_NORMAL, _T("EMU_C68K: SekExit\n"));
-#endif
 		} else {
-#if defined (FBA_DEBUG)
-			bprintf(PRINT_NORMAL, _T("EMU_M68K: SekExit\n"));
 #endif
-			SekCPUExitM68K(i);
+
+#ifdef EMU_M68K
+		SekCPUExitM68K(i);
+#endif
+
+#ifdef EMU_C68K
 		}
 #endif
 
@@ -881,7 +891,7 @@ void SekReset()
 {
 #ifdef EMU_C68K
 	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 		bprintf(PRINT_NORMAL, _T("EMU_C68K: SekReset\n"));
 #endif
 		memset(&c68k[nSekActive], 0, 22 * 4); // clear all regs
@@ -894,7 +904,7 @@ void SekReset()
 #endif
 
 #ifdef EMU_M68K
-#if defined (FBA_DEBUG)
+#if defined (FBNEO_DEBUG)
 		bprintf(PRINT_NORMAL, _T("EMU_M68K: SekReset\n"));
 #endif
 		m68k_pulse_reset();
@@ -983,12 +993,19 @@ INT32 SekGetActive()
 }
 
 // For Megadrive - check if the vdp controlport should set IRQ
-INT32 SekShouldInterrupt(void)
+INT32 SekShouldInterrupt()
 {
 	if(nSekCpuCore == SEK_CORE_M68K) {
 		return m68k_check_shouldinterrupt();
 	} else {
 		return 0;
+	}
+}
+
+void SekBurnUntilInt()
+{
+	if(nSekCpuCore == SEK_CORE_M68K) {
+		m68k_burn_until_irq(1);
 	}
 }
 
@@ -1268,9 +1285,7 @@ void SekRunAdjust(const INT32 nCycles)
 #ifndef EMU_C68K
 	INT32 count = m68k_ICount;
 #else
-	INT32 count = nSekCpuCore ==
-				  SEK_CORE_C68K && nSekCPUType[nSekActive] == 0x68000 ?
-				  c68k[nSekActive].cycles : m68k_ICount;
+	INT32 count = (nSekCpuCore == SEK_CORE_C68K && nSekCPUType[nSekActive] == 0x68000) ? c68k[nSekActive].cycles : m68k_ICount;
 #endif
 	if (nCycles < 0 && count < -nCycles) {
 		SekRunEnd();
@@ -1359,9 +1374,9 @@ INT32 SekRun(const INT32 nCycles)
 #ifdef EMU_M68K
 		nSekCyclesToDo = nCycles;
 
-		if (nSekRESETLine[nSekActive])
+		if (nSekRESETLine[nSekActive] || nSekHALT[nSekActive])
 		{
-			nSekCyclesSegment = nCycles; // idle when RESET high
+			nSekCyclesSegment = nCycles; // idle when RESET high or halted
 		}
 		else
 		{
@@ -1369,7 +1384,8 @@ INT32 SekRun(const INT32 nCycles)
 		}
 
 		nSekCyclesTotal += nSekCyclesSegment;
-		nSekCyclesToDo = m68k_ICount = 0;
+		nSekCyclesToDo = m68k_ICount = 0; // was -1; changed june26, 2019 -dink
+
 		return nSekCyclesSegment;
 #else
 		return 0;
@@ -1401,7 +1417,7 @@ INT32 SekRun(INT32 nCPU, INT32 nCycles)
 
 void SekDbgDisableBreakpoints()
 {
-#if defined FBA_DEBUG && defined EMU_M68K
+#if defined FBNEO_DEBUG && defined EMU_M68K
 		m68k_set_instr_hook_callback(NULL);
 
 		M68KReadByteDebug = M68KReadByte;

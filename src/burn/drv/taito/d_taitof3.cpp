@@ -103,7 +103,7 @@ static struct BurnInputInfo F3InputList[] = {
 STDINPUTINFO(F3)
 
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
-static struct BurnInputInfo ArkretrnInputList[] = {
+static struct BurnInputInfo F3AnalogInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 12,	"p1 start"	},
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
@@ -159,7 +159,7 @@ static struct BurnInputInfo ArkretrnInputList[] = {
 	{"Dip",	        	BIT_DIPSWITCH,  TaitoDip + 0,	"dip"		},
 };
 
-STDINPUTINFO(Arkretrn)
+STDINPUTINFO(F3Analog)
 
 static struct BurnInputInfo KnInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"	},
@@ -225,7 +225,7 @@ static struct BurnDIPInfo F3DIPList[]=
 
 STDDIPINFO(F3)
 
-static struct BurnDIPInfo ArkretrnDIPList[]=
+static struct BurnDIPInfo F3AnalogDIPList[]=
 {
 	{0x30, 0xff, 0xff, 0x00, NULL },
 
@@ -234,7 +234,7 @@ static struct BurnDIPInfo ArkretrnDIPList[]=
 	{0x30, 0x01, 0x02, 0x02, "Slow / Mellow" },
 };
 
-STDDIPINFO(Arkretrn)
+STDDIPINFO(F3Analog)
 
 static struct BurnDIPInfo KnDIPList[]=
 {
@@ -1469,9 +1469,10 @@ static INT32 DrvFrame()
 	}
 
 	{
-		if (f3_game == ARKRETRN) { // arkretn analog dial
+		 // arkretn / puchicar analog dial
+		if (f3_game == ARKRETRN || f3_game == PUCHICAR) {
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-			BurnTrackballFrame(0, DrvAxis[0], DrvAxis[1], 0x1, 0x2);
+			BurnTrackballFrame(0, DrvAxis[0], DrvAxis[1], 0x1, 0x3);
 			BurnTrackballUpdate(0);
 		}
 
@@ -1520,7 +1521,6 @@ static INT32 DrvFrame()
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == 255) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i == 120 && f3_game == ARKRETRN) BurnTrackballUpdate(0);
 		if (i == 7) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
@@ -5361,7 +5361,7 @@ struct BurnDriver BurnDrvArkretrn = {
 	"Arkanoid Returns (Ver 2.02O 1997/02/10)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkretrnRomInfo, arkretrnRomName, NULL, NULL, NULL, NULL, ArkretrnInputInfo, ArkretrnDIPInfo,
+	NULL, arkretrnRomInfo, arkretrnRomName, NULL, NULL, NULL, NULL, F3AnalogInputInfo, F3AnalogDIPInfo,
 	arkretrnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
 };
@@ -5403,7 +5403,7 @@ struct BurnDriver BurnDrvArkretrnu = {
 	"Arkanoid Returns (Ver 2.02A 1997/02/10)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkretrnuRomInfo, arkretrnuRomName, NULL, NULL, NULL, NULL, ArkretrnInputInfo, ArkretrnDIPInfo,
+	NULL, arkretrnuRomInfo, arkretrnuRomName, NULL, NULL, NULL, NULL, F3AnalogInputInfo, F3AnalogDIPInfo,
 	arkretrnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
 };
@@ -5445,7 +5445,7 @@ struct BurnDriver BurnDrvArkretrnj = {
 	"Arkanoid Returns (Ver 2.02J 1997/02/10)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkretrnjRomInfo, arkretrnjRomName, NULL, NULL, NULL, NULL, ArkretrnInputInfo, ArkretrnDIPInfo,
+	NULL, arkretrnjRomInfo, arkretrnjRomName, NULL, NULL, NULL, NULL, F3AnalogInputInfo, F3AnalogDIPInfo,
 	arkretrnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
 };
@@ -5548,7 +5548,7 @@ struct BurnDriver BurnDrvPuchicar = {
 	"Puchi Carat (Ver 2.02O 1997/10/29)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
-	NULL, puchicarRomInfo, puchicarRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	NULL, puchicarRomInfo, puchicarRomName, NULL, NULL, NULL, NULL, F3AnalogInputInfo, F3AnalogDIPInfo,
 	puchicarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
 };
@@ -5595,7 +5595,7 @@ struct BurnDriver BurnDrvPuchicarj = {
 	"Puchi Carat (Ver 2.02J 1997/10/29)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
-	NULL, puchicarjRomInfo, puchicarjRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	NULL, puchicarjRomInfo, puchicarjRomName, NULL, NULL, NULL, NULL, F3AnalogInputInfo, F3AnalogDIPInfo,
 	puchicarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
 };

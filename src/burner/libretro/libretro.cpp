@@ -426,8 +426,6 @@ void Reinitialise(void)
 
 static void ForceFrameStep(int bDraw)
 {
-	nBurnLayer = 0xff;
-
 #ifdef FBNEO_DEBUG
 	nFramesEmulated++;
 #endif
@@ -1185,6 +1183,10 @@ static bool retro_load_game_common()
 
 		// Initialize dipswitches
 		InpDIPSWInit();
+
+		// Initialize debug variables
+		nBurnLayer = 0xff;
+		nSpriteEnable = 0xff;
 
 		set_environment();
 		check_variables();

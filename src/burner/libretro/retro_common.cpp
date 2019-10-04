@@ -241,6 +241,141 @@ static const struct retro_core_option_definition var_fbneo_load_subsystem_from_p
 	"enabled"
 };
 
+#ifdef FBNEO_DEBUG
+static const struct retro_core_option_definition var_fbneo_debug_layer_1 = {
+	"fbneo-debug-layer-1",
+	"Layer 1",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_layer_2 = {
+	"fbneo-debug-layer-2",
+	"Layer 2",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_layer_3 = {
+	"fbneo-debug-layer-3",
+	"Layer 3",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_layer_4 = {
+	"fbneo-debug-layer-4",
+	"Layer 4",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_sprite_1 = {
+	"fbneo-debug-sprite-1",
+	"Sprite 1",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_sprite_2 = {
+	"fbneo-debug-sprite-2",
+	"Sprite 2",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_sprite_3 = {
+	"fbneo-debug-sprite-3",
+	"Sprite 3",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_sprite_4 = {
+	"fbneo-debug-sprite-4",
+	"Sprite 4",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_sprite_5 = {
+	"fbneo-debug-sprite-5",
+	"Sprite 5",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_sprite_6 = {
+	"fbneo-debug-sprite-6",
+	"Sprite 6",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_sprite_7 = {
+	"fbneo-debug-sprite-7",
+	"Sprite 7",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+static const struct retro_core_option_definition var_fbneo_debug_sprite_8 = {
+	"fbneo-debug-sprite-8",
+	"Sprite 8",
+	"For debugging",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
+};
+#endif
+
 // Replace the char c_find by the char c_replace in the destination c string
 char* str_char_replace(char* destination, char c_find, char c_replace)
 {
@@ -387,6 +522,21 @@ void set_environment()
 #ifdef USE_CYCLONE
 	vars_systems.push_back(&var_fbneo_cyclone);
 #endif
+#ifdef FBNEO_DEBUG
+	vars_systems.push_back(&var_fbneo_debug_layer_1);
+	vars_systems.push_back(&var_fbneo_debug_layer_2);
+	vars_systems.push_back(&var_fbneo_debug_layer_3);
+	vars_systems.push_back(&var_fbneo_debug_layer_4);
+	vars_systems.push_back(&var_fbneo_debug_sprite_1);
+	vars_systems.push_back(&var_fbneo_debug_sprite_2);
+	vars_systems.push_back(&var_fbneo_debug_sprite_3);
+	vars_systems.push_back(&var_fbneo_debug_sprite_4);
+	vars_systems.push_back(&var_fbneo_debug_sprite_5);
+	vars_systems.push_back(&var_fbneo_debug_sprite_6);
+	vars_systems.push_back(&var_fbneo_debug_sprite_7);
+	vars_systems.push_back(&var_fbneo_debug_sprite_8);
+#endif
+
 
 	if (pgi_diag)
 	{
@@ -840,6 +990,116 @@ void check_variables(void)
 			bCycloneEnabled = true;
 		else if (strcmp(var.value, "disabled") == 0)
 			bCycloneEnabled = false;
+	}
+#endif
+
+#ifdef FBNEO_DEBUG
+	var.key = var_fbneo_debug_layer_1.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nBurnLayer |= 1;
+		else if (strcmp(var.value, "disabled") == 0)
+			nBurnLayer &= ~1;
+	}
+
+	var.key = var_fbneo_debug_layer_2.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nBurnLayer |= 2;
+		else if (strcmp(var.value, "disabled") == 0)
+			nBurnLayer &= ~2;
+	}
+
+	var.key = var_fbneo_debug_layer_3.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nBurnLayer |= 4;
+		else if (strcmp(var.value, "disabled") == 0)
+			nBurnLayer &= ~4;
+	}
+
+	var.key = var_fbneo_debug_layer_4.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nBurnLayer |= 8;
+		else if (strcmp(var.value, "disabled") == 0)
+			nBurnLayer &= ~8;
+	}
+
+	var.key = var_fbneo_debug_sprite_1.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nSpriteEnable |= 0x01;
+		else if (strcmp(var.value, "disabled") == 0)
+			nSpriteEnable &= ~0x01;
+	}
+
+	var.key = var_fbneo_debug_sprite_2.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nSpriteEnable |= 0x02;
+		else if (strcmp(var.value, "disabled") == 0)
+			nSpriteEnable &= ~0x02;
+	}
+
+	var.key = var_fbneo_debug_sprite_3.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nSpriteEnable |= 0x04;
+		else if (strcmp(var.value, "disabled") == 0)
+			nSpriteEnable &= ~0x04;
+	}
+
+	var.key = var_fbneo_debug_sprite_4.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nSpriteEnable |= 0x08;
+		else if (strcmp(var.value, "disabled") == 0)
+			nSpriteEnable &= ~0x08;
+	}
+
+	var.key = var_fbneo_debug_sprite_5.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nSpriteEnable |= 0x10;
+		else if (strcmp(var.value, "disabled") == 0)
+			nSpriteEnable &= ~0x10;
+	}
+
+	var.key = var_fbneo_debug_sprite_6.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nSpriteEnable |= 0x20;
+		else if (strcmp(var.value, "disabled") == 0)
+			nSpriteEnable &= ~0x20;
+	}
+
+	var.key = var_fbneo_debug_sprite_7.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nSpriteEnable |= 0x40;
+		else if (strcmp(var.value, "disabled") == 0)
+			nSpriteEnable &= ~0x40;
+	}
+
+	var.key = var_fbneo_debug_sprite_8.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			nSpriteEnable |= 0x80;
+		else if (strcmp(var.value, "disabled") == 0)
+			nSpriteEnable &= ~0x80;
 	}
 #endif
 }

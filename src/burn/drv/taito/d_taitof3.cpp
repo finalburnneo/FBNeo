@@ -23,6 +23,7 @@
 #include "es5506.h"
 #include "eeprom.h"
 #include "msm6295.h"
+#include "burn_gun.h"
 
 static UINT8 *DrvVRAMRAM;
 static UINT8 *DrvPivotRAM;
@@ -36,6 +37,7 @@ static UINT8 DrvJoy5[16];
 static UINT8 DrvSrv[1];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[5];
+static INT16 DrvAxis[2];
 static UINT8 previous_coin;
 
 static INT32 sound_cpu_in_reset = 0;
@@ -100,6 +102,65 @@ static struct BurnInputInfo F3InputList[] = {
 
 STDINPUTINFO(F3)
 
+#define A(a, b, c, d) { a, b, (UINT8*)(c), d }
+static struct BurnInputInfo ArkretrnInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 12,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
+	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
+	A("P1 Analog Dial",	BIT_ANALOG_REL, DrvAxis + 0,	"p1 x-axis"	),
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 5,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 3"	},
+	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 4"	},
+	A("P2 Analog Dial",	BIT_ANALOG_REL, DrvAxis + 1,	"p2 x-axis"	),
+
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy5 + 6,	"p3 coin"	},
+	{"P3 Start",		BIT_DIGITAL,	DrvJoy1 + 14,	"p3 start"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy4 + 0,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy4 + 1,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy4 + 2,	"p3 left"	},
+	{"P3 Right",		BIT_DIGITAL,	DrvJoy4 + 3,	"p3 right"	},
+	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 8,	"p3 fire 1"	},
+	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 9,	"p3 fire 2"	},
+	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 10,	"p3 fire 3"	},
+	{"P3 Button 4",		BIT_DIGITAL,	DrvJoy3 + 11,	"p3 fire 4"	},
+
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy5 + 7,	"p4 coin"	},
+	{"P4 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p4 start"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy4 + 4,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy4 + 5,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy4 + 6,	"p4 left"	},
+	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 7,	"p4 right"	},
+	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p4 fire 1"	},
+	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p4 fire 2"	},
+	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p4 fire 3"	},
+	{"P4 Button 4",		BIT_DIGITAL,	DrvJoy3 + 15,	"p4 fire 4"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 9,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 10,	"service"	},
+	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 11,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"		},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 8,	"tilt"		},
+	{"Dip",	        	BIT_DIPSWITCH,  TaitoDip + 0,	"dip"		},
+};
+
+STDINPUTINFO(Arkretrn)
+
 static struct BurnInputInfo KnInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 12,	"p1 start"	},
@@ -163,6 +224,17 @@ static struct BurnDIPInfo F3DIPList[]=
 };
 
 STDDIPINFO(F3)
+
+static struct BurnDIPInfo ArkretrnDIPList[]=
+{
+	{0x30, 0xff, 0xff, 0x00, NULL },
+
+	{0   , 0xfe, 0   , 2   , "Music Tempo (must restart!)" },
+	{0x30, 0x01, 0x02, 0x00, "Normal / Fast" },
+	{0x30, 0x01, 0x02, 0x02, "Slow / Mellow" },
+};
+
+STDDIPINFO(Arkretrn)
 
 static struct BurnDIPInfo KnDIPList[]=
 {
@@ -317,7 +389,8 @@ static UINT32 control_r(INT32 offset, INT32 b)
 
 		case 0x08:
 		case 0x0c:
-			ret = ~0; // and
+			ret = BurnTrackballReadWord(0, (offset >> 2) & 1);
+			ret = 0xffff0000 + (((ret & 0xf) << 12) | ((ret & 0xff0) >> 4));
 		break;
 
 		case 0x10:
@@ -1268,6 +1341,8 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 	bitmap_width[6] = 512;
 	bitmap_width[7] = 512;
 
+	BurnTrackballInit(2);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -1289,6 +1364,8 @@ static INT32 DrvExit()
 	TaitoF3VideoExit();
 
 	TaitoClearVariables(); // from taito.cpp
+
+	BurnTrackballExit();
 
 	pPaletteUpdateCallback = NULL;
 	supercupkludge = 0;
@@ -1392,6 +1469,12 @@ static INT32 DrvFrame()
 	}
 
 	{
+		if (f3_game == ARKRETRN) { // arkretn analog dial
+			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+			BurnTrackballFrame(0, DrvAxis[0], DrvAxis[1], 0x1, 0x2);
+			BurnTrackballUpdate(0);
+		}
+
 		memset (DrvInputs, 0xff, 5 * sizeof(short));
 
 		for (INT32 i = 0; i < 16; i++) {
@@ -1437,6 +1520,7 @@ static INT32 DrvFrame()
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == 255) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 120 && f3_game == ARKRETRN) BurnTrackballUpdate(0);
 		if (i == 7) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
@@ -1578,6 +1662,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		TaitoF3SoundScan(nAction, pnMin);
 		SCAN_VAR(sound_cpu_in_reset);
+		if (f3_game == ARKRETRN) BurnTrackballScan();
 
 		if (nAction & ACB_WRITE) {
 			for (INT32 i = 0; i < 0x2000; i+=4) {
@@ -5276,7 +5361,7 @@ struct BurnDriver BurnDrvArkretrn = {
 	"Arkanoid Returns (Ver 2.02O 1997/02/10)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkretrnRomInfo, arkretrnRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	NULL, arkretrnRomInfo, arkretrnRomName, NULL, NULL, NULL, NULL, ArkretrnInputInfo, ArkretrnDIPInfo,
 	arkretrnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
 };
@@ -5318,7 +5403,7 @@ struct BurnDriver BurnDrvArkretrnu = {
 	"Arkanoid Returns (Ver 2.02A 1997/02/10)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkretrnuRomInfo, arkretrnuRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	NULL, arkretrnuRomInfo, arkretrnuRomName, NULL, NULL, NULL, NULL, ArkretrnInputInfo, ArkretrnDIPInfo,
 	arkretrnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
 };
@@ -5360,7 +5445,7 @@ struct BurnDriver BurnDrvArkretrnj = {
 	"Arkanoid Returns (Ver 2.02J 1997/02/10)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
-	NULL, arkretrnjRomInfo, arkretrnjRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	NULL, arkretrnjRomInfo, arkretrnjRomName, NULL, NULL, NULL, NULL, ArkretrnInputInfo, ArkretrnDIPInfo,
 	arkretrnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
 };

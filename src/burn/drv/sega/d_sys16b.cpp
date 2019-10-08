@@ -8964,31 +8964,6 @@ static INT32 TturfInit()
 	return nRet;
 }
 
-static INT32 TturfuInit()
-{
-	// Start off with some sprite rom and let the load routine add on the rest
-	System16SpriteRomSize = 0xe0000 - 0x80000;
-
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
-		if (pTemp) {
-			memcpy(pTemp, System16Sprites, 0x80000);
-			memset(System16Sprites, 0, 0xe0000);
-			memcpy(System16Sprites + 0x000000, pTemp + 0x00000, 0x20000);
-			memcpy(System16Sprites + 0x040000, pTemp + 0x20000, 0x20000);
-			memcpy(System16Sprites + 0x080000, pTemp + 0x40000, 0x20000);
-			memcpy(System16Sprites + 0x0c0000, pTemp + 0x60000, 0x20000);
-		} else {
-			nRet = 1;
-		}
-		BurnFree(pTemp);
-	}
-
-	return nRet;
-}
-
 static void UltracinMakeAnalogInputs()
 {
 	static UINT8 clock = 0;
@@ -10465,7 +10440,7 @@ struct BurnDriver BurnDrvTturfu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SCRFIGHT, 0,
 	NULL, TturfuRomInfo, TturfuRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, TturfDIPInfo,
-	TturfuInit, System16Exit, System16BFrame, System16BRender, System16Scan,
+	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

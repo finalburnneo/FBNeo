@@ -580,7 +580,7 @@ static INT32 DrvDraw()
 	if (priority == 0)
 		if (nBurnLayer & 2) DrawFgTiles();
 
-	if (priority) {
+	if (priority == 1) {
 		if (nSpriteEnable & 1) DrawSprites(DrvSprRAM0, DrvGfxROM2, 0);
 		if (nSpriteEnable & 2) DrawSprites(DrvSprRAM1, DrvGfxROM3, 0x100);
 	} else {
@@ -602,6 +602,7 @@ static INT32 DrvDoReset()
 	DrvZ80Bank0 = 0;
 	scroll_x = 0;
 	flipscreen = 0;
+	priority = 0;
 	adpcm_address = 0xffffffff;
 	adpcm_data = 0;
 	MSM5205Reset();

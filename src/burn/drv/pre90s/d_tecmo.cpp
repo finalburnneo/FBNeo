@@ -1032,20 +1032,21 @@ static INT32 draw_layer(UINT8 *vidram, UINT8 *gfx_base, INT32 paloffs, UINT16 *s
 		INT32 sx = (offs & 0x1f) << 4;
 		INT32 sy = (offs >> 5) << 4;
 
-		    sx -= scroll[0] & 0x1ff;
+		sx -= scroll[0] & 0x1ff;
 
-		    if (flipscreen) {
+		if (flipscreen) {
 			sx += 48 + 256;
-		    } else {
+		} else {
 			sx -= 48;
-		    }
+		}
 
 		if (sx <   -15) sx += 0x200;
 		if (sx >   511) sx -= 0x200;
-		    sy -= scroll[1] + 16;
+
+		sy -= scroll[1] + 16;
 		if (sy <   -15) sy += 0x100;
 
-		if (sx > nScreenWidth || sy > nScreenHeight) continue;
+		//if (sx > nScreenWidth || sy > nScreenHeight) continue; breaks backfirt's buggy 2p scrolling
 
 		UINT8 color = vidram[0x200 | offs];
 		INT32 code  = vidram[offs];
@@ -1057,11 +1058,9 @@ static INT32 draw_layer(UINT8 *vidram, UINT8 *gfx_base, INT32 paloffs, UINT16 *s
 		code  |= ((color & 7) << 8);
 		color >>= 4;
 
-		if (sx < 0 || sy < 0 || sx > nScreenWidth - 16 || sy > nScreenHeight - 16) {
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, paloffs, gfx_base);
-		} else {
-			Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, paloffs, gfx_base);
-		}
+		Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, paloffs, gfx_base);
+		if (DrvHasADPCM == 0) // backfirt
+			Render16x16Tile_Mask_Clip(pTransDraw, code, sx-0x200, sy, color, 4, 0, paloffs, gfx_base);
 	}
 
 	return 0;
@@ -1095,9 +1094,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x100;
-	}
+	BurnTransferClear(0x100);
 
 	if (nSpriteEnable & 1) draw_sprites(3);
 
@@ -1113,7 +1110,7 @@ static INT32 DrvDraw()
 
 	if (nSpriteEnable & 8) draw_sprites(0);
 
-	if (flipscreen) {
+	if (flipscreen && DrvHasADPCM) { // backfirt is the only one w/o ADPCM & buggy flipping
 		INT32 nSize = (nScreenWidth * nScreenHeight) - 1;
 		for (INT32 i = 0; i < nSize >> 1; i++) {
 			INT32 n = pTransDraw[i];

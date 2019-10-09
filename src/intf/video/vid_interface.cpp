@@ -12,6 +12,8 @@
 	extern struct VidOut VidOutDDrawFX;
 	extern struct VidOut VidOutDX9;
 	extern struct VidOut VidOutDX9Alt;
+#elif defined (BUILD_PI)
+	extern struct VidOut VidOutPi;
 #elif defined (BUILD_SDL)
 	extern struct VidOut VidOutSDLOpenGL;
 	extern struct VidOut VidOutSDLFX;
@@ -28,6 +30,8 @@ static struct VidOut *pVidOut[] = {
 	&VidOutDDrawFX,
 	&VidOutDX9,
 	&VidOutDX9Alt,
+#elif defined (BUILD_PI)
+	&VidOutPi,
 #elif defined (BUILD_SDL)
 	&VidOutSDLOpenGL,
 	&VidOutSDLFX,

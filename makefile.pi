@@ -41,10 +41,11 @@ include makefile.burner_pi_rules
 
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 		  -I/local/include -I$(srcdir)dep/pi/include -I$(srcdir)intf/input/sdl \
-		  -I/usr/include/SDL -I/opt/vc/include/interface/vcos/pthreads \
-		  -I/opt/vc/include/interface/vmcs_host/linux -I/opt/vc/include
+		  -I/usr/include/SDL \
+		  -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/interface/vmcs_host/linux \
+		  -I/opt/vc/include
 
-lib	= -lstdc++ -lSDL -lpthread -ludev -L/usr/X11R6/lib -L/opt/vc/lib
+lib	= -lstdc++ -lSDL -lbcm_host -lEGL -lGLESv2 -lpthread -ludev -L/usr/X11R6/lib -L/opt/vc/lib
 
 autdep	= $(depobj:.o=.d)
 drvdep	= $(drvsrc:.o=.d)

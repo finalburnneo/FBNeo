@@ -22,6 +22,8 @@ TCHAR szAppIconsPath[MAX_PATH]		= _T("support\\icons\\");
 TCHAR szAppArchivesPath[MAX_PATH]	= _T("support\\archives\\");
 TCHAR szAppHiscorePath[MAX_PATH]	= _T("support\\hiscores\\");
 TCHAR szAppSamplesPath[MAX_PATH]	= _T("support\\samples\\");
+TCHAR szAppHDDPath[MAX_PATH]		= _T("support/hdd/");
 TCHAR szAppBlendPath[MAX_PATH]		= _T("support\\blend\\");
+TCHAR szAppEEPROMPath[MAX_PATH]		= _T("config/games/");
 
 TCHAR szCheckIconsPath[MAX_PATH];

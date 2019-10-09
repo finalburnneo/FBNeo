@@ -23,6 +23,8 @@
     
 bool bDoIpsPatch = FALSE;
 
+INT32 nIpsMaxFileLen = 0;
+
 static void PatchFile(const char* ips_path, UINT8* base)
 {
 	char buf[6];
@@ -63,6 +65,7 @@ static void PatchFile(const char* ips_path, UINT8* base)
 			while (Size--) {
 				mem8 = base + Offset;
 				Offset++;
+                if (Offset > nIpsMaxFileLen) nIpsMaxFileLen = Offset; // file size is growing
 				*mem8 = bRLE ? ch : fgetc(f);
 			}
 		}
@@ -132,6 +135,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base)
 
 void IpsApplyPatches(UINT8* base, char* rom_name)
 {
+    nIpsMaxFileLen = 0;
 #if 0
 	char ips_data[MAX_PATH];
 	

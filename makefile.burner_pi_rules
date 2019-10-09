@@ -1,0 +1,33 @@
+alldir	+= 	burner burner/pi burner/sdl dep/kaillera/client dep/libs/libpng dep/libs/lib7z dep/libs/zlib intf intf/video \
+			intf/video/scalers 	intf/video/pi intf/audio intf/audio/sdl intf/input intf/input/pi intf/cd intf/cd/sdl \
+			intf/perfcount intf/perfcount/pi dep/generated
+
+depobj	+= 	neocdlist.o \
+			\
+			conc.o cong.o dat.o gamc.o gami.o image.o ioapi.o misc.o sshot.o state.o statec.o unzip.o zipfn.o \
+			\
+			adler32.o compress.o crc32.o deflate.o gzclose.o gzlib.o gzread.o gzwrite.o infback.o inffast.o inflate.o inftrees.o \
+			trees.o uncompr.o zutil.o \
+			\
+			png.o pngerror.o pngget.o pngmem.o pngpread.o pngread.o pngrio.o pngrtran.o pngrutil.o pngset.o pngtrans.o pngwio.o \
+			pngwrite.o pngwtran.o pngwutil.o \
+			\
+			net.o \
+			\
+			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o prf_interface.o vid_interface.o \
+			vid_softfx.o vid_support.o \
+			\
+			2xpm.o 2xsai.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o
+			
+ifdef INCLUDE_7Z_SUPPORT
+depobj	+=	un7z.o \
+			\
+			7zArcIn.o 7zBuf.o 7zBuf2.o 7zCrc.o 7zCrcOpt.o 7zDec.o 7zFile.o 7zStream.o Bcj2.o Bra.o Bra86.o BraIA64.o CpuArch.o \
+			Delta.o LzmaDec.o Lzma2Dec.o Ppmd7.o Ppmd7Dec.o Sha256.o Xz.o XzCrc64.o XzCrc64Opt.o XzDec.o
+endif
+			
+autobj += $(depobj)
+
+ifdef	BUILD_X86_ASM
+autobj += eagle_fm.o 2xsaimmx.o hq2x32.o hq3x32.o hq4x32.o superscale.o
+endif

@@ -196,107 +196,8 @@
     <ClInclude Include="..\..\src\burn\devices\vdc.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\capcom\cps.h">
-      <Filter>Burn\drv\capcom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\capcom\ctv_do.h">
-      <Filter>Burn\drv\capcom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\cave\cave.h">
-      <Filter>Burn\drv\cave</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\cave\cave_sprite_render.h">
-      <Filter>Burn\drv\cave</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\cave\cave_sprite_render_zoom.h">
-      <Filter>Burn\drv\cave</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\cave\cave_tile_render.h">
-      <Filter>Burn\drv\cave</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\cps3\cps3.h">
-      <Filter>Burn\drv\cps3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\dataeast\deco16ic.h">
-      <Filter>Burn\drv\dataeast</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\galaxian\gal.h">
-      <Filter>Burn\drv\galaxian</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\burn\drv\irem\irem_cpu.h">
       <Filter>Burn\drv\irem</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\konami\konamiic.h">
-      <Filter>Burn\drv\konami</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\megadrive\megadrive.h">
-      <Filter>Burn\drv\megadrive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\neogeo\neo_sprite_render.h">
-      <Filter>Burn\drv\neogeo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\neogeo\neo_text_render.h">
-      <Filter>Burn\drv\neogeo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\neogeo\neogeo.h">
-      <Filter>Burn\drv\neogeo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\pce\pce.h">
-      <Filter>Burn\drv\pce</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\pgm\pgm.h">
-      <Filter>Burn\drv\pgm</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\psikyo\psikyo.h">
-      <Filter>Burn\drv\psikyo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\psikyo\psikyo_render.h">
-      <Filter>Burn\drv\psikyo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\psikyo\psikyo_sprite_func.h">
-      <Filter>Burn\drv\psikyo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\psikyo\psikyosh_render.h">
-      <Filter>Burn\drv\psikyo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\pst90s\kanekotb.h">
-      <Filter>Burn\drv\pst90s</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sega\fd1094.h">
-      <Filter>Burn\drv\sega</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sega\genesis_vid.h">
-      <Filter>Burn\drv\sega</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sega\mc8123.h">
-      <Filter>Burn\drv\sega</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sega\sys16.h">
-      <Filter>Burn\drv\sega</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\snes\snes.h">
-      <Filter>Burn\drv\snes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\taito\taito.h">
-      <Filter>Burn\drv\taito</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\taito\taito_ic.h">
-      <Filter>Burn\drv\taito</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\taito\taito_m68705.h">
-      <Filter>Burn\drv\taito</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\taito\tnzs_prot.h">
-      <Filter>Burn\drv\taito</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\toaplan\toa_extratext.h">
-      <Filter>Burn\drv\toaplan</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\toaplan\toa_gp9001_render.h">
-      <Filter>Burn\drv\toaplan</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\toaplan\toaplan.h">
-      <Filter>Burn\drv\toaplan</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\cpu\arm_intf.h">
       <Filter>cpus</Filter>
@@ -565,9 +466,6 @@
     <ClInclude Include="..\..\src\dep\kaillera\client\net.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sms\sms.h">
-      <Filter>Burn\drv\sms</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\burn\devices\6821pia.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
@@ -661,83 +559,8 @@
     <ClInclude Include="..\..\src\burn\drv\capcom\d_kenseim.h">
       <Filter>Burn\drv\capcom</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\dataeast\deco146.h">
-      <Filter>Burn\drv\dataeast</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\dataeast\decobac06.h">
-      <Filter>Burn\drv\dataeast</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\burn\drv\irem\irem_sound.h">
       <Filter>Burn\drv\irem</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\konami\k007121.h">
-      <Filter>Burn\drv\konami</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\konami\k007342_k007420.h">
-      <Filter>Burn\drv\konami</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\konami\timeplt_snd.h">
-      <Filter>Burn\drv\konami</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\dcs2k.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\ide.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\midtunit.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\midtunit_dma.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\midwayic.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\midwunit.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sega\usb_snd.h">
-      <Filter>Burn\drv\sega</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sms\smsfmintf.h">
-      <Filter>Burn\drv\sms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sms\smshvc.h">
-      <Filter>Burn\drv\sms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sms\smspio.h">
-      <Filter>Burn\drv\sms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sms\smsrender.h">
-      <Filter>Burn\drv\sms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sms\smsshared.h">
-      <Filter>Burn\drv\sms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sms\smssound.h">
-      <Filter>Burn\drv\sms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sms\smssystem.h">
-      <Filter>Burn\drv\sms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sms\smstms.h">
-      <Filter>Burn\drv\sms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\sms\smsvdp.h">
-      <Filter>Burn\drv\sms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\spectrum\spectrum.h">
-      <Filter>Burn\drv\spectrum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\taito\cchip.h">
-      <Filter>Burn\drv\taito</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\taito\taitof3_snd.h">
-      <Filter>Burn\drv\taito</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\taito\taitof3_video.h">
-      <Filter>Burn\drv\taito</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\burn\snd\asteroids.h">
       <Filter>Burn\snd</Filter>
@@ -993,6 +816,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\burn\devices\midtcs.h">
       <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\seibucop.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\snd\s14001a.h">
+      <Filter>Burn\snd</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3636,9 +3465,6 @@
     <ClCompile Include="..\..\src\burn\drv\sms\smsfmintf.cpp">
       <Filter>Burn\drv\sms</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\sms\smspio.cpp">
-      <Filter>Burn\drv\sms</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sms\smsrender.cpp">
       <Filter>Burn\drv\sms</Filter>
     </ClCompile>
@@ -4083,6 +3909,42 @@
     <ClCompile Include="..\..\src\burn\drv\snes\snes_dsp.cpp">
       <Filter>Burn\drv\snes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\atari\d_akkaarrh.cpp">
+      <Filter>Burn\drv\atari</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_kingofbox.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_thief.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp">
+      <Filter>Burn\drv\sega</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp">
+      <Filter>Burn\drv\sega</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sms\smspio.cpp">
+      <Filter>Burn\drv\sms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\seibucop.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\s14001a.cpp">
+      <Filter>Burn\snd</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">
@@ -4361,9 +4223,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\src\burn\drv\spectrum\spectrum_games.txt">
-      <Filter>Burn\drv\spectrum</Filter>
-    </Text>
     <Text Include="..\..\src\dep\libs\lib7z\_fba_lzmasdk_v16.04.txt">
       <Filter>libs\7z</Filter>
     </Text>

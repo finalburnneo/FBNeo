@@ -74,6 +74,7 @@
     <ClInclude Include="..\..\src\burn\devices\nmk112.h" />
     <ClInclude Include="..\..\src\burn\devices\pandora.h" />
     <ClInclude Include="..\..\src\burn\devices\resnet.h" />
+    <ClInclude Include="..\..\src\burn\devices\seibucop.h" />
     <ClInclude Include="..\..\src\burn\devices\seibusnd.h" />
     <ClInclude Include="..\..\src\burn\devices\sknsspr.h" />
     <ClInclude Include="..\..\src\burn\devices\slapstic.h" />
@@ -87,68 +88,9 @@
     <ClInclude Include="..\..\src\burn\devices\watchdog.h" />
     <ClInclude Include="..\..\src\burn\devices\x2212.h" />
     <ClInclude Include="..\..\src\burn\driver.h" />
-    <ClInclude Include="..\..\src\burn\drv\capcom\cps.h" />
-    <ClInclude Include="..\..\src\burn\drv\capcom\ctv_do.h" />
     <ClInclude Include="..\..\src\burn\drv\capcom\d_kenseim.h" />
-    <ClInclude Include="..\..\src\burn\drv\cave\cave.h" />
-    <ClInclude Include="..\..\src\burn\drv\cave\cave_sprite_render.h" />
-    <ClInclude Include="..\..\src\burn\drv\cave\cave_sprite_render_zoom.h" />
-    <ClInclude Include="..\..\src\burn\drv\cave\cave_tile_render.h" />
-    <ClInclude Include="..\..\src\burn\drv\cps3\cps3.h" />
-    <ClInclude Include="..\..\src\burn\drv\dataeast\deco146.h" />
-    <ClInclude Include="..\..\src\burn\drv\dataeast\deco16ic.h" />
-    <ClInclude Include="..\..\src\burn\drv\dataeast\decobac06.h" />
-    <ClInclude Include="..\..\src\burn\drv\galaxian\gal.h" />
     <ClInclude Include="..\..\src\burn\drv\irem\irem_cpu.h" />
     <ClInclude Include="..\..\src\burn\drv\irem\irem_sound.h" />
-    <ClInclude Include="..\..\src\burn\drv\konami\k007121.h" />
-    <ClInclude Include="..\..\src\burn\drv\konami\k007342_k007420.h" />
-    <ClInclude Include="..\..\src\burn\drv\konami\konamiic.h" />
-    <ClInclude Include="..\..\src\burn\drv\konami\timeplt_snd.h" />
-    <ClInclude Include="..\..\src\burn\drv\megadrive\megadrive.h" />
-    <ClInclude Include="..\..\src\burn\drv\midway\dcs2k.h" />
-    <ClInclude Include="..\..\src\burn\drv\midway\ide.h" />
-    <ClInclude Include="..\..\src\burn\drv\midway\midtunit.h" />
-    <ClInclude Include="..\..\src\burn\drv\midway\midtunit_dma.h" />
-    <ClInclude Include="..\..\src\burn\drv\midway\midwayic.h" />
-    <ClInclude Include="..\..\src\burn\drv\midway\midwunit.h" />
-    <ClInclude Include="..\..\src\burn\drv\neogeo\neogeo.h" />
-    <ClInclude Include="..\..\src\burn\drv\neogeo\neo_sprite_render.h" />
-    <ClInclude Include="..\..\src\burn\drv\neogeo\neo_text_render.h" />
-    <ClInclude Include="..\..\src\burn\drv\pce\pce.h" />
-    <ClInclude Include="..\..\src\burn\drv\pgm\pgm.h" />
-    <ClInclude Include="..\..\src\burn\drv\psikyo\psikyo.h" />
-    <ClInclude Include="..\..\src\burn\drv\psikyo\psikyosh_render.h" />
-    <ClInclude Include="..\..\src\burn\drv\psikyo\psikyo_render.h" />
-    <ClInclude Include="..\..\src\burn\drv\psikyo\psikyo_sprite_func.h" />
-    <ClInclude Include="..\..\src\burn\drv\pst90s\kanekotb.h" />
-    <ClInclude Include="..\..\src\burn\drv\sega\fd1094.h" />
-    <ClInclude Include="..\..\src\burn\drv\sega\genesis_vid.h" />
-    <ClInclude Include="..\..\src\burn\drv\sega\mc8123.h" />
-    <ClInclude Include="..\..\src\burn\drv\sega\sys16.h" />
-    <ClInclude Include="..\..\src\burn\drv\sega\usb_snd.h" />
-    <ClInclude Include="..\..\src\burn\drv\sms\sms.h" />
-    <ClInclude Include="..\..\src\burn\drv\sms\smsfmintf.h" />
-    <ClInclude Include="..\..\src\burn\drv\sms\smshvc.h" />
-    <ClInclude Include="..\..\src\burn\drv\sms\smspio.h" />
-    <ClInclude Include="..\..\src\burn\drv\sms\smsrender.h" />
-    <ClInclude Include="..\..\src\burn\drv\sms\smsshared.h" />
-    <ClInclude Include="..\..\src\burn\drv\sms\smssound.h" />
-    <ClInclude Include="..\..\src\burn\drv\sms\smssystem.h" />
-    <ClInclude Include="..\..\src\burn\drv\sms\smstms.h" />
-    <ClInclude Include="..\..\src\burn\drv\sms\smsvdp.h" />
-    <ClInclude Include="..\..\src\burn\drv\snes\snes.h" />
-    <ClInclude Include="..\..\src\burn\drv\spectrum\spectrum.h" />
-    <ClInclude Include="..\..\src\burn\drv\taito\cchip.h" />
-    <ClInclude Include="..\..\src\burn\drv\taito\taito.h" />
-    <ClInclude Include="..\..\src\burn\drv\taito\taitof3_snd.h" />
-    <ClInclude Include="..\..\src\burn\drv\taito\taitof3_video.h" />
-    <ClInclude Include="..\..\src\burn\drv\taito\taito_ic.h" />
-    <ClInclude Include="..\..\src\burn\drv\taito\taito_m68705.h" />
-    <ClInclude Include="..\..\src\burn\drv\taito\tnzs_prot.h" />
-    <ClInclude Include="..\..\src\burn\drv\toaplan\toaplan.h" />
-    <ClInclude Include="..\..\src\burn\drv\toaplan\toa_extratext.h" />
-    <ClInclude Include="..\..\src\burn\drv\toaplan\toa_gp9001_render.h" />
     <ClInclude Include="..\..\src\burn\hiscore.h" />
     <ClInclude Include="..\..\src\burn\snd\asteroids.h" />
     <ClInclude Include="..\..\src\burn\snd\ay8910.h" />
@@ -196,6 +138,7 @@
     <ClInclude Include="..\..\src\burn\snd\redbaron.h" />
     <ClInclude Include="..\..\src\burn\snd\rescap.h" />
     <ClInclude Include="..\..\src\burn\snd\rf5c68.h" />
+    <ClInclude Include="..\..\src\burn\snd\s14001a.h" />
     <ClInclude Include="..\..\src\burn\snd\saa1099.h" />
     <ClInclude Include="..\..\src\burn\snd\samples.h" />
     <ClInclude Include="..\..\src\burn\snd\segapcm.h" />
@@ -455,6 +398,7 @@
     <ClCompile Include="..\..\src\burn\devices\nmk112.cpp" />
     <ClCompile Include="..\..\src\burn\devices\pandora.cpp" />
     <ClCompile Include="..\..\src\burn\devices\resnet.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\seibucop.cpp" />
     <ClCompile Include="..\..\src\burn\devices\seibusnd.cpp" />
     <ClCompile Include="..\..\src\burn\devices\sknsspr.cpp" />
     <ClCompile Include="..\..\src\burn\devices\slapstic.cpp" />
@@ -467,6 +411,7 @@
     <ClCompile Include="..\..\src\burn\devices\vdc.cpp" />
     <ClCompile Include="..\..\src\burn\devices\watchdog.cpp" />
     <ClCompile Include="..\..\src\burn\devices\x2212.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\atari\d_akkaarrh.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_arcadecl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_atarig1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_badlands.cpp" />
@@ -499,18 +444,28 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\cps_scr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\ctv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_kingofbox.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_thief.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sms\smspio.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\snes_dsp.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_groundfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_gunbuster.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_mexico86.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_qix.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf262.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\s14001a.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
     <ClCompile Include="..\..\src\cpu\z80\z80ctc.cpp" />
     <ClCompile Include="..\..\src\cpu\z80\z80pio.cpp" />
@@ -525,8 +480,8 @@ del %(Filename).exe</Command>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 
 %(Filename).exe &gt; generated\ctv.h 
-rm %(Filename).obj
-rm %(Filename).exe</Command>
+del %(Filename).obj
+del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\generated\ctv.h</Outputs>
     </CustomBuild>
     <ClCompile Include="..\..\src\burn\drv\capcom\d_cps1.cpp" />
@@ -741,8 +696,8 @@ del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pgm_sprite.h</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp 
 %(Filename).exe &gt; generated\pgm_sprite.h 
-rm %(Filename).obj
-rm %(Filename).exe</Command>
+del %(Filename).obj
+del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pgm_sprite.h</Outputs>
     </CustomBuild>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_1942.cpp" />
@@ -1086,7 +1041,6 @@ rm %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\sms\d_sms.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sms\sms.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sms\smsfmintf.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\sms\smspio.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sms\smsrender.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sms\smssound.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sms\smssystem.cpp" />
@@ -1287,16 +1241,16 @@ rm %(Filename).exe</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl /DINLINE="__inline static" ..\..\src\cpu\m68k\%(Filename).c
 
 %(Filename).exe generated/ ..\..\src\cpu\m68k\m68k_in.c
-rm %(Filename).obj
-rm %(Filename).exe
+del %(Filename).obj
+del %(Filename).exe
 
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">m68kmake.exe</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl /DINLINE="__inline static" ..\..\src\cpu\m68k\%(Filename).c
 
 %(Filename).exe generated/ ..\..\src\cpu\m68k\m68k_in.c
-rm %(Filename).obj
-rm %(Filename).exe
+del %(Filename).obj
+del %(Filename).exe
 
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">m68kmake.exe</Outputs>
@@ -1407,7 +1361,7 @@ cd src
 cd dep
 cd scripts
 "cl" build_details.cpp
-build_details &gt;../../../projectfiles/visualstudio-2010/generated/build_details.h
+build_details &gt;../../../projectfiles/visualstudio-2015/generated/build_details.h
 del build_details.obj
 del build_details.exe
 </Command>
@@ -1418,9 +1372,9 @@ cd src
 cd dep
 cd scripts
 "cl" build_details.cpp
-build_details &gt;../../../projectfiles/visualstudio-2010/generated/build_details.h
-rm build_details.obj
-rm build_details.exe
+build_details &gt;../../../projectfiles/visualstudio-2015/generated/build_details.h
+del build_details.obj
+del build_details.exe
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build_details.h</Outputs>
     </CustomBuild>
@@ -1477,7 +1431,6 @@ rm build_details.exe
     <ResourceCompile Include="..\..\src\dep\libs\lib7z\7zVersion.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\src\burn\drv\spectrum\spectrum_games.txt" />
     <Text Include="..\..\src\dep\libs\lib7z\_fba_lzmasdk_v16.04.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -1504,7 +1457,7 @@ rm build_details.exe
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -1540,6 +1493,7 @@ rm build_details.exe
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>$(SolutionDir)$(Configuration)\</IntDir>
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;..\..\src\dep\vc\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -1559,7 +1513,7 @@ rm build_details.exe
       <IgnoreSpecificDefaultLibraries>winspool.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PreBuildEvent>
-      <Command>$(MSBuildProjectDirectory)/../../src/dep/vs2010/pre.bat "$(VCInstallDir)</Command>
+      <Command>$(MSBuildProjectDirectory)/../../src/dep/vs2010/pre2015.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -1598,6 +1552,9 @@ rm build_details.exe
       <IgnoreSpecificDefaultLibraries>winspool.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</IgnoreSpecificDefaultLibraries>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <PreBuildEvent>
+      <Command>$(MSBuildProjectDirectory)/../../src/dep/vs2010/pre2015.bat "$(VCInstallDir)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

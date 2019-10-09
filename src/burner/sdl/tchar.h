@@ -16,10 +16,6 @@ typedef char	TCHAR;
 typedef char	_TCHAR;
 #endif
 
-// WTF? This is a normal string function!
-// damn linux. :)
-#define wcslen(void)
-
 #define _tcslen     strlen
 #define _tcscpy     strcpy
 #define _tcsncpy    strncpy
@@ -37,6 +33,7 @@ typedef char	_TCHAR;
 #define _tcsicmp    strcasecmp
 #define _tcsnicmp   strncasecmp
 #define _tcstol     strtol
+#define _tcsrchr    strrchr
 #define _tcsstr     strstr
 
 #define _fgetts     fgets
@@ -46,7 +43,8 @@ typedef char	_TCHAR;
 
 #define _tfopen     fopen
 
-#define _stricmp    strcmp
+#define _stricmp    strcasecmp
+#define stricmp     strcasecmp
 #define _strnicmp   strncmp
 
 // FBA function, change this!

@@ -196,7 +196,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 	if (!(i & DRV_ASCIIONLY)) {
 		switch (i & 0xFF) {
-#ifndef __LIBRETRO__
+#if !defined(__LIBRETRO__) && !defined(BUILD_PI)
 			case DRV_FULLNAME:
 				pszStringW = pDriver[nBurnDrvActive]->szFullNameW;
 				
@@ -236,7 +236,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 				}
 				break;
-#endif // __LIBRETRO__
+#endif // !defined(__LIBRETRO__) && !defined(BUILD_PI)
 			case DRV_COMMENT:
 				pszStringW = pDriver[nBurnDrvActive]->szCommentW;
 				break;

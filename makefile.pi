@@ -29,7 +29,6 @@ undefine BUILD_A68K
 undefine UNICODE
 
 
-
 #
 #	Specify paths/files
 #
@@ -40,8 +39,12 @@ srcdir	= src/
 include makefile.burn_rules
 include makefile.burner_pi_rules
 
-incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/pi/include \
-		  -I/usr/include/SDL
+incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
+		  -I/local/include -I$(srcdir)dep/pi/include -I$(srcdir)intf/input/sdl \
+		  -I/usr/include/SDL -I/opt/vc/include/interface/vcos/pthreads \
+		  -I/opt/vc/include/interface/vmcs_host/linux -I/opt/vc/include
+
+lib	= -lstdc++ -lSDL -lpthread -ludev -L/usr/X11R6/lib -L/opt/vc/lib
 
 autdep	= $(depobj:.o=.d)
 drvdep	= $(drvsrc:.o=.d)
@@ -101,7 +104,7 @@ CXX	= g++
 LD	= $(CXX)
 AS	= nasm
 
-LDFLAGS	= -static
+#LDFLAGS	= -static
 
 CFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
@@ -192,11 +195,6 @@ else
 	LDFLAGS	 += -s
 endif
 
-ifdef BUILD_X86_ASM
-	CFLAGS	 += -mmmx
-	CXXFLAGS += -mmmx
-endif
-
 # For zlib
 DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=32
 
@@ -254,11 +252,11 @@ endif
 
 ifeq ($(MAKELEVEL),2)
 
-$(objdir)/drivers.o:		$(autdrv)
+$(objdir)drivers.o:		$(autdrv)
 	@echo Linking drivers...
 	@$(LD) -r -nostdlib -o $@ $^
 
-$(NAME):	$(allobj) $(objdir)/drivers.o
+$(NAME):	$(allobj) $(objdir)drivers.o
 	@echo
 	@echo Linking executable... $(NAME)
 	@$(LD) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(lib)
@@ -339,7 +337,7 @@ $(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake $(objdir)dep/generated/m
 	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kops.c -o $(objdir)cpu/m68k/m68kops.o
 
 $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/m68k/m68kmake $(srcdir)cpu/m68k/m68k_in.c
-	$(objdir)/cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
+	$(objdir)cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
 
 $(objdir)cpu/m68k/m68kmake: $(srcdir)cpu/m68k/m68kmake.c
 	@echo Compiling Musashi MC680x0 core \(m68kmake.c\)...

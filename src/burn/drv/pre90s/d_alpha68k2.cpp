@@ -1,5 +1,5 @@
 // FB Alpha Alpha68k II & V driver module
-// Based on MAME driver by Pierpaolo Prazzoli, Bryan McPhail,Stephane Humbert
+// Based on MAME driver by Pierpaolo Prazzoli, Bryan McPhail, Stephane Humbert
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -74,101 +74,101 @@ static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
 
 static struct BurnInputInfo TimesoldInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 3" },
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 3" },
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
-	{"Service Mode",BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Timesold)
 
 static struct BurnInputInfo BtlfieldInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 3" },
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 3" },
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
-	{"Service Mode",BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Btlfield)
 
 static struct BurnInputInfo BtlfieldbInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
-	{"Service Mode",BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Btlfieldb)
 
 static struct BurnInputInfo GoldmedlInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 fire 2"	},
@@ -184,98 +184,98 @@ static struct BurnInputInfo GoldmedlInputList[] = {
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy2 + 3,	"p4 fire 2"	},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy2 + 5,	"p4 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
-	{"Service Mode",BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Goldmedl)
 
 static struct BurnInputInfo SkysoldrInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
-	{"Service Mode",BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Skysoldr)
 
 static struct BurnInputInfo GangwarsInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
-	{"Service Mode",BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Gangwars)
 
 static struct BurnInputInfo SbasebalInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
-	{"Service Mode",BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"      },
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Sbasebal)
@@ -771,7 +771,7 @@ static void RotateLeft(INT32 *v) {
 }
 
 static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -dink
-	if (joy[0] && joy[2]) return 11;    // up left
+	if (joy[0] && joy[2]) return 11;   // up left
 	if (joy[0] && joy[3]) return 1;    // up right
 
 	if (joy[1] && joy[2]) return 7;    // down left
@@ -844,8 +844,8 @@ static INT32 get_distance(INT32 from, INT32 to) {
 	while (1) {
 		fromtmp++;
 		countA++;
-		if(fromtmp>0xb) fromtmp = 0;
-		if(fromtmp == totmp || countA > 32) break;
+		if (fromtmp > 0xb) fromtmp = 0;
+		if (fromtmp == totmp || countA > 32) break;
 	}
 
 	fromtmp = from / rotate_gunpos_multiplier;
@@ -854,8 +854,8 @@ static INT32 get_distance(INT32 from, INT32 to) {
 	while (1) {
 		fromtmp--;
 		countB++;
-		if(fromtmp<0) fromtmp = 0xb;
-		if(fromtmp == totmp || countB > 32) break;
+		if (fromtmp < 0) fromtmp = 0xb;
+		if (fromtmp == totmp || countB > 32) break;
 	}
 
 	if (countA > countB) {
@@ -922,8 +922,8 @@ static void alpha68k_II_video_bank_write(UINT8 offset)
 		return;
 
 		case 0x18:
-			if (buffer_68) {if (buffer_60) bank_base = 3; else bank_base = 2; }
-			if (buffer_28) {if (buffer_60) bank_base = 1; else bank_base = 0; }
+			if (buffer_68) { if (buffer_60) bank_base = 3; else bank_base = 2; }
+			if (buffer_28) { if (buffer_60) bank_base = 1; else bank_base = 0; }
 		return;
 
 		case 0x30:
@@ -937,8 +937,8 @@ static void alpha68k_II_video_bank_write(UINT8 offset)
 		return;
 
 		case 0x38:
-			if (buffer_68) {if (buffer_60) bank_base = 7; else bank_base = 6; }
-			if (buffer_28) {if (buffer_60) bank_base = 5; else bank_base = 4; }
+			if (buffer_68) { if (buffer_60) bank_base = 7; else bank_base = 6; }
+			if (buffer_28) { if (buffer_60) bank_base = 5; else bank_base = 4; }
 		return;
 	}
 }
@@ -1035,7 +1035,7 @@ static UINT16 alpha_II_trigger_r(INT32 offset)
 static INT32 alpha_V_trigger_r(UINT16 offset)
 {
 	offset = (offset / 2) & 0x1fff;
-	UINT16 *m_shared_ram = (UINT16*)DrvShareRAM;	
+	UINT16 *m_shared_ram = (UINT16*)DrvShareRAM;
 
 	static const UINT8 coinage1[8][2] = {{1,1}, {1,5}, {1,3}, {2,3}, {1,2}, {1,6}, {1,4}, {3,2}};
 	static const UINT8 coinage2[8][2] = {{1,1}, {5,1}, {3,1}, {7,1}, {2,1}, {6,1}, {4,1}, {8,1}};
@@ -1310,8 +1310,6 @@ static UINT8 __fastcall alpha68k_ii_read_byte(UINT32 address)
 
 static void __fastcall alpha68k_v_write_word(UINT32 address, UINT16 data)
 {
-//	bprintf (0, _T("WW: %5.5x, %4.4x\n"), address, data);
-
 	// video ram is written byte-wise
 	if ((address & 0xfff000) == 0x100000) {
 		DrvVidRAM[(address / 2) & 0x7ff] = data;
@@ -1341,8 +1339,6 @@ static void __fastcall alpha68k_v_write_word(UINT32 address, UINT16 data)
 
 static void __fastcall alpha68k_v_write_byte(UINT32 address, UINT8 data)
 {
-//	bprintf (0, _T("WB: %5.5x, %2.2x\n"), address, data);
-
 	// video ram is written byte-wise
 	if ((address & 0xfff000) == 0x100000) {
 		DrvVidRAM[(address / 2) & 0x7ff] = data;
@@ -1376,8 +1372,6 @@ static void __fastcall alpha68k_v_write_byte(UINT32 address, UINT8 data)
 
 static UINT16 __fastcall alpha68k_v_read_word(UINT32 address)
 {
-//	bprintf (0, _T("RW: %5.5x\n"), address);
-
 	if ((address & 0xfff000) == 0x100000) {
 		return DrvVidRAM[(address / 2) & 0x7ff];
 	}
@@ -1406,8 +1400,6 @@ static UINT16 __fastcall alpha68k_v_read_word(UINT32 address)
 
 static UINT8 __fastcall alpha68k_v_read_byte(UINT32 address)
 {
-//	if (address != 0x0e8000) bprintf (0, _T("RB: %5.5x\n"), address);
-
 	if ((address & 0xfff000) == 0x100000) {
 		return DrvVidRAM[(address / 2) & 0x7ff];
 	}
@@ -1515,11 +1507,6 @@ static void DrvYM2203WritePortA(UINT32, UINT32 data)
 		sound_nmi_enable = 0;
 
 	sound_nmi_previous = data & 1;
-}
-
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((3579545.00 * 2) / (nBurnFPS / 100.0000))));
 }
 
 static INT32 DrvDoReset()
@@ -1674,7 +1661,7 @@ static INT32 Drv2Init(INT32 (*pLoadCb)(), UINT8 invert, UINT16 mc_id, UINT16 coi
 	BurnYM2203SetAllRoutes(0, 0.65, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.10);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, 3579545*2);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1742,7 +1729,7 @@ static INT32 Drv5Init(INT32 (*pLoadCb)(), UINT8 invert, UINT16 mc_id, UINT16 coi
 	BurnYM2203SetAllRoutes(0, 0.65, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.10);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, 3579545*2);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1750,7 +1737,7 @@ static INT32 Drv5Init(INT32 (*pLoadCb)(), UINT8 invert, UINT16 mc_id, UINT16 coi
 	GenericTilemapSetGfx(0, DrvGfxROM0, 4, 8, 8, 0x20000, 0, 0xf);
 	GenericTilemapSetTransparent(0,0);
 	GenericTilemapSetOffsets(0, 0, -16);
-	
+
 	DrvDoReset();
 
 	return 0;
@@ -1827,19 +1814,7 @@ static void draw_sprites(INT32 j, INT32 s, INT32 e, INT32 fx_mask, INT32 fy_mask
 
 			if (color)
 			{
-				if (fy) {
-					if (fx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, tile, mx, my - 16, color, 4, 0, 0, DrvGfxROM1);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, tile, mx, my - 16, color, 4, 0, 0, DrvGfxROM1);
-					}
-				} else {
-					if (fx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, tile, mx, my - 16, color, 4, 0, 0, DrvGfxROM1);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, tile, mx, my - 16, color, 4, 0, 0, DrvGfxROM1);
-					}
-				}
+				Draw16x16MaskTile(pTransDraw, tile, mx, my - 16, fx, fy, color, 4, 0, 0, DrvGfxROM1);
 			}
 
 			if (flipscreen)
@@ -1857,12 +1832,7 @@ static INT32 Alpha68KIIDraw()
 		DrvRecalc = 1;
 	}
 
-	{
-		INT32 last_color = BurnDrvGetPaletteEntries() - 1;
-		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-			pTransDraw[i] = last_color;
-		}
-	}
+	BurnTransferClear(BurnDrvGetPaletteEntries() - 1);
 
 	GenericTilemapSetFlip(0, flipscreen ? TMAP_FLIPXY : 0);
 
@@ -1891,12 +1861,7 @@ static INT32 GangwarsDraw()
 		DrvRecalc = 1;
 	}
 
-	{
-		INT32 last_color = BurnDrvGetPaletteEntries() - 1;
-		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-			pTransDraw[i] = last_color;
-		}
-	}
+	BurnTransferClear(BurnDrvGetPaletteEntries() - 1);
 
 	GenericTilemapSetFlip(0, flipscreen ? TMAP_FLIPXY : 0);
 
@@ -1925,12 +1890,7 @@ static INT32 SkyadvntDraw()
 		DrvRecalc = 1;
 	}
 
-	{
-		INT32 last_color = BurnDrvGetPaletteEntries() - 1;
-		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-			pTransDraw[i] = last_color;
-		}
-	}
+	BurnTransferClear(BurnDrvGetPaletteEntries() - 1);
 
 	GenericTilemapSetFlip(0, flipscreen ? TMAP_FLIPXY : 0);
 
@@ -1971,12 +1931,7 @@ static INT32 SbasebalDraw()
 		DrvRecalc = 1;
 	}
 
-	{
-		INT32 last_color = BurnDrvGetPaletteEntries() - 1;
-		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-			pTransDraw[i] = last_color;
-		}
-	}
+	BurnTransferClear(BurnDrvGetPaletteEntries() - 1);
 
 	GenericTilemapSetFlip(0, flipscreen ? TMAP_FLIPXY : 0);
 
@@ -2033,9 +1988,8 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = (game_id == 5) ? 141 : 125; // sound nmi
-	INT32 nTotalCycles[2] = { ((game_id == 5) ? 10000000 : 8000000) / 60, (3579545 * 2) / 60 };
+	INT32 nCyclesTotal[2] = { ((game_id == 5) ? 10000000 : 8000000) / 60, (3579545 * 2) / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -2043,8 +1997,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = (nTotalCycles[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += SekRun(nSegment);
+		CPU_RUN(0, Sek);
+
 		if (microcontroller_id == 0x8803) { // goldmedl
 
 			if (i == (nInterleave - 1)) {
@@ -2060,12 +2014,11 @@ static INT32 DrvFrame()
 			}
 		}	
 
-		nSegment = nTotalCycles[1] / nInterleave;
-		BurnTimerUpdate((i + 1) * nSegment);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 		if (sound_nmi_enable) ZetNmi();
 	}
 
-	BurnTimerEndFrame(nTotalCycles[1]);
+	BurnTimerEndFrame(nCyclesTotal[1]);
 	
 	if (pBurnSoundOut) {
 		BurnYM2413Render(pBurnSoundOut, nBurnSoundLen);
@@ -2220,7 +2173,7 @@ static INT32 TimesoldInit()
 
 struct BurnDriver BurnDrvTimesold = {
 	"timesold", NULL, NULL, NULL, "1987",
-	"Time Soldiers (US Rev 3)\0", NULL, "Alpha Denshi Co. (SNK/Romstar license)", "Miscellaneous",
+	"Time Soldiers (US Rev 3)\0", NULL, "Alpha Denshi Co. (SNK/Romstar license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, timesoldRomInfo, timesoldRomName, NULL, NULL, NULL, NULL, TimesoldInputInfo, TimesoldDIPInfo,
@@ -2277,7 +2230,7 @@ static INT32 Timesold1Init()
 
 struct BurnDriver BurnDrvTimesold1 = {
 	"timesold1", "timesold", NULL, NULL, "1987",
-	"Time Soldiers (US Rev 1)\0", NULL, "Alpha Denshi Co. (SNK/Romstar license)", "Miscellaneous",
+	"Time Soldiers (US Rev 1)\0", NULL, "Alpha Denshi Co. (SNK/Romstar license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, timesold1RomInfo, timesold1RomName, NULL, NULL, NULL, NULL, TimesoldInputInfo, TimesoldDIPInfo,
@@ -2363,7 +2316,7 @@ static INT32 BtlfieldInit()
 
 struct BurnDriver BurnDrvBtlfield = {
 	"btlfield", "timesold", NULL, NULL, "1987",
-	"Battle Field (Japan)\0", NULL, "Alpha Denshi Co. (SNK license)", "Miscellaneous",
+	"Battle Field (Japan)\0", NULL, "Alpha Denshi Co. (SNK license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, btlfieldRomInfo, btlfieldRomName, NULL, NULL, NULL, NULL, BtlfieldInputInfo, BtlfieldDIPInfo,
@@ -2470,7 +2423,7 @@ static INT32 BtlfieldbInit()
 
 struct BurnDriver BurnDrvBtlfieldb = {
 	"btlfieldb", "timesold", NULL, NULL, "1987",
-	"Battle Field (bootleg)\0", "no-rotation joystick ver", "bootleg", "Miscellaneous",
+	"Battle Field (bootleg)\0", "no-rotation joystick ver", "bootleg", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, btlfieldbRomInfo, btlfieldbRomName, NULL, NULL, NULL, NULL, BtlfieldbInputInfo, BtlfieldbDIPInfo,
@@ -2565,7 +2518,7 @@ static INT32 SkysoldrInit()
 
 struct BurnDriver BurnDrvSkysoldr = {
 	"skysoldr", NULL, NULL, NULL, "1988",
-	"Sky Soldiers (US)\0", NULL, "Alpha Denshi Co. (SNK of America/Romstar license)", "Miscellaneous",
+	"Sky Soldiers (US)\0", NULL, "Alpha Denshi Co. (SNK of America/Romstar license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, skysoldrRomInfo, skysoldrRomName, NULL, NULL, NULL, NULL, SkysoldrInputInfo, SkysoldrDIPInfo,
@@ -2696,7 +2649,7 @@ static INT32 SkysoldrblInit()
 
 struct BurnDriver BurnDrvSkysoldrbl = {
 	"skysoldrbl", "skysoldr", NULL, NULL, "1988",
-	"Sky Soldiers (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Sky Soldiers (bootleg)\0", NULL, "bootleg", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, skysoldrblRomInfo, skysoldrblRomName, NULL, NULL, NULL, NULL, SkysoldrInputInfo, SkysoldrDIPInfo,
@@ -2769,7 +2722,7 @@ static INT32 GoldmedlInit()
 
 struct BurnDriver BurnDrvGoldmedl = {
 	"goldmedl", NULL, NULL, NULL, "1988",
-	"Gold Medalist (set 1)\0", NULL, "SNK", "Miscellaneous",
+	"Gold Medalist (set 1)\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, goldmedlRomInfo, goldmedlRomName, NULL, NULL, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
@@ -2841,7 +2794,7 @@ static INT32 GoldmedlaInit()
 
 struct BurnDriver BurnDrvGoldmedla = {
 	"goldmedla", "goldmedl", NULL, NULL, "1988",
-	"Gold Medalist (set 2)\0", NULL, "SNK", "Miscellaneous",
+	"Gold Medalist (set 2)\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, goldmedlaRomInfo, goldmedlaRomName, NULL, NULL, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
@@ -2879,7 +2832,7 @@ STD_ROM_FN(goldmedlb)
 
 struct BurnDriver BurnDrvGoldmedlb = {
 	"goldmedlb", "goldmedl", NULL, NULL, "1988",
-	"Gold Medalist (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Gold Medalist (bootleg)\0", NULL, "bootleg", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, goldmedlbRomInfo, goldmedlbRomName, NULL, NULL, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
@@ -2947,7 +2900,7 @@ static INT32 SkyadvntInit()
 
 struct BurnDriver BurnDrvSkyadvnt = {
 	"skyadvnt", NULL, NULL, NULL, "1989",
-	"Sky Adventure (World)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
+	"Sky Adventure (World)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, skyadvntRomInfo, skyadvntRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, SkyadvntDIPInfo,
@@ -2987,7 +2940,7 @@ static INT32 SkyadvntuInit()
 
 struct BurnDriver BurnDrvSkyadvntu = {
 	"skyadvntu", "skyadvnt", NULL, NULL, "1989",
-	"Sky Adventure (US)\0", NULL, "Alpha Denshi Co. (SNK of America license)", "Miscellaneous",
+	"Sky Adventure (US)\0", NULL, "Alpha Denshi Co. (SNK of America license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, skyadvntuRomInfo, skyadvntuRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, SkyadvntuDIPInfo,
@@ -3022,7 +2975,7 @@ STD_ROM_FN(skyadvntj)
 
 struct BurnDriver BurnDrvSkyadvntj = {
 	"skyadvntj", "skyadvnt", NULL, NULL, "1989",
-	"Sky Adventure (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
+	"Sky Adventure (Japan)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, skyadvntjRomInfo, skyadvntjRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, SkyadvntDIPInfo,
@@ -3097,7 +3050,7 @@ static INT32 GangwarsInit()
 
 struct BurnDriver BurnDrvGangwars = {
 	"gangwars", NULL, NULL, NULL, "1989",
-	"Gang Wars\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
+	"Gang Wars\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, gangwarsRomInfo, gangwarsRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, GangwarsDIPInfo,
@@ -3235,7 +3188,7 @@ static INT32 GangwarsbInit()
 
 struct BurnDriver BurnDrvGangwarsb = {
 	"gangwarsb", "gangwars", NULL, NULL, "1989",
-	"Gang Wars (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Gang Wars (bootleg)\0", NULL, "bootleg", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, gangwarsbRomInfo, gangwarsbRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, GangwarsDIPInfo,
@@ -3276,7 +3229,7 @@ STD_ROM_FN(gangwarsj)
 
 struct BurnDriver BurnDrvGangwarsj = {
 	"gangwarsj", "gangwars", NULL, NULL, "1989",
-	"Gang Wars (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
+	"Gang Wars (Japan)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, gangwarsjRomInfo, gangwarsjRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, GangwarsDIPInfo,
@@ -3317,7 +3270,7 @@ STD_ROM_FN(gangwarsu)
 
 struct BurnDriver BurnDrvGangwarsu = {
 	"gangwarsu", "gangwars", NULL, NULL, "1989",
-	"Gang Wars (US)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
+	"Gang Wars (US)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, gangwarsuRomInfo, gangwarsuRomName, NULL, NULL, NULL, NULL, GangwarsInputInfo, GangwarsuDIPInfo,
@@ -3389,7 +3342,7 @@ static INT32 SbasebalInit()
 
 struct BurnDriver BurnDrvSbasebal = {
 	"sbasebal", NULL, NULL, NULL, "1989",
-	"Super Champion Baseball (US)\0", NULL, "Alpha Denshi Co. (SNK of America license)", "Miscellaneous",
+	"Super Champion Baseball (US)\0", NULL, "Alpha Denshi Co. (SNK of America license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, sbasebalRomInfo, sbasebalRomName, NULL, NULL, NULL, NULL, SbasebalInputInfo, SbasebalDIPInfo,
@@ -3429,7 +3382,7 @@ static INT32 SbasebaljInit()
 
 struct BurnDriver BurnDrvSbasebalj = {
 	"sbasebalj", "sbasebal", NULL, NULL, "1989",
-	"Super Champion Baseball (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
+	"Super Champion Baseball (Japan)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, sbasebaljRomInfo, sbasebaljRomName, NULL, NULL, NULL, NULL, SbasebalInputInfo, SbasebalDIPInfo /*wrong*/,

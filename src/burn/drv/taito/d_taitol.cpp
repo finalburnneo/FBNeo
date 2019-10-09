@@ -3720,6 +3720,32 @@ struct BurnDriver BurnDrvKurikint = {
 };
 
 
+// Kuri Kinton (US, World Games license)
+
+static struct BurnRomInfo kurikintwRomDesc[] = {
+	{ "b42-10.ic2",		0x20000, 0x87460109, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "b42-06.ic6",		0x20000, 0xfa15fd65, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "b42-07.ic22",	0x10000, 0x0f2719c0, 3 | BRF_PRG | BRF_ESS }, //  2 sound z80 code
+
+	{ "b42-01.ic1",		0x80000, 0x7d1a1fec, 4 | BRF_GRA },           //  3 graphics data
+	{ "b42-02.ic5",		0x80000, 0x1a52e65c, 4 | BRF_GRA },           //  4
+};
+
+STD_ROM_PICK(kurikintw)
+STD_ROM_FN(kurikintw)
+
+struct BurnDriver BurnDrvKurikintw = {
+	"kurikintw", "kurikint", NULL, NULL, "1988",
+	"Kuri Kinton (US, World Games license)\0", NULL, "Taito Corporation (World Games, Inc. license)", "Taito L System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	NULL, kurikintwRomInfo, kurikintwRomName, NULL, NULL, NULL, NULL, FhawkInputInfo, KurikintjDIPInfo,
+	KurikintInit, DrvExit, Z80x2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	320, 224, 4, 3
+};
+
+
 // Kuri Kinton (US)
 
 static struct BurnRomInfo kurikintuRomDesc[] = {

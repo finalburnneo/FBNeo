@@ -2,7 +2,7 @@
 // Based on MAME driver by Olivier Galibert
 
 #include "tiles_generic.h"
-#include "m68000_intf.h" 
+#include "m68000_intf.h"
 #include "z80_intf.h"
 #include "konamiic.h"
 #include "burn_ym2151.h"
@@ -42,7 +42,7 @@ static UINT8 DrvJoy3[16];
 static UINT8 DrvJoy4[16];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[4];
-static UINT8 DrvDips[4];
+static UINT8 DrvDips[3];
 
 static INT32 avac_bits[4];
 static INT32 avac_occupancy[4];
@@ -53,81 +53,76 @@ static INT32 irq6_timer;
 static UINT16 control_data;
 
 static struct BurnInputInfo GijoeInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 3"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 10,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 8,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p2 fire 2"},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 3"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 10,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 11,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 8,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 3"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy2 + 2,	"p3 coin"},
-	{"P3 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p3 start"},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p3 left"},
-	{"P3 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p3 right"},
-	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p3 fire 1"},
-	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"},
-	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy2 + 2,	"p3 coin"	},
+	{"P3 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p3 start"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p3 left"	},
+	{"P3 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p3 right"	},
+	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p3 fire 1"	},
+	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"	},
+	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy2 + 3,	"p4 coin"},
-	{"P4 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p4 start"},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"},
-	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 9,	"p4 right"},
-	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 12,	"p4 fire 1"},
-	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 13,	"p4 fire 2"},
-	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy4 + 14,	"p4 fire 3"},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy2 + 3,	"p4 coin"	},
+	{"P4 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p4 start"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"	},
+	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 9,	"p4 right"	},
+	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 12,	"p4 fire 1"	},
+	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 13,	"p4 fire 2"	},
+	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy4 + 14,	"p4 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service 1",		BIT_DIGITAL,	DrvJoy2 + 8,	"service"},
-	{"Service 2",		BIT_DIGITAL,	DrvJoy2 + 9,	"service"},
-	{"Service 3",		BIT_DIGITAL,	DrvJoy2 + 10,	"service"},
-	{"Service 4",		BIT_DIGITAL,	DrvJoy2 + 11,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
-	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy2 + 8,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy2 + 9,	"service"	},
+	{"Service 3",		BIT_DIGITAL,	DrvJoy2 + 10,	"service"	},
+	{"Service 4",		BIT_DIGITAL,	DrvJoy2 + 11,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy1 + 11,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Gijoe)
 
 static struct BurnDIPInfo GijoeDIPList[]=
 {
-	{0x29, 0xff, 0xff, 0x08, NULL			},
-	{0x2a, 0xff, 0xff, 0x80, NULL			},
-	{0x2b, 0xff, 0xff, 0x80, NULL			},
-	{0x2c, 0xff, 0xff, 0x80, NULL			},
+	{0x2a, 0xff, 0xff, 0x00, NULL				},
+	{0x2b, 0xff, 0xff, 0x80, NULL				},
+	{0x2c, 0xff, 0xff, 0x80, NULL				},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x29, 0x01, 0x08, 0x08, "Off"			},
-	{0x29, 0x01, 0x08, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    2, "Sound"		},
-	{0x2a, 0x01, 0x80, 0x80, "Mono"			},
-	{0x2a, 0x01, 0x80, 0x00, "Stereo"		},
+	{0   , 0xfe, 0   ,    2, "Sound"			},
+	{0x2a, 0x01, 0x80, 0x80, "Mono"				},
+	{0x2a, 0x01, 0x80, 0x00, "Stereo"			},
 
 	{0   , 0xfe, 0   ,    2, "Coin mechanism"	},
-	{0x2b, 0x01, 0x80, 0x80, "Common"		},
+	{0x2b, 0x01, 0x80, 0x80, "Common"			},
 	{0x2b, 0x01, 0x80, 0x00, "Independent"		},
 
-	{0   , 0xfe, 0   ,    2, "Players"		},
-	{0x2c, 0x01, 0x80, 0x80, "2"			},
-	{0x2c, 0x01, 0x80, 0x00, "4"			},
+	{0   , 0xfe, 0   ,    2, "Number of Players"},
+	{0x2c, 0x01, 0x80, 0x80, "2"				},
+	{0x2c, 0x01, 0x80, 0x00, "4"				},
 };
 
 STDDIPINFO(Gijoe)
@@ -188,7 +183,6 @@ static void __fastcall gijoe_main_write_word(UINT32 address, UINT16 data)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
-	//bprintf(0, _T("%X %X\n"), address, data);
 }
 
 static void __fastcall gijoe_main_write_byte(UINT32 address, UINT8 data)
@@ -317,7 +311,7 @@ static UINT8 __fastcall gijoe_main_read_byte(UINT32 address)
 
 		case 0x1f0000:
 		case 0x1f0001:
-			return K053246Read((address & 1)); // ^ 1? ??
+			return K053246Read((address & 1));
 	}
 
 	return 0;
@@ -359,16 +353,16 @@ static void gijoe_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority
 {
 	INT32 pri = (*color & 0x03e0) >> 4;
 
-	if (pri <= layerpri[3])					*priority = 0x0000;
+	if (pri <= layerpri[3])								*priority = 0x0000;
 	else if (pri > layerpri[3] && pri <= layerpri[2])	*priority = 0xff00;
 	else if (pri > layerpri[2] && pri <= layerpri[1])	*priority = 0xfff0;
 	else if (pri > layerpri[1] && pri <= layerpri[0])	*priority = 0xfffc;
-	else							*priority = 0xfffe;
+	else												*priority = 0xfffe;
 
 	*color = sprite_colorbase | (*color & 0x001f);
 }
 
-static void gijoe_tile_callback(int layer, int *code, int *color, int */*flags*/)
+static void gijoe_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
 {
 	INT32 tile = *code;
 
@@ -457,15 +451,15 @@ static INT32 MemIndex()
 	DrvZ80ROM		= Next; Next += 0x010000;
 
 	DrvGfxROM0		= Next; Next += 0x200000;
-	DrvGfxROMExp0		= Next; Next += 0x400000;
+	DrvGfxROMExp0	= Next; Next += 0x400000;
 	DrvGfxROM1		= Next; Next += 0x400000;
-	DrvGfxROMExp1		= Next; Next += 0x800000;
+	DrvGfxROMExp1	= Next; Next += 0x800000;
 
 	DrvSndROM		= Next; Next += 0x200000;
 
 	DrvEeprom		= Next; Next += 0x000080;
 
-	konami_palette32	= (UINT32*)Next;
+	konami_palette32= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -544,13 +538,14 @@ static INT32 DrvInit()
 
 	K056832Init(DrvGfxROM0, DrvGfxROMExp0, 0x200000, gijoe_tile_callback);
 	K056832SetGlobalOffsets(24, 16);
+	K056832SetLinemap();
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, gijoe_sprite_callback, 1);
 	K053247SetSpriteOffset(-61, -46+10);
 
 	K054539Init(0, 48000, DrvSndROM, 0x200000);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 2.10, BURN_SND_ROUTE_LEFT);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 2.10, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
 
@@ -587,7 +582,7 @@ static void DrvPaletteRecalc()
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
-		b = (b << 3) | (b >> 2); 
+		b = (b << 3) | (b >> 2);
 
 		DrvPalette[i] = (r << 16) + (g << 8) + b;
 	}
@@ -597,16 +592,12 @@ static INT32 DrvDraw()
 {
 	DrvPaletteRecalc();
 
-	INT32 layers[4], dirty, mask = 0, vrc_mode, vrc_new;
+	INT32 layers[4], vrc_mode, vrc_new;
 
 	K056832ReadAvac(&vrc_mode, &vrc_new);
 
 	if (vrc_mode)
 	{
-		for (dirty = 0xf000; dirty; dirty >>= 4)
-			if ((avac_vrc & dirty) != (vrc_new & dirty))
-				mask |= dirty;
-
 		avac_vrc = vrc_new;
 		avac_bits[0] = vrc_new << 4  & 0xf000;
 		avac_bits[1] = vrc_new       & 0xf000;
@@ -637,7 +628,7 @@ static INT32 DrvDraw()
 		K056832SetLayerOffsets(3, 16, 0);
 	}
 
-	KonamiClearBitmaps(0);
+	KonamiClearBitmaps(DrvPalette[0]);
 
 	layers[0] = 0;
 	layerpri[0] = 0; // not sure
@@ -649,6 +640,13 @@ static INT32 DrvDraw()
 	layerpri[3] = K053251GetPriority(4);
 
 	konami_sortlayers4(layers, layerpri);
+
+	// find layer 3's pri, tell renderer to inhibit shadows on that pri
+	for (INT32 i = 0; i < 4; i++) {
+		if (layers[i] == 3) {
+			konami_set_layer_shadow_inhibit_mode(1 << i);
+		}
+	}
 
 	if (nBurnLayer & 1) K056832Draw(layers[0], K056832_DRAW_FLAG_MIRROR, 1);
 	if (nBurnLayer & 2) K056832Draw(layers[1], K056832_DRAW_FLAG_MIRROR, 2);
@@ -677,10 +675,9 @@ static INT32 DrvFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 
-		DrvInputs[0] = (DrvInputs[0] & 0xf7ff) | ((DrvDips[0] & 0x08) << 8);
-		DrvInputs[2] = (DrvInputs[2] & 0x7f7f) | (DrvDips[1] & 0x80) | ((DrvDips[2] & 0x80) << 8);
-		DrvInputs[3] = (DrvInputs[3] & 0xff7f) | (DrvDips[3] & 0x80);
-		DrvInputs[0] &= 0x0fff;
+		DrvInputs[0] = (DrvInputs[0] & 0x0fff);
+		DrvInputs[2] = (DrvInputs[2] & 0x7f7f) | (DrvDips[0] & 0x80) | ((DrvDips[1] & 0x80) << 8);
+		DrvInputs[3] = (DrvInputs[3] & 0xff7f) | (DrvDips[2] & 0x80);
 		DrvInputs[1] &= 0x0fff;
 	}
 
@@ -692,22 +689,14 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext, nCyclesSegment;
-
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesSegment = SekRun(nCyclesSegment);
-		nCyclesDone[0] += nCyclesSegment;
+		CPU_RUN(0, Sek);
 
 		if (control_data & 0x20 && irq6_timer == 0) {
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			irq6_timer = -1;
 		} else if (irq6_timer != -1) irq6_timer--;
 
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[1] += nCyclesSegment;
+		CPU_RUN(1, Zet);
 		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1) && sound_nmi_enable) {
 			ZetNmi();
 		}
@@ -723,6 +712,10 @@ static INT32 DrvFrame()
 					SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 				}
 			}
+
+			if (pBurnDraw) { // draw at vblank (or linemapping flickers @ elevator level)
+				DrvDraw();
+			}
 		}
 	}
 
@@ -733,10 +726,6 @@ static INT32 DrvFrame()
 
 	ZetClose();
 	SekClose();
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
 	return 0;
 }

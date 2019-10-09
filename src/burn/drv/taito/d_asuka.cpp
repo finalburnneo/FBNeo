@@ -14,87 +14,88 @@
 static UINT8 TaitoInputConfig;
 static INT32 AsukaADPCMPos;
 static INT32 AsukaADPCMData;
+static INT32 coin_inserted_counter[2];
 
 static struct BurnInputInfo CadashInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	TC0220IOCInputPort0 + 7,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	TC0220IOCInputPort0 + 6,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	TC0220IOCInputPort0 + 7,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	TC0220IOCInputPort0 + 6,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	TC0220IOCInputPort0 + 4,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	TC0220IOCInputPort1 + 7,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	TC0220IOCInputPort1 + 6,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	TC0220IOCInputPort1 + 5,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	TC0220IOCInputPort1 + 7,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	TC0220IOCInputPort1 + 6,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	TC0220IOCInputPort1 + 5,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 3,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	TC0220IOCInputPort1 + 2,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"		},
-	{"Service",		BIT_DIGITAL,	TC0220IOCInputPort2 + 4,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	TC0220IOCInputPort2 + 5,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	TC0220IOCDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	TC0220IOCDip + 1,		"dip"		},
+	{"Reset",			BIT_DIGITAL,	&TaitoReset,				"reset"		},
+	{"Service",			BIT_DIGITAL,	TC0220IOCInputPort2 + 4,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	TC0220IOCInputPort2 + 5,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	TC0220IOCDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	TC0220IOCDip + 1,			"dip"		},
 };
 
 STDINPUTINFO(Cadash)
 
 static struct BurnInputInfo AsukaInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	TC0220IOCInputPort0 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	TC0220IOCInputPort0 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	TC0220IOCInputPort0 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	TC0220IOCInputPort0 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort0 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	TC0220IOCInputPort2 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	TC0220IOCInputPort1 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	TC0220IOCInputPort1 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	TC0220IOCInputPort1 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	TC0220IOCInputPort1 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	TC0220IOCInputPort1 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	TC0220IOCInputPort1 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"},
-	{"Service",		BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	TC0220IOCDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	TC0220IOCDip + 1,		"dip"		},
+	{"Reset",			BIT_DIGITAL,	&TaitoReset,				"reset"		},
+	{"Service",			BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	TC0220IOCDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	TC0220IOCDip + 1,			"dip"		},
 };
 
 STDINPUTINFO(Asuka)
 
 static struct BurnInputInfo BonzeadvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	TaitoInputPort1 + 0,		"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	TaitoInputPort0 + 6,		"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	TaitoInputPort2 + 2,		"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	TaitoInputPort2 + 3,		"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	TaitoInputPort2 + 4,		"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	TaitoInputPort2 + 5,		"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	TaitoInputPort2 + 6,		"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	TaitoInputPort2 + 7,		"p1 fire 2"	},
+	{"P1 Coin",			BIT_DIGITAL,	TaitoInputPort1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	TaitoInputPort0 + 6,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	TaitoInputPort2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	TaitoInputPort2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	TaitoInputPort2 + 4,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	TaitoInputPort2 + 5,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	TaitoInputPort2 + 6,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	TaitoInputPort2 + 7,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	TaitoInputPort1 + 1,		"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	TaitoInputPort0 + 5,		"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	TaitoInputPort3 + 1,		"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	TaitoInputPort3 + 2,		"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	TaitoInputPort3 + 7,		"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	TaitoInputPort3 + 4,		"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	TaitoInputPort3 + 5,		"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	TaitoInputPort3 + 6,		"p2 fire 2"	},
+	{"P2 Coin",			BIT_DIGITAL,	TaitoInputPort1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	TaitoInputPort0 + 5,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	TaitoInputPort3 + 1,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	TaitoInputPort3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	TaitoInputPort3 + 7,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	TaitoInputPort3 + 4,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	TaitoInputPort3 + 5,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	TaitoInputPort3 + 6,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"		},
-	{"Service",		BIT_DIGITAL,	TaitoInputPort0 + 7,		"service"	},
-	{"Tilt",		BIT_DIGITAL,	TaitoInputPort2 + 0,		"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	TaitoDip + 0,			"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	TaitoDip + 1,			"dip"		},
+	{"Reset",			BIT_DIGITAL,	&TaitoReset,			"reset"		},
+	{"Service",			BIT_DIGITAL,	TaitoInputPort0 + 7,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	TaitoInputPort2 + 0,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	TaitoDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	TaitoDip + 1,			"dip"		},
 };
 
 STDINPUTINFO(Bonzeadv)
@@ -1140,6 +1141,8 @@ static INT32 DrvDoReset()
 	AsukaADPCMPos = 0;
 	AsukaADPCMData = -1;
 
+	memset (coin_inserted_counter, 0, sizeof(coin_inserted_counter));
+
 	return 0;
 }
 
@@ -1517,6 +1520,16 @@ static INT32 BonzeFrame()
 			TaitoInput[1] ^= (TaitoInputPort1[i] & 1) << i;
 			TaitoInput[2] ^= (TaitoInputPort2[i] & 1) << i;
 			TaitoInput[3] ^= (TaitoInputPort3[i] & 1) << i;
+		}
+
+		// coin pulser
+		for (INT32 i = 0; i < 2; i++) {
+			if (TaitoInput[1] & (1 << i)) {
+				coin_inserted_counter[i]++;
+				if (coin_inserted_counter[i] >= 2) TaitoInput[1] &= ~(1 << i);
+			} else {
+				coin_inserted_counter[i] = 0;
+			}
 		}
 
 		cchip_loadports(TaitoInput[0], TaitoInput[1], TaitoInput[2], TaitoInput[3]);
@@ -2189,7 +2202,7 @@ struct BurnDriver BurnDrvGalmedes = {
 };
 
 
-// U.N. Defense Force: Earth Joker (Japan)
+// U.N. Defense Force: Earth Joker (US / Japan, set 1)
 
 static struct BurnRomInfo earthjkrRomDesc[] = {
 	{ "ej_3b.ic23",			0x20000, 0xbdd86fc2, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
@@ -2230,7 +2243,7 @@ static INT32 EarthjkrInit()
 
 struct BurnDriver BurnDrvEarthjkr = {
 	"earthjkr", NULL, NULL, NULL, "1993",
-	"U.N. Defense Force: Earth Joker (Japan)\0", NULL, "Visco", "Taito Misc",
+	"U.N. Defense Force: Earth Joker (US / Japan, set 1)\0", NULL, "Visco", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, earthjkrRomInfo, earthjkrRomName, NULL, NULL, NULL, NULL, AsukaInputInfo, EarthjkrDIPInfo,
@@ -2238,10 +2251,46 @@ struct BurnDriver BurnDrvEarthjkr = {
 	240, 320, 3, 4
 };
 
+
+// U.N. Defense Force: Earth Joker (US / Japan, set 2)
+
+static struct BurnRomInfo earthjkraRomDesc[] = {
+	{ "ejok_ic23",			0x20000, 0xcbd29731, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "ejok_ic8",			0x20000, 0xcfd4953c, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "ejok_ic30",		    0x80000, 0x49d1f77f, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+
+	{ "ejok_ic28",			0x10000, 0x42ba2566, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+
+	{ "ej_chr-0.ic3",		0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
+
+	{ "ej_obj-0.ic6",		0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "ejok_ic5",			0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
+	{ "ejok_ic4",			0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
+	
+	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
+	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },						//  9
+};
+
+STD_ROM_PICK(earthjkra)
+STD_ROM_FN(earthjkra)
+
+struct BurnDriver BurnDrvEarthjkra = {
+	"earthjkra", "earthjkr", NULL, NULL, "1993",
+	"U.N. Defense Force: Earth Joker (US / Japan, set 2)\0", NULL, "Visco", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	NULL, earthjkraRomInfo, earthjkraRomName, NULL, NULL, NULL, NULL, AsukaInputInfo, EarthjkrDIPInfo,
+	EarthjkrInit, TaitoExit, EtoFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	240, 320, 3, 4
+};
+
+
 // Known to exist (not dumped) a Japanese version with ROMs 3 & 4 also stamped "A" same as above or different version??
 // Also known to exist (not dumped) a US version of Earth Joker, title screen shows "DISTRIBUTED BY ROMSTAR, INC."  ROMs were numbered
 // from 0 through 4 and the fix ROM at IC30 is labeled 1 even though IC5 is also labled as 1 similar to the below set:
 // (ROMSTAR license is set by a dipswitch, is set mentioned above really undumped?)
+
+// U.N. Defense Force: Earth Joker (Japan, prototype?)
 
 static struct BurnRomInfo earthjkrpRomDesc[] = {
 	{ "4.ic8",				0x20000, 0xe9b1ef0c, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code

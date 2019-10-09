@@ -94,6 +94,8 @@
 #define ID_VALUE_CLOSE                  	20019
 #define IDC_VALUE_EDIT                  	20020
                                        // 	20021 is used by IDC_INPS_CLEARLOCK.
+#define IDC_INPD_ANSLIDER					20022
+#define IDC_INPD_ANEDIT						20023
 
 #define IDC_FBA_VER                     	20050
 #define IDC_SPECIALSTRING               	20051
@@ -209,7 +211,8 @@
 #define IDC_FILENAME                    20260
 #define IDC_BROWSE                      20261
 #define IDC_REPLAYRESET                 20262
-#define IDC_SHOWMOVEMENT                20263
+#define IDC_REPLAYTIME                  20263
+#define IDC_SHOWMOVEMENT                20264
 
 #define IDC_STATIC_SYS                  	20300
 #define IDC_STATIC_OPT                  	20301
@@ -535,6 +538,15 @@
 #define MENU_INPUT_AUTOFIRE_RATE_3			10262
 #define MENU_INPUT_AUTOFIRE_RATE_4			10263
 
+#define MENU_ASPECTNORMALVERL				10270
+#define MENU_ASPECTLCDVERL					10271
+#define MENU_ASPECTWIDEVERL					10272
+#define MENU_ASPECTWIDELCDVERL				10273
+#define MENU_ASPECTNORMALVERP				10274
+#define MENU_ASPECTLCDVERP					10275
+#define MENU_ASPECTWIDEVERP					10276
+#define MENU_ASPECTWIDELCDVERP				10277
+
 #define MENU_AUTOPAUSE                 	 	10300
 #define MENU_PROCESSINPUT					10301
 #define MENU_DISPLAYINDICATOR				10302
@@ -570,6 +582,7 @@
 #define MENU_WWW_HOME                   	10504
 #define MENU_WHATSNEW                  		10505
 #define MENU_WWW_NSFORUM					10506
+#define MENU_WWW_GITHUB						10507
 #define MENU_WLOGSTART						10606
 #define MENU_WLOGEND						10607
 #define MENU_AUTOSWITCHFULL					10613

@@ -1355,7 +1355,7 @@ static INT32 MemIndex()
 	RomBg		= Next; Next += 0x200040;			// Background, 1M 8x8x4bit decode to 2M + 64Byte safe 
 	DeRomBg		= 	   RomBg +  0x000040;
 	RomSpr1		= Next; Next += 0x200000;			// Sprite 1	 , 1M 16x16x4bit decode to 2M + 256Byte safe 
-	RomSpr2		= Next; Next += 0x100100;			// Sprite 2
+	RomSpr2		= Next; Next += 0x200100;			// Sprite 2
 	
 	DeRomSpr1	= RomSpr1    +  0x000100;
 	DeRomSpr2	= RomSpr2    += 0x000100;
@@ -1490,7 +1490,7 @@ static INT32 spinlbrkMemIndex()
 	RomSpr2		= Next; Next += 0x400110;			// Sprite 2
 	
 	DeRomSpr1	= RomSpr1    +  0x000100;
-	DeRomSpr2	= RomSpr2    +  0x000100;
+	DeRomSpr2	= RomSpr2    += 0x000100;
 	
 	RomSnd2		= Next; Next += 0x100000;			// ADPCM data
 	RomSnd1		= RomSnd2;
@@ -1533,7 +1533,7 @@ static INT32 aerofgtbMemIndex()
 	RomBg		= Next; Next += 0x400040;			// Background, 1M 8x8x4bit decode to 2M + 64Byte safe 
 	DeRomBg		= 	   RomBg +  0x000040;
 	RomSpr1		= Next; Next += 0x200000;			// Sprite 1	 , 1M 16x16x4bit decode to 2M + 256Byte safe 
-	RomSpr2		= Next; Next += 0x100100;			// Sprite 2
+	RomSpr2		= Next; Next += 0x200100;			// Sprite 2
 	
 	DeRomSpr1	= RomSpr1    +  0x000100;
 	DeRomSpr2	= RomSpr2    += 0x000100;
@@ -2658,13 +2658,15 @@ static INT32 spinlbrkDraw()
 		DrvRecalc = 0;
 	}
 
-	spinlbrkTileBackground();
-	karatblzTileBackground(RamBg2V, DeRomBg + 0x200000, 1, 0x100, bg2scrollx, bg2scrolly, RamGfxBank[1] & 0x07);
+	BurnTransferClear();
 
-	turbofrc_drawsprites(1, 0, 768, -1);	// enemy(near far)
-	turbofrc_drawsprites(1, 0, 768,  0);	// enemy(near) fense
- 	turbofrc_drawsprites(0, 0, 512,  0); // avatar , post , bullet
-	turbofrc_drawsprites(0, 0, 512, -1);
+	if (nBurnLayer & 1) spinlbrkTileBackground();
+	if (nBurnLayer & 2) karatblzTileBackground(RamBg2V, DeRomBg + 0x200000, 1, 0x100, bg2scrollx+4, bg2scrolly, RamGfxBank[1] & 0x07);
+
+	if (nSpriteEnable & 1) turbofrc_drawsprites(1, 0, 768, -1);	// enemy(near far)
+	if (nSpriteEnable & 2) turbofrc_drawsprites(1, 0, 768,  0);	// enemy(near) fense
+ 	if (nSpriteEnable & 4) turbofrc_drawsprites(0, 0, 512,  0); // avatar , post , bullet
+	if (nSpriteEnable & 8) turbofrc_drawsprites(0, 0, 512, -1);
 
 	BurnTransferCopy(RamCurPal);
 

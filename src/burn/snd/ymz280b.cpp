@@ -34,6 +34,8 @@ static INT32 YMZ280BStepShift[8] = {0x0E6, 0x0E6, 0x0E6, 0x0E6, 0x133, 0x199, 0x
 static double YMZ280BVolumes[2];
 static INT32 YMZ280BRouteDirs[2];
 
+static INT32 our_interpolation = 0; // ESP.Ra.De clicks with cubic, lets force off for that game.
+
 struct sYMZ280BChannelInfo {
 	bool bEnabled;
 	bool bPlaying;
@@ -160,6 +162,9 @@ INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32))
 
 	YMZ280BReset();
 
+	our_interpolation = nInterpolation;
+	if (bESPRaDeMixerKludge) our_interpolation = 0;
+
 	return 0;
 }
 
@@ -257,6 +262,7 @@ inline static void RampChannel()
 				channelInfo->nSample = 0;
 			}
 		}
+
 	}
 #endif
 }
@@ -508,7 +514,7 @@ INT32 YMZ280BRender(INT16* pSoundBuf, INT32 nSegmentLength)
 		channelInfo = &YMZ280BChannelInfo[nActiveChannel];
 
 		if (channelInfo->bPlaying) {
-			if (nInterpolation < 3) {
+			if (our_interpolation < 3) {
 				if (channelInfo->bEnabled && channelInfo->bLoop) {
 					RenderADPCMLoop_Linear();
 				} else {
@@ -592,20 +598,24 @@ void YMZ280BWriteRegister(UINT8 nValue)
 							//bprintf(0,_T("ch#%02x - Sample Start: %08X - Stop: %08X.  %S\n"), nWriteChannel, YMZ280BChannelInfo[nWriteChannel].nSampleStart, YMZ280BChannelInfo[nWriteChannel].nSampleStop, (YMZ280BChannelInfo[nWriteChannel].bLoop) ? "Looping" : "");
 						}
 
-#if 0
-						if (nInterpolation < 3) {
+#if 1
+						if (our_interpolation < 3) {
+							// click avoider with fast-retrig (adds last playing sample in this channel to the accumulator)
+							// only works with linear!
 							YMZ280BChannelInfo[nWriteChannel].nFractionalPosition = 0;
 							YMZ280BChannelInfo[nWriteChannel].nPreviousOutput = YMZ280BChannelInfo[nWriteChannel].nSample;
 							YMZ280BChannelInfo[nWriteChannel].nOutput = YMZ280BChannelInfo[nWriteChannel].nSample;
 						} else {
 							YMZ280BChannelInfo[nWriteChannel].nFractionalPosition = 0x03000000;
-							YMZ280BChannelData[nWriteChannel][0] = YMZ280BChannelInfo[nWriteChannel].nSample;
+							//YMZ280BChannelData[nWriteChannel][0] = YMZ280BChannelInfo[nWriteChannel].nSample;
+							YMZ280BChannelData[nWriteChannel][3] = 0;
 							YMZ280BChannelInfo[nWriteChannel].nBufPos = 1;
 						}
+						YMZ280BChannelInfo[nWriteChannel].nSample = 0; // zero adpcm accu, otherwise causes adpcm decoding errors (esprade coin sound triggered rapidly)
 #else
 						YMZ280BChannelInfo[nWriteChannel].nSample = 0;
 
-						if (nInterpolation < 3) {
+						if (our_interpolation < 3) {
 							YMZ280BChannelInfo[nWriteChannel].nFractionalPosition = 0;
 							YMZ280BChannelInfo[nWriteChannel].nPreviousOutput = 0;
 							YMZ280BChannelInfo[nWriteChannel].nOutput = 0;

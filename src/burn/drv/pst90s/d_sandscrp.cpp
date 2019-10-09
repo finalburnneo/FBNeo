@@ -1,6 +1,4 @@
-// FB Alpha Sand Scorpion driver module
-// Based on MAME driver by Luca Elia
-// Note: oc'd from 12 to 20mhz to make this game playable, for some reason its not so bad in mame... - dink
+// FB Alpha Sand Scorpion driver module based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -58,63 +56,63 @@ static UINT16 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo SandscrpInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 4,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy3 + 4,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Sandscrp)
 
 static struct BurnDIPInfo SandscrpDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xff, NULL			},
-	{0x14, 0xff, 0xff, 0xff, NULL			},
+	{0x13, 0xff, 0xff, 0xff, NULL					},
+	{0x14, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x13, 0x01, 0x03, 0x02, "1"			},
-	{0x13, 0x01, 0x03, 0x01, "2"			},
-	{0x13, 0x01, 0x03, 0x03, "3"			},
-	{0x13, 0x01, 0x03, 0x00, "5"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x13, 0x01, 0x03, 0x02, "1"					},
+	{0x13, 0x01, 0x03, 0x01, "2"					},
+	{0x13, 0x01, 0x03, 0x03, "3"					},
+	{0x13, 0x01, 0x03, 0x00, "5"					},
 
-	{0   , 0xfe, 0   ,    4, "Bombs"		},
-	{0x13, 0x01, 0x0c, 0x08, "1"			},
-	{0x13, 0x01, 0x0c, 0x04, "2"			},
-	{0x13, 0x01, 0x0c, 0x0c, "3"			},
-	{0x13, 0x01, 0x0c, 0x00, "5"			},
+	{0   , 0xfe, 0   ,    4, "Bombs"				},
+	{0x13, 0x01, 0x0c, 0x08, "1"					},
+	{0x13, 0x01, 0x0c, 0x04, "2"					},
+	{0x13, 0x01, 0x0c, 0x0c, "3"					},
+	{0x13, 0x01, 0x0c, 0x00, "5"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x13, 0x01, 0x30, 0x30, "Easy"			},
-	{0x13, 0x01, 0x30, 0x20, "Normal"		},
-	{0x13, 0x01, 0x30, 0x10, "Hard"			},
-	{0x13, 0x01, 0x30, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x13, 0x01, 0x30, 0x30, "Easy"					},
+	{0x13, 0x01, 0x30, 0x20, "Normal"				},
+	{0x13, 0x01, 0x30, 0x10, "Hard"					},
+	{0x13, 0x01, 0x30, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x13, 0x01, 0xc0, 0x80, "100K, 300K"		},
-	{0x13, 0x01, 0xc0, 0xc0, "200K, 500K"		},
-	{0x13, 0x01, 0xc0, 0x40, "500K, 1000K"		},
-	{0x13, 0x01, 0xc0, 0x00, "1000K, 3000K"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x13, 0x01, 0xc0, 0x80, "100K, 300K"			},
+	{0x13, 0x01, 0xc0, 0xc0, "200K, 500K"			},
+	{0x13, 0x01, 0xc0, 0x40, "500K, 1000K"			},
+	{0x13, 0x01, 0xc0, 0x00, "1000K, 3000K"			},
 
-	{0   , 0xfe, 0   ,    16, "Coinage"		},
+	{0   , 0xfe, 0   ,    16, "Coinage"				},
 	{0x14, 0x01, 0x0f, 0x0a, "6 Coins 1 Credits"	},
 	{0x14, 0x01, 0x0f, 0x0b, "5 Coins 1 Credits"	},
 	{0x14, 0x01, 0x0f, 0x0c, "4 Coins 1 Credits"	},
@@ -130,23 +128,23 @@ static struct BurnDIPInfo SandscrpDIPList[]=
 	{0x14, 0x01, 0x0f, 0x07, "1 Coin  4 Credits"	},
 	{0x14, 0x01, 0x0f, 0x06, "1 Coin  5 Credits"	},
 	{0x14, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
-	{0x14, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0x14, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x14, 0x01, 0x10, 0x10, "Off"			},
-	{0x14, 0x01, 0x10, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x14, 0x01, 0x10, 0x10, "Off"					},
+	{0x14, 0x01, 0x10, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x14, 0x01, 0x20, 0x00, "Off"			},
-	{0x14, 0x01, 0x20, 0x20, "On"			},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x14, 0x01, 0x20, 0x00, "Off"					},
+	{0x14, 0x01, 0x20, 0x20, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x14, 0x01, 0x40, 0x00, "Off"			},
-	{0x14, 0x01, 0x40, 0x40, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x14, 0x01, 0x40, 0x00, "Off"					},
+	{0x14, 0x01, 0x40, 0x40, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x14, 0x01, 0x80, 0x80, "Off"			},
-	{0x14, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x14, 0x01, 0x80, 0x80, "Off"					},
+	{0x14, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Sandscrp)
@@ -242,6 +240,11 @@ static void update_irq_state()
 	SekSetIRQLine(1, irq ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
+static void sound_sync()
+{
+	BurnTimerUpdate(SekTotalCycles() / 5);
+}
+
 static void __fastcall sandscrp_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffe0) == 0x200000) {
@@ -262,13 +265,15 @@ static void __fastcall sandscrp_main_write_word(UINT32 address, UINT16 data)
 		return; // coin counter
 
 		case 0xe00000:
+			sound_sync();
 			latch1_full = 1;
 			soundlatch = data & 0xff;
 			ZetNmi();
-			ZetRun(100); // ?
+			BurnTimerUpdate((SekTotalCycles() / 5) + 133);
 		return;
 
 		case 0xe40000:
+			sound_sync();
 			latch1_full = data & 0x80;
 			latch2_full = data & 0x40;
 		return;
@@ -304,10 +309,12 @@ static UINT16 __fastcall sandscrp_main_read_word(UINT32 address)
 			return 0xffff;
 
 		case 0xe00000:
+			sound_sync();
 			latch2_full = 0;
 			return soundlatch2;
 
 		case 0xe40000:
+			sound_sync();
 			return (latch1_full ? 0x80 : 0) | (latch2_full ? 0x40 : 0);
 
 		case 0xec0000:
@@ -699,7 +706,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] =  { 12000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[2] =  { 20000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -707,7 +714,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
 		if (i == 240) {
 			vblank_irq = 1;
@@ -719,7 +726,7 @@ static INT32 DrvFrame()
 			update_irq_state();
 		}
 
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		BurnTimerUpdate(SekTotalCycles()/5);
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
@@ -784,8 +791,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetOpen(0);
 		bankswitch(nDrvZ80Bank);
 		ZetClose();
-
-		DrvRecalc = 1;
 	}
 
 	return 0;

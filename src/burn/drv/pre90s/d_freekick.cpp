@@ -1146,6 +1146,7 @@ static INT32 LoadRoms()
 	}
 
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "omega") ||
+		!strcmp(BurnDrvGetTextA(DRV_NAME), "omegaa") ||
 	    !strcmp(BurnDrvGetTextA(DRV_NAME), "gigas"))
 	{
 		if (BurnLoadRom(DrvMainROM,  rom_number++, 1)) return 1;
@@ -1902,8 +1903,13 @@ struct BurnDriver BurnDrvGigasm2 = {
 };
 
 // Omega
+// A second PCB found with the CPU (under a metal cap) to be a NEC MC-8123 317-5002 - same Gigas & Gigas Mark II, however
+//  niether Omega set will work with the 317-5002 key in MAME, so maybe the CPU was factory reprogrammed?
+// A single byte difference at 0x1120 in 17.M10 (when decoded) looks like a legit bug fix as it changes a branch
+//  which incorrectly jumps over a bit of initialisation code
 
 static struct BurnRomInfo omegaRomDesc[] = {
+	// ROM at M10 labeled "17" to indicate a later Bug fix version
 	{ "17.m10",		0x4000, 0xc7de0993, BRF_PRG | BRF_ESS }, //  0 maincpu
 	{ "8.n10",		0x8000, 0x9bb61910, BRF_PRG | BRF_ESS }, //  1
 
@@ -1938,4 +1944,41 @@ struct BurnDriver BurnDrvOmega = {
 	224, 256, 3, 4
 };
 
+// Omega (earlier)
+
+static struct BurnRomInfo omegaaRomDesc[] = {
+	// ROM at M10 labeled "7" to indicate the original version skipping some initialisation code
+	{ "7.m10",		0x4000, 0x6e7d77e1, BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "8.n10",		0x8000, 0x9bb61910, BRF_PRG | BRF_ESS }, //  1
+
+	{ "omega.key",  0x2000, 0x0a63943f, BRF_PRG | BRF_ESS }, //  2 maincpu:key
+
+	{ "4.f10",		0x4000, 0xbf780a8e, BRF_GRA },           //  3 gfx1
+	{ "5.h10",		0x4000, 0xb491647f, BRF_GRA },           //  4
+	{ "6.j10",		0x4000, 0x65beba5b, BRF_GRA },           //  5
+
+	{ "3.d10",		0x4000, 0xc678b202, BRF_GRA },           //  6 gfx2
+	{ "1.a10",		0x4000, 0xe0aeada9, BRF_GRA },           //  7
+	{ "2.c10",		0x4000, 0xdbc0a47f, BRF_GRA },           //  8
+
+	{ "tbp24s10n.3f",	0x0100, 0x75ec7472, BRF_GRA },           //  9 proms
+	{ "tbp24s10n.4f",	0x0100, 0x5113a114, BRF_GRA },           // 10
+	{ "tbp24s10n.3g",	0x0100, 0xb6b5d4a0, BRF_GRA },           // 11
+	{ "tbp24s10n.4g",	0x0100, 0x931bc299, BRF_GRA },           // 12
+	{ "tbp24s10n.3e",	0x0100, 0x899e089d, BRF_GRA },           // 13
+	{ "tbp24s10n.4e",	0x0100, 0x28321dd8, BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(omegaa)
+STD_ROM_FN(omegaa)
+
+struct BurnDriver BurnDrvOmegaa = {
+	"omegaa", "omega", NULL, NULL, "1986",
+	"Omega (earlier)\0", NULL, "Nihon System", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	NULL, omegaaRomInfo, omegaaRomName, NULL, NULL, NULL, NULL, GigasInputInfo, OmegaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
 

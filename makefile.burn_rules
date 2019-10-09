@@ -5,8 +5,8 @@ alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/atari burn/drv/capcom bur
 			cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec cpu/pic16c5x cpu/s2650 cpu/tlcs90 cpu/sh2 cpu/tms32010 cpu/tms34010 cpu/upd7725 cpu/upd7810 \
 			cpu/v60 cpu/z80 cpu/z180
 
-drvsrc	= 	d_arcadecl.cpp d_atarig1.cpp d_badlands.cpp d_batman.cpp d_blstroid.cpp d_eprom.cpp d_gauntlet.cpp d_klax.cpp d_offtwall.cpp d_rampart.cpp \
-			d_relief.cpp d_shuuz.cpp d_skullxbo.cpp d_thunderj.cpp d_toobin.cpp d_vindictr.cpp d_xybots.cpp \
+drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstroid.o d_eprom.o d_gauntlet.o d_klax.o d_offtwall.o d_rampart.o \
+			d_relief.o d_shuuz.o d_skullxbo.o d_thunderj.o d_toobin.o d_vindictr.o d_xybots.o \
 			\
 			d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwange.o d_hotdogst.o d_korokoro.o d_mazinger.o d_metmqstr.o d_pwrinst2.o \
 			d_sailormn.o d_tjumpman.o d_uopoko.o \
@@ -41,9 +41,9 @@ drvsrc	= 	d_arcadecl.cpp d_atarig1.cpp d_badlands.cpp d_batman.cpp d_blstroid.cp
 			d_psikyo.o d_psikyo4.o d_psikyosh.o \
 			\
 			d_angelkds.o d_appoooh.o d_bankp.o d_dotrikun.o d_hangon.o d_outrun.o d_segae.o d_segag80v.o d_suprloco.o d_sys1.o d_sys16a.o d_sys16b.o d_sys18.o \
-			d_turbo.o d_xbrd.o d_ybrd.o d_zaxxon.o \
+			d_sys24.o d_turbo.o d_xbrd.o d_ybrd.o d_zaxxon.o \
 			\
-			d_arkanoid.o d_ashnojoe.o d_asuka.o d_bublbobl.o d_chaknpop.o d_crbaloon.o d_darius2.o d_darkmist.o d_exzisus.o d_flstory.o d_groundfx.o d_gunbuster.o d_jollyjgr.o \
+			d_arkanoid.o d_ashnojoe.o d_asuka.o d_bublbobl.o d_buggychl.o d_chaknpop.o d_crbaloon.o d_darius2.o d_darkmist.o d_exzisus.o d_flstory.o d_groundfx.o d_gunbuster.o d_jollyjgr.o \
 			d_ksayakyu.o d_lkage.o d_mexico86.o d_minivdr.o d_msisaac.o d_othunder.o d_qix.o d_retofinv.o d_rollrace.o d_slapshot.o d_ssrj.o d_superchs.o d_supridr.o d_taitob.o \
 			d_taitoh.o d_taitof2.o d_taitof3.o d_taitol.o d_taitomisc.o d_taitosj.o d_taitox.o d_taitoz.o d_tnzs.o d_undrfire.o d_wyvernf0.o \
 			\
@@ -51,13 +51,13 @@ drvsrc	= 	d_arcadecl.cpp d_atarig1.cpp d_badlands.cpp d_batman.cpp d_blstroid.cp
 			d_shippumd.o d_slapfght.o d_snowbro2.o d_tekipaki.o d_toaplan1.o d_truxton2.o d_twincobr.o d_vfive.o d_wardner.o \
 			\
 			d_4enraya.o d_1942.o d_1943.o d_aeroboto.o d_alinvade.o d_alpha68k.o d_alpha68k1.o d_alpha68k2.o d_ambush.o d_amspdwy.o d_arabian.o d_argus.o d_armedf.o \
-			d_asteroids.o d_atetris.o d_aztarac.o d_bagman.o d_baraduke.o d_battlane.o d_battlex.o d_bbusters.o d_beaminv.o d_bionicc.o d_blktiger.o \
+			d_asteroids.o d_atetris.o d_aztarac.o d_bagman.o d_baraduke.o d_battlane.o d_battlex.o d_bbusters.o d_beaminv.o d_berzerk.o d_bionicc.o d_blktiger.o \
 			d_blockade.o d_blockout.o d_blueprnt.o d_bogeyman.o d_bombjack.o d_btime.o d_bwidow.o d_bzone.o d_cabal.o d_calorie.o d_canyon.o d_capbowl.o \
 			d_carjmbre.o d_ccastles.o d_cclimber.o d_cheekyms.o d_chinagat.o d_citycon.o d_cloak.o d_cloud9.o d_clshroad.o d_commando.o d_cop01.o d_copsnrob.o \
-			d_cybertnk.o d_dacholer.o d_dday.o d_ddayjlc.o d_ddragon.o d_djboy.o d_dkong.o d_docastle.o d_dogfgt.o d_dorachan.o d_dribling.o d_drmicro.o \
+			d_cybertnk.o d_dacholer.o d_dday.o d_ddayjlc.o d_ddragon.o d_deadang.o d_djboy.o d_dkong.o d_docastle.o d_dogfgt.o d_dorachan.o d_dribling.o d_drmicro.o \
 			d_dynduke.o d_efdt.o d_epos.o d_espial.o d_ettrivia.o d_exedexes.o d_fantland.o d_fastfred.o d_firetrap.o d_flipjack.o d_flower.o d_foodf.o \
 			d_freekick.o d_funkybee.o d_galaga.o d_galivan.o d_gaplus.o d_ginganin.o d_gng.o d_goindol.o d_gunsmoke.o d_headonb.o d_higemaru.o \
-			d_himesiki.o d_holeland.o d_hvyunit.o d_invaders.o d_iqblock.o d_jack.o d_jedi.o d_jrpacman.o d_kangaroo.o d_kncljoe.o d_kyugo.o d_ladybug.o d_lasso.o \
+			d_himesiki.o d_holeland.o d_hvyunit.o d_invaders.o d_iqblock.o d_jack.o d_jedi.o d_jrpacman.o d_kangaroo.o d_kingofbox.o d_kncljoe.o d_kyugo.o d_ladybug.o d_lasso.o \
 			d_lastduel.o d_lwings.o d_mainsnk.o d_mappy.o d_marineb.o d_mario.o d_madmotor.o d_markham.o d_mastboyo.o d_matmania.o d_mcr.o d_mcr3.o d_megasys1.o d_meijinsn.o \
 			d_metlfrzr.o d_mhavoc.o d_millipede.o d_mirax.o d_mitchell.o d_mole.o d_momoko.o d_mmagic.o d_mouser.o d_mrdo.o d_mrflea.o d_mrjong.o d_munchmo.o \
 			d_mustache.o d_mystston.o d_namcos1.o d_namcos86.o d_ninjakd2.o d_nitedrvr.o d_naughtyb.o d_olibochu.o d_omegrace.o d_pacland.o d_pacman.o \
@@ -65,14 +65,14 @@ drvsrc	= 	d_arcadecl.cpp d_atarig1.cpp d_badlands.cpp d_batman.cpp d_blstroid.cp
 			d_qbert.o d_quizo.o d_rallyx.o d_renegade.o d_quantum.o d_route16.o d_rpunch.o d_safarir.o d_sauro.o d_scregg.o d_seicross.o d_senjyo.o d_sf.o d_shisen.o \
 			d_sidearms.o d_skyarmy.o d_skyfox.o d_skykid.o d_snk.o d_snk6502.o d_snk68.o d_solomon.o d_sonson.o d_spacefb.o d_speedbal.o d_sprcros2.o \
 			d_srumbler.o d_ssozumo.o d_sstrangr.o d_starwars.o d_stfight.o d_sub.o d_suna8.o d_tagteam.o d_tankbust.o d_tail2nose.o d_tbowl.o d_tceptor.o \
-			d_tecmo.o d_tempest.o d_terracre.o d_thedeep.o d_thepit.o d_tigeroad.o d_timelimt.o d_toki.o d_toypop.o d_travrusa.o d_tsamurai.o d_usgames.o \
+			d_tecmo.o d_tempest.o d_terracre.o d_thedeep.o d_thepit.o d_thief.o d_tigeroad.o d_timelimt.o d_toki.o d_toypop.o d_travrusa.o d_tsamurai.o d_usgames.o \
 			d_vastar.o d_vball.o d_vicdual.o d_vulgus.o d_wallc.o d_warpwarp.o d_warpsped.o d_wc90.o d_wc90b.o d_williams.o d_wiping.o d_wiz.o d_wwfsstar.o \
 			d_xain.o d_xxmissio.o d_xyonix.o d_zodiack.o \
 			\
 			d_3x3puzzl.o d_1945kiii.o d_20pacgal.o d_aerofgt.o d_airbustr.o d_aquarium.o d_bestleag.o d_bigstrkb.o d_blackt96.o d_blmbycar.o d_bloodbro.o \
 			d_crospang.o d_crshrace.o d_cultures.o d_dcon.o d_ddragon3.o d_deniam.o d_diverboy.o d_dooyong.o d_dreamwld.o d_drgnmst.o d_drtomy.o d_egghunt.o \
 			d_esd16.o d_f1gp.o d_funybubl.o d_fuukifg2.o d_fuukifg3.o d_gaelco.o d_gaelco2.o d_gaiden.o d_galpanic.o d_galspnbl.o d_glass.o d_go2000.o \
-			d_gotcha.o d_gumbo.o d_hyperpac.o d_itech32.o d_jchan.o d_kaneko16.o d_lordgun.o d_macrossp.o d_mcatadv.o d_metro.o d_midas.o d_mirage.o d_missb2.o d_mosaic.o \
+			d_gotcha.o d_gumbo.o d_hyperpac.o d_itech32.o d_jchan.o d_kaneko16.o d_legionna.o d_lordgun.o d_macrossp.o d_mcatadv.o d_metro.o d_midas.o d_mirage.o d_missb2.o d_mosaic.o \
 			d_mugsmash.o d_mwarr.o d_namcos2.o d_news.o d_nmg5.o d_nmk16.o d_ohmygod.o d_oneshot.o d_onetwo.o d_pass.o d_patapata.o \
 			d_pipedrm.o d_pirates.o d_pkscram.o d_playmark.o d_powerins.o d_ppmast93.o d_pushman.o d_raiden.o d_raiden2.o d_sandscrp.o d_seta.o d_seta2.o \
 			d_shadfrce.o d_silkroad.o d_silvmil.o d_speedspn.o d_ssv.o d_suna16.o d_supduck.o d_suprnova.o d_taotaido.o d_targeth.o d_tecmo16.o d_tecmosys.o \
@@ -101,12 +101,12 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			\
 			6821pia.o 8255ppi.o 8257dma.o c169.o atariic.o atarijsa.o atarimo.o atarirle.o atarivad.o avgdvg.o bsmt2000.o decobsmt.o earom.o eeprom.o \
 			gaelco_crypt.o joyprocess.o nb1414m4.o nb1414m4_8bit.o nmk004.o nmk112.o kaneko_tmap.o mathbox.o mb87078.o mermaid.o midcsd.o midsat.o midsg.o midssio.o midtcs.o \
-			namco_c45.o namcoio.o pandora.o resnet.o seibusnd.o sknsspr.o slapstic.o st0020.o t5182.o timekpr.o tms34061.o v3021.o vdc.o tms9928a.o watchdog.o x2212.o \
+			namco_c45.o namcoio.o pandora.o resnet.o seibucop.o seibusnd.o sknsspr.o slapstic.o st0020.o t5182.o timekpr.o tms34061.o v3021.o vdc.o tms9928a.o watchdog.o x2212.o \
 			\
 			asteroids.o ay8910.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o burn_md2612.o \
 			burn_ym3526.o burn_ym3812.o burn_ymf262.o burn_ymf278b.o bzone.o c6280.o dac.o es5506.o es8712.o flower.o flt_rc.o fm.o fmopl.o ym2612.o gaelco.o hc55516.o \
 			ics2115.o iremga20.o k005289.o k007232.o k051649.o k053260.o k054539.o llander.o msm5205.o msm5232.o msm6295.o namco_snd.o c140.o nes_apu.o \
-			tms5110.o tms5220.o tms36xx.o phoenixsound.o pleiadssound.o pokey.o redbaron.o rf5c68.o saa1099.o samples.o segapcm.o sn76477.o sn76496.o \
+			tms5110.o tms5220.o tms36xx.o phoenixsound.o pleiadssound.o pokey.o redbaron.o rf5c68.o s14001a.o saa1099.o samples.o segapcm.o sn76477.o sn76496.o \
 			upd7759.o vlm5030.o wiping.o x1010.o ym2151.o ym2413.o ymdeltat.o ymf262.o ymf278b.o ymz280b.o snk6502_sound.o sp0250.o sp0256.o \
 			\
 			adsp2100.o adsp2100_intf.o arm7_intf.o arm_intf.o h6280_intf.o hd6309_intf.o konami_intf.o m6502_intf.o m6800_intf.o m6805_intf.o m6809_intf.o \
@@ -142,7 +142,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			\
 			psikyo_palette.o psikyo_sprite.o psikyo_tile.o psikyosh_render.o \
 			\
-			fd1089.o fd1094.o genesis_vid.o mc8123.o sega_315_5195.o sys16_fd1094.o sys16_gfx.o sys16_run.o usb_snd.o \
+			fd1089.o fd1094.o fd1094_intf.o genesis_vid.o mc8123.o sega_315_5195.o sys16_fd1094.o sys16_gfx.o sys16_run.o usb_snd.o \
 			\
 			cchip.o pc080sn.o pc090oj.o taito.o taito_ic.o taitof3_snd.o taitof3_video.o taito_m68705.o tc0100scn.o tc0110pcr.o tc0140syt.o tc0150rod.o \
 			tc0180vcu.o tc0220ioc.o tc0280grd.o tc0360pri.o tc0480scp.o tc0510nio.o tc0640fio.o tnzs_prot.o \

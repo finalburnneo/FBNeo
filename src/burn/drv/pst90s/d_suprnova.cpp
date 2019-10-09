@@ -2332,6 +2332,7 @@ struct BurnDriver BurnDrvPanicstr = {
 
 
 // Gals Panic 4 (Europe)
+// only main CPU and plds dumps were provided
 
 static struct BurnRomInfo galpani4RomDesc[] = {
 	{ "gp4-000-e0.u10",	0x080000, 0x7464cc28, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -2344,12 +2345,9 @@ static struct BurnRomInfo galpani4RomDesc[] = {
 	{ "gp4-201-00.u18",	0x200000, 0x10c4b183, 3 | BRF_GRA },           //  5
 
 	{ "gp4-300-00.u4",	0x200000, 0x8374663a, 5 | BRF_SND },           //  6 YMZ280b Samples
-	
-	
-	{ "gp4-301-00.u7",	0x200000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
-	{ "skns-r11.u11",	0x000117, 0xa9f05af4, 0 | BRF_OPT },
-	{ "skns-r09.u9",	0x000117, 0xb02058d9, 0 | BRF_OPT },
-	
+		
+	{ "skns-r09.u9",	0x000117, 0xb02058d9, 0 | BRF_OPT },		   //  7 plds
+	{ "skns-r11.u11",	0x000117, 0xa9f05af4, 0 | BRF_OPT },		   
 };
 
 STDROMPICKEXT(galpani4, galpani4, skns)
@@ -2485,7 +2483,7 @@ struct BurnDriver BurnDrvGalpanidx = {
 };
 
 
-// Gals Panic S - Extra Edition (Europe)
+// Gals Panic S - Extra Edition (Europe, set 1)
 
 static struct BurnRomInfo galpanisRomDesc[] = {
 	{ "gps-000-e1.u10",	0x100000, 0xb9ea3c44, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -2514,10 +2512,40 @@ static INT32 GalpanisInit()
 
 struct BurnDriver BurnDrvGalpanis = {
 	"galpanis", NULL, "skns", NULL, "1997",
-	"Gals Panic S - Extra Edition (Europe)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	"Gals Panic S - Extra Edition (Europe, set 1)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpanisRomInfo, galpanisRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
+	GalpanisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic S - Extra Edition (Europe, set 2)
+
+static struct BurnRomInfo galpaniseRomDesc[] = {
+	{ "u10",			0x100000, 0xe78e1623, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "u8",				0x100000, 0x098eff7c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gps-100-00.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
+	{ "gps-101-00.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
+	{ "gps-102-00.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
+
+	{ "gps-200-00.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "gps-201-00.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
+
+	{ "gps-300-00.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STDROMPICKEXT(galpanise, galpanise, skns)
+STD_ROM_FN(galpanise)
+
+struct BurnDriver BurnDrvGalpanise = {
+	"galpanise", "galpanis", "skns", NULL, "1997",
+	"Gals Panic S - Extra Edition (Europe, set 2)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
+	NULL, galpaniseRomInfo, galpaniseRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
 	GalpanisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2557,6 +2585,44 @@ struct BurnDriver BurnDrvGalpanisj = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpanisjRomInfo, galpanisjRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
 	GalpanisjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic S - Extra Edition (Asia)
+
+static struct BurnRomInfo galpanisaRomDesc[] = {
+	{ "gps-000-a0_9abc.u10",	0x100000, 0x4e24b799, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gps-001-a0_bd64.u8",		0x100000, 0xaa4db8af, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gps-100-00.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
+	{ "gps-101-00.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
+	{ "gps-102-00.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
+
+	{ "gps-200-00.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "gps-201-00.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
+
+	{ "gps-300-00.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STDROMPICKEXT(galpanisa, galpanisa, skns)
+STD_ROM_FN(galpanisa)
+
+static INT32 GalpanisaInit()
+{
+	sprite_kludge_x = -5;
+	sprite_kludge_y = -1;
+
+	return DrvInit(2 /*Asia*/);
+}
+
+struct BurnDriver BurnDrvGalpanisa = {
+	"galpanisa", "galpanis", "skns", NULL, "1997",
+	"Gals Panic S - Extra Edition (Asia)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
+	NULL, galpanisaRomInfo, galpanisaRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
+	GalpanisaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
 

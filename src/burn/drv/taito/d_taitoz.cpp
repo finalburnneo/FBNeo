@@ -1099,7 +1099,7 @@ static struct BurnDIPInfo ContcircjDIPList[]=
 
 STDDIPINFO(Contcircj)
 
-static struct BurnDIPInfo DblaxleDIPList[]=
+static struct BurnDIPInfo DblaxleDIPList[]=  // Side by Side linkable versions
 {
 	// Default Values
 	{0x0d, 0xff, 0xff, 0xff, NULL                             },
@@ -1151,6 +1151,75 @@ static struct BurnDIPInfo DblaxleDIPList[]=
 };
 
 STDDIPINFO(Dblaxle)
+
+static struct BurnDIPInfo DblaxlesDIPList[]=  // Single player versions
+{
+	// Default Values
+	{0x0d, 0xff, 0xff, 0xff, NULL                             },
+	{0x0e, 0xff, 0xff, 0xfb, NULL                             },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Handle Pulse"                   },
+	{0x0d, 0x01, 0x01, 0x01, "Normal"                         },
+	{0x0d, 0x01, 0x01, 0x00, "Fast"                       	  },
+	
+	{0   , 0xfe, 0   , 2   , "Gear Shift"                     },
+	{0x0d, 0x01, 0x02, 0x02, "Normal"                         },
+	{0x0d, 0x01, 0x02, 0x00, "Inverted"                       },
+	
+	{0   , 0xfe, 0   , 2   , "Service Mode"                   },
+	{0x0d, 0x01, 0x04, 0x04, "Off"                            },
+	{0x0d, 0x01, 0x04, 0x00, "On"                             },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                    },
+	{0x0d, 0x01, 0x08, 0x00, "Off"                            },
+	{0x0d, 0x01, 0x08, 0x08, "On"                             },
+	
+	{0   , 0xfe, 0   , 4   , "Coin A"                         },
+	{0x0d, 0x01, 0x30, 0x10, "2 Coins 1 Credit"               },
+	{0x0d, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
+	{0x0d, 0x01, 0x30, 0x00, "2 Coins 3 Credits"              },
+	{0x0d, 0x01, 0x30, 0x20, "1 Coin  2 Credits"              },
+	
+	{0   , 0xfe, 0   , 4   , "Coin B"                         },
+	{0x0d, 0x01, 0xc0, 0x40, "2 Coins 1 Credit"               },
+	{0x0d, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"               },
+	{0x0d, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"              },
+	{0x0d, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"              },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Difficulty"                     },
+	{0x0e, 0x01, 0x03, 0x02, "Easy"                           },
+	{0x0e, 0x01, 0x03, 0x03, "Normal"                         },
+	{0x0e, 0x01, 0x03, 0x01, "Hard"                           },
+	{0x0e, 0x01, 0x03, 0x00, "Hardest"                        },
+	
+	{0   , 0xfe, 0   , 2   , "Back Gear"           			  },
+	{0x0e, 0x01, 0x04, 0x04, "Normal"                         },
+	{0x0e, 0x01, 0x04, 0x00, "No Back Gear"                   },
+	
+	{0   , 0xfe, 0   , 2   , "Vibration Mode"                 },
+	{0x0e, 0x01, 0x08, 0x08, "Partial Vibration"              },
+	{0x0e, 0x01, 0x08, 0x00, "All The Time Vibration"         },
+	
+	{0   , 0xfe, 0   , 2   , "Steering Wheel Vibration"       },
+	{0x0e, 0x01, 0x10, 0x00, "Off"                            },
+	{0x0e, 0x01, 0x10, 0x10, "On"                       	  },
+	
+	{0   , 0xfe, 0   , 2   , "Select Round"       			  },
+	{0x0e, 0x01, 0x20, 0x00, "Off"                            },
+	{0x0e, 0x01, 0x20, 0x20, "On"                       	  },
+	
+	{0   , 0xfe, 0   , 2   , "Allow Continue"       		  },
+	{0x0e, 0x01, 0x40, 0x00, "Off"                            },
+	{0x0e, 0x01, 0x40, 0x40, "On"                       	  },
+	
+	{0   , 0xfe, 0   , 2   , "Buy-In"       			      },
+	{0x0e, 0x01, 0x80, 0x00, "Off"                            },
+	{0x0e, 0x01, 0x80, 0x80, "On"                       	  },
+};
+
+STDDIPINFO(Dblaxles)
 
 static struct BurnDIPInfo PwheelsjDIPList[]=
 {
@@ -2545,6 +2614,7 @@ STD_ROM_PICK(Contcircj)
 STD_ROM_FN(Contcircj)
 
 static struct BurnRomInfo DblaxleRomDesc[] = {
+	/* Manual refers to this version as the "Version Without Communication" */
 	{ "c78_49-1.2",    0x020000, 0xa6f0c631, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c78_51-1.4",    0x020000, 0xef24e83b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c78_50-1.3",    0x020000, 0x8b0440f4, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -2582,7 +2652,47 @@ static struct BurnRomInfo DblaxleRomDesc[] = {
 STD_ROM_PICK(Dblaxle)
 STD_ROM_FN(Dblaxle)
 
+static struct BurnRomInfo DblaxleuRomDesc[] = {
+	/* Manual refers to this version as the "Version Without Communication" */
+	{ "c78_49+.2",     0x020000, 0x3bb0344a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c78_51+.4",     0x020000, 0x918176cb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c78_50+.3",     0x020000, 0x5a12e2bb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c78_53+.5",     0x020000, 0x62f910d4, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "c78-30+.35",    0x020000, 0xf73b3ce1, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "c78-31+.36",    0x020000, 0x4639adee, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	
+	{ "c78-34.c42",    0x020000, 0xf2186943, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "c78-10.12",     0x080000, 0x44b1897c, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "c78-11.11",     0x080000, 0x7db3d4a3, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	
+	{ "c78-08.25",     0x100000, 0x6c725211, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c78-07.33",     0x100000, 0x9da00d5b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c78-06.23",     0x100000, 0x8309e91b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c78-05.31",     0x100000, 0x90001f68, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	
+	{ "c78-09.12",     0x080000, 0x0dbde6f5, BRF_GRA | TAITO_ROAD },
+	
+	{ "c78-04.3",      0x080000, 0xcc1aa37c, BRF_GRA | TAITO_SPRITEMAP },
+	
+	{ "c78-12.33",     0x100000, 0xb0267404, BRF_SND | TAITO_YM2610A },
+	{ "c78-13.46",     0x080000, 0x1b363aa2, BRF_SND | TAITO_YM2610A },
+	
+	{ "c78-14.31",     0x080000, 0x9cad4dfb, BRF_SND | TAITO_YM2610B },
+	
+	{ "c78-25.15",     0x010000, 0x7245a6f6, BRF_OPT },
+	{ "c78-15.22",     0x000100, 0xfbf81f30, BRF_OPT },
+	{ "c78-21.74",     0x000100, 0x2926bf27, BRF_OPT },
+	{ "c84-10.16",     0x000400, 0x643e8bfc, BRF_OPT },
+	{ "c84-11.17",     0x000400, 0x10728853, BRF_OPT },
+};
+
+STD_ROM_PICK(Dblaxleu)
+STD_ROM_FN(Dblaxleu)
+
 static struct BurnRomInfo DblaxleulRomDesc[] = {
+	/* Side by side linkable version */
 	{ "c78_41-1.2",    0x020000, 0xcf297fe4, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c78_43-1.4",    0x020000, 0x38a8bad6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c78_42-1.3",    0x020000, 0x4124ab2b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -2621,6 +2731,7 @@ STD_ROM_PICK(Dblaxleul)
 STD_ROM_FN(Dblaxleul)
 
 static struct BurnRomInfo PwheelsjRomDesc[] = {
+	/* Side by side linkable version */
 	{ "c78_26-2.2",    0x020000, 0x25c8eb2e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c78_28-2.4",    0x020000, 0xa9500eb1, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c78_27-2.3",    0x020000, 0x08d2cffb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -3305,15 +3416,11 @@ static void TaitoZCpuAReset(UINT16 d)
 {
 	TaitoCpuACtrl = d;
 	if (!(TaitoCpuACtrl & 1)) {
-		SekClose();
-		SekOpen(1);
-		SekReset();
-		SekClose();
-		SekOpen(0);
+		SekReset(1);
 	}
 }
 
-void __fastcall Aquajack68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Aquajack68K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0100SCN0ByteWrite_Map(0xa00000, 0xa0ffff)
 
@@ -3324,7 +3431,7 @@ void __fastcall Aquajack68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall Aquajack68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Aquajack68K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0100SCN0WordWrite_Map(0xa00000, 0xa0ffff)
 	TC0100SCN0CtrlWordWrite_Map(0xa20000)
@@ -3347,7 +3454,7 @@ void __fastcall Aquajack68K1WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Aquajack68K2ReadByte(UINT32 a)
+static UINT8 __fastcall Aquajack68K2ReadByte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x200000)
 	
@@ -3364,7 +3471,7 @@ UINT8 __fastcall Aquajack68K2ReadByte(UINT32 a)
 	return 0;
 }
 
-UINT16 __fastcall Aquajack68K2ReadWord(UINT32 a)
+static UINT16 __fastcall Aquajack68K2ReadWord(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x200000)
 	
@@ -3385,7 +3492,7 @@ UINT16 __fastcall Aquajack68K2ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Aquajack68K2WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Aquajack68K2WriteWord(UINT32 a, UINT16 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x200000)
 	
@@ -3418,30 +3525,26 @@ static UINT8 BsharkStickRead(INT32 Offset)
 {
 	switch (Offset) {
 		case 0x00: {
-			INT32 Temp = (TaitoAnalogPort0 >> 4) & 0xfff;
-			Temp = 0xfff - Temp;
-			Temp += 1;
-			if (Temp == 0x1000) Temp = 0;
-			return Temp;
+			return ProcessAnalog(TaitoAnalogPort0, 1, 1, 0x34, 0xcc);
 		}
 		
 		case 0x01: {
-			return 0xff;
+			return 0x80;
 		}
 		
 		case 0x02: {
-			return TaitoAnalogPort1 >> 4;
+			return ProcessAnalog(TaitoAnalogPort1, 0, 1, 0x34, 0xcc);
 		}
 		
 		case 0x03: {
-			return 0xff;
+			return 0x80;
 		}
 	}
 	
 	return 0;
 }
 
-UINT8 __fastcall Bshark68K1ReadByte(UINT32 a)
+static UINT8 __fastcall Bshark68K1ReadByte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x400000)
 	
@@ -3462,7 +3565,7 @@ UINT8 __fastcall Bshark68K1ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Bshark68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Bshark68K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x400000)
 	TC0100SCN0ByteWrite_Map(0xd00000, 0xd0ffff)
@@ -3474,7 +3577,7 @@ void __fastcall Bshark68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall Bshark68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Bshark68K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x400000)
 	TC0100SCN0WordWrite_Map(0xd00000, 0xd0ffff)
@@ -3500,7 +3603,7 @@ void __fastcall Bshark68K1WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT16 __fastcall Bshark68K2ReadWord(UINT32 a)
+static UINT16 __fastcall Bshark68K2ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x40000a: {
@@ -3524,7 +3627,7 @@ UINT16 __fastcall Bshark68K2ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Bshark68K2WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Bshark68K2WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x400000:
@@ -3571,9 +3674,9 @@ void __fastcall Bshark68K2WriteWord(UINT32 a, UINT16 d)
 static UINT8 ChasehqInputBypassRead()
 {
 	UINT8 Port = TC0220IOCPortRead();
-	
-	INT32 Steer = (TaitoAnalogPort0 >> 4);
-	
+
+	INT32 Steer = 0xFF80 + ProcessAnalog(TaitoAnalogPort0, 0, 1, 0x20, 0xe0);
+
 	switch (Port) {
 		case 0x08:
 		case 0x09:
@@ -3596,7 +3699,7 @@ static UINT8 ChasehqInputBypassRead()
 	}
 }
 
-UINT8 __fastcall Chasehq68K1ReadByte(UINT32 a)
+static UINT8 __fastcall Chasehq68K1ReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x400001: {
@@ -3615,7 +3718,7 @@ UINT8 __fastcall Chasehq68K1ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Chasehq68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Chasehq68K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0100SCN0ByteWrite_Map(0xc00000, 0xc0ffff)
 	
@@ -3651,7 +3754,7 @@ void __fastcall Chasehq68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Chasehq68K1ReadWord(UINT32 a)
+static UINT16 __fastcall Chasehq68K1ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x400002: {
@@ -3670,7 +3773,7 @@ UINT16 __fastcall Chasehq68K1ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Chasehq68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Chasehq68K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0100SCN0WordWrite_Map(0xc00000, 0xc0ffff)
 	TC0100SCN0CtrlWordWrite_Map(0xc20000)
@@ -3702,13 +3805,8 @@ static UINT8 ContcircInputBypassRead()
 {
 	UINT8 Port = TC0220IOCPortRead();
 	
-	INT32 Steer = (TaitoAnalogPort0 >> 4) & 0xfff;
-	Steer = 0xfff - Steer;
-	if (Steer == 0xfff) Steer = 0;
-	if (Steer > 0x5f && Steer < 0x80) Steer = 0x5f;
-	if (Steer > 0xf7f && Steer < 0xfa0) Steer = 0xfa0;
-	if (Steer > 0xf7f) Steer |= 0xf000;
-	
+	INT32 Steer = 0xFF80 + ProcessAnalog(TaitoAnalogPort0, 1, 1, 0x20, 0xe0);
+
 	switch (Port) {
 		case 0x08: {
 			return Steer & 0xff;
@@ -3724,7 +3822,7 @@ static UINT8 ContcircInputBypassRead()
 	}
 }
 
-void __fastcall Contcirc68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Contcirc68K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0100SCN0ByteWrite_Map(0x200000, 0x20ffff)
 	
@@ -3735,7 +3833,7 @@ void __fastcall Contcirc68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall Contcirc68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Contcirc68K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0100SCN0WordWrite_Map(0x200000, 0x20ffff)
 	TC0100SCN0CtrlWordWrite_Map(0x220000)
@@ -3759,7 +3857,7 @@ void __fastcall Contcirc68K1WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Contcirc68K2ReadByte(UINT32 a)
+static UINT8 __fastcall Contcirc68K2ReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x100001: {
@@ -3774,7 +3872,7 @@ UINT8 __fastcall Contcirc68K2ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Contcirc68K2WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Contcirc68K2WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x100001: {
@@ -3788,7 +3886,7 @@ void __fastcall Contcirc68K2WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Contcirc68K2ReadWord(UINT32 a)
+static UINT16 __fastcall Contcirc68K2ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x100000: {
@@ -3811,7 +3909,7 @@ UINT16 __fastcall Contcirc68K2ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Contcirc68K2WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Contcirc68K2WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x100000: {
@@ -3842,8 +3940,7 @@ void __fastcall Contcirc68K2WriteWord(UINT32 a, UINT16 d)
 
 static UINT16 DblaxleSteerRead(INT32 Offset)
 {
-	int Steer = TaitoAnalogPort0 >> 5;
-	if (Steer > 0x3f) Steer |= 0xf800;
+	INT32 Steer = 0xFF80 + ProcessAnalog(TaitoAnalogPort0, 0, 1, 0x40, 0xc0);
 
 	switch (Offset) {
 		case 0x04: {
@@ -3858,7 +3955,7 @@ static UINT16 DblaxleSteerRead(INT32 Offset)
 	return 0x00;
 }
 
-UINT8 __fastcall Dblaxle68K1ReadByte(UINT32 a)
+static UINT8 __fastcall Dblaxle68K1ReadByte(UINT32 a)
 {
 	TC0510NIOHalfWordSwapRead_Map(0x400000)
 	
@@ -3875,7 +3972,7 @@ UINT8 __fastcall Dblaxle68K1ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Dblaxle68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Dblaxle68K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0510NIOHalfWordSwapWrite_Map(0x400000)
 	
@@ -3901,7 +3998,7 @@ void __fastcall Dblaxle68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Dblaxle68K1ReadWord(UINT32 a)
+static UINT16 __fastcall Dblaxle68K1ReadWord(UINT32 a)
 {
 	TC0510NIOHalfWordSwapRead_Map(0x400000)
 	
@@ -3919,7 +4016,7 @@ UINT16 __fastcall Dblaxle68K1ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Dblaxle68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Dblaxle68K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0510NIOHalfWordSwapWrite_Map(0x400000)
 	TC0480SCPCtrlWordWrite_Map(0xa30000)
@@ -3935,7 +4032,7 @@ void __fastcall Dblaxle68K1WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-void __fastcall Enforce68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Enforce68K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0100SCN0ByteWrite_Map(0x600000, 0x60ffff)
 	
@@ -3946,7 +4043,7 @@ void __fastcall Enforce68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Enforce68K1ReadWord(UINT32 a)
+static UINT16 __fastcall Enforce68K1ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x500002: {
@@ -3961,7 +4058,7 @@ UINT16 __fastcall Enforce68K1ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Enforce68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Enforce68K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0100SCN0WordWrite_Map(0x600000, 0x60ffff)
 	TC0100SCN0CtrlWordWrite_Map(0x620000)
@@ -3984,7 +4081,7 @@ void __fastcall Enforce68K1WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Enforce68K2ReadByte(UINT32 a)
+static UINT8 __fastcall Enforce68K2ReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x300001: {
@@ -3999,7 +4096,7 @@ UINT8 __fastcall Enforce68K2ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Enforce68K2WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Enforce68K2WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x300001: {
@@ -4013,7 +4110,7 @@ void __fastcall Enforce68K2WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Enforce68K2ReadWord(UINT32 a)
+static UINT16 __fastcall Enforce68K2ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x200002: {
@@ -4036,7 +4133,7 @@ UINT16 __fastcall Enforce68K2ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Enforce68K2WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Enforce68K2WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x200000: {
@@ -4102,7 +4199,7 @@ static UINT8 NightstrStickRead(INT32 Offset)
 	return 0xff;
 }
 
-UINT8 __fastcall Nightstr68K1ReadByte(UINT32 a)
+static UINT8 __fastcall Nightstr68K1ReadByte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x400000)
 	
@@ -4122,7 +4219,7 @@ UINT8 __fastcall Nightstr68K1ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Nightstr68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Nightstr68K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x400000)
 	TC0100SCN0ByteWrite_Map(0xc00000, 0xc0ffff)
@@ -4141,7 +4238,7 @@ void __fastcall Nightstr68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Nightstr68K1ReadWord(UINT32 a)
+static UINT16 __fastcall Nightstr68K1ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x820002: {
@@ -4160,7 +4257,7 @@ UINT16 __fastcall Nightstr68K1ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Nightstr68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Nightstr68K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x400000)
 	TC0100SCN0WordWrite_Map(0xc00000, 0xc0ffff)
@@ -4213,7 +4310,7 @@ void __fastcall Nightstr68K1WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Racingb68K1ReadByte(UINT32 a)
+static UINT8 __fastcall Racingb68K1ReadByte(UINT32 a)
 {
 	TC0510NIOHalfWordSwapRead_Map(0x300000)
 	
@@ -4235,7 +4332,7 @@ UINT8 __fastcall Racingb68K1ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Racingb68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Racingb68K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0510NIOHalfWordSwapWrite_Map(0x300000)
 	
@@ -4266,7 +4363,7 @@ void __fastcall Racingb68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Racingb68K1ReadWord(UINT32 a)
+static UINT16 __fastcall Racingb68K1ReadWord(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -4277,7 +4374,7 @@ UINT16 __fastcall Racingb68K1ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Racingb68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Racingb68K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0510NIOHalfWordSwapWrite_Map(0x300000)
 	TC0480SCPCtrlWordWrite_Map(0x930000)
@@ -4306,7 +4403,7 @@ static UINT8 SciSteerRead(INT32 Offset)
 	return 0xff;
 }
 
-UINT8 __fastcall Sci68K1ReadByte(UINT32 a)
+static UINT8 __fastcall Sci68K1ReadByte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x200000)
 	
@@ -4324,7 +4421,7 @@ UINT8 __fastcall Sci68K1ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Sci68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Sci68K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x200000)
 	TC0100SCN0ByteWrite_Map(0xa00000, 0xa0ffff)
@@ -4356,7 +4453,7 @@ void __fastcall Sci68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall Sci68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Sci68K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0100SCN0WordWrite_Map(0xa00000, 0xa0ffff)
 	TC0100SCN0CtrlWordWrite_Map(0xa20000)
@@ -4422,7 +4519,7 @@ static void SpacegunInputBypassWrite(INT32 Offset, UINT16 Data)
 	}
 }
 
-void __fastcall Spacegun68K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Spacegun68K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0100SCN0ByteWrite_Map(0x900000, 0x90ffff)
 	
@@ -4433,7 +4530,7 @@ void __fastcall Spacegun68K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Spacegun68K1ReadWord(UINT32 a)
+static UINT16 __fastcall Spacegun68K1ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0xb00002: {
@@ -4448,7 +4545,7 @@ UINT16 __fastcall Spacegun68K1ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Spacegun68K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Spacegun68K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0100SCN0WordWrite_Map(0x900000, 0x90ffff)
 	TC0100SCN0CtrlWordWrite_Map(0x920000)
@@ -4466,7 +4563,7 @@ void __fastcall Spacegun68K1WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Spacegun68K2ReadByte(UINT32 a)
+static UINT8 __fastcall Spacegun68K2ReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc0000d: {
@@ -4498,7 +4595,7 @@ UINT8 __fastcall Spacegun68K2ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Spacegun68K2WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Spacegun68K2WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x800008: {
@@ -4522,7 +4619,7 @@ void __fastcall Spacegun68K2WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Spacegun68K2ReadWord(UINT32 a)
+static UINT16 __fastcall Spacegun68K2ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x800000:
@@ -4548,7 +4645,7 @@ UINT16 __fastcall Spacegun68K2ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Spacegun68K2WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Spacegun68K2WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x800000:
@@ -4605,7 +4702,7 @@ void __fastcall Spacegun68K2WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall TaitoZZ80Read(UINT16 a)
+static UINT8 __fastcall TaitoZZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xe000: {
@@ -4642,7 +4739,7 @@ UINT8 __fastcall TaitoZZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall TaitoZZ80Write(UINT16 a, UINT8 d)
+static void __fastcall TaitoZZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xe000: {
@@ -6555,20 +6652,20 @@ static INT32 BsharkDraw()
 	TaitoZCalcPalette();
 	
 	if (TC0100SCNBottomLayer(0)) {
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoChars);
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 2 && !(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoChars);
+		if (nBurnLayer & 1 && !(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
 	} else {
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 1, TaitoChars);
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 1 && !(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 1, TaitoChars);
+		if (nBurnLayer & 2 && !(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
 	}
 	
-	BsharkRenderSprites(1, 8, 0x800);
+	if (nSpriteEnable & 1) BsharkRenderSprites(1, 8, 0x800);
 	
-	TC0150RODDraw(-1, 0xc0, 0, 1, 1, 2);
+	if (nBurnLayer & 4) TC0150RODDraw(-1, 0xc0, 0, 1, 1, 2);
 	
-	BsharkRenderSprites(0, 8, 0x800);
+	if (nSpriteEnable & 2) BsharkRenderSprites(0, 8, 0x800);
 	
-	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
+	if (nBurnLayer & 8 && !(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
 	BurnTransferCopy(TaitoPalette);
 
 	return 0;
@@ -7051,10 +7148,20 @@ struct BurnDriver BurnDrvContcircj = {
 
 struct BurnDriver BurnDrvDblaxle = {
 	"dblaxle", NULL, NULL, NULL, "1991",
-	"Double Axle (US)\0", NULL, "Taito America Corporation", "Taito Z",
+	"Double Axle (US, Rev 1)\0", NULL, "Taito America Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
-	NULL, DblaxleRomInfo, DblaxleRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, DblaxleDIPInfo,
+	NULL, DblaxleRomInfo, DblaxleRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, DblaxlesDIPInfo,
+	DblaxleInit, TaitoZExit, TaitoZFrame, DblaxleDraw, TaitoZScan,
+	NULL, 0x1000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvDblaxleu = {
+	"dblaxleu", "dblaxle", NULL, NULL, "1991",
+	"Double Axle (US)\0", NULL, "Taito America Corporation", "Taito Z",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
+	NULL, DblaxleuRomInfo, DblaxleuRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, DblaxlesDIPInfo,
 	DblaxleInit, TaitoZExit, TaitoZFrame, DblaxleDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };

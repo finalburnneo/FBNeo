@@ -1,8 +1,6 @@
 // FB Alpha Blades of Steel driver module
 // Based on MAME driver by Manuel Abadia
 
-// Needs trackball hooked up
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "hd6309_intf.h"
@@ -10,6 +8,7 @@
 #include "upd7759.h"
 #include "k007342_k007420.h"
 #include "konamiic.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -40,128 +39,233 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[4];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
-static INT32 DrvAnalog0 = 0;
-static INT32 DrvAnalog1 = 0;
-static INT32 DrvAnalog2 = 0;
-static INT32 DrvAnalog3 = 0;
+static INT16 DrvAnalog0 = 0;
+static INT16 DrvAnalog1 = 0;
+static INT16 DrvAnalog2 = 0;
+static INT16 DrvAnalog3 = 0;
+static INT32 last_track[4];
 
 static INT32 watchdog;
 
-#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static INT32 has_trackball = 0;
 
 static struct BurnInputInfo BladestlInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
-	A("P1 Trackball X",    	BIT_ANALOG_REL, &DrvAnalog0,    "mouse x-axis" ),
-	A("P1 Trackball Y",    	BIT_ANALOG_REL, &DrvAnalog1,    "mouse y-axis" ),
-
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
 
-	A("P2 Trackball X",    	BIT_ANALOG_REL, &DrvAnalog2,    "mouse x-axis" ),
-	A("P2 Trackball Y",    	BIT_ANALOG_REL, &DrvAnalog3,    "mouse y-axis" ),
-
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		}, //13
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Bladestl)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo BladestlTrkInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	A("P1 Trackball X",	BIT_ANALOG_REL, &DrvAnalog0,    "p1 x-axis" ),
+	A("P1 Trackball Y",	BIT_ANALOG_REL, &DrvAnalog1,    "p1 y-axis" ),
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
+
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	A("P2 Trackball X",	BIT_ANALOG_REL, &DrvAnalog2,    "p2 x-axis" ),
+	A("P2 Trackball Y",	BIT_ANALOG_REL, &DrvAnalog3,    "p2 y-axis" ),
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		}, // f
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
+};
+
+STDINPUTINFO(BladestlTrk)
+
 static struct BurnDIPInfo BladestlDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0xe0, NULL			},
-	{0x18, 0xff, 0xff, 0xc0, NULL			},
-	{0x19, 0xff, 0xff, 0xff, NULL			},
-	{0x1a, 0xff, 0xff, 0x5b, NULL			},
+	{0x13, 0xf0, 0xff, 0xff, NULL/*starting offset*/},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x17, 0x01, 0x20, 0x20, "Off"			},
-	{0x17, 0x01, 0x20, 0x00, "On"			},
+	{0x00, 0xff, 0xff, 0xe0, NULL					},
+	{0x01, 0xff, 0xff, 0xc0, NULL					},
+	{0x02, 0xff, 0xff, 0xff, NULL					},
+	{0x03, 0xff, 0xff, 0x5b, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x17, 0x01, 0x80, 0x80, "Off"			},
-	{0x17, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x20, 0x20, "Off"					},
+	{0x00, 0x01, 0x20, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Period time set"	},
-	{0x18, 0x01, 0x80, 0x80, "4"			},
-	{0x18, 0x01, 0x80, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x80, 0x80, "Off"					},
+	{0x00, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,   16, "Coin A"		},
-	{0x19, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
-	{0x19, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
-	{0x19, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
-	{0x19, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
-	{0x19, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x19, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
-	{0x19, 0x01, 0x0f, 0x00, "4 Coins 5 Credits"	},
-	{0x19, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
-	{0x19, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
-	{0x19, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
-	{0x19, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
-	{0x19, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
-	{0x19, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
-	{0x19, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
-	{0x19, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
-	{0x19, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+	{0   , 0xfe, 0   ,    2, "Period time set"		},
+	{0x01, 0x01, 0x80, 0x80, "4"					},
+	{0x01, 0x01, 0x80, 0x00, "7"					},
 
-	{0   , 0xfe, 0   ,   16, "Coin B"		},
-	{0x19, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
-	{0x19, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
-	{0x19, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
-	{0x19, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
-	{0x19, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x19, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
-	{0x19, 0x01, 0xf0, 0x00, "4 Coins 5 Credits"	},
-	{0x19, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
-	{0x19, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
-	{0x19, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
-	{0x19, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
-	{0x19, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
-	{0x19, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
-	{0x19, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
-	{0x19, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
-	{0x19, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+	{0   , 0xfe, 0   ,   16, "Coin A"				},
+	{0x02, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
+	{0x02, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
+	{0x02, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
+	{0x02, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x02, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
+	{0x02, 0x01, 0x0f, 0x00, "4 Coins 5 Credits"	},
+	{0x02, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x02, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x02, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x02, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x1a, 0x01, 0x04, 0x00, "Upright"		},
-	{0x1a, 0x01, 0x04, 0x04, "Cocktail"		},
+	{0   , 0xfe, 0   ,   16, "Coin B"				},
+	{0x02, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
+	{0x02, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
+	{0x02, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
+	{0x02, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x02, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x02, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
+	{0x02, 0x01, 0xf0, 0x00, "4 Coins 5 Credits"	},
+	{0x02, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x02, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x02, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x02, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x02, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x02, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x02, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x02, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x02, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Bonus time set"	},
-	{0x1a, 0x01, 0x18, 0x18, "30 secs"		},
-	{0x1a, 0x01, 0x18, 0x10, "20 secs"		},
-	{0x1a, 0x01, 0x18, 0x08, "15 secs"		},
-	{0x1a, 0x01, 0x18, 0x00, "10 secs"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x03, 0x01, 0x04, 0x00, "Upright"				},
+	{0x03, 0x01, 0x04, 0x04, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x1a, 0x01, 0x60, 0x60, "Easy"			},
-	{0x1a, 0x01, 0x60, 0x40, "Normal"		},
-	{0x1a, 0x01, 0x60, 0x20, "Difficult"		},
-	{0x1a, 0x01, 0x60, 0x00, "Very Difficult"	},
+	{0   , 0xfe, 0   ,    4, "Bonus time set"		},
+	{0x03, 0x01, 0x18, 0x18, "30 secs"				},
+	{0x03, 0x01, 0x18, 0x10, "20 secs"				},
+	{0x03, 0x01, 0x18, 0x08, "15 secs"				},
+	{0x03, 0x01, 0x18, 0x00, "10 secs"				},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x1a, 0x01, 0x80, 0x80, "Off"			},
-	{0x1a, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x03, 0x01, 0x60, 0x60, "Easy"					},
+	{0x03, 0x01, 0x60, 0x40, "Normal"				},
+	{0x03, 0x01, 0x60, 0x20, "Difficult"			},
+	{0x03, 0x01, 0x60, 0x00, "Very Difficult"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x03, 0x01, 0x80, 0x80, "Off"					},
+	{0x03, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Bladestl)
+
+static struct BurnDIPInfo BladestlTrkDIPList[]=
+{
+	{0x0f, 0xf0, 0xff, 0xff, NULL/*starting offset*/},
+
+	{0x00, 0xff, 0xff, 0xe0, NULL					},
+	{0x01, 0xff, 0xff, 0xc0, NULL					},
+	{0x02, 0xff, 0xff, 0xff, NULL					},
+	{0x03, 0xff, 0xff, 0x5b, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x20, 0x20, "Off"					},
+	{0x00, 0x01, 0x20, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x80, 0x80, "Off"					},
+	{0x00, 0x01, 0x80, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Period time set"		},
+	{0x01, 0x01, 0x80, 0x80, "4"					},
+	{0x01, 0x01, 0x80, 0x00, "7"					},
+
+	{0   , 0xfe, 0   ,   16, "Coin A"				},
+	{0x02, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
+	{0x02, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
+	{0x02, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
+	{0x02, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x02, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
+	{0x02, 0x01, 0x0f, 0x00, "4 Coins 5 Credits"	},
+	{0x02, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x02, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x02, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x02, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+
+	{0   , 0xfe, 0   ,   16, "Coin B"				},
+	{0x02, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
+	{0x02, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
+	{0x02, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
+	{0x02, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x02, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x02, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
+	{0x02, 0x01, 0xf0, 0x00, "4 Coins 5 Credits"	},
+	{0x02, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x02, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x02, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x02, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x02, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x02, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x02, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x02, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x02, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x03, 0x01, 0x04, 0x00, "Upright"				},
+	{0x03, 0x01, 0x04, 0x04, "Cocktail"				},
+
+	{0   , 0xfe, 0   ,    4, "Bonus time set"		},
+	{0x03, 0x01, 0x18, 0x18, "30 secs"				},
+	{0x03, 0x01, 0x18, 0x10, "20 secs"				},
+	{0x03, 0x01, 0x18, 0x08, "15 secs"				},
+	{0x03, 0x01, 0x18, 0x00, "10 secs"				},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x03, 0x01, 0x60, 0x60, "Easy"					},
+	{0x03, 0x01, 0x60, 0x40, "Normal"				},
+	{0x03, 0x01, 0x60, 0x20, "Difficult"			},
+	{0x03, 0x01, 0x60, 0x00, "Very Difficult"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x03, 0x01, 0x80, 0x80, "Off"					},
+	{0x03, 0x01, 0x80, 0x00, "On"					},
+};
+
+STDDIPINFO(BladestlTrk)
 
 static void bankswitch(INT32 bank)
 {
@@ -204,16 +308,13 @@ static void bladestl_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 trackball_read(INT32 /*offset*/)
+static UINT8 trackball_read(INT32 offset)
 {
-/*
-	int curr = m_trackball[offset]->read();
-	int delta = (curr - m_last_track[offset]) & 0xff;
-	m_last_track[offset] = curr;
+	INT32 curr = (has_trackball) ? BurnTrackballRead(offset>>1, offset&1) : 0xff;
+	INT32 delta = (curr - last_track[offset]) & 0xff;
+	last_track[offset] = curr;
 
 	return (delta & 0x80) | (curr >> 1);
-*/
-	return 0;
 }
 
 static UINT8 bladestl_main_read(UINT16 address)
@@ -333,6 +434,9 @@ static INT32 DrvDoReset(INT32 clear_ram)
 
 	HiscoreReset();
 
+	for (INT32 i = 0; i < 4; i++)
+		trackball_read(i); // cache last_track
+
 	HD6309Bank = 0;
 	soundlatch = 0;
 	spritebank = 0;
@@ -344,7 +448,7 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvHD6309ROM		= Next; Next += 0x010000;
+	DrvHD6309ROM	= Next; Next += 0x010000;
 	DrvM6809ROM		= Next; Next += 0x010000;
 
 	DrvGfxROM0		= Next; Next += 0x080000;
@@ -358,14 +462,14 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvHD6309RAM		= Next; Next += 0x002000;
+	DrvHD6309RAM	= Next; Next += 0x002000;
 	DrvM6809RAM		= Next; Next += 0x000800;
 	DrvPalRAM		= Next; Next += 0x000100;
 
-	K007342VidRAM[0]	= Next; Next += 0x002000;
-	K007342ScrRAM[0]	= Next; Next += 0x000200;
+	K007342VidRAM[0]= Next; Next += 0x002000;
+	K007342ScrRAM[0]= Next; Next += 0x000200;
 
-	K007420RAM[0]		= Next; Next += 0x000200;
+	K007420RAM[0]	= Next; Next += 0x000200;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -411,11 +515,11 @@ static INT32 DrvInit()
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(K007342VidRAM[0],	0x0000, 0x1fff, MAP_RAM);
-	HD6309MapMemory(K007420RAM[0], 		0x2000, 0x21ff, MAP_RAM);
-	HD6309MapMemory(K007342ScrRAM[0],	0x2200, 0x23ff, MAP_RAM);
-	HD6309MapMemory(DrvPalRAM,		0x2400, 0x24ff, MAP_RAM);
-	HD6309MapMemory(DrvHD6309RAM,		0x4000, 0x5fff, MAP_RAM);
+	HD6309MapMemory(K007342VidRAM[0],		0x0000, 0x1fff, MAP_RAM);
+	HD6309MapMemory(K007420RAM[0], 			0x2000, 0x21ff, MAP_RAM);
+	HD6309MapMemory(K007342ScrRAM[0],		0x2200, 0x23ff, MAP_RAM);
+	HD6309MapMemory(DrvPalRAM,				0x2400, 0x24ff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309RAM,			0x4000, 0x5fff, MAP_RAM);
 	HD6309MapMemory(DrvHD6309ROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(bladestl_main_write);
 	HD6309SetReadHandler(bladestl_main_read);
@@ -423,7 +527,7 @@ static INT32 DrvInit()
 
 	M6809Init(0);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809RAM,		0x0000, 0x07ff, MAP_RAM);
+	M6809MapMemory(DrvM6809RAM,				0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvM6809ROM  + 0x08000,	0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(bladestl_sound_write);
 	M6809SetReadHandler(bladestl_sound_read);
@@ -445,6 +549,9 @@ static INT32 DrvInit()
 	BurnYM2203SetPSGVolume(0, 0.35); // when filters get hooked up, remove this line.
 
 	// needs filters hooked up
+	if (has_trackball) {
+		BurnTrackballInit(2);
+	}
 
 	GenericTilesInit();
 
@@ -462,6 +569,11 @@ static INT32 DrvExit()
 
 	BurnYM2203Exit();
 	UPD7759Exit();
+
+	if (has_trackball) {
+		BurnTrackballExit();
+		has_trackball = 0;
+	}
 
 	BurnFree (AllMem);
 
@@ -535,6 +647,16 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		if (has_trackball) {
+			BurnTrackballConfig(0, AXIS_REVERSED, AXIS_NORMAL);
+			BurnTrackballFrame(0, DrvAnalog1, DrvAnalog0, 0x02, 0x0f);
+			BurnTrackballUpdate(0);
+
+			BurnTrackballConfig(1, AXIS_NORMAL, AXIS_NORMAL);
+			BurnTrackballFrame(1, DrvAnalog2, DrvAnalog3, 0x02, 0x0f);
+			BurnTrackballUpdate(1);
+		}
 	}
 
 	INT32 nInterleave = 256;
@@ -549,9 +671,20 @@ static INT32 DrvFrame()
 
 		HD6309Run(nCyclesTotal[0] / nInterleave);
 
-		if (i == 240 && K007342_irq_enabled()) HD6309SetIRQLine(1, CPU_IRQSTATUS_AUTO); // firq
+		if (i == 240) {
+			if (K007342_irq_enabled()) HD6309SetIRQLine(1, CPU_IRQSTATUS_AUTO); // firq
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+		}
 
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+
+		if (has_trackball && (i%32) == 31) {
+			BurnTrackballUpdate(0);
+			BurnTrackballUpdate(1);
+		}
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
@@ -564,10 +697,6 @@ static INT32 DrvFrame()
 	HD6309Close();
 	M6809Close();
 	
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
 	return 0;
 }
 
@@ -596,11 +725,13 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		UPD7759Scan(nAction, pnMin);
 
 		K007342Scan(nAction);
+		if (has_trackball) BurnTrackballScan();
 
 		SCAN_VAR(HD6309Bank);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(spritebank);
 		SCAN_VAR(soundbank);
+		SCAN_VAR(last_track);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -608,14 +739,14 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		bankswitch(HD6309Bank);
 		HD6309Close();
 
-		bladestl_ym2203_write_portB(0,soundbank);
+		bladestl_ym2203_write_portB(0, soundbank);
 	}
 
 	return 0;
 }
 
 
-// Blades of Steel (version T)
+// Blades of Steel (version T, Joystick)
 
 static struct BurnRomInfo bladestlRomDesc[] = {
 	{ "797-t01.19c",	0x10000, 0x89d7185d, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
@@ -637,7 +768,7 @@ STD_ROM_FN(bladestl)
 
 struct BurnDriver BurnDrvBladestl = {
 	"bladestl", NULL, NULL, NULL, "1987",
-	"Blades of Steel (version T)\0", NULL, "Konami", "GX797",
+	"Blades of Steel (version T, Joystick)\0", NULL, "Konami", "GX797",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, bladestlRomInfo, bladestlRomName, NULL, NULL, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
@@ -646,7 +777,14 @@ struct BurnDriver BurnDrvBladestl = {
 };
 
 
-// Blades of Steel (version L)
+static INT32 DrvTrkInit()
+{
+	has_trackball = 1;
+
+	return DrvInit();
+}
+
+// Blades of Steel (version L, Trackball)
 
 static struct BurnRomInfo bladestllRomDesc[] = {
 	{ "797-l01.19c",	0x10000, 0x1ab14c40, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
@@ -668,16 +806,16 @@ STD_ROM_FN(bladestll)
 
 struct BurnDriver BurnDrvBladestll = {
 	"bladestll", "bladestl", NULL, NULL, "1987",
-	"Blades of Steel (version L)\0", NULL, "Konami", "GX797",
+	"Blades of Steel (version L, Trackball)\0", NULL, "Konami", "GX797",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, bladestllRomInfo, bladestllRomName, NULL, NULL, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x120,
+	NULL, bladestllRomInfo, bladestllRomName, NULL, NULL, NULL, NULL, BladestlTrkInputInfo, BladestlTrkDIPInfo,
+	DrvTrkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x120,
 	224, 256, 3, 4
 };
 
 
-// Blades of Steel (version E)
+// Blades of Steel (version E, Trackball)
 
 static struct BurnRomInfo bladestleRomDesc[] = {
 	{ "797-e01.19c",	0x10000, 0xf8472e95, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
@@ -699,10 +837,10 @@ STD_ROM_FN(bladestle)
 
 struct BurnDriver BurnDrvBladestle = {
 	"bladestle", "bladestl", NULL, NULL, "1987",
-	"Blades of Steel (version E)\0", NULL, "Konami", "GX797",
+	"Blades of Steel (version E, Trackball)\0", NULL, "Konami", "GX797",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
-	NULL, bladestleRomInfo, bladestleRomName, NULL, NULL, NULL, NULL, BladestlInputInfo, BladestlDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x120,
+	NULL, bladestleRomInfo, bladestleRomName, NULL, NULL, NULL, NULL, BladestlTrkInputInfo, BladestlTrkDIPInfo,
+	DrvTrkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x120,
 	224, 256, 3, 4
 };

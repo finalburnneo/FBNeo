@@ -1027,6 +1027,11 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 
 		BurnDrvGetAspect(&ax, &ay);
 
+		if (!_tcsncmp(BurnDrvGetText(DRV_NAME), _T("wrally2"), 7)) {
+			ax = 4;
+			ay = 3;
+		}
+
 		//if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		if (ay > ax) {
 			bImageOrientation = TRUE;

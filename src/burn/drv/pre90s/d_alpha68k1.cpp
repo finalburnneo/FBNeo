@@ -39,178 +39,177 @@ static UINT8 DrvReset;
 static UINT32 tnextspc2mode = 0;
 
 static struct BurnInputInfo PaddlemaInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 left"	},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p3 fire 2"	},
 
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy3 + 8,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy3 + 9,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy3 + 10,	"p4 left"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy3 + 8,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy3 + 9,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy3 + 10,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy3 + 11,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p4 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 14,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 13,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 14,	"service"	},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 13,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Paddlema)
 
 static struct BurnInputInfo TnextspcInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Tnextspc)
 
 static struct BurnDIPInfo PaddlemaDIPList[]=
 {
-	{0x1e, 0xff, 0xff, 0x73, NULL				},
-	{0x1f, 0xff, 0xff, 0x00, NULL				},
+	{0x1e, 0xff, 0xff, 0x73, NULL						},
+	{0x1f, 0xff, 0xff, 0x00, NULL						},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"			},
+	{0   , 0xfe, 0   ,    4, "Coin B"					},
 	{0x1e, 0x01, 0x03, 0x03, "1 Coin  2 Credits"		},
 	{0x1e, 0x01, 0x03, 0x01, "1 Coin  3 Credits"		},
 	{0x1e, 0x01, 0x03, 0x02, "1 Coin  4 Credits"		},
 	{0x1e, 0x01, 0x03, 0x00, "1 Coin  6 Credits"		},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"			},
+	{0   , 0xfe, 0   ,    4, "Coin A"					},
 	{0x1e, 0x01, 0x0c, 0x0c, "4 Coins 1 Credits"		},
 	{0x1e, 0x01, 0x0c, 0x04, "3 Coins 1 Credits"		},
 	{0x1e, 0x01, 0x0c, 0x08, "2 Coins 1 Credits"		},
 	{0x1e, 0x01, 0x0c, 0x00, "1 Coin  1 Credits"		},
 
-	{0   , 0xfe, 0   ,    4, "Game Time"			},
-	{0x1e, 0x01, 0x30, 0x00, "Default Time"			},
-	{0x1e, 0x01, 0x30, 0x20, "+10 Seconds"			},
-	{0x1e, 0x01, 0x30, 0x10, "+20 Seconds"			},
-	{0x1e, 0x01, 0x30, 0x30, "+30 Seconds"			},
+	{0   , 0xfe, 0   ,    4, "Game Time"				},
+	{0x1e, 0x01, 0x30, 0x00, "Default Time"				},
+	{0x1e, 0x01, 0x30, 0x20, "+10 Seconds"				},
+	{0x1e, 0x01, 0x30, 0x10, "+20 Seconds"				},
+	{0x1e, 0x01, 0x30, 0x30, "+30 Seconds"				},
 
-	{0   , 0xfe, 0   ,    3, "Match Type"			},
-	{0x1e, 0x01, 0xc0, 0x80, "A to B"			},
-	{0x1e, 0x01, 0xc0, 0x00, "A to C"			},
-	{0x1e, 0x01, 0xc0, 0x40, "A to E"			},
+	{0   , 0xfe, 0   ,    3, "Match Type"				},
+	{0x1e, 0x01, 0xc0, 0x80, "A to B"					},
+	{0x1e, 0x01, 0xc0, 0x00, "A to C"					},
+	{0x1e, 0x01, 0xc0, 0x40, "A to E"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x1f, 0x01, 0x01, 0x00, "Off"				},
-	{0x1f, 0x01, 0x01, 0x01, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"				},
+	{0x1f, 0x01, 0x01, 0x00, "Off"						},
+	{0x1f, 0x01, 0x01, 0x01, "On"						},
 
-	{0   , 0xfe, 0   ,    4, "Game Mode"			},
-	{0x1f, 0x01, 0x30, 0x20, "Demo Sounds Off"		},
-	{0x1f, 0x01, 0x30, 0x00, "Demo Sounds On"		},
+	{0   , 0xfe, 0   ,    4, "Game Mode"				},
+	{0x1f, 0x01, 0x30, 0x20, "Demo Sounds Off"			},
+	{0x1f, 0x01, 0x30, 0x00, "Demo Sounds On"			},
 	{0x1f, 0x01, 0x30, 0x10, "Win Match Against CPU (Cheat)"},
-	{0x1f, 0x01, 0x30, 0x30, "Freeze"			},
+	{0x1f, 0x01, 0x30, 0x30, "Freeze"					},
 
-	{0   , 0xfe, 0   ,    2, "Language"			},
-	{0x1f, 0x01, 0x40, 0x00, "English"			},
-	{0x1f, 0x01, 0x40, 0x40, "Japanese"			},
+	{0   , 0xfe, 0   ,    2, "Language"					},
+	{0x1f, 0x01, 0x40, 0x00, "English"					},
+	{0x1f, 0x01, 0x40, 0x40, "Japanese"					},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x1f, 0x01, 0x80, 0x80, "No"				},
-	{0x1f, 0x01, 0x80, 0x00, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"			},
+	{0x1f, 0x01, 0x80, 0x80, "No"						},
+	{0x1f, 0x01, 0x80, 0x00, "Yes"						},
 };
 
 STDDIPINFO(Paddlema)
 
 static struct BurnDIPInfo TnextspcDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xbf, NULL				},
-	{0x12, 0xff, 0xff, 0xff, NULL				},
+	{0x11, 0xff, 0xff, 0xbf, NULL						},
+	{0x12, 0xff, 0xff, 0xff, NULL						},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x11, 0x01, 0x01, 0x01, "Off"				},
-	{0x11, 0x01, 0x01, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x11, 0x01, 0x01, 0x01, "Off"						},
+	{0x11, 0x01, 0x01, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Additional Bonus Life"	},
-	{0x11, 0x01, 0x04, 0x04, "2nd Extend ONLY"		},
-	{0x11, 0x01, 0x04, 0x00, "Every Extend"			},
+	{0x11, 0x01, 0x04, 0x04, "2nd Extend ONLY"			},
+	{0x11, 0x01, 0x04, 0x00, "Every Extend"				},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"			},
-	{0x11, 0x01, 0x30, 0x30, "A 1C/1C B 1C/2C"		},
-	{0x11, 0x01, 0x30, 0x20, "A 2C/1C B 1C/3C"		},
-	{0x11, 0x01, 0x30, 0x10, "A 3C/1C B 1C/5C"		},
-	{0x11, 0x01, 0x30, 0x00, "A 4C/1C B 1C/6C"		},
+	{0   , 0xfe, 0   ,    4, "Coinage"					},
+	{0x11, 0x01, 0x30, 0x30, "A 1C/1C B 1C/2C"			},
+	{0x11, 0x01, 0x30, 0x20, "A 2C/1C B 1C/3C"			},
+	{0x11, 0x01, 0x30, 0x10, "A 3C/1C B 1C/5C"			},
+	{0x11, 0x01, 0x30, 0x00, "A 4C/1C B 1C/6C"			},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x11, 0x01, 0xc0, 0xc0, "2"				},
-	{0x11, 0x01, 0xc0, 0x80, "3"				},
-	{0x11, 0x01, 0xc0, 0x40, "4"				},
-	{0x11, 0x01, 0xc0, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x11, 0x01, 0xc0, 0xc0, "2"						},
+	{0x11, 0x01, 0xc0, 0x80, "3"						},
+	{0x11, 0x01, 0xc0, 0x40, "4"						},
+	{0x11, 0x01, 0xc0, 0x00, "5"						},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x12, 0x01, 0x03, 0x02, "Easy"				},
-	{0x12, 0x01, 0x03, 0x03, "Normal"			},
-	{0x12, 0x01, 0x03, 0x01, "Hard"				},
-	{0x12, 0x01, 0x03, 0x00, "Hardest"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"				},
+	{0x12, 0x01, 0x03, 0x02, "Easy"						},
+	{0x12, 0x01, 0x03, 0x03, "Normal"					},
+	{0x12, 0x01, 0x03, 0x01, "Hard"						},
+	{0x12, 0x01, 0x03, 0x00, "Hardest"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x12, 0x01, 0x04, 0x00, "Off"				},
-	{0x12, 0x01, 0x04, 0x04, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x12, 0x01, 0x04, 0x00, "Off"						},
+	{0x12, 0x01, 0x04, 0x04, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Game Mode"			},
-	{0x12, 0x01, 0x04, 0x00, "Freeze"			},
+	{0   , 0xfe, 0   ,    2, "Game Mode"				},
+	{0x12, 0x01, 0x04, 0x00, "Freeze"					},
 	{0x12, 0x01, 0x04, 0x04, "Infinite Lives (Cheat)"	},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sound/Game Mode"		},
-	{0x12, 0x01, 0x08, 0x08, "Demo Sounds"			},
-	{0x12, 0x01, 0x08, 0x00, "Game Mode"			},
+	{0x12, 0x01, 0x08, 0x08, "Demo Sounds"				},
+	{0x12, 0x01, 0x08, 0x00, "Game Mode"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x12, 0x01, 0x30, 0x30, "100000 200000"		},
-	{0x12, 0x01, 0x30, 0x20, "150000 300000"		},
-	{0x12, 0x01, 0x30, 0x10, "300000 500000"		},
-	{0x12, 0x01, 0x30, 0x00, "None"				},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"				},
+	{0x12, 0x01, 0x30, 0x30, "100000 200000"			},
+	{0x12, 0x01, 0x30, 0x20, "150000 300000"			},
+	{0x12, 0x01, 0x30, 0x10, "300000 500000"			},
+	{0x12, 0x01, 0x30, 0x00, "None"						},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x12, 0x01, 0x40, 0x00, "No"				},
-	{0x12, 0x01, 0x40, 0x40, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"			},
+	{0x12, 0x01, 0x40, 0x00, "No"						},
+	{0x12, 0x01, 0x40, 0x40, "Yes"						},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x12, 0x01, 0x80, 0x80, "Off"				},
-	{0x12, 0x01, 0x80, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"				},
+	{0x12, 0x01, 0x80, 0x80, "Off"						},
+	{0x12, 0x01, 0x80, 0x00, "On"						},
 };
 
 STDDIPINFO(Tnextspc)
@@ -710,11 +709,7 @@ static void draw_sprites(INT32 c, INT32 d, INT32 yshift)
 			UINT16 flipy = attr & 0x4000;
 			UINT8 color  = color_prom[(code << 1) | (attr >> 15)];
 
-			if (flipy) {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0, DrvGfxROM0);
-			}
+			Draw8x8MaskTile(pTransDraw, code, sx, sy - 16, 0, flipy, color, 4, 0, 0, DrvGfxROM0);
 
 			sy = (sy + 8) & 0xff;
 		}
@@ -728,9 +723,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x400;
-	}
+	BurnTransferClear(0x400);
 
 	INT32 shift = (cpu_clock == 9000000) ? 1 : 0;
 
@@ -770,7 +763,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		if (i == 248) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
@@ -860,7 +853,7 @@ STD_ROM_FN(paddlema)
 
 struct BurnDriver BurnDrvPaddlema = {
 	"paddlema", NULL, NULL, NULL, "1988",
-	"Paddle Mania\0", NULL, "SNK", "Miscellaneous",
+	"Paddle Mania\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BALLPADDLE, 0,
 	NULL, paddlemaRomInfo, paddlemaRomName, NULL, NULL, NULL, NULL, PaddlemaInputInfo, PaddlemaDIPInfo,
@@ -894,7 +887,7 @@ STD_ROM_FN(tnextspc)
 
 struct BurnDriver BurnDrvTnextspc = {
 	"tnextspc", NULL, NULL, NULL, "1989",
-	"The Next Space (set 1)\0", NULL, "SNK", "Miscellaneous",
+	"The Next Space (set 1)\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tnextspcRomInfo, tnextspcRomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
@@ -935,7 +928,7 @@ STD_ROM_FN(tnextspc2)
 
 struct BurnDriver BurnDrvTnextspc2 = {
 	"tnextspc2", "tnextspc", NULL, NULL, "1989",
-	"The Next Space (set 2)\0", NULL, "SNK", "Miscellaneous",
+	"The Next Space (set 2)\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tnextspc2RomInfo, tnextspc2RomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
@@ -969,7 +962,7 @@ STD_ROM_FN(tnextspcj)
 
 struct BurnDriver BurnDrvTnextspcj = {
 	"tnextspcj", "tnextspc", NULL, NULL, "1989",
-	"The Next Space (Japan)\0", NULL, "SNK (Pasadena International Corp. license)", "Miscellaneous",
+	"The Next Space (Japan)\0", NULL, "SNK (Pasadena International Corp. license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tnextspcjRomInfo, tnextspcjRomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,

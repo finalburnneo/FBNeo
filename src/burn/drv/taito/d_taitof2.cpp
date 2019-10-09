@@ -18,6 +18,7 @@ static INT32 MjnquestInput;
 static INT32 DriveoutSoundNibble;
 static INT32 DriveoutOkiBank;
 static INT32 Driftout = 0;
+static INT32 bNoClearOpposites = 0;
 
 INT32 TaitoF2SpriteType;
 INT32 TaitoF2SpritesFlipScreen;
@@ -927,6 +928,16 @@ STDINPUTINFO(Yuyugogo)
 
 #undef A
 
+static inline void DrvClearOppositesCommon(UINT8* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
+	}
+}
+
 static void TC0220IOCMakeInputs()
 {
 	// Reset Inputs
@@ -938,6 +949,11 @@ static void TC0220IOCMakeInputs()
 		TC0220IOCInput[0] -= (TC0220IOCInputPort0[i] & 1) << i;
 		TC0220IOCInput[1] -= (TC0220IOCInputPort1[i] & 1) << i;
 		TC0220IOCInput[2] -= (TC0220IOCInputPort2[i] & 1) << i;
+	}
+
+	if (bNoClearOpposites == 0) {
+		DrvClearOppositesCommon(&TC0220IOCInput[0]);
+		DrvClearOppositesCommon(&TC0220IOCInput[1]);
 	}
 }
 
@@ -952,6 +968,11 @@ static void TC0510NIOMakeInputs()
 		TC0510NIOInput[0] -= (TC0510NIOInputPort0[i] & 1) << i;
 		TC0510NIOInput[1] -= (TC0510NIOInputPort1[i] & 1) << i;
 		TC0510NIOInput[2] -= (TC0510NIOInputPort2[i] & 1) << i;
+	}
+
+	if (bNoClearOpposites == 0) {
+		DrvClearOppositesCommon(&TC0510NIOInput[0]);
+		DrvClearOppositesCommon(&TC0510NIOInput[1]);
 	}
 }
 
@@ -972,6 +993,13 @@ static void TaitoF2MakeInputs()
 		TaitoInput[3] -= (TaitoInputPort3[i] & 1) << i;
 		TaitoInput[4] -= (TaitoInputPort4[i] & 1) << i;
 		TaitoInput[5] -= (TaitoInputPort5[i] & 1) << i;
+	}
+
+	if (bNoClearOpposites == 0) {
+		DrvClearOppositesCommon(&TaitoInput[0]);
+		DrvClearOppositesCommon(&TaitoInput[1]);
+		DrvClearOppositesCommon(&TaitoInput[3]);
+		DrvClearOppositesCommon(&TaitoInput[4]);
 	}
 }
 
@@ -4453,6 +4481,28 @@ static struct BurnRomInfo PulirulaRomDesc[] = {
 STD_ROM_PICK(Pulirula)
 STD_ROM_FN(Pulirula)
 
+static struct BurnRomInfo PulirulaaRomDesc[] = {
+	// dumped from an original PCB without original ROM labels. The maincpu and audiocpu ROMs differ from the parent.
+	{ "ic46.bin",            0x040000, 0x584ae599, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "ic45.bin",            0x040000, 0x08024086, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "ic44.bin",            0x020000, 0xda9d31fd, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "ic43.bin",            0x020000, 0x1feea319, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "ic50.bin",            0x020000, 0xe8b68cb8, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "c98-04.rom",          0x100000, 0x0e1fe3b2, BRF_GRA | TAITO_CHARS },
+	
+	{ "c98-02.rom",          0x100000, 0x4a2ad2b3, BRF_GRA | TAITO_SPRITESA },
+	{ "c98-03.rom",          0x100000, 0x589a678f, BRF_GRA | TAITO_SPRITESA },
+	
+	{ "c98-01.rom",          0x100000, 0x197f66f5, BRF_SND | TAITO_YM2610A },
+	
+	{ "c98-05.rom",          0x080000, 0x9ddd9c39, BRF_GRA | TAITO_CHARS_PIVOT },
+};
+
+STD_ROM_PICK(Pulirulaa)
+STD_ROM_FN(Pulirulaa)
+
 static struct BurnRomInfo PulirulajRomDesc[] = {
 	{ "c98-12.rom",          0x040000, 0x816d6cde, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c98-13.rom",          0x040000, 0xb7d13d5b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -7604,6 +7654,7 @@ static INT32 CameltryInit()
 	TaitoXOffset = 3;
 
 	SpritePriWritebackMode = 0;
+	bNoClearOpposites = 1;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -7696,7 +7747,8 @@ static INT32 CamltryaInit()
 
 	TaitoXOffset = 3;
 	SpritePriWritebackMode = 0;
-	
+	bNoClearOpposites = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -8404,6 +8456,7 @@ static INT32 KoshienInit()
 	TaitoXOffset = 1;
 
 	SpritePriWritebackMode = 0;
+	bNoClearOpposites = 1;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -8648,7 +8701,9 @@ static INT32 MjnquestInit()
 	SekClose();
 	
 	TaitoF2SoundInit();
-	
+
+	bNoClearOpposites = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -8827,6 +8882,7 @@ static INT32 QcrayonInit()
 	TaitoXOffset = 3;
 	TaitoF2SpriteType = 3;
 	SpritePriWritebackMode = 0;
+	bNoClearOpposites = 1;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -8885,6 +8941,7 @@ static INT32 Qcrayon2Init()
 	TaitoXOffset = 3;
 	TaitoF2SpriteType = 3;
 	SpritePriWritebackMode = 0;
+	bNoClearOpposites = 1;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -8942,7 +8999,8 @@ static INT32 QjinseiInit()
 	
 	TaitoXOffset = 3;
 	TaitoF2SpriteType = 3;
-		
+	bNoClearOpposites = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -8994,6 +9052,7 @@ static INT32 QtorimonInit()
 	TaitoF2SoundInit();
 	
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
+	bNoClearOpposites = 1;
 	
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9050,6 +9109,7 @@ static INT32 QuizhqInit()
 	TaitoF2SoundInit();
 	
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
+	bNoClearOpposites = 1;
 	
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9104,7 +9164,8 @@ static INT32 QzchikyuInit()
 	TaitoF2SoundInit();
 	
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayedQzchikyu;
-		
+	bNoClearOpposites = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -9158,7 +9219,8 @@ static INT32 QzquestInit()
 	TaitoF2SoundInit();
 	
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
-		
+	bNoClearOpposites = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -9395,6 +9457,7 @@ static INT32 YesnojInit()
 	TaitoF2SoundInit();
 	
 	TaitoXOffset = 3;
+	bNoClearOpposites = 1;
 	
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9459,6 +9522,7 @@ static INT32 YuyugogoInit()
 	
 	TaitoF2SpriteType = 1;
 	TaitoXOffset = 3;
+	bNoClearOpposites = 1;
 	
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9481,6 +9545,8 @@ static INT32 TaitoF2Exit()
 	MjnquestInput = 0;
 	DriveoutSoundNibble = 0;
 	DriveoutOkiBank = 0;
+
+	bNoClearOpposites = 0;
 
 	Driftout = 0;
 
@@ -10621,7 +10687,7 @@ static INT32 TaitoF2Frame()
 			TaitoF2MakeInputs();
 		}
 	}
-	
+
 	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
 
 	SekNewFrame();
@@ -11206,6 +11272,16 @@ struct BurnDriver BurnDrvPulirula = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, PulirulaRomInfo, PulirulaRomName, NULL, NULL, NULL, NULL, PulirulaInputInfo, PulirulaDIPInfo,
+	PulirulaInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriRozDraw, TaitoF2Scan,
+	NULL, 0x2000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvPulirulaa = {
+	"pulirulaa", "pulirula", NULL, NULL, "1991",
+	"PuLiRuLa (World, earlier?)\0", NULL, "Taito Corporation", "Taito F2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
+	NULL, PulirulaaRomInfo, PulirulaaRomName, NULL, NULL, NULL, NULL, PulirulaInputInfo, PulirulaDIPInfo,
 	PulirulaInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriRozDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };

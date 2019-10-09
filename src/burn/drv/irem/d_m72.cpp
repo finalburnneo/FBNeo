@@ -3037,29 +3037,31 @@ struct BurnDriver BurnDrvAirduel = {
 // Air Duel (Japan, M72)
 
 static struct BurnRomInfo airduelm72RomDesc[] = {
-	{ "ad-c-h0.bin",	0x20000, 0x12140276, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "ad-c-l0.bin",	0x20000, 0x4ac0b91d, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "ad-c-h3.bin",	0x20000, 0x9f7cfca3, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "ad-c-l3.bin",	0x20000, 0x9dd343f7, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "ad-c-h0.ic40",	0x20000, 0x12140276, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ad-c-l0.ic37",	0x20000, 0x4ac0b91d, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "ad-c-h3.ic43",	0x20000, 0x9f7cfca3, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "ad-c-l3.ic34",	0x20000, 0x9dd343f7, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ad-00.bin",		0x20000, 0x2f0d599b, 0x02 | BRF_GRA },           //  4 Sprites
-	{ "ad-10.bin",		0x20000, 0x9865856b, 0x02 | BRF_GRA },           //  5
-	{ "ad-20.bin",		0x20000, 0xd392aef2, 0x02 | BRF_GRA },           //  6
-	{ "ad-30.bin",		0x20000, 0x923240c3, 0x02 | BRF_GRA },           //  7
+	{ "ad-00.ic53",		0x20000, 0x2f0d599b, 0x02 | BRF_GRA },           //  4 Sprites
+	{ "ad-10.ic51",		0x20000, 0x9865856b, 0x02 | BRF_GRA },           //  5
+	{ "ad-20.ic49",		0x20000, 0xd392aef2, 0x02 | BRF_GRA },           //  6
+	{ "ad-30.ic47",		0x20000, 0x923240c3, 0x02 | BRF_GRA },           //  7
 
-	{ "ad-a0.bin",		0x20000, 0xce134b47, 0x03 | BRF_GRA },           //  8 Foreground Tiles
-	{ "ad-a1.bin",		0x20000, 0x097fd853, 0x03 | BRF_GRA },           //  9
-	{ "ad-a2.bin",		0x20000, 0x6a94c1b9, 0x03 | BRF_GRA },           // 10
-	{ "ad-a3.bin",		0x20000, 0x6637c349, 0x03 | BRF_GRA },           // 11
+	{ "ad-a0.ic21",		0x20000, 0xce134b47, 0x03 | BRF_GRA },           //  8 Foreground Tiles
+	{ "ad-a1.ic22",		0x20000, 0x097fd853, 0x03 | BRF_GRA },           //  9
+	{ "ad-a2.ic20",		0x20000, 0x6a94c1b9, 0x03 | BRF_GRA },           // 10
+	{ "ad-a3.ic23",		0x20000, 0x6637c349, 0x03 | BRF_GRA },           // 11
 
-	{ "ad-b0.bin",		0x20000, 0xce134b47, 0x04 | BRF_GRA },           // 12 Background Tiles
-	{ "ad-b1.bin",		0x20000, 0x097fd853, 0x04 | BRF_GRA },           // 13
-	{ "ad-b2.bin",		0x20000, 0x6a94c1b9, 0x04 | BRF_GRA },           // 14
-	{ "ad-b3.bin",		0x20000, 0x6637c349, 0x04 | BRF_GRA },           // 15
+	{ "ad-b0.ic26",		0x20000, 0xce134b47, 0x04 | BRF_GRA },           // 12 Background Tiles
+	{ "ad-b1.ic27",		0x20000, 0x097fd853, 0x04 | BRF_GRA },           // 13
+	{ "ad-b2.ic25",		0x20000, 0x6a94c1b9, 0x04 | BRF_GRA },           // 14
+	{ "ad-b3.ic24",		0x20000, 0x6637c349, 0x04 | BRF_GRA },           // 15
 
-	{ "ad-v0.bin",		0x20000, 0x339f474d, 0x05 | BRF_SND },           // 16 DAC Samples
+	{ "ad-v0.ic44",		0x20000, 0x339f474d, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "airduel_i8751.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 Code
+	{ "ad_c_pr.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 Code
+	
+	{ "ad-c-3f.ic13",	0x00104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 18 Pals
 };
 
 STD_ROM_PICK(airduelm72)
@@ -3796,31 +3798,33 @@ static INT32 lohtbRomLoadCallback()
 // Legend of Hero Tonma (bootleg, set 1)
 
 static struct BurnRomInfo lohtbRomDesc[] = {
-	{ "lohtb03.b",		0x20000, 0x8b845a70, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "lohtb05.d",		0x20000, 0xe90f7623, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "lohtb02.a",		0x20000, 0x714778b5, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "lohtb04.c",		0x20000, 0x2f049b03, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "lohtb03.b",			0x20000, 0x8b845a70, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "lohtb05.d",			0x20000, 0xe90f7623, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "lohtb02.a",			0x20000, 0x714778b5, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "lohtb04.c",			0x20000, 0x2f049b03, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "lohtb01.02",		0x10000, 0xe4bd8f03, 0x06 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "lohtb01.02",			0x10000, 0xe4bd8f03, 0x06 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "lohtb14.11",		0x10000, 0xdf5ac5ee, 0x02 | BRF_GRA },           //  5 Sprites
-	{ "lohtb18.15",		0x10000, 0xd7ecf849, 0x02 | BRF_GRA },           //  6
-	{ "lohtb15.12",		0x10000, 0x45220b01, 0x02 | BRF_GRA },           //  7
-	{ "lohtb19.16",		0x10000, 0x35d1a808, 0x02 | BRF_GRA },           //  8
-	{ "lohtb16.13",		0x10000, 0x25b85cfc, 0x02 | BRF_GRA },           //  9
-	{ "lohtb20.17",		0x10000, 0x464d8579, 0x02 | BRF_GRA },           // 10
-	{ "lohtb17.14",		0x10000, 0x763fa4ec, 0x02 | BRF_GRA },           // 11
-	{ "lohtb21.18",		0x10000, 0xa73568c7, 0x02 | BRF_GRA },           // 12
+	{ "lohtb14.11",			0x10000, 0xdf5ac5ee, 0x02 | BRF_GRA },           //  5 Sprites
+	{ "lohtb18.15",			0x10000, 0xd7ecf849, 0x02 | BRF_GRA },           //  6
+	{ "lohtb15.12",			0x10000, 0x45220b01, 0x02 | BRF_GRA },           //  7
+	{ "lohtb19.16",			0x10000, 0x35d1a808, 0x02 | BRF_GRA },           //  8
+	{ "lohtb16.13",			0x10000, 0x25b85cfc, 0x02 | BRF_GRA },           //  9
+	{ "lohtb20.17",			0x10000, 0x464d8579, 0x02 | BRF_GRA },           // 10
+	{ "lohtb17.14",			0x10000, 0x763fa4ec, 0x02 | BRF_GRA },           // 11
+	{ "lohtb21.18",			0x10000, 0xa73568c7, 0x02 | BRF_GRA },           // 12
 
-	{ "lohtb13.10",		0x10000, 0x359f17d4, 0x03 | BRF_GRA },           // 13 Foreground Tiles
-	{ "lohtb11.08",		0x10000, 0x73391e8a, 0x03 | BRF_GRA },           // 14
-	{ "lohtb09.06",		0x10000, 0x7096d390, 0x03 | BRF_GRA },           // 15
-	{ "lohtb07.04",		0x10000, 0x71a27b81, 0x03 | BRF_GRA },           // 16
+	{ "lohtb13.10",			0x10000, 0x359f17d4, 0x03 | BRF_GRA },           // 13 Foreground Tiles
+	{ "lohtb11.08",			0x10000, 0x73391e8a, 0x03 | BRF_GRA },           // 14
+	{ "lohtb09.06",			0x10000, 0x7096d390, 0x03 | BRF_GRA },           // 15
+	{ "lohtb07.04",			0x10000, 0x71a27b81, 0x03 | BRF_GRA },           // 16
 
-	{ "lohtb12.09",		0x10000, 0x4d5e9b53, 0x04 | BRF_GRA },           // 17 Background Tiles
-	{ "lohtb10.07",		0x10000, 0x4f75a26a, 0x04 | BRF_GRA },           // 18
-	{ "lohtb08.05",		0x10000, 0x34854262, 0x04 | BRF_GRA },           // 19
-	{ "lohtb06.03",		0x10000, 0xf923183c, 0x04 | BRF_GRA },           // 20
+	{ "lohtb12.09",			0x10000, 0x4d5e9b53, 0x04 | BRF_GRA },           // 17 Background Tiles
+	{ "lohtb10.07",			0x10000, 0x4f75a26a, 0x04 | BRF_GRA },           // 18
+	{ "lohtb08.05",			0x10000, 0x34854262, 0x04 | BRF_GRA },           // 19
+	{ "lohtb06.03",			0x10000, 0xf923183c, 0x04 | BRF_GRA },           // 20
+
+	{ "gal16v8-25qp.ic3",	0x00117, 0x6acdfafb, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(lohtb)

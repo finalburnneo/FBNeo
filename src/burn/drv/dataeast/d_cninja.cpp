@@ -1,6 +1,8 @@
 // FB Alpha Caveman Ninja driver module
 // Based on MAME driver by Bryan McPhail
 
+// TOFIX: cninjabl backgrounds won't display
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -1013,7 +1015,7 @@ static INT32 DrvDoReset()
 
 static void DrvBootlegCharDecode(UINT8 *gfx, INT32 len)
 {
-	UINT8 *dst = (UINT8*)BurnMalloc(len);
+	UINT8 *dst = (UINT8*)BurnMalloc(len+4);
 
 	memcpy (dst, gfx, len);
 
@@ -1600,6 +1602,14 @@ static INT32 StoneageInit()
 	deco16_set_color_base(3, 0x200 + 0x300);
 	deco16_set_bank_callback(2, cninja_bank_callback);
 	deco16_set_bank_callback(3, cninja_bank_callback);
+
+	// 146_104 prot
+	deco_104_init();
+	deco_146_104_set_use_magic_read_address_xor(1);
+	deco_146_104_set_port_a_cb(deco_104_port_a_cb);
+	deco_146_104_set_port_b_cb(deco_104_port_b_cb);
+	deco_146_104_set_port_c_cb(deco_104_port_c_cb);
+	//deco_146_104_set_soundlatch_cb(deco_146_soundlatch_dummy);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);

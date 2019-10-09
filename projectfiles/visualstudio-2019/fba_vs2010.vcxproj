@@ -74,6 +74,7 @@
     <ClInclude Include="..\..\src\burn\devices\nmk112.h" />
     <ClInclude Include="..\..\src\burn\devices\pandora.h" />
     <ClInclude Include="..\..\src\burn\devices\resnet.h" />
+    <ClInclude Include="..\..\src\burn\devices\seibucop.h" />
     <ClInclude Include="..\..\src\burn\devices\seibusnd.h" />
     <ClInclude Include="..\..\src\burn\devices\sknsspr.h" />
     <ClInclude Include="..\..\src\burn\devices\slapstic.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="..\..\src\burn\drv\psikyo\psikyo_sprite_func.h" />
     <ClInclude Include="..\..\src\burn\drv\pst90s\kanekotb.h" />
     <ClInclude Include="..\..\src\burn\drv\sega\fd1094.h" />
+    <ClInclude Include="..\..\src\burn\drv\sega\fd1094_intf.h" />
     <ClInclude Include="..\..\src\burn\drv\sega\genesis_vid.h" />
     <ClInclude Include="..\..\src\burn\drv\sega\mc8123.h" />
     <ClInclude Include="..\..\src\burn\drv\sega\sys16.h" />
@@ -196,6 +198,7 @@
     <ClInclude Include="..\..\src\burn\snd\redbaron.h" />
     <ClInclude Include="..\..\src\burn\snd\rescap.h" />
     <ClInclude Include="..\..\src\burn\snd\rf5c68.h" />
+    <ClInclude Include="..\..\src\burn\snd\s14001a.h" />
     <ClInclude Include="..\..\src\burn\snd\saa1099.h" />
     <ClInclude Include="..\..\src\burn\snd\samples.h" />
     <ClInclude Include="..\..\src\burn\snd\segapcm.h" />
@@ -455,6 +458,7 @@
     <ClCompile Include="..\..\src\burn\devices\nmk112.cpp" />
     <ClCompile Include="..\..\src\burn\devices\pandora.cpp" />
     <ClCompile Include="..\..\src\burn\devices\resnet.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\seibucop.cpp" />
     <ClCompile Include="..\..\src\burn\devices\seibusnd.cpp" />
     <ClCompile Include="..\..\src\burn\devices\sknsspr.cpp" />
     <ClCompile Include="..\..\src\burn\devices\slapstic.cpp" />
@@ -467,6 +471,7 @@
     <ClCompile Include="..\..\src\burn\devices\vdc.cpp" />
     <ClCompile Include="..\..\src\burn\devices\watchdog.cpp" />
     <ClCompile Include="..\..\src\burn\devices\x2212.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\atari\d_akkaarrh.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_arcadecl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_atarig1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_badlands.cpp" />
@@ -499,18 +504,26 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\cps_scr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\ctv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_kingofbox.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\snes_dsp.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_groundfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_gunbuster.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_mexico86.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_qix.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf262.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\s14001a.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
     <ClCompile Include="..\..\src\cpu\mips3\x64\mips3_x64.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -964,6 +977,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_terracre.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_thedeep.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_thepit.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_thief.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tigeroad.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_timelimt.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_toki.cpp" />
@@ -1647,20 +1661,31 @@ del build_details.exe
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;..\..\src\dep\vc\include;$(IncludePath)</IncludePath>
-    <IntDir>$(SolutionDir)$(Configuration)\</IntDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>fbneod_vs</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;..\..\src\dep\vc\include;$(IncludePath)</IncludePath>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <TargetName>fbneo64d_vs</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IntDir>$(SolutionDir)$(Configuration)\</IntDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;..\..\src\dep\vc\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <TargetName>fbneo_vs</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;..\..\src\dep\vc\include;$(IncludePath)</IncludePath>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <TargetName>fbneo64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -1668,9 +1693,10 @@ del build_details.exe
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src\dep\libs\lib7z;..\..\src\burner\win32\resource;..\..\src\burn\drv\taito;..\..\src\burn\drv\misc_post90s;..\..\src\burn\devices;generated;..\..\src\intf\audio\win32;..\..\src\intf\audio;..\..\src\intf\;..\..\src\intf\video\scalers;..\..\src\intf\video\win32;..\..\src\intf\video;..\..\src\intf\perfcount\win32;..\..\src\intf\perfcount;..\..\src\intf\input\win32;..\..\src\intf\input;..\..\src\intf\cd\win32;..\..\src\intf\cd;..\..\src\intf;..\..\src\burner\win32;..\..\src\dep\libs\zlib;..\..\src\dep\libs\libpng;..\..\src\dep\libs;..\..\src\dep\kaillera\client;..\..\src\dep\kaillera;..\..\src\burn\snd;..\..\src\cpu;..\..\src\burner;..\..\src\burn;..\..\src\cpu\z80;..\..\src\cpu\sh2;..\..\src\cpu\s2650;..\..\src\cpu\nec;..\..\src\cpu\m6809;..\..\src\cpu\m6805;..\..\src\cpu\m6800;..\..\src\cpu\m6502;..\..\src\cpu\m68k;..\..\src\cpu\i8039;..\..\src\cpu\konami;..\..\src\cpu\hd6309;..\..\src\cpu\h6280;..\..\src\cpu\arm7;..\..\src\cpu\arm;..\..\src\cpu\g65816;..\..\src\cpu\spc700;..\..\src\cpu\i8051;..\..\src\cpu\tms32010;..\..\src\cpu\tms34010;..\..\src\cpu\i8x41;..\..\src\burn\drv\sega;..\..\src\burn\drv\dataeast;..\..\src\burn\drv\konami;..\..\src\cpu\z180;..\..\src\burn\drv\irem;..\..\src\cpu\upd7810;..\..\src\cpu\v60;..\..\src\cpu\upd7725;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
-      <PreprocessorDefinitions>BUILD_WIN32;FASTCALL;_DEBUG;FBNEO_DEBUG;LSB_FIRST;INLINE=__inline static;INCLUDE_LIB_PNGH;C_INLINE=__inline;MAME_INLINE=__inline static;_CRT_SECURE_NO_WARNINGS;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILD_WIN32;FASTCALL;_DEBUG;FBNEO_DEBUG;LSB_FIRST;INLINE=__inline static;INCLUDE_LIB_PNGH;C_INLINE=__inline;MAME_INLINE=__inline static;_CRT_SECURE_NO_WARNINGS;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;INCLUDE_7Z_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <EnablePREfast>true</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -1684,6 +1710,9 @@ del build_details.exe
     <PreBuildEvent>
       <Command>$(MSBuildProjectDirectory)/../../src/dep/vs2010/pre2019.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
+    <ResourceCompile>
+      <PreprocessorDefinitions>FBNEO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -1691,9 +1720,11 @@ del build_details.exe
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src\dep\libs\lib7z;..\..\src\burner\win32\resource;..\..\src\burn\drv\taito;..\..\src\burn\drv\misc_post90s;..\..\src\burn\devices;generated;..\..\src\intf\audio\win32;..\..\src\intf\audio;..\..\src\intf\;..\..\src\intf\video\scalers;..\..\src\intf\video\win32;..\..\src\intf\video;..\..\src\intf\perfcount\win32;..\..\src\intf\perfcount;..\..\src\intf\input\win32;..\..\src\intf\input;..\..\src\intf\cd\win32;..\..\src\intf\cd;..\..\src\intf;..\..\src\burner\win32;..\..\src\dep\libs\zlib;..\..\src\dep\libs\libpng;..\..\src\dep\libs;..\..\src\dep\kaillera\client;..\..\src\dep\kaillera;..\..\src\burn\snd;..\..\src\cpu;..\..\src\burner;..\..\src\burn;..\..\src\cpu\z80;..\..\src\cpu\sh2;..\..\src\cpu\s2650;..\..\src\cpu\nec;..\..\src\cpu\m6809;..\..\src\cpu\m6805;..\..\src\cpu\m6800;..\..\src\cpu\m6502;..\..\src\cpu\m68k;..\..\src\cpu\i8039;..\..\src\cpu\konami;..\..\src\cpu\hd6309;..\..\src\cpu\h6280;..\..\src\cpu\arm7;..\..\src\cpu\arm;..\..\src\cpu\g65816;..\..\src\cpu\spc700;..\..\src\cpu\i8051;..\..\src\cpu\tms32010;..\..\src\cpu\tms34010;..\..\src\cpu\i8x41;..\..\src\burn\drv\sega;..\..\src\burn\drv\dataeast;..\..\src\burn\drv\konami;..\..\src\cpu\z180;..\..\src\burn\drv\irem;..\..\src\cpu\upd7810;..\..\src\cpu\v60;..\..\src\cpu\upd7725;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
-      <PreprocessorDefinitions>FBNEO_DEBUG;BUILD_WIN32;FASTCALL;_MBCS;LSB_FIRST;INLINE=__inline static;INCLUDE_LIB_PNGH;C_INLINE=__inline;MAME_INLINE=__inline static;_CRT_SECURE_NO_WARNINGS;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;BUILD_X64_EXE;XBYAK_NO_OP_NAMES;MIPS3_X64_DRC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FBNEO_DEBUG;BUILD_WIN32;FASTCALL;_MBCS;LSB_FIRST;INLINE=__inline static;INCLUDE_LIB_PNGH;C_INLINE=__inline;MAME_INLINE=__inline static;_CRT_SECURE_NO_WARNINGS;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;BUILD_X64_EXE;XBYAK_NO_OP_NAMES;MIPS3_X64_DRC;INCLUDE_7Z_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>Default</LanguageStandard>
+      <EnablePREfast>true</EnablePREfast>
+      <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -1705,6 +1736,9 @@ del build_details.exe
     <PreBuildEvent>
       <Command>$(MSBuildProjectDirectory)/../../src/dep/vs2010/pre2019.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
+    <ResourceCompile>
+      <PreprocessorDefinitions>FBNEO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -1713,9 +1747,11 @@ del build_details.exe
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\src\dep\libs\lib7z;..\..\src\burner\win32\resource;..\..\src\burn\drv\taito;..\..\src\burn\drv\misc_post90s;..\..\src\burn\devices;generated;..\..\src\intf\audio\win32;..\..\src\intf\audio;..\..\src\intf\;..\..\src\intf\video\scalers;..\..\src\intf\video\win32;..\..\src\intf\video;..\..\src\intf\perfcount\win32;..\..\src\intf\perfcount;..\..\src\intf\input\win32;..\..\src\intf\input;..\..\src\intf\cd\win32;..\..\src\intf\cd;..\..\src\intf;..\..\src\burner\win32;..\..\src\dep\libs\zlib;..\..\src\dep\libs\libpng;..\..\src\dep\libs;..\..\src\dep\kaillera\client;..\..\src\dep\kaillera;..\..\src\burn\snd;..\..\src\cpu;..\..\src\burner;..\..\src\burn;..\..\src\cpu\z80;..\..\src\cpu\sh2;..\..\src\cpu\s2650;..\..\src\cpu\nec;..\..\src\cpu\m6809;..\..\src\cpu\m6805;..\..\src\cpu\m6800;..\..\src\cpu\m6502;..\..\src\cpu\m68k;..\..\src\cpu\i8039;..\..\src\cpu\konami;..\..\src\cpu\hd6309;..\..\src\cpu\h6280;..\..\src\cpu\arm7;..\..\src\cpu\arm;..\..\src\cpu\g65816;..\..\src\cpu\spc700;..\..\src\cpu\i8051;..\..\src\cpu\tms32010;..\..\src\cpu\tms34010;..\..\src\cpu\i8x41;..\..\src\burn\drv\sega;..\..\src\burn\drv\dataeast;..\..\src\burn\drv\konami;..\..\src\cpu\z180;..\..\src\burn\drv\irem;..\..\src\cpu\upd7810;..\..\src\cpu\v60;..\..\src\cpu\upd7725;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>BUILD_WIN32;FASTCALL;LSB_FIRST;INLINE=__inline static;INCLUDE_LIB_PNGH;C_INLINE=__inline;MAME_INLINE=__inline static;_CRT_SECURE_NO_WARNINGS;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILD_WIN32;FASTCALL;LSB_FIRST;INLINE=__inline static;INCLUDE_LIB_PNGH;INCLUDE_7Z_SUPPORT;C_INLINE=__inline;MAME_INLINE=__inline static;_CRT_SECURE_NO_WARNINGS;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -1738,8 +1774,10 @@ del build_details.exe
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\src\dep\libs\lib7z;..\..\src\burner\win32\resource;..\..\src\burn\drv\taito;..\..\src\burn\drv\misc_post90s;..\..\src\burn\devices;generated;..\..\src\intf\audio\win32;..\..\src\intf\audio;..\..\src\intf\;..\..\src\intf\video\scalers;..\..\src\intf\video\win32;..\..\src\intf\video;..\..\src\intf\perfcount\win32;..\..\src\intf\perfcount;..\..\src\intf\input\win32;..\..\src\intf\input;..\..\src\intf\cd\win32;..\..\src\intf\cd;..\..\src\intf;..\..\src\burner\win32;..\..\src\dep\libs\zlib;..\..\src\dep\libs\libpng;..\..\src\dep\libs;..\..\src\dep\kaillera\client;..\..\src\dep\kaillera;..\..\src\burn\snd;..\..\src\cpu;..\..\src\burner;..\..\src\burn;..\..\src\cpu\z80;..\..\src\cpu\sh2;..\..\src\cpu\s2650;..\..\src\cpu\nec;..\..\src\cpu\m6809;..\..\src\cpu\m6805;..\..\src\cpu\m6800;..\..\src\cpu\m6502;..\..\src\cpu\m68k;..\..\src\cpu\i8039;..\..\src\cpu\konami;..\..\src\cpu\hd6309;..\..\src\cpu\h6280;..\..\src\cpu\arm7;..\..\src\cpu\arm;..\..\src\cpu\g65816;..\..\src\cpu\spc700;..\..\src\cpu\i8051;..\..\src\cpu\tms32010;..\..\src\cpu\tms34010;..\..\src\cpu\i8x41;..\..\src\burn\drv\sega;..\..\src\burn\drv\dataeast;..\..\src\burn\drv\konami;..\..\src\cpu\z180;..\..\src\burn\drv\irem;..\..\src\cpu\upd7810;..\..\src\cpu\v60;..\..\src\cpu\upd7725;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>BUILD_WIN32;FASTCALL;_MBCS;LSB_FIRST;INLINE=__inline static;INCLUDE_LIB_PNGH;C_INLINE=__inline;MAME_INLINE=__inline static;_CRT_SECURE_NO_WARNINGS;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;BUILD_X64_EXE;XBYAK_NO_OP_NAMES;MIPS3_X64_DRC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILD_WIN32;FASTCALL;_MBCS;LSB_FIRST;INLINE=__inline static;INCLUDE_LIB_PNGH;C_INLINE=__inline;MAME_INLINE=__inline static;_CRT_SECURE_NO_WARNINGS;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;BUILD_X64_EXE;XBYAK_NO_OP_NAMES;MIPS3_X64_DRC;INCLUDE_7Z_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnablePREfast>false</EnablePREfast>
+      <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

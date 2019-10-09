@@ -1086,6 +1086,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 // Tiger Road (US) * ECT program roms *
+/* N86614A-5 + N86614B-6 board combo - ECT program roms */
 
 static struct BurnRomInfo tigeroadRomDesc[] = {
 	{ "tre_02.6j",	0x20000, 0xc394add0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1158,6 +1159,7 @@ struct BurnDriver BurnDrvTigeroad = {
 
 
 // Tiger Road (US, Romstar license) * US ROMSTAR program roms *
+/* N86614A-5 + N86614B-6 board combo - US ROMSTAR program roms */
 
 static struct BurnRomInfo tigeroaduRomDesc[] = {
 	{ "tru_02.6j",	0x20000, 0x8d283a95, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1201,6 +1203,7 @@ struct BurnDriver BurnDrvTigeroadu = {
 
 
 // Tora e no Michi (Japan)
+/* N86614A-5 + N86614B-6 board combo */
 
 static struct BurnRomInfo toramichRomDesc[] = {
 	{ "tr_02.6j",	0x20000, 0xb54723b1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1367,7 +1370,7 @@ static struct BurnRomInfo tigeroadb2RomDesc[] = {
 	{ "12.bin",		0x10000, 0xe5039e3b, 5 | BRF_GRA },           // 28
 	{ "14.bin",		0x10000, 0x5e564954, 5 | BRF_GRA },           // 29
 
-	{ "27.bin",	0x08000, 0xa79be1eb, 6 | BRF_GRA },           // 30 Background Tilemaps
+	{ "27.bin",		0x08000, 0xa79be1eb, 6 | BRF_GRA },           // 30 Background Tilemaps
 
 	{ "trprom.bin",	0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 31 Priority Proms (unused)
 };
@@ -1416,32 +1419,33 @@ struct BurnDriver BurnDrvTigeroadb2 = {
 
 
 // F-1 Dream
+/* N86614A-5 + N86614B-6 board combo */
 
 static struct BurnRomInfo f1dreamRomDesc[] = {
-	{ "06j_02.bin",	0x20000, 0x3c2ec697, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "06k_03.bin",	0x20000, 0x85ebad91, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "f1_02.6j",	0x20000, 0x3c2ec697, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "f1_03.6k",	0x20000, 0x85ebad91, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "12k_04.bin",	0x08000, 0x4b9a7524, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "f1_04.12k",	0x08000, 0x4b9a7524, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "10d_01.bin",	0x08000, 0x361caf00, 3 | BRF_GRA },           //  3 Character Tiles
+	{ "f1_01.10d",	0x08000, 0x361caf00, 3 | BRF_GRA },           //  3 Character Tiles
 
-	{ "03f_12.bin",	0x10000, 0xbc13e43c, 4 | BRF_GRA },           //  4 Background Tiles
-	{ "01f_10.bin",	0x10000, 0xf7617ad9, 4 | BRF_GRA },           //  5
-	{ "03h_14.bin",	0x10000, 0xe33cd438, 4 | BRF_GRA },           //  6
-	{ "02f_11.bin",	0x10000, 0x4aa49cd7, 4 | BRF_GRA },           //  7
-	{ "17f_09.bin",	0x10000, 0xca622155, 4 | BRF_GRA },           //  8
-	{ "02h_13.bin",	0x10000, 0x2a63961e, 4 | BRF_GRA },           //  9
+	{ "f1_12.3f",	0x10000, 0xbc13e43c, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "f1_10.1f",	0x10000, 0xf7617ad9, 4 | BRF_GRA },           //  5
+	{ "f1_14.3h",	0x10000, 0xe33cd438, 4 | BRF_GRA },           //  6
+	{ "f1_11.2f",	0x10000, 0x4aa49cd7, 4 | BRF_GRA },           //  7
+	{ "f1_09.17f",	0x10000, 0xca622155, 4 | BRF_GRA },           //  8
+	{ "f1_13.2h",	0x10000, 0x2a63961e, 4 | BRF_GRA },           //  9
 
-	{ "03b_06.bin",	0x10000, 0x5e54e391, 5 | BRF_GRA },           // 10 Sprites
-	{ "02b_05.bin",	0x10000, 0xcdd119fd, 5 | BRF_GRA },           // 11
-	{ "03d_08.bin",	0x10000, 0x811f2e22, 5 | BRF_GRA },           // 12
-	{ "02d_07.bin",	0x10000, 0xaa9a1233, 5 | BRF_GRA },           // 13
+	{ "f1_06.3b",	0x10000, 0x5e54e391, 5 | BRF_GRA },           // 10 Sprites
+	{ "f1_05.2b",	0x10000, 0xcdd119fd, 5 | BRF_GRA },           // 11
+	{ "f1_08.3d",	0x10000, 0x811f2e22, 5 | BRF_GRA },           // 12
+	{ "f1_07.2d",	0x10000, 0xaa9a1233, 5 | BRF_GRA },           // 13
 
-	{ "07l_15.bin",	0x08000, 0x978758b7, 6 | BRF_GRA },           // 14 Background Tilemaps
+	{ "f1_15.7l",	0x08000, 0x978758b7, 6 | BRF_GRA },           // 14 Background Tilemaps
 
-	{ "09e_tr.bin",	0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 15 Priority Proms (unused)
+	{ "tr.9e",		0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 15 Priority Proms (unused)
 	
-	{ "8751.mcu",   0x01000, 0xc8e6075c, 0 | BRF_OPT },
+	{ "f1.9j",   	0x01000, 0xc8e6075c, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(f1dream)

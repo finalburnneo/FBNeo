@@ -793,7 +793,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Finalizer - Super Transformation
+// Finalizer - Super Transformation (set 1)
 
 static struct BurnRomInfo finalizrRomDesc[] = {
 	{ "523k01.9c",		0x4000, 0x716633cb, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -820,10 +820,46 @@ STD_ROM_FN(finalizr)
 
 struct BurnDriver BurnDrvFinalizr = {
 	"finalizr", NULL, NULL, NULL, "1985",
-	"Finalizer - Super Transformation\0", NULL, "Konami", "GX523",
+	"Finalizer - Super Transformation (set 1)\0", NULL, "Konami", "GX523",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizrRomInfo, finalizrRomName, NULL, NULL, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 272, 3, 4
+};
+
+
+// Finalizer - Super Transformation (set 2)
+
+static struct BurnRomInfo finalizraRomDesc[] = {
+	{ "1.9c",			0x4000, 0x7d464e5c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "2.12c",			0x4000, 0x383dc94e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.13c",			0x4000, 0xce177f6e, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "d8749hd.bin",	0x0800, 0x978dfc33, 2 | BRF_PRG | BRF_ESS }, //  3 I8039 Code
+
+	{ "523h04.5e",		0x4000, 0xc056d710, 3 | BRF_GRA },           //  4 Sprites & tiles
+	{ "523h07.5f",		0x4000, 0x50e512ba, 3 | BRF_GRA },           //  5
+	{ "523h05.6e",		0x4000, 0xae0d0f76, 3 | BRF_GRA },           //  6
+	{ "523h08.6f",		0x4000, 0x79f44e17, 3 | BRF_GRA },           //  7
+	{ "523h06.7e",		0x4000, 0xd2db9689, 3 | BRF_GRA },           //  8
+	{ "523h09.7f",		0x4000, 0x8896dc85, 3 | BRF_GRA },           //  9
+
+	{ "523h10.2f",		0x0020, 0xec15dd15, 4 | BRF_GRA },           // 10 Color Proms
+	{ "523h11.3f",		0x0020, 0x54be2e83, 4 | BRF_GRA },           // 11
+	{ "523h13.11f",		0x0100, 0x4e0647a0, 4 | BRF_GRA },           // 12
+	{ "523h12.10f",		0x0100, 0x53166a2a, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(finalizra)
+STD_ROM_FN(finalizra)
+
+struct BurnDriver BurnDrvFinalizra = {
+	"finalizra", "finalizr", NULL, NULL, "1985",
+	"Finalizer - Super Transformation (set 2)\0", NULL, "Konami", "GX523",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	NULL, finalizraRomInfo, finalizraRomName, NULL, NULL, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 272, 3, 4
 };

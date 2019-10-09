@@ -10,7 +10,7 @@
 // stargrds		- good
 // spyhunt		- good
 // spyhuntp		- good
-// crater		- good
+// crater		- graphics issues (unfixable offset? weird.)
 // turbotag		- should we bother? looks like a buggy mess
 
 #include "tiles_generic.h"
@@ -302,10 +302,10 @@ static struct BurnInputInfo StargrdsInputList[] = {
 	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
     {"P1 Left Stick Left",	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 left"	},
 	{"P1 Left Stick Right",	BIT_DIGITAL,	DrvJoy2 + 7,	"p1 right"	},
-    {"P1 Right Stick Up",	BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
-	{"P1 Right Stick Down",	BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
-	{"P1 Right Stick Left",	BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
-	{"P1 Right Stick Right",BIT_DIGITAL,	DrvJoy2 + 3,	"p3 right"	},
+    {"P1 Right Stick Up",	BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up 2"	},
+	{"P1 Right Stick Down",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down 2"	},
+	{"P1 Right Stick Left",	BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left 2"	},
+	{"P1 Right Stick Right",BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right 2"},
 
 	{"P2 Coin",				BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
@@ -313,21 +313,21 @@ static struct BurnInputInfo StargrdsInputList[] = {
 	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy3 + 5,	"p2 down"	},
     {"P2 Left Stick Left",	BIT_DIGITAL,	DrvJoy3 + 6,	"p2 left"	},
 	{"P2 Left Stick Right",	BIT_DIGITAL,	DrvJoy3 + 7,	"p2 right"	},
-    {"P2 Right Stick Up",	BIT_DIGITAL,	DrvJoy3 + 0,	"p4 up"		},
-	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvJoy3 + 1,	"p4 down"	},
-	{"P2 Right Stick Left",	BIT_DIGITAL,	DrvJoy3 + 2,	"p4 left"	},
-	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy3 + 3,	"p4 right"	},
+    {"P2 Right Stick Up",	BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up 2"	},
+	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down 2"	},
+	{"P2 Right Stick Left",	BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left 2"	},
+	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right 2"},
 
 	{"P3 Coin",				BIT_DIGITAL,	DrvJoy6 + 1,	"p3 coin"	},
 	{"P3 Start",			BIT_DIGITAL,	DrvJoy6 + 3,	"p3 start"	},
-    {"P3 Left Stick Up",	BIT_DIGITAL,	DrvJoy5 + 4,	"p5 up"		},
-	{"P3 Left Stick Down",	BIT_DIGITAL,	DrvJoy5 + 5,	"p5 down"	},
-    {"P3 Left Stick Left",	BIT_DIGITAL,	DrvJoy5 + 6,	"p5 left"	},
-	{"P3 Left Stick Right",	BIT_DIGITAL,	DrvJoy5 + 7,	"p5 right"	},
-    {"P3 Right Stick Up",	BIT_DIGITAL,	DrvJoy5 + 0,	"p6 up"		},
-	{"P3 Right Stick Down",	BIT_DIGITAL,	DrvJoy5 + 1,	"p6 down"	},
-	{"P3 Right Stick Left",	BIT_DIGITAL,	DrvJoy5 + 2,	"p6 left"	},
-	{"P3 Right Stick Right",BIT_DIGITAL,	DrvJoy5 + 3,	"p6 right"	},
+    {"P3 Left Stick Up",	BIT_DIGITAL,	DrvJoy5 + 4,	"p3 up"		},
+	{"P3 Left Stick Down",	BIT_DIGITAL,	DrvJoy5 + 5,	"p3 down"	},
+    {"P3 Left Stick Left",	BIT_DIGITAL,	DrvJoy5 + 6,	"p3 left"	},
+	{"P3 Left Stick Right",	BIT_DIGITAL,	DrvJoy5 + 7,	"p3 right"	},
+    {"P3 Right Stick Up",	BIT_DIGITAL,	DrvJoy5 + 0,	"p3 up 2"	},
+	{"P3 Right Stick Down",	BIT_DIGITAL,	DrvJoy5 + 1,	"p3 down 2"	},
+	{"P3 Right Stick Left",	BIT_DIGITAL,	DrvJoy5 + 2,	"p3 left 2"	},
+	{"P3 Right Stick Right",BIT_DIGITAL,	DrvJoy5 + 3,	"p3 right 2"},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",				BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
@@ -455,38 +455,38 @@ STDDIPINFO(Rampage)
 
 static struct BurnDIPInfo DemodermDIPList[]=
 {
+	{0x16, 0xff, 0xff, 0xff, NULL							},
 	{0x17, 0xff, 0xff, 0xff, NULL							},
 	{0x18, 0xff, 0xff, 0xff, NULL							},
 	{0x19, 0xff, 0xff, 0xff, NULL							},
 	{0x1a, 0xff, 0xff, 0xff, NULL							},
-	{0x1b, 0xff, 0xff, 0xff, NULL							},
-	{0x1c, 0xff, 0xff, 0x20, NULL							},
+	{0x1b, 0xff, 0xff, 0x20, NULL							},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"						},
-	{0x1a, 0x01, 0x01, 0x01, "2P Upright"					},
-	{0x1a, 0x01, 0x01, 0x00, "4P Cocktail"					},
+	{0x19, 0x01, 0x01, 0x01, "2P Upright"					},
+	{0x19, 0x01, 0x01, 0x00, "4P Cocktail"					},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"					},
-	{0x1a, 0x01, 0x02, 0x02, "Normal"						},
-	{0x1a, 0x01, 0x02, 0x00, "Harder"						},
+	{0x19, 0x01, 0x02, 0x02, "Normal"						},
+	{0x19, 0x01, 0x02, 0x00, "Harder"						},
 
 	{0   , 0xfe, 0   ,    2, "Free Play"					},
-	{0x1a, 0x01, 0x04, 0x04, "Off"							},
-	{0x1a, 0x01, 0x04, 0x00, "On"							},
+	{0x19, 0x01, 0x04, 0x04, "Off"							},
+	{0x19, 0x01, 0x04, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Reward Screen"				},
-	{0x1a, 0x01, 0x08, 0x08, "Expanded"						},
-	{0x1a, 0x01, 0x08, 0x00, "Limited"						},
+	{0x19, 0x01, 0x08, 0x08, "Expanded"						},
+	{0x19, 0x01, 0x08, 0x00, "Limited"						},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"						},
-	{0x1a, 0x01, 0x30, 0x20, "2 Coins 1 Credits"			},
-	{0x1a, 0x01, 0x30, 0x00, "2 Coins 2 Credits"			},
-	{0x1a, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
-	{0x1a, 0x01, 0x30, 0x10, "1 Coin  2 Credits"			},
+	{0x19, 0x01, 0x30, 0x20, "2 Coins 1 Credits"			},
+	{0x19, 0x01, 0x30, 0x00, "2 Coins 2 Credits"			},
+	{0x19, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
+	{0x19, 0x01, 0x30, 0x10, "1 Coin  2 Credits"			},
 
     {0   , 0xfe, 0   ,    2, "Service Mode"					},
-	{0x1c, 0x01, 0x20, 0x20, "Off"							},
-	{0x1c, 0x01, 0x20, 0x00, "On"							},
+	{0x1b, 0x01, 0x20, 0x20, "Off"							},
+	{0x1b, 0x01, 0x20, 0x00, "On"							},
 };
 
 STDDIPINFO(Demoderm)
@@ -1118,8 +1118,8 @@ static INT32 SpyhuntCommonInit(INT32 sound_system)
 	GenericTilemapSetGfx(0, DrvGfxROM0, 4, 64, 32, 0x40000, 0x30, 0);
 	GenericTilemapSetGfx(1, DrvGfxROM2, 2, 16, 16, 0x10000, 0x40, 0);
 	GenericTilemapSetTransparent(1, 0);
-	GenericTilemapSetOffsets(0, (sound_system == 3) ? -96 : -16, 0); 
-	GenericTilemapSetOffsets(1, -16, 0);
+	GenericTilemapSetOffsets(0, (sound_system == 3) ? 96-16 : -16, 0);
+	GenericTilemapSetOffsets(1, (sound_system == 3) ? 16 : -16, 0);
 
     if (is_spyhunt) {
         copy_and_rotate(DrvGfxROM1 + 0x29*0x20*0x20, DrvGfxROM1 + (0x200*0x20*0x20)+(0x20*0x20*0));
@@ -2285,11 +2285,11 @@ static INT32 CraterInit()
     return nRet;
 }
 
-struct BurnDriver BurnDrvCrater = {
+struct BurnDriverD BurnDrvCrater = {
 	"crater", NULL, "midssio", NULL, "1984",
-	"Crater Raider\0", NULL, "Bally Midway", "MCR3",
+	"Crater Raider\0", "Graphics Issues", "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, craterRomInfo, craterRomName, NULL, NULL, NULL, NULL, CraterInputInfo, CraterDIPInfo,
 	CraterInit, DrvExit, CSDSSIOFrame, SpyhuntDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 480, 4, 3

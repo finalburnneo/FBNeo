@@ -1589,6 +1589,13 @@ static void draw_sprites(INT32 xoffs)
 							for (px = 0; px < 16; px++)
 							{
 								int xpos = (((sx + ex*16 + px) & 0x3ff) + spr_x_adjust) & 0x3ff;
+								if (bDualMonitor && !wrally2_single) {
+									if (screen) {
+										if (xpos < (nScreenWidth/2) || xpos >= nScreenWidth) continue;
+									} else {
+										if (xpos >= (nScreenWidth/2) || xpos < -15) continue;
+									}
+								}
 								UINT16 *pixel = srcy + xpos;
 								int src_color = *pixel;
 

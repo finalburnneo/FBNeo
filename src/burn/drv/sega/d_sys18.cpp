@@ -3726,7 +3726,7 @@ struct BurnDriver BurnDrvLghostud = {
 
 struct BurnDriver BurnDrvMWalk = {
 	"mwalk", NULL, NULL, NULL, "1990",
-	"Michael Jackson's Moonwalker (set 3, World, FD1094/8751 317-0159)\0", NULL, "Sega", "System 18",
+	"Michael Jackson's Moonwalker (set 3, World, FD1094/8751 317-0159)\0", "Graphics issues", "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkRomInfo, MwalkRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
@@ -3736,7 +3736,7 @@ struct BurnDriver BurnDrvMWalk = {
 
 struct BurnDriver BurnDrvMWalkd = {
 	"mwalkd", "mwalk", NULL, NULL, "1990",
-	"Michael Jackson's Moonwalker (World) (bootleg of FD1094/8751 317-0159)\0", NULL, "Sega", "System 18",
+	"Michael Jackson's Moonwalker (World) (bootleg of FD1094/8751 317-0159 set)\0", "Graphics issues", "bootleg", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkdRomInfo, MwalkdRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
@@ -3746,7 +3746,7 @@ struct BurnDriver BurnDrvMWalkd = {
 
 struct BurnDriver BurnDrvMWalkj = {
 	"mwalkj", "mwalk", NULL, NULL, "1990",
-	"Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-0157)\0", NULL, "Sega", "System 18",
+	"Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-0157)\0", "Graphics issues", "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkjRomInfo, MwalkjRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
@@ -3756,7 +3756,7 @@ struct BurnDriver BurnDrvMWalkj = {
 
 struct BurnDriver BurnDrvMWalkjd = {
 	"mwalkjd", "mwalk", NULL, NULL, "1990",
-	"Michael Jackson's Moonwalker (Japan) (bootleg of FD1094/8751 317-0157 set)\0", NULL, "Sega", "System 18",
+	"Michael Jackson's Moonwalker (Japan) (bootleg of FD1094/8751 317-0157 set)\0", "Graphics issues", "bootleg", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkjdRomInfo, MwalkjdRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
@@ -3766,7 +3766,7 @@ struct BurnDriver BurnDrvMWalkjd = {
 
 struct BurnDriver BurnDrvMWalku = {
 	"mwalku", "mwalk", NULL, NULL, "1990",
-	"Michael Jackson's Moonwalker (US) (FD1094/8751 317-0158)\0", NULL, "Sega", "System 18",
+	"Michael Jackson's Moonwalker (US) (FD1094/8751 317-0158)\0", "Graphics issues", "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkuRomInfo, MwalkuRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkuDIPInfo,
@@ -3776,7 +3776,7 @@ struct BurnDriver BurnDrvMWalku = {
 
 struct BurnDriver BurnDrvMWalkud = {
 	"mwalkud", "mwalk", NULL, NULL, "1990",
-	"Michael Jackson's Moonwalker (US) (bootleg of FD1094/8751 317-0158)\0", NULL, "Sega", "System 18",
+	"Michael Jackson's Moonwalker (US) (bootleg of FD1094/8751 317-0158 set)\0", "Graphics issues", "bootleg", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkudRomInfo, MwalkudRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkuDIPInfo,
@@ -3786,7 +3786,7 @@ struct BurnDriver BurnDrvMWalkud = {
 
 struct BurnDriver BurnDrvMWalkbl2 = {
 	"mwalkbl2", "mwalk", NULL, NULL, "1990",
-	"Michael Jackson's Moonwalker (bootleg)\0", NULL, "bootleg", "System 18",
+	"Michael Jackson's Moonwalker (bootleg)\0", "Graphics issues", "bootleg", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18, GBF_PLATFORM, 0,
 	NULL, Mwalkbl2RomInfo, Mwalkbl2RomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,

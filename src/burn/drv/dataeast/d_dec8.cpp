@@ -1796,7 +1796,7 @@ static struct BurnRomInfo ghostbRomDesc[] = {
 	{ "dz19a.10d",		0x00400, 0x47e1f83b, 6 }, // 19 proms
 	{ "dz20a.11d",		0x00400, 0xd8fe2d99, 6 }, // 20
 
-	{ "dz-1.1b",         	0x01000, 0x18b7e1e6, 7 }, // 21 mcu
+	{ "dz-1.1b", 		0x01000, 0x18b7e1e6, 7 }, // 21 mcu
 };
 
 STD_ROM_PICK(ghostb)
@@ -2012,7 +2012,7 @@ static struct BurnRomInfo meikyuhRomDesc[] = {
 	{ "dw18.9d",	0x00400, 0x75f1945f, 6 }, // 18 proms
 	{ "dw19.10d",	0x00400, 0xcc16f3fa, 6 }, // 19
 
-	{ "dw.1b",	0x01000, 0x28e9ced9, 7 }, // 20 mcu
+	{ "dw.1b",		0x01000, 0x28e9ced9, 7 }, // 20 mcu
 };
 
 STD_ROM_PICK(meikyuh)
@@ -2041,14 +2041,14 @@ static struct BurnRomInfo meikyuhaRomDesc[] = {
 
 	{ "27256.16b",	0x08000, 0x3d25f15c, 3 }, //  5 gfx1
 
-	{ "92.6m",	0x10000, 0x9b0dbfa9, 4 }, //  6 gfx2
-	{ "93.6o",	0x10000, 0x95683fda, 4 }, //  7
-	{ "89.6i",	0x10000, 0x1b1fcca7, 4 }, //  8
-	{ "91.6l",	0x10000, 0xe7413056, 4 }, //  9
-	{ "88.6h",	0x10000, 0x57667546, 4 }, // 10
-	{ "90.6k",	0x10000, 0x4c548db8, 4 }, // 11
-	{ "94.6p",	0x10000, 0xe5bcf927, 4 }, // 12
-	{ "95.6r",	0x10000, 0x9e10f723, 4 }, // 13
+	{ "92.6m",		0x10000, 0x9b0dbfa9, 4 }, //  6 gfx2
+	{ "93.6o",		0x10000, 0x95683fda, 4 }, //  7
+	{ "89.6i",		0x10000, 0x1b1fcca7, 4 }, //  8
+	{ "91.6l",		0x10000, 0xe7413056, 4 }, //  9
+	{ "88.6h",		0x10000, 0x57667546, 4 }, // 10
+	{ "90.6k",		0x10000, 0x4c548db8, 4 }, // 11
+	{ "94.6p",		0x10000, 0xe5bcf927, 4 }, // 12
+	{ "95.6r",		0x10000, 0x9e10f723, 4 }, // 13
 
 	{ "27512.12f",	0x10000, 0xb65e029d, 5 }, // 14 gfx3
 	{ "27512.14f",	0x10000, 0x668d995d, 5 }, // 15
@@ -2058,7 +2058,7 @@ static struct BurnRomInfo meikyuhaRomDesc[] = {
 	{ "dw18.9d",	0x00400, 0x75f1945f, 6 }, // 18 proms
 	{ "dw19.10d",	0x00400, 0xcc16f3fa, 6 }, // 19
 
-	{ "dw.1b",	0x01000, 0x28e9ced9, 7 }, // 20 mcu
+	{ "dw.1b",		0x01000, 0x28e9ced9, 7 }, // 20 mcu
 };
 
 STD_ROM_PICK(meikyuha)
@@ -3264,26 +3264,26 @@ struct BurnDriver BurnDrvSrdarwin = {
 // Super Real Darwin (Japan)
 
 static struct BurnRomInfo srdarwnjRomDesc[] = {
-	{ "dy_01.rom",		0x10000, 0x1eeee4ff, 1 }, //  0 maincpu
-	{ "dy00.b16",		0x10000, 0x2bf6b461, 1 }, //  1
+	{ "dy_01.rom",			0x10000, 0x1eeee4ff, 1 }, //  0 maincpu
+	{ "dy00.b16",			0x10000, 0x2bf6b461, 1 }, //  1
 
-	{ "dy04.d7",		0x08000, 0x2ae3591c, 2 }, //  2 audiocpu
+	{ "dy04.d7",			0x08000, 0x2ae3591c, 2 }, //  2 audiocpu
 
-	{ "dy05.b6",		0x04000, 0x8780e8a3, 3 }, //  3 gfx1
+	{ "dy05.b6",			0x04000, 0x8780e8a3, 3 }, //  3 gfx1
 
-	{ "dy07.h16",		0x08000, 0x97eaba60, 4 }, //  4 gfx2
-	{ "dy06.h14",		0x08000, 0xc279541b, 4 }, //  5
-	{ "dy09.k13",		0x08000, 0xd30d1745, 4 }, //  6
-	{ "dy08.k11",		0x08000, 0x71d645fd, 4 }, //  7
-	{ "dy11.k16",		0x08000, 0xfd9ccc5b, 4 }, //  8
-	{ "dy10.k14",		0x08000, 0x88770ab8, 4 }, //  9
+	{ "dy07.h16",			0x08000, 0x97eaba60, 4 }, //  4 gfx2
+	{ "dy06.h14",			0x08000, 0xc279541b, 4 }, //  5
+	{ "dy09.k13",			0x08000, 0xd30d1745, 4 }, //  6
+	{ "dy08.k11",			0x08000, 0x71d645fd, 4 }, //  7
+	{ "dy11.k16",			0x08000, 0xfd9ccc5b, 4 }, //  8
+	{ "dy10.k14",			0x08000, 0x88770ab8, 4 }, //  9
 
-	{ "dy03.b4",		0x10000, 0x44f2a4f9, 5 }, // 10 gfx3
-	{ "dy02.b5",		0x10000, 0x522d9a9e, 5 }, // 11
+	{ "dy03.b4",			0x10000, 0x44f2a4f9, 5 }, // 10 gfx3
+	{ "dy02.b5",			0x10000, 0x522d9a9e, 5 }, // 11
 
 	{ "id8751h_japan.mcu",	0x01000, 0x4ac2ca9d, 6  }, // 12 mcu
 
-	{ "dy12.f4",		0x00100, 0xebfaaed9, 7 }, // 13 proms
+	{ "dy12.f4",			0x00100, 0xebfaaed9, 7 }, // 13 proms
 };
 
 STD_ROM_PICK(srdarwnj)
@@ -5178,7 +5178,7 @@ static struct BurnRomInfo lastmisnRomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_dl00-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+	{ "last_mission_dl00-e.18a",	0x01000, 0x6be57487, 7 }, // 13 mcu
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5219,7 +5219,7 @@ static struct BurnRomInfo lastmsnu6RomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_dl00-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+	{ "last_mission_dl00-a.18a",	0x01000, 0x6be57487, 7 }, // 13 mcu
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5260,7 +5260,7 @@ static struct BurnRomInfo lastmsnu5RomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_dl00-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+	{ "last_mission_dl00-a.18a",	0x01000, 0x6be57487, 7 }, // 13 mcu
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5301,7 +5301,8 @@ static struct BurnRomInfo lastmsnjRomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "id8751h.mcu",				0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+	// created from dump of the US version
+	{ "last_mission_japan.18a",		0x01000, 0x0d58c3a1, 7 }, // 13 mcu
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5371,33 +5372,33 @@ struct BurnDriver BurnDrvShackled = {
 // Breywood (Japan revision 2)
 
 static struct BurnRomInfo breywoodRomDesc[] = {
-	{ "dj02-2.13h",	0x08000, 0xc19856b9, 1 }, //  0 maincpu
-	{ "dj06-2.7h",	0x10000, 0x2860ea02, 1 }, //  1
-	{ "dj05-2.8h",	0x10000, 0x0fdd915e, 1 }, //  2
-	{ "dj04-2.10h",	0x10000, 0x71036579, 1 }, //  3
-	{ "dj03-2.11h",	0x08000, 0x308f4893, 1 }, //  4
+	{ "dj02-2.13h",		0x08000, 0xc19856b9, 1 }, //  0 maincpu
+	{ "dj06-2.7h",		0x10000, 0x2860ea02, 1 }, //  1
+	{ "dj05-2.8h",		0x10000, 0x0fdd915e, 1 }, //  2
+	{ "dj04-2.10h",		0x10000, 0x71036579, 1 }, //  3
+	{ "dj03-2.11h",		0x08000, 0x308f4893, 1 }, //  4
 
-	{ "dj1-2y.18h",	0x10000, 0x3d9fb623, 2 }, //  5 sub
+	{ "dj1-2y.18h",		0x10000, 0x3d9fb623, 2 }, //  5 sub
 
-	{ "dj07-1.5h",	0x08000, 0x4a471c38, 3 }, //  6 audiocpu
+	{ "dj07-1.5h",		0x08000, 0x4a471c38, 3 }, //  6 audiocpu
 
-	{ "dj-00.2a",	0x08000, 0x815a891a, 5 }, //  8 gfx1
+	{ "dj-00.2a",		0x08000, 0x815a891a, 5 }, //  8 gfx1
 
-	{ "dj12.15k",	0x10000, 0x2b7634f2, 6 }, //  9 gfx2
-	{ "dj13.14k",	0x10000, 0x4530a952, 6 }, // 10
-	{ "dj14.13k",	0x10000, 0x87c28833, 6 }, // 11
-	{ "dj15.11k",	0x10000, 0xbfb43a4d, 6 }, // 12
-	{ "dj16.10k",	0x10000, 0xf9848cc4, 6 }, // 13
-	{ "dj17.9k",	0x10000, 0xbaa3d218, 6 }, // 14
-	{ "dj18.8k",	0x10000, 0x12afe533, 6 }, // 15
-	{ "dj19.6k",	0x10000, 0x03373755, 6 }, // 16
+	{ "dj12.15k",		0x10000, 0x2b7634f2, 6 }, //  9 gfx2
+	{ "dj13.14k",		0x10000, 0x4530a952, 6 }, // 10
+	{ "dj14.13k",		0x10000, 0x87c28833, 6 }, // 11
+	{ "dj15.11k",		0x10000, 0xbfb43a4d, 6 }, // 12
+	{ "dj16.10k",		0x10000, 0xf9848cc4, 6 }, // 13
+	{ "dj17.9k",		0x10000, 0xbaa3d218, 6 }, // 14
+	{ "dj18.8k",		0x10000, 0x12afe533, 6 }, // 15
+	{ "dj19.6k",		0x10000, 0x03373755, 6 }, // 16
 
-	{ "dj11.12k",	0x10000, 0x067e2a43, 7 }, // 17 gfx3
-	{ "dj10.14k",	0x10000, 0xc19733aa, 7 }, // 18
-	{ "dj09.15k",	0x10000, 0xe37d5dbe, 7 }, // 19
-	{ "dj08.17k",	0x10000, 0xbeee880f, 7 }, // 20
+	{ "dj11.12k",		0x10000, 0x067e2a43, 7 }, // 17 gfx3
+	{ "dj10.14k",		0x10000, 0xc19733aa, 7 }, // 18
+	{ "dj09.15k",		0x10000, 0xe37d5dbe, 7 }, // 19
+	{ "dj08.17k",		0x10000, 0xbeee880f, 7 }, // 20
 
-	{ "dj.18a",		0x01000, 0x4cb20332, 4 }, //  7 mcu
+	{ "dj.18a",			0x01000, 0x4cb20332, 4 }, //  7 mcu
 	
 	{ "dk-20.9c",		0x00100, 0xff3cd588, 0 | BRF_OPT }, // priority PROM
 };

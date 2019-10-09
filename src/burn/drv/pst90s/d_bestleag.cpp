@@ -419,10 +419,9 @@ static void draw_sprites()
 
 	INT32 color_mask = (scroll[0] & 0x1000) ? 0x7 : 0xf;
 
-	for (INT32 offs = 0x16/2;offs < 0x1000/2;offs += 4)
+	for (INT32 offs = 0x16/2;offs < (0x1000/2)-4;offs += 4)
 	{
 		if (ram[offs] & 0x2000) break;
-
 		INT32 code  = (ram[offs+3] & 0xfff);
 		INT32 color = (ram[offs+2] >> 12) & color_mask;
 		INT32 sx    = (ram[offs+2] & 0x1ff) - 20;

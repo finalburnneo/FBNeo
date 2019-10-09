@@ -5,7 +5,7 @@
 // 
 // Games using this hardware:
 //
-//	Dead Angle	2x YM2203 + adpcm -- not implemented
+//	Dead Angle	2x YM2203 + 2x adpcm
 //
 // 	Dynamite Duke   1x YM3812 + 1x M6295
 //	Toki		1x YM3812 + 1x M6295
@@ -47,7 +47,7 @@ static INT32 seibu_sndcpu_frequency;
 static INT32 seibu_snd_type;
 static INT32 is_sdgndmps = 0;
 
-// ADPCM related (cabal)
+// ADPCM related (cabal/deadang)
 static UINT16 adpcmcurrent[2];
 static UINT8 adpcmnibble[2];
 static UINT16 adpcmend[2];
@@ -64,11 +64,11 @@ static const INT32 index_shift[8] = { -1, -1, -1, -1, 2, 4, 6, 8 };
 static void adpcm_init(); // forward
 static void adpcm_reset(); // forward
 
-static INT16 *mixer_buffer = NULL; // for cabal ADPCM resampler
+static INT16 *mixer_buffer = NULL; // for cabal/deadang ADPCM resampler
 static INT32 samples_from = 0;
 
-UINT8 *SeibuADPCMData[2];
-INT32 SeibuADPCMDataLen[2];
+UINT8 *SeibuADPCMData[2] = { NULL, NULL };
+INT32 SeibuADPCMDataLen[2] = { 0, 0 };
 
 enum
 {
@@ -221,10 +221,10 @@ void __fastcall seibu_sound_write(UINT16 address, UINT8 data)
 			seibu_z80_bank(data);
 		return;
 
-		case 0x401a: // raiden2
-			if ((seibu_snd_type & 8) == 0) {
+		case 0x401a:
+			if ((seibu_snd_type & 8) == 0) { // raiden2
 				seibu_z80_bank(data);
-			} else { // Cabal ADPCM
+			} else { // Cabal/Deadang ADPCM
 				if (data < 2) adpcmplaying[0] = data;
 			}
 		return;
@@ -418,7 +418,6 @@ void seibu_sound_reset()
 	ZetReset();
 	update_irq_lines(VECTOR_INIT);
 	seibu_z80_bank(0); // default banking. (fix for raiden2/dx coin-up)
-	ZetClose();
 
 	switch (seibu_snd_type & 3)
 	{
@@ -434,6 +433,8 @@ void seibu_sound_reset()
 			BurnYM2203Reset();
 		break;
 	}
+
+	ZetClose();
 
 	if ((seibu_snd_type & 8) == 0) MSM6295Reset();
 
@@ -507,7 +508,8 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 	}
 
 	// init kludge for sdgndmps
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "sdgndmps")) {
+	if ( (!strcmp(BurnDrvGetTextA(DRV_NAME), "sdgndmps")) || (!strncmp(BurnDrvGetTextA(DRV_NAME), "denjinmk", 8)) ) {
+		bprintf(0, _T("seibusnd: init kludge for sdgndmps / denjinmk..\n"));
 		is_sdgndmps = 1;
 	}
 }
@@ -539,7 +541,7 @@ void seibu_sound_exit()
 
 	if ((seibu_snd_type & 8) == 0) MSM6295Exit();
 
-	// cabal ADPCM-exit
+	// cabal/deadang ADPCM-exit
 	if (mixer_buffer) BurnFree(mixer_buffer);
 	samples_from = 0;
 
@@ -550,7 +552,10 @@ void seibu_sound_exit()
 	SeibuZ80RAM = NULL;
 	seibu_sndcpu_frequency = 0;
 	is_sdgndmps = 0;
-	
+
+	SeibuADPCMData[0] = SeibuADPCMData[1] = NULL;
+	SeibuADPCMDataLen[0] = SeibuADPCMDataLen[1] = 0;
+
 	DebugDev_SeibuSndInitted = 0;
 }
 
@@ -636,7 +641,9 @@ static void adpcm_update(INT32 chip, INT16 *pbuf, INT32 samples)
 			if (adpcmnibble[chip] == 4)
 			{
 				adpcmcurrent[chip]++;
-				if (adpcmcurrent[chip] >= adpcmend[chip]) {
+				if (adpcmcurrent[chip] >= adpcmend[chip] || adpcmcurrent[chip] >= SeibuADPCMDataLen[chip]) {
+					if (adpcmcurrent[chip] >= SeibuADPCMDataLen[chip])
+						bprintf(0, _T("seibuadpcm: tried to play past data!\n"));
 					adpcmplaying[chip] = 0;
 					adpcmending[chip] = 1;
 				}

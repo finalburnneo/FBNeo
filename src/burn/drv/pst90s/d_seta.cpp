@@ -1849,7 +1849,6 @@ static struct BurnDIPInfo TndrcadjDIPList[]=
 {
 	{0x13, 0xff, 0xff, 0xff, NULL			},
 	{0x14, 0xff, 0xff, 0xf7, NULL			},
-	{0x15, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
 	{0x13, 0x01, 0x03, 0x02, "Easy"			},
@@ -6108,9 +6107,11 @@ static void extdwnhl68kInit()
 	SekSetWriteByteHandler(1,		setaSoundRegWriteByte);
 	SekClose();
 
-	// swap halves of sound rom
-	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000);
+	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000); // temp storage
+
+	// swap halves of sound rom (extdwnhl & sokonuke)
 	memcpy (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x080000);
+	memcpy (DrvSndROM + 0x080000, DrvSndROM + 0x100000, 0x080000);
 }
 
 static void krzybowl68kInit()
@@ -9502,8 +9503,10 @@ static void gundhara68kInit()
 	wrofaero68kInit();
 
 	// swap halves of sound rom
-	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000);
+	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000); // temp storage
+
 	memcpy (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x080000);
+	memcpy (DrvSndROM + 0x080000, DrvSndROM + 0x100000, 0x080000);
 }
 
 static INT32 gundharaInit()
@@ -9618,8 +9621,8 @@ static INT32 gundharacRomCallback(INT32 bLoad)
 		if (BurnLoadRom(DrvGfxROM2 + 0x200000, 27, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x300000, 28, 2)) return 1;
 
-		if (BurnLoadRom(DrvSndROM  + 0x000000, 29, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM  + 0x080000, 30, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x080000, 29, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x000000, 30, 1)) return 1;
 	}
 
 	return 0;
@@ -10105,40 +10108,6 @@ struct BurnDriver BurnDrvJjsquawko = {
 };
 
 
-// J. J. Squawkers (bootleg, Blandia conversion)
-/* PCB was P0-078A, which was a Blandia board converted to JJ Squawkers. 
-No labels on any of the ROMs. Apparently based on jjsquawko set. */
-
-static struct BurnRomInfo jjsquawkb2RomDesc[] = {
-	{ "u3.3a",		   0x080000, 0xf94c913b, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "u4.4a",		   0x080000, 0x0227a2be, 0x01 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "u64.3l",		   0x100000, 0x11d8713a, 0x03 | BRF_GRA },           //  2 Sprites 	      // jj-rom9 + jj-rom10 
-	{ "u63.2l",		   0x100000, 0x7a385ef0, 0x03 | BRF_GRA },           //  3         		  // jj-rom7 + jj-rom8  
-	
-	{ "u66.5l",		   0x100000, 0xbbaf40c5, 0x04 | BRF_GRA },           //  4 Layer 1 tiles  // jj-rom11 + jj-rom12 
-	{ "u65.4l",		   0x080000, 0xa5a35caf, 0x1c | BRF_GRA },           //  5                // jj-rom3.040         
-
-	{ "u68.7l",		   0x100000, 0xae9ae01f, 0x05 | BRF_GRA },           //  9 Layer 2 tiles  // jj-rom14 + jj-rom13 
-	{ "u67.6l",	       0x080000, 0xa235488e, 0x1d | BRF_GRA },	         // 10                // jj-rom4.040 	     
-
-	{ "u70.10l",	   0x100000, 0x181a55b8, 0x06 | BRF_SND },           // 11 x1-010 Samples // jj-rom5.040 + jj-rom6.040 
-};
-
-STD_ROM_PICK(jjsquawkb2)
-STD_ROM_FN(jjsquawkb2)
-
-struct BurnDriver BurnDrvJjsquawkb2 = {
-	"jjsquawkb2", "jjsquawk", NULL, NULL, "1993",
-	"J. J. Squawkers (bootleg, Blandia conversion)\0", NULL, "bootleg", "Seta",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA1, GBF_PLATFORM, 0,
-	NULL, jjsquawkb2RomInfo, jjsquawkb2RomName, NULL, NULL, NULL, NULL, JjsquawkInputInfo, JjsquawkDIPInfo,
-	jjsquawkInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x1200,
-	384, 240, 4, 3
-};
-
-
 // J. J. Squawkers (bootleg)
 
 static struct BurnRomInfo jjsquawkbRomDesc[] = {
@@ -10172,12 +10141,46 @@ static INT32 jjsquawkbInit()
 }
 
 struct BurnDriver BurnDrvJjsquawkb = {
-	"jjsquawkb", "jjsquawk", NULL, NULL, "1993",
+	"jjsquawkb", "jjsquawk", NULL, NULL, "1999",
 	"J. J. Squawkers (bootleg)\0", NULL, "bootleg", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SETA1, GBF_PLATFORM, 0,
 	NULL, jjsquawkbRomInfo, jjsquawkbRomName, NULL, NULL, NULL, NULL, JjsquawkInputInfo, JjsquawkDIPInfo,
 	jjsquawkbInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x1200,
+	384, 240, 4, 3
+};
+
+
+// J. J. Squawkers (bootleg, Blandia conversion)
+/* PCB was P0-078A, which was a Blandia board converted to JJ Squawkers. 
+No labels on any of the ROMs. Apparently based on jjsquawko set. */
+
+static struct BurnRomInfo jjsquawkb2RomDesc[] = {
+	{ "u3.3a",		   0x080000, 0xf94c913b, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u4.4a",		   0x080000, 0x0227a2be, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "u64.3l",		   0x100000, 0x11d8713a, 0x03 | BRF_GRA },           //  2 Sprites 	      // jj-rom9 + jj-rom10 
+	{ "u63.2l",		   0x100000, 0x7a385ef0, 0x03 | BRF_GRA },           //  3         		  // jj-rom7 + jj-rom8  
+	
+	{ "u66.5l",		   0x100000, 0xbbaf40c5, 0x04 | BRF_GRA },           //  4 Layer 1 tiles  // jj-rom11 + jj-rom12 
+	{ "u65.4l",		   0x080000, 0xa5a35caf, 0x1c | BRF_GRA },           //  5                // jj-rom3.040         
+
+	{ "u68.7l",		   0x100000, 0xae9ae01f, 0x05 | BRF_GRA },           //  9 Layer 2 tiles  // jj-rom14 + jj-rom13 
+	{ "u67.6l",	       0x080000, 0xa235488e, 0x1d | BRF_GRA },	         // 10                // jj-rom4.040 	     
+
+	{ "u70.10l",	   0x100000, 0x181a55b8, 0x06 | BRF_SND },           // 11 x1-010 Samples // jj-rom5.040 + jj-rom6.040 
+};
+
+STD_ROM_PICK(jjsquawkb2)
+STD_ROM_FN(jjsquawkb2)
+
+struct BurnDriver BurnDrvJjsquawkb2 = {
+	"jjsquawkb2", "jjsquawk", NULL, NULL, "1999",
+	"J. J. Squawkers (bootleg, Blandia conversion)\0", NULL, "bootleg", "Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA1, GBF_PLATFORM, 0,
+	NULL, jjsquawkb2RomInfo, jjsquawkb2RomName, NULL, NULL, NULL, NULL, JjsquawkInputInfo, JjsquawkDIPInfo,
+	jjsquawkInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x1200,
 	384, 240, 4, 3
 };
 

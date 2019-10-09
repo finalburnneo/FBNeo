@@ -142,11 +142,26 @@ void SekBurnUntilInt();
 #define SEK_IRQSTATUS_ACK  (0x1000)
 
 void SekSetIRQLine(const INT32 line, INT32 status);
+void SekSetIRQLine(INT32 nCPU, const INT32 line, INT32 status);
+void SekSetVIRQLine(const INT32 line, INT32 nstatus);
+void SekSetVIRQLine(INT32 nCPU, const INT32 line, INT32 status);
+
 void SekReset();
+void SekReset(INT32 nCPU);
 
 void SekRunEnd();
 void SekRunAdjust(const INT32 nCycles);
 INT32 SekRun(const INT32 nCycles);
+INT32 SekRun(INT32 nCPU, INT32 nCycles);
+void SekSetRESETLine(INT32 nStatus);
+void SekSetRESETLine(INT32 nCPU, INT32 nStatus);
+INT32 SekGetRESETLine();
+INT32 SekGetRESETLine(INT32 nCPU);
+
+void SekSetHALT(INT32 nStatus);
+void SekSetHALT(INT32 nCPU, INT32 nStatus);
+INT32 SekGetHALT();
+INT32 SekGetHALT(INT32 nCPU);
 
 inline static INT32 SekIdle(INT32 nCycles)
 {
@@ -175,6 +190,8 @@ inline static INT32 SekSegmentCycles()
 	return nSekCyclesDone + nSekCyclesToDo;
 #endif
 }
+
+INT32 SekTotalCycles(INT32 nCPU);
 
 #if defined FBNEO_DEBUG
 static INT32 SekTotalCycles()
@@ -228,6 +245,7 @@ INT32 SekSetTASCallback(pSekTASCallback pCallback);
 
 // Get a CPU's PC
 UINT32 SekGetPC(INT32 n);
+UINT32 SekGetPPC(INT32);
 
 INT32 SekScan(INT32 nAction);
 

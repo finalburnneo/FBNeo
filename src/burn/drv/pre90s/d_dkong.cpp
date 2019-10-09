@@ -405,7 +405,7 @@ static struct BurnDIPInfo PestplceDIPList[]=
 	{0x0e, 0x01, 0xc0, 0x00, "20000"		},
 	{0x0e, 0x01, 0xc0, 0x40, "30000"		},
 	{0x0e, 0x01, 0xc0, 0x80, "40000"		},
-	{0x0e, 0x01, 0xc0, 0xc0, "×"			},
+	{0x0e, 0x01, 0xc0, 0xc0, "Ã—"			},
 };
 
 STDDIPINFO(Pestplce)
@@ -2696,6 +2696,84 @@ struct BurnDriver BurnDrvDkrainbow = {
 };
 
 
+// Donkey Kong (2600 graphics, hack)
+
+static struct BurnRomInfo kong2600RomDesc[] = {
+	{ "c_5et_g.bin",	0x1000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x1000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x1000, 0x1c97d324, 1 }, //  2
+	{ "c_5at_g.bin",	0x1000, 0xb9005ac0, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "k2600.3n",		0x0800, 0x0e6a2a6d, 3 }, //  6 gfx1
+	{ "k2600.3p",		0x0800, 0xca57e0f4, 3 }, //  7
+
+	{ "k2600.7c",		0x0800, 0xcf450a43, 4 }, //  8 gfx2
+	{ "k2600.7d",		0x0800, 0xd5046907, 4 }, //  9
+	{ "k2600.7e",		0x0800, 0x1539fe2a, 4 }, // 10
+	{ "k2600.7f",		0x0800, 0x77cc00ab, 4 }, // 11
+
+	{ "k2600.2k",		0x0100, 0x1e82d375, 5 }, // 12 proms
+	{ "k2600.2j",		0x0100, 0x2ab01dc8, 5 }, // 13
+	{ "k2600.5f",		0x0100, 0x44988665, 5 }, // 14
+};
+
+STD_ROM_PICK(kong2600)
+STD_ROM_FN(kong2600)
+
+struct BurnDriver BurnDrvKong2600 = {
+	"kong2600", "dkong", NULL, "dkong", "1999",
+	"Donkey Kong (2600 graphics, hack)\0", NULL, "Vic Twenty George", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, kong2600RomInfo, kong2600RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Reverse
+// Hack by Paul Goes (2019)
+
+static struct BurnRomInfo dkongrevRomDesc[] = {
+	{ "dkongrev.5et",	0x1000, 0xee02057e, 1 }, //  0 maincpu
+	{ "dkongrev.5ct",	0x1000, 0xe6fabd0f, 1 }, //  1
+	{ "dkongrev.5bt",	0x1000, 0x31c5bea3, 1 }, //  2
+	{ "dkongrev.5at",	0x1000, 0xc7d04ef3, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 }, //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 }, //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+
+};
+
+STD_ROM_PICK(dkongrev)
+STD_ROM_FN(dkongrev)
+
+struct BurnDriver BurnDrvDkongrev = {
+	"dkongrev", "dkong", NULL, "dkong", "2019",
+	"Donkey Kong Reverse (Hack)\0", NULL, "Hack (Paul Goes)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongrevRomInfo, dkongrevRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Donkey Kong II - Jumpman Returns (hack, V1.2)
 
 static struct BurnRomInfo dkongxRomDesc[] = {
@@ -2754,7 +2832,7 @@ static INT32 dkongxRomLoad()
 
 static INT32 dkongxInit()
 {
-	INT32 ret = DrvInit(dkongxRomLoad, dkongPaletteInit, 0);
+	INT32 ret = DrvInit(dkongxRomLoad, dkongnewPaletteInit, 0);
 
 	if (ret == 0)
 	{
@@ -2819,6 +2897,331 @@ struct BurnDriver BurnDrvDkongx11 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongx11RomInfo, dkongx11RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
 	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Christmas Remix (Hack)
+
+static struct BurnRomInfo dkchrmxRomDesc[] = {
+	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x01000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x01000, 0x1c97d324, 1 }, //  2
+	{ "c_5at_g.bin",	0x01000, 0xb9005ac0, 1 }, //  3
+
+	{ "dkchrmx.bin",	0x10000, 0xe5273cee, 2 }, //  4 braze
+
+	{ "s_3i_b.bin",		0x00800, 0x45a4ed06, 3 }, //  5 soundcpu
+	{ "s_3j_b.bin",		0x00800, 0x4743fe92, 3 }, //  6
+
+	{ "v_5h_b.ch",		0x00800, 0x0b92cc7a, 4 }, //  7 gfx1
+	{ "v_3pt.ch",		0x00800, 0x6a04f93f, 4 }, //  8
+
+	{ "l_4m_b.ch",		0x00800, 0xc6ddc85f, 5 }, //  9 gfx2
+	{ "l_4n_b.ch",		0x00800, 0x2cd9cfdf, 5 }, // 10
+	{ "l_4r_b.ch",		0x00800, 0xc1ea6688, 5 }, // 11
+	{ "l_4s_b.ch",		0x00800, 0x9473d658, 5 }, // 12
+
+	{ "c-2k.ch",		0x00100, 0xc6cee97e, 6 }, // 13 proms
+	{ "c-2j.ch",		0x00100, 0x1f64ac3d, 6 }, // 14
+	{ "v-5e.ch",		0x00100, 0x5a8ca805, 6 }, // 15
+
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dkchrmx)
+STD_ROM_FN(dkchrmx)
+
+struct BurnDriver BurnDrvDkchrmx = {
+	"dkchrmx", "dkong", NULL, "dkong", "2017",
+	"Donkey Kong Christmas Remix (Hack)\0", NULL, "Sock Master", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkchrmxRomInfo, dkchrmxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
+	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Spooky Remix (Hack)
+
+static struct BurnRomInfo dkspkyrmxRomDesc[] = {
+	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x01000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x01000, 0x1c97d324, 1 }, //  2
+	{ "c_5at_g.bin",	0x01000, 0xb9005ac0, 1 }, //  3
+
+	{ "dkspkyrmx.bin",	0x08000, 0xe68c6bfc, 2 }, //  4 braze
+
+	{ "s_3i_b.bin",		0x00800, 0x45a4ed06, 3 }, //  5 soundcpu
+	{ "s_3j_b.bin",		0x00800, 0x4743fe92, 3 }, //  6
+
+	{ "v_5h_b.sp",		0x00800, 0xb70b0904, 4 }, //  7 gfx1
+	{ "v_3pt.sp",		0x00800, 0xbe8c92c3, 4 }, //  8
+
+	{ "l_4m_b.sp",		0x00800, 0x1d0b3b77, 5 }, //  9 gfx2
+	{ "l_4n_b.sp",		0x00800, 0xcd717e7c, 5 }, // 10
+	{ "l_4r_b.sp",		0x00800, 0xd019732b, 5 }, // 11
+	{ "l_4s_b.sp",		0x00800, 0x04272273, 5 }, // 12
+
+	{ "c-2k.sp",		0x00100, 0xa837a227, 6 }, // 13 proms
+	{ "c-2j.sp",		0x00100, 0x244a89f9, 6 }, // 14
+	{ "v-5e.sp",		0x00100, 0xc70b6f9b, 6 }, // 15
+
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dkspkyrmx)
+STD_ROM_FN(dkspkyrmx)
+
+struct BurnDriver BurnDrvDkspkyrmx = {
+	"dkspkyrmx", "dkong", NULL, "dkong", "2018",
+	"Donkey Kong Spooky Remix (Hack)\0", NULL, "Sock Master", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkspkyrmxRomInfo, dkspkyrmxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
+	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong (Patch) by Don Hodges
+// Patched Kill Screen - see http://donhodges.com/how_high_can_you_get.htm
+
+static struct BurnRomInfo dkongpRomDesc[] = {
+	{ "dkongp_c_5et",	0x1000, 0x2066139d, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x1000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x1000, 0x1c97d324, 1 }, //  2
+	{ "c_5at_g.bin",	0x1000, 0xb9005ac0, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 }, //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 }, //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dkongp)
+STD_ROM_FN(dkongp)
+
+struct BurnDriver BurnDrvDkongp = {
+	"dkongp", "dkong", NULL, "dkong", "2007",
+	"Donkey Kong (Patched)\0", NULL, "Hack (Don Hodges)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongpRomInfo, dkongpRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Remix Demo by Sockmaster
+
+static struct BurnRomInfo dkrdemoRomDesc[] = {
+	{ "dkrdemo.5et",	0x1000, 0xf9fdff29, 1 }, //  0 maincpu
+	{ "dkrdemo.5ct",	0x1000, 0xf48cb898, 1 }, //  1
+	{ "dkrdemo.5bt",	0x1000, 0x660d43ec, 1 }, //  2
+	{ "dkrdemo.5at",	0x1000, 0xe59d406c, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 }, //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 }, //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dkrdemo)
+STD_ROM_FN(dkrdemo)
+
+struct BurnDriver BurnDrvDkrdemo = {
+	"dkrdemo", "dkong", NULL, "dkong", "2015",
+	"Donkey Kong Remix (Demo)\0", NULL, "Hack (Sockmaster)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkrdemoRomInfo, dkrdemoRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong (Pacman Graphics) (Hack) by Tim Appleton
+
+static struct BurnRomInfo dkongpacRomDesc[] = {
+	{ "c_5et_g.bin",	0x1000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x1000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x1000, 0x1c97d324, 1 }, //  2
+	{ "dkongpac.5a",	0x1000, 0x56d28137, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "dkongpac.3n",	0x0800, 0x1beba830, 3 }, //  6 gfx1
+	{ "dkongpac.3p",	0x0800, 0x94d61766, 3 }, //  7
+
+	{ "dkongpac.7c",	0x0800, 0x065e2713, 4 }, //  8 gfx2
+	{ "dkongpac.7d",	0x0800, 0xa84b347d, 4 }, //  9
+	{ "dkongpac.7e",	0x0800, 0x6ae6f476, 4 }, // 10
+	{ "dkongpac.7f",	0x0800, 0x9d293922, 4 }, // 11
+
+	{ "k2600.2k",		0x0100, 0x1e82d375, 5 }, // 12 proms
+	{ "k2600.2j",		0x0100, 0x2ab01dc8, 5 }, // 13
+	{ "k2600.5f",		0x0100, 0x44988665, 5 }, // 14
+
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dkongpac)
+STD_ROM_FN(dkongpac)
+
+struct BurnDriver BurnDrvDkongpac = {
+	"dkongpac", "dkong", NULL, "dkong", "2001",
+	"Donkey Kong (Pacman Graphics)\0", NULL, "Hack (Tim Appleton)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongpacRomInfo, dkongpacRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Trainer 1.01 (Hack) by Sock Master
+
+static struct BurnRomInfo dktrainerRomDesc[] = {
+	{ "dkt.5et",		0x1000, 0x7ed5a945, 1 }, //  0 maincpu
+	{ "dkt.5ct",		0x1000, 0x98e2caa8, 1 }, //  1
+	{ "dkt.5bt",		0x1000, 0x098a840a, 1 }, //  2
+	{ "dkt.5at",		0x1000, 0xdd092591, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 }, //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 }, //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dktrainer)
+STD_ROM_FN(dktrainer)
+
+struct BurnDriver BurnDrvDktrainer = {
+	"dktrainer", "dkong", NULL, "dkong", "2016",
+	"Donkey Kong Trainer 1.01\0", NULL, "Hack (Sock Master)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dktrainerRomInfo, dktrainerRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Pace (Hack) by Sock Master
+
+static struct BurnRomInfo dkpaceRomDesc[] = {
+	{ "dkp.5et",		0x1000, 0xe05563d5, 1 }, //  0 maincpu
+	{ "dkp.5ct",		0x1000, 0x88aa1ddf, 1 }, //  1
+	{ "dkp.5bt",		0x1000, 0x8ee0b1d2, 1 }, //  2
+	{ "dkp.5at",		0x1000, 0x0bc9c8db, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 }, //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 }, //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dkpace)
+STD_ROM_FN(dkpace)
+
+struct BurnDriver BurnDrvDkpace = {
+	"dkpace", "dkong", NULL, "dkong", "2016",
+	"Donkey Kong Pace\0", NULL, "Hack (Sock Master)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkpaceRomInfo, dkpaceRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Crazy Barrels Edition by Paul Goes
+
+static struct BurnRomInfo dkcbarrelRomDesc[] = {
+	{ "dkcbarrel.5et",	0x1000, 0x78e37c41, 1 }, //  0 maincpu
+	{ "dkcbarrel.5ct",	0x1000, 0xa46cbb85, 1 }, //  1
+	{ "dkcbarrel.5bt",	0x1000, 0x07da5b15, 1 }, //  2
+	{ "dkcbarrel.5at",	0x1000, 0x515e0639, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 }, //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 }, //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dkcbarrel)
+STD_ROM_FN(dkcbarrel)
+
+struct BurnDriver BurnDrvDkcbarrel = {
+	"dkcbarrel", "dkong", NULL, "dkong", "2019",
+	"Donkey Kong Crazy Barrels Edition\0", NULL, "Hack (Paul Goes)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkcbarrelRomInfo, dkcbarrelRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
 

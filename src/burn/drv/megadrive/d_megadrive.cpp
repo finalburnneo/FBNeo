@@ -352,7 +352,7 @@ INT32 MegadriveGetZipName(char** pszName, UINT32 i)
 		pszGameName = BurnDrvGetTextA(DRV_PARENT);
 	}
 
-	if (pszGameName == NULL) {
+	if (pszGameName == NULL || i > 1) {
 		*pszName = NULL;
 		return 1;
 	}
@@ -2233,24 +2233,6 @@ struct BurnDriver BurnDrvmd_addfamp1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_addfamp1RomInfo, md_addfamp1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// The Addams Family (USA, Prototype, Alt)
-static struct BurnRomInfo md_addfamp2RomDesc[] = {
-	{ "addams family, the (usa) (beta) (alt).bin", 0x100000, 0x3a173e1f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_addfamp2)
-STD_ROM_FN(md_addfamp2)
-
-struct BurnDriver BurnDrvmd_addfamp2 = {
-	"md_addfamp2", "md_addfam", NULL, NULL, "1994",
-	"The Addams Family (USA, Prototype, Alt)\0", NULL, "Flying Edge", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_addfamp2RomInfo, md_addfamp2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -18679,6 +18661,7 @@ struct BurnDriver BurnDrvmd_rockman = {
 };
 
 // Rockman Mega World (Jpn, Alt)
+// Note: Impossible to win game due to broken sram in this version.
 static struct BurnRomInfo md_rockman1RomDesc[] = {
 	{ "rockman mega world (jpn) (alt).bin", 0x200000, 0x85c956ef, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -18688,7 +18671,7 @@ STD_ROM_FN(md_rockman1)
 
 struct BurnDriver BurnDrvmd_rockman1 = {
 	"md_rockman1", "md_megaman", NULL, NULL, "1994",
-	"Rockman Mega World (Jpn, Alt)\0", NULL, "Capcom", "Sega Megadrive",
+	"Rockman Mega World (Jpn, Alt)\0", "Play md_rockman or md_megaman instead!", "Capcom", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_rockman1RomInfo, md_rockman1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -43020,6 +43003,188 @@ struct BurnDriver BurnDrvmd_bk3e = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_bk3eRomInfo, md_bk3eRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Misplaced (English)
+// https://retrosouls.itch.io/misplaced
+static struct BurnRomInfo md_misplacedRomDesc[] = {
+	{ "Misplaced-EN.bin", 0x0e0000, 0xd79fd3ec, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_misplaced)
+STD_ROM_FN(md_misplaced)
+
+struct BurnDriver BurnDrvmd_misplaced = {
+	"md_misplaced", NULL, NULL, NULL, "2019",
+	"Misplaced (English)\0", NULL, "2019 RetroSouls", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_misplacedRomInfo, md_misplacedRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Misplaced (Russian)
+// https://retrosouls.itch.io/misplaced
+static struct BurnRomInfo md_misplacedrRomDesc[] = {
+	{ "Misplaced-RU.bin", 0x0e0000, 0x1997b949, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_misplacedr)
+STD_ROM_FN(md_misplacedr)
+
+struct BurnDriver BurnDrvmd_misplacedr = {
+	"md_misplacedr", "md_misplaced", NULL, NULL, "2019",
+	"Misplaced (Russian)\0", NULL, "2019 RetroSouls", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_misplacedrRomInfo, md_misplacedrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Super Monaco GP 2019 - HE Returns (30th Anniversary Edition) (Hack By TA_Marcos_Translations)
+static struct BurnRomInfo md_smgp2019RomDesc[] = {
+	{ "Super_Monaco_GP2019.bin", 0x080000, 0x12BCABB6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_smgp2019)
+STD_ROM_FN(md_smgp2019)
+
+struct BurnDriver BurnDrvmd_smgp2019 = {
+	"md_smgp2019", "md_smgp", NULL, NULL, "2019",
+	"Super Monaco GP 2019 - HE Returns (Hack, Improvement)\0", NULL, "2019 TA_Marcos_Translations", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_smgp2019RomInfo, md_smgp2019RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 1 By Kratus
+static struct BurnRomInfo md_sor2sfv1RomDesc[] = {
+	{ "SoR2_StreetFighter_v1.bin", 0x33CF86, 0xE03F0C6B, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv1)
+STD_ROM_FN(md_sor2sfv1)
+
+struct BurnDriver BurnDrvmd_sor2sfv1 = {
+	"md_sor2sfv1", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 1 (Dhalsim/Ryu/Guile/Ken, Hack)\0", NULL, "2017 Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv1RomInfo, md_sor2sfv1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 2 By Kratus
+static struct BurnRomInfo md_sor2sfv2RomDesc[] = {
+	{ "SoR2_StreetFighter_v2.bin", 0x365298, 0x828786E2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv2)
+STD_ROM_FN(md_sor2sfv2)
+
+struct BurnDriver BurnDrvmd_sor2sfv2 = {
+	"md_sor2sfv2", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 2 (Cammy/DeeJay/ChunLi/FeiLong, Hack)\0", NULL, "2017 Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv2RomInfo, md_sor2sfv2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 3 By Kratus
+static struct BurnRomInfo md_sor2sfv3RomDesc[] = {
+	{ "SoR2_StreetFighter_v3.bin", 0x35E7FA, 0xD2ECF98F, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv3)
+STD_ROM_FN(md_sor2sfv3)
+
+struct BurnDriver BurnDrvmd_sor2sfv3 = {
+	"md_sor2sfv3", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 3 (Blanka/Honda/Zangief/T.Hawk, Hack)\0", NULL, "2017 Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv3RomInfo, md_sor2sfv3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 4 By Kratus
+static struct BurnRomInfo md_sor2sfv4RomDesc[] = {
+	{ "SoR2_StreetFighter_v4.bin", 0x395628, 0x59AA116D, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv4)
+STD_ROM_FN(md_sor2sfv4)
+
+struct BurnDriver BurnDrvmd_sor2sfv4 = {
+	"md_sor2sfv4", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 4 (Balrog/Bison/Sagat/Vega, Hack)\0", NULL, "2017 Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv4RomInfo, md_sor2sfv4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sega Sonic Bros. C2 Port, revision 2
+static struct BurnRomInfo md_ssonicbror2RomDesc[] = {
+	{ "SegaSonicBrosMDRev2.bin", 0xc0000, 0x91537567, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ssonicbror2)
+STD_ROM_FN(md_ssonicbror2)
+
+struct BurnDriver BurnDrvmd_ssonicbror2 = {
+	"md_ssonicbror2", NULL, NULL, NULL, "2018",
+	"Sega Sonic Bros. (Rev.2)\0", NULL, "2018 Dustin O'Dell", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ssonicbror2RomInfo, md_ssonicbror2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Old Towers v1.2
+static struct BurnRomInfo md_oldtowersRomDesc[] = {
+	{ "ot12.bin", 0xc0000, 0xd875e97d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_oldtowers)
+STD_ROM_FN(md_oldtowers)
+
+struct BurnDriver BurnDrvmd_oldtowers = {
+	"md_oldtowers", NULL, NULL, NULL, "2019",
+	"Old Towers (Rev 1.2)\0", NULL, "2019 RetroSouls", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_oldtowersRomInfo, md_oldtowersRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// L'Abbaye Des Morts
+static struct BurnRomInfo md_labbayeRomDesc[] = {
+	{ "20170907 - AbbayeMD.bin", 0x3c0000, 0x8865ee24, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_labbaye)
+STD_ROM_FN(md_labbaye)
+
+struct BurnDriver BurnDrvmd_labbaye = {
+	"md_labbaye", NULL, NULL, NULL, "2010",
+	"L'Abbaye Des Morts\0", NULL, "2010 Locomalito and Gryzor", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_labbayeRomInfo, md_labbayeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

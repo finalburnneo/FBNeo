@@ -44,6 +44,7 @@ UINT8 GalLastPort2 = 0;
 UINT8 GalShootEnable;
 UINT8 GalNoiseEnable;
 INT32 GalNoiseVolume;
+INT32 GalNoiseHold;
 double GalShootWavePos;
 double GalNoiseWavePos;
 double GalLfoWavePos[3];
@@ -474,6 +475,7 @@ void GalSoundScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(GalShootEnable);
 		SCAN_VAR(GalNoiseEnable);
 		SCAN_VAR(GalNoiseVolume);
+		SCAN_VAR(GalNoiseHold);
 		SCAN_VAR(GalShootWavePos);
 		SCAN_VAR(GalNoiseWavePos);
 		SCAN_VAR(GalLfoWavePos);
@@ -898,7 +900,7 @@ static void GalRenderNoiseSample(INT16 *pSoundBuf, INT32 nLength)
 	double Step = (double)NOISE_RATE / nBurnSoundRate;
 	
 	for (INT32 i = 0; i < nLength; i += 2) {
-		INT16 Sample = (INT16)(GalNoiseWave[(INT32)Addr] * (GalNoiseVolume / 100));
+		INT16 Sample = (INT16)(GalNoiseWave[(INT32)Addr] * ((double)GalNoiseVolume / 100));
 		Sample >>= 4;
 		
 		INT32 nLeftSample = 0, nRightSample = 0;
@@ -1031,8 +1033,14 @@ void GalaxianSoundWrite(UINT32 Offset, UINT8 d)
 		}
 		
 		case 0x03: {
+			if ((d & 1) && GalNoiseEnable) {
+				GalNoiseHold = 20; // already noise-ing, just extend the hold
+				GalNoiseVolume = 100;
+				return;
+			}
 			GalNoiseEnable = d & 1;
 			if (GalNoiseEnable) {
+				GalNoiseHold = 20;
 				GalNoiseVolume = 100;
 				GalNoiseWavePos = 0;
 			}
@@ -1107,12 +1115,19 @@ void GalaxianLfoFreqWrite(UINT32 Offset, UINT8 d)
 
 void GalaxianSoundUpdateTimers()
 {
-	if (GetCurrentFrame() % 3) {
-		if (!GalNoiseEnable && GalNoiseVolume > 0) {
+	if (GalNoiseHold) {
+		GalNoiseHold--;
+	}
+	if ((GetCurrentFrame() % 0x3) == 0) {
+		if (!GalNoiseHold && GalNoiseVolume > 0) {
 			GalNoiseVolume -= (GalNoiseVolume / 10) + 1;
+			if (GalNoiseVolume <= 0) {
+				GalNoiseVolume = 0;
+				GalNoiseEnable = 0;
+			}
 		}
 	}
-	
+
 	if (GalLfoFreq > MINFREQ) {
 		GalLfoFreq -= GalLfoFreqFrameVar;
 	} else {

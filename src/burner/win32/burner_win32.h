@@ -238,6 +238,7 @@ extern int bAltPause;
 extern int bAlwaysDrawFrames;
 extern int kNetGame;
 int RunIdle();
+int RunFrame(int bDraw, int bPause);
 int RunMessageLoop();
 int RunReset();
 void ToggleLayer(unsigned char thisLayer);
@@ -264,6 +265,7 @@ void DeActivateChat();
 int BurnerLoadDriver(TCHAR *szDriverName);
 int StartFromReset(TCHAR *szDriverName);
 void PausedRedraw(void);
+INT32 is_netgame_or_recording();
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)
@@ -335,6 +337,7 @@ extern TCHAR szNeoCDGamesDir[MAX_PATH];
 
 HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img);
 HBITMAP PNGLoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset);
+HBITMAP PNGLoadBitmapBuffer(HWND hWnd, unsigned char* buffer, int bufferLength, int nWidth, int nHeight, int nPreset);
 HBITMAP LoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset);
 
 // cona.cpp
@@ -431,6 +434,7 @@ int KailleraGetInput();
 extern int nReplayStatus;
 extern bool bReplayReadOnly;
 extern bool bReplayFrameCounterDisplay;
+extern INT32 movieFlags;
 int RecordInput();
 int ReplayInput();
 int StartRecord();

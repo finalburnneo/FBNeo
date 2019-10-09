@@ -87,6 +87,7 @@ static struct BurnInputInfo CclimberInputList[] = {
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset    , "reset"    },
 	{"Dip"               , BIT_DIPSWITCH, DrvDips + 0  , "dip"      },
+	{"Dip"               , BIT_DIPSWITCH, DrvDips + 1  , "dip"      },
 };
 
 STDINPUTINFO(Cclimber)
@@ -272,6 +273,74 @@ static struct BurnDIPInfo CkongDIPList[]=
 };
 
 STDDIPINFO(Ckong)
+
+static struct BurnDIPInfo CkongbDIPList[]=
+{
+	{0x0f, 0xff, 0xff, 0x80, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0f, 0x01, 0x03, 0x00, "1"		},
+	{0x0f, 0x01, 0x03, 0x01, "2"		},
+	{0x0f, 0x01, 0x03, 0x02, "3"		},
+	{0x0f, 0x01, 0x03, 0x03, "4"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x0f, 0x01, 0x0c, 0x00, "7000"		},
+	{0x0f, 0x01, 0x0c, 0x04, "10000"		},
+	{0x0f, 0x01, 0x0c, 0x08, "15000"		},
+	{0x0f, 0x01, 0x0c, 0x0c, "20000"		},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x0f, 0x01, 0x70, 0x70, "5 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x70, 0x50, "4 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x70, 0x30, "3 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x70, 0x10, "2 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x70, 0x00, "1 Coin  1 Credits"		},
+	{0x0f, 0x01, 0x70, 0x20, "1 Coin  2 Credits"		},
+	{0x0f, 0x01, 0x70, 0x40, "1 Coin  3 Credits"		},
+	{0x0f, 0x01, 0x70, 0x60, "1 Coin  4 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0f, 0x01, 0x80, 0x80, "Upright"		},
+	{0x0f, 0x01, 0x80, 0x00, "Cocktail"		},
+};
+
+STDDIPINFO(Ckongb)
+
+static struct BurnDIPInfo Ckongb2DIPList[]=
+{
+	{0x0f, 0xff, 0xff, 0x80, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0f, 0x01, 0x03, 0x00, "2"		},
+	{0x0f, 0x01, 0x03, 0x01, "3"		},
+	{0x0f, 0x01, 0x03, 0x02, "4"		},
+	{0x0f, 0x01, 0x03, 0x03, "5"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x0f, 0x01, 0x0c, 0x00, "7000"		},
+	{0x0f, 0x01, 0x0c, 0x04, "10000"		},
+	{0x0f, 0x01, 0x0c, 0x08, "15000"		},
+	{0x0f, 0x01, 0x0c, 0x0c, "20000"		},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x0f, 0x01, 0x70, 0x70, "5 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x70, 0x50, "4 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x70, 0x30, "3 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x70, 0x10, "2 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x70, 0x00, "1 Coin  1 Credits"		},
+	{0x0f, 0x01, 0x70, 0x20, "1 Coin  2 Credits"		},
+	{0x0f, 0x01, 0x70, 0x40, "1 Coin  3 Credits"		},
+	{0x0f, 0x01, 0x70, 0x60, "1 Coin  4 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0f, 0x01, 0x80, 0x80, "Upright"		},
+	{0x0f, 0x01, 0x80, 0x00, "Cocktail"		},
+};
+
+STDDIPINFO(Ckongb2)
+
+
 
 static struct BurnInputInfo GuzzlerInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"},
@@ -564,7 +633,7 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 
 		case 0xa001:
 		case 0xa002:
-			flipscreen[address & 1] = data & 1;
+			flipscreen[address & 1] = 0; // data & 1; ignore flipscreen
 		return;
 
 		case 0xa003:
@@ -1592,26 +1661,26 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Crazy Climber (US set 1)
 
 static struct BurnRomInfo cclimberRomDesc[] = {
-	{ "cc11",		0x1000, 0x217ec4ff, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
-	{ "cc10",		0x1000, 0xb3c26cef, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "cc09",		0x1000, 0x6db0879c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "cc08",		0x1000, 0xf48c5fe3, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "cc07",		0x1000, 0x3e873baf, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "cc11",			0x1000, 0x217ec4ff, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "cc10",			0x1000, 0xb3c26cef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cc09",			0x1000, 0x6db0879c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cc08",			0x1000, 0xf48c5fe3, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "cc07",			0x1000, 0x3e873baf, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "cc06",		0x0800, 0x481b64cc, 2 | BRF_GRA },	     //  5 - Sprites & Tiles
-	{ "cc05",		0x0800, 0x2c33b760, 2 | BRF_GRA },	     //  6
-	{ "cc04",		0x0800, 0x332347cb, 2 | BRF_GRA },	     //  7
-	{ "cc03",		0x0800, 0x4e4b3658, 2 | BRF_GRA },	     //  8
+	{ "cc06",			0x0800, 0x481b64cc, 2 | BRF_GRA },	     	 //  5 - Sprites & Tiles
+	{ "cc05",			0x0800, 0x2c33b760, 2 | BRF_GRA },	     	 //  6
+	{ "cc04",			0x0800, 0x332347cb, 2 | BRF_GRA },	     	 //  7
+	{ "cc03",			0x0800, 0x4e4b3658, 2 | BRF_GRA },	     	 //  8
 
-	{ "cc02",		0x0800, 0x14f3ecc9, 3 | BRF_GRA },	     //  9 - Big Sprites
-	{ "cc01",		0x0800, 0x21c0f9fb, 3 | BRF_GRA },	     // 10
+	{ "cc02",			0x0800, 0x14f3ecc9, 3 | BRF_GRA },	     	 //  9 - Big Sprites
+	{ "cc01",			0x0800, 0x21c0f9fb, 3 | BRF_GRA },	     	 // 10
 
-	{ "cclimber.pr1", 	0x0020, 0x751c3325, 6 | BRF_GRA },	     // 11 - Color Proms
-	{ "cclimber.pr2", 	0x0020, 0xab1940fa, 6 | BRF_GRA },	     // 12
-	{ "cclimber.pr3", 	0x0020, 0x71317756, 6 | BRF_GRA },	     // 13 
+	{ "cclimber.pr1", 	0x0020, 0x751c3325, 6 | BRF_GRA },	     	 // 11 - Color Proms
+	{ "cclimber.pr2", 	0x0020, 0xab1940fa, 6 | BRF_GRA },	     	 // 12
+	{ "cclimber.pr3", 	0x0020, 0x71317756, 6 | BRF_GRA },	     	 // 13 
 
-	{ "cc13",		0x1000, 0xe0042f75, 7 | BRF_SND },	     // 14 - Samples
-	{ "cc12",		0x1000, 0x5da13aaa, 7 | BRF_SND },	     // 15
+	{ "cc13",			0x1000, 0xe0042f75, 7 | BRF_SND },	     	 // 14 - Samples
+	{ "cc12",			0x1000, 0x5da13aaa, 7 | BRF_SND },	     	 // 15
 };
 
 STD_ROM_PICK(cclimber)
@@ -1680,26 +1749,26 @@ struct BurnDriver BurnDrvCclimber = {
 // Crazy Climber (US set 2)
 
 static struct BurnRomInfo cclimberaRomDesc[] = {
-	{ "cc11",		0x1000, 0x217ec4ff, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
-	{ "10",			0x1000, 0x983d0bab, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "cc9",		0x1000, 0x6db0879c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "cc8",		0x1000, 0xf48c5fe3, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "7",			0x1000, 0xc2e06606, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "cc11",			0x1000, 0x217ec4ff, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "10",				0x1000, 0x983d0bab, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cc9",			0x1000, 0x6db0879c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cc8",			0x1000, 0xf48c5fe3, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "7",				0x1000, 0xc2e06606, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "cc6",		0x0800, 0x481b64cc, 2 | BRF_GRA },	     	 //  5 - Sprites & Tiles
-	{ "cc5",		0x0800, 0x2c33b760, 2 | BRF_GRA },	     	 //  6
-	{ "cc4",		0x0800, 0x332347cb, 2 | BRF_GRA },	     	 //  7
-	{ "cc3",		0x0800, 0x4e4b3658, 2 | BRF_GRA },	     	 //  8
+	{ "cc6",			0x0800, 0x481b64cc, 2 | BRF_GRA },	     	 //  5 - Sprites & Tiles
+	{ "cc5",			0x0800, 0x2c33b760, 2 | BRF_GRA },	     	 //  6
+	{ "cc4",			0x0800, 0x332347cb, 2 | BRF_GRA },	     	 //  7
+	{ "cc3",			0x0800, 0x4e4b3658, 2 | BRF_GRA },	     	 //  8
 
-	{ "cc2",		0x0800, 0x14f3ecc9, 3 | BRF_GRA },	     	 //  9 - Big Sprites
-	{ "cc1",		0x0800, 0x21c0f9fb, 3 | BRF_GRA },	     	 // 10
+	{ "cc2",			0x0800, 0x14f3ecc9, 3 | BRF_GRA },	     	 //  9 - Big Sprites
+	{ "cc1",			0x0800, 0x21c0f9fb, 3 | BRF_GRA },	     	 // 10
 
-	{ "cclimber.pr1", 	0x0020, 0x751c3325, 6 | BRF_GRA },	     // 11 - Color Proms
-	{ "cclimber.pr2", 	0x0020, 0xab1940fa, 6 | BRF_GRA },	     // 12
-	{ "cclimber.pr3", 	0x0020, 0x71317756, 6 | BRF_GRA },	     // 13 
+	{ "cclimber.pr1", 	0x0020, 0x751c3325, 6 | BRF_GRA },	     	 // 11 - Color Proms
+	{ "cclimber.pr2", 	0x0020, 0xab1940fa, 6 | BRF_GRA },	     	 // 12
+	{ "cclimber.pr3", 	0x0020, 0x71317756, 6 | BRF_GRA },	     	 // 13 
 
-	{ "cc13",		0x1000, 0xe0042f75, 7 | BRF_SND },	     	 // 14 - Samples
-	{ "cc12",		0x1000, 0x5da13aaa, 7 | BRF_SND },	     	 // 15
+	{ "cc13",			0x1000, 0xe0042f75, 7 | BRF_SND },	     	 // 14 - Samples
+	{ "cc12",			0x1000, 0x5da13aaa, 7 | BRF_SND },	     	 // 15
 };
 
 STD_ROM_PICK(cclimbera)
@@ -1733,26 +1802,26 @@ static INT32 cclimberjInit()
 // Crazy Climber (Japan)
 
 static struct BurnRomInfo cclimberjRomDesc[] = {
-	{ "cc11j.bin",	0x1000, 0x89783959, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
-	{ "cc10j.bin",	0x1000, 0x14eda506, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "cc09j.bin",	0x1000, 0x26489069, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "cc08j.bin",	0x1000, 0xb33c96f8, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "cc07j.bin",	0x1000, 0xfbc9626c, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "cc11j.bin",		0x1000, 0x89783959, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "cc10j.bin",		0x1000, 0x14eda506, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cc09j.bin",		0x1000, 0x26489069, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cc08j.bin",		0x1000, 0xb33c96f8, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "cc07j.bin",		0x1000, 0xfbc9626c, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "cc06",		0x0800, 0x481b64cc, 2 | BRF_GRA },	     	 //  5 - Sprites & Tiles
-	{ "cc05",		0x0800, 0x2c33b760, 2 | BRF_GRA },	     	 //  6
-	{ "cc04",		0x0800, 0x332347cb, 2 | BRF_GRA },	     	 //  7
-	{ "cc03",		0x0800, 0x4e4b3658, 2 | BRF_GRA },	     	 //  8
+	{ "cc06",			0x0800, 0x481b64cc, 2 | BRF_GRA },	     	 //  5 - Sprites & Tiles
+	{ "cc05",			0x0800, 0x2c33b760, 2 | BRF_GRA },	     	 //  6
+	{ "cc04",			0x0800, 0x332347cb, 2 | BRF_GRA },	     	 //  7
+	{ "cc03",			0x0800, 0x4e4b3658, 2 | BRF_GRA },	     	 //  8
 
-	{ "cc02",		0x0800, 0x14f3ecc9, 3 | BRF_GRA },	     	 //  9 - Big Sprites
-	{ "cc01",		0x0800, 0x21c0f9fb, 3 | BRF_GRA },	     	 // 10
+	{ "cc02",			0x0800, 0x14f3ecc9, 3 | BRF_GRA },	     	 //  9 - Big Sprites
+	{ "cc01",			0x0800, 0x21c0f9fb, 3 | BRF_GRA },	     	 // 10
 
-	{ "cclimber.pr1", 	0x0020, 0x751c3325, 6 | BRF_GRA },	     // 11 - Color Proms
-	{ "cclimber.pr2", 	0x0020, 0xab1940fa, 6 | BRF_GRA },	     // 12
-	{ "cclimber.pr3", 	0x0020, 0x71317756, 6 | BRF_GRA },	     // 13 
+	{ "cclimber.pr1", 	0x0020, 0x751c3325, 6 | BRF_GRA },	     	 // 11 - Color Proms
+	{ "cclimber.pr2", 	0x0020, 0xab1940fa, 6 | BRF_GRA },	     	 // 12
+	{ "cclimber.pr3", 	0x0020, 0x71317756, 6 | BRF_GRA },	     	 // 13 
 
-	{ "cc13j.bin",	0x1000, 0x5f0bcdfb, 7 | BRF_SND },	     	 // 14 - Samples
-	{ "cc12j.bin",	0x1000, 0x9003ffbd, 7 | BRF_SND },	     	 // 15
+	{ "cc13j.bin",		0x1000, 0x5f0bcdfb, 7 | BRF_SND },	     	 // 14 - Samples
+	{ "cc12j.bin",		0x1000, 0x9003ffbd, 7 | BRF_SND },	     	 // 15
 };
 
 STD_ROM_PICK(cclimberj)
@@ -1812,6 +1881,206 @@ struct BurnDriverD BurnDrvCkongpt2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ckongpt2RomInfo, ckongpt2RomName, NULL, NULL, NULL, NULL, CkongInputInfo, CkongDIPInfo,
+	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	224, 256, 3, 4
+};
+
+
+// Crazy Kong Part II (set 2)
+
+static struct BurnRomInfo ckongpt2aRomDesc[] = {
+	{ "7.5d",		0x1000, 0xb27df032, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "8.5e",		0x1000, 0x5dc1aaba, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "9.5h",		0x1000, 0xc9054c94, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "10.dat",		0x1000, 0xc3beb501, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "11.5l",		0x1000, 0xae159192, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "12.5n",		0x1000, 0x966bc9ab, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "6.11n",		0x1000, 0x2dcedd12, 2 | BRF_GRA }, //  6 gfx1
+	{ "5.11l",		0x1000, 0xfa7cbd91, 2 | BRF_GRA }, //  7
+	{ "4.11k",		0x1000, 0x3375b3bd, 2 | BRF_GRA }, //  8
+	{ "3.11h",		0x1000, 0x5655cc11, 2 | BRF_GRA }, //  9
+
+	{ "2.11c",		0x0800, 0xd1352c31, 3 | BRF_GRA }, // 10 gfx2
+	{ "1.11a",		0x0800, 0xa7a2fdbd, 3 | BRF_GRA }, // 11
+
+	{ "prom.v6",	0x0020, 0xb3fc1505, 6 | BRF_GRA }, // 12 proms
+	{ "prom.u6",	0x0020, 0x26aada9e, 6 | BRF_GRA }, // 13
+	{ "prom.t6",	0x0020, 0x676b3166, 6 | BRF_GRA }, // 14
+
+	{ "14.5s",		0x1000, 0x5f0bcdfb, 7 | BRF_GRA }, // 15 samples
+	{ "13.5p",		0x1000, 0x9003ffbd, 7 | BRF_GRA }, // 16
+};
+
+STD_ROM_PICK(ckongpt2a)
+STD_ROM_FN(ckongpt2a)
+
+struct BurnDriverD BurnDrvCkongpt2a = {
+	"ckongpt2a", "ckongpt2", NULL, NULL, "1981",
+	"Crazy Kong Part II (set 2)\0", NULL, "Falcon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, ckongpt2aRomInfo, ckongpt2aRomName, NULL, NULL, NULL, NULL, CkongInputInfo, CkongDIPInfo,
+	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	224, 256, 3, 4
+};
+
+
+// Crazy Kong Part II (Japan)
+
+static struct BurnRomInfo ckongpt2jRomDesc[] = {
+	{ "7.5d",		0x1000, 0xb27df032, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "8.5e",		0x1000, 0x5dc1aaba, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "9.5h",		0x1000, 0xc9054c94, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "10.dat",		0x1000, 0xc3beb501, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "11.5l",		0x1000, 0x4164eb4d, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "12.5n",		0x1000, 0x966bc9ab, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "6.11n",		0x1000, 0x2dcedd12, 2 | BRF_GRA }, //  6 gfx1
+	{ "5.11l",		0x1000, 0xfa7cbd91, 2 | BRF_GRA }, //  7
+	{ "4.11k",		0x1000, 0x3375b3bd, 2 | BRF_GRA }, //  8
+	{ "3.11h",		0x1000, 0x5655cc11, 2 | BRF_GRA }, //  9
+
+	{ "2.11c",		0x0800, 0xd1352c31, 3 | BRF_GRA }, // 10 gfx2
+	{ "1.11a",		0x0800, 0xa7a2fdbd, 3 | BRF_GRA }, // 11
+
+	{ "prom.v6",	0x0020, 0xb3fc1505, 6 | BRF_GRA }, // 12 proms
+	{ "prom.u6",	0x0020, 0x26aada9e, 6 | BRF_GRA }, // 13
+	{ "prom.t6",	0x0020, 0x676b3166, 6 | BRF_GRA }, // 14
+
+	{ "14.5s",		0x1000, 0x5f0bcdfb, 7 | BRF_GRA }, // 15 samples
+	{ "13.5p",		0x1000, 0x9003ffbd, 7 | BRF_GRA }, // 16
+};
+
+STD_ROM_PICK(ckongpt2j)
+STD_ROM_FN(ckongpt2j)
+
+struct BurnDriverD BurnDrvCkongpt2j = {
+	"ckongpt2j", "ckongpt2", NULL, NULL, "1981",
+	"Crazy Kong Part II (Japan)\0", NULL, "Falcon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, ckongpt2jRomInfo, ckongpt2jRomName, NULL, NULL, NULL, NULL, CkongInputInfo, CkongDIPInfo,
+	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	224, 256, 3, 4
+};
+
+
+// Crazy Kong Part II (Jeutel bootleg)
+
+static struct BurnRomInfo ckongpt2jeuRomDesc[] = {
+	{ "7.5d",			0x1000, 0xb27df032, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "8.5e",			0x1000, 0x5dc1aaba, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "9.5h",			0x1000, 0xc9054c94, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ckjeu10.dat",	0x1000, 0x7e6eeec4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "11.5l",			0x1000, 0xae159192, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ckjeu12.dat",	0x1000, 0x966bc9ab, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "6.11n",			0x1000, 0x2dcedd12, 2 | BRF_GRA }, //  6 gfx1
+	{ "5.11l",			0x1000, 0xfa7cbd91, 2 | BRF_GRA }, //  7
+	{ "4.11k",			0x1000, 0x3375b3bd, 2 | BRF_GRA }, //  8
+	{ "3.11h",			0x1000, 0x5655cc11, 2 | BRF_GRA }, //  9
+
+	{ "2.11c",			0x0800, 0xd1352c31, 3 | BRF_GRA }, // 10 gfx2
+	{ "1.11a",			0x0800, 0xa7a2fdbd, 3 | BRF_GRA }, // 11
+
+	{ "prom.v6",		0x0020, 0xb3fc1505, 6 | BRF_GRA }, // 12 proms
+	{ "prom.u6",		0x0020, 0x26aada9e, 6 | BRF_GRA }, // 13
+	{ "prom.t6",		0x0020, 0x676b3166, 6 | BRF_GRA }, // 14
+
+	{ "14.5s",			0x1000, 0x5f0bcdfb, 7 | BRF_GRA }, // 15 samples
+	{ "13.5p",			0x1000, 0x9003ffbd, 7 | BRF_GRA }, // 16
+};
+
+STD_ROM_PICK(ckongpt2jeu)
+STD_ROM_FN(ckongpt2jeu)
+
+struct BurnDriverD BurnDrvCkongpt2jeu = {
+	"ckongpt2jeu", "ckongpt2", NULL, NULL, "1981",
+	"Crazy Kong Part II (Jeutel bootleg)\0", NULL, "bootleg (Jeutel)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, ckongpt2jeuRomInfo, ckongpt2jeuRomName, NULL, NULL, NULL, NULL, CkongInputInfo, CkongDIPInfo,
+	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	224, 256, 3, 4
+};
+
+
+// Crazy Kong Part II (alternative levels)
+
+static struct BurnRomInfo ckongpt2bRomDesc[] = {
+	{ "d05-7.rom",		0x1000, 0x5d96ee9a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "f05-8.rom",		0x1000, 0x74a8435b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "h05-9.rom",		0x1000, 0xe06ca575, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "k05-10.rom",		0x1000, 0x46d83a11, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "l05-11.rom",		0x1000, 0x07c30f3d, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "n05-12.rom",		0x1000, 0x151de90a, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "6.11n",			0x1000, 0x2dcedd12, 2 | BRF_GRA }, //  6 gfx1
+	{ "5.11l",			0x1000, 0xfa7cbd91, 2 | BRF_GRA }, //  7
+	{ "4.11k",			0x1000, 0x3375b3bd, 2 | BRF_GRA }, //  8
+	{ "3.11h",			0x1000, 0x5655cc11, 2 | BRF_GRA }, //  9
+
+	{ "2.11c",			0x0800, 0xd1352c31, 3 | BRF_GRA }, // 10 gfx2
+	{ "1.11a",			0x0800, 0xa7a2fdbd, 3 | BRF_GRA }, // 11
+
+	{ "prom.v6",		0x0020, 0xb3fc1505, 6 | BRF_GRA }, // 12 proms
+	{ "prom.u6",		0x0020, 0x26aada9e, 6 | BRF_GRA }, // 13
+	{ "prom.t6",		0x0020, 0x676b3166, 6 | BRF_GRA }, // 14
+
+	{ "14.5s",			0x1000, 0x5f0bcdfb, 7 | BRF_GRA }, // 15 samples
+	{ "13.5p",			0x1000, 0x9003ffbd, 7 | BRF_GRA }, // 16
+};
+
+STD_ROM_PICK(ckongpt2b)
+STD_ROM_FN(ckongpt2b)
+
+struct BurnDriverD BurnDrvCkongpt2b = {
+	"ckongpt2b", "ckongpt2", NULL, NULL, "1981",
+	"Crazy Kong Part II (alternative levels)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, ckongpt2bRomInfo, ckongpt2bRomName, NULL, NULL, NULL, NULL, CkongInputInfo, CkongbDIPInfo,
+	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	224, 256, 3, 4
+};
+
+
+// Crazy Kong Part II (bootleg)
+
+static struct BurnRomInfo ckongpt2b2RomDesc[] = {
+	{ "0.bin",		0x1000, 0x1c21386f, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "1.bin",		0x1000, 0x5dc1aaba, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.bin",		0x1000, 0xc9054c94, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.bin",		0x1000, 0x84903b9d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "4.bin",		0x1000, 0xae159192, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "5.bin",		0x1000, 0x966bc9ab, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "d.bin",		0x1000, 0x2dcedd12, 2 | BRF_GRA }, //  6 gfx1
+	{ "c.bin",		0x1000, 0xfa7cbd91, 2 | BRF_GRA }, //  7
+	{ "b.bin",		0x1000, 0x3375b3bd, 2 | BRF_GRA }, //  8
+	{ "a.bin",		0x1000, 0x5655cc11, 2 | BRF_GRA }, //  9
+
+	{ "9.bin",		0x0800, 0xd1352c31, 3 | BRF_GRA }, // 10 gfx2
+	{ "8.bin",		0x0800, 0xa7a2fdbd, 3 | BRF_GRA }, // 11
+
+	{ "prom.bin",	0x0020, 0xd3b84067, 6 | BRF_GRA }, // 12 proms
+	{ "prom.t6",	0x0020, 0x26aada9e, 6 | BRF_GRA }, // 13
+	{ "prom.u6",	0x0020, 0x676b3166, 6 | BRF_GRA }, // 14
+	
+	{ "14.5s",		0x1000, 0x5f0bcdfb, 7 | BRF_GRA }, // 15 samples
+	{ "13.5p",		0x1000, 0x9003ffbd, 7 | BRF_GRA }, // 16
+};
+
+STD_ROM_PICK(ckongpt2b2)
+STD_ROM_FN(ckongpt2b2)
+
+struct BurnDriverD BurnDrvCkongpt2b2 = {
+	"ckongpt2b2", "ckongpt2", NULL, NULL, "1981",
+	"Crazy Kong Part II (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, ckongpt2b2RomInfo, ckongpt2b2RomName, NULL, NULL, NULL, NULL, CkongInputInfo, Ckongb2DIPInfo,
 	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
 };
@@ -2130,6 +2399,15 @@ static INT32 rpatrolInit()
 	return rc;
 }
 
+static INT32 rpatrolnInit()
+{
+	game_select = 1;
+	uses_sub = 0;
+	gfx0_cont800 = 1;
+
+	return DrvInit();
+}
+
 static INT32 rpatrolbInit()
 {
 	game_select = 1;
@@ -2147,7 +2425,7 @@ static INT32 silvlandInit()
 	return DrvInit();
 }
 
-// River Patrol (Orca)
+// River Patrol (Japan)
 
 static struct BurnRomInfo rpatrolRomDesc[] = {
 	{ "1.1h",		0x1000, 0x065197f0, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -2172,11 +2450,46 @@ STD_ROM_FN(rpatrol)
 
 struct BurnDriver BurnDrvRpatrol = {
 	"rpatrol", NULL, NULL, NULL, "1981",
-	"River Patrol (Orca)\0", NULL, "Orca", "Miscellaneous",
+	"River Patrol (Japan)\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, rpatrolRomInfo, rpatrolRomName, NULL, NULL, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
 	rpatrolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+
+// River Patrol (Japan, unprotected)
+/* located original ORCA OVG-51A PCB */
+
+static struct BurnRomInfo rpatrolnRomDesc[] = {
+	{ "1_2.3k",		0x1000, 0x33b01c90, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2_2.3l",		0x1000, 0x03f53340, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3_2.3n",		0x1000, 0x8fa300df, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4_2.3p",		0x1000, 0x74a8f1f4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5_2.3r",		0x1000, 0xd7ef6c87, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "6.6l.2732",	0x1000, 0xb38d8aca, 2 | BRF_GRA },           //  5 gfx1
+	{ "7.6p.2732",	0x1000, 0xbc2bddf9, 2 | BRF_GRA },           //  6
+
+	{ "9.2t",		0x0800, 0x065651a5, 3 | BRF_GRA },           //  7 gfx2
+	{ "8.2s",		0x0800, 0x59747c31, 3 | BRF_GRA },           //  8
+
+	{ "mb7051.1b",	0x0020, 0xf9a2383b, 6 | BRF_GRA },           //  9 proms
+	{ "mb7051.1c",	0x0020, 0x1743bd26, 6 | BRF_GRA },           // 10
+	{ "mb7051.1u",	0x0020, 0xee03bc96, 6 | BRF_GRA },           // 11
+};
+
+STD_ROM_PICK(rpatroln)
+STD_ROM_FN(rpatroln)
+
+struct BurnDriver BurnDrvRpatroln = {
+	"rpatroln", "rpatrol", NULL, NULL, "1981",
+	"River Patrol (Japan, unprotected)\0", NULL, "Orca", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, rpatrolnRomInfo, rpatrolnRomName, NULL, NULL, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
+	rpatrolnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 

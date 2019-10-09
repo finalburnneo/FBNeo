@@ -583,10 +583,39 @@ STD_ROM_FN(pktgaldxj)
 
 struct BurnDriver BurnDrvPktgaldxj = {
 	"pktgaldxj", "pktgaldx", NULL, NULL, "1993",
-	"Pocket Gal Deluxe (Japan v3.00)\0", NULL, "Nihon System", "DECO IC16",
+	"Pocket Gal Deluxe (Japan v3.00)\0", NULL, "Data East Corporation (Nihon System license)", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, pktgaldxjRomInfo, pktgaldxjRomName, NULL, NULL, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Pocket Gal Deluxe (Asia v3.00)
+
+static struct BurnRomInfo pktgaldxaRomDesc[] = {
+	{ "rom.12a",		0x080000, 0xc4c7cc68, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+
+	{ "maz-02.2h",		0x100000, 0xc9d35a59, 2 | BRF_GRA },           //  1 Character and Background Tiles
+
+	{ "maz-00.1b",		0x080000, 0xfa3071f4, 3 | BRF_GRA },           //  2 Sprites
+	{ "maz-01.3b",		0x080000, 0x4934fe21, 3 | BRF_GRA },           //  3
+
+	{ "ke01.14f",		0x020000, 0x8a106263, 4 | BRF_SND },           //  4 OKI M6295 Sample 0
+
+	{ "maz-03.13f",		0x100000, 0xa313c964, 5 | BRF_SND },           //  5 OKI M6295 Sample 1
+};
+
+STD_ROM_PICK(pktgaldxa)
+STD_ROM_FN(pktgaldxa)
+
+struct BurnDriver BurnDrvPktgaldxa = {
+	"pktgaldxa", "pktgaldx", NULL, NULL, "1993",
+	"Pocket Gal Deluxe (Asia v3.00)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	NULL, pktgaldxaRomInfo, pktgaldxaRomName, NULL, NULL, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

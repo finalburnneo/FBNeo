@@ -5383,6 +5383,40 @@ struct BurnDriver BurnDrvPangpomsm = {
 };
 
 
+// Pang Pom's (Nova)
+
+static struct BurnRomInfo pangpomsnRomDesc[] = {
+	{ "pn_e_09.9.f7",		0x020000, 0x2cc925aa, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "pn_e_10.10.f8",		0x020000, 0x6d7ad1d2, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "pj_a12.12.a7",		0x020000, 0xa749357b, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+
+	{ "pj_e_02.i7",			0x020000, 0x88f902f7, 3 | BRF_GRA },           //  3 Graphics
+	{ "pj_e_04.i10",		0x020000, 0x54bf2f10, 3 | BRF_GRA },           //  4
+	{ "pj_e_06.i13",		0x020000, 0xc8b6347d, 3 | BRF_GRA },           //  5
+	{ "pj_e_08.i16",		0x020000, 0x9a3408b9, 3 | BRF_GRA },           //  6
+	{ "pj_e_01.i6",			0x020000, 0x11ac3810, 3 | BRF_GRA },           //  7
+	{ "pj_e_03.i9",			0x020000, 0xd126e774, 3 | BRF_GRA },           //  8
+	{ "pj_e_05.i12",		0x020000, 0x79c0ec1e, 3 | BRF_GRA },           //  9
+	{ "pj_e_07.i14",		0x020000, 0x48471c87, 3 | BRF_GRA },           // 10
+
+	{ "pj_a11.11.e1",		0x020000, 0xe89bd565, 4 | BRF_SND },           // 11 MSM6295 Samples
+};
+
+STD_ROM_PICK(pangpomsn)
+STD_ROM_FN(pangpomsn)
+
+struct BurnDriver BurnDrvPangpomsn = {
+	"pangpomsn", "pangpoms", NULL, NULL, "1992",
+	"Pang Pom's (Nova)\0", NULL, "Nova", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, pangpomsnRomInfo, pangpomsnRomName, NULL, NULL, NULL, NULL, SkyalertInputInfo, PangpomsDIPInfo,
+	pangpomsInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	360, 224, 4, 3
+};
+
+
 // Poitto!
 
 static struct BurnRomInfo poittoRomDesc[] = {
@@ -5413,7 +5447,8 @@ struct BurnDriver BurnDrvPoitto = {
 };
 
 
-// Last Fortress - Toride
+// Last Fortress - Toride (Japan, VG420 PCB)
+/* Japanese version on PCB VG420 */
 
 static struct BurnRomInfo lastfortRomDesc[] = {
 	{ "tr_jc09",			0x020000, 0x8b98a49a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -5438,11 +5473,42 @@ STD_ROM_FN(lastfort)
 
 struct BurnDriver BurnDrvLastfort = {
 	"lastfort", NULL, NULL, NULL, "1994",
-	"Last Fortress - Toride\0", NULL, "Metro", "Miscellaneous",
+	"Last Fortress - Toride (Japan, VG420 PCB)\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, lastfortRomInfo, lastfortRomName, NULL, NULL, NULL, NULL, SkyalertInputInfo, LastfortDIPInfo,
 	lastfortInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	360, 224, 4, 3
+};
+
+
+// Last Fortress - Toride (Japan, VG460 PCB)
+/* Japanese version on PCB VG460-(A) */
+
+static struct BurnRomInfo lastfortjRomDesc[] = {
+	{ "tr_mja2.8g",			0x020000, 0x4059a8c8, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tr_mja3.10g",		0x020000, 0x8fc6ddcd, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "tr_ma01.1i",			0x020000, 0x8a8f5fef, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+
+	{ "tr_ma04.15f",		0x080000, 0x5feafc6f, 3 | BRF_GRA },           //  3 Graphics
+	{ "tr_ma07.17d",		0x080000, 0x7519d569, 3 | BRF_GRA },           //  4
+	{ "tr_ma05.17f",		0x080000, 0x5d917ba5, 3 | BRF_GRA },           //  5
+	{ "tr_ma06.15d",		0x080000, 0xd366c04e, 3 | BRF_GRA },           //  6
+
+	{ "tr_ma08.1d",			0x020000, 0x83786a09, 4 | BRF_SND },           //  7 MSM6295 Samples
+};
+
+STD_ROM_PICK(lastfortj)
+STD_ROM_FN(lastfortj)
+
+struct BurnDriver BurnDrvLastfortj = {
+	"lastfortj", "lastfort", NULL, NULL, "1994",
+	"Last Fortress - Toride (Japan, VG460 PCB)\0", NULL, "Metro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
+	NULL, lastfortjRomInfo, lastfortjRomName, NULL, NULL, NULL, NULL, LadykillInputInfo, LadykillDIPInfo,
+	lastforgInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	360, 224, 4, 3
 };
 

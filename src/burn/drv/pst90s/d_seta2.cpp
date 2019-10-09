@@ -1044,135 +1044,150 @@ STD_ROM_PICK(gundamex)
 STD_ROM_FN(gundamex)
 
 static struct BurnRomInfo deerhuntRomDesc[] = {
-	{ "as0906e05.u06",	0x100000, 0x20c81f17, 1 }, //  0 68000 code
-	{ "as0907e05.u07",	0x100000, 0x1731aa2a, 1 }, //  1
+	{ "as0906_e05_u6_694e.u06",	0x100000, 0x20c81f17, 1 }, //  0 68000 code
+	{ "as0907_e05_u7_5d89.u07",	0x100000, 0x1731aa2a, 1 }, //  1
 
-	{ "as0901m01.u38",	0x800000, 0x1d6acf8f, 2 }, //  2 GFX
-	{ "as0902m01.u39",	0x800000, 0xc7ca2128, 2 }, //  3
-	{ "as0903m01.u40",	0x800000, 0xe8ef81b3, 2 }, //  4
-	{ "as0904m01.u41",	0x800000, 0xd0f97fdc, 2 }, //  5
+	{ "as0901m01.u38",			0x800000, 0x1d6acf8f, 2 }, //  2 GFX
+	{ "as0902m01.u39",			0x800000, 0xc7ca2128, 2 }, //  3
+	{ "as0903m01.u40",			0x800000, 0xe8ef81b3, 2 }, //  4
+	{ "as0904m01.u41",			0x800000, 0xd0f97fdc, 2 }, //  5
 
-	{ "as0905m01.u18",	0x400000, 0x8d8165bb, 3 }, //  6 PCM
+	{ "as0905m01.u18",			0x400000, 0x8d8165bb, 3 }, //  6 PCM
 };
 
 STD_ROM_PICK(deerhunt)
 STD_ROM_FN(deerhunt)
 
 static struct BurnRomInfo deerhunaRomDesc[] = {
-	{ "as0906e04-v4_2.u06",	0x100000, 0xbb3af36f, 1 }, //  0 68000 code
-	{ "as0907e04-v4_2.u07",	0x100000, 0x83f02117, 1 }, //  1
+	{ "as0906_e04_u6_6640.u06",	0x100000, 0xbb3af36f, 1 }, //  0 68000 code
+	{ "as0907_e04_u7_595a.u07",	0x100000, 0x83f02117, 1 }, //  1
 
-	{ "as0901m01.u38",	0x800000, 0x1d6acf8f, 2 }, //  2 GFX
-	{ "as0902m01.u39",	0x800000, 0xc7ca2128, 2 }, //  3
-	{ "as0903m01.u40",	0x800000, 0xe8ef81b3, 2 }, //  4
-	{ "as0904m01.u41",	0x800000, 0xd0f97fdc, 2 }, //  5
+	{ "as0901m01.u38",			0x800000, 0x1d6acf8f, 2 }, //  2 GFX
+	{ "as0902m01.u39",			0x800000, 0xc7ca2128, 2 }, //  3
+	{ "as0903m01.u40",			0x800000, 0xe8ef81b3, 2 }, //  4
+	{ "as0904m01.u41",			0x800000, 0xd0f97fdc, 2 }, //  5
 
-	{ "as0905m01.u18",	0x400000, 0x8d8165bb, 3 }, //  6 PCM
+	{ "as0905m01.u18",			0x400000, 0x8d8165bb, 3 }, //  6 PCM
 };
 
 STD_ROM_PICK(deerhuna)
 STD_ROM_FN(deerhuna)
 
 static struct BurnRomInfo deerhunbRomDesc[] = {
-	{ "as0906e04.u06",	0x100000, 0x07d9b64a, 1 }, //  0 68000 code
-	{ "as0907e04.u07",	0x100000, 0x19973d08, 1 }, //  1
+	{ "as_0906_e04.u06",	0x100000, 0x07d9b64a, 1 }, //  0 68000 code
+	{ "as_0907_e04.u07",	0x100000, 0x19973d08, 1 }, //  1
 
-	{ "as0901m01.u38",	0x800000, 0x1d6acf8f, 2 }, //  2 GFX
-	{ "as0902m01.u39",	0x800000, 0xc7ca2128, 2 }, //  3
-	{ "as0903m01.u40",	0x800000, 0xe8ef81b3, 2 }, //  4
-	{ "as0904m01.u41",	0x800000, 0xd0f97fdc, 2 }, //  5
+	{ "as0901m01.u38",		0x800000, 0x1d6acf8f, 2 }, //  2 GFX
+	{ "as0902m01.u39",		0x800000, 0xc7ca2128, 2 }, //  3
+	{ "as0903m01.u40",		0x800000, 0xe8ef81b3, 2 }, //  4
+	{ "as0904m01.u41",		0x800000, 0xd0f97fdc, 2 }, //  5
 
-	{ "as0905m01.u18",	0x400000, 0x8d8165bb, 3 }, //  6 PCM
+	{ "as0905m01.u18",		0x400000, 0x8d8165bb, 3 }, //  6 PCM
 };
 
 STD_ROM_PICK(deerhunb)
 STD_ROM_FN(deerhunb)
 
 static struct BurnRomInfo deerhuncRomDesc[] = {
-	{ "as0937e01.u06",	0x100000, 0x8d74088e, 1 }, //  0 68000 code
-	{ "as0938e01.u07",	0x100000, 0xc7657889, 1 }, //  1
+	{ "as_0937_e01.u06",	0x100000, 0x8d74088e, 1 }, //  0 68000 code
+	{ "as_0938_e01.u07",	0x100000, 0xc7657889, 1 }, //  1
 
-	{ "as0901m01.u38",	0x800000, 0x1d6acf8f, 2 }, //  2 GFX
-	{ "as0902m01.u39",	0x800000, 0xc7ca2128, 2 }, //  3
-	{ "as0903m01.u40",	0x800000, 0xe8ef81b3, 2 }, //  4
-	{ "as0904m01.u41",	0x800000, 0xd0f97fdc, 2 }, //  5
+	{ "as0901m01.u38",		0x800000, 0x1d6acf8f, 2 }, //  2 GFX
+	{ "as0902m01.u39",		0x800000, 0xc7ca2128, 2 }, //  3
+	{ "as0903m01.u40",		0x800000, 0xe8ef81b3, 2 }, //  4
+	{ "as0904m01.u41",		0x800000, 0xd0f97fdc, 2 }, //  5
 
-	{ "as0905m01.u18",	0x400000, 0x8d8165bb, 3 }, //  6 PCM
+	{ "as0905m01.u18",		0x400000, 0x8d8165bb, 3 }, //  6 PCM
 };
 
 STD_ROM_PICK(deerhunc)
 STD_ROM_FN(deerhunc)
 
 static struct BurnRomInfo deerhundRomDesc[] = {
-	{ "as0906e02.u06",	0x100000, 0x190cca42, 1 }, //  0 68000 code
-	{ "as0907e02.u07",	0x100000, 0x9de2b901, 1 }, //  1
+	{ "as_0906_e02.u06",	0x100000, 0x190cca42, 1 }, //  0 68000 code
+	{ "as_0907_e02.u07",	0x100000, 0x9de2b901, 1 }, //  1
 
-	{ "as0901m01.u38",	0x800000, 0x1d6acf8f, 2 }, //  2 GFX
-	{ "as0902m01.u39",	0x800000, 0xc7ca2128, 2 }, //  3
-	{ "as0903m01.u40",	0x800000, 0xe8ef81b3, 2 }, //  4
-	{ "as0904m01.u41",	0x800000, 0xd0f97fdc, 2 }, //  5
+	{ "as0901m01.u38",		0x800000, 0x1d6acf8f, 2 }, //  2 GFX
+	{ "as0902m01.u39",		0x800000, 0xc7ca2128, 2 }, //  3
+	{ "as0903m01.u40",		0x800000, 0xe8ef81b3, 2 }, //  4
+	{ "as0904m01.u41",		0x800000, 0xd0f97fdc, 2 }, //  5
 
-	{ "as0905m01.u18",	0x400000, 0x8d8165bb, 3 }, //  6 PCM
+	{ "as0905m01.u18",		0x400000, 0x8d8165bb, 3 }, //  6 PCM
 };
 
 STD_ROM_PICK(deerhund)
 STD_ROM_FN(deerhund)
 
 static struct BurnRomInfo deerhuneRomDesc[] = {
-	{ "as0906e01.u06",	0x100000, 0x103e3ba3, 1 }, //  0 68000 code
-	{ "as0907e01.u07",	0x100000, 0xddeb0f97, 1 }, //  1
+	{ "as_0906_e01.u06",	0x100000, 0x103e3ba3, 1 }, //  0 68000 code
+	{ "as_0907_e01.u07",	0x100000, 0xddeb0f97, 1 }, //  1
 
-	{ "as0901m01.u38",	0x800000, 0x1d6acf8f, 2 }, //  2 GFX
-	{ "as0902m01.u39",	0x800000, 0xc7ca2128, 2 }, //  3
-	{ "as0903m01.u40",	0x800000, 0xe8ef81b3, 2 }, //  4
-	{ "as0904m01.u41",	0x800000, 0xd0f97fdc, 2 }, //  5
+	{ "as0901m01.u38",		0x800000, 0x1d6acf8f, 2 }, //  2 GFX
+	{ "as0902m01.u39",		0x800000, 0xc7ca2128, 2 }, //  3
+	{ "as0903m01.u40",		0x800000, 0xe8ef81b3, 2 }, //  4
+	{ "as0904m01.u41",		0x800000, 0xd0f97fdc, 2 }, //  5
 
-	{ "as0905m01.u18",	0x400000, 0x8d8165bb, 3 }, //  6 PCM
+	{ "as0905m01.u18",		0x400000, 0x8d8165bb, 3 }, //  6 PCM
 };
 
 STD_ROM_PICK(deerhune)
 STD_ROM_FN(deerhune)
 
+static struct BurnRomInfo deerhunjRomDesc[] = {
+	{ "as0_908e01_u6_jdh.u06",	0x100000, 0x52f037da, 1 }, //  0 68000 code
+	{ "as0_909e01_u7_jdh.u07",	0x100000, 0xb391bc87, 1 }, //  1
+
+	{ "as0901m01.u38",		0x800000, 0x1d6acf8f, 2 }, //  2 GFX
+	{ "as0902m01.u39",		0x800000, 0xc7ca2128, 2 }, //  3
+	{ "as0903m01.u40",		0x800000, 0xe8ef81b3, 2 }, //  4
+	{ "as0904m01.u41",		0x800000, 0xd0f97fdc, 2 }, //  5
+
+	{ "as0905m01.u18",		0x400000, 0x8d8165bb, 3 }, //  6 PCM
+};
+
+STD_ROM_PICK(deerhunj)
+STD_ROM_FN(deerhunj)
+
 static struct BurnRomInfo turkhuntRomDesc[] = {
-	{ "asx906e01.u06",	0x100000, 0xc96266e1, 1 }, //  0 68000 code
-	{ "asx907e01.u07",	0x100000, 0x7c67b502, 1 }, //  1
+	{ "asx_906e01_th.u06",	0x100000, 0xc96266e1, 1 }, //  0 68000 code
+	{ "asx_907e01_th.u07",	0x100000, 0x7c67b502, 1 }, //  1
 
-	{ "asx901m01.u38",	0x800000, 0xeabd3f44, 2 }, //  2 GFX
-	{ "asx902m01.u39",	0x800000, 0xc32130c8, 2 }, //  3
-	{ "asx903m01.u40",	0x800000, 0x5f86c322, 2 }, //  4
-	{ "asx904m01.u41",	0x800000, 0xc77e0b66, 2 }, //  5
+	{ "asx901m01.u38",		0x800000, 0xeabd3f44, 2 }, //  2 GFX
+	{ "asx902m01.u39",		0x800000, 0xc32130c8, 2 }, //  3
+	{ "asx903m01.u40",		0x800000, 0x5f86c322, 2 }, //  4
+	{ "asx904m01.u41",		0x800000, 0xc77e0b66, 2 }, //  5
 
-	{ "asx905m01.u18",	0x400000, 0x8d9dd9a9, 3 }, //  6 PCM
+	{ "asx905m01.u18",		0x400000, 0x8d9dd9a9, 3 }, //  6 PCM
 };
 
 STD_ROM_PICK(turkhunt)
 STD_ROM_FN(turkhunt)
 
 static struct BurnRomInfo wschampRomDesc[] = {
-	{ "as1006e03.u06",	0x100000, 0x0ad01677, 1 }, //  0 68000 code
-	{ "as1007e03.u07",	0x100000, 0x572624f0, 1 }, //  1
+	{ "as_1006_e03.u06",	0x100000, 0x0ad01677, 1 }, //  0 68000 code
+	{ "as_1007_e03.u07",	0x100000, 0x572624f0, 1 }, //  1
 
-	{ "as1001m01.u38",	0x800000, 0x92595579, 2 }, //  2 GFX
-	{ "as1002m01.u39",	0x800000, 0x16c2bb08, 2 }, //  3
-	{ "as1003m01.u40",	0x800000, 0x89618858, 2 }, //  4
-	{ "as1004m01.u41",	0x800000, 0x500c0909, 2 }, //  5
+	{ "as1001m01.u38",		0x800000, 0x92595579, 2 }, //  2 GFX
+	{ "as1002m01.u39",		0x800000, 0x16c2bb08, 2 }, //  3
+	{ "as1003m01.u40",		0x800000, 0x89618858, 2 }, //  4
+	{ "as1004m01.u41",		0x800000, 0x500c0909, 2 }, //  5
 
-	{ "as1005m01.u18",	0x400000, 0xe4b137b8, 3 }, //  6 PCM
+	{ "as1005m01.u18",		0x400000, 0xe4b137b8, 3 }, //  6 PCM
 };
 
 STD_ROM_PICK(wschamp)
 STD_ROM_FN(wschamp)
 
 static struct BurnRomInfo wschampaRomDesc[] = {
-	{ "as1006e02.u06",	0x100000, 0xd3d3b2b5, 1 }, //  0 68000 code
-	{ "as1007e02.u07",	0x100000, 0x78ede6d9, 1 }, //  1
+	{ "as_1006_e02.u06",	0x100000, 0xd3d3b2b5, 1 }, //  0 68000 code
+	{ "as_1007_e02.u07",	0x100000, 0x78ede6d9, 1 }, //  1
 
-	{ "as1001m01.u38",	0x800000, 0x92595579, 2 }, //  2 GFX
-	{ "as1002m01.u39",	0x800000, 0x16c2bb08, 2 }, //  3
-	{ "as1003m01.u40",	0x800000, 0x89618858, 2 }, //  4
-	{ "as1004m01.u41",	0x800000, 0x500c0909, 2 }, //  5
+	{ "as1001m01.u38",		0x800000, 0x92595579, 2 }, //  2 GFX
+	{ "as1002m01.u39",		0x800000, 0x16c2bb08, 2 }, //  3
+	{ "as1003m01.u40",		0x800000, 0x89618858, 2 }, //  4
+	{ "as1004m01.u41",		0x800000, 0x500c0909, 2 }, //  5
 
-	{ "as1005m01.u18",	0x400000, 0xe4b137b8, 3 }, //  6 PCM
+	{ "as1005m01.u18",		0x400000, 0xe4b137b8, 3 }, //  6 PCM
 };
 
 STD_ROM_PICK(wschampa)
@@ -1194,15 +1209,15 @@ STD_ROM_PICK(wschampb)
 STD_ROM_FN(wschampb)
 
 static struct BurnRomInfo trophyhRomDesc[] = {
-	{ "as1106e01.u06",	0x100000, 0xb4950882, 1 }, //  0 68000 code
-	{ "as1107e01.u07",	0x100000, 0x19ee67cb, 1 }, //  1
+	{ "as_1106_e01.u06",	0x100000, 0xb4950882, 1 }, //  0 68000 code
+	{ "as_1107_e01.u07",	0x100000, 0x19ee67cb, 1 }, //  1
 
-	{ "as1101m01.u38",	0x800000, 0x855ed675, 2 }, //  2 GFX
-	{ "as1102m01.u39",	0x800000, 0xd186d271, 2 }, //  3
-	{ "as1103m01.u40",	0x800000, 0xadf8a54e, 2 }, //  4
-	{ "as1104m01.u41",	0x800000, 0x387882e9, 2 }, //  5
+	{ "as1101m01.u38",		0x800000, 0x855ed675, 2 }, //  2 GFX
+	{ "as1102m01.u39",		0x800000, 0xd186d271, 2 }, //  3
+	{ "as1103m01.u40",		0x800000, 0xadf8a54e, 2 }, //  4
+	{ "as1104m01.u41",		0x800000, 0x387882e9, 2 }, //  5
 
-	{ "as1105m01.u18",	0x400000, 0x633d0df8, 3 }, //  6 PCM
+	{ "as1105m01.u18",		0x400000, 0x633d0df8, 3 }, //  6 PCM
 };
 
 STD_ROM_PICK(trophyh)
@@ -3451,6 +3466,16 @@ struct BurnDriver BurnDrvDeerhune = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhuneRomInfo, deerhuneRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvDeerhunj = {
+	"deerhuntj", "deerhunt", NULL, NULL, "2000",
+	"Deer Hunting USA V4.4.1 (Japan)\0", NULL, "Sammy USA Corporation", "Newer Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
+	NULL, deerhunjRomInfo, deerhunjRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
 	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };

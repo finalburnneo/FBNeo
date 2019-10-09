@@ -1808,7 +1808,7 @@ static struct BurnRomInfo RbislandeRomDesc[] = {
 	{ "b22-12.7",      0x10000, 0x67a76dc6, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "b22-13.6",      0x10000, 0x2fda099f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 
-	{ "fake_cchip_b39-05.53", 0x02000, 0x935d805a, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
+	{ "cchip_b39-05.53", 0x02000, 0x397735e3, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
 STDROMPICKEXT(Rbislande, Rbislande, cchip)
@@ -2531,11 +2531,7 @@ static void TaitoMiscCpuAReset(UINT16 d)
 {
 	TaitoCpuACtrl = d;
 	if (!(TaitoCpuACtrl & 1)) {
-		SekClose();
-		SekOpen(1);
-		SekReset();
-		SekClose();
-		SekOpen(0);
+		SekReset(1);
 	}
 }
 

@@ -102,6 +102,8 @@ static void make_raw(UINT8 *src, UINT32 len)
 		memset(buffer_l, 0, sizeof(buffer_l));
 		memset(buffer_r, 0, sizeof(buffer_r));
 
+#if 0
+		// this block causes clicks when the sample loops, disable for now
 		if (sample_ptr->flags & SAMPLE_AUTOLOOP)
 		{
 			UINT8* end = sample_ptr->data + data_length / (bits * channels);
@@ -127,7 +129,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 				buffer_r[3] = (INT16)(get_shorti(end - 2 * channels) + (channels & 2));
 			}
 		}
-
+#endif
 		UINT64 prev_offs = ~0;
 
 		for (UINT64 i = 0; i < converted_len; i++)
@@ -247,10 +249,14 @@ INT32 BurnSampleGetStatus(INT32 sample)
 {
 	// this is also used to see if samples initialized and/or the game has samples.
 
-	if (sample >= nTotalSamples) return -1;
+	if (sample >= nTotalSamples) return SAMPLE_INVALID;
 
 	sample_ptr = &samples[sample];
-	return (sample_ptr->playing);
+
+	if (!sample_ptr->playing && sample_ptr->position)
+		return SAMPLE_PAUSED;
+
+	return (sample_ptr->playing) ? SAMPLE_PLAYING : SAMPLE_STOPPED;
 }
 
 INT32 BurnSampleGetPosition(INT32 sample)
@@ -401,6 +407,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 			sample_ptr->flags = si.nFlags;
 			bprintf(0, _T("Loading \"%S\": "), szSampleName);
 			make_raw((UINT8*)destination, length);
+			free(destination); // ZipLoadOneFile uses malloc()
 		} else {
 			sample_ptr->flags = SAMPLE_IGNORE;
 		}
@@ -410,8 +417,6 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->playback_rate = 100;
-
-		BurnFree (destination);
 
 		BurnSetProgressRange(1.0 / nTotalSamples);
 		BurnUpdateProgress((double)1.0 / i * nTotalSamples, _T("Loading samples..."), 0);
@@ -482,7 +487,7 @@ void BurnSampleInitOne(INT32 sample)
 		make_raw((UINT8*)destination, length);
 	}
 
-	BurnFree (destination);
+	free(destination); // ZipLoadOneFile uses malloc()
 }
 
 void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir)

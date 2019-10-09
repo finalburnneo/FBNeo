@@ -86,7 +86,7 @@ static int LocaliseDownloadOkay()
 	ofn.lpstrFilter = szFilter;
 	ofn.lpstrFile = szChoice;
 	ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
-	ofn.lpstrInitialDir = _T(".");
+	ofn.lpstrInitialDir = _T(".\\config\\localisation");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("dat");
 	ofn.lpstrTitle = szTitle;

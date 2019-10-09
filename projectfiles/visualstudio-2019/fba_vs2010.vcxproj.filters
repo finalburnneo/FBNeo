@@ -994,6 +994,15 @@
     <ClInclude Include="..\..\src\burn\devices\midtcs.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\snd\s14001a.h">
+      <Filter>Burn\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\seibucop.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\drv\sega\fd1094_intf.h">
+      <Filter>Burn\drv\sega</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -3561,6 +3570,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_thepit.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_thief.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_timelimt.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
@@ -4085,6 +4097,36 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\snes\snes_dsp.cpp">
       <Filter>Burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\s14001a.cpp">
+      <Filter>Burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\seibucop.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_kingofbox.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\atari\d_akkaarrh.cpp">
+      <Filter>Burn\drv\atari</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp">
+      <Filter>Burn\drv\sega</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp">
+      <Filter>Burn\drv\sega</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -259,9 +259,7 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	SekOpen(0);
-	SekReset();
-	SekClose();
+	SekReset(0);
 
 	ZetOpen(0);
 	ZetReset();

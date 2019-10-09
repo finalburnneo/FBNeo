@@ -515,6 +515,41 @@ static struct BurnRomInfo AmazonRomDesc[] = {
 STD_ROM_PICK(Amazon)
 STD_ROM_FN(Amazon)
 
+static struct BurnRomInfo AmazontRomDesc[] = {
+	/* Found a on Tecfri TC-1A and TC-2A boardset */
+	{ "5.4d",          0x08000, 0xae39432f, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "7.4b",          0x08000, 0xa74cdcea, BRF_ESS | BRF_PRG },	//  1
+	{ "4.6d",          0x08000, 0x0c6b0772, BRF_ESS | BRF_PRG },	//  2
+	{ "6.6b",          0x08000, 0xedbaad3f, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "1.15b",         0x04000, 0x55a8b5e7, BRF_ESS | BRF_PRG },	//  4	Z80 Program Code
+	{ "2.17b",         0x04000, 0x427a7cca, BRF_ESS | BRF_PRG },	//  5
+	{ "3.18b",         0x04000, 0xb8cceaf7, BRF_ESS | BRF_PRG },	//  6
+	
+	{ "8.16g",         0x02000, 0x0cec8644, BRF_GRA },				//  7	Chars
+	
+	{ "13.15f",        0x08000, 0x415ff4d9, BRF_GRA },				//  8	Tiles
+	{ "14.17f",        0x08000, 0x492b5c48, BRF_GRA },				//  9
+	{ "15.18f",        0x08000, 0xb1ac0b9d, BRF_GRA },				// 10
+	
+	{ "4.6e",          0x04000, 0xf77ced7a, BRF_GRA },				// 11	Sprites
+	{ "5.7e",          0x04000, 0x16ef1465, BRF_GRA },				// 12
+	{ "6.6g",          0x04000, 0x936ec941, BRF_GRA },				// 13
+	{ "7.7g",          0x04000, 0x66dd718e, BRF_GRA },				// 14
+	
+	{ "clr.10f",       0x00100, 0x6440b341, BRF_GRA },				// 15	PROMs
+	{ "clr.11f",       0x00100, 0x271e947f, BRF_GRA },				// 16
+	{ "clr.12f",       0x00100, 0x7d38621b, BRF_GRA },				// 17
+	{ "2g",            0x00100, 0x44ca16b9, BRF_GRA },				// 18
+	
+	{ "4e",            0x00100, 0x035f2c7b, BRF_GRA },				// 19	Sprite Palette Bank
+	
+	{ "16.18g",        0x02000, 0x1d8d592b, BRF_OPT },				// 20	Unknown
+};
+
+STD_ROM_PICK(Amazont)
+STD_ROM_FN(Amazont)
+
 static struct BurnRomInfo AmatelasRomDesc[] = {
 	{ "a11.4d",        0x08000, 0x3d226d0b, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "a9.4b",         0x08000, 0xe2a0d21d, BRF_ESS | BRF_PRG },	//  1
@@ -1850,6 +1885,16 @@ struct BurnDriver BurnDrvAmazon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, AmazonRomInfo, AmazonRomName, NULL, NULL, NULL, NULL, AmazonInputInfo, AmazonDIPInfo,
+	AmazonInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvAmazont = {
+	"amazont", "amazon", NULL, NULL, "1986",
+	"Soldier Girl Amazon (Tecfri license)\0", NULL, "Nichibutsu (Tecfri license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	NULL, AmazontRomInfo, AmazontRomName, NULL, NULL, NULL, NULL, AmazonInputInfo, AmazonDIPInfo,
 	AmazonInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };

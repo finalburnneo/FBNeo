@@ -83,7 +83,6 @@ extern bool bNeoEnableGraphics;
 
 extern bool bDisableNeoWatchdog;
 
-extern INT32 ssideki2mode;
 extern INT32 s1945pmode;
 extern INT32 fatfury2mode;
 extern INT32 vlinermode;

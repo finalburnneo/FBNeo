@@ -1,5 +1,5 @@
 // FB Alpha SNK / Alpha 68k based driver module
-// Based on MAME driver by Pierpaolo Prazzoli, Bryan McPhail,Stephane Humbert
+// Based on MAME driver by Pierpaolo Prazzoli, Bryan McPhail, Stephane Humbert
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -42,9 +42,6 @@ static INT32  DrvCoinID = 0;
 static INT32 DrvMicroControllerID = 0;
 static INT32 DrvFlipScreen = 0;
 static UINT8 DrvSoundLatch = 0;
-
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
 
 static INT32 nDrvTotal68KCycles = 0;
 static INT32 nDrvTotalZ80Cycles = 0;
@@ -438,7 +435,7 @@ static void kyros_alpha_trigger_w(UINT32 Offset, UINT16 Data)
 	if (Offset == 0x5b) DrvFlipScreen = Data & 0x01;
 }
 
-UINT8 __fastcall Kyros68KReadByte(UINT32 a)
+static UINT8 __fastcall Kyros68KReadByte(UINT32 a)
 {
 	if (a >= 0x080000 && a <= 0x0801ff) {
 		return kyros_alpha_trigger_r((a - 0x080000) >> 1);
@@ -469,7 +466,7 @@ UINT8 __fastcall Kyros68KReadByte(UINT32 a)
 	return 0;
 }
 
-UINT16 __fastcall Kyros68KReadWord(UINT32 a)
+static UINT16 __fastcall Kyros68KReadWord(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -480,7 +477,7 @@ UINT16 __fastcall Kyros68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Kyros68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Kyros68KWriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x080000 && a <= 0x0801ff) {
 		return kyros_alpha_trigger_w(a - 0x080000, d);
@@ -503,7 +500,7 @@ void __fastcall Kyros68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall Kyros68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Kyros68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		default: {
@@ -512,7 +509,7 @@ void __fastcall Kyros68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall SstingryZ80Read(UINT16 a)
+static UINT8 __fastcall SstingryZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xc100: {
@@ -527,7 +524,7 @@ UINT8 __fastcall SstingryZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall SstingryZ80Write(UINT16 a, UINT8 d)
+static void __fastcall SstingryZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc102: {
@@ -554,7 +551,7 @@ void __fastcall SstingryZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall KyrosZ80Read(UINT16 a)
+static UINT8 __fastcall KyrosZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xe000: {
@@ -569,7 +566,7 @@ UINT8 __fastcall KyrosZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall KyrosZ80Write(UINT16 a, UINT8 d)
+static void __fastcall KyrosZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xe002: {
@@ -596,7 +593,7 @@ void __fastcall KyrosZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall KyrosZ80PortRead(UINT16 a)
+static UINT8 __fastcall KyrosZ80PortRead(UINT16 a)
 {
 	a &= 0xff;
 	
@@ -609,7 +606,7 @@ UINT8 __fastcall KyrosZ80PortRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall KyrosZ80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall KyrosZ80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -665,11 +662,6 @@ static INT32 Kyros1Offsets[8]           = { 0, 8, 16, 24, 32, 40, 48, 56 };
 static INT32 Kyros2PlaneOffsets[3]      = { 0, 0x80000, 0x80004 };
 static INT32 Kyros2XOffsets[8]          = { 67, 66, 65, 64, 3, 2, 1, 0 };
 static INT32 Kyros2Offsets[8]           = { 0, 8, 16, 24, 32, 40, 48, 56 };
-
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((double)nDrvTotalZ80Cycles / (nBurnFPS / 100.000))));
-}
 
 static INT32 SstingryInit()
 {
@@ -753,7 +745,7 @@ static INT32 SstingryInit()
 	BurnYM2203SetRoute(2, BURN_SND_YM2203_AY8910_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(2, BURN_SND_YM2203_AY8910_ROUTE_3, 0.50, BURN_SND_ROUTE_BOTH);
 	
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, nDrvTotalZ80Cycles);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
@@ -866,7 +858,7 @@ static INT32 KyrosInit()
 	BurnYM2203SetRoute(2, BURN_SND_YM2203_AY8910_ROUTE_2, 0.90, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(2, BURN_SND_YM2203_AY8910_ROUTE_3, 0.90, BURN_SND_ROUTE_BOTH);
 	
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, nDrvTotalZ80Cycles);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
@@ -964,36 +956,8 @@ static void SstingryDrawSprites(INT32 c, INT32 d)
 				Colour = (Data >> 7 & 0x18) | (Data >> 13 & 7);
 				Tile = Data & 0x3ff;
 				Bank = Data >> 10 & 3;
-				
-				if (mx > 0 && mx < 248 && (my - 16) > 0 && (my - 16) < 216) {
-					if (xFlip) {
-						if (yFlip) {
-							Render8x8Tile_Mask_FlipXY(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-						} else {
-							Render8x8Tile_Mask_FlipX(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-						}
-					} else {
-						if (yFlip) {
-							Render8x8Tile_Mask_FlipY(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-						} else {
-							Render8x8Tile_Mask(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-						}
-					}	
-				} else {
-					if (xFlip) {
-						if (yFlip) {
-							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-						} else {
-							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-						}
-					} else {
-						if (yFlip) {
-							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-						} else {
-							Render8x8Tile_Mask_Clip(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-						}
-					}
-				}
+
+				Draw8x8MaskTile(pTransDraw, Tile, mx, my - 16, xFlip, yFlip, Colour, 3, 0, 0, DrvGfxData[Bank]);
 			}
 
 			if (DrvFlipScreen) {
@@ -1044,36 +1008,7 @@ static void KyrosDrawSprites(INT32 c, INT32 d)
 						KyrosVideoBanking(&Bank, Data);
 //					else
 //						jongbou_video_banking(&bank, data);
-
-					if (mx > 0 && mx < 248 && (my - 16) > 0 && (my - 16) < 216) {
-						if (xFlip) {
-							if (yFlip) {
-								Render8x8Tile_Mask_FlipXY(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-							} else {
-								Render8x8Tile_Mask_FlipX(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-							}
-						} else {
-							if (yFlip) {
-								Render8x8Tile_Mask_FlipY(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-							} else {
-								Render8x8Tile_Mask(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-							}
-						}	
-					} else {
-						if (xFlip) {
-							if (yFlip) {
-								Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-							} else {
-								Render8x8Tile_Mask_FlipX_Clip(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-							}
-						} else {
-							if (yFlip) {
-								Render8x8Tile_Mask_FlipY_Clip(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-							} else {
-								Render8x8Tile_Mask_Clip(pTransDraw, Tile, mx, my - 16, Colour, 3, 0, 0, DrvGfxData[Bank]);
-							}
-						}
-					}
+					Draw8x8MaskTile(pTransDraw, Tile, mx, my - 16, xFlip, yFlip, Colour, 3, 0, 0, DrvGfxData[Bank]);
 				}
 			}
 
@@ -1088,11 +1023,8 @@ static void KyrosDrawSprites(INT32 c, INT32 d)
 
 static INT32 SstingryDraw()
 {
-	BurnTransferClear();
+	BurnTransferClear(0x100);
 	KyrosCalcPalette();
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0x100;
-	}
 	if (nSpriteEnable & 1) SstingryDrawSprites(2, 0x0800);
 	if (nSpriteEnable & 2) SstingryDrawSprites(3, 0x0c00);
 	if (nSpriteEnable & 4) SstingryDrawSprites(1, 0x0400);
@@ -1103,11 +1035,8 @@ static INT32 SstingryDraw()
 
 static INT32 KyrosDraw()
 {
-	BurnTransferClear();
+	BurnTransferClear(0x100);
 	KyrosCalcPalette();
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0x100;
-	}
 	if (nSpriteEnable & 1) KyrosDrawSprites(2, 0x0800);
 	if (nSpriteEnable & 2) KyrosDrawSprites(3, 0x0c00);
 	if (nSpriteEnable & 4) KyrosDrawSprites(1, 0x0400);
@@ -1124,39 +1053,36 @@ static INT32 DrvFrame()
 
 	DrvMakeInputs();
 
-	nCyclesTotal[0] = nDrvTotal68KCycles / 60;
-	nCyclesTotal[1] = nDrvTotalZ80Cycles / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesTotal[2] = { nDrvTotal68KCycles / 60, nDrvTotalZ80Cycles / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekNewFrame();
 	ZetNewFrame();
 	SekOpen(0);
 	ZetOpen(0);
-	
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext;
 
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesDone[0] += SekRun(nCyclesSegment);
-		if (i == 125) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		CPU_RUN(0, Sek);
+		if (i == 125) {
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+			if (pBurnDraw) BurnDrvRedraw();
+
+		}
 		if (i == 66) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		
+
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		if (i == 44 || i == 88) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		if (i & 1) ZetNmi();
 	}
-	
+
 	BurnTimerEndFrame(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	SekClose();
 	ZetClose();
-	
-	if (pBurnDraw) BurnDrvRedraw();
 
 	return 0;
 }
@@ -1197,7 +1123,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvSstingry = {
 	"sstingry", NULL, NULL, NULL, "1986",
-	"Super Stingray (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
+	"Super Stingray (Japan)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, SstingryRomInfo, SstingryRomName, NULL, NULL, NULL, NULL, SstingryInputInfo, SstingryDIPInfo,
@@ -1207,7 +1133,7 @@ struct BurnDriver BurnDrvSstingry = {
 
 struct BurnDriver BurnDrvKyros = {
 	"kyros", NULL, NULL, NULL, "1987",
-	"Kyros\0", NULL, "Alpha Denshi Co. (World Games Inc. license)", "Miscellaneous",
+	"Kyros\0", NULL, "Alpha Denshi Co. (World Games Inc. license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, KyrosRomInfo, KyrosRomName, NULL, NULL, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,
@@ -1217,7 +1143,7 @@ struct BurnDriver BurnDrvKyros = {
 
 struct BurnDriver BurnDrvKyrosj = {
 	"kyrosj", "kyros", NULL, NULL, "1986",
-	"Kyros No Yakata (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
+	"Kyros No Yakata (Japan)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, KyrosjRomInfo, KyrosjRomName, NULL, NULL, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,

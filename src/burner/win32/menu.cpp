@@ -895,6 +895,40 @@ void MenuUpdate()
 		}
 	}
 	CheckMenuRadioItem(hMenu, MENU_ASPECTNORMAL, MENU_ASPECTWIDELCD, var, MF_BYCOMMAND);
+	var = -1;
+	if (nVidVerScrnAspectX == 4 && nVidVerScrnAspectY == 3) {
+		var = MENU_ASPECTNORMALVERL;
+	} else {
+		if (nVidVerScrnAspectX == 5 && nVidVerScrnAspectY == 4) {
+			var = MENU_ASPECTLCDVERL;
+		} else {
+			if (nVidVerScrnAspectX == 16 && nVidVerScrnAspectY == 9) {
+				var = MENU_ASPECTWIDEVERL;
+			} else {
+				if (nVidVerScrnAspectX == 16 && nVidVerScrnAspectY == 10) {
+					var = MENU_ASPECTWIDELCDVERL;
+				}
+			}
+		}
+	}
+	CheckMenuRadioItem(hMenu, MENU_ASPECTNORMALVERL, MENU_ASPECTWIDELCDVERL, var, MF_BYCOMMAND);
+	var = -1;
+	if (nVidVerScrnAspectX == 3 && nVidVerScrnAspectY == 4) {
+		var = MENU_ASPECTNORMALVERP;
+	} else {
+		if (nVidVerScrnAspectX == 4 && nVidVerScrnAspectY == 5) {
+			var = MENU_ASPECTLCDVERP;
+		} else {
+			if (nVidVerScrnAspectX == 9 && nVidVerScrnAspectY == 16) {
+				var = MENU_ASPECTWIDEVERP;
+			} else {
+				if (nVidVerScrnAspectX == 10 && nVidVerScrnAspectY == 16) {
+					var = MENU_ASPECTWIDELCDVERP;
+				}
+			}
+		}
+	}
+	CheckMenuRadioItem(hMenu, MENU_ASPECTNORMALVERP, MENU_ASPECTWIDELCDVERP, var, MF_BYCOMMAND);
 	CheckMenuItem(hMenu, MENU_MONITORMIRRORVERT, (nVidRotationAdjust & 2) ? MF_CHECKED : MF_UNCHECKED);
 
 	CheckMenuItem(hMenu, MENU_ROTATEVERTICAL, !(nVidRotationAdjust & 1) ? MF_CHECKED : MF_UNCHECKED);

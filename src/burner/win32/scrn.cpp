@@ -195,6 +195,11 @@ int ActivateChat()
 	return 0;
 }
 
+INT32 is_netgame_or_recording() // returns: 1 = netgame, 2 = recording/playback
+{
+	return (kNetGame | (movieFlags & (1<<1))); // netgame or recording from power_on
+}
+
 static int WINAPI gameCallback(char* game, int player, int numplayers)
 {
 	bool bFound = false;
@@ -683,7 +688,7 @@ void PausedRedraw(void)
 {
     if (bVidOkay && bRunPause && bDrvOkay && (hSelDlg == NULL)) { // Redraw the screen to show certain messages while paused. - dink
         INT16 *pBtemp = pBurnSoundOut;
-        pBurnSoundOut = NULL; // Mute the sound as VidRedraw() draws the frame (if no driver Redraw function is available)
+        pBurnSoundOut = NULL;
 
 		VidRedraw();
 		VidPaint(0);
@@ -1803,6 +1808,38 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bMonitorAutoCheck = false; nVidScrnAspectX = 16; nVidScrnAspectY = 10;
 			POST_INITIALISE_MESSAGE;
 			break;
+		case MENU_ASPECTNORMALVERL:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 4; nVidVerScrnAspectY = 3;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTLCDVERL:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 5; nVidVerScrnAspectY = 4;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTWIDEVERL:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 16; nVidVerScrnAspectY = 9;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTWIDELCDVERL:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 16; nVidVerScrnAspectY = 10;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTNORMALVERP:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 3; nVidVerScrnAspectY = 4;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTLCDVERP:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 4; nVidVerScrnAspectY = 5;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTWIDEVERP:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 9; nVidVerScrnAspectY = 16;
+			POST_INITIALISE_MESSAGE;
+			break;
+		case MENU_ASPECTWIDELCDVERP:
+			bMonitorAutoCheck = false; nVidVerScrnAspectX = 10; nVidVerScrnAspectY = 16;
+			POST_INITIALISE_MESSAGE;
+			break;
 		case MENU_MONITORMIRRORVERT:
 			nVidRotationAdjust ^= 2;
 			POST_INITIALISE_MESSAGE;
@@ -2486,7 +2523,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_WWW_NSFORUM:
 			if (!nVidFullscreen) {
-				ShellExecute(NULL, _T("open"), _T("http://neo-source.com/"), NULL, NULL, SW_SHOWNORMAL);
+				ShellExecute(NULL, _T("open"), _T("https://neo-source.com/"), NULL, NULL, SW_SHOWNORMAL);
+			}
+			break;
+
+		case MENU_WWW_GITHUB:
+			if (!nVidFullscreen) {
+				ShellExecute(NULL, _T("open"), _T("https://github.com/finalburnneo/FBNeo"), NULL, NULL, SW_SHOWNORMAL);
 			}
 			break;
 

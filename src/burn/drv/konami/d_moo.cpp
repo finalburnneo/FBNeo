@@ -61,141 +61,141 @@ static UINT16 zmask; // 0xffff moomesa, 0x00ff bucky
 static INT32 moomesabl = 0;
 
 static struct BurnInputInfo MooInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p3 start"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p3 fire 2"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 9,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 12,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 13,	"p4 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
 	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
 	{"Service 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
-	{"Service Mode",		BIT_DIGITAL,	DrvJoy5 + 3,	"diagnostics"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy5 + 3,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Moo)
 
 static struct BurnInputInfo BuckyInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 3"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p3 start"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p3 fire 2"	},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p3 fire 3"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 9,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 12,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 13,	"p4 fire 2"	},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy4 + 14,	"p4 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
 	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
 	{"Service 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
-	{"Service Mode",		BIT_DIGITAL,	DrvJoy5 + 3,	"diagnostics"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy5 + 3,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Bucky)
 
 static struct BurnDIPInfo MooDIPList[]=
 {
-	{0x26, 0xff, 0xff, 0x60, NULL			},
+	{0x26, 0xff, 0xff, 0x60, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x26, 0x01, 0x10, 0x10, "Mono"			},
-	{0x26, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x26, 0x01, 0x10, 0x10, "Mono"				},
+	{0x26, 0x01, 0x10, 0x00, "Stereo"			},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"	},
-	{0x26, 0x01, 0x20, 0x20, "Common"		},
+	{0x26, 0x01, 0x20, 0x20, "Common"			},
 	{0x26, 0x01, 0x20, 0x00, "Independent"		},
 
-	{0   , 0xfe, 0   ,    3, "Number of Players"	},
-	{0x26, 0x01, 0xc0, 0xc0, "2"			},
-	{0x26, 0x01, 0xc0, 0x40, "3"			},
-	{0x26, 0x01, 0xc0, 0x80, "4"			},
+	{0   , 0xfe, 0   ,    3, "Number of Players"},
+	{0x26, 0x01, 0xc0, 0xc0, "2"				},
+	{0x26, 0x01, 0xc0, 0x40, "3"				},
+	{0x26, 0x01, 0xc0, 0x80, "4"				},
 };
 
 STDDIPINFO(Moo)
 
 static struct BurnDIPInfo BuckyDIPList[]=
 {
-	{0x2a, 0xff, 0xff, 0x60, NULL			},
+	{0x2a, 0xff, 0xff, 0x60, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x2a, 0x01, 0x10, 0x10, "Mono"			},
-	{0x2a, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x2a, 0x01, 0x10, 0x10, "Mono"				},
+	{0x2a, 0x01, 0x10, 0x00, "Stereo"			},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"	},
-	{0x2a, 0x01, 0x20, 0x20, "Common"		},
+	{0x2a, 0x01, 0x20, 0x20, "Common"			},
 	{0x2a, 0x01, 0x20, 0x00, "Independent"		},
 
-	{0   , 0xfe, 0   ,    3, "Number of Players"	},
-	{0x2a, 0x01, 0xc0, 0xc0, "2"			},
-	{0x2a, 0x01, 0xc0, 0x40, "3"			},
-	{0x2a, 0x01, 0xc0, 0x80, "4"			},
+	{0   , 0xfe, 0   ,    3, "Number of Players"},
+	{0x2a, 0x01, 0xc0, 0xc0, "2"				},
+	{0x2a, 0x01, 0xc0, 0x40, "3"				},
+	{0x2a, 0x01, 0xc0, 0x80, "4"				},
 };
 
 STDDIPINFO(Bucky)
@@ -232,10 +232,6 @@ static void moo_objdma()
 		while (--num_inactive);
 	}
 }
-
-#ifdef FBNEO_DEBUG
-extern int counter;
-#endif
 
 static void moo_prot_write(INT32 offset)
 {
@@ -993,12 +989,12 @@ static INT32 MooInit()
 	K056832Init(DrvGfxROM0, DrvGfxROMExp0, 0x200000, moo_tile_callback);
 	K056832SetGlobalOffsets(40, 16);
 	K056832SetLayerOffsets(0, -1, 0);
-	K056832SetLayerOffsets(1,  3, 0);
+	K056832SetLayerOffsets(1,  3, 1); // y+1 for intro fix
 	K056832SetLayerOffsets(2,  5, 0);
 	K056832SetLayerOffsets(3,  7, 0);
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, moo_sprite_callback, 1);
-	K053247SetSpriteOffset(-88, -39);
+	K053247SetSpriteOffset(-87, -39);
 
 	zmask = 0xffff;
 

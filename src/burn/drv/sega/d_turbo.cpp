@@ -2,12 +2,7 @@
 // Based on and large pieces copied from (video code & sound code) MAME driver by 
 // Alex Pasadyn, Howie Cohen, Frank Palazzolo, Ernesto Corvi, and Aaron Giles
 
-// done:
-//  done: sample freq. hooked up to turbo. iq/dnk
-
 // to do:
-//  done: sample freq. hooked up to turbo.
-//  collisions don't work (turbo)
 //	add 9-seg support (i8279)
 //	bug testing
 //	fixing sounds (subroc3d is bad)
@@ -19,6 +14,7 @@
 #include "samples.h"
 #include "8255ppi.h"
 #include "math.h"
+#include "burn_shift.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -59,6 +55,7 @@ static UINT8 subroc3d_ply;
 static UINT8 subroc3d_flip;
 static UINT8 subroc3d_col;
 
+static UINT8 buckrog_status;
 static UINT8 buckrog_command;
 static UINT8 buckrog_mov;
 static UINT8 buckrog_fchg;
@@ -132,7 +129,7 @@ STDINPUTINFO(Buckrog)
 
 static struct BurnDIPInfo TurboDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0xfb, NULL					},
+	{0x0a, 0xff, 0xff, 0xeb, NULL					},
 	{0x0b, 0xff, 0xff, 0xff, NULL					},
 	{0x0c, 0xff, 0xff, 0xf0, NULL					},
 
@@ -151,8 +148,8 @@ static struct BurnDIPInfo TurboDIPList[]=
 	{0x0a, 0x01, 0x08, 0x00, "Hard"					},
 
 	{0   , 0xfe, 0   ,    2, "Game Mode"			},
-	{0x0a, 0x01, 0x10, 0x00, "No Collisions (cheat)"},
-	{0x0a, 0x01, 0x10, 0x10, "Normal"				},
+	{0x0a, 0x01, 0x10, 0x10, "No Collisions (cheat)"},
+	{0x0a, 0x01, 0x10, 0x00, "Normal"				},
 
 	{0   , 0xfe, 0   ,    2, "Initial Entry"		},
 	{0x0a, 0x01, 0x20, 0x00, "Off"					},
@@ -507,12 +504,7 @@ static void __fastcall buckrog_write(UINT16 address, UINT8 data)
 		case 0xc802:
 		case 0xc803: // sync before writing another command to the sub cpu
 		{
-			INT32 cycles = ZetTotalCycles();
-			ZetClose();
-			ZetOpen(1);
-			ZetRun(cycles - ZetTotalCycles());
-			ZetClose();
-			ZetOpen(0);
+			ZetRun(1, ZetTotalCycles(0) - ZetTotalCycles(1));
 			ppi8255_w(0, address & 3, data);
 		}
 		return;
@@ -531,8 +523,8 @@ static void __fastcall buckrog_write(UINT16 address, UINT8 data)
 
 static UINT8 buckrog_port_2_read()
 {
-	int inp1 = DrvDips[0];
-	int inp2 = DrvDips[1];
+	UINT8 inp1 = DrvDips[1];
+	UINT8 inp2 = DrvDips[2];
 
 	return  (((inp2 >> 6) & 1) << 7) |
 			(((inp2 >> 4) & 1) << 6) |
@@ -546,8 +538,8 @@ static UINT8 buckrog_port_2_read()
 
 static UINT8 buckrog_port_3_read()
 {
-	int inp1 = DrvDips[0];
-	int inp2 = DrvDips[1];
+	UINT8 inp1 = DrvDips[1];
+	UINT8 inp2 = DrvDips[2];
 
 	return  (((inp2 >> 7) & 1) << 7) |
 			(((inp2 >> 5) & 1) << 6) |
@@ -611,12 +603,18 @@ static void __fastcall buckrog_sub_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 __fastcall buckrog_sub_read_port(UINT16)
+static UINT8 __fastcall buckrog_sub_read_port(UINT16 port)
 {
-	ppi8255_set_portC(0,0);
-	return buckrog_command;
-}
+	port &= 0xff;
 
+	if (port == 0) {
+		ppi8255_set_portC(0,0);
+		buckrog_status |= 0x80;
+		return buckrog_command;
+	}
+
+	return 0;
+}
 
 
 static void turbo_ppi0a_write(UINT8 data)
@@ -738,7 +736,7 @@ static void subroc3d_ppi0c_write(UINT8 data)
 }
 
 #if 0
-static void subroc3d_update_volume(int leftchan, UINT8 dis, UINT8 dir)
+static void subroc3d_update_volume(INT32 leftchan, UINT8 dis, UINT8 dir)
 {
 	float volume = (float)(15 - dis) / 16.0f;
 	float lvol, rvol;
@@ -839,7 +837,9 @@ static void subroc3d_ppi1c_write(UINT8 data)
 
 static void buckrog_ppi0a_write(UINT8 data)
 {
+	buckrog_status &= ~0x80;
 	buckrog_command = data;
+	ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 }
 
 static void buckrog_ppi0b_write(UINT8 data)
@@ -850,11 +850,12 @@ static void buckrog_ppi0b_write(UINT8 data)
 static void buckrog_ppi0c_write(UINT8 data)
 {
 	buckrog_fchg = data & 0x07;
-	ZetClose();
-	ZetOpen(1);
-	ZetSetIRQLine(0, (data & 0x80) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
-	ZetClose();
-	ZetOpen(0);
+	//ZetSetIRQLine(1, 0, (data & 0x80) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
+}
+
+static UINT8 buckrog_ppi0c_read()
+{
+	return buckrog_status;
 }
 
 static void buckrog_update_samples()
@@ -935,11 +936,12 @@ static INT32 DrvDoReset()
 	ZetOpen(1);
 	ZetReset();
 	ZetClose();
-	
+
 	ppi8255_reset();
 
 	BurnSampleReset();
-	
+	BurnShiftReset();
+
 	memset (turbo_op, 0, 3);
 	memset (turbo_ip, 0, 3);
 	turbo_fbpla = 0;
@@ -947,7 +949,7 @@ static INT32 DrvDoReset()
 	turbo_last_analog = 0;
 	turbo_collision = 0;
 
-	turbo_bsel = 0;
+	turbo_bsel = 3;
 	turbo_accel = 0;
 	memset (sound_data, 0, 3);
 
@@ -955,6 +957,7 @@ static INT32 DrvDoReset()
 	subroc3d_flip = 0;
 	subroc3d_col = 0;
 
+	buckrog_status = 0x80;
 	buckrog_command = 0;
 	buckrog_mov = 0;
 	buckrog_fchg = 0;
@@ -1152,8 +1155,8 @@ static INT32 TurboInit(INT32 encrypted)
 		if (BurnLoadRom(DrvColPROM  + 0x00800, 32, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM  + 0x00c00, 33, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM  + 0x01000, 34, 1)) return 1;
-		
-		DrvGfxDecode();		
+
+		DrvGfxDecode();
 	}
 
 	ZetInit(0);
@@ -1177,7 +1180,9 @@ static INT32 TurboInit(INT32 encrypted)
 	ppi8255_set_read_ports(3, turbo_ppi3a_read, turbo_ppi3b_read, NULL);
 
 	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.20, BURN_SND_ROUTE_BOTH);
+
+	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_WHITE, 80);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, fg_map_callback, 8, 8, 32, 32);
@@ -1263,7 +1268,9 @@ static INT32 Subroc3dInit()
 	ppi8255_set_write_ports(1, subroc3d_ppi1a_write, subroc3d_ppi1b_write, subroc3d_ppi1c_write);
 
 	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.20, BURN_SND_ROUTE_BOTH);
+
+	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_RED, 80); // not used in this game
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, fg_map_callback, 8, 8, 32, 32);
@@ -1278,15 +1285,15 @@ static void sega_decode(UINT8 *rom, UINT8 *decrypted, INT32 len, const UINT8 con
 {
 	for (INT32 A = 0x0000; A < 0x8000;A++)
 	{
-		int xor1 = 0;
+		INT32 xor1 = 0;
 
 		UINT8 src = rom[A];
 
 		/* pick the translation table from bits 0, 4, 8 and 12 of the address */
-		int row = (A & 1) + (((A >> 4) & 1) << 1) + (((A >> 8) & 1) << 2) + (((A >> 12) & 1) << 3);
+		INT32 row = (A & 1) + (((A >> 4) & 1) << 1) + (((A >> 8) & 1) << 2) + (((A >> 12) & 1) << 3);
 
 		/* pick the offset in the table from bits 3 and 5 of the source data */
-		int col = ((src >> 3) & 1) + (((src >> 5) & 1) << 1);
+		INT32 col = ((src >> 3) & 1) + (((src >> 5) & 1) << 1);
 		/* the bottom half of the translation table is the mirror image of the top */
 		if (src & 0x80)
 		{
@@ -1404,11 +1411,14 @@ static INT32 BuckrogInit(INT32 encrypted)
 	ZetClose();
 
 	ppi8255_init(2);
+	ppi8255_set_read_ports (0, NULL, NULL, buckrog_ppi0c_read);
 	ppi8255_set_write_ports(0, buckrog_ppi0a_write, buckrog_ppi0b_write, buckrog_ppi0c_write);
 	ppi8255_set_write_ports(1, buckrog_ppi1a_write, buckrog_ppi1b_write, buckrog_ppi1c_write);
 
 	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.20, BURN_SND_ROUTE_BOTH);
+
+	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_RED, 80); // not used in this game
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, fg_map_callback, 8, 8, 32, 32);
@@ -1435,6 +1445,7 @@ static INT32 DrvExit()
 	ZetExit();
 	ppi8255_exit();
 	BurnSampleExit();
+	BurnShiftExit();
 
 	BurnFree(AllMem);
 
@@ -1522,7 +1533,7 @@ static UINT32 sprite_xscale(UINT8 dacinput, double vr1, double vr2, double cext)
 static void turbo_prepare_sprites(UINT8 y, sprite_info *info)
 {
 	const UINT8 *pr1119 = &DrvColPROM[0x200];
-	int sprnum;
+	INT32 sprnum;
 
 	/* initialize the line enable signals to 0 */
 	info->ve = 0;
@@ -1535,7 +1546,7 @@ static void turbo_prepare_sprites(UINT8 y, sprite_info *info)
 	for (sprnum = 0; sprnum < 16; sprnum++)
 	{
 		UINT8 *rambase = &DrvSprRAM[sprnum * 8];
-		int level = sprnum & 7;
+		INT32 level = sprnum & 7;
 		UINT8 clo, chi;
 		UINT32 sum;
 
@@ -1549,10 +1560,10 @@ static void turbo_prepare_sprites(UINT8 y, sprite_info *info)
 		/* for this sprite; note that the logic in the Turbo schematics is reversed here */
 		if (clo & (chi ^ 1))
 		{
-			int xscale = rambase[2] ^ 0xff;
-			int yscale = rambase[3];// ^ 0xff;
+			INT32 xscale = rambase[2] ^ 0xff;
+			INT32 yscale = rambase[3];// ^ 0xff;
 			UINT16 offset = rambase[6] + (rambase[7] << 8);
-			int offs;
+			INT32 offs;
 
 			/* mark this entry enabled */
 			info->ve |= 1 << sprnum;
@@ -1587,7 +1598,7 @@ static UINT32 turbo_get_sprite_bits(UINT8 road, sprite_info *sprinfo)
 {
 	UINT8 sprlive = sprinfo->lst;
 	UINT32 sprdata = 0;
-	int level;
+	INT32 level;
 
 	/* if we haven't left the road yet, prites 3-7 are disabled */
 	if (!road)
@@ -1639,18 +1650,18 @@ static void screen_update_turbo()
 	const UINT8 *pr1121 = &DrvColPROM[0x600];
 	const UINT8 *pr1122 = &DrvColPROM[0x800];
 	const UINT8 *pr1123 = &DrvColPROM[0xc00];
-	int x, y;
+	INT32 x, y;
 	
 	/* loop over rows */
 	for (y = 0; y < nScreenHeight; y++)
 	{
 		const UINT16 *fore = DrvBitmap + y * 256;
 		UINT16 *dest = pTransDraw + y * nScreenWidth;
-		int sel, coch, babit, slipar_acciar, area, offs, areatmp, road = 0;
+		INT32 sel, coch, babit, slipar_acciar, area, offs, areatmp, road = 0;
 		sprite_info sprinfo;
 
 		/* compute the Y sum between opa and the current scanline (p. 141) */
-		int va = (y + turbo_op[0]) & 0xff;
+		INT32 va = (y + turbo_op[0]) & 0xff;
 
 		/* the upper bit of OPC inverts the road (p. 141) */
 		if (!(turbo_op[2] & 0x80))
@@ -1663,8 +1674,8 @@ static void screen_update_turbo()
 		/* loop over columns */
 		for (x = 0; x < nScreenWidth; x += TURBO_X_SCALE)
 		{
-			int bacol, red, grn, blu, priority, foreraw, forebits, mx, ix;
-			int xx = x / TURBO_X_SCALE;
+			INT32 bacol, red, grn, blu, priority, foreraw, forebits, mx, ix;
+			INT32 xx = x / TURBO_X_SCALE;
 			UINT8 carry;
 			UINT32 sprbits;
 			UINT16 he;
@@ -1819,6 +1830,7 @@ static INT32 TurboDraw()
 	screen_update_turbo();
 
 	BurnTransferCopy(DrvPalette);
+	BurnShiftRenderDoubleSize();
 
 	return 0;
 }
@@ -1826,7 +1838,7 @@ static INT32 TurboDraw()
 static void subroc3d_prepare_sprites(UINT8 y, sprite_info *info)
 {
 	const UINT8 *pr1449 = &DrvColPROM[0x300];
-	int sprnum;
+	INT32 sprnum;
 
 	/* initialize the line enable signals to 0 */
 	info->ve = 0;
@@ -1836,7 +1848,7 @@ static void subroc3d_prepare_sprites(UINT8 y, sprite_info *info)
 	for (sprnum = 0; sprnum < 16; sprnum++)
 	{
 		UINT8 *rambase = &DrvSprRAM[sprnum * 8];
-		int level = sprnum & 7;
+		INT32 level = sprnum & 7;
 		UINT8 clo, chi;
 		UINT32 sum;
 
@@ -1850,10 +1862,10 @@ static void subroc3d_prepare_sprites(UINT8 y, sprite_info *info)
 		/* for this sprite; note that the logic in the Turbo schematics is reversed here */
 		if (clo & (chi ^ 1))
 		{
-			int xscale = rambase[2] ^ 0xff;
-			int yscale = rambase[3];// ^ 0xff;
+			INT32 xscale = rambase[2] ^ 0xff;
+			INT32 yscale = rambase[3];// ^ 0xff;
 			UINT16 offset = rambase[6] + (rambase[7] << 8);
-			int offs;
+			INT32 offs;
 
 			/* mark this entry enabled */
 			info->ve |= 1 << sprnum;
@@ -1891,7 +1903,7 @@ static UINT32 subroc3d_get_sprite_bits(sprite_info *sprinfo, UINT8 *plb)
 	*/
 	static const UINT8 plb_end[16] = { 0,1,1,2, 1,1,1,1, 1,1,1,1, 0,1,1,2 };
 	UINT32 sprdata = 0;
-	int level;
+	INT32 level;
 
 	*plb = 0;
 
@@ -1936,7 +1948,7 @@ static void screen_update_subroc3d()
 	const UINT8 *pr1620 = &DrvColPROM[0x200];
 	const UINT8 *pr1450 = &DrvColPROM[0x500];
 	const UINT8 *pr1454 = &DrvColPROM[0x920];
-	int x, y;
+	INT32 x, y;
 
 	for (y = 0; y < nScreenHeight; y++)
 	{
@@ -1948,7 +1960,7 @@ static void screen_update_subroc3d()
 
 		for (x = 0; x < nScreenWidth; x += TURBO_X_SCALE)
 		{
-			int offs, finalbits, ix;
+			INT32 offs, finalbits, ix;
 			UINT8 xx = x / TURBO_X_SCALE;
 			UINT8 foreraw, forebits, mux, cd, plb, mplb;
 			UINT16 he;
@@ -2043,7 +2055,7 @@ static void BuckrogPaletteInit()
 static void buckrog_prepare_sprites(UINT8 y, sprite_info *info)
 {
 	const UINT8 *pr5196 = &DrvColPROM[0x100];
-	int sprnum;
+	INT32 sprnum;
 
 	info->ve = 0;
 	info->lst = 0;
@@ -2051,7 +2063,7 @@ static void buckrog_prepare_sprites(UINT8 y, sprite_info *info)
 	for (sprnum = 0; sprnum < 16; sprnum++)
 	{
 		UINT8 *rambase = &DrvSprRAM[sprnum * 8];
-		int level = sprnum & 7;
+		INT32 level = sprnum & 7;
 		UINT8 clo, chi;
 		UINT32 sum;
 
@@ -2062,10 +2074,10 @@ static void buckrog_prepare_sprites(UINT8 y, sprite_info *info)
 
 		if (clo & (chi ^ 1))
 		{
-			int xscale = rambase[2] ^ 0xff;
-			int yscale = rambase[3];// ^ 0xff;
+			INT32 xscale = rambase[2] ^ 0xff;
+			INT32 yscale = rambase[3];// ^ 0xff;
 			UINT16 offset = rambase[6] + (rambase[7] << 8);
-			int offs;
+			INT32 offs;
 
 			info->ve |= 1 << sprnum;
 
@@ -2093,7 +2105,7 @@ static UINT32 buckrog_get_sprite_bits(sprite_info *sprinfo, UINT8 *plb)
 {
 	static const UINT8 plb_end[16] = { 0,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,2 };
 	UINT32 sprdata = 0;
-	int level;
+	INT32 level;
 
 	*plb = 0;
 
@@ -2137,7 +2149,7 @@ static void screen_update_buckrog()
 	const UINT8 *pr5194 = &DrvColPROM[0x000];
 	const UINT8 *pr5198 = &DrvColPROM[0x500];
 	const UINT8 *pr5199 = &DrvColPROM[0x700];
-	int x, y;
+	INT32 x, y;
 
 	/* loop over rows */
 	for (y = 0; y < nScreenHeight; y++)
@@ -2157,7 +2169,7 @@ static void screen_update_buckrog()
 			UINT8 xx = x / TURBO_X_SCALE;
 			UINT16 he;
 			UINT32 sprbits;
-			int palbits, offs, ix;
+			INT32 palbits, offs, ix;
 
 			/* load the bitmask from the sprite position for both halves of the Sprites (p. 143) */
 			he = DrvSprPOS[xx * 2] | (DrvSprPOS[xx * 2 + 1] << 8);
@@ -2289,17 +2301,24 @@ static INT32 TurboFrame()
 		if (DrvDial > 0xff) DrvDial = 0;
 		if (DrvDial < 0x00) DrvDial = 0xff;
 
+		{ // gear shifter stuff
+			BurnShiftInputCheckToggle(DrvJoy1[2]);
+
+			DrvInputs[0] &= ~4;
+			DrvInputs[0] |= (bBurnShiftStatus << 2);
+		}
 	}
 
 	INT32 nInterleave = 128; // 256/2
-	INT32 nCyclesTotal = 4992000 / 60;
+	INT32 nCyclesTotal[1] = { 4992000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 	INT32 nSoundBufferPos = 0;
 
 	ZetOpen(0);
 	
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		ZetRun(nCyclesTotal / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == 224/2) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		if (pBurnSoundOut && i&1) { // samplizer needs less update-latency for the speed changes.
@@ -2336,7 +2355,7 @@ static INT32 BuckrogFrame()
 	ZetNewFrame();
 
 	{
-		DrvInputs[0] = 0xff;
+		DrvInputs[0] = 0xf8;
 		DrvInputs[1] = 0xff;
 
 		for (INT32 i = 0; i < 8; i++) {
@@ -2346,18 +2365,18 @@ static INT32 BuckrogFrame()
 	}
 
 	INT32 nInterleave = 128;
-	INT32 nCyclesTotal = 4992000 / 60;
+	INT32 nCyclesTotal[2] = { 4992000 / 60, 4992000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		ZetRun(nCyclesTotal / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == 224/2) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		INT32 nSegment = ZetTotalCycles();
 		ZetClose();
 
 		ZetOpen(1);
-		ZetRun(nSegment - ZetTotalCycles());
+		CPU_RUN(1, Zet);
 		ZetClose();
 	}
 
@@ -2391,12 +2410,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		ppi8255_scan();
 
+		BurnSampleScan(nAction, pnMin);
+		BurnShiftScan(nAction);
+
 		SCAN_VAR(turbo_op);
 		SCAN_VAR(turbo_ip);
 		SCAN_VAR(turbo_fbpla);
 		SCAN_VAR(turbo_fbcol);
 		SCAN_VAR(turbo_last_analog);
 		SCAN_VAR(turbo_collision);
+		SCAN_VAR(DrvDial);
 
 		SCAN_VAR(turbo_bsel);
 		SCAN_VAR(turbo_accel);
@@ -2407,6 +2430,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(subroc3d_col);
 
 		SCAN_VAR(buckrog_command);
+		SCAN_VAR(buckrog_status);
 		SCAN_VAR(buckrog_mov);
 		SCAN_VAR(buckrog_fchg);
 		SCAN_VAR(buckrog_obch);

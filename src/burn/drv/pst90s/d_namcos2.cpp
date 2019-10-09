@@ -470,20 +470,12 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 
 		case 0x10000:
 			if (w) {
-				SekClose();
-				SekOpen((a) ? 0 : 1);
-				SekSetIRQLine(irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_ACK);
-				SekClose();
-				SekOpen(a);
+				SekSetIRQLine(a^1, irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_ACK);
 			}
 			return 0;
 
 		case 0x16000:
-			SekClose();
-			SekOpen((a) ? 0 : 1);
-			SekSetIRQLine(irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_NONE);
-			SekClose();
-			SekOpen(a);
+			SekSetIRQLine(a^1, irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_NONE);
 			return 0;
 
 		case 0x18000:
@@ -526,11 +518,7 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 				{
 					hd63705Reset();
 
-					SekClose();
-					SekOpen(1);
-					SekReset();
-					SekClose();
-					SekOpen(0);
+					SekReset(1);
 				}
 				else
 				{
@@ -822,6 +810,7 @@ static UINT8 __fastcall luckywld_68k_read_byte(UINT32 address)
 static void __fastcall metlhawk_68k_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffe0) == 0xd00000) {
+
 		*((UINT16*)(DrvRozCtrl + (address & 0x1e))) = data;
 		return;
 	}
@@ -1470,13 +1459,8 @@ static INT32 DrvDoReset()
 	memset (roz_dirty_tile, 1, 0x10000);
 	roz_update_tiles = 1;
 
-	SekOpen(0);
-	SekReset();
-	SekClose();
-
-	SekOpen(1);
-	SekReset();
-	SekClose();
+	SekReset(0);
+	SekReset(1);
 
 	M6809Open(0);
 	M6809Reset();
@@ -1565,7 +1549,7 @@ static INT32 MemIndex()
 	DrvM6809RAM		= Next; Next += 0x002000;
 
 	DrvC123Ctrl		= Next; Next += 0x000040;
-	DrvRozCtrl		= Next; Next += 0x000010;
+	DrvRozCtrl		= Next; Next += 0x000020;
 
 	RamEnd			= Next;
 
@@ -4779,7 +4763,8 @@ static struct BurnRomInfo rthun2jRomDesc[] = {
 	{ "rst1_voi1.bin",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
 	{ "rst1_voi2.bin",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
 
-	{ "pal12l10.8d",		0x00040, 0xd3ae64a6, 0x00 | BRF_OPT },
+	/* stuff below isn't used but loaded because it was on the board .. */
+	{ "pal12l10.8d",		0x00040, 0xd3ae64a6, 0x00 | BRF_OPT },			 // 21 plds
 	{ "plhs18p8a.2p",		0x00149, 0x28c634a4, 0x00 | BRF_OPT },
 	{ "plhs18p8a.4g",		0x00149, 0x1932dd5e, 0x00 | BRF_OPT },
 	{ "plhs18p8a.5f",		0x00149, 0xab2fd9c2, 0x00 | BRF_OPT },

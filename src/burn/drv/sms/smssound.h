@@ -5,9 +5,9 @@
 /* Sound emulation structure */
 typedef struct
 {
-    INT32 enabled;
-    UINT32 fm_clock;
-    UINT32 psg_clock;
+	INT32 enabled;
+	UINT32 fm_clock;
+	UINT32 psg_clock;
 } snd_t;
 
 

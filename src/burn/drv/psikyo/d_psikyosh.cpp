@@ -777,7 +777,16 @@ static INT32 DrvInit(INT32 (*LoadCallback)(), INT32 type, INT32 gfx_max, INT32 g
 	Sh2SetReadLongHandler (1,		hack_read_long);
 
 	BurnYMF278BInit(cpu_rate, DrvSndROM, 0x400000, &DrvIRQCallback, DrvSynchroniseStream);
-	BurnYMF278BSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "gnbarich") || strstr(BurnDrvGetTextA(DRV_NAME), "soldivid") ||
+		strstr(BurnDrvGetTextA(DRV_NAME), "daraku"))
+	{
+		bprintf(0, _T("not louder.\n"));
+		BurnYMF278BSetAllRoutes(1.30, BURN_SND_ROUTE_BOTH);
+	} else
+	{
+		bprintf(0, _T("louder.\n"));
+		BurnYMF278BSetAllRoutes(3.10, BURN_SND_ROUTE_BOTH);
+	}
 	BurnTimerAttachSh2(cpu_rate);
 
 	EEPROMInit(&eeprom_interface_93C56);

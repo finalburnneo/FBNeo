@@ -77,8 +77,21 @@ struct BurnDriver {
 
 // burn.cpp
 INT32 BurnSetRefreshRate(double dRefreshRate);
-INT32 BurnByteswap(UINT8* pm,INT32 nLen);
+INT32 BurnByteswap(UINT8* pMem, INT32 nLen);
+void BurnNibbleExpand(UINT8 *source, UINT8 *dst, INT32 length, INT32 swap, UINT8 nxor);
 INT32 BurnClearScreen();
+
+
+// recording / netgame helper
+#ifndef __LIBRETRO__
+INT32 is_netgame_or_recording();
+#else
+inline static INT32 is_netgame_or_recording()
+{
+	return kNetGame;
+}
+#endif
+
 
 // load.cpp
 
@@ -127,6 +140,7 @@ inline static void PutPix(UINT8* pPix, UINT32 c)
 // Setting up cpus for cheats
 
 struct cpu_core_config {
+	char cpu_name[32];
 	void (*open)(INT32);		// cpu open
 	void (*close)();		// cpu close
 
@@ -151,9 +165,11 @@ void CpuCheatRegister(INT32 type, cpu_core_config *config);
 
 // burn_memory.cpp
 void BurnInitMemoryManager();
-UINT8 *BurnMalloc(INT32 size);
-void _BurnFree(void *ptr);
+UINT8 *_BurnMalloc(INT32 size, char *file, INT32 line); // internal use only :)
+UINT8 *BurnRealloc(void *ptr, INT32 size);
+void _BurnFree(void *ptr); // internal use only :)
 #define BurnFree(x) do {_BurnFree(x); x = NULL; } while (0)
+#define BurnMalloc(x) _BurnMalloc(x, __FILE__, __LINE__)
 void BurnExitMemoryManager();
 
 // ---------------------------------------------------------------------------

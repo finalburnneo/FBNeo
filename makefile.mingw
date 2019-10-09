@@ -11,8 +11,9 @@ unexport
 #
 
 # Check for changes in header files
+ifndef	SKIPDEPEND
 DEPEND = 1
-
+endif
 
 
 #
@@ -186,8 +187,8 @@ AS	= nasm
 LDFLAGS	= -static
 
 ifdef GCC345
-CFLAGS	 = -pipe \
-	   -std=gnu99 -march=$(CPUTYPE) -O1 \
+CFLAGS = -pipe \
+	   -std=gnu99 -march=$(CPUTYPE) -O1 -ffloat-store \
 	   -mno-cygwin -mwindows \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \
@@ -195,7 +196,7 @@ CFLAGS	 = -pipe \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -march=$(CPUTYPE) -O1 \
+	   -march=$(CPUTYPE) -O1 -ffloat-store \
 	   -mno-cygwin -mwindows \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \
@@ -206,8 +207,8 @@ CXXFLAGS = -pipe \
 	   $(DEF) $(incdir)
 endif
 ifdef GCC452
-CFLAGS	 = -pipe \
-	   -std=gnu99 -march=$(CPUTYPE) -O1 \
+CFLAGS = -pipe \
+	   -std=gnu99 -march=$(CPUTYPE) -O3 -ffloat-store \
 	   -mno-cygwin -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations \
@@ -216,7 +217,7 @@ CFLAGS	 = -pipe \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -march=$(CPUTYPE) -O1 \
+	   -march=$(CPUTYPE) -O3 -ffloat-store \
 	   -mno-cygwin -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations -fcheck-new \
@@ -227,8 +228,8 @@ CXXFLAGS = -pipe \
 	   $(DEF) $(incdir)
 endif
 ifdef GCC471
-CFLAGS	 = -pipe \
-	   -std=gnu99 -O1 \
+CFLAGS = -pipe \
+	   -std=gnu99 -O3 -ffloat-store \
 	   -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations \
@@ -237,7 +238,7 @@ CFLAGS	 = -pipe \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -std=gnu++11 -O1 \
+	   -std=gnu++11 -O3 -ffloat-store \
 	   -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations -fcheck-new \
@@ -259,8 +260,8 @@ endif
 endif
 
 ifdef GCC510
-CFLAGS	 = -pipe \
-	   -std=gnu99 -O1 \
+CFLAGS = -pipe \
+	   -std=gnu99 -O3 -ffloat-store \
 	   -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations \
@@ -269,7 +270,7 @@ CFLAGS	 = -pipe \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -std=gnu++11 -O1 \
+	   -std=gnu++11 -O3 -ffloat-store \
 	   -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations -fcheck-new \
@@ -352,10 +353,6 @@ endif
 
 ifdef BUILD_X64_EXE
 	DEF := $(DEF) -DBUILD_X64_EXE -DXBYAK_NO_OP_NAMES -DMIPS3_X64_DRC
-endif
-
-ifdef USE_SEGOE
-	DEF	:= $(DEF) -DUSE_SEGOE
 endif
 
 ifdef	SYMBOL
@@ -531,11 +528,7 @@ resource.o resource.d:	$(app_gnuc.rc) string.rc version.rc version.h $(build_det
 $(license.rtf): $(srcdir)license.txt $(srcdir)dep/scripts/license2rtf.pl
 
 ifdef	PERL
-ifdef USE_SEGOE
-	@$(srcdir)dep/scripts/license2rtf.pl $< -o $(srcdir)dep/generated/$(@F:.rc=.rtf) -f 'Segoe UI'
-else
 	@$(srcdir)dep/scripts/license2rtf.pl $< -o $(srcdir)dep/generated/$(@F:.rc=.rtf)
-endif
 else
 ifeq ($(MAKELEVEL),2)
 	@echo

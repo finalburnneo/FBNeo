@@ -217,7 +217,16 @@ void K053245SpritesRender(INT32 chip)
 			if (sortedlist[pri_code] == -1) sortedlist[pri_code] = offs;
 		}
 	}
-
+#if 0
+	// dbg -dink
+	bprintf(0, _T("Sprite list:\n"));
+	for (offs = 0;offs < NUM_SPRITES;offs++) {
+		if (sortedlist[offs] != -1) {
+			bprintf(0, _T("%03x  "), sortedlist[offs]);
+		}
+	}
+	bprintf(0, _T("\n"));
+#endif
 	for (pri_code = NUM_SPRITES - 1; pri_code >= 0; pri_code--)
 	{
 		INT32 ox,oy,color,code,size,w,h,x,y,flipx,flipy,mirrorx,mirrory,shadow,zoomx,zoomy,pri;
@@ -245,6 +254,12 @@ void K053245SpritesRender(INT32 chip)
         */
 		zoomy = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+4]);
 		if (zoomy > 0x2000) continue;
+		if (zoomy == 2) {
+			// konami logo mask in asterix uses zoomy==2, but with these
+			// calculations, the size is so big it will never work.  Substituting
+			// 8 here brings the logo mask uncover in-time with the PCB recording. -dink
+			zoomy = 0x08;
+		}
 		if (zoomy) zoomy = (0x400000+zoomy/2) / zoomy;
 		else zoomy = 2 * 0x400000;
 		if ((BURN_ENDIAN_SWAP_INT16(sprbuf[offs]) & 0x4000) == 0)

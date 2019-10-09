@@ -157,9 +157,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 		memset (TaitoRamStart, 0, TaitoRamEnd - TaitoRamStart);
 	}
 
-	SekOpen(0);
-	SekReset();
-	SekClose();
+	SekReset(0);
 
 	EEPROMReset();
 

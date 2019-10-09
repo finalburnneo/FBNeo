@@ -435,6 +435,8 @@ static INT32 DrvDraw()
 		BurnDrvSetVisibleSize(screensize, 240);
 		Reinitialise();
 		DrvVideoInit(); // incredibly slow!
+
+		return 1; // don't draw this time around
 	}
 
 	GenericTilemapSetScrollX(0, scrollx);

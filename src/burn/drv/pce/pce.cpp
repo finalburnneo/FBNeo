@@ -78,7 +78,7 @@ INT32 PceGetZipName(char** pszName, UINT32 i)
 		pszGameName = BurnDrvGetTextA(DRV_PARENT);
 	}
 
-	if (pszGameName == NULL) {
+	if (pszGameName == NULL || i > 1) {
 		*pszName = NULL;
 		return 1;
 	}
@@ -109,7 +109,7 @@ INT32 TgGetZipName(char** pszName, UINT32 i)
 		pszGameName = BurnDrvGetTextA(DRV_PARENT);
 	}
 
-	if (pszGameName == NULL) {
+	if (pszGameName == NULL || i > 1) {
 		*pszName = NULL;
 		return 1;
 	}
@@ -140,7 +140,7 @@ INT32 SgxGetZipName(char** pszName, UINT32 i)
 		pszGameName = BurnDrvGetTextA(DRV_PARENT);
 	}
 
-	if (pszGameName == NULL) {
+	if (pszGameName == NULL || i > 1) {
 		*pszName = NULL;
 		return 1;
 	}
@@ -635,19 +635,17 @@ INT32 PCEFrame()
 
 	PCECompileInputs();
 
-	INT32 nCyclesTotal = (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60));
-	if (wondermomohack) nCyclesTotal += 1000;
-	INT32 nCyclesDone = 0;
-	INT32 nCyclesSegment = 0;
+	INT32 nInterleave = 262;
+	INT32 nCyclesTotal[1] = { (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60)) };
+	INT32 nCyclesDone[1] = { 0 };
+
+	if (wondermomohack) nCyclesTotal[0] += 1000;
 
 	h6280Open(0);
 
-	for (INT32 i = 0; i < 262; i++)
+	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nNext;
-		nNext = (i + 1) * nCyclesTotal / 262;
-		nCyclesSegment = nNext - nCyclesDone;
-		nCyclesDone += h6280Run(nCyclesSegment);
+		CPU_RUN(0, h6280);
 		interrupt();
 	}
 

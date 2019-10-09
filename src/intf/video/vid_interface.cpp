@@ -117,7 +117,8 @@ wchar_t VerScreen[32] = L"";
 INT32 nVidScrnWidth = 0, nVidScrnHeight = 0;		// Actual Screen dimensions (0 if in windowed mode)
 INT32 nVidScrnDepth = 0;							// Actual screen depth
 
-INT32 nVidScrnAspectX = 4, nVidScrnAspectY = 3;	// Aspect ratio of the display screen
+INT32 nVidScrnAspectX = 4, nVidScrnAspectY = 3;	        // Aspect ratio of the horizontally orientated display screen
+INT32 nVidVerScrnAspectX = 4, nVidVerScrnAspectY = 3;   // Aspect ratio of the vertically orientated display screen
 
 UINT8* pVidImage = NULL;				// Memory buffer
 INT32 nVidImageWidth = DEFAULT_IMAGE_WIDTH;		// Memory buffer size
@@ -229,7 +230,7 @@ INT32 VidInit()
 #if defined (BUILD_WIN32) && defined (ENABLE_PREVIEW)
 	if (bVidOkay && hbitmap) {
 		BITMAPINFO bitmapinfo;
-		UINT8* pLineBuffer = (UINT8*)malloc(bitmap.bmWidth * 4);
+		UINT8* pLineBuffer = (UINT8*)malloc((bitmap.bmWidth + 3) * 4); // add + 3 safetynet
 		HDC hDC = GetDC(hVidWnd);
 
 		if (hDC && pLineBuffer) {
@@ -489,9 +490,9 @@ InterfaceInfo* VidGetInfo()
 		GetClientScreenRect(hVidWnd, &rect);
 		if (nVidFullscreen == 0) {
 			rect.top += nMenuHeight;
-			_sntprintf(szString, MAX_PATH, _T("Running in windowed mode, $ix%i, %ibpp"), rect.right - rect.left, rect.bottom - rect.top, nVidScrnDepth);
+			_sntprintf(szString, MAX_PATH, _T("Running in windowed mode, %ix%i, %ibpp"), rect.right - rect.left, rect.bottom - rect.top, nVidScrnDepth);
 		} else {
-			_sntprintf(szString, MAX_PATH, _T("Running fullscreen, $ix$i, %ibpp"), nVidScrnWidth, nVidScrnHeight, nVidScrnDepth);
+			_sntprintf(szString, MAX_PATH, _T("Running fullscreen, %ix%i, %ibpp"), nVidScrnWidth, nVidScrnHeight, nVidScrnDepth);
 		}
 #elif defined (BUILD_SDL)
 		_sntprintf(szString, MAX_PATH, _T("Filler for fullscreen/windowed mode & image size"));

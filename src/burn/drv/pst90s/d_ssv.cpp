@@ -267,7 +267,6 @@ static struct BurnInputInfo MeosismInputList[] = {
 	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 5,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Meosism)
@@ -5506,7 +5505,7 @@ struct BurnDriverD BurnDrvJsk = {
 };
 
 
-// Eagle Shot Golf
+// Eagle Shot Golf (US)
 
 static struct BurnRomInfo eaglshotRomDesc[] = {
 	{ "si003-09.u18",	0x080000, 0x219c71ce, 2 | BRF_PRG | BRF_ESS }, //  0 V60 Code
@@ -5547,10 +5546,41 @@ static INT32 EaglshotInit()
 
 struct BurnDriver BurnDrvEaglshot = {
 	"eaglshot", NULL, NULL, NULL, "1994",
-	"Eagle Shot Golf\0", NULL, "Sammy", "SSV",
+	"Eagle Shot Golf (US)\0", NULL, "Sammy", "SSV",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_SPORTSMISC, 0,
 	NULL, eaglshotRomInfo, eaglshotRomName, NULL, NULL, NULL, NULL, EaglshotInputInfo, EaglshotDIPInfo,
+	EaglshotInit, DrvExit, DrvFrame, DrvDraw, eaglshtScan, &DrvRecalc, 0x8000,
+	320, 224, 4, 3
+};
+
+
+// Eagle Shot Golf (Japan, bootleg?)
+
+static struct BurnRomInfo eaglshotjRomDesc[] = {
+	{ "sammygolf.u18",	0x080000, 0xb6d6869c, 2 | BRF_PRG | BRF_ESS }, //  0 V60 Code
+	{ "sammygolf.u20",	0x080000, 0xc8872e48, 2 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "si003-01.u13",	0x200000, 0xd7df0d52, 8 | BRF_GRA },           //  2 Graphics
+	{ "si003-02.u12",	0x200000, 0x92b4d50d, 8 | BRF_GRA },           //  3
+	{ "si003-03.u11",	0x200000, 0x6ede4012, 8 | BRF_GRA },           //  4
+	{ "si003-04.u10",	0x200000, 0x4c65d1a1, 8 | BRF_GRA },           //  5
+	{ "si003-05.u30",	0x200000, 0xdaf52d56, 8 | BRF_GRA },           //  6
+	{ "si003-06.u31",	0x200000, 0x449f9ae5, 8 | BRF_GRA },           //  7
+
+	{ "si003-07.u23",	0x200000, 0x81679fd6, 4 | BRF_SND },           //  8 Ensoniq samples 0
+	{ "si003-08.u24",	0x200000, 0xd0122ba2, 4 | BRF_SND },           //  9
+};
+
+STD_ROM_PICK(eaglshotj)
+STD_ROM_FN(eaglshotj)
+
+struct BurnDriver BurnDrvEaglshotj = {
+	"eaglshotj", "eaglshot", NULL, NULL, "1994",
+	"Eagle Shot Golf (Japan, bootleg?)\0", NULL, "Sammy", "SSV",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA_SSV, GBF_SPORTSMISC, 0,
+	NULL, eaglshotjRomInfo, eaglshotjRomName, NULL, NULL, NULL, NULL, EaglshotInputInfo, EaglshotDIPInfo,
 	EaglshotInit, DrvExit, DrvFrame, DrvDraw, eaglshtScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
 };

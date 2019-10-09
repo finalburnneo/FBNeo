@@ -18,9 +18,6 @@ export
 # Include Unicode support
 UNICODE = 1
 
-# Use Segoe Fonts (installed by default on Windows Vista and newer)
-USE_SEGOE = 1
-
 # Build A68K ASM 68000 core
 #BUILD_A68K = 1
 
@@ -42,8 +39,10 @@ INCLUDE_AVI_RECORDING = 1
 # Include symbols and other debug information in the executable
 #SYMBOL = 1
 
-# Include features for debugging drivers
+# Include features for debugging drivers unless we are doing a release build
+ifndef RELEASEBUILD
 DEBUG	= 1
+endif
 
 # Include rom set verifying features (comment this for release builds)
 #ROM_VERIFY = 1

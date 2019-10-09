@@ -85,11 +85,7 @@ static void __fastcall undrfire_main_write_long(UINT32 a, UINT32 d)
 			INT32 previous = subcpu_in_reset;
 			subcpu_in_reset = (~d >> 12) & 1;
 			if (!subcpu_in_reset && previous) {
-				SekClose();
-				SekOpen(2);
-				SekReset();
-				SekClose();
-				SekOpen(0);
+				SekReset(2);
 			}
 		}
 		return;
@@ -282,13 +278,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (TaitoRamStart, 0, TaitoRamEnd - TaitoRamStart);
 	}
 
-	SekOpen(0);
-	SekReset();
-	SekClose();
-
-	SekOpen(2);
-	SekReset();
-	SekClose();
+	SekReset(0);
+	SekReset(2);
 
 	TaitoICReset();
 	TaitoF3SoundReset();
@@ -585,6 +576,8 @@ static INT32 CommonInit(INT32 game_select)
 	GenericTilesInit();
 	TC0100SCNInit(0, 0x10000, 50, 24, 0, NULL);
 	TC0100SCNSetColourDepth(0, 6);
+	TC0100SCNSetCharLayerGranularity(4);
+
 	TC0480SCPInit(0x8000, 0, 36, 0, -1, 0, 24);
 	TC0480SCPSetColourBase(game_select ? (0x1000 >> 4) : 0);
 	TC0480SCPSetPriMap(pPrioDraw);
@@ -937,17 +930,17 @@ static INT32 UndrfireDraw()
 	{
 		INT32 primasks[4] = {0xfff0, 0xff00, 0x0000, 0x0};
 
-		if (nSpriteEnable & 16) draw_sprites(primasks, 44, -574);
+		if (nSpriteEnable & 0x10) draw_sprites(primasks, 44, -574);
 	}
 	else
 	{
 		INT32 primasks[4] = {0xfffc, 0xfff0, 0xff00, 0x0};
 
-		if (nSpriteEnable & 16) draw_sprites(primasks, 44, -574);
+		if (nSpriteEnable & 0x10) draw_sprites(primasks, 44, -574);
 	}
 
-	if (nSpriteEnable & 4) TC0100SCNRenderCharLayer(0);
-	if (nSpriteEnable & 8) TC0480SCPRenderCharLayer();
+	if (nSpriteEnable & 0x40) TC0100SCNRenderCharLayer(0);
+	if (nSpriteEnable & 0x20) TC0480SCPRenderCharLayer();
 
 	BurnTransferCopy(TaitoPalette);
 	BurnGunDrawTargets();

@@ -559,7 +559,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Klax (set 1)
+// Klax (version 6)
 
 static struct BurnRomInfo klaxRomDesc[] = {
 	{ "136075-6006.3n",			0x10000, 0xe8991709, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -590,7 +590,7 @@ STD_ROM_FN(klax)
 
 struct BurnDriver BurnDrvKlax = {
 	"klax", NULL, NULL, NULL, "1989",
-	"Klax (set 1)\0", NULL, "Atari Games", "Miscellaneous",
+	"Klax (version 6)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, klaxRomInfo, klaxRomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
@@ -679,6 +679,46 @@ struct BurnDriver BurnDrvKlaxj3 = {
 };
 
 
+// Klax (Japan, version 4)
+
+static struct BurnRomInfo klaxj4RomDesc[] = {
+	{ "136075-4406.3n",			0x10000, 0xfc4045ec, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "136075-4405.1n",			0x10000, 0xf017461a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136075-4408.3k",			0x10000, 0x23231159, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136075-4407.1k",			0x10000, 0x8d8158b2, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "136075-2010.17x",		0x10000, 0x15290a0d, 2 | BRF_GRA },           //  4 Sprites and Backgrounds
+	{ "136075-2012.12x",		0x10000, 0xc0d9eb0f, 2 | BRF_GRA },           //  5
+	{ "136075-2009.17u",		0x10000, 0x6368dbaf, 2 | BRF_GRA },           //  6
+	{ "136075-2011.12u",		0x10000, 0xe83cca91, 2 | BRF_GRA },           //  7
+
+	{ "136075-2014.17y",		0x10000, 0x5c551e92, 3 | BRF_GRA },           //  8 Sprites and Backgrounds
+	{ "136075-2013.17w",		0x10000, 0x36764bbc, 3 | BRF_GRA },           //  9
+
+	{ "136075-1015.14b",		0x10000, 0x4d24c768, 4 | BRF_SND },           // 10 Samples
+	{ "136075-1016.12b",		0x10000, 0x12e9b4b7, 4 | BRF_SND },           // 11
+
+	{ "136075-1000.11c.bin",	0x00117, 0xfb86e94a, 5 | BRF_GRA },           // 12 PALs
+	{ "136075-1001.18l.bin",	0x00117, 0xcd21acfe, 5 | BRF_GRA },           // 13
+	{ "136075-1002.8w.bin",		0x00117, 0x4a7b6c44, 5 | BRF_GRA },           // 14
+	{ "136075-1003.9w.bin",		0x00117, 0x72f7f904, 5 | BRF_GRA },           // 15
+	{ "136075-1004.6w.bin",		0x00117, 0x6cd3270d, 5 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(klaxj4)
+STD_ROM_FN(klaxj4)
+
+struct BurnDriver BurnDrvKlaxj4 = {
+	"klaxj4", "klax", NULL, NULL, "1989",
+	"Klax (Japan, version 4)\0", NULL, "Atari Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, klaxj4RomInfo, klaxj4RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	336, 240, 4, 3
+};
+
+
 // Klax (version 4)
 
 static struct BurnRomInfo klax4RomDesc[] = {
@@ -760,6 +800,7 @@ struct BurnDriver BurnDrvKlax5 = {
 
 
 // Klax (version 5, bootleg set 1)
+// derived from 'klax5' set
 
 static struct BurnRomInfo klax5blRomDesc[] = {
 	{ "6.bin",					0x10000, 0x3cfd2748, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code

@@ -20,6 +20,8 @@ INT32 nIrqLine50, nIrqLine52;
 INT32 nCpsNumScanlines = 262;
 INT32 Cps1VBlankIRQLine = 2;
 
+INT32 Cps1DrawAtVblank = 0;
+
 CpsRunInitCallback CpsRunInitCallbackFunction = NULL;
 CpsRunInitCallback CpsRunExitCallbackFunction = NULL;
 CpsRunResetCallback CpsRunResetCallbackFunction = NULL;
@@ -203,6 +205,8 @@ INT32 CpsRunExit()
 	Cps2DisableQSnd = 0;
 	CpsBootlegEEPROM = 0;
 
+	Cps1DrawAtVblank = 0;
+
 	return 0;
 }
 
@@ -316,7 +320,10 @@ INT32 Cps1Frame()
 
 	SekOpen(0);
 
-	SekRun((nCpsCycles * nFirstLine / nCpsNumScanlines) + nCpsCyclesExtra);					// run 68K for the first few lines
+	SekIdle(nCpsCyclesExtra);
+	nCpsCyclesExtra = 0;
+
+	SekRun((nCpsCycles * nFirstLine / nCpsNumScanlines));					// run 68K for the first few lines
 
 	CpsObjGet();											// Get objects
 
@@ -335,12 +342,16 @@ INT32 Cps1Frame()
 
 			SekSetIRQLine(Cps1VBlankIRQLine, CPU_IRQSTATUS_AUTO);				// Trigger VBlank interrupt
 
-			if (pBurnDraw) {
+			if (Cps1DrawAtVblank && pBurnDraw) {
 				CpsDraw();										// Draw frame
 			}
 		}
 
 		SekRun(nNext - SekTotalCycles());						// run 68K
+	}
+
+	if (pBurnDraw && !Cps1DrawAtVblank) {
+		CpsDraw();												// Draw frame
 	}
 
 	if (Cps1Qs == 1) {
@@ -421,9 +432,11 @@ INT32 Cps2Frame()
 	}
 	ScheduleIRQ();
 
+	SekIdle(nCpsCyclesExtra);
+	nCpsCyclesExtra = 0;
+
 	if (nIrqCycles < nCpsCycles * nFirstLine / nCpsNumScanlines) {
-		SekRun(nIrqCycles + nCpsCyclesExtra);
-		nCpsCyclesExtra = 0;
+		SekRun(nIrqCycles);
 		DoIRQ();
 	}
 	nNext = nCpsCycles * nFirstLine / nCpsNumScanlines;
@@ -459,7 +472,7 @@ INT32 Cps2Frame()
 	if (pBurnDraw) {
 		CpsDraw();
 	}
-	SekRun(nCpsCycles - SekTotalCycles());	
+	SekRun(nCpsCycles - SekTotalCycles());
 
 	nCpsCyclesExtra = SekTotalCycles() - nCpsCycles;
 

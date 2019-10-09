@@ -554,6 +554,7 @@ static INT32 ConfigParseMAMEFile()
 					INT32 nPlus1 = (flags & 0x300) ? 1 : 0; // displayed value +1?
 
 					//bprintf(0, _T("adding .. %X. options\n"), nTotal);
+					if (nTotal > 0xff) continue; // bad entry (roughrac has this)
 					for (nValue = 0; nValue < nTotal; nValue++) {
 						swprintf(tmp2, L"# %d.", nValue + nPlus1);
 						n++;

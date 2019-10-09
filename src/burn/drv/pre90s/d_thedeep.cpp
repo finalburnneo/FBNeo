@@ -754,7 +754,7 @@ static struct BurnRomInfo thedeepRomDesc[] = {
 
 	{ "dp-12.rom",	0x08000, 0xc4e848c4, 2 | BRF_PRG | BRF_ESS }, //  2 M65c02 Code
 
-	{ "dp-14",	0x01000, 0x0b886dad, 3 | BRF_PRG | BRF_ESS }, //  3 i8751 Code
+	{ "dp-14",		0x01000, 0x0b886dad, 3 | BRF_PRG | BRF_ESS }, //  3 i8751 Code
 
 	{ "dp-08.rom",	0x10000, 0xc5624f6b, 4 | BRF_GRA },           //  4 Sprites
 	{ "dp-07.rom",	0x10000, 0xc76768c1, 4 | BRF_GRA },           //  5
@@ -768,9 +768,9 @@ static struct BurnRomInfo thedeepRomDesc[] = {
 
 	{ "dp-11.rom",	0x04000, 0x196e23d1, 6 | BRF_GRA },           // 12 Foreground Tiles
 
-	{ "fi-1",	0x00200, 0xf31efe09, 7 | BRF_OPT },           // 13 Color Data
-	{ "fi-2",	0x00200, 0xf305c8d5, 7 | BRF_GRA },           // 14
-	{ "fi-3",	0x00200, 0xf61a9686, 7 | BRF_GRA },           // 15
+	{ "fi-1",		0x00200, 0xf31efe09, 7 | BRF_OPT },           // 13 Color Data
+	{ "fi-2",		0x00200, 0xf305c8d5, 7 | BRF_GRA },           // 14
+	{ "fi-3",		0x00200, 0xf61a9686, 7 | BRF_GRA },           // 15
 };
 
 STD_ROM_PICK(thedeep)
@@ -778,7 +778,7 @@ STD_ROM_FN(thedeep)
 
 struct BurnDriver BurnDrvThedeep = {
 	"thedeep", NULL, NULL, NULL, "1987",
-	"The Deep (Japan)\0", NULL, "Wood Place Inc.", "Miscellaneous",
+	"The Deep (Japan)\0", NULL, "Woodplace Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, thedeepRomInfo, thedeepRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -790,12 +790,12 @@ struct BurnDriver BurnDrvThedeep = {
 // Run Deep
 
 static struct BurnRomInfo rundeepRomDesc[] = {
-	{ "3",		0x08000, 0xc9c9e194, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "9",		0x10000, 0x931f4e67, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3",			0x08000, 0xc9c9e194, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "9",			0x10000, 0x931f4e67, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "dp-12.rom",	0x08000, 0xc4e848c4, 2 | BRF_PRG | BRF_ESS }, //  2 M65c02 Code
 
-	{ "dp-14",	0x01000, 0x0b886dad, 3 | BRF_PRG | BRF_ESS }, //  3 i8751 Code
+	{ "dp-14",		0x01000, 0x0b886dad, 3 | BRF_PRG | BRF_ESS }, //  3 i8751 Code
 
 	{ "dp-08.rom",	0x10000, 0xc5624f6b, 4 | BRF_GRA },           //  4 sprites
 	{ "dp-07.rom",	0x10000, 0xc76768c1, 4 | BRF_GRA },           //  5
@@ -807,11 +807,11 @@ static struct BurnRomInfo rundeepRomDesc[] = {
 	{ "dp-04.rom",	0x10000, 0x4db02c3c, 5 | BRF_GRA },           // 10
 	{ "dp-02.rom",	0x10000, 0x1add423b, 5 | BRF_GRA },           // 11
 
-	{ "11",		0x04000, 0x5d29e4b9, 6 | BRF_GRA },           // 12 Foreground Tiles
+	{ "11",			0x04000, 0x5d29e4b9, 6 | BRF_GRA },           // 12 Foreground Tiles
 
-	{ "fi-1",	0x00200, 0xf31efe09, 7 | BRF_OPT },           // 13 Color Data
-	{ "fi-2",	0x00200, 0xf305c8d5, 7 | BRF_GRA },           // 14
-	{ "fi-3",	0x00200, 0xf61a9686, 7 | BRF_GRA },           // 15
+	{ "fi-1",		0x00200, 0xf31efe09, 7 | BRF_OPT },           // 13 Color Data
+	{ "fi-2",		0x00200, 0xf305c8d5, 7 | BRF_GRA },           // 14
+	{ "fi-3",		0x00200, 0xf61a9686, 7 | BRF_GRA },           // 15
 };
 
 STD_ROM_PICK(rundeep)
@@ -819,7 +819,7 @@ STD_ROM_FN(rundeep)
 
 struct BurnDriver BurnDrvRundeep = {
 	"rundeep", "thedeep", NULL, NULL, "1988",
-	"Run Deep\0", NULL, "bootleg (Cream)", "Miscellaneous",
+	"Run Deep\0", NULL, "Cream Co., Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, rundeepRomInfo, rundeepRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

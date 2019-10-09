@@ -10,10 +10,10 @@ unexport
 #	Flags. Uncomment any of these declarations to enable their function.
 #
 
-# Check for changes in header files
+# Check for changes in header files, but not if we want to skip the depend step
+ifndef	SKIPDEPEND
 DEPEND = 1
-
-
+endif
 
 #
 #	Declare variables
@@ -243,10 +243,6 @@ ifdef BUILD_X64_EXE
 	DEF := $(DEF) -DBUILD_X64_EXE -DXBYAK_NO_OP_NAMES -DMIPS3_X64_DRC
 endif
 
-ifdef USE_SEGOE
-	DEF	:= $(DEF) -DUSE_SEGOE
-endif
-
 ifdef	SYMBOL
 
 	CFLAGS   += -ggdb3
@@ -400,11 +396,7 @@ resource.o resource.d:	$(app_gnuc.rc) string.rc version.rc version.h $(build_det
 $(license.rtf): $(srcdir)license.txt $(srcdir)dep/scripts/license2rtf.pl
 
 ifdef	PERL
-ifdef USE_SEGOE
-	@$(srcdir)dep/scripts/license2rtf.pl $< -o $(srcdir)dep/generated/$(@F:.rc=.rtf) -f 'Segoe UI'
-else
 	@$(srcdir)dep/scripts/license2rtf.pl $< -o $(srcdir)dep/generated/$(@F:.rc=.rtf)
-endif
 else
 ifeq ($(MAKELEVEL),2)
 	@echo

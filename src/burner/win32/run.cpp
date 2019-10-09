@@ -67,20 +67,14 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 
 static int GetInput(bool bCopy)
 {
-	static int i = 0;
+	static unsigned int i = 0;
 	InputMake(bCopy); 						// get input
 
 	CheckSystemMacros();
 
-	// Update Input dialog ever 3 frames
-	if (i == 0) {
+	// Update Input dialog every 3rd frame
+	if ((i%3) == 0) {
 		InpdUpdate();
-	}
-
-	i++;
-
-	if (i >= 3) {
-		i = 0;
 	}
 
 	// Update Input Set dialog
@@ -125,7 +119,7 @@ void ToggleLayer(unsigned char thisLayer)
 
 // With or without sound, run one frame.
 // If bDraw is true, it's the last frame before we are up to date, and so we should draw the screen
-static int RunFrame(int bDraw, int bPause)
+int RunFrame(int bDraw, int bPause)
 {
 	static int bPrevPause = 0;
 	static int bPrevDraw = 0;
@@ -228,9 +222,13 @@ static int RunGetNextSound(int bDraw)
 		return 0;
 	}
 
+	int bBrokeOutOfFFWD = 0;
 	if (bAppDoFast) {									// do more frames
 		for (int i = 0; i < nFastSpeed; i++) {
-			if (!bAppDoFast) break;                     // break out if no longer in ffwd
+			if (!bAppDoFast) {
+				bBrokeOutOfFFWD = 1; // recording ended, etc.
+				break;
+			}                     // break out if no longer in ffwd
 #ifdef INCLUDE_AVI_RECORDING
 			if (nAviStatus) {
 				// Render frame with sound
@@ -245,17 +243,20 @@ static int RunGetNextSound(int bDraw)
 		}
 	}
 
-	// Render frame with sound
-	pBurnSoundOut = nAudNextSound;
-	RunFrame(bDraw, 0);
+	if (!bBrokeOutOfFFWD) {
+		// Render frame with sound
+		pBurnSoundOut = nAudNextSound;
+		RunFrame(bDraw, 0);
+	}
 
 	if (WaveLog != NULL && pBurnSoundOut != NULL) {		// log to the file
 		fwrite(pBurnSoundOut, 1, nBurnSoundLen << 2, WaveLog);
 		pBurnSoundOut = NULL;
 	}
 
-	if (bAppDoStep) {
+	if (bAppDoStep || (bBrokeOutOfFFWD && bRunPause)) {
 		memset(nAudNextSound, 0, nAudSegLen << 2);		// Write silence into the buffer
+		AudBlankSound();
 	}
 	bAppDoStep = 0;										// done one step
 

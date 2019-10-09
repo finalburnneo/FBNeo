@@ -53,11 +53,14 @@ void ZetSetIRQLine(INT32 nCPU, const INT32 line, const INT32 status);
 void ZetSetVector(INT32 vector);
 void ZetSetVector(INT32 nCPU, INT32 vector);
 UINT8 ZetGetVector();
+UINT8 ZetGetVector(INT32 nCPU);
 INT32 ZetNmi();
 INT32 ZetNmi(INT32 nCPU);
 INT32 ZetIdle(INT32 nCycles);
+INT32 ZetIdle(INT32 nCPU, INT32 nCycles);
 INT32 ZetSegmentCycles();
 INT32 ZetTotalCycles();
+INT32 ZetTotalCycles(INT32 nCPU);
 void ZetSetAF(INT32 n, UINT16 value);
 void ZetSetAF2(INT32 n, UINT16 value);
 void ZetSetBC(INT32 n, UINT16 value);
@@ -76,21 +79,23 @@ void ZetSetPC(INT32 n, UINT16 value);
 void ZetSetR(INT32 n, UINT16 value);
 void ZetSetSP(INT32 n, UINT16 value);
 
-//#define ZetRaiseIrq(n) ZetSetIRQLine(n, ZET_IRQSTATUS_AUTO)
-//#define ZetLowerIrq() ZetSetIRQLine(0, Z80_CLEAR_LINE)
-
 void ZetSetReadHandler(UINT8 (__fastcall *pHandler)(UINT16));
 void ZetSetWriteHandler(void (__fastcall *pHandler)(UINT16, UINT8));
 void ZetSetInHandler(UINT8 (__fastcall *pHandler)(UINT16));
 void ZetSetOutHandler(void (__fastcall *pHandler)(UINT16, UINT8));
 void ZetSetEDFECallback(void (*pCallback)(Z80_Regs*));
 
-void ZetSetBUSREQLine(INT32 nStatus);
-INT32 ZetGetBUSREQLine();
+void ZetSetHALT(INT32 nStatus);
+void ZetSetHALT(INT32 nCPU, INT32 nStatus);
+INT32 ZetGetHALT();
+INT32 ZetGetHALT(INT32 nCPU);
+
+#define ZetSetBUSREQLine ZetSetHALT
 
 void ZetSetRESETLine(INT32 nCPU, INT32 nStatus);
 void ZetSetRESETLine(INT32 nStatus);
 INT32 ZetGetRESETLine();
+INT32 ZetGetRESETLine(INT32 nCPU);
 
 void ZetCheatWriteROM(UINT32 a, UINT8 d); // cheat core
 UINT8 ZetCheatRead(UINT32 a);

@@ -1721,40 +1721,40 @@ STD_ROM_PICK(Quartet)
 STD_ROM_FN(Quartet)
 
 static struct BurnRomInfo QuartetaRomDesc[] = {
-	{ "epr-7458.9b",   0x08000, 0x0096499f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-7455.6b",   0x08000, 0xda934390, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-7459.10b",  0x08000, 0xd130cf61, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-7456.7b",   0x08000, 0x7847149f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-7460.11b",  0x08000, 0xa444ea13, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-7457.8b",   0x08000, 0x3b282c23, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7458.9b",        0x08000, 0x0096499f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7455.6b",        0x08000, 0xda934390, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7459.10b",       0x08000, 0xd130cf61, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7456.7b",        0x08000, 0x7847149f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7460.11b",       0x08000, 0xa444ea13, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7457.8b",        0x08000, 0x3b282c23, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
-	{ "epr-7461.9c",   0x08000, 0xf6af07f2, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-7462.10c",  0x08000, 0x7914af28, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-7463.11c",  0x08000, 0x827c5603, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7461.9c",        0x08000, 0xf6af07f2, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7462.10c",       0x08000, 0x7914af28, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7463.11c",       0x08000, 0x827c5603, SYS16_ROM_TILES | BRF_GRA },
 	
-	{ "epr-7465.5c",   0x08000, 0x8a1ab7d7, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-7469.2b",   0x08000, 0xcb65ae4f, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-7466.6c",   0x08000, 0xb2d3f4f3, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-7470.3b",   0x08000, 0x16fc67b1, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-7467.7c",   0x08000, 0x0af68de2, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-7471.4b",   0x08000, 0x13fad5ac, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-7468.8c",   0x08000, 0xddfd40c0, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-7472.5b",   0x08000, 0x8e2762ec, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7465.5c",        0x08000, 0x8a1ab7d7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7469.2b",        0x08000, 0xcb65ae4f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7466.6c",        0x08000, 0xb2d3f4f3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7470.3b",        0x08000, 0x16fc67b1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7467.7c",        0x08000, 0x0af68de2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7471.4b",        0x08000, 0x13fad5ac, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7468.8c",        0x08000, 0xddfd40c0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7472.5b",        0x08000, 0x8e2762ec, SYS16_ROM_SPRITES | BRF_GRA },
 
-	{ "epr-7464.1b",   0x08000, 0x9f291306, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7464.1b",        0x08000, 0x9f291306, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "7751.bin",      0x00400, 0x6a9534fc, SYS16_ROM_7751PROG | BRF_ESS | BRF_PRG },
+	{ "7751.bin",           0x00400, 0x6a9534fc, SYS16_ROM_7751PROG | BRF_ESS | BRF_PRG },
 	
-	{ "epr-7473.1c",   0x08000, 0x06ec75fa, SYS16_ROM_7751DATA | BRF_SND },
-	{ "epr-7475.2c",   0x08000, 0x7abd1206, SYS16_ROM_7751DATA | BRF_SND },
-	{ "epr-7474.3c",   0x08000, 0xdbf853b8, SYS16_ROM_7751DATA | BRF_SND },
-	{ "epr-7476.4c",   0x08000, 0x5eba655a, SYS16_ROM_7751DATA | BRF_SND },
+	{ "epr-7473.1c",        0x08000, 0x06ec75fa, SYS16_ROM_7751DATA | BRF_SND },
+	{ "epr-7475.2c",        0x08000, 0x7abd1206, SYS16_ROM_7751DATA | BRF_SND },
+	{ "epr-7474.3c",        0x08000, 0xdbf853b8, SYS16_ROM_7751DATA | BRF_SND },
+	{ "epr-7476.4c",        0x08000, 0x5eba655a, SYS16_ROM_7751DATA | BRF_SND },
 	
-	{ "315-5194.mcu",  0x01000, 0x00000000, BRF_NODUMP },
+	{ "315-5194.mcu",       0x01000, 0x00000000, BRF_NODUMP },
 	
-	{ "pal16r6a.22g",  0x00104, 0x00000000, BRF_NODUMP }, // PLD
-	{ "pal16r6a.23g",  0x00104, 0x00000000, BRF_NODUMP }, // PLD
-	{ "pls153.8j",     0x000eb, 0x0fe1eefd, BRF_OPT }, // PLD
+	{ "pal16r6a.22g",       0x00104, 0x00000000, BRF_NODUMP }, // PLD
+	{ "pal16r6a.23g",       0x00104, 0x00000000, BRF_NODUMP }, // PLD
+	{ "315-5193.pls153.8j", 0x000eb, 0x0fe1eefd, BRF_OPT }, // PLD
 };
 
 
@@ -2803,8 +2803,8 @@ static void MjleagueMakeAnalogInputs()
 	if (MjleagueTrack2Y >= 0x100) MjleagueTrack2Y = 0;
 	if (MjleagueTrack2Y < 0) MjleagueTrack2Y = 0xfc;
 	
-	MjleagueBat1 = 0x80 + (System16AnalogPort0 >> 4);
-	MjleagueBat2 = 0x80 + (System16AnalogPort1 >> 4);
+	MjleagueBat1 = ProcessAnalog(System16AnalogPort0, 1, INPUT_DEADZONE | INPUT_LINEAR, 0x00, 0x80);
+	MjleagueBat2 = ProcessAnalog(System16AnalogPort1, 1, INPUT_DEADZONE | INPUT_LINEAR, 0x00, 0x80);
 }
 
 static UINT8 __fastcall MjleagueReadByte(UINT32 a)

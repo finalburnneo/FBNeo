@@ -222,6 +222,7 @@ extern INT32 nVidScrnWidth, nVidScrnHeight;
 extern INT32 nVidScrnDepth;
 
 extern INT32 nVidScrnAspectX, nVidScrnAspectY;
+extern INT32 nVidVerScrnAspectX, nVidVerScrnAspectY;
 
 extern UINT8* pVidImage;
 extern INT32 nVidImageWidth, nVidImageHeight;

@@ -54,6 +54,7 @@ static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 
 cpu_core_config H6280Config =
 {
+	"h6280",
 	h6280Open,
 	h6280Close,
 	h6280Read,

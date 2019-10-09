@@ -312,6 +312,7 @@ INT32 BurnUpdateProgress(double dProgressStep, const TCHAR* pszText, bool bAbs);
 
 void BurnLocalisationSetName(char *szName, TCHAR *szLongName);
 
+void BurnGetLocalTime(tm *nTime);                   // Retrieve local-time of machine w/tweaks for netgame and input recordings
 UINT16 BurnRandom();                                // State-able Random Number Generator (0-32767)
 void BurnRandomScan(INT32 nAction);                 // Must be called in driver's DrvScan() if BurnRandom() is used
 void BurnRandomInit();                              // Called automatically in BurnDrvInit() / Internal use only
@@ -327,6 +328,11 @@ void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize);
 #define BurnDump(fn, b, bs) do { \
     bprintf(0, _T("Dumping %S (0x%x bytes) to %S\n"), #b, bs, #fn); \
     BurnDump_(fn, b, bs); } while (0)
+
+void BurnDumpLoad_(char *filename, UINT8 *buffer, INT32 bufsize);
+#define BurnDumpLoad(fn, b, bs) do { \
+    bprintf(0, _T("Loading Dump %S (0x%x bytes) to %S\n"), #fn, bs, #b); \
+    BurnDumpLoad_(fn, b, bs); } while (0)
 
 #endif
 
@@ -549,6 +555,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_SMS_MAPPER_XIN1     					(0x08)
 #define HARDWARE_SMS_MAPPER_NONE     					(0x0F)
 
+#define HARDWARE_SMS_NO_CART_HEADER						(0x1000)
 #define HARDWARE_SMS_GG_SMS_MODE						(0x2000)
 #define HARDWARE_SMS_DISPLAY_PAL						(0x4000)
 #define HARDWARE_SMS_JAPANESE							(0x8000)

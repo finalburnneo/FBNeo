@@ -310,7 +310,7 @@ static UINT8 *rand17;
 	INT32 toggle = 0; 													\
 	ADJUST_EVENT(chip); 												\
 	/* reset the channel counter */ 									\
-	pokey[chip].counter[ch] = p[chip].divisor[ch];						\
+	pokey[chip].counter[ch] = pokey[chip].divisor[ch];					\
 	pokey[chip].p4 = (pokey[chip].p4+pokey[chip].polyadjust)%0x0000f;	\
 	pokey[chip].p5 = (pokey[chip].p5+pokey[chip].polyadjust)%0x0001f;	\
 	pokey[chip].p9 = (pokey[chip].p9+pokey[chip].polyadjust)%0x001ff;	\

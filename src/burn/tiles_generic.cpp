@@ -19,6 +19,8 @@ UINT8* pTileData;
 INT32 nScreenWidth, nScreenHeight;
 static INT32 nScreenWidthMax, nScreenHeightMax, nScreenWidthMin, nScreenHeightMin;
 
+UINT8 GenericTilesPRIMASK = 0x00;
+
 INT32 GenericTilesInit()
 {
 	Debug_GenericTilesInitted = 1;
@@ -36,6 +38,8 @@ INT32 GenericTilesInit()
 	nScreenWidthMax = nScreenWidth;
 	nScreenHeightMax = nScreenHeight;
 	nScreenHeightMin = nScreenWidthMin = 0;
+
+	GenericTilesPRIMASK = 0x00;
 
 	nRet = BurnTransferInit();
 
@@ -312,18 +316,18 @@ void GfxDecodeSingle(INT32 which, INT32 numPlanes, INT32 xSize, INT32 ySize, INT
 
 //================================================================================================
 
-#define PLOTPIXEL_PRIO(x) { pPixel[x] = nPalette + pTileData[x]; pPri[x] = nPriority; }
-#define PLOTPIXEL_PRIO_FLIPX(x, a) { pPixel[x] = nPalette + pTileData[a]; pPri[x] = nPriority; }
-#define PLOTPIXEL_PRIO_MASK(x, mc) if (pTileData[x] != mc) { pPixel[x] = nPalette + pTileData[x]; pPri[x] = nPriority; }
-#define PLOTPIXEL_PRIO_MASK_FLIPX(x, a, mc) if (pTileData[a] != mc) { pPixel[x] = nPalette + pTileData[a]; pPri[x] = nPriority; }
+#define PLOTPIXEL_PRIO(x) { pPixel[x] = nPalette + pTileData[x]; pPri[x] = nPriority | (pPri[x] & GenericTilesPRIMASK); }
+#define PLOTPIXEL_PRIO_FLIPX(x, a) { pPixel[x] = nPalette + pTileData[a]; pPri[x] = nPriority | (pPri[x] & GenericTilesPRIMASK); }
+#define PLOTPIXEL_PRIO_MASK(x, mc) if (pTileData[x] != mc) { pPixel[x] = nPalette + pTileData[x]; pPri[x] = nPriority | (pPri[x] & GenericTilesPRIMASK); }
+#define PLOTPIXEL_PRIO_MASK_FLIPX(x, a, mc) if (pTileData[a] != mc) { pPixel[x] = nPalette + pTileData[a]; pPri[x] = nPriority | (pPri[x] & GenericTilesPRIMASK); }
 
 #define PLOTPIXEL(x) pPixel[x] = nPalette + pTileData[x];
 #define PLOTPIXEL_FLIPX(x, a) pPixel[x] = nPalette + pTileData[a];
 #define PLOTPIXEL_MASK(x, mc) if (pTileData[x] != mc) {pPixel[x] = nPalette + pTileData[x];}
 #define PLOTPIXEL_MASK_FLIPX(x, a, mc) if (pTileData[a] != mc) {pPixel[x] = nPalette + pTileData[a] ;}
 
-#define PLOTPIXEL_PRIO_TRANSMASK(x) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[x]; pPri[x] = nPriority; }
-#define PLOTPIXEL_PRIO_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[a]] == 0) { pPixel[x] = nPalette + pTileData[a]; pPri[x] = nPriority; }
+#define PLOTPIXEL_PRIO_TRANSMASK(x) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[x]; pPri[x] = nPriority | (pPri[x] & GenericTilesPRIMASK); }
+#define PLOTPIXEL_PRIO_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[a]] == 0) { pPixel[x] = nPalette + pTileData[a]; pPri[x] = nPriority | (pPri[x] & GenericTilesPRIMASK); }
 #define PLOTPIXEL_TRANSMASK(x) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[x];}
 #define PLOTPIXEL_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[a]] == 0) { pPixel[x] = nPalette + pTileData[a] ;}
 

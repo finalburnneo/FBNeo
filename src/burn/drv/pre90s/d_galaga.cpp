@@ -3454,7 +3454,8 @@ struct BurnDriver BurnDrvDigdug =
 	/* System = */                               NULL,
 	/* Flags = */                                BDF_GAME_WORKING |
 	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED,
+	BDF_ORIENTATION_FLIPPED |
+	BDF_HISCORE_SUPPORTED,
 	/* No of Players = */                        2,
 	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
 	/* Genre = */                                GBF_MAZE | GBF_ACTION,
@@ -3714,16 +3715,18 @@ static struct BurnRomInfo XeviousRomDesc[] = {
 	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, /* 15 */
 	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, /* 16 */
 
-	{ "xvi_8bpr.6a",   0x00100, 0x5cc2727f, BRF_GRA             }, /* 17 palette red component */
-	{ "xvi_9bpr.6d",   0x00100, 0x5c8796cc, BRF_GRA             }, /* 18 palette green component */
-	{ "xvi10bpr.6e",   0x00100, 0x3cb60975, BRF_GRA             }, /* 19 palette blue component */
-	{ "xvi_7bpr.4h",   0x00200, 0x22d98032, BRF_GRA             }, /* 20 bg tiles lookup table low bits */
-	{ "xvi_6bpr.4f",   0x00200, 0x3a7599f0, BRF_GRA             }, /* 21 bg tiles lookup table high bits */
-	{ "xvi_4bpr.3l",   0x00200, 0xfd8b9d91, BRF_GRA             }, /* 22 sprite lookup table low bits */
-	{ "xvi_5bpr.3m",   0x00200, 0xbf906d82, BRF_GRA             }, /* 23 sprite lookup table high bits */
+	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, /* 17 palette red component */
+	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, /* 18 palette green component */
+	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, /* 19 palette blue component */
+	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, /* 20 bg tiles lookup table low bits */
+	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, /* 21 bg tiles lookup table high bits */
+	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, /* 22 sprite lookup table low bits */
+	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, /* 23 sprite lookup table high bits */
 
-	{ "xvi_2bpr.7n",   0x00100, 0x550f06bc, BRF_GRA             }, /* 24 */
-	{ "xvi_1bpr.5n",   0x00100, 0x77245b66, BRF_GRA             }, /* 25 timing - not used */
+	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, /* 24 */
+	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, /* 25 timing - not used */
+
+	{ "xvi-3.1f",      0x00117, 0x9192d57a, BRF_OPT             }, /* N82S153N */
 };
 
 STD_ROM_PICK(Xevious)
@@ -3753,16 +3756,16 @@ static struct BurnRomInfo SxeviousRomDesc[] = {
 	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, /* 15 */
 	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, /* 16 */
 
-	{ "xvi_8bpr.6a",   0x00100, 0x5cc2727f, BRF_GRA             }, /* 17 palette red component */
-	{ "xvi_9bpr.6d",   0x00100, 0x5c8796cc, BRF_GRA             }, /* 18 palette green component */
-	{ "xvi10bpr.6e",   0x00100, 0x3cb60975, BRF_GRA             }, /* 19 palette blue component */
-	{ "xvi_7bpr.4h",   0x00200, 0x22d98032, BRF_GRA             }, /* 20 bg tiles lookup table low bits */
-	{ "xvi_6bpr.4f",   0x00200, 0x3a7599f0, BRF_GRA             }, /* 21 bg tiles lookup table high bits */
-	{ "xvi_4bpr.3l",   0x00200, 0xfd8b9d91, BRF_GRA             }, /* 22 sprite lookup table low bits */
-	{ "xvi_5bpr.3m",   0x00200, 0xbf906d82, BRF_GRA             }, /* 23 sprite lookup table high bits */
+	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, /* 17 palette red component */
+	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, /* 18 palette green component */
+	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, /* 19 palette blue component */
+	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, /* 20 bg tiles lookup table low bits */
+	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, /* 21 bg tiles lookup table high bits */
+	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, /* 22 sprite lookup table low bits */
+	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, /* 23 sprite lookup table high bits */
 
-	{ "xvi_2bpr.7n",   0x00100, 0x550f06bc, BRF_GRA             }, /* 24 */
-	{ "xvi_1bpr.5n",   0x00100, 0x77245b66, BRF_GRA             }, /* 25 timing - not used */
+	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, /* 24 */
+	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, /* 25 timing - not used */
 };
 
 STD_ROM_PICK(Sxevious)

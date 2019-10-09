@@ -169,7 +169,7 @@ static void __fastcall go2000_sound_write_port(UINT16 port, UINT8 data)
 	switch (port & 0xff)
 	{
 		case 0x00:
-			DACWrite(0, data);
+			DACSignedWrite(0, data);
 		return;
 
 		case 0x03:
@@ -482,10 +482,10 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Zet);
 	}
 
 	if (pBurnSoundOut) {

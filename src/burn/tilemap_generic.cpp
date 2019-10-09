@@ -723,7 +723,7 @@ INT32 GenericTilemapGetTileDirty(INT32 which, UINT32 offset)
 	return cur_map->dirty_tiles[offset % (cur_map->mwidth * cur_map->mheight)];
 }
 
-void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
+void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 priority_mask)
 {
 #if defined FBNEO_DEBUG
 	if (Bitmap == NULL) {
@@ -758,6 +758,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		if (miny < 0) miny = 0;
 		if (maxy >= nScreenHeight) maxy = nScreenHeight;
 	}
+
+	GenericTilesPRIMASK = priority_mask;
 
 	INT32 category_or = (priority & TMAP_DRAWLAYER1) ? 2 : 0;
 	INT32 opaque = priority & TMAP_FORCEOPAQUE;
@@ -855,7 +857,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				if (trans_ptr[*gfxsrc] == 0)
 				{
 					Bitmap[y * bitmap_width + x] = *gfxsrc + color;
-					pPrioDraw[y * bitmap_width + x] = priority;
+					pPrioDraw[y * bitmap_width + x] = priority | (pPrioDraw[y * bitmap_width + x] & GenericTilesPRIMASK);
 				}
 			}
 		}
@@ -969,7 +971,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 						if (trans_ptr[gfxsrc[flip_wide - dx]] == 0) {
 							dest[dst] = color + gfxsrc[flip_wide - dx];
-							prio[dst] = priority;
+							prio[dst] = priority | (prio[dst] & GenericTilesPRIMASK);
 						}
 					}
 				}
@@ -980,9 +982,9 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 						INT32 dst = (sx + dx) - scrx;
 						if (dst < minx || dst >= maxx) continue;
 
-						if (cur_map->transparent[0][gfxsrc[dx]] == 0) {
+						if (trans_ptr[gfxsrc[dx]] == 0) {
 							dest[dst] = color + gfxsrc[dx];
-							prio[dst] = priority;
+							prio[dst] = priority | (prio[dst] & GenericTilesPRIMASK);
 						}
 					}
 				}
@@ -1003,12 +1005,26 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		// start drawing at tile-border, and let RenderCustomTile..Clip() take care of the sub-tile clipping.
 		INT32 starty = miny - (miny % cur_map->theight);
 		INT32 startx = minx - (minx % cur_map->twidth);
+		INT32 endx = maxx + cur_map->twidth;
+		INT32 endy = maxy + cur_map->theight;
+		
+		if (cur_map->flags & TMAP_FLIPX) {
+			INT32 tmp = ((cur_map->mwidth - 1) * cur_map->twidth) - (endx - cur_map->twidth);
+			endx = (((cur_map->mwidth - 1) * cur_map->twidth) - startx) + cur_map->twidth;
+			startx = tmp;
+		}
 
-		for (INT32 y = starty; y < (INT32)(maxy + cur_map->theight); y += cur_map->theight)
+		if (cur_map->flags & TMAP_FLIPY) {
+			INT32 tmp = ((cur_map->mheight - 1) * cur_map->theight) - (endy - cur_map->theight);
+			endy = (((cur_map->mheight - 1) * cur_map->theight) - starty) + cur_map->theight;
+			starty = tmp;
+		}
+
+		for (INT32 y = starty; y < endy; y += cur_map->theight)
 		{
 			INT32 syy = (y + scrolly) % (cur_map->theight * cur_map->mheight);
 
-			for (INT32 x = startx; x < (INT32)(maxx + cur_map->twidth); x += cur_map->twidth)
+			for (INT32 x = startx; x < endx; x += cur_map->twidth)
 			{
 				INT32 sxx = (x + scrollx) % (cur_map->twidth * cur_map->mwidth);
 
@@ -1061,12 +1077,12 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				INT32 flipy = flags & TILE_FLIPY;
 
 				if (cur_map->flags & TMAP_FLIPY) {
-					sy = ((maxy - miny) - cur_map->theight) - sy;
+					sy = ((cur_map->mheight - 1) * cur_map->theight) - sy;
 					flipy ^= TILE_FLIPY;
 				}
 
 				if (cur_map->flags & TMAP_FLIPX) {
-					sx = ((maxx - minx) - cur_map->twidth) - sx;
+					sx = ((cur_map->mwidth - 1) * cur_map->twidth) - sx;
 					flipx ^= TILE_FLIPX;
 				}
 

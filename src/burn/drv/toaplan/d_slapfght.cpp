@@ -1339,9 +1339,9 @@ struct BurnDriver BurnDrvPerfrmanu = {
 // Tiger Heli (US)
 
 static struct BurnRomInfo tigerhRomDesc[] = {
-	{ "0.4",				0x4000, 0x4be73246, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "1.4",				0x4000, 0xaad04867, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "2.4",				0x4000, 0x4843f15c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a47_00-1.8p",		0x4000, 0x4be73246, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "a47_01-1.8n",		0x4000, 0xaad04867, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a47_02-1.8k",		0x4000, 0x4843f15c, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "a47_03.12d",			0x2000, 0xd105260f, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 

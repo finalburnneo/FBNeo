@@ -510,28 +510,8 @@ int OpenDebugLog()
 	return 0;
 }
 
-void MonitorAutoCheck()
+void GetAspectRatio (int x, int y, int *AspectX, int *AspectY)
 {
-	RECT rect;
-	int x, y;
-
-	SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
-
-	x = GetSystemMetrics(SM_CXSCREEN);
-	y = GetSystemMetrics(SM_CYSCREEN);
-
-	// default full-screen resolution to this size
-	nVidHorWidth = x;
-	nVidHorHeight = y;
-	nVidVerWidth = x;
-	nVidVerHeight = y;
-
-	// also add this to the presets
-	VidPreset[3].nWidth = x;
-	VidPreset[3].nHeight = y;
-	VidPresetVer[3].nWidth = x;
-	VidPresetVer[3].nHeight = y;
-
 	TCHAR szResXY[256] = _T("");
 	_stprintf(szResXY, _T("%dx%d"), x, y);
 
@@ -553,8 +533,9 @@ void MonitorAutoCheck()
 		!_tcscmp(szResXY, _T("3200x2400"))	||
 		!_tcscmp(szResXY, _T("4096x3072"))	||
 		!_tcscmp(szResXY, _T("6400x4800")) ){
-		nVidScrnAspectX = 4;
-		nVidScrnAspectY = 3;
+		*AspectX = 4;
+		*AspectY = 3;
+		return;
 	}
 
 	// Normal LCD (5:4) ( Verified at Wikipedia.Org )
@@ -563,8 +544,9 @@ void MonitorAutoCheck()
 		!_tcscmp(szResXY, _T("1280x1024"))	||
 		!_tcscmp(szResXY, _T("2560x2048"))	||
 		!_tcscmp(szResXY, _T("5120x4096")) ){
-		nVidScrnAspectX = 5;
-		nVidScrnAspectY = 4;
+		*AspectX = 5;
+		*AspectY = 4;
+		return;
 	}
 
 	// CRT Widescreen (16:9) ( Verified at Wikipedia.Org )
@@ -573,8 +555,9 @@ void MonitorAutoCheck()
 		!_tcscmp(szResXY, _T("1360x768")) ||
 		!_tcscmp(szResXY, _T("1366x768")) ||
 		!_tcscmp(szResXY, _T("1920x1080"))) {
-		nVidScrnAspectX = 16;
-		nVidScrnAspectY = 9;
+		*AspectX = 16;
+		*AspectY = 9;
+		return;
 	}
 
 	// LCD Widescreen (16:10) ( Verified at Wikipedia.Org )
@@ -587,8 +570,147 @@ void MonitorAutoCheck()
 		!_tcscmp(szResXY, _T("3840x2400"))	||
 		!_tcscmp(szResXY, _T("5120x3200"))	||
 		!_tcscmp(szResXY, _T("7680x4800")) ){
-		nVidScrnAspectX = 16;
-		nVidScrnAspectY = 10;
+		*AspectX = 16;
+		*AspectY = 10;
+		return;
+	}
+
+	// Vertically orientated Normal CRT (4:3) ( Verified at Wikipedia.Org )
+	if( !_tcscmp(szResXY, _T("240x320"))	||
+		!_tcscmp(szResXY, _T("384x512"))	||
+		!_tcscmp(szResXY, _T("480x640"))	||
+		!_tcscmp(szResXY, _T("600x800"))	||
+		!_tcscmp(szResXY, _T("624x832"))	||
+		!_tcscmp(szResXY, _T("768x1024"))	||
+		!_tcscmp(szResXY, _T("832x1120"))	||
+		!_tcscmp(szResXY, _T("864x1152"))	||
+		!_tcscmp(szResXY, _T("960x1280"))	||
+		!_tcscmp(szResXY, _T("1024x1280"))	||
+		!_tcscmp(szResXY, _T("1050x1400"))	||
+		!_tcscmp(szResXY, _T("1200x1600"))	||
+		!_tcscmp(szResXY, _T("1536x2048"))	||
+		!_tcscmp(szResXY, _T("2100x2800"))	||
+		!_tcscmp(szResXY, _T("2400x3200"))	||
+		!_tcscmp(szResXY, _T("3072x4096"))	||
+		!_tcscmp(szResXY, _T("4800x6400")) ){
+		*AspectX = 3;
+		*AspectY = 4;
+		return;
+	}
+
+	// Vertically orientated Normal LCD (5:4) ( Verified at Wikipedia.Org )
+	if( !_tcscmp(szResXY, _T("256x320"))	||
+		!_tcscmp(szResXY, _T("512x640"))	||
+		!_tcscmp(szResXY, _T("1024x1280"))	||
+		!_tcscmp(szResXY, _T("2048x2560"))	||
+		!_tcscmp(szResXY, _T("4096x5120")) ){
+		*AspectX = 4;
+		*AspectY = 5;
+		return;
+	}
+
+	// Vertically orientated CRT Widescreen (16:9) ( Verified at Wikipedia.Org )
+	if( !_tcscmp(szResXY, _T("270x480"))  ||
+		!_tcscmp(szResXY, _T("720x1280")) ||
+		!_tcscmp(szResXY, _T("768x1360")) ||
+		!_tcscmp(szResXY, _T("768x1366")) ||
+		!_tcscmp(szResXY, _T("1080x1920"))) {
+		*AspectX = 9;
+		*AspectY = 16;
+		return;
+	}
+
+	// Vertically orientated LCD Widescreen (10:16) ( Verified at Wikipedia.Org )
+	if(	!_tcscmp(szResXY, _T("200x320"))	||
+		!_tcscmp(szResXY, _T("800x1280"))	||
+		!_tcscmp(szResXY, _T("900x1440"))	||
+		!_tcscmp(szResXY, _T("1050x1680"))	||
+		!_tcscmp(szResXY, _T("1200x1920"))	||
+		!_tcscmp(szResXY, _T("1600x2560"))	||
+		!_tcscmp(szResXY, _T("2400x3840"))	||
+		!_tcscmp(szResXY, _T("3200x5120"))	||
+		!_tcscmp(szResXY, _T("4800x7680")) ){
+		*AspectX = 10;
+		*AspectY = 16;
+		return;
+	}
+}
+
+static BOOL CALLBACK MonInfoProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData)
+{
+	MONITORINFOEX iMonitor;
+	int width, height;
+
+	iMonitor.cbSize = sizeof(MONITORINFOEX);
+	GetMonitorInfo(hMonitor, &iMonitor);
+
+    width = iMonitor.rcMonitor.right - iMonitor.rcMonitor.left;
+    height = iMonitor.rcMonitor.bottom - iMonitor.rcMonitor.top;
+
+	if ((HorScreen[0] && !_wcsicmp(HorScreen, iMonitor.szDevice)) ||
+		(!HorScreen[0] && iMonitor.dwFlags & MONITORINFOF_PRIMARY)) {
+
+		// Set values for horizontal monitor
+		nVidHorWidth = width;
+		nVidHorHeight = height;
+
+		// also add this to the presets
+		VidPreset[3].nWidth = width;
+		VidPreset[3].nHeight = height;
+
+		GetAspectRatio(width, height, &nVidScrnAspectX, &nVidScrnAspectY);
+	}
+
+	if ((VerScreen[0] && !_wcsicmp(VerScreen, iMonitor.szDevice)) ||
+		(!VerScreen[0] && iMonitor.dwFlags & MONITORINFOF_PRIMARY)) {
+
+		// Set values for vertical monitor
+		nVidVerWidth = width;
+		nVidVerHeight = height;
+
+		// also add this to the presets
+		VidPresetVer[3].nWidth = width;
+		VidPresetVer[3].nHeight = height;
+
+		GetAspectRatio(width, height, &nVidVerScrnAspectX, &nVidVerScrnAspectY);
+	}
+
+	return TRUE;
+}
+
+void MonitorAutoCheck()
+{
+	RECT rect;
+	int numScreens;
+
+	SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
+
+	numScreens = GetSystemMetrics(SM_CMONITORS);
+
+    // If only one monitor or not using a DirectX9 blitter, only use primary monitor
+	if (numScreens == 1 || nVidSelect < 3) {
+		int x, y;
+
+		x = GetSystemMetrics(SM_CXSCREEN);
+		y = GetSystemMetrics(SM_CYSCREEN);
+
+		// default full-screen resolution to this size
+		nVidHorWidth = x;
+		nVidHorHeight = y;
+		nVidVerWidth = x;
+		nVidVerHeight = y;
+
+		// also add this to the presets
+		VidPreset[3].nWidth = x;
+		VidPreset[3].nHeight = y;
+		VidPresetVer[3].nWidth = x;
+		VidPresetVer[3].nHeight = y;
+
+		GetAspectRatio(x, y, &nVidScrnAspectX, &nVidScrnAspectY);
+		nVidVerScrnAspectX = nVidScrnAspectX;
+		nVidVerScrnAspectY = nVidScrnAspectY;
+	} else {
+		EnumDisplayMonitors(NULL, NULL, MonInfoProc, 0);
 	}
 }
 

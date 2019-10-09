@@ -686,9 +686,9 @@ extern "C" INT32 BurnDrvExit()
 	}
 #endif
 
+	HiscoreExit(); // must come before CheatExit() (uses cheat cpu-registry)
 	CheatExit();
 	CheatSearchExit();
-	HiscoreExit();
 	BurnStateExit();
 	
 	nBurnCPUSpeedAdjust = 0x0100;
@@ -850,6 +850,39 @@ INT32 BurnByteswap(UINT8* pMem, INT32 nLen)
 	return 0;
 }
 
+// useful for expanding 4bpp pixels packed into one byte using little to-no
+// extra memory.
+// use 'swap' to swap whether the high or low nibble goes into byte 0 or 1
+// 'nxor' is useful for inverting the data
+// this is an example of a graphics decode that can be converted to use this
+// function:
+//	INT32 Plane[4] = { STEP4(0,1) }; - 0,1,2,3
+//	INT32 XOffs[8] = { STEP8(0,4) }; - 0,4,8,12,16,20,24,28 (swap is useful for when this is 4,0,12,8...)
+//	INT32 YOffs[8] = { STEP8(0,32) }; - 0, 32, 64, 96, 128, 160, 192, 224
+//
+void BurnNibbleExpand(UINT8 *source, UINT8 *dst, INT32 length, INT32 swap, UINT8 nxor)
+{
+	if (source == NULL) {
+		bprintf (0, _T("BurnNibbleExpand() source passed as NULL!\n"));
+		return;
+	}
+
+	if (length <= 0) {
+		bprintf (0, _T("BurnNibbleExpand() length passed as <= 0 (%d)!\n"), length);
+		return;
+	}
+
+	swap = swap ? 1 : 0;
+	if (dst == NULL) dst = source;
+
+	for (INT32 i = length - 1; i >= 0; i--)
+	{
+		INT32 t = source[i] ^ nxor;
+		dst[(i * 2 + 0) ^ swap] = t >> 4;
+		dst[(i * 2 + 1) ^ swap] = t & 0xf;
+	}
+}
+
 // Application-defined rom loading function:
 INT32 (__cdecl *BurnExtLoadRom)(UINT8 *Dest, INT32 *pnWrote, INT32 i) = NULL;
 
@@ -883,15 +916,50 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 }
 
 // ----------------------------------------------------------------------------
+// Get the local time - make tweaks if netgame or input recording/playback
+// tweaks are needed for the game to to remain in-sync! (pgm, neogeo, etc)
+struct MovieExtInfo
+{
+	// date & time
+	UINT32 year, month, day;
+	UINT32 hour, minute, second;
+};
+
+extern struct MovieExtInfo MovieInfo; // from replay.cpp
+
+void BurnGetLocalTime(tm *nTime)
+{
+	if (is_netgame_or_recording()) {
+		if (is_netgame_or_recording() & 2) { // recording/playback
+			nTime->tm_sec = MovieInfo.second;
+			nTime->tm_min = MovieInfo.minute;
+			nTime->tm_hour = MovieInfo.hour;
+			nTime->tm_mday = MovieInfo.day;
+			nTime->tm_mon = MovieInfo.month;
+			nTime->tm_year = MovieInfo.year;
+		} else {
+			nTime->tm_sec = 0; // defaults for netgame
+			nTime->tm_min = 0;
+			nTime->tm_hour = 0;
+			nTime->tm_mday = 1;
+			nTime->tm_wday = 3;
+			nTime->tm_mon = 6 - 1;
+			nTime->tm_year = 2018;
+		}
+	} else {
+		time_t nLocalTime = time(NULL); // query current time from this machine
+		tm* tmLocalTime = localtime(&nLocalTime);
+		memcpy(nTime, tmLocalTime, sizeof(tm));
+	}
+}
+
+
+// ----------------------------------------------------------------------------
 // State-able random generator, based on early BSD LCG rand
 static UINT64 nBurnRandSeed = 0;
 
 UINT16 BurnRandom()
 {
-	if (!nBurnRandSeed) { // for the rare rollover-to-0 occurance
-		nBurnRandSeed = 0x2d1e0f;
-	}
-
 	nBurnRandSeed = nBurnRandSeed * 1103515245 + 12345;
 
 	return (UINT32)(nBurnRandSeed / 65536) % 0x10000;
@@ -911,7 +979,11 @@ void BurnRandomSetSeed(UINT64 nSeed)
 
 void BurnRandomInit()
 { // for states & input recordings - init before emulation starts
-	nBurnRandSeed = time(NULL);
+	if (is_netgame_or_recording()) {
+		BurnRandomSetSeed(0x303808909313ULL);
+	} else {
+		BurnRandomSetSeed(time(NULL));
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -958,6 +1030,13 @@ void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize)
 {
     FILE *f = fopen(filename, "wb+");
     fwrite(buffer, 1, bufsize, f);
+    fclose(f);
+}
+
+void BurnDumpLoad_(char *filename, UINT8 *buffer, INT32 bufsize)
+{
+    FILE *f = fopen(filename, "rb+");
+    fread(buffer, 1, bufsize, f);
     fclose(f);
 }
 #endif

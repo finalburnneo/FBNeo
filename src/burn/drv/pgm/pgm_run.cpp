@@ -59,6 +59,8 @@ INT32 nPGMDisableIRQ4 = 0;
 INT32 nPGMArm7Type = 0;
 UINT32 nPgmAsicRegionHackAddress = 0;
 
+INT32 pgm_cave_refresh = 0;
+
 #define Z80_FREQ            8468000
 #define M68K_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
 #define ARM7_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
@@ -519,7 +521,6 @@ INT32 PgmDoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
-	nExtraCycles = 0;
 
 	if (nEnableArm7) {
 		Arm7Open(0);
@@ -542,6 +543,7 @@ INT32 PgmDoReset()
     memset (hold_coin, 0, sizeof(hold_coin));
 
 	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -586,7 +588,7 @@ static void expand_tile_gfx()
 		PGMTileROM[i * 2 + 1] = d >> 4;
 	}
 
-	PGMTileROM = (UINT8*)realloc(PGMTileROM, 0x400000);
+	PGMTileROM = (UINT8*)BurnRealloc(PGMTileROM, 0x400000);
 }
 
 static void expand_colourdata()
@@ -671,7 +673,7 @@ static void ics2115_sound_irq(INT32 nState)
 
 INT32 pgmInit()
 {
-	BurnSetRefreshRate((BurnDrvGetHardwareCode() & HARDWARE_IGS_JAMMAPCB) ? 59.17 : 60.00); // different?
+	BurnSetRefreshRate(((BurnDrvGetHardwareCode() & HARDWARE_IGS_JAMMAPCB) || pgm_cave_refresh) ? 59.17 : 60.00);
 
 	Mem = NULL;
 
@@ -830,6 +832,8 @@ INT32 pgmExit()
 
 	nPgmCurrentBios = -1;
 
+	pgm_cave_refresh = 0;
+
 	return 0;
 }
 
@@ -881,7 +885,6 @@ INT32 pgmFrame()
         PgmInput[4] |= PgmCoins & ~0xf; // add non-coin buttons
 	}
 
-	INT32 nCyclesNext[3] = {0, 0, 0};
 	nCyclesDone[0] = 0;
 	nCyclesDone[1] = 0;
 	nCyclesDone[2] = 0;
@@ -908,18 +911,14 @@ INT32 pgmFrame()
 	SekOpen(0);
 	ZetOpen(0);
 	if (nEnableArm7) Arm7Open(0);
+	nCyclesDone[0] += SekIdle(nExtraCycles);
 
 	for (INT32 i = 0; i < PGM_INTER_LEAVE; i++)
 	{
-		nCyclesNext[0] += M68K_CYCS_PER_INTER;
-		nCyclesNext[1] += Z80_CYCS_PER_INTER;
-		nCyclesNext[2] += ARM7_CYCS_PER_INTER;
-
 		INT32 cycles = M68K_CYCS_PER_INTER;
 
 		INT32 nSegmentS = (M68K_CYCS_PER_FRAME - nCyclesDone[0]) / (PGM_INTER_LEAVE - i);
-		nCyclesDone[0] += SekRun(nSegmentS + nExtraCycles);
-		nExtraCycles = 0;
+		nCyclesDone[0] += SekRun(nSegmentS);
 
 		if (nEnableArm7) {
 			cycles = SekTotalCycles() - Arm7TotalCycles();
@@ -1044,6 +1043,8 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 
 		v3021Scan();
+
+		SCAN_VAR(nExtraCycles);
 
 		SCAN_VAR(PgmInput);
 

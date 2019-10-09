@@ -455,6 +455,7 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 {
 	int xm, ym;											// The multiple of nScrnWidth and nScrnHeight we can fit in
 	int nScrnWidth, nScrnHeight;
+	int nScrnAspectX, nScrnAspectY;
 
 	int nGameAspectX = 4, nGameAspectY = 3;
 	int nWidth = pRect->right - pRect->left;
@@ -464,11 +465,21 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 		return 0;
 	}
 
+	nScrnAspectX = nVidScrnAspectX;
+	nScrnAspectY = nVidScrnAspectY;
+
 	if (bDrvOkay) {
 		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)) && (nVidRotationAdjust & 1)) {
 			BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
 		} else {
 			BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
+		}
+
+
+		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && nVidFullscreen && !(nVidRotationAdjust & 1)) {
+			// Using vertically orientated monitor
+			nScrnAspectX = nVidVerScrnAspectX;
+			nScrnAspectY = nVidVerScrnAspectY;
 		}
 	}
 
@@ -489,14 +500,14 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 			int xmScratch = xm;
 			do {
 				nWidthScratch = nGameWidth * xmScratch;
-				nHeightScratch = nWidthScratch * nVidScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nVidScrnAspectY * nGameAspectX);
+				nHeightScratch = nWidthScratch * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
 				xmScratch--;
 			} while (nHeightScratch > nHeight && xmScratch >= 2);
 			if (nHeightScratch > nHeight) {				// The image is too high
 				if (nGameWidth < nGameHeight) {			// Vertical games
-					nWidth = nHeight * nVidScrnAspectX * nGameAspectX * nScrnHeight / (nScrnWidth * nVidScrnAspectY * nGameAspectY);
+					nWidth = nHeight * nScrnAspectX * nGameAspectX * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectY);
 				} else {								// Horizontal games
-					nWidth = nHeight * nVidScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nVidScrnAspectX * nGameAspectY);
+					nWidth = nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
 				}
 			} else {
 				nWidth = nWidthScratch;
@@ -506,14 +517,14 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 			int ymScratch = ym;
 			do {
 				nHeightScratch = nGameHeight * ymScratch;
-				nWidthScratch = nHeightScratch * nVidScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nVidScrnAspectX * nGameAspectY);
+				nWidthScratch = nHeightScratch * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
 				ymScratch--;
 			} while (nWidthScratch > nWidth && ymScratch >= 2);
 			if (nWidthScratch > nWidth) {				// The image is too wide
 				if (nGameWidth < nGameHeight) {			// Vertical games
-					nHeight = nWidth * nVidScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nVidScrnAspectX * nGameAspectX);
+					nHeight = nWidth * nScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectX);
 				} else {								// Horizontal games
-					nHeight = nWidth * nVidScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nVidScrnAspectY * nGameAspectX);
+					nHeight = nWidth * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
 				}
 			} else {
 				nWidth = nWidthScratch;
@@ -523,12 +534,12 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 	} else {
 		if (bVidCorrectAspect) {					// Correct aspect ratio
 			int nWidthScratch;
-			nWidthScratch = nHeight * nVidScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nVidScrnAspectX * nGameAspectY);
+			nWidthScratch = nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
 			if (nWidthScratch > nWidth) {			// The image is too wide
 				if (nGameWidth < nGameHeight) {		// Vertical games
-					nHeight = nWidth * nVidScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nVidScrnAspectX * nGameAspectX);
+					nHeight = nWidth * nScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectX);
 				} else {							// Horizontal games
-					nHeight = nWidth * nVidScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nVidScrnAspectY * nGameAspectX);
+					nHeight = nWidth * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
 				}
 			} else {
 				nWidth = nWidthScratch;

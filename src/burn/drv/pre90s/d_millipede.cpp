@@ -52,65 +52,65 @@ static UINT32 centipedemode = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo MillipedInputList[] = {
-	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"},
-	{"P1 Up",		    BIT_DIGITAL,	DrvJoy3 + 3,	"p1 up"},
-	{"P1 Down",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p1 down"},
-	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3 + 1,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy3 + 3,	"p1 up"		},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p1 down"	},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	A("P1 Trackball X", BIT_ANALOG_REL, &Analog0PortX,  "p1 x-axis"),
 	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog0PortY,  "p1 y-axis"),
 
-	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"},
-	{"P2 Up",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p2 up"},
-	{"P2 Down",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"},
-	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4 + 1,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 right"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p2 up"		},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"	},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4 + 1,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 	A("P2 Trackball X", BIT_ANALOG_REL, &Analog1PortX,  "p2 x-axis"),
 	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog1PortY,  "p2 y-axis"),
 
-	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
-	{"Service",		    BIT_DIGITAL,	DrvJoy3 + 7,	"service"},
-	{"Tilt",		    BIT_DIGITAL,	DrvJoy3 + 4,	"tilt"},
-	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	    "dip"},
-	{"Dip B",		    BIT_DIPSWITCH,	DrvDip + 1,	    "dip"},
-	{"Dip C",		    BIT_DIPSWITCH,	DrvDip + 2,	    "dip"},
-	{"Dip D",		    BIT_DIPSWITCH,	DrvDip + 3,	    "dip"},
-	{"Dip E",		    BIT_DIPSWITCH,	DrvDip + 4,	    "dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Service",		    BIT_DIGITAL,	DrvJoy3 + 7,	"service"	},
+	{"Tilt",		    BIT_DIGITAL,	DrvJoy3 + 4,	"tilt"		},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	    "dip"		},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDip + 1,	    "dip"		},
+	{"Dip C",		    BIT_DIPSWITCH,	DrvDip + 2,	    "dip"		},
+	{"Dip D",		    BIT_DIPSWITCH,	DrvDip + 3,	    "dip"		},
+	{"Dip E",		    BIT_DIPSWITCH,	DrvDip + 4,	    "dip"		},
 };
 
 STDINPUTINFO(Milliped)
 
 static struct BurnInputInfo CentipedInputList[] = {
-	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"},
-	{"P1 Up",		    BIT_DIGITAL,	DrvJoy4 + 4,	"p1 up"},
-	{"P1 Down",		    BIT_DIGITAL,	DrvJoy4 + 5,	"p1 down"},
-	{"P1 Left",		    BIT_DIGITAL,	DrvJoy4 + 6,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 7,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"	},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy4 + 4,	"p1 up"		},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy4 + 5,	"p1 down"	},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy4 + 6,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 7,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"	},
 	A("P1 Trackball X", BIT_ANALOG_REL, &Analog0PortX,  "p1 x-axis"),
 	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog0PortY,  "p1 y-axis"),
 
-	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"},
-	{"P2 Up",		    BIT_DIGITAL,	DrvJoy4 + 1,	"p2 up"},
-	{"P2 Down",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p2 down"},
-	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy4 + 1,	"p2 up"		},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p2 down"	},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
 	A("P2 Trackball X", BIT_ANALOG_REL, &Analog1PortX,  "p2 x-axis"),
 	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog1PortY,  "p2 y-axis"),
 
-	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
-	{"Service",		    BIT_DIGITAL,	DrvJoy2 + 7,	"service"},
-	{"Tilt",		    BIT_DIGITAL,	DrvJoy2 + 4,	"tilt"},
-	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	    "dip"},
-	{"Dip B",		    BIT_DIPSWITCH,	DrvDip + 4,	    "dip"},
-	{"Dip C",		    BIT_DIPSWITCH,	DrvDip + 5,	    "dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Service",		    BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Tilt",		    BIT_DIGITAL,	DrvJoy2 + 4,	"tilt"		},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	    "dip"		},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDip + 4,	    "dip"		},
+	{"Dip C",		    BIT_DIPSWITCH,	DrvDip + 5,	    "dip"		},
 };
 #undef A
 
@@ -119,67 +119,67 @@ STDINPUTINFO(Centiped)
 
 static struct BurnDIPInfo CentipedDIPList[]=
 {
-	{0x15, 0xff, 0xff, 0x20, NULL		},  // dip0
-	{0x16, 0xff, 0xff, 0x54, NULL		},  // dip4
-	{0x17, 0xff, 0xff, 0x02, NULL		},  // dip5
+	{0x15, 0xff, 0xff, 0x30, NULL					},  // dip0
+	{0x16, 0xff, 0xff, 0x54, NULL					},  // dip4
+	{0x17, 0xff, 0xff, 0x02, NULL					},  // dip5
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x15, 0x01, 0x10, 0x00, "Upright"		},
-	{0x15, 0x01, 0x10, 0x10, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x15, 0x01, 0x10, 0x00, "Upright"				},
+	{0x15, 0x01, 0x10, 0x10, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x15, 0x01, 0x20, 0x20, "Off"		},
-	{0x15, 0x01, 0x20, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x15, 0x01, 0x20, 0x20, "Off"					},
+	{0x15, 0x01, 0x20, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Language"		},
-	{0x16, 0x01, 0x03, 0x00, "English"		},
-	{0x16, 0x01, 0x03, 0x01, "German"		},
-	{0x16, 0x01, 0x03, 0x02, "French"		},
-	{0x16, 0x01, 0x03, 0x03, "Spanish"		},
+	{0   , 0xfe, 0   ,    4, "Language"				},
+	{0x16, 0x01, 0x03, 0x00, "English"				},
+	{0x16, 0x01, 0x03, 0x01, "German"				},
+	{0x16, 0x01, 0x03, 0x02, "French"				},
+	{0x16, 0x01, 0x03, 0x03, "Spanish"				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x16, 0x01, 0x0c, 0x00, "2"		},
-	{0x16, 0x01, 0x0c, 0x04, "3"		},
-	{0x16, 0x01, 0x0c, 0x08, "4"		},
-	{0x16, 0x01, 0x0c, 0x0c, "5"		},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x16, 0x01, 0x0c, 0x00, "2"					},
+	{0x16, 0x01, 0x0c, 0x04, "3"					},
+	{0x16, 0x01, 0x0c, 0x08, "4"					},
+	{0x16, 0x01, 0x0c, 0x0c, "5"					},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x16, 0x01, 0x30, 0x00, "10000"		},
-	{0x16, 0x01, 0x30, 0x10, "12000"		},
-	{0x16, 0x01, 0x30, 0x20, "15000"		},
-	{0x16, 0x01, 0x30, 0x30, "20000"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x16, 0x01, 0x30, 0x00, "10000"				},
+	{0x16, 0x01, 0x30, 0x10, "12000"				},
+	{0x16, 0x01, 0x30, 0x20, "15000"				},
+	{0x16, 0x01, 0x30, 0x30, "20000"				},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x16, 0x01, 0x40, 0x40, "Easy"		},
-	{0x16, 0x01, 0x40, 0x00, "Hard"		},
+	{0   , 0xfe, 0   ,    2, "Difficulty"			},
+	{0x16, 0x01, 0x40, 0x40, "Easy"					},
+	{0x16, 0x01, 0x40, 0x00, "Hard"					},
 
 	{0   , 0xfe, 0   ,    2, "Credit Minimum"		},
-	{0x16, 0x01, 0x80, 0x00, "1"		},
-	{0x16, 0x01, 0x80, 0x80, "2"		},
+	{0x16, 0x01, 0x80, 0x00, "1"					},
+	{0x16, 0x01, 0x80, 0x80, "2"					},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x17, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
-	{0x17, 0x01, 0x03, 0x02, "1 Coin  1 Credits"		},
-	{0x17, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
-	{0x17, 0x01, 0x03, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    4, "Coinage"				},
+	{0x17, 0x01, 0x03, 0x03, "2 Coins 1 Credits"	},
+	{0x17, 0x01, 0x03, 0x02, "1 Coin  1 Credits"	},
+	{0x17, 0x01, 0x03, 0x01, "1 Coin  2 Credits"	},
+	{0x17, 0x01, 0x03, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    4, "Right Coin"		},
-	{0x17, 0x01, 0x0c, 0x00, "*1"		},
-	{0x17, 0x01, 0x0c, 0x04, "*4"		},
-	{0x17, 0x01, 0x0c, 0x08, "*5"		},
-	{0x17, 0x01, 0x0c, 0x0c, "*6"		},
+	{0   , 0xfe, 0   ,    4, "Right Coin"			},
+	{0x17, 0x01, 0x0c, 0x00, "*1"					},
+	{0x17, 0x01, 0x0c, 0x04, "*4"					},
+	{0x17, 0x01, 0x0c, 0x08, "*5"					},
+	{0x17, 0x01, 0x0c, 0x0c, "*6"					},
 
-	{0   , 0xfe, 0   ,    2, "Left Coin"		},
-	{0x17, 0x01, 0x10, 0x00, "*1"		},
-	{0x17, 0x01, 0x10, 0x10, "*2"		},
+	{0   , 0xfe, 0   ,    2, "Left Coin"			},
+	{0x17, 0x01, 0x10, 0x00, "*1"					},
+	{0x17, 0x01, 0x10, 0x10, "*2"					},
 
-	{0   , 0xfe, 0   ,    6, "Bonus Coins"		},
-	{0x17, 0x01, 0xe0, 0x00, "None"		},
-	{0x17, 0x01, 0xe0, 0x20, "3 credits/2 coins"		},
-	{0x17, 0x01, 0xe0, 0x40, "5 credits/4 coins"		},
-	{0x17, 0x01, 0xe0, 0x60, "6 credits/4 coins"		},
-	{0x17, 0x01, 0xe0, 0x80, "6 credits/5 coins"		},
-	{0x17, 0x01, 0xe0, 0xa0, "4 credits/3 coins"		},
+	{0   , 0xfe, 0   ,    6, "Bonus Coins"			},
+	{0x17, 0x01, 0xe0, 0x00, "None"					},
+	{0x17, 0x01, 0xe0, 0x20, "3 credits/2 coins"	},
+	{0x17, 0x01, 0xe0, 0x40, "5 credits/4 coins"	},
+	{0x17, 0x01, 0xe0, 0x60, "6 credits/4 coins"	},
+	{0x17, 0x01, 0xe0, 0x80, "6 credits/5 coins"	},
+	{0x17, 0x01, 0xe0, 0xa0, "4 credits/3 coins"	},
 };
 
 STDDIPINFO(Centiped)
@@ -187,92 +187,92 @@ STDDIPINFO(Centiped)
 
 static struct BurnDIPInfo MillipedDIPList[]=
 {
-	{0x15, 0xff, 0xff, 0x04, NULL		},
-	{0x16, 0xff, 0xff, 0x00, NULL		},
-	{0x17, 0xff, 0xff, 0xA0, NULL		},
-	{0x18, 0xff, 0xff, 0x04, NULL		},
-	{0x19, 0xff, 0xff, 0x02, NULL		},
+	{0x15, 0xff, 0xff, 0x04, NULL					},
+	{0x16, 0xff, 0xff, 0x00, NULL					},
+	{0x17, 0xff, 0xff, 0x80, NULL					},
+	{0x18, 0xff, 0xff, 0x04, NULL					},
+	{0x19, 0xff, 0xff, 0x02, NULL					},
 
-	{0   , 0xfe, 0   ,    4, "Language"		},
-	{0x15, 0x01, 0x03, 0x00, "English"		},
-	{0x15, 0x01, 0x03, 0x01, "German"		},
-	{0x15, 0x01, 0x03, 0x02, "French"		},
-	{0x15, 0x01, 0x03, 0x03, "Spanish"		},
+	{0   , 0xfe, 0   ,    4, "Language"				},
+	{0x15, 0x01, 0x03, 0x00, "English"				},
+	{0x15, 0x01, 0x03, 0x01, "German"				},
+	{0x15, 0x01, 0x03, 0x02, "French"				},
+	{0x15, 0x01, 0x03, 0x03, "Spanish"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus"		},
-	{0x15, 0x01, 0x0c, 0x00, "0"		},
-	{0x15, 0x01, 0x0c, 0x04, "0 1x"		},
-	{0x15, 0x01, 0x0c, 0x08, "0 1x 2x"		},
-	{0x15, 0x01, 0x0c, 0x0c, "0 1x 2x 3x"		},
+	{0   , 0xfe, 0   ,    4, "Bonus"				},
+	{0x15, 0x01, 0x0c, 0x00, "0"					},
+	{0x15, 0x01, 0x0c, 0x04, "0 1x"					},
+	{0x15, 0x01, 0x0c, 0x08, "0 1x 2x"				},
+	{0x15, 0x01, 0x0c, 0x0c, "0 1x 2x 3x"			},
 
 	{0   , 0xfe, 0   ,    2, "Credit Minimum"		},
-	{0x16, 0x01, 0x04, 0x00, "1"		},
-	{0x16, 0x01, 0x04, 0x04, "2"		},
+	{0x16, 0x01, 0x04, 0x00, "1"					},
+	{0x16, 0x01, 0x04, 0x04, "2"					},
 
 	{0   , 0xfe, 0   ,    2, "Coin Counters"		},
-	{0x16, 0x01, 0x08, 0x00, "1"		},
-	{0x16, 0x01, 0x08, 0x08, "2"		},
+	{0x16, 0x01, 0x08, 0x00, "1"					},
+	{0x16, 0x01, 0x08, 0x08, "2"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x17, 0x01, 0x20, 0x20, "Upright"		},
-	{0x17, 0x01, 0x20, 0x00, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x17, 0x01, 0x20, 0x20, "Upright"				},
+	{0x17, 0x01, 0x20, 0x00, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x17, 0x01, 0x80, 0x80, "Off"		},
-	{0x17, 0x01, 0x80, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x17, 0x01, 0x80, 0x80, "Off"					},
+	{0x17, 0x01, 0x80, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Millipede Head"		},
-	{0x18, 0x01, 0x01, 0x00, "Easy"		},
-	{0x18, 0x01, 0x01, 0x01, "Hard"		},
+	{0x18, 0x01, 0x01, 0x00, "Easy"					},
+	{0x18, 0x01, 0x01, 0x01, "Hard"					},
 
-	{0   , 0xfe, 0   ,    2, "Beetle"		},
-	{0x18, 0x01, 0x02, 0x00, "Easy"		},
-	{0x18, 0x01, 0x02, 0x02, "Hard"		},
+	{0   , 0xfe, 0   ,    2, "Beetle"				},
+	{0x18, 0x01, 0x02, 0x00, "Easy"					},
+	{0x18, 0x01, 0x02, 0x02, "Hard"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x18, 0x01, 0x0c, 0x00, "2"		},
-	{0x18, 0x01, 0x0c, 0x04, "3"		},
-	{0x18, 0x01, 0x0c, 0x08, "4"		},
-	{0x18, 0x01, 0x0c, 0x0c, "5"		},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x18, 0x01, 0x0c, 0x00, "2"					},
+	{0x18, 0x01, 0x0c, 0x04, "3"					},
+	{0x18, 0x01, 0x0c, 0x08, "4"					},
+	{0x18, 0x01, 0x0c, 0x0c, "5"					},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x18, 0x01, 0x30, 0x00, "12000"		},
-	{0x18, 0x01, 0x30, 0x10, "15000"		},
-	{0x18, 0x01, 0x30, 0x20, "20000"		},
-	{0x18, 0x01, 0x30, 0x30, "None"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x18, 0x01, 0x30, 0x00, "12000"				},
+	{0x18, 0x01, 0x30, 0x10, "15000"				},
+	{0x18, 0x01, 0x30, 0x20, "20000"				},
+	{0x18, 0x01, 0x30, 0x30, "None"					},
 
-	{0   , 0xfe, 0   ,    2, "Spider"		},
-	{0x18, 0x01, 0x40, 0x00, "Easy"		},
-	{0x18, 0x01, 0x40, 0x40, "Hard"		},
+	{0   , 0xfe, 0   ,    2, "Spider"				},
+	{0x18, 0x01, 0x40, 0x00, "Easy"					},
+	{0x18, 0x01, 0x40, 0x40, "Hard"					},
 
-	{0   , 0xfe, 0   ,    2, "Starting Score Select"		},
-	{0x18, 0x01, 0x80, 0x80, "Off"		},
-	{0x18, 0x01, 0x80, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Starting Score Select"},
+	{0x18, 0x01, 0x80, 0x80, "Off"					},
+	{0x18, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x19, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
-	{0x19, 0x01, 0x03, 0x02, "1 Coin  1 Credits"		},
-	{0x19, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
-	{0x19, 0x01, 0x03, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    4, "Coinage"				},
+	{0x19, 0x01, 0x03, 0x03, "2 Coins 1 Credits"	},
+	{0x19, 0x01, 0x03, 0x02, "1 Coin  1 Credits"	},
+	{0x19, 0x01, 0x03, 0x01, "1 Coin  2 Credits"	},
+	{0x19, 0x01, 0x03, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    4, "Right Coin"		},
-	{0x19, 0x01, 0x0c, 0x00, "*1"		},
-	{0x19, 0x01, 0x0c, 0x04, "*4"		},
-	{0x19, 0x01, 0x0c, 0x08, "*5"		},
-	{0x19, 0x01, 0x0c, 0x0c, "*6"		},
+	{0   , 0xfe, 0   ,    4, "Right Coin"			},
+	{0x19, 0x01, 0x0c, 0x00, "*1"					},
+	{0x19, 0x01, 0x0c, 0x04, "*4"					},
+	{0x19, 0x01, 0x0c, 0x08, "*5"					},
+	{0x19, 0x01, 0x0c, 0x0c, "*6"					},
 
-	{0   , 0xfe, 0   ,    2, "Left Coin"		},
-	{0x19, 0x01, 0x10, 0x00, "*1"		},
-	{0x19, 0x01, 0x10, 0x10, "*2"		},
+	{0   , 0xfe, 0   ,    2, "Left Coin"			},
+	{0x19, 0x01, 0x10, 0x00, "*1"					},
+	{0x19, 0x01, 0x10, 0x10, "*2"					},
 
-	{0   , 0xfe, 0   ,    7, "Bonus Coins"		},
-	{0x19, 0x01, 0xe0, 0x00, "None"		},
-	{0x19, 0x01, 0xe0, 0x20, "3 credits/2 coins"		},
-	{0x19, 0x01, 0xe0, 0x40, "5 credits/4 coins"		},
-	{0x19, 0x01, 0xe0, 0x60, "6 credits/4 coins"		},
-	{0x19, 0x01, 0xe0, 0x80, "6 credits/5 coins"		},
-	{0x19, 0x01, 0xe0, 0xa0, "4 credits/3 coins"		},
-	{0x19, 0x01, 0xe0, 0xc0, "Demo Mode"		},
+	{0   , 0xfe, 0   ,    7, "Bonus Coins"			},
+	{0x19, 0x01, 0xe0, 0x00, "None"					},
+	{0x19, 0x01, 0xe0, 0x20, "3 credits/2 coins"	},
+	{0x19, 0x01, 0xe0, 0x40, "5 credits/4 coins"	},
+	{0x19, 0x01, 0xe0, 0x60, "6 credits/4 coins"	},
+	{0x19, 0x01, 0xe0, 0x80, "6 credits/5 coins"	},
+	{0x19, 0x01, 0xe0, 0xa0, "4 credits/3 coins"	},
+	{0x19, 0x01, 0xe0, 0xc0, "Demo Mode"			},
 };
 
 STDDIPINFO(Milliped)
@@ -420,7 +420,6 @@ static void millipede_write(UINT16 address, UINT8 data)
 			earom_ctrl_write(0x2700, data);
 		return;
 	}
-//	bprintf(0, _T("mw %X,"), address);
 }
 
 static void centipede_write(UINT16 address, UINT8 data)
@@ -468,14 +467,10 @@ static void centipede_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-//	bprintf(0, _T("mw %X,"), address);
 }
 
 static INT32 read_trackball(INT32 idx, INT32 switch_port)
 {
-	//UINT8 trackie[4] = { TrackX[0], TrackY[0], TrackX[1], TrackY[1] };
-	UINT8 trackie[4] = { BurnTrackballRead(0, 0), BurnTrackballRead(0, 1), BurnTrackballRead(1, 0), BurnTrackballRead(1, 0) };
-
 	UINT8 newpos;
 
 	if (flipscreen)
@@ -485,6 +480,8 @@ static INT32 read_trackball(INT32 idx, INT32 switch_port)
 		return ((DrvInput[switch_port] | DrvDip[switch_port]) & 0x7f) | sign[idx];
 	}
 
+	UINT8 trackie[4] = { BurnTrackballRead(0, 0), BurnTrackballRead(0, 1), BurnTrackballRead(1, 0), BurnTrackballRead(1, 1) };
+
 	newpos = trackie[idx];
 	if (newpos != oldpos[idx]) {
 		sign[idx] = (newpos - oldpos[idx]) & 0x80;
@@ -492,6 +489,19 @@ static INT32 read_trackball(INT32 idx, INT32 switch_port)
 	}
 
 	return ((DrvInput[switch_port] | DrvDip[switch_port]) & 0x70) | (oldpos[idx] & 0x0f) | sign[idx];
+}
+
+static UINT8 silly_milli()
+{
+	UINT8 inpt = DrvInput[2];
+	if (control_select) {
+		// p2 select
+		UINT8 swappy = DrvInput[3] & 0xf;
+		swappy = ((swappy >> 1) & 1) | ((swappy << 1) & 2) |
+				 ((swappy >> 1) & 4) | ((swappy << 1) & 8);
+		inpt = (inpt&0xf0) | swappy;
+	}
+	return inpt;
 }
 
 static UINT8 millipede_read(UINT16 address)
@@ -514,8 +524,8 @@ static UINT8 millipede_read(UINT16 address)
 	{
 		case 0x2000: return (read_trackball(0, 0) & ~0x40) | ((vblank) ? 0x40 : 0x00);
 		case 0x2001: return read_trackball(1, 1);
-		case 0x2010: return DrvInput[2];
-		case 0x2011: return DrvInput[3] | DrvDip[2];
+		case 0x2010: return silly_milli();
+		case 0x2011: return 0x5f | DrvDip[2];
 		case 0x2030: return earom_read(address);
 		case 0x0400:
 		case 0x0401:
@@ -600,8 +610,6 @@ static UINT8 centipede_read(UINT16 address)
 		case 0x100e:
 		case 0x100f: return pokey1_r(address);
 	}
-
-//	bprintf(0, _T("mr %X,"), address);
 
 	return 0;
 }
@@ -818,11 +826,13 @@ static void draw_bg()
 		sy = 8 * sy;
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		if (flip_tiles) {
-			Render8x8Tile_FlipXY_Clip(pTransDraw, code, 248 - sx, 184 - sy, color, 2, 0, DrvBGGFX);
-		} else {
-			Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 2, 0, DrvBGGFX);
+		if (flipscreen) {
+			sx = nScreenWidth - 8 - sx;
+			sy = nScreenHeight - 8 - sy;
+			flip_tiles ^= 3;
 		}
+
+		Draw8x8Tile(pTransDraw, code, sx, sy, flip_tiles & 1, flip_tiles & 2, color, 2, 0, DrvBGGFX);
 	}
 }
 
@@ -841,11 +851,11 @@ static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fl
 		if (sy < 0 || sy >= nScreenHeight) continue;
 
 		for (INT32 x = 0; x < width; x++, sx++) {
-			if (sx < 0 || sx >= nScreenWidth) continue;
+			if (sx < 0 || sx >= nScreenWidth - 8) continue; // clip top 8px of sprites (top of screen)
 
 			INT32 pxl = gfx[((y * width) + x) ^ flip];
 
-			if (penmask[color & 0x3f] & (1 << pxl) || !pxl) continue; // is this right?
+			if (penmask[color & 0x3f] & (1 << pxl) || !pxl) continue;
 			dest[sy * nScreenWidth + sx] = pxl + (color << 2) + 0x100;
 		}
 		sx -= width;
@@ -858,8 +868,8 @@ static void draw_sprites()
 	UINT8 *spriteram = DrvSpriteRAM;
 
 	for (INT32 offs = 0; offs < 0x10; offs++) {
-		INT32 code = ((spriteram[offs] & 0x3e) >> 1) | ((spriteram[offs] & 0x01) << 6);
-		INT32 color = spriteram[offs + 0x30];
+		INT32 code = (((spriteram[offs] & 0x3e) >> 1) | ((spriteram[offs] & 0x01) << 6)) & 0x7f;
+		INT32 color = spriteram[offs + 0x30] & ((centipedemode) ? 0x3f : 0xff);
 		INT32 flipx = (centipedemode) ? (spriteram[offs] >> 6) & 1 : flipscreen;
 		INT32 flipy = (centipedemode) ? (spriteram[offs] >> 7) & 1 : (spriteram[offs] & 0x80);
 		INT32 x = spriteram[offs + 0x20];
@@ -869,7 +879,12 @@ static void draw_sprites()
 			flipy = !flipy;
 		}
 
-		if (x + 8 >= nScreenWidth) continue; // clip top 8px of sprites (top of screen)
+		if (flipscreen) {
+			x = nScreenWidth - 8 - x;
+			y = nScreenHeight - 16 - y;
+			flipx = !flipx;
+			flipy = !flipy;
+		}
 
 		RenderTileCPMP(code, color, x, y, flipx, flipy, 8, 16);
 	}
@@ -923,12 +938,16 @@ static INT32 DrvFrame()
 		DrvMakeInputs();
 
 		BurnTrackballConfig(0, AXIS_REVERSED, AXIS_NORMAL);
-		BurnTrackballFrame(0, Analog0PortX, Analog0PortY, 3, 2);
+		BurnTrackballFrame(0, Analog0PortX, Analog0PortY, 1, 7);
 		BurnTrackballUpdate(0);
+
+		BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
+		BurnTrackballFrame(1, Analog1PortX, Analog1PortY, 1, 7);
+		BurnTrackballUpdate(1);
 	}
 
-	INT32 nTotalCycles = 1512000 / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { 1512000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 	INT32 nInterleave = 4;
 
 	vblank = 0;
@@ -936,11 +955,10 @@ static INT32 DrvFrame()
 	M6502Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesDone += M6502Run(((i + 1) * nTotalCycles / nInterleave) - nCyclesDone);
-		M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, M6502);
+		M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
-		if (i < 2) BurnTrackballUpdate(0);
-
+		if (i == 1) { BurnTrackballUpdate(0); BurnTrackballUpdate(1); }
 		if (i == 2)
 		    vblank = 1;
 	}

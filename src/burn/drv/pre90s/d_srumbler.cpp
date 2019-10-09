@@ -43,37 +43,37 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo SrumblerInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Srumbler)
 
 static struct BurnDIPInfo SrumblerDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xff, NULL			},
-	{0x12, 0xff, 0xff, 0x73, NULL			},
+	{0x11, 0xff, 0xff, 0xff, NULL					},
+	{0x12, 0xff, 0xff, 0x77, NULL					},
 
-	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0   , 0xfe, 0   ,    8, "Coin B"				},
 	{0x11, 0x01, 0x07, 0x00, "4 Coins 1 Credits"	},
 	{0x11, 0x01, 0x07, 0x01, "3 Coins 1 Credits"	},
 	{0x11, 0x01, 0x07, 0x02, "2 Coins 1 Credits"	},
@@ -83,7 +83,7 @@ static struct BurnDIPInfo SrumblerDIPList[]=
 	{0x11, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
 	{0x11, 0x01, 0x07, 0x03, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0   , 0xfe, 0   ,    8, "Coin A"				},
 	{0x11, 0x01, 0x38, 0x00, "4 Coins 1 Credits"	},
 	{0x11, 0x01, 0x38, 0x08, "3 Coins 1 Credits"	},
 	{0x11, 0x01, 0x38, 0x10, "2 Coins 1 Credits"	},
@@ -93,39 +93,39 @@ static struct BurnDIPInfo SrumblerDIPList[]=
 	{0x11, 0x01, 0x38, 0x20, "1 Coin  4 Credits"	},
 	{0x11, 0x01, 0x38, 0x18, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x11, 0x01, 0x40, 0x40, "Off"			},
-	{0x11, 0x01, 0x40, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x11, 0x01, 0x40, 0x40, "Off"					},
+	{0x11, 0x01, 0x40, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x11, 0x01, 0x80, 0x80, "Off"			},
-	{0x11, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x11, 0x01, 0x80, 0x80, "Off"					},
+	{0x11, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x12, 0x01, 0x03, 0x03, "3"			},
-	{0x12, 0x01, 0x03, 0x02, "4"			},
-	{0x12, 0x01, 0x03, 0x01, "5"			},
-	{0x12, 0x01, 0x03, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x12, 0x01, 0x03, 0x03, "3"					},
+	{0x12, 0x01, 0x03, 0x02, "4"					},
+	{0x12, 0x01, 0x03, 0x01, "5"					},
+	{0x12, 0x01, 0x03, 0x00, "7"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x12, 0x01, 0x04, 0x00, "Upright"		},
-	{0x12, 0x01, 0x04, 0x04, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x12, 0x01, 0x04, 0x00, "Upright"				},
+	{0x12, 0x01, 0x04, 0x04, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
 	{0x12, 0x01, 0x18, 0x18, "20k 70k and every 70k"},
 	{0x12, 0x01, 0x18, 0x10, "30k 80k and every 80k"},
-	{0x12, 0x01, 0x18, 0x08, "20k 80k"		},
-	{0x12, 0x01, 0x18, 0x00, "30k 80k"		},
+	{0x12, 0x01, 0x18, 0x08, "20k 80k"				},
+	{0x12, 0x01, 0x18, 0x00, "30k 80k"				},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x12, 0x01, 0x60, 0x40, "Easy"			},
-	{0x12, 0x01, 0x60, 0x60, "Normal"		},
-	{0x12, 0x01, 0x60, 0x20, "Difficult"		},
-	{0x12, 0x01, 0x60, 0x00, "Very Difficult"	},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x12, 0x01, 0x60, 0x40, "Easy"					},
+	{0x12, 0x01, 0x60, 0x60, "Normal"				},
+	{0x12, 0x01, 0x60, 0x20, "Difficult"			},
+	{0x12, 0x01, 0x60, 0x00, "Very Difficult"		},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x12, 0x01, 0x80, 0x00, "No"			},
-	{0x12, 0x01, 0x80, 0x80, "Yes"			},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x12, 0x01, 0x80, 0x00, "No"					},
+	{0x12, 0x01, 0x80, 0x80, "Yes"					},
 };
 
 STDDIPINFO(Srumbler)
@@ -142,11 +142,10 @@ static void bankswitch(INT32 data)
 	}
 }
 
-void srumbler_main_write(UINT16 address, UINT8 data)
+static void srumbler_main_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x7000 && address <= 0x73ff) {
 		DrvPalRAM[address - 0x7000] = data;
-		//bprintf(0, _T("%X,"), address);
 		DrvPalRAMWrite = 1;
 		DrvRecalc = 1;
 	}
@@ -157,7 +156,7 @@ void srumbler_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x4009:
-			*flipscreen = data & 1;
+			*flipscreen = 0; // data & 1; ignore flipscreen
 		return;
 
 		case 0x400a:
@@ -173,7 +172,7 @@ void srumbler_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 srumbler_main_read(UINT16 address)
+static UINT8 srumbler_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -196,7 +195,7 @@ UINT8 srumbler_main_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall srumbler_sound_write(UINT16 address, UINT8 data)
+static void __fastcall srumbler_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -212,7 +211,7 @@ void __fastcall srumbler_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall srumbler_sound_read(UINT16 address)
+static UINT8 __fastcall srumbler_sound_read(UINT16 address)
 {
 	if (address == 0xe000) {
 		return *soundlatch;
@@ -390,7 +389,7 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvSprRAM,		0x1e00, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvBgRAM,		0x2000, 0x3fff, MAP_RAM);
 	M6809MapMemory(DrvFgRAM,		0x5000, 0x5fff, MAP_WRITE);
-	//M6809MapMemory(DrvPalRAM,		0x7000, 0x73ff, MAP_WRITE);
+	//M6809MapMemory(DrvPalRAM,		0x7000, 0x73ff, MAP_WRITE); // in handler
 	M6809SetReadHandler(srumbler_main_read);
 	M6809SetWriteHandler(srumbler_main_write);
 	M6809Close();
@@ -636,12 +635,13 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, M6809);
+
 		if (i == (nInterleave / 2) - 1) {
-			M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO);
+			M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
 			memcpy (DrvSprBuf, DrvSprRAM, 0x200);
 		}
-		if (i == (nInterleave / 1) - 1) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 1) - 1) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 
@@ -649,9 +649,9 @@ static INT32 DrvFrame()
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 	}
-	
+
 	BurnTimerEndFrame(nCyclesTotal[1]);
-	
+
 	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 
 	ZetClose();
@@ -664,7 +664,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -687,7 +687,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnYM2203Scan(nAction, pnMin);
 	}
 
-	{
+	if (nAction & ACB_WRITE) {
 		M6809Open(0);
 		bankswitch(DrvBank[0]);
 		M6809Close();

@@ -11,10 +11,6 @@ static void myDrawText(HDC hDC, RECT* pRect, TCHAR* szText, int nSizeDelta, int 
 	HFONT hFont, myFont;
 	TEXTMETRIC myMetric;
 	
-#ifdef USE_SEGOE
-	nSizeDelta += 2;
-#endif
-
 	GetTextFace(hDC, 32, szName);
 	GetTextMetrics(hDC, &myMetric);
 	myFont = CreateFont(myMetric.tmHeight + nSizeDelta, 0, 0, 0, FW_BLACK, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, 0, szName);

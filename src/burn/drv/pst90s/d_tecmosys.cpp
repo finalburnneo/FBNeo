@@ -1,4 +1,4 @@
-// FB Alpha Tecmo System driver module
+// FB Neo Tecmo System driver module
 // Based on MAME driver by Farfetch, David Haywood, Tomasz Slanina, and nuapete
 
 #include "tiles_generic.h"
@@ -123,7 +123,11 @@ static void protection_reset()
 static void tecmosys_prot_data_write(INT32 data)
 {
 	static const UINT8 ranges[] = {
-		0x10,0x11,0x12,0x13,0x24,0x25,0x26,0x27,0x38,0x39,0x3a,0x3b,0x4c,0x4d,0x4e,0x4f, 0x00
+		0x10,0x11,0x12,0x13,
+		0x24,0x25,0x26,0x27,
+		0x38,0x39,0x3a,0x3b,
+		0x4c,0x4d,0x4e,0x4f,
+		0x00
 	};
 
 	switch (protection_status)
@@ -428,6 +432,46 @@ static UINT8 __fastcall tecmosys_sound_in(UINT16 port)
 	return 0;
 }
 
+static tilemap_callback( txt )
+{
+	UINT16 *vram = (UINT16*)DrvTxtRAM;
+	
+	INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]);
+
+	TILE_SET_INFO(0, code, attr, TILE_FLIPYX(attr >> 6));
+}
+
+static tilemap_callback( bg0 )
+{
+	UINT16 *vram = (UINT16*)DrvBgRAM0;
+	
+	INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]);
+
+	TILE_SET_INFO(1, code, attr, TILE_FLIPYX(attr >> 6));
+}
+
+static tilemap_callback( bg1 )
+{
+	UINT16 *vram = (UINT16*)DrvBgRAM1;
+	
+	INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]);
+
+	TILE_SET_INFO(2, code, attr, TILE_FLIPYX(attr >> 6));
+}
+
+static tilemap_callback( bg2 )
+{
+	UINT16 *vram = (UINT16*)DrvBgRAM2;
+	
+	INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]);
+
+	TILE_SET_INFO(3, code, attr, TILE_FLIPYX(attr >> 6));
+}
+
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
@@ -471,61 +515,60 @@ static INT32 MemIndex(INT32 sndlen)
 {
 	UINT8 *Next; Next = AllMem;
 
-	Drv68KROM		= Next; Next += 0x100000;
+	Drv68KROM			= Next; Next += 0x100000;
 
-	DrvGfxROM0		= Next; Next += 0x200000;
-	DrvGfxROM1		= Next; Next += 0x200000;
-	DrvGfxROM2		= Next; Next += 0x200000;
-	DrvGfxROM3		= Next; Next += 0x200000;
+	DrvGfxROM0			= Next; Next += 0x200000;
+	DrvGfxROM1			= Next; Next += 0x200000;
+	DrvGfxROM2			= Next; Next += 0x200000;
+	DrvGfxROM3			= Next; Next += 0x200000;
 
-	DrvZ80ROM		= Next; Next += 0x040000;
+	DrvZ80ROM			= Next; Next += 0x040000;
 
-	MSM6295ROM		= Next;
-	DrvSndROM0		= Next; Next += 0x100000;
+	MSM6295ROM			= Next;
+	DrvSndROM0			= Next; Next += 0x100000;
 
-	YMZ280BROM		= Next;
-	DrvSndROM1		= Next; Next += sndlen;
+	YMZ280BROM			= Next;
+	DrvSndROM1			= Next; Next += sndlen;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x4800 * sizeof(UINT32);
-	DrvPalette24	= (UINT32*)Next; Next += 0x4800 * sizeof(UINT32);
+	DrvPalette			= (UINT32*)Next; Next += 0x4800 * sizeof(UINT32);
+	DrvPalette24		= (UINT32*)Next; Next += 0x4800 * sizeof(UINT32);
 
-	DrvTmpSprites	= (UINT16*)Next; Next += 320 * 256 * sizeof(UINT16);
+	DrvTmpSprites		= (UINT16*)Next; Next += 320 * 256 * sizeof(UINT16);
 
-	AllRam			= Next;
+	AllRam				= Next;
 
-	Drv68KRAM		= Next; Next += 0x010000;
-	DrvSprRAM		= Next; Next += 0x010000;
-	DrvPalRAM		= Next; Next += 0x009000;
+	Drv68KRAM			= Next; Next += 0x010000;
+	DrvSprRAM			= Next; Next += 0x010000;
+	DrvPalRAM			= Next; Next += 0x009000;
 
-	DrvTxtRAM		= Next; Next += 0x004000;
+	DrvTxtRAM			= Next; Next += 0x004000;
 
-	DrvBgRAM0		= Next; Next += 0x001000;
-	DrvBgScrRAM0	= Next; Next += 0x000400;
-	DrvBgRAM1		= Next; Next += 0x001000;
-	DrvBgScrRAM1	= Next; Next += 0x000400;
-	DrvBgRAM2		= Next; Next += 0x001000;
-	DrvBgScrRAM2	= Next; Next += 0x000400;
+	DrvBgRAM0			= Next; Next += 0x001000;
+	DrvBgScrRAM0		= Next; Next += 0x000400;
+	DrvBgRAM1			= Next; Next += 0x001000;
+	DrvBgScrRAM1		= Next; Next += 0x000400;
+	DrvBgRAM2			= Next; Next += 0x001000;
+	DrvBgScrRAM2		= Next; Next += 0x000400;
 
+	DrvOkiBank 			= Next; Next += 0x000001 * sizeof(UINT32);
+	DrvZ80Bank 			= Next; Next += 0x000001 * sizeof(UINT32);
 
-	DrvOkiBank 		= Next; Next += 0x000001 * sizeof(UINT32);
-	DrvZ80Bank 		= Next; Next += 0x000001 * sizeof(UINT32);
+	DrvZ80RAM			= Next; Next += 0x001800;
 
-	DrvZ80RAM		= Next; Next += 0x001800;
-
-	soundlatch 		= Next; Next += 0x000001 * sizeof(UINT32);
+	soundlatch 			= Next; Next += 0x000001 * sizeof(UINT32);
 	soundlatch2 		= Next; Next += 0x000001 * sizeof(UINT32);
 
 	spritelist_select	= Next; Next += 0x000001 * sizeof(UINT32);
 
-	Drv88Regs		= Next; Next += 0x000004;
-	DrvA8Regs		= Next; Next += 0x000006;
-	DrvB0Regs		= Next; Next += 0x000006;
-	DrvC0Regs		= Next; Next += 0x000006;
-	DrvC8Regs		= Next; Next += 0x000006;
+	Drv88Regs			= Next; Next += 0x000004;
+	DrvA8Regs			= Next; Next += 0x000006;
+	DrvB0Regs			= Next; Next += 0x000006;
+	DrvC0Regs			= Next; Next += 0x000006;
+	DrvC8Regs			= Next; Next += 0x000006;
 
-	RamEnd			= Next;
+	RamEnd				= Next;
 
-	MemEnd			= Next;
+	MemEnd				= Next;
 
 	return 0;
 }
@@ -546,19 +589,11 @@ static void descramble_sprites(INT32 len)
 	}
 }
 
-static void expand_characters()
-{
-	for (INT32 i = 0x100000 - 1; i >= 0; i--) {
-		DrvGfxROM0[i * 2 + 0] = DrvGfxROM0[i] >> 4;
-		DrvGfxROM0[i * 2 + 1] = DrvGfxROM0[i] & 0x0f;
-	}
-}
-
 static void expand_tiles(UINT8 *rom, INT32 len)
 {
-	INT32 Planes[4] = { 0, 1, 2, 3 };
-	INT32 XOffs[16] = { 0x000, 0x004, 0x008, 0x00c, 0x010, 0x014, 0x018, 0x01c, 0x100, 0x104, 0x108, 0x10c, 0x110, 0x114, 0x118, 0x11c };
-	INT32 YOffs[16] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0, 0x200, 0x220, 0x240, 0x260, 0x280, 0x2a0, 0x2c0, 0x2e0 };
+	INT32 Planes[4] = { STEP4(0,1) };
+	INT32 XOffs[16] = { STEP8(0,4), STEP8(256,4) };
+	INT32 YOffs[16] = { STEP8(0,32), STEP8(512,32) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(len);
 
@@ -586,33 +621,33 @@ static INT32 CommonInit(INT32 (*pRomLoadCallback)(), INT32 spritelen, INT32 sndl
 	}
 
 	descramble_sprites(spritelen);
-	expand_characters();
+	BurnNibbleExpand(DrvGfxROM0, NULL, 0x100000, 0, 0);
 	expand_tiles(DrvGfxROM1, 0x100000);
 	expand_tiles(DrvGfxROM2, 0x100000);
 	expand_tiles(DrvGfxROM3, 0x100000);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,		0x200000, 0x20ffff, MAP_RAM);
-	SekMapMemory(DrvBgRAM0,		0x300000, 0x300fff, MAP_RAM);
-	SekMapMemory(DrvBgScrRAM0,	0x301000, 0x3013ff, MAP_RAM);
-	SekMapMemory(DrvBgRAM1,		0x400000, 0x400fff, MAP_RAM);
-	SekMapMemory(DrvBgScrRAM1,	0x401000, 0x4013ff, MAP_RAM);
-	SekMapMemory(DrvBgRAM2,		0x500000, 0x500fff, MAP_RAM);
-	SekMapMemory(DrvBgScrRAM2,	0x501000, 0x5013ff, MAP_RAM);
-	SekMapMemory(DrvTxtRAM,		0x700000, 0x703fff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,		0x800000, 0x80ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x900000, 0x907fff, MAP_ROM);
-	SekMapMemory(DrvPalRAM + 0x8000,0x980000, 0x980fff, MAP_ROM);
-	SekSetWriteWordHandler(0,	tecmosys_main_write_word);
-	SekSetWriteByteHandler(0,	tecmosys_main_write_byte);
-	SekSetReadWordHandler(0,	tecmosys_main_read_word);
-	SekSetReadByteHandler(0,	tecmosys_main_read_byte);
+	SekMapMemory(Drv68KROM,				0x000000, 0x0fffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM,				0x200000, 0x20ffff, MAP_RAM);
+	SekMapMemory(DrvBgRAM0,				0x300000, 0x300fff, MAP_RAM);
+	SekMapMemory(DrvBgScrRAM0,			0x301000, 0x3013ff, MAP_RAM);
+	SekMapMemory(DrvBgRAM1,				0x400000, 0x400fff, MAP_RAM);
+	SekMapMemory(DrvBgScrRAM1,			0x401000, 0x4013ff, MAP_RAM);
+	SekMapMemory(DrvBgRAM2,				0x500000, 0x500fff, MAP_RAM);
+	SekMapMemory(DrvBgScrRAM2,			0x501000, 0x5013ff, MAP_RAM);
+	SekMapMemory(DrvTxtRAM,				0x700000, 0x703fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,				0x800000, 0x80ffff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,				0x900000, 0x907fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0x8000,	0x980000, 0x980fff, MAP_ROM);
+	SekSetWriteWordHandler(0,			tecmosys_main_write_word);
+	SekSetWriteByteHandler(0,			tecmosys_main_write_byte);
+	SekSetReadWordHandler(0,			tecmosys_main_read_word);
+	SekSetReadByteHandler(0,			tecmosys_main_read_byte);
 
-	SekMapHandler(1,		0x900000, 0x980fff, MAP_WRITE);
-	SekSetWriteWordHandler(1,	tecmosys_palette_write_word);
-	SekSetWriteByteHandler(1,	tecmosys_palette_write_byte);
+	SekMapHandler(1,					0x900000, 0x980fff, MAP_WRITE);
+	SekSetWriteWordHandler(1,			tecmosys_palette_write_word);
+	SekSetWriteByteHandler(1,			tecmosys_palette_write_byte);
 	SekClose();
 
 	deroon = game;
@@ -645,6 +680,21 @@ static INT32 CommonInit(INT32 (*pRomLoadCallback)(), INT32 spritelen, INT32 sndl
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, txt_map_callback,  8,  8, 64, 64);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bg0_map_callback, 16, 16, 32, 32);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, bg1_map_callback, 16, 16, 32, 32);
+	GenericTilemapInit(3, TILEMAP_SCAN_ROWS, bg2_map_callback, 16, 16, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM0, 4,  8,  8, 0x200000, 0xc400, 0x3f);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 4, 16, 16, 0x200000, 0x0000, 0x3f);
+	GenericTilemapSetGfx(2, DrvGfxROM2, 4, 16, 16, 0x200000, 0x4000, 0x3f);
+	GenericTilemapSetGfx(3, DrvGfxROM3, 4, 16, 16, 0x200000, 0x8000, 0x3f);
+	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(1, 0);
+	if (deroon != 1) // deroon doesn't have background layer
+		GenericTilemapSetTransparent(2, 0);
+	else
+		GenericTilemapSetEnable(1, 0);
+	GenericTilemapSetTransparent(3, 0);
 
 	DrvDoReset(1);
 
@@ -673,208 +723,6 @@ static INT32 DrvExit()
 	BurnFree (AllMem);
 
 	return 0;
-}
-
-static void draw_character_layer()
-{
-	UINT16 *vram = (UINT16*)DrvTxtRAM;
-
-	for (INT32 offs = 0; offs < 64 * 64; offs++)
-	{
-		INT32 sx = (offs & 0x3f) << 3;
-		INT32 sy = (offs >> 6) << 3;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
-		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]) & 0x7fff;
-		INT32 color = attr & 0x003f;
-		INT32 flipy = attr & 0x0080;
-		INT32 flipx = attr & 0x0040;
-
-		if (code == 0) continue; // Should save some cycles
-
-		if (sx >= 0 && sx <= (nScreenWidth - 8) && sy >= 0 && sy <= (nScreenHeight - 8)) {
-			if (flipy) {
-				if (flipx) {
-					Render8x8Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
-				} else {
-					Render8x8Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
-				}
-			} else {
-				if (flipx) {
-					Render8x8Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
-				} else {
-					Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
-				}
-			}
-		} else {
-			if (flipy) {
-				if (flipx) {
-					Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
-				} else {
-					Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
-				}
-			} else {
-				if (flipx) {
-					Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
-				} else {
-					Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0xc400, DrvGfxROM0);
-				}
-			}
-		}
-	}
-}
-
-static void draw_background_layer(UINT8 *ram, UINT8 *gfx, UINT8 *regs, INT32 yoff, INT32 xoff, INT32 priority)
-{
-	UINT16 *vram = (UINT16*)ram;
-
-	INT32 scrollx = (*((UINT16*)(regs + 0)) + xoff) & 0x1ff;
-	INT32 scrolly = (*((UINT16*)(regs + 2)) + yoff) & 0x1ff;
-
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
-	{
-		INT32 sx = (offs & 0x1f) << 4;
-		INT32 sy = (offs >> 5) << 4;
-
-		sx -= scrollx;
-		if (sx < -15) sx += 512;
-		sy -= scrolly;
-		if (sy < -15) sy += 512;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
-		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]) & 0x1fff;
-		INT32 color = attr & 0x003f;
-		INT32 flipy = attr & 0x0080;
-		INT32 flipx = attr & 0x0040;
-
-		if (!code) continue; // Should save some cycles
-
-		if (sx >= 0 && sx <= (nScreenWidth - 16) && sy >= 0 && sy <= (nScreenHeight - 16)) {
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
-				} else {
-					Render16x16Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
-				} else {
-					Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
-				}
-			}
-		} else {
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, priority, gfx);
-				}
-			}
-		}
-	}
-}
-
-static void draw_sprite_zoomed(INT32 addr, INT32 color, INT32 x, INT32 y, INT32 flipx, INT32 flipy, INT32 xsize, INT32 ysize, INT32 zoomx, INT32 zoomy)
-{
-	if (y >= nScreenHeight || x >= nScreenWidth) return;
-
-	INT32 drawx, drawy;
-	UINT8 *rom = DrvSprROM + addr;
-
-	for (INT32 ycnt = 0; ycnt < ysize; ycnt++, rom += xsize)
-	{
-		if (flipy)
-			drawy = y + (((ysize * zoomy) / 256) - 1) - ((ycnt * zoomy) / 256);
-		else
-			drawy = y + ((ycnt * zoomy) / 256);
-
-		if (drawy < 0 || drawy >= 240) continue;
-
-		UINT16 *dstptr = DrvTmpSprites + drawy * nScreenWidth;
-
-		for (INT32 xcnt = 0; xcnt < xsize; xcnt++)
-		{
-			if (flipx)
-				drawx = x + (((xsize * zoomx) / 256) - 1) - ((xcnt * zoomx) / 256);
-			else
-				drawx = x + ((xcnt * zoomx) / 256);
-
-			if (drawx >= 0 && drawx < 320)
-			{
-				INT32 data = rom[xcnt];
-
-				if (data) dstptr[drawx] = data + color;
-			}
-		}
-	}
-}
-
-static void draw_sprite_nozoom(INT32 addr, INT32 color, INT32 x, INT32 y, INT32 flipx, INT32 flipy, INT32 xsize, INT32 ysize)
-{
-	if (y >= nScreenHeight || x >= nScreenWidth) return;
-
-	INT32 drawx, drawy;
-	UINT8 *rom = DrvSprROM + addr;
-
-	for (INT32 ycnt = 0; ycnt < ysize; ycnt++, rom += xsize)
-	{
-		if (flipy)
-			drawy = y + (ysize - 1) - ycnt;
-		else
-			drawy = y + ycnt;
-
-		if (drawy < 0 || drawy >= 240) continue;
-
-		UINT16 *dstptr = DrvTmpSprites + drawy * nScreenWidth;
-
-		if (x >= 0 && (x + xsize) < nScreenWidth) {
-			if (flipx) {
-				drawx = x + (xsize - 1);
-
-				for (INT32 xcnt = 0; xcnt < xsize; xcnt++)
-				{
-					INT32 data = rom[xcnt];
-
-					if (data) dstptr[drawx - xcnt] = data + color;
-				}
-			} else {
-				dstptr += x;
-
-				for (INT32 xcnt = 0; xcnt < xsize; xcnt++)
-				{
-					INT32 data = rom[xcnt];
-
-					if (data) dstptr[xcnt] = data + color;
-				}
-			}
-		} else {
-			for (INT32 xcnt = 0; xcnt < xsize; xcnt++)
-			{
-				if (flipx)
-					drawx = x + (xsize - 1) - xcnt;
-				else
-					drawx = x + xcnt;
-
-				if (drawx >= 0 && drawx < 320)
-				{
-					INT32 data = rom[xcnt];
-
-					if (data) dstptr[drawx] = data + color;
-				}
-			}
-		}
-	}
 }
 
 static void draw_sprites()
@@ -906,9 +754,9 @@ static void draw_sprites()
 		if (y & 0x100) y -= 0x200;
 
 		if (zoomx == 0x100 && zoomy == 0x100) {
-			draw_sprite_nozoom(addr, color + prio, x, y, flipx, flipy, xsize, ysize);
+			DrawCustomMaskTile(DrvTmpSprites, xsize, ysize, 0/*addr*/, x, y, flipx, flipy, color + prio, 0/*8*/, 0, 0, DrvSprROM + addr);
 		} else {
-			draw_sprite_zoomed(addr, color + prio, x, y, flipx, flipy, xsize, ysize, zoomx, zoomy);
+			RenderZoomedTile(DrvTmpSprites, DrvSprROM + addr, 0/*addr*/, color + prio, 0, x, y, flipx, flipy, xsize, ysize, zoomx << 8, zoomy << 8);
 		}
 	}
 }
@@ -930,8 +778,8 @@ static void blend_sprites_and_transfer()
 
 		// check for blend/priority
 
-		INT32 pxl  =(srcptr [z] & 0x07ff) + 0x4000;
-		INT32 pxl2 =(srcptr2[z] & 0x3fff);
+		INT32 pxl  = (srcptr [z] & 0x07ff) + 0x4000;
+		INT32 pxl2 = (srcptr2[z] & 0x3fff);
 
 		if ((BURN_ENDIAN_SWAP_INT16(palram[pxl]) & 0x8000) && (BURN_ENDIAN_SWAP_INT16(palram[pxl2]) & 0x8000)) // blend
 		{
@@ -966,12 +814,17 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	if (!deroon) { // deroon does not have tiles for this layer, so don't bother drawing it...
-		draw_background_layer(DrvBgRAM0, DrvGfxROM1, DrvC8Regs, 16, 104, 0x0000);
-	}
-	draw_background_layer(DrvBgRAM1, DrvGfxROM2, DrvA8Regs, 17, 106, 0x4000);
-	draw_background_layer(DrvBgRAM2, DrvGfxROM3, DrvB0Regs, 17, 106, 0x8000);
-	draw_character_layer();
+	GenericTilemapSetScrollX(1, *((UINT16*)(DrvC8Regs + 0)) + 104);
+	GenericTilemapSetScrollY(1, *((UINT16*)(DrvC8Regs + 2)) + 16);
+	GenericTilemapSetScrollX(2, *((UINT16*)(DrvA8Regs + 0)) + 106);
+	GenericTilemapSetScrollY(2, *((UINT16*)(DrvA8Regs + 2)) + 17);
+	GenericTilemapSetScrollX(3, *((UINT16*)(DrvB0Regs + 0)) + 106);
+	GenericTilemapSetScrollY(3, *((UINT16*)(DrvB0Regs + 2)) + 17);
+
+	GenericTilemapDraw(1, pTransDraw, 0);
+	GenericTilemapDraw(2, pTransDraw, 0);
+	GenericTilemapDraw(3, pTransDraw, 0);
+	GenericTilemapDraw(0, pTransDraw, 0);
 
 	blend_sprites_and_transfer();
 
@@ -1078,7 +931,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(protection_read_pointer);
 		SCAN_VAR(protection_status);
 		SCAN_VAR(protection_value);
-
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -1096,25 +948,25 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Deroon DeroDero
 
 static struct BurnRomInfo deroonRomDesc[] = {
-	{ "t001.upau1",			0x080000, 0x14b92c18, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "t002.upal1",			0x080000, 0x0fb05c68, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "t001.upau1",				0x080000, 0x14b92c18, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "t002.upal1",				0x080000, 0x0fb05c68, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "t003.uz1",			0x040000, 0x8bdfafa0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "t003.uz1",				0x040000, 0x8bdfafa0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "t101.uah1",			0x200000, 0x74baf845, 3 | BRF_GRA },           //  3 Sprites
-	{ "t102.ual1",			0x200000, 0x1a02c4a3, 3 | BRF_GRA },           //  4
-	{ "t103.ubl1",			0x400000, 0x84e7da88, 3 | BRF_GRA },           //  5
-	{ "t104.ucl1",			0x200000, 0x66eb611a, 3 | BRF_GRA },           //  6
+	{ "t101.uah1",				0x200000, 0x74baf845, 3 | BRF_GRA },           //  3 Sprites
+	{ "t102.ual1",				0x200000, 0x1a02c4a3, 3 | BRF_GRA },           //  4
+	{ "t103.ubl1",				0x400000, 0x84e7da88, 3 | BRF_GRA },           //  5
+	{ "t104.ucl1",				0x200000, 0x66eb611a, 3 | BRF_GRA },           //  6
 
-	{ "t301.ubd1",			0x100000, 0x8b026177, 4 | BRF_GRA },           //  7 Character Tiles
+	{ "t301.ubd1",				0x100000, 0x8b026177, 4 | BRF_GRA },           //  7 Character Tiles
 
-	{ "t201.ubb1",			0x100000, 0xd5a087ac, 6 | BRF_GRA },           //  8 Midground Layer
+	{ "t201.ubb1",				0x100000, 0xd5a087ac, 6 | BRF_GRA },           //  8 Midground Layer
 
-	{ "t202.ubc1",			0x100000, 0xf051dae1, 7 | BRF_GRA },           //  9 Foreground Layer
+	{ "t202.ubc1",				0x100000, 0xf051dae1, 7 | BRF_GRA },           //  9 Foreground Layer
 
-	{ "t401.uya1",			0x200000, 0x92111992, 8 | BRF_SND },           // 10 YMZ280B Samples
+	{ "t401.uya1",				0x200000, 0x92111992, 8 | BRF_SND },           // 10 YMZ280B Samples
 
-	{ "t501.uad1",			0x080000, 0x2fbcfe27, 9 | BRF_SND },           // 11 OKI6295 Samples
+	{ "t501.uad1",				0x080000, 0x2fbcfe27, 9 | BRF_SND },           // 11 OKI6295 Samples
 
 	{ "deroon_68hc11a8.rom",	0x002000, 0x00000000, 0 | BRF_NODUMP },        // 12 68HC11A8 Code
 	{ "deroon_68hc11a8.eeprom",	0x000200, 0x00000000, 0 | BRF_NODUMP },        // 13 68HC11A8 EEPROM
@@ -1168,25 +1020,25 @@ struct BurnDriver BurnDrvDeroon = {
 // maybe a bad dump - this set needs to be confirmed
 
 static struct BurnRomInfo deroonaRomDesc[] = {
-	{ "t.01",				0x080000, 0x7ad6c740, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "t.02",				0x080000, 0xe44f4430, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "t.01",					0x080000, 0x7ad6c740, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "t.02",					0x080000, 0xe44f4430, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "t003.bin",			0x040000, 0x8bdfafa0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "t003.bin",				0x040000, 0x8bdfafa0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "t101.uah1",			0x200000, 0x74baf845, 3 | BRF_GRA },           //  3 Sprites
-	{ "t102.ual1",			0x200000, 0x1a02c4a3, 3 | BRF_GRA },           //  4
-	{ "t103.ubl1",			0x400000, 0x84e7da88, 3 | BRF_GRA },           //  5
-	{ "t104.ucl1",			0x200000, 0x66eb611a, 3 | BRF_GRA },           //  6
+	{ "t101.uah1",				0x200000, 0x74baf845, 3 | BRF_GRA },           //  3 Sprites
+	{ "t102.ual1",				0x200000, 0x1a02c4a3, 3 | BRF_GRA },           //  4
+	{ "t103.ubl1",				0x400000, 0x84e7da88, 3 | BRF_GRA },           //  5
+	{ "t104.ucl1",				0x200000, 0x66eb611a, 3 | BRF_GRA },           //  6
 
-	{ "t301.ubd1",			0x100000, 0x8b026177, 4 | BRF_GRA },           //  7 Character Tiles
+	{ "t301.ubd1",				0x100000, 0x8b026177, 4 | BRF_GRA },           //  7 Character Tiles
 
-	{ "t201.ubb1",			0x100000, 0xd5a087ac, 6 | BRF_GRA },           //  8 Midground Layer
+	{ "t201.ubb1",				0x100000, 0xd5a087ac, 6 | BRF_GRA },           //  8 Midground Layer
 
-	{ "t202.ubc1",			0x100000, 0xf051dae1, 7 | BRF_GRA },           //  9 Foreground Layer
+	{ "t202.ubc1",				0x100000, 0xf051dae1, 7 | BRF_GRA },           //  9 Foreground Layer
 
-	{ "t401.uya1",			0x200000, 0x92111992, 8 | BRF_SND },           // 10 YMZ280B Samples
+	{ "t401.uya1",				0x200000, 0x92111992, 8 | BRF_SND },           // 10 YMZ280B Samples
 
-	{ "t501.uad1",			0x080000, 0x2fbcfe27, 9 | BRF_SND },           // 11 OKI6295 Samples
+	{ "t501.uad1",				0x080000, 0x2fbcfe27, 9 | BRF_SND },           // 11 OKI6295 Samples
 
 	{ "deroon_68hc11a8.rom",	0x002000, 0x00000000, 0 | BRF_NODUMP },        // 12 68HC11A8 Code
 	{ "deroon_68hc11a8.eeprom",	0x000200, 0x00000000, 0 | BRF_NODUMP },        // 13 68HC11A8 EEPROM
@@ -1208,25 +1060,25 @@ struct BurnDriver BurnDrvDeroona = {
 // Deroon DeroDero (newer)
 
 static struct BurnRomInfo deroon2RomDesc[] = {
-	{ "stk_t01.upau1",		0x080000, 0x90c794df, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "stk_t02.upal1",		0x080000, 0xcca9f87c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "stk_t01.upau1",			0x080000, 0x90c794df, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "stk_t02.upal1",			0x080000, 0xcca9f87c, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "t003.uz1",			0x040000, 0x8bdfafa0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "t003.uz1",				0x040000, 0x8bdfafa0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "t101.uah1",			0x200000, 0x74baf845, 3 | BRF_GRA },           //  3 Sprites
-	{ "t102.ual1",			0x200000, 0x1a02c4a3, 3 | BRF_GRA },           //  4
-	{ "t103.ubl1",			0x400000, 0x84e7da88, 3 | BRF_GRA },           //  5
-	{ "t104.ucl1",			0x200000, 0x66eb611a, 3 | BRF_GRA },           //  6
+	{ "t101.uah1",				0x200000, 0x74baf845, 3 | BRF_GRA },           //  3 Sprites
+	{ "t102.ual1",				0x200000, 0x1a02c4a3, 3 | BRF_GRA },           //  4
+	{ "t103.ubl1",				0x400000, 0x84e7da88, 3 | BRF_GRA },           //  5
+	{ "t104.ucl1",				0x200000, 0x66eb611a, 3 | BRF_GRA },           //  6
 
-	{ "t301.ubd1",			0x100000, 0x8b026177, 4 | BRF_GRA },           //  7 Character Tiles
+	{ "t301.ubd1",				0x100000, 0x8b026177, 4 | BRF_GRA },           //  7 Character Tiles
 
-	{ "t201.ubb1",			0x100000, 0xd5a087ac, 6 | BRF_GRA },           //  8 Midground Layer
+	{ "t201.ubb1",				0x100000, 0xd5a087ac, 6 | BRF_GRA },           //  8 Midground Layer
 
-	{ "t202.ubc1",			0x100000, 0xf051dae1, 7 | BRF_GRA },           //  9 Foreground Layer
+	{ "t202.ubc1",				0x100000, 0xf051dae1, 7 | BRF_GRA },           //  9 Foreground Layer
 
-	{ "t401.uya1",			0x200000, 0x92111992, 8 | BRF_SND },           // 10 YMZ280B Samples
+	{ "t401.uya1",				0x200000, 0x92111992, 8 | BRF_SND },           // 10 YMZ280B Samples
 
-	{ "t501.uad1",			0x080000, 0x2fbcfe27, 9 | BRF_SND },           // 11 OKI6295 Samples
+	{ "t501.uad1",				0x080000, 0x2fbcfe27, 9 | BRF_SND },           // 11 OKI6295 Samples
 
 	{ "deroon_68hc11a8.rom",	0x002000, 0x00000000, 0 | BRF_NODUMP },        // 12 68HC11A8 Code
 	{ "deroon_68hc11a8.eeprom",	0x000200, 0x00000000, 0 | BRF_NODUMP },        // 13 68HC11A8 EEPROM

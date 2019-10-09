@@ -3378,7 +3378,7 @@ struct BurnDriver BurnDrvNbbatmanu = {
 	"Ninja Baseball Batman (US)\0", NULL, "Irem America", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
-	NULL, nbbatmanuRomInfo, nbbatmanuRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,
+	NULL, nbbatmanuRomInfo, nbbatmanuRomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
 	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
@@ -3416,7 +3416,7 @@ struct BurnDriver BurnDrvLeaguemn = {
 	"Yakyuu Kakutou League-Man (Japan)\0", NULL, "Irem", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
-	NULL, leaguemnRomInfo, leaguemnRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,
+	NULL, leaguemnRomInfo, leaguemnRomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
 	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

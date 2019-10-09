@@ -45,31 +45,31 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin"      , 	BIT_DIGITAL  , DrvJoy1 + 6,	"p1 coin"  },
-	{"P1 start"     , 	BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
-	{"P1 Right"     , 	BIT_DIGITAL  , DrvJoy2 + 0, 	"p1 right" },
-	{"P1 Left"      , 	BIT_DIGITAL  , DrvJoy2 + 1, 	"p1 left"  },
-	{"P1 Down"      ,	BIT_DIGITAL  , DrvJoy2 + 2, 	"p1 down"  },
-	{"P1 Up"        ,	BIT_DIGITAL  , DrvJoy2 + 3, 	"p1 up"    },
-	{"P1 Button 1"  , 	BIT_DIGITAL  , DrvJoy2 + 4,	"p1 fire 1"},
-	{"P1 Button 2"  , 	BIT_DIGITAL  , DrvJoy2 + 5,	"p1 fire 2"},
-	{"P1 Button 3"  , 	BIT_DIGITAL  , DrvJoy2 + 6,	"p1 fire 3"},
+	{"P1 Coin", 		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"  },
+	{"P1 start", 		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start" },
+	{"P1 Right", 		BIT_DIGITAL,	DrvJoy2 + 0, 	"p1 right" },
+	{"P1 Left", 		BIT_DIGITAL,	DrvJoy2 + 1, 	"p1 left"  },
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2, 	"p1 down"  },
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3, 	"p1 up"    },
+	{"P1 Button 1", 	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"},
+	{"P1 Button 2", 	BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"},
+	{"P1 Button 3", 	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"},
 
-	{"P2 Coin"      , 	BIT_DIGITAL  , DrvJoy1 + 7,	"p2 coin"  },
-	{"P2 start"     , 	BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
-	{"P2 Right"     , 	BIT_DIGITAL  , DrvJoy3 + 0, 	"p2 right" },
-	{"P2 Left"      , 	BIT_DIGITAL  , DrvJoy3 + 1, 	"p2 left"  },
-	{"P2 Down"      ,	BIT_DIGITAL  , DrvJoy3 + 2, 	"p2 down"  },
-	{"P2 Up"        ,	BIT_DIGITAL  , DrvJoy3 + 3, 	"p2 up"    },
-	{"P2 Button 1"  , 	BIT_DIGITAL  , DrvJoy3 + 4,	"p2 fire 1"},
-	{"P2 Button 2"  , 	BIT_DIGITAL  , DrvJoy3 + 5,	"p2 fire 2"},
-	{"P2 Button 3"  , 	BIT_DIGITAL  , DrvJoy3 + 6,	"p2 fire 3"},
+	{"P2 Coin", 		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"  },
+	{"P2 start", 		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start" },
+	{"P2 Right", 		BIT_DIGITAL,	DrvJoy3 + 0, 	"p2 right" },
+	{"P2 Left", 		BIT_DIGITAL,	DrvJoy3 + 1, 	"p2 left"  },
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2, 	"p2 down"  },
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3, 	"p2 up"    },
+	{"P2 Button 1", 	BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"},
+	{"P2 Button 2", 	BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"},
+	{"P2 Button 3", 	BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"},
 
-	{"Service"      ,	BIT_DIGITAL  , DrvJoy1 + 4,	"service"  },
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"  },
 
-	{"Reset"        ,	BIT_DIGITAL  , &DrvReset  ,	"reset"    },
-	{"Dip 1"        ,	BIT_DIPSWITCH, DrvDips + 0,	"dip"	   },
-	{"Dip 2"        ,	BIT_DIPSWITCH, DrvDips + 1,	"dip"	   },
+	{"Reset",			BIT_DIGITAL,	&DrvReset  ,	"reset"    },
+	{"Dip 1",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"	   },
+	{"Dip 2",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"	   },
 };
 
 STDINPUTINFO(Drv)
@@ -77,7 +77,7 @@ STDINPUTINFO(Drv)
 static struct BurnDIPInfo DrvDIPList[]=
 {
 	// Default Values
-	{0x14, 0xff, 0xff, 0xf7, NULL               },
+	{0x14, 0xff, 0xff, 0xff, NULL               },
 
 	{0   , 0xfe, 0   , 4   , "Bonus Life"       },
 	{0x14, 0x01, 0x03, 0x01, "30k 80k 80k+"     },
@@ -86,14 +86,14 @@ static struct BurnDIPInfo DrvDIPList[]=
 	{0x14, 0x01, 0x03, 0x02, "30k 100k"    	    },
 
 	{0   , 0xfe, 0   , 2   , "Demo"             },
-	{0x14, 0x01, 0x04, 0x00, "Off"     	    },
-	{0x14, 0x01, 0x04, 0x04, "On"    	    },
+	{0x14, 0x01, 0x04, 0x00, "Off"     	        },
+	{0x14, 0x01, 0x04, 0x04, "On"    	        },
 };
 
 static struct BurnDIPInfo gunsmokeuDIPList[]=
 {
 	// Default Values
-	{0x14, 0xff, 0xff, 0xf7, NULL               },
+	{0x14, 0xff, 0xff, 0xff, NULL               },
 
 	{0   , 0xfe, 0   , 4   , "Bonus Life"       },
 	{0x14, 0x01, 0x03, 0x01, "30k 80k 80k+"     },
@@ -102,8 +102,8 @@ static struct BurnDIPInfo gunsmokeuDIPList[]=
 	{0x14, 0x01, 0x03, 0x02, "30k 100k"    	    },
 
 	{0   , 0xfe, 0   , 2   , "Lifes"            },
-	{0x14, 0x01, 0x04, 0x04, "3"     	    },
-	{0x14, 0x01, 0x04, 0x00, "5"    	    },
+	{0x14, 0x01, 0x04, 0x04, "3"     	        },
+	{0x14, 0x01, 0x04, 0x00, "5"    	        },
 };
 
 static struct BurnDIPInfo gunsmokeDIPList[]=
@@ -119,12 +119,12 @@ static struct BurnDIPInfo gunsmokeDIPList[]=
 	{0x14, 0x01, 0x30, 0x00, "Very Difficult"   },
 
 	{0   , 0xfe, 0   , 2   , "Freeze"           },
-	{0x14, 0x01, 0x40, 0x40, "Off"     	    },
-	{0x14, 0x01, 0x40, 0x00, "On"    	    },
+	{0x14, 0x01, 0x40, 0x40, "Off"     	        },
+	{0x14, 0x01, 0x40, 0x00, "On"    	        },
 
 	{0   , 0xfe, 0   , 2   , "Service Mode"     },
-	{0x14, 0x01, 0x80, 0x80, "Off"     	    },
-	{0x14, 0x01, 0x80, 0x00, "On"    	    },
+	{0x14, 0x01, 0x80, 0x80, "Off"     	        },
+	{0x14, 0x01, 0x80, 0x00, "On"    	        },
 
 	// Default Values
 	{0x15, 0xff, 0xff, 0xff, NULL               },
@@ -150,12 +150,12 @@ static struct BurnDIPInfo gunsmokeDIPList[]=
 	{0x15, 0x01, 0x38, 0x18, "1 Coin 6 Credits" },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"   },
-	{0x15, 0x01, 0x40, 0x00, "No"    	    },
+	{0x15, 0x01, 0x40, 0x00, "No"    	        },
 	{0x15, 0x01, 0x40, 0x40, "Yes"              },
 
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"      },
-	{0x15, 0x01, 0x80, 0x00, "Off"    	    },
-	{0x15, 0x01, 0x80, 0x80, "On"     	    },
+	{0x15, 0x01, 0x80, 0x00, "Off"    	        },
+	{0x15, 0x01, 0x80, 0x80, "On"     	        },
 };
 
 STDDIPINFOEXT(Drv, Drv, gunsmoke)
@@ -178,7 +178,7 @@ static void __fastcall gunsmoke_cpu0_write(UINT16 address, UINT8 data)
 
 		case 0xc804:
 			gunsmoke_bankswitch((data >> 2) & 3);
-			flipscreen = data & 0x40;
+			flipscreen = 0; // data & 0x40; ignore flipscreen
 			chon       = data & 0x80;
 		break;
 
@@ -496,19 +496,7 @@ static void draw_sprites()
 
 		sy -= 16;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x200, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x200, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x200, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x200, DrvGfxROM2);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, 0x200, DrvGfxROM2);
 	}
 }
 
@@ -552,41 +540,34 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-
-	INT32 nCyclesSegment;
-	INT32 nCyclesDone[2] = { 0, 0 };
 	INT32 nCyclesTotal[2] = { 4000000 / 60, 3000000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
+		if (i == 240) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
-		// Run Z80 #0
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+		}
 		ZetClose();
 
-		// Run Z80 #1
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		ZetOpen(1);
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		if (i%64 == 63) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
 	
 	ZetOpen(1);
 	BurnTimerEndFrame(nCyclesTotal[1]);
+
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
-	
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
 	return 0;
 }
@@ -689,7 +670,7 @@ struct BurnDriver BurnDrvGunsmoke = {
 };
 
 
-// Gun.Smoke (World, 851115)(bootleg)
+// Gun.Smoke (World, 851115) (bootleg)
 // based on world version, warning message patched out
 
 static struct BurnRomInfo gunsmokebRomDesc[] = {

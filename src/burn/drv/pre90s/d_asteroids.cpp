@@ -912,7 +912,7 @@ static INT32 LlanderInit()
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	avgdvg_init(USE_DVG, DrvVectorRAM, 0x2000, M6502TotalCycles, 1044, 788);
-	vector_set_offsets(11, 119);
+	vector_set_offsets(11, -8);
 
 	llander_sound_init();
 	llander = 1;

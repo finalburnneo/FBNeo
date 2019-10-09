@@ -7,3 +7,5 @@
 .DS_Store
 obj/
 ._*
+gamelist.txt
+src/dep/generated/

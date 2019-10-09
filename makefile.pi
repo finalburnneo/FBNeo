@@ -1,4 +1,4 @@
-# Makefile for FBA, for use with GNU make & GCC (MinGW)
+# Makefile for FBA, for use on Raspberry Pi
 #
 # The first pass makes sure all intermediary targets are present. The second pass updates
 # any targets, if necessary. (Intermediary) targets which have their own unique rules
@@ -26,7 +26,7 @@ NAME = fbneo
 undefine BUILD_X86_ASM
 undefine INCLUDE_AVI_RECORDING
 undefine BUILD_A68K
-
+undefine UNICODE
 
 
 
@@ -38,13 +38,9 @@ objdir	= obj/
 srcdir	= src/
 
 include makefile.burn_rules
-# FIXME
-# include makefile.burner_win32_rules
+include makefile.burner_pi_rules
 
-incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/mingw/include -I-
-
-#lib	+=	-luser32 -lgdi32 -lcomdlg32 -lcomctl32 -lshell32 -lwinmm -lshlwapi -ladvapi32 -lsetupapi -lole32 -luuid -lwininet
-		
+incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/pi/include
 
 autdep	= $(depobj:.o=.d)
 drvdep	= $(drvsrc:.o=.d)
@@ -108,12 +104,16 @@ LDFLAGS	= -static
 
 CFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
+	   -Wno-pedantic -Wno-conversion -Wno-attributes -Wno-unused-but-set-variable \
+	   -Wno-unused-parameter -Wno-unused-value \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
 	   -Wall -W -pedantic -Wno-long-long \
 	   -Wunknown-pragmas -Wundef -Wconversion -Wno-missing-braces \
 	   -Wuninitialized -Wpointer-arith -Winline -Wno-multichar \
+	   -Wno-pedantic -Wno-conversion -Wno-attributes -Wno-unused-but-set-variable \
+	   -Wno-unused-parameter -Wno-unused-value \
 	   $(DEF) $(incdir)
 
 ASFLAGS	=  -O1 -f coff -w-orphan-labels
@@ -122,7 +122,7 @@ ASFLAGS	=  -O1 -f coff -w-orphan-labels
 #       DEF     = -Dsinf=\(float\)sin -Dcosf=\(float\)cos -Dasinf=\(float\)asin -Dacosf=\(float\)acos -Dsqrtf=\(float\)sqrt
 
 # FIXME
-	DEF	:= -DBUILD_WIN32 -DUSE_SPEEDHACKS -DFILENAME=$(NAME) -DMMX=$(MMX)
+	DEF	:= -DBUILD_SDL -DBUILD_PI -DUSE_SPEEDHACKS -DFILENAME=$(NAME)
 
 ifdef UNICODE
 	DEF	:= $(DEF) -D_UNICODE
@@ -137,12 +137,6 @@ ifdef FASTCALL
 endif
 
 ifdef DEBUG
-ifdef GCC345
-	CFLAGS  += -mconsole
-endif
-ifdef GCC452
-	CFLAGS  += -mconsole
-endif
 	DEF	:= $(DEF) -DFBNEO_DEBUG
 endif
 
@@ -363,7 +357,7 @@ ctv.d ctv.o:	$(ctv.h)
 
 $(ctv.h):	ctv_make.cpp
 	@echo Generating $(srcdir)dep/generated/$(@F)...
-	@$(CC) -mconsole $(CXXFLAGS) $(LDFLAGS) $< \
+	@$(CC) $(CXXFLAGS) $(LDFLAGS) $< \
 		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
 
@@ -420,7 +414,7 @@ pgm_draw.d pgm_draw.o:	$(pgm_sprite.h)
 
 $(pgm_sprite.h):	pgm_sprite_create.cpp
 	@echo Generating $(srcdir)dep/generated/$(@F)...
-	@$(CC) -mconsole $(CXXFLAGS) $(LDFLAGS) $< \
+	@$(CC) $(CXXFLAGS) $(LDFLAGS) $< \
 		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
 

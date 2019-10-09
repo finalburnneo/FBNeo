@@ -40,7 +40,8 @@ srcdir	= src/
 include makefile.burn_rules
 include makefile.burner_pi_rules
 
-incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/pi/include
+incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/pi/include \
+		  -I/usr/include/SDL
 
 autdep	= $(depobj:.o=.d)
 drvdep	= $(drvsrc:.o=.d)
@@ -255,11 +256,7 @@ ifeq ($(MAKELEVEL),2)
 
 $(objdir)/drivers.o:		$(autdrv)
 	@echo Linking drivers...
-ifdef BUILD_X64_EXE
-	@$(LD) -m64 -r -nostdlib -o $@ $^
-else
-	@$(LD) -m32 -r -nostdlib -o $@ $^
-endif
+	@$(LD) -r -nostdlib -o $@ $^
 
 $(NAME):	$(allobj) $(objdir)/drivers.o
 	@echo
@@ -337,16 +334,16 @@ $(objdir)cpu/m68k/m68kcpu.o: $(srcdir)cpu/m68k/m68kcpu.c $(objdir)dep/generated/
 	@echo Compiling Musashi MC680x0 core \(m68kcpu.c\)...
 	@$(CC) $(CFLAGS) -c $(srcdir)cpu/m68k/m68kcpu.c -o $(objdir)cpu/m68k/m68kcpu.o
 
-$(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+$(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
 	@echo Compiling Musashi MC680x0 core \(m68kops.c\)...
 	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kops.c -o $(objdir)cpu/m68k/m68kops.o
 
-$(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c
+$(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/m68k/m68kmake $(srcdir)cpu/m68k/m68k_in.c
 	$(objdir)/cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
 
-$(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c
+$(objdir)cpu/m68k/m68kmake: $(srcdir)cpu/m68k/m68kmake.c
 	@echo Compiling Musashi MC680x0 core \(m68kmake.c\)...
-	@$(CC) $(CFLAGS) $(srcdir)cpu/m68k/m68kmake.c -o $(objdir)cpu/m68k/m68kmake.exe
+	@$(CC) $(CFLAGS) $(srcdir)cpu/m68k/m68kmake.c -o $(objdir)cpu/m68k/m68kmake
 
 
 #

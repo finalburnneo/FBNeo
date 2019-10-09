@@ -1,4 +1,4 @@
-alldir	+= 	burner burner/pi burner/sdl dep/kaillera/client dep/libs/libpng dep/libs/lib7z dep/libs/zlib intf intf/video \
+alldir	+= 	burner burner/pi burner/sdl dep/libs/libpng dep/libs/lib7z dep/libs/zlib intf intf/video \
 			intf/video/scalers 	intf/video/pi intf/audio intf/audio/sdl intf/input intf/input/pi intf/cd intf/cd/sdl \
 			intf/perfcount intf/perfcount/pi dep/generated
 
@@ -11,8 +11,6 @@ depobj	+= 	neocdlist.o \
 			\
 			png.o pngerror.o pngget.o pngmem.o pngpread.o pngread.o pngrio.o pngrtran.o pngrutil.o pngset.o pngtrans.o pngwio.o \
 			pngwrite.o pngwtran.o pngwutil.o \
-			\
-			net.o \
 			\
 			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o prf_interface.o vid_interface.o \
 			vid_softfx.o vid_support.o \

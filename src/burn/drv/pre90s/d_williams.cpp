@@ -122,6 +122,9 @@ static struct BurnInputInfo DefenderInputList[] = {
 	{"Thrust",					BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 4"	},
 	{"Reverse",					BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 5"	},
 
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
 	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
@@ -163,6 +166,8 @@ static struct BurnInputInfo Colony7InputList[] = {
 	{"P1 Button 2",				BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"	},
 	{"P1 Button 3",				BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
 
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 5,	"tilt"		},
 	{"Dip A",					BIT_DIPSWITCH,	DrvDips + 0,	"dip"		}, // b
@@ -181,6 +186,9 @@ static struct BurnInputInfo JinInputList[] = {
 	{"P1 Right",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",				BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
 	{"P1 Button 2",				BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"	},
+
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",					BIT_DIPSWITCH,	DrvDips + 0,	"dip"		}, // 9
@@ -204,9 +212,8 @@ static struct BurnInputInfo StargateInputList[] = {
 	{"Thrust",					BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 5"	},
 	{"Reverse",					BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 6"	},
 
-	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P3 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
@@ -229,9 +236,8 @@ static struct BurnInputInfo RobotronInputList[] = {
 	{"Fire Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"Fire Right",				BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 
-	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
-	{"P3 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
@@ -250,9 +256,8 @@ static struct BurnInputInfo BubblesInputList[] = {
 	{"Left",					BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"Right",					BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 
-	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P3 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
@@ -276,7 +281,7 @@ static struct BurnInputInfo SplatInputList[] = {
 	{"P1 Right Stick Left",		BIT_DIGITAL,	DrvJoy7 + 0,	"p3 left"	},
 	{"P1 Right Stick Right",	BIT_DIGITAL,	DrvJoy7 + 1,	"p3 right"	},
 
-	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
 	{"P2 Left Stick Up",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 up"		},
 	{"P2 Left Stick Down",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 down"	},
@@ -286,8 +291,6 @@ static struct BurnInputInfo SplatInputList[] = {
 	{"P2 Right Stick Down",		BIT_DIGITAL,	DrvJoy4 + 7,	"p4 down"	},
 	{"P2 Right Stick Left",		BIT_DIGITAL,	DrvJoy6 + 0,	"p4 left"	},
 	{"P2 Right Stick Right",	BIT_DIGITAL,	DrvJoy6 + 1,	"p4 right"	},
-
-	{"P3 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
@@ -305,13 +308,11 @@ static struct BurnInputInfo JoustInputList[] = {
 	{"P1 Right",				BIT_DIGITAL,	DrvJoy5 + 1,	"p1 right"	},
 	{"P1 Button 1",				BIT_DIGITAL,	DrvJoy5 + 2,	"p1 fire 1"	},
 
-	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 	{"P2 Left",					BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"	},
 	{"P2 Right",				BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
 	{"P2 Button 1",				BIT_DIGITAL,	DrvJoy4 + 2,	"p2 fire 1"	},
-
-	{"P3 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
@@ -335,7 +336,7 @@ static struct BurnInputInfo SpdballInputList[] = {
 	A("P1 Stick X",             BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
 	A("P1 Stick Y",             BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
-	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy5 + 7,	"p2 start"	},
 	{"P2 Up",					BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"		},
 	{"P2 Down",					BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"	},
@@ -393,6 +394,9 @@ static struct BurnInputInfo SinistarInputList[] = {
 	A("P1 Stick X",             BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
 	A("P1 Stick Y",             BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
+
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
 	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
@@ -413,6 +417,9 @@ static struct BurnInputInfo BlasterInputList[] = {
 
 	A("P1 Stick X",             BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
 	A("P1 Stick Y",             BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
+
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},

@@ -97,8 +97,8 @@ static struct BurnInputInfo BackfirtInputList[] = {
 
 	{"P2 Coin"       , BIT_DIGITAL , DrvJoy6 + 3,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy6 + 0,	"p2 start" },
-	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 0, 	"p2 left"  },
-	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 1, 	"p2 right" },
+	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 1, 	"p2 left"  },
+	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 0, 	"p2 right" },
 	{"P2 Down",	  BIT_DIGITAL,   DrvJoy3 + 2,   "p2 down", },
 	{"P2 Up",	  BIT_DIGITAL,   DrvJoy3 + 3,   "p2 up",   },
 	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy4 + 0,	"p2 fire 1"},
@@ -346,7 +346,7 @@ STDDIPINFO(Silkworm)
 static struct BurnDIPInfo BackfirtDIPList[]=
 {
 	{0x13, 0xff, 0xff, 0x00, NULL },
-	{0x14, 0xff, 0xff, 0x10, NULL },
+	{0x14, 0xff, 0xff, 0x00, NULL },
 	{0x15, 0xff, 0xff, 0x00, NULL },
 	{0x16, 0xff, 0xff, 0x00, NULL },
 
@@ -362,10 +362,6 @@ static struct BurnDIPInfo BackfirtDIPList[]=
 	{0x13, 0x01, 0xC, 0x08, "1C 2C" },
 	{0x13, 0x01, 0xC, 0x0C, "1C 3C" },
 
-	{0x14, 0xfe, 0,       2, "Cabinet" },
-	{0x14, 0x01, 0x10, 0x10, "Upright" },
-	{0x14, 0x01, 0x10, 0x00, "Cocktail" },
-
 	{0x15, 0xfe, 0,      8, "Bonus Life" },
 	{0x15, 0x01, 0x07, 0x00, "50000  200000 500000" },
 	{0x15, 0x01, 0x07, 0x01, "100000 300000 800000" },
@@ -376,14 +372,15 @@ static struct BurnDIPInfo BackfirtDIPList[]=
 	{0x15, 0x01, 0x07, 0x06, "200000" },
 	{0x15, 0x01, 0x07, 0x07, "None" },
 
-	// not verified
-	{0x15, 0xfe, 0,       6, "Difficulty" },
+	{0x15, 0xfe, 0,       8, "Difficulty" },
 	{0x15, 0x01, 0x38, 0x00, "0" },
 	{0x15, 0x01, 0x38, 0x08, "1" },
 	{0x15, 0x01, 0x38, 0x10, "2" },
 	{0x15, 0x01, 0x38, 0x18, "3" },
 	{0x15, 0x01, 0x38, 0x20, "4" },
 	{0x15, 0x01, 0x38, 0x28, "5" },
+	{0x15, 0x01, 0x38, 0x30, "6" },
+	{0x15, 0x01, 0x38, 0x38, "7" },
 
 	{0x16, 0xfe, 0,      2, "Allow Continue" },
 	{0x16, 0x01, 0x04, 0x04, "No" },
@@ -449,7 +446,7 @@ static inline void palette_write(INT32 offset)
 	DrvPalette[offset >> 1] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall rygar_main_write(UINT16 address, UINT8 data)
+static void __fastcall rygar_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf000) == 0xe000) {
 		DrvPalRAM[address & 0x7ff] = data;
@@ -504,7 +501,7 @@ void __fastcall rygar_main_write(UINT16 address, UINT8 data)
 	return;
 }
 
-UINT8 __fastcall rygar_sound_read(UINT16 address)
+static UINT8 __fastcall rygar_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -515,7 +512,7 @@ UINT8 __fastcall rygar_sound_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall rygar_sound_write(UINT16 address, UINT8 data)
+static void __fastcall rygar_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xff80) == 0x2000) {
 		DrvZ80ROM1[address] = data;

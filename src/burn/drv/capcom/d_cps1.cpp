@@ -1336,6 +1336,9 @@ static struct BurnInputInfo WofchInputList[] =
  	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
  	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
  	{"P1 Fire"          , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+ 	{"P1 Fire 4"        , BIT_DIGITAL  , CpsInp001+7, "p1 fire 4" },
+ 	{"P1 Fire 5"        , BIT_DIGITAL  , CpsInp018+0, "p1 fire 5" },
+ 	{"P1 Fire 6"        , BIT_DIGITAL  , CpsInp018+6, "p1 fire 6" },
 
 	{"P2 Pause"         , BIT_DIGITAL  , CpsInp018+3, "p2 coin"   },
  	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
@@ -1346,7 +1349,12 @@ static struct BurnInputInfo WofchInputList[] =
  	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
  	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
  	{"P2 Fire"          , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+ 	{"P2 Fire 4"        , BIT_DIGITAL  , CpsInp000+7, "p2 fire 4" },
+ 	{"P2 Fire 5"        , BIT_DIGITAL  , CpsInp018+1, "p2 fire 5" },
+ 	{"P2 Fire 6"        , BIT_DIGITAL  , CpsInp018+7, "p2 fire 6" },
 
+#if 0
+	// wofch only 2p?
  	{"P3 Start"         , BIT_DIGITAL  , CpsInpc001+7, "p3 start" },
  	{"P3 Up"            , BIT_DIGITAL  , CpsInpc001+3, "p3 up"    },
  	{"P3 Down"          , BIT_DIGITAL  , CpsInpc001+2, "p3 down"  },
@@ -1355,7 +1363,7 @@ static struct BurnInputInfo WofchInputList[] =
  	{"P3 Attack"        , BIT_DIGITAL  , CpsInpc001+4, "p3 fire 1"},
  	{"P3 Jump"          , BIT_DIGITAL  , CpsInpc001+5, "p3 fire 2"},
  	{"P3 Fire"          , BIT_DIGITAL  , CpsInpc001+6, "p3 fire 3"},
-
+#endif
  	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
 };
 

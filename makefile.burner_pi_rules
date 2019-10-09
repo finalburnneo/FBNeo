@@ -1,6 +1,6 @@
 alldir	+= 	burner burner/pi burner/sdl dep/libs/libpng dep/libs/lib7z dep/libs/zlib intf intf/video \
 			intf/video/scalers 	intf/video/pi intf/audio intf/audio/sdl intf/input intf/input/pi intf/cd intf/cd/sdl \
-			intf/perfcount intf/perfcount/pi dep/generated
+			intf/perfcount intf/perfcount/pi dep/generated dep/pi/cjson
 
 depobj	+= 	neocdlist.o \
 			\
@@ -12,10 +12,13 @@ depobj	+= 	neocdlist.o \
 			png.o pngerror.o pngget.o pngmem.o pngpread.o pngread.o pngrio.o pngrtran.o pngrutil.o pngset.o pngtrans.o pngwio.o \
 			pngwrite.o pngwtran.o pngwutil.o \
 			\
-			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o prf_interface.o vid_interface.o \
+			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o  vid_interface.o \
 			vid_softfx.o vid_support.o \
 			\
-			2xpm.o 2xsai.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o
+			2xpm.o 2xsai.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o \
+			\
+			inp_udev.o inp_pi.o inp_pi_keys.o aud_sdl.o support_paths.o ips_manager.o scrn.o cJSON.o \
+			cd_isowav.o cdsound.o
 			
 ifdef INCLUDE_7Z_SUPPORT
 depobj	+=	un7z.o \

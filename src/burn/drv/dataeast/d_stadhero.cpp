@@ -187,7 +187,7 @@ static UINT8 __fastcall stadhero_main_read_byte(UINT32 address)
 			return (DrvInputs[1] & 0x7f) | (vblank ? 0x80 : 0);
 
 		case 0x30c003:
-			return (BurnRandom() & 0xff)/4;
+			return BurnRandom() & 0x3f;
 	}
 
 	return 0;
@@ -595,9 +595,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2203Scan(nAction, pnMin);
 		BurnYM3812Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
-		
+
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(DrvVidCtrl);
+
+		BurnRandomScan(nAction);
 	}
 
 	return 0;

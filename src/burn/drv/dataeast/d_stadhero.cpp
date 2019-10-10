@@ -184,8 +184,10 @@ static UINT8 __fastcall stadhero_main_read_byte(UINT32 address)
 			return DrvDips[0];
 
 		case 0x30c002:
-		case 0x30c003:
 			return (DrvInputs[1] & 0x7f) | (vblank ? 0x80 : 0);
+
+		case 0x30c003:
+			return (BurnRandom() & 0xff)/4;
 	}
 
 	return 0;

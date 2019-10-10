@@ -118,7 +118,7 @@ CXXFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
 	   -Wunknown-pragmas -Wundef -Wconversion -Wno-missing-braces \
 	   -Wuninitialized -Wpointer-arith -Winline -Wno-multichar \
 	   -Wno-pedantic -Wno-conversion -Wno-attributes -Wno-unused-but-set-variable \
-	   -Wno-unused-parameter -Wno-unused-value \
+	   -Wno-unused-parameter -Wno-unused-value -Wno-narrowing \
 	   $(DEF) $(incdir)
 
 ASFLAGS	=  -O1 -f coff -w-orphan-labels

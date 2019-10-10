@@ -9,3 +9,6 @@ obj/
 ._*
 gamelist.txt
 src/dep/generated/
+fbneo
+roms
+joyconfig

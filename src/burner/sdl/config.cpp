@@ -4,7 +4,7 @@ int nIniVersion = 0;
 
 static void CreateConfigName(char* szConfig)
 {
-	memcpy(szConfig, "fbasdl.ini", 12);
+	memcpy(szConfig, "fbneo.ini", 12);
 	return;
 }
 

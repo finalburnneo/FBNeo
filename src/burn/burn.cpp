@@ -196,7 +196,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 	if (!(i & DRV_ASCIIONLY)) {
 		switch (i & 0xFF) {
-#if !defined(__LIBRETRO__) && !defined(BUILD_PI)
+#if !defined(__LIBRETRO__) && !defined(BUILD_SDL)
 			case DRV_FULLNAME:
 				pszStringW = pDriver[nBurnDrvActive]->szFullNameW;
 				
@@ -236,7 +236,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 				}
 				break;
-#endif // !defined(__LIBRETRO__) && !defined(BUILD_PI)
+#endif // !defined(__LIBRETRO__) && !defined(BUILD_SDL)
 			case DRV_COMMENT:
 				pszStringW = pDriver[nBurnDrvActive]->szCommentW;
 				break;
@@ -932,7 +932,7 @@ extern struct MovieExtInfo MovieInfo; // from replay.cpp
 void BurnGetLocalTime(tm *nTime)
 {
 	if (is_netgame_or_recording()) {
-#ifndef BUILD_PI
+#ifndef BUILD_SDL
 		if (is_netgame_or_recording() & 2) { // recording/playback
 			nTime->tm_sec = MovieInfo.second;
 			nTime->tm_min = MovieInfo.minute;
@@ -949,7 +949,7 @@ void BurnGetLocalTime(tm *nTime)
 			nTime->tm_wday = 3;
 			nTime->tm_mon = 6 - 1;
 			nTime->tm_year = 2018;
-#ifndef BUILD_PI
+#ifndef BUILD_SDL
 		}
 #endif
 	} else {

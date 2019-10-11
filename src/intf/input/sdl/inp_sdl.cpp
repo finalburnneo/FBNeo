@@ -1,5 +1,5 @@
 // Module for input using SDL
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include "burner.h"
 #include "inp_sdl_keys.h"

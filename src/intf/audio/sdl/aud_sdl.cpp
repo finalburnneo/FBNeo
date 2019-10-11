@@ -1,6 +1,6 @@
 // SDL_Sound module
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "burner.h"
 #include "aud_dsp.h"
 #include <math.h>

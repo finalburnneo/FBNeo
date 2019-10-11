@@ -8,7 +8,7 @@
 #include <interface/vchiq_arm/vchiq_if.h>
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include "burner.h"
 

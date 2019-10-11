@@ -28,10 +28,10 @@ endif
 # Specify the name of the executable file, without ".exe"
 NAME = fbneo
 
-undefine BUILD_X86_ASM
-undefine INCLUDE_AVI_RECORDING
-undefine BUILD_A68K
-undefine UNICODE
+BUILD_X86_ASM=
+INCLUDE_AVI_RECORDING=
+BUILD_A68K=
+UNICODE=
 
 
 #
@@ -145,8 +145,8 @@ autdrv := $(drvsrc:.cpp=.o)
 #
 #
 
-CC	= gcc-9
-CXX	= gcc-9 #g++
+CC	= gcc
+CXX	= gcc
 LD	= $(CXX)
 AS	= nasm
 
@@ -154,15 +154,15 @@ AS	= nasm
 
 CFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
-	   -Wno-pedantic -Wno-conversion -Wno-attributes \
-	   -Wno-unused-parameter -Wno-unused-value \
+	   -Wno-conversion -Wno-attributes \
+	   -Wno-unused-parameter -Wno-unused-value -std=c99 \
 	   $(PLATFLAGS) $(DEF) $(incdir)
 
 CXXFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
-	   -Wall -W -pedantic -Wno-long-long \
+	   -Wall -W -Wno-long-long \
 	   -Wunknown-pragmas -Wundef -Wconversion -Wno-missing-braces \
 	   -Wuninitialized -Wpointer-arith -Winline -Wno-multichar \
-	   -Wno-pedantic -Wno-conversion -Wno-attributes \
+	   -Wno-conversion -Wno-attributes \
 	   -Wno-unused-parameter -Wno-unused-value -Wno-narrowing \
 	   $(PLATFLAGS) $(DEF) $(incdir)
 

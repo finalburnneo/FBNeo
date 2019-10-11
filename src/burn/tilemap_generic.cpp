@@ -1007,7 +1007,11 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 		INT32 startx = minx - (minx % cur_map->twidth);
 		INT32 endx = maxx + cur_map->twidth;
 		INT32 endy = maxy + cur_map->theight;
-		
+#if 0
+		// akka arrh buggy (clipclipderp) fix
+		// after reimpl, test:
+		// bwings, zaviga, squaitsa, botanicf, bagman
+		// if they are weirdly-offset, something is wrong.
 		if (cur_map->flags & TMAP_FLIPX) {
 			INT32 tmp = ((cur_map->mwidth - 1) * cur_map->twidth) - (endx - cur_map->twidth);
 			endx = (((cur_map->mwidth - 1) * cur_map->twidth) - startx) + cur_map->twidth;
@@ -1019,7 +1023,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 			endy = (((cur_map->mheight - 1) * cur_map->theight) - starty) + cur_map->theight;
 			starty = tmp;
 		}
-
+#endif
 		for (INT32 y = starty; y < endy; y += cur_map->theight)
 		{
 			INT32 syy = (y + scrolly) % (cur_map->theight * cur_map->mheight);
@@ -1077,12 +1081,16 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 				INT32 flipy = flags & TILE_FLIPY;
 
 				if (cur_map->flags & TMAP_FLIPY) {
-					sy = ((cur_map->mheight - 1) * cur_map->theight) - sy;
+					// part of clipclipderp fix (save for reimpl)
+					//sy = ((cur_map->mheight - 1) * cur_map->theight) - sy;
+					sy = ((maxy - miny) - cur_map->theight) - sy;
 					flipy ^= TILE_FLIPY;
 				}
 
 				if (cur_map->flags & TMAP_FLIPX) {
-					sx = ((cur_map->mwidth - 1) * cur_map->twidth) - sx;
+					// part of clipclipderp fix (save for reimpl)
+					//sx = ((cur_map->mwidth - 1) * cur_map->twidth) - sx;
+					sx = ((maxx - minx) - cur_map->twidth) - sx;
 					flipx ^= TILE_FLIPX;
 				}
 

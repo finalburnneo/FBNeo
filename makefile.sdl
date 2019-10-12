@@ -145,9 +145,15 @@ autdrv := $(drvsrc:.cpp=.o)
 #
 #
 
-CC	= gcc
-CXX	= gcc
-LD	= $(CXX)
+ifdef DARWIN
+	# GCC 4.2.1 Segfaults during build
+	CC	= gcc-9
+else
+	CC	= gcc
+endif
+
+CXX	= $(CC)
+LD	= $(CC)
 AS	= nasm
 
 #LDFLAGS	= -static
@@ -552,9 +558,8 @@ touch:
 	-@for dir in $(alldir); do touch -c  -r $(NAME).exe $(objdir)$$dir/*; done
 
 clean:
-	@echo Removing all files from $(objdir)...
-	-@rm -f -r $(objdir)
-	-@rm -f -r $(ctv.h)
+	@echo Removing build files...
+	-@rm -fr $(objdir) $(ctv.h) $(dep)generated $(NAME)
 
 ifdef	PERL
 	@echo Removing all files generated with perl scripts...

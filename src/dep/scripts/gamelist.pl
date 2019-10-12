@@ -187,8 +187,9 @@ foreach my $filename ( @Filelist ) {
 }
 
 # Sort the list of drivers using the decorated game name as the key
+# Make the sort order more predictive by adding the driver name
 @Driverlist = sort {
-	lc( $Drivers{$a}[10] ) cmp lc( $Drivers{$b}[10] );
+	lc( $Drivers{$a}[10] . $Drivers{$a}[1] ) cmp lc( $Drivers{$b}[10] . $Drivers{$b}[1] );
 } keys %Drivers;
 
 # first define needed constants and include needed files

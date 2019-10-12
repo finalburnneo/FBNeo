@@ -91,4 +91,7 @@ sdl: FORCE
 vc: FORCE
 	@$(MAKE) -s -f makefile.vc
 
+pi: FORCE
+	@$(MAKE) -s -f makefile.pi
+
 FORCE:

@@ -196,7 +196,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 	if (!(i & DRV_ASCIIONLY)) {
 		switch (i & 0xFF) {
-#ifndef __LIBRETRO__
+#if !defined(__LIBRETRO__) && !defined(BUILD_PI)
 			case DRV_FULLNAME:
 				pszStringW = pDriver[nBurnDrvActive]->szFullNameW;
 				
@@ -236,7 +236,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 				}
 				break;
-#endif // __LIBRETRO__
+#endif // !defined(__LIBRETRO__) && !defined(BUILD_PI)
 			case DRV_COMMENT:
 				pszStringW = pDriver[nBurnDrvActive]->szCommentW;
 				break;
@@ -925,11 +925,14 @@ struct MovieExtInfo
 	UINT32 hour, minute, second;
 };
 
+#ifndef BUILD_PI
 extern struct MovieExtInfo MovieInfo; // from replay.cpp
+#endif
 
 void BurnGetLocalTime(tm *nTime)
 {
 	if (is_netgame_or_recording()) {
+#ifndef BUILD_PI
 		if (is_netgame_or_recording() & 2) { // recording/playback
 			nTime->tm_sec = MovieInfo.second;
 			nTime->tm_min = MovieInfo.minute;
@@ -938,6 +941,7 @@ void BurnGetLocalTime(tm *nTime)
 			nTime->tm_mon = MovieInfo.month;
 			nTime->tm_year = MovieInfo.year;
 		} else {
+#endif
 			nTime->tm_sec = 0; // defaults for netgame
 			nTime->tm_min = 0;
 			nTime->tm_hour = 0;
@@ -945,7 +949,9 @@ void BurnGetLocalTime(tm *nTime)
 			nTime->tm_wday = 3;
 			nTime->tm_mon = 6 - 1;
 			nTime->tm_year = 2018;
+#ifndef BUILD_PI
 		}
+#endif
 	} else {
 		time_t nLocalTime = time(NULL); // query current time from this machine
 		tm* tmLocalTime = localtime(&nLocalTime);

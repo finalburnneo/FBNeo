@@ -46,7 +46,7 @@ include makefile.burn_rules
 # Platform stuff
 alldir	+= 	burner burner/sdl burner/sdl dep/libs/libpng dep/libs/lib7z dep/libs/zlib intf intf/video \
 			intf/video/scalers 	intf/video/sdl intf/audio intf/audio/sdl intf/input intf/input/sdl intf/cd intf/cd/sdl \
-			intf/perfcount intf/perfcount/sdl dep/generated dep/dynhuff
+			intf/perfcount intf/perfcount/sdl dep/generated
 
 depobj	+= 	neocdlist.o \
 			\

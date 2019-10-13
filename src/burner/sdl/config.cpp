@@ -12,39 +12,39 @@ static void CreateConfigName(char* szConfig)
 int ConfigAppLoad()
 {
 	char szConfig[MAX_PATH];
-	char szLine[256];
-	FILE *h;
+	FILE *f;
 
 	CreateConfigName(szConfig);
 
-	if ((h = fopen(szConfig,"rt")) == NULL) {
+	if ((f = fopen(szConfig,"rt")) == NULL) {
 		return 1;
 	}
 
+#define VAR(x) { char *szValue = LabelCheck(szLine, #x);		\
+  if (szValue) x = strtol(szValue, NULL, 0); }
+#define FLT(x) { char *szValue = LabelCheck(szLine, #x);		\
+  if (szValue) x = atof(szValue); }
+#define STR(x) { char *szValue = LabelCheck(szLine, #x " ");	\
+  if (szValue) strcpy(x,szValue); }
+
 	// Go through each line of the config file
-	while (fgets(szLine, sizeof(szLine), h)) {
-		int nLen;
-
-		nLen = strlen(szLine);
-
+	char szLine[256];
+	while (fgets(szLine, sizeof(szLine), f)) {
 		// Get rid of the linefeed at the end
+		int nLen = strlen(szLine);
 		if (szLine[nLen - 1] == 10) {
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}
 
-#define VAR(x) { char *szValue = LabelCheck(szLine,#x);		\
-  if (szValue) x = strtol(szValue, NULL, 0); }
-#define FLT(x) { char *szValue = LabelCheck(szLine,#x);		\
-  if (szValue) x = atof(szValue); }
-#define STR(x) { char *szValue = LabelCheck(szLine,#x " ");	\
-  if (szValue) strcpy(x,szValue); }
-
 		VAR(nIniVersion);
+#ifndef BUILD_PI
 		VAR(nVidSelect); // video mode select
 		VAR(bVidFullStretch);
-
 		VAR(nAutoFireRate);
+#endif
+		VAR(bVidScanlines);
+		VAR(nAudSampleRate[0]);
 
 		// Other
 		STR(szAppRomPaths[0]);
@@ -72,7 +72,7 @@ int ConfigAppLoad()
 #undef VAR
 	}
 
-	fclose(h);
+	fclose(f);
 	return 0;
 }
 
@@ -80,33 +80,36 @@ int ConfigAppLoad()
 int ConfigAppSave()
 {
 	char szConfig[MAX_PATH];
-	FILE *h;
+	FILE *f;
 
 	CreateConfigName(szConfig);
 
-	if ((h = fopen(szConfig, "wt")) == NULL) {
+	if ((f = fopen(szConfig, "wt")) == NULL) {
 		return 1;
 	}
 
 
-#define VAR(x) fprintf(h, #x " %d\n", x)
-#define FLT(x) fprintf(h, #x " %f\n", x)
-#define STR(x) fprintf(h, #x " %s\n", x)
+#define VAR(x) fprintf(f, #x " %d\n", x)
+#define FLT(x) fprintf(f, #x " %f\n", x)
+#define STR(x) fprintf(f, #x " %s\n", x)
 
-	fprintf(h,"\n// The application version this file was saved from\n");
+	fprintf(f,"\n// The application version this file was saved from\n");
 	// We can't use the macros for this!
-	fprintf(h, "nIniVersion 0x%06X", nBurnVer);
-	
-	fprintf(h,"\n// video mode 0 = standard SDL 1= (very expiermental) opengl\n");
+	fprintf(f, "nIniVersion 0x%06X", nBurnVer);
+
+#ifndef BUILD_PI
+	fprintf(f,"\n// video mode 0 = standard SDL 1= (very expiermental) opengl\n");
 	VAR(nVidSelect); // video mode select
-
-	fprintf(h,"\n// If non-zero, allow stretching of the image to any size\n");
+	fprintf(f,"\n// If non-zero, allow stretching of the image to any size\n");
 	VAR(bVidFullStretch);
-
-	fprintf(h,"\n// Auto-Fire Rate, non-linear - use the GUI to change this setting!\n");
+	fprintf(f,"\n// Auto-Fire Rate, non-linear - use the GUI to change this setting!\n");
 	VAR(nAutoFireRate);
+#endif
+	fprintf(f,"\n// If non-zero, enable scanlines\n");
+	VAR(bVidScanlines);
+	VAR(nAudSampleRate[0]);
 
-	fprintf(h,"\n// The paths to search for rom zips. (include trailing backslash)\n");
+	fprintf(f,"\n// The paths to search for rom zips. (include trailing backslash)\n");
 	STR(szAppRomPaths[0]);
 	STR(szAppRomPaths[1]);
 	STR(szAppRomPaths[2]);
@@ -128,12 +131,12 @@ int ConfigAppSave()
 	STR(szAppRomPaths[18]);
 	STR(szAppRomPaths[19]);
 
-	fprintf(h,"\n\n\n");
+	fprintf(f,"\n\n\n");
 
 #undef STR
 #undef FLT
 #undef VAR
 
-	fclose(h);
+	fclose(f);
 	return 0;
 }

@@ -925,14 +925,15 @@ struct MovieExtInfo
 	UINT32 hour, minute, second;
 };
 
-#ifndef BUILD_PI
+#ifndef BUILD_SDL
 extern struct MovieExtInfo MovieInfo; // from replay.cpp
+#else
+struct MovieExtInfo MovieInfo = { 0, 0, 0, 0, 0, 0 };
 #endif
 
 void BurnGetLocalTime(tm *nTime)
 {
 	if (is_netgame_or_recording()) {
-#ifndef BUILD_SDL
 		if (is_netgame_or_recording() & 2) { // recording/playback
 			nTime->tm_sec = MovieInfo.second;
 			nTime->tm_min = MovieInfo.minute;
@@ -941,7 +942,6 @@ void BurnGetLocalTime(tm *nTime)
 			nTime->tm_mon = MovieInfo.month;
 			nTime->tm_year = MovieInfo.year;
 		} else {
-#endif
 			nTime->tm_sec = 0; // defaults for netgame
 			nTime->tm_min = 0;
 			nTime->tm_hour = 0;
@@ -949,9 +949,7 @@ void BurnGetLocalTime(tm *nTime)
 			nTime->tm_wday = 3;
 			nTime->tm_mon = 6 - 1;
 			nTime->tm_year = 2018;
-#ifndef BUILD_SDL
 		}
-#endif
 	} else {
 		time_t nLocalTime = time(NULL); // query current time from this machine
 		tm* tmLocalTime = localtime(&nLocalTime);

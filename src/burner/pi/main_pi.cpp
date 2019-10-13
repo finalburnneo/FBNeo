@@ -1,5 +1,4 @@
 #include "burner.h"
-#include "config.h"
 #include <sys/stat.h>
 #include <unistd.h>
 

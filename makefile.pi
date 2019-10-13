@@ -71,7 +71,7 @@ depobj	+= 	neocdlist.o \
 ifdef INCLUDE_7Z_SUPPORT
 	depobj	+= un7z.o 7zArcIn.o 7zBuf.o 7zBuf2.o 7zCrc.o 7zCrcOpt.o \
 		7zDec.o 7zFile.o 7zStream.o Bcj2.o Bra.o Bra86.o BraIA64.o \
-		CpuArch.o Delta.o LzmaDec.o Lzma2Dec.o Ppmd7.o Ppmd7Dec.o
+		CpuArch.o Delta.o LzmaDec.o Lzma2Dec.o Ppmd7.o Ppmd7Dec.o \
 		Sha256.o Xz.o XzCrc64.o XzCrc64Opt.o XzDec.o
 endif
 
@@ -551,7 +551,7 @@ touch:
 
 clean:
 	@echo Removing build files...
-	-@rm -fr $(objdir) $(ctv.h) $(dep)generated $(NAME)
+	-@rm -fr $(objdir) $(ctv.h) $(dep)generated gamelist.txt $(NAME)
 
 ifdef	PERL
 	@echo Removing all files generated with perl scripts...

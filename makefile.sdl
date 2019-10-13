@@ -559,7 +559,7 @@ touch:
 
 clean:
 	@echo Removing build files...
-	-@rm -fr $(objdir) $(ctv.h) $(dep)generated $(NAME)
+	-@rm -fr $(objdir) $(ctv.h) $(dep)generated gamelist.txt $(NAME)
 
 ifdef	PERL
 	@echo Removing all files generated with perl scripts...

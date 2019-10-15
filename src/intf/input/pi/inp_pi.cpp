@@ -48,6 +48,13 @@ static int handleFreeplayHack(int player, int code);
 
 #define JOY_DEADZONE 0x4000
 
+static unsigned int defaultLayout[] = {
+	FBK_Z, FBK_X, FBK_C, FBK_A, FBK_S, FBK_D, FBK_Q, FBK_W, FBK_E,
+};
+static unsigned int capcom6Layout[] = {
+	FBK_A, FBK_S, FBK_D, FBK_Z, FBK_X, FBK_C,
+};
+
 static unsigned char* keyState = NULL;
 static struct {
 	unsigned char buttons;
@@ -368,63 +375,33 @@ static bool usesStreetFighterLayout()
 
 static int setupDefaults(int pindex)
 {
-	int fbDirs[4];
-	int fbButtons[6]; // absolute max
-	int buttonCount = 0;
-
 	if (pindex == 0) {
-		int i = 0;
-		fbDirs[i++] = FBK_UPARROW;
-		fbDirs[i++] = FBK_LEFTARROW;
-		fbDirs[i++] = FBK_RIGHTARROW;
-		fbDirs[i++] = FBK_DOWNARROW;
+		joyLookupTable[FBK_UPARROW] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
+		joyLookupTable[FBK_LEFTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
+		joyLookupTable[FBK_RIGHTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
+		joyLookupTable[FBK_DOWNARROW] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
 
-		if (usesStreetFighterLayout()) {
-			fbButtons[buttonCount++] = FBK_A;
-			fbButtons[buttonCount++] = FBK_S;
-			fbButtons[buttonCount++] = FBK_D;
-			fbButtons[buttonCount++] = FBK_Z;
-			fbButtons[buttonCount++] = FBK_X;
-			fbButtons[buttonCount++] = FBK_C;
-		} else {
-			fbButtons[buttonCount++] = FBK_Z;
-			fbButtons[buttonCount++] = FBK_X;
-			fbButtons[buttonCount++] = FBK_C;
-			fbButtons[buttonCount++] = FBK_V;
-		}
-	} else if (pindex >= 1 && pindex <= 3) {
-		// P2 to P4
-		int pmasks[] = { 0x4000, 0x4100, 0x4200 };
-		int pmask = pmasks[pindex - 1];
-
-		int i = 0;
-		fbDirs[i++] = pmask|0x02;
-		fbDirs[i++] = pmask|0x00;
-		fbDirs[i++] = pmask|0x01;
-		fbDirs[i++] = pmask|0x03;
-
-		for (; buttonCount < 6; buttonCount++) {
-			fbButtons[buttonCount] = pmask|(0x80 + buttonCount);
-		}
+		if (usesStreetFighterLayout())
+			for (int i = 0; i < 6; i++)
+				joyLookupTable[capcom6Layout[i]] = JOY_MAP_BUTTON(pindex, i);
+		else
+			for (int i = 0; i < 9; i++)
+				joyLookupTable[defaultLayout[i]] = JOY_MAP_BUTTON(pindex, i);
 	} else {
-		return 0;
-	}
+		unsigned int mask = 0x4000 + 0x100 * (pindex - 1);
+		joyLookupTable[mask|0x02] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
+		joyLookupTable[mask|0x00] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
+		joyLookupTable[mask|0x01] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
+		joyLookupTable[mask|0x03] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
 
-	// Set direction defaults
-	int joyDirs[] = { JOY_DIR_UP, JOY_DIR_LEFT, JOY_DIR_RIGHT, JOY_DIR_DOWN };
-	for (int i = 0; i < 4; i++) {
-		joyLookupTable[fbDirs[i]] = JOY_MAP_DIR(pindex, joyDirs[i]);
-	}
-
-	// Set button defaults
-	for (int i = 0; i < buttonCount; i++) {
-		joyLookupTable[fbButtons[i]] = JOY_MAP_BUTTON(pindex, i);
+		for (int i = 0; i < 9; i++)
+			joyLookupTable[mask|(0x80 + i)] = JOY_MAP_BUTTON(pindex, i);
 	}
 
 	return 1;
 }
 
-static int readKonfigFile(int pindex, const char *path, int sixButton)
+static int readConfigFile(int pindex, const char *path, int sixButton)
 {
 	FILE *f = fopen(path, "r");
 	if (!f)
@@ -455,14 +432,10 @@ static int readKonfigFile(int pindex, const char *path, int sixButton)
 			} else if (pindex == 0) {
 				if (strncmp(line, "BUTTON", 6) == 0) {
 					int vbindex = atoi(line + 6) - 1;
-					unsigned int code;
-					if (sixButton && vbindex < 3)
-						code = FBK_A + vbindex;
-					else if (sixButton && vbindex >= 3)
-						code = FBK_Z + vbindex - 3;
-					else
-						code = FBK_Z + vbindex;
-					joyLookupTable[code] = JOY_MAP_BUTTON(pindex, hbindex);
+					if (sixButton && vbindex < 6)
+						joyLookupTable[capcom6Layout[vbindex]] = JOY_MAP_BUTTON(pindex, hbindex);
+					else if (!sixButton && vbindex < 9)
+						joyLookupTable[defaultLayout[vbindex]] = JOY_MAP_BUTTON(pindex, hbindex);
 				} else if (strncmp(line, "UP", 2) == 0) {
 					joyLookupTable[FBK_UPARROW] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
 				} else if (strncmp(line, "DOWN", 4) == 0) {
@@ -525,7 +498,7 @@ static void resetJoystickMap()
 	for (int i = 0; i < 4; i++) {
 		setupDefaults(i);
 		if (loadConfig)
-			readKonfigFile(i, path, sixButton);
+			readConfigFile(i, path, sixButton);
 	}
 }
 

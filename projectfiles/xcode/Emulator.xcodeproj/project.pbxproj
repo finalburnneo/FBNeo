@@ -986,6 +986,9 @@
 		FEA5E79623563FB300DA2D9D /* neocdlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79423563FB300DA2D9D /* neocdlist.cpp */; };
 		FEA5E79723563FB300DA2D9D /* inpdipsw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79523563FB300DA2D9D /* inpdipsw.cpp */; };
 		FEA5E79A2356472200DA2D9D /* vid_macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E7992356472200DA2D9D /* vid_macos.cpp */; };
+		FEA5E7C02356721900DA2D9D /* neo_sprite_func.pl in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E7BD2356721800DA2D9D /* neo_sprite_func.pl */; };
+		FEA5E7C12356721900DA2D9D /* psikyo_tile_func.pl in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */; };
+		FEA5E7C22356721900DA2D9D /* toa_gp9001_func.pl in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2429,13 +2432,9 @@
 		FE1B239E23561A750065200C /* sshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sshot.cpp; sourceTree = "<group>"; };
 		FE1B287E23561D1A0065200C /* tchar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tchar.h; sourceTree = "<group>"; };
 		FE1B287F235626280065200C /* burner_macos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = burner_macos.h; sourceTree = "<group>"; };
-		FE1B2880235629690065200C /* cave_tile_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_tile_func.h; sourceTree = "<group>"; };
-		FE1B2881235629690065200C /* cave_tile_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_tile_func_table.h; sourceTree = "<group>"; };
 		FE1B2882235629690065200C /* neo_sprite_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neo_sprite_func.h; sourceTree = "<group>"; };
 		FE1B28832356296A0065200C /* psikyo_tile_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = psikyo_tile_func_table.h; sourceTree = "<group>"; };
 		FE1B28842356296A0065200C /* toa_gp9001_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toa_gp9001_func.h; sourceTree = "<group>"; };
-		FE1B28852356296A0065200C /* cave_sprite_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_sprite_func.h; sourceTree = "<group>"; };
-		FE1B28862356296A0065200C /* cave_sprite_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_sprite_func_table.h; sourceTree = "<group>"; };
 		FE1B28872356296A0065200C /* ctv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctv.h; sourceTree = "<group>"; };
 		FE1B28882356296B0065200C /* driverlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = driverlist.h; sourceTree = "<group>"; };
 		FE1B28892356296B0065200C /* psikyo_tile_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = psikyo_tile_func.h; sourceTree = "<group>"; };
@@ -2448,6 +2447,15 @@
 		FEA5E79423563FB300DA2D9D /* neocdlist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = neocdlist.cpp; sourceTree = "<group>"; };
 		FEA5E79523563FB300DA2D9D /* inpdipsw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = inpdipsw.cpp; sourceTree = "<group>"; };
 		FEA5E7992356472200DA2D9D /* vid_macos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vid_macos.cpp; sourceTree = "<group>"; };
+		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
+		FEA5E7AE23564A6400DA2D9D /* cave_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_sprite_func.pl; sourceTree = "<group>"; };
+		FEA5E7B623566E7600DA2D9D /* cave_tile_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_tile_func_table.h; sourceTree = "<group>"; };
+		FEA5E7B723566E7700DA2D9D /* cave_sprite_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_sprite_func_table.h; sourceTree = "<group>"; };
+		FEA5E7B823566E7700DA2D9D /* cave_sprite_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_sprite_func.h; sourceTree = "<group>"; };
+		FEA5E7B923566E7700DA2D9D /* cave_tile_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_tile_func.h; sourceTree = "<group>"; };
+		FEA5E7BD2356721800DA2D9D /* neo_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = neo_sprite_func.pl; sourceTree = "<group>"; };
+		FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = psikyo_tile_func.pl; sourceTree = "<group>"; };
+		FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = toa_gp9001_func.pl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2980,6 +2988,7 @@
 			children = (
 				FE1B287C23561C330065200C /* generated */,
 				FE1B1DA923561A640065200C /* libs */,
+				FEA5E79B23564A3200DA2D9D /* scripts */,
 			);
 			name = dep;
 			path = ../../src/dep;
@@ -4532,10 +4541,10 @@
 		FE1B287C23561C330065200C /* generated */ = {
 			isa = PBXGroup;
 			children = (
-				FE1B28862356296A0065200C /* cave_sprite_func_table.h */,
-				FE1B28852356296A0065200C /* cave_sprite_func.h */,
-				FE1B2881235629690065200C /* cave_tile_func_table.h */,
-				FE1B2880235629690065200C /* cave_tile_func.h */,
+				FEA5E7B723566E7700DA2D9D /* cave_sprite_func_table.h */,
+				FEA5E7B823566E7700DA2D9D /* cave_sprite_func.h */,
+				FEA5E7B623566E7600DA2D9D /* cave_tile_func_table.h */,
+				FEA5E7B923566E7700DA2D9D /* cave_tile_func.h */,
 				FE1B28872356296A0065200C /* ctv.h */,
 				FE1B28882356296B0065200C /* driverlist.h */,
 				FE1B288E23562B360065200C /* m68kops.c */,
@@ -4571,6 +4580,18 @@
 			path = macos;
 			sourceTree = "<group>";
 		};
+		FEA5E79B23564A3200DA2D9D /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				FEA5E7AE23564A6400DA2D9D /* cave_sprite_func.pl */,
+				FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */,
+				FEA5E7BD2356721800DA2D9D /* neo_sprite_func.pl */,
+				FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */,
+				FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4578,6 +4599,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE1B109E235615960065200C /* Build configuration list for PBXNativeTarget "Emulator" */;
 			buildPhases = (
+				FEA5E7B023564BD600DA2D9D /* Generate cave_tile_func.h */,
+				FEA5E7B12356697500DA2D9D /* Generate cave_sprite_func.h */,
+				FEA5E7BA23566F0500DA2D9D /* Generate neo_sprite_func.h */,
+				FEA5E7BB2356703500DA2D9D /* Generate psikyo_tile_func.h */,
+				FEA5E7BC2356718400DA2D9D /* Generate toa_gp9001_func.h */,
 				FE1B1089235615940065200C /* Sources */,
 				FE1B108A235615940065200C /* Frameworks */,
 				FE1B108B235615940065200C /* Resources */,
@@ -4632,16 +4658,117 @@
 				FE1B245F23561A750065200C /* _fba_zlib_v1211.txt in Resources */,
 				FE1B245423561A750065200C /* zconf.h.in in Resources */,
 				FE1B241D23561A750065200C /* _fba_libpng_v1635.txt in Resources */,
+				FEA5E7C12356721900DA2D9D /* psikyo_tile_func.pl in Resources */,
 				FE1B1094235615950065200C /* Assets.xcassets in Resources */,
 				FE1B242A23561A750065200C /* _fba_lzmasdk_v16.04.txt in Resources */,
 				FE1B24D823561A750065200C /* WHATSNEW.txt in Resources */,
 				FE1B244123561A750065200C /* 7zVersion.rc in Resources */,
+				FEA5E7C22356721900DA2D9D /* toa_gp9001_func.pl in Resources */,
+				FEA5E7C02356721900DA2D9D /* neo_sprite_func.pl in Resources */,
 				FE1B262423561A770065200C /* spectrum_games.txt in Resources */,
 				FE1B1097235615950065200C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FEA5E7B023564BD600DA2D9D /* Generate cave_tile_func.h */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate cave_tile_func.h";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${SRCROOT}/../../src/dep/generated/cave_tile_func.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/../../src/dep/scripts/cave_tile_func.pl -o ${SRCROOT}/../../src/dep/generated/cave_tile_func.h\n";
+		};
+		FEA5E7B12356697500DA2D9D /* Generate cave_sprite_func.h */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate cave_sprite_func.h";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${SRCROOT}/../../src/dep/generated/cave_sprite_func.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/../../src/dep/scripts/cave_sprite_func.pl -o ${SRCROOT}/../../src/dep/generated/cave_sprite_func.h\n";
+		};
+		FEA5E7BA23566F0500DA2D9D /* Generate neo_sprite_func.h */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate neo_sprite_func.h";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${SRCROOT}/../../src/dep/generated/neo_sprite_func.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/../../src/dep/scripts/neo_sprite_func.pl -o ${SRCROOT}/../../src/dep/generated/neo_sprite_func.h\n";
+		};
+		FEA5E7BB2356703500DA2D9D /* Generate psikyo_tile_func.h */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate psikyo_tile_func.h";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${SRCROOT}/../../src/dep/generated/psikyo_tile_func.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/../../src/dep/scripts/psikyo_tile_func.pl -o ${SRCROOT}/../../src/dep/generated/psikyo_tile_func.h\n";
+		};
+		FEA5E7BC2356718400DA2D9D /* Generate toa_gp9001_func.h */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate toa_gp9001_func.h";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${SRCROOT}/../../src/dep/generated/toa_gp9001_func.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/../../src/dep/scripts/toa_gp9001_func.pl -o ${SRCROOT}/../../src/dep/generated/toa_gp9001_func.h\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FE1B1089235615940065200C /* Sources */ = {

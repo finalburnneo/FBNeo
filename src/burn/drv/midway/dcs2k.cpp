@@ -2,7 +2,7 @@
 
 #include "burnint.h"
 #include "adsp2100_intf.h"
-#include "adsp2100/adsp2100.h"
+#include "adsp2100.h"
 #include "dcs2k.h"
 #include <math.h>
 

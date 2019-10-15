@@ -187,7 +187,6 @@
 		FE1B24D523561A750065200C /* d_tjumpman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1EFD23561A670065200C /* d_tjumpman.cpp */; };
 		FE1B24D623561A750065200C /* d_sailormn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1EFE23561A670065200C /* d_sailormn.cpp */; };
 		FE1B24D723561A750065200C /* d_akkaarrh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0023561A670065200C /* d_akkaarrh.cpp */; };
-		FE1B24D823561A750065200C /* WHATSNEW.txt in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1F0123561A670065200C /* WHATSNEW.txt */; };
 		FE1B24D923561A750065200C /* d_atarig1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0223561A670065200C /* d_atarig1.cpp */; };
 		FE1B24DA23561A750065200C /* d_blstroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0323561A670065200C /* d_blstroid.cpp */; };
 		FE1B24DB23561A750065200C /* d_toobin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0423561A670065200C /* d_toobin.cpp */; };
@@ -519,7 +518,6 @@
 		FE1B262123561A770065200C /* cps3run.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207723561A6B0065200C /* cps3run.cpp */; };
 		FE1B262223561A770065200C /* d_spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207923561A6B0065200C /* d_spectrum.cpp */; };
 		FE1B262323561A770065200C /* spectrum_states.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207A23561A6B0065200C /* spectrum_states.cpp */; };
-		FE1B262423561A770065200C /* spectrum_games.txt in Resources */ = {isa = PBXBuildFile; fileRef = FE1B207C23561A6B0065200C /* spectrum_games.txt */; };
 		FE1B262523561A770065200C /* psikyo_tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207E23561A6B0065200C /* psikyo_tile.cpp */; };
 		FE1B262623561A770065200C /* psikyo_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B208023561A6B0065200C /* psikyo_sprite.cpp */; };
 		FE1B262723561A770065200C /* psikyosh_render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B208123561A6C0065200C /* psikyosh_render.cpp */; };
@@ -986,9 +984,6 @@
 		FEA5E79623563FB300DA2D9D /* neocdlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79423563FB300DA2D9D /* neocdlist.cpp */; };
 		FEA5E79723563FB300DA2D9D /* inpdipsw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79523563FB300DA2D9D /* inpdipsw.cpp */; };
 		FEA5E79A2356472200DA2D9D /* vid_macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E7992356472200DA2D9D /* vid_macos.cpp */; };
-		FEA5E7C02356721900DA2D9D /* neo_sprite_func.pl in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E7BD2356721800DA2D9D /* neo_sprite_func.pl */; };
-		FEA5E7C12356721900DA2D9D /* psikyo_tile_func.pl in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */; };
-		FEA5E7C22356721900DA2D9D /* toa_gp9001_func.pl in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -3299,32 +3294,32 @@
 		FE1B1EBF23561A670065200C /* drv */ = {
 			isa = PBXGroup;
 			children = (
-				FE1B1EC023561A670065200C /* megadrive */,
-				FE1B1EC523561A670065200C /* irem */,
-				FE1B1ED423561A670065200C /* sms */,
-				FE1B1EE823561A670065200C /* cave */,
 				FE1B1EFF23561A670065200C /* atari */,
-				FE1B1F1323561A670065200C /* snes */,
-				FE1B1F1D23561A670065200C /* d_parent.cpp */,
-				FE1B1F1E23561A670065200C /* pst90s */,
-				FE1B1F8123561A690065200C /* sega */,
-				FE1B1FA423561A690065200C /* galaxian */,
-				FE1B1FAB23561A690065200C /* dataeast */,
-				FE1B1FD523561A6A0065200C /* pce */,
-				FE1B1FD923561A6A0065200C /* konami */,
-				FE1B203323561A6B0065200C /* midway */,
-				FE1B204223561A6B0065200C /* sg1000 */,
+				FE1B208923561A6C0065200C /* capcom */,
+				FE1B1EE823561A670065200C /* cave */,
 				FE1B204423561A6B0065200C /* coleco */,
+				FE1B207323561A6B0065200C /* cps3 */,
+				FE1B1F1D23561A670065200C /* d_parent.cpp */,
+				FE1B1FAB23561A690065200C /* dataeast */,
+				FE1B1FA423561A690065200C /* galaxian */,
+				FE1B1EC523561A670065200C /* irem */,
+				FE1B1FD923561A6A0065200C /* konami */,
+				FE1B1EC023561A670065200C /* megadrive */,
+				FE1B203323561A6B0065200C /* midway */,
 				FE1B204623561A6B0065200C /* msx */,
 				FE1B204823561A6B0065200C /* neogeo */,
-				FE1B205423561A6B0065200C /* toaplan */,
-				FE1B207323561A6B0065200C /* cps3 */,
-				FE1B207823561A6B0065200C /* spectrum */,
-				FE1B207D23561A6B0065200C /* psikyo */,
-				FE1B208923561A6C0065200C /* capcom */,
-				FE1B20A723561A6C0065200C /* taito */,
+				FE1B1FD523561A6A0065200C /* pce */,
 				FE1B20EA23561A6C0065200C /* pgm */,
 				FE1B20F623561A6C0065200C /* pre90s */,
+				FE1B207D23561A6B0065200C /* psikyo */,
+				FE1B1F1E23561A670065200C /* pst90s */,
+				FE1B1F8123561A690065200C /* sega */,
+				FE1B204223561A6B0065200C /* sg1000 */,
+				FE1B1ED423561A670065200C /* sms */,
+				FE1B1F1323561A670065200C /* snes */,
+				FE1B207823561A6B0065200C /* spectrum */,
+				FE1B20A723561A6C0065200C /* taito */,
+				FE1B205423561A6B0065200C /* toaplan */,
 			);
 			path = drv;
 			sourceTree = "<group>";
@@ -4604,6 +4599,7 @@
 				FEA5E7BA23566F0500DA2D9D /* Generate neo_sprite_func.h */,
 				FEA5E7BB2356703500DA2D9D /* Generate psikyo_tile_func.h */,
 				FEA5E7BC2356718400DA2D9D /* Generate toa_gp9001_func.h */,
+				FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h */,
 				FE1B1089235615940065200C /* Sources */,
 				FE1B108A235615940065200C /* Frameworks */,
 				FE1B108B235615940065200C /* Resources */,
@@ -4658,14 +4654,9 @@
 				FE1B245F23561A750065200C /* _fba_zlib_v1211.txt in Resources */,
 				FE1B245423561A750065200C /* zconf.h.in in Resources */,
 				FE1B241D23561A750065200C /* _fba_libpng_v1635.txt in Resources */,
-				FEA5E7C12356721900DA2D9D /* psikyo_tile_func.pl in Resources */,
 				FE1B1094235615950065200C /* Assets.xcassets in Resources */,
 				FE1B242A23561A750065200C /* _fba_lzmasdk_v16.04.txt in Resources */,
-				FE1B24D823561A750065200C /* WHATSNEW.txt in Resources */,
 				FE1B244123561A750065200C /* 7zVersion.rc in Resources */,
-				FEA5E7C22356721900DA2D9D /* toa_gp9001_func.pl in Resources */,
-				FEA5E7C02356721900DA2D9D /* neo_sprite_func.pl in Resources */,
-				FE1B262423561A770065200C /* spectrum_games.txt in Resources */,
 				FE1B1097235615950065200C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4767,6 +4758,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "${SRCROOT}/../../src/dep/scripts/toa_gp9001_func.pl -o ${SRCROOT}/../../src/dep/generated/toa_gp9001_func.h\n";
+		};
+		FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/../../src/burn/drv/pgm/pgm_sprite_create.cpp",
+			);
+			name = "Generate pgm_sprite.h";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${SRCROOT}/../../src/dep/generated/pgm_sprite.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/bin/gcc ${SCRIPT_INPUT_FILE_0} -o ${DERIVED_FILE_DIR}/pgm_sprite_create\n${DERIVED_FILE_DIR}/pgm_sprite_create > ${SCRIPT_OUTPUT_FILE_0}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

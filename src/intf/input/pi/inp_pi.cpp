@@ -19,9 +19,8 @@ int InputFindCode(const char *keystring);
 
 #define FREEPLAY_HACK_COIN_DURATION_MS 1e3 / 8
 
-//#define DEBUG_INPUT
+// #define DEBUG_INPUT
 
-int nKioskTimeout = 0;
 int nEnableFreeplayHack = 0;
 
 static struct timeval lastInputEvent;
@@ -153,15 +152,6 @@ static int piInputStart()
 
 	// Mouse not read this frame
 	mouseScanned = 0;
-	if (nKioskTimeout > 0) {
-		if (inputEventOccurred) {
-			lastInputEvent = now;
-			inputEventOccurred = 0;
-		} else if (now.tv_sec - lastInputEvent.tv_sec > nKioskTimeout) {
-			nExitEmulator = 2;
-			fprintf(stderr, "Kiosk mode - %ds timeout exceeded\n", nKioskTimeout);
-		}
-	}
 
 	return 0;
 }
@@ -547,13 +537,10 @@ static int setupDefaults(int pindex)
 			fbButtons[buttonCount++] = FBK_X;
 			fbButtons[buttonCount++] = FBK_C;
 		} else {
-			fbButtons[buttonCount++] = FBK_A;
-			fbButtons[buttonCount++] = FBK_S;
-			fbButtons[buttonCount++] = FBK_D;
 			fbButtons[buttonCount++] = FBK_Z;
-//			fbButtons[buttonCount++] = FBK_X;
-//			fbButtons[buttonCount++] = FBK_C;
-//			fbButtons[buttonCount++] = FBK_V;
+			fbButtons[buttonCount++] = FBK_X;
+			fbButtons[buttonCount++] = FBK_C;
+			fbButtons[buttonCount++] = FBK_V;
 		}
 	} else if (pindex >= 1 && pindex <= 3) {
 		// P2 to P4
@@ -583,6 +570,76 @@ static int setupDefaults(int pindex)
 	for (int i = 0; i < buttonCount; i++) {
 		joyLookupTable[fbButtons[i]] = JOY_MAP_BUTTON(pindex, i);
 	}
+
+	return 1;
+}
+
+static int readKonfigFile(int pindex, const char *path, int sixButton)
+{
+	FILE *f = fopen(path, "r");
+	if (!f)
+		return 0;
+
+	char line[256];
+	while (fgets(line, sizeof(line), f)) {
+		char *delim = strchr(line, '=');
+		char *eol = strchr(delim, '\n');
+
+		if (delim && eol) {
+			*delim = '\0';
+			*eol = '\0';
+
+			int hbindex = atoi(delim + 1) - 1;
+			if (pindex == 0 && strncmp(line, "TEST", 4) == 0) {
+				joyLookupTable[FBK_F2] = JOY_MAP_BUTTON(pindex, hbindex);
+			} else if (pindex == 0 && strncmp(line, "SERVICE", 7) == 0) {
+				joyLookupTable[FBK_9] = JOY_MAP_BUTTON(pindex, hbindex);
+			} else if (pindex == 0 && strncmp(line, "RESET", 5) == 0) {
+				joyLookupTable[FBK_F3] = JOY_MAP_BUTTON(pindex, hbindex);
+			} else if (pindex == 0 && strncmp(line, "QUIT", 4) == 0) {
+				joyLookupTable[FBK_ESCAPE] = JOY_MAP_BUTTON(pindex, hbindex);
+			} else if (strncmp(line, "START", 5) == 0) {
+				joyLookupTable[FBK_1 + pindex] = JOY_MAP_BUTTON(pindex, hbindex);
+			} else if (strncmp(line, "COIN", 4) == 0) {
+				joyLookupTable[FBK_5 + pindex] = JOY_MAP_BUTTON(pindex, hbindex);
+			} else if (pindex == 0) {
+				if (strncmp(line, "BUTTON", 6) == 0) {
+					int vbindex = atoi(line + 6) - 1;
+					unsigned int code;
+					if (sixButton && vbindex < 3)
+						code = FBK_A + vbindex;
+					else if (sixButton && vbindex >= 3)
+						code = FBK_Z + vbindex - 3;
+					else
+						code = FBK_Z + vbindex;
+					joyLookupTable[code] = JOY_MAP_BUTTON(pindex, hbindex);
+				} else if (strncmp(line, "UP", 2) == 0) {
+					joyLookupTable[FBK_UPARROW] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
+				} else if (strncmp(line, "DOWN", 4) == 0) {
+					joyLookupTable[FBK_DOWNARROW] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
+				} else if (strncmp(line, "LEFT", 4) == 0) {
+					joyLookupTable[FBK_LEFTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
+				} else if (strncmp(line, "RIGHT", 5) == 0) {
+					joyLookupTable[FBK_RIGHTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
+				}
+			} else /* if (pIndex > 0) */ {
+				unsigned int mask = 0x4000 + (0x100 * (pindex - 1));
+				if (strncmp(line, "BUTTON", 6) == 0) {
+					int vbindex = atoi(line + 6) - 1;
+					joyLookupTable[mask | (0x80 + vbindex)] = JOY_MAP_BUTTON(pindex, hbindex);
+				} else if (strncmp(line, "UP", 2) == 0) {
+					joyLookupTable[mask | 0x02] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
+				} else if (strncmp(line, "DOWN", 4) == 0) {
+					joyLookupTable[mask | 0x03] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
+				} else if (strncmp(line, "LEFT", 4) == 0) {
+					joyLookupTable[mask | 0x00] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
+				} else if (strncmp(line, "RIGHT", 5) == 0) {
+					joyLookupTable[mask | 0x01] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
+				}
+			}
+		}
+	}
+	fclose(f);
 
 	return 1;
 }
@@ -618,6 +675,12 @@ static int readConfigFile(int pindex, const char *path)
 	return success;
 }
 
+static int configExists(char *path, int pathSize, const char *name)
+{
+	snprintf(path, pathSize, "joyconfig/%s.jc", name);
+	return access(path, F_OK) != -1;
+}
+
 static void resetJoystickMap()
 {
 	for (int i = 0; i < 0x8000; i++) {
@@ -629,7 +692,25 @@ static void resetJoystickMap()
 		keyLookupTable[code] = (code > 0) ? i : -1;
 	}
 
+	char path[512];
+	int sixButton = usesStreetFighterLayout();
+
+	int loadConfig = configExists(path, sizeof(path), BurnDrvGetText(DRV_NAME))
+		|| configExists(path, sizeof(path), BurnDrvGetText(DRV_PARENT))
+		|| (sixButton && configExists(path, sizeof(path), "capcom6"))
+		|| configExists(path, sizeof(path), "default");
+
+	if (loadConfig)
+		printf("Found joyconfig file in path '%s'\n", path);
+
+	for (int i = 0; i < 4; i++) {
+		setupDefaults(i);
+		if (loadConfig)
+			readKonfigFile(i, path, sixButton);
+	}
+return;
 	for (int i = 0, n = phl_udev_joy_count(); i < n; i++) {
+
 		const char *devId = phl_udev_joy_id(i);
 		fprintf(stderr, "Detected \"%s\" (USB id %s) in port %d\n",
 			phl_udev_joy_name(i), devId, i + 1);

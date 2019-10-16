@@ -4594,12 +4594,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE1B109E235615960065200C /* Build configuration list for PBXNativeTarget "Emulator" */;
 			buildPhases = (
-				FEA5E7B023564BD600DA2D9D /* Generate cave_tile_func.h */,
-				FEA5E7B12356697500DA2D9D /* Generate cave_sprite_func.h */,
-				FEA5E7BA23566F0500DA2D9D /* Generate neo_sprite_func.h */,
-				FEA5E7BB2356703500DA2D9D /* Generate psikyo_tile_func.h */,
-				FEA5E7BC2356718400DA2D9D /* Generate toa_gp9001_func.h */,
-				FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h */,
+				FEA5E7B023564BD600DA2D9D /* Generate cave_*_func.h, psikyo_tile_func.h, neo_sprite_func.h, toa_gp9001_func.h */,
+				FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h & ctv.h */,
 				FE1B1089235615940065200C /* Sources */,
 				FE1B108A235615940065200C /* Frameworks */,
 				FE1B108B235615940065200C /* Resources */,
@@ -4664,7 +4660,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		FEA5E7B023564BD600DA2D9D /* Generate cave_tile_func.h */ = {
+		FEA5E7B023564BD600DA2D9D /* Generate cave_*_func.h, psikyo_tile_func.h, neo_sprite_func.h, toa_gp9001_func.h */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4673,93 +4669,21 @@
 			);
 			inputPaths = (
 			);
-			name = "Generate cave_tile_func.h";
+			name = "Generate cave_*_func.h, psikyo_tile_func.h, neo_sprite_func.h, toa_gp9001_func.h";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${SRCROOT}/../../src/dep/generated/cave_tile_func.h",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${SRCROOT}/../../src/dep/scripts/cave_tile_func.pl -o ${SRCROOT}/../../src/dep/generated/cave_tile_func.h\n";
-		};
-		FEA5E7B12356697500DA2D9D /* Generate cave_sprite_func.h */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate cave_sprite_func.h";
-			outputFileListPaths = (
-			);
-			outputPaths = (
 				"${SRCROOT}/../../src/dep/generated/cave_sprite_func.h",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${SRCROOT}/../../src/dep/scripts/cave_sprite_func.pl -o ${SRCROOT}/../../src/dep/generated/cave_sprite_func.h\n";
-		};
-		FEA5E7BA23566F0500DA2D9D /* Generate neo_sprite_func.h */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate neo_sprite_func.h";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${SRCROOT}/../../src/dep/generated/neo_sprite_func.h",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${SRCROOT}/../../src/dep/scripts/neo_sprite_func.pl -o ${SRCROOT}/../../src/dep/generated/neo_sprite_func.h\n";
-		};
-		FEA5E7BB2356703500DA2D9D /* Generate psikyo_tile_func.h */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate psikyo_tile_func.h";
-			outputFileListPaths = (
-			);
-			outputPaths = (
 				"${SRCROOT}/../../src/dep/generated/psikyo_tile_func.h",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${SRCROOT}/../../src/dep/scripts/psikyo_tile_func.pl -o ${SRCROOT}/../../src/dep/generated/psikyo_tile_func.h\n";
-		};
-		FEA5E7BC2356718400DA2D9D /* Generate toa_gp9001_func.h */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate toa_gp9001_func.h";
-			outputFileListPaths = (
-			);
-			outputPaths = (
+				"${SRCROOT}/../../src/dep/generated/neo_sprite_func.h",
 				"${SRCROOT}/../../src/dep/generated/toa_gp9001_func.h",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${SRCROOT}/../../src/dep/scripts/toa_gp9001_func.pl -o ${SRCROOT}/../../src/dep/generated/toa_gp9001_func.h\n";
+			shellScript = "for (( I = 0; I < ${SCRIPT_OUTPUT_FILE_COUNT}; I++)); do\n    V=\"SCRIPT_OUTPUT_FILE_$I\"\n\n    OUT=${!V}\n    SCRIPT=${SRCROOT}/../../src/dep/scripts/$(basename ${OUT%.*}).pl\n    ${SCRIPT} -o ${OUT}\ndone\n";
 		};
-		FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h */ = {
+		FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h & ctv.h */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4768,16 +4692,18 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/../../src/burn/drv/pgm/pgm_sprite_create.cpp",
+				"${SRCROOT}/../../src/burn/drv/capcom/ctv_make.cpp",
 			);
-			name = "Generate pgm_sprite.h";
+			name = "Generate pgm_sprite.h & ctv.h";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${SRCROOT}/../../src/dep/generated/pgm_sprite.h",
+				"${SRCROOT}/../../src/dep/generated/ctv.h",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/bin/gcc ${SCRIPT_INPUT_FILE_0} -o ${DERIVED_FILE_DIR}/pgm_sprite_create\n${DERIVED_FILE_DIR}/pgm_sprite_create > ${SCRIPT_OUTPUT_FILE_0}\n";
+			shellScript = "for (( I = 0; I < ${SCRIPT_OUTPUT_FILE_COUNT}; I++)); do\n    IN_V=\"SCRIPT_INPUT_FILE_$I\"\n    OUT_V=\"SCRIPT_OUTPUT_FILE_$I\"\n\n    EXEC=${DERIVED_FILE_DIR}/$(basename ${!IN_V%.*})\n    /usr/bin/gcc ${!IN_V} -o ${EXEC}\n    ${EXEC} > ${!OUT_V}\n    rm ${EXEC}\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

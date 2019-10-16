@@ -2451,6 +2451,7 @@
 		FEA5E7BD2356721800DA2D9D /* neo_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = neo_sprite_func.pl; sourceTree = "<group>"; };
 		FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = psikyo_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = toa_gp9001_func.pl; sourceTree = "<group>"; };
+		FEED9DC22356DDA900B7AF83 /* gamelist.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = gamelist.pl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4580,6 +4581,7 @@
 			children = (
 				FEA5E7AE23564A6400DA2D9D /* cave_sprite_func.pl */,
 				FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */,
+				FEED9DC22356DDA900B7AF83 /* gamelist.pl */,
 				FEA5E7BD2356721800DA2D9D /* neo_sprite_func.pl */,
 				FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */,
 				FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */,
@@ -4594,8 +4596,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE1B109E235615960065200C /* Build configuration list for PBXNativeTarget "Emulator" */;
 			buildPhases = (
-				FEA5E7B023564BD600DA2D9D /* Generate cave_*_func.h, psikyo_tile_func.h, neo_sprite_func.h, toa_gp9001_func.h */,
-				FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h & ctv.h */,
+				FEA5E7B023564BD600DA2D9D /* Generate cave_tile_func.h, cave_sprite_func.h, psikyo_tile_func.h, neo_sprite_func.h, toa_gp9001_func.h */,
+				FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h, ctv.h */,
+				FEED9DC12356D9C900B7AF83 /* Generate Musashi core */,
+				FEED9DC42356E16400B7AF83 /* Generate driverlist.h */,
 				FE1B1089235615940065200C /* Sources */,
 				FE1B108A235615940065200C /* Frameworks */,
 				FE1B108B235615940065200C /* Resources */,
@@ -4660,7 +4664,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		FEA5E7B023564BD600DA2D9D /* Generate cave_*_func.h, psikyo_tile_func.h, neo_sprite_func.h, toa_gp9001_func.h */ = {
+		FEA5E7B023564BD600DA2D9D /* Generate cave_tile_func.h, cave_sprite_func.h, psikyo_tile_func.h, neo_sprite_func.h, toa_gp9001_func.h */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4669,7 +4673,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Generate cave_*_func.h, psikyo_tile_func.h, neo_sprite_func.h, toa_gp9001_func.h";
+			name = "Generate cave_tile_func.h, cave_sprite_func.h, psikyo_tile_func.h, neo_sprite_func.h, toa_gp9001_func.h";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -4683,7 +4687,7 @@
 			shellPath = /bin/sh;
 			shellScript = "for (( I = 0; I < ${SCRIPT_OUTPUT_FILE_COUNT}; I++)); do\n    V=\"SCRIPT_OUTPUT_FILE_$I\"\n\n    OUT=${!V}\n    SCRIPT=${SRCROOT}/../../src/dep/scripts/$(basename ${OUT%.*}).pl\n    ${SCRIPT} -o ${OUT}\ndone\n";
 		};
-		FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h & ctv.h */ = {
+		FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h, ctv.h */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4694,7 +4698,7 @@
 				"${SRCROOT}/../../src/burn/drv/pgm/pgm_sprite_create.cpp",
 				"${SRCROOT}/../../src/burn/drv/capcom/ctv_make.cpp",
 			);
-			name = "Generate pgm_sprite.h & ctv.h";
+			name = "Generate pgm_sprite.h, ctv.h";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -4704,6 +4708,47 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "for (( I = 0; I < ${SCRIPT_OUTPUT_FILE_COUNT}; I++)); do\n    IN_V=\"SCRIPT_INPUT_FILE_$I\"\n    OUT_V=\"SCRIPT_OUTPUT_FILE_$I\"\n\n    EXEC=${DERIVED_FILE_DIR}/$(basename ${!IN_V%.*})\n    /usr/bin/gcc ${!IN_V} -o ${EXEC}\n    ${EXEC} > ${!OUT_V}\n    rm ${EXEC}\ndone\n";
+		};
+		FEED9DC12356D9C900B7AF83 /* Generate Musashi core */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Musashi core";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${SRCROOT}/../../src/dep/generated/m68kops.c",
+				"${SRCROOT}/../../src/dep/generated/m68kops.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "@echo Compiling Musashi MC680x0 core...\nM68KMAKE=${DERIVED_FILE_DIR}/m68kmake\n/usr/bin/gcc ${SRCROOT}/../../src/cpu/m68k/m68kmake.c -o ${M68KMAKE}\n${M68KMAKE} $(dirname ${SCRIPT_OUTPUT_FILE_0}) ${SRCROOT}/../../src/cpu/m68k/m68k_in.c\nrm ${M68KMAKE}\n";
+		};
+		FEED9DC42356E16400B7AF83 /* Generate driverlist.h */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/../../src/dep/scripts/gamelist.pl",
+			);
+			name = "Generate driverlist.h";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${SRCROOT}/../../src/dep/generated/driverlist.h",
+				"${SRCROOT}/../../gamelist.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"${SRCROOT}/../../\"\n${SCRIPT_INPUT_FILE_0} -o ${SCRIPT_OUTPUT_FILE_0} -l ${SCRIPT_OUTPUT_FILE_1} `find src/burn/drv -name 'd_*.cpp' | sort`\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

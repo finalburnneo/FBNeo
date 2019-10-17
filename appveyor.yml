@@ -4,13 +4,8 @@ image: Visual Studio 2019
 shallow_clone: true
 clone_depth: 1
 
-install:
-  - set "PATH=C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
-  - set MSYSTEM=MINGW32
-  - set PreferredToolArchitecture=x86
-  - choco install nasm
-  - set PATH="C:\Program Files\NASM";%PATH%
-  - ps: >-
+init:
+- ps: >-
     Write-Host "DirectX Software Development Kit..." -ForegroundColor Cyan
 
 
@@ -35,6 +30,12 @@ install:
     Remove-Item $exePath
 
     Write-Host "Installed" -ForegroundColor Green
+install:
+  - set "PATH=C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - set MSYSTEM=MINGW32
+  - set PreferredToolArchitecture=x86
+  - choco install nasm
+  - set PATH="C:\Program Files\NASM";%PATH%
 build_script:
   - 7z a fbn-code.7z %APPVEYOR_BUILD_FOLDER%\*      
   - msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"

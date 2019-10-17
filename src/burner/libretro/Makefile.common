@@ -55,6 +55,7 @@ BURN_BLACKLIST := $(FBNEO_CPU_DIR)/arm7/arm7exec.c \
 	$(FBNEO_BURNER_DIR)/state.cpp \
 	$(FBNEO_BURNER_DIR)/gami.cpp \
 	$(FBNEO_BURNER_DIR)/gamc.cpp \
+	$(FBNEO_BURNER_DIR)/dynhuff.cpp \
 	$(FBNEO_CPU_DIR)/h6280/tblh6280.c \
 	$(FBNEO_CPU_DIR)/m6502/t65sc02.c \
 	$(FBNEO_CPU_DIR)/m6502/t65c02.c \

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12279 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12280 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -708,6 +708,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_backtof3u	|  	| Back to the Future Part III (USA)			| md_backtof3	| 1991	| Arena Entertai| Sega Megadrive| 					|
 | backfire	|  	| Backfire! (set 1)					| 		| 1995	| Data East Corp| DECO IC16	| 					|
 | backfirea	| D NW	| Backfire! (set 2)					| backfire	| 1995	| Data East Corp| DECO IC16	| Set inputs to \"Joystick\" in test mod|
+| badapple	|  	| Bad Apple Demo					| 		| 2017	| Hpman		| Neo Geo MVS	| 					|
 | baddudes	|  	| Bad Dudes vs. Dragonninja (US)			| 		| 1988	| Data East USA	| DEC0		| 					|
 | badlands	|  	| Bad Lands						| 		| 1989	| Atari Games	| Miscellaneous	| 					|
 | md_badomen	|  	| Bad Omen (Jpn, Kor)					| md_devilish	| 1992	| Hot-B		| Sega Megadrive| 					|

@@ -718,6 +718,7 @@ DRV		BurnDrvBackfire;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvBackfirea;		// Set inputs to \"Joystick\" in test mode [NOT WORKING]
 #endif
+DRV		BurnDrvbadapple;
 DRV		BurnDrvBaddudes;
 DRV		BurnDrvBadlands;
 DRV		BurnDrvmd_badomen;
@@ -13280,6 +13281,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvBackfirea,			// Backfire! (set 2) [Set inputs to \"Joystick\" in test mode, NOT WORKING]
 #endif
+	&BurnDrvbadapple,			// Bad Apple Demo
 	&BurnDrvBaddudes,			// Bad Dudes vs. Dragonninja (US)
 	&BurnDrvBadlands,			// Bad Lands
 	&BurnDrvmd_badomen,			// Bad Omen (Jpn, Kor)

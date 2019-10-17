@@ -18,7 +18,7 @@ init:
 
     Write-Host "Installing..."
 
-    $installPath = "C:\Program Files (x86)\Microsoft DirectX SDK"
+    $installPath = "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)"
 
     cmd /c start /wait $exePath /P $installPath /U
 
@@ -31,7 +31,7 @@ init:
 
     Write-Host "Installed" -ForegroundColor Green
 install:
-  - set "PATH=C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - set "PATH=C:\Program Files (x86)\Microsoft DirectX SDK (June 2010);C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
   - set MSYSTEM=MINGW32
   - set PreferredToolArchitecture=x86
   - choco install nasm

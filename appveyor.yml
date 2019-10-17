@@ -29,7 +29,7 @@ build_script:
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1"
   - 7z a fbn-win32-gcc.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1"
-  - 7z a fbn-win32-debug-gcc.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\generated\gamelist.txt       
+  - 7z a fbn-win32-debug-gcc.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html        
 #  - 7z a fbn-win32-vs.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\Win32\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\generated\gamelist.txt     
 #  - 7z a fbn-x64-vs.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\x64\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\generated\gamelist.txt      
    

@@ -11966,24 +11966,25 @@ STD_ROM_PICK(Sf2m8)
 STD_ROM_FN(Sf2m8)
 
 static struct BurnRomInfo Sf2cems6aRomDesc[] = {
-	{ "ms6.u196",       0x0100000, 0x596609d4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "ms6.u10",        0x0080000, 0xed4186bd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ms6.u196",          0x0100000, 0x596609d4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ms6.u10",           0x0080000, 0xed4186bd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "ms6.u70",     	0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
-	{ "ms6.u68",  	    0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
-	{ "ms6.u69",  	    0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
-	{ "ms6.u64",       	0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
-	{ "ms6.u19",     	0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
-	{ "ms6.u18",  	    0x0100000, 0x2ddfe46e, BRF_GRA | CPS1_TILES },
+	{ "ms6.u70",           0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
+	{ "ms6.u68",           0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
+	{ "ms6.u69",           0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
+	{ "ms6.u64",           0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
+	{ "ms6.u19",           0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
+	{ "ms6.u18",           0x0100000, 0x2ddfe46e, BRF_GRA | CPS1_TILES },
 
-	{ "ms6.u191",       0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "ms6.u191",          0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "ms6.u210",       0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "ms6.u210",          0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
-	{ "ms6.u31",        0x0040000, 0x35486f2d, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 }, 
-	{ "ms6.u29",        0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 },
-	
-	{ "ms6.u133",       0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
+	{ "ms6.u31",           0x0040000, 0x35486f2d, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 }, 
+	{ "ms6.u29",           0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 },
+
+	{ "ms6.u133",          0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
+	{ "ms6_gal20v8a.u104", 0x0000157, 0x67b56d29, BRF_OPT }, // pld devices
 };
 
 STD_ROM_PICK(Sf2cems6a)

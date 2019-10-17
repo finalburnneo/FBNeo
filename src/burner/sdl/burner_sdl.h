@@ -1,4 +1,4 @@
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 // defines to override various #ifndef _WIN32
 typedef struct tagRECT {

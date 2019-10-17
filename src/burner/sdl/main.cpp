@@ -39,14 +39,12 @@ int main(int argc, char *argv[])
 
 	BurnLibInit();
 
-	SDL_WM_SetCaption( "FBA, SDL port.", "FBA, SDL port.");
+	SDL_WM_SetCaption("FinalBurn Neo", "FinalBurn Neo");
 	SDL_ShowCursor(SDL_DISABLE);
 
 	if (argc < 2)
 	{
-		int c;
-		printf ("Usage: fbasdl <romname>\n   ie: fbasdl uopoko\n Note: no extension.\n\n");
-
+		printf ("Usage: %1$s <romname>\n   ie: %1$s uopoko\n Note: no extension.\n\n", argv[0]);
 		return 0;
 	}
 
@@ -66,7 +64,6 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	bBurnUseASMCPUEmulation = 0;
 	bCheatsAllowed = false;
 	ConfigAppLoad();
 	ConfigAppSave();
@@ -80,7 +77,7 @@ int main(int argc, char *argv[])
 
 	ConfigAppSave();
 	BurnLibExit();
-	//SDL_Quit();
+	SDL_Quit();
 
 	return 0;
 }

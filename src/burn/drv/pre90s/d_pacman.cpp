@@ -5735,7 +5735,7 @@ static struct BurnRomInfo pacmanugRomDesc[] = {
 	{ "4p.6j",     		0x0800, 0xb6289b26, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "8p.6p",     		0x0800, 0x17a88c13, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "p9bfz.5e", 		0x0800, 0x7a7b48b3, 2 | BRF_GRA },				//  8 Graphics
+	{ "p9bfz.5e", 		0x0800, 0xdc9f2a7b, 2 | BRF_GRA },				//  8 Graphics
 	{ "11p.5h",     	0x0800, 0x3591b89d, 2 | BRF_GRA },				//  9
 	{ "10p.5f", 		0x0800, 0x9e39323a, 2 | BRF_GRA },				// 10
 	{ "12p.5j", 		0x0800, 0x1b1d9096, 2 | BRF_GRA },				// 11

@@ -1573,7 +1573,7 @@ static struct BurnRomInfo chelnovjRomDesc[] = {
 	{ "ee14-.f13",		0x10000, 0xd8f4bbde, 5 | BRF_GRA},            // 14
 	{ "ee15-.f15",		0x10000, 0x81e3e68b, 5 | BRF_GRA},            // 15
 
-	{ "ee-17.k8",		0x00400, 0x309c49d8, 6 | BRF_GRA},            // 16 Color Proms
+	{ "ee-17.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA},            // 16 Color Proms
 	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA},            // 17
 	
 	{ "ee.k13",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},

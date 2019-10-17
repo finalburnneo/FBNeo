@@ -433,9 +433,6 @@
     <ClInclude Include="..\..\src\burner\win32\burner_win32.h">
       <Filter>burner\win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\burner\win32\dynhuff.h">
-      <Filter>burner\win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\burner\win32\resource.h">
       <Filter>burner\win32</Filter>
     </ClInclude>
@@ -1002,6 +999,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\burn\drv\sega\fd1094_intf.h">
       <Filter>Burn\drv\sega</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burner\dynhuff.h">
+      <Filter>burner</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2383,9 +2383,6 @@
       <Filter>burner\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burner\win32\drv.cpp">
-      <Filter>burner\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burner\win32\dynhuff.cpp">
       <Filter>burner\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burner\win32\fba_kaillera.cpp">
@@ -4127,6 +4124,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp">
       <Filter>Burn\drv\sega</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burner\dynhuff.cpp">
+      <Filter>burner</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

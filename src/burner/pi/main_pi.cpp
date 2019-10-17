@@ -1,5 +1,4 @@
 #include "burner.h"
-#include "config.h"
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -182,7 +181,7 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	piLoadConfig();
+	ConfigAppLoad();
 	SDL_Init(SDL_INIT_TIMER|SDL_INIT_VIDEO);
 	BurnLibInit();
 
@@ -218,7 +217,7 @@ int main(int argc, char *argv[])
 	DrvExit();
 	MediaExit();
 
-	piSaveConfig();
+	ConfigAppSave();
 	BurnLibExit();
 	SDL_Quit();
 

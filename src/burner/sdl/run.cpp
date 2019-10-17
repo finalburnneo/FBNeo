@@ -221,33 +221,26 @@ static int RunExit()
 // The main message loop
 int RunMessageLoop()
 {
-	int bRestartVideo;
-	int finished= 0;
-	do {
-		bRestartVideo = 0;
+    int quit = 0;
 
-		MediaInit();
+    MediaInit();
+    RunInit();
+    GameInpCheckMouse();                                                            // Hide the cursor
 
-		RunInit();
+    while (!quit) {
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+                case SDL_QUIT: /* Windows was closed */
+                    quit = 1;
+                    break;
+            }
+        }
 
-		GameInpCheckMouse();															// Hide the cursor
-		while (!finished) {
-			SDL_Event event;
-			if ( SDL_PollEvent(&event) ) {
-			switch (event.type) {
-				case SDL_QUIT: /* Windows was closed */
-					finished=1;
-					break;
-				}
-			}
-			else 
-			{
-				RunIdle();
-			}
-		}
-		RunExit();
-	} while (bRestartVideo);
+        RunIdle();
+    }
 
-	return 0;
+    RunExit();
+
+    return 0;
 }
-

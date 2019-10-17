@@ -3,9 +3,7 @@
 #include "vid_support.h"
 #include "vid_softfx.h"
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glext.h>
+#include <SDL_opengl.h>
 
 #ifdef frame_timer
 #include <sys/time.h>
@@ -263,7 +261,6 @@ static int Init()
 
 	screen = SDL_SetVideoMode(test_rect.right * nSize,
 				  test_rect.bottom * nSize, 32, SDL_OPENGL);
-	SDL_WM_SetCaption("FB Alpha", NULL);
 
 	// Initialize the buffer surfaces
 	BlitFXInit();

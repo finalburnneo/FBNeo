@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\burner\burner.h" />
+    <ClInclude Include="..\..\src\burner\dynhuff.h" />
     <ClInclude Include="..\..\src\burner\gameinp.h" />
     <ClInclude Include="..\..\src\burner\ioapi.h" />
     <ClInclude Include="..\..\src\burner\neocdlist.h" />
@@ -28,7 +29,6 @@
     <ClInclude Include="..\..\src\burner\unzip.h" />
     <ClInclude Include="..\..\src\burner\win32\burner_win32.h" />
     <ClInclude Include="..\..\src\burner\win32\d3dkmt_sync.h" />
-    <ClInclude Include="..\..\src\burner\win32\dynhuff.h" />
     <ClInclude Include="..\..\src\burner\win32\resource.h" />
     <ClInclude Include="..\..\src\burner\win32\resource_string.h" />
     <ClInclude Include="..\..\src\burn\bitswap.h" />
@@ -358,6 +358,7 @@
     <ClCompile Include="..\..\src\burner\conc.cpp" />
     <ClCompile Include="..\..\src\burner\cong.cpp" />
     <ClCompile Include="..\..\src\burner\dat.cpp" />
+    <ClCompile Include="..\..\src\burner\dynhuff.cpp" />
     <ClCompile Include="..\..\src\burner\gamc.cpp" />
     <ClCompile Include="..\..\src\burner\gami.cpp" />
     <ClCompile Include="..\..\src\burner\image.cpp" />
@@ -376,7 +377,6 @@
     <ClCompile Include="..\..\src\burner\win32\d3dkmt_sync.cpp" />
     <ClCompile Include="..\..\src\burner\win32\debugger.cpp" />
     <ClCompile Include="..\..\src\burner\win32\drv.cpp" />
-    <ClCompile Include="..\..\src\burner\win32\dynhuff.cpp" />
     <ClCompile Include="..\..\src\burner\win32\fba_kaillera.cpp" />
     <ClCompile Include="..\..\src\burner\win32\gameinfo.cpp" />
     <ClCompile Include="..\..\src\burner\win32\image_win32.cpp" />

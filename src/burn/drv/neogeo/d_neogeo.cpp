@@ -17403,6 +17403,36 @@ struct BurnDriver BurnDrvcphd = {
 	0x1000,	304, 224, 4, 3
 };
 
+
+// Bad Apple Demo
+
+static struct BurnRomInfo badappleRomDesc[] = {
+	{ "bada-p1.bin",   0x0400000, 0xf68ade5a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "bada-s1.bin",   0x0020000, 0xbc7ebee7, 2 | BRF_GRA },           //  1 Text data
+
+	{ "bada-c1.bin",   0x3100000, 0x88ddc443, 3 | BRF_GRA },           //  2 Sprite data
+	{ "bada-c2.bin",   0x3100000, 0xb64face4, 3 | BRF_GRA },           //  3
+
+	{ "bada-m1.bin",   0x0010000, 0xc11e8874, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "bada-v1.bin",   0x0500000, 0x3b741894, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(badapple, badapple, neogeo)
+STD_ROM_FN(badapple)
+
+struct BurnDriver BurnDrvbadapple = {
+	"badapple", NULL, "neogeo", NULL, "2017",
+	"Bad Apple Demo\0", NULL, "Hpman", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, badappleRomInfo, badappleRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
 // Metal Slug 5 (W)
 
 static struct BurnRomInfo mslug5wRomDesc[] = {

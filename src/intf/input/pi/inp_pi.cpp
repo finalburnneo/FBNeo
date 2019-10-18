@@ -410,55 +410,55 @@ static int readConfigFile(int pindex, const char *path, int sixButton)
 	char line[256];
 	while (fgets(line, sizeof(line), f)) {
 		char *delim = strchr(line, '=');
+		if (!delim) continue;
+		*delim = '\0';
+
 		char *eol = strchr(delim, '\n');
+		if (!eol) continue;
+		*eol = '\0';
 
-		if (delim && eol) {
-			*delim = '\0';
-			*eol = '\0';
-
-			int hbindex = atoi(delim + 1) - 1;
-			if (pindex == 0 && strncmp(line, "TEST", 4) == 0) {
-				joyLookupTable[FBK_F2] = JOY_MAP_BUTTON(pindex, hbindex);
-			} else if (pindex == 0 && strncmp(line, "SERVICE", 7) == 0) {
-				joyLookupTable[FBK_9] = JOY_MAP_BUTTON(pindex, hbindex);
-			} else if (pindex == 0 && strncmp(line, "RESET", 5) == 0) {
-				joyLookupTable[FBK_F3] = JOY_MAP_BUTTON(pindex, hbindex);
-			} else if (pindex == 0 && strncmp(line, "QUIT", 4) == 0) {
-				joyLookupTable[FBK_ESCAPE] = JOY_MAP_BUTTON(pindex, hbindex);
-			} else if (strncmp(line, "START", 5) == 0) {
-				joyLookupTable[FBK_1 + pindex] = JOY_MAP_BUTTON(pindex, hbindex);
-			} else if (strncmp(line, "COIN", 4) == 0) {
-				joyLookupTable[FBK_5 + pindex] = JOY_MAP_BUTTON(pindex, hbindex);
-			} else if (pindex == 0) {
-				if (strncmp(line, "BUTTON", 6) == 0) {
-					int vbindex = atoi(line + 6) - 1;
-					if (sixButton && vbindex < 6)
-						joyLookupTable[capcom6Layout[vbindex]] = JOY_MAP_BUTTON(pindex, hbindex);
-					else if (!sixButton && vbindex < 9)
-						joyLookupTable[defaultLayout[vbindex]] = JOY_MAP_BUTTON(pindex, hbindex);
-				} else if (strncmp(line, "UP", 2) == 0) {
-					joyLookupTable[FBK_UPARROW] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
-				} else if (strncmp(line, "DOWN", 4) == 0) {
-					joyLookupTable[FBK_DOWNARROW] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
-				} else if (strncmp(line, "LEFT", 4) == 0) {
-					joyLookupTable[FBK_LEFTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
-				} else if (strncmp(line, "RIGHT", 5) == 0) {
-					joyLookupTable[FBK_RIGHTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
-				}
-			} else /* if (pIndex > 0) */ {
-				unsigned int mask = 0x4000 + (0x100 * (pindex - 1));
-				if (strncmp(line, "BUTTON", 6) == 0) {
-					int vbindex = atoi(line + 6) - 1;
-					joyLookupTable[mask | (0x80 + vbindex)] = JOY_MAP_BUTTON(pindex, hbindex);
-				} else if (strncmp(line, "UP", 2) == 0) {
-					joyLookupTable[mask | 0x02] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
-				} else if (strncmp(line, "DOWN", 4) == 0) {
-					joyLookupTable[mask | 0x03] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
-				} else if (strncmp(line, "LEFT", 4) == 0) {
-					joyLookupTable[mask | 0x00] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
-				} else if (strncmp(line, "RIGHT", 5) == 0) {
-					joyLookupTable[mask | 0x01] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
-				}
+		int hbindex = atoi(delim + 1) - 1;
+		if (pindex == 0 && strncmp(line, "TEST", 4) == 0) {
+			joyLookupTable[FBK_F2] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (pindex == 0 && strncmp(line, "SERVICE", 7) == 0) {
+			joyLookupTable[FBK_9] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (pindex == 0 && strncmp(line, "RESET", 5) == 0) {
+			joyLookupTable[FBK_F3] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (pindex == 0 && strncmp(line, "QUIT", 4) == 0) {
+			joyLookupTable[FBK_ESCAPE] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (strncmp(line, "START", 5) == 0) {
+			joyLookupTable[FBK_1 + pindex] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (strncmp(line, "COIN", 4) == 0) {
+			joyLookupTable[FBK_5 + pindex] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (pindex == 0) {
+			if (strncmp(line, "BUTTON", 6) == 0) {
+				int vbindex = atoi(line + 6) - 1;
+				if (sixButton && vbindex < 6)
+					joyLookupTable[capcom6Layout[vbindex]] = JOY_MAP_BUTTON(pindex, hbindex);
+				else if (!sixButton && vbindex < 9)
+					joyLookupTable[defaultLayout[vbindex]] = JOY_MAP_BUTTON(pindex, hbindex);
+			} else if (strncmp(line, "UP", 2) == 0) {
+				joyLookupTable[FBK_UPARROW] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
+			} else if (strncmp(line, "DOWN", 4) == 0) {
+				joyLookupTable[FBK_DOWNARROW] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
+			} else if (strncmp(line, "LEFT", 4) == 0) {
+				joyLookupTable[FBK_LEFTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
+			} else if (strncmp(line, "RIGHT", 5) == 0) {
+				joyLookupTable[FBK_RIGHTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
+			}
+		} else /* if (pIndex > 0) */ {
+			unsigned int mask = 0x4000 + (0x100 * (pindex - 1));
+			if (strncmp(line, "BUTTON", 6) == 0) {
+				int vbindex = atoi(line + 6) - 1;
+				joyLookupTable[mask | (0x80 + vbindex)] = JOY_MAP_BUTTON(pindex, hbindex);
+			} else if (strncmp(line, "UP", 2) == 0) {
+				joyLookupTable[mask | 0x02] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
+			} else if (strncmp(line, "DOWN", 4) == 0) {
+				joyLookupTable[mask | 0x03] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
+			} else if (strncmp(line, "LEFT", 4) == 0) {
+				joyLookupTable[mask | 0x00] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
+			} else if (strncmp(line, "RIGHT", 5) == 0) {
+				joyLookupTable[mask | 0x01] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
 			}
 		}
 	}

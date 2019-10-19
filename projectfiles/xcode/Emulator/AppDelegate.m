@@ -23,13 +23,12 @@
 
 - (void) awakeFromNib
 {
-    NSLog(@"awakeFromNib");
     main = [FBMainThread new];
-    [main start];
 }
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
+    NSLog(@"applicationDidFinishLaunching");
+    [main start];
 }
 
 
@@ -45,6 +44,13 @@
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *) sender
 {
+    return YES;
+}
+
+- (BOOL) application:(NSApplication *) sender
+            openFile:(NSString *) filename
+{
+    main.fileToOpen = filename;
     return YES;
 }
 

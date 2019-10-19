@@ -4,28 +4,34 @@ extern int RunIdle();
 extern int RunInit();
 extern int RunExit();
 
-int MainInit()
+int MainInit(const char *path, const char *setname)
 {
+    if (path == NULL || setname == NULL) {
+        fprintf(stderr, "Path or set name uninitialized\n");
+        return 0;
+    }
+
+    fprintf(stderr, "Initializing '%s' with path '%s'\n", setname, path);
+
     SDL_Init(SDL_INIT_AUDIO);
     BurnLibInit();
 
-    const char *set = "sfiii3";
     int i;
     for (i = 0; i < nBurnDrvCount; i++) {
         nBurnDrvActive = i;
-        if (strcmp(BurnDrvGetTextA(0), set) == 0) {
+        if (strcmp(BurnDrvGetTextA(0), setname) == 0) {
             break;
         }
     }
 
     if (i == nBurnDrvCount) {
-        printf("%s is not supported by FB Neo.", set);
+        fprintf(stderr, "%s is not supported by FB Neo.", setname);
         return 0;
     }
 
     bCheatsAllowed = false;
 
-    sprintf(szAppRomPaths[0], "/Volumes/Stuff/Emulation/mame/");
+    sprintf(szAppRomPaths[0], path);
     DrvInit(i, 0);
 
     MediaInit();
@@ -36,14 +42,6 @@ int MainInit()
 
 int MainFrame()
 {
-//    SDL_Event event;
-//    while (SDL_PollEvent(&event)) {
-//            switch (event.type) {
-//                case SDL_QUIT: /* Windows was closed */
-//                    quit = 1;
-//                    break;
-//            }
-//    }
     RunIdle();
 
     return 1;

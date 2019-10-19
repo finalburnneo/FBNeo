@@ -2,7 +2,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-extern int nKioskTimeout;
 extern int nExitEmulator;
 extern int nEnableFreeplayHack;
 
@@ -140,14 +139,6 @@ int parseSwitches(int argc, char *argv[])
 		} else if (strcmp(argv[i] + 1, "F") == 0) {
 			nEnableFreeplayHack = 1;
 			printf("Freeplay hack enabled\n");
-		} else if (strcmp(argv[i] + 1, "k") == 0) {
-			if (++i < argc) {
-				int secs = atoi(argv[i]);
-				if (secs > 0) {
-					nKioskTimeout = secs;
-					printf("Kiosk mode enabled (%d seconds)\n", secs);
-				}
-			}
 		} else if (strcmp(argv[i] + 1, "dumpswitches") == 0) {
 			dumpDipSwitches();
 		} else if (strncmp(argv[i] + 1, "ds=", 3) == 0) {
@@ -175,7 +166,7 @@ int main(int argc, char *argv[])
 	}
 
 	if (romname == NULL) {
-		printf("Usage: %s [-f] [-F] [-dumpswitches] [-k seconds] <romname>\n", argv[0]);
+		printf("Usage: %s [-f] [-F] [-dumpswitches] <romname>\n", argv[0]);
 		printf("e.g.: %s mslug\n", argv[0]);
 
 		return 0;

@@ -6,22 +6,14 @@
 #include "burner.h"
 #include "inp_sdl_keys.h"
 
-extern "C" {
-#include "inp_udev.h"
-#include "cJSON.h"
-}
-
-int InputFindCode(const char *keystring);
-
 // Note that these constants are tied to the JOY_ macros!
 #define MAX_JOYSTICKS   8
 #define MAX_JOY_BUTTONS 28
 
 #define FREEPLAY_HACK_COIN_DURATION_MS 1e3 / 8
 
-//#define DEBUG_INPUT
+// #define DEBUG_INPUT
 
-int nKioskTimeout = 0;
 int nEnableFreeplayHack = 0;
 
 static struct timeval lastInputEvent;
@@ -41,7 +33,7 @@ static void scanMouse();
 static void resetJoystickMap();
 static bool usesStreetFighterLayout();
 static int checkMouseState(unsigned int nSubCode);
-static void handleFreeplayHack();
+static int handleFreeplayHack(int player, int code);
 
 #define JOY_DIR_LEFT  0x00
 #define JOY_DIR_RIGHT 0x01
@@ -56,17 +48,19 @@ static void handleFreeplayHack();
 
 #define JOY_DEADZONE 0x4000
 
+static unsigned int defaultLayout[] = {
+	FBK_Z, FBK_X, FBK_C, FBK_A, FBK_S, FBK_D, FBK_Q, FBK_W, FBK_E,
+};
+static unsigned int capcom6Layout[] = {
+	FBK_A, FBK_S, FBK_D, FBK_Z, FBK_X, FBK_C,
+};
+
 static unsigned char* keyState = NULL;
 static struct {
 	unsigned char buttons;
 	int xdelta;
 	int ydelta;
 } mouseState;
-
-
-static char* globFile(const char *path);
-
-///
 
 extern int nExitEmulator;
 
@@ -94,7 +88,6 @@ static int piInputExit()
 	}
 
 	nInitedSubsytems = 0;
-	phl_udev_shutdown();
 
 	return 0;
 }
@@ -113,7 +106,6 @@ static int piInputInit()
 	nInitedSubsytems = SDL_WasInit(SDL_INIT_JOYSTICK);
 	gettimeofday(&lastInputEvent, NULL);
 
-	phl_udev_init();
 	if (!(nInitedSubsytems & SDL_INIT_JOYSTICK)) {
 		SDL_InitSubSystem(SDL_INIT_JOYSTICK);
 	}
@@ -153,15 +145,6 @@ static int piInputStart()
 
 	// Mouse not read this frame
 	mouseScanned = 0;
-	if (nKioskTimeout > 0) {
-		if (inputEventOccurred) {
-			lastInputEvent = now;
-			inputEventOccurred = 0;
-		} else if (now.tv_sec - lastInputEvent.tv_sec > nKioskTimeout) {
-			nExitEmulator = 2;
-			fprintf(stderr, "Kiosk mode - %ds timeout exceeded\n", nKioskTimeout);
-		}
-	}
 
 	return 0;
 }
@@ -390,232 +373,104 @@ static bool usesStreetFighterLayout()
 		hardwareMask == HARDWARE_CAPCOM_CPS3);
 }
 
-struct JoyConfig {
-	char **labels;
-	int labelCount;
-};
-
-static struct JoyConfig* createJoyConfig(cJSON *root)
-{
-	struct JoyConfig *jc = (struct JoyConfig *)malloc(sizeof(struct JoyConfig));
-	if (jc) {
-		jc->labels = NULL;
-		jc->labelCount = 0;
-
-		cJSON *labelParent = cJSON_GetObjectItem(root, "labels");
-		cJSON *labelNode;
-		
-		if (labelParent) {
-			labelNode = labelParent->child;
-			while (labelNode) {
-				if (strncmp(labelNode->string, "button", 6) == 0) {
-					int index = atoi(labelNode->string + 6);
-					if (index > 0 && index <= MAX_JOY_BUTTONS && index > jc->labelCount) {
-						jc->labelCount = index;
-					}
-				}
-				labelNode = labelNode->next;
-			}
-
-			if (jc->labelCount > 0) {
-				jc->labels = (char **)calloc(jc->labelCount, sizeof(char *));
-				if (jc->labels) {
-					labelNode = labelParent->child;
-					while (labelNode) {
-						int index = atoi(labelNode->string + 6) - 1;
-						if (index >= 0 && index < MAX_JOY_BUTTONS) {
-							jc->labels[index] = strdup(labelNode->valuestring);
-						}
-						labelNode = labelNode->next;
-					}
-				}
-			}
-		}
-	}
-
-	return jc;
-}
-
-static void dumpJoyConfig(struct JoyConfig *jc)
-{
-	for (int i = 0; i < jc->labelCount; i++) {
-		fprintf(stderr, "labels[%d]='%s'\n", i, jc->labels[i]);
-	}
-}
-
-static void destroyJoyConfig(struct JoyConfig *jc)
-{
-	for (int i = 0; i < jc->labelCount; i++) {
-		free(jc->labels[i]);
-	}
-	free(jc->labels);
-	jc->labels = NULL;
-	jc->labelCount = 0;
-	free(jc);
-}
-
-static int findButton(struct JoyConfig *jc, const char *label)
-{
-	for (int i = 0; i < jc->labelCount; i++) {
-		if (jc->labels[i] && strcasecmp(jc->labels[i], label) == 0) {
-			return i;
-		}
-	}
-
-	if (strncmp(label, "button", 6) == 0) {
-		int index = atoi(label + 6) - 1;
-		if (index >= 0 && index < MAX_JOY_BUTTONS) {
-			return index;
-		}
-	}
-
-	return -1;
-}
-
-static void parseButtons(int player, struct JoyConfig *jc, cJSON *json)
-{
-	cJSON *node = json->child;
-	char temp[100];
-	while (node) {
-		int index = findButton(jc, node->string);
-		if (index > -1) {
-			int code;
-			if ((code = InputFindCode(node->valuestring)) != -1) {
-				joyLookupTable[code] = JOY_MAP_BUTTON(player, index);
-			} else {
-				// No literal match - try prepending player id
-				snprintf(temp, 99, "P%d %s", player + 1, node->valuestring);
-				if ((code = InputFindCode(temp)) != -1) {
-					joyLookupTable[code] = JOY_MAP_BUTTON(player, index);
-				}
-			}
-		}
-		node = node->next;
-	}
-}
-
-static void parsePlayerConfig(int player, struct JoyConfig *jc, cJSON *json)
-{
-	cJSON *node;
-	int code;
-
-	const char *dirnames[] = { "up","down","left","right" };
-	int dirconsts[] = { JOY_DIR_UP,JOY_DIR_DOWN,JOY_DIR_LEFT,JOY_DIR_RIGHT };
-	char temp[100];
-
-	for (int i = 0; i < 4; i++) {
-		if ((node = cJSON_GetObjectItem(json, dirnames[i]))) {
-			if ((code = InputFindCode(node->valuestring)) != -1) {
-				joyLookupTable[code] = JOY_MAP_DIR(player, dirconsts[i]);
-			} else {
-				// No literal match - try prepending player id (e.g. P1, etc)
-				snprintf(temp, 99, "P%d %s", player + 1, node->valuestring);
-				if ((code = InputFindCode(temp)) != -1) {
-					joyLookupTable[code] = JOY_MAP_DIR(player, dirconsts[i]);
-				}
-			}
-		}
-	}
-	
-	parseButtons(player, jc, json);
-	if (usesStreetFighterLayout()) {
-		cJSON *sf = cJSON_GetObjectItem(json, "sfLayout");
-		if (sf) {
-			parseButtons(player, jc, sf);
-		}
-	}
-}
-
 static int setupDefaults(int pindex)
 {
-	int fbDirs[4];
-	int fbButtons[6]; // absolute max
-	int buttonCount = 0;
-
 	if (pindex == 0) {
-		int i = 0;
-		fbDirs[i++] = FBK_UPARROW;
-		fbDirs[i++] = FBK_LEFTARROW;
-		fbDirs[i++] = FBK_RIGHTARROW;
-		fbDirs[i++] = FBK_DOWNARROW;
+		joyLookupTable[FBK_UPARROW] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
+		joyLookupTable[FBK_LEFTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
+		joyLookupTable[FBK_RIGHTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
+		joyLookupTable[FBK_DOWNARROW] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
 
-		if (usesStreetFighterLayout()) {
-			fbButtons[buttonCount++] = FBK_A;
-			fbButtons[buttonCount++] = FBK_S;
-			fbButtons[buttonCount++] = FBK_D;
-			fbButtons[buttonCount++] = FBK_Z;
-			fbButtons[buttonCount++] = FBK_X;
-			fbButtons[buttonCount++] = FBK_C;
-		} else {
-			fbButtons[buttonCount++] = FBK_A;
-			fbButtons[buttonCount++] = FBK_S;
-			fbButtons[buttonCount++] = FBK_D;
-			fbButtons[buttonCount++] = FBK_Z;
-//			fbButtons[buttonCount++] = FBK_X;
-//			fbButtons[buttonCount++] = FBK_C;
-//			fbButtons[buttonCount++] = FBK_V;
-		}
-	} else if (pindex >= 1 && pindex <= 3) {
-		// P2 to P4
-		int pmasks[] = { 0x4000, 0x4100, 0x4200 };
-		int pmask = pmasks[pindex - 1];
-
-		int i = 0;
-		fbDirs[i++] = pmask|0x02;
-		fbDirs[i++] = pmask|0x00;
-		fbDirs[i++] = pmask|0x01;
-		fbDirs[i++] = pmask|0x03;
-
-		for (; buttonCount < 6; buttonCount++) {
-			fbButtons[buttonCount] = pmask|(0x80 + buttonCount);
-		}
+		if (usesStreetFighterLayout())
+			for (int i = 0; i < 6; i++)
+				joyLookupTable[capcom6Layout[i]] = JOY_MAP_BUTTON(pindex, i);
+		else
+			for (int i = 0; i < 9; i++)
+				joyLookupTable[defaultLayout[i]] = JOY_MAP_BUTTON(pindex, i);
 	} else {
-		return 0;
-	}
+		unsigned int mask = 0x4000 + 0x100 * (pindex - 1);
+		joyLookupTable[mask|0x02] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
+		joyLookupTable[mask|0x00] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
+		joyLookupTable[mask|0x01] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
+		joyLookupTable[mask|0x03] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
 
-	// Set direction defaults
-	int joyDirs[] = { JOY_DIR_UP, JOY_DIR_LEFT, JOY_DIR_RIGHT, JOY_DIR_DOWN };
-	for (int i = 0; i < 4; i++) {
-		joyLookupTable[fbDirs[i]] = JOY_MAP_DIR(pindex, joyDirs[i]);
-	}
-
-	// Set button defaults
-	for (int i = 0; i < buttonCount; i++) {
-		joyLookupTable[fbButtons[i]] = JOY_MAP_BUTTON(pindex, i);
+		for (int i = 0; i < 9; i++)
+			joyLookupTable[mask|(0x80 + i)] = JOY_MAP_BUTTON(pindex, i);
 	}
 
 	return 1;
 }
 
-static int readConfigFile(int pindex, const char *path)
+static int readConfigFile(int pindex, const char *path, int sixButton)
 {
-	int success = 0;
-	if (pindex >= 0 && pindex <= 3) {
-		char *pnodes[] = { "joy1", "joy2", "joy3", "joy4" };
-		char *contents = globFile(path);
-		if (contents) {
-			cJSON *root = cJSON_Parse(contents);
-			if (root) {
-				struct JoyConfig *jc = createJoyConfig(root);
-				
-				cJSON *player;
-				if ((player = cJSON_GetObjectItem(root, "default"))) {
-					parsePlayerConfig(pindex, jc, player);
-				}
-				if ((player = cJSON_GetObjectItem(root, pnodes[pindex]))) {
-					parsePlayerConfig(pindex, jc, player);
-				}
+	FILE *f = fopen(path, "r");
+	if (!f)
+		return 0;
 
-				destroyJoyConfig(jc);
-				cJSON_Delete(root);
+	char line[256];
+	while (fgets(line, sizeof(line), f)) {
+		char *delim = strchr(line, '=');
+		if (!delim) continue;
+		*delim = '\0';
 
-				success = 1;
+		char *eol = strchr(delim, '\n');
+		if (!eol) continue;
+		*eol = '\0';
+
+		int hbindex = atoi(delim + 1) - 1;
+		if (pindex == 0 && strncmp(line, "TEST", 4) == 0) {
+			joyLookupTable[FBK_F2] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (pindex == 0 && strncmp(line, "SERVICE", 7) == 0) {
+			joyLookupTable[FBK_9] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (pindex == 0 && strncmp(line, "RESET", 5) == 0) {
+			joyLookupTable[FBK_F3] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (pindex == 0 && strncmp(line, "QUIT", 4) == 0) {
+			joyLookupTable[FBK_ESCAPE] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (strncmp(line, "START", 5) == 0) {
+			joyLookupTable[FBK_1 + pindex] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (strncmp(line, "COIN", 4) == 0) {
+			joyLookupTable[FBK_5 + pindex] = JOY_MAP_BUTTON(pindex, hbindex);
+		} else if (pindex == 0) {
+			if (strncmp(line, "BUTTON", 6) == 0) {
+				int vbindex = atoi(line + 6) - 1;
+				if (sixButton && vbindex < 6)
+					joyLookupTable[capcom6Layout[vbindex]] = JOY_MAP_BUTTON(pindex, hbindex);
+				else if (!sixButton && vbindex < 9)
+					joyLookupTable[defaultLayout[vbindex]] = JOY_MAP_BUTTON(pindex, hbindex);
+			} else if (strncmp(line, "UP", 2) == 0) {
+				joyLookupTable[FBK_UPARROW] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
+			} else if (strncmp(line, "DOWN", 4) == 0) {
+				joyLookupTable[FBK_DOWNARROW] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
+			} else if (strncmp(line, "LEFT", 4) == 0) {
+				joyLookupTable[FBK_LEFTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
+			} else if (strncmp(line, "RIGHT", 5) == 0) {
+				joyLookupTable[FBK_RIGHTARROW] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
 			}
-			free(contents);
+		} else /* if (pIndex > 0) */ {
+			unsigned int mask = 0x4000 + (0x100 * (pindex - 1));
+			if (strncmp(line, "BUTTON", 6) == 0) {
+				int vbindex = atoi(line + 6) - 1;
+				joyLookupTable[mask | (0x80 + vbindex)] = JOY_MAP_BUTTON(pindex, hbindex);
+			} else if (strncmp(line, "UP", 2) == 0) {
+				joyLookupTable[mask | 0x02] = JOY_MAP_DIR(pindex, JOY_DIR_UP);
+			} else if (strncmp(line, "DOWN", 4) == 0) {
+				joyLookupTable[mask | 0x03] = JOY_MAP_DIR(pindex, JOY_DIR_DOWN);
+			} else if (strncmp(line, "LEFT", 4) == 0) {
+				joyLookupTable[mask | 0x00] = JOY_MAP_DIR(pindex, JOY_DIR_LEFT);
+			} else if (strncmp(line, "RIGHT", 5) == 0) {
+				joyLookupTable[mask | 0x01] = JOY_MAP_DIR(pindex, JOY_DIR_RIGHT);
+			}
 		}
 	}
+	fclose(f);
 
-	return success;
+	return 1;
+}
+
+static int configExists(char *path, int pathSize, const char *name)
+{
+	snprintf(path, pathSize, "joyconfig/%s.jc", name);
+	return access(path, F_OK) != -1;
 }
 
 static void resetJoystickMap()
@@ -629,60 +484,22 @@ static void resetJoystickMap()
 		keyLookupTable[code] = (code > 0) ? i : -1;
 	}
 
-	for (int i = 0, n = phl_udev_joy_count(); i < n; i++) {
-		const char *devId = phl_udev_joy_id(i);
-		fprintf(stderr, "Detected \"%s\" (USB id %s) in port %d\n",
-			phl_udev_joy_name(i), devId, i + 1);
+	char path[512];
+	int sixButton = usesStreetFighterLayout();
 
-		// Set the defaults
+	int loadConfig = configExists(path, sizeof(path), BurnDrvGetText(DRV_NAME))
+		|| configExists(path, sizeof(path), BurnDrvGetText(DRV_PARENT))
+		|| (sixButton && configExists(path, sizeof(path), "capcom6"))
+		|| configExists(path, sizeof(path), "default");
+
+	if (loadConfig)
+		printf("Found joyconfig file in path '%s'\n", path);
+
+	for (int i = 0; i < 4; i++) {
 		setupDefaults(i);
-
-		// Try loading a config file
-		if (devId != NULL) {
-			char path[100];
-			snprintf(path, 99, "joyconfig/%s.joy", devId);
-			
-			char *colon = strchr(path, ':');
-			if (colon) *colon = '-';
-
-			if (access(path, F_OK) != -1) {
-				fprintf(stderr, " * Found configuration file \"%s\"\n", path);
-				if (!readConfigFile(i, path)) {
-					fprintf(stderr, "Error reading configuration file - check format\n");
-				}
-			} else {
-				fprintf(stderr, " * No configuration file at \"%s\" - will use defaults\n", path);
-			}
-		}
+		if (loadConfig)
+			readConfigFile(i, path, sixButton);
 	}
-}
-
-static char* globFile(const char *path)
-{
-	char *contents = NULL;
-	
-	FILE *file = fopen(path,"r");
-	if (file) {
-		// Determine size
-		fseek(file, 0L, SEEK_END);
-		long size = ftell(file);
-		rewind(file);
-	
-		// Allocate memory
-		contents = (char *)malloc(size + 1);
-		if (contents) {
-			contents[size] = '\0';
-			// Read contents
-			if (fread(contents, size, 1, file) != 1) {
-				free(contents);
-				contents = NULL;
-			}
-		}
-
-		fclose(file);
-	}
-	
-	return contents;
 }
 
 struct InputInOut InputInOutSDL = { piInputInit, piInputExit, NULL, piInputStart, piInputState, NULL, NULL, NULL, NULL, NULL, _T("Raspberry Pi input") };

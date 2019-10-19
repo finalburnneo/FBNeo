@@ -44,7 +44,6 @@ static UINT8 *DrvYMROMB;
 static UINT8 *DrvVidRAM0;
 static UINT8 *DrvVidRAM1;
 static UINT8 *DrvVidRAM2;
-static UINT8 *DrvUnkRAM;
 static UINT8 *Drv68KRAM0;
 static UINT8 *Drv68KRAM1;
 static UINT8 *DrvPalRAM;
@@ -3513,7 +3512,6 @@ static INT32 MemIndex()
 	DrvVidRAM0		= Next; Next += 0x020000;
 	DrvVidRAM1		= Next; Next += 0x020000;
 	DrvVidRAM2		= Next; Next += 0x020000;
-	DrvUnkRAM		= Next; Next += 0x010000;
 	Drv68KRAM0		= Next; Next += 0x002000;
 	Drv68KRAM1		= Next; Next += 0x010000;
 	DrvPalRAM		= Next; Next += 0x002000;
@@ -3526,8 +3524,8 @@ static INT32 MemIndex()
 	DrvUpdRAM		= Next;
 	DrvZ80RAM		= Next; Next += 0x002000;
 
-	DrvWindow		= Next; Next += 0x000010;
-	DrvScroll		= Next; Next += 0x000010;
+	DrvWindow		= Next; Next += 0x000020;
+	DrvScroll		= Next; Next += 0x000020;
 	DrvVidRegs		= Next; Next += 0x000020;
 	DrvBlitter		= Next; Next += 0x000020;
 
@@ -4960,6 +4958,7 @@ static INT32 YMF278bFrame()
 
 		if (blit_timer >= 0) {
 			if (blit_timer == 0) {
+				requested_int[blitter_bit] = 1;
 				update_irq_state();
 			}
 			blit_timer--;
@@ -5016,12 +5015,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ba.nLen		= 0x0020000;
 		ba.nAddress	= 0x240000;
 		ba.szName	= "Bg RAM 2";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvUnkRAM;
-		ba.nLen		= 0x0010000;
-		ba.nAddress	= 0x260000;
-		ba.szName	= "Unk RAM";
 		BurnAcb(&ba);
 
 		ba.Data		= Drv68KRAM0;

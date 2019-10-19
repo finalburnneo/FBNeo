@@ -91,6 +91,7 @@ static UINT32 main_cpu_cycles = 12000000 / 60;
 static INT32 ymf278bint = 0;
 
 static INT32 bangballmode = 0;
+static INT32 blzntrndmode = 0;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -1790,6 +1791,8 @@ static void metro_blitter_write(INT32 offset)
 		INT32 offs2 = (~dst_offs >> 7) & 1;
 		dst_offs >>=  8;
 
+		if (tmap != 1 && tmap != 2 && tmap != 3) return; // nothing to blit
+
 		while (1)
 		{
 			UINT16 b1, b2, count;
@@ -1806,8 +1809,7 @@ static void metro_blitter_write(INT32 offset)
 				{
 					if (b1 == 0)
 					{
-						requested_int[blitter_bit] = 1;
-						blit_timer = 1;
+						blit_timer = 3;
 						return;
 					}
 
@@ -1816,7 +1818,7 @@ static void metro_blitter_write(INT32 offset)
 						src_offs %= src_len;
 						b2 = src[src_offs];
 						src_offs++;
-	
+
 						dst_offs &= 0xffff;
 						dst[dst_offs*2+offs2] = b2;
 						dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
@@ -1989,6 +1991,10 @@ static void __fastcall metro_common_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 // end
+
+	if (blzntrndmode && (address >= 0x078800 && address <= 0x078813)) {
+		return; // blzntrnd writes here and clobbers the real vid regs @ 279700
+	}
 
 	// mirror or due to chip revision?
 	if ((address >= 0x078800 && address <= 0x078813) || (address >= 0x079700 && address <= 0x079713)) {
@@ -3398,9 +3404,9 @@ static void pGstrik2_roz_callback(INT32 offset, UINT16 *ram, INT32 *code, INT32 
 
 	*sx  = (offset >> 1) & 0x7f;
 	*sx *= 16; */
-	int val;
-	int row = *sy;
-	int col = *sx;
+	INT32 val;
+	INT32 row = *sy;
+	INT32 col = *sx;
 
 	val = (row & 0x3f) * (256 * 2) + (col * 2);
 
@@ -3523,7 +3529,7 @@ static INT32 MemIndex()
 	DrvWindow		= Next; Next += 0x000010;
 	DrvScroll		= Next; Next += 0x000010;
 	DrvVidRegs		= Next; Next += 0x000020;
-	DrvBlitter		= Next; Next += 0x000010;
+	DrvBlitter		= Next; Next += 0x000020;
 
 	RamEnd			= Next;
 
@@ -3627,6 +3633,7 @@ static INT32 blzntrndInit()
 	support_8bpp = 1;
 	support_16x16 = 1;
 	has_zoom = 1;
+	blzntrndmode = 1;
 
 	DrvDoReset();
 
@@ -4386,6 +4393,7 @@ static INT32 DrvExit()
 	m_sprite_yoffs_dx = 0;
 	ymf278bint = 0;
 	bangballmode = 0;
+	blzntrndmode = 0;
 
 	return 0;
 }
@@ -4420,19 +4428,19 @@ static void draw_sprites()
 	UINT8 *base_gfx8 = DrvGfxROM;
 	UINT32 gfx_size = graphics_length;
 
-	int max_x = nScreenWidth;
-	int max_y = nScreenHeight;
+	INT32 max_x = nScreenWidth;
+	INT32 max_y = nScreenHeight;
 
-	int max_sprites = 0x1000 / 8;
-	int sprites     = m_videoregs[0x00/2] % max_sprites;
+	INT32 max_sprites = 0x1000 / 8;
+	INT32 sprites     = m_videoregs[0x00/2] % max_sprites;
 
-	int color_start = (m_videoregs[0x08/2] & 0x0f) << 4;
+	INT32 color_start = (m_videoregs[0x08/2] & 0x0f) << 4;
 
-	int i, j, pri;
-	static const int primask[4] = { 0x0000, 0xff00, 0xff00 | 0xf0f0, 0xff00 | 0xf0f0 | 0xcccc };
+	INT32 i, j, pri;
+	static const INT32 primask[4] = { 0x0000, 0xff00, 0xff00 | 0xf0f0, 0xff00 | 0xf0f0 | 0xcccc };
 
 	UINT16 *src;
-	int inc;
+	INT32 inc;
 
 	if (sprites == 0)
 		return;
@@ -4450,9 +4458,9 @@ static void draw_sprites()
 
 		for (j = 0; j < sprites; j++)
 		{
-			int x, y, attr, code, color, flipx, flipy, zoom, curr_pri, width, height;
+			INT32 x, y, attr, code, color, flipx, flipy, zoom, curr_pri, width, height;
 
-			static const int zoomtable[0x40] = {
+			static const INT32 zoomtable[0x40] = {
 				0xAAC,0x800,0x668,0x554,0x494,0x400,0x390,0x334,0x2E8,0x2AC,0x278,0x248,0x224,0x200,0x1E0,0x1C8,
 				0x1B0,0x198,0x188,0x174,0x164,0x154,0x148,0x13C,0x130,0x124,0x11C,0x110,0x108,0x100,0x0F8,0x0F0,
 				0x0EC,0x0E4,0x0DC,0x0D8,0x0D4,0x0CC,0x0C8,0x0C4,0x0C0,0x0BC,0x0B8,0x0B4,0x0B0,0x0AC,0x0A8,0x0A4,
@@ -4592,29 +4600,29 @@ inline UINT8 get_tile_pix(UINT16 code, UINT8 x, UINT8 y, INT32 big, UINT16 *pix)
 	}
 }
 
-static void draw_tilemap(UINT32 ,UINT32 pcode,int sx, int sy, int wx, int wy, int big, UINT16 *tilemapram, int layer)
+static void draw_tilemap(UINT32 ,UINT32 pcode,INT32 sx, INT32 sy, INT32 wx, INT32 wy, INT32 big, UINT16 *tilemapram, INT32 layer)
 {
 	UINT8 * priority_bitmap = konami_priority_bitmap;
 
-	int width  = big ? 4096 : 2048;
-	int height = big ? 4096 : 2048;
+	INT32 width  = big ? 4096 : 2048;
+	INT32 height = big ? 4096 : 2048;
 
-	int scrwidth  = nScreenWidth;
-	int scrheight = nScreenHeight;
+	INT32 scrwidth  = nScreenWidth;
+	INT32 scrheight = nScreenHeight;
 
-	int windowwidth  = width >> 2;
-	int windowheight = height >> 3;
+	INT32 windowwidth  = width >> 2;
+	INT32 windowheight = height >> 3;
 
 	sx += m_tilemap_scrolldx[layer] * (flip_screen ? 1 : -1);
 
 	for (INT32 y = 0; y < scrheight; y++)
 	{
-		int scrolly = (sy+y-wy)&(windowheight-1);
-		int x;
+		INT32 scrolly = (sy+y-wy)&(windowheight-1);
+		INT32 x;
 		UINT32 *dst;
 		UINT8 *priority_baseaddr;
-		int srcline = (wy+scrolly)&(height-1);
-		int srctilerow = srcline >> (big ? 4 : 3);
+		INT32 srcline = (wy+scrolly)&(height-1);
+		INT32 srctilerow = srcline >> (big ? 4 : 3);
 
 		if (!flip_screen)
 		{
@@ -4623,10 +4631,10 @@ static void draw_tilemap(UINT32 ,UINT32 pcode,int sx, int sy, int wx, int wy, in
 
 			for (x = 0; x < scrwidth; x++)
 			{
-				int scrollx = (sx+x-wx)&(windowwidth-1);
-				int srccol = (wx+scrollx)&(width-1);
-				int srctilecol = srccol >> (big ? 4 : 3);
-				int tileoffs = srctilecol + srctilerow * 0x100;
+				INT32 scrollx = (sx+x-wx)&(windowwidth-1);
+				INT32 srccol = (wx+scrollx)&(width-1);
+				INT32 srctilecol = srccol >> (big ? 4 : 3);
+				INT32 tileoffs = srctilecol + srctilerow * 0x100;
 
 				UINT16 dat = 0;
 
@@ -4647,10 +4655,10 @@ static void draw_tilemap(UINT32 ,UINT32 pcode,int sx, int sy, int wx, int wy, in
 
 			for (x = 0; x < scrwidth; x++)
 			{
-				int scrollx = (sx+x-wx)&(windowwidth-1);
-				int srccol = (wx+scrollx)&(width-1);
-				int srctilecol = srccol >> (big ? 4 : 3);
-				int tileoffs = srctilecol + srctilerow * 0x100;
+				INT32 scrollx = (sx+x-wx)&(windowwidth-1);
+				INT32 srccol = (wx+scrollx)&(width-1);
+				INT32 srctilecol = srccol >> (big ? 4 : 3);
+				INT32 tileoffs = srctilecol + srctilerow * 0x100;
 
 				UINT16 dat = 0;
 
@@ -4667,13 +4675,13 @@ static void draw_tilemap(UINT32 ,UINT32 pcode,int sx, int sy, int wx, int wy, in
 	}
 }
 
-static void draw_layers(int pri)
+static void draw_layers(INT32 pri)
 {
 	UINT16 *m_videoregs = (UINT16*)DrvVidRegs;
 	UINT16 *m_scroll = (UINT16*)DrvScroll;
 	UINT16 *m_window = (UINT16*)DrvWindow;
 	UINT16 layers_pri = m_videoregs[0x10 / 2];
-	int layer;
+	INT32 layer;
 
 	for (layer = 2; layer >= 0; layer--)
 	{
@@ -4693,7 +4701,7 @@ static void draw_layers(int pri)
 				case 2: tilemapram = (UINT16*)DrvVidRAM2;   break;
 			}
 
-			int big = support_16x16 && (screen_control & (0x0020 << layer));
+			INT32 big = support_16x16 && (screen_control & (0x0020 << layer));
 
 			draw_tilemap(0, 1 << (3 - pri), sx, sy, wx, wy, big, tilemapram, layer);
 		}
@@ -4851,8 +4859,9 @@ static INT32 NoZ80Frame()
 			update_irq_state();
 		}
 
-		if (blit_timer >= 1) {
+		if (blit_timer >= 0) {
 			if (blit_timer == 0) {
+				requested_int[blitter_bit] = 1;
 				update_irq_state();
 			}
 			blit_timer--;
@@ -5070,7 +5079,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ba.Data		= DrvBlitter;
-		ba.nLen		= 0x000010;
+		ba.nLen		= 0x000020;
 		ba.nAddress	= 0x278840;
 		ba.szName	= "Blitter Regs";
 		BurnAcb(&ba);
@@ -5907,7 +5916,7 @@ struct BurnDriver BurnDrvDaitorid = {
 	"daitorid", NULL, NULL, NULL, "1995",
 	"Daitoride\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, daitoridRomInfo, daitoridRomName, NULL, NULL, NULL, NULL, DaitoridInputInfo, DaitoridDIPInfo,
 	daitoridInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
@@ -5936,7 +5945,7 @@ struct BurnDriver BurnDrvDaitorida = {
 	"daitorida", "daitorid", NULL, NULL, "1996",
 	"Daitoride (YMF278B version)\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, daitoridaRomInfo, daitoridaRomName, NULL, NULL, NULL, NULL, DaitoridInputInfo, DaitoridDIPInfo,
 	daitoridaInit, DrvExit, YMF278bFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3

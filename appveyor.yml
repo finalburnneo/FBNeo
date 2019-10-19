@@ -1,34 +1,45 @@
 version: 1.0.{build}
-image: Visual Studio 2019 Preview
+image: Visual Studio 2019
 
 shallow_clone: true
 clone_depth: 1
 
+#init:
+#- ps: >-
+#    Write-Host "DirectX Software Development Kit..." -ForegroundColor Cyan
+#    Write-Host "Downloading..."
+#    $exePath = "$env:temp\DXSDK_Jun10.exe"
+#    (New-Object Net.WebClient).DownloadFile('https://download.microsoft.com/download/A/E/7/AE743F1F-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe', $exePath)
+#    Write-Host "Installing..."
+#    $installPath = "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)"
+#    cmd /c start /wait $exePath /U
+#    Add-Path $installPath
+#    Write-Host "Installed" -ForegroundColor Green
 install:
   - set "PATH=C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
+#  - set "DXSDK_DIR=C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\"
   - set MSYSTEM=MINGW32
   - set PreferredToolArchitecture=x86
   - choco install nasm
   - set PATH="C:\Program Files\NASM";%PATH%
-  
 build_script:
   - 7z a fbn-code.7z %APPVEYOR_BUILD_FOLDER%\*      
-  - msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-  - msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+#  - msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+#  - msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1"
   - 7z a fbn-win32-gcc.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1"
-  - 7z a fbn-win32-debug-gcc.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\generated\gamelist.txt       
-  - 7z a fbn-win32-vs.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\Win32\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\generated\gamelist.txt     
-  - 7z a fbn-x64-vs.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\x64\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\generated\gamelist.txt      
+  - 7z a fbn-win32-debug-gcc.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html        
+#  - 7z a fbn-win32-vs.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\Win32\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\generated\gamelist.txt     
+#  - 7z a fbn-x64-vs.7z %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\x64\Release\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html %APPVEYOR_BUILD_FOLDER%\projectfiles\visualstudio-2019\generated\gamelist.txt      
    
 artifacts:
   - path: fbn-code.7z
     name: source
-  - path: fbn-win32-vs.7z
-    name: win32-bin-vs
-  - path: fbn-x64-vs.7z
-    name: x64-bin-vs  
+#  - path: fbn-win32-vs.7z
+#    name: win32-bin-vs
+#  - path: fbn-x64-vs.7z
+#    name: x64-bin-vs  
   - path: fbn-win32-gcc.7z
     name: win32-bin-gcc  
   - path: fbn-win32-debug-gcc.7z
@@ -46,4 +57,5 @@ deploy:
   auth_token:
     secure: cC6FjF22axzOF1Y1+B2DfieS+B3KAHeUTefa7k/iq7MJjqaj/OjQ01EWN+Ga5r6v
   repository: finalburnneo/FBNeo-WIP-Storage-Facility
-  artifact: win32-bin-vs, x64-bin-vs, source, win32-bin-gcc, win32-bin-debug-gcc
+  #artifact: win32-bin-vs, x64-bin-vs, source, win32-bin-gcc, win32-bin-debug-gcc
+  artifact: source, win32-bin-gcc, win32-bin-debug-gcc

@@ -2245,8 +2245,8 @@ This list contains all games supported by FinalBurn Neo.
 | daiohp	|  	| Daioh (prototype)					| daioh		| 1993	| Athena	| Seta		| 					|
 | daioh		|  	| Daioh							| 		| 1993	| Athena	| Seta		| 					|
 | daisenpu	|  	| Daisenpu (Japan)					| twinhawk	| 1989	| Taito Corporat| Taito X	| 					|
-| daitorida	|   NW	| Daitoride (YMF278B version)				| daitorid	| 1996	| Metro		| Miscellaneous	| 					|
-| daitorid	|   NW	| Daitoride						| 		| 1995	| Metro		| Miscellaneous	| 					|
+| daitorida	|  	| Daitoride (YMF278B version)				| daitorid	| 1996	| Metro		| Miscellaneous	| 					|
+| daitorid	|  	| Daitoride						| 		| 1995	| Metro		| Miscellaneous	| 					|
 | msx_daiva4	|  	| Daiva Story 4 - Asura's Bloodfeud (Jpn)		| 		| 1987	| T&E Soft	| MSX		| 					|
 | spec_dtdecthn	|  	| Daley Thompson's Decathlon - Day 1 (48K)		| 		| 1984	| Ocean		| ZX Spectrum	| 					|
 | spec_dtdecthn2|  	| Daley Thompson's Decathlon - Day 2 (48K)		| spec_dtdecthn	| 1984	| Ocean		| ZX Spectrum	| 					|

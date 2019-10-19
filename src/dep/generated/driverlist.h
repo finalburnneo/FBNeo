@@ -14850,8 +14850,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDaiohp,				// Daioh (prototype)
 	&BurnDrvDaioh,				// Daioh
 	&BurnDrvDaisenpu,			// Daisenpu (Japan)
-	&BurnDrvDaitorida,			// Daitoride (YMF278B version) [no comment, NOT WORKING]
-	&BurnDrvDaitorid,			// Daitoride [no comment, NOT WORKING]
+	&BurnDrvDaitorida,			// Daitoride (YMF278B version)
+	&BurnDrvDaitorid,			// Daitoride
 	&BurnDrvMSX_daiva4,			// Daiva Story 4 - Asura's Bloodfeud (Jpn)
 	&BurnSpecdtdecthn,			// Daley Thompson's Decathlon - Day 1 (48K)
 	&BurnSpecdtdecthn2,			// Daley Thompson's Decathlon - Day 2 (48K)

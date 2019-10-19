@@ -1,4 +1,4 @@
-//
+//(
 //  AppDelegate.m
 //  FinalBurnNeo
 //
@@ -8,21 +8,44 @@
 
 #import "AppDelegate.h"
 
+#import "FBMainThread.h"
+
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
+
 @end
 
 @implementation AppDelegate
+{
+    FBMainThread *main;
+}
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application
+- (void) awakeFromNib
+{
+    NSLog(@"awakeFromNib");
+    main = [FBMainThread new];
+    [main start];
+}
+
+- (void) applicationDidFinishLaunching:(NSNotification *)aNotification {
+    // Insert code here to initialize your application
 }
 
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
+- (void) applicationWillTerminate:(NSNotification *)aNotification {
 	// Insert code here to tear down your application
 }
 
+- (void) windowWillClose:(NSNotification *) notification
+{
+    NSLog(@"windowWillClose");
+    [main cancel];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *) sender
+{
+    return YES;
+}
 
 @end

@@ -200,7 +200,7 @@ int RunReset()
 	return 0;
 }
 
-static int RunInit()
+int RunInit()
 {
 	// Try to run with sound
 	AudSetCallback(RunGetNextSound);
@@ -211,7 +211,7 @@ static int RunInit()
 	return 0;
 }
 
-static int RunExit()
+int RunExit()
 {
 	nNormalLast = 0;
 

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FBMainThread : NSThread
 
+@property NSString *fileToOpen;
+
 @end
 
 NS_ASSUME_NONNULL_END

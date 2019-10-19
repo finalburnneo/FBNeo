@@ -8,7 +8,7 @@
 
 #import "FBMainThread.h"
 
-extern int MainInit();
+extern int MainInit(const char *, const char *);
 extern int MainFrame();
 extern int MainEnd();
 
@@ -23,7 +23,10 @@ extern int MainEnd();
 
 - (void) main
 {
-    if (!MainInit())
+    NSString *path = [[_fileToOpen stringByDeletingLastPathComponent] stringByAppendingString:@"/"];
+    NSString *setname = [[_fileToOpen lastPathComponent] stringByDeletingPathExtension];
+
+    if (!MainInit([path cStringUsingEncoding:NSUTF8StringEncoding], [setname cStringUsingEncoding:NSUTF8StringEncoding]))
         return;
 
     NSLog(@"Entering main loop");

@@ -11,6 +11,6 @@ jobs:
     - uses: actions/checkout@v1
     - name: make
       run: |
-        pacman -S mingw-w64-i686-SDL
+        choco install nasm
         rm -rf obj && mkdir obj && mingw32-make mingw510 -j20 RELEASEBUILD=1 SKIPDEPEND=1
         

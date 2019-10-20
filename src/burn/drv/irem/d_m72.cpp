@@ -2970,7 +2970,7 @@ static struct BurnRomInfo imgfightjRomDesc[] = {
 	{ "if-c-v0.bin",	0x10000, 0xcb64a194, 0x05 | BRF_SND },           // 16 DAC Samples
 	{ "if-c-v1.bin",	0x10000, 0x45b68bf5, 0x05 | BRF_SND },           // 17
 
-	{ "imgfightj_i8751h.bin",0x01000, 0xef0d5098, 0x00 | BRF_OPT }, // 18 i8751 Code
+	{ "if_c-pr.bin",	0x01000, 0xef0d5098, 0x00 | BRF_OPT }, 			 // 18 i8751 Code
 };
 
 STD_ROM_PICK(imgfightj)

@@ -6994,7 +6994,7 @@ struct BurnDriver BurnDrvWboyo = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyoRomInfo, WboyoRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboy2 = {
@@ -7004,7 +7004,7 @@ struct BurnDriver BurnDrvWboy2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy2RomInfo, Wboy2RomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	Wboy2Init, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboy2u = {
@@ -7014,7 +7014,7 @@ struct BurnDriver BurnDrvWboy2u = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy2uRomInfo, Wboy2uRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	Wboy2uInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboy3 = {
@@ -7024,7 +7024,7 @@ struct BurnDriver BurnDrvWboy3 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy3RomInfo, Wboy3RomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboy4 = {
@@ -7034,7 +7034,7 @@ struct BurnDriver BurnDrvWboy4 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy4RomInfo, Wboy4RomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	Wboy4Init, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboy5 = {
@@ -7044,7 +7044,7 @@ struct BurnDriver BurnDrvWboy5 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy5RomInfo, Wboy5RomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboyu = {
@@ -7054,7 +7054,7 @@ struct BurnDriver BurnDrvWboyu = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyuRomInfo, WboyuRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyuDIPInfo,
 	WboyuInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWbdeluxe = {
@@ -7064,7 +7064,7 @@ struct BurnDriver BurnDrvWbdeluxe = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WbdeluxeRomInfo, WbdeluxeRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WbdeluxeDIPInfo,
 	Wboy2uInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWmatch = {

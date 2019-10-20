@@ -1796,7 +1796,7 @@ static struct BurnRomInfo ghostbRomDesc[] = {
 	{ "dz19a.10d",		0x00400, 0x47e1f83b, 6 }, // 19 proms
 	{ "dz20a.11d",		0x00400, 0xd8fe2d99, 6 }, // 20
 
-	{ "dz-1.1b", 		0x01000, 0x18b7e1e6, 7 }, // 21 mcu
+	{ "dz-1.1b", 		0x01000, 0x9f5f3cb5, 7 }, // 21 i8751 microcontroller
 };
 
 STD_ROM_PICK(ghostb)
@@ -1873,7 +1873,7 @@ static struct BurnRomInfo ghostb2aRomDesc[] = {
 	{ "dz19a.10d",		0x00400, 0x47e1f83b, 6 }, // 19 proms
 	{ "dz20a.11d",		0x00400, 0xd8fe2d99, 6 }, // 20
 
-	{ "dz.1b",         	0x01000, 0x18b7e1e6, 7 }, // 21 mcu
+	{ "dz-1.1b",        0x01000, 0x9f5f3cb5, 7 }, // 21 i8751 microcontroller
 };
 
 STD_ROM_PICK(ghostb2a)
@@ -1890,7 +1890,7 @@ struct BurnDriver BurnDrvGhostb2a = {
 };
 
 
-// The Real Ghostbusters (US 3 Players)
+// The Real Ghostbusters (US 3 Players, revision 3B?)
 
 static struct BurnRomInfo ghostb3RomDesc[] = {
 	{ "dz01-3b.1d",		0x08000, 0xc8cc862a, 1 }, //  0 maincpu
@@ -1920,7 +1920,7 @@ static struct BurnRomInfo ghostb3RomDesc[] = {
 	{ "dz19a.10d",		0x00400, 0x47e1f83b, 6 }, // 19 proms
 	{ "dz20a.11d",		0x00400, 0xd8fe2d99, 6 }, // 20
 
-	{ "dz.1b",         	0x01000, 0x18b7e1e6, 7 }, // 21 mcu
+	{ "dz-1.1b",        0x01000, 0x9f5f3cb5, 7 }, // 21 i8751 microcontroller
 };
 
 STD_ROM_PICK(ghostb3)
@@ -1928,7 +1928,7 @@ STD_ROM_FN(ghostb3)
 
 struct BurnDriver BurnDrvGhostb3 = {
 	"ghostb3", "ghostb", NULL, NULL, "1987",
-	"The Real Ghostbusters (US 3 Players)\0", NULL, "Data East USA", "DEC8",
+	"The Real Ghostbusters (US 3 Players, revision 3B?)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, ghostb3RomInfo, ghostb3RomName, NULL, NULL, NULL, NULL, Ghostb3InputInfo, Ghostb3DIPInfo,
@@ -1936,7 +1936,7 @@ struct BurnDriver BurnDrvGhostb3 = {
 	256, 240, 4, 3
 };
 
-// The Real Ghostbusters (US 3 Players) from caius
+// The Real Ghostbusters (US 3 Players, revision 2) 
 
 static struct BurnRomInfo ghostb3aRomDesc[] = {
 	{ "dz01-2.1d",		0x08000, 0x1b16890e, 1 }, //  0 maincpu
@@ -1966,7 +1966,7 @@ static struct BurnRomInfo ghostb3aRomDesc[] = {
 	{ "dz19a.10d",		0x00400, 0x47e1f83b, 6 }, // 19 proms
 	{ "dz20a.11d",		0x00400, 0xd8fe2d99, 6 }, // 20
 
-	{ "dz.1b",         	0x01000, 0x18b7e1e6, 7 }, // 21 mcu
+	{ "dz-1.1b",        0x01000, 0x9f5f3cb5, 7 }, // 21 i8751 microcontroller
 };
 
 STD_ROM_PICK(ghostb3a)
@@ -1974,7 +1974,7 @@ STD_ROM_FN(ghostb3a)
 
 struct BurnDriverD BurnDrvGhostb3a = {
 	"ghostb3a", "ghostb", NULL, NULL, "1987",
-	"The Real Ghostbusters (US 3 Players, revision ?)\0", NULL, "Data East USA", "DEC8",
+	"The Real Ghostbusters (US 3 Players, revision 2)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, ghostb3aRomInfo, ghostb3aRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
@@ -2012,7 +2012,7 @@ static struct BurnRomInfo meikyuhRomDesc[] = {
 	{ "dw18.9d",	0x00400, 0x75f1945f, 6 }, // 18 proms
 	{ "dw19.10d",	0x00400, 0xcc16f3fa, 6 }, // 19
 
-	{ "dw.1b",		0x01000, 0x28e9ced9, 7 }, // 20 mcu
+	{ "dw.1b",		0x01000, 0x28e9ced9, 7 }, // 20 i8751 microcontroller
 };
 
 STD_ROM_PICK(meikyuh)
@@ -2058,7 +2058,7 @@ static struct BurnRomInfo meikyuhaRomDesc[] = {
 	{ "dw18.9d",	0x00400, 0x75f1945f, 6 }, // 18 proms
 	{ "dw19.10d",	0x00400, 0xcc16f3fa, 6 }, // 19
 
-	{ "dw.1b",		0x01000, 0x28e9ced9, 7 }, // 20 mcu
+	{ "dw.1b",		0x01000, 0x28e9ced9, 7 }, // 20 i8751 microcontroller
 };
 
 STD_ROM_PICK(meikyuha)
@@ -3242,7 +3242,7 @@ static struct BurnRomInfo srdarwinRomDesc[] = {
 	{ "dy03.b4",		0x10000, 0x44f2a4f9, 5 }, // 10 gfx3
 	{ "dy02.b5",		0x10000, 0x522d9a9e, 5 }, // 11
 
-	{ "id8751h.mcu",	0x01000, 0x11cd6ca4, 6 }, // 12 mcu
+	{ "id8751h.mcu",	0x01000, 0x11cd6ca4, 6 }, // 12 i8751 microcontroller
 
 	{ "dy12.f4",		0x00100, 0xebfaaed9, 7 }, // 13 proms
 };
@@ -3934,7 +3934,7 @@ static struct BurnRomInfo gondoRomDesc[] = {
 	{ "dt-10.512",		0x10000, 0xcfcfc9ed, 5 }, // 20
 	{ "dt-11.256",		0x08000, 0x53e9cf17, 5 }, // 21
 
-	{ "dt-a.b1",     	0x01000, 0x03abceeb, 6 }, // 22 mcu
+	{ "dt-a.b1",     	0x01000, 0x03abceeb, 6 }, // 22 i8751 microcontroller
 
 	{ "ds-23.b10",		0x00400, 0xdcbfec4e, 7 }, // 23 proms
 };
@@ -3983,7 +3983,7 @@ static struct BurnRomInfo makyosenRomDesc[] = {
 	{ "dt-10.512",		0x10000, 0xcfcfc9ed, 5 }, // 20
 	{ "dt-11.256",		0x08000, 0x53e9cf17, 5 }, // 21
 
-	{ "ds-a.b1",     	0x01000, 0x08f36e35, 6 }, // 22 mcu
+	{ "ds-a.b1",     	0x01000, 0x08f36e35, 6 }, // 22 i8751 microcontroller
 
 	{ "ds-23.b10",		0x00400, 0xdcbfec4e, 7 }, // 23 proms
 
@@ -5178,7 +5178,7 @@ static struct BurnRomInfo lastmisnRomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_dl00-e.18a",	0x01000, 0x6be57487, 7 }, // 13 mcu
+	{ "last_mission_dl00-e.18a",	0x01000, 0x6be57487, 7 }, // 13 i8751 microcontroller
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5219,7 +5219,7 @@ static struct BurnRomInfo lastmsnu6RomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_dl00-a.18a",	0x01000, 0x6be57487, 7 }, // 13 mcu
+	{ "last_mission_dl00-a.18a",	0x01000, 0x6be57487, 7 }, // 13 i8751 microcontroller
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5260,7 +5260,7 @@ static struct BurnRomInfo lastmsnu5RomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_dl00-a.18a",	0x01000, 0x6be57487, 7 }, // 13 mcu
+	{ "last_mission_dl00-a.18a",	0x01000, 0x6be57487, 7 }, // 13 i8751 microcontroller
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5398,7 +5398,7 @@ static struct BurnRomInfo breywoodRomDesc[] = {
 	{ "dj09.15k",		0x10000, 0xe37d5dbe, 7 }, // 19
 	{ "dj08.17k",		0x10000, 0xbeee880f, 7 }, // 20
 
-	{ "dj.18a",			0x01000, 0x4cb20332, 4 }, //  7 mcu
+	{ "dj.18a",			0x01000, 0x4cb20332, 4 }, //  7 i8751 microcontroller
 	
 	{ "dk-20.9c",		0x00100, 0xff3cd588, 0 | BRF_OPT }, // priority PROM
 };
@@ -5840,7 +5840,7 @@ static struct BurnRomInfo csilverRomDesc[] = {
 	{ "dx10.12f",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 mcu
+	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 i8751 microcontroller
 };
 
 STD_ROM_PICK(csilver)
@@ -5891,7 +5891,7 @@ static struct BurnRomInfo csilverjRomDesc[] = {
 	{ "dx10.b1",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.b2",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 mcu
+	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 i8751 microcontroller
 };
 
 STD_ROM_PICK(csilverj)
@@ -5933,7 +5933,7 @@ static struct BurnRomInfo csilverjaRomDesc[] = {
 	{ "dx10.12f",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 mcu
+	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 i8751 microcontroller
 };
 
 STD_ROM_PICK(csilverja)

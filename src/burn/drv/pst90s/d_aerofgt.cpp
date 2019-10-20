@@ -3154,8 +3154,8 @@ struct BurnDriver BurnDrvKaratbla = {
 // Karate Blazers (US)
 
 static struct BurnRomInfo karatbluRomDesc[] = {
-	{ "v2.u14",    	  0x040000, 0x202e6220, BRF_ESS | BRF_PRG }, // 68000 code swapped
-	{ "v1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
+	{ "1v2.u14",      0x040000, 0x202e6220, BRF_ESS | BRF_PRG }, // 68000 code swapped
+	{ "v1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG }, // 1 stamped on chip with VideoSystem logo V and 2
 
 	{ "gha.u55",   	  0x080000, 0x3e0cea91, BRF_GRA },			 // gfx1
 	{ "gh9.u61",  	  0x080000, 0x5d1676bd, BRF_GRA },			 // gfx2

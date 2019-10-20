@@ -1081,7 +1081,7 @@ static struct BurnRomInfo DrgninjaRomDesc[] = {
 	
 	{ "eg08.2c",            0x10000, 0x92f2c916, BRF_SND },				// 21	Samples
 	
-	{ "eg31.9a",            0x01000, 0xc3f6bc70, BRF_OPT },				// 22	I8751
+	{ "eg31.9a",            0x01000, 0x657aab2d, BRF_OPT },				// 22	I8751
 	
 	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 			// 23 PROMs
 	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 			// 24

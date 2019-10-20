@@ -1709,11 +1709,11 @@ static struct BurnRomInfo QuartetRomDesc[] = {
 	{ "epr-7474.3c",   0x08000, 0xdbf853b8, SYS16_ROM_7751DATA | BRF_SND },
 	{ "epr-7476.4c",   0x08000, 0x5eba655a, SYS16_ROM_7751DATA | BRF_SND },
 	
-	{ "315-5194.mcu",  0x01000, 0x00000000, BRF_NODUMP },
+	{ "315-5194.mcu",  0x01000, 0xb7298f66, SYS16_ROM_I8751 | BRF_PRG | BRF_OPT },
 	
-	{ "pal16r6a.22g",  0x00104, 0x00000000, BRF_NODUMP }, // PLD
-	{ "pal16r6a.23g",  0x00104, 0x00000000, BRF_NODUMP }, // PLD
-	{ "pls153.8j",     0x000eb, 0x0fe1eefd, BRF_OPT }, // PLD
+	{ "pal16r6a.22g",  0x00104, 0x00000000, BRF_NODUMP }, // plds
+	{ "pal16r6a.23g",  0x00104, 0x00000000, BRF_NODUMP }, 
+	{ "pls153.8j",     0x000eb, 0x0fe1eefd, BRF_OPT }, 
 };
 
 
@@ -1750,11 +1750,11 @@ static struct BurnRomInfo QuartetaRomDesc[] = {
 	{ "epr-7474.3c",        0x08000, 0xdbf853b8, SYS16_ROM_7751DATA | BRF_SND },
 	{ "epr-7476.4c",        0x08000, 0x5eba655a, SYS16_ROM_7751DATA | BRF_SND },
 	
-	{ "315-5194.mcu",       0x01000, 0x00000000, BRF_NODUMP },
+	{ "315-5194.mcu",       0x01000, 0xb7298f66, SYS16_ROM_I8751 | BRF_PRG | BRF_OPT },
 	
-	{ "pal16r6a.22g",       0x00104, 0x00000000, BRF_NODUMP }, // PLD
-	{ "pal16r6a.23g",       0x00104, 0x00000000, BRF_NODUMP }, // PLD
-	{ "315-5193.pls153.8j", 0x000eb, 0x0fe1eefd, BRF_OPT }, // PLD
+	{ "pal16r6a.22g",       0x00104, 0x00000000, BRF_NODUMP }, // plds
+	{ "pal16r6a.23g",       0x00104, 0x00000000, BRF_NODUMP },  
+	{ "315-5193.pls153.8j", 0x000eb, 0x0fe1eefd, BRF_OPT },     
 };
 
 
@@ -3448,17 +3448,6 @@ static INT32 MjleagueScan(INT32 nAction,INT32 *pnMin)
 	return System16Scan(nAction, pnMin);;
 }
 
-static void Quartet_Sim8751()
-{
-	// X-Scroll Values
-	*((UINT16*)(System16TextRam + 0xff8)) = BURN_ENDIAN_SWAP_INT16(((System16Ram[0x0d14 + 1] << 8) | System16Ram[0x0d14 + 0]));
-	*((UINT16*)(System16TextRam + 0xffa)) = BURN_ENDIAN_SWAP_INT16(((System16Ram[0x0d18 + 1] << 8) | System16Ram[0x0d18 + 0]));
-	
-	// Page Values
-	*((UINT16*)(System16TextRam + 0xe9e)) = BURN_ENDIAN_SWAP_INT16(((System16Ram[0x0d1c + 1] << 8) | System16Ram[0x0d1c + 0]));
-	*((UINT16*)(System16TextRam + 0xe9c)) = BURN_ENDIAN_SWAP_INT16(((System16Ram[0x0d1e + 1] << 8) | System16Ram[0x0d1e + 0]));
-}
-
 static INT32 Passsht16aInit()
 {
 	// Start off with some sprite rom and let the load routine add on the rest
@@ -3492,8 +3481,6 @@ static INT32 Passsht16aInit()
 
 static INT32 QuartetInit()
 {
-	Simulate8751 = Quartet_Sim8751;
-
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {

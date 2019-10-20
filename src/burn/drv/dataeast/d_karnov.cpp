@@ -1577,8 +1577,7 @@ static struct BurnRomInfo chelnovjRomDesc[] = {
 	{ "ee-17.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA },           // 16 Color Proms
 	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA },           // 17
 	
-	// created from the world version by patching the id byte, internal checksum matches
-	{ "ee-j.14k",  		0x01000, 0xb3dc380c, 0 | BRF_OPT },			  // 18 mcu
+	{ "ee.14k",  		0x01000, 0xb3dc380c, 0 | BRF_OPT },			  // 18 mcu
 };
 
 STD_ROM_PICK(chelnovj)

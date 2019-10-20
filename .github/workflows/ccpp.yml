@@ -10,4 +10,4 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: make
-      run: mingw32-make mingw510 -j5 RELEASEBUILD=1
+      run: mkdir obj && mingw32-make mingw510 -j20 RELEASEBUILD=1 SKIPDEPEND=1

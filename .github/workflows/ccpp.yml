@@ -15,6 +15,6 @@ jobs:
         set PATH="C:\Program Files\NASM";%PATH%
 
 
-        msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
+        # msbuild "projectfiles\visualstudio-2019\fba_vs2019.sln" /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
        # rm -rf obj && mkdir obj && mingw32-make mingw510 -j20 RELEASEBUILD=1 SKIPDEPEND=1
         

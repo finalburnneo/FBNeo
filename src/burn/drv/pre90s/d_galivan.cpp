@@ -1209,8 +1209,7 @@ static struct BurnRomInfo dangarjRomDesc[] = {
 	{ "82s129.7f",		0x0100, 0x29bc6216, 8 | BRF_GRA },           // 18 Sprite LUT
 
 	{ "dg-3.ic7.2764",	0x2000, 0x84a56d26, 9 | BRF_GRA },           // 19 user2
-	
-	{ "22.15b",			0x4000, 0x1d484f68, 2 | BRF_OPT },
+		
 };
 
 STD_ROM_PICK(dangarj)

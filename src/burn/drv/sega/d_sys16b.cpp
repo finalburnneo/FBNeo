@@ -2778,7 +2778,7 @@ static struct BurnRomInfo Altbeast6RomDesc[] = {
 	{ "opr-11672.a11",  0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0076.c2",    0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0076.c2",    0x01000, 0x32c91f89, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -3674,7 +3674,7 @@ static struct BurnRomInfo Ddux1RomDesc[] = {
 
 	{ "epr-11916.a10",  0x08000, 0x7ab541cf, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "317-0095.c2",    0x01000, 0x00000000, BRF_NODUMP }, // Intel i8751 protection MCU
+	{ "317-0095.c2",    0x01000, 0xb06b4ca7, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -7891,28 +7891,6 @@ static void Altbeastj_Sim8751()
 	}
 }
 
-static void Altbeast6_Sim8751()
-{
-	// System Inputs
-	*((UINT16*)(System16Ram + 0x3096)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
-	
-	// Tile Banking
-	INT32 Bank = (System16Ram[0x3094 + 1] << 8) | System16Ram[0x3094 + 0];
-	Bank &= 0xff;
-	Bank = (Bank & 0x01) | ((Bank & 0xfe) << 1);
-	System16TileBanks[1] = Bank & 7;
-	
-	// Sound command
-	UINT16 temp = (System16Ram[0x3098 + 1] << 8) | System16Ram[0x3098 + 0];
-	if ((temp & 0xff00) != 0x0000) {
-		System16SoundLatch = temp >> 8;
-		ZetOpen(0);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		ZetClose();
-		*((UINT16*)(System16Ram + 0x3098)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
-	}
-}
-
 static INT32 AltbeastInit()
 {
 	AltbeastMode = true;
@@ -7951,9 +7929,7 @@ static INT32 AltbeastjInit()
 }
 
 static INT32 Altbeast6Init()
-{
-	Simulate8751 = Altbeast6_Sim8751;
-	
+{	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1a0000 - 0xe0000;
 
@@ -8077,26 +8053,6 @@ static INT32 Blox16bInit()
 {
 	System16CustomLoadRomDo = Blox16bLoadRom;
 	System16UPD7759DataSize = 0x08000;
-	
-	return System16Init();
-}
-
-static void Ddux_Sim8751()
-{
-	// Sound command
-	UINT16 temp = (System16Ram[0x0bd0 + 1] << 8) | System16Ram[0x0bd0 + 0];
-	if ((temp & 0xff00) != 0x0000) {
-		System16SoundLatch = temp >> 8;
-		ZetOpen(0);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		ZetClose();
-		*((UINT16*)(System16Ram + 0x0bd0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
-	}
-}
-
-static INT32 Ddux1Init()
-{
-	Simulate8751 = Ddux_Sim8751;
 	
 	return System16Init();
 }
@@ -9600,7 +9556,7 @@ struct BurnDriver BurnDrvDdux1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, Ddux1RomInfo, Ddux1RomName, NULL, NULL, NULL, NULL, System16bInputInfo, DduxDIPInfo,
-	Ddux1Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

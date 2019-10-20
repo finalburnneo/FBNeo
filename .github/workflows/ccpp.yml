@@ -10,4 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: make
-      run: mkdir obj && mingw32-make mingw510 -j20 RELEASEBUILD=1 SKIPDEPEND=1
+      run: |
+        pacman -S mingw-w64-i686-SDL
+        mkdir obj && mingw32-make mingw510 -j20 RELEASEBUILD=1 SKIPDEPEND=1
+        

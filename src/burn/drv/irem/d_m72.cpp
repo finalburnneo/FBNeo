@@ -2541,7 +2541,7 @@ static struct BurnRomInfo xmultiplm72RomDesc[] = {
 
 	{ "t52.v0",		0x20000, 0x2db1bd80, 0x05 | BRF_SND },           // 20 DAC Samples
 
-	{ "xm_c_pr-.mcu",	0x01000, 0xc8ceb3cd, 0x00 | BRF_OPT }, 	 	 // 21 i8751 microcontroller
+	{ "xm_c-pr-.mcu",	0x01000, 0xc8ceb3cd, 0x00 | BRF_OPT }, 	 	 // 21 i8751 microcontroller
 };
 
 STD_ROM_PICK(xmultiplm72)
@@ -2818,6 +2818,7 @@ struct BurnDriver BurnDrvMrheli = {
 
 
 // Ninja Spirit
+// doesn't wait / check for japan warning string.. fails rom check if used with japanese mcu rom (World version?)
 
 static struct BurnRomInfo nspiritRomDesc[] = {
 	{ "nin_c-h0.6h",	0x10000, 0x035692fa, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -2931,6 +2932,7 @@ struct BurnDriver BurnDrvNspiritj = {
 
 
 // Image Fight (Japan, revision A)
+// doesn't wait / check for japan warning string.. fails rom check if used with japanese mcu rom (World version?)
 
 static struct BurnRomInfo imgfightRomDesc[] = {
 	{ "if-c-h0-a.bin",	0x10000, 0xf5c94464, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -3102,7 +3104,7 @@ static struct BurnRomInfo airduelm72RomDesc[] = {
 
 	{ "ad-v0.ic44",		0x20000, 0x339f474d, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "ad_c_pr.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 microcontroller
+	{ "ad_c-pr.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 microcontroller
 	
 	{ "ad-c-3f.ic13",	0x00104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 18 Pals
 };

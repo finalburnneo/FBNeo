@@ -4414,15 +4414,15 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\src\burn\drv\capcom\ctv_make.cpp">
-      <Filter>Burn\drv\capcom</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\cpu\m68k\m68kmake.c">
       <Filter>cpus\m68k</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\dep\scripts\build_details.cpp" />
     <CustomBuild Include="..\..\src\burn\drv\pgm\pgm_sprite_create.cpp">
       <Filter>Burn\drv\pgm</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\burn\drv\capcom\ctv_make.cpp">
+      <Filter>Burn\drv\capcom</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

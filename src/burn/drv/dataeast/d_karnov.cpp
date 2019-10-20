@@ -1255,7 +1255,7 @@ static struct BurnRomInfo karnovRomDesc[] = {
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
 	
-	{ "karnov_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP}, 
+	{ "karnov_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP}, // 22 i8751 microcontroller
 };
 
 STD_ROM_PICK(karnov)
@@ -1312,7 +1312,7 @@ static struct BurnRomInfo karnovaRomDesc[] = {
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA },           // 20 Color Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA },           // 21
 	
-	{ "karnov_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "karnov_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 22 i8751 microcontroller
 };
 
 STD_ROM_PICK(karnova)
@@ -1361,7 +1361,7 @@ static struct BurnRomInfo karnovjRomDesc[] = {
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA },           // 20 Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA },           // 21
 	
-	{ "karnovj_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
+	{ "karnovj_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP}, // 22 i8751 microcontroller
 };
 
 STD_ROM_PICK(karnovj)
@@ -1417,7 +1417,7 @@ static struct BurnRomInfo wndrplntRomDesc[] = {
 	{ "ea-21.k8",		0x00400, 0xc8beab49, 6 | BRF_GRA },           // 20 Color Proms
 	{ "ea-20.l6",		0x00400, 0x619f9d1e, 6 | BRF_GRA },           // 21
 	
-	{ "wndrplnt_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "wndrplnt_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 22 i8751 microcontroller
 };
 
 STD_ROM_PICK(wndrplnt)
@@ -1470,7 +1470,7 @@ static struct BurnRomInfo chelnovRomDesc[] = {
 	{ "ee-17.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA },           // 16 Color Proms
 	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA },           // 17
 	
-	{ "ee-e.14k",  		0x01000, 0xb7045395, 0 | BRF_OPT },			  // 18 mcu
+	{ "ee-e.14k",  		0x01000, 0xb7045395, 0 | BRF_OPT },			  // 18 i8751 microcontroller
 };
 
 STD_ROM_PICK(chelnov)
@@ -1523,8 +1523,7 @@ static struct BurnRomInfo chelnovuRomDesc[] = {
 	{ "ee-17.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA },           // 16 Color Proms
 	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA },           // 17
 	
-	// created from the world version by patching the id byte, internal checksum matches
-	{ "ee-a.14k",  		0x01000, 0x15fc8b96, 0 | BRF_OPT },			  // 18 mcu
+	{ "ee-a.14k",  		0x01000, 0x95ea1e7b, 0 | BRF_OPT },			  // 18 i8751 microcontroller
 };
 
 STD_ROM_PICK(chelnovu)
@@ -1577,7 +1576,7 @@ static struct BurnRomInfo chelnovjRomDesc[] = {
 	{ "ee-17.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA },           // 16 Color Proms
 	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA },           // 17
 	
-	{ "ee.14k",  		0x01000, 0xb3dc380c, 0 | BRF_OPT },			  // 18 mcu
+	{ "ee.14k",  		0x01000, 0xb3dc380c, 0 | BRF_OPT },			  // 18 i8751 microcontroller
 };
 
 STD_ROM_PICK(chelnovj)

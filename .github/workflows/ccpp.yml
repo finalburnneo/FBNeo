@@ -12,5 +12,5 @@ jobs:
     - name: make
       run: |
         pacman -S mingw-w64-i686-SDL
-        mkdir obj && mingw32-make mingw510 -j20 RELEASEBUILD=1 SKIPDEPEND=1
+        rm -rf obj && mkdir obj && mingw32-make mingw510 -j20 RELEASEBUILD=1 SKIPDEPEND=1
         

@@ -1470,7 +1470,7 @@ static struct BurnRomInfo chelnovRomDesc[] = {
 	{ "ee-17.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA},            // 16 Color Proms
 	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA},            // 17
 	
-	{ "ee-e.k13",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
+	{ "ee-e.14k",  		0x01000, 0xb7045395, 0 | BRF_OPT},			  // 18 mcu
 };
 
 STD_ROM_PICK(chelnov)
@@ -1523,7 +1523,8 @@ static struct BurnRomInfo chelnovuRomDesc[] = {
 	{ "ee-17.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA},            // 16 Color Proms
 	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA},            // 17
 	
-	{ "ee-a.k13",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
+	// created from the world version by patching the id byte, internal checksum matches
+	{ "ee-a.14k",  		0x01000, 0x15fc8b96, 0 | BRF_OPT},			  // 18 mcu
 };
 
 STD_ROM_PICK(chelnovu)
@@ -1576,7 +1577,8 @@ static struct BurnRomInfo chelnovjRomDesc[] = {
 	{ "ee-17.k8",		0x00400, 0xb1db6586, 6 | BRF_GRA},            // 16 Color Proms
 	{ "ee-16.l6",		0x00400, 0x41816132, 6 | BRF_GRA},            // 17
 	
-	{ "ee.k13",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
+	// created from the world version by patching the id byte, internal checksum matches
+	{ "ee-j.14k",  		0x01000, 0xb3dc380c, 0 | BRF_OPT},			  // 18 mcu
 };
 
 STD_ROM_PICK(chelnovj)

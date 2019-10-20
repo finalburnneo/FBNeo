@@ -5,7 +5,7 @@ shallow_clone: true
 clone_depth: 1
 
 init:
-- ps: >-
+  - ps: >-
     Write-Host "DirectX Software Development Kit..." -ForegroundColor Cyan
     Write-Host "Downloading..."
     $exePath = "$env:temp\DXSDK_Jun10.exe"

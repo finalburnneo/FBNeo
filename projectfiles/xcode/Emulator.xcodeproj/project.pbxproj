@@ -975,7 +975,8 @@
 		FE1B287B23561A7A0065200C /* sshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239E23561A750065200C /* sshot.cpp */; };
 		FE1B288F23562B360065200C /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B288E23562B360065200C /* m68kops.c */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
-		FEA5E79A2356472200DA2D9D /* vid_macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E7992356472200DA2D9D /* vid_macos.cpp */; };
+		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
+		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
 		FEED9DCA2356EF5000B7AF83 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */; };
 		FEED9DD12356F0B900B7AF83 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DCF2356F07500B7AF83 /* SDL.framework */; };
 		FEED9DD22356F0B900B7AF83 /* SDL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DCF2356F07500B7AF83 /* SDL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -2465,7 +2466,6 @@
 		FE1B288D23562B350065200C /* m68kops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = m68kops.h; sourceTree = "<group>"; };
 		FE1B288E23562B360065200C /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
-		FEA5E7992356472200DA2D9D /* vid_macos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vid_macos.cpp; sourceTree = "<group>"; };
 		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7AE23564A6400DA2D9D /* cave_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_sprite_func.pl; sourceTree = "<group>"; };
 		FEA5E7B623566E7600DA2D9D /* cave_tile_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_tile_func_table.h; sourceTree = "<group>"; };
@@ -2475,6 +2475,10 @@
 		FEA5E7BD2356721800DA2D9D /* neo_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = neo_sprite_func.pl; sourceTree = "<group>"; };
 		FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = psikyo_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = toa_gp9001_func.pl; sourceTree = "<group>"; };
+		FEC5D3D4235C136E00ABA9FB /* FBVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBVideo.h; sourceTree = "<group>"; };
+		FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBVideo.mm; sourceTree = "<group>"; };
+		FEC5D3D7235C160600ABA9FB /* FBScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBScreenView.h; sourceTree = "<group>"; };
+		FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBScreenView.mm; sourceTree = "<group>"; };
 		FEED9DC22356DDA900B7AF83 /* gamelist.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = gamelist.pl; sourceTree = "<group>"; };
 		FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		FEED9DCF2356F07500B7AF83 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../../../../../../Library/Frameworks/SDL.framework; sourceTree = "<group>"; };
@@ -4617,7 +4621,10 @@
 		FEA5E7982356472200DA2D9D /* macos */ = {
 			isa = PBXGroup;
 			children = (
-				FEA5E7992356472200DA2D9D /* vid_macos.cpp */,
+				FEC5D3D7235C160600ABA9FB /* FBScreenView.h */,
+				FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */,
+				FEC5D3D4235C136E00ABA9FB /* FBVideo.h */,
+				FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */,
 			);
 			path = macos;
 			sourceTree = "<group>";
@@ -4929,6 +4936,7 @@
 				FEED9E0623576DD800B7AF83 /* ips_manager.cpp in Sources */,
 				FE1B272123561A780065200C /* d_bogeyman.cpp in Sources */,
 				FE1B24B323561A750065200C /* d_m72.cpp in Sources */,
+				FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */,
 				FE1B268D23561A770065200C /* d_thief.cpp in Sources */,
 				FE1B266A23561A770065200C /* tc0280grd.cpp in Sources */,
 				FE1B254823561A760065200C /* d_dooyong.cpp in Sources */,
@@ -5327,6 +5335,7 @@
 				FE1B26FF23561A780065200C /* d_seicross.cpp in Sources */,
 				FE1B245B23561A750065200C /* gzwrite.c in Sources */,
 				FE1B278223561A790065200C /* tms5110.cpp in Sources */,
+				FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */,
 				FE1B26A223561A770065200C /* d_snk.cpp in Sources */,
 				FE1B271723561A780065200C /* d_travrusa.cpp in Sources */,
 				FE1B242523561A750065200C /* Lzma2Dec.c in Sources */,
@@ -5506,7 +5515,6 @@
 				FE1B26B623561A770065200C /* d_mrdo.cpp in Sources */,
 				FE1B27DD23561A790065200C /* mathbox.cpp in Sources */,
 				FE1B268E23561A770065200C /* d_bionicc.cpp in Sources */,
-				FEA5E79A2356472200DA2D9D /* vid_macos.cpp in Sources */,
 				FE1B24BF23561A750065200C /* smssystem.cpp in Sources */,
 				FE1B267623561A770065200C /* taito_ic.cpp in Sources */,
 				FE1B26BF23561A770065200C /* d_wallc.cpp in Sources */,

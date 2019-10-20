@@ -11026,10 +11026,10 @@ DRV		BurnDrvmd_punisheru;
 DRV		BurnDrvgg_quizgear;
 DRV		BurnDrvGhostb2a;
 DRV		BurnDrvGhostb;
-DRV		BurnDrvGhostb3;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvGhostb3a;		// no comment [NOT WORKING]
 #endif
+DRV		BurnDrvGhostb3;
 DRV		BurnDrvRoishtar;
 DRV		BurnDrvmd_revshin2;
 DRV		BurnDrvmd_revshin1;
@@ -23589,10 +23589,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_quizgear,		// The Quiz Gear Fight!! (Jpn)
 	&BurnDrvGhostb2a,			// The Real Ghostbusters (US 2 Players)
 	&BurnDrvGhostb,				// The Real Ghostbusters (US 2 Players, revision 2)
-	&BurnDrvGhostb3,			// The Real Ghostbusters (US 3 Players)
 #if defined FBNEO_DEBUG
-	&BurnDrvGhostb3a,			// The Real Ghostbusters (US 3 Players, revision ?) [no comment, NOT WORKING]
+	&BurnDrvGhostb3a,			// The Real Ghostbusters (US 3 Players, revision 2) [no comment, NOT WORKING]
 #endif
+	&BurnDrvGhostb3,			// The Real Ghostbusters (US 3 Players, revision 3B?)
 	&BurnDrvRoishtar,			// The Return of Ishtar
 	&BurnDrvmd_revshin2,		// The Revenge of Shinobi (Euro, USA)
 	&BurnDrvmd_revshin1,		// The Revenge of Shinobi (Euro, USA, Rev. A)

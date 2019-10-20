@@ -10798,8 +10798,8 @@ This list contains all games supported by FinalBurn Neo.
 | gg_quizgear	|  	| The Quiz Gear Fight!! (Jpn)				| 		| 1995	| Sega		| Sega Game Gear| 					|
 | ghostb2a	|  	| The Real Ghostbusters (US 2 Players)			| ghostb	| 1987	| Data East USA	| DEC8		| 					|
 | ghostb	|  	| The Real Ghostbusters (US 2 Players, revision 2)	| 		| 1987	| Data East USA	| DEC8		| 					|
-| ghostb3	|  	| The Real Ghostbusters (US 3 Players)			| ghostb	| 1987	| Data East USA	| DEC8		| 					|
-| ghostb3a	| D NW	| The Real Ghostbusters (US 3 Players, revision ?)	| ghostb	| 1987	| Data East USA	| DEC8		| 					|
+| ghostb3a	| D NW	| The Real Ghostbusters (US 3 Players, revision 2)	| ghostb	| 1987	| Data East USA	| DEC8		| 					|
+| ghostb3	|  	| The Real Ghostbusters (US 3 Players, revision 3B?)	| ghostb	| 1987	| Data East USA	| DEC8		| 					|
 | roishtar	|  	| The Return of Ishtar					| 		| 1986	| Namco		| System 86	| 					|
 | md_revshin2	|  	| The Revenge of Shinobi (Euro, USA)			| md_revshin	| 1989	| Sega		| Sega Megadrive| 					|
 | md_revshin1	|  	| The Revenge of Shinobi (Euro, USA, Rev. A)		| md_revshin	| 1989	| Sega		| Sega Megadrive| 					|

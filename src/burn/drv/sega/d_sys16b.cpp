@@ -9552,7 +9552,7 @@ struct BurnDriver BurnDrvDduxjd = {
 
 struct BurnDriver BurnDrvDdux1 = {
 	"ddux1", "ddux", NULL, NULL, "1989",
-	"Dynamite Dux (set 1, 8751 317-0095)\0", NULL, "Sega", "System 16B",
+	"Dynamite Dux (set 1, World, 8751 317-0095)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, Ddux1RomInfo, Ddux1RomName, NULL, NULL, NULL, NULL, System16bInputInfo, DduxDIPInfo,

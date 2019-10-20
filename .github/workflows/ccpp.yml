@@ -1,0 +1,13 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: make
+      run: mingw32-make mingw510 -j5 SKIPDEPEND=1

@@ -1680,6 +1680,7 @@ del build_details.exe
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <TargetName>fbneo_vs</TargetName>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>..\..\src\dep\mingw\include\directx9;..\..\src\dep\vc\include;..\..\src\dep\vc\include\xaudio2;$(IncludePath)</IncludePath>

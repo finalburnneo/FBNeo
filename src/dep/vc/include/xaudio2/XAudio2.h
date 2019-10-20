@@ -17,7 +17,7 @@
  *
  **************************************************************************/
 
-#include <comdecl.h>        // For DEFINE_CLSID and DEFINE_IID
+//#include <comdecl.h>        // For DEFINE_CLSID and DEFINE_IID
 
 // XAudio 2.0 (March 2008 SDK)
 //DEFINE_CLSID(XAudio2, fac23f48, 31f5, 45a8, b4, 9b, 52, 25, d6, 14, 01, aa);
@@ -48,10 +48,13 @@
 //DEFINE_CLSID(XAudio2_Debug, 47199894, 7cc2, 444d, 98, 73, ce, d2, 56, 2c, c6, 0e);
 
 // XAudio 2.7 (June 2010 SDK)
-DEFINE_CLSID(XAudio2, 5a508685, a254, 4fba, 9b, 82, 9a, 24, b0, 03, 06, af);
-DEFINE_CLSID(XAudio2_Debug, db05ea35, 0329, 4d4b, a5, 3a, 6d, ea, d0, 3d, 38, 52);
-DEFINE_IID(IXAudio2, 8bcf1f58, 9fe7, 4583, 8a, c6, e2, ad, c4, 65, c8, bb);
+//DEFINE_CLSID(XAudio2, 5a508685, a254, 4fba, 9b, 82, 9a, 24, b0, 03, 06, af);
+//DEFINE_CLSID(XAudio2_Debug, db05ea35, 0329, 4d4b, a5, 3a, 6d, ea, d0, 3d, 38, 52);
+//DEFINE_IID(IXAudio2, 8bcf1f58, 9fe7, 4583, 8a, c6, e2, ad, c4, 65, c8, bb);
 
+DEFINE_GUID(CLSID_XAudio2, 0x5a508685, 0xa254, 0x4fba, 0x9b, 0x82, 0x9a, 0x24, 0xb0, 0x03, 0x06, 0xaf);
+DEFINE_GUID(CLSID_XAudio2_Debug, 0xdb05ea35, 0x0329, 0x4d4b, 0xa5, 0x3a, 0x6d, 0xea, 0xd0, 0x3d, 0x38, 0x52);
+DEFINE_GUID(IID_IXAudio2, 0x8bcf1f58, 0x9fe7, 0x4583, 0x8a, 0xc6, 0xe2, 0xad, 0xc4, 0x65, 0xc8, 0xbb);
 
 // Ignore the rest of this header if only the GUID definitions were requested
 #ifndef GUID_DEFS_ONLY
@@ -1233,21 +1236,21 @@ __inline HRESULT XAudio2Create(__deref_out IXAudio2** ppXAudio2, UINT32 Flags X2
 
     #ifdef __cplusplus
 
-        HRESULT hr = CoCreateInstance((Flags & XAUDIO2_DEBUG_ENGINE) ? __uuidof(XAudio2_Debug) : __uuidof(XAudio2),
-                                      NULL, CLSCTX_INPROC_SERVER, __uuidof(IXAudio2), (void**)&pXAudio2);
-        if (SUCCEEDED(hr))
-        {
-            hr = pXAudio2->Initialize(Flags, XAudio2Processor);
+	HRESULT hr = CoCreateInstance((Flags & XAUDIO2_DEBUG_ENGINE) ? CLSID_XAudio2_Debug : CLSID_XAudio2,
+		NULL, CLSCTX_INPROC_SERVER, IID_IXAudio2, (void**)&pXAudio2);
+	if (SUCCEEDED(hr))
+	{
+		hr = pXAudio2->Initialize(Flags, XAudio2Processor);
 
-            if (SUCCEEDED(hr))
-            {
-                *ppXAudio2 = pXAudio2;
-            }
-            else
-            {
-                pXAudio2->Release();
-            }
-        }
+		if (SUCCEEDED(hr))
+		{
+			*ppXAudio2 = pXAudio2;
+		}
+		else
+		{
+			pXAudio2->Release();
+		}
+	}
 
     #else
 

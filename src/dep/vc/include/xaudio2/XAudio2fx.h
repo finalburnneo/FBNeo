@@ -17,7 +17,7 @@
  *
  **************************************************************************/
 
-#include "comdecl.h"        // For DEFINE_CLSID and DEFINE_IID
+//#include "comdecl.h"        // For DEFINE_CLSID and DEFINE_IID
 
 // XAudio 2.0 (March 2008 SDK)
 //DEFINE_CLSID(AudioVolumeMeter, C0C56F46, 29B1, 44E9, 99, 39, A3, 2C, E8, 68, 67, E2);
@@ -62,10 +62,11 @@
 //DEFINE_CLSID(AudioReverb_Debug, 99a1c72e, 364c, 4c1b, 96, 23, fd, 5c, 8a, bd, 90, c7);
 
 // XAudio 2.7 (June 2010 SDK)
-DEFINE_CLSID(AudioVolumeMeter, cac1105f, 619b, 4d04, 83, 1a, 44, e1, cb, f1, 2d, 57);
-DEFINE_CLSID(AudioVolumeMeter_Debug, 2d9a0f9c, e67b, 4b24, ab, 44, 92, b3, e7, 70, c0, 20);
-DEFINE_CLSID(AudioReverb, 6a93130e, 1d53, 41d1, a9, cf, e7, 58, 80, 0b, b1, 79);
-DEFINE_CLSID(AudioReverb_Debug, c4f82dd4, cb4e, 4ce1, 8b, db, ee, 32, d4, 19, 82, 69);
+DEFINE_GUID(CLSID_AudioVolumeMeter, 0xcac1105f, 0x619b, 0x4d04, 0x83, 0x1a, 0x44, 0xe1, 0xcb, 0xf1, 0x2d, 0x57);
+DEFINE_GUID(CLSID_AudioVolumeMeter_Debug, 0x2d9a0f9c, 0xe67b, 0x4b24, 0xab, 0x44, 0x92, 0xb3, 0xe7, 0x70, 0xc0, 0x20);
+DEFINE_GUID(CLSID_AudioReverb, 0x6a93130e, 0x1d53, 0x41d1, 0xa9, 0xcf, 0xe7, 0x58, 0x80, 0x0b, 0xb1, 0x79);
+DEFINE_GUID(CLSID_AudioReverb_Debug, 0xc4f82dd4, 0xcb4e, 0x4ce1, 0x8b, 0xdb, 0xee, 0x32, 0xd4, 0x19, 0x82, 0x69);
+
 
 // Ignore the rest of this header if only the GUID definitions were requested
 #ifndef GUID_DEFS_ONLY
@@ -119,31 +120,32 @@ DEFINE_CLSID(AudioReverb_Debug, c4f82dd4, cb4e, 4ce1, 8b, db, ee, 32, d4, 19, 82
 
 #else // Windows
 
-    __inline HRESULT XAudio2CreateVolumeMeter(__deref_out IUnknown** ppApo, UINT32 Flags DEFAULT(0))
-    {
-        #ifdef __cplusplus
-            return CoCreateInstance((Flags & XAUDIO2FX_DEBUG) ? __uuidof(AudioVolumeMeter_Debug)
-                                                              : __uuidof(AudioVolumeMeter),
-                                    NULL, CLSCTX_INPROC_SERVER, __uuidof(IUnknown), (void**)ppApo);
-        #else
-            return CoCreateInstance((Flags & XAUDIO2FX_DEBUG) ? &CLSID_AudioVolumeMeter_Debug
-                                                              : &CLSID_AudioVolumeMeter,
-                                    NULL, CLSCTX_INPROC_SERVER, &IID_IUnknown, (void**)ppApo);
-        #endif
-    }
+__inline HRESULT XAudio2CreateVolumeMeter(__deref_out IUnknown** ppApo, UINT32 Flags DEFAULT(0))
+{
+#ifdef __cplusplus
+	return CoCreateInstance((Flags & XAUDIO2FX_DEBUG) ? CLSID_AudioVolumeMeter_Debug
+		: CLSID_AudioVolumeMeter,
+		NULL, CLSCTX_INPROC_SERVER, IID_IUnknown, (void**)ppApo);
+#else
+	return CoCreateInstance((Flags & XAUDIO2FX_DEBUG) ? &CLSID_AudioVolumeMeter_Debug
+		: &CLSID_AudioVolumeMeter,
+		NULL, CLSCTX_INPROC_SERVER, &IID_IUnknown, (void**)ppApo);
+#endif
+}
 
-    __inline HRESULT XAudio2CreateReverb(__deref_out IUnknown** ppApo, UINT32 Flags DEFAULT(0))
-    {
-        #ifdef __cplusplus
-            return CoCreateInstance((Flags & XAUDIO2FX_DEBUG) ? __uuidof(AudioReverb_Debug)
-                                                              : __uuidof(AudioReverb),
-                                    NULL, CLSCTX_INPROC_SERVER, __uuidof(IUnknown), (void**)ppApo);
-        #else
-            return CoCreateInstance((Flags & XAUDIO2FX_DEBUG) ? &CLSID_AudioReverb_Debug
-                                                              : &CLSID_AudioReverb,
-                                    NULL, CLSCTX_INPROC_SERVER, &IID_IUnknown, (void**)ppApo);
-        #endif
-    }
+__inline HRESULT XAudio2CreateReverb(__deref_out IUnknown** ppApo, UINT32 Flags DEFAULT(0))
+{
+#ifdef __cplusplus
+	return CoCreateInstance((Flags & XAUDIO2FX_DEBUG) ? CLSID_AudioReverb_Debug
+		: CLSID_AudioReverb,
+		NULL, CLSCTX_INPROC_SERVER, IID_IUnknown, (void**)ppApo);
+#else
+	return CoCreateInstance((Flags & XAUDIO2FX_DEBUG) ? &CLSID_AudioReverb_Debug
+		: &CLSID_AudioReverb,
+		NULL, CLSCTX_INPROC_SERVER, &IID_IUnknown, (void**)ppApo);
+#endif
+}
+
 
 #endif // #ifdef _XBOX
 

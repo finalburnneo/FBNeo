@@ -58,7 +58,8 @@ extern int MainEnd();
             {
                 id<FBMainThreadDelegate> del = _delegate;
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [del driverInitDidEnd:NO];
+                    [del driverInitDidEnd:setName
+                                  success:NO];
                 });
             }
 
@@ -71,7 +72,8 @@ extern int MainEnd();
         {
             id<FBMainThreadDelegate> del = _delegate;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [del driverInitDidEnd:YES];
+                [del driverInitDidEnd:setName
+                              success:YES];
                 [del gameSessionDidStart:setName];
             });
         }

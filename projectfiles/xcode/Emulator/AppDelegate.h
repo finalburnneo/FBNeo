@@ -18,6 +18,7 @@
 {
     IBOutlet FBScreenView *screen;
     IBOutlet NSView *spinner;
+    IBOutlet NSTextField *label;
 }
 
 + (AppDelegate *) sharedInstance;

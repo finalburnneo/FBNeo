@@ -8,16 +8,18 @@
 
 #import "AppDelegate.h"
 
-// FIXME: errors during load
-// FIXME: starting without ROM selected
-// FIXME: dropping file into window
-// FIXME: focus on visibility toggle
+// FIXME: rename executable
+// FIXME: rename name in menubar
+// FIXME: add icon
+// FIXME: add file/open
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
 
 - (void) resizeFrame:(NSSize) newSize
              animate:(BOOL) animate;
+- (BOOL) canLoad:(NSString *) path;
+- (void) loadPath: (NSString *) path;
 
 @end
 
@@ -53,6 +55,12 @@ static AppDelegate *sharedInstance = nil;
     _video = [FBVideo new];
     _video.delegate = screen;
     screen.delegate = self;
+
+    label.stringValue = NSLocalizedString(@"Drop a set here to load it", nil);
+    label.hidden = NO;
+    screen.hidden = YES;
+
+    [_window registerForDraggedTypes:@[NSFilenamesPboardType]];
 }
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -108,7 +116,7 @@ static AppDelegate *sharedInstance = nil;
             openFile:(NSString *) filename
 {
     NSLog(@"application:openFile:");
-    [main load:filename];
+    [self loadPath:filename];
     return YES;
 }
 
@@ -146,24 +154,37 @@ static AppDelegate *sharedInstance = nil;
                   animate:NO];
 
     screen.hidden = NO;
+    label.hidden = YES;
+
+    [_window makeFirstResponder:screen];
 }
 
 - (void) gameSessionDidEnd
 {
     NSLog(@"gameSessionDidEnd");
     screen.hidden = YES;
+    label.hidden = NO;
 }
 
 - (void) driverInitDidStart
 {
     [spinner.subviews.firstObject startAnimation:self];
     [_window addTitlebarAccessoryViewController:tbAccessory];
+
+    label.stringValue = NSLocalizedString(@"Loading...", nil);
 }
 
-- (void) driverInitDidEnd:(BOOL) success
+- (void) driverInitDidEnd:(NSString *) name
+                  success:(BOOL) success
 {
     [spinner.subviews.firstObject stopAnimation:self];
     [tbAccessory removeFromParentViewController];
+
+    if (success)
+        label.stringValue = NSLocalizedString(@"Starting...", nil);
+    else
+        label.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Error loading \"%@\".", nil),
+                         name];
 }
 
 #pragma mark - Actions
@@ -182,6 +203,36 @@ static AppDelegate *sharedInstance = nil;
     if (screenSize.width != 0 && screenSize.height != 0)
         [self resizeFrame:NSMakeSize(screenSize.width * 2, screenSize.height * 2)
                   animate:YES];
+}
+
+#pragma mark - Drag & Drop
+
+- (BOOL) performDragOperation:(id<NSDraggingInfo>) sender
+{
+    NSLog(@"performDragOperation");
+
+    NSPasteboard *pboard = sender.draggingPasteboard;
+    NSString *path = [[pboard propertyListForType:NSFilenamesPboardType] firstObject];
+
+    [self loadPath:path];
+
+    return YES;
+}
+
+- (NSDragOperation) draggingEntered:(id <NSDraggingInfo>) sender
+{
+    NSLog(@"draggingEntered");
+
+    NSDragOperation dragOp = NSDragOperationNone;
+    if (sender.draggingSourceOperationMask & NSDragOperationCopy) {
+        NSPasteboard *pboard = sender.draggingPasteboard;
+        NSString *path = [[pboard propertyListForType:NSFilenamesPboardType] firstObject];
+
+        if ([self canLoad:path])
+            dragOp = NSDragOperationCopy;
+    }
+
+    return dragOp;
 }
 
 #pragma mark - Private
@@ -207,6 +258,18 @@ static AppDelegate *sharedInstance = nil;
     [_window setFrame:newRect
               display:YES
               animate:animate];
+}
+
+- (BOOL) canLoad:(NSString *) path
+{
+    return [@[ @"zip", @"7z" ] containsObject:path.pathExtension];
+}
+
+- (void) loadPath:(NSString *) path
+{
+    [main load:path];
+
+    [NSDocumentController.sharedDocumentController noteNewRecentDocumentURL:[NSURL fileURLWithPath:path]];
 }
 
 @end

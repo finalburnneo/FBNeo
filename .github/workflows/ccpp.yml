@@ -14,7 +14,6 @@ jobs:
     - name: MSBuild
       working-directory: projectfiles/visualstudio-2019
       run: |
-           msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x86
-           msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x64
-           msbuild fba_vs2010.vcxproj /m /property:Configuration=Debug /property:Platform=x64
-           msbuild fba_vs2010.vcxproj /m /property:Configuration=Debug /property:Platform=x86
+           msbuild fba_vs2010.vcxproj /m /property:Configuration=Release+Debug /property:Platform=x86
+           msbuild fba_vs2010.vcxproj /m /property:Configuration=Release+Debug /property:Platform=x64
+

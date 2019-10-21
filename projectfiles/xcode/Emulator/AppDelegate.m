@@ -8,16 +8,16 @@
 
 #import "AppDelegate.h"
 
-#import "FBMainThread.h"
-
 // FIXME: errors during load
 // FIXME: starting without ROM selected
 // FIXME: dropping file into window
-// FIXME: reset window size on reload
 // FIXME: rotation (mimonkey)
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
+
+- (void) resizeFrame:(NSSize) newSize
+             animate:(BOOL) animate;
 
 @end
 
@@ -29,9 +29,11 @@ static AppDelegate *sharedInstance = nil;
     BOOL _cursorVisible;
 }
 
-- (void)dealloc
+- (void) dealloc
 {
+    main.delegate = nil;
     screen.delegate = nil;
+    _video.delegate = nil;
 }
 
 - (void) awakeFromNib
@@ -42,6 +44,7 @@ static AppDelegate *sharedInstance = nil;
     main = [FBMainThread new];
 
     _cursorVisible = YES;
+    main.delegate = self;
     screen.delegate = self;
     _video.delegate = screen;
 }
@@ -90,21 +93,6 @@ static AppDelegate *sharedInstance = nil;
     return frameSize;
 }
 
-- (void) windowDidResize:(NSNotification *) notification
-{
-    NSSize screenSize = [_video gameScreenSize];
-    if (screenSize.width != 0 && screenSize.height != 0) {
-        NSRect windowFrame = [[self window] frame];
-        NSRect contentRect = [[self window] contentRectForFrameRect:windowFrame];
-
-        NSString *screenSizeString = NSStringFromSize(screenSize);
-        NSString *actualSizeString = NSStringFromSize(contentRect.size);
-
-        [[NSUserDefaults standardUserDefaults] setObject:actualSizeString
-                                                  forKey:[@"preferredSize-" stringByAppendingString:screenSizeString]];
-    }
-}
-
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *) sender
 {
     return YES;
@@ -114,7 +102,7 @@ static AppDelegate *sharedInstance = nil;
             openFile:(NSString *) filename
 {
     NSLog(@"application:openFile:");
-    main.fileToOpen = filename;
+    [main load:filename];
     return YES;
 }
 
@@ -139,6 +127,65 @@ static AppDelegate *sharedInstance = nil;
         _cursorVisible = YES;
         [NSCursor unhide];
     }
+}
+
+#pragma mark - FBMainThreadDelegate
+
+- (void) gameSessionDidStart:(NSString *) name
+{
+    NSLog(@"gameSessionDidStart: %@", name);
+    NSSize screenSize = _video.gameScreenSize;
+    if (screenSize.width != 0 && screenSize.height != 0)
+        [self resizeFrame:NSMakeSize(screenSize.width * 2, screenSize.height * 2)
+                  animate:NO];
+}
+
+- (void) gameSessionDidEnd
+{
+    NSLog(@"gameSessionDidEnd");
+}
+
+#pragma mark - Actions
+
+- (void) resizeNormalSize:(id) sender
+{
+    NSSize screenSize = _video.gameScreenSize;
+    if (screenSize.width != 0 && screenSize.height != 0)
+        [self resizeFrame:screenSize
+                  animate:YES];
+}
+
+- (void) resizeDoubleSize:(id) sender
+{
+    NSSize screenSize = _video.gameScreenSize;
+    if (screenSize.width != 0 && screenSize.height != 0)
+        [self resizeFrame:NSMakeSize(screenSize.width * 2, screenSize.height * 2)
+                  animate:YES];
+}
+
+#pragma mark - Private
+
+- (void) resizeFrame:(NSSize) newSize
+             animate:(BOOL) animate
+{
+    // Turn off full screen if active
+    if (([[NSApplication sharedApplication] presentationOptions] & NSApplicationPresentationFullScreen) != 0) {
+        [_window toggleFullScreen:nil];
+    }
+
+    NSRect windowRect = _window.frame;
+    NSSize windowSize = windowRect.size;
+    NSSize glViewSize = _window.contentView.bounds.size;
+
+    CGFloat newWidth = newSize.width + (windowSize.width - glViewSize.width);
+    CGFloat newHeight = newSize.height + (windowSize.height - glViewSize.height);
+
+    NSRect newRect = NSMakeRect(windowRect.origin.x, windowRect.origin.y,
+                                newWidth, newHeight);
+
+    [_window setFrame:newRect
+              display:YES
+              animate:animate];
 }
 
 @end

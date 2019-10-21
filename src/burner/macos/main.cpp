@@ -4,6 +4,9 @@ extern int RunIdle();
 extern int RunInit();
 extern int RunExit();
 
+int nAppVirtualFps = 6000; // App fps * 100
+bool bRunPause = 0;
+
 int MainInit(const char *path, const char *setname)
 {
     if (path == NULL || setname == NULL) {

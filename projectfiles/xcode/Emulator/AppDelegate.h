@@ -12,8 +12,9 @@
 
 #import "FBVideo.h"
 #import "FBInput.h"
+#import "FBMainThread.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, FBScreenViewDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, FBScreenViewDelegate, FBMainThreadDelegate>
 {
     IBOutlet FBScreenView *screen;
 }
@@ -22,5 +23,8 @@
 
 @property (readonly) FBVideo *video;
 @property (readonly) FBInput *input;
+
+- (IBAction) resizeNormalSize:(id)sender;
+- (IBAction) resizeDoubleSize:(id)sender;
 
 @end

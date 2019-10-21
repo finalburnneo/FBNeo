@@ -181,6 +181,15 @@ static unsigned char keyState[256];
 
 @end
 
+#pragma mark - FinalBurn
+
+bool bAlwaysProcessKeyboardInput = 0;
+
+bool AppProcessKeyboardInput()
+{
+    return true;
+}
+
 #pragma mark - FinalBurn callbacks
 
 static int MacOSinpJoystickInit(int i)

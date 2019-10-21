@@ -8,12 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
+@protocol FBMainThreadDelegate<NSObject>
 
-@interface FBMainThread : NSThread
-
-@property NSString *fileToOpen;
+- (void) gameSessionDidStart: (NSString *) name;
+- (void) gameSessionDidEnd;
 
 @end
 
-NS_ASSUME_NONNULL_END
+@interface FBMainThread : NSThread
+
+@property (readonly) NSString *running;
+@property (nonatomic, weak) id<FBMainThreadDelegate> delegate;
+
+- (void) load:(NSString *) path;
+
+@end

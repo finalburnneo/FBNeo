@@ -12,14 +12,10 @@ extern int MainInit(const char *, const char *);
 extern int MainFrame();
 extern int MainEnd();
 
-@interface FBMainThread()
-
-- (NSString *) setPath;
-- (NSString *) setName;
-
-@end
-
 @implementation FBMainThread
+{
+    NSString *pathToLoad;
+}
 
 - (instancetype) init
 {
@@ -28,43 +24,56 @@ extern int MainEnd();
     return self;
 }
 
+#pragma mark - Public
+
+- (void) load:(NSString *) path
+{
+    pathToLoad = path;
+}
+
 #pragma mark - NSThread
 
 - (void) main
 {
     while (!self.isCancelled) {
-        if (!_fileToOpen) {
+        if (pathToLoad == nil) {
             [NSThread sleepForTimeInterval:.5]; // Pause until there's something to load
             continue;
         }
 
-        if (!MainInit([[self setPath] cStringUsingEncoding:NSUTF8StringEncoding],
-                      [[self setName] cStringUsingEncoding:NSUTF8StringEncoding]))
-            return;
+        NSString *setPath = [[pathToLoad stringByDeletingLastPathComponent] stringByAppendingString:@"/"];
+        NSString *setName = [[pathToLoad lastPathComponent] stringByDeletingPathExtension];
 
-        NSLog(@"Entering main loop");
-        NSString *loaded = _fileToOpen;
-        while (!self.isCancelled) {
-            if ([loaded isNotEqualTo:_fileToOpen])
-                break;
-            MainFrame();
+        if (!MainInit([setPath cStringUsingEncoding:NSUTF8StringEncoding],
+                      [setName cStringUsingEncoding:NSUTF8StringEncoding])) {
+            pathToLoad = nil;
+            continue;
         }
-        NSLog(@"Exited main loop");
+
+        _running = pathToLoad;
+        pathToLoad = nil;
+
+        {
+            id<FBMainThreadDelegate> del = _delegate;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [del gameSessionDidStart:setName];
+            });
+        }
+
+        while (!self.isCancelled && pathToLoad == nil)
+            MainFrame();
+
+        {
+            id<FBMainThreadDelegate> del = _delegate;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [del gameSessionDidEnd];
+            });
+        }
+
+        _running = nil;
 
         MainEnd();
     }
-}
-
-#pragma mark - Private
-
-- (NSString *) setPath
-{
-    return [[_fileToOpen stringByDeletingLastPathComponent] stringByAppendingString:@"/"];
-}
-
-- (NSString *) setName
-{
-    return [[_fileToOpen lastPathComponent] stringByDeletingPathExtension];
 }
 
 @end

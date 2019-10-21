@@ -1,14 +1,5 @@
 #include "burner.h"
 
-int nAppVirtualFps = 6000; // App fps * 100
-bool bRunPause=0;
-bool bAlwaysProcessKeyboardInput = 0;
-
-bool AppProcessKeyboardInput()
-{
-	return true;
-}
-
 /* const */ TCHAR* ANSIToTCHAR(const char* pszInString, TCHAR* pszOutString, int nOutSize)
 {
 #if defined (UNICODE)

@@ -23,4 +23,6 @@
 
 @property (nonatomic, weak) id<FBVideoDelegate> delegate;
 
+- (NSSize) gameScreenSize;
+
 @end

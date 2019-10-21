@@ -12,6 +12,13 @@ extern int MainInit(const char *, const char *);
 extern int MainFrame();
 extern int MainEnd();
 
+@interface FBMainThread()
+
+- (NSString *) setPath;
+- (NSString *) setName;
+
+@end
+
 @implementation FBMainThread
 
 - (instancetype) init
@@ -21,21 +28,43 @@ extern int MainEnd();
     return self;
 }
 
+#pragma mark - NSThread
+
 - (void) main
 {
-    NSString *path = [[_fileToOpen stringByDeletingLastPathComponent] stringByAppendingString:@"/"];
-    NSString *setname = [[_fileToOpen lastPathComponent] stringByDeletingPathExtension];
-
-    if (!MainInit([path cStringUsingEncoding:NSUTF8StringEncoding], [setname cStringUsingEncoding:NSUTF8StringEncoding]))
-        return;
-
-    NSLog(@"Entering main loop");
     while (!self.isCancelled) {
-        MainFrame();
-    }
-    NSLog(@"Exited main loop");
+        if (!_fileToOpen) {
+            [NSThread sleepForTimeInterval:.5]; // Pause until there's something to load
+            continue;
+        }
 
-    MainEnd();
+        if (!MainInit([[self setPath] cStringUsingEncoding:NSUTF8StringEncoding],
+                      [[self setName] cStringUsingEncoding:NSUTF8StringEncoding]))
+            return;
+
+        NSLog(@"Entering main loop");
+        NSString *loaded = _fileToOpen;
+        while (!self.isCancelled) {
+            if ([loaded isNotEqualTo:_fileToOpen])
+                break;
+            MainFrame();
+        }
+        NSLog(@"Exited main loop");
+
+        MainEnd();
+    }
+}
+
+#pragma mark - Private
+
+- (NSString *) setPath
+{
+    return [[_fileToOpen stringByDeletingLastPathComponent] stringByAppendingString:@"/"];
+}
+
+- (NSString *) setName
+{
+    return [[_fileToOpen lastPathComponent] stringByDeletingPathExtension];
 }
 
 @end

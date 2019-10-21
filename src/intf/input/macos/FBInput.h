@@ -2,7 +2,7 @@
 //  FBInput.h
 //  FinalBurnNeo
 //
-//  Created by Akop Karapetyan on 10/15/19.
+//  Created by Akop Karapetyan on 10/20/19.
 //  Copyright © 2019 Akop Karapetyan. All rights reserved.
 //
 

@@ -10,11 +10,14 @@
 
 #import "FBMainThread.h"
 
+// FIXME: errors during load
+// FIXME: starting without ROM selected
+// FIXME: dropping file into window
+// FIXME: reset window size on reload
+// FIXME: rotation (mimonkey)
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
-
-- (NSSize) gameScreenSize;
 
 @end
 
@@ -62,32 +65,34 @@ static AppDelegate *sharedInstance = nil;
 - (NSSize) windowWillResize:(NSWindow *) sender
                      toSize:(NSSize) frameSize
 {
-    NSSize screenSize = [self gameScreenSize];
-    NSRect windowFrame = [[self window] frame];
-    NSView *contentView = [[self window] contentView];
-    NSRect viewRect = [contentView convertRect:[contentView bounds]
-                                        toView:nil];
-    NSRect contentRect = [[self window] contentRectForFrameRect:windowFrame];
+    NSSize screenSize = [_video gameScreenSize];
+    if (screenSize.width != 0 && screenSize.height != 0) {
+        NSRect windowFrame = [[self window] frame];
+        NSView *contentView = [[self window] contentView];
+        NSRect viewRect = [contentView convertRect:[contentView bounds]
+                                            toView:nil];
+        NSRect contentRect = [[self window] contentRectForFrameRect:windowFrame];
 
-    CGFloat screenRatio = screenSize.width / screenSize.height;
+        CGFloat screenRatio = screenSize.width / screenSize.height;
 
-    float marginY = viewRect.origin.y + windowFrame.size.height - contentRect.size.height;
-    float marginX = contentRect.size.width - viewRect.size.width;
+        float marginY = viewRect.origin.y + windowFrame.size.height - contentRect.size.height;
+        float marginX = contentRect.size.width - viewRect.size.width;
 
-    // Clamp the minimum height
-    if ((frameSize.height - marginY) < screenSize.height) {
-        frameSize.height = screenSize.height + marginY;
+        // Clamp the minimum height
+        if ((frameSize.height - marginY) < screenSize.height) {
+            frameSize.height = screenSize.height + marginY;
+        }
+
+        // Set the screen width as a percentage of the screen height
+        frameSize.width = (frameSize.height - marginY) * screenRatio + marginX;
     }
-
-    // Set the screen width as a percentage of the screen height
-    frameSize.width = (frameSize.height - marginY) * screenRatio + marginX;
 
     return frameSize;
 }
 
 - (void) windowDidResize:(NSNotification *) notification
 {
-    NSSize screenSize = [self gameScreenSize];
+    NSSize screenSize = [_video gameScreenSize];
     if (screenSize.width != 0 && screenSize.height != 0) {
         NSRect windowFrame = [[self window] frame];
         NSRect contentRect = [[self window] contentRectForFrameRect:windowFrame];
@@ -108,6 +113,7 @@ static AppDelegate *sharedInstance = nil;
 - (BOOL) application:(NSApplication *) sender
             openFile:(NSString *) filename
 {
+    NSLog(@"application:openFile:");
     main.fileToOpen = filename;
     return YES;
 }
@@ -133,17 +139,6 @@ static AppDelegate *sharedInstance = nil;
         _cursorVisible = YES;
         [NSCursor unhide];
     }
-}
-
-#pragma mark - Private
-
-extern int BurnDrvGetVisibleSize(int* pnWidth, int* pnHeight);
-
-- (NSSize) gameScreenSize
-{
-    int w, h;
-    BurnDrvGetVisibleSize(&w, &h);
-    return NSMakeSize(w, h);
 }
 
 @end

@@ -16,6 +16,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="screen" destination="Jj9-3G-U07" id="7Fv-Ip-Vmf"/>
+                <outlet property="spinner" destination="LUr-2W-WhR" id="BLW-Aq-ioS"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -181,5 +182,16 @@
             </connections>
             <point key="canvasLocation" x="131" y="-153"/>
         </window>
+        <customView id="LUr-2W-WhR">
+            <rect key="frame" x="0.0" y="0.0" width="24" height="16"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="XS4-h5-AoQ">
+                    <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                </progressIndicator>
+            </subviews>
+            <point key="canvasLocation" x="66" y="-511"/>
+        </customView>
     </objects>
 </document>

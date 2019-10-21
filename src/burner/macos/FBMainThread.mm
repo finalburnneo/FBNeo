@@ -44,9 +44,24 @@ extern int MainEnd();
         NSString *setPath = [[pathToLoad stringByDeletingLastPathComponent] stringByAppendingString:@"/"];
         NSString *setName = [[pathToLoad lastPathComponent] stringByDeletingPathExtension];
 
+        {
+            id<FBMainThreadDelegate> del = _delegate;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [del driverInitDidStart];
+            });
+        }
+
         if (!MainInit([setPath cStringUsingEncoding:NSUTF8StringEncoding],
                       [setName cStringUsingEncoding:NSUTF8StringEncoding])) {
             pathToLoad = nil;
+
+            {
+                id<FBMainThreadDelegate> del = _delegate;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [del driverInitDidEnd:NO];
+                });
+            }
+
             continue;
         }
 
@@ -56,6 +71,7 @@ extern int MainEnd();
         {
             id<FBMainThreadDelegate> del = _delegate;
             dispatch_async(dispatch_get_main_queue(), ^{
+                [del driverInitDidEnd:YES];
                 [del gameSessionDidStart:setName];
             });
         }

@@ -11,7 +11,7 @@
 // FIXME: errors during load
 // FIXME: starting without ROM selected
 // FIXME: dropping file into window
-// FIXME: sound when load fails
+// FIXME: focus on visibility toggle
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
@@ -27,6 +27,7 @@ static AppDelegate *sharedInstance = nil;
 {
     FBMainThread *main;
     BOOL _cursorVisible;
+    NSTitlebarAccessoryViewController *tbAccessory;
 }
 
 - (void) dealloc
@@ -39,14 +40,19 @@ static AppDelegate *sharedInstance = nil;
 - (void) awakeFromNib
 {
     sharedInstance = self;
-    _video = [FBVideo new];
-    _input = [FBInput new];
-    main = [FBMainThread new];
 
+    _input = [FBInput new];
     _cursorVisible = YES;
+
+    tbAccessory = [NSTitlebarAccessoryViewController new];
+    tbAccessory.view = spinner;
+    tbAccessory.layoutAttribute = NSLayoutAttributeRight;
+
+    main = [FBMainThread new];
     main.delegate = self;
-    screen.delegate = self;
+    _video = [FBVideo new];
     _video.delegate = screen;
+    screen.delegate = self;
 }
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -138,11 +144,26 @@ static AppDelegate *sharedInstance = nil;
     if (screenSize.width != 0 && screenSize.height != 0)
         [self resizeFrame:NSMakeSize(screenSize.width * 2, screenSize.height * 2)
                   animate:NO];
+
+    screen.hidden = NO;
 }
 
 - (void) gameSessionDidEnd
 {
     NSLog(@"gameSessionDidEnd");
+    screen.hidden = YES;
+}
+
+- (void) driverInitDidStart
+{
+    [spinner.subviews.firstObject startAnimation:self];
+    [_window addTitlebarAccessoryViewController:tbAccessory];
+}
+
+- (void) driverInitDidEnd:(BOOL) success
+{
+    [spinner.subviews.firstObject stopAnimation:self];
+    [tbAccessory removeFromParentViewController];
 }
 
 #pragma mark - Actions

@@ -1015,7 +1015,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FE1B108D235615940065200C /* Emulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emulator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE1B108D235615940065200C /* FinalBurn Neo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FinalBurn Neo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE1B1090235615940065200C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FE1B1091235615940065200C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		FE1B1093235615950065200C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -2532,7 +2532,7 @@
 		FE1B108E235615940065200C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FE1B108D235615940065200C /* Emulator.app */,
+				FE1B108D235615940065200C /* FinalBurn Neo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4721,7 +4721,7 @@
 			);
 			name = Emulator;
 			productName = FinalBurnNeo;
-			productReference = FE1B108D235615940065200C /* Emulator.app */;
+			productReference = FE1B108D235615940065200C /* FinalBurn Neo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -5991,6 +5991,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",
@@ -6003,7 +6004,7 @@
 					"-DUSE_FILE32API",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.akop.FinalBurnNeo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "FinalBurn Neo";
 				WARNING_CFLAGS = (
 					"-Wno-unused-const-variable",
 					"-Wno-shift-negative-value",
@@ -6046,6 +6047,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",
@@ -6058,7 +6060,7 @@
 					"-DUSE_FILE32API",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.akop.FinalBurnNeo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "FinalBurn Neo";
 				WARNING_CFLAGS = (
 					"-Wno-unused-const-variable",
 					"-Wno-shift-negative-value",

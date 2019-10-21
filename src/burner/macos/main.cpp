@@ -14,7 +14,7 @@ int MainInit(const char *path, const char *setname)
         return 0;
     }
 
-    fprintf(stderr, "Initializing '%s' with path '%s'\n", setname, path);
+    fprintf(stderr, "Initializing '%s' in '%s'\n", setname, path);
 
     SDL_Init(SDL_INIT_AUDIO);
     BurnLibInit();

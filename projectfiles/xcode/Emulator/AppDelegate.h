@@ -9,7 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 #import "FBScreenView.h"
-@class FBVideo;
+
+#import "FBVideo.h"
+#import "FBInput.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, FBScreenViewDelegate>
 {
@@ -19,5 +21,6 @@
 + (AppDelegate *) sharedInstance;
 
 @property (readonly) FBVideo *video;
+@property (readonly) FBInput *input;
 
 @end

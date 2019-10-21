@@ -58,6 +58,16 @@
     });
 }
 
+- (NSSize) gameScreenSize
+{
+    if (nBurnDrvActive == ~0U)
+        return NSZeroSize;
+
+    int w, h;
+    BurnDrvGetVisibleSize(&w, &h);
+    return NSMakeSize(w, h);
+}
+
 @end
 
 #pragma mark - FinalBurn callbacks

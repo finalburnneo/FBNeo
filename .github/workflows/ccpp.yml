@@ -3,7 +3,7 @@ name: C/C++ CI
 on: [push]
 
 jobs:
-  build:
+  buildvs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@master
@@ -11,16 +11,21 @@ jobs:
         fetch-depth: 1
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
-    - name: Setup msys2
-      uses: numworks/setup-msys2@v1
-    - name: mingw build 
-      run : |
-            msys2do pacman -S --noconfirm mingw-w64-x86_64-gcc mingw-w64-x86_64-pkg-config make 
-            msys2do make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1
     - name: MSBuild
       working-directory: projectfiles/visualstudio-2019
       run: |
            msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
            msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal
-
-
+  buildgcc:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: Setup msys2
+        uses: numworks/setup-msys2@v1
+      - name: mingw update 
+        run : msys2do pacman -S --noconfirm mingw-w64-x86_64-gcc mingw-w64-x86_64-pkg-config make 
+      - name: mingw build
+        run : msys2do make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1
+        

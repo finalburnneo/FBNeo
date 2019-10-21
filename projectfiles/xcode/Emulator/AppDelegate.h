@@ -17,6 +17,7 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate, FBScreenViewDelegate, FBMainThreadDelegate>
 {
     IBOutlet FBScreenView *screen;
+    IBOutlet NSView *spinner;
 }
 
 + (AppDelegate *) sharedInstance;

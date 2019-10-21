@@ -33,9 +33,10 @@ int MainInit(const char *path, const char *setname)
     }
 
     bCheatsAllowed = false;
-
     sprintf(szAppRomPaths[0], path);
-    DrvInit(i, 0);
+
+    if (DrvInit(i, 0))
+        return 0;
 
     MediaInit();
     RunInit();

@@ -10,12 +10,13 @@
 @protocol FBVideoDelegate<NSObject>
 
 @optional
-- (void)screenSizeDidChange:(NSSize)newSize;
-- (void)initTextureOfWidth:(int)width
-                    height:(int)height
-                 isRotated:(BOOL)rotated
-             bytesPerPixel:(int)bytesPerPixel;
-- (void)renderFrame:(unsigned char *)bitmap;
+- (void) screenSizeDidChange:(NSSize) newSize;
+- (void) initTextureOfWidth:(int) width
+                     height:(int) height
+                  isRotated:(BOOL) rotated
+                  isFlipped:(BOOL) flipped
+              bytesPerPixel:(int) bytesPerPixel;
+- (void) renderFrame:(unsigned char *) bitmap;
 
 @end
 

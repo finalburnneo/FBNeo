@@ -42,16 +42,18 @@
 - (void) notifyTextureReadyOfWidth:(int) texWidth
                             height:(int) texHeight
                          isRotated:(BOOL) isRotated
+                         isFlipped:(BOOL) isFlipped
                      bytesPerPixel:(int) bpp
                         screenSize:(NSSize) size
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         id<FBVideoDelegate> vd = [self delegate];
-        if ([vd respondsToSelector:@selector(initTextureOfWidth:height:isRotated:bytesPerPixel:)])
+        if ([vd respondsToSelector:@selector(initTextureOfWidth:height:isRotated:isFlipped:bytesPerPixel:)])
             [vd initTextureOfWidth:texWidth
-                    height:texHeight
-                 isRotated:isRotated
-             bytesPerPixel:bpp];
+                            height:texHeight
+                         isRotated:isRotated
+                         isFlipped:isFlipped
+                     bytesPerPixel:bpp];
 
         if ([vd respondsToSelector:@selector(screenSizeDidChange:)])
             [vd screenSizeDidChange:size];
@@ -82,14 +84,15 @@ static int MacOSVideoInit()
     int gameWidth;
     int gameHeight;
     int rotationMode = 0;
+    int flags = BurnDrvGetFlags();
 
     BurnDrvGetVisibleSize(&gameWidth, &gameHeight);
 
-    if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+    if (flags & BDF_ORIENTATION_VERTICAL) {
         rotationMode |= 1;
     }
 
-    if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
+    if (flags & BDF_ORIENTATION_FLIPPED) {
         rotationMode ^= 2;
     }
 
@@ -140,6 +143,7 @@ static int MacOSVideoInit()
     [AppDelegate.sharedInstance.video notifyTextureReadyOfWidth:textureWidth
                                                          height:textureHeight
                                                       isRotated:isRotated
+                                                      isFlipped:flags & BDF_ORIENTATION_FLIPPED
                                                   bytesPerPixel:bufferBytesPerPixel
                                                      screenSize:screenSize];
 

@@ -11,7 +11,7 @@
 // FIXME: errors during load
 // FIXME: starting without ROM selected
 // FIXME: dropping file into window
-// FIXME: rotation (mimonkey)
+// FIXME: sound when load fails
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;

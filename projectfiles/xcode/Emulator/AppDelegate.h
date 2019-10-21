@@ -26,7 +26,7 @@
 @property (readonly) FBVideo *video;
 @property (readonly) FBInput *input;
 
-- (IBAction) resizeNormalSize:(id)sender;
-- (IBAction) resizeDoubleSize:(id)sender;
+- (IBAction) resizeNormalSize:(id) sender;
+- (IBAction) resizeDoubleSize:(id) sender;
 
 @end

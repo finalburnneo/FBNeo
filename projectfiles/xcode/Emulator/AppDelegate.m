@@ -8,17 +8,14 @@
 
 #import "AppDelegate.h"
 
-// FIXME: rename executable
-// FIXME: rename name in menubar
 // FIXME: add icon
-// FIXME: add file/open
+// FIXME: sfiii
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
 
 - (void) resizeFrame:(NSSize) newSize
              animate:(BOOL) animate;
-- (BOOL) canLoad:(NSString *) path;
 - (void) loadPath: (NSString *) path;
 
 @end
@@ -30,6 +27,7 @@ static AppDelegate *sharedInstance = nil;
     FBMainThread *main;
     BOOL _cursorVisible;
     NSTitlebarAccessoryViewController *tbAccessory;
+    NSArray *supportedFormats;
 }
 
 - (void) dealloc
@@ -45,6 +43,7 @@ static AppDelegate *sharedInstance = nil;
 
     _input = [FBInput new];
     _cursorVisible = YES;
+    supportedFormats = @[ @"zip", @"7z" ];
 
     tbAccessory = [NSTitlebarAccessoryViewController new];
     tbAccessory.view = spinner;
@@ -205,6 +204,21 @@ static AppDelegate *sharedInstance = nil;
                   animate:YES];
 }
 
+- (void) openDocument:(id) sender
+{
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    panel.title = NSLocalizedString(@"Open", nil);
+    panel.canChooseFiles = YES;
+    panel.canChooseDirectories = NO;
+    panel.allowsMultipleSelection = NO;
+    panel.allowedFileTypes = supportedFormats;
+
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSModalResponseOK)
+            [self loadPath:panel.URLs.firstObject.path];
+    }];
+}
+
 #pragma mark - Drag & Drop
 
 - (BOOL) performDragOperation:(id<NSDraggingInfo>) sender
@@ -228,7 +242,7 @@ static AppDelegate *sharedInstance = nil;
         NSPasteboard *pboard = sender.draggingPasteboard;
         NSString *path = [[pboard propertyListForType:NSFilenamesPboardType] firstObject];
 
-        if ([self canLoad:path])
+        if ([supportedFormats containsObject:path.pathExtension])
             dragOp = NSDragOperationCopy;
     }
 
@@ -260,15 +274,9 @@ static AppDelegate *sharedInstance = nil;
               animate:animate];
 }
 
-- (BOOL) canLoad:(NSString *) path
-{
-    return [@[ @"zip", @"7z" ] containsObject:path.pathExtension];
-}
-
 - (void) loadPath:(NSString *) path
 {
     [main load:path];
-
     [NSDocumentController.sharedDocumentController noteNewRecentDocumentURL:[NSURL fileURLWithPath:path]];
 }
 

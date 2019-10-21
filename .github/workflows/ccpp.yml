@@ -13,6 +13,8 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
     - name: Setup msys2
       uses: numworks/setup-msys2@v1
+      with:
+         msystem: MINGW32
     - name: mingw build 
       run : |
             msys2do mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1

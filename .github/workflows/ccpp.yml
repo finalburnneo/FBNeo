@@ -17,6 +17,7 @@ jobs:
          msystem: MINGW32
     - name: mingw build 
       run : |
+            msys2do pacman -S --noconfirm mingw-w32*gcc make 
             msys2do make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1
     - name: MSBuild
       working-directory: projectfiles/visualstudio-2019

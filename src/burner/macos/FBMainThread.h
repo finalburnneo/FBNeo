@@ -11,7 +11,8 @@
 @protocol FBMainThreadDelegate<NSObject>
 
 - (void) driverInitDidStart;
-- (void) driverInitDidEnd:(BOOL) success;
+- (void) driverInitDidEnd:(NSString *) name
+                  success:(BOOL) success;
 - (void) gameSessionDidStart:(NSString *) name;
 - (void) gameSessionDidEnd;
 

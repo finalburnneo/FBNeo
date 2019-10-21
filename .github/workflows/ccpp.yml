@@ -11,16 +11,14 @@ jobs:
         fetch-depth: 1
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
-
+    - name: Setup mingw
+      uses: numworks/setup-msys2@v1
+      
     - name: MSBuild
       working-directory: projectfiles/visualstudio-2019
       run: |
            msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
            msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal
-    - name: mingw setup
-      uses: numworks/setup-msys2@v1
-      with:
-        update: true
     - name: mingw build 
       run : mingw32-make mingw510 -j5 SKIPDEPEND=1
 

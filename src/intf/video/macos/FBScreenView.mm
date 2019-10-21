@@ -9,6 +9,7 @@
 #include <time.h>
 
 #import "FBScreenView.h"
+#import "AppDelegate.h"
 
 #define HIDE_CURSOR_TIMEOUT_SECONDS 1.0f
 
@@ -79,11 +80,6 @@
     [self->renderLock unlock];
 }
 
-- (BOOL) acceptsFirstResponder
-{
-	return YES;
-}
-
 - (void) drawRect:(NSRect)dirtyRect
 {
     [self->renderLock lock];
@@ -120,7 +116,7 @@
     [self->renderLock unlock];
 }
 
-- (void)reshape
+- (void) reshape
 {
     viewBounds = [self bounds];
     [self->renderLock lock];
@@ -232,6 +228,31 @@
     [nsContext flushBuffer];
 
     [self->renderLock unlock];
+}
+
+#pragma mark - Keyboard
+
+- (BOOL) acceptsFirstResponder
+{
+    return YES;
+}
+
+- (void) keyDown:(NSEvent *) theEvent
+{
+//    NSLog(@"FBScreenView/keyDown: %@", theEvent);
+    [AppDelegate.sharedInstance.input keyDown:theEvent];
+}
+
+- (void) keyUp:(NSEvent *) theEvent
+{
+//    NSLog(@"FBScreenView/keyUp: %@", theEvent);
+    [AppDelegate.sharedInstance.input keyUp:theEvent];
+}
+
+- (void) flagsChanged:(NSEvent *) theEvent
+{
+//    NSLog(@"FBScreenView/flagsChanged: %@", theEvent);
+    [AppDelegate.sharedInstance.input flagsChanged:theEvent];
 }
 
 #pragma mark - Mouse tracking

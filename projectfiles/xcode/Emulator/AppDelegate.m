@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 
 #import "FBMainThread.h"
-#import "FBVideo.h"
 
 @interface AppDelegate ()
 
@@ -36,6 +35,7 @@ static AppDelegate *sharedInstance = nil;
 {
     sharedInstance = self;
     _video = [FBVideo new];
+    _input = [FBInput new];
     main = [FBMainThread new];
 
     _cursorVisible = YES;

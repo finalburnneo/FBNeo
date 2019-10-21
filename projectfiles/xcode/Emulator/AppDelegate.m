@@ -55,7 +55,7 @@ static AppDelegate *sharedInstance = nil;
     _video.delegate = screen;
     screen.delegate = self;
 
-    label.stringValue = NSLocalizedString(@"Drop a set here to load it", nil);
+    label.stringValue = NSLocalizedString(@"Drop a set here to load it.", nil);
     label.hidden = NO;
     screen.hidden = YES;
 

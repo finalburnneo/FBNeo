@@ -14,7 +14,7 @@ jobs:
     - name: mingw build 
       run : |
             mkdir obj
-            make mingw510 -j5 SKIPDEPEND=1
+            make mingw510 -j20
     - name: MSBuild
       working-directory: projectfiles/visualstudio-2019
       run: |

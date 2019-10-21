@@ -12,10 +12,10 @@ jobs:
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
     - name: Setup msys2
-      run: choco install msys2
+      uses: numworks/setup-msys2@v1
     - name: mingw build 
       run : |
-            C:\tools\msys64\usr\bin\bash -lc "mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1"
+            msys2do mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1
     - name: MSBuild
       working-directory: projectfiles/visualstudio-2019
       run: |

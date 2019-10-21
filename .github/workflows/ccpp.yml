@@ -11,12 +11,8 @@ jobs:
         fetch-depth: 1
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
-    - name: Setup mingw
-      uses: numworks/setup-msys2@v1
-      with:
-        msystem: MINGW32
     - name: mingw build 
-      run : mingw32-make mingw510 -j5 SKIPDEPEND=1
+      run : make mingw510 -j5 SKIPDEPEND=1
     - name: MSBuild
       working-directory: projectfiles/visualstudio-2019
       run: |

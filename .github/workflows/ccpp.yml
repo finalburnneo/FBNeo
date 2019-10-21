@@ -14,7 +14,7 @@ jobs:
     - name: Setup mingw
       uses: numworks/setup-msys2@v1
       with:
-        msystem: MSYS
+        msystem: MINGW32
     - name: mingw build 
       run : mingw32-make mingw510 -j5 SKIPDEPEND=1
     - name: MSBuild

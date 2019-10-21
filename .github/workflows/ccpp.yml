@@ -12,7 +12,9 @@ jobs:
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
     - name: mingw build 
-      run : make mingw510 -j5 SKIPDEPEND=1
+      run : |
+            mkdir obj
+            make mingw510 -j5 SKIPDEPEND=1
     - name: MSBuild
       working-directory: projectfiles/visualstudio-2019
       run: |

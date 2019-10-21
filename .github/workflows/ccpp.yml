@@ -14,6 +14,12 @@ jobs:
     - name: MSBuild
       working-directory: projectfiles/visualstudio-2019
       run: |
-           msbuild fba_vs2010.vcxproj /m /property:Configuration=Release+Debug /property:Platform=x86
-           msbuild fba_vs2010.vcxproj /m /property:Configuration=Release+Debug /property:Platform=x64
+           msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x86
+           msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x64
+    - name: mingw setup
+      uses: numworks/setup-msys2@v1
+      with:
+        update: true
+    - name: mingw build 
+      run : mingw32-make mingw510 -j5 SKIPDEPEND=1
 

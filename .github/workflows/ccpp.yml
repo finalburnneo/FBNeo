@@ -13,11 +13,9 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
     - name: Setup msys2
       uses: numworks/setup-msys2@v1
-      with:
-         msystem: MINGW32
     - name: mingw build 
       run : |
-            msys2do pacman -S --noconfirm mingw-w32*gcc make 
+            msys2do pacman -S --noconfirm mingw-w64-x86_64-gcc mingw-w64-x86_64-pkg-config make 
             msys2do make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1
     - name: MSBuild
       working-directory: projectfiles/visualstudio-2019

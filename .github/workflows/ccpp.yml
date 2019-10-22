@@ -35,7 +35,9 @@ jobs:
         with:
          fetch-depth: 1
       - name: install dev tools
-        run: sudo apt -y install libsdl1.2-dev
+        run: |
+             sudo apt-get -y update 
+             sudo apt -y install libsdl1.2-dev
       - name: sdl build
         run: make sdl RELEASEBUILD=1 SKIPDEPEND=1
         

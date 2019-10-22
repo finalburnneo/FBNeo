@@ -24,8 +24,10 @@ jobs:
           fetch-depth: 1
       - name: Setup msys2
         uses: numworks/setup-msys2@v1
+        with:
+          msystem: MINGW32
       - name: mingw update 
-        run : msys2do pacman -S --noconfirm --needed base-devel mingw-w64-i686-toolchain mingw-w64-x86_64-toolchain make perl
+        run : msys2do pacman -S --noconfirm --needed base-devel mingw-w64-i686-toolchain make mingw32-make perl
       - name: mingw build
         run : msys2do make mingw510 -j9 RELEASEBUILD=1
   buildsdl:

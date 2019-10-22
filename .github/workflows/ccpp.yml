@@ -3,6 +3,17 @@ name: C/C++ CI
 on: [push]
 
 jobs:
+  codeartifact:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 1  
+    - name: upload vs x86 artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: fbn-code
+        path: .
   buildvsx86:
     runs-on: windows-latest
     steps:

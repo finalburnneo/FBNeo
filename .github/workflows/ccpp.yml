@@ -27,7 +27,7 @@ jobs:
       - name: mingw update 
         run : msys2do pacman -S --noconfirm --needed base-devel mingw-w64-i686-toolchain mingw-w64-x86_64-toolchain make perl
       - name: mingw build
-        run : msys2do make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1
+        run : msys2do make mingw510 -j9 RELEASEBUILD=1
   buildsdl:
     runs-on: ubuntu-latest
     steps:

@@ -2794,6 +2794,7 @@ DRV		BurnDrvDragnblz;
 DRV		BurnDrvDrgnbowla;
 DRV		BurnDrvDrgnbowl;
 DRV		BurnSpecdrgbreed;
+DRV		BurnDrvDbreedm72j;
 DRV		BurnDrvDbreedm72;
 DRV		BurnDrvDbreed;
 DRV		BurnDrvDrgnbstr;
@@ -12793,7 +12794,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAirbustr,			// Air Buster: Trouble Specialty Raid Unit (World)
 	&BurnDrvmd_airdiverj,		// Air Diver (Jpn)
 	&BurnDrvmd_airdiver,		// Air Diver (USA)
-	&BurnDrvAirduelm72,			// Air Duel (Japan, M72)
+	&BurnDrvAirduelm72,			// Air Duel (Japan, M72 PCB version)
 	&BurnDrvAirduel,			// Air Duel (World, M82-A-A + M82-B-A)
 	&BurnDrvAirGallet,			// Air Gallet (Europe)
 	&BurnDrvAirGalleth,			// Air Gallet (Hong Kong)
@@ -13403,7 +13404,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBattleBkraiduj,		// Battle Bakraid - Unlimited Version (Japan) (Tue Jun 8 1999)
 	&BurnDrvBattleBkraidu,		// Battle Bakraid - Unlimited Version (U.S.A.) (Tue Jun 8 1999)
 	&BurnDrvBatlbubl,			// Battle Bubble (v2.00)
-	&BurnDrvBchopper,			// Battle Chopper
+	&BurnDrvBchopper,			// Battle Chopper (World)
 	&BurnDrvCpsBatcira,			// Battle Circuit (970319 Asia)
 	&BurnDrvCpsBatcird,			// Battle Circuit (970319 Euro Phoenix Edition)
 	&BurnDrvCpsBatcir,			// Battle Circuit (970319 Euro)
@@ -14843,8 +14844,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_donaturl,		// Daichi Kun Crisis - Do Natural
 	&BurnDrvmd_daikokai,		// Daikoukai Jidai (Jpn)
 	&BurnDrvmd_daikok2,			// Daikoukai Jidai II (Jpn)
-	&BurnDrvDkgensanm72,		// Daiku no Gensan (Japan, M72)
-	&BurnDrvDkgensan,			// Daiku no Gensan (Japan, M82)
+	&BurnDrvDkgensanm72,		// Daiku no Gensan (Japan, M72 PCB version)
+	&BurnDrvDkgensan,			// Daiku no Gensan (Japan, M84 PCB version)
 	&BurnDrvDaiohc,				// Daioh (93111A PCB conversion)
 	&BurnDrvDaioha,				// Daioh (earlier)
 	&BurnDrvDaiohp,				// Daioh (prototype)
@@ -15357,8 +15358,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDrgnbowla,			// Dragon Bowl (set 2, unencrypted program)
 	&BurnDrvDrgnbowl,			// Dragon Bowl
 	&BurnSpecdrgbreed,			// Dragon Breed (48K)
+	&BurnDrvDbreedm72j,			// Dragon Breed (Japan, M72 PCB version)
 	&BurnDrvDbreedm72,			// Dragon Breed (M72 PCB version)
-	&BurnDrvDbreed,				// Dragon Breed (M81 PCB version)
+	&BurnDrvDbreed,				// Dragon Breed (World, M81 PCB version)
 	&BurnDrvDrgnbstr,			// Dragon Buster
 	&BurnDrvsms_dcrystal,		// Dragon Crystal (Euro, Bra)
 	&BurnDrvgg_dcrystal,		// Dragon Crystal (Euro, USA)
@@ -15526,7 +15528,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dynduke,			// Dynamite Duke (World, Rev. A)
 	&BurnDrvDduxbl,				// Dynamite Dux (bootleg) [no comment, NOT WORKING]
 	&BurnDrvsms_ddux,			// Dynamite Dux (Euro, Bra)
-	&BurnDrvDdux1,				// Dynamite Dux (set 1, 8751 317-0095)
+	&BurnDrvDdux1,				// Dynamite Dux (set 1, World, 8751 317-0095)
 	&BurnDrvDduxd,				// Dynamite Dux (set 2, FD1094 317-0096 decrypted)
 	&BurnDrvDdux,				// Dynamite Dux (set 2, FD1094 317-0096)
 	&BurnDrvDduxjd,				// Dynamite Dux (set 2, Japan, FD1094 317-0094 decrypted)
@@ -16349,7 +16351,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_galforce,		// Gall Force - Defense of Chaos (Jpn)
 	&BurnDrvMSX_galforceb,		// Gall Force - Defense of Chaos (Jpn, Alt)
 	&BurnDrvGallag,				// Gallag
-	&BurnDrvGallop,				// Gallop - Armed police Unit (Japan)
+	&BurnDrvGallop,				// Gallop - Armed police Unit (Japan, M72 PCB version)
 	&BurnDrvGalmedes,			// Galmedes (Japan)
 	&BurnDrvGalhustl,			// Gals Hustler
 	&BurnDrvGalpanic,			// Gals Panic (Unprotected)
@@ -16897,8 +16899,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvChamburger,			// Hamburger (DECO Cassette) (Japan)
 	&BurnDrvHamaway,			// Hammer Away (prototype)
 	&BurnDrvMSX_hammboy,		// Hammer Boy (Spa)
-	&BurnDrvHharryu,			// Hammerin' Harry (US)
-	&BurnDrvHharry,				// Hammerin' Harry (World)
+	&BurnDrvHharryu,			// Hammerin' Harry (US, M84 PCB version)
+	&BurnDrvHharry,				// Hammerin' Harry (World, M81 PCB version))
 	&BurnDrvpce_hanataka,		// Hana Taaka Daka!?
 	&BurnDrvsms_hangon,			// Hang-On (Euro, Bra, Aus)
 	&BurnDrvsms_hangonc,		// Hang-On (Euro, Bra, Aus, Sega Card)
@@ -24816,8 +24818,8 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvWyvernf0,			// Wyvern F-0 (Rev 1)
 	&BurnDrvWyvernf0a,			// Wyvern F-0
-	&BurnDrvXmultiplm72,		// X Multiply (Japan, M72)
-	&BurnDrvXmultipl,			// X Multiply (World, M81)
+	&BurnDrvXmultiplm72,		// X Multiply (Japan, M72 PCB version)
+	&BurnDrvXmultipl,			// X Multiply (World, M81 PCB version)
 #if defined FBNEO_DEBUG
 	&BurnDrvXsedae,				// X Se Dae Quiz (Korea) [no comment, NOT WORKING]
 #endif

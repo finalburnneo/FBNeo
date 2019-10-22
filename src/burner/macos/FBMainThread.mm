@@ -7,10 +7,9 @@
 //
 
 #import "FBMainThread.h"
+#import "AppDelegate.h"
 
-extern int MainInit(const char *, const char *);
-extern int MainFrame();
-extern int MainEnd();
+#include "main.h"
 
 @implementation FBMainThread
 {
@@ -35,6 +34,8 @@ extern int MainEnd();
 
 - (void) main
 {
+    SetNVRAMPath([AppDelegate.sharedInstance.nvramPath cStringUsingEncoding:NSUTF8StringEncoding]);
+
     while (!self.isCancelled) {
         if (pathToLoad == nil) {
             [NSThread sleepForTimeInterval:.5]; // Pause until there's something to load

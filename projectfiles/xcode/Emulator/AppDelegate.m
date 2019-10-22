@@ -15,11 +15,14 @@
 - (void) resizeFrame:(NSSize) newSize
              animate:(BOOL) animate;
 - (void) loadPath: (NSString *) path;
+- (NSString *) appSupportPath;
 
 @end
 
 static AppDelegate *sharedInstance = nil;
 
+// FIXME: adsp2100.h
+// FIXME: title in titlebar
 @implementation AppDelegate
 {
     FBMainThread *main;
@@ -58,6 +61,24 @@ static AppDelegate *sharedInstance = nil;
     screen.hidden = YES;
 
     [_window registerForDraggedTypes:@[NSFilenamesPboardType]];
+}
+
+- (void) applicationWillFinishLaunching:(NSNotification *) notification
+{
+    _supportPath = self.appSupportPath;
+    _nvramPath = [_supportPath stringByAppendingPathComponent:@"NVRAM"];
+
+    NSArray *paths = @[
+        _nvramPath
+    ];
+
+    [paths enumerateObjectsUsingBlock:^(NSString *path, NSUInteger idx, BOOL *stop) {
+        if (![NSFileManager.defaultManager fileExistsAtPath:path])
+            [NSFileManager.defaultManager createDirectoryAtPath:path
+                                    withIntermediateDirectories:YES
+                                                     attributes:nil
+                                                          error:NULL];
+    }];
 }
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -276,6 +297,18 @@ static AppDelegate *sharedInstance = nil;
 {
     [main load:path];
     [NSDocumentController.sharedDocumentController noteNewRecentDocumentURL:[NSURL fileURLWithPath:path]];
+}
+
+- (NSString *) appSupportPath
+{
+    NSURL *appSupportUrl = [NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory
+                                                                inDomains:NSUserDomainMask].lastObject;
+
+    if (appSupportUrl == nil)
+        return nil;
+
+    NSDictionary* infoDict = NSBundle.mainBundle.infoDictionary;
+    return [appSupportUrl URLByAppendingPathComponent:[infoDict objectForKey:@"CFBundleName"]].path;
 }
 
 @end

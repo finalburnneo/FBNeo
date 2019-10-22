@@ -26,6 +26,9 @@
 @property (readonly) FBVideo *video;
 @property (readonly) FBInput *input;
 
+@property (readonly) NSString *supportPath;
+@property (readonly) NSString *nvramPath;
+
 - (IBAction) resizeNormalSize:(id) sender;
 - (IBAction) resizeDoubleSize:(id) sender;
 

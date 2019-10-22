@@ -28,4 +28,15 @@ jobs:
         run : msys2do pacman -S --noconfirm --needed base-devel mingw-w64-i686-toolchain mingw-w64-x86_64-toolchain make perl
       - name: mingw build
         run : msys2do make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1
+  buildsdl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+         fetch-depth: 1
+      - name: install dev tools
+        run: sudo apt -y install libsdl1.2-dev
+      - name: sdl build
+        run: make sdl RELEASEBUILD=1 SKIPDEPEND=1
+        
         

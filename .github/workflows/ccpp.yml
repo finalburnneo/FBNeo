@@ -67,6 +67,6 @@ jobs:
              sudo apt-get -y update 
              sudo apt -y install libsdl1.2-dev
       - name: sdl build
-        run: make sdl RELEASEBUILD=1 SKIPDEPEND=1
+        run: make sdl -j9 RELEASEBUILD=1 SKIPDEPEND=1
         
         

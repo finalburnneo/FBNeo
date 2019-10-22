@@ -994,8 +994,7 @@ static struct BurnRomInfo firetrapRomDesc[] = {
 	{ "di-17.10j",		0x8000, 0x8605f6b9, 2 | BRF_PRG | BRF_ESS }, //  3 Sound CPU Code
 	{ "di-18.12j",		0x8000, 0x49508c93, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	// created from japanese version, patched init byte
-	{ "di-12.16h",		0x1000, 0x49eba102, 3 | BRF_OPT },        	 //  5 MCU 
+	{ "di-12.16h",		0x1000, 0x6340a4d7, 3 | BRF_OPT },        	 //  5 MCU 
 
 	{ "di-03.17c",		0x2000, 0x46721930, 4 | BRF_GRA },           //  6 Characters
 
@@ -1044,8 +1043,7 @@ static struct BurnRomInfo firetrapaRomDesc[] = {
 	{ "di-17.10j",		0x8000, 0x8605f6b9, 2 | BRF_PRG | BRF_ESS }, //  3 Sound CPU Code
 	{ "di-18.12j",		0x8000, 0x49508c93, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	// created from japanese version, patched init byte
-	{ "di-12.16h",		0x1000, 0x49eba102, 3 | BRF_OPT },        	 //  5 MCU 
+	{ "di-12.16h",		0x1000, 0x6340a4d7, 3 | BRF_OPT },        	 //  5 MCU 
 
 	{ "di-03.17c",		0x2000, 0x46721930, 4 | BRF_GRA },           //  6 Characters
 

@@ -1102,12 +1102,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Wardner (World)
 
 static struct BurnRomInfo wardnerRomDesc[] = {
-	{ "wardner.17",	0x08000, 0xc5dd56fd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 code
-	{ "b25-18.rom",	0x10000, 0x9aab8ee2, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "b25-19.rom",	0x10000, 0x95b68813, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "wardner.20",	0x08000, 0x347f411b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "b25-31.6m",	0x08000, 0xc5dd56fd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 code
+	{ "b25-18.7m",	0x10000, 0x9aab8ee2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b25-19.8m",	0x10000, 0x95b68813, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "b25-32.10m",	0x08000, 0x347f411b, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "b25-16.rom",	0x08000, 0xe5202ff8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 code
+	{ "b25-16.4k",	0x08000, 0xe5202ff8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 code
 
 	{ "82s137.1d",	0x00400, 0xcc5b3f53, 3 | BRF_PRG | BRF_ESS }, //  5 tms32010 code
 	{ "82s137.1e",	0x00400, 0x47351d55, 3 | BRF_PRG | BRF_ESS }, //  6
@@ -1118,19 +1118,19 @@ static struct BurnRomInfo wardnerRomDesc[] = {
 	{ "82s131.2a",	0x00200, 0xac843ca6, 3 | BRF_PRG | BRF_ESS }, // 11
 	{ "82s131.1a",	0x00200, 0x50452ff8, 3 | BRF_PRG | BRF_ESS }, // 12
 
-	{ "wardner.07",	0x04000, 0x1392b60d, 4 | BRF_GRA },           // 13 Text characters
-	{ "wardner.06",	0x04000, 0x0ed848da, 4 | BRF_GRA },           // 14
-	{ "wardner.05",	0x04000, 0x79792c86, 4 | BRF_GRA },           // 15
+	{ "b25-28.10f",	0x04000, 0x1392b60d, 4 | BRF_GRA },           // 13 Text characters
+	{ "b25-27.8f",	0x04000, 0x0ed848da, 4 | BRF_GRA },           // 14
+	{ "b25-26.7f",	0x04000, 0x79792c86, 4 | BRF_GRA },           // 15
 
-	{ "b25-12.rom",	0x08000, 0x15d08848, 5 | BRF_GRA },           // 16 Background tiles
-	{ "b25-15.rom",	0x08000, 0xcdd2d408, 5 | BRF_GRA },           // 17
-	{ "b25-14.rom",	0x08000, 0x5a2aef4f, 5 | BRF_GRA },           // 18
-	{ "b25-13.rom",	0x08000, 0xbe21db2b, 5 | BRF_GRA },           // 19
+	{ "b25-12.12f",	0x08000, 0x15d08848, 5 | BRF_GRA },           // 16 Background tiles
+	{ "b25-15.16f",	0x08000, 0xcdd2d408, 5 | BRF_GRA },           // 17
+	{ "b25-14.15f",	0x08000, 0x5a2aef4f, 5 | BRF_GRA },           // 18
+	{ "b25-13.14f",	0x08000, 0xbe21db2b, 5 | BRF_GRA },           // 19
 
-	{ "b25-08.rom",	0x08000, 0x883ccaa3, 6 | BRF_GRA },           // 20 Foreground tiles
-	{ "b25-11.rom",	0x08000, 0xd6ebd510, 6 | BRF_GRA },           // 21
-	{ "b25-10.rom",	0x08000, 0xb9a61e81, 6 | BRF_GRA },           // 22
-	{ "b25-09.rom",	0x08000, 0x585411b7, 6 | BRF_GRA },           // 23
+	{ "b25-08.14c",	0x08000, 0x883ccaa3, 6 | BRF_GRA },           // 20 Foreground tiles
+	{ "b25-11.16c",	0x08000, 0xd6ebd510, 6 | BRF_GRA },           // 21
+	{ "b25-10.17c",	0x08000, 0xb9a61e81, 6 | BRF_GRA },           // 22
+	{ "b25-09.19c",	0x08000, 0x585411b7, 6 | BRF_GRA },           // 23
 
 	{ "b25-01.rom",	0x10000, 0x42ec01fb, 7 | BRF_GRA },           // 24 Sprites
 	{ "b25-02.rom",	0x10000, 0x6c0130b7, 7 | BRF_GRA },           // 25
@@ -1161,12 +1161,12 @@ struct BurnDriver BurnDrvWardner = {
 // Pyros (US)
 
 static struct BurnRomInfo pyrosRomDesc[] = {
-	{ "b25-29.rom",	0x08000, 0xb568294d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 code
-	{ "b25-18.rom",	0x10000, 0x9aab8ee2, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "b25-19.rom",	0x10000, 0x95b68813, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "b25-30.rom",	0x08000, 0x5056c799, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "b25-29.6m",	0x08000, 0xb568294d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 code
+	{ "b25-18.7m",	0x10000, 0x9aab8ee2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b25-19.8m",	0x10000, 0x95b68813, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "b25-30.10m",	0x08000, 0x5056c799, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "b25-16.rom",	0x08000, 0xe5202ff8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 code
+	{ "b25-16.4k",	0x08000, 0xe5202ff8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 code
 
 	{ "82s137.1d",	0x00400, 0xcc5b3f53, 3 | BRF_PRG | BRF_ESS }, //  5 tms32010 code
 	{ "82s137.1e",	0x00400, 0x47351d55, 3 | BRF_PRG | BRF_ESS }, //  6
@@ -1177,24 +1177,24 @@ static struct BurnRomInfo pyrosRomDesc[] = {
 	{ "82s131.2a",	0x00200, 0xac843ca6, 3 | BRF_PRG | BRF_ESS }, // 11
 	{ "82s131.1a",	0x00200, 0x50452ff8, 3 | BRF_PRG | BRF_ESS }, // 12
 
-	{ "b25-35.rom",	0x04000, 0xfec6f0c0, 4 | BRF_GRA },           // 13 Text characters
-	{ "b25-34.rom",	0x04000, 0x02505dad, 4 | BRF_GRA },           // 14
-	{ "b25-33.rom",	0x04000, 0x9a55fcb9, 4 | BRF_GRA },           // 15
+	{ "b25-35.10f",	0x04000, 0xfec6f0c0, 4 | BRF_GRA },           // 13 Text characters
+	{ "b25-34.8f",	0x04000, 0x02505dad, 4 | BRF_GRA },           // 14
+	{ "b25-33.7f",	0x04000, 0x9a55fcb9, 4 | BRF_GRA },           // 15
 
-	{ "b25-12.rom",	0x08000, 0x15d08848, 5 | BRF_GRA },           // 16 Background tiles
-	{ "b25-15.rom",	0x08000, 0xcdd2d408, 5 | BRF_GRA },           // 17
-	{ "b25-14.rom",	0x08000, 0x5a2aef4f, 5 | BRF_GRA },           // 18
-	{ "b25-13.rom",	0x08000, 0xbe21db2b, 5 | BRF_GRA },           // 19
+	{ "b25-12.18f",	0x08000, 0x15d08848, 5 | BRF_GRA },           // 16 Background tiles
+	{ "b25-15.23f",	0x08000, 0xcdd2d408, 5 | BRF_GRA },           // 17
+	{ "b25-14.21f",	0x08000, 0x5a2aef4f, 5 | BRF_GRA },           // 18
+	{ "b25-13.19f",	0x08000, 0xbe21db2b, 5 | BRF_GRA },           // 19
 
-	{ "b25-08.rom",	0x08000, 0x883ccaa3, 6 | BRF_GRA },           // 20 Foreground tiles
-	{ "b25-11.rom",	0x08000, 0xd6ebd510, 6 | BRF_GRA },           // 21
-	{ "b25-10.rom",	0x08000, 0xb9a61e81, 6 | BRF_GRA },           // 22
-	{ "b25-09.rom",	0x08000, 0x585411b7, 6 | BRF_GRA },           // 23
+	{ "b25-08.14c",	0x08000, 0x883ccaa3, 6 | BRF_GRA },           // 20 Foreground tiles
+	{ "b25-11.16c",	0x08000, 0xd6ebd510, 6 | BRF_GRA },           // 21
+	{ "b25-10.17c",	0x08000, 0xb9a61e81, 6 | BRF_GRA },           // 22
+	{ "b25-09.19c",	0x08000, 0x585411b7, 6 | BRF_GRA },           // 23
 
-	{ "b25-01.rom",	0x10000, 0x42ec01fb, 7 | BRF_GRA },           // 24 Sprites
-	{ "b25-02.rom",	0x10000, 0x6c0130b7, 7 | BRF_GRA },           // 25
-	{ "b25-03.rom",	0x10000, 0xb923db99, 7 | BRF_GRA },           // 26
-	{ "b25-04.rom",	0x10000, 0x8059573c, 7 | BRF_GRA },           // 27
+	{ "b25-01.14c",	0x10000, 0x42ec01fb, 7 | BRF_GRA },           // 24 Sprites
+	{ "b25-02.16c",	0x10000, 0x6c0130b7, 7 | BRF_GRA },           // 25
+	{ "b25-03.17c",	0x10000, 0xb923db99, 7 | BRF_GRA },           // 26
+	{ "b25-04.19c",	0x10000, 0x8059573c, 7 | BRF_GRA },           // 27
 
 	{ "82s129.b19",	0x00100, 0x24e7d62f, 8 | BRF_GRA },           // 28 Proms (not used)
 	{ "82s129.b18",	0x00100, 0xa50cef09, 8 | BRF_GRA },           // 29
@@ -1220,12 +1220,12 @@ struct BurnDriver BurnDrvPyros = {
 // Wardner no Mori (Japan)
 
 static struct BurnRomInfo wardnerjRomDesc[] = {
-	{ "b25-17.bin",	0x08000, 0x4164dca9, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 code
-	{ "b25-18.rom",	0x10000, 0x9aab8ee2, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "b25-19.rom",	0x10000, 0x95b68813, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "b25-20.bin",	0x08000, 0x1113ad38, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "b25-17.6m",	0x08000, 0x4164dca9, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 code
+	{ "b25-18.7m",	0x10000, 0x9aab8ee2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b25-19.8m",	0x10000, 0x95b68813, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "b25-20.10m",	0x08000, 0x1113ad38, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "b25-16.rom",	0x08000, 0xe5202ff8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 code
+	{ "b25-16.4k",	0x08000, 0xe5202ff8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 code
 
 	{ "82s137.1d",	0x00400, 0xcc5b3f53, 3 | BRF_PRG | BRF_ESS }, //  5 tms32010 code
 	{ "82s137.1e",	0x00400, 0x47351d55, 3 | BRF_PRG | BRF_ESS }, //  6
@@ -1236,24 +1236,24 @@ static struct BurnRomInfo wardnerjRomDesc[] = {
 	{ "82s131.2a",	0x00200, 0xac843ca6, 3 | BRF_PRG | BRF_ESS }, // 11
 	{ "82s131.1a",	0x00200, 0x50452ff8, 3 | BRF_PRG | BRF_ESS }, // 12
 
-	{ "b25-07.bin",	0x04000, 0x50e329e0, 4 | BRF_GRA },           // 13 Text characters
-	{ "b25-06.bin",	0x04000, 0x3bfeb6ae, 4 | BRF_GRA },           // 14
-	{ "b25-05.bin",	0x04000, 0xbe36a53e, 4 | BRF_GRA },           // 15
+	{ "b25-07.10f",	0x04000, 0x50e329e0, 4 | BRF_GRA },           // 13 Text characters
+	{ "b25-06.8f",	0x04000, 0x3bfeb6ae, 4 | BRF_GRA },           // 14
+	{ "b25-05.7f",	0x04000, 0xbe36a53e, 4 | BRF_GRA },           // 15
 
-	{ "b25-12.rom",	0x08000, 0x15d08848, 5 | BRF_GRA },           // 16 Background tiles
-	{ "b25-15.rom",	0x08000, 0xcdd2d408, 5 | BRF_GRA },           // 17
-	{ "b25-14.rom",	0x08000, 0x5a2aef4f, 5 | BRF_GRA },           // 18
-	{ "b25-13.rom",	0x08000, 0xbe21db2b, 5 | BRF_GRA },           // 19
+	{ "b25-12.18f",	0x08000, 0x15d08848, 5 | BRF_GRA },           // 16 Background tiles
+	{ "b25-15.23f",	0x08000, 0xcdd2d408, 5 | BRF_GRA },           // 17
+	{ "b25-14.21f",	0x08000, 0x5a2aef4f, 5 | BRF_GRA },           // 18
+	{ "b25-13.19f",	0x08000, 0xbe21db2b, 5 | BRF_GRA },           // 19
 
-	{ "b25-08.rom",	0x08000, 0x883ccaa3, 6 | BRF_GRA },           // 20 Foreground tiles
-	{ "b25-11.rom",	0x08000, 0xd6ebd510, 6 | BRF_GRA },           // 21
-	{ "b25-10.rom",	0x08000, 0xb9a61e81, 6 | BRF_GRA },           // 22
-	{ "b25-09.rom",	0x08000, 0x585411b7, 6 | BRF_GRA },           // 23
+	{ "b25-08.12f",	0x08000, 0x883ccaa3, 6 | BRF_GRA },           // 20 Foreground tiles
+	{ "b25-11.16f",	0x08000, 0xd6ebd510, 6 | BRF_GRA },           // 21
+	{ "b25-10.15f",	0x08000, 0xb9a61e81, 6 | BRF_GRA },           // 22
+	{ "b25-09.14f",	0x08000, 0x585411b7, 6 | BRF_GRA },           // 23
 
-	{ "b25-01.rom",	0x10000, 0x42ec01fb, 7 | BRF_GRA },           // 24 Sprites
-	{ "b25-02.rom",	0x10000, 0x6c0130b7, 7 | BRF_GRA },           // 25
-	{ "b25-03.rom",	0x10000, 0xb923db99, 7 | BRF_GRA },           // 26
-	{ "b25-04.rom",	0x10000, 0x8059573c, 7 | BRF_GRA },           // 27
+	{ "b25-01.14c",	0x10000, 0x42ec01fb, 7 | BRF_GRA },           // 24 Sprites
+	{ "b25-02.16c",	0x10000, 0x6c0130b7, 7 | BRF_GRA },           // 25
+	{ "b25-03.17c",	0x10000, 0xb923db99, 7 | BRF_GRA },           // 26
+	{ "b25-04.19c",	0x10000, 0x8059573c, 7 | BRF_GRA },           // 27
 
 	{ "82s129.b19",	0x00100, 0x24e7d62f, 8 | BRF_GRA },           // 28 Proms (not used)
 	{ "82s129.b18",	0x00100, 0xa50cef09, 8 | BRF_GRA },           // 29

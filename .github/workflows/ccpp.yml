@@ -16,6 +16,14 @@ jobs:
       run: |
            msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
            msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal
+    - name: make artifacts
+      run: |
+           7z a fbn-win32-vs.7z projectfiles\visualstudio-2019\Win32\Release\fbneo_vs.exe fba.chm  *.zip src\license.txt whatsnew.html
+    - name: upload vs artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: fbn-win32-vs.7z
+        path: fbn-win32-vs.7z           
   buildgcc:
     runs-on: windows-latest
     steps:

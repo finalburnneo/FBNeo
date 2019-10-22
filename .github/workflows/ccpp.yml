@@ -36,12 +36,12 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: fbn-win32-vs
-        path: fbn-win32-vs\*
+        path: fbn-win32-vs
     - name: upload vs x64 artifacts
       uses: actions/upload-artifact@v1
       with:
         name: fbn-x64-vs
-        path: fbn-x64-vs\*
+        path: fbn-x64-vs
     - name: Release
       uses: softprops/action-gh-release@v1
       with:

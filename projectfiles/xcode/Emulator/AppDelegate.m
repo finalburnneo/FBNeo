@@ -21,8 +21,6 @@
 
 static AppDelegate *sharedInstance = nil;
 
-// FIXME: adsp2100.h
-// FIXME: title in titlebar
 @implementation AppDelegate
 {
     FBMainThread *main;
@@ -209,7 +207,7 @@ static AppDelegate *sharedInstance = nil;
         label.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Error loading \"%@\".", nil),
                          name];
 
-    _window.title = NSBundle.mainBundle.infoDictionary[@"CFBundleName"];
+    _window.title = NSBundle.mainBundle.infoDictionary[(NSString *)kCFBundleNameKey];
 }
 
 #pragma mark - Actions
@@ -310,7 +308,7 @@ static AppDelegate *sharedInstance = nil;
 {
     NSURL *url = [NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory
                                                       inDomains:NSUserDomainMask].lastObject;
-    return [url URLByAppendingPathComponent:NSBundle.mainBundle.infoDictionary[@"CFBundleName"]].path;
+    return [url URLByAppendingPathComponent:NSBundle.mainBundle.infoDictionary[(NSString *)kCFBundleNameKey]].path;
 }
 
 @end

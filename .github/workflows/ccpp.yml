@@ -42,6 +42,13 @@ jobs:
       with:
         name: fbn-x64-vs
         path: fbn-x64-vs\*
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: test
+        files: fbn-x64-vs\*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   buildgcc:
     runs-on: windows-latest
     steps:

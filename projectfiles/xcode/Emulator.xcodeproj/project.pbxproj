@@ -974,6 +974,7 @@
 		FE1B287A23561A7A0065200C /* un7z.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239C23561A740065200C /* un7z.cpp */; };
 		FE1B287B23561A7A0065200C /* sshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239E23561A750065200C /* sshot.cpp */; };
 		FE1B288F23562B360065200C /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B288E23562B360065200C /* m68kops.c */; };
+		FE9A9910235F9A0700507894 /* FBEmulator.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE9A990E235F9A0600507894 /* FBEmulator.mm */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
@@ -2468,6 +2469,8 @@
 		FE1B288D23562B350065200C /* m68kops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = m68kops.h; sourceTree = "<group>"; };
 		FE1B288E23562B360065200C /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		FE9A990E235F9A0600507894 /* FBEmulator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBEmulator.mm; sourceTree = "<group>"; };
+		FE9A990F235F9A0700507894 /* FBEmulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBEmulator.h; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
 		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7AE23564A6400DA2D9D /* cave_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_sprite_func.pl; sourceTree = "<group>"; };
@@ -4617,6 +4620,8 @@
 			isa = PBXGroup;
 			children = (
 				FE1B287F235626280065200C /* burner_macos.h */,
+				FE9A990F235F9A0700507894 /* FBEmulator.h */,
+				FE9A990E235F9A0600507894 /* FBEmulator.mm */,
 				FEED9E1A235845EE00B7AF83 /* FBMainThread.h */,
 				FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */,
 				FEED9E1D2358B48C00B7AF83 /* main.cpp */,
@@ -5137,6 +5142,7 @@
 				FE1B264C23561A770065200C /* taito_m68705.cpp in Sources */,
 				FE1B263C23561A770065200C /* ps_z.cpp in Sources */,
 				FE1B261923561A770065200C /* d_wardner.cpp in Sources */,
+				FE9A9910235F9A0700507894 /* FBEmulator.mm in Sources */,
 				FE1B24C823561A750065200C /* d_esprade.cpp in Sources */,
 				FE1B25F823561A760065200C /* d_wunit.cpp in Sources */,
 				FE1B26F923561A780065200C /* d_quizo.cpp in Sources */,

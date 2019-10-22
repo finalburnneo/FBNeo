@@ -179,8 +179,8 @@ autdrv := $(drvsrc:.cpp=.o)
 #
 #
 
-CC	= gcc
-CXX	= g++
+CC	= i686-w64-mingw32-gcc
+CXX	= i686-w64-mingw32-g++
 LD	= $(CXX)
 AS	= nasm
 

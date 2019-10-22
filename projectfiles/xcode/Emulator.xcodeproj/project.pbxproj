@@ -463,7 +463,7 @@
 		FE1B25F023561A760065200C /* d_hcastle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B203223561A6B0065200C /* d_hcastle.cpp */; };
 		FE1B25F123561A760065200C /* ide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B203423561A6B0065200C /* ide.cpp */; settings = {COMPILER_FLAGS = "-Wno-return-type"; }; };
 		FE1B25F223561A760065200C /* d_kinst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B203723561A6B0065200C /* d_kinst.cpp */; };
-		FE1B25F323561A760065200C /* dcs2k.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B203823561A6B0065200C /* dcs2k.cpp */; };
+		FE1B25F323561A760065200C /* dcs2k.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B203823561A6B0065200C /* dcs2k.cpp */; settings = {COMPILER_FLAGS = "-I../../src/cpu/"; }; };
 		FE1B25F423561A760065200C /* midwayic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B203923561A6B0065200C /* midwayic.cpp */; };
 		FE1B25F523561A760065200C /* midwunit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B203C23561A6B0065200C /* midwunit.cpp */; };
 		FE1B25F623561A760065200C /* d_tunit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B203E23561A6B0065200C /* d_tunit.cpp */; };

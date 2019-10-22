@@ -2467,6 +2467,7 @@
 		FE1B288C2356296C0065200C /* toa_gp9001_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toa_gp9001_func_table.h; sourceTree = "<group>"; };
 		FE1B288D23562B350065200C /* m68kops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = m68kops.h; sourceTree = "<group>"; };
 		FE1B288E23562B360065200C /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
+		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
 		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7AE23564A6400DA2D9D /* cave_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_sprite_func.pl; sourceTree = "<group>"; };
@@ -4616,11 +4617,12 @@
 			isa = PBXGroup;
 			children = (
 				FE1B287F235626280065200C /* burner_macos.h */,
-				FEA5E79023563F5400DA2D9D /* misc.cpp */,
-				FEED9E1D2358B48C00B7AF83 /* main.cpp */,
-				FE1B287E23561D1A0065200C /* tchar.h */,
 				FEED9E1A235845EE00B7AF83 /* FBMainThread.h */,
 				FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */,
+				FEED9E1D2358B48C00B7AF83 /* main.cpp */,
+				FE9A990D235F82C900507894 /* main.h */,
+				FEA5E79023563F5400DA2D9D /* misc.cpp */,
+				FE1B287E23561D1A0065200C /* tchar.h */,
 			);
 			path = macos;
 			sourceTree = "<group>";
@@ -6010,6 +6012,7 @@
 					"-DBUILD_SDL",
 					"-DINCLUDE_7Z_SUPPORT",
 					"-DUSE_FILE32API",
+					"-DMAX_PATH=1024",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.akop.FinalBurnNeo;
 				PRODUCT_NAME = "FinalBurn Neo";
@@ -6066,6 +6069,7 @@
 					"-DBUILD_SDL",
 					"-DINCLUDE_7Z_SUPPORT",
 					"-DUSE_FILE32API",
+					"-DMAX_PATH=1024",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.akop.FinalBurnNeo;
 				PRODUCT_NAME = "FinalBurn Neo";

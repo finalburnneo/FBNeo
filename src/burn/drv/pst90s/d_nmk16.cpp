@@ -6619,7 +6619,7 @@ static struct BurnRomInfo macross2kRomDesc[] = {
 
 	{ "mcrs2j.2",		0x020000, 0xb4aa8ac7, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 code
 
-	{ "2.1",			0x020000, 0xe8ab17f9, 3 | BRF_GRA },           //  2 Characters
+	{ "2.1",			0x020000, 0x372dfa11, 3 | BRF_GRA },           //  2 Characters
 
 	{ "bp932an.a04",	0x200000, 0xc4d77ff0, 4 | BRF_GRA },           //  3 Tiles
 

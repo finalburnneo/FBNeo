@@ -5178,7 +5178,7 @@ static struct BurnRomInfo lastmisnRomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_dl00-e.18a",	0x01000, 0x6be57487, 7 }, // 13 i8751 microcontroller
+	{ "last_mission_dl00-e.18a",	0x01000, 0xe97481c6, 7 }, // 13 i8751 microcontroller
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5219,7 +5219,7 @@ static struct BurnRomInfo lastmsnu6RomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_dl00-a.18a",	0x01000, 0x6be57487, 7 }, // 13 i8751 microcontroller
+	{ "last_mission_dl00-a.18a",	0x01000, 0xe97481c6, 7 }, // 13 i8751 microcontroller
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5260,7 +5260,7 @@ static struct BurnRomInfo lastmsnu5RomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_dl00-a.18a",	0x01000, 0x6be57487, 7 }, // 13 i8751 microcontroller
+	{ "last_mission_dl00-a.18a",	0x01000, 0xe97481c6, 7 }, // 13 i8751 microcontroller
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };

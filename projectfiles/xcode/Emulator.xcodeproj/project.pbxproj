@@ -978,6 +978,8 @@
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
+		FEDA8F8D235EB561007A4D26 /* README-macOS.md in Resources */ = {isa = PBXBuildFile; fileRef = FEDA8F8C235EB561007A4D26 /* README-macOS.md */; };
+		FEDA8F8F235EB752007A4D26 /* whatsnew.html in Resources */ = {isa = PBXBuildFile; fileRef = FEDA8F8E235EB752007A4D26 /* whatsnew.html */; };
 		FEED9DCA2356EF5000B7AF83 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */; };
 		FEED9DD12356F0B900B7AF83 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DCF2356F07500B7AF83 /* SDL.framework */; };
 		FEED9DD22356F0B900B7AF83 /* SDL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DCF2356F07500B7AF83 /* SDL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -2481,6 +2483,8 @@
 		FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBScreenView.mm; sourceTree = "<group>"; };
 		FEDA8F87235D226E007A4D26 /* FBInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBInput.mm; sourceTree = "<group>"; };
 		FEDA8F88235D226E007A4D26 /* FBInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBInput.h; sourceTree = "<group>"; };
+		FEDA8F8C235EB561007A4D26 /* README-macOS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "README-macOS.md"; path = "../../README-macOS.md"; sourceTree = "<group>"; };
+		FEDA8F8E235EB752007A4D26 /* whatsnew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = whatsnew.html; path = ../../whatsnew.html; sourceTree = "<group>"; };
 		FEED9DC22356DDA900B7AF83 /* gamelist.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = gamelist.pl; sourceTree = "<group>"; };
 		FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		FEED9DCF2356F07500B7AF83 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../../../../../../Library/Frameworks/SDL.framework; sourceTree = "<group>"; };
@@ -2526,6 +2530,8 @@
 				FE1B108F235615940065200C /* Emulator */,
 				FE1B108E235615940065200C /* Products */,
 				FEED9DC82356EF4F00B7AF83 /* Frameworks */,
+				FEDA8F8C235EB561007A4D26 /* README-macOS.md */,
+				FEDA8F8E235EB752007A4D26 /* whatsnew.html */,
 			);
 			sourceTree = "<group>";
 		};
@@ -4761,6 +4767,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEDA8F8D235EB561007A4D26 /* README-macOS.md in Resources */,
+				FEDA8F8F235EB752007A4D26 /* whatsnew.html in Resources */,
 				FE1B241023561A750065200C /* license.txt in Resources */,
 				FE1B1094235615950065200C /* Assets.xcassets in Resources */,
 				FE1B1097235615950065200C /* MainMenu.xib in Resources */,

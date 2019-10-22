@@ -39,6 +39,7 @@
     NSPoint _lastCursorPosition;
     NSTrackingArea *_trackingArea;
     NSRect viewBounds; // Access from non-UI thread
+    GLint textureFormat;
 }
 
 #pragma mark - Initialize, Dealloc
@@ -70,8 +71,8 @@
 
     // Synchronize buffer swaps with vertical refresh rate
     GLint swapInt = 1;
-    [[self openGLContext] setValues:&swapInt
-                       forParameter:NSOpenGLCPSwapInterval];
+    [self.openGLContext setValues:&swapInt
+                     forParameter:NSOpenGLCPSwapInterval];
 
     glClearColor(0, 0, 0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -85,8 +86,7 @@
 {
     [renderLock lock];
 
-    NSOpenGLContext *nsContext = [self openGLContext];
-    [nsContext makeCurrentContext];
+    [self.openGLContext makeCurrentContext];
 
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -112,7 +112,7 @@
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
-    [nsContext flushBuffer];
+    [self.openGLContext flushBuffer];
 
     [renderLock unlock];
 }
@@ -122,8 +122,8 @@
     viewBounds = [self bounds];
     [renderLock lock];
 
-    [[self openGLContext] makeCurrentContext];
-    [[self openGLContext] update];
+    [self.openGLContext makeCurrentContext];
+    [self.openGLContext update];
 
     [self resetProjection];
 
@@ -144,8 +144,7 @@
 
     [renderLock lock];
 
-    NSOpenGLContext *nsContext = [self openGLContext];
-    [nsContext makeCurrentContext];
+    [self.openGLContext makeCurrentContext];
 
     free(texture);
 
@@ -157,9 +156,10 @@
     textureHeight = [FBScreenView powerOfTwoClosestTo:imageHeight];
     textureBytesPerPixel = bytesPerPixel;
     screenSize = NSMakeSize((CGFloat)width, (CGFloat)height);
+    textureFormat = GL_UNSIGNED_SHORT_5_6_5;
 
     int texSize = textureWidth * textureHeight * bytesPerPixel;
-    texture = (unsigned char *)malloc(texSize);
+    texture = (unsigned char *) malloc(texSize);
 
     glEnable(GL_TEXTURE_2D);
 
@@ -170,9 +170,9 @@
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, bytesPerPixel,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
                  textureWidth, textureHeight,
-                 0, GL_BGR, GL_UNSIGNED_BYTE, texture);
+                 0, GL_RGB, textureFormat, texture);
 
     glDisable(GL_TEXTURE_2D);
 
@@ -181,7 +181,7 @@
     [renderLock unlock];
 }
 
-- (void)renderFrame:(unsigned char *)bitmap
+- (void) renderFrame:(unsigned char *) bitmap
 {
     if (NSPointInRect(_lastCursorPosition, viewBounds)) {
         CFAbsoluteTime interval = CFAbsoluteTimeGetCurrent() - _lastMouseAction;
@@ -195,8 +195,7 @@
 
     [renderLock lock];
 
-    NSOpenGLContext *nsContext = [self openGLContext];
-    [nsContext makeCurrentContext];
+    [self.openGLContext makeCurrentContext];
 
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -207,11 +206,19 @@
     glBindTexture(GL_TEXTURE_2D, screenTextureId);
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-    for (int y = 0; y < imageHeight; y += 1) {
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, y, imageWidth, 1,
-                        GL_BGR, GL_UNSIGNED_BYTE,
-                        bitmap + y * imageWidth * textureBytesPerPixel);
+    unsigned char *ps = (unsigned char *) bitmap;
+    unsigned char *pd = (unsigned char *) texture;
+
+    int bitmapPitch = imageWidth * textureBytesPerPixel;
+    int texturePitch = textureWidth * textureBytesPerPixel;
+    for (int y = imageHeight; y--; ) {
+        memcpy(pd, ps, bitmapPitch);
+        pd += texturePitch;
+        ps += bitmapPitch;
     }
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0,
+             GL_RGB, textureFormat, texture);
 
     NSSize size = viewBounds.size;
     CGFloat offset = 0;
@@ -228,7 +235,7 @@
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
-    [nsContext flushBuffer];
+    [self.openGLContext flushBuffer];
 
     [renderLock unlock];
 }

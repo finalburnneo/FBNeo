@@ -55,6 +55,7 @@ static AppDelegate *sharedInstance = nil;
     _video = [FBVideo new];
     _video.delegate = screen;
     screen.delegate = self;
+    _emulator = [FBEmulator new];
 
     label.stringValue = NSLocalizedString(@"Drop a set here to load it.", nil);
     label.hidden = NO;
@@ -174,6 +175,7 @@ static AppDelegate *sharedInstance = nil;
     screen.hidden = NO;
     label.hidden = YES;
 
+    _window.title = _emulator.title;
     [_window makeFirstResponder:screen];
 }
 
@@ -182,6 +184,8 @@ static AppDelegate *sharedInstance = nil;
     NSLog(@"gameSessionDidEnd");
     screen.hidden = YES;
     label.hidden = NO;
+
+    _window.title = NSBundle.mainBundle.infoDictionary[@"CFBundleName"];
 }
 
 - (void) driverInitDidStart
@@ -189,7 +193,8 @@ static AppDelegate *sharedInstance = nil;
     [spinner.subviews.firstObject startAnimation:self];
     [_window addTitlebarAccessoryViewController:tbAccessory];
 
-    label.stringValue = NSLocalizedString(@"Loading...", nil);
+    label.stringValue = NSLocalizedString(@"Please wait...", nil);
+    _window.title = NSLocalizedString(@"Loading...", nil);
 }
 
 - (void) driverInitDidEnd:(NSString *) name
@@ -203,6 +208,8 @@ static AppDelegate *sharedInstance = nil;
     else
         label.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Error loading \"%@\".", nil),
                          name];
+
+    _window.title = NSBundle.mainBundle.infoDictionary[@"CFBundleName"];
 }
 
 #pragma mark - Actions
@@ -301,14 +308,9 @@ static AppDelegate *sharedInstance = nil;
 
 - (NSString *) appSupportPath
 {
-    NSURL *appSupportUrl = [NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory
-                                                                inDomains:NSUserDomainMask].lastObject;
-
-    if (appSupportUrl == nil)
-        return nil;
-
-    NSDictionary* infoDict = NSBundle.mainBundle.infoDictionary;
-    return [appSupportUrl URLByAppendingPathComponent:[infoDict objectForKey:@"CFBundleName"]].path;
+    NSURL *url = [NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory
+                                                      inDomains:NSUserDomainMask].lastObject;
+    return [url URLByAppendingPathComponent:NSBundle.mainBundle.infoDictionary[@"CFBundleName"]].path;
 }
 
 @end

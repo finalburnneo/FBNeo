@@ -8,8 +8,6 @@
 
 #import "AppDelegate.h"
 
-// FIXME: add icon
-// FIXME: sfiii
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;

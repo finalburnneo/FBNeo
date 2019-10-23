@@ -113,8 +113,8 @@ jobs:
         with:
          fetch-depth: 1
       - name: build
+        working-directory: projectfiles/xcode
         run: |
-             cd projectfiles/xcode
              xcodebuild -target Emulator -configuration Debug
         
         

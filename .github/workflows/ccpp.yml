@@ -106,5 +106,15 @@ jobs:
              sudo apt -y install libsdl1.2-dev
       - name: sdl build
         run: make sdl -j9 RELEASEBUILD=1 SKIPDEPEND=1
+  buildosx:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+         fetch-depth: 1
+      - name: build
+        run: |
+             cd projectfiles/xcode
+             xcodebuild -target Emulator -configuration Debug
         
         

@@ -54,6 +54,7 @@ static AppDelegate *sharedInstance = nil;
     _video.delegate = screen;
     screen.delegate = self;
     _emulator = [FBEmulator new];
+    _emulator.delegate = self;
 
     label.stringValue = NSLocalizedString(@"Drop a set here to load it.", nil);
     label.hidden = NO;
@@ -208,6 +209,18 @@ static AppDelegate *sharedInstance = nil;
                          name];
 
     _window.title = NSBundle.mainBundle.infoDictionary[(NSString *)kCFBundleNameKey];
+}
+
+#pragma mark - FBEmulatorDelegate
+
+- (void) driverProgressUpdate:(NSString *) message
+{
+    // FIXME
+}
+
+- (void) driverProgressError:(NSString *) message
+{
+    // FIXME
 }
 
 #pragma mark - Actions

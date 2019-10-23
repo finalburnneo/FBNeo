@@ -22,7 +22,9 @@ int MainInit(const char *path, const char *setname)
         return 0;
     }
 
-    fprintf(stderr, "Initializing '%s' in '%s'\n", setname, path);
+    char message[1024];
+    snprintf(message, sizeof(message), "Initializing '%s' in '%s'...\n", setname, path);
+    ProgressUpdateBurner(0, message, false);
 
     SDL_Init(SDL_INIT_AUDIO);
     BurnLibInit();
@@ -36,7 +38,8 @@ int MainInit(const char *path, const char *setname)
     }
 
     if (i == nBurnDrvCount) {
-        fprintf(stderr, "%s is not supported by FB Neo.", setname);
+        snprintf(message, sizeof(message), "'%s' is not supported by FB Neo.", setname);
+        AppError(message, false);
         return 0;
     }
 

@@ -15,7 +15,7 @@
 #import "FBEmulator.h"
 #import "FBMainThread.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, FBScreenViewDelegate, FBMainThreadDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, FBScreenViewDelegate, FBMainThreadDelegate, FBEmulatorDelegate>
 {
     IBOutlet FBScreenView *screen;
     IBOutlet NSView *spinner;

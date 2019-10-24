@@ -10,26 +10,34 @@
 
 #import "AppDelegate.h"
 
-@interface FBLogViewerController()
+@interface NSString (LogFormatter)
 
-- (void) loadText:(NSString *) text;
+- (NSMutableAttributedString *) applyFormat;
 
 @end
 
 @implementation FBLogViewerController
 {
-    NSFont *plainFont;
-    NSFont *boldFont;
+    NSMutableAttributedString *logContent;
 }
 
 - (id) init
 {
     if (self = [super initWithWindowNibName:@"LogViewer"]) {
-        plainFont = [NSFont fontWithName:@"Menlo" size:11];
-        boldFont = [NSFont fontWithName:@"Menlo-Bold" size:11];
+        logContent = [NSMutableAttributedString new];
     }
 
     return self;
+}
+
+- (void) awakeFromNib
+{
+    [AppDelegate.sharedInstance.runloop addObserver:self];
+}
+
+- (void) dealloc
+{
+    [AppDelegate.sharedInstance.runloop removeObserver:self];
 }
 
 #pragma mark - NSWindowController
@@ -38,36 +46,57 @@
 {
     [super windowDidLoad];
 
-    [self loadText:AppDelegate.sharedInstance.runloop.log];
+    [logContent appendAttributedString:[AppDelegate.sharedInstance.runloop.log applyFormat]];
+    textView.textStorage.attributedString = logContent;
 }
 
-#pragma mark - Private
+#pragma mark - FBMainThreadDelegate
 
-- (void) loadText:(NSString *) text
+- (void) logDidUpdate:(NSString *) message
 {
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:text];
+    [logContent appendAttributedString:[message applyFormat]];
+    textView.textStorage.attributedString = logContent;
 
+    if (self.window.visible)
+        [textView scrollToEndOfDocument:self];
+}
+
+- (void) logDidClear
+{
+    [logContent setAttributedString:[NSAttributedString new]];
+}
+
+@end
+
+#pragma mark - NSString (LogFormatter)
+
+@implementation NSString (LogFormatter)
+
+- (NSMutableAttributedString *) applyFormat
+{
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:self];
     [str addAttribute:NSFontAttributeName
-                value:plainFont
+                value:[NSFont fontWithName:@"Menlo" size:11]
                 range:NSMakeRange(0, str.length)];
 
     NSRegularExpression *rx = [NSRegularExpression regularExpressionWithPattern:@"^!.*$"
                                                                         options:NSRegularExpressionAnchorsMatchLines
                                                                           error:NULL];
 
-    NSArray *matches = [rx matchesInString:text
+    NSArray *matches = [rx matchesInString:self
                                    options:0
-                                     range:NSMakeRange(0, text.length)];
+                                     range:NSMakeRange(0, self.length)];
+
     for (NSTextCheckingResult *match in matches) {
         [str addAttribute:NSForegroundColorAttributeName
                     value:NSColor.redColor
                     range:match.range];
         [str addAttribute:NSFontAttributeName
-                    value:boldFont
+                    value:[NSFont fontWithName:@"Menlo-Bold" size:11]
                     range:match.range];
     }
 
-    textView.textStorage.attributedString = str;
+    return str;
 }
 
 @end

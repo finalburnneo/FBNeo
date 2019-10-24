@@ -20,12 +20,14 @@ typedef enum LogEntryType {
 {
     NSString *pathToLoad;
     NSMutableString *log;
+    NSMutableArray *observers;
 }
 
 - (instancetype) init
 {
     if (self = [super init]) {
         log = [NSMutableString new];
+        observers = [NSMutableArray new];
     }
     return self;
 }
@@ -42,12 +44,35 @@ typedef enum LogEntryType {
     return log;
 }
 
+- (void) addObserver:(id<FBMainThreadDelegate>) observer
+{
+    @synchronized (observer) {
+        [observers addObject:observer];
+    }
+}
+
+- (void) removeObserver:(id<FBMainThreadDelegate>) observer
+{
+    @synchronized (observer) {
+        [observers removeObject:observer];
+    }
+}
+
 #pragma mark - Private
 
 - (void) updateProgress:(const char *) message
                    type:(LogEntryType) entryType
 {
-    [log appendFormat:@"%c %s\n", entryType == LogEntryError ? '!' : ' ', message];
+    NSString *str = [NSString stringWithFormat:@"%c %s\n",
+                     entryType == LogEntryError ? '!' : ' ', message];
+
+    [log appendString:str];
+    for (id<FBMainThreadDelegate> o in observers) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([o respondsToSelector:@selector(logDidUpdate:)])
+                [o logDidUpdate:str];
+        });
+    }
 }
 
 #pragma mark - NSThread
@@ -65,25 +90,30 @@ typedef enum LogEntryType {
         NSString *setPath = [[pathToLoad stringByDeletingLastPathComponent] stringByAppendingString:@"/"];
         NSString *setName = [[pathToLoad lastPathComponent] stringByDeletingPathExtension];
 
-        {
-            id<FBMainThreadDelegate> del = _delegate;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([del respondsToSelector:@selector(driverInitDidStart)])
-                    [del driverInitDidStart];
-            });
+        log.string = @"";
+        @synchronized (observers) {
+            for (id<FBMainThreadDelegate> o in observers) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([o respondsToSelector:@selector(logDidClear)])
+                        [o logDidClear];
+                    if ([o respondsToSelector:@selector(driverInitDidStart)])
+                        [o driverInitDidStart];
+                });
+            }
         }
 
         if (!MainInit([setPath cStringUsingEncoding:NSUTF8StringEncoding],
                       [setName cStringUsingEncoding:NSUTF8StringEncoding])) {
             pathToLoad = nil;
 
-            {
-                id<FBMainThreadDelegate> del = _delegate;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if ([del respondsToSelector:@selector(driverInitDidEnd:success:)])
-                        [del driverInitDidEnd:setName
-                                      success:NO];
-                });
+            @synchronized (observers) {
+                for (id<FBMainThreadDelegate> o in observers) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if ([o respondsToSelector:@selector(driverInitDidEnd:success:)])
+                            [o driverInitDidEnd:setName
+                                        success:NO];
+                    });
+                }
             }
 
             continue;
@@ -92,26 +122,28 @@ typedef enum LogEntryType {
         _running = pathToLoad;
         pathToLoad = nil;
 
-        {
-            id<FBMainThreadDelegate> del = _delegate;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([del respondsToSelector:@selector(driverInitDidEnd:success:)])
-                    [del driverInitDidEnd:setName
-                                  success:YES];
-                if ([del respondsToSelector:@selector(gameSessionDidStart:)])
-                    [del gameSessionDidStart:setName];
-            });
+        @synchronized (observers) {
+            for (id<FBMainThreadDelegate> o in observers) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([o respondsToSelector:@selector(driverInitDidEnd:success:)])
+                        [o driverInitDidEnd:setName
+                                    success:YES];
+                    if ([o respondsToSelector:@selector(gameSessionDidStart:)])
+                        [o gameSessionDidStart:setName];
+                });
+            }
         }
 
         while (!self.isCancelled && pathToLoad == nil)
             MainFrame();
 
-        {
-            id<FBMainThreadDelegate> del = _delegate;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([del respondsToSelector:@selector(gameSessionDidEnd)])
-                    [del gameSessionDidEnd];
-            });
+        @synchronized (observers) {
+            for (id<FBMainThreadDelegate> o in observers) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([o respondsToSelector:@selector(gameSessionDidEnd)])
+                        [o gameSessionDidEnd];
+                });
+            }
         }
 
         _running = nil;

@@ -8,7 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface FBLogViewerController : NSWindowController<NSWindowDelegate>
+#import "FBMainThread.h"
+
+@interface FBLogViewerController : NSWindowController<NSWindowDelegate, FBMainThreadDelegate>
 {
     IBOutlet NSTextView *textView;
 }

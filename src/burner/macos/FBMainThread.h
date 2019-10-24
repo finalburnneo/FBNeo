@@ -17,14 +17,19 @@
 - (void) gameSessionDidStart:(NSString *) name;
 - (void) gameSessionDidEnd;
 
+- (void) logDidUpdate:(NSString *) message;
+- (void) logDidClear;
+
 @end
 
 @interface FBMainThread : NSThread
 
 @property (readonly) NSString *running;
-@property (nonatomic, weak) id<FBMainThreadDelegate> delegate;
 
 - (NSString *) log;
 - (void) load:(NSString *) path;
+
+- (void) addObserver:(id<FBMainThreadDelegate>) observer;
+- (void) removeObserver:(id<FBMainThreadDelegate>) observer;
 
 @end

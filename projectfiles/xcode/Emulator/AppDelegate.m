@@ -33,7 +33,7 @@ static AppDelegate *sharedInstance = nil;
 
 - (void) dealloc
 {
-    _runloop.delegate = nil;
+    [_runloop removeObserver:self];
     screen.delegate = nil;
     _video.delegate = nil;
 }
@@ -51,7 +51,7 @@ static AppDelegate *sharedInstance = nil;
     tbAccessory.layoutAttribute = NSLayoutAttributeRight;
 
     _runloop = [FBMainThread new];
-    _runloop.delegate = self;
+    [_runloop addObserver:self];
     _video = [FBVideo new];
     _video.delegate = screen;
     screen.delegate = self;
@@ -96,6 +96,9 @@ static AppDelegate *sharedInstance = nil;
 {
     NSLog(@"windowWillClose");
     [_runloop cancel];
+
+    NSLog(@"Emulator window closed; shutting down");
+    [[NSApplication sharedApplication] terminate:nil];
 }
 
 - (NSSize) windowWillResize:(NSWindow *) sender
@@ -124,11 +127,6 @@ static AppDelegate *sharedInstance = nil;
     }
 
     return frameSize;
-}
-
-- (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *) sender
-{
-    return YES;
 }
 
 - (BOOL) application:(NSApplication *) sender

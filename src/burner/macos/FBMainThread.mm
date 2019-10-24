@@ -11,14 +11,21 @@
 
 #include "main.h"
 
+typedef enum LogEntryType {
+    LogEntryMessage,
+    LogEntryError,
+} LogEntryType;
+
 @implementation FBMainThread
 {
     NSString *pathToLoad;
+    NSMutableString *log;
 }
 
 - (instancetype) init
 {
     if (self = [super init]) {
+        log = [NSMutableString new];
     }
     return self;
 }
@@ -28,6 +35,19 @@
 - (void) load:(NSString *) path
 {
     pathToLoad = path;
+}
+
+- (NSString *) log
+{
+    return log;
+}
+
+#pragma mark - Private
+
+- (void) updateProgress:(const char *) message
+                   type:(LogEntryType) entryType
+{
+    [log appendFormat:@"%c %s\n", entryType == LogEntryError ? '!' : ' ', message];
 }
 
 #pragma mark - NSThread
@@ -48,7 +68,8 @@
         {
             id<FBMainThreadDelegate> del = _delegate;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [del driverInitDidStart];
+                if ([del respondsToSelector:@selector(driverInitDidStart)])
+                    [del driverInitDidStart];
             });
         }
 
@@ -59,8 +80,9 @@
             {
                 id<FBMainThreadDelegate> del = _delegate;
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [del driverInitDidEnd:setName
-                                  success:NO];
+                    if ([del respondsToSelector:@selector(driverInitDidEnd:success:)])
+                        [del driverInitDidEnd:setName
+                                      success:NO];
                 });
             }
 
@@ -73,9 +95,11 @@
         {
             id<FBMainThreadDelegate> del = _delegate;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [del driverInitDidEnd:setName
-                              success:YES];
-                [del gameSessionDidStart:setName];
+                if ([del respondsToSelector:@selector(driverInitDidEnd:success:)])
+                    [del driverInitDidEnd:setName
+                                  success:YES];
+                if ([del respondsToSelector:@selector(gameSessionDidStart:)])
+                    [del gameSessionDidStart:setName];
             });
         }
 
@@ -85,7 +109,8 @@
         {
             id<FBMainThreadDelegate> del = _delegate;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [del gameSessionDidEnd];
+                if ([del respondsToSelector:@selector(gameSessionDidEnd)])
+                    [del gameSessionDidEnd];
             });
         }
 
@@ -96,3 +121,19 @@
 }
 
 @end
+
+#pragma mark - FinalBurn callbacks
+
+int ProgressUpdateBurner(double dProgress, const char* pszText, bool bAbs)
+{
+    [AppDelegate.sharedInstance.runloop updateProgress:pszText
+                                                  type:LogEntryMessage];
+    return 0;
+}
+
+int AppError(char* szText, int bWarning)
+{
+    [AppDelegate.sharedInstance.runloop updateProgress:szText
+                                                  type:LogEntryError];
+    return 0;
+}

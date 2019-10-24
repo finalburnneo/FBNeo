@@ -139,6 +139,12 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
+                            <menuItem title="Log Viewer" keyEquivalent="L" id="B9b-uq-YTW">
+                                <connections>
+                                    <action selector="displayLogViewer:" target="Voe-Tx-rLC" id="nPT-jf-1ps"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Ogn-TJ-pnG"/>
                             <menuItem title="Bring All to Front" id="LE2-aR-0XJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

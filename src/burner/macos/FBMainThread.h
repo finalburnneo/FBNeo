@@ -10,6 +10,7 @@
 
 @protocol FBMainThreadDelegate<NSObject>
 
+@optional
 - (void) driverInitDidStart;
 - (void) driverInitDidEnd:(NSString *) name
                   success:(BOOL) success;
@@ -23,6 +24,7 @@
 @property (readonly) NSString *running;
 @property (nonatomic, weak) id<FBMainThreadDelegate> delegate;
 
+- (NSString *) log;
 - (void) load:(NSString *) path;
 
 @end

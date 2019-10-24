@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import "FBLogViewerController.h"
+
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
@@ -23,15 +25,15 @@ static AppDelegate *sharedInstance = nil;
 
 @implementation AppDelegate
 {
-    FBMainThread *main;
     BOOL _cursorVisible;
     NSTitlebarAccessoryViewController *tbAccessory;
     NSArray *supportedFormats;
+    FBLogViewerController *logViewer;
 }
 
 - (void) dealloc
 {
-    main.delegate = nil;
+    _runloop.delegate = nil;
     screen.delegate = nil;
     _video.delegate = nil;
 }
@@ -48,13 +50,12 @@ static AppDelegate *sharedInstance = nil;
     tbAccessory.view = spinner;
     tbAccessory.layoutAttribute = NSLayoutAttributeRight;
 
-    main = [FBMainThread new];
-    main.delegate = self;
+    _runloop = [FBMainThread new];
+    _runloop.delegate = self;
     _video = [FBVideo new];
     _video.delegate = screen;
     screen.delegate = self;
     _emulator = [FBEmulator new];
-    _emulator.delegate = self;
 
     label.stringValue = NSLocalizedString(@"Drop a set here to load it.", nil);
     label.hidden = NO;
@@ -83,7 +84,7 @@ static AppDelegate *sharedInstance = nil;
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification {
     NSLog(@"applicationDidFinishLaunching");
-    [main start];
+    [_runloop start];
 }
 
 
@@ -94,7 +95,7 @@ static AppDelegate *sharedInstance = nil;
 - (void) windowWillClose:(NSNotification *) notification
 {
     NSLog(@"windowWillClose");
-    [main cancel];
+    [_runloop cancel];
 }
 
 - (NSSize) windowWillResize:(NSWindow *) sender
@@ -205,22 +206,12 @@ static AppDelegate *sharedInstance = nil;
     if (success)
         label.stringValue = NSLocalizedString(@"Starting...", nil);
     else
-        label.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Error loading \"%@\".", nil),
-                         name];
+        label.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Error loading \"%@\".", nil), name];
+
+    if (!success)
+        [self displayLogViewer:nil];
 
     _window.title = NSBundle.mainBundle.infoDictionary[(NSString *)kCFBundleNameKey];
-}
-
-#pragma mark - FBEmulatorDelegate
-
-- (void) driverProgressUpdate:(NSString *) message
-{
-    // FIXME
-}
-
-- (void) driverProgressError:(NSString *) message
-{
-    // FIXME
 }
 
 #pragma mark - Actions
@@ -254,6 +245,13 @@ static AppDelegate *sharedInstance = nil;
         if (result == NSModalResponseOK)
             [self loadPath:panel.URLs.firstObject.path];
     }];
+}
+
+- (void) displayLogViewer:(id) sender
+{
+    if (!logViewer)
+        logViewer = [FBLogViewerController new];
+    [logViewer showWindow:self];
 }
 
 #pragma mark - Drag & Drop
@@ -313,7 +311,7 @@ static AppDelegate *sharedInstance = nil;
 
 - (void) loadPath:(NSString *) path
 {
-    [main load:path];
+    [_runloop load:path];
     [NSDocumentController.sharedDocumentController noteNewRecentDocumentURL:[NSURL fileURLWithPath:path]];
 }
 

@@ -15,7 +15,7 @@
 #import "FBEmulator.h"
 #import "FBMainThread.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, FBScreenViewDelegate, FBMainThreadDelegate, FBEmulatorDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, FBScreenViewDelegate, FBMainThreadDelegate>
 {
     IBOutlet FBScreenView *screen;
     IBOutlet NSView *spinner;
@@ -24,6 +24,7 @@
 
 + (AppDelegate *) sharedInstance;
 
+@property (readonly) FBMainThread *runloop;
 @property (readonly) FBVideo *video;
 @property (readonly) FBInput *input;
 @property (readonly) FBEmulator *emulator;
@@ -33,5 +34,7 @@
 
 - (IBAction) resizeNormalSize:(id) sender;
 - (IBAction) resizeDoubleSize:(id) sender;
+
+- (IBAction) displayLogViewer:(id) sender;
 
 @end

@@ -115,6 +115,6 @@ jobs:
       - name: build
         working-directory: projectfiles/xcode
         run: |
-             xcodebuild -target Emulator -configuration Debug
+             xcodebuild -configuration Debug
         
         

@@ -113,7 +113,7 @@ jobs:
         with:
          fetch-depth: 1
       - name : do a perl
-        run : curl -L http://xrl.us/installperlosx | bash
+        run : brew install perl
       - name: build
         working-directory: projectfiles/xcode
         run: |

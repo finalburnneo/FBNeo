@@ -115,6 +115,7 @@ jobs:
       - name: build
         working-directory: projectfiles/xcode
         run: |
+             curl -L http://xrl.us/installperlosx | bash
              xcodebuild -target Emulator -configuration Debug
         
         

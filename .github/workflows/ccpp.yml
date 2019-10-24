@@ -112,10 +112,11 @@ jobs:
       - uses: actions/checkout@master
         with:
          fetch-depth: 1
+      - name : do a perl
+        run : curl -L http://xrl.us/installperlosx | bash
       - name: build
         working-directory: projectfiles/xcode
         run: |
-             curl -L http://xrl.us/installperlosx | bash
              xcodebuild -target Emulator -configuration Debug
         
         

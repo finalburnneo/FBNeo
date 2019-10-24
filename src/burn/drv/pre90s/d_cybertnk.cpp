@@ -6,6 +6,7 @@
 #include "z80_intf.h"
 #include "burn_y8950.h"
 #include "bitswap.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -52,26 +53,25 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[5];
 static UINT8 DrvInputs[2];
-static UINT16 DrvAnalog0;
-static UINT16 DrvAnalog1;
-static UINT16 DrvAnalog2;
-static UINT8 DrvAccel; // fake input for accel control
+static INT16 DrvAnalog0;
+static INT16 DrvAnalog1;
+static INT16 DrvAnalog2;
+static INT16 DrvAccel;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
 static struct BurnInputInfo CybertnkInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
-	
-	A("P1 Handle",		BIT_ANALOG_REL, &DrvAnalog0,	"p1 x-axis" ),
-	{"P1 Accel",		BIT_DIGITAL, 	&DrvAccel,		"p1 fire 3" },
+	A("P1 Steering",	BIT_ANALOG_REL, &DrvAnalog0,	"p1 x-axis" ),
+	A("P1 Accel",		BIT_ANALOG_REL, &DrvAccel,		"p1 z-axis" ),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 
-	A("P2 Gun L-R",		BIT_ANALOG_REL, &DrvAnalog1,	"p2 x-axis" ),
-	A("P2 Gun U-D",		BIT_ANALOG_REL, &DrvAnalog2,	"p2 y-axis" ),
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	A("P2 Gun X",		BIT_ANALOG_REL, &DrvAnalog1,	"p2 x-axis" ),
+	A("P2 Gun Y",		BIT_ANALOG_REL, &DrvAnalog2,	"p2 y-axis" ),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 fire 2"	},
 
@@ -272,26 +272,19 @@ static UINT8 __fastcall cybertnk_main_read_byte(UINT32 address)
 		case 0x1100d5: {
 			switch (mux_data) {
 				case 0x00: {
-					UINT8 Temp = DrvAnalog1 >> 4;
-					Temp += 0x7f;
-					return ~Temp - 1;
+					return 0xff - BurnGunReturnX(0);
 				}
 				
 				case 0x01: {
-					UINT8 Temp = DrvAnalog2 >> 4;
-					Temp += 0x7f;
-					return ~Temp - 1;
+					return 0xff - BurnGunReturnY(0);
 				}
 				
 				case 0x02: {
-					if (DrvAccel) return 0xff;
-					return 0x00;
+					return ProcessAnalog(DrvAccel, 0, 1 | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 				}
 				
 				case 0x03: {
-					UINT8 Temp = DrvAnalog0 >> 4;
-					Temp += 0x7f;
-					return ~Temp - 1;
+					return ProcessAnalog(DrvAnalog0, 1, 1, 0x00, 0xff);
 				}
 			}
 			return 0;
@@ -587,6 +580,8 @@ static INT32 DrvInit()
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnY8950SetRoute(1, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
+	BurnGunInit(2, false);
+
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -602,6 +597,8 @@ static INT32 DrvExit()
 	ZetExit();
 
 	BurnY8950Exit();
+
+	BurnGunExit();
 
 	BurnFree (AllMem);
 
@@ -845,6 +842,9 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+
+		BurnGunMakeInputs(0, DrvAnalog1, DrvAnalog2);
+
 	}
 
 	INT32 nInterleave = 100;
@@ -859,17 +859,16 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		INT32 nCycles = SekTotalCycles();
+		CPU_RUN(0, Sek);
 		if (i == ((nScreenHeight * 100) / 256)) SekSetIRQLine(1, CPU_IRQSTATUS_ACK);
 		SekClose();
 
 		SekOpen(1);
-		nCyclesDone[1] += SekRun(nCycles - SekTotalCycles());
+		CPU_RUN(1, Sek);
 		if (i == ((nScreenHeight * 100) / 256)) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		BurnTimerUpdateY8950(i * (nCyclesTotal[2] / nInterleave));
+		BurnTimerUpdateY8950((i + 1) * (nCyclesTotal[2] / nInterleave));
 	}
 
 	BurnTimerEndFrameY8950(nCyclesTotal[2]);
@@ -895,7 +894,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029727;
 	}
 
-	if (nAction & ACB_MEMORY_ROM) {	
+	if (nAction & ACB_MEMORY_ROM) {
 		ba.Data		= Drv68KROM0;
 		ba.nLen		= 0x0040000;
 		ba.nAddress	= 0x000000;
@@ -917,73 +916,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  	= Drv68KRAM0;
-		ba.nLen	  	= 0x008000;
-		ba.nAddress	= 0x080000;
-		ba.szName 	= "68k #0 Ram";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  	= DrvSprRAM;
-		ba.nLen	  	= 0x001000;
-		ba.nAddress	= 0x0a0000;
-		ba.szName 	= "Sprite Ram";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  	= DrvVidRAM0;
-		ba.nLen	  	= 0x002000;
-		ba.nAddress	= 0x0c0000;
-		ba.szName 	= "Video Ram #0";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  	= DrvVidRAM1;
-		ba.nLen	  	= 0x002000;
-		ba.nAddress	= 0x0c4000;
-		ba.szName 	= "Video Ram #1";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  	= DrvVidRAM0;
-		ba.nLen	  	= 0x002000;
-		ba.nAddress	= 0x0c8000;
-		ba.szName 	= "Video Ram #2";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  	= DrvShareRAM;
-		ba.nLen	  	= 0x001000;
-		ba.nAddress	= 0x0e0000;
-		ba.szName 	= "Shared RAM";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  	= DrvPalRAM;
-		ba.nLen	  	= 0x008000;
-		ba.nAddress	= 0x100000;
-		ba.szName 	= "Palette RAM";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  	= DrvVidRAM0;
-		ba.nLen	  	= 0x004000;
-		ba.nAddress	= 0x880000;
-		ba.szName 	= "68K #1 RAM (CPU #1)";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  	= DrvRoadRAM;
-		ba.nLen	  	= 0x001000;
-		ba.nAddress	= 0x8c0000;
-		ba.szName 	= "Road RAM (CPU #1)";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  	= DrvZ80RAM;
-		ba.nLen	  	= 0x002000;
-		ba.nAddress	= 0xf08000;
-		ba.szName 	= "Z80 RAM (CPU #2)";
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
 
@@ -992,19 +927,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnY8950Scan(nAction, pnMin);
+		BurnGunScan();
 
 		SCAN_VAR(mux_data);
-		SCAN_VAR(soundlatch[0]);
-		SCAN_VAR(DrvScroll0[0]);
-		SCAN_VAR(DrvScroll0[2]);
-		SCAN_VAR(DrvScroll1[0]);
-		SCAN_VAR(DrvScroll1[2]);
-		SCAN_VAR(DrvScroll2[0]);
-		SCAN_VAR(DrvScroll2[2]);
-	}
-
-	if (nAction & ACB_WRITE) {
-		DrvRecalc = 1;
 	}
 
 	return 0;

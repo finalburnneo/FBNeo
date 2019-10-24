@@ -196,7 +196,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 	if (!(i & DRV_ASCIIONLY)) {
 		switch (i & 0xFF) {
-#if !defined(__LIBRETRO__) && !defined(BUILD_SDL)
+#if !defined(__LIBRETRO__) && !defined(BUILD_SDL) && !defined(BUILD_MACOS)
 			case DRV_FULLNAME:
 				pszStringW = pDriver[nBurnDrvActive]->szFullNameW;
 				
@@ -925,7 +925,7 @@ struct MovieExtInfo
 	UINT32 hour, minute, second;
 };
 
-#ifndef BUILD_SDL
+#if !defined(BUILD_SDL) && !defined(BUILD_MACOS)
 extern struct MovieExtInfo MovieInfo; // from replay.cpp
 #else
 struct MovieExtInfo MovieInfo = { 0, 0, 0, 0, 0, 0 };

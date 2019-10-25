@@ -27,8 +27,10 @@ static AppDelegate *sharedInstance = nil;
 @implementation AppDelegate
 {
     BOOL _cursorVisible;
+    BOOL autoPaused;
     NSTitlebarAccessoryViewController *tbAccessory;
     NSArray *supportedFormats;
+    NSArray *defaultsToObserve;
     FBLogViewerController *logViewer;
     FBPreferencesController *prefs;
 }
@@ -47,6 +49,7 @@ static AppDelegate *sharedInstance = nil;
     _input = [FBInput new];
     _cursorVisible = YES;
     supportedFormats = @[ @"zip", @"7z" ];
+    defaultsToObserve = @[ @"pauseWhenInactive" ];
 
     tbAccessory = [NSTitlebarAccessoryViewController new];
     tbAccessory.view = spinner;
@@ -64,6 +67,11 @@ static AppDelegate *sharedInstance = nil;
     screen.hidden = YES;
 
     [_window registerForDraggedTypes:@[NSFilenamesPboardType]];
+    for (NSString *key in defaultsToObserve)
+        [NSUserDefaults.standardUserDefaults addObserver:self
+                                              forKeyPath:key
+                                                 options:NSKeyValueObservingOptionNew
+                                                 context:NULL];
 }
 
 - (void) applicationWillFinishLaunching:(NSNotification *) notification
@@ -75,13 +83,12 @@ static AppDelegate *sharedInstance = nil;
         _nvramPath
     ];
 
-    [paths enumerateObjectsUsingBlock:^(NSString *path, NSUInteger idx, BOOL *stop) {
+    for (NSString *path in paths)
         if (![NSFileManager.defaultManager fileExistsAtPath:path])
             [NSFileManager.defaultManager createDirectoryAtPath:path
                                     withIntermediateDirectories:YES
                                                      attributes:nil
                                                           error:NULL];
-    }];
 }
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -94,9 +101,43 @@ static AppDelegate *sharedInstance = nil;
 	// Insert code here to tear down your application
 }
 
+#pragma mark - NSWindowDelegate
+
+- (void) windowDidBecomeKey:(NSNotification *) notification
+{
+    if (autoPaused && _runloop.isPaused)
+        _runloop.paused = NO;
+    autoPaused = NO;
+
+    // FIXME!!
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"suppressScreenSaver"]) {
+//        [(FXAppDelegate *) [NSApp delegate] suppressScreenSaver];
+//    }
+}
+
+- (void) windowDidResignKey:(NSNotification *) notification
+{
+    if (!_cursorVisible) {
+        _cursorVisible = YES;
+        [NSCursor unhide];
+    }
+
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"pauseWhenInactive"] && !_runloop.isPaused) {
+        _runloop.paused = YES;
+        autoPaused = YES;
+    }
+
+    // FIXME!!
+//    [(FXAppDelegate *) [NSApp delegate] restoreScreenSaver];
+}
+
 - (void) windowWillClose:(NSNotification *) notification
 {
     NSLog(@"windowWillClose");
+    for (NSString *key in defaultsToObserve)
+        [NSUserDefaults.standardUserDefaults removeObserver:self
+                                                 forKeyPath:key];
+
     [_runloop cancel];
 
     NSLog(@"Emulator window closed; shutting down");
@@ -142,6 +183,22 @@ static AppDelegate *sharedInstance = nil;
 + (AppDelegate *) sharedInstance
 {
     return sharedInstance;
+}
+
+#pragma mark - Notifications
+
+- (void) observeValueForKeyPath:(NSString *) keyPath
+                       ofObject:(id) object
+                         change:(NSDictionary *) change
+                        context:(void *) context
+{
+    if ([keyPath isEqualToString:@"pauseWhenInactive"]) {
+        BOOL newValue = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
+        if (!_window.isKeyWindow && newValue && !_runloop.isPaused) {
+            _runloop.paused = YES;
+            autoPaused = YES;
+        }
+    }
 }
 
 #pragma mark - FBScreenViewDelegate

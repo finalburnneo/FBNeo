@@ -43,7 +43,6 @@ int MainInit(const char *path, const char *setname)
         return 0;
     }
 
-    bRunPause = 0;
     bCheatsAllowed = false;
     sprintf(szAppRomPaths[0], path);
 
@@ -57,6 +56,9 @@ int MainInit(const char *path, const char *setname)
     char temp[MAX_PATH];
     snprintf(temp, MAX_PATH, "%s/%s.nvr", NVRAMPath, BurnDrvGetTextA(0));
     BurnStateLoad(temp, 0, NULL);
+
+    if (bRunPause)
+        AudSoundStop();
 
     return 1;
 }

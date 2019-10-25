@@ -17,8 +17,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="600" height="400"/>
+            <rect key="contentRect" x="949" y="526" width="600" height="400"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
@@ -34,17 +33,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Fd-Rl-fcn">
-                                            <rect key="frame" x="278" y="362" width="248" height="19"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Pause when another window is active" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="VEg-EQ-yU6">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <binding destination="tRY-Xw-0IH" name="value" keyPath="values.pauseWhenInactive" id="94V-xI-Vbd"/>
-                                            </connections>
-                                        </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A5A-j1-YHP">
                                             <rect key="frame" x="177" y="363" width="97" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -54,6 +42,28 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Fd-Rl-fcn">
+                                            <rect key="frame" x="278" y="362" width="304" height="19"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Pause when window becomes inactive" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="VEg-EQ-yU6">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <binding destination="tRY-Xw-0IH" name="value" keyPath="values.pauseWhenInactive" id="94V-xI-Vbd"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pzu-xd-GXb">
+                                            <rect key="frame" x="278" y="342" width="304" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Turn off screensaver while window is active" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gCl-6s-69x">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <binding destination="tRY-Xw-0IH" name="value" keyPath="values.suppressScreenSaver" id="8Be-3b-Ge9"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -107,7 +117,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="193.5" y="183.5"/>
+            <point key="canvasLocation" x="193" y="183"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="tRY-Xw-0IH"/>
     </objects>

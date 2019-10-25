@@ -982,7 +982,6 @@
 		FE2BC6C12362CEBB00B9D150 /* FBPreferencesController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6BF2362CEBB00B9D150 /* FBPreferencesController.mm */; };
 		FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6C92362CFC000B9D150 /* Preferences.xib */; };
 		FE2BC6D02362D5BD00B9D150 /* FBMainThread+Etc.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */; };
-		FE9A9910235F9A0700507894 /* FBEmulator.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE9A990E235F9A0600507894 /* FBEmulator.mm */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
@@ -1009,6 +1008,10 @@
 		FEED9E152358414300B7AF83 /* stringset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E142358414300B7AF83 /* stringset.cpp */; };
 		FEED9E1C235845EE00B7AF83 /* FBMainThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */; };
 		FEED9E1E2358B48C00B7AF83 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E1D2358B48C00B7AF83 /* main.cpp */; };
+		FEF4EE8123635500004E0DCE /* FBEmulatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF4EE8023635500004E0DCE /* FBEmulatorController.m */; };
+		FEF4EE8423635521004E0DCE /* Emulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF4EE8223635521004E0DCE /* Emulator.xib */; };
+		FEF4EE8723635CA0004E0DCE /* NSWindowController+Core.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF4EE8523635CA0004E0DCE /* NSWindowController+Core.m */; };
+		FEF4EE892363720B004E0DCE /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEF4EE882363720B004E0DCE /* Defaults.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -2495,11 +2498,8 @@
 		FE2BC6BE2362CEBB00B9D150 /* FBPreferencesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBPreferencesController.h; sourceTree = "<group>"; };
 		FE2BC6BF2362CEBB00B9D150 /* FBPreferencesController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FBPreferencesController.mm; sourceTree = "<group>"; };
 		FE2BC6CA2362CFC000B9D150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Preferences.xib; sourceTree = "<group>"; };
-		FE2BC6CE2362D5BD00B9D150 /* FBMainThread+Etc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBMainThread+Etc.h"; sourceTree = "<group>"; };
 		FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "FBMainThread+Etc.mm"; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		FE9A990E235F9A0600507894 /* FBEmulator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBEmulator.mm; sourceTree = "<group>"; };
-		FE9A990F235F9A0700507894 /* FBEmulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBEmulator.h; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
 		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7AE23564A6400DA2D9D /* cave_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_sprite_func.pl; sourceTree = "<group>"; };
@@ -2541,6 +2541,12 @@
 		FEED9E1A235845EE00B7AF83 /* FBMainThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBMainThread.h; sourceTree = "<group>"; };
 		FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FBMainThread.mm; sourceTree = "<group>"; };
 		FEED9E1D2358B48C00B7AF83 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FEF4EE7F23635500004E0DCE /* FBEmulatorController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBEmulatorController.h; sourceTree = "<group>"; };
+		FEF4EE8023635500004E0DCE /* FBEmulatorController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBEmulatorController.m; sourceTree = "<group>"; };
+		FEF4EE8323635521004E0DCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Emulator.xib; sourceTree = "<group>"; };
+		FEF4EE8523635CA0004E0DCE /* NSWindowController+Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindowController+Core.m"; sourceTree = "<group>"; };
+		FEF4EE8623635CA0004E0DCE /* NSWindowController+Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindowController+Core.h"; sourceTree = "<group>"; };
+		FEF4EE882363720B004E0DCE /* Defaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2589,6 +2595,7 @@
 				FE1B109B235615960065200C /* FinalBurnNeo.entitlements */,
 				FE1B1098235615950065200C /* Info.plist */,
 				FE1B1099235615950065200C /* main.m */,
+				FEF4EE882363720B004E0DCE /* Defaults.plist */,
 			);
 			path = Emulator;
 			sourceTree = "<group>";
@@ -4652,11 +4659,8 @@
 			isa = PBXGroup;
 			children = (
 				FE1B287F235626280065200C /* burner_macos.h */,
-				FE9A990F235F9A0700507894 /* FBEmulator.h */,
-				FE9A990E235F9A0600507894 /* FBEmulator.mm */,
 				FEED9E1A235845EE00B7AF83 /* FBMainThread.h */,
 				FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */,
-				FE2BC6CE2362D5BD00B9D150 /* FBMainThread+Etc.h */,
 				FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */,
 				FEED9E1D2358B48C00B7AF83 /* main.cpp */,
 				FE9A990D235F82C900507894 /* main.h */,
@@ -4669,10 +4673,14 @@
 		FE2BC6AF23615BBC00B9D150 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FEF4EE7F23635500004E0DCE /* FBEmulatorController.h */,
+				FEF4EE8023635500004E0DCE /* FBEmulatorController.m */,
 				FE2BC6B323615C3300B9D150 /* FBLogViewerController.h */,
 				FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */,
 				FE2BC6BE2362CEBB00B9D150 /* FBPreferencesController.h */,
 				FE2BC6BF2362CEBB00B9D150 /* FBPreferencesController.mm */,
+				FEF4EE8623635CA0004E0DCE /* NSWindowController+Core.h */,
+				FEF4EE8523635CA0004E0DCE /* NSWindowController+Core.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4680,6 +4688,7 @@
 		FE2BC6BD2362BF9200B9D150 /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
+				FEF4EE8223635521004E0DCE /* Emulator.xib */,
 				FE2BC6A923615B3400B9D150 /* LogViewer.xib */,
 				FE1B1095235615950065200C /* MainMenu.xib */,
 				FE2BC6C92362CFC000B9D150 /* Preferences.xib */,
@@ -4833,9 +4842,11 @@
 			files = (
 				FE2BC6BB2362B4E200B9D150 /* dsa_pub.pem in Resources */,
 				FEDA8F8D235EB561007A4D26 /* README-macOS.md in Resources */,
+				FEF4EE892363720B004E0DCE /* Defaults.plist in Resources */,
 				FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */,
 				FEDA8F8F235EB752007A4D26 /* whatsnew.html in Resources */,
 				FE1B241023561A750065200C /* license.txt in Resources */,
+				FEF4EE8423635521004E0DCE /* Emulator.xib in Resources */,
 				FE1B1094235615950065200C /* Assets.xcassets in Resources */,
 				FE2BC6AB23615B3400B9D150 /* LogViewer.xib in Resources */,
 				FE1B1097235615950065200C /* MainMenu.xib in Resources */,
@@ -5112,6 +5123,7 @@
 				FE1B243D23561A750065200C /* XzCrc64.c in Sources */,
 				FE1B24E523561A760065200C /* d_shuuz.cpp in Sources */,
 				FE1B253423561A760065200C /* d_vmetal.cpp in Sources */,
+				FEF4EE8123635500004E0DCE /* FBEmulatorController.m in Sources */,
 				FE1B24FB23561A760065200C /* d_suprnova.cpp in Sources */,
 				FE1B257D23561A760065200C /* d_tumblep.cpp in Sources */,
 				FE1B262923561A770065200C /* d_psikyo4.cpp in Sources */,
@@ -5202,7 +5214,6 @@
 				FE1B264C23561A770065200C /* taito_m68705.cpp in Sources */,
 				FE1B263C23561A770065200C /* ps_z.cpp in Sources */,
 				FE1B261923561A770065200C /* d_wardner.cpp in Sources */,
-				FE9A9910235F9A0700507894 /* FBEmulator.mm in Sources */,
 				FE1B24C823561A750065200C /* d_esprade.cpp in Sources */,
 				FE1B25F823561A760065200C /* d_wunit.cpp in Sources */,
 				FE1B26F923561A780065200C /* d_quizo.cpp in Sources */,
@@ -5404,6 +5415,7 @@
 				FE1B249D23561A750065200C /* interface.cpp in Sources */,
 				FE1B27D923561A790065200C /* midssio.cpp in Sources */,
 				FE1B251423561A760065200C /* d_metro.cpp in Sources */,
+				FEF4EE8723635CA0004E0DCE /* NSWindowController+Core.m in Sources */,
 				FE1B26FB23561A780065200C /* d_madmotor.cpp in Sources */,
 				FE1B27DE23561A790065200C /* midsg.cpp in Sources */,
 				FE1B26E623561A780065200C /* d_prehisle.cpp in Sources */,
@@ -5955,6 +5967,14 @@
 				FE2BC6CA2362CFC000B9D150 /* Base */,
 			);
 			name = Preferences.xib;
+			sourceTree = "<group>";
+		};
+		FEF4EE8223635521004E0DCE /* Emulator.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FEF4EE8323635521004E0DCE /* Base */,
+			);
+			name = Emulator.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

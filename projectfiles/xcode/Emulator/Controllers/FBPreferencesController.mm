@@ -37,6 +37,48 @@
                                             forKey:@"selectedPreferencesTab"];
 }
 
+- (void) showPreviousTab:(id) sender
+{
+    __block int selected = -1;
+    NSArray<NSToolbarItem *> *items = toolbar.visibleItems;
+    [items enumerateObjectsUsingBlock:^(NSToolbarItem *item, NSUInteger idx, BOOL *stop) {
+        if ([item.itemIdentifier isEqualToString:toolbar.selectedItemIdentifier]) {
+            selected = (int) idx;
+            *stop = YES;
+        }
+    }];
+
+    if (selected < 0 || --selected < 0)
+        selected = items.count - 1;
+
+    NSString *nextId = items[selected].itemIdentifier;
+    toolbar.selectedItemIdentifier = nextId;
+
+    [NSUserDefaults.standardUserDefaults setObject:nextId
+                                            forKey:@"selectedPreferencesTab"];
+}
+
+- (void) showNextTab:(id) sender
+{
+    __block int selected = -1;
+    NSArray<NSToolbarItem *> *items = toolbar.visibleItems;
+    [items enumerateObjectsUsingBlock:^(NSToolbarItem *item, NSUInteger idx, BOOL *stop) {
+        if ([item.itemIdentifier isEqualToString:toolbar.selectedItemIdentifier]) {
+            selected = (int) idx;
+            *stop = YES;
+        }
+    }];
+
+    if (selected < 0 || ++selected >= items.count)
+        selected = 0;
+
+    NSString *nextId = items[selected].itemIdentifier;
+    toolbar.selectedItemIdentifier = nextId;
+
+    [NSUserDefaults.standardUserDefaults setObject:nextId
+                                            forKey:@"selectedPreferencesTab"];
+}
+
 #pragma mark - NSTabViewDelegate
 
 - (void) tabView:(NSTabView *) tabView

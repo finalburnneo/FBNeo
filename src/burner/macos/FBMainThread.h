@@ -33,3 +33,12 @@
 - (void) removeObserver:(id<FBMainThreadDelegate>) observer;
 
 @end
+
+@interface FBMainThread (Etc)
+
+- (BOOL) isPaused;
+- (void) setPaused:(BOOL) isPaused;
+
+- (NSString *) title;
+
+@end

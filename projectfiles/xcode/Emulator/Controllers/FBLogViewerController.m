@@ -7,6 +7,7 @@
 //
 
 #import "FBLogViewerController.h"
+#import "NSWindowController+Core.h"
 
 #import "AppDelegate.h"
 
@@ -32,12 +33,12 @@
 
 - (void) awakeFromNib
 {
-    [AppDelegate.sharedInstance.runloop addObserver:self];
+    [self.runloop addObserver:self];
 }
 
 - (void) dealloc
 {
-    [AppDelegate.sharedInstance.runloop removeObserver:self];
+    [self.runloop removeObserver:self];
 }
 
 #pragma mark - NSWindowController
@@ -46,8 +47,9 @@
 {
     [super windowDidLoad];
 
-    [logContent appendAttributedString:[AppDelegate.sharedInstance.runloop.log applyFormat]];
+    [logContent appendAttributedString:[self.runloop.log applyFormat]];
     textView.textStorage.attributedString = logContent;
+    [textView scrollToEndOfDocument:self];
 }
 
 #pragma mark - FBMainThreadDelegate

@@ -15,5 +15,7 @@
 }
 
 - (IBAction) tabChanged:(id) sender;
+- (IBAction) showPreviousTab:(id) sender;
+- (IBAction) showNextTab:(id) sender;
 
 @end

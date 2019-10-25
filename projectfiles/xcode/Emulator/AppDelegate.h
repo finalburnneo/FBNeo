@@ -8,35 +8,26 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "FBScreenView.h"
-
 #import "FBVideo.h"
 #import "FBInput.h"
-#import "FBEmulator.h"
 #import "FBMainThread.h"
-#import "FBMainThread+Etc.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, FBScreenViewDelegate, FBMainThreadDelegate>
-{
-    IBOutlet FBScreenView *screen;
-    IBOutlet NSView *spinner;
-    IBOutlet NSTextField *label;
-}
+@interface AppDelegate : NSObject <NSApplicationDelegate>
 
 + (AppDelegate *) sharedInstance;
+
+- (void) loadPath: (NSString *) path;
+- (void) suppressScreenSaver;
+- (void) restoreScreenSaver;
 
 @property (readonly) FBMainThread *runloop;
 @property (readonly) FBVideo *video;
 @property (readonly) FBInput *input;
-@property (readonly) FBEmulator *emulator;
 
 @property (readonly) NSString *supportPath;
 @property (readonly) NSString *nvramPath;
 
-- (IBAction) togglePause:(id) sender;
-
-- (IBAction) resizeNormalSize:(id) sender;
-- (IBAction) resizeDoubleSize:(id) sender;
+@property (readonly) NSArray *supportedFormats;
 
 - (IBAction) displayLogViewer:(id) sender;
 - (IBAction) displayPreferences:(id) sender;

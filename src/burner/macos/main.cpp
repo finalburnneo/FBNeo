@@ -60,6 +60,8 @@ int MainInit(const char *path, const char *setname)
     if (bRunPause)
         AudSoundStop();
 
+    ProgressUpdateBurner(0, "Initialization successful", false);
+
     return 1;
 }
 

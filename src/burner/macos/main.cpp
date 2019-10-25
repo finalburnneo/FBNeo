@@ -43,6 +43,7 @@ int MainInit(const char *path, const char *setname)
         return 0;
     }
 
+    bRunPause = 0;
     bCheatsAllowed = false;
     sprintf(szAppRomPaths[0], path);
 

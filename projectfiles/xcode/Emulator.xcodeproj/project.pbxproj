@@ -979,6 +979,9 @@
 		FE2BC6B7236265C000B9D150 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE2BC6B6236265BF00B9D150 /* Sparkle.framework */; };
 		FE2BC6B92362662600B9D150 /* Sparkle.framework in Copy Sparkle */ = {isa = PBXBuildFile; fileRef = FE2BC6B6236265BF00B9D150 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FE2BC6BB2362B4E200B9D150 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6BA2362B4E200B9D150 /* dsa_pub.pem */; };
+		FE2BC6C12362CEBB00B9D150 /* FBPreferencesController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6BF2362CEBB00B9D150 /* FBPreferencesController.mm */; };
+		FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6C92362CFC000B9D150 /* Preferences.xib */; };
+		FE2BC6D02362D5BD00B9D150 /* FBMainThread+Etc.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */; };
 		FE9A9910235F9A0700507894 /* FBEmulator.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE9A990E235F9A0600507894 /* FBEmulator.mm */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
@@ -2489,6 +2492,11 @@
 		FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLogViewerController.m; sourceTree = "<group>"; };
 		FE2BC6B6236265BF00B9D150 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		FE2BC6BA2362B4E200B9D150 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		FE2BC6BE2362CEBB00B9D150 /* FBPreferencesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBPreferencesController.h; sourceTree = "<group>"; };
+		FE2BC6BF2362CEBB00B9D150 /* FBPreferencesController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FBPreferencesController.mm; sourceTree = "<group>"; };
+		FE2BC6CA2362CFC000B9D150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Preferences.xib; sourceTree = "<group>"; };
+		FE2BC6CE2362D5BD00B9D150 /* FBMainThread+Etc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBMainThread+Etc.h"; sourceTree = "<group>"; };
+		FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "FBMainThread+Etc.mm"; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FE9A990E235F9A0600507894 /* FBEmulator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBEmulator.mm; sourceTree = "<group>"; };
 		FE9A990F235F9A0700507894 /* FBEmulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBEmulator.h; sourceTree = "<group>"; };
@@ -2572,6 +2580,7 @@
 		FE1B108F235615940065200C /* Emulator */ = {
 			isa = PBXGroup;
 			children = (
+				FE2BC6BD2362BF9200B9D150 /* Nibs */,
 				FE2BC6AF23615BBC00B9D150 /* Controllers */,
 				FE1B1090235615940065200C /* AppDelegate.h */,
 				FE1B1091235615940065200C /* AppDelegate.m */,
@@ -2579,9 +2588,7 @@
 				FE2BC6BA2362B4E200B9D150 /* dsa_pub.pem */,
 				FE1B109B235615960065200C /* FinalBurnNeo.entitlements */,
 				FE1B1098235615950065200C /* Info.plist */,
-				FE2BC6A923615B3400B9D150 /* LogViewer.xib */,
 				FE1B1099235615950065200C /* main.m */,
-				FE1B1095235615950065200C /* MainMenu.xib */,
 			);
 			path = Emulator;
 			sourceTree = "<group>";
@@ -4649,6 +4656,8 @@
 				FE9A990E235F9A0600507894 /* FBEmulator.mm */,
 				FEED9E1A235845EE00B7AF83 /* FBMainThread.h */,
 				FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */,
+				FE2BC6CE2362D5BD00B9D150 /* FBMainThread+Etc.h */,
+				FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */,
 				FEED9E1D2358B48C00B7AF83 /* main.cpp */,
 				FE9A990D235F82C900507894 /* main.h */,
 				FEA5E79023563F5400DA2D9D /* misc.cpp */,
@@ -4662,8 +4671,20 @@
 			children = (
 				FE2BC6B323615C3300B9D150 /* FBLogViewerController.h */,
 				FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */,
+				FE2BC6BE2362CEBB00B9D150 /* FBPreferencesController.h */,
+				FE2BC6BF2362CEBB00B9D150 /* FBPreferencesController.mm */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		FE2BC6BD2362BF9200B9D150 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				FE2BC6A923615B3400B9D150 /* LogViewer.xib */,
+				FE1B1095235615950065200C /* MainMenu.xib */,
+				FE2BC6C92362CFC000B9D150 /* Preferences.xib */,
+			);
+			name = Nibs;
 			sourceTree = "<group>";
 		};
 		FEA5E7982356472200DA2D9D /* macos */ = {
@@ -4812,6 +4833,7 @@
 			files = (
 				FE2BC6BB2362B4E200B9D150 /* dsa_pub.pem in Resources */,
 				FEDA8F8D235EB561007A4D26 /* README-macOS.md in Resources */,
+				FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */,
 				FEDA8F8F235EB752007A4D26 /* whatsnew.html in Resources */,
 				FE1B241023561A750065200C /* license.txt in Resources */,
 				FE1B1094235615950065200C /* Assets.xcassets in Resources */,
@@ -5854,6 +5876,7 @@
 				FE1B27BD23561A790065200C /* gaelco_crypt.cpp in Sources */,
 				FE1B271B23561A780065200C /* d_invaders.cpp in Sources */,
 				FE1B263823561A770065200C /* ctv.cpp in Sources */,
+				FE2BC6C12362CEBB00B9D150 /* FBPreferencesController.mm in Sources */,
 				FE1B268F23561A770065200C /* d_sub.cpp in Sources */,
 				FE1B279023561A790065200C /* ym2413.c in Sources */,
 				FE1B271A23561A780065200C /* d_battlane.cpp in Sources */,
@@ -5866,6 +5889,7 @@
 				FE1B258C23561A760065200C /* d_darkseal.cpp in Sources */,
 				FE1B258E23561A760065200C /* d_lemmings.cpp in Sources */,
 				FE1B261423561A770065200C /* d_dogyuun.cpp in Sources */,
+				FE2BC6D02362D5BD00B9D150 /* FBMainThread+Etc.mm in Sources */,
 				FE1B26BA23561A770065200C /* d_mole.cpp in Sources */,
 				FE1B25AD23561A760065200C /* d_shaolins.cpp in Sources */,
 				FE1B278C23561A790065200C /* k007232.cpp in Sources */,
@@ -5923,6 +5947,14 @@
 				FE2BC6AA23615B3400B9D150 /* Base */,
 			);
 			name = LogViewer.xib;
+			sourceTree = "<group>";
+		};
+		FE2BC6C92362CFC000B9D150 /* Preferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE2BC6CA2362CFC000B9D150 /* Base */,
+			);
+			name = Preferences.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

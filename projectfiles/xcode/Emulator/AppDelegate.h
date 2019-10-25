@@ -14,6 +14,7 @@
 #import "FBInput.h"
 #import "FBEmulator.h"
 #import "FBMainThread.h"
+#import "FBMainThread+Etc.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, FBScreenViewDelegate, FBMainThreadDelegate>
 {
@@ -32,9 +33,12 @@
 @property (readonly) NSString *supportPath;
 @property (readonly) NSString *nvramPath;
 
+- (IBAction) togglePause:(id) sender;
+
 - (IBAction) resizeNormalSize:(id) sender;
 - (IBAction) resizeDoubleSize:(id) sender;
 
 - (IBAction) displayLogViewer:(id) sender;
+- (IBAction) displayPreferences:(id) sender;
 
 @end

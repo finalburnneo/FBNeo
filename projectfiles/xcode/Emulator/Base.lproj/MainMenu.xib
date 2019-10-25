@@ -42,7 +42,11 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
+                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
+                                <connections>
+                                    <action selector="displayPreferences:" target="Voe-Tx-rLC" id="O4V-HT-KMv"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -101,6 +105,18 @@
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
                                     <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Game" id="nPQ-px-Dcp">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Game" id="cgf-ex-L8x">
+                        <items>
+                            <menuItem title="Pause" keyEquivalent="p" id="Jl5-0C-ZL9">
+                                <connections>
+                                    <action selector="togglePause:" target="Voe-Tx-rLC" id="S0p-UZ-iQj"/>
                                 </connections>
                             </menuItem>
                         </items>

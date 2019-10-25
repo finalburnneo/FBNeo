@@ -162,8 +162,8 @@ static int MacOSVideoExit()
 
 static int MacOSVideoFrame(bool redraw)
 {
-    if (pVidImage == NULL)
-        return NO;
+    if (pVidImage == NULL || bRunPause)
+        return 0;
 
     if (redraw) {
         if (BurnDrvRedraw()) {

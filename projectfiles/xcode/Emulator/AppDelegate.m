@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "FBLogViewerController.h"
+#import "FBPreferencesController.h"
 
 @interface AppDelegate ()
 
@@ -29,6 +30,7 @@ static AppDelegate *sharedInstance = nil;
     NSTitlebarAccessoryViewController *tbAccessory;
     NSArray *supportedFormats;
     FBLogViewerController *logViewer;
+    FBPreferencesController *prefs;
 }
 
 - (void) dealloc
@@ -250,6 +252,18 @@ static AppDelegate *sharedInstance = nil;
     if (!logViewer)
         logViewer = [FBLogViewerController new];
     [logViewer showWindow:self];
+}
+
+- (void) displayPreferences:(id) sender
+{
+    if (!prefs)
+        prefs = [FBPreferencesController new];
+    [prefs showWindow:self];
+}
+
+- (void) togglePause:(id) sender
+{
+    _runloop.paused = !_runloop.isPaused;
 }
 
 #pragma mark - Drag & Drop

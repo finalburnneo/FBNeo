@@ -8,15 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FBDipSwitch: NSObject
+@interface FBDipOption: NSObject
 
 @property NSString *name;
 @property uint32 start;
 @property uint8 flags;
 @property uint8 mask;
 @property uint8 setting;
-@property NSArray *switches;
+
+@end
+
+@interface FBDipSetting: NSObject
+
+@property NSString *name;
 @property int selectedIndex;
+@property int defaultIndex;
+@property NSArray<FBDipOption *> *switches;
 
 @end
 
@@ -53,6 +60,7 @@
 
 - (NSString *) title;
 
-- (NSArray *) dipSwitches;
+- (NSArray<FBDipSetting *> *) dipSwitches;
+- (void) applyDip:(FBDipOption *) option;
 
 @end

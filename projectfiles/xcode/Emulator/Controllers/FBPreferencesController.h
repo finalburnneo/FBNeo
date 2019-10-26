@@ -15,10 +15,12 @@
     IBOutlet NSToolbar *toolbar;
     IBOutlet NSTabView *contentTabView;
     IBOutlet NSTableView *dipswitchTableView;
+    IBOutlet NSButton *restoreDipButton;
 }
 
 - (IBAction) tabChanged:(id) sender;
 - (IBAction) showPreviousTab:(id) sender;
 - (IBAction) showNextTab:(id) sender;
+- (IBAction) restoreDipToDefault:(id) sender;
 
 @end

@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="contentTabView" destination="oE3-Es-MKD" id="sqi-Yy-NZ7"/>
                 <outlet property="dipswitchTableView" destination="Riy-Ok-IZT" id="eHL-jy-A8e"/>
+                <outlet property="restoreDipButton" destination="M0W-M1-aRD" id="dHM-Qp-shl"/>
                 <outlet property="toolbar" destination="EZn-6C-tNE" id="URm-K2-UMI"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -140,6 +141,17 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
                                         </scrollView>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M0W-M1-aRD">
+                                            <rect key="frame" x="437" y="97" width="149" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Restore Default" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pOb-rW-w6i">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="restoreDipToDefault:" target="-2" id="d7o-hh-1Sw"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>

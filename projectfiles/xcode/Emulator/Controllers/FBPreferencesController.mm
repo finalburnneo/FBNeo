@@ -18,7 +18,7 @@
 
 @implementation FBPreferencesController
 {
-    NSArray *dipSwitches;
+    NSArray<FBDipSetting *> *dipSwitches;
 }
 
 - (id) init
@@ -101,6 +101,17 @@
                                             forKey:@"selectedPreferencesTab"];
 }
 
+- (void) restoreDipToDefault:(id) sender
+{
+    for (FBDipSetting *sw in dipSwitches) {
+        if (sw.selectedIndex != sw.defaultIndex) {
+            sw.selectedIndex = sw.defaultIndex;
+            [self.runloop applyDip:sw.switches[sw.defaultIndex]];
+        }
+    }
+    [dipswitchTableView reloadData];
+}
+
 #pragma mark - NSTabViewDelegate
 
 - (void) tabView:(NSTabView *) tabView
@@ -125,21 +136,14 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
              row:(NSInteger) row
 {
     if (tableView == dipswitchTableView) {
-        FBDipSwitch *sw = [dipSwitches objectAtIndex:row];
+        FBDipSetting *sw = [dipSwitches objectAtIndex:row];
         if ([tableColumn.identifier isEqualToString:@"name"]) {
             return sw.name;
         } else if ([tableColumn.identifier isEqualToString:@"value"]) {
-            NSPopUpButtonCell* cell = [tableColumn dataCell];
-            [cell removeAllItems];
-
-            __block NSUInteger enabledIndex = -1;
-            [sw.switches enumerateObjectsUsingBlock:^(FBDipSwitch *sub, NSUInteger idx, BOOL *stop) {
-                [cell addItemWithTitle:sub.name];
-                if (idx == sw.selectedIndex)
-                    enabledIndex = idx;
-            }];
-
-            return @(enabledIndex);
+            [tableColumn.dataCell removeAllItems];
+            for (FBDipOption *opt in sw.switches)
+                [tableColumn.dataCell addItemWithTitle:opt.name];
+            return @(sw.selectedIndex);
         }
     }
 
@@ -152,13 +156,10 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
                row:(NSInteger) row
 {
     if (tableView == dipswitchTableView) {
-        // FIXME!!
-//        if ([[tableColumn identifier] isEqualToString:@"value"]) {
-//            FXEmulatorController *emulator = [[FXAppDelegate sharedInstance] emulator];
-//            [[emulator dipState] setGroup:row
-//                                 toOption:[object unsignedIntegerValue]];
-//            [[_dipList objectAtIndex:row] setSelection:[object intValue]];
-//        }
+        if ([tableColumn.identifier isEqualToString:@"value"]) {
+            dipSwitches[row].selectedIndex = [object intValue];
+            [self.runloop applyDip:dipSwitches[row].switches[[object intValue]]];
+        }
     }
 }
 
@@ -180,10 +181,9 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
 - (void) resetDipSwitches:(NSArray *) switches
 {
     dipSwitches = switches;
-    // FIXME!!
-//    [self->resetDipSwitchesButton setEnabled:[_dipList count] > 0];
-    dipswitchTableView.enabled = dipSwitches.count > 0;
+    restoreDipButton.enabled = dipswitchTableView.enabled = dipSwitches.count > 0;
     [dipswitchTableView reloadData];
+    // FIXME: reset DIPs
 }
 
 @end

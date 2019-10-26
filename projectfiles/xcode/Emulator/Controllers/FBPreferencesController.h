@@ -8,10 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface FBPreferencesController : NSWindowController<NSTabViewDelegate>
+#import "FBMainThread.h"
+
+@interface FBPreferencesController : NSWindowController<NSTabViewDelegate, NSTableViewDataSource, FBMainThreadDelegate>
 {
     IBOutlet NSToolbar *toolbar;
     IBOutlet NSTabView *contentTabView;
+    IBOutlet NSTableView *dipswitchTableView;
 }
 
 - (IBAction) tabChanged:(id) sender;

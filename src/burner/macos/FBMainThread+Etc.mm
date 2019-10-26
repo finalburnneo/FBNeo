@@ -39,4 +39,53 @@
                               encoding:NSUTF8StringEncoding];
 }
 
+- (NSArray *) dipSwitches
+{
+    if (!bDrvOkay)
+        return nil;
+
+    NSMutableArray *switches = [NSMutableArray new];
+    FBDipSwitch *active;
+
+    int offset = 0;
+    BurnDIPInfo dipSwitch;
+    for (int i = 0; BurnDrvGetDIPInfo(&dipSwitch, i) == 0; i++) {
+        if (dipSwitch.nFlags == 0xf0)
+            offset = dipSwitch.nInput;
+        if (!dipSwitch.szText) // defaruto
+            continue;
+
+        FBDipSwitch *sw = [FBDipSwitch new];
+        sw.name = [NSString stringWithCString:dipSwitch.szText
+                                     encoding:NSUTF8StringEncoding];
+
+        if (dipSwitch.nFlags & 0x40) {
+            active = sw;
+            sw.selectedIndex = 0;
+            sw.switches = [NSMutableArray new];
+            [switches addObject:sw];
+        } else {
+            sw.start = dipSwitch.nInput + offset;
+            sw.mask = dipSwitch.nMask;
+            sw.setting = dipSwitch.nSetting;
+            [(NSMutableArray *) active.switches addObject:sw];
+
+            BurnDIPInfo dsw2;
+            for (int j = 0; BurnDrvGetDIPInfo(&dsw2, j) == 0; j++)
+                if (dsw2.nFlags == 0xff
+                    && dsw2.nInput == dipSwitch.nInput
+                    && (dsw2.nSetting & dipSwitch.nMask) == dipSwitch.nSetting)
+                        active.selectedIndex = active.switches.count - 1;
+        }
+    }
+
+    return switches;
+}
+
+@end
+
+#pragma mark - FBDipSwitch
+
+@implementation FBDipSwitch
+
 @end

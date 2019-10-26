@@ -8,6 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@interface FBDipSwitch: NSObject
+
+@property NSString *name;
+@property uint32 start;
+@property uint8 flags;
+@property uint8 mask;
+@property uint8 setting;
+@property NSArray *switches;
+@property int selectedIndex;
+
+@end
+
 @protocol FBMainThreadDelegate<NSObject>
 
 @optional
@@ -40,5 +52,7 @@
 - (void) setPaused:(BOOL) isPaused;
 
 - (NSString *) title;
+
+- (NSArray *) dipSwitches;
 
 @end

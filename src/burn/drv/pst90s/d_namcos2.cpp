@@ -251,7 +251,7 @@ static struct BurnInputInfo LuckywldInputList[] = {
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
 
 	A("P1 Steering",	BIT_ANALOG_REL, &DrvAnalogPort0, "p1 x-axis"	),
-	A("P1 Break",		BIT_ANALOG_REL, &DrvAnalogPort1, "p1 fire 5"	),
+	A("P1 Brake",		BIT_ANALOG_REL, &DrvAnalogPort1, "p1 fire 5"	),
 	A("P1 Accelerator",	BIT_ANALOG_REL, &DrvAnalogPort2, "p1 fire 6"	),
 
 	A("P1 Gun X",    	BIT_ANALOG_REL, &DrvGun0,    "mouse x-axis"	),
@@ -299,7 +299,7 @@ static struct BurnInputInfo DirtfoxInputList[] = {
 	{"Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
 
 	A("Steering",        BIT_ANALOG_REL, &DrvAnalogPort0 , "p1 x-axis"	),
-	A("Break",           BIT_ANALOG_REL, &DrvAnalogPort1 , "p1 fire 5"	),
+	A("Brake",           BIT_ANALOG_REL, &DrvAnalogPort1 , "p1 fire 5"	),
 	A("Accelerator",     BIT_ANALOG_REL, &DrvAnalogPort2 , "p1 fire 6"	),
 
 	{"Gear Up",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},

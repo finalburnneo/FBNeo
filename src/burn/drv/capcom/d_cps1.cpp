@@ -1640,7 +1640,7 @@ static struct BurnDIPInfo NTFODIPList[]=
 	{0x13, 0x01, 0x60, 0x40, "Fast"                   },
 	{0x13, 0x01, 0x60, 0x60, "Very Fast"              },
 
-	{0   , 0xfe, 0   , 2   , "Initital Vitality"      },
+	{0   , 0xfe, 0   , 2   , "Initial Vitality"       },
 	{0x13, 0x01, 0x80, 0x00, "3 bars"                 },
 	{0x13, 0x01, 0x80, 0x80, "4 bars"                 },
 	

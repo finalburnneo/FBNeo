@@ -112,6 +112,9 @@ static struct BurnInputInfo KickInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4f + 1,	"p1 right"	},
 	A("P1 Dial", 		BIT_ANALOG_REL, &DrvAnalogPortZ,"p1 x-axis"),
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 5,	"tilt"		},
@@ -367,6 +370,9 @@ static struct BurnInputInfo DotronInputList[] = {
 	{"P1 Aim Down",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 3"	},
 	{"P1 Aim Up",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 4"	},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 5,	"tilt"		},
@@ -447,21 +453,21 @@ STDDIPINFO(Demoderb)
 
 static struct BurnDIPInfo DotronDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x80, NULL						},
-	{0x10, 0xff, 0xff, 0xff, NULL						},
 	{0x11, 0xff, 0xff, 0x80, NULL						},
+	{0x12, 0xff, 0xff, 0xff, NULL						},
+	{0x13, 0xff, 0xff, 0x80, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"					},
-	{0x0f, 0x01, 0x80, 0x00, "Environmental"			},
-	{0x0f, 0x01, 0x80, 0x80, "Upright"					},
+	{0x11, 0x01, 0x80, 0x00, "Environmental"			},
+	{0x11, 0x01, 0x80, 0x80, "Upright"					},
 
 	{0   , 0xfe, 0   ,    2, "Coin Meters"				},
-	{0x10, 0x01, 0x01, 0x01, "1"						},
-	{0x10, 0x01, 0x01, 0x00, "2"						},
+	{0x12, 0x01, 0x01, 0x01, "1"						},
+	{0x12, 0x01, 0x01, 0x00, "2"						},
 
     {0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x11, 0x01, 0x80, 0x80, "Off"						},
-	{0x11, 0x01, 0x80, 0x00, "On"						},
+	{0x13, 0x01, 0x80, 0x80, "Off"						},
+	{0x13, 0x01, 0x80, 0x00, "On"						},
 };
 
 STDDIPINFO(Dotron)
@@ -670,16 +676,16 @@ STDDIPINFO(Solarfox)
 
 static struct BurnDIPInfo KickDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0xfe, NULL						},
-	{0x0a, 0xff, 0xff, 0x80, NULL						},
+	{0x0b, 0xff, 0xff, 0xfe, NULL						},
+	{0x0c, 0xff, 0xff, 0x80, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Music"					},
-	{0x09, 0x01, 0x01, 0x01, "Off"						},
-	{0x09, 0x01, 0x01, 0x00, "On"						},
+	{0x0b, 0x01, 0x01, 0x01, "Off"						},
+	{0x0b, 0x01, 0x01, 0x00, "On"						},
 
     {0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x0a, 0x01, 0x80, 0x80, "Off"						},
-	{0x0a, 0x01, 0x80, 0x00, "On"						},
+	{0x0c, 0x01, 0x80, 0x80, "Off"						},
+	{0x0c, 0x01, 0x80, 0x00, "On"						},
 };
 
 STDDIPINFO(Kick)

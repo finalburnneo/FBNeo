@@ -9,6 +9,8 @@ static bool bCinpOkay;
 
 #if defined (BUILD_WIN32)
 	extern struct InputInOut InputInOutDInput;
+#elif defined (BUILD_MACOS)
+    extern struct InputInOut InputInOutMacOS;
 #elif defined (BUILD_SDL)
 	extern struct InputInOut InputInOutSDL;
 #elif defined (_XBOX)
@@ -21,6 +23,8 @@ static struct InputInOut *pInputInOut[]=
 {
 #if defined (BUILD_WIN32)
 	&InputInOutDInput,
+#elif defined (BUILD_MACOS)
+    &InputInOutMacOS,
 #elif defined (BUILD_SDL)
 	&InputInOutSDL,
 #elif defined (_XBOX)

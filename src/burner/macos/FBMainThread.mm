@@ -83,7 +83,7 @@ typedef enum LogEntryType {
 
     while (!self.isCancelled) {
         if (pathToLoad == nil) {
-            [NSThread sleepForTimeInterval:.5]; // Pause until there's something to load
+            [NSThread sleepForTimeInterval:.1]; // Pause until there's something to load
             continue;
         }
 
@@ -119,7 +119,13 @@ typedef enum LogEntryType {
             continue;
         }
 
-        _running = pathToLoad;
+        // Load DIP switch config
+        NSString *dipPath = [AppDelegate.sharedInstance.dipSwitchPath stringByAppendingPathComponent:
+                             [NSString stringWithFormat:@"%@.dip", self.setName]];
+        [self restoreDipState:dipPath];
+        _dipSwitchesDirty = NO;
+
+        _runningPath = pathToLoad;
         pathToLoad = nil;
 
         @synchronized (observers) {
@@ -134,8 +140,13 @@ typedef enum LogEntryType {
             }
         }
 
+        // Runtime loop
         while (!self.isCancelled && pathToLoad == nil)
             MainFrame();
+
+        // Save DIP switch config
+        if (_dipSwitchesDirty)
+            [self saveDipState:dipPath];
 
         @synchronized (observers) {
             for (id<FBMainThreadDelegate> o in observers) {
@@ -146,10 +157,12 @@ typedef enum LogEntryType {
             }
         }
 
-        _running = nil;
+        _runningPath = nil;
 
         MainEnd();
     }
+
+    NSLog(@"Exiting FBMainThread");
 }
 
 @end

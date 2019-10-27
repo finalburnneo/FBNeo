@@ -33,11 +33,19 @@
         AudSoundPlay();
 }
 
+- (NSString *) setName
+{
+    return [NSString stringWithCString:BurnDrvGetText(DRV_NAME)
+                              encoding:NSUTF8StringEncoding];
+}
+
 - (NSString *) title
 {
     return [NSString stringWithCString:BurnDrvGetText(DRV_FULLNAME)
                               encoding:NSUTF8StringEncoding];
 }
+
+#pragma mark - DIP switches
 
 - (NSArray<FBDipSetting *> *) dipSwitches
 {
@@ -50,11 +58,11 @@
     int offset = 0;
     BurnDIPInfo dipSwitch;
     for (int i = 0; BurnDrvGetDIPInfo(&dipSwitch, i) == 0; i++) {
-        if (dipSwitch.nFlags == 0xf0)
-            offset = dipSwitch.nInput;
         if (!dipSwitch.szText) // defaruto
             continue;
 
+        if (dipSwitch.nFlags == 0xf0)
+            offset = dipSwitch.nInput;
         if (dipSwitch.nFlags & 0x40) {
             FBDipSetting *set = [FBDipSetting new];
             set.name = [NSString stringWithCString:dipSwitch.szText
@@ -71,14 +79,20 @@
             opt.start = dipSwitch.nInput + offset;
             opt.mask = dipSwitch.nMask;
             opt.setting = dipSwitch.nSetting;
-            [(NSMutableArray *) active.switches addObject:opt];
 
+            // Default switch
             BurnDIPInfo dsw2;
             for (int j = 0; BurnDrvGetDIPInfo(&dsw2, j) == 0; j++)
-                if (dsw2.nFlags == 0xff
-                    && dsw2.nInput == dipSwitch.nInput
+                if (dsw2.nFlags == 0xff && dsw2.nInput == dipSwitch.nInput
                     && (dsw2.nSetting & dipSwitch.nMask) == dipSwitch.nSetting)
-                        active.defaultIndex = active.selectedIndex = active.switches.count - 1;
+                        active.defaultIndex = active.selectedIndex = active.switches.count;
+
+            // Active switch
+            struct GameInp *pgi = GameInp + opt.start;
+            if ((pgi->Input.Constant.nConst & opt.mask) == dipSwitch.nSetting)
+                active.selectedIndex = active.switches.count;
+
+            [(NSMutableArray *) active.switches addObject:opt];
         }
     }
 
@@ -90,7 +104,61 @@
     if (bDrvOkay) {
         struct GameInp *pgi = GameInp + option.start;
         pgi->Input.Constant.nConst = (pgi->Input.Constant.nConst & ~option.mask) | (option.setting & option.mask);
+        self.dipSwitchesDirty = YES;
     }
+}
+
+- (BOOL) saveDipState:(NSString *) path
+{
+    NSLog(@"saveDipState");
+
+    NSArray<FBDipSetting *> *switches = self.dipSwitches;
+    if (!switches || switches.count < 1)
+        return YES;
+
+    for (FBDipSetting *sw in switches)
+        if (sw.defaultIndex != sw.selectedIndex)
+            goto save;
+
+    return YES;
+
+save:
+    FILE *f = fopen([path cStringUsingEncoding:NSUTF8StringEncoding], "w");
+    if (!f)
+        return NO;
+
+    for (FBDipSetting *sw in switches) {
+        FBDipOption *opt = sw.switches[sw.selectedIndex];
+        fprintf(f, "%x %d %02x\n", opt.start, sw.selectedIndex, opt.setting);
+    }
+
+    fclose(f);
+    return YES;
+}
+
+- (BOOL) restoreDipState:(NSString *) path
+{
+    NSLog(@"restoreDipState");
+
+    NSArray<FBDipSetting *> *switches = self.dipSwitches;
+    if (!switches || switches.count < 1)
+        return YES;
+
+    FILE *f = fopen([path cStringUsingEncoding:NSUTF8StringEncoding], "r");
+    if (!f)
+        return NO;
+
+    int swIndex;
+    uint32 start;
+    uint32 setting;
+    for (int i = 0; fscanf(f, "%x %d %x", &start, &swIndex, &setting) == 3 && i < switches.count; i++) {
+        FBDipSetting *sw = switches[i];
+        if (sw.selectedIndex != swIndex && swIndex < sw.switches.count)
+            [self applyDip:sw.switches[swIndex]];
+    }
+
+    fclose(f);
+    return YES;
 }
 
 @end

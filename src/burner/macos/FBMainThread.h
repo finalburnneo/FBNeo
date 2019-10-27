@@ -43,7 +43,8 @@
 
 @interface FBMainThread : NSThread
 
-@property (readonly) NSString *running;
+@property (readonly) NSString *runningPath;
+@property BOOL dipSwitchesDirty;
 
 - (NSString *) log;
 - (void) load:(NSString *) path;
@@ -59,8 +60,11 @@
 - (void) setPaused:(BOOL) isPaused;
 
 - (NSString *) title;
+- (NSString *) setName;
 
 - (NSArray<FBDipSetting *> *) dipSwitches;
 - (void) applyDip:(FBDipOption *) option;
+- (BOOL) restoreDipState:(NSString *) path;
+- (BOOL) saveDipState:(NSString *) path;
 
 @end

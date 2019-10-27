@@ -26,6 +26,7 @@
 
 @property (readonly) NSString *supportPath;
 @property (readonly) NSString *nvramPath;
+@property (readonly) NSString *dipSwitchPath;
 
 @property (readonly) NSArray *supportedFormats;
 

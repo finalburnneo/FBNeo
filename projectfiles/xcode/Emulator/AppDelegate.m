@@ -59,9 +59,11 @@ static AppDelegate *sharedInstance = nil;
 
     _supportPath = self.appSupportPath;
     _nvramPath = [_supportPath stringByAppendingPathComponent:@"NVRAM"];
+    _dipSwitchPath = [_supportPath stringByAppendingPathComponent:@"DIPSwitches"];
 
     NSArray *paths = @[
-        _nvramPath
+        _nvramPath,
+        _dipSwitchPath,
     ];
 
     for (NSString *path in paths)
@@ -80,7 +82,13 @@ static AppDelegate *sharedInstance = nil;
 }
 
 - (void) applicationWillTerminate:(NSNotification *) aNotification {
+    NSLog(@"applicationWillTerminate");
     [_runloop cancel];
+
+    // Give the emulation thread some time to finish
+    NSDate *start = [NSDate date];
+    while (!_runloop.isFinished && start.timeIntervalSinceNow > -2)
+        [NSThread sleepForTimeInterval:0.25];
 }
 
 - (BOOL) application:(NSApplication *) sender

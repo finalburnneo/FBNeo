@@ -802,6 +802,11 @@ INT32 BurnSetRefreshRate(double dFrameRate)
 {
 	if (!bForce60Hz) {
 		nBurnFPS = (INT32)(100.0 * dFrameRate);
+#ifdef __LIBRETRO__
+		// By design, libretro dislike having nBurnSoundRate > nBurnFPS * 10
+		if (nBurnSoundRate > nBurnFPS * 10)
+			nBurnSoundRate = nBurnFPS * 10;
+#endif
 	}
 
 	nBurnSoundLen = (nBurnSoundRate * 100 + (nBurnFPS >> 1)) / nBurnFPS;

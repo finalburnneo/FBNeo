@@ -1074,11 +1074,6 @@ static void SetColorDepth()
 
 static void init_audio_buffer(INT32 sample_rate, INT32 fps)
 {
-	// [issue #206]
-	// For games where sample_rate/1000 > fps/100
-	// we don't change nBurnSoundRate, but we adjust some length
-	if ((sample_rate / 1000) > (fps / 100))
-		sample_rate = fps * 10;
 	nAudSegLen = (sample_rate * 100 + (fps >> 1)) / fps;
 	if (g_audio_buf)
 		g_audio_buf = (int16_t*)realloc(g_audio_buf, nAudSegLen<<2 * sizeof(int16_t));

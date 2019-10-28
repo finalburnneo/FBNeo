@@ -15,13 +15,18 @@
 
 - (void) resizeFrame:(NSSize) newSize
              animate:(BOOL) animate;
+- (void) lockCursor;
+- (void) unlockCursor;
+- (void) hideCursor;
+- (void) unhideCursor;
 
 @end
 
 @implementation FBEmulatorController
 {
-    BOOL cursorVisible;
-    BOOL autoPaused;
+    BOOL isCursorLocked;
+    BOOL isCursorVisible;
+    BOOL isAutoPaused;
     NSTitlebarAccessoryViewController *tbAccessory;
     NSArray *defaultsToObserve;
 }
@@ -29,6 +34,9 @@
 - (id) init
 {
     if (self = [super initWithWindowNibName:@"Emulator"]) {
+        isCursorLocked = NO;
+        isCursorVisible = YES;
+        isAutoPaused = NO;
     }
 
     return self;
@@ -43,8 +51,6 @@
 
 - (void) awakeFromNib
 {
-    cursorVisible = YES;
-
     defaultsToObserve = @[ @"pauseWhenInactive" ];
 
     tbAccessory = [NSTitlebarAccessoryViewController new];
@@ -71,9 +77,9 @@
 
 - (void) windowDidBecomeKey:(NSNotification *) notification
 {
-    if (autoPaused && self.runloop.isPaused)
+    if (isAutoPaused && self.runloop.isPaused)
         self.runloop.paused = NO;
-    autoPaused = NO;
+    isAutoPaused = NO;
 
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"suppressScreenSaver"])
         [self.appDelegate suppressScreenSaver];
@@ -81,15 +87,12 @@
 
 - (void) windowDidResignKey:(NSNotification *) notification
 {
-    if (!cursorVisible) {
-        cursorVisible = YES;
-        [NSCursor unhide];
-    }
+    [self unlockCursor];
 
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"pauseWhenInactive"]
         && !self.runloop.isPaused) {
         self.runloop.paused = YES;
-        autoPaused = YES;
+        isAutoPaused = YES;
     }
 
     [self.appDelegate restoreScreenSaver];
@@ -149,7 +152,7 @@
         BOOL newValue = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
         if (!self.window.isKeyWindow && newValue && !self.runloop.isPaused) {
             self.runloop.paused = YES;
-            autoPaused = YES;
+            isAutoPaused = YES;
         }
     }
 }
@@ -158,24 +161,29 @@
 
 - (void) mouseDidIdle
 {
-    if (cursorVisible) {
-        cursorVisible = NO;
-        [NSCursor hide];
-    }
+    [self hideCursor];
 }
 
 - (void) mouseStateDidChange
 {
-    if (!cursorVisible) {
-        cursorVisible = YES;
-        [NSCursor unhide];
-    }
+    if (!isCursorLocked)
+        [self unhideCursor];
 }
 
 - (void) mouseDidMove:(NSPoint) point
 {
-    NSLog(@"%.02f,%.02f", point.x, point.y);
     self.input.mouseCoords = point;
+}
+
+- (void) mouseButtonStateChange:(NSEvent *) event
+{
+    if ((event.modifierFlags & NSCommandKeyMask) != 0
+        && event.type == NSLeftMouseDown) {
+        if (isCursorLocked)
+            [self unlockCursor];
+        else
+            [self lockCursor];
+    }
 }
 
 #pragma mark - Drag & Drop
@@ -229,6 +237,7 @@
     NSLog(@"gameSessionDidEnd");
     screen.hidden = YES;
     label.hidden = NO;
+    [self unlockCursor];
 
     self.window.title = NSBundle.mainBundle.infoDictionary[@"CFBundleName"];
 }
@@ -253,7 +262,7 @@
         if ([NSUserDefaults.standardUserDefaults boolForKey:@"pauseWhenInactive"]
             && !self.window.isKeyWindow) {
             self.runloop.paused = YES;
-            autoPaused = YES;
+            isAutoPaused = YES;
         }
         self.window.title = self.runloop.title;
     } else {
@@ -329,6 +338,54 @@
     [self.window setFrame:newRect
                   display:YES
                   animate:animate];
+}
+
+- (void) hideCursor
+{
+    if (isCursorVisible) {
+        isCursorVisible = NO;
+        [NSCursor hide];
+#ifdef DEBUG
+    NSLog(@"hideCursor");
+#endif
+    }
+}
+
+- (void) unhideCursor
+{
+    if (!isCursorVisible) {
+        isCursorVisible = YES;
+        [NSCursor unhide];
+#ifdef DEBUG
+    NSLog(@"unhideCursor");
+#endif
+    }
+}
+
+- (void) lockCursor
+{
+    if (isCursorLocked) {
+        CGAssociateMouseAndMouseCursorPosition(false);
+        isCursorLocked = YES;
+#ifdef DEBUG
+    NSLog(@"lockCursor");
+#endif
+    }
+
+    [self hideCursor];
+}
+
+- (void) unlockCursor
+{
+    if (!isCursorLocked) {
+        CGAssociateMouseAndMouseCursorPosition(true);
+        isCursorLocked = NO;
+#ifdef DEBUG
+    NSLog(@"unlockCursor");
+#endif
+    }
+
+    [self unhideCursor];
 }
 
 @end

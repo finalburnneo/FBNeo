@@ -269,14 +269,14 @@
 
 - (void) mouseEntered:(NSEvent *) event
 {
-    [self handleMouseChange:[event locationInWindow]];
+    [self handleMouseChange:event.locationInWindow];
 }
 
 - (void) mouseMoved:(NSEvent *) event
 {
     if ([_delegate respondsToSelector:@selector(mouseDidMove:)])
         [_delegate mouseDidMove:NSMakePoint(event.deltaX, event.deltaY)];
-    [self handleMouseChange:[event locationInWindow]];
+    [self handleMouseChange:event.locationInWindow];
 }
 
 - (void) mouseExited:(NSEvent *) event
@@ -286,12 +286,40 @@
 
 - (void) mouseDown:(NSEvent *) event
 {
-    [self handleMouseChange:[event locationInWindow]];
+    if ([_delegate respondsToSelector:@selector(mouseButtonStateChange:)])
+        [_delegate mouseButtonStateChange:event];
+    [self handleMouseChange:event.locationInWindow];
+}
+
+- (void) mouseUp:(NSEvent *) event
+{
+    if ([_delegate respondsToSelector:@selector(mouseButtonStateChange:)])
+        [_delegate mouseButtonStateChange:event];
+}
+
+- (void) mouseDragged:(NSEvent *) event
+{
+    if ([_delegate respondsToSelector:@selector(mouseDidMove:)])
+        [_delegate mouseDidMove:NSMakePoint(event.deltaX, event.deltaY)];
 }
 
 - (void) rightMouseDown:(NSEvent *) event
 {
-    [self handleMouseChange:[event locationInWindow]];
+    if ([_delegate respondsToSelector:@selector(mouseButtonStateChange:)])
+        [_delegate mouseButtonStateChange:event];
+    [self handleMouseChange:event.locationInWindow];
+}
+
+- (void) rightMouseUp:(NSEvent *) event
+{
+    if ([_delegate respondsToSelector:@selector(mouseButtonStateChange:)])
+        [_delegate mouseButtonStateChange:event];
+}
+
+- (void) rightMouseDragged:(NSEvent *) event
+{
+    if ([_delegate respondsToSelector:@selector(mouseDidMove:)])
+        [_delegate mouseDidMove:NSMakePoint(event.deltaX, event.deltaY)];
 }
 
 #pragma mark - Public methods

@@ -18,7 +18,7 @@
 - (void) lockCursor;
 - (void) unlockCursor;
 - (void) hideCursor;
-- (void) unhideCursor;
+- (void) unhideCursor:(BOOL) force;
 
 @end
 
@@ -50,7 +50,12 @@
 
 - (void) awakeFromNib
 {
-    defaultsToObserve = @[ @"pauseWhenInactive" ];
+    defaultsToObserve = @[
+        @"pauseWhenInactive",
+        @"suppressScreenSaver",
+        @"hideLockOptions",
+        @"masterVolume",
+    ];
 
     NSTitlebarAccessoryViewController *tba = [NSTitlebarAccessoryViewController new];
     tba.view = accView;
@@ -59,6 +64,7 @@
     lockText.hidden = YES;
     lockIcon.image = [NSImage imageNamed:@"NSLockUnlockedTemplate"];
     lockIcon.enabled = NO;
+    lockIcon.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"hideLockOptions"];
     spinner.hidden = YES;
     [self.window addTitlebarAccessoryViewController:tba];
 
@@ -159,6 +165,13 @@
             self.runloop.paused = YES;
             isAutoPaused = YES;
         }
+    } else if ([keyPath isEqualToString:@"hideLockOptions"]) {
+        BOOL newValue = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
+        if (!isCursorLocked)
+            lockIcon.hidden = !self.input.usesMouse && newValue;
+    } else if ([keyPath isEqualToString:@"masterVolume"]) {
+        BOOL newValue = [[change objectForKey:NSKeyValueChangeNewKey] intValue];
+        self.audio.volume = newValue / 100.0f;
     }
 }
 
@@ -172,7 +185,7 @@
 - (void) mouseStateDidChange
 {
     if (!isCursorLocked)
-        [self unhideCursor];
+        [self unhideCursor:NO];
 }
 
 - (void) mouseDidMove:(NSPoint) point
@@ -182,12 +195,16 @@
 
 - (void) mouseButtonStateDidChange:(NSEvent *) event
 {
-    if ((event.modifierFlags & NSEventModifierFlagCommand) != 0
-        && event.type == NSEventTypeLeftMouseDown) {
+    if (event.type == NSEventTypeLeftMouseDown
+        && (event.modifierFlags & NSEventModifierFlagCommand) != 0) {
         if (isCursorLocked)
             [self unlockCursor];
         else
             [self lockCursor];
+    } else if (event.type == NSEventTypeLeftMouseDown
+               && !isCursorLocked
+               && self.input.usesMouse) {
+        [self lockCursor];
     } else switch (event.type) {
         case NSEventTypeLeftMouseDown:
             self.input.mouseButtonStates |= FBN_LMB;
@@ -249,6 +266,7 @@
     screen.hidden = NO;
     label.hidden = YES;
     lockIcon.enabled = YES;
+    lockIcon.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"hideLockOptions"] && !self.input.usesMouse;
 
     [self.window makeFirstResponder:screen];
 }
@@ -262,6 +280,7 @@
     [self unlockCursor];
 
     self.window.title = NSBundle.mainBundle.infoDictionary[@"CFBundleName"];
+    lockIcon.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"hideLockOptions"];
 }
 
 - (void) driverInitDidStart
@@ -379,9 +398,9 @@
     }
 }
 
-- (void) unhideCursor
+- (void) unhideCursor:(BOOL) force
 {
-    if (!isCursorVisible) {
+    if (!isCursorVisible || force) {
         isCursorVisible = YES;
         [NSCursor unhide];
 #ifdef DEBUG
@@ -403,6 +422,7 @@
 
         isCursorLocked = YES;
         lockIcon.image = [NSImage imageNamed:@"NSLockLockedTemplate"];
+        lockIcon.hidden = NO;
         lockText.hidden = NO;
 #ifdef DEBUG
     NSLog(@"lockCursor");
@@ -418,13 +438,14 @@
         CGAssociateMouseAndMouseCursorPosition(true);
         isCursorLocked = NO;
         lockIcon.image = [NSImage imageNamed:@"NSLockUnlockedTemplate"];
+        lockIcon.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"hideLockOptions"] && !self.input.usesMouse;
         lockText.hidden = YES;
 #ifdef DEBUG
     NSLog(@"unlockCursor");
 #endif
     }
 
-    [self unhideCursor];
+    [self unhideCursor:YES];
 }
 
 @end

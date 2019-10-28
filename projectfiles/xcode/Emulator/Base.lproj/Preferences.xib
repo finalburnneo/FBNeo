@@ -31,14 +31,23 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="General" identifier="general" id="oxZ-d9-DIt" userLabel="General">
-                                <view key="view" id="SyU-Ly-vJE">
+                                <view key="view" ambiguous="YES" id="SyU-Ly-vJE">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A5A-j1-YHP">
-                                            <rect key="frame" x="177" y="363" width="97" height="16"/>
+                                            <rect key="frame" x="137" y="364" width="137" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Emulation:" id="6Ws-21-mdy">
+                                                <font key="font" usesAppearanceFont="YES"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gO-qL-sy1">
+                                            <rect key="frame" x="149" y="243" width="125" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Master Volume:" id="GMY-pk-kZF">
                                                 <font key="font" usesAppearanceFont="YES"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -66,11 +75,54 @@
                                                 <binding destination="tRY-Xw-0IH" name="value" keyPath="values.suppressScreenSaver" id="8Be-3b-Ge9"/>
                                             </connections>
                                         </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Ew-U0-Eiq">
+                                            <rect key="frame" x="149" y="308" width="125" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Devices:" id="zM6-LX-qdK">
+                                                <font key="font" usesAppearanceFont="YES"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gBL-11-hvp">
+                                            <rect key="frame" x="278" y="306" width="304" height="19"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Hide locking options unless supported" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zJK-AH-06u">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <binding destination="tRY-Xw-0IH" name="value" keyPath="values.hideLockOptions" id="qno-tG-ilx"/>
+                                            </connections>
+                                        </button>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dtB-9E-SNR">
+                                            <rect key="frame" x="298" y="274" width="284" height="26"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" selectable="YES" title="You can always lock and unlock cursor by ⌘-clicking the game window." id="YHH-0w-4NK">
+                                                <font key="font" metaFont="menu" size="10"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CC1-w0-e2e">
+                                            <rect key="frame" x="278" y="237" width="304" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="below" numberOfTickMarks="10" sliderType="linear" id="FP1-E1-F2k"/>
+                                            <connections>
+                                                <binding destination="tRY-Xw-0IH" name="value" keyPath="values.masterVolume" id="O0v-nj-Wva"/>
+                                            </connections>
+                                        </slider>
                                     </subviews>
                                 </view>
                             </tabViewItem>
+                            <tabViewItem label="Input" identifier="input" id="5nQ-v7-xFT">
+                                <view key="view" id="Mhd-ZC-Bf5">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </tabViewItem>
                             <tabViewItem label="DIP Switches" identifier="dipswitch" id="wN5-H3-IgF" userLabel="DipSwitches">
-                                <view key="view" ambiguous="YES" id="Ojl-AF-gEP">
+                                <view key="view" id="Ojl-AF-gEP">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -91,12 +143,12 @@
                                                         <tableColumns>
                                                             <tableColumn identifier="name" editable="NO" width="116" minWidth="40" maxWidth="1000" id="ZSY-Zi-utt">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Name">
-                                                                    <font key="font" metaFont="label" size="11"/>
+                                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                                 </tableHeaderCell>
                                                                 <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="KDb-Ox-y5X">
-                                                                    <font key="font" metaFont="label" size="11"/>
+                                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -104,13 +156,13 @@
                                                             </tableColumn>
                                                             <tableColumn identifier="value" width="179" minWidth="40" maxWidth="1000" id="xfd-ul-qQe">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
-                                                                    <font key="font" metaFont="label" size="11"/>
+                                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                                 </tableHeaderCell>
                                                                 <popUpButtonCell key="dataCell" type="bevel" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="bezel" imageScaling="proportionallyDown" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="0iB-6v-fgl" id="N5p-PS-O1G">
                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                                    <font key="font" metaFont="label" size="11"/>
+                                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                                     <menu key="menu" id="JVl-kV-Weu">
                                                                         <items>
                                                                             <menuItem title="Item 1" state="on" id="0iB-6v-fgl"/>
@@ -172,6 +224,13 @@
                             <action selector="tabChanged:" target="-2" id="Hbw-aQ-VKY"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="C55463AC-3DF5-4728-9149-7B96334FD3E5" explicitItemIdentifier="input" label="Input" paletteLabel="Input" tag="-1" image="JoypadIcon" selectable="YES" id="DYc-Hq-yNp">
+                        <size key="minSize" width="32" height="32"/>
+                        <size key="maxSize" width="32" height="32"/>
+                        <connections>
+                            <action selector="tabChanged:" target="-2" id="9uW-Rk-F2X"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="21C17DAF-BB57-43CA-95AF-5EEE947F9B33" explicitItemIdentifier="dipswitch" label="DIP Switches" paletteLabel="DIP Switches" tag="-1" image="DipswitchIcon" selectable="YES" id="IgP-tm-58x">
                         <size key="minSize" width="32" height="32"/>
                         <size key="maxSize" width="32" height="32"/>
@@ -194,6 +253,7 @@
     </objects>
     <resources>
         <image name="DipswitchIcon" width="32" height="32"/>
+        <image name="JoypadIcon" width="32" height="32"/>
         <image name="NSPreferencesGeneral" width="32" height="32"/>
     </resources>
 </document>

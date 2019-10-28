@@ -982,6 +982,7 @@
 		FE2BC6C12362CEBB00B9D150 /* FBPreferencesController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6BF2362CEBB00B9D150 /* FBPreferencesController.mm */; };
 		FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6C92362CFC000B9D150 /* Preferences.xib */; };
 		FE2BC6D02362D5BD00B9D150 /* FBMainThread+Etc.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */; };
+		FE34741A23675C4C006646E7 /* FBAudio.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE34741823675C4C006646E7 /* FBAudio.mm */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
@@ -2499,6 +2500,8 @@
 		FE2BC6BF2362CEBB00B9D150 /* FBPreferencesController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FBPreferencesController.mm; sourceTree = "<group>"; };
 		FE2BC6CA2362CFC000B9D150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Preferences.xib; sourceTree = "<group>"; };
 		FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "FBMainThread+Etc.mm"; sourceTree = "<group>"; };
+		FE34741823675C4C006646E7 /* FBAudio.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBAudio.mm; sourceTree = "<group>"; };
+		FE34741923675C4C006646E7 /* FBAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAudio.h; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
 		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
@@ -3322,6 +3325,7 @@
 		FE1B1EA123561A660065200C /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				FE34741723675C4C006646E7 /* macos */,
 				FEED9DD72356F30D00B7AF83 /* sdl */,
 				FE1B1EAD23561A660065200C /* aud_dsp.cpp */,
 				FE1B1EA323561A660065200C /* aud_dsp.h */,
@@ -4696,6 +4700,15 @@
 			name = Nibs;
 			sourceTree = "<group>";
 		};
+		FE34741723675C4C006646E7 /* macos */ = {
+			isa = PBXGroup;
+			children = (
+				FE34741923675C4C006646E7 /* FBAudio.h */,
+				FE34741823675C4C006646E7 /* FBAudio.mm */,
+			);
+			path = macos;
+			sourceTree = "<group>";
+		};
 		FEA5E7982356472200DA2D9D /* macos */ = {
 			isa = PBXGroup;
 			children = (
@@ -5739,6 +5752,7 @@
 				FE1B23E923561A750065200C /* v25.cpp in Sources */,
 				FE1B27CD23561A790065200C /* 6821pia.cpp in Sources */,
 				FE1B257923561A760065200C /* d_kchamp.cpp in Sources */,
+				FE34741A23675C4C006646E7 /* FBAudio.mm in Sources */,
 				FE1B253323561A760065200C /* d_seta2.cpp in Sources */,
 				FE1B24B123561A750065200C /* d_m107.cpp in Sources */,
 				FE1B24AF23561A750065200C /* megadrive.cpp in Sources */,

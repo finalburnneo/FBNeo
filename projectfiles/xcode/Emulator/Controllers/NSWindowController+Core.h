@@ -16,5 +16,6 @@
 - (FBMainThread *) runloop;
 - (FBVideo *) video;
 - (FBInput *) input;
+- (FBAudio *) audio;
 
 @end

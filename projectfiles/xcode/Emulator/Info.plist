@@ -74,7 +74,11 @@
 	<key>NSSupportsAutomaticTermination</key>
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
-	<true/>
+	<false/>
+	<key>SUFeedURL</key>
+	<string>https://www.akop.org/su-updates/fbn.xml</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>

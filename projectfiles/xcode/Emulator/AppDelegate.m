@@ -8,13 +8,14 @@
 
 #import "AppDelegate.h"
 
+#import <IOKit/pwr_mgt/IOPMLib.h>
+
+#import "FBEmulatorController.h"
+#import "FBLogViewerController.h"
+#import "FBPreferencesController.h"
+
 @interface AppDelegate ()
 
-@property (weak) IBOutlet NSWindow *window;
-
-- (void) resizeFrame:(NSSize) newSize
-             animate:(BOOL) animate;
-- (void) loadPath: (NSString *) path;
 - (NSString *) appSupportPath;
 
 @end
@@ -23,110 +24,71 @@ static AppDelegate *sharedInstance = nil;
 
 @implementation AppDelegate
 {
-    FBMainThread *main;
-    BOOL _cursorVisible;
-    NSTitlebarAccessoryViewController *tbAccessory;
-    NSArray *supportedFormats;
-}
+    FBLogViewerController *logViewer;
+    FBPreferencesController *prefs;
+    FBEmulatorController *emulator;
 
-- (void) dealloc
-{
-    main.delegate = nil;
-    screen.delegate = nil;
-    _video.delegate = nil;
+    IOPMAssertionID sleepAssertId;
 }
 
 - (void) awakeFromNib
 {
+    sleepAssertId = kIOPMNullAssertionID;
+
     sharedInstance = self;
 
     _input = [FBInput new];
-    _cursorVisible = YES;
-    supportedFormats = @[ @"zip", @"7z" ];
+    _supportedFormats = @[ @"zip", @"7z" ];
 
-    tbAccessory = [NSTitlebarAccessoryViewController new];
-    tbAccessory.view = spinner;
-    tbAccessory.layoutAttribute = NSLayoutAttributeRight;
-
-    main = [FBMainThread new];
-    main.delegate = self;
+    _runloop = [FBMainThread new];
     _video = [FBVideo new];
-    _video.delegate = screen;
-    screen.delegate = self;
-    _emulator = [FBEmulator new];
-
-    label.stringValue = NSLocalizedString(@"Drop a set here to load it.", nil);
-    label.hidden = NO;
-    screen.hidden = YES;
-
-    [_window registerForDraggedTypes:@[NSFilenamesPboardType]];
 }
+
++ (AppDelegate *) sharedInstance
+{
+    return sharedInstance;
+}
+
+#pragma mark - NSApplicationDelegate
 
 - (void) applicationWillFinishLaunching:(NSNotification *) notification
 {
+    NSString *path = [NSBundle.mainBundle pathForResource:@"Defaults"
+                                                   ofType:@"plist"];
+    [NSUserDefaults.standardUserDefaults registerDefaults:[NSDictionary dictionaryWithContentsOfFile:path]];
+
     _supportPath = self.appSupportPath;
     _nvramPath = [_supportPath stringByAppendingPathComponent:@"NVRAM"];
+    _dipSwitchPath = [_supportPath stringByAppendingPathComponent:@"DIPSwitches"];
 
     NSArray *paths = @[
-        _nvramPath
+        _nvramPath,
+        _dipSwitchPath,
     ];
 
-    [paths enumerateObjectsUsingBlock:^(NSString *path, NSUInteger idx, BOOL *stop) {
+    for (NSString *path in paths)
         if (![NSFileManager.defaultManager fileExistsAtPath:path])
             [NSFileManager.defaultManager createDirectoryAtPath:path
                                     withIntermediateDirectories:YES
                                                      attributes:nil
                                                           error:NULL];
-    }];
 }
 
-- (void) applicationDidFinishLaunching:(NSNotification *)aNotification {
+- (void) applicationDidFinishLaunching:(NSNotification *) aNotification {
     NSLog(@"applicationDidFinishLaunching");
-    [main start];
+    emulator = [FBEmulatorController new];
+    [emulator showWindow:self];
+    [_runloop start];
 }
 
+- (void) applicationWillTerminate:(NSNotification *) aNotification {
+    NSLog(@"applicationWillTerminate");
+    [_runloop cancel];
 
-- (void) applicationWillTerminate:(NSNotification *)aNotification {
-	// Insert code here to tear down your application
-}
-
-- (void) windowWillClose:(NSNotification *) notification
-{
-    NSLog(@"windowWillClose");
-    [main cancel];
-}
-
-- (NSSize) windowWillResize:(NSWindow *) sender
-                     toSize:(NSSize) frameSize
-{
-    NSSize screenSize = [_video gameScreenSize];
-    if (screenSize.width != 0 && screenSize.height != 0) {
-        NSRect windowFrame = [[self window] frame];
-        NSView *contentView = [[self window] contentView];
-        NSRect viewRect = [contentView convertRect:[contentView bounds]
-                                            toView:nil];
-        NSRect contentRect = [[self window] contentRectForFrameRect:windowFrame];
-
-        CGFloat screenRatio = screenSize.width / screenSize.height;
-
-        float marginY = viewRect.origin.y + windowFrame.size.height - contentRect.size.height;
-        float marginX = contentRect.size.width - viewRect.size.width;
-
-        // Clamp the minimum height
-        if ((frameSize.height - marginY) < screenSize.height) {
-            frameSize.height = screenSize.height + marginY;
-        }
-
-        // Set the screen width as a percentage of the screen height
-        frameSize.width = (frameSize.height - marginY) * screenRatio + marginX;
-    }
-
-    return frameSize;
-}
-
-- (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *) sender
-{
-    return YES;
+    // Give the emulation thread some time to finish
+    NSDate *start = [NSDate date];
+    while (!_runloop.isFinished && start.timeIntervalSinceNow > -2)
+        [NSThread sleepForTimeInterval:0.25];
 }
 
 - (BOOL) application:(NSApplication *) sender
@@ -137,96 +99,7 @@ static AppDelegate *sharedInstance = nil;
     return YES;
 }
 
-+ (AppDelegate *) sharedInstance
-{
-    return sharedInstance;
-}
-
-#pragma mark - FBScreenViewDelegate
-
-- (void) mouseDidIdle
-{
-    if (_cursorVisible) {
-        _cursorVisible = NO;
-        [NSCursor hide];
-    }
-}
-
-- (void) mouseStateDidChange
-{
-    if (!_cursorVisible) {
-        _cursorVisible = YES;
-        [NSCursor unhide];
-    }
-}
-
-#pragma mark - FBMainThreadDelegate
-
-- (void) gameSessionDidStart:(NSString *) name
-{
-    NSLog(@"gameSessionDidStart: %@", name);
-    NSSize screenSize = _video.gameScreenSize;
-    if (screenSize.width != 0 && screenSize.height != 0)
-        [self resizeFrame:NSMakeSize(screenSize.width * 2, screenSize.height * 2)
-                  animate:NO];
-
-    screen.hidden = NO;
-    label.hidden = YES;
-
-    _window.title = _emulator.title;
-    [_window makeFirstResponder:screen];
-}
-
-- (void) gameSessionDidEnd
-{
-    NSLog(@"gameSessionDidEnd");
-    screen.hidden = YES;
-    label.hidden = NO;
-
-    _window.title = NSBundle.mainBundle.infoDictionary[@"CFBundleName"];
-}
-
-- (void) driverInitDidStart
-{
-    [spinner.subviews.firstObject startAnimation:self];
-    [_window addTitlebarAccessoryViewController:tbAccessory];
-
-    label.stringValue = NSLocalizedString(@"Please wait...", nil);
-    _window.title = NSLocalizedString(@"Loading...", nil);
-}
-
-- (void) driverInitDidEnd:(NSString *) name
-                  success:(BOOL) success
-{
-    [spinner.subviews.firstObject stopAnimation:self];
-    [tbAccessory removeFromParentViewController];
-
-    if (success)
-        label.stringValue = NSLocalizedString(@"Starting...", nil);
-    else
-        label.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Error loading \"%@\".", nil),
-                         name];
-
-    _window.title = NSBundle.mainBundle.infoDictionary[(NSString *)kCFBundleNameKey];
-}
-
 #pragma mark - Actions
-
-- (void) resizeNormalSize:(id) sender
-{
-    NSSize screenSize = _video.gameScreenSize;
-    if (screenSize.width != 0 && screenSize.height != 0)
-        [self resizeFrame:screenSize
-                  animate:YES];
-}
-
-- (void) resizeDoubleSize:(id) sender
-{
-    NSSize screenSize = _video.gameScreenSize;
-    if (screenSize.width != 0 && screenSize.height != 0)
-        [self resizeFrame:NSMakeSize(screenSize.width * 2, screenSize.height * 2)
-                  animate:YES];
-}
 
 - (void) openDocument:(id) sender
 {
@@ -235,7 +108,7 @@ static AppDelegate *sharedInstance = nil;
     panel.canChooseFiles = YES;
     panel.canChooseDirectories = NO;
     panel.allowsMultipleSelection = NO;
-    panel.allowedFileTypes = supportedFormats;
+    panel.allowedFileTypes = _supportedFormats;
 
     [panel beginWithCompletionHandler:^(NSInteger result){
         if (result == NSModalResponseOK)
@@ -243,66 +116,53 @@ static AppDelegate *sharedInstance = nil;
     }];
 }
 
-#pragma mark - Drag & Drop
-
-- (BOOL) performDragOperation:(id<NSDraggingInfo>) sender
+- (void) displayLogViewer:(id) sender
 {
-    NSLog(@"performDragOperation");
-
-    NSPasteboard *pboard = sender.draggingPasteboard;
-    NSString *path = [[pboard propertyListForType:NSFilenamesPboardType] firstObject];
-
-    [self loadPath:path];
-
-    return YES;
+    if (!logViewer)
+        logViewer = [FBLogViewerController new];
+    [logViewer showWindow:self];
 }
 
-- (NSDragOperation) draggingEntered:(id <NSDraggingInfo>) sender
+- (void) displayPreferences:(id) sender
 {
-    NSLog(@"draggingEntered");
-
-    NSDragOperation dragOp = NSDragOperationNone;
-    if (sender.draggingSourceOperationMask & NSDragOperationCopy) {
-        NSPasteboard *pboard = sender.draggingPasteboard;
-        NSString *path = [[pboard propertyListForType:NSFilenamesPboardType] firstObject];
-
-        if ([supportedFormats containsObject:path.pathExtension])
-            dragOp = NSDragOperationCopy;
-    }
-
-    return dragOp;
+    if (!prefs)
+        prefs = [FBPreferencesController new];
+    [prefs showWindow:self];
 }
 
-#pragma mark - Private
-
-- (void) resizeFrame:(NSSize) newSize
-             animate:(BOOL) animate
-{
-    // Turn off full screen if active
-    if (([[NSApplication sharedApplication] presentationOptions] & NSApplicationPresentationFullScreen) != 0) {
-        [_window toggleFullScreen:nil];
-    }
-
-    NSRect windowRect = _window.frame;
-    NSSize windowSize = windowRect.size;
-    NSSize glViewSize = _window.contentView.bounds.size;
-
-    CGFloat newWidth = newSize.width + (windowSize.width - glViewSize.width);
-    CGFloat newHeight = newSize.height + (windowSize.height - glViewSize.height);
-
-    NSRect newRect = NSMakeRect(windowRect.origin.x, windowRect.origin.y,
-                                newWidth, newHeight);
-
-    [_window setFrame:newRect
-              display:YES
-              animate:animate];
-}
+#pragma mark - Public
 
 - (void) loadPath:(NSString *) path
 {
-    [main load:path];
+    [_runloop load:path];
     [NSDocumentController.sharedDocumentController noteNewRecentDocumentURL:[NSURL fileURLWithPath:path]];
 }
+
+- (void) suppressScreenSaver
+{
+    if (sleepAssertId == kIOPMNullAssertionID) {
+        IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep,
+                                    kIOPMAssertionLevelOn,
+                                    (__bridge CFStringRef) @"FBNeo",
+                                    &sleepAssertId);
+#if DEBUG
+        NSLog(@"suppressScreenSaver");
+#endif
+    }
+}
+
+- (void) restoreScreenSaver
+{
+    if (sleepAssertId != kIOPMNullAssertionID) {
+        IOPMAssertionRelease(sleepAssertId);
+        sleepAssertId = kIOPMNullAssertionID;
+#if DEBUG
+        NSLog(@"restoreScreenSaver");
+#endif
+    }
+}
+
+#pragma mark - Private
 
 - (NSString *) appSupportPath
 {

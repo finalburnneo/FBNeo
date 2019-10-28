@@ -203,9 +203,9 @@ STDINPUTINFO(mschamp)
 
 static struct BurnInputInfo eyesInputList[] = {
 	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
+	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
 	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 7, 	"p2 start"},
+	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
@@ -1920,6 +1920,8 @@ void __fastcall pacman_write(UINT16 a, UINT8 d)
 				return;
 			}
 
+			if (a == 0x50c1) *flipscreen = d & 1;
+
 			if ((a & 0xfff0) == 0x5040) {
 				NamcoSoundWrite((a & 0x0f) | 0x00, d);
 				return;
@@ -2720,7 +2722,7 @@ static void DrawBackground()
 		INT32 code  = (charbank << 8) | DrvVidRAM[ofst];
 		INT32 color = (DrvColRAM[ofst] & 0x1f) | (colortablebank << 5) | (palettebank << 6);
 
-		if (*flipscreen) {
+		if (game_select == BIRDIY && *flipscreen) {
 			Render8x8Tile_FlipXY_Clip(pTransDraw, code, (272 - (sx * 8)) + 8, (224 - (sy * 8)) - 8, color, 2, 0, DrvGfxROM);
 		} else {
 			Render8x8Tile_Clip(pTransDraw, code, sx * 8, sy * 8, color, 2, 0, DrvGfxROM);
@@ -2740,15 +2742,17 @@ static void DrawSprites()
 		INT32 flipx  = DrvSprRAM [offs] & 1;
 		INT32 flipy  = DrvSprRAM [offs] & 2;
 
-		if (game_select == VANVAN)
-			sx += 2*8;
-		
-		if (*flipscreen) {
-			sy = (240 - sy) - 8;
-			sx += 8;
+		if (*flipscreen) { // unflip the sprites
+			if (game_select == VANVAN) {
+				sx -= 2*8;
+			}
+			sy = (240 - sy) - 1;
 			flipy = !flipy;
 			flipx = !flipx;
 		} else {
+			if (game_select == VANVAN) {
+				sx += 2*8;
+			}
 			sx = 272 - sx;
 			sy = sy - 31;
 		}

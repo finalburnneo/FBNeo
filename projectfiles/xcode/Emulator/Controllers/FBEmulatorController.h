@@ -18,6 +18,7 @@
     IBOutlet NSTextField *label;
 }
 
+- (IBAction) resetEmulation:(id) sender;
 - (IBAction) togglePause:(id) sender;
 
 - (IBAction) resizeNormalSize:(id) sender;

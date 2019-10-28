@@ -9,6 +9,8 @@
 #import "FBMainThread.h"
 
 #include "burner.h"
+#include "burnint.h"
+#include "driverlist.h"
 
 // Placing burner.h stuff in the NSThread file
 // messes with thread execution for some reason,
@@ -36,13 +38,26 @@
 - (NSString *) setName
 {
     return [NSString stringWithCString:BurnDrvGetText(DRV_NAME)
-                              encoding:NSUTF8StringEncoding];
+                              encoding:NSASCIIStringEncoding];
 }
 
 - (NSString *) title
 {
-    return [NSString stringWithCString:BurnDrvGetText(DRV_FULLNAME)
-                              encoding:NSUTF8StringEncoding];
+    if (!bDrvOkay)
+        return nil;
+
+    const wchar_t *unicodeName = pDriver[nBurnDrvActive]->szFullNameW;
+    if (unicodeName)
+        return [[NSString alloc] initWithBytes:unicodeName
+                                        length:sizeof(wchar_t) * wcslen(unicodeName)
+                                      encoding:NSUTF32LittleEndianStringEncoding];
+
+    const char *asciiName = pDriver[nBurnDrvActive]->szFullNameA;
+    if (asciiName)
+        return [NSString stringWithCString:asciiName
+                                  encoding:NSASCIIStringEncoding];
+
+    return nil;
 }
 
 #pragma mark - DIP switches

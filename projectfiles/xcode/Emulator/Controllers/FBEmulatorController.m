@@ -172,6 +172,12 @@
     }
 }
 
+- (void) mouseDidMove:(NSPoint) point
+{
+    NSLog(@"%.02f,%.02f", point.x, point.y);
+    self.input.mouseCoords = point;
+}
+
 #pragma mark - Drag & Drop
 
 - (BOOL) performDragOperation:(id<NSDraggingInfo>) sender
@@ -258,6 +264,26 @@
 }
 
 #pragma mark - Actions
+
+- (BOOL) validateMenuItem:(NSMenuItem *) menuItem
+{
+    if (menuItem.action == @selector(resetEmulation:))
+        return self.runloop.isRunning;
+    else if (menuItem.action == @selector(togglePause:)) {
+        if (self.runloop.isRunning && self.runloop.isPaused)
+            menuItem.title = NSLocalizedString(@"Resume", nil);
+        else
+            menuItem.title = NSLocalizedString(@"Pause", nil);
+        return self.runloop.isRunning;
+    }
+
+    return menuItem.isEnabled;
+}
+
+- (void) resetEmulation:(id) sender
+{
+    [self.input simReset];
+}
 
 - (void) togglePause:(id) sender
 {

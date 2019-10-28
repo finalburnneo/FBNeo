@@ -274,6 +274,8 @@
 
 - (void) mouseMoved:(NSEvent *) event
 {
+    if ([_delegate respondsToSelector:@selector(mouseDidMove:)])
+        [_delegate mouseDidMove:NSMakePoint(event.deltaX, event.deltaY)];
     [self handleMouseChange:[event locationInWindow]];
 }
 
@@ -321,9 +323,8 @@
     _lastCursorPosition = [self convertPoint:position
                                     fromView:nil];
 
-    if ([_delegate respondsToSelector:@selector(mouseStateDidChange)]) {
+    if ([_delegate respondsToSelector:@selector(mouseStateDidChange)])
         [_delegate mouseStateDidChange];
-    }
 }
 
 - (void)resetProjection

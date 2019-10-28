@@ -10,6 +10,9 @@
 
 @interface FBInput : NSObject
 
+@property NSPoint mouseCoords;
+
+- (void) simReset;
 - (void) keyDown:(NSEvent *) theEvent;
 - (void) keyUp:(NSEvent *) theEvent;
 - (void) flagsChanged:(NSEvent *) theEvent;

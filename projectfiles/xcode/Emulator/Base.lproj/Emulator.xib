@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="FBEmulatorController">
+            <connections>
+                <outlet property="label" destination="r9V-Zc-ar6" id="m5W-Nb-eKU"/>
+                <outlet property="screen" destination="NMq-dl-ima" id="DmS-4G-KTJ"/>
+                <outlet property="spinner" destination="tAE-oU-84p" id="Nux-fu-lkz"/>
+                <outlet property="window" destination="iUn-Rc-9rO" id="NmU-Wm-wrs"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="FinalBurn Neo" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" id="iUn-Rc-9rO">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="2ny-FP-Dnz">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r9V-Zc-ar6">
+                        <rect key="frame" x="-2" y="164" width="484" height="32"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Twas brillig and the slithy toves Did gyre and gimble in the wabe" id="xlr-B9-gSP">
+                            <font key="font" usesAppearanceFont="YES"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <openGLView wantsLayer="YES" fixedFrame="YES" colorSize="5bit_RGB_8bit_Alpha" depthSize="32bit" rendererType="accelerated" useAuxiliaryDepthBufferStencil="NO" useDoubleBufferingEnabled="YES" allowOffline="YES" useRecovery="YES" wantsBestResolutionOpenGLSurface="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NMq-dl-ima" customClass="FBScreenView">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </openGLView>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="Wmy-un-Ibj"/>
+                <outlet property="initialFirstResponder" destination="NMq-dl-ima" id="nnt-FJ-SyP"/>
+            </connections>
+            <point key="canvasLocation" x="130" y="-102"/>
+        </window>
+        <customView id="tAE-oU-84p">
+            <rect key="frame" x="0.0" y="0.0" width="24" height="16"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="9M6-12-JcO">
+                    <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                </progressIndicator>
+            </subviews>
+            <point key="canvasLocation" x="66" y="-511"/>
+        </customView>
+    </objects>
+</document>

@@ -9145,7 +9145,7 @@ struct BurnDriver BurnDrvFsoccerb = {
 	"fsoccerb", "fsoccer", NULL, NULL, "1988",
 	"Fighting Soccer (Joystick hack bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, fsoccerbRomInfo, fsoccerbRomName, NULL, NULL, NULL, NULL, FsoccerInputInfo, FsoccerDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, FsoccerDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3
@@ -9189,7 +9189,7 @@ struct BurnDriver BurnDrvFsoccerba = {
 	"fsoccerba", "fsoccer", NULL, NULL, "1988",
 	"Fighting Soccer (Joystick hack bootleg, alt)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, fsoccerbaRomInfo, fsoccerbaRomName, NULL, NULL, NULL, NULL, FsoccerInputInfo, FsoccerDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, FsoccerDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3

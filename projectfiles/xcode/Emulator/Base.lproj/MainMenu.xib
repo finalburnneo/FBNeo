@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -13,15 +12,9 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
-            <connections>
-                <outlet property="label" destination="jn1-Sr-H69" id="zSE-Ge-GkC"/>
-                <outlet property="screen" destination="Jj9-3G-U07" id="7Fv-Ip-Vmf"/>
-                <outlet property="spinner" destination="LUr-2W-WhR" id="BLW-Aq-ioS"/>
-                <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
-            </connections>
-        </customObject>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <customObject id="GcD-Lb-7Ld" customClass="SUUpdater"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="FinalBurnNeo" id="1Xt-HY-uBw">
@@ -34,8 +27,18 @@
                                     <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Check for Updates..." id="PWa-fO-f5X">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="checkForUpdates:" target="GcD-Lb-7Ld" id="NHi-vE-IVE"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
+                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
+                                <connections>
+                                    <action selector="displayPreferences:" target="Voe-Tx-rLC" id="O4V-HT-KMv"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -99,18 +102,30 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Game" id="nPQ-px-Dcp">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Game" id="cgf-ex-L8x">
+                        <items>
+                            <menuItem title="Pause" keyEquivalent="p" id="Jl5-0C-ZL9">
+                                <connections>
+                                    <action selector="togglePause:" target="-1" id="s4r-F4-i9t"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="View" id="H8h-7b-M4v">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
                         <items>
                             <menuItem title="Normal Size" keyEquivalent="1" id="s9w-ms-Dvq">
                                 <connections>
-                                    <action selector="resizeNormalSize:" target="Voe-Tx-rLC" id="UST-1w-sAC"/>
+                                    <action selector="resizeNormalSize:" target="-1" id="oIz-8D-em1"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Double Size" keyEquivalent="2" id="mHm-QL-BS1">
                                 <connections>
-                                    <action selector="resizeDoubleSize:" target="Voe-Tx-rLC" id="bM8-fE-ktr"/>
+                                    <action selector="resizeDoubleSize:" target="-1" id="pX4-x3-r8b"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="se6-Pj-Iwh"/>
@@ -139,6 +154,23 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
+                            <menuItem title="Show Previous Tab" keyEquivalent="{" id="tp8-x5-WMZ">
+                                <connections>
+                                    <action selector="showPreviousTab:" target="-1" id="Fvb-ea-B0K"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show Next Tab" keyEquivalent="}" id="Xcg-z8-3QS">
+                                <connections>
+                                    <action selector="showNextTab:" target="-1" id="Ohx-Ps-S7A"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="GbV-NH-itl"/>
+                            <menuItem title="Log Viewer" keyEquivalent="L" id="B9b-uq-YTW">
+                                <connections>
+                                    <action selector="displayLogViewer:" target="Voe-Tx-rLC" id="nPT-jf-1ps"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Ogn-TJ-pnG"/>
                             <menuItem title="Bring All to Front" id="LE2-aR-0XJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -163,45 +195,5 @@
             </items>
             <point key="canvasLocation" x="140" y="154"/>
         </menu>
-        <window title="FinalBurn Neo" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jn1-Sr-H69">
-                        <rect key="frame" x="-2" y="164" width="484" height="32"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Twas brillig and the slithy toves Did gyre and gimble in the wabe" id="LSC-SW-Wuc">
-                            <font key="font" usesAppearanceFont="YES"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <openGLView wantsLayer="YES" fixedFrame="YES" colorSize="5bit_RGB_8bit_Alpha" depthSize="32bit" rendererType="accelerated" useAuxiliaryDepthBufferStencil="NO" useDoubleBufferingEnabled="YES" allowOffline="YES" useRecovery="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jj9-3G-U07" customClass="FBScreenView">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </openGLView>
-                </subviews>
-            </view>
-            <connections>
-                <outlet property="delegate" destination="Voe-Tx-rLC" id="suI-T0-B1U"/>
-            </connections>
-            <point key="canvasLocation" x="131" y="-153"/>
-        </window>
-        <customView id="LUr-2W-WhR">
-            <rect key="frame" x="0.0" y="0.0" width="24" height="16"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="XS4-h5-AoQ">
-                    <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                </progressIndicator>
-            </subviews>
-            <point key="canvasLocation" x="66" y="-511"/>
-        </customView>
     </objects>
 </document>

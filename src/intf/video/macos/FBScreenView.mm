@@ -286,15 +286,15 @@
 
 - (void) mouseDown:(NSEvent *) event
 {
-    if ([_delegate respondsToSelector:@selector(mouseButtonStateChange:)])
-        [_delegate mouseButtonStateChange:event];
+    if ([_delegate respondsToSelector:@selector(mouseButtonStateDidChange:)])
+        [_delegate mouseButtonStateDidChange:event];
     [self handleMouseChange:event.locationInWindow];
 }
 
 - (void) mouseUp:(NSEvent *) event
 {
-    if ([_delegate respondsToSelector:@selector(mouseButtonStateChange:)])
-        [_delegate mouseButtonStateChange:event];
+    if ([_delegate respondsToSelector:@selector(mouseButtonStateDidChange:)])
+        [_delegate mouseButtonStateDidChange:event];
 }
 
 - (void) mouseDragged:(NSEvent *) event
@@ -305,15 +305,15 @@
 
 - (void) rightMouseDown:(NSEvent *) event
 {
-    if ([_delegate respondsToSelector:@selector(mouseButtonStateChange:)])
-        [_delegate mouseButtonStateChange:event];
+    if ([_delegate respondsToSelector:@selector(mouseButtonStateDidChange:)])
+        [_delegate mouseButtonStateDidChange:event];
     [self handleMouseChange:event.locationInWindow];
 }
 
 - (void) rightMouseUp:(NSEvent *) event
 {
-    if ([_delegate respondsToSelector:@selector(mouseButtonStateChange:)])
-        [_delegate mouseButtonStateChange:event];
+    if ([_delegate respondsToSelector:@selector(mouseButtonStateDidChange:)])
+        [_delegate mouseButtonStateDidChange:event];
 }
 
 - (void) rightMouseDragged:(NSEvent *) event

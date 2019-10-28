@@ -274,18 +274,17 @@ int MacOSinpState(int nCode)
 //
 //        // Find the joystick state in our array
 //        return JoystickState(nJoyNumber, nCode & 0xFF);
+        return 0;
     }
 
     if (nCode < 0xC000) {
-        // FIXME!!
-//        // Codes 8000-C000 = Mouse
-//        if ((nCode - 0x8000) >> 8) {                        // Only the system mouse is supported by SDL
-//            return 0;
-//        }
-//        if (ReadMouse() != 0) {                                // Error polling the mouse
-//            return 0;
-//        }
-//        return CheckMouseState(nCode & 0xFF);
+        if (((nCode - 0x8000) >> 8) == 0) {
+            switch (nCode & 0x7f) {
+                case 0: return (AppDelegate.sharedInstance.input.mouseButtonStates & FBN_LMB) != 0;
+                case 1: return (AppDelegate.sharedInstance.input.mouseButtonStates & FBN_RMB) != 0;
+                case 2: return (AppDelegate.sharedInstance.input.mouseButtonStates & FBN_MMB) != 0;
+            }
+        }
     }
 
     return 0;

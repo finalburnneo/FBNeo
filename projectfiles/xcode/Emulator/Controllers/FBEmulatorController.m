@@ -175,14 +175,29 @@
     self.input.mouseCoords = point;
 }
 
-- (void) mouseButtonStateChange:(NSEvent *) event
+- (void) mouseButtonStateDidChange:(NSEvent *) event
 {
-    if ((event.modifierFlags & NSCommandKeyMask) != 0
-        && event.type == NSLeftMouseDown) {
+    if ((event.modifierFlags & NSEventModifierFlagCommand) != 0
+        && event.type == NSEventTypeLeftMouseDown) {
         if (isCursorLocked)
             [self unlockCursor];
         else
             [self lockCursor];
+    } else switch (event.type) {
+        case NSEventTypeLeftMouseDown:
+            self.input.mouseButtonStates |= FBN_LMB;
+            break;
+        case NSEventTypeLeftMouseUp:
+            self.input.mouseButtonStates &= ~FBN_LMB;
+            break;
+        case NSEventTypeRightMouseDown:
+            self.input.mouseButtonStates |= FBN_RMB;
+            break;
+        case NSEventTypeRightMouseUp:
+            self.input.mouseButtonStates &= ~FBN_RMB;
+            break;
+        default:
+            break;
     }
 }
 
@@ -364,7 +379,7 @@
 
 - (void) lockCursor
 {
-    if (isCursorLocked) {
+    if (!isCursorLocked) {
         CGAssociateMouseAndMouseCursorPosition(false);
         isCursorLocked = YES;
 #ifdef DEBUG
@@ -377,7 +392,7 @@
 
 - (void) unlockCursor
 {
-    if (!isCursorLocked) {
+    if (isCursorLocked) {
         CGAssociateMouseAndMouseCursorPosition(true);
         isCursorLocked = NO;
 #ifdef DEBUG

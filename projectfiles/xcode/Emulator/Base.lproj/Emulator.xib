@@ -8,9 +8,12 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FBEmulatorController">
             <connections>
+                <outlet property="accView" destination="tAE-oU-84p" id="STJ-Bl-aOY"/>
                 <outlet property="label" destination="r9V-Zc-ar6" id="m5W-Nb-eKU"/>
+                <outlet property="lockIcon" destination="e2Z-og-5sM" id="m2t-2S-SAX"/>
+                <outlet property="lockText" destination="faS-dc-o2e" id="Z0S-o0-j4Q"/>
                 <outlet property="screen" destination="NMq-dl-ima" id="DmS-4G-KTJ"/>
-                <outlet property="spinner" destination="tAE-oU-84p" id="Nux-fu-lkz"/>
+                <outlet property="spinner" destination="9M6-12-JcO" id="h8L-zo-cgm"/>
                 <outlet property="window" destination="iUn-Rc-9rO" id="NmU-Wm-wrs"/>
             </connections>
         </customObject>
@@ -47,15 +50,38 @@
             <point key="canvasLocation" x="130" y="-102"/>
         </window>
         <customView id="tAE-oU-84p">
-            <rect key="frame" x="0.0" y="0.0" width="24" height="16"/>
+            <rect key="frame" x="0.0" y="0.0" width="111" height="24"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="faS-dc-o2e">
+                    <rect key="frame" x="18" y="5" width="46" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="⌘+click" id="Hsh-02-gGV">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e2Z-og-5sM">
+                    <rect key="frame" x="63" y="4" width="24" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSLockLockedTemplate" imagePosition="only" alignment="center" controlSize="small" imageScaling="proportionallyUpOrDown" inset="2" id="kDJ-ul-fJ3">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu" size="11"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="activateCursorLock:" target="-2" id="gdb-de-U7o"/>
+                    </connections>
+                </button>
                 <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="9M6-12-JcO">
-                    <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                    <rect key="frame" x="87" y="4" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 </progressIndicator>
             </subviews>
-            <point key="canvasLocation" x="66" y="-511"/>
+            <point key="canvasLocation" x="69.5" y="-511"/>
         </customView>
     </objects>
+    <resources>
+        <image name="NSLockLockedTemplate" width="10" height="14"/>
+    </resources>
 </document>

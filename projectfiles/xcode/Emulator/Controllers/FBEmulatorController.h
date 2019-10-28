@@ -14,9 +14,14 @@
 @interface FBEmulatorController : NSWindowController<FBScreenViewDelegate, FBMainThreadDelegate>
 {
     IBOutlet FBScreenView *screen;
-    IBOutlet NSView *spinner;
+    IBOutlet NSView *accView;
+    IBOutlet NSProgressIndicator *spinner;
+    IBOutlet NSButton *lockIcon;
+    IBOutlet NSTextField *lockText;
     IBOutlet NSTextField *label;
 }
+
+- (IBAction) activateCursorLock:(id) sender;
 
 - (IBAction) resetEmulation:(id) sender;
 - (IBAction) togglePause:(id) sender;

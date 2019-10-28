@@ -185,6 +185,16 @@ static unsigned char simKeyState[256];
 {
 }
 
+- (BOOL) usesMouse
+{
+    struct BurnInputInfo bii;
+    for (int i = 0; BurnDrvGetInputInfo(&bii, i) == 0; i++)
+        if (bii.nType == BIT_ANALOG_REL && strstr(bii.szName, "mouse") == 0)
+            return YES;
+
+    return NO;
+}
+
 @end
 
 #pragma mark - FinalBurn

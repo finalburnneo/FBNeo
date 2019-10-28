@@ -27,7 +27,6 @@
     BOOL isCursorLocked;
     BOOL isCursorVisible;
     BOOL isAutoPaused;
-    NSTitlebarAccessoryViewController *tbAccessory;
     NSArray *defaultsToObserve;
 }
 
@@ -53,9 +52,15 @@
 {
     defaultsToObserve = @[ @"pauseWhenInactive" ];
 
-    tbAccessory = [NSTitlebarAccessoryViewController new];
-    tbAccessory.view = spinner;
-    tbAccessory.layoutAttribute = NSLayoutAttributeRight;
+    NSTitlebarAccessoryViewController *tba = [NSTitlebarAccessoryViewController new];
+    tba.view = accView;
+    tba.layoutAttribute = NSLayoutAttributeRight;
+    lockText.stringValue = NSLocalizedString(@"⌘+click", nil);
+    lockText.hidden = YES;
+    lockIcon.image = [NSImage imageNamed:@"NSLockUnlockedTemplate"];
+    lockIcon.enabled = NO;
+    spinner.hidden = YES;
+    [self.window addTitlebarAccessoryViewController:tba];
 
     screen.delegate = self;
     self.video.delegate = screen;
@@ -243,6 +248,7 @@
 
     screen.hidden = NO;
     label.hidden = YES;
+    lockIcon.enabled = YES;
 
     [self.window makeFirstResponder:screen];
 }
@@ -252,6 +258,7 @@
     NSLog(@"gameSessionDidEnd");
     screen.hidden = YES;
     label.hidden = NO;
+    lockIcon.enabled = NO;
     [self unlockCursor];
 
     self.window.title = NSBundle.mainBundle.infoDictionary[@"CFBundleName"];
@@ -259,8 +266,8 @@
 
 - (void) driverInitDidStart
 {
-    [spinner.subviews.firstObject startAnimation:self];
-    [self.window addTitlebarAccessoryViewController:tbAccessory];
+    [spinner startAnimation:self];
+    spinner.hidden = NO;
 
     label.stringValue = NSLocalizedString(@"Please wait...", nil);
     self.window.title = NSLocalizedString(@"Loading...", nil);
@@ -269,8 +276,8 @@
 - (void) driverInitDidEnd:(NSString *) name
                   success:(BOOL) success
 {
-    [spinner.subviews.firstObject stopAnimation:self];
-    [tbAccessory removeFromParentViewController];
+    [spinner stopAnimation:self];
+    spinner.hidden = YES;
 
     if (success) {
         label.stringValue = NSLocalizedString(@"Starting...", nil);
@@ -330,6 +337,12 @@
                   animate:YES];
 }
 
+- (void) activateCursorLock:(id) sender
+{
+    if (!isCursorLocked)
+        [self lockCursor];
+}
+
 #pragma mark - Private
 
 - (void) resizeFrame:(NSSize) newSize
@@ -381,7 +394,16 @@
 {
     if (!isCursorLocked) {
         CGAssociateMouseAndMouseCursorPosition(false);
+
+        CGFloat offset = self.window.screen.frame.size.height + self.window.screen.frame.origin.y;
+        NSPoint centerScreen = [self.window convertPointToScreen:NSMakePoint(NSMidX(screen.bounds),
+                                                                             NSMidY(screen.bounds))];
+        NSPoint screenCoords = NSMakePoint(centerScreen.x, offset - centerScreen.y);
+        CGWarpMouseCursorPosition(NSPointToCGPoint(screenCoords));
+
         isCursorLocked = YES;
+        lockIcon.image = [NSImage imageNamed:@"NSLockLockedTemplate"];
+        lockText.hidden = NO;
 #ifdef DEBUG
     NSLog(@"lockCursor");
 #endif
@@ -395,6 +417,8 @@
     if (isCursorLocked) {
         CGAssociateMouseAndMouseCursorPosition(true);
         isCursorLocked = NO;
+        lockIcon.image = [NSImage imageNamed:@"NSLockUnlockedTemplate"];
+        lockText.hidden = YES;
 #ifdef DEBUG
     NSLog(@"unlockCursor");
 #endif

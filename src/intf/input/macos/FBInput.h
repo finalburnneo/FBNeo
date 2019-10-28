@@ -18,6 +18,7 @@
 @property uint8 mouseButtonStates;
 
 - (void) simReset;
+- (BOOL) usesMouse;
 - (void) keyDown:(NSEvent *) theEvent;
 - (void) keyUp:(NSEvent *) theEvent;
 - (void) flagsChanged:(NSEvent *) theEvent;

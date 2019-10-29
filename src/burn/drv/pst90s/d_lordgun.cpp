@@ -655,7 +655,6 @@ static UINT8 aliencha_dip_read()
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
-//	bprintf(0, _T("%S"), (nStatus) ? "I":"i");
 	ZetSetIRQLine(0, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
@@ -679,7 +678,6 @@ static INT32 DrvDoReset()
 	MSM6295Reset();
 	ZetClose();
 
-	*okibank = -1;
 	set_oki_bank(0); // lordgun
 
 	EEPROMReset();
@@ -1413,9 +1411,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		INT32 bank = *okibank;
-		*okibank = -1;
-		set_oki_bank(bank);
+		set_oki_bank(*okibank);
 	}
 
 	return 0;
@@ -1458,7 +1454,7 @@ static INT32 lordgunInit()
 
 struct BurnDriver BurnDrvLordgun = {
 	"lordgun", NULL, NULL, NULL, "1994",
-	"Lord of Gun (USA)\0", "Imperfect graphics and sound", "IGS", "Miscellaneous",
+	"Lord of Gun (USA)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, lordgunRomInfo, lordgunRomName, NULL, NULL, NULL, NULL, LordgunInputInfo, LordgunDIPInfo,
@@ -1502,7 +1498,7 @@ static INT32 alienchaInit()
 
 struct BurnDriver BurnDrvAliencha = {
 	"aliencha", NULL, NULL, NULL, "1994",
-	"Alien Challenge (World)\0", "Imperfect sound", "IGS", "Miscellaneous",
+	"Alien Challenge (World)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, alienchaRomInfo, alienchaRomName, NULL, NULL, NULL, NULL, AlienchaInputInfo, AlienchaDIPInfo,
@@ -1549,7 +1545,7 @@ static INT32 alienchacInit()
 
 struct BurnDriver BurnDrvAlienchac = {
 	"alienchac", "aliencha", NULL, NULL, "1994",
-	"Alien Challenge (China)\0", "Imperfect sound", "IGS", "Miscellaneous",
+	"Alien Challenge (China)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, alienchacRomInfo, alienchacRomName, NULL, NULL, NULL, NULL, AlienchaInputInfo, AlienchacDIPInfo,

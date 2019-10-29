@@ -11,10 +11,10 @@
 		FE1B1094235615950065200C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1093235615950065200C /* Assets.xcassets */; };
 		FE1B1097235615950065200C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1095235615950065200C /* MainMenu.xib */; };
 		FE1B109A235615950065200C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1099235615950065200C /* main.m */; };
-		FE1B23A023561A750065200C /* m68kcpu.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1C9C23561A610065200C /* m68kcpu.c */; };
+		FE1B23A023561A750065200C /* m68kcpu.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1C9C23561A610065200C /* m68kcpu.c */; settings = {COMPILER_FLAGS = "-Wno-sometimes-uninitialized -Wno-conditional-uninitialized"; }; };
 		FE1B23A423561A750065200C /* z180_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CA223561A610065200C /* z180_intf.cpp */; };
 		FE1B23A523561A750065200C /* z80_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CA323561A610065200C /* z80_intf.cpp */; };
-		FE1B23A723561A750065200C /* i8x41.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CA623561A610065200C /* i8x41.cpp */; };
+		FE1B23A723561A750065200C /* i8x41.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CA623561A610065200C /* i8x41.cpp */; settings = {COMPILER_FLAGS = "-Wno-parentheses"; }; };
 		FE1B23A823561A750065200C /* m6800_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CA823561A610065200C /* m6800_intf.cpp */; };
 		FE1B23A923561A750065200C /* m6805.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CAB23561A610065200C /* m6805.cpp */; };
 		FE1B23AB23561A750065200C /* mips3_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CAE23561A620065200C /* mips3_intf.cpp */; };
@@ -63,7 +63,7 @@
 		FE1B240623561A750065200C /* m6805_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D7823561A630065200C /* m6805_intf.cpp */; };
 		FE1B240723561A750065200C /* s2650.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D7A23561A630065200C /* s2650.cpp */; };
 		FE1B240923561A750065200C /* mcs51.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D7F23561A630065200C /* mcs51.cpp */; };
-		FE1B240A23561A750065200C /* tlcs90.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D8423561A630065200C /* tlcs90.cpp */; };
+		FE1B240A23561A750065200C /* tlcs90.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D8423561A630065200C /* tlcs90.cpp */; settings = {COMPILER_FLAGS = "-Wno-tautological-pointer-compare"; }; };
 		FE1B240B23561A750065200C /* upd7810.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D8623561A630065200C /* upd7810.cpp */; };
 		FE1B240F23561A750065200C /* hd6309_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D8B23561A640065200C /* hd6309_intf.cpp */; };
 		FE1B241023561A750065200C /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1D8C23561A640065200C /* license.txt */; };
@@ -192,7 +192,7 @@
 		FE1B24E123561A760065200C /* d_eprom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0A23561A670065200C /* d_eprom.cpp */; };
 		FE1B24E223561A760065200C /* d_batman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0B23561A670065200C /* d_batman.cpp */; };
 		FE1B24E323561A760065200C /* d_thunderj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0C23561A670065200C /* d_thunderj.cpp */; };
-		FE1B24E423561A760065200C /* d_skullxbo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0D23561A670065200C /* d_skullxbo.cpp */; };
+		FE1B24E423561A760065200C /* d_skullxbo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0D23561A670065200C /* d_skullxbo.cpp */; settings = {COMPILER_FLAGS = "-Wno-macro-redefined"; }; };
 		FE1B24E523561A760065200C /* d_shuuz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0E23561A670065200C /* d_shuuz.cpp */; };
 		FE1B24E623561A760065200C /* d_klax.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F0F23561A670065200C /* d_klax.cpp */; };
 		FE1B24E723561A760065200C /* d_gauntlet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1023561A670065200C /* d_gauntlet.cpp */; };
@@ -332,11 +332,11 @@
 		FE1B256D23561A760065200C /* d_sys1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FA023561A690065200C /* d_sys1.cpp */; };
 		FE1B256E23561A760065200C /* d_zaxxon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FA323561A690065200C /* d_zaxxon.cpp */; };
 		FE1B256F23561A760065200C /* d_galaxian.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FA523561A690065200C /* d_galaxian.cpp */; };
-		FE1B257023561A760065200C /* gal_gfx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FA623561A690065200C /* gal_gfx.cpp */; };
+		FE1B257023561A760065200C /* gal_gfx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FA623561A690065200C /* gal_gfx.cpp */; settings = {COMPILER_FLAGS = "-Wno-conditional-uninitialized"; }; };
 		FE1B257123561A760065200C /* gal_stars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FA723561A690065200C /* gal_stars.cpp */; };
 		FE1B257223561A760065200C /* gal_sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FA923561A690065200C /* gal_sound.cpp */; };
 		FE1B257323561A760065200C /* gal_run.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FAA23561A690065200C /* gal_run.cpp */; };
-		FE1B257423561A760065200C /* d_simpl156.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FAC23561A690065200C /* d_simpl156.cpp */; };
+		FE1B257423561A760065200C /* d_simpl156.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FAC23561A690065200C /* d_simpl156.cpp */; settings = {COMPILER_FLAGS = "-Wno-sometimes-uninitialized"; }; };
 		FE1B257523561A760065200C /* d_stadhero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FAD23561A690065200C /* d_stadhero.cpp */; };
 		FE1B257623561A760065200C /* d_cninja.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FAE23561A690065200C /* d_cninja.cpp */; };
 		FE1B257723561A760065200C /* d_karnov.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1FB023561A690065200C /* d_karnov.cpp */; };
@@ -509,7 +509,7 @@
 		FE1B261E23561A770065200C /* d_batrider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207223561A6B0065200C /* d_batrider.cpp */; };
 		FE1B261F23561A770065200C /* d_cps3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207423561A6B0065200C /* d_cps3.cpp */; };
 		FE1B262023561A770065200C /* cps3snd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207623561A6B0065200C /* cps3snd.cpp */; };
-		FE1B262123561A770065200C /* cps3run.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207723561A6B0065200C /* cps3run.cpp */; };
+		FE1B262123561A770065200C /* cps3run.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207723561A6B0065200C /* cps3run.cpp */; settings = {COMPILER_FLAGS = "-Wno-logical-not-parentheses"; }; };
 		FE1B262223561A770065200C /* d_spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207923561A6B0065200C /* d_spectrum.cpp */; };
 		FE1B262323561A770065200C /* spectrum_states.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207A23561A6B0065200C /* spectrum_states.cpp */; };
 		FE1B262523561A770065200C /* psikyo_tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207E23561A6B0065200C /* psikyo_tile.cpp */; };
@@ -726,7 +726,7 @@
 		FE1B26FA23561A780065200C /* d_mrflea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B216623561A6D0065200C /* d_mrflea.cpp */; };
 		FE1B26FB23561A780065200C /* d_madmotor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B216723561A6D0065200C /* d_madmotor.cpp */; };
 		FE1B26FC23561A780065200C /* d_bwidow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B216823561A6D0065200C /* d_bwidow.cpp */; };
-		FE1B26FD23561A780065200C /* d_gaplus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B216923561A6E0065200C /* d_gaplus.cpp */; };
+		FE1B26FD23561A780065200C /* d_gaplus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B216923561A6E0065200C /* d_gaplus.cpp */; settings = {COMPILER_FLAGS = "-Wno-logical-not-parentheses"; }; };
 		FE1B26FE23561A780065200C /* d_rpunch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B216A23561A6E0065200C /* d_rpunch.cpp */; };
 		FE1B26FF23561A780065200C /* d_seicross.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B216B23561A6E0065200C /* d_seicross.cpp */; };
 		FE1B270023561A780065200C /* d_holeland.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B216C23561A6E0065200C /* d_holeland.cpp */; };
@@ -965,7 +965,7 @@
 		FE1B27EA23561A790065200C /* dat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B22E223561A730065200C /* dat.cpp */; };
 		FE1B27EB23561A790065200C /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B22E323561A730065200C /* misc.cpp */; };
 		FE1B27EC23561A790065200C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B22E423561A730065200C /* ioapi.c */; };
-		FE1B27ED23561A790065200C /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B22E523561A730065200C /* state.cpp */; };
+		FE1B27ED23561A790065200C /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B22E523561A730065200C /* state.cpp */; settings = {COMPILER_FLAGS = "-Wno-conditional-uninitialized"; }; };
 		FE1B282D23561A7A0065200C /* cong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B234223561A740065200C /* cong.cpp */; };
 		FE1B283C23561A7A0065200C /* conc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B235423561A740065200C /* conc.cpp */; };
 		FE1B283D23561A7A0065200C /* statec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B235623561A740065200C /* statec.cpp */; };
@@ -1005,7 +1005,7 @@
 		FEED9E0C23576F2A00B7AF83 /* drv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E0B23576F2900B7AF83 /* drv.cpp */; };
 		FEED9E0E23576F5A00B7AF83 /* media.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E0D23576F5A00B7AF83 /* media.cpp */; };
 		FEED9E102357702D00B7AF83 /* run.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E0F2357702D00B7AF83 /* run.cpp */; };
-		FEED9E132358412E00B7AF83 /* bzip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E122358412D00B7AF83 /* bzip.cpp */; };
+		FEED9E132358412E00B7AF83 /* bzip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E122358412D00B7AF83 /* bzip.cpp */; settings = {COMPILER_FLAGS = "-Wno-tautological-pointer-compare"; }; };
 		FEED9E152358414300B7AF83 /* stringset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E142358414300B7AF83 /* stringset.cpp */; };
 		FEED9E1C235845EE00B7AF83 /* FBMainThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */; };
 		FEED9E1E2358B48C00B7AF83 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E1D2358B48C00B7AF83 /* main.cpp */; };
@@ -4932,7 +4932,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "@echo Compiling Musashi MC680x0 core...\nM68KMAKE=${DERIVED_FILE_DIR}/m68kmake\n/usr/bin/gcc ${SRCROOT}/../../src/cpu/m68k/m68kmake.c -o ${M68KMAKE}\n${M68KMAKE} $(dirname ${SCRIPT_OUTPUT_FILE_0}) ${SRCROOT}/../../src/cpu/m68k/m68k_in.c\nrm ${M68KMAKE}\n";
+			shellScript = "@echo Compiling Musashi MC680x0 core...\nM68KMAKE=${DERIVED_FILE_DIR}/m68kmake\n/usr/bin/gcc -Wno-tautological-pointer-compare ${SRCROOT}/../../src/cpu/m68k/m68kmake.c -o ${M68KMAKE}\n${M68KMAKE} $(dirname ${SCRIPT_OUTPUT_FILE_0}) ${SRCROOT}/../../src/cpu/m68k/m68k_in.c\nrm ${M68KMAKE}\n";
 		};
 		FEED9DC42356E16400B7AF83 /* Generate driverlist.h */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6110,6 +6110,7 @@
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6122,6 +6123,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MARKETING_VERSION = 1.01;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",
@@ -6157,6 +6159,7 @@
 					"-Wno-unused-function",
 					"-Wno-format",
 					"-Wno-invalid-source-encoding",
+					"-Wno-documentation",
 				);
 			};
 			name = Debug;
@@ -6168,6 +6171,7 @@
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6180,6 +6184,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MARKETING_VERSION = 1.01;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",
@@ -6215,6 +6220,7 @@
 					"-Wno-unused-function",
 					"-Wno-format",
 					"-Wno-invalid-source-encoding",
+					"-Wno-documentation",
 				);
 			};
 			name = Release;

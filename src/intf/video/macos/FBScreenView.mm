@@ -33,7 +33,6 @@
     int textureWidth;
     int textureHeight;
     int textureBytesPerPixel;
-    NSLock *renderLock;
     NSSize screenSize;
     CFAbsoluteTime _lastMouseAction;
     NSPoint _lastCursorPosition;
@@ -52,9 +51,9 @@
 
 - (void) awakeFromNib
 {
-    renderLock = [[NSLock alloc] init];
     _lastMouseAction = CFAbsoluteTimeGetCurrent();
     _lastCursorPosition = NSMakePoint(-1, -1);
+    textureFormat = GL_UNSIGNED_SHORT_5_6_5;
 
     [self resetTrackingArea];
 }
@@ -67,7 +66,7 @@
 
     NSLog(@"FBScreenView/prepareOpenGL");
 
-    [renderLock lock];
+    CGLLockContext(self.openGLContext.CGLContextObj);
 
     // Synchronize buffer swaps with vertical refresh rate
     GLint swapInt = 1;
@@ -79,19 +78,18 @@
 
     glGenTextures(1, &screenTextureId);
 
-    [renderLock unlock];
+    CGLUnlockContext(self.openGLContext.CGLContextObj);
 }
 
 - (void) drawRect:(NSRect)dirtyRect
 {
-    [renderLock lock];
-
-    [self.openGLContext makeCurrentContext];
-
-    glClear(GL_COLOR_BUFFER_BIT);
-
     GLfloat coordX = (GLfloat)imageWidth / textureWidth;
     GLfloat coordY = (GLfloat)imageHeight / textureHeight;
+
+    [self.openGLContext makeCurrentContext];
+    CGLLockContext(self.openGLContext.CGLContextObj);
+
+    glClear(GL_COLOR_BUFFER_BIT);
 
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, screenTextureId);
@@ -114,22 +112,25 @@
 
     [self.openGLContext flushBuffer];
 
-    [renderLock unlock];
+    CGLUnlockContext(self.openGLContext.CGLContextObj);
 }
 
 - (void) reshape
 {
-    viewBounds = [self bounds];
-    [renderLock lock];
+    [super reshape];
+
+    viewBounds = self.bounds;
 
     [self.openGLContext makeCurrentContext];
+    CGLLockContext(self.openGLContext.CGLContextObj);
+
     [self.openGLContext update];
 
     [self resetProjection];
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    [renderLock unlock];
+    CGLUnlockContext(self.openGLContext.CGLContextObj);
 }
 
 #pragma mark - FBVideoRenderDelegate
@@ -142,12 +143,10 @@
 {
     NSLog(@"FBScreenView/initTexture");
 
-    [renderLock lock];
-
     [self.openGLContext makeCurrentContext];
+    CGLLockContext(self.openGLContext.CGLContextObj);
 
     free(texture);
-
     imageWidth = width;
     imageHeight = height;
     isRotated = rotated;
@@ -156,7 +155,6 @@
     textureHeight = [FBScreenView powerOfTwoClosestTo:imageHeight];
     textureBytesPerPixel = bytesPerPixel;
     screenSize = NSMakeSize((CGFloat)width, (CGFloat)height);
-    textureFormat = GL_UNSIGNED_SHORT_5_6_5;
 
     int texSize = textureWidth * textureHeight * bytesPerPixel;
     texture = (unsigned char *) malloc(texSize);
@@ -178,7 +176,7 @@
 
     [self resetProjection];
 
-    [renderLock unlock];
+    CGLUnlockContext(self.openGLContext.CGLContextObj);
 }
 
 - (void) renderFrame:(unsigned char *) bitmap
@@ -193,9 +191,8 @@
         }
     }
 
-    [renderLock lock];
-
     [self.openGLContext makeCurrentContext];
+    CGLLockContext(self.openGLContext.CGLContextObj);
 
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -237,7 +234,7 @@
 
     [self.openGLContext flushBuffer];
 
-    [renderLock unlock];
+    CGLUnlockContext(self.openGLContext.CGLContextObj);
 }
 
 #pragma mark - Keyboard

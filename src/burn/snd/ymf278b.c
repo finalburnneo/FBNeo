@@ -513,7 +513,7 @@ static void A_w(int num, UINT8 reg, UINT8 data)
 
 		// timer a count
 		case 0x02:
-			//if (data != m_timer_a_count) - this breaks FBA if uncommented
+			if (data != m_timer_a_count)
 			{
 				m_timer_a_count = data;
 				if (!ymf278b_chip_in_reset)
@@ -524,7 +524,7 @@ static void A_w(int num, UINT8 reg, UINT8 data)
 
 		// timer b count
 		case 0x03:
-			//if (data != m_timer_b_count) - same here.
+			if (data != m_timer_b_count)
 			{
 				m_timer_b_count = data;
 				if (!ymf278b_chip_in_reset)

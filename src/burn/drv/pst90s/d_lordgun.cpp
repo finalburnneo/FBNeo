@@ -5,7 +5,6 @@
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "burn_ymf278b.h"
-#include "burn_ymf262.h"
 #include "burn_ym3812.h"
 #include "msm6295.h"
 #include "8255ppi.h"
@@ -556,8 +555,6 @@ static void __fastcall lordgun_sound_write_port(UINT16 port, UINT8 data)
 		case 0x7001:
 		case 0x7002:
 		case 0x7003:
-			BurnYMF262Write(port & 3, data);
-			// no break!
 		case 0x7004:
 		case 0x7005:
 			BurnYMF278BWrite(port & 7, data);
@@ -587,7 +584,7 @@ static UINT8 __fastcall lordgun_sound_read_port(UINT16 port)
 			return soundlatch[1];
 
 		case 0x7000:	// aliencha
-			return BurnYMF262Read(0);
+			return BurnYMF278BReadStatus();
 
 		case 0x7400:	// aliencha
 			return MSM6295Read(0);
@@ -658,6 +655,7 @@ static UINT8 aliencha_dip_read()
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
+//	bprintf(0, _T("%S"), (nStatus) ? "I":"i");
 	ZetSetIRQLine(0, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
@@ -677,7 +675,6 @@ static INT32 DrvDoReset()
 	ZetOpen(0);
 	ZetReset();
 	BurnYMF278BReset(); // aliencha
-	BurnYMF262Reset();  // aliencha
 	BurnYM3812Reset();
 	MSM6295Reset();
 	ZetClose();
@@ -859,13 +856,9 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 	ZetClose();
 
 	// aliencha
-	BurnYMF278BInit(33868800|0x80000000, DrvSndROM[2], 0x200000, NULL, DrvSynchroniseStream);
+	BurnYMF278BInit(33868800, DrvSndROM[2], 0x200000, &DrvFMIRQHandler);
 	BurnYMF278BSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
-
-	BurnYMF262Init(33868800, &DrvFMIRQHandler, DrvSynchroniseStream, 1);
-	BurnYMF262SetRoute(BURN_SND_YMF262_YMF262_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
-	BurnYMF262SetRoute(BURN_SND_YMF262_YMF262_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
-	BurnTimerAttachZet(5000000);
+	BurnTimerAttachZet(6000000);
 
 	// lordgun
 	BurnYM3812Init(1, 3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
@@ -906,7 +899,6 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	BurnYMF278BExit(); // aliencha
-	BurnYMF262Exit();  // aliencha
 	BurnYM3812Exit();
 	MSM6295Exit();
 
@@ -1353,9 +1345,9 @@ static INT32 alienchaFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 100;
 
-	INT32 nCyclesTotal[2] =  { 10000000 / 60, 5000000 / 60 };
+	INT32 nCyclesTotal[2] =  { 10000000 / 60, 6000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -1373,7 +1365,6 @@ static INT32 alienchaFrame()
 
 	if (pBurnSoundOut) {
 		BurnYMF278BUpdate(nBurnSoundLen);
-		BurnYMF262Update(nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -1406,7 +1397,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYMF278BScan(nAction, pnMin);
-		BurnYMF262Scan(nAction, pnMin);
 		BurnYM3812Scan(nAction, pnMin);
 
 		BurnGunScan();

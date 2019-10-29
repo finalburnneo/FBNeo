@@ -141,8 +141,18 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
             return sw.name;
         } else if ([tableColumn.identifier isEqualToString:@"value"]) {
             [tableColumn.dataCell removeAllItems];
-            for (FBDipOption *opt in sw.switches)
-                [tableColumn.dataCell addItemWithTitle:opt.name];
+            NSMutableSet *used = [NSMutableSet new];
+            for (FBDipOption *opt in sw.switches) {
+                // NSPopupButtonCell discards duplicated titles,
+                // so add a count suffix when a dip name is duplicated (e.g.
+                // SFIII, 'Region'/'Asia')
+                NSString *name = opt.name;
+                for (int i = 2;[used containsObject:name]; i++)
+                    name = [NSString stringWithFormat:@"%@ (%d)", opt.name, i];
+
+                [used addObject:name];
+                [tableColumn.dataCell addItemWithTitle:name];
+            }
             return @(sw.selectedIndex);
         }
     }
@@ -183,7 +193,6 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
     dipSwitches = switches;
     restoreDipButton.enabled = dipswitchTableView.enabled = dipSwitches.count > 0;
     [dipswitchTableView reloadData];
-    // FIXME: reset DIPs
 }
 
 @end

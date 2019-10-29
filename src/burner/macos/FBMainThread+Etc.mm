@@ -8,6 +8,8 @@
 
 #import "FBMainThread.h"
 
+#import "AppDelegate.h"
+
 #include "burner.h"
 #include "burnint.h"
 #include "driverlist.h"
@@ -173,6 +175,8 @@ save:
     }
 
     fclose(f);
+
+    [AppDelegate.sharedInstance.input simReset];
     return YES;
 }
 

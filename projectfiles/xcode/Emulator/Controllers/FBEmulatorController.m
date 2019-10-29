@@ -67,6 +67,7 @@
     lockIcon.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"hideLockOptions"];
     spinner.hidden = YES;
     [self.window addTitlebarAccessoryViewController:tba];
+    self.window.backgroundColor = NSColor.blackColor;
 
     screen.delegate = self;
     self.video.delegate = screen;

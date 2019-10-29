@@ -427,9 +427,9 @@ static void irq_check()
 
 int ymf278b_timer_over(int num, int timer)
 {
-	if(!(m_enable & (0x20 << timer)))
+	if(!(m_enable & (0x20 << (timer ^ 1))))
 	{
-		m_current_irq |= (0x20 << timer);
+		m_current_irq |= (0x20 << (timer ^ 1));
 		irq_check();
 	}
 

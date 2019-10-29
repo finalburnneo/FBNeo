@@ -11,41 +11,36 @@
 #include "eeprom.h"
 #include "burn_gun.h"
 
-static UINT8 *AllMem		= NULL;
-static UINT8 *MemEnd		= NULL;
-static UINT8 *AllRam		= NULL;
-static UINT8 *RamEnd		= NULL;
-static UINT8 *Drv68KROM		= NULL;
-static UINT8 *DrvZ80ROM		= NULL;
-static UINT8 *DrvGfxROM0	= NULL;
-static UINT8 *DrvGfxROM1	= NULL;
-static UINT8 *DrvGfxROM2	= NULL;
-static UINT8 *DrvGfxROM3	= NULL;
-static UINT8 *DrvSndROM0	= NULL;
-static UINT8 *DrvSndROM1	= NULL;
-static UINT8 *DrvSndROM2	= NULL;
-static UINT8 *Drv68KRAM		= NULL;
-static UINT8 *DrvPriRAM		= NULL;
-static UINT8 *DrvPalRAM		= NULL;
-static UINT8 *DrvVidRAM0	= NULL;
-static UINT8 *DrvVidRAM1	= NULL;
-static UINT8 *DrvVidRAM2	= NULL;
-static UINT8 *DrvVidRAM3	= NULL;
-static UINT8 *DrvScrRAM		= NULL;
-static UINT8 *DrvSprRAM		= NULL;
-static UINT8 *DrvZ80RAM		= NULL;
+static UINT8 *AllMem;
+static UINT8 *MemEnd;
+static UINT8 *AllRam;
+static UINT8 *RamEnd;
+static UINT8 *Drv68KROM;
+static UINT8 *DrvZ80ROM;
+static UINT8 *DrvGfxROM[4];
+static UINT8 *DrvSndROM[3];
+static UINT8 *Drv68KRAM;
+static UINT8 *DrvPriRAM;
+static UINT8 *DrvPalRAM;
+static UINT8 *DrvVidRAM0;
+static UINT8 *DrvVidRAM1;
+static UINT8 *DrvVidRAM2;
+static UINT8 *DrvVidRAM3;
+static UINT8 *DrvScrRAM;
+static UINT8 *DrvSprRAM;
+static UINT8 *DrvZ80RAM;
 
-static UINT32 *DrvPalette	= NULL;
+static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
 
-static UINT16 *scrollx		= NULL;
-static UINT16 *scrolly		= NULL;
-static UINT16 *priority		= NULL;
-static UINT8 *soundlatch	= NULL;
-static INT8 *okibank			= NULL;
+static UINT16 *scrollx;
+static UINT16 *scrolly;
+static UINT16 *priority;
+static UINT8 *soundlatch;
+static INT8 *okibank;
 
-static UINT8 *DrvTransTable[5]	= { NULL, NULL, NULL, NULL, NULL };
-static UINT16 *draw_bitmap[5] 	= { NULL, NULL, NULL, NULL, NULL };
+static UINT8 *DrvTransTable[5];
+static UINT16 *draw_bitmap[5];
 
 static UINT8 aliencha_dip_sel;
 static UINT8 lordgun_whitescreen;
@@ -67,106 +62,104 @@ static INT32 lordgun_gun_hw_x[2];
 static INT32 lordgun_gun_hw_y[2];
 
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
-
 static struct BurnInputInfo LordgunInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	A("P1 Right / left",	BIT_ANALOG_REL, DrvAxis + 0,	"mouse x-axis"),
-	A("P1 Up / Down",	BIT_ANALOG_REL, DrvAxis + 1,	"mouse y-axis"),
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy5 + 4,	"mouse button"	},
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"		},
+	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"		},
+	A("P1 Right / left",	BIT_ANALOG_REL, DrvAxis + 0,	"mouse x-axis"	),
+	A("P1 Up / Down",		BIT_ANALOG_REL, DrvAxis + 1,	"mouse y-axis"	),
+	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy5 + 4,	"mouse button"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 start"	},
-	A("P2 Right / left",	BIT_ANALOG_REL, DrvAxis + 2,	"mouse x-axis"),
-	A("P2 Up / Down",	BIT_ANALOG_REL, DrvAxis + 3,	"mouse y-axis"),
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy5 + 5,	"mouse button"	},
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"		},
+	{"P2 Start",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 start"		},
+	A("P2 Right / left",	BIT_ANALOG_REL, DrvAxis + 2,	"mouse x-axis"	),
+	A("P2 Up / Down",		BIT_ANALOG_REL, DrvAxis + 3,	"mouse y-axis"	),
+	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy5 + 5,	"mouse button"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"			},
+	{"Service",				BIT_DIGITAL,	DrvJoy3 + 4,	"service"		},
+	{"Service",				BIT_DIGITAL,	DrvJoy1 + 7,	"service"		},
+	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"			},
 };
 
 STDINPUTINFO(Lordgun)
-
 #undef A
 
 static struct BurnInputInfo AlienchaInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy4 + 2,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy4 + 3,	"p1 fire 5"	},
-	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 fire 6"	},
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"		},
+	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"		},
+	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"			},
+	{"P1 Down",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"		},
+	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"		},
+	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 right"		},
+	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"		},
+	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"		},
+	{"P1 Button 3",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"		},
+	{"P1 Button 4",			BIT_DIGITAL,	DrvJoy4 + 2,	"p1 fire 4"		},
+	{"P1 Button 5",			BIT_DIGITAL,	DrvJoy4 + 3,	"p1 fire 5"		},
+	{"P1 Button 6",			BIT_DIGITAL,	DrvJoy4 + 4,	"p1 fire 6"		},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 3"	},
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 4"	},
-	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 5"	},
-	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy4 + 7,	"p2 fire 6"	},
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"		},
+	{"P2 Start",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 start"		},
+	{"P2 Up",				BIT_DIGITAL,	DrvJoy2 + 1,	"p2 up"			},
+	{"P2 Down",				BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"		},
+	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"		},
+	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 right"		},
+	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 1"		},
+	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"		},
+	{"P2 Button 3",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 3"		},
+	{"P2 Button 4",			BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 4"		},
+	{"P2 Button 5",			BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 5"		},
+	{"P2 Button 6",			BIT_DIGITAL,	DrvJoy4 + 7,	"p2 fire 6"		},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 1,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-	{"Fake Dip",		BIT_DIPSWITCH,  DrvDips + 3,    "dip"		},
+	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"			},
+	{"Service",				BIT_DIGITAL,	DrvJoy3 + 1,	"service"		},
+	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"			},
+	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"			},
+	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"			},
+	{"Fake Dip",			BIT_DIPSWITCH,  DrvDips + 3,    "dip"			},
 };
 
 STDINPUTINFO(Aliencha)
 
 static struct BurnDIPInfo LordgunDIPList[]=
 {
-	{0x0d, 0xff, 0xff, 0x7f, NULL			},
+	{0x0d, 0xff, 0xff, 0x7f, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Stage Select"		},
-	{0x0d, 0x01, 0x01, 0x01, "Off"			},
-	{0x0d, 0x01, 0x01, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Stage Select"			},
+	{0x0d, 0x01, 0x01, 0x01, "Off"					},
+	{0x0d, 0x01, 0x01, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Guns"			},
-	{0x0d, 0x01, 0x02, 0x02, "IGS"			},
-	{0x0d, 0x01, 0x02, 0x00, "Konami"		},
+	{0   , 0xfe, 0   ,    2, "Guns"					},
+	{0x0d, 0x01, 0x02, 0x02, "IGS"					},
+	{0x0d, 0x01, 0x02, 0x00, "Konami"				},
 
-	{0   , 0xfe, 0   ,    2, "Ranking Music"	},
-	{0x0d, 0x01, 0x04, 0x04, "Exciting"		},
-	{0x0d, 0x01, 0x04, 0x00, "Tender"		},
+	{0   , 0xfe, 0   ,    2, "Ranking Music"		},
+	{0x0d, 0x01, 0x04, 0x04, "Exciting"				},
+	{0x0d, 0x01, 0x04, 0x00, "Tender"				},
 
-	{0   , 0xfe, 0   ,    2, "Coin Slots"		},
-	{0x0d, 0x01, 0x08, 0x00, "1"			},
-	{0x0d, 0x01, 0x08, 0x08, "2"			},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
+	{0x0d, 0x01, 0x08, 0x00, "1"					},
+	{0x0d, 0x01, 0x08, 0x08, "2"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0d, 0x01, 0x40, 0x40, "Off"			},
-	{0x0d, 0x01, 0x40, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x0d, 0x01, 0x40, 0x40, "Off"					},
+	{0x0d, 0x01, 0x40, 0x00, "On"					},
 };
 
 STDDIPINFO(Lordgun)
 
 static struct BurnDIPInfo AlienchaDIPList[]=
 {
-	{0x1a, 0xff, 0xff, 0xff, NULL			},
-	{0x1b, 0xff, 0xff, 0xff, NULL			},
-	{0x1c, 0xff, 0xff, 0xff, NULL			},
-	{0x1d, 0xff, 0xff, 0x00, NULL			},
+	{0x1a, 0xff, 0xff, 0xff, NULL					},
+	{0x1b, 0xff, 0xff, 0xff, NULL					},
+	{0x1c, 0xff, 0xff, 0xff, NULL					},
+	{0x1d, 0xff, 0xff, 0x00, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Credits To Start"	},
-	{0x1a, 0x01, 0x01, 0x01, "1"			},
-	{0x1a, 0x01, 0x01, 0x00, "2"			},
+	{0   , 0xfe, 0   ,    2, "Credits To Start"		},
+	{0x1a, 0x01, 0x01, 0x01, "1"					},
+	{0x1a, 0x01, 0x01, 0x00, "2"					},
 
-	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0   , 0xfe, 0   ,    8, "Coin A"				},
 	{0x1a, 0x01, 0x0e, 0x00, "5 Coins 1 Credits"	},
 	{0x1a, 0x01, 0x0e, 0x02, "4 Coins 1 Credits"	},
 	{0x1a, 0x01, 0x0e, 0x04, "3 Coins 1 Credits"	},
@@ -186,66 +179,66 @@ static struct BurnDIPInfo AlienchaDIPList[]=
 	{0x1a, 0x01, 0x70, 0x50, "1 Coin  3 Credits"	},
 	{0x1a, 0x01, 0x70, 0x40, "1 Coin  4 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Coin Slots"		},
-	{0x1a, 0x01, 0x80, 0x80, "1"			},
-	{0x1a, 0x01, 0x80, 0x00, "2"			},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
+	{0x1a, 0x01, 0x80, 0x80, "1"					},
+	{0x1a, 0x01, 0x80, 0x00, "2"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x1b, 0x01, 0x03, 0x03, "0"			},
-	{0x1b, 0x01, 0x03, 0x02, "1"			},
-	{0x1b, 0x01, 0x03, 0x01, "2"			},
-	{0x1b, 0x01, 0x03, 0x00, "3"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x1b, 0x01, 0x03, 0x03, "0"					},
+	{0x1b, 0x01, 0x03, 0x02, "1"					},
+	{0x1b, 0x01, 0x03, 0x01, "2"					},
+	{0x1b, 0x01, 0x03, 0x00, "3"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x1b, 0x01, 0x04, 0x04, "Off"			},
-	{0x1b, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x1b, 0x01, 0x04, 0x04, "Off"					},
+	{0x1b, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Round Time"		},
-	{0x1b, 0x01, 0x08, 0x00, "32 s"			},
-	{0x1b, 0x01, 0x08, 0x08, "40 s"			},
+	{0   , 0xfe, 0   ,    2, "Round Time"			},
+	{0x1b, 0x01, 0x08, 0x00, "32 s"					},
+	{0x1b, 0x01, 0x08, 0x08, "40 s"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x1b, 0x01, 0x10, 0x00, "Off"			},
-	{0x1b, 0x01, 0x10, 0x10, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x1b, 0x01, 0x10, 0x00, "Off"					},
+	{0x1b, 0x01, 0x10, 0x10, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"		},
-	{0x1b, 0x01, 0x20, 0x20, "Off"			},
-	{0x1b, 0x01, 0x20, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Free Play"			},
+	{0x1b, 0x01, 0x20, 0x20, "Off"					},
+	{0x1b, 0x01, 0x20, 0x00, "On"					},
+	
+	{0   , 0xfe, 0   ,    2, "Allow Join"			},
+	{0x1b, 0x01, 0x40, 0x00, "No"					},
+	{0x1b, 0x01, 0x40, 0x40, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Allow Join"		},
-	{0x1b, 0x01, 0x40, 0x00, "No"			},
-	{0x1b, 0x01, 0x40, 0x40, "Yes"			},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x1b, 0x01, 0x80, 0x00, "No"					},
+	{0x1b, 0x01, 0x80, 0x80, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x1b, 0x01, 0x80, 0x00, "No"			},
-	{0x1b, 0x01, 0x80, 0x80, "Yes"			},
+	{0   , 0xfe, 0   ,    3, "Buttons"				},
+	{0x1c, 0x01, 0x03, 0x01, "3"					},
+	{0x1c, 0x01, 0x03, 0x02, "4"					},
+	{0x1c, 0x01, 0x03, 0x03, "6"					},
 
-	{0   , 0xfe, 0   ,    3, "Buttons"		},
-	{0x1c, 0x01, 0x03, 0x01, "3"			},
-	{0x1c, 0x01, 0x03, 0x02, "4"			},
-	{0x1c, 0x01, 0x03, 0x03, "6"			},
+	{0   , 0xfe, 0   ,    2, "Vs. Rounds"			},
+	{0x1c, 0x01, 0x04, 0x00, "3"					},
+	{0x1c, 0x01, 0x04, 0x04, "5"					},
 
-	{0   , 0xfe, 0   ,    2, "Vs. Rounds"		},
-	{0x1c, 0x01, 0x04, 0x00, "3"			},
-	{0x1c, 0x01, 0x04, 0x04, "5"			},
-
-	{0   , 0xfe, 0   ,    2, "Language (text)"	},
-	{0x1d, 0x01, 0x01, 0x00, "English"		},
-	{0x1d, 0x01, 0x01, 0x01, "Chinese"		},
+	{0   , 0xfe, 0   ,    2, "Language (text)"		},
+	{0x1d, 0x01, 0x01, 0x00, "English"				},
+	{0x1d, 0x01, 0x01, 0x01, "Chinese"				},
 
 	{0   , 0xfe, 0   ,    2, "Language (char names)"},
-	{0x1d, 0x01, 0x02, 0x00, "English"		},
-	{0x1d, 0x01, 0x02, 0x02, "Chinese"		},
+	{0x1d, 0x01, 0x02, 0x00, "English"				},
+	{0x1d, 0x01, 0x02, 0x02, "Chinese"				},
 
-	{0   , 0xfe, 0   ,    2, "Title"		},
-	{0x1d, 0x01, 0x04, 0x00, "Alien Challenge"	},
+	{0   , 0xfe, 0   ,    2, "Title"				},
+	{0x1d, 0x01, 0x04, 0x00, "Alien Challenge"		},
 	{0x1d, 0x01, 0x04, 0x04, "Round House Rumble"	},
 };
 
 STDDIPINFO(Aliencha)
 
 static struct BurnDIPInfo AlienchacDIPList[] = {
-	{0x1d, 0xff, 0xff, 0x03, NULL			},
+	{0x1d, 0xff, 0xff, 0x03, NULL					},
 };
 
 STDDIPINFOEXT(Alienchac, Aliencha, Alienchac)
@@ -306,16 +299,14 @@ static void lordgun_protection_write(UINT32 offset)
 		{
 			lordgun_protection_data++;
 			lordgun_protection_data &= 0x1f;
-
-			return;
 		}
+		return;
 
 		case 0xc0/2: // reset protection device
 		{
 			lordgun_protection_data = 0;
-
-			return;
 		}
+		return;
 	}
 }
 
@@ -399,7 +390,8 @@ static UINT8 aliencha_protection_read(INT32 offset)
 
 	return 0;
 }
-void __fastcall lordgun_write_word(UINT32 address, UINT16 data)
+
+static void __fastcall lordgun_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff00) == 0x50a900) {
 		lordgun_protection_write(address/2);
@@ -450,8 +442,8 @@ void __fastcall lordgun_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x504000:
-			soundlatch[0] = data >> 8;
-			soundlatch[1] = data;
+			soundlatch[0] = (data >> 8) & 0xff;
+			soundlatch[1] = data & 0xff;
 			ZetNmi();
 		return;
 
@@ -471,12 +463,12 @@ void __fastcall lordgun_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall lordgun_write_byte(UINT32 /*address*/, UINT8 /*data*/)
+static void __fastcall lordgun_write_byte(UINT32 /*address*/, UINT8 /*data*/)
 {
-
+//	bprintf(0, _T("write_byte: %X %X\n"), address, data);
 }
 
-UINT16 __fastcall lordgun_read_word(UINT32 address)
+static UINT16 __fastcall lordgun_read_word(UINT32 address)
 {
 	if ((address & 0xfffff00) == 0x50a900) {
 		return lordgun_protection_read(address/2);
@@ -516,7 +508,7 @@ UINT16 __fastcall lordgun_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall lordgun_read_byte(UINT32 address)
+static UINT8 __fastcall lordgun_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -538,14 +530,11 @@ UINT8 __fastcall lordgun_read_byte(UINT32 address)
 
 static void set_oki_bank(INT32 bank)
 {
-	if (*okibank != (bank & 0x02)) {
-		*okibank = bank & 0x02;
-
-		memcpy (DrvSndROM0, DrvSndROM0 + 0x40000 + *okibank * 0x40000, 0x40000);
-	}
+	bank = (bank >> 1) & 1;
+	MSM6295SetBank(0, DrvSndROM[0] + (bank * 0x40000), 0, 0x3ffff);
 }
 
-void __fastcall lordgun_sound_write_port(UINT16 port, UINT8 data)
+static void __fastcall lordgun_sound_write_port(UINT16 port, UINT8 data)
 {
 	switch (port)
 	{
@@ -565,13 +554,10 @@ void __fastcall lordgun_sound_write_port(UINT16 port, UINT8 data)
 		case 0x7000: 	// aliencha
 		case 0x7001:
 		case 0x7002:
-			BurnYMF278BSelectRegister(port & 3, data);
-		return;
-
 		case 0x7003:
 		case 0x7004:
 		case 0x7005:
-			BurnYMF278BWriteRegister(port & 3, data);
+			BurnYMF278BWrite(port & 7, data);
 		return;
 
 		case 0x7400:	// aliencha
@@ -584,7 +570,7 @@ void __fastcall lordgun_sound_write_port(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall lordgun_sound_read_port(UINT16 port)
+static UINT8 __fastcall lordgun_sound_read_port(UINT16 port)
 {
 	switch (port)
 	{
@@ -687,13 +673,11 @@ static INT32 DrvDoReset()
 
 	ZetOpen(0);
 	ZetReset();
-	ZetClose();
-
 	BurnYMF278BReset(); // aliencha
 	BurnYM3812Reset();
 	MSM6295Reset();
+	ZetClose();
 
-	*okibank = -1;
 	set_oki_bank(0); // lordgun
 
 	EEPROMReset();
@@ -729,10 +713,10 @@ static INT32 MemIndex()
 	Drv68KROM	= Next; Next += 0x200000;
 	DrvZ80ROM	= Next; Next += 0x010000;
 
-	DrvGfxROM0	= Next; Next += 0x400000;
-	DrvGfxROM1	= Next; Next += 0x800000;
-	DrvGfxROM2	= Next; Next += 0x800000;
-	DrvGfxROM3	= Next; Next += 0x1000000;
+	DrvGfxROM[0]	= Next; Next += 0x400000;
+	DrvGfxROM[1]	= Next; Next += 0x800000;
+	DrvGfxROM[2]	= Next; Next += 0x800000;
+	DrvGfxROM[3]	= Next; Next += 0x1000000;
 
 	DrvTransTable[0]= Next; Next += (0x0400000 / ( 8 *  8));
 	DrvTransTable[1]= Next; Next += (0x0800000 / (16 * 16));
@@ -740,10 +724,9 @@ static INT32 MemIndex()
 	DrvTransTable[3]= Next; Next += (0x1000000 / (16 * 16));
 	DrvTransTable[4]= Next; Next += (0x0800000 / (16 * 16)) * 16;
 
-	MSM6295ROM	= Next;
-	DrvSndROM0	= Next; Next += 0x100000;
-	DrvSndROM1	= Next; Next += 0x040000;
-	DrvSndROM2	= Next; Next += 0x200000;
+	DrvSndROM[0]	= Next; Next += 0x100000;
+	DrvSndROM[1]	= Next; Next += 0x100000;
+	DrvSndROM[2]	= Next; Next += 0x200000;
 
 	DrvPalette	= (UINT32*)Next; Next += (0x0800 + 1) * sizeof(UINT32);
 
@@ -805,16 +788,9 @@ static void DrvGfxDecode(UINT8 *gfxsrc, UINT8 *gfxdest, INT32 len, INT32 size)
 		(((len * 8) / 3) * 0) + 8, (((len * 8) / 3) * 0) + 0
 	};
 
-	INT32 XOffs1[16] = { 0x000, 0x001, 0x002, 0x003, 0x004, 0x005, 0x006, 0x007,
-			   0x100, 0x101, 0x102, 0x103, 0x104, 0x105, 0x106, 0x107 };
-	INT32 XOffs2[32] = { 0x000, 0x001, 0x002, 0x003, 0x004, 0x005, 0x006, 0x007, 
-			   0x200, 0x201, 0x202, 0x203, 0x204, 0x205, 0x206, 0x207,
-			   0x400, 0x401, 0x402, 0x403, 0x404, 0x405, 0x406, 0x407,
-			   0x600, 0x601, 0x602, 0x603, 0x604, 0x605, 0x606, 0x607 };
-	INT32 YOffs[32]  = { 0x000, 0x010, 0x020, 0x030, 0x040, 0x050, 0x060, 0x070,
-			   0x080, 0x090, 0x0a0, 0x0b0, 0x0c0, 0x0d0, 0x0e0, 0x0f0,
-			   0x100, 0x110, 0x120, 0x130, 0x140, 0x150, 0x160, 0x170,
-			   0x180, 0x190, 0x1a0, 0x1b0, 0x1c0, 0x1d0, 0x1e0, 0x1f0 };
+	INT32 XOffs1[16] = { STEP8(0,1), STEP8(256,1) };
+	INT32 XOffs2[32] = { STEP8(0,1), STEP8(512,1), STEP8(1024,1), STEP8(1536,1) };
+	INT32 YOffs[32]  = { STEP16(0,16), STEP16(256,16) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(len);
 	if (tmp == NULL) {
@@ -841,15 +817,15 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 		if (pInitCallback()) return 1;
 	}
 
-	DrvGfxDecode(DrvGfxROM0, DrvGfxROM0, 0x300000,  8);
-	DrvGfxDecode(DrvGfxROM2, DrvGfxROM1, 0x600000, 16);
-	DrvGfxDecode(DrvGfxROM2, DrvGfxROM2, 0x600000, 32);
-	DrvGfxDecode(DrvGfxROM3, DrvGfxROM3, 0xc00000, 16);
-	DrvSetTransTab(DrvGfxROM0, 0, 0x0400000, 8);
-	DrvSetTransTab(DrvGfxROM1, 1, 0x0800000, 16);
-	DrvSetTransTab(DrvGfxROM2, 2, 0x0800000, 32);
-	DrvSetTransTab(DrvGfxROM3, 3, 0x1000000, 16);
-	DrvSetTransTab(DrvGfxROM1, 4, 0x0800000, 16/4); // for line scroll
+	DrvGfxDecode(DrvGfxROM[0], DrvGfxROM[0], 0x300000,  8);
+	DrvGfxDecode(DrvGfxROM[2], DrvGfxROM[1], 0x600000, 16);
+	DrvGfxDecode(DrvGfxROM[2], DrvGfxROM[2], 0x600000, 32);
+	DrvGfxDecode(DrvGfxROM[3], DrvGfxROM[3], 0xc00000, 16);
+	DrvSetTransTab(DrvGfxROM[0], 0, 0x0400000, 8);
+	DrvSetTransTab(DrvGfxROM[1], 1, 0x0800000, 16);
+	DrvSetTransTab(DrvGfxROM[2], 2, 0x0800000, 32);
+	DrvSetTransTab(DrvGfxROM[3], 3, 0x1000000, 16);
+	DrvSetTransTab(DrvGfxROM[1], 4, 0x0800000, 16/4); // for line scroll
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -858,7 +834,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 	SekMapMemory(DrvPriRAM,		0x210000, 0x21ffff, MAP_RAM);
 	SekMapMemory(DrvVidRAM0,	0x300000, 0x30ffff, MAP_RAM);
 	SekMapMemory(DrvVidRAM1,	0x310000, 0x313fff, MAP_RAM);
-	SekMapMemory(DrvVidRAM2	,	0x314000, 0x317fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM2,	0x314000, 0x317fff, MAP_RAM);
 	SekMapMemory(DrvVidRAM3,	0x318000, 0x319fff, MAP_RAM);
 	SekMapMemory(DrvScrRAM,		0x31c000, 0x31c7ff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,		0x400000, 0x4007ff, MAP_RAM);
@@ -871,19 +847,16 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xefff, 0, DrvZ80ROM);	
-	ZetMapArea(0x0000, 0xefff, 2, DrvZ80ROM);	
-	ZetMapArea(0xf000, 0xffff, 0, DrvZ80RAM);	
-	ZetMapArea(0xf000, 0xffff, 1, DrvZ80RAM);
-	ZetMapArea(0xf000, 0xffff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0xefff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0xf000, 0xffff, MAP_RAM);
 	ZetSetOutHandler(lordgun_sound_write_port);
 	ZetSetInHandler(lordgun_sound_read_port);
 	ZetClose();
 
 	// aliencha
-	BurnYMF278BInit(0, DrvSndROM2, 0x200000, &DrvFMIRQHandler, DrvSynchroniseStream);
+	BurnYMF278BInit(33868800, DrvSndROM[2], 0x200000, &DrvFMIRQHandler);
 	BurnYMF278BSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
-	BurnTimerAttachZet(5000000);
+	BurnTimerAttachZet(6000000);
 
 	// lordgun
 	BurnYM3812Init(1, 3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
@@ -894,6 +867,8 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 	MSM6295Init(1, 1000000 / 132, 1); // aliencha
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetBank(0, DrvSndROM[0], 0, 0x3ffff);
+	MSM6295SetBank(1, DrvSndROM[1], 0, 0x3ffff);
 
 	ppi8255_init(2);
 	if (lordgun) {
@@ -945,22 +920,22 @@ static INT32 lordgunLoadRoms()
 
 	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x100000,  4, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x200000,  5, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x000000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x100000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x200000,  5, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  6, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM2 + 0x200000,  7, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM2 + 0x400000,  8, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x000000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x200000,  7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x400000,  8, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM3 + 0x000000,  9, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM3 + 0x200000, 10, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM3 + 0x400000, 11, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM3 + 0x600000, 12, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM3 + 0x800000, 13, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM3 + 0xa00000, 14, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x000000,  9, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x200000, 10, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x400000, 11, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x600000, 12, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x800000, 13, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0xa00000, 14, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM0 + 0x040000, 15, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM[0] + 0x000000, 15, 1)) return 1;
 
 	UINT16 *rom = (UINT16*)Drv68KROM;
 
@@ -979,23 +954,23 @@ static INT32 alienchaLoadRoms()
 
 	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  1, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x100000,  3, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x200000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x000000,  2, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x100000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x200000,  4, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  5, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM2 + 0x200000,  6, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM2 + 0x400000,  7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x000000,  5, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x200000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x400000,  7, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM3 + 0x000000,  8, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM3 + 0x400000,  9, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM3 + 0x800000, 10, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x000000,  8, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x400000,  9, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x800000, 10, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM0 + 0x040000, 11, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM[0] + 0x000000, 11, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM1 + 0x000000, 12, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM[1] + 0x000000, 12, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM2 + 0x000000, 13, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM[2] + 0x000000, 13, 1)) return 1;
 
 	return 0;
 }
@@ -1009,23 +984,23 @@ static INT32 alienchacLoadRoms()
 
 	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  3, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  4, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x100000,  5, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x200000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x000000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x100000,  5, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x200000,  6, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  7, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM2 + 0x200000,  8, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM2 + 0x400000,  9, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x000000,  7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x200000,  8, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x400000,  9, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM3 + 0x000000, 10, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM3 + 0x400000, 11, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM3 + 0x800000, 12, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x000000, 10, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x400000, 11, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x800000, 12, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM0 + 0x040000, 13, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM[0] + 0x000000, 13, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM1 + 0x000000, 14, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM[1] + 0x000000, 14, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM2 + 0x000000, 15, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM[2] + 0x000000, 15, 1)) return 1;
 
 	return 0;
 }
@@ -1056,12 +1031,12 @@ static void draw_layer_linescroll()
 			INT32 color = ((attr & 0x0070) << 2)+0x600+pri*0x800;
 
 			{
-				UINT8 *gfx = DrvGfxROM1 + (code << 8);
+				UINT8 *gfx = DrvGfxROM[1] + (code << 8);
 
 				if (flipy) gfx += ((yscroll & 0x0f)^0xf) << 4;
 				else	   gfx += ((yscroll & 0x0f)    ) << 4;
 
-				if (DrvTransTable[4][(gfx-DrvGfxROM1)/16]) continue;
+				if (DrvTransTable[4][(gfx-DrvGfxROM[1])/16]) continue;
 
 				if (flipx) flipx = 0x0f;
 
@@ -1166,15 +1141,15 @@ static void draw_sprites()
 
 				if (flipy) {
 					if (flipx) {
-						RenderCustomTile_Mask_FlipXY_Clip(draw_bitmap[4], 16, 16, code, sx + x * 0x10, sy + y * 0x10, color + pri * 0x800/0x40, 6, 0x3f, 0, DrvGfxROM3);
+						RenderCustomTile_Mask_FlipXY_Clip(draw_bitmap[4], 16, 16, code, sx + x * 0x10, sy + y * 0x10, color + pri * 0x800/0x40, 6, 0x3f, 0, DrvGfxROM[3]);
 					} else {
-						RenderCustomTile_Mask_FlipY_Clip(draw_bitmap[4], 16, 16, code, sx + x * 0x10, sy + y * 0x10, color + pri * 0x800/0x40, 6, 0x3f, 0, DrvGfxROM3);
+						RenderCustomTile_Mask_FlipY_Clip(draw_bitmap[4], 16, 16, code, sx + x * 0x10, sy + y * 0x10, color + pri * 0x800/0x40, 6, 0x3f, 0, DrvGfxROM[3]);
 					}
 				} else {
 					if (flipx) {
-						RenderCustomTile_Mask_FlipX_Clip(draw_bitmap[4], 16, 16, code, sx + x * 0x10, sy + y * 0x10, color + pri * 0x800/0x40, 6, 0x3f, 0, DrvGfxROM3);
+						RenderCustomTile_Mask_FlipX_Clip(draw_bitmap[4], 16, 16, code, sx + x * 0x10, sy + y * 0x10, color + pri * 0x800/0x40, 6, 0x3f, 0, DrvGfxROM[3]);
 					} else {
-						RenderCustomTile_Mask_Clip(draw_bitmap[4], 16, 16, code, sx + x * 0x10, sy + y * 0x10, color + pri * 0x800/0x40, 6, 0x3f, 0, DrvGfxROM3);
+						RenderCustomTile_Mask_Clip(draw_bitmap[4], 16, 16, code, sx + x * 0x10, sy + y * 0x10, color + pri * 0x800/0x40, 6, 0x3f, 0, DrvGfxROM[3]);
 					}
 				}
 			}
@@ -1260,14 +1235,14 @@ static INT32 DrvDraw()
 		}
 	}
 
-	draw_layer(DrvVidRAM0, DrvGfxROM0,  8, 0x100, 0x040, 0x500, 0x03, 0);
+	draw_layer(DrvVidRAM0, DrvGfxROM[0],  8, 0x100, 0x040, 0x500, 0x03, 0);
 	if (line_enable == 0) {
-		draw_layer(DrvVidRAM1, DrvGfxROM1, 16, 0x080, 0x020, 0x600, 0x07, 1);
+		draw_layer(DrvVidRAM1, DrvGfxROM[1], 16, 0x080, 0x020, 0x600, 0x07, 1);
 	} else {
 		draw_layer_linescroll();
 	}
-	draw_layer(DrvVidRAM2, DrvGfxROM2, 32, 0x040, 0x010, 0x700, 0x03, 2);
-	draw_layer(DrvVidRAM3, DrvGfxROM0,  8, 0x040, 0x020, 0x400, 0x0f, 3);
+	draw_layer(DrvVidRAM2, DrvGfxROM[2], 32, 0x040, 0x010, 0x700, 0x03, 2);
+	draw_layer(DrvVidRAM3, DrvGfxROM[0],  8, 0x040, 0x020, 0x400, 0x0f, 3);
 	draw_sprites();
 
 	copy_layers();
@@ -1324,27 +1299,23 @@ static INT32 lordgunFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nTotalCycles[2] =  { 10000000 / 60, 5000000 / 60 };
+	INT32 nCyclesTotal[2] =  { 10000000 / 60, 5000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	INT32 nInterleave = 50;
 	
 	SekOpen(0);
 	ZetOpen(0);
-	
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
 
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nTotalCycles[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		CPU_RUN(0, Sek);
+
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		
-		BurnTimerUpdateYM3812(i * (nTotalCycles[1] / nInterleave));
+
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
-	BurnTimerEndFrameYM3812(nTotalCycles[1]);
+	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
@@ -1371,27 +1342,23 @@ static INT32 alienchaFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
-	
-	INT32 nInterleave = 1000;
 
-	INT32 nCyclesTotal[2] =  { 10000000 / 60, 5000000 / 60 };
+	INT32 nInterleave = 100;
+
+	INT32 nCyclesTotal[2] =  { 10000000 / 60, 6000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
+		CPU_RUN(0, Sek);
 
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
-	
+
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
@@ -1428,6 +1395,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYMF278BScan(nAction, pnMin);
+		BurnYM3812Scan(nAction, pnMin);
 
 		BurnGunScan();
 		EEPROMScan(nAction, pnMin);
@@ -1443,9 +1411,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		INT32 bank = *okibank;
-		*okibank = -1;
-		set_oki_bank(bank);
+		set_oki_bank(*okibank);
 	}
 
 	return 0;
@@ -1488,7 +1454,7 @@ static INT32 lordgunInit()
 
 struct BurnDriver BurnDrvLordgun = {
 	"lordgun", NULL, NULL, NULL, "1994",
-	"Lord of Gun (USA)\0", "Imperfect graphics and sound", "IGS", "Miscellaneous",
+	"Lord of Gun (USA)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, lordgunRomInfo, lordgunRomName, NULL, NULL, NULL, NULL, LordgunInputInfo, LordgunDIPInfo,
@@ -1532,7 +1498,7 @@ static INT32 alienchaInit()
 
 struct BurnDriver BurnDrvAliencha = {
 	"aliencha", NULL, NULL, NULL, "1994",
-	"Alien Challenge (World)\0", "Imperfect sound", "IGS", "Miscellaneous",
+	"Alien Challenge (World)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, alienchaRomInfo, alienchaRomName, NULL, NULL, NULL, NULL, AlienchaInputInfo, AlienchaDIPInfo,
@@ -1579,7 +1545,7 @@ static INT32 alienchacInit()
 
 struct BurnDriver BurnDrvAlienchac = {
 	"alienchac", "aliencha", NULL, NULL, "1994",
-	"Alien Challenge (China)\0", "Imperfect sound", "IGS", "Miscellaneous",
+	"Alien Challenge (China)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, alienchacRomInfo, alienchacRomName, NULL, NULL, NULL, NULL, AlienchaInputInfo, AlienchacDIPInfo,

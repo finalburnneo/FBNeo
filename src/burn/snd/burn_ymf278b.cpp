@@ -164,6 +164,7 @@ void BurnYMF278BSelectRegister(INT32 nRegister, UINT8 nValue)
 			break;
 	}
 }
+
 void BurnYMF278BWriteRegister(INT32 nRegister, UINT8 nValue)
 {
 #if defined FBNEO_DEBUG
@@ -183,6 +184,16 @@ void BurnYMF278BWriteRegister(INT32 nRegister, UINT8 nValue)
 			YMF278B_data_port_0_C_w(nValue);
 			break;
 	}
+}
+
+void BurnYMF278BWrite(INT32 nRegister, UINT8 nValue)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BWrite called without init\n"));
+#endif
+
+	YMF278BRender(BurnYMF278BStreamCallback(nBurnYMF278SoundRate));
+	ymf278b_write(0, nRegister, nValue);
 }
 
 UINT8 BurnYMF278BReadStatus()

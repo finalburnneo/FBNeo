@@ -136,7 +136,7 @@
 	UINT8 m_enable, m_current_irq;
 	int m_irq_line;
 
-	UINT8 m_port_C, m_port_A, m_port_B, m_lastport;
+	UINT8 m_port_C, m_port_A, m_port_AB, m_port_B, m_lastport;
 
 	// precomputed tables
 	UINT32 m_lut_ar[64];              // attack rate
@@ -811,28 +811,28 @@ static void C_w(int num, UINT8 reg, UINT8 data)
 	// status register BUSY bit is on for 56(FM) or 88(PCM) cycles
 	m_status_busy = 1;
 	//m_timer_busy->adjust(attotime::from_hz(m_clock / (is_pcm ? 88 : 56)));
-}
+}  */
 
-WRITE8_MEMBER( ymf278b_device::write )
+void ymf278b_write(int num, UINT16 offset, UINT8 data)
 {
 	switch (offset)
 	{
 		case 0:
 		case 2:
-			timer_busy_start(0);
+			//timer_busy_start(0);
 			m_port_AB = data;
 			m_lastport = offset>>1 & 1;
 			break;
 
 		case 1:
 		case 3:
-			timer_busy_start(0);
-			if (m_lastport) B_w(m_port_AB, data);
-			else A_w(m_port_AB, data);
+			//timer_busy_start(0);
+			if (m_lastport) B_w(num, m_port_AB, data);
+			else A_w(num, m_port_AB, data);
 			break;
 
 		case 4:
-			timer_busy_start(1);
+			//timer_busy_start(1);
 			m_port_C = data;
 			break;
 
@@ -843,17 +843,17 @@ WRITE8_MEMBER( ymf278b_device::write )
 
 			//m_stream->update();
 
-			timer_busy_start(1);
-			C_w(m_port_C, data);
+			//timer_busy_start(1);
+			C_w(num, m_port_C, data);
 			break;
 
 		default:
-			logerror("%s: unexpected write at offset %X to ymf278b = %02X\n", machine().describe_context(), offset, data);
+			//logerror("%s: unexpected write at offset %X to ymf278b = %02X\n", machine().describe_context(), offset, data);
 			break;
 	}
 }
 
-
+/*
 READ8_MEMBER( ymf278b_device::read )
 {
 	UINT8 ret = 0;
@@ -973,7 +973,7 @@ void ymf278b_reset()
 		C_w(0, i, 0);
 	C_w(0, 0xf8, 0x1b);
 
-	m_port_A = m_port_B = m_port_C = 0;
+	m_port_AB = m_port_A = m_port_B = m_port_C = 0;
 	m_lastport = 0;
 	m_memadr = 0;
 

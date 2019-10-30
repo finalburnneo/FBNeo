@@ -983,6 +983,7 @@
 		FE2BC6D02362D5BD00B9D150 /* FBMainThread+Etc.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */; };
 		FE34741A23675C4C006646E7 /* FBAudio.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE34741823675C4C006646E7 /* FBAudio.mm */; };
 		FE34741D23693ABA006646E7 /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE34741C23693ABA006646E7 /* m68kops.c */; };
+		FE34742623696151006646E7 /* SDLAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FE34742423696150006646E7 /* SDLAudioEngine.m */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
@@ -990,7 +991,6 @@
 		FEED9DCA2356EF5000B7AF83 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */; };
 		FEED9DD12356F0B900B7AF83 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DCF2356F07500B7AF83 /* SDL.framework */; };
 		FEED9DD22356F0B900B7AF83 /* SDL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DCF2356F07500B7AF83 /* SDL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FEED9DD92356F30E00B7AF83 /* aud_sdl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DD82356F30D00B7AF83 /* aud_sdl.cpp */; };
 		FEED9DEF2356F5DB00B7AF83 /* neocdlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DDF2356F5DA00B7AF83 /* neocdlist.cpp */; };
 		FEED9DFA23576B9F00B7AF83 /* support_paths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DF923576B9F00B7AF83 /* support_paths.cpp */; };
 		FEED9DFC23576BD500B7AF83 /* inpdipsw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DFB23576BD500B7AF83 /* inpdipsw.cpp */; };
@@ -2490,6 +2490,8 @@
 		FE34741823675C4C006646E7 /* FBAudio.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBAudio.mm; sourceTree = "<group>"; };
 		FE34741923675C4C006646E7 /* FBAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAudio.h; sourceTree = "<group>"; };
 		FE34741C23693ABA006646E7 /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = m68kops.c; path = ../../Intermediates.noindex/Emulator.build/Debug/Emulator.build/DerivedSources/m68kops.c; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE34742423696150006646E7 /* SDLAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLAudioEngine.m; sourceTree = "<group>"; };
+		FE34742523696151006646E7 /* SDLAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLAudioEngine.h; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
 		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
@@ -2508,7 +2510,6 @@
 		FEED9DC22356DDA900B7AF83 /* gamelist.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = gamelist.pl; sourceTree = "<group>"; };
 		FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		FEED9DCF2356F07500B7AF83 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../../../../../../Library/Frameworks/SDL.framework; sourceTree = "<group>"; };
-		FEED9DD82356F30D00B7AF83 /* aud_sdl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aud_sdl.cpp; sourceTree = "<group>"; };
 		FEED9DDF2356F5DA00B7AF83 /* neocdlist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = neocdlist.cpp; sourceTree = "<group>"; };
 		FEED9DF923576B9F00B7AF83 /* support_paths.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = support_paths.cpp; sourceTree = "<group>"; };
 		FEED9DFB23576BD500B7AF83 /* inpdipsw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = inpdipsw.cpp; sourceTree = "<group>"; };
@@ -3310,7 +3311,6 @@
 			isa = PBXGroup;
 			children = (
 				FE34741723675C4C006646E7 /* macos */,
-				FEED9DD72356F30D00B7AF83 /* sdl */,
 				FE1B1EAD23561A660065200C /* aud_dsp.cpp */,
 				FE1B1EA323561A660065200C /* aud_dsp.h */,
 				FE1B1EB323561A660065200C /* aud_interface.cpp */,
@@ -4667,6 +4667,8 @@
 			children = (
 				FE34741923675C4C006646E7 /* FBAudio.h */,
 				FE34741823675C4C006646E7 /* FBAudio.mm */,
+				FE34742523696151006646E7 /* SDLAudioEngine.h */,
+				FE34742423696150006646E7 /* SDLAudioEngine.m */,
 			);
 			path = macos;
 			sourceTree = "<group>";
@@ -4711,14 +4713,6 @@
 				FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		FEED9DD72356F30D00B7AF83 /* sdl */ = {
-			isa = PBXGroup;
-			children = (
-				FEED9DD82356F30D00B7AF83 /* aud_sdl.cpp */,
-			);
-			path = sdl;
 			sourceTree = "<group>";
 		};
 		FEED9DDA2356F5DA00B7AF83 /* sdl */ = {
@@ -4965,6 +4959,7 @@
 				FE1B25E823561A760065200C /* d_lethal.cpp in Sources */,
 				FE1B27A323561A790065200C /* ay8910.c in Sources */,
 				FE1B263923561A770065200C /* cps_draw.cpp in Sources */,
+				FE34742623696151006646E7 /* SDLAudioEngine.m in Sources */,
 				FE1B247F23561A750065200C /* ddt3x.cpp in Sources */,
 				FE1B277123561A790065200C /* sn76477.cpp in Sources */,
 				FE1B252723561A760065200C /* d_supduck.cpp in Sources */,
@@ -5682,7 +5677,6 @@
 				FE1B24E923561A760065200C /* d_badlands.cpp in Sources */,
 				FE1B243123561A750065200C /* Bra.c in Sources */,
 				FE1B250523561A760065200C /* d_shadfrce.cpp in Sources */,
-				FEED9DD92356F30E00B7AF83 /* aud_sdl.cpp in Sources */,
 				FE1B268323561A770065200C /* pgm_crypt.cpp in Sources */,
 				FE1B262523561A770065200C /* psikyo_tile.cpp in Sources */,
 				FE1B269E23561A770065200C /* d_rallyx.cpp in Sources */,

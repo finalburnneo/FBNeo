@@ -15,19 +15,26 @@ void SetNVRAMPath(const char *path)
     strncpy(NVRAMPath, path, MAX_PATH);
 }
 
+int OneTimeInit()
+{
+    return BurnLibInit();
+}
+
+int OneTimeEnd()
+{
+    return BurnLibExit();
+}
+
 int MainInit(const char *path, const char *setname)
 {
     if (path == NULL || setname == NULL) {
         fprintf(stderr, "Path or set name uninitialized\n");
-        return 0;
+        return 1;
     }
 
     char message[1024];
     snprintf(message, sizeof(message), "Initializing '%s' in '%s'...\n", setname, path);
     ProgressUpdateBurner(0, message, false);
-
-    SDL_Init(SDL_INIT_AUDIO);
-    BurnLibInit();
 
     int i;
     for (i = 0; i < nBurnDrvCount; i++) {
@@ -40,14 +47,14 @@ int MainInit(const char *path, const char *setname)
     if (i == nBurnDrvCount) {
         snprintf(message, sizeof(message), "'%s' is not supported by FB Neo.", setname);
         AppError(message, false);
-        return 0;
+        return 1;
     }
 
     bCheatsAllowed = false;
     sprintf(szAppRomPaths[0], path);
 
     if (DrvInit(i, 0))
-        return 0;
+        return 1;
 
     MediaInit();
     RunInit();
@@ -62,14 +69,14 @@ int MainInit(const char *path, const char *setname)
 
     ProgressUpdateBurner(0, "Initialization successful", false);
 
-    return 1;
+    return 0;
 }
 
 int MainFrame()
 {
     RunIdle();
 
-    return 1;
+    return 0;
 }
 
 int MainEnd()
@@ -83,7 +90,6 @@ int MainEnd()
     RunExit();
     DrvExit();
     MediaExit();
-    SDL_Quit();
 
-    return 1;
+    return 0;
 }

@@ -81,6 +81,9 @@ typedef enum LogEntryType {
 
 - (void) main
 {
+    if (OneTimeInit() != 0)
+        return;
+
     SetNVRAMPath([AppDelegate.sharedInstance.nvramPath cStringUsingEncoding:NSUTF8StringEncoding]);
 
     while (!self.isCancelled) {
@@ -104,8 +107,8 @@ typedef enum LogEntryType {
             }
         }
 
-        if (!MainInit([setPath cStringUsingEncoding:NSUTF8StringEncoding],
-                      [setName cStringUsingEncoding:NSUTF8StringEncoding])) {
+        if (MainInit([setPath cStringUsingEncoding:NSUTF8StringEncoding],
+                     [setName cStringUsingEncoding:NSUTF8StringEncoding]) != 0) {
             pathToLoad = nil;
 
             @synchronized (observers) {
@@ -120,6 +123,9 @@ typedef enum LogEntryType {
 
             continue;
         }
+
+        AppDelegate.sharedInstance.audio.volume = [NSUserDefaults.standardUserDefaults
+                                                   integerForKey:@"masterVolume"] / 100.0f;
 
         // Load DIP switch config
         NSString *dipPath = [AppDelegate.sharedInstance.dipSwitchPath stringByAppendingPathComponent:
@@ -166,6 +172,7 @@ typedef enum LogEntryType {
         MainEnd();
     }
 
+    OneTimeEnd();
     NSLog(@"Exiting FBMainThread");
 }
 

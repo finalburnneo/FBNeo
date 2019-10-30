@@ -8,7 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface FBAudio : NSObject
+#import "SDLAudioEngine.h"
+
+@interface FBAudio : NSObject<SDLAudioDelegate>
 
 @property float volume;
 

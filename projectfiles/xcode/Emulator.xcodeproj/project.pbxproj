@@ -973,7 +973,6 @@
 		FE1B283F23561A7A0065200C /* gamc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B235A23561A740065200C /* gamc.cpp */; };
 		FE1B287A23561A7A0065200C /* un7z.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239C23561A740065200C /* un7z.cpp */; };
 		FE1B287B23561A7A0065200C /* sshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239E23561A750065200C /* sshot.cpp */; };
-		FE1B288F23562B360065200C /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B288E23562B360065200C /* m68kops.c */; };
 		FE2BC6AB23615B3400B9D150 /* LogViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6A923615B3400B9D150 /* LogViewer.xib */; };
 		FE2BC6B523615C3400B9D150 /* FBLogViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */; };
 		FE2BC6B7236265C000B9D150 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE2BC6B6236265BF00B9D150 /* Sparkle.framework */; };
@@ -983,12 +982,11 @@
 		FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6C92362CFC000B9D150 /* Preferences.xib */; };
 		FE2BC6D02362D5BD00B9D150 /* FBMainThread+Etc.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */; };
 		FE34741A23675C4C006646E7 /* FBAudio.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE34741823675C4C006646E7 /* FBAudio.mm */; };
+		FE34741D23693ABA006646E7 /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE34741C23693ABA006646E7 /* m68kops.c */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
-		FEDA8F8D235EB561007A4D26 /* README-macOS.md in Resources */ = {isa = PBXBuildFile; fileRef = FEDA8F8C235EB561007A4D26 /* README-macOS.md */; };
-		FEDA8F8F235EB752007A4D26 /* whatsnew.html in Resources */ = {isa = PBXBuildFile; fileRef = FEDA8F8E235EB752007A4D26 /* whatsnew.html */; };
 		FEED9DCA2356EF5000B7AF83 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */; };
 		FEED9DD12356F0B900B7AF83 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DCF2356F07500B7AF83 /* SDL.framework */; };
 		FEED9DD22356F0B900B7AF83 /* SDL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DCF2356F07500B7AF83 /* SDL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -2480,17 +2478,6 @@
 		FE1B239E23561A750065200C /* sshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sshot.cpp; sourceTree = "<group>"; };
 		FE1B287E23561D1A0065200C /* tchar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tchar.h; sourceTree = "<group>"; };
 		FE1B287F235626280065200C /* burner_macos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = burner_macos.h; sourceTree = "<group>"; };
-		FE1B2882235629690065200C /* neo_sprite_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neo_sprite_func.h; sourceTree = "<group>"; };
-		FE1B28832356296A0065200C /* psikyo_tile_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = psikyo_tile_func_table.h; sourceTree = "<group>"; };
-		FE1B28842356296A0065200C /* toa_gp9001_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toa_gp9001_func.h; sourceTree = "<group>"; };
-		FE1B28872356296A0065200C /* ctv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctv.h; sourceTree = "<group>"; };
-		FE1B28882356296B0065200C /* driverlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = driverlist.h; sourceTree = "<group>"; };
-		FE1B28892356296B0065200C /* psikyo_tile_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = psikyo_tile_func.h; sourceTree = "<group>"; };
-		FE1B288A2356296B0065200C /* pgm_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pgm_sprite.h; sourceTree = "<group>"; };
-		FE1B288B2356296B0065200C /* neo_sprite_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neo_sprite_func_table.h; sourceTree = "<group>"; };
-		FE1B288C2356296C0065200C /* toa_gp9001_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toa_gp9001_func_table.h; sourceTree = "<group>"; };
-		FE1B288D23562B350065200C /* m68kops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = m68kops.h; sourceTree = "<group>"; };
-		FE1B288E23562B360065200C /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
 		FE2BC6AA23615B3400B9D150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LogViewer.xib; sourceTree = "<group>"; };
 		FE2BC6B323615C3300B9D150 /* FBLogViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLogViewerController.h; sourceTree = "<group>"; };
 		FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLogViewerController.m; sourceTree = "<group>"; };
@@ -2502,14 +2489,11 @@
 		FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "FBMainThread+Etc.mm"; sourceTree = "<group>"; };
 		FE34741823675C4C006646E7 /* FBAudio.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBAudio.mm; sourceTree = "<group>"; };
 		FE34741923675C4C006646E7 /* FBAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAudio.h; sourceTree = "<group>"; };
+		FE34741C23693ABA006646E7 /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = m68kops.c; path = ../../Intermediates.noindex/Emulator.build/Debug/Emulator.build/DerivedSources/m68kops.c; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
 		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7AE23564A6400DA2D9D /* cave_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_sprite_func.pl; sourceTree = "<group>"; };
-		FEA5E7B623566E7600DA2D9D /* cave_tile_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_tile_func_table.h; sourceTree = "<group>"; };
-		FEA5E7B723566E7700DA2D9D /* cave_sprite_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_sprite_func_table.h; sourceTree = "<group>"; };
-		FEA5E7B823566E7700DA2D9D /* cave_sprite_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_sprite_func.h; sourceTree = "<group>"; };
-		FEA5E7B923566E7700DA2D9D /* cave_tile_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cave_tile_func.h; sourceTree = "<group>"; };
 		FEA5E7BD2356721800DA2D9D /* neo_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = neo_sprite_func.pl; sourceTree = "<group>"; };
 		FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = psikyo_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = toa_gp9001_func.pl; sourceTree = "<group>"; };
@@ -3089,7 +3073,7 @@
 		FE1B1D8D23561A640065200C /* dep */ = {
 			isa = PBXGroup;
 			children = (
-				FE1B287C23561C330065200C /* generated */,
+				FE34741B23693AA8006646E7 /* generated */,
 				FE1B1DA923561A640065200C /* libs */,
 				FEA5E79B23564A3200DA2D9D /* scripts */,
 			);
@@ -4637,28 +4621,6 @@
 			path = ../../src/burner;
 			sourceTree = "<group>";
 		};
-		FE1B287C23561C330065200C /* generated */ = {
-			isa = PBXGroup;
-			children = (
-				FEA5E7B723566E7700DA2D9D /* cave_sprite_func_table.h */,
-				FEA5E7B823566E7700DA2D9D /* cave_sprite_func.h */,
-				FEA5E7B623566E7600DA2D9D /* cave_tile_func_table.h */,
-				FEA5E7B923566E7700DA2D9D /* cave_tile_func.h */,
-				FE1B28872356296A0065200C /* ctv.h */,
-				FE1B28882356296B0065200C /* driverlist.h */,
-				FE1B288E23562B360065200C /* m68kops.c */,
-				FE1B288D23562B350065200C /* m68kops.h */,
-				FE1B288B2356296B0065200C /* neo_sprite_func_table.h */,
-				FE1B2882235629690065200C /* neo_sprite_func.h */,
-				FE1B288A2356296B0065200C /* pgm_sprite.h */,
-				FE1B28832356296A0065200C /* psikyo_tile_func_table.h */,
-				FE1B28892356296B0065200C /* psikyo_tile_func.h */,
-				FE1B288C2356296C0065200C /* toa_gp9001_func_table.h */,
-				FE1B28842356296A0065200C /* toa_gp9001_func.h */,
-			);
-			path = generated;
-			sourceTree = "<group>";
-		};
 		FE1B287D23561CC00065200C /* macos */ = {
 			isa = PBXGroup;
 			children = (
@@ -4707,6 +4669,14 @@
 				FE34741823675C4C006646E7 /* FBAudio.mm */,
 			);
 			path = macos;
+			sourceTree = "<group>";
+		};
+		FE34741B23693AA8006646E7 /* generated */ = {
+			isa = PBXGroup;
+			children = (
+				FE34741C23693ABA006646E7 /* m68kops.c */,
+			);
+			name = generated;
 			sourceTree = "<group>";
 		};
 		FEA5E7982356472200DA2D9D /* macos */ = {
@@ -4854,10 +4824,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE2BC6BB2362B4E200B9D150 /* dsa_pub.pem in Resources */,
-				FEDA8F8D235EB561007A4D26 /* README-macOS.md in Resources */,
 				FEF4EE892363720B004E0DCE /* Defaults.plist in Resources */,
 				FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */,
-				FEDA8F8F235EB752007A4D26 /* whatsnew.html in Resources */,
 				FE1B241023561A750065200C /* license.txt in Resources */,
 				FEF4EE8423635521004E0DCE /* Emulator.xib in Resources */,
 				FE1B1094235615950065200C /* Assets.xcassets in Resources */,
@@ -4882,11 +4850,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${SRCROOT}/../../src/dep/generated/cave_tile_func.h",
-				"${SRCROOT}/../../src/dep/generated/cave_sprite_func.h",
-				"${SRCROOT}/../../src/dep/generated/psikyo_tile_func.h",
-				"${SRCROOT}/../../src/dep/generated/neo_sprite_func.h",
-				"${SRCROOT}/../../src/dep/generated/toa_gp9001_func.h",
+				"${DERIVED_FILES_DIR}/cave_tile_func.h",
+				"${DERIVED_FILES_DIR}/cave_sprite_func.h",
+				"${DERIVED_FILES_DIR}/psikyo_tile_func.h",
+				"${DERIVED_FILES_DIR}/neo_sprite_func.h",
+				"${DERIVED_FILES_DIR}/toa_gp9001_func.h",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4907,12 +4875,12 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${SRCROOT}/../../src/dep/generated/pgm_sprite.h",
-				"${SRCROOT}/../../src/dep/generated/ctv.h",
+				"${DERIVED_FILES_DIR}/pgm_sprite.h",
+				"${DERIVED_FILES_DIR}/ctv.h",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "for (( I = 0; I < ${SCRIPT_OUTPUT_FILE_COUNT}; I++)); do\n    IN_V=\"SCRIPT_INPUT_FILE_$I\"\n    OUT_V=\"SCRIPT_OUTPUT_FILE_$I\"\n\n    EXEC=${DERIVED_FILE_DIR}/$(basename ${!IN_V%.*})\n    /usr/bin/gcc ${!IN_V} -o ${EXEC}\n    ${EXEC} > ${!OUT_V}\n    rm ${EXEC}\ndone\n";
+			shellScript = "for (( I = 0; I < ${SCRIPT_OUTPUT_FILE_COUNT}; I++)); do\n    IN_V=\"SCRIPT_INPUT_FILE_$I\"\n    OUT_V=\"SCRIPT_OUTPUT_FILE_$I\"\n\n    EXEC=${DERIVED_FILES_DIR}/$(basename ${!IN_V%.*})\n    /usr/bin/gcc ${!IN_V} -o ${EXEC}\n    ${EXEC} > ${!OUT_V}\n    rm ${EXEC}\ndone\n";
 		};
 		FEED9DC12356D9C900B7AF83 /* Generate Musashi core */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4927,8 +4895,8 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${SRCROOT}/../../src/dep/generated/m68kops.c",
-				"${SRCROOT}/../../src/dep/generated/m68kops.h",
+				"${DERIVED_FILES_DIR}/m68kops.c",
+				"${DERIVED_FILES_DIR}/m68kops.h",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4948,8 +4916,8 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${SRCROOT}/../../src/dep/generated/driverlist.h",
-				"${SRCROOT}/../../gamelist.txt",
+				"${DERIVED_FILES_DIR}/driverlist.h",
+				"${DERIVED_FILES_DIR}/gamelist.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4974,7 +4942,6 @@
 				FE1B276723561A790065200C /* burn.cpp in Sources */,
 				FE1B261E23561A770065200C /* d_batrider.cpp in Sources */,
 				FE1B259323561A760065200C /* d_rohga.cpp in Sources */,
-				FE1B288F23562B360065200C /* m68kops.c in Sources */,
 				FE1B256623561A760065200C /* d_hangon.cpp in Sources */,
 				FE1B26E723561A780065200C /* d_argus.cpp in Sources */,
 				FE1B254C23561A760065200C /* d_news.cpp in Sources */,
@@ -5423,6 +5390,7 @@
 				FE1B264623561A770065200C /* d_buggychl.cpp in Sources */,
 				FE1B269F23561A770065200C /* d_pengadvb.cpp in Sources */,
 				FE1B264823561A770065200C /* cchip.cpp in Sources */,
+				FE34741D23693ABA006646E7 /* m68kops.c in Sources */,
 				FE1B24CE23561A750065200C /* cave_tile.cpp in Sources */,
 				FE1B27C123561A790065200C /* timekpr.cpp in Sources */,
 				FE1B249D23561A750065200C /* interface.cpp in Sources */,

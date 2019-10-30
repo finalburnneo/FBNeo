@@ -30,4 +30,9 @@
     return AppDelegate.sharedInstance.input;
 }
 
+- (FBAudio *) audio
+{
+    return AppDelegate.sharedInstance.audio;
+}
+
 @end

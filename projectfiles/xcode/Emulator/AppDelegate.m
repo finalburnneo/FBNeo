@@ -37,6 +37,7 @@ static AppDelegate *sharedInstance = nil;
 
     sharedInstance = self;
 
+    _audio = [FBAudio new];
     _input = [FBInput new];
     _supportedFormats = @[ @"zip", @"7z" ];
 

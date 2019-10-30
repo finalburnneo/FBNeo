@@ -10,6 +10,7 @@
 
 #import "FBVideo.h"
 #import "FBInput.h"
+#import "FBAudio.h"
 #import "FBMainThread.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
@@ -23,6 +24,7 @@
 @property (readonly) FBMainThread *runloop;
 @property (readonly) FBVideo *video;
 @property (readonly) FBInput *input;
+@property (readonly) FBAudio *audio;
 
 @property (readonly) NSString *supportPath;
 @property (readonly) NSString *nvramPath;

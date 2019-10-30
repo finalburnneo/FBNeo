@@ -18,6 +18,7 @@ typedef enum LogEntryType {
 
 @implementation FBMainThread
 {
+    NSString *runningPath;
     NSString *pathToLoad;
     NSMutableString *log;
     NSMutableArray *observers;
@@ -28,6 +29,7 @@ typedef enum LogEntryType {
     if (self = [super init]) {
         log = [NSMutableString new];
         observers = [NSMutableArray new];
+        _isRunning = NO;
     }
     return self;
 }
@@ -125,7 +127,8 @@ typedef enum LogEntryType {
         [self restoreDipState:dipPath];
         _dipSwitchesDirty = NO;
 
-        _runningPath = pathToLoad;
+        _isRunning = YES;
+        runningPath = pathToLoad;
         pathToLoad = nil;
 
         @synchronized (observers) {
@@ -144,6 +147,9 @@ typedef enum LogEntryType {
         while (!self.isCancelled && pathToLoad == nil)
             MainFrame();
 
+        _isRunning = NO;
+        runningPath = nil;
+
         // Save DIP switch config
         if (_dipSwitchesDirty)
             [self saveDipState:dipPath];
@@ -156,8 +162,6 @@ typedef enum LogEntryType {
                 });
             }
         }
-
-        _runningPath = nil;
 
         MainEnd();
     }

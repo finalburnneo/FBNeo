@@ -218,6 +218,7 @@ int RunExit()
 	return 0;
 }
 
+#ifndef BUILD_MACOS
 // The main message loop
 int RunMessageLoop()
 {
@@ -244,3 +245,4 @@ int RunMessageLoop()
 
     return 0;
 }
+#endif

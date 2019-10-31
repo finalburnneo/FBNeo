@@ -108,13 +108,13 @@ jobs:
         run: make sdl -j9 RELEASEBUILD=1 SKIPDEPEND=1
   buildmacos:
     runs-on: macOS-latest
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_11.app
     steps:
-      - uses: actions/checkout@master
-        with:
-         fetch-depth: 1
+      - uses: actions/checkout@v1
       - name: build
-        working-directory: projectfiles/xcode
         run: |
-             xcodebuild -configuration Debug
+             cd projectfiles/xcode
+             xcodebuild -target Emulator -configuration Debug
         
         

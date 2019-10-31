@@ -982,8 +982,8 @@
 		FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6C92362CFC000B9D150 /* Preferences.xib */; };
 		FE2BC6D02362D5BD00B9D150 /* FBMainThread+Etc.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */; };
 		FE34741A23675C4C006646E7 /* FBAudio.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE34741823675C4C006646E7 /* FBAudio.mm */; };
-		FE34741D23693ABA006646E7 /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE34741C23693ABA006646E7 /* m68kops.c */; };
 		FE34742623696151006646E7 /* SDLAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FE34742423696150006646E7 /* SDLAudioEngine.m */; };
+		FE811005236B73BD000B5F73 /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE811004236B73BD000B5F73 /* m68kops.c */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
@@ -2486,9 +2486,9 @@
 		FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "FBMainThread+Etc.mm"; sourceTree = "<group>"; };
 		FE34741823675C4C006646E7 /* FBAudio.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBAudio.mm; sourceTree = "<group>"; };
 		FE34741923675C4C006646E7 /* FBAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAudio.h; sourceTree = "<group>"; };
-		FE34741C23693ABA006646E7 /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = m68kops.c; path = ../../Intermediates.noindex/Emulator.build/Debug/Emulator.build/DerivedSources/m68kops.c; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE34742423696150006646E7 /* SDLAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLAudioEngine.m; sourceTree = "<group>"; };
 		FE34742523696151006646E7 /* SDLAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLAudioEngine.h; sourceTree = "<group>"; };
+		FE811004236B73BD000B5F73 /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
 		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
@@ -3068,7 +3068,7 @@
 		FE1B1D8D23561A640065200C /* dep */ = {
 			isa = PBXGroup;
 			children = (
-				FE34741B23693AA8006646E7 /* generated */,
+				FE811001236B6B29000B5F73 /* generated */,
 				FE1B1DA923561A640065200C /* libs */,
 				FEA5E79B23564A3200DA2D9D /* scripts */,
 			);
@@ -4667,12 +4667,12 @@
 			path = macos;
 			sourceTree = "<group>";
 		};
-		FE34741B23693AA8006646E7 /* generated */ = {
+		FE811001236B6B29000B5F73 /* generated */ = {
 			isa = PBXGroup;
 			children = (
-				FE34741C23693ABA006646E7 /* m68kops.c */,
+				FE811004236B73BD000B5F73 /* m68kops.c */,
 			);
-			name = generated;
+			path = generated;
 			sourceTree = "<group>";
 		};
 		FEA5E7982356472200DA2D9D /* macos */ = {
@@ -4757,6 +4757,7 @@
 				FEA5E7C4235674E000DA2D9D /* Generate pgm_sprite.h, ctv.h */,
 				FEED9DC12356D9C900B7AF83 /* Generate Musashi core */,
 				FEED9DC42356E16400B7AF83 /* Generate driverlist.h */,
+				FE811000236B6A07000B5F73 /* Copy generated files */,
 				FE1B1089235615940065200C /* Sources */,
 				FE1B108A235615940065200C /* Frameworks */,
 				FE1B108B235615940065200C /* Resources */,
@@ -4823,6 +4824,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		FE811000236B6A07000B5F73 /* Copy generated files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DERIVED_FILES_DIR}/m68kops.c",
+			);
+			name = "Copy generated files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${SRCROOT}/../../src/dep/generated/m68kops.c",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "for (( I = 0; I < ${SCRIPT_OUTPUT_FILE_COUNT}; I++)); do\n    II=SCRIPT_INPUT_FILE_$I\n    OI=SCRIPT_OUTPUT_FILE_$I\n    IP=${!II}\n    OP=${!OI}\n    mkdir -p \"$(dirname ${OP%.*})\"\n    cp \"$IP\" \"$OP\"\ndone\n";
+		};
 		FEA5E7B023564BD600DA2D9D /* Generate cave_tile_func.h, cave_sprite_func.h, psikyo_tile_func.h, neo_sprite_func.h, toa_gp9001_func.h */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4886,7 +4907,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "@echo Compiling Musashi MC680x0 core...\nM68KMAKE=${DERIVED_FILE_DIR}/m68kmake\n/usr/bin/gcc -Wno-tautological-pointer-compare ${SRCROOT}/../../src/cpu/m68k/m68kmake.c -o ${M68KMAKE}\n${M68KMAKE} $(dirname ${SCRIPT_OUTPUT_FILE_0}) ${SRCROOT}/../../src/cpu/m68k/m68k_in.c\nrm ${M68KMAKE}\n";
+			shellScript = "M68KMAKE=${DERIVED_FILE_DIR}/m68kmake\n/usr/bin/gcc -Wno-tautological-pointer-compare ${SRCROOT}/../../src/cpu/m68k/m68kmake.c -o ${M68KMAKE}\n${M68KMAKE} $(dirname ${SCRIPT_OUTPUT_FILE_0}) ${SRCROOT}/../../src/cpu/m68k/m68k_in.c\nrm ${M68KMAKE}\n";
 		};
 		FEED9DC42356E16400B7AF83 /* Generate driverlist.h */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5376,8 +5397,8 @@
 				FE1B279E23561A790065200C /* sp0256.cpp in Sources */,
 				FE1B264623561A770065200C /* d_buggychl.cpp in Sources */,
 				FE1B269F23561A770065200C /* d_pengadvb.cpp in Sources */,
+				FE811005236B73BD000B5F73 /* m68kops.c in Sources */,
 				FE1B264823561A770065200C /* cchip.cpp in Sources */,
-				FE34741D23693ABA006646E7 /* m68kops.c in Sources */,
 				FE1B24CE23561A750065200C /* cave_tile.cpp in Sources */,
 				FE1B27C123561A790065200C /* timekpr.cpp in Sources */,
 				FE1B249D23561A750065200C /* interface.cpp in Sources */,

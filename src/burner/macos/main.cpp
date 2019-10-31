@@ -98,16 +98,16 @@ int MainEnd()
 
 #pragma mark - SDL substitutes
 
-Uint32 SDL_GetTicks()
+unsigned int SDL_GetTicks()
 {
     UnsignedWide uw;
     Microseconds(&uw);
     return ((double) UnsignedWideToUInt64(uw) + 500.0) / 1000.0;
 }
 
-void SDL_Delay(Uint32 ms)
+void SDL_Delay(unsigned int ms)
 {
-    Uint32 stop, now;
+    unsigned int stop, now;
     stop = SDL_GetTicks() + ms;
     do {
         MPYield();

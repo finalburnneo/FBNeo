@@ -2519,7 +2519,6 @@
 		FEED9E0B23576F2900B7AF83 /* drv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drv.cpp; sourceTree = "<group>"; };
 		FEED9E0D23576F5A00B7AF83 /* media.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = media.cpp; sourceTree = "<group>"; };
 		FEED9E0F2357702D00B7AF83 /* run.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run.cpp; sourceTree = "<group>"; };
-		FEED9E11235770F200B7AF83 /* burner_sdl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = burner_sdl.h; sourceTree = "<group>"; };
 		FEED9E122358412D00B7AF83 /* bzip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bzip.cpp; sourceTree = "<group>"; };
 		FEED9E142358414300B7AF83 /* stringset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stringset.cpp; sourceTree = "<group>"; };
 		FEED9E1A235845EE00B7AF83 /* FBMainThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBMainThread.h; sourceTree = "<group>"; };
@@ -4714,7 +4713,6 @@
 			children = (
 				FEED9E142358414300B7AF83 /* stringset.cpp */,
 				FEED9E122358412D00B7AF83 /* bzip.cpp */,
-				FEED9E11235770F200B7AF83 /* burner_sdl.h */,
 				FEED9E0F2357702D00B7AF83 /* run.cpp */,
 				FEED9E0D23576F5A00B7AF83 /* media.cpp */,
 				FEED9E0B23576F2900B7AF83 /* drv.cpp */,

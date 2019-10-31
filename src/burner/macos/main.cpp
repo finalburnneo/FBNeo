@@ -1,6 +1,8 @@
 #include "burner.h"
 #include "main.h"
 
+#include <Carbon/Carbon.h>
+
 extern int RunIdle();
 extern int RunInit();
 extern int RunExit();
@@ -92,4 +94,23 @@ int MainEnd()
     MediaExit();
 
     return 0;
+}
+
+#pragma mark - SDL substitutes
+
+Uint32 SDL_GetTicks()
+{
+    UnsignedWide uw;
+    Microseconds(&uw);
+    return ((double) UnsignedWideToUInt64(uw) + 500.0) / 1000.0;
+}
+
+void SDL_Delay(Uint32 ms)
+{
+    Uint32 stop, now;
+    stop = SDL_GetTicks() + ms;
+    do {
+        MPYield();
+        now = SDL_GetTicks();
+    } while (stop > now);
 }

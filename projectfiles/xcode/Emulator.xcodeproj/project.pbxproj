@@ -989,8 +989,6 @@
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
 		FEED9DCA2356EF5000B7AF83 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */; };
-		FEED9DD12356F0B900B7AF83 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DCF2356F07500B7AF83 /* SDL.framework */; };
-		FEED9DD22356F0B900B7AF83 /* SDL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DCF2356F07500B7AF83 /* SDL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FEED9DEF2356F5DB00B7AF83 /* neocdlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DDF2356F5DA00B7AF83 /* neocdlist.cpp */; };
 		FEED9DFA23576B9F00B7AF83 /* support_paths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DF923576B9F00B7AF83 /* support_paths.cpp */; };
 		FEED9DFC23576BD500B7AF83 /* inpdipsw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DFB23576BD500B7AF83 /* inpdipsw.cpp */; };
@@ -1006,7 +1004,7 @@
 		FEED9E132358412E00B7AF83 /* bzip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E122358412D00B7AF83 /* bzip.cpp */; settings = {COMPILER_FLAGS = "-Wno-tautological-pointer-compare"; }; };
 		FEED9E152358414300B7AF83 /* stringset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E142358414300B7AF83 /* stringset.cpp */; };
 		FEED9E1C235845EE00B7AF83 /* FBMainThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */; };
-		FEED9E1E2358B48C00B7AF83 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E1D2358B48C00B7AF83 /* main.cpp */; };
+		FEED9E1E2358B48C00B7AF83 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E1D2358B48C00B7AF83 /* main.cpp */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations"; }; };
 		FEF4EE8123635500004E0DCE /* FBEmulatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF4EE8023635500004E0DCE /* FBEmulatorController.m */; };
 		FEF4EE8423635521004E0DCE /* Emulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF4EE8223635521004E0DCE /* Emulator.xib */; };
 		FEF4EE8723635CA0004E0DCE /* NSWindowController+Core.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF4EE8523635CA0004E0DCE /* NSWindowController+Core.m */; };
@@ -1031,7 +1029,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FEED9DD22356F0B900B7AF83 /* SDL.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2509,7 +2506,6 @@
 		FEDA8F8E235EB752007A4D26 /* whatsnew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = whatsnew.html; path = ../../whatsnew.html; sourceTree = "<group>"; };
 		FEED9DC22356DDA900B7AF83 /* gamelist.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = gamelist.pl; sourceTree = "<group>"; };
 		FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		FEED9DCF2356F07500B7AF83 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../../../../../../Library/Frameworks/SDL.framework; sourceTree = "<group>"; };
 		FEED9DDF2356F5DA00B7AF83 /* neocdlist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = neocdlist.cpp; sourceTree = "<group>"; };
 		FEED9DF923576B9F00B7AF83 /* support_paths.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = support_paths.cpp; sourceTree = "<group>"; };
 		FEED9DFB23576BD500B7AF83 /* inpdipsw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = inpdipsw.cpp; sourceTree = "<group>"; };
@@ -2542,7 +2538,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FEED9DD12356F0B900B7AF83 /* SDL.framework in Frameworks */,
 				FE2BC6B7236265C000B9D150 /* Sparkle.framework in Frameworks */,
 				FEED9DCA2356EF5000B7AF83 /* OpenGL.framework in Frameworks */,
 			);
@@ -4709,7 +4704,6 @@
 			isa = PBXGroup;
 			children = (
 				FE2BC6B6236265BF00B9D150 /* Sparkle.framework */,
-				FEED9DCF2356F07500B7AF83 /* SDL.framework */,
 				FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */,
 			);
 			name = Frameworks;
@@ -6093,7 +6087,6 @@
 					"-DINCLUDE_LIB_PNGH",
 					"-DLSB_FIRST",
 					"-DSH2_INLINE=\"static inline\"",
-					"-DBUILD_SDL",
 					"-DINCLUDE_7Z_SUPPORT",
 					"-DUSE_FILE32API",
 					"-DMAX_PATH=1024",
@@ -6154,7 +6147,6 @@
 					"-DINCLUDE_LIB_PNGH",
 					"-DLSB_FIRST",
 					"-DSH2_INLINE=\"static inline\"",
-					"-DBUILD_SDL",
 					"-DINCLUDE_7Z_SUPPORT",
 					"-DUSE_FILE32API",
 					"-DMAX_PATH=1024",

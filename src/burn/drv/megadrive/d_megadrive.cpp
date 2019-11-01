@@ -43188,3 +43188,39 @@ struct BurnDriver BurnDrvmd_labbaye = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Ultracore 2019
+static struct BurnRomInfo md_ultracoreRomDesc[] = {
+	{ "Ultracore.bin", 0x200000, 0xae7fda5a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ultracore)
+STD_ROM_FN(md_ultracore)
+
+struct BurnDriver BurnDrvmd_ultracore = {
+	"md_ultracore", NULL, NULL, NULL, "2019",
+	"Ultracore (USA)\0", NULL, "Digital Illusions", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ultracoreRomInfo, md_ultracoreRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Xenocrises 2019
+static struct BurnRomInfo md_xenocrisesRomDesc[] = {
+	{ "Xenocrises.bin", 0x400000, 0xac5f4cca, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_xenocrises)
+STD_ROM_FN(md_xenocrises)
+
+struct BurnDriver BurnDrvmd_xenocrises = {
+	"md_xenocrises", NULL, NULL, NULL, "2019",
+	"Xenocrises (USA)\0", NULL, "Bitmap Bureau", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_xenocrisesRomInfo, md_xenocrisesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

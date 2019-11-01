@@ -1,0 +1,18 @@
+name: SDL CI
+
+on:
+  push
+
+jobs:
+  build:
+    name: Build SDL variant
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install prerequisites
+        run: |
+             sudo apt-get -y update
+             sudo apt-get -y install libsdl1.2-dev
+      - name: Build
+        run: |
+             make sdl

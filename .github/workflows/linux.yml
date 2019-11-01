@@ -15,4 +15,4 @@ jobs:
              sudo apt-get -y install libsdl1.2-dev
       - name: Build
         run: |
-             make sdl
+             make sdl -j9 RELEASEBUILD=1 SKIPDEPEND=1

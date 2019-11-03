@@ -2637,7 +2637,7 @@ static struct BurnRomInfo dbreedm72RomDesc[] = {
 
 	{ "db_c-v0.rom",	0x20000, 0x312f7282, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "dbreedm72_i8751.mcu",0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 microcontroller
+	{ "dbreedm72.mcu",  0x01000, 0x8bf2910c, 0x00 | BRF_OPT }, 			 // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(dbreedm72)
@@ -2694,7 +2694,7 @@ static struct BurnRomInfo dbreedm72jRomDesc[] = {
 
 	{ "db_c-v0.rom",	0x20000, 0x312f7282, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "db_c-pr-.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 microcontroller
+	{ "db_c-pr-.mcu",	0x01000, 0x8bf2910c, 0x00 | BRF_OPT }, 			 // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(dbreedm72j)
@@ -3104,7 +3104,7 @@ static struct BurnRomInfo airduelm72RomDesc[] = {
 
 	{ "ad-v0.ic44",		0x20000, 0x339f474d, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "ad_c-pr.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 microcontroller
+	{ "ad_c-pr.mcu",	0x01000, 0x45584e52, 0x00 | BRF_OPT }, 			 // 17 i8751 microcontroller
 	
 	{ "ad-c-3f.ic13",	0x00104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 18 Pals
 };

@@ -121,6 +121,9 @@ ifdef INCLUDE_AVI_RECORDING
 lib +=	-lvfw32
 endif
 		
+ifdef USE_UCRT
+lib +=	-lucrt
+endif
 
 depobj	+=	resource.o \
 		

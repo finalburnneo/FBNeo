@@ -2637,7 +2637,8 @@ static struct BurnRomInfo dbreedm72RomDesc[] = {
 
 	{ "db_c-v0.rom",	0x20000, 0x312f7282, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "dbreedm72.mcu",  0x01000, 0x8bf2910c, 0x00 | BRF_OPT }, 			 // 17 i8751 microcontroller
+	// Requires different currently undumped MCU code - i8751 MCU labeled  DB C-PR-B??
+	{ "dbreedm72.mcu",  0x01000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, 			 // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(dbreedm72)

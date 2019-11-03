@@ -2694,7 +2694,7 @@ static struct BurnRomInfo dbreedm72jRomDesc[] = {
 
 	{ "db_c-v0.rom",	0x20000, 0x312f7282, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "dbreedm72_i8751.mcu",0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 microcontroller
+	{ "db_c-pr-.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(dbreedm72j)
@@ -3631,7 +3631,7 @@ static struct BurnRomInfo gallopRomDesc[] = {
 
 	{ "cc-c-v0.bin",	0x20000, 0x6247bade, 0x05 | BRF_SND },           // 16 DAC Samples
 	
-	{ "gallop_i8751.mcu", 0x10000, 0x00000000, BRF_NODUMP | BRF_OPT },	 // i8751 microcontroller
+	{ "cc_c-pr-.mcu", 	0x10000, 0x00000000, BRF_NODUMP | BRF_OPT },	 // i8751 microcontroller
 };
 
 STD_ROM_PICK(gallop)

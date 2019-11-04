@@ -43191,7 +43191,7 @@ struct BurnDriver BurnDrvmd_labbaye = {
 
 // Ultracore 2019
 static struct BurnRomInfo md_ultracoreRomDesc[] = {
-	{ "Ultracore.bin", 0x200000, 0xae7fda5a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ultracore.bin", 0x200000, 0x97ed4b2a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ultracore)

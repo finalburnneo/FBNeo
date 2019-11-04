@@ -18,6 +18,7 @@ typedef enum LogEntryType {
 
 @implementation FBMainThread
 {
+    NSString *runningPath;
     NSString *pathToLoad;
     NSMutableString *log;
     NSMutableArray *observers;
@@ -28,6 +29,7 @@ typedef enum LogEntryType {
     if (self = [super init]) {
         log = [NSMutableString new];
         observers = [NSMutableArray new];
+        _isRunning = NO;
     }
     return self;
 }
@@ -79,6 +81,9 @@ typedef enum LogEntryType {
 
 - (void) main
 {
+    if (OneTimeInit() != 0)
+        return;
+
     SetNVRAMPath([AppDelegate.sharedInstance.nvramPath cStringUsingEncoding:NSUTF8StringEncoding]);
 
     while (!self.isCancelled) {
@@ -102,8 +107,8 @@ typedef enum LogEntryType {
             }
         }
 
-        if (!MainInit([setPath cStringUsingEncoding:NSUTF8StringEncoding],
-                      [setName cStringUsingEncoding:NSUTF8StringEncoding])) {
+        if (MainInit([setPath cStringUsingEncoding:NSUTF8StringEncoding],
+                     [setName cStringUsingEncoding:NSUTF8StringEncoding]) != 0) {
             pathToLoad = nil;
 
             @synchronized (observers) {
@@ -119,13 +124,17 @@ typedef enum LogEntryType {
             continue;
         }
 
+        AppDelegate.sharedInstance.audio.volume = [NSUserDefaults.standardUserDefaults
+                                                   integerForKey:@"masterVolume"] / 100.0f;
+
         // Load DIP switch config
         NSString *dipPath = [AppDelegate.sharedInstance.dipSwitchPath stringByAppendingPathComponent:
                              [NSString stringWithFormat:@"%@.dip", self.setName]];
         [self restoreDipState:dipPath];
         _dipSwitchesDirty = NO;
 
-        _runningPath = pathToLoad;
+        _isRunning = YES;
+        runningPath = pathToLoad;
         pathToLoad = nil;
 
         @synchronized (observers) {
@@ -144,6 +153,9 @@ typedef enum LogEntryType {
         while (!self.isCancelled && pathToLoad == nil)
             MainFrame();
 
+        _isRunning = NO;
+        runningPath = nil;
+
         // Save DIP switch config
         if (_dipSwitchesDirty)
             [self saveDipState:dipPath];
@@ -157,11 +169,10 @@ typedef enum LogEntryType {
             }
         }
 
-        _runningPath = nil;
-
         MainEnd();
     }
 
+    OneTimeEnd();
     NSLog(@"Exiting FBMainThread");
 }
 

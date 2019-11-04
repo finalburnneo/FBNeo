@@ -5146,6 +5146,24 @@ struct BurnDriver BurnDrvcv_mecha8 = {
 	272, 228, 4, 3
 };
 
+// Mecha 9
+static struct BurnRomInfo cv_mecha9RomDesc[] = {
+	{ "mecha9_colecovision_sgm.rom",	0x040000, 0xb405591a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mecha9, cv_mecha9, cv_coleco)
+STD_ROM_FN(cv_mecha9)
+
+struct BurnDriver BurnDrvcv_mecha9 = {
+	"cv_mecha9", NULL, "cv_coleco", NULL, "2015",
+	"Mecha-9 Super Game\0", NULL, "Oscar Toledo G.", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_mecha9RomInfo, cv_mecha9RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Zaxxon SuperGame (SGM)
 
 static struct BurnRomInfo cv_zaxxonsgmRomDesc[] = {

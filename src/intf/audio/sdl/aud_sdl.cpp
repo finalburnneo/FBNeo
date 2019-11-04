@@ -5,8 +5,9 @@
 #include "aud_dsp.h"
 #include <math.h>
 
-static unsigned int nSoundFps;	
+static unsigned int nSoundFps;
 
+int nSDLVolume = SDL_MIX_MAXVOLUME;
 int (*GetNextSound)(int);				// Callback used to request more sound
 
 static SDL_AudioSpec audiospec;
@@ -25,15 +26,15 @@ void audiospec_callback(void* /* data */, Uint8* stream, int len)
 	
 //		dprintf(_T(" %i - %i"), nSDLPlayPos, nSDLPlayPos + nAudLoopLen - nSDLPlayPos);
 	
-		SDL_MixAudio(stream, (Uint8*)SDLAudBuffer + nSDLPlayPos, nAudLoopLen - nSDLPlayPos, SDL_MIX_MAXVOLUME);
+		SDL_MixAudio(stream, (Uint8*)SDLAudBuffer + nSDLPlayPos, nAudLoopLen - nSDLPlayPos, nSDLVolume);
 		end -= nAudLoopLen;
 
 //		dprintf(_T(", %i - %i (%i)"), 0, end, nAudLoopLen - nSDLPlayPos + end);
 
-		SDL_MixAudio(stream + nAudLoopLen - nSDLPlayPos, (Uint8*)SDLAudBuffer, end, SDL_MIX_MAXVOLUME);
+		SDL_MixAudio(stream + nAudLoopLen - nSDLPlayPos, (Uint8*)SDLAudBuffer, end, nSDLVolume);
 		nSDLPlayPos = end;
 	} else {
-		SDL_MixAudio(stream, (Uint8*)SDLAudBuffer + nSDLPlayPos, len, SDL_MIX_MAXVOLUME);
+		SDL_MixAudio(stream, (Uint8*)SDLAudBuffer + nSDLPlayPos, len, nSDLVolume);
 		nSDLPlayPos = end;
 		
 		if (nSDLPlayPos == nAudLoopLen) {

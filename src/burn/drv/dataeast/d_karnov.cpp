@@ -1228,7 +1228,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 static struct BurnRomInfo karnovRomDesc[] = {
 	{ "dn08-6.j15",		0x10000, 0x4c60837f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "dn11-6.j12",		0x10000, 0xcd4abb99, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dn11-6.j20",		0x10000, 0xcd4abb99, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "dn07-.j14",		0x10000, 0xfc14291b, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "dn10-.j18",		0x10000, 0xa4a34e37, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "dn06-5.j13",		0x10000, 0x29d64e42, 1 | BRF_PRG | BRF_ESS }, //  4
@@ -1255,7 +1255,7 @@ static struct BurnRomInfo karnovRomDesc[] = {
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
 	
-	{ "karnov_i8751.k13",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP}, // 22 i8751 microcontroller
+	{ "dn-e.k13",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP}, // 22 i8751 microcontroller
 };
 
 STD_ROM_PICK(karnov)
@@ -1552,8 +1552,8 @@ struct BurnDriver BurnDrvChelnovu = {
 /* DE-0248-1 main board + unknown video board */
 
 static struct BurnRomInfo chelnovjRomDesc[] = {
-	{ "ee08.j15",		0x10000, 0x1978cb52, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ee11.j20",		0x10000, 0xe0ed3d99, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ee08-1.j15",		0x10000, 0x1978cb52, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ee11-1.j20",		0x10000, 0xe0ed3d99, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "ee07.j14",		0x10000, 0x51465486, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "ee10.j18",		0x10000, 0xd09dda33, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "ee06.j13",		0x10000, 0xcd991507, 1 | BRF_PRG | BRF_ESS }, //  4

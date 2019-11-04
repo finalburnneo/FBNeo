@@ -43,7 +43,7 @@
 
 @interface FBMainThread : NSThread
 
-@property (readonly) NSString *runningPath;
+@property (readonly) BOOL isRunning;
 @property BOOL dipSwitchesDirty;
 
 - (NSString *) log;

@@ -829,6 +829,33 @@ STDINPUTINFO(Spf2t)
 // Rom Definitions
 
 static struct BurnRomInfo NinexxRomDesc[] = {
+	{ "19xe.03b",      0x080000, 0x9bf9d9b1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xe.04b",      0x080000, 0x9aa46476, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xe.05b",      0x080000, 0xa04a2c5e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xe.06b",      0x080000, 0xf0a81c33, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19x.07",        0x080000, 0x61c0296c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "19x.13m",       0x080000, 0x427aeb18, CPS2_GFX | BRF_GRA },
+	{ "19x.15m",       0x080000, 0x63bdbf54, CPS2_GFX | BRF_GRA },
+	{ "19x.17m",       0x080000, 0x2dfe18b5, CPS2_GFX | BRF_GRA },
+	{ "19x.19m",       0x080000, 0xcbef9579, CPS2_GFX | BRF_GRA },
+	{ "19x.14m",       0x200000, 0xe916967c, CPS2_GFX | BRF_GRA },
+	{ "19x.16m",       0x200000, 0x6e75f3db, CPS2_GFX | BRF_GRA },
+	{ "19x.18m",       0x200000, 0x2213e798, CPS2_GFX | BRF_GRA },
+	{ "19x.20m",       0x200000, 0xab9d5b96, CPS2_GFX | BRF_GRA },
+
+	{ "19x.01",        0x020000, 0xef55195e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
+	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
+	
+	{ "19xx.key",      0x000014, 0x6f5d6406, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Ninexx)
+STD_ROM_FN(Ninexx)
+
+static struct BurnRomInfo NinexxuRomDesc[] = {
 	{ "19xu.03",       0x080000, 0x05955268, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "19xu.04",       0x080000, 0x3111ab7f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "19xu.05",       0x080000, 0x38df4a63, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -849,11 +876,11 @@ static struct BurnRomInfo NinexxRomDesc[] = {
 	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
 	
-	{ "19xx.key",      0x000014, 0x77e67ba1, CPS2_ENCRYPTION_KEY },
+	{ "19xxu.key",     0x000014, 0x77e67ba1, CPS2_ENCRYPTION_KEY },
 };
 
-STD_ROM_PICK(Ninexx)
-STD_ROM_FN(Ninexx)
+STD_ROM_PICK(Ninexxu)
+STD_ROM_FN(Ninexxu)
 
 static struct BurnRomInfo NinexxaRomDesc[] = {
 	{ "09xa.03b",      0x080000, 0x2e994897, CPS2_PRG_68K | BRF_ESS | BRF_PRG },  /* Yes it's actually 09xa, that's not a typo */
@@ -8577,10 +8604,20 @@ static INT32 DrvExit()
 
 struct BurnDriver BurnDrvCps19xx = {
 	"19xx", NULL, NULL, NULL, "1995",
-	"19XX - the war against destiny (951207 USA)\0", NULL, "Capcom", "CPS2",
+	"19XX - the war against destiny (960104 Euro)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
 	NULL, NinexxRomInfo, NinexxRomName, NULL, NULL, NULL, NULL, NineXXInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvCps19xxu = {
+	"19xxu", "19xx", NULL, NULL, "1995",
+	"19XX - the war against destiny (951207 USA)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
+	NULL, NinexxuRomInfo, NinexxuRomName, NULL, NULL, NULL, NULL, NineXXInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };

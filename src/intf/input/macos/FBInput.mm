@@ -113,7 +113,7 @@ static const int keyCodeToFbk[] = {
     FBK_F5, // 60
     FBK_F6, // 61
     FBK_F7, // 62
-    FBK_F3, // 63
+    0, // 63 - kVK_F3
     FBK_F8, // 64
     FBK_F9, // 65
     0, // 66
@@ -144,6 +144,7 @@ static const int keyCodeToFbk[] = {
     0,
 };
 static unsigned char keyState[256];
+static unsigned char simKeyState[256];
 
 @implementation FBInput
 
@@ -158,6 +159,11 @@ static unsigned char keyState[256];
 }
 
 #pragma mark - Interface
+
+- (void) simReset
+{
+    simKeyState[FBK_F3] = 1;
+}
 
 - (void) keyDown:(NSEvent *) theEvent
 {
@@ -177,6 +183,19 @@ static unsigned char keyState[256];
 
 - (void) flagsChanged:(NSEvent *) theEvent
 {
+}
+
+- (BOOL) usesMouse
+{
+    if (!bDrvOkay)
+        return NO;
+
+    struct BurnInputInfo bii;
+    for (int i = 0; BurnDrvGetInputInfo(&bii, i) == 0; i++)
+        if (bii.nType == BIT_ANALOG_REL && strstr(bii.szName, "mouse") == 0)
+            return YES;
+
+    return NO;
 }
 
 @end
@@ -220,6 +239,7 @@ int MacOSinpExit()
 int MacOSinpInit()
 {
     memset(keyState, 0, sizeof(keyState));
+    memset(simKeyState, 0, sizeof(simKeyState));
     return 0;
 }
 
@@ -235,6 +255,12 @@ int MacOSinpJoyAxis(int i, int nAxis)
 
 int MacOSinpMouseAxis(int i, int nAxis)
 {
+    if (i == 0)
+        switch (nAxis) {
+            case 0: return AppDelegate.sharedInstance.input.mouseCoords.x;
+            case 1: return AppDelegate.sharedInstance.input.mouseCoords.y;
+        }
+
     return 0;
 }
 
@@ -243,8 +269,13 @@ int MacOSinpState(int nCode)
     if (nCode < 0)
         return 0;
 
-    if (nCode < 0x100)
+    if (nCode < 0x100) {
+        if (simKeyState[nCode]) {
+            simKeyState[nCode] = 0;
+            return 1;
+        }
         return keyState[nCode];
+    }
 
     if (nCode < 0x4000)
         return 0;
@@ -256,18 +287,17 @@ int MacOSinpState(int nCode)
 //
 //        // Find the joystick state in our array
 //        return JoystickState(nJoyNumber, nCode & 0xFF);
+        return 0;
     }
 
     if (nCode < 0xC000) {
-        // FIXME!!
-//        // Codes 8000-C000 = Mouse
-//        if ((nCode - 0x8000) >> 8) {                        // Only the system mouse is supported by SDL
-//            return 0;
-//        }
-//        if (ReadMouse() != 0) {                                // Error polling the mouse
-//            return 0;
-//        }
-//        return CheckMouseState(nCode & 0xFF);
+        if (((nCode - 0x8000) >> 8) == 0) {
+            switch (nCode & 0x7f) {
+                case 0: return (AppDelegate.sharedInstance.input.mouseButtonStates & FBN_LMB) != 0;
+                case 1: return (AppDelegate.sharedInstance.input.mouseButtonStates & FBN_RMB) != 0;
+                case 2: return (AppDelegate.sharedInstance.input.mouseButtonStates & FBN_MMB) != 0;
+            }
+        }
     }
 
     return 0;

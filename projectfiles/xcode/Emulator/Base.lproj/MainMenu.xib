@@ -102,18 +102,6 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Game" id="nPQ-px-Dcp">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Game" id="cgf-ex-L8x">
-                        <items>
-                            <menuItem title="Pause" keyEquivalent="p" id="Jl5-0C-ZL9">
-                                <connections>
-                                    <action selector="togglePause:" target="-1" id="s4r-F4-i9t"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
                 <menuItem title="View" id="H8h-7b-M4v">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
@@ -133,6 +121,24 @@
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>
                                     <action selector="toggleFullScreen:" target="-1" id="dU3-MA-1Rq"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Game" id="nPQ-px-Dcp">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Game" id="cgf-ex-L8x">
+                        <items>
+                            <menuItem title="Reset" keyEquivalent="r" id="JkY-XH-e2q">
+                                <connections>
+                                    <action selector="resetEmulation:" target="-1" id="jPc-9m-cTE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="HHV-Gg-f59"/>
+                            <menuItem title="Pause" keyEquivalent="p" id="Jl5-0C-ZL9">
+                                <connections>
+                                    <action selector="togglePause:" target="-1" id="s4r-F4-i9t"/>
                                 </connections>
                             </menuItem>
                         </items>

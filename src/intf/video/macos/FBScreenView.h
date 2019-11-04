@@ -14,6 +14,8 @@
 @optional
 - (void) mouseDidIdle;
 - (void) mouseStateDidChange;
+- (void) mouseDidMove:(NSPoint) point;
+- (void) mouseButtonStateDidChange:(NSEvent *) event;
 
 @end
 

@@ -1,0 +1,16 @@
+name: Code Artifact
+
+on: [push]
+
+jobs:
+  codeartifact:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 1  
+    - name: Upload code artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: fbn-code
+        path: .

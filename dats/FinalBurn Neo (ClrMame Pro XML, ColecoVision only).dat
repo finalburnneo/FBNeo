@@ -1198,6 +1198,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="mecha9" romof="coleco">
+		<description>Mecha-9 Super Game</description>
+		<year>2015</year>
+		<manufacturer>Oscar Toledo G.</manufacturer>
+		<rom name="mecha9_colecovision_sgm.rom" size="262144" crc="b405591a"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="memmanor" romof="coleco">
 		<description>Memory Manor</description>
 		<year>1984</year>

@@ -73,11 +73,12 @@ DRV		BurnDrv1945kiiio;
 DRV		BurnDrvCps19xxar1;
 DRV		BurnDrvCps19xxjr2;
 DRV		BurnDrvCps19xxd;
-DRV		BurnDrvCps19xx;
+DRV		BurnDrvCps19xxu;
 DRV		BurnDrvCps19xxb;
 DRV		BurnDrvCps19xxh;
 DRV		BurnDrvCps19xxjr1;
 DRV		BurnDrvCps19xxa;
+DRV		BurnDrvCps19xx;
 DRV		BurnDrvCps19xxj;
 DRV		BurnDrvmd_2psymmac;
 #if defined FBNEO_DEBUG
@@ -5928,6 +5929,7 @@ DRV		BurnDrvmd_mcdonaldjp;
 DRV		BurnDrvmd_mcdonaldu;
 DRV		BurnDrvcv_mecha8;
 DRV		BurnDrvMSX_mecha8;
+DRV		BurnDrvcv_mecha9;
 DRV		BurnDrvMechattj;
 DRV		BurnDrvMechattu;
 DRV		BurnDrvMechattu1;
@@ -11577,6 +11579,7 @@ DRV		BurnDrvUballoon;
 DRV		BurnDrvUtoukond;
 DRV		BurnDrvUltraxg;
 DRV		BurnDrvUltrax;
+DRV		BurnDrvmd_ultracore;
 DRV		BurnDrvUltraman;
 DRV		BurnDrvmd_ultraman;
 DRV		BurnDrvMSX_ultraman;
@@ -12350,6 +12353,7 @@ DRV		BurnDrvXsleenaj;
 DRV		BurnDrvXsleena;
 DRV		BurnDrvMSX_xanadu;
 DRV		BurnDrvmd_xdr;
+DRV		BurnDrvmd_xenocrises;
 DRV		BurnSpecxenon;
 DRV		BurnDrvMSX_xenon;
 DRV		BurnDrvmd_xenon2;
@@ -12637,11 +12641,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCps19xxar1,			// 19XX - the war against destiny (951207 Asia)
 	&BurnDrvCps19xxjr2,			// 19XX - the war against destiny (951207 Japan)
 	&BurnDrvCps19xxd,			// 19XX - the war against destiny (951207 USA Phoenix Edition)
-	&BurnDrvCps19xx,			// 19XX - the war against destiny (951207 USA)
+	&BurnDrvCps19xxu,			// 19XX - the war against destiny (951207 USA)
 	&BurnDrvCps19xxb,			// 19XX - the war against destiny (951218 Brazil)
 	&BurnDrvCps19xxh,			// 19XX - the war against destiny (951218 Hispanic)
 	&BurnDrvCps19xxjr1,			// 19XX - the war against destiny (951225 Japan)
 	&BurnDrvCps19xxa,			// 19XX - the war against destiny (960104 Asia)
+	&BurnDrvCps19xx,			// 19XX - the war against destiny (960104 Euro)
 	&BurnDrvCps19xxj,			// 19XX - the war against destiny (960104 Japan, yellow case)
 	&BurnDrvmd_2psymmac,		// 2 in 1 - Psycho Pinball & Micro Machines (Euro)
 #if defined FBNEO_DEBUG
@@ -15359,7 +15364,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDrgnbowl,			// Dragon Bowl
 	&BurnSpecdrgbreed,			// Dragon Breed (48K)
 	&BurnDrvDbreedm72j,			// Dragon Breed (Japan, M72 PCB version)
-	&BurnDrvDbreedm72,			// Dragon Breed (M72 PCB version)
+	&BurnDrvDbreedm72,			// Dragon Breed (World, M72 PCB version)
 	&BurnDrvDbreed,				// Dragon Breed (World, M81 PCB version)
 	&BurnDrvDrgnbstr,			// Dragon Buster
 	&BurnDrvsms_dcrystal,		// Dragon Crystal (Euro, Bra)
@@ -15969,8 +15974,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFightrol,			// Fighting Roller
 	&BurnDrvpce_fightrun,		// Fighting Run
 	&BurnDrvFsoccerj,			// Fighting Soccer (Japan) [no comment, NOT WORKING]
-	&BurnDrvFsoccerb,			// Fighting Soccer (Joystick hack bootleg)
-	&BurnDrvFsoccerba,			// Fighting Soccer (Joystick hack bootleg, alt)
+	&BurnDrvFsoccerb,			// Fighting Soccer (Joystick hack bootleg) [no comment, NOT WORKING]
+	&BurnDrvFsoccerba,			// Fighting Soccer (Joystick hack bootleg, alt) [no comment, NOT WORKING]
 	&BurnDrvFsoccer,			// Fighting Soccer (version 4) [no comment, NOT WORKING]
 	&BurnDrvpce_finlblst,		// Final Blaster
 	&BurnDrvFinalbj,			// Final Blow (Japan)
@@ -17226,7 +17231,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvIkki,				// Ikki (Japan)
 	&BurnDrvcv_illusion,		// Illusions
 	&BurnDrvImgfightj,			// Image Fight (Japan)
-	&BurnDrvImgfight,			// Image Fight (Japan, revision A)
+	&BurnDrvImgfight,			// Image Fight (World)
 	&BurnDrvpce_imagefgt,		// Image Fight
 	&BurnDrvImago,				// Imago (cocktail set)
 	&BurnDrvImagoa,				// Imago (no cocktail set)
@@ -18492,6 +18497,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mcdonaldu,		// McDonald's Treasure Land Adventure (USA)
 	&BurnDrvcv_mecha8,			// Mecha-8
 	&BurnDrvMSX_mecha8,			// Mecha-8
+	&BurnDrvcv_mecha9,			// Mecha-9 Super Game
 	&BurnDrvMechattj,			// Mechanized Attack (Japan)
 	&BurnDrvMechattu,			// Mechanized Attack (US)
 	&BurnDrvMechattu1,			// Mechanized Attack (US, Version 1, Single Player)
@@ -19489,7 +19495,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRyukendna,			// Ninja Ryukenden (Japan, set 2)
 	&BurnDrvpce_nryukend,		// Ninja Ryukenden
 	&BurnDrvMSX_ninjasav,		// Ninja Savior
-	&BurnDrvNspirit,			// Ninja Spirit
+	&BurnDrvNspirit,			// Ninja Spirit (World)
 	&BurnDrvtg_nspirit,			// Ninja Spirit
 	&BurnDrvNinjakd2,			// Ninja-Kid II / NinjaKun Ashura no Shou (set 1)
 	&BurnDrvNinjakd2a,			// Ninja-Kid II / NinjaKun Ashura no Shou (set 2, bootleg?)
@@ -24141,6 +24147,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvUtoukond,			// Ultra Toukon Densetsu (Japan)
 	&BurnDrvUltraxg,			// Ultra X Weapons / Ultra Keibitai (GAMEST review build)
 	&BurnDrvUltrax,				// Ultra X Weapons / Ultra Keibitai
+	&BurnDrvmd_ultracore,		// Ultracore (USA)
 	&BurnDrvUltraman,			// Ultraman (Japan)
 	&BurnDrvmd_ultraman,		// Ultraman (Jpn)
 	&BurnDrvMSX_ultraman,		// Ultraman (Jpn)
@@ -24914,6 +24921,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvXsleena,			// Xain'd Sleena (World)
 	&BurnDrvMSX_xanadu,			// Xanadu - Dragon Slayer II (Jpn)
 	&BurnDrvmd_xdr,				// XDR - X Dazedly Ray (Jpn)
+	&BurnDrvmd_xenocrises,		// Xenocrises (USA)
 	&BurnSpecxenon,				// Xenon (48K)
 	&BurnDrvMSX_xenon,			// Xenon (Spa)
 	&BurnDrvmd_xenon2,			// Xenon 2 - Megablast (Euro)

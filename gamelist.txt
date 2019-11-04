@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12281 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12285 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -73,11 +73,12 @@ This list contains all games supported by FinalBurn Neo.
 | 19xxar1	|  	| 19XX - the war against destiny (951207 Asia)		| 19xx		| 1995	| Capcom	| CPS2		| 					|
 | 19xxjr2	|  	| 19XX - the war against destiny (951207 Japan)		| 19xx		| 1995	| Capcom	| CPS2		| 					|
 | 19xxd		|  	| 19XX - the war against destiny (951207 USA Phoenix Edi| 19xx		| 1995	| bootleg	| CPS2		| 					|
-| 19xx		|  	| 19XX - the war against destiny (951207 USA)		| 		| 1995	| Capcom	| CPS2		| 					|
+| 19xxu		|  	| 19XX - the war against destiny (951207 USA)		| 19xx		| 1995	| Capcom	| CPS2		| 					|
 | 19xxb		|  	| 19XX - the war against destiny (951218 Brazil)	| 19xx		| 1995	| Capcom	| CPS2		| 					|
 | 19xxh		|  	| 19XX - the war against destiny (951218 Hispanic)	| 19xx		| 1995	| Capcom	| CPS2		| 					|
 | 19xxjr1	|  	| 19XX - the war against destiny (951225 Japan)		| 19xx		| 1995	| Capcom	| CPS2		| 					|
 | 19xxa		|  	| 19XX - the war against destiny (960104 Asia)		| 19xx		| 1995	| Capcom	| CPS2		| 					|
+| 19xx		|  	| 19XX - the war against destiny (960104 Euro)		| 		| 1995	| Capcom	| CPS2		| 					|
 | 19xxj		|  	| 19XX - the war against destiny (960104 Japan, yellow c| 19xx		| 1996	| Capcom	| CPS2		| 					|
 | md_2psymmac	|  	| 2 in 1 - Psycho Pinball & Micro Machines (Euro)	| 		| 1993	| Codemasters	| Sega Megadrive| 					|
 | openice	| D NW	| 2 On 2 Open Ice Challenge (rev 1.21)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
@@ -299,8 +300,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_alien8h	|  	| Alien 8 (Jpn, Hacked?)				| msx_alien8	| 1985	| A.C.G.	| MSX		| 					|
 | alienaru	|  	| Alien Arena (Stargate upgrade)			| alienar	| 1985	| Duncan Brown	| 6809 System	| 					|
 | alienar	|  	| Alien Arena						| 		| 1985	| Duncan Brown	| 6809 System	| Game has no sound			|
-| alienchac	|  	| Alien Challenge (China)				| aliencha	| 1994	| IGS		| Miscellaneous	| Imperfect sound			|
-| aliencha	|  	| Alien Challenge (World)				| 		| 1994	| IGS		| Miscellaneous	| Imperfect sound			|
+| alienchac	|  	| Alien Challenge (China)				| aliencha	| 1994	| IGS		| Miscellaneous	| 					|
+| aliencha	|  	| Alien Challenge (World)				| 		| 1994	| IGS		| Miscellaneous	| 					|
 | pce_acrush	|  	| Alien Crush						| 		| 1988	| Naxat		| PC Engine	| 					|
 | tg_acrush	|  	| Alien Crush						| 		| 1989	| NEC		| TurboGrafx 16	| 					|
 | alinvade	|  	| Alien Invaders					| 		| 198?	| Forbes?	| Miscellaneous	| preliminary sound			|
@@ -2733,7 +2734,7 @@ This list contains all games supported by FinalBurn Neo.
 | drgnbowl	|  	| Dragon Bowl						| 		| 1992	| Nics		| Miscellaneous	| 					|
 | spec_drgbreed	|  	| Dragon Breed (48K)					| 		| 1989	| Activision	| ZX Spectrum	| 					|
 | dbreedm72j	|  	| Dragon Breed (Japan, M72 PCB version)			| dbreed	| 1989	| Irem		| Irem M72	| 					|
-| dbreedm72	|  	| Dragon Breed (M72 PCB version)			| dbreed	| 1989	| Irem		| Irem M72	| 					|
+| dbreedm72	|  	| Dragon Breed (World, M72 PCB version)			| dbreed	| 1989	| Irem		| Irem M72	| 					|
 | dbreed	|  	| Dragon Breed (World, M81 PCB version)			| 		| 1989	| Irem		| Irem M81	| 					|
 | drgnbstr	|  	| Dragon Buster						| 		| 1984	| Namco		| Miscellaneous	| Missing sounds			|
 | sms_dcrystal	|  	| Dragon Crystal (Euro, Bra)				| 		| 1991	| Sega		| Sega Master Sy| 					|
@@ -3329,8 +3330,8 @@ This list contains all games supported by FinalBurn Neo.
 | fightrol	|  	| Fighting Roller					| 		| 1983	| Kaneko (Taito | Miscellaneous	| 					|
 | pce_fightrun	|  	| Fighting Run						| 		| 1991	| Nihon Bussan	| PC Engine	| 					|
 | fsoccerj	|   NW	| Fighting Soccer (Japan)				| fsoccer	| 1988	| SNK		| Miscellaneous	| 					|
-| fsoccerb	|  	| Fighting Soccer (Joystick hack bootleg)		| fsoccer	| 1988	| bootleg	| Miscellaneous	| 					|
-| fsoccerba	|  	| Fighting Soccer (Joystick hack bootleg, alt)		| fsoccer	| 1988	| bootleg	| Miscellaneous	| 					|
+| fsoccerb	|   NW	| Fighting Soccer (Joystick hack bootleg)		| fsoccer	| 1988	| bootleg	| Miscellaneous	| 					|
+| fsoccerba	|   NW	| Fighting Soccer (Joystick hack bootleg, alt)		| fsoccer	| 1988	| bootleg	| Miscellaneous	| 					|
 | fsoccer	|   NW	| Fighting Soccer (version 4)				| 		| 1988	| SNK		| Miscellaneous	| 					|
 | pce_finlblst	|  	| Final Blaster						| 		| 1990	| Namcot	| PC Engine	| 					|
 | finalbj	|  	| Final Blow (Japan)					| finalb	| 1988	| Taito Corporat| Taito F2	| 					|
@@ -4562,7 +4563,7 @@ This list contains all games supported by FinalBurn Neo.
 | ikki		|  	| Ikki (Japan)						| 		| 1985	| Sun Electronic| Miscellaneous	| 					|
 | cv_illusion	|  	| Illusions						| 		| 1984	| Coleco	| ColecoVision	| 					|
 | imgfightj	|  	| Image Fight (Japan)					| imgfight	| 1988	| Irem		| Irem M72	| 					|
-| imgfight	|  	| Image Fight (Japan, revision A)			| 		| 1988	| Irem		| Irem M72	| 					|
+| imgfight	|  	| Image Fight (World)					| 		| 1988	| Irem		| Irem M72	| 					|
 | pce_imagefgt	|  	| Image Fight						| 		| 1990	| Irem		| PC Engine	| 					|
 | imago		|  	| Imago (cocktail set)					| 		| 1984	| Acom		| Miscellaneous	| 					|
 | imagoa	|  	| Imago (no cocktail set)				| imago		| 1983	| Acom		| Miscellaneous	| 					|
@@ -5456,7 +5457,7 @@ This list contains all games supported by FinalBurn Neo.
 | looper	|  	| Looper						| changes	| 1982	| Orca		| Miscellaneous	| 					|
 | cv_looping	|  	| Looping						| 		| 1983	| Coleco	| ColecoVision	| 					|
 | md_lordmon	|  	| Lord Monarch - Tokoton Sentou Densetsu (Jpn)		| 		| 1994	| Sega		| Sega Megadrive| 					|
-| lordgun	|  	| Lord of Gun (USA)					| 		| 1994	| IGS		| Miscellaneous	| Imperfect graphics and sound		|
+| lordgun	|  	| Lord of Gun (USA)					| 		| 1994	| IGS		| Miscellaneous	| 					|
 | sms_lordswrdj	|  	| Lord of Sword (Jpn)					| sms_lordswrd	| 1988	| Sega		| Sega Master Sy| 					|
 | md_lotr	|  	| Lord of the Rings (Rus, Hack of Stormlord)		| md_strmlord	| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_lotrgs	|  	| Lord of the Rings - The Return of the King (Rus)	| 		| 199?	| Glorysun	| Sega Megadrive| 					|
@@ -5798,6 +5799,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_mcdonaldu	|  	| McDonald's Treasure Land Adventure (USA)		| md_mcdonald	| 1993	| Sega		| Sega Megadrive| 					|
 | cv_mecha8	|  	| Mecha-8						| 		| 2013	| Oscar Toledo G| ColecoVision	| 					|
 | msx_mecha8	|  	| Mecha-8						| 		| 2011	| Oscar Toledo G| MSX		| 					|
+| cv_mecha9	|  	| Mecha-9 Super Game					| 		| 2015	| Oscar Toledo G| ColecoVision	| 					|
 | mechattj	|  	| Mechanized Attack (Japan)				| mechatt	| 1989	| SNK		| Miscellaneous	| 					|
 | mechattu	|  	| Mechanized Attack (US)				| mechatt	| 1989	| SNK		| Miscellaneous	| 					|
 | mechattu1	|  	| Mechanized Attack (US, Version 1, Single Player)	| mechatt	| 1989	| SNK		| Miscellaneous	| 					|
@@ -6771,7 +6773,7 @@ This list contains all games supported by FinalBurn Neo.
 | ryukendna	|  	| Ninja Ryukenden (Japan, set 2)			| shadoww	| 1989	| Tecmo		| Miscellaneous	| 					|
 | pce_nryukend	|  	| Ninja Ryukenden					| 		| 1992	| Hudson	| PC Engine	| 					|
 | msx_ninjasav	|  	| Ninja Savior						| 		| 2015	| RELEVO	| MSX		| 					|
-| nspirit	|  	| Ninja Spirit						| 		| 1988	| Irem		| Irem M72	| 					|
+| nspirit	|  	| Ninja Spirit (World)					| 		| 1988	| Irem		| Irem M72	| 					|
 | tg_nspirit	|  	| Ninja Spirit						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | ninjakd2	|  	| Ninja-Kid II / NinjaKun Ashura no Shou (set 1)	| 		| 1987	| UPL		| Miscellaneous	| 					|
 | ninjakd2a	|  	| Ninja-Kid II / NinjaKun Ashura no Shou (set 2, bootleg| ninjakd2	| 1987	| UPL		| Miscellaneous	| 					|
@@ -11333,6 +11335,7 @@ This list contains all games supported by FinalBurn Neo.
 | utoukond	|  	| Ultra Toukon Densetsu (Japan)				| 		| 1993	| Banpresto / Ts| Seta		| 					|
 | ultraxg	|  	| Ultra X Weapons / Ultra Keibitai (GAMEST review build)| ultrax	| 1995	| Banpresto / Ts| SSV		| 					|
 | ultrax	|  	| Ultra X Weapons / Ultra Keibitai			| 		| 1995	| Banpresto / Ts| SSV		| 					|
+| md_ultracore	|  	| Ultracore (USA)					| 		| 2019	| Digital Illusi| Sega Megadrive| 					|
 | ultraman	|  	| Ultraman (Japan)					| 		| 1991	| Banpresto / Ba| GX910		| 					|
 | md_ultraman	|  	| Ultraman (Jpn)					| 		| 1993	| Ma-Ba		| Sega Megadrive| 					|
 | msx_ultraman	|  	| Ultraman (Jpn)					| 		| 1984	| Bandai	| MSX		| 					|
@@ -12080,6 +12083,7 @@ This list contains all games supported by FinalBurn Neo.
 | xsleena	|  	| Xain'd Sleena (World)					| 		| 1986	| Technos Japan | Miscellaneous	| 					|
 | msx_xanadu	|  	| Xanadu - Dragon Slayer II (Jpn)			| 		| 1987	| Nihon Falcom	| MSX		| 					|
 | md_xdr	|  	| XDR - X Dazedly Ray (Jpn)				| 		| 1990	| Unipac	| Sega Megadrive| 					|
+| md_xenocrises	|  	| Xenocrises (USA)					| 		| 2019	| Bitmap Bureau	| Sega Megadrive| 					|
 | spec_xenon	|  	| Xenon (48K)						| 		| 1988	| Melbourne Hous| ZX Spectrum	| 					|
 | msx_xenon	|  	| Xenon (Spa)						| 		| 1988	| Dro Soft	| MSX		| 					|
 | md_xenon2	|  	| Xenon 2 - Megablast (Euro)				| 		| 1992	| Virgin Games	| Sega Megadrive| 					|

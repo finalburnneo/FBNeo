@@ -14811,6 +14811,13 @@
 		<rom name="world soccer (prototype).bin" size="1048576" crc="9d451f72"/>
 		<driver status="good"/>
 	</game>
+	<game name="ultracore">
+		<description>Ultracore (USA)</description>
+		<year>2019</year>
+		<manufacturer>Digital Illusions</manufacturer>
+		<rom name="Ultracore.bin" size="2097152" crc="ae7fda5a"/>
+		<driver status="good"/>
+	</game>
 	<game name="ultraman">
 		<description>Ultraman (Jpn)</description>
 		<year>1993</year>
@@ -16377,6 +16384,13 @@
 		<year>1990</year>
 		<manufacturer>Unipac</manufacturer>
 		<rom name="xdr - x dazedly ray (jpn).bin" size="524288" crc="ab22d002"/>
+		<driver status="good"/>
+	</game>
+	<game name="xenocrises">
+		<description>Xenocrises (USA)</description>
+		<year>2019</year>
+		<manufacturer>Bitmap Bureau</manufacturer>
+		<rom name="Xenocrises.bin" size="4194304" crc="ac5f4cca"/>
 		<driver status="good"/>
 	</game>
 	<game name="xenon2">

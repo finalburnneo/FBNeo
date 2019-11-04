@@ -465,7 +465,7 @@ void evaluate_neogeo_bios_mode(const char* drvname)
 	// search the BIOS dipswitch
 	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
 	{
-		if (strcasecmp(dipswitch_core_options[dip_idx].friendly_name, "BIOS") == 0)
+		if (dipswitch_core_options[dip_idx].friendly_name.compare("BIOS") == 0)
 		{
 			is_bios_dipswitch_found = true;
 			if (dipswitch_core_options[dip_idx].values.size() > 0)
@@ -571,17 +571,17 @@ void set_environment()
 	for (int dip_idx = 0; dip_idx < nbr_dips; dip_idx++)
 	{
 		// Filter out the BIOS dipswitch if present while the game needs specific bios
-		if (!is_neogeo_game || allow_neogeo_mode || strcasecmp(dipswitch_core_options[dip_idx].friendly_name, "BIOS") != 0)
+		if (!is_neogeo_game || allow_neogeo_mode || dipswitch_core_options[dip_idx].friendly_name.compare("BIOS") != 0)
 		{
-			vars[idx_var].key = dipswitch_core_options[dip_idx].option_name;
-			vars[idx_var].desc = dipswitch_core_options[dip_idx].friendly_name;
+			vars[idx_var].key = dipswitch_core_options[dip_idx].option_name.c_str();
+			vars[idx_var].desc = dipswitch_core_options[dip_idx].friendly_name.c_str();
 			vars[idx_var].info = "Dipswitch setting, setting is specific to the running romset";
 			for (int dip_value_idx = 0; dip_value_idx < dipswitch_core_options[dip_idx].values.size(); dip_value_idx++)
 			{
-				vars[idx_var].values[dip_value_idx].value = dipswitch_core_options[dip_idx].values[dip_value_idx].friendly_name;
+				vars[idx_var].values[dip_value_idx].value = dipswitch_core_options[dip_idx].values[dip_value_idx].friendly_name.c_str();
 			}
 			vars[idx_var].values[dipswitch_core_options[dip_idx].values.size()].value = NULL;
-			vars[idx_var].default_value = dipswitch_core_options[dip_idx].default_value;
+			vars[idx_var].default_value = dipswitch_core_options[dip_idx].default_value.c_str();
 			idx_var++;
 		}
 	}

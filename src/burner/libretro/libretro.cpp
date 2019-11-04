@@ -245,33 +245,33 @@ static int InpDIPSWInit()
 			dipswitch_core_option *dip_option = &dipswitch_core_options.back();
 
 			// Clean the dipswitch name to creation the core option name (removing space and equal characters)
-			char option_name[100];
+			std::string option_name;
 
 			// Some dipswitch has no name...
 			if (bdi.szText)
 			{
-				strcpy(option_name, bdi.szText);
+				option_name = bdi.szText;
 			}
 			else // ... so, to not hang, we will generate a name based on the position of the dip (DIPSWITCH 1, DIPSWITCH 2...)
 			{
-				sprintf(option_name, "DIPSWITCH %d", (int)dipswitch_core_options.size());
-				log_cb(RETRO_LOG_WARN, "Error in %sDIPList : The DIPSWITCH '%d' has no name. '%s' name has been generated\n", drvname, dipswitch_core_options.size(), option_name);
+				option_name = SSTR( "DIPSWITCH " << dipswitch_core_options.size() );
+				log_cb(RETRO_LOG_WARN, "Error in %sDIPList : The DIPSWITCH '%d' has no name. '%s' name has been generated\n", drvname, dipswitch_core_options.size(), option_name.c_str());
 			}
 
-			strncpy(dip_option->friendly_name, option_name, sizeof(dip_option->friendly_name));
+			dip_option->friendly_name = option_name;
 
-			str_char_replace(option_name, ' ', '_');
-			str_char_replace(option_name, '=', '_');
+			std::replace( option_name.begin(), option_name.end(), ' ', '_');
+			std::replace( option_name.begin(), option_name.end(), '=', '_');
 
-			snprintf(dip_option->option_name, sizeof(dip_option->option_name), "fbneo-dipswitch-%s-%s", drvname, option_name);
+			dip_option->option_name = SSTR( "fbneo-dipswitch-" << drvname << "-" << option_name.c_str() );
 
 			// Search for duplicate name, and add number to make them unique in the core-options file
 			for (int dup_idx = 0, dup_nbr = 1; dup_idx < dipswitch_core_options.size() - 1; dup_idx++) // - 1 to exclude the current one
 			{
-				if (strcmp(dip_option->option_name, dipswitch_core_options[dup_idx].option_name) == 0)
+				if (dip_option->option_name.compare(dipswitch_core_options[dup_idx].option_name) == 0)
 				{
 					dup_nbr++;
-					snprintf(dip_option->option_name, sizeof(dip_option->option_name), "fbneo-dipswitch-%s-%s_%d", drvname, option_name, dup_nbr);
+					dip_option->option_name = SSTR( "fbneo-dipswitch-" << drvname << "-" << option_name.c_str() << "_" << dup_nbr );
 				}
 			}
 
@@ -315,13 +315,13 @@ static int InpDIPSWInit()
 
 				BurnDrvGetDIPInfo(&(dip_value->bdi), k + i + 1);
 				dip_value->pgi = pgi_value;
-				strncpy(dip_value->friendly_name, dip_value->bdi.szText, sizeof(dip_value->friendly_name));
+				dip_value->friendly_name = dip_value->bdi.szText;
 
 				bool is_default_value = (dip_value->pgi->Input.Constant.nConst & dip_value->bdi.nMask) == (dip_value->bdi.nSetting);
 
 				if (is_default_value)
 				{
-					snprintf(dip_option->default_value, sizeof(dip_option->default_value), "%s", dip_value->bdi.szText);
+					dip_option->default_value = dip_value->bdi.szText;
 				}
 
 				values_count++;
@@ -366,10 +366,10 @@ static bool apply_dipswitch_from_variables()
 		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
 
 		// Games which needs a specific bios don't handle alternative bioses very well
-		if (is_neogeo_game && !allow_neogeo_mode && strcasecmp(dip_option->friendly_name, "BIOS") == 0)
+		if (is_neogeo_game && !allow_neogeo_mode && dip_option->friendly_name.compare("BIOS") == 0)
 			continue;
 
-		var.key = dip_option->option_name;
+		var.key = dip_option->option_name.c_str();
 		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false)
 			continue;
 
@@ -377,7 +377,7 @@ static bool apply_dipswitch_from_variables()
 		{
 			dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
 
-			if (strcasecmp(var.value, dip_value->friendly_name) != 0)
+			if (dip_value->friendly_name.compare(var.value) != 0)
 				continue;
 
 			int old_nConst = dip_value->pgi->Input.Constant.nConst;

@@ -2,8 +2,12 @@
 #define __RETRO_COMMON__
 
 #include <string>
+#include <sstream>
+#include <algorithm>
 #include <vector>
 #include "burner.h"
+
+#define SSTR( x ) static_cast< std::ostringstream & >(( std::ostringstream() << std::dec << x ) ).str()
 
 #define RETRO_GAME_TYPE_CV		1
 #define RETRO_GAME_TYPE_GG		2
@@ -60,14 +64,14 @@ struct dipswitch_core_option_value
 {
 	struct GameInp *pgi;
 	BurnDIPInfo bdi;
-	char friendly_name[100];
+	std::string friendly_name;
 };
 
 struct dipswitch_core_option
 {
-	char option_name[100];
-	char friendly_name[100];
-	char default_value[100];
+	std::string option_name;
+	std::string friendly_name;
+	std::string default_value;
 	std::vector<dipswitch_core_option_value> values;
 };
 

@@ -285,13 +285,13 @@ static int InpDIPSWInit()
 				BurnDIPInfo bdi_value;
 				if (BurnDrvGetDIPInfo(&bdi_value, k + i + 1) != 0)
 				{
-					log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': End of the struct was reached too early\n", drvname, dip_option->friendly_name);
+					log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': End of the struct was reached too early\n", drvname, dip_option->friendly_name.c_str());
 					break;
 				}
 
 				if (bdi_value.nFlags == 0xFE || bdi_value.nFlags == 0xFD)
 				{
-					log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': Start of next DIPSWITCH is too early\n", drvname, dip_option->friendly_name);
+					log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': Start of next DIPSWITCH is too early\n", drvname, dip_option->friendly_name.c_str());
 					break;
 				}
 
@@ -307,7 +307,7 @@ static int InpDIPSWInit()
 				// Filter away NULL entries
 				if (bdi_value.nFlags == 0)
 				{
-					log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': the line '%d' is useless\n", drvname, dip_option->friendly_name, k + 1);
+					log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': the line '%d' is useless\n", drvname, dip_option->friendly_name.c_str(), k + 1);
 					continue;
 				}
 
@@ -331,7 +331,7 @@ static int InpDIPSWInit()
 			{
 				// Truncate the list at the values_count found to not have empty values
 				dip_option->values.resize(values_count); // +1 for default value
-				log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': '%d' values were intended and only '%d' were found\n", drvname, dip_option->friendly_name, bdi.nSetting, values_count);
+				log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': '%d' values were intended and only '%d' were found\n", drvname, dip_option->friendly_name.c_str(), bdi.nSetting, values_count);
 			}
 
 			// Skip the unusable option by removing it from the list
@@ -391,7 +391,7 @@ static bool apply_dipswitch_from_variables()
 			{
 #if 0
 				log_cb(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - No change - '%s' '%s' [0x%02x]\n",
-				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name, dip_value->friendly_name, dip_value->bdi.nSetting);
+				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
 #endif
 			}
 			else
@@ -399,7 +399,7 @@ static bool apply_dipswitch_from_variables()
 				dip_changed = true;
 #if 0
 				log_cb(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - Changed   - '%s' '%s' [0x%02x]\n",
-				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name, dip_value->friendly_name, dip_value->bdi.nSetting);
+				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
 #endif
 			}
 		}

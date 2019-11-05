@@ -14815,7 +14815,7 @@
 		<description>Ultracore (USA)</description>
 		<year>2019</year>
 		<manufacturer>Digital Illusions</manufacturer>
-		<rom name="Ultracore.bin" size="2097152" crc="ae7fda5a"/>
+		<rom name="Ultracore.bin" size="2097152" crc="97ed4b2a"/>
 		<driver status="good"/>
 	</game>
 	<game name="ultraman">

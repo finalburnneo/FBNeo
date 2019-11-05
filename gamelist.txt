@@ -3033,7 +3033,7 @@ This list contains all games supported by FinalBurn Neo.
 | enforcej	|  	| Enforce (Japan)					| enforce	| 1988	| Taito Corporat| Taito Z	| 					|
 | enforceja	|  	| Enforce (Japan, Analog Controls)			| enforce	| 1988	| Taito Corporat| Taito Z	| 					|
 | enforce	|  	| Enforce (World)					| 		| 1988	| Taito Corporat| Taito Z	| 					|
-| enmadaio	| D	| Enma Daio (Japan)					| 		| 1993	| Toaplan / Tait| Toaplan GP9001| 					|
+| enmadaio	|  	| Enma Daio (Japan)					| 		| 1993	| Toaplan / Tait| Toaplan GP9001| Game unplayable.			|
 | gg_ernieeg	|  	| Ernie Els Golf (Euro)					| 		| 1994	| Codemasters	| Sega Game Gear| 					|
 | md_tazmars	|  	| Escape from Mars Starring Taz (Euro)			| 		| 1994	| Sega		| Sega Megadrive| 					|
 | md_tazmarsp11	|  	| Escape from Mars Starring Taz (Prototype, 19940309)	| md_tazmars	| 1994	| Sega		| Sega Megadrive| 					|

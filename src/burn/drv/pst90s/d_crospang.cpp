@@ -41,6 +41,7 @@ static UINT16 *bg_scroll_y;
 static UINT8 DrvRecalc;
 
 static INT32 bestri = 0;
+static INT32 bestria = 0;
 static INT32 pitapat = 0;
 
 static struct BurnInputInfo CrospangInputList[] = {
@@ -208,30 +209,7 @@ static void __fastcall crospang_write_byte(UINT32 address, UINT8 data)
 
 static void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 {
-	if (bestri == 0) {
-		switch (address)
-		{
-			case 0x100002:
-				*fg_scroll_y = (data + 8) & 0x1ff;
-			return;
-
-			case 0x100004:
-				*bg_scroll_x = (data + 4) & 0x1ff;
-			return;
-
-			case 0x100006:
-				*bg_scroll_y = (data + 8) & 0x1ff;
-			return;
-
-			case 0x100008:
-				*fg_scroll_x = (data + 0) & 0x1ff;
-			return;
-
-			case 0x270000:
-				*soundlatch = data & 0xff;
-			return;
-		}
-	} else {
+	if (bestri == 1) {
 		switch (address)
 		{
 			case 0x100004:
@@ -248,6 +226,52 @@ static void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 
 			case 0x10000c:
 				*bg_scroll_x = ((data ^ 0x0000) - 60) & 0x1ff;
+			return;
+
+			case 0x270000:
+				*soundlatch = data & 0xff;
+			return;
+		}
+	} else if (bestria == 1) {
+		switch (address)
+		{
+			case 0x100006:
+				*fg_scroll_x = ((data ^ 0x0000) + 32) & 0x1ff;
+			return;
+
+			case 0x100008:
+				*fg_scroll_y = ((data ^ 0xff54) +  7) & 0x1ff;
+			return;
+
+			case 0x10000a:
+				*bg_scroll_x = ((data ^ 0x0000) - 60) & 0x1ff;
+			return;
+
+			case 0x10000c:
+				*bg_scroll_y = ((data ^ 0xfeaa) +  7) & 0x1ff;
+			return;
+
+			case 0x270000:
+				*soundlatch = data & 0xff;
+			return;
+		}
+	} else {
+		switch (address)
+		{
+			case 0x100002:
+				*fg_scroll_y = (data + 8) & 0x1ff;
+			return;
+
+			case 0x100004:
+				*bg_scroll_x = (data + 4) & 0x1ff;
+			return;
+
+			case 0x100006:
+				*bg_scroll_y = (data + 8) & 0x1ff;
+			return;
+
+			case 0x100008:
+				*fg_scroll_x = (data + 0) & 0x1ff;
 			return;
 
 			case 0x270000:
@@ -507,6 +531,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 	SekMapMemory(DrvSprRAM,		0x210000, 0x2107ff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,		0x320000, 0x32ffff, MAP_RAM); // crospang, heuksun
 	SekMapMemory(Drv68KRAM,		0x3a0000, 0x3affff, MAP_RAM); // bestri
+	SekMapMemory(Drv68KRAM,		0x340000, 0x34ffff, MAP_RAM); // bestria
 	SekMapMemory(Drv68KRAM,		0x300000, 0x30ffff, MAP_RAM); // pitapat
 	SekSetWriteByteHandler(0,	crospang_write_byte);
 	SekSetWriteWordHandler(0,	crospang_write_word);
@@ -550,6 +575,7 @@ static INT32 DrvExit()
 	MSM6295ROM = NULL;
 
 	bestri = 0;
+	bestria = 0;
 	pitapat = 0;
 
 	return 0;
@@ -805,7 +831,7 @@ struct BurnDriver BurnDrvHeuksun = {
 };
 
 
-// Bestri (Korea)
+// Bestri (Korea, set 1)
 
 static struct BurnRomInfo bestriRomDesc[] = {
 	{ "ua02.i3",	0x80000, 0x9e94023d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -838,11 +864,53 @@ static INT32 bestriInit()
 
 struct BurnDriver BurnDrvBestri = {
 	"bestri", NULL, NULL, NULL, "1998",
-	"Bestri (Korea)\0", NULL, "F2 System", "Miscellaneous",
-	L"Bestri\0\uBCA0\uC2A4\uD2B8\uB77C\uC774 (Korea)\0", NULL, NULL, NULL,
+	"Bestri (Korea, set 1)\0", NULL, "F2 System", "Miscellaneous",
+	L"Bestri\0\uBCA0\uC2A4\uD2B8\uB77C\uC774 (Korea, set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, bestriRomInfo, bestriRomName, NULL, NULL, NULL, NULL, CrospangInputInfo, BestriDIPInfo,
 	bestriInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	320, 240, 4, 3
+};
+
+
+// Bestri (Korea, set 2)
+
+static struct BurnRomInfo bestriaRomDesc[] = {
+	{ "o_ua02.i3",	0x80000, 0x035c86f6, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "e_ua03.i5",	0x80000, 0x7c53d9f8, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "us02.p3",	0x10000, 0xc7cc05fa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "us08.q7",	0x40000, 0x85d8f3de, 3 | BRF_SND },           //  3 Oki Samples
+
+	{ "2_uc08.m12",	0x80000, 0x23778472, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "0_uc07.p12",	0x80000, 0x7aad194c, 4 | BRF_GRA },           //  5
+	{ "3_uc29.k12",	0x80000, 0x2f5b244f, 4 | BRF_GRA },           //  6
+	{ "1_uc28.n12",	0x80000, 0x4f737007, 4 | BRF_GRA },           //  7
+
+	{ "a_ud14.j12",	0x80000, 0x3502f71b, 5 | BRF_GRA },           //  8 Sprites
+	{ "b_ud15.h12",	0x80000, 0x2636b837, 5 | BRF_GRA },           //  9
+	{ "c_ud16.g12",	0x80000, 0x68b0ff81, 5 | BRF_GRA },           // 10
+	{ "d_ud17.e12",	0x80000, 0x60082aed, 5 | BRF_GRA },           // 11
+};
+
+STD_ROM_PICK(bestria)
+STD_ROM_FN(bestria)
+
+static INT32 bestriaInit()
+{
+	bestria = 1;
+
+	return DrvInit(bestriLoadRoms);
+}
+
+struct BurnDriver BurnDrvBestria = {
+	"bestria", "bestri", NULL, NULL, "1998",
+	"Bestri (Korea, set 2)\0", NULL, "F2 System", "Miscellaneous",
+	L"Bestri\0\uBCA0\uC2A4\uD2B8\uB77C\uC774 (Korea, set 2)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	NULL, bestriaRomInfo, bestriaRomName, NULL, NULL, NULL, NULL, CrospangInputInfo, BestriDIPInfo,
+	bestriaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };
 

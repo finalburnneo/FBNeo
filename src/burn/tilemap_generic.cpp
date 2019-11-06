@@ -1,6 +1,7 @@
 #include "tiles_generic.h"
 
 #define MAX_TILEMAPS	32	// number of tile maps allowed
+#define MAX_GFXNUM
 
 struct GenericTilemap {
 	UINT8 initialized;
@@ -25,6 +26,7 @@ struct GenericTilemap {
 	INT32 transcolor;
 	UINT8 *dirty_tiles;			// 1 skip, 0 draw
 	INT32 dirty_tiles_enable;
+	UINT8 *skip_tiles[MAX_GFX];
 };
 
 static GenericTilemap maps[MAX_TILEMAPS];
@@ -94,6 +96,10 @@ void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void 
 
 	cur_map->dirty_tiles = NULL; // disable by default
 	cur_map->dirty_tiles_enable = 0; // disable by default
+
+	for (INT32 i = 0; i < MAX_GFX; i++) {
+		cur_map->skip_tiles[i] = NULL; // disable by default
+	}
 }
 
 void GenericTilemapSetGfx(INT32 num, UINT8 *gfxbase, INT32 depth, INT32 tile_width, INT32 tile_height, INT32 gfxlen, UINT32 color_offset, UINT32 color_mask)
@@ -152,6 +158,12 @@ void GenericTilemapExit()
 		if (cur_map->scrollx_table) BurnFree(cur_map->scrollx_table);
 		if (cur_map->transparent[0]) BurnFree(cur_map->transparent[0]);
 		if (cur_map->dirty_tiles) BurnFree(cur_map->dirty_tiles);
+
+		for (INT32 j = 0; j < MAX_GFX; j++) {
+			if (cur_map->skip_tiles[j]) {
+				BurnFree(cur_map->skip_tiles[j]);
+			}
+		}
 	}
 
 	// wipe everything else out
@@ -230,6 +242,70 @@ void GenericTilemapSetTransparent(INT32 which, UINT32 transparent)
 
 	cur_map->transcolor = transparent;	// pass this to generic tile drawing
 	cur_map->flags |= TMAP_TRANSPARENT;
+}
+
+void GenericTilemapBuildSkipTable(INT32 which, INT32 gfxnum, INT32 transparent)
+{
+#if defined FBNEO_DEBUG
+	if (which < 0 || which >= MAX_TILEMAPS) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapBuildSkipTable(%d, %d, 0x%x); called with impossible tilemap number!\n"), which, gfxnum, transparent);
+		return;
+	}
+
+	if (gfxnum >= MAX_GFX) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapBuildSkipTable(%d, %d, 0x%x); called with impossible gfxnum number (max is %d!)\n"), which, gfxnum, transparent, MAX_GFX);
+		return;
+	}
+#endif
+
+	cur_map = &maps[which];
+
+#if defined FBNEO_DEBUG
+	if (cur_map->initialized == 0) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapBuildSkipTable(%d, %d, 0x%x); called without initialized tilemap!\n"), which, gfxnum, transparent);
+		return;
+	}
+#endif
+
+	GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
+
+#if defined FBNEO_DEBUG
+	if (gfx->gfxbase == NULL) {
+		bprintf (PRINT_ERROR,_T("GenericTilemapBuildSkipTable(%d, %d, 0x%x); gfx[%d] not initialized!\n"), which, gfxnum, transparent, gfxnum);
+		return;
+	}
+
+	INT32 maxtrans = (1 << gfx->depth) - 1;
+
+	if (maxtrans < transparent) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapBuildSkipTable(%d, %d, 0x%x); called with invalid transparent color (max is %x)!\n"), which, gfxnum, transparent, maxtrans);
+		return;
+	}
+#endif
+
+	INT32 one_tile = gfx->width * gfx->height;
+
+	if (cur_map->skip_tiles[gfxnum] == NULL) {
+		cur_map->skip_tiles[gfxnum] = (UINT8*)BurnMalloc(gfx->gfx_len / one_tile);
+	}
+
+	UINT8 *gfxptr = gfx->gfxbase;
+
+	for (UINT32 i = 0; i < gfx->gfx_len / one_tile; i++)
+	{
+		cur_map->skip_tiles[gfxnum][i] = 1; // skip
+
+		for (INT32 j = 0; j < one_tile; j++)
+		{
+			if (gfxptr[j] != transparent)
+			{
+				cur_map->skip_tiles[gfxnum][i] = 0;
+				break;
+			}
+		}
+		
+		gfxptr += one_tile;
+	}
 }
 
 void GenericTilemapSetTransSplit(INT32 which, INT32 category, UINT16 layer0, UINT16 layer1)
@@ -817,8 +893,29 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
+				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
+
+#if defined FBNEO_DEBUG
+				if (gfx->gfxbase == NULL) {
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					continue;
+				}
+
+				if (((UINT32)gfx->width != cur_map->twidth) || ((UINT32)gfx->height != cur_map->theight))
+				{
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, gfxnum, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
+					continue;
+				}
+#endif
+
+				code %= gfx->code_mask;
+
 				if (opaque == 0)
 				{
+					if (cur_map->skip_tiles[gfxnum] && (cur_map->flags & TMAP_TRANSPARENT))	// skip this tile
+						if (cur_map->skip_tiles[gfxnum][code])
+							continue; 
+
 					if (flags & TILE_SKIP) continue; // skip this tile
 
 					if (flags & TILE_GROUP_ENABLE) {
@@ -830,15 +927,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
-				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
-
-				if (gfx->gfxbase == NULL) {
-					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
-					continue;
-				}
-
 				color = ((color & gfx->color_mask) << gfx->depth) + gfx->color_offset;
-				code %= gfx->code_mask;
 
 				INT32 flipx = flags & TILE_FLIPX; 
 				INT32 flipy = flags & TILE_FLIPY;
@@ -915,8 +1004,29 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
+				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
+
+#if defined FBNEO_DEBUG
+				if (gfx->gfxbase == NULL) {
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					continue;
+				}
+
+				if (((UINT32)gfx->width != cur_map->twidth) || ((UINT32)gfx->height != cur_map->theight))
+				{
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, gfxnum, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
+					continue;
+				}
+#endif
+
+				code %= gfx->code_mask;
+
 				if (opaque == 0)
 				{
+					if (cur_map->skip_tiles[gfxnum] && (cur_map->flags & TMAP_TRANSPARENT))	// skip this tile
+						if (cur_map->skip_tiles[gfxnum][code])
+							continue; 
+
 					if (flags & TILE_SKIP) continue; // skip this tile
 
 					if (flags & TILE_GROUP_ENABLE) {
@@ -928,15 +1038,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
-				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
-
-				if (gfx->gfxbase == NULL) {
-					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
-					continue;
-				}
-
 				color = ((color & gfx->color_mask) << gfx->depth) + gfx->color_offset;
-				code %= gfx->code_mask;
 
 				INT32 flipx = flags & TILE_FLIPX; 
 				INT32 flipy = flags & TILE_FLIPY;
@@ -1008,7 +1110,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 		INT32 endx = maxx + cur_map->twidth;
 		INT32 endy = maxy + cur_map->theight;
 #if 0
-		// akka arrh buggy (clipclipderp) fix
+		// akka arrh buggy (clip) fix
 		// after reimpl, test:
 		// bwings, zaviga, squaitsa, botanicf, bagman
 		// if they are weirdly-offset, something is wrong.
@@ -1051,8 +1153,31 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
+				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
+
+#if defined FBNEO_DEBUG
+				if (gfx->gfxbase == NULL) {
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					continue;
+				}
+
+				if (((UINT32)gfx->width != cur_map->twidth) || ((UINT32)gfx->height != cur_map->theight))
+				{
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, gfxnum, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
+					continue;
+				}
+#endif
+
+				code %= gfx->code_mask;
+
 				if (opaque == 0)
 				{
+					if (cur_map->skip_tiles[gfxnum] && (cur_map->flags & TMAP_TRANSPARENT)) {	// skip this tile
+						if (cur_map->skip_tiles[gfxnum][code]) {
+							continue;
+						}
+					}
+
 					if (flags & TILE_SKIP) continue; // skip this tile
 
 					if (flags & TILE_GROUP_ENABLE) {
@@ -1064,15 +1189,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
-				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
-
-				if (gfx->gfxbase == NULL) {
-					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
-					continue;
-				}
-
 				color &= gfx->color_mask;
-				code %= gfx->code_mask;
 
 				INT32 sy = y - syshift;
 				INT32 sx = x - sxshift;
@@ -1081,14 +1198,14 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 				INT32 flipy = flags & TILE_FLIPY;
 
 				if (cur_map->flags & TMAP_FLIPY) {
-					// part of clipclipderp fix (save for reimpl)
+					// part of clip fix (save for reimpl)
 					//sy = ((cur_map->mheight - 1) * cur_map->theight) - sy;
 					sy = ((maxy - miny) - cur_map->theight) - sy;
 					flipy ^= TILE_FLIPY;
 				}
 
 				if (cur_map->flags & TMAP_FLIPX) {
-					// part of clipclipderp fix (save for reimpl)
+					// part of clipc fix (save for reimpl)
 					//sx = ((cur_map->mwidth - 1) * cur_map->twidth) - sx;
 					sx = ((maxx - minx) - cur_map->twidth) - sx;
 					flipx ^= TILE_FLIPX;
@@ -1231,8 +1348,29 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 			}
 		}
 
+		GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
+
+#if defined FBNEO_DEBUG
+		if (gfx->gfxbase == NULL) {
+			bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+			continue;
+		}
+
+		if (((UINT32)gfx->width != cur_map->twidth) || ((UINT32)gfx->height != cur_map->theight))
+		{
+			bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, gfxnum, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
+			continue;
+		}
+#endif
+
+		code %= gfx->code_mask;
+
 		if (opaque == 0)
 		{
+			if (cur_map->skip_tiles[gfxnum] && (cur_map->flags & TMAP_TRANSPARENT))	// skip this tile
+				if (cur_map->skip_tiles[gfxnum][code])
+					continue; 
+
 			if (flags & TILE_SKIP) continue; // skip this tile
 
 			if (flags & TILE_GROUP_ENABLE) {
@@ -1244,15 +1382,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 			}
 		}
 
-		GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
-
-		if (gfx->gfxbase == NULL) {
-			bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
-			continue;
-		}
-
 		color &= gfx->color_mask;
-		code %= gfx->code_mask;
 
 		INT32 sx = col * cur_map->twidth;
 		INT32 sy = row * cur_map->theight;

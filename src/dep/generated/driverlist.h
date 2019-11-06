@@ -975,6 +975,7 @@ DRV		BurnDrvmd_bestofp;
 DRV		BurnDrvmd_bestof;
 DRV		BurnDrvMSX_bestwarr;
 DRV		BurnDrvBestri;
+DRV		BurnDrvBestria;
 DRV		BurnDrvMSX_betiled;
 DRV		BurnDrvmd_beyoasis;
 DRV		BurnDrvmd_beyoasisp;
@@ -1976,15 +1977,15 @@ DRV		BurnDrvmd_comixup04;
 DRV		BurnDrvmd_comixup02;
 DRV		BurnDrvmd_commconq;
 DRV		BurnDrvCommandw;
-DRV		BurnDrvCommandb;
-DRV		BurnDrvCommandb2;
-DRV		BurnDrvCommandb3;
+DRV		BurnDrvCommandob;
+DRV		BurnDrvCommandob2;
+DRV		BurnDrvCommandob3;
 DRV		BurnSpeccommando;
 DRV		BurnSpeccommandof;
 DRV		BurnSpeccommandop;
 DRV		BurnDrvCommsega;
-DRV		BurnDrvCommandu;
-DRV		BurnDrvCommandu2;
+DRV		BurnDrvCommandou;
+DRV		BurnDrvCommandou2;
 DRV		BurnDrvCommando;
 DRV		BurnDrvmd_commands;
 DRV		BurnDrvComotion;
@@ -8717,7 +8718,7 @@ DRV		BurnDrvSngkAcea;
 DRV		BurnDrvpce_sengokmj;
 DRV		BurnDrvCpsMercsj;
 DRV		BurnDrvMSX_senjokam;
-DRV		BurnDrvCommandj;
+DRV		BurnDrvCommandoj;
 DRV		BurnDrvMSX_senjyo;
 DRV		BurnDrvMSX_senjyoa;
 DRV		BurnDrvSenjyo;
@@ -13540,7 +13541,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_bestofp,			// Best of the Best - Championship Karate (Euro, Prototype)
 	&BurnDrvmd_bestof,			// Best of the Best - Championship Karate (USA)
 	&BurnDrvMSX_bestwarr,		// Bestial Warrior (Spa)
-	&BurnDrvBestri,				// Bestri (Korea)
+	&BurnDrvBestri,				// Bestri (Korea, set 1)
+	&BurnDrvBestria,			// Bestri (Korea, set 2)
 	&BurnDrvMSX_betiled,		// Betiled!
 	&BurnDrvmd_beyoasis,		// Beyond Oasis (USA)
 	&BurnDrvmd_beyoasisp,		// Beyond Oasis (USA, Prototype, 19941101)
@@ -14542,15 +14544,15 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_comixup02,		// Comix Zone (USA, Prototype, 19950603)
 	&BurnDrvmd_commconq,		// Command & Conquer (Prototype)
 	&BurnDrvCommandw,			// Command War - Super Special Battle & War Game (Ver 0.0J) (Prototype)
-	&BurnDrvCommandb,			// Commando (bootleg set 1)
-	&BurnDrvCommandb2,			// Commando (bootleg set 2)
-	&BurnDrvCommandb3,			// Commando (bootleg set 3)
+	&BurnDrvCommandob,			// Commando (bootleg set 1)
+	&BurnDrvCommandob2,			// Commando (bootleg set 2)
+	&BurnDrvCommandob3,			// Commando (bootleg set 3)
 	&BurnSpeccommando,			// Commando (Elite Systems) (48K)
 	&BurnSpeccommandof,			// Commando (fr) (48K)
 	&BurnSpeccommandop,			// Commando (Pocket Money Software) (48K)
 	&BurnDrvCommsega,			// Commando (Sega)
-	&BurnDrvCommandu,			// Commando (US, set 1)
-	&BurnDrvCommandu2,			// Commando (US, set 2)
+	&BurnDrvCommandou,			// Commando (US set 1)
+	&BurnDrvCommandou2,			// Commando (US set 2)
 	&BurnDrvCommando,			// Commando (World)
 	&BurnDrvmd_commands,		// Commandos (Rus)
 	&BurnDrvComotion,			// CoMOTION
@@ -21283,7 +21285,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_sengokmj,		// Sengoku Mahjong
 	&BurnDrvCpsMercsj,			// Senjo no Ookami II (Ookami 2 900302 Japan)
 	&BurnDrvMSX_senjokam,		// Senjou no Ookami (Jpn)
-	&BurnDrvCommandj,			// Senjou no Ookami
+	&BurnDrvCommandoj,			// Senjou no Ookami
 	&BurnDrvMSX_senjyo,			// Senjyo (Jpn)
 	&BurnDrvMSX_senjyoa,		// Senjyo (Jpn, Alt)
 	&BurnDrvSenjyo,				// Senjyo

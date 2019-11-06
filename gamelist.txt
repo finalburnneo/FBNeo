@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12285 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12286 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -958,7 +958,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_bestofp	|  	| Best of the Best - Championship Karate (Euro, Prototyp| md_bestof	| 1993	| Electro Brain	| Sega Megadrive| 					|
 | md_bestof	|  	| Best of the Best - Championship Karate (USA)		| 		| 1993	| Electro Brain	| Sega Megadrive| 					|
 | msx_bestwarr	|  	| Bestial Warrior (Spa)					| 		| 1989	| Dinamic Softwa| MSX		| 					|
-| bestri	|  	| Bestri (Korea)					| 		| 1998	| F2 System	| Miscellaneous	| 					|
+| bestri	|  	| Bestri (Korea, set 1)					| 		| 1998	| F2 System	| Miscellaneous	| 					|
+| bestria	|  	| Bestri (Korea, set 2)					| bestri	| 1998	| F2 System	| Miscellaneous	| 					|
 | msx_betiled	|  	| Betiled!						| 		| 2007	| CEZ GS	| MSX		| 					|
 | md_beyoasis	|  	| Beyond Oasis (USA)					| md_thor	| 1995	| Sega		| Sega Megadrive| 					|
 | md_beyoasisp	|  	| Beyond Oasis (USA, Prototype, 19941101)		| md_thor	| 1994	| Sega		| Sega Megadrive| 					|
@@ -1949,8 +1950,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_commandof|  	| Commando (fr) (48K)					| spec_commando	| 1984	| Loriciels	| ZX Spectrum	| 					|
 | spec_commandop|  	| Commando (Pocket Money Software) (48K)		| spec_commando	| 1984	| Pocket Money S| ZX Spectrum	| 					|
 | commsega	|  	| Commando (Sega)					| 		| 1983	| Sega		| Miscellaneous	| 					|
-| commandou	|  	| Commando (US, set 1)					| commando	| 1985	| Capcom (Data E| Miscellaneous	| 					|
-| commandou2	|  	| Commando (US, set 2)					| commando	| 1985	| Capcom (Data E| Miscellaneous	| 					|
+| commandou	|  	| Commando (US set 1)					| commando	| 1985	| Capcom (Data E| Miscellaneous	| 					|
+| commandou2	|  	| Commando (US set 2)					| commando	| 1985	| Capcom (Data E| Miscellaneous	| 					|
 | commando	|  	| Commando (World)					| 		| 1985	| Capcom	| Miscellaneous	| 					|
 | md_commands	|  	| Commandos (Rus)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | comotion	|  	| CoMOTION						| 		| 1976	| Gremlin	| Miscellaneous	| 					|

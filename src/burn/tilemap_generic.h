@@ -115,6 +115,9 @@ void GenericTilemapSetTransMask(INT32 which, INT32 category, UINT16 transmask);
 // Set a Transmask Split.  Specify TMAP_DRAWLAYER0 or TMAP_DRAWLAYER1 in draw flags, set "*category = layernum;" in callback.
 void GenericTilemapSetTransSplit(INT32 which, INT32 category, UINT16 layer0, UINT16 layer1);
 
+// Build a table of fully transparent tiles
+void GenericTilemapBuildSkipTable(INT32 which, INT32 gfxnum, INT32 transparent);
+
 // Set scroll x (horizontal) or y (vertical) for the tilemap
 void GenericTilemapSetScrollX(INT32 which, INT32 scrollx);
 void GenericTilemapSetScrollY(INT32 which, INT32 scrolly);

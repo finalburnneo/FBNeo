@@ -1855,7 +1855,7 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 	}
 
 	// Store the pgi that controls the diagnostic input
-	if (strcmp(szi, "diag") == 0) {
+	if (strcmp(szi, "diag") == 0 || strcmp(szi, "diagnostics") == 0) {
 		pgi->nInput = GIT_SWITCH;
 		if (!bInputInitialized)
 			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);

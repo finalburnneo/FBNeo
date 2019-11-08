@@ -268,7 +268,8 @@ static inline void pgmSynchroniseZ80(INT32 extra_cycles)
 	if (cycles <= ZetTotalCycles())
 		return;
 
-	while (ZetTotalCycles() < cycles)
+	INT32 i = 0;
+	while (ZetTotalCycles() < cycles && i++ < 5)
 		BurnTimerUpdate(cycles);
 }
 

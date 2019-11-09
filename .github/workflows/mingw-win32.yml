@@ -15,7 +15,7 @@ jobs:
           msystem: MINGW32
       - name: mingw update 
         run: |
-           msys2do pacman -S --noconfirm --needed base-devel mingw-w64-i686-toolchain make perl nasm
+           msys2do pacman -S --noconfirm --needed wget base-devel mingw-w64-i686-toolchain make perl nasm
            msys2do wget http://repo.msys2.org/mingw/i686/mingw-w64-i686-libwinpthread-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
            msys2do wget http://repo.msys2.org/mingw/i686/mingw-w64-i686-winpthreads-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
 

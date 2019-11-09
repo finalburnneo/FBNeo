@@ -16,13 +16,13 @@ jobs:
       - name: mingw update 
         run: |
            msys2do pacman -S --noconfirm --needed base-devel mingw-w64-i686-toolchain make perl nasm
-           wget http://repo.msys2.org/mingw/i686/mingw-w64-i686-libwinpthread-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
-           wget http://repo.msys2.org/mingw/i686/mingw-w64-i686-winpthreads-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
+           msys2do wget http://repo.msys2.org/mingw/i686/mingw-w64-i686-libwinpthread-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
+           msys2do wget http://repo.msys2.org/mingw/i686/mingw-w64-i686-winpthreads-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
 
-           pacman -U --noconfirm mingw-w64-i686-libwinpthread-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz mingw-w64-i686-winpthreads-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
+           msys2do pacman -U --noconfirm mingw-w64-i686-libwinpthread-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz mingw-w64-i686-winpthreads-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
 
-           rm mingw-w64-i686-libwinpthread-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
-           rm mingw-w64-i686-winpthreads-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
+           msys2do rm mingw-w64-i686-libwinpthread-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
+           msys2do rm mingw-w64-i686-winpthreads-git-7.0.0.5273.3e5acf5d-1-any.pkg.tar.xz
       - name: mingw build
         run : msys2do make mingw510 -j9 RELEASEBUILD=1
       - name: make artifacts

@@ -4,14 +4,14 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
+#include "watchdog.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *DrvZ80ROM;
-static UINT8 *DrvGfxROM0;
-static UINT8 *DrvGfxROM1;
+static UINT8 *DrvGfxROM;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvVidRAM;
@@ -20,9 +20,11 @@ static UINT8 *DrvColRAM;
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
 
-static UINT8 *scroll;
-static UINT8 *flipscreen;
-static UINT8 *gfx_bank;
+static UINT8 scroll;
+static UINT8 flipscreen;
+static UINT8 gfx_bank;
+
+static INT32 netplay_mode = 1;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -31,185 +33,183 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
-static INT32 watchdog;
-
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 0,	"p1 coin"  },
-	{"P1 start"  ,    BIT_DIGITAL  , DrvJoy1 + 3,	"p1 start" },
-	{"P1 Left"      , BIT_DIGITAL  , DrvJoy2 + 0, 	"p1 left"  },
-	{"P1 Right"     , BIT_DIGITAL  , DrvJoy2 + 1, 	"p1 right" },
-	{"P1 Up",	  BIT_DIGITAL,   DrvJoy2 + 2,   "p1 up",   },
-	{"P1 Down",	  BIT_DIGITAL,   DrvJoy2 + 3,   "p1 down", },
-	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 4,	"p1 fire 1"},
+	{"P1 Coin",		BIT_DIGITAL,   DrvJoy1 + 0,	"p1 coin"  },
+	{"P1 start",    BIT_DIGITAL,   DrvJoy1 + 3,	"p1 start" },
+	{"P1 Left",		BIT_DIGITAL,   DrvJoy2 + 0, "p1 left"  },
+	{"P1 Right",	BIT_DIGITAL,   DrvJoy2 + 1, "p1 right" },
+	{"P1 Up",		BIT_DIGITAL,   DrvJoy2 + 2, "p1 up",   },
+	{"P1 Down",		BIT_DIGITAL,   DrvJoy2 + 3, "p1 down", },
+	{"P1 Button 1",	BIT_DIGITAL,   DrvJoy2 + 4,	"p1 fire 1"},
 
-	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy1 + 1,	"p2 coin"  },
-	{"P2 start"  ,    BIT_DIGITAL  , DrvJoy1 + 4,	"p2 start" },
-	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 0, 	"p2 left"  },
-	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 1, 	"p2 right" },
-	{"P2 Up",	  BIT_DIGITAL,   DrvJoy3 + 2,   "p2 up",   },
-	{"P2 Down",	  BIT_DIGITAL,   DrvJoy3 + 3,   "p2 down", },
-	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy3 + 4,	"p2 fire 1"},
+	{"P2 Coin",		BIT_DIGITAL,   DrvJoy1 + 1, "p2 coin"  },
+	{"P2 start",	BIT_DIGITAL,   DrvJoy1 + 4, "p2 start" },
+	{"P2 Left",		BIT_DIGITAL,   DrvJoy3 + 0, "p2 left"  },
+	{"P2 Right",	BIT_DIGITAL,   DrvJoy3 + 1, "p2 right" },
+	{"P2 Up",		BIT_DIGITAL,   DrvJoy3 + 2, "p2 up",   },
+	{"P2 Down",		BIT_DIGITAL,   DrvJoy3 + 3, "p2 down", },
+	{"P2 Button 1",	BIT_DIGITAL,   DrvJoy3 + 4,	"p2 fire 1"},
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"    },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip"	   },
-	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	"dip"	   },
+	{"Reset",		BIT_DIGITAL,  &DrvReset,	"reset"    },
+	{"Dip 1",		BIT_DIPSWITCH, DrvDips + 0,	"dip"	   },
+	{"Dip 2",		BIT_DIPSWITCH, DrvDips + 1,	"dip"	   },
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo funkybeeDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x20, NULL                     },
-	{0x10, 0xff, 0xff, 0xff, NULL                     },
+	{0x0f, 0xff, 0xff, 0x20, NULL				},
+	{0x10, 0xff, 0xff, 0xff, NULL				},
 
-	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-	{0x0f, 0x01, 0x20, 0x20, "Off"       		  },
-	{0x0f, 0x01, 0x20, 0x00, "On"       		  },
+	{0   , 0xfe, 0   , 2   , "Freeze"			},
+	{0x0f, 0x01, 0x20, 0x20, "Off"				},
+	{0x0f, 0x01, 0x20, 0x00, "On"				},
 
-	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x10, 0x01, 0x03, 0x03, "1C 1C"    		  },
-	{0x10, 0x01, 0x03, 0x02, "1C 2C"    		  },
-	{0x10, 0x01, 0x03, 0x01, "1C 3C"     		  },
-	{0x10, 0x01, 0x03, 0x00, "1C 4C"     		  },
+	{0   , 0xfe, 0   , 4   , "Coin A"			},
+	{0x10, 0x01, 0x03, 0x03, "1C 1C"			},
+	{0x10, 0x01, 0x03, 0x02, "1C 2C"			},
+	{0x10, 0x01, 0x03, 0x01, "1C 3C"			},
+	{0x10, 0x01, 0x03, 0x00, "1C 4C"			},
 
-	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x10, 0x01, 0x0c, 0x08, "2C 1C"     		  },
-	{0x10, 0x01, 0x0c, 0x0c, "1C 1C"    		  },
-	{0x10, 0x01, 0x0c, 0x04, "2C 3C"     		  },
-	{0x10, 0x01, 0x0c, 0x00, "1C 6C"    		  },
+	{0   , 0xfe, 0   , 4   , "Coin B"			},
+	{0x10, 0x01, 0x0c, 0x08, "2C 1C"			},
+	{0x10, 0x01, 0x0c, 0x0c, "1C 1C"			},
+	{0x10, 0x01, 0x0c, 0x04, "2C 3C"			},
+	{0x10, 0x01, 0x0c, 0x00, "1C 6C"			},
 
-	{0   , 0xfe, 0   , 2   , "Lives"                  },
-	{0x10, 0x01, 0x30, 0x30, "3"     		  },
-	{0x10, 0x01, 0x30, 0x20, "4"    		  },
-	{0x10, 0x01, 0x30, 0x10, "5"     		  },
-	{0x10, 0x01, 0x30, 0x00, "6"    		  },
+	{0   , 0xfe, 0   , 2   , "Lives"			},
+	{0x10, 0x01, 0x30, 0x30, "3"				},
+	{0x10, 0x01, 0x30, 0x20, "4"				},
+	{0x10, 0x01, 0x30, 0x10, "5"				},
+	{0x10, 0x01, 0x30, 0x00, "6"				},
 
-	{0   , 0xfe, 0   , 2   , "Bonus Life"	          },
-	{0x10, 0x01, 0x40, 0x40, "20000"     		  },
-	{0x10, 0x01, 0x40, 0x00, "None"			  },
+	{0   , 0xfe, 0   , 2   , "Bonus Life"		},
+	{0x10, 0x01, 0x40, 0x40, "20000"			},
+	{0x10, 0x01, 0x40, 0x00, "None"				},
 
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x10, 0x01, 0x80, 0x00, "Upright"     		  },
-	{0x10, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0   , 0xfe, 0   , 2   , "Cabinet"			},
+	{0x10, 0x01, 0x80, 0x00, "Upright"			},
+	{0x10, 0x01, 0x80, 0x80, "Cocktail"			},
 };
 
 STDDIPINFO(funkybee)
 
 static struct BurnDIPInfo funkbeebDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x20, NULL                     },
-	{0x10, 0xff, 0xff, 0xff, NULL                     },
+	{0x0f, 0xff, 0xff, 0x20, NULL				},
+	{0x10, 0xff, 0xff, 0xff, NULL				},
 
-	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-	{0x0f, 0x01, 0x20, 0x20, "Off"       		  },
-	{0x0f, 0x01, 0x20, 0x00, "On"       		  },
+	{0   , 0xfe, 0   , 2   , "Freeze"			},
+	{0x0f, 0x01, 0x20, 0x20, "Off"				},
+	{0x0f, 0x01, 0x20, 0x00, "On"				},
 
-	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x10, 0x01, 0x03, 0x03, "1C 1C"    		  },
-	{0x10, 0x01, 0x03, 0x02, "1C 2C"    		  },
-	{0x10, 0x01, 0x03, 0x01, "1C 3C"     		  },
-	{0x10, 0x01, 0x03, 0x00, "1C 4C"     		  },
+	{0   , 0xfe, 0   , 4   , "Coin A"			},
+	{0x10, 0x01, 0x03, 0x03, "1C 1C"			},
+	{0x10, 0x01, 0x03, 0x02, "1C 2C"			},
+	{0x10, 0x01, 0x03, 0x01, "1C 3C"			},
+	{0x10, 0x01, 0x03, 0x00, "1C 4C"			},
 
-	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x10, 0x01, 0x0c, 0x08, "2C 1C"     		  },
-	{0x10, 0x01, 0x0c, 0x0c, "1C 1C"    		  },
-	{0x10, 0x01, 0x0c, 0x04, "2C 3C"     		  },
-	{0x10, 0x01, 0x0c, 0x00, "1C 6C"    		  },
+	{0   , 0xfe, 0   , 4   , "Coin B"			},
+	{0x10, 0x01, 0x0c, 0x08, "2C 1C"			},
+	{0x10, 0x01, 0x0c, 0x0c, "1C 1C"			},
+	{0x10, 0x01, 0x0c, 0x04, "2C 3C"			},
+	{0x10, 0x01, 0x0c, 0x00, "1C 6C"			},
 
-	{0   , 0xfe, 0   , 2   , "Lives"                  },
-	{0x10, 0x01, 0x30, 0x30, "1"     		  },
-	{0x10, 0x01, 0x30, 0x20, "2"    		  },
-	{0x10, 0x01, 0x30, 0x10, "3"     		  },
-	{0x10, 0x01, 0x30, 0x00, "4"    		  },
+	{0   , 0xfe, 0   , 2   , "Lives"			},
+	{0x10, 0x01, 0x30, 0x30, "1"				},
+	{0x10, 0x01, 0x30, 0x20, "2"				},
+	{0x10, 0x01, 0x30, 0x10, "3"				},
+	{0x10, 0x01, 0x30, 0x00, "4" 				},
 
-	{0   , 0xfe, 0   , 2   , "Bonus Life"	          },
-	{0x10, 0x01, 0x40, 0x40, "20000"     		  },
-	{0x10, 0x01, 0x40, 0x00, "None"			  },
+	{0   , 0xfe, 0   , 2   , "Bonus Life"		},
+	{0x10, 0x01, 0x40, 0x40, "20000"			},
+	{0x10, 0x01, 0x40, 0x00, "None"				},
 
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x10, 0x01, 0x80, 0x00, "Upright"     		  },
-	{0x10, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0   , 0xfe, 0   , 2   , "Cabinet"			},
+	{0x10, 0x01, 0x80, 0x00, "Upright"			},
+	{0x10, 0x01, 0x80, 0x80, "Cocktail"			},
 };
 
 STDDIPINFO(funkbeeb)
 
 static struct BurnDIPInfo skylancrDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x20, NULL                     },
-	{0x10, 0xff, 0xff, 0xff, NULL                     },
+	{0x0f, 0xff, 0xff, 0x20, NULL				},
+	{0x10, 0xff, 0xff, 0xff, NULL				},
 
-	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-	{0x0f, 0x01, 0x20, 0x20, "Off"       		  },
-	{0x0f, 0x01, 0x20, 0x00, "On"       		  },
+	{0   , 0xfe, 0   , 2   , "Freeze"			},
+	{0x0f, 0x01, 0x20, 0x20, "Off"				},
+	{0x0f, 0x01, 0x20, 0x00, "On"				},
 
-	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x10, 0x01, 0x03, 0x03, "1C 1C"    		  },
-	{0x10, 0x01, 0x03, 0x02, "1C 2C"    		  },
-	{0x10, 0x01, 0x03, 0x01, "1C 3C"     		  },
-	{0x10, 0x01, 0x03, 0x00, "1C 6C"     		  },
+	{0   , 0xfe, 0   , 4   , "Coin A"			},
+	{0x10, 0x01, 0x03, 0x03, "1C 1C"			},
+	{0x10, 0x01, 0x03, 0x02, "1C 2C"			},
+	{0x10, 0x01, 0x03, 0x01, "1C 3C"			},
+	{0x10, 0x01, 0x03, 0x00, "1C 6C"			},
 
-	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x10, 0x01, 0x0c, 0x08, "2C 1C"     		  },
-	{0x10, 0x01, 0x0c, 0x0c, "1C 1C"    		  },
-	{0x10, 0x01, 0x0c, 0x04, "2C 3C"     		  },
-	{0x10, 0x01, 0x0c, 0x00, "1C 6C"    		  },
+	{0   , 0xfe, 0   , 4   , "Coin B"			},
+	{0x10, 0x01, 0x0c, 0x08, "2C 1C"			},
+	{0x10, 0x01, 0x0c, 0x0c, "1C 1C"			},
+	{0x10, 0x01, 0x0c, 0x04, "2C 3C"			},
+	{0x10, 0x01, 0x0c, 0x00, "1C 6C"			},
 
-	{0   , 0xfe, 0   , 2   , "Lives"                  },
-	{0x10, 0x01, 0x30, 0x30, "1"     		  },
-	{0x10, 0x01, 0x30, 0x20, "2"    		  },
-	{0x10, 0x01, 0x30, 0x10, "3"     		  },
-	{0x10, 0x01, 0x30, 0x00, "4"    		  },
+	{0   , 0xfe, 0   , 2   , "Lives"			},
+	{0x10, 0x01, 0x30, 0x30, "1"				},
+	{0x10, 0x01, 0x30, 0x20, "2"				},
+	{0x10, 0x01, 0x30, 0x10, "3"				},
+	{0x10, 0x01, 0x30, 0x00, "4"				},
 
-	{0   , 0xfe, 0   , 2   , "Bonus Life"	          },
-	{0x10, 0x01, 0x40, 0x40, "20000"     		  },
-	{0x10, 0x01, 0x40, 0x00, "None"			  },
+	{0   , 0xfe, 0   , 2   , "Bonus Life"		},
+	{0x10, 0x01, 0x40, 0x40, "20000"			},
+	{0x10, 0x01, 0x40, 0x00, "None"				},
 
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x10, 0x01, 0x80, 0x00, "Upright"     		  },
-	{0x10, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0   , 0xfe, 0   , 2   , "Cabinet"			},
+	{0x10, 0x01, 0x80, 0x00, "Upright" 			},
+	{0x10, 0x01, 0x80, 0x80, "Cocktail"			},
 };
 
 STDDIPINFO(skylancr)
 
 static struct BurnDIPInfo skylanceDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x20, NULL                     },
-	{0x10, 0xff, 0xff, 0xff, NULL                     },
+	{0x0f, 0xff, 0xff, 0x20, NULL				},
+	{0x10, 0xff, 0xff, 0xff, NULL				},
 
-	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-	{0x0f, 0x01, 0x20, 0x20, "Off"       		  },
-	{0x0f, 0x01, 0x20, 0x00, "On"       		  },
+	{0   , 0xfe, 0   , 2   , "Freeze"			},
+	{0x0f, 0x01, 0x20, 0x20, "Off"				},
+	{0x0f, 0x01, 0x20, 0x00, "On"				},
 
-	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x10, 0x01, 0x03, 0x03, "1C 1C"    		  },
-	{0x10, 0x01, 0x03, 0x02, "1C 2C"    		  },
-	{0x10, 0x01, 0x03, 0x01, "1C 3C"     		  },
-	{0x10, 0x01, 0x03, 0x00, "1C 6C"     		  },
+	{0   , 0xfe, 0   , 4   , "Coin A"			},
+	{0x10, 0x01, 0x03, 0x03, "1C 1C"			},
+	{0x10, 0x01, 0x03, 0x02, "1C 2C"			},
+	{0x10, 0x01, 0x03, 0x01, "1C 3C"			},
+	{0x10, 0x01, 0x03, 0x00, "1C 6C"			},
 
-	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x10, 0x01, 0x0c, 0x08, "2C 1C"     		  },
-	{0x10, 0x01, 0x0c, 0x0c, "1C 1C"    		  },
-	{0x10, 0x01, 0x0c, 0x04, "2C 3C"     		  },
-	{0x10, 0x01, 0x0c, 0x00, "1C 6C"    		  },
+	{0   , 0xfe, 0   , 4   , "Coin B"			},
+	{0x10, 0x01, 0x0c, 0x08, "2C 1C"			},
+	{0x10, 0x01, 0x0c, 0x0c, "1C 1C"			},
+	{0x10, 0x01, 0x0c, 0x04, "2C 3C"			},
+	{0x10, 0x01, 0x0c, 0x00, "1C 6C"			},
 
-	{0   , 0xfe, 0   , 2   , "Lives"                  },
-	{0x10, 0x01, 0x30, 0x30, "3"     		  },
-	{0x10, 0x01, 0x30, 0x20, "4"    		  },
-	{0x10, 0x01, 0x30, 0x10, "5"     		  },
-	{0x10, 0x01, 0x30, 0x00, "64"    		  },
+	{0   , 0xfe, 0   , 2   , "Lives"			},
+	{0x10, 0x01, 0x30, 0x30, "3"				},
+	{0x10, 0x01, 0x30, 0x20, "4"				},
+	{0x10, 0x01, 0x30, 0x10, "5"				},
+	{0x10, 0x01, 0x30, 0x00, "6"				},
 
-	{0   , 0xfe, 0   , 2   , "Bonus Life"	          },
-	{0x10, 0x01, 0x40, 0x40, "20000 50000" 		  },
-	{0x10, 0x01, 0x40, 0x00, "40000 70000"		  },
+	{0   , 0xfe, 0   , 2   , "Bonus Life"		},
+	{0x10, 0x01, 0x40, 0x40, "20000 50000"		},
+	{0x10, 0x01, 0x40, 0x00, "40000 70000"		},
 
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x10, 0x01, 0x80, 0x00, "Upright"     		  },
-	{0x10, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0   , 0xfe, 0   , 2   , "Cabinet"			},
+	{0x10, 0x01, 0x80, 0x00, "Upright"			},
+	{0x10, 0x01, 0x80, 0x80, "Cocktail"			},
 };
 
 STDDIPINFO(skylance)
 
-UINT8 __fastcall funkybee_read(UINT16 address)
+static UINT8 __fastcall funkybee_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -217,7 +217,7 @@ UINT8 __fastcall funkybee_read(UINT16 address)
 			return 0;
 
 		case 0xf800:
-			watchdog = 0;
+			BurnWatchdogWrite();
 			return DrvInputs[0] | (DrvDips[0] & 0xe0);
 
 		case 0xf801:
@@ -230,16 +230,16 @@ UINT8 __fastcall funkybee_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall funkybee_write(UINT16 address, UINT8 data)
+static void __fastcall funkybee_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
 		case 0xe000:
-			*scroll = data;
+			scroll = data;
 		break;
 
 		case 0xe800:
-			*flipscreen = data & 1;
+			flipscreen = data & 1;
 		break;
 
 		case 0xe802: // coin counter
@@ -247,16 +247,16 @@ void __fastcall funkybee_write(UINT16 address, UINT8 data)
 		break;
 
 		case 0xe805:
-			*gfx_bank = data & 1;
+			gfx_bank = data & 1;
 		break;
 
 		case 0xf800:
-			watchdog = 0;
+			BurnWatchdogWrite();
 		break;
 	}
 }
 
-UINT8 __fastcall funkybee_in_port(UINT16 address)
+static UINT8 __fastcall funkybee_in_port(UINT16 address)
 {
 	switch (address & 0xff)
 	{
@@ -267,7 +267,7 @@ UINT8 __fastcall funkybee_in_port(UINT16 address)
 	return 0;
 }
 
-void __fastcall funkybee_out_port(UINT16 address, UINT8 data)
+static void __fastcall funkybee_out_port(UINT16 address, UINT8 data)
 {
 	switch (address & 0xff)
 	{
@@ -276,6 +276,19 @@ void __fastcall funkybee_out_port(UINT16 address, UINT8 data)
 			AY8910Write(0, address & 1, data);
 		break; 
 	}
+}
+
+static tilemap_scan( bg )
+{
+	return 256 * row + col;
+}
+
+static tilemap_callback( bg )
+{
+	INT32 attr = DrvColRAM[offs];
+	INT32 code = DrvVidRAM[offs] + ((attr & 0x80) << 1) + (gfx_bank * 0x200);
+	
+	TILE_SET_INFO(0, code, attr, 0);
 }
 
 static UINT8 funkybee_ay8910_read_A(UINT32)
@@ -292,8 +305,37 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	ZetOpen(0);
 	ZetReset();
 	ZetClose();
+	
+	BurnWatchdogReset();
 
-	watchdog = 0;
+	scroll = 0;
+	gfx_bank = 0;
+	flipscreen = 0;
+
+	return 0;
+}
+
+static INT32 MemIndex()
+{
+	UINT8 *Next; Next = AllMem;
+
+	DrvZ80ROM		= Next; Next += 0x005000;
+
+	DrvGfxROM		= Next; Next += 0x010000;
+
+	DrvColPROM		= Next; Next += 0x000020;
+
+	DrvPalette		= (UINT32*)Next; Next += 0x0020 * sizeof(UINT32);
+
+	AllRam			= Next;
+
+	DrvZ80RAM		= Next; Next += 0x000800;
+	DrvVidRAM		= Next; Next += 0x002000;
+	DrvColRAM		= Next; Next += 0x002000;
+
+	RamEnd			= Next;
+
+	MemEnd			= Next;
 
 	return 0;
 }
@@ -309,17 +351,83 @@ static void DrvGfxDecode()
 		return;
 	}
 
-	memcpy (tmp, DrvGfxROM0, 0x4000);
+	memcpy (tmp, DrvGfxROM, 0x4000);
 
-	GfxDecode(0x400, 2, 8,  8, Planes, XOffs, YOffs, 0x080, tmp, DrvGfxROM0);
-	GfxDecode(0x100, 2, 8, 32, Planes, XOffs, YOffs, 0x200, tmp, DrvGfxROM1);
+	GfxDecode(0x400, 2, 8,  8, Planes, XOffs, YOffs, 0x080, tmp, DrvGfxROM);
 
 	BurnFree (tmp);
 }
 
+static INT32 DrvInit(INT32 game)
+{
+	BurnAllocMemIndex();
+
+	{
+		INT32 k = 0;
+		if (BurnLoadRom(DrvZ80ROM  + 0x0000, k++, 1)) return 1;
+
+		if (game) {
+			if (BurnLoadRom(DrvZ80ROM  + 0x2000, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM  + 0x4000, k++, 1)) return 1;
+		} else {
+			if (BurnLoadRom(DrvZ80ROM  + 0x1000, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM  + 0x2000, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM  + 0x3000, k++, 1)) return 1;
+		}
+
+		if (BurnLoadRom(DrvGfxROM  + 0x0000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM  + 0x2000, k++, 1)) return 1;
+
+		if (BurnLoadRom(DrvColPROM + 0x0000, k++, 1)) return 1;
+
+		DrvGfxDecode();
+	}
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvZ80ROM,	0x0000, 0x4fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,	0x8000, 0x87ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM,	0xa000, 0xbfff, MAP_RAM);
+	ZetMapMemory(DrvColRAM,	0xc000, 0xdfff, MAP_RAM);
+	ZetSetWriteHandler(funkybee_write);
+	ZetSetReadHandler(funkybee_read);
+	ZetSetOutHandler(funkybee_out_port);
+	ZetSetInHandler(funkybee_in_port);
+	ZetClose();
+	
+	BurnWatchdogInit(DrvDoReset, 180);
+
+	AY8910Init(0, 1500000, 0);
+	AY8910SetPorts(0, &funkybee_ay8910_read_A, NULL, NULL, NULL);
+	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
+
+	GenericTilesInit();
+	GenericTilemapInit(0, bg_map_scan, bg_map_callback, 8, 8, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM, 2, 8, 8, 0x10000, 0, 3);
+
+	//netplay_mode = is_netgame_or_recording();
+
+	DrvDoReset(1);
+
+	return 0;
+}
+
+static INT32 DrvExit()
+{
+	GenericTilesExit();
+
+	ZetExit();
+	AY8910Exit(0);
+
+	BurnFreeMemIndex();
+
+	return 0;
+}
+
 static void DrvPaletteInit()
 {
-	for (INT32 i = 0; i < 32; i++)
+	for (INT32 i = 0; i < 0x20; i++)
 	{
 		INT32 bit0 = (DrvColPROM[i] >> 0) & 0x01;
 		INT32 bit1 = (DrvColPROM[i] >> 1) & 0x01;
@@ -340,126 +448,6 @@ static void DrvPaletteInit()
 	}
 }
 
-static INT32 MemIndex()
-{
-	UINT8 *Next; Next = AllMem;
-
-	DrvZ80ROM		= Next; Next += 0x005000;
-
-	DrvGfxROM0		= Next; Next += 0x010000;
-	DrvGfxROM1		= Next; Next += 0x010000;
-
-	DrvColPROM		= Next; Next += 0x000020;
-
-	DrvPalette		= (UINT32*)Next; Next += 0x0020 * sizeof(UINT32);
-
-	AllRam			= Next;
-
-	DrvZ80RAM		= Next; Next += 0x000800;
-	DrvVidRAM		= Next; Next += 0x002000;
-	DrvColRAM		= Next; Next += 0x002000;
-
-	flipscreen		= Next; Next += 0x000001;
-	gfx_bank		= Next; Next += 0x000001;
-	scroll			= Next; Next += 0x000001;
-
-	RamEnd			= Next;
-
-	MemEnd			= Next;
-
-	return 0;
-}
-
-static INT32 DrvInit(INT32 game)
-{
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-
-	{
-		if (game) {
-			if (BurnLoadRom(DrvZ80ROM  + 0x0000, 0, 1)) return 1;
-			if (BurnLoadRom(DrvZ80ROM  + 0x2000, 1, 1)) return 1;
-			if (BurnLoadRom(DrvZ80ROM  + 0x4000, 2, 1)) return 1;
-
-			if (BurnLoadRom(DrvGfxROM0 + 0x0000, 3, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM0 + 0x2000, 4, 1)) return 1;
-
-			if (BurnLoadRom(DrvColPROM + 0x0000, 5, 1)) return 1;
-		} else {
-			if (BurnLoadRom(DrvZ80ROM  + 0x0000, 0, 1)) return 1;
-			if (BurnLoadRom(DrvZ80ROM  + 0x1000, 1, 1)) return 1;
-			if (BurnLoadRom(DrvZ80ROM  + 0x2000, 2, 1)) return 1;
-			if (BurnLoadRom(DrvZ80ROM  + 0x3000, 3, 1)) return 1;
-
-			if (BurnLoadRom(DrvGfxROM0 + 0x0000, 4, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM0 + 0x2000, 5, 1)) return 1;
-
-			if (BurnLoadRom(DrvColPROM + 0x0000, 6, 1)) return 1;
-		}
-
-		DrvPaletteInit();
-		DrvGfxDecode();
-	}
-
-	ZetInit(0);
-	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,	0x0000, 0x4fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM,	0x8000, 0x87ff, MAP_RAM);
-	ZetMapMemory(DrvVidRAM,	0xa000, 0xbfff, MAP_RAM);
-	ZetMapMemory(DrvColRAM,	0xc000, 0xdfff, MAP_RAM);
-	ZetSetWriteHandler(funkybee_write);
-	ZetSetReadHandler(funkybee_read);
-	ZetSetOutHandler(funkybee_out_port);
-	ZetSetInHandler(funkybee_in_port);
-	ZetClose();
-
-	AY8910Init(0, 1500000, 0);
-	AY8910SetPorts(0, &funkybee_ay8910_read_A, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-
-	GenericTilesInit();
-
-	DrvDoReset(1);
-
-	return 0;
-}
-
-static INT32 DrvExit()
-{
-	GenericTilesExit();
-
-	ZetExit();
-	AY8910Exit(0);
-
-	BurnFree(AllMem);
-
-	return 0;
-}
-
-static void draw_bg_layer()
-{
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
-	{
-		INT32 sx = (offs & 0x1f) * 8;
-		INT32 sy = (offs / 0x20) * 8;
-
-		sx -= *scroll;
-		if (sx < -7) sx += 256;
-
-		INT32 ofst = ((offs / 0x20) * 0x100) + (offs & 0x1f);
-
-		INT32 attr  = DrvColRAM[ofst];
-		INT32 code  = DrvVidRAM[ofst] + ((attr & 0x80) << 1) + (*gfx_bank * 0x200);
-		INT32 color = attr & 0x03;
-
-		Render8x8Tile_Clip(pTransDraw, code, sx - 12, sy, color, 2, 0, DrvGfxROM0);
-	}
-}
-
 static void draw_sprites()
 {
 	for (INT32 offs = 0x0f; offs >= 0; offs--)
@@ -469,23 +457,25 @@ static void draw_sprites()
 		INT32 sy    = 224 - DrvColRAM[ofst];
 		INT32 sx    = DrvVidRAM[ofst + 0x10];
 		INT32 color = DrvColRAM[ofst + 0x10] & 3;
-		INT32 code = (attr >> 2) + ((attr & 2) << 5) + (*gfx_bank * 0x080);
+		INT32 code = (attr >> 2) + ((attr & 2) << 5) + (gfx_bank * 0x080);
 		INT32 flipy = attr & 1;
 		INT32 flipx = 0;
-
-		if (flipy) {
-			if (flipx) {
-				RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 8, 32, code, sx - 12, sy, color, 2, 0, 0x10, DrvGfxROM1);
-			} else {
-				RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 8, 32, code, sx - 12, sy, color, 2, 0, 0x10, DrvGfxROM1);
+		
+		if (flipscreen) {
+			if (netplay_mode) {
+				sy = (224 - 32) - sy;
+				sx = (256 - 8) - sx;
+				sy -= 2; // ?
 			}
-		} else {
-			if (flipx) {
-				RenderCustomTile_Mask_FlipX_Clip(pTransDraw, 8, 32, code, sx - 12, sy, color, 2, 0, 0x10, DrvGfxROM1);
-			} else {
-				RenderCustomTile_Mask_Clip(pTransDraw, 8, 32, code, sx - 12, sy, color, 2, 0, 0x10, DrvGfxROM1);
+			else
+			{
+				flipx ^= 1;
+				sx += 12-9;
+				sy += 1;
 			}
 		}
+
+		DrawCustomMaskTile(pTransDraw, 8, 32, code, sx - 12, sy, flipx, flipy, color, 2, 0, 0x10, DrvGfxROM);
 	}
 }
 
@@ -493,27 +483,29 @@ static void draw_fg_layer()
 {
 	for (INT32 offs = 0x1f; offs >= 0; offs--)
 	{
-		int flip  = *flipscreen;
-		int sy    = offs * 8;
-		if (flip) sy = 248 - sy;
+		INT32 sy    = (flipscreen) ? (248 - (offs * 8) - 32) : (offs * 8);
+		INT32 sx    = flipscreen ? DrvVidRAM[0x1f1f] : DrvVidRAM[0x1f10];
+		INT32 code  = DrvVidRAM[0x1c00 + offs] + (gfx_bank * 0x200);
+		INT32 color = DrvColRAM[0x1f10] & 0x03;
+		INT32 flip  = flipscreen;
 
-		int code  = DrvVidRAM[0x1c00 + offs] + (*gfx_bank * 0x200);
-		int color = DrvColRAM[0x1f10] & 0x03;
-		int sx = flip ? DrvVidRAM[0x1f1f] : DrvVidRAM[0x1f10];
+		if (netplay_mode && flipscreen) {
+			flip = 0;
+			sy = (224 - 8) - sy;
+			sx = (256 - 8) - sx + 4;
+		}
 
-		if (flip)
-			Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, (232 - sx) + 4, sy ^ 0xf8, color, 2, 0, 0, DrvGfxROM0);
-		else
-			Render8x8Tile_Mask_Clip(pTransDraw, code, sx - 12, sy, color, 2, 0, 0, DrvGfxROM0);
+		Draw8x8MaskTile(pTransDraw, code, sx - 12, sy, flip, flip, color, 2, 0, 0, DrvGfxROM);
 
-		code  = DrvVidRAM[0x1d00 + offs] + (*gfx_bank * 0x200);
+		code  = DrvVidRAM[0x1d00 + offs] + (gfx_bank * 0x200);
 		color = DrvColRAM[0x1f11] & 0x03;
-		sx = flip ? DrvVidRAM[0x1f1e] : DrvVidRAM[0x1f11];
+		sx = flipscreen ? DrvVidRAM[0x1f1e] : DrvVidRAM[0x1f11];
 
-		if (flip)
-			Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, (232 - sx) + 4, sy ^ 0xf8, color, 2, 0, 0, DrvGfxROM0);
-		else
-			Render8x8Tile_Mask_Clip(pTransDraw, code, sx - 12, sy, color, 2, 0, 0, DrvGfxROM0);
+		if (netplay_mode && flipscreen) {
+			sx = (256 - 8) - sx + 4;
+		}
+
+		Draw8x8MaskTile(pTransDraw, code, sx - 12, sy, flip, flip, color, 2, 0, 0, DrvGfxROM);
 	}
 }
 
@@ -524,7 +516,10 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_bg_layer();
+	GenericTilemapSetFlip(0, (!netplay_mode && flipscreen) ? (TMAP_FLIPX | TMAP_FLIPY) : 0);
+	GenericTilemapSetScrollX(0, flipscreen ? -(scroll - 8) : (scroll + 12));	
+	GenericTilemapDraw(0, pTransDraw, 0);
+	
 	draw_sprites();
 	draw_fg_layer();
 
@@ -535,17 +530,14 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
+	BurnWatchdogUpdate();
+	
 	if (DrvReset) {
 		DrvDoReset(1);
 	}
 
-	watchdog++;
-	if (watchdog >= 180) {
-		DrvDoReset(0);
-	}
-
 	{
-		memset (DrvInputs, 0, 3);
+		memset (DrvInputs, 0, sizeof(DrvInputs));
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -553,7 +545,7 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 	}
-
+	ZetNewFrame();
 	ZetOpen(0);
 	ZetRun(3072000 / 60);
 	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
@@ -564,12 +556,11 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnDraw) {
-		DrvDraw();
+		BurnDrvRedraw();
 	}
 
 	return 0;
 }
-
 
 static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
@@ -589,6 +580,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
+		BurnWatchdogScan(nAction);
+
+		SCAN_VAR(scroll);
+		SCAN_VAR(gfx_bank);
+		SCAN_VAR(flipscreen);
 	}
 
 	return 0;
@@ -598,15 +594,15 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Funky Bee
 
 static struct BurnRomInfo funkybeeRomDesc[] = {
-	{ "funkybee.1",    0x1000, 0x3372cb33, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "funkybee.3",    0x1000, 0x7bf7c62f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "funkybee.2",    0x1000, 0x8cc0fe8e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "funkybee.4",    0x1000, 0x1e1aac26, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "funkybee.1",		0x1000, 0x3372cb33, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "funkybee.3",		0x1000, 0x7bf7c62f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "funkybee.2",		0x1000, 0x8cc0fe8e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "funkybee.4",		0x1000, 0x1e1aac26, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "funkybee.5",    0x2000, 0x86126655, 2 | BRF_GRA },		//  4 Graphics tiles
-	{ "funkybee.6",    0x2000, 0x5fffd323, 2 | BRF_GRA },		//  5
+	{ "funkybee.5",		0x2000, 0x86126655, 2 | BRF_GRA },			 //  4 Graphics tiles
+	{ "funkybee.6",		0x2000, 0x5fffd323, 2 | BRF_GRA },			 //  5
 
-	{ "funkybee.clr",  0x0020, 0xe2cf5fe2, 3 | BRF_GRA },		//  6 Color prom
+	{ "funkybee.clr",	0x0020, 0xe2cf5fe2, 3 | BRF_GRA },			 //  6 Color prom
 };
 
 STD_ROM_PICK(funkybee)
@@ -631,15 +627,15 @@ struct BurnDriver BurnDrvfunkybee = {
 // Funky Bee (bootleg, harder)
 
 static struct BurnRomInfo funkbeebRomDesc[] = {
-	{ "senza_orca.fb1", 0x1000, 0x7f2e7f85, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "funkybee.3",     0x1000, 0x7bf7c62f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "funkybee.2",     0x1000, 0x8cc0fe8e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "senza_orca.fb4", 0x1000, 0x53c2db3b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "senza_orca.fb1",	0x1000, 0x7f2e7f85, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "funkybee.3",		0x1000, 0x7bf7c62f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "funkybee.2",		0x1000, 0x8cc0fe8e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "senza_orca.fb4",	0x1000, 0x53c2db3b, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "funkybee.5",     0x2000, 0x86126655, 2 | BRF_GRA },		 //  4 Graphics tiles
-	{ "funkybee.6",     0x2000, 0x5fffd323, 2 | BRF_GRA },		 //  5
+	{ "funkybee.5",		0x2000, 0x86126655, 2 | BRF_GRA },			 //  4 Graphics tiles
+	{ "funkybee.6",		0x2000, 0x5fffd323, 2 | BRF_GRA },			 //  5
 
-	{ "funkybee.clr",   0x0020, 0xe2cf5fe2, 3 | BRF_GRA },		 //  6 Color prom
+	{ "funkybee.clr",	0x0020, 0xe2cf5fe2, 3 | BRF_GRA },			 //  6 Color prom
 };
 
 STD_ROM_PICK(funkbeeb)
@@ -659,14 +655,14 @@ struct BurnDriver BurnDrvfunkbeeb = {
 // Sky Lancer
 
 static struct BurnRomInfo skylancrRomDesc[] = {
-	{ "1sl.5a",        0x2000, 0xe80b315e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "2sl.5c",        0x2000, 0x9d70567b, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3sl.5d",        0x2000, 0x64c39457, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1sl.5a",			0x2000, 0xe80b315e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "2sl.5c",			0x2000, 0x9d70567b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3sl.5d",			0x2000, 0x64c39457, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "4sl.6a",        0x2000, 0x9b4469a5, 2 | BRF_GRA },		//  3 Graphics tiles
-	{ "5sl.6c",        0x2000, 0x29afa134, 2 | BRF_GRA },		//  4
+	{ "4sl.6a",			0x2000, 0x9b4469a5, 2 | BRF_GRA },			 //  3 Graphics tiles
+	{ "5sl.6c",			0x2000, 0x29afa134, 2 | BRF_GRA },			 //  4
 
-	{ "18s030.1a",     0x0020, 0xe645bacb, 3 | BRF_GRA },		//  5 Color prom
+	{ "18s030.1a",		0x0020, 0xe645bacb, 3 | BRF_GRA },			 //  5 Color prom
 };
 
 STD_ROM_PICK(skylancr)
@@ -691,14 +687,14 @@ struct BurnDriver BurnDrvskylancr = {
 // Sky Lancer (Esco Trading Co license)
 
 static struct BurnRomInfo skylanceRomDesc[] = {
-	{ "1.5a",          0x2000, 0x82d55824, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "2.5c",          0x2000, 0xdff3a682, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.5d",          0x1000, 0x7c006ee6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1.5a",			0x2000, 0x82d55824, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "2.5c",			0x2000, 0xdff3a682, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.5d",			0x1000, 0x7c006ee6, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "4.6a",          0x2000, 0x0f8ede07, 2 | BRF_GRA },		//  3 Graphics tiles
-	{ "5.6b",          0x2000, 0x24cec070, 2 | BRF_GRA },		//  4
+	{ "4.6a",			0x2000, 0x0f8ede07, 2 | BRF_GRA },			 //  3 Graphics tiles
+	{ "5.6b",			0x2000, 0x24cec070, 2 | BRF_GRA },			 //  4
 
-	{ "18s030.1a",     0x0020, 0xe645bacb, 3 | BRF_GRA },		//  5 Color prom
+	{ "18s030.1a",		0x0020, 0xe645bacb, 3 | BRF_GRA },			 //  5 Color prom
 };
 
 STD_ROM_PICK(skylance)

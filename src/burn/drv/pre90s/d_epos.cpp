@@ -760,7 +760,7 @@ static struct BurnRomInfo megadonRomDesc[] = {
 	{ "2732u04b.bin",   0x1000, 0x9b8b7e92, BRF_ESS | BRF_PRG }, //  6
 	{ "2716u11b.bin",   0x0800, 0x599b8b61, BRF_ESS | BRF_PRG }, //  7
 
-	{ "74s288.bin",     0x0020, 0xc779ea99, BRF_GRA },	     //  8 Color PROM
+	{ "74s288.bin",     0x0020, 0xc779ea99, BRF_GRA },	     	 //  8 Color PROM
 };
 
 STD_ROM_PICK(megadon)
@@ -789,7 +789,7 @@ static struct BurnRomInfo catapultRomDesc[] = {
 	{ "co3223.u04",     0x1000, 0x648453bc, BRF_ESS | BRF_PRG }, //  6
 	{ "co3223.u11",     0x0800, 0x08fb8c28, BRF_ESS | BRF_PRG }, //  7
 
-	{ "co3223.u66",     0x0020, 0xe7de76a7, BRF_GRA },	     //  8 Color PROM
+	{ "co3223.u66",     0x0020, 0xe7de76a7, BRF_GRA },	     	 //  8 Color PROM
 };
 
 STD_ROM_PICK(catapult)
@@ -847,7 +847,7 @@ static struct BurnRomInfo theglobRomDesc[] = {
 	{ "globu4.bin",	    0x1000, 0x7ee9fdeb, BRF_ESS | BRF_PRG }, //  6
 	{ "globu11.bin",    0x0800, 0x9e05dee3, BRF_ESS | BRF_PRG }, //  7
 
-	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	     //  8 Color PROM
+	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	     	 //  8 Color PROM
 };
 
 STD_ROM_PICK(theglob)
@@ -876,7 +876,7 @@ static struct BurnRomInfo theglob2RomDesc[] = {
 	{ "611293.u4",	    0x1000, 0xceea0018, BRF_ESS | BRF_PRG }, //  6
 	{ "611293.u11",	    0x0800, 0x6ac83f9b, BRF_ESS | BRF_PRG }, //  7
 
-	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	     //  8 Color PROM
+	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	     	 //  8 Color PROM
 };
 
 STD_ROM_PICK(theglob2)
@@ -905,7 +905,7 @@ static struct BurnRomInfo theglob3RomDesc[] = {
 	{ "theglob3.u4",    0x1000, 0x81db53ad, BRF_ESS | BRF_PRG },	//  6
 	{ "theglob3.u11",   0x0800, 0x0e2e6359, BRF_ESS | BRF_PRG },	//  7
 
-	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	   	//  8 Color PROM
+	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	   			//  8 Color PROM
 };
 
 STD_ROM_PICK(theglob3)
@@ -946,6 +946,35 @@ struct BurnDriver BurnDrvIgmo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, igmoRomInfo, igmoRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, IgmoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
+	236, 272, 3, 4
+};
+
+
+// Eeekk!
+
+static struct BurnRomInfo eeekkRomDesc[] = {
+	{ "e12063.u10",		0x1000, 0xedd05de2, BRF_ESS | BRF_PRG }, 	//  0 Z80 code
+	{ "e12063.u9",		0x1000, 0x6f57114a, BRF_ESS | BRF_PRG }, 	//  1
+	{ "e12063.u8",		0x1000, 0xbcb0ebbd, BRF_ESS | BRF_PRG }, 	//  2
+	{ "e12063.u7",		0x1000, 0xa0df8f77, BRF_ESS | BRF_PRG }, 	//  3
+	{ "e12063.u6",		0x1000, 0x61953b0a, BRF_ESS | BRF_PRG }, 	//  4
+	{ "e12063.u5",		0x1000, 0x4c22c6d9, BRF_ESS | BRF_PRG }, 	//  5
+	{ "e12063.u4",		0x1000, 0x3d341208, BRF_ESS | BRF_PRG }, 	//  6
+	{ "e12063.u11",		0x0800, 0x417faff0, BRF_ESS | BRF_PRG }, 	//  7
+
+	{ "prom.u66",		0x0020, 0xda9952f2, BRF_GRA },				//  8 Color Prom (missing)
+};
+
+STD_ROM_PICK(eeekk)
+STD_ROM_FN(eeekk)
+
+struct BurnDriver BurnDrvEeekk = {
+	"eeekk", NULL, NULL, NULL, "1984",
+	"Eeekk!\0", NULL, "Epos Corporation", "EPOS Tristar",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, eeekkRomInfo, eeekkRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, IgmoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
 };

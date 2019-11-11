@@ -999,7 +999,7 @@ static struct BurnRomInfo eeekkRomDesc[] = {
 	{ "u4_e12063.u4",		0x1000, 0x3d341208, BRF_ESS | BRF_PRG }, 	//  6
 	{ "u11_e12063.u11",		0x0800, 0x417faff0, BRF_ESS | BRF_PRG }, 	//  7
 
-	{ "74s288.u66",			0x0020, 0xda9952f2, BRF_GRA },				//  8 Color Prom (missing)
+	{ "74s288.u66",			0x0020, 0xda9952f2, BRF_GRA },				//  8 Color Prom 
 };
 
 STD_ROM_PICK(eeekk)
@@ -1009,8 +1009,8 @@ struct BurnDriver BurnDrvEeekk = {
 	"eeekk", NULL, NULL, NULL, "1983",
 	"Eeekk!\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, eeekkRomInfo, eeekkRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, EeekkDIPInfo,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, eeekkRomInfo, eeekkRomName, NULL, NULL, NULL, NULL, MegadonInputInfo, EeekkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
 };

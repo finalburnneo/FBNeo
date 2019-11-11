@@ -685,7 +685,7 @@ static struct BurnRomInfo ropemanRomDesc[] = {
 	{ "2.16b",		0x0100, 0x750a9677, 5 | BRF_GRA },           // 14
 	{ "3.16g",		0x0100, 0xb5c75a27, 5 | BRF_GRA },           // 15
 
-	{ "pal10l8.6g",			0x0044, 0x82e98da9, 6 | BRF_OPT }, 	 // 16 PALs
+	{ "pal10l8.6g",			0x002c, 0x82e98da9, 6 | BRF_OPT }, 	 // 16 PALs
 	{ "n82s153.pal1.bin",	0x00eb, 0xbaebe804, 6 | BRF_OPT },   // 17
 	{ "n82s153.pal2.bin",	0x00eb, 0xa0e1b7a0, 6 | BRF_OPT },   // 18
 };

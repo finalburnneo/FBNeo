@@ -1803,12 +1803,12 @@ static struct BurnRomInfo tripoolaRomDesc[] = {
 	{ "tri33c.bin",		0x1000, 0xd7ef061d, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "tri45c.bin",		0x1000, 0x51b813b1, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "tri25d.bin",		0x1000, 0x8e64512d, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "tp1ckt",		0x1000, 0x72ec43a3, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "tp1ckt",			0x1000, 0x72ec43a3, 1 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "trisnd.bin",		0x1000, 0x945c4b8b, 2 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
 
-	{ "tri105a.bin",	0x1000, 0x366a753c, 11 | BRF_GRA },           //  8 Graphics
-	{ "tri93a.bin",		0x1000, 0x35213782, 11 | BRF_GRA },           //  9
+	{ "tri105a.bin",	0x1000, 0x366a753c, 11 | BRF_GRA },          //  8 Graphics
+	{ "tri93a.bin",		0x1000, 0x35213782, 11 | BRF_GRA },          //  9
 };
 
 STD_ROM_PICK(tripoola)
@@ -1828,31 +1828,31 @@ struct BurnDriver BurnDrvTripoola = {
 // Super Triv (English questions)
 
 static struct BurnRomInfo strivRomDesc[] = {
-	{ "s.triv_p1.2f",	0x1000, 0xdcf5da6e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "s.triv_p2.3f",	0x1000, 0x921610ba, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "pr3.5f",		0x1000, 0xc36f0e21, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "s.triv_cp4.f6",	0x1000, 0x0dc98a97, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "s.triv_c1.5e",	0x1000, 0x2c2c7282, 9 | BRF_PRG | BRF_ESS }, //  4
-	{ "s.triv_c2.e6",	0x1000, 0xe21bd3ab, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "s.triv_c3.e7",	0x1000, 0x2f4b0570, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "s.triv_p1.2f",		0x1000, 0xdcf5da6e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "s.triv_p2.3f",		0x1000, 0x921610ba, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pr3.5f",		    	0x1000, 0xc36f0e21, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "s.triv_cp4.6f",		0x1000, 0x0dc98a97, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "s.triv_c3.7e",		0x1000, 0x2f4b0570, 9 | BRF_PRG | BRF_ESS }, //  4
+	{ "s.triv_c2.6e",		0x1000, 0xe21bd3ab, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "s.triv_c1.5e",		0x1000, 0x2c2c7282, 1 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "s.triv_sound.5a",	0x1000, 0xb7ddf84f, 2 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
 
-	{ "s.triv.5a",		0x1000, 0x8f982a9c, 3 | BRF_GRA },           //  8 Graphics
-	{ "s.triv.4a",		0x1000, 0x8f982a9c, 3 | BRF_GRA },           //  9
-	{ "s.triv.2a",		0x1000, 0x7ad4358e, 3 | BRF_GRA },           // 10
-	{ "s.triv.1a",		0x1000, 0x8f60229b, 3 | BRF_GRA },           // 11
+	{ "s.triv.5a",			0x1000, 0x8f982a9c, 3 | BRF_GRA },           //  8 Graphics
+	{ "s.triv.4a",			0x1000, 0x8f982a9c, 3 | BRF_GRA },           //  9
+	{ "s.triv.2a",			0x1000, 0x7ad4358e, 3 | BRF_GRA },           // 10
+	{ "s.triv.1a",			0x1000, 0x8f60229b, 3 | BRF_GRA },           // 11
 
-	{ "s.triv_ts0.u6",	0x8000, 0x796849da, 4 | BRF_GRA },           // 12 Question data
-	{ "s.triv_ts1.u7",	0x8000, 0x059d4900, 4 | BRF_GRA },           // 13
-	{ "s.triv_ts2.u8",	0x8000, 0x184159aa, 4 | BRF_GRA },           // 14
-	{ "s.triv_ta0.u9",	0x8000, 0xc4eb7f2e, 4 | BRF_GRA },           // 15
-	{ "s.triv_ta1.u10",	0x8000, 0x3d9a136f, 4 | BRF_GRA },           // 16
-	{ "s.triv_ta2.u11",	0x8000, 0x8fa557b2, 4 | BRF_GRA },           // 17
-	{ "s.triv_te0.u12",	0x8000, 0x3f5d1c4b, 4 | BRF_GRA },           // 18
-	{ "s.triv_te1.u13",	0x8000, 0x6ae2bf3a, 4 | BRF_GRA },           // 19
-	{ "s.triv_tg0.u14",	0x8000, 0x8fc9c76d, 4 | BRF_GRA },           // 20
-	{ "s.triv_tg1.u15",	0x8000, 0x981a2a43, 4 | BRF_GRA },           // 21
+	{ "s.triv_ts0.u6",		0x8000, 0x796849da, 4 | BRF_GRA },           // 12 Question data
+	{ "s.triv_ts1.u7",		0x8000, 0x059d4900, 4 | BRF_GRA },           // 13
+	{ "s.triv_ts2.u8",		0x8000, 0x184159aa, 4 | BRF_GRA },           // 14
+	{ "s.triv_ta0.u9",		0x8000, 0xc4eb7f2e, 4 | BRF_GRA },           // 15
+	{ "s.triv_ta1.u10",		0x8000, 0x3d9a136f, 4 | BRF_GRA },           // 16
+	{ "s.triv_ta2.u11",		0x8000, 0x8fa557b2, 4 | BRF_GRA },           // 17
+	{ "s.triv_te0.u12",		0x8000, 0x3f5d1c4b, 4 | BRF_GRA },           // 18
+	{ "s.triv_te1.u13",		0x8000, 0x6ae2bf3a, 4 | BRF_GRA },           // 19
+	{ "s.triv_tg0.u14",		0x8000, 0x8fc9c76d, 4 | BRF_GRA },           // 20
+	{ "s.triv_tg1.u15",		0x8000, 0x981a2a43, 4 | BRF_GRA },           // 21
 };
 
 STD_ROM_PICK(striv)
@@ -1899,9 +1899,9 @@ static INT32 StrivInit()
 
 struct BurnDriverD BurnDrvStriv = {
 	"striv", NULL, NULL, NULL, "1985",
-	"Super Triv (English questions)\0", "resets after displaying the first question", "Nova du Canada", "Jack the Giantkiller",
+	"Super Triv (English questions)\0", "bad sound", "Nova du Canada", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, strivRomInfo, strivRomName, NULL, NULL, NULL, NULL, StrivInputInfo, StrivDIPInfo,
 	StrivInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 256, 3, 4
@@ -1921,23 +1921,23 @@ static struct BurnRomInfo strivfRomDesc[] = {
 
 	{ "snd.5a",		0x1000, 0xb7ddf84f, 2 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
 
-	{ "chr3.5a",		0x1000, 0x8f982a9c, 3 | BRF_GRA },           //  8 Graphics
-	{ "chr2.4a",		0x1000, 0x8f982a9c, 3 | BRF_GRA },           //  9
-	{ "chr1.2a",		0x1000, 0x7ad4358e, 3 | BRF_GRA },           // 10
-	{ "chr0.1a",		0x1000, 0x8f60229b, 3 | BRF_GRA },           // 11
+	{ "chr3.5a",	0x1000, 0x8f982a9c, 3 | BRF_GRA },           //  8 Graphics
+	{ "chr2.4a",	0x1000, 0x8f982a9c, 3 | BRF_GRA },           //  9
+	{ "chr1.2a",	0x1000, 0x7ad4358e, 3 | BRF_GRA },           // 10
+	{ "chr0.1a",	0x1000, 0x8f60229b, 3 | BRF_GRA },           // 11
 
 	{ "rom.u6",		0x8000, 0xa32d7a28, 4 | BRF_GRA },           // 12 Question data
 	{ "rom.u7",		0x8000, 0xbc44ae18, 4 | BRF_GRA },           // 13
-	{ "tbfd2.u8",		0x8000, 0x9572984a, 4 | BRF_GRA },           // 14
-	{ "tbfd3.u9",		0x8000, 0xd904a2f1, 4 | BRF_GRA },           // 15
-	{ "tbfl0.u10",		0x8000, 0x680264a2, 4 | BRF_GRA },           // 16
-	{ "tbfl1.u11",		0x8000, 0x33e99d00, 4 | BRF_GRA },           // 17
-	{ "tbfl2.u12",		0x8000, 0x2e7a941f, 4 | BRF_GRA },           // 18
-	{ "tbft0.u13",		0x8000, 0x7d2e5e89, 4 | BRF_GRA },           // 19
-	{ "tbft1.u14",		0x8000, 0xd36246cf, 4 | BRF_GRA },           // 20
-	{ "tbfd1.u15",		0x8000, 0x745db398, 4 | BRF_GRA },           // 21
+	{ "tbfd2.u8",	0x8000, 0x9572984a, 4 | BRF_GRA },           // 14
+	{ "tbfd3.u9",	0x8000, 0xd904a2f1, 4 | BRF_GRA },           // 15
+	{ "tbfl0.u10",	0x8000, 0x680264a2, 4 | BRF_GRA },           // 16
+	{ "tbfl1.u11",	0x8000, 0x33e99d00, 4 | BRF_GRA },           // 17
+	{ "tbfl2.u12",	0x8000, 0x2e7a941f, 4 | BRF_GRA },           // 18
+	{ "tbft0.u13",	0x8000, 0x7d2e5e89, 4 | BRF_GRA },           // 19
+	{ "tbft1.u14",	0x8000, 0xd36246cf, 4 | BRF_GRA },           // 20
+	{ "tbfd1.u15",	0x8000, 0x745db398, 4 | BRF_GRA },           // 21
 
-	{ "tbfd0.u21",		0x2000, 0x15b83099, 0 | BRF_OPT },           // 22 Junk leftover rom
+	{ "tbfd0.u21",	0x2000, 0x15b83099, 0 | BRF_OPT },           // 22 Junk leftover rom
 };
 
 STD_ROM_PICK(strivf)

@@ -999,7 +999,7 @@ static struct BurnRomInfo eeekkRomDesc[] = {
 	{ "u4_e12063.u4",		0x1000, 0x3d341208, BRF_ESS | BRF_PRG }, 	//  6
 	{ "u11_e12063.u11",		0x0800, 0x417faff0, BRF_ESS | BRF_PRG }, 	//  7
 
-	{ "74s288.u66",			0x0020, 0xda9952f2, BRF_GRA },				//  8 Color Prom 
+	{ "74s288.u66",			0x0020, 0xf2078c38, BRF_GRA },				//  8 Color Prom 
 };
 
 STD_ROM_PICK(eeekk)

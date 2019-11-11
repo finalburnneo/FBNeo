@@ -219,6 +219,42 @@ static struct BurnDIPInfo IgmoDIPList[]=
 
 STDDIPINFO(Igmo)
 
+static struct BurnDIPInfo EeekkDIPList[]=
+{
+	{0x09, 0xff, 0xff, 0x00, NULL				},
+	{0x0A, 0xff, 0xff, 0xfe, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Coinage"			},
+	{0x09, 0x01, 0x01, 0x00, "1 Coin 1 Credits "		},
+	{0x09, 0x01, 0x01, 0x01, "1 Coin 2 Credits "		},
+
+	{0   , 0xfe, 0   ,    8, "Difficulty"		},
+	{0x09, 0x01, 0x26, 0x00, "1 (easy)"			},
+	{0x09, 0x01, 0x26, 0x02, "2"				},
+	{0x09, 0x01, 0x26, 0x20, "3"				},
+	{0x09, 0x01, 0x26, 0x22, "4"				},
+	{0x09, 0x01, 0x26, 0x04, "5"				},
+	{0x09, 0x01, 0x26, 0x06, "6"				},
+	{0x09, 0x01, 0x26, 0x24, "7"				},
+	{0x09, 0x01, 0x26, 0x26, "8 (Hard)"			},
+
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x09, 0x01, 0x50, 0x00, "3"				},
+	{0x09, 0x01, 0x50, 0x10, "4"				},
+	{0x09, 0x01, 0x50, 0x40, "5"				},
+	{0x09, 0x01, 0x50, 0x50, "6"				},
+
+	{0   , 0xfe, 0   ,    2, "Extra life Range"			},
+	{0x09, 0x01, 0x08, 0x08, "100000 - 170000 points"	},
+	{0x09, 0x01, 0x08, 0x00, "20000 - 90000 points"		},
+	
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x09, 0x01, 0x80, 0x80, "Off"				},
+	{0x09, 0x01, 0x80, 0x00, "On"				},
+};
+
+STDDIPINFO(Eeekk)
+
 static struct BurnDIPInfo CatapultDIPList[]=
 {
 	{0x09, 0xff, 0xff, 0x00, NULL				},
@@ -954,27 +990,27 @@ struct BurnDriver BurnDrvIgmo = {
 // Eeekk!
 
 static struct BurnRomInfo eeekkRomDesc[] = {
-	{ "e12063.u10",		0x1000, 0xedd05de2, BRF_ESS | BRF_PRG }, 	//  0 Z80 code
-	{ "e12063.u9",		0x1000, 0x6f57114a, BRF_ESS | BRF_PRG }, 	//  1
-	{ "e12063.u8",		0x1000, 0xbcb0ebbd, BRF_ESS | BRF_PRG }, 	//  2
-	{ "e12063.u7",		0x1000, 0xa0df8f77, BRF_ESS | BRF_PRG }, 	//  3
-	{ "e12063.u6",		0x1000, 0x61953b0a, BRF_ESS | BRF_PRG }, 	//  4
-	{ "e12063.u5",		0x1000, 0x4c22c6d9, BRF_ESS | BRF_PRG }, 	//  5
-	{ "e12063.u4",		0x1000, 0x3d341208, BRF_ESS | BRF_PRG }, 	//  6
-	{ "e12063.u11",		0x0800, 0x417faff0, BRF_ESS | BRF_PRG }, 	//  7
+	{ "u10_e12063.u10",		0x1000, 0xedd05de2, BRF_ESS | BRF_PRG }, 	//  0 Z80 code
+	{ "u9_e12063.u9",		0x1000, 0x6f57114a, BRF_ESS | BRF_PRG }, 	//  1
+	{ "u8_e12063.u8",		0x1000, 0xbcb0ebbd, BRF_ESS | BRF_PRG }, 	//  2
+	{ "u7_e12063.u7",		0x1000, 0xa0df8f77, BRF_ESS | BRF_PRG }, 	//  3
+	{ "u6_e12063.u6",		0x1000, 0x61953b0a, BRF_ESS | BRF_PRG }, 	//  4
+	{ "u5_e12063.u5",		0x1000, 0x4c22c6d9, BRF_ESS | BRF_PRG }, 	//  5
+	{ "u4_e12063.u4",		0x1000, 0x3d341208, BRF_ESS | BRF_PRG }, 	//  6
+	{ "u11_e12063.u11",		0x0800, 0x417faff0, BRF_ESS | BRF_PRG }, 	//  7
 
-	{ "prom.u66",		0x0020, 0xda9952f2, BRF_GRA },				//  8 Color Prom (missing)
+	{ "74s288.u66",			0x0020, 0xda9952f2, BRF_GRA },				//  8 Color Prom (missing)
 };
 
 STD_ROM_PICK(eeekk)
 STD_ROM_FN(eeekk)
 
 struct BurnDriver BurnDrvEeekk = {
-	"eeekk", NULL, NULL, NULL, "1984",
+	"eeekk", NULL, NULL, NULL, "1983",
 	"Eeekk!\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, eeekkRomInfo, eeekkRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, IgmoDIPInfo,
+	NULL, eeekkRomInfo, eeekkRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, EeekkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
 };

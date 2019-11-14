@@ -14,8 +14,7 @@ jobs:
         with:
           msystem: MINGW32
       - name: mingw update 
-        run: |
-           msys2do pacman -S --noconfirm --needed wget base-devel mingw-w64-i686-toolchain make perl nasm
+        run : msys2do pacman -S --noconfirm --needed base-devel mingw-w64-i686-toolchain make perl nasm
       - name: mingw build
         run : msys2do make mingw510 -j9 RELEASEBUILD=1
       - name: make artifacts

@@ -4851,6 +4851,7 @@ INT32 NeoFrame()
 		switch (nGameID) {
 			case 0x0050: bRenderMode = 1; break; // ninjacommando (cd)
 			case 0x0061: bRenderMode = 1; break; // ssideki2 (cd)
+			case 0x0200: bRenderMode = 1; break; // turfmasters (cd)
 		}
 		bRenderLineByLine = (!bNeoCDIRQEnabled) && bRenderMode;
 	}

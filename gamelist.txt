@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12286 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12292 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -905,7 +905,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_beastwj	|  	| Beast Warriors (Jpn)					| md_beastw	| 1991	| Riot		| Sega Megadrive| 					|
 | md_beastw	|  	| Beast Wrestler (USA)					| 		| 1991	| Renovation	| Sega Megadrive| 					|
 | md_beastbal	|  	| Beastball (Prototype)					| 		| 199?	| Spectrum Holob| Sega Megadrive| 					|
-| beastfp	|  	| Beastie Feastie					| suprglob	| 1984	| Epos Corporati| Pac-man	| 					|
+| beastfp	|  	| Beastie Feastie (Pac-Man conversion)			| suprglob	| 1984	| Epos Corporati| Pac-man	| 					|
 | md_beavis	|  	| Beavis and Butt-Head (Euro)				| 		| 1994	| Viacom New Med| Sega Megadrive| 					|
 | gg_beavis	|  	| Beavis and Butt-head (Euro, USA)			| 		| 1994	| Viacom New Med| Sega Game Gear| 					|
 | gg_beavisp	|  	| Beavis and Butt-head (Prototype?)			| gg_beavis	| 1994	| Viacom New Med| Sega Game Gear| 					|
@@ -947,11 +947,12 @@ This list contains all games supported by FinalBurn Neo.
 | bermudatj	|  	| Bermuda Triangle (Japan)				| bermudat	| 1987	| SNK		| Miscellaneous	| 					|
 | bermudata	|  	| Bermuda Triangle (World Wars) (US)			| worldwar	| 1987	| SNK		| Miscellaneous	| 					|
 | bermudat	|  	| Bermuda Triangle (World?)				| 		| 1987	| SNK		| Miscellaneous	| 					|
-| berzerkf	|  	| Berzerk (French Speech)				| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
-| berzerkg	|  	| Berzerk (German Speech)				| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
-| berzerk	|  	| Berzerk (set 1)					| 		| 1980	| Stern Electron| Miscellaneous	| 					|
-| berzerk1	|  	| Berzerk (set 2)					| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
-| berzerks	|  	| Berzerk (Spanish Speech)				| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
+| berzerkf	|  	| Berzerk (French Speech, revision RC31)		| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
+| berzerkg	|  	| Berzerk (German Speech, revision RC32)		| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
+| berzerkb	|  	| Berzerk (revision RC28)				| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
+| berzerka	|  	| Berzerk (revision RC31)				| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
+| berzerk	|  	| Berzerk (revision RC31A)				| 		| 1980	| Stern Electron| Miscellaneous	| 					|
+| berzerks	|  	| Berzerk (Spanish Speech, revision RC32)		| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
 | bestleag	|  	| Best League (bootleg of Big Striker, Italian Serie A)	| bigstrik	| 1993	| bootleg	| Miscellaneous	| 					|
 | bestleaw	|  	| Best League (bootleg of Big Striker, World Cup)	| bigstrik	| 1993	| bootleg	| Miscellaneous	| 					|
 | bestbest	|  	| Best Of Best						| 		| 1994	| SunA		| Miscellaneous	| 					|
@@ -2982,7 +2983,8 @@ This list contains all games supported by FinalBurn Neo.
 | ecofghtru1	|  	| Eco Fighters (931203 USA)				| ecofghtr	| 1993	| Capcom	| CPS2		| 					|
 | ecofghtrd	|  	| Eco Fighters (931203 World Phoenix Edition)		| ecofghtr	| 1993	| bootleg	| CPS2		| 					|
 | ecofghtru	|  	| Eco Fighters (940215 USA)				| ecofghtr	| 1993	| Capcom	| CPS2		| 					|
-| eeekk		|  	| Eeekk!						| 		| 1984	| Epos Corporati| Pac-man	| 					|
+| eeekkp	|  	| Eeekk! (Pac-man conversion)				| 		| 1984	| Epos Corporati| Pac-man	| 					|
+| eeekk		|  	| Eeekk!						| 		| 1983	| Epos Corporati| EPOS Tristar	| 					|
 | egghunt	|  	| Egg Hunt						| 		| 1995	| Invi Image	| Miscellaneous	| 					|
 | msx_eggerlnd	|  	| Eggerland Mystery (Jpn)				| 		| 1985	| HAL Kenkyuujo	| MSX		| 					|
 | eggor		|  	| Eggor							| 		| 1982	| Telko		| Pac-man	| 					|
@@ -3548,8 +3550,8 @@ This list contains all games supported by FinalBurn Neo.
 | freeze	|  	| Freeze						| 		| 1984	| Cinematronics	| Jack the Giant| 					|
 | cv_frenzya	|  	| Frenzy (Alt 1)					| cv_frenzy	| 1983	| Coleco	| ColecoVision	| 					|
 | cv_frenzya2	|  	| Frenzy (Alt 2)					| cv_frenzy	| 1983	| Coleco	| ColecoVision	| 					|
+| frenzy	|  	| Frenzy (revision RA1)					| 		| 1981	| Stern Electron| Miscellaneous	| 					|
 | cv_frenzy	|  	| Frenzy						| 		| 1983	| Coleco	| ColecoVision	| 					|
-| frenzy	|  	| Frenzy						| 		| 1981	| Stern Electron| Miscellaneous	| 					|
 | friskyt	|  	| Frisky Tom (set 1)					| 		| 1981	| Nichibutsu	| Miscellaneous	| 					|
 | friskyta	|  	| Frisky Tom (set 2)					| friskyt	| 1981	| Nichibutsu	| Miscellaneous	| 					|
 | friskytb	|   NW	| Frisky Tom (set 3, encrypted)				| friskyt	| 1981	| Nichibutsu	| Miscellaneous	| Broken, please use parent romset!	|
@@ -4341,6 +4343,7 @@ This list contains all games supported by FinalBurn Neo.
 | hvysmsha	|  	| Heavy Smash (Asia version -4)				| hvysmsh	| 1993	| Data East Corp| DECO 156	| 					|
 | hvysmsh	|  	| Heavy Smash (Europe version -2)			| 		| 1993	| Data East Corp| DECO 156	| 					|
 | hvysmshj	|  	| Heavy Smash (Japan version -2)			| hvysmsh	| 1993	| Data East Corp| DECO 156	| 					|
+| hvyunitja	|  	| Heavy Unit (Japan, Alternate ROM format)		| hvyunit	| 1988	| Kaneko / Taito| Miscellaneous	| 					|
 | hvyunitj	|  	| Heavy Unit (Japan, Newer)				| hvyunit	| 1988	| Kaneko / Taito| Miscellaneous	| 					|
 | hvyunitjo	|  	| Heavy Unit (Japan, Older)				| hvyunit	| 1988	| Kaneko / Taito| Miscellaneous	| 					|
 | hvyunit	|  	| Heavy Unit (World)					| 		| 1988	| Kaneko / Taito| Miscellaneous	| 					|
@@ -7480,6 +7483,7 @@ This list contains all games supported by FinalBurn Neo.
 | powerinsb	|  	| Power Instinct (USA, bootleg set 2)			| powerins	| 1993	| Atlus		| Miscellaneous	| 					|
 | powerinsc	|   NW	| Power Instinct (USA, bootleg set 3)			| powerins	| 1993	| bootleg	| Miscellaneous	| 					|
 | powerinspu	|  	| Power Instinct (USA, prototype)			| powerins	| 1993	| Atlus		| Miscellaneous	| 					|
+| pwrinst2k	|  	| Power instinct 2 (Korea, ver. 94/04/08)		| pwrinst2	| 1994	| Atlus		| Cave		| 					|
 | pwrinst2	|  	| Power Instinct 2 (USA, ver. 94/04/08)			| 		| 1994	| Atlus		| Cave		| 					|
 | pce_pleag93	|  	| Power League '93					| 		| 1993	| Hudson	| PC Engine	| 					|
 | pce_pleagas	|  	| Power League (All Star Version)			| 		| 19??	| Hudson	| PC Engine	| 					|
@@ -7968,6 +7972,7 @@ This list contains all games supported by FinalBurn Neo.
 | reaktor	|  	| Reaktor (Track & Field conversion)			| 		| 1987	| Zilec		| Miscellaneous	| 					|
 | rbff1a	|  	| Real Bout Fatal Fury / Real Bout Garou Densetsu (bug f| rbff1		| 1995	| SNK		| Neo Geo MVS	| 					|
 | rbff1k	|  	| Real Bout Fatal Fury / Real Bout Garou Densetsu (Korea| rbff1		| 1995	| SNK		| Neo Geo MVS	| 					|
+| rbff1ka	|  	| Real Bout Fatal Fury / Real Bout Garou Densetsu (Korea| rbff1		| 1995	| SNK		| Neo Geo MVS	| 					|
 | rbff1		|  	| Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-0| 		| 1995	| SNK		| Neo Geo MVS	| 					|
 | rbff2k	|  	| Real Bout Fatal Fury 2 - The Newcomers (Korean release| rbff2		| 1998	| SNK		| Neo Geo MVS	| 					|
 | rbff2h	|  	| Real Bout Fatal Fury 2 - The Newcomers / Real Bout Gar| rbff2		| 1998	| SNK		| Neo Geo MVS	| 					|
@@ -10032,7 +10037,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_stbladj	|  	| Super Thunder Blade (Jpn, Launch Cart)		| md_stblad	| 1988	| Sega		| Sega Megadrive| 					|
 | md_stblad	|  	| Super Thunder Blade (World)				| 		| 1989	| Sega		| Sega Megadrive| 					|
 | suprtrio	|  	| Super Trio						| 		| 1994	| Gameace	| Miscellaneous	| 					|
-| striv		| D NW	| Super Triv (English questions)			| 		| 1985	| Nova du Canada| Jack the Giant| resets after displaying the first ques|
+| striv		| D	| Super Triv (English questions)			| 		| 1985	| Nova du Canada| Jack the Giant| bad sound				|
 | strivf	| D	| Super Triv (French questions)				| striv		| 1985	| Nova du Canada| Jack the Giant| bad sound				|
 | strvmstr	|  	| Super Trivia Master					| 		| 1986	| Enerdyne Techn| Miscellaneous	| 					|
 | sg1k_superuwol|  	| Super UWOL! SG-1000					| 		| 2016	| Mojon Twins	| Sega SG-1000	| 					|
@@ -11467,6 +11472,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_venom	|  	| Venom & Spider-Man - Separation Anxiety (Euro, USA)	| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | cv_venture	|  	| Venture						| 		| 1982	| Coleco	| ColecoVision	| 					|
 | venus		|  	| Venus							| gyruss	| 1983	| bootleg	| GX347		| 					|
+| verbena	|  	| Verbena (bootleg of Carnival)				| carnival	| 1980	| bootleg (Cocom| Vic Dual	| 					|
 | md_vermilj	|  	| Vermilion (Jpn)					| md_vermil	| 1989	| Sega		| Sega Megadrive| 					|
 | md_verytex	|  	| Verytex (Jpn)						| 		| 1991	| Asmik Ace	| Sega Megadrive| 					|
 | msx_vesikauhu	|  	| Vesikauhu (demo)					| 		| 2000	| Bandwagon	| MSX		| 					|

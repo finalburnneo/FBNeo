@@ -965,8 +965,9 @@ DRV		BurnDrvBermudata;
 DRV		BurnDrvBermudat;
 DRV		BurnDrvBerzerkf;
 DRV		BurnDrvBerzerkg;
+DRV		BurnDrvBerzerkb;
+DRV		BurnDrvBerzerka;
 DRV		BurnDrvBerzerk;
-DRV		BurnDrvBerzerk1;
 DRV		BurnDrvBerzerks;
 DRV		BurnDrvBestleag;
 DRV		BurnDrvBestleaw;
@@ -3052,6 +3053,7 @@ DRV		BurnDrvCpsEcofghtrh;
 DRV		BurnDrvCpsEcofghtru1;
 DRV		BurnDrvCpsEcofghtrd;
 DRV		BurnDrvCpsEcofghtru;
+DRV		BurnDrvEeekkp;
 DRV		BurnDrvEeekk;
 DRV		BurnDrvEgghunt;
 DRV		BurnDrvMSX_eggerlnd;
@@ -3626,8 +3628,8 @@ DRV		BurnDrvFreekicka;
 DRV		BurnDrvFreeze;
 DRV		BurnDrvcv_frenzya;
 DRV		BurnDrvcv_frenzya2;
-DRV		BurnDrvcv_frenzy;
 DRV		BurnDrvFrenzy;
+DRV		BurnDrvcv_frenzy;
 DRV		BurnDrvFriskyt;
 DRV		BurnDrvFriskyta;
 DRV		BurnDrvFriskytb;
@@ -4433,6 +4435,7 @@ DRV		BurnDrvmd_heavynov;
 DRV		BurnDrvHvysmsha;
 DRV		BurnDrvHvysmsh;
 DRV		BurnDrvHvysmshj;
+DRV		BurnDrvHvyunitja;
 DRV		BurnDrvHvyunitj;
 DRV		BurnDrvHvyunitjo;
 DRV		BurnDrvHvyunit;
@@ -7646,6 +7649,7 @@ DRV		BurnDrvPowerina;
 DRV		BurnDrvPowerinb;
 DRV		BurnDrvPowerinsc;
 DRV		BurnDrvPowerinspu;
+DRV		BurnDrvPwrinst2k;
 DRV		BurnDrvPwrinst2;
 DRV		BurnDrvpce_pleag93;
 DRV		BurnDrvpce_pleagas;
@@ -8146,6 +8150,7 @@ DRV		BurnDrvRazmataz;
 DRV		BurnDrvReaktor;
 DRV		BurnDrvrbff1a;
 DRV		BurnDrvrbff1k;
+DRV		BurnDrvrbff1ka;
 DRV		BurnDrvrbff1;
 DRV		BurnDrvrbff2k;
 DRV		BurnDrvrbff2h;
@@ -10251,7 +10256,7 @@ DRV		BurnDrvmd_stbladj;
 DRV		BurnDrvmd_stblad;
 DRV		BurnDrvSuprtrio;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvStriv;			// resets after displaying the first question [NOT WORKING]
+DRV		BurnDrvStriv;			// bad sound
 DRV		BurnDrvStrivf;			// bad sound
 #endif
 DRV		BurnDrvStrvmstr;
@@ -11709,6 +11714,7 @@ DRV		BurnDrvVendettaun;
 DRV		BurnDrvmd_venom;
 DRV		BurnDrvcv_venture;
 DRV		BurnDrvVenus;
+DRV		BurnDrvVerbena;
 DRV		BurnDrvmd_vermilj;
 DRV		BurnDrvmd_verytex;
 DRV		BurnDrvMSX_vesikauhu;
@@ -13486,7 +13492,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_beastwj,			// Beast Warriors (Jpn)
 	&BurnDrvmd_beastw,			// Beast Wrestler (USA)
 	&BurnDrvmd_beastbal,		// Beastball (Prototype)
-	&BurnDrvbeastfp,			// Beastie Feastie
+	&BurnDrvbeastfp,			// Beastie Feastie (Pac-Man conversion)
 	&BurnDrvmd_beavis,			// Beavis and Butt-Head (Euro)
 	&BurnDrvgg_beavis,			// Beavis and Butt-head (Euro, USA)
 	&BurnDrvgg_beavisp,			// Beavis and Butt-head (Prototype?)
@@ -13530,11 +13536,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBermudatj,			// Bermuda Triangle (Japan)
 	&BurnDrvBermudata,			// Bermuda Triangle (World Wars) (US)
 	&BurnDrvBermudat,			// Bermuda Triangle (World?)
-	&BurnDrvBerzerkf,			// Berzerk (French Speech)
-	&BurnDrvBerzerkg,			// Berzerk (German Speech)
-	&BurnDrvBerzerk,			// Berzerk (set 1)
-	&BurnDrvBerzerk1,			// Berzerk (set 2)
-	&BurnDrvBerzerks,			// Berzerk (Spanish Speech)
+	&BurnDrvBerzerkf,			// Berzerk (French Speech, revision RC31)
+	&BurnDrvBerzerkg,			// Berzerk (German Speech, revision RC32)
+	&BurnDrvBerzerkb,			// Berzerk (revision RC28)
+	&BurnDrvBerzerka,			// Berzerk (revision RC31)
+	&BurnDrvBerzerk,			// Berzerk (revision RC31A)
+	&BurnDrvBerzerks,			// Berzerk (Spanish Speech, revision RC32)
 	&BurnDrvBestleag,			// Best League (bootleg of Big Striker, Italian Serie A)
 	&BurnDrvBestleaw,			// Best League (bootleg of Big Striker, World Cup)
 	&BurnDrvBestbest,			// Best Of Best
@@ -15619,6 +15626,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsEcofghtru1,		// Eco Fighters (931203 USA)
 	&BurnDrvCpsEcofghtrd,		// Eco Fighters (931203 World Phoenix Edition)
 	&BurnDrvCpsEcofghtru,		// Eco Fighters (940215 USA)
+	&BurnDrvEeekkp,				// Eeekk! (Pac-man conversion)
 	&BurnDrvEeekk,				// Eeekk!
 	&BurnDrvEgghunt,			// Egg Hunt
 	&BurnDrvMSX_eggerlnd,		// Eggerland Mystery (Jpn)
@@ -16193,8 +16201,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFreeze,				// Freeze
 	&BurnDrvcv_frenzya,			// Frenzy (Alt 1)
 	&BurnDrvcv_frenzya2,		// Frenzy (Alt 2)
+	&BurnDrvFrenzy,				// Frenzy (revision RA1)
 	&BurnDrvcv_frenzy,			// Frenzy
-	&BurnDrvFrenzy,				// Frenzy
 	&BurnDrvFriskyt,			// Frisky Tom (set 1)
 	&BurnDrvFriskyta,			// Frisky Tom (set 2)
 	&BurnDrvFriskytb,			// Frisky Tom (set 3, encrypted) [Broken, please use parent romset!, NOT WORKING]
@@ -17000,6 +17008,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHvysmsha,			// Heavy Smash (Asia version -4)
 	&BurnDrvHvysmsh,			// Heavy Smash (Europe version -2)
 	&BurnDrvHvysmshj,			// Heavy Smash (Japan version -2)
+	&BurnDrvHvyunitja,			// Heavy Unit (Japan, Alternate ROM format)
 	&BurnDrvHvyunitj,			// Heavy Unit (Japan, Newer)
 	&BurnDrvHvyunitjo,			// Heavy Unit (Japan, Older)
 	&BurnDrvHvyunit,			// Heavy Unit (World)
@@ -20213,6 +20222,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPowerinb,			// Power Instinct (USA, bootleg set 2)
 	&BurnDrvPowerinsc,			// Power Instinct (USA, bootleg set 3) [no comment, NOT WORKING]
 	&BurnDrvPowerinspu,			// Power Instinct (USA, prototype)
+	&BurnDrvPwrinst2k,			// Power instinct 2 (Korea, ver. 94/04/08)
 	&BurnDrvPwrinst2,			// Power Instinct 2 (USA, ver. 94/04/08)
 	&BurnDrvpce_pleag93,		// Power League '93
 	&BurnDrvpce_pleagas,		// Power League (All Star Version)
@@ -20713,6 +20723,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvReaktor,			// Reaktor (Track & Field conversion)
 	&BurnDrvrbff1a,				// Real Bout Fatal Fury / Real Bout Garou Densetsu (bug fix revision)
 	&BurnDrvrbff1k,				// Real Bout Fatal Fury / Real Bout Garou Densetsu (Korean release)
+	&BurnDrvrbff1ka,			// Real Bout Fatal Fury / Real Bout Garou Densetsu (Korean release, bug fix revision)
 	&BurnDrvrbff1,				// Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-095)(NGH-095)
 	&BurnDrvrbff2k,				// Real Bout Fatal Fury 2 - The Newcomers (Korean release)
 	&BurnDrvrbff2h,				// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGH-2400)
@@ -22818,7 +22829,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_stblad,			// Super Thunder Blade (World)
 	&BurnDrvSuprtrio,			// Super Trio
 #if defined FBNEO_DEBUG
-	&BurnDrvStriv,				// Super Triv (English questions) [resets after displaying the first question, NOT WORKING]
+	&BurnDrvStriv,				// Super Triv (English questions) [bad sound]
 	&BurnDrvStrivf,				// Super Triv (French questions) [bad sound]
 #endif
 	&BurnDrvStrvmstr,			// Super Trivia Master
@@ -24276,6 +24287,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_venom,			// Venom & Spider-Man - Separation Anxiety (Euro, USA)
 	&BurnDrvcv_venture,			// Venture
 	&BurnDrvVenus,				// Venus
+	&BurnDrvVerbena,			// Verbena (bootleg of Carnival)
 	&BurnDrvmd_vermilj,			// Vermilion (Jpn)
 	&BurnDrvmd_verytex,			// Verytex (Jpn)
 	&BurnDrvMSX_vesikauhu,		// Vesikauhu (demo)

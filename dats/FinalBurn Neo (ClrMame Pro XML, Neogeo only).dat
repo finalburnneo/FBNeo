@@ -10616,6 +10616,65 @@
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
 		<driver status="good"/>
 	</game>
+	<game name="rbff1ka" cloneof="rbff1" romof="rbff1">
+		<description>Real Bout Fatal Fury / Real Bout Garou Densetsu (Korean release, bug fix revision)</description>
+		<year>1995</year>
+		<manufacturer>SNK</manufacturer>
+		<rom name="095-p1k.p1" size="1048576" crc="f705364b"/>
+		<rom name="095-p2.sp2" merge="095-p2.sp2" size="2097152" crc="cc15826e"/>
+		<rom name="095-s1.s1" merge="095-s1.s1" size="131072" crc="b6bf5e08"/>
+		<rom name="069-c1.c1" merge="069-c1.c1" size="4194304" crc="e302f93c"/>
+		<rom name="069-c2.c2" merge="069-c2.c2" size="4194304" crc="1053a455"/>
+		<rom name="069-c3.c3" merge="069-c3.c3" size="4194304" crc="1c0fde2f"/>
+		<rom name="069-c4.c4" merge="069-c4.c4" size="4194304" crc="a25fc3d0"/>
+		<rom name="095-c5.c5" merge="095-c5.c5" size="4194304" crc="8b9b65df"/>
+		<rom name="095-c6.c6" merge="095-c6.c6" size="4194304" crc="3e164718"/>
+		<rom name="095-c7.c7" merge="095-c7.c7" size="2097152" crc="ca605e12"/>
+		<rom name="095-c8.c8" merge="095-c8.c8" size="2097152" crc="4e6beb6c"/>
+		<rom name="095-m1.m1" merge="095-m1.m1" size="131072" crc="653492a7"/>
+		<rom name="069-v1.v1" merge="069-v1.v1" size="4194304" crc="2bdbd4db"/>
+		<rom name="069-v2.v2" merge="069-v2.v2" size="4194304" crc="a698a487"/>
+		<rom name="095-v3.v3" merge="095-v3.v3" size="4194304" crc="189d1c6c"/>
+		<rom name="095-eprk.ep1" size="524288" crc="422093ed"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
+	</game>
 	<game name="rbff1" romof="neogeo">
 		<description>Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-095)(NGH-095)</description>
 		<year>1995</year>

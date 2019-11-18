@@ -27,7 +27,7 @@ BUILD_X86_ASM=
 INCLUDE_AVI_RECORDING=
 BUILD_A68K=
 UNICODE=
-
+RASPBIAN_VER=$(shell cat /etc/os-release | grep VERSION_ID | cut -d '=' -f2)
 
 #
 #	Specify paths/files
@@ -88,7 +88,14 @@ incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 		  -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/interface/vmcs_host/linux \
 		  -I/opt/vc/include
 
-lib	= -lstdc++ -lSDL -lbcm_host -lEGL -lGLESv2 -lpthread -L/usr/X11R6/lib -L/opt/vc/lib
+lib	= -lstdc++ -lSDL -lbcm_host -lpthread -L/usr/X11R6/lib -L/opt/vc/lib
+
+ifeq ($(shell test $(RASPBIAN_VER) -ge 9; echo $$?),0)
+  # Stretch and higher
+  lib += -lbrcmEGL -lbrcmGLESv2
+else
+  lib += -lEGL -lGLESv2
+endif
 
 autdep	= $(depobj:.o=.d)
 drvdep	= $(drvsrc:.o=.d)

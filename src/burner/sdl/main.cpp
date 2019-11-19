@@ -71,6 +71,8 @@ int main(int argc, char *argv[])
     	if (DrvInit(i, 0) !=0)
     	{
             printf("driver init failed\n");
+            BurnLibExit();
+            SDL_Quit();
             return 1;
     	}
 

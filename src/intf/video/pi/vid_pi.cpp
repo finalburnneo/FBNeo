@@ -405,8 +405,11 @@ static int FbInit()
 	
 	int virtualWidth;
 	int virtualHeight;
+	int xAspect;
+	int yAspect;
 
 	if (bDrvOkay) {
+		BurnDrvGetAspect(&xAspect, &yAspect);
 		BurnDrvGetVisibleSize(&virtualWidth, &virtualHeight);
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		    screenRotated = 1;
@@ -416,17 +419,15 @@ static int FbInit()
 			screenFlipped = 1;
 		}
 		
-		fprintf(stderr, "Game screen size: %dx%d (%s,%s)\n",
+		fprintf(stderr, "Game screen size: %dx%d (%s,%s) (aspect: %d:%d)\n",
 			virtualWidth, virtualHeight,
 			screenRotated ? "rotated" : "not rotated",
-			screenFlipped ? "flipped" : "not flipped");
+			screenFlipped ? "flipped" : "not flipped",
+			xAspect, yAspect);
 
 		nVidImageDepth = 16;
 		nVidImageBPP = 2;
 		
-		int xAspect;
-		int yAspect;
-		BurnDrvGetAspect(&xAspect, &yAspect);
 		float ratio = (float) yAspect / xAspect;
 
 		if (!screenRotated) {
@@ -446,7 +447,10 @@ static int FbInit()
 		bufferBpp = nVidImageBPP;
 
 		if (!screenRotated) {
-			bufferHeight = bufferWidth * ratio;
+			if (bufferHeight / ratio >= bufferWidth)
+				bufferWidth = bufferHeight / ratio;
+			else
+				bufferHeight = bufferWidth * ratio;
 		} else {
 			bufferWidth = bufferHeight / ratio;
 		}

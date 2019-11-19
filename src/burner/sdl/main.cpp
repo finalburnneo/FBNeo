@@ -68,7 +68,11 @@ int main(int argc, char *argv[])
 	ConfigAppLoad();
 	ConfigAppSave();
 
-	DrvInit(i, 0);
+    	if (DrvInit(i, 0) !=0)
+    	{
+            printf("driver init failed\n");
+            return 1;
+    	}
 
 	RunMessageLoop();
 

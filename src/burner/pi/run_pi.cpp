@@ -193,12 +193,12 @@ int RunMessageLoop()
 
 	RunInit();
 
-	GameInpCheckMouse();															// Hide the cursor
+	GameInpCheckMouse();
 	while (!nExitEmulator) {
 		SDL_Event event;
 		if ( SDL_PollEvent(&event) ) {
 		switch (event.type) {
-			case SDL_QUIT: /* Windows was closed */
+			case SDL_QUIT:
 				nExitEmulator = 1;
 				break;
 			}
@@ -219,6 +219,8 @@ int SaveNVRAM()
 
 	fprintf(stderr, "Writing NVRAM to \"%s\"\n", temp);
 	BurnStateSave(temp, 0);
+
+    return 0;
 }
 
 int ReadNVRAM()
@@ -228,4 +230,6 @@ int ReadNVRAM()
 
 	fprintf(stderr, "Reading NVRAM from \"%s\"\n", temp);
     BurnStateLoad(temp, 0, NULL);
+
+    return 0;
 }

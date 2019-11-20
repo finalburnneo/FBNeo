@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <bcm_host.h>
-#include <interface/vchiq_arm/vchiq_if.h>
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 #include <SDL.h>
@@ -14,7 +12,7 @@
 
 extern "C" {
 #include "matrix.h"
-#include "phl_gles.h"
+#include "pigl.h"
 }
 
 typedef	struct ShaderInfo {
@@ -105,12 +103,12 @@ static const GLfloat vertices[] = {
 
 static int piInitVideo()
 {
-	if (!phl_gles_init()) {
+	if (!pigl_init()) {
 		return 0;
 	}
 
-	screen_width = phl_gles_screen_width;
-	screen_height = phl_gles_screen_height - vborder_thickness;
+	screen_width = pigl_screen_width;
+	screen_height = pigl_screen_height - vborder_thickness;
 
 	fprintf(stderr, "Initializing shaders...\n");
 
@@ -161,7 +159,7 @@ static void piDestroyVideo()
 		glDeleteProgram(shader.program);
 	}
 
-	phl_gles_shutdown();
+	pigl_shutdown();
 }
 
 static void piUpdateEmuDisplay()
@@ -172,7 +170,7 @@ static void piUpdateEmuDisplay()
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT);
-	glViewport(0, phl_gles_screen_height - screen_height, screen_width, screen_height);
+	glViewport(0, pigl_screen_height - screen_height, screen_width, screen_height);
 
 	ShaderInfo *sh = &shader;
 
@@ -200,7 +198,7 @@ static void piUpdateEmuDisplay()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	phl_gles_swap_buffers();
+	pigl_swap();
 }
 
 static GLuint createShader(GLenum type, const char *shaderSrc)
@@ -402,7 +400,7 @@ static int FbInit()
 	if (!piInitVideo()) {
 		return 1;
 	}
-	
+
 	int virtualWidth;
 	int virtualHeight;
 	int xAspect;

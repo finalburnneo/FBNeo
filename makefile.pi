@@ -28,6 +28,11 @@ INCLUDE_AVI_RECORDING=
 BUILD_A68K=
 UNICODE=
 RASPBIAN_VER=$(shell cat /etc/os-release | grep VERSION_ID | cut -d '=' -f2)
+PI_VER=$(shell cat /proc/device-tree/model | cut -d ' ' -f 3)
+
+ifeq ($(shell test $(PI_VER) -ge 4; echo $$?),0)
+  BUILD_DRM=1
+endif
 
 #
 #	Specify paths/files

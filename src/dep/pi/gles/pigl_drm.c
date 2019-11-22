@@ -209,6 +209,8 @@ int pigl_init()
         return 0;
     }
 
+    fprintf(stderr, "Using renderer: %s\n", glGetString(GL_RENDERER));
+
     return 1;
 }
 

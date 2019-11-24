@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 		}
 
 		if (i == nBurnDrvCount) {
-			printf("%s is not supported by FB Alpha.",argv[1]);
+			printf("%s is not supported by FinalBurn Neo.\n",argv[1]);
 			return 1;
 		}
 	}
@@ -67,10 +67,14 @@ int main(int argc, char *argv[])
 	bCheatsAllowed = false;
 	ConfigAppLoad();
 	ConfigAppSave();
-
-	DrvInit(i, 0);
-
-	RunMessageLoop();
+    	if (!DrvInit(i, 0))
+    	{
+		RunMessageLoop();
+	}
+	else
+	{
+		printf("There was an error loading your selected game.\n");
+	}
 
 	DrvExit();
 	MediaExit();

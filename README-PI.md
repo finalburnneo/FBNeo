@@ -1,12 +1,25 @@
 # FinalBurn Neo for Raspberry Pi
 
 ## Compiling
-To compile the emulator, run `make pi`. You will need SDL libraries for sound
-and input.
+To compile the emulator, run `make pi`. You will need SDL 1.2 libraries for
+sound and input:
+
+```
+sudo apt-get install libsdl1.2-dev
+```
+
+To build on Pi4, you may need additional libraries, including:
+
+```
+sudo apt-get install libgles2-mesa-dev libgbm-dev libdrm-dev
+```
+
+If you receive "failed to fetch" errors during `apt-get install`, update
+the definitions (`sudo apt-get update`) and try again.
 
 ## Compatibility
-Presently, the emulator will run on Raspberry Pi 1, 2 and 3. It will most
-likely compile on 4, but will not run on it.
+The emulator runs very smoothly on Pi 1, 2 and 3. It runs on 4, but the
+performance isn't nearly as good.
 
 ## Input
 To customize joystick input, place a text file in a directory named `joyconfig`.
@@ -64,3 +77,6 @@ switch isn't guaranteed to always work, since not every game has a free play
 dipswitch, and because different sets may have the switch labeled differently.
 `-F`: Enables free play hack mode. In hack mode, pressing Start also generates
 a Coin button press.
+
+## About
+Pi build is maintained by [0xe1f](https://github.com/0xe1f).

@@ -2010,7 +2010,7 @@ static INT32 DrvDraw()
 		bRecalcPalette = 0;
 	}
 
-//	DrawLayers(0, nScreenHeight);
+	DrawLayers(0, nScreenHeight);
 
 	if (nSpriteEnable & 1) draw_sprites();
 
@@ -2083,7 +2083,7 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 
 		if (scanline>=8 && scanline < 248 && nPrevScreenPos != (scanline-8)+1) {
 			if (nPrevScreenPos >= 0 && nPrevScreenPos <= 239)
-				DrawLayers(nPrevScreenPos, (scanline-8)+1);
+			//	DrawLayers(nPrevScreenPos, (scanline-8)+1);
 			nPrevScreenPos = (scanline-8)+1;
 		}
 
@@ -2095,7 +2095,7 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 	else if (scanline == 248) // vblank
 	{
 		if (nPrevScreenPos != 240) {
-			DrawLayers(nPrevScreenPos, 240);
+		//	DrawLayers(nPrevScreenPos, 240);
 		}
 		nPrevScreenPos = 0;
 

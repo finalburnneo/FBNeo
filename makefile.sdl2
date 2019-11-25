@@ -1,4 +1,4 @@
-# Makefile for FBNeo, SDL
+# Makefile for FBNeo, SDL2
 #
 # The first pass makes sure all intermediary targets are present. The second pass updates
 # any targets, if necessary. (Intermediary) targets which have their own unique rules
@@ -11,10 +11,10 @@ ifeq ($(UNAME_S),Darwin)
 DARWIN=1
 endif
 
+
 ifeq ($(OS),Windows_NT)
 WINDOWS=1
 endif
-
 
 #
 #	Flags. Uncomment any of these declarations to enable their function.
@@ -25,6 +25,7 @@ ifndef	SKIPDEPEND
 DEPEND = 1
 endif
 
+# SANITIZE = 1
 
 #
 #	Declare variables
@@ -68,9 +69,9 @@ depobj	+= 	neocdlist.o \
 			\
 			2xpm.o 2xsai.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o \
 			\
-			inp_sdl.o aud_sdl.o support_paths.o ips_manager.o scrn.o \
-		  cd_sdl2.o config.o main.o run.o stringset.o bzip.o drv.o media.o \
-			inpdipsw.o vid_sdlfx.o dynhuff.o replay.o vid_sdlopengl.o input.o stated.o
+			inp_sdl2.o aud_sdl.o support_paths.o ips_manager.o scrn.o \
+			cd_sdl2.o config.o main.o run.o stringset.o bzip.o drv.o media.o \
+			inpdipsw.o vid_sdl2opengl.o vid_sdl2.o dynhuff.o replay.o sdl2_gui.o sdl2_inprint.o input.o stated.o
 
 ifdef INCLUDE_7Z_SUPPORT
 depobj	+=	un7z.o \
@@ -89,13 +90,15 @@ endif
 
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 		  -I/local/include -I$(srcdir)dep/sdl/include \
-		  -I$(srcdir)intf/input/sdl `sdl-config --cflags`
+		  -I$(srcdir)intf/input/sdl `sdl2-config --cflags`
 
 ifdef WINDOWS
-lib	= -lstdc++ -lSDL `sdl-config --libs` -lopengl32  -lm
+lib	= -lstdc++ `sdl2-config --libs` -lopengl32 -lSDL2_image -lm
 else
-lib	= -lstdc++ -lSDL `sdl-config --libs` -lGL -lm
+lib	= -lstdc++ `sdl2-config --libs` -lGL -lSDL2_image -lm
 endif
+
+
 
 ifdef DARWIN
 lib += -L/System/Library/Frameworks/OpenGL.framework/Libraries/
@@ -187,7 +190,7 @@ ASFLAGS	=  -O1 -f coff -w-orphan-labels
 #       DEF     = -Dsinf=\(float\)sin -Dcosf=\(float\)cos -Dasinf=\(float\)asin -Dacosf=\(float\)acos -Dsqrtf=\(float\)sqrt
 
 # FIXME
-	DEF	:= -DBUILD_SDL -DUSE_SPEEDHACKS -DFILENAME=$(NAME) -DUSE_FILE32API
+	DEF	:= -DBUILD_SDL2 -DUSE_SPEEDHACKS -DFILENAME=$(NAME) -DUSE_FILE32API
 
 ifdef UNICODE
 	DEF	:= $(DEF) -D_UNICODE
@@ -239,17 +242,19 @@ endif
 
 ifdef	SYMBOL
 
-	CFLAGS   += -ggdb3
-	CXXFLAGS += -ggdb3
+	CFLAGS   += -ggdb3 -fno-omit-frame-pointer
+	CXXFLAGS += -ggdb3 -fno-omit-frame-pointer
 	ASFLAGS  += -g
 	DEF	 := $(DEF) -D_DEBUG
+
+ifdef SANITIZE
+  CFLAGS   += -fsanitize=address -fsanitize=undefined -fsanitize=bounds-strict
+  CXXFLAGS += -fsanitize=address -fsanitize=undefined -fsanitize=bounds-strict
+endif
 
 ifdef PROFILE
 	CFLAGS	 += -pg
 	CXXFLAGS += -pg
-else
-	CFLAGS	 += -fomit-frame-pointer
-	CXXFLAGS += -fomit-frame-pointer
 endif
 
 else
@@ -291,12 +296,12 @@ ifeq ($(MAKELEVEL),1)
 ifdef DEPEND
 
 all:	init $(drvdep) $(autdep) $(autobj) $(autdrv)
-	@$(MAKE) -f makefile.sdl -s
+	@$(MAKE) -f makefile.sdl2 -s
 
 else
 
 all:	init $(autobj) $(autdrv)
-	@$(MAKE) -f makefile.sdl -s
+	@$(MAKE) -f makefile.sdl2 -s
 
 endif
 else
@@ -471,7 +476,7 @@ pgm_draw.d pgm_draw.o:	$(pgm_sprite.h)
 $(pgm_sprite.h):	pgm_sprite_create.cpp
 	@echo Generating $(srcdir)dep/generated/$(@F)...
 	@$(CC) $(CXXFLAGS) $(LDFLAGS) $< \
-		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
+		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)  -Dmain=main
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
 
 

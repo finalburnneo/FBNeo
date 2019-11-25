@@ -8,6 +8,7 @@ extern int nEnableFreeplayHack;
 int nAppVirtualFps = 6000;			// App fps * 100
 bool bRunPause = 0;
 bool bAlwaysProcessKeyboardInput=0;
+TCHAR szAppBurnVer[16];
 
 void formatBinary(int number, int sizeBytes, char *dest, int len)
 {
@@ -158,6 +159,19 @@ int main(int argc, char *argv[])
 {
 	const char *romname = NULL;
 	nEnableFreeplayHack = 0;
+
+	// Make version string
+	if (nBurnVer & 0xFF)
+	{
+		 // private version (alpha)
+		 _stprintf(szAppBurnVer, _T("%x.%x.%x.%02x"), nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF);
+	}
+	else
+	{
+		 // public version
+		 _stprintf(szAppBurnVer, _T("%x.%x.%x"), nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF);
+	}
+
 
 	for (int i = 1; i < argc; i++) {
 		if (*argv[i] != '-') {

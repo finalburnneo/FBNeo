@@ -8,7 +8,7 @@
 static unsigned int nSoundFps;
 
 int nSDLVolume = SDL_MIX_MAXVOLUME;
-int (*GetNextSound)(int);				// Callback used to request more sound
+int (*GetNextSound)(int);               // Callback used to request more sound
 
 static SDL_AudioSpec audiospec;
 
@@ -19,47 +19,44 @@ static int nAudLoopLen;
 
 void audiospec_callback(void* /* data */, Uint8* stream, int len)
 {
-//	dprintf(_T("audiospec_callback %i"), len);
-
+#ifdef BUILD_SDL2
+	SDL_memset(stream, 0, len);
+#endif
 	int end = nSDLPlayPos + len;
-	if (end > nAudLoopLen) {
-	
-//		dprintf(_T(" %i - %i"), nSDLPlayPos, nSDLPlayPos + nAudLoopLen - nSDLPlayPos);
-	
+	if (end > nAudLoopLen)
+	{
 		SDL_MixAudio(stream, (Uint8*)SDLAudBuffer + nSDLPlayPos, nAudLoopLen - nSDLPlayPos, nSDLVolume);
 		end -= nAudLoopLen;
-
-//		dprintf(_T(", %i - %i (%i)"), 0, end, nAudLoopLen - nSDLPlayPos + end);
-
 		SDL_MixAudio(stream + nAudLoopLen - nSDLPlayPos, (Uint8*)SDLAudBuffer, end, nSDLVolume);
 		nSDLPlayPos = end;
-	} else {
+	}
+	else
+	{
 		SDL_MixAudio(stream, (Uint8*)SDLAudBuffer + nSDLPlayPos, len, nSDLVolume);
 		nSDLPlayPos = end;
-		
-		if (nSDLPlayPos == nAudLoopLen) {
+
+		if (nSDLPlayPos == nAudLoopLen)
+		{
 			nSDLPlayPos = 0;
 		}
 	}
-
-//	dprintf(_T("\n"));
 }
 
-static int SDLSoundGetNextSoundFiller(int)							// int bDraw
+static int SDLSoundGetNextSoundFiller(int)                          // int bDraw
 {
-	if (nAudNextSound == NULL) {
+	if (nAudNextSound == NULL)
+	{
 		return 1;
 	}
-	memset(nAudNextSound, 0, nAudSegLen << 2);						// Write silence into the buffer
+	memset(nAudNextSound, 0, nAudSegLen << 2);                  // Write silence into the buffer
 
 	return 0;
 }
 
 static int SDLSoundBlankSound()
 {
-	dprintf (_T("SDLBlankSound\n"));
-	if (nAudNextSound) {
-		dprintf (_T("blanking nAudNextSound\n"));
+	if (nAudNextSound)
+	{
 		memset(nAudNextSound, 0, nAudSegLen << 2);
 	}
 	return 0;
@@ -71,25 +68,23 @@ static int SDLSoundCheck()
 {
 	int nPlaySeg, nFollowingSeg;
 
-	if (!bAudPlaying) {
-		dprintf(_T("SDLSoundCheck (not playing)\n"));
-		return 0;
-	}
+	if (!bAudPlaying)
+		return 1;
 
 	// Since the SDL buffer is smaller than a segment, only fill the buffer up to the start of the currently playing segment
 	nPlaySeg = nSDLPlayPos / (nAudSegLen << 2) - 1;
 
-//	dprintf(_T("SDLSoundCheck (seg %i)\n"), nPlaySeg);
-
-	if (nPlaySeg >= nAudSegCount) {
+	if (nPlaySeg >= nAudSegCount)
+	{
 		nPlaySeg -= nAudSegCount;
 	}
-	if (nPlaySeg < 0) {
+	if (nPlaySeg < 0)
+	{
 		nPlaySeg = nAudSegCount - 1;
 	}
 
-	if (nSDLFillSeg == nPlaySeg) {
-		SDL_Delay(1);
+	if (nSDLFillSeg == nPlaySeg)
+	{
 		return 0;
 	}
 
@@ -97,34 +92,30 @@ static int SDLSoundCheck()
 	nFollowingSeg = nSDLFillSeg;
 	WRAP_INC(nFollowingSeg);
 
-	while (nSDLFillSeg != nPlaySeg) {
+	while (nSDLFillSeg != nPlaySeg)
+	{
 		int bDraw;
 
-		// fill nSDLFillSeg
-//		dprintf(_T("Filling seg %i at %i\n"), nSDLFillSeg, nSDLFillSeg * (nAudSegLen << 2));
-
 		bDraw = (nFollowingSeg == nPlaySeg);//	|| bAlwaysDrawFrames;	// If this is the last seg of sound, flag bDraw (to draw the graphics)
+		GetNextSound(bDraw);                                // get more sound into nAudNextSound
 
-//		nAudNextSound = SDLAudBuffer + nSDLFillSeg * (nAudSegLen << 1);
-		GetNextSound(bDraw);										// get more sound into nAudNextSound
-
-//		if (nAudDSPModule)	{
-//			DspDo(nAudNextSound, nAudSegLen);
-//		}
+		if (nAudDSPModule[0])
+		{
+			DspDo(nAudNextSound, nAudSegLen);
+		}
 
 		memcpy((char*)SDLAudBuffer + nSDLFillSeg * (nAudSegLen << 2), nAudNextSound, nAudSegLen << 2);
 
 		nSDLFillSeg = nFollowingSeg;
 		WRAP_INC(nFollowingSeg);
 	}
-	
+
 	return 0;
 }
 
 static int SDLSoundExit()
 {
-	dprintf(_T("SDLSoundExit\n"));
-
+	DspExit();
 	SDL_CloseAudio();
 
 	free(SDLAudBuffer);
@@ -138,11 +129,13 @@ static int SDLSoundExit()
 
 static int SDLSetCallback(int (*pCallback)(int))
 {
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		GetNextSound = SDLSoundGetNextSoundFiller;
-	} else {
+	}
+	else
+	{
 		GetNextSound = pCallback;
-		dprintf(_T("SDL callback set\n"));
 	}
 	return 0;
 }
@@ -152,16 +145,20 @@ static int SDLSoundInit()
 	SDL_AudioSpec audiospec_req;
 	int nSDLBufferSize;
 
-	dprintf(_T("SDLSoundInit (%dHz)\n"), nAudSampleRate[0]);
+	printf("SDLSoundInit (%dHz)\n", nAudSampleRate[0]);
 
-	if (nAudSampleRate[0] <= 0) {
+	if (nAudSampleRate[0] <= 0)
+	{
 		return 1;
 	}
 
 	nSoundFps = nAppVirtualFps;
 	nAudSegLen = (nAudSampleRate[0] * 100 + (nSoundFps >> 1)) / nSoundFps;
 	nAudLoopLen = (nAudSegLen * nAudSegCount) << 2;
-	for (nSDLBufferSize = 64; nSDLBufferSize < (nAudSegLen >> 1); nSDLBufferSize <<= 1) { }
+	for (nSDLBufferSize = 64; nSDLBufferSize < (nAudSegLen >> 1); nSDLBufferSize <<= 1)
+	{
+
+	}
 
 	audiospec_req.freq = nAudSampleRate[0];
 	audiospec_req.format = AUDIO_S16;
@@ -170,15 +167,17 @@ static int SDLSoundInit()
 	audiospec_req.callback = audiospec_callback;
 
 	SDLAudBuffer = (short*)malloc(nAudLoopLen);
-	if (SDLAudBuffer == NULL) {
-		dprintf(_T("Couldn't malloc SDLAudBuffer\n"));
+	if (SDLAudBuffer == NULL)
+	{
+		printf("Couldn't malloc SDLAudBuffer\n");
 		SDLSoundExit();
 		return 1;
 	}
 	memset(SDLAudBuffer, 0, nAudLoopLen);
 
 	nAudNextSound = (short*)malloc(nAudSegLen << 2);
-	if (nAudNextSound == NULL) {
+	if (nAudNextSound == NULL)
+	{
 		SDLSoundExit();
 		return 1;
 	}
@@ -186,12 +185,12 @@ static int SDLSoundInit()
 	nSDLPlayPos = 0;
 	nSDLFillSeg = nAudSegCount - 1;
 
-	if(SDL_OpenAudio(&audiospec_req, &audiospec)) {
+	if (SDL_OpenAudio(&audiospec_req, &audiospec))
+	{
 		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
-		dprintf(_T("Couldn't open audio: %s\n"), SDL_GetError());
 		return 1;
-	}		
-
+	}
+	DspInit();
 	SDLSetCallback(NULL);
 
 	return 0;
@@ -199,8 +198,6 @@ static int SDLSoundInit()
 
 static int SDLSoundPlay()
 {
-	dprintf(_T("SDLSoundPlay\n"));
-
 	SDL_PauseAudio(0);
 	bAudPlaying = 1;
 
@@ -209,8 +206,6 @@ static int SDLSoundPlay()
 
 static int SDLSoundStop()
 {
-	dprintf(_T("SDLSoundStop\n"));
-
 	SDL_PauseAudio(1);
 	bAudPlaying = 0;
 
@@ -219,7 +214,6 @@ static int SDLSoundStop()
 
 static int SDLSoundSetVolume()
 {
-	dprintf(_T("SDLSoundSetVolume\n"));
 	return 1;
 }
 

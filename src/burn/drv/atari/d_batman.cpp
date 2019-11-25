@@ -53,7 +53,7 @@ static struct BurnInputInfo BatmanInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 fire 2"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
-	
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy2 + 2,	"tilt"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 3,	"service"	},
@@ -782,7 +782,7 @@ static struct BurnRomInfo batmanRomDesc[] = {
 	{ "136085-1042.17e",			0x20000, 0x8c496986, 6 | BRF_GRA },           // 25
 	{ "136085-1043.15e",			0x20000, 0x51812d3b, 6 | BRF_GRA },           // 26
 	{ "136085-1044.12e",			0x20000, 0x5e2d7f31, 6 | BRF_GRA },           // 27
-	
+
 	{ "batman-eeprom.bin",			0x00800, 0xc859b535, 7 | BRF_PRG | BRF_ESS }, // 28 NVRAM Data
 
 	{ "gal16v8a-136085-1001.m9",	0x00117, 0x45dfc0cf, 8 | BRF_OPT },           // 29 PLDs

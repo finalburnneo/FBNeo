@@ -3,64 +3,70 @@
 
 int MediaInit()
 {
-	//ScrnInit()			// Init the Scrn Window
+   //ScrnInit()			// Init the Scrn Window
 
-	if (!bInputOkay) {
-		InputInit();		// Init Input
-	}
+   if (!bInputOkay)
+   {
+      InputInit();                           // Init Input
+   }
 
-	nAppVirtualFps = nBurnFPS;
+   nAppVirtualFps = nBurnFPS;
 
-	if (!bAudOkay) {
-		AudSoundInit();		// Init Sound (not critical if it fails)
-	}
+   if (!bAudOkay)
+   {
+      AudSoundInit();                           // Init Sound (not critical if it fails)
+   }
 
-	nBurnSoundRate = 0;		// Assume no sound
-	pBurnSoundOut = NULL;
-	if (bAudOkay) {
-		nBurnSoundRate = nAudSampleRate[nAudSelect];
-		nBurnSoundLen = nAudSegLen;
-	}
+   nBurnSoundRate = 0;              // Assume no sound
+   pBurnSoundOut  = NULL;
+   if (bAudOkay)
+   {
+      nBurnSoundRate = nAudSampleRate[nAudSelect];
+      nBurnSoundLen  = nAudSegLen;
+   }
 
-	if (!bVidOkay) {
-		// Reinit the video plugin
-		VidInit();
-		if (!bVidOkay && nVidFullscreen) {
+   if (!bVidOkay)
+   {
+      // Reinit the video plugin
+      VidInit();
+      if (!bVidOkay && nVidFullscreen)
+      {
+         nVidFullscreen = 0;
 
-			nVidFullscreen = 0;
+         MediaExit();
+         return MediaInit();
+      }
+      if (!nVidFullscreen)
+      {
+         //ScrnSize();
+      }
 
-			MediaExit();
-			return (MediaInit());
-		}
-		if (!nVidFullscreen) {
-			//ScrnSize();
-		}
+      if (!bVidOkay)
+      {
+         printf("Initialized video: %s\n", VidGetModuleName());
+      }
 
-		if (!bVidOkay) {
-			printf("Initialized video: %s\n", VidGetModuleName());
-		}
+      if (bVidOkay && (bRunPause || !bDrvOkay))
+      {
+         VidRedraw();
+      }
+   }
 
-		if (bVidOkay && (bRunPause || !bDrvOkay)) {
-			VidRedraw();
-		}
-	}
-
-	return 0;
+   return 0;
 }
 
 int MediaExit()
 {
-	nBurnSoundRate = 0;		// Blank sound
-	pBurnSoundOut = NULL;
+   nBurnSoundRate = 0;              // Blank sound
+   pBurnSoundOut  = NULL;
 
-	AudSoundExit();			// Exit sound
+   AudSoundExit();                  // Exit sound
 
-	VidExit();
+   VidExit();
 
-	InputExit();
+   InputExit();
 
-	//ScrnExit();			// Exit the Scrn Window
+   //ScrnExit();			// Exit the Scrn Window
 
-	return 0;
+   return 0;
 }
- 

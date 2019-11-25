@@ -1,136 +1,143 @@
 // Driver Init module
 #include "burner.h"
 
-int bDrvOkay = 0;						// 1 if the Driver has been initted okay, and it's okay to use the BurnDrv functions
+int bDrvOkay = 0;                       // 1 if the Driver has been initted okay, and it's okay to use the BurnDrv functions
 
-char szAppRomPaths[DIRS_MAX][MAX_PATH] = {{"/usr/local/share/roms/"},{"roms/"}, };
+char szAppRomPaths[DIRS_MAX][MAX_PATH] = {{ "/usr/local/share/roms/" }, { "roms/" }, };
 
 static bool bSaveRAM = false;
 
-static int DoLibInit()					// Do Init of Burn library driver
+static int DoLibInit()                  // Do Init of Burn library driver
 {
-	int nRet;
+   int nRet;
 
-	BzipOpen(false);
+   BzipOpen(false);
 
-	//ProgressCreate();
+   //ProgressCreate();
 
-	nRet = BurnDrvInit();
+   nRet = BurnDrvInit();
 
-	BzipClose();
+   BzipClose();
 
-	//ProgressDestroy();
+   //ProgressDestroy();
 
-	if (nRet) {
-		return 1;
-	} else {
-		return 0;
-	}
+   if (nRet)
+   {
+      return 1;
+   }
+   else
+   {
+      return 0;
+   }
 }
 
 // Catch calls to BurnLoadRom() once the emulation has started;
 // Intialise the zip module before forwarding the call, and exit cleanly.
-static int DrvLoadRom(unsigned char* Dest, int* pnWrote, int i)
+static int DrvLoadRom(unsigned char *Dest, int *pnWrote, int i)
 {
-	int nRet;
+   int nRet;
 
-	BzipOpen(false);
+   BzipOpen(false);
 
-	if ((nRet = BurnExtLoadRom(Dest, pnWrote, i)) != 0) {
-		char szText[256] = "";
-		char* pszFilename;
+   if ((nRet = BurnExtLoadRom(Dest, pnWrote, i)) != 0)
+   {
+      char  szText[256] = "";
+      char *pszFilename;
 
-		BurnDrvGetRomName(&pszFilename, i, 0);
-		sprintf(szText, "Error loading %s, requested by %s.\nThe emulation will likely suffer problems.", pszFilename, BurnDrvGetTextA(0));
-	}
+      BurnDrvGetRomName(&pszFilename, i, 0);
+      sprintf(szText, "Error loading %s, requested by %s.\nThe emulation will likely suffer problems.", pszFilename, BurnDrvGetTextA(0));
+   }
 
-	BzipClose();
+   BzipClose();
 
-	BurnExtLoadRom = DrvLoadRom;
+   BurnExtLoadRom = DrvLoadRom;
 
-	//ScrnTitle();
+   //ScrnTitle();
 
-	return nRet;
+   return nRet;
 }
 
 int DrvInit(int nDrvNum, bool bRestore)
 {
-	DrvExit();						// Make sure exitted
-	MediaExit();
+   DrvExit();                               // Make sure exitted
+   MediaExit();
 
-	nBurnDrvSelect[0] = nDrvNum;		// Set the driver number
+   nBurnDrvSelect[0] = nDrvNum;                 // Set the driver number
 
-	MediaInit();
+   MediaInit();
 
-	// Define nMaxPlayers early; GameInpInit() needs it (normally defined in DoLibInit()).
-	nMaxPlayers = BurnDrvGetMaxPlayers();
-	GameInpInit();					// Init game input
+   // Define nMaxPlayers early; GameInpInit() needs it (normally defined in DoLibInit()).
+   nMaxPlayers = BurnDrvGetMaxPlayers();
+   GameInpInit();                           // Init game input
 
-	ConfigGameLoad(true);
-	InputMake(true);
+   ConfigGameLoad(true);
+   InputMake(true);
 
-	GameInpDefault();
+   GameInpDefault();
 
-	if (DoLibInit()) {				// Init the Burn library's driver
-		char szTemp[512];
+   if (DoLibInit())                         // Init the Burn library's driver
+   {
+      char szTemp[512];
 
-		BurnDrvExit();				// Exit the driver
+      BurnDrvExit();                                // Exit the driver
 
-		_stprintf (szTemp, _T("There was an error starting '%s'.\n"), BurnDrvGetText(DRV_FULLNAME));
-		return 1;
-	}
+      _stprintf(szTemp, _T("There was an error starting '%s'.\n"), BurnDrvGetText(DRV_FULLNAME));
+      return 1;
+   }
 
-	BurnExtLoadRom = DrvLoadRom;
+   BurnExtLoadRom = DrvLoadRom;
 
-	bDrvOkay = 1;					// Okay to use all BurnDrv functions
+   bDrvOkay = 1;                            // Okay to use all BurnDrv functions
 
-	bSaveRAM = false;
-	nBurnLayer = 0xFF;				// show all layers
+   bSaveRAM   = false;
+   nBurnLayer = 0xFF;                       // show all layers
 
-	// Reset the speed throttling code, so we don't 'jump' after the load
-	RunReset();
-	return 0;
+   // Reset the speed throttling code, so we don't 'jump' after the load
+   RunReset();
+   return 0;
 }
 
 int DrvInitCallback()
 {
-	return DrvInit(nBurnDrvSelect[0], false);
+   return DrvInit(nBurnDrvSelect[0], false);
 }
 
 int DrvExit()
 {
-	if (bDrvOkay) {
-		if (nBurnDrvSelect[0] < nBurnDrvCount) {
-			if (bSaveRAM) {
+   if (bDrvOkay)
+   {
+      if (nBurnDrvSelect[0] < nBurnDrvCount)
+      {
+         if (bSaveRAM)
+         {
+            bSaveRAM = false;
+         }
 
-				bSaveRAM = false;
-			}
+         ConfigGameSave(bSaveInputs);
 
-			ConfigGameSave(bSaveInputs);
+         GameInpExit();                                         // Exit game input
+         BurnDrvExit();                                         // Exit the driver
+      }
+   }
 
-			GameInpExit();				// Exit game input
-			BurnDrvExit();				// Exit the driver
-		}
-	}
+   BurnExtLoadRom = NULL;
 
-	BurnExtLoadRom = NULL;
+   bDrvOkay          = 0;                   // Stop using the BurnDrv functions
+   nBurnDrvSelect[0] = ~0U;                 // no driver selected
 
-	bDrvOkay = 0;					// Stop using the BurnDrv functions
-	nBurnDrvSelect[0] = ~0U;			// no driver selected
-
-	return 0;
+   return 0;
 }
 
 #ifndef BUILD_MACOS
 
-int ProgressUpdateBurner(double dProgress, const TCHAR* pszText, bool bAbs)
+int ProgressUpdateBurner(double dProgress, const TCHAR *pszText, bool bAbs)
 {
-	return 0;
+   return 0;
 }
 
-int AppError(TCHAR* szText, int bWarning)
+int AppError(TCHAR *szText, int bWarning)
 {
-	return 0;
+   return 0;
 }
 
 #endif

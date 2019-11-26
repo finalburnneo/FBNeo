@@ -1,6 +1,8 @@
 // Run module
 #include "burner.h"
 
+#include "cfgpath.h"
+
 bool bAltPause = 0;
 
 int bAlwaysDrawFrames = 0;

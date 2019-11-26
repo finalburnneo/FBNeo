@@ -1,5 +1,8 @@
 // Burner Config file module
 #include "burner.h"
+
+#include "cfgpath.h"
+
 int nIniVersion = 0;
 
 static void CreateConfigName(char *szConfig)

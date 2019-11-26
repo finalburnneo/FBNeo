@@ -104,7 +104,7 @@ static inline void get_user_config_file(char *out, unsigned int maxlen, const ch
 
 	unsigned int home_len = strlen(home);
 	unsigned int appname_len = strlen(appname);
-	const int ext_len = strlen(".conf");
+	const int ext_len = strlen(".ini");
 
 	/* first +1 is "/", second is terminating null */
 	if (home_len + 1 + config_len + appname_len + ext_len + 1 > maxlen) {
@@ -124,7 +124,7 @@ static inline void get_user_config_file(char *out, unsigned int maxlen, const ch
 	}
 	memcpy(out, appname, appname_len);
 	out += appname_len;
-	memcpy(out, ".conf", ext_len);
+	memcpy(out, ".ini", ext_len);
 	out += ext_len;
 	*out = 0;
 #elif defined(WIN32)
@@ -151,7 +151,7 @@ static inline void get_user_config_file(char *out, unsigned int maxlen, const ch
 	char home[MAX_PATH];
 	FSRefMakePath(&ref, (UInt8 *)&home, MAX_PATH);
 	/* first +1 is "/", second is terminating null */
-	const char *ext = ".conf";
+	const char *ext = ".ini";
 	if (strlen(home) + 1 + strlen(appname) + strlen(ext) + 1 > maxlen) {
 		out[0] = 0;
 		return;

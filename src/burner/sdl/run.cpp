@@ -16,11 +16,28 @@ static bool bAppDoStep = 0;
 static bool bAppDoFast = 0;
 static int  nFastSpeed = 6;
 
+static void CreateSavePath(char *szConfig)
+{
+   char cfgdir[MAX_PATH];
+
+   get_user_data_folder(cfgdir, sizeof(cfgdir), "fbneo");
+   if (cfgdir[0] == 0)
+   {
+      printf("Unable to find home directory.\n");
+      return;
+   }
+
+   memcpy(szConfig, cfgdir, sizeof(cfgdir));
+   return;
+}
+
 int SaveNVRAM()
 {
-   char temp[256];
+   char temp[MAX_PATH];
+   char cfgdir[MAX_PATH];
 
-   snprintf(temp, 255, "nvram/%s.nvr", BurnDrvGetTextA(0));
+   CreateSavePath(cfgdir);
+   snprintf(temp, 255, "%s%s.nvr", cfgdir, BurnDrvGetTextA(0));
 
    fprintf(stderr, "Writing NVRAM to \"%s\"\n", temp);
    BurnStateSave(temp, 0);
@@ -30,9 +47,12 @@ int SaveNVRAM()
 
 int ReadNVRAM()
 {
-   char temp[256];
+   char temp[MAX_PATH];
+   char cfgdir[MAX_PATH];
 
-   snprintf(temp, 255, "nvram/%s.nvr", BurnDrvGetTextA(0));
+   CreateSavePath(cfgdir);
+
+   snprintf(temp, 255, "%s%s.nvr", cfgdir, BurnDrvGetTextA(0));
 
    fprintf(stderr, "Reading NVRAM from \"%s\"\n", temp);
    BurnStateLoad(temp, 0, NULL);
@@ -277,6 +297,9 @@ int RunMessageLoop()
             case SDLK_F1:
                bAppDoFast = 1;
                break;
+
+            default:
+               break;
             }
             break;
 
@@ -289,6 +312,9 @@ int RunMessageLoop()
 
             case SDLK_F12:
                quit = 1;
+               break;
+
+            default:
                break;
             }
             break;

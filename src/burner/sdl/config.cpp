@@ -24,8 +24,7 @@ int ConfigAppLoad()
    FILE *f;
 
    CreateConfigName(szConfig);
-   printf("000");
-   printf(szConfig);
+   printf("Loading config from %s\n",szConfig);
    if ((f = fopen(szConfig, "rt")) == NULL)
    {
       return 1;

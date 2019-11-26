@@ -175,11 +175,10 @@ static int ReadKeyboard()
 		return 0;
 	}
 
-	SDLinpKeyboardState = SDL_GetKeyboardState(NULL);
+	SDLinpKeyboardState = SDL_GetKeyboardState(&numkeys);
 	if (SDLinpKeyboardState == NULL) {
 		return 1;
 	}
-
 	// The keyboard has been successfully Read this frame
 	bKeyboardRead = 1;
 
@@ -307,7 +306,6 @@ int SDLinpState(int nCode)
 		if (ReadKeyboard() != 0) {							// Check keyboard has been read - return not pressed on error
 			return 0;
 		}
-		printf("code %i\n", nCode);
 		return SDL_KEY_IS_DOWN(nCode);							// Return key state
 	}
 

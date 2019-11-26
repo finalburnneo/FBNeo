@@ -307,6 +307,7 @@ int SDLinpState(int nCode)
 		if (ReadKeyboard() != 0) {							// Check keyboard has been read - return not pressed on error
 			return 0;
 		}
+		print_f("keypress\n");
 		return SDL_KEY_DOWN(nCode);							// Return key state
 	}
 

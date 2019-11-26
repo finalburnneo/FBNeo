@@ -16,6 +16,8 @@
 	extern struct VidOut VidOutMacOS;
 #elif defined (BUILD_PI)
 	extern struct VidOut VidOutPi;
+#elif defined (BUILD_SDL2)
+		extern struct VidOut VidOutSDL2;
 #elif defined (BUILD_SDL)
 	extern struct VidOut VidOutSDLOpenGL;
 	extern struct VidOut VidOutSDLFX;
@@ -36,6 +38,8 @@ static struct VidOut *pVidOut[] = {
 	&VidOutMacOS,
 #elif defined (BUILD_PI)
 	&VidOutPi,
+#elif defined (BUILD_SDL2)
+		&VidOutSDL2,
 #elif defined (BUILD_SDL)
 	&VidOutSDLOpenGL,
 	&VidOutSDLFX,
@@ -197,9 +201,9 @@ INT32 VidInit()
 		} else {
 			hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
 		}
-		
+
 		if (!hbitmap) hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
-		
+
 		GetObject(hbitmap, sizeof(BITMAP), &bitmap);
 
 		nVidImageWidth = bitmap.bmWidth; nVidImageHeight = bitmap.bmHeight;
@@ -250,7 +254,7 @@ INT32 VidInit()
 			bitmapinfo.bmiHeader.biPlanes = 1;
 			bitmapinfo.bmiHeader.biBitCount = 24;
 			bitmapinfo.bmiHeader.biCompression = BI_RGB;
-			
+
 			for (INT32 y = 0; y < nVidImageHeight; y++) {
 				UINT8* pd = pVidImage + y * nVidImagePitch;
 				UINT8* ps = pLineBuffer;
@@ -362,7 +366,7 @@ static void VidDoFrameCallback()
 static INT32 VidDoFrame(bool bRedraw)
 {
 	INT32 nRet;
-	
+
 	if (pVidTransImage && pVidTransPalette) {
 		if (bVidRecalcPalette) {
 			for (INT32 r = 0; r < 256; r += 8) {

@@ -4,7 +4,7 @@
  * It wouldn't be a stretch of the imagination to think the whole of the sdl 'port' needs a redo but here are the main things wrong with this version:
  *
  *
- * There is OSD of any kind which makes it hard to display info to the users.
+ * There is no OSD of any kind which makes it hard to display info to the users.
  * There are lots of problems with the audio output code.
  * There are lots of problems with the opengl renderer
  * probably many other things.
@@ -15,14 +15,6 @@ int  nAppVirtualFps = 6000;         // App fps * 100
 bool bRunPause      = 0;
 bool bAlwaysProcessKeyboardInput = 0;
 
-void CheckFirstTime()
-{
-}
-
-void ProcessCommandLine(int argc, char *argv[])
-{
-}
-
 #undef main
 
 int main(int argc, char *argv[])
@@ -30,15 +22,23 @@ int main(int argc, char *argv[])
    UINT32 i = 0;
 
    ConfigAppLoad();
-
-   CheckFirstTime();              // check for first time run
-
+#ifdef BUILD_SDL
    SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
-
-   BurnLibInit();
 
    SDL_WM_SetCaption("FinalBurn Neo", "FinalBurn Neo");
    SDL_ShowCursor(SDL_DISABLE);
+#endif
+
+#ifdef BUILD_SDL2
+
+   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
+   {
+      printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+   }
+#endif
+
+   BurnLibInit();
+
 
    if (argc < 2)
    {

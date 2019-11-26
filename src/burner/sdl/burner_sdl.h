@@ -1,6 +1,5 @@
+// Header for SDL 1.2 & SDL2
 #include <SDL.h>
-
-#include "cfgpath.h"
 
 // defines to override various #ifndef _WIN32
 typedef struct tagRECT

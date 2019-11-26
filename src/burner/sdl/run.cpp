@@ -43,7 +43,6 @@ int SaveNVRAM()
 
    fprintf(stderr, "Writing NVRAM to \"%s\"\n", temp);
    BurnStateSave(temp, 0);
-
    return 0;
 }
 
@@ -58,7 +57,6 @@ int ReadNVRAM()
 
    fprintf(stderr, "Reading NVRAM from \"%s\"\n", temp);
    BurnStateLoad(temp, 0, NULL);
-
    return 0;
 }
 

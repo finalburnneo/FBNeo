@@ -42,7 +42,7 @@ typedef struct tagIMAGE {
  #include "burner_win32.h"
 #elif defined (BUILD_MACOS)
  #include "burner_macos.h"
-#elif defined (BUILD_SDL)
+#elif defined (BUILD_SDL) || defined (BUILD_SDL2)
  #include "burner_sdl.h"
 #elif defined (_XBOX) && !defined(__LIBRETRO__)
  #include "burner_xbox.h"

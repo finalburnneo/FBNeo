@@ -19,6 +19,9 @@ static int nAudLoopLen;
 
 void audiospec_callback(void* /* data */, Uint8* stream, int len)
 {
+#ifdef BUILD_SDL2
+		SDL_memset(stream, 0, len);
+#endif
 		int end = nSDLPlayPos + len;
 		if (end > nAudLoopLen)
 		{

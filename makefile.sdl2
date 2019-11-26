@@ -86,7 +86,7 @@ incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 		  -I/local/include -I$(srcdir)dep/sdl/include \
 		  -I$(srcdir)intf/input/sdl `sdl2-config --cflags`
 
-lib	= -lstdc++ `sdl2-config --libs` -lGL  -lm
+lib	= -lstdc++ `sdl2-config --libs` -lGL -lm
 
 ifdef DARWIN
 lib += -L/System/Library/Frameworks/OpenGL.framework/Libraries/

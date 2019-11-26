@@ -39,7 +39,7 @@ static struct AudOut *pAudOut[]=
 	&AudOutXAudio2,
 #elif defined (BUILD_MACOS)
     &AudOutMacOS,
-#elif defined (BUILD_SDL)
+#elif defined (BUILD_SDL) || defined (BUILD_SDL2)
 	&AudOutSDL,
 #elif defined (_XBOX)
 	&AudOutXAudio2,

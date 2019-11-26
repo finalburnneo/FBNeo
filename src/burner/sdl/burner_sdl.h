@@ -1,5 +1,7 @@
 #include <SDL.h>
 
+#include "cfgpath.h"
+
 // defines to override various #ifndef _WIN32
 typedef struct tagRECT
 {

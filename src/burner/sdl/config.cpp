@@ -4,7 +4,16 @@ int nIniVersion = 0;
 
 static void CreateConfigName(char *szConfig)
 {
-   memcpy(szConfig, "fbneo.ini", 12);
+   char cfgdir[MAX_PATH];
+
+   get_user_config_file(cfgdir, sizeof(cfgdir), "fbneo");
+   if (cfgdir[0] == 0)
+   {
+      printf("Unable to find home directory.\n");
+      return;
+   }
+
+   memcpy(szConfig, cfgdir, sizeof(cfgdir));
    return;
 }
 
@@ -15,7 +24,8 @@ int ConfigAppLoad()
    FILE *f;
 
    CreateConfigName(szConfig);
-
+   printf("000");
+   printf(szConfig);
    if ((f = fopen(szConfig, "rt")) == NULL)
    {
       return 1;

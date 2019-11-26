@@ -113,7 +113,7 @@ static unsigned char bJoystickRead = 0;
 static unsigned char bMouseRead = 0;
 static struct { unsigned char buttons; int xdelta; int ydelta; } SDLinpMouseState;
 
-#define SDL_KEY_DOWN(key) (FBKtoSDL[key] > 0 ? SDLinpKeyboardState[FBKtoSDL[key]] : 0)
+#define SDL_KEY_IS_DOWN(key) (FBKtoSDL[key] > 0 ? SDLinpKeyboardState[FBKtoSDL[key]] : 0)
 
 // Call before checking for Input in a frame
 int SDLinpStart()
@@ -307,8 +307,8 @@ int SDLinpState(int nCode)
 		if (ReadKeyboard() != 0) {							// Check keyboard has been read - return not pressed on error
 			return 0;
 		}
-		print_f("keypress\n");
-		return SDL_KEY_DOWN(nCode);							// Return key state
+		printf("code %i\n", nCode);
+		return SDL_KEY_IS_DOWN(nCode);							// Return key state
 	}
 
 	if (nCode < 0x4000) {
@@ -345,7 +345,7 @@ int SDLinpFind(bool CreateBaseline)
 	// check if any keyboard keys are pressed
 	if (ReadKeyboard() == 0) {
 		for (int i = 0; i < 0x100; i++) {
-			if (SDL_KEY_DOWN(i) > 0) {
+			if (SDL_KEY_IS_DOWN(i) > 0) {
 				nRetVal = i;
 				goto End;
 			}

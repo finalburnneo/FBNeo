@@ -2,14 +2,17 @@
 #include <SDL.h>
 
 // defines to override various #ifndef _WIN32
-typedef struct tagRECT
-{
-   int left;
-   int top;
-   int right;
-   int bottom;
-} RECT, *PRECT, *LPRECT;
-typedef const RECT *    LPCRECT;
+#ifndef _WIN32
+typedef struct tagRECT {
+	int left;
+	int top;
+	int right;
+	int bottom;
+} RECT,*PRECT,*LPRECT;
+typedef const RECT *LPCRECT;
+#else
+#include <windows.h>
+#endif 
 
 typedef unsigned long   DWORD;
 typedef unsigned char   BYTE;

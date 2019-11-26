@@ -11,6 +11,11 @@ ifeq ($(UNAME_S),Darwin)
 DARWIN=1
 endif
 
+ifeq ($(OS),Windows_NT)
+WINDOWS=1
+endif
+
+
 #
 #	Flags. Uncomment any of these declarations to enable their function.
 #
@@ -86,7 +91,11 @@ incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 		  -I/local/include -I$(srcdir)dep/sdl/include \
 		  -I$(srcdir)intf/input/sdl `sdl-config --cflags`
 
+ifdef WINDOWS
+lib	= -lstdc++ -lSDL `sdl-config --libs` -lopengl32  -lm
+else
 lib	= -lstdc++ -lSDL `sdl-config --libs` -lGL -lm
+endif
 
 ifdef DARWIN
 lib += -L/System/Library/Frameworks/OpenGL.framework/Libraries/
@@ -393,7 +402,7 @@ $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/
 
 $(objdir)cpu/m68k/m68kmake: $(srcdir)cpu/m68k/m68kmake.c
 	@echo Compiling Musashi MC680x0 core \(m68kmake.c\)...
-	@$(CC) $(CFLAGS) $(srcdir)cpu/m68k/m68kmake.c -o $(objdir)cpu/m68k/m68kmake
+	@$(CC) $(CFLAGS) $(srcdir)cpu/m68k/m68kmake.c -o $(objdir)cpu/m68k/m68kmake -Dmain=main
 
 
 #

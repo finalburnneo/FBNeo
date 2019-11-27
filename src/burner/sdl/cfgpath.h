@@ -33,7 +33,7 @@
 #ifndef CFGPATH_H_
 #define CFGPATH_H_
 
-#ifdef _MSC_VER
+#if defined (_MSC_VER) || defined (_WIN32)
 #define inline __inline
 #include <direct.h>
 #define mkdir _mkdir

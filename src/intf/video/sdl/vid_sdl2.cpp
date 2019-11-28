@@ -132,8 +132,12 @@ static int Init()
 		//	nTextureHeight = GetTextureSize(nGamesWidth);
 	}
 
+	char title[512];
+
+sprintf(title, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME),BurnDrvGetTextA(DRV_FULLNAME));
+
   	sdlWindow = SDL_CreateWindow(
-  			"An SDL2 window",                  // window title
+  			title,                  // window title
   			SDL_WINDOWPOS_CENTERED,           // initial x position
   			SDL_WINDOWPOS_CENTERED,           // initial y position
   			nGamesWidth,                               // width, in pixels
@@ -168,7 +172,7 @@ static int Init()
      printf("correctx after %d, %d\n", test_rect.right, test_rect.bottom);
 
 
-  	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);  
+  	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
   	SDL_RenderSetLogicalSize(sdlRenderer, test_rect.right, test_rect.bottom);
 
     if(nVidImageDepth == 32)

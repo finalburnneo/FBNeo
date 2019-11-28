@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
       {
          //nBurnDrvSelect[0] = i;
          nBurnDrvActive = i;
-         if (strcmp(BurnDrvGetTextA(0), argv[1]) == 0)
+         if (strcmp(BurnDrvGetTextA(DRV_NAME), argv[1]) == 0)
          {
             break;
          }

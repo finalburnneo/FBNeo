@@ -176,7 +176,7 @@ static int Init()
 
    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
    SDL_RenderSetLogicalSize(sdlRenderer, test_rect.right, test_rect.bottom);
-
+	 //SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE); // Probably best not turn this on 
    if (nVidImageDepth == 32)
    {
       sdlTexture = SDL_CreateTexture(sdlRenderer,
@@ -276,7 +276,7 @@ static int Paint(int bValidate)
    SDL_RenderClear(sdlRenderer);
 	 if (nRotateGame)
 	 {
-	 		SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);	 
+	 		SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
 	 }
 	 else
 	 {

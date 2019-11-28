@@ -7,6 +7,7 @@ int nIniVersion = 0;
 
 static void CreateConfigName(char *szConfig)
 {
+#ifndef _WIN32
    char cfgdir[MAX_PATH];
 
    get_user_config_file(cfgdir, sizeof(cfgdir), "fbneo");
@@ -16,7 +17,11 @@ static void CreateConfigName(char *szConfig)
       return;
    }
 
-   memcpy(szConfig, cfgdir, sizeof(cfgdir));
+    memcpy(szConfig, cfgdir, sizeof(cfgdir));
+#else
+	memcpy(szConfig, "fbneo.ini", 10);
+#endif 
+
    return;
 }
 
@@ -27,12 +32,12 @@ int ConfigAppLoad()
    FILE *f;
 
    CreateConfigName(szConfig);
-   printf("Loading config from %s\n",szConfig);
+
    if ((f = fopen(szConfig, "rt")) == NULL)
    {
       return 1;
    }
-
+   printf("Loading config from %s\n",szConfig);
 #define VAR(x)    { char *szValue = LabelCheck(szLine, #x); \
                     if (szValue) { x = strtol(szValue, NULL, 0); } }
 #define FLT(x)    { char *szValue = LabelCheck(szLine, #x); \

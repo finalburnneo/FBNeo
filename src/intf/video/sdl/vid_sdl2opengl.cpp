@@ -1,4 +1,4 @@
-// OpenGL via SDL
+// OpenGL via SDL2
 #include "burner.h"
 #include "vid_support.h"
 #include "vid_softfx.h"
@@ -131,8 +131,8 @@ void init_gl()
 		glDepthMask(GL_FALSE);
 		glDisable(GL_CULL_FACE);
 		glEnable(GL_TEXTURE_2D);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, nTextureWidth, nTextureHeight, 0, GL_RGB, texture_type, texture);
 
 		glMatrixMode(GL_PROJECTION);
@@ -155,7 +155,7 @@ void init_gl()
 		printf("opengl config done . . . \n");
 }
 
-int VidSScaleImage(RECT* pRect)
+static int VidSScaleImage(RECT* pRect)
 {
 		int nScrnWidth, nScrnHeight;
 

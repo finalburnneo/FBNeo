@@ -130,8 +130,8 @@ static int Init()
       title,                                    // window title
       SDL_WINDOWPOS_CENTERED,                   // initial x position
       SDL_WINDOWPOS_CENTERED,                   // initial y position
-      nVidImageWidth,                              // width, in pixels
-      nVidImageHeight,                             // height, in pixels
+      nVidImageWidth,                           // width, in pixels
+      nVidImageHeight,                          // height, in pixels
       SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE   // flags - see below
       );
 
@@ -150,16 +150,16 @@ static int Init()
       printf("Could not create renderer: %s\n", SDL_GetError());
       return 1;
    }
-	 if (!nRotateGame)
-	 {
-			 nVidImageWidth = nGamesWidth;
-			 nVidImageHeight = nGamesHeight;
-	 }
-	 else
-	 {
-			 nVidImageWidth = nGamesHeight;
-			 nVidImageHeight = nGamesWidth;
-	 }
+   if (!nRotateGame)
+   {
+      nVidImageWidth  = nGamesWidth;
+      nVidImageHeight = nGamesHeight;
+   }
+   else
+   {
+      nVidImageWidth  = nGamesHeight;
+      nVidImageHeight = nGamesWidth;
+   }
 
    nVidImageDepth = bDrvOkay ? 16 : 32;
 
@@ -176,7 +176,7 @@ static int Init()
 
    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
    SDL_RenderSetLogicalSize(sdlRenderer, test_rect.right, test_rect.bottom);
-	 //SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE); // Probably best not turn this on 
+   //SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE); // Probably best not turn this on
    if (nVidImageDepth == 32)
    {
       sdlTexture = SDL_CreateTexture(sdlRenderer,
@@ -270,18 +270,22 @@ static int Frame(bool bRedraw)                                          // bRedr
 // Paint the BlitFX surface onto the primary surface
 static int Paint(int bValidate)
 {
-   //SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255);
-   SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
+   void *pixels;
+   int   pitch;
+
+   SDL_LockTexture(sdlTexture, NULL, &pixels, &pitch);
+   memcpy(pixels, pVidImage, nVidImagePitch * nGamesHeight);
+   SDL_UnlockTexture(sdlTexture);
 
    SDL_RenderClear(sdlRenderer);
-	 if (nRotateGame)
-	 {
-	 		SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
-	 }
-	 else
-	 {
-	 		SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
-	}
+   if (nRotateGame)
+   {
+      SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
+   }
+   else
+   {
+      SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
+   }
 
    SDL_RenderPresent(sdlRenderer);
 

@@ -79,18 +79,7 @@ void gui_render()
 {
    SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
    SDL_SetRenderDrawColor(sdlRenderer, 200, 200, 200, SDL_ALPHA_OPAQUE);
-
-   void *pixels;
-   int   pitch;
-
-   SDL_LockTexture(sdlTexture, NULL, &pixels, &pitch);
-  // memcpy(pixels, pVidImage, nVidImagePitch * nGamesHeight);
-   memset(pixels, 0,  sizeof(pixels));
-   SDL_UnlockTexture(sdlTexture);
-
    SDL_RenderClear(sdlRenderer);
-   SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
-
    incolor(0xffffff, /* unused */ 0);
    inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
    inprint(sdlRenderer, "=============", 10, 20);
@@ -117,7 +106,7 @@ void gui_render()
    SDL_RenderPresent(sdlRenderer);
 }
 
-void gui_process()
+int gui_process()
 {
    SDL_Event e;
    bool      quit = false;
@@ -132,7 +121,27 @@ void gui_process()
          }
          if (e.type == SDL_KEYDOWN)
          {
-            startGame++;
+           switch (e.key.keysym.sym)
+           {
+           case SDLK_UP:
+
+              if (startGame > 0 )
+              {
+                startGame--;
+              }
+              break;
+            case SDLK_DOWN:
+               if (startGame < nBurnDrvCount)
+               {
+                 startGame++;
+               }
+               break;
+            case SDLK_RETURN:
+                return startGame;
+           default:
+              break;
+           }
+           break;
          }
          if (e.type == SDL_MOUSEBUTTONDOWN)
          {
@@ -141,4 +150,5 @@ void gui_process()
       }
       gui_render();
    }
+   return -1;
 }

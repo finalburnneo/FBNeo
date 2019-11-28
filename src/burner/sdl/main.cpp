@@ -47,16 +47,20 @@ int main(int argc, char *argv[])
    if (argc == 2)
    {
      #ifdef BUILD_SDL2
-      if (strcmp(argv[1], "menu")==0)
+      if (strcmp(argv[1], "menu") == 0)
       {
          gui_init();
-         gui_process();
+         int selectedOk = gui_process();
          gui_exit();
-         BurnLibExit();
-         SDL_Quit();
-
-         return 0;
+         if (selectedOk == -1)
+         {
+            BurnLibExit();
+            SDL_Quit();
+            return 0;
+         }
       }
+      else
+      {
      #endif
 
 
@@ -75,6 +79,11 @@ int main(int argc, char *argv[])
          printf("%s is not supported by FinalBurn Neo.\n", argv[1]);
          return 1;
       }
+
+
+      #ifdef BUILD_SDL2
+      }
+      #endif
    }
 
 
@@ -111,8 +120,8 @@ int main(int argc, char *argv[])
   #if defined (UNICODE)
    static TCHAR szStringBuffer[1024];
 
-   TCHAR *pszBuffer   = pszOutString ? pszOutString : szStringBuffer;
-   int    nBufferSize = pszOutString ? nOutSize * 2 : sizeof(szStringBuffer);
+   TCHAR *pszBuffer = pszOutString ? pszOutString : szStringBuffer;
+   int nBufferSize  = pszOutString ? nOutSize * 2 : sizeof(szStringBuffer);
 
    if (MultiByteToWideChar(CP_ACP, 0, pszInString, -1, pszBuffer, nBufferSize))
    {
@@ -137,8 +146,8 @@ int main(int argc, char *argv[])
    static char szStringBuffer[1024];
    memset(szStringBuffer, 0, sizeof(szStringBuffer));
 
-   char *pszBuffer   = pszOutString ? pszOutString : szStringBuffer;
-   int   nBufferSize = pszOutString ? nOutSize * 2 : sizeof(szStringBuffer);
+   char *pszBuffer = pszOutString ? pszOutString : szStringBuffer;
+   int nBufferSize = pszOutString ? nOutSize * 2 : sizeof(szStringBuffer);
 
    if (WideCharToMultiByte(CP_ACP, 0, pszInString, -1, pszBuffer, nBufferSize, NULL, NULL))
    {

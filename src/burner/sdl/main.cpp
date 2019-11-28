@@ -22,23 +22,7 @@ int main(int argc, char *argv[])
    UINT32 i = 0;
 
    ConfigAppLoad();
-#ifdef BUILD_SDL
-   SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
-
-   SDL_WM_SetCaption("FinalBurn Neo", "FinalBurn Neo");
-   SDL_ShowCursor(SDL_DISABLE);
-#endif
-
-#ifdef BUILD_SDL2
-
-   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
-   {
-      printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-   }
-#endif
-
    BurnLibInit();
-
 
    if (argc < 2)
    {
@@ -46,8 +30,36 @@ int main(int argc, char *argv[])
       return 0;
    }
 
+   #ifdef BUILD_SDL
+   SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
+
+   SDL_WM_SetCaption("FinalBurn Neo", "FinalBurn Neo");
+   SDL_ShowCursor(SDL_DISABLE);
+   #endif
+
+   #ifdef BUILD_SDL2
+   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
+   {
+      printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+   }
+   #endif
+
    if (argc == 2)
    {
+     #ifdef BUILD_SDL2
+      if (strcmp(argv[1], "menu")==0)
+      {
+         gui_init();
+         gui_process();
+         gui_exit();
+         BurnLibExit();
+         SDL_Quit();
+
+         return 0;
+      }
+     #endif
+
+
       for (i = 0; i < nBurnDrvCount; i++)
       {
          //nBurnDrvSelect[0] = i;
@@ -64,6 +76,8 @@ int main(int argc, char *argv[])
          return 1;
       }
    }
+
+
 
    bCheatsAllowed   = false;
    nAudDSPModule[0] = 1;
@@ -84,6 +98,9 @@ int main(int argc, char *argv[])
 
    ConfigAppSave();
    BurnLibExit();
+
+   gui_exit();
+
    SDL_Quit();
 
    return 0;

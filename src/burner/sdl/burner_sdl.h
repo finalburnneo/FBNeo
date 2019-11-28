@@ -1,6 +1,11 @@
 // Header for SDL 1.2 & SDL2
 #include <SDL.h>
 
+#ifdef BUILD_SDL2
+#include "sdl2_gui.h"
+#include "sdl2_inprint.h"
+#endif
+
 // defines to override various #ifndef _WIN32
 #ifndef _WIN32
 typedef struct tagRECT {
@@ -12,7 +17,7 @@ typedef struct tagRECT {
 typedef const RECT *LPCRECT;
 #else
 #include <windows.h>
-#endif 
+#endif
 
 typedef unsigned long   DWORD;
 typedef unsigned char   BYTE;

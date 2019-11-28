@@ -2,7 +2,7 @@
 #include <SDL.h>
 
 #include "burner.h"
-#include "inp_sdl_keys.h"
+#include "inp_sdl2_keys.h"
 
 #define MAX_JOYSTICKS (8)
 

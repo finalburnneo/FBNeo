@@ -108,8 +108,6 @@ int main(int argc, char *argv[])
    ConfigAppSave();
    BurnLibExit();
 
-   gui_exit();
-
    SDL_Quit();
 
    return 0;

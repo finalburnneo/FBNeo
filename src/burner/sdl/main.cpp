@@ -96,10 +96,9 @@ int main(int argc, char *argv[])
    ConfigAppLoad();
    ConfigAppSave();
 
-   MediaInit();
    if (!DrvInit(i, 0))
    {
-
+      MediaInit();
       RunMessageLoop();
    }
    else

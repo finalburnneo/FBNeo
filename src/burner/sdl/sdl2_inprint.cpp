@@ -3,7 +3,6 @@
 
 #include "burner.h"
 
-
 #define inline_font_width 128
 #define inline_font_height 64
 static unsigned char inline_font_bits[] = {

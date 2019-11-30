@@ -8,6 +8,11 @@ static SDL_Texture * sdlTexture  = NULL;
 static int nVidGuiWidth  = 800;
 static int nVidGuiHeight = 600;
 
+static unsigned int startGame=0; // game at top of list as it is displayed on the menu
+static unsigned int gamesperscreen=12;
+static unsigned int gametoplay=0;
+
+
 void gui_exit()
 {
    kill_inline_font();
@@ -66,24 +71,25 @@ void gui_init()
       SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create sdlTexture from surface: %s", SDL_GetError());
       return;
    }
-inrenderer(sdlRenderer);
+   inrenderer(sdlRenderer);
    prepare_inline_font();
+
+   gamesperscreen = (nVidGuiHeight - 60)/10;
 }
 
-static unsigned int startGame=0; // game at top of list as it is displayed on the menu
-static unsigned int gamesperscreen=12;
-static unsigned int gametoplay=0;
 
 
 void gui_render()
 {
    SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
-   SDL_SetRenderDrawColor(sdlRenderer, 200, 200, 200, SDL_ALPHA_OPAQUE);
+   SDL_SetRenderDrawColor(sdlRenderer, 50, 50, 50, SDL_ALPHA_OPAQUE);
    SDL_RenderClear(sdlRenderer);
    incolor(0xffffff, /* unused */ 0);
    inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
    inprint(sdlRenderer, "=============", 10, 20);
    incolor(0x000fff, /* unused */ 0);
+
+
    for (unsigned int i=startGame,game_counter=0; game_counter<gamesperscreen; i++,game_counter++)
  	{
  		if (i>0 && i<nBurnDrvCount)
@@ -91,14 +97,14 @@ void gui_render()
  			nBurnDrvActive=i;
  			if (game_counter==gamesperscreen/2)
  			{
-        incolor(0x000fff, /* unused */ 0);
- 				inprint(sdlRenderer,BurnDrvGetTextA(DRV_FULLNAME), 10,game_counter*16+40);
+        incolor(0xffffff, /* unused */ 0);
+ 				inprint(sdlRenderer,BurnDrvGetTextA(DRV_FULLNAME), 10,30 + (game_counter*10));
  				gametoplay=i;
  			}
  			else
  			{
         incolor(0xfff000, /* unused */ 0);
-        inprint(sdlRenderer,BurnDrvGetTextA(DRV_FULLNAME), 10,game_counter*16+40);
+        inprint(sdlRenderer,BurnDrvGetTextA(DRV_FULLNAME), 10,30 + (game_counter*10));
  			}
  		}
  	}
@@ -124,7 +130,6 @@ int gui_process()
            switch (e.key.keysym.sym)
            {
            case SDLK_UP:
-
               if (startGame > 0 )
               {
                 startGame--;
@@ -135,9 +140,23 @@ int gui_process()
                {
                  startGame++;
                }
+                 break;
+           case SDLK_LEFT:
+                  if (startGame > 10 )
+                  {
+                    startGame-=10;
+                  }
+                  break;
+                case SDLK_RIGHT:
+                   if (startGame < nBurnDrvCount-10)
+                   {
+                     startGame+=10;
+                   }
                break;
             case SDLK_RETURN:
-                return startGame;
+             		nBurnDrvActive=gametoplay;
+                printf("selected %s\n", BurnDrvGetTextA(DRV_FULLNAME));
+                return gametoplay;
            default:
               break;
            }

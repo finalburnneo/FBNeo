@@ -13,10 +13,6 @@ static SDL_Texture *  sdlTexture  = NULL;
 static int  nRotateGame = 0;
 static bool bFlipped    = false;
 
-static int gameWidth =0;
-static int gameHeight = 0;
-
-
 static int VidSScaleImage(RECT *pRect)
 {
    int nScrnWidth, nScrnHeight;
@@ -165,21 +161,21 @@ static int Init()
 
    if (nRotateGame)
    {
-     SDL_RenderSetLogicalSize(sdlRenderer,  test_rect.bottom, test_rect.right);
+      SDL_RenderSetLogicalSize(sdlRenderer, test_rect.bottom, test_rect.right);
    }
    else
    {
-     SDL_RenderSetLogicalSize(sdlRenderer, test_rect.right,  test_rect.bottom);
+      SDL_RenderSetLogicalSize(sdlRenderer, test_rect.right, test_rect.bottom);
    }
 
    //SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE); // Probably best not turn this on
 
-if (nRotateGame)
-{
-  int temp = nVidImageWidth;
-  nVidImageWidth = nVidImageHeight;
-  nVidImageHeight = temp;
-}
+   if (nRotateGame)
+   {
+      int temp = nVidImageWidth;
+      nVidImageWidth  = nVidImageHeight;
+      nVidImageHeight = temp;
+   }
 
 
    if (nVidImageDepth == 32)
@@ -208,7 +204,6 @@ if (nRotateGame)
    nBurnBpp     = nVidImageBPP;
 
    SetBurnHighCol(nVidImageDepth);
-
 
 
 
@@ -278,6 +273,7 @@ static int Paint(int bValidate)
 {
    void *pixels;
    int   pitch;
+
    SDL_RenderClear(sdlRenderer);
    if (nRotateGame)
    {

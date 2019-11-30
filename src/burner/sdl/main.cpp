@@ -89,8 +89,6 @@ int main(int argc, char *argv[])
       #endif
    }
 
-
-
    bCheatsAllowed   = false;
    nAudDSPModule[0] = 1;
    ConfigAppLoad();

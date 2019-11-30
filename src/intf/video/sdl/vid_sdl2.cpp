@@ -10,10 +10,11 @@ static SDL_Window *   sdlWindow   = NULL;
 static SDL_Renderer * sdlRenderer = NULL;
 static SDL_Texture *  sdlTexture  = NULL;
 
-static int nGamesWidth = 0, nGamesHeight = 0; // screen size
-
 static int  nRotateGame = 0;
 static bool bFlipped    = false;
+
+static int gameWidth =0;
+static int gameHeight = 0;
 
 
 static int VidSScaleImage(RECT *pRect)
@@ -49,7 +50,7 @@ static int VidSScaleImage(RECT *pRect)
 
    if (nWidthScratch > nWidth)
    {              // The image is too wide
-      if (nGamesWidth < nGamesHeight)
+      if (nVidImageWidth < nVidImageHeight)
       {           // Vertical games
          nHeight = nWidth * nVidScrnAspectY * nGameAspectY * nScrnWidth /
                    (nScrnHeight * nVidScrnAspectX * nGameAspectX);
@@ -97,15 +98,13 @@ static int Init()
       return 3;
    }
 
-   nGamesWidth  = nVidImageWidth;
-   nGamesHeight = nVidImageHeight;
 
    nRotateGame = 0;
 
    if (bDrvOkay)
    {
       // Get the game screen size
-      BurnDrvGetVisibleSize(&nGamesWidth, &nGamesHeight);
+      BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
 
       if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
       {
@@ -119,8 +118,6 @@ static int Init()
          bFlipped = true;
       }
    }
-
-
 
    char title[512];
 
@@ -150,24 +147,14 @@ static int Init()
       printf("Could not create renderer: %s\n", SDL_GetError());
       return 1;
    }
-   if (!nRotateGame)
-   {
-      nVidImageWidth  = nGamesWidth;
-      nVidImageHeight = nGamesHeight;
-   }
-   else
-   {
-      nVidImageWidth  = nGamesHeight;
-      nVidImageHeight = nGamesWidth;
-   }
 
    nVidImageDepth = bDrvOkay ? 16 : 32;
 
    RECT test_rect;
    test_rect.left   = 0;
-   test_rect.right  = nGamesWidth;
+   test_rect.right  = nVidImageWidth;
    test_rect.top    = 0;
-   test_rect.bottom = nGamesHeight;
+   test_rect.bottom = nVidImageHeight;
 
    printf("correctx before %d, %d\n", test_rect.right, test_rect.bottom);
    VidSScaleImage(&test_rect);
@@ -175,8 +162,26 @@ static int Init()
 
 
    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
-   SDL_RenderSetLogicalSize(sdlRenderer, test_rect.right, test_rect.bottom);
+
+   if (nRotateGame)
+   {
+     SDL_RenderSetLogicalSize(sdlRenderer,  test_rect.bottom, test_rect.right);
+   }
+   else
+   {
+     SDL_RenderSetLogicalSize(sdlRenderer, test_rect.right,  test_rect.bottom);
+   }
+
    //SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE); // Probably best not turn this on
+
+if (nRotateGame)
+{
+  int temp = nVidImageWidth;
+  nVidImageWidth = nVidImageHeight;
+  nVidImageHeight = temp;
+}
+
+
    if (nVidImageDepth == 32)
    {
       sdlTexture = SDL_CreateTexture(sdlRenderer,
@@ -203,6 +208,7 @@ static int Init()
    nBurnBpp     = nVidImageBPP;
 
    SetBurnHighCol(nVidImageDepth);
+
 
 
 
@@ -272,18 +278,17 @@ static int Paint(int bValidate)
 {
    void *pixels;
    int   pitch;
-
-   SDL_LockTexture(sdlTexture, NULL, &pixels, &pitch);
-   memcpy(pixels, pVidImage, nVidImagePitch * nGamesHeight);
-   SDL_UnlockTexture(sdlTexture);
-
    SDL_RenderClear(sdlRenderer);
    if (nRotateGame)
    {
+      SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
       SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
    }
    else
    {
+      SDL_LockTexture(sdlTexture, NULL, &pixels, &pitch);
+      memcpy(pixels, pVidImage, nVidImagePitch * nVidImageHeight);
+      SDL_UnlockTexture(sdlTexture);
       SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
    }
 

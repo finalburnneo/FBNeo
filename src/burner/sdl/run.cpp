@@ -276,7 +276,6 @@ int RunMessageLoop()
 {
    int quit = 0;
 
-   MediaInit();
    RunInit();
    GameInpCheckMouse();                                                                     // Hide the cursor
 

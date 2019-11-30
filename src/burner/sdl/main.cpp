@@ -42,6 +42,9 @@ int main(int argc, char *argv[])
    {
       printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
    }
+   #ifdef _WIN32
+   SDL_setenv("SDL_AUDIODRIVER", "directsound", true);        // fix audio for windows
+   #endif
    #endif
 
    if (argc == 2)
@@ -82,7 +85,7 @@ int main(int argc, char *argv[])
 
 
       #ifdef BUILD_SDL2
-      }
+   }
       #endif
    }
 
@@ -93,8 +96,10 @@ int main(int argc, char *argv[])
    ConfigAppLoad();
    ConfigAppSave();
 
+   MediaInit();
    if (!DrvInit(i, 0))
    {
+
       RunMessageLoop();
    }
    else

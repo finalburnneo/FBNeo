@@ -74,15 +74,21 @@ void gui_init()
    gamesperscreen = (nVidGuiHeight - 100) / 10;
 }
 
+#define fbn_color 0xfe8a71
+#define select_color 0xffffff
+#define normal_color 0x1eaab7
+#define info_color 0xf6cd61
+
+
 void gui_render()
 {
    SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
-   SDL_SetRenderDrawColor(sdlRenderer, 50, 50, 50, SDL_ALPHA_OPAQUE);
+   SDL_SetRenderDrawColor(sdlRenderer, 0x3a, 0x3e, 0x3d, SDL_ALPHA_OPAQUE);
    SDL_RenderClear(sdlRenderer);
-   incolor(0xffffff, /* unused */ 0);
+   incolor(fbn_color, /* unused */ 0);
    inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
    inprint(sdlRenderer, "=============", 10, 20);
-   incolor(0x000fff, /* unused */ 0);
+   incolor(normal_color, /* unused */ 0);
 
    for (unsigned int i = startGame, game_counter = 0; game_counter < gamesperscreen; i++, game_counter++)
    {
@@ -91,10 +97,15 @@ void gui_render()
          nBurnDrvActive = i;
          if (game_counter == gamesperscreen / 2)
          {
-            incolor(0xffffff, /* unused */ 0);
+            incolor(select_color, /* unused */ 0);
             inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
             gametoplay = i;
-            incolor(0x000fff, /* unused */ 0);
+
+            SDL_Rect fillRect = { 0, nVidGuiHeight -70, nVidGuiWidth, nVidGuiHeight };
+            SDL_SetRenderDrawColor( sdlRenderer, 0, 0, 0, 0xFF );
+            SDL_RenderFillRect( sdlRenderer, &fillRect );
+
+            incolor(info_color, /* unused */ 0);
             char infoLine[512];
             snprintf(infoLine, 512, "Year: %s - Manufacturer: %s - System: %s", BurnDrvGetTextA(DRV_DATE), BurnDrvGetTextA(DRV_MANUFACTURER), BurnDrvGetTextA(DRV_SYSTEM));
             char romLine[512];
@@ -107,7 +118,7 @@ void gui_render()
          }
          else
          {
-            incolor(0xfff000, /* unused */ 0);
+            incolor(normal_color, /* unused */ 0);
             inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
          }
       }

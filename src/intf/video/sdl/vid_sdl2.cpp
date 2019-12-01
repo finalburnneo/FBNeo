@@ -86,6 +86,8 @@ static int Exit()
 static int Init()
 {
    int nMemLen = 0;
+   int GameAspectX = 4, GameAspectY = 3;
+   int display_w = 400, display_h = 300;
 
    if (SDL_Init(SDL_INIT_VIDEO) < 0)
    {
@@ -101,9 +103,14 @@ static int Init()
    {
       // Get the game screen size
       BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
-
-      if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
+      BurnDrvGetAspect(&GameAspectX, &GameAspectY);
+ 
+ if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
       {
+        BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
+        int temp = display_h;
+        display_h = display_w;
+        display_w = temp;
          printf("Vertical\n");
          nRotateGame = 1;
       }
@@ -111,9 +118,14 @@ static int Init()
       if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED)
       {
          printf("Flipped\n");
-         bFlipped = true;
+         bFlipped = 1;
       }
    }
+
+   printf("AspectX=%d : AspectY=%d\n",GameAspectX,GameAspectY);
+   float aspect_ratio = nRotateGame ? (float)GameAspectY / (float)GameAspectX : (float)GameAspectX / (float)GameAspectY;
+   printf("aspect ratio = %f\n",aspect_ratio);
+
 
    char title[512];
 
@@ -123,8 +135,8 @@ static int Init()
       title,                                    // window title
       SDL_WINDOWPOS_CENTERED,                   // initial x position
       SDL_WINDOWPOS_CENTERED,                   // initial y position
-      nVidImageWidth,                           // width, in pixels
-      nVidImageHeight,                          // height, in pixels
+      display_w,                           // width, in pixels
+      display_h,                          // height, in pixels
       SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE   // flags - see below
       );
 
@@ -161,22 +173,14 @@ static int Init()
 
    if (nRotateGame)
    {
-      SDL_RenderSetLogicalSize(sdlRenderer, test_rect.bottom, test_rect.right);
+      SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_w);
    }
    else
    {
-      SDL_RenderSetLogicalSize(sdlRenderer, test_rect.right, test_rect.bottom);
+      SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_h);
    }
 
    //SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE); // Probably best not turn this on
-
-   if (nRotateGame)
-   {
-      int temp = nVidImageWidth;
-      nVidImageWidth  = nVidImageHeight;
-      nVidImageHeight = temp;
-   }
-
 
    if (nVidImageDepth == 32)
    {
@@ -278,7 +282,8 @@ static int Paint(int bValidate)
    if (nRotateGame)
    {
       SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
-      SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
+      if (nRotateGame && bFlipped ) SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 90, NULL, SDL_FLIP_NONE);
+      if (nRotateGame && !bFlipped) SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
    }
    else
    {

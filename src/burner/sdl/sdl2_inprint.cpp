@@ -190,6 +190,9 @@ void inprint(SDL_Renderer *dst, const char *str, Uint32 x, Uint32 y)
    SDL_Rect s_rect;
    SDL_Rect d_rect;
 
+   if (str==NULL)
+   return;
+
    d_rect.x = x;
    d_rect.y = y;
    s_rect.w = selected_font_w / CHARACTERS_PER_ROW;
@@ -223,6 +226,17 @@ void inprint(SDL_Renderer *dst, const char *str, Uint32 x, Uint32 y)
       SDL_RenderCopy(dst, selected_font, &s_rect, &d_rect);
       d_rect.x += s_rect.w;
    }
+}
+
+
+void inprint_shadowed(SDL_Renderer *dst, const char *str, Uint32 x, Uint32 y)
+{
+  SDL_Color pal[1];
+  SDL_GetTextureColorMod(selected_font, &pal[0].r, &pal[0].g, &pal[0].b);
+  incolor(0x000000, 0);
+  inprint(dst,str,x+2,y+2);
+  SDL_SetTextureColorMod(selected_font, pal[0].r, pal[0].g, pal[0].b);
+  inprint(dst,str,x,y);
 }
 
 SDL_Texture *get_inline_font(void)

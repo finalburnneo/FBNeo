@@ -8,9 +8,9 @@ static SDL_Texture * sdlTexture  = NULL;
 static int nVidGuiWidth  = 800;
 static int nVidGuiHeight = 600;
 
-static unsigned int startGame=0; // game at top of list as it is displayed on the menu
-static unsigned int gamesperscreen=12;
-static unsigned int gametoplay=0;
+static unsigned int startGame      = 0; // game at top of list as it is displayed on the menu
+static unsigned int gamesperscreen = 12;
+static unsigned int gametoplay     = 0;
 
 
 void gui_exit()
@@ -56,11 +56,8 @@ void gui_init()
       return;
    }
 
-
    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
    SDL_RenderSetLogicalSize(sdlRenderer, nVidGuiWidth, nVidGuiHeight);
-   //SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE); // Probably best not turn this on
-
    sdlTexture = SDL_CreateTexture(sdlRenderer,
                                   SDL_PIXELFORMAT_RGB888,
                                   SDL_TEXTUREACCESS_STREAMING,
@@ -74,10 +71,8 @@ void gui_init()
    inrenderer(sdlRenderer);
    prepare_inline_font();
 
-   gamesperscreen = (nVidGuiHeight - 60)/10;
+   gamesperscreen = (nVidGuiHeight - 100) / 10;
 }
-
-
 
 void gui_render()
 {
@@ -89,25 +84,34 @@ void gui_render()
    inprint(sdlRenderer, "=============", 10, 20);
    incolor(0x000fff, /* unused */ 0);
 
+   for (unsigned int i = startGame, game_counter = 0; game_counter < gamesperscreen; i++, game_counter++)
+   {
+      if (i > 0 && i < nBurnDrvCount)
+      {
+         nBurnDrvActive = i;
+         if (game_counter == gamesperscreen / 2)
+         {
+            incolor(0xffffff, /* unused */ 0);
+            inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
+            gametoplay = i;
+            incolor(0x000fff, /* unused */ 0);
+            char infoLine[512];
+            snprintf(infoLine, 512, "Year: %s - Manufacturer: %s - System: %s", BurnDrvGetTextA(DRV_DATE), BurnDrvGetTextA(DRV_MANUFACTURER), BurnDrvGetTextA(DRV_SYSTEM));
+            char romLine[512];
+            snprintf(romLine, 512, "Romset: %s - Parent: %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_PARENT));
 
-   for (unsigned int i=startGame,game_counter=0; game_counter<gamesperscreen; i++,game_counter++)
- 	{
- 		if (i>0 && i<nBurnDrvCount)
- 		{
- 			nBurnDrvActive=i;
- 			if (game_counter==gamesperscreen/2)
- 			{
-        incolor(0xffffff, /* unused */ 0);
- 				inprint(sdlRenderer,BurnDrvGetTextA(DRV_FULLNAME), 10,30 + (game_counter*10));
- 				gametoplay=i;
- 			}
- 			else
- 			{
-        incolor(0xfff000, /* unused */ 0);
-        inprint(sdlRenderer,BurnDrvGetTextA(DRV_FULLNAME), 10,30 + (game_counter*10));
- 			}
- 		}
- 	}
+            inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, nVidGuiHeight - 60);
+            inprint_shadowed(sdlRenderer, infoLine, 10, nVidGuiHeight - 50);
+            inprint_shadowed(sdlRenderer, romLine, 10, nVidGuiHeight - 40);
+            inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_COMMENT), 10, nVidGuiHeight - 30);
+         }
+         else
+         {
+            incolor(0xfff000, /* unused */ 0);
+            inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
+         }
+      }
+   }
 
    SDL_RenderPresent(sdlRenderer);
 }
@@ -127,40 +131,45 @@ int gui_process()
          }
          if (e.type == SDL_KEYDOWN)
          {
-           switch (e.key.keysym.sym)
-           {
-           case SDLK_UP:
-              if (startGame > 0 )
-              {
-                startGame--;
-              }
-              break;
+            switch (e.key.keysym.sym)
+            {
+            case SDLK_UP:
+               if (startGame > 0)
+               {
+                  startGame--;
+               }
+               break;
+
             case SDLK_DOWN:
                if (startGame < nBurnDrvCount)
                {
-                 startGame++;
+                  startGame++;
                }
-                 break;
-           case SDLK_LEFT:
-                  if (startGame > 10 )
-                  {
-                    startGame-=10;
-                  }
-                  break;
-                case SDLK_RIGHT:
-                   if (startGame < nBurnDrvCount-10)
-                   {
-                     startGame+=10;
-                   }
                break;
+
+            case SDLK_LEFT:
+               if (startGame > 10)
+               {
+                  startGame -= 10;
+               }
+               break;
+
+            case SDLK_RIGHT:
+               if (startGame < nBurnDrvCount - 10)
+               {
+                  startGame += 10;
+               }
+               break;
+
             case SDLK_RETURN:
-             		nBurnDrvActive=gametoplay;
-                printf("selected %s\n", BurnDrvGetTextA(DRV_FULLNAME));
-                return gametoplay;
-           default:
-              break;
-           }
-           break;
+               nBurnDrvActive = gametoplay;
+               printf("selected %s\n", BurnDrvGetTextA(DRV_FULLNAME));
+               return gametoplay;
+
+            default:
+               break;
+            }
+            break;
          }
          if (e.type == SDL_MOUSEBUTTONDOWN)
          {

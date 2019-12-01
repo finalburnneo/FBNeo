@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE0A7E9723938CE7001E6997 /* FBLauncherController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9523938CE6001E6997 /* FBLauncherController.m */; };
+		FE0A7E9A23938E9F001E6997 /* Launcher.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE0A7E9823938E9F001E6997 /* Launcher.xib */; };
+		FE0A7E9D2393A1FF001E6997 /* FBScanner.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */; };
 		FE1B1092235615940065200C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1091235615940065200C /* AppDelegate.m */; };
 		FE1B1094235615950065200C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1093235615950065200C /* Assets.xcassets */; };
 		FE1B1097235615950065200C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1095235615950065200C /* MainMenu.xib */; };
@@ -1036,6 +1039,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FE0A7E9523938CE6001E6997 /* FBLauncherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLauncherController.m; sourceTree = "<group>"; };
+		FE0A7E9623938CE6001E6997 /* FBLauncherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLauncherController.h; sourceTree = "<group>"; };
+		FE0A7E9923938E9F001E6997 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Launcher.xib; sourceTree = "<group>"; };
+		FE0A7E9B2393A1FE001E6997 /* FBScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBScanner.h; sourceTree = "<group>"; };
+		FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBScanner.mm; sourceTree = "<group>"; };
 		FE1B108D235615940065200C /* FinalBurn Neo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FinalBurn Neo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE1B1090235615940065200C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FE1B1091235615940065200C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -4622,6 +4630,8 @@
 				FEED9E1A235845EE00B7AF83 /* FBMainThread.h */,
 				FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */,
 				FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */,
+				FE0A7E9B2393A1FE001E6997 /* FBScanner.h */,
+				FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */,
 				FEED9E1D2358B48C00B7AF83 /* main.cpp */,
 				FE9A990D235F82C900507894 /* main.h */,
 				FEA5E79023563F5400DA2D9D /* misc.cpp */,
@@ -4635,6 +4645,8 @@
 			children = (
 				FEF4EE7F23635500004E0DCE /* FBEmulatorController.h */,
 				FEF4EE8023635500004E0DCE /* FBEmulatorController.m */,
+				FE0A7E9623938CE6001E6997 /* FBLauncherController.h */,
+				FE0A7E9523938CE6001E6997 /* FBLauncherController.m */,
 				FE2BC6B323615C3300B9D150 /* FBLogViewerController.h */,
 				FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */,
 				FE2BC6BE2362CEBB00B9D150 /* FBPreferencesController.h */,
@@ -4652,6 +4664,7 @@
 				FE2BC6A923615B3400B9D150 /* LogViewer.xib */,
 				FE1B1095235615950065200C /* MainMenu.xib */,
 				FE2BC6C92362CFC000B9D150 /* Preferences.xib */,
+				FE0A7E9823938E9F001E6997 /* Launcher.xib */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -4810,6 +4823,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE0A7E9A23938E9F001E6997 /* Launcher.xib in Resources */,
 				FE2BC6BB2362B4E200B9D150 /* dsa_pub.pem in Resources */,
 				FEF4EE892363720B004E0DCE /* Defaults.plist in Resources */,
 				FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */,
@@ -4954,6 +4968,7 @@
 				FE1B254C23561A760065200C /* d_news.cpp in Sources */,
 				FE1B25E223561A760065200C /* d_dbz.cpp in Sources */,
 				FE1B278323561A790065200C /* ymf278b.c in Sources */,
+				FE0A7E9D2393A1FF001E6997 /* FBScanner.mm in Sources */,
 				FE1B25CB23561A760065200C /* d_kontest.cpp in Sources */,
 				FE1B25E923561A760065200C /* k007121.cpp in Sources */,
 				FE1B24C323561A750065200C /* smstms.cpp in Sources */,
@@ -5848,6 +5863,7 @@
 				FE1B24FF23561A760065200C /* d_playmark.cpp in Sources */,
 				FEED9E132358412E00B7AF83 /* bzip.cpp in Sources */,
 				FE1B26E323561A780065200C /* d_stfight.cpp in Sources */,
+				FE0A7E9723938CE7001E6997 /* FBLauncherController.m in Sources */,
 				FE1B27DC23561A790065200C /* atarimo.cpp in Sources */,
 				FE1B250923561A760065200C /* d_yunsun16.cpp in Sources */,
 				FE1B27E223561A790065200C /* decobsmt.cpp in Sources */,
@@ -5934,6 +5950,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		FE0A7E9823938E9F001E6997 /* Launcher.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE0A7E9923938E9F001E6997 /* Base */,
+			);
+			name = Launcher.xib;
+			sourceTree = "<group>";
+		};
 		FE1B1095235615950065200C /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

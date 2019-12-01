@@ -13,6 +13,7 @@
 #import "FBEmulatorController.h"
 #import "FBLogViewerController.h"
 #import "FBPreferencesController.h"
+#import "FBLauncherController.h"
 
 @interface AppDelegate ()
 
@@ -27,6 +28,7 @@ static AppDelegate *sharedInstance = nil;
     FBLogViewerController *logViewer;
     FBPreferencesController *prefs;
     FBEmulatorController *emulator;
+    FBLauncherController *launcher;
 
     IOPMAssertionID sleepAssertId;
 }
@@ -59,10 +61,12 @@ static AppDelegate *sharedInstance = nil;
     [NSUserDefaults.standardUserDefaults registerDefaults:[NSDictionary dictionaryWithContentsOfFile:path]];
 
     _supportPath = self.appSupportPath;
+    _romPath = [_supportPath stringByAppendingPathComponent:@"ROMs"];
     _nvramPath = [_supportPath stringByAppendingPathComponent:@"NVRAM"];
     _dipSwitchPath = [_supportPath stringByAppendingPathComponent:@"DIPSwitches"];
 
     NSArray *paths = @[
+        _romPath,
         _nvramPath,
         _dipSwitchPath,
     ];
@@ -129,6 +133,13 @@ static AppDelegate *sharedInstance = nil;
     if (!prefs)
         prefs = [FBPreferencesController new];
     [prefs showWindow:self];
+}
+
+- (void) displayLauncher:(id) sender
+{
+    if (!launcher)
+        launcher = [FBLauncherController new];
+    [launcher showWindow:self];
 }
 
 #pragma mark - Public

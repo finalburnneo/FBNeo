@@ -22,3 +22,6 @@ and mouse.
 
 ## Known issues
 * Joysticks are currently unsupported
+
+## About
+macOS build is maintained by [0xe1f](https://github.com/0xe1f).

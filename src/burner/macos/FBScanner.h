@@ -10,7 +10,7 @@
 
 #define FBROMSET_STATUS_OK 0
 
-@interface FBROMSet: NSObject
+@interface FBROMSet: NSObject<NSCoding>
 
 @property NSString *parent;
 @property NSString *name;
@@ -24,7 +24,7 @@
 @optional
 - (void) scanDidStart;
 - (void) progressDidUpdate:(float) progress;
-- (void) scanDidEnd;
+- (void) scanDidEnd:(NSArray<FBROMSet *> *) romSets;
 
 @end
 

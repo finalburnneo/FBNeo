@@ -94,6 +94,12 @@
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
+                            <menuItem title="Rescan sets..." keyEquivalent="R" id="A6k-Dm-n7z">
+                                <connections>
+                                    <action selector="rescanSets:" target="-1" id="uPw-AG-YhZ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="yui-D6-pxa"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
                                     <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>

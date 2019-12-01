@@ -23,6 +23,28 @@
     return self;
 }
 
+#pragma mark - NSCoding
+
+- (instancetype) initWithCoder:(NSCoder *) coder
+{
+    if ((self = [super init]) != nil) {
+        _parent = [coder decodeObjectForKey:@"parent"];
+        _name = [coder decodeObjectForKey:@"name"];
+        _title = [coder decodeObjectForKey:@"title"];
+        _status = (unsigned char) [coder decodeIntForKey:@"status"];
+    }
+
+    return self;
+}
+
+- (void) encodeWithCoder:(NSCoder *) coder
+{
+    [coder encodeObject:_parent forKey:@"parent"];
+    [coder encodeObject:_name forKey:@"name"];
+    [coder encodeObject:_title forKey:@"title"];
+    [coder encodeInt:(int) _status forKey:@"status"];
+}
+
 @end
 
 #pragma mark - FBScanner
@@ -44,11 +66,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    NSLog(@"Cleaning up");
-}
-
 #pragma mark - NSThread
 
 - (void) main
@@ -63,6 +80,7 @@
     if ([del respondsToSelector:@selector(scanDidStart)])
         dispatch_async(dispatch_get_main_queue(), ^{ [del scanDidStart]; });
 
+    NSMutableArray<FBROMSet *> *romSets = [NSMutableArray new];
     UINT32 originallyActive = nBurnDrvActive;
     for (unsigned int i = 0; i < nBurnDrvCount && !self.cancelled; i++) {
         FBROMSet *set = [self newRomSetWithIndex:i];
@@ -79,11 +97,14 @@
         set.status = BzipOpen(TRUE);
         BzipClose();
         nBurnDrvActive = originallyActive;
+
+        [romSets addObject:set];
     }
 
+    NSArray<FBROMSet *> *doneSets = (!self.isCancelled) ? romSets : nil;
     del = _delegate;
-    if ([del respondsToSelector:@selector(scanDidEnd)])
-        dispatch_async(dispatch_get_main_queue(), ^{ [del scanDidEnd]; });
+    if ([del respondsToSelector:@selector(scanDidEnd:)])
+        dispatch_async(dispatch_get_main_queue(), ^{ [del scanDidEnd:doneSets]; });
 }
 
 - (FBROMSet *) newRomSetWithIndex:(int) index

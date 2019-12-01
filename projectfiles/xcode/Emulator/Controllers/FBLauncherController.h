@@ -12,8 +12,17 @@
 
 @interface FBLauncherController : NSWindowController<FBScannerDelegate>
 {
+    IBOutlet NSPanel *progressPanel;
+    IBOutlet NSProgressIndicator *progressPanelBar;
+    IBOutlet NSButton *progressPanelCancelButton;
+    IBOutlet NSTextField *progressPanelLabel;
+
+    IBOutlet NSTreeController *romSetTreeController;
 }
 
-- (IBAction) hiya:(id) sender;
+- (IBAction) rescanSets:(id) sender;
+- (IBAction) cancelProgress:(id) sender;
+
+@property (readonly) NSArray<NSDictionary *> *romSets;
 
 @end

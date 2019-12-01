@@ -79,9 +79,23 @@ void gui_init()
 #define normal_color 0x1eaab7
 #define info_color 0xf6cd61
 
-
+static int result = 0;
+static double x = 0.01;
+static double y = 0.01;
+static double z = 0.01;
 void gui_render()
 {
+
+  x+=0.07;
+  y+=0.03;
+  z+=0.05;
+
+  SDL_Color pal[1];
+  pal[0].r = 190+64*sin(x+(result*0.004754));
+  pal[0].g = 190+64*sin(y+(result*0.006754));
+  pal[0].b = 190+64*sin(z+(result*0.004754));
+  result++;
+
    SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
    SDL_SetRenderDrawColor(sdlRenderer, 0x3a, 0x3e, 0x3d, SDL_ALPHA_OPAQUE);
    SDL_RenderClear(sdlRenderer);
@@ -97,7 +111,8 @@ void gui_render()
          nBurnDrvActive = i;
          if (game_counter == gamesperscreen / 2)
          {
-            incolor(select_color, /* unused */ 0);
+            incolor1(pal);
+            //incolor(select_color, /* unused */ 0);
             inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
             gametoplay = i;
 
@@ -119,7 +134,7 @@ void gui_render()
          else
          {
             incolor(normal_color, /* unused */ 0);
-            inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
+            inprint(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
          }
       }
    }

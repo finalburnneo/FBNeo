@@ -20,7 +20,7 @@ static int  nFastSpeed = 6;
 
 static void CreateSavePath(char *szConfig)
 {
-   char cfgdir[MAX_PATH];
+   char cfgdir[MAX_PATH]= { 0 } ;
 
    get_user_data_folder(cfgdir, sizeof(cfgdir), "fbneo");
    if (cfgdir[0] == 0)
@@ -35,27 +35,24 @@ static void CreateSavePath(char *szConfig)
 
 int SaveNVRAM()
 {
-   char temp[MAX_PATH];
-   char cfgdir[MAX_PATH];
+   char temp[MAX_PATH] { 0 };
+   char cfgdir[MAX_PATH] { 0 };
 
-   CreateSavePath(cfgdir);
+  
    snprintf(temp, 255, "%s%s.nvr", cfgdir, BurnDrvGetTextA(0));
-
-   fprintf(stderr, "Writing NVRAM to \"%s\"\n", temp);
+   CreateSavePath(cfgdir);
+   fprintf(stderr, "Writing NVRAM to \"%s%s\"\n", cfgdir, temp);
    BurnStateSave(temp, 0);
    return 0;
 }
 
 int ReadNVRAM()
 {
-   char temp[MAX_PATH];
-   char cfgdir[MAX_PATH];
-
+   char temp[MAX_PATH] = { 0 };
+   char cfgdir[MAX_PATH] = { 0 } ;
+    snprintf(temp, 255, "%s%s.nvr", cfgdir, BurnDrvGetTextA(0));  
    CreateSavePath(cfgdir);
-
-   snprintf(temp, 255, "%s%s.nvr", cfgdir, BurnDrvGetTextA(0));
-
-   fprintf(stderr, "Reading NVRAM from \"%s\"\n", temp);
+   fprintf(stderr, "Reading NVRAM from \"%s%s\"\n", cfgdir, temp);
    BurnStateLoad(temp, 0, NULL);
    return 0;
 }

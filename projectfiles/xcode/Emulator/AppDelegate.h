@@ -26,6 +26,7 @@
 @property (readonly) FBInput *input;
 @property (readonly) FBAudio *audio;
 
+@property (readonly) NSString *romPath;
 @property (readonly) NSString *supportPath;
 @property (readonly) NSString *nvramPath;
 @property (readonly) NSString *dipSwitchPath;
@@ -34,5 +35,6 @@
 
 - (IBAction) displayLogViewer:(id) sender;
 - (IBAction) displayPreferences:(id) sender;
+- (IBAction) displayLauncher:(id) sender;
 
 @end

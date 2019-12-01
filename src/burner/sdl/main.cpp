@@ -91,9 +91,7 @@ int main(int argc, char *argv[])
 
    bCheatsAllowed   = false;
    nAudDSPModule[0] = 1;
-   ConfigAppLoad();
-   ConfigAppSave();
-
+   
    if (!DrvInit(i, 0))
    {
       MediaInit();
@@ -104,10 +102,10 @@ int main(int argc, char *argv[])
       printf("There was an error loading your selected game.\n");
    }
 
+   ConfigAppSave();
    DrvExit();
    MediaExit();
-
-   ConfigAppSave();
+ 
    BurnLibExit();
 
    SDL_Quit();

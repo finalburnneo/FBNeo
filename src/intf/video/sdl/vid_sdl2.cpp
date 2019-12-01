@@ -278,7 +278,8 @@ static int Paint(int bValidate)
    if (nRotateGame)
    {
       SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
-      SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
+      if (nRotateGame && bFlipped ) SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 90, NULL, SDL_FLIP_NONE);
+      if (nRotateGame && !bFlipped) SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
    }
    else
    {

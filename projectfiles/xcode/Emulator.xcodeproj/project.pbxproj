@@ -10,6 +10,7 @@
 		FE0A7E9723938CE7001E6997 /* FBLauncherController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9523938CE6001E6997 /* FBLauncherController.m */; };
 		FE0A7E9A23938E9F001E6997 /* Launcher.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE0A7E9823938E9F001E6997 /* Launcher.xib */; };
 		FE0A7E9D2393A1FF001E6997 /* FBScanner.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */; };
+		FE0A7EA12394B87B001E6997 /* FBRomSetStatusAsNSImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */; };
 		FE1B1092235615940065200C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1091235615940065200C /* AppDelegate.m */; };
 		FE1B1094235615950065200C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1093235615950065200C /* Assets.xcassets */; };
 		FE1B1097235615950065200C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1095235615950065200C /* MainMenu.xib */; };
@@ -1044,6 +1045,8 @@
 		FE0A7E9923938E9F001E6997 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Launcher.xib; sourceTree = "<group>"; };
 		FE0A7E9B2393A1FE001E6997 /* FBScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBScanner.h; sourceTree = "<group>"; };
 		FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBScanner.mm; sourceTree = "<group>"; };
+		FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRomSetStatusAsNSImage.m; sourceTree = "<group>"; };
+		FE0A7EA02394B87B001E6997 /* FBRomSetStatusAsNSImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRomSetStatusAsNSImage.h; sourceTree = "<group>"; };
 		FE1B108D235615940065200C /* FinalBurn Neo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FinalBurn Neo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE1B1090235615940065200C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FE1B1091235615940065200C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -2553,6 +2556,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE0A7E9E2394B87B001E6997 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FE0A7EA02394B87B001E6997 /* FBRomSetStatusAsNSImage.h */,
+				FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		FE1B1084235615940065200C = {
 			isa = PBXGroup;
 			children = (
@@ -2578,6 +2590,7 @@
 			children = (
 				FE2BC6BD2362BF9200B9D150 /* Nibs */,
 				FE2BC6AF23615BBC00B9D150 /* Controllers */,
+				FE0A7E9E2394B87B001E6997 /* Views */,
 				FE1B1090235615940065200C /* AppDelegate.h */,
 				FE1B1091235615940065200C /* AppDelegate.m */,
 				FE1B1093235615950065200C /* Assets.xcassets */,
@@ -5217,6 +5230,7 @@
 				FE1B264C23561A770065200C /* taito_m68705.cpp in Sources */,
 				FE1B263C23561A770065200C /* ps_z.cpp in Sources */,
 				FE1B261923561A770065200C /* d_wardner.cpp in Sources */,
+				FE0A7EA12394B87B001E6997 /* FBRomSetStatusAsNSImage.m in Sources */,
 				FE1B24C823561A750065200C /* d_esprade.cpp in Sources */,
 				FE1B25F823561A760065200C /* d_wunit.cpp in Sources */,
 				FE1B26F923561A780065200C /* d_quizo.cpp in Sources */,

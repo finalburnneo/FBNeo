@@ -10,6 +10,15 @@
 
 #import "FBScanner.h"
 
+@interface FBLauncherItem: NSObject
+
+@property NSString *name;
+@property NSString *title;
+@property unsigned char status;
+@property (readonly) NSMutableArray<FBLauncherItem *> *subsets;
+
+@end
+
 @interface FBLauncherController : NSWindowController<FBScannerDelegate>
 {
     IBOutlet NSPanel *progressPanel;
@@ -22,7 +31,8 @@
 
 - (IBAction) rescanSets:(id) sender;
 - (IBAction) cancelProgress:(id) sender;
+- (IBAction) launchSet:(id) sender;
 
-@property (readonly) NSArray<NSDictionary *> *romSets;
+@property (readonly) NSArray<FBLauncherItem *> *romSets;
 
 @end

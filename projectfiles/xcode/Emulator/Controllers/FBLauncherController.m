@@ -11,9 +11,26 @@
 #import "AppDelegate.h"
 #import "NSWindowController+Core.h"
 
+#pragma mark - FBLauncherItem
+
+@implementation FBLauncherItem
+
+- (instancetype) init
+{
+    if (self = [super init]) {
+        _subsets = [NSMutableArray new];
+    }
+    return self;
+}
+
+@end
+
+#pragma mark - FBLauncherController
+
 @interface FBLauncherController ()
 
 - (void) reloadSets:(NSArray<FBROMSet *> *) romSets;
+- (NSString *) setCachePath;
 
 @end
 
@@ -33,14 +50,20 @@
 
 - (void) awakeFromNib
 {
+    if ([NSFileManager.defaultManager fileExistsAtPath:self.setCachePath]) {
+        NSArray<FBROMSet *> *cached = [NSKeyedUnarchiver unarchiveObjectWithFile:self.setCachePath];
+        if (cached)
+            [self reloadSets:cached];
+    }
+
+    if (_romSets.count == 0)
+        [self rescanSets:self];
 }
 
 #pragma mark - NSWindowDelegate
 
 - (void) windowWillLoad
 {
-    if (_romSets.count == 0)
-        [self rescanSets:self];
 }
 
 - (void) windowWillClose:(NSNotification *) notification
@@ -58,11 +81,8 @@
     progressPanelLabel.stringValue = NSLocalizedString(@"Scanning...", nil);
     progressPanelCancelButton.enabled = YES;
 
-    [NSApp beginSheet:progressPanel
-       modalForWindow:[self window]
-        modalDelegate:self
-       didEndSelector:@selector(didEndSheet:returnCode:contextInfo:)
-          contextInfo:nil];
+    [self.window beginSheet:progressPanel
+          completionHandler:^(NSModalResponse returnCode) { }];
 }
 
 - (void) progressDidUpdate:(float) progress
@@ -76,22 +96,16 @@
         scanner = nil;
     }
 
-    [NSApp endSheet:progressPanel];
+    [self.window endSheet:progressPanel];
 
     if (!romSets)
         return; // Cancelled, or otherwise failed
 
+    // Cache
+    [NSKeyedArchiver archiveRootObject:romSets
+                                toFile:self.setCachePath];
+
     [self reloadSets:romSets];
-    [romSetTreeController rearrangeObjects];
-}
-
-#pragma mark - Callbacks
-
-- (void) didEndSheet:(NSWindow *) sheet
-          returnCode:(NSInteger) returnCode
-         contextInfo:(void *) contextInfo
-{
-    [sheet orderOut:self];
 }
 
 #pragma mark - Actions
@@ -118,6 +132,18 @@
     }
 }
 
+- (void) launchSet:(id) sender
+{
+    FBLauncherItem *item = romSetTreeController.selectedObjects.lastObject;
+    if (!item || item.status != FBROMSET_STATUS_OK)
+        return;
+
+    // FIXME: hack!
+    // Ask emulator to load a (possibly) non-existent file
+    NSString *file = [item.name stringByAppendingPathExtension:@"zip"];
+    [self.appDelegate loadPath:[self.appDelegate.romPath stringByAppendingPathComponent:file]];
+}
+
 #pragma mark - Private
 
 - (void) reloadSets:(NSArray<FBROMSet *> *) romSets
@@ -129,29 +155,36 @@
     // and child sets to respective sub-list
     NSMutableDictionary<NSString *, NSMutableArray *> *childSetsByName = [NSMutableDictionary new];
     [romSets enumerateObjectsUsingBlock:^(FBROMSet *obj, NSUInteger idx, BOOL *stop) {
-        NSDictionary *set = @{
-            @"name": obj.name,
-            @"title": obj.title,
-            @"subsets": [NSMutableArray new],
-        };
+        FBLauncherItem *item = [FBLauncherItem new];
+        item.name = obj.name;
+        item.title = obj.title;
+        item.status = obj.status;
+
         if (!obj.parent)
-            [(NSMutableArray *)_romSets addObject:set];
+            [(NSMutableArray *) _romSets addObject:item];
         else {
             NSMutableArray *childSet = childSetsByName[obj.parent];
             if (!childSet) {
                 childSet = [NSMutableArray new];
                 childSetsByName[obj.parent] = childSet;
             }
-            [childSet addObject:set];
+            [childSet addObject:item];
         }
     }];
 
     // Sweep through master list and add any child sets
-    [_romSets enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-        NSArray *children = childSetsByName[obj[@"name"]];
+    [_romSets enumerateObjectsUsingBlock:^(FBLauncherItem *obj, NSUInteger idx, BOOL *stop) {
+        NSArray *children = childSetsByName[obj.name];
         if (children)
-            [obj[@"subsets"] addObjectsFromArray:children];
+            [obj.subsets addObjectsFromArray:children];
     }];
+
+    [romSetTreeController rearrangeObjects];
+}
+
+- (NSString *) setCachePath
+{
+    return [self.appDelegate.supportPath stringByAppendingPathComponent:@"SetCache.plist"];
 }
 
 @end

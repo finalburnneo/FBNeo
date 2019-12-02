@@ -87,6 +87,13 @@
                                             </connections>
                                         </tableColumn>
                                     </tableColumns>
+                                    <connections>
+                                        <binding destination="-2" name="doubleClickTarget" keyPath="self" id="WLF-Lh-4jC">
+                                            <dictionary key="options">
+                                                <string key="NSSelectorName">launchSet:</string>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </outlineView>
                             </subviews>
                         </clipView>
@@ -125,7 +132,7 @@
             </connections>
             <point key="canvasLocation" x="192" y="209.5"/>
         </window>
-        <treeController objectClassName="NSDictionary" editable="NO" childrenKeyPath="subsets" id="IZb-g9-uEr">
+        <treeController objectClassName="FBLauncherItem" editable="NO" childrenKeyPath="subsets" id="IZb-g9-uEr">
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="romSets" id="i4j-NI-FYk"/>
                 <binding destination="Mk3-du-Xcu" name="sortDescriptors" keyPath="values.romSetSortDescriptor" id="XzZ-ve-L7D">

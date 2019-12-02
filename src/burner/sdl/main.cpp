@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
    parseSwitches(argc, argv);
 
    if (romname == NULL) {
-      printf("Usage: %s [-joy] [-menu]  <romname>\n", argv[0]);
+      printf("Usage: %s [-joy] [-menu]  [-vsync] <romname>\n", argv[0]);
       printf("Note the -menu switch does not require a romname\n");
       printf("e.g.: %s mslug\n", argv[0]);
       printf("e.g.: %s -menu -joy\n", argv[0]);

@@ -11,6 +11,7 @@
 		FE0A7E9A23938E9F001E6997 /* Launcher.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE0A7E9823938E9F001E6997 /* Launcher.xib */; };
 		FE0A7E9D2393A1FF001E6997 /* FBScanner.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */; };
 		FE0A7EA12394B87B001E6997 /* FBRomSetStatusAsNSImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */; };
+		FE0A7EA42394ED91001E6997 /* FBDropFileScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7EA32394ED91001E6997 /* FBDropFileScrollView.m */; };
 		FE1B1092235615940065200C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1091235615940065200C /* AppDelegate.m */; };
 		FE1B1094235615950065200C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1093235615950065200C /* Assets.xcassets */; };
 		FE1B1097235615950065200C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1095235615950065200C /* MainMenu.xib */; };
@@ -1047,6 +1048,8 @@
 		FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBScanner.mm; sourceTree = "<group>"; };
 		FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRomSetStatusAsNSImage.m; sourceTree = "<group>"; };
 		FE0A7EA02394B87B001E6997 /* FBRomSetStatusAsNSImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRomSetStatusAsNSImage.h; sourceTree = "<group>"; };
+		FE0A7EA22394ED90001E6997 /* FBDropFileScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDropFileScrollView.h; sourceTree = "<group>"; };
+		FE0A7EA32394ED91001E6997 /* FBDropFileScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBDropFileScrollView.m; sourceTree = "<group>"; };
 		FE1B108D235615940065200C /* FinalBurn Neo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FinalBurn Neo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE1B1090235615940065200C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FE1B1091235615940065200C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -2559,6 +2562,8 @@
 		FE0A7E9E2394B87B001E6997 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FE0A7EA22394ED90001E6997 /* FBDropFileScrollView.h */,
+				FE0A7EA32394ED91001E6997 /* FBDropFileScrollView.m */,
 				FE0A7EA02394B87B001E6997 /* FBRomSetStatusAsNSImage.h */,
 				FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */,
 			);
@@ -5677,6 +5682,7 @@
 				FE1B266F23561A770065200C /* d_darius2.cpp in Sources */,
 				FE1B25CA23561A760065200C /* d_contra.cpp in Sources */,
 				FE1B273A23561A780065200C /* d_srumbler.cpp in Sources */,
+				FE0A7EA42394ED91001E6997 /* FBDropFileScrollView.m in Sources */,
 				FE1B253023561A760065200C /* d_hyperpac.cpp in Sources */,
 				FE1B27D523561A790065200C /* atariic.cpp in Sources */,
 				FE1B23D823561A750065200C /* 2100dasm.cpp in Sources */,

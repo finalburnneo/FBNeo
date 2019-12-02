@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define FBROMSET_STATUS_OK 0
+#define FBROMSET_STATUS_OK         0
+#define FBROMSET_STATUS_UNPLAYABLE 2
 
 @interface FBROMSet: NSObject<NSCoding>
 

@@ -81,8 +81,9 @@ static AppDelegate *sharedInstance = nil;
 
 - (void) applicationDidFinishLaunching:(NSNotification *) aNotification {
     NSLog(@"applicationDidFinishLaunching");
+    launcher = [FBLauncherController new];
     emulator = [FBEmulatorController new];
-    [emulator showWindow:self];
+    [launcher showWindow:self];
     [_runloop start];
 }
 
@@ -148,6 +149,8 @@ static AppDelegate *sharedInstance = nil;
 {
     [_runloop load:path];
     [NSDocumentController.sharedDocumentController noteNewRecentDocumentURL:[NSURL fileURLWithPath:path]];
+
+    [emulator showWindow:self];
 }
 
 - (void) suppressScreenSaver

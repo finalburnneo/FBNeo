@@ -135,11 +135,14 @@
 - (void) launchSet:(id) sender
 {
     FBLauncherItem *item = romSetTreeController.selectedObjects.lastObject;
-    if (!item || item.status != FBROMSET_STATUS_OK)
+    if (!item || item.status == FBROMSET_STATUS_UNPLAYABLE)
         return;
 
     // FIXME: hack!
     // Ask emulator to load a (possibly) non-existent file
+    // The loader doesn't really care whether the file exists - it only
+    // uses the set's path and file name to determine which set to load
+    // and from where.
     NSString *file = [item.name stringByAppendingPathExtension:@"zip"];
     [self.appDelegate loadPath:[self.appDelegate.romPath stringByAppendingPathComponent:file]];
 }

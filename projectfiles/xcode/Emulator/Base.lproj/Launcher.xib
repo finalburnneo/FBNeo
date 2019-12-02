@@ -47,12 +47,15 @@
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="dxk-DU-Pc5">
-                                                <font key="font" metaFont="menu" size="11"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
+                                            <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="37K-uV-JwN"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="IZb-g9-uEr" name="value" keyPath="arrangedObjects.status" id="D1U-05-p70">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">FBRomSetStatusAsNSImage</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
                                         </tableColumn>
                                         <tableColumn editable="NO" width="116" minWidth="40" maxWidth="1000" id="SfF-mw-sk3">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Name">
@@ -112,21 +115,6 @@
                     </scrollView>
                 </subviews>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="45801F3E-846E-4D62-9F9C-403E0D3C379B" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="9cL-0S-sWb">
-                <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="rRr-0R-A7H"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="B2k-1t-iyn"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="gMd-QL-JPh"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="p3s-o2-ixw"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="ZKR-9D-uds"/>
-                </allowedToolbarItems>
-                <defaultToolbarItems>
-                    <toolbarItem reference="rRr-0R-A7H"/>
-                    <toolbarItem reference="B2k-1t-iyn"/>
-                    <toolbarItem reference="ZKR-9D-uds"/>
-                    <toolbarItem reference="gMd-QL-JPh"/>
-                </defaultToolbarItems>
-            </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="uIo-I6-8Np"/>
             </connections>

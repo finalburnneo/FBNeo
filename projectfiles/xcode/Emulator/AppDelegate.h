@@ -31,7 +31,7 @@
 @property (readonly) NSString *nvramPath;
 @property (readonly) NSString *dipSwitchPath;
 
-@property (readonly) NSArray *supportedFormats;
+@property (readonly) NSSet<NSString *> *supportedFormats;
 
 - (IBAction) displayLogViewer:(id) sender;
 - (IBAction) displayPreferences:(id) sender;

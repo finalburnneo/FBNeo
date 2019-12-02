@@ -31,6 +31,7 @@
 
 - (void) reloadSets:(NSArray<FBROMSet *> *) romSets;
 - (NSString *) setCachePath;
+- (NSSet<NSString *> *) supportedRomSets;
 
 @end
 
@@ -51,6 +52,7 @@
 - (void) awakeFromNib
 {
     if ([NSFileManager.defaultManager fileExistsAtPath:self.setCachePath]) {
+        // Restore from cache
         NSArray<FBROMSet *> *cached = [NSKeyedUnarchiver unarchiveObjectWithFile:self.setCachePath];
         if (cached)
             [self reloadSets:cached];
@@ -101,11 +103,37 @@
     if (!romSets)
         return; // Cancelled, or otherwise failed
 
-    // Cache
+    // Save to cache
     [NSKeyedArchiver archiveRootObject:romSets
                                 toFile:self.setCachePath];
 
     [self reloadSets:romSets];
+}
+
+#pragma mark - FBDropFileScrollView
+
+- (BOOL) isDropAcceptable:(NSArray<NSString *> *) paths
+{
+    __block BOOL acceptable = YES;
+    NSSet<NSString *> *supportedFormats = self.appDelegate.supportedFormats;
+    NSSet<NSString *> *supportedArchives = self.supportedRomSets;
+
+    [paths enumerateObjectsUsingBlock:^(NSString *path, NSUInteger idx, BOOL *stop) {
+        NSString *filename = path.lastPathComponent;
+        // Check extension && archive name
+        if (![supportedFormats containsObject:filename.pathExtension]
+            || ![supportedArchives containsObject:filename.stringByDeletingPathExtension]) {
+            acceptable = NO;
+            *stop = YES;
+        }
+    }];
+
+    return acceptable;
+}
+
+- (void) dropDidComplete:(NSArray<NSString *> *) paths
+{
+    // FIXME
 }
 
 #pragma mark - Actions
@@ -188,6 +216,19 @@
 - (NSString *) setCachePath
 {
     return [self.appDelegate.supportPath stringByAppendingPathComponent:@"SetCache.plist"];
+}
+
+- (NSSet<NSString *> *) supportedRomSets
+{
+    NSMutableSet *set = [NSMutableSet new];
+    [_romSets enumerateObjectsUsingBlock:^(FBLauncherItem *item, NSUInteger idx, BOOL *stop) {
+        [set addObject:item.name];
+        [item.subsets enumerateObjectsUsingBlock:^(FBLauncherItem *sub, NSUInteger idx, BOOL *stop) {
+            [set addObject:sub.name];
+        }];
+    }];
+
+    return set;
 }
 
 @end

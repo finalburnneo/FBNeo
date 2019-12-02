@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "FBScanner.h"
+#import "FBDropFileScrollView.h"
 
 @interface FBLauncherItem: NSObject
 
@@ -19,7 +20,7 @@
 
 @end
 
-@interface FBLauncherController : NSWindowController<FBScannerDelegate>
+@interface FBLauncherController : NSWindowController<FBScannerDelegate, FBDropFileScrollViewDelegate>
 {
     IBOutlet NSPanel *progressPanel;
     IBOutlet NSProgressIndicator *progressPanelBar;

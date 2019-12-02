@@ -41,7 +41,7 @@ static AppDelegate *sharedInstance = nil;
 
     _audio = [FBAudio new];
     _input = [FBInput new];
-    _supportedFormats = @[ @"zip", @"7z" ];
+    _supportedFormats = [NSSet setWithArray:@[ @"zip", @"7z" ]];
 
     _runloop = [FBMainThread new];
     _video = [FBVideo new];
@@ -114,7 +114,7 @@ static AppDelegate *sharedInstance = nil;
     panel.canChooseFiles = YES;
     panel.canChooseDirectories = NO;
     panel.allowsMultipleSelection = NO;
-    panel.allowedFileTypes = _supportedFormats;
+    panel.allowedFileTypes = _supportedFormats.allObjects;
 
     [panel beginWithCompletionHandler:^(NSInteger result){
         if (result == NSModalResponseOK)

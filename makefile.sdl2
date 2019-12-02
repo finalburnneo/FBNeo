@@ -70,7 +70,7 @@ depobj	+= 	neocdlist.o \
 			\
 			inp_sdl2.o aud_sdl.o support_paths.o ips_manager.o scrn.o \
 			cd_isowav.o cdsound.o config.o main.o run.o stringset.o bzip.o drv.o media.o \
-			inpdipsw.o vid_sdl2opengl.o vid_sdl2.o dynhuff.o replay.o sdl2_gui.o sdl2_inprint.o
+			inpdipsw.o vid_sdl2opengl.o vid_sdl2.o dynhuff.o replay.o sdl2_gui.o sdl2_inprint.o input.o
 
 ifdef INCLUDE_7Z_SUPPORT
 depobj	+=	un7z.o \

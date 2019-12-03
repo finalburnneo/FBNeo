@@ -74,6 +74,8 @@ void gui_init()
    gamesperscreen = (nVidGuiHeight - 100) / 10;
 }
 
+
+
 #define fbn_color 0xfe8a71
 #define select_color 0xffffff
 #define normal_color 0x1eaab7
@@ -83,9 +85,9 @@ static int result = 0;
 static double x = 0.01;
 static double y = 0.01;
 static double z = 0.01;
-void gui_render()
-{
 
+inline void calcSelectedItemColor()
+{
   x+=0.07;
   y+=0.03;
   z+=0.05;
@@ -96,6 +98,12 @@ void gui_render()
   pal[0].b = 190+64*sin(z+(result*0.004754));
   result++;
 
+  incolor1(pal);
+}
+
+
+void gui_render()
+{
    SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
    SDL_SetRenderDrawColor(sdlRenderer, 0x3a, 0x3e, 0x3d, SDL_ALPHA_OPAQUE);
    SDL_RenderClear(sdlRenderer);
@@ -111,7 +119,7 @@ void gui_render()
          nBurnDrvActive = i;
          if (game_counter == gamesperscreen / 2)
          {
-            incolor1(pal);
+           calcSelectedItemColor();
             //incolor(select_color, /* unused */ 0);
             inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
             gametoplay = i;
@@ -191,7 +199,9 @@ int gui_process()
                nBurnDrvActive = gametoplay;
                printf("selected %s\n", BurnDrvGetTextA(DRV_FULLNAME));
                return gametoplay;
-
+            case SDLK_F12:
+                quit = 1;
+                break;
             default:
                break;
             }

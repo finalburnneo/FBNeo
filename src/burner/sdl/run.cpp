@@ -15,7 +15,7 @@ static unsigned int nNormalLast = 0;        // Last value of timeGetTime()
 static int          nNormalFrac = 0;        // Extra fraction we did
 
 static bool bAppDoStep = 0;
-static bool bAppDoFast = 0;
+bool bAppDoFast = 0;
 static int  nFastSpeed = 6;
 
 static void CreateSavePath(char *szConfig)
@@ -38,7 +38,7 @@ int SaveNVRAM()
    char temp[MAX_PATH] { 0 };
    char cfgdir[MAX_PATH] { 0 };
 
-  
+
    snprintf(temp, 255, "%s%s.nvr", cfgdir, BurnDrvGetTextA(0));
    CreateSavePath(cfgdir);
    fprintf(stderr, "Writing NVRAM to \"%s%s\"\n", cfgdir, temp);
@@ -50,7 +50,7 @@ int ReadNVRAM()
 {
    char temp[MAX_PATH] = { 0 };
    char cfgdir[MAX_PATH] = { 0 } ;
-    snprintf(temp, 255, "%s%s.nvr", cfgdir, BurnDrvGetTextA(0));  
+    snprintf(temp, 255, "%s%s.nvr", cfgdir, BurnDrvGetTextA(0));
    CreateSavePath(cfgdir);
    fprintf(stderr, "Reading NVRAM from \"%s%s\"\n", cfgdir, temp);
    BurnStateLoad(temp, 0, NULL);

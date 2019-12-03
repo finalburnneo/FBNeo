@@ -76,6 +76,8 @@ static int VidSScaleImage(RECT *pRect)
 
 static int Exit()
 {
+   kill_inline_font(); //TODO: This is not supposed to be here
+
    SDL_DestroyTexture(sdlTexture);
    SDL_DestroyRenderer(sdlRenderer);
    SDL_DestroyWindow(sdlWindow);
@@ -105,7 +107,7 @@ static int Init()
       // Get the game screen size
       BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
       BurnDrvGetAspect(&GameAspectX, &GameAspectY);
- 
+
  if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
       {
         BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
@@ -150,7 +152,7 @@ static int Init()
    }
 
    Uint32 renderflags=SDL_RENDERER_ACCELERATED;
-   
+
    if (vsync) renderflags = renderflags | SDL_RENDERER_PRESENTVSYNC;
 
    sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, renderflags);
@@ -184,6 +186,9 @@ static int Init()
    {
       SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_h);
    }
+   inrenderer(sdlRenderer);   //TODO: this is not supposed to be here
+   prepare_inline_font(); // TODO: BAD
+   incolor(0xFFF000, 0);
 
    //SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE); // Probably best not turn this on
 
@@ -298,6 +303,10 @@ static int Paint(int bValidate)
       SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
    }
 
+   if (bAppDoFast)
+   {
+     inprint_shadowed(sdlRenderer,"FFWD", 10, 10);
+   }
    SDL_RenderPresent(sdlRenderer);
 
    return 0;

@@ -35,6 +35,7 @@ int SetBurnHighCol(int nDepth);
 
 extern int  nAppVirtualFps;
 extern bool bRunPause;
+extern bool bAppDoFast;
 extern bool bAlwaysProcessKeyboardInput;
 TCHAR *ANSIToTCHAR(const char *pszInString, TCHAR *pszOutString, int nOutSize);
 char *TCHARToANSI(const TCHAR *pszInString, char *pszOutString, int nOutSize);

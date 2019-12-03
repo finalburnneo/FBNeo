@@ -17,3 +17,4 @@ xcuserdata
 project.xcworkspace
 projectfiles/xcode/build
 nvram
+*.nvr

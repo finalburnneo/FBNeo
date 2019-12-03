@@ -4,6 +4,7 @@
 #include "vid_softfx.h"
 
 #include <SDL.h>
+extern int vsync;
 
 static unsigned char *VidMem      = NULL;
 static SDL_Window *   sdlWindow   = NULL;
@@ -148,7 +149,11 @@ static int Init()
       return 1;
    }
 
-   sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_ACCELERATED);
+   Uint32 renderflags=SDL_RENDERER_ACCELERATED;
+   
+   if (vsync) renderflags = renderflags | SDL_RENDERER_PRESENTVSYNC;
+
+   sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, renderflags);
    if (sdlRenderer == NULL)
    {
       // In the case that the window could not be made...

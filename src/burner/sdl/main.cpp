@@ -1,35 +1,70 @@
 /*----------------
- * Stuff to finish:
- *
- * It wouldn't be a stretch of the imagination to think the whole of the sdl 'port' needs a redo but here are the main things wrong with this version:
- *
- *
- * There is no OSD of any kind which makes it hard to display info to the users.
- * There are lots of problems with the audio output code.
- * There are lots of problems with the opengl renderer
- * probably many other things.
- * ------------------*/
+* Stuff to finish:
+*
+* It wouldn't be a stretch of the imagination to think the whole of the sdl 'port' needs a redo but here are the main things wrong with this version:
+*
+*
+* There are lots of problems with the audio output code.
+* There are lots of problems with the opengl renderer
+* probably many other things.
+* ------------------*/
+
 #include "burner.h"
+
+INT32 Init_Joysticks(int p1_use_joystick);
 
 int  nAppVirtualFps = 6000;         // App fps * 100
 bool bRunPause      = 0;
 bool bAlwaysProcessKeyboardInput = 0;
+int usemenu=0, usejoy=0, vsync =0; 
 
-#undef main
+int parseSwitches(int argc, char *argv[])
+{
+   for (int i = 1; i < argc; i++) {
+      if (*argv[i] != '-') {
+         continue;
+      }
+
+      if (strcmp(argv[i] + 1, "joy") == 0) {
+         usejoy=1;
+      }
+
+      if (strcmp(argv[i] + 1, "menu") == 0) {
+         usemenu=1;
+      }
+
+      if (strcmp(argv[i] + 1, "vsync") == 0) {
+         vsync=1; // might need to change this to bit flags if there is more than one gfx option
+      }
+   }
+   return 0;
+}
 
 int main(int argc, char *argv[])
 {
+   const char *romname = NULL;
    UINT32 i = 0;
 
-   ConfigAppLoad();
-   BurnLibInit();
 
-   if (argc < 2)
-   {
-      printf("Usage: %1$s <romname>\n   ie: %1$s uopoko\n Note: no extension.\n\n", argv[0]);
-      return 0;
+   for (int i = 1; i < argc; i++) {
+      if (*argv[i] != '-') {
+         romname = argv[i];
+      }
    }
 
+   parseSwitches(argc, argv);
+
+   if (romname == NULL) {
+      printf("Usage: %s [-joy] [-menu]  [-vsync] <romname>\n", argv[0]);
+      printf("Note the -menu switch does not require a romname\n");
+      printf("e.g.: %s mslug\n", argv[0]);
+      printf("e.g.: %s -menu -joy\n", argv[0]);
+      if (!usemenu) return 0;
+   }
+   
+   ConfigAppLoad();
+
+   BurnLibInit();
    #ifdef BUILD_SDL
    SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
 
@@ -47,31 +82,27 @@ int main(int argc, char *argv[])
    #endif
    #endif
 
-   if (argc == 2)
+   if (usemenu)
    {
-     #ifdef BUILD_SDL2
-      if (strcmp(argv[1], "menu") == 0)
+      #ifdef BUILD_SDL2
+      gui_init();
+      int selectedOk = gui_process();
+      gui_exit();
+      if (selectedOk == -1)
       {
-         gui_init();
-         int selectedOk = gui_process();
-         gui_exit();
-         if (selectedOk == -1)
-         {
-            BurnLibExit();
-            SDL_Quit();
-            return 0;
-         }
+         BurnLibExit();
+         SDL_Quit();
+         return 0;
       }
-      else
-      {
-     #endif
-
+      #endif
+   }
+   else
+   {
 
       for (i = 0; i < nBurnDrvCount; i++)
       {
-         //nBurnDrvSelect[0] = i;
          nBurnDrvActive = i;
-         if (strcmp(BurnDrvGetTextA(DRV_NAME), argv[1]) == 0)
+         if (strcmp(BurnDrvGetTextA(DRV_NAME), romname) == 0)
          {
             break;
          }
@@ -79,14 +110,9 @@ int main(int argc, char *argv[])
 
       if (i == nBurnDrvCount)
       {
-         printf("%s is not supported by FinalBurn Neo.\n", argv[1]);
+         printf("%s is not supported by FinalBurn Neo.\n",  romname);
          return 1;
       }
-
-
-      #ifdef BUILD_SDL2
-   }
-      #endif
    }
 
    bCheatsAllowed   = false;
@@ -95,6 +121,7 @@ int main(int argc, char *argv[])
    if (!DrvInit(i, 0))
    {
       MediaInit();
+      Init_Joysticks(usejoy);
       RunMessageLoop();
    }
    else
@@ -105,7 +132,7 @@ int main(int argc, char *argv[])
    ConfigAppSave();
    DrvExit();
    MediaExit();
- 
+
    BurnLibExit();
 
    SDL_Quit();
@@ -115,7 +142,7 @@ int main(int argc, char *argv[])
 
 /* const */ TCHAR *ANSIToTCHAR(const char *pszInString, TCHAR *pszOutString, int nOutSize)
 {
-  #if defined (UNICODE)
+#if defined (UNICODE)
    static TCHAR szStringBuffer[1024];
 
    TCHAR *pszBuffer = pszOutString ? pszOutString : szStringBuffer;
@@ -127,7 +154,7 @@ int main(int argc, char *argv[])
    }
 
    return NULL;
-  #else
+#else
    if (pszOutString)
    {
       _tcscpy(pszOutString, pszInString);
@@ -135,12 +162,12 @@ int main(int argc, char *argv[])
    }
 
    return (TCHAR *)pszInString;
-  #endif
+#endif
 }
 
 /* const */ char *TCHARToANSI(const TCHAR *pszInString, char *pszOutString, int nOutSize)
 {
-  #if defined (UNICODE)
+#if defined (UNICODE)
    static char szStringBuffer[1024];
    memset(szStringBuffer, 0, sizeof(szStringBuffer));
 
@@ -153,7 +180,7 @@ int main(int argc, char *argv[])
    }
 
    return NULL;
-  #else
+#else
    if (pszOutString)
    {
       strcpy(pszOutString, pszInString);
@@ -161,7 +188,7 @@ int main(int argc, char *argv[])
    }
 
    return (char *)pszInString;
-  #endif
+#endif
 }
 
 bool AppProcessKeyboardInput()

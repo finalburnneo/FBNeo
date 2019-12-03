@@ -7,6 +7,19 @@
  * There are lots of problems with the audio output code.
  * There are lots of problems with the opengl renderer
  * probably many other things.
+
+TODO for SDL2:
+Make OSD a bit better as it seems a bit hack doing it how FFWD is done...
+Add FPS to osd mapped to a key
+Add autostart to menu as an ini config option
+Rom scanning to filter out missing games (as an option)
+Add previews, etc to menu
+Add menu for options e.g. dips, mapping, saves, IPS patches
+Maybe a better font output setup with some sort of scaling, maybe add sdl1 support?
+Bind quick save and load to key
+Add option for .dat generation
+Sort out whatever checks are missing from Bzip and HDD support
+Add joypad support to menu
  * ------------------*/
 
 #include "burner.h"

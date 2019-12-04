@@ -817,10 +817,10 @@ static struct BurnRomInfo GngRomDesc[] = {
 	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
 	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
 
-	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, BRF_GRA },	     //  19	PLDs
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, BRF_GRA | BRF_OPT },	     //  19	PLDs
 };
 
 STD_ROM_PICK(Gng)
@@ -862,8 +862,8 @@ static struct BurnRomInfo GngaRomDesc[] = {
 	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  17
 	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  18
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA },	     //  19	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA },	     //  20
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  19	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  20
 };
 
 STD_ROM_PICK(Gnga)
@@ -983,10 +983,10 @@ static struct BurnRomInfo GngblitaRomDesc[] = {
 	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
 	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
 
-	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, BRF_GRA },	     //  19	PLDs
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, BRF_GRA | BRF_OPT },	     //  19	PLDs
 };
 
 STD_ROM_PICK(Gngblita)
@@ -1066,8 +1066,8 @@ static struct BurnRomInfo GngtRomDesc[] = {
 	{ "mm13.3l",       0x04000, 0xe80c3fca, BRF_GRA },	     //  15
 	{ "mm12.1l",       0x04000, 0x7780a925, BRF_GRA },	     //  16
 
-	{ "m-02.14k",      0x00100, 0x0eaf5158, BRF_GRA },	     //  17	PROMs
-	{ "m-01.2e",       0x00100, 0x4a1285a4, BRF_GRA },	     //  18
+	{ "m-02.14k",      0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "m-01.2e",       0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Gngt)
@@ -1107,8 +1107,8 @@ static struct BurnRomInfo GngcRomDesc[] = {
 	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
 	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Gngc)
@@ -1148,8 +1148,8 @@ static struct BurnRomInfo MakaimurRomDesc[] = {
 	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
 	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makaimur)
@@ -1189,8 +1189,8 @@ static struct BurnRomInfo MakaimucRomDesc[] = {
 	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
 	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makaimuc)
@@ -1230,8 +1230,8 @@ static struct BurnRomInfo MakaimugRomDesc[] = {
 	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
 	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makaimug)
@@ -1268,8 +1268,8 @@ static struct BurnRomInfo DiamondRomDesc[] = {
 	{ "d17",           0x04000, 0x8164b005, BRF_GRA },	     //  12	Sprites
 	{ "d14",           0x04000, 0x6f132163, BRF_GRA },	     //  13
 
-	{ "prom1",         0x00100, 0x0eaf5158, BRF_GRA },	     //  14	PROMs
-	{ "prom2",         0x00100, 0x4a1285a4, BRF_GRA },	     //  15
+	{ "prom1",         0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  14	PROMs
+	{ "prom2",         0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  15
 };
 
 STD_ROM_PICK(Diamond)

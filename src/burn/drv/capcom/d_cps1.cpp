@@ -321,6 +321,44 @@ static struct BurnInputInfo FfightInputList[] =
 
 STDINPUTINFO(Ffight)
 
+static struct BurnInputInfo FfightaeInputList[] =
+{
+	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0 , "p1 coin"  },
+	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4 , "p1 start" },
+	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3 , "p1 up"    },
+	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2 , "p1 down"  },
+	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1 , "p1 left"  },
+	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0 , "p1 right" },
+	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4 , "p1 fire 1"},
+	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5 , "p1 fire 2"},
+
+	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1 , "p2 coin"  },
+	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5 , "p2 start" },
+	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3 , "p2 up"    },
+	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2 , "p2 down"  },
+	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1 , "p2 left"  },
+	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0 , "p2 right" },
+	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4 , "p2 fire 1"},
+	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5 , "p2 fire 2"},
+
+	{"P3 Coin"          , BIT_DIGITAL  , CpsInpc001+6, "p3 coin"  },
+	{"P3 Start"         , BIT_DIGITAL  , CpsInpc001+7, "p3 start" },
+	{"P3 Up"            , BIT_DIGITAL  , CpsInpc001+3, "p3 up"    },
+	{"P3 Down"          , BIT_DIGITAL  , CpsInpc001+2, "p3 down"  },
+	{"P3 Left"          , BIT_DIGITAL  , CpsInpc001+1, "p3 left"  },
+	{"P3 Right"         , BIT_DIGITAL  , CpsInpc001+0, "p3 right" },
+	{"P3 Attack"        , BIT_DIGITAL  , CpsInpc001+4, "p3 fire 1"},
+	{"P3 Jump"          , BIT_DIGITAL  , CpsInpc001+5, "p3 fire 2"},
+
+	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
+	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
+	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
+	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
+	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+};
+
+STDINPUTINFO(Ffightae)
+
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
 static struct BurnInputInfo ForgottnInputList[] =
@@ -2122,6 +2160,69 @@ static struct BurnDIPInfo FfightDIPList[]=
 };
 
 STDDIPINFO(Ffight)
+
+static struct BurnDIPInfo FfightaeDIPList[]=
+{
+	// Defaults
+	{0x1a, 0xff, 0xff, 0x00, NULL                     },
+	{0x1b, 0xff, 0xff, 0x03, NULL                     },
+	{0x1c, 0xff, 0xff, 0x60, NULL                     },
+		
+	// Dip A
+	CPS1_COINAGE_1(0x1a)
+
+	{0   , 0xfe, 0   , 2   , "2C to Start, 1 to Cont" },
+	{0x1a, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1a, 0x01, 0x40, 0x40, "On"                     },
+		
+	// Dip B
+	CPS1_DIFFICULTY_1(0x1b)
+
+	{0   , 0xfe, 0   , 4   , "Difficulty 2"           },
+	{0x1b, 0x01, 0x18, 0x00, "Easy"                   },
+	{0x1b, 0x01, 0x18, 0x08, "Normal"                 },
+	{0x1b, 0x01, 0x18, 0x10, "Hard"                   },
+	{0x1b, 0x01, 0x18, 0x18, "Hardest"                },
+
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x1b, 0x01, 0x60, 0x00, "100k"                   },
+	{0x1b, 0x01, 0x60, 0x20, "200k"                   },
+	{0x1b, 0x01, 0x60, 0x40, "100k and every 200k"    },
+	{0x1b, 0x01, 0x60, 0x60, "None"                   },
+	
+	// Dip C
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x1c, 0x01, 0x03, 0x03, "1"                      },
+	{0x1c, 0x01, 0x03, 0x00, "2"                      },
+	{0x1c, 0x01, 0x03, 0x01, "3"                      },
+	{0x1c, 0x01, 0x03, 0x02, "4"                      },
+
+	{0   , 0xfe, 0   , 2   , "Free Play"              },
+	{0x1c, 0x01, 0x04, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x04, 0x04, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Freeze"                 },
+	{0x1c, 0x01, 0x08, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x08, 0x08, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Flip"                   },
+	{0x1c, 0x01, 0x10, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x10, 0x10, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
+	{0x1c, 0x01, 0x20, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x20, 0x20, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
+	{0x1c, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x40, 0x40, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0x1c, 0x01, 0x80, 0x00, "Game"                   },
+	{0x1c, 0x01, 0x80, 0x80, "Test"                   },
+};
+
+STDDIPINFO(Ffightae)
 
 static struct BurnDIPInfo ForgottnDIPList[]=
 {
@@ -14190,6 +14291,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "dynwarj"     , CPS_B_02    , mapper_TK22B , 0, NULL                },
 	{ "dynwarjr"    , CPS_B_21_DEF, mapper_TK22B , 0, NULL                },
 	{ "ffight"      , CPS_B_04    , mapper_S224B , 0, NULL                },
+	{ "ffightae"    , CPS_B_21_DEF, mapper_S224B , 0, NULL                },
 	{ "ffighta"     , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightu"     , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightu1"    , CPS_B_04    , mapper_S224B , 0, NULL                },
@@ -22606,6 +22708,41 @@ struct BurnDriver BurnDrvCpswofchp = {
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_CAPCOM_CPSCHANGER, GBF_SCRFIGHT, 0,
 	NULL, wofchpRomInfo, wofchpRomName, NULL, NULL, NULL, NULL, WofchInputInfo, NULL,
 	WofchInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Hacked by Grego.
+// Patch can be found at: https://github.com/originalgrego/FinalFightAE-Installer
+static struct BurnRomInfo FfightaeRomDesc[] = {
+	{ "ff-23m.8h",     0x080000, 0x86def74f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ff-22m.7h",     0x080000, 0xcbdd8689, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "ff-5m.7a",      0x080000, 0x91a909bd, BRF_GRA | CPS1_TILES },
+	{ "ff-7m.9a",      0x080000, 0x89f8b4cd, BRF_GRA | CPS1_TILES },
+	{ "ff-1m.3a",      0x080000, 0xd5469303, BRF_GRA | CPS1_TILES },
+	{ "ff-3m.5a",      0x080000, 0x0c6302bf, BRF_GRA | CPS1_TILES },
+
+	{ "ff_09.12b",     0x010000, 0xb8367eb5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "ff_18.11c",     0x020000, 0x375c66e7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "ff_19.12c",     0x020000, 0x1ef137f9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s224b.1a",      0x000117, 0xcdc4413e, BRF_OPT },	// b-board PLDs
+	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
+};
+
+STD_ROM_PICK(Ffightae)
+STD_ROM_FN(Ffightae)
+
+struct BurnDriver BurnDrvCpsFfightae = {
+	"ffightae", "ffight", NULL, NULL, "2019",
+	"Final Fight 30th Anniversary Edition\0", NULL, "hack", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, FfightaeRomInfo, FfightaeRomName, NULL, NULL, NULL, NULL, FfightaeInputInfo, FfightaeDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

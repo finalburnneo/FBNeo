@@ -16,7 +16,6 @@
  * Add menu for options e.g. dips, mapping, saves, IPS patches
  * Maybe a better font output setup with some sort of scaling, maybe add sdl1 support?
  * Bind quick save and load to key
- * Add option for .dat generation
  * Sort out whatever checks are missing from Bzip and HDD support
  * Add joypad support to menu
  * ------------------*/
@@ -58,8 +57,7 @@ int parseSwitches(int argc, char *argv[])
 
       if (strcmp(argv[i] + 1, "dat") == 0)
       {
-        printf("dat\n");
-        dat = 1;
+         dat = 1;
       }
    }
    return 0;
@@ -173,8 +171,8 @@ int main(int argc, char *argv[])
    }
    else if (dat)
    {
-     printf("Creating fbneo.dat\n");
-     create_datfile(_T("fbneo.dat"), -1);
+      printf("Creating fbneo.dat\n");
+      create_datfile(_T("fbneo.dat"), -1);
    }
    else
    {

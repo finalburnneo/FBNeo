@@ -8,13 +8,14 @@
 
 // defines to override various #ifndef _WIN32
 #ifndef _WIN32
-typedef struct tagRECT {
-	int left;
-	int top;
-	int right;
-	int bottom;
-} RECT,*PRECT,*LPRECT;
-typedef const RECT *LPCRECT;
+typedef struct tagRECT
+{
+   int left;
+   int top;
+   int right;
+   int bottom;
+} RECT, *PRECT, *LPRECT;
+typedef const RECT *    LPCRECT;
 #else
 #include <windows.h>
 #endif
@@ -33,12 +34,12 @@ typedef unsigned char   BYTE;
 //main.cpp
 int SetBurnHighCol(int nDepth);
 
-extern int  nAppVirtualFps;
-extern bool bRunPause;
-extern bool bAppDoFast; // TODO: bad
-extern char fpsstring[20]; // TODO: also bad
-extern bool bAppShowFPS; // TODO: Also also bad
-extern bool bAlwaysProcessKeyboardInput;
+extern int   nAppVirtualFps;
+extern bool  bRunPause;
+extern bool  bAppDoFast;    // TODO: bad
+extern char  fpsstring[20]; // TODO: also bad
+extern bool  bAppShowFPS;   // TODO: Also also bad
+extern bool  bAlwaysProcessKeyboardInput;
 extern TCHAR szAppBurnVer[16];
 TCHAR *ANSIToTCHAR(const char *pszInString, TCHAR *pszOutString, int nOutSize);
 char *TCHARToANSI(const TCHAR *pszInString, char *pszOutString, int nOutSize);

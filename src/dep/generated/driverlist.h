@@ -3432,6 +3432,7 @@ DRV		BurnDrvCpsFfightu1;
 DRV		BurnDrvCpsFfightu2;
 DRV		BurnDrvCpsFfight;
 DRV		BurnDrvCpsFfighta;
+DRV		BurnDrvCpsFfightae;
 DRV		BurnDrvMSX_fjustice;
 DRV		BurnDrvMSX_fjusticeb;
 DRV		BurnDrvMSX_fjusticea;
@@ -16008,6 +16009,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsFfightu2,		// Final Fight (USA, set 3)
 	&BurnDrvCpsFfight,			// Final Fight (World, set 1)
 	&BurnDrvCpsFfighta,			// Final Fight (World, set 2)
+	&BurnDrvCpsFfightae,		// Final Fight 30th Anniversary Edition
 	&BurnDrvMSX_fjustice,		// Final Justice (Jpn)
 	&BurnDrvMSX_fjusticeb,		// Final Justice (Jpn, Alt 2)
 	&BurnDrvMSX_fjusticea,		// Final Justice (Jpn, Alt)

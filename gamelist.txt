@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12295 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12296 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3358,6 +3358,7 @@ This list contains all games supported by FinalBurn Neo.
 | ffightu2	|  	| Final Fight (USA, set 3)				| ffight	| 1989	| Capcom	| CPS1		| 					|
 | ffight	|  	| Final Fight (World, set 1)				| 		| 1989	| Capcom	| CPS1		| 					|
 | ffighta	|  	| Final Fight (World, set 2)				| ffight	| 1989	| Capcom	| CPS1		| 					|
+| ffightae	|  	| Final Fight 30th Anniversary Edition			| ffight	| 2019	| hack		| CPS1		| 					|
 | msx_fjustice	|  	| Final Justice (Jpn)					| 		| 1985	| Pony Canyon	| MSX		| 					|
 | msx_fjusticeb	|  	| Final Justice (Jpn, Alt 2)				| msx_fjustice	| 1985	| Pony Canyon	| MSX		| 					|
 | msx_fjusticea	|  	| Final Justice (Jpn, Alt)				| msx_fjustice	| 1985	| Pony Canyon	| MSX		| 					|

@@ -7,18 +7,18 @@
  * There are lots of problems with the audio output code.
  * There are lots of problems with the opengl renderer
  * probably many other things.
-
-TODO for SDL2:
-Make OSD a bit better as it seems a bit hack doing it how FFWD is done...
-Add autostart to menu as an ini config option
-Rom scanning to filter out missing games (as an option)
-Add previews, etc to menu
-Add menu for options e.g. dips, mapping, saves, IPS patches
-Maybe a better font output setup with some sort of scaling, maybe add sdl1 support?
-Bind quick save and load to key
-Add option for .dat generation
-Sort out whatever checks are missing from Bzip and HDD support
-Add joypad support to menu
+ *
+ * TODO for SDL2:
+ * Make OSD a bit better as it seems a bit hack doing it how FFWD is done...
+ * Add autostart to menu as an ini config option
+ * Rom scanning to filter out missing games (as an option)
+ * Add previews, etc to menu
+ * Add menu for options e.g. dips, mapping, saves, IPS patches
+ * Maybe a better font output setup with some sort of scaling, maybe add sdl1 support?
+ * Bind quick save and load to key
+ * Add option for .dat generation
+ * Sort out whatever checks are missing from Bzip and HDD support
+ * Add joypad support to menu
  * ------------------*/
 
 #include "burner.h"
@@ -28,7 +28,9 @@ INT32 Init_Joysticks(int p1_use_joystick);
 int  nAppVirtualFps = 6000;         // App fps * 100
 bool bRunPause      = 0;
 bool bAlwaysProcessKeyboardInput = 0;
-int  usemenu = 0, usejoy = 0, vsync = 0;
+int  usemenu = 0, usejoy = 0, vsync = 0, dat = 0;
+
+TCHAR szAppBurnVer[16];
 
 int parseSwitches(int argc, char *argv[])
 {
@@ -56,10 +58,9 @@ int parseSwitches(int argc, char *argv[])
 
       if (strcmp(argv[i] + 1, "dat") == 0)
       {
-        printf("Creating fbneo.dat\n");
-         create_datfile(_T("fbneo.dat"), 0);
+        printf("dat\n");
+        dat = 1;
       }
-
    }
    return 0;
 }
@@ -90,7 +91,19 @@ int main(int argc, char *argv[])
    const char *romname = NULL;
    UINT32      i       = 0;
 
+   // Make version string
+   if (nBurnVer & 0xFF)
+   {
+      // private version (alpha)
+      _stprintf(szAppBurnVer, _T("%x.%x.%x.%02x"), nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF);
+   }
+   else
+   {
+      // public version
+      _stprintf(szAppBurnVer, _T("%x.%x.%x"), nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF);
+   }
 
+   printf("FBNeo v%s\n", szAppBurnVer);
    for (int i = 1; i < argc; i++)
    {
       if (*argv[i] != '-')
@@ -103,11 +116,11 @@ int main(int argc, char *argv[])
 
    if (romname == NULL)
    {
-      printf("Usage: %s [-joy] [-menu]  [-vsync] <romname>\n", argv[0]);
+      printf("Usage: %s [-joy] [-menu] [-vsync] [-dat] <romname>\n", argv[0]);
       printf("Note the -menu switch does not require a romname\n");
       printf("e.g.: %s mslug\n", argv[0]);
       printf("e.g.: %s -menu -joy\n", argv[0]);
-      if (!usemenu)
+      if (!usemenu && !dat)
       {
          return 0;
       }
@@ -157,6 +170,11 @@ int main(int argc, char *argv[])
          }
       }
       #endif
+   }
+   else if (dat)
+   {
+     printf("Creating fbneo.dat\n");
+     create_datfile(_T("fbneo.dat"), -1);
    }
    else
    {

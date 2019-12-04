@@ -39,6 +39,7 @@ extern bool bAppDoFast; // TODO: bad
 extern char fpsstring[20]; // TODO: also bad
 extern bool bAppShowFPS; // TODO: Also also bad
 extern bool bAlwaysProcessKeyboardInput;
+extern TCHAR szAppBurnVer[16];
 TCHAR *ANSIToTCHAR(const char *pszInString, TCHAR *pszOutString, int nOutSize);
 char *TCHARToANSI(const TCHAR *pszInString, char *pszOutString, int nOutSize);
 bool AppProcessKeyboardInput();
@@ -71,9 +72,6 @@ void InpDIPSWResetDIPs();
 int InputInit();
 int InputExit();
 int InputMake(bool bCopy);
-
-//TODO:
-#define szAppBurnVer    1
 
 //stringset.cpp
 class StringSet {

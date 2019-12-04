@@ -4876,12 +4876,15 @@ DRV		BurnDrvJojoban;
 DRV		BurnDrvJojonr2;
 DRV		BurnDrvJojonr1;
 DRV		BurnDrvJojon;
-DRV		BurnDrvJojojr2;
-DRV		BurnDrvJojojr1;
-DRV		BurnDrvJojoj;
 DRV		BurnDrvJojor2;
 DRV		BurnDrvJojor1;
 DRV		BurnDrvJojo;
+DRV		BurnDrvJojojr2;
+DRV		BurnDrvJojojr1;
+DRV		BurnDrvJojoj;
+DRV		BurnDrvJojour2;
+DRV		BurnDrvJojour1;
+DRV		BurnDrvJojou;
 DRV		BurnDrvJollyjgr;
 DRV		BurnDrvltorb1;
 DRV		BurnDrvjongpute;
@@ -17449,12 +17452,15 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJojonr2,			// JoJo's Venture / JoJo no Kimyou na Bouken (Asia 981202, NO CD)
 	&BurnDrvJojonr1,			// JoJo's Venture / JoJo no Kimyou na Bouken (Asia 990108, NO CD)
 	&BurnDrvJojon,				// JoJo's Venture / JoJo no Kimyou na Bouken (Asia 990128, NO CD)
+	&BurnDrvJojor2,				// JoJo's Venture / JoJo no Kimyou na Bouken (Euro 981202)
+	&BurnDrvJojor1,				// JoJo's Venture / JoJo no Kimyou na Bouken (Euro 990108)
+	&BurnDrvJojo,				// JoJo's Venture / JoJo no Kimyou na Bouken (Euro 990128)
 	&BurnDrvJojojr2,			// JoJo's Venture / JoJo no Kimyou na Bouken (Japan 981202)
 	&BurnDrvJojojr1,			// JoJo's Venture / JoJo no Kimyou na Bouken (Japan 990108)
 	&BurnDrvJojoj,				// JoJo's Venture / JoJo no Kimyou na Bouken (Japan 990128)
-	&BurnDrvJojor2,				// JoJo's Venture / JoJo no Kimyou na Bouken (USA 981202)
-	&BurnDrvJojor1,				// JoJo's Venture / JoJo no Kimyou na Bouken (USA 990108)
-	&BurnDrvJojo,				// JoJo's Venture / JoJo no Kimyou na Bouken (USA 990128)
+	&BurnDrvJojour2,			// JoJo's Venture / JoJo no Kimyou na Bouken (USA 981202)
+	&BurnDrvJojour1,			// JoJo's Venture / JoJo no Kimyou na Bouken (USA 990108)
+	&BurnDrvJojou,				// JoJo's Venture / JoJo no Kimyou na Bouken (USA 990128)
 	&BurnDrvJollyjgr,			// Jolly Jogger
 	&BurnDrvltorb1,				// Jonas Indiana and the Lost Temple of RA (20050717)
 	&BurnDrvjongpute,			// Jongputer [no comment, NOT WORKING]

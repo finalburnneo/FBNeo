@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12292 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12295 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4772,12 +4772,15 @@ This list contains all games supported by FinalBurn Neo.
 | jojonr2	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Asia 981202| jojo		| 1998	| Capcom	| CPS-3		| 					|
 | jojonr1	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Asia 990108| jojo		| 1998	| Capcom	| CPS-3		| 					|
 | jojon		|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Asia 990128| jojo		| 1998	| Capcom	| CPS-3		| 					|
+| jojor2	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Euro 981202| jojo		| 1998	| Capcom	| CPS-3		| 					|
+| jojor1	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Euro 990108| jojo		| 1998	| Capcom	| CPS-3		| 					|
+| jojo		|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Euro 990128| 		| 1998	| Capcom	| CPS-3		| 					|
 | jojojr2	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Japan 98120| jojo		| 1998	| Capcom	| CPS-3		| 					|
 | jojojr1	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Japan 99010| jojo		| 1998	| Capcom	| CPS-3		| 					|
 | jojoj		|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Japan 99012| jojo		| 1998	| Capcom	| CPS-3		| 					|
-| jojor2	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (USA 981202)| jojo		| 1998	| Capcom	| CPS-3		| 					|
-| jojor1	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (USA 990108)| jojo		| 1998	| Capcom	| CPS-3		| 					|
-| jojo		|  	| JoJo's Venture / JoJo no Kimyou na Bouken (USA 990128)| 		| 1998	| Capcom	| CPS-3		| 					|
+| jojour2	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (USA 981202)| jojo		| 1998	| Capcom	| CPS-3		| 					|
+| jojour1	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (USA 990108)| jojo		| 1998	| Capcom	| CPS-3		| 					|
+| jojou		|  	| JoJo's Venture / JoJo no Kimyou na Bouken (USA 990128)| jojo		| 1998	| Capcom	| CPS-3		| 					|
 | jollyjgr	|  	| Jolly Jogger						| 		| 1982	| Taito Corporat| Miscellaneous	| 					|
 | ltorb1	|  	| Jonas Indiana and the Lost Temple of RA (20050717)	| 		| 2005	| blastar@gmx.ne| Neo Geo MVS	| 					|
 | jongpute	|   NW	| Jongputer						| 		| 1980	| Taito		| Route 16	| 					|

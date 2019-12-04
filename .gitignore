@@ -18,3 +18,4 @@ project.xcworkspace
 projectfiles/xcode/build
 nvram
 *.nvr
+fbneo.dat

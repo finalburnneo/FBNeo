@@ -792,7 +792,7 @@ static int AppInit()
 
 	// Write a clrmame dat file if we are verifying roms
 #if defined (ROM_VERIFY)
-	create_datfile(_T("fba.dat"), 0);
+	create_datfile(_T("fbneo.dat"), 0);
 #endif
 
 	bNumlockStatus = SetNumLock(false);

@@ -10,7 +10,6 @@
 
 TODO for SDL2:
 Make OSD a bit better as it seems a bit hack doing it how FFWD is done...
-Add FPS to osd mapped to a key
 Add autostart to menu as an ini config option
 Rom scanning to filter out missing games (as an option)
 Add previews, etc to menu
@@ -54,6 +53,13 @@ int parseSwitches(int argc, char *argv[])
       {
          vsync = 1; // might need to change this to bit flags if there is more than one gfx option
       }
+
+      if (strcmp(argv[i] + 1, "dat") == 0)
+      {
+        printf("Creating fbneo.dat\n");
+         create_datfile(_T("fbneo.dat"), 0);
+      }
+
    }
    return 0;
 }

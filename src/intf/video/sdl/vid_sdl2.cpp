@@ -302,10 +302,13 @@ static int Paint(int bValidate)
       SDL_UnlockTexture(sdlTexture);
       SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
    }
-
    if (bAppDoFast)
    {
      inprint_shadowed(sdlRenderer,"FFWD", 10, 10);
+   }
+   if (bAppShowFPS)
+   {
+     inprint_shadowed(sdlRenderer,fpsstring, 10, 50);
    }
    SDL_RenderPresent(sdlRenderer);
 

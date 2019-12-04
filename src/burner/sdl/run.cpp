@@ -7,8 +7,6 @@ bool bAltPause = 0;
 
 int bAlwaysDrawFrames = 0;
 
-static bool bShowFPS = false;
-
 int counter;                                // General purpose variable used when debugging
 
 static unsigned int nNormalLast = 0;        // Last value of timeGetTime()
@@ -16,6 +14,7 @@ static int          nNormalFrac = 0;        // Extra fraction we did
 
 static bool bAppDoStep = 0;
 bool bAppDoFast = 0;
+bool bAppShowFPS = 0;
 static int  nFastSpeed = 6;
 
 static void CreateSavePath(char *szConfig)
@@ -63,12 +62,14 @@ static int GetInput(bool bCopy)
    return 0;
 }
 
+char   fpsstring[20];
+
 static void DisplayFPS()
 {
    static time_t       fpstimer;
    static unsigned int nPreviousFrames;
 
-   char   fpsstring[8];
+
    time_t temptime = clock();
    float  fps      = static_cast <float>(nFramesRendered - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
 
@@ -123,6 +124,7 @@ static int RunFrame(int bDraw, int bPause)
       if (VidFrame())
       {                                     // Do one frame
          AudBlankSound();
+
       }
    }
    else
@@ -130,6 +132,8 @@ static int RunFrame(int bDraw, int bPause)
       pBurnDraw = NULL;                    // Make sure no image is drawn
       BurnDrvFrame();
    }
+
+   DisplayFPS();
    bPrevPause = bPause;
    bPrevDraw  = bDraw;
 
@@ -196,7 +200,7 @@ int RunIdle()
    nCount = (nTime * nAppVirtualFps - nNormalFrac) / 100000;
    if (nCount <= 0)
    {                                // No need to do anything for a bit
-      SDL_Delay(3);
+    //  SDL_Delay(3);
 
       return 0;
    }
@@ -293,7 +297,9 @@ int RunMessageLoop()
             case SDLK_F1:
                bAppDoFast = 1;
                break;
-
+            case SDLK_F11:
+               bAppShowFPS = !bAppShowFPS;
+               break;
             default:
                break;
             }
@@ -305,7 +311,6 @@ int RunMessageLoop()
             case SDLK_F1:
                bAppDoFast = 0;
                break;
-
             case SDLK_F12:
                quit = 1;
                break;

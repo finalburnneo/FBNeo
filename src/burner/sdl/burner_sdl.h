@@ -45,6 +45,8 @@ TCHAR *ANSIToTCHAR(const char *pszInString, TCHAR *pszOutString, int nOutSize);
 char *TCHARToANSI(const TCHAR *pszInString, char *pszOutString, int nOutSize);
 bool AppProcessKeyboardInput();
 
+char *AppConfigPath();
+
 //config.cpp
 int ConfigAppLoad();
 int ConfigAppSave();

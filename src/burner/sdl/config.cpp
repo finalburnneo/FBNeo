@@ -1,26 +1,22 @@
 // Burner Config file module
 #include "burner.h"
 
-#include "cfgpath.h"
-
 int nIniVersion = 0;
 
 static void CreateConfigName(char *szConfig)
 {
 #ifndef _WIN32
-   char cfgdir[MAX_PATH];
+   char cfgdir[MAX_PATH] = { 0 };
 
-   get_user_config_file(cfgdir, sizeof(cfgdir), "fbneo");
-   if (cfgdir[0] == 0)
+   char *base_path = AppConfigPath();
+   if (base_path)
    {
-      printf("Unable to find home directory.\n");
-      return;
+      snprintf(cfgdir, MAX_PATH, "%sfbneo.ini", base_path);
+      memcpy(szConfig, cfgdir, sizeof(cfgdir));
    }
-
-    memcpy(szConfig, cfgdir, sizeof(cfgdir));
 #else
-	memcpy(szConfig, "fbneo.ini", 10);
-#endif 
+   memcpy(szConfig, "fbneo.ini", 10);
+#endif
 
    return;
 }
@@ -37,7 +33,7 @@ int ConfigAppLoad()
    {
       return 1;
    }
-   printf("Loading config from %s\n",szConfig);
+   printf("Loading config from %s\n", szConfig);
 #define VAR(x)    { char *szValue = LabelCheck(szLine, #x); \
                     if (szValue) { x = strtol(szValue, NULL, 0); } }
 #define FLT(x)    { char *szValue = LabelCheck(szLine, #x); \
@@ -66,7 +62,7 @@ int ConfigAppLoad()
       VAR(bVidScanlines);
       VAR(nAudSampleRate[0]);
       VAR(nAudDSPModule[0]);
-
+      VAR(EnableHiscores);
       // Other
       STR(szAppRomPaths[0]);
       STR(szAppRomPaths[1]);
@@ -132,6 +128,9 @@ int ConfigAppSave()
    VAR(nAudSampleRate[0]);
    fprintf(f, "\n// If non-zero, enable DSP filter\n");
    VAR(nAudDSPModule[0]);
+
+   _ftprintf(f, _T("\n// If non-zero, enable high score saving support.\n"));
+   VAR(EnableHiscores);
 
    fprintf(f, "\n// The paths to search for rom zips. (include trailing backslash)\n");
    STR(szAppRomPaths[0]);

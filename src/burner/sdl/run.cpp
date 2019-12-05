@@ -1,8 +1,6 @@
 // Run module
 #include "burner.h"
 
-#include "cfgpath.h"
-
 bool bAltPause = 0;
 
 int bAlwaysDrawFrames = 0;
@@ -12,35 +10,17 @@ int counter;                                // General purpose variable used whe
 static unsigned int nNormalLast = 0;        // Last value of timeGetTime()
 static int          nNormalFrac = 0;        // Extra fraction we did
 
-static bool bAppDoStep = 0;
-bool bAppDoFast = 0;
-bool bAppShowFPS = 0;
-static int  nFastSpeed = 6;
-
-static void CreateSavePath(char *szConfig)
-{
-   char cfgdir[MAX_PATH]= { 0 } ;
-
-   get_user_data_folder(cfgdir, sizeof(cfgdir), "fbneo");
-   if (cfgdir[0] == 0)
-   {
-      printf("Unable to find home directory.\n");
-      return;
-   }
-
-   memcpy(szConfig, cfgdir, sizeof(cfgdir));
-   return;
-}
+static bool bAppDoStep  = 0;
+bool        bAppDoFast  = 0;
+bool        bAppShowFPS = 0;
+static int  nFastSpeed  = 6;
 
 int SaveNVRAM()
 {
    char temp[MAX_PATH] { 0 };
-   char cfgdir[MAX_PATH] { 0 };
 
-
-   snprintf(temp, 255, "%s%s.nvr", cfgdir, BurnDrvGetTextA(0));
-   CreateSavePath(cfgdir);
-   fprintf(stderr, "Writing NVRAM to \"%s%s\"\n", cfgdir, temp);
+   snprintf(temp, MAX_PATH, "%s%s.nvr", AppConfigPath(), BurnDrvGetTextA(0));
+   fprintf(stderr, "Writing NVRAM to \"%s\"\n", temp);
    BurnStateSave(temp, 0);
    return 0;
 }
@@ -48,10 +28,9 @@ int SaveNVRAM()
 int ReadNVRAM()
 {
    char temp[MAX_PATH] = { 0 };
-   char cfgdir[MAX_PATH] = { 0 } ;
-    snprintf(temp, 255, "%s%s.nvr", cfgdir, BurnDrvGetTextA(0));
-   CreateSavePath(cfgdir);
-   fprintf(stderr, "Reading NVRAM from \"%s%s\"\n", cfgdir, temp);
+
+   snprintf(temp, MAX_PATH, "%s%s.nvr", AppConfigPath(), BurnDrvGetTextA(0));
+   fprintf(stderr, "Reading NVRAM from \"%s\"\n", temp);
    BurnStateLoad(temp, 0, NULL);
    return 0;
 }
@@ -62,7 +41,7 @@ static int GetInput(bool bCopy)
    return 0;
 }
 
-char   fpsstring[20];
+char fpsstring[20];
 
 static void DisplayFPS()
 {
@@ -124,7 +103,6 @@ static int RunFrame(int bDraw, int bPause)
       if (VidFrame())
       {                                     // Do one frame
          AudBlankSound();
-
       }
    }
    else
@@ -200,7 +178,7 @@ int RunIdle()
    nCount = (nTime * nAppVirtualFps - nNormalFrac) / 100000;
    if (nCount <= 0)
    {                                // No need to do anything for a bit
-    //  SDL_Delay(3);
+      //  SDL_Delay(3);
 
       return 0;
    }
@@ -297,9 +275,11 @@ int RunMessageLoop()
             case SDLK_F1:
                bAppDoFast = 1;
                break;
+
             case SDLK_F11:
                bAppShowFPS = !bAppShowFPS;
                break;
+
             default:
                break;
             }
@@ -311,6 +291,7 @@ int RunMessageLoop()
             case SDLK_F1:
                bAppDoFast = 0;
                break;
+
             case SDLK_F12:
                quit = 1;
                break;

@@ -31,6 +31,12 @@ int  usemenu = 0, usejoy = 0, vsync = 0, dat = 0;
 
 TCHAR szAppBurnVer[16];
 
+
+char *AppConfigPath()
+{
+   return SDL_GetPrefPath("fbneo", "sdl");
+}
+
 int parseSwitches(int argc, char *argv[])
 {
    for (int i = 1; i < argc; i++)
@@ -67,6 +73,8 @@ void DoGame(int gameToRun)
 {
    bCheatsAllowed   = false;
    nAudDSPModule[0] = 1;
+   EnableHiscores   = 1;
+   _stprintf(szAppHiscorePath, _T("%s"), AppConfigPath());
 
    if (!DrvInit(gameToRun, 0))
    {

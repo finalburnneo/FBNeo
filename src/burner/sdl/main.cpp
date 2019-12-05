@@ -34,7 +34,10 @@ TCHAR szAppBurnVer[16];
 
 char *AppConfigPath()
 {
+#ifdef BUILD_SDL2
    return SDL_GetPrefPath("fbneo", "sdl");
+#endif
+   return "";
 }
 
 int parseSwitches(int argc, char *argv[])

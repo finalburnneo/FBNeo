@@ -7,13 +7,8 @@ static void CreateConfigName(char *szConfig)
 {
 #ifndef _WIN32
    char cfgdir[MAX_PATH] = { 0 };
-
-   char *base_path = AppConfigPath();
-   if (base_path)
-   {
-      snprintf(cfgdir, MAX_PATH, "%sfbneo.ini", base_path);
-      memcpy(szConfig, cfgdir, sizeof(cfgdir));
-   }
+   snprintf(cfgdir, MAX_PATH, "%sfbneo.ini", AppConfigPath("config"));
+   memcpy(szConfig, cfgdir, sizeof(cfgdir));
 #else
    memcpy(szConfig, "fbneo.ini", 10);
 #endif

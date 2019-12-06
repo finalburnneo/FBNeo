@@ -32,10 +32,10 @@ int  usemenu = 0, usejoy = 0, vsync = 0, dat = 0;
 TCHAR szAppBurnVer[16];
 
 
-char *AppConfigPath()
+char *AppConfigPath(char* type)
 {
 #ifdef BUILD_SDL2
-   return SDL_GetPrefPath("fbneo", "sdl");
+   return SDL_GetPrefPath("fbneo", type);
 #endif
    return "";
 }
@@ -74,11 +74,6 @@ int parseSwitches(int argc, char *argv[])
 
 void DoGame(int gameToRun)
 {
-   bCheatsAllowed   = false;
-   nAudDSPModule[0] = 1;
-   EnableHiscores   = 1;
-   _stprintf(szAppHiscorePath, _T("%s"), AppConfigPath());
-
    if (!DrvInit(gameToRun, 0))
    {
       MediaInit();
@@ -134,6 +129,13 @@ int main(int argc, char *argv[])
          return 0;
       }
    }
+
+   // Do these bits before override via ConfigAppLoad
+   bCheatsAllowed   = false;
+   nAudDSPModule[0] = 1;
+   EnableHiscores   = 1;
+   _stprintf(szAppHiscorePath, _T("%s"), AppConfigPath("hiscore"));
+   _stprintf(szAppEEPROMPath, _T("%s"), AppConfigPath("eeprom"));
 
    ConfigAppLoad();
 

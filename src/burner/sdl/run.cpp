@@ -14,7 +14,7 @@ static bool bAppDoStep  = 0;
 bool        bAppDoFast  = 0;
 bool        bAppShowFPS = 0;
 static int  nFastSpeed  = 6;
-
+/*
 int SaveNVRAM()
 {
    char temp[MAX_PATH] { 0 };
@@ -32,6 +32,31 @@ int ReadNVRAM()
    snprintf(temp, MAX_PATH, "%s%s.nvr", AppConfigPath(), BurnDrvGetTextA(0));
    fprintf(stderr, "Reading NVRAM from \"%s\"\n", temp);
    BurnStateLoad(temp, 0, NULL);
+   return 0;
+}
+*/
+
+int SaveNVRAM()
+{
+   char temp[256];
+
+   snprintf(temp, 255, "nvram/%s.nvr", BurnDrvGetTextA(0));
+
+   fprintf(stderr, "Writing NVRAM to \"%s\"\n", temp);
+   BurnStateSave(temp, 0);
+
+   return 0;
+}
+
+int ReadNVRAM()
+{
+   char temp[256];
+
+   snprintf(temp, 255, "nvram/%s.nvr", BurnDrvGetTextA(0));
+
+   fprintf(stderr, "Reading NVRAM from \"%s\"\n", temp);
+   BurnStateLoad(temp, 0, NULL);
+
    return 0;
 }
 

@@ -10,11 +10,11 @@ static TCHAR* GameConfigName()
 {
 	static TCHAR szName[MAX_PATH];
 
-	#ifdef SDL2_BUILD
+	#ifdef BUILD_SDL2
 		if (NeoCDInfo_ID()) {
-		   snprintf(szConfig, MAX_PATH, "%sngcd_%s.ini", AppConfigPath("config"), BurnDrvGetText(DRV_NAME));
+		   snprintf(szName, MAX_PATH, "%sngcd_%s.ini", AppConfigPath("config"), BurnDrvGetText(DRV_NAME));
 		} else {
-			snprintf(szConfig, MAX_PATH, "%s%s.ini", AppConfigPath("config"), BurnDrvGetText(DRV_NAME));
+			snprintf(szName, MAX_PATH, "%s%s.ini", AppConfigPath("config"), BurnDrvGetText(DRV_NAME));
 		}
 	#else
 		// Return the path of the config file for this game

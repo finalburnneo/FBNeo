@@ -12,6 +12,77 @@ static unsigned int startGame      = 0; // game at top of list as it is displaye
 static unsigned int gamesperscreen = 12;
 static unsigned int gametoplay     = 0;
 
+#define NUMSTARS  512
+
+static float star_x[NUMSTARS];
+static float star_y[NUMSTARS];
+static float star_z[NUMSTARS];
+
+static int star_screenx[NUMSTARS];
+static int star_screeny[NUMSTARS];
+
+static float star_zv[NUMSTARS];
+
+static int centerx = 0;
+static int centery = 0;
+
+#define fbn_color       0xfe8a71
+#define select_color    0xffffff
+#define normal_color    0x1eaab7
+#define info_color      0x3a3e3d
+
+static int    color_result = 0;
+static double color_x      = 0.01;
+static double color_y      = 0.01;
+static double color_z      = 0.01;
+
+
+float random_gen()
+{
+   return rand() / (float)RAND_MAX;
+}
+
+float randomRange(float low, float high)
+{
+   float range = high - low;
+
+   return (float)(random_gen() * range) + low;
+}
+
+void star_init(int screencenterx, int screencentery)
+{
+   centerx = screencenterx;
+   centery = screencentery;
+   srand(time(0));
+   for (int i = 0; i < NUMSTARS; i++)
+   {
+      star_x[i]  = randomRange(-1000, 1000);
+      star_y[i]  = randomRange(-1000, 1000);
+      star_z[i]  = randomRange(100, 1000);
+      star_zv[i] = randomRange(0.5, 5);
+   }
+}
+
+void star_render(SDL_Renderer *renderer)
+{
+   for (int i = 0; i < NUMSTARS; i++)
+   {
+      star_z[i]       = star_z[i] - star_zv[i];
+      star_screenx[i] = star_x[i] / star_z[i] * 100 + centerx;
+      star_screeny[i] = star_y[i] / star_z[i] * 100 + centery;
+      if (star_screenx[i] > nVidGuiWidth || star_screeny[i] > nVidGuiHeight || star_z[i] < 1)
+      {
+         star_x[i]  = randomRange(-1000, 1000);
+         star_y[i]  = randomRange(-1000, 1000);
+         star_z[i]  = randomRange(100, 1000);
+         star_zv[i] = randomRange(0.5, 5);
+      }
+
+      int b =255 - ((255) * star_zv[i]) * (1000 / star_z[i]);
+      SDL_SetRenderDrawColor(renderer, b, b, b, 255);
+      SDL_RenderDrawPoint(renderer, star_screenx[i], star_screeny[i]);
+   }
+}
 
 void gui_exit()
 {
@@ -57,6 +128,8 @@ void gui_init()
       screenFlags
       );
 
+   star_init(nVidGuiWidth / 2, nVidGuiHeight / 2);
+
    // Check that the window was successfully created
    if (sdlWindow == NULL)
    {
@@ -92,27 +165,18 @@ void gui_init()
    gamesperscreen = (nVidGuiHeight - 100) / 10;
 }
 
-#define fbn_color       0xfe8a71
-#define select_color    0xffffff
-#define normal_color    0x1eaab7
-#define info_color      0xf6cd61
-
-static int    result = 0;
-static double x      = 0.01;
-static double y      = 0.01;
-static double z      = 0.01;
 
 inline void calcSelectedItemColor()
 {
-   x += 0.07;
-   y += 0.03;
-   z += 0.05;
+   color_x += randomRange(0.01, 0.07);
+   color_y += randomRange(0.01, 0.07);
+   color_z += randomRange(0.01, 0.07);
 
    SDL_Color pal[1];
-   pal[0].r = 190 + 64 * sin(x + (result * 0.004754));
-   pal[0].g = 190 + 64 * sin(y + (result * 0.006754));
-   pal[0].b = 190 + 64 * sin(z + (result * 0.004754));
-   result++;
+   pal[0].r = 190 + 64 * sin(color_x + (color_result * 0.004754));
+   pal[0].g = 190 + 64 * sin(color_y + (color_result * 0.006754));
+   pal[0].b = 190 + 64 * sin(color_z + (color_result * 0.004754));
+   color_result++;
 
    incolor1(pal);
 }
@@ -120,8 +184,11 @@ inline void calcSelectedItemColor()
 void gui_render()
 {
    SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
-   SDL_SetRenderDrawColor(sdlRenderer, 0x3a, 0x3e, 0x3d, SDL_ALPHA_OPAQUE);
+   SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
    SDL_RenderClear(sdlRenderer);
+
+   star_render(sdlRenderer);
+
    incolor(fbn_color, /* unused */ 0);
    inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
    inprint(sdlRenderer, "=============", 10, 20);

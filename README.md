@@ -12,9 +12,9 @@ If the below build status badge is green, you can download the latest builds fro
 
 # Ports
 
-Raspberry pi [build instructions](https://github.com/finalburnneo/FBNeo/blob/master/README-PI.md).
+Raspberry Pi [build instructions](README-PI.md).
 
-MacOS [build instructions](https://github.com/finalburnneo/FBNeo/blob/master/README-macOS.md) and [builds](https://github.com/0xe1f/FBNeo/releases).
+macOS [build instructions](README-macOS.md) and [releases](https://github.com/fbn-mac/FBNeo/releases).
 
 [LibRetro port](https://github.com/libretro/FBNeo) with builds availble via retroarch for most platforms.
 
@@ -26,4 +26,4 @@ Please raise an issue on the [project GitHub](https://github.com/finalburnneo/FB
 
 # What about FB Alpha?
 
-Many of the developers of this project also worked on FB Alpha. Due to a ["controversy"](https://www.google.com/search?q=capcom+home+arcade+illegal&oq=capcom+home+arcade+illegal), we no longer do, and would recommend that everyone use this emulator instead. 
+Many of the developers of this project also worked on FB Alpha. Due to a [controversy](https://www.google.com/search?q=capcom+home+arcade+illegal&oq=capcom+home+arcade+illegal), we no longer do, and recommend that everyone use this emulator instead.

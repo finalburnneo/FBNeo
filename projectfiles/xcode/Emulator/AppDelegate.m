@@ -13,6 +13,8 @@
 #import "FBEmulatorController.h"
 #import "FBLogViewerController.h"
 #import "FBPreferencesController.h"
+#import "FBLauncherController.h"
+#import "FBAboutController.h"
 
 @interface AppDelegate ()
 
@@ -27,6 +29,8 @@ static AppDelegate *sharedInstance = nil;
     FBLogViewerController *logViewer;
     FBPreferencesController *prefs;
     FBEmulatorController *emulator;
+    FBLauncherController *launcher;
+    FBAboutController *about;
 
     IOPMAssertionID sleepAssertId;
 }
@@ -39,7 +43,7 @@ static AppDelegate *sharedInstance = nil;
 
     _audio = [FBAudio new];
     _input = [FBInput new];
-    _supportedFormats = @[ @"zip", @"7z" ];
+    _supportedFormats = [NSSet setWithArray:@[ @"zip", @"7z" ]];
 
     _runloop = [FBMainThread new];
     _video = [FBVideo new];
@@ -59,10 +63,12 @@ static AppDelegate *sharedInstance = nil;
     [NSUserDefaults.standardUserDefaults registerDefaults:[NSDictionary dictionaryWithContentsOfFile:path]];
 
     _supportPath = self.appSupportPath;
+    _romPath = [_supportPath stringByAppendingPathComponent:@"ROMs"];
     _nvramPath = [_supportPath stringByAppendingPathComponent:@"NVRAM"];
     _dipSwitchPath = [_supportPath stringByAppendingPathComponent:@"DIPSwitches"];
 
     NSArray *paths = @[
+        _romPath,
         _nvramPath,
         _dipSwitchPath,
     ];
@@ -77,8 +83,9 @@ static AppDelegate *sharedInstance = nil;
 
 - (void) applicationDidFinishLaunching:(NSNotification *) aNotification {
     NSLog(@"applicationDidFinishLaunching");
+    launcher = [FBLauncherController new];
     emulator = [FBEmulatorController new];
-    [emulator showWindow:self];
+    [launcher showWindow:self];
     [_runloop start];
 }
 
@@ -109,7 +116,7 @@ static AppDelegate *sharedInstance = nil;
     panel.canChooseFiles = YES;
     panel.canChooseDirectories = NO;
     panel.allowsMultipleSelection = NO;
-    panel.allowedFileTypes = _supportedFormats;
+    panel.allowedFileTypes = _supportedFormats.allObjects;
 
     [panel beginWithCompletionHandler:^(NSInteger result){
         if (result == NSModalResponseOK)
@@ -131,12 +138,28 @@ static AppDelegate *sharedInstance = nil;
     [prefs showWindow:self];
 }
 
+- (void) displayLauncher:(id) sender
+{
+    if (!launcher)
+        launcher = [FBLauncherController new];
+    [launcher showWindow:self];
+}
+
+- (void) displayAbout:(id) sender
+{
+    if (!about)
+        about = [FBAboutController new];
+    [about showWindow:self];
+}
+
 #pragma mark - Public
 
 - (void) loadPath:(NSString *) path
 {
     [_runloop load:path];
     [NSDocumentController.sharedDocumentController noteNewRecentDocumentURL:[NSURL fileURLWithPath:path]];
+
+    [emulator showWindow:self];
 }
 
 - (void) suppressScreenSaver

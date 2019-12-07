@@ -33,11 +33,15 @@
 - (NSString *) setCachePath;
 - (NSSet<NSString *> *) supportedRomSets;
 
+- (void) importFiles:(NSArray<NSString *> *) files;
+- (void) initiateScan;
+
 @end
 
 @implementation FBLauncherController
 {
     FBScanner *scanner;
+    FBImporter *importer;
 }
 
 - (id) init
@@ -54,8 +58,14 @@
     if ([NSFileManager.defaultManager fileExistsAtPath:self.setCachePath]) {
         // Restore from cache
         NSArray<FBROMSet *> *cached = [NSKeyedUnarchiver unarchiveObjectWithFile:self.setCachePath];
-        if (cached)
+        if (cached) {
             [self reloadSets:cached];
+
+            // Restore previous selection
+            NSData *data = [NSUserDefaults.standardUserDefaults objectForKey:@"selectedGame"];
+            romSetTreeController.selectionIndexPaths = [NSKeyedUnarchiver unarchiveTopLevelObjectWithData:data
+                                                                                                    error:nil];
+        }
     }
 
     if (_romSets.count == 0)
@@ -70,9 +80,10 @@
 
 - (void) windowWillClose:(NSNotification *) notification
 {
-    @synchronized (self) {
-        [scanner cancel];
-    }
+    [NSUserDefaults.standardUserDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:romSetTreeController.selectionIndexPaths]
+                                            forKey:@"selectedGame"];
+    [importer cancel];
+    [scanner cancel];
 }
 
 #pragma mark - FBScannerDelegate
@@ -87,16 +98,14 @@
           completionHandler:^(NSModalResponse returnCode) { }];
 }
 
-- (void) progressDidUpdate:(float) progress
+- (void) scanDidProgress:(float) progress
 {
     progressPanelBar.doubleValue = progress;
 }
 
 - (void) scanDidEnd:(NSArray<FBROMSet *> *) romSets
 {
-    @synchronized (self) {
-        scanner = nil;
-    }
+    scanner = nil;
 
     [self.window endSheet:progressPanel];
 
@@ -110,6 +119,37 @@
     [self reloadSets:romSets];
 }
 
+#pragma mark - FBImporterDelegate
+
+- (void) importDidStart
+{
+    progressPanelBar.doubleValue = 0;
+    progressPanelLabel.stringValue = NSLocalizedString(@"Importing...", nil);
+    progressPanelCancelButton.enabled = YES;
+
+    [self.window beginSheet:progressPanel
+          completionHandler:^(NSModalResponse returnCode) { }];
+}
+
+- (void) importDidProgress:(float) progress
+{
+    progressPanelBar.doubleValue = progress;
+}
+
+- (void) importDidEnd:(BOOL) isCancelled
+          filesCopied:(int) count
+{
+    importer = nil;
+    NSLog(@"Import complete; %d files copied", count);
+
+    [self.window endSheet:progressPanel];
+
+    if (isCancelled || count < 1)
+        return;
+
+    [self rescanSets:self];
+}
+
 #pragma mark - FBDropFileScrollView
 
 - (BOOL) isDropAcceptable:(NSArray<NSString *> *) paths
@@ -117,12 +157,16 @@
     __block BOOL acceptable = YES;
     NSSet<NSString *> *supportedFormats = self.appDelegate.supportedFormats;
     NSSet<NSString *> *supportedArchives = self.supportedRomSets;
+    NSString *romPath = self.appDelegate.romPath;
 
     [paths enumerateObjectsUsingBlock:^(NSString *path, NSUInteger idx, BOOL *stop) {
         NSString *filename = path.lastPathComponent;
+        NSString *parent = path.stringByDeletingLastPathComponent.stringByResolvingSymlinksInPath;
+
         // Check extension && archive name
         if (![supportedFormats containsObject:filename.pathExtension]
-            || ![supportedArchives containsObject:filename.stringByDeletingPathExtension]) {
+            || ![supportedArchives containsObject:filename.stringByDeletingPathExtension]
+            || [parent isEqualToString:romPath]) {
             acceptable = NO;
             *stop = YES;
         }
@@ -133,21 +177,14 @@
 
 - (void) dropDidComplete:(NSArray<NSString *> *) paths
 {
-    // FIXME
+    [self importFiles:paths];
 }
 
 #pragma mark - Actions
 
 - (void) rescanSets:(id) sender
 {
-    @synchronized (self) {
-        if (!scanner) {
-            scanner = [FBScanner new];
-            scanner.rootPath = AppDelegate.sharedInstance.romPath;
-            scanner.delegate = self;
-            [scanner start];
-        }
-    }
+    [self initiateScan];
 }
 
 - (void) cancelProgress:(id) sender
@@ -155,9 +192,8 @@
     progressPanelCancelButton.enabled = NO;
     progressPanelLabel.stringValue = NSLocalizedString(@"Cancelling...", nil);
 
-    @synchronized (self) {
-        [scanner cancel];
-    }
+    [importer cancel];
+    [scanner cancel];
 }
 
 - (void) launchSet:(id) sender
@@ -179,6 +215,9 @@
 
 - (void) reloadSets:(NSArray<FBROMSet *> *) romSets
 {
+    // Save current selection
+    NSArray<NSIndexPath *> *selection = romSetTreeController.selectionIndexPaths;
+
     // Clear the master list
     [(NSMutableArray *) _romSets removeAllObjects];
 
@@ -211,6 +250,9 @@
     }];
 
     [romSetTreeController rearrangeObjects];
+
+    // Restore selection
+    romSetTreeController.selectionIndexPaths = selection;
 }
 
 - (NSString *) setCachePath
@@ -229,6 +271,31 @@
     }];
 
     return set;
+}
+
+- (void) importFiles:(NSArray<NSString *> *) files
+{
+    if (scanner || importer)
+        return;
+
+    importer = [FBImporter new];
+    importer.destinationPath = AppDelegate.sharedInstance.romPath;
+    importer.sourcePaths = files;
+    importer.delegate = self;
+
+    [importer start];
+}
+
+- (void) initiateScan
+{
+    if (scanner || importer)
+        return;
+
+    scanner = [FBScanner new];
+    scanner.rootPath = AppDelegate.sharedInstance.romPath;
+    scanner.delegate = self;
+
+    [scanner start];
 }
 
 @end

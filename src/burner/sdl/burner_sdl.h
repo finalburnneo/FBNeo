@@ -41,17 +41,18 @@ extern char  fpsstring[20]; // TODO: also bad
 extern bool  bAppShowFPS;   // TODO: Also also bad
 extern bool  bAlwaysProcessKeyboardInput;
 extern TCHAR szAppBurnVer[16];
-
+extern bool  bAppFullscreen;
 
 TCHAR *ANSIToTCHAR(const char *pszInString, TCHAR *pszOutString, int nOutSize);
 char *TCHARToANSI(const TCHAR *pszInString, char *pszOutString, int nOutSize);
-#define _TtoA(a)	TCHARToANSI(a, NULL, 0)
-#define _AtoT(a)	ANSIToTCHAR(a, NULL, 0)
+
+#define _TtoA(a)    TCHARToANSI(a, NULL, 0)
+#define _AtoT(a)    ANSIToTCHAR(a, NULL, 0)
 
 
 bool AppProcessKeyboardInput();
 
-char *AppConfigPath(char* type);
+char *AppConfigPath(char *type);
 
 //config.cpp
 int ConfigAppLoad();

@@ -108,12 +108,12 @@ static int Init()
       BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
       BurnDrvGetAspect(&GameAspectX, &GameAspectY);
 
- if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
+      if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
       {
-        BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
-        int temp = display_h;
-        display_h = display_w;
-        display_w = temp;
+         BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
+         int temp = display_h;
+         display_h = display_w;
+         display_w = temp;
          printf("Vertical\n");
          nRotateGame = 1;
       }
@@ -125,22 +125,29 @@ static int Init()
       }
    }
 
-   printf("AspectX=%d : AspectY=%d\n",GameAspectX,GameAspectY);
+   printf("AspectX=%d : AspectY=%d\n", GameAspectX, GameAspectY);
    float aspect_ratio = nRotateGame ? (float)GameAspectY / (float)GameAspectX : (float)GameAspectX / (float)GameAspectY;
-   printf("aspect ratio = %f\n",aspect_ratio);
+   printf("aspect ratio = %f\n", aspect_ratio);
 
 
    char title[512];
 
    sprintf(title, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
 
+   Uint32 screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
+
+   if (bAppFullscreen)
+   {
+      screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP;
+   }
+
    sdlWindow = SDL_CreateWindow(
-      title,                                    // window title
-      SDL_WINDOWPOS_CENTERED,                   // initial x position
-      SDL_WINDOWPOS_CENTERED,                   // initial y position
-      display_w,                           // width, in pixels
-      display_h,                          // height, in pixels
-      SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE   // flags - see below
+      title,                  // window title
+      SDL_WINDOWPOS_CENTERED, // initial x position
+      SDL_WINDOWPOS_CENTERED, // initial y position
+      display_w,              // width, in pixels
+      display_h,              // height, in pixels
+      screenFlags             // flags - see below
       );
 
    // Check that the window was successfully created
@@ -151,9 +158,12 @@ static int Init()
       return 1;
    }
 
-   Uint32 renderflags=SDL_RENDERER_ACCELERATED;
+   Uint32 renderflags = SDL_RENDERER_ACCELERATED;
 
-   if (vsync) renderflags = renderflags | SDL_RENDERER_PRESENTVSYNC;
+   if (vsync)
+   {
+      renderflags = renderflags | SDL_RENDERER_PRESENTVSYNC;
+   }
 
    sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, renderflags);
    if (sdlRenderer == NULL)
@@ -175,8 +185,8 @@ static int Init()
    VidSScaleImage(&test_rect);
    printf("correctx after %d, %d\n", test_rect.right, test_rect.bottom);
 
-
    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
+  // SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE);   // Probably best not turn this on
 
    if (nRotateGame)
    {
@@ -186,11 +196,10 @@ static int Init()
    {
       SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_h);
    }
-   inrenderer(sdlRenderer);   //TODO: this is not supposed to be here
-   prepare_inline_font(); // TODO: BAD
-   incolor(0xFFF000, 0);
 
-   //SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE); // Probably best not turn this on
+   inrenderer(sdlRenderer); //TODO: this is not supposed to be here
+   prepare_inline_font();   // TODO: BAD
+   incolor(0xFFF000, 0);
 
    if (nVidImageDepth == 32)
    {
@@ -292,8 +301,14 @@ static int Paint(int bValidate)
    if (nRotateGame)
    {
       SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
-      if (nRotateGame && bFlipped ) SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 90, NULL, SDL_FLIP_NONE);
-      if (nRotateGame && !bFlipped) SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
+      if (nRotateGame && bFlipped)
+      {
+         SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 90, NULL, SDL_FLIP_NONE);
+      }
+      if (nRotateGame && !bFlipped)
+      {
+         SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
+      }
    }
    else
    {
@@ -304,11 +319,11 @@ static int Paint(int bValidate)
    }
    if (bAppDoFast)
    {
-     inprint_shadowed(sdlRenderer,"FFWD", 10, 10);
+      inprint_shadowed(sdlRenderer, "FFWD", 10, 10);
    }
    if (bAppShowFPS)
    {
-     inprint_shadowed(sdlRenderer,fpsstring, 10, 50);
+      inprint_shadowed(sdlRenderer, fpsstring, 10, 50);
    }
    SDL_RenderPresent(sdlRenderer);
 

@@ -30,14 +30,21 @@ void gui_init()
       return;
    }
 
+   Uint32 screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
+
+   if (bAppFullscreen)
+   {
+     screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP;
+   }
+
 
    sdlWindow = SDL_CreateWindow(
-      "FBNeo - Choose your weapon...",        // window title
-      SDL_WINDOWPOS_CENTERED,                 // initial x position
-      SDL_WINDOWPOS_CENTERED,                 // initial y position
-      nVidGuiWidth,                           // width, in pixels
-      nVidGuiHeight,                          // height, in pixels
-      SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE // flags - see below
+      "FBNeo - Choose your weapon...",
+      SDL_WINDOWPOS_CENTERED,
+      SDL_WINDOWPOS_CENTERED,
+      nVidGuiWidth,
+      nVidGuiHeight,                          
+      screenFlags
       );
 
    // Check that the window was successfully created

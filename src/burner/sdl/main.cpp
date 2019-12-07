@@ -26,6 +26,7 @@ INT32 Init_Joysticks(int p1_use_joystick);
 
 int  nAppVirtualFps = 6000;         // App fps * 100
 bool bRunPause      = 0;
+bool bAppFullscreen = 0;
 bool bAlwaysProcessKeyboardInput = 0;
 int  usemenu = 0, usejoy = 0, vsync = 0, dat = 0;
 
@@ -68,6 +69,13 @@ int parseSwitches(int argc, char *argv[])
       {
          dat = 1;
       }
+
+      if (strcmp(argv[i] + 1, "fullscreen") == 0)
+      {
+         bAppFullscreen = 1;
+      }
+
+
    }
    return 0;
 }
@@ -120,7 +128,7 @@ int main(int argc, char *argv[])
 
    if (romname == NULL)
    {
-      printf("Usage: %s [-joy] [-menu] [-vsync] [-dat] <romname>\n", argv[0]);
+      printf("Usage: %s [-joy] [-menu] [-vsync] [-dat] [-fullscreen] <romname>\n", argv[0]);
       printf("Note the -menu switch does not require a romname\n");
       printf("e.g.: %s mslug\n", argv[0]);
       printf("e.g.: %s -menu -joy\n", argv[0]);

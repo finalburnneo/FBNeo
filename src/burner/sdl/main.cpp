@@ -4,9 +4,8 @@
  * It wouldn't be a stretch of the imagination to think the whole of the sdl 'port' needs a redo but here are the main things wrong with this version:
  *
  *
- * There are lots of problems with the audio output code.
- * There are lots of problems with the opengl renderer
- * probably many other things.
+ * The audio output code code could maybe do with some work, but it's getting there...
+ * There are lots of problems with the opengl renderer, but you should just use the SDL2 build anyway
  *
  * TODO for SDL2:
  * Make OSD a bit better as it seems a bit hack doing it how FFWD is done...
@@ -16,7 +15,6 @@
  * Add menu for options e.g. dips, mapping, saves, IPS patches
  * Maybe a better font output setup with some sort of scaling, maybe add sdl1 support?
  * Bind quick save and load to key
- * Sort out whatever checks are missing from Bzip and HDD support
  * Add joypad support to menu
  * ------------------*/
 

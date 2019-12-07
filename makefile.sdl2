@@ -92,9 +92,9 @@ incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 		  -I$(srcdir)intf/input/sdl `sdl2-config --cflags`
 
 ifdef WINDOWS
-lib	= -lstdc++ `sdl2-config --libs` -lopengl32  -lm
+lib	= -lstdc++ `sdl2-config --libs` -lopengl32 -lSDL2_image -lm
 else
-lib	= -lstdc++ `sdl2-config --libs` -lGL -lm
+lib	= -lstdc++ `sdl2-config --libs` -lGL -lSDL2_image -lm
 endif
 
 

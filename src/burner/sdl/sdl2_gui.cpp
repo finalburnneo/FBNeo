@@ -1,8 +1,11 @@
 #include "burner.h"
 
+#include <SDL_image.h>
+
 static SDL_Window *  sdlWindow   = NULL;
 static SDL_Renderer *sdlRenderer = NULL;
-static SDL_Texture * sdlTexture  = NULL;
+
+static SDL_Texture *titleTexture = NULL;
 
 
 static int nVidGuiWidth  = 800;
@@ -36,6 +39,11 @@ static int    color_result = 0;
 static double color_x      = 0.01;
 static double color_y      = 0.01;
 static double color_z      = 0.01;
+
+SDL_Texture* LoadImage(SDL_Renderer* renderer, char * filename)
+{
+  return IMG_LoadTexture(renderer, "test.png");
+}
 
 
 float random_gen()
@@ -88,7 +96,7 @@ void star_render(SDL_Renderer *renderer)
 void gui_exit()
 {
    kill_inline_font();
-   SDL_DestroyTexture(sdlTexture);
+   SDL_DestroyTexture(titleTexture);
    SDL_DestroyRenderer(sdlRenderer);
    SDL_DestroyWindow(sdlWindow);
 }
@@ -150,21 +158,14 @@ void gui_init()
 
    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
    SDL_RenderSetLogicalSize(sdlRenderer, nVidGuiWidth, nVidGuiHeight);
-   sdlTexture = SDL_CreateTexture(sdlRenderer,
-                                  SDL_PIXELFORMAT_RGB888,
-                                  SDL_TEXTUREACCESS_STREAMING,
-                                  nVidGuiWidth, nVidGuiHeight);
 
-   if (!sdlTexture)
-   {
-      SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create sdlTexture from surface: %s", SDL_GetError());
-      return;
-   }
    inrenderer(sdlRenderer);
    prepare_inline_font();
 
    gamesperscreen = (nVidGuiHeight - 100) / 10;
    gamesperscreen_halfway = gamesperscreen / 2;
+
+  titleTexture = LoadImage(sdlRenderer,  "test.png");
 }
 
 
@@ -185,10 +186,13 @@ inline void calcSelectedItemColor()
 
 void gui_render()
 {
-   SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
+   SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
    SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
    SDL_RenderClear(sdlRenderer);
-
+   if (titleTexture !=NULL) // JUST FOR TESTING!!
+   {
+     SDL_RenderCopy(sdlRenderer, titleTexture, NULL, NULL);
+   }
    star_render(sdlRenderer);
 
    incolor(fbn_color, /* unused */ 0);

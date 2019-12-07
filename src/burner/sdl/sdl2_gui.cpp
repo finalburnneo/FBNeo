@@ -30,11 +30,21 @@ void gui_init()
       return;
    }
 
+
    Uint32 screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
 
    if (bAppFullscreen)
    {
-     screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP;
+      SDL_DisplayMode dm;
+      if (SDL_GetDesktopDisplayMode(0, &dm) != 0)
+      {
+         SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+         return;
+      }
+
+      nVidGuiWidth  = dm.w;
+      nVidGuiHeight = dm.h;
+      screenFlags   = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP;
    }
 
 
@@ -43,7 +53,7 @@ void gui_init()
       SDL_WINDOWPOS_CENTERED,
       SDL_WINDOWPOS_CENTERED,
       nVidGuiWidth,
-      nVidGuiHeight,                          
+      nVidGuiHeight,
       screenFlags
       );
 
@@ -55,7 +65,8 @@ void gui_init()
       return;
    }
 
-   sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_ACCELERATED);
+   // TODO: I guess it make sense to always vsync on the menu??
+   sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
    if (sdlRenderer == NULL)
    {
       // In the case that the window could not be made...
@@ -81,33 +92,30 @@ void gui_init()
    gamesperscreen = (nVidGuiHeight - 100) / 10;
 }
 
+#define fbn_color       0xfe8a71
+#define select_color    0xffffff
+#define normal_color    0x1eaab7
+#define info_color      0xf6cd61
 
-
-#define fbn_color 0xfe8a71
-#define select_color 0xffffff
-#define normal_color 0x1eaab7
-#define info_color 0xf6cd61
-
-static int result = 0;
-static double x = 0.01;
-static double y = 0.01;
-static double z = 0.01;
+static int    result = 0;
+static double x      = 0.01;
+static double y      = 0.01;
+static double z      = 0.01;
 
 inline void calcSelectedItemColor()
 {
-  x+=0.07;
-  y+=0.03;
-  z+=0.05;
+   x += 0.07;
+   y += 0.03;
+   z += 0.05;
 
-  SDL_Color pal[1];
-  pal[0].r = 190+64*sin(x+(result*0.004754));
-  pal[0].g = 190+64*sin(y+(result*0.006754));
-  pal[0].b = 190+64*sin(z+(result*0.004754));
-  result++;
+   SDL_Color pal[1];
+   pal[0].r = 190 + 64 * sin(x + (result * 0.004754));
+   pal[0].g = 190 + 64 * sin(y + (result * 0.006754));
+   pal[0].b = 190 + 64 * sin(z + (result * 0.004754));
+   result++;
 
-  incolor1(pal);
+   incolor1(pal);
 }
-
 
 void gui_render()
 {
@@ -126,14 +134,14 @@ void gui_render()
          nBurnDrvActive = i;
          if (game_counter == gamesperscreen / 2)
          {
-           calcSelectedItemColor();
+            calcSelectedItemColor();
             //incolor(select_color, /* unused */ 0);
             inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
             gametoplay = i;
 
-            SDL_Rect fillRect = { 0, nVidGuiHeight -70, nVidGuiWidth, nVidGuiHeight };
-            SDL_SetRenderDrawColor( sdlRenderer, 0, 0, 0, 0xFF );
-            SDL_RenderFillRect( sdlRenderer, &fillRect );
+            SDL_Rect fillRect = { 0, nVidGuiHeight - 70, nVidGuiWidth, nVidGuiHeight };
+            SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 0xFF);
+            SDL_RenderFillRect(sdlRenderer, &fillRect);
 
             incolor(info_color, /* unused */ 0);
             char infoLine[512];
@@ -206,9 +214,11 @@ int gui_process()
                nBurnDrvActive = gametoplay;
                printf("selected %s\n", BurnDrvGetTextA(DRV_FULLNAME));
                return gametoplay;
+
             case SDLK_F12:
-                quit = 1;
-                break;
+               quit = 1;
+               break;
+
             default:
                break;
             }

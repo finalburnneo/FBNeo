@@ -8,8 +8,9 @@ static SDL_Texture * sdlTexture  = NULL;
 static int nVidGuiWidth  = 800;
 static int nVidGuiHeight = 600;
 
-static unsigned int startGame      = 0; // game at top of list as it is displayed on the menu
+static int startGame      = 0; // game at top of list as it is displayed on the menu
 static unsigned int gamesperscreen = 12;
+static unsigned int gamesperscreen_halfway = 6;
 static unsigned int gametoplay     = 0;
 
 #define NUMSTARS  512
@@ -163,14 +164,15 @@ void gui_init()
    prepare_inline_font();
 
    gamesperscreen = (nVidGuiHeight - 100) / 10;
+   gamesperscreen_halfway = gamesperscreen / 2;
 }
 
 
 inline void calcSelectedItemColor()
 {
-   color_x += randomRange(0.01, 0.07);
-   color_y += randomRange(0.01, 0.07);
-   color_z += randomRange(0.01, 0.07);
+   color_x += randomRange(0.03, 0.08);
+   color_y += randomRange(0.02, 0.07);
+   color_z += randomRange(0.01, 0.06);
 
    SDL_Color pal[1];
    pal[0].r = 190 + 64 * sin(color_x + (color_result * 0.004754));
@@ -193,13 +195,12 @@ void gui_render()
    inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
    inprint(sdlRenderer, "=============", 10, 20);
    incolor(normal_color, /* unused */ 0);
-
    for (unsigned int i = startGame, game_counter = 0; game_counter < gamesperscreen; i++, game_counter++)
    {
       if (i > 0 && i < nBurnDrvCount)
       {
          nBurnDrvActive = i;
-         if (game_counter == gamesperscreen / 2)
+         if (game_counter == gamesperscreen_halfway)
          {
             calcSelectedItemColor();
             //incolor(select_color, /* unused */ 0);
@@ -250,28 +251,22 @@ int gui_process()
             switch (e.key.keysym.sym)
             {
             case SDLK_UP:
-               if (startGame > 0)
-               {
-                  startGame--;
-               }
+               startGame--;
                break;
 
             case SDLK_DOWN:
-               if (startGame < nBurnDrvCount)
+               if (startGame < (int)nBurnDrvCount)
                {
                   startGame++;
                }
                break;
 
             case SDLK_LEFT:
-               if (startGame > 10)
-               {
-                  startGame -= 10;
-               }
+              startGame -= 10;
                break;
 
             case SDLK_RIGHT:
-               if (startGame < nBurnDrvCount - 10)
+            //   if (startGame < nBurnDrvCount - 10)
                {
                   startGame += 10;
                }
@@ -295,6 +290,12 @@ int gui_process()
          {
             quit = true;
          }
+      }
+
+      // TODO: Need to put more clamping logic here....
+      if (startGame < -(int)gamesperscreen_halfway+1)
+      {
+           startGame = -gamesperscreen_halfway+1;
       }
       gui_render();
    }

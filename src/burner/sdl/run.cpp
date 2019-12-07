@@ -1,6 +1,6 @@
 // Run module
 #include "burner.h"
-
+static unsigned int nDoFPS = 0;
 bool bAltPause = 0;
 
 int bAlwaysDrawFrames = 0;
@@ -134,7 +134,13 @@ static int RunFrame(int bDraw, int bPause)
       BurnDrvFrame();
    }
 
-   DisplayFPS();
+		if ( bAppShowFPS) {
+			if (nDoFPS < nFramesRendered) {
+				DisplayFPS();
+				nDoFPS = nFramesRendered + 30;
+			}
+		}
+      
    bPrevPause = bPause;
    bPrevDraw  = bDraw;
 

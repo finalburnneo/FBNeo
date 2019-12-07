@@ -12,6 +12,7 @@
 		FE0A7E9D2393A1FF001E6997 /* FBScanner.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */; };
 		FE0A7EA12394B87B001E6997 /* FBRomSetStatusAsNSImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */; };
 		FE0A7EA42394ED91001E6997 /* FBDropFileScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7EA32394ED91001E6997 /* FBDropFileScrollView.m */; };
+		FE0A7EA7239501FF001E6997 /* FBImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7EA5239501FF001E6997 /* FBImporter.m */; };
 		FE1B1092235615940065200C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1091235615940065200C /* AppDelegate.m */; };
 		FE1B1094235615950065200C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1093235615950065200C /* Assets.xcassets */; };
 		FE1B1097235615950065200C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1095235615950065200C /* MainMenu.xib */; };
@@ -1050,6 +1051,8 @@
 		FE0A7EA02394B87B001E6997 /* FBRomSetStatusAsNSImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRomSetStatusAsNSImage.h; sourceTree = "<group>"; };
 		FE0A7EA22394ED90001E6997 /* FBDropFileScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDropFileScrollView.h; sourceTree = "<group>"; };
 		FE0A7EA32394ED91001E6997 /* FBDropFileScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBDropFileScrollView.m; sourceTree = "<group>"; };
+		FE0A7EA5239501FF001E6997 /* FBImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBImporter.m; sourceTree = "<group>"; };
+		FE0A7EA6239501FF001E6997 /* FBImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBImporter.h; sourceTree = "<group>"; };
 		FE1B108D235615940065200C /* FinalBurn Neo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FinalBurn Neo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE1B1090235615940065200C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FE1B1091235615940065200C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -4645,6 +4648,8 @@
 			isa = PBXGroup;
 			children = (
 				FE1B287F235626280065200C /* burner_macos.h */,
+				FE0A7EA6239501FF001E6997 /* FBImporter.h */,
+				FE0A7EA5239501FF001E6997 /* FBImporter.m */,
 				FEED9E1A235845EE00B7AF83 /* FBMainThread.h */,
 				FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */,
 				FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */,
@@ -5626,6 +5631,7 @@
 				FE1B25C923561A760065200C /* k051316.cpp in Sources */,
 				FE1B25AC23561A760065200C /* k056832.cpp in Sources */,
 				FE1B26B623561A770065200C /* d_mrdo.cpp in Sources */,
+				FE0A7EA7239501FF001E6997 /* FBImporter.m in Sources */,
 				FE1B27DD23561A790065200C /* mathbox.cpp in Sources */,
 				FE1B268E23561A770065200C /* d_bionicc.cpp in Sources */,
 				FE1B24BF23561A750065200C /* smssystem.cpp in Sources */,
@@ -6129,7 +6135,7 @@
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6142,7 +6148,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.02;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",
@@ -6189,7 +6195,7 @@
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6202,7 +6208,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.02;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",

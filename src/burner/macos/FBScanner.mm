@@ -88,9 +88,9 @@
             continue;
 
         del = _delegate;
-        if ([del respondsToSelector:@selector(progressDidUpdate:)])
+        if ([del respondsToSelector:@selector(scanDidProgress:)])
             dispatch_async(dispatch_get_main_queue(), ^{
-                [del progressDidUpdate:(float)i/nBurnDrvCount];
+                [del scanDidProgress:(float)i/nBurnDrvCount];
             });
 
         nBurnDrvActive = i;

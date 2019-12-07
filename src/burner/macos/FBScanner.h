@@ -24,7 +24,7 @@
 
 @optional
 - (void) scanDidStart;
-- (void) progressDidUpdate:(float) progress;
+- (void) scanDidProgress:(float) progress;
 - (void) scanDidEnd:(NSArray<FBROMSet *> *) romSets;
 
 @end

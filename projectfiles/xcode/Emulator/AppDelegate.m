@@ -14,6 +14,7 @@
 #import "FBLogViewerController.h"
 #import "FBPreferencesController.h"
 #import "FBLauncherController.h"
+#import "FBAboutController.h"
 
 @interface AppDelegate ()
 
@@ -29,6 +30,7 @@ static AppDelegate *sharedInstance = nil;
     FBPreferencesController *prefs;
     FBEmulatorController *emulator;
     FBLauncherController *launcher;
+    FBAboutController *about;
 
     IOPMAssertionID sleepAssertId;
 }
@@ -141,6 +143,13 @@ static AppDelegate *sharedInstance = nil;
     if (!launcher)
         launcher = [FBLauncherController new];
     [launcher showWindow:self];
+}
+
+- (void) displayAbout:(id) sender
+{
+    if (!about)
+        about = [FBAboutController new];
+    [about showWindow:self];
 }
 
 #pragma mark - Public

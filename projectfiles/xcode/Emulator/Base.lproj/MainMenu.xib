@@ -24,7 +24,7 @@
                             <menuItem title="About FinalBurn Neo" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
+                                    <action selector="displayAbout:" target="-1" id="HKs-yK-tDc"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Check for Updates..." id="PWa-fO-f5X">

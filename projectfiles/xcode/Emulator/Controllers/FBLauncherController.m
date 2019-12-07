@@ -252,7 +252,8 @@
     [romSetTreeController rearrangeObjects];
 
     // Restore selection
-    romSetTreeController.selectionIndexPaths = selection;
+    if (selection)
+        romSetTreeController.selectionIndexPaths = selection;
 }
 
 - (NSString *) setCachePath

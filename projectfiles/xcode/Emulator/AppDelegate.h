@@ -36,5 +36,6 @@
 - (IBAction) displayLogViewer:(id) sender;
 - (IBAction) displayPreferences:(id) sender;
 - (IBAction) displayLauncher:(id) sender;
+- (IBAction) displayAbout:(id) sender;
 
 @end

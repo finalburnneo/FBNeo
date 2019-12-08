@@ -40,9 +40,36 @@ static double color_x      = 0.01;
 static double color_y      = 0.01;
 static double color_z      = 0.01;
 
-SDL_Texture* LoadImage(SDL_Renderer* renderer, char * filename)
+static SDL_Rect title_texture_rect;
+static SDL_Rect dest_title_texture_rect;
+
+
+
+
+SDL_Texture* LoadTitleImage(SDL_Renderer* renderer)
 {
-  return IMG_LoadTexture(renderer, "test.png");
+  char titlePath[MAX_PATH] = { 0 };
+  int w, h;
+  #ifndef _WIN32
+    snprintf(titlePath, MAX_PATH, "%s%s.png", "/usr/local/share/titles/", BurnDrvGetTextA(0));
+  #else
+   snprintf(titlePath, MAX_PATH, "\\support\\titles\\$s.png", BurnDrvGetTextA(0));
+  #endif
+
+  SDL_Texture* loadedTexture = IMG_LoadTexture(renderer, titlePath);
+  SDL_QueryTexture(loadedTexture, NULL, NULL, &w, &h);
+
+  title_texture_rect.x = 0;  //the x coordinate
+  title_texture_rect.y = 0; // the y coordinate
+  title_texture_rect.w = w; //the width of the texture
+  title_texture_rect.h = h; //the height of the texture
+
+  dest_title_texture_rect.x = nVidGuiWidth - w;  //the x coordinate
+  dest_title_texture_rect.y = (nVidGuiHeight / 2) - (h/2); // the y coordinate
+  dest_title_texture_rect.w = w; //the width of the texture
+  dest_title_texture_rect.h = h; //the height of the texture
+
+  return loadedTexture;
 }
 
 
@@ -164,8 +191,6 @@ void gui_init()
 
    gamesperscreen = (nVidGuiHeight - 100) / 10;
    gamesperscreen_halfway = gamesperscreen / 2;
-
-  titleTexture = LoadImage(sdlRenderer,  "test.png");
 }
 
 
@@ -189,11 +214,12 @@ void gui_render()
    SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
    SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
    SDL_RenderClear(sdlRenderer);
+   star_render(sdlRenderer);
    if (titleTexture !=NULL) // JUST FOR TESTING!!
    {
-     SDL_RenderCopy(sdlRenderer, titleTexture, NULL, NULL);
+     SDL_RenderCopy(sdlRenderer, titleTexture, &title_texture_rect, &dest_title_texture_rect);
    }
-   star_render(sdlRenderer);
+
 
    incolor(fbn_color, /* unused */ 0);
    inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
@@ -249,6 +275,11 @@ int gui_process()
          if (e.type == SDL_QUIT)
          {
             quit = true;
+         }
+         if (e.type == SDL_KEYUP)
+         {
+           SDL_DestroyTexture(titleTexture);
+           titleTexture = LoadTitleImage(sdlRenderer);
          }
          if (e.type == SDL_KEYDOWN)
          {

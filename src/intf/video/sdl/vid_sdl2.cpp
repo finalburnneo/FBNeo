@@ -14,65 +14,6 @@ static SDL_Texture *  sdlTexture  = NULL;
 static int  nRotateGame = 0;
 static bool bFlipped    = false;
 
-static int VidSScaleImage(RECT *pRect)
-{
-   int nScrnWidth, nScrnHeight;
-
-   int nGameAspectX = 4, nGameAspectY = 3;
-   int nWidth  = pRect->right - pRect->left;
-   int nHeight = pRect->bottom - pRect->top;
-
-   if (bVidFullStretch)
-   {              // Arbitrary stretch
-      return 0;
-   }
-
-   if (bDrvOkay)
-   {
-      if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)))
-      {
-         BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
-      }
-      else
-      {
-         BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
-      }
-   }
-
-   nScrnWidth  = nGameAspectX;
-   nScrnHeight = nGameAspectY;
-
-   int nWidthScratch = nHeight * nVidScrnAspectY * nGameAspectX * nScrnWidth /
-                       (nScrnHeight * nVidScrnAspectX * nGameAspectY);
-
-   if (nWidthScratch > nWidth)
-   {              // The image is too wide
-      if (nVidImageWidth < nVidImageHeight)
-      {           // Vertical games
-         nHeight = nWidth * nVidScrnAspectY * nGameAspectY * nScrnWidth /
-                   (nScrnHeight * nVidScrnAspectX * nGameAspectX);
-      }
-      else
-      {                           // Horizontal games
-         nHeight = nWidth * nVidScrnAspectX * nGameAspectY * nScrnHeight /
-                   (nScrnWidth * nVidScrnAspectY * nGameAspectX);
-      }
-   }
-   else
-   {
-      nWidth = nWidthScratch;
-   }
-
-   pRect->left  = (pRect->right + pRect->left) / 2;
-   pRect->left -= nWidth / 2;
-   pRect->right = pRect->left + nWidth;
-
-   pRect->top    = (pRect->top + pRect->bottom) / 2;
-   pRect->top   -= nHeight / 2;
-   pRect->bottom = pRect->top + nHeight;
-
-   return 0;
-}
 
 static int Exit()
 {
@@ -99,7 +40,6 @@ static int Init()
       return 3;
    }
 
-
    nRotateGame = 0;
 
    if (bDrvOkay)
@@ -108,14 +48,17 @@ static int Init()
       BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
       BurnDrvGetAspect(&GameAspectX, &GameAspectY);
 
+      display_w = nVidImageWidth;
+      display_h = nVidImageWidth * GameAspectY/GameAspectX;
+
       if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
       {
          BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
-         int temp = display_h;
-         display_h = display_w;
-         display_w = temp;
+         BurnDrvGetAspect(&GameAspectX, &GameAspectY);
          printf("Vertical\n");
          nRotateGame = 1;
+         display_w = nVidImageHeight* GameAspectX/GameAspectY;
+         display_h = nVidImageHeight;
       }
 
       if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED)
@@ -124,11 +67,6 @@ static int Init()
          bFlipped = 1;
       }
    }
-
-   printf("AspectX=%d : AspectY=%d\n", GameAspectX, GameAspectY);
-   float aspect_ratio = nRotateGame ? (float)GameAspectY / (float)GameAspectX : (float)GameAspectX / (float)GameAspectY;
-   printf("aspect ratio = %f\n", aspect_ratio);
-
 
    char title[512];
 
@@ -174,17 +112,6 @@ static int Init()
    }
 
    nVidImageDepth = bDrvOkay ? 16 : 32;
-
-   RECT test_rect;
-   test_rect.left   = 0;
-   test_rect.right  = nVidImageWidth;
-   test_rect.top    = 0;
-   test_rect.bottom = nVidImageHeight;
-
-   printf("correctx before %d, %d\n", test_rect.right, test_rect.bottom);
-   VidSScaleImage(&test_rect);
-   printf("correctx after %d, %d\n", test_rect.right, test_rect.bottom);
-
    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
   // SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE);   // Probably best not turn this on
 

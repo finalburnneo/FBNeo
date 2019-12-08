@@ -43,9 +43,6 @@ static double color_z      = 0.01;
 static SDL_Rect title_texture_rect;
 static SDL_Rect dest_title_texture_rect;
 
-
-
-
 SDL_Texture* LoadTitleImage(SDL_Renderer* renderer)
 {
 		char titlePath[MAX_PATH] = { 0 };

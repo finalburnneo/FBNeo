@@ -83,9 +83,12 @@ static AppDelegate *sharedInstance = nil;
 
 - (void) applicationDidFinishLaunching:(NSNotification *) aNotification {
     NSLog(@"applicationDidFinishLaunching");
-    launcher = [FBLauncherController new];
     emulator = [FBEmulatorController new];
+    [emulator window]; // Trigger awakeFromNib
+
+    launcher = [FBLauncherController new];
     [launcher showWindow:self];
+
     [_runloop start];
 }
 

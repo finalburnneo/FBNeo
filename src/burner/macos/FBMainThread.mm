@@ -30,8 +30,14 @@ typedef enum LogEntryType {
         log = [NSMutableString new];
         observers = [NSMutableArray new];
         _isRunning = NO;
+        OneTimeInit();
     }
     return self;
+}
+
+- (void) dealloc
+{
+    OneTimeEnd();
 }
 
 #pragma mark - Public
@@ -81,9 +87,6 @@ typedef enum LogEntryType {
 
 - (void) main
 {
-    if (OneTimeInit() != 0)
-        return;
-
     SetNVRAMPath([AppDelegate.sharedInstance.nvramPath cStringUsingEncoding:NSUTF8StringEncoding]);
 
     while (!self.isCancelled) {
@@ -172,7 +175,6 @@ typedef enum LogEntryType {
         MainEnd();
     }
 
-    OneTimeEnd();
     NSLog(@"Exiting FBMainThread");
 }
 

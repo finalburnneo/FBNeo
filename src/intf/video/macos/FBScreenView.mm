@@ -65,7 +65,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (void) awakeFromNib
 {
-    useDisplayLink = NO;
+    useDisplayLink = [NSUserDefaults.standardUserDefaults boolForKey:@"cvDisplayLink"];
     _lastMouseAction = CFAbsoluteTimeGetCurrent();
     _lastCursorPosition = NSMakePoint(-1, -1);
     textureFormat = GL_UNSIGNED_SHORT_5_6_5;
@@ -97,6 +97,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
     CGLUnlockContext(cglContext);
 
     if (useDisplayLink) {
+        NSLog(@"Initializing display link...");
+
         // Initialize display link
         CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
         CVDisplayLinkSetOutputCallback(displayLink, &displayLinkCallback,

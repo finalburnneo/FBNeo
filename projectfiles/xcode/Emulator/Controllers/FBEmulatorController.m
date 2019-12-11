@@ -5,7 +5,8 @@
 //  Created by Akop Karapetyan on 10/25/19.
 //  Copyright © 2019 Akop Karapetyan. All rights reserved.
 //
-
+// FIXME: on catalina, it still starts in white
+// FIXME: don't add bogus paths to recently used!
 #import "FBEmulatorController.h"
 
 #import "AppDelegate.h"
@@ -19,6 +20,7 @@
 - (void) unlockCursor;
 - (void) hideCursor;
 - (void) unhideCursor:(BOOL) force;
+- (NSPoint) convertPointToScreen:(NSPoint) point;
 
 @end
 
@@ -401,8 +403,8 @@
         CGAssociateMouseAndMouseCursorPosition(false);
 
         CGFloat offset = self.window.screen.frame.size.height + self.window.screen.frame.origin.y;
-        NSPoint centerScreen = [self.window convertPointToScreen:NSMakePoint(NSMidX(screen.bounds),
-                                                                             NSMidY(screen.bounds))];
+        NSPoint centerScreen = [self convertPointToScreen:NSMakePoint(NSMidX(screen.bounds),
+                                                                      NSMidY(screen.bounds))];
         NSPoint screenCoords = NSMakePoint(centerScreen.x, offset - centerScreen.y);
         CGWarpMouseCursorPosition(NSPointToCGPoint(screenCoords));
 
@@ -432,6 +434,19 @@
     }
 
     [self unhideCursor:YES];
+}
+
+- (NSPoint) convertPointToScreen:(NSPoint) point
+{
+    NSWindow *window = self.window;
+    if (@available(macOS 10.12, *))
+        return [window convertPointToScreen:point];
+
+    NSRect frame = window.frame;
+    point.x += frame.origin.x;
+    point.y += frame.origin.y;
+
+    return point;
 }
 
 @end

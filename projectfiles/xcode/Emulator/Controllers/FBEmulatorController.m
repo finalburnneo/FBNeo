@@ -110,21 +110,6 @@
     [self.appDelegate restoreScreenSaver];
 }
 
-- (void) windowWillClose:(NSNotification *) notification
-{
-    NSLog(@"windowWillClose");
-    for (NSString *key in defaultsToObserve)
-        [NSUserDefaults.standardUserDefaults removeObserver:self
-                                                 forKeyPath:key
-                                                    context:NULL];
-
-    NSLog(@"Emulator window closed; shutting down");
-    if (NSApplication.sharedApplication.isRunning)
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [NSApplication.sharedApplication terminate:nil];
-        });
-}
-
 - (NSSize) windowWillResize:(NSWindow *) sender
                      toSize:(NSSize) frameSize
 {

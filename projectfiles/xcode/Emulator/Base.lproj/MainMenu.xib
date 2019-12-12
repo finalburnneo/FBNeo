@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -24,7 +24,7 @@
                             <menuItem title="About FinalBurn Neo" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
+                                    <action selector="displayAbout:" target="-1" id="HKs-yK-tDc"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Check for Updates..." id="PWa-fO-f5X">
@@ -94,6 +94,12 @@
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
+                            <menuItem title="Rescan sets..." keyEquivalent="R" id="A6k-Dm-n7z">
+                                <connections>
+                                    <action selector="rescanSets:" target="-1" id="uPw-AG-YhZ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="yui-D6-pxa"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
                                     <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
@@ -174,6 +180,11 @@
                             <menuItem title="Log Viewer" keyEquivalent="L" id="B9b-uq-YTW">
                                 <connections>
                                     <action selector="displayLogViewer:" target="Voe-Tx-rLC" id="nPT-jf-1ps"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Launcher" keyEquivalent="O" id="nF4-4x-QYI">
+                                <connections>
+                                    <action selector="displayLauncher:" target="-1" id="lru-ge-xVT"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Ogn-TJ-pnG"/>

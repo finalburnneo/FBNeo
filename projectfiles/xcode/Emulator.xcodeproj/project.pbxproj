@@ -2574,6 +2574,8 @@
 				FE0A7EA32394ED91001E6997 /* FBDropFileScrollView.m */,
 				FE0A7EA02394B87B001E6997 /* FBRomSetStatusAsNSImage.h */,
 				FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */,
+				FEC5D3D7235C160600ABA9FB /* FBScreenView.h */,
+				FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4722,8 +4724,6 @@
 		FEA5E7982356472200DA2D9D /* macos */ = {
 			isa = PBXGroup;
 			children = (
-				FEC5D3D7235C160600ABA9FB /* FBScreenView.h */,
-				FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */,
 				FEC5D3D4235C136E00ABA9FB /* FBVideo.h */,
 				FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */,
 			);

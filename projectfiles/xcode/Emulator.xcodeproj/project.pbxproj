@@ -74,7 +74,6 @@
 		FE1B240A23561A750065200C /* tlcs90.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D8423561A630065200C /* tlcs90.cpp */; settings = {COMPILER_FLAGS = "-Wno-tautological-pointer-compare"; }; };
 		FE1B240B23561A750065200C /* upd7810.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D8623561A630065200C /* upd7810.cpp */; };
 		FE1B240F23561A750065200C /* hd6309_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D8B23561A640065200C /* hd6309_intf.cpp */; };
-		FE1B241023561A750065200C /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1D8C23561A640065200C /* license.txt */; };
 		FE1B241523561A750065200C /* pngrio.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1DAC23561A640065200C /* pngrio.c */; };
 		FE1B241623561A750065200C /* pngerror.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1DAD23561A640065200C /* pngerror.c */; };
 		FE1B241723561A750065200C /* pngwio.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1DAE23561A640065200C /* pngwio.c */; };
@@ -991,6 +990,7 @@
 		FE2BC6D02362D5BD00B9D150 /* FBMainThread+Etc.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */; };
 		FE34741A23675C4C006646E7 /* FBAudio.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE34741823675C4C006646E7 /* FBAudio.mm */; };
 		FE34742623696151006646E7 /* SDLAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FE34742423696150006646E7 /* SDLAudioEngine.m */; };
+		FE3BD61623A4979700570784 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FE3BD61523A4979700570784 /* License.rtf */; };
 		FE811005236B73BD000B5F73 /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE811004236B73BD000B5F73 /* m68kops.c */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
@@ -1278,7 +1278,6 @@
 		FE1B1D8923561A640065200C /* 7810ops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7810ops.c; sourceTree = "<group>"; };
 		FE1B1D8A23561A640065200C /* 7810dasm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7810dasm.c; sourceTree = "<group>"; };
 		FE1B1D8B23561A640065200C /* hd6309_intf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hd6309_intf.cpp; sourceTree = "<group>"; };
-		FE1B1D8C23561A640065200C /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = license.txt; path = ../../src/license.txt; sourceTree = "<group>"; };
 		FE1B1DAB23561A640065200C /* pnginfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pnginfo.h; sourceTree = "<group>"; };
 		FE1B1DAC23561A640065200C /* pngrio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngrio.c; sourceTree = "<group>"; };
 		FE1B1DAD23561A640065200C /* pngerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngerror.c; sourceTree = "<group>"; };
@@ -2510,6 +2509,7 @@
 		FE34741923675C4C006646E7 /* FBAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAudio.h; sourceTree = "<group>"; };
 		FE34742423696150006646E7 /* SDLAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLAudioEngine.m; sourceTree = "<group>"; };
 		FE34742523696151006646E7 /* SDLAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLAudioEngine.h; sourceTree = "<group>"; };
+		FE3BD61523A4979700570784 /* License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = License.rtf; sourceTree = "<group>"; };
 		FE811004236B73BD000B5F73 /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
@@ -2603,17 +2603,18 @@
 		FE1B108F235615940065200C /* Emulator */ = {
 			isa = PBXGroup;
 			children = (
-				FE2BC6BD2362BF9200B9D150 /* Nibs */,
 				FE2BC6AF23615BBC00B9D150 /* Controllers */,
+				FE3BD61423A4979700570784 /* Doc */,
+				FE2BC6BD2362BF9200B9D150 /* Nibs */,
 				FE0A7E9E2394B87B001E6997 /* Views */,
+				FE1B109B235615960065200C /* FinalBurnNeo.entitlements */,
 				FE1B1090235615940065200C /* AppDelegate.h */,
 				FE1B1091235615940065200C /* AppDelegate.m */,
-				FE1B1093235615950065200C /* Assets.xcassets */,
-				FE2BC6BA2362B4E200B9D150 /* dsa_pub.pem */,
-				FE1B109B235615960065200C /* FinalBurnNeo.entitlements */,
-				FE1B1098235615950065200C /* Info.plist */,
 				FE1B1099235615950065200C /* main.m */,
+				FE2BC6BA2362B4E200B9D150 /* dsa_pub.pem */,
 				FEF4EE882363720B004E0DCE /* Defaults.plist */,
+				FE1B1098235615950065200C /* Info.plist */,
+				FE1B1093235615950065200C /* Assets.xcassets */,
 			);
 			path = Emulator;
 			sourceTree = "<group>";
@@ -2628,7 +2629,6 @@
 				FE1B1E5023561A660065200C /* intf */,
 				FE1B1EA023561A660065200C /* interface.cpp */,
 				FE1B1E9F23561A660065200C /* interface.h */,
-				FE1B1D8C23561A640065200C /* license.txt */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -4713,6 +4713,14 @@
 			path = macos;
 			sourceTree = "<group>";
 		};
+		FE3BD61423A4979700570784 /* Doc */ = {
+			isa = PBXGroup;
+			children = (
+				FE3BD61523A4979700570784 /* License.rtf */,
+			);
+			path = Doc;
+			sourceTree = SOURCE_ROOT;
+		};
 		FE811001236B6B29000B5F73 /* generated */ = {
 			isa = PBXGroup;
 			children = (
@@ -4859,10 +4867,10 @@
 				FEF4EE892363720B004E0DCE /* Defaults.plist in Resources */,
 				FE0A7EAA239B8A7E001E6997 /* About.xib in Resources */,
 				FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */,
-				FE1B241023561A750065200C /* license.txt in Resources */,
 				FEF4EE8423635521004E0DCE /* Emulator.xib in Resources */,
 				FE1B1094235615950065200C /* Assets.xcassets in Resources */,
 				FE2BC6AB23615B3400B9D150 /* LogViewer.xib in Resources */,
+				FE3BD61623A4979700570784 /* License.rtf in Resources */,
 				FE1B1097235615950065200C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6153,7 +6161,7 @@
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6166,7 +6174,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.03;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",
@@ -6213,7 +6221,7 @@
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6226,7 +6234,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.03;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",

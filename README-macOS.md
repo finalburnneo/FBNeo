@@ -1,7 +1,7 @@
 # FinalBurn Neo for macOS
 
 ## Download
-[Version 1.02](https://github.com/fbn-mac/FBNeo/releases/tag/macos-v1.02) is the
+[Version 1.03](https://github.com/fbn-mac/FBNeo/releases/tag/macos-v1.03) is the
 latest stable release. [View all releases](https://github.com/fbn-mac/FBNeo/releases).
 
 ## Compatibility

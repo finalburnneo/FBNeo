@@ -37,6 +37,7 @@
     BOOL isCursorVisible;
     BOOL isAutoPaused;
     NSArray *defaultsToObserve;
+    BOOL driverLoadError;
 }
 
 - (id) init
@@ -74,17 +75,12 @@
     lockIcon.image = [NSImage imageNamed:@"NSLockUnlockedTemplate"];
     lockIcon.enabled = NO;
     lockIcon.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"hideLockOptions"];
-    spinner.hidden = YES;
     [self.window addTitlebarAccessoryViewController:tba];
     self.window.backgroundColor = NSColor.blackColor;
 
     screen.delegate = self;
     self.video.delegate = screen;
     [self.runloop addObserver:self];
-
-    label.stringValue = NSLocalizedString(@"Drop a set here to load it.", nil);
-    label.hidden = NO;
-    screen.hidden = YES;
 
     [self.window registerForDraggedTypes:@[NSFilenamesPboardType]];
     for (NSString *key in defaultsToObserve)
@@ -258,8 +254,6 @@
         [self resizeFrame:NSMakeSize(screenSize.width * 2, screenSize.height * 2)
                   animate:NO];
 
-    screen.hidden = NO;
-    label.hidden = YES;
     lockIcon.enabled = YES;
     lockIcon.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"hideLockOptions"] && !self.input.usesMouse;
 
@@ -269,8 +263,6 @@
 - (void) gameSessionDidEnd
 {
     NSLog(@"gameSessionDidEnd");
-    screen.hidden = YES;
-    label.hidden = NO;
     lockIcon.enabled = NO;
     [self unlockCursor];
 
@@ -280,32 +272,38 @@
 
 - (void) driverInitDidStart
 {
-    [spinner startAnimation:self];
-    spinner.hidden = NO;
+    [progressPanelBar startAnimation:self];
+    [self.window beginSheet:progressPanel
+          completionHandler:^(NSModalResponse returnCode) { }];
 
-    label.stringValue = NSLocalizedString(@"Please wait...", nil);
     self.window.title = NSLocalizedString(@"Loading...", nil);
+    driverLoadError = NO;
 }
 
 - (void) driverInitDidEnd:(NSString *) name
                   success:(BOOL) success
 {
-    [spinner stopAnimation:self];
-    spinner.hidden = YES;
+    [self.window endSheet:progressPanel];
 
     if (success) {
-        label.stringValue = NSLocalizedString(@"Starting...", nil);
         if ([NSUserDefaults.standardUserDefaults boolForKey:@"pauseWhenInactive"]
             && !self.window.isKeyWindow) {
             self.runloop.paused = YES;
             isAutoPaused = YES;
         }
         self.window.title = self.runloop.title;
+        if (driverLoadError)
+            [self.appDelegate displayLogViewer:self];
     } else {
-        label.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Error loading \"%@\".", nil), name];
-        [self.appDelegate displayLogViewer:self];
         self.window.title = NSBundle.mainBundle.infoDictionary[(NSString *)kCFBundleNameKey];
+        [self.appDelegate displayLogViewer:self];
     }
+}
+
+- (void) logDidUpdate:(NSString *) message
+{
+    if ([message hasPrefix:@"!"])
+        driverLoadError = YES;
 }
 
 #pragma mark - Actions

@@ -22,7 +22,7 @@
 
 static int powerOf2Gte(int number);
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
-                                    const CVTimeStamp *now, const CVTimeStamp* outputTime,
+                                    const CVTimeStamp *now, const CVTimeStamp *outputTime,
                                     CVOptionFlags flagsIn, CVOptionFlags *flagsOut,
                                     void *displayLinkContext);
 
@@ -72,7 +72,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (void) awakeFromNib
 {
-    useDisplayLink = [NSUserDefaults.standardUserDefaults boolForKey:@"cvDisplayLink"];
+    useDisplayLink = [NSUserDefaults.standardUserDefaults boolForKey:@"useDisplayLink"];
     _lastMouseAction = CFAbsoluteTimeGetCurrent();
     _lastCursorPosition = NSMakePoint(-1, -1);
     textureFormat = GL_UNSIGNED_SHORT_5_6_5;
@@ -98,6 +98,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
 
     glClearColor(0, 0, 0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(0, 0, 0);
 
     glGenTextures(1, &screenTextureId);
 
@@ -112,39 +113,40 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
                                        (__bridge void *) self);
         CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext,
                                                           self.pixelFormat.CGLPixelFormatObj);
-
         CVDisplayLinkStart(displayLink);
     }
 }
 
-- (void) drawRect:(NSRect)dirtyRect
+- (void) drawRect:(NSRect) dirtyRect
 {
-    GLfloat coordX = (GLfloat)imageWidth / textureWidth;
-    GLfloat coordY = (GLfloat)imageHeight / textureHeight;
-
     [self.openGLContext makeCurrentContext];
     CGLLockContext(self.openGLContext.CGLContextObj);
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, screenTextureId);
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    if (textureWidth > 0 && textureHeight > 0) {
+        GLfloat coordX = (GLfloat) imageWidth / textureWidth;
+        GLfloat coordY = (GLfloat) imageHeight / textureHeight;
 
-    NSSize size = [self bounds].size;
-    CGFloat offset = 0;
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, screenTextureId);
+        glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0, 0.0);
-    glVertex3f(-offset, 0.0, 0.0);
-    glTexCoord2f(coordX, 0.0);
-    glVertex3f(size.width + offset, 0.0, 0.0);
-    glTexCoord2f(coordX, coordY);
-    glVertex3f(size.width + offset, size.height, 0.0);
-    glTexCoord2f(0.0, coordY);
-    glVertex3f(-offset, size.height, 0.0);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
+        NSSize size = self.bounds.size;
+        CGFloat offset = 0;
+
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.0, 0.0);
+        glVertex3f(-offset, 0.0, 0.0);
+        glTexCoord2f(coordX, 0.0);
+        glVertex3f(size.width + offset, 0.0, 0.0);
+        glTexCoord2f(coordX, coordY);
+        glVertex3f(size.width + offset, size.height, 0.0);
+        glTexCoord2f(0.0, coordY);
+        glVertex3f(-offset, size.height, 0.0);
+        glEnd();
+        glDisable(GL_TEXTURE_2D);
+    }
 
     [self.openGLContext flushBuffer];
 
@@ -170,13 +172,13 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
     CGLUnlockContext(self.openGLContext.CGLContextObj);
 }
 
-#pragma mark - FBVideoRenderDelegate
+#pragma mark - FBVideoDelegate
 
-- (void)initTextureOfWidth:(int) width
-                    height:(int) height
-                 isRotated:(BOOL) rotated
-                 isFlipped:(BOOL) flipped
-             bytesPerPixel:(int) bytesPerPixel
+- (void) initTextureOfWidth:(int) width
+                     height:(int) height
+                  isRotated:(BOOL) rotated
+                  isFlipped:(BOOL) flipped
+              bytesPerPixel:(int) bytesPerPixel
 {
     NSLog(@"FBScreenView/initTexture");
 
@@ -222,9 +224,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
     if (NSPointInRect(_lastCursorPosition, viewBounds)) {
         CFAbsoluteTime interval = CFAbsoluteTimeGetCurrent() - _lastMouseAction;
         if (interval > HIDE_CURSOR_TIMEOUT_SECONDS) {
-            if ([_delegate respondsToSelector:@selector(mouseDidIdle)]) {
+            if ([_delegate respondsToSelector:@selector(mouseDidIdle)])
                 [_delegate mouseDidIdle];
-            }
             _lastCursorPosition.x = -1;
         }
     }

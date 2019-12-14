@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FBEmulatorController">
             <connections>
                 <outlet property="accView" destination="tAE-oU-84p" id="STJ-Bl-aOY"/>
-                <outlet property="label" destination="r9V-Zc-ar6" id="m5W-Nb-eKU"/>
                 <outlet property="lockIcon" destination="e2Z-og-5sM" id="m2t-2S-SAX"/>
                 <outlet property="lockText" destination="faS-dc-o2e" id="Z0S-o0-j4Q"/>
+                <outlet property="progressPanel" destination="20X-QE-xlt" id="EWT-H8-Ua3"/>
+                <outlet property="progressPanelBar" destination="lGt-rh-vqA" id="Hcy-32-Hwg"/>
                 <outlet property="screen" destination="NMq-dl-ima" id="DmS-4G-KTJ"/>
-                <outlet property="spinner" destination="9M6-12-JcO" id="h8L-zo-cgm"/>
                 <outlet property="window" destination="iUn-Rc-9rO" id="NmU-Wm-wrs"/>
             </connections>
         </customObject>
@@ -28,20 +28,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r9V-Zc-ar6">
-                        <rect key="frame" x="-2" y="158" width="484" height="38"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Twas brillig and the slithy toves Did gyre and gimble in the wabe" id="xlr-B9-gSP">
-                            <font key="font" metaFont="system" size="15"/>
-                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <openGLView wantsLayer="YES" fixedFrame="YES" colorSize="5bit_RGB_8bit_Alpha" depthSize="32bit" useAuxiliaryDepthBufferStencil="NO" useDoubleBufferingEnabled="YES" allowOffline="YES" useRecovery="YES" wantsBestResolutionOpenGLSurface="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NMq-dl-ima" customClass="FBScreenView">
+                    <openGLView wantsLayer="YES" colorSize="5bit_RGB_8bit_Alpha" depthSize="32bit" useAuxiliaryDepthBufferStencil="NO" useDoubleBufferingEnabled="YES" allowOffline="YES" useRecovery="YES" wantsBestResolutionOpenGLSurface="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NMq-dl-ima" customClass="FBScreenView">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </openGLView>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="NMq-dl-ima" secondAttribute="trailing" id="9eL-wZ-d2g"/>
+                    <constraint firstAttribute="bottom" secondItem="NMq-dl-ima" secondAttribute="bottom" id="XlF-HN-kRw"/>
+                    <constraint firstItem="NMq-dl-ima" firstAttribute="leading" secondItem="2ny-FP-Dnz" secondAttribute="leading" id="aVV-JZ-yVo"/>
+                    <constraint firstItem="NMq-dl-ima" firstAttribute="top" secondItem="2ny-FP-Dnz" secondAttribute="top" id="r7l-zA-RgS"/>
+                </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="Wmy-un-Ibj"/>
@@ -50,36 +46,75 @@
             <point key="canvasLocation" x="130" y="-102"/>
         </window>
         <customView id="tAE-oU-84p">
-            <rect key="frame" x="0.0" y="0.0" width="111" height="24"/>
+            <rect key="frame" x="0.0" y="0.0" width="97" height="24"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="faS-dc-o2e">
-                    <rect key="frame" x="18" y="5" width="46" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="⌘+click" id="Hsh-02-gGV">
-                        <font key="font" metaFont="controlContent" size="11"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button focusRingType="none" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e2Z-og-5sM">
-                    <rect key="frame" x="63" y="4" width="24" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                <button focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="e2Z-og-5sM">
+                    <rect key="frame" x="77" y="4" width="16" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="16" id="a1u-vl-vVC"/>
+                    </constraints>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSLockLockedTemplate" imagePosition="only" alignment="center" controlSize="small" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="kDJ-ul-fJ3">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="controlContent" size="11"/>
+                        <font key="font" metaFont="menu" size="11"/>
                     </buttonCell>
                     <connections>
                         <action selector="activateCursorLock:" target="-2" id="gdb-de-U7o"/>
                     </connections>
                 </button>
-                <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="9M6-12-JcO">
-                    <rect key="frame" x="87" y="4" width="16" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                </progressIndicator>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="faS-dc-o2e">
+                    <rect key="frame" x="29" y="5" width="46" height="14"/>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="⌘+click" id="Hsh-02-gGV">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
-            <point key="canvasLocation" x="69.5" y="-511"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="e2Z-og-5sM" secondAttribute="bottom" constant="4" id="8K4-6h-Y4y"/>
+                <constraint firstItem="e2Z-og-5sM" firstAttribute="top" secondItem="tAE-oU-84p" secondAttribute="top" constant="4" id="9B1-PA-3UL"/>
+                <constraint firstAttribute="bottom" secondItem="faS-dc-o2e" secondAttribute="bottom" constant="5" id="Ibd-gH-hFE"/>
+                <constraint firstItem="e2Z-og-5sM" firstAttribute="leading" secondItem="faS-dc-o2e" secondAttribute="trailing" constant="4" id="duc-nU-MpV"/>
+                <constraint firstItem="faS-dc-o2e" firstAttribute="top" secondItem="tAE-oU-84p" secondAttribute="top" constant="5" id="nAz-np-L3t"/>
+                <constraint firstItem="faS-dc-o2e" firstAttribute="leading" relation="lessThanOrEqual" secondItem="tAE-oU-84p" secondAttribute="leading" constant="35" id="uFX-Xs-bMK"/>
+                <constraint firstAttribute="trailing" secondItem="e2Z-og-5sM" secondAttribute="trailing" constant="4" id="ytd-FC-H9b"/>
+            </constraints>
+            <point key="canvasLocation" x="76.5" y="-511"/>
         </customView>
+        <window title="Loading..." allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="20X-QE-xlt" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="272" y="172" width="347" height="80"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="nde-No-BYW">
+                <rect key="frame" x="0.0" y="0.0" width="347" height="80"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <progressIndicator wantsLayer="YES" maxValue="1" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="lGt-rh-vqA">
+                        <rect key="frame" x="20" y="19" width="307" height="20"/>
+                    </progressIndicator>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7kU-El-DTe">
+                        <rect key="frame" x="18" y="46" width="311" height="14"/>
+                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Loading..." id="WEh-yM-j7L">
+                            <font key="font" metaFont="menu" size="11"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7kU-El-DTe" firstAttribute="top" secondItem="nde-No-BYW" secondAttribute="top" constant="20" symbolic="YES" id="3Dc-U3-pDc"/>
+                    <constraint firstAttribute="trailing" secondItem="lGt-rh-vqA" secondAttribute="trailing" constant="20" symbolic="YES" id="MmA-Mg-WZA"/>
+                    <constraint firstItem="lGt-rh-vqA" firstAttribute="leading" secondItem="nde-No-BYW" secondAttribute="leading" constant="20" symbolic="YES" id="R41-s6-hPr"/>
+                    <constraint firstItem="lGt-rh-vqA" firstAttribute="top" secondItem="7kU-El-DTe" secondAttribute="bottom" constant="8" symbolic="YES" id="awG-Lp-aBA"/>
+                    <constraint firstAttribute="trailing" secondItem="7kU-El-DTe" secondAttribute="trailing" constant="20" symbolic="YES" id="g3T-7o-Whg"/>
+                    <constraint firstItem="7kU-El-DTe" firstAttribute="leading" secondItem="nde-No-BYW" secondAttribute="leading" constant="20" symbolic="YES" id="kfB-W0-zo7"/>
+                    <constraint firstAttribute="bottom" secondItem="lGt-rh-vqA" secondAttribute="bottom" constant="20" symbolic="YES" id="sRx-gr-4VP"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="131" y="225"/>
+        </window>
     </objects>
     <resources>
         <image name="NSLockLockedTemplate" width="10" height="14"/>

@@ -62,8 +62,8 @@
 
 - (void) openLicense:(id) sender
 {
-    NSString *documentPath = [NSBundle.mainBundle pathForResource:@"license"
-                                                           ofType:@"txt"];
+    NSString *documentPath = [NSBundle.mainBundle pathForResource:@"License"
+                                                           ofType:@"rtf"];
     [NSWorkspace.sharedWorkspace openURL:[NSURL fileURLWithPath:documentPath]];
 }
 

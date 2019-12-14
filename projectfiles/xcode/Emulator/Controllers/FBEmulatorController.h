@@ -21,10 +21,10 @@
 {
     IBOutlet FBScreenView *screen;
     IBOutlet NSView *accView;
-    IBOutlet NSProgressIndicator *spinner;
     IBOutlet NSButton *lockIcon;
     IBOutlet NSTextField *lockText;
-    IBOutlet NSTextField *label;
+    IBOutlet NSPanel *progressPanel;
+    IBOutlet NSProgressIndicator *progressPanelBar;
 }
 
 - (IBAction) activateCursorLock:(id) sender;

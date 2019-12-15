@@ -290,10 +290,7 @@ int gui_process()
 										break;
 
 								case SDLK_DOWN:
-										if (startGame < (int)nBurnDrvCount)
-										{
-												startGame++;
-										}
+										startGame++;
 										break;
 
 								case SDLK_LEFT:
@@ -301,11 +298,8 @@ int gui_process()
 										break;
 
 								case SDLK_RIGHT:
-										//   if (startGame < nBurnDrvCount - 10)
-								{
 										startGame += 10;
-								}
-								break;
+										break;
 
 								case SDLK_RETURN:
 										nBurnDrvActive = gametoplay;
@@ -331,6 +325,11 @@ int gui_process()
 				if (startGame < -(int)gamesperscreen_halfway+1)
 				{
 						startGame = -gamesperscreen_halfway+1;
+				}
+
+				if (startGame > nBurnDrvCount+gamesperscreen_halfway)
+				{
+						startGame = nBurnDrvCount+gamesperscreen_halfway;
 				}
 				gui_render();
 		}

@@ -267,6 +267,7 @@ int gui_process()
 {
 		SDL_Event e;
 		bool quit = false;
+		static UINT32 previousSelected;
 
 		while (!quit)
 		{
@@ -275,11 +276,6 @@ int gui_process()
 						if (e.type == SDL_QUIT)
 						{
 								quit = true;
-						}
-						if (e.type == SDL_KEYUP)
-						{
-								SDL_DestroyTexture(titleTexture);
-								titleTexture = LoadTitleImage(sdlRenderer);
 						}
 						if(e.type == SDL_MOUSEWHEEL)
 				    {
@@ -291,7 +287,7 @@ int gui_process()
 				        {
 										startGame++;
 				        }
-
+						}
 						if (e.type == SDL_KEYDOWN)
 						{
 								switch (e.key.keysym.sym)
@@ -328,7 +324,15 @@ int gui_process()
 						}
 						if (e.type == SDL_MOUSEBUTTONDOWN)
 						{
-								quit = true;
+							switch (e.button.button)
+							{
+								case SDL_BUTTON_LEFT:
+									nBurnDrvActive = gametoplay;
+									return gametoplay;
+								case SDL_BUTTON_RIGHT:
+									quit = 1;
+									break;
+							}
 						}
 				}
 
@@ -342,6 +346,15 @@ int gui_process()
 				{
 						startGame = nBurnDrvCount - gamesperscreen_halfway-1;
 				}
+
+				if (previousSelected != gametoplay)
+				{
+					SDL_DestroyTexture(titleTexture);
+					titleTexture = LoadTitleImage(sdlRenderer);
+				}
+
+				previousSelected = gametoplay;
+
 				gui_render();
 		}
 		return -1;

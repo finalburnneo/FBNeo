@@ -66,6 +66,8 @@ int ConfigAppLoad()
       VAR(nAutoFireRate);
 #endif
       VAR(bVidScanlines);
+      VAR(bDoGamma);
+      FLT(nGamma);
       VAR(nAudSampleRate[0]);
       VAR(nAudDSPModule[0]);
       VAR(EnableHiscores);
@@ -131,6 +133,10 @@ int ConfigAppSave()
 #endif
    fprintf(f, "\n// If non-zero, enable scanlines\n");
    VAR(bVidScanlines);
+   fprintf(f, "\n// If non-zero, enable software gamma correction\n");
+   VAR(bDoGamma);
+   _ftprintf(f, _T("\n// Gamma to correct with\n"));
+ 	 FLT(nGamma);
    VAR(nAudSampleRate[0]);
    fprintf(f, "\n// If non-zero, enable DSP filter\n");
    VAR(nAudDSPModule[0]);

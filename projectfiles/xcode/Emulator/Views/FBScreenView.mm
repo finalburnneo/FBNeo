@@ -1,9 +1,16 @@
-// Portions from FinalBurn X: Port of FinalBurn to OS X
-//   https://github.com/0xe1f/FinalBurn-X
+// Copyright (c) Akop Karapetyan
 //
-// Copyright (C) Akop Karapetyan
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   http://www.apache.org/licenses/LICENSE-2.0
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #include <OpenGL/gl.h>
 #include <time.h>
@@ -13,12 +20,18 @@
 
 #define HIDE_CURSOR_TIMEOUT_SECONDS 1.0f
 
+static int powerOf2Gte(int number);
+static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
+                                    const CVTimeStamp *now, const CVTimeStamp *outputTime,
+                                    CVOptionFlags flagsIn, CVOptionFlags *flagsOut,
+                                    void *displayLinkContext);
+
 @interface FBScreenView ()
 
-+ (int) powerOfTwoClosestTo:(int) number;
 - (void) resetProjection;
 - (void) handleMouseChange:(NSPoint) position;
 - (void) resetTrackingArea;
+- (void) renderTexture:(BOOL) resetContext;
 
 @end
 
@@ -38,19 +51,28 @@
     NSPoint _lastCursorPosition;
     NSTrackingArea *_trackingArea;
     NSRect viewBounds; // Access from non-UI thread
+    NSSize viewSize; // Access from non-UI thread
     GLint textureFormat;
+    CVDisplayLinkRef displayLink;
+    BOOL useDisplayLink;
 }
 
 #pragma mark - Initialize, Dealloc
 
 - (void) dealloc
 {
+    if (useDisplayLink) {
+        CVDisplayLinkStop(displayLink);
+        CVDisplayLinkRelease(displayLink);
+    }
+
     glDeleteTextures(1, &screenTextureId);
     free(texture);
 }
 
 - (void) awakeFromNib
 {
+    useDisplayLink = [NSUserDefaults.standardUserDefaults boolForKey:@"useDisplayLink"];
     _lastMouseAction = CFAbsoluteTimeGetCurrent();
     _lastCursorPosition = NSMakePoint(-1, -1);
     textureFormat = GL_UNSIGNED_SHORT_5_6_5;
@@ -66,7 +88,8 @@
 
     NSLog(@"FBScreenView/prepareOpenGL");
 
-    CGLLockContext(self.openGLContext.CGLContextObj);
+    CGLContextObj cglContext = self.openGLContext.CGLContextObj;
+    CGLLockContext(cglContext);
 
     // Synchronize buffer swaps with vertical refresh rate
     GLint swapInt = 1;
@@ -75,40 +98,55 @@
 
     glClearColor(0, 0, 0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(0, 0, 0);
 
     glGenTextures(1, &screenTextureId);
 
-    CGLUnlockContext(self.openGLContext.CGLContextObj);
+    CGLUnlockContext(cglContext);
+
+    if (useDisplayLink) {
+        NSLog(@"Initializing display link...");
+
+        // Initialize display link
+        CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
+        CVDisplayLinkSetOutputCallback(displayLink, &displayLinkCallback,
+                                       (__bridge void *) self);
+        CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext,
+                                                          self.pixelFormat.CGLPixelFormatObj);
+        CVDisplayLinkStart(displayLink);
+    }
 }
 
-- (void) drawRect:(NSRect)dirtyRect
+- (void) drawRect:(NSRect) dirtyRect
 {
-    GLfloat coordX = (GLfloat)imageWidth / textureWidth;
-    GLfloat coordY = (GLfloat)imageHeight / textureHeight;
-
     [self.openGLContext makeCurrentContext];
     CGLLockContext(self.openGLContext.CGLContextObj);
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, screenTextureId);
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    if (textureWidth > 0 && textureHeight > 0) {
+        GLfloat coordX = (GLfloat) imageWidth / textureWidth;
+        GLfloat coordY = (GLfloat) imageHeight / textureHeight;
 
-    NSSize size = [self bounds].size;
-    CGFloat offset = 0;
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, screenTextureId);
+        glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0, 0.0);
-    glVertex3f(-offset, 0.0, 0.0);
-    glTexCoord2f(coordX, 0.0);
-    glVertex3f(size.width + offset, 0.0, 0.0);
-    glTexCoord2f(coordX, coordY);
-    glVertex3f(size.width + offset, size.height, 0.0);
-    glTexCoord2f(0.0, coordY);
-    glVertex3f(-offset, size.height, 0.0);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
+        NSSize size = self.bounds.size;
+        CGFloat offset = 0;
+
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.0, 0.0);
+        glVertex3f(-offset, 0.0, 0.0);
+        glTexCoord2f(coordX, 0.0);
+        glVertex3f(size.width + offset, 0.0, 0.0);
+        glTexCoord2f(coordX, coordY);
+        glVertex3f(size.width + offset, size.height, 0.0);
+        glTexCoord2f(0.0, coordY);
+        glVertex3f(-offset, size.height, 0.0);
+        glEnd();
+        glDisable(GL_TEXTURE_2D);
+    }
 
     [self.openGLContext flushBuffer];
 
@@ -120,6 +158,7 @@
     [super reshape];
 
     viewBounds = self.bounds;
+    viewSize = [self convertRectToBacking:viewBounds].size;
 
     [self.openGLContext makeCurrentContext];
     CGLLockContext(self.openGLContext.CGLContextObj);
@@ -133,13 +172,13 @@
     CGLUnlockContext(self.openGLContext.CGLContextObj);
 }
 
-#pragma mark - FBVideoRenderDelegate
+#pragma mark - FBVideoDelegate
 
-- (void)initTextureOfWidth:(int) width
-                    height:(int) height
-                 isRotated:(BOOL) rotated
-                 isFlipped:(BOOL) flipped
-             bytesPerPixel:(int) bytesPerPixel
+- (void) initTextureOfWidth:(int) width
+                     height:(int) height
+                  isRotated:(BOOL) rotated
+                  isFlipped:(BOOL) flipped
+              bytesPerPixel:(int) bytesPerPixel
 {
     NSLog(@"FBScreenView/initTexture");
 
@@ -151,13 +190,14 @@
     imageHeight = height;
     isRotated = rotated;
     isFlipped = flipped;
-    textureWidth = [FBScreenView powerOfTwoClosestTo:imageWidth];
-    textureHeight = [FBScreenView powerOfTwoClosestTo:imageHeight];
+    textureWidth = powerOf2Gte(imageWidth);
+    textureHeight = powerOf2Gte(imageHeight);
     textureBytesPerPixel = bytesPerPixel;
     screenSize = NSMakeSize((CGFloat)width, (CGFloat)height);
 
     int texSize = textureWidth * textureHeight * bytesPerPixel;
     texture = (unsigned char *) malloc(texSize);
+    memset(texture, 0, texSize);
 
     glEnable(GL_TEXTURE_2D);
 
@@ -184,24 +224,14 @@
     if (NSPointInRect(_lastCursorPosition, viewBounds)) {
         CFAbsoluteTime interval = CFAbsoluteTimeGetCurrent() - _lastMouseAction;
         if (interval > HIDE_CURSOR_TIMEOUT_SECONDS) {
-            if ([_delegate respondsToSelector:@selector(mouseDidIdle)]) {
+            if ([_delegate respondsToSelector:@selector(mouseDidIdle)])
                 [_delegate mouseDidIdle];
-            }
             _lastCursorPosition.x = -1;
         }
     }
 
     [self.openGLContext makeCurrentContext];
     CGLLockContext(self.openGLContext.CGLContextObj);
-
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    GLfloat coordX = (GLfloat)imageWidth / textureWidth;
-    GLfloat coordY = (GLfloat)imageHeight / textureHeight;
-
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, screenTextureId);
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
     unsigned char *ps = (unsigned char *) bitmap;
     unsigned char *pd = (unsigned char *) texture;
@@ -214,25 +244,8 @@
         ps += bitmapPitch;
     }
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0,
-             GL_RGB, textureFormat, texture);
-
-    NSSize size = viewBounds.size;
-    CGFloat offset = 0;
-
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0, 0.0);
-    glVertex3f(-offset, 0.0, 0.0);
-    glTexCoord2f(coordX, 0.0);
-    glVertex3f(size.width + offset, 0.0, 0.0);
-    glTexCoord2f(coordX, coordY);
-    glVertex3f(size.width + offset, size.height, 0.0);
-    glTexCoord2f(0.0, coordY);
-    glVertex3f(-offset, size.height, 0.0);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-
-    [self.openGLContext flushBuffer];
+    if (!useDisplayLink)
+        [self renderTexture:NO];
 
     CGLUnlockContext(self.openGLContext.CGLContextObj);
 }
@@ -352,7 +365,7 @@
         [_delegate mouseStateDidChange];
 }
 
-- (void)resetProjection
+- (void) resetProjection
 {
     NSSize size = [self bounds].size;
 
@@ -370,11 +383,62 @@
     glMatrixMode(GL_MODELVIEW);
 }
 
-+ (int)powerOfTwoClosestTo:(int)number
+- (void) renderTexture:(BOOL) resetContext
+{
+    if (resetContext) {
+        [self.openGLContext makeCurrentContext];
+        CGLLockContext(self.openGLContext.CGLContextObj);
+    }
+
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    GLfloat coordX = (GLfloat)imageWidth / textureWidth;
+    GLfloat coordY = (GLfloat)imageHeight / textureHeight;
+
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, screenTextureId);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0,
+             GL_RGB, textureFormat, texture);
+
+    NSSize size = viewSize;
+    CGFloat offset = 0;
+
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(-offset, 0.0, 0.0);
+    glTexCoord2f(coordX, 0.0);
+    glVertex3f(size.width + offset, 0.0, 0.0);
+    glTexCoord2f(coordX, coordY);
+    glVertex3f(size.width + offset, size.height, 0.0);
+    glTexCoord2f(0.0, coordY);
+    glVertex3f(-offset, size.height, 0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+    [self.openGLContext flushBuffer];
+
+    if (resetContext)
+        CGLUnlockContext(self.openGLContext.CGLContextObj);
+}
+
+@end
+
+#pragma mark - Statics/C/C++
+
+static int powerOf2Gte(int number)
 {
     int rv = 1;
     while (rv < number) rv *= 2;
     return rv;
 }
 
-@end
+static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
+                                    const CVTimeStamp *now, const CVTimeStamp *outputTime,
+                                    CVOptionFlags flagsIn, CVOptionFlags *flagsOut,
+                                    void *displayLinkContext)
+{
+    [(__bridge FBScreenView *) displayLinkContext renderTexture:YES];
+    return kCVReturnSuccess;
+}

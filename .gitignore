@@ -3,6 +3,7 @@
 ################################################################################
 
 /.vs
+.vscode
 /projectfiles/visualstudio-2019/enc_temp_folder
 .DS_Store
 obj/

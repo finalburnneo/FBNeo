@@ -6,15 +6,22 @@ const INT32 nConfigMinVersion = 0x020921;
 
 bool bSaveInputs = true;
 
+#ifdef BUILD_SDL2
+static char* szSDLconfigPath = NULL;
+#endif
+
 static TCHAR* GameConfigName()
 {
 	static TCHAR szName[MAX_PATH];
 
 	#ifdef BUILD_SDL2
+	 	if (szSDLconfigPath == NULL) {
+			szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
+		}
 		if (NeoCDInfo_ID()) {
-		   snprintf(szName, MAX_PATH, "%sngcd_%s.ini", AppConfigPath("config"), BurnDrvGetText(DRV_NAME));
+		  snprintf(szName, MAX_PATH, "%sngcd_%s.ini", szSDLconfigPath, BurnDrvGetText(DRV_NAME));
 		} else {
-			snprintf(szName, MAX_PATH, "%s%s.ini", AppConfigPath("config"), BurnDrvGetText(DRV_NAME));
+			snprintf(szName, MAX_PATH, "%s%s.ini", szSDLconfigPath, BurnDrvGetText(DRV_NAME));
 		}
 	#else
 		// Return the path of the config file for this game

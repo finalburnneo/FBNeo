@@ -45,7 +45,7 @@ static double color_z      = 0.01;
 static SDL_Rect title_texture_rect;
 static SDL_Rect dest_title_texture_rect;
 
-SDL_Texture* LoadTitleImage(SDL_Renderer* renderer)
+SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 {
 		char titlePath[MAX_PATH] = { 0 };
 		int w, h;
@@ -58,7 +58,7 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer)
 		snprintf(titlePath, MAX_PATH, "\\support\\titles\\$s.png", BurnDrvGetTextA(0));
 	#endif
 
-		SDL_Texture* loadedTexture = IMG_LoadTexture(renderer, titlePath);
+		loadedTexture = IMG_LoadTexture(renderer, titlePath);
 		SDL_QueryTexture(loadedTexture, NULL, NULL, &w, &h);
 
 		title_texture_rect.x = 0; //the x coordinate
@@ -138,7 +138,6 @@ void gui_init()
 				SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
 				return;
 		}
-
 
 		Uint32 screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
 
@@ -352,7 +351,7 @@ int gui_process()
 				if (previousSelected != gametoplay)
 				{
 					SDL_DestroyTexture(titleTexture);
-					titleTexture = LoadTitleImage(sdlRenderer);
+				  titleTexture =LoadTitleImage(sdlRenderer, titleTexture);
 				}
 
 				previousSelected = gametoplay;

@@ -31,6 +31,12 @@ int  usemenu = 0, usejoy = 0, vsync = 0, dat = 0;
 TCHAR szAppBurnVer[16];
 char videofiltering[3];
 
+#ifdef BUILD_SDL2
+static char* szSDLeepromPath = NULL;
+static char* szSDLhiscorePath = NULL;
+#endif
+
+
 int parseSwitches(int argc, char *argv[])
 {
    for (int i = 1; i < argc; i++)
@@ -150,8 +156,14 @@ int main(int argc, char *argv[])
    bCheatsAllowed   = false;
    nAudDSPModule[0] = 1;
    EnableHiscores   = 1;
-   _stprintf(szAppHiscorePath, _T("%s"), AppConfigPath("hiscore"));
-   _stprintf(szAppEEPROMPath, _T("%s"), AppConfigPath("eeprom"));
+
+   #ifdef BUILD_SDL2
+   szSDLhiscorePath = SDL_GetPrefPath("fbneo", "hiscore");
+   szSDLeepromPath = SDL_GetPrefPath("fbneo", "eeprom");
+
+   _stprintf(szAppHiscorePath, _T("%s"), szSDLhiscorePath);
+   _stprintf(szAppEEPROMPath, _T("%s"), szSDLeepromPath);
+   #endif
 
    ConfigAppLoad();
    ComputeGammaLUT();
@@ -164,7 +176,7 @@ int main(int argc, char *argv[])
    #endif
 
    #ifdef BUILD_SDL2
-   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
+   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO) < 0)
    {
       printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
    }

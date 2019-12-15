@@ -3,22 +3,24 @@
 
 int nIniVersion = 0;
 
-char *AppConfigPath(char* type)
-{
 #ifdef BUILD_SDL2
-   return SDL_GetPrefPath("fbneo", type);
+static char* szSDLconfigPath = NULL;
 #endif
-   char temp[MAX_PATH] { 0 };
-   snprintf(temp, MAX_PATH, "%s/", type);
-   return type;
-}
-
 
 static void CreateConfigName(char *szConfig)
 {
 #ifndef _WIN32
    char cfgdir[MAX_PATH] = { 0 };
-   snprintf(cfgdir, MAX_PATH, "%sfbneo.ini", AppConfigPath("config"));
+#ifdef BUILD_SDL2
+   if(szSDLconfigPath==NULL)
+   {
+     szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
+   }
+
+   snprintf(cfgdir, MAX_PATH, "%sfbneo.ini", szSDLconfigPath);
+#else
+   snprintf(cfgdir, MAX_PATH, "fbneo.ini");
+#endif
    memcpy(szConfig, cfgdir, sizeof(cfgdir));
 #else
    memcpy(szConfig, "fbneo.ini", 10);

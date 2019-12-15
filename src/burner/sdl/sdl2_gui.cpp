@@ -327,9 +327,9 @@ int gui_process()
 						startGame = -gamesperscreen_halfway+1;
 				}
 
-				if (startGame > nBurnDrvCount+gamesperscreen_halfway)
+				if (startGame > (int)nBurnDrvCount - (int)gamesperscreen_halfway-1)
 				{
-						startGame = nBurnDrvCount+gamesperscreen_halfway;
+						startGame = nBurnDrvCount - gamesperscreen_halfway-1;
 				}
 				gui_render();
 		}

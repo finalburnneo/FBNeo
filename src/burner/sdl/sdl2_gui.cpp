@@ -281,6 +281,17 @@ int gui_process()
 								SDL_DestroyTexture(titleTexture);
 								titleTexture = LoadTitleImage(sdlRenderer);
 						}
+						if(e.type == SDL_MOUSEWHEEL)
+				    {
+				        if(e.wheel.y > 0) // scroll up
+				        {
+										startGame--;
+				        }
+				        else if(e.wheel.y < 0) // scroll down
+				        {
+										startGame++;
+				        }
+
 						if (e.type == SDL_KEYDOWN)
 						{
 								switch (e.key.keysym.sym)

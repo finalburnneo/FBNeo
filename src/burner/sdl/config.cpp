@@ -3,6 +3,17 @@
 
 int nIniVersion = 0;
 
+char *AppConfigPath(char* type)
+{
+#ifdef BUILD_SDL2
+   return SDL_GetPrefPath("fbneo", type);
+#endif
+   char temp[MAX_PATH] { 0 };
+   snprintf(temp, MAX_PATH, "%s/", type);
+   return type;
+}
+
+
 static void CreateConfigName(char *szConfig)
 {
 #ifndef _WIN32

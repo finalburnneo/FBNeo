@@ -47,6 +47,9 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer)
 {
 		char titlePath[MAX_PATH] = { 0 };
 		int w, h;
+
+		int currentSelected = nBurnDrvActive;
+		nBurnDrvActive = gametoplay;
 	#ifndef _WIN32
 		snprintf(titlePath, MAX_PATH, "%s%s.png", "/usr/local/share/titles/", BurnDrvGetTextA(0));
 	#else
@@ -65,7 +68,7 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer)
 		dest_title_texture_rect.y = (nVidGuiHeight / 2) - (h/2); // the y coordinate
 		dest_title_texture_rect.w = w; //the width of the texture
 		dest_title_texture_rect.h = h; //the height of the texture
-
+		nBurnDrvActive = currentSelected;
 		return loadedTexture;
 }
 

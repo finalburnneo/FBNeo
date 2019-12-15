@@ -52,9 +52,8 @@ char *TCHARToANSI(const TCHAR *pszInString, char *pszOutString, int nOutSize);
 
 bool AppProcessKeyboardInput();
 
-char *AppConfigPath(char *type);
-
 //config.cpp
+char *AppConfigPath(char *type);
 int ConfigAppLoad();
 int ConfigAppSave();
 

@@ -30,15 +30,6 @@ int  usemenu = 0, usejoy = 0, vsync = 0, dat = 0;
 
 TCHAR szAppBurnVer[16];
 
-
-char *AppConfigPath(char* type)
-{
-#ifdef BUILD_SDL2
-   return SDL_GetPrefPath("fbneo", type);
-#endif
-   return "";
-}
-
 int parseSwitches(int argc, char *argv[])
 {
    for (int i = 1; i < argc; i++)

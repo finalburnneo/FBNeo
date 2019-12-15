@@ -52,11 +52,11 @@ int ReadNVRAM()
 {
 #ifndef BUILD_MACOS
    char temp[MAX_PATH] = { 0 };
+   #ifdef BUILD_SDL2
    if (szSDLnvramPath == NULL)
    {
      szSDLnvramPath = SDL_GetPrefPath("fbneo", "nvram");
    }
-   #ifdef BUILD_SDL2
    snprintf(temp, MAX_PATH, "%s%s.nvr",szSDLnvramPath, BurnDrvGetTextA(0));
    #else
    snprintf(temp, MAX_PATH, "/nvram/%s.nvr",BurnDrvGetTextA(0));

@@ -2,6 +2,8 @@
 
 #include <SDL_image.h>
 
+extern char videofiltering[3];
+
 static SDL_Window *  sdlWindow   = NULL;
 static SDL_Renderer *sdlRenderer = NULL;
 
@@ -183,7 +185,7 @@ void gui_init()
 				return;
 		}
 
-		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
+		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, videofiltering);
 		SDL_RenderSetLogicalSize(sdlRenderer, nVidGuiWidth, nVidGuiHeight);
 
 		inrenderer(sdlRenderer);

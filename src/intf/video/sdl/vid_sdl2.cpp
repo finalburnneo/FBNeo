@@ -5,6 +5,7 @@
 
 #include <SDL.h>
 extern int vsync;
+extern char videofiltering[3];
 
 static unsigned char *VidMem      = NULL;
 static SDL_Window *   sdlWindow   = NULL;
@@ -112,7 +113,14 @@ static int Init()
    }
 
    nVidImageDepth = bDrvOkay ? 16 : 32;
-   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
+
+   if (BurnDrvGetFlags() & BDF_16BIT_ONLY)
+   {
+      nVidImageDepth = 16;
+      printf("Forcing 16bit color\n");
+   }
+
+   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, videofiltering);
   // SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE);   // Probably best not turn this on
 
    if (nRotateGame)

@@ -29,6 +29,7 @@ bool bAlwaysProcessKeyboardInput = 0;
 int  usemenu = 0, usejoy = 0, vsync = 0, dat = 0;
 
 TCHAR szAppBurnVer[16];
+char videofiltering[3];
 
 int parseSwitches(int argc, char *argv[])
 {
@@ -62,6 +63,21 @@ int parseSwitches(int argc, char *argv[])
       if (strcmp(argv[i] + 1, "fullscreen") == 0)
       {
          bAppFullscreen = 1;
+      }
+
+      if (strcmp(argv[i] + 1, "nearest") == 0)
+      {
+         snprintf(videofiltering, 3, "0");
+      }
+
+      if (strcmp(argv[i] + 1, "linear") == 0)
+      {
+        snprintf(videofiltering, 3, "1");
+      }
+
+      if (strcmp(argv[i] + 1, "best") == 0)
+      {
+        snprintf(videofiltering, 3, "2");
       }
 
 
@@ -104,6 +120,9 @@ int main(int argc, char *argv[])
       _stprintf(szAppBurnVer, _T("%x.%x.%x"), nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF);
    }
 
+   // set default videofiltering
+   snprintf(videofiltering, 3, "0");
+
    printf("FBNeo v%s\n", szAppBurnVer);
    for (int i = 1; i < argc; i++)
    {
@@ -117,7 +136,7 @@ int main(int argc, char *argv[])
 
    if (romname == NULL)
    {
-      printf("Usage: %s [-joy] [-menu] [-vsync] [-dat] [-fullscreen] <romname>\n", argv[0]);
+      printf("Usage: %s [-joy] [-menu] [-vsync] [-fullscreen] [-dat] [-nearest] [-linear] [-best] <romname>\n", argv[0]);
       printf("Note the -menu switch does not require a romname\n");
       printf("e.g.: %s mslug\n", argv[0]);
       printf("e.g.: %s -menu -joy\n", argv[0]);

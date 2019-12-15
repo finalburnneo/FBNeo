@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
    _stprintf(szAppEEPROMPath, _T("%s"), AppConfigPath("eeprom"));
 
    ConfigAppLoad();
-
+   ComputeGammaLUT();
    BurnLibInit();
    #ifdef BUILD_SDL
    SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);

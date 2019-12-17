@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12296 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12297 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7591,6 +7591,7 @@ This list contains all games supported by FinalBurn Neo.
 | promutrvb	|  	| Progressive Music Trivia (Question set 3)		| promutrv	| 1985	| Enerdyne Techn| Miscellaneous	| 					|
 | promutrvc	|  	| Progressive Music Trivia (Question set 4)		| promutrv	| 1985	| Enerdyne Techn| Miscellaneous	| 					|
 | progress	|  	| Progress						| 		| 1984	| Chuo Co. Ltd	| Miscellaneous	| 					|
+| neon		|  	| Project Neon - Caravan Demo (0.4.19)			| 		| 2019	| FULLSET	| Neo Geo MVS	| 					|
 | sms_sms3samp	|  	| Promocao Especial M. System III Compact (Bra, Sample)	| 		| 19??	| Tec Toy	| Sega Master Sy| 					|
 | md_psyoblade	|  	| Psy-O-Blade (Hack, English)				| md_psyoblad	| 2015	| Sigma		| Sega Megadrive| 					|
 | md_psyoblad	|  	| Psy-O-Blade (Jpn)					| 		| 1990	| Sigma		| Sega Megadrive| 					|
@@ -12094,7 +12095,7 @@ This list contains all games supported by FinalBurn Neo.
 | xsleena	|  	| Xain'd Sleena (World)					| 		| 1986	| Technos Japan | Miscellaneous	| 					|
 | msx_xanadu	|  	| Xanadu - Dragon Slayer II (Jpn)			| 		| 1987	| Nihon Falcom	| MSX		| 					|
 | md_xdr	|  	| XDR - X Dazedly Ray (Jpn)				| 		| 1990	| Unipac	| Sega Megadrive| 					|
-| md_xenocrises	|  	| Xenocrises (USA)					| 		| 2019	| Bitmap Bureau	| Sega Megadrive| 					|
+| md_xenocrisis	|  	| Xenocrisis (USA)					| 		| 2019	| Bitmap Bureau	| Sega Megadrive| 					|
 | spec_xenon	|  	| Xenon (48K)						| 		| 1988	| Melbourne Hous| ZX Spectrum	| 					|
 | msx_xenon	|  	| Xenon (Spa)						| 		| 1988	| Dro Soft	| MSX		| 					|
 | md_xenon2	|  	| Xenon 2 - Megablast (Euro)				| 		| 1992	| Virgin Games	| Sega Megadrive| 					|

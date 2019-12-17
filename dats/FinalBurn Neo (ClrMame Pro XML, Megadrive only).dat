@@ -16386,8 +16386,8 @@
 		<rom name="xdr - x dazedly ray (jpn).bin" size="524288" crc="ab22d002"/>
 		<driver status="good"/>
 	</game>
-	<game name="xenocrises">
-		<description>Xenocrises (USA)</description>
+	<game name="xenocrisis">
+		<description>Xenocrisis (USA)</description>
 		<year>2019</year>
 		<manufacturer>Bitmap Bureau</manufacturer>
 		<rom name="Xenocrises.bin" size="4194304" crc="ac5f4cca"/>

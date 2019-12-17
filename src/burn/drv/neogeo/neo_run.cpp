@@ -608,6 +608,7 @@ static INT32 LoadRoms()
 			nSpriteSize[nNeoActiveSlot] *= pInfo->nSpriteNum - 2;
 
 			if (!strcmp("kof97oro", BurnDrvGetTextA(DRV_NAME))) nSpriteSize[nNeoActiveSlot] = 0x2400000;
+			if (!strcmp("neon", BurnDrvGetTextA(DRV_NAME))) nSpriteSize[nNeoActiveSlot] = 0x80000;
 
 			// The final 2 ROMs may have a different size
 			BurnDrvGetRomInfo(&ri, pInfo->nSpriteOffset + pInfo->nSpriteNum - 2);
@@ -1471,6 +1472,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(bNeoEnableGraphics);
 		SCAN_VAR(bNeoEnableSprites);
 		SCAN_VAR(bNeoEnableText);
+		SCAN_VAR(bNeoDarkenPalette);
 
 		SCAN_VAR(nIRQAcknowledge);
 
@@ -2106,13 +2108,17 @@ static void WriteIO1(INT32 nOffset, UINT8 byteValue)
 	return;
 }
 
-static void WriteIO2(INT32 nOffset, UINT8 /*byteValue*/)
+static void WriteIO2(INT32 nOffset, UINT8 byteValue)
 {
 	switch (nOffset) {
-		case 0x01:											// Enable display
+		case 0x01:
+		case 0x09:
+		case 0x11:
+		case 0x19: // Screen Brightness
 			if (nNeoSystemType & NEO_SYS_CART) {
-				bNeoEnableGraphics = true;
-//				bprintf(PRINT_NORMAL, _T("  - Display  enabled (0x%02X, at scanline %i).\n"), byteValue, SekCurrentScanline());
+				NeoRecalcPalette = 1;
+				bNeoDarkenPalette = (nOffset == 0x11) ? 1 : 0;
+				//bprintf(PRINT_NORMAL, _T("  - Darken Palette %X (0x%02X, at scanline %i).\n"), bNeoDarkenPalette, byteValue, SekCurrentScanline());
 			}
 			break;
 
@@ -2152,13 +2158,6 @@ static void WriteIO2(INT32 nOffset, UINT8 /*byteValue*/)
 		case 0x0F:											// Select palette bank 1
 //			bprintf(PRINT_NORMAL, _T("  - Palette 1 banked in (0x%02X).\n"), byteValue);
 			MapPalette(1);
-			break;
-
-		case 0x11:											// Disable display
-			if (nNeoSystemType & NEO_SYS_CART) {
-				bNeoEnableGraphics = false;
-//				bprintf(PRINT_NORMAL, _T("  - Display disabled (0x%02X, at scanline %i).\n"), byteValue, SekCurrentScanline());
-			}
 			break;
 
 		case 0x13:											// Select game vector table

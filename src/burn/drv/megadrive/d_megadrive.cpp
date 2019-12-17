@@ -43207,20 +43207,20 @@ struct BurnDriver BurnDrvmd_ultracore = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Xenocrises 2019
-static struct BurnRomInfo md_xenocrisesRomDesc[] = {
+// Xenocrisis 2019
+static struct BurnRomInfo md_xenocrisisRomDesc[] = {
 	{ "Xenocrises.bin", 0x400000, 0xac5f4cca, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_xenocrises)
-STD_ROM_FN(md_xenocrises)
+STD_ROM_PICK(md_xenocrisis)
+STD_ROM_FN(md_xenocrisis)
 
-struct BurnDriver BurnDrvmd_xenocrises = {
-	"md_xenocrises", NULL, NULL, NULL, "2019",
-	"Xenocrises (USA)\0", NULL, "Bitmap Bureau", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_xenocrisis = {
+	"md_xenocrisis", NULL, NULL, NULL, "2019",
+	"Xenocrisis (USA)\0", NULL, "Bitmap Bureau", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_xenocrisesRomInfo, md_xenocrisesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_xenocrisisRomInfo, md_xenocrisisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

@@ -17475,6 +17475,48 @@ struct BurnDriver BurnDrvbadapple = {
 };
 
 
+// Project Neon - Caravan Demo (0.4.19)
+
+static struct BurnRomInfo neonRomDesc[] = {
+	{ "dev_p1.rom",    0x002f6e5, 0x06a0946f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "fix.bin",       0x0020000, 0xf32de862, 2 | BRF_GRA },           //  1 Text data
+
+	{ "char.bin",      0x007a380, 0x8e0e0e70, 3 | BRF_GRA },           //  2 Sprite data
+
+	{ "sound.M1",      0x0010000, 0x6d24cf93, 4 | BRF_ESS | BRF_PRG }, //  3 Z80 code
+
+	{ "sound.V1",      0x0100000, 0x2823ca49, 5 | BRF_SND },           //  4 Sound data
+};
+
+STDROMPICKEXT(neon, neon, neogeo)
+STD_ROM_FN(neon)
+
+static void neonCallback()
+{
+	BurnByteswap(Neo68KROMActive, 0x80000); // byteswap 68k
+
+	BurnLoadRom(NeoSpriteROM[nNeoActiveSlot], 2, 1);
+}
+
+static INT32 neonInit()
+{
+	NeoCallbackActive->pInitialise = neonCallback;
+	
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvneon = {
+	"neon", NULL, "neogeo", NULL, "2019",
+	"Project Neon - Caravan Demo (0.4.19)\0", NULL, "FULLSET", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_DEMO | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, neonRomInfo, neonRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	neonInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 224, 304, 3, 4
+};
+
+
 // Metal Slug 5 (W)
 
 static struct BurnRomInfo mslug5wRomDesc[] = {

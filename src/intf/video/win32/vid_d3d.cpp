@@ -1319,6 +1319,14 @@ static int vidInit()
 		RECT rect;
 
 		SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
+		HMONITOR monitor = MonitorFromRect(&rect, MONITOR_DEFAULTTOPRIMARY);
+		MONITORINFO mi;
+
+		memset(&mi, 0, sizeof(mi));
+		mi.cbSize = sizeof(mi);
+		GetMonitorInfo(monitor, &mi);
+		rect = mi.rcMonitor; // needs to be set to monitor's resolution for proper aspect calculation
+
 		nVidScrnWidth = rect.right - rect.left;
 		nVidScrnHeight = rect.bottom - rect.top;
 

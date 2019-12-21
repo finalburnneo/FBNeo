@@ -3209,11 +3209,23 @@ int ScrnSize()
 {
 	int x, y, w, h, ew, eh;
 	int nScrnWidth, nScrnHeight;
+	int nWorkWidth, nWorkHeight;
 	int nBmapWidth = nVidImageWidth, nBmapHeight = nVidImageHeight;
 	int nGameAspectX = 4, nGameAspectY = 3;
 	int nMaxSize;
 
-	SystemParametersInfo(SPI_GETWORKAREA, 0, &SystemWorkArea, 0);	// Find the size of the visible WorkArea
+	// SystemWorkArea = resolution of desktop
+	// RealWorkArea = resolution of desktop - taskbar (if avail)
+	RECT RealWorkArea;
+	SystemParametersInfo(SPI_GETWORKAREA, 0, &RealWorkArea, 0);	// Find the size of the visible WorkArea
+
+	HMONITOR monitor = MonitorFromRect(&RealWorkArea, MONITOR_DEFAULTTOPRIMARY);
+	MONITORINFO mi;
+
+	memset(&mi, 0, sizeof(mi));
+	mi.cbSize = sizeof(mi);
+	GetMonitorInfo(monitor, &mi);
+	SystemWorkArea = mi.rcMonitor; // needs to be set to monitor's resolution for proper aspect calculation
 
 	if (hScrnWnd == NULL || nVidFullscreen) {
 		return 1;
@@ -3239,6 +3251,9 @@ int ScrnSize()
 	nScrnWidth = SystemWorkArea.right - SystemWorkArea.left;
 	nScrnHeight = SystemWorkArea.bottom - SystemWorkArea.top;
 
+	nWorkWidth = RealWorkArea.right - RealWorkArea.left;
+	nWorkHeight = RealWorkArea.bottom - RealWorkArea.top;
+
 	if (nVidSelect == 2 && nVidBlitterOpt[2] & 0x0100) {								// The Software effects blitter uses a fixed size
 		nMaxSize = 9;
 	} else {
@@ -3251,13 +3266,13 @@ int ScrnSize()
 			}
 		} else {
 			if (nBmapWidth < nBmapHeight) {
-				if (SystemWorkArea.bottom - SystemWorkArea.top <= 600) {
+				if (nWorkHeight <= 600) {
 					nMaxSize = 1;
 				} else {
-					if (SystemWorkArea.bottom - SystemWorkArea.top <= 960) {
+					if (nWorkHeight <= 960) {
 						nMaxSize = 2;
 					} else {
-						if (SystemWorkArea.bottom - SystemWorkArea.top <= 1280) {
+						if (nWorkHeight <= 1280) {
 							nMaxSize = 3;
 						} else {
 							nMaxSize = 4;
@@ -3265,13 +3280,13 @@ int ScrnSize()
 					}
 				}
 			} else {
-				if (SystemWorkArea.right - SystemWorkArea.left <= 640) {
+				if (nWorkWidth <= 640) {
 					nMaxSize = 1;
 				} else {
-					if (SystemWorkArea.right - SystemWorkArea.left <= 1152) {
+					if (nWorkWidth <= 1152) {
 						nMaxSize = 2;
 					} else {
-						if (SystemWorkArea.right - SystemWorkArea.left <= 1600) {
+						if (nWorkWidth <= 1600) {
 							nMaxSize = 3;
 						} else {
 							nMaxSize = 4;
@@ -3283,8 +3298,8 @@ int ScrnSize()
 	}
 
 	// Find the width and height
-	w = nScrnWidth;
-	h = nScrnHeight;
+	w = nWorkWidth;
+	h = nWorkHeight;
 
 	// Find out how much space is taken up by the borders
 	ew = GetSystemMetrics(SM_CXSIZEFRAME) << 1;

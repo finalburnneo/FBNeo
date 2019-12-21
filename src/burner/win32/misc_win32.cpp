@@ -237,19 +237,20 @@ int WndInMid(HWND hMid, HWND hBase)
 	by = (by - mh) >> 1;
 
 	if (hBase) {
-		SystemParametersInfo(SPI_GETWORKAREA, 0, &SystemWorkArea, 0);
+		RECT tmpWorkArea;
+		SystemParametersInfo(SPI_GETWORKAREA, 0, &tmpWorkArea, 0);
 
-		if (bx + mw > SystemWorkArea.right) {
-			bx = SystemWorkArea.right - mw;
+		if (bx + mw > tmpWorkArea.right) {
+			bx = tmpWorkArea.right - mw;
 		}
-		if (by + mh > SystemWorkArea.bottom) {
-			by = SystemWorkArea.bottom - mh;
+		if (by + mh > tmpWorkArea.bottom) {
+			by = tmpWorkArea.bottom - mh;
 		}
-		if (bx < SystemWorkArea.left) {
-			bx = SystemWorkArea.left;
+		if (bx < tmpWorkArea.left) {
+			bx = tmpWorkArea.left;
 		}
-		if (by < SystemWorkArea.top) {
-			by = SystemWorkArea.top;
+		if (by < tmpWorkArea.top) {
+			by = tmpWorkArea.top;
 		}
 	}
 

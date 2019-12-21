@@ -250,8 +250,8 @@ ifdef PROFILE
 	CXXFLAGS += -pg
 endif
 
-elseifdef	SYMBOL
-
+else
+ifdef	SYMBOL
 	CFLAGS   += -ggdb3
 	CXXFLAGS += -ggdb3
 	ASFLAGS  += -g

@@ -68,6 +68,10 @@ int DrvInit(int nDrvNum, bool bRestore)
 
    // Define nMaxPlayers early; GameInpInit() needs it (normally defined in DoLibInit()).
    nMaxPlayers = BurnDrvGetMaxPlayers();
+   if(nMaxPlayers > 4)
+   {
+     nMaxPlayers = 4;
+   }
    GameInpInit();                           // Init game input
 
    ConfigGameLoad(true);

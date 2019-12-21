@@ -88,8 +88,6 @@ int parseSwitches(int argc, char *argv[])
       {
          set_commandline_option_string(videofiltering, "2", 3)
       }
-
-
    }
    return 0;
 }

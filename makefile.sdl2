@@ -25,7 +25,7 @@ ifndef	SKIPDEPEND
 DEPEND = 1
 endif
 
-#SANTISIE = 1
+#SANITIZE = 1
 
 #
 #	Declare variables
@@ -240,7 +240,7 @@ ifdef BUILD_X64_EXE
 	DEF := $(DEF) -DBUILD_X64_EXE -DXBYAK_NO_OP_NAMES -DMIPS3_X64_DRC
 endif
 
-ifdef	SANTISIE
+ifdef	SANITIZE
 	CFLAGS   += -ggdb3  -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=bounds-strict
 	CXXFLAGS += -ggdb3  -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=bounds-strict
 	ASFLAGS  += -g

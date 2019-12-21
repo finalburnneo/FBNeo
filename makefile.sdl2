@@ -249,14 +249,12 @@ ifdef PROFILE
 	CFLAGS	 += -pg
 	CXXFLAGS += -pg
 endif
-
 else
 ifdef	SYMBOL
 	CFLAGS   += -ggdb3
 	CXXFLAGS += -ggdb3
 	ASFLAGS  += -g
 	DEF	 := $(DEF) -D_DEBUG
-
 ifdef PROFILE
 	CFLAGS	 += -pg
 	CXXFLAGS += -pg
@@ -264,7 +262,6 @@ else
 	CFLAGS	 += -fomit-frame-pointer
 	CXXFLAGS += -fomit-frame-pointer
 endif
-
 else
 	LDFLAGS	 += -s
 endif

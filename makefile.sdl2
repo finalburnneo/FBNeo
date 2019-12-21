@@ -25,6 +25,7 @@ ifndef	SKIPDEPEND
 DEPEND = 1
 endif
 
+#SANTISIE = 1
 
 #
 #	Declare variables
@@ -239,7 +240,17 @@ ifdef BUILD_X64_EXE
 	DEF := $(DEF) -DBUILD_X64_EXE -DXBYAK_NO_OP_NAMES -DMIPS3_X64_DRC
 endif
 
-ifdef	SYMBOL
+ifdef	SANTISIE
+	CFLAGS   += -ggdb3  -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=bounds-strict
+	CXXFLAGS += -ggdb3  -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=bounds-strict
+	ASFLAGS  += -g
+	DEF	 := $(DEF) -D_DEBUG
+ifdef PROFILE
+	CFLAGS	 += -pg
+	CXXFLAGS += -pg
+endif
+
+elseifdef	SYMBOL
 
 	CFLAGS   += -ggdb3
 	CXXFLAGS += -ggdb3

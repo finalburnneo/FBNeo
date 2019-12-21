@@ -25,6 +25,7 @@ ifndef	SKIPDEPEND
 DEPEND = 1
 endif
 
+SANITIZE = 1
 
 #
 #	Declare variables
@@ -241,10 +242,15 @@ endif
 
 ifdef	SYMBOL
 
-	CFLAGS   += -ggdb3  -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=bounds-strict
-	CXXFLAGS += -ggdb3  -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=bounds-strict
+	CFLAGS   += -ggdb3
+	CXXFLAGS += -ggdb3
 	ASFLAGS  += -g
 	DEF	 := $(DEF) -D_DEBUG
+
+ifdef SANITIZE
+  CFLAGS   += -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=bounds-strict
+  CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=bounds-strict
+endif
 
 ifdef PROFILE
 	CFLAGS	 += -pg

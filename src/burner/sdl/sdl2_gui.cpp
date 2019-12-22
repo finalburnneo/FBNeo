@@ -192,6 +192,9 @@ void gui_init()
 
 		gamesperscreen = (nVidGuiHeight - 100) / 10;
 		gamesperscreen_halfway = gamesperscreen / 2;
+
+		startGame = nBurnDrvActive - gamesperscreen_halfway;
+
 }
 
 

@@ -189,6 +189,19 @@ int main(int argc, char *argv[])
    #endif
    #endif
 
+   // Search for a game now, for use in the menu and loading a games
+   if(romname!=NULL)
+   {
+     for (i = 0; i < nBurnDrvCount; i++)
+     {
+        nBurnDrvActive = i;
+        if (strcmp(BurnDrvGetTextA(DRV_NAME), romname) == 0)
+        {
+           break;
+        }
+     }
+   }
+
    if (usemenu)
    {
       #ifdef BUILD_SDL2
@@ -221,15 +234,6 @@ int main(int argc, char *argv[])
    }
    else
    {
-      for (i = 0; i < nBurnDrvCount; i++)
-      {
-         nBurnDrvActive = i;
-         if (strcmp(BurnDrvGetTextA(DRV_NAME), romname) == 0)
-         {
-            break;
-         }
-      }
-
       if (i == nBurnDrvCount)
       {
          printf("%s is not supported by FinalBurn Neo.\n", romname);

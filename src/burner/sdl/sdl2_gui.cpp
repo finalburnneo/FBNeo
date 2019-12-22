@@ -32,10 +32,11 @@ static float star_zv[NUMSTARS];
 static int centerx = 0;
 static int centery = 0;
 
-#define fbn_color       0xfe8a71
-#define select_color    0xffffff
-#define normal_color    0x1eaab7
-#define info_color      0x3a3e3d
+#define fbn_color           0xfe8a71
+#define select_color        0xffffff
+#define normal_color        0x1eaab7
+#define normal_color_parent 0xaebac7
+#define info_color          0x3a3e3d
 
 static int color_result = 0;
 static double color_x      = 0.01;
@@ -258,7 +259,14 @@ void gui_render()
 						}
 						else
 						{
-								incolor(normal_color, /* unused */ 0);
+								if (BurnDrvGetTextA(DRV_PARENT)==NULL)
+								{
+									incolor(normal_color_parent, /* unused */ 0);
+								}
+								else
+								{
+									incolor(normal_color, /* unused */ 0);
+								}
 								inprint(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
 						}
 				}

@@ -180,13 +180,15 @@ int main(int argc, char *argv[])
    #endif
 
    #ifdef BUILD_SDL2
-   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO) < 0)
-   {
-      printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-   }
    #ifdef _WIN32
    SDL_setenv("SDL_AUDIODRIVER", "directsound", true);        // fix audio for windows
    #endif
+   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO) < 0)
+   {
+      printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+      SDL_Quit();
+   }
+
    #endif
 
    if (usemenu)

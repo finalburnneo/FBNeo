@@ -8,12 +8,12 @@ unexport
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
-DARWIN=
+DARWIN=1
 endif
 
 
 ifeq ($(OS),Windows_NT)
-	WINDOWS=1
+WINDOWS=1
 endif
 
 #

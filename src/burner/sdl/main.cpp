@@ -26,7 +26,8 @@ int  nAppVirtualFps = 6000;         // App fps * 100
 bool bRunPause      = 0;
 bool bAppFullscreen = 0;
 bool bAlwaysProcessKeyboardInput = 0;
-int  usemenu = 0, usejoy = 0, vsync = 0, dat = 0;
+int  usemenu = 0, usejoy = 0, vsync = 1, dat = 0;
+bool saveconfig = 1;
 
 TCHAR szAppBurnVer[16];
 char videofiltering[3];
@@ -36,6 +37,8 @@ static char* szSDLeepromPath = NULL;
 static char* szSDLhiscorePath = NULL;
 #endif
 
+#define set_commandline_option(i,v) i = v; saveconfig = 0;
+#define set_commandline_option_string(i, v, length) snprintf(i, length, v); saveconfig = 0;
 
 int parseSwitches(int argc, char *argv[])
 {
@@ -48,45 +51,43 @@ int parseSwitches(int argc, char *argv[])
 
       if (strcmp(argv[i] + 1, "joy") == 0)
       {
-         usejoy = 1;
+         set_commandline_option(usejoy, 1)
       }
 
       if (strcmp(argv[i] + 1, "menu") == 0)
       {
-         usemenu = 1;
+         set_commandline_option(usemenu, 1)
       }
 
-      if (strcmp(argv[i] + 1, "vsync") == 0)
+      if (strcmp(argv[i] + 1, "novsync") == 0)
       {
-         vsync = 1; // might need to change this to bit flags if there is more than one gfx option
+        set_commandline_option(vsync, 0) // might need to change this to bit flags if there is more than one gfx option
       }
 
       if (strcmp(argv[i] + 1, "dat") == 0)
       {
-         dat = 1;
+        set_commandline_option(dat, 1)
       }
 
       if (strcmp(argv[i] + 1, "fullscreen") == 0)
       {
-         bAppFullscreen = 1;
+         set_commandline_option(bAppFullscreen, 1)
       }
 
       if (strcmp(argv[i] + 1, "nearest") == 0)
       {
-         snprintf(videofiltering, 3, "0");
+         set_commandline_option_string(videofiltering, "0", 3)
       }
 
       if (strcmp(argv[i] + 1, "linear") == 0)
       {
-        snprintf(videofiltering, 3, "1");
+         set_commandline_option_string(videofiltering, "1", 3)
       }
 
       if (strcmp(argv[i] + 1, "best") == 0)
       {
-        snprintf(videofiltering, 3, "2");
+         set_commandline_option_string(videofiltering, "2", 3)
       }
-
-
    }
    return 0;
 }
@@ -104,7 +105,10 @@ void DoGame(int gameToRun)
       printf("There was an error loading your selected game.\n");
    }
 
-   ConfigAppSave();
+   if (saveconfig)
+   {
+      ConfigAppSave();
+   }
    DrvExit();
    MediaExit();
 }
@@ -142,7 +146,7 @@ int main(int argc, char *argv[])
 
    if (romname == NULL)
    {
-      printf("Usage: %s [-joy] [-menu] [-vsync] [-fullscreen] [-dat] [-nearest] [-linear] [-best] <romname>\n", argv[0]);
+      printf("Usage: %s [-joy] [-menu] [-novsync] [-fullscreen] [-dat] [-nearest] [-linear] [-best] <romname>\n", argv[0]);
       printf("Note the -menu switch does not require a romname\n");
       printf("e.g.: %s mslug\n", argv[0]);
       printf("e.g.: %s -menu -joy\n", argv[0]);

@@ -117,8 +117,8 @@ INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite);
 extern INT32 nAutoFireRate;
 
 // Player Default Controls
-extern INT32 nPlayerDefaultControls[4];
-extern TCHAR szPlayerDefaultIni[4][MAX_PATH];
+extern INT32 nPlayerDefaultControls[5];
+extern TCHAR szPlayerDefaultIni[5][MAX_PATH];
 
 // mappable System Macros for the Input Dialogue
 extern UINT8 macroSystemPause;

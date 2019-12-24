@@ -15,8 +15,10 @@ void v60SetIRQLine(INT32 irqline, INT32 state);
 void v60SetIRQCallback(int (*callback)(int irqline));
 void v60SetWriteByteHandler(void (*write)(UINT32,UINT8));
 void v60SetWriteWordHandler(void (*write)(UINT32,UINT16));
+void v60SetWriteLongHandler(void (*write)(UINT32,UINT32));
 void v60SetReadByteHandler(UINT8  (*read)(UINT32));
 void v60SetReadWordHandler(UINT16 (*read)(UINT32));
+void v60SetReadLongHandler(UINT32 (*read)(UINT32));
 void v60MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags);
 
 INT32 v60TotalCycles();

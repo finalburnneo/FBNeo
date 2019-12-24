@@ -71,6 +71,11 @@ void v60SetWriteWordHandler(void (*write)(UINT32,UINT16))
 	v60_write16 = write;
 }
 
+void v60SetWriteLongHandler(void (*write)(UINT32,UINT32))
+{
+	v60_write32 = write;
+}
+
 void v60SetReadByteHandler(UINT8  (*read)(UINT32))
 {
 	v60_read8 = read;
@@ -79,6 +84,11 @@ void v60SetReadByteHandler(UINT8  (*read)(UINT32))
 void v60SetReadWordHandler(UINT16 (*read)(UINT32))
 {
 	v60_read16 = read;
+}
+
+void v60SetReadLongHandler(UINT32 (*read)(UINT32))
+{
+	v60_read32 = read;
 }
 
 

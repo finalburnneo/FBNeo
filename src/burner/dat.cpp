@@ -272,7 +272,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		if (BurnDrvGetTextA(DRV_SAMPLENAME)) {
 			strcpy(ssName, BurnDrvGetTextA(DRV_SAMPLENAME));
 		}
-
+#if !defined(BUILD_SDL2)
 		remove_driver_leader(HARDWARE_SEGA_MEGADRIVE, 3, 1)
 		remove_driver_leader(HARDWARE_PCENGINE_TG16, 3, 1)
 		remove_driver_leader(HARDWARE_COLECO, 3, 1)
@@ -283,7 +283,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		remove_driver_leader(HARDWARE_SEGA_GAME_GEAR, 3, 1)
 		remove_driver_leader(HARDWARE_MSX, 4, 1)
 		remove_driver_leader(HARDWARE_SPECTRUM, 5, 1)
-
+#endif
 		// Report problems
 		if (nParentSelect==-1U)
 			fprintf(fDat, "# Missing parent %s. It needs to be added to " APP_TITLE "!\n\n", spName);

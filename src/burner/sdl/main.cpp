@@ -231,8 +231,49 @@ int main(int argc, char *argv[])
    }
    else if (dat)
    {
-      printf("Creating fbneo.dat\n");
-      create_datfile(_T("fbneo.dat"), -1);
+      printf("Creating fbneo dats in %s\n",SDL_GetPrefPath("fbneo", "dats"));
+
+      char filename[1024] = { 0 };
+
+      sprintf(filename,"%sFBNeo_-_ALL_SYSTEMS.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, -1);
+
+      sprintf(filename,"%sFBNeo_-_Arcade.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_ARCADE_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_MegaDrive.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_MEGADRIVE_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_PC_ENGINE.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_PCENGINE_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_TurboGrafx-16.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_TG16_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_PC_Engine_SuperGrafx.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_SGX_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_Sega_SG-1000.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_SG1000_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_ColecoVision.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_COLECO_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_Sega_Master_System.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_MASTERSYSTEM_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_Sega_Game_Gear.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_GAMEGEAR_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_MSX.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_MSX_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_Sinclair_ZX_Spectrum.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_SPECTRUM_ONLY);
+
+      sprintf(filename,"%sFBNeo_-_Neogeo.dat",SDL_GetPrefPath("fbneo", "dats"));
+      create_datfile(filename, DAT_NEOGEO_ONLY);
+
    }
    else
    {

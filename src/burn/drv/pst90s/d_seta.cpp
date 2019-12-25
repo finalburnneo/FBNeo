@@ -5881,11 +5881,7 @@ static void zombraid68kInit()
 	SekSetWriteByteHandler(2,		zombraid_gun_write_byte);
 	SekClose();
 
-	UINT8 *tmp = BurnMalloc(0x400000);
-	memcpy(tmp, DrvSndROM, 0x400000);
-	memcpy(DrvSndROM + 0x000000, tmp + 0x00000, 0x80000);
-	memcpy(DrvSndROM + 0x100000, tmp + 0x80000, 0x380000);
-	BurnFree(tmp);
+	memmove (DrvSndROM + 0x100000, DrvSndROM + 0x080000, 0x380000);
 }
 
 static void BlandiaGfxRearrange()

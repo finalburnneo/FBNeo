@@ -366,10 +366,10 @@ _7z_error _7z_file_open(const char *filename, _7z_file **_7z)
 	}
 
 	FileInStream_CreateVTable(&new_7z->archiveStream);
-	LookToRead2_CreateVTable(&new_7z->lookStream, False);
+	LookToRead_CreateVTable(&new_7z->lookStream, False);
 
 	new_7z->lookStream.realStream = &new_7z->archiveStream.s;
-	LookToRead2_Init(&new_7z->lookStream);
+	LookToRead_Init(&new_7z->lookStream);
 
 	CrcGenerateTable();
 

@@ -616,8 +616,8 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 				nRightSample += (INT32)(dat[(position + 1) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
 			}
 
-			dst[0] = BURN_ENDIAN_SWAP_INT16(BURN_SND_CLIP(nLeftSample + dst[0]));
-			dst[1] = BURN_ENDIAN_SWAP_INT16(BURN_SND_CLIP(nRightSample + dst[1]));
+			dst[0] = BURN_SND_CLIP(nLeftSample + dst[0]);
+			dst[1] = BURN_SND_CLIP(nRightSample + dst[1]);
 		}
 
 		sample_ptr->position = pos; // store the updated position 

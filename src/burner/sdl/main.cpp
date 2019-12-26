@@ -231,12 +231,10 @@ int main(int argc, char *argv[])
    }
    else if (dat)
    {
+#if defined(BUILD_SDL2)
       printf("Creating fbneo dats in %s\n",SDL_GetPrefPath("fbneo", "dats"));
 
       char filename[1024] = { 0 };
-
-      sprintf(filename,"%sFBNeo_-_ALL_SYSTEMS.dat",SDL_GetPrefPath("fbneo", "dats"));
-      create_datfile(filename, -1);
 
       sprintf(filename,"%sFBNeo_-_Arcade.dat",SDL_GetPrefPath("fbneo", "dats"));
       create_datfile(filename, DAT_ARCADE_ONLY);
@@ -273,7 +271,47 @@ int main(int argc, char *argv[])
 
       sprintf(filename,"%sFBNeo_-_Neogeo.dat",SDL_GetPrefPath("fbneo", "dats"));
       create_datfile(filename, DAT_NEOGEO_ONLY);
+#else
+      printf("Creating fbneo dats\n");
 
+      char filename[1024] = { 0 };
+
+      sprintf(filename,"FBNeo_-_Arcade.dat");
+      create_datfile(filename, DAT_ARCADE_ONLY);
+
+      sprintf(filename,"FBNeo_-_MegaDrive.dat");
+      create_datfile(filename, DAT_MEGADRIVE_ONLY);
+
+      sprintf(filename,"FBNeo_-_PC_ENGINE.dat");
+      create_datfile(filename, DAT_PCENGINE_ONLY);
+
+      sprintf(filename,"FBNeo_-_TurboGrafx-16.dat");
+      create_datfile(filename, DAT_TG16_ONLY);
+
+      sprintf(filename,"FBNeo_-_PC_Engine_SuperGrafx.dat");
+      create_datfile(filename, DAT_SGX_ONLY);
+
+      sprintf(filename,"FBNeo_-_Sega_SG-1000.dat");
+      create_datfile(filename, DAT_SG1000_ONLY);
+
+      sprintf(filename,"FBNeo_-_ColecoVision.dat");
+      create_datfile(filename, DAT_COLECO_ONLY);
+
+      sprintf(filename,"FBNeo_-_Sega_Master_System.dat");
+      create_datfile(filename, DAT_MASTERSYSTEM_ONLY);
+
+      sprintf(filename,"FBNeo_-_Sega_Game_Gear.dat");
+      create_datfile(filename, DAT_GAMEGEAR_ONLY);
+
+      sprintf(filename,"FBNeo_-_MSX.dat");
+      create_datfile(filename, DAT_MSX_ONLY);
+
+      sprintf(filename,"FBNeo_-_Sinclair_ZX_Spectrum.dat");
+      create_datfile(filename, DAT_SPECTRUM_ONLY);
+
+      sprintf(filename,"FBNeo_-_Neogeo.dat");
+      create_datfile(filename, DAT_NEOGEO_ONLY);
+#endif
    }
    else
    {

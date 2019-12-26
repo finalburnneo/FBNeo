@@ -1,5 +1,5 @@
 /* CpuArch.h -- CPU specific code
-2018-02-18 : Igor Pavlov : Public domain */
+2017-06-30 : Igor Pavlov : Public domain */
 
 #ifndef __CPU_ARCH_H
 #define __CPU_ARCH_H
@@ -174,7 +174,7 @@ MY_CPU_LE_UNALIGN means that CPU is LITTLE ENDIAN and CPU supports unaligned mem
 #ifndef MY_CPU_NAME
   #ifdef MY_CPU_LE
     #define MY_CPU_NAME "LE"
-  #elif defined(MY_CPU_BE)
+  #elif MY_CPU_BE
     #define MY_CPU_NAME "BE"
   #else
     /*
@@ -318,16 +318,15 @@ enum
 
 void MyCPUID(UInt32 function, UInt32 *a, UInt32 *b, UInt32 *c, UInt32 *d);
 
-BoolInt x86cpuid_CheckAndRead(Cx86cpuid *p);
+Bool x86cpuid_CheckAndRead(Cx86cpuid *p);
 int x86cpuid_GetFirm(const Cx86cpuid *p);
 
 #define x86cpuid_GetFamily(ver) (((ver >> 16) & 0xFF0) | ((ver >> 8) & 0xF))
 #define x86cpuid_GetModel(ver)  (((ver >> 12) &  0xF0) | ((ver >> 4) & 0xF))
 #define x86cpuid_GetStepping(ver) (ver & 0xF)
 
-BoolInt CPU_Is_InOrder();
-BoolInt CPU_Is_Aes_Supported();
-BoolInt CPU_IsSupported_PageGB();
+Bool CPU_Is_InOrder();
+Bool CPU_Is_Aes_Supported();
 
 #endif
 

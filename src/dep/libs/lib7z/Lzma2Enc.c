@@ -1,5 +1,5 @@
 /* Lzma2Enc.c -- LZMA2 Encoder
-2018-07-04 : Igor Pavlov : Public domain */
+2017-08-28 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
 
@@ -115,7 +115,7 @@ SRes LzmaEnc_PrepareForLzma2(CLzmaEncHandle pp, ISeqInStream *inStream, UInt32 k
     ISzAllocPtr alloc, ISzAllocPtr allocBig);
 SRes LzmaEnc_MemPrepare(CLzmaEncHandle pp, const Byte *src, SizeT srcLen,
     UInt32 keepWindowSize, ISzAllocPtr alloc, ISzAllocPtr allocBig);
-SRes LzmaEnc_CodeOneMemBlock(CLzmaEncHandle pp, BoolInt reInit,
+SRes LzmaEnc_CodeOneMemBlock(CLzmaEncHandle pp, Bool reInit,
     Byte *dest, size_t *destLen, UInt32 desiredPackSize, UInt32 *unpackSize);
 const Byte *LzmaEnc_GetCurBuf(CLzmaEncHandle pp);
 void LzmaEnc_Finish(CLzmaEncHandle pp);
@@ -133,7 +133,7 @@ static SRes Lzma2EncInt_EncodeSubblock(CLzma2EncInt *p, Byte *outBuf,
   size_t packSize = packSizeLimit;
   UInt32 unpackSize = LZMA2_UNPACK_SIZE_MAX;
   unsigned lzHeaderSize = 5 + (p->needInitProp ? 1 : 0);
-  BoolInt useCopyBlock;
+  Bool useCopyBlock;
   SRes res;
 
   *packSizeRes = 0;
@@ -369,11 +369,9 @@ typedef struct
   
   ISeqOutStream *outStream;
   Byte *outBuf;
-  size_t outBuf_Rem;   /* remainder in outBuf */
-
-  size_t outBufSize;   /* size of allocated outBufs[i] */
+  size_t outBufSize;
   size_t outBufsDataSizes[MTCODER__BLOCKS_MAX];
-  BoolInt mtCoder_WasConstructed;
+  Bool mtCoder_WasConstructed;
   CMtCoder mtCoder;
   Byte *outBufs[MTCODER__BLOCKS_MAX];
 
@@ -668,7 +666,7 @@ static SRes Lzma2Enc_MtCallback_Code(void *pp, unsigned coderIndex, unsigned out
 
   if (!dest)
   {
-    dest = (Byte *)ISzAlloc_Alloc(me->alloc, me->outBufSize);
+    dest = ISzAlloc_Alloc(me->alloc, me->outBufSize);
     if (!dest)
       return SZ_ERROR_MEM;
     me->outBufs[outBufIndex] = dest;
@@ -676,8 +674,7 @@ static SRes Lzma2Enc_MtCallback_Code(void *pp, unsigned coderIndex, unsigned out
 
   MtProgressThunk_CreateVTable(&progressThunk);
   progressThunk.mtProgress = &me->mtCoder.mtProgress;
-  progressThunk.inSize = 0;
-  progressThunk.outSize = 0;
+  progressThunk.index = coderIndex;
 
   res = Lzma2Enc_EncodeMt1(me,
       &me->coders[coderIndex],
@@ -701,10 +698,10 @@ static SRes Lzma2Enc_MtCallback_Write(void *pp, unsigned outBufIndex)
   if (me->outStream)
     return ISeqOutStream_Write(me->outStream, data, size) == size ? SZ_OK : SZ_ERROR_WRITE;
   
-  if (size > me->outBuf_Rem)
+  if (size > me->outBufSize)
     return SZ_ERROR_OUTPUT_EOF;
   memcpy(me->outBuf, data, size);
-  me->outBuf_Rem -= size;
+  me->outBufSize -= size;
   me->outBuf += size;
   return SZ_OK;
 }
@@ -723,10 +720,10 @@ SRes Lzma2Enc_Encode2(CLzma2EncHandle pp,
   CLzma2Enc *p = (CLzma2Enc *)pp;
 
   if (inStream && inData)
-    return SZ_ERROR_PARAM;
+    return E_INVALIDARG;
 
   if (outStream && outBuf)
-    return SZ_ERROR_PARAM;
+    return E_INVALIDARG;
 
   {
     unsigned i;
@@ -751,11 +748,11 @@ SRes Lzma2Enc_Encode2(CLzma2EncHandle pp,
 
     p->outStream = outStream;
     p->outBuf = NULL;
-    p->outBuf_Rem = 0;
+    p->outBufSize = 0;
     if (!outStream)
     {
       p->outBuf = outBuf;
-      p->outBuf_Rem = *outBufSize;
+      p->outBufSize = *outBufSize;
       *outBufSize = 0;
     }
 

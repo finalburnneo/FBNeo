@@ -1,28 +1,85 @@
 /* MtCoder.c -- Multi-thread Coder
-2018-07-04 : Igor Pavlov : Public domain */
+2017-07-17 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
 
 #include "MtCoder.h"
 
-#ifndef _7ZIP_ST
-
-SRes MtProgressThunk_Progress(const ICompressProgress *pp, UInt64 inSize, UInt64 outSize)
+static void MtProgress_Init(CMtProgress *p, ICompressProgress *progress)
 {
-  CMtProgressThunk *thunk = CONTAINER_FROM_VTBL(pp, CMtProgressThunk, vt);
-  UInt64 inSize2 = 0;
-  UInt64 outSize2 = 0;
-  if (inSize != (UInt64)(Int64)-1)
+  unsigned i;
+
+  p->progress = progress;
+  p->res = SZ_OK;
+  p->totalInSize = 0;
+  p->totalOutSize = 0;
+  
+  for (i = 0; i < MTCODER__THREADS_MAX; i++)
   {
-    inSize2 = inSize - thunk->inSize;
-    thunk->inSize = inSize;
+    CMtProgressSizes *pair = &p->sizes[i];
+    pair->inSize = 0;
+    pair->outSize = 0;
   }
-  if (outSize != (UInt64)(Int64)-1)
+}
+
+
+static void MtProgress_Reinit(CMtProgress *p, unsigned index)
+{
+  CMtProgressSizes *pair = &p->sizes[index];
+  pair->inSize = 0;
+  pair->outSize = 0;
+}
+
+
+#define UPDATE_PROGRESS(size, prev, total) \
+  if (size != (UInt64)(Int64)-1) { total += size - prev; prev = size; }
+
+SRes MtProgress_Set(CMtProgress *p, unsigned index, UInt64 inSize, UInt64 outSize)
+{
+  SRes res;
+  CMtProgressSizes *pair;
+  
+  CriticalSection_Enter(&p->cs);
+  
+  pair = &p->sizes[index];
+  UPDATE_PROGRESS(inSize, pair->inSize, p->totalInSize)
+  UPDATE_PROGRESS(outSize, pair->outSize, p->totalOutSize)
+  if (p->res == SZ_OK && p->progress)
   {
-    outSize2 = outSize - thunk->outSize;
-    thunk->outSize = outSize;
+    if (ICompressProgress_Progress(p->progress, p->totalInSize, p->totalOutSize) != SZ_OK)
+      p->res = SZ_ERROR_PROGRESS;
   }
-  return MtProgress_ProgressAdd(thunk->mtProgress, inSize2, outSize2);
+  res = p->res;
+  
+  CriticalSection_Leave(&p->cs);
+  
+  return res;
+}
+
+
+static SRes MtProgress_GetError(CMtProgress *p)
+{
+  SRes res;
+  CriticalSection_Enter(&p->cs);
+  res = p->res;
+  CriticalSection_Leave(&p->cs);
+  return res;
+}
+
+
+static void MtProgress_SetError(CMtProgress *p, SRes res)
+{
+  CriticalSection_Enter(&p->cs);
+  if (p->res == SZ_OK)
+    p->res = res;
+  CriticalSection_Leave(&p->cs);
+}
+
+
+static SRes MtProgressThunk_Progress(const ICompressProgress *pp, UInt64 inSize, UInt64 outSize)
+{
+  CMtProgressThunk *p = CONTAINER_FROM_VTBL(pp, CMtProgressThunk, vt);
+  return MtProgress_Set(p->mtProgress, p->index, inSize, outSize);
 }
 
 
@@ -119,7 +176,7 @@ static SRes ThreadFunc2(CMtCoderThread *t)
     unsigned bi;
     SRes res;
     SRes res2;
-    BoolInt finished;
+    Bool finished;
     unsigned bufIndex;
     size_t size;
     const Byte *inData;
@@ -241,7 +298,7 @@ static SRes ThreadFunc2(CMtCoderThread *t)
       res = mtc->mtCallback->Code(mtc->mtCallbackObject, t->index, bufIndex,
           mtc->inStream ? t->inBuf : inData, size, finished);
       
-      // MtProgress_Reinit(&mtc->mtProgress, t->index);
+      MtProgress_Reinit(&mtc->mtProgress, t->index);
 
       if (res != SZ_OK)
         MtProgress_SetError(&mtc->mtProgress, res);
@@ -294,7 +351,7 @@ static SRes ThreadFunc2(CMtCoderThread *t)
         if (++wi >= mtc->numBlocksMax)
           wi = 0;
         {
-          BoolInt isReady;
+          Bool isReady;
 
           CriticalSection_Enter(&mtc->cs);
           
@@ -547,7 +604,7 @@ SRes MtCoder_Code(CMtCoder *p)
       {
         const CMtCoderBlock *block = &p->blocks[bi];
         unsigned bufIndex = block->bufIndex;
-        BoolInt finished = block->finished;
+        Bool finished = block->finished;
         if (res == SZ_OK && block->res != SZ_OK)
           res = block->res;
 
@@ -597,5 +654,3 @@ SRes MtCoder_Code(CMtCoder *p)
     MtCoder_Free(p);
   return res;
 }
-
-#endif

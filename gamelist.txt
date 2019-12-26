@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12297 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12300 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6551,6 +6551,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_nfsu	|  	| Need for Speed Undercover (Rus)			| md_toutrun	| 199?	| <unknown>	| Sega Megadrive| 					|
 | kuniokunb	|  	| Nekketsu Kouha Kunio-kun (Japan bootleg)		| renegade	| 1986	| bootleg	| Miscellaneous	| 					|
 | kuniokun	|  	| Nekketsu Kouha Kunio-kun (Japan)			| renegade	| 1986	| Technos	| Miscellaneous	| 					|
+| nkdodge	|  	| Nekketsu Koukou Dodgeball Bu (Japan)			| spdodgeb	| 1987	| Technos Japan	| Miscellaneous	| 					|
+| nkdodgeb	|  	| Nekketsu Koukou Dodgeball Bu (Japan, bootleg)		| spdodgeb	| 1987	| bootleg	| Miscellaneous	| 					|
 | pce_nekdodge	|  	| Nekketsu Koukou Dodgeball Bu - PC Bangai Hen		| 		| 1990	| Naxat		| PC Engine	| 					|
 | md_neksoccr	|  	| Nekketsu Koukou Dodgeball Bu - Soccer Hen MD (Jpn)	| 		| 1992	| Palsoft	| Sega Megadrive| 					|
 | pce_neksoccr	|  	| Nekketsu Koukou Dodgeball Bu - Soccer PC Hen		| 		| 1992	| Naxat		| PC Engine	| 					|
@@ -9830,6 +9832,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_supdaisn	|  	| Super Daisenryaku (Jpn, Rev. 02)			| 		| 1989	| Sega		| Sega Megadrive| 					|
 | cv_superdk	|  	| Super DK! (Prototype)					| 		| 1982	| Nintendo	| ColecoVision	| 					|
 | cv_suprdkjr	|  	| Super DK! Junior (Prototype)				| 		| 1983	| Nintendo	| ColecoVision	| 					|
+| spdodgeb	|  	| Super Dodge Ball (US)					| 		| 1987	| Technos Japan	| Miscellaneous	| 					|
 | sdodgeb	|  	| Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu	| 		| 1996	| Technos	| Neo Geo MVS	| 					|
 | md_sdkong99	|   NW	| Super Donkey Kong 99 (Protected)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_sdkong99a	|  	| Super Donkey Kong 99 (Unprotected)			| md_sdkong99	| 199?	| <unlicensed>	| Sega Megadrive| 					|

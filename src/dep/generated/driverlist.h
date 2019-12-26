@@ -6699,6 +6699,8 @@ DRV		BurnDrvpce_nectaris;
 DRV		BurnDrvmd_nfsu;
 DRV		BurnDrvKuniokunb;
 DRV		BurnDrvKuniokun;
+DRV		BurnDrvNkdodge;
+DRV		BurnDrvNkdodgeb;
 DRV		BurnDrvpce_nekdodge;
 DRV		BurnDrvmd_neksoccr;
 DRV		BurnDrvpce_neksoccr;
@@ -10042,6 +10044,7 @@ DRV		BurnDrvmd_supdaisna;
 DRV		BurnDrvmd_supdaisn;
 DRV		BurnDrvcv_superdk;
 DRV		BurnDrvcv_suprdkjr;
+DRV		BurnDrvSpdodgeb;
 DRV		BurnDrvsdodgeb;
 DRV		BurnDrvmd_sdkong99;
 DRV		BurnDrvmd_sdkong99a;
@@ -19277,6 +19280,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_nfsu,			// Need for Speed Undercover (Rus)
 	&BurnDrvKuniokunb,			// Nekketsu Kouha Kunio-kun (Japan bootleg)
 	&BurnDrvKuniokun,			// Nekketsu Kouha Kunio-kun (Japan)
+	&BurnDrvNkdodge,			// Nekketsu Koukou Dodgeball Bu (Japan)
+	&BurnDrvNkdodgeb,			// Nekketsu Koukou Dodgeball Bu (Japan, bootleg)
 	&BurnDrvpce_nekdodge,		// Nekketsu Koukou Dodgeball Bu - PC Bangai Hen
 	&BurnDrvmd_neksoccr,		// Nekketsu Koukou Dodgeball Bu - Soccer Hen MD (Jpn)
 	&BurnDrvpce_neksoccr,		// Nekketsu Koukou Dodgeball Bu - Soccer PC Hen
@@ -22620,6 +22625,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_supdaisn,		// Super Daisenryaku (Jpn, Rev. 02)
 	&BurnDrvcv_superdk,			// Super DK! (Prototype)
 	&BurnDrvcv_suprdkjr,		// Super DK! Junior (Prototype)
+	&BurnDrvSpdodgeb,			// Super Dodge Ball (US)
 	&BurnDrvsdodgeb,			// Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu
 	&BurnDrvmd_sdkong99,		// Super Donkey Kong 99 (Protected) [no comment, NOT WORKING]
 	&BurnDrvmd_sdkong99a,		// Super Donkey Kong 99 (Unprotected)

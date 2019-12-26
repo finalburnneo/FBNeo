@@ -139,7 +139,7 @@ struct __7z_file
 	UINT64 crc;								/* current file crc */
 
 	CFileInStream archiveStream;
-	CLookToRead2 lookStream;
+	CLookToRead lookStream;
 	CSzArEx db;
 	SRes res;
 	ISzAlloc allocImp;

@@ -376,7 +376,7 @@ _7z_error _7z_file_open(const char *filename, _7z_file **_7z)
 	SzArEx_Init(&new_7z->db);
 	new_7z->inited = true;
 
-	res = SzArEx_Open(&new_7z->db, &new_7z->lookStream.vt, &new_7z->allocImp, &new_7z->allocTempImp);
+	res = SzArEx_Open(&new_7z->db, &new_7z->lookStream.s, &new_7z->allocImp, &new_7z->allocTempImp);
 	if (res != SZ_OK)
 	{
 		_7zerr = _7ZERR_FILE_ERROR;
@@ -477,7 +477,7 @@ _7z_error _7z_file_decompress(_7z_file *new_7z, void *buffer, UINT32 length, UIN
 	size_t offset = 0;
 	size_t outSizeProcessed = 0;
 
-	res = SzArEx_Extract(&new_7z->db, &new_7z->lookStream.vt, index,
+	res = SzArEx_Extract(&new_7z->db, &new_7z->lookStream.s, index,
 		&new_7z->blockIndex, &new_7z->outBuffer, &new_7z->outBufferSize,
 		&offset, &outSizeProcessed,
 		&new_7z->allocImp, &new_7z->allocTempImp);

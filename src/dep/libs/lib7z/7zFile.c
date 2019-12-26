@@ -1,5 +1,5 @@
 /* 7zFile.c -- File IO
-2017-04-03 : Igor Pavlov : Public domain */
+2009-11-24 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
 
@@ -238,49 +238,49 @@ WRes File_GetLength(CSzFile *p, UInt64 *length)
 
 /* ---------- FileSeqInStream ---------- */
 
-static SRes FileSeqInStream_Read(const ISeqInStream *pp, void *buf, size_t *size)
+static SRes FileSeqInStream_Read(void *pp, void *buf, size_t *size)
 {
-  CFileSeqInStream *p = CONTAINER_FROM_VTBL(pp, CFileSeqInStream, vt);
+  CFileSeqInStream *p = (CFileSeqInStream *)pp;
   return File_Read(&p->file, buf, size) == 0 ? SZ_OK : SZ_ERROR_READ;
 }
 
 void FileSeqInStream_CreateVTable(CFileSeqInStream *p)
 {
-  p->vt.Read = FileSeqInStream_Read;
+  p->s.Read = FileSeqInStream_Read;
 }
 
 
 /* ---------- FileInStream ---------- */
 
-static SRes FileInStream_Read(const ISeekInStream *pp, void *buf, size_t *size)
+static SRes FileInStream_Read(void *pp, void *buf, size_t *size)
 {
-  CFileInStream *p = CONTAINER_FROM_VTBL(pp, CFileInStream, vt);
+  CFileInStream *p = (CFileInStream *)pp;
   return (File_Read(&p->file, buf, size) == 0) ? SZ_OK : SZ_ERROR_READ;
 }
 
-static SRes FileInStream_Seek(const ISeekInStream *pp, Int64 *pos, ESzSeek origin)
+static SRes FileInStream_Seek(void *pp, Int64 *pos, ESzSeek origin)
 {
-  CFileInStream *p = CONTAINER_FROM_VTBL(pp, CFileInStream, vt);
+  CFileInStream *p = (CFileInStream *)pp;
   return File_Seek(&p->file, pos, origin);
 }
 
 void FileInStream_CreateVTable(CFileInStream *p)
 {
-  p->vt.Read = FileInStream_Read;
-  p->vt.Seek = FileInStream_Seek;
+  p->s.Read = FileInStream_Read;
+  p->s.Seek = FileInStream_Seek;
 }
 
 
 /* ---------- FileOutStream ---------- */
 
-static size_t FileOutStream_Write(const ISeqOutStream *pp, const void *data, size_t size)
+static size_t FileOutStream_Write(void *pp, const void *data, size_t size)
 {
-  CFileOutStream *p = CONTAINER_FROM_VTBL(pp, CFileOutStream, vt);
+  CFileOutStream *p = (CFileOutStream *)pp;
   File_Write(&p->file, data, &size);
   return size;
 }
 
 void FileOutStream_CreateVTable(CFileOutStream *p)
 {
-  p->vt.Write = FileOutStream_Write;
+  p->s.Write = FileOutStream_Write;
 }

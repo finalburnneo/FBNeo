@@ -1,9 +1,7 @@
 /* 7zAlloc.c -- Allocation functions
-2017-04-03 : Igor Pavlov : Public domain */
+2015-11-09 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
-
-#include <stdlib.h>
 
 #include "7zAlloc.h"
 
@@ -22,7 +20,7 @@ int g_allocCountTemp = 0;
 
 #endif
 
-void *SzAlloc(ISzAllocPtr p, size_t size)
+void *SzAlloc(void *p, size_t size)
 {
   UNUSED_VAR(p);
   if (size == 0)
@@ -34,7 +32,7 @@ void *SzAlloc(ISzAllocPtr p, size_t size)
   return malloc(size);
 }
 
-void SzFree(ISzAllocPtr p, void *address)
+void SzFree(void *p, void *address)
 {
   UNUSED_VAR(p);
   #ifdef _SZ_ALLOC_DEBUG
@@ -47,7 +45,7 @@ void SzFree(ISzAllocPtr p, void *address)
   free(address);
 }
 
-void *SzAllocTemp(ISzAllocPtr p, size_t size)
+void *SzAllocTemp(void *p, size_t size)
 {
   UNUSED_VAR(p);
   if (size == 0)
@@ -62,7 +60,7 @@ void *SzAllocTemp(ISzAllocPtr p, size_t size)
   return malloc(size);
 }
 
-void SzFreeTemp(ISzAllocPtr p, void *address)
+void SzFreeTemp(void *p, void *address)
 {
   UNUSED_VAR(p);
   #ifdef _SZ_ALLOC_DEBUG

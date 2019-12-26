@@ -1,5 +1,5 @@
 /* Threads.c -- multithreading library
-2017-06-26 : Igor Pavlov : Public domain */
+2014-09-21 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
 
@@ -12,20 +12,18 @@
 static WRes GetError()
 {
   DWORD res = GetLastError();
-  return res ? (WRes)res : 1;
+  return (res) ? (WRes)(res) : 1;
 }
 
-static WRes HandleToWRes(HANDLE h) { return (h != NULL) ? 0 : GetError(); }
-static WRes BOOLToWRes(BOOL v) { return v ? 0 : GetError(); }
+WRes HandleToWRes(HANDLE h) { return (h != 0) ? 0 : GetError(); }
+WRes BOOLToWRes(BOOL v) { return v ? 0 : GetError(); }
 
 WRes HandlePtr_Close(HANDLE *p)
 {
   if (*p != NULL)
-  {
     if (!CloseHandle(*p))
       return GetError();
-    *p = NULL;
-  }
+  *p = NULL;
   return 0;
 }
 
@@ -51,7 +49,7 @@ WRes Thread_Create(CThread *p, THREAD_FUNC_TYPE func, LPVOID param)
   return HandleToWRes(*p);
 }
 
-static WRes Event_Create(CEvent *p, BOOL manualReset, int signaled)
+WRes Event_Create(CEvent *p, BOOL manualReset, int signaled)
 {
   *p = CreateEvent(NULL, manualReset, (signaled ? TRUE : FALSE), NULL);
   return HandleToWRes(*p);

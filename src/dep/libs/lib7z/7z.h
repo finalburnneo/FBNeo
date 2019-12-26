@@ -1,5 +1,5 @@
 /* 7z.h -- 7z interface
-2017-04-03 : Igor Pavlov : Public domain */
+2015-11-18 : Igor Pavlov : Public domain */
 
 #ifndef __7Z_H
 #define __7Z_H
@@ -98,7 +98,7 @@ UInt64 SzAr_GetFolderUnpackSize(const CSzAr *p, UInt32 folderIndex);
 SRes SzAr_DecodeFolder(const CSzAr *p, UInt32 folderIndex,
     ILookInStream *stream, UInt64 startPos,
     Byte *outBuffer, size_t outSize,
-    ISzAllocPtr allocMain);
+    ISzAlloc *allocMain);
 
 typedef struct
 {
@@ -131,7 +131,7 @@ typedef struct
 #define SzArEx_GetFileSize(p, i) ((p)->UnpackPositions[(i) + 1] - (p)->UnpackPositions[i])
 
 void SzArEx_Init(CSzArEx *p);
-void SzArEx_Free(CSzArEx *p, ISzAllocPtr alloc);
+void SzArEx_Free(CSzArEx *p, ISzAlloc *alloc);
 UInt64 SzArEx_GetFolderStreamPos(const CSzArEx *p, UInt32 folderIndex, UInt32 indexInFolder);
 int SzArEx_GetFolderFullPackSize(const CSzArEx *p, UInt32 folderIndex, UInt64 *resSize);
 
@@ -179,8 +179,8 @@ SRes SzArEx_Extract(
     size_t *outBufferSize,    /* buffer size for output buffer */
     size_t *offset,           /* offset of stream for required file in *outBuffer */
     size_t *outSizeProcessed, /* size of file in *outBuffer */
-    ISzAllocPtr allocMain,
-    ISzAllocPtr allocTemp);
+    ISzAlloc *allocMain,
+    ISzAlloc *allocTemp);
 
 
 /*
@@ -195,7 +195,7 @@ SZ_ERROR_FAIL
 */
 
 SRes SzArEx_Open(CSzArEx *p, ILookInStream *inStream,
-    ISzAllocPtr allocMain, ISzAllocPtr allocTemp);
+    ISzAlloc *allocMain, ISzAlloc *allocTemp);
 
 EXTERN_C_END
 

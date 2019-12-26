@@ -1,5 +1,5 @@
 /* Xz.c - Xz
-2017-05-12 : Igor Pavlov : Public domain */
+2015-05-01 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
 
@@ -9,7 +9,7 @@
 #include "XzCrc64.h"
 
 const Byte XZ_SIG[XZ_SIG_SIZE] = { 0xFD, '7', 'z', 'X', 'Z', 0 };
-/* const Byte XZ_FOOTER_SIG[XZ_FOOTER_SIG_SIZE] = { 'Y', 'Z' }; */
+const Byte XZ_FOOTER_SIG[XZ_FOOTER_SIG_SIZE] = { 'Y', 'Z' };
 
 unsigned Xz_WriteVarInt(Byte *buf, UInt64 v)
 {
@@ -20,22 +20,22 @@ unsigned Xz_WriteVarInt(Byte *buf, UInt64 v)
     v >>= 7;
   }
   while (v != 0);
-  buf[(size_t)i - 1] &= 0x7F;
+  buf[i - 1] &= 0x7F;
   return i;
 }
 
 void Xz_Construct(CXzStream *p)
 {
-  p->numBlocks = 0;
-  p->blocks = NULL;
+  p->numBlocks = p->numBlocksAllocated = 0;
+  p->blocks = 0;
   p->flags = 0;
 }
 
-void Xz_Free(CXzStream *p, ISzAllocPtr alloc)
+void Xz_Free(CXzStream *p, ISzAlloc *alloc)
 {
-  ISzAlloc_Free(alloc, p->blocks);
-  p->numBlocks = 0;
-  p->blocks = NULL;
+  alloc->Free(alloc, p->blocks);
+  p->numBlocks = p->numBlocksAllocated = 0;
+  p->blocks = 0;
 }
 
 unsigned XzFlags_GetCheckSize(CXzStreamFlags f)

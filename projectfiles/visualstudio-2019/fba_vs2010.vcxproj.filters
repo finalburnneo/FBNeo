@@ -4396,9 +4396,7 @@
     <None Include="..\..\src\dep\libs\zlib\zconf.h.in">
       <Filter>libs\zlib</Filter>
     </None>
-    <None Include="..\..\src\dep\libs\libpng\_fba_libpng_v1512.txt">
-      <Filter>libs\libpng</Filter>
-    </None>
+    <None Include="..\..\src\dep\libs\libpng\_fbn_libpng_v1637.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\dep\libs\lib7z\7zVersion.rc">
@@ -4412,9 +4410,7 @@
     <Text Include="..\..\src\burn\drv\spectrum\spectrum_games.txt">
       <Filter>Burn\drv\spectrum</Filter>
     </Text>
-    <Text Include="..\..\src\dep\libs\lib7z\_fba_lzmasdk_v16.04.txt">
-      <Filter>libs\7z</Filter>
-    </Text>
+    <Text Include="..\..\src\dep\libs\lib7z\_fbn_lzmasdk_v16.04.txt" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\cpu\m68k\m68kmake.c">

@@ -88,16 +88,16 @@ static void pia_irq(INT32 state)
 }
 
 static pia6821_interface pia_0 = {
-	NULL, NULL,
-	NULL, NULL, NULL, NULL,
-	pia0_out_a, NULL, NULL, NULL,
+	nullptr, nullptr,
+	nullptr, nullptr, nullptr, nullptr,
+	pia0_out_a, nullptr, nullptr, nullptr,
 	pia_irq, pia_irq
 };
 
 static pia6821_interface pia_1 = {
-	NULL, NULL,
-	NULL, NULL, NULL, NULL,
-	pia1_out_a, pia1_out_b, NULL, NULL,
+	nullptr, nullptr,
+	nullptr, nullptr, nullptr, nullptr,
+	pia1_out_a, pia1_out_b, nullptr, nullptr,
 	pia_irq, pia_irq
 };
 

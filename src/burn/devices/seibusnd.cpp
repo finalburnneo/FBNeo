@@ -38,9 +38,9 @@ static INT32 sub2main_pending;
 static INT32 SeibuSoundBank;
 static INT32 irq1,irq2;
 
-UINT8 *SeibuZ80DecROM = NULL;
-UINT8 *SeibuZ80ROM = NULL;
-UINT8 *SeibuZ80RAM = NULL;
+UINT8 *SeibuZ80DecROM = nullptr;
+UINT8 *SeibuZ80ROM = nullptr;
+UINT8 *SeibuZ80RAM = nullptr;
 INT32 seibu_coin_input;
 
 static INT32 seibu_sndcpu_frequency;
@@ -64,10 +64,10 @@ static const INT32 index_shift[8] = { -1, -1, -1, -1, 2, 4, 6, 8 };
 static void adpcm_init(); // forward
 static void adpcm_reset(); // forward
 
-static INT16 *mixer_buffer = NULL; // for cabal/deadang ADPCM resampler
+static INT16 *mixer_buffer = nullptr; // for cabal/deadang ADPCM resampler
 static INT32 samples_from = 0;
 
-UINT8 *SeibuADPCMData[2] = { NULL, NULL };
+UINT8 *SeibuADPCMData[2] = {nullptr, nullptr };
 INT32 SeibuADPCMDataLen[2] = { 0, 0 };
 
 enum
@@ -455,7 +455,7 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 
 	seibu_snd_type = type;
 
-	if (len && SeibuZ80DecROM != NULL) {
+	if (len && SeibuZ80DecROM != nullptr) {
 		seibu_sound_decrypt(len);
 	} else {
 		SeibuZ80DecROM = SeibuZ80ROM;
@@ -545,15 +545,15 @@ void seibu_sound_exit()
 	if (mixer_buffer) BurnFree(mixer_buffer);
 	samples_from = 0;
 
-	MSM6295ROM = NULL;
+	MSM6295ROM = nullptr;
 
-	SeibuZ80DecROM = NULL;
-	SeibuZ80ROM = NULL;
-	SeibuZ80RAM = NULL;
+	SeibuZ80DecROM = nullptr;
+	SeibuZ80ROM = nullptr;
+	SeibuZ80RAM = nullptr;
 	seibu_sndcpu_frequency = 0;
 	is_sdgndmps = 0;
 
-	SeibuADPCMData[0] = SeibuADPCMData[1] = NULL;
+	SeibuADPCMData[0] = SeibuADPCMData[1] = nullptr;
 	SeibuADPCMDataLen[0] = SeibuADPCMDataLen[1] = 0;
 
 	DebugDev_SeibuSndInitted = 0;

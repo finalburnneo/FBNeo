@@ -22,8 +22,8 @@ typedef void (*output_func)(UINT8 offset, UINT8 data);
 typedef UINT8 (*input_func)(UINT8 offset);
 
 static double ssio_ayvolume_lookup[16];
-static output_func output_handlers[2] = { NULL, NULL };
-static input_func input_handlers[5] = { NULL, NULL, NULL, NULL, NULL };
+static output_func output_handlers[2] = {nullptr, nullptr };
+static input_func input_handlers[5] = {nullptr, nullptr, nullptr, nullptr, nullptr };
 static INT32 output_mask[2] = { 0xff, 0xff };
 static INT32 input_mask[5] = { 0, 0, 0, 0, 0 };
 
@@ -318,8 +318,8 @@ void ssio_init(UINT8 *rom, UINT8 *ram, UINT8 *prom)
 	ssio_compute_ay8910_modulation(prom);
 
 	for (INT32 i = 0; i < 4; i++) {
-		output_handlers[i>>1] = NULL;
-		input_handlers[i] = NULL;
+		output_handlers[i>>1] = nullptr;
+		input_handlers[i] = nullptr;
 		output_mask[i>>1] = 0xff;
 		input_mask[i] = 0;
 	}
@@ -337,8 +337,8 @@ void ssio_init(UINT8 *rom, UINT8 *ram, UINT8 *prom)
 
 	AY8910Init(0, 2000000, 0);
 	AY8910Init(1, 2000000, 0);
-	AY8910SetPorts(0, NULL, NULL, AY8910_write_0A, AY8910_write_0B);
-	AY8910SetPorts(1, NULL, NULL, AY8910_write_1A, AY8910_write_1B);
+	AY8910SetPorts(0, nullptr, nullptr, AY8910_write_0A, AY8910_write_0B);
+	AY8910SetPorts(1, nullptr, nullptr, AY8910_write_1A, AY8910_write_1B);
 	AY8910SetBuffered(ZetTotalCycles, 2000000);
 
 	ssio_is_initialized = 1;
@@ -364,11 +364,11 @@ void ssio_scan(INT32 nAction, INT32 *pnMin)
 
 void ssio_exit()
 {
-	ssio_set_custom_output(0, 0xff, NULL);
-	ssio_set_custom_output(1, 0xff, NULL);
+	ssio_set_custom_output(0, 0xff, nullptr);
+	ssio_set_custom_output(1, 0xff, nullptr);
 
 	for (INT32 i = 0; i < 5; i++ ){
-		ssio_set_custom_input(i, 0, NULL);
+		ssio_set_custom_input(i, 0, nullptr);
 	}
 
 	if (ssio_is_initialized == 0) return;

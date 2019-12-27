@@ -304,7 +304,7 @@ void iremga20_scan(INT32 nAction, INT32 *pnMin)
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_scan called without init\n"));
 #endif
 
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029678;
 	}
 

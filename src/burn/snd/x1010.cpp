@@ -7,7 +7,7 @@
 UINT8 *X1010SNDROM;
 INT32 X1010_Arbalester_Mode = 0;
 
-struct x1_010_info * x1_010_chip = NULL;
+struct x1_010_info * x1_010_chip = nullptr;
 
 void x1010_sound_bank_w(UINT32 offset, UINT16 data)
 {
@@ -242,7 +242,7 @@ void x1010_scan(INT32 nAction,INT32 *pnMin)
 
 	struct BurnArea ba;
 	
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin =  0x029672;
 	}
 	

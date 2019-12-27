@@ -127,9 +127,9 @@ void tms34061_exit()
 #endif
 
 	BurnFree(m_vram_orig);
-	m_vram = NULL;
+	m_vram = nullptr;
 	BurnFree(m_latchram_orig);
-	m_latchram = NULL;
+	m_latchram = nullptr;
 	
 	DebugDev_Tms34061Initted = 0;
 }

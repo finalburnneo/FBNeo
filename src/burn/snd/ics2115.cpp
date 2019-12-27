@@ -38,9 +38,9 @@
 #define CAVE_HACK
 
 
-static UINT8* m_rom = NULL;			// ics2115 rom
+static UINT8* m_rom = nullptr;			// ics2115 rom
 static INT32 m_rom_len;
-static void (*m_irq_cb)(INT32) = NULL;// cpu irq callback
+static void (*m_irq_cb)(INT32) = nullptr;// cpu irq callback
 
 struct ics2115_voice {
 	struct {
@@ -208,7 +208,7 @@ void ics2115_init(void (*cpu_irq_cb)(INT32), UINT8 *sample_rom, INT32 sample_rom
 		m_ulaw[i] = (i & 0x80) ? -value : value;
 	}
 
-	buffer = NULL;
+	buffer = nullptr;
 
 	output_sample_rate = nBurnSoundRate;
 	if (output_sample_rate == 0)
@@ -216,7 +216,7 @@ void ics2115_init(void (*cpu_irq_cb)(INT32), UINT8 *sample_rom, INT32 sample_rom
 	else
 		buffer = (INT32*)(BurnMalloc(output_sample_rate /*/ 50*/ * 2 * sizeof(INT32)));
 
-	BurnTimerInit(&ics2115_timer_cb, NULL);
+	BurnTimerInit(&ics2115_timer_cb, nullptr);
 
 	sample_count = stream_pos = 0;
 
@@ -238,9 +238,9 @@ void ics2115_exit()
 
 	if (!DebugSnd_ICS2115Initted) return;
 
-	m_rom = NULL;
+	m_rom = nullptr;
 	m_rom_len = 0;
-	m_irq_cb = NULL;
+	m_irq_cb = nullptr;
 
 	BurnFree(buffer);
 
@@ -534,7 +534,7 @@ static bool ics2115_fill_output(ics2115_voice& voice, INT32* outputs, INT32 samp
 
 #endif
 
-	if (outputs == 0)
+	if (outputs == nullptr)
 	{
 		// no need to compute the output, just update state
 
@@ -690,7 +690,7 @@ void ics2115_update(INT32 segment_length)
 	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_update called without init\n"));
 #endif
 
-	if (pBurnSoundOut == NULL)
+	if (pBurnSoundOut == nullptr)
 		return;
 
 	if (segment_length >= nBurnSoundLen)

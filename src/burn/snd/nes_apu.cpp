@@ -619,7 +619,7 @@ static inline void apu_update(struct nesapu_info *info)
    INT32 accum;
 
 //------------------------------------------------------------------------------------------------------
-	if (info->pSyncCallback == NULL) return;
+	if (info->pSyncCallback == nullptr) return;
 	INT32 position;
 
 	if (info->fill_buffer_hack) {
@@ -721,7 +721,7 @@ void nesapuUpdate(INT32 chip, INT16 *buf, INT32 samples)
 
 	struct nesapu_info *info = &nesapu_chips[chip];
 
-	if (pBurnSoundOut == NULL) {
+	if (pBurnSoundOut == nullptr) {
 		info->current_position = 0;
 		return;
 	}
@@ -873,7 +873,7 @@ void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_p
 
 	info->bAdd = bAdd;
 
-	info->stream = NULL;
+	info->stream = nullptr;
 	info->stream = (INT16*)BurnMalloc(info->samples_per_frame * 2 * sizeof(INT16));
 	info->gain[BURN_SND_NESAPU_ROUTE_1] = 1.00;
 	info->gain[BURN_SND_NESAPU_ROUTE_2] = 1.00;

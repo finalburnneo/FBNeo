@@ -32,10 +32,10 @@ struct rf5c68pcm
 	INT32		output_dir[2];
 };
 
-static struct rf5c68pcm *chip = NULL;
+static struct rf5c68pcm *chip = nullptr;
 
-static INT32 *left = NULL;
-static INT32 *right = NULL;
+static INT32 *left = nullptr;
+static INT32 *right = nullptr;
 
 void RF5C68PCMUpdate(INT16* pSoundBuf, INT32 length)
 {

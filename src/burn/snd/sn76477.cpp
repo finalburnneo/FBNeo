@@ -100,7 +100,7 @@ struct SN76477 {
 };
 
 //static struct SN76477interface *intf;
-struct SN76477 *sn76477[MAX_SN76477] = {NULL, NULL, NULL, NULL};
+struct SN76477 *sn76477[MAX_SN76477] = {nullptr, nullptr, nullptr, nullptr};
 
 static void attack_decay(INT32 param)
 {

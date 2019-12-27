@@ -2,7 +2,7 @@
 
 #include "burnint.h"
 
-static INT32 (*WatchdogReset)(INT32 clear_mem) = NULL;
+static INT32 (*WatchdogReset)(INT32 clear_mem) = nullptr;
 static INT32 WatchdogFrames = 0;
 static INT32 Watchdog = 0;
 static INT32 WatchdogEnable = 0;
@@ -38,12 +38,12 @@ void BurnWatchdogExit()
 	WatchdogFrames = 0;
 	Watchdog = 0;
 	WatchdogEnable = 0;
-	WatchdogReset = NULL;
+	WatchdogReset = nullptr;
 }
 
 void BurnWatchdogInit(INT32 (*reset)(INT32 clear_mem), INT32 frames)
 {
-	if (reset == NULL) {
+	if (reset == nullptr) {
 #if defined FBNEO_DEBUG
 		bprintf (PRINT_ERROR, _T("Error: BurnWatchdogInit called with no reset!\n"));
 #endif
@@ -72,7 +72,7 @@ void BurnWatchdogUpdate()
 	}
 
 	if (Watchdog >= WatchdogFrames) {
-		if (WatchdogReset != NULL) {
+		if (WatchdogReset != nullptr) {
 			WatchdogReset(0);
 #if defined FBNEO_DEBUG
 			bprintf (0, _T("BurnWatchdogUpdate - Watchdog triggered!\n"));

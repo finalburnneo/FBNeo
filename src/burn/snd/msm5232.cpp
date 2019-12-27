@@ -65,7 +65,7 @@ static INT32     m_chip_clock;      /* chip clock in Hz */
 static INT32     m_rate;       /* sample rate in Hz */
 
 static double  m_external_capacity[8]; /* in Farads, eg 0.39e-6 = 0.36 uF (microFarads) */
-static void (*m_gate_handler_cb)(INT32 state) = NULL;/* callback called when the GATE output pin changes state */
+static void (*m_gate_handler_cb)(INT32 state) = nullptr;/* callback called when the GATE output pin changes state */
 
 static INT32 *sound_buffer[11];
 
@@ -303,10 +303,10 @@ void MSM5232Exit()
 
 	for (INT32 j = 0; j < 11; j++) {
 		BurnFree(sound_buffer[j]);
-		sound_buffer[j] = NULL;
+		sound_buffer[j] = nullptr;
 	}
 
-	m_gate_handler_cb = NULL;
+	m_gate_handler_cb = nullptr;
 	
 	DebugSnd_MSM5232Initted = 0;
 }

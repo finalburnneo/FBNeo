@@ -3,9 +3,9 @@
 
 #include "tiles_generic.h"
 
-static UINT16 *pandora_temp	= NULL;
-static UINT8 *pandora_ram	= NULL;
-static UINT8 *pandora_gfx	= NULL;
+static UINT16 *pandora_temp	= nullptr;
+static UINT8 *pandora_ram	= nullptr;
+static UINT8 *pandora_gfx	= nullptr;
 static INT32 pandora_clear;
 static INT32 pandora_xoffset;
 static INT32 pandora_yoffset;
@@ -138,7 +138,7 @@ void pandora_exit()
 
 	BurnFree (pandora_temp);
 
-	pandora_ram = pandora_gfx = NULL;
+	pandora_ram = pandora_gfx = nullptr;
 	
 	DebugDev_PandoraInitted = 0;
 }

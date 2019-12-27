@@ -10,9 +10,9 @@ static UINT16 write_data = 0;
 static UINT16 register_select = 0;
 static UINT16 rom_address = 0;
 static UINT8 rom_bank = 0;
-static UINT8 *datarom = NULL;
+static UINT8 *datarom = nullptr;
 static INT32 datarom_len = 0;
-static void (*ready_callback)() = NULL;
+static void (*ready_callback)() = nullptr;
 static UINT16 data_left = 0;
 static UINT16 data_right = 0;
 

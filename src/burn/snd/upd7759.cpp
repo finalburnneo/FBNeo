@@ -70,8 +70,8 @@ struct upd7759_chip
 	INT32		output_dir;
 };
 
-static struct upd7759_chip *Chips[2] = { NULL, NULL }; // more?
-static struct upd7759_chip *Chip = NULL;
+static struct upd7759_chip *Chips[2] = {nullptr, nullptr }; // more?
+static struct upd7759_chip *Chip = nullptr;
 
 static INT32 nNumChips = 0;
 
@@ -394,7 +394,7 @@ void UPD7759Reset()
 
 	for (INT32 i = 0; i < 2; i++) {
 		Chip = Chips[i];
-		if (Chip == NULL) {
+		if (Chip == nullptr) {
 			continue;
 		}
 	
@@ -540,7 +540,7 @@ void UPD7759Scan(INT32 nAction,INT32 *pnMin)
 		return;
 	}
 	
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029680;
 	}
 

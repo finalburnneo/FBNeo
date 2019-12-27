@@ -28,7 +28,7 @@ static INT32 buffer_len;
 static INT32 emulation_rate;
 static INT32 multiplier;
 static INT32 lfsr_index;
-static UINT16 *lfsr_buffer = NULL;
+static UINT16 *lfsr_buffer = nullptr;
 
 static INT32 volume;
 static INT32 tone_6khz;

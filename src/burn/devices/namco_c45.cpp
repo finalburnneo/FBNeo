@@ -3,18 +3,18 @@
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 
-UINT8 *c45RoadRAM = NULL; // external
+UINT8 *c45RoadRAM = nullptr; // external
 
-static UINT8 *c45RoadTiles = NULL;
-static UINT16 *c45RoadBitmap = NULL;
-static UINT8 *c45RoadClut = NULL;
+static UINT8 *c45RoadTiles = nullptr;
+static UINT16 *c45RoadBitmap = nullptr;
+static UINT8 *c45RoadClut = nullptr;
 static UINT8 c45_temp_clut[0x100];
 static INT32 c45_transparent_color = 0x7fffffff;
 
 void c45RoadReset()
 {
-	if (c45RoadRAM != NULL) memset (c45RoadRAM, 0, 0x20000);
-	if (c45RoadTiles != NULL) memset (c45RoadTiles, 0, 0x40000);
+	if (c45RoadRAM != nullptr) memset (c45RoadRAM, 0, 0x20000);
+	if (c45RoadTiles != nullptr) memset (c45RoadTiles, 0, 0x40000);
 }
 
 void c45RoadInit(UINT32 transparent_color, UINT8 *clut)
@@ -27,7 +27,7 @@ void c45RoadInit(UINT32 transparent_color, UINT8 *clut)
 
 	c45_transparent_color = transparent_color;
 	
-	if (c45RoadClut == NULL) {
+	if (c45RoadClut == nullptr) {
 		c45RoadClut = c45_temp_clut;
 		for (INT32 i = 0; i < 0x100; i++) c45RoadClut[i] = i;
 	}
@@ -35,15 +35,15 @@ void c45RoadInit(UINT32 transparent_color, UINT8 *clut)
 
 void c45RoadExit()
 {
-	if (c45RoadRAM != NULL) BurnFree(c45RoadRAM);
-	if (c45RoadTiles != NULL) BurnFree(c45RoadTiles);
-	if (c45RoadBitmap != NULL) BurnFree(c45RoadBitmap);
+	if (c45RoadRAM != nullptr) BurnFree(c45RoadRAM);
+	if (c45RoadTiles != nullptr) BurnFree(c45RoadTiles);
+	if (c45RoadBitmap != nullptr) BurnFree(c45RoadBitmap);
 
-	c45RoadRAM = NULL;
-	c45RoadTiles = NULL;
-	c45RoadBitmap = NULL;
+	c45RoadRAM = nullptr;
+	c45RoadTiles = nullptr;
+	c45RoadBitmap = nullptr;
 
-	c45RoadClut = NULL;
+	c45RoadClut = nullptr;
 
 	c45_transparent_color = 0x7fffffff;
 }
@@ -216,7 +216,7 @@ void c45RoadDraw()
 // call from save state
 void c45RoadState(INT32 nAction)
 {
-	if (c45RoadRAM == NULL) return;
+	if (c45RoadRAM == nullptr) return;
 
 	struct BurnArea ba;
 	memset(&ba, 0, sizeof(ba));

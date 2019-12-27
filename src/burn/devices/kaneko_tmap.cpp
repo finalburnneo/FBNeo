@@ -5,10 +5,10 @@
 
 static INT32 kaneko_view2_xoff[MAX_VIEW2_CHIPS] = { 0, 0 };
 static INT32 kaneko_view2_yoff[MAX_VIEW2_CHIPS] = { 0, 0 };
-static UINT8 *kaneko_view2_vram[MAX_VIEW2_CHIPS] = { NULL, NULL };
-static UINT8 *kaneko_view2_regs[MAX_VIEW2_CHIPS] = { NULL, NULL };
-static UINT8 *kaneko_view2_gfx[MAX_VIEW2_CHIPS] = { NULL, NULL };
-static UINT8 *kaneko_view2_gfx_trans[MAX_VIEW2_CHIPS] = { NULL, NULL };
+static UINT8 *kaneko_view2_vram[MAX_VIEW2_CHIPS] = {nullptr, nullptr };
+static UINT8 *kaneko_view2_regs[MAX_VIEW2_CHIPS] = {nullptr, nullptr };
+static UINT8 *kaneko_view2_gfx[MAX_VIEW2_CHIPS] = {nullptr, nullptr };
+static UINT8 *kaneko_view2_gfx_trans[MAX_VIEW2_CHIPS] = {nullptr, nullptr };
 static INT32 kaneko_color_offset[MAX_VIEW2_CHIPS] = { 0, 0 };
 
 void kaneko_view2_init(INT32 chip, UINT8 *video_ram, UINT8 *reg_ram, UINT8 *gfx_rom, INT32 color_offset, UINT8 *gfx_trans, INT32 global_x, INT32 global_y)
@@ -26,11 +26,11 @@ void kaneko_view2_init(INT32 chip, UINT8 *video_ram, UINT8 *reg_ram, UINT8 *gfx_
 void kaneko_view2_exit()
 {
 	for (INT32 i = 0; i < MAX_VIEW2_CHIPS; i++) {
-		kaneko_view2_vram[i] = NULL;
-		kaneko_view2_regs[i] = NULL;
-		kaneko_view2_gfx[i] = NULL;
+		kaneko_view2_vram[i] = nullptr;
+		kaneko_view2_regs[i] = nullptr;
+		kaneko_view2_gfx[i] = nullptr;
 		kaneko_color_offset[i] = 0;
-		kaneko_view2_gfx_trans[i] = NULL;
+		kaneko_view2_gfx_trans[i] = nullptr;
 
 		kaneko_view2_xoff[i] = 0;
 		kaneko_view2_yoff[i] = 0;	

@@ -27,7 +27,7 @@ static void (*AtariVADPartialCB)(INT32 param);
 INT32 atarivad_scanline; // external
 
 static UINT8 *palette_ram;
-static void (*atari_palette_write)(INT32 offset, UINT16 data) = NULL;
+static void (*atari_palette_write)(INT32 offset, UINT16 data) = nullptr;
 
 static tilemap_callback( bg ) // offtwall // shuuz
 {
@@ -284,7 +284,7 @@ void AtariVADInit(INT32 tmap_num0, INT32 tmap_num1, INT32 bg_map_type, void (*sl
 	palette_ram = (UINT8*)BurnMalloc(0x1000);
 
 	scanline_timer_callback = (sl_timer_cb) ? sl_timer_cb : scanline_timer_dummy;
-	AtariVADPartialCB = NULL;
+	AtariVADPartialCB = nullptr;
 
 	GenericTilemapInit(tmap_num0, TILEMAP_SCAN_COLS, bg_map_type ? bg_map_callback : bg0_map_callback, 8, 8, 64, 64);
 	GenericTilemapInit(tmap_num1, TILEMAP_SCAN_COLS, bg1_map_callback, 8, 8, 64, 64);

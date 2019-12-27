@@ -486,7 +486,7 @@ void asteroid_sound_exit()
 {
 	if( discharge )
 		BurnFree(discharge);
-	discharge = NULL;
+	discharge = nullptr;
 }
 
 void asteroid_sound_reset()

@@ -210,7 +210,7 @@ struct _es5506_state
 #endif
 };
 
-static struct _es5506_state *chip = NULL;
+static struct _es5506_state *chip = nullptr;
 
 INT32 ES550X_twincobra2_pan_fix = 0;
 
@@ -973,10 +973,10 @@ static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UIN
 	chip->chiptype = sndtype;
 
 	/* initialize the regions */
-	chip->region_base[0] = region0 ? (UINT16 *)region0 : NULL;
-	chip->region_base[1] = region1 ? (UINT16 *)region1 : NULL;
-	chip->region_base[2] = region2 ? (UINT16 *)region2 : NULL;
-	chip->region_base[3] = region3 ? (UINT16 *)region3 : NULL;
+	chip->region_base[0] = region0 ? (UINT16 *)region0 : nullptr;
+	chip->region_base[1] = region1 ? (UINT16 *)region1 : nullptr;
+	chip->region_base[2] = region2 ? (UINT16 *)region2 : nullptr;
+	chip->region_base[3] = region3 ? (UINT16 *)region3 : nullptr;
 
 	/* initialize the rest of the structure */
 	chip->master_clock = clock;
@@ -1085,7 +1085,7 @@ void ES5506Exit()
 	if (LOG_COMMANDS && eslog)
 	{
 		fclose(eslog);
-		eslog = NULL;
+		eslog = nullptr;
 	}
 
 #if MAKE_WAVS
@@ -1104,7 +1104,7 @@ void ES5506Exit()
 	BurnFree(chip->volume_lookup);
 	BurnFree(chip->scratch);
 	BurnFree(chip);
-	chip = NULL;
+	chip = nullptr;
 
 	ES550X_twincobra2_pan_fix = 0;
 
@@ -1648,7 +1648,7 @@ void es5506_voice_bank_w(INT32 voice, INT32 bank)
 
 void ES5505Init(INT32 clock, UINT8* region0, UINT8* region1, irq_callback callback)
 {
-	es5506_start_common(clock, region0, region1, NULL, NULL, callback, ES5505);
+	es5506_start_common(clock, region0, region1, nullptr, nullptr, callback, ES5505);
 }
 
 /**********************************************************************************************

@@ -61,7 +61,7 @@ static void MSM5205_playmode(INT32 chip, INT32 select);
 
 static const INT32 index_shift[8] = { -1, -1, -1, -1, 2, 4, 6, 8 };
 
-static UINT8 *scanline_table = NULL;
+static UINT8 *scanline_table = nullptr;
 
 static void ComputeTables(INT32 chip)
 {
@@ -249,7 +249,7 @@ void MSM5205Reset()
 	{
 		voice = &chips[chip];
 
-		if (stream[chip] == NULL) continue;
+		if (stream[chip] == nullptr) continue;
 
 		voice->data    = 0;
 		voice->vclk    = 0;
@@ -351,7 +351,7 @@ void MSM5205Exit()
 	{
 		voice = &chips[chip];
 
-		if (stream[chip] == NULL) continue;
+		if (stream[chip] == nullptr) continue;
 
 		memset (voice, 0, sizeof(_MSM5205_state));
 
@@ -359,7 +359,7 @@ void MSM5205Exit()
 	}
 
 	BurnFree(scanline_table);
-	scanline_table = NULL;
+	scanline_table = nullptr;
 
 	DebugSnd_MSM5205Initted = 0;
 	nNumChips = 0;
@@ -496,7 +496,7 @@ void MSM5205Scan(INT32 nAction, INT32 *pnMin)
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205Scan called without init\n"));
 #endif
 
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029708;
 	}
 

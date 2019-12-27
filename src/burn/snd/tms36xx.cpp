@@ -43,7 +43,7 @@ struct TMS36XX {
 	INT32 tune_max;		/* end of tune */
 };
 
-struct TMS36XX *tms = NULL;
+struct TMS36XX *tms = nullptr;
 
 #define C(n)	(int)((FSCALE<<(n-1))*1.18921)	/* 2^(3/12) */
 #define Cx(n)	(int)((FSCALE<<(n-1))*1.25992)	/* 2^(4/12) */
@@ -299,7 +299,7 @@ static const INT32 tune4[13*6] = {
 	B(1),	B(2),	Dx(3),	B(3),	Dx(4),	B(4)
 };
 
-static const INT32 *tunes[] = {NULL,tune1,tune2,tune3,tune4};
+static const INT32 *tunes[] = {nullptr,tune1,tune2,tune3,tune4};
 
 #define DECAY(voice)											\
 	if( tms->vol[voice] > VMIN )								\

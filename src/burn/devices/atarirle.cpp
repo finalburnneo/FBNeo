@@ -801,7 +801,7 @@ static void sort_and_render(struct atarirle_data *mo)
 	struct mo_sort_entry *current;
 	int i;
 
-	struct atarirle_entry *hilite = NULL;
+	struct atarirle_entry *hilite = nullptr;
 	int count = 0;
 
 	/* sort the motion objects into their proper priorities */

@@ -11,7 +11,7 @@ static UINT16 soundsgood_status;
 static INT32 soundsgood_in_reset;
 static INT32 soundsgood_is_initialized;
 static INT32 which_cpu, which_dac;
-static UINT16 *sg_ram = NULL;
+static UINT16 *sg_ram = nullptr;
 
 INT32 soundsgood_rampage = 0;
 
@@ -158,8 +158,8 @@ void soundsgood_reset()
 }
 
 static const pia6821_interface pia_intf = {
-	0, 0, 0, 0, 0, 0,
-	soundsgood_porta_w, soundsgood_portb_w, 0, 0,
+	nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
+	soundsgood_porta_w, soundsgood_portb_w, nullptr, nullptr,
 	soundsgood_irq, soundsgood_irq
 };
 

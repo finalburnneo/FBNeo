@@ -71,9 +71,9 @@ static void parse_frame(struct tms5110 *tms);
 
 #define DEBUG_5110	0
 
-static struct tms5110 *our_chip = NULL;
+static struct tms5110 *our_chip = nullptr;
 static INT32 tms5110_initted = 0;
-static INT16 *soundbuf = NULL;
+static INT16 *soundbuf = nullptr;
 static INT32 samples_from; // "re"sampler
 
 static void *tms5110_create(void)

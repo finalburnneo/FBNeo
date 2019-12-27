@@ -67,7 +67,7 @@ static k054539_info Chips[2];
 static k054539_info *info;
 
 // for resampling
-static INT16 *soundbuf[2] = { NULL, NULL };
+static INT16 *soundbuf[2] = {nullptr, nullptr };
 static UINT32 nSampleSize;
 static INT32 nFractionalPosition[2];
 static INT32 nPosition[2];
@@ -331,8 +331,8 @@ void K054539Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 
 	k054539_init_chip(clock, rom, nLen);
 
-	if (soundbuf[0] == NULL) soundbuf[0] = (INT16*)BurnMalloc((800 * sizeof(INT16) * 2) * 4);
-	if (soundbuf[1] == NULL) soundbuf[1] = (INT16*)BurnMalloc((800 * sizeof(INT16) * 2) * 4);
+	if (soundbuf[0] == nullptr) soundbuf[0] = (INT16*)BurnMalloc((800 * sizeof(INT16) * 2) * 4);
+	if (soundbuf[1] == nullptr) soundbuf[1] = (INT16*)BurnMalloc((800 * sizeof(INT16) * 2) * 4);
 
 	nNumChips = chip;
 }
@@ -361,8 +361,8 @@ void K054539Exit()
 
 	BurnFree (soundbuf[0]);
 	BurnFree (soundbuf[1]);
-	soundbuf[0] = NULL;
-	soundbuf[1] = NULL;
+	soundbuf[0] = nullptr;
+	soundbuf[1] = nullptr;
 
 	for (INT32 i = 0; i < 2; i++) {
 		info = &Chips[i];

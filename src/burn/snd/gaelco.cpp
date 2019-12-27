@@ -345,8 +345,8 @@ void gaelcosnd_exit()
 	if (!gaelcosnd_initted) return;
 
 	BurnFree(sample_buffer);
-	sample_buffer = NULL;
-	m_snd_data = NULL;
+	sample_buffer = nullptr;
+	m_snd_data = nullptr;
 	gaelcosnd_mono = 0;
 	gaelcosnd_swap_lr = 0;
 }

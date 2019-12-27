@@ -7,7 +7,7 @@ static INT32        m_gain[4];       /* gain index 0-63,64,65 */
 static INT32        m_channel_latch; /* current channel */
 static UINT8        m_latch[2][4];   /* 6bit+3bit 4 data latches */
 static UINT8        m_reset_comp;
-static void         (*m_gain_changed_cb)(INT32, INT32) = NULL;
+static void         (*m_gain_changed_cb)(INT32, INT32) = nullptr;
 
 static void reset_comp_w( int level );
 

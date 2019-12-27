@@ -16,9 +16,9 @@ static INT32 (*pTimerOverCallback)(INT32, INT32);
 static double (*pTimerTimeCallback)();
 
 static INT32 nCPUClockspeed = 0;
-static INT32 (*pCPUTotalCycles)() = NULL;
-static INT32 (*pCPURun)(INT32) = NULL;
-static void (*pCPURunEnd)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
+static INT32 (*pCPURun)(INT32) = nullptr;
+static void (*pCPURunEnd)() = nullptr;
 
 // ---------------------------------------------------------------------------
 // Running time
@@ -148,9 +148,9 @@ void BurnTimerScanYM3812(INT32 nAction, INT32* pnMin)
 void BurnTimerExitYM3812()
 {
 	nCPUClockspeed = 0;
-	pCPUTotalCycles = NULL;
-	pCPURun = NULL;
-	pCPURunEnd = NULL;
+	pCPUTotalCycles = nullptr;
+	pCPURun = nullptr;
+	pCPURunEnd = nullptr;
 
 	return;
 }
@@ -475,7 +475,7 @@ INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallbac
 	
 	if (num > MAX_YM3812) num = MAX_YM3812;
 	
-	BurnTimerInitYM3812(&YM3812TimerOver, NULL);
+	BurnTimerInitYM3812(&YM3812TimerOver, nullptr);
 
 	if (nBurnSoundRate <= 0) {
 		BurnYM3812StreamCallback = YM3812StreamCallbackDummy;

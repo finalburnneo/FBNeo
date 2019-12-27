@@ -11,7 +11,7 @@
 #define WAVEFORM_POSITION(n)	(((n) >> chip->f_fracbits) & 0x1f)
 
 static INT32 enable_ram = 0; // allocate RAM?
-UINT8* NamcoSoundProm = NULL;
+UINT8* NamcoSoundProm = nullptr;
 
 typedef struct
 {
@@ -26,9 +26,9 @@ typedef struct
 	INT32 waveform_select;
 } sound_channel;
 
-static UINT8 *namco_soundregs = NULL;
-static UINT8 *namco_wavedata = NULL;
-static UINT8 *namco_waveformdata = NULL;
+static UINT8 *namco_soundregs = nullptr;
+static UINT8 *namco_wavedata = nullptr;
+static UINT8 *namco_waveformdata = nullptr;
 static INT32 namco_waveformdatasize = 0;
 
 struct namco_sound
@@ -53,14 +53,14 @@ struct namco_sound
 	INT32 bAdd;
 };
 
-static struct namco_sound *chip = NULL;
+static struct namco_sound *chip = nullptr;
 
 static void NamcoSoundUpdate_INT(INT16* buffer, INT32 length); // forwards
 static void NamcoSoundUpdateStereo_INT(INT16* buffer, INT32 length); // forwards
 
 // for stream-sync
 static INT32 namco_buffered = 0;
-static INT32 (*pCPUTotalCycles)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
 static UINT32 nDACCPUMHZ = 0;
 static INT32 nPosition;
 static INT16 *soundbuf;
@@ -621,11 +621,11 @@ static INT32 build_decoded_waveform()
 	INT32 offset;
 	INT32 v;
 
-	if (NamcoSoundProm != NULL)
+	if (NamcoSoundProm != nullptr)
 		namco_wavedata = NamcoSoundProm;
 
 	/* 20pacgal has waves in RAM but old sound system */
-	if (NamcoSoundProm == NULL && chip->num_voices != 3)
+	if (NamcoSoundProm == nullptr && chip->num_voices != 3)
 	{
 		chip->wave_size = 1;
 		size = 32 * 16;		/* 32 samples, 16 waveforms */
@@ -649,7 +649,7 @@ static INT32 build_decoded_waveform()
 		p += size;
 	}
 
-	if (namco_wavedata == NULL) {
+	if (namco_wavedata == nullptr) {
 		enable_ram = 1;
 		namco_wavedata = (UINT8*)BurnMalloc(0x400);
 		memset(namco_wavedata, 0, 0x400);
@@ -776,13 +776,13 @@ void NamcoSoundExit()
 	BurnFree(soundbuf);
     if (namco_buffered) {
         namco_buffered = 0;
-        pCPUTotalCycles = NULL;
+        pCPUTotalCycles = nullptr;
 		nDACCPUMHZ = 0;
 		nPosition = 0;
     }
 
-	NamcoSoundProm = NULL;
-	namco_wavedata = NULL; // this is important.
+	NamcoSoundProm = nullptr;
+	namco_wavedata = nullptr; // this is important.
 
 	enable_ram = 0;
 	DebugSnd_NamcoSndInitted = 0;
@@ -797,7 +797,7 @@ void NamcoSoundScan(INT32 nAction, INT32 *pnMin)
 		return;
 	}
 
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029707;
 	}
 

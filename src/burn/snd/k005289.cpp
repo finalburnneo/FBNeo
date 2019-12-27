@@ -132,8 +132,8 @@ void K005289Exit()
 
 	BurnFree (mixer_buffer);
 	BurnFree (mixer_table);
-	mixer_buffer = NULL;
-	mixer_table = NULL;
+	mixer_buffer = nullptr;
+	mixer_table = nullptr;
 
 	DebugSnd_K005289Initted = 0;
 }

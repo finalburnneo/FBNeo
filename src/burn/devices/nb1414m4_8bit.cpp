@@ -31,7 +31,7 @@ Notes:
 #include "tiles_generic.h" // for UINT* etc
 #include "nb1414m4_8bit.h"
 
-UINT8 *nb1414_blit_data8b = NULL;
+UINT8 *nb1414_blit_data8b = nullptr;
 UINT32 nb1414_frame8b = 0;
 
 static void nichibutsu_1414m4_dma(UINT16 src,UINT16 dst,UINT16 size, UINT8 condition,UINT8 *vram)

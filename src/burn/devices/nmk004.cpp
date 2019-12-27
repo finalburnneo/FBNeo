@@ -169,7 +169,7 @@ void NMK004_exit()
 	nmk004_initted = 0;
 
 	BurnFree(ram);
-	ram = NULL;
+	ram = nullptr;
 
 	tlcs90Exit();
 	BurnYM2203Exit();

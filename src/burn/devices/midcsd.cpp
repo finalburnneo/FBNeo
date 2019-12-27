@@ -10,7 +10,7 @@ static UINT16 dacvalue;
 static UINT16 csd_status;
 static INT32 csd_in_reset;
 static INT32 csd_is_intialized = 0;
-static UINT16 *csd_ram = NULL;
+static UINT16 *csd_ram = nullptr;
 extern INT32 ssio_spyhunter;
 
 // muting & pop-supression logic
@@ -184,8 +184,8 @@ void csd_reset()
 }
 
 static const pia6821_interface pia_intf = {
-	0, 0, 0, 0, 0, 0,
-	csd_porta_w, csd_portb_w, 0, 0,
+	nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
+	csd_porta_w, csd_portb_w, nullptr, nullptr,
 	csd_irq, csd_irq
 };
 
@@ -220,7 +220,7 @@ void csd_exit()
 	pia_init();
 	DACExit();
     csd_is_intialized = 0;
-    csd_ram = NULL;
+    csd_ram = nullptr;
 }
 
 void csd_scan(INT32 nAction, INT32 *pnMin)

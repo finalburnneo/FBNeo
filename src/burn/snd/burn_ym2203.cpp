@@ -606,7 +606,7 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 		BurnYM2203Update = YM2203UpdateDummy;
 
 		for (INT32 i = 0; i < num; i++) {
-			AY8910InitYM(i, nClockFrequency, 11025, NULL, NULL, NULL, NULL, BurnAY8910UpdateRequest);
+			AY8910InitYM(i, nClockFrequency, 11025, nullptr, nullptr, nullptr, nullptr, BurnAY8910UpdateRequest);
 		}
 		YM2203Init(num, nClockFrequency, 11025, &BurnOPNTimerCallback, IRQCallback);
 		return 0;
@@ -634,7 +634,7 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 	}
 
 	for (INT32 i = 0; i < num; i++) {
-		AY8910InitYM(i, nClockFrequency, nBurnYM2203SoundRate, NULL, NULL, NULL, NULL, BurnAY8910UpdateRequest);
+		AY8910InitYM(i, nClockFrequency, nBurnYM2203SoundRate, nullptr, nullptr, nullptr, nullptr, BurnAY8910UpdateRequest);
 	}
 	
 	YM2203Init(num, nClockFrequency, nBurnYM2203SoundRate, &BurnOPNTimerCallback, IRQCallback);

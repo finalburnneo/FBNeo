@@ -310,7 +310,7 @@ static void vlm5030_update(struct vlm5030_info *chip)
 	INT32 u[11];
 
 //------------------------------------------------------------------------------------------------------
-	if (chip->pSyncCallback == NULL) return;
+	if (chip->pSyncCallback == nullptr) return;
 	INT32 position;
 
 	if (chip->fill_buffer_hack) {
@@ -730,7 +730,7 @@ void vlm5030Exit()
 
 		if (chip->output) {
 			BurnFree(chip->output);
-			chip->output = NULL;
+			chip->output = nullptr;
 		}
 	}
 	
@@ -745,7 +745,7 @@ void vlm5030Update(INT32 nChip, INT16 *buf, INT32 samples)
 
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
 
-	if (pBurnSoundOut == NULL) {
+	if (pBurnSoundOut == nullptr) {
 		chip->current_position = 0;
 		return;
 	}

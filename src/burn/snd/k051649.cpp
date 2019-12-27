@@ -230,7 +230,7 @@ void K051649Scan(INT32 nAction, INT32 *pnMin)
 		return;
 	}
 	
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029705;
 	}
 

@@ -30,8 +30,8 @@ struct sample_format
 	INT32 output_dir[2];
 };
 
-static struct sample_format *samples		= NULL; // store samples
-static struct sample_format *sample_ptr		= NULL; // generic pointer for sample
+static struct sample_format *samples		= nullptr; // store samples
+static struct sample_format *sample_ptr		= nullptr; // generic pointer for sample
 
 static void make_raw(UINT8 *src, UINT32 len)
 {
@@ -331,14 +331,14 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 	INT32 length;
 	char path[256*2];
 	char setname[128];
-	void *destination = NULL;
+	void *destination = nullptr;
 	char szTempPath[MAX_PATH];
 	sprintf(szTempPath, _TtoA(SAMPLE_DIRECTORY));
 
 	// test to see if file exists
 	INT32 nEnableSamples = 0;
 
-	if (BurnDrvGetTextA(DRV_SAMPLENAME) == NULL) { // called with no samples
+	if (BurnDrvGetTextA(DRV_SAMPLENAME) == nullptr) { // called with no samples
 		nTotalSamples = 0;
 		return;
 	}
@@ -378,7 +378,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		BurnDrvGetSampleInfo(&si, i);
-		char *szSampleNameTmp = NULL;
+		char *szSampleNameTmp = nullptr;
 		BurnDrvGetSampleName(&szSampleNameTmp, i, 0);
 
 		sample_ptr = &samples[i];
@@ -393,13 +393,13 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 
 		if (si.nFlags & SAMPLE_NOSTORE) {
 			sample_ptr->flags = si.nFlags;
-			sample_ptr->data = NULL;
+			sample_ptr->data = nullptr;
 			continue;
 		}
 
 		sprintf (path, "%s%s", szTempPath, setname);
 
-		destination = NULL;
+		destination = nullptr;
 		length = 0;
 		ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
 		
@@ -435,11 +435,11 @@ void BurnSampleInitOne(INT32 sample)
 		int i = 0;
 		while (i < nTotalSamples) {
 			
-			if (clr_ptr->data != NULL && i != sample && (clr_ptr->flags & SAMPLE_NOSTORE)) {
+			if (clr_ptr->data != nullptr && i != sample && (clr_ptr->flags & SAMPLE_NOSTORE)) {
 				BurnFree(clr_ptr->data);
 				clr_ptr->playing = 0;
 				clr_ptr->playback_rate = 100;
-				clr_ptr->data = NULL;
+				clr_ptr->data = nullptr;
 			}
 
 			clr_ptr++, i++;
@@ -453,7 +453,7 @@ void BurnSampleInitOne(INT32 sample)
 	INT32 length;
 	char path[256];
 	char setname[128];
-	void *destination = NULL;
+	void *destination = nullptr;
 	char szTempPath[MAX_PATH];
 	sprintf(szTempPath, _TtoA(SAMPLE_DIRECTORY));
 
@@ -462,7 +462,7 @@ void BurnSampleInitOne(INT32 sample)
 
 	struct BurnSampleInfo si;
 	BurnDrvGetSampleInfo(&si, sample);
-	char *szSampleNameTmp = NULL;
+	char *szSampleNameTmp = nullptr;
 	BurnDrvGetSampleName(&szSampleNameTmp, sample, 0);
 
 	sample_ptr = &samples[sample];
@@ -473,13 +473,13 @@ void BurnSampleInitOne(INT32 sample)
 	strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 5); // leave space for ".wav" + null, just incase!
 	strcat(&szSampleName[0], ".wav");
 
-	if (sample_ptr->playing || sample_ptr->data != NULL || sample_ptr->flags == SAMPLE_IGNORE) {
+	if (sample_ptr->playing || sample_ptr->data != nullptr || sample_ptr->flags == SAMPLE_IGNORE) {
 		return;
 	}
 
 	sprintf (path, "%s%s", szTempPath, setname);
 
-	destination = NULL;
+	destination = nullptr;
 	length = 0;
 	ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
 		
@@ -537,7 +537,7 @@ void BurnSampleExit()
 	if (samples)
 		BurnFree (samples);
 
-	sample_ptr = NULL;
+	sample_ptr = nullptr;
 	nTotalSamples = 0;
 	bAddToStream = 0;
 	bBurnSampleTrimSampleEnd = 0;
@@ -551,7 +551,7 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleRender called without init\n"));
 #endif
 
-	if (pBurnSoundOut == NULL) {
+	if (pBurnSoundOut == nullptr) {
 		return;
 	}
 
@@ -630,7 +630,7 @@ void BurnSampleScan(INT32 nAction, INT32 *pnMin)
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleScan called without init\n"));
 #endif
 
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029707;
 	}
 

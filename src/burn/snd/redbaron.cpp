@@ -12,7 +12,7 @@
 
 static INT16  *m_mixer_buffer; // re-sampler
 
-static INT32 (*pCPUTotalCycles)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
 static UINT32  nDACCPUMHZ = 0;
 static INT32   nCurrentPosition = 0;
 

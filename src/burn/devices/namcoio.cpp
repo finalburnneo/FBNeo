@@ -147,12 +147,12 @@ void namcoio_init(INT32 chip, INT32 type, UINT8 (*in0)(UINT8), UINT8 (*in1)(UINT
 
 	ptr->type = type;
 
-	ptr->in_0_cb = (in0 == NULL) ? fakeIn : in0;
-	ptr->in_1_cb = (in1 == NULL) ? fakeIn : in1;
-	ptr->in_2_cb = (in2 == NULL) ? fakeIn : in2;
-	ptr->in_3_cb = (in3 == NULL) ? fakeIn : in3;
-	ptr->out_0_cb = (out0 == NULL) ? fakeOut : out0;
-	ptr->out_1_cb = (out1 == NULL) ? fakeOut : out1;
+	ptr->in_0_cb = (in0 == nullptr) ? fakeIn : in0;
+	ptr->in_1_cb = (in1 == nullptr) ? fakeIn : in1;
+	ptr->in_2_cb = (in2 == nullptr) ? fakeIn : in2;
+	ptr->in_3_cb = (in3 == nullptr) ? fakeIn : in3;
+	ptr->out_0_cb = (out0 == nullptr) ? fakeOut : out0;
+	ptr->out_1_cb = (out1 == nullptr) ? fakeOut : out1;
 
 	switch (type)
 	{

@@ -14,9 +14,9 @@ static INT32 (*pTimerOverCallback)(INT32, INT32);
 static double (*pTimerTimeCallback)();
 
 static INT32 nCPUClockspeed = 0;
-static INT32 (*pCPUTotalCycles)() = NULL;
-static INT32 (*pCPURun)(INT32) = NULL;
-static void (*pCPURunEnd)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
+static INT32 (*pCPURun)(INT32) = nullptr;
+static void (*pCPURunEnd)() = nullptr;
 
 // ---------------------------------------------------------------------------
 // Running time
@@ -146,9 +146,9 @@ void BurnTimerScanY8950(INT32 nAction, INT32* pnMin)
 void BurnTimerExitY8950()
 {
 	nCPUClockspeed = 0;
-	pCPUTotalCycles = NULL;
-	pCPURun = NULL;
-	pCPURunEnd = NULL;
+	pCPUTotalCycles = nullptr;
+	pCPURun = nullptr;
+	pCPURunEnd = nullptr;
 
 	return;
 }
@@ -469,7 +469,7 @@ void BurnY8950Exit()
 
 INT32 BurnY8950Init(INT32 num, INT32 nClockFrequency, UINT8* Y8950ADPCM0ROM, INT32 nY8950ADPCM0Size, UINT8* Y8950ADPCM1ROM, INT32 nY8950ADPCM1Size, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal)
 {
-	BurnTimerInitY8950(&Y8950TimerOver, NULL);
+	BurnTimerInitY8950(&Y8950TimerOver, nullptr);
 
 	if (nBurnSoundRate <= 0) {
 		BurnY8950StreamCallback = Y8950StreamCallbackDummy;

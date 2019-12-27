@@ -8,14 +8,14 @@
 
 // only used in t5182.c
 static INT32 irqstate;
-static UINT8 *t5182RAM	= NULL;
+static UINT8 *t5182RAM	= nullptr;
 
 static INT32 nCPU;
 static INT32 coin_frame;
 
 // use externally
-UINT8 *t5182SharedRAM = NULL;	// allocate externally
-UINT8 *t5182ROM = NULL;		// allocate externally
+UINT8 *t5182SharedRAM = nullptr;	// allocate externally
+UINT8 *t5182ROM = nullptr;		// allocate externally
 
 UINT8 t5182_semaphore_snd = 0;
 UINT8 t5182_semaphore_main = 0;
@@ -185,9 +185,9 @@ void t5182Exit()
 
 	BurnFree (t5182RAM);
 
-	t5182SharedRAM = NULL;
-	t5182RAM = NULL;
-	t5182ROM = NULL;
+	t5182SharedRAM = nullptr;
+	t5182RAM = nullptr;
+	t5182ROM = nullptr;
 	
 	DebugDev_T5182Initted = 0;
 }

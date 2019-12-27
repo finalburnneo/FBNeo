@@ -52,7 +52,7 @@ static INT32 tone1_vco1_cap;
 static INT32 tone1_level;
 static INT32 tone2_level;
 
-static UINT32 *poly18 = NULL;
+static UINT32 *poly18 = nullptr;
 
 static INT32 phoenixsnd_initted = 0;
 

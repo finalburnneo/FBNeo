@@ -128,8 +128,8 @@ void tcs_reset()
 }
 
 static const pia6821_interface pia_intf = {
-	0, 0, 0, 0, 0, 0,
-	tcs_porta_w, tcs_portb_w, 0, 0,
+	nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
+	tcs_porta_w, tcs_portb_w, nullptr, nullptr,
 	tcs_irq, tcs_irq
 };
 

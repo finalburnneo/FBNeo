@@ -345,7 +345,7 @@ void TimeKeeperInit(INT32 type, UINT8 *data)
 		break;
 	}
 
-	if( data == NULL )
+	if( data == nullptr )
 	{
 		data = (UINT8*)BurnMalloc(Chip.size);
 		memset(data, 0xff, Chip.size );

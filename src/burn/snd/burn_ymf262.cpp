@@ -17,7 +17,7 @@ static INT32 nBurnYMF262SoundRate;
 static double YMF262Volumes[2];
 static INT32 YMF262RouteDirs[2];
 
-static void *ymfchip = NULL;
+static void *ymfchip = nullptr;
 
 // ----------------------------------------------------------------------------
 // Dummy functions
@@ -80,7 +80,7 @@ void BurnYMF262Update(INT32 nSegmentEnd)
 
 	INT16* pSoundBuf = pBurnSoundOut;
 
-	if (nBurnSoundRate == 0 || pBurnSoundOut == NULL) {
+	if (nBurnSoundRate == 0 || pBurnSoundOut == nullptr) {
 		return;
 	}
 
@@ -218,7 +218,7 @@ INT32 BurnYMF262Init(INT32 nClockFrequency, void (*IRQCallback)(INT32, INT32), I
 	nSampleSize = (UINT32)nBurnYMF262SoundRate * (1 << 16) / nBurnSoundRate;
 	bYMF262AddSignal = nAdd;
 
-	BurnTimerInit(&ymf262_timerover, NULL);
+	BurnTimerInit(&ymf262_timerover, nullptr);
 	ymfchip = ymf262_init(nClockFrequency, nBurnYMF262SoundRate, IRQCallback, BurnYMF262TimerCallback);
 
 	pBuffer = (INT16*)BurnMalloc(4096 * 2 * sizeof(INT16));

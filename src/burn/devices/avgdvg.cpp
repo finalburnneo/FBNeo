@@ -135,7 +135,7 @@ struct vgvector
 	INT32 status;
 };
 
-static vgvector *vectbuf = NULL;
+static vgvector *vectbuf = nullptr;
 
 static void vg_flush()
 {
@@ -1022,7 +1022,7 @@ static void avgdvg_clr_busy(INT32 /*dummy*/)
 }
 
 // cycle timing stuff for pot routines
-static INT32 (*pCPUTotalCycles)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
 
 void avgdvg_checkhalt()
 {
@@ -1107,7 +1107,7 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 {
 	INT32 i;
 
-	pCPUTotalCycles = NULL;
+	pCPUTotalCycles = nullptr;
 
 	/* 0 vector RAM size is invalid */
 	if (vectorram_size == 0)

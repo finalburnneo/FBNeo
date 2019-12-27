@@ -18,7 +18,7 @@ static INT32 sound_latch_a;
 static INT32 sound_latch_b;
 static INT32 sound_latch_c;	/* part of the videoreg_w latch */
 
-static UINT32 *poly18 = NULL;
+static UINT32 *poly18 = nullptr;
 static INT32 polybit;
 static double custom_volume = 1.00;
 

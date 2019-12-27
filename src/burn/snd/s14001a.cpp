@@ -163,7 +163,7 @@ typedef struct
 	UINT8 *SpeechRom; // array to hold rom contents, mame will not need this, will use a pointer
 } S14001AChip;
 
-static S14001AChip *our_chip = NULL;
+static S14001AChip *our_chip = nullptr;
 
 // for resampling
 static UINT32 nSampleSize;
@@ -172,7 +172,7 @@ static INT32 nFractionalPosition;
 static INT32 samples_from; // (samples per frame)
 static INT16 *mixer_buffer;
 
-static INT32 (*pCPUTotalCycles)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
 static UINT32  nDACCPUMHZ = 0;
 static INT32   nCurrentPosition;
 
@@ -491,7 +491,7 @@ static void UpdateStream(INT32 length)
 
 void s14001a_render(INT16 *buffer, INT32 length)
 {
-	if (mixer_buffer == NULL || samples_from == 0) return;
+	if (mixer_buffer == nullptr || samples_from == 0) return;
 
 	if (length != nBurnSoundLen) {
 		bprintf(0, _T("s14001a_render(): once per frame, please!\n"));

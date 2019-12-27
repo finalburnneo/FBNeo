@@ -32,7 +32,7 @@ INT32 atarijsa_int_state;
 
 static INT32 has_pokey = 0;
 static INT32 has_tms5220 = 0;
-static UINT8 *samples[2] = { NULL, NULL };
+static UINT8 *samples[2] = {nullptr, nullptr };
 static UINT8 *atarijsa_rom;
 static UINT8 *atarijsa_ram;
 static void (*update_int_callback)();
@@ -307,7 +307,7 @@ void AtariJSAInit(UINT8 *rom, void (*int_cb)(), UINT8 *samples0, UINT8 *samples1
 	samples[0] = samples0;
 	samples[1] = samples1;
 
-	has_tms5220 = (samples0 == NULL) && (samples1 == NULL);
+	has_tms5220 = (samples0 == nullptr) && (samples1 == nullptr);
 	has_pokey = has_tms5220;
 
 	M6502Init(0, TYPE_M6502);
@@ -358,7 +358,7 @@ void AtariJSAExit()
 	BurnFree (atarijsa_ram);
 
 	has_tms5220 = 0;
-	MSM6295ROM = NULL;
+	MSM6295ROM = nullptr;
 }
 
 void AtariJSAScan(INT32 nAction, INT32 *pnMin)

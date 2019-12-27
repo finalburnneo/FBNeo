@@ -52,7 +52,7 @@ struct _es8712_state
 	INT32 addSignal;			/* add signal to stream? */
 };
 
-static INT16 *tbuf[MAX_ES8712_CHIPS] = { NULL };
+static INT16 *tbuf[MAX_ES8712_CHIPS] = {nullptr };
 
 static _es8712_state chips[MAX_ES8712_CHIPS];
 static _es8712_state *chip;
@@ -252,7 +252,7 @@ void es8712Init(INT32 device, UINT8 *rom, INT32 sample_rate, INT32 addSignal)
 	chip->output_dir = BURN_SND_ROUTE_BOTH;
 	chip->addSignal = addSignal;
 
-	if (tbuf[device] == NULL) {
+	if (tbuf[device] == nullptr) {
 		tbuf[device] = (INT16*)BurnMalloc(sample_rate * sizeof(INT16));
 	}
 }

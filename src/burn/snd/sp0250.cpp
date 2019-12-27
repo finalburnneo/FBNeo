@@ -23,13 +23,13 @@
 #define ASSERT_LINE 1
 #define CLEAR_LINE 0
 
-static INT32 (*pCPUTotalCycles)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
 static UINT32  nDACCPUMHZ = 0;
 static INT32   nCurrentPosition = 0;
 static INT16  *mixer_buffer; // re-sampler
 
-static struct sp0250 *sp = NULL;
-static void (*drq)(INT32 state) = NULL;
+static struct sp0250 *sp = nullptr;
+static void (*drq)(INT32 state) = nullptr;
 static INT32 sp0250_clock; // sp0250 clockrate
 static INT32 sp0250_frame; // frame sample-size
 

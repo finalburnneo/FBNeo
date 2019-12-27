@@ -136,11 +136,11 @@ struct atarimo_data
     GLOBAL VARIABLES
 ##########################################################################*/
 
-UINT16 *atarimo_0_spriteram = NULL;
-UINT16 *atarimo_0_slipram = NULL;
+UINT16 *atarimo_0_spriteram = nullptr;
+UINT16 *atarimo_0_slipram = nullptr;
 
-UINT16 *atarimo_1_spriteram = NULL;
-UINT16 *atarimo_1_slipram = NULL;
+UINT16 *atarimo_1_spriteram = nullptr;
+UINT16 *atarimo_1_slipram = nullptr;
 
 
 
@@ -633,7 +633,7 @@ static void convert_dirty_grid_to_rects(atarimo_data *mo, const rectangle *clipr
 	/* initialize the rect list */
 	rectlist->numrects = 0;
 	rectlist->rect = mo->rectlist;
-	rect = NULL;
+	rect = nullptr;
 
 	/* loop over all grid rows that intersect our cliprect */
 	for (y = sy; y <= ey; y++)
@@ -652,7 +652,7 @@ static void convert_dirty_grid_to_rects(atarimo_data *mo, const rectangle *clipr
 				{
 					/* advance pointers */
 					rectlist->numrects++;
-					if (rect == NULL) {
+					if (rect == nullptr) {
 						rect = &mo->rectlist[0];
 					} else {
 						rect++;
@@ -871,7 +871,7 @@ if ((temp & 0xff00) == 0xc800)
 	if (mo->specialmask.mask != 0 && EXTRACT_DATA(entry, mo->specialmask) == mo->specialvalue)
 	{
 		if (mo->specialcb)
-			return (*mo->specialcb)(bitmap, cliprect, code, color, xpos, ypos, NULL);
+			return (*mo->specialcb)(bitmap, cliprect, code, color, xpos, ypos, nullptr);
 		return 0;
 	}
 

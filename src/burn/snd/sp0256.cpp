@@ -63,8 +63,8 @@ struct lpc12_t
 	INT32   interp;
 };
 
-static void (*m_drq_cb)(UINT8) = NULL;
-static void (*m_sby_cb)(UINT8) = NULL;
+static void (*m_drq_cb)(UINT8) = nullptr;
+static void (*m_sby_cb)(UINT8) = nullptr;
 
 static void null_callback_drq(UINT8 data)
 {

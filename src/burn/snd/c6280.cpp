@@ -88,7 +88,7 @@ typedef struct {
 	INT32 output_dir[2];
 } c6280_t;
 
-static INT16 *stream_buffer = NULL;
+static INT16 *stream_buffer = nullptr;
 static INT32 c6280_previous_offset = 0;
 
 static c6280_t chip[1];
@@ -156,7 +156,7 @@ void c6280_init(double clk, INT32 bAdd)
 
 	stream_buffer = (INT16*)BurnMalloc(nBurnSoundLen * 2 * sizeof(INT16));
 
-	if (stream_buffer == NULL) {
+	if (stream_buffer == nullptr) {
 #if defined FBNEO_DEBUG
 		bprintf (0, _T("Stream buffer allocation failed!\n"));
 #endif

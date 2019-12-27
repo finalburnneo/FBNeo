@@ -187,7 +187,7 @@ void c140_exit()
 {
 	if (m_mixer_buffer_left) {
 		BurnFree(m_mixer_buffer_left);
-		m_mixer_buffer_left = m_mixer_buffer_right = NULL;
+		m_mixer_buffer_left = m_mixer_buffer_right = nullptr;
 	}
 }
 

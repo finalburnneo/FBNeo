@@ -54,7 +54,7 @@ void MSM6295SetBank(INT32 nChip, UINT8 *pRomData, INT32 nStart, INT32 nEnd)
 	if (nStart >= nEnd || nEnd < 0 || nEnd >= 0x40000) bprintf(PRINT_ERROR, _T("MSM6295SetBank (Chip %d) called with invalid nEnd %x\n"), nChip, nEnd);
 #endif
 
-	if (pRomData == NULL) return;
+	if (pRomData == nullptr) return;
 
 //	if (nEnd >= nStart) return;
 //	if (nEnd >= 0x40000) nEnd = 0x40000;
@@ -87,8 +87,8 @@ static INT32 MSM6295StepShift[8] = {-1, -1, -1, -1, 2, 4, 6, 8};
 
 static INT32* MSM6295ChannelData[MAX_MSM6295][4];
 
-static INT32* pLeftBuffer = NULL;
-static INT32* pRightBuffer = NULL;
+static INT32* pLeftBuffer = nullptr;
+static INT32* pRightBuffer = nullptr;
 
 static INT32 nPreviousSample[MAX_MSM6295], nCurrentSample[MAX_MSM6295];
 
@@ -116,7 +116,7 @@ void MSM6295Reset(INT32 nChip)
 	}
 
 	// set bank data only if DataPointer has not already been set
-	if (pBankPointer[nChip][0] == NULL) {
+	if (pBankPointer[nChip][0] == nullptr) {
 		MSM6295SetBank(nChip, MSM6295ROM + (nChip * 0x0100000), 0, 0x3ffff); // set initial bank (compatibility)
 	}
 }
@@ -487,8 +487,8 @@ void MSM6295Exit(INT32 nChip)
 
 	if (pLeftBuffer) BurnFree(pLeftBuffer);
 	if (pRightBuffer) BurnFree(pRightBuffer);
-	pLeftBuffer = NULL;
-	pRightBuffer = NULL;
+	pLeftBuffer = nullptr;
+	pRightBuffer = nullptr;
 
 	for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
 		BurnFree(MSM6295ChannelData[nChip][nChannel]);
@@ -523,10 +523,10 @@ INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, bool bAddSignal)
 	DebugSnd_MSM6295Initted = 1;
 	
 	if (nBurnSoundRate > 0) {
-		if (pLeftBuffer == NULL) {
+		if (pLeftBuffer == nullptr) {
 			pLeftBuffer = (INT32*)BurnMalloc(nBurnSoundRate * sizeof(INT32));
 		}
-		if (pRightBuffer == NULL) {
+		if (pRightBuffer == nullptr) {
 			pRightBuffer = (INT32*)BurnMalloc(nBurnSoundRate * sizeof(INT32));
 		}
 	}

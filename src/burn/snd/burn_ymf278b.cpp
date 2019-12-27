@@ -80,7 +80,7 @@ void BurnYMF278BUpdate(INT32 nSegmentEnd)
 
 	INT16* pSoundBuf = pBurnSoundOut;
 
-	if (nBurnSoundRate == 0 || pBurnSoundOut == NULL) {
+	if (nBurnSoundRate == 0 || pBurnSoundOut == nullptr) {
 		return;
 	}
 
@@ -273,10 +273,10 @@ INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, INT32 YMF278BROM
 	nSampleSize = (UINT32)nBurnYMF278SoundRate * (1 << 16) / nBurnSoundRate;
 	bYMF278BAddSignal = 0; // not used by any driver. (yet)
 
-	uses_timer = (IRQCallback != NULL);
+	uses_timer = (IRQCallback != nullptr);
 
 	if (uses_timer)
-		BurnTimerInit(&ymf278b_timer_over, NULL);
+		BurnTimerInit(&ymf278b_timer_over, nullptr);
 
 	ymf278b_start(0, YMF278BROM, YMF278BROMSize, IRQCallback, BurnYMFTimerCallback, nClockFrequency);
 

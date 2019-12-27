@@ -126,11 +126,11 @@ void i8257Config(UINT8 (*cpuread)(UINT16), void (*cpuwrite)(UINT16,UINT8), INT32
 	m_out_memw_func = cpuwrite;
 
 	for (INT32 i = 0; i < I8257_NUM_CHANNELS; i++) {
-		if (read_f != NULL) m_in_ior_func[i] = (read_f[i] != NULL) ? read_f[i] : null_in;
-		if (write_f != NULL) m_out_iow_func[i] = (write_f[i] != NULL) ? write_f[i] : null_out;
+		if (read_f != nullptr) m_in_ior_func[i] = (read_f[i] != nullptr) ? read_f[i] : null_in;
+		if (write_f != nullptr) m_out_iow_func[i] = (write_f[i] != nullptr) ? write_f[i] : null_out;
 	}
 
-	if (idle != NULL) m_idle_func = idle;
+	if (idle != nullptr) m_idle_func = idle;
 }
 
 //-------------------------------------------------

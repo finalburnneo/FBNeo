@@ -610,7 +610,7 @@ static int num_lock = 0;
 
 INLINE void OPL3_SLOT_CONNECT(OPL3 *chip, OPL3_SLOT *slot) {
 	if (slot->conn_enum == CONN_NULL) {
-		slot->connect = NULL;
+		slot->connect = nullptr;
 	} else if (slot->conn_enum >= CONN_CHAN0 && slot->conn_enum < CONN_PHASEMOD) {
 		slot->connect = &chip->chanout[slot->conn_enum];
 	} else if (slot->conn_enum == CONN_PHASEMOD) {
@@ -2335,7 +2335,7 @@ static OPL3 *OPL3Create(int clock, int rate, int type)
 {
 	OPL3 *chip;
 
-	if (OPL3_LockTable() == -1) return NULL;
+	if (OPL3_LockTable() == -1) return nullptr;
 
 	/* allocate memory block */
 	chip = (OPL3 *)malloc(sizeof(OPL3));

@@ -206,7 +206,7 @@ static struct POKEYinterface intf;
 static struct POKEYregisters pokey[MAXPOKEYS];
 
 // cycle timing stuff for pot routines
-static INT32 (*pCPUTotalCycles)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
 
 void pokey_scan(INT32 nAction, INT32* pnMin)
 {

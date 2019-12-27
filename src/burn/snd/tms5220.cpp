@@ -464,7 +464,7 @@ struct tms5220_state
 };
 
 
-static tms5220_state *our_chip = NULL;
+static tms5220_state *our_chip = nullptr;
 static INT16 *soundbuf;
 
 static double tms5220_vol;
@@ -477,7 +477,7 @@ static INT32 our_freq = 0; // for tms5220_set_frequency()
 
 // for stream-sync
 static INT32 tms5220_buffered = 0;
-static INT32 (*pCPUTotalCycles)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
 static UINT32  nDACCPUMHZ = 0;
 
 // Streambuffer handling
@@ -1482,7 +1482,7 @@ static void set_interrupt_state(tms5220_state *tms, INT32 state)
 #ifdef DEBUG_PIN_READS
 	logerror("irq pin set to state %d\n", state);
 #endif
-	if (tms->irq_func != NULL && state != tms->irq_pin)
+	if (tms->irq_func != nullptr && state != tms->irq_pin)
 		tms->irq_func(!state);
 	tms->irq_pin = state;
 }
@@ -1499,7 +1499,7 @@ static void update_ready_state(tms5220_state *tms)
 #ifdef DEBUG_PIN_READS
 	logerror("ready pin set to state %d\n", state);
 #endif
-	if (tms->readyq_func != NULL && state != tms->ready_pin)
+	if (tms->readyq_func != nullptr && state != tms->ready_pin)
 		tms->readyq_func(!state);
 	tms->ready_pin = state;
 }
@@ -1589,7 +1589,7 @@ void tms5220_exit()
     BurnFree(soundbuf);
 
     tms5220_buffered = 0;
-    pCPUTotalCycles = NULL;
+    pCPUTotalCycles = nullptr;
     nDACCPUMHZ = 0;
     our_freq = 0;
 }

@@ -24,7 +24,7 @@ static INT32 overrun_errmsg_ignore = 0;
 
 static INT32 eeprom_command_match(const char *buf, const char *cmd, INT32 len)
 {
-	if ( cmd == 0 )	return 0;
+	if ( cmd == nullptr )	return 0;
 	if ( len == 0 )	return 0;
 
 	for (;len>0;)
@@ -101,7 +101,7 @@ void EEPROMInit(const eeprom_interface *interface)
 	INT32 len = ((1 << intf->address_bits) * (intf->data_bits >> 3)) & (MEMORY_SIZE-1);
 
 	FILE *fz = _tfopen(output, _T("rb"));
-	if (fz != NULL) {
+	if (fz != nullptr) {
 		neeprom_available = 1;
 		fread (eeprom_data, len, 1, fz);
 		fclose (fz);

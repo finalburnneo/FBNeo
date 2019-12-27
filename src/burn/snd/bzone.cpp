@@ -12,7 +12,7 @@
 
 static INT16  *m_mixer_buffer; // re-sampler
 
-static INT32 (*pCPUTotalCycles)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
 static UINT32  nDACCPUMHZ = 0;
 static INT32   nCurrentPosition = 0;
 
@@ -39,7 +39,7 @@ static void UpdateStream(INT32 length)
 }
 
 /* Statics */
-static INT16 *discharge = NULL;
+static INT16 *discharge = nullptr;
 #define EXP(charge,n) (charge ? 0x7fff - discharge[0x7fff-n] : discharge[n])
 
 static INT32 latch;

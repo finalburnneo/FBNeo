@@ -10,8 +10,8 @@ bool bESPRaDeMixerKludge = false;
 
 UINT8* YMZ280BROM;
 UINT32 YMZ280BROMSIZE = 0xffffff; // 16meg max addressable rom size
-void (*pYMZ280BRAMWrite)(INT32 offset, INT32 nValue) = NULL;
-INT32 (*pYMZ280BRAMRead)(INT32 offset) = NULL;
+void (*pYMZ280BRAMWrite)(INT32 offset, INT32 nValue) = nullptr;
+INT32 (*pYMZ280BRAMRead)(INT32 offset) = nullptr;
 
 UINT32 nYMZ280BStatus;
 UINT32 nYMZ280BRegister;
@@ -21,9 +21,9 @@ static bool bYMZ280BEnable;
 static bool bYMZ280BIRQEnable;
 static INT32 nYMZ280BIRQMask;
 static INT32 nYMZ280BIRQStatus;
-void (*YMZ280BIRQCallback)(INT32 nStatus) = NULL;
+void (*YMZ280BIRQCallback)(INT32 nStatus) = nullptr;
 
-static INT32* pBuffer = NULL;
+static INT32* pBuffer = nullptr;
 
 static double nYMZ280BFrequency;
 
@@ -65,7 +65,7 @@ struct sYMZ280BChannelInfo {
 };
 
 static INT32 nActiveChannel, nDelta, nSample, nCount, nRamReadAddress;
-static INT32* buf = NULL;
+static INT32* buf = nullptr;
 
 sYMZ280BChannelInfo YMZ280BChannelInfo[8];
 static sYMZ280BChannelInfo* channelInfo;
@@ -200,9 +200,9 @@ void YMZ280BExit()
 		BurnFree(YMZ280BChannelData[j]);
 	}
 
-	YMZ280BIRQCallback = NULL;
-	pYMZ280BRAMWrite = NULL;
-	pYMZ280BRAMRead = NULL;
+	YMZ280BIRQCallback = nullptr;
+	pYMZ280BRAMWrite = nullptr;
+	pYMZ280BRAMRead = nullptr;
 	bESPRaDeMixerKludge = false;
 	YMZ280BROMSIZE = 0xffffff;
 
@@ -216,7 +216,7 @@ inline static void UpdateIRQStatus()
 		nYMZ280BIRQStatus = 1;
 	}
 
-	if ((YMZ280BIRQCallback != NULL)) {
+	if ((YMZ280BIRQCallback != nullptr)) {
 		YMZ280BIRQCallback(nYMZ280BIRQStatus);
 	}
 }

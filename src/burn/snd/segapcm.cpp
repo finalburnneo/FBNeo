@@ -20,9 +20,9 @@ struct segapcm
 	INT32 OutputDir[2];
 };
 
-static struct segapcm *Chip[MAX_CHIPS] = { NULL, };
-static INT32 *Left[MAX_CHIPS] = { NULL, };
-static INT32 *Right[MAX_CHIPS] = { NULL, };
+static struct segapcm *Chip[MAX_CHIPS] = {nullptr, };
+static INT32 *Left[MAX_CHIPS] = {nullptr, };
+static INT32 *Right[MAX_CHIPS] = {nullptr, };
 
 static INT32 nNumChips = 0;
 
@@ -200,7 +200,7 @@ void SegaPCMScan(INT32 nAction, INT32 *pnMin)
 
 	struct BurnArea ba;
 	
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029719;
 	}
 

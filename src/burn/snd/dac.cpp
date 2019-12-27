@@ -20,14 +20,14 @@ static struct dac_info dac_table[DAC_NUM];
 static INT16 UnsignedVolTable[256];
 static INT16 SignedVolTable[256];
 
-static INT16 *lBuffer = NULL;
-static INT16 *rBuffer = NULL;
+static INT16 *lBuffer = nullptr;
+static INT16 *rBuffer = nullptr;
 
 static INT32 NumChips;
 
 static INT32 bAddSignal;
 
-static INT32 (*pCPUTotalCycles)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
 static UINT32 nDACCPUMHZ = 0;
 
 // single-order dc blocking filter
@@ -71,11 +71,11 @@ static void UpdateStream(INT32 chip, INT32 length)
 {
 	struct dac_info *ptr;
 
-	if (lBuffer == NULL) {	// delay buffer allocation for cases when fps is not 60
+	if (lBuffer == nullptr) {	// delay buffer allocation for cases when fps is not 60
 		lBuffer = (INT16*)BurnMalloc(nBurnSoundLen * sizeof(INT16));
 		memset (lBuffer, 0, nBurnSoundLen * sizeof(INT16));
 	}
-	if (rBuffer == NULL) {	// delay buffer allocation for cases when fps is not 60
+	if (rBuffer == nullptr) {	// delay buffer allocation for cases when fps is not 60
 		rBuffer = (INT16*)BurnMalloc(nBurnSoundLen * sizeof(INT16));
 		memset (rBuffer, 0, nBurnSoundLen * sizeof(INT16));
 	}
@@ -272,7 +272,7 @@ void DACStereoMode(INT32 Chip)
 
 void DACInit(INT32 Num, UINT32 Clock, INT32 bAdd, INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 {
-	if (pCPUCyclesCB == NULL) {
+	if (pCPUCyclesCB == nullptr) {
 		bprintf(PRINT_ERROR, _T("DACInit pCPUCyclesCB is NULL.\n"));
 	}
 	if (nCpuMHZ == 0) {
@@ -362,10 +362,10 @@ void DACExit()
 		ptr = &dac_table[i];
 
 		ptr->Initialized = 0;
-		ptr->pSyncCallback = NULL;
+		ptr->pSyncCallback = nullptr;
 	}
 
-	pCPUTotalCycles = NULL;
+	pCPUTotalCycles = nullptr;
 	nDACCPUMHZ = 0;
 
 	NumChips = 0;
@@ -376,8 +376,8 @@ void DACExit()
 
 	BurnFree (lBuffer);
 	BurnFree (rBuffer);
-	lBuffer = NULL;
-	rBuffer = NULL;
+	lBuffer = nullptr;
+	rBuffer = nullptr;
 }
 
 void DACScan(INT32 nAction, INT32 *pnMin)
@@ -386,7 +386,7 @@ void DACScan(INT32 nAction, INT32 *pnMin)
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACScan called without init\n"));
 #endif
 	
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029719;
 	}
 	

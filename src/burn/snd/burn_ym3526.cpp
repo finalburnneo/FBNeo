@@ -14,9 +14,9 @@ static INT32 (*pTimerOverCallback)(INT32, INT32);
 static double (*pTimerTimeCallback)();
 
 static INT32 nCPUClockspeed = 0;
-static INT32 (*pCPUTotalCycles)() = NULL;
-static INT32 (*pCPURun)(INT32) = NULL;
-static void (*pCPURunEnd)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
+static INT32 (*pCPURun)(INT32) = nullptr;
+static void (*pCPURunEnd)() = nullptr;
 
 // ---------------------------------------------------------------------------
 // Running time
@@ -146,9 +146,9 @@ void BurnTimerScanYM3526(INT32 nAction, INT32* pnMin)
 void BurnTimerExitYM3526()
 {
 	nCPUClockspeed = 0;
-	pCPUTotalCycles = NULL;
-	pCPURun = NULL;
-	pCPURunEnd = NULL;
+	pCPUTotalCycles = nullptr;
+	pCPURun = nullptr;
+	pCPURunEnd = nullptr;
 
 	return;
 }
@@ -430,7 +430,7 @@ INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*
 {
 	DebugSnd_YM3526Initted = 1;
 	
-	BurnTimerInitYM3526(&YM3526TimerOver, NULL);
+	BurnTimerInitYM3526(&YM3526TimerOver, nullptr);
 
 	if (nBurnSoundRate <= 0) {
 		BurnYM3526StreamCallback = YM3526StreamCallbackDummy;

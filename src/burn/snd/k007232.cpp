@@ -60,10 +60,10 @@ struct kdacPointers
 
 static struct kdacApcm Chips[2];
 static struct kdacPointers Pointers[2];
-static struct kdacApcm *Chip = NULL;
-static struct kdacPointers *Ptr = NULL;
-static INT32 *Left = NULL;
-static INT32 *Right = NULL;
+static struct kdacApcm *Chip = nullptr;
+static struct kdacPointers *Ptr = nullptr;
+static INT32 *Left = nullptr;
+static INT32 *Right = nullptr;
 
 static INT32 nNumChips = 0;
 
@@ -257,11 +257,11 @@ void K007232Init(INT32 chip, INT32 clock, UINT8 *pPCMData, INT32 PCMDataSize)
 	memset(Chip,	0, sizeof(kdacApcm));
 	memset(Ptr,	0, sizeof(kdacPointers));
 
-	if (Left == NULL) {
+	if (Left == nullptr) {
 		Left = (INT32*)BurnMalloc(nBurnSoundLen * sizeof(INT32));
 	}
 
-	if (Right == NULL) {
+	if (Right == nullptr) {
 		Right = (INT32*)BurnMalloc(nBurnSoundLen * sizeof(INT32));
 	}
 
@@ -342,7 +342,7 @@ void K007232Scan(INT32 nAction, INT32 *pnMin)
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Scan called without init\n"));
 #endif
 
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029693;
 	}
 

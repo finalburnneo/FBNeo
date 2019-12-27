@@ -34,12 +34,12 @@ struct SN76496
 };
 
 static INT32 NumChips = 0;
-static struct SN76496 *Chips[MAX_SN76496_CHIPS] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+static struct SN76496 *Chips[MAX_SN76496_CHIPS] = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
 
 
 // for stream-sync
 static INT32 sn76496_buffered = 0;
-static INT32 (*pCPUTotalCycles)() = NULL;
+static INT32 (*pCPUTotalCycles)() = nullptr;
 static UINT32 nDACCPUMHZ = 0;
 static INT32 nPosition[MAX_SN76496_CHIPS];
 static INT16 *soundbuf[MAX_SN76496_CHIPS];
@@ -489,7 +489,7 @@ void SN76496Exit()
 	for (INT32 i = 0; i < NumChips; i++) {
 		BurnFree(Chips[i]);
 		BurnFree(soundbuf[i]);
-		Chips[i] = NULL;
+		Chips[i] = nullptr;
 
         if (sn76496_buffered) {
             nPosition[i] = 0;
@@ -500,7 +500,7 @@ void SN76496Exit()
 
     if (sn76496_buffered) {
         sn76496_buffered = 0;
-        pCPUTotalCycles = NULL;
+        pCPUTotalCycles = nullptr;
         nDACCPUMHZ = 0;
     }
 
@@ -513,7 +513,7 @@ void SN76496Scan(INT32 nAction, INT32 *pnMin)
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Scan called without init\n"));
 #endif
 
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029719;
 	}
 

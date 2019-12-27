@@ -139,7 +139,7 @@
 
 #include "burnint.h"
 #include "mcs51.h"
-#include "stddef.h"
+#include <cstddef>
 
 #define VERBOSE 0
 #define CLEAR_LINE	0

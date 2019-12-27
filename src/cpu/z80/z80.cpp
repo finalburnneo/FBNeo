@@ -95,7 +95,7 @@
 
 #include "burnint.h"
 #include "z80.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define	FALSE			0
 #define TRUE			1
@@ -200,7 +200,7 @@ static INT32 end_run;
 static Z80_Regs Z80;
 UINT32 EA;
 
-void (*z80edfe_callback)(Z80_Regs *Regs) = NULL;
+void (*z80edfe_callback)(Z80_Regs *Regs) = nullptr;
 
 static UINT8 SZ[256];		/* zero and sign flags */
 static UINT8 SZ_BIT[256];	/* zero, sign and parity/overflow (=zero) flags for BIT opcode */
@@ -209,8 +209,8 @@ static UINT8 SZHV_inc[256]; /* zero, sign, half carry and overflow flags INC r8 
 static UINT8 SZHV_dec[256]; /* zero, sign, half carry and overflow flags DEC r8 */
 
 #if BIG_FLAGS_ARRAY
-static UINT8 *SZHVC_add = 0;
-static UINT8 *SZHVC_sub = 0;
+static UINT8 *SZHVC_add = nullptr;
+static UINT8 *SZHVC_sub = nullptr;
 #endif
 
 static const UINT8 cc_op[0x100] = {
@@ -3560,10 +3560,10 @@ void Z80Exit()
     }
 
 	if (SZHVC_add) free(SZHVC_add);
-	SZHVC_add = NULL;
+	SZHVC_add = nullptr;
 	if (SZHVC_sub) free(SZHVC_sub);
-	SZHVC_sub = NULL;
-	z80edfe_callback = NULL;
+	SZHVC_sub = nullptr;
+	z80edfe_callback = nullptr;
 }
 
 int Z80Execute(int cycles)

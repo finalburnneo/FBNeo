@@ -118,10 +118,10 @@ void Z180MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags)
 
 	for (UINT32 i = 0; i < ((end >> PROG_PAGE_BITS) - (start >> PROG_PAGE_BITS)) + 1; i++)
 	{
-		if (flags & MAP_READ    ) Mem[nActiveCPU][READ    ][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
-		if (flags & MAP_WRITE   ) Mem[nActiveCPU][WRITE   ][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
-		if (flags & MAP_FETCHOP ) Mem[nActiveCPU][FETCHOP ][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
-		if (flags & MAP_FETCHARG) Mem[nActiveCPU][FETCHARG][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
+		if (flags & MAP_READ    ) Mem[nActiveCPU][READ    ][s + i] = (ptr == nullptr) ? nullptr : (ptr + (i << PROG_PAGE_BITS));
+		if (flags & MAP_WRITE   ) Mem[nActiveCPU][WRITE   ][s + i] = (ptr == nullptr) ? nullptr : (ptr + (i << PROG_PAGE_BITS));
+		if (flags & MAP_FETCHOP ) Mem[nActiveCPU][FETCHOP ][s + i] = (ptr == nullptr) ? nullptr : (ptr + (i << PROG_PAGE_BITS));
+		if (flags & MAP_FETCHARG) Mem[nActiveCPU][FETCHARG][s + i] = (ptr == nullptr) ? nullptr : (ptr + (i << PROG_PAGE_BITS));
 	}
 }
 
@@ -442,12 +442,12 @@ void Z180Init(UINT32 nCPU)
 
 	memset (Mem[nActiveCPU], 0, 4 * PROG_PAGES * sizeof(UINT8*));
 
-	prog_write[nActiveCPU] = NULL;
-	prog_read[nActiveCPU] = NULL;
-	prog_fetchop[nActiveCPU] = NULL;
-	prog_fetcharg[nActiveCPU] = NULL;
-	port_write[nActiveCPU] = NULL;
-	port_read[nActiveCPU] = NULL;
+	prog_write[nActiveCPU] = nullptr;
+	prog_read[nActiveCPU] = nullptr;
+	prog_fetchop[nActiveCPU] = nullptr;
+	prog_fetcharg[nActiveCPU] = nullptr;
+	port_write[nActiveCPU] = nullptr;
+	port_read[nActiveCPU] = nullptr;
 
 	CpuCheatRegister(nActiveCPU, &Z180Config);
 

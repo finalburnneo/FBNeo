@@ -25,9 +25,9 @@
 /* ================================ INCLUDES ============================== */
 /* ======================================================================== */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
 #include "m68k.h"
 
 #ifndef DECL_SPEC
@@ -3178,7 +3178,7 @@ static opcode_struct g_opcode_info[] =
 	{d68000_unlk         , 0xfff8, 0x4e58, 0x000},
 	{d68020_unpk_rr      , 0xf1f8, 0x8180, 0x000},
 	{d68020_unpk_mm      , 0xf1f8, 0x8188, 0x000},
-	{0, 0, 0, 0}
+	{nullptr, 0, 0, 0}
 };
 
 /* Check if opcode is using a valid ea mode */
@@ -3252,7 +3252,7 @@ static void build_opcode_table(void)
 	opcode_struct* ostruct;
 	uint opcode_info_length = 0;
 
-	for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++)
+	for(ostruct = g_opcode_info;ostruct->opcode_handler != nullptr;ostruct++)
 		opcode_info_length++;
 
 	qsort((void *)g_opcode_info, opcode_info_length, sizeof(g_opcode_info[0]), compare_nof_true_bits);
@@ -3262,7 +3262,7 @@ static void build_opcode_table(void)
 		g_instruction_table[i] = d68000_illegal; /* default to illegal */
 		opcode = i;
 		/* search through opcode info for a match */
-		for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++)
+		for(ostruct = g_opcode_info;ostruct->opcode_handler != nullptr;ostruct++)
 		{
 			/* match opcode mask and allowed ea modes */
 			if((opcode & ostruct->mask) == ostruct->match)

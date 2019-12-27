@@ -1,13 +1,13 @@
 #include "burnint.h"
 #include "m6800_intf.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define MAX_CPU     8
 
 INT32 nM6800Count = 0; // note: is 0 when 1 cpu is in use. also, 0 when no cpus are in use.
 static INT32 nActiveCPU = 0;
 
-static M6800Ext *M6800CPUContext = NULL;
+static M6800Ext *M6800CPUContext = nullptr;
 
 static INT32 nM6800CyclesDone[MAX_CPU];
 INT32 nM6800CyclesTotal;
@@ -313,9 +313,9 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 	nActiveCPU = -1;
 	nM6800Count = num;
 
-	if (M6800CPUContext == NULL) {
+	if (M6800CPUContext == nullptr) {
 		M6800CPUContext = (M6800Ext*)malloc(MAX_CPU * sizeof(M6800Ext));
-		if (M6800CPUContext == NULL) {
+		if (M6800CPUContext == nullptr) {
 			return 1;
 		}
 
@@ -332,7 +332,7 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 			nM6800CyclesDone[i] = 0;
 
 			for (INT32 j = 0; j < (0x0100 * 3); j++) {
-				M6800CPUContext[i].pMemMap[j] = NULL;
+				M6800CPUContext[i].pMemMap[j] = nullptr;
 			}
 		}
 	}
@@ -411,7 +411,7 @@ void M6800Exit()
 
 	if (M6800CPUContext) {
 		free(M6800CPUContext);
-		M6800CPUContext = NULL;
+		M6800CPUContext = nullptr;
 	}
 	
 	DebugCPU_M6800Initted = 0;
@@ -709,12 +709,12 @@ UINT8 M6800ReadByte(UINT16 Address)
 {
 	// check mem map
 	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
-	if (pr != NULL) {
+	if (pr != nullptr) {
 		return pr[Address & 0xff];
 	}
 	
 	// check handler
-	if (M6800CPUContext[nActiveCPU].ReadByte != NULL) {
+	if (M6800CPUContext[nActiveCPU].ReadByte != nullptr) {
 		return M6800CPUContext[nActiveCPU].ReadByte(Address);
 	}
 	
@@ -725,13 +725,13 @@ void M6800WriteByte(UINT16 Address, UINT8 Data)
 {
 	// check mem map
 	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
-	if (pr != NULL) {
+	if (pr != nullptr) {
 		pr[Address & 0xff] = Data;
 		return;
 	}
 	
 	// check handler
-	if (M6800CPUContext[nActiveCPU].WriteByte != NULL) {
+	if (M6800CPUContext[nActiveCPU].WriteByte != nullptr) {
 		M6800CPUContext[nActiveCPU].WriteByte(Address, Data);
 		return;
 	}
@@ -741,12 +741,12 @@ UINT8 M6800ReadOp(UINT16 Address)
 {
 	// check mem map
 	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
-	if (pr != NULL) {
+	if (pr != nullptr) {
 		return pr[Address & 0xff];
 	}
 	
 	// check handler
-	if (M6800CPUContext[nActiveCPU].ReadOp != NULL) {
+	if (M6800CPUContext[nActiveCPU].ReadOp != nullptr) {
 		return M6800CPUContext[nActiveCPU].ReadOp(Address);
 	}
 	
@@ -757,12 +757,12 @@ UINT8 M6800ReadOpArg(UINT16 Address)
 {
 	// check mem map
 	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
-	if (pr != NULL) {
+	if (pr != nullptr) {
 		return pr[Address & 0xff];
 	}
 	
 	// check handler
-	if (M6800CPUContext[nActiveCPU].ReadOpArg != NULL) {
+	if (M6800CPUContext[nActiveCPU].ReadOpArg != nullptr) {
 		return M6800CPUContext[nActiveCPU].ReadOpArg(Address);
 	}
 	
@@ -772,7 +772,7 @@ UINT8 M6800ReadOpArg(UINT16 Address)
 UINT8 M6800ReadPort(UINT16 Address)
 {
 	// check handler
-	if (M6800CPUContext[nActiveCPU].ReadPort != NULL) {
+	if (M6800CPUContext[nActiveCPU].ReadPort != nullptr) {
 		return M6800CPUContext[nActiveCPU].ReadPort(Address);
 	}
 	
@@ -782,7 +782,7 @@ UINT8 M6800ReadPort(UINT16 Address)
 void M6800WritePort(UINT16 Address, UINT8 Data)
 {
 	// check handler
-	if (M6800CPUContext[nActiveCPU].WritePort != NULL) {
+	if (M6800CPUContext[nActiveCPU].WritePort != nullptr) {
 		M6800CPUContext[nActiveCPU].WritePort(Address, Data);
 		return;
 	}
@@ -801,20 +801,20 @@ void M6800WriteRom(UINT32 Address, UINT8 Data)
 	UINT8 * pw = M6800CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
 	UINT8 * pf = M6800CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
 
-	if (pr != NULL) {
+	if (pr != nullptr) {
 		pr[Address & 0xff] = Data;
 	}
 	
-	if (pw != NULL) {
+	if (pw != nullptr) {
 		pw[Address & 0xff] = Data;
 	}
 
-	if (pf != NULL) {
+	if (pf != nullptr) {
 		pf[Address & 0xff] = Data;
 	}
 
 	// check handler
-	if (M6800CPUContext[nActiveCPU].WriteByte != NULL) {
+	if (M6800CPUContext[nActiveCPU].WriteByte != nullptr) {
 		M6800CPUContext[nActiveCPU].WriteByte(Address, Data);
 		return;
 	}

@@ -10,7 +10,7 @@
 #include "tms34010_jump.h"
 #include "tms34010_shift.h"
 #include "tms34010_gfx.h"
-#include "stddef.h"
+#include <cstddef>
 
 #ifdef TMS34010_DEBUGGER
 #include <algorithm>
@@ -60,7 +60,7 @@ void reset(cpu_state *cpu)
 	memset(cpu->shiftreg, 0, 4096*2);
 
 	cpu->timer_active = 0;
-	cpu->timer_cb = NULL;
+	cpu->timer_cb = nullptr;
 	cpu->timer_cyc = 0;
 }
 

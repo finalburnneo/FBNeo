@@ -16,11 +16,11 @@
 
 static INT32 program_address_mask;
 static INT32 data_address_mask;
-static UINT8 *upd96050Opcodes = NULL;
-static UINT8 *upd96050Data = NULL;
+static UINT8 *upd96050Opcodes = nullptr;
+static UINT8 *upd96050Data = nullptr;
 static UINT16 *dataRAM;
-static void (*out_p0_cb)(INT32) = NULL;
-static void (*out_p1_cb)(INT32) = NULL;
+static void (*out_p0_cb)(INT32) = nullptr;
+static void (*out_p1_cb)(INT32) = nullptr;
 
 static inline UINT32 read_op(UINT16 a)
 {
@@ -341,8 +341,8 @@ void upd96050Init(INT32 type, UINT8 *opcode, UINT8 *data, UINT8 *ram, void (*p0_
 	dataRAM = (UINT16*)ram;
 
 	// resolve callbacks
-	out_p0_cb = (p0_cb == NULL) ? dummy_cb :  p0_cb;
-	out_p1_cb = (p1_cb == NULL) ? dummy_cb :  p1_cb;
+	out_p0_cb = (p0_cb == nullptr) ? dummy_cb :  p0_cb;
+	out_p1_cb = (p1_cb == nullptr) ? dummy_cb :  p1_cb;
 
 	if (type == 96050)
 	{

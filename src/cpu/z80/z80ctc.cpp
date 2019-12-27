@@ -95,7 +95,7 @@ struct z80ctc
 	void                (*zc[4])(int, UINT8); /* zero crossing callbacks */
 };
 
-static z80ctc *ctc = NULL;
+static z80ctc *ctc = nullptr;
 
 static void timercallback(int param); // forward
 
@@ -121,7 +121,7 @@ void timer_reset()
 		timers[i].running = 0;
 		timers[i].time_trig = 0;
 		timers[i].time_current = 0;
-		timer_exec[i] = NULL;
+		timer_exec[i] = nullptr;
 		timers[i].timer_param = 0;
 	}
 }
@@ -192,7 +192,7 @@ static void z80ctc_timer_scan(INT32 nAction) // called from z80ctc_scan()! (belo
 static void interrupt_check()
 {
 	/* if we have a callback, update it with the current state */
-	if (ctc->intr != NULL)
+	if (ctc->intr != nullptr)
 		(*ctc->intr)((z80ctc_irq_state() & Z80_DAISY_INT) ? ASSERT_LINE : CLEAR_LINE);
 }
 
@@ -210,7 +210,7 @@ static void timercallback(int param)
 	}
 
 	/* generate the clock pulse */
-	if (ctc->zc[param] != NULL)
+	if (ctc->zc[param] != nullptr)
 	{
 		ctc->zc[param](0, 1);
 		ctc->zc[param](0, 0);
@@ -537,7 +537,7 @@ void z80ctc_init(INT32 clock, INT32 notimer, void (*intr)(int), void (*zc0)(int,
 	ctc->zc[0] = zc0;
 	ctc->zc[1] = zc1;
 	ctc->zc[2] = zc2;
-	ctc->zc[3] = NULL;
+	ctc->zc[3] = nullptr;
 }
 
 void z80ctc_exit()

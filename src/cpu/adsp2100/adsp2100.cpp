@@ -96,16 +96,16 @@
 ***************************************************************************/
 
 #include "adsp2100.h"
-#include <stddef.h>
-#include <stdlib.h>
+#include <cstddef>
+#include <cstdlib>
 
 /***************************************************************************
     PRIVATE GLOBAL VARIABLES
 ***************************************************************************/
 
-static UINT16 *reverse_table = 0;
-static UINT16 *mask_table = 0;
-static UINT8 *condition_table = 0;
+static UINT16 *reverse_table = nullptr;
+static UINT16 *mask_table = nullptr;
+static UINT8 *condition_table = nullptr;
 
 #if TRACK_HOTSPOTS
 static UINT32 pcbucket[0x4000];
@@ -769,7 +769,7 @@ static int create_tables(void)
 		condition_table = (UINT8 *)malloc(0x1000 * sizeof(UINT8));
 
 	/* handle errors */
-	if (reverse_table == NULL || mask_table == NULL || condition_table == NULL)
+	if (reverse_table == nullptr || mask_table == nullptr || condition_table == nullptr)
 		return 0;
 
 	/* initialize the bit reversing table */
@@ -848,17 +848,17 @@ static int create_tables(void)
 //static CPU_EXIT( adsp21xx )
 void adsp21xx_exit(adsp2100_state *adsp)
 {
-	if (reverse_table != NULL)
+	if (reverse_table != nullptr)
 		free(reverse_table);
-	reverse_table = NULL;
+	reverse_table = nullptr;
 
-	if (mask_table != NULL)
+	if (mask_table != nullptr)
 		free(mask_table);
-	mask_table = NULL;
+	mask_table = nullptr;
 
-	if (condition_table != NULL)
+	if (condition_table != nullptr)
 		free(condition_table);
-	condition_table = NULL;
+	condition_table = nullptr;
 
 #if TRACK_HOTSPOTS
 	{

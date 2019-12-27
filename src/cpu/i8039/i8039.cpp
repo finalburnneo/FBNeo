@@ -128,7 +128,7 @@ static UINT8 *RAM;
 static I8039_Regs RegStore[I8039_NUM];
 static I8039_Handlers Handlers[I8039_NUM];
 static I8039_Handlers *HPtr;
-static UINT8 *RAMStore[I8039_NUM] = { NULL, NULL };
+static UINT8 *RAMStore[I8039_NUM] = {nullptr, nullptr };
 static int nI8039Active = -1;
 
 static void i8039_get_context (void *dst); // forwards
@@ -159,9 +159,9 @@ void I8039Close()
 		return;
 	}
 
-	RAM = NULL;
+	RAM = nullptr;
 	i8039_get_context(&RegStore[nI8039Active]);
-	HPtr = NULL;
+	HPtr = nullptr;
 	nI8039Active = -1;
 }
 
@@ -904,7 +904,7 @@ void I8039Exit()
 	{
 		if (RAMStore[i]) {
 			BurnFree (RAMStore[i]);
-			RAMStore[i] = NULL;
+			RAMStore[i] = nullptr;
 		}
 	}
 	
@@ -1067,7 +1067,7 @@ int I8039Scan(int nAction, int *pnMin)
 	struct BurnArea ba;
 	char szName[16];
 
-	if (pnMin != NULL) {
+	if (pnMin != nullptr) {
 		*pnMin = 0x029719;
 	}
 

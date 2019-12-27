@@ -438,11 +438,11 @@ static UINT8 (*an7_func)();
 
 static UINT8 *mem[3][0x100];
 
-static UINT8 (*read_byte_8)(UINT16) = NULL;
-static void (*write_byte_8)(UINT16,UINT8) = NULL;
+static UINT8 (*read_byte_8)(UINT16) = nullptr;
+static void (*write_byte_8)(UINT16,UINT8) = nullptr;
 
-static UINT8 (*io_read_byte_8)(UINT8) = NULL;
-static void (*io_write_byte_8)(UINT8,UINT8) = NULL;
+static UINT8 (*io_read_byte_8)(UINT8) = nullptr;
+static void (*io_write_byte_8)(UINT8,UINT8) = nullptr;
 
 static void dummy_write(UINT16,UINT8) {}
 static UINT8 dummy_read(UINT16) { return 0; }
@@ -555,8 +555,8 @@ void upd7810MapMemory(UINT8 *src, UINT16 start, UINT16 finish, UINT8 map)
 
 static const struct opcode_s *opXX; // = opXX_7810;
 static INT32 upd7810_config_type = TYPE_7810;
-INT32 (*upd7810_io_callback)(INT32 ioline, INT32 state) = NULL;
-INT32 (*upd7810_irq_callback)(INT32 line) = NULL;
+INT32 (*upd7810_io_callback)(INT32 ioline, INT32 state) = nullptr;
+INT32 (*upd7810_irq_callback)(INT32 line) = nullptr;
 #define	change_pc(x)	PC = (x)
 
 
@@ -1879,7 +1879,7 @@ void upd7810Reset()
 
 void upd7810Exit()
 {
-	upd7810_io_callback = NULL;
+	upd7810_io_callback = nullptr;
 	upd7810_config_type = 0;
 }
 

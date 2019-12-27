@@ -31,7 +31,7 @@
 
 #include "burnint.h"
 #include "sh2_intf.h"
-#include <stddef.h>
+#include <cstddef>
 
 int has_sh2;
 INT32 cps3speedhack; // must be set _after_ Sh2Init();
@@ -185,7 +185,7 @@ typedef struct
 } SH2EXT;
 
 static SH2EXT * pSh2Ext;
-static SH2EXT * Sh2Ext = NULL;
+static SH2EXT * Sh2Ext = nullptr;
 
 static INT32 core_idle(INT32 cycles)
 {
@@ -472,9 +472,9 @@ int Sh2Exit()
 
 	if (Sh2Ext) {
 		free(Sh2Ext);
-		Sh2Ext = NULL;
+		Sh2Ext = nullptr;
 	}
-	pSh2Ext = NULL;
+	pSh2Ext = nullptr;
 	
 	DebugCPU_SH2Initted = 0;
 
@@ -501,7 +501,7 @@ int Sh2Init(int nCount)
 	sh2_busyloop_speedhack_mode2 = 0;
 
 	Sh2Ext = (SH2EXT *)malloc(sizeof(SH2EXT) * nCount);
-	if (Sh2Ext == NULL) {
+	if (Sh2Ext == nullptr) {
 		Sh2Exit();
 		return 1;
 	}

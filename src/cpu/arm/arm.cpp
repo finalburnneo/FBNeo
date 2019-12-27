@@ -15,9 +15,9 @@
 
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 //#include "state.h"
 //#include "driver.h"
 #include "burnint.h"
@@ -539,7 +539,7 @@ static void HandleMemSingle( UINT32 insn )
 	/* Fetch the offset */
 	if (insn & INSN_I)
 	{
-		off = decodeShift(insn, NULL);
+		off = decodeShift(insn, nullptr);
 	}
 	else
 	{
@@ -743,7 +743,7 @@ static void HandleALU( UINT32 insn )
 	}
 	else
 	{
-		op2 = decodeShift(insn, (insn & INSN_S) ? &sc : NULL);
+		op2 = decodeShift(insn, (insn & INSN_S) ? &sc : nullptr);
 
         	if (!(insn & INSN_S))
 			sc=0;

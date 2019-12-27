@@ -8,7 +8,7 @@
 
 #include "burnint.h"
 #include "tlcs90_intf.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define T90_IOBASE	0xffc0
 
@@ -2587,7 +2587,7 @@ void t90_timer4_callback(INT32 )
 
 	// Overflow
 
-	if ( cpustate->timer_value == 0 )
+	if ( cpustate->timer_value == nullptr )
 	{
 //      	logerror("CPU Timer 4 overflow\n");
 	}

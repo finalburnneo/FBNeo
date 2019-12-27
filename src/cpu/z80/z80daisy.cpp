@@ -14,8 +14,8 @@
 #define CLEAR_LINE	0
 #define ASSERT_LINE	1
 
-static z80_irq_daisy_chain *main_chain = NULL;
-static z80_irq_daisy_chain *daisy_end = NULL;
+static z80_irq_daisy_chain *main_chain = nullptr;
+static z80_irq_daisy_chain *daisy_end = nullptr;
 
 INT32 z80daisy_has_ctc = 0;
 
@@ -45,12 +45,12 @@ static void add_dev(int dev)
             break;
 
         default:
-            daisy_end->reset 	 = NULL;
-            daisy_end->irq_state = NULL;
-            daisy_end->irq_ack   = NULL;
-            daisy_end->irq_reti  = NULL;
-            daisy_end->dev_exit  = NULL;
-            daisy_end->dev_scan  = NULL;
+            daisy_end->reset 	 = nullptr;
+            daisy_end->irq_state = nullptr;
+            daisy_end->irq_ack   = nullptr;
+            daisy_end->irq_reti  = nullptr;
+            daisy_end->dev_exit  = nullptr;
+            daisy_end->dev_scan  = nullptr;
             daisy_end->param     = -1;
             break;
     }
@@ -82,7 +82,7 @@ void z80daisy_exit()
 			(*daisy->dev_exit)();
 
     BurnFree(main_chain);
-    daisy_end = NULL;
+    daisy_end = nullptr;
 
     z80daisy_has_ctc = 0;
 }

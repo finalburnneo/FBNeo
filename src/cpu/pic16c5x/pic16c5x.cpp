@@ -1014,7 +1014,7 @@ INT32 pic16c5xIdle(INT32 cycles)
 	return cycles;
 }
 
-int pic16c5xScanCpu(int nAction,int */*pnMin*/)
+int pic16c5xScanCpu(int nAction, int* /*pnMin*/)
 {
 	struct BurnArea ba;
 

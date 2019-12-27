@@ -959,6 +959,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_sonson.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spacefb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_speedbal.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_sprcros2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_srumbler.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_ssozumo.cpp" />
@@ -1587,7 +1588,7 @@ del build_details.exe
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\burn\burn_sound_a.asm" />
-    <None Include="..\..\src\dep\libs\libpng\_fba_libpng_v1512.txt" />
+    <None Include="..\..\src\dep\libs\libpng\_fbn_libpng_v1637.txt" />
     <None Include="..\..\src\dep\libs\zlib\zconf.h.in" />
     <None Include="..\..\src\intf\video\scalers\2xsaimmx.asm" />
     <None Include="..\..\src\intf\video\scalers\eagle_fm.asm" />
@@ -1608,13 +1609,13 @@ del build_details.exe
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\src\burn\drv\spectrum\spectrum_games.txt" />
-    <Text Include="..\..\src\dep\libs\lib7z\_fba_lzmasdk_v16.04.txt" />
+    <Text Include="..\..\src\dep\libs\lib7z\_fbn_lzmasdk_v16.04.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{86D06C32-A849-4988-A176-A38D014C36C1}</ProjectGuid>
     <RootNamespace>fba_vs2010</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>fba_vs2019</ProjectName>
+    <ProjectName>fbn_vs2019</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

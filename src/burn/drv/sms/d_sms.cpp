@@ -185,7 +185,7 @@ INT32 SMSFrame()
 	return 0;
 }
 
-void system_manage_sram(UINT8 */*sram*/, INT32 /*slot*/, INT32 /*mode*/)
+void system_manage_sram(UINT8* /*sram*/, INT32 /*slot*/, INT32 /*mode*/)
 {
 	// not hooked up..
 }

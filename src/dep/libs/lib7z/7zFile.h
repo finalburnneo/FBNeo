@@ -4,7 +4,7 @@
 #ifndef __7Z_FILE_H
 #define __7Z_FILE_H
 
-#if defined(_WIN32) && !defined(__LIBRETRO__)
+#ifdef _WIN32
 #define USE_WINDOWS_FILE
 #endif
 

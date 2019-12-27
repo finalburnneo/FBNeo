@@ -13,7 +13,7 @@
 // Jan 19, 2018: added cubic resampling.
 
 #include "burnint.h"
-#include "math.h"
+#include <cmath>
 #include "k054539.h"
 
 static INT32 nNumChips = 0;

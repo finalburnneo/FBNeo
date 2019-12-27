@@ -8,7 +8,7 @@
  ****************************************************************************/
 
 
-#include <math.h>
+#include <cmath>
 #include "burnint.h"
 #include "tms36xx.h"
 

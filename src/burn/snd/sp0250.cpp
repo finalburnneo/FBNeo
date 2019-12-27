@@ -17,7 +17,7 @@
 */
 
 #include "burnint.h"
-#include <math.h>
+#include <cmath>
 #include "sp0250.h"
 
 #define ASSERT_LINE 1

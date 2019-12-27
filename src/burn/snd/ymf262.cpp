@@ -57,7 +57,7 @@ differences between OPL2 and OPL3 shown in datasheets:
 #define _USE_MATH_DEFINES
 #endif
 
-#include <math.h>
+#include <cmath>
 #include "driver.h"
 #include "ymf262.h"
 #include "state.h"

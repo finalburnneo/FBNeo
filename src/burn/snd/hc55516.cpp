@@ -10,7 +10,7 @@
 
 #include "burnint.h"
 #include "hc55516.h"
-#include <math.h>
+#include <cmath>
 
 #define SAMPLE_RATE             (48000)
 #define FRAME_SIZE              800

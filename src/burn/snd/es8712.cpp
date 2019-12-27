@@ -17,7 +17,7 @@
  **********************************************************************************************/
 
 #include "burnint.h"
-#include "math.h"
+#include <cmath>
 #include "es8712.h"
 
 #define MAX_ES8712_CHIPS	1

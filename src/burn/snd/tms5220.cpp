@@ -248,8 +248,8 @@ in MCU code). Look for a 16-pin chip at U6 labeled "ECHO-3 SN".
 
 ***********************************************************************************************/
 
-#include <stddef.h>
-#include <math.h>
+#include <cstddef>
+#include <cmath>
 
 #include "burnint.h"
 #include "tms5220.h"

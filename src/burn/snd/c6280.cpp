@@ -58,8 +58,8 @@
 #include "burnint.h"
 #include "h6280_intf.h"
 #include "c6280.h"
-#include <stddef.h>
-#include "math.h"
+#include <cstddef>
+#include <cmath>
 
 typedef struct {
 	UINT16 frequency;

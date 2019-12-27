@@ -19,37 +19,37 @@
  * http://kstenerud.cjb.net
  */
 
-/*
- * Modified For OpenVMS By:  Robert Alan Byer
- *                           byer@mail.ourservers.net
- */
+ /*
+  * Modified For OpenVMS By:  Robert Alan Byer
+  *                           byer@mail.ourservers.net
+  */
 
 
-/* ======================================================================== */
-/* ============================ CODE GENERATOR ============================ */
-/* ======================================================================== */
-/*
- * This is the code generator program which will generate the opcode table
- * and the final opcode handlers.
- *
- * It requires an input file to function (default m68k_in.c), but you can
- * specify your own like so:
- *
- * m68kmake <output path> <input file>
- *
- * where output path is the path where the output files should be placed, and
- * input file is the file to use for input.
- *
- * If you modify the input file greatly from its released form, you may have
- * to tweak the configuration section a bit since I'm using static allocation
- * to keep things simple.
- *
- *
- * TODO: - build a better code generator for the move instruction.
- *       - Add callm and rtm instructions
- *       - Fix RTE to handle other format words
- *       - Add address error (and bus error?) handling
- */
+  /* ======================================================================== */
+  /* ============================ CODE GENERATOR ============================ */
+  /* ======================================================================== */
+  /*
+   * This is the code generator program which will generate the opcode table
+   * and the final opcode handlers.
+   *
+   * It requires an input file to function (default m68k_in.c), but you can
+   * specify your own like so:
+   *
+   * m68kmake <output path> <input file>
+   *
+   * where output path is the path where the output files should be placed, and
+   * input file is the file to use for input.
+   *
+   * If you modify the input file greatly from its released form, you may have
+   * to tweak the configuration section a bit since I'm using static allocation
+   * to keep things simple.
+   *
+   *
+   * TODO: - build a better code generator for the move instruction.
+   *       - Add callm and rtm instructions
+   *       - Fix RTE to handle other format words
+   *       - Add address error (and bus error?) handling
+   */
 
 
 static const char g_version[] = "3.32";
@@ -180,7 +180,7 @@ typedef struct
 	unsigned short op_match;              /* Value to match after masking */
 	char ea_allowed[EA_ALLOWED_LENGTH];   /* Effective addressing modes allowed */
 	char cpu_mode[NUM_CPUS];              /* User or supervisor mode */
-	char cpus[NUM_CPUS+1];                /* Allowed CPUs */
+	char cpus[NUM_CPUS + 1];                /* Allowed CPUs */
 	unsigned char cycles[NUM_CPUS];       /* cycles for 000, 010, 020 */
 } opcode_struct;
 
@@ -198,7 +198,7 @@ typedef struct
 /* Holds the body of a function */
 typedef struct
 {
-	char body[MAX_BODY_LENGTH][MAX_LINE_LENGTH+1];
+	char body[MAX_BODY_LENGTH][MAX_LINE_LENGTH + 1];
 	int length;
 } body_struct;
 
@@ -206,7 +206,7 @@ typedef struct
 /* Holds a sequence of search / replace strings */
 typedef struct
 {
-	char replace[MAX_REPLACE_LENGTH][2][MAX_LINE_LENGTH+1];
+	char replace[MAX_REPLACE_LENGTH][2][MAX_LINE_LENGTH + 1];
 	int length;
 } replace_struct;
 
@@ -215,7 +215,7 @@ typedef struct
 void error_exit(const char* fmt, ...);
 void perror_exit(const char* fmt, ...);
 int check_strsncpy(char* dst, char* src, int maxlength);
-int check_atoi(char* str, int *result);
+int check_atoi(char* str, int* result);
 int skip_spaces(char* str);
 int num_bits(int value);
 int atoh(char* buff);
@@ -250,9 +250,9 @@ void read_insert(char* insert);
 char g_input_filename[M68K_MAX_PATH] = FILENAME_INPUT;
 
 /* File handles */
-FILE* g_input_file = nullptr;
-FILE* g_prototype_file = nullptr;
-FILE* g_table_file = nullptr;
+FILE* g_input_file = NULL;
+FILE* g_prototype_file = NULL;
+FILE* g_table_file = NULL;
 
 int g_num_functions = 0;  /* Number of functions processed */
 int g_num_primitives = 0; /* Number of function primitives read */
@@ -282,7 +282,7 @@ const ea_info_struct g_ea_info_table[13] =
 };
 
 
-const char *const g_cc_table[16][2] =
+const char* const g_cc_table[16][2] =
 {
 	{ "t",  "T"}, /* 0000 */
 	{ "f",  "F"}, /* 0001 */
@@ -472,9 +472,9 @@ void error_exit(const char* fmt, ...)
 	va_end(args);
 	fprintf(stderr, "\n");
 
-	if(g_prototype_file) fclose(g_prototype_file);
-	if(g_table_file) fclose(g_table_file);
-	if(g_input_file) fclose(g_input_file);
+	if (g_prototype_file) fclose(g_prototype_file);
+	if (g_table_file) fclose(g_table_file);
+	if (g_input_file) fclose(g_input_file);
 
 	exit(EXIT_FAILURE);
 }
@@ -488,9 +488,9 @@ void perror_exit(const char* fmt, ...)
 	va_end(args);
 	perror("");
 
-	if(g_prototype_file) fclose(g_prototype_file);
-	if(g_table_file) fclose(g_table_file);
-	if(g_input_file) fclose(g_input_file);
+	if (g_prototype_file) fclose(g_prototype_file);
+	if (g_table_file) fclose(g_table_file);
+	if (g_input_file) fclose(g_input_file);
 
 	exit(EXIT_FAILURE);
 }
@@ -500,10 +500,10 @@ void perror_exit(const char* fmt, ...)
 int check_strsncpy(char* dst, char* src, int maxlength)
 {
 	char* p = dst;
-	while(*src && *src != ' ')
+	while (*src && *src != ' ')
 	{
 		*p++ = *src++;
-		if(p - dst > maxlength)
+		if (p - dst > maxlength)
 			error_exit("Field too long");
 	}
 	*p = 0;
@@ -514,10 +514,10 @@ int check_strsncpy(char* dst, char* src, int maxlength)
 int check_strcncpy(char* dst, char* src, char delim, int maxlength)
 {
 	char* p = dst;
-	while(*src && *src != delim)
+	while (*src && *src != delim)
 	{
 		*p++ = *src++;
-		if(p - dst > maxlength)
+		if (p - dst > maxlength)
 			error_exit("Field too long");
 	}
 	*p = 0;
@@ -525,16 +525,16 @@ int check_strcncpy(char* dst, char* src, char delim, int maxlength)
 }
 
 /* convert ascii to integer and exit with error if we find invalid data */
-int check_atoi(char* str, int *result)
+int check_atoi(char* str, int* result)
 {
 	int accum = 0;
 	char* p = str;
-	while(*p >= '0' && *p <= '9')
+	while (*p >= '0' && *p <= '9')
 	{
 		accum *= 10;
 		accum += *p++ - '0';
 	}
-	if(*p != ' ' && *p != 0)
+	if (*p != ' ' && *p != 0)
 		error_exit("Malformed integer value (%c)", *p);
 	*result = accum;
 	return p - str;
@@ -545,7 +545,7 @@ int skip_spaces(char* str)
 {
 	char* p = str;
 
-	while(*p == ' ')
+	while (*p == ' ')
 		p++;
 
 	return p - str;
@@ -554,10 +554,10 @@ int skip_spaces(char* str)
 /* Count the number of set bits in a value */
 int num_bits(int value)
 {
-    value = ((value & 0xaaaa) >> 1) + (value & 0x5555);
-    value = ((value & 0xcccc) >> 2) + (value & 0x3333);
-    value = ((value & 0xf0f0) >> 4) + (value & 0x0f0f);
-    value = ((value & 0xff00) >> 8) + (value & 0x00ff);
+	value = ((value & 0xaaaa) >> 1) + (value & 0x5555);
+	value = ((value & 0xcccc) >> 2) + (value & 0x3333);
+	value = ((value & 0xf0f0) >> 4) + (value & 0x0f0f);
+	value = ((value & 0xff00) >> 8) + (value & 0x00ff);
 	return value;
 }
 
@@ -566,14 +566,14 @@ int atoh(char* buff)
 {
 	int accum = 0;
 
-	for(;;buff++)
+	for (;; buff++)
 	{
-		if(*buff >= '0' && *buff <= '9')
+		if (*buff >= '0' && *buff <= '9')
 		{
 			accum <<= 4;
 			accum += *buff - '0';
 		}
-		else if(*buff >= 'a' && *buff <= 'f')
+		else if (*buff >= 'a' && *buff <= 'f')
 		{
 			accum <<= 4;
 			accum += *buff - 'a' + 10;
@@ -588,13 +588,13 @@ int fgetline(char* buff, int nchars, FILE* file)
 {
 	int length;
 
-	if(fgets(buff, nchars, file) == nullptr)
+	if (fgets(buff, nchars, file) == NULL)
 		return -1;
-	if(buff[0] == '\r')
+	if (buff[0] == '\r')
 		memmove(buff, buff + 1, nchars - 1);
 
 	length = strlen(buff);
-	while(length && (buff[length-1] == '\r' || buff[length-1] == '\n'))
+	while (length && (buff[length - 1] == '\r' || buff[length - 1] == '\n'))
 		length--;
 	buff[length] = 0;
 	g_line_number++;
@@ -613,39 +613,39 @@ int get_oper_cycles(opcode_struct* op, int ea_mode, int cpu_type)
 {
 	int size = g_size_select_table[op->size];
 
-	if(op->cpus[cpu_type] == '.')
+	if (op->cpus[cpu_type] == '.')
 		return 0;
 
-	if(cpu_type < CPU_TYPE_020)
+	if (cpu_type < CPU_TYPE_020)
 	{
-		if(cpu_type == CPU_TYPE_010)
+		if (cpu_type == CPU_TYPE_010)
 		{
-			if(strcmp(op->name, "moves") == 0)
+			if (strcmp(op->name, "moves") == 0)
 				return op->cycles[cpu_type] + g_moves_cycle_table[ea_mode][size];
-			if(strcmp(op->name, "clr") == 0)
+			if (strcmp(op->name, "clr") == 0)
 				return op->cycles[cpu_type] + g_clr_cycle_table[ea_mode][size];
 		}
 
 		/* ASG: added these cases -- immediate modes take 2 extra cycles here */
 		/* SV: but only when operating on long, and also on register direct mode */
-		if(cpu_type == CPU_TYPE_000 && (ea_mode == EA_MODE_I || ea_mode == EA_MODE_NONE) && op->size == 32 &&
-		   ((strcmp(op->name, "add") == 0 && strcmp(op->spec_proc, "er") == 0) ||
-			strcmp(op->name, "adda")   == 0                                    ||
-			(strcmp(op->name, "and") == 0 && strcmp(op->spec_proc, "er") == 0) ||
-			(strcmp(op->name, "or") == 0 && strcmp(op->spec_proc, "er") == 0)  ||
-			(strcmp(op->name, "sub") == 0 && strcmp(op->spec_proc, "er") == 0) ||
-			strcmp(op->name, "suba")   == 0))
+		if (cpu_type == CPU_TYPE_000 && (ea_mode == EA_MODE_I || ea_mode == EA_MODE_NONE) && op->size == 32 &&
+			((strcmp(op->name, "add") == 0 && strcmp(op->spec_proc, "er") == 0) ||
+				strcmp(op->name, "adda") == 0 ||
+				(strcmp(op->name, "and") == 0 && strcmp(op->spec_proc, "er") == 0) ||
+				(strcmp(op->name, "or") == 0 && strcmp(op->spec_proc, "er") == 0) ||
+				(strcmp(op->name, "sub") == 0 && strcmp(op->spec_proc, "er") == 0) ||
+				strcmp(op->name, "suba") == 0))
 			return op->cycles[cpu_type] + g_ea_cycle_table[ea_mode][cpu_type][size] + 2;
 
-		if(strcmp(op->name, "jmp") == 0)
+		if (strcmp(op->name, "jmp") == 0)
 			return op->cycles[cpu_type] + g_jmp_cycle_table[ea_mode];
-		if(strcmp(op->name, "jsr") == 0)
+		if (strcmp(op->name, "jsr") == 0)
 			return op->cycles[cpu_type] + g_jsr_cycle_table[ea_mode];
-		if(strcmp(op->name, "lea") == 0)
+		if (strcmp(op->name, "lea") == 0)
 			return op->cycles[cpu_type] + g_lea_cycle_table[ea_mode];
-		if(strcmp(op->name, "pea") == 0)
+		if (strcmp(op->name, "pea") == 0)
 			return op->cycles[cpu_type] + g_pea_cycle_table[ea_mode];
-		if(strcmp(op->name, "movem") == 0)
+		if (strcmp(op->name, "movem") == 0)
 			return op->cycles[cpu_type] + g_movem_cycle_table[ea_mode];
 	}
 	return op->cycles[cpu_type] + g_ea_cycle_table[ea_mode][cpu_type][size];
@@ -657,15 +657,15 @@ opcode_struct* find_opcode(char* name, int size, char* spec_proc, char* spec_ea)
 	opcode_struct* op;
 
 
-	for(op = g_opcode_input_table;op->name != nullptr;op++)
+	for (op = g_opcode_input_table; op->name != NULL; op++)
 	{
-		if(	strcmp(name, op->name) == 0 &&
+		if (strcmp(name, op->name) == 0 &&
 			(size == op->size) &&
 			strcmp(spec_proc, op->spec_proc) == 0 &&
 			strcmp(spec_ea, op->spec_ea) == 0)
-				return op;
+			return op;
 	}
-	return nullptr;
+	return NULL;
 }
 
 /* Specifically find the illegal opcode in the list */
@@ -673,12 +673,12 @@ opcode_struct* find_illegal_opcode(void)
 {
 	opcode_struct* op;
 
-	for(op = g_opcode_input_table;op->name != nullptr;op++)
+	for (op = g_opcode_input_table; op->name != NULL; op++)
 	{
-		if(strcmp(op->name, "illegal") == 0)
+		if (strcmp(op->name, "illegal") == 0)
 			return op;
 	}
-	return nullptr;
+	return NULL;
 }
 
 /* Parse an opcode handler name */
@@ -686,29 +686,29 @@ int extract_opcode_info(char* src, char* name, int* size, char* spec_proc, char*
 {
 	char* ptr = strstr(src, ID_OPHANDLER_NAME);
 
-	if(ptr == nullptr)
+	if (ptr == NULL)
 		return 0;
 
 	ptr += strlen(ID_OPHANDLER_NAME) + 1;
 
 	ptr += check_strcncpy(name, ptr, ',', MAX_NAME_LENGTH);
-	if(*ptr != ',') return 0;
+	if (*ptr != ',') return 0;
 	ptr++;
 	ptr += skip_spaces(ptr);
 
 	*size = atoi(ptr);
 	ptr = strstr(ptr, ",");
-	if(ptr == nullptr) return 0;
-    ptr++;
+	if (ptr == NULL) return 0;
+	ptr++;
 	ptr += skip_spaces(ptr);
 
 	ptr += check_strcncpy(spec_proc, ptr, ',', MAX_SPEC_PROC_LENGTH);
-	if(*ptr != ',') return 0;
+	if (*ptr != ',') return 0;
 	ptr++;
 	ptr += skip_spaces(ptr);
 
 	ptr += check_strcncpy(spec_ea, ptr, ')', MAX_SPEC_EA_LENGTH);
-	if(*ptr != ')') return 0;
+	if (*ptr != ')') return 0;
 	ptr++;
 	ptr += skip_spaces(ptr);
 
@@ -719,7 +719,7 @@ int extract_opcode_info(char* src, char* name, int* size, char* spec_proc, char*
 /* Add a search/replace pair to a replace structure */
 void add_replace_string(replace_struct* replace, const char* search_str, const char* replace_str)
 {
-	if(replace->length >= MAX_REPLACE_LENGTH)
+	if (replace->length >= MAX_REPLACE_LENGTH)
 		error_exit("overflow in replace structure");
 
 	strcpy(replace->replace[replace->length][0], search_str);
@@ -732,32 +732,32 @@ void write_body(FILE* filep, body_struct* body, replace_struct* replace)
 	int i;
 	int j;
 	char* ptr;
-	char output[MAX_LINE_LENGTH+1];
-	char temp_buff[MAX_LINE_LENGTH+1];
+	char output[MAX_LINE_LENGTH + 1];
+	char temp_buff[MAX_LINE_LENGTH + 1];
 	int found;
 
-	for(i=0;i<body->length;i++)
+	for (i = 0; i < body->length; i++)
 	{
 		strcpy(output, body->body[i]);
 		/* Check for the base directive header */
-		if(strstr(output, ID_BASE) != nullptr)
+		if (strstr(output, ID_BASE) != NULL)
 		{
 			/* Search for any text we need to replace */
 			found = 0;
-			for(j=0;j<replace->length;j++)
+			for (j = 0; j < replace->length; j++)
 			{
 				ptr = strstr(output, replace->replace[j][0]);
-				if(ptr)
+				if (ptr)
 				{
 					/* We found something to replace */
 					found = 1;
-					strcpy(temp_buff, ptr+strlen(replace->replace[j][0]));
+					strcpy(temp_buff, ptr + strlen(replace->replace[j][0]));
 					strcpy(ptr, replace->replace[j][1]);
 					strcat(ptr, temp_buff);
 				}
 			}
 			/* Found a directive with no matching replace string */
-			if(!found)
+			if (!found)
 				error_exit("Unknown " ID_BASE " directive");
 		}
 		fprintf(filep, "%s\n", output);
@@ -769,12 +769,12 @@ void write_body(FILE* filep, body_struct* body, replace_struct* replace)
 void get_base_name(char* base_name, opcode_struct* op)
 {
 	sprintf(base_name, "m68k_op_%s", op->name);
-	if(op->size > 0)
-		sprintf(base_name+strlen(base_name), "_%d", op->size);
-	if(strcmp(op->spec_proc, UNSPECIFIED) != 0)
-		sprintf(base_name+strlen(base_name), "_%s", op->spec_proc);
-	if(strcmp(op->spec_ea, UNSPECIFIED) != 0)
-		sprintf(base_name+strlen(base_name), "_%s", op->spec_ea);
+	if (op->size > 0)
+		sprintf(base_name + strlen(base_name), "_%d", op->size);
+	if (strcmp(op->spec_proc, UNSPECIFIED) != 0)
+		sprintf(base_name + strlen(base_name), "_%s", op->spec_proc);
+	if (strcmp(op->spec_ea, UNSPECIFIED) != 0)
+		sprintf(base_name + strlen(base_name), "_%s", op->spec_ea);
 }
 
 /* Write the name of an opcode handler function */
@@ -786,7 +786,7 @@ void write_function_name(FILE* filep, char* base_name)
 void add_opcode_output_table_entry(opcode_struct* op, char* name)
 {
 	opcode_struct* ptr;
-	if(g_opcode_output_table_length > MAX_OPCODE_OUTPUT_TABLE_LENGTH)
+	if (g_opcode_output_table_length > MAX_OPCODE_OUTPUT_TABLE_LENGTH)
 		error_exit("Opcode output table overflow");
 
 	ptr = g_opcode_output_table + g_opcode_output_table_length++;
@@ -803,10 +803,10 @@ void add_opcode_output_table_entry(opcode_struct* op, char* name)
  */
 static int DECL_SPEC compare_nof_true_bits(const void* aptr, const void* bptr)
 {
-	const opcode_struct *a = aptr, *b = bptr;
-	if(a->bits != b->bits)
+	const opcode_struct* a = aptr, * b = bptr;
+	if (a->bits != b->bits)
 		return a->bits - b->bits;
-	if(a->op_mask != b->op_mask)
+	if (a->op_mask != b->op_mask)
 		return a->op_mask - b->op_mask;
 	return a->op_match - b->op_match;
 }
@@ -814,10 +814,10 @@ static int DECL_SPEC compare_nof_true_bits(const void* aptr, const void* bptr)
 void print_opcode_output_table(FILE* filep)
 {
 	int i;
-	qsort((void *)g_opcode_output_table, g_opcode_output_table_length, sizeof(g_opcode_output_table[0]), compare_nof_true_bits);
+	qsort((void*)g_opcode_output_table, g_opcode_output_table_length, sizeof(g_opcode_output_table[0]), compare_nof_true_bits);
 
-	for(i=0;i<g_opcode_output_table_length;i++)
-		write_table_entry(filep, g_opcode_output_table+i);
+	for (i = 0; i < g_opcode_output_table_length; i++)
+		write_table_entry(filep, g_opcode_output_table + i);
 }
 
 /* Write an entry in the opcode handler table */
@@ -828,10 +828,10 @@ void write_table_entry(FILE* filep, opcode_struct* op)
 	fprintf(filep, "\t{%-28s, 0x%04x, 0x%04x, {",
 		op->name, op->op_mask, op->op_match);
 
-	for(i=0;i<NUM_CPUS;i++)
+	for (i = 0; i < NUM_CPUS; i++)
 	{
 		fprintf(filep, "%3d", op->cycles[i]);
-		if(i < NUM_CPUS-1)
+		if (i < NUM_CPUS - 1)
 			fprintf(filep, ", ");
 	}
 
@@ -845,9 +845,9 @@ void set_opcode_struct(opcode_struct* src, opcode_struct* dst, int ea_mode)
 
 	*dst = *src;
 
-	for(i=0;i<NUM_CPUS;i++)
+	for (i = 0; i < NUM_CPUS; i++)
 		dst->cycles[i] = get_oper_cycles(dst, ea_mode, i);
-	if(strcmp(dst->spec_ea, UNSPECIFIED) == 0 && ea_mode != EA_MODE_NONE)
+	if (strcmp(dst->spec_ea, UNSPECIFIED) == 0 && ea_mode != EA_MODE_NONE)
 		sprintf(dst->spec_ea, "%s", g_ea_info_table[ea_mode].fname_add);
 	dst->op_mask |= g_ea_info_table[ea_mode].mask_add;
 	dst->op_match |= g_ea_info_table[ea_mode].match_add;
@@ -857,7 +857,7 @@ void set_opcode_struct(opcode_struct* src, opcode_struct* dst, int ea_mode)
 /* Generate a final opcode handler from the provided data */
 void generate_opcode_handler(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* opinfo, int ea_mode)
 {
-	char str[MAX_LINE_LENGTH+1];
+	char str[MAX_LINE_LENGTH + 1];
 	opcode_struct* op = malloc(sizeof(opcode_struct));
 
 	/* Set the opcode structure and write the tables, prototypes, etc */
@@ -867,7 +867,7 @@ void generate_opcode_handler(FILE* filep, body_struct* body, replace_struct* rep
 	write_function_name(filep, str);
 
 	/* Add any replace strings needed */
-	if(ea_mode != EA_MODE_NONE)
+	if (ea_mode != EA_MODE_NONE)
 	{
 		sprintf(str, "EA_%s_8()", g_ea_info_table[ea_mode].ea_add);
 		add_replace_string(replace, ID_OPHANDLER_EA_AY_8, str);
@@ -895,51 +895,51 @@ void generate_opcode_ea_variants(FILE* filep, body_struct* body, replace_struct*
 	int old_length = replace->length;
 
 	/* No ea modes available for this opcode */
-	if(HAS_NO_EA_MODE(op->ea_allowed))
+	if (HAS_NO_EA_MODE(op->ea_allowed))
 	{
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_NONE);
 		return;
 	}
 
 	/* Check for and create specific opcodes for each available addressing mode */
-	if(HAS_EA_AI(op->ea_allowed))
+	if (HAS_EA_AI(op->ea_allowed))
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_AI);
 	replace->length = old_length;
-	if(HAS_EA_PI(op->ea_allowed))
+	if (HAS_EA_PI(op->ea_allowed))
 	{
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_PI);
 		replace->length = old_length;
-		if(op->size == 8)
+		if (op->size == 8)
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_PI7);
 	}
 	replace->length = old_length;
-	if(HAS_EA_PD(op->ea_allowed))
+	if (HAS_EA_PD(op->ea_allowed))
 	{
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_PD);
 		replace->length = old_length;
-		if(op->size == 8)
+		if (op->size == 8)
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_PD7);
 	}
 	replace->length = old_length;
-	if(HAS_EA_DI(op->ea_allowed))
+	if (HAS_EA_DI(op->ea_allowed))
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_DI);
 	replace->length = old_length;
-	if(HAS_EA_IX(op->ea_allowed))
+	if (HAS_EA_IX(op->ea_allowed))
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_IX);
 	replace->length = old_length;
-	if(HAS_EA_AW(op->ea_allowed))
+	if (HAS_EA_AW(op->ea_allowed))
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_AW);
 	replace->length = old_length;
-	if(HAS_EA_AL(op->ea_allowed))
+	if (HAS_EA_AL(op->ea_allowed))
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_AL);
 	replace->length = old_length;
-	if(HAS_EA_PCDI(op->ea_allowed))
+	if (HAS_EA_PCDI(op->ea_allowed))
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_PCDI);
 	replace->length = old_length;
-	if(HAS_EA_PCIX(op->ea_allowed))
+	if (HAS_EA_PCIX(op->ea_allowed))
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_PCIX);
 	replace->length = old_length;
-	if(HAS_EA_I(op->ea_allowed))
+	if (HAS_EA_I(op->ea_allowed))
 		generate_opcode_handler(filep, body, replace, op, EA_MODE_I);
 	replace->length = old_length;
 }
@@ -958,7 +958,7 @@ void generate_opcode_cc_variants(FILE* filep, body_struct* body, replace_struct*
 	op->op_mask |= 0x0f00;
 
 	/* Do all condition codes except t and f */
-	for(i=2;i<16;i++)
+	for (i = 2; i < 16; i++)
 	{
 		/* Add replace strings for this condition code */
 		sprintf(repl, "COND_%s()", g_cc_table[i][1]);
@@ -968,9 +968,9 @@ void generate_opcode_cc_variants(FILE* filep, body_struct* body, replace_struct*
 		add_replace_string(replace, ID_OPHANDLER_NOT_CC, replnot);
 
 		/* Set the new opcode info */
-		strcpy(op->name+offset, g_cc_table[i][0]);
+		strcpy(op->name + offset, g_cc_table[i][0]);
 
-		op->op_match = (op->op_match & 0xf0ff) | (i<<8);
+		op->op_match = (op->op_match & 0xf0ff) | (i << 8);
 
 		/* Generate all opcode variants for this modified opcode */
 		generate_opcode_ea_variants(filep, body, replace, op);
@@ -984,40 +984,40 @@ void generate_opcode_cc_variants(FILE* filep, body_struct* body, replace_struct*
 void process_opcode_handlers(FILE* filep)
 {
 	FILE* input_file = g_input_file;
-	char func_name[MAX_LINE_LENGTH+1];
-	char oper_name[MAX_LINE_LENGTH+1];
+	char func_name[MAX_LINE_LENGTH + 1];
+	char oper_name[MAX_LINE_LENGTH + 1];
 	int  oper_size;
-	char oper_spec_proc[MAX_LINE_LENGTH+1];
-	char oper_spec_ea[MAX_LINE_LENGTH+1];
+	char oper_spec_proc[MAX_LINE_LENGTH + 1];
+	char oper_spec_ea[MAX_LINE_LENGTH + 1];
 	opcode_struct* opinfo;
 	replace_struct* replace = malloc(sizeof(replace_struct));
 	body_struct* body = malloc(sizeof(body_struct));
 
-	for(;;)
+	for (;;)
 	{
 		/* Find the first line of the function */
 		func_name[0] = 0;
-		while(strstr(func_name, ID_OPHANDLER_NAME) == nullptr)
+		while (strstr(func_name, ID_OPHANDLER_NAME) == NULL)
 		{
-			if(strcmp(func_name, ID_INPUT_SEPARATOR) == 0)
+			if (strcmp(func_name, ID_INPUT_SEPARATOR) == 0)
 			{
 				free(replace);
 				free(body);
 				return; /* all done */
 			}
-			if(fgetline(func_name, MAX_LINE_LENGTH, input_file) < 0)
+			if (fgetline(func_name, MAX_LINE_LENGTH, input_file) < 0)
 				error_exit("Premature end of file when getting function name");
 		}
 		/* Get the rest of the function */
-		for(body->length=0;;body->length++)
+		for (body->length = 0;; body->length++)
 		{
-			if(body->length > MAX_BODY_LENGTH)
+			if (body->length > MAX_BODY_LENGTH)
 				error_exit("Function too long");
 
-			if(fgetline(body->body[body->length], MAX_LINE_LENGTH, input_file) < 0)
+			if (fgetline(body->body[body->length], MAX_LINE_LENGTH, input_file) < 0)
 				error_exit("Premature end of file when getting function body");
 
-			if(body->body[body->length][0] == '}')
+			if (body->body[body->length][0] == '}')
 			{
 				body->length++;
 				break;
@@ -1027,22 +1027,22 @@ void process_opcode_handlers(FILE* filep)
 		g_num_primitives++;
 
 		/* Extract the function name information */
-		if(!extract_opcode_info(func_name, oper_name, &oper_size, oper_spec_proc, oper_spec_ea))
+		if (!extract_opcode_info(func_name, oper_name, &oper_size, oper_spec_proc, oper_spec_ea))
 			error_exit("Invalid " ID_OPHANDLER_NAME " format");
 
 		/* Find the corresponding table entry */
 		opinfo = find_opcode(oper_name, oper_size, oper_spec_proc, oper_spec_ea);
-		if(opinfo == nullptr)
+		if (opinfo == NULL)
 			error_exit("Unable to find matching table entry for %s", func_name);
 
 		replace->length = 0;
 
 		/* Generate opcode variants */
-		if(strcmp(opinfo->name, "bcc") == 0 || strcmp(opinfo->name, "scc") == 0)
+		if (strcmp(opinfo->name, "bcc") == 0 || strcmp(opinfo->name, "scc") == 0)
 			generate_opcode_cc_variants(filep, body, replace, opinfo, 1);
-		else if(strcmp(opinfo->name, "dbcc") == 0)
+		else if (strcmp(opinfo->name, "dbcc") == 0)
 			generate_opcode_cc_variants(filep, body, replace, opinfo, 2);
-		else if(strcmp(opinfo->name, "trapcc") == 0)
+		else if (strcmp(opinfo->name, "trapcc") == 0)
 			generate_opcode_cc_variants(filep, body, replace, opinfo, 4);
 		else
 			generate_opcode_ea_variants(filep, body, replace, opinfo);
@@ -1066,19 +1066,19 @@ void populate_table(void)
 	buff[0] = 0;
 
 	/* Find the start of the table */
-	while(strcmp(buff, ID_TABLE_START) != 0)
-		if(fgetline(buff, MAX_LINE_LENGTH, g_input_file) < 0)
+	while (strcmp(buff, ID_TABLE_START) != 0)
+		if (fgetline(buff, MAX_LINE_LENGTH, g_input_file) < 0)
 			error_exit("Premature EOF while reading table");
 
 	/* Process the entire table */
-	for(op = g_opcode_input_table;;op++)
+	for (op = g_opcode_input_table;; op++)
 	{
-		if(fgetline(buff, MAX_LINE_LENGTH, g_input_file) < 0)
+		if (fgetline(buff, MAX_LINE_LENGTH, g_input_file) < 0)
 			error_exit("Premature EOF while reading table");
-		if(strlen(buff) == 0)
+		if (strlen(buff) == 0)
 			continue;
 		/* We finish when we find an input separator */
-		if(strcmp(buff, ID_INPUT_SEPARATOR) == 0)
+		if (strcmp(buff, ID_INPUT_SEPARATOR) == 0)
 			break;
 
 		/* Extract the info from the table */
@@ -1111,17 +1111,17 @@ void populate_table(void)
 
 		/* CPU operating mode (U = user or supervisor, S = supervisor only */
 		ptr += skip_spaces(ptr);
-		for(i=0;i<NUM_CPUS;i++)
+		for (i = 0; i < NUM_CPUS; i++)
 		{
 			op->cpu_mode[i] = *ptr++;
 			ptr += skip_spaces(ptr);
 		}
 
 		/* Allowed CPUs for this instruction */
-		for(i=0;i<NUM_CPUS;i++)
+		for (i = 0; i < NUM_CPUS; i++)
 		{
 			ptr += skip_spaces(ptr);
-			if(*ptr == UNSPECIFIED_CH)
+			if (*ptr == UNSPECIFIED_CH)
 			{
 				op->cpus[i] = UNSPECIFIED_CH;
 				op->cycles[i] = 0;
@@ -1138,10 +1138,10 @@ void populate_table(void)
 		/* generate mask and match from bitpattern */
 		op->op_mask = 0;
 		op->op_match = 0;
-		for(i=0;i<16;i++)
+		for (i = 0; i < 16; i++)
 		{
-			op->op_mask |= (bitpattern[i] != '.') << (15-i);
-			op->op_match |= (bitpattern[i] == '1') << (15-i);
+			op->op_mask |= (bitpattern[i] != '.') << (15 - i);
+			op->op_match |= (bitpattern[i] == '1') << (15 - i);
 		}
 	}
 	/* Terminate the list */
@@ -1154,15 +1154,15 @@ void read_insert(char* insert)
 	char* ptr = insert;
 	char* overflow = insert + MAX_INSERT_LENGTH - MAX_LINE_LENGTH;
 	int length;
-	char* first_blank = nullptr;
+	char* first_blank = NULL;
 
-	first_blank = nullptr;
+	first_blank = NULL;
 
 	/* Skip any leading blank lines */
-	for(length = 0;length == 0;length = fgetline(ptr, MAX_LINE_LENGTH, g_input_file))
-		if(ptr >= overflow)
+	for (length = 0; length == 0; length = fgetline(ptr, MAX_LINE_LENGTH, g_input_file))
+		if (ptr >= overflow)
 			error_exit("Buffer overflow reading inserts");
-	if(length < 0)
+	if (length < 0)
 		error_exit("Premature EOF while reading inserts");
 
 	/* Advance and append newline */
@@ -1170,26 +1170,26 @@ void read_insert(char* insert)
 	strcpy(ptr++, "\n");
 
 	/* Read until next separator */
-	for(;;)
+	for (;;)
 	{
 		/* Read a new line */
-		if(ptr >= overflow)
+		if (ptr >= overflow)
 			error_exit("Buffer overflow reading inserts");
-		if((length = fgetline(ptr, MAX_LINE_LENGTH, g_input_file)) < 0)
+		if ((length = fgetline(ptr, MAX_LINE_LENGTH, g_input_file)) < 0)
 			error_exit("Premature EOF while reading inserts");
 
 		/* Stop if we read a separator */
-		if(strcmp(ptr, ID_INPUT_SEPARATOR) == 0)
+		if (strcmp(ptr, ID_INPUT_SEPARATOR) == 0)
 			break;
 
 		/* keep track in case there are trailing blanks */
-		if(length == 0)
+		if (length == 0)
 		{
-			if(first_blank == nullptr)
+			if (first_blank == NULL)
 				first_blank = ptr;
 		}
 		else
-			first_blank = nullptr;
+			first_blank = NULL;
 
 		/* Advance and append newline */
 		ptr += length;
@@ -1197,7 +1197,7 @@ void read_insert(char* insert)
 	}
 
 	/* kill any trailing blank lines */
-	if(first_blank)
+	if (first_blank)
 		ptr = first_blank;
 	*ptr++ = 0;
 }
@@ -1208,20 +1208,20 @@ void read_insert(char* insert)
 /* ============================= MAIN FUNCTION ============================ */
 /* ======================================================================== */
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	/* File stuff */
 	char output_path[M68K_MAX_DIR] = "";
 	char filename[M68K_MAX_PATH];
 	/* Section identifier */
-	char section_id[MAX_LINE_LENGTH+1];
+	char section_id[MAX_LINE_LENGTH + 1];
 	/* Inserts */
-	char temp_insert[MAX_INSERT_LENGTH+1];
-	char prototype_footer_insert[MAX_INSERT_LENGTH+1];
-	char table_header_insert[MAX_INSERT_LENGTH+1];
-	char table_footer_insert[MAX_INSERT_LENGTH+1];
-	char ophandler_header_insert[MAX_INSERT_LENGTH+1];
-	char ophandler_footer_insert[MAX_INSERT_LENGTH+1];
+	char temp_insert[MAX_INSERT_LENGTH + 1];
+	char prototype_footer_insert[MAX_INSERT_LENGTH + 1];
+	char table_header_insert[MAX_INSERT_LENGTH + 1];
+	char table_footer_insert[MAX_INSERT_LENGTH + 1];
+	char ophandler_header_insert[MAX_INSERT_LENGTH + 1];
+	char ophandler_footer_insert[MAX_INSERT_LENGTH + 1];
 	/* Flags if we've processed certain parts already */
 	int prototype_header_read = 0;
 	int prototype_footer_read = 0;
@@ -1236,20 +1236,20 @@ int main(int argc, char **argv)
 	printf("\tCopyright Karl Stenerud (karl@mame.net)\n\n");
 
 	/* Check if output path and source for the input file are given */
-    if(argc > 1)
+	if (argc > 1)
 	{
-		char *ptr;
+		char* ptr;
 		strcpy(output_path, argv[1]);
 
-		for(ptr = strchr(output_path, '\\'); ptr; ptr = strchr(ptr, '\\'))
+		for (ptr = strchr(output_path, '\\'); ptr; ptr = strchr(ptr, '\\'))
 			*ptr = '/';
 
 #if !(defined(__DECC) && defined(VMS))
-        if(output_path[strlen(output_path)-1] != '/')
+		if (output_path[strlen(output_path) - 1] != '/')
 			strcat(output_path, "/");
 #endif
 
-		if(argc > 2)
+		if (argc > 2)
 			strcpy(g_input_filename, argv[2]);
 	}
 
@@ -1258,14 +1258,14 @@ int main(int argc, char **argv)
 
 	/* Open the files we need */
 	sprintf(filename, "%s%s", output_path, FILENAME_PROTOTYPE);
-	if((g_prototype_file = fopen(filename, "w")) == NULL)
+	if ((g_prototype_file = fopen(filename, "w")) == NULL)
 		perror_exit("Unable to create prototype file (%s)\n", filename);
 
 	sprintf(filename, "%s%s", output_path, FILENAME_TABLE);
-	if((g_table_file = fopen(filename, "w")) == NULL)
+	if ((g_table_file = fopen(filename, "w")) == NULL)
 		perror_exit("Unable to create table file (%s)\n", filename);
 
-	if((g_input_file=fopen(g_input_filename, "r")) == NULL)
+	if ((g_input_file = fopen(g_input_filename, "r")) == NULL)
 		perror_exit("can't open %s for input", g_input_filename);
 
 #else
@@ -1273,99 +1273,99 @@ int main(int argc, char **argv)
 
 	/* Open the files we need */
 	sprintf(filename, "%s%s", output_path, FILENAME_PROTOTYPE);
-	if((g_prototype_file = fopen(filename, "wt")) == nullptr)
+	if ((g_prototype_file = fopen(filename, "wt")) == NULL)
 		perror_exit("Unable to create prototype file (%s)\n", filename);
 
 	sprintf(filename, "%s%s", output_path, FILENAME_TABLE);
-	if((g_table_file = fopen(filename, "wt")) == nullptr)
+	if ((g_table_file = fopen(filename, "wt")) == NULL)
 		perror_exit("Unable to create table file (%s)\n", filename);
 
-	if((g_input_file=fopen(g_input_filename, "rt")) == nullptr)
+	if ((g_input_file = fopen(g_input_filename, "rt")) == NULL)
 		perror_exit("can't open %s for input", g_input_filename);
 
 #endif
 
 	/* Get to the first section of the input file */
 	section_id[0] = 0;
-	while(strcmp(section_id, ID_INPUT_SEPARATOR) != 0)
-		if(fgetline(section_id, MAX_LINE_LENGTH, g_input_file) < 0)
+	while (strcmp(section_id, ID_INPUT_SEPARATOR) != 0)
+		if (fgetline(section_id, MAX_LINE_LENGTH, g_input_file) < 0)
 			error_exit("Premature EOF while reading input file");
 
 	/* Now process all sections */
-	for(;;)
+	for (;;)
 	{
-		if(fgetline(section_id, MAX_LINE_LENGTH, g_input_file) < 0)
+		if (fgetline(section_id, MAX_LINE_LENGTH, g_input_file) < 0)
 			error_exit("Premature EOF while reading input file");
-		if(strcmp(section_id, ID_PROTOTYPE_HEADER) == 0)
+		if (strcmp(section_id, ID_PROTOTYPE_HEADER) == 0)
 		{
-			if(prototype_header_read)
+			if (prototype_header_read)
 				error_exit("Duplicate prototype header");
 			read_insert(temp_insert);
 			fprintf(g_prototype_file, "%s\n\n", temp_insert);
 			prototype_header_read = 1;
 		}
-		else if(strcmp(section_id, ID_TABLE_HEADER) == 0)
+		else if (strcmp(section_id, ID_TABLE_HEADER) == 0)
 		{
-			if(table_header_read)
+			if (table_header_read)
 				error_exit("Duplicate table header");
 			read_insert(table_header_insert);
 			table_header_read = 1;
 		}
-		else if(strcmp(section_id, ID_OPHANDLER_HEADER) == 0)
+		else if (strcmp(section_id, ID_OPHANDLER_HEADER) == 0)
 		{
-			if(ophandler_header_read)
+			if (ophandler_header_read)
 				error_exit("Duplicate opcode handler header");
 			read_insert(ophandler_header_insert);
 			ophandler_header_read = 1;
 		}
-		else if(strcmp(section_id, ID_PROTOTYPE_FOOTER) == 0)
+		else if (strcmp(section_id, ID_PROTOTYPE_FOOTER) == 0)
 		{
-			if(prototype_footer_read)
+			if (prototype_footer_read)
 				error_exit("Duplicate prototype footer");
 			read_insert(prototype_footer_insert);
 			prototype_footer_read = 1;
 		}
-		else if(strcmp(section_id, ID_TABLE_FOOTER) == 0)
+		else if (strcmp(section_id, ID_TABLE_FOOTER) == 0)
 		{
-			if(table_footer_read)
+			if (table_footer_read)
 				error_exit("Duplicate table footer");
 			read_insert(table_footer_insert);
 			table_footer_read = 1;
 		}
-		else if(strcmp(section_id, ID_OPHANDLER_FOOTER) == 0)
+		else if (strcmp(section_id, ID_OPHANDLER_FOOTER) == 0)
 		{
-			if(ophandler_footer_read)
+			if (ophandler_footer_read)
 				error_exit("Duplicate opcode handler footer");
 			read_insert(ophandler_footer_insert);
 			ophandler_footer_read = 1;
 		}
-		else if(strcmp(section_id, ID_TABLE_BODY) == 0)
+		else if (strcmp(section_id, ID_TABLE_BODY) == 0)
 		{
-			if(!prototype_header_read)
+			if (!prototype_header_read)
 				error_exit("Table body encountered before prototype header");
-			if(!table_header_read)
+			if (!table_header_read)
 				error_exit("Table body encountered before table header");
-			if(!ophandler_header_read)
+			if (!ophandler_header_read)
 				error_exit("Table body encountered before opcode handler header");
 
-			if(table_body_read)
+			if (table_body_read)
 				error_exit("Duplicate table body");
 
 			populate_table();
 			table_body_read = 1;
 		}
-		else if(strcmp(section_id, ID_OPHANDLER_BODY) == 0)
+		else if (strcmp(section_id, ID_OPHANDLER_BODY) == 0)
 		{
-			if(!prototype_header_read)
+			if (!prototype_header_read)
 				error_exit("Opcode handlers encountered before prototype header");
-			if(!table_header_read)
+			if (!table_header_read)
 				error_exit("Opcode handlers encountered before table header");
-			if(!ophandler_header_read)
+			if (!ophandler_header_read)
 				error_exit("Opcode handlers encountered before opcode handler header");
-			if(!table_body_read)
+			if (!table_body_read)
 				error_exit("Opcode handlers encountered before table body");
 
-			if(ophandler_body_read)
+			if (ophandler_body_read)
 				error_exit("Duplicate opcode handler section");
 
 			fprintf(g_table_file, "%s\n\n", ophandler_header_insert);
@@ -1374,24 +1374,24 @@ int main(int argc, char **argv)
 
 			ophandler_body_read = 1;
 		}
-		else if(strcmp(section_id, ID_END) == 0)
+		else if (strcmp(section_id, ID_END) == 0)
 		{
 			/* End of input file.  Do a sanity check and then write footers */
-			if(!prototype_header_read)
+			if (!prototype_header_read)
 				error_exit("Missing prototype header");
-			if(!prototype_footer_read)
+			if (!prototype_footer_read)
 				error_exit("Missing prototype footer");
-			if(!table_header_read)
+			if (!table_header_read)
 				error_exit("Missing table header");
-			if(!table_footer_read)
+			if (!table_footer_read)
 				error_exit("Missing table footer");
-			if(!table_body_read)
+			if (!table_body_read)
 				error_exit("Missing table body");
-			if(!ophandler_header_read)
+			if (!ophandler_header_read)
 				error_exit("Missing opcode handler header");
-			if(!ophandler_footer_read)
+			if (!ophandler_footer_read)
 				error_exit("Missing opcode handler footer");
-			if(!ophandler_body_read)
+			if (!ophandler_body_read)
 				error_exit("Missing opcode handler body");
 
 			fprintf(g_table_file, "%s\n\n", table_header_insert);

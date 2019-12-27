@@ -16,12 +16,12 @@
 
 #include "ddraw_core.h"
 
-static IDirectDraw7* BlitFXDD = NULL;				// DirectDraw interface
-static IDirectDrawSurface7* BlitFXPrim = NULL;		// Primary surface
-static IDirectDrawSurface7* BlitFXBack = NULL;		// Back buffer surface
+static IDirectDraw7* BlitFXDD = nullptr;				// DirectDraw interface
+static IDirectDrawSurface7* BlitFXPrim = nullptr;		// Primary surface
+static IDirectDrawSurface7* BlitFXBack = nullptr;		// Back buffer surface
 
 static int nGameWidth = 0, nGameHeight = 0;			// screen size
-IDirectDrawSurface7* pddsBlitFX[2] = {NULL, };		// The image surfaces
+IDirectDrawSurface7* pddsBlitFX[2] = {nullptr, };		// The image surfaces
 
 static int nSize;
 static int nUseBlitter;
@@ -32,18 +32,18 @@ static int nRotateGame = 0;
 
 static int PrimClear()
 {
-	if (BlitFXPrim == NULL) {
+	if (BlitFXPrim == nullptr) {
 		return 1;
 	}
-	VidSClearSurface(BlitFXPrim, 0, NULL);			// Clear 1st page
+	VidSClearSurface(BlitFXPrim, 0, nullptr);			// Clear 1st page
 
-	if (BlitFXBack == NULL) {
+	if (BlitFXBack == nullptr) {
 		return 0;
 	}
 
-	VidSClearSurface(BlitFXBack, 0, NULL);			// Clear 2nd page
-	BlitFXPrim->Flip(NULL, DDFLIP_WAIT);			// wait till the flip actually occurs
-	VidSClearSurface(BlitFXBack, 0, NULL);			// Clear 3rd page
+	VidSClearSurface(BlitFXBack, 0, nullptr);			// Clear 2nd page
+	BlitFXPrim->Flip(nullptr, DDFLIP_WAIT);			// wait till the flip actually occurs
+	VidSClearSurface(BlitFXBack, 0, nullptr);			// Clear 3rd page
 
 	return 0;
 }
@@ -52,12 +52,12 @@ static int AutodetectUseSys()
 {
 	// Try to autodetect the best secondary buffer type to use, based on the cards capabilities
 	DDCAPS ddc;
-	if (BlitFXDD == NULL) {
+	if (BlitFXDD == nullptr) {
 		return 1;
 	}
 	memset(&ddc, 0, sizeof(ddc));
 	ddc.dwSize = sizeof(ddc);
-	BlitFXDD->GetCaps(&ddc, NULL);
+	BlitFXDD->GetCaps(&ddc, nullptr);
 
 	if (ddc.dwCaps & DDCAPS_BLTSTRETCH) {	// If it can do a hardware stretch use video memory
 		return 0;
@@ -72,7 +72,7 @@ static int BlitFXMakeSurf()
 	int nRet;
 	DDSURFACEDESC2 ddsd;
 
-	if (BlitFXDD == NULL) {
+	if (BlitFXDD == nullptr) {
 		return 1;
 	}
 
@@ -86,8 +86,8 @@ static int BlitFXMakeSurf()
 		nDirectAccess = ((nVidBlitterOpt[nVidSelect] >> 9) & 1) ^ 1;
 	}
 	
-	pddsBlitFX[0] = NULL;
-	pddsBlitFX[1] = NULL;
+	pddsBlitFX[0] = nullptr;
+	pddsBlitFX[1] = nullptr;
 
 	// Try to allocate buffer in Video memory if required, always allocate one in System memory
 	if (nUseSys == 0) {
@@ -99,10 +99,10 @@ static int BlitFXMakeSurf()
 		ddsd.dwWidth = nGameWidth * nSize;
 		ddsd.dwHeight = nGameHeight * nSize;
 
-		nRet = BlitFXDD->CreateSurface(&ddsd, &pddsBlitFX[0], NULL);
+		nRet = BlitFXDD->CreateSurface(&ddsd, &pddsBlitFX[0], nullptr);
 
-		if (nRet < 0 || pddsBlitFX[0] == NULL) {									// Allocation in Video meory has failed, so use System memory only
-			pddsBlitFX[0] = NULL;
+		if (nRet < 0 || pddsBlitFX[0] == nullptr) {									// Allocation in Video meory has failed, so use System memory only
+			pddsBlitFX[0] = nullptr;
 			nDirectAccess = 0;
 			nUseSys = 1;
 		}
@@ -117,14 +117,14 @@ static int BlitFXMakeSurf()
 		ddsd.dwWidth = nGameWidth * nSize;
 		ddsd.dwHeight = nGameHeight * nSize;
 
-		nRet = BlitFXDD->CreateSurface(&ddsd, &pddsBlitFX[1], NULL);
+		nRet = BlitFXDD->CreateSurface(&ddsd, &pddsBlitFX[1], nullptr);
 
-		if (nRet < 0 || pddsBlitFX[1] == NULL) {
+		if (nRet < 0 || pddsBlitFX[1] == nullptr) {
 			return 1;
 		}
 	}
 
-	VidSClearSurface(pddsBlitFX[1 ^ nDirectAccess], 0, NULL);
+	VidSClearSurface(pddsBlitFX[1 ^ nDirectAccess], 0, nullptr);
 
 	return 0;
 }
@@ -147,9 +147,9 @@ static int PrimInit(int bTriple)
 		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 	}
 
-	BlitFXPrim = NULL;
-	nRet = BlitFXDD->CreateSurface(&ddsd, &BlitFXPrim, NULL);
-	if (nRet < 0 || BlitFXPrim == NULL) {
+	BlitFXPrim = nullptr;
+	nRet = BlitFXDD->CreateSurface(&ddsd, &BlitFXPrim, nullptr);
+	if (nRet < 0 || BlitFXPrim == nullptr) {
 		return 1;
 	}
 
@@ -161,9 +161,9 @@ static int PrimInit(int bTriple)
 	memset(&ddsd.ddsCaps, 0, sizeof(ddsd.ddsCaps));
 	ddsd.ddsCaps.dwCaps = DDSCAPS_BACKBUFFER;
 
-	BlitFXBack = NULL;
+	BlitFXBack = nullptr;
 	nRet = BlitFXPrim->GetAttachedSurface(&ddsd.ddsCaps, &BlitFXBack);
-	if (nRet < 0 || BlitFXBack == NULL) {			// Failed to make triple buffer
+	if (nRet < 0 || BlitFXBack == nullptr) {			// Failed to make triple buffer
 		RELEASE(BlitFXPrim)
 		return 1;
 	}
@@ -186,7 +186,7 @@ static int BlitFXExit()
 
 static int BlitFXInit()
 {
-	if (BlitFXDD == NULL) {
+	if (BlitFXDD == nullptr) {
 		return 1;
 	}
 
@@ -239,7 +239,7 @@ static int Exit()
 	VidSRestoreGamma();
 
 	RELEASE(BlitFXPrim);							// a single call releases all surfaces
-	BlitFXBack = NULL;
+	BlitFXBack = nullptr;
 
 	VidSRestoreScreenMode();
 
@@ -252,7 +252,7 @@ static int Exit()
 
 static int Init()
 {
-	if (hScrnWnd == NULL) {
+	if (hScrnWnd == nullptr) {
 		return 1;
 	}
 
@@ -261,7 +261,7 @@ static int Init()
 	nUseBlitter = nVidBlitterOpt[nVidSelect] & 0xFF;
 
 	// Get pointer to DirectDraw device
-	_DirectDrawCreateEx(NULL, (void**)&BlitFXDD, IID_IDirectDraw7, NULL);
+	_DirectDrawCreateEx(nullptr, (void**)&BlitFXDD, IID_IDirectDraw7, nullptr);
 
 	VidSInit(BlitFXDD);
 
@@ -288,8 +288,8 @@ static int Init()
 		}
 	}
 
-	BlitFXPrim = NULL;								// No primary surface yet
-	BlitFXBack = NULL;
+	BlitFXPrim = nullptr;								// No primary surface yet
+	BlitFXBack = nullptr;
 
 	bVidScanlines = 0;								// !!!
 	nSize = VidSoftFXGetZoom(nUseBlitter);
@@ -320,7 +320,7 @@ static int Init()
 		BlitFXDD->SetCooperativeLevel(hVidWnd, DDSCL_NORMAL);
 	}
 
-	if (BlitFXPrim == NULL) {
+	if (BlitFXPrim == nullptr) {
 		// No primary surface yet, so try normal
 		if (PrimInit(0)) {
 			RELEASE(BlitFXBack);
@@ -328,7 +328,7 @@ static int Init()
 		}
 	}
 
-	if (BlitFXPrim == NULL) {						// No primary surface
+	if (BlitFXPrim == nullptr) {						// No primary surface
 		Exit();
 		return 1;
 	}
@@ -368,7 +368,7 @@ static int vidScale(RECT* pRect, int nWidth, int nHeight)
 // Copy BlitFXsMem to pddsBlitFX
 static int MemToSurf()
 {
-	if (pddsBlitFX == NULL) {
+	if (pddsBlitFX == nullptr) {
 		return 1;
 	}
 
@@ -376,7 +376,7 @@ static int MemToSurf()
 		return 1;
 	}
 
-	VidSoftFXApplyEffectDirectX(pddsBlitFX[1 ^ nDirectAccess], NULL);
+	VidSoftFXApplyEffectDirectX(pddsBlitFX[1 ^ nDirectAccess], nullptr);
 
 	if (nUseSys == 0 && nDirectAccess == 0) {
 		DDSURFACEDESC2 ddsd;
@@ -385,8 +385,8 @@ static int MemToSurf()
 		// Lock the surface so we can write to it
 		memset(&ddsd, 0, sizeof(ddsd));
 		ddsd.dwSize = sizeof(ddsd);
-		pddsBlitFX[1]->Lock(NULL, &ddsd, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT, NULL);
-		if (ddsd.lpSurface == NULL) {
+		pddsBlitFX[1]->Lock(nullptr, &ddsd, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT, nullptr);
+		if (ddsd.lpSurface == nullptr) {
 			return 1;
 		}
 		unsigned char* Surf = (unsigned char*)ddsd.lpSurface;
@@ -395,8 +395,8 @@ static int MemToSurf()
 		// Lock the surface so we can write to it
 		memset(&ddsdVid, 0, sizeof(ddsdVid));
 		ddsdVid.dwSize = sizeof(ddsdVid);
-		pddsBlitFX[0]->Lock(NULL, &ddsdVid, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT, NULL);
-		if (ddsdVid.lpSurface == NULL) {
+		pddsBlitFX[0]->Lock(nullptr, &ddsdVid, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT, nullptr);
+		if (ddsdVid.lpSurface == nullptr) {
 			return 1;
 		}
 
@@ -411,8 +411,8 @@ static int MemToSurf()
 			memcpy(pd, ps, nPitch);
 		}
 
-		pddsBlitFX[0]->Unlock(NULL);
-		pddsBlitFX[1]->Unlock(NULL);
+		pddsBlitFX[0]->Unlock(nullptr);
+		pddsBlitFX[1]->Unlock(nullptr);
 	}
 
 	return 0;
@@ -421,7 +421,7 @@ static int MemToSurf()
 // Run one frame and render the screen
 static int Frame(bool bRedraw)								// bRedraw = 0
 {
-	if (pVidImage == NULL) {
+	if (pVidImage == nullptr) {
 		return 1;
 	}
 
@@ -461,7 +461,7 @@ static int Paint(int bValidate)
 {
 	RECT Dest = {0, 0, 0, 0};
 
-	if (BlitFXPrim == NULL || pddsBlitFX[nUseSys] == NULL) {
+	if (BlitFXPrim == nullptr || pddsBlitFX[nUseSys] == nullptr) {
 		return 1;
 	}
 
@@ -499,17 +499,17 @@ static int Paint(int bValidate)
 	// Display OSD text message
 	VidSDisplayOSD(pddsBlitFX[nUseSys], &rect, 0);
 
-	if (BlitFXBack != NULL) {
+	if (BlitFXBack != nullptr) {
 		// Triple bufferring
-		if (BlitFXBack->Blt(&Dest, pddsBlitFX[nUseSys], NULL, DDBLT_WAIT, NULL) < 0) {
+		if (BlitFXBack->Blt(&Dest, pddsBlitFX[nUseSys], nullptr, DDBLT_WAIT, nullptr) < 0) {
 			return 1;
 		}
-		BlitFXPrim->Flip(NULL, DDFLIP_WAIT);
+		BlitFXPrim->Flip(nullptr, DDFLIP_WAIT);
 	} else {
 		// Normal
-		if (bVidVSync && !nVidFullscreen) { BlitFXDD->WaitForVerticalBlank(DDWAITVB_BLOCKBEGIN, NULL); }
+		if (bVidVSync && !nVidFullscreen) { BlitFXDD->WaitForVerticalBlank(DDWAITVB_BLOCKBEGIN, nullptr); }
 
-		if (BlitFXPrim->Blt(&Dest, pddsBlitFX[nUseSys], NULL, DDBLT_WAIT, NULL) < 0) {
+		if (BlitFXPrim->Blt(&Dest, pddsBlitFX[nUseSys], nullptr, DDBLT_WAIT, nullptr) < 0) {
 			return 1;
 		}
 	}

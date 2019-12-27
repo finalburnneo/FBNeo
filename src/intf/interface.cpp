@@ -8,26 +8,26 @@ INT32 IntInfoFree(InterfaceInfo* pInfo)
 		for (INT32 i = 0; i < INT_INFO_STRINGS; i++) {
 			if (pInfo->ppszInterfaceSettings[i]) {
 				free(pInfo->ppszInterfaceSettings[i]);
-				pInfo->ppszInterfaceSettings[i] = NULL;
+				pInfo->ppszInterfaceSettings[i] = nullptr;
 			}
 		}
 	}
 	if (pInfo->ppszInterfaceSettings) {
 		free(pInfo->ppszInterfaceSettings);
-		pInfo->ppszInterfaceSettings = NULL;
+		pInfo->ppszInterfaceSettings = nullptr;
 	}
 
 	if (pInfo->ppszModuleSettings) {
 		for (INT32 i = 0; i < INT_INFO_STRINGS; i++) {
 			if (pInfo->ppszModuleSettings[i]) {
 				free(pInfo->ppszModuleSettings[i]);
-				pInfo->ppszModuleSettings[i] = NULL;
+				pInfo->ppszModuleSettings[i] = nullptr;
 			}
 		}
 	}
 	if (pInfo->ppszModuleSettings) {
 		free(pInfo->ppszModuleSettings);
-		pInfo->ppszModuleSettings = NULL;
+		pInfo->ppszModuleSettings = nullptr;
 	}
 
 	memset(pInfo, 0, sizeof(InterfaceInfo));
@@ -40,13 +40,13 @@ INT32 IntInfoInit(InterfaceInfo* pInfo)
 	IntInfoFree(pInfo);
 
 	pInfo->ppszInterfaceSettings = (TCHAR**)malloc((INT_INFO_STRINGS + 1) * sizeof(TCHAR*));
-	if (pInfo->ppszInterfaceSettings == NULL) {
+	if (pInfo->ppszInterfaceSettings == nullptr) {
 		return 1;
 	}
 	memset(pInfo->ppszInterfaceSettings, 0, (INT_INFO_STRINGS + 1) * sizeof(TCHAR*));
 
 	pInfo->ppszModuleSettings = (TCHAR**)malloc((INT_INFO_STRINGS + 1) * sizeof(TCHAR*));
-	if (pInfo->ppszModuleSettings == NULL) {
+	if (pInfo->ppszModuleSettings == nullptr) {
 		return 1;
 	}
 	memset(pInfo->ppszModuleSettings, 0, (INT_INFO_STRINGS + 1) * sizeof(TCHAR*));
@@ -65,7 +65,7 @@ INT32 IntInfoAddStringInterface(InterfaceInfo* pInfo, TCHAR* szString)
 	}
 
 	pInfo->ppszInterfaceSettings[i] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
-	if (pInfo->ppszInterfaceSettings[i] == NULL) {
+	if (pInfo->ppszInterfaceSettings[i] == nullptr) {
 		return 1;
 	}
 
@@ -85,7 +85,7 @@ INT32 IntInfoAddStringModule(InterfaceInfo* pInfo, TCHAR* szString)
 	}
 
 	pInfo->ppszModuleSettings[i] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
-	if (pInfo->ppszModuleSettings[i] == NULL) {
+	if (pInfo->ppszModuleSettings[i] == nullptr) {
 		return 1;
 	}
 

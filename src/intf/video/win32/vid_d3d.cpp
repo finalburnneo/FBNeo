@@ -2473,6 +2473,6 @@ static int vidGetSettings(InterfaceInfo* pInfo)
 // The video output plugin:
 struct VidOut VidOutD3D = { vidInit, vidExit, vidFrame, vidPaint, vidScale, vidGetSettings, _T("DirectDraw7 / Direct3D7 Enhanced video output") };
 #else
-struct VidOut VidOutD3D = { NULL, NULL, NULL, NULL, NULL, NULL, _T("DirectDraw7 / Direct3D7 Enhanced video output") };
+struct VidOut VidOutD3D = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, _T("DirectDraw7 / Direct3D7 Enhanced video output") };
 #endif
 

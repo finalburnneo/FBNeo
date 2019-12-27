@@ -15,15 +15,15 @@
 
 #include "ddraw_core.h"
 
-static IDirectDraw7* DtoDD = NULL;				// DirectDraw interface
-static IDirectDrawSurface7* DtoPrim = NULL;		// Primary surface
-static IDirectDrawSurface7* DtoBack = NULL;		// Back buffer surface
+static IDirectDraw7* DtoDD = nullptr;				// DirectDraw interface
+static IDirectDrawSurface7* DtoPrim = nullptr;		// Primary surface
+static IDirectDrawSurface7* DtoBack = nullptr;		// Back buffer surface
 
 static int nRotateGame;
 static bool bRotateScanlines;
-static DDBLTFX* DtoBltFx = NULL;				// We use mirrored blits for flipped games
+static DDBLTFX* DtoBltFx = nullptr;				// We use mirrored blits for flipped games
 
-static IDirectDrawSurface7* pddsDtos = NULL;	// The screen surface
+static IDirectDrawSurface7* pddsDtos = nullptr;	// The screen surface
 static int nGameWidth = 0, nGameHeight = 0;		// screen size
 
 static bool bDtosScan;
@@ -37,16 +37,16 @@ static int nUseSys;								// Use System or Video memory
 
 static int DtoPrimClear()
 {
-	if (DtoPrim == NULL) {
+	if (DtoPrim == nullptr) {
 		return 1;
 	}
 
-	VidSClearSurface(DtoPrim, 0, NULL);			// Clear 1st page
+	VidSClearSurface(DtoPrim, 0, nullptr);			// Clear 1st page
 
 	if (DtoBack) {								// We're using a triple buffer
-		VidSClearSurface(DtoBack, 0, NULL);		// Clear 2nd page
-		DtoPrim->Flip(NULL, DDFLIP_WAIT);
-		VidSClearSurface(DtoBack, 0, NULL);		// Clear 3rd page
+		VidSClearSurface(DtoBack, 0, nullptr);		// Clear 2nd page
+		DtoPrim->Flip(nullptr, DDFLIP_WAIT);
+		VidSClearSurface(DtoBack, 0, nullptr);		// Clear 3rd page
 	}
 
 	return 0;
@@ -95,7 +95,7 @@ static int AutodetectUseSys()
 
 	memset(&ddc, 0, sizeof(ddc));
 	ddc.dwSize = sizeof(ddc);
-	DtoDD->GetCaps(&ddc, NULL);
+	DtoDD->GetCaps(&ddc, nullptr);
 
 	if (ddc.dwCaps & DDCAPS_BLTSTRETCH) {					// If it can do a hardware stretch use video memory
 		return 0;
@@ -112,7 +112,7 @@ static int DtosMakeSurf()
 	nUseSys = 0;
 	DDSURFACEDESC2 ddsd;
 
-	if (DtoDD == NULL) {
+	if (DtoDD == nullptr) {
 		return 1;
 	}
 
@@ -139,7 +139,7 @@ static int DtosMakeSurf()
 		ddsd.dwWidth = nGameWidth << 1;						// Make the surface large enough to add scanlines
 		ddsd.dwHeight = nGameHeight << 1;					//
 
-		nRet = DtoDD->CreateSurface(&ddsd, &pddsDtos, NULL);
+		nRet = DtoDD->CreateSurface(&ddsd, &pddsDtos, nullptr);
 
 		if (SUCCEEDED(nRet)) {								// Break early, so nUseSys will keep its value
 			break;
@@ -153,7 +153,7 @@ static int DtosMakeSurf()
 
 	nVidScrnDepth = VidSGetSurfaceDepth(pddsDtos);			// Get colourdepth of primary surface
 
-	VidSClearSurface(pddsDtos, 0, NULL);
+	VidSClearSurface(pddsDtos, 0, nullptr);
 
 	return 0;
 }
@@ -171,7 +171,7 @@ static int DtosExit()
 
 static int DtosInit()
 {
-	if (DtoDD == NULL) {
+	if (DtoDD == nullptr) {
 		return 1;
 	}
 
@@ -240,13 +240,13 @@ static int vidExit()
 	DtosExit();
 
 	RELEASE(DtoPrim)					// a single call releases all surfaces
-	DtoBack = NULL;
+	DtoBack = nullptr;
 
 	VidSExit();
 
 	if (DtoBltFx) {
 		free(DtoBltFx);
-		DtoBltFx = NULL;
+		DtoBltFx = nullptr;
 	}
 
 	RELEASE(DtoDD)
@@ -293,7 +293,7 @@ static int vidInit()
 #endif
 
 	// Get pointer to DirectDraw device
-	_DirectDrawCreateEx(nWantDriver ? &MyGuid : NULL, (void**)&DtoDD, IID_IDirectDraw7, NULL);
+	_DirectDrawCreateEx(nWantDriver ? &MyGuid : nullptr, (void**)&DtoDD, IID_IDirectDraw7, nullptr);
 
 	VidSInit(DtoDD);
 
@@ -301,7 +301,7 @@ static int vidInit()
 
 	nRotateGame = 0;
 	if (bDrvOkay) {
-		DtoBltFx = NULL;
+		DtoBltFx = nullptr;
 
 		// Get the game screen size
 		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
@@ -329,11 +329,11 @@ static int vidInit()
 			memset(&ddcaps, 0, sizeof(ddcaps));
 			ddcaps.dwSize = sizeof(ddcaps);
 
-			DtoDD->GetCaps(&ddcaps, NULL);
+			DtoDD->GetCaps(&ddcaps, nullptr);
 			if (((ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORLEFTRIGHT) && (ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORUPDOWN)) || bVidForceFlip) {
 
 				DtoBltFx = (DDBLTFX*)malloc(sizeof(DDBLTFX));
-				if (DtoBltFx == NULL) {
+				if (DtoBltFx == nullptr) {
 					vidExit();
 					return 1;
 				}
@@ -349,8 +349,8 @@ static int vidInit()
 		}
 	}
 
-	DtoPrim = NULL;							// No primary surface yet
-	DtoBack = NULL;
+	DtoPrim = nullptr;							// No primary surface yet
+	DtoBack = nullptr;
 
 	// Remember the changes to the display
 	if (nVidFullscreen) {
@@ -402,7 +402,7 @@ static int vidInit()
 		}
 	}
 
-	if (DtoPrim == NULL) {
+	if (DtoPrim == nullptr) {
 		// No primary surface yet, so try normal
 		if (DtoPrimInit(0)) {
 #ifdef PRINT_DEBUG_INFO
@@ -606,7 +606,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 				}
 				if (pBuffer) {
 					free (pBuffer);
-					pBuffer = NULL;
+					pBuffer = nullptr;
 				}
 			}
 		} else {
@@ -880,7 +880,7 @@ static int vidBurnToSurf()
 {
 	DDSURFACEDESC2 ddsd;
 
-	if (pddsDtos == NULL) {
+	if (pddsDtos == nullptr) {
 		return 1;
 	}
 
@@ -953,7 +953,7 @@ static int vidBurnToSurf()
 		}
 	}
 
-	pddsDtos->Unlock(NULL);
+	pddsDtos->Unlock(nullptr);
 
 	return 0;
 }
@@ -961,7 +961,7 @@ static int vidBurnToSurf()
 // Run one frame and render the screen
 int vidFrame(bool bRedraw)			// bRedraw = 0
 {
-	if (pVidImage == NULL) {
+	if (pVidImage == nullptr) {
 		return 1;
 	}
 
@@ -998,7 +998,7 @@ int vidFrame(bool bRedraw)			// bRedraw = 0
 // Paint the Dtos surface onto the primary surface
 static int vidPaint(int bValidate)
 {
-	if (DtoPrim == NULL || pddsDtos == NULL) {
+	if (DtoPrim == nullptr || pddsDtos == nullptr) {
 		return 1;
 	}
 
@@ -1028,9 +1028,9 @@ static int vidPaint(int bValidate)
 		dwBltFlags |= DDBLT_DDFX;
 	}
 
-	if (bVidVSync && !nVidFullscreen) { DtoDD->WaitForVerticalBlank(DDWAITVB_BLOCKEND, NULL); }
+	if (bVidVSync && !nVidFullscreen) { DtoDD->WaitForVerticalBlank(DDWAITVB_BLOCKEND, nullptr); }
 
-	if (DtoBack != NULL) {																		// Triple bufferring
+	if (DtoBack != nullptr) {																		// Triple bufferring
 		if (FAILED(DtoBack->Blt(&Dest, pddsDtos, &Src, DDBLT_ASYNC | dwBltFlags, DtoBltFx))) {
 			if (FAILED(DtoBack->Blt(&Dest, pddsDtos, &Src, DDBLT_WAIT | dwBltFlags, DtoBltFx))) {
 				return 1;
@@ -1038,7 +1038,7 @@ static int vidPaint(int bValidate)
 		}
 		VidSDisplayOSD(DtoBack, &Dest, 0);
 
-		DtoPrim->Flip(NULL, DDFLIP_WAIT);
+		DtoPrim->Flip(nullptr, DDFLIP_WAIT);
 	} else {																					// Normal
 		RECT rect = { 0, 0, nGameWidth, nGameHeight };
 		int nFlags = 0;

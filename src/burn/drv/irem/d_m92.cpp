@@ -9,7 +9,7 @@
 #include "msm6295.h" // ppan
 #include "irem_cpu.h"
 #include "iremga20.h"
-#include "stddef.h"
+#include <cstddef>
 
 static UINT8 *Mem = NULL;
 static UINT8 *MemEnd = NULL;

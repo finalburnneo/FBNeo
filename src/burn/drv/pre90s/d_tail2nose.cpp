@@ -302,7 +302,7 @@ static void tail2noseFMIRQHandler(INT32, INT32 status)
 	ZetSetIRQLine(0, (status & 1) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE );
 }
 
-static void tail2nos_zoom_callback(INT32 *code, INT32 *color, INT32 */*flags*/)
+static void tail2nos_zoom_callback(INT32 *code, INT32 *color, INT32* /*flags*/)
 {
 	*code |= ((*color & 0x03) << 8);
 	*color = 0x20 + ((*color & 0x38) >> 3);

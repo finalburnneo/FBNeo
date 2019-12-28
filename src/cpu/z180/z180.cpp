@@ -80,7 +80,7 @@ Hitachi HD647180 series:
 #define Z180_INLINE			static inline
 
 #include "z180_intf.h"
-#include <stddef.h>
+#include <cstddef>
 
 // in z180_intf.cpp
 extern void __fastcall z180_cpu_write_handler(UINT32 address, UINT8 data);

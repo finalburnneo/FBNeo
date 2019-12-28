@@ -117,12 +117,12 @@ static struct { TCHAR* pszName; int nZoom; unsigned int nFlags; } SoftFXInfo[] =
 	{ _T("DDT3x"),                          3, FXF_MMX },
 };
 
-static unsigned char* pSoftFXImage = NULL;
+static unsigned char* pSoftFXImage = nullptr;
 static int nSoftFXImageWidth = 0;
 static int nSoftFXImageHeight = 0;
 static int nSoftFXImagePitch = 0;
 
-static unsigned char* pSoftFXXBuffer = NULL;
+static unsigned char* pSoftFXXBuffer = nullptr;
 
 static int nSoftFXRotate = 0;
 static int nSoftFXBlitter = 0;
@@ -219,14 +219,14 @@ void VidSoftFXExit()
 {
 	if (pSoftFXXBuffer) {
 		free(pSoftFXXBuffer);
-		pSoftFXXBuffer = NULL;
+		pSoftFXXBuffer = nullptr;
 	}
 
 	if (nSoftFXRotate) {
 		free(pSoftFXImage);
-		pSoftFXImage = NULL;
+		pSoftFXImage = nullptr;
 	}
-	pSoftFXImage = NULL;
+	pSoftFXImage = nullptr;
 
 	nSoftFXRotate = 0;
 	nSoftFXEnlarge = 0;
@@ -265,7 +265,7 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 
 		if (nSoftFXRotate) {
 			pSoftFXImage = (unsigned char*)malloc(nSoftFXImageWidth * nSoftFXImageHeight * nVidImageBPP);
-			if (pSoftFXImage == NULL) {
+			if (pSoftFXImage == nullptr) {
 				VidSoftFXExit();
 				return 1;
 			}
@@ -275,7 +275,7 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 
 	if (nSoftFXBlitter >= FILTER_SUPEREAGLE && nSoftFXBlitter <= FILTER_SUPER_2XSAI) {		// Initialize the 2xSaI engine
 		pSoftFXXBuffer = (unsigned char*)malloc((nSoftFXImageHeight + 2) * nSoftFXImagePitch);
-		if (pSoftFXXBuffer == NULL) {
+		if (pSoftFXXBuffer == nullptr) {
 			VidSoftFXExit();
 			return 1;
 		}
@@ -294,7 +294,7 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 	if (nSoftFXBlitter >= FILTER_SUPEREAGLE_VBA && nSoftFXBlitter <= FILTER_SUPER_2XSAI_VBA) {
 		int nMemLen = (nSoftFXImageHeight + /*2*/4) * nSoftFXImagePitch;
 		pSoftFXXBuffer = (unsigned char*)malloc(nMemLen);
-		if (pSoftFXXBuffer == NULL) {
+		if (pSoftFXXBuffer == nullptr) {
 			VidSoftFXExit();
 			return 1;
 		}
@@ -866,9 +866,9 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 #endif
 		case FILTER_HQ2XS_VBA: {                                                                                      // hq2xS filter (16/32BPP only)
 			if (nVidImageDepth == 16) {
-				hq2xS(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+				hq2xS(ps, nSoftFXImagePitch, nullptr, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			} else if (nVidImageDepth == 32) {
-				hq2xS32(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+				hq2xS32(ps, nSoftFXImagePitch, nullptr, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			}
 			break;
 		}
@@ -966,7 +966,7 @@ int VidSoftFXApplyEffectDirectX(IDirectDrawSurface7* pSurf, RECT* pRect)
 
 	VidSoftFXApplyEffect(pSoftFXImage, (unsigned char*)ddsd.lpSurface, ddsd.lPitch);
 
-	pSurf->Unlock(NULL);
+	pSurf->Unlock(nullptr);
 
 	return 0;
 }

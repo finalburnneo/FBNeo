@@ -57,14 +57,14 @@ INT32 DDCore_Init()
 	hDDCore = LoadLibrary(_T("ddraw.dll"));
 
 	if(!hDDCore) {
-		MessageBox(NULL, _T("Loading of DDRAW.DLL failed."), _T("Error"), MB_OK | MB_ICONERROR);
+		MessageBox(nullptr, _T("Loading of DDRAW.DLL failed."), _T("Error"), MB_OK | MB_ICONERROR);
 		nDDCoreInit = FALSE;
 		return 0;
 	}
 	
 	nDDCoreInit = TRUE;
 	if(!DDCore_GetFunctions()) {
-		MessageBox(NULL, _T("There was a problem while loading functions from DDRAW.DLL"), _T("Error"), MB_OK | MB_ICONERROR);
+		MessageBox(nullptr, _T("There was a problem while loading functions from DDRAW.DLL"), _T("Error"), MB_OK | MB_ICONERROR);
 		return 0;
 	}
 

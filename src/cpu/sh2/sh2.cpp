@@ -31,7 +31,7 @@
 
 #include "burnint.h"
 #include "sh2_intf.h"
-#include <stddef.h>
+#include <cstddef>
 
 int has_sh2;
 INT32 cps3speedhack; // must be set _after_ Sh2Init();

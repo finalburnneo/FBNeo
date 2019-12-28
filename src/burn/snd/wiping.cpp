@@ -8,7 +8,7 @@
 
 #include "burnint.h"
 #include "wiping.h"
-#include <stddef.h>
+#include <cstddef>
 
 static const INT32 samplerate = 48000;
 static const INT32 defgain = 48;

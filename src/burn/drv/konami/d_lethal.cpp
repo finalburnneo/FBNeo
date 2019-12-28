@@ -374,7 +374,7 @@ static void lethal_sprite_callback(INT32 *code, INT32 *color, INT32 *priority)
 	*code = (*code & 0x3fff);
 }
 
-static void lethal_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
+static void lethal_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32* /*flags*/)
 {
 	*color = layer_colorbase[layer] + ((*color & 0x3c) << 2);
 	*code &= 0xffff;

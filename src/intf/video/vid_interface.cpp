@@ -50,7 +50,7 @@ static struct VidOut *pVidOut[] = {
 
 INT64 nVidBlitterOpt[VID_LEN] = {0, };			// Options for the blitter module (meaning depens on module)
 
-static InterfaceInfo VidInfo = { NULL, NULL, NULL };
+static InterfaceInfo VidInfo = {nullptr, nullptr, nullptr };
 
 #if defined (BUILD_WIN32)
 #if defined BUILD_X64_EXE
@@ -115,7 +115,7 @@ wchar_t HorScreen[32] = L"";
 wchar_t VerScreen[32] = L"";
 
 #ifdef BUILD_WIN32
- HWND hVidWnd = NULL;							// Actual window used for video
+ HWND hVidWnd = nullptr;							// Actual window used for video
 #endif
 
 #if defined (_XBOX)
@@ -128,7 +128,7 @@ INT32 nVidScrnDepth = 0;							// Actual screen depth
 INT32 nVidScrnAspectX = 4, nVidScrnAspectY = 3;	        // Aspect ratio of the horizontally orientated display screen
 INT32 nVidVerScrnAspectX = 4, nVidVerScrnAspectY = 3;   // Aspect ratio of the vertically orientated display screen
 
-UINT8* pVidImage = NULL;				// Memory buffer
+UINT8* pVidImage = nullptr;				// Memory buffer
 INT32 nVidImageWidth = DEFAULT_IMAGE_WIDTH;		// Memory buffer size
 INT32 nVidImageHeight = DEFAULT_IMAGE_HEIGHT;		//
 INT32 nVidImageLeft = 0, nVidImageTop = 0;		// Memory buffer visible area offsets
@@ -139,9 +139,9 @@ UINT32 (__cdecl *VidHighCol) (INT32 r, INT32 g, INT32 b, INT32 i);
 static bool bVidRecalcPalette;
 												// Translation to native Bpp for games flagged with BDF_16BIT_ONLY
 static void VidDoFrameCallback();
-void (*pVidTransCallback)(void) = NULL;         // Callback for video driver, after BurnDrvFrame() / BurnDrvRedraw() (see win32/vid_d3d.cpp:vidFrame() for example)
-static UINT8* pVidTransImage = NULL;
-static UINT32* pVidTransPalette = NULL;
+void (*pVidTransCallback)(void) = nullptr;         // Callback for video driver, after BurnDrvFrame() / BurnDrvRedraw() (see win32/vid_d3d.cpp:vidFrame() for example)
+static UINT8* pVidTransImage = nullptr;
+static UINT32* pVidTransPalette = nullptr;
 static INT32 bSkipNextFrame = 0;
 
 TCHAR szPlaceHolder[MAX_PATH] = _T("");
@@ -171,7 +171,7 @@ INT32 VidSelect(UINT32 nPlugin)
 INT32 VidInit()
 {
 #if defined (BUILD_WIN32) && defined (ENABLE_PREVIEW)
-	HBITMAP hbitmap = NULL;
+	HBITMAP hbitmap = nullptr;
 	BITMAP bitmap;
 #endif
 
@@ -227,7 +227,7 @@ INT32 VidInit()
 
 				BurnHighCol = HighCol15;
 
-				if (pVidTransPalette == NULL || pVidTransImage == NULL) {
+				if (pVidTransPalette == nullptr || pVidTransImage == nullptr) {
 					VidExit();
 					nRet = 1;
 				}
@@ -283,7 +283,7 @@ INT32 VidInit()
 		}
 		if (pLineBuffer) {
 			free(pLineBuffer);
-			pLineBuffer = NULL;
+			pLineBuffer = nullptr;
 		}
 	}
 
@@ -303,7 +303,7 @@ INT32 VidExit()
 		INT32 nRet = pVidOut[nVidActive]->Exit();
 
 #if defined (BUILD_WIN32)
-		hVidWnd = NULL;
+		hVidWnd = nullptr;
 #endif
 
 		bVidOkay = false;
@@ -315,14 +315,14 @@ INT32 VidExit()
 
 		if (pVidTransPalette) {
 			free(pVidTransPalette);
-			pVidTransPalette = NULL;
+			pVidTransPalette = nullptr;
 		}
 		if (pVidTransImage) {
 			free(pVidTransImage);
-			pVidTransImage = NULL;
+			pVidTransImage = nullptr;
 		}
 		if (pVidTransCallback) {
-			pVidTransCallback = NULL;
+			pVidTransCallback = nullptr;
 		}
 
 		return nRet;
@@ -387,7 +387,7 @@ static INT32 VidDoFrame(bool bRedraw)
 			return 0;
 		}
 
-		pBurnDraw = NULL;
+		pBurnDraw = nullptr;
 		nBurnPitch = 0;
 
 		if (!pVidTransCallback) {
@@ -399,7 +399,7 @@ static INT32 VidDoFrame(bool bRedraw)
 
 		nRet = pVidOut[nVidActive]->Frame(bRedraw);
 
-		pBurnDraw = NULL;
+		pBurnDraw = nullptr;
 		nBurnPitch = 0;
 	}
 
@@ -463,7 +463,7 @@ INT32 VidImageSize(RECT* pRect, INT32 nGameWidth, INT32 nGameHeight)
 
 const TCHAR* VidGetModuleName()
 {
-	const TCHAR* pszName = NULL;
+	const TCHAR* pszName = nullptr;
 
 	if (bVidOkay) {
 		pszName = pVidOut[nVidActive]->szModuleName;
@@ -485,7 +485,7 @@ InterfaceInfo* VidGetInfo()
 {
 	if (IntInfoInit(&VidInfo)) {
 		IntInfoFree(&VidInfo);
-		return NULL;
+		return nullptr;
 	}
 
 	if (bVidOkay) {

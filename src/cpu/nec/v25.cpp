@@ -34,7 +34,7 @@
 
 ****************************************************************************/
 #include "burnint.h"
-#include <stddef.h>
+#include <cstddef>
 #include "driver.h"
 #include "nec_intf.h"
 #include "bitswap.h"

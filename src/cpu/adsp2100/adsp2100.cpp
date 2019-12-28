@@ -96,8 +96,8 @@
 ***************************************************************************/
 
 #include "adsp2100.h"
-#include <stddef.h>
-#include <stdlib.h>
+#include <cstddef>
+#include <cstdlib>
 
 /***************************************************************************
     PRIVATE GLOBAL VARIABLES

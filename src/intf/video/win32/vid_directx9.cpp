@@ -53,26 +53,26 @@ typedef struct _D3DLVERTEX2 {
 #define DX9_USE_PS20		 ( nVidBlitterOpt[nVidSelect] & (1 <<  9))
 #define DX9_USE_FPTEXTURE    ( nVidBlitterOpt[nVidSelect] & (1 <<  8))
 
-static IDirect3D9* pD3D = NULL;							// Direct3D interface
+static IDirect3D9* pD3D = nullptr;							// Direct3D interface
 static D3DPRESENT_PARAMETERS d3dpp;
-static IDirect3DDevice9* pD3DDevice = NULL;
-static IDirect3DVertexBuffer9* pVB[RENDER_STRIPS] = { NULL, };
-static IDirect3DTexture9* pTexture = NULL;
-static IDirect3DTexture9* pScanlineTexture[2] = { NULL, };
+static IDirect3DDevice9* pD3DDevice = nullptr;
+static IDirect3DVertexBuffer9* pVB[RENDER_STRIPS] = {nullptr, };
+static IDirect3DTexture9* pTexture = nullptr;
+static IDirect3DTexture9* pScanlineTexture[2] = {nullptr, };
 static int nTextureWidth = 0, nTextureHeight = 0;
-static IDirect3DSurface9* pSurface = NULL;
+static IDirect3DSurface9* pSurface = nullptr;
 
-static IDirect3DVertexBuffer9* pIntermediateVB = NULL;
-static IDirect3DTexture9* pIntermediateTexture = NULL;
+static IDirect3DVertexBuffer9* pIntermediateVB = nullptr;
+static IDirect3DTexture9* pIntermediateTexture = nullptr;
 static int nIntermediateTextureWidth, nIntermediateTextureHeight;
 
-static ID3DXEffect* pEffect = NULL;
-static ID3DXTextureShader* pEffectShader = NULL;
-static D3DXHANDLE hTechnique = NULL;
+static ID3DXEffect* pEffect = nullptr;
+static ID3DXTextureShader* pEffectShader = nullptr;
+static D3DXHANDLE hTechnique = nullptr;
 //static D3DXHANDLE hScanIntensity = NULL;
-static IDirect3DTexture9* pEffectTexture = NULL;
+static IDirect3DTexture9* pEffectTexture = nullptr;
 
-static ID3DXFont* pFont = NULL;							// OSD font
+static ID3DXFont* pFont = nullptr;							// OSD font
 static D3DCOLOR osdColor = D3DCOLOR_ARGB(0xFF, 0xFF, 0xFF, 0xFF);
 
 static double dPrevCubicB, dPrevCubicC;
@@ -222,7 +222,7 @@ static void FillEffectTexture()
 	FLOAT B = (FLOAT)dVidCubicB;
 	FLOAT C = (FLOAT)dVidCubicC;
 
-	if (pEffect == NULL) {
+	if (pEffect == nullptr) {
 		return;
 	}
 
@@ -436,12 +436,12 @@ static int dx9EffectSurfaceInit()
 		IDirect3DSurface9* pSurf;
 
 		pTexture->GetSurfaceLevel(0, &pSurf);
-		pD3DDevice->ColorFill(pSurf, 0, D3DCOLOR_XRGB(0, 0, 0));
+		pD3DDevice->ColorFill(pSurf, nullptr, D3DCOLOR_XRGB(0, 0, 0));
 		RELEASE(pSurf);
 
 		if (pIntermediateTexture) {
 			pIntermediateTexture->GetSurfaceLevel(0, &pSurf);
-			pD3DDevice->ColorFill(pSurf, 0, D3DCOLOR_XRGB(0, 0, 0));
+			pD3DDevice->ColorFill(pSurf, nullptr, D3DCOLOR_XRGB(0, 0, 0));
 			RELEASE(pSurf);
 		}
 
@@ -452,7 +452,7 @@ static int dx9EffectSurfaceInit()
 	// Allocate scanline textures
 	for (int i = 0, nSize = 2; i < 2; i++, nSize <<= 1) {
 		RECT rect = { 0, 0, nSize, nSize };
-		IDirect3DSurface9* pSurf = NULL;
+		IDirect3DSurface9* pSurf = nullptr;
 
 		unsigned int scan2x2[] =  { 0xFFFFFF, 0xFFFFFF,
 									0x000000, 0x000000 };
@@ -645,13 +645,13 @@ int dx9EffectInit()
 //	D3DXMACRO d3dxm[] = {{ "USE_BC_MACRO", "1", }, { "B", szB, }, { "C", szC, }, { NULL, NULL, }};
 
 	char* pszTechniqueOpt[] = { "ScanBilinear", "Bilinear", "ScanPoint", "Point" };
-	char* pszTechnique = NULL;
+	char* pszTechnique = nullptr;
 
-	ID3DXBuffer* pErrorBuffer = NULL;
+	ID3DXBuffer* pErrorBuffer = nullptr;
 	FLOAT pFloatArray[2];
 
-	pEffect = NULL;
-	pEffectShader = NULL;
+	pEffect = nullptr;
+	pEffectShader = nullptr;
 
 	_D3DXCreateBuffer(0x10000, &pErrorBuffer);
 
@@ -669,7 +669,7 @@ int dx9EffectInit()
 
 	// Check if we need to use PS1.4 (instead of 2.0)
 	bUsePS14 = !DX9_USE_PS20;
-	if (pEffect->GetTechniqueByName("SinglePassHQBicubic") == NULL) {
+	if (pEffect->GetTechniqueByName("SinglePassHQBicubic") == nullptr) {
 		bUsePS14 = true;
 	}
 
@@ -728,7 +728,7 @@ int dx9EffectInit()
 	pEffect->SetTexture("weightTex", pEffectTexture);
 
 	{
-		ID3DXBuffer* pEffectShaderBuffer = NULL;
+		ID3DXBuffer* pEffectShaderBuffer = nullptr;
 		_D3DXCreateBuffer(0x10000, &pEffectShaderBuffer);
 
 #ifdef LOAD_EFFECT_FROM_FILE
@@ -811,7 +811,7 @@ static void dx9DrawText()
 		osdRect.bottom = Dest.bottom - Dest.top - 1;
 	}
 
-	pFont->DrawText(NULL, OSDMsg, -1, &osdRect, DT_RIGHT | DT_TOP, osdColor);
+	pFont->DrawText(nullptr, OSDMsg, -1, &osdRect, DT_RIGHT | DT_TOP, osdColor);
 }
 // <== osd for dx9 video output (ugly)
 
@@ -832,7 +832,7 @@ static int dx9Init()
 	hVidWnd = hScrnWnd;								// Use Screen window for video
 
 	// Get pointer to Direct3D
-	if ((pD3D = _Direct3DCreate9(D3D_SDK_VERSION)) == NULL) {
+	if ((pD3D = _Direct3DCreate9(D3D_SDK_VERSION)) == nullptr) {
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't initialise Direct3D.\n"));
 #endif
@@ -979,16 +979,16 @@ static int dx9Init()
 	// Clear the swapchain's buffers
 	if (nVidFullscreen) {
 		for (int i = 0; i < 3; i++) {
-			pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-			pD3DDevice->Present(NULL, NULL, NULL, NULL);
+			pD3DDevice->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+			pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
 		}
 	} else {
 		RECT rect;
 
 		GetClientScreenRect(hVidWnd, &rect);
 		rect.top += nMenuHeight; rect.bottom += nMenuHeight;
-		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-		pD3DDevice->Present(&rect, &rect, NULL, NULL);
+		pD3DDevice->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+		pD3DDevice->Present(&rect, &rect, nullptr, nullptr);
 	}
 
 	// Create osd font
@@ -1034,9 +1034,9 @@ static int dx9Reset()
 	dx9EffectInit();
 
 	for (int y = 0; y < RENDER_STRIPS; y++) {
-		pD3DDevice->CreateVertexBuffer(4 * sizeof(D3DLVERTEX2), D3DUSAGE_WRITEONLY, D3DFVF_LVERTEX2, D3DPOOL_DEFAULT, &pVB[y], NULL);
+		pD3DDevice->CreateVertexBuffer(4 * sizeof(D3DLVERTEX2), D3DUSAGE_WRITEONLY, D3DFVF_LVERTEX2, D3DPOOL_DEFAULT, &pVB[y], nullptr);
 	}
-	pD3DDevice->CreateVertexBuffer(4 * sizeof(D3DLVERTEX2), D3DUSAGE_WRITEONLY, D3DFVF_LVERTEX2, D3DPOOL_DEFAULT, &pIntermediateVB, NULL);
+	pD3DDevice->CreateVertexBuffer(4 * sizeof(D3DLVERTEX2), D3DUSAGE_WRITEONLY, D3DFVF_LVERTEX2, D3DPOOL_DEFAULT, &pIntermediateVB, nullptr);
 
 	pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -1301,7 +1301,7 @@ static int dx9MemToSurf()
 // Run one frame and render the screen
 static int dx9Frame(bool bRedraw)					// bRedraw = 0
 {
-	if (pVidImage == NULL) {
+	if (pVidImage == nullptr) {
 		return 1;
 	}
 
@@ -1379,7 +1379,7 @@ static int dx9Paint(int bValidate)
 //	VidSDisplayOSD(pddsBlitFX[nUseSys], &rect, 0);
 
 	if (nVidFullscreen) {
-		pD3DDevice->Present(NULL, NULL, NULL, NULL);
+		pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
 	} else {
 		RECT src = { 0, 0, Dest.right - Dest.left, Dest.bottom - Dest.top };
 
@@ -1404,7 +1404,7 @@ static int dx9Paint(int bValidate)
 		}
 		*/
 
-		pD3DDevice->Present(&src, &dst, NULL, NULL);
+		pD3DDevice->Present(&src, &dst, nullptr, nullptr);
 
 		// Validate the rectangle we just drew
 		if (bValidate & 1) {
@@ -1796,21 +1796,21 @@ static void dx9AltDrawText()
 	}
 
 	if (nOSDTimer) {
-		pFont->DrawText(NULL, OSDMsg, -1, &osdRect, DT_RIGHT | DT_TOP, osdColor);
+		pFont->DrawText(nullptr, OSDMsg, -1, &osdRect, DT_RIGHT | DT_TOP, osdColor);
 	}
 }
 // <== osd for dx9 video output (ugly)
 
 static int dx9AltInit()
 {
-	if (hScrnWnd == NULL) {
+	if (hScrnWnd == nullptr) {
 		return 1;
 	}
 
 	hVidWnd = hScrnWnd;
 
 	// Get pointer to Direct3D
-	if ((pD3D = _Direct3DCreate9(D3D_SDK_VERSION)) == NULL) {
+	if ((pD3D = _Direct3DCreate9(D3D_SDK_VERSION)) == nullptr) {
 		dx9AltExit();
 		return 1;
 	}
@@ -1969,15 +1969,15 @@ static int dx9AltInit()
 	// Clear the swapchain's buffers
 	if (nVidFullscreen) {
 		for (int i = 0; i < 3; i++) {
-			pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-			pD3DDevice->Present(NULL, NULL, NULL, NULL);
+			pD3DDevice->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+			pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
 		}
 	} else {
 		RECT rect;
 		GetClientScreenRect(hVidWnd, &rect);
 
-		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-		pD3DDevice->Present(&rect, &rect, NULL, NULL);
+		pD3DDevice->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+		pD3DDevice->Present(&rect, &rect, nullptr, nullptr);
 	}
 
 	// Create osd font
@@ -2125,7 +2125,7 @@ static int dx9AltRender()
 	{
 		// Copy the game image onto a texture for rendering
 		D3DLOCKED_RECT d3dlr;
-		pTexture->LockRect(0, &d3dlr, 0, 0);
+		pTexture->LockRect(0, &d3dlr, nullptr, 0);
 
 		int pitch = d3dlr.Pitch;
 		unsigned char* pd = (unsigned char*)d3dlr.pBits;
@@ -2188,7 +2188,7 @@ static int dx9AltRender()
 // Run one frame and render the screen
 static int dx9AltFrame(bool bRedraw)	// bRedraw = 0
 {
-	if (pVidImage == NULL) {
+	if (pVidImage == nullptr) {
 		return 1;
 	}
 
@@ -2249,14 +2249,14 @@ static int dx9AltPaint(int bValidate)
 	}
 
 	if (nVidFullscreen) {
-		pD3DDevice->Present(NULL, NULL, NULL, NULL);
+		pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
 	} else {
 		RECT src = { 0, 0, Dest.right - Dest.left, Dest.bottom - Dest.top };
 		POINT c = { 0, 0 };
 		ClientToScreen(hVidWnd, &c);
 		RECT dst = { rect.left - c.x, rect.top - c.y, rect.right - c.x, rect.bottom - c.y };
 
-		pD3DDevice->Present(&src, &dst, NULL, NULL);
+		pD3DDevice->Present(&src, &dst, nullptr, nullptr);
 
 		// Validate the rectangle we just drew
 		if (bValidate & 1) {

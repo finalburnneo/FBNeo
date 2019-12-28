@@ -686,7 +686,7 @@ static pia6821_interface pia_5 =
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static void mcu_portb_write(UINT8 */*data*/)
+static void mcu_portb_write(UINT8* /*data*/)
 {
 }
 

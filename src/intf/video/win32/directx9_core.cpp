@@ -3,7 +3,7 @@
 
 // Direct3DCreate9
 LPDIRECT3D9 (WINAPI* _Direct3DCreate9) (UINT);
-LPDIRECT3D9 WINAPI Empty_Direct3DCreate9 (UINT) { return NULL; }
+LPDIRECT3D9 WINAPI Empty_Direct3DCreate9 (UINT) { return nullptr; }
 
 // D3DXFillTextureTX
 HRESULT (WINAPI* _D3DXFillTextureTX) (LPDIRECT3DTEXTURE9, LPD3DXTEXTURESHADER);

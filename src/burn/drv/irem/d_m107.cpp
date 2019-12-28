@@ -7,7 +7,7 @@
 #include "nec_intf.h"
 #include "irem_cpu.h"
 #include "iremga20.h"
-#include "stddef.h"
+#include <cstddef>
 
 static UINT8 *Mem;
 static UINT8 *MemEnd;

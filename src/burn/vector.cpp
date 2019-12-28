@@ -1,6 +1,6 @@
 // vector.cpp, by iq_132.  aa mods by dink
 #include "tiles_generic.h"
-#include "math.h"
+#include <cmath>
 
 #define TABLE_SIZE  0x10000 // excessive?
 

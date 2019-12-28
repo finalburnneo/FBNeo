@@ -8,12 +8,12 @@
  * There are lots of problems with the opengl renderer, but you should just use the SDL2 build anyway
  *
  * TODO for SDL2:
- * Make OSD a bit better as it seems a bit hack doing it how FFWD is done...
  * Add autostart to menu as an ini config option
  * Add previews, etc to menu
  * Add menu for options e.g. dips, mapping, saves, IPS patches
  * Maybe a better font output setup with some sort of scaling, maybe add sdl1 support?
  * Add joypad support to menu
+ * figure out what is going on with the sdl sound output, something breaks after a few frames
  * ------------------*/
 
 #include "burner.h"

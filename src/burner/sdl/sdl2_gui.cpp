@@ -401,15 +401,15 @@ void gui_init()
 
 inline void calcSelectedItemColor()
 {
-	color_x += randomRange(0.03, 0.08);
-	color_y += randomRange(0.02, 0.07);
-	color_z += randomRange(0.01, 0.06);
+	color_x += randomRange(0.01, 0.02);
+	color_y += randomRange(0.01, 0.07);
+	color_z += randomRange(0.01, 0.09);
 
 	SDL_Color pal[1];
 	pal[0].r = 190 + 64 * sin(color_x + (color_result * 0.004754));
 	pal[0].g = 190 + 64 * sin(color_y + (color_result * 0.006754));
-	pal[0].b = 190 + 64 * sin(color_z + (color_result * 0.004754));
-	color_result++;
+	pal[0].b = 190 + 64 * sin(color_z + (color_result * 0.005754));
+	color_result+5;
 
 	incolor1(pal);
 }
@@ -419,12 +419,17 @@ void gui_render()
 
 	SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(sdlRenderer);
+
+	SDL_Rect fillRect = { 0,  28 + (gamesperscreen_halfway * 10), nVidGuiWidth, 12};
+	SDL_SetRenderDrawColor(sdlRenderer, 0x41, 0x1d, 0x62, 0xFF);
+	SDL_RenderFillRect(sdlRenderer, &fillRect);
+
 	star_render(sdlRenderer);
+
 	if (titleTexture != NULL) // JUST FOR TESTING!!
 	{
 		SDL_RenderCopy(sdlRenderer, titleTexture, &title_texture_rect, &dest_title_texture_rect);
 	}
-
 
 	incolor(fbn_color, /* unused */ 0);
 	inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
@@ -439,10 +444,10 @@ void gui_render()
 			{
 				calcSelectedItemColor();
 				//incolor(select_color, /* unused */ 0);
-				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
+				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (gamesperscreen_halfway * 10));
 				gametoplay = i;
 
-				SDL_Rect fillRect = { 0, nVidGuiHeight - 70, nVidGuiWidth, nVidGuiHeight };
+				fillRect = { 0, nVidGuiHeight - 70, nVidGuiWidth, nVidGuiHeight };
 				SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 0xFF);
 				SDL_RenderFillRect(sdlRenderer, &fillRect);
 

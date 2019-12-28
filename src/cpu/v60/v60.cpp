@@ -530,9 +530,9 @@ static int v60_ICount;
 #define ANDW(dst,src)		{ (dst) &= (src); _OV = 0; SetSZPF_Word(dst); }
 #define ANDL(dst,src)		{ (dst) &= (src); _OV = 0; SetSZPF_Long(dst); }
 
-#define XORB(dst,src)		{ (dst) ^= (src); _CY = _OV = 0; SetSZPF_Byte(dst); }
-#define XORW(dst,src)		{ (dst) ^= (src); _CY = _OV = 0; SetSZPF_Word(dst); }
-#define XORL(dst,src)		{ (dst) ^= (src); _CY = _OV = 0; SetSZPF_Long(dst); }
+#define XORB(dst,src)		{ (dst) ^= (src); _OV = 0; SetSZPF_Byte(dst); }
+#define XORW(dst,src)		{ (dst) ^= (src); _OV = 0; SetSZPF_Word(dst); }
+#define XORL(dst,src)		{ (dst) ^= (src); _OV = 0; SetSZPF_Long(dst); }
 
 #define SUBB(dst, src)		{ unsigned res=(dst)-(src); SetCFB(res); SetOFB_Sub(res,src,dst); SetSZPF_Byte(res); dst=(UINT8)res; }
 #define SUBW(dst, src)		{ unsigned res=(dst)-(src); SetCFW(res); SetOFW_Sub(res,src,dst); SetSZPF_Word(res); dst=(UINT16)res; }

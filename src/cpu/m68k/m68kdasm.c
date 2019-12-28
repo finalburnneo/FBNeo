@@ -3,186 +3,243 @@
 /* ======================================================================== */
 /*
  *                                  MUSASHI
- *                                Version 3.3
+ *                                Version 3.32
  *
  * A portable Motorola M680x0 processor emulation engine.
- * Copyright 1998-2001 Karl Stenerud.  All rights reserved.
+ * Copyright Karl Stenerud.  All rights reserved.
  *
  * This code may be freely used for non-commercial purposes as long as this
  * copyright notice remains unaltered in the source code and any binary files
  * containing this code in compiled form.
  *
- * All other lisencing terms must be negotiated with the author
+ * All other licensing terms must be negotiated with the author
  * (Karl Stenerud).
  *
  * The latest version of this code can be obtained at:
  * http://kstenerud.cjb.net
  */
 
+/*
+ * Modified For OpenVMS By:  Robert Alan Byer
+ *                           byer@mail.ourservers.net
+ */
 
 
 /* ======================================================================== */
-/* ================================ INCLUDES ============================== */
+/* ============================ CODE GENERATOR ============================ */
+/* ======================================================================== */
+/*
+ * This is the code generator program which will generate the opcode table
+ * and the final opcode handlers.
+ *
+ * It requires an input file to function (default m68k_in.c), but you can
+ * specify your own like so:
+ *
+ * m68kmake <output path> <input file>
+ *
+ * where output path is the path where the output files should be placed, and
+ * input file is the file to use for input.
+ *
+ * If you modify the input file greatly from its released form, you may have
+ * to tweak the configuration section a bit since I'm using static allocation
+ * to keep things simple.
+ *
+ *
+ * TODO: - build a better code generator for the move instruction.
+ *       - Add callm and rtm instructions
+ *       - Fix RTE to handle other format words
+ *       - Add address error (and bus error?) handling
+ */
+
+
+static const char g_version[] = "3.32";
+
+/* ======================================================================== */
+/* =============================== INCLUDES =============================== */
 /* ======================================================================== */
 
-#include <cstdlib>
-#include <cstdio>
-#include <cstring>
-#include "m68k.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdarg.h>
+
+
+
+/* ======================================================================== */
+/* ============================= CONFIGURATION ============================ */
+/* ======================================================================== */
+
+#define M68K_MAX_PATH 1024
+#define M68K_MAX_DIR  1024
+
+#define MAX_LINE_LENGTH                 200	/* length of 1 line */
+#define MAX_BODY_LENGTH                 300	/* Number of lines in 1 function */
+#define MAX_REPLACE_LENGTH               30	/* Max number of replace strings */
+#define MAX_INSERT_LENGTH              5000	/* Max size of insert piece */
+#define MAX_NAME_LENGTH                  30	/* Max length of ophandler name */
+#define MAX_SPEC_PROC_LENGTH              4	/* Max length of special processing str */
+#define MAX_SPEC_EA_LENGTH                5	/* Max length of specified EA str */
+#define EA_ALLOWED_LENGTH                11	/* Max length of ea allowed str */
+#define MAX_OPCODE_INPUT_TABLE_LENGTH  1000	/* Max length of opcode handler tbl */
+#define MAX_OPCODE_OUTPUT_TABLE_LENGTH 3000	/* Max length of opcode handler tbl */
+
+/* Default filenames */
+#define FILENAME_INPUT      "m68k_in.c"
+#define FILENAME_PROTOTYPE  "m68kops.h"
+#define FILENAME_TABLE      "m68kops.c"
+
+
+/* Identifier sequences recognized by this program */
+
+#define ID_INPUT_SEPARATOR "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+#define ID_BASE                 "M68KMAKE"
+#define ID_PROTOTYPE_HEADER     ID_BASE "_PROTOTYPE_HEADER"
+#define ID_PROTOTYPE_FOOTER     ID_BASE "_PROTOTYPE_FOOTER"
+#define ID_TABLE_HEADER         ID_BASE "_TABLE_HEADER"
+#define ID_TABLE_FOOTER         ID_BASE "_TABLE_FOOTER"
+#define ID_TABLE_BODY           ID_BASE "_TABLE_BODY"
+#define ID_TABLE_START          ID_BASE "_TABLE_START"
+#define ID_OPHANDLER_HEADER     ID_BASE "_OPCODE_HANDLER_HEADER"
+#define ID_OPHANDLER_FOOTER     ID_BASE "_OPCODE_HANDLER_FOOTER"
+#define ID_OPHANDLER_BODY       ID_BASE "_OPCODE_HANDLER_BODY"
+#define ID_END                  ID_BASE "_END"
+
+#define ID_OPHANDLER_NAME       ID_BASE "_OP"
+#define ID_OPHANDLER_EA_AY_8    ID_BASE "_GET_EA_AY_8"
+#define ID_OPHANDLER_EA_AY_16   ID_BASE "_GET_EA_AY_16"
+#define ID_OPHANDLER_EA_AY_32   ID_BASE "_GET_EA_AY_32"
+#define ID_OPHANDLER_OPER_AY_8  ID_BASE "_GET_OPER_AY_8"
+#define ID_OPHANDLER_OPER_AY_16 ID_BASE "_GET_OPER_AY_16"
+#define ID_OPHANDLER_OPER_AY_32 ID_BASE "_GET_OPER_AY_32"
+#define ID_OPHANDLER_CC         ID_BASE "_CC"
+#define ID_OPHANDLER_NOT_CC     ID_BASE "_NOT_CC"
+
 
 #ifndef DECL_SPEC
 #define DECL_SPEC
-#endif
+#endif /* DECL_SPEC */
 
-/* ======================================================================== */
-/* ============================ GENERAL DEFINES =========================== */
-/* ======================================================================== */
-
-/* unsigned int and int must be at least 32 bits wide */
-#undef uint
-#define uint unsigned int
-
-/* Bit Isolation Functions */
-#define BIT_0(A)  ((A) & 0x00000001)
-#define BIT_1(A)  ((A) & 0x00000002)
-#define BIT_2(A)  ((A) & 0x00000004)
-#define BIT_3(A)  ((A) & 0x00000008)
-#define BIT_4(A)  ((A) & 0x00000010)
-#define BIT_5(A)  ((A) & 0x00000020)
-#define BIT_6(A)  ((A) & 0x00000040)
-#define BIT_7(A)  ((A) & 0x00000080)
-#define BIT_8(A)  ((A) & 0x00000100)
-#define BIT_9(A)  ((A) & 0x00000200)
-#define BIT_A(A)  ((A) & 0x00000400)
-#define BIT_B(A)  ((A) & 0x00000800)
-#define BIT_C(A)  ((A) & 0x00001000)
-#define BIT_D(A)  ((A) & 0x00002000)
-#define BIT_E(A)  ((A) & 0x00004000)
-#define BIT_F(A)  ((A) & 0x00008000)
-#define BIT_10(A) ((A) & 0x00010000)
-#define BIT_11(A) ((A) & 0x00020000)
-#define BIT_12(A) ((A) & 0x00040000)
-#define BIT_13(A) ((A) & 0x00080000)
-#define BIT_14(A) ((A) & 0x00100000)
-#define BIT_15(A) ((A) & 0x00200000)
-#define BIT_16(A) ((A) & 0x00400000)
-#define BIT_17(A) ((A) & 0x00800000)
-#define BIT_18(A) ((A) & 0x01000000)
-#define BIT_19(A) ((A) & 0x02000000)
-#define BIT_1A(A) ((A) & 0x04000000)
-#define BIT_1B(A) ((A) & 0x08000000)
-#define BIT_1C(A) ((A) & 0x10000000)
-#define BIT_1D(A) ((A) & 0x20000000)
-#define BIT_1E(A) ((A) & 0x40000000)
-#define BIT_1F(A) ((A) & 0x80000000)
-
-/* These are the CPU types understood by this disassembler */
-#define TYPE_68000 1
-#define TYPE_68008 2
-#define TYPE_68010 4
-#define TYPE_68020 8
-#define TYPE_68030 16
-#define TYPE_68040 32
-
-#define M68000_ONLY		(TYPE_68000 | TYPE_68008)
-
-#define M68010_ONLY		TYPE_68010
-#define M68010_LESS		(TYPE_68000 | TYPE_68008 | TYPE_68010)
-#define M68010_PLUS		(TYPE_68010 | TYPE_68020 | TYPE_68030 | TYPE_68040)
-
-#define M68020_ONLY 	TYPE_68020
-#define M68020_LESS 	(TYPE_68010 | TYPE_68020)
-#define M68020_PLUS		(TYPE_68020 | TYPE_68030 | TYPE_68040)
-
-#define M68030_ONLY 	TYPE_68030
-#define M68030_LESS 	(TYPE_68010 | TYPE_68020 | TYPE_68030)
-#define M68030_PLUS		(TYPE_68030 | TYPE_68040)
-
-#define M68040_PLUS		TYPE_68040
-
-
-/* Extension word formats */
-#define EXT_8BIT_DISPLACEMENT(A)          ((A)&0xff)
-#define EXT_FULL(A)                       BIT_8(A)
-#define EXT_EFFECTIVE_ZERO(A)             (((A)&0xe4) == 0xc4 || ((A)&0xe2) == 0xc0)
-#define EXT_BASE_REGISTER_PRESENT(A)      (!BIT_7(A))
-#define EXT_INDEX_REGISTER_PRESENT(A)     (!BIT_6(A))
-#define EXT_INDEX_REGISTER(A)             (((A)>>12)&7)
-#define EXT_INDEX_PRE_POST(A)             (EXT_INDEX_PRESENT(A) && (A)&3)
-#define EXT_INDEX_PRE(A)                  (EXT_INDEX_PRESENT(A) && ((A)&7) < 4 && ((A)&7) != 0)
-#define EXT_INDEX_POST(A)                 (EXT_INDEX_PRESENT(A) && ((A)&7) > 4)
-#define EXT_INDEX_SCALE(A)                (((A)>>9)&3)
-#define EXT_INDEX_LONG(A)                 BIT_B(A)
-#define EXT_INDEX_AR(A)                   BIT_F(A)
-#define EXT_BASE_DISPLACEMENT_PRESENT(A)  (((A)&0x30) > 0x10)
-#define EXT_BASE_DISPLACEMENT_WORD(A)     (((A)&0x30) == 0x20)
-#define EXT_BASE_DISPLACEMENT_LONG(A)     (((A)&0x30) == 0x30)
-#define EXT_OUTER_DISPLACEMENT_PRESENT(A) (((A)&3) > 1 && ((A)&0x47) < 0x44)
-#define EXT_OUTER_DISPLACEMENT_WORD(A)    (((A)&3) == 2 && ((A)&0x47) < 0x44)
-#define EXT_OUTER_DISPLACEMENT_LONG(A)    (((A)&3) == 3 && ((A)&0x47) < 0x44)
-
-
-/* Opcode flags */
-#if M68K_COMPILE_FOR_MAME == OPT_ON
-#define SET_OPCODE_FLAGS(x)	g_opcode_type = x;
-#define COMBINE_OPCODE_FLAGS(x) ((x) | g_opcode_type | DASMFLAG_SUPPORTED)
-#else
-#define SET_OPCODE_FLAGS(x)
-#define COMBINE_OPCODE_FLAGS(x) (x)
-#endif
 
 
 /* ======================================================================== */
-/* =============================== PROTOTYPES ============================= */
+/* ============================== PROTOTYPES ============================== */
 /* ======================================================================== */
 
-/* Read data at the PC and increment PC */
-uint  read_imm_8(void);
-uint  read_imm_16(void);
-uint  read_imm_32(void);
+enum
+{
+	CPU_TYPE_000 = 0,
+	CPU_TYPE_010,
+	CPU_TYPE_020,
+	CPU_TYPE_040,
+	NUM_CPUS
+};
 
-/* Read data at the PC but don't imcrement the PC */
-uint  peek_imm_8(void);
-uint  peek_imm_16(void);
-uint  peek_imm_32(void);
+#define UNSPECIFIED "."
+#define UNSPECIFIED_CH '.'
 
-/* make signed integers 100% portably */
-static int make_int_8(int value);
-static int make_int_16(int value);
+#define HAS_NO_EA_MODE(A) (strcmp(A, "..........") == 0)
+#define HAS_EA_AI(A)   ((A)[0] == 'A')
+#define HAS_EA_PI(A)   ((A)[1] == '+')
+#define HAS_EA_PD(A)   ((A)[2] == '-')
+#define HAS_EA_DI(A)   ((A)[3] == 'D')
+#define HAS_EA_IX(A)   ((A)[4] == 'X')
+#define HAS_EA_AW(A)   ((A)[5] == 'W')
+#define HAS_EA_AL(A)   ((A)[6] == 'L')
+#define HAS_EA_PCDI(A) ((A)[7] == 'd')
+#define HAS_EA_PCIX(A) ((A)[8] == 'x')
+#define HAS_EA_I(A)    ((A)[9] == 'I')
 
-/* make a string of a hex value */
-static char* make_signed_hex_str_8(uint val);
-static char* make_signed_hex_str_16(uint val);
-static char* make_signed_hex_str_32(uint val);
+enum
+{
+	EA_MODE_NONE,	/* No special addressing mode */
+	EA_MODE_AI,		/* Address register indirect */
+	EA_MODE_PI,		/* Address register indirect with postincrement */
+	EA_MODE_PI7,	/* Address register 7 indirect with postincrement */
+	EA_MODE_PD,		/* Address register indirect with predecrement */
+	EA_MODE_PD7,	/* Address register 7 indirect with predecrement */
+	EA_MODE_DI,		/* Address register indirect with displacement */
+	EA_MODE_IX,		/* Address register indirect with index */
+	EA_MODE_AW,		/* Absolute word */
+	EA_MODE_AL,		/* Absolute long */
+	EA_MODE_PCDI,	/* Program counter indirect with displacement */
+	EA_MODE_PCIX,	/* Program counter indirect with index */
+	EA_MODE_I		/* Immediate */
+};
 
-/* make string of ea mode */
-static char* get_ea_mode_str(uint instruction, uint size);
 
-char* get_ea_mode_str_8(uint instruction);
-char* get_ea_mode_str_16(uint instruction);
-char* get_ea_mode_str_32(uint instruction);
-
-/* make string of immediate value */
-static char* get_imm_str_s(uint size);
-static char* get_imm_str_u(uint size);
-
-char* get_imm_str_s8(void);
-char* get_imm_str_s16(void);
-char* get_imm_str_s32(void);
-
-/* Stuff to build the opcode handler jump table */
-static void  build_opcode_table(void);
-static int   valid_ea(uint opcode, uint mask);
-static int DECL_SPEC compare_nof_true_bits(const void *aptr, const void *bptr);
-
-/* used to build opcode handler jump table */
+/* Everything we need to know about an opcode */
 typedef struct
 {
-	void (*opcode_handler)(void); /* handler function */
-	uint mask;                    /* mask on opcode */
-	uint match;                   /* what to match after masking */
-	uint ea_mask;                 /* what ea modes are allowed */
+	char name[MAX_NAME_LENGTH];           /* opcode handler name */
+	unsigned char size;                   /* Size of operation */
+	char spec_proc[MAX_SPEC_PROC_LENGTH]; /* Special processing mode */
+	char spec_ea[MAX_SPEC_EA_LENGTH];     /* Specified effective addressing mode */
+	unsigned char bits;                   /* Number of significant bits (used for sorting the table) */
+	unsigned short op_mask;               /* Mask to apply for matching an opcode to a handler */
+	unsigned short op_match;              /* Value to match after masking */
+	char ea_allowed[EA_ALLOWED_LENGTH];   /* Effective addressing modes allowed */
+	char cpu_mode[NUM_CPUS];              /* User or supervisor mode */
+	char cpus[NUM_CPUS+1];                /* Allowed CPUs */
+	unsigned char cycles[NUM_CPUS];       /* cycles for 000, 010, 020 */
 } opcode_struct;
+
+
+/* All modifications necessary for a specific EA mode of an instruction */
+typedef struct
+{
+	const char* fname_add;
+	const char* ea_add;
+	unsigned int mask_add;
+	unsigned int match_add;
+} ea_info_struct;
+
+
+/* Holds the body of a function */
+typedef struct
+{
+	char body[MAX_BODY_LENGTH][MAX_LINE_LENGTH+1];
+	int length;
+} body_struct;
+
+
+/* Holds a sequence of search / replace strings */
+typedef struct
+{
+	char replace[MAX_REPLACE_LENGTH][2][MAX_LINE_LENGTH+1];
+	int length;
+} replace_struct;
+
+
+/* Function Prototypes */
+void error_exit(const char* fmt, ...);
+void perror_exit(const char* fmt, ...);
+int check_strsncpy(char* dst, char* src, int maxlength);
+int check_atoi(char* str, int *result);
+int skip_spaces(char* str);
+int num_bits(int value);
+int atoh(char* buff);
+int fgetline(char* buff, int nchars, FILE* file);
+int get_oper_cycles(opcode_struct* op, int ea_mode, int cpu_type);
+opcode_struct* find_opcode(char* name, int size, char* spec_proc, char* spec_ea);
+opcode_struct* find_illegal_opcode(void);
+int extract_opcode_info(char* src, char* name, int* size, char* spec_proc, char* spec_ea);
+void add_replace_string(replace_struct* replace, const char* search_str, const char* replace_str);
+void write_body(FILE* filep, body_struct* body, replace_struct* replace);
+void get_base_name(char* base_name, opcode_struct* op);
+void write_function_name(FILE* filep, char* base_name);
+void add_opcode_output_table_entry(opcode_struct* op, char* name);
+static int DECL_SPEC compare_nof_true_bits(const void* aptr, const void* bptr);
+void print_opcode_output_table(FILE* filep);
+void write_table_entry(FILE* filep, opcode_struct* op);
+void set_opcode_struct(opcode_struct* src, opcode_struct* dst, int ea_mode);
+void generate_opcode_handler(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* opinfo, int ea_mode);
+void generate_opcode_ea_variants(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* op);
+void generate_opcode_cc_variants(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* op_in, int offset);
+void process_opcode_handlers(FILE* filep);
+void populate_table(void);
+void read_insert(char* insert);
 
 
 
@@ -190,3340 +247,1176 @@ typedef struct
 /* ================================= DATA ================================= */
 /* ======================================================================== */
 
-/* Opcode handler jump table */
-static void (*g_instruction_table[0x10000])(void);
-/* Flag if disassembler initialized */
-static int  g_initialized = 0;
+/* Name of the input file */
+char g_input_filename[M68K_MAX_PATH] = FILENAME_INPUT;
 
-/* Address mask to simulate address lines */
-static unsigned int g_address_mask = 0xffffffff;
+/* File handles */
+FILE* g_input_file = NULL;
+FILE* g_prototype_file = NULL;
+FILE* g_table_file = NULL;
 
-static char g_dasm_str[100]; /* string to hold disassembly */
-static char g_helper_str[100]; /* string to hold helpful info */
-static uint g_cpu_pc;        /* program counter */
-static uint g_cpu_ir;        /* instruction register */
-static uint g_cpu_type;
-static uint g_opcode_type;
+int g_num_functions = 0;  /* Number of functions processed */
+int g_num_primitives = 0; /* Number of function primitives read */
+int g_line_number = 1;    /* Current line number */
 
-/* used by ops like asr, ror, addq, etc */
-static uint g_3bit_qdata_table[8] = {8, 1, 2, 3, 4, 5, 6, 7};
+/* Opcode handler table */
+opcode_struct g_opcode_input_table[MAX_OPCODE_INPUT_TABLE_LENGTH];
 
-static uint g_5bit_data_table[32] =
+opcode_struct g_opcode_output_table[MAX_OPCODE_OUTPUT_TABLE_LENGTH];
+int g_opcode_output_table_length = 0;
+
+const ea_info_struct g_ea_info_table[13] =
+{/* fname    ea        mask  match */
+	{"",     "",       0x00, 0x00}, /* EA_MODE_NONE */
+	{"ai",   "AY_AI",  0x38, 0x10}, /* EA_MODE_AI   */
+	{"pi",   "AY_PI",  0x38, 0x18}, /* EA_MODE_PI   */
+	{"pi7",  "A7_PI",  0x3f, 0x1f}, /* EA_MODE_PI7  */
+	{"pd",   "AY_PD",  0x38, 0x20}, /* EA_MODE_PD   */
+	{"pd7",  "A7_PD",  0x3f, 0x27}, /* EA_MODE_PD7  */
+	{"di",   "AY_DI",  0x38, 0x28}, /* EA_MODE_DI   */
+	{"ix",   "AY_IX",  0x38, 0x30}, /* EA_MODE_IX   */
+	{"aw",   "AW",     0x3f, 0x38}, /* EA_MODE_AW   */
+	{"al",   "AL",     0x3f, 0x39}, /* EA_MODE_AL   */
+	{"pcdi", "PCDI",   0x3f, 0x3a}, /* EA_MODE_PCDI */
+	{"pcix", "PCIX",   0x3f, 0x3b}, /* EA_MODE_PCIX */
+	{"i",    "I",      0x3f, 0x3c}, /* EA_MODE_I    */
+};
+
+
+const char *const g_cc_table[16][2] =
 {
-	32,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
-	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+	{ "t",  "T"}, /* 0000 */
+	{ "f",  "F"}, /* 0001 */
+	{"hi", "HI"}, /* 0010 */
+	{"ls", "LS"}, /* 0011 */
+	{"cc", "CC"}, /* 0100 */
+	{"cs", "CS"}, /* 0101 */
+	{"ne", "NE"}, /* 0110 */
+	{"eq", "EQ"}, /* 0111 */
+	{"vc", "VC"}, /* 1000 */
+	{"vs", "VS"}, /* 1001 */
+	{"pl", "PL"}, /* 1010 */
+	{"mi", "MI"}, /* 1011 */
+	{"ge", "GE"}, /* 1100 */
+	{"lt", "LT"}, /* 1101 */
+	{"gt", "GT"}, /* 1110 */
+	{"le", "LE"}, /* 1111 */
 };
 
-static const char* g_cc[16] =
-{"t", "f", "hi", "ls", "cc", "cs", "ne", "eq", "vc", "vs", "pl", "mi", "ge", "lt", "gt", "le"};
-
-static const char* g_cpcc[64] =
-{/* 000    001    010    011    100    101    110    111 */
-	  "f",  "eq", "ogt", "oge", "olt", "ole", "ogl",  "or", /* 000 */
-	 "un", "ueq", "ugt", "uge", "ult", "ule",  "ne",   "t", /* 001 */
-	 "sf", "seq",  "gt",  "ge",  "lt",  "le",  "gl"  "gle", /* 010 */
-  "ngle", "ngl", "nle", "nlt", "nge", "ngt", "sne",  "st", /* 011 */
-	  "?",   "?",   "?",   "?",   "?",   "?",   "?",   "?", /* 100 */
-	  "?",   "?",   "?",   "?",   "?",   "?",   "?",   "?", /* 101 */
-	  "?",   "?",   "?",   "?",   "?",   "?",   "?",   "?", /* 110 */
-	  "?",   "?",   "?",   "?",   "?",   "?",   "?",   "?"  /* 111 */
+/* size to index translator (0 -> 0, 8 and 16 -> 1, 32 -> 2) */
+const int g_size_select_table[33] =
+{
+	0,												/* unsized */
+	0, 0, 0, 0, 0, 0, 0, 1,							/*    8    */
+	0, 0, 0, 0, 0, 0, 0, 1,							/*   16    */
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2	/*   32    */
 };
+
+/* Extra cycles required for certain EA modes */
+/* TODO: correct timings for 040 */
+const int g_ea_cycle_table[13][NUM_CPUS][3] =
+{/*       000           010           020           040  */
+	{{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}}, /* EA_MODE_NONE */
+	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  4,  4}, { 0,  4,  4}}, /* EA_MODE_AI   */
+	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  4,  4}, { 0,  4,  4}}, /* EA_MODE_PI   */
+	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  4,  4}, { 0,  4,  4}}, /* EA_MODE_PI7  */
+	{{ 0,  6, 10}, { 0,  6, 10}, { 0,  5,  5}, { 0,  5,  5}}, /* EA_MODE_PD   */
+	{{ 0,  6, 10}, { 0,  6, 10}, { 0,  5,  5}, { 0,  5,  5}}, /* EA_MODE_PD7  */
+	{{ 0,  8, 12}, { 0,  8, 12}, { 0,  5,  5}, { 0,  5,  5}}, /* EA_MODE_DI   */
+	{{ 0, 10, 14}, { 0, 10, 14}, { 0,  7,  7}, { 0,  7,  7}}, /* EA_MODE_IX   */
+	{{ 0,  8, 12}, { 0,  8, 12}, { 0,  4,  4}, { 0,  4,  4}}, /* EA_MODE_AW   */
+	{{ 0, 12, 16}, { 0, 12, 16}, { 0,  4,  4}, { 0,  4,  4}}, /* EA_MODE_AL   */
+	{{ 0,  8, 12}, { 0,  8, 12}, { 0,  5,  5}, { 0,  5,  5}}, /* EA_MODE_PCDI */
+	{{ 0, 10, 14}, { 0, 10, 14}, { 0,  7,  7}, { 0,  7,  7}}, /* EA_MODE_PCIX */
+	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  2,  4}, { 0,  2,  4}}, /* EA_MODE_I    */
+};
+
+/* Extra cycles for JMP instruction (000, 010) */
+const int g_jmp_cycle_table[13] =
+{
+	 0, /* EA_MODE_NONE */
+	 4, /* EA_MODE_AI   */
+	 0, /* EA_MODE_PI   */
+	 0, /* EA_MODE_PI7  */
+	 0, /* EA_MODE_PD   */
+	 0, /* EA_MODE_PD7  */
+	 6, /* EA_MODE_DI   */
+	10, /* EA_MODE_IX   */
+	 6, /* EA_MODE_AW   */
+	 8, /* EA_MODE_AL   */
+	 6, /* EA_MODE_PCDI */
+	10, /* EA_MODE_PCIX */
+	 0, /* EA_MODE_I    */
+};
+
+/* Extra cycles for JSR instruction (000, 010) */
+const int g_jsr_cycle_table[13] =
+{
+	 0, /* EA_MODE_NONE */
+	 4, /* EA_MODE_AI   */
+	 0, /* EA_MODE_PI   */
+	 0, /* EA_MODE_PI7  */
+	 0, /* EA_MODE_PD   */
+	 0, /* EA_MODE_PD7  */
+	 6, /* EA_MODE_DI   */
+	10, /* EA_MODE_IX   */
+	 6, /* EA_MODE_AW   */
+	 8, /* EA_MODE_AL   */
+	 6, /* EA_MODE_PCDI */
+	10, /* EA_MODE_PCIX */
+	 0, /* EA_MODE_I    */
+};
+
+/* Extra cycles for LEA instruction (000, 010) */
+const int g_lea_cycle_table[13] =
+{
+	 0, /* EA_MODE_NONE */
+	 4, /* EA_MODE_AI   */
+	 0, /* EA_MODE_PI   */
+	 0, /* EA_MODE_PI7  */
+	 0, /* EA_MODE_PD   */
+	 0, /* EA_MODE_PD7  */
+	 8, /* EA_MODE_DI   */
+	12, /* EA_MODE_IX   */
+	 8, /* EA_MODE_AW   */
+	12, /* EA_MODE_AL   */
+	 8, /* EA_MODE_PCDI */
+	12, /* EA_MODE_PCIX */
+	 0, /* EA_MODE_I    */
+};
+
+/* Extra cycles for PEA instruction (000, 010) */
+const int g_pea_cycle_table[13] =
+{
+	 0, /* EA_MODE_NONE */
+	 6, /* EA_MODE_AI   */
+	 0, /* EA_MODE_PI   */
+	 0, /* EA_MODE_PI7  */
+	 0, /* EA_MODE_PD   */
+	 0, /* EA_MODE_PD7  */
+	10, /* EA_MODE_DI   */
+	14, /* EA_MODE_IX   */
+	10, /* EA_MODE_AW   */
+	14, /* EA_MODE_AL   */
+	10, /* EA_MODE_PCDI */
+	14, /* EA_MODE_PCIX */
+	 0, /* EA_MODE_I    */
+};
+
+/* Extra cycles for MOVEM instruction (000, 010) */
+const int g_movem_cycle_table[13] =
+{
+	 0, /* EA_MODE_NONE */
+	 0, /* EA_MODE_AI   */
+	 0, /* EA_MODE_PI   */
+	 0, /* EA_MODE_PI7  */
+	 0, /* EA_MODE_PD   */
+	 0, /* EA_MODE_PD7  */
+	 4, /* EA_MODE_DI   */
+	 6, /* EA_MODE_IX   */
+	 4, /* EA_MODE_AW   */
+	 8, /* EA_MODE_AL   */
+	 0, /* EA_MODE_PCDI */
+	 0, /* EA_MODE_PCIX */
+	 0, /* EA_MODE_I    */
+};
+
+/* Extra cycles for MOVES instruction (010) */
+const int g_moves_cycle_table[13][3] =
+{
+	{ 0,  0,  0}, /* EA_MODE_NONE */
+	{ 0,  4,  6}, /* EA_MODE_AI   */
+	{ 0,  4,  6}, /* EA_MODE_PI   */
+	{ 0,  4,  6}, /* EA_MODE_PI7  */
+	{ 0,  6, 12}, /* EA_MODE_PD   */
+	{ 0,  6, 12}, /* EA_MODE_PD7  */
+	{ 0, 12, 16}, /* EA_MODE_DI   */
+	{ 0, 16, 20}, /* EA_MODE_IX   */
+	{ 0, 12, 16}, /* EA_MODE_AW   */
+	{ 0, 16, 20}, /* EA_MODE_AL   */
+	{ 0,  0,  0}, /* EA_MODE_PCDI */
+	{ 0,  0,  0}, /* EA_MODE_PCIX */
+	{ 0,  0,  0}, /* EA_MODE_I    */
+};
+
+/* Extra cycles for CLR instruction (010) */
+const int g_clr_cycle_table[13][3] =
+{
+	{ 0,  0,  0}, /* EA_MODE_NONE */
+	{ 0,  4,  6}, /* EA_MODE_AI   */
+	{ 0,  4,  6}, /* EA_MODE_PI   */
+	{ 0,  4,  6}, /* EA_MODE_PI7  */
+	{ 0,  6,  8}, /* EA_MODE_PD   */
+	{ 0,  6,  8}, /* EA_MODE_PD7  */
+	{ 0,  8, 10}, /* EA_MODE_DI   */
+	{ 0, 10, 14}, /* EA_MODE_IX   */
+	{ 0,  8, 10}, /* EA_MODE_AW   */
+	{ 0, 10, 14}, /* EA_MODE_AL   */
+	{ 0,  0,  0}, /* EA_MODE_PCDI */
+	{ 0,  0,  0}, /* EA_MODE_PCIX */
+	{ 0,  0,  0}, /* EA_MODE_I    */
+};
+
 
 
 /* ======================================================================== */
 /* =========================== UTILITY FUNCTIONS ========================== */
 /* ======================================================================== */
 
-#define LIMIT_CPU_TYPES(ALLOWED_CPU_TYPES)	\
-	if(!(g_cpu_type & ALLOWED_CPU_TYPES))	\
-	{										\
-		d68000_illegal();					\
-		return;								\
-	}
-
-#define read_imm_8()  (m68k_read_disassembler_16(((g_cpu_pc+=2)-2)&g_address_mask)&0xff)
-#define read_imm_16() m68k_read_disassembler_16(((g_cpu_pc+=2)-2)&g_address_mask)
-#define read_imm_32() m68k_read_disassembler_32(((g_cpu_pc+=4)-4)&g_address_mask)
-
-#define peek_imm_8()  (m68k_read_disassembler_16(g_cpu_pc & g_address_mask)&0xff)
-#define peek_imm_16() m68k_read_disassembler_16(g_cpu_pc & g_address_mask)
-#define peek_imm_32() m68k_read_disassembler_32(g_cpu_pc & g_address_mask)
-
-/* Fake a split interface */
-#define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)
-#define get_ea_mode_str_16(instruction) get_ea_mode_str(instruction, 1)
-#define get_ea_mode_str_32(instruction) get_ea_mode_str(instruction, 2)
-
-#define get_imm_str_s8() get_imm_str_s(0)
-#define get_imm_str_s16() get_imm_str_s(1)
-#define get_imm_str_s32() get_imm_str_s(2)
-
-#define get_imm_str_u8() get_imm_str_u(0)
-#define get_imm_str_u16() get_imm_str_u(1)
-#define get_imm_str_u32() get_imm_str_u(2)
-
-
-/* 100% portable signed int generators */
-static int make_int_8(int value)
+/* Print an error message and exit with status error */
+void error_exit(const char* fmt, ...)
 {
-	return (value & 0x80) ? value | ~0xff : value & 0xff;
+	va_list args;
+	fprintf(stderr, "In %s, near or on line %d:\n\t", g_input_filename, g_line_number);
+	va_start(args, fmt);
+	vfprintf(stderr, fmt, args);
+	va_end(args);
+	fprintf(stderr, "\n");
+
+	if(g_prototype_file) fclose(g_prototype_file);
+	if(g_table_file) fclose(g_table_file);
+	if(g_input_file) fclose(g_input_file);
+
+	exit(EXIT_FAILURE);
 }
 
-static int make_int_16(int value)
+/* Print an error message, call perror(), and exit with status error */
+void perror_exit(const char* fmt, ...)
 {
-	return (value & 0x8000) ? value | ~0xffff : value & 0xffff;
+	va_list args;
+	va_start(args, fmt);
+	vfprintf(stderr, fmt, args);
+	va_end(args);
+	perror("");
+
+	if(g_prototype_file) fclose(g_prototype_file);
+	if(g_table_file) fclose(g_table_file);
+	if(g_input_file) fclose(g_input_file);
+
+	exit(EXIT_FAILURE);
 }
 
 
-/* Get string representation of hex values */
-static char* make_signed_hex_str_8(uint val)
+/* copy until 0 or space and exit with error if we read too far */
+int check_strsncpy(char* dst, char* src, int maxlength)
 {
-	static char str[20];
-
-	val &= 0xff;
-
-	if(val == 0x80)
-		sprintf(str, "-$80");
-	else if(val & 0x80)
-		sprintf(str, "-$%x", (0-val) & 0x7f);
-	else
-		sprintf(str, "$%x", val & 0x7f);
-
-	return str;
-}
-
-static char* make_signed_hex_str_16(uint val)
-{
-	static char str[20];
-
-	val &= 0xffff;
-
-	if(val == 0x8000)
-		sprintf(str, "-$8000");
-	else if(val & 0x8000)
-		sprintf(str, "-$%x", (0-val) & 0x7fff);
-	else
-		sprintf(str, "$%x", val & 0x7fff);
-
-	return str;
-}
-
-static char* make_signed_hex_str_32(uint val)
-{
-	static char str[20];
-
-	val &= 0xffffffff;
-
-	if(val == 0x80000000)
-		sprintf(str, "-$80000000");
-	else if(val & 0x80000000)
-		sprintf(str, "-$%x", (0-val) & 0x7fffffff);
-	else
-		sprintf(str, "$%x", val & 0x7fffffff);
-
-	return str;
-}
-
-
-/* make string of immediate value */
-static char* get_imm_str_s(uint size)
-{
-	static char str[15];
-	if(size == 0)
-		sprintf(str, "#%s", make_signed_hex_str_8(read_imm_8()));
-	else if(size == 1)
-		sprintf(str, "#%s", make_signed_hex_str_16(read_imm_16()));
-	else
-		sprintf(str, "#%s", make_signed_hex_str_32(read_imm_32()));
-	return str;
-}
-
-static char* get_imm_str_u(uint size)
-{
-	static char str[15];
-	if(size == 0)
-		sprintf(str, "#$%x", read_imm_8() & 0xff);
-	else if(size == 1)
-		sprintf(str, "#$%x", read_imm_16() & 0xffff);
-	else
-		sprintf(str, "#$%x", read_imm_32() & 0xffffffff);
-	return str;
-}
-
-/* Make string of effective address mode */
-static char* get_ea_mode_str(uint instruction, uint size)
-{
-	static char b1[64];
-	static char b2[64];
-	static char* mode = b2;
-	uint extension;
-	uint base;
-	uint outer;
-	char base_reg[4];
-	char index_reg[8];
-	uint preindex;
-	uint postindex;
-	uint comma = 0;
-	uint temp_value;
-	char invalid_mode = 0;
-
-	/* Switch buffers so we don't clobber on a double-call to this function */
-	mode = mode == b1 ? b2 : b1;
-
-	switch(instruction & 0x3f)
+	char* p = dst;
+	while(*src && *src != ' ')
 	{
-		case 0x00: case 0x01: case 0x02: case 0x03: case 0x04: case 0x05: case 0x06: case 0x07:
-		/* data register direct */
-			sprintf(mode, "D%d", instruction&7);
-			break;
-		case 0x08: case 0x09: case 0x0a: case 0x0b: case 0x0c: case 0x0d: case 0x0e: case 0x0f:
-		/* address register direct */
-			sprintf(mode, "A%d", instruction&7);
-			break;
-		case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17:
-		/* address register indirect */
-			sprintf(mode, "(A%d)", instruction&7);
-			break;
-		case 0x18: case 0x19: case 0x1a: case 0x1b: case 0x1c: case 0x1d: case 0x1e: case 0x1f:
-		/* address register indirect with postincrement */
-			sprintf(mode, "(A%d)+", instruction&7);
-			break;
-		case 0x20: case 0x21: case 0x22: case 0x23: case 0x24: case 0x25: case 0x26: case 0x27:
-		/* address register indirect with predecrement */
-			sprintf(mode, "-(A%d)", instruction&7);
-			break;
-		case 0x28: case 0x29: case 0x2a: case 0x2b: case 0x2c: case 0x2d: case 0x2e: case 0x2f:
-		/* address register indirect with displacement*/
-			sprintf(mode, "(%s,A%d)", make_signed_hex_str_16(read_imm_16()), instruction&7);
-			break;
-		case 0x30: case 0x31: case 0x32: case 0x33: case 0x34: case 0x35: case 0x36: case 0x37:
-		/* address register indirect with index */
-			extension = read_imm_16();
-
-			if((g_cpu_type & M68010_LESS) && EXT_INDEX_SCALE(extension))
-			{
-				invalid_mode = 1;
-				break;
-			}
-
-			if(EXT_FULL(extension))
-			{
-				if(g_cpu_type & M68010_LESS)
-				{
-					invalid_mode = 1;
-					break;
-				}
-
-				if(EXT_EFFECTIVE_ZERO(extension))
-				{
-					strcpy(mode, "0");
-					break;
-				}
-
-				base = EXT_BASE_DISPLACEMENT_PRESENT(extension) ? (EXT_BASE_DISPLACEMENT_LONG(extension) ? read_imm_32() : read_imm_16()) : 0;
-				outer = EXT_OUTER_DISPLACEMENT_PRESENT(extension) ? (EXT_OUTER_DISPLACEMENT_LONG(extension) ? read_imm_32() : read_imm_16()) : 0;
-				if(EXT_BASE_REGISTER_PRESENT(extension))
-					sprintf(base_reg, "A%d", instruction&7);
-				else
-					*base_reg = 0;
-				if(EXT_INDEX_REGISTER_PRESENT(extension))
-				{
-					sprintf(index_reg, "%c%d.%c", EXT_INDEX_AR(extension) ? 'A' : 'D', EXT_INDEX_REGISTER(extension), EXT_INDEX_LONG(extension) ? 'l' : 'w');
-					if(EXT_INDEX_SCALE(extension))
-						sprintf(index_reg+strlen(index_reg), "*%d", 1 << EXT_INDEX_SCALE(extension));
-				}
-				else
-					*index_reg = 0;
-				preindex = (extension&7) > 0 && (extension&7) < 4;
-				postindex = (extension&7) > 4;
-
-				strcpy(mode, "(");
-				if(preindex || postindex)
-					strcat(mode, "[");
-				if(base)
-				{
-					strcat(mode, make_signed_hex_str_16(base));
-					comma = 1;
-				}
-				if(*base_reg)
-				{
-					if(comma)
-						strcat(mode, ",");
-					strcat(mode, base_reg);
-					comma = 1;
-				}
-				if(postindex)
-				{
-					strcat(mode, "]");
-					comma = 1;
-				}
-				if(*index_reg)
-				{
-					if(comma)
-						strcat(mode, ",");
-					strcat(mode, index_reg);
-					comma = 1;
-				}
-				if(preindex)
-				{
-					strcat(mode, "]");
-					comma = 1;
-				}
-				if(outer)
-				{
-					if(comma)
-						strcat(mode, ",");
-					strcat(mode, make_signed_hex_str_16(outer));
-				}
-				strcat(mode, ")");
-				break;
-			}
-
-			if(EXT_8BIT_DISPLACEMENT(extension) == 0)
-				sprintf(mode, "(A%d,%c%d.%c", instruction&7, EXT_INDEX_AR(extension) ? 'A' : 'D', EXT_INDEX_REGISTER(extension), EXT_INDEX_LONG(extension) ? 'l' : 'w');
-			else
-				sprintf(mode, "(%s,A%d,%c%d.%c", make_signed_hex_str_8(extension), instruction&7, EXT_INDEX_AR(extension) ? 'A' : 'D', EXT_INDEX_REGISTER(extension), EXT_INDEX_LONG(extension) ? 'l' : 'w');
-			if(EXT_INDEX_SCALE(extension))
-				sprintf(mode+strlen(mode), "*%d", 1 << EXT_INDEX_SCALE(extension));
-			strcat(mode, ")");
-			break;
-		case 0x38:
-		/* absolute short address */
-			sprintf(mode, "$%x.w", read_imm_16());
-			break;
-		case 0x39:
-		/* absolute long address */
-			sprintf(mode, "$%x.l", read_imm_32());
-			break;
-		case 0x3a:
-		/* program counter with displacement */
-			temp_value = read_imm_16();
-			sprintf(mode, "(%s,PC)", make_signed_hex_str_16(temp_value));
-			sprintf(g_helper_str, "; ($%x)", (make_int_16(temp_value) + g_cpu_pc-2) & 0xffffffff);
-			break;
-		case 0x3b:
-		/* program counter with index */
-			extension = read_imm_16();
-
-			if((g_cpu_type & M68010_LESS) && EXT_INDEX_SCALE(extension))
-			{
-				invalid_mode = 1;
-				break;
-			}
-
-			if(EXT_FULL(extension))
-			{
-				if(g_cpu_type & M68010_LESS)
-				{
-					invalid_mode = 1;
-					break;
-				}
-
-				if(EXT_EFFECTIVE_ZERO(extension))
-				{
-					strcpy(mode, "0");
-					break;
-				}
-				base = EXT_BASE_DISPLACEMENT_PRESENT(extension) ? (EXT_BASE_DISPLACEMENT_LONG(extension) ? read_imm_32() : read_imm_16()) : 0;
-				outer = EXT_OUTER_DISPLACEMENT_PRESENT(extension) ? (EXT_OUTER_DISPLACEMENT_LONG(extension) ? read_imm_32() : read_imm_16()) : 0;
-				if(EXT_BASE_REGISTER_PRESENT(extension))
-					strcpy(base_reg, "PC");
-				else
-					*base_reg = 0;
-				if(EXT_INDEX_REGISTER_PRESENT(extension))
-				{
-					sprintf(index_reg, "%c%d.%c", EXT_INDEX_AR(extension) ? 'A' : 'D', EXT_INDEX_REGISTER(extension), EXT_INDEX_LONG(extension) ? 'l' : 'w');
-					if(EXT_INDEX_SCALE(extension))
-						sprintf(index_reg+strlen(index_reg), "*%d", 1 << EXT_INDEX_SCALE(extension));
-				}
-				else
-					*index_reg = 0;
-				preindex = (extension&7) > 0 && (extension&7) < 4;
-				postindex = (extension&7) > 4;
-
-				strcpy(mode, "(");
-				if(preindex || postindex)
-					strcat(mode, "[");
-				if(base)
-				{
-					strcat(mode, make_signed_hex_str_16(base));
-					comma = 1;
-				}
-				if(*base_reg)
-				{
-					if(comma)
-						strcat(mode, ",");
-					strcat(mode, base_reg);
-					comma = 1;
-				}
-				if(postindex)
-				{
-					strcat(mode, "]");
-					comma = 1;
-				}
-				if(*index_reg)
-				{
-					if(comma)
-						strcat(mode, ",");
-					strcat(mode, index_reg);
-					comma = 1;
-				}
-				if(preindex)
-				{
-					strcat(mode, "]");
-					comma = 1;
-				}
-				if(outer)
-				{
-					if(comma)
-						strcat(mode, ",");
-					strcat(mode, make_signed_hex_str_16(outer));
-				}
-				strcat(mode, ")");
-				break;
-			}
-
-			if(EXT_8BIT_DISPLACEMENT(extension) == 0)
-				sprintf(mode, "(PC,%c%d.%c", EXT_INDEX_AR(extension) ? 'A' : 'D', EXT_INDEX_REGISTER(extension), EXT_INDEX_LONG(extension) ? 'l' : 'w');
-			else
-				sprintf(mode, "(%s,PC,%c%d.%c", make_signed_hex_str_8(extension), EXT_INDEX_AR(extension) ? 'A' : 'D', EXT_INDEX_REGISTER(extension), EXT_INDEX_LONG(extension) ? 'l' : 'w');
-			if(EXT_INDEX_SCALE(extension))
-				sprintf(mode+strlen(mode), "*%d", 1 << EXT_INDEX_SCALE(extension));
-			strcat(mode, ")");
-			break;
-		case 0x3c:
-		/* Immediate */
-			sprintf(mode, "%s", get_imm_str_u(size));
-			break;
-		default:
-			invalid_mode = 1;
+		*p++ = *src++;
+		if(p - dst > maxlength)
+			error_exit("Field too long");
 	}
+	*p = 0;
+	return p - dst;
+}
 
-	if(invalid_mode)
-		sprintf(mode, "INVALID %x", instruction & 0x3f);
+/* copy until 0 or specified character and exit with error if we read too far */
+int check_strcncpy(char* dst, char* src, char delim, int maxlength)
+{
+	char* p = dst;
+	while(*src && *src != delim)
+	{
+		*p++ = *src++;
+		if(p - dst > maxlength)
+			error_exit("Field too long");
+	}
+	*p = 0;
+	return p - dst;
+}
 
-	return mode;
+/* convert ascii to integer and exit with error if we find invalid data */
+int check_atoi(char* str, int *result)
+{
+	int accum = 0;
+	char* p = str;
+	while(*p >= '0' && *p <= '9')
+	{
+		accum *= 10;
+		accum += *p++ - '0';
+	}
+	if(*p != ' ' && *p != 0)
+		error_exit("Malformed integer value (%c)", *p);
+	*result = accum;
+	return p - str;
+}
+
+/* Skip past spaces in a string */
+int skip_spaces(char* str)
+{
+	char* p = str;
+
+	while(*p == ' ')
+		p++;
+
+	return p - str;
+}
+
+/* Count the number of set bits in a value */
+int num_bits(int value)
+{
+    value = ((value & 0xaaaa) >> 1) + (value & 0x5555);
+    value = ((value & 0xcccc) >> 2) + (value & 0x3333);
+    value = ((value & 0xf0f0) >> 4) + (value & 0x0f0f);
+    value = ((value & 0xff00) >> 8) + (value & 0x00ff);
+	return value;
+}
+
+/* Convert a hex value written in ASCII */
+int atoh(char* buff)
+{
+	int accum = 0;
+
+	for(;;buff++)
+	{
+		if(*buff >= '0' && *buff <= '9')
+		{
+			accum <<= 4;
+			accum += *buff - '0';
+		}
+		else if(*buff >= 'a' && *buff <= 'f')
+		{
+			accum <<= 4;
+			accum += *buff - 'a' + 10;
+		}
+		else break;
+	}
+	return accum;
+}
+
+/* Get a line of text from a file, discarding any end-of-line characters */
+int fgetline(char* buff, int nchars, FILE* file)
+{
+	int length;
+
+	if(fgets(buff, nchars, file) == NULL)
+		return -1;
+	if(buff[0] == '\r')
+		memmove(buff, buff + 1, nchars - 1);
+
+	length = strlen(buff);
+	while(length && (buff[length-1] == '\r' || buff[length-1] == '\n'))
+		length--;
+	buff[length] = 0;
+	g_line_number++;
+
+	return length;
 }
 
 
 
 /* ======================================================================== */
-/* ========================= INSTRUCTION HANDLERS ========================= */
-/* ======================================================================== */
-/* Instruction handler function names follow this convention:
- *
- * d68000_NAME_EXTENSIONS(void)
- * where NAME is the name of the opcode it handles and EXTENSIONS are any
- * extensions for special instances of that opcode.
- *
- * Examples:
- *   d68000_add_er_8(): add opcode, from effective address to register,
- *                      size = byte
- *
- *   d68000_asr_s_8(): arithmetic shift right, static count, size = byte
- *
- *
- * Common extensions:
- * 8   : size = byte
- * 16  : size = word
- * 32  : size = long
- * rr  : register to register
- * mm  : memory to memory
- * r   : register
- * s   : static
- * er  : effective address -> register
- * re  : register -> effective address
- * ea  : using effective address mode of operation
- * d   : data register direct
- * a   : address register direct
- * ai  : address register indirect
- * pi  : address register indirect with postincrement
- * pd  : address register indirect with predecrement
- * di  : address register indirect with displacement
- * ix  : address register indirect with index
- * aw  : absolute word
- * al  : absolute long
- */
-
-static void d68000_illegal(void)
-{
-	sprintf(g_dasm_str, "dc.w $%04x; ILLEGAL", g_cpu_ir);
-}
-
-static void d68000_1010(void)
-{
-	sprintf(g_dasm_str, "dc.w    $%04x; opcode 1010", g_cpu_ir);
-}
-
-
-static void d68000_1111(void)
-{
-	sprintf(g_dasm_str, "dc.w    $%04x; opcode 1111", g_cpu_ir);
-}
-
-
-static void d68000_abcd_rr(void)
-{
-	sprintf(g_dasm_str, "abcd    D%d, D%d", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-
-static void d68000_abcd_mm(void)
-{
-	sprintf(g_dasm_str, "abcd    -(A%d), -(A%d)", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_add_er_8(void)
-{
-	sprintf(g_dasm_str, "add.b   %s, D%d", get_ea_mode_str_8(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-
-static void d68000_add_er_16(void)
-{
-	sprintf(g_dasm_str, "add.w   %s, D%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_add_er_32(void)
-{
-	sprintf(g_dasm_str, "add.l   %s, D%d", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_add_re_8(void)
-{
-	sprintf(g_dasm_str, "add.b   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_add_re_16(void)
-{
-	sprintf(g_dasm_str, "add.w   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_add_re_32(void)
-{
-	sprintf(g_dasm_str, "add.l   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_adda_16(void)
-{
-	sprintf(g_dasm_str, "adda.w  %s, A%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_adda_32(void)
-{
-	sprintf(g_dasm_str, "adda.l  %s, A%d", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_addi_8(void)
-{
-	char* str = get_imm_str_s8();
-	sprintf(g_dasm_str, "addi.b  %s, %s", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_addi_16(void)
-{
-	char* str = get_imm_str_s16();
-	sprintf(g_dasm_str, "addi.w  %s, %s", str, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_addi_32(void)
-{
-	char* str = get_imm_str_s32();
-	sprintf(g_dasm_str, "addi.l  %s, %s", str, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_addq_8(void)
-{
-	sprintf(g_dasm_str, "addq.b  #%d, %s", g_3bit_qdata_table[(g_cpu_ir>>9)&7], get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_addq_16(void)
-{
-	sprintf(g_dasm_str, "addq.w  #%d, %s", g_3bit_qdata_table[(g_cpu_ir>>9)&7], get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_addq_32(void)
-{
-	sprintf(g_dasm_str, "addq.l  #%d, %s", g_3bit_qdata_table[(g_cpu_ir>>9)&7], get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_addx_rr_8(void)
-{
-	sprintf(g_dasm_str, "addx.b  D%d, D%d", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_addx_rr_16(void)
-{
-	sprintf(g_dasm_str, "addx.w  D%d, D%d", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_addx_rr_32(void)
-{
-	sprintf(g_dasm_str, "addx.l  D%d, D%d", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_addx_mm_8(void)
-{
-	sprintf(g_dasm_str, "addx.b  -(A%d), -(A%d)", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_addx_mm_16(void)
-{
-	sprintf(g_dasm_str, "addx.w  -(A%d), -(A%d)", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_addx_mm_32(void)
-{
-	sprintf(g_dasm_str, "addx.l  -(A%d), -(A%d)", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_and_er_8(void)
-{
-	sprintf(g_dasm_str, "and.b   %s, D%d", get_ea_mode_str_8(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_and_er_16(void)
-{
-	sprintf(g_dasm_str, "and.w   %s, D%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_and_er_32(void)
-{
-	sprintf(g_dasm_str, "and.l   %s, D%d", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_and_re_8(void)
-{
-	sprintf(g_dasm_str, "and.b   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_and_re_16(void)
-{
-	sprintf(g_dasm_str, "and.w   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_and_re_32(void)
-{
-	sprintf(g_dasm_str, "and.l   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_andi_8(void)
-{
-	char* str = get_imm_str_u8();
-	sprintf(g_dasm_str, "andi.b  %s, %s", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_andi_16(void)
-{
-	char* str = get_imm_str_u16();
-	sprintf(g_dasm_str, "andi.w  %s, %s", str, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_andi_32(void)
-{
-	char* str = get_imm_str_u32();
-	sprintf(g_dasm_str, "andi.l  %s, %s", str, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_andi_to_ccr(void)
-{
-	sprintf(g_dasm_str, "andi    %s, CCR", get_imm_str_u8());
-}
-
-static void d68000_andi_to_sr(void)
-{
-	sprintf(g_dasm_str, "andi    %s, SR", get_imm_str_u16());
-}
-
-static void d68000_asr_s_8(void)
-{
-	sprintf(g_dasm_str, "asr.b   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_asr_s_16(void)
-{
-	sprintf(g_dasm_str, "asr.w   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_asr_s_32(void)
-{
-	sprintf(g_dasm_str, "asr.l   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_asr_r_8(void)
-{
-	sprintf(g_dasm_str, "asr.b   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_asr_r_16(void)
-{
-	sprintf(g_dasm_str, "asr.w   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_asr_r_32(void)
-{
-	sprintf(g_dasm_str, "asr.l   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_asr_ea(void)
-{
-	sprintf(g_dasm_str, "asr.w   %s", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_asl_s_8(void)
-{
-	sprintf(g_dasm_str, "asl.b   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_asl_s_16(void)
-{
-	sprintf(g_dasm_str, "asl.w   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_asl_s_32(void)
-{
-	sprintf(g_dasm_str, "asl.l   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_asl_r_8(void)
-{
-	sprintf(g_dasm_str, "asl.b   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_asl_r_16(void)
-{
-	sprintf(g_dasm_str, "asl.w   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_asl_r_32(void)
-{
-	sprintf(g_dasm_str, "asl.l   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_asl_ea(void)
-{
-	sprintf(g_dasm_str, "asl.w   %s", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_bcc_8(void)
-{
-	uint temp_pc = g_cpu_pc;
-	sprintf(g_dasm_str, "b%-2s     %x", g_cc[(g_cpu_ir>>8)&0xf], temp_pc + make_int_8(g_cpu_ir));
-}
-
-static void d68000_bcc_16(void)
-{
-	uint temp_pc = g_cpu_pc;
-	sprintf(g_dasm_str, "b%-2s     %x", g_cc[(g_cpu_ir>>8)&0xf], temp_pc + make_int_16(read_imm_16()));
-}
-
-static void d68020_bcc_32(void)
-{
-	uint temp_pc = g_cpu_pc;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "b%-2s     %x; (2+)", g_cc[(g_cpu_ir>>8)&0xf], temp_pc + read_imm_32());
-}
-
-static void d68000_bchg_r(void)
-{
-	sprintf(g_dasm_str, "bchg    D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_bchg_s(void)
-{
-	char* str = get_imm_str_u8();
-	sprintf(g_dasm_str, "bchg    %s, %s", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_bclr_r(void)
-{
-	sprintf(g_dasm_str, "bclr    D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_bclr_s(void)
-{
-	char* str = get_imm_str_u8();
-	sprintf(g_dasm_str, "bclr    %s, %s", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68010_bkpt(void)
-{
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	sprintf(g_dasm_str, "bkpt #%d; (1+)", g_cpu_ir&7);
-}
-
-static void d68020_bfchg(void)
-{
-	uint extension;
-	char offset[3];
-	char width[3];
-
-	LIMIT_CPU_TYPES(M68020_PLUS);
-
-	extension = read_imm_16();
-
-	if(BIT_B(extension))
-		sprintf(offset, "D%d", (extension>>6)&7);
-	else
-		sprintf(offset, "%d", (extension>>6)&31);
-	if(BIT_5(extension))
-		sprintf(width, "D%d", extension&7);
-	else
-		sprintf(width, "%d", g_5bit_data_table[extension&31]);
-	sprintf(g_dasm_str, "bfchg   %s {%s:%s}; (2+)", get_ea_mode_str_8(g_cpu_ir), offset, width);
-}
-
-static void d68020_bfclr(void)
-{
-	uint extension;
-	char offset[3];
-	char width[3];
-
-	LIMIT_CPU_TYPES(M68020_PLUS);
-
-	extension = read_imm_16();
-
-	if(BIT_B(extension))
-		sprintf(offset, "D%d", (extension>>6)&7);
-	else
-		sprintf(offset, "%d", (extension>>6)&31);
-	if(BIT_5(extension))
-		sprintf(width, "D%d", extension&7);
-	else
-		sprintf(width, "%d", g_5bit_data_table[extension&31]);
-	sprintf(g_dasm_str, "bfclr   %s {%s:%s}; (2+)", get_ea_mode_str_8(g_cpu_ir), offset, width);
-}
-
-static void d68020_bfexts(void)
-{
-	uint extension;
-	char offset[3];
-	char width[3];
-
-	LIMIT_CPU_TYPES(M68020_PLUS);
-
-	extension = read_imm_16();
-
-	if(BIT_B(extension))
-		sprintf(offset, "D%d", (extension>>6)&7);
-	else
-		sprintf(offset, "%d", (extension>>6)&31);
-	if(BIT_5(extension))
-		sprintf(width, "D%d", extension&7);
-	else
-		sprintf(width, "%d", g_5bit_data_table[extension&31]);
-	sprintf(g_dasm_str, "bfexts  D%d, %s {%s:%s}; (2+)", (extension>>12)&7, get_ea_mode_str_8(g_cpu_ir), offset, width);
-}
-
-static void d68020_bfextu(void)
-{
-	uint extension;
-	char offset[3];
-	char width[3];
-
-	LIMIT_CPU_TYPES(M68020_PLUS);
-
-	extension = read_imm_16();
-
-	if(BIT_B(extension))
-		sprintf(offset, "D%d", (extension>>6)&7);
-	else
-		sprintf(offset, "%d", (extension>>6)&31);
-	if(BIT_5(extension))
-		sprintf(width, "D%d", extension&7);
-	else
-		sprintf(width, "%d", g_5bit_data_table[extension&31]);
-	sprintf(g_dasm_str, "bfextu  D%d, %s {%s:%s}; (2+)", (extension>>12)&7, get_ea_mode_str_8(g_cpu_ir), offset, width);
-}
-
-static void d68020_bfffo(void)
-{
-	uint extension;
-	char offset[3];
-	char width[3];
-
-	LIMIT_CPU_TYPES(M68020_PLUS);
-
-	extension = read_imm_16();
-
-	if(BIT_B(extension))
-		sprintf(offset, "D%d", (extension>>6)&7);
-	else
-		sprintf(offset, "%d", (extension>>6)&31);
-	if(BIT_5(extension))
-		sprintf(width, "D%d", extension&7);
-	else
-		sprintf(width, "%d", g_5bit_data_table[extension&31]);
-	sprintf(g_dasm_str, "bfffo   D%d, %s {%s:%s}; (2+)", (extension>>12)&7, get_ea_mode_str_8(g_cpu_ir), offset, width);
-}
-
-static void d68020_bfins(void)
-{
-	uint extension;
-	char offset[3];
-	char width[3];
-
-	LIMIT_CPU_TYPES(M68020_PLUS);
-
-	extension = read_imm_16();
-
-	if(BIT_B(extension))
-		sprintf(offset, "D%d", (extension>>6)&7);
-	else
-		sprintf(offset, "%d", (extension>>6)&31);
-	if(BIT_5(extension))
-		sprintf(width, "D%d", extension&7);
-	else
-		sprintf(width, "%d", g_5bit_data_table[extension&31]);
-	sprintf(g_dasm_str, "bfins   D%d, %s {%s:%s}; (2+)", (extension>>12)&7, get_ea_mode_str_8(g_cpu_ir), offset, width);
-}
-
-static void d68020_bfset(void)
-{
-	uint extension;
-	char offset[3];
-	char width[3];
-
-	LIMIT_CPU_TYPES(M68020_PLUS);
-
-	extension = read_imm_16();
-
-	if(BIT_B(extension))
-		sprintf(offset, "D%d", (extension>>6)&7);
-	else
-		sprintf(offset, "%d", (extension>>6)&31);
-	if(BIT_5(extension))
-		sprintf(width, "D%d", extension&7);
-	else
-		sprintf(width, "%d", g_5bit_data_table[extension&31]);
-	sprintf(g_dasm_str, "bfset   %s {%s:%s}; (2+)", get_ea_mode_str_8(g_cpu_ir), offset, width);
-}
-
-static void d68020_bftst(void)
-{
-	uint extension;
-	char offset[3];
-	char width[3];
-
-	LIMIT_CPU_TYPES(M68020_PLUS);
-
-	extension = read_imm_16();
-
-	if(BIT_B(extension))
-		sprintf(offset, "D%d", (extension>>6)&7);
-	else
-		sprintf(offset, "%d", (extension>>6)&31);
-	if(BIT_5(extension))
-		sprintf(width, "D%d", extension&7);
-	else
-		sprintf(width, "%d", g_5bit_data_table[extension&31]);
-	sprintf(g_dasm_str, "bftst   %s {%s:%s}; (2+)", get_ea_mode_str_8(g_cpu_ir), offset, width);
-}
-
-static void d68000_bra_8(void)
-{
-	uint temp_pc = g_cpu_pc;
-	sprintf(g_dasm_str, "bra     %x", temp_pc + make_int_8(g_cpu_ir));
-}
-
-static void d68000_bra_16(void)
-{
-	uint temp_pc = g_cpu_pc;
-	sprintf(g_dasm_str, "bra     %x", temp_pc + make_int_16(read_imm_16()));
-}
-
-static void d68020_bra_32(void)
-{
-	uint temp_pc = g_cpu_pc;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "bra     %x; (2+)", temp_pc + read_imm_32());
-}
-
-static void d68000_bset_r(void)
-{
-	sprintf(g_dasm_str, "bset    D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_bset_s(void)
-{
-	char* str = get_imm_str_u8();
-	sprintf(g_dasm_str, "bset    %s, %s", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_bsr_8(void)
-{
-	uint temp_pc = g_cpu_pc;
-	sprintf(g_dasm_str, "bsr     %x", temp_pc + make_int_8(g_cpu_ir));
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68000_bsr_16(void)
-{
-	uint temp_pc = g_cpu_pc;
-	sprintf(g_dasm_str, "bsr     %x", temp_pc + make_int_16(read_imm_16()));
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68020_bsr_32(void)
-{
-	uint temp_pc = g_cpu_pc;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "bsr     %x; (2+)", temp_pc + peek_imm_32());
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68000_btst_r(void)
-{
-	sprintf(g_dasm_str, "btst    D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_btst_s(void)
-{
-	char* str = get_imm_str_u8();
-	sprintf(g_dasm_str, "btst    %s, %s", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68020_callm(void)
-{
-	char* str;
-	LIMIT_CPU_TYPES(M68020_ONLY);
-	str = get_imm_str_u8();
-
-	sprintf(g_dasm_str, "callm   %s, %s; (2)", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68020_cas_8(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_16();
-	sprintf(g_dasm_str, "cas.b   D%d, D%d, %s; (2+)", extension&7, (extension>>8)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68020_cas_16(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_16();
-	sprintf(g_dasm_str, "cas.w   D%d, D%d, %s; (2+)", extension&7, (extension>>8)&7, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68020_cas_32(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_16();
-	sprintf(g_dasm_str, "cas.l   D%d, D%d, %s; (2+)", extension&7, (extension>>8)&7, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68020_cas2_16(void)
-{
-/* CAS2 Dc1:Dc2,Du1:Dc2:(Rn1):(Rn2)
-f e d c b a 9 8 7 6 5 4 3 2 1 0
- DARn1  0 0 0  Du1  0 0 0  Dc1
- DARn2  0 0 0  Du2  0 0 0  Dc2
-*/
-
-	uint extension;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_32();
-	sprintf(g_dasm_str, "cas2.w  D%d:D%d:D%d:D%d, (%c%d):(%c%d); (2+)",
-		(extension>>16)&7, extension&7, (extension>>22)&7, (extension>>6)&7,
-		BIT_1F(extension) ? 'A' : 'D', (extension>>28)&7,
-		BIT_F(extension) ? 'A' : 'D', (extension>>12)&7);
-}
-
-static void d68020_cas2_32(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_32();
-	sprintf(g_dasm_str, "cas2.l  D%d:D%d:D%d:D%d, (%c%d):(%c%d); (2+)",
-		(extension>>16)&7, extension&7, (extension>>22)&7, (extension>>6)&7,
-		BIT_1F(extension) ? 'A' : 'D', (extension>>28)&7,
-		BIT_F(extension) ? 'A' : 'D', (extension>>12)&7);
-}
-
-static void d68000_chk_16(void)
-{
-	sprintf(g_dasm_str, "chk.w   %s, D%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68020_chk_32(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "chk.l   %s, D%d; (2+)", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68020_chk2_cmp2_8(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_16();
-	sprintf(g_dasm_str, "%s.b  %s, %c%d; (2+)", BIT_B(extension) ? "chk2" : "cmp2", get_ea_mode_str_8(g_cpu_ir), BIT_F(extension) ? 'A' : 'D', (extension>>12)&7);
-}
-
-static void d68020_chk2_cmp2_16(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_16();
-	sprintf(g_dasm_str, "%s.w  %s, %c%d; (2+)", BIT_B(extension) ? "chk2" : "cmp2", get_ea_mode_str_16(g_cpu_ir), BIT_F(extension) ? 'A' : 'D', (extension>>12)&7);
-}
-
-static void d68020_chk2_cmp2_32(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_16();
-	sprintf(g_dasm_str, "%s.l  %s, %c%d; (2+)", BIT_B(extension) ? "chk2" : "cmp2", get_ea_mode_str_32(g_cpu_ir), BIT_F(extension) ? 'A' : 'D', (extension>>12)&7);
-}
-
-static void d68040_cinv(void)
-{
-	LIMIT_CPU_TYPES(M68040_PLUS);
-	switch((g_cpu_ir>>3)&3)
-	{
-		case 0:
-			sprintf(g_dasm_str, "cinv (illegal scope); (4)");
-			break;
-		case 1:
-			sprintf(g_dasm_str, "cinvl   %d, (A%d); (4)", (g_cpu_ir>>6)&3, g_cpu_ir&7);
-			break;
-		case 2:
-			sprintf(g_dasm_str, "cinvp   %d, (A%d); (4)", (g_cpu_ir>>6)&3, g_cpu_ir&7);
-			break;
-		case 3:
-			sprintf(g_dasm_str, "cinva   %d; (4)", (g_cpu_ir>>6)&3);
-			break;
-	}
-}
-
-static void d68000_clr_8(void)
-{
-	sprintf(g_dasm_str, "clr.b   %s", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_clr_16(void)
-{
-	sprintf(g_dasm_str, "clr.w   %s", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_clr_32(void)
-{
-	sprintf(g_dasm_str, "clr.l   %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_cmp_8(void)
-{
-	sprintf(g_dasm_str, "cmp.b   %s, D%d", get_ea_mode_str_8(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_cmp_16(void)
-{
-	sprintf(g_dasm_str, "cmp.w   %s, D%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_cmp_32(void)
-{
-	sprintf(g_dasm_str, "cmp.l   %s, D%d", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_cmpa_16(void)
-{
-	sprintf(g_dasm_str, "cmpa.w  %s, A%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_cmpa_32(void)
-{
-	sprintf(g_dasm_str, "cmpa.l  %s, A%d", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_cmpi_8(void)
-{
-	char* str = get_imm_str_s8();
-	sprintf(g_dasm_str, "cmpi.b  %s, %s", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68020_cmpi_pcdi_8(void)
-{
-	char* str;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	str = get_imm_str_s8();
-	sprintf(g_dasm_str, "cmpi.b  %s, %s; (2+)", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68020_cmpi_pcix_8(void)
-{
-	char* str;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	str = get_imm_str_s8();
-	sprintf(g_dasm_str, "cmpi.b  %s, %s; (2+)", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_cmpi_16(void)
-{
-	char* str;
-	str = get_imm_str_s16();
-	sprintf(g_dasm_str, "cmpi.w  %s, %s", str, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68020_cmpi_pcdi_16(void)
-{
-	char* str;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	str = get_imm_str_s16();
-	sprintf(g_dasm_str, "cmpi.w  %s, %s; (2+)", str, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68020_cmpi_pcix_16(void)
-{
-	char* str;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	str = get_imm_str_s16();
-	sprintf(g_dasm_str, "cmpi.w  %s, %s; (2+)", str, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_cmpi_32(void)
-{
-	char* str;
-	str = get_imm_str_s32();
-	sprintf(g_dasm_str, "cmpi.l  %s, %s", str, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68020_cmpi_pcdi_32(void)
-{
-	char* str;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	str = get_imm_str_s32();
-	sprintf(g_dasm_str, "cmpi.l  %s, %s; (2+)", str, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68020_cmpi_pcix_32(void)
-{
-	char* str;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	str = get_imm_str_s32();
-	sprintf(g_dasm_str, "cmpi.l  %s, %s; (2+)", str, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_cmpm_8(void)
-{
-	sprintf(g_dasm_str, "cmpm.b  (A%d)+, (A%d)+", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_cmpm_16(void)
-{
-	sprintf(g_dasm_str, "cmpm.w  (A%d)+, (A%d)+", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_cmpm_32(void)
-{
-	sprintf(g_dasm_str, "cmpm.l  (A%d)+, (A%d)+", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68020_cpbcc_16(void)
-{
-	uint extension;
-	uint new_pc = g_cpu_pc;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_16();
-	new_pc += make_int_16(peek_imm_16());
-	sprintf(g_dasm_str, "%db%-4s  %s; %x (extension = %x) (2-3)", (g_cpu_ir>>9)&7, g_cpcc[g_cpu_ir&0x3f], get_imm_str_s16(), new_pc, extension);
-}
-
-static void d68020_cpbcc_32(void)
-{
-	uint extension;
-	uint new_pc = g_cpu_pc;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_16();
-	new_pc += peek_imm_32();
-	sprintf(g_dasm_str, "%db%-4s  %s; %x (extension = %x) (2-3)", (g_cpu_ir>>9)&7, g_cpcc[g_cpu_ir&0x3f], get_imm_str_s16(), new_pc, extension);
-}
-
-static void d68020_cpdbcc(void)
-{
-	uint extension1;
-	uint extension2;
-	uint new_pc = g_cpu_pc;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension1 = read_imm_16();
-	extension2 = read_imm_16();
-	new_pc += make_int_16(peek_imm_16());
-	sprintf(g_dasm_str, "%ddb%-4s D%d,%s; %x (extension = %x) (2-3)", (g_cpu_ir>>9)&7, g_cpcc[extension1&0x3f], g_cpu_ir&7, get_imm_str_s16(), new_pc, extension2);
-}
-
-static void d68020_cpgen(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "%dgen    %s; (2-3)", (g_cpu_ir>>9)&7, get_imm_str_u32());
-}
-
-static void d68020_cprestore(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "%drestore %s; (2-3)", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68020_cpsave(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "%dsave   %s; (2-3)", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68020_cpscc(void)
-{
-	uint extension1;
-	uint extension2;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension1 = read_imm_16();
-	extension2 = read_imm_16();
-	sprintf(g_dasm_str, "%ds%-4s  %s; (extension = %x) (2-3)", (g_cpu_ir>>9)&7, g_cpcc[extension1&0x3f], get_ea_mode_str_8(g_cpu_ir), extension2);
-}
-
-static void d68020_cptrapcc_0(void)
-{
-	uint extension1;
-	uint extension2;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension1 = read_imm_16();
-	extension2 = read_imm_16();
-	sprintf(g_dasm_str, "%dtrap%-4s; (extension = %x) (2-3)", (g_cpu_ir>>9)&7, g_cpcc[extension1&0x3f], extension2);
-}
-
-static void d68020_cptrapcc_16(void)
-{
-	uint extension1;
-	uint extension2;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension1 = read_imm_16();
-	extension2 = read_imm_16();
-	sprintf(g_dasm_str, "%dtrap%-4s %s; (extension = %x) (2-3)", (g_cpu_ir>>9)&7, g_cpcc[extension1&0x3f], get_imm_str_u16(), extension2);
-}
-
-static void d68020_cptrapcc_32(void)
-{
-	uint extension1;
-	uint extension2;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension1 = read_imm_16();
-	extension2 = read_imm_16();
-	sprintf(g_dasm_str, "%dtrap%-4s %s; (extension = %x) (2-3)", (g_cpu_ir>>9)&7, g_cpcc[extension1&0x3f], get_imm_str_u32(), extension2);
-}
-
-static void d68040_cpush(void)
-{
-	LIMIT_CPU_TYPES(M68040_PLUS);
-	switch((g_cpu_ir>>3)&3)
-	{
-		case 0:
-			sprintf(g_dasm_str, "cpush (illegal scope); (4)");
-			break;
-		case 1:
-			sprintf(g_dasm_str, "cpushl  %d, (A%d); (4)", (g_cpu_ir>>6)&3, g_cpu_ir&7);
-			break;
-		case 2:
-			sprintf(g_dasm_str, "cpushp  %d, (A%d); (4)", (g_cpu_ir>>6)&3, g_cpu_ir&7);
-			break;
-		case 3:
-			sprintf(g_dasm_str, "cpusha  %d; (4)", (g_cpu_ir>>6)&3);
-			break;
-	}
-}
-
-static void d68000_dbra(void)
-{
-	uint temp_pc = g_cpu_pc;
-	sprintf(g_dasm_str, "dbra    D%d, %x", g_cpu_ir & 7, temp_pc + make_int_16(read_imm_16()));
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68000_dbcc(void)
-{
-	uint temp_pc = g_cpu_pc;
-	sprintf(g_dasm_str, "db%-2s    D%d, %x", g_cc[(g_cpu_ir>>8)&0xf], g_cpu_ir & 7, temp_pc + make_int_16(read_imm_16()));
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68000_divs(void)
-{
-	sprintf(g_dasm_str, "divs.w  %s, D%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_divu(void)
-{
-	sprintf(g_dasm_str, "divu.w  %s, D%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68020_divl(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_16();
-
-	if(BIT_A(extension))
-		sprintf(g_dasm_str, "div%c.l  %s, D%d:D%d; (2+)", BIT_B(extension) ? 's' : 'u', get_ea_mode_str_32(g_cpu_ir), extension&7, (extension>>12)&7);
-	else if((extension&7) == ((extension>>12)&7))
-		sprintf(g_dasm_str, "div%c.l  %s, D%d; (2+)", BIT_B(extension) ? 's' : 'u', get_ea_mode_str_32(g_cpu_ir), (extension>>12)&7);
-	else
-		sprintf(g_dasm_str, "div%cl.l %s, D%d:D%d; (2+)", BIT_B(extension) ? 's' : 'u', get_ea_mode_str_32(g_cpu_ir), extension&7, (extension>>12)&7);
-}
-
-static void d68000_eor_8(void)
-{
-	sprintf(g_dasm_str, "eor.b   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_eor_16(void)
-{
-	sprintf(g_dasm_str, "eor.w   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_eor_32(void)
-{
-	sprintf(g_dasm_str, "eor.l   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_eori_8(void)
-{
-	char* str = get_imm_str_u8();
-	sprintf(g_dasm_str, "eori.b  %s, %s", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_eori_16(void)
-{
-	char* str = get_imm_str_u16();
-	sprintf(g_dasm_str, "eori.w  %s, %s", str, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_eori_32(void)
-{
-	char* str = get_imm_str_u32();
-	sprintf(g_dasm_str, "eori.l  %s, %s", str, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_eori_to_ccr(void)
-{
-	sprintf(g_dasm_str, "eori    %s, CCR", get_imm_str_u8());
-}
-
-static void d68000_eori_to_sr(void)
-{
-	sprintf(g_dasm_str, "eori    %s, SR", get_imm_str_u16());
-}
-
-static void d68000_exg_dd(void)
-{
-	sprintf(g_dasm_str, "exg     D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_exg_aa(void)
-{
-	sprintf(g_dasm_str, "exg     A%d, A%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_exg_da(void)
-{
-	sprintf(g_dasm_str, "exg     D%d, A%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_ext_16(void)
-{
-	sprintf(g_dasm_str, "ext.w   D%d", g_cpu_ir&7);
-}
-
-static void d68000_ext_32(void)
-{
-	sprintf(g_dasm_str, "ext.l   D%d", g_cpu_ir&7);
-}
-
-static void d68020_extb_32(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "extb.l  D%d; (2+)", g_cpu_ir&7);
-}
-
-static void d68000_jmp(void)
-{
-	sprintf(g_dasm_str, "jmp     %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_jsr(void)
-{
-	sprintf(g_dasm_str, "jsr     %s", get_ea_mode_str_32(g_cpu_ir));
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68000_lea(void)
-{
-	sprintf(g_dasm_str, "lea     %s, A%d", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_link_16(void)
-{
-	sprintf(g_dasm_str, "link    A%d, %s", g_cpu_ir&7, get_imm_str_s16());
-}
-
-static void d68020_link_32(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "link    A%d, %s; (2+)", g_cpu_ir&7, get_imm_str_s32());
-}
-
-static void d68000_lsr_s_8(void)
-{
-	sprintf(g_dasm_str, "lsr.b   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_lsr_s_16(void)
-{
-	sprintf(g_dasm_str, "lsr.w   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_lsr_s_32(void)
-{
-	sprintf(g_dasm_str, "lsr.l   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_lsr_r_8(void)
-{
-	sprintf(g_dasm_str, "lsr.b   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_lsr_r_16(void)
-{
-	sprintf(g_dasm_str, "lsr.w   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_lsr_r_32(void)
-{
-	sprintf(g_dasm_str, "lsr.l   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_lsr_ea(void)
-{
-	sprintf(g_dasm_str, "lsr.w   %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_lsl_s_8(void)
-{
-	sprintf(g_dasm_str, "lsl.b   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_lsl_s_16(void)
-{
-	sprintf(g_dasm_str, "lsl.w   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_lsl_s_32(void)
-{
-	sprintf(g_dasm_str, "lsl.l   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_lsl_r_8(void)
-{
-	sprintf(g_dasm_str, "lsl.b   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_lsl_r_16(void)
-{
-	sprintf(g_dasm_str, "lsl.w   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_lsl_r_32(void)
-{
-	sprintf(g_dasm_str, "lsl.l   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_lsl_ea(void)
-{
-	sprintf(g_dasm_str, "lsl.w   %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_move_8(void)
-{
-	char* str = get_ea_mode_str_8(g_cpu_ir);
-	sprintf(g_dasm_str, "move.b  %s, %s", str, get_ea_mode_str_8(((g_cpu_ir>>9) & 7) | ((g_cpu_ir>>3) & 0x38)));
-}
-
-static void d68000_move_16(void)
-{
-	char* str = get_ea_mode_str_16(g_cpu_ir);
-	sprintf(g_dasm_str, "move.w  %s, %s", str, get_ea_mode_str_16(((g_cpu_ir>>9) & 7) | ((g_cpu_ir>>3) & 0x38)));
-}
-
-static void d68000_move_32(void)
-{
-	char* str = get_ea_mode_str_32(g_cpu_ir);
-	sprintf(g_dasm_str, "move.l  %s, %s", str, get_ea_mode_str_32(((g_cpu_ir>>9) & 7) | ((g_cpu_ir>>3) & 0x38)));
-}
-
-static void d68000_movea_16(void)
-{
-	sprintf(g_dasm_str, "movea.w %s, A%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_movea_32(void)
-{
-	sprintf(g_dasm_str, "movea.l %s, A%d", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_move_to_ccr(void)
-{
-	sprintf(g_dasm_str, "move    %s, CCR", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68010_move_fr_ccr(void)
-{
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	sprintf(g_dasm_str, "move    CCR, %s; (1+)", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_move_fr_sr(void)
-{
-	sprintf(g_dasm_str, "move    SR, %s", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_move_to_sr(void)
-{
-	sprintf(g_dasm_str, "move    %s, SR", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_move_fr_usp(void)
-{
-	sprintf(g_dasm_str, "move    USP, A%d", g_cpu_ir&7);
-}
-
-static void d68000_move_to_usp(void)
-{
-	sprintf(g_dasm_str, "move    A%d, USP", g_cpu_ir&7);
-}
-
-static void d68010_movec(void)
-{
-	uint extension;
-	const char* reg_name;
-	const char* processor;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	extension = read_imm_16();
-
-	switch(extension & 0xfff)
-	{
-		case 0x000:
-			reg_name = "SFC";
-			processor = "1+";
-			break;
-		case 0x001:
-			reg_name = "DFC";
-			processor = "1+";
-			break;
-		case 0x800:
-			reg_name = "USP";
-			processor = "1+";
-			break;
-		case 0x801:
-			reg_name = "VBR";
-			processor = "1+";
-			break;
-		case 0x002:
-			reg_name = "CACR";
-			processor = "2+";
-			break;
-		case 0x802:
-			reg_name = "CAAR";
-			processor = "2,3";
-			break;
-		case 0x803:
-			reg_name = "MSP";
-			processor = "2+";
-			break;
-		case 0x804:
-			reg_name = "ISP";
-			processor = "2+";
-			break;
-		case 0x003:
-			reg_name = "TC";
-			processor = "4+";
-			break;
-		case 0x004:
-			reg_name = "ITT0";
-			processor = "4+";
-			break;
-		case 0x005:
-			reg_name = "ITT1";
-			processor = "4+";
-			break;
-		case 0x006:
-			reg_name = "DTT0";
-			processor = "4+";
-			break;
-		case 0x007:
-			reg_name = "DTT1";
-			processor = "4+";
-			break;
-		case 0x805:
-			reg_name = "MMUSR";
-			processor = "4+";
-			break;
-		case 0x806:
-			reg_name = "URP";
-			processor = "4+";
-			break;
-		case 0x807:
-			reg_name = "SRP";
-			processor = "4+";
-			break;
-		default:
-			reg_name = make_signed_hex_str_16(extension & 0xfff);
-			processor = "?";
-	}
-
-	if(BIT_1(g_cpu_ir))
-		sprintf(g_dasm_str, "movec   %c%d, %s; (%s)", BIT_F(extension) ? 'A' : 'D', (extension>>12)&7, reg_name, processor);
-	else
-		sprintf(g_dasm_str, "movec   %s, %c%d; (%s)", reg_name, BIT_F(extension) ? 'A' : 'D', (extension>>12)&7, processor);
-}
-
-static void d68000_movem_pd_16(void)
-{
-	uint data = read_imm_16();
-	char buffer[40];
-	uint first;
-	uint run_length;
-	uint i;
-
-	buffer[0] = 0;
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<(15-i)))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(15-(i+1)))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "D%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-D%d", first + run_length);
-		}
-	}
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<(7-i)))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(7-(i+1)))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "A%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-A%d", first + run_length);
-		}
-	}
-	sprintf(g_dasm_str, "movem.w %s, %s", buffer, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_movem_pd_32(void)
-{
-	uint data = read_imm_16();
-	char buffer[40];
-	uint first;
-	uint run_length;
-	uint i;
-
-	buffer[0] = 0;
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<(15-i)))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(15-(i+1)))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "D%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-D%d", first + run_length);
-		}
-	}
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<(7-i)))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(7-(i+1)))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "A%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-A%d", first + run_length);
-		}
-	}
-	sprintf(g_dasm_str, "movem.l %s, %s", buffer, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_movem_er_16(void)
-{
-	uint data = read_imm_16();
-	char buffer[40];
-	uint first;
-	uint run_length;
-	uint i;
-
-	buffer[0] = 0;
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<i))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(i+1))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "D%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-D%d", first + run_length);
-		}
-	}
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<(i+8)))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(i+8+1))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "A%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-A%d", first + run_length);
-		}
-	}
-	sprintf(g_dasm_str, "movem.w %s, %s", get_ea_mode_str_16(g_cpu_ir), buffer);
-}
-
-static void d68000_movem_er_32(void)
-{
-	uint data = read_imm_16();
-	char buffer[40];
-	uint first;
-	uint run_length;
-	uint i;
-
-	buffer[0] = 0;
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<i))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(i+1))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "D%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-D%d", first + run_length);
-		}
-	}
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<(i+8)))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(i+8+1))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "A%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-A%d", first + run_length);
-		}
-	}
-	sprintf(g_dasm_str, "movem.l %s, %s", get_ea_mode_str_32(g_cpu_ir), buffer);
-}
-
-static void d68000_movem_re_16(void)
-{
-	uint data = read_imm_16();
-	char buffer[40];
-	uint first;
-	uint run_length;
-	uint i;
-
-	buffer[0] = 0;
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<i))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(i+1))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "D%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-D%d", first + run_length);
-		}
-	}
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<(i+8)))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(i+8+1))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "A%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-A%d", first + run_length);
-		}
-	}
-	sprintf(g_dasm_str, "movem.w %s, %s", buffer, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_movem_re_32(void)
-{
-	uint data = read_imm_16();
-	char buffer[40];
-	uint first;
-	uint run_length;
-	uint i;
-
-	buffer[0] = 0;
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<i))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(i+1))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "D%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-D%d", first + run_length);
-		}
-	}
-	for(i=0;i<8;i++)
-	{
-		if(data&(1<<(i+8)))
-		{
-			first = i;
-			run_length = 0;
-			while(i<7 && (data&(1<<(i+8+1))))
-			{
-				i++;
-				run_length++;
-			}
-			if(buffer[0] != 0)
-				strcat(buffer, "/");
-			sprintf(buffer+strlen(buffer), "A%d", first);
-			if(run_length > 0)
-				sprintf(buffer+strlen(buffer), "-A%d", first + run_length);
-		}
-	}
-	sprintf(g_dasm_str, "movem.l %s, %s", buffer, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_movep_re_16(void)
-{
-	sprintf(g_dasm_str, "movep.w D%d, ($%x,A%d)", (g_cpu_ir>>9)&7, read_imm_16(), g_cpu_ir&7);
-}
-
-static void d68000_movep_re_32(void)
-{
-	sprintf(g_dasm_str, "movep.l D%d, ($%x,A%d)", (g_cpu_ir>>9)&7, read_imm_16(), g_cpu_ir&7);
-}
-
-static void d68000_movep_er_16(void)
-{
-	sprintf(g_dasm_str, "movep.w ($%x,A%d), D%d", read_imm_16(), g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_movep_er_32(void)
-{
-	sprintf(g_dasm_str, "movep.l ($%x,A%d), D%d", read_imm_16(), g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68010_moves_8(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	extension = read_imm_16();
-	if(BIT_B(extension))
-		sprintf(g_dasm_str, "moves.b %c%d, %s; (1+)", BIT_F(extension) ? 'A' : 'D', (extension>>12)&7, get_ea_mode_str_8(g_cpu_ir));
-	else
-		sprintf(g_dasm_str, "moves.b %s, %c%d; (1+)", get_ea_mode_str_8(g_cpu_ir), BIT_F(extension) ? 'A' : 'D', (extension>>12)&7);
-}
-
-static void d68010_moves_16(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	extension = read_imm_16();
-	if(BIT_B(extension))
-		sprintf(g_dasm_str, "moves.w %c%d, %s; (1+)", BIT_F(extension) ? 'A' : 'D', (extension>>12)&7, get_ea_mode_str_16(g_cpu_ir));
-	else
-		sprintf(g_dasm_str, "moves.w %s, %c%d; (1+)", get_ea_mode_str_16(g_cpu_ir), BIT_F(extension) ? 'A' : 'D', (extension>>12)&7);
-}
-
-static void d68010_moves_32(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	extension = read_imm_16();
-	if(BIT_B(extension))
-		sprintf(g_dasm_str, "moves.l %c%d, %s; (1+)", BIT_F(extension) ? 'A' : 'D', (extension>>12)&7, get_ea_mode_str_32(g_cpu_ir));
-	else
-		sprintf(g_dasm_str, "moves.l %s, %c%d; (1+)", get_ea_mode_str_32(g_cpu_ir), BIT_F(extension) ? 'A' : 'D', (extension>>12)&7);
-}
-
-static void d68000_moveq(void)
-{
-	sprintf(g_dasm_str, "moveq   #%s, D%d", make_signed_hex_str_8(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68040_move16_pi_pi(void)
-{
-	LIMIT_CPU_TYPES(M68040_PLUS);
-	sprintf(g_dasm_str, "move16  (A%d)+, (A%d)+; (4)", g_cpu_ir&7, (read_imm_16()>>12)&7);
-}
-
-static void d68040_move16_pi_al(void)
-{
-	LIMIT_CPU_TYPES(M68040_PLUS);
-	sprintf(g_dasm_str, "move16  (A%d)+, %s; (4)", g_cpu_ir&7, get_imm_str_u32());
-}
-
-static void d68040_move16_al_pi(void)
-{
-	LIMIT_CPU_TYPES(M68040_PLUS);
-	sprintf(g_dasm_str, "move16  %s, (A%d)+; (4)", get_imm_str_u32(), g_cpu_ir&7);
-}
-
-static void d68040_move16_ai_al(void)
-{
-	LIMIT_CPU_TYPES(M68040_PLUS);
-	sprintf(g_dasm_str, "move16  (A%d), %s; (4)", g_cpu_ir&7, get_imm_str_u32());
-}
-
-static void d68040_move16_al_ai(void)
-{
-	LIMIT_CPU_TYPES(M68040_PLUS);
-	sprintf(g_dasm_str, "move16  %s, (A%d); (4)", get_imm_str_u32(), g_cpu_ir&7);
-}
-
-static void d68000_muls(void)
-{
-	sprintf(g_dasm_str, "muls.w  %s, D%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_mulu(void)
-{
-	sprintf(g_dasm_str, "mulu.w  %s, D%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68020_mull(void)
-{
-	uint extension;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	extension = read_imm_16();
-
-	if(BIT_A(extension))
-		sprintf(g_dasm_str, "mul%c.l %s, D%d-D%d; (2+)", BIT_B(extension) ? 's' : 'u', get_ea_mode_str_32(g_cpu_ir), extension&7, (extension>>12)&7);
-	else
-		sprintf(g_dasm_str, "mul%c.l  %s, D%d; (2+)", BIT_B(extension) ? 's' : 'u', get_ea_mode_str_32(g_cpu_ir), (extension>>12)&7);
-}
-
-static void d68000_nbcd(void)
-{
-	sprintf(g_dasm_str, "nbcd    %s", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_neg_8(void)
-{
-	sprintf(g_dasm_str, "neg.b   %s", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_neg_16(void)
-{
-	sprintf(g_dasm_str, "neg.w   %s", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_neg_32(void)
-{
-	sprintf(g_dasm_str, "neg.l   %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_negx_8(void)
-{
-	sprintf(g_dasm_str, "negx.b  %s", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_negx_16(void)
-{
-	sprintf(g_dasm_str, "negx.w  %s", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_negx_32(void)
-{
-	sprintf(g_dasm_str, "negx.l  %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_nop(void)
-{
-	sprintf(g_dasm_str, "nop");
-}
-
-static void d68000_not_8(void)
-{
-	sprintf(g_dasm_str, "not.b   %s", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_not_16(void)
-{
-	sprintf(g_dasm_str, "not.w   %s", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_not_32(void)
-{
-	sprintf(g_dasm_str, "not.l   %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_or_er_8(void)
-{
-	sprintf(g_dasm_str, "or.b    %s, D%d", get_ea_mode_str_8(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_or_er_16(void)
-{
-	sprintf(g_dasm_str, "or.w    %s, D%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_or_er_32(void)
-{
-	sprintf(g_dasm_str, "or.l    %s, D%d", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_or_re_8(void)
-{
-	sprintf(g_dasm_str, "or.b    D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_or_re_16(void)
-{
-	sprintf(g_dasm_str, "or.w    D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_or_re_32(void)
-{
-	sprintf(g_dasm_str, "or.l    D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_ori_8(void)
-{
-	char* str = get_imm_str_u8();
-	sprintf(g_dasm_str, "ori.b   %s, %s", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_ori_16(void)
-{
-	char* str = get_imm_str_u16();
-	sprintf(g_dasm_str, "ori.w   %s, %s", str, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_ori_32(void)
-{
-	char* str = get_imm_str_u32();
-	sprintf(g_dasm_str, "ori.l   %s, %s", str, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_ori_to_ccr(void)
-{
-	sprintf(g_dasm_str, "ori     %s, CCR", get_imm_str_u8());
-}
-
-static void d68000_ori_to_sr(void)
-{
-	sprintf(g_dasm_str, "ori     %s, SR", get_imm_str_u16());
-}
-
-static void d68020_pack_rr(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "pack    D%d, D%d, %s; (2+)", g_cpu_ir&7, (g_cpu_ir>>9)&7, get_imm_str_u16());
-}
-
-static void d68020_pack_mm(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "pack    -(A%d), -(A%d), %s; (2+)", g_cpu_ir&7, (g_cpu_ir>>9)&7, get_imm_str_u16());
-}
-
-static void d68000_pea(void)
-{
-	sprintf(g_dasm_str, "pea     %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_reset(void)
-{
-	sprintf(g_dasm_str, "reset");
-}
-
-static void d68000_ror_s_8(void)
-{
-	sprintf(g_dasm_str, "ror.b   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_ror_s_16(void)
-{
-	sprintf(g_dasm_str, "ror.w   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7],g_cpu_ir&7);
-}
-
-static void d68000_ror_s_32(void)
-{
-	sprintf(g_dasm_str, "ror.l   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_ror_r_8(void)
-{
-	sprintf(g_dasm_str, "ror.b   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_ror_r_16(void)
-{
-	sprintf(g_dasm_str, "ror.w   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_ror_r_32(void)
-{
-	sprintf(g_dasm_str, "ror.l   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_ror_ea(void)
-{
-	sprintf(g_dasm_str, "ror.w   %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_rol_s_8(void)
-{
-	sprintf(g_dasm_str, "rol.b   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_rol_s_16(void)
-{
-	sprintf(g_dasm_str, "rol.w   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_rol_s_32(void)
-{
-	sprintf(g_dasm_str, "rol.l   #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_rol_r_8(void)
-{
-	sprintf(g_dasm_str, "rol.b   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_rol_r_16(void)
-{
-	sprintf(g_dasm_str, "rol.w   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_rol_r_32(void)
-{
-	sprintf(g_dasm_str, "rol.l   D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_rol_ea(void)
-{
-	sprintf(g_dasm_str, "rol.w   %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_roxr_s_8(void)
-{
-	sprintf(g_dasm_str, "roxr.b  #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_roxr_s_16(void)
-{
-	sprintf(g_dasm_str, "roxr.w  #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-
-static void d68000_roxr_s_32(void)
-{
-	sprintf(g_dasm_str, "roxr.l  #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_roxr_r_8(void)
-{
-	sprintf(g_dasm_str, "roxr.b  D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_roxr_r_16(void)
-{
-	sprintf(g_dasm_str, "roxr.w  D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_roxr_r_32(void)
-{
-	sprintf(g_dasm_str, "roxr.l  D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_roxr_ea(void)
-{
-	sprintf(g_dasm_str, "roxr.w  %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_roxl_s_8(void)
-{
-	sprintf(g_dasm_str, "roxl.b  #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_roxl_s_16(void)
-{
-	sprintf(g_dasm_str, "roxl.w  #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_roxl_s_32(void)
-{
-	sprintf(g_dasm_str, "roxl.l  #%d, D%d", g_3bit_qdata_table[(g_cpu_ir>>9)&7], g_cpu_ir&7);
-}
-
-static void d68000_roxl_r_8(void)
-{
-	sprintf(g_dasm_str, "roxl.b  D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_roxl_r_16(void)
-{
-	sprintf(g_dasm_str, "roxl.w  D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_roxl_r_32(void)
-{
-	sprintf(g_dasm_str, "roxl.l  D%d, D%d", (g_cpu_ir>>9)&7, g_cpu_ir&7);
-}
-
-static void d68000_roxl_ea(void)
-{
-	sprintf(g_dasm_str, "roxl.w  %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68010_rtd(void)
-{
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	sprintf(g_dasm_str, "rtd     %s; (1+)", get_imm_str_s16());
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OUT);
-}
-
-static void d68000_rte(void)
-{
-	sprintf(g_dasm_str, "rte");
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OUT);
-}
-
-static void d68020_rtm(void)
-{
-	LIMIT_CPU_TYPES(M68020_ONLY);
-	sprintf(g_dasm_str, "rtm     %c%d; (2+)", BIT_3(g_cpu_ir) ? 'A' : 'D', g_cpu_ir&7);
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OUT);
-}
-
-static void d68000_rtr(void)
-{
-	sprintf(g_dasm_str, "rtr");
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OUT);
-}
-
-static void d68000_rts(void)
-{
-	sprintf(g_dasm_str, "rts");
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OUT);
-}
-
-static void d68000_sbcd_rr(void)
-{
-	sprintf(g_dasm_str, "sbcd    D%d, D%d", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_sbcd_mm(void)
-{
-	sprintf(g_dasm_str, "sbcd    -(A%d), -(A%d)", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_scc(void)
-{
-	sprintf(g_dasm_str, "s%-2s     %s", g_cc[(g_cpu_ir>>8)&0xf], get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_stop(void)
-{
-	sprintf(g_dasm_str, "stop    %s", get_imm_str_s16());
-}
-
-static void d68000_sub_er_8(void)
-{
-	sprintf(g_dasm_str, "sub.b   %s, D%d", get_ea_mode_str_8(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_sub_er_16(void)
-{
-	sprintf(g_dasm_str, "sub.w   %s, D%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_sub_er_32(void)
-{
-	sprintf(g_dasm_str, "sub.l   %s, D%d", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_sub_re_8(void)
-{
-	sprintf(g_dasm_str, "sub.b   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_sub_re_16(void)
-{
-	sprintf(g_dasm_str, "sub.w   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_sub_re_32(void)
-{
-	sprintf(g_dasm_str, "sub.l   D%d, %s", (g_cpu_ir>>9)&7, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_suba_16(void)
-{
-	sprintf(g_dasm_str, "suba.w  %s, A%d", get_ea_mode_str_16(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_suba_32(void)
-{
-	sprintf(g_dasm_str, "suba.l  %s, A%d", get_ea_mode_str_32(g_cpu_ir), (g_cpu_ir>>9)&7);
-}
-
-static void d68000_subi_8(void)
-{
-	char* str = get_imm_str_s8();
-	sprintf(g_dasm_str, "subi.b  %s, %s", str, get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_subi_16(void)
-{
-	char* str = get_imm_str_s16();
-	sprintf(g_dasm_str, "subi.w  %s, %s", str, get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_subi_32(void)
-{
-	char* str = get_imm_str_s32();
-	sprintf(g_dasm_str, "subi.l  %s, %s", str, get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_subq_8(void)
-{
-	sprintf(g_dasm_str, "subq.b  #%d, %s", g_3bit_qdata_table[(g_cpu_ir>>9)&7], get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_subq_16(void)
-{
-	sprintf(g_dasm_str, "subq.w  #%d, %s", g_3bit_qdata_table[(g_cpu_ir>>9)&7], get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_subq_32(void)
-{
-	sprintf(g_dasm_str, "subq.l  #%d, %s", g_3bit_qdata_table[(g_cpu_ir>>9)&7], get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_subx_rr_8(void)
-{
-	sprintf(g_dasm_str, "subx.b  D%d, D%d", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_subx_rr_16(void)
-{
-	sprintf(g_dasm_str, "subx.w  D%d, D%d", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_subx_rr_32(void)
-{
-	sprintf(g_dasm_str, "subx.l  D%d, D%d", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_subx_mm_8(void)
-{
-	sprintf(g_dasm_str, "subx.b  -(A%d), -(A%d)", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_subx_mm_16(void)
-{
-	sprintf(g_dasm_str, "subx.w  -(A%d), -(A%d)", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_subx_mm_32(void)
-{
-	sprintf(g_dasm_str, "subx.l  -(A%d), -(A%d)", g_cpu_ir&7, (g_cpu_ir>>9)&7);
-}
-
-static void d68000_swap(void)
-{
-	sprintf(g_dasm_str, "swap    D%d", g_cpu_ir&7);
-}
-
-static void d68000_tas(void)
-{
-	sprintf(g_dasm_str, "tas     %s", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_trap(void)
-{
-	sprintf(g_dasm_str, "trap    #$%x", g_cpu_ir&0xf);
-}
-
-static void d68020_trapcc_0(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "trap%-2s; (2+)", g_cc[(g_cpu_ir>>8)&0xf]);
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68020_trapcc_16(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "trap%-2s  %s; (2+)", g_cc[(g_cpu_ir>>8)&0xf], get_imm_str_u16());
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68020_trapcc_32(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "trap%-2s  %s; (2+)", g_cc[(g_cpu_ir>>8)&0xf], get_imm_str_u32());
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68000_trapv(void)
-{
-	sprintf(g_dasm_str, "trapv");
-	SET_OPCODE_FLAGS(DASMFLAG_STEP_OVER);
-}
-
-static void d68000_tst_8(void)
-{
-	sprintf(g_dasm_str, "tst.b   %s", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68020_tst_pcdi_8(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.b   %s; (2+)", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68020_tst_pcix_8(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.b   %s; (2+)", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68020_tst_i_8(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.b   %s; (2+)", get_ea_mode_str_8(g_cpu_ir));
-}
-
-static void d68000_tst_16(void)
-{
-	sprintf(g_dasm_str, "tst.w   %s", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68020_tst_a_16(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.w   %s; (2+)", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68020_tst_pcdi_16(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.w   %s; (2+)", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68020_tst_pcix_16(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.w   %s; (2+)", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68020_tst_i_16(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.w   %s; (2+)", get_ea_mode_str_16(g_cpu_ir));
-}
-
-static void d68000_tst_32(void)
-{
-	sprintf(g_dasm_str, "tst.l   %s", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68020_tst_a_32(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.l   %s; (2+)", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68020_tst_pcdi_32(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.l   %s; (2+)", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68020_tst_pcix_32(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.l   %s; (2+)", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68020_tst_i_32(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "tst.l   %s; (2+)", get_ea_mode_str_32(g_cpu_ir));
-}
-
-static void d68000_unlk(void)
-{
-	sprintf(g_dasm_str, "unlk    A%d", g_cpu_ir&7);
-}
-
-static void d68020_unpk_rr(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "unpk    D%d, D%d, %s; (2+)", g_cpu_ir&7, (g_cpu_ir>>9)&7, get_imm_str_u16());
-}
-
-static void d68020_unpk_mm(void)
-{
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	sprintf(g_dasm_str, "unpk    -(A%d), -(A%d), %s; (2+)", g_cpu_ir&7, (g_cpu_ir>>9)&7, get_imm_str_u16());
-}
-
-
-
-/* ======================================================================== */
-/* ======================= INSTRUCTION TABLE BUILDER ====================== */
+/* =========================== HELPER FUNCTIONS =========================== */
 /* ======================================================================== */
 
-/* EA Masks:
-800 = data register direct
-400 = address register direct
-200 = address register indirect
-100 = ARI postincrement
- 80 = ARI pre-decrement
- 40 = ARI displacement
- 20 = ARI index
- 10 = absolute short
-  8 = absolute long
-  4 = immediate / sr
-  2 = pc displacement
-  1 = pc idx
-*/
-
-static opcode_struct g_opcode_info[] =
+/* Calculate the number of cycles an opcode requires */
+int get_oper_cycles(opcode_struct* op, int ea_mode, int cpu_type)
 {
-/*  opcode handler    mask    match   ea mask */
-	{d68000_1010         , 0xf000, 0xa000, 0x000},
-	{d68000_1111         , 0xf000, 0xf000, 0x000},
-	{d68000_abcd_rr      , 0xf1f8, 0xc100, 0x000},
-	{d68000_abcd_mm      , 0xf1f8, 0xc108, 0x000},
-	{d68000_add_er_8     , 0xf1c0, 0xd000, 0xbff},
-	{d68000_add_er_16    , 0xf1c0, 0xd040, 0xfff},
-	{d68000_add_er_32    , 0xf1c0, 0xd080, 0xfff},
-	{d68000_add_re_8     , 0xf1c0, 0xd100, 0x3f8},
-	{d68000_add_re_16    , 0xf1c0, 0xd140, 0x3f8},
-	{d68000_add_re_32    , 0xf1c0, 0xd180, 0x3f8},
-	{d68000_adda_16      , 0xf1c0, 0xd0c0, 0xfff},
-	{d68000_adda_32      , 0xf1c0, 0xd1c0, 0xfff},
-	{d68000_addi_8       , 0xffc0, 0x0600, 0xbf8},
-	{d68000_addi_16      , 0xffc0, 0x0640, 0xbf8},
-	{d68000_addi_32      , 0xffc0, 0x0680, 0xbf8},
-	{d68000_addq_8       , 0xf1c0, 0x5000, 0xbf8},
-	{d68000_addq_16      , 0xf1c0, 0x5040, 0xff8},
-	{d68000_addq_32      , 0xf1c0, 0x5080, 0xff8},
-	{d68000_addx_rr_8    , 0xf1f8, 0xd100, 0x000},
-	{d68000_addx_rr_16   , 0xf1f8, 0xd140, 0x000},
-	{d68000_addx_rr_32   , 0xf1f8, 0xd180, 0x000},
-	{d68000_addx_mm_8    , 0xf1f8, 0xd108, 0x000},
-	{d68000_addx_mm_16   , 0xf1f8, 0xd148, 0x000},
-	{d68000_addx_mm_32   , 0xf1f8, 0xd188, 0x000},
-	{d68000_and_er_8     , 0xf1c0, 0xc000, 0xbff},
-	{d68000_and_er_16    , 0xf1c0, 0xc040, 0xbff},
-	{d68000_and_er_32    , 0xf1c0, 0xc080, 0xbff},
-	{d68000_and_re_8     , 0xf1c0, 0xc100, 0x3f8},
-	{d68000_and_re_16    , 0xf1c0, 0xc140, 0x3f8},
-	{d68000_and_re_32    , 0xf1c0, 0xc180, 0x3f8},
-	{d68000_andi_to_ccr  , 0xffff, 0x023c, 0x000},
-	{d68000_andi_to_sr   , 0xffff, 0x027c, 0x000},
-	{d68000_andi_8       , 0xffc0, 0x0200, 0xbf8},
-	{d68000_andi_16      , 0xffc0, 0x0240, 0xbf8},
-	{d68000_andi_32      , 0xffc0, 0x0280, 0xbf8},
-	{d68000_asr_s_8      , 0xf1f8, 0xe000, 0x000},
-	{d68000_asr_s_16     , 0xf1f8, 0xe040, 0x000},
-	{d68000_asr_s_32     , 0xf1f8, 0xe080, 0x000},
-	{d68000_asr_r_8      , 0xf1f8, 0xe020, 0x000},
-	{d68000_asr_r_16     , 0xf1f8, 0xe060, 0x000},
-	{d68000_asr_r_32     , 0xf1f8, 0xe0a0, 0x000},
-	{d68000_asr_ea       , 0xffc0, 0xe0c0, 0x3f8},
-	{d68000_asl_s_8      , 0xf1f8, 0xe100, 0x000},
-	{d68000_asl_s_16     , 0xf1f8, 0xe140, 0x000},
-	{d68000_asl_s_32     , 0xf1f8, 0xe180, 0x000},
-	{d68000_asl_r_8      , 0xf1f8, 0xe120, 0x000},
-	{d68000_asl_r_16     , 0xf1f8, 0xe160, 0x000},
-	{d68000_asl_r_32     , 0xf1f8, 0xe1a0, 0x000},
-	{d68000_asl_ea       , 0xffc0, 0xe1c0, 0x3f8},
-	{d68000_bcc_8        , 0xf000, 0x6000, 0x000},
-	{d68000_bcc_16       , 0xf0ff, 0x6000, 0x000},
-	{d68020_bcc_32       , 0xf0ff, 0x60ff, 0x000},
-	{d68000_bchg_r       , 0xf1c0, 0x0140, 0xbf8},
-	{d68000_bchg_s       , 0xffc0, 0x0840, 0xbf8},
-	{d68000_bclr_r       , 0xf1c0, 0x0180, 0xbf8},
-	{d68000_bclr_s       , 0xffc0, 0x0880, 0xbf8},
-	{d68020_bfchg        , 0xffc0, 0xeac0, 0xa78},
-	{d68020_bfclr        , 0xffc0, 0xecc0, 0xa78},
-	{d68020_bfexts       , 0xffc0, 0xebc0, 0xa7b},
-	{d68020_bfextu       , 0xffc0, 0xe9c0, 0xa7b},
-	{d68020_bfffo        , 0xffc0, 0xedc0, 0xa7b},
-	{d68020_bfins        , 0xffc0, 0xefc0, 0xa78},
-	{d68020_bfset        , 0xffc0, 0xeec0, 0xa78},
-	{d68020_bftst        , 0xffc0, 0xe8c0, 0xa7b},
-	{d68010_bkpt         , 0xfff8, 0x4848, 0x000},
-	{d68000_bra_8        , 0xff00, 0x6000, 0x000},
-	{d68000_bra_16       , 0xffff, 0x6000, 0x000},
-	{d68020_bra_32       , 0xffff, 0x60ff, 0x000},
-	{d68000_bset_r       , 0xf1c0, 0x01c0, 0xbf8},
-	{d68000_bset_s       , 0xffc0, 0x08c0, 0xbf8},
-	{d68000_bsr_8        , 0xff00, 0x6100, 0x000},
-	{d68000_bsr_16       , 0xffff, 0x6100, 0x000},
-	{d68020_bsr_32       , 0xffff, 0x61ff, 0x000},
-	{d68000_btst_r       , 0xf1c0, 0x0100, 0xbff},
-	{d68000_btst_s       , 0xffc0, 0x0800, 0xbfb},
-	{d68020_callm        , 0xffc0, 0x06c0, 0x27b},
-	{d68020_cas_8        , 0xffc0, 0x0ac0, 0x3f8},
-	{d68020_cas_16       , 0xffc0, 0x0cc0, 0x3f8},
-	{d68020_cas_32       , 0xffc0, 0x0ec0, 0x3f8},
-	{d68020_cas2_16      , 0xffff, 0x0cfc, 0x000},
-	{d68020_cas2_32      , 0xffff, 0x0efc, 0x000},
-	{d68000_chk_16       , 0xf1c0, 0x4180, 0xbff},
-	{d68020_chk_32       , 0xf1c0, 0x4100, 0xbff},
-	{d68020_chk2_cmp2_8  , 0xffc0, 0x00c0, 0x27b},
-	{d68020_chk2_cmp2_16 , 0xffc0, 0x02c0, 0x27b},
-	{d68020_chk2_cmp2_32 , 0xffc0, 0x04c0, 0x27b},
-	{d68040_cinv         , 0xff20, 0xf400, 0x000},
-	{d68000_clr_8        , 0xffc0, 0x4200, 0xbf8},
-	{d68000_clr_16       , 0xffc0, 0x4240, 0xbf8},
-	{d68000_clr_32       , 0xffc0, 0x4280, 0xbf8},
-	{d68000_cmp_8        , 0xf1c0, 0xb000, 0xbff},
-	{d68000_cmp_16       , 0xf1c0, 0xb040, 0xfff},
-	{d68000_cmp_32       , 0xf1c0, 0xb080, 0xfff},
-	{d68000_cmpa_16      , 0xf1c0, 0xb0c0, 0xfff},
-	{d68000_cmpa_32      , 0xf1c0, 0xb1c0, 0xfff},
-	{d68000_cmpi_8       , 0xffc0, 0x0c00, 0xbf8},
-	{d68020_cmpi_pcdi_8  , 0xffff, 0x0c3a, 0x000},
-	{d68020_cmpi_pcix_8  , 0xffff, 0x0c3b, 0x000},
-	{d68000_cmpi_16      , 0xffc0, 0x0c40, 0xbf8},
-	{d68020_cmpi_pcdi_16 , 0xffff, 0x0c7a, 0x000},
-	{d68020_cmpi_pcix_16 , 0xffff, 0x0c7b, 0x000},
-	{d68000_cmpi_32      , 0xffc0, 0x0c80, 0xbf8},
-	{d68020_cmpi_pcdi_32 , 0xffff, 0x0cba, 0x000},
-	{d68020_cmpi_pcix_32 , 0xffff, 0x0cbb, 0x000},
-	{d68000_cmpm_8       , 0xf1f8, 0xb108, 0x000},
-	{d68000_cmpm_16      , 0xf1f8, 0xb148, 0x000},
-	{d68000_cmpm_32      , 0xf1f8, 0xb188, 0x000},
-	{d68020_cpbcc_16     , 0xf1c0, 0xf080, 0x000},
-	{d68020_cpbcc_32     , 0xf1c0, 0xf0c0, 0x000},
-	{d68020_cpdbcc       , 0xf1f8, 0xf048, 0x000},
-	{d68020_cpgen        , 0xf1c0, 0xf000, 0x000},
-	{d68020_cprestore    , 0xf1c0, 0xf140, 0x37f},
-	{d68020_cpsave       , 0xf1c0, 0xf100, 0x2f8},
-	{d68020_cpscc        , 0xf1c0, 0xf040, 0xbf8},
-	{d68020_cptrapcc_0   , 0xf1ff, 0xf07c, 0x000},
-	{d68020_cptrapcc_16  , 0xf1ff, 0xf07a, 0x000},
-	{d68020_cptrapcc_32  , 0xf1ff, 0xf07b, 0x000},
-	{d68040_cpush        , 0xff20, 0xf420, 0x000},
-	{d68000_dbcc         , 0xf0f8, 0x50c8, 0x000},
-	{d68000_dbra         , 0xfff8, 0x51c8, 0x000},
-	{d68000_divs         , 0xf1c0, 0x81c0, 0xbff},
-	{d68000_divu         , 0xf1c0, 0x80c0, 0xbff},
-	{d68020_divl         , 0xffc0, 0x4c40, 0xbff},
-	{d68000_eor_8        , 0xf1c0, 0xb100, 0xbf8},
-	{d68000_eor_16       , 0xf1c0, 0xb140, 0xbf8},
-	{d68000_eor_32       , 0xf1c0, 0xb180, 0xbf8},
-	{d68000_eori_to_ccr  , 0xffff, 0x0a3c, 0x000},
-	{d68000_eori_to_sr   , 0xffff, 0x0a7c, 0x000},
-	{d68000_eori_8       , 0xffc0, 0x0a00, 0xbf8},
-	{d68000_eori_16      , 0xffc0, 0x0a40, 0xbf8},
-	{d68000_eori_32      , 0xffc0, 0x0a80, 0xbf8},
-	{d68000_exg_dd       , 0xf1f8, 0xc140, 0x000},
-	{d68000_exg_aa       , 0xf1f8, 0xc148, 0x000},
-	{d68000_exg_da       , 0xf1f8, 0xc188, 0x000},
-	{d68020_extb_32      , 0xfff8, 0x49c0, 0x000},
-	{d68000_ext_16       , 0xfff8, 0x4880, 0x000},
-	{d68000_ext_32       , 0xfff8, 0x48c0, 0x000},
-	{d68000_illegal      , 0xffff, 0x4afc, 0x000},
-	{d68000_jmp          , 0xffc0, 0x4ec0, 0x27b},
-	{d68000_jsr          , 0xffc0, 0x4e80, 0x27b},
-	{d68000_lea          , 0xf1c0, 0x41c0, 0x27b},
-	{d68000_link_16      , 0xfff8, 0x4e50, 0x000},
-	{d68020_link_32      , 0xfff8, 0x4808, 0x000},
-	{d68000_lsr_s_8      , 0xf1f8, 0xe008, 0x000},
-	{d68000_lsr_s_16     , 0xf1f8, 0xe048, 0x000},
-	{d68000_lsr_s_32     , 0xf1f8, 0xe088, 0x000},
-	{d68000_lsr_r_8      , 0xf1f8, 0xe028, 0x000},
-	{d68000_lsr_r_16     , 0xf1f8, 0xe068, 0x000},
-	{d68000_lsr_r_32     , 0xf1f8, 0xe0a8, 0x000},
-	{d68000_lsr_ea       , 0xffc0, 0xe2c0, 0x3f8},
-	{d68000_lsl_s_8      , 0xf1f8, 0xe108, 0x000},
-	{d68000_lsl_s_16     , 0xf1f8, 0xe148, 0x000},
-	{d68000_lsl_s_32     , 0xf1f8, 0xe188, 0x000},
-	{d68000_lsl_r_8      , 0xf1f8, 0xe128, 0x000},
-	{d68000_lsl_r_16     , 0xf1f8, 0xe168, 0x000},
-	{d68000_lsl_r_32     , 0xf1f8, 0xe1a8, 0x000},
-	{d68000_lsl_ea       , 0xffc0, 0xe3c0, 0x3f8},
-	{d68000_move_8       , 0xf000, 0x1000, 0xbff},
-	{d68000_move_16      , 0xf000, 0x3000, 0xfff},
-	{d68000_move_32      , 0xf000, 0x2000, 0xfff},
-	{d68000_movea_16     , 0xf1c0, 0x3040, 0xfff},
-	{d68000_movea_32     , 0xf1c0, 0x2040, 0xfff},
-	{d68000_move_to_ccr  , 0xffc0, 0x44c0, 0xbff},
-	{d68010_move_fr_ccr  , 0xffc0, 0x42c0, 0xbf8},
-	{d68000_move_to_sr   , 0xffc0, 0x46c0, 0xbff},
-	{d68000_move_fr_sr   , 0xffc0, 0x40c0, 0xbf8},
-	{d68000_move_to_usp  , 0xfff8, 0x4e60, 0x000},
-	{d68000_move_fr_usp  , 0xfff8, 0x4e68, 0x000},
-	{d68010_movec        , 0xfffe, 0x4e7a, 0x000},
-	{d68000_movem_pd_16  , 0xfff8, 0x48a0, 0x000},
-	{d68000_movem_pd_32  , 0xfff8, 0x48e0, 0x000},
-	{d68000_movem_re_16  , 0xffc0, 0x4880, 0x2f8},
-	{d68000_movem_re_32  , 0xffc0, 0x48c0, 0x2f8},
-	{d68000_movem_er_16  , 0xffc0, 0x4c80, 0x37b},
-	{d68000_movem_er_32  , 0xffc0, 0x4cc0, 0x37b},
-	{d68000_movep_er_16  , 0xf1f8, 0x0108, 0x000},
-	{d68000_movep_er_32  , 0xf1f8, 0x0148, 0x000},
-	{d68000_movep_re_16  , 0xf1f8, 0x0188, 0x000},
-	{d68000_movep_re_32  , 0xf1f8, 0x01c8, 0x000},
-	{d68010_moves_8      , 0xffc0, 0x0e00, 0x3f8},
-	{d68010_moves_16     , 0xffc0, 0x0e40, 0x3f8},
-	{d68010_moves_32     , 0xffc0, 0x0e80, 0x3f8},
-	{d68000_moveq        , 0xf100, 0x7000, 0x000},
-	{d68040_move16_pi_pi , 0xfff8, 0xf620, 0x000},
-	{d68040_move16_pi_al , 0xfff8, 0xf600, 0x000},
-	{d68040_move16_al_pi , 0xfff8, 0xf608, 0x000},
-	{d68040_move16_ai_al , 0xfff8, 0xf610, 0x000},
-	{d68040_move16_al_ai , 0xfff8, 0xf618, 0x000},
-	{d68000_muls         , 0xf1c0, 0xc1c0, 0xbff},
-	{d68000_mulu         , 0xf1c0, 0xc0c0, 0xbff},
-	{d68020_mull         , 0xffc0, 0x4c00, 0xbff},
-	{d68000_nbcd         , 0xffc0, 0x4800, 0xbf8},
-	{d68000_neg_8        , 0xffc0, 0x4400, 0xbf8},
-	{d68000_neg_16       , 0xffc0, 0x4440, 0xbf8},
-	{d68000_neg_32       , 0xffc0, 0x4480, 0xbf8},
-	{d68000_negx_8       , 0xffc0, 0x4000, 0xbf8},
-	{d68000_negx_16      , 0xffc0, 0x4040, 0xbf8},
-	{d68000_negx_32      , 0xffc0, 0x4080, 0xbf8},
-	{d68000_nop          , 0xffff, 0x4e71, 0x000},
-	{d68000_not_8        , 0xffc0, 0x4600, 0xbf8},
-	{d68000_not_16       , 0xffc0, 0x4640, 0xbf8},
-	{d68000_not_32       , 0xffc0, 0x4680, 0xbf8},
-	{d68000_or_er_8      , 0xf1c0, 0x8000, 0xbff},
-	{d68000_or_er_16     , 0xf1c0, 0x8040, 0xbff},
-	{d68000_or_er_32     , 0xf1c0, 0x8080, 0xbff},
-	{d68000_or_re_8      , 0xf1c0, 0x8100, 0x3f8},
-	{d68000_or_re_16     , 0xf1c0, 0x8140, 0x3f8},
-	{d68000_or_re_32     , 0xf1c0, 0x8180, 0x3f8},
-	{d68000_ori_to_ccr   , 0xffff, 0x003c, 0x000},
-	{d68000_ori_to_sr    , 0xffff, 0x007c, 0x000},
-	{d68000_ori_8        , 0xffc0, 0x0000, 0xbf8},
-	{d68000_ori_16       , 0xffc0, 0x0040, 0xbf8},
-	{d68000_ori_32       , 0xffc0, 0x0080, 0xbf8},
-	{d68020_pack_rr      , 0xf1f8, 0x8140, 0x000},
-	{d68020_pack_mm      , 0xf1f8, 0x8148, 0x000},
-	{d68000_pea          , 0xffc0, 0x4840, 0x27b},
-	{d68000_reset        , 0xffff, 0x4e70, 0x000},
-	{d68000_ror_s_8      , 0xf1f8, 0xe018, 0x000},
-	{d68000_ror_s_16     , 0xf1f8, 0xe058, 0x000},
-	{d68000_ror_s_32     , 0xf1f8, 0xe098, 0x000},
-	{d68000_ror_r_8      , 0xf1f8, 0xe038, 0x000},
-	{d68000_ror_r_16     , 0xf1f8, 0xe078, 0x000},
-	{d68000_ror_r_32     , 0xf1f8, 0xe0b8, 0x000},
-	{d68000_ror_ea       , 0xffc0, 0xe6c0, 0x3f8},
-	{d68000_rol_s_8      , 0xf1f8, 0xe118, 0x000},
-	{d68000_rol_s_16     , 0xf1f8, 0xe158, 0x000},
-	{d68000_rol_s_32     , 0xf1f8, 0xe198, 0x000},
-	{d68000_rol_r_8      , 0xf1f8, 0xe138, 0x000},
-	{d68000_rol_r_16     , 0xf1f8, 0xe178, 0x000},
-	{d68000_rol_r_32     , 0xf1f8, 0xe1b8, 0x000},
-	{d68000_rol_ea       , 0xffc0, 0xe7c0, 0x3f8},
-	{d68000_roxr_s_8     , 0xf1f8, 0xe010, 0x000},
-	{d68000_roxr_s_16    , 0xf1f8, 0xe050, 0x000},
-	{d68000_roxr_s_32    , 0xf1f8, 0xe090, 0x000},
-	{d68000_roxr_r_8     , 0xf1f8, 0xe030, 0x000},
-	{d68000_roxr_r_16    , 0xf1f8, 0xe070, 0x000},
-	{d68000_roxr_r_32    , 0xf1f8, 0xe0b0, 0x000},
-	{d68000_roxr_ea      , 0xffc0, 0xe4c0, 0x3f8},
-	{d68000_roxl_s_8     , 0xf1f8, 0xe110, 0x000},
-	{d68000_roxl_s_16    , 0xf1f8, 0xe150, 0x000},
-	{d68000_roxl_s_32    , 0xf1f8, 0xe190, 0x000},
-	{d68000_roxl_r_8     , 0xf1f8, 0xe130, 0x000},
-	{d68000_roxl_r_16    , 0xf1f8, 0xe170, 0x000},
-	{d68000_roxl_r_32    , 0xf1f8, 0xe1b0, 0x000},
-	{d68000_roxl_ea      , 0xffc0, 0xe5c0, 0x3f8},
-	{d68010_rtd          , 0xffff, 0x4e74, 0x000},
-	{d68000_rte          , 0xffff, 0x4e73, 0x000},
-	{d68020_rtm          , 0xfff0, 0x06c0, 0x000},
-	{d68000_rtr          , 0xffff, 0x4e77, 0x000},
-	{d68000_rts          , 0xffff, 0x4e75, 0x000},
-	{d68000_sbcd_rr      , 0xf1f8, 0x8100, 0x000},
-	{d68000_sbcd_mm      , 0xf1f8, 0x8108, 0x000},
-	{d68000_scc          , 0xf0c0, 0x50c0, 0xbf8},
-	{d68000_stop         , 0xffff, 0x4e72, 0x000},
-	{d68000_sub_er_8     , 0xf1c0, 0x9000, 0xbff},
-	{d68000_sub_er_16    , 0xf1c0, 0x9040, 0xfff},
-	{d68000_sub_er_32    , 0xf1c0, 0x9080, 0xfff},
-	{d68000_sub_re_8     , 0xf1c0, 0x9100, 0x3f8},
-	{d68000_sub_re_16    , 0xf1c0, 0x9140, 0x3f8},
-	{d68000_sub_re_32    , 0xf1c0, 0x9180, 0x3f8},
-	{d68000_suba_16      , 0xf1c0, 0x90c0, 0xfff},
-	{d68000_suba_32      , 0xf1c0, 0x91c0, 0xfff},
-	{d68000_subi_8       , 0xffc0, 0x0400, 0xbf8},
-	{d68000_subi_16      , 0xffc0, 0x0440, 0xbf8},
-	{d68000_subi_32      , 0xffc0, 0x0480, 0xbf8},
-	{d68000_subq_8       , 0xf1c0, 0x5100, 0xbf8},
-	{d68000_subq_16      , 0xf1c0, 0x5140, 0xff8},
-	{d68000_subq_32      , 0xf1c0, 0x5180, 0xff8},
-	{d68000_subx_rr_8    , 0xf1f8, 0x9100, 0x000},
-	{d68000_subx_rr_16   , 0xf1f8, 0x9140, 0x000},
-	{d68000_subx_rr_32   , 0xf1f8, 0x9180, 0x000},
-	{d68000_subx_mm_8    , 0xf1f8, 0x9108, 0x000},
-	{d68000_subx_mm_16   , 0xf1f8, 0x9148, 0x000},
-	{d68000_subx_mm_32   , 0xf1f8, 0x9188, 0x000},
-	{d68000_swap         , 0xfff8, 0x4840, 0x000},
-	{d68000_tas          , 0xffc0, 0x4ac0, 0xbf8},
-	{d68000_trap         , 0xfff0, 0x4e40, 0x000},
-	{d68020_trapcc_0     , 0xf0ff, 0x50fc, 0x000},
-	{d68020_trapcc_16    , 0xf0ff, 0x50fa, 0x000},
-	{d68020_trapcc_32    , 0xf0ff, 0x50fb, 0x000},
-	{d68000_trapv        , 0xffff, 0x4e76, 0x000},
-	{d68000_tst_8        , 0xffc0, 0x4a00, 0xbf8},
-	{d68020_tst_pcdi_8   , 0xffff, 0x4a3a, 0x000},
-	{d68020_tst_pcix_8   , 0xffff, 0x4a3b, 0x000},
-	{d68020_tst_i_8      , 0xffff, 0x4a3c, 0x000},
-	{d68000_tst_16       , 0xffc0, 0x4a40, 0xbf8},
-	{d68020_tst_a_16     , 0xfff8, 0x4a48, 0x000},
-	{d68020_tst_pcdi_16  , 0xffff, 0x4a7a, 0x000},
-	{d68020_tst_pcix_16  , 0xffff, 0x4a7b, 0x000},
-	{d68020_tst_i_16     , 0xffff, 0x4a7c, 0x000},
-	{d68000_tst_32       , 0xffc0, 0x4a80, 0xbf8},
-	{d68020_tst_a_32     , 0xfff8, 0x4a88, 0x000},
-	{d68020_tst_pcdi_32  , 0xffff, 0x4aba, 0x000},
-	{d68020_tst_pcix_32  , 0xffff, 0x4abb, 0x000},
-	{d68020_tst_i_32     , 0xffff, 0x4abc, 0x000},
-	{d68000_unlk         , 0xfff8, 0x4e58, 0x000},
-	{d68020_unpk_rr      , 0xf1f8, 0x8180, 0x000},
-	{d68020_unpk_mm      , 0xf1f8, 0x8188, 0x000},
-	{0, 0, 0, 0}
-};
+	int size = g_size_select_table[op->size];
 
-/* Check if opcode is using a valid ea mode */
-static int valid_ea(uint opcode, uint mask)
-{
-	if(mask == 0)
-		return 1;
-
-	switch(opcode & 0x3f)
-	{
-		case 0x00: case 0x01: case 0x02: case 0x03:
-		case 0x04: case 0x05: case 0x06: case 0x07:
-			return (mask & 0x800) != 0;
-		case 0x08: case 0x09: case 0x0a: case 0x0b:
-		case 0x0c: case 0x0d: case 0x0e: case 0x0f:
-			return (mask & 0x400) != 0;
-		case 0x10: case 0x11: case 0x12: case 0x13:
-		case 0x14: case 0x15: case 0x16: case 0x17:
-			return (mask & 0x200) != 0;
-		case 0x18: case 0x19: case 0x1a: case 0x1b:
-		case 0x1c: case 0x1d: case 0x1e: case 0x1f:
-			return (mask & 0x100) != 0;
-		case 0x20: case 0x21: case 0x22: case 0x23:
-		case 0x24: case 0x25: case 0x26: case 0x27:
-			return (mask & 0x080) != 0;
-		case 0x28: case 0x29: case 0x2a: case 0x2b:
-		case 0x2c: case 0x2d: case 0x2e: case 0x2f:
-			return (mask & 0x040) != 0;
-		case 0x30: case 0x31: case 0x32: case 0x33:
-		case 0x34: case 0x35: case 0x36: case 0x37:
-			return (mask & 0x020) != 0;
-		case 0x38:
-			return (mask & 0x010) != 0;
-		case 0x39:
-			return (mask & 0x008) != 0;
-		case 0x3a:
-			return (mask & 0x002) != 0;
-		case 0x3b:
-			return (mask & 0x001) != 0;
-		case 0x3c:
-			return (mask & 0x004) != 0;
-	}
-	return 0;
-
-}
-
-/* Used by qsort */
-static int DECL_SPEC compare_nof_true_bits(const void *aptr, const void *bptr)
-{
-	uint a = ((const opcode_struct*)aptr)->mask;
-	uint b = ((const opcode_struct*)bptr)->mask;
-
-	a = ((a & 0xAAAA) >> 1) + (a & 0x5555);
-	a = ((a & 0xCCCC) >> 2) + (a & 0x3333);
-	a = ((a & 0xF0F0) >> 4) + (a & 0x0F0F);
-	a = ((a & 0xFF00) >> 8) + (a & 0x00FF);
-
-	b = ((b & 0xAAAA) >> 1) + (b & 0x5555);
-	b = ((b & 0xCCCC) >> 2) + (b & 0x3333);
-	b = ((b & 0xF0F0) >> 4) + (b & 0x0F0F);
-	b = ((b & 0xFF00) >> 8) + (b & 0x00FF);
-
-	return b - a; /* reversed to get greatest to least sorting */
-}
-
-/* build the opcode handler jump table */
-static void build_opcode_table(void)
-{
-	uint i;
-	uint opcode;
-	opcode_struct* ostruct;
-	uint opcode_info_length = 0;
-
-	for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++)
-		opcode_info_length++;
-
-	qsort((void *)g_opcode_info, opcode_info_length, sizeof(g_opcode_info[0]), compare_nof_true_bits);
-
-	for(i=0;i<0x10000;i++)
-	{
-		g_instruction_table[i] = d68000_illegal; /* default to illegal */
-		opcode = i;
-		/* search through opcode info for a match */
-		for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++)
-		{
-			/* match opcode mask and allowed ea modes */
-			if((opcode & ostruct->mask) == ostruct->match)
-			{
-				/* Handle destination ea for move instructions */
-				if((ostruct->opcode_handler == d68000_move_8 ||
-					 ostruct->opcode_handler == d68000_move_16 ||
-					 ostruct->opcode_handler == d68000_move_32) &&
-					 !valid_ea(((opcode>>9)&7) | ((opcode>>3)&0x38), 0xbf8))
-						continue;
-				if(valid_ea(opcode, ostruct->ea_mask))
-				{
-					g_instruction_table[i] = ostruct->opcode_handler;
-					break;
-				}
-			}
-		}
-	}
-}
-
-
-
-/* ======================================================================== */
-/* ================================= API ================================== */
-/* ======================================================================== */
-
-/* Disasemble one instruction at pc and store in str_buff */
-unsigned int m68k_disassemble(char* str_buff, unsigned int pc, unsigned int cpu_type)
-{
-	if(!g_initialized)
-	{
-		build_opcode_table();
-		g_initialized = 1;
-	}
-	switch(cpu_type)
-	{
-		case M68K_CPU_TYPE_68000:
-			g_cpu_type = TYPE_68000;
-			g_address_mask = 0x00ffffff;
-			break;
-		case M68K_CPU_TYPE_68008:
-			g_cpu_type = TYPE_68008;
-			g_address_mask = 0x003fffff;
-			break;
-		case M68K_CPU_TYPE_68010:
-			g_cpu_type = TYPE_68010;
-			g_address_mask = 0x00ffffff;
-			break;
-		case M68K_CPU_TYPE_68EC020:
-			g_cpu_type = TYPE_68020;
-			g_address_mask = 0x00ffffff;
-			break;
-		case M68K_CPU_TYPE_68020:
-			g_cpu_type = TYPE_68020;
-			g_address_mask = 0xffffffff;
-			break;
-		case M68K_CPU_TYPE_68030:
-			g_cpu_type = TYPE_68030;
-			g_address_mask = 0xffffffff;
-			break;
-		case M68K_CPU_TYPE_68040:
-			g_cpu_type = TYPE_68040;
-			g_address_mask = 0xffffffff;
-			break;
-		default:
-			return 0;
-	}
-
-	g_cpu_pc = pc;
-	g_helper_str[0] = 0;
-	g_cpu_ir = read_imm_16();
-	g_opcode_type = 0;
-	g_instruction_table[g_cpu_ir]();
-	sprintf(str_buff, "%s%s", g_dasm_str, g_helper_str);
-	return COMBINE_OPCODE_FLAGS(g_cpu_pc - pc);
-}
-
-char* m68ki_disassemble_quick(unsigned int pc, unsigned int cpu_type)
-{
-	static char buff[100];
-	buff[0] = 0;
-	m68k_disassemble(buff, pc, cpu_type);
-	return buff;
-}
-
-/* Check if the instruction is a valid one */
-unsigned int m68k_is_valid_instruction(unsigned int instruction, unsigned int cpu_type)
-{
-	if(!g_initialized)
-	{
-		build_opcode_table();
-		g_initialized = 1;
-	}
-
-	instruction &= 0xffff;
-	if(g_instruction_table[instruction] == d68000_illegal)
+	if(op->cpus[cpu_type] == '.')
 		return 0;
 
-	switch(cpu_type)
+	if(cpu_type < CPU_TYPE_020)
 	{
-		case M68K_CPU_TYPE_68000:
-		case M68K_CPU_TYPE_68008:
-			if(g_instruction_table[instruction] == d68010_bkpt)
-				return 0;
-			if(g_instruction_table[instruction] == d68010_move_fr_ccr)
-				return 0;
-			if(g_instruction_table[instruction] == d68010_movec)
-				return 0;
-			if(g_instruction_table[instruction] == d68010_moves_8)
-				return 0;
-			if(g_instruction_table[instruction] == d68010_moves_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68010_moves_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68010_rtd)
-				return 0;
-		case M68K_CPU_TYPE_68010:
-			if(g_instruction_table[instruction] == d68020_bcc_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_bfchg)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_bfclr)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_bfexts)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_bfextu)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_bfffo)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_bfins)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_bfset)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_bftst)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_bra_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_bsr_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_callm)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cas_8)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cas_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cas_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cas2_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cas2_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_chk_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_chk2_cmp2_8)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_chk2_cmp2_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_chk2_cmp2_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cmpi_pcdi_8)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cmpi_pcix_8)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cmpi_pcdi_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cmpi_pcix_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cmpi_pcdi_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cmpi_pcix_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cpbcc_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cpbcc_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cpdbcc)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cpgen)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cprestore)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cpsave)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cpscc)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cptrapcc_0)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cptrapcc_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_cptrapcc_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_divl)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_extb_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_link_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_mull)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_pack_rr)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_pack_mm)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_rtm)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_trapcc_0)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_trapcc_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_trapcc_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_pcdi_8)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_pcix_8)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_i_8)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_a_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_pcdi_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_pcix_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_i_16)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_a_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_pcdi_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_pcix_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_tst_i_32)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_unpk_rr)
-				return 0;
-			if(g_instruction_table[instruction] == d68020_unpk_mm)
-				return 0;
-		case M68K_CPU_TYPE_68EC020:
-		case M68K_CPU_TYPE_68020:
-		case M68K_CPU_TYPE_68030:
-			if(g_instruction_table[instruction] == d68040_cinv)
-				return 0;
-			if(g_instruction_table[instruction] == d68040_cpush)
-				return 0;
-			if(g_instruction_table[instruction] == d68040_move16_pi_pi)
-				return 0;
-			if(g_instruction_table[instruction] == d68040_move16_pi_al)
-				return 0;
-			if(g_instruction_table[instruction] == d68040_move16_al_pi)
-				return 0;
-			if(g_instruction_table[instruction] == d68040_move16_ai_al)
-				return 0;
-			if(g_instruction_table[instruction] == d68040_move16_al_ai)
-				return 0;
+		if(cpu_type == CPU_TYPE_010)
+		{
+			if(strcmp(op->name, "moves") == 0)
+				return op->cycles[cpu_type] + g_moves_cycle_table[ea_mode][size];
+			if(strcmp(op->name, "clr") == 0)
+				return op->cycles[cpu_type] + g_clr_cycle_table[ea_mode][size];
+		}
+
+		/* ASG: added these cases -- immediate modes take 2 extra cycles here */
+		/* SV: but only when operating on long, and also on register direct mode */
+		if(cpu_type == CPU_TYPE_000 && (ea_mode == EA_MODE_I || ea_mode == EA_MODE_NONE) && op->size == 32 &&
+		   ((strcmp(op->name, "add") == 0 && strcmp(op->spec_proc, "er") == 0) ||
+			strcmp(op->name, "adda")   == 0                                    ||
+			(strcmp(op->name, "and") == 0 && strcmp(op->spec_proc, "er") == 0) ||
+			(strcmp(op->name, "or") == 0 && strcmp(op->spec_proc, "er") == 0)  ||
+			(strcmp(op->name, "sub") == 0 && strcmp(op->spec_proc, "er") == 0) ||
+			strcmp(op->name, "suba")   == 0))
+			return op->cycles[cpu_type] + g_ea_cycle_table[ea_mode][cpu_type][size] + 2;
+
+		if(strcmp(op->name, "jmp") == 0)
+			return op->cycles[cpu_type] + g_jmp_cycle_table[ea_mode];
+		if(strcmp(op->name, "jsr") == 0)
+			return op->cycles[cpu_type] + g_jsr_cycle_table[ea_mode];
+		if(strcmp(op->name, "lea") == 0)
+			return op->cycles[cpu_type] + g_lea_cycle_table[ea_mode];
+		if(strcmp(op->name, "pea") == 0)
+			return op->cycles[cpu_type] + g_pea_cycle_table[ea_mode];
+		if(strcmp(op->name, "movem") == 0)
+			return op->cycles[cpu_type] + g_movem_cycle_table[ea_mode];
 	}
-	if(cpu_type != M68K_CPU_TYPE_68020 && cpu_type != M68K_CPU_TYPE_68EC020 &&
-	  (g_instruction_table[instruction] == d68020_callm ||
-	  g_instruction_table[instruction] == d68020_rtm))
+	return op->cycles[cpu_type] + g_ea_cycle_table[ea_mode][cpu_type][size];
+}
+
+/* Find an opcode in the opcode handler list */
+opcode_struct* find_opcode(char* name, int size, char* spec_proc, char* spec_ea)
+{
+	opcode_struct* op;
+
+
+	for(op = g_opcode_input_table;op->name != NULL;op++)
+	{
+		if(	strcmp(name, op->name) == 0 &&
+			(size == op->size) &&
+			strcmp(spec_proc, op->spec_proc) == 0 &&
+			strcmp(spec_ea, op->spec_ea) == 0)
+				return op;
+	}
+	return NULL;
+}
+
+/* Specifically find the illegal opcode in the list */
+opcode_struct* find_illegal_opcode(void)
+{
+	opcode_struct* op;
+
+	for(op = g_opcode_input_table;op->name != NULL;op++)
+	{
+		if(strcmp(op->name, "illegal") == 0)
+			return op;
+	}
+	return NULL;
+}
+
+/* Parse an opcode handler name */
+int extract_opcode_info(char* src, char* name, int* size, char* spec_proc, char* spec_ea)
+{
+	char* ptr = strstr(src, ID_OPHANDLER_NAME);
+
+	if(ptr == NULL)
 		return 0;
+
+	ptr += strlen(ID_OPHANDLER_NAME) + 1;
+
+	ptr += check_strcncpy(name, ptr, ',', MAX_NAME_LENGTH);
+	if(*ptr != ',') return 0;
+	ptr++;
+	ptr += skip_spaces(ptr);
+
+	*size = atoi(ptr);
+	ptr = strstr(ptr, ",");
+	if(ptr == NULL) return 0;
+    ptr++;
+	ptr += skip_spaces(ptr);
+
+	ptr += check_strcncpy(spec_proc, ptr, ',', MAX_SPEC_PROC_LENGTH);
+	if(*ptr != ',') return 0;
+	ptr++;
+	ptr += skip_spaces(ptr);
+
+	ptr += check_strcncpy(spec_ea, ptr, ')', MAX_SPEC_EA_LENGTH);
+	if(*ptr != ')') return 0;
+	ptr++;
+	ptr += skip_spaces(ptr);
 
 	return 1;
+}
+
+
+/* Add a search/replace pair to a replace structure */
+void add_replace_string(replace_struct* replace, const char* search_str, const char* replace_str)
+{
+	if(replace->length >= MAX_REPLACE_LENGTH)
+		error_exit("overflow in replace structure");
+
+	strcpy(replace->replace[replace->length][0], search_str);
+	strcpy(replace->replace[replace->length++][1], replace_str);
+}
+
+/* Write a function body while replacing any selected strings */
+void write_body(FILE* filep, body_struct* body, replace_struct* replace)
+{
+	int i;
+	int j;
+	char* ptr;
+	char output[MAX_LINE_LENGTH+1];
+	char temp_buff[MAX_LINE_LENGTH+1];
+	int found;
+
+	for(i=0;i<body->length;i++)
+	{
+		strcpy(output, body->body[i]);
+		/* Check for the base directive header */
+		if(strstr(output, ID_BASE) != NULL)
+		{
+			/* Search for any text we need to replace */
+			found = 0;
+			for(j=0;j<replace->length;j++)
+			{
+				ptr = strstr(output, replace->replace[j][0]);
+				if(ptr)
+				{
+					/* We found something to replace */
+					found = 1;
+					strcpy(temp_buff, ptr+strlen(replace->replace[j][0]));
+					strcpy(ptr, replace->replace[j][1]);
+					strcat(ptr, temp_buff);
+				}
+			}
+			/* Found a directive with no matching replace string */
+			if(!found)
+				error_exit("Unknown " ID_BASE " directive");
+		}
+		fprintf(filep, "%s\n", output);
+	}
+	fprintf(filep, "\n\n");
+}
+
+/* Generate a base function name from an opcode struct */
+void get_base_name(char* base_name, opcode_struct* op)
+{
+	sprintf(base_name, "m68k_op_%s", op->name);
+	if(op->size > 0)
+		sprintf(base_name+strlen(base_name), "_%d", op->size);
+	if(strcmp(op->spec_proc, UNSPECIFIED) != 0)
+		sprintf(base_name+strlen(base_name), "_%s", op->spec_proc);
+	if(strcmp(op->spec_ea, UNSPECIFIED) != 0)
+		sprintf(base_name+strlen(base_name), "_%s", op->spec_ea);
+}
+
+/* Write the name of an opcode handler function */
+void write_function_name(FILE* filep, char* base_name)
+{
+	fprintf(filep, "static void %s(void)\n", base_name);
+}
+
+void add_opcode_output_table_entry(opcode_struct* op, char* name)
+{
+	opcode_struct* ptr;
+	if(g_opcode_output_table_length > MAX_OPCODE_OUTPUT_TABLE_LENGTH)
+		error_exit("Opcode output table overflow");
+
+	ptr = g_opcode_output_table + g_opcode_output_table_length++;
+
+	*ptr = *op;
+	strcpy(ptr->name, name);
+	ptr->bits = num_bits(ptr->op_mask);
+}
+
+/*
+ * Comparison function for qsort()
+ * For entries with an equal number of set bits in
+ * the mask compare the match values
+ */
+static int DECL_SPEC compare_nof_true_bits(const void* aptr, const void* bptr)
+{
+	const opcode_struct *a = aptr, *b = bptr;
+	if(a->bits != b->bits)
+		return a->bits - b->bits;
+	if(a->op_mask != b->op_mask)
+		return a->op_mask - b->op_mask;
+	return a->op_match - b->op_match;
+}
+
+void print_opcode_output_table(FILE* filep)
+{
+	int i;
+	qsort((void *)g_opcode_output_table, g_opcode_output_table_length, sizeof(g_opcode_output_table[0]), compare_nof_true_bits);
+
+	for(i=0;i<g_opcode_output_table_length;i++)
+		write_table_entry(filep, g_opcode_output_table+i);
+}
+
+/* Write an entry in the opcode handler table */
+void write_table_entry(FILE* filep, opcode_struct* op)
+{
+	int i;
+
+	fprintf(filep, "\t{%-28s, 0x%04x, 0x%04x, {",
+		op->name, op->op_mask, op->op_match);
+
+	for(i=0;i<NUM_CPUS;i++)
+	{
+		fprintf(filep, "%3d", op->cycles[i]);
+		if(i < NUM_CPUS-1)
+			fprintf(filep, ", ");
+	}
+
+	fprintf(filep, "}},\n");
+}
+
+/* Fill out an opcode struct with a specific addressing mode of the source opcode struct */
+void set_opcode_struct(opcode_struct* src, opcode_struct* dst, int ea_mode)
+{
+	int i;
+
+	*dst = *src;
+
+	for(i=0;i<NUM_CPUS;i++)
+		dst->cycles[i] = get_oper_cycles(dst, ea_mode, i);
+	if(strcmp(dst->spec_ea, UNSPECIFIED) == 0 && ea_mode != EA_MODE_NONE)
+		sprintf(dst->spec_ea, "%s", g_ea_info_table[ea_mode].fname_add);
+	dst->op_mask |= g_ea_info_table[ea_mode].mask_add;
+	dst->op_match |= g_ea_info_table[ea_mode].match_add;
+}
+
+
+/* Generate a final opcode handler from the provided data */
+void generate_opcode_handler(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* opinfo, int ea_mode)
+{
+	char str[MAX_LINE_LENGTH+1];
+	opcode_struct* op = malloc(sizeof(opcode_struct));
+
+	/* Set the opcode structure and write the tables, prototypes, etc */
+	set_opcode_struct(opinfo, op, ea_mode);
+	get_base_name(str, op);
+	add_opcode_output_table_entry(op, str);
+	write_function_name(filep, str);
+
+	/* Add any replace strings needed */
+	if(ea_mode != EA_MODE_NONE)
+	{
+		sprintf(str, "EA_%s_8()", g_ea_info_table[ea_mode].ea_add);
+		add_replace_string(replace, ID_OPHANDLER_EA_AY_8, str);
+		sprintf(str, "EA_%s_16()", g_ea_info_table[ea_mode].ea_add);
+		add_replace_string(replace, ID_OPHANDLER_EA_AY_16, str);
+		sprintf(str, "EA_%s_32()", g_ea_info_table[ea_mode].ea_add);
+		add_replace_string(replace, ID_OPHANDLER_EA_AY_32, str);
+		sprintf(str, "OPER_%s_8()", g_ea_info_table[ea_mode].ea_add);
+		add_replace_string(replace, ID_OPHANDLER_OPER_AY_8, str);
+		sprintf(str, "OPER_%s_16()", g_ea_info_table[ea_mode].ea_add);
+		add_replace_string(replace, ID_OPHANDLER_OPER_AY_16, str);
+		sprintf(str, "OPER_%s_32()", g_ea_info_table[ea_mode].ea_add);
+		add_replace_string(replace, ID_OPHANDLER_OPER_AY_32, str);
+	}
+
+	/* Now write the function body with the selected replace strings */
+	write_body(filep, body, replace);
+	g_num_functions++;
+	free(op);
+}
+
+/* Generate opcode variants based on available addressing modes */
+void generate_opcode_ea_variants(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* op)
+{
+	int old_length = replace->length;
+
+	/* No ea modes available for this opcode */
+	if(HAS_NO_EA_MODE(op->ea_allowed))
+	{
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_NONE);
+		return;
+	}
+
+	/* Check for and create specific opcodes for each available addressing mode */
+	if(HAS_EA_AI(op->ea_allowed))
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_AI);
+	replace->length = old_length;
+	if(HAS_EA_PI(op->ea_allowed))
+	{
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_PI);
+		replace->length = old_length;
+		if(op->size == 8)
+			generate_opcode_handler(filep, body, replace, op, EA_MODE_PI7);
+	}
+	replace->length = old_length;
+	if(HAS_EA_PD(op->ea_allowed))
+	{
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_PD);
+		replace->length = old_length;
+		if(op->size == 8)
+			generate_opcode_handler(filep, body, replace, op, EA_MODE_PD7);
+	}
+	replace->length = old_length;
+	if(HAS_EA_DI(op->ea_allowed))
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_DI);
+	replace->length = old_length;
+	if(HAS_EA_IX(op->ea_allowed))
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_IX);
+	replace->length = old_length;
+	if(HAS_EA_AW(op->ea_allowed))
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_AW);
+	replace->length = old_length;
+	if(HAS_EA_AL(op->ea_allowed))
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_AL);
+	replace->length = old_length;
+	if(HAS_EA_PCDI(op->ea_allowed))
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_PCDI);
+	replace->length = old_length;
+	if(HAS_EA_PCIX(op->ea_allowed))
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_PCIX);
+	replace->length = old_length;
+	if(HAS_EA_I(op->ea_allowed))
+		generate_opcode_handler(filep, body, replace, op, EA_MODE_I);
+	replace->length = old_length;
+}
+
+/* Generate variants of condition code opcodes */
+void generate_opcode_cc_variants(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* op_in, int offset)
+{
+	char repl[20];
+	char replnot[20];
+	int i;
+	int old_length = replace->length;
+	opcode_struct* op = malloc(sizeof(opcode_struct));
+
+	*op = *op_in;
+
+	op->op_mask |= 0x0f00;
+
+	/* Do all condition codes except t and f */
+	for(i=2;i<16;i++)
+	{
+		/* Add replace strings for this condition code */
+		sprintf(repl, "COND_%s()", g_cc_table[i][1]);
+		sprintf(replnot, "COND_NOT_%s()", g_cc_table[i][1]);
+
+		add_replace_string(replace, ID_OPHANDLER_CC, repl);
+		add_replace_string(replace, ID_OPHANDLER_NOT_CC, replnot);
+
+		/* Set the new opcode info */
+		strcpy(op->name+offset, g_cc_table[i][0]);
+
+		op->op_match = (op->op_match & 0xf0ff) | (i<<8);
+
+		/* Generate all opcode variants for this modified opcode */
+		generate_opcode_ea_variants(filep, body, replace, op);
+		/* Remove the above replace strings */
+		replace->length = old_length;
+	}
+	free(op);
+}
+
+/* Process the opcode handlers section of the input file */
+void process_opcode_handlers(FILE* filep)
+{
+	FILE* input_file = g_input_file;
+	char func_name[MAX_LINE_LENGTH+1];
+	char oper_name[MAX_LINE_LENGTH+1];
+	int  oper_size;
+	char oper_spec_proc[MAX_LINE_LENGTH+1];
+	char oper_spec_ea[MAX_LINE_LENGTH+1];
+	opcode_struct* opinfo;
+	replace_struct* replace = malloc(sizeof(replace_struct));
+	body_struct* body = malloc(sizeof(body_struct));
+
+	for(;;)
+	{
+		/* Find the first line of the function */
+		func_name[0] = 0;
+		while(strstr(func_name, ID_OPHANDLER_NAME) == NULL)
+		{
+			if(strcmp(func_name, ID_INPUT_SEPARATOR) == 0)
+			{
+				free(replace);
+				free(body);
+				return; /* all done */
+			}
+			if(fgetline(func_name, MAX_LINE_LENGTH, input_file) < 0)
+				error_exit("Premature end of file when getting function name");
+		}
+		/* Get the rest of the function */
+		for(body->length=0;;body->length++)
+		{
+			if(body->length > MAX_BODY_LENGTH)
+				error_exit("Function too long");
+
+			if(fgetline(body->body[body->length], MAX_LINE_LENGTH, input_file) < 0)
+				error_exit("Premature end of file when getting function body");
+
+			if(body->body[body->length][0] == '}')
+			{
+				body->length++;
+				break;
+			}
+		}
+
+		g_num_primitives++;
+
+		/* Extract the function name information */
+		if(!extract_opcode_info(func_name, oper_name, &oper_size, oper_spec_proc, oper_spec_ea))
+			error_exit("Invalid " ID_OPHANDLER_NAME " format");
+
+		/* Find the corresponding table entry */
+		opinfo = find_opcode(oper_name, oper_size, oper_spec_proc, oper_spec_ea);
+		if(opinfo == NULL)
+			error_exit("Unable to find matching table entry for %s", func_name);
+
+		replace->length = 0;
+
+		/* Generate opcode variants */
+		if(strcmp(opinfo->name, "bcc") == 0 || strcmp(opinfo->name, "scc") == 0)
+			generate_opcode_cc_variants(filep, body, replace, opinfo, 1);
+		else if(strcmp(opinfo->name, "dbcc") == 0)
+			generate_opcode_cc_variants(filep, body, replace, opinfo, 2);
+		else if(strcmp(opinfo->name, "trapcc") == 0)
+			generate_opcode_cc_variants(filep, body, replace, opinfo, 4);
+		else
+			generate_opcode_ea_variants(filep, body, replace, opinfo);
+	}
+
+	free(replace);
+	free(body);
+}
+
+
+/* Populate the opcode handler table from the input file */
+void populate_table(void)
+{
+	char* ptr;
+	char bitpattern[17];
+	opcode_struct* op;
+	char buff[MAX_LINE_LENGTH];
+	int i;
+	int temp;
+
+	buff[0] = 0;
+
+	/* Find the start of the table */
+	while(strcmp(buff, ID_TABLE_START) != 0)
+		if(fgetline(buff, MAX_LINE_LENGTH, g_input_file) < 0)
+			error_exit("Premature EOF while reading table");
+
+	/* Process the entire table */
+	for(op = g_opcode_input_table;;op++)
+	{
+		if(fgetline(buff, MAX_LINE_LENGTH, g_input_file) < 0)
+			error_exit("Premature EOF while reading table");
+		if(strlen(buff) == 0)
+			continue;
+		/* We finish when we find an input separator */
+		if(strcmp(buff, ID_INPUT_SEPARATOR) == 0)
+			break;
+
+		/* Extract the info from the table */
+		ptr = buff;
+
+		/* Name */
+		ptr += skip_spaces(ptr);
+		ptr += check_strsncpy(op->name, ptr, MAX_NAME_LENGTH);
+
+		/* Size */
+		ptr += skip_spaces(ptr);
+		ptr += check_atoi(ptr, &temp);
+		op->size = (unsigned char)temp;
+
+		/* Special processing */
+		ptr += skip_spaces(ptr);
+		ptr += check_strsncpy(op->spec_proc, ptr, MAX_SPEC_PROC_LENGTH);
+
+		/* Specified EA Mode */
+		ptr += skip_spaces(ptr);
+		ptr += check_strsncpy(op->spec_ea, ptr, MAX_SPEC_EA_LENGTH);
+
+		/* Bit Pattern (more processing later) */
+		ptr += skip_spaces(ptr);
+		ptr += check_strsncpy(bitpattern, ptr, 17);
+
+		/* Allowed Addressing Mode List */
+		ptr += skip_spaces(ptr);
+		ptr += check_strsncpy(op->ea_allowed, ptr, EA_ALLOWED_LENGTH);
+
+		/* CPU operating mode (U = user or supervisor, S = supervisor only */
+		ptr += skip_spaces(ptr);
+		for(i=0;i<NUM_CPUS;i++)
+		{
+			op->cpu_mode[i] = *ptr++;
+			ptr += skip_spaces(ptr);
+		}
+
+		/* Allowed CPUs for this instruction */
+		for(i=0;i<NUM_CPUS;i++)
+		{
+			ptr += skip_spaces(ptr);
+			if(*ptr == UNSPECIFIED_CH)
+			{
+				op->cpus[i] = UNSPECIFIED_CH;
+				op->cycles[i] = 0;
+				ptr++;
+			}
+			else
+			{
+				op->cpus[i] = '0' + i;
+				ptr += check_atoi(ptr, &temp);
+				op->cycles[i] = (unsigned char)temp;
+			}
+		}
+
+		/* generate mask and match from bitpattern */
+		op->op_mask = 0;
+		op->op_match = 0;
+		for(i=0;i<16;i++)
+		{
+			op->op_mask |= (bitpattern[i] != '.') << (15-i);
+			op->op_match |= (bitpattern[i] == '1') << (15-i);
+		}
+	}
+	/* Terminate the list */
+	op->name[0] = 0;
+}
+
+/* Read a header or footer insert from the input file */
+void read_insert(char* insert)
+{
+	char* ptr = insert;
+	char* overflow = insert + MAX_INSERT_LENGTH - MAX_LINE_LENGTH;
+	int length;
+	char* first_blank = NULL;
+
+	first_blank = NULL;
+
+	/* Skip any leading blank lines */
+	for(length = 0;length == 0;length = fgetline(ptr, MAX_LINE_LENGTH, g_input_file))
+		if(ptr >= overflow)
+			error_exit("Buffer overflow reading inserts");
+	if(length < 0)
+		error_exit("Premature EOF while reading inserts");
+
+	/* Advance and append newline */
+	ptr += length;
+	strcpy(ptr++, "\n");
+
+	/* Read until next separator */
+	for(;;)
+	{
+		/* Read a new line */
+		if(ptr >= overflow)
+			error_exit("Buffer overflow reading inserts");
+		if((length = fgetline(ptr, MAX_LINE_LENGTH, g_input_file)) < 0)
+			error_exit("Premature EOF while reading inserts");
+
+		/* Stop if we read a separator */
+		if(strcmp(ptr, ID_INPUT_SEPARATOR) == 0)
+			break;
+
+		/* keep track in case there are trailing blanks */
+		if(length == 0)
+		{
+			if(first_blank == NULL)
+				first_blank = ptr;
+		}
+		else
+			first_blank = NULL;
+
+		/* Advance and append newline */
+		ptr += length;
+		strcpy(ptr++, "\n");
+	}
+
+	/* kill any trailing blank lines */
+	if(first_blank)
+		ptr = first_blank;
+	*ptr++ = 0;
+}
+
+
+
+/* ======================================================================== */
+/* ============================= MAIN FUNCTION ============================ */
+/* ======================================================================== */
+
+int main(int argc, char **argv)
+{
+	/* File stuff */
+	char output_path[M68K_MAX_DIR] = "";
+	char filename[M68K_MAX_PATH];
+	/* Section identifier */
+	char section_id[MAX_LINE_LENGTH+1];
+	/* Inserts */
+	char temp_insert[MAX_INSERT_LENGTH+1];
+	char prototype_footer_insert[MAX_INSERT_LENGTH+1];
+	char table_header_insert[MAX_INSERT_LENGTH+1];
+	char table_footer_insert[MAX_INSERT_LENGTH+1];
+	char ophandler_header_insert[MAX_INSERT_LENGTH+1];
+	char ophandler_footer_insert[MAX_INSERT_LENGTH+1];
+	/* Flags if we've processed certain parts already */
+	int prototype_header_read = 0;
+	int prototype_footer_read = 0;
+	int table_header_read = 0;
+	int table_footer_read = 0;
+	int ophandler_header_read = 0;
+	int ophandler_footer_read = 0;
+	int table_body_read = 0;
+	int ophandler_body_read = 0;
+
+	printf("\n\tMusashi v%s 68000, 68008, 68010, 68EC020, 68020, 68040 emulator\n", g_version);
+	printf("\tCopyright Karl Stenerud (karl@mame.net)\n\n");
+
+	/* Check if output path and source for the input file are given */
+    if(argc > 1)
+	{
+		char *ptr;
+		strcpy(output_path, argv[1]);
+
+		for(ptr = strchr(output_path, '\\'); ptr; ptr = strchr(ptr, '\\'))
+			*ptr = '/';
+
+#if !(defined(__DECC) && defined(VMS))
+        if(output_path[strlen(output_path)-1] != '/')
+			strcat(output_path, "/");
+#endif
+
+		if(argc > 2)
+			strcpy(g_input_filename, argv[2]);
+	}
+
+
+#if defined(__DECC) && defined(VMS)
+
+	/* Open the files we need */
+	sprintf(filename, "%s%s", output_path, FILENAME_PROTOTYPE);
+	if((g_prototype_file = fopen(filename, "w")) == NULL)
+		perror_exit("Unable to create prototype file (%s)\n", filename);
+
+	sprintf(filename, "%s%s", output_path, FILENAME_TABLE);
+	if((g_table_file = fopen(filename, "w")) == NULL)
+		perror_exit("Unable to create table file (%s)\n", filename);
+
+	if((g_input_file=fopen(g_input_filename, "r")) == NULL)
+		perror_exit("can't open %s for input", g_input_filename);
+
+#else
+
+
+	/* Open the files we need */
+	sprintf(filename, "%s%s", output_path, FILENAME_PROTOTYPE);
+	if((g_prototype_file = fopen(filename, "wt")) == NULL)
+		perror_exit("Unable to create prototype file (%s)\n", filename);
+
+	sprintf(filename, "%s%s", output_path, FILENAME_TABLE);
+	if((g_table_file = fopen(filename, "wt")) == NULL)
+		perror_exit("Unable to create table file (%s)\n", filename);
+
+	if((g_input_file=fopen(g_input_filename, "rt")) == NULL)
+		perror_exit("can't open %s for input", g_input_filename);
+
+#endif
+
+	/* Get to the first section of the input file */
+	section_id[0] = 0;
+	while(strcmp(section_id, ID_INPUT_SEPARATOR) != 0)
+		if(fgetline(section_id, MAX_LINE_LENGTH, g_input_file) < 0)
+			error_exit("Premature EOF while reading input file");
+
+	/* Now process all sections */
+	for(;;)
+	{
+		if(fgetline(section_id, MAX_LINE_LENGTH, g_input_file) < 0)
+			error_exit("Premature EOF while reading input file");
+		if(strcmp(section_id, ID_PROTOTYPE_HEADER) == 0)
+		{
+			if(prototype_header_read)
+				error_exit("Duplicate prototype header");
+			read_insert(temp_insert);
+			fprintf(g_prototype_file, "%s\n\n", temp_insert);
+			prototype_header_read = 1;
+		}
+		else if(strcmp(section_id, ID_TABLE_HEADER) == 0)
+		{
+			if(table_header_read)
+				error_exit("Duplicate table header");
+			read_insert(table_header_insert);
+			table_header_read = 1;
+		}
+		else if(strcmp(section_id, ID_OPHANDLER_HEADER) == 0)
+		{
+			if(ophandler_header_read)
+				error_exit("Duplicate opcode handler header");
+			read_insert(ophandler_header_insert);
+			ophandler_header_read = 1;
+		}
+		else if(strcmp(section_id, ID_PROTOTYPE_FOOTER) == 0)
+		{
+			if(prototype_footer_read)
+				error_exit("Duplicate prototype footer");
+			read_insert(prototype_footer_insert);
+			prototype_footer_read = 1;
+		}
+		else if(strcmp(section_id, ID_TABLE_FOOTER) == 0)
+		{
+			if(table_footer_read)
+				error_exit("Duplicate table footer");
+			read_insert(table_footer_insert);
+			table_footer_read = 1;
+		}
+		else if(strcmp(section_id, ID_OPHANDLER_FOOTER) == 0)
+		{
+			if(ophandler_footer_read)
+				error_exit("Duplicate opcode handler footer");
+			read_insert(ophandler_footer_insert);
+			ophandler_footer_read = 1;
+		}
+		else if(strcmp(section_id, ID_TABLE_BODY) == 0)
+		{
+			if(!prototype_header_read)
+				error_exit("Table body encountered before prototype header");
+			if(!table_header_read)
+				error_exit("Table body encountered before table header");
+			if(!ophandler_header_read)
+				error_exit("Table body encountered before opcode handler header");
+
+			if(table_body_read)
+				error_exit("Duplicate table body");
+
+			populate_table();
+			table_body_read = 1;
+		}
+		else if(strcmp(section_id, ID_OPHANDLER_BODY) == 0)
+		{
+			if(!prototype_header_read)
+				error_exit("Opcode handlers encountered before prototype header");
+			if(!table_header_read)
+				error_exit("Opcode handlers encountered before table header");
+			if(!ophandler_header_read)
+				error_exit("Opcode handlers encountered before opcode handler header");
+			if(!table_body_read)
+				error_exit("Opcode handlers encountered before table body");
+
+			if(ophandler_body_read)
+				error_exit("Duplicate opcode handler section");
+
+			fprintf(g_table_file, "%s\n\n", ophandler_header_insert);
+			process_opcode_handlers(g_table_file);
+			fprintf(g_table_file, "%s\n\n", ophandler_footer_insert);
+
+			ophandler_body_read = 1;
+		}
+		else if(strcmp(section_id, ID_END) == 0)
+		{
+			/* End of input file.  Do a sanity check and then write footers */
+			if(!prototype_header_read)
+				error_exit("Missing prototype header");
+			if(!prototype_footer_read)
+				error_exit("Missing prototype footer");
+			if(!table_header_read)
+				error_exit("Missing table header");
+			if(!table_footer_read)
+				error_exit("Missing table footer");
+			if(!table_body_read)
+				error_exit("Missing table body");
+			if(!ophandler_header_read)
+				error_exit("Missing opcode handler header");
+			if(!ophandler_footer_read)
+				error_exit("Missing opcode handler footer");
+			if(!ophandler_body_read)
+				error_exit("Missing opcode handler body");
+
+			fprintf(g_table_file, "%s\n\n", table_header_insert);
+			print_opcode_output_table(g_table_file);
+			fprintf(g_table_file, "%s\n\n", table_footer_insert);
+
+			fprintf(g_prototype_file, "%s\n\n", prototype_footer_insert);
+
+			break;
+		}
+		else
+		{
+			error_exit("Unknown section identifier: %s", section_id);
+		}
+	}
+
+	/* Close all files and exit */
+	fclose(g_prototype_file);
+	fclose(g_table_file);
+	fclose(g_input_file);
+
+	printf("Generated %d opcode handlers from %d primitives\n", g_num_functions, g_num_primitives);
+
+	return 0;
 }
 
 

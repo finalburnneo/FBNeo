@@ -1776,6 +1776,10 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_srumbler.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
+	<ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+	  
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tecmo.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>

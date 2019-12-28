@@ -51,6 +51,7 @@ static int Init()
 	int nMemLen = 0;
 	int GameAspectX = 4, GameAspectY = 3;
 	int display_w = 400, display_h = 300;
+	int nScale = 2;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -103,8 +104,8 @@ static int Init()
 		title,                  // window title
 		SDL_WINDOWPOS_CENTERED, // initial x position
 		SDL_WINDOWPOS_CENTERED, // initial y position
-		display_w,              // width, in pixels
-		display_h,              // height, in pixels
+		display_w*nScale,              // width, in pixels
+		display_h*nScale,              // height, in pixels
 		screenFlags             // flags - see below
 	);
 

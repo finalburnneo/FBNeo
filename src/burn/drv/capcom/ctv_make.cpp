@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <cstdio>
 
 // Create the ctv.h header file
 // which includes all combinations of the cps tile drawing functions

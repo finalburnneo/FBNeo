@@ -10,9 +10,9 @@
 
 */
 
-#include <math.h>
-#include <stddef.h>
-#include <string.h>	// for memset
+#include <cmath>
+#include <cstddef>
+#include <cstring>	// for memset
 #include "cps.h"
 
 static const INT32 nQscClock = 60000000;

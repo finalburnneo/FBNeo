@@ -93,7 +93,7 @@ INT32 RecordInput()
 
 	if (bReplayFrameCounterDisplay) {
 		wchar_t framestring[15];
-		_swprintf(framestring, L"%d", GetCurrentFrame() - nStartFrame);
+		swprintf(framestring, L"%d", GetCurrentFrame() - nStartFrame);
 		VidSNewTinyMsg(framestring);
 	}
 

@@ -10,7 +10,7 @@
 //  The only optimization i've made is to change doubles for fixed point
 //  integers.
 
-#include <math.h>
+#include <cmath>
 #include "burner.h"
 #include "lowpass2.h"
 

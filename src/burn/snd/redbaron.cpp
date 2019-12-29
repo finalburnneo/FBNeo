@@ -5,7 +5,7 @@
 
 #include "burnint.h"
 #include "redbaron.h"
-#include <math.h>
+#include <cmath>
 
 #define OUTPUT_RATE 48000
 #define FRAME_SIZE 800

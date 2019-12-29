@@ -1,7 +1,7 @@
 // DirectSound module
 #include "burner.h"
 #include "aud_dsp.h"
-#include <math.h>
+#include <cmath>
 
 #include <InitGuid.h>
 #define DIRECTSOUND_VERSION  0x0300			// Only need version from DirectX 3

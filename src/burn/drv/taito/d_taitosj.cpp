@@ -7,8 +7,7 @@
 #include "watchdog.h"
 #include "ay8910.h"
 #include "dac.h"
-#include "math.h" // abs()
-
+#include <cmath> // abs()
 static UINT8 *AllMem;
 static UINT8 *RamEnd;
 static UINT8 *AllRam;

@@ -5,15 +5,15 @@
 // ---------------------------------------------------------------------------
 // General
 
-static UINT8* pVidSFullImage = NULL;
+static UINT8* pVidSFullImage = nullptr;
 
 void VidSFreeVidImage()
 {
 	if (pVidSFullImage) {
 		free(pVidSFullImage);
-		pVidSFullImage = NULL;
+		pVidSFullImage = nullptr;
 	}
-	pVidImage = NULL;
+	pVidImage = nullptr;
 }
 
 INT32 VidSAllocVidImage()
@@ -32,7 +32,7 @@ INT32 VidSAllocVidImage()
 		pVidImage = pVidSFullImage + nVidImagePitch;
 		return 0;
 	} else {
-		pVidImage = NULL;
+		pVidImage = nullptr;
 		return 1;
 	}
 }

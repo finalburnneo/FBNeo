@@ -349,7 +349,7 @@ static UINT8 __fastcall gijoe_sound_read(UINT16 address)
 	return 0;
 }
 
-static void gijoe_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
+static void gijoe_sprite_callback(INT32* /*code*/, INT32 *color, INT32 *priority)
 {
 	INT32 pri = (*color & 0x03e0) >> 4;
 
@@ -362,7 +362,7 @@ static void gijoe_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority
 	*color = sprite_colorbase | (*color & 0x001f);
 }
 
-static void gijoe_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
+static void gijoe_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32* /*flags*/)
 {
 	INT32 tile = *code;
 

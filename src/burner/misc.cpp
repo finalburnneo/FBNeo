@@ -1,5 +1,5 @@
 // Misc functions module
-#include <math.h>
+#include <cmath>
 #include "burner.h"
 
 // ---------------------------------------------------------------------------

@@ -5,7 +5,7 @@
 #if defined (_MSC_VER)
 #define _USE_MATH_DEFINES
 #endif
-#include <math.h>
+#include <cmath>
 
 //#define HARDSEK - hard-config seibucop to use 68k only!
 

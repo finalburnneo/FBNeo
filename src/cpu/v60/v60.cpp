@@ -522,17 +522,17 @@ static int v60_ICount;
 #define SetSZPF_Word(x) 	{_Z = ((UINT16)(x)==0);  _S = ((x)&0x8000) ? 1 : 0; }
 #define SetSZPF_Long(x) 	{_Z = ((UINT32)(x)==0);  _S = ((x)&0x80000000) ? 1 : 0; }
 
-#define ORB(dst,src)		{ (dst) |= (src); _CY = _OV = 0; SetSZPF_Byte(dst); }
-#define ORW(dst,src)		{ (dst) |= (src); _CY = _OV = 0; SetSZPF_Word(dst); }
-#define ORL(dst,src)		{ (dst) |= (src); _CY = _OV = 0; SetSZPF_Long(dst); }
+#define ORB(dst,src)		{ (dst) |= (src); _OV = 0; SetSZPF_Byte(dst); }
+#define ORW(dst,src)		{ (dst) |= (src); _OV = 0; SetSZPF_Word(dst); }
+#define ORL(dst,src)		{ (dst) |= (src); _OV = 0; SetSZPF_Long(dst); }
 
-#define ANDB(dst,src)		{ (dst) &= (src); _CY = _OV = 0; SetSZPF_Byte(dst); }
-#define ANDW(dst,src)		{ (dst) &= (src); _CY = _OV = 0; SetSZPF_Word(dst); }
-#define ANDL(dst,src)		{ (dst) &= (src); _CY = _OV = 0; SetSZPF_Long(dst); }
+#define ANDB(dst,src)		{ (dst) &= (src); _OV = 0; SetSZPF_Byte(dst); }
+#define ANDW(dst,src)		{ (dst) &= (src); _OV = 0; SetSZPF_Word(dst); }
+#define ANDL(dst,src)		{ (dst) &= (src); _OV = 0; SetSZPF_Long(dst); }
 
-#define XORB(dst,src)		{ (dst) ^= (src); _CY = _OV = 0; SetSZPF_Byte(dst); }
-#define XORW(dst,src)		{ (dst) ^= (src); _CY = _OV = 0; SetSZPF_Word(dst); }
-#define XORL(dst,src)		{ (dst) ^= (src); _CY = _OV = 0; SetSZPF_Long(dst); }
+#define XORB(dst,src)		{ (dst) ^= (src); _OV = 0; SetSZPF_Byte(dst); }
+#define XORW(dst,src)		{ (dst) ^= (src); _OV = 0; SetSZPF_Word(dst); }
+#define XORL(dst,src)		{ (dst) ^= (src); _OV = 0; SetSZPF_Long(dst); }
 
 #define SUBB(dst, src)		{ unsigned res=(dst)-(src); SetCFB(res); SetOFB_Sub(res,src,dst); SetSZPF_Byte(res); dst=(UINT8)res; }
 #define SUBW(dst, src)		{ unsigned res=(dst)-(src); SetCFW(res); SetOFW_Sub(res,src,dst); SetSZPF_Word(res); dst=(UINT16)res; }

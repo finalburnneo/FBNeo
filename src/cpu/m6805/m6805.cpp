@@ -33,7 +33,7 @@
 #include "burnint.h"
 #include "driver.h"
 #include "m6805_intf.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define IRQ_LEVEL_DETECT 0
 

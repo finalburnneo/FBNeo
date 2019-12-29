@@ -1776,6 +1776,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_srumbler.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
+	<ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>  
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tecmo.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
@@ -4393,7 +4396,7 @@
     <None Include="..\..\src\dep\libs\zlib\zconf.h.in">
       <Filter>libs\zlib</Filter>
     </None>
-    <None Include="..\..\src\dep\libs\libpng\_fba_libpng_v1512.txt">
+    <None Include="..\..\src\dep\libs\libpng\_fbn_libpng_v1637.txt">
       <Filter>libs\libpng</Filter>
     </None>
   </ItemGroup>
@@ -4409,7 +4412,7 @@
     <Text Include="..\..\src\burn\drv\spectrum\spectrum_games.txt">
       <Filter>Burn\drv\spectrum</Filter>
     </Text>
-    <Text Include="..\..\src\dep\libs\lib7z\_fba_lzmasdk_v16.04.txt">
+    <Text Include="..\..\src\dep\libs\lib7z\_fbn_lzmasdk_v16.04.txt">
       <Filter>libs\7z</Filter>
     </Text>
   </ItemGroup>

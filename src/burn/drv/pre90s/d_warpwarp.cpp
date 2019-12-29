@@ -5,7 +5,7 @@
 #include "z80_intf.h"
 #include "bitswap.h"
 #include "resnet.h"
-#include <math.h>
+#include <cmath>
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

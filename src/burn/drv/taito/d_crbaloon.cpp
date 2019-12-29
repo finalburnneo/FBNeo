@@ -4,7 +4,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76477.h"
-#include <math.h>
+#include <cmath>
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

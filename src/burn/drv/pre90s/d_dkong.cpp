@@ -25,7 +25,7 @@
 #include "dac.h"
 #include "nes_apu.h"
 #include "resnet.h"
-#include <math.h> // for exp()
+#include <cmath> // for exp()
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

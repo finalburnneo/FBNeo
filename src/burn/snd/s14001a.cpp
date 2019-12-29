@@ -132,7 +132,7 @@
  *
  */
 
-#include <stddef.h>
+#include <cstddef>
 #include "burnint.h"
 #include "s14001a.h"
 

@@ -101,12 +101,12 @@ static int Init()
 	}
 
 	sdlWindow = SDL_CreateWindow(
-		title,                  // window title
-		SDL_WINDOWPOS_CENTERED, // initial x position
-		SDL_WINDOWPOS_CENTERED, // initial y position
-		display_w*nScale,              // width, in pixels
-		display_h*nScale,              // height, in pixels
-		screenFlags             // flags - see below
+		title,
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		display_w*nScale,
+		display_h*nScale,
+		screenFlags
 	);
 
 	// Check that the window was successfully created
@@ -176,14 +176,10 @@ static int Init()
 		return 3;
 	}
 
-
-
 	nVidImageBPP = (nVidImageDepth + 7) >> 3;
 	nBurnBpp = nVidImageBPP;
 
 	SetBurnHighCol(nVidImageDepth);
-
-
 
 	nVidImagePitch = nVidImageWidth * nVidImageBPP;
 	nBurnPitch = nVidImagePitch;

@@ -550,7 +550,7 @@ static int ZipNames_qs_cmp_desc(const void *p0, const void *p1) {
 	struct NODEINFO *ni0 = (struct NODEINFO*) p0;
 	struct NODEINFO *ni1 = (struct NODEINFO*) p1;
 
-	return stricmp(ni1->pszROMName, ni0->pszROMName);
+	return _stricmp(ni1->pszROMName, ni0->pszROMName);
 }
 
 // Make a tree-view control with all drivers

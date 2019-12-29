@@ -316,11 +316,11 @@ int BuildTemplateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, LPTSTR lpszName, 
 				pTemplateDataIn += 2 * sizeof(WORD);
 				break;
 			default:
-				if ( !wcsicmp((wchar_t*)pTemplateDataIn, L"SysTreeView32") ||
-					 !wcsicmp((wchar_t*)pTemplateDataIn, L"SysListView32") ||
-					 !wcsicmp((wchar_t*)pTemplateDataIn, L"Edit")		   ||
-					 !wcsnicmp((wchar_t*)pTemplateDataIn, L"RichEdit", 8)  ||
-					(!wcsicmp((wchar_t*)pTemplateDataIn, L"Static") && (dwStyle & SS_BITMAP))) {
+				if ( !_wcsicmp((wchar_t*)pTemplateDataIn, L"SysTreeView32") ||
+					 !_wcsicmp((wchar_t*)pTemplateDataIn, L"SysListView32") ||
+					 !_wcsicmp((wchar_t*)pTemplateDataIn, L"Edit")		   ||
+					 !_wcsnicmp((wchar_t*)pTemplateDataIn, L"RichEdit", 8)  ||
+					(!_wcsicmp((wchar_t*)pTemplateDataIn, L"Static") && (dwStyle & SS_BITMAP))) {
 
 					bExcludeControl = true;
 				}

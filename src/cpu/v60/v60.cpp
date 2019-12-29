@@ -46,19 +46,19 @@ inline UINT32 f2u(float f)
 
 static UINT8 *mem[3][(address_mask + 1) / page_size];
 
-static UINT8  (*v60_read8)(UINT32) = NULL;
-static UINT16 (*v60_read16)(UINT32) = NULL;
-static UINT32 (*v60_read32)(UINT32) = NULL;
-static void (*v60_write8)(UINT32,UINT8) = NULL;
-static void (*v60_write16)(UINT32,UINT16) = NULL;
-static void (*v60_write32)(UINT32,UINT32) = NULL;
+static UINT8  (*v60_read8)(UINT32) = nullptr;
+static UINT16 (*v60_read16)(UINT32) = nullptr;
+static UINT32 (*v60_read32)(UINT32) = nullptr;
+static void (*v60_write8)(UINT32,UINT8) = nullptr;
+static void (*v60_write16)(UINT32,UINT16) = nullptr;
+static void (*v60_write32)(UINT32,UINT32) = nullptr;
 
-static UINT8  (*v60_ioread8)(UINT32) = NULL;
-static UINT16 (*v60_ioread16)(UINT32) = NULL;
-static UINT32 (*v60_ioread32)(UINT32) = NULL;
-static void (*v60_iowrite8)(UINT32,UINT8) = NULL;
-static void (*v60_iowrite16)(UINT32,UINT16) = NULL;
-static void (*v60_iowrite32)(UINT32,UINT32) = NULL;
+static UINT8  (*v60_ioread8)(UINT32) = nullptr;
+static UINT16 (*v60_ioread16)(UINT32) = nullptr;
+static UINT32 (*v60_ioread32)(UINT32) = nullptr;
+static void (*v60_iowrite8)(UINT32,UINT8) = nullptr;
+static void (*v60_iowrite16)(UINT32,UINT16) = nullptr;
+static void (*v60_iowrite32)(UINT32,UINT32) = nullptr;
 
 
 void v60SetWriteByteHandler(void (*write)(UINT32,UINT8))

@@ -41,7 +41,7 @@ void	(*const *insnActive)(void);
 
 typedef UINT8 (*deco_function)(UINT16 address, UINT8 opcode);
 
-static deco_function Cpu7Write[8] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+static deco_function Cpu7Write[8] = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
 
 extern INT32 M6502GetActive();
 
@@ -118,7 +118,7 @@ void DecoCpu7SetDecode(UINT8 (*write)(UINT16,UINT8))
 void m6502_core_exit()
 {
 	for (INT32 i = 0; i < 8; i++) {
-		Cpu7Write[i] = NULL;
+		Cpu7Write[i] = nullptr;
 	}
 }
 

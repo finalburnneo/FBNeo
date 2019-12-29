@@ -1788,7 +1788,7 @@ void z180_write_iolines(UINT32 data)
 
 void z180_init(int index, int clock, /*const void *config,*/ int (*irqcallback)(int))
 {
-	Z180.daisy = NULL;
+	Z180.daisy = nullptr;
 	/*if (config)
 		Z180.daisy = z80daisy_init(Machine, Machine->config->cpu[cpu_getactivecpu()].tag, config);*/
 	Z180.irq_callback = irqcallback;

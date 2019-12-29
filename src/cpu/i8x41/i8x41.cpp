@@ -94,7 +94,7 @@
 #include "driver.h"
 #include <cstddef>
 
-UINT8 *I8x41Mem = NULL;
+UINT8 *I8x41Mem = nullptr;
 
 
 static UINT8 program_read_byte_8(UINT16 a)
@@ -114,8 +114,8 @@ static void program_write_byte_8(UINT16 a, UINT8 d)
 #define cpu_readop(a) program_read_byte_8(a)
 #define cpu_readop_arg(a)	program_read_byte_8(a)
 
-static void (*io_write_byte_8)(UINT16 p, UINT8 d) = NULL;
-static UINT8 (*io_read_byte_8)(UINT16 p) = NULL;
+static void (*io_write_byte_8)(UINT16 p, UINT8 d) = nullptr;
+static UINT8 (*io_read_byte_8)(UINT16 p) = nullptr;
 
 void i8x41_set_read_port(UINT8 (*read)(UINT16))
 {
@@ -1416,10 +1416,10 @@ void i8x41_reset()
 
 void i8x41_exit()
 {
-	I8x41Mem = NULL;
+	I8x41Mem = nullptr;
 
-	io_write_byte_8 = NULL;
-	io_read_byte_8 = NULL;
+	io_write_byte_8 = nullptr;
+	io_read_byte_8 = nullptr;
 }
 
 

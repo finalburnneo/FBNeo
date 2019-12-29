@@ -9,11 +9,11 @@ static INT32 rom_address_mask = 0x7ff;
 static INT32 ram_address_mask = 0x07f;
 
 INT32 nPic16c5xCpuType = -1;
-static UINT8 *pic16c5x_rom = NULL;
-static UINT8 *pic16c5x_ram = NULL;
+static UINT8 *pic16c5x_rom = nullptr;
+static UINT8 *pic16c5x_ram = nullptr;
 
-static UINT8 (*pPic16c5xReadPort)(UINT16 port) = NULL;
-static void (*pPic16c5xWritePort)(UINT16 port, UINT8 data) = NULL;
+static UINT8 (*pPic16c5xReadPort)(UINT16 port) = nullptr;
+static void (*pPic16c5xWritePort)(UINT16 port, UINT8 data) = nullptr;
 
 static void core_set_irq(INT32,INT32,INT32)
 {
@@ -168,16 +168,16 @@ void pic16c5xExit()
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xExit called without init\n"));
 #endif
 
-	pic16c5x_rom = NULL;
+	pic16c5x_rom = nullptr;
 	nPic16c5xCpuType = -1;
 	
 	if (pic16c5x_ram) {
 		BurnFree(pic16c5x_ram);
-		pic16c5x_ram = NULL;
+		pic16c5x_ram = nullptr;
 	}
 
-	pPic16c5xReadPort = NULL;
-	pPic16c5xWritePort = NULL;
+	pPic16c5xReadPort = nullptr;
+	pPic16c5xWritePort = nullptr;
 
 	DebugCPU_PIC16C5XInitted = 0;
 }
@@ -204,7 +204,7 @@ INT32 pic16c5xScan(INT32 nAction)
 
 	struct BurnArea ba;
 
-	pic16c5xScanCpu(nAction, 0);
+	pic16c5xScanCpu(nAction, nullptr);
 
 	if (nAction & ACB_MEMORY_RAM) {
 		ba.Data		= pic16c5x_ram;

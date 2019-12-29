@@ -24,7 +24,7 @@ inline void tms_fast_write(UINT8 *xptr, UINT32 adr, T value) {
 }
 
 static TMS34010State tms34010;
-static pTMS34010ScanlineRender scanlineRenderCallback = NULL;
+static pTMS34010ScanlineRender scanlineRenderCallback = nullptr;
 
 struct TMS34010MemoryMap
 {
@@ -159,8 +159,8 @@ void TMS34010WriteWord(UINT32 address, UINT16 value)
 void TMS34010MapReset()
 {
     for (int page = 0; page < PAGE_COUNT; page++) {
-        g_mmap.map[page] = NULL;
-        g_mmap.map[page + PAGE_WADD] = NULL;
+        g_mmap.map[page] = nullptr;
+        g_mmap.map[page + PAGE_WADD] = nullptr;
     }
     for (int handler = 0; handler < MAXHANDLER; handler++) {
         g_mmap.read[handler] = default_read;

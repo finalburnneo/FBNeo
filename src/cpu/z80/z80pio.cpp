@@ -69,7 +69,7 @@ struct z80pio_t
 	void (*port_write[2])(int offset, UINT8 data); /* port write callbacks           */
 };
 
-z80pio_t *z80pio = NULL;
+z80pio_t *z80pio = nullptr;
 
 
 /***************************************************************************

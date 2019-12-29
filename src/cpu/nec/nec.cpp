@@ -371,7 +371,7 @@ void necCpuOpen(int cpu)
 
 void necCpuClose()
 {
-	sChipsPtr = NULL;
+	sChipsPtr = nullptr;
 }
 
 unsigned int nec_total_cycles()

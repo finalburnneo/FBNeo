@@ -4,7 +4,7 @@
 #include <cstddef>
 
 #define MAX_Z80		8
-static struct ZetExt * ZetCPUContext[MAX_Z80] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+static struct ZetExt * ZetCPUContext[MAX_Z80] = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
  
 typedef UINT8 (__fastcall *pZetInHandler)(UINT16 a);
 typedef void (__fastcall *pZetOutHandler)(UINT16 a, UINT8 d);
@@ -73,12 +73,12 @@ UINT8 __fastcall ZetReadProg(UINT32 a)
 {
 	// check mem map
 	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x000 | (a >> 8)];
-	if (pr != NULL) {
+	if (pr != nullptr) {
 		return pr[a & 0xff];
 	}
 	
 	// check handler
-	if (ZetCPUContext[nOpenedCPU]->ZetRead != NULL) {
+	if (ZetCPUContext[nOpenedCPU]->ZetRead != nullptr) {
 		return ZetCPUContext[nOpenedCPU]->ZetRead(a);
 	}
 	
@@ -89,13 +89,13 @@ void __fastcall ZetWriteProg(UINT32 a, UINT8 d)
 {
 	// check mem map
 	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x100 | (a >> 8)];
-	if (pr != NULL) {
+	if (pr != nullptr) {
 		pr[a & 0xff] = d;
 		return;
 	}
 	
 	// check handler
-	if (ZetCPUContext[nOpenedCPU]->ZetWrite != NULL) {
+	if (ZetCPUContext[nOpenedCPU]->ZetWrite != nullptr) {
 		ZetCPUContext[nOpenedCPU]->ZetWrite(a, d);
 		return;
 	}
@@ -105,12 +105,12 @@ UINT8 __fastcall ZetReadOp(UINT32 a)
 {
 	// check mem map
 	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | (a >> 8)];
-	if (pr != NULL) {
+	if (pr != nullptr) {
 		return pr[a & 0xff];
 	}
 	
 	// check read handler
-	if (ZetCPUContext[nOpenedCPU]->ZetRead != NULL) {
+	if (ZetCPUContext[nOpenedCPU]->ZetRead != nullptr) {
 		return ZetCPUContext[nOpenedCPU]->ZetRead(a);
 	}
 	
@@ -121,12 +121,12 @@ UINT8 __fastcall ZetReadOpArg(UINT32 a)
 {
 	// check mem map
 	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | (a >> 8)];
-	if (pr != NULL) {
+	if (pr != nullptr) {
 		return pr[a & 0xff];
 	}
 	
 	// check read handler
-	if (ZetCPUContext[nOpenedCPU]->ZetRead != NULL) {
+	if (ZetCPUContext[nOpenedCPU]->ZetRead != nullptr) {
 		return ZetCPUContext[nOpenedCPU]->ZetRead(a);
 	}
 	
@@ -227,7 +227,7 @@ INT32 ZetInit(INT32 nCPU)
 		nZ80ICount[nCPU] = 0;
 		
 		for (INT32 j = 0; j < (0x0100 * 4); j++) {
-			ZetCPUContext[nCPU]->pZetMemMap[j] = NULL;
+			ZetCPUContext[nCPU]->pZetMemMap[j] = nullptr;
 		}
 	}
 
@@ -272,11 +272,11 @@ void ZetWriteRom(UINT16 address, UINT8 data)
 
 	if (nOpenedCPU < 0) return;
 
-	if (ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | (address >> 8)] != NULL) {
+	if (ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | (address >> 8)] != nullptr) {
 		ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | (address >> 8)][address & 0xff] = data;
 	}
 	
-	if (ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | (address >> 8)] != NULL) {
+	if (ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | (address >> 8)] != nullptr) {
 		ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | (address >> 8)][address & 0xff] = data;
 	}
 	
@@ -450,14 +450,14 @@ INT32 ZetMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode)
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
 		switch (nMode) {
 			case 0:
-				pMemMap[0     + i] = NULL;
+				pMemMap[0     + i] = nullptr;
 				break;
 			case 1:
-				pMemMap[0x100 + i] = NULL;
+				pMemMap[0x100 + i] = nullptr;
 				break;
 			case 2:
-				pMemMap[0x200 + i] = NULL;
-				pMemMap[0x300 + i] = NULL;
+				pMemMap[0x200 + i] = nullptr;
+				pMemMap[0x300 + i] = nullptr;
 				break;
 		}
 	}
@@ -482,7 +482,7 @@ void ZetExit()
 	for (INT32 i = 0; i < MAX_Z80; i++) {
 		if (ZetCPUContext[i]) {
 			BurnFree (ZetCPUContext[i]);
-			ZetCPUContext[i] = NULL;
+			ZetCPUContext[i] = nullptr;
 		}
 	}
 
@@ -505,10 +505,10 @@ INT32 ZetUnmapMemory(INT32 nStart, INT32 nEnd, INT32 nFlags)
 	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
 
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
-		if (nFlags & (1 << 0)) pMemMap[0     + i] = NULL; // READ
-		if (nFlags & (1 << 1)) pMemMap[0x100 + i] = NULL; // WRITE
-		if (nFlags & (1 << 2)) pMemMap[0x200 + i] = NULL; // OP
-		if (nFlags & (1 << 3)) pMemMap[0x300 + i] = NULL; // ARG
+		if (nFlags & (1 << 0)) pMemMap[0     + i] = nullptr; // READ
+		if (nFlags & (1 << 1)) pMemMap[0x100 + i] = nullptr; // WRITE
+		if (nFlags & (1 << 2)) pMemMap[0x200 + i] = nullptr; // OP
+		if (nFlags & (1 << 3)) pMemMap[0x300 + i] = nullptr; // ARG
 	}
 
 	return 0;

@@ -46,10 +46,10 @@ static void DefWriteLong(unsigned int a, unsigned int value) { xlog("DefWriteLog
 static void ResetMemoryMap()
 {
     for (int page = 0; page < PAGE_COUNT; page++) {
-        pMemMap->PrgMap[page] = (unsigned char*) 0;
-        pMemMap->PrgMap[PAGE_WADD + page] = (unsigned char*) 0;
-        pMemMap->DataMap[page] = (unsigned char*) 0;
-        pMemMap->DataMap[PAGE_WADD + page] = (unsigned char*) 0;
+        pMemMap->PrgMap[page] = (unsigned char*) nullptr;
+        pMemMap->PrgMap[PAGE_WADD + page] = (unsigned char*) nullptr;
+        pMemMap->DataMap[page] = (unsigned char*) nullptr;
+        pMemMap->DataMap[PAGE_WADD + page] = (unsigned char*) nullptr;
 
     }
 
@@ -87,14 +87,14 @@ int Adsp2100Init()
     pMemMap = new Adsp2100MemoryMap;
     ResetMemoryMap();
     pADSP = (adsp2100_state*) BurnMalloc(sizeof(adsp2100_state));
-    adsp2105_init(pADSP, NULL);
+    adsp2105_init(pADSP, nullptr);
     pADSP->sport_rx_callback = RxCallback;
     pADSP->sport_tx_callback = TxCallback;
     pADSP->timer_fired = TimerCallback;
 
-    pTimerCallback = NULL;
-    pTxCallback = NULL;
-    pRxCallback = NULL;
+    pTimerCallback = nullptr;
+    pTxCallback = nullptr;
+    pRxCallback = nullptr;
 
 #if ENABLE_TRACE
     pTrace = fopen("adsp21xx.txt", "w");
@@ -107,7 +107,7 @@ int Adsp2100Exit()
     adsp21xx_exit(pADSP);
     BurnFree(pADSP);
     delete pMemMap;
-    pMemMap = NULL;
+    pMemMap = nullptr;
 #if ENABLE_TRACE
     fclose(pTrace);
 #endif

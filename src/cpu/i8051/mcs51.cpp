@@ -252,10 +252,10 @@ struct _mcs51_uart
 	UINT8	delay_cycles;	//Gross Hack;
 };
 
-UINT8 *mcs51_program_data = NULL;
-static UINT8 (*cpu_readop_arg_dat)(INT32) = NULL;
-static void (*mcs51_write_port)(INT32,UINT8) = NULL;
-static UINT8 (*mcs51_read_port)(INT32) = NULL;
+UINT8 *mcs51_program_data = nullptr;
+static UINT8 (*cpu_readop_arg_dat)(INT32) = nullptr;
+static void (*mcs51_write_port)(INT32,UINT8) = nullptr;
+static UINT8 (*mcs51_read_port)(INT32) = nullptr;
 
 static UINT8 mcs51_readop_arg_dat(INT32 address)
 {
@@ -2286,10 +2286,10 @@ void mcs51_reset (void)
 /* Shut down CPU core */
 void mcs51_exit(void)
 {
-	mcs51_read_port = NULL;
-	mcs51_write_port = NULL;
-	mcs51_program_data = NULL;
-	cpu_readop_arg_dat = NULL;
+	mcs51_read_port = nullptr;
+	mcs51_write_port = nullptr;
+	mcs51_program_data = nullptr;
+	cpu_readop_arg_dat = nullptr;
 }
 
 /****************************************************************************

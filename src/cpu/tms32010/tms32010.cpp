@@ -71,8 +71,8 @@
 #endif
 
 
-UINT16 *tms32010_ram = NULL;
-UINT16 *tms32010_rom = NULL;
+UINT16 *tms32010_ram = nullptr;
+UINT16 *tms32010_rom = nullptr;
 
 static UINT32 tms32010_cycles = 0;
 static UINT32 tms32010_current_cycles = 0;

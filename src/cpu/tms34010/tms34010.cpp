@@ -60,7 +60,7 @@ void reset(cpu_state *cpu)
 	memset(cpu->shiftreg, 0, 4096*2);
 
 	cpu->timer_active = 0;
-	cpu->timer_cb = NULL;
+	cpu->timer_cb = nullptr;
 	cpu->timer_cyc = 0;
 }
 

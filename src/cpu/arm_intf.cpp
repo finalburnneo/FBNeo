@@ -17,11 +17,11 @@
 
 static UINT8 **membase[3]; // 0 read, 1, write, 2 opcode
 
-static void (*pWriteLongHandler)(UINT32, UINT32  ) = NULL;
-static void (*pWriteByteHandler)(UINT32, UINT8 ) = NULL;
+static void (*pWriteLongHandler)(UINT32, UINT32  ) = nullptr;
+static void (*pWriteByteHandler)(UINT32, UINT8 ) = nullptr;
 
-static UINT32   (*pReadLongHandler)(UINT32) = NULL;
-static UINT8  (*pReadByteHandler)(UINT32) = NULL;
+static UINT32   (*pReadLongHandler)(UINT32) = nullptr;
+static UINT8  (*pReadByteHandler)(UINT32) = nullptr;
 
 UINT32 ArmSpeedHackAddress;
 static void (*pArmSpeedHackCallback)();
@@ -138,7 +138,7 @@ void ArmWriteByte(UINT32 addr, UINT8 data)
 	bprintf (PRINT_NORMAL, _T("%5.5x, %2.2x wb\n"), addr, data);
 #endif
 
-	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[WRITE][addr >> PAGE_SHIFT] != nullptr) {
 		membase[WRITE][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND] = data;
 		return;
 	}
@@ -160,7 +160,7 @@ void ArmWriteLong(UINT32 addr, UINT32 data)
 	bprintf (PRINT_NORMAL, _T("%5.5x, %8.8x wd\n"), addr, data);
 #endif
 
-	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[WRITE][addr >> PAGE_SHIFT] != nullptr) {
 		*((UINT32*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND))) = BURN_ENDIAN_SWAP_INT32(data);
 		return;
 	}
@@ -183,7 +183,7 @@ UINT8 ArmReadByte(UINT32 addr)
 	bprintf (PRINT_NORMAL, _T("%5.5x, rb\n"), addr);
 #endif
 
-	if (membase[ READ][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[ READ][addr >> PAGE_SHIFT] != nullptr) {
 		return membase[READ][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND];
 	}
 
@@ -206,7 +206,7 @@ UINT32 ArmReadLong(UINT32 addr)
 	bprintf (PRINT_NORMAL, _T("%5.5x, rl\n"), addr);
 #endif
 
-	if (membase[ READ][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[ READ][addr >> PAGE_SHIFT] != nullptr) {
 		return BURN_ENDIAN_SWAP_INT32(*((UINT32*)(membase[ READ][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND))));
 	}
 
@@ -245,7 +245,7 @@ UINT32 ArmFetchLong(UINT32 addr)
 	}
 #endif
 
-	if (membase[FETCH][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[FETCH][addr >> PAGE_SHIFT] != nullptr) {
 		return BURN_ENDIAN_SWAP_INT32(*((UINT32*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND))));
 	}
 
@@ -284,11 +284,11 @@ void Arm_write_rom_byte(UINT32 addr, UINT8 data)
 	addr &= MAX_MASK;
 
 	// write to rom & ram
-	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[WRITE][addr >> PAGE_SHIFT] != nullptr) {
 		membase[WRITE][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND] = data;
 	}
 
-	if (membase[READ][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[READ][addr >> PAGE_SHIFT] != nullptr) {
 		membase[READ][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND] = data;
 	}
 
@@ -311,14 +311,14 @@ void ArmInit(INT32 /*CPU*/) // only one cpu supported
 		memset (membase[i], 0, PAGE_COUNT * sizeof(UINT8**));
 	}
 
-	pWriteLongHandler = NULL;
-	pWriteByteHandler = NULL;
-	pReadLongHandler = NULL;
-	pReadByteHandler = NULL;
+	pWriteLongHandler = nullptr;
+	pWriteByteHandler = nullptr;
+	pReadLongHandler = nullptr;
+	pReadByteHandler = nullptr;
 
 	CpuCheatRegister(0, &ArmConfig);
 
-	pArmSpeedHackCallback = NULL;
+	pArmSpeedHackCallback = nullptr;
 	ArmSpeedHackAddress = ~0;
 }
 
@@ -333,7 +333,7 @@ void ArmExit()
 	for (INT32 i = 0; i < 3; i++) {
 		if (membase[i]) {
 			free (membase[i]);
-			membase[i] = NULL;
+			membase[i] = nullptr;
 		}
 	}
 	

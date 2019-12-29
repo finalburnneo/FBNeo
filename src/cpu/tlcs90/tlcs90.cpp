@@ -2587,7 +2587,7 @@ void t90_timer4_callback(INT32 )
 
 	// Overflow
 
-	if ( cpustate->timer_value == 0 )
+	if ( cpustate->timer_value == nullptr )
 	{
 //      	logerror("CPU Timer 4 overflow\n");
 	}

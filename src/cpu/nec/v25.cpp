@@ -170,7 +170,7 @@ void v25_open(int cpu)
 
 void v25_close()
 {
-	sChipsPtr = NULL;
+	sChipsPtr = nullptr;
 }
 
 
@@ -456,13 +456,13 @@ void v25_common_init(int)
 
 	memset(nec_state, 0, sizeof(*nec_state));
 
-	nec_state->decode = NULL;
+	nec_state->decode = nullptr;
 }
 
 void v25_set_decode(unsigned char *table)
 {
 	sChipsPtr->decode = table;
-	sChipsPtr->mode_state = sChipsPtr->MF = (table != NULL) ? 0 : 1;
+	sChipsPtr->mode_state = sChipsPtr->MF = (table != nullptr) ? 0 : 1;
 }
 
 unsigned int v25_total_cycles()

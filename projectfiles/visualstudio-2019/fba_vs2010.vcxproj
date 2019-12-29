@@ -1783,7 +1783,7 @@ del build_details.exe
       <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>user32.lib;gdi32.lib;comdlg32.lib;comctl32.lib;shell32.lib;winmm.lib;ole32.lib;shlwapi.lib;advapi32.lib;setupapi.lib;vfw32.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>

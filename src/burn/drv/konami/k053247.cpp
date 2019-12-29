@@ -1133,7 +1133,7 @@ void k053247_draw_yxloop_gx(
 
 void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, INT32 code, UINT16 *gx_spriteram, INT32 offs,
 		INT32 color, INT32 alpha, INT32 drawmode, INT32 zcode, INT32 pri,
-		INT32 /*primask*/, INT32 /*shadow*/, UINT8 */*drawmode_table*/, UINT8 */*shadowmode_table*/, INT32 /*shdmask*/)
+		INT32 /*primask*/, INT32 /*shadow*/, UINT8* /*drawmode_table*/, UINT8* /*shadowmode_table*/, INT32 /*shdmask*/)
 	{
 		INT32 xa,ya,ox,oy,flipx,flipy,mirrorx,mirrory,zoomx,zoomy,scalex,scaley,nozoom;
 		INT32 temp, temp4;

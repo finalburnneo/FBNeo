@@ -1090,6 +1090,7 @@ static UINT32 opNEGB(void) /* TRUSTED  (C too!)*/
 	modWriteValB = 0;
 	SUBB(modWriteValB, (INT8)f12Op1);
 	_CY = modWriteValB ? 1 : 0;
+
 	F12WriteSecondOperand(0);
 	F12END();
 }
@@ -1101,6 +1102,7 @@ static UINT32 opNEGH(void) /* TRUSTED  (C too!)*/
 	modWriteValH = 0;
 	SUBW(modWriteValH, (INT16)f12Op1);
 	_CY = modWriteValH ? 1 : 0;
+
 	F12WriteSecondOperand(1);
 	F12END();
 }
@@ -1112,6 +1114,7 @@ static UINT32 opNEGW(void) /* TRUSTED  (C too!)*/
 	modWriteValW = 0;
 	SUBL(modWriteValW, (INT32)f12Op1);
 	_CY = modWriteValW ? 1 : 0;
+
 	F12WriteSecondOperand(2);
 	F12END();
 }

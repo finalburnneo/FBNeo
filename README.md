@@ -16,7 +16,7 @@ Raspberry Pi [build instructions](README-PI.md).
 
 macOS [build instructions](README-macOS.md) and [releases](https://github.com/fbn-mac/FBNeo/releases).
 
-[LibRetro port](https://github.com/libretro/FBNeo) with builds availble via retroarch for most platforms.
+[LibRetro port](https://github.com/libretro/FBNeo) with builds availble via [RetroArch](https://www.retroarch.com/) for most platforms.
 
 For SDL1.2 builds just type `make sdl` (requires SDL1.2 and GCC, make, perl and nasm)
 
@@ -34,9 +34,9 @@ Many of the developers of this project also worked on FB Alpha. Due to a [contro
 
 We welcome pull requests and other submissions from anyone. We maintain a list of known bugs and features that would be nice to add on the [issue tracker](https://github.com/finalburnneo/FBNeo/issues), some of which would be a good starting point for new contributors. 
 
-One of the focuses of FBNeo is ensuring that the codebase is compilable on older systems. This is for many reasons, not least because older hardware still has a use outside of landfill or being stored in a recycling center, but also it can be a lot of fun porting and running FBNeo on PC hardware. Currently, this means we will always aim for [C++03 compliance](https://en.wikipedia.org/wiki/C%2B%2B03) as a minimum. Any pull requests should keep this in mind!
+One of the focuses of FBNeo is ensuring that the codebase is compilable on older systems. This is for many reasons, not least because older hardware still has a use outside of landfill or being stored in a recycling center, but also it can be a lot of fun porting and running FBNeo to other platforms. Currently, this means we will always aim for [C++03 compliance](https://en.wikipedia.org/wiki/C%2B%2B03) as a minimum. Any pull requests should keep this in mind!
 
-## notes on contributions
+## Notes on Contributions
 
 In the root of the source tree there is an [.editorconfig](https://editorconfig.org/) that mandates:
 
@@ -58,7 +58,21 @@ void FunctionName(UINT8 var1, UINT16 var2)
 }
 
 ```
-## porting
+## Source tree structure
+
+The source for FBNeo is layed out in a similar way to how things were in the days of the original FinalBurn. It's just that there are now more of them as the emulator has grown significantly.
+```
+src/
+--/burn			<-- This is where the emulation code lives
+----/devices		<-- This is where emulated devices (EEPROMS, etc) live
+----/drv		<-- This is where the drivers for Games and Systems live
+----/snd		<-- This is where the emulation for sound chips and other sound generate devices live
+--/burner		<-- This is where the frontend code lives
+--/cpu			<-- This is where the CPU emulation lives
+--/dep			<-- This is where external dependencies live (such as libpng)
+--/intf			<-- This is where the platform specific code for each platform that FBNeo supports live (e.g. Video and Sound output)
+```
+## Porting FBNeo to different systems
 
 In the main source tree, you will see in the intf directory various implementations for different platforms. You should look in here when porting to new platforms. We also encourage new ports, and are happy to have them merged in to the main sourcetree. There is probably a project there for someone to re-implement some of the older ports using the intf standard, should they want to.
 
@@ -75,4 +89,4 @@ signed int64	INT64;
 unsigned int64  UINT64;
 
 ```
-
+It is recommended that you take a look at the other #defines and things in the header files in Burn and Burner, and don't forget that some of the existing code in the intf directory will come in handy for new ports. 

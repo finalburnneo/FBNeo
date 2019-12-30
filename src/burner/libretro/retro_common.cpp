@@ -470,9 +470,8 @@ void evaluate_neogeo_bios_mode(const char* drvname)
 			is_bios_dipswitch_found = true;
 			if (dipswitch_core_options[dip_idx].values.size() > 0)
 			{
-				// values[0] is the default value of the dipswitch
 				// if the default is different than 0, this means that a different Bios is needed
-				if (dipswitch_core_options[dip_idx].values[0].bdi.nSetting != 0x00)
+				if (dipswitch_core_options[dip_idx].default_bdi.nSetting != 0x00)
 				{
 					is_neogeo_needs_specific_bios = true;
 					break;
@@ -581,7 +580,7 @@ void set_environment()
 				vars[idx_var].values[dip_value_idx].value = dipswitch_core_options[dip_idx].values[dip_value_idx].friendly_name.c_str();
 			}
 			vars[idx_var].values[dipswitch_core_options[dip_idx].values.size()].value = NULL;
-			vars[idx_var].default_value = dipswitch_core_options[dip_idx].default_value.c_str();
+			vars[idx_var].default_value = dipswitch_core_options[dip_idx].default_bdi.szText;
 			idx_var++;
 		}
 	}

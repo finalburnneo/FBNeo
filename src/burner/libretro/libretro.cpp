@@ -321,7 +321,7 @@ static int InpDIPSWInit()
 
 				if (is_default_value)
 				{
-					dip_option->default_value = dip_value->bdi.szText;
+					dip_option->default_bdi = dip_value->bdi;
 				}
 
 				values_count++;

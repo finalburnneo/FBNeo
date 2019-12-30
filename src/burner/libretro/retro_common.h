@@ -71,7 +71,7 @@ struct dipswitch_core_option
 {
 	std::string option_name;
 	std::string friendly_name;
-	std::string default_value;
+	BurnDIPInfo default_bdi;
 	std::vector<dipswitch_core_option_value> values;
 };
 

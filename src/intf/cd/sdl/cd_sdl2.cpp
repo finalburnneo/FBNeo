@@ -301,7 +301,7 @@ static int cdimgParseCueFile()
 	// derive .bin name from .cue filename (it gets the actual name from the .cue, below)
 	length = _tcslen(CDEmuImage);
 	_tcscpy(cdimgTOC->Image, CDEmuImage);
-	_tcscpy(cdimgTOC->Image + length - 4, _T(".bin"));
+	_tcscpy(cdimgTOC->Image + length - 4, _T(".img"));
 	//bprintf(0, _T("Image file: %s\n"),cdimgTOC->Image);
 
 	h = _tfopen(CDEmuImage, _T("rt"));
@@ -322,9 +322,9 @@ static int cdimgParseCueFile()
 		}
 
 		s = szLine;
-
+//TODO: This needs to check for the img/bin filename from the cue but also include the path
 		// file info
-		if ((t = LabelCheck(s, _T("FILE"))) != 0) {
+/*		if ((t = LabelCheck(s, _T("FILE"))) != 0) {
 			s = t;
 
 			TCHAR* szQuote;
@@ -341,7 +341,7 @@ static int cdimgParseCueFile()
 			}
 			continue;
 		}
-
+*/
 		// track info
 		if ((t = LabelCheck(s, _T("TRACK"))) != 0) {
 			s = t;

@@ -509,6 +509,22 @@ int gui_process()
 					startGame++;
 				}
 			}
+			if (e.type == SDL_MOUSEBUTTONDOWN)
+			{
+				switch (e.button.button)
+				{
+				case SDL_BUTTON_LEFT:
+					if (gameAv[nBurnDrvActive])
+					{
+						return gametoplay;
+					}
+					break;
+
+				case SDL_BUTTON_RIGHT:
+					quit = 1;
+					break;
+				}
+			}
 			if (e.type == SDL_KEYDOWN)
 			{
 				switch (e.key.keysym.sym)
@@ -548,22 +564,7 @@ int gui_process()
 				}
 				break;
 			}
-			if (e.type == SDL_MOUSEBUTTONDOWN)
-			{
-				switch (e.button.button)
-				{
-				case SDL_BUTTON_LEFT:
-					if (gameAv[nBurnDrvActive])
-					{
-						return gametoplay;
-					}
-					break;
 
-				case SDL_BUTTON_RIGHT:
-					quit = 1;
-					break;
-				}
-			}
 		}
 
 		// TODO: Need to put more clamping logic here....

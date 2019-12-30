@@ -35,7 +35,7 @@
 //       + fixes the skew problem when lines weren't a multiple of 4
 //
 // 0.6 - added flipped screen support, fixed a bunch of bugs
-//       added to FBAlpha 2.97.37
+//       added to FBNeo 2.97.37
 //
 // 0.5 - fixed a minor bug regarding video stream header
 //       (some applications chose wrong decompressor while opening avi)

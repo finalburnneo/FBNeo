@@ -81,7 +81,7 @@ Ensoniq OTIS - ES5505                                            Ensoniq OTTO - 
 ***********************************************************************************************/
 
 //
-// FBAlpha notes: (Nov.21.2016)
+// FBNeo notes: (Nov.21.2016)
 //
 //   ES5505Write() only supports 16bit writes.
 //

@@ -17,6 +17,9 @@ static unsigned int gamesperscreen = 12;
 static unsigned int gamesperscreen_halfway = 6;
 static unsigned int gametoplay = 0;
 
+const int JOYSTICK_DEAD_ZONE = 8000;
+SDL_Joystick* gGameController = NULL;
+
 #define NUMSTARS  512
 
 static float star_x[NUMSTARS];
@@ -320,6 +323,9 @@ void RefreshRomList(bool force_rescan)
 
 void gui_exit()
 {
+	SDL_JoystickClose( gGameController );
+	gGameController = NULL;
+
 	kill_inline_font();
 	SDL_DestroyTexture(titleTexture);
 	SDL_DestroyRenderer(sdlRenderer);
@@ -331,6 +337,24 @@ void gui_init()
 {
 	gameAv = (char*)malloc(nBurnDrvCount);
 	memset(gameAv, 0, nBurnDrvCount);
+
+	if( SDL_NumJoysticks() < 1 )
+	{
+		printf( "Warning: No joysticks connected!\n" );
+	}
+	else
+	{
+		//Load joystick
+		gGameController = SDL_JoystickOpen( 0 );
+		if( gGameController == NULL )
+		{
+			printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
+		}
+		else
+		{
+			printf("Found a Joystick\n");
+		}
+	}
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -492,6 +516,15 @@ int gui_process()
 
 	while (!quit)
 	{
+		if (SDL_JoystickGetAxis(gGameController, 1)<= -JOYSTICK_DEAD_ZONE)
+		{
+			startGame--;
+		}
+		else if (SDL_JoystickGetAxis(gGameController, 1)>=JOYSTICK_DEAD_ZONE)
+		{
+			startGame++;
+		}
+
 		while (SDL_PollEvent(&e))
 		{
 			if (e.type == SDL_QUIT)

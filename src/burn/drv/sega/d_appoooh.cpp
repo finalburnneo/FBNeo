@@ -1,4 +1,4 @@
-// FB Alpha Appoooh driver module by vbt
+// FB Neo Appoooh driver module by vbt
 // Based on MAME driver by Tatsuyuki Satoh
 
 #include "tiles_generic.h"

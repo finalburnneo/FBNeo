@@ -1,4 +1,4 @@
-// FB Alpha Pac-Land driver module
+// FB Neo Pac-Land driver module
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"

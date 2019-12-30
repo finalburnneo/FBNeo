@@ -1,4 +1,4 @@
-// FB Alpha Legend of Kage driver Module
+// FB Neo Legend of Kage driver Module
 // Based on MAME driver by Phil Stroffolino
 
 #include "tiles_generic.h"

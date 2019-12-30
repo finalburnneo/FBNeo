@@ -1,4 +1,4 @@
-// FB Alpha City Connection driver module
+// FB Neo City Connection driver module
 // Based on MAME driver by Mirko Buffoni
 
 #include "tiles_generic.h"

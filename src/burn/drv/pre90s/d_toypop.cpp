@@ -1,4 +1,4 @@
-// FB Alpha "Universal System 16" hardware driver module
+// FB Neo "Universal System 16" hardware driver module
 // Based on MAME driver by Angelo Salese
 
 #include "tiles_generic.h"

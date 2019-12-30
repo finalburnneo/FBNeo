@@ -1,4 +1,4 @@
-// FB Alpha Lethal Enforcers driver module
+// FB Neo Lethal Enforcers driver module
 // Based on MAME driver by R. Belmont and Nicola Salmoria
 // Notes:
 //   japan version needs sprites fixed (x flipped not y flipped)

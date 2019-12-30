@@ -1,4 +1,4 @@
-// Millipede emu-layer for FB Alpha by dink, based on Ivan Mackintosh's Millipede/Centipede emulator and MAME driver.
+// Millipede emu-layer for FB Neo by dink, based on Ivan Mackintosh's Millipede/Centipede emulator and MAME driver.
 // Todo:
 //   Screen flip needs fixing (2p coctail mode) [move joystick <- -> or press OK to continue!]
 

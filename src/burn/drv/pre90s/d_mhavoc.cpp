@@ -1,4 +1,4 @@
-// FB Alpha Major Havoc driver module
+// FB Neo Major Havoc driver module
 // Based on MAME driver by Mike Appolo
 
 #include "tiles_generic.h"

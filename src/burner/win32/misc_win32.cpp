@@ -165,7 +165,7 @@ void RegisterExtensions(bool bCreateKeys)
 		MyRegCreateKeys(4, myKeynames3, myKeys);
 		_stprintf(myKeyValue, _T("\"%s\" \"%%1\" -w"), szExename);
 		RegSetValueEx(myKeys[3], NULL, 0, REG_SZ, (BYTE*)myKeyValue, (_tcslen(myKeyValue) + 1) * sizeof(TCHAR));
-		_stprintf(myKeyValue, _T("FB Alpha file"));
+		_stprintf(myKeyValue, _T("FB Neo file"));
 		RegSetValueEx(myKeys[0], NULL, 0, REG_SZ, (BYTE*)myKeyValue, (_tcslen(myKeyValue) + 1) * sizeof(TCHAR));
 		MyRegCloseKeys(4, myKeys);
 

@@ -1,4 +1,4 @@
-// Dr. Micro emu-layer for FB Alpha by dink, based on the MAME driver by Uki.
+// Dr. Micro emu-layer for FB Neo by dink, based on the MAME driver by Uki.
 
 #include "tiles_generic.h"
 #include "driver.h"

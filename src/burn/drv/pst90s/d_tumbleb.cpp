@@ -1,4 +1,4 @@
-// FB Alpha Tumble Pop driver module
+// FB Neo Tumble Pop driver module
 // Based on MAME driver by David Haywood, Bryan McPhail
 
 #include "tiles_generic.h"

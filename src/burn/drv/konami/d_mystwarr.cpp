@@ -1,4 +1,4 @@
-// FB Alpha Pre-Gx driver module
+// FB Neo Pre-Gx driver module
 // based on MAME driver by R. Belmont, Phil Stroffolino, Acho A. Tang, Nicola Salmoria
 
 /*

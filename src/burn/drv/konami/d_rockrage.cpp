@@ -1,4 +1,4 @@
-// FB ALpha Rock'n Rage driver module
+// FB Neo Rock'n Rage driver module
 // Based on MAME driver by Manuel Abadia
 
 #include "tiles_generic.h"

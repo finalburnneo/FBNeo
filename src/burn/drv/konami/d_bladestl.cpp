@@ -1,4 +1,4 @@
-// FB Alpha Blades of Steel driver module
+// FB Neo Blades of Steel driver module
 // Based on MAME driver by Manuel Abadia
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha The Simpsons driver module
+// FB Neo The Simpsons driver module
 // Based on MAME driver by Ernesto Corvi and various others
 
 #include "tiles_generic.h"

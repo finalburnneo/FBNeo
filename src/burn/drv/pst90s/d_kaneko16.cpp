@@ -1,4 +1,4 @@
-// FB Alpha Kaneko 16-bit driver module
+// FB Neo Kaneko 16-bit driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

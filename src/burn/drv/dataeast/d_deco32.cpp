@@ -1,4 +1,4 @@
-// FB Alpha Deco32 driver module
+// FB Neo Deco32 driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

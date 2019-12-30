@@ -1,4 +1,4 @@
-// FB Alpha Crude Buster / Two Crude drive module
+// FB Neo Crude Buster / Two Crude drive module
 // Based on MAME driver by by Bryan McPhail
 
 #include "tiles_generic.h"

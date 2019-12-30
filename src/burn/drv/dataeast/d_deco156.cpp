@@ -1,4 +1,4 @@
-// FB Alpha Data East 156 CPU-based games driver module
+// FB Neo Data East 156 CPU-based games driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

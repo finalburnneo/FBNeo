@@ -1,4 +1,4 @@
-// FB Alpha UPL (Ninja Kid 2) driver module
+// FB Neo UPL (Ninja Kid 2) driver module
 // Based on MAME driver by Roberto Ventura, Leandro Dardini, Yochizo, Nicola Salmoria
 
 #include "tiles_generic.h"

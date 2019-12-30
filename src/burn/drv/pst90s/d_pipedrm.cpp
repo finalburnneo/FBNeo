@@ -1,4 +1,4 @@
-// FB Alpha Pipe Dream & Hatris driver module
+// FB Neo Pipe Dream & Hatris driver module
 // Based on MAME driver by Bryan McPhail and Aaron Giles
 
 #include "tiles_generic.h"

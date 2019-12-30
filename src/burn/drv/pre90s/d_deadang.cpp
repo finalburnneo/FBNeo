@@ -1,4 +1,4 @@
-// FB Alpha Dead Angle driver module
+// FB Neo Dead Angle driver module
 // Based on MAME driver by Bryan McPhail and David Haywood
 
 #include "tiles_generic.h"

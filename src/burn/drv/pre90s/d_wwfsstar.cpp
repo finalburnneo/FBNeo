@@ -1,4 +1,4 @@
-// FB Alpha WWF Superstars driver module
+// FB Neo WWF Superstars driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

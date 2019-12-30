@@ -1,4 +1,4 @@
-// FB Alpha Snow Bros. 2 driver module
+// FB Neo Snow Bros. 2 driver module
 // Driver and emulation by Jan Klaassen
 
 #include "toaplan.h"

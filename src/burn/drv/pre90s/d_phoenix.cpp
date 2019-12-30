@@ -1,4 +1,4 @@
-// FB Alpha Phoenix driver module
+// FB Neo Phoenix driver module
 // Based on MAME driver by Richard Davies
 
 #include "tiles_generic.h"

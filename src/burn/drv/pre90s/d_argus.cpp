@@ -1,4 +1,4 @@
-// FB Alpha NMK Argus driver module
+// FB Neo NMK Argus driver module
 // Based on MAME driver by Yochizo
 
 #include "tiles_generic.h"

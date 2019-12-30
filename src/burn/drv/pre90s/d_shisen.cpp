@@ -1,4 +1,4 @@
-// FB Alpha Shinsen / Match-It driver module
+// FB Neo Shinsen / Match-It driver module
 // Based on MAME driver by Nicola Salmoria
 
 // sound hardware copied from m72 driver

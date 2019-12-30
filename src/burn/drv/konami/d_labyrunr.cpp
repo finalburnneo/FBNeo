@@ -1,4 +1,4 @@
-// FB Alpha Labyrinth Runner driver module
+// FB Neo Labyrinth Runner driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

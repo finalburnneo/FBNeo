@@ -1,4 +1,4 @@
-// FB Alpha Scooter Shooter driver module
+// FB Neo Scooter Shooter driver module
 // Based on MAME driver by Pierpaolo Prazzoli
 
 #include "tiles_generic.h"

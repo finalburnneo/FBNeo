@@ -1,4 +1,4 @@
-// FB Alpha Atari Akka Arrh driver module
+// FB Neo Atari Akka Arrh driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

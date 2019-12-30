@@ -1,4 +1,4 @@
-// FB Alpha Kick & Run driver module
+// FB Neo Kick & Run driver module
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"

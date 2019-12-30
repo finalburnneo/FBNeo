@@ -1,4 +1,4 @@
-// FB Alpha One + Two driver module
+// FB Neo One + Two driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

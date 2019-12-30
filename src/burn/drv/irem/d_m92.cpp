@@ -1,4 +1,4 @@
-// FB Alpha Irem M92 system driver
+// FB Neo Irem M92 system driver
 // Based on MAME driver by Bryan McPhail
 // Original port from MAME by OopsWare
 // Overhauled and tuned up by dink in August 2014, R-Type LEO title intro-effect fixed Dec.2016

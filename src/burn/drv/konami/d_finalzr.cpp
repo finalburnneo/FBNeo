@@ -1,4 +1,4 @@
-// FB Alpha Finalizer driver module
+// FB Neo Finalizer driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

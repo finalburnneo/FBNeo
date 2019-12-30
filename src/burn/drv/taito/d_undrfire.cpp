@@ -1,4 +1,4 @@
-// FB Alpha Taito Under Fire / Chase Bombers
+// FB Neo Taito Under Fire / Chase Bombers
 // Based on MAME driver by Bryan McPhail and David Graves
 
 // do-to:

@@ -1,4 +1,4 @@
-// FB Alpha Sega System 24 driver module
+// FB Neo Sega System 24 driver module
 // Based on MAME driver by Olivier Galibert
 
 // Needs inputs hooked up...

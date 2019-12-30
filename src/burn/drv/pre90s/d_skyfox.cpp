@@ -1,4 +1,4 @@
-// FB Alpha Skyfox Driver Module
+// FB Neo Skyfox Driver Module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

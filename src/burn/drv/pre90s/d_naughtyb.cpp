@@ -1,4 +1,4 @@
-// FB Alpha Naughty Boy driver module
+// FB Neo Naughty Boy driver module
 // Based on MAME driver by Brad Oliver, Sal and John Bugliarisi, Paul Priest
 
 #include "tiles_generic.h"

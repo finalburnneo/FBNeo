@@ -1,4 +1,4 @@
-// FB Alpha 4 Enraya driver module
+// FB Neo 4 Enraya driver module
 // Based on MAME driver by Tomasz Slanina
 
 #include "tiles_generic.h"

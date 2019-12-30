@@ -1,4 +1,4 @@
-// FB Alpha Exzisus driver module
+// FB Neo Exzisus driver module
 // Based on MAME driver by Yochizo
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha WWF WrestleFest (Double Dragon 3 driver) driver module
+// FB Neo WWF WrestleFest (Double Dragon 3 driver) driver module
 // based on MAME driver by Bryan McPhail, David Haywood
 
 #include "tiles_generic.h"

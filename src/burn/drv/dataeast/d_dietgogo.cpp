@@ -1,4 +1,4 @@
-// FB Alpha Diet Go Go driver module
+// FB Neo Diet Go Go driver module
 // Based on MAME driver by Bryan McPhail and David Haywood
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Baraduke driver module
+// FB Neo Baraduke driver module
 // Based on MAME driver by Manuel Abadia and various others
 
 #include "tiles_generic.h"

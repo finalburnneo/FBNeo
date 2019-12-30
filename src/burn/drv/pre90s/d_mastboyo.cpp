@@ -1,4 +1,4 @@
-// FB Alpha Master Boy (original) driver module
+// FB Neo Master Boy (original) driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

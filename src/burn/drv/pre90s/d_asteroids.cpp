@@ -1,4 +1,4 @@
-// FB Alpha 1942 driver module
+// FB Neo 1942 driver module
 // Based on MAME driver by Brad Oliver, Bernd Wiebelt, Allard van der Bas
 
 // not working (all use same read handler/inputs)

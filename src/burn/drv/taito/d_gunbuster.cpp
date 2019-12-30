@@ -1,4 +1,4 @@
-// FB Alpha Taito Gunbuster driver module
+// FB Neo Taito Gunbuster driver module
 // Based on MAME driver by Bryan McPhail and David Graves
 
 #include "tiles_generic.h"

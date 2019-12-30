@@ -235,7 +235,7 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 			char szData[32];
 			sprintf(szData, "%c%c%c%c%c%c%c", Data[0x100], Data[0x101], Data[0x102], Data[0x103], Data[0x104], Data[0x105], Data[0x106]);
 
-			if(!strncmp(szData, "NEO-GEO", 7))
+			if(!strncmp(szData, "NEO GEO", 7))
 			{
 				_tcscpy(ngcd_list[nListItems].szISOFile, pszFile);
 

@@ -1,4 +1,4 @@
-// FB Alpha Monkey Magic driver module
+// FB Neo Monkey Magic driver module
 // Based on MAME driver by Dirk Best
 
 #include "tiles_generic.h"

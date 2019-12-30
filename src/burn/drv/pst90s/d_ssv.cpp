@@ -1,4 +1,4 @@
-// FB Alpha (SSV) Seta, Sammy, and Visco driver module
+// FB Neo (SSV) Seta, Sammy, and Visco driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

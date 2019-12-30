@@ -1,4 +1,4 @@
-// FB Alpha Himeshikibu & Android driver module
+// FB Neo Himeshikibu & Android driver module
 // Based on MAME driver by Uki and David Haywood
 
 #include "tiles_generic.h"

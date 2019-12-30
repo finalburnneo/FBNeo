@@ -1,4 +1,4 @@
-// FB Alpha Best League (Big Striker bootleg) driver module
+// FB Neo Best League (Big Striker bootleg) driver module
 // Based on MAME driver by David Haywood & Angelo Salese
 
 #include "tiles_generic.h"

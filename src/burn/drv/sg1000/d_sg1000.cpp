@@ -1,4 +1,4 @@
-// FB Alpha Sega SG-1000-based arcade driver module
+// FB Neo Sega SG-1000-based arcade driver module
 // Based on MAME driver by Tomasz Slanina
 // Code by iq_132, fixups & bring up-to-date by dink Aug 18, 2014
 

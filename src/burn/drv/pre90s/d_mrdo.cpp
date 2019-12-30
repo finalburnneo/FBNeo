@@ -1,4 +1,4 @@
-// FB Alpha Mr. Do! driver module
+// FB Neo Mr. Do! driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

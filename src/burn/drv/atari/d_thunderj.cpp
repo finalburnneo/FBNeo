@@ -1,4 +1,4 @@
-// FB Alpha Atari ThunderJaws driver module
+// FB Neo Atari ThunderJaws driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

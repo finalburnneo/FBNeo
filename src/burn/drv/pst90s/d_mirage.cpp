@@ -1,4 +1,4 @@
-// FB Alpha Mirage Youjuu Mahjongden  driver module
+// FB Neo Mirage Youjuu Mahjongden  driver module
 // Based on MAME driver by Angelo Salese
 
 #include "tiles_generic.h"

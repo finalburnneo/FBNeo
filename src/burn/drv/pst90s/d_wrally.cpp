@@ -1,4 +1,4 @@
-// FB Alpha World Rally driver module
+// FB Neo World Rally driver module
 // Based on MAME driver by Manuel Abadia, Mike Coates, Nicola Salmoria, and Miguel Angel Horna
 
 // to do

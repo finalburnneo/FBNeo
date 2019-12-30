@@ -1,4 +1,4 @@
-// FB Alpha Eggs & Dommy driver module
+// FB Neo Eggs & Dommy driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

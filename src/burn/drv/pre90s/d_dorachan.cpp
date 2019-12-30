@@ -1,4 +1,4 @@
-// FB Alpha Dora-chan driver module
+// FB Neo Dora-chan driver module
 // Based on MAME driver by Tomasz Slanina
 
 #include "tiles_generic.h"

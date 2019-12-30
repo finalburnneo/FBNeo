@@ -1,4 +1,4 @@
-// FB Alpha  Quiz Olympic driver module
+// FB Neo  Quiz Olympic driver module
 // Based on MAME driver by Tomasz Slanina
 
 #include "tiles_generic.h"

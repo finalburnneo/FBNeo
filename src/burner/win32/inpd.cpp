@@ -607,7 +607,7 @@ static void SaveHardwarePreset()
 
 	if (nHardwareFlag == HARDWARE_SNK_NEOGEO) {
 		szFileName = szDefaultNeogeoFile;
-		szHardwareString = _T("Neo-Geo hardware");
+		szHardwareString = _T("Neo Geo hardware");
 	}
 
 	if (nHardwareFlag == HARDWARE_IGS_PGM) {

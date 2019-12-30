@@ -1,4 +1,4 @@
-// FB Alpha GI Joe driver module
+// FB Neo GI Joe driver module
 // Based on MAME driver by Olivier Galibert
 
 #include "tiles_generic.h"

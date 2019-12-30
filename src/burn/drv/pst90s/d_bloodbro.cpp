@@ -1,4 +1,4 @@
-// FB Alpha Blood Bros. driver module
+// FB Neo Blood Bros. driver module
 // Based on MAME driver by Carlos A. Lozano Baides and Richard Bush
 
 #include "tiles_generic.h"

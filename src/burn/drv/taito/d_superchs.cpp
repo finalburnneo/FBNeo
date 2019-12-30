@@ -1,4 +1,4 @@
-// Taito SuperChase driver for FB Alpha
+// Taito SuperChase driver for FB Neo
 // Based on MAME driver by Bryan McPhail, David Graves
 
 // Notes:

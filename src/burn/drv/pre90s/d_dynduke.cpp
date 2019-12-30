@@ -1,4 +1,4 @@
-// FB Alpha Dynamite Duke driver module
+// FB Neo Dynamite Duke driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

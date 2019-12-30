@@ -1,4 +1,4 @@
-// FB Alpha Taito En / F3 sound core
+// FB Neo Taito En / F3 sound core
 // Based on MAME sources by Bryan McPhail, Aaron Giles, R. Belmont, hap, Philip Bennett
 
 #include "burnint.h"

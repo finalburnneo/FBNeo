@@ -1,4 +1,4 @@
-// FB Alpha Juno First driver module
+// FB Neo Juno First driver module
 // Based on MAME driver by Chris Hardy
 
 #include "tiles_generic.h"

@@ -321,7 +321,7 @@ int PrintGlobalMemoryInfo()
 	AddLine(_T("Physical RAM: %7i KB (%4i MB) total, %7i KB (%4i MB) avail"), stat.dwTotalPhys / 1024, stat.dwTotalPhys / (1024 * 1024), stat.dwAvailPhys / 1024, stat.dwAvailPhys / (1024 * 1024));
 	AddLine(_T("Total RAM:    %7i KB (%4i MB) total, %7i KB (%4i MB) avail"), stat.dwTotalPageFile / 1024, stat.dwTotalPageFile / (1024 * 1024), stat.dwAvailPageFile / 1024, stat.dwAvailPageFile / (1024 * 1024));
 
-	// Information on FB Alpha memory usage
+	// Information on FB Neo memory usage
 	BOOL (WINAPI* pGetProcessMemoryInfo)(HANDLE, PPROCESS_MEMORY_COUNTERS, DWORD) = NULL;
 	HINSTANCE hPsapiDLL;
 
@@ -593,7 +593,7 @@ int PrintDisplayInfo()
 	return 0;
 }
 
-// Print FB Alpha settings
+// Print FB Neo settings
 int PrintFBAInfo()
 {
 	InterfaceInfo* pInfo;

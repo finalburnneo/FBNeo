@@ -1,4 +1,4 @@
-// FB Alpha Bagman driver module
+// FB Neo Bagman driver module
 // based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

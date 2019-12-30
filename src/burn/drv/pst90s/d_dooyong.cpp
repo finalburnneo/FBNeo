@@ -1,4 +1,4 @@
-// FB Alpha Dooyong driver module
+// FB Neo Dooyong driver module
 // Based on MAME driver by Nicola Salmoria
 
 /*

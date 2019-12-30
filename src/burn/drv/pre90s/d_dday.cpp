@@ -1,4 +1,4 @@
-// FB Alpha D-Day (Olympia) driver module
+// FB Neo D-Day (Olympia) driver module
 // Based on MAME driver by Zsolt Vasvari
 
 #include "tiles_generic.h"

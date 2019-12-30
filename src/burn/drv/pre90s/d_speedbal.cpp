@@ -1,4 +1,4 @@
-// FB Alpha Speed Ball / Music Ball driver module
+// FB Neo Speed Ball / Music Ball driver module
 // Based on MAME driver by Joseba Epalza and Andreas Naive
 
 #include "tiles_generic.h"

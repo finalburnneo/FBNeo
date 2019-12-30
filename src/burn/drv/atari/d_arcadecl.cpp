@@ -1,4 +1,4 @@
-// FB Alpha Atari Arcade Classics / Sparkz driver module
+// FB Neo Atari Arcade Classics / Sparkz driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

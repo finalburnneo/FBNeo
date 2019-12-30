@@ -1,4 +1,4 @@
-// FB Alpha Surprise Attack driver module
+// FB Neo Surprise Attack driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

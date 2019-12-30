@@ -1,4 +1,4 @@
-// FB Alpha Taito Qix driver module
+// FB Neo Taito Qix driver module
 // Based on MAME driver by Aaron Giles and Zsolt Vasvari
 
 #include "tiles_generic.h"

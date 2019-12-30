@@ -1,4 +1,4 @@
-// FB Alpha Berzerk driver module
+// FB Neo Berzerk driver module
 // Based on MAME driver by Zsolt Vasvari, Aaron Giles, R. Belmont, Jonathan Gevaryahu
 
 #include "tiles_generic.h"

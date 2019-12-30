@@ -1,4 +1,4 @@
-// FB Alpha Gradius 3 driver module
+// FB Neo Gradius 3 driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

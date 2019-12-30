@@ -1,4 +1,4 @@
-// FB Alpha Diverboy driver module
+// FB Neo Diverboy driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

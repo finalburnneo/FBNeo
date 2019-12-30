@@ -1,4 +1,4 @@
-// FB Alpha Atari Nite Driver Module
+// FB Neo Atari Nite Driver Module
 // Based on MAME driver by Mike Balfour
 
 // to do:

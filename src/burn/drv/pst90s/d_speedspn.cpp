@@ -1,4 +1,4 @@
-// FB Alpha Speed Spin driver module
+// FB Neo Speed Spin driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

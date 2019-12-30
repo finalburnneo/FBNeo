@@ -1,4 +1,4 @@
-// FB Alpha Bionic Commando driver module
+// FB Neo Bionic Commando driver module
 // Based on MAME driver by Steven Frew, Phil Stroffolino, and Paul Leaman
 
 #include "tiles_generic.h"

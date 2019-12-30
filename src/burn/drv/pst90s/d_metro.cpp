@@ -1,4 +1,4 @@
-// FB Alpha Metro driver module
+// FB Neo Metro driver module
 // Based on MAME driver by Luca Elia and David Haywood
 
 /*

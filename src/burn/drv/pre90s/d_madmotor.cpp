@@ -1,4 +1,4 @@
-// FB Alpha Mad Motor driver module
+// FB Neo Mad Motor driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

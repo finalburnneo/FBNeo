@@ -1,4 +1,4 @@
-// FB Alpha Kick Boy / Dacholer / Itazura Tenshi driver module
+// FB Neo Kick Boy / Dacholer / Itazura Tenshi driver module
 // Based on MAME driver by Pierpaolo Prazzoli
 
 #include "tiles_generic.h"

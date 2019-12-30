@@ -1,4 +1,4 @@
-// FB Alpha Technos "U.S. Championship V'ball driver module
+// FB Neo Technos "U.S. Championship V'ball driver module
 // Based on MAME driver by Paul "TBBle" Hampson
 
 #include "tiles_generic.h"

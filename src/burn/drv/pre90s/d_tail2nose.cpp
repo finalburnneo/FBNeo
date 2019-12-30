@@ -1,4 +1,4 @@
-// FB Alpha Tail to Nose driver module
+// FB Neo Tail to Nose driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

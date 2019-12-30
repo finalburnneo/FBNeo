@@ -1,4 +1,4 @@
-// FB Alpha SNK 6502-based hardware driver module
+// FB Neo SNK 6502-based hardware driver module
 // Based on MAME driver by Nicola Salmoria and Dan Boris
 
 #include "tiles_generic.h"

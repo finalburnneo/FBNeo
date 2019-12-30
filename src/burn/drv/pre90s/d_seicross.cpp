@@ -1,4 +1,4 @@
-// FB Alpha Frisky Tom / Seicross / Radical Radial driver module
+// FB Neo Frisky Tom / Seicross / Radical Radial driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

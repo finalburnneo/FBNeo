@@ -1,4 +1,4 @@
-// FB Alpha Blockade hardware driver module
+// FB Neo Blockade hardware driver module
 // Based on MAME driver by Frank Palazzolo and Dirk Best
 
 #include "tiles_generic.h"

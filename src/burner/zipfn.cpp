@@ -151,9 +151,9 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 			if (SzArEx_IsDir(&_7ZipFile->db, i)) continue;
 
 			if (len > tempSize) {
-				SZipFree(NULL, temp);
+				SzFree(NULL, temp);
 				tempSize = len;
-				temp = (UInt16 *)SZipAlloc(NULL, tempSize * sizeof(temp[0]));
+				temp = (UInt16 *)SzAlloc(NULL, tempSize * sizeof(temp[0]));
 				if (temp == 0) {
 					free(List);
 					List = NULL;
@@ -189,7 +189,7 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 
 		nCurrFile = 0;
 
-		SZipFree(NULL, temp);
+		SzFree(NULL, temp);
 	}
 #endif
 

@@ -56,7 +56,7 @@
     7Zip Memory / File handling (adapted from 7zfile.c/.h and 7zalloc.c/.h)
 ***************************************************************************/
 
-void *SZipAlloc(void *, size_t size)
+void *SzAlloc(void *, size_t size)
 {
 	if (size == 0)
 		return 0;
@@ -64,7 +64,7 @@ void *SZipAlloc(void *, size_t size)
 	return malloc(size);
 }
 
-void SZipFree(void *, void *address)
+void SzFree(void *, void *address)
 {
 	free(address);
 }
@@ -233,9 +233,9 @@ int _7z_search_crc_match(_7z_file *new_7z, UINT32 search_crc, const char* search
 
 		if (len > tempSize)
 		{
-			SZipFree(NULL, temp);
+			SzFree(NULL, temp);
 			tempSize = len;
-			temp = (UInt16 *)SZipAlloc(NULL, tempSize * sizeof(temp[0]));
+			temp = (UInt16 *)SzAlloc(NULL, tempSize * sizeof(temp[0]));
 			if (temp == 0)
 			{
 				return -1; // memory error
@@ -296,12 +296,12 @@ int _7z_search_crc_match(_7z_file *new_7z, UINT32 search_crc, const char* search
 			new_7z->uncompressed_length = size;
 			new_7z->crc = crc;
 
-			SZipFree(NULL, temp);
+			SzFree(NULL, temp);
 			return i;
 		}
 	}
 
-	SZipFree(NULL, temp);
+	SzFree(NULL, temp);
 	return -1;
 }
 
@@ -353,11 +353,11 @@ _7z_error _7z_file_open(const char *filename, _7z_file **_7z)
 	new_7z->archiveStream.file._7z_length = ftell(new_7z->archiveStream.file._7z_osdfile);
 	fseek(new_7z->archiveStream.file._7z_osdfile, 0, SEEK_SET);
 
-	new_7z->allocImp.Alloc = SZipAlloc;
-	new_7z->allocImp.Free = SZipFree;
+	new_7z->allocImp.Alloc = SzAlloc;
+	new_7z->allocImp.Free = SzFree;
 
-	new_7z->allocTempImp.Alloc = SZipAlloc;
-	new_7z->allocTempImp.Free = SZipFree;
+	new_7z->allocTempImp.Alloc = SzAlloc;
+	new_7z->allocTempImp.Free = SzFree;
 
 	if (InFile_Open(&new_7z->archiveStream.file, filename))
 	{

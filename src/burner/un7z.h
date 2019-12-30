@@ -59,11 +59,11 @@
 #include "7zCrc.h"
 #include "7zVersion.h"
 
+void* SzAlloc(void* p, size_t size);
+void SzFree(void* p, void* address);
 
-void *SZipAlloc(void *p, size_t size);
-void SZipFree(void *p, void *address);
-void *SZipAllocTemp(void *p, size_t size);
-void SZipFreeTemp(void *p, void *address);
+void* SzAllocTemp(void* p, size_t size);
+void SzFreeTemp(void* p, void* address);
 
 typedef struct
 {
@@ -73,14 +73,13 @@ typedef struct
 
 } CSzFile;
 
-
 typedef struct
 {
 	ISeqInStream s;
 	CSzFile file;
 } CFileSeqInStream;
 
-void FileSeqInStream_CreateVTable(CFileSeqInStream *p);
+void FileSeqInStream_CreateVTable(CFileSeqInStream* p);
 
 
 typedef struct
@@ -89,7 +88,7 @@ typedef struct
 	CSzFile file;
 } CFileInStream;
 
-void FileInStream_CreateVTable(CFileInStream *p);
+void FileInStream_CreateVTable(CFileInStream* p);
 
 
 typedef struct
@@ -98,8 +97,7 @@ typedef struct
 	CSzFile file;
 } CFileOutStream;
 
-void FileOutStream_CreateVTable(CFileOutStream *p);
-
+void FileOutStream_CreateVTable(CFileOutStream* p);
 
 
 /***************************************************************************
@@ -168,7 +166,7 @@ _7z_error _7z_file_open(const char *filename, _7z_file **_7z);
 void _7z_file_close(_7z_file *_7z);
 
 /* clear out all open _7Z files from the cache */
-void _7z_file_cache_clear(void);
+void _7z_file_cache_clear();
 
 
 /* ----- contained file access ----- */

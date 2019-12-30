@@ -3192,6 +3192,9 @@ DRV		BurnDrvCexplore;
 DRV		BurnDrvExplorer;
 DRV		BurnDrvExplbrkrk;
 DRV		BurnDrvExplbrkr;
+DRV		BurnDrvExprraidi;
+DRV		BurnDrvExprraidu;
+DRV		BurnDrvExprraid;
 DRV		BurnDrvExtrmatj;
 DRV		BurnDrvExtrmatur;
 DRV		BurnDrvExtrmatu;
@@ -11820,6 +11823,7 @@ DRV		BurnDrvpce_volfied;
 DRV		BurnDrvMSX_volguard;
 DRV		BurnDrvgowcaizr;
 DRV		BurnDrvMSX_vortraid;
+DRV		BurnDrvsms_voyage;
 DRV		BurnDrvgg_vrtroop;
 DRV		BurnDrvmd_vrtroop;
 DRV		BurnDrvVs10yardj;
@@ -11923,6 +11927,10 @@ DRV		BurnDrvWelltris;
 DRV		BurnDrvWeststry;		// no comment [NOT WORKING]
 DRV		BurnDrvWeststrya;		// no comment [NOT WORKING]
 #endif
+DRV		BurnDrvWexpressb1;
+DRV		BurnDrvWexpressb2;
+DRV		BurnDrvWexpressb3;
+DRV		BurnDrvWexpress;
 DRV		BurnDrvmd_whacacri;
 DRV		BurnDrvgg_wheelof;
 DRV		BurnDrvmd_wheelfor;
@@ -15773,6 +15781,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvExplorer,			// Explorer
 	&BurnDrvExplbrkrk,			// Explosive Breaker (Korea)
 	&BurnDrvExplbrkr,			// Explosive Breaker (World)
+	&BurnDrvExprraidi,			// Express Raider (Italy)
+	&BurnDrvExprraidu,			// Express Raider (US, rev 5)
+	&BurnDrvExprraid,			// Express Raider (World, Rev 4)
 	&BurnDrvExtrmatj,			// Extermination (Japan)
 	&BurnDrvExtrmatur,			// Extermination (US, Romstar)
 	&BurnDrvExtrmatu,			// Extermination (US, set 1)
@@ -24401,6 +24412,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_volguard,		// Volguard (Jpn)
 	&BurnDrvgowcaizr,			// Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer
 	&BurnDrvMSX_vortraid,		// Vortex Raider (Euro)
+	&BurnDrvsms_voyage,			// Voyage - A Sorceress Vacation (v1.0 build 684)
 	&BurnDrvgg_vrtroop,			// VR Troopers (Euro, USA)
 	&BurnDrvmd_vrtroop,			// VR Troopers (Euro, USA)
 	&BurnDrvVs10yardj,			// Vs 10-Yard Fight (Japan)
@@ -24504,6 +24516,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWeststry,			// West Story (bootleg of Blood Bros., set 1) [no comment, NOT WORKING]
 	&BurnDrvWeststrya,			// West Story (bootleg of Blood Bros., set 2) [no comment, NOT WORKING]
 #endif
+	&BurnDrvWexpressb1,			// Western Express (bootleg set 1)
+	&BurnDrvWexpressb2,			// Western Express (bootleg set 2)
+	&BurnDrvWexpressb3,			// Western Express (bootleg set 3)
+	&BurnDrvWexpress,			// Western Express (Japan, rev 4)
 	&BurnDrvmd_whacacri,		// Whac-a-Critter (USA) [no comment, NOT WORKING]
 	&BurnDrvgg_wheelof,			// Wheel of Fortune (USA)
 	&BurnDrvmd_wheelfor,		// Wheel of Fortune (USA)

@@ -3876,6 +3876,13 @@
 		<rom name="virtua fighter animation (brazil).bin" size="1048576" crc="57f1545b"/>
 		<driver status="good"/>
 	</game>
+	<game name="voyage">
+		<description>Voyage - A Sorceress Vacation (v1.0 build 684)</description>
+		<year>2019</year>
+		<manufacturer>SNAGS</manufacturer>
+		<rom name="Voyage - A Sorceress Vacation v1.0 (build 684).sms" size="524288" crc="80afc57a"/>
+		<driver status="good"/>
+	</game>
 	<game name="WaimanuSMS">
 		<description>Waimanu: Scary Monsters Saga</description>
 		<year>2015</year>

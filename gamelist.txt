@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12300 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12308 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3122,6 +3122,9 @@ This list contains all games supported by FinalBurn Neo.
 | explorer	|  	| Explorer						| scramble	| 1981	| bootleg	| Galaxian	| 					|
 | explbrkrk	|  	| Explosive Breaker (Korea)				| explbrkr	| 1992	| Kaneko	| Kaneko16	| 					|
 | explbrkr	|  	| Explosive Breaker (World)				| 		| 1992	| Kaneko	| Kaneko16	| 					|
+| exprraidi	|  	| Express Raider (Italy)				| exprraid	| 1986	| Data East Corp| Miscellaneous	| 					|
+| exprraidu	|  	| Express Raider (US, rev 5)				| exprraid	| 1986	| Data East USA	| Miscellaneous	| 					|
+| exprraid	|  	| Express Raider (World, Rev 4)				| 		| 1986	| Data East Corp| Miscellaneous	| 					|
 | extrmatnj	|  	| Extermination (Japan)					| extrmatn	| 1987	| Taito Corporat| Miscellaneous	| 					|
 | extrmatnur	|  	| Extermination (US, Romstar)				| extrmatn	| 1987	| Taito America | Miscellaneous	| 					|
 | extrmatnu	|  	| Extermination (US, set 1)				| extrmatn	| 1987	| Taito (World G| Miscellaneous	| 					|
@@ -11572,6 +11575,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_volguard	|  	| Volguard (Jpn)					| 		| 1985	| dB-Soft	| MSX		| 					|
 | gowcaizr	|  	| Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer| 		| 1995	| Technos	| Neo Geo MVS	| 					|
 | msx_vortraid	|  	| Vortex Raider (Euro)					| 		| 1988	| Eurosoft	| MSX		| 					|
+| sms_voyage	|  	| Voyage - A Sorceress Vacation (v1.0 build 684)	| 		| 2019	| SNAGS		| Sega Master Sy| 					|
 | gg_vrtroop	|  	| VR Troopers (Euro, USA)				| 		| 1995	| Sega		| Sega Game Gear| 					|
 | md_vrtroop	|  	| VR Troopers (Euro, USA)				| 		| 1994	| Sega		| Sega Megadrive| 					|
 | vs10yardj	|  	| Vs 10-Yard Fight (Japan)				| 10yard	| 1984	| Irem		| M58		| 					|
@@ -11669,6 +11673,10 @@ This list contains all games supported by FinalBurn Neo.
 | welltris	|  	| Welltris - Alexey Pajitnov's (World?, 2 players)	| 		| 1991	| Video System C| Miscellaneous	| 					|
 | weststry	| D NW	| West Story (bootleg of Blood Bros., set 1)		| bloodbro	| 1991	| bootleg (Datsu| Miscellaneous	| 					|
 | weststrya	| D NW	| West Story (bootleg of Blood Bros., set 2)		| bloodbro	| 1991	| bootleg (Datsu| Miscellaneous	| 					|
+| wexpressb1	|  	| Western Express (bootleg set 1)			| exprraid	| 1986	| bootleg	| Miscellaneous	| 					|
+| wexpressb2	|  	| Western Express (bootleg set 2)			| exprraid	| 1986	| bootleg	| Miscellaneous	| 					|
+| wexpressb3	|  	| Western Express (bootleg set 3)			| exprraid	| 1986	| bootleg	| Miscellaneous	| 					|
+| wexpress	|  	| Western Express (Japan, rev 4)			| exprraid	| 1986	| Data East Corp| Miscellaneous	| 					|
 | md_whacacri	|   NW	| Whac-a-Critter (USA)					| 		| 1993	| Realtec	| Sega Megadrive| 					|
 | gg_wheelof	|  	| Wheel of Fortune (USA)				| 		| 1992	| GameTek	| Sega Game Gear| 					|
 | md_wheelfor	|  	| Wheel of Fortune (USA)				| 		| 1992	| GameTek	| Sega Megadrive| 					|

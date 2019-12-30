@@ -246,7 +246,7 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 			char szData[32];
 			sprintf(szData, "%c%c%c%c%c%c%c", Data[0x100], Data[0x101], Data[0x102], Data[0x103], Data[0x104], Data[0x105], Data[0x106]);
 
-			if(!strncmp(szData, "NEO GEO", 7))
+			if(!strncmp(szData, "NEO-GEO", 7))
 			{
 				char id[32];
 				sprintf(id, "%02X%02X",  Data[0x108], Data[0x109]);

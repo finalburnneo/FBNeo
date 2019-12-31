@@ -1,4 +1,4 @@
-// FB Alpha Bishi Bashi driver module
+// FB Neo Bishi Bashi driver module
 // Based on MAME driver by R. Belmont
 
 #include "tiles_generic.h"
@@ -385,7 +385,7 @@ static UINT8 __fastcall bishi_read_byte(UINT32 address)
 	return 0;
 }
 
-static void bishi_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
+static void bishi_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32* /*flags*/)
 {
 	*color = layer_colorbase[layer] + ((*color & 0xf0));
 	*code &= 0x7fff;

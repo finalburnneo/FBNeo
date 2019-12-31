@@ -1,4 +1,4 @@
-// FB Alpha Wild West C.O.W.-Boys of Moo Mesa / Bucky O'Hare driver module
+// FB Neo Wild West C.O.W.-Boys of Moo Mesa / Bucky O'Hare driver module
 // Based on MAME driver by R. Belmont, Acho A. Tang
 
 #include "tiles_generic.h"
@@ -792,7 +792,7 @@ static const eeprom_interface moo_eeprom_interface =
 	0
 };
 
-static void moo_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
+static void moo_sprite_callback(INT32* /*code*/, INT32 *color, INT32 *priority)
 {
 	INT32 pri = (*color & 0x03e0) >> 4;
 
@@ -804,7 +804,7 @@ static void moo_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 	*color = sprite_colorbase | (*color & 0x001f);
 }
 
-static void moo_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
+static void moo_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32* /*flags*/)
 {
 	*color = layer_colorbase[layer] | (*color >> 2 & 0x0f);
 	if (layer == 1 && *code == 0xda02 && zmask == 0xffff) fogcnt = 10; // moomesa only

@@ -1,4 +1,4 @@
-// FB Alpha Mega Zone driver module
+// FB Neo Mega Zone driver module
 // Based on MAME driver by Chris Hardy
 
 #include "tiles_generic.h"

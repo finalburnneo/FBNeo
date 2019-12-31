@@ -1,4 +1,4 @@
-// FB Alpha Pass driver module
+// FB Neo Pass driver module
 // Based on MAME driver by David Haywood and Stephh
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// Fast Freddy / Jump Coaster HW emu-layer for FB Alpha, Based on the MAME driver by Zsolt Vasvari
+// Fast Freddy / Jump Coaster HW emu-layer for FB Neo, Based on the MAME driver by Zsolt Vasvari
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "flt_rc.h"

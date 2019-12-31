@@ -1,4 +1,4 @@
-// FB Alpha Crazy Balloon driver module
+// FB Neo Crazy Balloon driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Super Duck driver module
+// FB Neo Super Duck driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

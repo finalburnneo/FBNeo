@@ -1,4 +1,4 @@
-// FB Alpha Sega G80 Vector driver module
+// FB Neo Sega G80 Vector driver module
 // Based on MAME driver by Aaron Giles
 
 // to do:

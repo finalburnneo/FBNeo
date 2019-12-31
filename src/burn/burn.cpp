@@ -26,7 +26,7 @@ bool bBurnUseMMX;
 bool bBurnUseASMCPUEmulation = false;
 #endif
 
-// Just so we can start using FBNEO_DEBUG and keep backwards compatablity should whatever is left of FB Alpha rise from it's grave. 
+// Just so we can start using FBNEO_DEBUG and keep backwards compatablity should whatever is left of FB Neo rise from it's grave. 
 #if defined (FBNEO_DEBUG) && (!defined FBA_DEBUG)
 #define FBA_DEBUG 1
 #endif

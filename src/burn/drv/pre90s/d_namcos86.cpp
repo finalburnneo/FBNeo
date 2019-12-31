@@ -1,4 +1,4 @@
-// FB Alpha Namco System 86 driver module
+// FB Neo Namco System 86 driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

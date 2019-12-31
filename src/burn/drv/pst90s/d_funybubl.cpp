@@ -1,4 +1,4 @@
-// FB Alpha Funny Bubble driver module
+// FB Neo Funny Bubble driver module
 // Based on MAME driver by Pierpaolo Prazzoli and David Haywood
 
 #include "tiles_generic.h"

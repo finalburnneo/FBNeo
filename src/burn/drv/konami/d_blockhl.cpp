@@ -1,4 +1,4 @@
-// FB Alpha Block Hole driver module
+// FB Neo Block Hole driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Mosaic / Gold Fire II driver module
+// FB Neo Mosaic / Gold Fire II driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

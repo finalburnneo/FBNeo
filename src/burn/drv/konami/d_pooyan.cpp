@@ -1,4 +1,4 @@
-// FB Alpha Pooyan Driver Module
+// FB Neo Pooyan Driver Module
 // Based on MAME driver by Allard van der Bas, Mike Cuddy, Nicola Salmoria, Martin Binder, and Marco Cassili
 
 #include "tiles_generic.h"

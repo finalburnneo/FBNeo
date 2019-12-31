@@ -1,4 +1,4 @@
-// FB Alpha Vendetta / Crime Fighters 2 / Escape Kids driver module
+// FB Neo Vendetta / Crime Fighters 2 / Escape Kids driver module
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"

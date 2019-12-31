@@ -1,4 +1,4 @@
-// FB Alpha Bomby Car driver module
+// FB Neo Bomby Car driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

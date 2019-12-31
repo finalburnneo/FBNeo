@@ -138,7 +138,7 @@ static void PrintInputs()
 		if (bii.pVal && bii.szInfo && bii.szInfo[0]) {
 			// Translate X/Y axis to UDLR, TODO: (maybe) support mouse axis/buttons
 			if ((bii.nType & BIT_GROUP_ANALOG) && bii.pShortVal && *bii.pShortVal) {
-				if (stricmp(bii.szInfo+2, " x-axis")==0 && bii.nType == BIT_GROUP_ANALOG) {
+				if (_stricmp(bii.szInfo+2, " x-axis")==0 && bii.nType == BIT_GROUP_ANALOG) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
 						if ((INT16)*bii.pShortVal > 0x80)
 							UDLR[(bii.szInfo[1] - '1')][3] = 1;  // Right
@@ -147,7 +147,7 @@ static void PrintInputs()
 						PrintInputsSetActive(bii.szInfo[1] - '1');
 					}
 				}
-				if (stricmp(bii.szInfo+2, " y-axis")==0 && bii.nType == BIT_GROUP_ANALOG) {
+				if (_stricmp(bii.szInfo+2, " y-axis")==0 && bii.nType == BIT_GROUP_ANALOG) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
 						if ((INT16)*bii.pShortVal > 0x80)
 							UDLR[(bii.szInfo[1] - '1')][1] = 1;  // Down
@@ -158,31 +158,31 @@ static void PrintInputs()
 				}
 			}
 			if (*bii.pVal) { // Button pressed
-				if (stricmp(bii.szInfo+2, " Up")==0) {
+				if (_stricmp(bii.szInfo+2, " Up")==0) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
 						UDLR[(bii.szInfo[1] - '1')][0] = 1;
 						PrintInputsSetActive(bii.szInfo[1] - '1');
 					}
 				}
-				if (stricmp(bii.szInfo+2, " Down")==0) {
+				if (_stricmp(bii.szInfo+2, " Down")==0) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
 						UDLR[(bii.szInfo[1] - '1')][1] = 1;
 						PrintInputsSetActive(bii.szInfo[1] - '1');
 					}
 				}
-				if (stricmp(bii.szInfo+2, " Left")==0) {
+				if (_stricmp(bii.szInfo+2, " Left")==0) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
 						UDLR[(bii.szInfo[1] - '1')][2] = 1;
 						PrintInputsSetActive(bii.szInfo[1] - '1');
 					}
 				}
-				if (stricmp(bii.szInfo+2, " Right")==0) {
+				if (_stricmp(bii.szInfo+2, " Right")==0) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2')  {
 						UDLR[(bii.szInfo[1] - '1')][3] = 1;
 						PrintInputsSetActive(bii.szInfo[1] - '1');
 					}
 				}
-				if (strnicmp(bii.szInfo+2, " fire ", 6)==0) {
+				if (_strnicmp(bii.szInfo+2, " fire ", 6)==0) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
 						if (bii.szInfo[8] - '1' < 6) { // avoid overflow
 							BUTTONS[(bii.szInfo[1] - '1')][bii.szInfo[8] - '1'] = bii.szInfo[8];
@@ -191,7 +191,7 @@ static void PrintInputs()
 					}
 				}
 			} else { // get "off" buttons
-				if (strnicmp(bii.szInfo+2, " fire ", 6)==0) {
+				if (_strnicmp(bii.szInfo+2, " fire ", 6)==0) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
 						if (bii.szInfo[8] - '1' < 6) // avoid overflow
 							OFFBUTTONS[(bii.szInfo[1] - '1')][bii.szInfo[8] - '1'] = bii.szInfo[8];
@@ -809,10 +809,10 @@ static void DisplayPropertiesError(HWND hDlg, INT32 nErrType)
 	if (hDlg != 0) {
 		switch (nErrType) {
 			case 0:
-				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Not a FBAlpha input recording file.\0"));
+				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Not a FBNeo input recording file.\0"));
 				break;
 			case 1:
-				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Incompatible file-type.  Try playback with an earlier version of FBAlpha.\0"));
+				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Incompatible file-type.  Try playback with an earlier version of FBNeo.\0"));
 				break;
 			case 2:
 				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Recording is corrupt :(\0"));

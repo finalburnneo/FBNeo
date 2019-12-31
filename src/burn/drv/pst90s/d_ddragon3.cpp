@@ -1,4 +1,4 @@
-// FB Alpha Double Dragon 3 driver module
+// FB Neo Double Dragon 3 driver module
 // Based on MAME driver by Bryan McPhail, David Haywood
 
 #include "tiles_generic.h"

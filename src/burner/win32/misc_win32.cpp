@@ -1,29 +1,18 @@
 #include "burner.h"
-
+#include <VersionHelpers.h>
 bool bEnableHighResTimer = true; // default value
-
 bool bIsWindowsXPorGreater = false;
 bool bIsWindowsXP = false;
 bool bIsWindows8OrGreater = false;
 
-// Detect if we are using Windows XP/Vista/7
 BOOL DetectWindowsVersion()
 {
-    OSVERSIONINFO osvi;
-    BOOL bIsWindowsXPorLater;
 
-    ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
-    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
-    GetVersionEx(&osvi);
-
-	// osvi.dwMajorVersion returns the windows version: 5 = XP 6 = Vista/7
-    // osvi.dwMinorVersion returns the minor version, XP and 7 = 1, Vista = 0
-    bIsWindowsXPorLater = ((osvi.dwMajorVersion > 5) || ( (osvi.dwMajorVersion == 5) && (osvi.dwMinorVersion >= 1)));
-	bIsWindowsXP = (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1);
-	bIsWindows8OrGreater = ((osvi.dwMajorVersion > 6) || ((osvi.dwMajorVersion == 6) && (osvi.dwMinorVersion >= 2)));
-
-	return bIsWindowsXPorLater;
+	bIsWindowsXPorGreater = IsWindowsXPOrGreater();
+	bIsWindowsXP = !IsWindowsVistaOrGreater();
+	bIsWindows8OrGreater = IsWindows8OrGreater();
+	
+	return bIsWindowsXPorGreater;
 }
 
 // Set the current directory to be the application's directory
@@ -144,8 +133,8 @@ void RegisterExtensions(bool bCreateKeys)
 
 	TCHAR* myKeynames1[1] = { _T(".fr") };
 	TCHAR* myKeynames2[1] = { _T(".fs") };
-	TCHAR* myKeynames3[4] = { _T("FBAlpha"), _T("shell"), _T("open"), _T("command") };
-	TCHAR* myKeynames4[2] = { _T("FBAlpha"), _T("DefaultIcon") };
+	TCHAR* myKeynames3[4] = { _T("FBNeo"), _T("shell"), _T("open"), _T("command") };
+	TCHAR* myKeynames4[2] = { _T("FBNeo"), _T("DefaultIcon") };
 	TCHAR myKeyValue[MAX_PATH + 32] = _T("");
 
 	if (bCreateKeys) {
@@ -153,19 +142,19 @@ void RegisterExtensions(bool bCreateKeys)
 		GetModuleFileName(NULL, szExename, MAX_PATH);
 
 		MyRegCreateKeys(1, myKeynames1, myKeys);
-		_stprintf(myKeyValue, _T("FBAlpha"));
+		_stprintf(myKeyValue, _T("FBNeo"));
 		RegSetValueEx(myKeys[0], NULL, 0, REG_SZ, (BYTE*)myKeyValue, (_tcslen(myKeyValue) + 1) * sizeof(TCHAR));
 		MyRegCloseKeys(2, myKeys);
 
 		MyRegCreateKeys(1, myKeynames2, myKeys);
-		_stprintf(myKeyValue, _T("FBAlpha"));
+		_stprintf(myKeyValue, _T("FBNeo"));
 		RegSetValueEx(myKeys[0], NULL, 0, REG_SZ, (BYTE*)myKeyValue, (_tcslen(myKeyValue) + 1) * sizeof(TCHAR));
 		MyRegCloseKeys(2, myKeys);
 
 		MyRegCreateKeys(4, myKeynames3, myKeys);
 		_stprintf(myKeyValue, _T("\"%s\" \"%%1\" -w"), szExename);
 		RegSetValueEx(myKeys[3], NULL, 0, REG_SZ, (BYTE*)myKeyValue, (_tcslen(myKeyValue) + 1) * sizeof(TCHAR));
-		_stprintf(myKeyValue, _T("FB Alpha file"));
+		_stprintf(myKeyValue, _T("FB Neo file"));
 		RegSetValueEx(myKeys[0], NULL, 0, REG_SZ, (BYTE*)myKeyValue, (_tcslen(myKeyValue) + 1) * sizeof(TCHAR));
 		MyRegCloseKeys(4, myKeys);
 

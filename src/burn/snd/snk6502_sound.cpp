@@ -8,7 +8,7 @@
   - support playing flag for music channel 0
   - support HD38880 speech by samples
 
-  FBAlpha port by dink jan. 8, 2018
+  FBNeo port by dink jan. 8, 2018
 */
 
 

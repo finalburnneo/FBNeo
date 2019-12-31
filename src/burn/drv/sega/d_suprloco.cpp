@@ -1,4 +1,4 @@
-// FB Alpha Super Locomotive driver module
+// FB Neo Super Locomotive driver module
 // Based on MAME driver by Zsolt Vasvari
 
 #include "tiles_generic.h"

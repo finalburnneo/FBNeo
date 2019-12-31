@@ -1,4 +1,4 @@
-// FB Alpha Lady Bug driver module
+// FB Neo Lady Bug driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

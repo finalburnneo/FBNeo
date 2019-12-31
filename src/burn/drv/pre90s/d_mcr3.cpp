@@ -1,4 +1,4 @@
-// FB Alpha Midway MCR-3 system driver module
+// FB Neo Midway MCR-3 system driver module
 // Based on MAME driver by Christopher Kirmse, Aaron Giles
 
 // demoderm		- good

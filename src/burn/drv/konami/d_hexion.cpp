@@ -1,4 +1,4 @@
-// FB Alpha Hexion driver module
+// FB Neo Hexion driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

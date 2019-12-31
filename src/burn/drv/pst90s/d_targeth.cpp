@@ -1,4 +1,4 @@
-// FB Alpha Target Hits driver module
+// FB Neo Target Hits driver module
 // Based on MAME driver by Manuel Abadia and David Haywood
 
 #include "tiles_generic.h"

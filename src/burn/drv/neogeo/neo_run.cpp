@@ -9,7 +9,7 @@
 //   Ninja Commando: glitching "logo" during demo play.
 
 /*
- * FB Alpha Neo Geo module
+ * FB Neo Neo-Geo module
  *
  * The video frequencies of MVS hardware are:
  * hsync: 15625    Hz

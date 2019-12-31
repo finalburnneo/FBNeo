@@ -1,4 +1,4 @@
-// FB Alpha SNK / Alpha 68k based driver module
+// FB Neo SNK / Alpha 68k based driver module
 // Based on MAME driver by Pierpaolo Prazzoli, Bryan McPhail, Stephane Humbert
 
 #include "tiles_generic.h"

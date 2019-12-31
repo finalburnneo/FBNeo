@@ -1,4 +1,4 @@
-// FB Alpha Gang Busters driver module
+// FB Neo Gang Busters driver module
 // Based on MAME by Manuel Abadia
 
 #include "tiles_generic.h"

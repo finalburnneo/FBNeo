@@ -1,4 +1,4 @@
-// FB Alpha Shadow Force driver module
+// FB Neo Shadow Force driver module
 // Based on MAME driver by David Haywood
 // port to Finalburn Alpha by OopsWare. 2007
 

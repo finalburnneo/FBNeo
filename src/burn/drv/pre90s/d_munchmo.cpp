@@ -1,4 +1,4 @@
-// FB Alpha Joyful Road / Munch Mobile driver module
+// FB Neo Joyful Road / Munch Mobile driver module
 // Based on MAME driver by Phil Stroffolino
 
 /*

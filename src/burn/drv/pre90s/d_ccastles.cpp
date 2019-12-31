@@ -1,4 +1,4 @@
-// FB Alpha Crystal Castles driver module
+// FB Neo Crystal Castles driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

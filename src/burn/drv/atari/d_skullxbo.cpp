@@ -1,4 +1,4 @@
-// FB Alpha Atari Skull and Crossbones driver module
+// FB Neo Atari Skull and Crossbones driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

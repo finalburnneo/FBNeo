@@ -1,4 +1,4 @@
-// FB Alpha ColecoVision console driver module
+// FB Neo ColecoVision console driver module
 // Code by iq_132, fixups & bring up-to-date by dink Aug 19, 2014
 // SGM added April 2019 -dink
 

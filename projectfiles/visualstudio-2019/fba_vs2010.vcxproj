@@ -506,12 +506,13 @@
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exprraid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_kingofbox.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />	  
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
@@ -859,7 +860,6 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_espial.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_ettrivia.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exedexes.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exprraid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_fantland.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_fastfred.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_firetrap.cpp" />
@@ -1700,6 +1700,7 @@ del build_details.exe
       <EnablePREfast>true</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -1755,6 +1756,7 @@ del build_details.exe
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
       <EnablePREfast>false</EnablePREfast>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -1783,7 +1785,7 @@ del build_details.exe
       <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>user32.lib;gdi32.lib;comdlg32.lib;comctl32.lib;shell32.lib;winmm.lib;ole32.lib;shlwapi.lib;advapi32.lib;setupapi.lib;vfw32.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>

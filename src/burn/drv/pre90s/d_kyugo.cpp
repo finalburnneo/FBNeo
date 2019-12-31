@@ -1,4 +1,4 @@
-// FB Alpha Kyugo driver module
+// FB Neo Kyugo driver module
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"

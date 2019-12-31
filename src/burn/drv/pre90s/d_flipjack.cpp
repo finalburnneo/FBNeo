@@ -1,4 +1,4 @@
-// FB Alpha Flipper Jack driver module
+// FB Neo Flipper Jack driver module
 // Based on MAME driver by Algelo Salese and Hap
 
 #include "tiles_generic.h"

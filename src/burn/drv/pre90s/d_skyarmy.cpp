@@ -1,4 +1,4 @@
-// FB Alpha Sky Army driver module
+// FB Neo Sky Army driver module
 // Based on MAME driver by Ryan Holtz
 
 

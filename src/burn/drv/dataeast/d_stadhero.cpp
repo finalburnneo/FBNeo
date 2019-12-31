@@ -1,4 +1,4 @@
-// FB Alpha Stadium Hero driver module
+// FB Neo Stadium Hero driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

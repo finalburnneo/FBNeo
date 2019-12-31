@@ -1,4 +1,4 @@
-// FB Alpha Espial / Netwars driver module
+// FB Neo Espial / Netwars driver module
 // Based on MAME driver by Brad Oliver
 
 #include "tiles_generic.h"

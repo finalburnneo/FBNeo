@@ -1,4 +1,4 @@
-// FB Alpha "Tao Taido" driver module
+// FB Neo "Tao Taido" driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

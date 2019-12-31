@@ -1,4 +1,4 @@
-// FB Alpha Taito B System driver module
+// FB Neo Taito B System driver module
 // Based on MAME driver by Jarek Burczynski and various others
 
 // to do:

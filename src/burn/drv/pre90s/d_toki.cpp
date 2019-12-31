@@ -1,4 +1,4 @@
-// FB Alpha Toki driver module
+// FB Neo Toki driver module
 // Based on MAME driver by Jarek Parchanski
 
 // Why isn't sound working for jujuba?

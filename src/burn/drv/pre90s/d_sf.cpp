@@ -1,4 +1,4 @@
-// FB Alpha Street Fighter driver module
+// FB Neo Street Fighter driver module
 // Based on MAME driver by Olivier Galibert
 
 #include "tiles_generic.h"

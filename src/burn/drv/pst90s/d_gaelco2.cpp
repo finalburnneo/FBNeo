@@ -1,4 +1,4 @@
-// FB Alpha Gaelco system 2 driver module
+// FB Neo Gaelco system 2 driver module
 // Based on MAME driver by Manuel Abadia
 
 #include "tiles_generic.h"

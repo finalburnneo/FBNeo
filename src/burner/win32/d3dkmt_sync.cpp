@@ -1,5 +1,6 @@
 // D3DKMTWaitForVerticalBlankEvent (codename: SuperWaitVBlank) interface.  - dink 2018
 #include "burner.h"
+#include <VersionHelpers.h>
 
 typedef struct _D3DKMT_OPENADAPTERFROMHDC
 {
@@ -63,21 +64,11 @@ void LoadGDIFunctions() {
 	SuperWaitVBlank_DLLsLoaded = 1;
 }
 
-BOOL IsWindows7Plus() {
-
-	OSVERSIONINFO osvi;
-	memset(&osvi, 0, sizeof(OSVERSIONINFO));
-	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
-	GetVersionEx(&osvi);
-
-	return (osvi.dwMajorVersion >= 6); // win7+
-}
 
 // This will need re-init every vid init in the case of multiple monitors.
 void SuperWaitVBlankInit()
 {
-	if(!IsWindows7Plus()) return;
+	if(!IsWindows7OrGreater()) return;
 
 	if (!SuperWaitVBlank_DLLsLoaded) {
 		LoadGDIFunctions();

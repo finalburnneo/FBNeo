@@ -1,4 +1,4 @@
-// FB Alpha Chequered Flag driver module
+// FB Neo Chequered Flag driver module
 // Based on MAME driver by Nicola Salmoria and Manuel Abadia
 
 #include "tiles_generic.h"

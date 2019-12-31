@@ -1,4 +1,4 @@
-// FB Alpha One Shot One Kill driver module
+// FB Neo One Shot One Kill driver module
 // Based on MAME driver by David Haywood and Paul Priest
 
 #include "tiles_generic.h"

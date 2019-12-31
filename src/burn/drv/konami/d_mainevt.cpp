@@ -1,4 +1,4 @@
-// FB Alpha The Main Event / Devastators driver module
+// FB Neo The Main Event / Devastators driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Blue Print driver module
+// FB Neo Blue Print driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

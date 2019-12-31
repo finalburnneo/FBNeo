@@ -1,4 +1,4 @@
-// FB Alpha PC-Engine / TurboGrafx 16 / SuperGrafx driver module
+// FB Neo PC-Engine / TurboGrafx 16 / SuperGrafx driver module
 // Based on MESS driver by Charles MacDonald
 
 #include "tiles_generic.h"

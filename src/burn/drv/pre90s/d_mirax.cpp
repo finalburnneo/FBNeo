@@ -1,4 +1,4 @@
-// Mirax emu-layer for FB Alpha by dink, based on the MAME driver by Angelo Salese, Tomasz Slanina, Olivier Galibert.
+// Mirax emu-layer for FB Neo by dink, based on the MAME driver by Angelo Salese, Tomasz Slanina, Olivier Galibert.
 
 #include "tiles_generic.h"
 #include "z80_intf.h"

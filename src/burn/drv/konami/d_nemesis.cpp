@@ -1,4 +1,4 @@
-// FB Alpha Nemesis driver module
+// FB Neo Nemesis driver module
 // Based on MAME driver by Bryan McPhail w/additions by Hau, hap, and likely othes
 
 #include "tiles_generic.h"

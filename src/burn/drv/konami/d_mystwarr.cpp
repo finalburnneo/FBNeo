@@ -1,4 +1,4 @@
-// FB Alpha Pre-Gx driver module
+// FB Neo Pre-Gx driver module
 // based on MAME driver by R. Belmont, Phil Stroffolino, Acho A. Tang, Nicola Salmoria
 
 /*
@@ -1715,23 +1715,23 @@ static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
 }
 
-static void metamrph_tile_callback(INT32 layer, INT32 */*code*/, INT32 *color, INT32 */*flags*/)
+static void metamrph_tile_callback(INT32 layer, INT32* /*code*/, INT32 *color, INT32* /*flags*/)
 {
 	*color = layer_colorbase[layer] | (*color >> 2 & 0x0f);
 }
 
-static void game5bpp_tile_callback(INT32 layer, INT32 */*code*/, INT32 *color, INT32 */*flags*/)
+static void game5bpp_tile_callback(INT32 layer, INT32* /*code*/, INT32 *color, INT32* /*flags*/)
 {
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
 }
-static void mystwarr_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
+static void mystwarr_sprite_callback(INT32* /*code*/, INT32 *color, INT32 *priority)
 {
 	INT32 c = *color;
 	*color = sprite_colorbase | (c & 0x001f);
 	*priority = c & 0x00f0;
 }
 
-static void metamrph_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
+static void metamrph_sprite_callback(INT32* /*code*/, INT32 *color, INT32 *priority)
 {
 	INT32 c = *color;
 	INT32 attr = c;
@@ -1750,7 +1750,7 @@ static void metamrph_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *prior
 	}
 }
 
-static void martchmp_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
+static void martchmp_sprite_callback(INT32* /*code*/, INT32 *color, INT32 *priority)
 {
 	INT32 c = *color;
 
@@ -1765,7 +1765,7 @@ static void martchmp_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *prior
 		*priority = c & 0xf0;
 }
 
-static void gaiapolis_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
+static void gaiapolis_sprite_callback(INT32* /*code*/, INT32 *color, INT32 *priority)
 {
 	INT32 c = *color;
 

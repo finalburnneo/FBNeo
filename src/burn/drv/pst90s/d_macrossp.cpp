@@ -1,4 +1,4 @@
-// FB Alpha Macross Plus driver module
+// FB Neo Macross Plus driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

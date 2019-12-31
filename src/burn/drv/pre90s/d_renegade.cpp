@@ -1,4 +1,4 @@
-// FB Alpha Renegade driver module
+// FB Neo Renegade driver module
 // Based on MAME driver by Phil Stroffolino, Carlos A. Lozano, Rob Rosenbrock
 
 #include "tiles_generic.h"

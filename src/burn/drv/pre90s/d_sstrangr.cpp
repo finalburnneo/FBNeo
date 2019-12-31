@@ -1,4 +1,4 @@
-// FB Alpha Space Stranger driver module
+// FB Neo Space Stranger driver module
 // Based on MAME driver by 
 
 #include "tiles_generic.h"

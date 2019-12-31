@@ -1,4 +1,4 @@
-// FB Alpha Fire Trap driver module
+// FB Neo Fire Trap driver module
 // Based on MAME driver by Nicola Salmoria and Stephane Humbert
 
 

@@ -4,7 +4,7 @@
 
     Harris HC-55516 (and related) emulator
 
-   FBAlpha port by dink, July 2018
+   FBNeo port by dink, July 2018
 
 *****************************************************************************/
 

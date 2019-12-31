@@ -1,4 +1,4 @@
-// FB Alpha Cabal driver module
+// FB Neo Cabal driver module
 // Based on MAME driver by Carlos A. Lozano
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha X-Men driver module
+// FB Neo X-Men driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

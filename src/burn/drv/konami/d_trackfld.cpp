@@ -1,4 +1,4 @@
-// FB Alpha Track & Field driver module
+// FB Neo Track & Field driver module
 // Based on MAME driver by Chris Hardy.
 
 // To fix / Oddities:

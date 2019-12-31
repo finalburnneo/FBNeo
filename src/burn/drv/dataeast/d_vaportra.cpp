@@ -1,4 +1,4 @@
-// FB Alpha Vapor Trail driver module
+// FB Neo Vapor Trail driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

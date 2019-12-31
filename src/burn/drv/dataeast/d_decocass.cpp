@@ -1,4 +1,4 @@
-// FB Alpha Deco Cassette driver module
+// FB Neo Deco Cassette driver module
 // Based on MAME driver by Juergen Buchmueller, David Haywood, Ajrhacker
 // Uses tape loader & protection code by Juergen Buchmueller, David Haywood
 // Some graphics routines by Juergen Buchmueller, David Haywood, Ajrhacker

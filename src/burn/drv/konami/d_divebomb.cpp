@@ -1,4 +1,4 @@
-// FB Alpha Kyuukoukabakugekitai - Dive Bomber Squad driver module
+// FB Neo Kyuukoukabakugekitai - Dive Bomber Squad driver module
 // Based on MAME driver by David Haywood, Phil Bennett
 
 #include "tiles_generic.h"

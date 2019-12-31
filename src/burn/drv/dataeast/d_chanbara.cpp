@@ -1,4 +1,4 @@
-// FB Alpha Chanbara driver module
+// FB Neo Chanbara driver module
 // Based on MAME driver by Tomasz Slanina and David Haywood
 // Todo:
 // 1) Figure out the sprite banking issue (strange blob of broken

@@ -1,4 +1,4 @@
-// FB Alpha PK Scramble driver module
+// FB Neo PK Scramble driver module
 // Based on MAME driver by David Haywood and Pierpaolo Prazzoli
 
 #include "tiles_generic.h"

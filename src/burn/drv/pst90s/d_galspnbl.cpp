@@ -1,4 +1,4 @@
-// FB Alpha Gals Pinball driver module
+// FB Neo Gals Pinball driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

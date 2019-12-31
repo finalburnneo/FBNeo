@@ -1,4 +1,4 @@
-// FBAlpha YM-2151 sound core interface
+// FBNeo YM-2151 sound core interface
 #include "burnint.h"
 #include "burn_ym2151.h"
 

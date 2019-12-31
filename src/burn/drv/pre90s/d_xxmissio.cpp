@@ -1,4 +1,4 @@
-// FB Alpha XX Mission driver module
+// FB Neo XX Mission driver module
 // Based on MAME driver by Uki
 // Todo:
 //   Figure out why the scrolling "hiccups" when something blows up running @

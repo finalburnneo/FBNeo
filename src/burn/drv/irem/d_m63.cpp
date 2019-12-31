@@ -1,4 +1,4 @@
-// FB Alpha Irem M63 driver module
+// FB Neo Irem M63 driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Metal Clash driver module
+// FB Neo Metal Clash driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

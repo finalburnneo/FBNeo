@@ -1,4 +1,4 @@
-// FB Alpha Crime Fighters driver module
+// FB Neo Crime Fighters driver module
 // Based on MAME driver by Manuel Abadia
 
 #include "tiles_generic.h"

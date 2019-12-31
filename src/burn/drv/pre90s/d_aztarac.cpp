@@ -1,4 +1,4 @@
-// FB Alpha Aztarac driver module
+// FB Neo Aztarac driver module
 // Based on MAME driver by Mathis Rosenhauer
 
 #include "burnint.h"

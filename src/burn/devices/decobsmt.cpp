@@ -1,4 +1,4 @@
-// FBAlpha "deco pinball bsmt" emulation
+// FBNeo "deco pinball bsmt" emulation
 #include "burnint.h"
 //#include "m6809_intf.h" // in decobsmt.h
 #include "bsmt2000.h"

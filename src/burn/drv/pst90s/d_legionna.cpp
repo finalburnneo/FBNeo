@@ -1,4 +1,4 @@
-// FB Alpha Legionnaire driver module
+// FB Neo Legionnaire driver module
 // Based on MAME driver by David Graves, Angelo Salese, David Haywood, Tomasz Slanina
 
 #include "tiles_generic.h"

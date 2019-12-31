@@ -1,4 +1,4 @@
-// FB Alpha Rock'n Rope driver module
+// FB Neo Rock'n Rope driver module
 // Based on MAME driver by Chris Hardy
 
 #include "tiles_generic.h"

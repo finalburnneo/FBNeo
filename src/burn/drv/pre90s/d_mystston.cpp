@@ -1,4 +1,4 @@
-// FB Alpha Mysterious Stones Driver Module
+// FB Neo Mysterious Stones Driver Module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

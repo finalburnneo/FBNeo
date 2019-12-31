@@ -1,4 +1,4 @@
-// FB Alpha Bitmap Management System
+// FB Neo Bitmap Management System
 
 #include "tiles_generic.h"
 

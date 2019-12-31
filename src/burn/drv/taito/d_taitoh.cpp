@@ -1,4 +1,4 @@
-// FB Alpha Taito System H driver module
+// FB Neo Taito System H driver module
 // Based on MAME driver by Yochizo and Nicola Salmoria
 
 // Weirdness:

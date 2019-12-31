@@ -1,4 +1,4 @@
-// FB Alpha Tetris Plus driver module
+// FB Neo Tetris Plus driver module
 // Based on MAME driver by Luca Elia
 
 /*

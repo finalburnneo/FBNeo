@@ -1,4 +1,4 @@
-// FB Alpha Taito F3 driver module
+// FB Neo Taito F3 driver module
 // Based on MAME driver by Bryan McPhail and MANY others.
 
 /*

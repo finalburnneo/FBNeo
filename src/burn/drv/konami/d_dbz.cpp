@@ -484,7 +484,7 @@ static UINT8 __fastcall dbz_sound_read(UINT16 address)
 	return 0;
 }
 
-static void dbz_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
+static void dbz_sprite_callback(INT32* /*code*/, INT32 *color, INT32 *priority)
 {
 	INT32 pri = (*color & 0x3c0) >> 5;
 
@@ -496,7 +496,7 @@ static void dbz_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 	*color = (sprite_colorbase << 1) + (*color & 0x1f);
 }
 
-static void dbz_tile_callback(INT32 layer, INT32 */*code*/, INT32 *color, INT32 */*flags*/)
+static void dbz_tile_callback(INT32 layer, INT32* /*code*/, INT32 *color, INT32* /*flags*/)
 {
 	*color = (layer_colorbase[layer] << 1) + ((*color & 0x3c) >> 2);
 }

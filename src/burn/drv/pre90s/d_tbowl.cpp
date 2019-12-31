@@ -1,4 +1,4 @@
-// FB Alpha Tecmo Bowl driver module
+// FB Neo Tecmo Bowl driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

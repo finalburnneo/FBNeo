@@ -1,4 +1,4 @@
-// FB Alpha 1945K-III driver module
+// FB Neo 1945K-III driver module
 // Based on MAME driver by David Haywood
 // Port to Finalburn Alpha by OopsWare. 2007
 

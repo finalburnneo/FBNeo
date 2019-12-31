@@ -1,4 +1,4 @@
-// FB Alpha Super Cross II driver module
+// FB Neo Super Cross II driver module
 // Based on MAME driver by Angelo Salese
 
 #include "tiles_generic.h"

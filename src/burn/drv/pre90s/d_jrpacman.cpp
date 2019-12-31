@@ -1,4 +1,4 @@
-// FB Alpha JR. Pacman driver module
+// FB Neo JR. Pacman driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

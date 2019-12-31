@@ -1,4 +1,4 @@
-// FB Alpha US Games - Trivia / Quiz / 'Amusement Only' Gambling Games Driver Module
+// FB Neo US Games - Trivia / Quiz / 'Amusement Only' Gambling Games Driver Module
 // Based on MAME driver by David Haywood and Nicola Salmoria
 
 #include "tiles_generic.h"

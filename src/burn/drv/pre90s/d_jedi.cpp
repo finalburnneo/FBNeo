@@ -1,4 +1,4 @@
-// FB Alpha Return of the Jedi driver module
+// FB Neo Return of the Jedi driver module
 // Based on MAME driver by Dan Boris and Aaron Giles
 
 #include "tiles_generic.h"

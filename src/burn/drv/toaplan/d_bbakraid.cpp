@@ -1,4 +1,4 @@
-// FB Alpha Battle Bakraid driver module
+// FB Neo Battle Bakraid driver module
 // Driver and emulation by Jan Klaassen
 
 #include "toaplan.h"

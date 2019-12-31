@@ -1,4 +1,4 @@
-// FB Alpha watchdog device module
+// FB Neo watchdog device module
 
 #include "burnint.h"
 

@@ -1,4 +1,4 @@
-// FB Alpha Wiping driver module
+// FB Neo Wiping driver module
 // Based on MAME driver by Allard van der Bas
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Playmark hardware driver module
+// FB Neo Playmark hardware driver module
 // Based on MAME driver by Nicola Salmoria, Pierpaolo Prazzoli, Quench
 
 #include "tiles_generic.h"

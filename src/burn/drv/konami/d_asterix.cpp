@@ -1,4 +1,4 @@
-// FB Alpha Asterix driver module
+// FB Neo Asterix driver module
 // Based on MAME driver by Olivier Galibert
 
 #include "tiles_generic.h"

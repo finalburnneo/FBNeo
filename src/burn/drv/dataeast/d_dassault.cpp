@@ -1,4 +1,4 @@
-// FB Alpha Thunder Zone / Desert Assault driver module
+// FB Neo Thunder Zone / Desert Assault driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

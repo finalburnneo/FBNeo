@@ -1,4 +1,4 @@
-// FB Alpha Pirates driver
+// FB Neo Pirates driver
 // Based on MAME driver by David Haywood and Nicola Salmoria
 
 #include "tiles_generic.h"

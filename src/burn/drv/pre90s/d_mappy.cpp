@@ -1,4 +1,4 @@
-// FB Alpha Mappy driver module
+// FB Neo Mappy driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

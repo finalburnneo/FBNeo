@@ -18,7 +18,7 @@ static unsigned int gamesperscreen_halfway = 6;
 static unsigned int gametoplay = 0;
 
 const int JOYSTICK_DEAD_ZONE = 8000;
-SDL_Joystick* gGameController = NULL;
+SDL_GameController* gGameController = NULL;
 
 #define NUMSTARS  512
 
@@ -323,7 +323,7 @@ void RefreshRomList(bool force_rescan)
 
 void gui_exit()
 {
-	SDL_JoystickClose( gGameController );
+	SDL_GameControllerClose( gGameController );
 	gGameController = NULL;
 
 	kill_inline_font();
@@ -344,16 +344,18 @@ void gui_init()
 	}
 	else
 	{
-		//Load joystick
-		gGameController = SDL_JoystickOpen( 0 );
-		if( gGameController == NULL )
-		{
-			printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
+		for (int i = 0; i < SDL_NumJoysticks(); ++i) {
+		    if (SDL_IsGameController(i)) {
+		        gGameController = SDL_GameControllerOpen(i);
+		        if (gGameController) {
+							  printf("Found a joypad!\n");
+		            break;
+		        } else {
+		            printf("Could not open gamecontroller %i: %s\n", i, SDL_GetError());
+		        }
+		    }
 		}
-		else
-		{
-			printf("Found a Joystick\n");
-		}
+
 	}
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -516,13 +518,27 @@ int gui_process()
 
 	while (!quit)
 	{
-		if (SDL_JoystickGetAxis(gGameController, 1)<= -JOYSTICK_DEAD_ZONE)
+		//TODO: probably move this down inside the while (SDL_pollevent) bit...
+		SDL_GameControllerUpdate();
+		if (SDL_GameControllerGetAxis(gGameController, SDL_CONTROLLER_AXIS_LEFTY)<= -JOYSTICK_DEAD_ZONE)
 		{
 			startGame--;
 		}
-		else if (SDL_JoystickGetAxis(gGameController, 1)>=JOYSTICK_DEAD_ZONE)
+		else if (SDL_GameControllerGetAxis(gGameController, SDL_CONTROLLER_AXIS_LEFTY)>=JOYSTICK_DEAD_ZONE)
 		{
 			startGame++;
+		}
+		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_A))
+		{
+			nBurnDrvActive = gametoplay;
+			if (gameAv[nBurnDrvActive])
+			{
+				return gametoplay;
+			}
+		}
+		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_Y))
+		{
+			RefreshRomList(true);
 		}
 
 		while (SDL_PollEvent(&e))
@@ -547,6 +563,7 @@ int gui_process()
 				switch (e.button.button)
 				{
 				case SDL_BUTTON_LEFT:
+					nBurnDrvActive = gametoplay;
 					if (gameAv[nBurnDrvActive])
 					{
 						return gametoplay;

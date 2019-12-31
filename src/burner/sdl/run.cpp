@@ -10,7 +10,7 @@ int bAlwaysDrawFrames = 0;
 
 int counter;                                // General purpose variable used when debugging
 
-static unsigned int nNormalLast = 0;        // Last value of timeGetTime()
+static unsigned int nNormalLast = 0;        // Last value of GetTime()
 static int          nNormalFrac = 0;        // Extra fraction we did
 
 static bool bAppDoStep = 0;
@@ -122,7 +122,7 @@ void ToggleLayer(unsigned char thisLayer)
 
 struct timeval start;
 
-unsigned int timeGetTime(void)
+unsigned int GetTime(void)
 {
 	unsigned int ticks;
 	struct timeval now;
@@ -246,7 +246,7 @@ int RunIdle()
 	}
 
 	// Run without sound
-	nTime = timeGetTime() - nNormalLast;
+	nTime = GetTime() - nNormalLast;
 	nCount = (nTime * nAppVirtualFps - nNormalFrac) / 100000;
 	if (nCount <= 0) {						// No need to do anything for a bit
 		//Sleep(2);
@@ -300,7 +300,7 @@ int RunReset()
 	if (!bAudPlaying)
 	{
 		// run without sound
-		nNormalLast = timeGetTime();
+		nNormalLast = GetTime();
 	}
 	return 0;
 }

@@ -1,4 +1,4 @@
-// FB Alpha M52 (Moon Patrol) driver module
+// FB Neo M52 (Moon Patrol) driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Mustache Boy driver module
+// FB Neo Mustache Boy driver module
 // Based on MAME drver by Tomasz Slanina
 
 #include "tiles_generic.h"

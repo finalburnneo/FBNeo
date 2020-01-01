@@ -97,7 +97,7 @@
 #define IDC_INPD_ANSLIDER					20022
 #define IDC_INPD_ANEDIT						20023
 
-#define IDC_FBA_VER                     	20050
+#define IDC_FBN_VER                     	20050
 #define IDC_SPECIALSTRING               	20051
 #define IDC_SHOWLICENSE						20052
 #define IDC_LICENSE							20053

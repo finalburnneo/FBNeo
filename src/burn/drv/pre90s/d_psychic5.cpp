@@ -1,4 +1,4 @@
-// FB Alpha Psychic 5 driver module
+// FB Neo Psychic 5 driver module
 // Based on MAME driver by Jarek Parchanski
 
 #include "tiles_generic.h"

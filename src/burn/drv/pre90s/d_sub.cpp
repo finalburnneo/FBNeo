@@ -1,4 +1,4 @@
-// FB Alpha Submarine (Sigma) driver module
+// FB Neo Submarine (Sigma) driver module
 // Based on MAME driver by Angelo Salese and David Haywood
 
 #include "tiles_generic.h"

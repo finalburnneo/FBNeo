@@ -52,7 +52,7 @@ void __fastcall PsndZWrite(UINT16 a, UINT8 d)
 		case 0xF006:						// ??? Enable interrupt ???
 			break;
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 //		default:
 //			bprintf(PRINT_NORMAL, _T("Z80 address %04X -> %02X.\n"), a, d);
 #endif
@@ -74,7 +74,7 @@ void __fastcall kodbZWrite(UINT16 a, UINT8 d)
 			MSM6295Write(0, d);
 			break;
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 //		default:
 //			bprintf(PRINT_NORMAL, _T("Z80 address %04X -> %02X.\n"), a, d);
 #endif
@@ -97,7 +97,7 @@ UINT8 __fastcall PsndZRead(UINT16 a)
 		case 0xF00A:
 			return PsndFade;
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 //		default:
 //			bprintf(PRINT_NORMAL, _T("Z80 address %04X read.\n"), a);
 #endif
@@ -116,7 +116,7 @@ UINT8 __fastcall kodbZRead(UINT16 a)
 		case 0xE800:
 			return PsndCode;
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 //		default:
 //			bprintf(PRINT_NORMAL, _T("Z80 address %04X read.\n"), a);
 #endif

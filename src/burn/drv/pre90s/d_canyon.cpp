@@ -1,4 +1,4 @@
-// FB Alpha Canyon Bomber driver module
+// FB Neo Canyon Bomber driver module
 // Based on MAME driver by Mike Balfour
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Mr. Jong driver module
+// FB Neo Mr. Jong driver module
 // Based on MAME driver by Takahiro Nogi (nogi@kt.rim.or.jp) 2000/03/20
 
 #include "tiles_generic.h"

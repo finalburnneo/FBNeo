@@ -4,7 +4,7 @@
  *                                                                          *
  *  Created by Zsolt Vasvari on 5/26/1998.                                  *
  *  Updated by Aaron Giles on 11/21/2000.                                   *
- *  Modified for use in FBA by iq_132 4/15/2014                             *
+ *  Modified for use in FBN by iq_132 4/15/2014                             *
  *                                                                          *
  *  This is far from complete. See the TMS34061 User's Guide available on   *
  *  www.spies.com/arcade                                                    *
@@ -61,7 +61,7 @@ INT32 			   tms34061_current_scanline;
 
 void tms34061_reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_reset called without init\n"));
 #endif
 
@@ -122,7 +122,7 @@ void tms34061_init(UINT8 rowshift, UINT32 ram_size, void (*partial_update)(), vo
 
 void tms34061_exit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_exit called without init\n"));
 #endif
 
@@ -156,7 +156,7 @@ static void update_interrupts()
 
 void tms34061_interrupt()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_interrupt called without init\n"));
 #endif
 
@@ -206,7 +206,7 @@ static void register_w(INT32 offset, UINT8 data)
 			if (scanline < 0)
 				scanline += m_regs[TMS34061_VERTOTAL];
 
-			// FBA -- this isn't accurate, it will only trigger on a per-scanline basis, but should be
+			// FBN -- this isn't accurate, it will only trigger on a per-scanline basis, but should be
 			// scanline and horizontal position in the scanline. It doesn't seem to bother the tested
 			// games much though, so don't worry about it
 			m_timer = scanline; //m_regs[TMS34061_HORSTARTBLNK];
@@ -416,7 +416,7 @@ static UINT8 xypixel_r(INT32 offset)
 
 void tms34061_write(INT32 col, INT32 row, INT32 func, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_write called without init\n"));
 #endif
 
@@ -479,7 +479,7 @@ void tms34061_write(INT32 col, INT32 row, INT32 func, UINT8 data)
 
 UINT8 tms34061_read(INT32 col, INT32 row, INT32 func)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_read called without init\n"));
 #endif
 
@@ -545,7 +545,7 @@ UINT8 tms34061_read(INT32 col, INT32 row, INT32 func)
 
 UINT8 tms34061_latch_read()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_latch_read called without init\n"));
 #endif
 
@@ -555,7 +555,7 @@ UINT8 tms34061_latch_read()
 
 void tms34061_latch_write(UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_latch_write called without init\n"));
 #endif
 
@@ -564,7 +564,7 @@ void tms34061_latch_write(UINT8 data)
 
 INT32 tms34061_display_blanked()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_display_blanked called without init\n"));
 #endif
 
@@ -573,7 +573,7 @@ INT32 tms34061_display_blanked()
 
 UINT8 *tms34061_get_vram_pointer()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_get_vram_pointer called without init\n"));
 #endif
 
@@ -589,7 +589,7 @@ UINT8 *tms34061_get_vram_pointer()
 
 INT32 tms34061_scan(INT32 nAction, INT32 *)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_scan called without init\n"));
 #endif
 

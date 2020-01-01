@@ -1,4 +1,4 @@
-// FB Alpha Irem M72 driver module
+// FB Neo Irem M72 driver module
 // Based on MAME driver by Nicola Salmoria and Nao
 
 #include "tiles_generic.h"

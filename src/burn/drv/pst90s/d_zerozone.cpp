@@ -1,4 +1,4 @@
-// FB Alpha Zero Zone driver module
+// FB Neo Zero Zone driver module
 // Based on MAME driver by Brad Oliver
 
 #include "tiles_generic.h"

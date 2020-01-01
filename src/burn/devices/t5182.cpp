@@ -1,4 +1,4 @@
-// FB Alpha t5182 core
+// FB Neo t5182 core
 // Based on MAME sources by Jonathan Gevaryahu
 
 #include "burnint.h"
@@ -23,7 +23,7 @@ UINT8 t5182_coin_input;
 
 void t5182_setirq_callback(INT32 param)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_T5182Initted) bprintf(PRINT_ERROR, _T("t5182_setirq_callback called without init\n"));
 #endif
 
@@ -119,7 +119,7 @@ static void t5182YM2151IrqHandler(INT32 Irq)
 
 void t5182Reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_T5182Initted) bprintf(PRINT_ERROR, _T("t5182Reset called without init\n"));
 #endif
 
@@ -171,7 +171,7 @@ void t5182Init(INT32 nZ80CPU, INT32 clock)
 
 void t5182Exit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_T5182Initted) bprintf(PRINT_ERROR, _T("t5182Exit called without init\n"));
 #endif
 
@@ -194,7 +194,7 @@ void t5182Exit()
 
 INT32 t5182Scan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_T5182Initted) bprintf(PRINT_ERROR, _T("t5182Scan called without init\n"));
 #endif
 

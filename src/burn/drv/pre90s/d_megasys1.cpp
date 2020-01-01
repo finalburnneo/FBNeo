@@ -1,4 +1,4 @@
-// FB Alpha Jaleco Mega System 1 driver module
+// FB Neo Jaleco Mega System 1 driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha "Got-ya" driver module
+// FB Neo "Got-ya" driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

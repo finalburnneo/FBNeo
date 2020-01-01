@@ -1644,7 +1644,7 @@ UINT16 __fastcall YBoardReadWord(UINT32 a)
 		return System16DivideChipRead(0, (a - 0x084000) >> 1);
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
 #endif
 
@@ -1661,7 +1661,7 @@ UINT8 __fastcall YBoardReadByte(UINT32 a)
 		return analog_r((a - 0x100040) >> 1);
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -1685,7 +1685,7 @@ void __fastcall YBoardWriteWord(UINT32 a, UINT16 d)
 		return;
 	}
 	
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -1712,7 +1712,7 @@ void __fastcall YBoardWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -1727,7 +1727,7 @@ UINT16 __fastcall YBoard2ReadWord(UINT32 a)
 		return System16DivideChipRead(1, (a - 0x084000) >> 1);
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 #2 Read Word -> 0x%06X\n"), a);
 #endif
 
@@ -1746,7 +1746,7 @@ void __fastcall YBoard2WriteWord(UINT32 a, UINT16 d)
 		return;
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 #2 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -1776,7 +1776,7 @@ UINT16 __fastcall YBoard3ReadWord(UINT32 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 #3 Read Word -> 0x%06X\n"), a);
 #endif
 
@@ -1789,7 +1789,7 @@ UINT8 __fastcall YBoard3ReadByte(UINT32 a)
 		return System16DivideChipRead(2, (a - 0x084000) >> 1);
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 #3 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -1808,7 +1808,7 @@ void __fastcall YBoard3WriteWord(UINT32 a, UINT16 d)
 		return;
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 #3 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }

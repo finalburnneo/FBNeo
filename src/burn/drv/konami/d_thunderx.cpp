@@ -1,4 +1,4 @@
-// FB Alpha Thunder X / Super Contra driver module
+// FB Neo Thunder X / Super Contra driver module
 // Based on MAME driver by by Bryan McPhail, Manuel Abadia, and Eddie Edwards
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Unico driver module
+// FB Neo Unico driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

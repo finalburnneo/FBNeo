@@ -2,7 +2,7 @@
 #include "z80_intf.h"
 #include "msm6295.h"
 
-// FB Alpha - "News" Driver
+// FB Neo - "News" Driver
 // Based on MAME driver by David Haywood
 
 // Input Related Variables

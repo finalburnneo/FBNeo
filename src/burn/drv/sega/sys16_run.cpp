@@ -429,7 +429,7 @@ UINT8 __fastcall System16Z80PortRead(UINT16 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
 #endif
 
@@ -452,7 +452,7 @@ UINT8 __fastcall System16PPIZ80PortRead(UINT16 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
 #endif
 
@@ -474,7 +474,7 @@ UINT8 __fastcall SystemXZ80PortRead(UINT16 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
 #endif
 
@@ -492,7 +492,7 @@ UINT8 __fastcall System16Z80PortRead2(UINT16 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
 #endif
 
@@ -567,12 +567,12 @@ void __fastcall System16Z80PortWrite(UINT16 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write Port -> %02X, %02X\n"), a, d);
 #endif
 }
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 UINT8 __fastcall System16Z80Read(UINT16 a)
 {
 	bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
@@ -581,7 +581,7 @@ UINT8 __fastcall System16Z80Read(UINT16 a)
 }
 #endif
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 void __fastcall System16Z80Write(UINT16 a, UINT8 d)
 {
 	bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02X\n"), a, d);
@@ -594,7 +594,7 @@ UINT8 __fastcall System16Z80PCMRead(UINT16 a)
 		return SegaPCMRead(0, a - 0xf000);
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
 #endif
 
@@ -608,7 +608,7 @@ void __fastcall System16Z80PCMWrite(UINT16 a, UINT8 d)
 		return;
 	}
 	
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02X\n"), a, d);
 #endif
 }
@@ -624,7 +624,7 @@ UINT8 __fastcall System16Z802203PortRead(UINT16 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
 #endif
 
@@ -643,7 +643,7 @@ UINT8 __fastcall System16Z802203Read(UINT16 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
 #endif
 
@@ -669,7 +669,7 @@ void __fastcall System16Z802203Write(UINT16 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02X\n"), a, d);
 #endif
 }
@@ -680,7 +680,7 @@ UINT8 __fastcall System16Z80Read2(UINT16 a)
 		return SegaPCMRead(1, a - 0xf000);
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
 #endif
 
@@ -694,7 +694,7 @@ void __fastcall System16Z80Write2(UINT16 a, UINT8 d)
 		return;
 	}
 	
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02X\n"), a, d);
 #endif
 }
@@ -713,7 +713,7 @@ UINT8 __fastcall System18Z80PortRead(UINT16 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
 #endif
 
@@ -781,7 +781,7 @@ void __fastcall System18Z80PortWrite(UINT16 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write Port -> %02X, %02X\n"), a, d);
 #endif
 }
@@ -792,7 +792,7 @@ UINT8 __fastcall System18Z80Read(UINT16 a)
 		return RF5C68PCMRead(a - 0xd000);
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
 #endif
 
@@ -811,7 +811,7 @@ void __fastcall System18Z80Write(UINT16 a, UINT8 d)
 		return;
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02X\n"), a, d);
 #endif
 }
@@ -1160,7 +1160,7 @@ INT32 System16LoadRoms(bool bLoad)
 			System16Z80RomSize = 0x210000;
 		}
 		
-#if 1 && defined FBNEO_DEBUG	
+#if 1 && defined FBN_DEBUG	
 		bprintf(PRINT_NORMAL, _T("68K Rom Size: 0x%X (%i roms)\n"), System16RomSize, System16RomNum);
 		if (System16Rom2Size) bprintf(PRINT_NORMAL, _T("68K #2 Rom Size: 0x%X (%i roms)\n"), System16Rom2Size, System16Rom2Num);
 		if (System16Rom3Size) bprintf(PRINT_NORMAL, _T("68K #3 Rom Size: 0x%X (%i roms)\n"), System16Rom3Size, System16Rom3Num);
@@ -1883,7 +1883,7 @@ INT32 System16Init()
 #ifdef BUILD_A68K
 		// Make sure we use Musashi
 		if (bBurnUseASMCPUEmulation) {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 			bprintf(PRINT_NORMAL, _T("Switching to Musashi 68000 core\n"));
 #endif
 			bUseAsm68KCoreOldValue = bBurnUseASMCPUEmulation;
@@ -1935,7 +1935,7 @@ INT32 System16Init()
 			ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
 			ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
 		
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 			ZetSetReadHandler(System16Z80Read);
 			ZetSetWriteHandler(System16Z80Write);
 #endif	
@@ -2014,7 +2014,7 @@ INT32 System16Init()
 				ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
 				ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
 		
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 				ZetSetReadHandler(System16Z80Read);
 				ZetSetWriteHandler(System16Z80Write);
 #endif	
@@ -2705,7 +2705,7 @@ INT32 System16Exit()
 #ifdef BUILD_A68K
 		// Switch back CPU core if needed
 		if (bUseAsm68KCoreOldValue) {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 			bprintf(PRINT_NORMAL, _T("Switching back to A68K core\n"));
 #endif
 			bUseAsm68KCoreOldValue = false;

@@ -1,4 +1,4 @@
-// FB Alpha Air Buster: Trouble Specialty Raid Unit driver module
+// FB Neo Air Buster: Trouble Specialty Raid Unit driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Lemmings driver module
+// FB Neo Lemmings driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

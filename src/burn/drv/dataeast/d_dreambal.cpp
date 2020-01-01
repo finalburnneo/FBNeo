@@ -1,4 +1,4 @@
-// FB Alpha Dream Ball driver module
+// FB Neo Dream Ball driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

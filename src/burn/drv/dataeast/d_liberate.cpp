@@ -1,4 +1,4 @@
-// FB Alpha Data East Liberation driver module
+// FB Neo Data East Liberation driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

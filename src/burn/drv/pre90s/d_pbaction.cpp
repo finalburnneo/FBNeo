@@ -1,4 +1,4 @@
-// FB Alpha Pinball Action driver module
+// FB Neo Pinball Action driver module
 // Based on MAME driver by Nicola Salmoria
 
 // move sega decrypt stuff to a file

@@ -1,4 +1,4 @@
-// FB Alpha Irem M107 system driver
+// FB Neo Irem M107 system driver
 // Based on MAME driver by Bryan McPhail
 // Based on port of M92 driver from MAME by OopsWare
 

@@ -1,4 +1,4 @@
-// FB Alpha Jack the Giant Killer driver module
+// FB Neo Jack the Giant Killer driver module
 // Based on MAME driver by Brad Oliver
 
 #include "tiles_generic.h"

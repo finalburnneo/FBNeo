@@ -1,4 +1,4 @@
-// FB Alpha - World Cup '90 driver
+// FB Neo - World Cup '90 driver
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"
@@ -893,7 +893,7 @@ static void drawsprite_64x64(INT32 Code, INT32 x, INT32 y, INT32 Bank, INT32 Att
 }
 
 static void drawsprite_invalid(INT32 Code, INT32 x, INT32 y, INT32 Bank, INT32 Attr) {
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("8 Pixel Size not Supported! %X, %d, %d, %X, %X\n"), Code, x, y, Bank, Attr);
 #else
 	(void)Code; (void)x; (void)y; (void)Bank; (void)Attr;

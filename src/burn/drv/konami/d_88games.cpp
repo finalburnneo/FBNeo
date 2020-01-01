@@ -1,4 +1,4 @@
-// FB Alpha '88 Games driver module
+// FB Neo '88 Games driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

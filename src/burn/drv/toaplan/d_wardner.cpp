@@ -1,4 +1,4 @@
-// FB Alpha Wardner driver module
+// FB Neo Wardner driver module
 // Based on MAME driver by Quench
 
 #include "tiles_generic.h"

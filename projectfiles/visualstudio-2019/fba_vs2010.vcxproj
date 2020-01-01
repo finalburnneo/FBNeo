@@ -506,12 +506,13 @@
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exprraid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_kingofbox.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />	  
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
@@ -859,7 +860,6 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_espial.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_ettrivia.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exedexes.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exprraid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_fantland.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_fastfred.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_firetrap.cpp" />
@@ -1616,7 +1616,7 @@ del build_details.exe
     <ProjectGuid>{86D06C32-A849-4988-A176-A38D014C36C1}</ProjectGuid>
     <RootNamespace>fba_vs2010</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>fba_vs2019</ProjectName>
+    <ProjectName>fbn_vs2019</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -1624,6 +1624,7 @@ del build_details.exe
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
+    <EnableASAN>true</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -1637,6 +1638,7 @@ del build_details.exe
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
+    <EnableASAN>true</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -1700,6 +1702,7 @@ del build_details.exe
       <EnablePREfast>true</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -1755,6 +1758,8 @@ del build_details.exe
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
       <EnablePREfast>false</EnablePREfast>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -1781,9 +1786,10 @@ del build_details.exe
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnablePREfast>false</EnablePREfast>
       <ObjectFileName>$(IntDir)1\1\%(RelativeDir)\</ObjectFileName>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>user32.lib;gdi32.lib;comdlg32.lib;comctl32.lib;shell32.lib;winmm.lib;ole32.lib;shlwapi.lib;advapi32.lib;setupapi.lib;vfw32.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>

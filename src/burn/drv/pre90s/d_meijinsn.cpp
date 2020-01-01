@@ -1,4 +1,4 @@
-// FB Alpha Meijinsen Driver Module 
+// FB Neo Meijinsen Driver Module 
 // Based on MAME driver by Tomasz Slanina
 
 #include "tiles_generic.h"

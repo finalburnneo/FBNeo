@@ -15,7 +15,7 @@ void BurnYM2413Scan(INT32 nAction, INT32 *pnMin);
 
 static inline void BurnYM2413Write(INT32 Address, const UINT8 nValue)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Write called without init\n"));
 #endif
 

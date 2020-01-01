@@ -1,4 +1,4 @@
-// FB Alpha Yun Sung 16 Bit Games driver module
+// FB Neo Yun Sung 16 Bit Games driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

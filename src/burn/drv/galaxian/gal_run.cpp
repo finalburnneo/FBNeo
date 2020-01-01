@@ -259,7 +259,7 @@ static INT32 GalLoadRoms(bool bLoad)
 			SpritePlaneOffsets[1] = GalTilesSpriteRomSize * 4;
 		}
 		
-#if 1 && defined FBNEO_DEBUG	
+#if 1 && defined FBN_DEBUG	
 		if (GalZ80Rom1Size) bprintf(PRINT_NORMAL, _T("Z80 #1 Rom Size: 0x%X (%i roms)\n"), GalZ80Rom1Size, GalZ80Rom1Num);
 		if (GalZ80Rom2Size) bprintf(PRINT_NORMAL, _T("Z80 #2 Rom Size: 0x%X (%i roms)\n"), GalZ80Rom2Size, GalZ80Rom2Num);
 		if (GalZ80Rom3Size) bprintf(PRINT_NORMAL, _T("Z80 #3 Rom Size: 0x%X (%i roms)\n"), GalZ80Rom3Size, GalZ80Rom3Num);

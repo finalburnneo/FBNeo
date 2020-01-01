@@ -1,4 +1,4 @@
-// FB Alpha Atari G1 system driver module
+// FB Neo Atari G1 system driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

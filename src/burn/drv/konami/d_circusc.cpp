@@ -1,4 +1,4 @@
-// FB Alpha Circus Charlie driver module
+// FB Neo Circus Charlie driver module
 // Based on MAME driver by Chris Hardy
 
 #include "tiles_generic.h"

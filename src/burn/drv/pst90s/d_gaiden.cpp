@@ -1,4 +1,4 @@
-// FB Alpha Ninja Gaiden driver module
+// FB Neo Ninja Gaiden driver module
 // Based on MAME driver by Alex Pasadyn, Phil Stroffolino, Nicola Salmoria, and various others
 
 #include "tiles_generic.h"

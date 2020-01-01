@@ -1,4 +1,4 @@
-// FB Alpha Momoko 120% driver module
+// FB Neo Momoko 120% driver module
 // Based on MAME driver by Uki
 
 #include "tiles_generic.h"

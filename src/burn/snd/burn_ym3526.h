@@ -22,7 +22,7 @@ void BurnYM3526Scan(INT32 nAction, INT32* pnMin);
 
 #define BurnYM3526Read(a) YM3526Read(0, a)
 
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	#define BurnYM3526Write(a, n) if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Write called without init\n")); YM3526Write(0, a, n)
 #else
 	#define BurnYM3526Write(a, n) YM3526Write(0, a, n)

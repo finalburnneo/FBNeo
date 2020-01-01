@@ -1,4 +1,4 @@
-// FB Alpha Twin16 driver module
+// FB Neo Twin16 driver module
 // Based on MAME driver by Phil Stroffolino
 
 #include "tiles_generic.h"

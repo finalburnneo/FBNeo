@@ -1,4 +1,4 @@
-// FB Alpha Samurai Nihon-Ichi driver module
+// FB Neo Samurai Nihon-Ichi driver module
 // Based on MAME driver by Phil Stroffolino
 
 // vsgongf - player is black (normal!)

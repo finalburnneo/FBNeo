@@ -1,4 +1,4 @@
-// FB Alpha Syusse Oozumou driver module
+// FB Neo Syusse Oozumou driver module
 // Based on MAME driver by Takahiro Nogi (nogi@kt.rim.or.jp)
 
 #include "tiles_generic.h"

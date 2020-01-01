@@ -1,4 +1,4 @@
-// FB Alpha Tecmo driver Module
+// FB Neo Tecmo driver Module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Toaplan driver module
+// FB Neo Toaplan driver module
 // Based on MAME driver by Darren Olafson, Quench, and Stephane Humbert
 
 #include "tiles_generic.h"

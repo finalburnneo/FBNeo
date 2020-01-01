@@ -1,4 +1,4 @@
-// FB Alpha B-Wing / Zaviga driver module
+// FB Neo B-Wing / Zaviga driver module
 // Based on MAME driver by Acho A. Tang and Alex W. Jackson
 
 // Note dac missing output filtering...

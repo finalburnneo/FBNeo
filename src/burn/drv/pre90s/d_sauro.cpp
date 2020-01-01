@@ -1,4 +1,4 @@
-// FB Alpha Sauro driver module
+// FB Neo Sauro driver module
 // Based on MAME driver by Zsolt Vasvari
 
 #include "tiles_generic.h"

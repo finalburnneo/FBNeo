@@ -1,4 +1,4 @@
-// FB Alpha Tutankham driver module
+// FB Neo Tutankham driver module
 // Based on MAME driver by Mirko Buffoni & Rob Jarrett
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha tempest driver module
+// FB Neo tempest driver module
 // Based on MAME driver by Brad Oliver, Bernd Wiebelt, Allard van der Bas
 
 #include "tiles_generic.h"

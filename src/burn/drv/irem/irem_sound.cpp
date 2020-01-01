@@ -1,4 +1,4 @@
-// FB Alpha Irem Sound system device
+// FB Neo Irem Sound system device
 // Based on MAME sources by Couriersud and FBA port by Barry Harris (Treble Winner)
 
 #include "burnint.h"

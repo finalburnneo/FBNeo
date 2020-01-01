@@ -1,4 +1,4 @@
-// FB Alpha sample player module
+// FB Neo sample player module
 
 #include "burnint.h"
 #include "samples.h"
@@ -176,7 +176,7 @@ void BurnSampleInitOne(INT32); // below...
 
 void BurnSamplePlay(INT32 sample)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSamplePlay called without init\n"));
 #endif
 
@@ -196,7 +196,7 @@ void BurnSamplePlay(INT32 sample)
 
 void BurnSamplePause(INT32 sample)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSamplePause called without init\n"));
 #endif
 
@@ -208,7 +208,7 @@ void BurnSamplePause(INT32 sample)
 
 void BurnSampleResume(INT32 sample)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleResume called without init\n"));
 #endif
 
@@ -220,7 +220,7 @@ void BurnSampleResume(INT32 sample)
 
 void BurnSampleStop(INT32 sample)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleStop called without init\n"));
 #endif
 
@@ -234,7 +234,7 @@ void BurnSampleStop(INT32 sample)
 
 void BurnSampleSetLoop(INT32 sample, bool dothis)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetLoop called without init\n"));
 #endif
 
@@ -261,7 +261,7 @@ INT32 BurnSampleGetStatus(INT32 sample)
 
 INT32 BurnSampleGetPosition(INT32 sample)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleGetPosition called without init\n"));
 #endif
 
@@ -273,7 +273,7 @@ INT32 BurnSampleGetPosition(INT32 sample)
 
 void BurnSampleSetPosition(INT32 sample, UINT32 position)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetPosition called without init\n"));
 #endif
 
@@ -285,7 +285,7 @@ void BurnSampleSetPosition(INT32 sample, UINT32 position)
 
 void BurnSampleSetPlaybackRate(INT32 sample, INT32 rate)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetPlaybackRate called without init\n"));
 	if (rate > 5000 || rate < 0) bprintf (PRINT_ERROR, _T("BurnSampleSetPlaybackRate called with unlikely rate (%d)!\n"), rate);
 #endif
@@ -298,7 +298,7 @@ void BurnSampleSetPlaybackRate(INT32 sample, INT32 rate)
 
 void BurnSampleReset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleReset called without init\n"));
 #endif
 
@@ -492,7 +492,7 @@ void BurnSampleInitOne(INT32 sample)
 
 void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnSampleSetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -506,7 +506,7 @@ void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRoute
 
 void BurnSampleSetRouteAllSamples(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetRouteAllSamples called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnSampleSetRouteAllSamples called with invalid index %i\n"), nIndex);
 #endif
@@ -522,7 +522,7 @@ void BurnSampleSetRouteAllSamples(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void BurnSampleExit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleExit called without init\n"));
 #endif
 
@@ -547,7 +547,7 @@ void BurnSampleExit()
 
 void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleRender called without init\n"));
 #endif
 
@@ -626,7 +626,7 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 
 void BurnSampleScan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleScan called without init\n"));
 #endif
 

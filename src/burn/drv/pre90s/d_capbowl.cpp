@@ -1,4 +1,4 @@
-// FB Alpha Coors Light Bowling/Bowl-O-Rama driver module
+// FB Neo Coors Light Bowling/Bowl-O-Rama driver module
 // Based on MAME driver by Zsolt Vasvari
 
 #include "tiles_generic.h"

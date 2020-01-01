@@ -1,4 +1,4 @@
-// FB Alpha Big Striker bootleg Hardware
+// FB Neo Big Striker bootleg Hardware
 // Based on MAME driver by David Haywood
 
 // note:

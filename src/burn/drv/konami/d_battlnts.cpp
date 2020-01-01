@@ -1,4 +1,4 @@
-// FB Alpha Battlantis driver module
+// FB Neo Battlantis driver module
 // Based on MAME driver by Manuel Abadia
 
 #include "tiles_generic.h"
@@ -336,7 +336,7 @@ static UINT8 __fastcall battlnts_sound_read(UINT16 address)
 	return 0;
 }
 
-static void battlnts_tile_callback(INT32 /*layer*/, INT32 /*bank*/, INT32 *code, INT32 *color, INT32 */*flags*/)
+static void battlnts_tile_callback(INT32 /*layer*/, INT32 /*bank*/, INT32 *code, INT32 *color, INT32* /*flags*/)
 {
 	*code |= ((*color & 0x0f) << 9) | ((*color & 0x40) << 2);
 	*color = 0;

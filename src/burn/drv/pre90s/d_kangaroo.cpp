@@ -1,4 +1,4 @@
-// FB Alpha Kangaroo / Funky Fish driver module
+// FB Neo Kangaroo / Funky Fish driver module
 // Based on MAME driver by Ville Laitinen and Aaron Giles
 
 #include "tiles_generic.h"

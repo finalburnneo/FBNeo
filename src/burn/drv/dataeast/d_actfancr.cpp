@@ -1,4 +1,4 @@
-// FB Alpha Act-Fancer & Trio The Punch driver module
+// FB Neo Act-Fancer & Trio The Punch driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Block Out driver module
+// FB Neo Block Out driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

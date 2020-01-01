@@ -1,4 +1,4 @@
-// FB Alpha Cloak and Dagger driver module
+// FB Neo Cloak and Dagger driver module
 // Based on MAME driver by Dan Boris and Mirko Buffoni
 
 #include "tiles_generic.h"

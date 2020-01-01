@@ -1,4 +1,4 @@
-// FB Alpha Sega Z80-3D system driver module
+// FB Neo Sega Z80-3D system driver module
 // Based on and large pieces copied from (video code & sound code) MAME driver by 
 // Alex Pasadyn, Howie Cohen, Frank Palazzolo, Ernesto Corvi, and Aaron Giles
 

@@ -1,4 +1,4 @@
-// FB Alpha NMG5 driver module
+// FB Neo NMG5 driver module
 // Based on MAME driver by Pierpaolo Prazzoli
 
 #include "tiles_generic.h"

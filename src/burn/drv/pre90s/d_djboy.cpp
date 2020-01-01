@@ -1,4 +1,4 @@
-// FB Alpha DJ Boy driver module
+// FB Neo DJ Boy driver module
 // Based on MAME driver by Phil Stroffolino
 
 #include "tiles_generic.h"

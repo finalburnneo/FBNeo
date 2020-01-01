@@ -1,4 +1,4 @@
-// FB Alpha Williams Games driver module
+// FB Neo Williams Games driver module
 // Based on MAME driver by Aaron Giles
 
 // Works:

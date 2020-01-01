@@ -1,4 +1,4 @@
-// FB Alpha Angel Kids driver module
+// FB Neo Angel Kids driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

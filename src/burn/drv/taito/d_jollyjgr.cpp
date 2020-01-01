@@ -1,4 +1,4 @@
-// FB Alpha Jolly Jogger driver module
+// FB Neo Jolly Jogger driver module
 // Based on MAME driver by Pierpaolo Prazzoli
 
 #include "tiles_generic.h"

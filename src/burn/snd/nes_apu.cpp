@@ -662,7 +662,7 @@ static inline void apu_update(struct nesapu_info *info)
 /* READ VALUES FROM REGISTERS */
 UINT8 nesapuRead(INT32 chip, INT32 address)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuRead called without init\n"));
 #endif
 
@@ -697,7 +697,7 @@ UINT8 nesapuRead(INT32 chip, INT32 address)
 /* WRITE VALUE TO TEMP REGISTRY AND QUEUE EVENT */
 void nesapuWrite(INT32 chip, INT32 address, UINT8 value)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuWrite called without init\n"));
 #endif
 
@@ -715,7 +715,7 @@ void nesapuWrite(INT32 chip, INT32 address, UINT8 value)
 /* UPDATE APU SYSTEM */
 void nesapuUpdate(INT32 chip, INT16 *buf, INT32 samples)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuUpdate called without init\n"));
 #endif
 
@@ -777,7 +777,7 @@ void nesapuUpdate(INT32 chip, INT16 *buf, INT32 samples)
 
 void nesapuReset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuReset called without init\n"));
 #endif
 
@@ -883,7 +883,7 @@ void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_p
 
 void nesapuSetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuSetRoute called without init\n"));
 #endif
 
@@ -895,7 +895,7 @@ void nesapuSetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void nesapuExit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuExit called without init\n"));
 #endif
 
@@ -914,7 +914,7 @@ void nesapuExit()
 
 void nesapuScan(INT32 nAction, INT32 *)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuScan called without init\n"));
 #endif
 

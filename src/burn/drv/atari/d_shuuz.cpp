@@ -1,4 +1,4 @@
-// FB Alpha Atari Shuzz driver module
+// FB Neo Atari Shuzz driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Pushman driver module
+// FB Neo Pushman driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

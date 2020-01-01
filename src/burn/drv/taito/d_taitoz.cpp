@@ -4856,7 +4856,7 @@ static void TaitoZZ80Init()
 static void SwitchToMusashi()
 {
 	if (bBurnUseASMCPUEmulation) {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		bprintf(PRINT_NORMAL, _T("Switching to Musashi 68000 core\n"));
 #endif
 		bUseAsm68KCoreOldValue = bBurnUseASMCPUEmulation;
@@ -5891,7 +5891,7 @@ static INT32 TaitoZExit()
 #ifdef BUILD_A68K
 	// Switch back CPU core if needed
 	if (bUseAsm68KCoreOldValue) {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		bprintf(PRINT_NORMAL, _T("Switching back to A68K core\n"));
 #endif
 		bUseAsm68KCoreOldValue = false;

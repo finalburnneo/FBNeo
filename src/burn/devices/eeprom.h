@@ -14,7 +14,7 @@ struct _eeprom_interface
 				/* before starting to return 1. */
 };
 
-// default for most in fba
+// default for most in fbn
 const eeprom_interface eeprom_interface_93C46 =
 {
 	6,		// address bits 6

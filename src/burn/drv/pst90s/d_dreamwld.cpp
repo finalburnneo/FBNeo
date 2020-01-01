@@ -1,4 +1,4 @@
-// FB Alpha Dream World / Baryon driver module
+// FB Neo Dream World / Baryon driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

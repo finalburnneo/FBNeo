@@ -1,4 +1,4 @@
-// FB Alpha Super Burger Time / China Town driver module
+// FB Neo Super Burger Time / China Town driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

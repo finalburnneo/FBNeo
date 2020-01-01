@@ -1,4 +1,4 @@
-// FB Alpha Shoot Out driver module
+// FB Neo Shoot Out driver module
 // Based on MAME driver by Ernesto Corvi, Phil Stroffolino, Bryan McPhail
 
 #include "tiles_generic.h"

@@ -109,7 +109,7 @@ void i8257Init()
 
 void i8257Exit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Exit called without init\n"));
 #endif
 
@@ -118,7 +118,7 @@ void i8257Exit()
 
 void i8257Config(UINT8 (*cpuread)(UINT16), void (*cpuwrite)(UINT16,UINT8), INT32 (*idle)(INT32), ior_in_functs *read_f, ior_out_functs *write_f)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Config called without init\n"));
 #endif
 
@@ -139,7 +139,7 @@ void i8257Config(UINT8 (*cpuread)(UINT16), void (*cpuwrite)(UINT16,UINT8), INT32
 
 void i8257Reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Reset called without init\n"));
 #endif
 
@@ -274,7 +274,7 @@ static void i8257_timer(INT32 id, INT32 param)
 
 void i8257_update_status()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257_update_status called without init\n"));
 #endif
 
@@ -302,7 +302,7 @@ static void i8257_prepare_msb_flip()
 
 UINT8 i8257Read(UINT8 offset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Read called without init\n"));
 #endif
 
@@ -340,7 +340,7 @@ UINT8 i8257Read(UINT8 offset)
 
 void i8257Write(UINT8 offset, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Write called without init\n"));
 #endif
 
@@ -395,7 +395,7 @@ void i8257Write(UINT8 offset, UINT8 data)
 
 void i8257_drq_write(INT32 channel, INT32 state)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257_drq_write called without init\n"));
 #endif
 
@@ -406,7 +406,7 @@ void i8257_drq_write(INT32 channel, INT32 state)
 
 void i8257_do_transfer(INT32)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257_do_transfer called without init\n"));
 #endif
 
@@ -417,7 +417,7 @@ void i8257_do_transfer(INT32)
 
 void i8257Scan()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Scan called without init\n"));
 #endif
 

@@ -1,4 +1,4 @@
-// FB Alpha Egg Hunt driver module
+// FB Neo Egg Hunt driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

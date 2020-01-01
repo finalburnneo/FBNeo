@@ -1,4 +1,4 @@
-// FB Alpha Pandora's Palace driver module
+// FB Neo Pandora's Palace driver module
 // Based on MAME driver by Manuel Abadia
 
 #include "tiles_generic.h"

@@ -490,7 +490,7 @@ INLINE void YM_DELTAT_synthesis_from_external_memory(YM_DELTAT *DELTAT)
 				DELTAT->now_addr = 0;
 
 			if ( DELTAT->now_addr >= (DELTAT->memory_size<<1) ) {
-				/* 2-26-2016 DINK@FBAlpha: solution for crash in gwar when loading a savestate as player death sample is playing. */
+				/* 2-26-2016 DINK@FBNeo: solution for crash in gwar when loading a savestate as player death sample is playing. */
 				/* set EOS bit in status register */
 				if(DELTAT->status_set_handler)
 					if(DELTAT->status_change_EOS_bit)

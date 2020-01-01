@@ -1,4 +1,4 @@
-// FB Alpha The Deep driver module
+// FB Neo The Deep driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

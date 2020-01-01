@@ -1,4 +1,4 @@
-// FB Alpha Shaolin's Road driver module
+// FB Neo Shaolin's Road driver module
 // Based on MAME driver by Allard Van Der Bas
 
 #include "tiles_generic.h"

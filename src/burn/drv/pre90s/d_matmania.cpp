@@ -1,4 +1,4 @@
-// FB Alpha Mat Mania driver module
+// FB Neo Mat Mania driver module
 // Based on MAME driver by Brad Oliver
 
 #include "tiles_generic.h"

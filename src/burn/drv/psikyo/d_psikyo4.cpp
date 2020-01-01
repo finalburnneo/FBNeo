@@ -1,4 +1,4 @@
-// FB Alpha Psikyo PS4 harware driver module
+// FB Neo Psikyo PS4 harware driver module
 // Based on MAME driver by David Haywood and Paul Priest
 
 #include "tiles_generic.h"

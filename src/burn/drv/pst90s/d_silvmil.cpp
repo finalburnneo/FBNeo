@@ -1,4 +1,4 @@
-// FB Alpha Silver Millennium driver module
+// FB Neo Silver Millennium driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

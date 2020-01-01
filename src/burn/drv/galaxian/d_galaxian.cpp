@@ -1,6 +1,6 @@
 #include "gal.h"
 
-// FB Alpha Galaxian driver module
+// FB Neo Galaxian driver module
 // Based on MAME driver by Aaron Giles, Couriersud,Stephane Humbert
 
 static INT32 ScrambleInit();

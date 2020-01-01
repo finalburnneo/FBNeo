@@ -1,4 +1,4 @@
-// FB Alpha Double Wings driver module
+// FB Neo Double Wings driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

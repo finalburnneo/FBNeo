@@ -158,7 +158,7 @@ INT32 M6800Scan(INT32 nAction);
 
 inline static INT32 M6800TotalCycles()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800TotalCycles called without init\n"));
 #endif
 
@@ -171,7 +171,7 @@ inline static INT32 M6800TotalCycles()
 
 inline static INT32 M6800Idle(INT32 cycles)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800Idle called without init\n"));
 #endif
 

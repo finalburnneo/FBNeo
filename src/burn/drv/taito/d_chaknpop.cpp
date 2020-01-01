@@ -1,4 +1,4 @@
-// FB Alpha Chack'n Pop driver module
+// FB Neo Chack'n Pop driver module
 // Based on MAME driver by BUT
 
 #include "tiles_generic.h"

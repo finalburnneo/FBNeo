@@ -1,4 +1,4 @@
-// FB Alpha Combat School driver module
+// FB Neo Combat School driver module
 // Based on MAME driver by Phil Stroffolino, Manuel Abadia
 
 #include "tiles_generic.h"

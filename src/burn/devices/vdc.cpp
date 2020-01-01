@@ -54,7 +54,7 @@ static void vpc_update_prio_map()
 
 void vpc_write(UINT8 offset, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vpc_write called without init\n"));
 #endif
 
@@ -108,7 +108,7 @@ void vpc_write(UINT8 offset, UINT8 data)
 
 UINT8 vpc_read(UINT8 offset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vpc_read called without init\n"));
 #endif
 
@@ -138,7 +138,7 @@ UINT8 vpc_read(UINT8 offset)
 
 void vpc_reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vpc_reset called without init\n"));
 #endif
 
@@ -159,7 +159,7 @@ void vpc_reset()
 
 UINT8 vce_read(UINT8 offset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vce_read called without init\n"));
 #endif
 
@@ -179,7 +179,7 @@ UINT8 vce_read(UINT8 offset)
 
 void vce_write(UINT8 offset, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vce_write called without init\n"));
 #endif
 
@@ -210,7 +210,7 @@ void vce_write(UINT8 offset, UINT8 data)
 
 void vce_palette_init(UINT32 *Palette)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vce_palette_init called without init\n"));
 #endif
 
@@ -229,7 +229,7 @@ void vce_palette_init(UINT32 *Palette)
 
 void vce_reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vce_reset called without init\n"));
 #endif
 
@@ -801,7 +801,7 @@ static void pce_refresh_line(INT32 which, INT32 /*line*/, INT32 external_input, 
 
 void pce_interrupt()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("pce_interrupt called without init\n"));
 #endif
 
@@ -839,7 +839,7 @@ void pce_interrupt()
 
 void sgx_interrupt()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("sgx_interrupt called without init\n"));
 #endif
 
@@ -1021,7 +1021,7 @@ static void vdc_do_dma(INT32 which)
 
 void vdc_write(INT32 which, UINT8 offset, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_write called without init\n"));
 #endif
 
@@ -1122,7 +1122,7 @@ void vdc_write(INT32 which, UINT8 offset, UINT8 data)
 
 UINT8 vdc_read(INT32 which, UINT8 offset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_read called without init\n"));
 #endif
 
@@ -1152,7 +1152,7 @@ UINT8 vdc_read(INT32 which, UINT8 offset)
 
 void sgx_vdc_write(UINT8 offset, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("sgx_vdc_write called without init\n"));
 #endif
 
@@ -1168,7 +1168,7 @@ void sgx_vdc_write(UINT8 offset, UINT8 data)
 
 UINT8 sgx_vdc_read(UINT8 offset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("sgx_vdc_read called without init\n"));
 #endif
 
@@ -1177,7 +1177,7 @@ UINT8 sgx_vdc_read(UINT8 offset)
 
 void vdc_reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_reset called without init\n"));
 #endif
 
@@ -1204,7 +1204,7 @@ void vdc_reset()
 
 void vdc_get_dimensions(INT32 which, INT32 *x, INT32 *y)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_get_dimensions called without init\n"));
 #endif
 
@@ -1219,7 +1219,7 @@ void vdc_init()
 
 void vdc_exit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_exit called without init\n"));
 #endif
 
@@ -1228,7 +1228,7 @@ void vdc_exit()
 
 INT32 vdc_scan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_scan called without init\n"));
 #endif
 

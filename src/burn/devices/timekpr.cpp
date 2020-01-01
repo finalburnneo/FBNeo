@@ -139,7 +139,7 @@ static void counters_from_ram()
 
 UINT8 TimeKeeperRead(UINT32 offset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperRead called without init\n"));
 #endif
 
@@ -148,7 +148,7 @@ UINT8 TimeKeeperRead(UINT32 offset)
 
 INT32 TimeKeeperIsEmpty()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperIsEmpty called without init\n"));
 #endif
 
@@ -164,7 +164,7 @@ INT32 TimeKeeperIsEmpty()
 
 UINT8* TimeKeeperGetRaw()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperGetRaw called without init\n"));
 #endif
 
@@ -173,7 +173,7 @@ UINT8* TimeKeeperGetRaw()
 
 void TimeKeeperWrite(INT32 offset, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperWrite called without init\n"));
 #endif
 
@@ -196,7 +196,7 @@ void TimeKeeperWrite(INT32 offset, UINT8 data)
 
 void TimeKeeperTick()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperTick called without init\n"));
 #endif
 
@@ -368,7 +368,7 @@ void TimeKeeperInit(INT32 type, UINT8 *data)
 
 void TimeKeeperExit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperExit called without init\n"));
 #endif
 
@@ -383,7 +383,7 @@ void TimeKeeperExit()
 
 void TimeKeeperScan(INT32 nAction)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperScan called without init\n"));
 #endif
 

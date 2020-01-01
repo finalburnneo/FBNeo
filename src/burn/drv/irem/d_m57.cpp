@@ -1,4 +1,4 @@
-// FB Alpha Tropical Angel driver module
+// FB Neo Tropical Angel driver module
 // Based on MAME driver by Phil Stroffolino
 
 #include "tiles_generic.h"

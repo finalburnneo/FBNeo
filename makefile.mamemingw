@@ -212,7 +212,7 @@ ifdef FASTCALL
 endif
 
 ifdef DEBUG
-	DEF	:= $(DEF) -DFBNEO_DEBUG
+	DEF	:= $(DEF) -DFBN_DEBUG
 endif
 
 ifdef ROM_VERIFY

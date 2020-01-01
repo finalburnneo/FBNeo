@@ -1,4 +1,4 @@
-// FB Alpha Varia Metal driver module
+// FB Neo Varia Metal driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

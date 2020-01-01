@@ -1624,7 +1624,7 @@ static void System16ARenderSpriteLayer(INT32 Priority)
 		if ((BURN_ENDIAN_SWAP_INT16(data[0]) >> 8) > 0xf0) break;
 		INT32 sprpri  = 1 << ((BURN_ENDIAN_SWAP_INT16(data[4]) >> 0) & 0x3);
 				
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		if (sprpri != 1 && sprpri != 2 && sprpri != 4 && sprpri != 8) bprintf(PRINT_IMPORTANT, _T("Unknown Sprite Priority - %x\n"), sprpri);
 #endif
 		
@@ -1712,7 +1712,7 @@ static void System16BRenderSpriteLayer(INT32 Priority)
 		if (BURN_ENDIAN_SWAP_INT16(data[2]) & 0x8000) break;
 		INT32 sprpri  = 1 << ((BURN_ENDIAN_SWAP_INT16(data[4]) >> 6) & 0x3);
 				
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		if (sprpri != 1 && sprpri != 2 && sprpri != 4 && sprpri != 8) bprintf(PRINT_IMPORTANT, _T("Unknown Sprite Priority - %x\n"), sprpri);
 #endif
 		
@@ -1836,7 +1836,7 @@ static void OutrunRenderSpriteLayer(INT32 Priority)
 		if (BURN_ENDIAN_SWAP_INT16(data[0]) & 0x8000) break;
 		INT32 sprpri  = 1 << ((BURN_ENDIAN_SWAP_INT16(data[3]) >> 12) & 3);
 				
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		if (sprpri != 1 && sprpri != 2 && sprpri != 4 && sprpri != 8) bprintf(PRINT_IMPORTANT, _T("Unknown Sprite Priority - %x\n"), sprpri);
 #endif
 		if (sprpri != Priority) continue;
@@ -1974,7 +1974,7 @@ static void HangonRenderSpriteLayer(INT32 Priority)
 		if ((BURN_ENDIAN_SWAP_INT16(data[0]) >> 8) > 0xf0) break;	
 		INT32 sprpri  = ((BURN_ENDIAN_SWAP_INT16(data[2]) >> 14) & 1) ? (1<<3) : (1<<1);
 		
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		if (sprpri != 1 && sprpri != 2 && sprpri != 4 && sprpri != 8) bprintf(PRINT_IMPORTANT, _T("Unknown Sprite Priority - %x\n"), sprpri);
 #endif
 		
@@ -2083,7 +2083,7 @@ static void HangonAltRenderSpriteLayer(INT32 Priority)
 		if ((BURN_ENDIAN_SWAP_INT16(data[0]) >> 8) > 0xf0) break;
 		INT32 sprpri  = 1 << ((BURN_ENDIAN_SWAP_INT16(data[4]) >> 0) & 0x3);
 		
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		if (sprpri != 1 && sprpri != 2 && sprpri != 4 && sprpri != 8) bprintf(PRINT_IMPORTANT, _T("Unknown Sprite Priority - %x\n"), sprpri);
 #endif
 		
@@ -2208,7 +2208,7 @@ static void XBoardRenderSpriteLayer(INT32 Priority)
 		if (BURN_ENDIAN_SWAP_INT16(data[0]) & 0x8000) break;
 		INT32 sprpri  = 1 << ((BURN_ENDIAN_SWAP_INT16(data[3]) >> 12) & 3);
 		
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		if (sprpri != 1 && sprpri != 2 && sprpri != 4 && sprpri != 8) bprintf(PRINT_IMPORTANT, _T("Unknown Sprite Priority - %x\n"), sprpri);
 #endif
 		if (sprpri != Priority) continue;

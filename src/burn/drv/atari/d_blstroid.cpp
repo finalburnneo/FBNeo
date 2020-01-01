@@ -1,4 +1,4 @@
-// FB Alpha Atari Blasteroids driver module
+// FB Neo Atari Blasteroids driver module
 // Based on MAME driver by Aaron Giles
 
 // this game is very picky regarding timing!

@@ -1,4 +1,4 @@
-// FB Alpha Jackie Chan driver module
+// FB Neo Jackie Chan driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

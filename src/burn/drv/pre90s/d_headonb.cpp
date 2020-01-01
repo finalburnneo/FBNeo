@@ -1,4 +1,4 @@
-// FB Alpha Head On (Bootleg) driver module
+// FB Neo Head On (Bootleg) driver module
 // Based on MAME driver by Hap
 
 #include "tiles_generic.h"

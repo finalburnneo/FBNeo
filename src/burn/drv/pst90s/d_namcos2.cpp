@@ -1,4 +1,4 @@
-// FB Alpha Namco System 2 driver module
+// FB Neo Namco System 2 driver module
 // Based on MAME driver by K.Wilkins
 
 //tested / good:

@@ -1,4 +1,4 @@
-// FB Alpha Solomon's Key driver module
+// FB Neo Solomon's Key driver module
 // Based on MAME driver by Mirko Buffoni
 
 #include "tiles_generic.h"

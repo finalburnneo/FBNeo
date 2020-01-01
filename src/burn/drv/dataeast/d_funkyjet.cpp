@@ -1,4 +1,4 @@
-// FB Alpha Funky Jet driver module
+// FB Neo Funky Jet driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

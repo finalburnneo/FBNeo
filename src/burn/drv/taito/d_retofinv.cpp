@@ -1,4 +1,4 @@
-// FB Alpha Return of the Invaders driver module
+// FB Neo Return of the Invaders driver module
 // Based on MAME driver by Jarek Parchanski and Andrea Mazzoleni
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Xor World driver module
+// FB Neo Xor World driver module
 // Based on MAME driver by Manuel Abadia
 
 #include "tiles_generic.h"

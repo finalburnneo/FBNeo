@@ -5,7 +5,7 @@ static void MakeOfn()
 	memset(&ofn, 0, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = hScrnWnd;
-	ofn.lpstrFilter = _T("FB Alpha skin files (*.bmp,*.png)\0*.bmp;*.png\0\0)");
+	ofn.lpstrFilter = _T("FB Neo skin files (*.bmp,*.png)\0*.bmp;*.png\0\0)");
 	ofn.lpstrFile = szChoice;
 	ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
 	ofn.lpstrInitialDir = _T("");

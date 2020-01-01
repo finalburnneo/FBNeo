@@ -1,4 +1,4 @@
-// FB Alpha Pocket Gal deluxe driver module
+// FB Neo Pocket Gal deluxe driver module
 // Based on MAME driver by David Haywood and Bryan McPhail
 
 #include "tiles_generic.h"

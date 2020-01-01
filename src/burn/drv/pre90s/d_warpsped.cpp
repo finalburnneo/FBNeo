@@ -1,4 +1,4 @@
-// FB Alpha Warp Speed driver module
+// FB Neo Warp Speed driver module
 // Based on MAME driver by Mariusz Wojcieszek
 
 // to do:

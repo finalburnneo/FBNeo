@@ -1,4 +1,4 @@
-// FB Alpha Ajax driver module
+// FB Neo Ajax driver module
 // Based on MAME driver by Manuel Abadia
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Knuckle Joe driver module
+// FB Neo Knuckle Joe driver module
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"

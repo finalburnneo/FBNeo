@@ -1,4 +1,4 @@
-// FB Alpha Mikie driver module
+// FB Neo Mikie driver module
 // Based on MAME driver by Allard Van Der Bas
 
 #include "tiles_generic.h"

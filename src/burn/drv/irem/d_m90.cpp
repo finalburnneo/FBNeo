@@ -1,4 +1,4 @@
-// FB Alpha Irem M90 driver module
+// FB Neo Irem M90 driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

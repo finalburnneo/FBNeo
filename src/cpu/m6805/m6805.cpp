@@ -429,7 +429,7 @@ static void m6805_reset()
 }
 
 void m6805Reset() {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Reset called without init\n"));
 #endif
 
@@ -449,7 +449,7 @@ void m6805Reset() {
 
 void m6805SetIrqLine(int , int state)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805SetIrqLine called without init\n"));
 #endif
 
@@ -469,7 +469,7 @@ void m6805SetIrqLine(int , int state)
 /* execute instructions on this CPU until icount expires */
 int m6805Run(int cycles)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Run called without init\n"));
 #endif
 
@@ -774,7 +774,7 @@ int m6805Idle(int cycles)
 
 void m6805RunEnd()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805RunEnd called without init\n"));
 #endif
 
@@ -783,7 +783,7 @@ void m6805RunEnd()
 
 void m6805NewFrame()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805NewFrame called without init\n"));
 #endif
 
@@ -792,7 +792,7 @@ void m6805NewFrame()
 
 int m6805TotalCycles()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805TotalCycles called without init\n"));
 #endif
 
@@ -801,7 +801,7 @@ int m6805TotalCycles()
 
 int m6805Scan(int nAction)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Scan called without init\n"));
 #endif
 
@@ -826,7 +826,7 @@ int m6805Scan(int nAction)
 
 void m68705Reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m68705Reset called without init\n"));
 #endif
 
@@ -838,7 +838,7 @@ void m68705Reset()
 
 void m68705SetIrqLine(int irqline, int state)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m68705SetIrqLine called without init\n"));
 #endif
 	if (m6805.irq_state[irqline] == state ) return;
@@ -855,7 +855,7 @@ void m68705SetIrqLine(int irqline, int state)
 
 void hd63705Reset(void)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("hd63705Reset called without init\n"));
 #endif
 
@@ -871,7 +871,7 @@ void hd63705Reset(void)
 
 void hd63705SetIrqLine(int irqline, int state)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("hd63705SetIrqLine called without init\n"));
 #endif
 

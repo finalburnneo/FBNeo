@@ -14594,7 +14594,7 @@ static void SetGameConfig()
 		SetGfxMapper(k->CpsMapperId);
 		KabukiDecodeFunction = k->DecodeFunction;
 	} else {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		bprintf(PRINT_IMPORTANT, _T("Missing Config Data\n"));
 #endif
 	}
@@ -14667,7 +14667,7 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 		if (PangEEP) nCpsGfxLen *= 2;
 		if (nCpsPicRomNum) Cps1DisablePSnd = 1;
 		
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		if (nCpsRomLen) bprintf(PRINT_IMPORTANT, _T("68K Rom Length %06X, (%i roms byteswapped, %i roms not byteswapped)\n"), nCpsRomLen, nCps68KByteswapRomNum, nCps68KNoByteswapRomNum);
 		if (nCpsZRomLen) bprintf(PRINT_IMPORTANT, _T("Z80 Rom Length %06X, (%i roms)\n"), nCpsZRomLen, nCpsZ80RomNum);
 		if (nCpsGfxLen) bprintf(PRINT_IMPORTANT, _T("Tile Rom Length %08X, (%i roms)\n"), nCpsGfxLen, nCpsTilesRomNum);

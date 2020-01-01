@@ -1,4 +1,4 @@
-// FB Alpha key definitions
+// FB Neo key definitions
 
 #define FBK_ESCAPE          0x01
 #define FBK_1               0x02

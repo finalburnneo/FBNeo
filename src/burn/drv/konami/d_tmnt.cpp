@@ -1,4 +1,4 @@
-// FB Alpha Teenage Mutant Ninja Turtle driver module
+// FB Neo Teenage Mutant Ninja Turtle driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

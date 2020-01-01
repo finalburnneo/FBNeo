@@ -66,7 +66,7 @@ static void myDrawText(HDC hDC, RECT* pRect, TCHAR* szText, int nSizeDelta, int 
 static bool AboutDrawStrings(unsigned int nControlID, LPDRAWITEMSTRUCT pdis)
 {
 	switch (nControlID) {
-		case IDC_FBA_VER: {
+		case IDC_FBN_VER: {
 			TCHAR szVerString[128];
 			if ((nBurnVer & 0xFFFF) > 0x9990) {
 

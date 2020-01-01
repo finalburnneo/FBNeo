@@ -1,4 +1,4 @@
-// FB Alpha Break Thru driver module
+// FB Neo Break Thru driver module
 // Based on MAME driver by Phil Stroffolino
 
 // Notes:

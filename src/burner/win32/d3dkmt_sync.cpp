@@ -63,6 +63,7 @@ void LoadGDIFunctions() {
 	SuperWaitVBlank_DLLsLoaded = 1;
 }
 
+
 BOOL IsWindows7Plus() {
 
 	OSVERSIONINFO osvi;

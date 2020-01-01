@@ -1,4 +1,4 @@
-// FB Alpha IronHorse driver module
+// FB Neo IronHorse driver module
 // Based on MAME driver by Mirko Buffoni
 
 #include "tiles_generic.h"

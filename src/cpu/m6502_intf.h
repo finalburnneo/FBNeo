@@ -83,7 +83,7 @@ UINT32 M6502GetPrevPC(INT32);
 
 inline static INT32 M6502TotalCycles()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502TotalCycles called without init\n"));
 #endif
 

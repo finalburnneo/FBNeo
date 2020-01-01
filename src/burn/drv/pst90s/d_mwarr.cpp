@@ -1,4 +1,4 @@
-// Fb Alpha Mighty Warrior / Steel Force / Twin Brats driver module
+// FB Neo Mighty Warrior / Steel Force / Twin Brats driver module
 // Based on MAME drivers by Pierpaolo Prazzoli, David Haywood, and stephh
 //
 // for later: figure out why the 3rd tile layer needs prio-hack, otherwise

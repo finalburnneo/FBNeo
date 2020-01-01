@@ -5,7 +5,7 @@
     Driver for Midway T-unit games.
 
 **************************************************************************/
-// Adapted to FBAlpha
+// Adapted to FBNeo
 #define XPOSMASK        0x3ff
 #define YPOSMASK        0x1ff
 

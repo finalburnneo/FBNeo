@@ -81,7 +81,7 @@
 **
 ** 01-12-2002 Jarek Burczynski:
 **  - fixed register addressing in YM2608, YM2610, YM2610B chips. (verified on real YM2608)
-**    The addressing patch used for early Neo-Geo games can be removed now.
+**    The addressing patch used for early Neo Geo games can be removed now.
 **
 ** 26-11-2002 Jarek Burczynski, Nicola Salmoria:
 **  - recreated YM2608 ADPCM ROM using data from real YM2608's output which leads to:

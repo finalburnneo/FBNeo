@@ -1,4 +1,4 @@
-// FB Alpha Rabio Lepus / Super Volleyball driver module
+// FB Neo Rabio Lepus / Super Volleyball driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

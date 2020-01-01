@@ -1,4 +1,4 @@
-// FB Alpha Atari Relief Pitcher driver module
+// FB Neo Atari Relief Pitcher driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Atari Toobin' driver module
+// FB Neo Atari Toobin' driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

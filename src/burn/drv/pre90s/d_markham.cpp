@@ -1,4 +1,4 @@
-// FB Alpha Markham / Strength & Skill / Ikki driver module
+// FB Neo Markham / Strength & Skill / Ikki driver module
 // Based on MAME driver by UKI
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Battle Cross / Dodge Man driver module
+// FB Neo Battle Cross / Dodge Man driver module
 // Based on MAME driver by David Haywood
 
 // Notes:

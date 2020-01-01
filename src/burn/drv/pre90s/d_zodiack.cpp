@@ -1,4 +1,4 @@
-// Zodiack emu-layer for FB Alpha by dink
+// Zodiack emu-layer for FB Neo by dink
 // Based on the MAME driver by Zsolt Vasvari.
 
 #include "tiles_generic.h"

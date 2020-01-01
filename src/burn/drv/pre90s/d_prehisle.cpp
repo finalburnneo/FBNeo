@@ -1,4 +1,4 @@
-// FB Alpha Prehistoric Isle in 1930 driver module
+// FB Neo Prehistoric Isle in 1930 driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

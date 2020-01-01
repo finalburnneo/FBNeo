@@ -1,4 +1,4 @@
-// FB Alpha driver module Atari Tetris driver module
+// FB Neo driver module Atari Tetris driver module
 // Based on MAME driver by Zsolt Vasvari
 
 // To do:

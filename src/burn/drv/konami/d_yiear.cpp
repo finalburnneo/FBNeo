@@ -1,4 +1,4 @@
-// FB Alpha Yie Ar Kung-Fu driver module
+// FB Neo Yie Ar Kung-Fu driver module
 // Based on MAME driver by Enrique Sanchez (?)
 
 #include "tiles_generic.h"

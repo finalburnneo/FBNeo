@@ -196,7 +196,7 @@ static void MSM5205_vclk_callback(INT32 chip)
 
 void MSM5205Render(INT32 chip, INT16 *buffer, INT32 len)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205Render called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205Render called with invalid chip %x\n"), chip);
 #endif
@@ -241,7 +241,7 @@ void MSM5205Render(INT32 chip, INT16 *buffer, INT32 len)
 
 void MSM5205Reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205Reset called without init\n"));
 #endif
 
@@ -296,7 +296,7 @@ void MSM5205Init(INT32 chip, INT32 (*stream_sync)(INT32), INT32 clock, void (*vc
 
 void MSM5205SetRoute(INT32 chip, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205SetRoute called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205SetRoute called with invalid chip %x\n"), chip);
 #endif
@@ -308,7 +308,7 @@ void MSM5205SetRoute(INT32 chip, double nVolume, INT32 nRouteDir)
 
 void MSM5205SetLeftVolume(INT32 chip, double nLeftVolume)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205SetLeftVolume called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205SetLeftVolume called with invalid chip %x\n"), chip);
 #endif
@@ -319,7 +319,7 @@ void MSM5205SetLeftVolume(INT32 chip, double nLeftVolume)
 
 void MSM5205SetRightVolume(INT32 chip, double nRightVolume)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205SetRightVolume called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205SetRightVolume called with invalid chip %x\n"), chip);
 #endif
@@ -330,7 +330,7 @@ void MSM5205SetRightVolume(INT32 chip, double nRightVolume)
 
 void MSM5205SetSeperateVolumes(INT32 chip, INT32 state)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205SetSeperateVolumes called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205SetSeperateVolumes called with invalid chip %x\n"), chip);
 #endif
@@ -341,7 +341,7 @@ void MSM5205SetSeperateVolumes(INT32 chip, INT32 state)
 
 void MSM5205Exit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205Exit called without init\n"));
 #endif
 
@@ -367,7 +367,7 @@ void MSM5205Exit()
 
 void MSM5205VCLKWrite(INT32 chip, INT32 vclk)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205VCLKWrite called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205VCLKWrite called with invalid chip %x\n"), chip);
 #endif
@@ -386,7 +386,7 @@ void MSM5205VCLKWrite(INT32 chip, INT32 vclk)
 
 void MSM5205ResetWrite(INT32 chip, INT32 reset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205ResetWrite called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205ResetWrite called with invalid chip %x\n"), chip);
 #endif
@@ -397,7 +397,7 @@ void MSM5205ResetWrite(INT32 chip, INT32 reset)
 
 void MSM5205DataWrite(INT32 chip, INT32 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205DataWrite called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205DataWrite called with invalid chip %x\n"), chip);
 #endif
@@ -412,7 +412,7 @@ void MSM5205DataWrite(INT32 chip, INT32 data)
 
 void MSM5205PlaymodeWrite(INT32 chip, INT32 select)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205PlaymodeWrite called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205PlaymodeWrite called with invalid chip %x\n"), chip);
 #endif
@@ -441,7 +441,7 @@ void MSM5205NewFrame(INT32 chip, INT32 cpu_speed, INT32 interleave)
 
 void MSM5205UpdateScanline(INT32 scanline)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205UpdateScanline called without init\n"));
 #endif
 	if (scanline_table[scanline]) {
@@ -451,7 +451,7 @@ void MSM5205UpdateScanline(INT32 scanline)
 
 void MSM5205Update()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205Update called without init\n"));
 #endif
 
@@ -472,7 +472,7 @@ void MSM5205Update()
 // see MSM5205_playmode for a more in-depth explanation of this
 INT32 MSM5205CalcInterleave(INT32 chip, INT32 cpu_speed)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205CalcInterleave called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205CalcInterleave called with invalid chip %x\n"), chip);
 #endif
@@ -492,7 +492,7 @@ INT32 MSM5205CalcInterleave(INT32 chip, INT32 cpu_speed)
 
 void MSM5205Scan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205Scan called without init\n"));
 #endif
 

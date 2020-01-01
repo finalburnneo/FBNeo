@@ -1,4 +1,4 @@
-// FB Alpha Bomb Jack driver module
+// FB Neo Bomb Jack driver module
 // Based on MAME driver by Mirko Buffoni
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Galaga 3 / Gaplus driver module
+// FB Neo Galaga 3 / Gaplus driver module
 // Based on MAME driver by Manuel Abadia, Ernesto Corvi, and Nicola Salmoria
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Chelnov / Karnov / Wonder Planet driver module
+// FB Neo Chelnov / Karnov / Wonder Planet driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

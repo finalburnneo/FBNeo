@@ -1,4 +1,4 @@
-// FB Alpha Haunted Castle / Akuma-Jou Dracula driver module
+// FB Neo Haunted Castle / Akuma-Jou Dracula driver module
 // Based on MAME driver by Bryan McPhail
 //
 

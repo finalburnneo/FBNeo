@@ -1,4 +1,4 @@
-// FB Alpha Atari Klax driver module
+// FB Neo Atari Klax driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

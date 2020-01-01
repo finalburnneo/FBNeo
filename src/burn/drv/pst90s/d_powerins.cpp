@@ -3,7 +3,7 @@
  (C) 1993 Atlus
  driver by Luca Elia (l.elia@tin.it)
  ***************************************************************
- port to Finalburn Alpha by OopsWare. 2007
+ port to Finalburn Neo by OopsWare. 2007
  ***************************************************************/
 
 #include "tiles_generic.h"

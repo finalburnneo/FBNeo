@@ -32,7 +32,7 @@ bool bBurnUseASMCPUEmulation = false;
 #endif
 
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
  clock_t starttime = 0;
 #endif
 
@@ -600,7 +600,7 @@ extern "C" INT32 BurnDrvInit()
 		return 1;
 	}
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 	{
 		TCHAR szText[1024] = _T("");
 		TCHAR* pszPosition = szText;
@@ -656,7 +656,7 @@ extern "C" INT32 BurnDrvInit()
 
 	nCurrentFrame = 0;
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 	if (!nReturnValue) {
 		starttime = clock();
 		nFramesEmulated = 0;
@@ -672,7 +672,7 @@ extern "C" INT32 BurnDrvInit()
 // Exit game emulation
 extern "C" INT32 BurnDrvExit()
 {
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 	if (starttime) {
 		clock_t endtime;
 		clock_t nElapsedSecs;
@@ -1016,7 +1016,7 @@ double BurnGetTime()
 // ----------------------------------------------------------------------------
 // Wrapper for MAME logerror calls
 
-#if defined (FBN_DEBUG) && defined (MAME_USE_LOGERROR)
+#ifdef FBN_DEBUG && defined (MAME_USE_LOGERROR)
 void logerror(char* szFormat, ...)
 {
 	static char szLogMessage[1024];
@@ -1034,7 +1034,7 @@ void logerror(char* szFormat, ...)
 }
 #endif
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize)
 {
     FILE *f = fopen(filename, "wb+");

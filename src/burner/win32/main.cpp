@@ -20,7 +20,7 @@
  #endif
 #endif
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 bool bDisableDebugConsole = true;
 #endif
 
@@ -185,7 +185,7 @@ char *utf8_from_wstring(const WCHAR *wstring)
 	return result;
 }
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
  static TCHAR szConsoleBuffer[1024];
  static int nPrevConsoleStatus = -1;
 
@@ -227,7 +227,7 @@ void tcharstrreplace(TCHAR *pszSRBuffer, const TCHAR *pszFind, const TCHAR *pszR
 	}
 }
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 // Debug printf to a file
 static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 {
@@ -326,7 +326,7 @@ static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 
 int dprintf(TCHAR* pszFormat, ...)
 {
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 	va_list vaFormat;
 	va_start(vaFormat, pszFormat);
 
@@ -361,7 +361,7 @@ int dprintf(TCHAR* pszFormat, ...)
 
 void CloseDebugLog()
 {
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 	if (DebugLog) {
 
 		_ftprintf(DebugLog, _T("</pre></body></html>"));
@@ -383,7 +383,7 @@ void CloseDebugLog()
 
 int OpenDebugLog()
 {
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
  #if defined (APP_DEBUG_LOG)
 
     time_t nTime;
@@ -749,7 +749,7 @@ static int AppInit()
 	// Load config for the application
 	ConfigAppLoad();
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 	OpenDebugLog();
 #endif
 

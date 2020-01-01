@@ -1008,7 +1008,7 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_MODELESS, bModelessMenu ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_NOCHANGENUMLOCK, bNoChangeNumLock ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_HIGHRESTIMER, bEnableHighResTimer ? MF_CHECKED : MF_UNCHECKED);
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 	CheckMenuItem(hMenu, MENU_DEBUGCONSOLE, bDisableDebugConsole ? MF_UNCHECKED : MF_CHECKED);
 #endif
 	CheckMenuItem(hMenu, MENU_CREATEDIRS, bAlwaysCreateSupportFolders ? MF_CHECKED : MF_UNCHECKED);
@@ -1358,7 +1358,7 @@ void MenuEnableItems()
 				EnableMenuItem(hMenu, MENU_CHEATSEARCH_START, MF_ENABLED | MF_BYCOMMAND);
 			}
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 			extern UINT8 DebugCPU_SekInitted;
 			if (DebugCPU_SekInitted) {
 				EnableMenuItem(hMenu, MENU_DEBUG,		MF_ENABLED | MF_BYCOMMAND);

@@ -2020,7 +2020,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			EnableHighResolutionTiming();   // use new setting.
 			break;
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 		case MENU_DEBUGCONSOLE:
 			bDisableDebugConsole = !bDisableDebugConsole;
 			break;

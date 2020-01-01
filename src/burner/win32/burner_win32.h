@@ -91,7 +91,7 @@ INT32 Dx9Core_Init();
 // ---------------------------------------------------------------------------
 
 // main.cpp
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 extern bool bDisableDebugConsole;                   // Disable debug console?
 #endif
 extern HINSTANCE hAppInst;							// Application Instance

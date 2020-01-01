@@ -2,7 +2,7 @@
 
 HWND hDbgDlg = NULL;
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 
 #include "m68000_intf.h"
 #include "m68000_debug.h"
@@ -1507,7 +1507,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 int DebugExit()
 {
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 
 	if (DbgMemoryAreaInfo) {
 		free(DbgMemoryAreaInfo);
@@ -1537,7 +1537,7 @@ int DebugExit()
 int DebugCreate()
 {
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 
 	if (DebugCPU_SekInitted == 0) {
 		return 1;

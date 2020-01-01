@@ -63,7 +63,7 @@ cpu_core_config SekConfig =
 	0
 };
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 
 void (*SekDbgBreakpointHandlerRead)(UINT32, INT32);
 void (*SekDbgBreakpointHandlerFetch)(UINT32, INT32);
@@ -118,7 +118,7 @@ static UINT32 GetA68KUSP()
 }
 #endif
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 
 inline static void CheckBreakpoint_R(UINT32 a, const UINT32 m)
 {
@@ -506,7 +506,7 @@ inline static void WriteLongROM(UINT32 a, UINT32 d)
 	pSekExt->WriteLong[(uintptr_t)pr](a, d);
 }
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 
 // Breakpoint checking memory access functions
 UINT8 __fastcall ReadByteBP(UINT32 a)
@@ -666,7 +666,7 @@ void __fastcall A68KWrite8 (UINT32 a,UINT8 d)  { WriteByte(a,d);}
 void __fastcall A68KWrite16(UINT32 a,UINT16 d) { WriteWord(a,d);}
 void __fastcall A68KWrite32(UINT32 a,UINT32 d)   { WriteLong(a,d);}
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 void __fastcall A68KCheckBreakpoint(unsigned int pc) { CheckBreakpoint_PC(pc); }
 void __fastcall A68KSingleStep(unsigned int pc) { SingleStep_PC(pc); }
 #endif
@@ -738,7 +738,7 @@ struct A68KInter a68k_inter_normal = {
 	A68KRead32,	// unused
 };
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 
 struct A68KInter a68k_inter_breakpoint = {
 	NULL,
@@ -1749,7 +1749,7 @@ void SekDbgDisableBreakpoints()
 	mame_debug = 0;
 }
 
-#if defined (FBN_DEBUG)
+#ifdef FBN_DEBUG
 
 void SekDbgEnableBreakpoints()
 {

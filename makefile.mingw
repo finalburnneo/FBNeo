@@ -320,7 +320,7 @@ endif
 ifdef GCC452
 	CFLAGS  += -mconsole
 endif
-	DEF	:= $(DEF) -DFBNEO_DEBUG
+	DEF	:= $(DEF) -DFBN_DEBUG
 endif
 
 ifdef ROM_VERIFY

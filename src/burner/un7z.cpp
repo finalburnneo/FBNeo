@@ -48,13 +48,10 @@
 
 #include "un7z.h"
 
-#include <ctype.h>
-#include <stdlib.h>
-#include "zlib.h"
-
 /***************************************************************************
     7Zip Memory / File handling (adapted from 7zfile.c/.h and 7zalloc.c/.h)
 ***************************************************************************/
+
 
 void* SzAlloc(void*, size_t size)
 {
@@ -69,7 +66,6 @@ void SzFree(void*, void* address)
 	free(address);
 }
 
-
 void File_Construct(CSzFile* p)
 {
 	p->_7z_osdfile = NULL;
@@ -79,11 +75,12 @@ static WRes File_Open(CSzFile* p, const char*, int)
 {
 	/* we handle this ourselves ... */
 	if (!p->_7z_osdfile) return 1;
-	else return 0;
+	return 0;
 }
 
 WRes InFile_Open(CSzFile *p, const char *name) { return File_Open(p, name, 0); }
 WRes OutFile_Open(CSzFile *p, const char *name) { return File_Open(p, name, 1); }
+
 
 
 WRes File_Close(CSzFile*)
@@ -138,6 +135,7 @@ WRes File_GetLength(CSzFile* p, UInt64* length)
 	return 0;
 }
 
+
 /* ---------- FileSeqInStream ---------- */
 
 static SRes FileSeqInStream_Read(void* pp, void* buf, size_t* size)
@@ -171,7 +169,6 @@ void FileInStream_CreateVTable(CFileInStream* p)
 	p->s.Read = FileInStream_Read;
 	p->s.Seek = FileInStream_Seek;
 }
-
 
 /* ---------- FileOutStream ---------- */
 

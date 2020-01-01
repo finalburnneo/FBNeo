@@ -52,12 +52,10 @@
 #define __UN_7Z_H__
 
 #include "driver.h"
-
-#define ARRAY_LENGTH(x)		(sizeof(x) / sizeof(x[0]))
-
 #include "7z.h"
 #include "7zCrc.h"
-#include "7zVersion.h"
+#define ARRAY_LENGTH(x)		(sizeof(x) / sizeof(x[0]))
+
 
 void* SzAlloc(void* p, size_t size);
 void SzFree(void* p, void* address);

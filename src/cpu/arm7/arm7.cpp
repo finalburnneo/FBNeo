@@ -113,7 +113,7 @@ int Arm7TotalCycles()
 
 void Arm7RunEndEatCycles()
 {
-#if defined FBA_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7RunEndEatCycles called without init\n"));
 #endif
 

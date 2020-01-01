@@ -1016,7 +1016,7 @@ double BurnGetTime()
 // ----------------------------------------------------------------------------
 // Wrapper for MAME logerror calls
 
-#ifdef FBN_DEBUG && defined (MAME_USE_LOGERROR)
+#if defined (FBN_DEBUG) && defined (MAME_USE_LOGERROR)
 void logerror(char* szFormat, ...)
 {
 	static char szLogMessage[1024];

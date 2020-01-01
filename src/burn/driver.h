@@ -23,9 +23,6 @@
  #define INLINE __inline static
 #endif
 
-#define FBA
-#define FBANEO
-
 typedef unsigned char						UINT8;
 typedef signed char 						INT8;
 typedef unsigned short						UINT16;

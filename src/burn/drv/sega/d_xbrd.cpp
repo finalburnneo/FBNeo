@@ -2606,7 +2606,7 @@ UINT16 __fastcall XBoardReadWord(UINT32 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
 #endif
 
@@ -2699,7 +2699,7 @@ UINT8 __fastcall XBoardReadByte(UINT32 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -2815,7 +2815,7 @@ void __fastcall XBoardWriteWord(UINT32 a, UINT16 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -2901,7 +2901,7 @@ void __fastcall XBoardWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -2945,7 +2945,7 @@ UINT16 __fastcall XBoard2ReadWord(UINT32 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 # 2 Read Word -> 0x%06X\n"), a);
 #endif
 
@@ -2971,7 +2971,7 @@ UINT8 __fastcall XBoard2ReadByte(UINT32 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 # 2 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -3013,7 +3013,7 @@ void __fastcall XBoard2WriteWord(UINT32 a, UINT16 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 # 2 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -3028,7 +3028,7 @@ void __fastcall XBoard2WriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 # 2 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }

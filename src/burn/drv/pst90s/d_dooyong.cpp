@@ -1604,7 +1604,7 @@ static void DrvGfxDecode(INT32 gfx, UINT8 *src, INT32 nLen, INT32 nType)
 			count+=advcnt;
 		}
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 		bprintf (0, _T("%d, mask: %x, transpcnt: %x\n"), gfx, gfxmask[gfx], count);
 #endif
 	}

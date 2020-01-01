@@ -22,7 +22,7 @@ jobs:
            mkdir fbn-x86-gcc
            cd fbn-x86-gcc
            cp ../fbneo.exe .
-           cp ../fba.chm .
+           cp ../fbn.chm .
            cp ../*.zip .
            cp ../src/license.txt .
            cp ../whatsnew.html .

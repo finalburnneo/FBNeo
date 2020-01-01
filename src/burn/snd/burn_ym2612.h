@@ -24,7 +24,7 @@ void BurnYM2612Scan(INT32 nAction, INT32* pnMin);
 	
 #define BurnYM2612Read(i, a) YM2612Read(i, a)
 
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	#define BurnYM2612Write(i, a, n) if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnYM2612Write called without init\n")); YM2612Write(i, a, n)
 #else
 	#define BurnYM2612Write(i, a, n) YM2612Write(i, a, n)
@@ -46,7 +46,7 @@ void BurnYM2612Scan(INT32 nAction, INT32* pnMin);
 
 #define BurnYM3438Read(i, a) YM2612Read(i, a)
 
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	#define BurnYM3438Write(i, a, n) if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnYM3438Write called without init\n")); YM2612Write(i, a, n)
 #else
 	#define BurnYM3438Write(i, a, n) YM2612Write(i, a, n)

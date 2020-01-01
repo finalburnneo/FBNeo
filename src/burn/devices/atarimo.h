@@ -140,7 +140,7 @@ extern UINT16 *atarimo_0_slipram;
 extern UINT16 *atarimo_1_spriteram;
 extern UINT16 *atarimo_1_slipram;
 
-// fba-specific routines
+// fbn-specific routines
 
 void AtariMoWrite(INT32 map, INT32 offset, UINT16 data);
 void AtariMoExpandedWrite(INT32 map, INT32 offset, UINT16 data);

@@ -1,5 +1,5 @@
 #pragma once
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
  #define PRINT_DEBUG_INFO
 #endif
 #include <vector>

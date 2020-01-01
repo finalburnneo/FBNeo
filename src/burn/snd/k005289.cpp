@@ -81,7 +81,7 @@ static void make_mixer_table(INT32 voices)
 
 void K005289Reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Reset called without init\n"));
 #endif
 
@@ -114,7 +114,7 @@ void K005289Init(INT32 clock, UINT8 *prom)
 
 void K005289SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289SetRoute called without init\n"));
 #endif
 
@@ -124,7 +124,7 @@ void K005289SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void K005289Exit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Exit called without init\n"));
 #endif
 
@@ -140,7 +140,7 @@ void K005289Exit()
 
 void K005289Update(INT16 *buffer, INT32 samples)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Update called without init\n"));
 #endif
 
@@ -221,7 +221,7 @@ void K005289Update(INT16 *buffer, INT32 samples)
 
 void K005289ControlAWrite(UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289ControlAWrite called without init\n"));
 #endif
 
@@ -231,7 +231,7 @@ void K005289ControlAWrite(UINT8 data)
 
 void K005289ControlBWrite(UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289ControlBWrite called without init\n"));
 #endif
 
@@ -241,7 +241,7 @@ void K005289ControlBWrite(UINT8 data)
 
 void K005289Ld1Write(INT32 offset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Ld1 called without init\n"));
 #endif
 
@@ -251,7 +251,7 @@ void K005289Ld1Write(INT32 offset)
 
 void K005289Ld2Write(INT32 offset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Ld2 called without init\n"));
 #endif
 
@@ -261,7 +261,7 @@ void K005289Ld2Write(INT32 offset)
 
 void K005289Tg1Write()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Tg1 called without init\n"));
 #endif
 
@@ -270,7 +270,7 @@ void K005289Tg1Write()
 
 void K005289Tg2Write()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Tg2 called without init\n"));
 #endif
 
@@ -279,7 +279,7 @@ void K005289Tg2Write()
 
 void K005289Scan(INT32 nAction, INT32 *)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Scan called without init\n"));
 #endif
 

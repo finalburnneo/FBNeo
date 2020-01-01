@@ -20,7 +20,7 @@ jobs:
            mkdir fbn-x64-vs
            cd fbn-x64-vs
            cp ../projectfiles/visualstudio-2019/x64/Release/*.exe .
-           cp ../fba.chm .
+           cp ../fbn.chm .
            cp ../*.zip .
            cp ../src/license.txt .
            cp ../whatsnew.html .

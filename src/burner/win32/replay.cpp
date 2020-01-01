@@ -434,7 +434,7 @@ INT32 StartRecord()
 			}
 		}
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 		dprintf(_T("*** Recording of file %s started.\n"), szChoice);
 #endif
 
@@ -622,7 +622,7 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 		}
 	}
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	dprintf(_T("*** Replay of file %s started.\n"), szChoice);
 #endif
 
@@ -686,15 +686,15 @@ void StopReplay()
 	if (nReplayStatus) {
 		if (nReplayStatus == 1) {
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 			dprintf(_T(" ** Recording stopped, recorded %d frames.\n"), GetCurrentFrame() - nStartFrame);
 #endif
 			CloseRecord();
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 			PrintResult();
 #endif
 		} else {
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 			dprintf(_T(" ** Replay stopped, replayed %d frames.\n"), GetCurrentFrame() - nStartFrame);
 #endif
 

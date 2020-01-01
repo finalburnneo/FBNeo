@@ -48,7 +48,7 @@ static INT32 YM2203StreamCallbackDummy(INT32)
 
 static void AY8910Render(INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203 AY8910Render called without init\n"));
 #endif
 
@@ -85,7 +85,7 @@ static void AY8910Render(INT32 nSegmentLength)
 
 static void YM2203Render(INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("YM2203Render called without init\n"));
 #endif
 
@@ -147,7 +147,7 @@ static void YM2203Render(INT32 nSegmentLength)
 
 static void YM2203UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("YM2203UpdateResample called without init\n"));
 #endif
 
@@ -313,7 +313,7 @@ static void YM2203UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 static void YM2203UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("YM2203UpdateNormal called without init\n"));
 #endif
 
@@ -530,7 +530,7 @@ static void YM2203UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnYM2203UpdateRequest()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203UpdateRequest called without init\n"));
 #endif
 
@@ -539,7 +539,7 @@ void BurnYM2203UpdateRequest()
 
 static void BurnAY8910UpdateRequest()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203 BurnAY8910UpdateRequest called without init\n"));
 #endif
 
@@ -551,7 +551,7 @@ static void BurnAY8910UpdateRequest()
 
 void BurnYM2203Reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203Reset called without init\n"));
 #endif
 
@@ -565,7 +565,7 @@ void BurnYM2203Reset()
 
 void BurnYM2203Exit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203Exit called without init\n"));
 #endif
 
@@ -714,7 +714,7 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 
 void BurnYM2203SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 3) bprintf(PRINT_ERROR, _T("BurnYM2203SetRoute called with invalid index %i\n"), nIndex);
 	if (nChip >= nNumChips) bprintf(PRINT_ERROR, _T("BurnYM2203SetRoute called with invalid chip %i\n"), nChip);
@@ -738,7 +738,7 @@ void BurnYM2203SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteD
 
 void BurnYM2203SetLeftVolume(INT32 nChip, INT32 nIndex, double nLeftVolume)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203SetLeftVolume called without init\n"));
 	if (nIndex < 0 || nIndex > 3) bprintf(PRINT_ERROR, _T("BurnYM2203SetLeftVolume called with invalid index %i\n"), nIndex);
 	if (nChip >= nNumChips) bprintf(PRINT_ERROR, _T("BurnYM2203SetLeftVolume called with invalid chip %i\n"), nChip);
@@ -751,7 +751,7 @@ void BurnYM2203SetLeftVolume(INT32 nChip, INT32 nIndex, double nLeftVolume)
 
 void BurnYM2203SetRightVolume(INT32 nChip, INT32 nIndex, double nRightVolume)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203SetRightVolume called without init\n"));
 	if (nIndex < 0 || nIndex > 3) bprintf(PRINT_ERROR, _T("BurnYM2203SetRightVolume called with invalid index %i\n"), nIndex);
 	if (nChip >= nNumChips) bprintf(PRINT_ERROR, _T("BurnYM2203SetRightVolume called with invalid chip %i\n"), nChip);
@@ -764,7 +764,7 @@ void BurnYM2203SetRightVolume(INT32 nChip, INT32 nIndex, double nRightVolume)
 
 void BurnYM2203Scan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203Scan called without init\n"));
 #endif
 

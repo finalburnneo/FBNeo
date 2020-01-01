@@ -1,5 +1,5 @@
 // Define macros for appliction title and description
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
  #define APP_TITLE "FinalBurn Neo [DEBUG]"
 #else
  #define APP_TITLE "FinalBurn Neo"

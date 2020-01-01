@@ -74,7 +74,7 @@ static INT32* YMZ280BChannelData[8];
 
 void YMZ280BReset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BReset called without init\n"));
 #endif
 
@@ -104,7 +104,7 @@ inline void YMZ280BSetSampleSize(const INT32 nChannel)
 
 void YMZ280BScan(INT32 , INT32 *)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BScan called without init\n"));
 #endif
 
@@ -177,7 +177,7 @@ INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32), INT32 rom_len)
 
 void YMZ280BSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("BurnYMZ280BSetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnYMZ280BSetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -188,7 +188,7 @@ void YMZ280BSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void YMZ280BExit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BExit called without init\n"));
 #endif
 
@@ -502,7 +502,7 @@ inline static void RenderADPCMLoop_Cubic()
 
 INT32 YMZ280BRender(INT16* pSoundBuf, INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BRender called without init\n"));
 #endif
 
@@ -558,7 +558,7 @@ INT32 YMZ280BRender(INT16* pSoundBuf, INT32 nSegmentLength)
 
 void YMZ280BWriteRegister(UINT8 nValue)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BWriteRegister called without init\n"));
 #endif
 
@@ -765,7 +765,7 @@ void YMZ280BWriteRegister(UINT8 nValue)
 
 UINT32 YMZ280BReadStatus()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BReadStatus called without init\n"));
 #endif
 
@@ -779,7 +779,7 @@ UINT32 YMZ280BReadStatus()
 
 UINT32 YMZ280BReadRAM()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BReadRAM called without init\n"));
 #endif
 	

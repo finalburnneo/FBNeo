@@ -232,7 +232,7 @@ void ics2115_init(void (*cpu_irq_cb)(INT32), UINT8 *sample_rom, INT32 sample_rom
 
 void ics2115_exit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_exit called without init\n"));
 #endif
 
@@ -249,7 +249,7 @@ void ics2115_exit()
 
 void ics2115_reset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_reset called without init\n"));
 #endif
 
@@ -686,7 +686,7 @@ void ics2115_update(INT32 segment_length)
 
 void ics2115_update(INT32 segment_length)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_update called without init\n"));
 #endif
 
@@ -1222,7 +1222,7 @@ static void ics2115_reg_write(UINT8 data, bool msb) {
 
 UINT8 ics2115read(UINT8 offset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115read called without init\n"));
 #endif
 
@@ -1268,7 +1268,7 @@ UINT8 ics2115read(UINT8 offset)
 
 void ics2115write(UINT8 offset, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115write called without init\n"));
 #endif
 
@@ -1328,7 +1328,7 @@ void ics2115_recalc_timer(INT32 timer)
 
 void ics2115_scan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_scan called without init\n"));
 #endif
 

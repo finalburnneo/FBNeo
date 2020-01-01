@@ -225,7 +225,7 @@ void HiscoreInit()
 							HiscoreMemRange[nHiscoreNumRanges].Data = (UINT8*)BurnMalloc(HiscoreMemRange[nHiscoreNumRanges].NumBytes);
 							memset(HiscoreMemRange[nHiscoreNumRanges].Data, 0, HiscoreMemRange[nHiscoreNumRanges].NumBytes);
 							
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 							bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Loaded (New Format) - CPU %i (%S), Address %x, Bytes %02x, Start Val %x, End Val %x\n"), nHiscoreNumRanges, HiscoreMemRange[nHiscoreNumRanges].nCpu, cCpu, HiscoreMemRange[nHiscoreNumRanges].Address, HiscoreMemRange[nHiscoreNumRanges].NumBytes, HiscoreMemRange[nHiscoreNumRanges].StartValue, HiscoreMemRange[nHiscoreNumRanges].EndValue);
 #endif
 							
@@ -254,7 +254,7 @@ void HiscoreInit()
 							HiscoreMemRange[nHiscoreNumRanges].Data = (UINT8*)BurnMalloc(HiscoreMemRange[nHiscoreNumRanges].NumBytes);
 							memset(HiscoreMemRange[nHiscoreNumRanges].Data, 0, HiscoreMemRange[nHiscoreNumRanges].NumBytes);
 						
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 							bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Loaded - CPU %i, Address %x, Bytes %02x, Start Val %x, End Val %x\n"), nHiscoreNumRanges, HiscoreMemRange[nHiscoreNumRanges].nCpu, HiscoreMemRange[nHiscoreNumRanges].Address, HiscoreMemRange[nHiscoreNumRanges].NumBytes, HiscoreMemRange[nHiscoreNumRanges].StartValue, HiscoreMemRange[nHiscoreNumRanges].EndValue);
 #endif
 						
@@ -306,7 +306,7 @@ void HiscoreInit()
 			
 			HiscoreMemRange[i].Loaded = 1;
 			
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 			bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Loaded from file\n"), i);
 #endif
 		}
@@ -321,7 +321,7 @@ void HiscoreInit()
 
 void HiscoreReset()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreReset called without init\n"));
 #endif
 
@@ -339,7 +339,7 @@ void HiscoreReset()
 			if (HiscoreMemRange[i].NumBytes > 1) cheat_subptr->write(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1, (UINT8)~HiscoreMemRange[i].EndValue);
 			cheat_subptr->close();
 			
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 			bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Initted\n"), i);
 #endif
 		}
@@ -356,7 +356,7 @@ INT32 HiscoreOkToWrite()
 		}
 	}
 
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 	bprintf(0, _T("Hiscore Write-Check #1 - Applied data: %X\n"), Ok);
 #endif
 
@@ -364,7 +364,7 @@ INT32 HiscoreOkToWrite()
 		return 1; // Passed check #1 - already applied hiscore?
 
 	// Check #2 - didn't apply high score, but verified the memory locations
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 	bprintf(0, _T("Hiscore Write-Check #2 - Memory verified: %X\n"), WriteCheck1);
 #endif
 
@@ -386,7 +386,7 @@ INT32 HiscoreOkToApplyAll()
 
 void HiscoreApply()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreApply called without init\n"));
 #endif
 
@@ -407,13 +407,13 @@ void HiscoreApply()
 			
 			if (Confirmed == 1) {
 				HiscoreMemRange[i].Applied = APPLIED_STATE_CONFIRMED;
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 				bprintf(PRINT_IMPORTANT, _T("Applied Hi Score Memory Range %i on frame number %i\n"), i, GetCurrentFrame());
 #endif
 			} else {
 				HiscoreMemRange[i].Applied = APPLIED_STATE_NONE;
 				HiscoreMemRange[i].ApplyNextFrame = 1;
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 				bprintf(PRINT_IMPORTANT, _T("Failed attempt to apply Hi Score Memory Range %i on frame number %i\n"), i, GetCurrentFrame());
 #endif
 			}
@@ -437,7 +437,7 @@ void HiscoreApply()
 	}
 
 	if (WriteCheckOk == nHiscoreNumRanges) {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		bprintf(0, _T("Memory Verified - OK to write Hiscore data!\n"));
 #endif
 		WriteCheck1 = 1; // It's OK to write hi-score data for the first time.
@@ -460,7 +460,7 @@ void HiscoreApply()
 
 void HiscoreExit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreExit called without init\n"));
 #endif
 
@@ -496,7 +496,7 @@ void HiscoreExit()
 			fclose(fp);
 		}
 	} else {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		bprintf(0, _T("HiscoreExit(): -NOT- ok to write Hiscore data!\n"));
 #endif
 	}

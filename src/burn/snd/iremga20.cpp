@@ -72,7 +72,7 @@ static INT32 nNumChips;
 
 void iremga20_update(INT32 device, INT16 *buffer, INT32 length)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_update called without init\n"));
 	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_update called with invalid chip %x\n"), device);
 #endif
@@ -162,7 +162,7 @@ void iremga20_update(INT32 device, INT16 *buffer, INT32 length)
 
 void iremga20_write(INT32 device, INT32 offset, INT32 data)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_write called without init\n"));
 	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_write called with invalid chip %x\n"), device);
 #endif
@@ -209,7 +209,7 @@ void iremga20_write(INT32 device, INT32 offset, INT32 data)
 
 UINT8 iremga20_read(INT32 device, INT32 offset)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_read called without init\n"));
 	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_read called with invalid chip %x\n"), device);
 #endif
@@ -230,7 +230,7 @@ UINT8 iremga20_read(INT32 device, INT32 offset)
 
 void iremga20_reset(INT32 device)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_reset called without init\n"));
 	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_reset called with invalid chip %x\n"), device);
 #endif
@@ -277,7 +277,7 @@ void iremga20_init(INT32 device, UINT8 *rom, INT32 rom_size, INT32 frequency)
 
 void itemga20_set_route(INT32 device, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("itemga20_set_route called without init\n"));
 	if (device > nNumChips) bprintf(PRINT_ERROR, _T("itemga20_set_route called with invalid chip %x\n"), device);
 #endif
@@ -290,7 +290,7 @@ void itemga20_set_route(INT32 device, double nVolume, INT32 nRouteDir)
 
 void iremga20_exit()
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_exit called without init\n"));
 #endif
 
@@ -300,7 +300,7 @@ void iremga20_exit()
 
 void iremga20_scan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_scan called without init\n"));
 #endif
 

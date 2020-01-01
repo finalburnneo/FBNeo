@@ -2387,7 +2387,7 @@ static INT32 default_col_cb(INT32 col)
 static INT32 (*m_pri_cb)(INT32, INT32) = NULL;
 static INT32 (*m_col_cb)(INT32) = NULL;
 
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 extern int counter; // dink debug stuff, to be removed when driver 100%.  (or slightly less)
 #endif
 

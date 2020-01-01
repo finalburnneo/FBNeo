@@ -556,7 +556,7 @@ static INT32 LoadRoms()
 			pInfo->nADPCMBNum = 0;
 		}
 
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		bprintf(PRINT_IMPORTANT, _T("  - P: %i (%i);"), pInfo->nCodeOffset, pInfo->nCodeNum);
 		if (pInfo->nTextOffset >= 0) {
 			bprintf(PRINT_IMPORTANT, _T(" S: %i;"), pInfo->nTextOffset);
@@ -3689,7 +3689,7 @@ static INT32 neogeoReset()
 			*((UINT16*)(Neo68KBIOS + 0x000400)) = BURN_ENDIAN_SWAP_INT16(((NeoSystem & 4) << 13) | (NeoSystem & 0x03));
 		}
 
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_DEDICATED_PCB) && (BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) != HARDWARE_SNK_TRACKBALL) {
 			switch (NeoSystem & 0x3f) {
 				case 0x00: { bprintf(PRINT_IMPORTANT, _T("Emulating using MVS Asia/Europe ver. 6 (1 slot) BIOS\n")); break; }
@@ -3742,7 +3742,7 @@ static INT32 neogeoReset()
 		OldDebugDip[1] = NeoDebugDip[1] = 0;
 	}
 
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 	if (nNeoSystemType & NEO_SYS_CD) {
 		bprintf(PRINT_IMPORTANT, _T("  - Emulating Neo CD system.\n"));
 	}
@@ -3906,7 +3906,7 @@ static INT32 neogeoReset()
 static void SwitchToMusashi()
 {
 	if (bBurnUseASMCPUEmulation) {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		bprintf(PRINT_NORMAL, _T("Switching to Musashi 68000 core\n"));
 #endif
 		bUseAsm68KCoreOldValue = bBurnUseASMCPUEmulation;
@@ -4454,7 +4454,7 @@ INT32 NeoExit()
 	// Switch back CPU core if needed
 	if (nNeoSystemType & NEO_SYS_CD) {
 		if (bUseAsm68KCoreOldValue) {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 			bprintf(PRINT_NORMAL, _T("Switching back to A68K core\n"));
 #endif
 			bUseAsm68KCoreOldValue = false;
@@ -4780,7 +4780,7 @@ INT32 NeoFrame()
 	// This can't be 100% accurate, as the 68000 instruction timings are not 100%
 	if ((nNeoSystemType & NEO_SYS_CART) && nNeoWatchdog > nCyclesTotal[0] * 8) {
 		if (bDisableNeoWatchdog == false) {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 			SekOpen(0);
 			bprintf(PRINT_IMPORTANT, _T(" ** Watchdog triggered system reset (PC: 0x%06X)\n"), SekGetPC(-1));
 			SekClose();

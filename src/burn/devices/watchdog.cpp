@@ -44,14 +44,14 @@ void BurnWatchdogExit()
 void BurnWatchdogInit(INT32 (*reset)(INT32 clear_mem), INT32 frames)
 {
 	if (reset == NULL) {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 		bprintf (PRINT_ERROR, _T("Error: BurnWatchdogInit called with no reset!\n"));
 #endif
 		return;
 	}
 
 	if (frames == 0) {
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 		bprintf (PRINT_ERROR, _T("Error: BurnWatchdogInit called with 0 frames (%d)!\n"), frames);
 #endif
 		frames = 180; // default
@@ -74,7 +74,7 @@ void BurnWatchdogUpdate()
 	if (Watchdog >= WatchdogFrames) {
 		if (WatchdogReset != NULL) {
 			WatchdogReset(0);
-#if defined FBNEO_DEBUG
+#if defined FBN_DEBUG
 			bprintf (0, _T("BurnWatchdogUpdate - Watchdog triggered!\n"));
 #endif
 

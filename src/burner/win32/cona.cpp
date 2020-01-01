@@ -180,7 +180,7 @@ int ConfigAppLoad()
 
 		VAR(nSplashTime);
 
-#if defined (FBNEO_DEBUG)
+#if defined (FBN_DEBUG)
 		VAR(bDisableDebugConsole);
 #endif
 
@@ -545,7 +545,7 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// Minimum length of time to display the splash screen (in milliseconds)\n"));
 	VAR(nSplashTime);
 
-#if defined (FBNEO_DEBUG)
+#if defined (FBN_DEBUG)
 	_ftprintf(h, _T("\n// Disable the text-debug console (hint: needed for debugging with gdb!)\n"));
 	VAR(bDisableDebugConsole);
 #endif

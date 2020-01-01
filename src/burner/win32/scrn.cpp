@@ -2020,7 +2020,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			EnableHighResolutionTiming();   // use new setting.
 			break;
 
-#if defined (FBNEO_DEBUG)
+#if defined (FBN_DEBUG)
 		case MENU_DEBUGCONSOLE:
 			bDisableDebugConsole = !bDisableDebugConsole;
 			break;
@@ -2495,10 +2495,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_CONTENTS: {
 			if (!nVidFullscreen) {
-				FILE* fp = _tfopen(_T("fba.chm"), _T("r"));
+				FILE* fp = _tfopen(_T("fbn.chm"), _T("r"));
 				if (fp) {
 					fclose(fp);
-					ShellExecute(NULL, _T("open"), _T("fba.chm"), NULL, NULL, SW_SHOWNORMAL);
+					ShellExecute(NULL, _T("open"), _T("fbn.chm"), NULL, NULL, SW_SHOWNORMAL);
 				}
 			}
 			break;

@@ -82,8 +82,8 @@ static WRes File_Open(CSzFile* p, const char*, int)
 	else return 0;
 }
 
-WRes InFile_Open(CSzFile* p, const char* name) { return File_Open(p, name, 0); }
-WRes OutFile_Open(CSzFile* p, const char* name) { return File_Open(p, name, 1); }
+WRes InFile_Open(CSzFile *p, const char *name) { return File_Open(p, name, 0); }
+WRes OutFile_Open(CSzFile *p, const char *name) { return File_Open(p, name, 1); }
 
 
 WRes File_Close(CSzFile*)
@@ -172,12 +172,13 @@ void FileInStream_CreateVTable(CFileInStream* p)
 	p->s.Seek = FileInStream_Seek;
 }
 
+
 /* ---------- FileOutStream ---------- */
 
-static size_t FileOutStream_Write(void*, const void*, size_t size)
+static size_t FileOutStream_Write(void* pp, const void* data, size_t size)
 {
-	//  CFileOutStream *p = (CFileOutStream *)pp;
-	//  File_Write(&p->file, data, &size);
+	// CFileOutStream* p = (CFileOutStream*)pp;
+	// File_Write(&p->file, data, &size);
 	return size;
 }
 
@@ -185,6 +186,7 @@ void FileOutStream_CreateVTable(CFileOutStream* p)
 {
 	p->s.Write = FileOutStream_Write;
 }
+
 
 /***************************************************************************
     CONSTANTS

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// This code has been modified to work with FinalBurn Alpha.
+// This code has been modified to work with Finalburn Neo.
 //
 //---------------------------------------------------------------------------
 //

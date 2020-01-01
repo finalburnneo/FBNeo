@@ -1,6 +1,6 @@
 // FB Neo Shadow Force driver module
 // Based on MAME driver by David Haywood
-// port to Finalburn Alpha by OopsWare. 2007
+// port to Finalburn Neo by OopsWare. 2007
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"

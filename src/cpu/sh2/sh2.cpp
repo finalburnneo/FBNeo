@@ -24,7 +24,7 @@
  *
  *****************************************************************************
  *
- *  Port to Finalburn Alpha by OopsWare
+ *  Port to Finalburn Neo by OopsWare
  *  http://oopsware.googlepages.com/
  *
  *****************************************************************************/
@@ -156,7 +156,7 @@ enum {
 static UINT32 sh2_internal_r(UINT32 A, UINT32 mask);
 static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask);
 
-//-- sh2 memory handler for Finalburn Alpha ---------------------
+//-- sh2 memory handler for Finalburn Neo ---------------------
 
 #define SH2_BITS		(16)					// 16 = 0x10000 page size
 #define SH2_PAGE_COUNT  (1 << (32 - SH2_BITS))	// Number of pages

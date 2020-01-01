@@ -83,10 +83,10 @@ static int SDLSoundCheck()
 		nPlaySeg = nAudSegCount - 1;
 	}
 
-	if (nSDLFillSeg == nPlaySeg)
-	{
-		return 0;
-	}
+	if (nSDLFillSeg == nPlaySeg) {
+			SDL_Delay(1);
+			return 0;
+		}
 
 	// work out which seg we will fill next
 	nFollowingSeg = nSDLFillSeg;

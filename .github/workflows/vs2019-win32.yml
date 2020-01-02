@@ -14,7 +14,7 @@ jobs:
     - name: MSBuild x86
       working-directory: projectfiles/visualstudio-2019
       run: |
-           msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
+           msbuild fbn_vs2019.vcxproj /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
     - name: make artifacts
       run: |
            mkdir fbn-win32-vs

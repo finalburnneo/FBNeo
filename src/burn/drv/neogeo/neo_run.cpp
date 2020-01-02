@@ -4,7 +4,7 @@
 // fix lastblade2 (cd) (feb.17.2019)
 //
 // known issues:
-//   Audio Hz rate must be 44100 for proper CDDA speed (auto-handled in fba-ui)
+//   Audio Hz rate must be 44100 for proper CDDA speed (auto-handled in fbn-ui)
 //
 //   Ninja Commando: glitching "logo" during demo play.
 

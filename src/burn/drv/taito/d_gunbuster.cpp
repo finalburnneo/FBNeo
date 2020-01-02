@@ -108,7 +108,7 @@ static void __fastcall gunbuster_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x380000:
-			// motor control (not used in FBA)
+			// motor control (not used in FBN)
 		return;
 	}
 

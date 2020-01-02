@@ -176,7 +176,7 @@ static void __fastcall shisen_main_write_port(UINT16 port, UINT8 data)
 	switch (port & 0xff)
 	{
 		case 0x00:
-			// coin counter (not emulated in FBA)
+			// coin counter (not emulated in FBN)
 		return;
 
 		case 0x01:

@@ -1,4 +1,4 @@
-// Crazy Climber FBA Driver
+// Crazy Climber FBN Driver
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

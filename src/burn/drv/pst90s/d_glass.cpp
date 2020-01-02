@@ -185,7 +185,7 @@ static void __fastcall glass_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-	// coin counter/lockout (not used in FBA)
+	// coin counter/lockout (not used in FBN)
 	if (address >= 0x70000a && address <= 0x70004b) {
 		return;
 	}

@@ -3,7 +3,7 @@
 
 
 // This particular driver is a tutorial to hopefully help others
-// develop drivers for fba using mame's source as a starting point
+// develop drivers for fbn using mame's source as a starting point
 // I have tried to document as many lines as possible, and given hopefully enough details
 // 
 // original source:
@@ -220,14 +220,14 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-// convert palette rom into a format fba can use (24-bit color)
+// convert palette rom into a format fbn can use (24-bit color)
 
 //static PALETTE_INIT( skyarmy ) // mame
 static void DrvPaletteInit()
 {
 	INT32 i;
 
-	UINT8 *color_prom = DrvColPROM; // fba
+	UINT8 *color_prom = DrvColPROM; // fbn
 
 	for (i = 0;i < 32;i++)
 	{
@@ -252,14 +252,14 @@ static void DrvPaletteInit()
 
 		// assemble colors into 24-bit standard rgb format
 
-		Palette[i] = (r << 16) | (g << 8) | (b << 0); // fba 
+		Palette[i] = (r << 16) | (g << 8) | (b << 0); // fbn
 
 		color_prom++;
 	}
 }
 
 /*
-	convert the graphics into a format fba's generic tile handling can use
+	convert the graphics into a format fbn's generic tile handling can use
 */
 
 static INT32 DrvGfxDecode()
@@ -366,7 +366,7 @@ static INT32 MemIndex()
 		load roms in to ram
 		set up cpu(s)
 		set up sound chips
-		initialize fba's graphics routines
+		initialize fbn's graphics routines
 		reset the machine
 */
 
@@ -620,9 +620,9 @@ static INT32 DrvFrame()
 }
 
 /*
-	fba's save state function
+	fbn's save state function
 
-	we check the lowest version of fba this should be compatible with
+	we check the lowest version of fbn this should be compatible with
 	and if it's not, we exit the state loading 
 
 	we also save ram, data from the z80, ay8910, and other misc data

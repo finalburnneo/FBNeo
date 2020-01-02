@@ -349,7 +349,7 @@ static void bwidow_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xff80) == 0x8980) {
-		// watchdog clear (not hooked up in MAME/FBA)
+		// watchdog clear (not hooked up in MAME/FBN)
 		return;
 	}
 

@@ -1,6 +1,6 @@
 #include "gal.h"
 
-// This module is not accurate to the arcade hardware - it is ported from my previous Galaxian driver for FBA,
+// This module is not accurate to the arcade hardware - it is ported from my previous Galaxian driver for FBN,
 // which was based on an old version of MAME. It is considered "good enough" for the purpose of giving the impression
 // of the star layers without being totally accurate
 

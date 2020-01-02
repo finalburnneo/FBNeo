@@ -1,5 +1,5 @@
 /********************************************************************************
- SEGA Genesis / Mega Drive Driver for FBA
+ SEGA Genesis / Mega Drive Driver for FBN
  ********************************************************************************
  This is part of Pico Library v0936
 

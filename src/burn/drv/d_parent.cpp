@@ -1,4 +1,4 @@
-// A module for keeping parents who have no driver in FBA
+// A module for keeping parents who have no driver in FBN
 
 #include "burnint.h"
 

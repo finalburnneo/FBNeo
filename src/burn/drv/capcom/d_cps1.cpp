@@ -16872,7 +16872,7 @@ static INT32 Sf2rkInit()
 
 static void Sf2accp2Callback()
 {
-	// This causes problems in FBA, but is ignored in MAME??
+	// This causes problems in FBN, but is ignored in MAME??
 	// 011756: 66FF                       dc.w    $66ff; ILLEGAL
 
 //	*((UINT16*)(CpsRom + 0x11756)) = 0x4e71;
@@ -17951,7 +17951,7 @@ static INT32 Sf2bhhInit()
 
 static INT32 Sf2hfInit()
 {
-	// game runs too fast - RN compared MAME/FBA to PCB
+	// game runs too fast - RN compared MAME/FBN to PCB
 	// RN October 2018 research: adjust excessive speed to 65.83% of 12Mhz as per: https://www.youtube.com/watch?v=HyL87eswe8M
 	
 	nCPS68KClockspeed = 7900000;

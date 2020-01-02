@@ -17787,7 +17787,7 @@ struct BurnDriver BurnDrvmslug2dg = {
 	0x1000, 304, 224, 4, 3
 };
 
-// FBA4DROID/GOTVG  Metal Slug 3 (Multifunction Hack 20190119)
+// FBN4DROID/GOTVG  Metal Slug 3 (Multifunction Hack 20190119)
 static struct BurnRomInfo mslug3gRomDesc[] = {
 	{ "256-ph1.bin",   0x100000, 0xb23bd9b7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2.bin",   0x400000, 0x8053a3fb, 1 | BRF_ESS | BRF_PRG }, //  1 

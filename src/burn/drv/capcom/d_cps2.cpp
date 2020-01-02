@@ -8560,7 +8560,7 @@ static INT32 Ssf2tInit()
 	
 	Ssf2t = 1;
 	
-	// game runs too fast - RN compared MAME/FBA to PCB
+	// game runs too fast - RN compared MAME/FBN to PCB
 	// RN October 2018 research: adjust excessive speed to 90.5625% if 12Mhz as per: https://www.youtube.com/watch?v=RafLAkg0Wr4
 	
 	nCPS68KClockspeed = 10867500;

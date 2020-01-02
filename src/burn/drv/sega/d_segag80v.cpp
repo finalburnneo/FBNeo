@@ -709,7 +709,7 @@ static void __fastcall segag80v_write_port(UINT16 port, UINT8 data)
 
 		case 0xf9:
 		case 0xfd:
-			// coin_count_w (not used in fba)
+			// coin_count_w (not used in fbn)
 		return;
 
 		case 0xf8:

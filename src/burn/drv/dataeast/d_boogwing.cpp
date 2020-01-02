@@ -317,7 +317,7 @@ static INT32 MemIndex()
 
 static INT32 DrvGfxDecode5bpp()
 {
-	// actually 5 bits / pixel, but fba doesn't seem to like that...
+	// actually 5 bits / pixel, but fbn doesn't seem to like that...
 	INT32 Plane[6] = { 0x1800000, 0x1000000, 0x800008, 0x800000, 0x000008, 0x000000 };
 	INT32 XOffs[16] = { 32*8+0, 32*8+1, 32*8+2, 32*8+3, 32*8+4, 32*8+5, 32*8+6, 32*8+7, 0, 1, 2, 3, 4, 5, 6, 7 };
 	INT32 YOffs[16] = { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16, 8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 };

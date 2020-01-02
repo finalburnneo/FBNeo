@@ -32,7 +32,7 @@ extern void s2650_open(INT32 num);
 extern void s2650_close();
 extern void s2650_init(INT32 num);
 extern void s2650_exit();
-extern void s2650_reset(void);
+extern void s2650_reset();
 extern INT32 s2650_get_pc();
 
 static void core_set_irq(INT32 cpu, INT32 line, INT32 state)

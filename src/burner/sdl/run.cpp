@@ -131,19 +131,13 @@ unsigned int GetTime(void)
 	return ticks;
 }
 
+extern void internalState(int bSave);
+
 
 // With or without sound, run one frame.
 // If bDraw is true, it's the last frame before we are up to date, and so we should draw the screen
 static int RunFrame(int bDraw, int bPause)
 {
-	static int bPrevPause = 0;
-	static int bPrevDraw = 0;
-
-	if (bPrevDraw && !bPause)
-	{
-		VidPaint(0);                                              // paint the screen (no need to validate)
-	}
-
 	if (!bDrvOkay)
 	{
 		return 1;
@@ -151,25 +145,24 @@ static int RunFrame(int bDraw, int bPause)
 
 	if (bPause)
 	{
-		GetInput(false);                                          // Update burner inputs, but not game inputs
-		if (bPause != bPrevPause)
-		{
-			VidPaint(2);                                                   // Redraw the screen (to ensure mode indicators are updated)
-		}
+		InputMake(false);
+		VidPaint(0);
 	}
 	else
 	{
 		nFramesEmulated++;
 		nCurrentFrame++;
-		GetInput(true);                                   // Update inputs
+		InputMake(true);
 	}
+
 	if (bDraw)
 	{
 		nFramesRendered++;
 		if (VidFrame())
-		{                                     // Do one frame
-			AudBlankSound();
+		{
+		 	AudBlankSound();
 		}
+		VidPaint(0);                                              // paint the screen (no need to validate)
 	}
 	else
 	{                                       // frame skipping
@@ -183,9 +176,6 @@ static int RunFrame(int bDraw, int bPause)
 			nDoFPS = nFramesRendered + 30;
 		}
 	}
-
-	bPrevPause = bPause;
-	bPrevDraw = bDraw;
 
 	return 0;
 }

@@ -217,7 +217,7 @@ static int Frame(bool bRedraw)                                          // bRedr
 {
 	if (pVidImage == NULL)
 	{
-		printf("lost image\n");
+		return 1;
 	}
 
 	if (bDrvOkay)

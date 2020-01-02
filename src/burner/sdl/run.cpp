@@ -21,6 +21,11 @@ static int  nFastSpeed = 6;
 UINT32 messageFrames = 0;
 char lastMessage[MESSAGE_MAX_LENGTH];
 
+/// Ingame gui
+#ifdef BUILD_SDL2
+extern void ingame_gui_start();
+#endif
+
 /// Save States
 #ifdef BUILD_SDL2
 static char* szSDLSavePath = NULL;
@@ -216,11 +221,11 @@ static int RunGetNextSound(int bDraw)
 
 int delay_ticks(int ticks)
 {
-//sdl_delay can take up to 10 - 15 ticks it doesnt guarentee below this 
+//sdl_delay can take up to 10 - 15 ticks it doesnt guarentee below this
    int startTicks = 0;
    int endTicks = 0;
    int checkTicks = 0;
-   
+
    startTicks=SDL_GetTicks();
 
    while (checkTicks <= ticks)
@@ -357,7 +362,11 @@ int RunMessageLoop()
 				case SDLK_F11:
 					bAppShowFPS = !bAppShowFPS;
 					break;
-
+#ifdef BUILD_SDL2
+				case SDLK_TAB:
+					ingame_gui_start();
+					break;
+#endif
 				default:
 					break;
 				}

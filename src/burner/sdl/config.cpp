@@ -72,6 +72,8 @@ int ConfigAppLoad()
 		FLT(nGamma);
 		VAR(nAudSampleRate[0]);
 		VAR(nAudDSPModule[0]);
+		VAR(nInterpolation);
+		VAR(nFMInterpolation);
 		VAR(EnableHiscores);
 		// Other
 		STR(szAppRomPaths[0]);
@@ -142,7 +144,10 @@ int ConfigAppSave()
 	VAR(nAudSampleRate[0]);
 	fprintf(f, "\n// If non-zero, enable DSP filter\n");
 	VAR(nAudDSPModule[0]);
-
+	_ftprintf(f, _T("\n// The order of PCM/ADPCM interpolation\n"));
+	VAR(nInterpolation);
+	_ftprintf(f, _T("\n// The order of FM interpolation\n"));
+	VAR(nFMInterpolation);
 	_ftprintf(f, _T("\n// If non-zero, enable high score saving support.\n"));
 	VAR(EnableHiscores);
 

@@ -57,7 +57,7 @@ bool bMonitorAutoCheck = true;
 TCHAR szChoice[MAX_PATH] = _T("");
 OPENFILENAME ofn;
 
-#if defined (UNICODE)
+#ifdef UNICODE
 char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int nOutSize)
 {
 
@@ -111,18 +111,14 @@ TCHAR* ANSIToTCHAR(const char* pszInString, TCHAR* pszOutString, int /*nOutSize*
 
 CHAR *astring_from_utf8(const char *utf8string)
 {
-	WCHAR *wstring;
-	int char_count;
-	CHAR *result;
-
 	// convert MAME string (UTF-8) to UTF-16
-	char_count = MultiByteToWideChar(CP_UTF8, 0, utf8string, -1, NULL, 0);
-	wstring = (WCHAR *)malloc(char_count * sizeof(*wstring));
+	int char_count = MultiByteToWideChar(CP_UTF8, 0, utf8string, -1, NULL, 0);
+	WCHAR* wstring = (WCHAR*)malloc(char_count * sizeof(*wstring));
 	MultiByteToWideChar(CP_UTF8, 0, utf8string, -1, wstring, char_count);
 
 	// convert UTF-16 to "ANSI code page" string
 	char_count = WideCharToMultiByte(CP_ACP, 0, wstring, -1, NULL, 0, NULL, NULL);
-	result = (CHAR *)malloc(char_count * sizeof(*result));
+	CHAR* result = (CHAR*)malloc(char_count * sizeof(*result));
 	if (result != NULL)
 		WideCharToMultiByte(CP_ACP, 0, wstring, -1, result, char_count, NULL, NULL);
 
@@ -135,18 +131,14 @@ CHAR *astring_from_utf8(const char *utf8string)
 
 char *utf8_from_astring(const CHAR *astring)
 {
-	WCHAR *wstring;
-	int char_count;
-	CHAR *result;
-
 	// convert "ANSI code page" string to UTF-16
-	char_count = MultiByteToWideChar(CP_ACP, 0, astring, -1, NULL, 0);
-	wstring = (WCHAR *)malloc(char_count * sizeof(*wstring));
+	int char_count = MultiByteToWideChar(CP_ACP, 0, astring, -1, NULL, 0);
+	WCHAR* wstring = (WCHAR*)malloc(char_count * sizeof(*wstring));
 	MultiByteToWideChar(CP_ACP, 0, astring, -1, wstring, char_count);
 
 	// convert UTF-16 to MAME string (UTF-8)
 	char_count = WideCharToMultiByte(CP_UTF8, 0, wstring, -1, NULL, 0, NULL, NULL);
-	result = (CHAR *)malloc(char_count * sizeof(*result));
+	CHAR* result = (CHAR*)malloc(char_count * sizeof(*result));
 	if (result != NULL)
 		WideCharToMultiByte(CP_UTF8, 0, wstring, -1, result, char_count, NULL, NULL);
 
@@ -159,12 +151,9 @@ char *utf8_from_astring(const CHAR *astring)
 
 WCHAR *wstring_from_utf8(const char *utf8string)
 {
-	int char_count;
-	WCHAR *result;
-
 	// convert MAME string (UTF-8) to UTF-16
-	char_count = MultiByteToWideChar(CP_UTF8, 0, utf8string, -1, NULL, 0);
-	result = (WCHAR *)malloc(char_count * sizeof(*result));
+	int char_count = MultiByteToWideChar(CP_UTF8, 0, utf8string, -1, NULL, 0);
+	WCHAR* result = (WCHAR*)malloc(char_count * sizeof(*result));
 	if (result != NULL)
 		MultiByteToWideChar(CP_UTF8, 0, utf8string, -1, result, char_count);
 
@@ -173,12 +162,9 @@ WCHAR *wstring_from_utf8(const char *utf8string)
 
 char *utf8_from_wstring(const WCHAR *wstring)
 {
-	int char_count;
-	char *result;
-
 	// convert UTF-16 to MAME string (UTF-8)
-	char_count = WideCharToMultiByte(CP_UTF8, 0, wstring, -1, NULL, 0, NULL, NULL);
-	result = (char *)malloc(char_count * sizeof(*result));
+	int char_count = WideCharToMultiByte(CP_UTF8, 0, wstring, -1, NULL, 0, NULL, NULL);
+	char* result = (char*)malloc(char_count * sizeof(*result));
 	if (result != NULL)
 		WideCharToMultiByte(CP_UTF8, 0, wstring, -1, result, char_count, NULL, NULL);
 
@@ -384,7 +370,7 @@ void CloseDebugLog()
 int OpenDebugLog()
 {
 #ifdef FBN_DEBUG
- #if defined (APP_DEBUG_LOG)
+ #ifdef APP_DEBUG_LOG
 
     time_t nTime;
 	tm* tmTime;
@@ -632,20 +618,18 @@ void GetAspectRatio (int x, int y, int *AspectX, int *AspectY)
 		!_tcscmp(szResXY, _T("4800x7680")) ){
 		*AspectX = 10;
 		*AspectY = 16;
-		return;
 	}
 }
 
 static BOOL CALLBACK MonInfoProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData)
 {
 	MONITORINFOEX iMonitor;
-	int width, height;
 
 	iMonitor.cbSize = sizeof(MONITORINFOEX);
 	GetMonitorInfo(hMonitor, &iMonitor);
 
-    width = iMonitor.rcMonitor.right - iMonitor.rcMonitor.left;
-    height = iMonitor.rcMonitor.bottom - iMonitor.rcMonitor.top;
+    int width = iMonitor.rcMonitor.right - iMonitor.rcMonitor.left;
+    int height = iMonitor.rcMonitor.bottom - iMonitor.rcMonitor.top;
 
 	if ((HorScreen[0] && !_wcsicmp(HorScreen, iMonitor.szDevice)) ||
 		(!HorScreen[0] && iMonitor.dwFlags & MONITORINFOF_PRIMARY)) {
@@ -681,18 +665,15 @@ static BOOL CALLBACK MonInfoProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcM
 void MonitorAutoCheck()
 {
 	RECT rect;
-	int numScreens;
 
 	SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
 
-	numScreens = GetSystemMetrics(SM_CMONITORS);
+	int numScreens = GetSystemMetrics(SM_CMONITORS);
 
     // If only one monitor or not using a DirectX9 blitter, only use primary monitor
 	if (numScreens == 1 || nVidSelect < 3) {
-		int x, y;
-
-		x = GetSystemMetrics(SM_CXSCREEN);
-		y = GetSystemMetrics(SM_CYSCREEN);
+		int x = GetSystemMetrics(SM_CXSCREEN);
+		int y = GetSystemMetrics(SM_CYSCREEN);
 
 		// default full-screen resolution to this size
 		nVidHorWidth = x;
@@ -791,7 +772,7 @@ static int AppInit()
 	CreateROMInfo(NULL);
 
 	// Write a clrmame dat file if we are verifying roms
-#if defined (ROM_VERIFY)
+#ifdef ROM_VERIFY
 	create_datfile(_T("fba.dat"), 0);
 #endif
 

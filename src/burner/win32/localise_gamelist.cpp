@@ -60,10 +60,8 @@ void BurnerDoGameListLocalisation()
 
 			MultiByteToWideChar(nCodePage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));
 
-			TCHAR *Tokens;
-
 			// Read the file into arrays
-			Tokens = _tcstok(szLine, _T("\t"));
+			TCHAR* Tokens = _tcstok(szLine, _T("\t"));
 			while (Tokens != NULL) {
 				if (nTokenPos == 0) {
 					wcscpy(szShortNamesArray[nArrayPos], Tokens);
@@ -151,8 +149,6 @@ static void MakeOfn()
 	ofn.lpstrInitialDir = _T(".\\config\\localisation");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("glt");
-
-	return;
 }
 
 int FBALocaliseGamelistLoadTemplate()

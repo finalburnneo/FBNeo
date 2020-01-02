@@ -60,7 +60,7 @@ typedef struct {
 #define WFIND_WS(s) while (*s && !iswspace(*s)) { s++; }	// Find whitespace
 #define WFIND_QT(s) while (*s && *s != L'\"') { s++; }		// Find quote
 
-#if defined (UNICODE)
+#ifdef UNICODE
 #define QuoteReadW QuoteRead
 #define LabelCheckW LabelCheck
 #else
@@ -260,7 +260,7 @@ int BuildTemplateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, LPTSTR lpszName, 
 		if (IS_INTRESOURCE(lpszName)) {
 			_ftprintf(fp, _T("dialog\t%4i "), (INT_PTR)lpszName);
 		} else {
-#if defined (UNICODE)
+#ifdef UNICODE
 			EscapeString(wszBuffer, lpszName, 5120);
 #else
 			wchar_t szTemp[5120] = L"";
@@ -291,13 +291,11 @@ int BuildTemplateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, LPTSTR lpszName, 
 	// Controls
 	for (int i = 0; i < pTemplate->cDlgItems; i++) {
 		bool bExcludeControl = false;
-		DWORD dwStyle;
-		WORD wID;
 
 		pTemplateDataIn = (char*)(((INT_PTR)pTemplateDataIn + sizeof(DWORD) - 1) & ~(sizeof(DWORD) - 1));
 
-		dwStyle = ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->style;
-		wID = ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->id;
+		DWORD dwStyle = ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->style;
+		WORD wID = ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->id;
 
 		pTemplateDataIn = (char*)(((INT_PTR)pTemplateDataIn + sizeof(DLGITEMTEMPLATEEX) + sizeof(WORD) - 1) & ~(sizeof(WORD) - 1));
 
@@ -369,7 +367,7 @@ int BuildTemplateMenuTemplate(const MENUTEMPLATE* pTemplate, LPTSTR lpszName, FI
 		if (IS_INTRESOURCE(lpszName)) {
 			_ftprintf(fp, _T("menu   %4i {\n"), (INT_PTR)lpszName);
 		} else {
-#if defined (UNICODE)
+#ifdef UNICODE
 			EscapeString(wszBuffer, lpszName, 5120);
 #else
 			wchar_t szTemp[5120] = L"";
@@ -1132,7 +1130,7 @@ int FBALoadString(HINSTANCE hInstance, UINT uID, LPTSTR lpBuffer, int nBufferMax
 		if (FBAResourceInfo[uID].pResourceTranslation) {
 			int nLen = _tcslen((TCHAR*)FBAResourceInfo[uID].pResourceTranslation);
 
-#if defined (UNICODE)
+#ifdef UNICODE
 			_tcsncpy(lpBuffer, (TCHAR*)FBAResourceInfo[uID].pResourceTranslation, nBufferMax - 1);
 #else
 			strncpy(lpBuffer, (char*)FBAResourceInfo[uID].pResourceTranslation, nBufferMax - 1);
@@ -1488,9 +1486,8 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 
 				if (CurrentResource.nID < nMaxResources) {
 					if (nResourceType == RT_MENU) {
-						MENUTEMPLATE* pTemplate;
-
-						pTemplate = (MENUTEMPLATE*)LoadResource(hAppInst, FindResource(hAppInst, MAKEINTRESOURCE(CurrentResource.nID), RT_MENU));
+						MENUTEMPLATE* pTemplate = (MENUTEMPLATE*)LoadResource(
+							hAppInst, FindResource(hAppInst, MAKEINTRESOURCE(CurrentResource.nID), RT_MENU));
 						if (LockResource((HGLOBAL)pTemplate)) {
 							if (((MENUITEMTEMPLATEHEADER*)pTemplate)->versionNumber == 0) {
 
@@ -1501,9 +1498,8 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 						}
 					}
 					if (nResourceType == RT_DIALOG) {
-						LPCDLGTEMPLATE pTemplate;
-
-						pTemplate = (LPCDLGTEMPLATE)LoadResource(hAppInst, FindResource(hAppInst, MAKEINTRESOURCE(CurrentResource.nID), RT_DIALOG));
+						LPCDLGTEMPLATE pTemplate = (LPCDLGTEMPLATE)LoadResource(
+							hAppInst, FindResource(hAppInst, MAKEINTRESOURCE(CurrentResource.nID), RT_DIALOG));
 						if (LockResource((HGLOBAL)pTemplate)) {
 							if (((DLGTEMPLATEEX*)pTemplate)->signature == 0xFFFF && ((DLGTEMPLATEEX*)pTemplate)->dlgVer == 1) {
 
@@ -1575,14 +1571,10 @@ void FBALocaliseExit()
 			FBAResourceInfo = NULL;
 		}
 	}
-
-	return;
 }
 
 int FBALocaliseInit(TCHAR* pszTemplate)
 {
-	int nRet;
-
 	FBALocaliseExit();
 	nFBACodepage = GetACP();
 
@@ -1604,7 +1596,7 @@ int FBALocaliseInit(TCHAR* pszTemplate)
 
 	memset(FBAResourceInfo, 0, nMaxResources * sizeof(FBAResourceInfo_t));
 
-	nRet = FBALocaliseParseFile(pszTemplate);
+	int nRet = FBALocaliseParseFile(pszTemplate);
 	if (nRet > 0) {
 
 #ifdef PRINT_DEBUG_INFO
@@ -1660,8 +1652,6 @@ static void MakeOfn()
 	ofn.lpstrInitialDir = _T(".\\config\\localisation");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("flt");
-
-	return;
 }
 
 int FBALocaliseLoadTemplate()

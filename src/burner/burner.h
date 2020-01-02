@@ -5,11 +5,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <assert.h>
-#include <ctype.h>
-
 #include "tchar.h"
 
 // Macro to make quoted strings
@@ -17,13 +12,22 @@
 #define MAKE_STRING(s) MAKE_STRING_2(s)
 
 #define BZIP_MAX (20)								// Maximum zip files to search through
-#if defined (BUILD_QT)
+#ifdef BUILD_QT
  #define DIRS_MAX (4)								// Maximum number of directories to search
 #else
  #define DIRS_MAX (20)								// Maximum number of directories to search
 #endif
 
-#include "title.h"
+// ---------------------------------------------------------------------------
+// Previously title.h
+#ifdef FBN_DEBUG
+#define APP_TITLE "FinalBurn Neo [DEBUG]"
+#else
+#define APP_TITLE "FinalBurn Neo"
+#endif
+
+#define APP_DESCRIPTION "Emulator for Arcade-Games"
+
 #include "burn.h"
 
 // ---------------------------------------------------------------------------
@@ -38,7 +42,7 @@ typedef struct tagIMAGE {
 	unsigned int	flags;
 } IMAGE;
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
  #include "burner_win32.h"
 #elif defined (BUILD_MACOS)
  #include "burner_macos.h"
@@ -52,7 +56,7 @@ typedef struct tagIMAGE {
  #include "burner_qt.h"
 #endif
 
-#if defined (INCLUDE_LIB_PNGH)
+#ifdef INCLUDE_LIB_PNGH
  #include "png.h"
 #endif
 

@@ -7,7 +7,7 @@ bool bInputOkay = false;
 
 static bool bCinpOkay;
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	extern struct InputInOut InputInOutDInput;
 #elif defined (BUILD_MACOS)
     extern struct InputInOut InputInOutMacOS;
@@ -21,7 +21,7 @@ static bool bCinpOkay;
 
 static struct InputInOut *pInputInOut[]=
 {
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	&InputInOutDInput,
 #elif defined (BUILD_MACOS)
     &InputInOutMacOS,

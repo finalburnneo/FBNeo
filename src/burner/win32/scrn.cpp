@@ -116,9 +116,8 @@ static char* CreateKailleraList()
 				char* szDecoratedName = DecorateGameName(nBurnDrvActive);
 
 				if (pName + strlen(szDecoratedName) >= pList + nSize) {
-					char* pNewList;
 					nSize <<= 1;
-					pNewList = (char*)realloc(pList, nSize);
+					char* pNewList = (char*)realloc(pList, nSize);
 					if (pNewList == NULL) {
 						return NULL;
 					}
@@ -139,9 +138,8 @@ static char* CreateKailleraList()
 				char* szDecoratedName = DecorateGameName(nBurnDrvActive);
 
 				if (pName + strlen(szDecoratedName) >= pList + nSize) {
-					char* pNewList;
 					nSize <<= 1;
-					pNewList = (char*)realloc(pList, nSize);
+					char* pNewList = (char*)realloc(pList, nSize);
 					if (pNewList == NULL) {
 						return NULL;
 					}
@@ -203,7 +201,6 @@ INT32 is_netgame_or_recording() // returns: 1 = netgame, 2 = recording/playback
 static int WINAPI gameCallback(char* game, int player, int numplayers)
 {
 	bool bFound = false;
-	HWND hActive;
 
 	for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
 
@@ -222,7 +219,7 @@ static int WINAPI gameCallback(char* game, int player, int numplayers)
 	}
 
 	kNetGame = 1;
-	hActive = GetActiveWindow();
+	HWND hActive = GetActiveWindow();
 
 	bCheatsAllowed = false;								// Disable cheats during netplay
 	AudSoundStop();										// Stop while we load roms
@@ -849,13 +846,11 @@ static bool bSramLoad = true; // always true, unless BurnerLoadDriver() is calle
 // Compact driver loading module
 int BurnerLoadDriver(TCHAR *szDriverName)
 {
-	unsigned int j;
-
 	int nOldDrvSelect = nBurnDrvActive;
 	DrvExit();
 	bLoading = 1;
 
-	for (j = 0; j < nBurnDrvCount; j++) {
+	for (unsigned int j = 0; j < nBurnDrvCount; j++) {
 		nBurnDrvActive = j;
 		if (!_tcscmp(szDriverName, BurnDrvGetText(DRV_NAME)) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
 			nBurnDrvActive = nOldDrvSelect;
@@ -3207,9 +3202,7 @@ static int ScrnRegister()
 
 int ScrnSize()
 {
-	int x, y, w, h, ew, eh;
-	int nScrnWidth, nScrnHeight;
-	int nWorkWidth, nWorkHeight;
+	int x, y;
 	int nBmapWidth = nVidImageWidth, nBmapHeight = nVidImageHeight;
 	int nGameAspectX = 4, nGameAspectY = 3;
 	int nMaxSize;
@@ -3248,11 +3241,11 @@ int ScrnSize()
 	nDragX = GetSystemMetrics(SM_CXDRAG) / 2;
 	nDragY = GetSystemMetrics(SM_CYDRAG) / 2;
 
-	nScrnWidth = SystemWorkArea.right - SystemWorkArea.left;
-	nScrnHeight = SystemWorkArea.bottom - SystemWorkArea.top;
+	int nScrnWidth = SystemWorkArea.right - SystemWorkArea.left;
+	int nScrnHeight = SystemWorkArea.bottom - SystemWorkArea.top;
 
-	nWorkWidth = RealWorkArea.right - RealWorkArea.left;
-	nWorkHeight = RealWorkArea.bottom - RealWorkArea.top;
+	int nWorkWidth = RealWorkArea.right - RealWorkArea.left;
+	int nWorkHeight = RealWorkArea.bottom - RealWorkArea.top;
 
 	if (nVidSelect == 2 && nVidBlitterOpt[2] & 0x0100) {								// The Software effects blitter uses a fixed size
 		nMaxSize = 9;
@@ -3298,12 +3291,12 @@ int ScrnSize()
 	}
 
 	// Find the width and height
-	w = nWorkWidth;
-	h = nWorkHeight;
+	int w = nWorkWidth;
+	int h = nWorkHeight;
 
 	// Find out how much space is taken up by the borders
-	ew = GetSystemMetrics(SM_CXSIZEFRAME) << 1;
-	eh = GetSystemMetrics(SM_CYSIZEFRAME) << 1;
+	int ew = GetSystemMetrics(SM_CXSIZEFRAME) << 1;
+	int eh = GetSystemMetrics(SM_CYSIZEFRAME) << 1;
 
 	// Visual Studio 2012 (seems to have an issue with these, other reports on the web about it too
 #if defined _MSC_VER

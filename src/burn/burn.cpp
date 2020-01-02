@@ -22,7 +22,7 @@ UINT32 nBurnDrvActive = ~0U;	// Which game driver is selected
 UINT32 nBurnDrvSelect[8] = { ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U }; // Which games are selected (i.e. loaded but not necessarily active)
 									
 bool bBurnUseMMX;
-#if defined BUILD_A68K
+#ifdef BUILD_A68K
 bool bBurnUseASMCPUEmulation = false;
 #endif
 
@@ -68,7 +68,7 @@ UINT32 *pBurnDrvPalette;
 
 bool BurnCheckMMXSupport()
 {
-#if defined BUILD_X86_ASM
+#ifdef BUILD_X86_ASM
 	UINT32 nSignatureEAX = 0, nSignatureEBX = 0, nSignatureECX = 0, nSignatureEDX = 0;
 
 	CPUID(1, nSignatureEAX, nSignatureEBX, nSignatureECX, nSignatureEDX);
@@ -168,7 +168,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 	static char* pszCurrentNameA;
 	static wchar_t* pszCurrentNameW;
 
-#if defined (_UNICODE)
+#ifdef _UNICODE
 
 	static wchar_t szShortNameW[32];
 	static wchar_t szDateW[32];
@@ -247,7 +247,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 				pszStringW = pDriver[nBurnDrvActive]->szSystemW;
 		}
 
-#if defined (_UNICODE)
+#ifdef _UNICODE
 
 		if (pszStringW && pszStringW[0]) {
 			return pszStringW;
@@ -344,7 +344,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 			pszStringA = pDriver[nBurnDrvActive]->szSampleName;
 	}
 
-#if defined (_UNICODE)
+#ifdef _UNICODE
 
 	switch (i & 0xFF) {
 		case DRV_NAME:
@@ -421,7 +421,7 @@ extern "C" char* BurnDrvGetTextA(UINT32 i)
 	}
 }
 
-#if defined (_UNICODE)
+#ifdef _UNICODE
 void BurnLocalisationSetName(char *szName, TCHAR *szLongName)
 {
 	for (UINT32 i = 0; i < nBurnDrvCount; i++) {

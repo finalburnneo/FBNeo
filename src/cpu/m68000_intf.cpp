@@ -79,7 +79,7 @@ static struct { UINT32 address; INT32 id; } BreakpointFetch[9] = { { 0, 0 }, };
 
 #endif
 
-#if defined (EMU_A68K)
+#ifdef EMU_A68K
 static void UpdateA68KContext()
 {
 	if (M68000_regs.srh & 20) {		// Supervisor mode

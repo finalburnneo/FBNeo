@@ -310,21 +310,16 @@ static void MakeOfn(TCHAR* pszFilter)
 	ofn.lpstrInitialDir = _T(".\\recordings");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("fr");
-
-	return;
 }
 
 INT32 StartRecord()
 {
-	INT32 nRet;
-	INT32 bOldPause;
-
 	fp = NULL;
 	movieFlags = 0;
 
-	bOldPause = bRunPause;
+	INT32 bOldPause = bRunPause;
 	bRunPause = 1;
-	nRet = RecordDialog();
+	INT32 nRet = RecordDialog();
 	bRunPause = bOldPause;
 
 	if (nRet == 0) {
@@ -445,7 +440,6 @@ INT32 StartRecord()
 INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 {
 	INT32 nRet;
-	INT32 bOldPause;
 
 	PrintInputsReset();
 
@@ -458,7 +452,7 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 			DisplayReplayProperties(0, false);
 		}
 	} else {
-		bOldPause = bRunPause;
+		INT32 bOldPause = bRunPause;
 		bRunPause = 1;
 		nRet = ReplayDialog();
 		bRunPause = bOldPause;
@@ -655,8 +649,7 @@ static void CloseRecord()
 		INT32 nMetaSize = nMetaLen * 2;
 		fwrite(&nMetaSize, 1, 4, fp);
 		UINT8* metabuf = (UINT8*)malloc(nMetaSize);
-		INT32 i;
-		for(i=0; i<nMetaLen; ++i) {
+		for(INT32 i = 0; i<nMetaLen; ++i) {
 			metabuf[i*2 + 0] = wszMetadata[i] & 0xff;
 			metabuf[i*2 + 1] = (wszMetadata[i] >> 8) & 0xff;
 		}
@@ -724,8 +717,7 @@ static inline void Write32(UINT8*& ptr, const unsigned long v)
 
 static inline UINT32 Read32(const UINT8*& ptr)
 {
-	UINT32 v;
-	v = (UINT32)(*ptr++);
+	UINT32 v = (UINT32)(*ptr++);
 	v |= (UINT32)((*ptr++)<<8);
 	v |= (UINT32)((*ptr++)<<16);
 	v |= (UINT32)((*ptr++)<<24);
@@ -740,8 +732,7 @@ static inline void Write16(UINT8*& ptr, const UINT16 v)
 
 static inline UINT16 Read16(const UINT8*& ptr)
 {
-	UINT16 v;
-	v = (UINT16)(*ptr++);
+	UINT16 v = (UINT16)(*ptr++);
 	v |= (UINT16)((*ptr++)<<8);
 	return v;
 }
@@ -1071,7 +1062,6 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 	if (Msg == WM_INITDIALOG) {
 		wchar_t szFindPath[MAX_PATH] = L"recordings\\*.fr";
 		WIN32_FIND_DATA wfd;
-		HANDLE hFind;
 		INT32 i = 0;
 
 		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0);
@@ -1081,7 +1071,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 			_stprintf(szFindPath, _T("recordings\\%s*.fr"), BurnDrvGetText(DRV_NAME));
 		}
 
-		hFind = FindFirstFile(szFindPath, &wfd);
+		HANDLE hFind = FindFirstFile(szFindPath, &wfd);
 		if (hFind != INVALID_HANDLE_VALUE) {
 			do {
 				if(!(wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))

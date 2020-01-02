@@ -126,15 +126,12 @@ static struct FBAVI {
 // Returns: 0 (successful), 1 (failed)
 static INT32 AviCreateFile()
 {
-	HRESULT hRet;
-
 	char szFilePath[MAX_PATH*2];
     time_t currentTime;
-    tm* tmTime;
 
 	// Get the time
 	time(&currentTime);
-    tmTime = localtime(&currentTime);
+    tm* tmTime = localtime(&currentTime);
 
 	// construct our filename -> "romname-mm-dd-hms.avi"
 
@@ -145,11 +142,11 @@ static INT32 AviCreateFile()
 	// add the set# and extension to our file.
 	sprintf(szFilePath, "%s_%X.avi", szAviFileName, nAviSplit);
 
-	hRet = AVIFileOpenA(
-				&FBAvi.pFile,           // returned file pointer
-				szFilePath,             // file path
-				OF_CREATE | OF_WRITE,   // mode
-				NULL);                  // use handler determined from file extension
+	HRESULT hRet = AVIFileOpenA(
+		&FBAvi.pFile, // returned file pointer
+		szFilePath, // file path
+		OF_CREATE | OF_WRITE, // mode
+		NULL);                  // use handler determined from file extension
 	if (hRet) {
 #ifdef AVI_DEBUG
 		bprintf(0, _T("    AVI Error: AVIFileOpen() failed.\n"));
@@ -314,12 +311,11 @@ static INT32 MakeBitmap2x()
 	INT32 nHeight = FBAvi.nHeight;
 	UINT8 *pSrc = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf2 : FBAvi.pBitmapBuf1;
 	UINT8 *pDest = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
-	UINT8 *pDestL2;
 	FBAvi.pBitmap = pDest;
 	INT32 lctr = 0;
 
 	for (INT32 i = 0; i < nHeight * nWidth; i++) {
-		pDestL2 = pDest + (nWidth * (aviBPP * 2)); // next line down
+		UINT8* pDestL2 = pDest + (nWidth * (aviBPP * 2)); // next line down
 		memcpy(pDest, pSrc, aviBPP);
 		pDest += aviBPP;
 		memcpy(pDest, pSrc, aviBPP);
@@ -347,13 +343,12 @@ static INT32 MakeBitmap3x()
 	INT32 nHeight = FBAvi.nHeight;
 	UINT8 *pSrc = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf2 : FBAvi.pBitmapBuf1;
 	UINT8 *pDest = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
-	UINT8 *pDestL2, *pDestL3;
 	FBAvi.pBitmap = pDest;
 	INT32 lctr = 0;
 
 	for (INT32 i = 0; i < nHeight * nWidth; i++) {
-		pDestL2 = pDest + (nWidth * (aviBPP * 3)); // next line down, aviBPP * x = # pixels expanding
-		pDestL3 = pDest + ((nWidth * (aviBPP * 3)) * 2); // next line down + 1
+		UINT8* pDestL2 = pDest + (nWidth * (aviBPP * 3)); // next line down, aviBPP * x = # pixels expanding
+		UINT8* pDestL3 = pDest + ((nWidth * (aviBPP * 3)) * 2); // next line down + 1
 		memcpy(pDest, pSrc, aviBPP);
 		pDest += aviBPP;
 		memcpy(pDest, pSrc, aviBPP);
@@ -422,7 +417,6 @@ static void AviSetAudFormat()
 static INT32 AviCreateVidStream()
 {
 	INT32 nRet;
-	HRESULT hRet;
 
 	/*
 	Problem:
@@ -491,8 +485,8 @@ static INT32 AviCreateVidStream()
 	}
 
 	// create the video stream in the avi file
-	hRet = AVIFileCreateStream(
-		FBAvi.pFile,  // file pointer
+	HRESULT hRet = AVIFileCreateStream(
+		FBAvi.pFile, // file pointer
 		&FBAvi.psVid, // returned stream pointer
 		&FBAvi.vidh); // stream header
 	if (hRet) {
@@ -565,8 +559,6 @@ static INT32 AviCreateVidStream()
 // Returns: 0 (successful), 1 (failed)
 static INT32 AviCreateAudStream()
 {
-	HRESULT hRet;
-
 	// fill in the header for the audio stream
 	//
 	// - dwInitialFrames specifies how much to skew the
@@ -582,8 +574,8 @@ static INT32 AviCreateAudStream()
 	FBAvi.audh.dwSampleSize           = FBAvi.wfx.nBlockAlign;
 
 	// create the audio stream
-	hRet = AVIFileCreateStream(
-		FBAvi.pFile,  // file pointer
+	HRESULT hRet = AVIFileCreateStream(
+		FBAvi.pFile, // file pointer
 		&FBAvi.psAud, // returned stream pointer
 		&FBAvi.audh); // stream header
 	if (hRet) {

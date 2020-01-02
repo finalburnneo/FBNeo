@@ -2743,8 +2743,6 @@ static void UpdateInfoROMInfo()
 	if (hInfoLabel[0]) {
 		EnableWindow(hInfoLabel[0], TRUE);
 	}
-
-	return;
 }
 
 static void UpdateInfoRelease()
@@ -2767,8 +2765,6 @@ static void UpdateInfoRelease()
 	if (hInfoLabel[2]) {
 		EnableWindow(hInfoLabel[2], TRUE);
 	}
-
-	return;
 }
 
 static void UpdateInfoGameInfo()
@@ -2801,8 +2797,6 @@ static void UpdateInfoGameInfo()
 			EnableWindow(hInfoLabel[3], FALSE);
 		}
 	}
-
-	return;
 }
 
 static int MVSpreviewUpdateSlot(int nSlot, HWND hDlg)

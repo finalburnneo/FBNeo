@@ -37,7 +37,7 @@ extern TCHAR szAppEEPROMPath[MAX_PATH];
 // #define MAME_USE_LOGERROR
 
 // Give access to the CPUID function for various compilers
-#if defined (__GNUC__)
+#ifdef __GNUC__
  #define CPUID(f,ra,rb,rc,rd) __asm__ __volatile__ ("cpuid"											\
  													: "=a" (ra), "=b" (rb), "=c" (rc), "=d" (rd)	\
  													: "a"  (f)										\

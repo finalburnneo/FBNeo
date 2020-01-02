@@ -1393,7 +1393,7 @@ static struct BurnRomInfo oldsRomDesc[] = {
 
 	{ "sp_v101_u6.u6",	   	0x010000, 0x097046bc, 9 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
 	
-#if defined (ROM_VERIFY)
+#ifdef ROM_VERIFY
 	{ "ram_dump",	   		0x040000, 0x280cfb4e, 0 | BRF_OPT },
 #endif
 };
@@ -1448,7 +1448,7 @@ static struct BurnRomInfo olds100RomDesc[] = {
 
 	{ "sp_v100_u6.u6",	   	0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
 	
-#if defined (ROM_VERIFY)
+#ifdef ROM_VERIFY
 	{ "ram_dump",	   		0x040000, 0x280cfb4e, 0 | BRF_OPT },
 #endif
 };

@@ -120,11 +120,10 @@ static int FindRomByCrc(unsigned int nCrc)
 static int FindRom(int i)
 {
 	struct BurnRomInfo ri;
-	int nRet;
 
 	memset(&ri, 0, sizeof(ri));
 
-	nRet = BurnDrvGetRomInfo(&ri, i);
+	int nRet = BurnDrvGetRomInfo(&ri, i);
 	if (nRet != 0) {											// Failure: no such rom
 		return -2;
 	}
@@ -187,11 +186,10 @@ static int CheckRomsBoot()
 
 	for (int i = 0; i < nRomCount; i++) {
 		struct BurnRomInfo ri;
-		int nState;
 
 		memset(&ri, 0, sizeof(ri));
 		BurnDrvGetRomInfo(&ri, i);			// Find information about the wanted rom
-		nState = RomFind[i].nState;			// Get the state of the rom in the zip file
+		int nState = RomFind[i].nState;			// Get the state of the rom in the zip file
 
 		if (nState != 1 && ri.nType && ri.nCrc) {
 			if (!(ri.nType & BRF_OPT) && !(ri.nType & BRF_NODUMP)) {
@@ -269,7 +267,7 @@ static int CheckRoms()
 
 static int __cdecl BzipBurnLoadRom(unsigned char* Dest, int* pnWrote, int i)
 {
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	MSG Msg;
 #endif
 
@@ -325,7 +323,7 @@ static int __cdecl BzipBurnLoadRom(unsigned char* Dest, int* pnWrote, int i)
 	}
 	ProgressUpdateBurner(ri.nLen ? 1.0 / ((double)nTotalSize / ri.nLen) : 0, szText, 0);
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	// Check for messages:
 	while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
 		DispatchMessage(&Msg);
@@ -375,8 +373,6 @@ int BzipStatus()
 
 int BzipOpen(bool bootApp)
 {
-	int nMemLen;														// Zip name number
-
 	nTotalSize = 0;
 	nBzipError = 0;
 
@@ -397,7 +393,7 @@ int BzipOpen(bool bootApp)
 	}
 
 	// Create an array for holding lookups for each rom -> zip entries
-	nMemLen = nRomCount * sizeof(struct RomFind);
+	int nMemLen = nRomCount * sizeof(struct RomFind);
 	RomFind = (struct RomFind*)malloc(nMemLen);
 	if (RomFind == NULL) {
 		return 1;
@@ -474,7 +470,6 @@ int BzipOpen(bool bootApp)
 
 			for (int i = 0; i < nRomCount; i++) {
 				struct BurnRomInfo ri;
-				int nFind;
 
 				if (RomFind[i].nState == 1) {							// Already found this and it's okay
 					continue;
@@ -482,7 +477,7 @@ int BzipOpen(bool bootApp)
 
 				memset(&ri, 0, sizeof(ri));
 
-				nFind = FindRom(i);
+				int nFind = FindRom(i);
 
 				if (nFind < 0) {										// Couldn't find this rom at all
 					continue;

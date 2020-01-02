@@ -171,7 +171,7 @@ InterfaceInfo* VidGetInfo();
  extern HWND hVidWnd;
 #endif
 
-#if defined (_XBOX)
+#ifdef _XBOX
  extern HWND hVidWnd;
 #endif
 

@@ -323,9 +323,8 @@ int PrintGlobalMemoryInfo()
 
 	// Information on FB Neo memory usage
 	BOOL (WINAPI* pGetProcessMemoryInfo)(HANDLE, PPROCESS_MEMORY_COUNTERS, DWORD) = NULL;
-	HINSTANCE hPsapiDLL;
 
-	hPsapiDLL = LoadLibrary(_T("psapi.dll"));
+	HINSTANCE hPsapiDLL = LoadLibrary(_T("psapi.dll"));
 	if (hPsapiDLL) {
 		pGetProcessMemoryInfo = (BOOL (WINAPI*)(HANDLE, PPROCESS_MEMORY_COUNTERS, DWORD))GetProcAddress(hPsapiDLL, "GetProcessMemoryInfo");
 		if (pGetProcessMemoryInfo) {
@@ -513,12 +512,11 @@ int ProcessEDID(HKEY hMonitorKey)
 int PrintDisplayInfo()
 {
 	BOOL (WINAPI* pEnumDisplayDevices)(LPCTSTR, DWORD, PDISPLAY_DEVICE, DWORD) = NULL;
-	HINSTANCE hUser32DLL;
 
 	// The EnumDisplayDevices() function is only available on NT based OSes
-	hUser32DLL = LoadLibrary(_T("user32.dll"));
+	HINSTANCE hUser32DLL = LoadLibrary(_T("user32.dll"));
 	if (hUser32DLL) {
-#if defined (UNICODE)
+#ifdef UNICODE
 		pEnumDisplayDevices = (BOOL (WINAPI*)(LPCTSTR, DWORD, PDISPLAY_DEVICE, DWORD))GetProcAddress(hUser32DLL, "EnumDisplayDevicesW");
 #else
 		pEnumDisplayDevices = (BOOL (WINAPI*)(LPCTSTR, DWORD, PDISPLAY_DEVICE, DWORD))GetProcAddress(hUser32DLL, "EnumDisplayDevicesA");
@@ -603,7 +601,7 @@ int PrintFBAInfo()
 
 	AddLine(_T("Built on ") _T(MAKE_STRING(BUILD_DATE)) _T(", ") _T(MAKE_STRING(BUILD_TIME))  _T(", using ") _T(MAKE_STRING(BUILD_COMP)) _T("."));
 	AddLine(_T("    Optimised for ") _T(MAKE_STRING(BUILD_CPU)) _T(" CPUs."));
-#if defined (_UNICODE)
+#ifdef _UNICODE
 	AddLine(_T("    Using Unicode for all text."));
 #else
 	AddLine(_T("    Using multi-byte characters for all text, active codepage is %d."), GetACP());
@@ -675,10 +673,9 @@ int PrintProcessInfo()
 {
 #if 1
 
-	HANDLE hModuleSnap;
 	MODULEENTRY32 me32;
 
-	hModuleSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, GetCurrentProcessId());
+	HANDLE hModuleSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, GetCurrentProcessId());
 	if (hModuleSnap == INVALID_HANDLE_VALUE) {
 		AddLine(_T("Unable to retrieve detailed process information."));
 	} else {
@@ -735,13 +732,12 @@ int PrintDeviceInfo()
 		SC_HANDLE (WINAPI* pOpenService)(SC_HANDLE, LPCTSTR, DWORD) = NULL;
 		BOOL (WINAPI* pQueryServiceConfig)(SC_HANDLE, LPQUERY_SERVICE_CONFIG, DWORD, LPDWORD) = NULL;
 		BOOL (WINAPI* pCloseServiceHandle)(SC_HANDLE) = NULL;
-		HINSTANCE hAdvapi32DLL;
 
 		SP_DEVINFO_DATA did;
 
-		hAdvapi32DLL = LoadLibrary(_T("advapi32.dll"));
+		HINSTANCE hAdvapi32DLL = LoadLibrary(_T("advapi32.dll"));
 		if (hAdvapi32DLL) {
-#if defined (_UNICODE)
+#ifdef _UNICODE
 			pOpenSCManager = (SC_HANDLE (WINAPI*)(LPCTSTR, LPCTSTR, DWORD))GetProcAddress(hAdvapi32DLL, "OpenSCManagerW");
 			pOpenService = (SC_HANDLE (WINAPI*)(SC_HANDLE, LPCTSTR, DWORD))GetProcAddress(hAdvapi32DLL, "OpenServiceW");
 			pQueryServiceConfig = (BOOL (WINAPI*)(SC_HANDLE, LPQUERY_SERVICE_CONFIG, DWORD, LPDWORD))GetProcAddress(hAdvapi32DLL, "QueryServiceConfigW");
@@ -773,7 +769,6 @@ int PrintDeviceInfo()
 					TCHAR szDriverDate[1024] = _T("");
 					TCHAR szDriverVersion[1024] = _T("");
 					TCHAR szImagePath[1024] = _T("");
-					HKEY hKey;
 
 					// Get the device name
 					SetupDiGetDeviceRegistryProperty(hDevInfo, &did, SPDRP_DEVICEDESC, NULL, (BYTE*)szName, 1024, NULL);
@@ -786,7 +781,7 @@ int PrintDeviceInfo()
 					}
 
 					// Get driver info
-					hKey = SetupDiOpenDevRegKey(hDevInfo, &did, DICS_FLAG_GLOBAL, 0, DIREG_DRV, KEY_READ);
+					HKEY hKey = SetupDiOpenDevRegKey(hDevInfo, &did, DICS_FLAG_GLOBAL, 0, DIREG_DRV, KEY_READ);
 					if (hKey != INVALID_HANDLE_VALUE) {
 						DWORD nType = REG_SZ;
 						DWORD nSize = 1024;
@@ -871,15 +866,14 @@ static INT_PTR CALLBACK SysInfoProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM l
 	switch (Msg) {
 		case WM_INITDIALOG: {
 		    time_t nTime;
-			tm* tmTime;
 
-			nReturnCode = 0;
+		    nReturnCode = 0;
 
 			pszTextBuffer = NULL;
 			nTextBufferSize = 0;
 
 			time(&nTime);
-			tmTime = localtime(&nTime);
+			tm* tmTime = localtime(&nTime);
 
 			hLogFont = CreateFont(14, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, 0, 0, DEFAULT_QUALITY, FF_MODERN, _T(""));
 
@@ -1047,11 +1041,10 @@ static INT_PTR CALLBACK SysInfoProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM l
 					}
 
 					if (fp) {
-						TCHAR* szText;
 						int nSize = SendDlgItemMessage(hDlg, IDC_SYSINFO_EDIT, WM_GETTEXTLENGTH, 0, 0);
-						szText = (TCHAR*)malloc((nSize + 1) * sizeof(TCHAR));
+						TCHAR* szText = (TCHAR*)malloc((nSize + 1) * sizeof(TCHAR));
 
-#if defined (_UNICODE)
+#ifdef _UNICODE
 						// write a Unicode Byte Order Mark if needed
 						if (ftell(fp) == 0) {
 							WRITE_UNICODE_BOM(fp);
@@ -1079,8 +1072,6 @@ static INT_PTR CALLBACK SysInfoProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM l
 
 LONG CALLBACK ExceptionFilter(_EXCEPTION_POINTERS* pExceptionInfo)
 {
-	int nRet;
-
 	// If we're getting recursive calls to this function, bail out
 	if (nRecursion++) {
 		if (nRecursion <= 2) {
@@ -1099,7 +1090,7 @@ LONG CALLBACK ExceptionFilter(_EXCEPTION_POINTERS* pExceptionInfo)
 
 	pExceptionPointers = pExceptionInfo;
 
-	nRet = FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_EXCEPTION), hScrnWnd, (DLGPROC)SysInfoProc);
+	int nRet = FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_EXCEPTION), hScrnWnd, (DLGPROC)SysInfoProc);
 
 	switch (nRet) {
 		case 1:

@@ -252,7 +252,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 	return 1;
 }
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 extern INT32 VidSNewTinyMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, INT32 nPriority = 5);
 #endif
 
@@ -286,7 +286,7 @@ INT32 CheatApply()
 
 				if (pCurrentCheat->bWatchMode) {
 					// Watch address mode, Win32-only for now.
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 					pAddressInfo->nOriginalValue = cheat_subptr->read(pAddressInfo->nAddress);
 					wchar_t framestring[32];
 					swprintf(framestring, L"%X", pAddressInfo->nOriginalValue);

@@ -26,8 +26,6 @@ static void MakeOfn(TCHAR* pszFilter)
 	ofn.lpstrInitialDir = NULL;// default "Documents" folder.. _T(".\\wav");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("wav");
-
-	return;
 }
 
 
@@ -76,15 +74,13 @@ static int WaveLogHeaderFillIn(FILE *Hand)
 int WaveLogStart()
 {
 	TCHAR szFilter[1024];
-	int nRet;
-	int bOldPause;
 
 	WaveLogStop(); // make sure old log is closed
 
 	MakeOfn(szFilter);
-	bOldPause = bRunPause;
+	int bOldPause = bRunPause;
 	bRunPause = 1;
-	nRet = GetSaveFileName(&ofn);
+	int nRet = GetSaveFileName(&ofn);
 	bRunPause = bOldPause;
 	if (nRet == 0) {
 		return 1;

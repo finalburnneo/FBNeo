@@ -21,8 +21,6 @@ static HANDLE hEvent = NULL;
 static void CreateRomDatName(TCHAR* szRomDat)
 {
 	_stprintf(szRomDat, _T("config/%s.roms.dat"), szAppExeName);
-
-	return;
 }
 
 //Select Directory Dialog//////////////////////////////////////////////////////////////////////////
@@ -265,7 +263,6 @@ int CheckGameAvb()
 {
 	TCHAR szRomDat[MAX_PATH];
 	FILE* h;
-	int bOK;
 	int nBufferSize = nBurnDrvCount + 256;
 	TCHAR* buffer = (TCHAR*)malloc(nBufferSize * sizeof(TCHAR));
 	if (buffer == NULL) {
@@ -287,7 +284,7 @@ int CheckGameAvb()
 	_fgetts(buffer, nBufferSize, h);
 	fclose(h);
 
-	bOK = DoCheck(buffer);
+	int bOK = DoCheck(buffer);
 
 	if (buffer) {
 		free(buffer);
@@ -393,12 +390,11 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 
 			if (hParent == NULL) {
 				RECT rect;
-				int x, y;
 
 				SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
 
-				x = 315 + GetSystemMetrics(SM_CXDLGFRAME) * 2 + 6;
-				y = 74 + GetSystemMetrics(SM_CYDLGFRAME) * 2 + 6;
+				int x = 315 + GetSystemMetrics(SM_CXDLGFRAME) * 2 + 6;
+				int y = 74 + GetSystemMetrics(SM_CYDLGFRAME) * 2 + 6;
 
 				SetForegroundWindow(hDlg);
 				SetWindowPos(hDlg, HWND_TOPMOST, (rect.right - rect.left) / 2 - x / 2, (rect.bottom - rect.top) / 2 - y / 2, x, y, 0);

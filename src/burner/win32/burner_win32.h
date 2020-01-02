@@ -13,7 +13,7 @@
 #define WINVER 0x0501
 #define STRICT
 
-#if defined (_UNICODE)
+#ifdef _UNICODE
 #ifndef UNICODE
  #define UNICODE
 #endif
@@ -25,8 +25,6 @@
 #include <windowsx.h>
 #include <commctrl.h>
 #include <commdlg.h>
-
-#include <mmsystem.h>
 #include <shellapi.h>
 
 // fix for shlwapi.h

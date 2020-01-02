@@ -11,20 +11,16 @@ static void MakeOfn()
 	ofn.lpstrInitialDir = _T("");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("png");
-	return;
 }
 
 int SelectPlaceHolder()
 {
-	int nRet;
-	int bOldPause;
-
 	MakeOfn();
 	ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_PLACEHOLDER_LOAD, true);
 
-	bOldPause = bRunPause;
+	int bOldPause = bRunPause;
 	bRunPause = 1;
-	nRet = GetOpenFileName(&ofn);
+	int nRet = GetOpenFileName(&ofn);
 	bRunPause = bOldPause;
 
 	if (nRet == 0) {		// Error

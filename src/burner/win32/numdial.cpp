@@ -173,10 +173,9 @@ static INT_PTR CALLBACK GammaProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)	//
 				case TB_TOP: {
 					if (nExitStatus == 0) {
 						TCHAR szText[16];
-						int nPos;
 
 						// Update the contents of the edit control
-						nPos = SendDlgItemMessage(hDlg, IDC_GAMMA_SLIDER, TBM_GETPOS, (WPARAM)0, (LPARAM)0);
+						int nPos = SendDlgItemMessage(hDlg, IDC_GAMMA_SLIDER, TBM_GETPOS, (WPARAM)0, (LPARAM)0);
 						if (nPos > 10000) {	// Gamma > 1
 							nGamma = 1.0 + (nPos - 10000.0) / 10000.0;
 						} else {			// Gamma < 1
@@ -767,7 +766,6 @@ static INT_PTR CALLBACK CPUClockProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 					if (nExitStatus == 0) {
 						TCHAR szText[16] = _T("");
 						bool bValid = 1;
-						int nValue;
 
 						if (SendDlgItemMessage(hDlg, IDC_CPUCLOCK_EDIT, WM_GETTEXTLENGTH, (WPARAM)0, (LPARAM)0) < 16) {
 							SendDlgItemMessage(hDlg, IDC_CPUCLOCK_EDIT, WM_GETTEXT, (WPARAM)16, (LPARAM)szText);
@@ -782,7 +780,7 @@ static INT_PTR CALLBACK CPUClockProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 						}
 
 						if (bValid) {
-							nValue = _tcstol(szText, NULL, 0);
+							int nValue = _tcstol(szText, NULL, 0);
 							if (nValue < 25) {
 								nValue = 25;
 							} else {
@@ -816,10 +814,9 @@ static INT_PTR CALLBACK CPUClockProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 				case TB_TOP: {
 					if (nExitStatus == 0) {
 						TCHAR szText[16];
-						int nValue;
 
 						// Update the contents of the edit control
-						nValue = SendDlgItemMessage(hDlg, IDC_CPUCLOCK_SLIDER, TBM_GETPOS, (WPARAM)0, (LPARAM)0);
+						int nValue = SendDlgItemMessage(hDlg, IDC_CPUCLOCK_SLIDER, TBM_GETPOS, (WPARAM)0, (LPARAM)0);
 						nValue = (int)((double)nValue * 100.0 / 256.0 + 0.5);
 						_stprintf(szText, _T("%i"), nValue);
 						SendDlgItemMessage(hDlg, IDC_CPUCLOCK_EDIT, WM_SETTEXT, (WPARAM)0, (LPARAM)szText);

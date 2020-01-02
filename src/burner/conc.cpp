@@ -19,7 +19,7 @@ static bool SkipComma(TCHAR** s)
 
 static void CheatError(TCHAR* pszFilename, INT32 nLineNumber, CheatInfo* pCheat, TCHAR* pszInfo, TCHAR* pszLine)
 {
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Cheat file %s is malformed.\nPlease remove or repair the file.\n\n"), pszFilename);
 	if (pCheat) {
 		FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Parse error at line %i, in cheat \"%s\".\n"), nLineNumber, pCheat->szCheatName);
@@ -291,7 +291,7 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 {
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	FILE *fp = _tfopen(pszFilename, _T("rt"));
 	if (fp == NULL) {
 		return 1;
@@ -409,7 +409,7 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 //TODO: make cross platform
 static INT32 ConfigParseMAMEFile()
 {
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 
 #define AddressInfo()	\
 	INT32 k = (flags >> 20) & 3;	\

@@ -10,14 +10,14 @@ static int nPaletteEntries;
 
 static void CalcBrushes(int nStartColour)
 {
-	int Colour, r, g, b;
+	int r, g, b;
 
 	for (int i = 0; i < 256; i++) {
 		DeleteObject(PaletteBrush[i]);
 		PaletteBrush[i] = NULL;
 
 		if (i + nStartColour < nPaletteEntries) {
-			Colour = pBurnDrvPalette[i + nStartColour];
+			int Colour = pBurnDrvPalette[i + nStartColour];
 
 			if (nVidImageDepth < 16 || (BurnDrvGetFlags() & BDF_16BIT_ONLY)) {
 				// 15-bit
@@ -122,9 +122,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 			for (int i = 0; i < 256; i++) {
 				if ((HWND)lParam == PaletteControl[i]) {
-					int Colour, r, g, b;
+					int r, g, b;
 
-					Colour = pBurnDrvPalette[i + nPalettePosition];
+					int Colour = pBurnDrvPalette[i + nPalettePosition];
 
 					if (nVidImageDepth < 16 || (BurnDrvGetFlags() & BDF_16BIT_ONLY)) {
 						// 15-bit

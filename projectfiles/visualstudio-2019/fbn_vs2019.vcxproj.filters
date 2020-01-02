@@ -421,9 +421,6 @@
     <ClInclude Include="..\..\src\burner\neocdlist.h">
       <Filter>burner</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\burner\title.h">
-      <Filter>burner</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\burner\un7z.h">
       <Filter>burner</Filter>
     </ClInclude>

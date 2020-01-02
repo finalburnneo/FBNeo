@@ -36,7 +36,7 @@
 #include "k054539.h"
 #include "eeprom.h"
 
-#if defined _MSC_VER
+#ifdef _MSC_VER
  #define _USE_MATH_DEFINES
  #include <cmath>
 #endif

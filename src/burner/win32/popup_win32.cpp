@@ -340,10 +340,10 @@ int FBAPopupDisplay(int nFlags)
 {
 	HMODULE hRiched = NULL;
 
-#if defined (_UNICODE)
-	hRiched = LoadLibrary(L"RICHED20.DLL");
+#ifdef _UNICODE
+	hRiched = LoadLibraryW(L"RICHED20.DLL");
 #else
-	hRiched = LoadLibrary("RICHED20.DLL");
+	hRiched = LoadLibraryA("RICHED20.DLL");
 #endif
 
 	nPopupFlags = nFlags;

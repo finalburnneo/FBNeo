@@ -16,12 +16,10 @@ static FILE* OpenPreview(TCHAR *szPath)
 	TCHAR szBaseName[MAX_PATH];
 	TCHAR szFileName[MAX_PATH];
 
-	FILE* fp = NULL;
-
 	// Try to load a .PNG preview image
 	_sntprintf(szBaseName, sizeof(szBaseName), _T("%s%s"), szPath, BurnDrvGetText(DRV_NAME));
 	_stprintf(szFileName, _T("%s.png"), szBaseName);
-	fp = _tfopen(szFileName, _T("rb"));
+	FILE* fp = _tfopen(szFileName, _T("rb"));
 
 	if (!fp && BurnDrvGetText(DRV_PARENT)) {						// Try the parent
 		_sntprintf(szBaseName, sizeof(szBaseName), _T("%s%s"), szPath, BurnDrvGetText(DRV_PARENT));
@@ -347,7 +345,7 @@ static int GameInfoInit()
 	int RomPos = 0;
 	for (int i = 0; i < 0x100; i++) { // assume max 0x100 roms per game
 		int nRet;
-		struct BurnRomInfo ri;
+		struct BurnRomInfo ri{};
 		char nLen[10] = "";
 		char nCrc[10] = "";
 		char *szRomName = NULL;
@@ -415,7 +413,7 @@ static int GameInfoInit()
 
 		for (int j = 0; j < 0x100; j++) {
 			int nRetBoard;
-			struct BurnRomInfo riBoard;
+			struct BurnRomInfo riBoard{};
 			char nLenBoard[10] = "";
 			char nCrcBoard[10] = "";
 			char *szBoardRomName = NULL;
@@ -490,7 +488,7 @@ static int GameInfoInit()
 	if (BurnDrvGetTextA(DRV_SAMPLENAME) != NULL) {
 		for (int i = 0; i < 0x100; i++) { // assume max 0x100 samples per game
 			int nRet;
-			struct BurnSampleInfo si;
+			struct BurnSampleInfo si{};
 			char *szSampleName = NULL;
 
 			memset(&si, 0, sizeof(si));
@@ -533,7 +531,7 @@ static int GameInfoInit()
 	int HDDPos = 0;
 	for (int i = 0; i < 0x100; i++) { // assume max 0x100 hdds per game
 		int nRet;
-		struct BurnHDDInfo hddi;
+		struct BurnHDDInfo hddi{};
 		char nLen[10] = "";
 		char nCrc[10] = "";
 		char *szHDDName = NULL;
@@ -914,10 +912,10 @@ int GameInfoDialogCreate(HWND hParentWND, int nDrvSel)
 	bGameInfoOpen = true;
 	nGiDriverSelected = nDrvSel;
 
-#if defined (_UNICODE)
-	hRiched = LoadLibrary(L"RICHED20.DLL");
+#ifdef _UNICODE
+	hRiched = LoadLibraryW(L"RICHED20.DLL");
 #else
-	hRiched = LoadLibrary("RICHED20.DLL");
+	hRiched = LoadLibraryA("RICHED20.DLL");
 #endif
 
 	if (hRiched) {

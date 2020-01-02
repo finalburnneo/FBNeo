@@ -304,12 +304,10 @@ static void InitComboboxes()
 
 static int InpdInit()
 {
-	int nMemLen;
-
 	hInpdList = GetDlgItem(hInpdDlg, IDC_INPD_LIST);
 
 	// Allocate a last val array for the last input values
-	nMemLen = nGameInpCount * sizeof(char);
+	int nMemLen = nGameInpCount * sizeof(char);
 	LastVal = (unsigned short*)malloc(nMemLen * sizeof(unsigned short));
 	if (LastVal == NULL) {
 		return 1;
@@ -639,14 +637,14 @@ static void SaveHardwarePreset()
 
 int UsePreset(bool bMakeDefault)
 {
-	int nGi, nPci, nAnalog = 0;
+	int nAnalog = 0;
 	TCHAR szFilename[MAX_PATH] = _T("config\\presets\\");
 
-	nGi = SendMessage(hInpdGi, CB_GETCURSEL, 0, 0);
+	int nGi = SendMessage(hInpdGi, CB_GETCURSEL, 0, 0);
 	if (nGi == CB_ERR) {
 		return 1;
 	}
-	nPci = SendMessage(hInpdPci, CB_GETCURSEL, 0, 0);
+	int nPci = SendMessage(hInpdPci, CB_GETCURSEL, 0, 0);
 	if (nPci == CB_ERR) {
 		return 1;
 	}
@@ -725,7 +723,6 @@ static void SliderUpdate()
 {
 	TCHAR szText[16] = _T("");
 	bool bValid = 1;
-	int nValue;
 
 	if (SendDlgItemMessage(hInpdDlg, IDC_INPD_ANEDIT, WM_GETTEXTLENGTH, (WPARAM)0, (LPARAM)0) < 16) {
 		SendDlgItemMessage(hInpdDlg, IDC_INPD_ANEDIT, WM_GETTEXT, (WPARAM)16, (LPARAM)szText);
@@ -740,7 +737,7 @@ static void SliderUpdate()
 	}
 
 	if (bValid) {
-		nValue = _tcstol(szText, NULL, 0);
+		int nValue = _tcstol(szText, NULL, 0);
 		if (nValue < 25) {
 			nValue = 25;
 		} else {
@@ -850,8 +847,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		}
 
 		if (Id == IDC_INPD_GI && Notify == CBN_SELCHANGE) {
-			int nGi;
-			nGi = SendMessage(hInpdGi, CB_GETCURSEL, 0, 0);
+			int nGi = SendMessage(hInpdGi, CB_GETCURSEL, 0, 0);
 			if (nGi == CB_ERR) {
 				SendMessage(hInpdPci, CB_SETCURSEL, (WPARAM)-1, 0);
 				SendMessage(hInpdAnalog, CB_SETCURSEL, (WPARAM)-1, 0);
@@ -879,12 +875,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		}
 
 		if (Id == IDC_INPD_PCI && Notify == CBN_SELCHANGE) {
-			int nGi, nPci;
-			nGi = SendMessage(hInpdGi, CB_GETCURSEL, 0, 0);
+			int nGi = SendMessage(hInpdGi, CB_GETCURSEL, 0, 0);
 			if (nGi == CB_ERR) {
 				return 0;
 			}
-			nPci = SendMessage(hInpdPci, CB_GETCURSEL, 0, 0);
+			int nPci = SendMessage(hInpdPci, CB_GETCURSEL, 0, 0);
 			if (nPci == CB_ERR) {
 				return 0;
 			}
@@ -934,10 +929,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			case TB_THUMBTRACK:
 			case TB_TOP: {
 				TCHAR szText[16] = _T("");
-				int nValue;
 
 				// Update the contents of the edit control
-				nValue = SendDlgItemMessage(hDlg, IDC_INPD_ANSLIDER, TBM_GETPOS, (WPARAM)0, (LPARAM)0);
+				int nValue = SendDlgItemMessage(hDlg, IDC_INPD_ANSLIDER, TBM_GETPOS, (WPARAM)0, (LPARAM)0);
 				nValue = (int)((double)nValue * 100.0 / 256.0 + 0.5);
 				_stprintf(szText, _T("%i"), nValue);
 				SendDlgItemMessage(hDlg, IDC_INPD_ANEDIT, WM_SETTEXT, (WPARAM)0, (LPARAM)szText);

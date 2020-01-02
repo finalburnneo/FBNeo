@@ -6,7 +6,7 @@
 
 #define ENABLE_PREVIEW
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	extern struct VidOut VidOutDDraw;
 	extern struct VidOut VidOutD3D;
 	extern struct VidOut VidOutDDrawFX;
@@ -26,7 +26,7 @@
 #endif
 
 static struct VidOut *pVidOut[] = {
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	&VidOutDDraw,
 	&VidOutD3D,
 	&VidOutDDrawFX,
@@ -52,8 +52,8 @@ INT64 nVidBlitterOpt[VID_LEN] = {0, };			// Options for the blitter module (mean
 
 static InterfaceInfo VidInfo = { NULL, NULL, NULL };
 
-#if defined (BUILD_WIN32)
-#if defined BUILD_X64_EXE
+#ifdef BUILD_WIN32
+#ifdef BUILD_X64_EXE
 // set SoftFX DDraw blitter as default for 64-bit builds (in case user doesn't have DX redistributable installed)
 UINT32 nVidSelect = 2;					// Which video output is selected
 #else
@@ -118,7 +118,7 @@ wchar_t VerScreen[32] = L"";
  HWND hVidWnd = NULL;							// Actual window used for video
 #endif
 
-#if defined (_XBOX)
+#ifdef _XBOX
   HWND hVidWnd = NULL;							// Actual window used for video
 #endif
 
@@ -302,7 +302,7 @@ INT32 VidExit()
 	if (bVidOkay) {
 		INT32 nRet = pVidOut[nVidActive]->Exit();
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 		hVidWnd = NULL;
 #endif
 
@@ -474,7 +474,7 @@ const TCHAR* VidGetModuleName()
 	if (pszName) {
 		return pszName;
 	}
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	return FBALoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true);
 #else
 	return "There was an error with the video";
@@ -494,7 +494,7 @@ InterfaceInfo* VidGetInfo()
 
 		VidInfo.pszModuleName = pVidOut[nVidActive]->szModuleName;
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 		GetClientScreenRect(hVidWnd, &rect);
 		if (nVidFullscreen == 0) {
 			rect.top += nMenuHeight;

@@ -40,10 +40,9 @@ static INT32 LocaliseDownloadInit()
 
 	DataReceived[NumberOfBytesRead] = '\0';
 
-	char *Tokens;
 	int i = 0;
 	int j = 0;
-	Tokens = strtok(DataReceived, ":^");
+	char* Tokens = strtok(DataReceived, ":^");
 	while (Tokens != NULL) {
 		if (i & 1) {
 			SendDlgItemMessage(hLocalDownDlg, IDC_CHOOSE_LIST, CB_ADDSTRING, 0, (LPARAM)ANSIToTCHAR(Tokens, NULL, 0));

@@ -1,5 +1,6 @@
 // Run module
 #include "burner.h"
+#include <timeapi.h>
 
 int bRunPause = 0;
 int bAltPause = 0;
@@ -265,8 +266,6 @@ static int RunGetNextSound(int bDraw)
 
 int RunIdle()
 {
-	int nTime, nCount;
-
 	if (bAudPlaying) {
 		// Run with sound
 		AudSoundCheck();
@@ -274,8 +273,8 @@ int RunIdle()
 	}
 
 	// Run without sound
-	nTime = timeGetTime() - nNormalLast;
-	nCount = (nTime * nAppVirtualFps - nNormalFrac) / 100000;
+	int nTime = timeGetTime() - nNormalLast;
+	int nCount = (nTime * nAppVirtualFps - nNormalFrac) / 100000;
 	if (nCount <= 0) {						// No need to do anything for a bit
 		//Sleep(2);
 		return 0;

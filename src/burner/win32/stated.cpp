@@ -19,7 +19,6 @@ static void MakeOfn(TCHAR* pszFilter)
 	ofn.lpstrInitialDir = _T(".\\savestates");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("fs");
-	return;
 }
 
 // The automatic save (nvram or nvram+state if restore state on load is enabled.)
@@ -68,7 +67,6 @@ int StatedLoad(int nSlot)
 {
 	TCHAR szFilter[1024];
 	int nRet;
-	int bOldPause;
 
 	// if rewinding during playback, and readonly is not set,
 	// then transition from decoding to encoding (recording)
@@ -98,7 +96,7 @@ int StatedLoad(int nSlot)
 		MakeOfn(szFilter);
 		ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_STATE_LOAD, true);
 
-		bOldPause = bRunPause;
+		int bOldPause = bRunPause;
 		bRunPause = 1;
 		nRet = GetOpenFileName(&ofn);
 		bRunPause = bOldPause;
@@ -146,7 +144,6 @@ int StatedSave(int nSlot)
 {
 	TCHAR szFilter[1024];
 	int nRet;
-	int bOldPause;
 
 	if (bDrvOkay == 0) {
 		return 1;
@@ -164,7 +161,7 @@ int StatedSave(int nSlot)
 		ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_STATE_SAVE, true);
 		ofn.Flags |= OFN_OVERWRITEPROMPT;
 
-		bOldPause = bRunPause;
+		int bOldPause = bRunPause;
 		bRunPause = 1;
 		nRet = GetSaveFileName(&ofn);
 		bRunPause = bOldPause;

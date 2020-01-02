@@ -1,9 +1,0 @@
-// Define macros for appliction title and description
-#ifdef FBN_DEBUG
- #define APP_TITLE "FinalBurn Neo [DEBUG]"
-#else
- #define APP_TITLE "FinalBurn Neo"
-#endif
-
-#define APP_DESCRIPTION "Emulator for Arcade games"
-

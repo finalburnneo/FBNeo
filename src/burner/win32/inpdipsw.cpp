@@ -28,13 +28,12 @@ void InpDIPSWResetDIPs()
 {
 	int i = 0;
 	BurnDIPInfo bdi;
-	struct GameInp* pgi;
 
 	InpDIPSWGetOffset();
 
 	while (BurnDrvGetDIPInfo(&bdi, i) == 0) {
 		if (bdi.nFlags == 0xFF) {
-			pgi = GameInp + bdi.nInput + nDIPOffset;
+			struct GameInp* pgi = GameInp + bdi.nInput + nDIPOffset;
 			pgi->Input.Constant.nConst = (pgi->Input.Constant.nConst & ~bdi.nMask) | (bdi.nSetting & bdi.nMask);
 		}
 		i++;
@@ -137,7 +136,6 @@ static int InpDIPSWListMake()
 static int InpDIPSWInit()
 {
 	BurnDIPInfo bdi;
-	struct GameInp *pgi;
 
 	InpDIPSWGetOffset();
 
@@ -147,7 +145,7 @@ static int InpDIPSWInit()
 
 	for (int i = 0, j = 0; BurnDrvGetDIPInfo(&bdi, i) == 0; i++) {
 		if (bdi.nInput >= 0  && bdi.nFlags == 0xFF) {
-			pgi = GameInp + bdi.nInput + nDIPOffset;
+			struct GameInp* pgi = GameInp + bdi.nInput + nDIPOffset;
 			nPrevDIPSettings[j] = pgi->Input.Constant.nConst;
 			j++;
 		}
@@ -172,10 +170,9 @@ static void InpDIPSWCancel()
 	if (!bOK) {
 		int i = 0, j = 0;
 		BurnDIPInfo bdi;
-		struct GameInp *pgi;
 		while (BurnDrvGetDIPInfo(&bdi, i) == 0) {
 			if (bdi.nInput >= 0 && bdi.nFlags == 0xFF) {
-				pgi = GameInp + bdi.nInput + nDIPOffset;
+				struct GameInp* pgi = GameInp + bdi.nInput + nDIPOffset;
 				pgi->Input.Constant.nConst = nPrevDIPSettings[j];
 				j++;
 			}
@@ -273,7 +270,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		// New DIPswitch value selected
 		if (Id == IDC_INPCX1_VALUE && Notify == CBN_SELCHANGE) {
 			BurnDIPInfo bdi = {0, 0, 0, 0, NULL};
-			struct GameInp *pgi;
 			int nSel = SendMessage(GetDlgItem(hInpDIPSWDlg, IDC_INPCX1_VALUE), CB_GETCURSEL, 0, 0);
 			int j = 0;
 			for (int i = 0; i <= nSel; i++) {
@@ -281,7 +277,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					BurnDrvGetDIPInfo(&bdi, nDIPGroup + 1 + j++);
 				} while (bdi.nFlags == 0);
 			}
-			pgi = GameInp + bdi.nInput + nDIPOffset;
+			struct GameInp* pgi = GameInp + bdi.nInput + nDIPOffset;
 			pgi->Input.Constant.nConst = (pgi->Input.Constant.nConst & ~bdi.nMask) | (bdi.nSetting & bdi.nMask);
 			if (bdi.nFlags & 0x40) {
 				while (BurnDrvGetDIPInfo(&bdi, nDIPGroup + 1 + j++) == 0) {

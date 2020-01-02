@@ -551,7 +551,6 @@ static void CreatepresetResItems()
 		menuItem.cch = _tcslen(szItemText);
 		SetMenuItemInfo(hMenu, MENU_RES_1_VERTICAL + i, 0, &menuItem);
 	}
-	return;
 }
 
 // Update the other gamma menuitem

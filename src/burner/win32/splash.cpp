@@ -14,14 +14,13 @@ static INT_PTR CALLBACK SplashProc(HWND hDlg, UINT Msg, WPARAM /*wParam*/, LPARA
 {
 	if (Msg == WM_INITDIALOG) {
 		RECT rect;
-		int x, y;
 
 		hSplashDlg = hDlg;
 
 		SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
 
-		x = 304 + GetSystemMetrics(SM_CXDLGFRAME) * 2 + 6;
-		y = 224 + GetSystemMetrics(SM_CYDLGFRAME) * 2 + 6;
+		int x = 304 + GetSystemMetrics(SM_CXDLGFRAME) * 2 + 6;
+		int y = 224 + GetSystemMetrics(SM_CYDLGFRAME) * 2 + 6;
 
 		SetForegroundWindow(hDlg);
 		SetWindowPos(hDlg, HWND_TOPMOST, (rect.right - rect.left) / 2 - x / 2, (rect.bottom - rect.top) / 2 - y / 2, x, y, 0);

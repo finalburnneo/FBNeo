@@ -8,13 +8,13 @@ static void myDrawText(HDC hDC, RECT* pRect, TCHAR* szText, int nSizeDelta, int 
 {
 	TCHAR szName[32];
 	RECT rect;
-	HFONT hFont, myFont;
 	TEXTMETRIC myMetric;
 	
 	GetTextFace(hDC, 32, szName);
 	GetTextMetrics(hDC, &myMetric);
-	myFont = CreateFont(myMetric.tmHeight + nSizeDelta, 0, 0, 0, FW_BLACK, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, 0, szName);
-	hFont = (HFONT)SelectObject(hDC, myFont);
+	HFONT myFont = CreateFont(myMetric.tmHeight + nSizeDelta, 0, 0, 0, FW_BLACK, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY,
+	                          0, szName);
+	HFONT hFont = (HFONT)SelectObject(hDC, myFont);
 	SetBkMode(hDC, TRANSPARENT);
 
 	// Shrink the rect to allow space for the outline
@@ -182,7 +182,7 @@ int AboutCreate()
 {
 	HMODULE hRiched = NULL;
 	
-#if defined (_UNICODE)
+#ifdef _UNICODE
 	hRiched = LoadLibrary(L"RICHED20.DLL");
 #else
 	hRiched = LoadLibrary("RICHED20.DLL");
@@ -281,10 +281,10 @@ int FirstUsageCreate()
 {
 	HMODULE hRiched = NULL;
 	
-#if defined (_UNICODE)
-	hRiched = LoadLibrary(L"RICHED20.DLL");
+#ifdef _UNICODE
+	hRiched = LoadLibraryW(L"RICHED20.DLL");
 #else
-	hRiched = LoadLibrary("RICHED20.DLL");
+	hRiched = LoadLibraryA("RICHED20.DLL");
 #endif
 	if (hRiched) {	
 		DialogBox(hAppInst, MAKEINTRESOURCE(IDD_FIRST), hScrnWnd, (DLGPROC)FirstProc);

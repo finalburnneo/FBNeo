@@ -164,7 +164,6 @@ static int MemCardGetSize()
 int	MemCardCreate()
 {
 	TCHAR szFilter[1024];
-	int nRet;
 
 	_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_CARD, true), _T(APP_TITLE));
 	memcpy(szFilter + _tcslen(szFilter), _T(" (*.fc)\0*.fc\0\0"), 14 * sizeof(TCHAR));
@@ -177,7 +176,7 @@ int	MemCardCreate()
 
 	int bOldPause = bRunPause;
 	bRunPause = 1;
-	nRet = GetSaveFileName(&ofn);
+	int nRet = GetSaveFileName(&ofn);
 	bRunPause = bOldPause;
 
 	if (nRet == 0) {
@@ -185,11 +184,9 @@ int	MemCardCreate()
 	}
 
 	{
-		unsigned char* pCard;
-
 		MemCardGetSize();
 
-		pCard = (unsigned char*)malloc(nMemoryCardSize);
+		unsigned char* pCard = (unsigned char*)malloc(nMemoryCardSize);
 		memset(pCard, 0, nMemoryCardSize);
 
 		bMemCardFC1Format = true;
@@ -214,7 +211,6 @@ int	MemCardSelect()
 {
 	TCHAR szFilter[1024];
 	TCHAR* pszTemp = szFilter;
-	int nRet;
 
 	pszTemp += _stprintf(pszTemp, FBALoadStringEx(hAppInst, IDS_DISK_ALL_CARD, true));
 	memcpy(pszTemp, _T(" (*.fc, MEMCARD.\?\?\?)\0*.fc;MEMCARD.\?\?\?\0"), 38 * sizeof(TCHAR));
@@ -231,7 +227,7 @@ int	MemCardSelect()
 
 	int bOldPause = bRunPause;
 	bRunPause = 1;
-	nRet = GetOpenFileName(&ofn);
+	int nRet = GetOpenFileName(&ofn);
 	bRunPause = bOldPause;
 
 	if (nRet == 0) {

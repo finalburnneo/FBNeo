@@ -16,7 +16,7 @@ INT16* nAudNextSound = NULL;		// The next sound seg we will add to the sample lo
 UINT32 nAudSelect = 0;		// Which audio plugin is selected
 static UINT32 nAudActive = 0;
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	extern struct AudOut AudOutDx;
 	extern struct AudOut AudOutXAudio2;
 #elif defined (BUILD_MACOS)
@@ -34,7 +34,7 @@ static UINT32 nAudActive = 0;
 
 static struct AudOut *pAudOut[]=
 {
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	&AudOutDx,
 	&AudOutXAudio2,
 #elif defined (BUILD_MACOS)

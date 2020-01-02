@@ -203,7 +203,6 @@ static void InpsUpdateControl(int nCode)
 int InpsUpdate()
 {
 	TCHAR szTemp[MAX_PATH] = _T("");
-	int nButtonState;
 	int nFind = -1;
 
 	if (hInpsDlg == NULL) {										// Don't do anything if the dialog isn't created
@@ -217,7 +216,7 @@ int InpsUpdate()
 		return 0;
 	}
 
-	nButtonState = SendDlgItemMessage(hInpsDlg, IDC_INPS_CLEARLOCK, BM_GETSTATE, 0, 0); // Lock Input = If checked: clear an input, and don't let a default value or default preset re-fill it in.
+	int nButtonState = SendDlgItemMessage(hInpsDlg, IDC_INPS_CLEARLOCK, BM_GETSTATE, 0, 0); // Lock Input = If checked: clear an input, and don't let a default value or default preset re-fill it in.
 	bClearLock = (nButtonState & BST_CHECKED);
 
 	nButtonState = SendDlgItemMessage(hInpsDlg, IDC_INPS_GRABMOUSE, BM_GETSTATE, 0, 0);

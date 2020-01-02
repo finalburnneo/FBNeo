@@ -49,7 +49,7 @@ int KailleraInitInput()
 	while ((bii.nType & BIT_GROUP_CONSTANT) == 0 && i < nGameInpCount){
 		i++;
 		BurnDrvGetInputInfo(&bii, i);
-	};
+	}
 	nCommonInputs = i - nCommonOffset;
 
 	nDIPOffset = i;
@@ -69,7 +69,7 @@ int KailleraInitInput()
 
 int KailleraGetInput()
 {
-	int i, j, k;
+	int i, j;
 
 	struct BurnInputInfo bii;
 	memset(&bii, 0, sizeof(bii));
@@ -114,7 +114,7 @@ int KailleraGetInput()
 	}
 
 	// k has the size of all inputs for one player
-	k = j + 1;
+	int k = j + 1;
 
 	// Send the control block to the Kaillera DLL & retrieve all controls
 	//if (kailleraModifyPlayValues(nControls, k) == -1) {

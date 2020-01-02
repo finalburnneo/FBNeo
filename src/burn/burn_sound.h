@@ -1,7 +1,7 @@
 // burn_sound.h - General sound support functions
 // based on code by Daniel Moreno (ComaC) < comac2k@teleline.es >
 
-#if defined BUILD_X86_ASM
+#ifdef BUILD_X86_ASM
 extern "C" {
 	int __cdecl ChannelMix_QS_A(int* Dest, int nLen,
 								char* Sample, int LoopEnd,

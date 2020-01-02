@@ -24,7 +24,6 @@
     <ClInclude Include="..\..\src\burner\gameinp.h" />
     <ClInclude Include="..\..\src\burner\ioapi.h" />
     <ClInclude Include="..\..\src\burner\neocdlist.h" />
-    <ClInclude Include="..\..\src\burner\title.h" />
     <ClInclude Include="..\..\src\burner\un7z.h" />
     <ClInclude Include="..\..\src\burner\unzip.h" />
     <ClInclude Include="..\..\src\burner\win32\burner_win32.h" />

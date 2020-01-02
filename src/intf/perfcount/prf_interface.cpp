@@ -6,7 +6,7 @@ UINT32 nProfileSelect = 0;
 
 static InterfaceInfo ProfileInfo = { NULL, NULL, NULL };
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	extern struct ProfileDo cntDoPerfCount;
 #elif defined (BUILD_SDL)
 	extern struct ProfileDo cntDoPerfCount;
@@ -16,7 +16,7 @@ static InterfaceInfo ProfileInfo = { NULL, NULL, NULL };
 
 static struct ProfileDo* pProfileDo[] =
 {
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 	&cntDoPerfCount,
 #elif defined (BUILD_SDL)
 	&cntDoPerfCount,

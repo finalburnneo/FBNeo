@@ -177,8 +177,6 @@ void RegisterExtensions(bool bCreateKeys)
 		MyRegDeleteKeys(1, myKeynames2, myKeys);
 		MyRegDeleteKeys(1, myKeynames1, myKeys);
 	}
-
-	return;
 }
 
 // ---------------------------------------------------------------------------

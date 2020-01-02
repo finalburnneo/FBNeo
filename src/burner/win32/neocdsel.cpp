@@ -543,7 +543,6 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 	{
 		TCHAR szBuffer[2048];
 		TCHAR szOriginal[2048];
-		TCHAR* s;
 		TCHAR* t;
 
 		_fgetts(szBuffer, sizeof(szBuffer) - 1, fp);
@@ -585,7 +584,7 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 		}
 		// track info
 		if ((t = LabelCheck(szBuffer, _T("TRACK"))) != 0) {
-			s = t;
+			TCHAR* s = t;
 
 			// track number
 			/*UINT8 track = */ _tcstol(s, &t, 10);
@@ -618,8 +617,6 @@ static PNGRESOLUTION GetPNGResolution(TCHAR* szFile)
 	int width = 0;
 	int height = 0;
 	PNGRESOLUTION nResolution = { 0, 0 };
-	png_structp png_ptr;
-	png_infop info_ptr;
 	char header[8];
 
 	FILE *fp = _tfopen(szFile, _T("rb"));
@@ -634,13 +631,13 @@ static PNGRESOLUTION GetPNGResolution(TCHAR* szFile)
 		return nResolution;
 	}
 
-	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
 	if (!png_ptr) {
 		return nResolution;
 	}
 
-	info_ptr = png_create_info_struct(png_ptr);
+	png_infop info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
 		return nResolution;
 	}

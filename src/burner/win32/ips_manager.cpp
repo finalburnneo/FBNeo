@@ -57,14 +57,13 @@ static TCHAR* GameIpsConfigName()
 int GetIpsNumPatches()
 {
 	WIN32_FIND_DATA wfd;
-	HANDLE hSearch;
 	TCHAR szFilePath[MAX_PATH];
 	int Count = 0;
 
 	_stprintf(szFilePath, _T("%s%s\\"), szAppIpsPath, BurnDrvGetText(DRV_NAME));
 	_tcscat(szFilePath, _T("*.dat"));
 
-	hSearch = FindFirstFile(szFilePath, &wfd);
+	HANDLE hSearch = FindFirstFile(szFilePath, &wfd);
 
 	if (hSearch != INVALID_HANDLE_VALUE) {
 		int Done = 0;
@@ -101,8 +100,6 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, int nLang)
 
 			while (fgets(s, sizeof(s), fp) != NULL)
 			{
-				char* p;
-
 				if (*s == '[')
 				{
 					if (desc)
@@ -118,7 +115,7 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, int nLang)
 						return NULL;
 				}
 
-				for (p = s; *p; p++)
+				for (char* p = s; *p; p++)
 				{
 					if (*p == '\r' || *p == '\n')
 					{
@@ -129,11 +126,10 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, int nLang)
 
 				if (desc)
 				{
-					char* p1;
 					int len = strlen(desc);
 
 					len += strlen(s) + 2;
-					p1 = (char*)malloc(len + 1);
+					char* p1 = (char*)malloc(len + 1);
 					sprintf(p1, "%s\r\n%s", desc, s);
 					if (desc) {
 						free(desc);
@@ -307,7 +303,7 @@ static void FillListBox()
 	nNumPatches = nPatchIndex;
 
 	// Expand all branches
-	int nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);;
+	int nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);
 	for (int i = 0; i < nNumNodes; i++) {
 		SendMessage(hIpsList, TVM_EXPAND, TVE_EXPAND, (LPARAM)hItemHandles[i]);
 	}
@@ -518,9 +514,8 @@ static void SavePatches()
 	if (fp) {
 		_ftprintf(fp, _T("// ") _T(APP_TITLE) _T(" v%s --- IPS Config File for %s (%s)\n\n"), szAppBurnVer, szDriverName, szFullName);
 		for (int i = 0; i < nActivePatches; i++) {
-			TCHAR *Tokens;
 			TCHAR szFileName[MAX_PATH];
-			Tokens = _tcstok(szIpsActivePatches[i], _T("\\"));
+			TCHAR* Tokens = _tcstok(szIpsActivePatches[i], _T("\\"));
 			while (Tokens != NULL) {
 				szFileName[0] = _T('\0');
 				_tcscpy(szFileName, Tokens);
@@ -585,8 +580,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			hPreview = PNGLoadBitmap(hIpsDlg, NULL, 304, 228, 2);
 			SendDlgItemMessage(hIpsDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPreview);
 
-			LONG_PTR Style;
-			Style = GetWindowLongPtr (GetDlgItem(hIpsDlg, IDC_TREE1), GWL_STYLE);
+			LONG_PTR Style = GetWindowLongPtr(GetDlgItem(hIpsDlg, IDC_TREE1), GWL_STYLE);
 			Style |= TVS_CHECKBOXES;
 			SetWindowLongPtr (GetDlgItem(hIpsDlg, IDC_TREE1), GWL_STYLE, Style);
 
@@ -717,7 +711,6 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 {
 	char buf[6];
 	FILE* f = NULL;
-	int Offset, Size;
 	UINT8* mem8 = NULL;
 
 	if (NULL == (f = fopen(ips_path, "rb")))
@@ -743,11 +736,11 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 			if (strcmp(buf, IPS_TAG_EOF) == 0)
 				break;
 
-			Offset = BYTE3_TO_UINT(buf);
+			int Offset = BYTE3_TO_UINT(buf);
 
 			// read patch length
 			fread(buf, 1, 2, f);
-			Size = BYTE2_TO_UINT(buf);
+			int Size = BYTE2_TO_UINT(buf);
 
 			bRLE = (Size == 0);
 			if (bRLE) {
@@ -812,12 +805,11 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
 	char* rom_name = NULL;
 	char* ips_name = NULL;
 	FILE* fp = NULL;
-	unsigned long nIpsSize;
 
-    if ((fp = fopen(patch_name, "rb")) != NULL) {
+	if ((fp = fopen(patch_name, "rb")) != NULL) {
 		// get ips size
 		fseek(fp, 0, SEEK_END);
-		nIpsSize = ftell(fp);
+		unsigned long nIpsSize = ftell(fp);
 		fseek(fp, 0, SEEK_SET);
 
         while (!feof(fp)) {

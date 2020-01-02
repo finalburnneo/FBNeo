@@ -141,8 +141,6 @@ static void NeoCDZRateChange()
 
 int DrvInit(int nDrvNum, bool bRestore)
 {
-	int nStatus;
-
 	DrvExit();						// Make sure exitted
 	MediaExit();
 
@@ -194,7 +192,7 @@ int DrvInit(int nDrvNum, bool bRestore)
 		nBurnCPUSpeedAdjust = 0x0100;
 	}
 
-	nStatus = DoLibInit();			// Init the Burn library's driver
+	int nStatus = DoLibInit();			// Init the Burn library's driver
 
 	if (nStatus) {
 		if (nStatus & 2) {

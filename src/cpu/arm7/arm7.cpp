@@ -212,7 +212,7 @@ int Arm7Scan(int nAction)
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Scan called without init\n"));
 #endif
 
-	struct BurnArea ba;
+	struct BurnArea ba{};
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		memset(&ba, 0, sizeof(ba));

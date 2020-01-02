@@ -591,7 +591,7 @@ static void HandleMemSingle( UINT32 insn )
 		arm_icount -= S_CYCLE + I_CYCLE + N_CYCLE;
 		if (insn & INSN_SDT_B)
 		{
-			SetRegister(rd,static_cast<UINT32>(READ8(rnv)));
+			SetRegister(rd,(UINT8)(READ8(rnv)));
 		}
 		else
 		{

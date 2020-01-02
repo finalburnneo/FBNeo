@@ -170,22 +170,22 @@ void TMS34010MapReset()
 
 void TMS34010MapMemory(UINT8 *mem, UINT32 start, UINT32 end, UINT8 type)
 {
-    const int max_pages = (PFN(end) - PFN(start)) + 1;
+    const int max_pages = PFN(end) - PFN(start) + 1;
 
     int page = PFN(start);
     for (int i = 0; i < max_pages; i++, page++) {
 
         if (type & MAP_READ)
-            g_mmap.map[page] = mem + (PAGE_SIZE_8 * i);
+            g_mmap.map[page] = mem + PAGE_SIZE_8 * i;
 
         if (type & MAP_WRITE)
-            g_mmap.map[page + PAGE_WADD] = mem + (PAGE_SIZE_8 * i);
+            g_mmap.map[page + PAGE_WADD] = mem + PAGE_SIZE_8 * i;
     }
 }
 
 void TMS34010MapHandler(uintptr_t num, UINT32 start, UINT32 end, UINT8 type)
 {
-    const int max_pages = (PFN(end) - PFN(start)) + 1;
+    const int max_pages = PFN(end) - PFN(start) + 1;
 
     int page = PFN(start);
     for (int i = 0; i < max_pages; i++, page++) {

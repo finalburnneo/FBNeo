@@ -124,7 +124,7 @@ void m6502_core_exit()
 
 static void m6502_common_init(UINT8 subtype, void (*const *insn)(void)/*, const char *type*/)
 {
-	memset(&m6502, 0, sizeof(m6502));
+	memset(&m6502, 0, sizeof m6502);
 //	m6502.irq_callback = irqcallback;
 	m6502.subtype = subtype;
 	//m6502.insn = insn;
@@ -166,7 +166,7 @@ void m6502_reset(void)
 	PCH = RDMEM(M6502_RST_VEC+1);
 
 	m6502.sp.d = 0x01ff;	/* stack pointer starts at page 1 offset FF */
-	m6502.p = F_T|F_I|F_Z|F_B|(P&F_D);	/* set T, I and Z flags */
+	m6502.p = F_T|F_I|F_Z|F_B| P&F_D;	/* set T, I and Z flags */
 	m6502.pending_irq = 0;	/* nonzero if an IRQ is pending */
 	m6502.after_cli = 0;	/* pending IRQ and last insn cleared I */
 	m6502.irq_state = 0;
@@ -502,7 +502,7 @@ unsigned char m6510_read_0000(unsigned short address)
 		case 0x0001:	/* Data Port */
 			if (m6502.port_read)
 				result = M6502ReadPort( m6502.ddr );
-			result = (m6502.ddr & m6502.port) | (~m6502.ddr & result);
+			result = m6502.ddr & m6502.port | ~m6502.ddr & result;
 			break;
 	}
 	return result;
@@ -556,7 +556,7 @@ M6502_INLINE void m65c02_take_irq(void)
 		PUSH(PCH);
 		PUSH(PCL);
 		PUSH(P & ~F_B);
-		P = (P & ~F_D) | F_I;		/* knock out D and set I flag */
+		P = P & ~F_D | F_I;		/* knock out D and set I flag */
 		PCL = RDMEM(EAD);
 		PCH = RDMEM(EAD+1);
 		//LOG(("M65c02#%d takes IRQ ($%04x)\n", cpu_getactivecpu(), PCD));
@@ -641,7 +641,7 @@ void m65c02_set_irq_line(int irqline, int state)
 			PUSH(PCH);
 			PUSH(PCL);
 			PUSH(P & ~F_B);
-			P = (P & ~F_D) | F_I;		/* knock out D and set I flag */
+			P = P & ~F_D | F_I;		/* knock out D and set I flag */
 			PCL = RDMEM(EAD);
 			PCH = RDMEM(EAD+1);
 		//	LOG(("M6502#%d takes NMI ($%04x)\n", cpu_getactivecpu(), PCD));
@@ -684,7 +684,7 @@ void deco16_reset (void)
     PCH = RDMEM(DECO16_RST_VEC);
 
 	m6502.sp.d = 0x01ff;	/* stack pointer starts at page 1 offset FF */
-	m6502.p = F_T|F_I|F_Z|F_B|(P&F_D);	/* set T, I and Z flags */
+	m6502.p = F_T|F_I|F_Z|F_B| P&F_D;	/* set T, I and Z flags */
 	m6502.pending_irq = 0;	/* nonzero if an IRQ is pending */
 	m6502.after_cli = 0;	/* pending IRQ and last insn cleared I */
 

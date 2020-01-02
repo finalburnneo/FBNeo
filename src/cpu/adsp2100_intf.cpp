@@ -179,16 +179,16 @@ int Adsp2100LoadBootROM(void *src, void *dst)
 
 int Adsp2100MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int nEnd, int nType)
 {
-    const int maxPages = (PFN(nEnd) - PFN(nStart)) + 1;
+    const int maxPages = PFN(nEnd) - PFN(nStart) + 1;
 
     int page = PFN(nStart);
     for (int i = 0; i < maxPages; i++, page++) {
 
         if (nType & MAP_READ)
-            pMemMap->PrgMap[page] = pMemory + (PAGE_SIZE * i);
+            pMemMap->PrgMap[page] = pMemory + PAGE_SIZE * i;
 
         if (nType & MAP_WRITE)
-            pMemMap->PrgMap[PAGE_WADD + page] = pMemory + (PAGE_SIZE * i);
+            pMemMap->PrgMap[PAGE_WADD + page] = pMemory + PAGE_SIZE * i;
     }
     return 0;
 }
@@ -196,7 +196,7 @@ int Adsp2100MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int 
 
 int Adsp2100MapHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEnd, int nType)
 {
-    const int maxPages = (PFN(nEnd) - PFN(nStart)) + 1;
+    const int maxPages = PFN(nEnd) - PFN(nStart) + 1;
 
     int page = PFN(nStart);
     for (int i = 0; i < maxPages; i++, page++) {
@@ -214,16 +214,16 @@ int Adsp2100MapHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEn
 
 int Adsp2100MapData(unsigned char* pMemory, unsigned int nStart, unsigned int nEnd, int nType)
 {
-    const int maxPages = (PFN(nEnd) - PFN(nStart)) + 1;
+    const int maxPages = PFN(nEnd) - PFN(nStart) + 1;
 
     int page = PFN(nStart);
     for (int i = 0; i < maxPages; i++, page++) {
 
         if (nType & MAP_READ)
-            pMemMap->DataMap[page] = pMemory + (PAGE_SIZE * i);
+            pMemMap->DataMap[page] = pMemory + PAGE_SIZE * i;
 
         if (nType & MAP_WRITE)
-            pMemMap->DataMap[PAGE_WADD + page] = pMemory + (PAGE_SIZE * i);
+            pMemMap->DataMap[PAGE_WADD + page] = pMemory + PAGE_SIZE * i;
     }
     return 0;
 }
@@ -231,7 +231,7 @@ int Adsp2100MapData(unsigned char* pMemory, unsigned int nStart, unsigned int nE
 
 int Adsp2100MapDataHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEnd, int nType)
 {
-    const int maxPages = (PFN(nEnd) - PFN(nStart)) + 1;
+    const int maxPages = PFN(nEnd) - PFN(nStart) + 1;
 
     int page = PFN(nStart);
     for (int i = 0; i < maxPages; i++, page++) {

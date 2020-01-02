@@ -114,14 +114,14 @@ void Z180MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags)
 		bprintf(PRINT_ERROR, _T("Z180MapMemory called when invalid parameters ptr, start: %x, end: %x, flags: %x\n"), start, end, flags);
 #endif
 
-	UINT32 s = (start >> PROG_PAGE_BITS);
+	UINT32 s = start >> PROG_PAGE_BITS;
 
-	for (UINT32 i = 0; i < ((end >> PROG_PAGE_BITS) - (start >> PROG_PAGE_BITS)) + 1; i++)
+	for (UINT32 i = 0; i < (end >> PROG_PAGE_BITS) - (start >> PROG_PAGE_BITS) + 1; i++)
 	{
-		if (flags & MAP_READ    ) Mem[nActiveCPU][READ    ][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
-		if (flags & MAP_WRITE   ) Mem[nActiveCPU][WRITE   ][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
-		if (flags & MAP_FETCHOP ) Mem[nActiveCPU][FETCHOP ][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
-		if (flags & MAP_FETCHARG) Mem[nActiveCPU][FETCHARG][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
+		if (flags & MAP_READ    ) Mem[nActiveCPU][READ    ][s + i] = ptr == NULL ? NULL : ptr + (i << PROG_PAGE_BITS);
+		if (flags & MAP_WRITE   ) Mem[nActiveCPU][WRITE   ][s + i] = ptr == NULL ? NULL : ptr + (i << PROG_PAGE_BITS);
+		if (flags & MAP_FETCHOP ) Mem[nActiveCPU][FETCHOP ][s + i] = ptr == NULL ? NULL : ptr + (i << PROG_PAGE_BITS);
+		if (flags & MAP_FETCHARG) Mem[nActiveCPU][FETCHARG][s + i] = ptr == NULL ? NULL : ptr + (i << PROG_PAGE_BITS);
 	}
 }
 

@@ -193,7 +193,7 @@ static void interrupt_check()
 {
 	/* if we have a callback, update it with the current state */
 	if (ctc->intr != NULL)
-		(*ctc->intr)((z80ctc_irq_state() & Z80_DAISY_INT) ? ASSERT_LINE : CLEAR_LINE);
+		(*ctc->intr)(z80ctc_irq_state() & Z80_DAISY_INT ? ASSERT_LINE : CLEAR_LINE);
 }
 
 
@@ -243,7 +243,7 @@ INT32 z80ctc_getperiod(int ch)
 	}
 
 	/* compute the period */
-	INT32 period = ((channel->mode & PRESCALER) == PRESCALER_16) ? ctc->period16 : ctc->period256;
+	INT32 period = (channel->mode & PRESCALER) == PRESCALER_16 ? ctc->period16 : ctc->period256;
 	//return attotime_mul(period, channel->tconst);
 	return period * channel->tconst;   // tih?-timmy?  (dink)
 }
@@ -285,7 +285,7 @@ void z80ctc_write(int offset, UINT8 data)
 			{
 				if (!channel->notimer)
 				{
-					INT32 period = ((mode & PRESCALER) == PRESCALER_16) ? ctc->period16 : ctc->period256;
+					INT32 period = (mode & PRESCALER) == PRESCALER_16 ? ctc->period16 : ctc->period256;
 					period *= channel->tconst;
 					//period = attotime_mul(period, channel->tconst);
 					timer_start(ch, period, timercallback, ch, 1);
@@ -356,18 +356,18 @@ UINT8 z80ctc_read(int offset)
 	ctc_channel *channel = &ctc->channel[ch];
 
 	/* if we're in counter mode, just return the count */
-	if ((channel->mode & MODE) == MODE_COUNTER || (channel->mode & WAITING_FOR_TRIG))
+	if ((channel->mode & MODE) == MODE_COUNTER || channel->mode & WAITING_FOR_TRIG)
 		return channel->down;
 
 	/* else compute the down counter value */
 	else
 	{
-		INT32 period = ((channel->mode & PRESCALER) == PRESCALER_16) ? ctc->period16 : ctc->period256;
+		INT32 period = (channel->mode & PRESCALER) == PRESCALER_16 ? ctc->period16 : ctc->period256;
 
 		//VPRINTF(("CTC clock %f\n",ATTOSECONDS_TO_HZ(period.attoseconds)));
 
         if (timer_isrunning(ch))
-            return ((int)timer_timeleft(ch) / period + 1) & 0xff;
+            return (int)timer_timeleft(ch) / period + 1 & 0xff;
         else
             return 0;
 #if 0
@@ -398,14 +398,14 @@ void z80ctc_trg_write(int ch, UINT8 data)
 		channel->extclk = data;
 
 		/* see if this is the active edge of the trigger */
-		if (((channel->mode & EDGE) == EDGE_RISING && data) || ((channel->mode & EDGE) == EDGE_FALLING && !data))
+		if ((channel->mode & EDGE) == EDGE_RISING && data || (channel->mode & EDGE) == EDGE_FALLING && !data)
 		{
 			/* if we're waiting for a trigger, start the timer */
-			if ((channel->mode & WAITING_FOR_TRIG) && (channel->mode & MODE) == MODE_TIMER)
+			if (channel->mode & WAITING_FOR_TRIG && (channel->mode & MODE) == MODE_TIMER)
 			{
 				if (!channel->notimer)
 				{
-					INT32 period = ((channel->mode & PRESCALER) == PRESCALER_16) ? ctc->period16 : ctc->period256;
+					INT32 period = (channel->mode & PRESCALER) == PRESCALER_16 ? ctc->period16 : ctc->period256;
 					//period = attotime_mul(period, channel->tconst);
 					period = period * channel->tconst;
 
@@ -530,7 +530,7 @@ void z80ctc_init(INT32 clock, INT32 notimer, void (*intr)(int), void (*zc0)(int,
 	for (int ch = 0; ch < 4; ch++)
 	{
 		ctc_channel *channel = &ctc->channel[ch];
-		channel->notimer = (notimer >> ch) & 1;
+		channel->notimer = notimer >> ch & 1;
 		//channel->timer = timer_alloc(timercallback, ptr);
 	}
 	ctc->intr = intr;

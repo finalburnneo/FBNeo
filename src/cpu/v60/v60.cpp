@@ -663,7 +663,7 @@ INLINE void v60SaveStack(void)
 	if (PSW & 0x10000000)
 		ISP = SP;
 	else
-		v60.reg[37 + ((PSW >> 24) & 3)] = SP;
+		v60.reg[37 + (PSW >> 24 & 3)] = SP;
 }
 
 INLINE void v60ReloadStack(void)
@@ -671,7 +671,7 @@ INLINE void v60ReloadStack(void)
 	if (PSW & 0x10000000)
 		SP = ISP;
 	else
-		SP = v60.reg[37 + ((PSW >> 24) & 3)];
+		SP = v60.reg[37 + (PSW >> 24 & 3)];
 }
 
 INLINE UINT32 v60ReadPSW(void)
@@ -691,7 +691,7 @@ INLINE void v60WritePSW(UINT32 newval)
 		updateStack = 1;
 
 	/* if we are not in interrupt mode and the level is changing, we also must update */
-	else if (!(PSW & 0x10000000) && ((newval ^ PSW) & 0x03000000))
+	else if (!(PSW & 0x10000000) && (newval ^ PSW) & 0x03000000)
 		updateStack = 1;
 
 	/* save the previous stack value */
@@ -725,8 +725,8 @@ INLINE UINT32 v60_update_psw_for_exception(int is_interrupt, int target_level)
 	newPSW &= ~(1 << 17);  // PSW.AE = 0
 	newPSW &= ~(1 << 29);  // PSW.EM = 0
 	if (is_interrupt)
-		newPSW |=  (1 << 28);// PSW.IS = 1
-	newPSW |=  (1 << 31);  // PSW.ASA = 1
+		newPSW |=  1 << 28;// PSW.IS = 1
+	newPSW |=  1 << 31;  // PSW.ASA = 1
 	v60WritePSW(newPSW);
 
 	return oldPSW;
@@ -844,7 +844,7 @@ INT32 v60Scan(INT32 nAction)
 	}
 
 	ba.Data = &v60.reg;
-	ba.nLen = sizeof(v60.reg);
+	ba.nLen = sizeof v60.reg;
 	ba.szName = "V60 Regs";
 	BurnAcb(&ba);
 
@@ -914,7 +914,7 @@ static void v60_try_irq(void)
 {
 	if(v60.irq_line == CLEAR_LINE)
 		return;
-	if((PSW & (1<<18)) != 0) {
+	if((PSW & 1<<18) != 0) {
 		int vector;
 		if(v60.irq_line != ASSERT_LINE)
 			v60.irq_line = CLEAR_LINE;

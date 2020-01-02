@@ -110,7 +110,7 @@ static INT32 m_icount = 0;
 
 static void exec_ld(UINT32 opcode) {
 	UINT16 id = opcode >> 6;  //immediate data
-	UINT8 dst = (opcode >> 0) & 0xf;  //destination
+	UINT8 dst = opcode >> 0 & 0xf;  //destination
 
 	regs.idb = id;
 
@@ -122,7 +122,7 @@ static void exec_ld(UINT32 opcode) {
 	case  4: regs.dp = id; break;
 	case  5: regs.rp = id; break;
 	case  6: regs.dr = id; regs.sr.rqm = 1; break;
-	case  7: regs.sr = (regs.sr & 0x907c) | (id & ~0x907c);
+	case  7: regs.sr = regs.sr & 0x907c | id & ~0x907c;
 				out_p0_cb(regs.sr&0x1);
 				out_p1_cb((regs.sr&0x2)>>1);
 				break;
@@ -138,14 +138,14 @@ static void exec_ld(UINT32 opcode) {
 }
 
 static void exec_op(UINT32 opcode) {
-	UINT8 pselect = (opcode >> 20)&0x3;  //P select
-	UINT8 alu     = (opcode >> 16)&0xf;  //ALU operation mode
-	UINT8 asl     = (opcode >> 15)&0x1;  //accumulator select
-	UINT8 dpl     = (opcode >> 13)&0x3;  //DP low modify
-	UINT8 dphm    = (opcode >>  9)&0xf;  //DP high XOR modify
-	UINT8 rpdcr   = (opcode >>  8)&0x1;  //RP decrement
-	UINT8 src     = (opcode >>  4)&0xf;  //move source
-	UINT8 dst     = (opcode >>  0)&0xf;  //move destination
+	UINT8 pselect = opcode >> 20&0x3;  //P select
+	UINT8 alu     = opcode >> 16&0xf;  //ALU operation mode
+	UINT8 asl     = opcode >> 15&0x1;  //accumulator select
+	UINT8 dpl     = opcode >> 13&0x3;  //DP low modify
+	UINT8 dphm    = opcode >>  9&0xf;  //DP high XOR modify
+	UINT8 rpdcr   = opcode >>  8&0x1;  //RP decrement
+	UINT8 src     = opcode >>  4&0xf;  //move source
+	UINT8 dst     = opcode >>  0&0xf;  //move destination
 
 	switch(src) {
 	case  0: regs.idb = regs.trb; break;
@@ -201,15 +201,15 @@ static void exec_op(UINT32 opcode) {
 		case  8: r = q - 1; p = 1; break;             //DEC
 		case  9: r = q + 1; p = 1; break;             //INC
 		case 10: r = ~q; break;                       //CMP
-		case 11: r = (q >> 1) | (q & 0x8000); break;  //SHR1 (ASR)
-		case 12: r = (q << 1) | (c ? 1 : 0); break;             //SHL1 (ROL)
-		case 13: r = (q << 2) | 3; break;             //SHL2
-		case 14: r = (q << 4) | 15; break;            //SHL4
-		case 15: r = (q << 8) | (q >> 8); break;      //XCHG
+		case 11: r = q >> 1 | q & 0x8000; break;  //SHR1 (ASR)
+		case 12: r = q << 1 | (c ? 1 : 0); break;             //SHL1 (ROL)
+		case 13: r = q << 2 | 3; break;             //SHL2
+		case 14: r = q << 4 | 15; break;            //SHL4
+		case 15: r = q << 8 | q >> 8; break;      //XCHG
 	}
 
-	flag.s0 = (r & 0x8000);
-	flag.z = (r == 0);
+	flag.s0 = r & 0x8000;
+	flag.z = r == 0;
 	flag.ov0pp = flag.ov0p;
 	flag.ov0p = flag.ov0;
 
@@ -223,11 +223,11 @@ static void exec_op(UINT32 opcode) {
 		if(alu & 1) {
 			//addition
 			flag.ov0 = (q ^ r) & ~(q ^ p) & 0x8000;
-			flag.c = (r < q);
+			flag.c = r < q;
 		} else {
 			//subtraction
 			flag.ov0 = (q ^ r) &  (q ^ p) & 0x8000;
-			flag.c = (r > q);
+			flag.c = r > q;
 		}
 		break;
 		}
@@ -243,7 +243,7 @@ static void exec_op(UINT32 opcode) {
 		}
 	}
 	// flag.ov1 is only set if the number of overflows of the past 3 opcodes (of type 4,5,6,7,8,9) is odd
-	flag.ov1 = (flag.ov0 + flag.ov0p + flag.ov0pp) & 1;
+	flag.ov1 = flag.ov0 + flag.ov0p + flag.ov0pp & 1;
 	// flag.s1 is based on ov1: s1 = ov1 ^ s0;
 	flag.s1 = flag.ov1 ^ flag.s0;
 
@@ -256,9 +256,9 @@ static void exec_op(UINT32 opcode) {
 	exec_ld((regs.idb << 6) + dst);
 
 	switch(dpl) {
-	case 1: regs.dp = (regs.dp & 0xf0) + ((regs.dp + 1) & 0x0f); break;  //DPINC
-	case 2: regs.dp = (regs.dp & 0xf0) + ((regs.dp - 1) & 0x0f); break;  //DPDEC
-	case 3: regs.dp = (regs.dp & 0xf0); break;  //DPCLR
+	case 1: regs.dp = (regs.dp & 0xf0) + (regs.dp + 1 & 0x0f); break;  //DPINC
+	case 2: regs.dp = (regs.dp & 0xf0) + (regs.dp - 1 & 0x0f); break;  //DPDEC
+	case 3: regs.dp = regs.dp & 0xf0; break;  //DPCLR
 	}
 
 	regs.dp ^= dphm << 4;
@@ -273,12 +273,12 @@ static void exec_rt(UINT32 opcode) {
 }
 
 static void exec_jp(UINT32 opcode) {
-	UINT16 brch = (opcode >> 13) & 0x1ff;  //branch
-	UINT16 na  =  (opcode >>  2) & 0x7ff;  //next address
-	UINT16 bank = (opcode >>  0) & 0x3;  //bank address
+	UINT16 brch = opcode >> 13 & 0x1ff;  //branch
+	UINT16 na  =  opcode >>  2 & 0x7ff;  //next address
+	UINT16 bank = opcode >>  0 & 0x3;  //bank address
 
-	UINT16 jps = (regs.pc & 0x2000) | (bank << 11) | (na << 0);
-	UINT16 jpl = (bank << 11) | (na << 0);
+	UINT16 jps = regs.pc & 0x2000 | bank << 11 | na << 0;
+	UINT16 jpl = bank << 11 | na << 0;
 
 	switch(brch) {
 		case 0x000: regs.pc = regs.so; return;  //JMPSO
@@ -341,19 +341,19 @@ void upd96050Init(INT32 type, UINT8 *opcode, UINT8 *data, UINT8 *ram, void (*p0_
 	dataRAM = (UINT16*)ram;
 
 	// resolve callbacks
-	out_p0_cb = (p0_cb == NULL) ? dummy_cb :  p0_cb;
-	out_p1_cb = (p1_cb == NULL) ? dummy_cb :  p1_cb;
+	out_p0_cb = p0_cb == NULL ? dummy_cb :  p0_cb;
+	out_p1_cb = p1_cb == NULL ? dummy_cb :  p1_cb;
 
 	if (type == 96050)
 	{
-		program_address_mask = ((1 << 14) - 1) >> 2;
-		data_address_mask = ((1 << 12) - 1) >> 1;
+		program_address_mask = (1 << 14) - 1 >> 2;
+		data_address_mask = (1 << 12) - 1 >> 1;
 	}
 
 	if (type == 7725)
 	{
-		program_address_mask = ((1 << 11) - 1) >> 2;
-		data_address_mask = ((1 << 11) - 1) >> 1;
+		program_address_mask = (1 << 11) - 1 >> 2;
+		data_address_mask = (1 << 11) - 1 >> 1;
 	}
 }
 
@@ -495,19 +495,19 @@ void snesdsp_write(bool mode, UINT8 data)
 		if (regs.sr.drs == 0)
 		{
 			regs.sr.drs = 1;
-			regs.dr = (regs.dr & 0xff00) | (data << 0);
+			regs.dr = regs.dr & 0xff00 | data << 0;
 		}
 		else
 		{
 			regs.sr.rqm = 0;
 			regs.sr.drs = 0;
-			regs.dr = (data << 8) | (regs.dr & 0x00ff);
+			regs.dr = data << 8 | regs.dr & 0x00ff;
 		}
 	}
 	else
 	{
 		//8-bit
 		regs.sr.rqm = 0;
-		regs.dr = (regs.dr & 0xff00) | (data << 0);
+		regs.dr = regs.dr & 0xff00 | data << 0;
 	}
 }

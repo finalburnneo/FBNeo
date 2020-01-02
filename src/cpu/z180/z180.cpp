@@ -800,7 +800,7 @@ void z180_scan(INT32 nAction)
 	if (nAction & ACB_DRIVER_DATA) {
 		struct BurnArea ba;
 
-		memset(&ba, 0, sizeof(ba));
+		memset(&ba, 0, sizeof ba);
 		ba.Data	  = &Z180;
 		ba.nLen	  = STRUCT_SIZE_HELPER(Z180_Regs, after_EI);
 		ba.szName = "Z180 Registers";
@@ -816,8 +816,8 @@ Z180_INLINE void BURNODD(int cycles, int opcodes, int cyclesum)
 {
 	if( cycles > 0 )
 	{
-		_R += (cycles / cyclesum) * opcodes;
-		z180_icount -= (cycles / cyclesum) * cyclesum;
+		_R += cycles / cyclesum * opcodes;
+		z180_icount -= cycles / cyclesum * cyclesum;
 	}
 }
 
@@ -951,7 +951,7 @@ static UINT8 z180_readcontrol(UINT32 port)
 		break;
 
 	case Z180_TCR:
-		data = (IO_TCR & Z180_TCR_RMASK) | (Z180.tif[0] << 6) | (Z180.tif[1] << 7);
+		data = IO_TCR & Z180_TCR_RMASK | Z180.tif[0] << 6 | Z180.tif[1] << 7;
 
 		if(Z180.read_tcr_tmdr[0])
 		{
@@ -1197,1030 +1197,1031 @@ static UINT8 z180_readcontrol(UINT32 port)
 	case Z180_IOCR:
 		data = IO_IOCR & Z180_IOCR_RMASK;
 		break;
-	}
-
-	return data;
-}
-
-static void z180_writecontrol(UINT32 port, UINT8 data)
-{
-	/* normal external write port */
-	io_write_byte_8le(port, data);
-
-	/* remap internal I/O registers */
-	if((port & (IO_IOCR & 0xc0)) == (IO_IOCR & 0xc0))
-		port = port - (IO_IOCR & 0xc0);
-
-	/* store the data in the internal register */
-	switch (port + Z180_CNTLA0)
-	{
-	case Z180_CNTLA0:
-		IO_CNTLA0 = (IO_CNTLA0 & ~Z180_CNTLA0_WMASK) | (data & Z180_CNTLA0_WMASK);
-		break;
-
-	case Z180_CNTLA1:
-		IO_CNTLA1 = (IO_CNTLA1 & ~Z180_CNTLA1_WMASK) | (data & Z180_CNTLA1_WMASK);
-		break;
-
-	case Z180_CNTLB0:
-		IO_CNTLB0 = (IO_CNTLB0 & ~Z180_CNTLB0_WMASK) | (data & Z180_CNTLB0_WMASK);
-		break;
-
-	case Z180_CNTLB1:
-		IO_CNTLB1 = (IO_CNTLB1 & ~Z180_CNTLB1_WMASK) | (data & Z180_CNTLB1_WMASK);
-		break;
-
-	case Z180_STAT0:
-		IO_STAT0 = (IO_STAT0 & ~Z180_STAT0_WMASK) | (data & Z180_STAT0_WMASK);
-		break;
-
-	case Z180_STAT1:
-		IO_STAT1 = (IO_STAT1 & ~Z180_STAT1_WMASK) | (data & Z180_STAT1_WMASK);
-		break;
-
-	case Z180_TDR0:
-		IO_TDR0 = (IO_TDR0 & ~Z180_TDR0_WMASK) | (data & Z180_TDR0_WMASK);
-		break;
-
-	case Z180_TDR1:
-		IO_TDR1 = (IO_TDR1 & ~Z180_TDR1_WMASK) | (data & Z180_TDR1_WMASK);
-		break;
-
-	case Z180_RDR0:
-		IO_RDR0 = (IO_RDR0 & ~Z180_RDR0_WMASK) | (data & Z180_RDR0_WMASK);
-		break;
-
-	case Z180_RDR1:
-		IO_RDR1 = (IO_RDR1 & ~Z180_RDR1_WMASK) | (data & Z180_RDR1_WMASK);
-		break;
-
-	case Z180_CNTR:
-		IO_CNTR = (IO_CNTR & ~Z180_CNTR_WMASK) | (data & Z180_CNTR_WMASK);
-		break;
-
-	case Z180_TRDR:
-		IO_TRDR = (IO_TRDR & ~Z180_TRDR_WMASK) | (data & Z180_TRDR_WMASK);
-		break;
-
-	case Z180_TMDR0L:
-		IO_TMDR0L = data & Z180_TMDR0L_WMASK;
-		Z180.tmdr_value[0] = (Z180.tmdr_value[0] & 0xff00) | IO_TMDR0L;
-		break;
-
-	case Z180_TMDR0H:
-		IO_TMDR0H = data & Z180_TMDR0H_WMASK;
-		Z180.tmdr_value[0] = (Z180.tmdr_value[0] & 0x00ff) | (IO_TMDR0H << 8);
-		break;
-
-	case Z180_RLDR0L:
-		IO_RLDR0L = (IO_RLDR0L & ~Z180_RLDR0L_WMASK) | (data & Z180_RLDR0L_WMASK);
-		break;
-
-	case Z180_RLDR0H:
-		IO_RLDR0H = (IO_RLDR0H & ~Z180_RLDR0H_WMASK) | (data & Z180_RLDR0H_WMASK);
-		break;
-
-	case Z180_TCR:
-		IO_TCR = (IO_TCR & ~Z180_TCR_WMASK) | (data & Z180_TCR_WMASK);
-		break;
-
-	case Z180_IO11:
-		IO_IO11 = (IO_IO11 & ~Z180_IO11_WMASK) | (data & Z180_IO11_WMASK);
-		break;
-
-	case Z180_ASEXT0:
-		IO_ASEXT0 = (IO_ASEXT0 & ~Z180_ASEXT0_WMASK) | (data & Z180_ASEXT0_WMASK);
-		break;
-
-	case Z180_ASEXT1:
-		IO_ASEXT1 = (IO_ASEXT1 & ~Z180_ASEXT1_WMASK) | (data & Z180_ASEXT1_WMASK);
-		break;
-
-	case Z180_TMDR1L:
-		IO_TMDR1L = data & Z180_TMDR1L_WMASK;
-		Z180.tmdr_value[1] = (Z180.tmdr_value[1] & 0xff00) | IO_TMDR1L;
-		break;
-
-	case Z180_TMDR1H:
-		IO_TMDR1H = data & Z180_TMDR1H_WMASK;
-		Z180.tmdr_value[1] = (Z180.tmdr_value[1] & 0x00ff) | IO_TMDR1H;
-		break;
-
-	case Z180_RLDR1L:
-		IO_RLDR1L = (IO_RLDR1L & ~Z180_RLDR1L_WMASK) | (data & Z180_RLDR1L_WMASK);
-		break;
-
-	case Z180_RLDR1H:
-		IO_RLDR1H = (IO_RLDR1H & ~Z180_RLDR1H_WMASK) | (data & Z180_RLDR1H_WMASK);
-		break;
-
-	case Z180_FRC:
-		IO_FRC = (IO_FRC & ~Z180_FRC_WMASK) | (data & Z180_FRC_WMASK);
-		break;
-
-	case Z180_IO19:
-		IO_IO19 = (IO_IO19 & ~Z180_IO19_WMASK) | (data & Z180_IO19_WMASK);
-		break;
-
-	case Z180_ASTC0L:
-		IO_ASTC0L = (IO_ASTC0L & ~Z180_ASTC0L_WMASK) | (data & Z180_ASTC0L_WMASK);
-		break;
-
-	case Z180_ASTC0H:
-		IO_ASTC0H = (IO_ASTC0H & ~Z180_ASTC0H_WMASK) | (data & Z180_ASTC0H_WMASK);
-		break;
-
-	case Z180_ASTC1L:
-		IO_ASTC1L = (IO_ASTC1L & ~Z180_ASTC1L_WMASK) | (data & Z180_ASTC1L_WMASK);
-		break;
-
-	case Z180_ASTC1H:
-		IO_ASTC1H = (IO_ASTC1H & ~Z180_ASTC1H_WMASK) | (data & Z180_ASTC1H_WMASK);
-		break;
-
-	case Z180_CMR:
-		IO_CMR = (IO_CMR & ~Z180_CMR_WMASK) | (data & Z180_CMR_WMASK);
-		break;
-
-	case Z180_CCR:
-		IO_CCR = (IO_CCR & ~Z180_CCR_WMASK) | (data & Z180_CCR_WMASK);
-		break;
-
-	case Z180_SAR0L:
-		IO_SAR0L = (IO_SAR0L & ~Z180_SAR0L_WMASK) | (data & Z180_SAR0L_WMASK);
-		break;
-
-	case Z180_SAR0H:
-		IO_SAR0H = (IO_SAR0H & ~Z180_SAR0H_WMASK) | (data & Z180_SAR0H_WMASK);
-		break;
-
-	case Z180_SAR0B:
-		IO_SAR0B = (IO_SAR0B & ~Z180_SAR0B_WMASK) | (data & Z180_SAR0B_WMASK);
-		break;
-
-	case Z180_DAR0L:
-		IO_DAR0L = (IO_DAR0L & ~Z180_DAR0L_WMASK) | (data & Z180_DAR0L_WMASK);
-		break;
-
-	case Z180_DAR0H:
-		IO_DAR0H = (IO_DAR0H & ~Z180_DAR0H_WMASK) | (data & Z180_DAR0H_WMASK);
-		break;
-
-	case Z180_DAR0B:
-		IO_DAR0B = (IO_DAR0B & ~Z180_DAR0B_WMASK) | (data & Z180_DAR0B_WMASK);
-		break;
-
-	case Z180_BCR0L:
-		IO_BCR0L = (IO_BCR0L & ~Z180_BCR0L_WMASK) | (data & Z180_BCR0L_WMASK);
-		break;
-
-	case Z180_BCR0H:
-		IO_BCR0H = (IO_BCR0H & ~Z180_BCR0H_WMASK) | (data & Z180_BCR0H_WMASK);
-		break;
-
-	case Z180_MAR1L:
-		IO_MAR1L = (IO_MAR1L & ~Z180_MAR1L_WMASK) | (data & Z180_MAR1L_WMASK);
-		break;
-
-	case Z180_MAR1H:
-		IO_MAR1H = (IO_MAR1H & ~Z180_MAR1H_WMASK) | (data & Z180_MAR1H_WMASK);
-		break;
-
-	case Z180_MAR1B:
-		IO_MAR1B = (IO_MAR1B & ~Z180_MAR1B_WMASK) | (data & Z180_MAR1B_WMASK);
-		break;
-
-	case Z180_IAR1L:
-		IO_IAR1L = (IO_IAR1L & ~Z180_IAR1L_WMASK) | (data & Z180_IAR1L_WMASK);
-		break;
-
-	case Z180_IAR1H:
-		IO_IAR1H = (IO_IAR1H & ~Z180_IAR1H_WMASK) | (data & Z180_IAR1H_WMASK);
-		break;
-
-	case Z180_IAR1B:
-		IO_IAR1B = (IO_IAR1B & ~Z180_IAR1B_WMASK) | (data & Z180_IAR1B_WMASK);
-		break;
-
-	case Z180_BCR1L:
-		IO_BCR1L = (IO_BCR1L & ~Z180_BCR1L_WMASK) | (data & Z180_BCR1L_WMASK);
-		break;
-
-	case Z180_BCR1H:
-		IO_BCR1H = (IO_BCR1H & ~Z180_BCR1H_WMASK) | (data & Z180_BCR1H_WMASK);
-		break;
-
-	case Z180_DSTAT:
-		IO_DSTAT = (IO_DSTAT & ~Z180_DSTAT_WMASK) | (data & Z180_DSTAT_WMASK);
-		if ((data & (Z180_DSTAT_DE1 | Z180_DSTAT_DWE1)) == Z180_DSTAT_DE1)
-			IO_DSTAT |= Z180_DSTAT_DME;  /* DMA enable */
-		if ((data & (Z180_DSTAT_DE0 | Z180_DSTAT_DWE0)) == Z180_DSTAT_DE0)
-			IO_DSTAT |= Z180_DSTAT_DME;  /* DMA enable */
-		break;
-
-	case Z180_DMODE:
-		IO_DMODE = (IO_DMODE & ~Z180_DMODE_WMASK) | (data & Z180_DMODE_WMASK);
-		break;
-
-	case Z180_DCNTL:
-		IO_DCNTL = (IO_DCNTL & ~Z180_DCNTL_WMASK) | (data & Z180_DCNTL_WMASK);
-		break;
-
-	case Z180_IL:
-		IO_IL = (IO_IL & ~Z180_IL_WMASK) | (data & Z180_IL_WMASK);
-		break;
-
-	case Z180_ITC:
-		IO_ITC = (IO_ITC & ~Z180_ITC_WMASK) | (data & Z180_ITC_WMASK);
-		break;
-
-	case Z180_IO35:
-		IO_IO35 = (IO_IO35 & ~Z180_IO35_WMASK) | (data & Z180_IO35_WMASK);
-		break;
-
-	case Z180_RCR:
-		IO_RCR = (IO_RCR & ~Z180_RCR_WMASK) | (data & Z180_RCR_WMASK);
-		break;
-
-	case Z180_IO37:
-		IO_IO37 = (IO_IO37 & ~Z180_IO37_WMASK) | (data & Z180_IO37_WMASK);
-		break;
-
-	case Z180_CBR:
-		IO_CBR = (IO_CBR & ~Z180_CBR_WMASK) | (data & Z180_CBR_WMASK);
-		z180_mmu();
-		break;
-
-	case Z180_BBR:
-		IO_BBR = (IO_BBR & ~Z180_BBR_WMASK) | (data & Z180_BBR_WMASK);
-		z180_mmu();
-		break;
-
-	case Z180_CBAR:
-		IO_CBAR = (IO_CBAR & ~Z180_CBAR_WMASK) | (data & Z180_CBAR_WMASK);
-		z180_mmu();
-		break;
-
-	case Z180_IO3B:
-		IO_IO3B = (IO_IO3B & ~Z180_IO3B_WMASK) | (data & Z180_IO3B_WMASK);
-		break;
-
-	case Z180_IO3C:
-		IO_IO3C = (IO_IO3C & ~Z180_IO3C_WMASK) | (data & Z180_IO3C_WMASK);
-		break;
-
-	case Z180_IO3D:
-		IO_IO3D = (IO_IO3D & ~Z180_IO3D_WMASK) | (data & Z180_IO3D_WMASK);
-		break;
-
-	case Z180_OMCR:
-		IO_OMCR = (IO_OMCR & ~Z180_OMCR_WMASK) | (data & Z180_OMCR_WMASK);
-		break;
-
-	case Z180_IOCR:
-		IO_IOCR = (IO_IOCR & ~Z180_IOCR_WMASK) | (data & Z180_IOCR_WMASK);
-		break;
-	}
-}
-
-static void z180_dma0(void)
-{
-	UINT32 sar0 = 65536 * IO_SAR0B + 256 * IO_SAR0H + IO_SAR0L;
-	UINT32 dar0 = 65536 * IO_DAR0B + 256 * IO_DAR0H + IO_DAR0L;
-	int bcr0 = 256 * IO_BCR0H + IO_BCR0L;
-	int count = (IO_DMODE & Z180_DMODE_MMOD) ? bcr0 : 1;
-
-	if (bcr0 == 0)
-	{
-		IO_DSTAT &= ~Z180_DSTAT_DE0;
-		return;
-	}
-
-	while (count-- > 0)
-	{
-		/* last transfer happening now? */
-		if (bcr0 == 1)
-		{
-			Z180.iol |= Z180_TEND0;
 		}
-		switch( IO_DMODE & (Z180_DMODE_SM | Z180_DMODE_DM) )
+
+		return data;
+		}
+
+		static void z180_writecontrol(UINT32 port, UINT8 data)
 		{
-		case 0x00:	/* memory SAR0+1 to memory DAR0+1 */
-			program_write_byte_8le(dar0++, program_read_byte_8le(sar0++));
-			break;
-		case 0x04:	/* memory SAR0-1 to memory DAR0+1 */
-			program_write_byte_8le(dar0++, program_read_byte_8le(sar0--));
-			break;
-		case 0x08:	/* memory SAR0 fixed to memory DAR0+1 */
-			program_write_byte_8le(dar0++, program_read_byte_8le(sar0));
-			break;
-		case 0x0c:	/* I/O SAR0 fixed to memory DAR0+1 */
-			if (Z180.iol & Z180_DREQ0)
+			/* normal external write port */
+			io_write_byte_8le(port, data);
+
+			/* remap internal I/O registers */
+			if((port & (IO_IOCR & 0xc0)) == (IO_IOCR & 0xc0))
+				port = port - (IO_IOCR & 0xc0);
+
+			/* store the data in the internal register */
+			switch (port + Z180_CNTLA0)
 			{
-				program_write_byte_8le(dar0++, IN(sar0));
-				/* edge sensitive DREQ0 ? */
-				if (IO_DCNTL & Z180_DCNTL_DIM0)
-				{
-					Z180.iol &= ~Z180_DREQ0;
-					count = 0;
+			case Z180_CNTLA0:
+				IO_CNTLA0 = IO_CNTLA0 & ~Z180_CNTLA0_WMASK | data & Z180_CNTLA0_WMASK;
+				break;
+
+			case Z180_CNTLA1:
+				IO_CNTLA1 = IO_CNTLA1 & ~Z180_CNTLA1_WMASK | data & Z180_CNTLA1_WMASK;
+				break;
+
+			case Z180_CNTLB0:
+				IO_CNTLB0 = IO_CNTLB0 & ~Z180_CNTLB0_WMASK | data & Z180_CNTLB0_WMASK;
+				break;
+
+			case Z180_CNTLB1:
+				IO_CNTLB1 = IO_CNTLB1 & ~Z180_CNTLB1_WMASK | data & Z180_CNTLB1_WMASK;
+				break;
+
+			case Z180_STAT0:
+				IO_STAT0 = IO_STAT0 & ~Z180_STAT0_WMASK | data & Z180_STAT0_WMASK;
+				break;
+
+			case Z180_STAT1:
+				IO_STAT1 = IO_STAT1 & ~Z180_STAT1_WMASK | data & Z180_STAT1_WMASK;
+				break;
+
+			case Z180_TDR0:
+				IO_TDR0 = IO_TDR0 & ~Z180_TDR0_WMASK | data & Z180_TDR0_WMASK;
+				break;
+
+			case Z180_TDR1:
+				IO_TDR1 = IO_TDR1 & ~Z180_TDR1_WMASK | data & Z180_TDR1_WMASK;
+				break;
+
+			case Z180_RDR0:
+				IO_RDR0 = IO_RDR0 & ~Z180_RDR0_WMASK | data & Z180_RDR0_WMASK;
+				break;
+
+			case Z180_RDR1:
+				IO_RDR1 = IO_RDR1 & ~Z180_RDR1_WMASK | data & Z180_RDR1_WMASK;
+				break;
+
+			case Z180_CNTR:
+				IO_CNTR = IO_CNTR & ~Z180_CNTR_WMASK | data & Z180_CNTR_WMASK;
+				break;
+
+			case Z180_TRDR:
+				IO_TRDR = IO_TRDR & ~Z180_TRDR_WMASK | data & Z180_TRDR_WMASK;
+				break;
+
+			case Z180_TMDR0L:
+				IO_TMDR0L = data & Z180_TMDR0L_WMASK;
+				Z180.tmdr_value[0] = Z180.tmdr_value[0] & 0xff00 | IO_TMDR0L;
+				break;
+
+			case Z180_TMDR0H:
+				IO_TMDR0H = data & Z180_TMDR0H_WMASK;
+				Z180.tmdr_value[0] = Z180.tmdr_value[0] & 0x00ff | IO_TMDR0H << 8;
+				break;
+
+			case Z180_RLDR0L:
+				IO_RLDR0L = IO_RLDR0L & ~Z180_RLDR0L_WMASK | data & Z180_RLDR0L_WMASK;
+				break;
+
+			case Z180_RLDR0H:
+				IO_RLDR0H = IO_RLDR0H & ~Z180_RLDR0H_WMASK | data & Z180_RLDR0H_WMASK;
+				break;
+
+			case Z180_TCR:
+				IO_TCR = IO_TCR & ~Z180_TCR_WMASK | data & Z180_TCR_WMASK;
+				break;
+
+			case Z180_IO11:
+				IO_IO11 = IO_IO11 & ~Z180_IO11_WMASK | data & Z180_IO11_WMASK;
+				break;
+
+			case Z180_ASEXT0:
+				IO_ASEXT0 = IO_ASEXT0 & ~Z180_ASEXT0_WMASK | data & Z180_ASEXT0_WMASK;
+				break;
+
+			case Z180_ASEXT1:
+				IO_ASEXT1 = IO_ASEXT1 & ~Z180_ASEXT1_WMASK | data & Z180_ASEXT1_WMASK;
+				break;
+
+			case Z180_TMDR1L:
+				IO_TMDR1L = data & Z180_TMDR1L_WMASK;
+				Z180.tmdr_value[1] = Z180.tmdr_value[1] & 0xff00 | IO_TMDR1L;
+				break;
+
+			case Z180_TMDR1H:
+				IO_TMDR1H = data & Z180_TMDR1H_WMASK;
+				Z180.tmdr_value[1] = Z180.tmdr_value[1] & 0x00ff | IO_TMDR1H;
+				break;
+
+			case Z180_RLDR1L:
+				IO_RLDR1L = IO_RLDR1L & ~Z180_RLDR1L_WMASK | data & Z180_RLDR1L_WMASK;
+				break;
+
+			case Z180_RLDR1H:
+				IO_RLDR1H = IO_RLDR1H & ~Z180_RLDR1H_WMASK | data & Z180_RLDR1H_WMASK;
+				break;
+
+			case Z180_FRC:
+				IO_FRC = IO_FRC & ~Z180_FRC_WMASK | data & Z180_FRC_WMASK;
+				break;
+
+			case Z180_IO19:
+				IO_IO19 = IO_IO19 & ~Z180_IO19_WMASK | data & Z180_IO19_WMASK;
+				break;
+
+			case Z180_ASTC0L:
+				IO_ASTC0L = IO_ASTC0L & ~Z180_ASTC0L_WMASK | data & Z180_ASTC0L_WMASK;
+				break;
+
+			case Z180_ASTC0H:
+				IO_ASTC0H = IO_ASTC0H & ~Z180_ASTC0H_WMASK | data & Z180_ASTC0H_WMASK;
+				break;
+
+			case Z180_ASTC1L:
+				IO_ASTC1L = IO_ASTC1L & ~Z180_ASTC1L_WMASK | data & Z180_ASTC1L_WMASK;
+				break;
+
+			case Z180_ASTC1H:
+				IO_ASTC1H = IO_ASTC1H & ~Z180_ASTC1H_WMASK | data & Z180_ASTC1H_WMASK;
+				break;
+
+			case Z180_CMR:
+				IO_CMR = IO_CMR & ~Z180_CMR_WMASK | data & Z180_CMR_WMASK;
+				break;
+
+			case Z180_CCR:
+				IO_CCR = IO_CCR & ~Z180_CCR_WMASK | data & Z180_CCR_WMASK;
+				break;
+
+			case Z180_SAR0L:
+				IO_SAR0L = IO_SAR0L & ~Z180_SAR0L_WMASK | data & Z180_SAR0L_WMASK;
+				break;
+
+			case Z180_SAR0H:
+				IO_SAR0H = IO_SAR0H & ~Z180_SAR0H_WMASK | data & Z180_SAR0H_WMASK;
+				break;
+
+			case Z180_SAR0B:
+				IO_SAR0B = IO_SAR0B & ~Z180_SAR0B_WMASK | data & Z180_SAR0B_WMASK;
+				break;
+
+			case Z180_DAR0L:
+				IO_DAR0L = IO_DAR0L & ~Z180_DAR0L_WMASK | data & Z180_DAR0L_WMASK;
+				break;
+
+			case Z180_DAR0H:
+				IO_DAR0H = IO_DAR0H & ~Z180_DAR0H_WMASK | data & Z180_DAR0H_WMASK;
+				break;
+
+			case Z180_DAR0B:
+				IO_DAR0B = IO_DAR0B & ~Z180_DAR0B_WMASK | data & Z180_DAR0B_WMASK;
+				break;
+
+			case Z180_BCR0L:
+				IO_BCR0L = IO_BCR0L & ~Z180_BCR0L_WMASK | data & Z180_BCR0L_WMASK;
+				break;
+
+			case Z180_BCR0H:
+				IO_BCR0H = IO_BCR0H & ~Z180_BCR0H_WMASK | data & Z180_BCR0H_WMASK;
+				break;
+
+			case Z180_MAR1L:
+				IO_MAR1L = IO_MAR1L & ~Z180_MAR1L_WMASK | data & Z180_MAR1L_WMASK;
+				break;
+
+			case Z180_MAR1H:
+				IO_MAR1H = IO_MAR1H & ~Z180_MAR1H_WMASK | data & Z180_MAR1H_WMASK;
+				break;
+
+			case Z180_MAR1B:
+				IO_MAR1B = IO_MAR1B & ~Z180_MAR1B_WMASK | data & Z180_MAR1B_WMASK;
+				break;
+
+			case Z180_IAR1L:
+				IO_IAR1L = IO_IAR1L & ~Z180_IAR1L_WMASK | data & Z180_IAR1L_WMASK;
+				break;
+
+			case Z180_IAR1H:
+				IO_IAR1H = IO_IAR1H & ~Z180_IAR1H_WMASK | data & Z180_IAR1H_WMASK;
+				break;
+
+			case Z180_IAR1B:
+				IO_IAR1B = IO_IAR1B & ~Z180_IAR1B_WMASK | data & Z180_IAR1B_WMASK;
+				break;
+
+			case Z180_BCR1L:
+				IO_BCR1L = IO_BCR1L & ~Z180_BCR1L_WMASK | data & Z180_BCR1L_WMASK;
+				break;
+
+			case Z180_BCR1H:
+				IO_BCR1H = IO_BCR1H & ~Z180_BCR1H_WMASK | data & Z180_BCR1H_WMASK;
+				break;
+
+			case Z180_DSTAT:
+				IO_DSTAT = IO_DSTAT & ~Z180_DSTAT_WMASK | data & Z180_DSTAT_WMASK;
+				if ((data & (Z180_DSTAT_DE1 | Z180_DSTAT_DWE1)) == Z180_DSTAT_DE1)
+					IO_DSTAT |= Z180_DSTAT_DME;  /* DMA enable */
+				if ((data & (Z180_DSTAT_DE0 | Z180_DSTAT_DWE0)) == Z180_DSTAT_DE0)
+					IO_DSTAT |= Z180_DSTAT_DME;  /* DMA enable */
+				break;
+
+			case Z180_DMODE:
+				IO_DMODE = IO_DMODE & ~Z180_DMODE_WMASK | data & Z180_DMODE_WMASK;
+				break;
+
+			case Z180_DCNTL:
+				IO_DCNTL = IO_DCNTL & ~Z180_DCNTL_WMASK | data & Z180_DCNTL_WMASK;
+				break;
+
+			case Z180_IL:
+				IO_IL = IO_IL & ~Z180_IL_WMASK | data & Z180_IL_WMASK;
+				break;
+
+			case Z180_ITC:
+				IO_ITC = IO_ITC & ~Z180_ITC_WMASK | data & Z180_ITC_WMASK;
+				break;
+
+			case Z180_IO35:
+				IO_IO35 = IO_IO35 & ~Z180_IO35_WMASK | data & Z180_IO35_WMASK;
+				break;
+
+			case Z180_RCR:
+				IO_RCR = IO_RCR & ~Z180_RCR_WMASK | data & Z180_RCR_WMASK;
+				break;
+
+			case Z180_IO37:
+				IO_IO37 = IO_IO37 & ~Z180_IO37_WMASK | data & Z180_IO37_WMASK;
+				break;
+
+			case Z180_CBR:
+				IO_CBR = IO_CBR & ~Z180_CBR_WMASK | data & Z180_CBR_WMASK;
+				z180_mmu();
+				break;
+
+			case Z180_BBR:
+				IO_BBR = IO_BBR & ~Z180_BBR_WMASK | data & Z180_BBR_WMASK;
+				z180_mmu();
+				break;
+
+			case Z180_CBAR:
+				IO_CBAR = IO_CBAR & ~Z180_CBAR_WMASK | data & Z180_CBAR_WMASK;
+				z180_mmu();
+				break;
+
+			case Z180_IO3B:
+				IO_IO3B = IO_IO3B & ~Z180_IO3B_WMASK | data & Z180_IO3B_WMASK;
+				break;
+
+			case Z180_IO3C:
+				IO_IO3C = IO_IO3C & ~Z180_IO3C_WMASK | data & Z180_IO3C_WMASK;
+				break;
+
+			case Z180_IO3D:
+				IO_IO3D = IO_IO3D & ~Z180_IO3D_WMASK | data & Z180_IO3D_WMASK;
+				break;
+
+			case Z180_OMCR:
+				IO_OMCR = IO_OMCR & ~Z180_OMCR_WMASK | data & Z180_OMCR_WMASK;
+				break;
+
+			case Z180_IOCR:
+				IO_IOCR = IO_IOCR & ~Z180_IOCR_WMASK | data & Z180_IOCR_WMASK;
+				break;
 				}
-			}
-			break;
-		case 0x10:	/* memory SAR0+1 to memory DAR0-1 */
-			program_write_byte_8le(dar0--, program_read_byte_8le(sar0++));
-			break;
-		case 0x14:	/* memory SAR0-1 to memory DAR0-1 */
-			program_write_byte_8le(dar0--, program_read_byte_8le(sar0--));
-			break;
-		case 0x18:	/* memory SAR0 fixed to memory DAR0-1 */
-			program_write_byte_8le(dar0--, program_read_byte_8le(sar0));
-			break;
-		case 0x1c:	/* I/O SAR0 fixed to memory DAR0-1 */
-			if (Z180.iol & Z180_DREQ0)
-            {
-				program_write_byte_8le(dar0--, IN(sar0));
-				/* edge sensitive DREQ0 ? */
-				if (IO_DCNTL & Z180_DCNTL_DIM0)
-				{
-					Z180.iol &= ~Z180_DREQ0;
-					count = 0;
 				}
-			}
-			break;
-		case 0x20:	/* memory SAR0+1 to memory DAR0 fixed */
-			program_write_byte_8le(dar0, program_read_byte_8le(sar0++));
-			break;
-		case 0x24:	/* memory SAR0-1 to memory DAR0 fixed */
-			program_write_byte_8le(dar0, program_read_byte_8le(sar0--));
-			break;
-		case 0x28:	/* reserved */
-			break;
-		case 0x2c:	/* reserved */
-			break;
-		case 0x30:	/* memory SAR0+1 to I/O DAR0 fixed */
-			if (Z180.iol & Z180_DREQ0)
-            {
-				OUT(dar0, program_read_byte_8le(sar0++));
-				/* edge sensitive DREQ0 ? */
-				if (IO_DCNTL & Z180_DCNTL_DIM0)
+
+				static void z180_dma0(void)
 				{
-					Z180.iol &= ~Z180_DREQ0;
-					count = 0;
-				}
-			}
-			break;
-		case 0x34:	/* memory SAR0-1 to I/O DAR0 fixed */
-			if (Z180.iol & Z180_DREQ0)
-            {
-				OUT(dar0, program_read_byte_8le(sar0--));
-				/* edge sensitive DREQ0 ? */
-				if (IO_DCNTL & Z180_DCNTL_DIM0)
-				{
-					Z180.iol &= ~Z180_DREQ0;
-					count = 0;
-				}
-			}
-			break;
-		case 0x38:	/* reserved */
-			break;
-		case 0x3c:	/* reserved */
-			break;
-		}
-		bcr0--;
-		count--;
-		if ((z180_icount -= 6) < 0)
-			break;
-	}
+					UINT32 sar0 = 65536 * IO_SAR0B + 256 * IO_SAR0H + IO_SAR0L;
+					UINT32 dar0 = 65536 * IO_DAR0B + 256 * IO_DAR0H + IO_DAR0L;
+					int bcr0 = 256 * IO_BCR0H + IO_BCR0L;
+					int count = IO_DMODE & Z180_DMODE_MMOD ? bcr0 : 1;
 
-	IO_SAR0L = sar0;
-	IO_SAR0H = sar0 >> 8;
-	IO_SAR0B = sar0 >> 16;
-	IO_DAR0L = dar0;
-	IO_DAR0H = dar0 >> 8;
-	IO_DAR0B = dar0 >> 16;
-	IO_BCR0L = bcr0;
-	IO_BCR0H = bcr0 >> 8;
+					if (bcr0 == 0)
+					{
+						IO_DSTAT &= ~Z180_DSTAT_DE0;
+						return;
+					}
 
-	/* DMA terminal count? */
-	if (bcr0 == 0)
-	{
-		Z180.iol &= ~Z180_TEND0;
-		IO_DSTAT &= ~Z180_DSTAT_DE0;
-		/* terminal count interrupt enabled? */
-		if (IO_DSTAT & Z180_DSTAT_DIE0 && _IFF1)
-			take_interrupt(Z180_INT_DMA0);
-	}
-}
+					while (count-- > 0)
+					{
+						/* last transfer happening now? */
+						if (bcr0 == 1)
+						{
+							Z180.iol |= Z180_TEND0;
+						}
+						switch( IO_DMODE & (Z180_DMODE_SM | Z180_DMODE_DM) )
+						{
+						case 0x00:	/* memory SAR0+1 to memory DAR0+1 */
+							program_write_byte_8le(dar0++, program_read_byte_8le(sar0++));
+							break;
+						case 0x04:	/* memory SAR0-1 to memory DAR0+1 */
+							program_write_byte_8le(dar0++, program_read_byte_8le(sar0--));
+							break;
+						case 0x08:	/* memory SAR0 fixed to memory DAR0+1 */
+							program_write_byte_8le(dar0++, program_read_byte_8le(sar0));
+							break;
+						case 0x0c:	/* I/O SAR0 fixed to memory DAR0+1 */
+							if (Z180.iol & Z180_DREQ0)
+							{
+								program_write_byte_8le(dar0++, IN(sar0));
+								/* edge sensitive DREQ0 ? */
+								if (IO_DCNTL & Z180_DCNTL_DIM0)
+								{
+									Z180.iol &= ~Z180_DREQ0;
+									count = 0;
+								}
+							}
+							break;
+						case 0x10:	/* memory SAR0+1 to memory DAR0-1 */
+							program_write_byte_8le(dar0--, program_read_byte_8le(sar0++));
+							break;
+						case 0x14:	/* memory SAR0-1 to memory DAR0-1 */
+							program_write_byte_8le(dar0--, program_read_byte_8le(sar0--));
+							break;
+						case 0x18:	/* memory SAR0 fixed to memory DAR0-1 */
+							program_write_byte_8le(dar0--, program_read_byte_8le(sar0));
+							break;
+						case 0x1c:	/* I/O SAR0 fixed to memory DAR0-1 */
+							if (Z180.iol & Z180_DREQ0)
+							{
+								program_write_byte_8le(dar0--, IN(sar0));
+								/* edge sensitive DREQ0 ? */
+								if (IO_DCNTL & Z180_DCNTL_DIM0)
+								{
+									Z180.iol &= ~Z180_DREQ0;
+									count = 0;
+								}
+							}
+							break;
+						case 0x20:	/* memory SAR0+1 to memory DAR0 fixed */
+							program_write_byte_8le(dar0, program_read_byte_8le(sar0++));
+							break;
+						case 0x24:	/* memory SAR0-1 to memory DAR0 fixed */
+							program_write_byte_8le(dar0, program_read_byte_8le(sar0--));
+							break;
+						case 0x28:	/* reserved */
+							break;
+						case 0x2c:	/* reserved */
+							break;
+						case 0x30:	/* memory SAR0+1 to I/O DAR0 fixed */
+							if (Z180.iol & Z180_DREQ0)
+							{
+								OUT(dar0, program_read_byte_8le(sar0++));
+								/* edge sensitive DREQ0 ? */
+								if (IO_DCNTL & Z180_DCNTL_DIM0)
+								{
+									Z180.iol &= ~Z180_DREQ0;
+									count = 0;
+								}
+							}
+							break;
+						case 0x34:	/* memory SAR0-1 to I/O DAR0 fixed */
+							if (Z180.iol & Z180_DREQ0)
+							{
+								OUT(dar0, program_read_byte_8le(sar0--));
+								/* edge sensitive DREQ0 ? */
+								if (IO_DCNTL & Z180_DCNTL_DIM0)
+								{
+									Z180.iol &= ~Z180_DREQ0;
+									count = 0;
+								}
+							}
+							break;
+						case 0x38:	/* reserved */
+							break;
+						case 0x3c:	/* reserved */
+							break;
+						}
+						bcr0--;
+						count--;
+						if ((z180_icount -= 6) < 0)
+							break;
+					}
 
-static void z180_dma1(void)
-{
-	UINT32 mar1 = 65536 * IO_MAR1B + 256 * IO_MAR1H + IO_MAR1L;
-	UINT32 iar1 = 256 * IO_IAR1H + IO_IAR1L;
-	int bcr1 = 256 * IO_BCR1H + IO_BCR1L;
+					IO_SAR0L = sar0;
+					IO_SAR0H = sar0 >> 8;
+					IO_SAR0B = sar0 >> 16;
+					IO_DAR0L = dar0;
+					IO_DAR0H = dar0 >> 8;
+					IO_DAR0B = dar0 >> 16;
+					IO_BCR0L = bcr0;
+					IO_BCR0H = bcr0 >> 8;
 
-	if ((Z180.iol & Z180_DREQ1) == 0)
-		return;
+					/* DMA terminal count? */
+					if (bcr0 == 0)
+					{
+						Z180.iol &= ~Z180_TEND0;
+						IO_DSTAT &= ~Z180_DSTAT_DE0;
+						/* terminal count interrupt enabled? */
+						if (IO_DSTAT & Z180_DSTAT_DIE0 && _IFF1)
+							take_interrupt(Z180_INT_DMA0);
+					}
+					}
 
-	/* counter is zero? */
-	if (bcr1 == 0)
-	{
-		IO_DSTAT &= ~Z180_DSTAT_DE1;
-		return;
-	}
+					static void z180_dma1(void)
+					{
+						UINT32 mar1 = 65536 * IO_MAR1B + 256 * IO_MAR1H + IO_MAR1L;
+						UINT32 iar1 = 256 * IO_IAR1H + IO_IAR1L;
+						int bcr1 = 256 * IO_BCR1H + IO_BCR1L;
 
-	/* last transfer happening now? */
-	if (bcr1 == 1)
-	{
-		Z180.iol |= Z180_TEND1;
-	}
+						if ((Z180.iol & Z180_DREQ1) == 0)
+							return;
 
-	switch (IO_DCNTL & (Z180_DCNTL_DIM1 | Z180_DCNTL_DIM0))
-	{
-	case 0x00:	/* memory MAR1+1 to I/O IAR1 fixed */
-		io_write_byte_8le(iar1, program_read_byte_8le(mar1++));
-		break;
-	case 0x01:	/* memory MAR1-1 to I/O IAR1 fixed */
-		io_write_byte_8le(iar1, program_read_byte_8le(mar1--));
-		break;
-	case 0x02:	/* I/O IAR1 fixed to memory MAR1+1 */
-		program_write_byte_8le(mar1++, io_read_byte_8le(iar1));
-		break;
-	case 0x03:	/* I/O IAR1 fixed to memory MAR1-1 */
-		program_write_byte_8le(mar1--, io_read_byte_8le(iar1));
-		break;
-	}
+						/* counter is zero? */
+						if (bcr1 == 0)
+						{
+							IO_DSTAT &= ~Z180_DSTAT_DE1;
+							return;
+						}
 
-	/* edge sensitive DREQ1 ? */
-	if (IO_DCNTL & Z180_DCNTL_DIM1)
-		Z180.iol &= ~Z180_DREQ1;
+						/* last transfer happening now? */
+						if (bcr1 == 1)
+						{
+							Z180.iol |= Z180_TEND1;
+						}
 
-	IO_MAR1L = mar1;
-	IO_MAR1H = mar1 >> 8;
-	IO_MAR1B = mar1 >> 16;
-	IO_BCR1L = bcr1;
-	IO_BCR1H = bcr1 >> 8;
+						switch (IO_DCNTL & (Z180_DCNTL_DIM1 | Z180_DCNTL_DIM0))
+						{
+						case 0x00:	/* memory MAR1+1 to I/O IAR1 fixed */
+							io_write_byte_8le(iar1, program_read_byte_8le(mar1++));
+							break;
+						case 0x01:	/* memory MAR1-1 to I/O IAR1 fixed */
+							io_write_byte_8le(iar1, program_read_byte_8le(mar1--));
+							break;
+						case 0x02:	/* I/O IAR1 fixed to memory MAR1+1 */
+							program_write_byte_8le(mar1++, io_read_byte_8le(iar1));
+							break;
+						case 0x03:	/* I/O IAR1 fixed to memory MAR1-1 */
+							program_write_byte_8le(mar1--, io_read_byte_8le(iar1));
+							break;
+						}
 
-	/* DMA terminal count? */
-	if (bcr1 == 0)
-	{
-		Z180.iol &= ~Z180_TEND1;
-		IO_DSTAT &= ~Z180_DSTAT_DE1;
-		if (IO_DSTAT & Z180_DSTAT_DIE1 && _IFF1)
-			take_interrupt(Z180_INT_DMA1);
-	}
+						/* edge sensitive DREQ1 ? */
+						if (IO_DCNTL & Z180_DCNTL_DIM1)
+							Z180.iol &= ~Z180_DREQ1;
 
-	/* six cycles per transfer (minimum) */
-	z180_icount -= 6;
-}
+						IO_MAR1L = mar1;
+						IO_MAR1H = mar1 >> 8;
+						IO_MAR1B = mar1 >> 16;
+						IO_BCR1L = bcr1;
+						IO_BCR1H = bcr1 >> 8;
 
-void z180_write_iolines(UINT32 data)
-{
-	UINT32 changes = Z180.iol ^ data;
+						/* DMA terminal count? */
+						if (bcr1 == 0)
+						{
+							Z180.iol &= ~Z180_TEND1;
+							IO_DSTAT &= ~Z180_DSTAT_DE1;
+							if (IO_DSTAT & Z180_DSTAT_DIE1 && _IFF1)
+								take_interrupt(Z180_INT_DMA1);
+						}
 
-    /* I/O asynchronous clock 0 (active high) or DREQ0 (mux) */
-	if (changes & Z180_CKA0)
-	{
-		Z180.iol = (Z180.iol & ~Z180_CKA0) | (data & Z180_CKA0);
-    }
+						/* six cycles per transfer (minimum) */
+						z180_icount -= 6;
+					}
 
-    /* I/O asynchronous clock 1 (active high) or TEND1 (mux) */
-	if (changes & Z180_CKA1)
-	{
-		Z180.iol = (Z180.iol & ~Z180_CKA1) | (data & Z180_CKA1);
-    }
+					void z180_write_iolines(UINT32 data)
+					{
+						UINT32 changes = Z180.iol ^ data;
 
-    /* I/O serial clock (active high) */
-	if (changes & Z180_CKS)
-	{
-		Z180.iol = (Z180.iol & ~Z180_CKS) | (data & Z180_CKS);
-    }
+						/* I/O asynchronous clock 0 (active high) or DREQ0 (mux) */
+						if (changes & Z180_CKA0)
+						{
+							Z180.iol = Z180.iol & ~Z180_CKA0 | data & Z180_CKA0;
+						}
 
-    /* I   clear to send 0 (active low) */
-	if (changes & Z180_CTS0)
-	{
-		Z180.iol = (Z180.iol & ~Z180_CTS0) | (data & Z180_CTS0);
-    }
+						/* I/O asynchronous clock 1 (active high) or TEND1 (mux) */
+						if (changes & Z180_CKA1)
+						{
+							Z180.iol = Z180.iol & ~Z180_CKA1 | data & Z180_CKA1;
+						}
 
-    /* I   clear to send 1 (active low) or RXS (mux) */
-	if (changes & Z180_CTS1)
-	{
-		Z180.iol = (Z180.iol & ~Z180_CTS1) | (data & Z180_CTS1);
-    }
+						/* I/O serial clock (active high) */
+						if (changes & Z180_CKS)
+						{
+							Z180.iol = Z180.iol & ~Z180_CKS | data & Z180_CKS;
+						}
 
-    /* I   data carrier detect (active low) */
-	if (changes & Z180_DCD0)
-	{
-		Z180.iol = (Z180.iol & ~Z180_DCD0) | (data & Z180_DCD0);
-    }
+						/* I   clear to send 0 (active low) */
+						if (changes & Z180_CTS0)
+						{
+							Z180.iol = Z180.iol & ~Z180_CTS0 | data & Z180_CTS0;
+						}
 
-    /* I   data request DMA ch 0 (active low) or CKA0 (mux) */
-	if (changes & Z180_DREQ0)
-	{
-		Z180.iol = (Z180.iol & ~Z180_DREQ0) | (data & Z180_DREQ0);
-    }
+						/* I   clear to send 1 (active low) or RXS (mux) */
+						if (changes & Z180_CTS1)
+						{
+							Z180.iol = Z180.iol & ~Z180_CTS1 | data & Z180_CTS1;
+						}
 
-    /* I   data request DMA ch 1 (active low) */
-	if (changes & Z180_DREQ1)
-	{
-		Z180.iol = (Z180.iol & ~Z180_DREQ1) | (data & Z180_DREQ1);
-    }
+						/* I   data carrier detect (active low) */
+						if (changes & Z180_DCD0)
+						{
+							Z180.iol = Z180.iol & ~Z180_DCD0 | data & Z180_DCD0;
+						}
 
-    /* I   asynchronous receive data 0 (active high) */
-	if (changes & Z180_RXA0)
-	{
-        Z180.iol = (Z180.iol & ~Z180_RXA0) | (data & Z180_RXA0);
-    }
+						/* I   data request DMA ch 0 (active low) or CKA0 (mux) */
+						if (changes & Z180_DREQ0)
+						{
+							Z180.iol = Z180.iol & ~Z180_DREQ0 | data & Z180_DREQ0;
+						}
 
-    /* I   asynchronous receive data 1 (active high) */
-	if (changes & Z180_RXA1)
-	{
-		Z180.iol = (Z180.iol & ~Z180_RXA1) | (data & Z180_RXA1);
-    }
+						/* I   data request DMA ch 1 (active low) */
+						if (changes & Z180_DREQ1)
+						{
+							Z180.iol = Z180.iol & ~Z180_DREQ1 | data & Z180_DREQ1;
+						}
 
-    /* I   clocked serial receive data (active high) or CTS1 (mux) */
-	if (changes & Z180_RXS)
-	{
-        Z180.iol = (Z180.iol & ~Z180_RXS) | (data & Z180_RXS);
-    }
+						/* I   asynchronous receive data 0 (active high) */
+						if (changes & Z180_RXA0)
+						{
+							Z180.iol = Z180.iol & ~Z180_RXA0 | data & Z180_RXA0;
+						}
 
-    /*   O request to send (active low) */
-	if (changes & Z180_RTS0)
-	{
+						/* I   asynchronous receive data 1 (active high) */
+						if (changes & Z180_RXA1)
+						{
+							Z180.iol = Z180.iol & ~Z180_RXA1 | data & Z180_RXA1;
+						}
 
-    }
+						/* I   clocked serial receive data (active high) or CTS1 (mux) */
+						if (changes & Z180_RXS)
+						{
+							Z180.iol = Z180.iol & ~Z180_RXS | data & Z180_RXS;
+						}
 
-    /*   O transfer end 0 (active low) or CKA1 (mux) */
-	if (changes & Z180_TEND0)
-	{
+						/*   O request to send (active low) */
+						if (changes & Z180_RTS0)
+						{
 
-    }
+						}
 
-    /*   O transfer end 1 (active low) */
-	if (changes & Z180_TEND1)
-	{
+						/*   O transfer end 0 (active low) or CKA1 (mux) */
+						if (changes & Z180_TEND0)
+						{
 
-    }
+						}
 
-    /*   O transfer out (PRT channel, active low) or A18 (mux) */
-	if (changes & Z180_A18_TOUT)
-	{
+						/*   O transfer end 1 (active low) */
+						if (changes & Z180_TEND1)
+						{
 
-    }
+						}
 
-    /*   O asynchronous transmit data 0 (active high) */
-	if (changes & Z180_TXA0)
-	{
+						/*   O transfer out (PRT channel, active low) or A18 (mux) */
+						if (changes & Z180_A18_TOUT)
+						{
 
-    }
+						}
 
-    /*   O asynchronous transmit data 1 (active high) */
-	if (changes & Z180_TXA1)
-	{
+						/*   O asynchronous transmit data 0 (active high) */
+						if (changes & Z180_TXA0)
+						{
 
-    }
+						}
 
-    /*   O clocked serial transmit data (active high) */
-	if (changes & Z180_TXS)
-	{
+						/*   O asynchronous transmit data 1 (active high) */
+						if (changes & Z180_TXA1)
+						{
 
-    }
-}
+						}
 
-void z180_init(int index, int clock, /*const void *config,*/ int (*irqcallback)(int))
-{
-	Z180.daisy = NULL;
-	/*if (config)
+						/*   O clocked serial transmit data (active high) */
+						if (changes & Z180_TXS)
+						{
+
+						}
+					}
+
+					void z180_init(int index, int clock, /*const void *config,*/ int (*irqcallback)(int))
+					{
+						Z180.daisy = NULL;
+						/*if (config)
 		Z180.daisy = z80daisy_init(Machine, Machine->config->cpu[cpu_getactivecpu()].tag, config);*/
-	Z180.irq_callback = irqcallback;
+						Z180.irq_callback = irqcallback;
 	
 #if BIG_FLAGS_ARRAY
-	/* allocate big flag arrays once */
-	SZHVC_add = (UINT8 *)BurnMalloc(2*256*256*sizeof(UINT8));
-	SZHVC_sub = (UINT8 *)BurnMalloc(2*256*256*sizeof(UINT8));
+						/* allocate big flag arrays once */
+						SZHVC_add = (UINT8 *)BurnMalloc(2*256*256*sizeof(UINT8));
+						SZHVC_sub = (UINT8 *)BurnMalloc(2*256*256*sizeof(UINT8));
 #endif
-}
+					}
 
-void z180_exit()
-{
-	memset(&Z180, 0, sizeof(Z180));
+					void z180_exit()
+					{
+						memset(&Z180, 0, sizeof Z180);
 	
 #if BIG_FLAGS_ARRAY
-	BurnFree(SZHVC_add);
-	BurnFree(SZHVC_sub);
+						BurnFree(SZHVC_add);
+						BurnFree(SZHVC_sub);
 #endif	
-}
+					}
 
-/****************************************************************************
+					/****************************************************************************
  * Reset registers to their initial values
  ****************************************************************************/
-void z180_reset(void)
-{
-//	z80_irq_daisy_chain *save_daisy;
-	int (*save_irqcallback)(int);
-	int i, p;
+					void z180_reset(void)
+					{
+						//	z80_irq_daisy_chain *save_daisy;
+						int (*save_irqcallback)(int);
+						int i, p;
 #if BIG_FLAGS_ARRAY
-	int oldval, newval, val;
-	UINT8 *padd, *padc, *psub, *psbc;
-	padd = &SZHVC_add[	0*256];
-	padc = &SZHVC_add[256*256];
-	psub = &SZHVC_sub[	0*256];
-	psbc = &SZHVC_sub[256*256];
-	for (oldval = 0; oldval < 256; oldval++)
-	{
-		for (newval = 0; newval < 256; newval++)
-		{
-			/* add or adc w/o carry set */
-			val = newval - oldval;
-			*padd = (newval) ? ((newval & 0x80) ? SF : 0) : ZF;
-			*padd |= (newval & (YF | XF));	/* undocumented flag bits 5+3 */
+						int oldval, newval, val;
+						UINT8 *padd, *padc, *psub, *psbc;
+						padd = &SZHVC_add[	0*256];
+						padc = &SZHVC_add[256*256];
+						psub = &SZHVC_sub[	0*256];
+						psbc = &SZHVC_sub[256*256];
+						for (oldval = 0; oldval < 256; oldval++)
+						{
+							for (newval = 0; newval < 256; newval++)
+							{
+								/* add or adc w/o carry set */
+								val = newval - oldval;
+								*padd = newval ? (newval & 0x80 ? SF : 0) : ZF;
+								*padd |= newval & (YF | XF);	/* undocumented flag bits 5+3 */
 
-			if( (newval & 0x0f) < (oldval & 0x0f) ) *padd |= HF;
-			if( newval < oldval ) *padd |= CF;
-			if( (val^oldval^0x80) & (val^newval) & 0x80 ) *padd |= VF;
-			padd++;
+								if( (newval & 0x0f) < (oldval & 0x0f) ) *padd |= HF;
+								if( newval < oldval ) *padd |= CF;
+								if( (val^oldval^0x80) & (val^newval) & 0x80 ) *padd |= VF;
+								padd++;
 
-			/* adc with carry set */
-			val = newval - oldval - 1;
-			*padc = (newval) ? ((newval & 0x80) ? SF : 0) : ZF;
-			*padc |= (newval & (YF | XF));	/* undocumented flag bits 5+3 */
-			if( (newval & 0x0f) <= (oldval & 0x0f) ) *padc |= HF;
-			if( newval <= oldval ) *padc |= CF;
-			if( (val^oldval^0x80) & (val^newval) & 0x80 ) *padc |= VF;
-			padc++;
+								/* adc with carry set */
+								val = newval - oldval - 1;
+								*padc = newval ? (newval & 0x80 ? SF : 0) : ZF;
+								*padc |= newval & (YF | XF);	/* undocumented flag bits 5+3 */
+								if( (newval & 0x0f) <= (oldval & 0x0f) ) *padc |= HF;
+								if( newval <= oldval ) *padc |= CF;
+								if( (val^oldval^0x80) & (val^newval) & 0x80 ) *padc |= VF;
+								padc++;
 
-			/* cp, sub or sbc w/o carry set */
-			val = oldval - newval;
-			*psub = NF | ((newval) ? ((newval & 0x80) ? SF : 0) : ZF);
-			*psub |= (newval & (YF | XF));	/* undocumented flag bits 5+3 */
-			if( (newval & 0x0f) > (oldval & 0x0f) ) *psub |= HF;
-			if( newval > oldval ) *psub |= CF;
-			if( (val^oldval) & (oldval^newval) & 0x80 ) *psub |= VF;
-			psub++;
+								/* cp, sub or sbc w/o carry set */
+								val = oldval - newval;
+								*psub = NF | (newval ? (newval & 0x80 ? SF : 0) : ZF);
+								*psub |= newval & (YF | XF);	/* undocumented flag bits 5+3 */
+								if( (newval & 0x0f) > (oldval & 0x0f) ) *psub |= HF;
+								if( newval > oldval ) *psub |= CF;
+								if( (val^oldval) & (oldval^newval) & 0x80 ) *psub |= VF;
+								psub++;
 
-			/* sbc with carry set */
-			val = oldval - newval - 1;
-			*psbc = NF | ((newval) ? ((newval & 0x80) ? SF : 0) : ZF);
-			*psbc |= (newval & (YF | XF));	/* undocumented flag bits 5+3 */
-			if( (newval & 0x0f) >= (oldval & 0x0f) ) *psbc |= HF;
-			if( newval >= oldval ) *psbc |= CF;
-			if( (val^oldval) & (oldval^newval) & 0x80 ) *psbc |= VF;
-			psbc++;
-		}
-	}
+								/* sbc with carry set */
+								val = oldval - newval - 1;
+								*psbc = NF | (newval ? (newval & 0x80 ? SF : 0) : ZF);
+								*psbc |= newval & (YF | XF);	/* undocumented flag bits 5+3 */
+								if( (newval & 0x0f) >= (oldval & 0x0f) ) *psbc |= HF;
+								if( newval >= oldval ) *psbc |= CF;
+								if( (val^oldval) & (oldval^newval) & 0x80 ) *psbc |= VF;
+								psbc++;
+							}
+						}
 #endif
-	for (i = 0; i < 256; i++)
-	{
-		p = 0;
-		if( i&0x01 ) ++p;
-		if( i&0x02 ) ++p;
-		if( i&0x04 ) ++p;
-		if( i&0x08 ) ++p;
-		if( i&0x10 ) ++p;
-		if( i&0x20 ) ++p;
-		if( i&0x40 ) ++p;
-		if( i&0x80 ) ++p;
-		SZ[i] = i ? i & SF : ZF;
-		SZ[i] |= (i & (YF | XF));		/* undocumented flag bits 5+3 */
-		SZ_BIT[i] = i ? i & SF : ZF | PF;
-		SZ_BIT[i] |= (i & (YF | XF));	/* undocumented flag bits 5+3 */
-		SZP[i] = SZ[i] | ((p & 1) ? 0 : PF);
-		SZHV_inc[i] = SZ[i];
-		if( i == 0x80 ) SZHV_inc[i] |= VF;
-		if( (i & 0x0f) == 0x00 ) SZHV_inc[i] |= HF;
-		SZHV_dec[i] = SZ[i] | NF;
-		if( i == 0x7f ) SZHV_dec[i] |= VF;
-		if( (i & 0x0f) == 0x0f ) SZHV_dec[i] |= HF;
-	}
+						for (i = 0; i < 256; i++)
+						{
+							p = 0;
+							if( i&0x01 ) ++p;
+							if( i&0x02 ) ++p;
+							if( i&0x04 ) ++p;
+							if( i&0x08 ) ++p;
+							if( i&0x10 ) ++p;
+							if( i&0x20 ) ++p;
+							if( i&0x40 ) ++p;
+							if( i&0x80 ) ++p;
+							SZ[i] = i ? i & SF : ZF;
+							SZ[i] |= i & (YF | XF);		/* undocumented flag bits 5+3 */
+							SZ_BIT[i] = i ? i & SF : ZF | PF;
+							SZ_BIT[i] |= i & (YF | XF);	/* undocumented flag bits 5+3 */
+							SZP[i] = SZ[i] | (p & 1 ? 0 : PF);
+							SZHV_inc[i] = SZ[i];
+							if( i == 0x80 ) SZHV_inc[i] |= VF;
+							if( (i & 0x0f) == 0x00 ) SZHV_inc[i] |= HF;
+							SZHV_dec[i] = SZ[i] | NF;
+							if( i == 0x7f ) SZHV_dec[i] |= VF;
+							if( (i & 0x0f) == 0x0f ) SZHV_dec[i] |= HF;
+						}
 
-	//save_daisy = Z180.daisy;
-	save_irqcallback = Z180.irq_callback;
-	memset(&Z180, 0, sizeof(Z180));
-	//Z180.daisy = save_daisy;
-	Z180.irq_callback = save_irqcallback;
-	_IX = _IY = 0xffff; /* IX and IY are FFFF after a reset! */
-	_F = ZF;			/* Zero flag is set */
-	Z180.nmi_state = Z180_CLEAR_LINE;
-	Z180.nmi_pending = 0;
-	Z180.irq_state[0] = Z180_CLEAR_LINE;
-	Z180.irq_state[1] = Z180_CLEAR_LINE;
-	Z180.irq_state[2] = Z180_CLEAR_LINE;
-	Z180.after_EI = 0;
-	Z180.tif[0] = 0;
-	Z180.tif[1] = 0;
-	Z180.read_tcr_tmdr[0] = 0;
-	Z180.read_tcr_tmdr[1] = 0;
-	Z180.tmdr_value[0] = 0xffff;
-	Z180.tmdr_value[1] = 0xffff;
+						//save_daisy = Z180.daisy;
+						save_irqcallback = Z180.irq_callback;
+						memset(&Z180, 0, sizeof Z180);
+						//Z180.daisy = save_daisy;
+						Z180.irq_callback = save_irqcallback;
+						_IX = _IY = 0xffff; /* IX and IY are FFFF after a reset! */
+						_F = ZF;			/* Zero flag is set */
+						Z180.nmi_state = Z180_CLEAR_LINE;
+						Z180.nmi_pending = 0;
+						Z180.irq_state[0] = Z180_CLEAR_LINE;
+						Z180.irq_state[1] = Z180_CLEAR_LINE;
+						Z180.irq_state[2] = Z180_CLEAR_LINE;
+						Z180.after_EI = 0;
+						Z180.tif[0] = 0;
+						Z180.tif[1] = 0;
+						Z180.read_tcr_tmdr[0] = 0;
+						Z180.read_tcr_tmdr[1] = 0;
+						Z180.tmdr_value[0] = 0xffff;
+						Z180.tmdr_value[1] = 0xffff;
 
-	/* reset io registers */
-	IO_CNTLA0  = Z180_CNTLA0_RESET;
-	IO_CNTLA1  = Z180_CNTLA1_RESET;
-	IO_CNTLB0  = Z180_CNTLB0_RESET;
-	IO_CNTLB1  = Z180_CNTLB1_RESET;
-	IO_STAT0   = Z180_STAT0_RESET;
-	IO_STAT1   = Z180_STAT1_RESET;
-	IO_TDR0    = Z180_TDR0_RESET;
-	IO_TDR1    = Z180_TDR1_RESET;
-	IO_RDR0    = Z180_RDR0_RESET;
-	IO_RDR1    = Z180_RDR1_RESET;
-	IO_CNTR    = Z180_CNTR_RESET;
-	IO_TRDR    = Z180_TRDR_RESET;
-	IO_TMDR0L  = Z180_TMDR0L_RESET;
-	IO_TMDR0H  = Z180_TMDR0H_RESET;
-	IO_RLDR0L  = Z180_RLDR0L_RESET;
-	IO_RLDR0H  = Z180_RLDR0H_RESET;
-	IO_TCR	   = Z180_TCR_RESET;
-	IO_IO11    = Z180_IO11_RESET;
-	IO_ASEXT0  = Z180_ASEXT0_RESET;
-	IO_ASEXT1  = Z180_ASEXT1_RESET;
-	IO_TMDR1L  = Z180_TMDR1L_RESET;
-	IO_TMDR1H  = Z180_TMDR1H_RESET;
-	IO_RLDR1L  = Z180_RLDR1L_RESET;
-	IO_RLDR1H  = Z180_RLDR1H_RESET;
-	IO_FRC	   = Z180_FRC_RESET;
-	IO_IO19    = Z180_IO19_RESET;
-	IO_ASTC0L  = Z180_ASTC0L_RESET;
-	IO_ASTC0H  = Z180_ASTC0H_RESET;
-	IO_ASTC1L  = Z180_ASTC1L_RESET;
-	IO_ASTC1H  = Z180_ASTC1H_RESET;
-	IO_CMR	   = Z180_CMR_RESET;
-	IO_CCR	   = Z180_CCR_RESET;
-	IO_SAR0L   = Z180_SAR0L_RESET;
-	IO_SAR0H   = Z180_SAR0H_RESET;
-	IO_SAR0B   = Z180_SAR0B_RESET;
-	IO_DAR0L   = Z180_DAR0L_RESET;
-	IO_DAR0H   = Z180_DAR0H_RESET;
-	IO_DAR0B   = Z180_DAR0B_RESET;
-	IO_BCR0L   = Z180_BCR0L_RESET;
-	IO_BCR0H   = Z180_BCR0H_RESET;
-	IO_MAR1L   = Z180_MAR1L_RESET;
-	IO_MAR1H   = Z180_MAR1H_RESET;
-	IO_MAR1B   = Z180_MAR1B_RESET;
-	IO_IAR1L   = Z180_IAR1L_RESET;
-	IO_IAR1H   = Z180_IAR1H_RESET;
-	IO_IAR1B   = Z180_IAR1B_RESET;
-	IO_BCR1L   = Z180_BCR1L_RESET;
-	IO_BCR1H   = Z180_BCR1H_RESET;
-	IO_DSTAT   = Z180_DSTAT_RESET;
-	IO_DMODE   = Z180_DMODE_RESET;
-	IO_DCNTL   = Z180_DCNTL_RESET;
-	IO_IL	   = Z180_IL_RESET;
-	IO_ITC	   = Z180_ITC_RESET;
-	IO_IO35    = Z180_IO35_RESET;
-	IO_RCR	   = Z180_RCR_RESET;
-	IO_IO37    = Z180_IO37_RESET;
-	IO_CBR	   = Z180_CBR_RESET;
-	IO_BBR	   = Z180_BBR_RESET;
-	IO_CBAR    = Z180_CBAR_RESET;
-	IO_IO3B    = Z180_IO3B_RESET;
-	IO_IO3C    = Z180_IO3C_RESET;
-	IO_IO3D    = Z180_IO3D_RESET;
-	IO_OMCR    = Z180_OMCR_RESET;
-	IO_IOCR    = Z180_IOCR_RESET;
+						/* reset io registers */
+						IO_CNTLA0  = Z180_CNTLA0_RESET;
+						IO_CNTLA1  = Z180_CNTLA1_RESET;
+						IO_CNTLB0  = Z180_CNTLB0_RESET;
+						IO_CNTLB1  = Z180_CNTLB1_RESET;
+						IO_STAT0   = Z180_STAT0_RESET;
+						IO_STAT1   = Z180_STAT1_RESET;
+						IO_TDR0    = Z180_TDR0_RESET;
+						IO_TDR1    = Z180_TDR1_RESET;
+						IO_RDR0    = Z180_RDR0_RESET;
+						IO_RDR1    = Z180_RDR1_RESET;
+						IO_CNTR    = Z180_CNTR_RESET;
+						IO_TRDR    = Z180_TRDR_RESET;
+						IO_TMDR0L  = Z180_TMDR0L_RESET;
+						IO_TMDR0H  = Z180_TMDR0H_RESET;
+						IO_RLDR0L  = Z180_RLDR0L_RESET;
+						IO_RLDR0H  = Z180_RLDR0H_RESET;
+						IO_TCR	   = Z180_TCR_RESET;
+						IO_IO11    = Z180_IO11_RESET;
+						IO_ASEXT0  = Z180_ASEXT0_RESET;
+						IO_ASEXT1  = Z180_ASEXT1_RESET;
+						IO_TMDR1L  = Z180_TMDR1L_RESET;
+						IO_TMDR1H  = Z180_TMDR1H_RESET;
+						IO_RLDR1L  = Z180_RLDR1L_RESET;
+						IO_RLDR1H  = Z180_RLDR1H_RESET;
+						IO_FRC	   = Z180_FRC_RESET;
+						IO_IO19    = Z180_IO19_RESET;
+						IO_ASTC0L  = Z180_ASTC0L_RESET;
+						IO_ASTC0H  = Z180_ASTC0H_RESET;
+						IO_ASTC1L  = Z180_ASTC1L_RESET;
+						IO_ASTC1H  = Z180_ASTC1H_RESET;
+						IO_CMR	   = Z180_CMR_RESET;
+						IO_CCR	   = Z180_CCR_RESET;
+						IO_SAR0L   = Z180_SAR0L_RESET;
+						IO_SAR0H   = Z180_SAR0H_RESET;
+						IO_SAR0B   = Z180_SAR0B_RESET;
+						IO_DAR0L   = Z180_DAR0L_RESET;
+						IO_DAR0H   = Z180_DAR0H_RESET;
+						IO_DAR0B   = Z180_DAR0B_RESET;
+						IO_BCR0L   = Z180_BCR0L_RESET;
+						IO_BCR0H   = Z180_BCR0H_RESET;
+						IO_MAR1L   = Z180_MAR1L_RESET;
+						IO_MAR1H   = Z180_MAR1H_RESET;
+						IO_MAR1B   = Z180_MAR1B_RESET;
+						IO_IAR1L   = Z180_IAR1L_RESET;
+						IO_IAR1H   = Z180_IAR1H_RESET;
+						IO_IAR1B   = Z180_IAR1B_RESET;
+						IO_BCR1L   = Z180_BCR1L_RESET;
+						IO_BCR1H   = Z180_BCR1H_RESET;
+						IO_DSTAT   = Z180_DSTAT_RESET;
+						IO_DMODE   = Z180_DMODE_RESET;
+						IO_DCNTL   = Z180_DCNTL_RESET;
+						IO_IL	   = Z180_IL_RESET;
+						IO_ITC	   = Z180_ITC_RESET;
+						IO_IO35    = Z180_IO35_RESET;
+						IO_RCR	   = Z180_RCR_RESET;
+						IO_IO37    = Z180_IO37_RESET;
+						IO_CBR	   = Z180_CBR_RESET;
+						IO_BBR	   = Z180_BBR_RESET;
+						IO_CBAR    = Z180_CBAR_RESET;
+						IO_IO3B    = Z180_IO3B_RESET;
+						IO_IO3C    = Z180_IO3C_RESET;
+						IO_IO3D    = Z180_IO3D_RESET;
+						IO_OMCR    = Z180_OMCR_RESET;
+						IO_IOCR    = Z180_IOCR_RESET;
 
-	if (Z180.daisy)
-		z80daisy_reset(Z180.daisy);
-	z180_mmu();
+						if (Z180.daisy)
+							z80daisy_reset(Z180.daisy);
+						z180_mmu();
 
-	total_cycles = 0;
-	current_cycles = 0;
-}
+						total_cycles = 0;
+						current_cycles = 0;
+					}
 
-/* Handle PRT timers, decreasing them after 20 clocks and returning the new icount base that needs to be used for the next check */
-static int handle_timers(int current_icount, int previous_icount)
-{
-	int diff = previous_icount - current_icount;
-	int new_icount_base;
+					/* Handle PRT timers, decreasing them after 20 clocks and returning the new icount base that needs to be used for the next check */
+					static int handle_timers(int current_icount, int previous_icount)
+					{
+						int diff = previous_icount - current_icount;
+						int new_icount_base;
 
-	if(diff >= 20)
-	{
-		/* Programmable Reload Timer 0 */
-		if(IO_TCR & Z180_TCR_TDE0)
-		{
-			Z180.tmdr_value[0]--;
-			if(Z180.tmdr_value[0] == 0)
-			{
-				Z180.tmdr_value[0] = IO_RLDR0L | (IO_RLDR0H << 8);
-				Z180.tif[0] = 1;
-			}
-		}
+						if(diff >= 20)
+						{
+							/* Programmable Reload Timer 0 */
+							if(IO_TCR & Z180_TCR_TDE0)
+							{
+								Z180.tmdr_value[0]--;
+								if(Z180.tmdr_value[0] == 0)
+								{
+									Z180.tmdr_value[0] = IO_RLDR0L | IO_RLDR0H << 8;
+									Z180.tif[0] = 1;
+									}
+									}
 
-		/* Programmable Reload Timer 1 */
-		if(IO_TCR & Z180_TCR_TDE1)
-		{
-			Z180.tmdr_value[1]--;
-			if(Z180.tmdr_value[1] == 0)
-			{
-				Z180.tmdr_value[1] = IO_RLDR1L | (IO_RLDR1H << 8);
-				Z180.tif[1] = 1;
-			}
-		}
+									/* Programmable Reload Timer 1 */
+									if(IO_TCR & Z180_TCR_TDE1)
+									{
+										Z180.tmdr_value[1]--;
+										if(Z180.tmdr_value[1] == 0)
+										{
+											Z180.tmdr_value[1] = IO_RLDR1L | IO_RLDR1H << 8;
+											Z180.tif[1] = 1;
+											}
+											}
 
-		if((IO_TCR & Z180_TCR_TIE0) && Z180.tif[0])
-		{
-			// check if we can take the interrupt
-			if(_IFF1 && !Z180.after_EI)
-			{
-				take_interrupt(Z180_INT_PRT0);
-			}
-		}
+											if(IO_TCR & Z180_TCR_TIE0 && Z180.tif[0])
+											{
+												// check if we can take the interrupt
+												if(_IFF1 && !Z180.after_EI)
+												{
+													take_interrupt(Z180_INT_PRT0);
+												}
+											}
 
-		if((IO_TCR & Z180_TCR_TIE1) && Z180.tif[1])
-		{
-			// check if we can take the interrupt
-			if(_IFF1 && !Z180.after_EI)
-			{
-				take_interrupt(Z180_INT_PRT1);
-			}
-		}
+											if(IO_TCR & Z180_TCR_TIE1 && Z180.tif[1])
+											{
+												// check if we can take the interrupt
+												if(_IFF1 && !Z180.after_EI)
+												{
+													take_interrupt(Z180_INT_PRT1);
+												}
+											}
 
-		new_icount_base = current_icount + (diff - 20);
-	}
-	else
-	{
-		new_icount_base = previous_icount;
-	}
+											new_icount_base = current_icount + (diff - 20);
+											}
+											else
+											{
+												new_icount_base = previous_icount;
+											}
 
-	return new_icount_base;
-}
+											return new_icount_base;
+											}
 
-static void check_interrupts(void)
-{
-	int i;
-	for(i = 0; i <= 2; i++)
-	{
-		/* check for IRQs before each instruction */
-		if(Z180.irq_state[i] != Z180_CLEAR_LINE && _IFF1 && !Z180.after_EI)
-		{
-			take_interrupt(Z180_INT0 + i);
-		}
-	}
-}
+											static void check_interrupts(void)
+											{
+												int i;
+												for(i = 0; i <= 2; i++)
+												{
+													/* check for IRQs before each instruction */
+													if(Z180.irq_state[i] != Z180_CLEAR_LINE && _IFF1 && !Z180.after_EI)
+													{
+														take_interrupt(Z180_INT0 + i);
+													}
+												}
+											}
 
-void z180_write_internal_io(UINT32 port, UINT8 data)
-{
-	if (port < 0x40) {
-		Z180.io[port] = data;
-	}
-}
+											void z180_write_internal_io(UINT32 port, UINT8 data)
+											{
+												if (port < 0x40)
+												{
+													Z180.io[port] = data;
+												}
+											}
 
-static INT32 end_run;
+											static INT32 end_run;
 
-/****************************************************************************
+											/****************************************************************************
  * Execute 'cycles' T-states. Return number of T-states really executed
  ****************************************************************************/
-int z180_execute(int cycles)
-{
-	int old_icount = cycles;
-	z180_icount = cycles;
-	current_cycles = cycles;
+											int z180_execute(int cycles)
+											{
+												int old_icount = cycles;
+												z180_icount = cycles;
+												current_cycles = cycles;
 
-	end_run = 0;
+												end_run = 0;
 
-	/* check for NMIs on the way in; they can only be set externally */
-	/* via timers, and can't be dynamically enabled, so it is safe */
-	/* to just check here */
-	if (Z180.nmi_pending)
-	{
-		_PPC = -1;			/* there isn't a valid previous program counter */
-		LEAVE_HALT; 		/* Check if processor was halted */
+												/* check for NMIs on the way in; they can only be set externally */
+												/* via timers, and can't be dynamically enabled, so it is safe */
+												/* to just check here */
+												if (Z180.nmi_pending)
+												{
+													_PPC = -1;			/* there isn't a valid previous program counter */
+													LEAVE_HALT; 		/* Check if processor was halted */
 
-		/* disable DMA transfers!! */
-		IO_DSTAT &= ~Z180_DSTAT_DME;
+													/* disable DMA transfers!! */
+													IO_DSTAT &= ~Z180_DSTAT_DME;
 
-		_IFF2 = _IFF1;
-		_IFF1 = 0;
-		PUSH( PC );
-		_PCD = 0x0066;
-		z180_icount -= 11;
-		Z180.nmi_pending = 0;
-	}
+													_IFF2 = _IFF1;
+													_IFF1 = 0;
+													PUSH( PC );
+													_PCD = 0x0066;
+													z180_icount -= 11;
+													Z180.nmi_pending = 0;
+												}
 
-again:
-    /* check if any DMA transfer is running */
-	if ((IO_DSTAT & Z180_DSTAT_DME) == Z180_DSTAT_DME)
-	{
-		/* check if DMA channel 0 is running and also is in burst mode */
-		if ((IO_DSTAT & Z180_DSTAT_DE0) == Z180_DSTAT_DE0 &&
-			(IO_DMODE & Z180_DMODE_MMOD) == Z180_DMODE_MMOD)
-		{
-			z180_dma0();
-			old_icount = handle_timers(z180_icount, old_icount);
-		}
-		else
-		{
-			do
-			{
-				check_interrupts();
-				Z180.after_EI = 0;
+											again:
+												/* check if any DMA transfer is running */
+												if ((IO_DSTAT & Z180_DSTAT_DME) == Z180_DSTAT_DME)
+												{
+													/* check if DMA channel 0 is running and also is in burst mode */
+													if ((IO_DSTAT & Z180_DSTAT_DE0) == Z180_DSTAT_DE0 &&
+														(IO_DMODE & Z180_DMODE_MMOD) == Z180_DMODE_MMOD)
+													{
+														z180_dma0();
+														old_icount = handle_timers(z180_icount, old_icount);
+													}
+													else
+													{
+														do
+														{
+															check_interrupts();
+															Z180.after_EI = 0;
 
-				_PPC = _PCD;
-				_R++;
+															_PPC = _PCD;
+															_R++;
 
-				EXEC_Z180_INLINE(op,ROP());
-				old_icount = handle_timers(z180_icount, old_icount);
+															EXEC_Z180_INLINE(op,ROP());
+															old_icount = handle_timers(z180_icount, old_icount);
 
-				z180_dma0();
-				old_icount = handle_timers(z180_icount, old_icount);
+															z180_dma0();
+															old_icount = handle_timers(z180_icount, old_icount);
 
-				z180_dma1();
-				old_icount = handle_timers(z180_icount, old_icount);
+															z180_dma1();
+															old_icount = handle_timers(z180_icount, old_icount);
 
-				/* If DMA is done break out to the faster loop */
-				if ((IO_DSTAT & Z180_DSTAT_DME) != Z180_DSTAT_DME)
-					break;
-			} while( z180_icount > 0 && !end_run);
-		}
-    }
+															/* If DMA is done break out to the faster loop */
+															if ((IO_DSTAT & Z180_DSTAT_DME) != Z180_DSTAT_DME)
+																break;
+														} while( z180_icount > 0 && !end_run);
+													}
+												}
 
-    if (z180_icount > 0 && !end_run)
-    {
-        do
-		{
-			check_interrupts();
-			Z180.after_EI = 0;
-			_PPC = _PCD;
-			_R++;
+												if (z180_icount > 0 && !end_run)
+												{
+													do
+													{
+														check_interrupts();
+														Z180.after_EI = 0;
+														_PPC = _PCD;
+														_R++;
 
-			EXEC_Z180_INLINE(op,ROP());
+														EXEC_Z180_INLINE(op,ROP());
 
-			old_icount = handle_timers(z180_icount, old_icount);
+														old_icount = handle_timers(z180_icount, old_icount);
 
-			/* If DMA is started go to check the mode */
-			if ((IO_DSTAT & Z180_DSTAT_DME) == Z180_DSTAT_DME)
-				goto again;
+														/* If DMA is started go to check the mode */
+														if ((IO_DSTAT & Z180_DSTAT_DME) == Z180_DSTAT_DME)
+															goto again;
 
-        } while( z180_icount > 0 && !end_run );
-	}
+													} while( z180_icount > 0 && !end_run );
+												}
 
-	total_cycles += cycles - z180_icount;
+												total_cycles += cycles - z180_icount;
 
-	INT32 ret = cycles - z180_icount;
+												INT32 ret = cycles - z180_icount;
 
-	z180_icount = current_cycles = 0;
+												z180_icount = current_cycles = 0;
 
-	return ret;
-}
+												return ret;
+											}
 
-INT32 z180_idle(INT32 cyc)
-{
-	total_cycles += cyc;
+											INT32 z180_idle(INT32 cyc)
+											{
+												total_cycles += cyc;
 
-	return cyc;
-}
+												return cyc;
+											}
 
-void z180_run_end()
-{
-	end_run = 1;
-}
+											void z180_run_end()
+											{
+												end_run = 1;
+											}
 
-INT32 z180_total_cycles()
-{
-	return total_cycles + (current_cycles - z180_icount);
-}
+											INT32 z180_total_cycles()
+											{
+												return total_cycles + (current_cycles - z180_icount);
+											}
 
-void z180_new_frame()
-{
-	total_cycles = 0;
-}
+											void z180_new_frame()
+											{
+												total_cycles = 0;
+											}
 
-/****************************************************************************
+											/****************************************************************************
  * Burn 'cycles' T-states. Adjust R register for the lost time
  ****************************************************************************/
-void z180_burn(int cycles)
-{
-	if( cycles > 0 )
-	{
-		/* NOP takes 3 cycles per instruction */
-		int n = (cycles + 2) / 3;
-		_R += n;
-		z180_icount -= 3 * n;
-	}
-}
+											void z180_burn(int cycles)
+											{
+												if( cycles > 0 )
+												{
+													/* NOP takes 3 cycles per instruction */
+													int n = (cycles + 2) / 3;
+													_R += n;
+													z180_icount -= 3 * n;
+												}
+											}
 
-/****************************************************************************
+											/****************************************************************************
  * Set IRQ line state
  ****************************************************************************/
-void z180_set_irq_line(int irqline, int state)
-{
-	if (irqline == Z180_INPUT_LINE_NMI)
-	{
-		/* mark an NMI pending on the rising edge */
-		if (Z180.nmi_state == Z180_CLEAR_LINE && state != Z180_CLEAR_LINE)
-			Z180.nmi_pending = 1;
-		Z180.nmi_state = state;
-	}
-	else
-	{
+											void z180_set_irq_line(int irqline, int state)
+											{
+												if (irqline == Z180_INPUT_LINE_NMI)
+												{
+													/* mark an NMI pending on the rising edge */
+													if (Z180.nmi_state == Z180_CLEAR_LINE && state != Z180_CLEAR_LINE)
+														Z180.nmi_pending = 1;
+													Z180.nmi_state = state;
+												}
+												else
+												{
 
-		/* update the IRQ state */
-		Z180.irq_state[irqline] = state;
-		if (Z180.daisy)
-			Z180.irq_state[0] = z80daisy_update_irq_state(Z180.daisy);
+													/* update the IRQ state */
+													Z180.irq_state[irqline] = state;
+													if (Z180.daisy)
+														Z180.irq_state[0] = z80daisy_update_irq_state(Z180.daisy);
 
-		/* the main execute loop will take the interrupt */
-	}
-}
+													/* the main execute loop will take the interrupt */
+												}
+											}
 #if 0
 /* logical to physical address translation */
 static int z180_translate(int space, int intention, UINT32 *addr)

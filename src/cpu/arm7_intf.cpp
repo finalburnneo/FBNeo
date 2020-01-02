@@ -84,14 +84,14 @@ void Arm7MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type)
 	if (start >= MAX_MEMORY || finish >= MAX_MEMORY) bprintf (PRINT_ERROR, _T("Arm7MapMemory memory range unsupported 0x%8.8x-0x%8.8x\n"), start, finish);
 #endif
 
-	UINT32 len = (finish-start) >> PAGE_SHIFT;
+	UINT32 len = finish-start >> PAGE_SHIFT;
 
 	for (UINT32 i = 0; i < len+1; i++)
 	{
 		UINT32 offset = i + (start >> PAGE_SHIFT);
-		if (type & (1 <<  READ)) membase[ READ][offset] = src + (i << PAGE_SHIFT);
-		if (type & (1 << WRITE)) membase[WRITE][offset] = src + (i << PAGE_SHIFT);
-		if (type & (1 << FETCH)) membase[FETCH][offset] = src + (i << PAGE_SHIFT);
+		if (type & 1 <<  READ) membase[ READ][offset] = src + (i << PAGE_SHIFT);
+		if (type & 1 << WRITE) membase[WRITE][offset] = src + (i << PAGE_SHIFT);
+		if (type & 1 << FETCH) membase[FETCH][offset] = src + (i << PAGE_SHIFT);
 	}
 }
 
@@ -184,7 +184,7 @@ void Arm7WriteWord(UINT32 addr, UINT16 data)
 #endif
 
 	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
-		*((UINT16*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND))) = data;
+		*(UINT16*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)) = data;
 		return;
 	}
 
@@ -206,7 +206,7 @@ void Arm7WriteLong(UINT32 addr, UINT32 data)
 #endif
 
 	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
-		*((UINT32*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND))) = data;
+		*(UINT32*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)) = data;
 		return;
 	}
 
@@ -252,7 +252,7 @@ UINT16 Arm7ReadWord(UINT32 addr)
 #endif
 
 	if (membase[ READ][addr >> PAGE_SHIFT] != NULL) {
-		return *((UINT16*)(membase[ READ][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)));
+		return *(UINT16*)(membase[ READ][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND));
 	}
 
 	if (pReadWordHandler) {
@@ -275,7 +275,7 @@ UINT32 Arm7ReadLong(UINT32 addr)
 #endif
 
 	if (membase[ READ][addr >> PAGE_SHIFT] != NULL) {
-		return *((UINT32*)(membase[ READ][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)));
+		return *(UINT32*)(membase[ READ][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND));
 	}
 
 	if (pReadLongHandler) {
@@ -303,7 +303,7 @@ UINT16 Arm7FetchWord(UINT32 addr)
 	}
 
 	if (membase[FETCH][addr >> PAGE_SHIFT] != NULL) {
-		return *((UINT16*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)));
+		return *(UINT16*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND));
 	}
 
 	// good enough for now...
@@ -332,7 +332,7 @@ UINT32 Arm7FetchLong(UINT32 addr)
 	}
 
 	if (membase[FETCH][addr >> PAGE_SHIFT] != NULL) {
-		return *((UINT32*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)));
+		return *(UINT32*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND));
 	}
 
 	// good enough for now...

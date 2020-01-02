@@ -52,7 +52,7 @@ void mips3::cop0_execute(uint32_t opcode)
     case 0x04:
         m_state.cpr[0][RDNUM] = RT;
         if (RDNUM == COP0_Count) {
-            m_state.reset_cycle = m_state.total_cycles - ((uint64_t)(uint32_t)RT * 2);
+            m_state.reset_cycle = m_state.total_cycles - (uint64_t)(uint32_t)RT * 2;
         }
         break;
 

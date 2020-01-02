@@ -123,14 +123,14 @@ void cpu_writeport(unsigned int,unsigned int);
 
 static NEC_INLINE void write_mem_word(unsigned int a, unsigned short d)
 {
-	cpu_writemem20((a),(unsigned char)(d));
-	cpu_writemem20((a)+1,(d)>>8);
+	cpu_writemem20(a,(unsigned char)d);
+	cpu_writemem20(a+1,d>>8);
 }
 
 static NEC_INLINE void write_port_word(unsigned int a, unsigned short d)
 {
-	cpu_writeport((a),(unsigned char)(d));
-	cpu_writeport((a)+1,(d)>>8);
+	cpu_writeport(a,(unsigned char)d);
+	cpu_writeport(a+1,d>>8);
 }
 
 typedef UINT8 BOOLEAN;
@@ -186,125 +186,125 @@ static void do_prefetch(nec_state_t *nec_state, int previous_ICount)
 NEC_INLINE UINT8 fetch(nec_state_t *nec_state)
 {
 	prefetch(nec_state);
-	return cpu_readop_arg(((Sreg(PS)<<4)+nec_state->ip++) ^ nec_state->fetch_xor); // ^ fetch_xor?
+	return cpu_readop_arg((Sreg(PS)<<4)+nec_state->ip++ ^ nec_state->fetch_xor); // ^ fetch_xor?
 }
 
 NEC_INLINE UINT16 fetchword(nec_state_t *nec_state)
 {
 	UINT16 r = FETCH();
-	r |= (FETCH()<<8);
+	r |= FETCH()<<8;
 	return r;
-}
+	}
 
 #include "necinstr.h"
 #include "necmacro.h"
 #include "necea.h"
 #include "necmodrm.h"
 
-static UINT8 parity_table[256];
+	static UINT8 parity_table[256];
 
-static UINT8 fetchop(nec_state_t *nec_state)
-{
-	prefetch(nec_state);
-	return cpu_readop(((Sreg(PS)<<4)+nec_state->ip++) ^ nec_state->fetch_xor);
-}
-
-
-/***************************************************************************/
-
-int nec_reset()
-{
-	nec_state_t *nec_state = sChipsPtr;
-
-	memset( &nec_state->regs.w, 0, sizeof(nec_state->regs.w));
-
-	nec_state->ip = 0;
-	nec_state->TF = 0;
-	nec_state->IF = 0;
-	nec_state->DF = 0;
-	nec_state->MF = 1;	// brkem should set to 0 when implemented
-	nec_state->SignVal = 0;
-	nec_state->AuxVal = 0;
-	nec_state->OverVal = 0;
-	nec_state->ZeroVal = 1;
-	nec_state->CarryVal = 0;
-	nec_state->ParityVal = 1;
-	nec_state->pending_irq = 0;
-	nec_state->nmi_state = 0;
-	nec_state->irq_state = 0;
-	nec_state->poll_state = 1;
-	nec_state->halted = 0;
-	nec_state->cycles_total = 0;
-	nec_state->cycles_remaining = 0;
-	nec_state->vector = 0xff; //default vector
-
-	Sreg(PS) = 0xffff;
-	Sreg(SS_) = 0;
-	Sreg(DS0) = 0;
-	Sreg(DS1) = 0;
-
-	CHANGE_PC;
-
-	return 0;
-}
-
-static void nec_interrupt(nec_state_t *nec_state, unsigned int_num, INTSOURCES source)
-{
-	UINT32 dest_seg, dest_off;
-
-	i_pushf(nec_state);
-	nec_state->TF = nec_state->IF = 0;
-
-	if (source == INT_IRQ)	/* get vector */
-		int_num = nec_state->vector;
-
-	dest_off = read_mem_word(int_num*4);
-	dest_seg = read_mem_word(int_num*4+2);
-
-	PUSH(Sreg(PS));
-	PUSH(nec_state->ip);
-	nec_state->ip = (WORD)dest_off;
-	Sreg(PS) = (WORD)dest_seg;
-	CHANGE_PC;
-}
-
-static void nec_trap(nec_state_t *nec_state)
-{
-	nec_instruction[fetchop(nec_state)](nec_state);
-	nec_interrupt(nec_state, NEC_TRAP_VECTOR, BRK);
-}
-
-static void external_int(nec_state_t *nec_state)
-{
-	if (nec_state->pending_irq & NMI_IRQ)
+	static UINT8 fetchop(nec_state_t *nec_state)
 	{
-		nec_interrupt(nec_state, NEC_NMI_VECTOR, NMI_IRQ);
-		nec_state->pending_irq &= ~NMI_IRQ;
+		prefetch(nec_state);
+		return cpu_readop((Sreg(PS)<<4)+nec_state->ip++ ^ nec_state->fetch_xor);
 	}
-	else if (nec_state->pending_irq)
-	{
-		/* the actual vector is retrieved after pushing flags */
-		/* and clearing the IF */
-		nec_interrupt(nec_state, (UINT32)-1, INT_IRQ);
-		nec_state->irq_state = CLEAR_LINE;
-		nec_state->pending_irq &= ~INT_IRQ;
-	}
-}
 
-/****************************************************************************/
-/*                             OPCODES                                      */
-/****************************************************************************/
+
+	/***************************************************************************/
+
+	int nec_reset()
+	{
+		nec_state_t *nec_state = sChipsPtr;
+
+		memset( &nec_state->regs.w, 0, sizeof nec_state->regs.w);
+
+		nec_state->ip = 0;
+		nec_state->TF = 0;
+		nec_state->IF = 0;
+		nec_state->DF = 0;
+		nec_state->MF = 1;	// brkem should set to 0 when implemented
+		nec_state->SignVal = 0;
+		nec_state->AuxVal = 0;
+		nec_state->OverVal = 0;
+		nec_state->ZeroVal = 1;
+		nec_state->CarryVal = 0;
+		nec_state->ParityVal = 1;
+		nec_state->pending_irq = 0;
+		nec_state->nmi_state = 0;
+		nec_state->irq_state = 0;
+		nec_state->poll_state = 1;
+		nec_state->halted = 0;
+		nec_state->cycles_total = 0;
+		nec_state->cycles_remaining = 0;
+		nec_state->vector = 0xff; //default vector
+
+		Sreg(PS) = 0xffff;
+		Sreg(SS_) = 0;
+		Sreg(DS0) = 0;
+		Sreg(DS1) = 0;
+
+		CHANGE_PC;
+
+		return 0;
+	}
+
+	static void nec_interrupt(nec_state_t *nec_state, unsigned int_num, INTSOURCES source)
+	{
+		UINT32 dest_seg, dest_off;
+
+		i_pushf(nec_state);
+		nec_state->TF = nec_state->IF = 0;
+
+		if (source == INT_IRQ)	/* get vector */
+			int_num = nec_state->vector;
+
+		dest_off = read_mem_word(int_num*4);
+		dest_seg = read_mem_word(int_num*4+2);
+
+		PUSH(Sreg(PS));
+		PUSH(nec_state->ip);
+		nec_state->ip = (WORD)dest_off;
+		Sreg(PS) = (WORD)dest_seg;
+		CHANGE_PC;
+	}
+
+	static void nec_trap(nec_state_t *nec_state)
+	{
+		nec_instruction[fetchop(nec_state)](nec_state);
+		nec_interrupt(nec_state, NEC_TRAP_VECTOR, BRK);
+	}
+
+	static void external_int(nec_state_t *nec_state)
+	{
+		if (nec_state->pending_irq & NMI_IRQ)
+		{
+			nec_interrupt(nec_state, NEC_NMI_VECTOR, NMI_IRQ);
+			nec_state->pending_irq &= ~NMI_IRQ;
+		}
+		else if (nec_state->pending_irq)
+		{
+			/* the actual vector is retrieved after pushing flags */
+			/* and clearing the IF */
+			nec_interrupt(nec_state, (UINT32)-1, INT_IRQ);
+			nec_state->irq_state = CLEAR_LINE;
+			nec_state->pending_irq &= ~INT_IRQ;
+		}
+	}
+
+	/****************************************************************************/
+	/*                             OPCODES                                      */
+	/****************************************************************************/
 
 #include "necinstr.c"
 
-/*****************************************************************************/
+	/*****************************************************************************/
 
-void nec_set_irq_line_and_vector(int irqline, int vector, int state)
-{
-	nec_state_t *nec_state = sChipsPtr;
-
-	switch (irqline)
+	void nec_set_irq_line_and_vector(int irqline, int vector, int state)
 	{
+		nec_state_t *nec_state = sChipsPtr;
+
+		switch (irqline)
+		{
 		case 0:
 			nec_state->irq_state = state;
 			if (state == CLEAR_LINE)
@@ -318,7 +318,7 @@ void nec_set_irq_line_and_vector(int irqline, int vector, int state)
 			break;
 		case INPUT_LINE_NMI:
 			if (nec_state->nmi_state == (unsigned int)state) return;
-		    	nec_state->nmi_state = state;
+			nec_state->nmi_state = state;
 			if (state != CLEAR_LINE)
 			{
 				nec_state->vector = vector;
@@ -330,189 +330,195 @@ void nec_set_irq_line_and_vector(int irqline, int vector, int state)
 			nec_state->vector = vector;
 			nec_state->poll_state = state;
 			break;
+		}
 	}
-}
 
-void nec_init(int cpu)
-{
-	nec_state_t *nec_state = &sChips[cpu];
-
-	unsigned int i, j, c;
-
-	static const WREGS wreg_name[8]={ AW, CW, DW, BW, SP, BP, IX, IY };
-	static const BREGS breg_name[8]={ AL, CL, DL, BL, AH, CH, DH, BH };
-
-	for (i = 0; i < 256; i++)
+	void nec_init(int cpu)
 	{
-		for (j = i, c = 0; j > 0; j >>= 1)
-			if (j & 1) c++;
-		parity_table[i] = !(c & 1);
+		nec_state_t *nec_state = &sChips[cpu];
+
+		unsigned int i, j, c;
+
+		static const WREGS wreg_name[8]={ AW, CW, DW, BW, SP, BP, IX, IY };
+		static const BREGS breg_name[8]={ AL, CL, DL, BL, AH, CH, DH, BH };
+
+		for (i = 0; i < 256; i++)
+		{
+			for (j = i, c = 0; j > 0; j >>= 1)
+				if (j & 1) c++;
+			parity_table[i] = !(c & 1);
+		}
+
+		for (i = 0; i < 256; i++)
+		{
+			Mod_RM.reg.b[i] = breg_name[(i & 0x38) >> 3];
+			Mod_RM.reg.w[i] = wreg_name[(i & 0x38) >> 3];
+		}
+
+		for (i = 0xc0; i < 0x100; i++)
+		{
+			Mod_RM.RM.w[i] = wreg_name[i & 7];
+			Mod_RM.RM.b[i] = breg_name[i & 7];
+		}
+
+		memset(nec_state, 0, sizeof*nec_state);
 	}
 
-	for (i = 0; i < 256; i++)
+	void necCpuOpen(int cpu)
 	{
-		Mod_RM.reg.b[i] = breg_name[(i & 0x38) >> 3];
-		Mod_RM.reg.w[i] = wreg_name[(i & 0x38) >> 3];
+		sChipsPtr = &sChips[cpu];
 	}
 
-	for (i = 0xc0; i < 0x100; i++)
+	void necCpuClose()
 	{
-		Mod_RM.RM.w[i] = wreg_name[i & 7];
-		Mod_RM.RM.b[i] = breg_name[i & 7];
+		sChipsPtr = NULL;
 	}
 
-	memset(nec_state, 0, sizeof(*nec_state));
-}
-
-void necCpuOpen(int cpu)
-{
-	sChipsPtr = &sChips[cpu];
-}
-
-void necCpuClose()
-{
-	sChipsPtr = NULL;
-}
-
-unsigned int nec_total_cycles()
-{
-	return sChipsPtr->cycles_total + (sChipsPtr->cycles_remaining - sChipsPtr->icount);
-}
-
-void nec_new_frame()
-{
-	for (int i = 0; i < 4; i++) {
-		nec_state_t *nec_state = &sChips[i];
-		nec_state->cycles_total = 0;
-	}
-}
-
-void nec_set_vector(int vector)
-{
-	nec_state_t *nec_state = sChipsPtr;
-	nec_state->vector = vector;
-}
-
-void necRunEnd()
-{
-	sChipsPtr->stop_run = 1;
-}
-
-void necIdle(int cycles)
-{
-	sChipsPtr->cycles_total += cycles;
-}
-
-int nec_execute(int cycles)
-{
-	nec_state_t *nec_state = sChipsPtr;
-	int prev_ICount;
-
-	nec_state->icount = cycles;
-	nec_state->cycles_remaining = cycles;
-	nec_state->stop_run = 0;
-
-	if (nec_state->halted)
+	unsigned int nec_total_cycles()
 	{
-		nec_state->icount = 0;
-		//debugger_instruction_hook(device, (Sreg(PS)<<4) + nec_state->ip);
+		return sChipsPtr->cycles_total + (sChipsPtr->cycles_remaining - sChipsPtr->icount);
+	}
+
+	void nec_new_frame()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			nec_state_t *nec_state = &sChips[i];
+			nec_state->cycles_total = 0;
+		}
+	}
+
+	void nec_set_vector(int vector)
+	{
+		nec_state_t *nec_state = sChipsPtr;
+		nec_state->vector = vector;
+	}
+
+	void necRunEnd()
+	{
+		sChipsPtr->stop_run = 1;
+	}
+
+	void necIdle(int cycles)
+	{
+		sChipsPtr->cycles_total += cycles;
+	}
+
+	int nec_execute(int cycles)
+	{
+		nec_state_t *nec_state = sChipsPtr;
+		int prev_ICount;
+
+		nec_state->icount = cycles;
+		nec_state->cycles_remaining = cycles;
+		nec_state->stop_run = 0;
+
+		if (nec_state->halted)
+		{
+			nec_state->icount = 0;
+			//debugger_instruction_hook(device, (Sreg(PS)<<4) + nec_state->ip);
+			return cycles;
+		}
+
+		while(nec_state->icount>0 && !nec_state->stop_run)
+		{
+			/* Dispatch IRQ */
+			if (nec_state->pending_irq && nec_state->no_interrupt==0)
+			{
+				if (nec_state->pending_irq & NMI_IRQ)
+					external_int(nec_state);
+				else if (nec_state->IF)
+					external_int(nec_state);
+			}
+
+			/* No interrupt allowed between last instruction and this one */
+			if (nec_state->no_interrupt)
+				nec_state->no_interrupt--;
+
+			//debugger_instruction_hook(device, (Sreg(PS)<<4) + nec_state->ip);
+			prev_ICount = nec_state->icount;
+			nec_instruction[fetchop(nec_state)](nec_state);
+			do_prefetch(nec_state, prev_ICount);
+		}
+
+		cycles = cycles - nec_state->icount;
+		nec_state->cycles_total += cycles;
+		nec_state->cycles_remaining = nec_state->icount = 0;
+
 		return cycles;
 	}
 
-	while((nec_state->icount>0) && (!nec_state->stop_run)) {
-		/* Dispatch IRQ */
-		if (nec_state->pending_irq && nec_state->no_interrupt==0)
-		{
-			if (nec_state->pending_irq & NMI_IRQ)
-				external_int(nec_state);
-			else if (nec_state->IF)
-				external_int(nec_state);
-		}
-
-		/* No interrupt allowed between last instruction and this one */
-		if (nec_state->no_interrupt)
-			nec_state->no_interrupt--;
-
-		//debugger_instruction_hook(device, (Sreg(PS)<<4) + nec_state->ip);
-		prev_ICount = nec_state->icount;
-		nec_instruction[fetchop(nec_state)](nec_state);
-		do_prefetch(nec_state, prev_ICount);
-	}
-
-	cycles = cycles - nec_state->icount;
-	nec_state->cycles_total += cycles;
-	nec_state->cycles_remaining = nec_state->icount = 0;
-
-	return cycles;
-}
-
-void necInit(int cpu, int type)
-{
-	nec_state_t *nec_state = &sChips[cpu];
-
-	nec_init(cpu);
-
-	switch (type)
+	void necInit(int cpu, int type)
 	{
-		case V20_TYPE:
+		nec_state_t *nec_state = &sChips[cpu];
+
+		nec_init(cpu);
+
+		switch (type)
 		{
-			nec_state->fetch_xor = 0;
-			nec_state->chip_type=V20_TYPE;
-			nec_state->prefetch_size = 4;		/* 3 words */
-			nec_state->prefetch_cycles = 4;		/* four cycles per byte */
-		}
-		break;
+		case V20_TYPE:
+			{
+				nec_state->fetch_xor = 0;
+				nec_state->chip_type=V20_TYPE;
+				nec_state->prefetch_size = 4;		/* 3 words */
+				nec_state->prefetch_cycles = 4;		/* four cycles per byte */
+			}
+			break;
 
 		case V30_TYPE:
-		{
-			nec_state->fetch_xor = 0;
-			nec_state->chip_type=V30_TYPE;
-			nec_state->prefetch_size = 6;		/* 3 words */
-			nec_state->prefetch_cycles = 2;		/* two cycles per byte / four per word */
-		}
-		break;
+			{
+				nec_state->fetch_xor = 0;
+				nec_state->chip_type=V30_TYPE;
+				nec_state->prefetch_size = 6;		/* 3 words */
+				nec_state->prefetch_cycles = 2;		/* two cycles per byte / four per word */
+			}
+			break;
 
 		case V33_TYPE:
-		{
-			nec_state->fetch_xor = 0;
-			nec_state->chip_type=V33_TYPE;
-			nec_state->prefetch_size = 6;
-			/* FIXME: Need information about prefetch size and cycles for V33.
+			{
+				nec_state->fetch_xor = 0;
+				nec_state->chip_type=V33_TYPE;
+				nec_state->prefetch_size = 6;
+				/* FIXME: Need information about prefetch size and cycles for V33.
 		         * complete guess below, nbbatman will not work
 		         * properly without. */
-			nec_state->prefetch_cycles = 1;		/* two cycles per byte / four per word */
+				nec_state->prefetch_cycles = 1;		/* two cycles per byte / four per word */
+			}
+			break;
 		}
-		break;
 	}
-}
 
-int necGetPC(int n)
-{
-	if (n == -1) { // current cpu
-		return ((sChipsPtr->sregs[PS]<<4) + sChipsPtr->ip);
-	} else {
-		nec_state_t *nec_state = &sChips[n];
-		return ((nec_state->sregs[PS]<<4) + nec_state->ip);
+	int necGetPC(int n)
+	{
+		if (n == -1)
+		{
+			// current cpu
+			return (sChipsPtr->sregs[PS]<<4) + sChipsPtr->ip;
+		} else
+		{
+			nec_state_t *nec_state = &sChips[n];
+			return (nec_state->sregs[PS]<<4) + nec_state->ip;
+		}
 	}
-}
 
-void necScan(int cpu, int nAction)
-{
-	nec_state_t *nec_state = &sChips[cpu];
+	void necScan(int cpu, int nAction)
+	{
+		nec_state_t *nec_state = &sChips[cpu];
 
-	if (nAction & ACB_DRIVER_DATA) {
-		struct BurnArea ba;
-		char szText[] = "NEC #0";
-		szText[5] = '1' + cpu;
+		if (nAction & ACB_DRIVER_DATA)
+		{
+			struct BurnArea ba;
+			char szText[] = "NEC #0";
+			szText[5] = '1' + cpu;
 
-		memset(&ba, 0, sizeof(ba));
+			memset(&ba, 0, sizeof ba);
 
-		ba.Data	  = (unsigned char*)nec_state;
-		ba.nLen	  = sizeof(nec_state_t);
-		ba.szName = szText;
-		BurnAcb(&ba);
+			ba.Data	  = (unsigned char*)nec_state;
+			ba.nLen	  = sizeof(nec_state_t);
+			ba.szName = szText;
+			BurnAcb(&ba);
+		}
 	}
-}
 
 
 #if 0

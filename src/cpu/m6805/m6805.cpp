@@ -286,7 +286,7 @@ M6805_INLINE void WM16( UINT32 Addr, PAIR *p )
 /* Generate interrupt - m68705 version */
 static void m68705_Interrupt(void)
 {
-	if( (m6805.pending_interrupts & ((1<<M6805_IRQ_LINE)|M68705_INT_MASK)) != 0 )
+	if( (m6805.pending_interrupts & (1<<M6805_IRQ_LINE|M68705_INT_MASK)) != 0 )
 	{
 		if ( (CC & IFLAG) == 0 )
 		{
@@ -298,12 +298,12 @@ static void m68705_Interrupt(void)
 			if (m6805.irq_callback)
 				(*m6805.irq_callback)(0);
 
-			if ((m6805.pending_interrupts & (1<<M68705_IRQ_LINE)) != 0 )
+			if ((m6805.pending_interrupts & 1<<M68705_IRQ_LINE) != 0 )
 			{
 				m6805.pending_interrupts &= ~(1<<M68705_IRQ_LINE);
 				RM16( 0xfffa, &pPC);
 			}
-			else if((m6805.pending_interrupts&(1<<M68705_INT_TIMER))!=0)
+			else if((m6805.pending_interrupts&1<<M68705_INT_TIMER)!=0)
 			{
 				m6805.pending_interrupts &= ~(1<<M68705_INT_TIMER);
 				RM16( 0xfff8, &pPC);
@@ -321,7 +321,7 @@ static void Interrupt(void)
 	/* pending_interrupts until the interrupt is taken, no matter what the */
 	/* external IRQ pin does. */
 
-	if( (m6805.pending_interrupts & (1<<HD63705_INT_NMI)) != 0)
+	if( (m6805.pending_interrupts & 1<<HD63705_INT_NMI) != 0)
 	{
 		PUSHWORD(m6805.pc);
 		PUSHBYTE(m6805.x);
@@ -338,7 +338,7 @@ static void Interrupt(void)
 		m6805_ICount -= 11;
 		m6805.nTotalCycles += 11;
 	}
-	else if( (m6805.pending_interrupts & ((1<<M6805_IRQ_LINE)|HD63705_INT_MASK)) != 0 ) {
+	else if( (m6805.pending_interrupts & (1<<M6805_IRQ_LINE|HD63705_INT_MASK)) != 0 ) {
 		if ( (CC & IFLAG) == 0 ) {
 	{
 		PUSHWORD(m6805.pc);
@@ -357,42 +357,42 @@ static void Interrupt(void)
 			/* Need to add emulation of other interrupt sources here KW-2/4/99 */
 			/* This is just a quick patch for Namco System 2 operation         */
 
-			if((m6805.pending_interrupts&(1<<HD63705_INT_IRQ1))!=0)
+			if((m6805.pending_interrupts&1<<HD63705_INT_IRQ1)!=0)
 			{
 				m6805.pending_interrupts &= ~(1<<HD63705_INT_IRQ1);
 				RM16( 0x1ff8, &pPC);
 			}
-			else if((m6805.pending_interrupts&(1<<HD63705_INT_IRQ2))!=0)
+			else if((m6805.pending_interrupts&1<<HD63705_INT_IRQ2)!=0)
 			{
 				m6805.pending_interrupts &= ~(1<<HD63705_INT_IRQ2);
 				RM16( 0x1fec, &pPC);
 			}
-			else if((m6805.pending_interrupts&(1<<HD63705_INT_ADCONV))!=0)
+			else if((m6805.pending_interrupts&1<<HD63705_INT_ADCONV)!=0)
 			{
 				m6805.pending_interrupts &= ~(1<<HD63705_INT_ADCONV);
 				RM16( 0x1fea, &pPC);
 			}
-			else if((m6805.pending_interrupts&(1<<HD63705_INT_TIMER1))!=0)
+			else if((m6805.pending_interrupts&1<<HD63705_INT_TIMER1)!=0)
 			{
 				m6805.pending_interrupts &= ~(1<<HD63705_INT_TIMER1);
 				RM16( 0x1ff6, &pPC);
 			}
-			else if((m6805.pending_interrupts&(1<<HD63705_INT_TIMER2))!=0)
+			else if((m6805.pending_interrupts&1<<HD63705_INT_TIMER2)!=0)
 			{
 				m6805.pending_interrupts &= ~(1<<HD63705_INT_TIMER2);
 				RM16( 0x1ff4, &pPC);
 			}
-			else if((m6805.pending_interrupts&(1<<HD63705_INT_TIMER3))!=0)
+			else if((m6805.pending_interrupts&1<<HD63705_INT_TIMER3)!=0)
 			{
 				m6805.pending_interrupts &= ~(1<<HD63705_INT_TIMER3);
 				RM16( 0x1ff2, &pPC);
 			}
-			else if((m6805.pending_interrupts&(1<<HD63705_INT_PCI))!=0)
+			else if((m6805.pending_interrupts&1<<HD63705_INT_PCI)!=0)
 			{
 				m6805.pending_interrupts &= ~(1<<HD63705_INT_PCI);
 				RM16( 0x1ff0, &pPC);
 			}
-			else if((m6805.pending_interrupts&(1<<HD63705_INT_SCI))!=0)
+			else if((m6805.pending_interrupts&1<<HD63705_INT_SCI)!=0)
 			{
 				m6805.pending_interrupts &= ~(1<<HD63705_INT_SCI);
 				RM16( 0x1fee, &pPC);
@@ -415,7 +415,7 @@ static void Interrupt(void)
 static void m6805_reset()
 {
 	int (*save_irqcallback)(int) = m6805.irq_callback;
-	memset(&m6805, 0, sizeof(m6805));
+	memset(&m6805, 0, sizeof m6805);
 	m6805.irq_callback = save_irqcallback;
 	/* Force CPU sub-type and relevant masks */
 	m6805.subtype	= SUBTYPE_M6805;
@@ -808,7 +808,7 @@ int m6805Scan(int nAction)
 	struct BurnArea ba;
 
 	if (nAction & ACB_DRIVER_DATA) {
-		memset(&ba, 0, sizeof(ba));
+		memset(&ba, 0, sizeof ba);
 
 		ba.Data	  = &m6805;
 		ba.nLen	  = STRUCT_SIZE_HELPER(m6805_Regs, nTotalCycles);

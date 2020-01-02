@@ -240,9 +240,9 @@ int Sh2MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int nEnd,
 
 	unsigned char* Ptr = pMemory - nStart;
 	unsigned char** pMemMap = pSh2Ext->MemMap + (nStart >> SH2_SHIFT);
-	int need_mirror = (nStart < 0x08000000) ? 1 : 0;
+	int need_mirror = nStart < 0x08000000 ? 1 : 0;
 		
-	for (unsigned long long i = (nStart & ~SH2_PAGEM); i <= nEnd; i += SH2_PAGE_SIZE, pMemMap++) {
+	for (unsigned long long i = nStart & ~SH2_PAGEM; i <= nEnd; i += SH2_PAGE_SIZE, pMemMap++) {
 		if (nType & 0x01 /*SM_READ*/)  pMemMap[0] 			= Ptr + i;
 		if (nType & 0x02 /*SM_WRITE*/) pMemMap[SH2_WADD] 	= Ptr + i;
 		if (nType & 0x04 /*SM_FETCH*/) pMemMap[SH2_WADD*2]	= Ptr + i;
@@ -287,9 +287,9 @@ int Sh2MapHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEnd, in
 #endif
 
 	unsigned char** pMemMap = pSh2Ext->MemMap + (nStart >> SH2_SHIFT);
-	int need_mirror = (nStart < 0x08000000) ? 1 : 0;
+	int need_mirror = nStart < 0x08000000 ? 1 : 0;
 	
-	for (unsigned long long i = (nStart & ~SH2_PAGEM); i <= nEnd; i += SH2_PAGE_SIZE, pMemMap++) {
+	for (unsigned long long i = nStart & ~SH2_PAGEM; i <= nEnd; i += SH2_PAGE_SIZE, pMemMap++) {
 		if (nType & 0x01 /*SM_READ*/)  pMemMap[0]		 	= (unsigned char*)nHandler;
 		if (nType & 0x02 /*SM_WRITE*/) pMemMap[SH2_WADD] 	= (unsigned char*)nHandler;
 		if (nType & 0x04 /*SM_FETCH*/) pMemMap[SH2_WADD*2]	= (unsigned char*)nHandler;
@@ -406,7 +406,7 @@ unsigned char  __fastcall Sh2InnerReadByte(unsigned int a)
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2InnerReadByte called without init\n"));
 #endif
 
-	return sh2_internal_r((a & 0x1fc)>>2, ~(0xff << (((~a) & 3)*8))) >> (((~a) & 3)*8); 
+	return sh2_internal_r((a & 0x1fc)>>2, ~(0xff << (~a & 3)*8)) >> (~a & 3)*8; 
 }
 
 unsigned short __fastcall Sh2InnerReadWord(unsigned int a) 
@@ -415,7 +415,7 @@ unsigned short __fastcall Sh2InnerReadWord(unsigned int a)
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2InnerReadWord called without init\n"));
 #endif
 
-	return sh2_internal_r((a & 0x1fc)>>2, ~(0xffff << (((~a) & 2)*8))) >> (((~a) & 2)*8); 
+	return sh2_internal_r((a & 0x1fc)>>2, ~(0xffff << (~a & 2)*8)) >> (~a & 2)*8; 
 }
 
 unsigned int   __fastcall Sh2InnerReadLong(unsigned int a) 
@@ -434,7 +434,7 @@ void __fastcall Sh2InnerWriteByte(unsigned int a, unsigned char d)
 #endif
 
 	//bprintf(0, _T("Attempt to write byte value   %02x to location %8x   offset: %04x\n"), d, a, (a & 0x1fc)>>2);
-	sh2_internal_w((a & 0x1fc)>>2, d << (((~a) & 3)*8), ~(0xff << (((~a) & 3)*8)));
+	sh2_internal_w((a & 0x1fc)>>2, d << (~a & 3)*8, ~(0xff << (~a & 3)*8));
 }
 
 void __fastcall Sh2InnerWriteWord(unsigned int a, unsigned short d) 
@@ -443,7 +443,7 @@ void __fastcall Sh2InnerWriteWord(unsigned int a, unsigned short d)
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2InnerWriteWord called without init\n"));
 #endif
 
-	sh2_internal_w((a & 0x1fc)>>2, d << (((~a) & 2)*8), ~(0xffff << (((~a) & 2)*8)));
+	sh2_internal_w((a & 0x1fc)>>2, d << (~a & 2)*8, ~(0xffff << (~a & 2)*8));
 }
 
 void __fastcall Sh2InnerWriteLong(unsigned int a, unsigned int d) 
@@ -510,7 +510,7 @@ int Sh2Init(int nCount)
 	// init default memory handler
 	for (int i=0; i<nCount; i++) {
 		pSh2Ext = Sh2Ext + i;
-		sh2 = & (pSh2Ext->sh2);
+		sh2 = & pSh2Ext->sh2;
 
 		sh2->sh2_eat_cycles = 1;
 
@@ -545,7 +545,7 @@ void Sh2Open(const int i)
 #endif
 
 	pSh2Ext = Sh2Ext + i;
-	sh2 = & (pSh2Ext->sh2);
+	sh2 = & pSh2Ext->sh2;
 }
 
 void Sh2Close()
@@ -684,7 +684,7 @@ SH2_INLINE UINT16 RW(UINT32 A)
 		A ^= 2;
 #endif
 		//return (pr[A & SH2_PAGEM] << 8) | pr[(A & SH2_PAGEM) + 1];
-		return *((unsigned short *)(pr + (A & SH2_PAGEM)));
+		return *(unsigned short *)(pr + (A & SH2_PAGEM));
 	}
 	return pSh2Ext->ReadWord[(uintptr_t)pr](A);
 }
@@ -698,7 +698,7 @@ SH2_INLINE UINT16 OPRW(UINT32 A)
 #ifdef LSB_FIRST
 		A ^= 2;
 #endif
-		return *((unsigned short *)(pr + (A & SH2_PAGEM)));
+		return *(unsigned short *)(pr + (A & SH2_PAGEM));
 	}
 	
 	return 0x0000;
@@ -715,7 +715,7 @@ SH2_INLINE UINT32 RL(UINT32 A)
 	pr = pSh2Ext->MemMap[ A >> SH2_SHIFT ];
 	if ( (uintptr_t)pr >= SH2_MAXHANDLER ) {
 		//return (pr[(A & SH2_PAGEM) + 0] << 24) | (pr[(A & SH2_PAGEM) + 1] << 16) | (pr[(A & SH2_PAGEM) + 2] <<  8) | (pr[(A & SH2_PAGEM) + 3] <<  0);
-		return *((unsigned int *)(pr + (A & SH2_PAGEM)));
+		return *(unsigned int *)(pr + (A & SH2_PAGEM));
 	}
 	return pSh2Ext->ReadLong[(uintptr_t)pr](A);
 }
@@ -752,7 +752,7 @@ SH2_INLINE void WW(UINT32 A, UINT16 V)
 #ifdef LSB_FIRST
 		A ^= 2;
 #endif
-		*((unsigned short *)(pr + (A & SH2_PAGEM))) = (unsigned short)V;
+		*(unsigned short *)(pr + (A & SH2_PAGEM)) = (unsigned short)V;
 		return;
 	}
 	pSh2Ext->WriteWord[(uintptr_t)pr](A, V);
@@ -767,7 +767,7 @@ SH2_INLINE void WL(UINT32 A, UINT32 V)
 	unsigned char * pr;
 	pr = pSh2Ext->MemMap[(A >> SH2_SHIFT) + SH2_WADD];
 	if ((uintptr_t)pr >= SH2_MAXHANDLER) {
-		*((unsigned int *)(pr + (A & SH2_PAGEM))) = (unsigned int)V;
+		*(unsigned int *)(pr + (A & SH2_PAGEM)) = (unsigned int)V;
 		return;
 	}
 	pSh2Ext->WriteLong[(uintptr_t)pr](A, V);
@@ -779,7 +779,7 @@ SH2_INLINE void sh2_exception(/*const char *message,*/ int irqline)
 
 	if (irqline != 16)
 	{
-		if (irqline <= (signed int)((sh2->sr >> 4) & 15)) /* If the cpu forbids this interrupt */
+		if (irqline <= (signed int)(sh2->sr >> 4 & 15)) /* If the cpu forbids this interrupt */
 			return;
 
 		// if this is an sh2 internal irq, use its vector
@@ -821,7 +821,7 @@ SH2_INLINE void sh2_exception(/*const char *message,*/ int irqline)
 	if (irqline > SH2_INT_15)
 		sh2->sr = sh2->sr | I;
 	else
-		sh2->sr = (sh2->sr & ~I) | (irqline << 4);
+		sh2->sr = sh2->sr & ~I | irqline << 4;
 
 	/* fetch PC */
 	sh2->pc = RL( sh2->vbr + vector * 4 );
@@ -971,7 +971,7 @@ SH2_INLINE void BF(UINT32 d)
 {
 	if ((sh2->sr & T) == 0)
 	{
-		INT32 disp = ((INT32)d << 24) >> 24;
+		INT32 disp = (INT32)d << 24 >> 24;
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		change_pc(sh2->pc & AM);
 		sh2->sh2_icount -= 2;
@@ -986,7 +986,7 @@ SH2_INLINE void BFS(UINT32 d)
 {
 	if ((sh2->sr & T) == 0)
 	{
-		INT32 disp = ((INT32)d << 24) >> 24;
+		INT32 disp = (INT32)d << 24 >> 24;
 		sh2->delay = sh2->pc;
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		sh2->sh2_icount--;
@@ -999,7 +999,7 @@ SH2_INLINE void BFS(UINT32 d)
  */
 SH2_INLINE void BRA(UINT32 d)
 {
-	INT32 disp = ((INT32)d << 20) >> 20;
+	INT32 disp = (INT32)d << 20 >> 20;
 
 #if BUSY_LOOP_HACKS
 	if (disp == -2)
@@ -1041,7 +1041,7 @@ SH2_INLINE void BRAF(UINT32 m)
  */
 SH2_INLINE void BSR(UINT32 d)
 {
-	INT32 disp = ((INT32)d << 20) >> 20;
+	INT32 disp = (INT32)d << 20 >> 20;
 
 	sh2->pr = sh2->pc + 2;
 	sh2->delay = sh2->pc;
@@ -1069,7 +1069,7 @@ SH2_INLINE void BT(UINT32 d)
 {
 	if ((sh2->sr & T) != 0)
 	{
-		INT32 disp = ((INT32)d << 24) >> 24;
+		INT32 disp = (INT32)d << 24 >> 24;
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		change_pc(sh2->pc & AM);
 		sh2->sh2_icount -= 2;
@@ -1084,7 +1084,7 @@ SH2_INLINE void BTS(UINT32 d)
 {
 	if ((sh2->sr & T) != 0)
 	{
-		INT32 disp = ((INT32)d << 24) >> 24;
+		INT32 disp = (INT32)d << 24 >> 24;
 		sh2->delay = sh2->pc;
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		sh2->sh2_icount--;
@@ -1204,9 +1204,9 @@ SH2_INLINE void CMPSTR(UINT32 m, UINT32 n)
   UINT32 temp;
   INT32 HH, HL, LH, LL;
   temp = sh2->r[n] ^ sh2->r[m];
-  HH = (temp >> 24) & 0xff;
-  HL = (temp >> 16) & 0xff;
-  LH = (temp >> 8) & 0xff;
+  HH = temp >> 24 & 0xff;
+  HL = temp >> 16 & 0xff;
+  LH = temp >> 8 & 0xff;
   LL = temp & 0xff;
   if (HH && HL && LH && LL)
    sh2->sr &= ~T;
@@ -1273,7 +1273,7 @@ SH2_INLINE void DIV1(UINT32 m, UINT32 n)
 	else
 		sh2->sr &= ~Q;
 
-	sh2->r[n] = (sh2->r[n] << 1) | (sh2->sr & T);
+	sh2->r[n] = sh2->r[n] << 1 | sh2->sr & T;
 
 	if (!old_q)
 	{
@@ -1346,8 +1346,8 @@ SH2_INLINE void DIV1(UINT32 m, UINT32 n)
 		}
 	}
 
-	tmp0 = (sh2->sr & (Q | M));
-	if((!tmp0) || (tmp0 == 0x300)) /* if Q == M set T else clear T */
+	tmp0 = sh2->sr & (Q | M);
+	if(!tmp0 || tmp0 == 0x300) /* if Q == M set T else clear T */
 		sh2->sr |= T;
 	else
 		sh2->sr &= ~T;
@@ -1373,9 +1373,9 @@ SH2_INLINE void DMULS(UINT32 m, UINT32 n)
 	temp1 = (UINT32) tempn;
 	temp2 = (UINT32) tempm;
 	RnL = temp1 & 0x0000ffff;
-	RnH = (temp1 >> 16) & 0x0000ffff;
+	RnH = temp1 >> 16 & 0x0000ffff;
 	RmL = temp2 & 0x0000ffff;
-	RmH = (temp2 >> 16) & 0x0000ffff;
+	RmH = temp2 >> 16 & 0x0000ffff;
 	temp0 = RmL * RnL;
 	temp1 = RmH * RnL;
 	temp2 = RmL * RnH;
@@ -1384,18 +1384,18 @@ SH2_INLINE void DMULS(UINT32 m, UINT32 n)
 	Res1 = temp1 + temp2;
 	if (Res1 < temp1)
 		Res2 += 0x00010000;
-	temp1 = (Res1 << 16) & 0xffff0000;
+	temp1 = Res1 << 16 & 0xffff0000;
 	Res0 = temp0 + temp1;
 	if (Res0 < temp0)
 		Res2++;
-	Res2 = Res2 + ((Res1 >> 16) & 0x0000ffff) + temp3;
+	Res2 = Res2 + (Res1 >> 16 & 0x0000ffff) + temp3;
 	if (fnLmL < 0)
 	{
 		Res2 = ~Res2;
 		if (Res0 == 0)
 			Res2++;
 		else
-			Res0 = (~Res0) + 1;
+			Res0 = ~Res0 + 1;
 	}
 	sh2->mach = Res2;
 	sh2->macl = Res0;
@@ -1409,9 +1409,9 @@ SH2_INLINE void DMULU(UINT32 m, UINT32 n)
 	UINT32 temp0, temp1, temp2, temp3;
 
 	RnL = sh2->r[n] & 0x0000ffff;
-	RnH = (sh2->r[n] >> 16) & 0x0000ffff;
+	RnH = sh2->r[n] >> 16 & 0x0000ffff;
 	RmL = sh2->r[m] & 0x0000ffff;
-	RmH = (sh2->r[m] >> 16) & 0x0000ffff;
+	RmH = sh2->r[m] >> 16 & 0x0000ffff;
 	temp0 = RmL * RnL;
 	temp1 = RmH * RnL;
 	temp2 = RmL * RnH;
@@ -1420,11 +1420,11 @@ SH2_INLINE void DMULU(UINT32 m, UINT32 n)
 	Res1 = temp1 + temp2;
 	if (Res1 < temp1)
 		Res2 += 0x00010000;
-	temp1 = (Res1 << 16) & 0xffff0000;
+	temp1 = Res1 << 16 & 0xffff0000;
 	Res0 = temp0 + temp1;
 	if (Res0 < temp0)
 		Res2++;
-	Res2 = Res2 + ((Res1 >> 16) & 0x0000ffff) + temp3;
+	Res2 = Res2 + (Res1 >> 16 & 0x0000ffff) + temp3;
 	sh2->mach = Res2;
 	sh2->macl = Res0;
 	sh2->sh2_icount--;
@@ -1461,13 +1461,13 @@ SH2_INLINE void DT(UINT32 n)
 /*  EXTS.B  Rm,Rn */
 SH2_INLINE void EXTSB(UINT32 m, UINT32 n)
 {
-	sh2->r[n] = ((INT32)sh2->r[m] << 24) >> 24;
+	sh2->r[n] = (INT32)sh2->r[m] << 24 >> 24;
 }
 
 /*  EXTS.W  Rm,Rn */
 SH2_INLINE void EXTSW(UINT32 m, UINT32 n)
 {
-	sh2->r[n] = ((INT32)sh2->r[m] << 16) >> 16;
+	sh2->r[n] = (INT32)sh2->r[m] << 16 >> 16;
 }
 
 /*  EXTU.B  Rm,Rn */
@@ -1610,9 +1610,9 @@ SH2_INLINE void MAC_L(UINT32 m, UINT32 n)
 	temp1 = (UINT32) tempn;
 	temp2 = (UINT32) tempm;
 	RnL = temp1 & 0x0000ffff;
-	RnH = (temp1 >> 16) & 0x0000ffff;
+	RnH = temp1 >> 16 & 0x0000ffff;
 	RmL = temp2 & 0x0000ffff;
-	RmH = (temp2 >> 16) & 0x0000ffff;
+	RmH = temp2 >> 16 & 0x0000ffff;
 	temp0 = RmL * RnL;
 	temp1 = RmH * RnL;
 	temp2 = RmL * RnH;
@@ -1621,31 +1621,31 @@ SH2_INLINE void MAC_L(UINT32 m, UINT32 n)
 	Res1 = temp1 + temp2;
 	if (Res1 < temp1)
 		Res2 += 0x00010000;
-	temp1 = (Res1 << 16) & 0xffff0000;
+	temp1 = Res1 << 16 & 0xffff0000;
 	Res0 = temp0 + temp1;
 	if (Res0 < temp0)
 		Res2++;
-	Res2 = Res2 + ((Res1 >> 16) & 0x0000ffff) + temp3;
+	Res2 = Res2 + (Res1 >> 16 & 0x0000ffff) + temp3;
 	if (fnLmL < 0)
 	{
 		Res2 = ~Res2;
 		if (Res0 == 0)
 			Res2++;
 		else
-			Res0 = (~Res0) + 1;
+			Res0 = ~Res0 + 1;
 	}
 	if (sh2->sr & S)
 	{
 		Res0 = sh2->macl + Res0;
 		if (sh2->macl > Res0)
 			Res2++;
-		Res2 += (sh2->mach & 0x0000ffff);
-		if (((INT32) Res2 < 0) && (Res2 < 0xffff8000))
+		Res2 += sh2->mach & 0x0000ffff;
+		if ((INT32) Res2 < 0 && Res2 < 0xffff8000)
 		{
 			Res2 = 0x00008000;
 			Res0 = 0x00000000;
 		}
-		else if (((INT32) Res2 > 0) && (Res2 > 0x00007fff))
+		else if ((INT32) Res2 > 0 && Res2 > 0x00007fff)
 		{
 			Res2 = 0x00007fff;
 			Res0 = 0xffffffff;
@@ -1676,7 +1676,7 @@ SH2_INLINE void MAC_W(UINT32 m, UINT32 n)
 	tempm = (INT32) RW( sh2->r[m] );
 	sh2->r[m] += 2;
 	templ = sh2->macl;
-	tempm = ((INT32) (short) tempn * (INT32) (short) tempm);
+	tempm = (INT32) (short) tempn * (INT32) (short) tempm;
 	if ((INT32) sh2->macl >= 0)
 		dest = 0;
 	else
@@ -1877,7 +1877,7 @@ SH2_INLINE void MOVWI(UINT32 d, UINT32 n)
 SH2_INLINE void MOVLI(UINT32 d, UINT32 n)
 {
 	UINT32 disp = d & 0xff;
-	sh2->ea = ((sh2->pc + 2) & ~3) + disp * 4;
+	sh2->ea = (sh2->pc + 2 & ~3) + disp * 4;
 	sh2->r[n] = RL( sh2->ea );
 }
 
@@ -1981,7 +1981,7 @@ SH2_INLINE void MOVLL4(UINT32 m, UINT32 d, UINT32 n)
 SH2_INLINE void MOVA(UINT32 d)
 {
 	UINT32 disp = d & 0xff;
-	sh2->ea = ((sh2->pc + 2) & ~3) + disp * 4;
+	sh2->ea = (sh2->pc + 2 & ~3) + disp * 4;
 	sh2->r[0] = sh2->ea;
 }
 
@@ -2023,7 +2023,7 @@ SH2_INLINE void NEGC(UINT32 m, UINT32 n)
 
 	temp = sh2->r[m];
 	sh2->r[n] = -temp - (sh2->sr & T);
-	if (temp || (sh2->sr & T))
+	if (temp || sh2->sr & T)
 		sh2->sr |= T;
 	else
 		sh2->sr &= ~T;
@@ -2069,9 +2069,9 @@ SH2_INLINE void ROTCL(UINT32 n)
 {
 	UINT32 temp;
 
-	temp = (sh2->r[n] >> 31) & T;
-	sh2->r[n] = (sh2->r[n] << 1) | (sh2->sr & T);
-	sh2->sr = (sh2->sr & ~T) | temp;
+	temp = sh2->r[n] >> 31 & T;
+	sh2->r[n] = sh2->r[n] << 1 | sh2->sr & T;
+	sh2->sr = sh2->sr & ~T | temp;
 }
 
 /*  ROTCR   Rn */
@@ -2083,21 +2083,21 @@ SH2_INLINE void ROTCR(UINT32 n)
 		sh2->sr |= T;
 	else
 		sh2->sr &= ~T;
-	sh2->r[n] = (sh2->r[n] >> 1) | temp;
+	sh2->r[n] = sh2->r[n] >> 1 | temp;
 }
 
 /*  ROTL    Rn */
 SH2_INLINE void ROTL(UINT32 n)
 {
-	sh2->sr = (sh2->sr & ~T) | ((sh2->r[n] >> 31) & T);
-	sh2->r[n] = (sh2->r[n] << 1) | (sh2->r[n] >> 31);
+	sh2->sr = sh2->sr & ~T | sh2->r[n] >> 31 & T;
+	sh2->r[n] = sh2->r[n] << 1 | sh2->r[n] >> 31;
 }
 
 /*  ROTR    Rn */
 SH2_INLINE void ROTR(UINT32 n)
 {
-	sh2->sr = (sh2->sr & ~T) | (sh2->r[n] & T);
-	sh2->r[n] = (sh2->r[n] >> 1) | (sh2->r[n] << 31);
+	sh2->sr = sh2->sr & ~T | sh2->r[n] & T;
+	sh2->r[n] = sh2->r[n] >> 1 | sh2->r[n] << 31;
 }
 
 /*  RTE */
@@ -2131,21 +2131,21 @@ SH2_INLINE void SETT(void)
 /*  SHAL    Rn      (same as SHLL) */
 SH2_INLINE void SHAL(UINT32 n)
 {
-	sh2->sr = (sh2->sr & ~T) | ((sh2->r[n] >> 31) & T);
+	sh2->sr = sh2->sr & ~T | sh2->r[n] >> 31 & T;
 	sh2->r[n] <<= 1;
 }
 
 /*  SHAR    Rn */
 SH2_INLINE void SHAR(UINT32 n)
 {
-	sh2->sr = (sh2->sr & ~T) | (sh2->r[n] & T);
+	sh2->sr = sh2->sr & ~T | sh2->r[n] & T;
 	sh2->r[n] = (UINT32)((INT32)sh2->r[n] >> 1);
 }
 
 /*  SHLL    Rn      (same as SHAL) */
 SH2_INLINE void SHLL(UINT32 n)
 {
-	sh2->sr = (sh2->sr & ~T) | ((sh2->r[n] >> 31) & T);
+	sh2->sr = sh2->sr & ~T | sh2->r[n] >> 31 & T;
 	sh2->r[n] <<= 1;
 }
 
@@ -2170,7 +2170,7 @@ SH2_INLINE void SHLL16(UINT32 n)
 /*  SHLR    Rn */
 SH2_INLINE void SHLR(UINT32 n)
 {
-	sh2->sr = (sh2->sr & ~T) | (sh2->r[n] & T);
+	sh2->sr = sh2->sr & ~T | sh2->r[n] & T;
 	sh2->r[n] >>= 1;
 }
 
@@ -2347,7 +2347,7 @@ SH2_INLINE void SWAPB(UINT32 m, UINT32 n)
 
 	temp0 = sh2->r[m] & 0xffff0000;
 	temp1 = (sh2->r[m] & 0x000000ff) << 8;
-	sh2->r[n] = (sh2->r[m] >> 8) & 0x000000ff;
+	sh2->r[n] = sh2->r[m] >> 8 & 0x000000ff;
 	sh2->r[n] = sh2->r[n] | temp1 | temp0;
 }
 
@@ -2356,8 +2356,8 @@ SH2_INLINE void SWAPW(UINT32 m, UINT32 n)
 {
 	UINT32 temp;
 
-	temp = (sh2->r[m] >> 16) & 0x0000ffff;
-	sh2->r[n] = (sh2->r[m] << 16) | temp;
+	temp = sh2->r[m] >> 16 & 0x0000ffff;
+	sh2->r[n] = sh2->r[m] << 16 | temp;
 }
 
 /*  TAS.B   @Rn */
@@ -2459,8 +2459,8 @@ SH2_INLINE void XTRCT(UINT32 m, UINT32 n)
 {
 	UINT32 temp;
 
-	temp = (sh2->r[m] << 16) & 0xffff0000;
-	sh2->r[n] = (sh2->r[n] >> 16) & 0x0000ffff;
+	temp = sh2->r[m] << 16 & 0xffff0000;
+	sh2->r[n] = sh2->r[n] >> 16 & 0x0000ffff;
 	sh2->r[n] |= temp;
 }
 
@@ -2706,7 +2706,7 @@ SH2_INLINE void op0111(UINT16 opcode)
 
 SH2_INLINE void op1000(UINT16 opcode)
 {
-	switch ( opcode  & (15<<8) )
+	switch ( opcode  & 15<<8 )
 	{
 	case  0 << 8: MOVBS4(opcode & 0x0f, Rm); 	break;
 	case  1 << 8: MOVWS4(opcode & 0x0f, Rm); 	break;
@@ -2745,7 +2745,7 @@ SH2_INLINE void op1011(UINT16 opcode)
 
 SH2_INLINE void op1100(UINT16 opcode)
 {
-	switch (opcode & (15<<8))
+	switch (opcode & 15<<8)
 	{
 	case  0<<8: MOVBSG(opcode & 0xff); 		break;
 	case  1<<8: MOVWSG(opcode & 0xff); 		break;
@@ -2789,9 +2789,9 @@ SH2_INLINE void op1111(UINT16 /*opcode*/)
 
 static void sh2_timer_resync(void)
 {
-	int divider = div_tab[(sh2->m[5] >> 8) & 3];
+	int divider = div_tab[sh2->m[5] >> 8 & 3];
 	UINT64 cur_time = sh2_GetTotalCycles();
-	UINT64 add = (cur_time - sh2->frc_base) >> divider;
+	UINT64 add = cur_time - sh2->frc_base >> divider;
 
 	if (add > 0)
 	{
@@ -2831,7 +2831,7 @@ static void sh2_timer_activate(void)
 	}
 
 	if(max_delta != 0xfffff) {
-		int divider = div_tab[(sh2->m[5] >> 8) & 3];
+		int divider = div_tab[sh2->m[5] >> 8 & 3];
 		if(divider) {
 			max_delta <<= divider;
 			sh2->frc_base = sh2_GetTotalCycles();
@@ -2855,36 +2855,36 @@ static void sh2_recalc_irq(void)
 	int  level;
 
 	// Timer irqs
-	if((sh2->m[4]>>8) & sh2->m[4] & (ICF|OCFA|OCFB|OVF))
+	if(sh2->m[4]>>8 & sh2->m[4] & (ICF|OCFA|OCFB|OVF))
 	{
-		level = (sh2->m[0x18] >> 24) & 15;
+		level = sh2->m[0x18] >> 24 & 15;
 		if(level > irq)
 		{
-			int mask = (sh2->m[4]>>8) & sh2->m[4];
+			int mask = sh2->m[4]>>8 & sh2->m[4];
 			irq = level;
 			if(mask & ICF)
-				vector = (sh2->m[0x19] >> 8) & 0x7f;
+				vector = sh2->m[0x19] >> 8 & 0x7f;
 			else if(mask & (OCFA|OCFB))
 				vector = sh2->m[0x19] & 0x7f;
 			else
-				vector = (sh2->m[0x1a] >> 24) & 0x7f;
+				vector = sh2->m[0x1a] >> 24 & 0x7f;
 		}
 	}
 
 	// DMA irqs
 	if((sh2->m[0x63] & 6) == 6) {
-		level = (sh2->m[0x38] >> 8) & 15;
+		level = sh2->m[0x38] >> 8 & 15;
 		if(level > irq) {
 			irq = level;
-			vector = (sh2->m[0x68] >> 24) & 0x7f;
+			vector = sh2->m[0x68] >> 24 & 0x7f;
 		}
 	}
 
 	if((sh2->m[0x67] & 6) == 6) {
-		level = (sh2->m[0x38] >> 8) & 15;
+		level = sh2->m[0x38] >> 8 & 15;
 		if(level > irq) {
 			irq = level;
-			vector = (sh2->m[0x6a] >> 24) & 0x7f;
+			vector = sh2->m[0x6a] >> 24 & 0x7f;
 		}
 	}
 
@@ -2945,9 +2945,9 @@ static void sh2_dmac_check(int dma)
 		{
 			int incs, incd, size;
 			UINT32 src, dst, count;
-			incd = (sh2->m[0x63+4*dma] >> 14) & 3;
-			incs = (sh2->m[0x63+4*dma] >> 12) & 3;
-			size = (sh2->m[0x63+4*dma] >> 10) & 3;
+			incd = sh2->m[0x63+4*dma] >> 14 & 3;
+			incs = sh2->m[0x63+4*dma] >> 12 & 3;
+			size = sh2->m[0x63+4*dma] >> 10 & 3;
 			if(incd == 3 || incs == 3)
 			{
 //				logerror("SH2: DMA: bad increment values (%d, %d, %d, %04x)\n", incd, incs, size, sh2->m[0x63+4*dma]);
@@ -3078,7 +3078,7 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		if((mem_mask & 0x00ffffff) != 0xffffff)
 			sh2_timer_resync();
 		//bprintf(0, _T("SH2: TIER write %04x @ %04x\n"), data >> 16, mem_mask>>16);
-		sh2->m[4] = (sh2->m[4] & ~(ICF|OCFA|OCFB|OVF)) | (old & sh2->m[4] & (ICF|OCFA|OCFB|OVF));
+		sh2->m[4] = sh2->m[4] & ~(ICF|OCFA|OCFB|OVF) | old & sh2->m[4] & (ICF|OCFA|OCFB|OVF);
 		COMBINE_DATA(&sh2->frc);
 		if((mem_mask & 0x00ffffff) != 0xffffff)
 			sh2_timer_activate();
@@ -3088,9 +3088,9 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		//bprintf(0, _T("SH2: TCR write %08x @ %08x\n"), data, mem_mask);
 		sh2_timer_resync();
 		if(sh2->m[5] & 0x10)
-			sh2->ocrb = (sh2->ocrb & (mem_mask >> 16)) | ((data & ~mem_mask) >> 16);
+			sh2->ocrb = sh2->ocrb & mem_mask >> 16 | (data & ~mem_mask) >> 16;
 		else
-			sh2->ocra = (sh2->ocra & (mem_mask >> 16)) | ((data & ~mem_mask) >> 16);
+			sh2->ocra = sh2->ocra & mem_mask >> 16 | (data & ~mem_mask) >> 16;
 		sh2_timer_activate();
 		break;
 
@@ -3145,7 +3145,7 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 			break;
 		}
 	case 0x42: // DVCR
-		sh2->m[0x42] = (sh2->m[0x42] & ~0x00001000) | (old & sh2->m[0x42] & 0x00010000);
+		sh2->m[0x42] = sh2->m[0x42] & ~0x00001000 | old & sh2->m[0x42] & 0x00010000;
 		sh2_recalc_irq();
 		break;
 	case 0x43: // VCRDIV
@@ -3155,7 +3155,7 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		break;
 	case 0x45: // DVDNTL
 		{
-			INT64 a = sh2->m[0x45] | ((UINT64)(sh2->m[0x44]) << 32);
+			INT64 a = sh2->m[0x45] | (UINT64)sh2->m[0x44] << 32;
 			INT64 b = (INT32)sh2->m[0x40];
 //			LOG(("SH2 #%d div+mod %lld/%lld\n", cpu_getactivecpu(), a, b));
 			if (b)
@@ -3192,7 +3192,7 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		sh2->m[0x62] &= 0xffffff;
 		break;
 	case 0x63: // CHCR0
-		sh2->m[0x63] = (sh2->m[0x63] & ~2) | (old & sh2->m[0x63] & 2);
+		sh2->m[0x63] = sh2->m[0x63] & ~2 | old & sh2->m[0x63] & 2;
 		sh2_dmac_check(0);
 		break;
 	case 0x64: // SAR1
@@ -3202,7 +3202,7 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		sh2->m[0x66] &= 0xffffff;
 		break;
 	case 0x67: // CHCR1
-		sh2->m[0x67] = (sh2->m[0x67] & ~2) | (old & sh2->m[0x67] & 2);
+		sh2->m[0x67] = sh2->m[0x67] & ~2 | old & sh2->m[0x67] & 2;
 		sh2_dmac_check(1);
 		break;
 	case 0x68: // VCRDMA0
@@ -3210,7 +3210,7 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		sh2_recalc_irq();
 		break;
 	case 0x6c: // DMAOR
-		sh2->m[0x6c] = (sh2->m[0x6c] & ~6) | (old & sh2->m[0x6c] & 6);
+		sh2->m[0x6c] = sh2->m[0x6c] & ~6 | old & sh2->m[0x6c] & 6;
 		sh2_dmac_check(0);
 		sh2_dmac_check(1);
 		break;
@@ -3240,21 +3240,21 @@ static UINT32 sh2_internal_r(UINT32 offset, UINT32 /*mem_mask*/)
 	{
 	case 0x04: // TIER, FTCSR, FRC
 		sh2_timer_resync();
-		return (sh2->m[4] & 0xffff0000) | sh2->frc;
+		return sh2->m[4] & 0xffff0000 | sh2->frc;
 	case 0x05: // OCRx, TCR, TOCR
 		if(sh2->m[5] & 0x10)
-			return (sh2->ocrb << 16) | (sh2->m[5] & 0xffff);
+			return sh2->ocrb << 16 | sh2->m[5] & 0xffff;
 		else
-			return (sh2->ocra << 16) | (sh2->m[5] & 0xffff);
+			return sh2->ocra << 16 | sh2->m[5] & 0xffff;
 	case 0x06: // ICR
 		return sh2->icr << 16;
 
 	case 0x38: // ICR, IPRA
 //		return (sh2->m[0x38] & 0x7fffffff) | (sh2->nmi_line_state == ASSERT_LINE ? 0 : 0x80000000);
-		return (sh2->m[0x38] & 0x7fffffff) | 0x80000000;
+		return sh2->m[0x38] & 0x7fffffff | 0x80000000;
 
 	case 0x78: // BCR1
-		return /*(m_is_slave ? 0x00008000 : 0)*/ 0 | (sh2->m[0x78] & 0x7fff);
+		return /*(m_is_slave ? 0x00008000 : 0)*/ 0 | sh2->m[0x78] & 0x7fff;
 		//return 0;
 
 	case 0x41: // dvdntl mirrors
@@ -3301,7 +3301,7 @@ int Sh2Run(int cycles)
 
 			sh2->ppc = sh2->pc;
 
-			switch (opcode & ( 15 << 12))
+			switch (opcode & 15 << 12)
 			{
 				case  0<<12: op0000(opcode); break;
 				case  1<<12: op0001(opcode); break;
@@ -3338,15 +3338,15 @@ int Sh2Run(int cycles)
 
 
 			if (sh2->dma_timer_active[0])
-				if ((cy - sh2->dma_timer_base[0]) >= sh2->dma_timer_cycles[0])
+				if (cy - sh2->dma_timer_base[0] >= sh2->dma_timer_cycles[0])
 					sh2_dmac_callback(0);
 
 			if (sh2->dma_timer_active[1])
-				if ((cy - sh2->dma_timer_base[1]) >= sh2->dma_timer_cycles[1])
+				if (cy - sh2->dma_timer_base[1] >= sh2->dma_timer_cycles[1])
 					sh2_dmac_callback(1);
 
 			if ( sh2->timer_active )
-				if ((cy - sh2->timer_base) >= sh2->timer_cycles)
+				if (cy - sh2->timer_base >= sh2->timer_cycles)
 					sh2_timer_callback();
 		}
 		
@@ -3408,7 +3408,7 @@ unsigned int Sh2GetPC(int)
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2GetPC called without init\n"));
 #endif
 
-	return (sh2->delay) ? (sh2->delay & AM) : (sh2->pc & AM);
+	return sh2->delay ? sh2->delay & AM : sh2->pc & AM;
 }
 
 void Sh2SetVBR(unsigned int i)
@@ -3516,7 +3516,7 @@ int Sh2Scan(int nAction)
 
 			szText[5] = '0' + i;
 
-			memset(&ba, 0, sizeof(ba));
+			memset(&ba, 0, sizeof ba);
 			ba.Data	  = &Sh2Ext[i].sh2;
 			ba.nLen	  = STRUCT_SIZE_HELPER(SH2, sh2_eat_cycles);
 			ba.szName = szText;

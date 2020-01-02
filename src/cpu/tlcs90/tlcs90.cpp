@@ -197,19 +197,19 @@ static const char *const cc_names[] =   {   "f",    "lt",   "le",   "ule",  "ov"
 #define R16R8( N,R,g )      cpustate->mode##N = MODE_R16R8; cpustate->r##N = R; cpustate->r##N##b = g;
 
 INLINE UINT8  RM8 (t90_Regs *, UINT32 a)    { return tlcs90_program_read_byte( a ); }
-INLINE UINT16 RM16(t90_Regs *cpustate, UINT32 a)    { return RM8(cpustate,a) | (RM8( cpustate, (a+1) & 0xffff ) << 8); }
+INLINE UINT16 RM16(t90_Regs *cpustate, UINT32 a)    { return RM8(cpustate,a) | RM8( cpustate, a+1 & 0xffff ) << 8; }
 
 INLINE void WM8 (t90_Regs *, UINT32 a, UINT8  v)    { tlcs90_program_write_byte( a, v ); }
-INLINE void WM16(t90_Regs *cpustate, UINT32 a, UINT16 v)    { WM8(cpustate,a,v);    WM8( cpustate, (a+1) & 0xffff, v >> 8); }
+INLINE void WM16(t90_Regs *cpustate, UINT32 a, UINT16 v)    { WM8(cpustate,a,v);    WM8( cpustate, a+1 & 0xffff, v >> 8); }
 
 INLINE UINT8  RX8 (t90_Regs *, UINT32 a, UINT32 base)   { return tlcs90_program_read_byte( base | a ); }
-INLINE UINT16 RX16(t90_Regs *cpustate, UINT32 a, UINT32 base)   { return RX8(cpustate,a,base) | (RX8( cpustate, (a+1) & 0xffff, base ) << 8); }
+INLINE UINT16 RX16(t90_Regs *cpustate, UINT32 a, UINT32 base)   { return RX8(cpustate,a,base) | RX8( cpustate, a+1 & 0xffff, base ) << 8; }
 
 INLINE void WX8 (t90_Regs *, UINT32 a, UINT8  v, UINT32 base)   { tlcs90_program_write_byte( base | a, v ); }
-INLINE void WX16(t90_Regs *cpustate, UINT32 a, UINT16 v, UINT32 base)   { WX8(cpustate,a,v,base);   WX8( cpustate, (a+1) & 0xffff, v >> 8, base); }
+INLINE void WX16(t90_Regs *cpustate, UINT32 a, UINT16 v, UINT32 base)   { WX8(cpustate,a,v,base);   WX8( cpustate, a+1 & 0xffff, v >> 8, base); }
 
 INLINE UINT8  READ8(t90_Regs *cpustate) { UINT8 b0 = RM8( cpustate, cpustate->addr++ ); cpustate->addr &= 0xffff; return b0; }
-INLINE UINT16 READ16(t90_Regs *cpustate)    { UINT8 b0 = READ8(cpustate); return b0 | (READ8(cpustate) << 8); }
+INLINE UINT16 READ16(t90_Regs *cpustate)    { UINT8 b0 = READ8(cpustate); return b0 | READ8(cpustate) << 8; }
 
 static void decode(t90_Regs *cpustate)
 {
@@ -1094,7 +1094,7 @@ INLINE UINT16 r16( t90_Regs *cpustate, const e_r r )
 		case AF:    return cpustate->af.w.l;
 //      case AF2:   return cpustate->af2.w.l;
 // one interrupt flip-flop? Needed by e.g. mjifb
-		case AF2:   return (cpustate->af2.w.l & (~IF)) | (cpustate->af.w.l & IF);
+		case AF2:   return cpustate->af2.w.l & ~IF | cpustate->af.w.l & IF;
 		case PC:    return cpustate->pc.w.l;
 
 		//default:
@@ -1236,16 +1236,16 @@ INLINE INT32 Test( t90_Regs *cpustate, UINT8 cond )
 	switch ( cond )
 	{
 		case FLS:   return 0;
-		case LT:    s = F & SF; v = F & VF; return (s && !v) || (!s && v);
-		case LE:    s = F & SF; v = F & VF; return (F & ZF) || (s && !v) || (!s && v);
-		case ULE:   return (F & CF) || (F & ZF);
+		case LT:    s = F & SF; v = F & VF; return s && !v || !s && v;
+		case LE:    s = F & SF; v = F & VF; return F & ZF || s && !v || !s && v;
+		case ULE:   return F & CF || F & ZF;
 		case OV:    return F & VF;
 		case MI:    return F & SF;
 		case Z:     return F & ZF;
 		case CR:    return F & CF;
 		case T:     return 1;
-		case GE:    s = F & SF; v = F & VF; return (s && v) || (!s && !v);
-		case GT:    s = F & SF; v = F & VF; return !((F & ZF) || (s && !v) || (!s && v));
+		case GE:    s = F & SF; v = F & VF; return s && v || !s && !v;
+		case GT:    s = F & SF; v = F & VF; return !(F & ZF || s && !v || !s && v);
 		case UGT:   return !(F & CF) && !(F & ZF);
 		case NOV:   return !(F & VF);
 		case PL:    return !(F & SF);
@@ -1341,7 +1341,7 @@ static void check_interrupts(t90_Regs *cpustate)
 
 	for (irq = INTSWI; irq < INTMAX; irq++)
 	{
-		mask = (1 << irq);
+		mask = 1 << irq;
 		if(irq >= INT0) mask &= cpustate->irq_mask;
 		if ( cpustate->irq_state & mask )
 		{
@@ -1355,7 +1355,7 @@ void tlcs90_set_irq_line(INT32 irq, INT32 state)
 {
 	t90_Regs *cpustate = &tlcs90_data[0];
 
-	if ( ((cpustate->irq_state >> irq)&1) == state ) return;
+	if ( (cpustate->irq_state >> irq&1) == state ) return;
 
 	if (state)
 	{
@@ -1513,7 +1513,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				b8 = cpustate->af.b.h - a8;
 				cpustate->hl.w.l++;
 				cpustate->bc.w.l--;
-				F = (F & (IF | CF)) | SZ[b8] | ((cpustate->af.b.h^a8^b8)&HF) | NF;
+				F = F & (IF | CF) | SZ[b8] | (cpustate->af.b.h^a8^b8)&HF | NF;
 				if ( cpustate->bc.w.l ) F |= VF;
 				Cyc(cpustate);
 				break;
@@ -1522,7 +1522,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				b8 = cpustate->af.b.h - a8;
 				cpustate->hl.w.l++;
 				cpustate->bc.w.l--;
-				F = (F & (IF | CF)) | SZ[b8] | ((cpustate->af.b.h^a8^b8)&HF) | NF;
+				F = F & (IF | CF) | SZ[b8] | (cpustate->af.b.h^a8^b8)&HF | NF;
 				if ( cpustate->bc.w.l )
 				{
 					F |= VF;
@@ -1625,7 +1625,7 @@ INT32 tlcs90Run(INT32 nCycles)
 
 				if (cf)
 				{
-					diff = (lo <= 9 && !hf) ? 0x60 : 0x66;
+					diff = lo <= 9 && !hf ? 0x60 : 0x66;
 				}
 				else
 				{
@@ -1648,7 +1648,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				if (nf) cpustate->af.b.h -= diff;
 				else cpustate->af.b.h += diff;
 
-				F = SZP[A] | (F & (IF | NF));
+				F = SZP[A] | F & (IF | NF);
 				if (cf || (lo <= 9 ? hi >= 10 : hi >= 9)) F |= XCF | CF;
 				if (nf ? hf && lo <= 5 : lo >= 10)  F |= HF;
 			}
@@ -1665,7 +1665,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				a8 = 0;
 				b8 = cpustate->af.b.h;
 				a32 = a8 - b8;
-				F = (F & IF) | SZ[(UINT8)a32] | NF;
+				F = F & IF | SZ[(UINT8)a32] | NF;
 				if (a32 & 0x100)            F |= CF | XCF;  //X?
 				if ((a8 ^ a32 ^ b8) & 0x10) F |= HF;
 				if ((b8 ^ a8) & (a8 ^ a32) & 0x80)  F |= VF;
@@ -1683,11 +1683,11 @@ INT32 tlcs90Run(INT32 nCycles)
 				Cyc(cpustate);
 				break;
 			case SCF:
-				F = (F & (SF | ZF | IF | VF)) | XCF | CF;
+				F = F & (SF | ZF | IF | VF) | XCF | CF;
 				Cyc(cpustate);
 				break;
 			case CCF:
-				F = (F & (SF | ZF | IF | VF)) | ((F & CF)?HF:(XCF | CF));
+				F = F & (SF | ZF | IF | VF) | (F & CF?HF: XCF | CF);
 				Cyc(cpustate);
 				break;
 
@@ -1695,22 +1695,22 @@ INT32 tlcs90Run(INT32 nCycles)
 //              Cyc(cpustate);
 //              break;
 			case BIT:
-				F = (F & (IF | CF)) | HF | SZ_BIT[ Read2_8(cpustate) & (1 << Read1_8(cpustate)) ];
+				F = F & (IF | CF) | HF | SZ_BIT[ Read2_8(cpustate) & 1 << Read1_8(cpustate) ];
 				Cyc(cpustate);
 				break;
 			case SET:
-				Write2_8( cpustate, Read2_8(cpustate) | (1 << Read1_8(cpustate)) );
+				Write2_8( cpustate, Read2_8(cpustate) | 1 << Read1_8(cpustate) );
 				Cyc(cpustate);
 				break;
 			case RES:
-				Write2_8( cpustate, Read2_8(cpustate) & (~(1 << Read1_8(cpustate))) );
+				Write2_8( cpustate, Read2_8(cpustate) & ~(1 << Read1_8(cpustate)) );
 				Cyc(cpustate);
 				break;
 
 			case INC:
 				a8 = Read1_8(cpustate) + 1;
 				Write1_8( cpustate, a8 );
-				F = (F & (IF | CF)) | SZHV_inc[a8];
+				F = F & (IF | CF) | SZHV_inc[a8];
 				if (a8 == 0)    F |= XCF;
 				Cyc(cpustate);
 				break;
@@ -1719,7 +1719,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				{
 					a8 = Read1_8(cpustate) + 1;
 					Write1_8( cpustate, a8 );
-					F = (F & (IF | CF)) | SZHV_inc[a8];
+					F = F & (IF | CF) | SZHV_inc[a8];
 					if (a8 == 0)    F |= XCF;
 					Cyc(cpustate);
 				}
@@ -1748,7 +1748,7 @@ INT32 tlcs90Run(INT32 nCycles)
 			case DEC:
 				a8 = Read1_8(cpustate) - 1;
 				Write1_8( cpustate, a8 );
-				F = (F & (IF | CF)) | SZHV_dec[a8];
+				F = F & (IF | CF) | SZHV_dec[a8];
 				if (a8 == 0)    F |= XCF;
 				Cyc(cpustate);
 				break;
@@ -1757,7 +1757,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				{
 					a8 = Read1_8(cpustate) - 1;
 					Write1_8( cpustate, a8 );
-					F = (F & (IF | CF)) | SZHV_dec[a8];
+					F = F & (IF | CF) | SZHV_dec[a8];
 					if (a8 == 0)    F |= XCF;
 					Cyc(cpustate);
 				}
@@ -1774,7 +1774,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				a16 = Read1_16(cpustate);
 				a32 = a16 - 1;
 				Write1_16( cpustate, a32 );
-				F = (F & (IF | CF)) | NF;
+				F = F & (IF | CF) | NF;
 				if ((UINT16)a32 == 0)   F |= ZF | XCF;
 				if (a32 & 0x8000)       F |= SF;
 				if (a16 == 0x8000)      F |= VF;
@@ -1787,9 +1787,9 @@ INT32 tlcs90Run(INT32 nCycles)
 				a8 = Read1_8(cpustate);
 				b8 = Read2_8(cpustate);
 				a32 = a8 + b8;
-				if ( (cpustate->op == ADC) && (F & CF) )    a32 += 1;
+				if ( cpustate->op == ADC && F & CF )    a32 += 1;
 				Write1_8( cpustate, a32 );
-				F = (F & IF) | SZ[(UINT8)a32];
+				F = F & IF | SZ[(UINT8)a32];
 				if (a32 & 0x100)            F |= CF | XCF;  //X?
 				if ((a8 ^ a32 ^ b8) & 0x10) F |= HF;
 				if ((b8 ^ a8 ^ 0x80) & (b8 ^ a32) & 0x80)   F |= VF;
@@ -1800,9 +1800,9 @@ INT32 tlcs90Run(INT32 nCycles)
 				a16 = Read1_16(cpustate);
 				b16 = Read2_16(cpustate);
 				a32 = a16 + b16;
-				if ( (cpustate->op == (ADC | OP_16)) && (F & CF) )  a32 += 1;
+				if ( cpustate->op == (ADC | OP_16) && F & CF )  a32 += 1;
 				Write1_16( cpustate, a32 );
-				if ( (cpustate->op == (ADD | OP_16)) && cpustate->mode2 == MODE_R16 )
+				if ( cpustate->op == (ADD | OP_16) && cpustate->mode2 == MODE_R16 )
 				{
 					F &= SF | ZF | IF | VF;
 				}
@@ -1824,8 +1824,8 @@ INT32 tlcs90Run(INT32 nCycles)
 				a8 = Read1_8(cpustate);
 				b8 = Read2_8(cpustate);
 				a32 = a8 - b8;
-				if ( (cpustate->op == SBC) && (F & CF) )    a32 -= 1;
-				F = (F & IF) | SZ[(UINT8)a32] | NF;
+				if ( cpustate->op == SBC && F & CF )    a32 -= 1;
+				F = F & IF | SZ[(UINT8)a32] | NF;
 				if (a32 & 0x100)            F |= CF | XCF;  //X?
 				if ((a8 ^ a32 ^ b8) & 0x10) F |= HF;
 				if ((b8 ^ a8) & (a8 ^ a32) & 0x80)  F |= VF;
@@ -1839,8 +1839,8 @@ INT32 tlcs90Run(INT32 nCycles)
 				a16 = Read1_16(cpustate);
 				b16 = Read2_16(cpustate);
 				a32 = a16 - b16;
-				if ( (cpustate->op == (SBC | OP_16)) && (F & CF) )  a32 -= 1;
-				F = (F & IF) | NF;
+				if ( cpustate->op == (SBC | OP_16) && F & CF )  a32 -= 1;
+				F = F & IF | NF;
 				if ((UINT16)a32 == 0)           F |= ZF;
 				if (a32 & 0x8000)               F |= SF;
 				if (a32 & 0x10000)              F |= CF | XCF;  //X?
@@ -1854,13 +1854,13 @@ INT32 tlcs90Run(INT32 nCycles)
 			case AND:
 				a8 = Read1_8(cpustate) & Read2_8(cpustate);
 				Write1_8( cpustate, a8 );
-				F = (F & IF) | SZP[a8] | HF;
+				F = F & IF | SZP[a8] | HF;
 				Cyc(cpustate);
 				break;
 			case AND | OP_16:
 				a16 = Read1_16(cpustate) & Read2_16(cpustate);
 				Write1_16( cpustate, a16 );
-				F = (F & IF) | HF;
+				F = F & IF | HF;
 				if (a16 == 0)       F |= ZF;
 				if (a16 & 0x8000)   F |= SF;
 				Cyc(cpustate);
@@ -1868,7 +1868,7 @@ INT32 tlcs90Run(INT32 nCycles)
 			case XOR:
 				a8 = Read1_8(cpustate) ^ Read2_8(cpustate);
 				Write1_8( cpustate, a8 );
-				F = (F & IF) | SZP[a8];
+				F = F & IF | SZP[a8];
 				Cyc(cpustate);
 				break;
 			case XOR | OP_16:
@@ -1882,7 +1882,7 @@ INT32 tlcs90Run(INT32 nCycles)
 			case OR:
 				a8 = Read1_8(cpustate) | Read2_8(cpustate);
 				Write1_8( cpustate, a8 );
-				F = (F & IF) | SZP[a8];
+				F = F & IF | SZP[a8];
 				Cyc(cpustate);
 				break;
 			case OR | OP_16:
@@ -1896,19 +1896,19 @@ INT32 tlcs90Run(INT32 nCycles)
 
 			case RLC:
 				a8 = Read1_8(cpustate);
-				a8 = (a8 << 1) | (a8 >> 7);
+				a8 = a8 << 1 | a8 >> 7;
 				Write1_8( cpustate, a8 );
 				if ( cpustate->mode1 == MODE_R8 && cpustate->r1 == A )  F &= SF | ZF | IF | PF;
-				else                                F = (F & IF) | SZP[a8];
+				else                                F = F & IF | SZP[a8];
 				if (a8 & 0x01)                      F |= CF | XCF;  // X?
 				Cyc(cpustate);
 				break;
 			case RRC:
 				a8 = Read1_8(cpustate);
-				a8 = (a8 >> 1) | (a8 << 7);
+				a8 = a8 >> 1 | a8 << 7;
 				Write1_8( cpustate, a8 );
 				if ( cpustate->mode1 == MODE_R8 && cpustate->r1 == A )  F &= SF | ZF | IF | PF;
-				else                                F = (F & IF) | SZP[a8];
+				else                                F = F & IF | SZP[a8];
 				if (a8 & 0x80)                      F |= CF | XCF;  // X?
 				Cyc(cpustate);
 				break;
@@ -1919,7 +1919,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				if (F & CF) a8 |= 0x01;
 				Write1_8( cpustate, a8 );
 				if ( cpustate->mode1 == MODE_R8 && cpustate->r1 == A )  F &= SF | ZF | IF | PF;
-				else                                F = (F & IF) | SZP[a8];
+				else                                F = F & IF | SZP[a8];
 				if (b8)                             F |= CF | XCF;  // X?
 				Cyc(cpustate);
 				break;
@@ -1930,7 +1930,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				if (F & CF) a8 |= 0x80;
 				Write1_8( cpustate, a8 );
 				if ( cpustate->mode1 == MODE_R8 && cpustate->r1 == A )  F &= SF | ZF | IF | PF;
-				else                                F = (F & IF) | SZP[a8];
+				else                                F = F & IF | SZP[a8];
 				if (b8)                             F |= CF | XCF;  // X?
 				Cyc(cpustate);
 				break;
@@ -1942,17 +1942,17 @@ INT32 tlcs90Run(INT32 nCycles)
 				a8 <<= 1;
 				Write1_8( cpustate, a8 );
 				if ( cpustate->mode1 == MODE_R8 && cpustate->r1 == A )  F &= SF | ZF | IF | PF;
-				else                                F = (F & IF) | SZP[a8];
+				else                                F = F & IF | SZP[a8];
 				if (b8)                             F |= CF | XCF;  // X?
 				Cyc(cpustate);
 				break;
 			case SRA:
 				a8 = Read1_8(cpustate);
 				b8 = a8 & 0x01;
-				a8 = (a8 & 0x80) | (a8 >> 1);
+				a8 = a8 & 0x80 | a8 >> 1;
 				Write1_8( cpustate, a8 );
 				if ( cpustate->mode1 == MODE_R8 && cpustate->r1 == A )  F &= SF | ZF | IF | PF;
-				else                                F = (F & IF) | SZP[a8];
+				else                                F = F & IF | SZP[a8];
 				if (b8)                             F |= CF | XCF;  // X?
 				Cyc(cpustate);
 				break;
@@ -1962,25 +1962,25 @@ INT32 tlcs90Run(INT32 nCycles)
 				a8 >>= 1;
 				Write1_8( cpustate, a8 );
 				if ( cpustate->mode1 == MODE_R8 && cpustate->r1 == A )  F &= SF | ZF | IF | PF;
-				else                                F = (F & IF) | SZP[a8];
+				else                                F = F & IF | SZP[a8];
 				if (b8)                             F |= CF | XCF;  // X?
 				Cyc(cpustate);
 				break;
 			case RLD:
 				a8 = cpustate->af.b.h;
 				b8 = Read1_8(cpustate);
-				Write1_8( cpustate, (b8 << 4) | (a8 & 0x0f) );
-				a8 = (a8 & 0xf0) | (b8 >> 4);
-				F = (F & (IF | CF)) | SZP[a8];
+				Write1_8( cpustate, b8 << 4 | a8 & 0x0f );
+				a8 = a8 & 0xf0 | b8 >> 4;
+				F = F & (IF | CF) | SZP[a8];
 				cpustate->af.b.h = a8;
 				Cyc(cpustate);
 				break;
 			case RRD:
 				a8 = cpustate->af.b.h;
 				b8 = Read1_8(cpustate);
-				Write1_8( cpustate, (b8 >> 4) | (a8 << 4) );
-				a8 = (a8 & 0xf0) | (b8 & 0x0f);
-				F = (F & (IF | CF)) | SZP[a8];
+				Write1_8( cpustate, b8 >> 4 | a8 << 4 );
+				a8 = a8 & 0xf0 | b8 & 0x0f;
+				F = F & (IF | CF) | SZP[a8];
 				cpustate->af.b.h = a8;
 				Cyc(cpustate);
 				break;
@@ -2012,7 +2012,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				if (b16 == 0)
 				{
 					F |= VF;
-					cpustate->hl.w.l = (a16 << 8) | ((a16 >> 8) ^ 0xff);
+					cpustate->hl.w.l = a16 << 8 | a16 >> 8 ^ 0xff;
 				}
 				else
 				{
@@ -2040,7 +2040,7 @@ INT32 tlcs90Run(INT32 nCycles)
 		// timers
 		for (INT32 i = 0; i < 5; i++) {
 			if (cpustate->timer_enable[i]) {
-				cpustate->timer_periods[i] -= (prev_cycles - cpustate->icount);
+				cpustate->timer_periods[i] -= prev_cycles - cpustate->icount;
 				if (cpustate->timer_periods[i] <= 0)
 				{
 					cpustate->timer_cb[i](i);
@@ -2108,7 +2108,7 @@ void tlcs90Reset()
     dedicated input ports and CPU registers remain unchanged,
     but PC IFF BX BY = 0, A undefined
 */
-	memset(&cpustate->internal_registers, 0, sizeof(cpustate->internal_registers));
+	memset(&cpustate->internal_registers, 0, sizeof cpustate->internal_registers);
 }
 
 void tlcs90BurnCycles(INT32 cycles)
@@ -2402,20 +2402,20 @@ UINT8 t90_internal_registers_r(UINT16 offset)
 	switch ( T90_IOBASE + offset )
 	{
 		case T90_P3:    // 7,4,1,0
-			return (data & 0x6c) | (RIO & 0x93);
+			return data & 0x6c | RIO & 0x93;
 
 		case T90_P4:    // only output
 			return data & 0x0f;
 
 		case T90_P5:
-			return (RIO & 0x3f);
+			return RIO & 0x3f;
 
 		case T90_P6:
 		case T90_P7:
-			return (data & 0xf0) | (RIO & 0x0f);
+			return data & 0xf0 | RIO & 0x0f;
 
 		case T90_P8:    // 2,1,0
-			return (data & 0x08) | (RIO & 0x07);
+			return data & 0x08 | RIO & 0x07;
 
 		case T90_BX:
 		case T90_BY:
@@ -2431,7 +2431,7 @@ static void t90_start_timer(t90_Regs *cpustate, INT32 i)
 
 	cpustate->timer_value[i] = 0;
 
-	switch((cpustate->internal_registers[ T90_TMOD - T90_IOBASE ] >> (i * 2)) & 0x03)
+	switch(cpustate->internal_registers[ T90_TMOD - T90_IOBASE ] >> i * 2 & 0x03)
 	{
 		case 0:
 			// 8-bit mode
@@ -2446,7 +2446,7 @@ static void t90_start_timer(t90_Regs *cpustate, INT32 i)
 			return;
 	}
 
-	switch((cpustate->internal_registers[ T90_TCLK - T90_IOBASE ] >> (i * 2)) & 0x03)
+	switch(cpustate->internal_registers[ T90_TCLK - T90_IOBASE ] >> i * 2 & 0x03)
 	{
 		case 0:// if (i & 1)  logerror("%04X: CPU Timer %d clocked by Timer %d match signal\n", cpustate->pc.w.l, i,i-1);
 			//	else        logerror("%04X: CPU Timer %d, unsupported TCLK = 0\n", cpustate->pc.w.l, i);
@@ -2508,14 +2508,14 @@ void t90_timer_callback(INT32 param)
 
 	INT32 mode, timer_fired;
 	INT32 i = param;
-	INT32 mask = 0x20 | (1 << i);
+	INT32 mask = 0x20 | 1 << i;
 
 	if ( (cpustate->internal_registers[ T90_TRUN - T90_IOBASE ] & mask) != mask )
 		return;
 
 	timer_fired = 0;
 
-	mode = (cpustate->internal_registers[ T90_TMOD - T90_IOBASE ] >> ((i & ~1) + 2)) & 0x03;
+	mode = cpustate->internal_registers[ T90_TMOD - T90_IOBASE ] >> (i & ~1) + 2 & 0x03;
 	// Match
   switch (mode)
   {
@@ -2549,7 +2549,7 @@ void t90_timer_callback(INT32 param)
       case 0x00: // 8bit
         if(i & 1)
           break;
-        if ( (cpustate->internal_registers[ T90_TCLK - T90_IOBASE ] & (0x0C << (i * 2))) == 0 ) // T0/T1 match signal clocks T1/T3
+        if ( (cpustate->internal_registers[ T90_TCLK - T90_IOBASE ] & 0x0C << i * 2) == 0 ) // T0/T1 match signal clocks T1/T3
           t90_timer_callback(i+1);
         break;
       case 0x01: // 16bit, only can happen for i=0,2
@@ -2572,12 +2572,12 @@ void t90_timer4_callback(INT32 )
 
 	// Match
 
-	if ( cpustate->timer4_value == (cpustate->internal_registers[ T90_TREG4L - T90_IOBASE ] + (cpustate->internal_registers[ T90_TREG4H - T90_IOBASE ] << 8)) )
+	if ( cpustate->timer4_value == cpustate->internal_registers[ T90_TREG4L - T90_IOBASE ] + (cpustate->internal_registers[ T90_TREG4H - T90_IOBASE ] << 8) )
 	{
 //      	logerror("CPU Timer 4 matches TREG4\n");
 		tlcs90_set_irq_line(INTT4, 1);
 	}
-	if ( cpustate->timer4_value == (cpustate->internal_registers[ T90_TREG5L - T90_IOBASE ] + (cpustate->internal_registers[ T90_TREG5H - T90_IOBASE ] << 8)) )
+	if ( cpustate->timer4_value == cpustate->internal_registers[ T90_TREG5L - T90_IOBASE ] + (cpustate->internal_registers[ T90_TREG5H - T90_IOBASE ] << 8) )
 	{
 //      	logerror("CPU Timer 4 matches TREG5\n");
 		tlcs90_set_irq_line(INTT5, 1);
@@ -2609,7 +2609,7 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 			// Timers 0-3
 			for (i = 0; i < 4; i++)
 			{
-				mask = 0x20 | (1 << i);
+				mask = 0x20 | 1 << i;
 				if ( (old ^ data) & mask ) // if timer bit or prescaler bit changed
 				{
 					if ( (data & mask) == mask ) t90_start_timer(cpustate, i);
@@ -2627,33 +2627,33 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 		}
 
 		case T90_INTEL:
-			cpustate->irq_mask  &=  ~(  (1 << INTT2 ) |
-									(1 << INTT3 ) |
-									(1 << INTT4 ) |
-									(1 << INT1  ) |
-									(1 << INTT5 ) |
-									(1 << INT2  ) |
-									(1 << INTRX ) |
-									(1 << INTTX )   );
+			cpustate->irq_mask  &=  ~(  1 << INTT2 |
+									1 << INTT3 |
+									1 << INTT4 |
+									1 << INT1 |
+									1 << INTT5 |
+									1 << INT2 |
+									1 << INTRX |
+									1 << INTTX   );
 
-			cpustate->irq_mask  |=  ((data & 0x80) ? (1 << INTT2 ) : 0) |
-								((data & 0x40) ? (1 << INTT3 ) : 0) |
-								((data & 0x20) ? (1 << INTT4 ) : 0) |
-								((data & 0x10) ? (1 << INT1  ) : 0) |
-								((data & 0x08) ? (1 << INTT5 ) : 0) |
-								((data & 0x04) ? (1 << INT2  ) : 0) |
-								((data & 0x02) ? (1 << INTRX ) : 0) |
-								((data & 0x01) ? (1 << INTTX ) : 0) ;
+			cpustate->irq_mask  |=  (data & 0x80 ? 1 << INTT2 : 0) |
+								(data & 0x40 ? 1 << INTT3 : 0) |
+								(data & 0x20 ? 1 << INTT4 : 0) |
+								(data & 0x10 ? 1 << INT1 : 0) |
+								(data & 0x08 ? 1 << INTT5 : 0) |
+								(data & 0x04 ? 1 << INT2 : 0) |
+								(data & 0x02 ? 1 << INTRX : 0) |
+								(data & 0x01 ? 1 << INTTX : 0) ;
 			break;
 
 		case T90_INTEH:
-			cpustate->irq_mask  &=  ~(  (1 << INT0 ) |
-									(1 << INTT0) |
-									(1 << INTT1)    );
+			cpustate->irq_mask  &=  ~(  1 << INT0 |
+									1 << INTT0 |
+									1 << INTT1    );
 
-			cpustate->irq_mask  |=  ((data & 0x04) ? (1 << INT0 ) : 0) |
-								((data & 0x02) ? (1 << INTT0) : 0) |
-								((data & 0x01) ? (1 << INTT1) : 0) ;
+			cpustate->irq_mask  |=  (data & 0x04 ? 1 << INT0 : 0) |
+								(data & 0x02 ? 1 << INTT0 : 0) |
+								(data & 0x01 ? 1 << INTT1 : 0) ;
 			break;
 
 		case T90_P3:
@@ -2663,7 +2663,7 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 
 		case T90_P4:
 			data &= 0x0f;
-			out_mask = (~cpustate->internal_registers[ T90_P4CR - T90_IOBASE ]) & 0x0f;
+			out_mask = ~cpustate->internal_registers[ T90_P4CR - T90_IOBASE ] & 0x0f;
 			if (out_mask)
 			{
 				data &= out_mask;
@@ -2695,7 +2695,7 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 
 		case T90_P7:
 			out_mask = (cpustate->internal_registers[ T90_P67CR - T90_IOBASE ] & 0xf0) >> 4;
-			switch ((cpustate->internal_registers[ T90_SMMOD - T90_IOBASE ]>>4) & 0x03)
+			switch (cpustate->internal_registers[ T90_SMMOD - T90_IOBASE ]>>4 & 0x03)
 			{
 				case 1:
 					data &= ~0x01;
@@ -2717,7 +2717,7 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 
 		case T90_P8:
 			data &= 0x0f;
-			out_mask = (~cpustate->internal_registers[ T90_P8CR - T90_IOBASE ]) & 0x08;
+			out_mask = ~cpustate->internal_registers[ T90_P8CR - T90_IOBASE ] & 0x08;
 			if (out_mask)
 			{
 				data &= out_mask;
@@ -2755,7 +2755,7 @@ INT32 tlcs90_init(INT32 clock)
 //      	SZ[i] |= (i & (YF | XF));       /* undocumented flag bits 5+3 */
 		SZ_BIT[i] = i ? i & SF : ZF | PF;
 //      	SZ_BIT[i] |= (i & (YF | XF));   /* undocumented flag bits 5+3 */
-		SZP[i] = SZ[i] | ((p & 1) ? 0 : PF);
+		SZP[i] = SZ[i] | (p & 1 ? 0 : PF);
 		SZHV_inc[i] = SZ[i];
 		if( i == 0x80 ) SZHV_inc[i] |= VF;
 		if( (i & 0x0f) == 0x00 ) SZHV_inc[i] |= HF;
@@ -2783,7 +2783,7 @@ INT32 tlcs90Scan(INT32 nAction)
 	if (nAction & ACB_DRIVER_DATA) {
 		struct BurnArea ba;
 
-		memset(&ba, 0, sizeof(ba));
+		memset(&ba, 0, sizeof ba);
 		ba.Data		= &tlcs90_data[0];
 		ba.nLen		= STRUCT_SIZE_HELPER(struct t90_Regs, run_end);
 		ba.szName	= "tlcs90 CPU Data";

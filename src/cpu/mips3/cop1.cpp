@@ -96,11 +96,11 @@ void mips3::cop1_execute_32(uint32_t opcode)
     // BC
     case 0x08:
     {
-        switch ((opcode >> 16) & 3) {
+        switch (opcode >> 16 & 3) {
         // BC1F offset
         case 0x00:
             if (~FCR31 & 0x800000) {
-                m_next_pc = m_state.pc + ((int32_t)(SIMM) << 2);
+                m_next_pc = m_state.pc + ((int32_t)SIMM << 2);
                 m_delay_slot = true;
             }
             break;
@@ -108,7 +108,7 @@ void mips3::cop1_execute_32(uint32_t opcode)
         // BC1FL offset
         case 0x02:
             if (~FCR31 & 0x800000) {
-                m_next_pc = m_state.pc + ((int32_t)(SIMM) << 2);
+                m_next_pc = m_state.pc + ((int32_t)SIMM << 2);
                 m_delay_slot = true;
             } else
                 m_state.pc += 4;
@@ -117,7 +117,7 @@ void mips3::cop1_execute_32(uint32_t opcode)
         // BC1T offset
         case 0x01:
             if (FCR31 & 0x800000) {
-                m_next_pc = m_state.pc + ((int32_t)(SIMM) << 2);
+                m_next_pc = m_state.pc + ((int32_t)SIMM << 2);
                 m_delay_slot = true;
             }
             break;
@@ -125,7 +125,7 @@ void mips3::cop1_execute_32(uint32_t opcode)
         // BC1TL offset
         case 0x03:
             if (FCR31 & 0x800000) {
-                m_next_pc = m_state.pc + ((int32_t)(SIMM) << 2);
+                m_next_pc = m_state.pc + ((int32_t)SIMM << 2);
                 m_delay_slot = true;
             } else
                 m_state.pc += 4;
@@ -207,17 +207,17 @@ void mips3::cop1_execute_32(uint32_t opcode)
 
         // C.UN.x fs, ft
         case 0x32:
-            if (SP) FCR31 = (isnan(FS_s) || isnan(FT_s)) ? FCR31 | 0x800000 : FCR31 & ~0x800000;
+            if (SP) FCR31 = isnan(FS_s) || isnan(FT_s) ? FCR31 | 0x800000 : FCR31 & ~0x800000;
             else    FCR31 &= ~0x800000;
             break;
 
         // C.OLT.x fs, ft
         case 0x34:
-            if (SP) FCR31 = (FS_s < FT_s) ? FCR31 | 0x800000 : FCR31 & ~0x800000;
-            else    FCR31 = (FS_d < FT_d) ? FCR31 | 0x800000 : FCR31 & ~0x800000;
+            if (SP) FCR31 = FS_s < FT_s ? FCR31 | 0x800000 : FCR31 & ~0x800000;
+            else    FCR31 = FS_d < FT_d ? FCR31 | 0x800000 : FCR31 & ~0x800000;
             break;
 
-        // C.F fs, ft
+            // C.F fs, ft
         case 0x3C:
             FCR31 &= ~0x800000;
             break;
@@ -226,9 +226,9 @@ void mips3::cop1_execute_32(uint32_t opcode)
             //qDebug() << QString::number(m_state.pc, 16) << "Op:" << RSNUM << (opcode & 0x3F) << "[FPU32]";
             //exit(-6);
             break;
-        }
-    }
-    }
-}
+            }
+            }
+            }
+            }
 
-}
+            }

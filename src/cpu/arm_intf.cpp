@@ -79,14 +79,14 @@ void ArmMapMemory(UINT8 *src, INT32 start, INT32 finish, INT32 type)
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmMapMemory called without init\n"));
 #endif
 
-	UINT32 len = (finish-start) >> PAGE_SHIFT;
+	UINT32 len = finish-start >> PAGE_SHIFT;
 
 	for (UINT32 i = 0; i < len+1; i++)
 	{
 		UINT32 offset = i + (start >> PAGE_SHIFT);
-		if (type & (1 <<  READ)) membase[ READ][offset] = src + (i << PAGE_SHIFT);
-		if (type & (1 << WRITE)) membase[WRITE][offset] = src + (i << PAGE_SHIFT);
-		if (type & (1 << FETCH)) membase[FETCH][offset] = src + (i << PAGE_SHIFT);
+		if (type & 1 <<  READ) membase[ READ][offset] = src + (i << PAGE_SHIFT);
+		if (type & 1 << WRITE) membase[WRITE][offset] = src + (i << PAGE_SHIFT);
+		if (type & 1 << FETCH) membase[FETCH][offset] = src + (i << PAGE_SHIFT);
 	}
 }
 
@@ -161,7 +161,7 @@ void ArmWriteLong(UINT32 addr, UINT32 data)
 #endif
 
 	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
-		*((UINT32*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND))) = BURN_ENDIAN_SWAP_INT32(data);
+		*(UINT32*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)) = BURN_ENDIAN_SWAP_INT32(data);
 		return;
 	}
 

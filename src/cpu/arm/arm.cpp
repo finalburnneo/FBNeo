@@ -284,11 +284,11 @@ inline UINT32 cpu_read32( int addr )
 	/* Unaligned reads rotate the word, they never combine words */
 	if (addr&3) {
 		if ((addr&3)==1)
-			return ((result&0x000000ff)<<24)|((result&0xffffff00)>> 8);
+			return (result&0x000000ff)<<24|(result&0xffffff00)>> 8;
 		if ((addr&3)==2)
-			return ((result&0x0000ffff)<<16)|((result&0xffff0000)>>16);
+			return (result&0x0000ffff)<<16|(result&0xffff0000)>>16;
 		if ((addr&3)==3)
-			return ((result&0x00ffffff)<< 8)|((result&0xff000000)>>24);
+			return (result&0x00ffffff)<< 8|(result&0xff000000)>>24;
 	}
 
 	return result;
@@ -323,7 +323,7 @@ inline void SetModeRegister( int mode, int rIndex, UINT32 value )
 
 void ArmReset(void)
 {
-	memset(&arm, 0, sizeof(arm));
+	memset(&arm, 0, sizeof arm);
 
 	/* start up in SVC mode with interrupts disabled. */
 	R15 = eARM_MODE_SVC|I_MASK|F_MASK;
@@ -385,10 +385,10 @@ int ArmRun( int cycles )
 			if (!(pc & N_MASK) == !(pc & V_MASK)) goto L_Next;
 			break;
 		case COND_GT:
-			if (Z_IS_SET(pc) || (!(pc & N_MASK) != !(pc & V_MASK))) goto L_Next;
+			if (Z_IS_SET(pc) || !(pc & N_MASK) != !(pc & V_MASK)) goto L_Next;
 			break;
 		case COND_LE:
-			if (Z_IS_CLEAR(pc) && (!(pc & N_MASK) == !(pc & V_MASK))) goto L_Next;
+			if (Z_IS_CLEAR(pc) && !(pc & N_MASK) == !(pc & V_MASK)) goto L_Next;
 			break;
 		case COND_NV:
 			goto L_Next;
@@ -427,7 +427,7 @@ int ArmRun( int cycles )
 			pc=R15+4;
 			R15 = eARM_MODE_SVC;	/* Set SVC mode so PC is saved to correct R14 bank */
 			SetRegister( 14, pc );	/* save PC */
-			R15 = (pc&PSR_MASK)|(pc&IRQ_MASK)|0x8|eARM_MODE_SVC|I_MASK|(pc&MODE_MASK);
+			R15 = pc&PSR_MASK|pc&IRQ_MASK|0x8|eARM_MODE_SVC|I_MASK|pc&MODE_MASK;
 			arm_icount -= 2 * S_CYCLE + N_CYCLE;
 		}
 		else /* Undefined */
@@ -468,7 +468,7 @@ static void arm_check_irq_state(void)
 	if (arm.pendingFiq && (pc&F_MASK)==0) {
 		R15 = eARM_MODE_FIQ;	/* Set FIQ mode so PC is saved to correct R14 bank */
 		SetRegister( 14, pc );	/* save PC */
-		R15 = (pc&PSR_MASK)|(pc&IRQ_MASK)|0x1c|eARM_MODE_FIQ|I_MASK|F_MASK; /* Mask both IRQ & FIRQ, set PC=0x1c */
+		R15 = pc&PSR_MASK|pc&IRQ_MASK|0x1c|eARM_MODE_FIQ|I_MASK|F_MASK; /* Mask both IRQ & FIRQ, set PC=0x1c */
 		arm.pendingFiq=0;
 		return;
 	}
@@ -476,7 +476,7 @@ static void arm_check_irq_state(void)
 	if (arm.pendingIrq && (pc&I_MASK)==0) {
 		R15 = eARM_MODE_IRQ;	/* Set IRQ mode so PC is saved to correct R14 bank */
 		SetRegister( 14, pc );	/* save PC */
-		R15 = (pc&PSR_MASK)|(pc&IRQ_MASK)|0x18|eARM_MODE_IRQ|I_MASK|(pc&F_MASK); /* Mask only IRQ, set PC=0x18 */
+		R15 = pc&PSR_MASK|pc&IRQ_MASK|0x18|eARM_MODE_IRQ|I_MASK|pc&F_MASK; /* Mask only IRQ, set PC=0x18 */
 		arm.pendingIrq=0;
 		return;
 	}
@@ -523,11 +523,11 @@ static void HandleBranch(  UINT32 insn )
 	/* Sign-extend the 24-bit offset in our calculations */
 	if (off & 0x2000000u)
 	{
-		R15 = ((R15 - (((~(off | 0xfc000000u)) + 1) - 8)) & ADDRESS_MASK) | (R15 & ~ADDRESS_MASK);
+		R15 = R15 - (~(off | 0xfc000000u) + 1 - 8) & ADDRESS_MASK | R15 & ~ADDRESS_MASK;
 	}
 	else
 	{
-		R15 = ((R15 + (off + 8)) & ADDRESS_MASK) | (R15 & ~ADDRESS_MASK);
+		R15 = R15 + (off + 8) & ADDRESS_MASK | R15 & ~ADDRESS_MASK;
 	}
 	arm_icount -= 2 * S_CYCLE + N_CYCLE;
 }
@@ -555,14 +555,14 @@ static void HandleMemSingle( UINT32 insn )
 		if (insn & INSN_SDT_U)
 		{
 			if (rn != eR15)
-				rnv = (GetRegister(rn) + off);
+				rnv = GetRegister(rn) + off;
 			else
 				rnv = (R15 & ADDRESS_MASK) + off;
 		}
 		else
 		{
 			if (rn != eR15)
-				rnv = (GetRegister(rn) - off);
+				rnv = GetRegister(rn) - off;
 			else
 				rnv = (R15 & ADDRESS_MASK) - off;
 		}
@@ -603,7 +603,7 @@ static void HandleMemSingle( UINT32 insn )
 		{
 			if (rd == eR15)
 			{
-				R15 = (READ32(rnv) & ADDRESS_MASK) | (R15 & PSR_MASK) | (R15 & IRQ_MASK) | (R15 & MODE_MASK);
+				R15 = READ32(rnv) & ADDRESS_MASK | R15 & PSR_MASK | R15 & IRQ_MASK | R15 & MODE_MASK;
 
 				/*
 		                The docs are explicit in that the bottom bits should be masked off
@@ -639,9 +639,9 @@ static void HandleMemSingle( UINT32 insn )
 	}
 
 	/* Do pre-indexing writeback */
-	if ((insn & INSN_SDT_P) && (insn & INSN_SDT_W))
+	if (insn & INSN_SDT_P && insn & INSN_SDT_W)
 	{
-		if ((insn & INSN_SDT_L) && rd == rn)
+		if (insn & INSN_SDT_L && rd == rn)
 			SetRegister(rn, GetRegister(rd));
 		else
 			SetRegister(rn, rnv);
@@ -658,7 +658,7 @@ static void HandleMemSingle( UINT32 insn )
 				SetRegister(rn,GetRegister(rd));
 			}
 			else {
-				SetRegister(rn,(rnv + off));
+				SetRegister(rn,rnv + off);
 			}
 		}
 		else
@@ -669,7 +669,7 @@ static void HandleMemSingle( UINT32 insn )
 				SetRegister(rn,GetRegister(rd));
 			}
 			else {
-				SetRegister(rn,(rnv - off));
+				SetRegister(rn,rnv - off);
 			}
 		}
 	}
@@ -743,7 +743,7 @@ static void HandleALU( UINT32 insn )
 	}
 	else
 	{
-		op2 = decodeShift(insn, (insn & INSN_S) ? &sc : NULL);
+		op2 = decodeShift(insn, insn & INSN_S ? &sc : NULL);
 
         	if (!(insn & INSN_S))
 			sc=0;
@@ -756,7 +756,7 @@ static void HandleALU( UINT32 insn )
 		{
 			/* Docs strongly suggest the mode bits should be included here, but it breaks Captain
             America, as it starts doing unaligned reads */
-			rn=(R15+8)&ADDRESS_MASK;
+			rn= R15+8&ADDRESS_MASK;
 		}
 		else
 		{
@@ -769,29 +769,29 @@ static void HandleALU( UINT32 insn )
 	{
 	/* Arithmetic operations */
 	case OPCODE_SBC:
-		rd = (rn - op2 - (R15 & C_MASK ? 0 : 1));
+		rd = rn - op2 - (R15 & C_MASK ? 0 : 1);
 		HandleALUSubFlags(rd, rn, op2);
 		break;
 	case OPCODE_CMP:
 	case OPCODE_SUB:
-		rd = (rn - op2);
+		rd = rn - op2;
 		HandleALUSubFlags(rd, rn, op2);
 		break;
 	case OPCODE_RSC:
-		rd = (op2 - rn - (R15 & C_MASK ? 0 : 1));
+		rd = op2 - rn - (R15 & C_MASK ? 0 : 1);
 		HandleALUSubFlags(rd, op2, rn);
 		break;
 	case OPCODE_RSB:
-		rd = (op2 - rn);
+		rd = op2 - rn;
 		HandleALUSubFlags(rd, op2, rn);
 		break;
 	case OPCODE_ADC:
-		rd = (rn + op2 + ((R15 & C_MASK) >> C_BIT));
+		rd = rn + op2 + ((R15 & C_MASK) >> C_BIT);
 		HandleALUAddFlags(rd, rn, op2);
 		break;
 	case OPCODE_CMN:
 	case OPCODE_ADD:
-		rd = (rn + op2);
+		rd = rn + op2;
 		HandleALUAddFlags(rd, rn, op2);
 		break;
 	/* Logical operations */
@@ -818,7 +818,7 @@ static void HandleALU( UINT32 insn )
 		HandleALULogicalFlags(rd, sc);
 		break;
 	case OPCODE_MVN:
-		rd = (~op2);
+		rd = ~op2;
 		HandleALULogicalFlags(rd, sc);
 		break;
 	}
@@ -830,7 +830,7 @@ static void HandleALU( UINT32 insn )
 		if (rdn == eR15 && !(insn & INSN_S))
 		{
 			/* Merge the old NZCV flags into the new PC value */
-			R15 = (rd & ADDRESS_MASK) | (R15 & PSR_MASK) | (R15 & IRQ_MASK) | (R15&MODE_MASK);
+			R15 = rd & ADDRESS_MASK | R15 & PSR_MASK | R15 & IRQ_MASK | R15&MODE_MASK;
 			arm_icount -= S_CYCLE + N_CYCLE;
 		}
 		else
@@ -844,7 +844,7 @@ static void HandleALU( UINT32 insn )
 				}
 				else
 				{
-					SetRegister(rdn,(rd&ADDRESS_MASK) | (rd&PSR_MASK) | (R15&IRQ_MASK) | (R15&MODE_MASK));
+					SetRegister(rdn,rd&ADDRESS_MASK | rd&PSR_MASK | R15&IRQ_MASK | R15&MODE_MASK);
 				}
 				arm_icount -= S_CYCLE + N_CYCLE;
 			}
@@ -855,22 +855,22 @@ static void HandleALU( UINT32 insn )
 		}
 	/* TST & TEQ can affect R15 (the condition code register) with the S bit set */
 	}
-	else if ((rdn==eR15) && (insn & INSN_S))
+	else if (rdn==eR15 && insn & INSN_S)
 	{
 		// update only the flags
 		if ((R15&MODE_MASK)!=0)
 		{
 			// combine the flags from rd with the address from R15
 			rd &= ~ADDRESS_MASK;
-			rd |= (R15 & ADDRESS_MASK);
+			rd |= R15 & ADDRESS_MASK;
 			SetRegister(rdn,rd);
 		}
 		else
 		{
 			// combine the flags from rd with the address from R15
 			rd &= ~ADDRESS_MASK;    // clear address part of RD
-			rd |= (R15 & ADDRESS_MASK); // RD = address part of R15
-			SetRegister(rdn,(rd&ADDRESS_MASK) | (rd&PSR_MASK) | (R15&IRQ_MASK) | (R15&MODE_MASK));
+			rd |= R15 & ADDRESS_MASK; // RD = address part of R15
+			SetRegister(rdn,rd&ADDRESS_MASK | rd&PSR_MASK | R15&IRQ_MASK | R15&MODE_MASK);
 		}
 		arm_icount -= S_CYCLE + N_CYCLE;
 	}
@@ -918,7 +918,7 @@ static void HandleMul( UINT32 insn)
 	/* Set N and Z if asked */
 	if( insn & INSN_S )
 	{
-		R15 = (R15 &~ (N_MASK | Z_MASK)) | HandleALUNZFlags(r);
+		R15 = R15 &~ (N_MASK | Z_MASK) | HandleALUNZFlags(r);
 	}
 }
 
@@ -929,13 +929,13 @@ static int loadInc ( UINT32 pat, UINT32 rbv, UINT32 s)
 	result = 0;
 	for( i=0; i<16; i++ )
 	{
-		if( (pat>>i)&1 )
+		if( pat>>i&1 )
 		{
 			if (i==15) {
 				if (s) /* Pull full contents from stack */
 					SetRegister( 15, READ32(rbv+=4) );
 				else /* Pull only address, preserve mode & status flags */
-					SetRegister( 15, (R15&PSR_MASK) | (R15&IRQ_MASK) | (R15&MODE_MASK) | ((READ32(rbv+=4))&ADDRESS_MASK) );
+					SetRegister( 15, R15&PSR_MASK | R15&IRQ_MASK | R15&MODE_MASK | READ32(rbv+=4)&ADDRESS_MASK );
 			} else
 				SetRegister( i, READ32(rbv+=4) );
 
@@ -952,14 +952,14 @@ static int loadDec( UINT32 pat, UINT32 rbv, UINT32 s, UINT32* deferredR15, int* 
 	result = 0;
 	for( i=15; i>=0; i-- )
 	{
-		if( (pat>>i)&1 )
+		if( pat>>i&1 )
 		{
 			if (i==15) {
 				*defer=1;
 				if (s) /* Pull full contents from stack */
 					*deferredR15=READ32(rbv-=4);
 				else /* Pull only address, preserve mode & status flags */
-					*deferredR15=(R15&PSR_MASK) | (R15&IRQ_MASK) | (R15&MODE_MASK) | ((READ32(rbv-=4))&ADDRESS_MASK);
+					*deferredR15= R15&PSR_MASK | R15&IRQ_MASK | R15&MODE_MASK | READ32(rbv-=4)&ADDRESS_MASK;
 			}
 			else
 				SetRegister( i, READ32(rbv -=4) );
@@ -976,7 +976,7 @@ static int storeInc( UINT32 pat, UINT32 rbv)
 	result = 0;
 	for( i=0; i<16; i++ )
 	{
-		if( (pat>>i)&1 )
+		if( pat>>i&1 )
 		{
 			WRITE32( rbv += 4, GetRegister(i) );
 			result++;
@@ -992,7 +992,7 @@ static int storeDec( UINT32 pat, UINT32 rbv)
 	result = 0;
 	for( i=15; i>=0; i-- )
 	{
-		if( (pat>>i)&1 )
+		if( pat>>i&1 )
 		{
 			WRITE32( rbv -= 4, GetRegister(i) );
 			result++;
@@ -1015,10 +1015,10 @@ static void HandleMemBlock( UINT32 insn)
 			int mode = MODE;
 
 			/* Incrementing */
-			if (!(insn & INSN_BDT_P)) rbp = rbp + (- 4);
+			if (!(insn & INSN_BDT_P)) rbp = rbp + - 4;
 
 			// S Flag Set, but R15 not in list = Transfers to User Bank
-			if ((insn & INSN_BDT_S) && !(insn & 0x8000))
+			if (insn & INSN_BDT_S && !(insn & 0x8000))
 			{
 				int curmode = MODE;
 				R15 = R15 & ~MODE_MASK;
@@ -1045,7 +1045,7 @@ static void HandleMemBlock( UINT32 insn)
 		                correct for this situation, but that is not necessarily true for all ARM hardware
 		                implementations (the results are officially undefined).
 		                */
-				if ((insn&(1<<rb))==0)
+				if ((insn&1<<rb)==0)
 					SetModeRegister(mode, rb, GetModeRegister(mode, rb) + result * 4);
 			}
 		}
@@ -1057,11 +1057,11 @@ static void HandleMemBlock( UINT32 insn)
 			/* Decrementing */
 			if (!(insn & INSN_BDT_P))
 			{
-				rbp = rbp - (- 4);
+				rbp = rbp - - 4;
 			}
 
 			// S Flag Set, but R15 not in list = Transfers to User Bank
-			if ((insn & INSN_BDT_S) && !(insn & 0x8000))
+			if (insn & INSN_BDT_S && !(insn & 0x8000))
 			{
 				int curmode = MODE;
 				R15 = R15 & ~MODE_MASK;
@@ -1098,7 +1098,7 @@ static void HandleMemBlock( UINT32 insn)
            	 register is the first in the list. Otherwise, the value which is used is not defined.
 
         	*/
-		if (insn & (1<<eR15))
+		if (insn & 1<<eR15)
 		{
 			/* special case handling if writing to PC */
 			R15 += 12;
@@ -1108,7 +1108,7 @@ static void HandleMemBlock( UINT32 insn)
 			/* Incrementing */
 			if (!(insn & INSN_BDT_P))
 			{
-				rbp = rbp + (- 4);
+				rbp = rbp + - 4;
 			}
 
 			// S bit set = Transfers to User Bank
@@ -1132,7 +1132,7 @@ static void HandleMemBlock( UINT32 insn)
 			/* Decrementing */
 			if (!(insn & INSN_BDT_P))
 			{
-				rbp = rbp - (- 4);
+				rbp = rbp - - 4;
 			}
 
 			// S bit set = Transfers to User Bank
@@ -1151,7 +1151,7 @@ static void HandleMemBlock( UINT32 insn)
 				SetRegister(rb,GetRegister(rb)-result*4);
 			}
 		}
-		if( insn & (1<<eR15) )
+		if( insn & 1<<eR15 )
 			R15 -= 12;
 
 		arm_icount -= (result - 1) * S_CYCLE + 2 * N_CYCLE;
@@ -1195,12 +1195,12 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 		if (k >= 32)
 		{
 			if (pCarry)
-				*pCarry = (k == 32) ? rm & 1 : 0;
+				*pCarry = k == 32 ? rm & 1 : 0;
 			return 0;
 		}
 		else if (pCarry)
 		{
-			*pCarry = k ? (rm & (1 << (32 - k))) : (R15 & C_MASK);
+			*pCarry = k ? rm & 1 << 32 - k : R15 & C_MASK;
 		}
 		return k ? LSL(rm, k) : rm;
 
@@ -1217,20 +1217,20 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 		}
 		else
 		{
-			if (pCarry) *pCarry = (rm & (1 << (k - 1)));
+			if (pCarry) *pCarry = rm & 1 << k - 1;
 			return LSR(rm, k);
 		}
 
 	case 2:						/* ASR */
 		if (k == 0 || k > 32)
 			k = 32;
-		if (pCarry) *pCarry = (rm & (1 << (k - 1)));
+		if (pCarry) *pCarry = rm & 1 << k - 1;
 		if (k >= 32)
 			return rm & SIGN_BIT ? 0xffffffffu : 0;
 		else
 		{
 			if (rm & SIGN_BIT)
-				return LSR(rm, k) | (0xffffffffu << (32 - k));
+				return LSR(rm, k) | 0xffffffffu << 32 - k;
 			else
 				return LSR(rm, k);
 		}
@@ -1240,13 +1240,13 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 		if (k)
 		{
 			while (k > 32) k -= 32;
-			if (pCarry) *pCarry = rm & (1 << (k - 1));
+			if (pCarry) *pCarry = rm & 1 << k - 1;
 			return ROR(rm, k);
 		}
 		else
 		{
-			if (pCarry) *pCarry = (rm & 1);
-			return LSR(rm, 1) | ((R15 & C_MASK) << 2);
+			if (pCarry) *pCarry = rm & 1;
+			return LSR(rm, 1) | (R15 & C_MASK) << 2;
 		}
 		break;
 	}
@@ -1286,7 +1286,7 @@ static UINT32 DecimalToBCD(UINT32 value)
 		value -= temp;
 		temp /= divisor / 10;
 
-		accumulator += temp << (i * 4);
+		accumulator += temp << i * 4;
 
 		divisor *= 10;
 	}
@@ -1296,8 +1296,8 @@ static UINT32 DecimalToBCD(UINT32 value)
 
 static void HandleCoPro( UINT32 insn)
 {
-	UINT32 rn=(insn>>12)&0xf;
-	UINT32 crn=(insn>>16)&0xf;
+	UINT32 rn=insn>>12&0xf;
+	UINT32 crn=insn>>16&0xf;
 
 	arm_icount -= S_CYCLE;
 
@@ -1392,7 +1392,7 @@ unsigned int ArmRemainingCycles()
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmRemainingCycles called without init\n"));
 #endif
 
-	return (arm.ArmLeftCycles - arm_icount);
+	return arm.ArmLeftCycles - arm_icount;
 }
 
 // get the total of cycles run
@@ -1441,7 +1441,7 @@ int ArmScan(int nAction)
 	struct BurnArea ba;
 
 	if (nAction & ACB_VOLATILE) {
-		memset(&ba, 0, sizeof(ba));
+		memset(&ba, 0, sizeof ba);
 		ba.Data	  = &arm;
 		ba.nLen	  = sizeof(ARM_REGS);
 		ba.szName = "ARM Registers";

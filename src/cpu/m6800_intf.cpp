@@ -331,7 +331,7 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 
 			nM6800CyclesDone[i] = 0;
 
-			for (INT32 j = 0; j < (0x0100 * 3); j++) {
+			for (INT32 j = 0; j < 0x0100 * 3; j++) {
 				M6800CPUContext[i].pMemMap[j] = NULL;
 			}
 		}
@@ -633,18 +633,18 @@ INT32 M6800MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6800MapMemory called when no CPU open\n"));
 #endif
 
-	UINT8 cStart = (nStart >> 8);
+	UINT8 cStart = nStart >> 8;
 	UINT8 **pMemMap = M6800CPUContext[nActiveCPU].pMemMap;
 
-	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
+	for (UINT16 i = cStart; i <= nEnd >> 8; i++) {
 		if (nType & MAP_READ)	{
-			pMemMap[0     + i] = pMemory + ((i - cStart) << 8);
+			pMemMap[0     + i] = pMemory + (i - cStart << 8);
 		}
 		if (nType & MAP_WRITE) {
-			pMemMap[0x100 + i] = pMemory + ((i - cStart) << 8);
+			pMemMap[0x100 + i] = pMemory + (i - cStart << 8);
 		}
 		if (nType & MAP_FETCH) {
-			pMemMap[0x200 + i] = pMemory + ((i - cStart) << 8);
+			pMemMap[0x200 + i] = pMemory + (i - cStart << 8);
 		}
 	}
 	return 0;
@@ -708,7 +708,7 @@ void M6800SetWritePortHandler(void (*pHandler)(UINT16, UINT8))
 UINT8 M6800ReadByte(UINT16 Address)
 {
 	// check mem map
-	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
+	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x000 | Address >> 8];
 	if (pr != NULL) {
 		return pr[Address & 0xff];
 	}
@@ -724,7 +724,7 @@ UINT8 M6800ReadByte(UINT16 Address)
 void M6800WriteByte(UINT16 Address, UINT8 Data)
 {
 	// check mem map
-	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
+	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x100 | Address >> 8];
 	if (pr != NULL) {
 		pr[Address & 0xff] = Data;
 		return;
@@ -740,7 +740,7 @@ void M6800WriteByte(UINT16 Address, UINT8 Data)
 UINT8 M6800ReadOp(UINT16 Address)
 {
 	// check mem map
-	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
+	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x200 | Address >> 8];
 	if (pr != NULL) {
 		return pr[Address & 0xff];
 	}
@@ -756,7 +756,7 @@ UINT8 M6800ReadOp(UINT16 Address)
 UINT8 M6800ReadOpArg(UINT16 Address)
 {
 	// check mem map
-	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
+	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x200 | Address >> 8];
 	if (pr != NULL) {
 		return pr[Address & 0xff];
 	}
@@ -797,9 +797,9 @@ void M6800WriteRom(UINT32 Address, UINT8 Data)
 	Address &= 0xffff;
 
 	// check mem map
-	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
-	UINT8 * pw = M6800CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
-	UINT8 * pf = M6800CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
+	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x000 | Address >> 8];
+	UINT8 * pw = M6800CPUContext[nActiveCPU].pMemMap[0x100 | Address >> 8];
+	UINT8 * pf = M6800CPUContext[nActiveCPU].pMemMap[0x200 | Address >> 8];
 
 	if (pr != NULL) {
 		pr[Address & 0xff] = Data;
@@ -830,7 +830,7 @@ INT32 M6800Scan(INT32 nAction)
 		for (INT32 i = 0; i < nM6800Count+1; i++) { // this will only work for 1 cpu (that's all this interface currently supports)
 			struct BurnArea ba;
 
-			memset(&ba, 0, sizeof(ba));
+			memset(&ba, 0, sizeof ba);
 			ba.Data	  = &M6800CPUContext[i].reg;
 			ba.nLen	  = STRUCT_SIZE_HELPER(m6800_Regs, timer_over);
 			ba.szName = "M6800 Registers";

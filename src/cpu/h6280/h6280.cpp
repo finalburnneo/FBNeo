@@ -199,7 +199,7 @@ void h6280Reset(void)
 
     /* read the reset vector into PC */
 	PCL = RDMEM(H6280_RESET_VEC);
-	PCH = RDMEM((H6280_RESET_VEC+1));
+	PCH = RDMEM(H6280_RESET_VEC+1);
 	CHANGE_PC;
 
 	/* CPU starts in low speed mode */
@@ -391,9 +391,9 @@ unsigned char h6280_irq_status_r(unsigned int offset)
 			if(h6280.irq_state[1]!=CLEAR_LINE) status|=1; /* IRQ 2 */
 			if(h6280.irq_state[0]!=CLEAR_LINE) status|=2; /* IRQ 1 */
 			if(h6280.irq_state[2]!=CLEAR_LINE) status|=4; /* TIMER */
-			return status|(h6280.io_buffer&(~H6280_IRQ_MASK));
+			return status|h6280.io_buffer&~H6280_IRQ_MASK;
 		}
-	case 2: return h6280.irq_mask|(h6280.io_buffer&(~H6280_IRQ_MASK));break;
+	case 2: return h6280.irq_mask|h6280.io_buffer&~H6280_IRQ_MASK;break;
 	}
 }
 
@@ -427,7 +427,7 @@ unsigned char h6280_timer_r(unsigned int)
 #endif
 
 	/* only returns countdown */
-	return ((h6280.timer_value>>10)&0x7F)|(h6280.io_buffer&0x80);
+	return h6280.timer_value>>10&0x7F|h6280.io_buffer&0x80;
 }
 
 void h6280_timer_w(unsigned int offset, unsigned char data)

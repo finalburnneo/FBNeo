@@ -60,7 +60,12 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 
 	int currentSelected = nBurnDrvActive;
 	nBurnDrvActive = gametoplay;
-	snprintf(titlePath, MAX_PATH, "%s%s.png", SDL_GetPrefPath("fbneo", "titles"), BurnDrvGetTextA(0));
+#ifndef _WIN32
+	snprintf(titlePath, MAX_PATH, "%s%s.png", "/usr/local/share/titles/", BurnDrvGetTextA(0));
+#else
+	snprintf(titlePath, MAX_PATH, "\\support\\titles\\%s.png", BurnDrvGetTextA(0));
+#endif
+
 	loadedTexture = IMG_LoadTexture(renderer, titlePath);
 	SDL_QueryTexture(loadedTexture, NULL, NULL, &w, &h);
 

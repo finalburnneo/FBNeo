@@ -239,13 +239,10 @@ int main(int argc, char* argv[])
 	UINT32      i = 0;
 	bool gamefound = 0;
 	atexit(bye);
-	// TODO: figure out if we can use hardware Gamma until then, force software gamma
-	bVidUseHardwareGamma = 0;
-	bHardwareGammaOnly = 0;
-
-	//add the paths we need to roms we need this because its based on username and os
-	snprintf(szAppRomPaths[2], MAX_PATH, "%s", SDL_GetPrefPath("fbneo", "roms") );
-
+// TODO: figure out if we can use hardware Gamma until then, force software gamma
+  bVidUseHardwareGamma = 0;
+  bHardwareGammaOnly = 0;
+//
 
 	// Make version string
 	if (nBurnVer & 0xFF)

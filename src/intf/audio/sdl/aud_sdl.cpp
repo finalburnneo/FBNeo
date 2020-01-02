@@ -101,7 +101,7 @@ static int SDLSoundCheck()
 
 		if (nAudDSPModule[0])
 		{
-///			DspDo(nAudNextSound, nAudSegLen);
+			DspDo(nAudNextSound, nAudSegLen);
 		}
 
 		memcpy((char*)SDLAudBuffer + nSDLFillSeg * (nAudSegLen << 2), nAudNextSound, nAudSegLen << 2);

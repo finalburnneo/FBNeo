@@ -69,13 +69,6 @@ int StatedAuto(int bSave)
 
 /// End Save States
 
-
-static int GetInput(bool bCopy)
-{
-	InputMake(bCopy);                                // get input
-	return 0;
-}
-
 char fpsstring[20];
 
 static time_t fpstimer;
@@ -130,9 +123,6 @@ unsigned int GetTime(void)
 	ticks = (now.tv_sec - start.tv_sec) * 1000000 + now.tv_usec - start.tv_usec;
 	return ticks;
 }
-
-extern void internalState(int bSave);
-
 
 // With or without sound, run one frame.
 // If bDraw is true, it's the last frame before we are up to date, and so we should draw the screen

@@ -214,6 +214,23 @@ static int RunGetNextSound(int bDraw)
 	return 0;
 }
 
+int delay_ticks(int ticks)
+{
+//sdl_delay can take up to 10 - 15 ticks it doesnt guarentee below this 
+   int startTicks = 0;
+   int endTicks = 0;
+   int checkTicks = 0;
+   
+   startTicks=SDL_GetTicks();
+
+   while (checkTicks <= ticks)
+   {
+      endTicks=SDL_GetTicks();
+      checkTicks = endTicks - startTicks;
+   }
+
+   return ticks;
+}
 int RunIdle()
 {
 	int nTime, nCount;
@@ -229,7 +246,7 @@ int RunIdle()
 	nTime = GetTime() - nNormalLast;
 	nCount = (nTime * nAppVirtualFps - nNormalFrac) / 100000;
 	if (nCount <= 0) {						// No need to do anything for a bit
-	//	SDL_Delay(2);
+		delay_ticks(2);
 		return 0;
 	}
 

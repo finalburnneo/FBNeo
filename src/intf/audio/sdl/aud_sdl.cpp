@@ -7,6 +7,8 @@
 
 static unsigned int nSoundFps;
 
+extern int delay_ticks(int ticks);
+
 int nSDLVolume = SDL_MIX_MAXVOLUME;
 int (*GetNextSound)(int);               // Callback used to request more sound
 
@@ -84,7 +86,7 @@ static int SDLSoundCheck()
 	}
 
 	if (nSDLFillSeg == nPlaySeg) {
-	//	SDL_Delay(1);
+			delay_ticks(1);
 			return 0;
 		}
 

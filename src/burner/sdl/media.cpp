@@ -61,7 +61,7 @@ int MediaExit()
 	pBurnSoundOut = NULL;
 
 	AudSoundExit();                  // Exit sound
-
+	bAudOkay = 0;
 	VidExit();
 
 	InputExit();

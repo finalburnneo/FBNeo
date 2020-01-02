@@ -147,7 +147,7 @@ static int SDLSoundInit()
 	SDL_AudioSpec audiospec_req;
 	int nSDLBufferSize;
 
-	printf("SDLSoundInit (%dHz)\n", nAudSampleRate[0]);
+	printf("SDLSoundInit (%dHz) (%dFPS)\n", nAudSampleRate[0], nAppVirtualFps);
 
 	if (nAudSampleRate[0] <= 0)
 	{

@@ -79,10 +79,11 @@ static int DrvLoadRom(unsigned char* Dest, int* pnWrote, int i)
 
 int DrvInit(int nDrvNum, bool bRestore)
 {
-	DrvExit();                               // Make sure exitted
+	DrvExit();						// Make sure exitted
 	MediaExit();
 
-	nBurnDrvSelect[0] = nDrvNum;                 // Set the driver number
+	nBurnDrvActive = nDrvNum;		// Set the driver number
+
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOCD) {
 		if (CDEmuInit()) {
@@ -95,7 +96,11 @@ int DrvInit(int nDrvNum, bool bRestore)
 		NeoCDZRateChange();
 	}
 
-	MediaInit();
+	{ // Init input and audio, save blitter init for later. (reduce # of mode changes, nice for emu front-ends)
+		bVidOkay = 1;
+		MediaInit();
+		bVidOkay = 0;
+	}
 
 	// Define nMaxPlayers early; GameInpInit() needs it (normally defined in DoLibInit()).
 	nMaxPlayers = BurnDrvGetMaxPlayers();
@@ -125,6 +130,8 @@ int DrvInit(int nDrvNum, bool bRestore)
 
 	// Reset the speed throttling code, so we don't 'jump' after the load
 	RunReset();
+	VidExit();
+	AudSoundExit();
 	return 0;
 }
 

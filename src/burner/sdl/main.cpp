@@ -9,10 +9,8 @@
  *
  * TODO for SDL2:
  * Add autostart to menu as an ini config option
- * Add previews, etc to menu
  * Add menu for options e.g. dips, mapping, saves, IPS patches
  * Maybe a better font output setup with some sort of scaling, maybe add sdl1 support?
- * Add joypad support to menu
  * figure out what is going on with the sdl sound output, something breaks after a few frames
  * ------------------*/
 
@@ -20,7 +18,7 @@
 
 INT32 Init_Joysticks(int p1_use_joystick);
 
-int  nAppVirtualFps = 6000;         // App fps * 100
+int  nAppVirtualFps = 0;         // App fps * 100
 bool bRunPause = 0;
 bool bAppFullscreen = 0;
 bool bAlwaysProcessKeyboardInput = 0;

@@ -82,11 +82,11 @@ void s2650MapMemory(UINT8 *ptr, INT32 nStart, INT32 nEnd, INT32 nType)
 	nStart &= ADDRESS_MASK;
 	nEnd   &= ADDRESS_MASK;
 
-	for (INT32 i = nStart / PAGE; i < nEnd / PAGE + 1; i++)
+	for (INT32 i = nStart / PAGE; i < (nEnd / PAGE) + 1; i++)
 	{
-		if (nType & 1 <<  READ) sPointer->mem[ READ][i] = ptr + (i * PAGE - nStart);
-		if (nType & 1 << WRITE) sPointer->mem[WRITE][i] = ptr + (i * PAGE - nStart);
-		if (nType & 1 << FETCH) sPointer->mem[FETCH][i] = ptr + (i * PAGE - nStart);
+		if (nType & (1 <<  READ)) sPointer->mem[ READ][i] = ptr + ((i * PAGE) - nStart);
+		if (nType & (1 << WRITE)) sPointer->mem[WRITE][i] = ptr + ((i * PAGE) - nStart);
+		if (nType & (1 << FETCH)) sPointer->mem[FETCH][i] = ptr + ((i * PAGE) - nStart);
 	}
 }
 
@@ -256,7 +256,7 @@ void s2650Exit()
 
 	if (!DebugCPU_S2650Initted) return;
 
-	memset (&sHandler, 0, sizeof sHandler);
+	memset (&sHandler, 0, sizeof (sHandler));
 	s2650Count = 0;
 	s2650_exit();
 	

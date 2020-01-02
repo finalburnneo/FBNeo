@@ -630,11 +630,11 @@ int get_oper_cycles(opcode_struct* op, int ea_mode, int cpu_type)
 		/* ASG: added these cases -- immediate modes take 2 extra cycles here */
 		/* SV: but only when operating on long, and also on register direct mode */
 		if(cpu_type == CPU_TYPE_000 && (ea_mode == EA_MODE_I || ea_mode == EA_MODE_NONE) && op->size == 32 &&
-		   (strcmp(op->name, "add") == 0 && strcmp(op->spec_proc, "er") == 0 ||
+		   ((strcmp(op->name, "add") == 0 && strcmp(op->spec_proc, "er") == 0) ||
 			strcmp(op->name, "adda")   == 0                                    ||
-			strcmp(op->name, "and") == 0 && strcmp(op->spec_proc, "er") == 0 ||
-			strcmp(op->name, "or") == 0 && strcmp(op->spec_proc, "er") == 0  ||
-			strcmp(op->name, "sub") == 0 && strcmp(op->spec_proc, "er") == 0 ||
+			(strcmp(op->name, "and") == 0 && strcmp(op->spec_proc, "er") == 0) ||
+			(strcmp(op->name, "or") == 0 && strcmp(op->spec_proc, "er") == 0)  ||
+			(strcmp(op->name, "sub") == 0 && strcmp(op->spec_proc, "er") == 0) ||
 			strcmp(op->name, "suba")   == 0))
 			return op->cycles[cpu_type] + g_ea_cycle_table[ea_mode][cpu_type][size] + 2;
 
@@ -661,7 +661,7 @@ opcode_struct* find_opcode(char* name, int size, char* spec_proc, char* spec_ea)
 	for(op = g_opcode_input_table;op->name != NULL;op++)
 	{
 		if(	strcmp(name, op->name) == 0 &&
-			size == op->size &&
+			(size == op->size) &&
 			strcmp(spec_proc, op->spec_proc) == 0 &&
 			strcmp(spec_ea, op->spec_ea) == 0)
 				return op;
@@ -815,7 +815,7 @@ static int DECL_SPEC compare_nof_true_bits(const void* aptr, const void* bptr)
 void print_opcode_output_table(FILE* filep)
 {
 	int i;
-	qsort((void *)g_opcode_output_table, g_opcode_output_table_length, sizeof g_opcode_output_table[0], compare_nof_true_bits);
+	qsort((void *)g_opcode_output_table, g_opcode_output_table_length, sizeof(g_opcode_output_table[0]), compare_nof_true_bits);
 
 	for(i=0;i<g_opcode_output_table_length;i++)
 		write_table_entry(filep, g_opcode_output_table+i);
@@ -971,7 +971,7 @@ void generate_opcode_cc_variants(FILE* filep, body_struct* body, replace_struct*
 		/* Set the new opcode info */
 		strcpy(op->name+offset, g_cc_table[i][0]);
 
-		op->op_match = op->op_match & 0xf0ff | i<<8;
+		op->op_match = (op->op_match & 0xf0ff) | (i<<8);
 
 		/* Generate all opcode variants for this modified opcode */
 		generate_opcode_ea_variants(filep, body, replace, op);
@@ -1141,8 +1141,8 @@ void populate_table(void)
 		op->op_match = 0;
 		for(i=0;i<16;i++)
 		{
-			op->op_mask |= (bitpattern[i] != '.') << 15-i;
-			op->op_match |= (bitpattern[i] == '1') << 15-i;
+			op->op_mask |= (bitpattern[i] != '.') << (15-i);
+			op->op_match |= (bitpattern[i] == '1') << (15-i);
 		}
 	}
 	/* Terminate the list */

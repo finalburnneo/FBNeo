@@ -35,7 +35,7 @@ void scan(cpu_state *cpu, sdword nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		struct BurnArea ba;
-		memset(&ba, 0, sizeof ba);
+		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = cpu;
 		ba.nLen	  = STRUCT_SIZE_HELPER(cpu_state, shiftreg);
 		ba.szName = "TMS34010 Regs";
@@ -174,7 +174,7 @@ int run(cpu_state *cpu, int cycles)
         word opcode = mem_read(cpu->pc);
         cpu->last_pc = cpu->pc;
         cpu->pc += 16;
-		opcode_table[opcode >> 4 & 0xFFF](cpu, opcode);
+		opcode_table[(opcode >> 4) & 0xFFF](cpu, opcode);
 	}
 
 	cycles = cycles - cpu->icounter;
@@ -232,7 +232,7 @@ void clear_irq(cpu_state *cpu, int num)
 
 void write_ioreg(cpu_state *cpu, dword addr, word value)
 {
-    const int reg = addr >> 4 & 0x1F;
+    const int reg = (addr >> 4) & 0x1F;
     cpu->io_regs[reg] = value;
     switch (reg) {
     case PSIZE:  cpu->pshift = log2((double)value); break;
@@ -264,7 +264,7 @@ void write_ioreg(cpu_state *cpu, dword addr, word value)
 
 dword read_ioreg(cpu_state *cpu, dword addr)
 {
-    int reg = addr >> 4 & 0x1F;
+    int reg = (addr >> 4) & 0x1F;
     return cpu->io_regs[reg];
 }
 
@@ -291,7 +291,7 @@ int generate_scanline(cpu_state *cpu, int line, scanline_render_t render)
             dpyadr ^= 0xFFFC;
 
         int rowaddr = dpyadr >> 4;
-        int coladdr = (dpyadr & 0x007C) << 4 | cpu->io_regs[DPYTAP] & 0x3FFF;
+        int coladdr = ((dpyadr & 0x007C) << 4) | (cpu->io_regs[DPYTAP] & 0x3FFF);
 
         display_info info;
         info.coladdr = coladdr;
@@ -307,10 +307,10 @@ int generate_scanline(cpu_state *cpu, int line, scanline_render_t render)
     if (line >= cpu->io_regs[VEBLNK] && line < cpu->io_regs[VSBLNK]) {
         word dpyadr = cpu->io_regs[DPYADR];
         if ((dpyadr & 3) == 0) {
-            dpyadr = (dpyadr & 0xFFFC) - (cpu->io_regs[DPYCTL] & 0x03FC);
-            dpyadr |= cpu->io_regs[DPYSTRT] & 0x0003;
+            dpyadr = ((dpyadr & 0xFFFC) - (cpu->io_regs[DPYCTL] & 0x03FC));
+            dpyadr |= (cpu->io_regs[DPYSTRT] & 0x0003);
         } else {
-            dpyadr = dpyadr & 0xfffc | dpyadr - 1 & 3;
+            dpyadr = (dpyadr & 0xfffc) | ((dpyadr - 1) & 3);
         }
         cpu->io_regs[DPYADR] = dpyadr;
     }

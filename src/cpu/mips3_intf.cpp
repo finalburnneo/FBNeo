@@ -128,23 +128,23 @@ int Mips3Run(int cycles)
 
 int Mips3MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int nEnd, int nType)
 {
-    const int maxPages = PFN(nEnd) - PFN(nStart) + 1;
+    const int maxPages = (PFN(nEnd) - PFN(nStart)) + 1;
 
     int page = PFN(nStart);
     for (int i = 0; i < maxPages; i++, page++) {
 
         if (nType & MAP_READ)
-            g_mmap->MemMap[page] = pMemory + PAGE_SIZE * i;
+            g_mmap->MemMap[page] = pMemory + (PAGE_SIZE * i);
 
         if (nType & MAP_WRITE)
-            g_mmap->MemMap[PAGE_WADD + page] = pMemory + PAGE_SIZE * i;
+            g_mmap->MemMap[PAGE_WADD + page] = pMemory + (PAGE_SIZE * i);
     }
     return 0;
 }
 
 int Mips3MapHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEnd, int nType)
 {
-    const int maxPages = PFN(nEnd) - PFN(nStart) + 1;
+    const int maxPages = (PFN(nEnd) - PFN(nStart)) + 1;
 
     int page = PFN(nStart);
     for (int i = 0; i < maxPages; i++, page++) {
@@ -226,7 +226,7 @@ void Mips3SetIRQLine(const int line, const int state)
 {
     if (g_mips) {
         if (state) {
-            g_mips->m_state.cpr[0][13] |= 0x400 << line;
+            g_mips->m_state.cpr[0][13] |= (0x400 << line);
         } else {
             g_mips->m_state.cpr[0][13] &= ~(0x400 << line);
         }

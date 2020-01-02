@@ -57,14 +57,14 @@ void konamiMapMemory(UINT8 *src, UINT16 start, UINT16 finish, INT32 type)
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiMapMemory called without init\n"));
 #endif
 
-	UINT16 len = finish-start >> PAGE_SHIFT;
+	UINT16 len = (finish-start) >> PAGE_SHIFT;
 
 	for (UINT16 i = 0; i < len+1; i++)
 	{
 		UINT32 offset = i + (start >> PAGE_SHIFT);
-		if (type & 1 <<  READ) mem[ READ][offset] = src + (i << PAGE_SHIFT);
-		if (type & 1 << WRITE) mem[WRITE][offset] = src + (i << PAGE_SHIFT);
-		if (type & 1 << FETCH) mem[FETCH][offset] = src + (i << PAGE_SHIFT);
+		if (type & (1 <<  READ)) mem[ READ][offset] = src + (i << PAGE_SHIFT);
+		if (type & (1 << WRITE)) mem[WRITE][offset] = src + (i << PAGE_SHIFT);
+		if (type & (1 << FETCH)) mem[FETCH][offset] = src + (i << PAGE_SHIFT);
 	}
 }
 
@@ -206,7 +206,7 @@ void konamiInit(INT32 /*nCpu*/) // only 1 cpu (No examples exist of multi-cpu ko
 	konami_init(konamiDummyIrqCallback);
 
 	for (INT32 i = 0; i < 3; i++) {
-		for (INT32 j = 0; j < MEMORY_SPACE / PAGE_SIZE; j++) {
+		for (INT32 j = 0; j < (MEMORY_SPACE / PAGE_SIZE); j++) {
 			mem[i][j] = NULL;
 		}
 	}

@@ -43,11 +43,11 @@ void m6805MapMemory(UINT8 *ptr, INT32 nStart, INT32 nEnd, INT32 nType)
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805MapMemory called without init\n"));
 #endif
 
-	for (INT32 i = nStart / M6805_PAGE; i < nEnd / M6805_PAGE + 1; i++)
+	for (INT32 i = nStart / M6805_PAGE; i < (nEnd / M6805_PAGE) + 1; i++)
 	{
-		if (nType & 1 <<  READ) mem[ READ][i] = ptr + (i * M6805_PAGE - nStart);
-		if (nType & 1 << WRITE) mem[WRITE][i] = ptr + (i * M6805_PAGE - nStart);
-		if (nType & 1 << FETCH) mem[FETCH][i] = ptr + (i * M6805_PAGE - nStart);
+		if (nType & (1 <<  READ)) mem[ READ][i] = ptr + ((i * M6805_PAGE) - nStart);
+		if (nType & (1 << WRITE)) mem[WRITE][i] = ptr + ((i * M6805_PAGE) - nStart);
+		if (nType & (1 << FETCH)) mem[FETCH][i] = ptr + ((i * M6805_PAGE) - nStart);
 	}
 }
 
@@ -159,7 +159,7 @@ void m6805Init(INT32 num, INT32 max)
 	M6805_PAGE	     = M6805_ADDRESS_MAX / 0x100;
 	M6805_PAGE_MASK    = M6805_PAGE - 1;
 	M6805_PAGE_SHIFT   = 0;
-	for (M6805_PAGE_SHIFT = 0; 1 << M6805_PAGE_SHIFT < M6805_PAGE; M6805_PAGE_SHIFT++) {}
+	for (M6805_PAGE_SHIFT = 0; (1 << M6805_PAGE_SHIFT) < M6805_PAGE; M6805_PAGE_SHIFT++) {}
 
 	memset (mem[0], 0, M6805_PAGE * sizeof(UINT8 *));
 	memset (mem[1], 0, M6805_PAGE * sizeof(UINT8 *));

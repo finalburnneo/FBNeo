@@ -78,14 +78,14 @@ void h6280MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type)
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280MapMemory called with no CPU open\n"));
 #endif
 
-	UINT32 len = finish-start >> PAGE_SHIFT;
+	UINT32 len = (finish-start) >> PAGE_SHIFT;
 
 	for (UINT32 i = 0; i < len+1; i++)
 	{
 		UINT32 offset = i + (start >> PAGE_SHIFT);
-		if (type & 1 <<  READ) sPointer->mem[ READ][offset] = src + (i << PAGE_SHIFT);
-		if (type & 1 << WRITE) sPointer->mem[WRITE][offset] = src + (i << PAGE_SHIFT);
-		if (type & 1 << FETCH) sPointer->mem[FETCH][offset] = src + (i << PAGE_SHIFT);
+		if (type & (1 <<  READ)) sPointer->mem[ READ][offset] = src + (i << PAGE_SHIFT);
+		if (type & (1 << WRITE)) sPointer->mem[WRITE][offset] = src + (i << PAGE_SHIFT);
+		if (type & (1 << FETCH)) sPointer->mem[FETCH][offset] = src + (i << PAGE_SHIFT);
 	}
 }
 
@@ -274,7 +274,7 @@ void h6280Init(INT32 nCpu)
 	if (nCpu >= nh6280CpuCount) nh6280CpuCount = nCpu+1;
 
 	for (INT32 i = 0; i < 3; i++) {
-		for (INT32 j = 0; j < MEMORY_SPACE / PAGE_SIZE; j++) {
+		for (INT32 j = 0; j < (MEMORY_SPACE / PAGE_SIZE); j++) {
 			sPointer->mem[i][j] = NULL;
 		}
 	}
@@ -378,7 +378,7 @@ INT32 h6280Scan(INT32 nAction)
 
 			if (p == NULL) continue;
 
-			memset(&ba, 0, sizeof ba);
+			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = p;
 			ba.nLen	  = STRUCT_SIZE_HELPER(h6280_Regs, io_buffer);
 			sprintf (szName, "h6280 Registers for Chip #%d", i);

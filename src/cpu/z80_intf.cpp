@@ -72,7 +72,7 @@ void __fastcall ZetWriteIO(UINT32 a, UINT8 d)
 UINT8 __fastcall ZetReadProg(UINT32 a)
 {
 	// check mem map
-	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x000 | a >> 8];
+	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x000 | (a >> 8)];
 	if (pr != NULL) {
 		return pr[a & 0xff];
 	}
@@ -88,7 +88,7 @@ UINT8 __fastcall ZetReadProg(UINT32 a)
 void __fastcall ZetWriteProg(UINT32 a, UINT8 d)
 {
 	// check mem map
-	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x100 | a >> 8];
+	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x100 | (a >> 8)];
 	if (pr != NULL) {
 		pr[a & 0xff] = d;
 		return;
@@ -104,7 +104,7 @@ void __fastcall ZetWriteProg(UINT32 a, UINT8 d)
 UINT8 __fastcall ZetReadOp(UINT32 a)
 {
 	// check mem map
-	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | a >> 8];
+	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | (a >> 8)];
 	if (pr != NULL) {
 		return pr[a & 0xff];
 	}
@@ -120,7 +120,7 @@ UINT8 __fastcall ZetReadOp(UINT32 a)
 UINT8 __fastcall ZetReadOpArg(UINT32 a)
 {
 	// check mem map
-	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | a >> 8];
+	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | (a >> 8)];
 	if (pr != NULL) {
 		return pr[a & 0xff];
 	}
@@ -226,7 +226,7 @@ INT32 ZetInit(INT32 nCPU)
 		nZetCyclesDelayed[nCPU] = 0;
 		nZ80ICount[nCPU] = 0;
 		
-		for (INT32 j = 0; j < 0x0100 * 4; j++) {
+		for (INT32 j = 0; j < (0x0100 * 4); j++) {
 			ZetCPUContext[nCPU]->pZetMemMap[j] = NULL;
 		}
 	}
@@ -272,12 +272,12 @@ void ZetWriteRom(UINT16 address, UINT8 data)
 
 	if (nOpenedCPU < 0) return;
 
-	if (ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | address >> 8] != NULL) {
-		ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | address >> 8][address & 0xff] = data;
+	if (ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | (address >> 8)] != NULL) {
+		ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | (address >> 8)][address & 0xff] = data;
 	}
 	
-	if (ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | address >> 8] != NULL) {
-		ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | address >> 8][address & 0xff] = data;
+	if (ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | (address >> 8)] != NULL) {
+		ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | (address >> 8)][address & 0xff] = data;
 	}
 	
 	ZetWriteProg(address, data);
@@ -444,10 +444,10 @@ INT32 ZetMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode)
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetMemCallback called when no CPU open\n"));
 #endif
 
-	UINT8 cStart = nStart >> 8;
+	UINT8 cStart = (nStart >> 8);
 	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
 
-	for (UINT16 i = cStart; i <= nEnd >> 8; i++) {
+	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
 		switch (nMode) {
 			case 0:
 				pMemMap[0     + i] = NULL;
@@ -501,14 +501,14 @@ INT32 ZetUnmapMemory(INT32 nStart, INT32 nEnd, INT32 nFlags)
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetUnmapMemory called when no CPU open\n"));
 #endif
 
-	UINT8 cStart = nStart >> 8;
+	UINT8 cStart = (nStart >> 8);
 	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
 
-	for (UINT16 i = cStart; i <= nEnd >> 8; i++) {
-		if (nFlags & 1 << 0) pMemMap[0     + i] = NULL; // READ
-		if (nFlags & 1 << 1) pMemMap[0x100 + i] = NULL; // WRITE
-		if (nFlags & 1 << 2) pMemMap[0x200 + i] = NULL; // OP
-		if (nFlags & 1 << 3) pMemMap[0x300 + i] = NULL; // ARG
+	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
+		if (nFlags & (1 << 0)) pMemMap[0     + i] = NULL; // READ
+		if (nFlags & (1 << 1)) pMemMap[0x100 + i] = NULL; // WRITE
+		if (nFlags & (1 << 2)) pMemMap[0x200 + i] = NULL; // OP
+		if (nFlags & (1 << 3)) pMemMap[0x300 + i] = NULL; // ARG
 	}
 
 	return 0;
@@ -521,14 +521,14 @@ void ZetMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nFlags)
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetMapMemory called when no CPU open\n"));
 #endif
 
-	UINT8 cStart = nStart >> 8;
+	UINT8 cStart = (nStart >> 8);
 	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
 
-	for (UINT16 i = cStart; i <= nEnd >> 8; i++) {
-		if (nFlags & 1 << 0) pMemMap[0     + i] = Mem + (i - cStart << 8); // READ
-		if (nFlags & 1 << 1) pMemMap[0x100 + i] = Mem + (i - cStart << 8); // WRITE
-		if (nFlags & 1 << 2) pMemMap[0x200 + i] = Mem + (i - cStart << 8); // OP
-		if (nFlags & 1 << 3) pMemMap[0x300 + i] = Mem + (i - cStart << 8); // ARG
+	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
+		if (nFlags & (1 << 0)) pMemMap[0     + i] = Mem + ((i - cStart) << 8); // READ
+		if (nFlags & (1 << 1)) pMemMap[0x100 + i] = Mem + ((i - cStart) << 8); // WRITE
+		if (nFlags & (1 << 2)) pMemMap[0x200 + i] = Mem + ((i - cStart) << 8); // OP
+		if (nFlags & (1 << 3)) pMemMap[0x300 + i] = Mem + ((i - cStart) << 8); // ARG
 	}
 }
 
@@ -539,24 +539,24 @@ INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem)
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetMapArea called when no CPU open\n"));
 #endif
 
-	UINT8 cStart = nStart >> 8;
+	UINT8 cStart = (nStart >> 8);
 	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
 
-	for (UINT16 i = cStart; i <= nEnd >> 8; i++) {
+	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
 		switch (nMode) {
 			case 0: {
-				pMemMap[0     + i] = Mem + (i - cStart << 8);
+				pMemMap[0     + i] = Mem + ((i - cStart) << 8);
 				break;
 			}
 		
 			case 1: {
-				pMemMap[0x100 + i] = Mem + (i - cStart << 8);
+				pMemMap[0x100 + i] = Mem + ((i - cStart) << 8);
 				break;
 			}
 			
 			case 2: {
-				pMemMap[0x200 + i] = Mem + (i - cStart << 8);
-				pMemMap[0x300 + i] = Mem + (i - cStart << 8);
+				pMemMap[0x200 + i] = Mem + ((i - cStart) << 8);
+				pMemMap[0x300 + i] = Mem + ((i - cStart) << 8);
 				break;
 			}
 		}
@@ -572,16 +572,16 @@ INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetMapArea called when no CPU open\n"));
 #endif
 
-	UINT8 cStart = nStart >> 8;
+	UINT8 cStart = (nStart >> 8);
 	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
 	
 	if (nMode != 2) {
 		return 1;
 	}
 	
-	for (UINT16 i = cStart; i <= nEnd >> 8; i++) {
-		pMemMap[0x200 + i] = Mem01 + (i - cStart << 8);
-		pMemMap[0x300 + i] = Mem02 + (i - cStart << 8);
+	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
+		pMemMap[0x200 + i] = Mem01 + ((i - cStart) << 8);
+		pMemMap[0x300 + i] = Mem02 + ((i - cStart) << 8);
 	}
 
 	return 0;

@@ -546,14 +546,14 @@ unsigned int m68k_get_reg(void* context, m68k_register_t regnum)
 		case M68K_REG_PC:	return MASK_OUT_ABOVE_32(cpu->pc);
 		case M68K_REG_SR:	return	cpu->t1_flag						|
 									cpu->t0_flag						|
-									cpu->s_flag << 11					|
-									cpu->m_flag << 11					|
+									(cpu->s_flag << 11)					|
+									(cpu->m_flag << 11)					|
 									cpu->int_mask						|
-									(cpu->x_flag & XFLAG_SET) >> 4	|
-									(cpu->n_flag & NFLAG_SET) >> 4	|
-									!cpu->not_z_flag << 2			|
-									(cpu->v_flag & VFLAG_SET) >> 6	|
-									(cpu->c_flag & CFLAG_SET) >> 8;
+									((cpu->x_flag & XFLAG_SET) >> 4)	|
+									((cpu->n_flag & NFLAG_SET) >> 4)	|
+									((!cpu->not_z_flag) << 2)			|
+									((cpu->v_flag & VFLAG_SET) >> 6)	|
+									((cpu->c_flag & CFLAG_SET) >> 8);
 		case M68K_REG_SP:	return cpu->dar[15];
 		case M68K_REG_USP:	return cpu->s_flag ? cpu->sp[0] : cpu->dar[15];
 		case M68K_REG_ISP:	return cpu->s_flag && !cpu->m_flag ? cpu->dar[15] : cpu->sp[4];
@@ -786,7 +786,7 @@ void m68k_set_cpu_type(unsigned int cpu_type)
 
 int m68k_check_shouldinterrupt(void)
 {
-	return CPU_INT_LEVEL > FLAG_INT_MASK;
+	return (CPU_INT_LEVEL > FLAG_INT_MASK);
 }
 
 /* Execute some instructions until we use up num_cycles clock cycles */
@@ -969,14 +969,14 @@ void m68k_set_virq(unsigned int level, unsigned int active)
 	m68ki_cpu.virq_state = state;
 
 	for(blevel = 7; blevel > 0; blevel--)
-		if(state & 1 << blevel)
+		if(state & (1 << blevel))
 			break;
 	m68k_set_irq(blevel);
 }
 
 unsigned int m68k_get_virq(unsigned int level)
 {
-	return m68ki_cpu.virq_state & 1 << level ? 1 : 0;
+	return (m68ki_cpu.virq_state & (1 << level)) ? 1 : 0;
 }
 
 void m68k_init(void)
@@ -986,7 +986,7 @@ void m68k_init(void)
 	/* The first call to this function initializes the opcode handler jump table */
 	if(!emulation_initialized)
 	{
-		memset(&m68ki_cpu, 0, sizeof m68ki_cpu);
+		memset(&m68ki_cpu, 0, sizeof(m68ki_cpu));
 		memset(&m68ki_cycles, 0, 0x10000 * 4);
 		m68ki_build_opcode_table();
 		emulation_initialized = 1;

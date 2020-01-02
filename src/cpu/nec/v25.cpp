@@ -46,8 +46,8 @@ void cpu_writeport(unsigned int,unsigned int);
 
 static inline void write_port_word(unsigned int a, unsigned short d)
 {
-	cpu_writeport(a,(unsigned char)d);
-	cpu_writeport(a+1,d>>8);
+	cpu_writeport((a),(unsigned char)(d));
+	cpu_writeport((a)+1,(d)>>8);
 }
 
 #define cpu_readop cpu_readmem20_op
@@ -66,7 +66,7 @@ typedef UINT32 DWORD;
 
 static void add_timer(v25_state_t *nec_state, int timer, double tmp, int param, int flags)
 {
-	float cycles = nec_state->clock / 2 * (tmp * (1.000000000 / nec_state->clock));
+	float cycles = (nec_state->clock / 2) * (tmp * (1.000000000 / nec_state->clock));
 
 	nec_state->timer_param[timer]			= param;
 	nec_state->timer_enabled[timer]			= 1;
@@ -128,13 +128,13 @@ static void do_prefetch(v25_state_t *nec_state, int previous_ICount)
 NEC_INLINE UINT8 fetch(v25_state_t *nec_state)
 {
 	prefetch(nec_state);
-	return cpu_readop_arg((Sreg(PS)<<4)+nec_state->ip++ ^ nec_state->fetch_xor);
+	return cpu_readop_arg(((Sreg(PS)<<4)+nec_state->ip++) ^ nec_state->fetch_xor);
 }
 
 NEC_INLINE UINT16 fetchword(v25_state_t *nec_state)
 {
 	UINT16 r = FETCH();
-	r |= FETCH()<<8;
+	r |= (FETCH()<<8);
 	return r;
 }
 
@@ -152,7 +152,7 @@ static UINT8 fetchop(v25_state_t *nec_state)
 	UINT8 ret;
 
 	prefetch(nec_state);
-	ret = cpu_readop((Sreg(PS)<<4)+nec_state->ip++ ^ nec_state->fetch_xor);
+	ret = cpu_readop(((Sreg(PS)<<4)+nec_state->ip++) ^ nec_state->fetch_xor);
 
 	if (nec_state->MF == 0)
 		if (nec_state->decode)
@@ -323,7 +323,7 @@ static void external_int(v25_state_t *nec_state)
 	{
 		for(int i = 0; i < 8; i++)
 		{
-			if (nec_state->ISPR & 1 << i) break;
+			if (nec_state->ISPR & (1 << i)) break;
 
 			if (nec_state->priority_inttu == i)
 			{
@@ -417,7 +417,7 @@ void v25_set_irq_line_and_vector(int irqline, int vector, int state)
 			if (nec_state->intp_state[irqline] == (unsigned int)state) return;
 			nec_state->intp_state[irqline] = state;
 			if (state != CLEAR_LINE)
-				nec_state->pending_irq |= INTP0 << irqline;
+				nec_state->pending_irq |= (INTP0 << irqline);
 			break;
 		case NEC_INPUT_LINE_POLL:
 			nec_state->vector = vector;
@@ -454,7 +454,7 @@ void v25_common_init(int)
 		Mod_RM.RM.b[i] = breg_name[i & 7];
 	}
 
-	memset(nec_state, 0, sizeof*nec_state);
+	memset(nec_state, 0, sizeof(*nec_state));
 
 	nec_state->decode = NULL;
 }
@@ -462,7 +462,7 @@ void v25_common_init(int)
 void v25_set_decode(unsigned char *table)
 {
 	sChipsPtr->decode = table;
-	sChipsPtr->mode_state = sChipsPtr->MF = table != NULL ? 0 : 1;
+	sChipsPtr->mode_state = sChipsPtr->MF = (table != NULL) ? 0 : 1;
 }
 
 unsigned int v25_total_cycles()
@@ -489,24 +489,24 @@ int v25_execute(int cycles)
 	{
 		for(int i = 0; i < 8; i++)
 		{
-			if (nec_state->ISPR & 1 << i) break;
+			if (nec_state->ISPR & (1 << i)) break;
 
-			if (nec_state->priority_inttu == i && pending & (INTTU0|INTTU1|INTTU2))
+			if (nec_state->priority_inttu == i && (pending & (INTTU0|INTTU1|INTTU2)))
 				nec_state->halted = 0;
 
-			if (nec_state->priority_intd == i && pending & (INTD0|INTD1))
+			if (nec_state->priority_intd == i && (pending & (INTD0|INTD1)))
 				nec_state->halted = 0;
 
-			if (nec_state->priority_intp == i && pending & (INTP0|INTP1|INTP2))
+			if (nec_state->priority_intp == i && (pending & (INTP0|INTP1|INTP2)))
 				nec_state->halted = 0;
 
-			if (nec_state->priority_ints0 == i && pending & (INTSER0|INTSR0|INTST0))
+			if (nec_state->priority_ints0 == i && (pending & (INTSER0|INTSR0|INTST0)))
 				nec_state->halted = 0;
 
-			if (nec_state->priority_ints1 == i && pending & (INTSER1|INTSR1|INTST1))
+			if (nec_state->priority_ints1 == i && (pending & (INTSER1|INTSR1|INTST1)))
 				nec_state->halted = 0;
 
-			if (i == 7 && pending & INTTB)
+			if (i == 7 && (pending & INTTB))
 				nec_state->halted = 0;
 		}
 	}
@@ -523,7 +523,7 @@ int v25_execute(int cycles)
 
 	while(nec_state->icount>0 && !nec_state->stop_run) {
 		/* Dispatch IRQ */
-		if (nec_state->no_interrupt==0 && nec_state->pending_irq & nec_state->unmasked_irq)
+		if (nec_state->no_interrupt==0 && (nec_state->pending_irq & nec_state->unmasked_irq))
 		{
 			if (nec_state->pending_irq & NMI_IRQ)
 				external_int(nec_state);
@@ -607,10 +607,10 @@ void v25Idle(int cycles)
 int v25GetPC(int n)
 {
 	if (n == -1) { // current cpu
-		return (sChipsPtr->ram.w[sChipsPtr->RBW + PS]<<4) + sChipsPtr->ip;
+		return ((sChipsPtr->ram.w[sChipsPtr->RBW + (PS)]<<4) + sChipsPtr->ip);
 	} else {
 		v25_state_t *nec_state = &sChips[n];
-		return (nec_state->ram.w[nec_state->RBW + PS]<<4) + nec_state->ip;
+		return ((nec_state->ram.w[nec_state->RBW + (PS)]<<4) + nec_state->ip);
 	}
 }
 
@@ -623,7 +623,7 @@ void v25Scan(int cpu, int nAction)
 		char szText[] = "V25 #0";
 		szText[5] = '1' + cpu;
 
-		memset(&ba, 0, sizeof ba);
+		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = (unsigned char*)nec_state;
 		ba.nLen	  = STRUCT_SIZE_HELPER(nec_state_t, stop_run);

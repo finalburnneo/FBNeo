@@ -127,10 +127,10 @@ void tlcs90MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, INT32 flags)
 	start &= 0xfffff;
 	end &= 0xfffff;
 
-	for (UINT32 i = start / 0x100; i < end / 0x100 + 1; i++)
+	for (UINT32 i = start / 0x100; i < (end / 0x100) + 1; i++)
 	{
-		if (flags & 1 << 0) mem[0][i] = ptr + (i * 0x100 - start);
-		if (flags & 1 << 1) mem[1][i] = ptr + (i * 0x100 - start);
+		if (flags & (1 << 0)) mem[0][i] = ptr + ((i * 0x100) - start);
+		if (flags & (1 << 1)) mem[1][i] = ptr + ((i * 0x100) - start);
 	}
 }
 

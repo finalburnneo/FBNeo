@@ -222,9 +222,9 @@ static UINT8 asciitohex(UINT8 data)
 {
 	/* Convert ASCII data to HEX */
 
-	if (data >= 0x30 && data < 0x3a) data -= 0x30;
+	if ((data >= 0x30) && (data < 0x3a)) data -= 0x30;
 	data &= 0xdf;			/* remove case sensitivity */
-	if (data >= 0x41 && data < 0x5b) data -= 0x37;
+	if ((data >= 0x41) && (data < 0x5b)) data -= 0x37;
 
 	return data;
 }
@@ -245,23 +245,23 @@ INT32 BurnLoadPicROM(UINT8 *src, INT32 offset, INT32 len)
 	// Convert the PIC16C57 ASCII HEX dump to pure HEX
 	do
 	{
-		if (PICROM_HEX[src_pos + 0] == ':' &&
-			PICROM_HEX[src_pos + 1] == '1' &&
-			PICROM_HEX[src_pos + 2] == '0')
+		if ((PICROM_HEX[src_pos + 0] == ':') &&
+			(PICROM_HEX[src_pos + 1] == '1') &&
+			(PICROM_HEX[src_pos + 2] == '0'))
 			{
 			src_pos += 9;
 
 			for (offs = 0; offs < 32; offs += 4)
 			{
-				data_hi = asciitohex(PICROM_HEX[src_pos + offs + 0]);
-				data_lo = asciitohex(PICROM_HEX[src_pos + offs + 1]);
-				if (data_hi <= 0x0f && data_lo <= 0x0f) {
-					data =  data_hi <<  4 | data_lo << 0;
-					data_hi = asciitohex(PICROM_HEX[src_pos + offs + 2]);
-					data_lo = asciitohex(PICROM_HEX[src_pos + offs + 3]);
+				data_hi = asciitohex((PICROM_HEX[src_pos + offs + 0]));
+				data_lo = asciitohex((PICROM_HEX[src_pos + offs + 1]));
+				if ((data_hi <= 0x0f) && (data_lo <= 0x0f)) {
+					data =  (data_hi <<  4) | (data_lo << 0);
+					data_hi = asciitohex((PICROM_HEX[src_pos + offs + 2]));
+					data_lo = asciitohex((PICROM_HEX[src_pos + offs + 3]));
 
-					if (data_hi <= 0x0f && data_lo <= 0x0f) {
-						data |= data_hi << 12 | data_lo << 8;
+					if ((data_hi <= 0x0f) && (data_lo <= 0x0f)) {
+						data |= (data_hi << 12) | (data_lo << 8);
 						PICROM[dst_pos] = data;
 						dst_pos += 1;
 					}
@@ -272,19 +272,19 @@ INT32 BurnLoadPicROM(UINT8 *src, INT32 offset, INT32 len)
 
 		/* Get the PIC16C57 Config register data */
 
-		if (PICROM_HEX[src_pos + 0] == ':' &&
-			PICROM_HEX[src_pos + 1] == '0' &&
-			PICROM_HEX[src_pos + 2] == '2' &&
-			PICROM_HEX[src_pos + 3] == '1')
+		if ((PICROM_HEX[src_pos + 0] == ':') &&
+			(PICROM_HEX[src_pos + 1] == '0') &&
+			(PICROM_HEX[src_pos + 2] == '2') &&
+			(PICROM_HEX[src_pos + 3] == '1'))
 			{
 				src_pos += 9;
 
-				data_hi = asciitohex(PICROM_HEX[src_pos + 0]);
-				data_lo = asciitohex(PICROM_HEX[src_pos + 1]);
-				data =  data_hi <<  4 | data_lo << 0;
-				data_hi = asciitohex(PICROM_HEX[src_pos + 2]);
-				data_lo = asciitohex(PICROM_HEX[src_pos + 3]);
-				data |= data_hi << 12 | data_lo << 8;
+				data_hi = asciitohex((PICROM_HEX[src_pos + 0]));
+				data_lo = asciitohex((PICROM_HEX[src_pos + 1]));
+				data =  (data_hi <<  4) | (data_lo << 0);
+				data_hi = asciitohex((PICROM_HEX[src_pos + 2]));
+				data_lo = asciitohex((PICROM_HEX[src_pos + 3]));
+				data |= (data_hi << 12) | (data_lo << 8);
 
 				pic16c5x_config(data);
 				src_pos = 0x7fff;		/* Force Exit */

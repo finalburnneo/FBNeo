@@ -71,9 +71,9 @@ inline addr_t mips3::tlb_translate(addr_t address)
 
         if (vpn2 == vpn) {
             if (address & 0x1000)
-                return address & 0xFFF | entry->b.odd_lo >> 6 << 12;
+                return (address & 0xFFF) | ((entry->b.odd_lo >> 6) << 12);
             else
-                return address & 0xFFF | entry->b.even_lo >> 6 << 12;
+                return (address & 0xFFF) | ((entry->b.even_lo >> 6) << 12);
         }
     }
    // qDebug() << "Address error" << QString::number(address,16);
@@ -287,7 +287,7 @@ bool mips3::run(int cycles, bool skip_bps)
         // REGIMM
         case 0x01:
         {
-            switch (opcode >> 16 & 0x1F) {
+            switch ((opcode >> 16) & 0x1F) {
             // BLTZ rs, offset
             case 0x00: BLTZ(opcode); break;
 
@@ -301,7 +301,7 @@ bool mips3::run(int cycles, bool skip_bps)
             case 0x11: BGEZAL(opcode); break;
 
             default:
-                cout << "Op: " << (opcode >> 16 & 0x1F) << " [REGIMM]" << endl;
+                cout << "Op: " << ((opcode >> 16) & 0x1F) << " [REGIMM]" << endl;
                 break;
             }
 
@@ -355,7 +355,7 @@ bool mips3::run(int cycles, bool skip_bps)
 
         // COP1 (FPU) > TODO
         case 0x11:
-            if (m_state.cpr[0][COP0_SR] & 1 << 26)
+            if (m_state.cpr[0][COP0_SR] & (1 << 26))
                 cop1_execute_32(opcode);
             else
                 cop1_execute_16(opcode);

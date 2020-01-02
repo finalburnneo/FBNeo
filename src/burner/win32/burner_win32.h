@@ -24,6 +24,7 @@
 #include <windows.h>
 #include <windowsx.h>
 #include <commctrl.h>
+#include <timeapi.h>
 #include <commdlg.h>
 #include <shellapi.h>
 

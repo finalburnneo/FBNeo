@@ -21,7 +21,7 @@ void BurnMD2612Scan(INT32 nAction, INT32* pnMin);
 	
 #define BurnMD2612Read(i, a) MDYM2612Read()
 
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	#define BurnMD2612Write(i, a, n) if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnMD2612Write called without init\n")); MDYM2612Write(a, n)
 #else
 	#define BurnMD2612Write(i, a, n) MDYM2612Write(a, n)

@@ -1,4 +1,4 @@
-// FB Alpha Minivader driver module
+// FB Neo Minivader driver module
 //Based on MAME Driver by Takahiro Nogi
 
 #include "tiles_generic.h"

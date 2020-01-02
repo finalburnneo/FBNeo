@@ -14,7 +14,7 @@ static int nOldAudVolume;
 
 int kNetGame = 0;							// Non-zero if Kaillera is being used
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 int counter;								// General purpose variable used when debugging
 #endif
 
@@ -439,7 +439,7 @@ int RunMessageLoop()
 						// An Alt/AltGr-key was pressed
 						switch (Msg.wParam) {
 
-#if defined (FBNEO_DEBUG)
+#ifdef FBN_DEBUG
 							case 'C': {
 								static int count = 0;
 								if (count == 0) {
@@ -526,7 +526,7 @@ int RunMessageLoop()
 
 						switch (Msg.wParam) {
 
-#if defined (FBNEO_DEBUG)
+#ifdef FBN_DEBUG
 							case 'N':
 								counter--;
 								if (counter < 0) {

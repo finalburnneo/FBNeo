@@ -1,4 +1,4 @@
-// FB Alpha Konami Test Board (GX800) driver module
+// FB Neo Konami Test Board (GX800) driver module
 // Based on MAME driver by Angelo Salese
 
 #include "tiles_generic.h"

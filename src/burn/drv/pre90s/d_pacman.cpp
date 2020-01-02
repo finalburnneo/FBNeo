@@ -1,4 +1,4 @@
-// FB Alpha Puckman module
+// FB Neo Puckman module
 // Based on MAME driver by Nicola Salmoria and many others
 
 // Fix Shoot the Bull inputs

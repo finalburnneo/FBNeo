@@ -1,4 +1,4 @@
-// FB Alpha Time Limit driver module
+// FB Neo Time Limit driver module
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"

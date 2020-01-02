@@ -1,4 +1,4 @@
-// FB Alpha Time Pilot driver module
+// FB Neo Time Pilot driver module
 // Based on MAME driver by Nicola Salmoria
 
 /*

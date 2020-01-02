@@ -1,4 +1,4 @@
-// FB Alpha Metal Freezer driver module
+// FB Neo Metal Freezer driver module
 // Based on MAME driver by Angelo Salese (Kale)
 
 #include "tiles_generic.h"

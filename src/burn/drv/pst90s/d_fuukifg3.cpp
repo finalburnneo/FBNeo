@@ -1,4 +1,4 @@
-// FB Alpha Fuuki FG-3 driver module
+// FB Neo Fuuki FG-3 driver module
 // Based on MAME driver by Paul Priest and David Haywood
 
 #include "tiles_generic.h"

@@ -39,7 +39,7 @@ static int MemCardRead(TCHAR* szFilename, unsigned char* pData, int nSize)
 	fread(szReadHeader, 1, 8, fp);					// Read identifiers
 	if (memcmp(szReadHeader, szHeader, 8) == 0) {
 
-		// FB Alpha memory card file
+		// FB Neo memory card file
 
 		int nChunkSize = 0;
 		int nVersion = 0;
@@ -70,7 +70,7 @@ static int MemCardRead(TCHAR* szFilename, unsigned char* pData, int nSize)
 		fread(pData, 1, nChunkSize - 32, fp);		// Read the data
 	} else {
 
-		// MAME or old FB Alpha memory card file
+		// MAME or old FB Neo memory card file
 
 		unsigned char* pTemp = (unsigned char*)malloc(nSize >> 1);
 
@@ -103,7 +103,7 @@ static int MemCardWrite(TCHAR* szFilename, unsigned char* pData, int nSize)
 
 	if (bMemCardFC1Format) {
 
-		// FB Alpha memory card file
+		// FB Neo memory card file
 
 		const char* szFileHeader  = "FB1 ";				// File identifier
 		const char* szChunkHeader = "FC1 ";				// Chunk identifier
@@ -126,7 +126,7 @@ static int MemCardWrite(TCHAR* szFilename, unsigned char* pData, int nSize)
 		fwrite(pData, 1, nSize, fp);
 	} else {
 
-		// MAME or old FB Alpha memory card file
+		// MAME or old FB Neo memory card file
 
 		unsigned char* pTemp = (unsigned char*)malloc(nSize >> 1);
 		if (pTemp) {

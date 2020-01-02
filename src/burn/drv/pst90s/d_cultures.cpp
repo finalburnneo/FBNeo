@@ -1,4 +1,4 @@
-// FB Alpha Jibun wo Migaku Culture School Mahjong Hen driver module
+// FB Neo Jibun wo Migaku Culture School Mahjong Hen driver module
 // Based on MAME driver by Pierpaolo Prazzoli
 
 #include "tiles_generic.h"

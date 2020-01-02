@@ -1,4 +1,4 @@
-// FB Alpha Tiger Road driver module
+// FB Neo Tiger Road driver module
 // Based on MAME driver by Phil Stroffolino
 // F1 Dream protection code by Eric Hustvedt
 

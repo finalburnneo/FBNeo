@@ -1,5 +1,5 @@
-// FB Alpha IGS PolyGameMaster driver module
-// Original FB Alpha port by OopsWare
+// FB Neo IGS PolyGameMaster driver module
+// Original FB Neo port by OopsWare
 // Based on information from ElSemi, Haze (David Haywood), and XingXing
 
 #include "pgm.h"

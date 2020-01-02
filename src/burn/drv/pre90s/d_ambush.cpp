@@ -1,4 +1,4 @@
-// FB Alpha Ambush driver module
+// FB Neo Ambush driver module
 // Based on MAME driver by Zsolt Vasvari
 
 #include "tiles_generic.h"

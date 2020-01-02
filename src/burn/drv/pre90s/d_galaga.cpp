@@ -1,4 +1,4 @@
-// Galaga & Dig-Dug driver for FB Alpha, based on the MAME driver by Nicola Salmoria & previous work by Martin Scragg, Mirko Buffoni, Aaron Giles
+// Galaga & Dig-Dug driver for FB Neo, based on the MAME driver by Nicola Salmoria & previous work by Martin Scragg, Mirko Buffoni, Aaron Giles
 // Dig Dug added July 27, 2015 - dink
 // Xevious added April 22, 2019 - CupcakeFan
 

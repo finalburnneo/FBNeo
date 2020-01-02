@@ -1,4 +1,4 @@
-// FB Alpha Battle Garegga driver module
+// FB Neo Battle Garegga driver module
 // Driver and emulation by Jan Klaassen
 
 #include "toaplan.h"

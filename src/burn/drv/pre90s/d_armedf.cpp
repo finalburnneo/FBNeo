@@ -1,4 +1,4 @@
-// FB Alpha Armed Formation driver module
+// FB Neo Armed Formation driver module
 // Based on MAME driver by Carlos A. Lozano, Phil Stroffolino, and Takahiro Nogi
 //
 // nb1414m4 hooked up to Kozure Ookami July 8 2015 -dink

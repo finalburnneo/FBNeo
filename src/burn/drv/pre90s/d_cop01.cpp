@@ -1,4 +1,4 @@
-// FB Alpha Nichibutsu Cop 01 / Mighty Guy driver module
+// FB Neo Nichibutsu Cop 01 / Mighty Guy driver module
 // Based on MAME driver by Carlos A. Lozano
 
 #include "tiles_generic.h"

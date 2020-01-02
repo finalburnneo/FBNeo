@@ -1,4 +1,4 @@
-// FB Alpha Deniam-16 Hardware driver module
+// FB Neo Deniam-16 Hardware driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Miss Bubble 2 / Bubble Pong Pong driver module
+// FB Neo Miss Bubble 2 / Bubble Pong Pong driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

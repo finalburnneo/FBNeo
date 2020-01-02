@@ -1,4 +1,4 @@
-// FB Alpha Gumbo driver module
+// FB Neo Gumbo driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

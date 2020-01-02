@@ -1,4 +1,4 @@
-// FB Alpha Exed Exes driver module
+// FB Neo Exed Exes driver module
 // Based on MAME driver by Richard Davies, Paul Swan, and various others
 
 #include "tiles_generic.h"

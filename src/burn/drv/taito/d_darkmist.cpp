@@ -1,4 +1,4 @@
-// FB Alpha The Lost Castle in Darkmist driver module
+// FB Neo The Lost Castle in Darkmist driver module
 // Based on MAME driver by David Haywood, Nicola Salmoria, and Tomasz Slanina
 
 #include "tiles_generic.h"

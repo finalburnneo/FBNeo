@@ -81,7 +81,7 @@ Ensoniq OTIS - ES5505                                            Ensoniq OTTO - 
 ***********************************************************************************************/
 
 //
-// FBAlpha notes: (Nov.21.2016)
+// FBNeo notes: (Nov.21.2016)
 //
 //   ES5505Write() only supports 16bit writes.
 //
@@ -871,7 +871,7 @@ static void generate_samples(INT32 *left, INT32 *right, INT32 samples)
 
 void ES5506Update(INT16 *outputs, INT32 samples_len)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Update called without init\n"));
 #endif
 
@@ -1015,7 +1015,7 @@ void ES5506Init(INT32 clock, UINT8* region0, UINT8* region1, UINT8* region2, UIN
 
 void ES5506Scan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Scan called without init\n"));
 #endif
 
@@ -1044,7 +1044,7 @@ void ES5506Scan(INT32 nAction, INT32* pnMin)
 // Some games (Taito F3) change the l/r volume in-game, this is for them
 void ES5506ScanRoutes(INT32 nAction, INT32* pnMin)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506ScanRoutes called without init\n"));
 #endif
 
@@ -1075,7 +1075,7 @@ void ES5506SetRoute(INT32, double nVolume, INT32 nRouteDir)
 
 void ES5506Exit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Exit called without init\n"));
 #endif
 
@@ -1114,7 +1114,7 @@ void ES5506Exit()
 
 void ES5506Reset()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Reset called without init\n"));
 #endif
 
@@ -1393,7 +1393,7 @@ ES5506_INLINE void es5506_reg_write_test(UINT32 offset, UINT32 data)
 
 void ES5506Write(UINT32 offset, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Write called without init\n"));
 #endif
 
@@ -1601,7 +1601,7 @@ ES5506_INLINE UINT32 es5506_reg_read_test(UINT32 offset)
 
 UINT8 ES5506Read(UINT32 offset)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Read called without init\n"));
 #endif
 
@@ -1632,7 +1632,7 @@ UINT8 ES5506Read(UINT32 offset)
 
 void es5506_voice_bank_w(INT32 voice, INT32 bank)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("es5506_voice_bank_w called without init\n"));
 #endif
 
@@ -1965,7 +1965,7 @@ ES5506_INLINE void es5505_reg_write_test(UINT32 offset, UINT16 data)
 
 void ES5505Write(UINT32 offset, UINT16 data)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5505Write called without init\n"));
 #endif
 
@@ -2176,7 +2176,7 @@ ES5506_INLINE UINT16 es5505_reg_read_test(UINT32 offset)
 
 UINT16 ES5505Read(UINT32 offset)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5505Read called without init\n"));
 #endif
 
@@ -2205,7 +2205,7 @@ UINT16 ES5505Read(UINT32 offset)
 
 void es5505_voice_bank_w(INT32 voice, INT32 bank)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("es5505_voice_bank_w called without init\n"));
 #endif
 

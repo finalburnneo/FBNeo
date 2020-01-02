@@ -1,4 +1,4 @@
-// FB Alpha Andamiro "Midas" hardware driver module
+// FB Neo Andamiro "Midas" hardware driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

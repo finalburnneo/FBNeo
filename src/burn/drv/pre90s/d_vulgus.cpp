@@ -1,4 +1,4 @@
-// FB Alpha Vulgus drive module
+// FB Neo Vulgus drive module
 // Based on MAME driver by Mirko Buffoni
 
 #include "tiles_generic.h"

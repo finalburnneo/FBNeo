@@ -1,4 +1,4 @@
-// FB Alpha Irem M62 system driver
+// FB Neo Irem M62 system driver
 // Based on MAME driver by smf and David Haywood
 
 #include "tiles_generic.h"

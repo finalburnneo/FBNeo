@@ -1,4 +1,4 @@
-// FB Alpha Wyvern F-0 driver module
+// FB Neo Wyvern F-0 driver module
 // Based on MAME driver by Luca Elia
 
 // Note: wyvernf0 sound hw has a dac @ 0xd600, but it is not used in the

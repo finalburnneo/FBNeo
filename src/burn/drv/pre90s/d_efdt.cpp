@@ -1,4 +1,4 @@
-// FB Alpha El Fin Del Tiempo driver module
+// FB Neo El Fin Del Tiempo driver module
 // Based on MAME driver by El Semi and Roberto Fresca
 
 //

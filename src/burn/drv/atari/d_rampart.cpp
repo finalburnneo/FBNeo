@@ -1,4 +1,4 @@
-// FB Alpha Atari Rampart driver module
+// FB Neo Atari Rampart driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

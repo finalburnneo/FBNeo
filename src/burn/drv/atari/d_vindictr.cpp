@@ -1,4 +1,4 @@
-// FB Alpha Atari Vindicators Driver Module
+// FB Neo Atari Vindicators Driver Module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

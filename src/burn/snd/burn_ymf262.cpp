@@ -33,7 +33,7 @@ static INT32 YMF262StreamCallbackDummy(INT32 /* nSoundRate */)
 
 static void YMF262Render(INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF262Initted) bprintf(PRINT_ERROR, _T("YMF262Render called without init\n"));
 #endif
 
@@ -74,7 +74,7 @@ static void YMF262Render(INT32 nSegmentLength)
 
 void BurnYMF262Update(INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF262Initted) bprintf(PRINT_ERROR, _T("BurnYMF262Update called without init\n"));
 #endif
 
@@ -146,7 +146,7 @@ void BurnYMF262Update(INT32 nSegmentEnd)
 
 void BurnYMF262Write(INT32 nAddress, UINT8 nValue)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF262Initted) bprintf(PRINT_ERROR, _T("BurnYMF262Write called without init\n"));
 #endif
 
@@ -156,7 +156,7 @@ void BurnYMF262Write(INT32 nAddress, UINT8 nValue)
 
 UINT8 BurnYMF262Read(INT32 nAddress)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF262Initted) bprintf(PRINT_ERROR, _T("BurnYMF262Read called without init\n"));
 #endif
 
@@ -174,7 +174,7 @@ static int ymf262_timerover(int /*num*/, int c)
 
 void BurnYMF262Reset()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF262Initted) bprintf(PRINT_ERROR, _T("BurnYMF262Reset called without init\n"));
 #endif
 
@@ -184,7 +184,7 @@ void BurnYMF262Reset()
 
 void BurnYMF262Exit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF262Initted) bprintf(PRINT_ERROR, _T("BurnYMF262Exit called without init\n"));
 #endif
 
@@ -238,7 +238,7 @@ INT32 BurnYMF262Init(INT32 nClockFrequency, void (*IRQCallback)(INT32, INT32), I
 
 void BurnYMF262SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF262Initted) bprintf(PRINT_ERROR, _T("BurnYMF262SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnYMF262SetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -249,7 +249,7 @@ void BurnYMF262SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void BurnYMF262Scan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF262Initted) bprintf(PRINT_ERROR, _T("BurnYMF262Scan called without init\n"));
 #endif
 

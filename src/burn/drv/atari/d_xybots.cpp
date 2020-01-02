@@ -1,4 +1,4 @@
-// FB Alpha Atari Xybots driver module
+// FB Neo Atari Xybots driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

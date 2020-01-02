@@ -1,4 +1,4 @@
-// FB Alpha Kusayakyuu (Sandlot Baseball) driver module
+// FB Neo Kusayakyuu (Sandlot Baseball) driver module
 // Based on MAME driver by Tomasz Slanina
 
 #include "tiles_generic.h"

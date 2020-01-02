@@ -15,8 +15,6 @@
 
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 //#include "state.h"
 //#include "driver.h"
@@ -333,9 +331,6 @@ static int end_run = 0;
 
 int ArmRun( int cycles )
 {
-	UINT32 pc;
-	UINT32 insn;
-
 	arm_icount = cycles;
 	arm.ArmLeftCycles = cycles;
 	end_run = 0;
@@ -343,8 +338,8 @@ int ArmRun( int cycles )
 	do
 	{
 		/* load instruction */
-		pc = R15;
-		insn = ArmFetchLong( pc & ADDRESS_MASK );
+		UINT32 pc = R15;
+		UINT32 insn = ArmFetchLong(pc & ADDRESS_MASK);
 
 		switch (insn >> INSN_COND_SHIFT)
 		{
@@ -453,7 +448,7 @@ int ArmRun( int cycles )
 
 static void arm_check_irq_state(void)
 {
-	UINT32 pc = R15+4; /* save old pc (already incremented in pipeline) */;
+	UINT32 pc = R15+4; /* save old pc (already incremented in pipeline) */
 
 	/* Exception priorities (from ARM6, not specifically ARM2/3):
 
@@ -478,13 +473,12 @@ static void arm_check_irq_state(void)
 		SetRegister( 14, pc );	/* save PC */
 		R15 = (pc&PSR_MASK)|(pc&IRQ_MASK)|0x18|eARM_MODE_IRQ|I_MASK|(pc&F_MASK); /* Mask only IRQ, set PC=0x18 */
 		arm.pendingIrq=0;
-		return;
 	}
 }
 
 void arm_set_irq_line(int irqline, int state)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("arm_set_irq_line called without init\n"));
 #endif
 
@@ -534,7 +528,7 @@ static void HandleBranch(  UINT32 insn )
 
 static void HandleMemSingle( UINT32 insn )
 {
-	UINT32 rn, rnv, off, rd;
+	UINT32 rnv, off;
 
 	/* Fetch the offset */
 	if (insn & INSN_I)
@@ -547,7 +541,7 @@ static void HandleMemSingle( UINT32 insn )
 	}
 
 	/* Calculate Rn, accounting for PC */
-	rn = (insn & INSN_RN) >> INSN_RN_SHIFT;
+	UINT32 rn = (insn & INSN_RN) >> INSN_RN_SHIFT;
 
 	if (insn & INSN_SDT_P)
 	{
@@ -590,14 +584,14 @@ static void HandleMemSingle( UINT32 insn )
 	}
 
 	/* Do the transfer */
-	rd = (insn & INSN_RD) >> INSN_RD_SHIFT;
+	UINT32 rd = (insn & INSN_RD) >> INSN_RD_SHIFT;
 	if (insn & INSN_SDT_L)
 	{
 		/* Load */
 		arm_icount -= S_CYCLE + I_CYCLE + N_CYCLE;
 		if (insn & INSN_SDT_B)
 		{
-			SetRegister(rd,(UINT32) READ8(rnv));
+			SetRegister(rd,(UINT8)(READ8(rnv)));
 		}
 		else
 		{
@@ -630,7 +624,7 @@ static void HandleMemSingle( UINT32 insn )
 		arm_icount -= 2 * N_CYCLE;
 		if (insn & INSN_SDT_B)
 		{
-			WRITE8(rnv, (UINT8) GetRegister(rd) & 0xffu);
+			WRITE8(rnv, (UINT8)(GetRegister(rd)) & 0xffu);
 		}
 		else
 		{
@@ -716,20 +710,19 @@ static void HandleMemSingle( UINT32 insn )
 
 static void HandleALU( UINT32 insn )
 {
-	UINT32 op2, sc=0, rd, rn, opcode;
-	UINT32 by, rdn;
+	UINT32 op2, sc=0;
 
-	opcode = (insn & INSN_OPCODE) >> INSN_OPCODE_SHIFT;
+	UINT32 opcode = (insn & INSN_OPCODE) >> INSN_OPCODE_SHIFT;
 	arm_icount -= S_CYCLE;
 
-	rd = 0;
-	rn = 0;
+	UINT32 rd = 0;
+	UINT32 rn = 0;
 
 	/* Construct Op2 */
 	if (insn & INSN_I)
 	{
 		/* Immediate constant */
-		by = (insn & INSN_OP2_ROTATE) >> INSN_OP2_ROTATE_SHIFT;
+		UINT32 by = (insn & INSN_OP2_ROTATE) >> INSN_OP2_ROTATE_SHIFT;
 		if (by)
 		{
 			op2 = ROR(insn & INSN_OP2_IMM, by << 1);
@@ -824,7 +817,7 @@ static void HandleALU( UINT32 insn )
 	}
 
 	/* Put the result in its register if not a test */
-	rdn = (insn & INSN_RD) >> INSN_RD_SHIFT;
+	UINT32 rdn = (insn & INSN_RD) >> INSN_RD_SHIFT;
 	if ((opcode & 0xc) != 0x8)
 	{
 		if (rdn == eR15 && !(insn & INSN_S))
@@ -878,8 +871,6 @@ static void HandleALU( UINT32 insn )
 
 static void HandleMul( UINT32 insn)
 {
-	UINT32 r;
-
 	arm_icount -= S_CYCLE + I_CYCLE;
 	/* should be:
             Range of Rs            Number of cycles
@@ -903,8 +894,8 @@ static void HandleMul( UINT32 insn)
   */
 
 	/* Do the basic multiply of Rm and Rs */
-	r =	GetRegister( insn&INSN_MUL_RM ) *
-	  	GetRegister( (insn&INSN_MUL_RS)>>INSN_MUL_RS_SHIFT );
+	UINT32 r = GetRegister(insn & INSN_MUL_RM) *
+		GetRegister((insn & INSN_MUL_RS) >> INSN_MUL_RS_SHIFT);
 
 	/* Add on Rn if this is a MLA */
 	if (insn & INSN_MUL_A)
@@ -924,10 +915,8 @@ static void HandleMul( UINT32 insn)
 
 static int loadInc ( UINT32 pat, UINT32 rbv, UINT32 s)
 {
-	int i,result;
-
-	result = 0;
-	for( i=0; i<16; i++ )
+	int result = 0;
+	for( int i = 0; i<16; i++ )
 	{
 		if( (pat>>i)&1 )
 		{
@@ -947,10 +936,8 @@ static int loadInc ( UINT32 pat, UINT32 rbv, UINT32 s)
 
 static int loadDec( UINT32 pat, UINT32 rbv, UINT32 s, UINT32* deferredR15, int* defer)
 {
-	int i,result;
-
-	result = 0;
-	for( i=15; i>=0; i-- )
+	int result = 0;
+	for( int i = 15; i>=0; i-- )
 	{
 		if( (pat>>i)&1 )
 		{
@@ -971,10 +958,8 @@ static int loadDec( UINT32 pat, UINT32 rbv, UINT32 s, UINT32* deferredR15, int* 
 
 static int storeInc( UINT32 pat, UINT32 rbv)
 {
-	int i,result;
-
-	result = 0;
-	for( i=0; i<16; i++ )
+	int result = 0;
+	for( int i = 0; i<16; i++ )
 	{
 		if( (pat>>i)&1 )
 		{
@@ -987,10 +972,8 @@ static int storeInc( UINT32 pat, UINT32 rbv)
 
 static int storeDec( UINT32 pat, UINT32 rbv)
 {
-	int i,result;
-
-	result = 0;
-	for( i=15; i>=0; i-- )
+	int result = 0;
+	for( int i = 15; i>=0; i-- )
 	{
 		if( (pat>>i)&1 )
 		{
@@ -1192,31 +1175,32 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 	switch (t >> 1)
 	{
 	case 0:                     /* LSL */
-		if (k >= 32)
 		{
+			if (k >= 32)
+			{
+				if (pCarry)
+					*pCarry = (k == 32) ? rm & 1 : 0;
+				return 0;
+			}
 			if (pCarry)
-				*pCarry = (k == 32) ? rm & 1 : 0;
-			return 0;
-		}
-		else if (pCarry)
-		{
-			*pCarry = k ? (rm & (1 << (32 - k))) : (R15 & C_MASK);
+			{
+				*pCarry = k ? (rm & (1 << (32 - k))) : (R15 & C_MASK);
+			}
 		}
 		return k ? LSL(rm, k) : rm;
 
 	case 1:                         /* LSR */
-		if (k == 0 || k == 32)
 		{
-			if (pCarry) *pCarry = rm & SIGN_BIT;
-			return 0;
-		}
-		else if (k > 32)
-		{
-			if (pCarry) *pCarry = 0;
-			return 0;
-		}
-		else
-		{
+			if (k == 0 || k == 32)
+			{
+				if (pCarry) *pCarry = rm & SIGN_BIT;
+				return 0;
+			}
+			if (k > 32)
+			{
+				if (pCarry) *pCarry = 0;
+				return 0;
+			}
 			if (pCarry) *pCarry = (rm & (1 << (k - 1)));
 			return LSR(rm, k);
 		}
@@ -1227,24 +1211,19 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 		if (pCarry) *pCarry = (rm & (1 << (k - 1)));
 		if (k >= 32)
 			return rm & SIGN_BIT ? 0xffffffffu : 0;
-		else
-		{
-			if (rm & SIGN_BIT)
-				return LSR(rm, k) | (0xffffffffu << (32 - k));
-			else
-				return LSR(rm, k);
-		}
+		if (rm & SIGN_BIT)
+			return LSR(rm, k) | (0xffffffffu << (32 - k));
+		return LSR(rm, k);
 		break;
 
 	case 3:						/* ROR and RRX */
-		if (k)
 		{
-			while (k > 32) k -= 32;
-			if (pCarry) *pCarry = rm & (1 << (k - 1));
-			return ROR(rm, k);
-		}
-		else
-		{
+			if (k)
+			{
+				while (k > 32) k -= 32;
+				if (pCarry) *pCarry = rm & (1 << (k - 1));
+				return ROR(rm, k);
+			}
 			if (pCarry) *pCarry = (rm & 1);
 			return LSR(rm, 1) | ((R15 & C_MASK) << 2);
 		}
@@ -1259,9 +1238,8 @@ static UINT32 BCDToDecimal(UINT32 value)
 {
 	UINT32	accumulator = 0;
 	UINT32	multiplier = 1;
-	int		i;
 
-	for(i = 0; i < 8; i++)
+	for(int i = 0; i < 8; i++)
 	{
 		accumulator += (value & 0xF) * multiplier;
 
@@ -1276,13 +1254,10 @@ static UINT32 DecimalToBCD(UINT32 value)
 {
 	UINT32	accumulator = 0;
 	UINT32	divisor = 10;
-	int		i;
 
-	for(i = 0; i < 8; i++)
+	for(int i = 0; i < 8; i++)
 	{
-		UINT32	temp;
-
-		temp = value % divisor;
+		UINT32 temp = value % divisor;
 		value -= temp;
 		temp /= divisor / 10;
 
@@ -1364,7 +1339,7 @@ static void HandleCoPro( UINT32 insn)
 // burn some cycles
 void ArmIdleCycles(int cycles)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmIdleCycles called without init\n"));
 #endif
 
@@ -1378,7 +1353,7 @@ void ArmIdleCycles(int cycles)
 // get the current position
 unsigned int ArmGetPc(INT32)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmGetPC called without init\n"));
 #endif
 
@@ -1388,7 +1363,7 @@ unsigned int ArmGetPc(INT32)
 // get the remaining cycles left to run
 unsigned int ArmRemainingCycles()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmRemainingCycles called without init\n"));
 #endif
 
@@ -1398,7 +1373,7 @@ unsigned int ArmRemainingCycles()
 // get the total of cycles run
 int ArmGetTotalCycles()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmGetTotalCycles called without init\n"));
 #endif
 
@@ -1408,7 +1383,7 @@ int ArmGetTotalCycles()
 // stop the current cpu slice
 void ArmRunEnd()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmRunEnd called without init\n"));
 #endif
 
@@ -1425,7 +1400,7 @@ INT32 ArmIdle(INT32 cycles)
 // start a new frame
 void ArmNewFrame()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmNewFrame called without init\n"));
 #endif
 
@@ -1434,11 +1409,11 @@ void ArmNewFrame()
 
 int ArmScan(int nAction)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmScan called without init\n"));
 #endif
 
-	struct BurnArea ba;
+	struct BurnArea ba{};
 
 	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));

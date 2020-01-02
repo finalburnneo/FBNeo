@@ -1,4 +1,4 @@
-// FB Alpha Jaleco D-Day driver module
+// FB Neo Jaleco D-Day driver module
 // Based on MAME driver by Pierpaolo Prazzoli, Tomasz Slanina and Angelo Salese
 
 #include "tiles_generic.h"

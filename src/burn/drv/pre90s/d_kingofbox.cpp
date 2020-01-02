@@ -1,4 +1,4 @@
-// FB Alpha King of Boxing / Ring King driver module
+// FB Neo King of Boxing / Ring King driver module
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FB Alpha Super Speed Race Junior driver module
+// FB Neo Super Speed Race Junior driver module
 // Based on MAME driver by Tomasz Slanina
 
 #include "tiles_generic.h"

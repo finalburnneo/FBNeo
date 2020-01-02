@@ -1,4 +1,4 @@
-// FB Alpha Battle Dogyuun driver module
+// FB Neo Battle Dogyuun driver module
 // Driver and emulation by Jan Klaassen
 
 #include "toaplan.h"

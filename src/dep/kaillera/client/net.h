@@ -11,5 +11,5 @@ extern int (WINAPI *Kaillera_Modify_Play_Values) (void *values, int size);
 extern int (WINAPI *Kaillera_Chat_Send) (char *text);
 extern int (WINAPI *Kaillera_End_Game) ();
 
-int Init_Network(void);
-void End_Network(void);
+int Init_Network();
+void End_Network();

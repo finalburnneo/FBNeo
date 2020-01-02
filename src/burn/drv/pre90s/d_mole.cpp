@@ -1,4 +1,4 @@
-// FB Alpha driver module
+// FB Neo driver module
 // Based on MAME driver by Phil Stroffolino
 
 #include "tiles_generic.h"

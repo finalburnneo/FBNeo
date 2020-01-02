@@ -1,4 +1,4 @@
-// FB Alpha Slap Fight driver module
+// FB Neo Slap Fight driver module
 // Based on MAME driver by K.Wilkins and Stephane Humbert
 
 #include "tiles_generic.h"

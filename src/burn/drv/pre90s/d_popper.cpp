@@ -1,4 +1,4 @@
-// FB Alpha Popper driver module
+// FB Neo Popper driver module
 // Based on MAME driver by Dirk Best
 
 #include "tiles_generic.h"

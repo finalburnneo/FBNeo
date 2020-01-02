@@ -1,4 +1,4 @@
-// FB Alpha 18 Holes Pro Golf driver module
+// FB Neo 18 Holes Pro Golf driver module
 // Based on MAME driver by Angelo Salese and Roberto Zandona'
 
 // TOFIX:

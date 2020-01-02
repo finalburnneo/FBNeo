@@ -1,4 +1,4 @@
-// FB Alpha Alpha Denshi Co 68k Type I driver module
+// FB Neo Alpha Denshi Co 68k Type I driver module
 // Based on MAME driver by Pierpaolo Prazzoli, Bryan McPhail, and Stephane Humbert
 
 #include "tiles_generic.h"

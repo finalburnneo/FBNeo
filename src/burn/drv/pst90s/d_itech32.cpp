@@ -1,4 +1,4 @@
-// FB Alpha Incredible technologies (32-bit blitter) driver module
+// FB Neo Incredible technologies (32-bit blitter) driver module
 // Based on MAME driver by Aaron Giles and Brian Troha
 
 #include "tiles_generic.h"

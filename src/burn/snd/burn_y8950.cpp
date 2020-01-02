@@ -233,7 +233,7 @@ static int Y8950StreamCallbackDummy(INT32)
 
 static void Y8950Render(INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("Y8950Render called without init\n"));
 #endif
 
@@ -257,7 +257,7 @@ static void Y8950Render(INT32 nSegmentLength)
 
 static void Y8950UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("Y8950UpdateResample called without init\n"));
 #endif
 
@@ -349,7 +349,7 @@ static void Y8950UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 static void Y8950UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("Y8950UpdateNormal called without init\n"));
 #endif
 
@@ -423,7 +423,7 @@ static void Y8950UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnY8950UpdateRequest(INT32, INT32)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950UpdateRequest called without init\n"));
 #endif
 
@@ -435,7 +435,7 @@ void BurnY8950UpdateRequest(INT32, INT32)
 
 void BurnY8950Reset()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Reset called without init\n"));
 #endif
 
@@ -448,7 +448,7 @@ void BurnY8950Reset()
 
 void BurnY8950Exit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Exit called without init\n"));
 #endif
 
@@ -537,7 +537,7 @@ INT32 BurnY8950Init(INT32 num, INT32 nClockFrequency, UINT8* Y8950ADPCM0ROM, INT
 
 void BurnY8950SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnY8950SetRoute called with invalid index %i\n"), nIndex);
 	if (nChip >= nNumChips) bprintf(PRINT_ERROR, _T("BurnY8950SetRoute called with invalid chip %i\n"), nChip);
@@ -556,7 +556,7 @@ void BurnY8950SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDi
 
 void BurnY8950Scan(INT32 nAction, INT32* pnMin)
 {
-	#if defined FBNEO_DEBUG
+	#ifdef FBN_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Scan called without init\n"));
 #endif
 	

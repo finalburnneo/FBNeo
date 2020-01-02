@@ -73,7 +73,7 @@ cpu_core_config H6280Config =
 
 void h6280MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280MapMemory called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280MapMemory called with no CPU open\n"));
 #endif
@@ -96,7 +96,7 @@ INT32 h6280DummyIrqCallback(INT32)
 
 void h6280SetIrqCallbackHandler(INT32 (*callback)(INT32))
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280SetIrqCallbackHandler called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280SetIrqCallbackHandler called with no CPU open\n"));
 #endif
@@ -106,7 +106,7 @@ void h6280SetIrqCallbackHandler(INT32 (*callback)(INT32))
 
 void h6280SetWriteHandler(void (*write)(UINT32, UINT8))
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280SetWriteHandler called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280SetWriteHandler called with no CPU open\n"));
 #endif
@@ -116,7 +116,7 @@ void h6280SetWriteHandler(void (*write)(UINT32, UINT8))
 
 void h6280SetWritePortHandler(void (*write)(UINT8, UINT8))
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280SetWritePortHandler called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280SetWritePortHandler called with no CPU open\n"));
 #endif
@@ -126,7 +126,7 @@ void h6280SetWritePortHandler(void (*write)(UINT8, UINT8))
 
 void h6280SetReadHandler(UINT8 (*read)(UINT32))
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280SetReadHandler called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280SetReadPortHandler called with no CPU open\n"));
 #endif
@@ -136,7 +136,7 @@ void h6280SetReadHandler(UINT8 (*read)(UINT32))
 
 void h6280_write_rom(UINT32 address, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_write_rom called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_write_rom called with no CPU open\n"));
 #endif
@@ -162,7 +162,7 @@ void h6280_write_rom(UINT32 address, UINT8 data)
 
 void h6280WritePort(UINT8 port, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_write_port called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_write_port called with no CPU open\n"));
 #endif
@@ -179,7 +179,7 @@ void h6280WritePort(UINT8 port, UINT8 data)
 
 void h6280Write(UINT32 address, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_write called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_write called with no CPU open\n"));
 #endif
@@ -203,7 +203,7 @@ void h6280Write(UINT32 address, UINT8 data)
 
 UINT8 h6280Read(UINT32 address)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_read called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_read called with no CPU open\n"));
 #endif
@@ -225,7 +225,7 @@ UINT8 h6280Read(UINT32 address)
 
 UINT8 h6280Fetch(UINT32 address)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_fetch1 called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_fetch1 called with no CPU open\n"));
 #endif
@@ -245,7 +245,7 @@ UINT8 h6280Fetch(UINT32 address)
 
 void h6280SetIRQLine(INT32 line, INT32 state)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280SetIRQLine called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280SetIRQLine called with no CPU open\n"));
 #endif
@@ -263,7 +263,7 @@ void h6280Init(INT32 nCpu)
 {
 	DebugCPU_H6280Initted = 1;
 
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (nCpu >= MAX_H6280) bprintf(PRINT_ERROR, _T("h6280Init nCpu is more than MAX_CPU %d (MAX is %d)\n"), nCpu, MAX_H6280);
 #endif
 
@@ -288,7 +288,7 @@ void h6280Init(INT32 nCpu)
 
 void h6280Exit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280Exit called without init\n"));
 #endif
 
@@ -312,7 +312,7 @@ void h6280Exit()
 
 void h6280Open(INT32 num)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280Open called without init\n"));
 	if (num >= nh6280CpuCount) bprintf(PRINT_ERROR, _T("h6280Open called with invalid index %x\n"), num);
 	if (nh6280CpuActive != -1) bprintf(PRINT_ERROR, _T("h6280Open called with CPU already open with index %x\n"), num);
@@ -327,7 +327,7 @@ void h6280Open(INT32 num)
 
 void h6280Close()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280Close called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280Close called with no CPU open\n"));
 #endif
@@ -341,7 +341,7 @@ void h6280Close()
 
 INT32 h6280GetActive()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280GetActive called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280GetActive called with no CPU open\n"));
 #endif
@@ -351,7 +351,7 @@ INT32 h6280GetActive()
 
 void h6280NewFrame()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280NewFrame called without init\n"));
 #endif
 

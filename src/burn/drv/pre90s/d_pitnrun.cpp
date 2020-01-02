@@ -1,4 +1,4 @@
-// FBAlpha Pit 'n Run driver, based on MAME driver by Tomasz Slanina, Pierpaolo Prazzoli
+// FBNeo Pit 'n Run driver, based on MAME driver by Tomasz Slanina, Pierpaolo Prazzoli
 
 // Jump Kun fully working.
 //

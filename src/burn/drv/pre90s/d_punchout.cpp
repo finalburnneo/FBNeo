@@ -1,4 +1,4 @@
-// FB Alpha Punch Out!!! driver module
+// FB Neo Punch Out!!! driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

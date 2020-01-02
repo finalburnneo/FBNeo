@@ -1,4 +1,4 @@
-// FB Alpha Appoooh driver module by vbt
+// FB Neo Appoooh driver module by vbt
 // Based on MAME driver by Tatsuyuki Satoh
 
 #include "tiles_generic.h"
@@ -715,7 +715,7 @@ static INT32 DrvCommonInit()
 	return 0;
 }
 
-static void sega_decode_2(UINT8 */*pDest*/, UINT8 */*pDestDec*/, const UINT8 xor_table[128],const int swap_table[128])
+static void sega_decode_2(UINT8* /*pDest*/, UINT8* /*pDestDec*/, const UINT8 xor_table[128],const int swap_table[128])
 {
 	int A;
 	UINT8 swaptable[24][4] =

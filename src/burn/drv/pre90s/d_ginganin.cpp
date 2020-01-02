@@ -1,4 +1,4 @@
-// FB Alpha Ginga NinkyouDen driver module
+// FB Neo Ginga NinkyouDen driver module
 // Based on MAME driver by Luca Elia and Takahiro Nogi
 
 #include "tiles_generic.h"

@@ -145,7 +145,7 @@ static INT32 nTransWidth, nTransHeight;
 
 void BurnTransferClear()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferClear called without init\n"));
 #endif
 
@@ -156,7 +156,7 @@ void BurnTransferClear()
 
 void BurnPrioClear()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnPrioClear called without init\n"));
 #endif
 
@@ -165,7 +165,7 @@ void BurnPrioClear()
 
 void BurnTransferClear(UINT16 nFillPattern)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferClear called without init\n"));
 #endif
 
@@ -177,7 +177,7 @@ void BurnTransferClear(UINT16 nFillPattern)
 
 INT32 BurnTransferCopy(UINT32* pPalette)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferCopy called without init\n"));
 #endif
 
@@ -222,7 +222,7 @@ INT32 BurnTransferCopy(UINT32* pPalette)
 
 void BurnTransferExit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferExit called without init\n"));
 #endif
 
@@ -339,7 +339,7 @@ void GfxDecodeSingle(INT32 which, INT32 numPlanes, INT32 xSize, INT32 ySize, INT
 
 void Render8x8Tile(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile called without init\n"));
 #endif
 
@@ -362,7 +362,7 @@ void Render8x8Tile(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 Sta
 
 void Render8x8Tile_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Clip called without init\n"));
 #endif
 
@@ -389,7 +389,7 @@ void Render8x8Tile_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT3
 
 void Render8x8Tile_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_FlipX called without init\n"));
 #endif
 
@@ -412,7 +412,7 @@ void Render8x8Tile_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT
 
 void Render8x8Tile_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_FlipX_Clip called without init\n"));
 #endif
 
@@ -439,7 +439,7 @@ void Render8x8Tile_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 
 void Render8x8Tile_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_FlipY called without init\n"));
 #endif
 
@@ -462,7 +462,7 @@ void Render8x8Tile_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT
 
 void Render8x8Tile_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_FlipY_Clip called without init\n"));
 #endif
 
@@ -489,7 +489,7 @@ void Render8x8Tile_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 
 void Render8x8Tile_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_FlipXY called without init\n"));
 #endif
 
@@ -512,7 +512,7 @@ void Render8x8Tile_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 
 void Render8x8Tile_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_FlipXY_Clip called without init\n"));
 #endif
 
@@ -543,7 +543,7 @@ void Render8x8Tile_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 
 void Render8x8Tile_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Mask called without init\n"));
 #endif
 
@@ -566,7 +566,7 @@ void Render8x8Tile_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT3
 
 void Render8x8Tile_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Mask_Clip called without init\n"));
 #endif
 
@@ -593,7 +593,7 @@ void Render8x8Tile_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX,
 
 void Render8x8Tile_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Mask_FlipX called without init\n"));
 #endif
 
@@ -616,7 +616,7 @@ void Render8x8Tile_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 
 void Render8x8Tile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Mask_FlipX_Clip called without init\n"));
 #endif
 
@@ -643,7 +643,7 @@ void Render8x8Tile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 
 void Render8x8Tile_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Mask_FlipY called without init\n"));
 #endif
 
@@ -666,7 +666,7 @@ void Render8x8Tile_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 
 void Render8x8Tile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Mask_FlipY_Clip called without init\n"));
 #endif
 
@@ -693,7 +693,7 @@ void Render8x8Tile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 
 void Render8x8Tile_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Mask_FlipXY called without init\n"));
 #endif
 
@@ -716,7 +716,7 @@ void Render8x8Tile_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 
 void Render8x8Tile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Mask_FlipXY_Clip called without init\n"));
 #endif
 
@@ -747,7 +747,7 @@ void Render8x8Tile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 
 
 void Render16x16Tile(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile called without init\n"));
 #endif
 
@@ -778,7 +778,7 @@ void Render16x16Tile(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 S
 
 void Render16x16Tile_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Clip called without init\n"));
 #endif
 
@@ -813,7 +813,7 @@ void Render16x16Tile_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 
 void Render16x16Tile_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_FlipX called without init\n"));
 #endif
 
@@ -844,7 +844,7 @@ void Render16x16Tile_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, I
 
 void Render16x16Tile_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_FlipX_Clip called without init\n"));
 #endif
 
@@ -879,7 +879,7 @@ void Render16x16Tile_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render16x16Tile_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_FlipY called without init\n"));
 #endif
 
@@ -910,7 +910,7 @@ void Render16x16Tile_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, I
 
 void Render16x16Tile_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_FlipY_Clip called without init\n"));
 #endif
 
@@ -945,7 +945,7 @@ void Render16x16Tile_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render16x16Tile_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_FlipXY called without init\n"));
 #endif
 
@@ -976,7 +976,7 @@ void Render16x16Tile_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, 
 
 void Render16x16Tile_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_FlipXY_Clip called without init\n"));
 #endif
 
@@ -1015,7 +1015,7 @@ void Render16x16Tile_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 
 void Render16x16Tile_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Mask called without init\n"));
 #endif
 
@@ -1046,7 +1046,7 @@ void Render16x16Tile_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 
 void Render16x16Tile_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Mask_Clip called without init\n"));
 #endif
 
@@ -1081,7 +1081,7 @@ void Render16x16Tile_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 
 void Render16x16Tile_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Mask_FlipX called without init\n"));
 #endif
 
@@ -1112,7 +1112,7 @@ void Render16x16Tile_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render16x16Tile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Mask_FlipX_Clip called without init\n"));
 #endif
 
@@ -1147,7 +1147,7 @@ void Render16x16Tile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render16x16Tile_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Mask_FlipY called without init\n"));
 #endif
 
@@ -1178,7 +1178,7 @@ void Render16x16Tile_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render16x16Tile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Mask_FlipY_Clip called without init\n"));
 #endif
 
@@ -1213,7 +1213,7 @@ void Render16x16Tile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render16x16Tile_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Mask_FlipXY called without init\n"));
 #endif
 
@@ -1244,7 +1244,7 @@ void Render16x16Tile_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 
 void Render16x16Tile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Mask_FlipXY_Clip called without init\n"));
 #endif
 
@@ -1283,7 +1283,7 @@ void Render16x16Tile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT3
 
 void Render32x32Tile(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile called without init\n"));
 #endif
 
@@ -1330,7 +1330,7 @@ void Render32x32Tile(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 S
 
 void Render32x32Tile_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Clip called without init\n"));
 #endif
 
@@ -1381,7 +1381,7 @@ void Render32x32Tile_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 
 void Render32x32Tile_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_FlipX called without init\n"));
 #endif
 
@@ -1428,7 +1428,7 @@ void Render32x32Tile_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, I
 
 void Render32x32Tile_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_FlipX_Clip called without init\n"));
 #endif
 
@@ -1479,7 +1479,7 @@ void Render32x32Tile_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render32x32Tile_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_FlipY called without init\n"));
 #endif
 
@@ -1526,7 +1526,7 @@ void Render32x32Tile_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, I
 
 void Render32x32Tile_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_FlipY_Clip called without init\n"));
 #endif
 
@@ -1577,7 +1577,7 @@ void Render32x32Tile_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render32x32Tile_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_FlipXY called without init\n"));
 #endif
 
@@ -1624,7 +1624,7 @@ void Render32x32Tile_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, 
 
 void Render32x32Tile_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_FlipXY_Clip called without init\n"));
 #endif
 
@@ -1679,7 +1679,7 @@ void Render32x32Tile_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 
 void Render32x32Tile_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Mask called without init\n"));
 #endif
 
@@ -1726,7 +1726,7 @@ void Render32x32Tile_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 
 void Render32x32Tile_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Mask_Clip called without init\n"));
 #endif
 
@@ -1777,7 +1777,7 @@ void Render32x32Tile_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 
 void Render32x32Tile_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Mask_FlipX called without init\n"));
 #endif
 
@@ -1824,7 +1824,7 @@ void Render32x32Tile_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render32x32Tile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Mask_FlipX_Clip called without init\n"));
 #endif
 
@@ -1875,7 +1875,7 @@ void Render32x32Tile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render32x32Tile_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Mask_FlipY called without init\n"));
 #endif
 
@@ -1922,7 +1922,7 @@ void Render32x32Tile_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render32x32Tile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Mask_FlipY_Clip called without init\n"));
 #endif
 
@@ -1973,7 +1973,7 @@ void Render32x32Tile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render32x32Tile_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Mask_FlipXY called without init\n"));
 #endif
 
@@ -2020,7 +2020,7 @@ void Render32x32Tile_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 
 void Render32x32Tile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Mask_FlipXY_Clip called without init\n"));
 #endif
 
@@ -2075,7 +2075,7 @@ Custom Height and Width Functions
 
 void RenderCustomTile(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile called without init\n"));
 #endif
 
@@ -2093,7 +2093,7 @@ void RenderCustomTile(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTil
 
 void RenderCustomTile_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Clip called without init\n"));
 #endif
 
@@ -2115,7 +2115,7 @@ void RenderCustomTile_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32
 
 void RenderCustomTile_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_FlipX called without init\n"));
 #endif
 
@@ -2133,7 +2133,7 @@ void RenderCustomTile_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT3
 
 void RenderCustomTile_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_FlipX_Clip called without init\n"));
 #endif
 
@@ -2155,7 +2155,7 @@ void RenderCustomTile_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight,
 
 void RenderCustomTile_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_FlipY called without init\n"));
 #endif
 
@@ -2173,7 +2173,7 @@ void RenderCustomTile_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT3
 
 void RenderCustomTile_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_FlipY_Clip called without init\n"));
 #endif
 
@@ -2195,7 +2195,7 @@ void RenderCustomTile_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight,
 
 void RenderCustomTile_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_FlipXY called without init\n"));
 #endif
 
@@ -2213,7 +2213,7 @@ void RenderCustomTile_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT
 
 void RenderCustomTile_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_FlipXY_Clip called without init\n"));
 #endif
 
@@ -2239,7 +2239,7 @@ Custom Height and Width Functions with Masking
 
 void RenderCustomTile_Mask(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Mask called without init\n"));
 #endif
 
@@ -2257,7 +2257,7 @@ void RenderCustomTile_Mask(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32
 
 void RenderCustomTile_Mask_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Mask_Clip called without init\n"));
 #endif
 
@@ -2279,7 +2279,7 @@ void RenderCustomTile_Mask_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, 
 
 void RenderCustomTile_Mask_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Mask_FlipX called without init\n"));
 #endif
 
@@ -2297,7 +2297,7 @@ void RenderCustomTile_Mask_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight,
 
 void RenderCustomTile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Mask_FlipX_Clip called without init\n"));
 #endif
 
@@ -2319,7 +2319,7 @@ void RenderCustomTile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 
 void RenderCustomTile_Mask_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Mask_FlipY called without init\n"));
 #endif
 
@@ -2337,7 +2337,7 @@ void RenderCustomTile_Mask_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight,
 
 void RenderCustomTile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Mask_FlipY_Clip called without init\n"));
 #endif
 
@@ -2359,7 +2359,7 @@ void RenderCustomTile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 
 void RenderCustomTile_Mask_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Mask_FlipXY called without init\n"));
 #endif
 
@@ -2377,7 +2377,7 @@ void RenderCustomTile_Mask_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight
 
 void RenderCustomTile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Mask_FlipXY_Clip called without init\n"));
 #endif
 
@@ -2401,7 +2401,7 @@ void RenderCustomTile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nH
 
 void Render8x8Tile_Prio(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile called without init\n"));
 #endif
 
@@ -2425,7 +2425,7 @@ void Render8x8Tile_Prio(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT3
 
 void Render8x8Tile_Prio_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_Clip called without init\n"));
 #endif
 
@@ -2453,7 +2453,7 @@ void Render8x8Tile_Prio_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX,
 
 void Render8x8Tile_Prio_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_FlipX called without init\n"));
 #endif
 
@@ -2477,7 +2477,7 @@ void Render8x8Tile_Prio_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 
 void Render8x8Tile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_FlipX_Clip called without init\n"));
 #endif
 
@@ -2505,7 +2505,7 @@ void Render8x8Tile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 
 void Render8x8Tile_Prio_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_FlipY called without init\n"));
 #endif
 
@@ -2529,7 +2529,7 @@ void Render8x8Tile_Prio_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 
 void Render8x8Tile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_FlipY_Clip called without init\n"));
 #endif
 
@@ -2557,7 +2557,7 @@ void Render8x8Tile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 
 void Render8x8Tile_Prio_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_FlipXY called without init\n"));
 #endif
 
@@ -2581,7 +2581,7 @@ void Render8x8Tile_Prio_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 
 void Render8x8Tile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_FlipXY_Clip called without init\n"));
 #endif
 
@@ -2613,7 +2613,7 @@ void Render8x8Tile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 
 
 void Render8x8Tile_Prio_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_Mask called without init\n"));
 #endif
 
@@ -2637,7 +2637,7 @@ void Render8x8Tile_Prio_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX,
 
 void Render8x8Tile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_Mask_Clip called without init\n"));
 #endif
 
@@ -2665,7 +2665,7 @@ void Render8x8Tile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 St
 
 void Render8x8Tile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_Mask_FlipX called without init\n"));
 #endif
 
@@ -2689,7 +2689,7 @@ void Render8x8Tile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 
 void Render8x8Tile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_Mask_FlipX_Clip called without init\n"));
 #endif
 
@@ -2717,7 +2717,7 @@ void Render8x8Tile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, IN
 
 void Render8x8Tile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_Mask_FlipY called without init\n"));
 #endif
 
@@ -2741,7 +2741,7 @@ void Render8x8Tile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 
 void Render8x8Tile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_Mask_FlipY_Clip called without init\n"));
 #endif
 
@@ -2769,7 +2769,7 @@ void Render8x8Tile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, IN
 
 void Render8x8Tile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_Mask_FlipXY called without init\n"));
 #endif
 
@@ -2793,7 +2793,7 @@ void Render8x8Tile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 
 
 void Render8x8Tile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render8x8Tile_Prio_Mask_FlipXY_Clip called without init\n"));
 #endif
 
@@ -2825,7 +2825,7 @@ void Render8x8Tile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, I
 
 void Render16x16Tile_Prio(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile called without init\n"));
 #endif
 
@@ -2857,7 +2857,7 @@ void Render16x16Tile_Prio(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 
 void Render16x16Tile_Prio_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_Clip called without init\n"));
 #endif
 
@@ -2893,7 +2893,7 @@ void Render16x16Tile_Prio_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 
 void Render16x16Tile_Prio_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_FlipX called without init\n"));
 #endif
 
@@ -2925,7 +2925,7 @@ void Render16x16Tile_Prio_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render16x16Tile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_FlipX_Clip called without init\n"));
 #endif
 
@@ -2961,7 +2961,7 @@ void Render16x16Tile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render16x16Tile_Prio_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_FlipY called without init\n"));
 #endif
 
@@ -2993,7 +2993,7 @@ void Render16x16Tile_Prio_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render16x16Tile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_FlipY_Clip called without init\n"));
 #endif
 
@@ -3029,7 +3029,7 @@ void Render16x16Tile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render16x16Tile_Prio_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_FlipXY called without init\n"));
 #endif
 
@@ -3061,7 +3061,7 @@ void Render16x16Tile_Prio_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 
 void Render16x16Tile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_FlipXY_Clip called without init\n"));
 #endif
 
@@ -3101,7 +3101,7 @@ void Render16x16Tile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT3
 
 void Render16x16Tile_Prio_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_Mask called without init\n"));
 #endif
 
@@ -3133,7 +3133,7 @@ void Render16x16Tile_Prio_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 
 void Render16x16Tile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_Mask_Clip called without init\n"));
 #endif
 
@@ -3169,7 +3169,7 @@ void Render16x16Tile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 
 
 void Render16x16Tile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_Mask_FlipX called without init\n"));
 #endif
 
@@ -3201,7 +3201,7 @@ void Render16x16Tile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render16x16Tile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_Mask_FlipX_Clip called without init\n"));
 #endif
 
@@ -3237,7 +3237,7 @@ void Render16x16Tile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, 
 
 void Render16x16Tile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_Mask_FlipY called without init\n"));
 #endif
 
@@ -3269,7 +3269,7 @@ void Render16x16Tile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render16x16Tile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_Mask_FlipY_Clip called without init\n"));
 #endif
 
@@ -3305,7 +3305,7 @@ void Render16x16Tile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, 
 
 void Render16x16Tile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_Mask_FlipXY called without init\n"));
 #endif
 
@@ -3337,7 +3337,7 @@ void Render16x16Tile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT3
 
 void Render16x16Tile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render16x16Tile_Prio_Mask_FlipXY_Clip called without init\n"));
 #endif
 
@@ -3377,7 +3377,7 @@ void Render16x16Tile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber,
 
 void Render32x32Tile_Prio(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile called without init\n"));
 #endif
 
@@ -3425,7 +3425,7 @@ void Render32x32Tile_Prio(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 
 void Render32x32Tile_Prio_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_Clip called without init\n"));
 #endif
 
@@ -3477,7 +3477,7 @@ void Render32x32Tile_Prio_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 
 void Render32x32Tile_Prio_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_FlipX called without init\n"));
 #endif
 
@@ -3525,7 +3525,7 @@ void Render32x32Tile_Prio_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render32x32Tile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_FlipX_Clip called without init\n"));
 #endif
 
@@ -3577,7 +3577,7 @@ void Render32x32Tile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render32x32Tile_Prio_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_FlipY called without init\n"));
 #endif
 
@@ -3625,7 +3625,7 @@ void Render32x32Tile_Prio_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 
 void Render32x32Tile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_FlipY_Clip called without init\n"));
 #endif
 
@@ -3677,7 +3677,7 @@ void Render32x32Tile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render32x32Tile_Prio_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_FlipXY called without init\n"));
 #endif
 
@@ -3725,7 +3725,7 @@ void Render32x32Tile_Prio_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 
 void Render32x32Tile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_FlipXY_Clip called without init\n"));
 #endif
 
@@ -3781,7 +3781,7 @@ void Render32x32Tile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT3
 
 void Render32x32Tile_Prio_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_Mask called without init\n"));
 #endif
 
@@ -3829,7 +3829,7 @@ void Render32x32Tile_Prio_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 
 void Render32x32Tile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_Mask_Clip called without init\n"));
 #endif
 
@@ -3881,7 +3881,7 @@ void Render32x32Tile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 
 
 void Render32x32Tile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_Mask_FlipX called without init\n"));
 #endif
 
@@ -3929,7 +3929,7 @@ void Render32x32Tile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render32x32Tile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_Mask_FlipX_Clip called without init\n"));
 #endif
 
@@ -3981,7 +3981,7 @@ void Render32x32Tile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, 
 
 void Render32x32Tile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_Mask_FlipY called without init\n"));
 #endif
 
@@ -4029,7 +4029,7 @@ void Render32x32Tile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32
 
 void Render32x32Tile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_Mask_FlipY_Clip called without init\n"));
 #endif
 
@@ -4081,7 +4081,7 @@ void Render32x32Tile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, 
 
 void Render32x32Tile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_Mask_FlipXY called without init\n"));
 #endif
 
@@ -4129,7 +4129,7 @@ void Render32x32Tile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT3
 
 void Render32x32Tile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("Render32x32Tile_Prio_Mask_FlipXY_Clip called without init\n"));
 #endif
 
@@ -4185,7 +4185,7 @@ Custom Height and Width Functions
 
 void RenderCustomTile_Prio(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile called without init\n"));
 #endif
 
@@ -4204,7 +4204,7 @@ void RenderCustomTile_Prio(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32
 
 void RenderCustomTile_Prio_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Clip called without init\n"));
 #endif
 
@@ -4227,7 +4227,7 @@ void RenderCustomTile_Prio_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, 
 
 void RenderCustomTile_Prio_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_FlipX called without init\n"));
 #endif
 
@@ -4246,7 +4246,7 @@ void RenderCustomTile_Prio_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight,
 
 void RenderCustomTile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_FlipX_Clip called without init\n"));
 #endif
 
@@ -4269,7 +4269,7 @@ void RenderCustomTile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 
 void RenderCustomTile_Prio_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_FlipY called without init\n"));
 #endif
 
@@ -4288,7 +4288,7 @@ void RenderCustomTile_Prio_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight,
 
 void RenderCustomTile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_FlipY_Clip called without init\n"));
 #endif
 
@@ -4311,7 +4311,7 @@ void RenderCustomTile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 
 void RenderCustomTile_Prio_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_FlipXY called without init\n"));
 #endif
 
@@ -4330,7 +4330,7 @@ void RenderCustomTile_Prio_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight
 
 void RenderCustomTile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_FlipXY_Clip called without init\n"));
 #endif
 
@@ -4357,7 +4357,7 @@ Custom Height and Width Functions with Masking
 
 void RenderCustomTile_Prio_Mask(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask called without init\n"));
 #endif
 
@@ -4376,7 +4376,7 @@ void RenderCustomTile_Prio_Mask(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, 
 
 void RenderCustomTile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_Clip called without init\n"));
 #endif
 
@@ -4399,7 +4399,7 @@ void RenderCustomTile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHei
 
 void RenderCustomTile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipX called without init\n"));
 #endif
 
@@ -4418,7 +4418,7 @@ void RenderCustomTile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 
 void RenderCustomTile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipX_Clip called without init\n"));
 #endif
 
@@ -4441,7 +4441,7 @@ void RenderCustomTile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT3
 
 void RenderCustomTile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipY called without init\n"));
 #endif
 
@@ -4460,7 +4460,7 @@ void RenderCustomTile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 
 void RenderCustomTile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipY_Clip called without init\n"));
 #endif
 
@@ -4483,7 +4483,7 @@ void RenderCustomTile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT3
 
 void RenderCustomTile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipXY called without init\n"));
 #endif
 
@@ -4502,7 +4502,7 @@ void RenderCustomTile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nH
 
 void RenderCustomTile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipXY_Clip called without init\n"));
 #endif
 
@@ -4533,7 +4533,7 @@ void RenderCustomTile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT
 
 void RenderCustomTile_Prio_TransMask(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask called without init\n"));
 #endif
 
@@ -4552,7 +4552,7 @@ void RenderCustomTile_Prio_TransMask(UINT16* pDestDraw, INT32 nWidth, INT32 nHei
 
 void RenderCustomTile_Prio_TransMask_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_Clip called without init\n"));
 #endif
 
@@ -4575,7 +4575,7 @@ void RenderCustomTile_Prio_TransMask_Clip(UINT16* pDestDraw, INT32 nWidth, INT32
 
 void RenderCustomTile_Prio_TransMask_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipX called without init\n"));
 #endif
 
@@ -4594,7 +4594,7 @@ void RenderCustomTile_Prio_TransMask_FlipX(UINT16* pDestDraw, INT32 nWidth, INT3
 
 void RenderCustomTile_Prio_TransMask_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipX_Clip called without init\n"));
 #endif
 
@@ -4617,7 +4617,7 @@ void RenderCustomTile_Prio_TransMask_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth,
 
 void RenderCustomTile_Prio_TransMask_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipY called without init\n"));
 #endif
 
@@ -4636,7 +4636,7 @@ void RenderCustomTile_Prio_TransMask_FlipY(UINT16* pDestDraw, INT32 nWidth, INT3
 
 void RenderCustomTile_Prio_TransMask_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipY_Clip called without init\n"));
 #endif
 
@@ -4659,7 +4659,7 @@ void RenderCustomTile_Prio_TransMask_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth,
 
 void RenderCustomTile_Prio_TransMask_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipXY called without init\n"));
 #endif
 
@@ -4678,7 +4678,7 @@ void RenderCustomTile_Prio_TransMask_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT
 
 void RenderCustomTile_Prio_TransMask_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipXY_Clip called without init\n"));
 #endif
 
@@ -5795,7 +5795,7 @@ Zoomed Tile Functions
 
 void RenderZoomedTile(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderZoomedTile called without init\n"));
 #endif
 
@@ -5850,7 +5850,7 @@ void RenderZoomedTile(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t
 
 void RenderZoomedPrioTile(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, INT32 priority)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderZoomedPrioTile called without init\n"));
 #endif
 
@@ -5912,7 +5912,7 @@ Tile with Transparency Table Functions
 
 void RenderTileTranstabOffset(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT8 *tab, UINT32 color_offset)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderTileTranstab called without init\n"));
 #endif
 
@@ -5946,7 +5946,7 @@ void RenderTileTranstab(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32
 
 void RenderTilePrioTranstabOffset(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT8 *tab, UINT32 color_offset, INT32 priority)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderTilePrioTranstab called without init\n"));
 #endif
 
@@ -5981,7 +5981,7 @@ void RenderTilePrioTranstab(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, I
 
 void RenderPrioMaskTranstabSpriteOffset(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT8 *tab, UINT32 color_offset, UINT32 priority)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderPrioMaskTranstabSprite called without init\n"));
 #endif
 
@@ -6024,7 +6024,7 @@ Sprite tile with priorities
 
 void RenderZoomedPrioSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, INT32 priority)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderZoomedPrioSprite called without init\n"));
 #endif
 
@@ -6088,7 +6088,7 @@ void RenderZoomedPrioSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, I
 
 void RenderPrioSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 priority)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderPrioSprite called without init\n"));
 #endif
 
@@ -6128,7 +6128,7 @@ void RenderPrioSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t
 
 void RenderZoomedPrioTranstabSpriteOffset(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT8 *tab, UINT32 color_offset, INT32 priority)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderZoomedPrioSprite called without init\n"));
 #endif
 

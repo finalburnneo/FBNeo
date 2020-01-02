@@ -33,7 +33,7 @@ static INT32 YMF278BStreamCallbackDummy(INT32 /* nSoundRate */)
 
 static void YMF278BRender(INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("YMF278BRender called without init\n"));
 #endif
 
@@ -74,7 +74,7 @@ static void YMF278BRender(INT32 nSegmentLength)
 
 void BurnYMF278BUpdate(INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BUpdate called without init\n"));
 #endif
 
@@ -146,7 +146,7 @@ void BurnYMF278BUpdate(INT32 nSegmentEnd)
 
 void BurnYMF278BSelectRegister(INT32 nRegister, UINT8 nValue)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BSelectRegister called without init\n"));
 #endif
 
@@ -167,7 +167,7 @@ void BurnYMF278BSelectRegister(INT32 nRegister, UINT8 nValue)
 
 void BurnYMF278BWriteRegister(INT32 nRegister, UINT8 nValue)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BWriteRegister called without init\n"));
 #endif
 
@@ -188,7 +188,7 @@ void BurnYMF278BWriteRegister(INT32 nRegister, UINT8 nValue)
 
 void BurnYMF278BWrite(INT32 nRegister, UINT8 nValue)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BWrite called without init\n"));
 #endif
 
@@ -198,7 +198,7 @@ void BurnYMF278BWrite(INT32 nRegister, UINT8 nValue)
 
 UINT8 BurnYMF278BReadStatus()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BReadStatus called without init\n"));
 #endif
 
@@ -208,7 +208,7 @@ UINT8 BurnYMF278BReadStatus()
 
 UINT8 BurnYMF278BReadData()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BReadData called without init\n"));
 #endif
 
@@ -219,7 +219,7 @@ UINT8 BurnYMF278BReadData()
 
 void BurnYMF278BReset()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BReset called without init\n"));
 #endif
 
@@ -230,7 +230,7 @@ void BurnYMF278BReset()
 
 void BurnYMF278BExit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BExit called without init\n"));
 #endif
 
@@ -297,7 +297,7 @@ INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, INT32 YMF278BROM
 
 void BurnYMF278BSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BSetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnYMF278BSetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -308,7 +308,7 @@ void BurnYMF278BSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void BurnYMF278BScan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BScan called without init\n"));
 #endif
 

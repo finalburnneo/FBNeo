@@ -1,4 +1,4 @@
-// FB Alpha American Speedway driver module
+// FB Neo American Speedway driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

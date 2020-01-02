@@ -1,4 +1,4 @@
-// FB Alpha Taito Ground Effects driver module
+// FB Neo Taito Ground Effects driver module
 // Based on MAME driver by Bryan McPhail and David Graves
 
 #include "tiles_generic.h"

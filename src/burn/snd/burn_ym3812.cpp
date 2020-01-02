@@ -234,7 +234,7 @@ static INT32 YM3812StreamCallbackDummy(INT32)
 
 static void YM3812Render(INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("YM3812Render called without init\n"));
 #endif
 
@@ -258,7 +258,7 @@ static void YM3812Render(INT32 nSegmentLength)
 
 static void YM3812UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("YM3812UpdateResample called without init\n"));
 #endif
 
@@ -347,7 +347,7 @@ static void YM3812UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 static void YM3812UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("YM3812UpdateNormal called without init\n"));
 #endif
 
@@ -421,7 +421,7 @@ static void YM3812UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnYM3812UpdateRequest(INT32, INT32)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812UpdateRequest called without init\n"));
 #endif
 
@@ -433,7 +433,7 @@ void BurnYM3812UpdateRequest(INT32, INT32)
 
 void BurnYM3812Reset()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Reset called without init\n"));
 #endif
 
@@ -446,7 +446,7 @@ void BurnYM3812Reset()
 
 void BurnYM3812Exit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Exit called without init\n"));
 #endif
 
@@ -535,7 +535,7 @@ INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallbac
 
 void BurnYM3812SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnYM3812SetRoute called with invalid index %i\n"), nIndex);
 	if (nChip >= nNumChips) bprintf(PRINT_ERROR, _T("BurnYM3812SetRoute called with invalid chip %i\n"), nChip);
@@ -554,7 +554,7 @@ void BurnYM3812SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteD
 
 void BurnYM3812Scan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Scan called without init\n"));
 #endif
 

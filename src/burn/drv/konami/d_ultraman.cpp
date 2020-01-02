@@ -1,4 +1,4 @@
-// FB Alpha Ultraman driver module
+// FB Neo Ultraman driver module
 // Based on MAME driver by Manuel Abadia
 
 #include "tiles_generic.h"

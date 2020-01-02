@@ -1,4 +1,4 @@
-// FB Alpha MSX arcade driver module, by dink. memory mapping code (megarom) from fMSX
+// FB Neo MSX arcade driver module, by dink. memory mapping code (megarom) from fMSX
 //
 // TODO:
 // 1: Clean-up!

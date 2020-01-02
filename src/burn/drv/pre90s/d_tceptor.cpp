@@ -1,4 +1,4 @@
-// FB Alpha Thunder Ceptor driver module
+// FB Neo Thunder Ceptor driver module
 // Based on MAME driver by BUT
 
 // to do:

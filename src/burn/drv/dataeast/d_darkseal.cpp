@@ -1,4 +1,4 @@
-// FB Alpha Dark Seal driver module
+// FB Neo Dark Seal driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

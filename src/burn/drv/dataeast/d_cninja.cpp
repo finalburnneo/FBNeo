@@ -1,4 +1,4 @@
-// FB Alpha Caveman Ninja driver module
+// FB Neo Caveman Ninja driver module
 // Based on MAME driver by Bryan McPhail
 
 // TOFIX: cninjabl backgrounds won't display

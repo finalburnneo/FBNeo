@@ -1,4 +1,4 @@
-// FB Alpha Face "LINDA" hardware driver module
+// FB Neo Face "LINDA" hardware driver module
 // Based on MAME driver by Paul Priest and David Haywood
 
 #include "tiles_generic.h"

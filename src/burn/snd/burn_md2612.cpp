@@ -42,7 +42,7 @@ static INT32 MD2612StreamCallbackDummy(INT32)
 
 static void MD2612Render(INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("MD2612Render called without init\n"));
 #endif
 	
@@ -82,7 +82,7 @@ static void MD2612Render(INT32 nSegmentLength)
 
 static void MD2612UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("MD2612UpdateResample called without init\n"));
 #endif
 
@@ -146,7 +146,7 @@ static void MD2612UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 // Callbacks for YM2612 core
 void BurnMD2612UpdateRequest()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("YM2612UpdateRequest called without init\n"));
 #endif
 
@@ -158,7 +158,7 @@ void BurnMD2612UpdateRequest()
 
 void BurnMD2612Reset()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnMD2612Reset called without init\n"));
 #endif
 
@@ -167,7 +167,7 @@ void BurnMD2612Reset()
 
 void BurnMD2612Exit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnMD2612Exit called without init\n"));
 #endif
 
@@ -234,7 +234,7 @@ INT32 BurnMD2612Init(INT32 num, INT32 bIsPal, INT32 (*StreamCallback)(INT32), IN
 
 void BurnMD2612SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnMD2612SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnMD2612SetRoute called with invalid index %i\n"), nIndex);
 	if (nChip >= nNumChips) bprintf(PRINT_ERROR, _T("BurnMD2612SetRoute called with invalid chip %i\n"), nChip);
@@ -248,7 +248,7 @@ void BurnMD2612SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteD
 
 void BurnMD2612Scan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnMD2612Scan called without init\n"));
 #endif
 

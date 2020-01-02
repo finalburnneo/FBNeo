@@ -1,4 +1,4 @@
-// FB Alpha Black Tiger driver module
+// FB Neo Black Tiger driver module
 // Based on MAME driver by Paul Leaman
 
 #include "tiles_generic.h"

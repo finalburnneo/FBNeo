@@ -41,7 +41,7 @@ static INT32 YM2608StreamCallbackDummy(INT32)
 
 static void AY8910Render(INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2608Initted) bprintf(PRINT_ERROR, _T("BurnYM2608 AY8910Render called without init\n"));
 #endif
 
@@ -62,7 +62,7 @@ static void AY8910Render(INT32 nSegmentLength)
 
 static void YM2608Render(INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2608Initted) bprintf(PRINT_ERROR, _T("YM2608Render called without init\n"));
 #endif
 
@@ -85,7 +85,7 @@ static void YM2608Render(INT32 nSegmentLength)
 
 static void YM2608UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2608Initted) bprintf(PRINT_ERROR, _T("YM2608UpdateResample called without init\n"));
 #endif
 
@@ -199,7 +199,7 @@ static void YM2608UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 static void YM2608UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2608Initted) bprintf(PRINT_ERROR, _T("YM2608UpdateNormal called without init\n"));
 #endif
 
@@ -292,7 +292,7 @@ static void YM2608UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnYM2608UpdateRequest()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2608Initted) bprintf(PRINT_ERROR, _T("BurnYM2608UpdateRequest called without init\n"));
 #endif
 
@@ -301,7 +301,7 @@ void BurnYM2608UpdateRequest()
 
 static void BurnAY8910UpdateRequest()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2608Initted) bprintf(PRINT_ERROR, _T("BurnYM2608 BurnAY8910UpdateRequest called without init\n"));
 #endif
 
@@ -313,7 +313,7 @@ static void BurnAY8910UpdateRequest()
 
 void BurnYM2608Reset()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2608Initted) bprintf(PRINT_ERROR, _T("BurnYM2608Reset called without init\n"));
 #endif
 
@@ -324,7 +324,7 @@ void BurnYM2608Reset()
 
 void BurnYM2608Exit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2608Initted) bprintf(PRINT_ERROR, _T("BurnYM2608Exit called without init\n"));
 #endif
 
@@ -411,7 +411,7 @@ INT32 BurnYM2608Init(INT32 nClockFrequency, UINT8* YM2608ADPCMROM, INT32* nYM260
 
 void BurnYM2608SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2608Initted) bprintf(PRINT_ERROR, _T("BurnYM2608SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 2) bprintf(PRINT_ERROR, _T("BurnYM2608SetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -422,7 +422,7 @@ void BurnYM2608SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void BurnYM2608Scan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2608Initted) bprintf(PRINT_ERROR, _T("BurnYM2608Scan called without init\n"));
 #endif
 

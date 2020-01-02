@@ -1,4 +1,4 @@
-// FB Alpha Battle Lane driver module
+// FB Neo Battle Lane driver module
 // Based on MAME driver by Paul Leaman (paul@vortexcomputing.demon.co.uk)
 
 #include "tiles_generic.h"

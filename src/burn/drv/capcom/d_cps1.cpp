@@ -14594,7 +14594,7 @@ static void SetGameConfig()
 		SetGfxMapper(k->CpsMapperId);
 		KabukiDecodeFunction = k->DecodeFunction;
 	} else {
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		bprintf(PRINT_IMPORTANT, _T("Missing Config Data\n"));
 #endif
 	}
@@ -14667,7 +14667,7 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 		if (PangEEP) nCpsGfxLen *= 2;
 		if (nCpsPicRomNum) Cps1DisablePSnd = 1;
 		
-#if 1 && defined FBNEO_DEBUG
+#if 1 && defined FBN_DEBUG
 		if (nCpsRomLen) bprintf(PRINT_IMPORTANT, _T("68K Rom Length %06X, (%i roms byteswapped, %i roms not byteswapped)\n"), nCpsRomLen, nCps68KByteswapRomNum, nCps68KNoByteswapRomNum);
 		if (nCpsZRomLen) bprintf(PRINT_IMPORTANT, _T("Z80 Rom Length %06X, (%i roms)\n"), nCpsZRomLen, nCpsZ80RomNum);
 		if (nCpsGfxLen) bprintf(PRINT_IMPORTANT, _T("Tile Rom Length %08X, (%i roms)\n"), nCpsGfxLen, nCpsTilesRomNum);
@@ -16872,7 +16872,7 @@ static INT32 Sf2rkInit()
 
 static void Sf2accp2Callback()
 {
-	// This causes problems in FBA, but is ignored in MAME??
+	// This causes problems in FBN, but is ignored in MAME??
 	// 011756: 66FF                       dc.w    $66ff; ILLEGAL
 
 //	*((UINT16*)(CpsRom + 0x11756)) = 0x4e71;
@@ -17951,7 +17951,7 @@ static INT32 Sf2bhhInit()
 
 static INT32 Sf2hfInit()
 {
-	// game runs too fast - RN compared MAME/FBA to PCB
+	// game runs too fast - RN compared MAME/FBN to PCB
 	// RN October 2018 research: adjust excessive speed to 65.83% of 12Mhz as per: https://www.youtube.com/watch?v=HyL87eswe8M
 	
 	nCPS68KClockspeed = 7900000;

@@ -116,7 +116,7 @@ static void UpdateStream(INT32 chip, INT32 length)
 
 void DACUpdate(INT16* Buffer, INT32 Length)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACUpdate called without init\n"));
 #endif
 
@@ -159,7 +159,7 @@ void DACUpdate(INT16* Buffer, INT32 Length)
 
 void DACWrite(INT32 Chip, UINT8 Data)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACWrite called without init\n"));
 	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACWrite called with invalid chip number %x\n"), Chip);
 #endif
@@ -175,7 +175,7 @@ void DACWrite(INT32 Chip, UINT8 Data)
 
 void DACWrite16(INT32 Chip, INT16 Data)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACWrite16 called without init\n"));
 	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACWrite16 called with invalid chip number %x\n"), Chip);
 #endif
@@ -194,7 +194,7 @@ void DACWrite16(INT32 Chip, INT16 Data)
 
 void DACWrite16Stereo(INT32 Chip, INT16 Data, INT16 Data2)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACWrite16Stereo called without init\n"));
 	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACWrite16Stereo called with invalid chip number %x\n"), Chip);
 #endif
@@ -215,7 +215,7 @@ void DACWrite16Stereo(INT32 Chip, INT16 Data, INT16 Data2)
 
 void DACWrite16Signed(INT32 Chip, UINT16 Data)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACWrite16 called without init\n"));
 	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACWrite16 called with invalid chip number %x\n"), Chip);
 #endif
@@ -236,7 +236,7 @@ void DACWrite16Signed(INT32 Chip, UINT16 Data)
 
 void DACSignedWrite(INT32 Chip, UINT8 Data)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACSignedWrite called without init\n"));
 	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACSignedWrite called with invalid chip number %x\n"), Chip);
 #endif
@@ -259,7 +259,7 @@ static void DACBuildVolTables()
 
 void DACStereoMode(INT32 Chip)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACStereoMode called without init\n"));
 	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACStereoMode called with invalid chip number %x\n"), Chip);
 #endif
@@ -288,7 +288,7 @@ void DACInit(INT32 Num, UINT32 Clock, INT32 bAdd, INT32 (*pCPUCyclesCB)(), INT32
 
 void DACInit(INT32 Num, UINT32 /*Clock*/, INT32 bAdd, INT32 (*pSyncCB)())
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (Num >= DAC_NUM) bprintf (PRINT_ERROR, _T("DACInit called for too many chips (%d)! Change DAC_NUM (%d)!\n"), Num, DAC_NUM);
 	if (pSyncCB == NULL) bprintf (PRINT_ERROR, _T("DACInit called with NULL callback!\n"));
 #endif
@@ -316,7 +316,7 @@ void DACInit(INT32 Num, UINT32 /*Clock*/, INT32 bAdd, INT32 (*pSyncCB)())
 
 void DACSetRoute(INT32 Chip, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACSetRoute called without init\n"));
 	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACSetRoute called with invalid chip %i\n"), Chip);
 #endif
@@ -330,7 +330,7 @@ void DACSetRoute(INT32 Chip, double nVolume, INT32 nRouteDir)
 
 void DACReset()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACReset called without init\n"));
 #endif
 
@@ -350,7 +350,7 @@ void DACReset()
 
 void DACExit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACExit called without init\n"));
 #endif
 
@@ -382,7 +382,7 @@ void DACExit()
 
 void DACScan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACScan called without init\n"));
 #endif
 	

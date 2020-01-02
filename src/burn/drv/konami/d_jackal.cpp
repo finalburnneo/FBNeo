@@ -1,4 +1,4 @@
-// FB Alpha Jackal driver module
+// FB Neo Jackal driver module
 // Based on MAME driver by Kenneth Lin
 
 #include "tiles_generic.h"

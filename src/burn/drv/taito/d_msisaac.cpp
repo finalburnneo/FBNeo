@@ -1,4 +1,4 @@
-// FB Alpha Metal Soldier Isaac II driver module
+// FB Neo Metal Soldier Isaac II driver module
 // Based on MAME driver by Jarek Burczynski
 
 #include "tiles_generic.h"

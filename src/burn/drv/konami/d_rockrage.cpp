@@ -1,4 +1,4 @@
-// FB ALpha Rock'n Rage driver module
+// FB Neo Rock'n Rage driver module
 // Based on MAME driver by Manuel Abadia
 
 #include "tiles_generic.h"
@@ -244,7 +244,7 @@ static UINT32 DrvVLM5030Sync(INT32 samples_rate)
 	return (samples_rate * M6809TotalCycles()) / 25000;
 }
 
-static void rockrage_tile_callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, INT32 */*flags*/)
+static void rockrage_tile_callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, INT32* /*flags*/)
 {
 	if (layer == 1) {
 		*code |= ((*color & 0x40) << 2) | ((bank & 0x01) << 9);

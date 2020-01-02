@@ -1,4 +1,4 @@
-// FB Alpha Beast Busters and Mechanized Attack driver module
+// FB Neo Beast Busters and Mechanized Attack driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"

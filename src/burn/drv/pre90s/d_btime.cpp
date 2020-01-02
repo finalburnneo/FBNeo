@@ -1,4 +1,4 @@
-// BurgerTime emu-layer for FB Alpha by dink & iq_132, based on the MAME driver by Zsolt Vasvari.
+// BurgerTime emu-layer for FB Neo by dink & iq_132, based on the MAME driver by Zsolt Vasvari.
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"

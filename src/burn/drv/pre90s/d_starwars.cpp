@@ -1,4 +1,4 @@
-// FB Alpha Star Wars driver module
+// FB Neo Star Wars driver module
 // Based on MAME driver by Steve Baine and Frank Palazzolo
 // based on mame 0.111/0.119
 

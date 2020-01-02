@@ -1,4 +1,4 @@
-// FB Alpha Wiz driver module
+// FB Neo Wiz driver module
 // Based on MAME driver by Zsolt Vasvari
 
 // Wiz Todo:

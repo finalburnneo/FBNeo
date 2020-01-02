@@ -434,7 +434,7 @@ INT32 StartRecord()
 			}
 		}
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 		dprintf(_T("*** Recording of file %s started.\n"), szChoice);
 #endif
 
@@ -622,7 +622,7 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 		}
 	}
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	dprintf(_T("*** Replay of file %s started.\n"), szChoice);
 #endif
 
@@ -686,15 +686,15 @@ void StopReplay()
 	if (nReplayStatus) {
 		if (nReplayStatus == 1) {
 
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 			dprintf(_T(" ** Recording stopped, recorded %d frames.\n"), GetCurrentFrame() - nStartFrame);
 #endif
 			CloseRecord();
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 			PrintResult();
 #endif
 		} else {
-#ifdef FBNEO_DEBUG
+#ifdef FBN_DEBUG
 			dprintf(_T(" ** Replay stopped, replayed %d frames.\n"), GetCurrentFrame() - nStartFrame);
 #endif
 
@@ -809,10 +809,10 @@ static void DisplayPropertiesError(HWND hDlg, INT32 nErrType)
 	if (hDlg != 0) {
 		switch (nErrType) {
 			case 0:
-				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Not a FBAlpha input recording file.\0"));
+				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Not a FBNeo input recording file.\0"));
 				break;
 			case 1:
-				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Incompatible file-type.  Try playback with an earlier version of FBAlpha.\0"));
+				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Incompatible file-type.  Try playback with an earlier version of FBNeo.\0"));
 				break;
 			case 2:
 				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Recording is corrupt :(\0"));

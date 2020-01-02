@@ -1,4 +1,4 @@
-// FB Alpha Black Touch '96 driver module
+// FB Neo Black Touch '96 driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"

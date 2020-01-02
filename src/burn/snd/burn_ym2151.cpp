@@ -1,4 +1,4 @@
-// FBAlpha YM-2151 sound core interface
+// FBNeo YM-2151 sound core interface
 #include "burnint.h"
 #include "burn_ym2151.h"
 
@@ -28,7 +28,7 @@ static INT32 YM2151BurnTimer = 0;
 
 static void YM2151RenderResample(INT16* pSoundBuf, INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("YM2151RenderResample called without init\n"));
 #endif
 	
@@ -111,7 +111,7 @@ static void YM2151RenderResample(INT16* pSoundBuf, INT32 nSegmentLength)
 
 static void YM2151RenderNormal(INT16* pSoundBuf, INT32 nSegmentLength)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("YM2151RenderNormal called without init\n"));
 #endif
 
@@ -149,7 +149,7 @@ static void YM2151RenderNormal(INT16* pSoundBuf, INT32 nSegmentLength)
 
 void BurnYM2151Reset()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Reset called without init\n"));
 #endif
 
@@ -161,7 +161,7 @@ void BurnYM2151Reset()
 
 void BurnYM2151Exit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Exit called without init\n"));
 #endif
 
@@ -239,7 +239,7 @@ INT32 BurnYM2151Init(INT32 nClockFrequency, INT32 use_timer)
 // is called.  See drv/dataeast/d_rohga for example usage.
 void BurnYM2151SetInterleave(INT32 nInterleave)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SetInterleave called without init\n"));
 #endif
 
@@ -248,7 +248,7 @@ void BurnYM2151SetInterleave(INT32 nInterleave)
 
 void BurnYM2151SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnYM2151SetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -259,7 +259,7 @@ void BurnYM2151SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void BurnYM2151Scan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Scan called without init\n"));
 #endif
 	

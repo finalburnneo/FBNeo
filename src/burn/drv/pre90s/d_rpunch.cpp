@@ -1,4 +1,4 @@
-// FB Alpha Rabio Lepus / Super Volleyball driver module
+// FB Neo Rabio Lepus / Super Volleyball driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"
@@ -545,7 +545,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	// FBA doesn't support memory masks, so use mirroring instead
+	// FBN doesn't support memory masks, so use mirroring instead
 	for (INT32 i = 0; i < 1 << 24; i+= 1 << 20) {
 		SekMapMemory(Drv68KROM,			i+0x000000, i+0x03ffff, MAP_ROM);
 		SekMapMemory(DrvBMPRAM,			i+0x040000, i+0x04ffff, MAP_RAM);

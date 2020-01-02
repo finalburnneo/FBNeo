@@ -1,7 +1,7 @@
 // Raiden(c) 1990 Seibu Kaihatsu
 // driver by Oliver Bergmann, Bryan McPhail, Randy Mongenel
 
-// port to FB Alpha by OopsWare
+// port to FB Neo by OopsWare
 // Update Aug. 15, 2014, IQ_132
 
 #include "tiles_generic.h"

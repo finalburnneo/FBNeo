@@ -1,4 +1,4 @@
-// FB Alpha Sky Kid driver module
+// FB Neo Sky Kid driver module
 // Based on MAME driver by Manuel Abadia and various others
 
 #include "tiles_generic.h"

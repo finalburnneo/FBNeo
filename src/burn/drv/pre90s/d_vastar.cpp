@@ -1,4 +1,4 @@
-// FB Alpha Vastar driver module
+// FB Neo Vastar driver module
 // Based on MAME driver by Allard Van Der Bas
 
 #include "tiles_generic.h"

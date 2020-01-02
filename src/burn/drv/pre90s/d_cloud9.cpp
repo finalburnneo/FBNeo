@@ -1,4 +1,4 @@
-// FB Alpha Cloud 9 / Firebeast driver module
+// FB Neo Cloud 9 / Firebeast driver module
 // Based on MAME driver by Mike Balfour and Aaron Giles
 
 #include "tiles_generic.h"

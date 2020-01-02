@@ -158,7 +158,7 @@ static UINT8 ppi8255_read_port(ppi8255 *chip, INT32 port, INT32 chipnum)
 
 void ppi8255_set_read_port(INT32 which, INT32 port, PPIPortRead pr)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_set_read_port called without init\n"));
 	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_set_read_port called with invalid chip %x\n"), which);
 #endif
@@ -173,7 +173,7 @@ void ppi8255_set_read_port(INT32 which, INT32 port, PPIPortRead pr)
 
 void ppi8255_set_read_ports(INT32 which, PPIPortRead a, PPIPortRead b, PPIPortRead c)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_set_read_ports called without init\n"));
 	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_set_read_ports called with invalid chip %x\n"), which);
 #endif
@@ -186,7 +186,7 @@ void ppi8255_set_read_ports(INT32 which, PPIPortRead a, PPIPortRead b, PPIPortRe
 
 void ppi8255_set_write_port(INT32 which, INT32 port, PPIPortWrite pw)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_set_write_port called without init\n"));
 	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_set_write_port called with invalid chip %x\n"), which);
 #endif
@@ -201,7 +201,7 @@ void ppi8255_set_write_port(INT32 which, INT32 port, PPIPortWrite pw)
 
 void ppi8255_set_write_ports(INT32 which, PPIPortWrite a, PPIPortWrite b, PPIPortWrite c)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_set_write_ports called without init\n"));
 	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_set_write_ports called with invalid chip %x\n"), which);
 #endif
@@ -214,7 +214,7 @@ void ppi8255_set_write_ports(INT32 which, PPIPortWrite a, PPIPortWrite b, PPIPor
 
 UINT8 ppi8255_r(INT32 which, INT32 offset)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_r called without init\n"));
 	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_r called with invalid chip %x\n"), which);
 #endif
@@ -327,7 +327,7 @@ static void set_mode(INT32 which, INT32 data, INT32 call_handlers)
 
 void ppi8255_w(INT32 which, INT32 offset, UINT8 data)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_w called without init\n"));
 	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_w called with invalid chip %x\n"), which);
 #endif
@@ -415,7 +415,7 @@ void ppi8255_init(INT32 num)
 
 void ppi8255_exit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_exit called without init\n"));
 #endif
 
@@ -431,7 +431,7 @@ void ppi8255_exit()
 
 void ppi8255_scan()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_scan called without init\n"));
 #endif
 
@@ -442,7 +442,7 @@ void ppi8255_scan()
 
 void ppi8255_set_portC( INT32 which, UINT8 data )
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_set_portC called without init\n"));
 	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_set_portC called with invalid chip %x\n"), which);
 #endif

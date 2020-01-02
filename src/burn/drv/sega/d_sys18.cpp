@@ -2815,7 +2815,7 @@ static UINT16 __fastcall System18ReadWord(UINT32 a)
 		return GenesisVDPRead((a - 0xc00000) >> 1);
 	}
 	
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
 #endif
 
@@ -2832,7 +2832,7 @@ static UINT8 __fastcall System18ReadByte(UINT32 a)
 		return system18_io_chip_r((a - 0xe40000) >> 1);
 	}
 	
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -2858,7 +2858,7 @@ static void __fastcall System18WriteWord(UINT32 a, UINT16 d)
 		}
 	}
 	
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -2906,7 +2906,7 @@ static void __fastcall System18WriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -2979,7 +2979,7 @@ static void __fastcall Mwalkbl2WriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -3004,7 +3004,7 @@ static void __fastcall Mwalkbl2WriteWord(UINT32 a, UINT16 d)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -3037,7 +3037,7 @@ static UINT8 __fastcall ShdancblReadByte(UINT32 a)
 		}
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 	
@@ -3082,7 +3082,7 @@ static void __fastcall ShdancblWriteByte(UINT32 a, UINT8 d)
 
 	}
 
-#if 0 && defined FBNEO_DEBUG
+#if 0 && defined FBN_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }

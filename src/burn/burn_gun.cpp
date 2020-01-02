@@ -1,7 +1,7 @@
 #include "burnint.h"
 #include "burn_gun.h"
 
-// Generic Light Gun & Trackball (dial, paddle, wheel, trackball) support for FBA
+// Generic Light Gun & Trackball (dial, paddle, wheel, trackball) support for FBN
 // written by Barry Harris (Treble Winner) based on the code in Kev's opwolf driver
 // Trackball/Paddle/Dial emulation by dink
 
@@ -83,7 +83,7 @@ void BurnGunSetCoords(INT32 player, INT32 x, INT32 y)
 
 UINT8 BurnGunReturnX(INT32 num)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunReturnX called without init\n"));
 	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunReturnX called with invalid player %x\n"), num);
 #endif
@@ -96,7 +96,7 @@ UINT8 BurnGunReturnX(INT32 num)
 
 UINT8 BurnGunReturnY(INT32 num)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunReturnY called without init\n"));
 	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunReturnY called with invalid player %x\n"), num);
 #endif
@@ -112,7 +112,7 @@ static INT32 PaddleLast[MAX_GUNS * 2];
 
 void BurnPaddleReturn(BurnDialINF &dial, INT32 num, INT32 isB)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnPaddleReturn called without init\n"));
 	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnPaddleReturn called with invalid player %x\n"), num);
 #endif
@@ -309,7 +309,7 @@ void BurnPaddleSetWrap(INT32 num, INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax
 
 void BurnPaddleMakeInputs(INT32 num, BurnDialINF &dial, INT16 x, INT16 y)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunMakeInputs called without init\n"));
 	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunMakeInputs called with invalid player %x\n"), num);
 #endif
@@ -348,7 +348,7 @@ void BurnPaddleMakeInputs(INT32 num, BurnDialINF &dial, INT16 x, INT16 y)
 
 void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunMakeInputs called without init\n"));
 	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunMakeInputs called with invalid player %x\n"), num);
 #endif
@@ -414,7 +414,7 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 
 void BurnGunExit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunExit called without init\n"));
 #endif
 
@@ -435,7 +435,7 @@ void BurnGunExit()
 
 void BurnGunScan()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunScan called without init\n"));
 #endif
 
@@ -455,7 +455,7 @@ void BurnGunScan()
 
 void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunDrawTarget called without init\n"));
 	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunDrawTarget called with invalid player %x\n"), num);
 #endif

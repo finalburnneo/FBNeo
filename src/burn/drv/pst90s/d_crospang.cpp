@@ -1,4 +1,4 @@
-// FB Alpha Cross Pang driver module
+// FB Neo Cross Pang driver module
 // Based on MAME driver by Pierpaolo Prazzoli and David Haywood
 
 #include "tiles_generic.h"

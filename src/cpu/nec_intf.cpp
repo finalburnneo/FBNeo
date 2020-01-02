@@ -238,7 +238,7 @@ void VezCheatWrite(UINT32 a, UINT8 d)
 
 void VezSetReadHandler(UINT8 (__fastcall *pHandler)(UINT32))
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetReadHandler called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetReadHandler called when no CPU open\n"));
 #endif
@@ -248,7 +248,7 @@ void VezSetReadHandler(UINT8 (__fastcall *pHandler)(UINT32))
 
 void VezSetWriteHandler(void (__fastcall *pHandler)(UINT32, UINT8))
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetWriteHandler called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetWriteHandler called when no CPU open\n"));
 #endif
@@ -258,7 +258,7 @@ void VezSetWriteHandler(void (__fastcall *pHandler)(UINT32, UINT8))
 
 void VezSetReadPort(UINT8 (__fastcall *pHandler)(UINT32))
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetReadPort called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetReadPort called when no CPU open\n"));
 #endif
@@ -268,7 +268,7 @@ void VezSetReadPort(UINT8 (__fastcall *pHandler)(UINT32))
 
 void VezSetWritePort(void (__fastcall *pHandler)(UINT32, UINT8))
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetWritePort called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetWritePort called when no CPU open\n"));
 #endif
@@ -278,7 +278,7 @@ void VezSetWritePort(void (__fastcall *pHandler)(UINT32, UINT8))
 
 void VezSetDecode(UINT8 *table)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetDecode called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetDcode called when no CPU open\n"));
 #endif
@@ -410,7 +410,7 @@ INT32 VezInit(INT32 cpu, INT32 type)
 
 void VezExit()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezExit called without init\n"));
 #endif
 
@@ -432,7 +432,7 @@ void VezExit()
 
 void VezOpen(INT32 nCPU)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezOpen called without init\n"));
 	if (nCPU > nCPUCount) bprintf(PRINT_ERROR, _T("VezOpen called with invalid index %x\n"), nCPU);
 	if (nOpenedCPU != -1) bprintf(PRINT_ERROR, _T("VezOpen called when CPU already open with index %x\n"), nCPU);
@@ -447,7 +447,7 @@ void VezOpen(INT32 nCPU)
 
 void VezClose()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezClose called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezClose called when no CPU open\n"));
 #endif
@@ -459,7 +459,7 @@ void VezClose()
 
 void VezNewFrame()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezNewFrame called without init\n"));
 #endif
 
@@ -470,7 +470,7 @@ void VezNewFrame()
 
 void VezRunEnd()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezRunEnd called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezRunEnd called when no CPU open\n"));
 #endif
@@ -480,7 +480,7 @@ void VezRunEnd()
 
 void VezIdle(INT32 cycles)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezIdle called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezIdle called when no CPU open\n"));
 #endif
@@ -490,7 +490,7 @@ void VezIdle(INT32 cycles)
 
 INT32 VezTotalCycles()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezTotalCycles called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezTotalCycles called when no CPU open\n"));
 #endif
@@ -500,7 +500,7 @@ INT32 VezTotalCycles()
 
 INT32 VezGetActive()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezGetActive called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezGetActive called when no CPU open\n"));
 #endif
@@ -510,7 +510,7 @@ INT32 VezGetActive()
 
 INT32 VezMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezMemCallback called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezMemCallback called when no CPU open\n"));
 #endif
@@ -538,7 +538,7 @@ INT32 VezMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode)
 
 INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezMapArea called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezMapArea called when no CPU open\n"));
 #endif
@@ -566,7 +566,7 @@ INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem)
 
 INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem1, UINT8 *Mem2)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezMapArea called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezMapArea called when no CPU open\n"));
 #endif
@@ -586,7 +586,7 @@ INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem1, UINT8 *Mem2
 
 INT32 VezMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nMode)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezMapMemory called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezMapMemory called when no CPU open\n"));
 #endif
@@ -602,7 +602,7 @@ INT32 VezMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nMode)
 
 void VezReset()
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezReset called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezReset called when no CPU open\n"));
 #endif
@@ -612,7 +612,7 @@ void VezReset()
 
 INT32 VezRun(INT32 nCycles)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezRun called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezRun called when no CPU open\n"));
 #endif
@@ -624,7 +624,7 @@ INT32 VezRun(INT32 nCycles)
 
 UINT32 VezGetPC(INT32 n)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezGetPc called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezGetPc called when no CPU open\n"));
 #endif
@@ -642,7 +642,7 @@ UINT32 VezGetPC(INT32 n)
 
 INT32 VezScan(INT32 nAction)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezScan called without init\n"));
 #endif
 
@@ -661,7 +661,7 @@ INT32 VezScan(INT32 nAction)
 
 void VezSetIRQLineAndVector(const INT32 line, const INT32 vector, const INT32 status)
 {
-#if defined FBNEO_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetIRQLineAndVector called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetIRQLineAndVector called when no CPU open\n"));
 #endif

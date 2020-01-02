@@ -1,4 +1,4 @@
-// FB Alpha Taito SJ system driver module
+// FB Neo Taito SJ system driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

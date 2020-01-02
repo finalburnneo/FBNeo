@@ -1,4 +1,4 @@
-// FB Alpha Ghosts'n Goblins driver module
+// FB Neo Ghosts'n Goblins driver module
 // Based on MAME driver by Pierpaolo Prazzoli
 
 #include "tiles_generic.h"

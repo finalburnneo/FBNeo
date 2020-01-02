@@ -1,4 +1,4 @@
-// FB Alpha Lasso driver module
+// FB Neo Lasso driver module
 // Based on MAME driver by Phil Stroffolino, Nicola Salmoria, and Luca Elia
 
 #include "tiles_generic.h"

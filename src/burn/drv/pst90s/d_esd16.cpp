@@ -1,4 +1,4 @@
-// FB Alpha ESD 16-bit hardware driver module
+// FB Neo ESD 16-bit hardware driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"

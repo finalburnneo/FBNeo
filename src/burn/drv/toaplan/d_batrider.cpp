@@ -1,4 +1,4 @@
-// FB Alpha Batrider driver module
+// FB Neo Batrider driver module
 // Driver and emulation by Jan Klaassen
 
 #include "toaplan.h"

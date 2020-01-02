@@ -1,4 +1,4 @@
-// FB Alpha Atari Black Widow driver module
+// FB Neo Atari Black Widow driver module
 // Based on MAME driver by Brad Oliver, Bernd Wiebelt, and Allard van der Bas
 
 #include "tiles_generic.h"
@@ -349,7 +349,7 @@ static void bwidow_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xff80) == 0x8980) {
-		// watchdog clear (not hooked up in MAME/FBA)
+		// watchdog clear (not hooked up in MAME/FBN)
 		return;
 	}
 

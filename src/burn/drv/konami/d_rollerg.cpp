@@ -1,4 +1,4 @@
-// FB Alpha Roller Games driver module
+// FB Neo Roller Games driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

@@ -1,4 +1,4 @@
-// FBAlpha cd-img, TruRip .ccd/.sub/.img support by Jan Klaassen
+// FBNeo cd-img, TruRip .ccd/.sub/.img support by Jan Klaassen
 // .bin/.cue re-work by dink
 
 #include "burner.h"

@@ -1,4 +1,4 @@
-// FB Alpha Cheeky Mouse driver module
+// FB Neo Cheeky Mouse driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

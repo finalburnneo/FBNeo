@@ -1,4 +1,4 @@
-// FB Alpha Fairyland story driver module
+// FB Neo Fairyland story driver module
 // Based on MAME driver by Nicola Salmoria
 
 // Todo: victnine

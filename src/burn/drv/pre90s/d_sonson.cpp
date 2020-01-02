@@ -1,4 +1,4 @@
-// FB Alpha Son Son driver module
+// FB Neo Son Son driver module
 // Based on MAME driver by Mirko Buffoni
 
 #include "tiles_generic.h"

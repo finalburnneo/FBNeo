@@ -1,4 +1,4 @@
-// FB Alpha Twin Cobra driver module
+// FB Neo Twin Cobra driver module
 // Based on MAME driver by Quench
 
 #include "tiles_generic.h"

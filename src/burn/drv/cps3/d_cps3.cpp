@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------
-// Capcom Play System III Drivers for FB Alpha (2007 - 2008).
+// Capcom Play System III Drivers for FB Neo (2007 - 2008).
 // ------------------------------------------------------------------------------------
 //     Based on MAME driver by David Haywood, Andreas Naive, El Semi, Philip Bennett,
 //	and Tomasz Slanina
@@ -21,7 +21,7 @@
 //
 //  v4 [ CaptainCPS-X ]
 //     - Updated comments & organized structures of code.
-//     - Revised code for compatibility with FB Alpha Enhanced.
+//     - Revised code for compatibility with FB Neo Enhanced.
 //
 //	More info: http://neosource.1emu.net/forums/index.php
 //

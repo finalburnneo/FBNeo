@@ -718,7 +718,7 @@ INT32 pgmInit()
                         SekMapMemory(PGM68KRAM,            		0x800000 | i, 0x81ffff | i, MAP_RAM);
                 }
 
-		// Ripped from FBA Shuffle.
+		// Ripped from FBN Shuffle.
                 for (INT32 i = 0; i < 0x100000; i+=0x08000) {		// Video Ram + Mirrors...
                         SekMapMemory((UINT8 *)PGMBgRAM,		0x900000 | i, 0x900fff | i, MAP_RAM);
                         SekMapMemory((UINT8 *)PGMBgRAM,		0x901000 | i, 0x901fff | i, MAP_RAM); // mirror

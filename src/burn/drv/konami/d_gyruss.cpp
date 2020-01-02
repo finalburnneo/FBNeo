@@ -1,4 +1,4 @@
-// FB Alpha Gyruss driver module
+// FB Neo Gyruss driver module
 // Based on MAME driver by Mirko Buffoni, Michael Cuddy, and Nicola Salmoria
 //
 // Massive overhaul by dink on Feb. 9, 2015, sound mixing modification Feb. 9, 2018.

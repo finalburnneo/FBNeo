@@ -1,4 +1,4 @@
-// FB Alpha Legend of Silkroad driver
+// FB Neo Legend of Silkroad driver
 // Based on MAME driver by David Haywood, R.Belmont, and Stephh
 
 #include "tiles_generic.h"

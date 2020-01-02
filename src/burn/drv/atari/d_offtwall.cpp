@@ -1,4 +1,4 @@
-// FB Alpha Atari Off the Wall driver module
+// FB Neo Atari Off the Wall driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"

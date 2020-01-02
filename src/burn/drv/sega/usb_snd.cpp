@@ -1,4 +1,4 @@
-// Sega USB sound core / cpu combo for FBAlpha, based on code by Aaron Giles,
+// Sega USB sound core / cpu combo for FBNeo, based on code by Aaron Giles,
 // also contains large portions of code by Aaron Giles
 
 #include "burnint.h"

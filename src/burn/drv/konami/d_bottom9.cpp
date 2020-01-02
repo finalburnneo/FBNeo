@@ -1,4 +1,4 @@
-// FB Alpha Bottom of the Nineth driver module
+// FB Neo Bottom of the Nineth driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"

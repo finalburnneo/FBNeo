@@ -1,4 +1,4 @@
-// FB Alpha Tag Team / The Big Pro Wrestling driver module
+// FB Neo Tag Team / The Big Pro Wrestling driver module
 // Based on MAME driver by Steve Ellenoff and Brad Oliver
 
 #include "tiles_generic.h"

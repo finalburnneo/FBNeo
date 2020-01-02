@@ -698,7 +698,7 @@ extern "C" INT32 BurnDrvExit()
 	INT32 nRet = pDriver[nBurnDrvActive]->Exit();			// Forward to drivers function
 	
 	BurnExitMemoryManager();
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	DebugTrackerExit();
 #endif
 
@@ -723,7 +723,7 @@ INT32 BurnDrvCartridgeSetup(BurnCartrigeCommand nCommand)
 
 	BurnExtCartridgeSetupCallback(CART_INIT_END);
 
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 		bprintf(PRINT_NORMAL, _T("  * Loading"));
 #endif
 

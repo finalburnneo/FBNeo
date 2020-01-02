@@ -484,7 +484,7 @@ static void arm_check_irq_state(void)
 
 void arm_set_irq_line(int irqline, int state)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("arm_set_irq_line called without init\n"));
 #endif
 
@@ -1364,7 +1364,7 @@ static void HandleCoPro( UINT32 insn)
 // burn some cycles
 void ArmIdleCycles(int cycles)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmIdleCycles called without init\n"));
 #endif
 
@@ -1378,7 +1378,7 @@ void ArmIdleCycles(int cycles)
 // get the current position
 unsigned int ArmGetPc(INT32)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmGetPC called without init\n"));
 #endif
 
@@ -1388,7 +1388,7 @@ unsigned int ArmGetPc(INT32)
 // get the remaining cycles left to run
 unsigned int ArmRemainingCycles()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmRemainingCycles called without init\n"));
 #endif
 
@@ -1398,7 +1398,7 @@ unsigned int ArmRemainingCycles()
 // get the total of cycles run
 int ArmGetTotalCycles()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmGetTotalCycles called without init\n"));
 #endif
 
@@ -1408,7 +1408,7 @@ int ArmGetTotalCycles()
 // stop the current cpu slice
 void ArmRunEnd()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmRunEnd called without init\n"));
 #endif
 
@@ -1425,7 +1425,7 @@ INT32 ArmIdle(INT32 cycles)
 // start a new frame
 void ArmNewFrame()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmNewFrame called without init\n"));
 #endif
 
@@ -1434,7 +1434,7 @@ void ArmNewFrame()
 
 int ArmScan(int nAction)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmScan called without init\n"));
 #endif
 

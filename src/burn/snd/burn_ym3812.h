@@ -23,7 +23,7 @@ void BurnYM3812Scan(INT32 nAction, INT32* pnMin);
 
 #define BurnYM3812Read(i, a) YM3812Read(i, a)
 
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	#define BurnYM3812Write(i, a, n) if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Write called without init\n")); YM3812Write(i, a, n)
 #else
 	#define BurnYM3812Write(i, a, n) YM3812Write(i, a, n)

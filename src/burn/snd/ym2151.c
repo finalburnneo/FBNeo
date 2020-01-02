@@ -15,7 +15,7 @@
 #include "state.h"
 #include "ym2151.h"
 
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 #ifdef __GNUC__ 
 	// MSVC doesn't like this - this module only supports debug tracking with GCC only
 	#include <tchar.h>

@@ -61,7 +61,7 @@ INT32 			   tms34061_current_scanline;
 
 void tms34061_reset()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_reset called without init\n"));
 #endif
 
@@ -122,7 +122,7 @@ void tms34061_init(UINT8 rowshift, UINT32 ram_size, void (*partial_update)(), vo
 
 void tms34061_exit()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_exit called without init\n"));
 #endif
 
@@ -156,7 +156,7 @@ static void update_interrupts()
 
 void tms34061_interrupt()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_interrupt called without init\n"));
 #endif
 
@@ -416,7 +416,7 @@ static UINT8 xypixel_r(INT32 offset)
 
 void tms34061_write(INT32 col, INT32 row, INT32 func, UINT8 data)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_write called without init\n"));
 #endif
 
@@ -479,7 +479,7 @@ void tms34061_write(INT32 col, INT32 row, INT32 func, UINT8 data)
 
 UINT8 tms34061_read(INT32 col, INT32 row, INT32 func)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_read called without init\n"));
 #endif
 
@@ -545,7 +545,7 @@ UINT8 tms34061_read(INT32 col, INT32 row, INT32 func)
 
 UINT8 tms34061_latch_read()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_latch_read called without init\n"));
 #endif
 
@@ -555,7 +555,7 @@ UINT8 tms34061_latch_read()
 
 void tms34061_latch_write(UINT8 data)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_latch_write called without init\n"));
 #endif
 
@@ -564,7 +564,7 @@ void tms34061_latch_write(UINT8 data)
 
 INT32 tms34061_display_blanked()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_display_blanked called without init\n"));
 #endif
 
@@ -573,7 +573,7 @@ INT32 tms34061_display_blanked()
 
 UINT8 *tms34061_get_vram_pointer()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_get_vram_pointer called without init\n"));
 #endif
 
@@ -589,7 +589,7 @@ UINT8 *tms34061_get_vram_pointer()
 
 INT32 tms34061_scan(INT32 nAction, INT32 *)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_scan called without init\n"));
 #endif
 

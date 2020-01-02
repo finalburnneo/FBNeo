@@ -232,7 +232,7 @@ static INT32 YM3526StreamCallbackDummy(INT32)
 
 static void YM3526Render(INT32 nSegmentLength)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("YM3526Render called without init\n"));
 #endif
 
@@ -252,7 +252,7 @@ static void YM3526Render(INT32 nSegmentLength)
 
 static void YM3526UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("YM3526UpdateResample called without init\n"));
 #endif
 
@@ -320,7 +320,7 @@ static void YM3526UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 static void YM3526UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("YM3526UpdateNormal called without init\n"));
 #endif
 
@@ -381,7 +381,7 @@ static void YM3526UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnYM3526UpdateRequest(int, int)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526UpdateRequest called without init\n"));
 #endif
 
@@ -393,7 +393,7 @@ void BurnYM3526UpdateRequest(int, int)
 
 void BurnYM3526Reset()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Reset called without init\n"));
 #endif
 
@@ -404,7 +404,7 @@ void BurnYM3526Reset()
 
 void BurnYM3526Exit()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Exit called without init\n"));
 #endif
 
@@ -484,7 +484,7 @@ INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*
 
 void BurnYM3526SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnYM3526SetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -495,7 +495,7 @@ void BurnYM3526SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void BurnYM3526Scan(INT32 nAction, INT32* pnMin)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Scan called without init\n"));
 #endif
 

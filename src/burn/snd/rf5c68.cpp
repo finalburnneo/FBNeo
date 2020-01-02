@@ -39,7 +39,7 @@ static INT32 *right = NULL;
 
 void RF5C68PCMUpdate(INT16* pSoundBuf, INT32 length)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMUpdate called without init\n"));
 #endif
 
@@ -115,7 +115,7 @@ void RF5C68PCMUpdate(INT16* pSoundBuf, INT32 length)
 
 void RF5C68PCMReset()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMReset called without init\n"));
 #endif
 
@@ -143,7 +143,7 @@ void RF5C68PCMInit(INT32 clock)
 
 void RF5C68PCMSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMSetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("RF5C68PCMSetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -154,7 +154,7 @@ void RF5C68PCMSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void RF5C68PCMExit()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMExit called without init\n"));
 #endif
 
@@ -185,7 +185,7 @@ void RF5C68PCMScan(INT32 nAction, INT32 *)
 
 void RF5C68PCMRegWrite(UINT8 offset, UINT8 data)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMReqWrite called without init\n"));
 #endif
 
@@ -254,7 +254,7 @@ void RF5C68PCMRegWrite(UINT8 offset, UINT8 data)
 
 UINT8 RF5C68PCMRead(UINT16 offset)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMRead called without init\n"));
 #endif
 
@@ -263,7 +263,7 @@ UINT8 RF5C68PCMRead(UINT16 offset)
 
 void RF5C68PCMWrite(UINT16 offset, UINT8 data)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMWrite called without init\n"));
 #endif
 

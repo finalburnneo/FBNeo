@@ -41,7 +41,7 @@ cpu_core_config pic16c5xConfig =
 
 UINT16 pic16c5xFetch(UINT16 address)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_read_op called without init\n"));
 #endif
 
@@ -54,7 +54,7 @@ UINT16 pic16c5xFetch(UINT16 address)
 
 UINT8 pic16c5xRead(UINT16 address)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_read_byte called without init\n"));
 #endif
 
@@ -71,7 +71,7 @@ UINT8 pic16c5xRead(UINT16 address)
 
 void pic16c5xWrite(UINT16 address, UINT8 data)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_write_byte called without init\n"));
 #endif
 
@@ -90,7 +90,7 @@ void pic16c5xWrite(UINT16 address, UINT8 data)
 
 UINT8 pic16c5xReadPort(UINT16 port)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_read_port called without init\n"));
 #endif
 
@@ -103,7 +103,7 @@ UINT8 pic16c5xReadPort(UINT16 port)
 
 void pic16c5xWritePort(UINT16 port, UINT8 data)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_write_port called without init\n"));
 #endif
 
@@ -125,7 +125,7 @@ void pic16c5xSetWritePortHandler(void (*pWritePort)(UINT16 port, UINT8 data))
 
 void pic16c5xReset()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xReset called without init\n"));
 #endif
 
@@ -164,7 +164,7 @@ void pic16c5xInit(INT32 /*nCPU*/, INT32 type, UINT8 *mem)
 
 void pic16c5xExit()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xExit called without init\n"));
 #endif
 
@@ -184,21 +184,21 @@ void pic16c5xExit()
 
 void pic16c5xOpen(INT32)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xOpen called without init\n"));
 #endif
 }
 
 void pic16c5xClose()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xClose called without init\n"));
 #endif
 }
 
 INT32 pic16c5xScan(INT32 nAction)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xScan called without init\n"));
 #endif
 

@@ -25,7 +25,7 @@ void MSM6295SetBank(INT32 nChip, UINT8 *pRomData, INT32 nStart, INT32 nEnd);
 
 inline static UINT32 MSM6295Read(const INT32 nChip)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	extern INT32 nLastMSM6295Chip;
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Read called without init\n"));
 	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Read called with invalid chip %x\n"), nChip);

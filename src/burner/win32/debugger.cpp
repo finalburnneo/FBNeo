@@ -30,7 +30,7 @@ static int nMemdumpAttrib;
 
 static bool bBreakpointHit;
 
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 extern UINT8 DebugCPU_SekInitted;
 #endif
 

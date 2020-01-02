@@ -135,7 +135,7 @@ UINT8 __fastcall ZetReadOpArg(UINT32 a)
 
 void ZetSetReadHandler(UINT8 (__fastcall *pHandler)(UINT16))
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetReadHandler called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetReadHandler called when no CPU open\n"));
 #endif
@@ -145,7 +145,7 @@ void ZetSetReadHandler(UINT8 (__fastcall *pHandler)(UINT16))
 
 void ZetSetWriteHandler(void (__fastcall *pHandler)(UINT16, UINT8))
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetWriteHandler called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetWriteHandler called when no CPU open\n"));
 #endif
@@ -155,7 +155,7 @@ void ZetSetWriteHandler(void (__fastcall *pHandler)(UINT16, UINT8))
 
 void ZetSetInHandler(UINT8 (__fastcall *pHandler)(UINT16))
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetInHandler called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetInHandler called when no CPU open\n"));
 #endif
@@ -165,7 +165,7 @@ void ZetSetInHandler(UINT8 (__fastcall *pHandler)(UINT16))
 
 void ZetSetOutHandler(void (__fastcall *pHandler)(UINT16, UINT8))
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetOutHandler called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetOutHandler called when no CPU open\n"));
 #endif
@@ -181,7 +181,7 @@ void ZetSetEDFECallback(void (*pCallback)(Z80_Regs*))
 
 void ZetNewFrame()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetNewFrame called without init\n"));
 #endif
 
@@ -265,7 +265,7 @@ void ZetWriteByte(UINT16 address, UINT8 data)
 
 void ZetWriteRom(UINT16 address, UINT8 data)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetWriteRom called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetWriteRom called when no CPU open\n"));
 #endif
@@ -285,7 +285,7 @@ void ZetWriteRom(UINT16 address, UINT8 data)
 
 void ZetClose()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetClose called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetClose called when no CPU open\n"));
 #endif
@@ -300,7 +300,7 @@ void ZetClose()
 
 void ZetOpen(INT32 nCPU)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetOpen called without init\n"));
 	if (nCPU >= nCPUCount) bprintf(PRINT_ERROR, _T("ZetOpen called with invalid index %x\n"), nCPU);
 	if (nOpenedCPU != -1) bprintf(PRINT_ERROR, _T("ZetOpen called when CPU already open with index %x\n"), nCPU);
@@ -317,7 +317,7 @@ void ZetOpen(INT32 nCPU)
 
 void ZetSwapActive(INT32 nCPU)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSwapActive called without init\n"));
 	if (nCPU >= nCPUCount) bprintf(PRINT_ERROR, _T("ZetSwapActive called with invalid index %x\n"), nCPU);
 #endif
@@ -330,7 +330,7 @@ void ZetSwapActive(INT32 nCPU)
 
 INT32 ZetGetActive()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetActive called without init\n"));
 	//if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetActive called when no CPU open\n"));
 #endif
@@ -378,7 +378,7 @@ static void ZetCPUPop()
 
 INT32 ZetRun(INT32 nCycles)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetRun called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetRun called when no CPU open\n"));
 #endif
@@ -405,7 +405,7 @@ INT32 ZetRun(INT32 nCycles)
 
 INT32 ZetRun(INT32 nCPU, INT32 nCycles)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetRun called without init\n"));
 #endif
 
@@ -420,7 +420,7 @@ INT32 ZetRun(INT32 nCPU, INT32 nCycles)
 
 void ZetRunAdjust(INT32 /*nCycles*/)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetRunAdjust called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetRunAdjust called when no CPU open\n"));
 #endif
@@ -428,7 +428,7 @@ void ZetRunAdjust(INT32 /*nCycles*/)
 
 void ZetRunEnd()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetRunEnd called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetRunEnd called when no CPU open\n"));
 #endif
@@ -439,7 +439,7 @@ void ZetRunEnd()
 // This function will make an area callback ZetRead/ZetWrite
 INT32 ZetMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetMemCallback called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetMemCallback called when no CPU open\n"));
 #endif
@@ -467,7 +467,7 @@ INT32 ZetMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode)
 
 void ZetExit()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetExit called without init\n"));
 #endif
 
@@ -496,7 +496,7 @@ void ZetExit()
 // This function will make an area callback ZetRead/ZetWrite
 INT32 ZetUnmapMemory(INT32 nStart, INT32 nEnd, INT32 nFlags)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetUnmapMemory called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetUnmapMemory called when no CPU open\n"));
 #endif
@@ -516,7 +516,7 @@ INT32 ZetUnmapMemory(INT32 nStart, INT32 nEnd, INT32 nFlags)
 
 void ZetMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nFlags)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetMapMemory called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetMapMemory called when no CPU open\n"));
 #endif
@@ -534,7 +534,7 @@ void ZetMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nFlags)
 
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetMapArea called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetMapArea called when no CPU open\n"));
 #endif
@@ -567,7 +567,7 @@ INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem)
 
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem02)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetMapArea called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetMapArea called when no CPU open\n"));
 #endif
@@ -589,7 +589,7 @@ INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem
 
 void ZetReset()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetReset called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetReset called when no CPU open\n"));
 #endif
@@ -600,7 +600,7 @@ void ZetReset()
 
 void ZetReset(INT32 nCPU)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetReset called without init\n"));
 #endif
 
@@ -613,7 +613,7 @@ void ZetReset(INT32 nCPU)
 
 UINT32 ZetGetPC(INT32 n)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetPC called without init\n"));
 	if (nOpenedCPU == -1 && n < 0) bprintf(PRINT_ERROR, _T("ZetGetPC called when no CPU open\n"));
 #endif
@@ -627,7 +627,7 @@ UINT32 ZetGetPC(INT32 n)
 
 INT32 ZetGetPrevPC(INT32 n)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetPrvPC called without init\n"));
 	if (nOpenedCPU == -1 && n < 0) bprintf(PRINT_ERROR, _T("ZetGetPrevPC called when no CPU open\n"));
 #endif
@@ -641,7 +641,7 @@ INT32 ZetGetPrevPC(INT32 n)
 
 INT32 ZetBc(INT32 n)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetBc called without init\n"));
 	if (nOpenedCPU == -1 && n < 0) bprintf(PRINT_ERROR, _T("ZetBc called when no CPU open\n"));
 #endif
@@ -655,7 +655,7 @@ INT32 ZetBc(INT32 n)
 
 INT32 ZetDe(INT32 n)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetDe called without init\n"));
 	if (nOpenedCPU == -1 && n < 0) bprintf(PRINT_ERROR, _T("ZetDe called when no CPU open\n"));
 #endif
@@ -669,7 +669,7 @@ INT32 ZetDe(INT32 n)
 
 INT32 ZetHL(INT32 n)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetHL called without init\n"));
 	if (nOpenedCPU == -1 && n < 0) bprintf(PRINT_ERROR, _T("ZetHL called when no CPU open\n"));
 #endif
@@ -683,7 +683,7 @@ INT32 ZetHL(INT32 n)
 
 INT32 ZetI(INT32 n)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetI called without init\n"));
 	if (nOpenedCPU == -1 && n < 0) bprintf(PRINT_ERROR, _T("ZetI called when no CPU open\n"));
 #endif
@@ -697,7 +697,7 @@ INT32 ZetI(INT32 n)
 
 INT32 ZetSP(INT32 n)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSP called without init\n"));
 	if (nOpenedCPU == -1 && n < 0) bprintf(PRINT_ERROR, _T("ZetSP called when no CPU open\n"));
 #endif
@@ -711,7 +711,7 @@ INT32 ZetSP(INT32 n)
 
 INT32 ZetScan(INT32 nAction)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetScan called without init\n"));
 #endif
 
@@ -746,7 +746,7 @@ INT32 ZetScan(INT32 nAction)
 
 void ZetDaisyInit(INT32 dev0, INT32 dev1)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetDaisyInit called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetDaisyInit called when no CPU open\n"));
 #endif
@@ -756,7 +756,7 @@ void ZetDaisyInit(INT32 dev0, INT32 dev1)
 
 void ZetSetIRQLine(const INT32 line, const INT32 status)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetIRQLine called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetIRQLine called when no CPU open\n"));
 #endif
@@ -783,7 +783,7 @@ void ZetSetIRQLine(const INT32 line, const INT32 status)
 
 void ZetSetIRQLine(INT32 nCPU, const INT32 line, const INT32 status)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetIRQLine called without init\n"));
 #endif
 
@@ -796,7 +796,7 @@ void ZetSetIRQLine(INT32 nCPU, const INT32 line, const INT32 status)
 
 void ZetSetVector(INT32 nCPU, INT32 vector)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetVector called without init\n"));
 #endif
 
@@ -809,7 +809,7 @@ void ZetSetVector(INT32 nCPU, INT32 vector)
 
 void ZetSetVector(INT32 vector)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetVector called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetVector called when no CPU open\n"));
 #endif
@@ -819,7 +819,7 @@ void ZetSetVector(INT32 vector)
 
 UINT8 ZetGetVector()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetVector called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetVector called when no CPU open\n"));
 #endif
@@ -829,7 +829,7 @@ UINT8 ZetGetVector()
 
 UINT8 ZetGetVector(INT32 nCPU)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetVector called without init\n"));
 #endif
 
@@ -844,7 +844,7 @@ UINT8 ZetGetVector(INT32 nCPU)
 
 INT32 ZetNmi()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetNmi called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetNmi called when no CPU open\n"));
 #endif
@@ -859,7 +859,7 @@ INT32 ZetNmi()
 
 INT32 ZetNmi(INT32 nCPU)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetNmi called without init\n"));
 #endif
 
@@ -874,7 +874,7 @@ INT32 ZetNmi(INT32 nCPU)
 
 INT32 ZetIdle(INT32 nCycles)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetIdle called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetIdle called when no CPU open\n"));
 #endif
@@ -886,7 +886,7 @@ INT32 ZetIdle(INT32 nCycles)
 
 INT32 ZetIdle(INT32 nCPU, INT32 nCycles)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetIdle called without init\n"));
 #endif
 
@@ -901,7 +901,7 @@ INT32 ZetIdle(INT32 nCPU, INT32 nCycles)
 
 INT32 ZetSegmentCycles()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSegmentCycles called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSegmentCycles called when no CPU open\n"));
 #endif
@@ -911,7 +911,7 @@ INT32 ZetSegmentCycles()
 
 INT32 ZetTotalCycles()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetTotalCycles called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetTotalCycles called when no CPU open\n"));
 #endif
@@ -921,7 +921,7 @@ INT32 ZetTotalCycles()
 
 INT32 ZetTotalCycles(INT32 nCPU)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetTotalCycles called without init\n"));
 #endif
 
@@ -936,7 +936,7 @@ INT32 ZetTotalCycles(INT32 nCPU)
 
 void ZetSetHALT(INT32 nStatus)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetHALT called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetHALT called when no CPU open\n"));
 #endif
@@ -948,7 +948,7 @@ void ZetSetHALT(INT32 nStatus)
 
 void ZetSetHALT(INT32 nCPU, INT32 nStatus)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetHALT called without init\n"));
 #endif
 
@@ -961,7 +961,7 @@ void ZetSetHALT(INT32 nCPU, INT32 nStatus)
 
 INT32 ZetGetHALT()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetHALT called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetHALT called when no CPU open\n"));
 #endif
@@ -971,7 +971,7 @@ INT32 ZetGetHALT()
 
 INT32 ZetGetHALT(INT32 nCPU)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetHALT called without init\n"));
 #endif
 
@@ -986,7 +986,7 @@ INT32 ZetGetHALT(INT32 nCPU)
 
 void ZetSetRESETLine(INT32 nStatus)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetRESETLine called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetRESETLine called when no CPU open\n"));
 #endif
@@ -1002,7 +1002,7 @@ void ZetSetRESETLine(INT32 nStatus)
 
 void ZetSetRESETLine(INT32 nCPU, INT32 nStatus)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSetRESETLine called without init\n"));
 #endif
 
@@ -1015,7 +1015,7 @@ void ZetSetRESETLine(INT32 nCPU, INT32 nStatus)
 
 INT32 ZetGetRESETLine()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetRESETLine called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetRESETLine called when no CPU open\n"));
 #endif
@@ -1025,7 +1025,7 @@ INT32 ZetGetRESETLine()
 
 INT32 ZetGetRESETLine(INT32 nCPU)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetRESETLine called without init\n"));
 #endif
 

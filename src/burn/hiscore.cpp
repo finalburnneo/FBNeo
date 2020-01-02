@@ -321,7 +321,7 @@ void HiscoreInit()
 
 void HiscoreReset()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreReset called without init\n"));
 #endif
 
@@ -386,7 +386,7 @@ INT32 HiscoreOkToApplyAll()
 
 void HiscoreApply()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreApply called without init\n"));
 #endif
 
@@ -460,7 +460,7 @@ void HiscoreApply()
 
 void HiscoreExit()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreExit called without init\n"));
 #endif
 

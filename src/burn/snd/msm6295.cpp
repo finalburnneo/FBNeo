@@ -47,7 +47,7 @@ INT32 nLastMSM6295Chip;
 
 void MSM6295SetBank(INT32 nChip, UINT8 *pRomData, INT32 nStart, INT32 nEnd)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295SetBank called without init\n"));
 	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295SetBank called with invalid chip number %x\n"), nChip);
 	if (nStart >= nEnd || nStart < 0 || nStart >= 0x40000) bprintf(PRINT_ERROR, _T("MSM6295SetBank (Chip %d) called with invalid nStart %x\n"), nChip, nStart);
@@ -65,7 +65,7 @@ void MSM6295SetBank(INT32 nChip, UINT8 *pRomData, INT32 nStart, INT32 nEnd)
 	}
 }
 
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 static inline UINT8 MSM6295ReadData(INT32 nChip, UINT32 nAddress)
 {
 	nAddress &= 0x3ffff;
@@ -96,7 +96,7 @@ static bool bAdd;
 
 void MSM6295Reset(INT32 nChip)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Reset called without init\n"));
 	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Reset called with invalid chip number %x\n"), nChip);
 #endif
@@ -123,7 +123,7 @@ void MSM6295Reset(INT32 nChip)
 
 void MSM6295Reset()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Reset called without init\n"));
 #endif
 	for (INT32 nChip = 0; nChip <= nLastMSM6295Chip; nChip++)
@@ -134,7 +134,7 @@ void MSM6295Reset()
 
 void MSM6295Scan(INT32 , INT32 *)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Scan called without init\n"));
 #endif
 
@@ -355,7 +355,7 @@ static void MSM6295Render_Cubic(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf, 
 
 INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength) // render per-chip
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Render called without init\n"));
 	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Render called with invalid chip number %x\n"), nChip);
 #endif
@@ -389,7 +389,7 @@ INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength) // rend
 
 INT32 MSM6295Render(INT16* pSoundBuf, INT32 nSegmentLength) // render all chips
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Render called without init\n"));
 #endif
 
@@ -403,7 +403,7 @@ INT32 MSM6295Render(INT16* pSoundBuf, INT32 nSegmentLength) // render all chips
 
 void MSM6295Write(INT32 nChip, UINT8 nCommand)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Write called without init\n"));
 	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Write called with invalid chip number %x\n"), nChip);
 #endif
@@ -478,7 +478,7 @@ void MSM6295Write(INT32 nChip, UINT8 nCommand)
 
 void MSM6295Exit(INT32 nChip)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Exit called without init\n"));
 	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Exit called with invalid chip number %x\n"), nChip);
 #endif
@@ -499,7 +499,7 @@ void MSM6295Exit(INT32 nChip)
 
 void MSM6295Exit()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Exit called without init\n"));
 #endif
 	for (INT32 nChip = 0; nChip <= nLastMSM6295Chip; nChip++)
@@ -605,7 +605,7 @@ INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, bool bAddSignal)
 
 void MSM6295SetRoute(INT32 nChip, double nVolume, INT32 nRouteDir)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295SetRoute called without init\n"));
 	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295SetRoute called with invalid chip %i\n"), nChip);
 #endif

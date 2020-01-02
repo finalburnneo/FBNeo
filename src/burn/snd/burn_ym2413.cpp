@@ -19,7 +19,7 @@ static INT32 YM2413RouteDirs[2];
 #if 0
 static void YM2413RenderResample(INT16* pSoundBuf, INT32 nSegmentLength)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("YM2413RenderResample called without init\n"));
 #endif
 
@@ -29,7 +29,7 @@ static void YM2413RenderResample(INT16* pSoundBuf, INT32 nSegmentLength)
 
 static void YM2413RenderNormal(INT16* pSoundBuf, INT32 nSegmentLength)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("YM2413RenderNormal called without init\n"));
 #endif
 
@@ -67,7 +67,7 @@ static void YM2413RenderNormal(INT16* pSoundBuf, INT32 nSegmentLength)
 
 void BurnYM2413Reset()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Reset called without init\n"));
 #endif
 
@@ -76,7 +76,7 @@ void BurnYM2413Reset()
 
 void BurnYM2413Exit()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Exit called without init\n"));
 #endif
 
@@ -138,7 +138,7 @@ INT32 BurnYM2413Init(INT32 nClockFrequency)
 
 void BurnYM2413SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnYM2413SetRoute called with invalid index %i\n"), nIndex);
 #endif
@@ -149,7 +149,7 @@ void BurnYM2413SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void BurnYM2413Scan(INT32 nAction, INT32 *)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Scan called without init\n"));
 #endif
 

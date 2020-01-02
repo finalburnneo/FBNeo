@@ -70,7 +70,7 @@ static void SegaPCMUpdateOne(INT32 nChip, INT32 nLength)
 
 void SegaPCMUpdate(INT16* pSoundBuf, INT32 nLength)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMUpdate called without init\n"));
 #endif
 
@@ -163,7 +163,7 @@ void SegaPCMInit(INT32 nChip, INT32 clock, INT32 bank, UINT8 *pPCMData, INT32 PC
 
 void SegaPCMSetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMSetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("SegaPCMSetRoute called with invalid index %i\n"), nIndex);
 	if (nChip > nNumChips) bprintf(PRINT_ERROR, _T("SegaPCMSetRoute called with invalid chip %i\n"), nChip);
@@ -175,7 +175,7 @@ void SegaPCMSetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void SegaPCMExit()
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMExit called without init\n"));
 #endif
 
@@ -194,7 +194,7 @@ void SegaPCMExit()
 
 void SegaPCMScan(INT32 nAction, INT32 *pnMin)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMScan called without init\n"));
 #endif
 
@@ -219,7 +219,7 @@ void SegaPCMScan(INT32 nAction, INT32 *pnMin)
 
 UINT8 SegaPCMRead(INT32 nChip, UINT32 Offset)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMRead called without init\n"));
 	if (nChip > nNumChips) bprintf(PRINT_ERROR, _T("SegaPCMRead called with invalid chip %i\n"), nChip);
 #endif
@@ -229,7 +229,7 @@ UINT8 SegaPCMRead(INT32 nChip, UINT32 Offset)
 
 void SegaPCMWrite(INT32 nChip, UINT32 Offset, UINT8 Data)
 {
-#if defined FBN_DEBUG
+#ifdef FBN_DEBUG
 	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMWrite called without init\n"));
 	if (nChip > nNumChips) bprintf(PRINT_ERROR, _T("SegaPCMWrite called with invalid chip %i\n"), nChip);
 #endif

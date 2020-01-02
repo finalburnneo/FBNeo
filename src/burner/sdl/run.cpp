@@ -23,7 +23,8 @@ char lastMessage[MESSAGE_MAX_LENGTH];
 
 /// Ingame gui
 #ifdef BUILD_SDL2
-extern void ingame_gui_start();
+extern SDL_Renderer* sdlRenderer;
+extern void ingame_gui_start(SDL_Renderer* renderer);
 #endif
 
 /// Save States
@@ -364,7 +365,7 @@ int RunMessageLoop()
 					break;
 #ifdef BUILD_SDL2
 				case SDLK_TAB:
-					ingame_gui_start();
+					ingame_gui_start(sdlRenderer);
 					break;
 #endif
 				default:

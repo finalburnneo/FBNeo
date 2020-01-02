@@ -9,7 +9,7 @@ extern char videofiltering[3];
 
 static unsigned char* VidMem = NULL;
 static SDL_Window* sdlWindow = NULL;
-static SDL_Renderer* sdlRenderer = NULL;
+SDL_Renderer* sdlRenderer = NULL;
 static SDL_Texture* sdlTexture = NULL;
 
 static int  nRotateGame = 0;

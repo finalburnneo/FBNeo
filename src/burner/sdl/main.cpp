@@ -289,7 +289,7 @@ int main(int argc, char* argv[])
 
 	// Do these bits before override via ConfigAppLoad
 	bCheatsAllowed = false;
-	nAudDSPModule[0] = 1;
+	nAudDSPModule[0] = 0;
 	EnableHiscores = 1;
 
 #ifdef BUILD_SDL

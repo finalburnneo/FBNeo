@@ -99,13 +99,12 @@ static int SDLSoundCheck()
 		bDraw = (nFollowingSeg == nPlaySeg);//	|| bAlwaysDrawFrames;	// If this is the last seg of sound, flag bDraw (to draw the graphics)
 		GetNextSound(bDraw);                                // get more sound into nAudNextSound
 
-		memcpy((char*)SDLAudBuffer + nSDLFillSeg * (nAudSegLen << 2), nAudNextSound, nAudSegLen << 2);
-
 		if (nAudDSPModule[0])
 		{
-			DspDo(nAudNextSound, nAudSegLen);
+///			DspDo(nAudNextSound, nAudSegLen);
 		}
 
+		memcpy((char*)SDLAudBuffer + nSDLFillSeg * (nAudSegLen << 2), nAudNextSound, nAudSegLen << 2);
 
 		nSDLFillSeg = nFollowingSeg;
 		WRAP_INC(nFollowingSeg);

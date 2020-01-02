@@ -229,7 +229,7 @@ int RunIdle()
 	nTime = GetTime() - nNormalLast;
 	nCount = (nTime * nAppVirtualFps - nNormalFrac) / 100000;
 	if (nCount <= 0) {						// No need to do anything for a bit
-		SDL_Delay(2);
+	//	SDL_Delay(2);
 		return 0;
 	}
 

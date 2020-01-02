@@ -170,21 +170,6 @@ void FileInStream_CreateVTable(CFileInStream* p)
 	p->s.Seek = FileInStream_Seek;
 }
 
-/* ---------- FileOutStream ---------- */
-
-static size_t FileOutStream_Write(void* pp, const void* data, size_t size)
-{
-	// CFileOutStream* p = (CFileOutStream*)pp;
-	// File_Write(&p->file, data, &size);
-	return size;
-}
-
-void FileOutStream_CreateVTable(CFileOutStream* p)
-{
-	p->s.Write = FileOutStream_Write;
-}
-
-
 /***************************************************************************
     CONSTANTS
 ***************************************************************************/

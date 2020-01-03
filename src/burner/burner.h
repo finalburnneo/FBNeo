@@ -27,8 +27,6 @@
 #define APP_TITLE "FinalBurn Neo"
 #endif
 
-#define APP_DESCRIPTION "Emulator for Arcade-Games"
-
 #include "burn.h"
 
 // ---------------------------------------------------------------------------

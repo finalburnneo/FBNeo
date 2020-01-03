@@ -30,24 +30,55 @@ struct MenuItem
   char* (*menuText)();
 };
 
-
 #define MAINMENU 0
+#define SOUNDMENU 1
+#define GRAPHICSMENU 2
+#define SAVESTATE 3
+#define LOADSTATE 4
+#define SCREENSHOT 5
+#define RESET 6
+
+// menu item tracking
+static UINT16 current_menu = MAINMENU;
+static UINT16 current_selected_item = 0;
+
+void QuickSave()
+{
+  QuickState(1);
+}
+
+void QuickLoad()
+{
+  QuickState(0);
+}
+
+void GraphicsMenuSelected()
+{
+  current_selected_item = 0;
+  current_menu = GRAPHICSMENU;
+}
+
+void SoundMenuSelected()
+{
+  current_selected_item = 0;
+  current_menu = SOUNDMENU;
+}
 
 #define MAINMENU_COUNT 7
 
 struct MenuItem mainMenu[MAINMENU_COUNT] =
 {
- {"Sound Options\0", NULL, NULL},
- {"Graphics Options\0", NULL, NULL},
- {"Save State\0", NULL, NULL},
- {"Load State\0", NULL, NULL},
+ {"Sound Options\0", SoundMenuSelected, NULL},
+ {"Graphics Options\0", GraphicsMenuSelected, NULL},
+ {"Save State\0", QuickSave, NULL},
+ {"Load State\0", QuickLoad, NULL},
  {"Save Screenshot\0", NULL, NULL},
  {"Reset!\0", NULL, NULL},
  {NULL,NULL,NULL}
 };
 
+// menu instance tracking
 struct MenuItem *current_menu_items = mainMenu;
-static UINT16 current_menu = MAINMENU;
 static UINT16 current_item_count = MAINMENU_COUNT;
 
 void ingame_gui_init()

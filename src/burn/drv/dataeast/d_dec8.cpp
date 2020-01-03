@@ -3947,7 +3947,7 @@ STD_ROM_FN(gondo)
 
 struct BurnDriverD BurnDrvGondo = {
 	"gondo", NULL, NULL, NULL, "1987",
-	"Gondomania (US)\0", "Broken inputs", "Data East USA", "DEC8",
+	"Gondomania (World)\0", "Broken inputs", "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, gondoRomInfo, gondoRomName, NULL, NULL, NULL, NULL, GondoInputInfo, GondoDIPInfo,

@@ -2,7 +2,6 @@
 #define _DSOUND_CORE_
 
 #include <dsound.h>
-#include <audiodefs.h>
 // DirectSoundCreate
 extern HRESULT (WINAPI *_DirectSoundCreate)(LPGUID, LPDIRECTSOUND*, LPUNKNOWN);
 

@@ -26,6 +26,7 @@
 #include <commctrl.h>
 #include <timeapi.h>
 #include <commdlg.h>
+#include <mmsystem.h>
 #include <shellapi.h>
 
 // fix for shlwapi.h

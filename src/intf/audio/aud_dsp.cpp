@@ -43,7 +43,7 @@ INT32 DspDo(INT16 *Buff, INT32 Len)
 }
 
 
-INT32 DspInit(void)
+INT32 DspInit()
 {
   LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain,
                      CutFreq2, Q2, Gain2);
@@ -52,7 +52,7 @@ INT32 DspInit(void)
   return 0;
 }
 
-INT32 DspExit(void)
+INT32 DspExit()
 {
   delete LP1;
   delete LP2;

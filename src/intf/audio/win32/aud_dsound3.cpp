@@ -1,13 +1,11 @@
 // DirectSound module
-#include "burner.h"
-#include "aud_dsp.h"
-#include <math.h>
-
 #include <InitGuid.h>
+#include <XAudio2.h>
+#include <XAudio2fx.h>
+#include <aud_dsp.h>
+#include <burner.h>
 #define DIRECTSOUND_VERSION  0x0300			// Only need version from DirectX 3
-#include <dsound.h>
-
-#include "dsound_core.h"
+#include <dsound_core.h>
 
 // Sound is split into a series of 'segs', one seg for each frame
 // The Loop buffer is a multiple of this seg length.

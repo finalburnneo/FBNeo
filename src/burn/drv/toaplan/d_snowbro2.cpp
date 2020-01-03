@@ -589,7 +589,9 @@ static INT32 DrvInit()
 	return 0;
 }
 
-// Rom information
+
+// Snow Bros. 2 - With New Elves / Otenki Paradise (Hanafram)
+
 static struct BurnRomInfo snowbro2RomDesc[] = {
 	{ "pro-4",        0x080000, 0x4c7ee341, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 
@@ -608,11 +610,44 @@ STD_ROM_FN(snowbro2)
 
 struct BurnDriver BurnDrvSnowbro2 = {
 	"snowbro2", NULL, NULL, NULL, "1994",
-	"Snow Bros. 2 - with new elves\0", NULL, "[Toaplan] Hanafram", "Toaplan GP9001 based",
-	L"Snow Bros. 2 - with new elves\0\u304A\u3066\u3093\u304D\u30D1\u30E9\u30C0\u30A4\u30B9\0\u96EA\u4EBA\u5144\u5F1F\uFF12\0\uB208\uC0AC\uB78C\uD615\uC81C\uFF12\0", NULL, NULL, NULL,
+	"Snow Bros. 2 - with new elves (Hanafram)\0", NULL, "[Toaplan] Hanafram", "Toaplan GP9001 based",
+	L"Snow Bros. 2 - with new elves\0\u304A\u3066\u3093\u304D\u30D1\u30E9\u30C0\u30A4\u30B9\0\u96EA\u4EBA\u5144\u5F1F\uFF12\0\uB208\uC0AC\uB78C\uD615\uC81C\uFF12 (Hanafram)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TOAPLAN_68K_ONLY, GBF_PLATFORM, 0,
 	NULL, snowbro2RomInfo, snowbro2RomName, NULL, NULL, NULL, NULL, snowbro2InputInfo, snowbro2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
 
+
+// Snow Bros. 2 - With New Elves / Otenki Paradise (Nyanko)
+// not a bootleg, has original parts (the "GP9001 L7A0498 TOA PLAN" IC and the three mask ROMs)
+
+static struct BurnRomInfo snowbro2nyRomDesc[] = {
+	{ "rom1_c8.u61",  			0x080000, 0x9e6eb76b, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+
+	{ "rom2-l_tp-033.u13",		0x100000, 0xe9d366a9, BRF_GRA },		   //  1 GP9001 Tile data
+	{ "rom2-h_c10.u26",     	0x080000, 0x9aab7a62, BRF_GRA },		   //  2
+	{ "rom3-l_tp-033.u12",  	0x100000, 0xeb06e332, BRF_GRA },		   //  3
+	{ "rom3-h_c9.u27",      	0x080000, 0x6de2b059, BRF_GRA },		   //  4
+
+	{ "rom4-tp-033.u33",    	0x080000, 0x638f341e, BRF_SND },		   //  5 MSM6295 ADPCM data
+	
+	{ "13_gal16v8-25lnc.u91",	0x0117, 0x00000000, BRF_OPT },     	   	   //  6 PLDs
+	{ "14_gal16v8-25lnc.u92",	0x0117, 0x00000000, BRF_OPT },     	   	   //  7
+	{ "15_gal16v8-25lnc.u93",	0x0117, 0x00000000, BRF_OPT },     	   	   //  8
+};
+
+
+STD_ROM_PICK(snowbro2ny)
+STD_ROM_FN(snowbro2ny)
+
+
+struct BurnDriver BurnDrvSnowbro2ny = {
+	"snowbro2ny", "snowbro2", NULL, NULL, "1994",
+	"Snow Bros. 2 - with new elves (Nyanko)\0", NULL, "[Toaplan] Nyanko", "Toaplan GP9001 based",
+	L"Snow Bros. 2 - with new elves\0\u304A\u3066\u3093\u304D\u30D1\u30E9\u30C0\u30A4\u30B9\0\u96EA\u4EBA\u5144\u5F1F\uFF12\0\uB208\uC0AC\uB78C\uD615\uC81C\uFF12 (Nyanko)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TOAPLAN_68K_ONLY, GBF_PLATFORM, 0,
+	NULL, snowbro2nyRomInfo, snowbro2nyRomName, NULL, NULL, NULL, NULL, snowbro2InputInfo, snowbro2DIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	320, 240, 4, 3
+};

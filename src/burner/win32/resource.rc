@@ -12,8 +12,6 @@
 
 // For version macros
 #include "version.h"
-// For APP_TITLE and APP_DESCRIPTION macros (both include quotes)
-#include "title.h"
 
 // String IDs
 #include "resource_string.h"

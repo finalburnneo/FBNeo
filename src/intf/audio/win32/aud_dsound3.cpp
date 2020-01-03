@@ -8,6 +8,7 @@
 #include <dsound.h>
 
 #include "dsound_core.h"
+#include <audiodefs.h>
 
 // Sound is split into a series of 'segs', one seg for each frame
 // The Loop buffer is a multiple of this seg length.

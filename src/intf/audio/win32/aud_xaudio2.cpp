@@ -5,6 +5,7 @@
 #include <InitGuid.h>
 #include <xaudio2.h>
 #include <xaudio2fx.h>
+#include <cassert>
 
 static IXAudio2* pXAudio2 = NULL;
 static IXAudio2MasteringVoice* pMasterVoice = NULL;

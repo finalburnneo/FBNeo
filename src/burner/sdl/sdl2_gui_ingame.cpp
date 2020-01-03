@@ -1,16 +1,5 @@
 #include "burner.h"
 
-static SDL_Renderer* sdlRenderer = NULL;
-static SDL_Surface* screenshot = NULL;
-static SDL_Texture* screenshotTexture = NULL;
-
-
-static SDL_Rect title_texture_rect;
-static SDL_Rect dest_title_texture_rect;
-
-static int screenW = 0;
-static int screenH = 0;
-
 #if SDL_BYTEORDER != SDL_BIG_ENDIAN
 const UINT32 amask = 0xff000000;
 const UINT32 rmask = 0x00ff0000;
@@ -23,7 +12,43 @@ const UINT32 gmask = 0x00ff0000;
 const UINT32 bmask = 0xff000000;
 #endif
 
+static SDL_Renderer* sdlRenderer = NULL;
+static SDL_Surface* screenshot = NULL;
+static SDL_Texture* screenshotTexture = NULL;
 
+static SDL_Rect title_texture_rect;
+static SDL_Rect dest_title_texture_rect;
+
+static int screenW = 0;
+static int screenH = 0;
+
+
+struct MenuItem
+{
+	const char* name;			// The filename of the zip file (without extension)
+  void (*menuFunction)();
+  char* (*menuText)();
+};
+
+
+#define MAINMENU 0
+
+#define MAINMENU_COUNT 7
+
+struct MenuItem mainMenu[MAINMENU_COUNT] =
+{
+ {"Sound Options\0", NULL, NULL},
+ {"Graphics Options\0", NULL, NULL},
+ {"Save State\0", NULL, NULL},
+ {"Load State\0", NULL, NULL},
+ {"Save Screenshot\0", NULL, NULL},
+ {"Reset!\0", NULL, NULL},
+ {NULL,NULL,NULL}
+};
+
+struct MenuItem *current_menu_items = mainMenu;
+static UINT16 current_menu = MAINMENU;
+static UINT16 current_item_count = MAINMENU_COUNT;
 
 void ingame_gui_init()
 {
@@ -48,6 +73,21 @@ void ingame_gui_render()
   incolor(0xfe8a71, /* unused */ 0);
   inprint(sdlRenderer, "FinalBurn Neo", 55, 10);
   inprint(sdlRenderer, "=============", 55, 20);
+
+
+  switch (current_menu)
+  {
+      case MAINMENU:
+        current_item_count = MAINMENU_COUNT;
+        current_menu_items = mainMenu;
+        break;
+  }
+
+  for(int i=0; i < current_item_count; i ++)
+  {
+    inprint(sdlRenderer,current_menu_items[i].name , 55, 30+(10*i));
+  }
+
   SDL_RenderPresent(sdlRenderer);
 }
 

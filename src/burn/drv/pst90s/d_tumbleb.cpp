@@ -1189,7 +1189,7 @@ static struct BurnRomInfo HtchctchRomDesc[] = {
 	
 	{ "p01.c1",        0x20000, 0x18c06829, BRF_SND },	     //  10	Samples
 	
-	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },	     //  11
+	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },	 //  11 Intel 87C52 MCU Code
 };
 
 STD_ROM_PICK(Htchctch)
@@ -1213,7 +1213,7 @@ static struct BurnRomInfo CookbibRomDesc[] = {
 	
 	{ "sound.uc1",     0x20000, 0x545e19b6, BRF_SND },	     //  10	Samples
 	
-	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },	     //  11
+	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },	 //  11 Intel 87C52 MCU Code
 };
 
 STD_ROM_PICK(Cookbib)
@@ -1237,7 +1237,7 @@ static struct BurnRomInfo CookbibaRomDesc[] = {
 	
 	{ "sound.uc1",     0x20000, 0x545e19b6, BRF_SND },	     //  10	Samples
 	
-	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },	     //  11
+	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },	 //  11 Intel 87C52 MCU Code
 };
 
 STD_ROM_PICK(Cookbiba)
@@ -1261,7 +1261,7 @@ static struct BurnRomInfo ChokchokRomDesc[] = {
 	
 	{ "uc1.bin",       0x40000, 0xf3f57abd, BRF_SND },	     //  10	Samples
 	
-	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },	     //  11
+	{ "p87c52ebpn.bin",     0x02000, 0x0d6b4918, BRF_ESS | BRF_PRG }, //  11 Intel 87C52 MCU Code
 };
 
 STD_ROM_PICK(Chokchok)

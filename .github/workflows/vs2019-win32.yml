@@ -20,7 +20,7 @@ jobs:
            mkdir fbn-win32-vs
            cd fbn-win32-vs
            cp ../projectfiles/visualstudio-2019/Win32/Release/*.exe .
-           cp ../fba.chm .
+           cp ../fbn.chm .
            cp ../*.zip .
            cp ../src/license.txt .
            cp ../whatsnew.html .

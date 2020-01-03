@@ -1683,16 +1683,16 @@ static struct BurnRomInfo victnineRomDesc[] = {
 	{ "a16-16.38",		0x2000, 0x9395351b, 2 | BRF_PRG | BRF_ESS }, // 10
 	{ "a16-17.39",		0x2000, 0x872270b3, 2 | BRF_PRG | BRF_ESS }, // 11
 
-	{ "a16-06-1.7",		0x2000, 0xb708134d, 3 | BRF_GRA }, // 12 gfx1
-	{ "a16-07-2.8",		0x2000, 0xcdaf7f83, 3 | BRF_GRA }, // 13
-	{ "a16-10.90",		0x2000, 0xe8e42454, 3 | BRF_GRA }, // 14
-	{ "a16-11-1.91",	0x2000, 0x1f766661, 3 | BRF_GRA }, // 15
-	{ "a16-04.5",		0x2000, 0xb2fae99f, 3 | BRF_GRA }, // 16
-	{ "a16-05-1.6",		0x2000, 0x85dfbb6e, 3 | BRF_GRA }, // 17
-	{ "a16-08.88",		0x2000, 0x1ddb6466, 3 | BRF_GRA }, // 18
-	{ "a16-09-1.89",	0x2000, 0x23d4c43c, 3 | BRF_GRA }, // 19
+	{ "a16-06-1.7",		0x2000, 0xb708134d, 3 | BRF_GRA }, 			 // 12 gfx1
+	{ "a16-07-2.8",		0x2000, 0xcdaf7f83, 3 | BRF_GRA }, 			 // 13
+	{ "a16-10.90",		0x2000, 0xe8e42454, 3 | BRF_GRA }, 			 // 14
+	{ "a16-11-1.91",	0x2000, 0x1f766661, 3 | BRF_GRA }, 			 // 15
+	{ "a16-04.5",		0x2000, 0xb2fae99f, 3 | BRF_GRA }, 			 // 16
+	{ "a16-05-1.6",		0x2000, 0x85dfbb6e, 3 | BRF_GRA }, 			 // 17
+	{ "a16-08.88",		0x2000, 0x1ddb6466, 3 | BRF_GRA }, 			 // 18
+	{ "a16-09-1.89",	0x2000, 0x23d4c43c, 3 | BRF_GRA }, 			 // 19
 
-	{ "a16-18.mcu",		0x0800, 0x00000000, 4 | BRF_NODUMP }, // 20 cpu2
+	{ "a16-18.53",		0x0800, 0x5198ef59, 4 | BRF_PRG | BRF_ESS }, // 20 cpu2
 };
 
 STD_ROM_PICK(victnine)

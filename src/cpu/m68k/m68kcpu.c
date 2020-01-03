@@ -54,7 +54,7 @@ uint m68ki_address_space;
 int megadrive_sr_checkint_mode = 0;
 
 #ifdef M68K_LOG_ENABLE
-const char *const m68ki_cpu_names[] =
+const char* const m68ki_cpu_names[] =
 {
 	"Invalid CPU",
 	"M68000",
@@ -77,7 +77,7 @@ const char *const m68ki_cpu_names[] =
 #endif /* M68K_LOG_ENABLE */
 
 /* The CPU core */
-m68ki_cpu_core m68ki_cpu = {0};
+m68ki_cpu_core m68ki_cpu = { 0 };
 
 #if M68K_EMULATE_ADDRESS_ERROR
 jmp_buf m68ki_aerr_trap;
@@ -194,7 +194,7 @@ const uint8 m68ki_exception_cycle_table[4][256] =
 		  4, /* 61: RESERVED                                           */
 		  4, /* 62: RESERVED                                           */
 		  4, /* 63: RESERVED                                           */
-		     /* 64-255: User Defined                                   */
+			 /* 64-255: User Defined                                   */
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
@@ -267,7 +267,7 @@ const uint8 m68ki_exception_cycle_table[4][256] =
 		  4, /* 61: RESERVED                                           */
 		  4, /* 62: RESERVED                                           */
 		  4, /* 63: RESERVED                                           */
-		     /* 64-255: User Defined                                   */
+			 /* 64-255: User Defined                                   */
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
@@ -340,7 +340,7 @@ const uint8 m68ki_exception_cycle_table[4][256] =
 		  4, /* 61: RESERVED                                           */
 		  4, /* 62: RESERVED                                           */
 		  4, /* 63: RESERVED                                           */
-		     /* 64-255: User Defined                                   */
+			 /* 64-255: User Defined                                   */
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
@@ -413,7 +413,7 @@ const uint8 m68ki_exception_cycle_table[4][256] =
 		  4, /* 61: RESERVED                                           */
 		  4, /* 62: RESERVED                                           */
 		  4, /* 63: RESERVED                                           */
-		     /* 64-255: User Defined                                   */
+			 /* 64-255: User Defined                                   */
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
@@ -453,7 +453,7 @@ const uint8 m68ki_ea_idx_cycle_table[64] =
  * callback is set to NULL
  */
 
-/* Interrupt acknowledge */
+ /* Interrupt acknowledge */
 static int default_int_ack_callback_data;
 static int default_int_ack_callback(int int_level)
 {
@@ -511,8 +511,8 @@ static void default_instr_hook_callback(unsigned int pc)
 
 
 #if M68K_EMULATE_ADDRESS_ERROR
-	#include <setjmp.h>
-	jmp_buf m68ki_aerr_trap;
+#include <setjmp.h>
+jmp_buf m68ki_aerr_trap;
 #endif /* M68K_EMULATE_ADDRESS_ERROR */
 
 
@@ -523,113 +523,113 @@ static void default_instr_hook_callback(unsigned int pc)
 /* Access the internals of the CPU */
 unsigned int m68k_get_reg(void* context, m68k_register_t regnum)
 {
-	m68ki_cpu_core* cpu = context != NULL ?(m68ki_cpu_core*)context : &m68ki_cpu;
+	m68ki_cpu_core* cpu = context != NULL ? (m68ki_cpu_core*)context : &m68ki_cpu;
 
-	switch(regnum)
+	switch (regnum)
 	{
-		case M68K_REG_D0:	return cpu->dar[0];
-		case M68K_REG_D1:	return cpu->dar[1];
-		case M68K_REG_D2:	return cpu->dar[2];
-		case M68K_REG_D3:	return cpu->dar[3];
-		case M68K_REG_D4:	return cpu->dar[4];
-		case M68K_REG_D5:	return cpu->dar[5];
-		case M68K_REG_D6:	return cpu->dar[6];
-		case M68K_REG_D7:	return cpu->dar[7];
-		case M68K_REG_A0:	return cpu->dar[8];
-		case M68K_REG_A1:	return cpu->dar[9];
-		case M68K_REG_A2:	return cpu->dar[10];
-		case M68K_REG_A3:	return cpu->dar[11];
-		case M68K_REG_A4:	return cpu->dar[12];
-		case M68K_REG_A5:	return cpu->dar[13];
-		case M68K_REG_A6:	return cpu->dar[14];
-		case M68K_REG_A7:	return cpu->dar[15];
-		case M68K_REG_PC:	return MASK_OUT_ABOVE_32(cpu->pc);
-		case M68K_REG_SR:	return	cpu->t1_flag						|
-									cpu->t0_flag						|
-									(cpu->s_flag << 11)					|
-									(cpu->m_flag << 11)					|
-									cpu->int_mask						|
-									((cpu->x_flag & XFLAG_SET) >> 4)	|
-									((cpu->n_flag & NFLAG_SET) >> 4)	|
-									((!cpu->not_z_flag) << 2)			|
-									((cpu->v_flag & VFLAG_SET) >> 6)	|
-									((cpu->c_flag & CFLAG_SET) >> 8);
-		case M68K_REG_SP:	return cpu->dar[15];
-		case M68K_REG_USP:	return cpu->s_flag ? cpu->sp[0] : cpu->dar[15];
-		case M68K_REG_ISP:	return cpu->s_flag && !cpu->m_flag ? cpu->dar[15] : cpu->sp[4];
-		case M68K_REG_MSP:	return cpu->s_flag && cpu->m_flag ? cpu->dar[15] : cpu->sp[6];
-		case M68K_REG_SFC:	return cpu->sfc;
-		case M68K_REG_DFC:	return cpu->dfc;
-		case M68K_REG_VBR:	return cpu->vbr;
-		case M68K_REG_CACR:	return cpu->cacr;
-		case M68K_REG_CAAR:	return cpu->caar;
-		case M68K_REG_PREF_ADDR:	return cpu->pref_addr;
-		case M68K_REG_PREF_DATA:	return cpu->pref_data;
-		case M68K_REG_PPC:	return MASK_OUT_ABOVE_32(cpu->ppc);
-		case M68K_REG_IR:	return cpu->ir;
-		case M68K_REG_CPU_TYPE:
-			switch(cpu->cpu_type)
-			{
-				case CPU_TYPE_000:		return (unsigned int)M68K_CPU_TYPE_68000;
-				case CPU_TYPE_008:		return (unsigned int)M68K_CPU_TYPE_68008;
-				case CPU_TYPE_010:		return (unsigned int)M68K_CPU_TYPE_68010;
-				case CPU_TYPE_EC020:	return (unsigned int)M68K_CPU_TYPE_68EC020;
-				case CPU_TYPE_020:		return (unsigned int)M68K_CPU_TYPE_68020;
-				case CPU_TYPE_040:		return (unsigned int)M68K_CPU_TYPE_68040;
-			}
-			return M68K_CPU_TYPE_INVALID;
-		default:			return 0;
+	case M68K_REG_D0:	return cpu->dar[0];
+	case M68K_REG_D1:	return cpu->dar[1];
+	case M68K_REG_D2:	return cpu->dar[2];
+	case M68K_REG_D3:	return cpu->dar[3];
+	case M68K_REG_D4:	return cpu->dar[4];
+	case M68K_REG_D5:	return cpu->dar[5];
+	case M68K_REG_D6:	return cpu->dar[6];
+	case M68K_REG_D7:	return cpu->dar[7];
+	case M68K_REG_A0:	return cpu->dar[8];
+	case M68K_REG_A1:	return cpu->dar[9];
+	case M68K_REG_A2:	return cpu->dar[10];
+	case M68K_REG_A3:	return cpu->dar[11];
+	case M68K_REG_A4:	return cpu->dar[12];
+	case M68K_REG_A5:	return cpu->dar[13];
+	case M68K_REG_A6:	return cpu->dar[14];
+	case M68K_REG_A7:	return cpu->dar[15];
+	case M68K_REG_PC:	return MASK_OUT_ABOVE_32(cpu->pc);
+	case M68K_REG_SR:	return	cpu->t1_flag |
+		cpu->t0_flag |
+		(cpu->s_flag << 11) |
+		(cpu->m_flag << 11) |
+		cpu->int_mask |
+		((cpu->x_flag & XFLAG_SET) >> 4) |
+		((cpu->n_flag & NFLAG_SET) >> 4) |
+		((!cpu->not_z_flag) << 2) |
+		((cpu->v_flag & VFLAG_SET) >> 6) |
+		((cpu->c_flag & CFLAG_SET) >> 8);
+	case M68K_REG_SP:	return cpu->dar[15];
+	case M68K_REG_USP:	return cpu->s_flag ? cpu->sp[0] : cpu->dar[15];
+	case M68K_REG_ISP:	return cpu->s_flag && !cpu->m_flag ? cpu->dar[15] : cpu->sp[4];
+	case M68K_REG_MSP:	return cpu->s_flag && cpu->m_flag ? cpu->dar[15] : cpu->sp[6];
+	case M68K_REG_SFC:	return cpu->sfc;
+	case M68K_REG_DFC:	return cpu->dfc;
+	case M68K_REG_VBR:	return cpu->vbr;
+	case M68K_REG_CACR:	return cpu->cacr;
+	case M68K_REG_CAAR:	return cpu->caar;
+	case M68K_REG_PREF_ADDR:	return cpu->pref_addr;
+	case M68K_REG_PREF_DATA:	return cpu->pref_data;
+	case M68K_REG_PPC:	return MASK_OUT_ABOVE_32(cpu->ppc);
+	case M68K_REG_IR:	return cpu->ir;
+	case M68K_REG_CPU_TYPE:
+		switch (cpu->cpu_type)
+		{
+		case CPU_TYPE_000:		return (unsigned int)M68K_CPU_TYPE_68000;
+		case CPU_TYPE_008:		return (unsigned int)M68K_CPU_TYPE_68008;
+		case CPU_TYPE_010:		return (unsigned int)M68K_CPU_TYPE_68010;
+		case CPU_TYPE_EC020:	return (unsigned int)M68K_CPU_TYPE_68EC020;
+		case CPU_TYPE_020:		return (unsigned int)M68K_CPU_TYPE_68020;
+		case CPU_TYPE_040:		return (unsigned int)M68K_CPU_TYPE_68040;
+		}
+		return M68K_CPU_TYPE_INVALID;
+	default:			return 0;
 	}
 }
 
 void m68k_set_reg(m68k_register_t regnum, unsigned int value)
 {
-	switch(regnum)
+	switch (regnum)
 	{
-		case M68K_REG_D0:	REG_D[0] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_D1:	REG_D[1] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_D2:	REG_D[2] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_D3:	REG_D[3] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_D4:	REG_D[4] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_D5:	REG_D[5] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_D6:	REG_D[6] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_D7:	REG_D[7] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_A0:	REG_A[0] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_A1:	REG_A[1] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_A2:	REG_A[2] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_A3:	REG_A[3] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_A4:	REG_A[4] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_A5:	REG_A[5] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_A6:	REG_A[6] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_A7:	REG_A[7] = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_PC:	m68ki_jump(MASK_OUT_ABOVE_32(value)); return;
-		case M68K_REG_SR:	m68ki_set_sr(value); return;
-		case M68K_REG_SP:	REG_SP = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_USP:	if(FLAG_S)
-								REG_USP = MASK_OUT_ABOVE_32(value);
-							else
-								REG_SP = MASK_OUT_ABOVE_32(value);
-							return;
-		case M68K_REG_ISP:	if(FLAG_S && !FLAG_M)
-								REG_SP = MASK_OUT_ABOVE_32(value);
-							else
-								REG_ISP = MASK_OUT_ABOVE_32(value);
-							return;
-		case M68K_REG_MSP:	if(FLAG_S && FLAG_M)
-								REG_SP = MASK_OUT_ABOVE_32(value);
-							else
-								REG_MSP = MASK_OUT_ABOVE_32(value);
-							return;
-		case M68K_REG_VBR:	REG_VBR = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_SFC:	REG_SFC = value & 7; return;
-		case M68K_REG_DFC:	REG_DFC = value & 7; return;
-		case M68K_REG_CACR:	REG_CACR = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_CAAR:	REG_CAAR = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_PPC:	REG_PPC = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_IR:	REG_IR = MASK_OUT_ABOVE_16(value); return;
-		case M68K_REG_PREF_ADDR:	CPU_PREF_ADDR = MASK_OUT_ABOVE_32(value); return;
-		case M68K_REG_CPU_TYPE: m68k_set_cpu_type(value); return;
-		default:			return;
+	case M68K_REG_D0:	REG_D[0] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_D1:	REG_D[1] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_D2:	REG_D[2] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_D3:	REG_D[3] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_D4:	REG_D[4] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_D5:	REG_D[5] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_D6:	REG_D[6] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_D7:	REG_D[7] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_A0:	REG_A[0] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_A1:	REG_A[1] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_A2:	REG_A[2] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_A3:	REG_A[3] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_A4:	REG_A[4] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_A5:	REG_A[5] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_A6:	REG_A[6] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_A7:	REG_A[7] = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_PC:	m68ki_jump(MASK_OUT_ABOVE_32(value)); return;
+	case M68K_REG_SR:	m68ki_set_sr(value); return;
+	case M68K_REG_SP:	REG_SP = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_USP:	if (FLAG_S)
+		REG_USP = MASK_OUT_ABOVE_32(value);
+					 else
+		REG_SP = MASK_OUT_ABOVE_32(value);
+		return;
+	case M68K_REG_ISP:	if (FLAG_S && !FLAG_M)
+		REG_SP = MASK_OUT_ABOVE_32(value);
+					 else
+		REG_ISP = MASK_OUT_ABOVE_32(value);
+		return;
+	case M68K_REG_MSP:	if (FLAG_S && FLAG_M)
+		REG_SP = MASK_OUT_ABOVE_32(value);
+					 else
+		REG_MSP = MASK_OUT_ABOVE_32(value);
+		return;
+	case M68K_REG_VBR:	REG_VBR = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_SFC:	REG_SFC = value & 7; return;
+	case M68K_REG_DFC:	REG_DFC = value & 7; return;
+	case M68K_REG_CACR:	REG_CACR = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_CAAR:	REG_CAAR = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_PPC:	REG_PPC = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_IR:	REG_IR = MASK_OUT_ABOVE_16(value); return;
+	case M68K_REG_PREF_ADDR:	CPU_PREF_ADDR = MASK_OUT_ABOVE_32(value); return;
+	case M68K_REG_CPU_TYPE: m68k_set_cpu_type(value); return;
+	default:			return;
 	}
 }
 
@@ -683,104 +683,104 @@ void m68k_set_instr_hook_callback(void  (*callback)(unsigned int pc))
 /* Set the CPU type. */
 void m68k_set_cpu_type(unsigned int cpu_type)
 {
-	switch(cpu_type)
+	switch (cpu_type)
 	{
-		case M68K_CPU_TYPE_68000:
-			CPU_TYPE         = CPU_TYPE_000;
-			CPU_ADDRESS_MASK = 0x00ffffff;
-			CPU_SR_MASK      = 0xa71f; /* T1 -- S  -- -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
-			CYC_INSTRUCTION  = m68ki_cycles[0];
-			CYC_EXCEPTION    = m68ki_exception_cycle_table[0];
-			CYC_BCC_NOTAKE_B = -2;
-			CYC_BCC_NOTAKE_W = 2;
-			CYC_DBCC_F_NOEXP = -2;
-			CYC_DBCC_F_EXP   = 2;
-			CYC_SCC_R_TRUE   = 2;
-			CYC_MOVEM_W      = 2;
-			CYC_MOVEM_L      = 3;
-			CYC_SHIFT        = 1;
-			CYC_RESET        = 132;
-			return;
-		case M68K_CPU_TYPE_68008:
-			CPU_TYPE         = CPU_TYPE_008;
-			CPU_ADDRESS_MASK = 0x003fffff;
-			CPU_SR_MASK      = 0xa71f; /* T1 -- S  -- -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
-			CYC_INSTRUCTION  = m68ki_cycles[0];
-			CYC_EXCEPTION    = m68ki_exception_cycle_table[0];
-			CYC_BCC_NOTAKE_B = -2;
-			CYC_BCC_NOTAKE_W = 2;
-			CYC_DBCC_F_NOEXP = -2;
-			CYC_DBCC_F_EXP   = 2;
-			CYC_SCC_R_TRUE   = 2;
-			CYC_MOVEM_W      = 2;
-			CYC_MOVEM_L      = 3;
-			CYC_SHIFT        = 1;
-			CYC_RESET        = 132;
-			return;
-		case M68K_CPU_TYPE_68010:
-			CPU_TYPE         = CPU_TYPE_010;
-			CPU_ADDRESS_MASK = 0x00ffffff;
-			CPU_SR_MASK      = 0xa71f; /* T1 -- S  -- -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
-			CYC_INSTRUCTION  = m68ki_cycles[1];
-			CYC_EXCEPTION    = m68ki_exception_cycle_table[1];
-			CYC_BCC_NOTAKE_B = -4;
-			CYC_BCC_NOTAKE_W = 0;
-			CYC_DBCC_F_NOEXP = 0;
-			CYC_DBCC_F_EXP   = 6;
-			CYC_SCC_R_TRUE   = 0;
-			CYC_MOVEM_W      = 2;
-			CYC_MOVEM_L      = 3;
-			CYC_SHIFT        = 1;
-			CYC_RESET        = 130;
-			return;
-		case M68K_CPU_TYPE_68EC020:
-			CPU_TYPE         = CPU_TYPE_EC020;
-			CPU_ADDRESS_MASK = 0x00ffffff;
-			CPU_SR_MASK      = 0xf71f; /* T1 T0 S  M  -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
-			CYC_INSTRUCTION  = m68ki_cycles[2];
-			CYC_EXCEPTION    = m68ki_exception_cycle_table[2];
-			CYC_BCC_NOTAKE_B = -2;
-			CYC_BCC_NOTAKE_W = 0;
-			CYC_DBCC_F_NOEXP = 0;
-			CYC_DBCC_F_EXP   = 4;
-			CYC_SCC_R_TRUE   = 0;
-			CYC_MOVEM_W      = 2;
-			CYC_MOVEM_L      = 2;
-			CYC_SHIFT        = 0;
-			CYC_RESET        = 518;
-			return;
-		case M68K_CPU_TYPE_68020:
-			CPU_TYPE         = CPU_TYPE_020;
-			CPU_ADDRESS_MASK = 0xffffffff;
-			CPU_SR_MASK      = 0xf71f; /* T1 T0 S  M  -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
-			CYC_INSTRUCTION  = m68ki_cycles[2];
-			CYC_EXCEPTION    = m68ki_exception_cycle_table[2];
-			CYC_BCC_NOTAKE_B = -2;
-			CYC_BCC_NOTAKE_W = 0;
-			CYC_DBCC_F_NOEXP = 0;
-			CYC_DBCC_F_EXP   = 4;
-			CYC_SCC_R_TRUE   = 0;
-			CYC_MOVEM_W      = 2;
-			CYC_MOVEM_L      = 2;
-			CYC_SHIFT        = 0;
-			CYC_RESET        = 518;
-			return;
-		case M68K_CPU_TYPE_68040:		// TODO: these values are not correct
-			CPU_TYPE         = CPU_TYPE_040;
-			CPU_ADDRESS_MASK = 0xffffffff;
-			CPU_SR_MASK      = 0xf71f; /* T1 T0 S  M  -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
-			CYC_INSTRUCTION  = m68ki_cycles[2];
-			CYC_EXCEPTION    = m68ki_exception_cycle_table[2];
-			CYC_BCC_NOTAKE_B = -2;
-			CYC_BCC_NOTAKE_W = 0;
-			CYC_DBCC_F_NOEXP = 0;
-			CYC_DBCC_F_EXP   = 4;
-			CYC_SCC_R_TRUE   = 0;
-			CYC_MOVEM_W      = 2;
-			CYC_MOVEM_L      = 2;
-			CYC_SHIFT        = 0;
-			CYC_RESET        = 518;
-			return;
+	case M68K_CPU_TYPE_68000:
+		CPU_TYPE = CPU_TYPE_000;
+		CPU_ADDRESS_MASK = 0x00ffffff;
+		CPU_SR_MASK = 0xa71f; /* T1 -- S  -- -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
+		CYC_INSTRUCTION = m68ki_cycles[0];
+		CYC_EXCEPTION = m68ki_exception_cycle_table[0];
+		CYC_BCC_NOTAKE_B = -2;
+		CYC_BCC_NOTAKE_W = 2;
+		CYC_DBCC_F_NOEXP = -2;
+		CYC_DBCC_F_EXP = 2;
+		CYC_SCC_R_TRUE = 2;
+		CYC_MOVEM_W = 2;
+		CYC_MOVEM_L = 3;
+		CYC_SHIFT = 1;
+		CYC_RESET = 132;
+		return;
+	case M68K_CPU_TYPE_68008:
+		CPU_TYPE = CPU_TYPE_008;
+		CPU_ADDRESS_MASK = 0x003fffff;
+		CPU_SR_MASK = 0xa71f; /* T1 -- S  -- -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
+		CYC_INSTRUCTION = m68ki_cycles[0];
+		CYC_EXCEPTION = m68ki_exception_cycle_table[0];
+		CYC_BCC_NOTAKE_B = -2;
+		CYC_BCC_NOTAKE_W = 2;
+		CYC_DBCC_F_NOEXP = -2;
+		CYC_DBCC_F_EXP = 2;
+		CYC_SCC_R_TRUE = 2;
+		CYC_MOVEM_W = 2;
+		CYC_MOVEM_L = 3;
+		CYC_SHIFT = 1;
+		CYC_RESET = 132;
+		return;
+	case M68K_CPU_TYPE_68010:
+		CPU_TYPE = CPU_TYPE_010;
+		CPU_ADDRESS_MASK = 0x00ffffff;
+		CPU_SR_MASK = 0xa71f; /* T1 -- S  -- -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
+		CYC_INSTRUCTION = m68ki_cycles[1];
+		CYC_EXCEPTION = m68ki_exception_cycle_table[1];
+		CYC_BCC_NOTAKE_B = -4;
+		CYC_BCC_NOTAKE_W = 0;
+		CYC_DBCC_F_NOEXP = 0;
+		CYC_DBCC_F_EXP = 6;
+		CYC_SCC_R_TRUE = 0;
+		CYC_MOVEM_W = 2;
+		CYC_MOVEM_L = 3;
+		CYC_SHIFT = 1;
+		CYC_RESET = 130;
+		return;
+	case M68K_CPU_TYPE_68EC020:
+		CPU_TYPE = CPU_TYPE_EC020;
+		CPU_ADDRESS_MASK = 0x00ffffff;
+		CPU_SR_MASK = 0xf71f; /* T1 T0 S  M  -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
+		CYC_INSTRUCTION = m68ki_cycles[2];
+		CYC_EXCEPTION = m68ki_exception_cycle_table[2];
+		CYC_BCC_NOTAKE_B = -2;
+		CYC_BCC_NOTAKE_W = 0;
+		CYC_DBCC_F_NOEXP = 0;
+		CYC_DBCC_F_EXP = 4;
+		CYC_SCC_R_TRUE = 0;
+		CYC_MOVEM_W = 2;
+		CYC_MOVEM_L = 2;
+		CYC_SHIFT = 0;
+		CYC_RESET = 518;
+		return;
+	case M68K_CPU_TYPE_68020:
+		CPU_TYPE = CPU_TYPE_020;
+		CPU_ADDRESS_MASK = 0xffffffff;
+		CPU_SR_MASK = 0xf71f; /* T1 T0 S  M  -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
+		CYC_INSTRUCTION = m68ki_cycles[2];
+		CYC_EXCEPTION = m68ki_exception_cycle_table[2];
+		CYC_BCC_NOTAKE_B = -2;
+		CYC_BCC_NOTAKE_W = 0;
+		CYC_DBCC_F_NOEXP = 0;
+		CYC_DBCC_F_EXP = 4;
+		CYC_SCC_R_TRUE = 0;
+		CYC_MOVEM_W = 2;
+		CYC_MOVEM_L = 2;
+		CYC_SHIFT = 0;
+		CYC_RESET = 518;
+		return;
+	case M68K_CPU_TYPE_68040:		// TODO: these values are not correct
+		CPU_TYPE = CPU_TYPE_040;
+		CPU_ADDRESS_MASK = 0xffffffff;
+		CPU_SR_MASK = 0xf71f; /* T1 T0 S  M  -- I2 I1 I0 -- -- -- X  N  Z  V  C  */
+		CYC_INSTRUCTION = m68ki_cycles[2];
+		CYC_EXCEPTION = m68ki_exception_cycle_table[2];
+		CYC_BCC_NOTAKE_B = -2;
+		CYC_BCC_NOTAKE_W = 0;
+		CYC_DBCC_F_NOEXP = 0;
+		CYC_DBCC_F_EXP = 4;
+		CYC_SCC_R_TRUE = 0;
+		CYC_MOVEM_W = 2;
+		CYC_MOVEM_L = 2;
+		CYC_SHIFT = 0;
+		CYC_RESET = 518;
+		return;
 	}
 }
 
@@ -805,7 +805,7 @@ int m68k_execute(int num_cycles)
 	m68ki_check_interrupts();
 
 	/* Make sure we're not stopped */
-	if(!CPU_STOPPED)
+	if (!CPU_STOPPED)
 	{
 		/* Return point if we had an address error */
 		m68ki_set_address_error_trap(); /* auto-disable (see m68kcpu.h) */
@@ -832,7 +832,7 @@ int m68k_execute(int num_cycles)
 
 			/* Trace m68k_exception, if necessary */
 			m68ki_exception_if_trace(); /* auto-disable (see m68kcpu.h) */
-		} while(GET_CYCLES() > 0);
+		} while (GET_CYCLES() > 0);
 
 		/* set previous PC to current PC for the next entry into the loop */
 		REG_PPC = REG_PC;
@@ -863,7 +863,7 @@ int m68k_executeMD(int num_cycles)
 	m68ki_check_interrupts();
 
 	/* Make sure we're not stopped */
-	if(!CPU_STOPPED)
+	if (!CPU_STOPPED)
 	{
 		/* Return point if we had an address error */
 		m68ki_set_address_error_trap(); /* auto-disable (see m68kcpu.h) */
@@ -951,7 +951,7 @@ void m68k_set_irq(unsigned int int_level)
 
 	/* A transition from < 7 to 7 always interrupts (NMI) */
 	/* Note: Level 7 can also level trigger like a normal IRQ */
-	if(old_level != 0x0700 && CPU_INT_LEVEL == 0x0700)
+	if (old_level != 0x0700 && CPU_INT_LEVEL == 0x0700)
 		m68ki_cpu.nmi_pending = TRUE;
 
 	m68ki_cpu.sleepuntilint = 0;
@@ -962,14 +962,14 @@ void m68k_set_virq(unsigned int level, unsigned int active)
 	uint state = m68ki_cpu.virq_state;
 	uint blevel;
 
-	if(active)
+	if (active)
 		state |= 1 << level;
 	else
 		state &= ~(1 << level);
 	m68ki_cpu.virq_state = state;
 
-	for(blevel = 7; blevel > 0; blevel--)
-		if(state & (1 << blevel))
+	for (blevel = 7; blevel > 0; blevel--)
+		if (state & (1 << blevel))
 			break;
 	m68k_set_irq(blevel);
 }
@@ -984,7 +984,7 @@ void m68k_init(void)
 	static uint emulation_initialized = 0;
 
 	/* The first call to this function initializes the opcode handler jump table */
-	if(!emulation_initialized)
+	if (!emulation_initialized)
 	{
 		memset(&m68ki_cpu, 0, sizeof(m68ki_cpu));
 		memset(&m68ki_cycles, 0, 0x10000 * 4);
@@ -1063,13 +1063,13 @@ unsigned int m68k_context_size_no_pointers()
 
 unsigned int m68k_get_context(void* dst)
 {
-	if(dst) *(m68ki_cpu_core*)dst = m68ki_cpu;
+	if (dst) *(m68ki_cpu_core*)dst = m68ki_cpu;
 	return sizeof(m68ki_cpu_core);
 }
 
 void m68k_set_context(void* src)
 {
-	if(src) m68ki_cpu = *(m68ki_cpu_core*)src;
+	if (src) m68ki_cpu = *(m68ki_cpu_core*)src;
 }
 
 
@@ -1088,22 +1088,22 @@ static struct {
 	UINT8 halted;
 } m68k_substate;
 
-static void m68k_prepare_substate(running_machine *machine, void *param)
+static void m68k_prepare_substate(running_machine* machine, void* param)
 {
 	m68k_substate.sr = m68ki_get_sr();
 	m68k_substate.stopped = (CPU_STOPPED & STOP_LEVEL_STOP) != 0;
-	m68k_substate.halted  = (CPU_STOPPED & STOP_LEVEL_HALT) != 0;
+	m68k_substate.halted = (CPU_STOPPED & STOP_LEVEL_HALT) != 0;
 }
 
-static void m68k_post_load(running_machine *machine, void *param)
+static void m68k_post_load(running_machine* machine, void* param)
 {
 	m68ki_set_sr_noint_nosp(m68k_substate.sr);
 	CPU_STOPPED = m68k_substate.stopped ? STOP_LEVEL_STOP : 0
-		        | m68k_substate.halted  ? STOP_LEVEL_HALT : 0;
+		| m68k_substate.halted ? STOP_LEVEL_HALT : 0;
 	m68ki_jump(REG_PC);
 }
 
-void m68k_state_register(const char *type, int index)
+void m68k_state_register(const char* type, int index)
 {
 	/* Note, D covers A because the dar array is common, REG_A=REG_D+8 */
 	state_save_register_item_array(type, index, REG_D);

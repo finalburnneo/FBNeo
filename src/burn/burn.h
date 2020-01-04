@@ -18,9 +18,9 @@
  #define MAX_PATH 	260
 #endif
 
-#include <time.h>
+#include <ctime>
 
-extern TCHAR szAppHiscorePath[MAX_PATH];
+ extern TCHAR szAppHiscorePath[MAX_PATH];
 extern TCHAR szAppSamplesPath[MAX_PATH];
 extern TCHAR szAppHDDPath[MAX_PATH];
 extern TCHAR szAppBlendPath[MAX_PATH];

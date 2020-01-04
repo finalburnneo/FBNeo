@@ -26,12 +26,6 @@ bool bBurnUseMMX;
 bool bBurnUseASMCPUEmulation = false;
 #endif
 
-// Just so we can start using FBN_DEBUG and keep backwards compatablity should whatever is left of FB Neo rise from it's grave. 
-#if defined (FBN_DEBUG) && (!defined FBA_DEBUG)
-#define FBA_DEBUG 1
-#endif
-
-
 #ifdef FBN_DEBUG
  clock_t starttime = 0;
 #endif

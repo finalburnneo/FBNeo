@@ -1,4 +1,5 @@
 #include "burner.h"
+#include "sdl2_gui_common.h"
 
 #if SDL_BYTEORDER != SDL_BIG_ENDIAN
 const UINT32 amask = 0xff000000;
@@ -84,13 +85,10 @@ static UINT16 current_item_count = MAINMENU_COUNT;
 void ingame_gui_init()
 {
   AudSoundStop();
-  inrenderer(sdlRenderer);
-	prepare_inline_font();
 }
 
 void ingame_gui_exit()
 {
-  kill_inline_font();
   AudSoundPlay();
   SDL_FreeSurface(screenshot);
   SDL_DestroyTexture(screenshotTexture);
@@ -101,10 +99,9 @@ void ingame_gui_render()
   SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(sdlRenderer);
   SDL_RenderCopy(sdlRenderer, screenshotTexture, &title_texture_rect, &dest_title_texture_rect);
-  incolor(0xfe8a71, /* unused */ 0);
+  incolor(fbn_color, /* unused */ 0);
   inprint(sdlRenderer, "FinalBurn Neo", 55, 10);
   inprint(sdlRenderer, "=============", 55, 20);
-
 
   switch (current_menu)
   {
@@ -115,7 +112,15 @@ void ingame_gui_render()
   }
 
   for(int i=0; i < current_item_count; i ++)
-  {
+	{
+		if (i ==current_selected_item)
+		{
+			calcSelectedItemColor();
+		}
+		else
+		{
+			incolor(normal_color, /* unused */ 0);
+		}
     inprint(sdlRenderer,current_menu_items[i].name , 55, 30+(10*i));
   }
 

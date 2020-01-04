@@ -1,6 +1,6 @@
-#include "burner.h"
-
 #include <SDL_image.h>
+#include "burner.h"
+#include "sdl2_gui_common.h"
 
 extern char videofiltering[3];
 
@@ -34,24 +34,10 @@ static float star_zv[NUMSTARS];
 static int centerx = 0;
 static int centery = 0;
 
-#define fbn_color           0xfe8a71
-#define select_color        0xffffff
-#define normal_color        0x1eaab7
-#define normal_color_parent 0xaebac7
-#define unavailable_color   0xFF0000
-#define info_color          0x3a3e3d
-
-static int color_result = 0;
-static double color_x = 0.01;
-static double color_y = 0.01;
-static double color_z = 0.01;
-
 static SDL_Rect title_texture_rect;
 static SDL_Rect dest_title_texture_rect;
 
-
 static char* gameAv = NULL;
-
 
 SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 {
@@ -80,19 +66,6 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 	dest_title_texture_rect.h = h; //the height of the texture
 	nBurnDrvActive = currentSelected;
 	return loadedTexture;
-}
-
-
-float random_gen()
-{
-	return rand() / (float)RAND_MAX;
-}
-
-float randomRange(float low, float high)
-{
-	float range = high - low;
-
-	return (float)(random_gen() * range) + low;
 }
 
 void star_init(int screencenterx, int screencentery)
@@ -422,22 +395,6 @@ void gui_init()
 	startGame = nBurnDrvActive - gamesperscreen_halfway;
 
 	RefreshRomList(false);
-}
-
-
-inline void calcSelectedItemColor()
-{
-	color_x += randomRange(0.01, 0.02);
-	color_y += randomRange(0.01, 0.07);
-	color_z += randomRange(0.01, 0.09);
-
-	SDL_Color pal[1];
-	pal[0].r = 190 + 64 * sin(color_x + (color_result * 0.004754));
-	pal[0].g = 190 + 64 * sin(color_y + (color_result * 0.006754));
-	pal[0].b = 190 + 64 * sin(color_z + (color_result * 0.005754));
-	color_result+5;
-
-	incolor1(pal);
 }
 
 void gui_render()

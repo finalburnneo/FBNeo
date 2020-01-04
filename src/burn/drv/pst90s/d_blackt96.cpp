@@ -1,3 +1,6 @@
+// FB Alpha Black Touch '96 driver module
+// Based on MAME driver by David Haywood
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "pic16c5x_intf.h"

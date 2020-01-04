@@ -1,3 +1,6 @@
+// FB Alpha Deco32 driver module
+// Based on MAME driver by Bryan McPhail
+
 #include "tiles_generic.h"
 #include "arm_intf.h"
 #include "h6280_intf.h"

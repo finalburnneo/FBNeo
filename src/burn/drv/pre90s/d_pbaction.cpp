@@ -1,3 +1,8 @@
+// FB Alpha Pinball Action driver module
+// Based on MAME driver by Nicola Salmoria
+
+// move sega decrypt stuff to a file
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

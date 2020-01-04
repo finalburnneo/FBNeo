@@ -1,3 +1,6 @@
+// FB Alpha China Gate driver module
+// Based on MAME driver by Paul Hampson
+
 #include "tiles_generic.h"
 #include "hd6309_intf.h"
 #include "z80_intf.h"

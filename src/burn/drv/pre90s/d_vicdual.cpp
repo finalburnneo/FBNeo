@@ -1,3 +1,15 @@
+// FB Alpha Sega Vic Dual driver module
+// Based on MAME driver by Zsolt Vasvari
+
+/*
+    finished:
+		carnival (w/sound)
+
+	to do:
+	  	bugtest
+		sound?
+*/
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "samples.h"

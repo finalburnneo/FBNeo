@@ -1,3 +1,5 @@
+// FB Alpha Bitmap Management System
+
 #include "tiles_generic.h"
 
 #define MAX_BITMAPS			32			// maximum number of 

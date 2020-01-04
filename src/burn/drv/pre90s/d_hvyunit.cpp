@@ -1,3 +1,6 @@
+// FB Alpha Heavy Unit driver module
+// Based on MAME drivery Angelo Salese, Tomasz Slanina, and David Haywood
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "mermaid.h"

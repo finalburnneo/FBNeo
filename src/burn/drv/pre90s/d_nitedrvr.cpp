@@ -1,3 +1,9 @@
+// FB Alpha Atari Nite Driver Module
+// Based on MAME driver by Mike Balfour
+
+// to do:
+//	hook up samples?
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "watchdog.h"

@@ -1,3 +1,24 @@
+// FB Alpha Williams Games driver module
+// Based on MAME driver by Aaron Giles
+
+// Works:
+//  Defender
+//  Stargate
+//  Joust
+//  Robotron 2084
+//  Bubbles
+//  Colony 7
+//  Mayday
+//  Jin
+//  Splat
+//  Alien Area - no sound (there is none)
+//  Sinistar
+//  Blaster
+//  Speed Ball
+
+// todo / tofix:
+//  Lottofun - memory protect sw. error
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"

@@ -1,3 +1,6 @@
+// FB Alpha Pirates driver
+// Based on MAME driver by David Haywood and Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "bitswap.h"

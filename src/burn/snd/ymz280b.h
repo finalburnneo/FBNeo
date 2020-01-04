@@ -1,3 +1,5 @@
+// Yamaha YMZ280B module
+
 INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32));
 INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32), INT32 rom_len);
 void YMZ280BSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);

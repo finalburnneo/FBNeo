@@ -1,3 +1,37 @@
+// license:BSD-3-Clause
+// copyright-holders:Couriersud
+/*****************************************************************************
+
+    resnet.h
+
+    Compute weights for resistors networks.
+
+*****************************************************************************/
+
+/**********************************************************************
+ *      Rbias
+ * Vbias >-ZZZ-.    .-----------------------------------------> Out0
+ *             |    |                           Vcc
+ *          R0 |    |                            |
+ *   In0 >-ZZZ-+----+               Vcc          Z
+ *             |    |                |           Z
+ *          R1 |    |               /            Z
+ *   In1 >-ZZZ-+    +----+----ZZZ--|   NPN       +------------> Out1
+ *             :         |          >           <
+ *             :         |           +----+----|  PNP
+ *          R8 |         |           Z    |     \
+ *   In8 >-ZZZ-+         |           Z    |      |
+ *             |         |           Z    |     Gnd
+ *             Z         |           |    '-------------------> Out2
+ *             Z Rgnd    |          Gnd
+ *             Z         |   |-----------------------|
+ *             |         `---| max(vmin,min(sig-vcut)|--------> Out3
+ *            Gnd            |-----------------------|
+ *
+ *********************************************************************/
+
+/* Amplifier stage per channel but may be specified globally as default */
+
 #define RES_NET_AMP_USE_GLOBAL      0x0000
 #define RES_NET_AMP_NONE            0x0001      //Out0
 #define RES_NET_AMP_DARLINGTON      0x0002      //Out1

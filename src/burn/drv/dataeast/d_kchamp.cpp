@@ -1,3 +1,6 @@
+// FB Alpha Karate Champ driver module
+// Based on MAME driver by Ernesto Corvi
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

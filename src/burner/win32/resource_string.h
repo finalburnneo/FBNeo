@@ -1,3 +1,4 @@
+// This in increments of 2, otherwise creating a localisation template is broken with GCC
 #define IDS_ERROR						(IDS_STRING + 1600)
 
 #define IDS_FIRSTRUN1					(IDS_STRING +    0)

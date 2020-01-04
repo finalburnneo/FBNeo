@@ -1,3 +1,9 @@
+// FB Alpha Lethal Enforcers driver module
+// Based on MAME driver by R. Belmont and Nicola Salmoria
+// Notes:
+//   japan version needs sprites fixed (x flipped not y flipped)
+//
+
 #include "tiles_generic.h"
 #include "hd6309_intf.h"
 #include "z80_intf.h"

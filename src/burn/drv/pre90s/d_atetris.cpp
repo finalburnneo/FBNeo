@@ -1,3 +1,9 @@
+// FB Alpha driver module Atari Tetris driver module
+// Based on MAME driver by Zsolt Vasvari
+
+// To do:
+//	verify bootleg set 2 sound
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "slapstic.h"

@@ -1,3 +1,6 @@
+// FB Alpha 1942 driver module
+// Based on MAME driver by Mark McDougall
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_m68705.h"

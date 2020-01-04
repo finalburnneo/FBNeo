@@ -1,3 +1,15 @@
+/*
+
+	Capcom DL-1425 QSound emulator
+	==============================
+
+	by superctr (Ian Karlsson)
+	with thanks to Valley Bell
+
+	2018-05-12 - 2018-05-15
+
+*/
+
 #include <math.h>
 #include <stddef.h>
 #include <string.h>	// for memset

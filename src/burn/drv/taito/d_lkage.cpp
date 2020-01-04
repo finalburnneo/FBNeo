@@ -1,3 +1,6 @@
+// FB Alpha Legend of Kage driver Module
+// Based on MAME driver by Phil Stroffolino
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_m68705.h"

@@ -1,3 +1,12 @@
+// FB Alpha MSX arcade driver module, by dink. memory mapping code (megarom) from fMSX
+//
+// TODO:
+// 1: Clean-up!
+//
+// Oddities:
+//  VoidRunner and Milk Race freeze when selecting between kbd/joy. (VoidRunner has a kludge, but it doesn't work for Milk Race)
+//  Krakout any key starts, can't get into settings
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "driver.h"

@@ -1,3 +1,6 @@
+/* 7zFile.c -- File IO
+2009-11-24 : Igor Pavlov : Public domain */
+
 #include "Precomp.h"
 
 #include "7zFile.h"

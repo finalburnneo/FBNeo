@@ -1,3 +1,11 @@
+/***************************************************************
+ Power Instinct
+ (C) 1993 Atlus
+ driver by Luca Elia (l.elia@tin.it)
+ ***************************************************************
+ port to Finalburn Alpha by OopsWare. 2007
+ ***************************************************************/
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

@@ -1,3 +1,6 @@
+// FB Alpha Black Tiger driver module
+// Based on MAME driver by Paul Leaman
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "mcs51.h"

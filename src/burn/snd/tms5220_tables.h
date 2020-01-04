@@ -1,3 +1,41 @@
+/* TMS51xx and TMS52xx ROM Tables */
+
+/* The following table is assumed to be for TMS5100
+ *
+ * US Patent 4209836
+ *           4331836
+ *           4304964
+ *           4234761
+ *           4189779
+ *           4449233
+ *
+ * All patents give interpolation coefficients
+ *  { 1, 8, 8, 8, 4, 4, 2, 2 }
+ *  This sequence will not calculate the published
+ *  fractions:
+ * 1 8 0.125
+ * 2 8 0.234
+ * 3 8 0.330
+ * 4 4 0.498
+ * 5 4 0.623
+ * 6 2 0.717
+ * 7 2 0.859
+ * 0 1 1.000
+ * (remember, 1 is the FIRST entry!)
+ *
+ * Instead,  { 1, 8, 8, 8, 4, 4, 4, 2 }
+ * will calculate those coefficients.
+ * Howeever, after simulating the actual circuit from the patent in pspice,
+ * the { 1, 8, 8, 8, 4, 4, 2, 2 } pattern is revealed as the correct one.
+ * Since the real chip uses shifters and not true division to achieve those
+ * factors, they have been replaced by the shifting coefficients:
+ * { 0, 3, 3, 3, 2, 2, 1, 1 }
+ */
+
+	/* quick note on derivative analysis:
+	Judging by all the TI chips I (Lord Nightmare) have done this test on, the first derivative between successive values of the LPC tables should follow a roughly triangular or sine shaped curve, the second derivative should start at a value, increase slightly, then decrease smoothly and become negative right around where the LPC curve passes 0, finally increase slightly right near the end. If it doesn't do this, there is probably a wrong value in there somewhere. The pitch and energy tables follow similar patterns but aren't the same since they never cross 0. The chirp table doesn't follow this pattern at all.
+	*/
+/* chip type defines */
 #define SUBTYPE_TMS5100         1
 #define SUBTYPE_M58817          2
 #define SUBTYPE_TMS5110         4

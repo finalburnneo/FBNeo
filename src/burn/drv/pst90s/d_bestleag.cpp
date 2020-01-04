@@ -1,3 +1,6 @@
+// FB Alpha Best League (Big Striker bootleg) driver module
+// Based on MAME driver by David Haywood & Angelo Salese
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "msm6295.h"

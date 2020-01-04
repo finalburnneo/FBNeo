@@ -1,3 +1,6 @@
+// FB Alpha NMK Argus driver module
+// Based on MAME driver by Yochizo
+
 #include "tiles_generic.h"
 #include "burn_bitmap.h"
 #include "z80_intf.h"

@@ -1,3 +1,17 @@
+/* from Andrew Scott (ascott@utkux.utcc.utk.edu) */
+
+/*
+  updated by BUT
+  - corrected music tempo (not confirmed Satan of Saturn and clone)
+  - adjusted music freq (except Satan of Saturn and clone)
+  - adjusted music waveform
+  - support playing flag for music channel 0
+  - support HD38880 speech by samples
+
+  FBAlpha port by dink jan. 8, 2018
+*/
+
+
 #include "burnint.h"
 #include "rescap.h"
 #include "samples.h"

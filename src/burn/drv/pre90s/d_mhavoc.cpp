@@ -1,3 +1,6 @@
+// FB Alpha Major Havoc driver module
+// Based on MAME driver by Mike Appolo
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "vector.h"

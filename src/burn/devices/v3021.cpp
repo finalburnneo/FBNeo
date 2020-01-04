@@ -1,3 +1,6 @@
+/* v3021 Calendar Emulation */
+/* Based on MAME sources by Angelo Salese */
+
 #include "burnint.h"
 
 static UINT8 CalVal, CalMask, CalCom=0, CalCnt=0;

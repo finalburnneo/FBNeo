@@ -1,3 +1,10 @@
+// FB Alpha World Rally driver module
+// Based on MAME driver by Manuel Abadia, Mike Coates, Nicola Salmoria, and Miguel Angel Horna
+
+// to do
+//	hook up analog inputs (or not, since it has joystick settings)
+//		note these are disabled in the dips completely!
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "mcs51.h"

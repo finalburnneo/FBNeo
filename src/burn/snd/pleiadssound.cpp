@@ -1,3 +1,11 @@
+/****************************************************************************
+ *
+ * Sound hardware for Pleiades, Naughty Boy and Pop Flamer.
+ *
+ * If you find errors or have suggestions, please mail me.
+ * Juergen Buchmueller <pullmoll@t-online.de>
+ *
+ ****************************************************************************/
 #include "burnint.h"
 #include "tms36xx.h"
 

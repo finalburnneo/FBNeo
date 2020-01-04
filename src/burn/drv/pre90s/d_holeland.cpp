@@ -1,3 +1,6 @@
+// FB Alpha Hole Land driver module
+// Based on MAME driver by Mathis Rosenhauer
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

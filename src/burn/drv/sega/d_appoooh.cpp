@@ -1,3 +1,6 @@
+// FB Alpha Appoooh driver module by vbt
+// Based on MAME driver by Tatsuyuki Satoh
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"

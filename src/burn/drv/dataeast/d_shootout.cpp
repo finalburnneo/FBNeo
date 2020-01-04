@@ -1,3 +1,6 @@
+// FB Alpha Shoot Out driver module
+// Based on MAME driver by Ernesto Corvi, Phil Stroffolino, Bryan McPhail
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "burn_ym2203.h"

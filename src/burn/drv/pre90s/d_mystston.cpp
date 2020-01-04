@@ -1,3 +1,6 @@
+// FB Alpha Mysterious Stones Driver Module
+// Based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "resnet.h"

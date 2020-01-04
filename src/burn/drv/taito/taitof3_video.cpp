@@ -1,3 +1,5 @@
+// see tait_f3.cpp for credits
+
 #include "tiles_generic.h"
 #include "taitof3_video.h"
 #include "taito.h"

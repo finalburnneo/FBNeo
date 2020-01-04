@@ -1,3 +1,6 @@
+// FB Alpha Legionnaire driver module
+// Based on MAME driver by David Graves, Angelo Salese, David Haywood, Tomasz Slanina
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

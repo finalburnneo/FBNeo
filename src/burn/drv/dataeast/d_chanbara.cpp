@@ -1,3 +1,9 @@
+// FB Alpha Chanbara driver module
+// Based on MAME driver by Tomasz Slanina and David Haywood
+// Todo:
+// 1) Figure out the sprite banking issue (strange blob of broken
+//    sprites appears sporatically - usually when the floor pattern changes.
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "burn_ym2203.h"

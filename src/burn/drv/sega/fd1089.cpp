@@ -1,3 +1,5 @@
+// based on MAME sources for FD1089 by Nicola Salmoria, Andreas Naive, and Charles MacDonald
+
 #include "sys16.h"
 #include "bitswap.h"
 

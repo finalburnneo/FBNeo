@@ -1,3 +1,6 @@
+// FB Alpha Hexion driver module
+// Based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "k051649.h"

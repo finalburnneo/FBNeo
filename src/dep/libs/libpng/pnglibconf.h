@@ -1,3 +1,18 @@
+/* libpng 1.6.35 STANDARD API DEFINITION */
+
+/* pnglibconf.h - library build configuration */
+
+/* Libpng version 1.6.35 - July 15, 2018 */
+
+/* Copyright (c) 1998-2018 Glenn Randers-Pehrson */
+
+/* This code is released under the libpng license. */
+/* For conditions of distribution and use, see the disclaimer */
+/* and license in png.h */
+
+/* pnglibconf.h */
+/* Machine generated file: DO NOT EDIT */
+/* Derived from: scripts/pnglibconf.dfa */
 #ifndef PNGLCONF_H
 #define PNGLCONF_H
 /* options */

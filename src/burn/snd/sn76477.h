@@ -1,3 +1,30 @@
+/*****************************************************************************
+  SN76477 pins and assigned interface variables/functions
+
+							SN76477_envelope_w()
+						   /					\
+					[ 1] ENV SEL 1			ENV SEL 2 [28]
+					[ 2] GND				  MIXER C [27] \
+  SN76477_noise_w() [ 3] NOISE EXT OSC		  MIXER A [26]	> SN76477_mixer_w()
+		  noise_res [ 4] RES NOISE OSC		  MIXER B [25] /
+		 filter_res [ 5] NOISE FILTER RES	  O/S RES [24] oneshot_res
+		 filter_cap [ 6] NOISE FILTER CAP	  O/S CAP [23] oneshot_cap
+		  decay_res [ 7] DECAY RES			  VCO SEL [22] SN76477_vco_w()
+   attack_decay_cap [ 8] A/D CAP			  SLF CAP [21] slf_cap
+ SN76477_enable_w() [ 9] ENABLE 			  SLF RES [20] slf_res
+		 attack_res [10] ATTACK RES 			PITCH [19] pitch_voltage
+	  amplitude_res [11] AMP				  VCO RES [18] vco_res
+	   feedback_res [12] FEEDBACK			  VCO CAP [17] vco_cap
+					[13] OUTPUT 		 VCO EXT CONT [16] vco_voltage
+					[14] Vcc			  +5V REG OUT [15]
+
+	All resistor values in Ohms.
+	All capacitor values in Farads.
+	Use RES_K, RES_M and CAP_U, CAP_N, CAP_P macros to convert
+	magnitudes, eg. 220k = RES_K(220), 47nF = CAP_N(47)
+
+ *****************************************************************************/
+
 #define MAX_SN76477 4
 
 #include "rescap.h"

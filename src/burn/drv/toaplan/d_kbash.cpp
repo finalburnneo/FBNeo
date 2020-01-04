@@ -1,3 +1,6 @@
+// FB Alpha Knuckle Bash driver module
+// Driver and emulation by Jan Klaassen
+
 #include "toaplan.h"
 #include "nec_intf.h"
 // Knuckle Bash

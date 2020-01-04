@@ -1,3 +1,4 @@
+// Create a unique name for each of the functions
 #define FN(a,b,c,d,e,f,g) RenderSprite ## a ## _ ## b ## _ROT ## c ## d ## e ## _NOCLIP ## f ## g
 #define FUNCTIONNAME(a,b,c,d,e,f,g) FN(a,b,c,d,e,f,g)
 

@@ -1,3 +1,6 @@
+// FB Alpha Syusse Oozumou driver module
+// Based on MAME driver by Takahiro Nogi (nogi@kt.rim.or.jp)
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6502_intf.h"

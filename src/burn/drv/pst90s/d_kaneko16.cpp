@@ -1,3 +1,6 @@
+// FB Alpha Kaneko 16-bit driver module
+// Based on MAME driver by Luca Elia
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

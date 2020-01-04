@@ -1,3 +1,5 @@
+// MSM6295 module header
+
 #define MAX_MSM6295 (4)
 #define MSM6295_PIN7_HIGH (132)
 #define MSM6295_PIN7_LOW (165)

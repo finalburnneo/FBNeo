@@ -1,3 +1,5 @@
+// Based on MAME sources by Luca Elia,David Haywood
+
 #include "tiles_generic.h"
 #include "st0020.h"
 

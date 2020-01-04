@@ -1,3 +1,6 @@
+// FB Alpha Son Son driver module
+// Based on MAME driver by Mirko Buffoni
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "ay8910.h"

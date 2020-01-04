@@ -1,3 +1,8 @@
+// FB Alpha Puckman module
+// Based on MAME driver by Nicola Salmoria and many others
+
+// Fix Shoot the Bull inputs
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "bitswap.h"

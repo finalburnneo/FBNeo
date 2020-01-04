@@ -1,3 +1,5 @@
+// Based on MAME source by Juergen Buchmueller
+
 #include "burnint.h"
 #include "tms36xx.h"
 

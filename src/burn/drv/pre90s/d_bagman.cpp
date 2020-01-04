@@ -1,3 +1,6 @@
+// FB Alpha Bagman driver module
+// based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "resnet.h"
 #include "z80_intf.h"

@@ -1,3 +1,6 @@
+/* XzDec.c -- Xz Decode
+2015-11-09 : Igor Pavlov : Public domain */
+
 #include "Precomp.h"
 
 /* #define XZ_DUMP */

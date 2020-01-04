@@ -1,3 +1,8 @@
+// Based on MAME sources by Olivier Galibert,Aaron Giles
+/*********************************************************/
+/*    ricoh RF5C68(or clone) PCM controller              */
+/*********************************************************/
+
 #include "burnint.h"
 #include "rf5c68.h"
 

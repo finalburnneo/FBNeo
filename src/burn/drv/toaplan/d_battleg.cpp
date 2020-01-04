@@ -1,3 +1,6 @@
+// FB Alpha Battle Garegga driver module
+// Driver and emulation by Jan Klaassen
+
 #include "toaplan.h"
 #include "nmk112.h"
 // Battle Garegga

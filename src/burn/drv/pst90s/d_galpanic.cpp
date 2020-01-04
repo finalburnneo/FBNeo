@@ -1,3 +1,9 @@
+/*
+ * Gals Panic (set 1) driver for FB Alpha 0.2.96.71
+ * Based on MAME driver by Nicola Salmoria
+ * Port by OopsWare. 2007
+ */
+
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "driver.h"

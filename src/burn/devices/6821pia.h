@@ -1,3 +1,11 @@
+/**********************************************************************
+
+    Motorola 6821 PIA interface and emulation
+
+    This function emulates all the functionality of up to 4 M6821
+    peripheral interface adapters.
+
+**********************************************************************/
 #define MAX_PIA 8
 
 

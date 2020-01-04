@@ -1,3 +1,6 @@
+// FB Alpha Pac-Man-based S2650 game hardware driver module
+// Based on MAME driver by Nicola Salmoria and many others
+
 #include "tiles_generic.h"
 #include "s2650_intf.h"
 #include "sn76496.h"

@@ -1,3 +1,7 @@
+/*** m6809: Portable 6809 emulator ******************************************/
+
+//#pragma once
+
 #ifndef __M6809_H__
 #define __M6809_H__
 

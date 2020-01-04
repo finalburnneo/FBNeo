@@ -1,3 +1,7 @@
+// Popeye & SkySkipper emu-layer for FB Alpha by dink, based on Marc Lafontaine's MAME driver.
+// Note:
+//   sprite clipping in popeye on the thru-way is normal (see pcb vid)
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "bitswap.h"

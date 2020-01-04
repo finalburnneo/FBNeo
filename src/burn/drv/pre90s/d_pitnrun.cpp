@@ -1,3 +1,9 @@
+// FBAlpha Pit 'n Run driver, based on MAME driver by Tomasz Slanina, Pierpaolo Prazzoli
+
+// Jump Kun fully working.
+//
+// pitnrun todo: hook up "heed" clipping, hook up spotlight drawing
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_m68705.h"

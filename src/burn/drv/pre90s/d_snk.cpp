@@ -1,3 +1,11 @@
+// FB Alpha SNK triple Z80 driver module
+// Based on MAME driver by Marco Cassili, Ernesto Corvi, Tim Lindquist, Carlos A. Lozano, Bryan McPhail, Jarek Parchanski, Nicola Salmoria, Tomasz Slanina, Phil Stroffolino, Acho A. Tang, Victor Trucco
+
+//
+// Todo:
+//  x tdfever, fsoccer - hook up inputs & trackball(?)
+//  x tnk3's second player can't use the new rotate-button feature, probably needs flipscreen & coctail mode to work.
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym3526.h"

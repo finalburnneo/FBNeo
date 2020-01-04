@@ -1,3 +1,35 @@
+/*
+ * Aero Fighters driver for FB Alpha 0.2.96.71
+ * based on MAME driver by Nicola Salmoria
+ * Port by OopsWare. 2007
+ * http://oopsware.googlepages.com
+ * http://oopsware.ys168.com
+ *
+ *
+ * 12.08.2014, 8.13.2016 - revisited.
+ *   Add sprite priority bitmap for Turbo Force - see notes in turbofrcDraw();
+ *
+ * 6.04.2014
+ *   Overhaul graphics routines, now supports multiple color depths and sprite zooming
+ *   Clean and merge routines
+ *
+ * 6.13.2007
+ *   Add driver Spinal Breakers (spinlbrk)
+ *
+ * 6.12.2007
+ *   Add driver Karate Blazers (karatblz)
+ *
+ * 6.11.2007
+ *   Add driver Turbo Force (turbofrc)
+ *
+ * 6.10.2007
+ *   Add BurnHighCol support, and add BDF_16BIT_ONLY into driver.   thanks to KEV
+ *
+ *
+ *  Priorities and row scroll are not implemented (except turbofrc, where needed)
+ *
+ */
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

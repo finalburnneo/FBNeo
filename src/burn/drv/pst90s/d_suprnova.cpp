@@ -1,3 +1,9 @@
+// FB Alpha Super Kaneko Nova System driver module by iq_132, fixups by dink
+// Based on MAME driver by Sylvain Glaize and David Haywood
+//
+// notes: vblokbr/sarukani prefers 60hz w/the speedhack, or it gets stuck in testmode.
+//
+
 #include "tiles_generic.h"
 #include "ymz280b.h"
 #include "sknsspr.h"

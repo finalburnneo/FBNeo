@@ -1,3 +1,5 @@
+// Sega Mastersystem driver for FBN, interface for SMS Plus by Charles MacDonald
+
 #include "smsshared.h"
 #include "z80_intf.h"
 #include "sn76496.h"
@@ -12392,7 +12394,7 @@ struct BurnDriver BurnDrvgg_alexkidd = {
 };
 
 
-// Alienï¿½ (Euro, USA)
+// Alien³ (Euro, USA)
 
 static struct BurnRomInfo gg_alien3RomDesc[] = {
 	{ "alien 3 (usa, europe).bin",	0x40000, 0x11a68c08, BRF_PRG | BRF_ESS },
@@ -12412,7 +12414,7 @@ struct BurnDriver BurnDrvgg_alien3 = {
 };
 
 
-// Alienï¿½ (Jpn)
+// Alien³ (Jpn)
 
 static struct BurnRomInfo gg_alien3jRomDesc[] = {
 	{ "alien 3 (jp).bin",	0x40000, 0x06f6eebb, BRF_PRG | BRF_ESS },

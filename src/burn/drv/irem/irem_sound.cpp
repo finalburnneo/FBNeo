@@ -1,3 +1,6 @@
+// FB Alpha Irem Sound system device
+// Based on MAME sources by Couriersud and FBA port by Barry Harris (Treble Winner)
+
 #include "burnint.h"
 #include "z80_intf.h"
 #include "m6800_intf.h"

@@ -1,3 +1,18 @@
+// Fb Alpha Donkey Kong driver module
+// Based on MAME driver by Couriersud
+
+// still need:
+
+// sbdk
+// 8ballact
+// 8ballact2
+// shootgal
+// splforc
+// splfrcii
+// strtheat
+
+
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "s2650_intf.h"

@@ -1,3 +1,6 @@
+// FB Alpha Jackal driver module
+// Based on MAME driver by Kenneth Lin
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "burn_ym2151.h"

@@ -1,3 +1,6 @@
+// FB Alpha Pipe Dream & Hatris driver module
+// Based on MAME driver by Bryan McPhail and Aaron Giles
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2610.h"

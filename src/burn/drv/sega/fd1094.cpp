@@ -1,3 +1,185 @@
+/*****************************************************************************
+
+FD1094 encryption
+
+
+The FD1094 is a custom CPU based on the 68000, which runs encrypted code.
+The decryption key is stored in 8KB of battery-backed RAM; when the battery
+dies, the CPU can no longer decrypt the program code and the game stops
+working (though the CPU itself still works - it just uses a wrong decryption
+key).
+
+Being a 68000, the encryption works on 16-bit words. Only words fetched from
+program space are decrypted; words fetched from data space are not affected.
+
+The decryption can logically be split in two parts. The first part consists
+of a series of conditional XORs and bitswaps, controlled by the decryption
+key, which will be described in the next paragraph. The second part does a
+couple more XORs which don't depend on the key, followed by the replacement
+of several values with FFFF. This last step is done to prevent usage of any
+PC-relative opcode, which would easily allow an intruder to dump decrypted
+values from program space. The FFFF replacement may affect either ~300 values
+or ~5000, depending on the decryption key.
+
+The main part of the decryption can itself be subdivided in four consecutive
+steps. The first one is executed only if bit 15 of the encrypted value is 1;
+the second one only if bit 14 of the _current_ value is 1; the third one only
+if bit 13 of the current value is 1; the fourth one is always executed. The
+first three steps consist of a few conditional XORs and a final conditional
+bitswap; the fourth one consists of a fixed XOR and a few conditional
+bitswaps. There is, however, a special case: if bits 15, 14 and 13 of the
+encrypted value are all 0, none of the above steps are executed, replaced by
+a single fixed bitswap.
+
+In the end, the decryption of a value at a given address is controlled by 32
+boolean variables; 8 of them change at every address (repeating after 0x2000
+words), and constitute the main key which is stored in the battery-backed
+RAM; the other 24 don't change with the address, and depend solely on bytes
+1, 2, and 3 of the battery-backed RAM, modified by the "state" which the CPU
+is in.
+
+The CPU can be in one of 256 possible states. The 8 bits of the state modify
+the 24 bits of the global key in a fixed way, which isn't affected by the
+battery-backed RAM.
+On reset, the CPU goes in state 0x00. The state can then be modified by the
+program, executing the instruction
+CMPI.L  #$00xxFFFF, D0
+where xx is the state.
+When an interrupt happens, the CPU enters "irq mode", forcing a specific
+state, which is stored in byte 0 of the battery-backed RAM. Irq mode can also
+be selected by the program with the instruction
+CMPI.L  #$0200FFFF, D0
+When RTE is executed, the CPU leaves irq mode, restoring the previous state.
+This can also be done by the program with the instruction
+CMPI.L  #$0300FFFF, D0
+
+Since bytes 0-3 of the battery-backed RAM are used to store the irq state and
+the global key, they have a double use: this one, and the normal 8-bit key
+that changes at every address. To prevent that double use, the CPU fetches
+the 8-bit key from a different place when decrypting words 0-3, but this only
+happens after wrapping around at least once; when decrypting the first four
+words of memory, which correspond the the initial SP and initial PC vectors,
+the 8-bit key is taken from bytes 0-3 of RAM. Instead, when fetching the
+vectors, the global key is handled differently, to prevent double use of
+those bytes. But this special handling of the global key doesn't apply to
+normal operations: reading words 1-3 from program space results in bytes 1-3
+of RAM being used both for the 8-bit key and for the 24-bit global key.
+
+
+
+There is still uncertainty about the assignment of two global key bits.
+
+key[1]
+------
+key_0b invert;  \ bits 7,5 always 1 for now (but 0 in a bad CPU)
+global_xor0;    /
+key_5b invert;  bit 6
+key_2b invert;  bit 4
+key_1b invert;  bit 3 always 1 for now (but 0 in a bad CPU)
+global_xor1;    bit 2
+key_0c invert;  bit 1
+global_swap2;   bit 0
+
+key[2]
+------
+key_1a invert;  bit 7 always 1 for now (but 0 in a bad CPU)
+key_6b invert;  bit 6 always 1 for now (but 0 in a bad CPU)
+global_swap0a;  bit 5
+key_7a invert;  bit 4
+key_4a invert;  bit 3
+global_swap0b;  bit 2
+key_6a invert;  bit 1
+key_3a invert;  bit 0
+
+key[3]
+------
+key_2a invert;  bit 7 always 1 for now (but 0 in a bad CPU)
+global_swap3;   bit 6 always 1 for now (but 0 in a bad CPU)
+key_5a_invert;  bit 5
+global_swap1;   bit 4
+key_3b invert;  bit 3
+global_swap4;   bit 2
+key_0a invert;  bit 1
+key_4b invert;  bit 0
+
+
+summary of global keys:
+-----------------------
+          .....    ..       ..
+0049      10101000 11110101 11100011
+0050      10101000 11110101 11100011
+0053      11111111 11111111 11111111
+0056      10101111 11111110 11101000
+0058-02C  10101111 11110101 11111000
+0058-03D  10101111 11110100 11100100
+0058-05C  10101110 11111001 11110010
+0058-09D  10101100 11111001 11100101
+0068      10101111 11111001 11110101
+0070      10101111 11110111 11111001
+0080      10101111 11110111 11100101
+0084      10101111 11110101 11100000
+0085      10101111 11110100 11110111
+0087      10101111 11110100 11110111
+0089      10101111 11110100 11100010
+0090      10101111 11111110 11100100
+0091      10101111 11110100 11100100
+0092      10101111 11110100 11100011
+0093      10101111 11110100 11100010
+0093A     11111101 11110110 11101110
+0096      10101111 11110100 11101010
+0102      10101111 11111101 11111100
+0110      10101110 11111100 11100010
+0115      11111011 11111010 11110100
+0116      11111100 11100001 11110110
+0118      10101110 11111100 11111000
+0120      10101110 11111100 11100010
+0121      10101110 11111100 11100010
+0122      10101110 11111011 11111011
+0124A     11111001 11101010 11110100
+0125A     11111001 11110000 11101111
+0126      11111010 11100011 11111110
+0126A     11111001 11101111 11110000
+0127A     10101110 11111000 11111001
+0128      11111111 11100011 11101011
+0129      11111111 11100011 11101011
+0130      11111111 11100011 11101100
+0134      10101110 11110100 11100001
+0136      10101110 11110100 11100010
+0139      11111100 11100110 11110000
+0142      11111110 11100111 11101110
+0143      11111101 11111101 11101101
+0144      11111101 11101000 11101101
+0146      11111011 11100101 11101110
+0147      11111011 11110001 11110001
+0148      11111011 11100101 11110000
+0153      11111011 11110101 11110001
+0157      11111000 11101011 11110101
+0158      11111000 11110000 11110000
+0159      11111000 11101011 11110101
+0162      11111110 11110001 11110000
+0163      11111110 11110010 11110000
+0165      10101101 11110100 11100110
+0166      10101101 11110100 11101110
+0169B     11111001 11011100 11011111
+0175      10101100 11111100 11101001
+0176      10101100 11111100 11110001
+0179A     11111001 11001000 11101110
+0180      11111100 11001010 11111111
+0181A     11111001 11001000 11101110
+0184      11111000 11110011 11101111
+0186      10101100 11111000 11111110
+0196      11101011 11110011 11101001
+0197A     10101011 11111001 11101100
+5023      11111011 11101101 11111010
+          .....    ..       ..
+unknown   11111111 11110110 10111110 (Shinobi 16A, part no. unreadable, could be dead)
+dead      00001111 00001111 00001111 (Alien Storm CPU with no battery)
+bad       11100000 10101011 10111001 (flaky 317-0049)
+
+based on MAME FD1094 sources by Nicola Salmoria, Andreas Naive, Charles MacDonald
+
+*****************************************************************************/
+
 #include "burnint.h"
 #include "fd1094.h"
 #include "bitswap.h"

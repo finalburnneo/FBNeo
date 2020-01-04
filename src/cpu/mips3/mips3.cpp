@@ -1,3 +1,16 @@
+/*
+ *
+ * Copyright (c) 2015, Marcos Medeiros
+ * Licensed under BSD 3-clause.
+ */
+/*
+ * TODO:
+ *    Fix TLB emulation
+ *    COP1 FR0 opcodes
+ *    Exceptions!!!
+ **/
+
+//#include <QDebug>
 #include <iostream>
 #include "mips3.h"
 #include "mipsdef.h"

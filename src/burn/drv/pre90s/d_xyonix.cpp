@@ -1,3 +1,6 @@
+// FB Alpha Xyonix driver module
+// Based on MAME driver by David Haywood and Stephh
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"

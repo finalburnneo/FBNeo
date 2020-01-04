@@ -1,3 +1,7 @@
+// based on MESS/MAME driver by David Haywood
+
+// Note: opaopa doesn't fully boot.  ideas?
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"

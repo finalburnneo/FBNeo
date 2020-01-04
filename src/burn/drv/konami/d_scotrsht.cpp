@@ -1,3 +1,6 @@
+// FB Alpha Scooter Shooter driver module
+// Based on MAME driver by Pierpaolo Prazzoli
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6809_intf.h"

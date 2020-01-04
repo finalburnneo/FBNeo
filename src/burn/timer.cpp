@@ -1,3 +1,4 @@
+// Timers (for Yamaha FM chips and generic)
 #include "burnint.h"
 #include "timer.h"
 

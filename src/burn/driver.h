@@ -1,3 +1,7 @@
+/*
+ * For the MAME sound cores
+ */
+
 #ifndef DRIVER_H
 #define DRIVER_H
 

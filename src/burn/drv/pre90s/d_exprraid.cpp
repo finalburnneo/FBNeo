@@ -1,3 +1,6 @@
+// Final Burn Neo Data East Express raider driver module
+// Based on MAME driver by Ernesto Corvi
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "m6809_intf.h"

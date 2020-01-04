@@ -1,3 +1,5 @@
+// Cheat module
+
 #include "burnint.h"
 
 #define CHEAT_MAXCPU	8 // enough?

@@ -1,3 +1,6 @@
+/* LzFindMt.c -- multithreaded Match finder for LZ algorithms
+2015-10-15 : Igor Pavlov : Public domain */
+
 #include "Precomp.h"
 
 #include "LzHash.h"

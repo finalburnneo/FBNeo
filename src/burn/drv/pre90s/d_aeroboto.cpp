@@ -1,3 +1,6 @@
+// FB Alpha Formation Z driver module
+// Based on MAME driver by Carlos A. Lozano
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "ay8910.h"

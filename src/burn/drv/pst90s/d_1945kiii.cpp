@@ -1,3 +1,7 @@
+// FB Alpha 1945K-III driver module
+// Based on MAME driver by David Haywood
+// Port to Finalburn Alpha by OopsWare. 2007
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "msm6295.h"

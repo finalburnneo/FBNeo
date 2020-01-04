@@ -1,3 +1,5 @@
+// Mr. Do's Castle emu-layer for FB Alpha by dink, based on the MAME driver by Brad Oliver.
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"

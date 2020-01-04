@@ -1,3 +1,10 @@
+// FB Alpha Cops'n Robbers driver module
+// Based on MAME driver by Zsolt Vasvari
+
+// to do:
+//	hook up analog inputs
+//	make samples from MAME discrete sounds
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "samples.h"

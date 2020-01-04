@@ -1,3 +1,6 @@
+// FB Alpha Exed Exes driver module
+// Based on MAME driver by Richard Davies, Paul Swan, and various others
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"

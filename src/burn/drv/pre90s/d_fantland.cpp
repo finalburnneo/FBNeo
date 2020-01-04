@@ -1,3 +1,6 @@
+// FB Alpha Fantasy Land driver module
+// Based on MAME driver by Luca Elia
+
 #include "tiles_generic.h"
 #include "nec_intf.h"
 #include "z80_intf.h"

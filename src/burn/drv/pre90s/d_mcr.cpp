@@ -1,3 +1,12 @@
+// FB Alpha Midway MCR driver module
+// Based on MAME driver by Aaron Giles
+
+/*
+twotigerc	- <<-- todo (alt.inpt) (marked not working/BurnDriverD for now)
+dpoker		- don't bother with this (uses light panel/special buttons/etc)
+nflfoot		- don't bother with this (laserdisc)
+*/
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6809_intf.h"

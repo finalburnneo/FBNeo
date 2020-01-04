@@ -1,3 +1,4 @@
+// Burner Input Set dialog module
 #include "burner.h"
 
 HWND hInpsDlg = NULL;						// Handle to the Input Set Dialog

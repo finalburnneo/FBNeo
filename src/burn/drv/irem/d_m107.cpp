@@ -1,3 +1,7 @@
+// FB Alpha Irem M107 system driver
+// Based on MAME driver by Bryan McPhail
+// Based on port of M92 driver from MAME by OopsWare
+
 #include "tiles_generic.h"
 #include "burn_ym2151.h"
 #include "nec_intf.h"

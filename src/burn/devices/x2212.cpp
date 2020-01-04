@@ -1,3 +1,5 @@
+// Atari EE-ROM (X2212), impl. by dink
+
 #include "burnint.h"
 #include "x2212.h"
 

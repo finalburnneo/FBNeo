@@ -1,3 +1,6 @@
+// FB Alpha PC-Engine / TurboGrafx 16 / SuperGrafx driver module
+// Based on MESS driver by Charles MacDonald
+
 #include "tiles_generic.h"
 #include "pce.h"
 #include "h6280_intf.h"

@@ -1,3 +1,6 @@
+// FB Alpha Traverse USA driver module
+// Based on MAME driver by Lee Taylor (with thanks to John Clegg and Tomasz Slanina)
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "irem_sound.h"

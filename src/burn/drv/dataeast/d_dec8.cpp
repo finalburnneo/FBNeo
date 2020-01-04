@@ -1,3 +1,9 @@
+// FB Alpha Data East 8-bit driver module
+// Based on MAME driver by Bryan McPhail and Stephane Humbert
+
+// To do:
+//	gondo needs rotary inputs hooked up and doesn't read the i8751 value at all - so coins don't work
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "burn_ym2203.h"

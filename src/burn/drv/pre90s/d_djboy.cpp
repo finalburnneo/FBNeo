@@ -1,3 +1,6 @@
+// FB Alpha DJ Boy driver module
+// Based on MAME driver by Phil Stroffolino
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "mermaid.h"

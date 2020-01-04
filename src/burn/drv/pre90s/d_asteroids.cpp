@@ -1,3 +1,11 @@
+// FB Alpha 1942 driver module
+// Based on MAME driver by Brad Oliver, Bernd Wiebelt, Allard van der Bas
+
+// not working (all use same read handler/inputs)
+// 	asterock
+// 	asterockv
+// 	meteorite
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "watchdog.h"

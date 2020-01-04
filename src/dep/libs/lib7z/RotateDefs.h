@@ -1,3 +1,6 @@
+/* RotateDefs.h -- Rotate functions
+2015-03-25 : Igor Pavlov : Public domain */
+
 #ifndef __ROTATE_DEFS_H
 #define __ROTATE_DEFS_H
 

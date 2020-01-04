@@ -1,3 +1,72 @@
+/*
+**
+** File: fmopl.c - software implementation of FM sound generator
+**                                            types OPL and OPL2
+**
+** Copyright (C) 2002,2003 Jarek Burczynski (bujar at mame dot net)
+** Copyright (C) 1999,2000 Tatsuyuki Satoh , MultiArcadeMachineEmulator development
+**
+** Version 0.72
+**
+
+Revision History:
+
+04-08-2003 Jarek Burczynski:
+ - removed BFRDY hack. BFRDY is busy flag, and it should be 0 only when the chip
+   handles memory read/write or during the adpcm synthesis when the chip
+   requests another byte of ADPCM data.
+
+24-07-2003 Jarek Burczynski:
+ - added a small hack for Y8950 status BFRDY flag (bit 3 should be set after
+   some (unknown) delay). Right now it's always set.
+
+14-06-2003 Jarek Burczynski:
+ - implemented all of the status register flags in Y8950 emulation
+ - renamed Y8950SetDeltaTMemory() parameters from _rom_ to _mem_ since
+   they can be either RAM or ROM
+
+08-10-2002 Jarek Burczynski (thanks to Dox for the YM3526 chip)
+ - corrected YM3526Read() to always set bit 2 and bit 1
+   to HIGH state - identical to YM3812Read (verified on real YM3526)
+
+04-28-2002 Jarek Burczynski:
+ - binary exact Envelope Generator (verified on real YM3812);
+   compared to YM2151: the EG clock is equal to internal_clock,
+   rates are 2 times slower and volume resolution is one bit less
+ - modified interface functions (they no longer return pointer -
+   that's internal to the emulator now):
+    - new wrapper functions for OPLCreate: YM3526Init(), YM3812Init() and Y8950Init()
+ - corrected 'off by one' error in feedback calculations (when feedback is off)
+ - enabled waveform usage (credit goes to Vlad Romascanu and zazzal22)
+ - speeded up noise generator calculations (Nicola Salmoria)
+
+03-24-2002 Jarek Burczynski (thanks to Dox for the YM3812 chip)
+ Complete rewrite (all verified on real YM3812):
+ - corrected sin_tab and tl_tab data
+ - corrected operator output calculations
+ - corrected waveform_select_enable register;
+   simply: ignore all writes to waveform_select register when
+   waveform_select_enable == 0 and do not change the waveform previously selected.
+ - corrected KSR handling
+ - corrected Envelope Generator: attack shape, Sustain mode and
+   Percussive/Non-percussive modes handling
+ - Envelope Generator rates are two times slower now
+ - LFO amplitude (tremolo) and phase modulation (vibrato)
+ - rhythm sounds phase generation
+ - white noise generator (big thanks to Olivier Galibert for mentioning Berlekamp-Massey algorithm)
+ - corrected key on/off handling (the 'key' signal is ORed from three sources: FM, rhythm and CSM)
+ - funky details (like ignoring output of operator 1 in BD rhythm sound when connect == 1)
+
+12-28-2001 Acho A. Tang
+ - reflected Delta-T EOS status on Y8950 status port.
+ - fixed subscription range of attack/decay tables
+
+
+	To do:
+		add delay before key off in CSM mode (see CSMKeyControll)
+		verify volume of the FM part on the Y8950
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

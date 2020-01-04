@@ -1,3 +1,6 @@
+// FB Alpha Ashita No Joe / Success Joe driver module
+// Based on MAME driver by driver by David Haywood and Pierpaolo Prazzoli
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

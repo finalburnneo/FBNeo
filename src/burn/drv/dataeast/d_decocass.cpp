@@ -1,3 +1,13 @@
+// FB Alpha Deco Cassette driver module
+// Based on MAME driver by Juergen Buchmueller, David Haywood, Ajrhacker
+// Uses tape loader & protection code by Juergen Buchmueller, David Haywood
+// Some graphics routines by Juergen Buchmueller, David Haywood, Ajrhacker
+
+/*
+note -- 
+cflyball, cpsoccer, coozumou, & zeroize overload bios (glitches normal)
+*/
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "bitswap.h"

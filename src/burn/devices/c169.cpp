@@ -1,3 +1,5 @@
+// Based on MAME sources by Phil Stroffolino
+
 #include "tiles_generic.h"
 
 static UINT32 size;

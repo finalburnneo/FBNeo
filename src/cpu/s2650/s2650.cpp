@@ -1,3 +1,17 @@
+/*************************************************************************
+ *
+ *      Portable Signetics 2650 cpu emulation
+ *
+ *      Written by Juergen Buchmueller for use with MAME
+ *
+ *  Version 1.2
+ *  - changed to clock cycle counts from machine cycles
+ *  - replaced cycle table with S2650_INLINE code (M_RET conditional case)
+ *  - removed wrong distinct add/sub CC and OVF handling
+ *  - cosmetics, readability
+ *
+ *************************************************************************/
+
 #include "s2650.h"
 #include "burnint.h"
 #include "s2650_intf.h"

@@ -1,3 +1,11 @@
+/*******************************************************
+ *
+ *      Portable Signetics 2650 cpu emulation
+ *
+ *      Written by Juergen Buchmueller for use with MAME
+ *
+ *******************************************************/
+
 #define PMSK    0x1fff          /* mask page offset */
 #define PLEN    0x2000          /* page length */
 #define PAGE    0x6000          /* mask page */

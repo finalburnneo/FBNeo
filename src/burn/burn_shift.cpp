@@ -1,3 +1,8 @@
+// FBAlpha Toggable Shifter and Gear Display
+//
+// For how-to, search BurnShift in konami/d_chqflag.cpp :)
+//
+
 #include "burnint.h"
 #include "burn_shift.h"
 

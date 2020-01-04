@@ -1,3 +1,6 @@
+// FB Alpha Phoenix driver module
+// Based on MAME driver by Richard Davies
+
 #include "tiles_generic.h"
 #define USE_Z80
 

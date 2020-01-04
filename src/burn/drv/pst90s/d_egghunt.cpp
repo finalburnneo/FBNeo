@@ -1,3 +1,6 @@
+// FB Alpha Egg Hunt driver module
+// Based on MAME driver by David Haywood
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "msm6295.h"

@@ -1,3 +1,11 @@
+/*##########################################################################
+
+    atarimo.h
+
+    Common motion object management functions for Atari raster games.
+
+##########################################################################*/
+
 #ifndef __ATARIMO__
 #define __ATARIMO__
 

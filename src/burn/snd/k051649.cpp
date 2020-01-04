@@ -1,3 +1,27 @@
+/***************************************************************************
+
+    Konami 051649 - SCC1 sound as used in Haunted Castle, City Bomber
+
+    This file is pieced together by Bryan McPhail from a combination of
+    Namco Sound, Amuse by Cab, Haunted Castle schematics and whoever first
+    figured out SCC!
+
+    The 051649 is a 5 channel sound generator, each channel gets it's
+    waveform from RAM (32 bytes per waveform, 8 bit signed data).
+
+    This sound chip is the same as the sound chip in some Konami
+    megaROM cartridges for the MSX. It is actually well researched
+    and documented:
+
+        http://www.msxnet.org/tech/scc
+
+    Thanks to Sean Young (sean@mess.org) for some bugfixes.
+
+    K052539 is equivalent to this chip except channel 5 does not share
+    waveforms with channel 4.
+
+***************************************************************************/
+
 #include "burnint.h"
 #include "k051649.h"
 

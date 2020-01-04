@@ -1,3 +1,5 @@
+// FB Alpha Sand Scorpion driver module based on MAME driver by Luca Elia
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m68000_intf.h"

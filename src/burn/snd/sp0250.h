@@ -1,3 +1,5 @@
+// sp0250 speech core
+
 void sp0250_init(INT32 clock, void (*drqCB)(INT32), INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ);
 void sp0250_update(INT16 *inputs, INT32 sample_len);
 void sp0250_exit();

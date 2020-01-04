@@ -1,3 +1,7 @@
+// ZX Spectrum driver
+// Snapshot formats supported - .SNA (48K only for now), .Z80
+// joysticks supported - Kempston (1 stick), Inteface2/Sinclair (2 sticks)
+
 #include "spectrum.h"
 
 #define SPEC_SCREEN_XSIZE			256

@@ -1,3 +1,21 @@
+/**********************************************************************************************
+ *
+ *  Streaming singe channel ADPCM core for the ES8712 chip
+ *  Chip is branded by Excellent Systems, probably OEM'd.
+ *
+ *  Samples are currently looped, but whether they should and how, is unknown.
+ *  Interface to the chip is also not 100% clear.
+ *  Should there be any status signals signifying busy, end of sample - etc?
+ *
+ *  Heavily borrowed from the OKI M6295 source
+ *
+ *  Excellent Systems ADPCM Emulation
+ *  Copyright Nicola Salmoria and the MAME Team
+ *
+ *  From MAME 0.139u1. Modified for use in FBA Aug 23, 2010.
+ *
+ **********************************************************************************************/
+
 #include "burnint.h"
 #include "math.h"
 #include "es8712.h"

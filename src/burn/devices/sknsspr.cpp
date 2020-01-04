@@ -1,3 +1,19 @@
+/* Super Kaneko Nova System Sprites
+
+   "CG24173 6186" & "CG24143 4181" (always used as a pair?)
+
+  - used by suprnova.c
+            galpani3.c
+            jchan.c
+
+  - ToDo:
+    Get rid of sprite position kludges
+    Fix zooming precision/rounding (most noticeable on jchan backgrounds)
+
+	Ported from MAME 0.144u4
+	based on MAME sources by David Haywood
+*/
+
 #include "tiles_generic.h"
 
 #define cliprect_min_y 0

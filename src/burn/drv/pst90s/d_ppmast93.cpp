@@ -1,3 +1,6 @@
+// FB Alpha Ping Pong Master '93 driver module
+// Based on MAME driver by David Haywood
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2413.h"

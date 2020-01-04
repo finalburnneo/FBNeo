@@ -1,3 +1,12 @@
+// FB Alpha Battle Cross / Dodge Man driver module
+// Based on MAME driver by David Haywood
+
+// Notes:
+// Dodge Man tiles and colors are really like that (bad rom data?)
+//
+// Todo:
+// Palette in handler, update as data comes in instead of every frame.
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

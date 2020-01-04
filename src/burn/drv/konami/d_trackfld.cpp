@@ -1,3 +1,10 @@
+// FB Alpha Track & Field driver module
+// Based on MAME driver by Chris Hardy.
+
+// To fix / Oddities:
+//   Watchdog timer doesn't get reset by Mastkin
+//   Wizz Quiz needs some work.
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"

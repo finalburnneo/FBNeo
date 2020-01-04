@@ -1,3 +1,6 @@
+// FB Alpha The NewZealand Story driver module
+// Based on MAME driver by Chris Moore, Brad Oliver, Nicola Salmoria, and many others
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_gun.h"

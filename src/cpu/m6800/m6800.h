@@ -1,3 +1,5 @@
+/*** m6800: Portable 6800 class emulator *************************************/
+
 #define HAS_M6801		1
 #define HAS_M6802		0
 #define HAS_M6803		1

@@ -1,3 +1,22 @@
+/*
+    TODO:
+    - bonkadv_mcu_43: extract data from MCU (dumped eeprom data for now)
+    - bloodwar: verify all extracted data against real board (WIP)
+*/
+
+/***************************************************************************
+
+    TOYBOX MCU data for Bonk's Adventure
+
+***************************************************************************/
+
+// notes based on test programs results, verified on PCB:
+// - bonkadv_mcu_4_30 is the only cmd that ouputs an odd (655) number of bytes
+// - bonkadv_mcu_4_33: the 32 'zeroed' bytes every 64 bytes are effectively written by the MCU
+
+// MCU executed command: 4300 0100 - factory settings
+// this command is issued whenever the nvram settings are corrupted
+// the MCU writes directly to NVRAM
 static UINT16 bonkadv_mcu_43[] = {
 	0x8BE0,0x8E71,0x0102,0x0102,0x0300,0x010C,0x0202,0x0202,
 	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,

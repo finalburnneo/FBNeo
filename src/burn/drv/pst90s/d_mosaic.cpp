@@ -1,3 +1,6 @@
+// FB Alpha Mosaic / Gold Fire II driver module
+// Based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "z180_intf.h"
 #include "burn_ym2203.h"

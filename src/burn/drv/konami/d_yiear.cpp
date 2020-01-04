@@ -1,3 +1,6 @@
+// FB Alpha Yie Ar Kung-Fu driver module
+// Based on MAME driver by Enrique Sanchez (?)
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "vlm5030.h"

@@ -1,3 +1,5 @@
+// Based on MAME driver by Quench, Yochizo, David Haywood
+
 #include "toaplan.h"
 #include "eeprom.h"
 #include "nec_intf.h"

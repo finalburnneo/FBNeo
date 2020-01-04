@@ -1,3 +1,16 @@
+
+/* png.c - location for general purpose libpng functions
+ *
+ * Copyright (c) 2018-2019 Cosmin Truta
+ * Copyright (c) 1998-2002,2004,2006-2018 Glenn Randers-Pehrson
+ * Copyright (c) 1996-1997 Andreas Dilger
+ * Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
+ *
+ * This code is released under the libpng license.
+ * For conditions of distribution and use, see the disclaimer
+ * and license in png.h
+ */
+
 #include "pngpriv.h"
 
 /* Generate a compiler error if there is an old png.h in the search path. */

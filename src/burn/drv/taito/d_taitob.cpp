@@ -1,3 +1,10 @@
+// FB Alpha Taito B System driver module
+// Based on MAME driver by Jarek Burczynski and various others
+
+// to do:
+//	fix rambo alt sets inputs
+//	master of weapon title screen is incorrect (only w/ffwd)
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

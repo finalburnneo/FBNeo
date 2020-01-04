@@ -1,3 +1,6 @@
+// FB Alpha dribling driver module
+// Based on MAME driver by:Aaron Giles
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "watchdog.h"

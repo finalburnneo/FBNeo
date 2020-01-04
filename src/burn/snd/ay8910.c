@@ -1,3 +1,21 @@
+/***************************************************************************
+
+  Modified from ay8910.c from MAME
+
+
+  Emulation of the AY-3-8910 / YM2149 sound chip.
+
+  Based on various code snippets by Ville Hallik, Michael Cuddy,
+  Tatsuyuki Satoh, Fabrice Frances, Nicola Salmoria.
+
+  June 07, 2016 - Added Burgertime Mode                              [dink]
+                  This feature eliminates the horrible hissing noise
+				  present in the game.  Note: no longer used!  Code moved to
+				  driver-level.  Keeping this just in-case it might be usefull
+				  for something else.
+
+***************************************************************************/
+
 #include "driver.h"
 #include "state.h"
 #include <stddef.h>

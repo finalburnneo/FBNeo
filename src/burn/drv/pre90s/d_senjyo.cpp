@@ -1,3 +1,6 @@
+// FB Alpha Senjyo / Star Force / Baluba-louk driver module
+// Based on MAME driver by Mirko Buffoni
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"

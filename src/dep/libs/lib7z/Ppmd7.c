@@ -1,3 +1,7 @@
+/* Ppmd7.c -- PPMdH codec
+2016-05-21 : Igor Pavlov : Public domain
+This code is based on PPMd var.H (2001): Dmitry Shkarin : Public domain */
+
 #include "Precomp.h"
 
 #include <string.h>

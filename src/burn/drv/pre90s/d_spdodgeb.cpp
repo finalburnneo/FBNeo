@@ -1,3 +1,6 @@
+// FB Neo Super Dodge Ball driver module
+// Based on MAME driver by Paul Hampson, Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "m6809_intf.h"

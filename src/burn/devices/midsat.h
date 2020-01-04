@@ -1,3 +1,5 @@
+// Midway Squeak and Talk module
+
 void midsat_write(UINT8 data);
 
 void midsat_reset_write(INT32 state);

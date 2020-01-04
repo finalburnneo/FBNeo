@@ -1,3 +1,7 @@
+// FB Alpha IGS PolyGameMaster driver module
+// Original FB Alpha port by OopsWare
+// Based on information from ElSemi, Haze (David Haywood), and XingXing
+
 #include "pgm.h"
 #include "ics2115.h"
 

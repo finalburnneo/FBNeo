@@ -1,3 +1,6 @@
+// FB Alpha driver module
+// Based on MAME driver by Phil Stroffolino
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "ay8910.h"

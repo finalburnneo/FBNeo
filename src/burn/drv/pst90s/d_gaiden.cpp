@@ -1,3 +1,6 @@
+// FB Alpha Ninja Gaiden driver module
+// Based on MAME driver by Alex Pasadyn, Phil Stroffolino, Nicola Salmoria, and various others
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

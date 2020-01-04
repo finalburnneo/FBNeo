@@ -1,3 +1,4 @@
+// FB Neo Game Info and Favorites handling
 #include "burner.h"
 
 static HWND hGameInfoDlg	= NULL;

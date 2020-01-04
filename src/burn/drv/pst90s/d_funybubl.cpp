@@ -1,3 +1,6 @@
+// FB Alpha Funny Bubble driver module
+// Based on MAME driver by Pierpaolo Prazzoli and David Haywood
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "msm6295.h"

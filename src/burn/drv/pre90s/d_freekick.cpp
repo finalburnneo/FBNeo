@@ -1,3 +1,5 @@
+// Gigas / Freekick / Counter Run / Perfect Billiard for FBA, ported by vbt, based on driver by Tomasz Slanina and David Haywood
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "driver.h"

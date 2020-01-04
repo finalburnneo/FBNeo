@@ -1,3 +1,6 @@
+// FB Alpha Data East Liberation driver module
+// Based on MAME driver by Bryan McPhail
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "ay8910.h"

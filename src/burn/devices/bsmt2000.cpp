@@ -1,3 +1,4 @@
+// FBAlpha BSMT2000 emulation, based on code written by Aaron Giles
 #include "burnint.h"
 #include "tms32010.h"
 #include "dac.h"

@@ -1,3 +1,27 @@
+/*****************************************************************************
+ *
+ *   ops02.h
+ *   Addressing mode and opcode macros for 6502,65c02,65sc02,6510,n2a03 CPUs
+ *
+ *   Copyright Juergen Buchmueller, all rights reserved.
+ *   65sc02 core Copyright Peter Trauner, all rights reserved.
+ *
+ *   - This source code is released as freeware for non-commercial purposes.
+ *   - You are free to use and redistribute this code in modified or
+ *     unmodified form, provided you list me in the credits.
+ *   - If you modify this source code, you must add a notice to each modified
+ *     source file that it has been changed.  If you're a nice person, you
+ *     will clearly mark each change too.  :)
+ *   - If you wish to use this for commercial purposes, please contact me at
+ *     pullmoll@t-online.de
+ *   - The author of this copywritten work reserves the right to change the
+ *     terms of its usage and license at any time, including retroactively
+ *   - This entire notice must remain in the source code.
+ *
+ *****************************************************************************/
+
+
+/* 6502 flags */
 #define F_C 0x01
 #define F_Z 0x02
 #define F_I 0x04

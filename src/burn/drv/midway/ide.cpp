@@ -1,3 +1,10 @@
+// Killer Instinct hd image:
+// Tag='GDDD'  Index=0  Length=34 bytes
+// CYLS:419,HEADS:13,SECS:47,BPS:512.
+/*#include <string>
+#include <fstream>
+#include <cstdio>
+#include <cstring>*/
 #include "ide.h"
 
 #define DEBUG_ATA   0

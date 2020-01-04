@@ -1,3 +1,13 @@
+// FB Alpha Tank Busters driver module
+// Based on MAME driver by Jarek Burczynski
+
+// Notes:
+//  1) game has stuck sprite issues.  might be due to a unknown bad dump or
+//  unhandled emulation of the device that sits at 0xe803.
+//  2) *game seems to act more like PCB when e803 is used to return a random#
+//  3) considering the tricks used in bagman (also Valadon) w/ the pal, its
+//  safe to assume there is possibly something similar being used here.
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

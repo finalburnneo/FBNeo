@@ -1,3 +1,83 @@
+/*
+    vlm5030.c
+
+    VLM5030 emulator
+
+    Written by Tatsuyuki Satoh
+    Based on TMS5220 simulator (tms5220.c)
+
+  note:
+    memory read cycle(==sampling rate) = 122.9u(440clock)
+    interpolator (LC8109 = 2.5ms)      = 20 * samples(125us)
+    frame time (20ms)                  =  4 * interpolator
+    9bit DAC is composed of 5bit Physical and 3bitPWM.
+
+  todo:
+    Noise Generator circuit without 'rand()' function.
+
+----------- command format (Analytical result) ----------
+
+1)end of speech (8bit)
+:00000011:
+
+2)silent some frame (8bit)
+:????SS01:
+
+SS : number of silent frames
+   00 = 2 frame
+   01 = 4 frame
+   10 = 6 frame
+   11 = 8 frame
+
+3)-speech frame (48bit)
+function:   6th  :  5th   :   4th  :   3rd  :   2nd  : 1st    :
+end     :   ---  :  ---   :   ---  :   ---  :   ---  :00000011:
+silent  :   ---  :  ---   :   ---  :   ---  :   ---  :0000SS01:
+speech  :11111122:22233334:44455566:67778889:99AAAEEE:EEPPPPP0:
+
+EEEEE  : energy : volume 0=off,0x1f=max
+PPPPP  : pitch  : 0=noize , 1=fast,0x1f=slow
+111111 : K1     : 48=off
+22222  : K2     : 0=off,1=+min,0x0f=+max,0x10=off,0x11=+max,0x1f=-min
+                : 16 == special function??
+3333   : K3     : 0=off,1=+min,0x07=+max,0x08=-max,0x0f=-min
+4444   : K4     :
+555    : K5     : 0=off,1=+min,0x03=+max,0x04=-max,0x07=-min
+666    : K6     :
+777    : K7     :
+888    : K8     :
+999    : K9     :
+AAA    : K10    :
+
+ ---------- chirp table information ----------
+
+DAC PWM cycle == 88system clock , (11clock x 8 pattern) = 40.6KHz
+one chirp     == 5 x PWM cycle == 440systemclock(8,136Hz)
+
+chirp  0   : volume 10- 8 : with filter
+chirp  1   : volume  8- 6 : with filter
+chirp  2   : volume  6- 4 : with filter
+chirp  3   : volume   4   : no filter ??
+chirp  4- 5: volume  4- 2 : with filter
+chirp  6-11: volume  2- 0 : with filter
+chirp 12-..: volume   0   : silent
+
+ ---------- digial output information ----------
+ when ME pin = high , some status output to A0..15 pins
+
+  A0..8   : DAC output value (abs)
+  A9      : DAC sign flag , L=minus,H=Plus
+  A10     : energy reload flag (pitch pulse)
+  A11..15 : unknown
+
+  [DAC output value(signed 6bit)] = A9 ? A0..8 : -(A0..8)
+
+*/
+/*
+	Ported from MAME 0.120
+	29/01/14
+*/
+
 #include "burnint.h"
 #include "vlm5030.h"
 

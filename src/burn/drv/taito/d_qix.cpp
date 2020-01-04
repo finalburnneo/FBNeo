@@ -1,3 +1,6 @@
+// FB Alpha Taito Qix driver module
+// Based on MAME driver by Aaron Giles and Zsolt Vasvari
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"

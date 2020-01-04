@@ -1,3 +1,6 @@
+// FB Alpha Atari Akka Arrh driver module
+// Based on MAME driver by Aaron Giles
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "pokey.h"

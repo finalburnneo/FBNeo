@@ -1,3 +1,5 @@
+// Based on MAME driver by Chris Moore, Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6800_intf.h"

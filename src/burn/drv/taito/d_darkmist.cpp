@@ -1,3 +1,6 @@
+// FB Alpha The Lost Castle in Darkmist driver module
+// Based on MAME driver by David Haywood, Nicola Salmoria, and Tomasz Slanina
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2151.h"

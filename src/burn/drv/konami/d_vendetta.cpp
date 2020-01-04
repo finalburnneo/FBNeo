@@ -1,3 +1,6 @@
+// FB Alpha Vendetta / Crime Fighters 2 / Escape Kids driver module
+// Based on MAME driver by Ernesto Corvi
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2151.h"

@@ -1,3 +1,6 @@
+// FB Alpha M52 (Moon Patrol) driver module
+// Based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "irem_sound.h"

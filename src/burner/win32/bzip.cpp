@@ -1,3 +1,4 @@
+// Burner Zip module
 #include "burner.h"
 
 int nBzipError = 0;												// non-zero if there is a problem with the opened romset

@@ -1,3 +1,6 @@
+// Megadrive ym2612 interface for eke-eke's genplus-gx ym2612, based on MAME's ym2612
+// Note: if a mono route is needed (in the future), uncomment in the main render loop.
+
 #include "burnint.h"
 #include "burn_md2612.h"
 

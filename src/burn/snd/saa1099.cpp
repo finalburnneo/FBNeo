@@ -1,3 +1,68 @@
+/***************************************************************************
+
+    Philips SAA1099 Sound driver
+
+    By Juergen Buchmueller and Manuel Abadia
+
+    SAA1099 register layout:
+    ========================
+
+    offs | 7654 3210 | description
+    -----+-----------+---------------------------
+    0x00 | ---- xxxx | Amplitude channel 0 (left)
+    0x00 | xxxx ---- | Amplitude channel 0 (right)
+    0x01 | ---- xxxx | Amplitude channel 1 (left)
+    0x01 | xxxx ---- | Amplitude channel 1 (right)
+    0x02 | ---- xxxx | Amplitude channel 2 (left)
+    0x02 | xxxx ---- | Amplitude channel 2 (right)
+    0x03 | ---- xxxx | Amplitude channel 3 (left)
+    0x03 | xxxx ---- | Amplitude channel 3 (right)
+    0x04 | ---- xxxx | Amplitude channel 4 (left)
+    0x04 | xxxx ---- | Amplitude channel 4 (right)
+    0x05 | ---- xxxx | Amplitude channel 5 (left)
+    0x05 | xxxx ---- | Amplitude channel 5 (right)
+         |           |
+    0x08 | xxxx xxxx | Frequency channel 0
+    0x09 | xxxx xxxx | Frequency channel 1
+    0x0a | xxxx xxxx | Frequency channel 2
+    0x0b | xxxx xxxx | Frequency channel 3
+    0x0c | xxxx xxxx | Frequency channel 4
+    0x0d | xxxx xxxx | Frequency channel 5
+         |           |
+    0x10 | ---- -xxx | Channel 0 octave select
+    0x10 | -xxx ---- | Channel 1 octave select
+    0x11 | ---- -xxx | Channel 2 octave select
+    0x11 | -xxx ---- | Channel 3 octave select
+    0x12 | ---- -xxx | Channel 4 octave select
+    0x12 | -xxx ---- | Channel 5 octave select
+         |           |
+    0x14 | ---- ---x | Channel 0 frequency enable (0 = off, 1 = on)
+    0x14 | ---- --x- | Channel 1 frequency enable (0 = off, 1 = on)
+    0x14 | ---- -x-- | Channel 2 frequency enable (0 = off, 1 = on)
+    0x14 | ---- x--- | Channel 3 frequency enable (0 = off, 1 = on)
+    0x14 | ---x ---- | Channel 4 frequency enable (0 = off, 1 = on)
+    0x14 | --x- ---- | Channel 5 frequency enable (0 = off, 1 = on)
+         |           |
+    0x15 | ---- ---x | Channel 0 noise enable (0 = off, 1 = on)
+    0x15 | ---- --x- | Channel 1 noise enable (0 = off, 1 = on)
+    0x15 | ---- -x-- | Channel 2 noise enable (0 = off, 1 = on)
+    0x15 | ---- x--- | Channel 3 noise enable (0 = off, 1 = on)
+    0x15 | ---x ---- | Channel 4 noise enable (0 = off, 1 = on)
+    0x15 | --x- ---- | Channel 5 noise enable (0 = off, 1 = on)
+         |           |
+    0x16 | ---- --xx | Noise generator parameters 0
+    0x16 | --xx ---- | Noise generator parameters 1
+         |           |
+    0x18 | --xx xxxx | Envelope generator 0 parameters
+    0x18 | x--- ---- | Envelope generator 0 control enable (0 = off, 1 = on)
+    0x19 | --xx xxxx | Envelope generator 1 parameters
+    0x19 | x--- ---- | Envelope generator 1 control enable (0 = off, 1 = on)
+         |           |
+    0x1c | ---- ---x | All channels enable (0 = off, 1 = on)
+    0x1c | ---- --x- | Synch & Reset generators
+
+***************************************************************************/
+
 #include "burnint.h"
 #include "saa1099.h"
 

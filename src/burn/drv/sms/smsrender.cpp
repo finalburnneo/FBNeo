@@ -1,3 +1,8 @@
+/*
+    render.c --
+    Display rendering.
+*/
+
 #include "smsshared.h"
 
 static UINT8 sms_cram_expand_table[4];

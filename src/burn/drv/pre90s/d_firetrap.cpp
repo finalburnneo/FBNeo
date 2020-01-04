@@ -1,3 +1,7 @@
+// FB Alpha Fire Trap driver module
+// Based on MAME driver by Nicola Salmoria and Stephane Humbert
+
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6502_intf.h"

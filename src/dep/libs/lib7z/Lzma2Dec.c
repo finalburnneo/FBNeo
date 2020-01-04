@@ -1,3 +1,8 @@
+/* Lzma2Dec.c -- LZMA2 Decoder
+2015-11-09 : Igor Pavlov : Public domain */
+
+/* #define SHOW_DEBUG_INFO */
+
 #include "Precomp.h"
 
 #ifdef SHOW_DEBUG_INFO

@@ -1,3 +1,8 @@
+// FB Alpha Gyruss driver module
+// Based on MAME driver by Mirko Buffoni, Michael Cuddy, and Nicola Salmoria
+//
+// Massive overhaul by dink on Feb. 9, 2015, sound mixing modification Feb. 9, 2018.
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6809_intf.h"

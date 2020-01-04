@@ -1,3 +1,13 @@
+// FB Alpha Thunder Ceptor driver module
+// Based on MAME driver by BUT
+
+// to do:
+//  right side background is jerky and scrolls kinda weird - fixed with kludge in tilemap_generic
+
+// for later (dink):
+//  audio cpu (hd63701) needs 100khz cycles p/s more otherwise it dies at 0xe in the soundtest.
+//  -> verify the m6803_internal_registers & timers internal to the m680x in the core.
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"

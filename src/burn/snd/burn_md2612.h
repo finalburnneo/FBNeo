@@ -1,3 +1,4 @@
+// burn_md2612.h
 #include "driver.h"
 extern "C" {
  #include "ym2612.h"

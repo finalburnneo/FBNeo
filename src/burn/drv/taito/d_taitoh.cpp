@@ -1,3 +1,10 @@
+// FB Alpha Taito System H driver module
+// Based on MAME driver by Yochizo and Nicola Salmoria
+
+// Weirdness:
+// DLeagueJ's sprites get covered up on the right side of the screen, see temp.
+//   fix in DleagueJDraw();
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

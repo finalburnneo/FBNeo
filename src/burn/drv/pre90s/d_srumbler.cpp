@@ -1,3 +1,8 @@
+// FB Alpha The Speed Rumbler driver module
+// Based on MAME driver by Paul Leaman
+// Note: main cpu oc'd otherwise there is terrible slowdown, I wonder if our
+// m6809 is cycle accurate or not? (I tried several different timing/irq methods) -dink
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6809_intf.h"

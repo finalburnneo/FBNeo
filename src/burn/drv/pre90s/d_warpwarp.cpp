@@ -1,3 +1,5 @@
+// Warp Warp emu-layer for FB Alpha by dink, based on Mirko & Chris Hardy's MAME driver & sound core code by Juergen Buchmueller
+
 #include "tiles_generic.h"
 #include "driver.h"
 #include "z80_intf.h"

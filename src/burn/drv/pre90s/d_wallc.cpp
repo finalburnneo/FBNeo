@@ -1,3 +1,6 @@
+// FB Alpha Wall Crash driver module
+// Based on MAME driver by Jarek Burczynski
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "bitswap.h"

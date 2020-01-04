@@ -1,3 +1,6 @@
+// FB Alpha PK Scramble driver module
+// Based on MAME driver by David Haywood and Pierpaolo Prazzoli
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "burn_ym2203.h"

@@ -1,3 +1,4 @@
+// Create a unique name for each of the functions
 #define FN(a,b,c,d) RenderBank ## a ## _ZOOM ## b ## c ## d
 #define FUNCTIONNAME(a,b,c,d) FN(a,b,c,d)
 

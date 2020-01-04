@@ -1,3 +1,12 @@
+// Taito SuperChase driver for FB Alpha
+// Based on MAME driver by Bryan McPhail, David Graves
+
+// Notes:
+//   SubCPU needs a 2mhz overclocking boost to prevent flashing glitches in
+//   certain areas.  For example - late in level 1 near the SanFranCisco-style Cable Cars;
+//   when going down a hill, the background "buildings" tilemap will flash through the road
+//   near the bottom quarter of the screen. -dink
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "taitof3_snd.h"

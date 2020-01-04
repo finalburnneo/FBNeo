@@ -1,3 +1,6 @@
+// FB Alpha Aztarac driver module
+// Based on MAME driver by Mathis Rosenhauer
+
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

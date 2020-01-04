@@ -1,3 +1,7 @@
+// Based on MAME driver by Aaron Giles
+
+// coin up doesn't work - forcing freeplay dip for now
+
 #include "tiles_generic.h"
 #include "mips3_intf.h"
 #include "ide.h"

@@ -1,3 +1,6 @@
+// FB Alpha Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion / Pac-Man - 25th Anniversary Edition driver module
+// Based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "z180_intf.h"
 #include "namco_snd.h"

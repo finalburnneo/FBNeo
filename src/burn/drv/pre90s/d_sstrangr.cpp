@@ -1,3 +1,6 @@
+// FB Alpha Space Stranger driver module
+// Based on MAME driver by 
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "samples.h"

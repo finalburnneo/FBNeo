@@ -1,3 +1,6 @@
+/* Aes.c -- AES encryption / decryption
+2016-05-21 : Igor Pavlov : Public domain */
+
 #include "Precomp.h"
 
 #include "Aes.h"

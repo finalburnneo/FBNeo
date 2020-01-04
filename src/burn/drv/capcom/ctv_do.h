@@ -1,3 +1,14 @@
+// CPS Tiles (header)
+
+// Draw a nxn tile
+// pCtvLine, pTile, nTileAdd are defined
+// CU_FLIPX is 1 to flip the tile horizontally
+// CU_CARE  is 1 to clip output based on nCtvRollX/Y
+// CU_ROWS  is 1 to shift output based on CpstRowShift
+// CU_SIZE  is 8, 16 or 32
+// CU_BPP is 1 2 3 4 bytes per pixel
+// CU_MASK CPS1 BgHi CPS2 Sprite Masking
+
 #ifndef CU_FLIPX
  #error "CU_FLIPX wasn\'t defined"
 #endif

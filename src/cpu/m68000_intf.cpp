@@ -1,3 +1,7 @@
+// 680x0 (Sixty Eight K) Interface
+
+// todo: (I think!) if SekRunEnd() is called while running, wrong cycles get returned by SekRun() for m68k -dink
+
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "m68000_debug.h"

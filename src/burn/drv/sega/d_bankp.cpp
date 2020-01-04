@@ -1,3 +1,6 @@
+// FB Alpha Bank Panic Driver Module
+// Based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"

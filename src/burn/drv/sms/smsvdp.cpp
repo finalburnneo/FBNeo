@@ -1,3 +1,7 @@
+/*
+    vdp.c --
+    Video Display Processor (VDP) emulation.
+*/
 #include "smsshared.h"
 #include "z80_intf.h"
 #include "smshvc.h"

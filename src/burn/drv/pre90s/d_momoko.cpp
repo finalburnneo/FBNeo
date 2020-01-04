@@ -1,3 +1,6 @@
+// FB Alpha Momoko 120% driver module
+// Based on MAME driver by Uki
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2203.h"

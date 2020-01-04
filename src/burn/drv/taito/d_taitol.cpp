@@ -1,3 +1,6 @@
+// FB Alpha Taito System-L driver module
+// Based on MAME driver by Oliver Galibert
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_ic.h"

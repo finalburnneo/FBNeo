@@ -1,3 +1,6 @@
+// FB Alpha Kick Boy / Dacholer / Itazura Tenshi driver module
+// Based on MAME driver by Pierpaolo Prazzoli
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "msm5205.h"

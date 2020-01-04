@@ -1,3 +1,6 @@
+// Zodiack emu-layer for FB Alpha by dink
+// Based on the MAME driver by Zsolt Vasvari.
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "watchdog.h"

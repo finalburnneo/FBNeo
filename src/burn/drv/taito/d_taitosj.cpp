@@ -1,3 +1,6 @@
+// FB Alpha Taito SJ system driver module
+// Based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6805_intf.h"

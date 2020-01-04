@@ -1,3 +1,7 @@
+/*
+    pio.c --
+    I/O chip and peripheral emulation.
+*/
 #include "smsshared.h"
 #include "z80_intf.h"
 

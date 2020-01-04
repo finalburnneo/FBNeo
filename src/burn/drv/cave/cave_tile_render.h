@@ -1,3 +1,6 @@
+// Graphics format: 8 × 8 pixel tiles, 4/8 bits/pixel.
+
+// Create a unique name for each of the functions
 #define FN(a,b,c,d,e,f,g,h) RenderTile ## a ## _ ## b ## _ROT ## c ## d ## e ## f ## g ## h
 #define FUNCTIONNAME(a,b,c,d,e,f,g,h) FN(a,b,c,d,e,f,g,h)
 

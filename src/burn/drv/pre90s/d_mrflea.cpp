@@ -1,3 +1,6 @@
+// FB Alpha Amazing Adventures of Mr. F. Lea driver module
+// Based on MAME driver by Phil Stroffolino
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "bitswap.h"

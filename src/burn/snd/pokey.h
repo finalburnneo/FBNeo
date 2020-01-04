@@ -1,3 +1,19 @@
+/*****************************************************************************
+ *
+ *	POKEY chip emulator 4.3
+ *	Copyright (c) 2000 by The MAME Team
+ *
+ *	Based on original info found in Ron Fries' Pokey emulator,
+ *	with additions by Brad Oliver, Eric Smith and Juergen Buchmueller.
+ *	paddle (a/d conversion) details from the Atari 400/800 Hardware Manual.
+ *  Polynome algorithms according to info supplied by Perry McFarlane.
+ *
+ *	This code is subject to the MAME license, which besides other
+ *	things means it is distributed as is, no warranties whatsoever.
+ *	For more details read the readme.txt that comes with MAME.
+ *
+ *****************************************************************************/
+
 #ifndef _POKEYSOUND_H
 #define _POKEYSOUND_H
 

@@ -1,3 +1,5 @@
+// Based on MAME sources by Couriersud
+
 #include "burnint.h"
 #include "resnet.h"
 

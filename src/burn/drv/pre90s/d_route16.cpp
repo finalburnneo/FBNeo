@@ -1,3 +1,8 @@
+// FB Alpha Route 16 driver module
+// Based on MAME driver by Zsolt Vasvari
+
+// Todo: revise route16 protection
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

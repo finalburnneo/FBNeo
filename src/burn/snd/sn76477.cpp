@@ -1,3 +1,33 @@
+// Based on MAME sources by Zsolt Vasvari
+/*****************************************************************************
+
+    Texas Instruments SN76477 emulator
+
+    authors: Derrick Renaud - info
+             Zsolt Vasvari  - software
+
+    (see sn76477.h for details)
+
+    Notes:
+        * All formulas were derived by taking measurements of a real device,
+          then running the data sets through the numerical analysis
+          application at http://zunzun.com to come up with the functions.
+
+    Known issues/to-do's:
+        * VCO
+            * confirm value of VCO_MAX_EXT_VOLTAGE, VCO_TO_SLF_VOLTAGE_DIFF
+              VCO_CAP_VOLTAGE_MIN and VCO_CAP_VOLTAGE_MAX
+            * confirm value of VCO_MIN_DUTY_CYCLE
+            * get real formulas for VCO cap charging and discharging
+            * get real formula for VCO duty cycle
+            * what happens if no vco_res
+            * what happens if no vco_cap
+
+        * Attack/Decay
+            * get real formulas for a/d cap charging and discharging
+
+ *****************************************************************************/
+
 #include "burnint.h"
 #include "sn76477.h"
 

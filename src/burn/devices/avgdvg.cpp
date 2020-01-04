@@ -1,3 +1,41 @@
+/*************************************************************************
+
+    avgdvg.c: Atari DVG and AVG simulators
+
+    Copyright 1991, 1992, 1996 Eric Smith
+
+    Modified for the MAME project 1997 by
+    Brad Oliver, Bernd Wiebelt, Aaron Giles, Andrew Caldwell
+
+    971108 Disabled vector timing routines, introduced an ugly (but fast!)
+            busy flag hack instead. BW
+    980202 New anti aliasing code by Andrew Caldwell (.ac)
+    980206 New (cleaner) busy flag handling.
+            Moved LBO's buffered point into generic vector code. BW
+    980212 Introduced timing code based on Aaron timer routines. BW
+    980318 Better color handling, Bzone and MHavoc clipping. BW
+
+    Battlezone uses a red overlay for the top of the screen and a green one
+    for the rest. There is a circuit to clip color 0 lines extending to the
+    red zone. This is emulated now. Thanks to Neil Bradley for the info. BW
+
+    Frame and interrupt rates (Neil Bradley) BW
+        ~60 fps/4.0ms: Asteroid, Asteroid Deluxe
+        ~40 fps/4.0ms: Lunar Lander
+        ~40 fps/4.1ms: Battle Zone
+        ~45 fps/5.4ms: Space Duel, Red Baron
+        ~30 fps/5.4ms: StarWars
+
+    Games with self adjusting framerate
+        4.1ms: Black Widow, Gravitar
+        4.1ms: Tempest
+        Major Havoc
+        Quantum
+
+    TODO: accurate vector timing (need timing diagramm)
+
+************************************************************************/
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "avgdvg.h"

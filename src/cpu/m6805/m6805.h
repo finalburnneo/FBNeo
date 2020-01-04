@@ -1,3 +1,5 @@
+/*** m6805: Portable 6805 emulator ******************************************/
+
 enum { M6805_PC=1, M6805_S, M6805_CC, M6805_A, M6805_X, M6805_IRQ_STATE };
 
 #define M6805_IRQ_LINE		0

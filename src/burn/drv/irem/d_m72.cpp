@@ -1,3 +1,6 @@
+// FB Alpha Irem M72 driver module
+// Based on MAME driver by Nicola Salmoria and Nao
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2151.h"

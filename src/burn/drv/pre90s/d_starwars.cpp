@@ -1,3 +1,11 @@
+// FB Alpha Star Wars driver module
+// Based on MAME driver by Steve Baine and Frank Palazzolo
+// based on mame 0.111/0.119
+
+// todink:
+//   add parent tomcat to d_parent, uncomment BurnDriver for tomcatsw
+//
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "watchdog.h"

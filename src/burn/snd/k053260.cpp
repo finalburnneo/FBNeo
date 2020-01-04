@@ -1,3 +1,56 @@
+// copyright-holders:Ernesto Corvi, Alex W. Jackson
+/*********************************************************
+
+    Konami 053260 KDSC
+
+    The 053260 is a four voice PCM/ADPCM sound chip that
+    also incorporates four 8-bit ports for communication
+    between a main CPU and audio CPU. The chip's output
+    is compatible with a YM3012 DAC, and it has a digital
+    auxiliary input compatible with the output of a YM2151.
+    Some games (e.g. Simpsons) only connect one channel of
+    the YM2151, but others (e.g. Thunder Cross II) connect
+    both channels for stereo mixing.
+
+    The 053260 has a 21-bit address bus and 8-bit data bus
+    to ROM, allowing it to access up to 2 megabytes of
+    sample data. Sample data can be either signed 8-bit
+    PCM or a custom 4-bit ADPCM format. It is possible for
+    two 053260 chips to share access to the same ROMs
+    (used by Over Drive)
+
+    The 053260 has separate address and data buses to the
+    audio CPU controlling it and to the main CPU. Both data
+    buses are 8 bit. The audio CPU address bus has 6 lines
+    (64 addressable registers, but fewer than 48 are
+    actually used) while the main CPU "bus" has only 1 line
+    (2 addressable registers). All registers on the audio
+    CPU side seem to be either read-only or write-only,
+    although some games write 0 to all the registers in a
+    loop at startup (including otherwise read-only or
+    entirely unused registers).
+    On the main CPU side, reads and writes to the same
+    address access different communication ports.
+
+    The sound data ROMs of Simpsons and Vendetta have
+    "headers" listing all the samples in the ROM, their
+    formats ("PCM" or "KADPCM"), start and end addresses.
+    The header data doesn't seem to be used by the hardware
+    (none of the other games have headers) but provides
+    useful information about the chip.
+
+    2004-02-28 (Oliver Achten)
+    Fixed ADPCM decoding. Games sound much better now.
+
+    2014-10-06 (Alex W. Jackson)
+    Rewrote from scratch in C++; implemented communication
+    ports properly; used the actual up counters instead of
+    converting to fractional sample position; fixed ADPCM
+    decoding bugs; added documentation.
+
+
+*********************************************************/
+
 #include "burnint.h"
 #include "k053260.h"
 

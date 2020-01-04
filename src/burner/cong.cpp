@@ -1,3 +1,4 @@
+// Burner Config for Game file module
 #include "burner.h"
 #include "neocdlist.h"
 

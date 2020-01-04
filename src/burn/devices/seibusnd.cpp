@@ -1,3 +1,28 @@
+//
+// FB Alpha Seibu sound hardware module
+//
+// Based on MAME sources by Bryan McPhail, R. Belmont
+// 
+// Games using this hardware:
+//
+//	Dead Angle	2x YM2203 + 2x adpcm
+//
+// 	Dynamite Duke   1x YM3812 + 1x M6295
+//	Toki		1x YM3812 + 1x M6295
+//	Raiden          1x YM3812 + 1x M6295
+//	Blood Brothers  1x YM3812 + 1x M6295
+//	D-Con		1x YM3812 + 1x M6295
+//	Legionnaire	1x YM3812 + 1x M6295
+//
+//	SD Gundam PSK	1x YM2151 + 1x M6295
+//	Raiden II	1x YM2151 + 2x M6295
+//	Raiden DX	1x YM2151 + 2x M6295
+//	Zero Team	1x YM2151 + 2x M6295
+//
+// 	Cross Shooter	1x YM2151 + ?
+//	Cabal		1x YM2151 + adpcm
+//
+
 #include "burnint.h"
 #include "z80_intf.h"
 #include "burn_ym3812.h"

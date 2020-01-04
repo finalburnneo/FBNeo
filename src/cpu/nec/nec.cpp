@@ -1,3 +1,108 @@
+/****************************************************************************
+
+    NEC V20/V30/V33 emulator
+
+    ---------------------------------------------
+
+    V20 = uPD70108 = 8-bit data bus @ 5MHz or 8MHz
+    V20HL = uPD70108H = V20 with EMS support (24-bit address bus)
+
+    V25 = uPD70320 = V20 with on-chip features:
+            - 256 bytes on-chip RAM
+            - 8 register banks
+            - 4-bit input port
+            - 20-bit I/O port
+            - 2 channel serial interface
+            - interrupt controller
+            - 2 channel DMA controller
+            - 2 channel 16-bit timer
+            - new instructions: BTCLR, RETRBI, STOP, BRKCS, TSKSW,
+                                MOVSPA, MOVSPB
+
+    V25+ = uPD70325 = V25 @ 8MHz or 10MHz plus changes:
+            - faster DMA
+            - improved serial interface
+
+    ---------------------------------------------
+
+    V30 = uPD70116 = 16-bit data bus version of V20
+    V30HL = uPD70116H = 16-bit data bus version of V20HL
+    V30MX = V30HL with separate address and data busses
+
+    V35 = uPD70330 = 16-bit data bus version of V25
+
+    V35+ = uPD70335 = 16-bit data bus version of V25+
+
+    ---------------------------------------------
+
+    V40 = uPD70208 = 8-bit data bus @ 10MHz
+    V40HL = uPD70208H = V40 with support up to 20Mhz
+
+    ---------------------------------------------
+
+    V50 = uPD70216 = 16-bit data bus version of V40
+    V50HL = uPD70216H = 16-bit data bus version of V40HL
+
+    ---------------------------------------------
+
+    V41 = uPD70270
+
+    V51 = uPD70280
+
+
+
+    V33A = uPD70136A
+
+    V53A = uPD70236A
+
+
+
+    Instruction differences:
+        V20, V30, V40, V50 have dedicated emulation instructions
+            (BRKEM, RETEM, CALLN)
+
+        V33A, V53A has dedicated address mode instructions
+            (BRKXA, RETXA)
+
+
+
+    (Re)Written June-September 2000 by Bryan McPhail (mish@tendril.co.uk) based
+    on code by Oliver Bergmann (Raul_Bloodworth@hotmail.com) who based code
+    on the i286 emulator by Fabrice Frances which had initial work based on
+    David Hedley's pcemu(!).
+
+    This new core features 99% accurate cycle counts for each processor,
+    there are still some complex situations where cycle counts are wrong,
+    typically where a few instructions have differing counts for odd/even
+    source and odd/even destination memory operands.
+
+    Flag settings are also correct for the NEC processors rather than the
+    I86 versions.
+
+    Changelist:
+
+    22/02/2003:
+        Removed cycle counts from memory accesses - they are certainly wrong,
+        and there is already a memory access cycle penalty in the opcodes
+        using them.
+
+        Fixed save states.
+
+        Fixed ADJBA/ADJBS/ADJ4A/ADJ4S flags/return values for all situations.
+        (Fixes bugs in Geostorm and Thunderblaster)
+
+        Fixed carry flag on NEG (I thought this had been fixed circa Mame 0.58,
+        but it seems I never actually submitted the fix).
+
+        Fixed many cycle counts in instructions and bug in cycle count
+        macros (odd word cases were testing for odd instruction word address
+        not data address).
+
+    Todo!
+        Double check cycle timing is 100%.
+
+****************************************************************************/
+
 #include "burnint.h"
 //#include <stdlib.h>
 //#include <stdio.h>

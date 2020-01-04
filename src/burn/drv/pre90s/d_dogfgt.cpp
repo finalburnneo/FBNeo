@@ -1,3 +1,6 @@
+// FB Alpha Acrobatic Dog-Fight driver module
+// Based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "ay8910.h"

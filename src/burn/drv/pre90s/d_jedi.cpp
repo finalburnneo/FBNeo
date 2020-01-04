@@ -1,3 +1,6 @@
+// FB Alpha Return of the Jedi driver module
+// Based on MAME driver by Dan Boris and Aaron Giles
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "pokey.h"

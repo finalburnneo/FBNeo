@@ -1,3 +1,6 @@
+// FB Alpha Galaga 3 / Gaplus driver module
+// Based on MAME driver by Manuel Abadia, Ernesto Corvi, and Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "namco_snd.h"

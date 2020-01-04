@@ -1,3 +1,6 @@
+// FB Alpha Cheeky Mouse driver module
+// Based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "dac.h"

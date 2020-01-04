@@ -1,3 +1,6 @@
+// Version number, written as  vV.V.BB  or  vV.V.BBaa
+// (0xVVBBaa, in BCD notation)
+
 #define VER_MAJOR  0
 #define VER_MINOR  2
 #define VER_BETA  97

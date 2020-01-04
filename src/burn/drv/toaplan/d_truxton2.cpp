@@ -1,3 +1,6 @@
+// FB Alpha Truxton 2 driver module
+// Driver and emulation by Jan Klaassen
+
 #include "toaplan.h"
 // Truxton 2
 

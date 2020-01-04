@@ -1,3 +1,7 @@
+// FB Alpha Double Dragon driver module
+// Based on MAME driver by Philip Bennett,Carlos A. Lozano, Rob Rosenbrock,
+// Phil Stroffolino, Ernesto Corvi, David Haywood, and R. Belmont
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "hd6309_intf.h"

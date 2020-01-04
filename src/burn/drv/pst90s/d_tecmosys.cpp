@@ -1,3 +1,6 @@
+// FB Neo Tecmo System driver module
+// Based on MAME driver by Farfetch, David Haywood, Tomasz Slanina, and nuapete
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "msm6295.h"

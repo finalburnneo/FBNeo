@@ -1,3 +1,7 @@
+// Millipede emu-layer for FB Alpha by dink, based on Ivan Mackintosh's Millipede/Centipede emulator and MAME driver.
+// Todo:
+//   Screen flip needs fixing (2p coctail mode) [move joystick <- -> or press OK to continue!]
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "burn_gun.h"

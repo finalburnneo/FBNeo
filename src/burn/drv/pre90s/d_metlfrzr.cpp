@@ -1,3 +1,6 @@
+// FB Alpha Metal Freezer driver module
+// Based on MAME driver by Angelo Salese (Kale)
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2151.h"

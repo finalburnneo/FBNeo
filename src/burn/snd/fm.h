@@ -1,3 +1,7 @@
+/*
+  File: fm.h -- header file for software emulation for FM sound generator
+
+*/
 #ifndef _H_FM_FM_
 #define _H_FM_FM_
 

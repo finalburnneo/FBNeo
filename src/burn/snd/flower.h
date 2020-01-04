@@ -1,3 +1,4 @@
+// flower sound core
 void flower_sound_init(UINT8 *rom_sample, UINT8 *rom_volume);
 void flower_sound_exit();
 void flower_sound_scan();

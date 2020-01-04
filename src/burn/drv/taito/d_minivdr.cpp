@@ -1,3 +1,6 @@
+// FB Alpha Minivader driver module
+//Based on MAME Driver by Takahiro Nogi
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 

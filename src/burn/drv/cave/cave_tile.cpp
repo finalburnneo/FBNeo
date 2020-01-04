@@ -1,3 +1,5 @@
+// Cave hardware tilemaps
+
 #include "cave.h"
 
 struct CaveTile { INT16 x; INT16 y; UINT32 tile; };

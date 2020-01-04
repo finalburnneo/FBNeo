@@ -1,3 +1,6 @@
+// FB Alpha Goindol driver module
+// Based on MAME driver by Jarek Parchanski
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2203.h"

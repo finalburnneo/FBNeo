@@ -1,3 +1,8 @@
+// FB Alpha Irem M92 system driver
+// Based on MAME driver by Bryan McPhail
+// Original port from MAME by OopsWare
+// Overhauled and tuned up by dink in August 2014, R-Type LEO title intro-effect fixed Dec.2016
+
 #include "tiles_generic.h"
 #include "burn_ym2151.h"
 #include "nec_intf.h"

@@ -1,3 +1,6 @@
+/* Bcj2.c -- BCJ2 Decoder (Converter for x86 code)
+2015-08-01 : Igor Pavlov : Public domain */
+
 #include "Precomp.h"
 
 #include "Bcj2.h"

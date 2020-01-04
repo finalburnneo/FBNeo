@@ -1,3 +1,6 @@
+// FB Alpha Stadium Hero driver module
+// Based on MAME driver by Bryan McPhail
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "m6502_intf.h"

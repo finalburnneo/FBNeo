@@ -1,3 +1,6 @@
+// FB Alpha - World Cup '90 driver
+// Based on MAME driver by Ernesto Corvi
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2608.h"

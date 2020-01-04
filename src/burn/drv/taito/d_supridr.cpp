@@ -1,3 +1,9 @@
+// FB Alpha Super Rider driver module
+// Based on MAME driver by Aaron Giles
+//
+// Notes: Added a lowpass filter effect to get rid of the headache-inducing
+// high pitched hissing noise.
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

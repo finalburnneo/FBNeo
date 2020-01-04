@@ -1,3 +1,6 @@
+// FB Alpha Tecmo driver Module
+// Based on MAME driver by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym3812.h"

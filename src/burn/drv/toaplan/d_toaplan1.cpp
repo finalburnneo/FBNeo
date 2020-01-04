@@ -1,3 +1,6 @@
+// FB Alpha Toaplan driver module
+// Based on MAME driver by Darren Olafson, Quench, and Stephane Humbert
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015, Marcos Medeiros
+ * Licensed under BSD 3-clause.
+ */
 #include <cstdio>
 #include "mips3_x64.h"
 #include "xbyak/xbyak.h"

@@ -1,3 +1,6 @@
+// FB Alpha Atari Arcade Classics / Sparkz driver module
+// Based on MAME driver by Aaron Giles
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "atariic.h"

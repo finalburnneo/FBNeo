@@ -1,3 +1,4 @@
+// wiping sound core
 void wipingsnd_init(UINT8 *rom, UINT8 *prom);
 void wipingsnd_exit();
 void wipingsnd_reset();

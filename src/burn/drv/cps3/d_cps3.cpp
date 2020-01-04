@@ -1,3 +1,32 @@
+// ------------------------------------------------------------------------------------
+// Capcom Play System III Drivers for FB Alpha (2007 - 2008).
+// ------------------------------------------------------------------------------------
+//     Based on MAME driver by David Haywood, Andreas Naive, El Semi, Philip Bennett,
+//	and Tomasz Slanina
+//
+//	v1	[ OopsWare ]
+//     - Original drivers release.
+//
+//	v2  [ CaptainCPS-X ]
+//     - Verified drivers.
+//     - Updated DIPs.
+//     - Updated some Inits.
+//     - Added some Comments.
+//
+//  v3 [ BisonSAS ]
+//     - Added default game regions DIPs.
+//     - Added unicode titles for "jojo" and "jojoba".
+//     - Changed the redeartn BIOS to "warzard_euro.29f400.u2".
+//     - Added "HARDWARE_CAPCOM_CPS3_NO_CD" flag for NOCD sets.
+//
+//  v4 [ CaptainCPS-X ]
+//     - Updated comments & organized structures of code.
+//     - Revised code for compatibility with FB Alpha Enhanced.
+//
+//	More info: https://neo-source.com/
+//
+// ------------------------------------------------------------------------------------
+
 #include "cps3.h"
 
 static struct BurnInputInfo cps3InputList[] = {

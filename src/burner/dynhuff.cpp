@@ -1,3 +1,57 @@
+//
+//  Dynamic Huffman Encoder/Decoder
+//
+//  implemented by Gangta
+//
+//-----------------------------------------------------------
+//
+//  Version History
+//
+//  version 0.1  - first release
+//  version 0.1a - fixed a bug where the bit remainder in
+//                 the EncodeBuffer() function didn't reset
+//                 to 32 if encoding is restarted before
+//                 program exit
+//  version 0.1b - fixed right shift
+//               - fixed some utility functions
+//
+//  version 0.1c - fixed PrintResult()
+//               - fixed a fatal bug in CorrectDH_T) 15% slower
+//               - optimized compression/decompression 95% faster
+//               - overall 80% faster :)
+//
+//  version 0.2  - optimized even more, now O(lg 2) :)
+//
+//-----------------------------------------------------------
+//
+//  Memory usage:
+//
+//     128 KB for both encoding/decoding
+//
+//     I tested buffer size 16K, 32K, 64K, 128K, etc
+//     The performance started to drop after 512K,
+//     so I chose 128K.
+//
+//  Comments:
+//
+//     I tried to optimize the speed as best I can in my
+//     knowledge.
+//
+//     It has buffer overflow protection for encoding and
+//     decoding.
+//
+//     It has a frequency reset function which prevents
+//     frequency overflow.
+//
+//     It can compress text files as well as any type of
+//     binary files.  The compression is not as good as
+//     zlib, or bzlibb2, but it supports "on the fly"
+//     encoding/decoding, and I believe it is faster than
+//     bzlibb2.
+//
+//
+///////////////////////////////////////////////////////////////
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

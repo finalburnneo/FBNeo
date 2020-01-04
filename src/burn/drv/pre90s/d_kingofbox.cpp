@@ -1,3 +1,6 @@
+// FB Alpha King of Boxing / Ring King driver module
+// Based on MAME driver by Ernesto Corvi
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "dac.h"

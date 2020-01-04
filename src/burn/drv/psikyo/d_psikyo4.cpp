@@ -1,3 +1,6 @@
+// FB Alpha Psikyo PS4 harware driver module
+// Based on MAME driver by David Haywood and Paul Priest
+
 #include "tiles_generic.h"
 #include "burn_ymf278b.h"
 #include "eeprom.h"

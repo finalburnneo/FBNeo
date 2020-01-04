@@ -1,3 +1,6 @@
+// FB Alpha Dead Angle driver module
+// Based on MAME driver by Bryan McPhail and David Haywood
+
 #include "tiles_generic.h"
 #include "nec_intf.h"
 #include "z80_intf.h"

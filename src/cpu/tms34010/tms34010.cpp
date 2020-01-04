@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015, Marcos Medeiros
+ * Licensed under BSD 3-clause.
+ */
 #include "tms34010.h"
 #include "tms34010_memacc.h"
 #include "tms34010_ctrl.h"

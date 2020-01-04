@@ -1,3 +1,6 @@
+
+// deco16 tilemap routines
+
 extern UINT16 *deco16_pf_control[2];
 extern UINT8 *deco16_pf_ram[4];
 extern UINT8 *deco16_pf_rowscroll[4];

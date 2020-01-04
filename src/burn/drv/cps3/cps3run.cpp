@@ -1,3 +1,22 @@
+/**********************************************************************
+
+CPS3 Driver (preliminary)
+
+Decryption by Andreas Naive
+
+Driver by David Haywood
+ with help from Tomasz Slanina and ElSemi
+
+Sound emulation by Philip Bennett
+
+SCSI code by ElSemi
+
+**********************************************************************
+
+Port to FBA by OopsWare
+
+**********************************************************************/
+
 #include "cps3.h"
 #include "sh2_intf.h"
 

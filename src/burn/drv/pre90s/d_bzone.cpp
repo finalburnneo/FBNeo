@@ -1,3 +1,10 @@
+// FB Alpha Battlezone / Bradley Tank Trainer / Red Baron driver module
+// Based on MAME driver by Brad Oliver and Nicola Salmoria
+
+// to do:
+// 	hook up analog inputs (bradley)
+//	bug fix
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "burn_gun.h"

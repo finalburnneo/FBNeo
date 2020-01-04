@@ -1,3 +1,9 @@
+// FB Alpha Wyvern F-0 driver module
+// Based on MAME driver by Luca Elia
+
+// Note: wyvernf0 sound hw has a dac @ 0xd600, but it is not used in the
+// game at all except for initialization @ boot (0x80)
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_m68705.h"

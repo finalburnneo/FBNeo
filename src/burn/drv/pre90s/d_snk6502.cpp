@@ -1,3 +1,6 @@
+// FB Alpha SNK 6502-based hardware driver module
+// Based on MAME driver by Nicola Salmoria and Dan Boris
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "snk6502_sound.h"

@@ -1,3 +1,38 @@
+/***************************************************************************
+                    Gaelco Sound Hardware
+
+                By Manuel Abadia <manu@teleline.es>
+
+CG-1V/GAE1 (Gaelco custom GFX & Sound chip):
+    The CG-1V/GAE1 can handle up to 7 stereo channels.
+    The chip output is connected to a TDA1543 (16 bit DAC).
+
+Registers per channel:
+======================
+    Word | Bit(s)            | Description
+    -----+-FEDCBA98-76543210-+--------------------------
+      0  | xxxxxxxx xxxxxxxx | not used?
+      1  | xxxx---- -------- | left channel volume (0x00..0x0f)
+      1  | ----xxxx -------- | right channel volume (0x00..0x0f)
+      1  | -------- xxxx---- | sample type (0x0c = PCM 8 bits mono, 0x08 = PCM 8 bits stereo)
+      1  | -------- ----xxxx | ROM Bank
+      2  | xxxxxxxx xxxxxxxx | sample end position
+      3  | xxxxxxxx xxxxxxxx | remaining bytes to play
+
+      the following are used only when looping (usually used for music)
+
+      4  | xxxxxxxx xxxxxxxx | not used?
+      5  | xxxx---- -------- | left channel volume (0x00..0x0f)
+      5  | ----xxxx -------- | right channel volume (0x00..0x0f)
+      5  | -------- xxxx---- | sample type (0x0c = PCM 8 bits mono, 0x08 = PCM 8 bits stereo)
+      5  | -------- ----xxxx | ROM Bank
+      6  | xxxxxxxx xxxxxxxx | sample end position
+      7  | xxxxxxxx xxxxxxxx | remaining bytes to play
+
+    The samples are played from (end position + length) to (end position)!
+
+***************************************************************************/
+
 #include "burnint.h"
 #include "gaelco.h"
 

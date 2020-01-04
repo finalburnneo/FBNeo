@@ -1,3 +1,6 @@
+// FB Alpha Technos "U.S. Championship V'ball driver module
+// Based on MAME driver by Paul "TBBle" Hampson
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "z80_intf.h"

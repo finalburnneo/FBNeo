@@ -1,3 +1,6 @@
+// Kaneko Pandora module
+// Based on MAME sources by David Haywood, Luca Elia
+
 #include "tiles_generic.h"
 
 static UINT16 *pandora_temp	= NULL;

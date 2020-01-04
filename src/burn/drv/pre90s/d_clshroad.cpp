@@ -1,3 +1,6 @@
+// FB Alpha Clash Road / Fire Battle driver module
+// Based on MAME driver by Luca Elia
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "wiping.h"

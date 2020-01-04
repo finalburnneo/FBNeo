@@ -1,3 +1,6 @@
+// TC0100SCN
+// Based on MAME sources by Nicola Salmoria
+
 #include "tiles_generic.h"
 #include "taito_ic.h"
 

@@ -1,3 +1,7 @@
+// FB Alpha NMK16 driver module
+// Based on MAME driver by Mirko Buffoni, Richard Bush, Nicola Salmoria, Bryan McPhail, David Haywood, and R. Belmont
+// Also, a huge "thank you!" to JacKc for helping bug test
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

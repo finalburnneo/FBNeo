@@ -1,3 +1,7 @@
+// todo:
+//   NBAJAM & NBA JAM TE: resets in intro - CPU core?
+//   JDREDDP - sound
+
 #include "tiles_generic.h"
 #include "midtunit.h"
 #include "tms34010_intf.h"

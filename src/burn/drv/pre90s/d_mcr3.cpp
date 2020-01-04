@@ -1,3 +1,18 @@
+// FB Alpha Midway MCR-3 system driver module
+// Based on MAME driver by Christopher Kirmse, Aaron Giles
+
+// demoderm		- good
+// sarge		- good
+// maxrpm		- needs proper inputs
+// rampage		- good
+// rampage2		- good
+// powerdrv		- needs toggle-inputs and fix for slow-mo issue
+// stargrds		- good
+// spyhunt		- good
+// spyhuntp		- good
+// crater		- graphics issues (unfixable offset? weird.)
+// turbotag		- should we bother? looks like a buggy mess
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m68000_intf.h"

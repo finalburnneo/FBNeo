@@ -1,3 +1,6 @@
+/* Bra86.c -- Converter for x86 code (BCJ)
+2013-11-12 : Igor Pavlov : Public domain */
+
 #include "Precomp.h"
 
 #include "Bra.h"

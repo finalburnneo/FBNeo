@@ -1,3 +1,20 @@
+// FB Alpha Taito F3 driver module
+// Based on MAME driver by Bryan McPhail and MANY others.
+
+/*
+    version .00001d ;)
+
+	- known issues and workarounds -
+	scfinals & scfinalso coin inputs do not work, therefore a kludge is used.
+	  -> if a coin is pressed, it instead presses the service coin :)
+	  -> scfinals also displays a weird/corrupt version string in service mode(!!)
+
+	- todo -
+	kirameki sound banking
+*/
+
+//#define USE_CPU_SPEEDHACKS
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "taito.h"

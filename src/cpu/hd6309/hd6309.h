@@ -1,3 +1,7 @@
+/*** hd6309: Portable 6309 emulator ******************************************/
+
+//#pragma once
+
 #ifndef __HD6309_H__
 #define __HD6309_H__
 

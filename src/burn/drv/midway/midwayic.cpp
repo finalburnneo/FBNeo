@@ -1,3 +1,4 @@
+/* Ported from MAME */
 #include "burnint.h"
 #include "midwayic.h"
 

@@ -1,3 +1,6 @@
+/* Lzma2Enc.h -- LZMA2 Encoder
+2013-01-18 : Igor Pavlov : Public domain */
+
 #ifndef __LZMA2_ENC_H
 #define __LZMA2_ENC_H
 

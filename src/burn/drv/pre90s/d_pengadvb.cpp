@@ -1,3 +1,5 @@
+// FB Alpha pengadvb arcade driver module based on hap's mame driver
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "tms9928a.h"

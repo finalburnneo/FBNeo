@@ -1,3 +1,6 @@
+// FB Alpha Data East Simple 156 System driver module
+// Based on MAME driver by 
+
 #include "tiles_generic.h"
 #include "arm_intf.h"
 #include "msm6295.h"

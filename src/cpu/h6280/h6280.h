@@ -1,3 +1,15 @@
+/*****************************************************************************
+
+    h6280.h Portable Hu6280 emulator interface
+
+    Copyright Bryan McPhail, mish@tendril.co.uk
+
+    This source code is based (with permission!) on the 6502 emulator by
+    Juergen Buchmueller.  It is released as part of the Mame emulator project.
+    Let me know if you intend to use this code in any other project.
+
+******************************************************************************/
+
 #pragma once
 
 #ifndef __H6280_H__

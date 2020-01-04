@@ -1,3 +1,9 @@
+// FB Alpha Warp Speed driver module
+// Based on MAME driver by Mariusz Wojcieszek
+
+// to do:
+//	hook up analog inputs
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "math.h"

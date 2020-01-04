@@ -168,7 +168,7 @@ static int DxSoundCheck()
 		}
 
 		// get more sound into nAudNextSound
-		DSoundGetNextSound(nFollowingSeg == nPlaySeg || bAlwaysDrawFrames); // If this is the last seg of sound, draw the graphics (frameskipping)
+		DSoundGetNextSound((nFollowingSeg == nPlaySeg) || bAlwaysDrawFrames); // If this is the last seg of sound, draw the graphics (frameskipping)
 
 		if (nAudDSPModule[0])	{
 			DspDo(nAudNextSound, nAudSegLen);
@@ -245,11 +245,11 @@ static int DxSoundInit()
 
 	// Calculate the Seg Length and Loop length (round to nearest sample)
 	nAudSegLen = (nAudSampleRate[0] * 100 + (nDSoundFps >> 1)) / nDSoundFps;
-	cbLoopLen = nAudSegLen * nAudSegCount << 2;
+	cbLoopLen = (nAudSegLen * nAudSegCount) << 2;
 
 	// Make the format of the sound
-	memset(&wfx, 0, sizeof wfx);
-	wfx.cbSize = sizeof wfx;
+	memset(&wfx, 0, sizeof(wfx));
+	wfx.cbSize = sizeof(wfx);
 	wfx.wFormatTag = WAVE_FORMAT_PCM;
 	wfx.nChannels = 2;										  // stereo
 	wfx.nSamplesPerSec = nAudSampleRate[0];					  // sample rate
@@ -266,8 +266,8 @@ static int DxSoundInit()
 	nRet = pDS->SetCooperativeLevel(hScrnWnd, DSSCL_PRIORITY);
 
 	// Make the primary sound buffer
-	memset(&dsbd, 0, sizeof dsbd);
-	dsbd.dwSize = sizeof dsbd;
+	memset(&dsbd, 0, sizeof(dsbd));
+	dsbd.dwSize = sizeof(dsbd);
 	dsbd.dwFlags = DSBCAPS_PRIMARYBUFFER;
 	if (FAILED(pDS->CreateSoundBuffer(&dsbd, &pdsbPrim, NULL))) {
 		DxSoundExit();
@@ -285,8 +285,8 @@ static int DxSoundInit()
 	}
 
 	// Make the loop sound buffer
-	memset(&dsbd, 0, sizeof dsbd);
-	dsbd.dwSize = sizeof dsbd;
+	memset(&dsbd, 0, sizeof(dsbd));
+	dsbd.dwSize = sizeof(dsbd);
 	// A standard secondary buffer (accurate position, plays in the background, and can notify).
 	dsbd.dwFlags = DSBCAPS_GETCURRENTPOSITION2 | DSBCAPS_GLOBALFOCUS | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_CTRLVOLUME;
 	dsbd.dwBufferBytes = cbLoopLen;
@@ -305,7 +305,7 @@ static int DxSoundInit()
 
 	for (int i = 0; i < nAudSegCount; i++)
 	{
-		lpPositionNotify[i].dwOffset = i * nAudSegLen << 2;
+		lpPositionNotify[i].dwOffset = (i * nAudSegLen) << 2;
 		lpPositionNotify[i].hEventNotify = hDSoundEvent;
 	}
 
@@ -320,7 +320,7 @@ static int DxSoundInit()
 	free(lpPositionNotify);
 
 	// Note: +2 is a hacky work-around for crashy Midway games (mk2, etc) via Kaillera
-	nAudNextSound = (short*)malloc(nAudSegLen << 2 + 2);		// The next sound block to put in the stream
+	nAudNextSound = (short*)malloc(nAudSegLen << (2 + 2));		// The next sound block to put in the stream
 	if (nAudNextSound == NULL) {
 		DxSoundExit();
 		return 1;

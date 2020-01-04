@@ -34,7 +34,7 @@ class LowPass2 *LP1 = NULL, *LP2 = NULL;
 
 INT32 DspDo(INT16 *Buff, INT32 Len)
 {
-  if (!LP1 || !LP2) { return 1; }
+  if ((!LP1) || (!LP2)) { return 1; }
 
   LP1->Filter(Buff, Len);	// Left
   LP2->Filter(Buff+1, Len);	// Right

@@ -1,5 +1,5 @@
-#include "vid_support.h"
 #include "burner.h"
+#include "vid_support.h"
 
 // ---------------------------------------------------------------------------
 // General

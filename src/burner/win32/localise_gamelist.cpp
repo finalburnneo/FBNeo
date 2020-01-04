@@ -7,22 +7,24 @@
 TCHAR szGamelistLocalisationTemplate[MAX_PATH] = _T("");
 bool nGamelistLocalisationActive = false;
 static int nCodePage = CP_ACP;
-static TCHAR *szLongNamesArray[MAX_LST_GAMES];
+static TCHAR* szLongNamesArray[MAX_LST_GAMES];
 
 void BurnerDoGameListLocalisation()
 {
 	if (!nGamelistLocalisationActive) return;
 
 	FILE* fp = _tfopen(szGamelistLocalisationTemplate, _T("rt"));
-	if (fp) {
-		TCHAR *szShortNamesArray[MAX_LST_GAMES];
+	if (fp)
+	{
+		TCHAR* szShortNamesArray[MAX_LST_GAMES];
 		TCHAR szLine[MAX_LST_LINE_LEN * sizeof(TCHAR)];
 		int nTokenPos = 0;
 		int nArrayPos = 0;
 		int nNumGames = 0;
 
 		// Allocate arrays to read the file into
-		for (int i = 0; i < MAX_LST_GAMES; i++) {
+		for (int i = 0; i < MAX_LST_GAMES; i++)
+		{
 			szLongNamesArray[i] = (TCHAR*)malloc(MAX_LST_LINE_LEN * sizeof(TCHAR));
 			szShortNamesArray[i] = (TCHAR*)malloc(33 * sizeof(TCHAR));
 			memset(szLongNamesArray[i], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
@@ -31,20 +33,25 @@ void BurnerDoGameListLocalisation()
 
 		char szTemp[MAX_LST_LINE_LEN];
 
-		while (fgets(szTemp, sizeof(szTemp), fp)) {
-			if (szTemp[0] == '/' && szTemp[1] == '/') {
+		while (fgets(szTemp, sizeof(szTemp), fp))
+		{
+			if (szTemp[0] == '/' && szTemp[1] == '/')
+			{
 				continue;
 			}
 
-			if (!strncmp(szTemp, "codepage=", 9)) {
-				if ((strlen(szTemp) - 10) == 4) {
-					nCodePage  = (szTemp[9] - '0') * 1000;
+			if (!strncmp(szTemp, "codepage=", 9))
+			{
+				if ((strlen(szTemp) - 10) == 4)
+				{
+					nCodePage = (szTemp[9] - '0') * 1000;
 					nCodePage += (szTemp[10] - '0') * 100;
 					nCodePage += (szTemp[11] - '0') * 10;
 					nCodePage += (szTemp[12] - '0');
 				}
-				if ((strlen(szTemp) - 10) == 3) {
-					nCodePage  = (szTemp[9] - '0') * 100;
+				if ((strlen(szTemp) - 10) == 3)
+				{
+					nCodePage = (szTemp[9] - '0') * 100;
 					nCodePage += (szTemp[10] - '0') * 10;
 					nCodePage += (szTemp[11] - '0');
 				}
@@ -53,7 +60,8 @@ void BurnerDoGameListLocalisation()
 
 			// Get rid of the linefeed at the end
 			int nLen = strlen(szTemp);
-			if (szTemp[nLen - 1] == 10) {
+			if (szTemp[nLen - 1] == 10)
+			{
 				szTemp[nLen - 1] = 0;
 				nLen--;
 			}
@@ -62,15 +70,18 @@ void BurnerDoGameListLocalisation()
 
 			// Read the file into arrays
 			TCHAR* Tokens = _tcstok(szLine, _T("\t"));
-			while (Tokens != NULL) {
-				if (nTokenPos == 0) {
+			while (Tokens != NULL)
+			{
+				if (nTokenPos == 0)
+				{
 					wcscpy(szShortNamesArray[nArrayPos], Tokens);
-//					szShortNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
+					//					szShortNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
 				}
 
-				if (nTokenPos == 1) {
+				if (nTokenPos == 1)
+				{
 					wcscpy(szLongNamesArray[nArrayPos], Tokens);
-//					szLongNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
+					//					szLongNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
 				}
 
 				Tokens = _tcstok(NULL, _T("\t"));
@@ -82,13 +93,16 @@ void BurnerDoGameListLocalisation()
 		}
 		nNumGames = nArrayPos;
 
-		for (int i = 0; i < nNumGames; i++) {
+		for (int i = 0; i < nNumGames; i++)
+		{
 			BurnLocalisationSetName(TCHARToANSI(szShortNamesArray[i], NULL, 0), szLongNamesArray[i]);
 		}
 
 		// tidy up
-		for (int i = 0; i < MAX_LST_GAMES; i++) {
-			if (szShortNamesArray[i]) {
+		for (int i = 0; i < MAX_LST_GAMES; i++)
+		{
+			if (szShortNamesArray[i])
+			{
 				free(szShortNamesArray[i]);
 				szShortNamesArray[i] = NULL;
 			}
@@ -103,11 +117,13 @@ static void BurnerGameListCreateTemplate()
 	unsigned int nOldDrvSelect = nBurnDrvActive;
 
 	FILE* fp = _tfopen(szGamelistLocalisationTemplate, _T("wt"));
-	if (fp) {
+	if (fp)
+	{
 		_ftprintf(fp, _T("// game list translation template for FinalBurn Neo version 0x%06X\n\n"), nBurnVer);
 		_ftprintf(fp, _T("// codepage=1252\n\n"));
 
-		for (unsigned int i = 0; i < nBurnDrvCount; i++) {
+		for (unsigned int i = 0; i < nBurnDrvCount; i++)
+		{
 			nBurnDrvActive = i;
 			_ftprintf(fp, _T("%s\t%s\n"), BurnDrvGetText(DRV_NAME), BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
 		}
@@ -120,8 +136,10 @@ static void BurnerGameListCreateTemplate()
 
 void BurnerExitGameListLocalisation()
 {
-	for (int i = 0; i < MAX_LST_GAMES; i++) {
-		if (szLongNamesArray[i]) {
+	for (int i = 0; i < MAX_LST_GAMES; i++)
+	{
+		if (szLongNamesArray[i])
+		{
 			free(szLongNamesArray[i]);
 			szLongNamesArray[i] = NULL;
 		}
@@ -165,7 +183,8 @@ int LocaliseGamelistLoadTemplate()
 	int nRet = GetOpenFileName(&ofn);
 	bRunPause = bOldPause;
 
-	if (nRet == 0) {
+	if (nRet == 0)
+	{
 		return 1;
 	}
 
@@ -189,7 +208,8 @@ int LocaliseGamelistCreateTemplate()
 	int nRet = GetSaveFileName(&ofn);
 	bRunPause = bOldPause;
 
-	if (nRet == 0) {
+	if (nRet == 0)
+	{
 		return 1;
 	}
 

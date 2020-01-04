@@ -17,7 +17,8 @@ static unsigned char nControls[INPUTSIZE];
 
 int KailleraInitInput()
 {
-	if (nGameInpCount == 0) {
+	if (nGameInpCount == 0)
+	{
 		return 1;
 	}
 
@@ -27,18 +28,22 @@ int KailleraInitInput()
 	unsigned int i = 0;
 
 	nPlayerOffset[0] = 0;
-	do {
+	do
+	{
 		BurnDrvGetInputInfo(&bii, i);
 		i++;
-	} while (!_strnicmp(bii.szName, "P1", 2) && i <= nGameInpCount);
+	}
+	while (!_strnicmp(bii.szName, "P1", 2) && i <= nGameInpCount);
 	i--;
 	nPlayerInputs[0] = i - nPlayerOffset[0];
 
-	for (int j = 1; j < MAXPLAYER; j++) {
+	for (int j = 1; j < MAXPLAYER; j++)
+	{
 		char szString[3] = "P?";
 		szString[1] = j + '1';
 		nPlayerOffset[j] = i;
-		while (!_strnicmp(bii.szName, szString, 2) && i < nGameInpCount) {
+		while (!_strnicmp(bii.szName, szString, 2) && i < nGameInpCount)
+		{
 			i++;
 			BurnDrvGetInputInfo(&bii, i);
 		}
@@ -46,7 +51,8 @@ int KailleraInitInput()
 	}
 
 	nCommonOffset = i;
-	while ((bii.nType & BIT_GROUP_CONSTANT) == 0 && i < nGameInpCount){
+	while ((bii.nType & BIT_GROUP_CONSTANT) == 0 && i < nGameInpCount)
+	{
 		i++;
 		BurnDrvGetInputInfo(&bii, i);
 	}
@@ -78,15 +84,19 @@ int KailleraGetInput()
 	memset(nControls, 0, INPUTSIZE);
 
 	// Pack all DIP switches + common controls + player 1 controls
-	for (i = 0, j = 0; i < nPlayerInputs[0]; i++, j++) {
+	for (i = 0, j = 0; i < nPlayerInputs[0]; i++, j++)
+	{
 		BurnDrvGetInputInfo(&bii, i + nPlayerOffset[0]);
-		if (*bii.pVal && bii.nType == BIT_DIGITAL) {
+		if (*bii.pVal && bii.nType == BIT_DIGITAL)
+		{
 			nControls[j >> 3] |= (1 << (j & 7));
 		}
 	}
-	for (i = 0; i < nCommonInputs; i++, j++) {
+	for (i = 0; i < nCommonInputs; i++, j++)
+	{
 		BurnDrvGetInputInfo(&bii, i + nCommonOffset);
-		if (*bii.pVal) {
+		if (*bii.pVal)
+		{
 			nControls[j >> 3] |= (1 << (j & 7));
 		}
 	}
@@ -95,20 +105,26 @@ int KailleraGetInput()
 	j = (j + 7) >> 3;
 
 	// Analog controls/constants
-	for (i = 0; i < nPlayerInputs[0]; i++) {
+	for (i = 0; i < nPlayerInputs[0]; i++)
+	{
 		BurnDrvGetInputInfo(&bii, i + nPlayerOffset[0]);
-		if (*bii.pVal && bii.nType != BIT_DIGITAL) {
-			if (bii.nType & BIT_GROUP_ANALOG) {
+		if (*bii.pVal && bii.nType != BIT_DIGITAL)
+		{
+			if (bii.nType & BIT_GROUP_ANALOG)
+			{
 				nControls[j++] = *bii.pShortVal >> 8;
 				nControls[j++] = *bii.pShortVal & 0xFF;
-			} else {
+			}
+			else
+			{
 				nControls[j++] = *bii.pVal;
 			}
 		}
 	}
 
 	// DIP switches
-	for (i = 0; i < nDIPInputs; i++, j++) {
+	for (i = 0; i < nDIPInputs; i++, j++)
+	{
 		BurnDrvGetInputInfo(&bii, i + nDIPOffset);
 		nControls[j] = *bii.pVal;
 	}
@@ -118,27 +134,37 @@ int KailleraGetInput()
 
 	// Send the control block to the Kaillera DLL & retrieve all controls
 	//if (kailleraModifyPlayValues(nControls, k) == -1) {
-	if (Kaillera_Modify_Play_Values(nControls, k) == -1) {
+	if (Kaillera_Modify_Play_Values(nControls, k) == -1)
+	{
 		kNetGame = 0;
 		return 1;
 	}
 
 	// Decode Player 1 input block
-	for (i = 0, j = 0; i < nPlayerInputs[0]; i++, j++) {
+	for (i = 0, j = 0; i < nPlayerInputs[0]; i++, j++)
+	{
 		BurnDrvGetInputInfo(&bii, i + nPlayerOffset[0]);
-		if (bii.nType == BIT_DIGITAL) {
-			if (nControls[j >> 3] & (1 << (j & 7))) {
+		if (bii.nType == BIT_DIGITAL)
+		{
+			if (nControls[j >> 3] & (1 << (j & 7)))
+			{
 				*bii.pVal = 0x01;
-			} else {
+			}
+			else
+			{
 				*bii.pVal = 0x00;
 			}
 		}
 	}
-	for (i = 0; i < nCommonInputs; i++, j++) {
+	for (i = 0; i < nCommonInputs; i++, j++)
+	{
 		BurnDrvGetInputInfo(&bii, i + nCommonOffset);
-		if (nControls[j >> 3] & (1 << (j & 7))) {
+		if (nControls[j >> 3] & (1 << (j & 7)))
+		{
 			*bii.pVal = 0x01;
-		} else {
+		}
+		else
+		{
 			*bii.pVal = 0x00;
 		}
 	}
@@ -147,35 +173,46 @@ int KailleraGetInput()
 	j = (j + 7) >> 3;
 
 	// Analog inputs
-	for (i = 0; i < nPlayerInputs[0]; i++) {
+	for (i = 0; i < nPlayerInputs[0]; i++)
+	{
 		BurnDrvGetInputInfo(&bii, i + nDIPOffset);
-		if (bii.nType & BIT_GROUP_ANALOG) {
+		if (bii.nType & BIT_GROUP_ANALOG)
+		{
 			*bii.pShortVal = (nControls[j] << 8) | nControls[j + 1];
 			j += 2;
 		}
 	}
 
 	// DIP switches
-	for (i = 0; i < nDIPInputs; i++, j++) {
+	for (i = 0; i < nDIPInputs; i++, j++)
+	{
 		BurnDrvGetInputInfo(&bii, i + nDIPOffset);
 		*bii.pVal = nControls[j];
 	}
 
 	// Decode other player's input blocks
-	for (int l = 1; l < MAXPLAYER; l++) {
-		if (nPlayerInputs[l]) {
-			for (i = 0, j = k * (l << 3); i < nPlayerInputs[l]; i++, j++) {
+	for (int l = 1; l < MAXPLAYER; l++)
+	{
+		if (nPlayerInputs[l])
+		{
+			for (i = 0, j = k * (l << 3); i < nPlayerInputs[l]; i++, j++)
+			{
 				BurnDrvGetInputInfo(&bii, i + nPlayerOffset[l]);
-				if (bii.nType == BIT_DIGITAL) {
-					if (nControls[j >> 3] & (1 << (j & 7))) {
+				if (bii.nType == BIT_DIGITAL)
+				{
+					if (nControls[j >> 3] & (1 << (j & 7)))
+					{
 						*bii.pVal = 0x01;
-					} else {
+					}
+					else
+					{
 						*bii.pVal = 0x00;
 					}
 				}
 			}
 
-			for (i = 0; i < nCommonInputs; i++, j++) {
+			for (i = 0; i < nCommonInputs; i++, j++)
+			{
 #if 0
 				// Allow other players to use common inputs
 				BurnDrvGetInputInfo(&bii, i + nCommonOffset);
@@ -189,10 +226,13 @@ int KailleraGetInput()
 			j = (j + 7) >> 3;
 
 			// Analog inputs/constants
-			for (i = 0; i < nPlayerInputs[l]; i++) {
+			for (i = 0; i < nPlayerInputs[l]; i++)
+			{
 				BurnDrvGetInputInfo(&bii, i + nPlayerOffset[l]);
-				if (bii.nType != BIT_DIGITAL) {
-					if (bii.nType & BIT_GROUP_ANALOG) {
+				if (bii.nType != BIT_DIGITAL)
+				{
+					if (bii.nType & BIT_GROUP_ANALOG)
+					{
 						*bii.pShortVal = (nControls[j] << 8) | nControls[j + 1];
 						j += 2;
 					}

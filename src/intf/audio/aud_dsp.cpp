@@ -32,33 +32,33 @@
 class LowPass2 *LP1 = NULL, *LP2 = NULL;
 
 
-INT32 DspDo(INT16 *Buff, INT32 Len)
+INT32 DspDo(INT16* Buff, INT32 Len)
 {
-  if ((!LP1) || (!LP2)) { return 1; }
+	if ((!LP1) || (!LP2)) { return 1; }
 
-  LP1->Filter(Buff, Len);	// Left
-  LP2->Filter(Buff+1, Len);	// Right
+	LP1->Filter(Buff, Len); // Left
+	LP2->Filter(Buff + 1, Len); // Right
 
-  return 0;
+	return 0;
 }
 
 
 INT32 DspInit()
 {
-  LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain,
-                     CutFreq2, Q2, Gain2);
-  LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain,
-                     CutFreq2, Q2, Gain2);
-  return 0;
+	LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain,
+	                   CutFreq2, Q2, Gain2);
+	LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain,
+	                   CutFreq2, Q2, Gain2);
+	return 0;
 }
 
 INT32 DspExit()
 {
-  delete LP1;
-  delete LP2;
+	delete LP1;
+	delete LP2;
 
-  LP1 = NULL;
-  LP2 = NULL;
+	LP1 = NULL;
+	LP2 = NULL;
 
-  return 0;
+	return 0;
 }

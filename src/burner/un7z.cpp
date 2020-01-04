@@ -78,9 +78,8 @@ static WRes File_Open(CSzFile* p, const char*, int)
 	return 0;
 }
 
-WRes InFile_Open(CSzFile *p, const char *name) { return File_Open(p, name, 0); }
-WRes OutFile_Open(CSzFile *p, const char *name) { return File_Open(p, name, 1); }
-
+WRes InFile_Open(CSzFile* p, const char* name) { return File_Open(p, name, 0); }
+WRes OutFile_Open(CSzFile* p, const char* name) { return File_Open(p, name, 1); }
 
 
 WRes File_Close(CSzFile*)

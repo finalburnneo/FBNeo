@@ -8,11 +8,12 @@ static HWND hSplashDlg = NULL;
 static HANDLE hSplashThread = NULL;
 static unsigned SplashThreadID = 0;
 
-static 	clock_t StartTime;
+static clock_t StartTime;
 
 static INT_PTR CALLBACK SplashProc(HWND hDlg, UINT Msg, WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
-	if (Msg == WM_INITDIALOG) {
+	if (Msg == WM_INITDIALOG)
+	{
 		RECT rect;
 
 		hSplashDlg = hDlg;
@@ -23,7 +24,8 @@ static INT_PTR CALLBACK SplashProc(HWND hDlg, UINT Msg, WPARAM /*wParam*/, LPARA
 		int y = 224 + GetSystemMetrics(SM_CYDLGFRAME) * 2 + 6;
 
 		SetForegroundWindow(hDlg);
-		SetWindowPos(hDlg, HWND_TOPMOST, (rect.right - rect.left) / 2 - x / 2, (rect.bottom - rect.top) / 2 - y / 2, x, y, 0);
+		SetWindowPos(hDlg, HWND_TOPMOST, (rect.right - rect.left) / 2 - x / 2, (rect.bottom - rect.top) / 2 - y / 2, x,
+		             y, 0);
 		RedrawWindow(hDlg, NULL, NULL, 0);
 		ShowWindow(hDlg, SW_SHOWNORMAL);
 
@@ -42,10 +44,11 @@ static unsigned __stdcall DoSplash(void*)
 
 	CreateDialog(hAppInst, MAKEINTRESOURCE(IDD_SPLASH), NULL, (DLGPROC)SplashProc);
 
-	while (GetMessage(&msg, NULL, 0, 0)) {
-
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
 		// See if we need to end the thread
-		if (msg.message == (WM_APP + 0)) {
+		if (msg.message == (WM_APP + 0))
+		{
 			break;
 		}
 
@@ -60,7 +63,8 @@ static unsigned __stdcall DoSplash(void*)
 
 int SplashCreate()
 {
-	if (hSplashDlg || !nSplashTime || hSplashThread) {
+	if (hSplashDlg || !nSplashTime || hSplashThread)
+	{
 		return 1;
 	}
 
@@ -72,9 +76,10 @@ int SplashCreate()
 
 void SplashDestroy(bool bForce)
 {
-	if (hSplashThread) {
-
-		if (!bForce && clock() - nSplashTime < StartTime) {
+	if (hSplashThread)
+	{
+		if (!bForce && clock() - nSplashTime < StartTime)
+		{
 			return;
 		}
 
@@ -82,7 +87,8 @@ void SplashDestroy(bool bForce)
 		PostThreadMessage(SplashThreadID, WM_APP + 0, 0, 0);
 
 		// Wait for the thread to finish
-		if (WaitForSingleObject(hSplashThread, 10000) != WAIT_OBJECT_0) {
+		if (WaitForSingleObject(hSplashThread, 10000) != WAIT_OBJECT_0)
+		{
 			// If the thread doesn't finish within 10 seconds, forcibly kill it
 			TerminateThread(hSplashThread, 1);
 		}
@@ -93,6 +99,5 @@ void SplashDestroy(bool bForce)
 
 		hSplashThread = NULL;
 		SplashThreadID = 0;
-
 	}
 }

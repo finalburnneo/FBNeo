@@ -5,7 +5,8 @@ HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img)
 {
 	BITMAPINFO bi;
 
-	if (hwnd == NULL || img == NULL) {
+	if (hwnd == NULL || img == NULL)
+	{
 		return NULL;
 	}
 
@@ -24,7 +25,8 @@ HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img)
 	HDC hDC = GetDC(hwnd);
 	BYTE* pbits = NULL;
 	HBITMAP hBitmap = CreateDIBSection(hDC, &bi, DIB_RGB_COLORS, (void**)&pbits, NULL, 0);
-	if (pbits) {
+	if (pbits)
+	{
 		memcpy(pbits, img->bmpbits, img->imgbytes);
 	}
 	ReleaseDC(hwnd, hDC);
@@ -35,9 +37,10 @@ HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img)
 
 HBITMAP PNGLoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset)
 {
-	IMAGE img = { nWidth, nHeight, 0, 0, NULL, NULL, 0};
+	IMAGE img = {nWidth, nHeight, 0, 0, NULL, NULL, 0};
 
-	if (PNGLoad(&img, fp, nPreset)) {
+	if (PNGLoad(&img, fp, nPreset))
+	{
 		return NULL;
 	}
 
@@ -46,9 +49,10 @@ HBITMAP PNGLoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset)
 
 HBITMAP PNGLoadBitmapBuffer(HWND hWnd, unsigned char* buffer, int bufferLength, int nWidth, int nHeight, int nPreset)
 {
-	IMAGE img = { nWidth, nHeight, 0, 0, NULL, NULL, 0};
+	IMAGE img = {nWidth, nHeight, 0, 0, NULL, NULL, 0};
 
-	if (PNGLoadBuffer(&img, buffer, bufferLength, nPreset)) {
+	if (PNGLoadBuffer(&img, buffer, bufferLength, nPreset))
+	{
 		return NULL;
 	}
 
@@ -57,7 +61,8 @@ HBITMAP PNGLoadBitmapBuffer(HWND hWnd, unsigned char* buffer, int bufferLength, 
 
 HBITMAP LoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset)
 {
-	if (hWnd == NULL || fp == NULL) {
+	if (hWnd == NULL || fp == NULL)
+	{
 		return NULL;
 	}
 

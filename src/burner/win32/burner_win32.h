@@ -93,21 +93,21 @@ INT32 Dx9Core_Init();
 #ifdef FBN_DEBUG
 extern bool bDisableDebugConsole;                   // Disable debug console?
 #endif
-extern HINSTANCE hAppInst;							// Application Instance
-extern HANDLE hMainThread;							// Handle to the main thread
-extern long int nMainThreadID;						// ID of the main thread
+extern HINSTANCE hAppInst; // Application Instance
+extern HANDLE hMainThread; // Handle to the main thread
+extern long int nMainThreadID; // ID of the main thread
 extern int nAppThreadPriority;
 extern int nAppShowCmd;
 
 extern HACCEL hAccel;
 
-extern int nAppVirtualFps;							// virtual fps
+extern int nAppVirtualFps; // virtual fps
 
 #define EXE_NAME_SIZE (32)
 extern TCHAR szAppExeName[EXE_NAME_SIZE + 1];
 extern TCHAR szAppBurnVer[16];
 
-extern int  nCmdOptUsed;
+extern int nCmdOptUsed;
 extern bool bAlwaysProcessKeyboardInput;
 extern bool bAlwaysCreateSupportFolders;
 
@@ -119,18 +119,20 @@ extern bool bNoChangeNumLock;
 extern bool bMonitorAutoCheck;
 
 // Used for the load/save dialog in commdlg.h
-extern TCHAR szChoice[MAX_PATH];					// File chosen by the user
+extern TCHAR szChoice[MAX_PATH]; // File chosen by the user
 extern OPENFILENAME ofn;
 
 // Used to convert strings when possibly needed
-/* const */ char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int nOutSize);
-/* const */ TCHAR* ANSIToTCHAR(const char* pszString, TCHAR* pszOutString, int nOutSize);
+/* const */
+char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int nOutSize);
+/* const */
+TCHAR* ANSIToTCHAR(const char* pszString, TCHAR* pszOutString, int nOutSize);
 
-CHAR *astring_from_utf8(const char *s);
-char *utf8_from_astring(const CHAR *s);
+CHAR* astring_from_utf8(const char* s);
+char* utf8_from_astring(const CHAR* s);
 
-WCHAR *wstring_from_utf8(const char *s);
-char *utf8_from_wstring(const WCHAR *s);
+WCHAR* wstring_from_utf8(const char* s);
+char* utf8_from_wstring(const WCHAR* s);
 
 #ifdef _UNICODE
 #define tstring_from_utf8 wstring_from_utf8
@@ -140,7 +142,7 @@ char *utf8_from_wstring(const WCHAR *s);
 #define utf8_from_tstring utf8_from_astring
 #endif // _UNICODE
 
-int dprintf(TCHAR* pszFormat, ...);					// Use instead of printf() in the UI
+int dprintf(TCHAR* pszFormat, ...); // Use instead of printf() in the UI
 
 void MonitorAutoCheck();
 
@@ -157,7 +159,7 @@ int LocaliseInit(TCHAR* pszTemplate);
 int LocaliseLoadTemplate();
 int LocaliseCreateTemplate();
 HMENU FBNLoadMenu(HINSTANCE hInstance, LPTSTR lpMenuName);
-INT_PTR FBNDialogBox(HINSTANCE hInstance, LPTSTR lpTemplate, HWND hWndParent, DLGPROC  lpDialogFunc);
+INT_PTR FBNDialogBox(HINSTANCE hInstance, LPTSTR lpTemplate, HWND hWndParent, DLGPROC lpDialogFunc);
 HWND FBNCreateDialog(HINSTANCE hInstance, LPCTSTR lpTemplate, HWND hWndParent, DLGPROC lpDialogFunc);
 int FBNLoadString(HINSTANCE hInstance, UINT uID, LPTSTR lpBuffer, int nBufferMax);
 TCHAR* FBNLoadStringEx(HINSTANCE hInstance, UINT uID, bool bTranslate);
@@ -221,10 +223,10 @@ void EnableHighResolutionTiming();
 void DisableHighResolutionTiming();
 
 // drv.cpp
-extern int bDrvOkay;								// 1 if the Driver has been initted okay, and it's okay to use the BurnDrv functions
+extern int bDrvOkay; // 1 if the Driver has been initted okay, and it's okay to use the BurnDrv functions
 extern TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH];
 int DrvInit(int nDrvNum, bool bRestore);
-int DrvInitCallback();								// Used when Burn library needs to load a game. DrvInit(nBurnSelect, false)
+int DrvInitCallback(); // Used when Burn library needs to load a game. DrvInit(nBurnSelect, false)
 int DrvExit();
 void NeoCDZRateChangeback();
 
@@ -243,13 +245,13 @@ int RunReset();
 void ToggleLayer(unsigned char thisLayer);
 
 // scrn.cpp
-extern HWND hScrnWnd;								// Handle to the screen window
-extern HWND hRebar;									// Handle to the Rebar control containing the menu
+extern HWND hScrnWnd; // Handle to the screen window
+extern HWND hRebar; // Handle to the Rebar control containing the menu
 extern HWND hwndChat;
 extern bool bRescanRoms;
 extern bool bMenuEnabled;
 
-extern RECT SystemWorkArea;							// The full screen area
+extern RECT SystemWorkArea; // The full screen area
 extern int nWindowPosX, nWindowPosY;
 
 extern int nSavestateSlot;
@@ -261,8 +263,8 @@ int ScrnTitle();
 void SetPauseMode(bool bPause);
 int ActivateChat();
 void DeActivateChat();
-int BurnerLoadDriver(TCHAR *szDriverName);
-int StartFromReset(TCHAR *szDriverName);
+int BurnerLoadDriver(TCHAR* szDriverName);
+int StartFromReset(TCHAR* szDriverName);
 void PausedRedraw(void);
 INT32 is_netgame_or_recording();
 
@@ -270,19 +272,19 @@ INT32 is_netgame_or_recording();
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)
 #define UM_CANCELPOPUP (WM_USER + 0x0101)
 
-extern HANDLE hMenuThread;							// Handle to the thread that executes TrackPopupMenuEx
-extern DWORD nMenuThreadID;							// ID of the thread that executes TrackPopupMenuEx
-extern HWND hMenubar;								// Handle to the Toolbar control comprising the menu
+extern HANDLE hMenuThread; // Handle to the thread that executes TrackPopupMenuEx
+extern DWORD nMenuThreadID; // ID of the thread that executes TrackPopupMenuEx
+extern HWND hMenubar; // Handle to the Toolbar control comprising the menu
 extern HWND hMenuWindow;
 extern bool bMenuDisplayed;
 extern int nLastMenu;
-extern HMENU hMenu;									// Handle to the menu
-extern HMENU hMenuPopup;							// Handle to a popup version of the menu
+extern HMENU hMenu; // Handle to the menu
+extern HMENU hMenuPopup; // Handle to a popup version of the menu
 extern int nMenuHeight;
 extern int bAutoPause;
 extern int nScreenSize;
-extern int nScreenSizeHor;	// For horizontal orientation
-extern int nScreenSizeVer;	// For vertical orientation
+extern int nScreenSizeHor; // For horizontal orientation
+extern int nScreenSizeVer; // For vertical orientation
 extern int nWindowSize;
 
 #define SHOW_PREV_GAMES		10
@@ -342,36 +344,46 @@ HBITMAP LoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset);
 // cona.cpp
 extern int nIniVersion;
 
-struct VidPresetData { int nWidth; int nHeight; };
+struct VidPresetData
+{
+	int nWidth;
+	int nHeight;
+};
+
 extern struct VidPresetData VidPreset[4];
 
-struct VidPresetDataVer { int nWidth; int nHeight; };
+struct VidPresetDataVer
+{
+	int nWidth;
+	int nHeight;
+};
+
 extern struct VidPresetDataVer VidPresetVer[4];
 
 int ConfigAppLoad();
 int ConfigAppSave();
 
 // wave.cpp
-extern FILE* WaveLog;								// wave log file
+extern FILE* WaveLog; // wave log file
 
 int WaveLogStart();
 int WaveLogStop();
 
 // inpd.cpp
-extern HWND hInpdDlg;								// Handle to the Input Dialog
+extern HWND hInpdDlg; // Handle to the Input Dialog
 
 int InpdUpdate();
 int InpdCreate();
 int InpdListMake(int bBuild);
 
 // inpcheat.cpp
-extern HWND hInpCheatDlg;							// Handle to the Input Dialog
+extern HWND hInpCheatDlg; // Handle to the Input Dialog
 
 int InpCheatCreate();
 int InpCheatListMake(int bBuild);
 
 // inpdipsw.cpp
-extern HWND hInpDIPSWDlg;							// Handle to the Input Dialog
+extern HWND hInpDIPSWDlg; // Handle to the Input Dialog
 void InpDIPSWResetDIPs();
 int InpDIPSWCreate();
 
@@ -381,14 +393,14 @@ void InpMacroExit();
 int InpMacroCreate(int nInput);
 
 // inps.cpp
-extern HWND hInpsDlg;								// Handle to the Input Set Dialog
-extern unsigned int nInpsInput;						// The input number we are redefining
+extern HWND hInpsDlg; // Handle to the Input Set Dialog
+extern unsigned int nInpsInput; // The input number we are redefining
 int InpsCreate();
 int InpsUpdate();
 
 // inpc.cpp
-extern HWND hInpcDlg;								// Handle to the Input Constant Dialog
-extern unsigned int nInpcInput;						// The input number we are redefining
+extern HWND hInpcDlg; // Handle to the Input Constant Dialog
+extern unsigned int nInpcInput; // The input number we are redefining
 int InpcCreate();
 
 // stated.cpp
@@ -444,13 +456,13 @@ int UnfreezeInput(const unsigned char* buf, int size);
 void DisplayReplayProperties(HWND hDlg, bool bClear);
 
 // memcard.cpp
-extern int nMemoryCardStatus;						// & 1 = file selected, & 2 = inserted
+extern int nMemoryCardStatus; // & 1 = file selected, & 2 = inserted
 
-int	MemCardCreate();
-int	MemCardSelect();
-int	MemCardInsert();
-int	MemCardEject();
-int	MemCardToggle();
+int MemCardCreate();
+int MemCardSelect();
+int MemCardInsert();
+int MemCardEject();
+int MemCardToggle();
 
 // progress.cpp
 int ProgressUpdateBurner(double dProgress, const TCHAR* pszText, bool bAbs);
@@ -461,7 +473,7 @@ int ProgressDestroy();
 int GameInfoDialogCreate(HWND hParentWND, int nDrvSel);
 void LoadFavorites();
 void AddFavorite_Ext(UINT8 addf);
-INT32 CheckFavorites(char *name);
+INT32 CheckFavorites(char* name);
 
 // ---------------------------------------------------------------------------
 // Debugger

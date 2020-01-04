@@ -6,12 +6,12 @@ class LowPass2
 public:
 	LowPass2(void);
 	LowPass2(double Freq, double SampleRate, double Q, double Gain,
-		 double Freq2, double Q2, double Gain2);
+	         double Freq2, double Q2, double Gain2);
 
-	void Filter(INT16 *Buff, INT32 Tam);
-	void FilterMono(INT16 *Buff, INT32 Tam);
+	void Filter(INT16* Buff, INT32 Tam);
+	void FilterMono(INT16* Buff, INT32 Tam);
 	void SetParam(double Freq, double SampleRate, double Q, double Gain,
-				  double Freq2, double Q2, double Gain2);
+	              double Freq2, double Q2, double Gain2);
 	void Reset(void);
 
 private:

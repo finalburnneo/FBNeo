@@ -1,45 +1,57 @@
-
-struct giConstant {
-	UINT8 nConst;				// The constant value
+struct giConstant
+{
+	UINT8 nConst; // The constant value
 };
 
-struct giSwitch {
-	UINT16 nCode;				// The input code (for digital)
+struct giSwitch
+{
+	UINT16 nCode; // The input code (for digital)
 };
 
-struct giJoyAxis {
-	UINT8 nJoy;					// The joystick number
-	UINT8 nAxis;	   			// The joystick axis number
+struct giJoyAxis
+{
+	UINT8 nJoy; // The joystick number
+	UINT8 nAxis; // The joystick axis number
 };
 
-struct giMouseAxis {
-	UINT8 nMouse;				// The mouse number
-	UINT8 nAxis;				// The axis number
-	UINT16 nOffset;				// Used for absolute axes
+struct giMouseAxis
+{
+	UINT8 nMouse; // The mouse number
+	UINT8 nAxis; // The axis number
+	UINT16 nOffset; // Used for absolute axes
 };
 
-struct giSliderAxis {
-	UINT16 nSlider[2];			// Keys to use for slider
+struct giSliderAxis
+{
+	UINT16 nSlider[2]; // Keys to use for slider
 };
 
-struct giSlider {
-	union {
+struct giSlider
+{
+	union
+	{
 		struct giJoyAxis JoyAxis;
 		struct giSliderAxis SliderAxis;
 	};
-	INT16 nSliderSpeed;					// speed with which keys move the slider
-	INT16 nSliderCenter;				// Speed the slider should center itself (high value = slow)
-	INT32 nSliderValue;					// Current position of the slider
+
+	INT16 nSliderSpeed; // speed with which keys move the slider
+	INT16 nSliderCenter; // Speed the slider should center itself (high value = slow)
+	INT32 nSliderValue; // Current position of the slider
 };
 
-struct giInput {
-	union {								// Destination for the Input Value
+struct giInput
+{
+	union
+	{
+		// Destination for the Input Value
 		UINT8* pVal;
 		UINT16* pShortVal;
 	};
-	UINT16 nVal;				// The Input Value
 
-	union {
+	UINT16 nVal; // The Input Value
+
+	union
+	{
 		struct giConstant Constant;
 		struct giSwitch Switch;
 		struct giJoyAxis JoyAxis;
@@ -48,22 +60,24 @@ struct giInput {
 	};
 };
 
-struct giForce {
-	UINT8 nInput;				// The input to apply force feedback effects to
-	UINT8 nEffect;				// The effect to use
+struct giForce
+{
+	UINT8 nInput; // The input to apply force feedback effects to
+	UINT8 nEffect; // The effect to use
 };
 
-struct giMacro {
-	UINT8 nMode;				// 0 = Unused, 1 = used
+struct giMacro
+{
+	UINT8 nMode; // 0 = Unused, 1 = used
 
-	UINT8* pVal[4];				// Destination for the Input Value
-	UINT8 nVal[4];				// The Input Value
-	UINT8 nInput[4];			// Which inputs are mapped
+	UINT8* pVal[4]; // Destination for the Input Value
+	UINT8 nVal[4]; // The Input Value
+	UINT8 nInput[4]; // Which inputs are mapped
 
 	struct giSwitch Switch;
 
-	char szName[33];			// Maximum name length 16 chars
-	UINT8 nSysMacro;			// mappable system macro (1) or Auto-Fire (15)
+	char szName[33]; // Maximum name length 16 chars
+	UINT8 nSysMacro; // mappable system macro (1) or Auto-Fire (15)
 };
 
 #define GIT_CONSTANT		(0x01)
@@ -87,14 +101,15 @@ struct giMacro {
 #define GIT_MACRO_AUTO		(0x80)
 #define GIT_MACRO_CUSTOM	(0x81)
 
-struct GameInp {
-	UINT8 nInput;				// PC side: see above
-	UINT8 nType;				// game side: see burn.h
+struct GameInp
+{
+	UINT8 nInput; // PC side: see above
+	UINT8 nType; // game side: see burn.h
 
-	union {
+	union
+	{
 		struct giInput Input;
 		struct giForce Force;
 		struct giMacro Macro;
 	};
 };
-

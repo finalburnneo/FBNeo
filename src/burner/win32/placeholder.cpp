@@ -23,7 +23,9 @@ int SelectPlaceHolder()
 	int nRet = GetOpenFileName(&ofn);
 	bRunPause = bOldPause;
 
-	if (nRet == 0) {		// Error
+	if (nRet == 0)
+	{
+		// Error
 		return 1;
 	}
 

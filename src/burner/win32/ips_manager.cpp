@@ -4,25 +4,25 @@
 #define MAX_NODES			1024
 #define MAX_ACTIVE_PATCHES	1024
 
-static HWND hIpsDlg			= NULL;
-static HWND hParent			= NULL;
-static HWND hIpsList		= NULL;
+static HWND hIpsDlg = NULL;
+static HWND hParent = NULL;
+static HWND hIpsList = NULL;
 
-int nIpsSelectedLanguage		= 0;
+int nIpsSelectedLanguage = 0;
 static TCHAR szFullName[1024];
 static TCHAR szLanguages[NUM_LANGUAGES][32];
 static TCHAR szLanguageCodes[NUM_LANGUAGES][6];
 
 static HTREEITEM hItemHandles[MAX_NODES];
 
-static int nPatchIndex		= 0;
-static int nNumPatches		= 0;
+static int nPatchIndex = 0;
+static int nNumPatches = 0;
 static HTREEITEM hPatchHandlesIndex[MAX_NODES];
 static TCHAR szPatchFileNames[MAX_NODES][MAX_PATH];
 
 static HBRUSH hWhiteBGBrush;
-static HBITMAP hBmp			= NULL;
-static HBITMAP hPreview		= NULL;
+static HBITMAP hBmp = NULL;
+static HBITMAP hPreview = NULL;
 
 static TCHAR szDriverName[32];
 
@@ -65,10 +65,12 @@ int GetIpsNumPatches()
 
 	HANDLE hSearch = FindFirstFile(szFilePath, &wfd);
 
-	if (hSearch != INVALID_HANDLE_VALUE) {
+	if (hSearch != INVALID_HANDLE_VALUE)
+	{
 		int Done = 0;
 
-		while (!Done ) {
+		while (!Done)
+		{
 			Count++;
 			Done = !FindNextFile(hSearch, &wfd);
 		}
@@ -105,14 +107,14 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, int nLang)
 					if (desc)
 					{
 						result = tstring_from_utf8(desc);
-						if (desc) {
+						if (desc)
+						{
 							free(desc);
 							desc = NULL;
 						}
 						return result;
 					}
-					else
-						return NULL;
+					return NULL;
 				}
 
 				for (char* p = s; *p; p++)
@@ -131,7 +133,8 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, int nLang)
 					len += strlen(s) + 2;
 					char* p1 = (char*)malloc(len + 1);
 					sprintf(p1, "%s\r\n%s", desc, s);
-					if (desc) {
+					if (desc)
+					{
 						free(desc);
 					}
 					desc = p1;
@@ -149,14 +152,14 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, int nLang)
 	if (desc)
 	{
 		result = tstring_from_utf8(desc);
-		if (desc) {
+		if (desc)
+		{
 			free(desc);
 			desc = NULL;
 		}
 		return result;
 	}
-	else
-		return NULL;
+	return NULL;
 }
 
 static void FillListBox()
@@ -166,7 +169,7 @@ static void FillListBox()
 	TCHAR szFilePath[MAX_PATH];
 	TCHAR szFilePathSearch[MAX_PATH];
 	TCHAR szFileName[MAX_PATH];
-	TCHAR *PatchDesc = NULL;
+	TCHAR* PatchDesc = NULL;
 	TCHAR PatchName[256];
 	int nHandlePos = 0;
 
@@ -181,16 +184,19 @@ static void FillListBox()
 
 	hSearch = FindFirstFile(szFilePathSearch, &wfd);
 
-	if (hSearch != INVALID_HANDLE_VALUE) {
+	if (hSearch != INVALID_HANDLE_VALUE)
+	{
 		int Done = 0;
 
-		while (!Done ) {
+		while (!Done)
+		{
 			memset(szFileName, '\0', MAX_PATH * sizeof(TCHAR));
 			_stprintf(szFileName, _T("%s%s"), szFilePath, wfd.cFileName);
 
-			FILE *fp = _tfopen(szFileName, _T("r"));
-            if (fp) {
-                bool AllocDesc = false;
+			FILE* fp = _tfopen(szFileName, _T("r"));
+			if (fp)
+			{
+				bool AllocDesc = false;
 				PatchDesc = NULL;
 				memset(PatchName, '\0', 256 * sizeof(TCHAR));
 
@@ -202,36 +208,42 @@ static void FillListBox()
 
 				bprintf(0, _T("PatchDesc [%s]\n"), PatchDesc);
 
-                if (PatchDesc == NULL) {
-                    PatchDesc = (TCHAR*)malloc(1024);
-                    memset(PatchDesc, 0, 1024);
-                    AllocDesc = true;
-                    _stprintf(PatchDesc, _T("%s"), wfd.cFileName);
-                }
+				if (PatchDesc == NULL)
+				{
+					PatchDesc = (TCHAR*)malloc(1024);
+					memset(PatchDesc, 0, 1024);
+					AllocDesc = true;
+					_stprintf(PatchDesc, _T("%s"), wfd.cFileName);
+				}
 
-				for (unsigned int i = 0; i < _tcslen(PatchDesc); i++) {
+				for (unsigned int i = 0; i < _tcslen(PatchDesc); i++)
+				{
 					if (PatchDesc[i] == '\r' || PatchDesc[i] == '\n') break;
 					PatchName[i] = PatchDesc[i];
 				}
 
-                if (AllocDesc) {
-                    free(PatchDesc);
-                }
+				if (AllocDesc)
+				{
+					free(PatchDesc);
+				}
 
 				// Check for categories
-				TCHAR *Tokens;
+				TCHAR* Tokens;
 				int nNumTokens = 0;
 				int nNumNodes = 0;
 				TCHAR szCategory[256];
 				unsigned int nPatchNameLength = _tcslen(PatchName);
 
 				Tokens = _tcstok(PatchName, _T("/"));
-				while (Tokens != NULL) {
-					if (nNumTokens == 0) {
+				while (Tokens != NULL)
+				{
+					if (nNumTokens == 0)
+					{
 						int bAddItem = 1;
 						// Check if item already exists
 						nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);
-						for (int i = 0; i < nNumNodes; i++) {
+						for (int i = 0; i < nNumNodes; i++)
+						{
 							TCHAR Temp[256];
 							TVITEM Tvi;
 							memset(&Tvi, 0, sizeof(Tvi));
@@ -244,14 +256,17 @@ static void FillListBox()
 							if (!_tcsicmp(Tvi.pszText, Tokens)) bAddItem = 0;
 						}
 
-						if (bAddItem) {
+						if (bAddItem)
+						{
 							TvItem.hParent = TVI_ROOT;
 							TvItem.item.pszText = Tokens;
-							hItemHandles[nHandlePos] = (HTREEITEM)SendMessage(hIpsList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
+							hItemHandles[nHandlePos] = (HTREEITEM)SendMessage(
+								hIpsList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
 							nHandlePos++;
 						}
 
-						if (_tcslen(Tokens) == nPatchNameLength) {
+						if (_tcslen(Tokens) == nPatchNameLength)
+						{
 							hPatchHandlesIndex[nPatchIndex] = hItemHandles[nHandlePos - 1];
 							_tcscpy(szPatchFileNames[nPatchIndex], szFileName);
 
@@ -259,11 +274,14 @@ static void FillListBox()
 						}
 
 						_tcscpy(szCategory, Tokens);
-					} else {
+					}
+					else
+					{
 						HTREEITEM hNode = TVI_ROOT;
 						// See which category we should be in
 						nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);
-						for (int i = 0; i < nNumNodes; i++) {
+						for (int i = 0; i < nNumNodes; i++)
+						{
 							TCHAR Temp[256];
 							TVITEM Tvi;
 							memset(&Tvi, 0, sizeof(Tvi));
@@ -304,7 +322,8 @@ static void FillListBox()
 
 	// Expand all branches
 	int nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);
-	for (int i = 0; i < nNumNodes; i++) {
+	for (int i = 0; i < nNumNodes; i++)
+	{
 		SendMessage(hIpsList, TVM_EXPAND, TVE_EXPAND, (LPARAM)hItemHandles[i]);
 	}
 }
@@ -313,7 +332,8 @@ int GetIpsNumActivePatches()
 {
 	int nActivePatches = 0;
 
-	for (int i = 0; i < MAX_ACTIVE_PATCHES; i++) {
+	for (int i = 0; i < MAX_ACTIVE_PATCHES; i++)
+	{
 		if (_tcsicmp(szIpsActivePatches[i], _T(""))) nActivePatches++;
 	}
 
@@ -322,9 +342,10 @@ int GetIpsNumActivePatches()
 
 void LoadIpsActivePatches()
 {
-    _tcscpy(szDriverName, BurnDrvGetText(DRV_NAME));
+	_tcscpy(szDriverName, BurnDrvGetText(DRV_NAME));
 
-	for (int i = 0; i < MAX_ACTIVE_PATCHES; i++) {
+	for (int i = 0; i < MAX_ACTIVE_PATCHES; i++)
+	{
 		_stprintf(szIpsActivePatches[i], _T(""));
 	}
 
@@ -332,12 +353,15 @@ void LoadIpsActivePatches()
 	TCHAR szLine[MAX_PATH];
 	int nActivePatches = 0;
 
-    if (fp) {
-		while (_fgetts(szLine, sizeof(szLine), fp)) {
+	if (fp)
+	{
+		while (_fgetts(szLine, sizeof(szLine), fp))
+		{
 			int nLen = _tcslen(szLine);
 
 			// Get rid of the linefeed at the end
-			if (szLine[nLen - 1] == 10) {
+			if (szLine[nLen - 1] == 10)
+			{
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
@@ -350,7 +374,7 @@ void LoadIpsActivePatches()
 		}
 
 		fclose(fp);
-    }
+	}
 }
 
 static void CheckActivePatches()
@@ -359,9 +383,12 @@ static void CheckActivePatches()
 
 	int nActivePatches = GetIpsNumActivePatches();
 
-	for (int i = 0; i < nActivePatches; i++) {
-		for (int j = 0; j < nNumPatches; j++) {
-			if (!_tcsicmp(szIpsActivePatches[i], szPatchFileNames[j])) {
+	for (int i = 0; i < nActivePatches; i++)
+	{
+		for (int j = 0; j < nNumPatches; j++)
+		{
+			if (!_tcsicmp(szIpsActivePatches[i], szPatchFileNames[j]))
+			{
 				_TreeView_SetCheckState(hIpsList, hPatchHandlesIndex[j], TRUE);
 			}
 		}
@@ -378,8 +405,10 @@ static int IpsManagerInit()
 	pszPosition += _sntprintf(szText, 1024, pszName);
 
 	pszName = BurnDrvGetText(DRV_FULLNAME);
-	while ((pszName = BurnDrvGetText(DRV_NEXTNAME | DRV_FULLNAME)) != NULL) {
-		if (pszPosition + _tcslen(pszName) - 1024 > szText) {
+	while ((pszName = BurnDrvGetText(DRV_NEXTNAME | DRV_FULLNAME)) != NULL)
+	{
+		if (pszPosition + _tcslen(pszName) - 1024 > szText)
+		{
 			break;
 		}
 		pszPosition += _stprintf(pszPosition, _T(SEPERATOR_2) _T("%s"), pszName);
@@ -387,7 +416,8 @@ static int IpsManagerInit()
 
 	_tcscpy(szFullName, szText);
 
-	_stprintf(szText, _T("%s") _T(SEPERATOR_1) _T("%s"), FBNLoadStringEx(hAppInst, IDS_IPSMANAGER_TITLE, true), szFullName);
+	_stprintf(szText, _T("%s") _T(SEPERATOR_1) _T("%s"), FBNLoadStringEx(hAppInst, IDS_IPSMANAGER_TITLE, true),
+	          szFullName);
 
 	// Set the window caption
 	SetWindowText(hIpsDlg, szText);
@@ -419,7 +449,8 @@ static int IpsManagerInit()
 	_stprintf(szLanguageCodes[10], _T("pl_PL"));
 	_stprintf(szLanguageCodes[11], _T("hu_HU"));
 
-	for (int i = 0; i < NUM_LANGUAGES; i++) {
+	for (int i = 0; i < NUM_LANGUAGES; i++)
+	{
 		SendDlgItemMessage(hIpsDlg, IDC_CHOOSE_LIST, CB_ADDSTRING, 0, (LPARAM)&szLanguages[i]);
 	}
 
@@ -443,17 +474,21 @@ static void RefreshPatch()
 
 	HTREEITEM hSelectHandle = (HTREEITEM)SendMessage(hIpsList, TVM_GETNEXTITEM, TVGN_CARET, ~0U);
 
-	if (hBmp) {
+	if (hBmp)
+	{
 		DeleteObject((HGDIOBJ)hBmp);
 		hBmp = NULL;
 	}
 
-	for (int i = 0; i < nNumPatches; i++) {
-		if (hSelectHandle == hPatchHandlesIndex[i]) {
-			TCHAR *PatchDesc = NULL;
+	for (int i = 0; i < nNumPatches; i++)
+	{
+		if (hSelectHandle == hPatchHandlesIndex[i])
+		{
+			TCHAR* PatchDesc = NULL;
 
-			FILE *fp = _tfopen(szPatchFileNames[i], _T("r"));
-			if (fp) {
+			FILE* fp = _tfopen(szPatchFileNames[i], _T("r"));
+			if (fp)
+			{
 				PatchDesc = GetPatchDescByLangcode(fp, nIpsSelectedLanguage);
 				// If not available - try English first
 				if (PatchDesc == NULL) PatchDesc = GetPatchDescByLangcode(fp, 0);
@@ -476,16 +511,20 @@ static void RefreshPatch()
 
 			fp = _tfopen(szImageFileName, _T("rb"));
 			HBITMAP hNewImage = NULL;
-			if (fp) {
+			if (fp)
+			{
 				hNewImage = PNGLoadBitmap(hIpsDlg, fp, 304, 228, 3);
 				fclose(fp);
 			}
 
-			if (hNewImage) {
+			if (hNewImage)
+			{
 				DeleteObject((HGDIOBJ)hBmp);
 				hBmp = hNewImage;
 				SendDlgItemMessage(hIpsDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBmp);
-			} else {
+			}
+			else
+			{
 				SendDlgItemMessage(hIpsDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPreview);
 			}
 		}
@@ -496,14 +535,17 @@ static void SavePatches()
 {
 	int nActivePatches = 0;
 
-	for (int i = 0; i < MAX_ACTIVE_PATCHES; i++) {
+	for (int i = 0; i < MAX_ACTIVE_PATCHES; i++)
+	{
 		_stprintf(szIpsActivePatches[i], _T(""));
 	}
 
-	for (int i = 0; i < nNumPatches; i++) {
+	for (int i = 0; i < nNumPatches; i++)
+	{
 		int nChecked = _TreeView_GetCheckState(hIpsList, hPatchHandlesIndex[i]);
 
-		if (nChecked) {
+		if (nChecked)
+		{
 			_tcscpy(szIpsActivePatches[nActivePatches], szPatchFileNames[i]);
 			nActivePatches++;
 		}
@@ -511,12 +553,16 @@ static void SavePatches()
 
 	FILE* fp = _tfopen(GameIpsConfigName(), _T("wt"));
 
-	if (fp) {
-		_ftprintf(fp, _T("// ") _T(APP_TITLE) _T(" v%s --- IPS Config File for %s (%s)\n\n"), szAppBurnVer, szDriverName, szFullName);
-		for (int i = 0; i < nActivePatches; i++) {
+	if (fp)
+	{
+		_ftprintf(fp, _T("// ") _T(APP_TITLE) _T(" v%s --- IPS Config File for %s (%s)\n\n"), szAppBurnVer,
+		          szDriverName, szFullName);
+		for (int i = 0; i < nActivePatches; i++)
+		{
 			TCHAR szFileName[MAX_PATH];
 			TCHAR* Tokens = _tcstok(szIpsActivePatches[i], _T("\\"));
-			while (Tokens != NULL) {
+			while (Tokens != NULL)
+			{
 				szFileName[0] = _T('\0');
 				_tcscpy(szFileName, Tokens);
 				Tokens = _tcstok(NULL, _T("\\"));
@@ -532,7 +578,8 @@ static void IpsManagerExit()
 {
 	SendDlgItemMessage(hIpsDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 
-	for (int i = 0; i < NUM_LANGUAGES; i++) {
+	for (int i = 0; i < NUM_LANGUAGES; i++)
+	{
 		szLanguages[i][0] = _T('\0');
 		szLanguageCodes[i][0] = _T('\0');
 	}
@@ -543,16 +590,19 @@ static void IpsManagerExit()
 	nPatchIndex = 0;
 	nNumPatches = 0;
 
-	for (int i = 0; i < MAX_NODES; i++) {
+	for (int i = 0; i < MAX_NODES; i++)
+	{
 		szPatchFileNames[i][0] = _T('\0');
 	}
 
-	if (hBmp) {
+	if (hBmp)
+	{
 		DeleteObject((HGDIOBJ)hBmp);
 		hBmp = NULL;
 	}
 
-	if (hPreview) {
+	if (hPreview)
+	{
 		DeleteObject((HGDIOBJ)hPreview);
 		hPreview = NULL;
 	}
@@ -572,44 +622,54 @@ static void IpsOkay()
 
 static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-	switch (Msg) {
-		case WM_INITDIALOG: {
+	switch (Msg)
+	{
+	case WM_INITDIALOG:
+		{
 			hIpsDlg = hDlg;
 
-			hWhiteBGBrush = CreateSolidBrush(RGB(0xFF,0xFF,0xFF));
+			hWhiteBGBrush = CreateSolidBrush(RGB(0xFF, 0xFF, 0xFF));
 			hPreview = PNGLoadBitmap(hIpsDlg, NULL, 304, 228, 2);
 			SendDlgItemMessage(hIpsDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPreview);
 
 			LONG_PTR Style = GetWindowLongPtr(GetDlgItem(hIpsDlg, IDC_TREE1), GWL_STYLE);
 			Style |= TVS_CHECKBOXES;
-			SetWindowLongPtr (GetDlgItem(hIpsDlg, IDC_TREE1), GWL_STYLE, Style);
+			SetWindowLongPtr(GetDlgItem(hIpsDlg, IDC_TREE1), GWL_STYLE, Style);
 
 			IpsManagerInit();
 
 			WndInMid(hDlg, hScrnWnd);
-			SetFocus(hDlg);											// Enable Esc=close
+			SetFocus(hDlg); // Enable Esc=close
 			break;
 		}
 
-		case WM_COMMAND: {
+	case WM_COMMAND:
+		{
 			int wID = LOWORD(wParam);
 			int Notify = HIWORD(wParam);
 
-			if (Notify == BN_CLICKED) {
-				switch (wID) {
-					case IDOK: {
+			if (Notify == BN_CLICKED)
+			{
+				switch (wID)
+				{
+				case IDOK:
+					{
 						IpsOkay();
 						break;
 					}
 
-					case IDCANCEL: {
+				case IDCANCEL:
+					{
 						SendMessage(hDlg, WM_CLOSE, 0, 0);
 						return 0;
 					}
 
-					case IDC_IPSMAN_DESELECTALL: {
-						for (int i = 0; i < nNumPatches; i++) {
-							for (int j = 0; j < nNumPatches; j++) {
+				case IDC_IPSMAN_DESELECTALL:
+					{
+						for (int i = 0; i < nNumPatches; i++)
+						{
+							for (int j = 0; j < nNumPatches; j++)
+							{
 								_TreeView_SetCheckState(hIpsList, hPatchHandlesIndex[j], FALSE);
 							}
 						}
@@ -618,7 +678,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				}
 			}
 
-			if (wID == IDC_CHOOSE_LIST && Notify == CBN_SELCHANGE) {
+			if (wID == IDC_CHOOSE_LIST && Notify == CBN_SELCHANGE)
+			{
 				nIpsSelectedLanguage = SendMessage(GetDlgItem(hIpsDlg, IDC_CHOOSE_LIST), CB_GETCURSEL, 0, 0);
 				TreeView_DeleteAllItems(hIpsList);
 				FillListBox();
@@ -629,23 +690,27 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			break;
 		}
 
-		case WM_NOTIFY: {
+	case WM_NOTIFY:
+		{
 			NMHDR* pNmHdr = (NMHDR*)lParam;
 
-			if (LOWORD(wParam) == IDC_TREE1 && pNmHdr->code == TVN_SELCHANGED) {
+			if (LOWORD(wParam) == IDC_TREE1 && pNmHdr->code == TVN_SELCHANGED)
+			{
 				RefreshPatch();
 
 				return 1;
 			}
 
-			if (LOWORD(wParam) == IDC_TREE1 && pNmHdr->code == NM_DBLCLK) {
+			if (LOWORD(wParam) == IDC_TREE1 && pNmHdr->code == NM_DBLCLK)
+			{
 				// disable double-click node-expand
 				SetWindowLongPtr(hIpsDlg, DWLP_MSGRESULT, 1);
 
 				return 1;
 			}
 
-			if (LOWORD(wParam) == IDC_TREE1 && pNmHdr->code == NM_CLICK) {
+			if (LOWORD(wParam) == IDC_TREE1 && pNmHdr->code == NM_CLICK)
+			{
 				POINT cursorPos;
 				GetCursorPos(&cursorPos);
 				ScreenToClient(hIpsList, &cursorPos);
@@ -654,7 +719,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				thi.pt = cursorPos;
 				TreeView_HitTest(hIpsList, &thi);
 
-				if (thi.flags == TVHT_ONITEMSTATEICON) {
+				if (thi.flags == TVHT_ONITEMSTATEICON)
+				{
 					TreeView_SelectItem(hIpsList, thi.hItem);
 				}
 
@@ -665,14 +731,17 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			return 1;
 		}
 
-		case WM_CTLCOLORSTATIC: {
-			if ((HWND)lParam == GetDlgItem(hIpsDlg, IDC_TEXTCOMMENT)) {
+	case WM_CTLCOLORSTATIC:
+		{
+			if ((HWND)lParam == GetDlgItem(hIpsDlg, IDC_TEXTCOMMENT))
+			{
 				return (INT_PTR)hWhiteBGBrush;
 			}
 			break;
 		}
 
-		case WM_CLOSE: {
+	case WM_CLOSE:
+		{
 			IpsManagerExit();
 			break;
 		}
@@ -718,46 +787,52 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 
 	memset(buf, 0, sizeof(buf));
 	fread(buf, 1, 5, f);
-	if (strcmp(buf, IPS_SIGNATURE)) {
+	if (strcmp(buf, IPS_SIGNATURE))
+	{
 		bprintf(0, _T("IPS - Bad IPS-Signature in: %S.\n"), ips_path);
 		if (f)
 		{
 			fclose(f);
 		}
 		return;
-	} else {
-		bprintf(0, _T("IPS - Patching with: %S.\n"), ips_path);
-		UINT8 ch = 0;
-		int bRLE = 0;
-		while (!feof(f)) {
-			// read patch address offset
-			fread(buf, 1, 3, f);
-			buf[3] = 0;
-			if (strcmp(buf, IPS_TAG_EOF) == 0)
-				break;
+	}
+	bprintf(0, _T("IPS - Patching with: %S.\n"), ips_path);
+	UINT8 ch = 0;
+	int bRLE = 0;
+	while (!feof(f))
+	{
+		// read patch address offset
+		fread(buf, 1, 3, f);
+		buf[3] = 0;
+		if (strcmp(buf, IPS_TAG_EOF) == 0)
+			break;
 
-			int Offset = BYTE3_TO_UINT(buf);
+		int Offset = BYTE3_TO_UINT(buf);
 
-			// read patch length
+		// read patch length
+		fread(buf, 1, 2, f);
+		int Size = BYTE2_TO_UINT(buf);
+
+		bRLE = (Size == 0);
+		if (bRLE)
+		{
 			fread(buf, 1, 2, f);
-			int Size = BYTE2_TO_UINT(buf);
+			Size = BYTE2_TO_UINT(buf);
+			ch = fgetc(f);
+		}
 
-			bRLE = (Size == 0);
-			if (bRLE) {
-				fread(buf, 1, 2, f);
-				Size = BYTE2_TO_UINT(buf);
-				ch = fgetc(f);
+		while (Size--)
+		{
+			mem8 = base + Offset;
+			Offset++;
+			if (Offset > nIpsMaxFileLen) nIpsMaxFileLen = Offset; // file size is growing
+			if (readonly)
+			{
+				if (!bRLE) fgetc(f);
 			}
-
-			while (Size--) {
-				mem8 = base + Offset;
-                Offset++;
-                if (Offset > nIpsMaxFileLen) nIpsMaxFileLen = Offset; // file size is growing
-                if (readonly) {
-                    if (!bRLE) fgetc(f);
-                } else {
-                    *mem8 = bRLE ? ch : fgetc(f);
-                }
+			else
+			{
+				*mem8 = bRLE ? ch : fgetc(f);
 			}
 		}
 	}
@@ -767,72 +842,88 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 
 static char* stristr_int(const char* str1, const char* str2)
 {
-    const char* p1 = str1;
-    const char* p2 = str2;
-    const char* r = (!*p2) ? str1 : NULL;
+	const char* p1 = str1;
+	const char* p2 = str2;
+	const char* r = (!*p2) ? str1 : NULL;
 
-    while (*p1 && *p2) {
-        if (tolower((unsigned char)*p1) == tolower((unsigned char)*p2)) {
-            if (!r) {
-                r = p1;
-            }
+	while (*p1 && *p2)
+	{
+		if (tolower((unsigned char)*p1) == tolower((unsigned char)*p2))
+		{
+			if (!r)
+			{
+				r = p1;
+			}
 
-            p2++;
-        } else {
-            p2 = str2;
-            if (r) {
-                p1 = r + 1;
-            }
+			p2++;
+		}
+		else
+		{
+			p2 = str2;
+			if (r)
+			{
+				p1 = r + 1;
+			}
 
-            if (tolower((unsigned char)*p1) == tolower((unsigned char)*p2)) {
-                r = p1;
-                p2++;
-            } else {
-                r = NULL;
-            }
-        }
+			if (tolower((unsigned char)*p1) == tolower((unsigned char)*p2))
+			{
+				r = p1;
+				p2++;
+			}
+			else
+			{
+				r = NULL;
+			}
+		}
 
-        p1++;
-    }
+		p1++;
+	}
 
-    return (*p2) ? NULL : (char*)r;
+	return (*p2) ? NULL : (char*)r;
 }
 
 static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, INT32 readonly)
 {
 	char s[MAX_PATH];
-    char* p = NULL;
+	char* p = NULL;
 	char* rom_name = NULL;
 	char* ips_name = NULL;
 	FILE* fp = NULL;
 
-	if ((fp = fopen(patch_name, "rb")) != NULL) {
+	if ((fp = fopen(patch_name, "rb")) != NULL)
+	{
 		// get ips size
 		fseek(fp, 0, SEEK_END);
 		unsigned long nIpsSize = ftell(fp);
 		fseek(fp, 0, SEEK_SET);
 
-        while (!feof(fp)) {
-			if (fgets(s, sizeof(s), fp) != NULL) {
+		while (!feof(fp))
+		{
+			if (fgets(s, sizeof(s), fp) != NULL)
+			{
 				p = s;
 
 				// skip UTF-8 sig
 				if (strncmp(p, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE)) == 0)
 					p += strlen(UTF8_SIGNATURE);
 
-				if (p[0] == '[')	// '['
+				if (p[0] == '[') // '['
 					break;
 
-                // Can support linetypes:
-                // "rom name.bin" "patch file.ips" CRC(abcd1234)
-                // romname.bin patchfile CRC(abcd1234)
+				// Can support linetypes:
+				// "rom name.bin" "patch file.ips" CRC(abcd1234)
+				// romname.bin patchfile CRC(abcd1234)
 
-                if (p[0] == '\"') { // "quoted rom name with spaces.bin"
-                    p++;
-                    rom_name = strtok(p, "\"");
-                } else {
-                    rom_name = strtok(p, " \t\r\n");
-                }
+				if (p[0] == '\"')
+				{
+					// "quoted rom name with spaces.bin"
+					p++;
+					rom_name = strtok(p, "\"");
+				}
+				else
+				{
+					rom_name = strtok(p, " \t\r\n");
+				}
 
 				if (!rom_name)
 					continue;
@@ -841,41 +932,46 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
 				if (_stricmp(rom_name, game_name))
 					continue;
 
-                ips_name = strtok(NULL, "\r\n");
+				ips_name = strtok(NULL, "\r\n");
 
 				if (!ips_name)
 					continue;
 
-                // remove crc portion, and end quote/spaces from ips name
-                char *c = stristr_int(ips_name, "crc");
-                if (c) {
-                    c--; // "derp.ips" CRC(abcd1234)\n"
-                         //           ^ we're now here.
-                    while (*c && (*c == ' ' || *c == '\t' || *c == '\"'))
-                    {
-                        *c = '\0';
-                        c--;
-                    }
-                }
+				// remove crc portion, and end quote/spaces from ips name
+				char* c = stristr_int(ips_name, "crc");
+				if (c)
+				{
+					c--; // "derp.ips" CRC(abcd1234)\n"
+					//           ^ we're now here.
+					while (*c && (*c == ' ' || *c == '\t' || *c == '\"'))
+					{
+						*c = '\0';
+						c--;
+					}
+				}
 
-                // clean-up IPS name beginning (could be quoted or not)
-                while (ips_name && (ips_name[0] == ' ' || ips_name[0] == '\"'))
-                    ips_name++;
+				// clean-up IPS name beginning (could be quoted or not)
+				while (ips_name && (ips_name[0] == ' ' || ips_name[0] == '\"'))
+					ips_name++;
 
-                char *has_ext = stristr_int(ips_name, ".ips");
+				char* has_ext = stristr_int(ips_name, ".ips");
 
-                bprintf(0, _T("ips name:[%S]\n"), ips_name);
-                bprintf(0, _T("rom name:[%S]\n"), rom_name);
+				bprintf(0, _T("ips name:[%S]\n"), ips_name);
+				bprintf(0, _T("rom name:[%S]\n"), rom_name);
 
-				char ips_path[MAX_PATH*2];
+				char ips_path[MAX_PATH * 2];
 				char ips_dir[MAX_PATH];
 				TCHARToANSI(szAppIpsPath, ips_dir, sizeof(ips_dir));
 
-				if (strchr(ips_name, '\\')) {
+				if (strchr(ips_name, '\\'))
+				{
 					// ips in parent's folder
-                    sprintf(ips_path, "%s\\%s%s", ips_dir, ips_name, (has_ext) ? "" : IPS_EXT);
-				} else {
-					sprintf(ips_path, "%s%s\\%s%s", ips_dir, BurnDrvGetTextA(DRV_NAME), ips_name, (has_ext) ? "" : IPS_EXT);
+					sprintf(ips_path, "%s\\%s%s", ips_dir, ips_name, (has_ext) ? "" : IPS_EXT);
+				}
+				else
+				{
+					sprintf(ips_path, "%s%s\\%s%s", ips_dir, BurnDrvGetTextA(DRV_NAME), ips_name,
+					        (has_ext) ? "" : IPS_EXT);
 				}
 
 				PatchFile(ips_path, base, readonly);
@@ -889,15 +985,16 @@ void IpsApplyPatches(UINT8* base, char* rom_name)
 {
 	char ips_data[MAX_PATH];
 
-    nIpsMaxFileLen = 0;
+	nIpsMaxFileLen = 0;
 
 	int nActivePatches = GetIpsNumActivePatches();
 
-	for (int i = 0; i < nActivePatches; i++) {
+	for (int i = 0; i < nActivePatches; i++)
+	{
 		memset(ips_data, 0, MAX_PATH);
 		TCHARToANSI(szIpsActivePatches[i], ips_data, sizeof(ips_data));
 		DoPatchGame(ips_data, rom_name, base, false);
-    }
+	}
 }
 
 void IpsPatchExit()

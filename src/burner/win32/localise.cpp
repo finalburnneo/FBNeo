@@ -10,16 +10,32 @@ static const unsigned int nMaxResources = 2000;
 
 static int nFBACodepage;
 
-struct LocaliseControlInfo { unsigned int nID; wchar_t szCaption[QUOTE_MAX]; };
-struct LocaliseResourceInfo { unsigned int nID; wchar_t szCaption[QUOTE_MAX]; LocaliseControlInfo* pControlInfo[1024]; };
+struct LocaliseControlInfo
+{
+	unsigned int nID;
+	wchar_t szCaption[QUOTE_MAX];
+};
+
+struct LocaliseResourceInfo
+{
+	unsigned int nID;
+	wchar_t szCaption[QUOTE_MAX];
+	LocaliseControlInfo* pControlInfo[1024];
+};
 
 #define RES_DEALLOCATE		(1 << 0)
 #define RES_ISTRANSLATION	(1 << 1)
 
-struct FBAResourceInfo_t { int nResourceFlags; void* pResourceTranslation; };
+struct FBAResourceInfo_t
+{
+	int nResourceFlags;
+	void* pResourceTranslation;
+};
+
 static FBAResourceInfo_t* FBAResourceInfo = NULL;
 
-typedef struct {
+typedef struct
+{
 	WORD dlgVer;
 	WORD signature;
 	DWORD helpID;
@@ -30,17 +46,18 @@ typedef struct {
 	short y;
 	short cx;
 	short cy;
-//	sz_Or_Ord menu;
-//	sz_Or_Ord windowClass;
-//	WCHAR title[titleLen];
-//	WORD pointsize;
-//	WORD weight;
-//	BYTE italic;
-//	BYTE charset;
-//	WCHAR typeface[stringLen];
+	//	sz_Or_Ord menu;
+	//	sz_Or_Ord windowClass;
+	//	WCHAR title[titleLen];
+	//	WORD pointsize;
+	//	WORD weight;
+	//	BYTE italic;
+	//	BYTE charset;
+	//	WCHAR typeface[stringLen];
 } DLGTEMPLATEEX;
 
-typedef struct {
+typedef struct
+{
 	DWORD helpID;
 	DWORD exStyle;
 	DWORD style;
@@ -49,9 +66,9 @@ typedef struct {
 	short cx;
 	short cy;
 	WORD id;
-//	sz_Or_Ord windowClass;
-//	sz_Or_Ord title;
-//	WORD extraCount;
+	//	sz_Or_Ord windowClass;
+	//	sz_Or_Ord title;
+	//	WORD extraCount;
 } DLGITEMTEMPLATEEX;
 
 // ----------------------------------------------------------------------------
@@ -130,31 +147,33 @@ int EscapeString(wchar_t* pwszStringOut, wchar_t* pwszStringIn, int max)
 {
 	int in = 0, out = 0;
 
-	while (pwszStringIn[in] && out < (max - 1)) {
-		switch (pwszStringIn[in]) {
-			case L'\n':
-				pwszStringOut[out++] = L'\\';
-				pwszStringOut[out++] = L'n';
-				break;
-			case L'\t':
-				pwszStringOut[out++] = L'\\';
-				pwszStringOut[out++] = L't';
-				break;
-			case L'\'':
-				pwszStringOut[out++] = L'\\';
-				pwszStringOut[out++] = L'\'';
-				break;
-			case L'\"':
-				pwszStringOut[out++] = L'\\';
-				pwszStringOut[out++] = L'\"';
-				break;
-			case L'\\':
-				pwszStringOut[out++] = L'\\';
-				pwszStringOut[out++] = L'\\';
-				break;
+	while (pwszStringIn[in] && out < (max - 1))
+	{
+		switch (pwszStringIn[in])
+		{
+		case L'\n':
+			pwszStringOut[out++] = L'\\';
+			pwszStringOut[out++] = L'n';
+			break;
+		case L'\t':
+			pwszStringOut[out++] = L'\\';
+			pwszStringOut[out++] = L't';
+			break;
+		case L'\'':
+			pwszStringOut[out++] = L'\\';
+			pwszStringOut[out++] = L'\'';
+			break;
+		case L'\"':
+			pwszStringOut[out++] = L'\\';
+			pwszStringOut[out++] = L'\"';
+			break;
+		case L'\\':
+			pwszStringOut[out++] = L'\\';
+			pwszStringOut[out++] = L'\\';
+			break;
 
-			default:
-				pwszStringOut[out++] = pwszStringIn[in];
+		default:
+			pwszStringOut[out++] = pwszStringIn[in];
 		}
 
 		in++;
@@ -169,30 +188,35 @@ int UnEscapeString(wchar_t* pwszStringOut, wchar_t* pwszStringIn, int max)
 {
 	int in = 0, out = 0;
 
-	while (pwszStringIn[in] && in < max) {
-		if (pwszStringIn[in] == L'\\') {
+	while (pwszStringIn[in] && in < max)
+	{
+		if (pwszStringIn[in] == L'\\')
+		{
 			in++;
-			switch (pwszStringIn[in++]) {
-				case L'n':
-					pwszStringOut[out++] = L'\n';
-					break;
-				case L't':
-					pwszStringOut[out++] = L'\t';
-					break;
-				case L'\'':
-					pwszStringOut[out++] = L'\'';
-					break;
-				case L'\"':
-					pwszStringOut[out++] = L'\"';
-					break;
-				case L'\\':
-					pwszStringOut[out++] = L'\\';
-					break;
+			switch (pwszStringIn[in++])
+			{
+			case L'n':
+				pwszStringOut[out++] = L'\n';
+				break;
+			case L't':
+				pwszStringOut[out++] = L'\t';
+				break;
+			case L'\'':
+				pwszStringOut[out++] = L'\'';
+				break;
+			case L'\"':
+				pwszStringOut[out++] = L'\"';
+				break;
+			case L'\\':
+				pwszStringOut[out++] = L'\\';
+				break;
 
-				default:
-					pwszStringOut[out++] = pwszStringIn[in];
+			default:
+				pwszStringOut[out++] = pwszStringIn[in];
 			}
-		} else {
+		}
+		else
+		{
 			pwszStringOut[out++] = pwszStringIn[in++];
 		}
 	}
@@ -215,51 +239,58 @@ int BuildTemplateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, LPTSTR lpszName, 
 	char* pTemplateDataIn = (char*)(((INT_PTR)pTemplate + 26 + sizeof(WORD) - 1) & ~(sizeof(WORD) - 1));
 
 	// Menu
-	switch (*((WORD*)pTemplateDataIn)) {
-		case 0x0000:
-			pTemplateDataIn += 1 * sizeof(WORD);
-			break;
-		case 0xFFFF:
-			pTemplateDataIn += 2 * sizeof(WORD);
-			break;
-		default:
-			pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
-			break;
+	switch (*((WORD*)pTemplateDataIn))
+	{
+	case 0x0000:
+		pTemplateDataIn += 1 * sizeof(WORD);
+		break;
+	case 0xFFFF:
+		pTemplateDataIn += 2 * sizeof(WORD);
+		break;
+	default:
+		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
+		break;
 	}
 
 	// Class
-	switch (*((WORD*)pTemplateDataIn)) {
-		case 0x0000:
-			pTemplateDataIn += 1 * sizeof(WORD);
-			break;
-		case 0xFFFF:
-			pTemplateDataIn += 2 * sizeof(WORD);
-			break;
-		default:
-			pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
-			break;
+	switch (*((WORD*)pTemplateDataIn))
+	{
+	case 0x0000:
+		pTemplateDataIn += 1 * sizeof(WORD);
+		break;
+	case 0xFFFF:
+		pTemplateDataIn += 2 * sizeof(WORD);
+		break;
+	default:
+		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
+		break;
 	}
 
 	// Caption
-	switch (*((WORD*)pTemplateDataIn)) {
-		case 0x0000:
-			pTemplateDataIn += 1 * sizeof(WORD);
-			break;
-		case 0xFFFF:
-			pTemplateDataIn += 2 * sizeof(WORD);
-			break;
-		default:
-			pszCaption = (wchar_t*)pTemplateDataIn;
-			pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
-			break;
+	switch (*((WORD*)pTemplateDataIn))
+	{
+	case 0x0000:
+		pTemplateDataIn += 1 * sizeof(WORD);
+		break;
+	case 0xFFFF:
+		pTemplateDataIn += 2 * sizeof(WORD);
+		break;
+	default:
+		pszCaption = (wchar_t*)pTemplateDataIn;
+		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
+		break;
 	}
 
-	if (fp) {
+	if (fp)
+	{
 		EscapeString(wszBuffer, pszCaption, 5120);
 		_ftprintf(fp, _T("        //-- \"%ls\"\n"), wszBuffer);
-		if (IS_INTRESOURCE(lpszName)) {
+		if (IS_INTRESOURCE(lpszName))
+		{
 			_ftprintf(fp, _T("dialog\t%4i "), (INT_PTR)lpszName);
-		} else {
+		}
+		else
+		{
 #ifdef UNICODE
 			EscapeString(wszBuffer, lpszName, 5120);
 #else
@@ -275,8 +306,8 @@ int BuildTemplateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, LPTSTR lpszName, 
 	}
 
 	// Font
-	if (pTemplate->style & (DS_SETFONT | DS_SHELLFONT)) {
-
+	if (pTemplate->style & (DS_SETFONT | DS_SHELLFONT))
+	{
 #if 0
 		if (fp) {
 			EscapeString(wszBuffer, (wchar_t*)(pTemplateDataIn + 2 + 2 * sizeof(WORD)), 5120);
@@ -289,7 +320,8 @@ int BuildTemplateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, LPTSTR lpszName, 
 	}
 
 	// Controls
-	for (int i = 0; i < pTemplate->cDlgItems; i++) {
+	for (int i = 0; i < pTemplate->cDlgItems; i++)
+	{
 		bool bExcludeControl = false;
 
 		pTemplateDataIn = (char*)(((INT_PTR)pTemplateDataIn + sizeof(DWORD) - 1) & ~(sizeof(DWORD) - 1));
@@ -297,44 +329,49 @@ int BuildTemplateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, LPTSTR lpszName, 
 		DWORD dwStyle = ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->style;
 		WORD wID = ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->id;
 
-		pTemplateDataIn = (char*)(((INT_PTR)pTemplateDataIn + sizeof(DLGITEMTEMPLATEEX) + sizeof(WORD) - 1) & ~(sizeof(WORD) - 1));
+		pTemplateDataIn = (char*)(((INT_PTR)pTemplateDataIn + sizeof(DLGITEMTEMPLATEEX) + sizeof(WORD) - 1) & ~(sizeof(
+			WORD) - 1));
 
 		// Class
-		switch (*((WORD*)pTemplateDataIn)) {
-			case 0x0000:
-				pTemplateDataIn += 1 * sizeof(WORD);
-				break;
-			case 0xFFFF:
-				if ( ((WORD*)pTemplateDataIn)[1] == 0x0081 ||
-					(((WORD*)pTemplateDataIn)[1] == 0x0082 && (dwStyle & SS_BITMAP))) {
+		switch (*((WORD*)pTemplateDataIn))
+		{
+		case 0x0000:
+			pTemplateDataIn += 1 * sizeof(WORD);
+			break;
+		case 0xFFFF:
+			if (((WORD*)pTemplateDataIn)[1] == 0x0081 ||
+				(((WORD*)pTemplateDataIn)[1] == 0x0082 && (dwStyle & SS_BITMAP)))
+			{
+				bExcludeControl = true;
+			}
 
-					bExcludeControl = true;
-				}
+			pTemplateDataIn += 2 * sizeof(WORD);
+			break;
+		default:
+			if (!wcsicmp((wchar_t*)pTemplateDataIn, L"SysTreeView32") ||
+				!wcsicmp((wchar_t*)pTemplateDataIn, L"SysListView32") ||
+				!wcsicmp((wchar_t*)pTemplateDataIn, L"Edit") ||
+				!wcsnicmp((wchar_t*)pTemplateDataIn, L"RichEdit", 8) ||
+				(!wcsicmp((wchar_t*)pTemplateDataIn, L"Static") && (dwStyle & SS_BITMAP)))
+			{
+				bExcludeControl = true;
+			}
 
-				pTemplateDataIn += 2 * sizeof(WORD);
-				break;
-			default:
-				if ( !wcsicmp((wchar_t*)pTemplateDataIn, L"SysTreeView32") ||
-					 !wcsicmp((wchar_t*)pTemplateDataIn, L"SysListView32") ||
-					 !wcsicmp((wchar_t*)pTemplateDataIn, L"Edit")		   ||
-					 !wcsnicmp((wchar_t*)pTemplateDataIn, L"RichEdit", 8)  ||
-					(!wcsicmp((wchar_t*)pTemplateDataIn, L"Static") && (dwStyle & SS_BITMAP))) {
-
-					bExcludeControl = true;
-				}
-
-				pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
-				break;
+			pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
+			break;
 		}
 
-		if (*((WORD*)pTemplateDataIn) == 0xFFFF) {
+		if (*((WORD*)pTemplateDataIn) == 0xFFFF)
+		{
 			pTemplateDataIn += 4;
 		}
 
-		if (wcslen((wchar_t*)pTemplateDataIn) && !bExcludeControl) {
+		if (wcslen((wchar_t*)pTemplateDataIn) && !bExcludeControl)
+		{
 			nControls++;
 
-			if (fp) {
+			if (fp)
+			{
 				EscapeString(wszBuffer, (wchar_t*)pTemplateDataIn, 5120);
 				_ftprintf(fp, _T("        //-- \"%ls\"\n"), wszBuffer);
 				_ftprintf(fp, _T("  %5i\t%4i \"\"\n"), wID, i);
@@ -345,7 +382,8 @@ int BuildTemplateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, LPTSTR lpszName, 
 		pTemplateDataIn += sizeof(WORD) + *((WORD*)pTemplateDataIn);
 	}
 
-	if (fp) {
+	if (fp)
+	{
 		_ftprintf(fp, _T("}\n\n"));
 	}
 
@@ -363,10 +401,14 @@ int BuildTemplateMenuTemplate(const MENUTEMPLATE* pTemplate, LPTSTR lpszName, FI
 	int bracketcnt = 0; // popup menu counter (BEGIN...END)
 	int i = 0;
 
-	if (fp) {
-		if (IS_INTRESOURCE(lpszName)) {
+	if (fp)
+	{
+		if (IS_INTRESOURCE(lpszName))
+		{
 			_ftprintf(fp, _T("menu   %4i {\n"), (INT_PTR)lpszName);
-		} else {
+		}
+		else
+		{
 #ifdef UNICODE
 			EscapeString(wszBuffer, lpszName, 5120);
 #else
@@ -379,23 +421,29 @@ int BuildTemplateMenuTemplate(const MENUTEMPLATE* pTemplate, LPTSTR lpszName, FI
 		}
 	}
 
-	do {
+	do
+	{
 		wchar_t pszTitle[1024] = L"";
 		WORD wOption = ((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption;
 		WORD wID = 0;
 		int l;
 
-		if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_POPUP) {
+		if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_POPUP)
+		{
 			bLastPopup = false;
 			bLastItem = false;
 			bracketcnt++;
-			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END) {
+			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END)
+			{
 				bLastPopup = true;
 				bracketcnt--;
 			}
 			pTemplateDataIn += sizeof(WORD);
-		} else {
-			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END) {
+		}
+		else
+		{
+			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END)
+			{
 				bLastItem = true;
 				bracketcnt--;
 			}
@@ -403,43 +451,56 @@ int BuildTemplateMenuTemplate(const MENUTEMPLATE* pTemplate, LPTSTR lpszName, FI
 			pTemplateDataIn += sizeof(WORD) * 2;
 		}
 
-		for (l = 0; l < 1023 && ((wchar_t*)pTemplateDataIn)[l] && ((wchar_t*)pTemplateDataIn)[l] != _T('\t'); l++) { }
+		for (l = 0; l < 1023 && ((wchar_t*)pTemplateDataIn)[l] && ((wchar_t*)pTemplateDataIn)[l] != _T('\t'); l++)
+		{
+		}
 
 		wcsncpy(pszTitle, (wchar_t*)pTemplateDataIn, l);
 
-		if (fp) {
-			if (wcslen((wchar_t*)pTemplateDataIn)) {
+		if (fp)
+		{
+			if (wcslen((wchar_t*)pTemplateDataIn))
+			{
 				EscapeString(wszBuffer, pszTitle, 5120);
 				_ftprintf(fp, _T("%s        //-- \"%ls\"\n"), szIndent + (8 - nIndent) * 2, wszBuffer);
 				_ftprintf(fp, _T("%s"), szIndent + (8 - nIndent) * 2);
-				if (wOption & MF_POPUP) {
+				if (wOption & MF_POPUP)
+				{
 					_ftprintf(fp, _T("  popup %4i \"\" {\n"), i);
 					nIndent++;
-				} else {
+				}
+				else
+				{
 					_ftprintf(fp, _T("  %5i %4i \"\"\n"), wID, i);
 				}
 			}
 
-			if ((wOption & MF_END) && !(wOption & MF_POPUP)) {
+			if ((wOption & MF_END) && !(wOption & MF_POPUP))
+			{
 				nIndent--;
-				if (nIndent < 0) {
+				if (nIndent < 0)
+				{
 					nIndent = 0;
 				}
-				if (nIndent > 8) {
+				if (nIndent > 8)
+				{
 					nIndent = 8;
 				}
 
-				if (fp) {
+				if (fp)
+				{
 					_ftprintf(fp, _T("%s  }\n"), szIndent + (8 - nIndent) * 2);
 				}
 			}
 		}
 		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
+	}
+	while (i++ < 1024 && (!(bLastPopup && bLastItem) || bracketcnt > 0));
 
-	} while (i++ < 1024 && (!(bLastPopup && bLastItem) || bracketcnt > 0));
-
-	if (fp) {
-		while (nIndent) {
+	if (fp)
+	{
+		while (nIndent)
+		{
 			nIndent--;
 			_ftprintf(fp, _T("%s  }\n"), szIndent + (8 - nIndent) * 2);
 		}
@@ -450,13 +511,17 @@ int BuildTemplateMenuTemplate(const MENUTEMPLATE* pTemplate, LPTSTR lpszName, FI
 	return i;
 }
 
-static BOOL CALLBACK FBALocaliseEnumResourceNamesDialog(HMODULE /* hModule */, LPCTSTR /* lpszType */, LPTSTR lpszName, LONG_PTR lParam)
+static BOOL CALLBACK FBALocaliseEnumResourceNamesDialog(HMODULE /* hModule */, LPCTSTR /* lpszType */, LPTSTR lpszName,
+                                                        LONG_PTR lParam)
 {
 	LPCDLGTEMPLATE pTemplate = (LPCDLGTEMPLATE)LoadResource(hAppInst, FindResource(hAppInst, lpszName, RT_DIALOG));
 
-	if (LockResource((HGLOBAL)pTemplate)) {
-		if (((DLGTEMPLATEEX*)pTemplate)->signature == 0xFFFF && ((DLGTEMPLATEEX*)pTemplate)->dlgVer == 1) {
-			if (BuildTemplateDlgTemplateEx((DLGTEMPLATEEX*)pTemplate, lpszName, NULL)) {
+	if (LockResource((HGLOBAL)pTemplate))
+	{
+		if (((DLGTEMPLATEEX*)pTemplate)->signature == 0xFFFF && ((DLGTEMPLATEEX*)pTemplate)->dlgVer == 1)
+		{
+			if (BuildTemplateDlgTemplateEx((DLGTEMPLATEEX*)pTemplate, lpszName, NULL))
+			{
 				BuildTemplateDlgTemplateEx((DLGTEMPLATEEX*)pTemplate, lpszName, (FILE*)lParam);
 			}
 		}
@@ -465,12 +530,15 @@ static BOOL CALLBACK FBALocaliseEnumResourceNamesDialog(HMODULE /* hModule */, L
 	return TRUE;
 }
 
-static BOOL CALLBACK FBALocaliseEnumResourceNamesMenu(HMODULE /* hModule */, LPCTSTR /* lpszType */, LPTSTR lpszName, LONG_PTR lParam)
+static BOOL CALLBACK FBALocaliseEnumResourceNamesMenu(HMODULE /* hModule */, LPCTSTR /* lpszType */, LPTSTR lpszName,
+                                                      LONG_PTR lParam)
 {
 	MENUTEMPLATE* pTemplate = (MENUTEMPLATE*)LoadResource(hAppInst, FindResource(hAppInst, lpszName, RT_MENU));
 
-	if (LockResource((HGLOBAL)pTemplate)) {
-		if (((MENUITEMTEMPLATEHEADER*)pTemplate)->versionNumber == 0) {
+	if (LockResource((HGLOBAL)pTemplate))
+	{
+		if (((MENUITEMTEMPLATEHEADER*)pTemplate)->versionNumber == 0)
+		{
 			BuildTemplateMenuTemplate((MENUITEMTEMPLATEHEADER*)pTemplate, lpszName, (FILE*)lParam);
 		}
 	}
@@ -478,16 +546,20 @@ static BOOL CALLBACK FBALocaliseEnumResourceNamesMenu(HMODULE /* hModule */, LPC
 	return TRUE;
 }
 
-static BOOL CALLBACK FBALocaliseEnumResourceNamesString(HMODULE /* hModule */, LPCTSTR /* lpszType */, LPTSTR lpszName, LONG_PTR lParam)
+static BOOL CALLBACK FBALocaliseEnumResourceNamesString(HMODULE /* hModule */, LPCTSTR /* lpszType */, LPTSTR lpszName,
+                                                        LONG_PTR lParam)
 {
 	wchar_t* pwsz = (wchar_t*)LoadResource(hAppInst, FindResource(hAppInst, lpszName, RT_STRING));
 
-	if (LockResource(pwsz)) {
+	if (LockResource(pwsz))
+	{
 		wchar_t wszBuffer[5120];
 
 		// Locate the string in the bundle
-		for (int i = 0; i < 16; i++) {
-			if (*pwsz) {
+		for (int i = 0; i < 16; i++)
+		{
+			if (*pwsz)
+			{
 				EscapeString(wszBuffer, pwsz + 1, 5120);
 				_ftprintf((FILE*)lParam, _T("        //-- \"%ls\"\n"), wszBuffer);
 				_ftprintf((FILE*)lParam, _T("string %5i \"\"\n\n"), (((INT_PTR)lpszName) - 1) * 16 + i);
@@ -501,13 +573,16 @@ static BOOL CALLBACK FBALocaliseEnumResourceNamesString(HMODULE /* hModule */, L
 
 static BOOL CALLBACK FBALocaliseEnumResTypeProc(HMODULE /* hModule */, LPTSTR lpszType, LONG_PTR lParam)
 {
-	if (lpszType == RT_DIALOG) {
+	if (lpszType == RT_DIALOG)
+	{
 		EnumResourceNames(NULL, lpszType, &FBALocaliseEnumResourceNamesDialog, lParam);
 	}
-	if (lpszType == RT_MENU) {
+	if (lpszType == RT_MENU)
+	{
 		EnumResourceNames(NULL, lpszType, &FBALocaliseEnumResourceNamesMenu, lParam);
 	}
-	if (lpszType == RT_STRING) {
+	if (lpszType == RT_STRING)
+	{
 		EnumResourceNames(NULL, lpszType, &FBALocaliseEnumResourceNamesString, lParam);
 	}
 
@@ -517,7 +592,8 @@ static BOOL CALLBACK FBALocaliseEnumResTypeProc(HMODULE /* hModule */, LPTSTR lp
 static int FBALocaliseWriteTemplate(TCHAR* pszTemplate)
 {
 	FILE* fp = _tfopen(pszTemplate, _T("wt"));
-	if (fp == NULL) {
+	if (fp == NULL)
+	{
 		return 1;
 	}
 
@@ -692,7 +768,7 @@ DLGTEMPLATE* TranslateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, const Locali
 	pTemplateDataOutSync = pTemplateDataOut + 26;
 
 #ifdef PRINT_TRANSLATION_INFO
- #if 0
+#if 0
 	dprintf(_T("\n"));
 	char* pData = (char*)pTemplate;
 	for (int i = 0; i < 16; i++) {
@@ -707,83 +783,91 @@ DLGTEMPLATE* TranslateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, const Locali
 		dprintf(_T("\n"));
 	}
 	dprintf(_T("\n"));
- #endif
+#endif
 #endif
 
 	// Menu
-	switch (*((WORD*)pTemplateDataIn)) {
-		case 0x0000:
-			pTemplateDataIn += 1 * sizeof(WORD);
-			break;
-		case 0xFFFF:
+	switch (*((WORD*)pTemplateDataIn))
+	{
+	case 0x0000:
+		pTemplateDataIn += 1 * sizeof(WORD);
+		break;
+	case 0xFFFF:
 #ifdef PRINT_TRANSLATION_INFO
 			dprintf(_T("   menu is %04X.\n"), *((UINT16*)pTemplateDataIn + sizeof(WORD)));
 #endif
-			pTemplateDataIn += 2 * sizeof(WORD);
-			break;
-		default:
+		pTemplateDataIn += 2 * sizeof(WORD);
+		break;
+	default:
 #ifdef PRINT_TRANSLATION_INFO
 			dprintf(_T("   menu is \"%ls\".\n"), (wchar_t*)pTemplateDataIn);
 #endif
-			pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
-			break;
+		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
+		break;
 	}
 
-//	pTemplateDataIn = (char*)(((UINT32)pTemplateDataIn + sizeof(WORD) - 1) & ~(sizeof(WORD) - 1));
+	//	pTemplateDataIn = (char*)(((UINT32)pTemplateDataIn + sizeof(WORD) - 1) & ~(sizeof(WORD) - 1));
 
 	// Class
-	switch (*((WORD*)pTemplateDataIn)) {
-		case 0x0000:
-			pTemplateDataIn += 1 * sizeof(WORD);
-			break;
-		case 0xFFFF:
+	switch (*((WORD*)pTemplateDataIn))
+	{
+	case 0x0000:
+		pTemplateDataIn += 1 * sizeof(WORD);
+		break;
+	case 0xFFFF:
 #ifdef PRINT_TRANSLATION_INFO
 			dprintf(_T("   class is %04X.\n"), *((UINT16*)pTemplateDataIn + sizeof(WORD)));
 #endif
-			pTemplateDataIn += 2 * sizeof(WORD);
-			break;
-		default:
+		pTemplateDataIn += 2 * sizeof(WORD);
+		break;
+	default:
 #ifdef PRINT_TRANSLATION_INFO
 			dprintf(_T("   class is \"%ls\".\n"), (wchar_t*)pTemplateDataIn);
 #endif
-			pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
-			break;
+		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
+		break;
 	}
 
-//	pTemplateDataIn = (char*)(((UINT32)pTemplateDataIn + sizeof(WORD) - 1) & ~(sizeof(WORD) - 1));
+	//	pTemplateDataIn = (char*)(((UINT32)pTemplateDataIn + sizeof(WORD) - 1) & ~(sizeof(WORD) - 1));
 
 	// Caption
 #ifdef PRINT_TRANSLATION_INFO
 	dprintf(_T("   "));
 #endif
-	if (*((WORD*)pTemplateDataIn) == 0xFFFF) {
+	if (*((WORD*)pTemplateDataIn) == 0xFFFF)
+	{
 #ifdef PRINT_TRANSLATION_INFO
 		dprintf(_T("icon is %04X, "), *((UINT16*)pTemplateDataIn + sizeof(WORD)));
 #endif
 		pTemplateDataIn += 2 * sizeof(WORD);
 	}
 	CATCH_UP;
-	if (pLocaliseInfo->szCaption[0]) {
+	if (pLocaliseInfo->szCaption[0])
+	{
 		ADD_STRING(pLocaliseInfo->szCaption);
-	} else {
+	}
+	else
+	{
 		ADD_STRING((wchar_t*)pTemplateDataIn);
 	}
 
-	switch (*((WORD*)pTemplateDataIn)) {
-		case 0x0000:
-			pTemplateDataIn += 1 * sizeof(WORD);
-			break;
-		default:
+	switch (*((WORD*)pTemplateDataIn))
+	{
+	case 0x0000:
+		pTemplateDataIn += 1 * sizeof(WORD);
+		break;
+	default:
 #ifdef PRINT_TRANSLATION_INFO
 			dprintf(_T("caption is \"%ls\".\n"), (wchar_t*)pTemplateDataIn);
 #endif
-			pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
-			break;
+		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
+		break;
 	}
 	pTemplateDataInSync = pTemplateDataIn;
 
 	// Font
-	if (pTemplate->style & (DS_SETFONT | DS_SHELLFONT)) {
+	if (pTemplate->style & (DS_SETFONT | DS_SHELLFONT))
+	{
 #ifdef PRINT_TRANSLATION_INFO
 		dprintf(_T("   Font: \"%ls\", %i pt.\n"), (wchar_t*)(pTemplateDataIn + 2 + 2 * sizeof(WORD)), *((WORD*)pTemplateDataIn));
 #endif
@@ -797,59 +881,65 @@ DLGTEMPLATE* TranslateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, const Locali
 #else
 		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
 #endif
-
 	}
 
 	// Controls
 #ifdef PRINT_TRANSLATION_INFO
 	dprintf(_T("   %i controls used.\n"), pTemplate->cDlgItems);
 #endif
-	for (int i = 0; i < pTemplate->cDlgItems; i++) {
-
+	for (int i = 0; i < pTemplate->cDlgItems; i++)
+	{
 		CATCH_UP;
 		ALIGN(sizeof(DWORD));
 
-		pTemplateDataIn = pTemplateDataInSync = (char*)(((INT_PTR)pTemplateDataIn + sizeof(DWORD) - 1) & ~(sizeof(DWORD) - 1));
+		pTemplateDataIn = pTemplateDataInSync = (char*)(((INT_PTR)pTemplateDataIn + sizeof(DWORD) - 1) & ~(sizeof(DWORD)
+			- 1));
 
 #ifdef PRINT_TRANSLATION_INFO
 		dprintf(_T("      control %02i, ID is %05i, pos %03ix%03i, size %03ix%03i\n"), i, ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->id, ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->x, ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->y, ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->cx, ((DLGITEMTEMPLATEEX*)pTemplateDataIn)->cy);
 #endif
 
-		pTemplateDataIn = (char*)(((INT_PTR)pTemplateDataIn + sizeof(DLGITEMTEMPLATEEX) + sizeof(WORD) - 1) & ~(sizeof(WORD) - 1));
+		pTemplateDataIn = (char*)(((INT_PTR)pTemplateDataIn + sizeof(DLGITEMTEMPLATEEX) + sizeof(WORD) - 1) & ~(sizeof(
+			WORD) - 1));
 
 #ifdef PRINT_TRANSLATION_INFO
 		dprintf(_T("         "));
 #endif
 
 		// Class
-		switch (*((WORD*)pTemplateDataIn)) {
-			case 0x0000:
-				pTemplateDataIn += 1 * sizeof(WORD);
-				break;
-			case 0xFFFF:
+		switch (*((WORD*)pTemplateDataIn))
+		{
+		case 0x0000:
+			pTemplateDataIn += 1 * sizeof(WORD);
+			break;
+		case 0xFFFF:
 #ifdef PRINT_TRANSLATION_INFO
 				dprintf(_T("class is %04X, "), *((UINT16*)pTemplateDataIn + sizeof(WORD)));
 #endif
-				pTemplateDataIn += 2 * sizeof(WORD);
-				break;
-			default:
+			pTemplateDataIn += 2 * sizeof(WORD);
+			break;
+		default:
 #ifdef PRINT_TRANSLATION_INFO
 				dprintf(_T("class is \"%ls\", "), (wchar_t*)pTemplateDataIn);
 #endif
-				pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
-				break;
+			pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
+			break;
 		}
 
-//		pTemplateDataIn = (char*)(((UINT32)pTemplateDataIn + sizeof(WORD) - 1) & ~(sizeof(WORD) - 1));
+		//		pTemplateDataIn = (char*)(((UINT32)pTemplateDataIn + sizeof(WORD) - 1) & ~(sizeof(WORD) - 1));
 
-		if (*((WORD*)pTemplateDataIn) == 0xFFFF) {
+		if (*((WORD*)pTemplateDataIn) == 0xFFFF)
+		{
 			pTemplateDataIn += 4;
 		}
 
 		CATCH_UP;
-		if (pLocaliseInfo->pControlInfo[i] && pLocaliseInfo->pControlInfo[i]->szCaption[0]) {
+		if (pLocaliseInfo->pControlInfo[i] && pLocaliseInfo->pControlInfo[i]->szCaption[0])
+		{
 			ADD_STRING(pLocaliseInfo->pControlInfo[i]->szCaption);
-		} else {
+		}
+		else
+		{
 			ADD_STRING((wchar_t*)pTemplateDataIn);
 		}
 
@@ -884,8 +974,11 @@ DLGTEMPLATE* TranslateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, const Locali
 INT_PTR FBNDialogBox(HINSTANCE hInstance, LPTSTR lpTemplate, HWND hWndParent, DLGPROC lpDialogFunc)
 {
 	// Try to load the translated dialog
-	if (bLocalisationActive && hInstance == hAppInst && (UINT_PTR)lpTemplate < nMaxResources && FBAResourceInfo[(UINT_PTR)lpTemplate].pResourceTranslation) {
-		return DialogBoxIndirect(hInstance, (LPCDLGTEMPLATE)FBAResourceInfo[(INT_PTR)lpTemplate].pResourceTranslation, hWndParent, lpDialogFunc);
+	if (bLocalisationActive && hInstance == hAppInst && (UINT_PTR)lpTemplate < nMaxResources && FBAResourceInfo[(
+		UINT_PTR)lpTemplate].pResourceTranslation)
+	{
+		return DialogBoxIndirect(hInstance, (LPCDLGTEMPLATE)FBAResourceInfo[(INT_PTR)lpTemplate].pResourceTranslation,
+		                         hWndParent, lpDialogFunc);
 	}
 
 	// Localisation disabled or couldn't lock resource, so use normal function
@@ -895,8 +988,12 @@ INT_PTR FBNDialogBox(HINSTANCE hInstance, LPTSTR lpTemplate, HWND hWndParent, DL
 HWND FBNCreateDialog(HINSTANCE hInstance, LPCTSTR lpTemplate, HWND hWndParent, DLGPROC lpDialogFunc)
 {
 	// Try to load the translated dialog
-	if (bLocalisationActive && hInstance == hAppInst && (UINT_PTR)lpTemplate < nMaxResources && FBAResourceInfo[(UINT_PTR)lpTemplate].pResourceTranslation) {
-		return CreateDialogIndirect(hInstance, (LPCDLGTEMPLATE)FBAResourceInfo[(INT_PTR)lpTemplate].pResourceTranslation, hWndParent, lpDialogFunc);
+	if (bLocalisationActive && hInstance == hAppInst && (UINT_PTR)lpTemplate < nMaxResources && FBAResourceInfo[(
+		UINT_PTR)lpTemplate].pResourceTranslation)
+	{
+		return CreateDialogIndirect(
+			hInstance, (LPCDLGTEMPLATE)FBAResourceInfo[(INT_PTR)lpTemplate].pResourceTranslation, hWndParent,
+			lpDialogFunc);
 	}
 
 	// Localisation disabled or couldn't lock resource, so use normal function
@@ -970,12 +1067,14 @@ MENUTEMPLATE* TranslateMenuTemplate(const MENUTEMPLATE* pTemplate, const Localis
 #endif
 
 	pTemplateDataOut = (char*)malloc(sizeof(MENUITEMTEMPLATEHEADER));
-	memcpy(pTemplateDataOut, (char*)pTemplate, sizeof(MENUITEMTEMPLATEHEADER) + ((MENUITEMTEMPLATEHEADER*)pTemplate)->offset);
+	memcpy(pTemplateDataOut, (char*)pTemplate,
+	       sizeof(MENUITEMTEMPLATEHEADER) + ((MENUITEMTEMPLATEHEADER*)pTemplate)->offset);
 	pTemplateDataInSync = pTemplateDataIn;
-	pTemplateDataOutSync = pTemplateDataOut + sizeof(MENUITEMTEMPLATEHEADER) + ((MENUITEMTEMPLATEHEADER*)pTemplate)->offset;
+	pTemplateDataOutSync = pTemplateDataOut + sizeof(MENUITEMTEMPLATEHEADER) + ((MENUITEMTEMPLATEHEADER*)pTemplate)->
+		offset;
 
 #ifdef PRINT_TRANSLATION_INFO
- #if 0
+#if 0
 	dprintf(_T("\n"));
 	char* pData = (char*)pTemplate;
 	for (int i = 0; i < 16; i++) {
@@ -990,18 +1089,21 @@ MENUTEMPLATE* TranslateMenuTemplate(const MENUTEMPLATE* pTemplate, const Localis
 		dprintf(_T("\n"));
 	}
 	dprintf(_T("\n"));
- #endif
+#endif
 #endif
 
 	int i = 0;
 	int bracketcnt = 0; // popup menu counter (BEGIN...END)
 	bool bLastPopup = false, bLastItem = false;
-	do {
-		if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_POPUP) {
+	do
+	{
+		if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_POPUP)
+		{
 			bLastPopup = false;
 			bLastItem = false;
 			bracketcnt++;
-			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END) {
+			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END)
+			{
 				bLastPopup = true;
 				bracketcnt--;
 			}
@@ -1009,8 +1111,11 @@ MENUTEMPLATE* TranslateMenuTemplate(const MENUTEMPLATE* pTemplate, const Localis
 			dprintf(_T("   popup %03i "), i);
 #endif
 			pTemplateDataIn += sizeof(WORD);
-		} else {
-			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END) {
+		}
+		else
+		{
+			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END)
+			{
 				bLastItem = true;
 				bracketcnt--;
 			}
@@ -1024,23 +1129,30 @@ MENUTEMPLATE* TranslateMenuTemplate(const MENUTEMPLATE* pTemplate, const Localis
 #ifdef PRINT_TRANSLATION_INFO
 		dprintf(_T("\"%ls\".\n"), (wchar_t*)pTemplateDataIn);
 #endif
-		if (pLocaliseInfo->pControlInfo[i] && pLocaliseInfo->pControlInfo[i]->szCaption[0]) {
+		if (pLocaliseInfo->pControlInfo[i] && pLocaliseInfo->pControlInfo[i]->szCaption[0])
+		{
 			wchar_t* pszHotkey = NULL;
 
-			for (pszHotkey = (wchar_t*)pTemplateDataIn; *pszHotkey && *pszHotkey != _T('\t'); pszHotkey++) { }
+			for (pszHotkey = (wchar_t*)pTemplateDataIn; *pszHotkey && *pszHotkey != _T('\t'); pszHotkey++)
+			{
+			}
 
 			ADD_STRING(pLocaliseInfo->pControlInfo[i]->szCaption);
-			if (*pszHotkey) {
+			if (*pszHotkey)
+			{
 				pTemplateDataOutSync -= sizeof(wchar_t);
 				ADD_STRING(pszHotkey);
 			}
-		} else {
+		}
+		else
+		{
 			ADD_STRING((wchar_t*)pTemplateDataIn);
 		}
 
 		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
 		pTemplateDataInSync = pTemplateDataIn;
-	} while (i++ < 1024 && (!(bLastPopup && bLastItem) || bracketcnt > 0));
+	}
+	while (i++ < 1024 && (!(bLastPopup && bLastItem) || bracketcnt > 0));
 
 	CATCH_UP;
 
@@ -1051,13 +1163,14 @@ MENUTEMPLATE* TranslateMenuTemplate(const MENUTEMPLATE* pTemplate, const Localis
 #endif
 
 	return (MENUTEMPLATE*)pTemplateDataOut;
-
 }
 
 HMENU FBNLoadMenu(HINSTANCE hInstance, LPTSTR lpMenuName)
 {
 	// Try to load the translated menu
-	if (bLocalisationActive && hInstance == hAppInst && (UINT_PTR)lpMenuName < nMaxResources && FBAResourceInfo[(UINT_PTR)lpMenuName].pResourceTranslation) {
+	if (bLocalisationActive && hInstance == hAppInst && (UINT_PTR)lpMenuName < nMaxResources && FBAResourceInfo[(
+		UINT_PTR)lpMenuName].pResourceTranslation)
+	{
 		return LoadMenuIndirect((MENUTEMPLATE*)FBAResourceInfo[(INT_PTR)lpMenuName].pResourceTranslation);
 	}
 
@@ -1069,9 +1182,10 @@ HMENU FBNLoadMenu(HINSTANCE hInstance, LPTSTR lpMenuName)
 
 TCHAR* FBNLoadStringEx(HINSTANCE hInstance, UINT uID, bool bTranslate)
 {
-	if (bLocalisationActive && bTranslate && uID < nMaxResources) {
-		if (FBAResourceInfo[uID].pResourceTranslation) {
-
+	if (bLocalisationActive && bTranslate && uID < nMaxResources)
+	{
+		if (FBAResourceInfo[uID].pResourceTranslation)
+		{
 #if 1 && defined (PRINT_TRANSLATION_INFO)
 			dprintf(_T("string %5i: \"%ls\"\n"), uID, (TCHAR*)FBAResourceInfo[uID].pResourceTranslation);
 #endif
@@ -1082,11 +1196,14 @@ TCHAR* FBNLoadStringEx(HINSTANCE hInstance, UINT uID, bool bTranslate)
 
 	{
 		// Convert the string ID into a bundle number
-		wchar_t* pwsz = (wchar_t*)LoadResource(hInstance, FindResource(hInstance, MAKEINTRESOURCE(uID / 16 + 1), RT_STRING));
+		wchar_t* pwsz = (wchar_t*)LoadResource(
+			hInstance, FindResource(hInstance, MAKEINTRESOURCE(uID / 16 + 1), RT_STRING));
 
-		if ((pwsz = (wchar_t*)LockResource(pwsz)) != NULL) {
+		if ((pwsz = (wchar_t*)LockResource(pwsz)) != NULL)
+		{
 			// Locate the string in the bundle
-			for (unsigned int i = 0; i < (uID & 15); i++) {
+			for (unsigned int i = 0; i < (uID & 15); i++)
+			{
 				pwsz += *pwsz + 1;
 			}
 		}
@@ -1126,8 +1243,10 @@ TCHAR* FBNLoadStringEx(HINSTANCE hInstance, UINT uID, bool bTranslate)
 
 int FBNLoadString(HINSTANCE hInstance, UINT uID, LPTSTR lpBuffer, int nBufferMax)
 {
-	if (bLocalisationActive && uID < nMaxResources) {
-		if (FBAResourceInfo[uID].pResourceTranslation) {
+	if (bLocalisationActive && uID < nMaxResources)
+	{
+		if (FBAResourceInfo[uID].pResourceTranslation)
+		{
 			int nLen = _tcslen((TCHAR*)FBAResourceInfo[uID].pResourceTranslation);
 
 #ifdef UNICODE
@@ -1146,13 +1265,16 @@ int FBNLoadString(HINSTANCE hInstance, UINT uID, LPTSTR lpBuffer, int nBufferMax
 
 static void FBALocaliseError(TCHAR* pszFilename, int nLineNumber, TCHAR* pszInfo, wchar_t* pszLine)
 {
-	FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Language file %s is malformed.\nPlease remove or repair the file.\n\n"), pszFilename);
+	FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Language file %s is malformed.\nPlease remove or repair the file.\n\n"),
+	                pszFilename);
 	FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Parse error at line %i.\n"), nLineNumber);
 
-	if (pszInfo) {
+	if (pszInfo)
+	{
 		FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Problem:\t%s.\n"), pszInfo);
 	}
-	if (pszLine) {
+	if (pszLine)
+	{
 		FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Text:\t%ls\n"), pszLine);
 	}
 
@@ -1175,64 +1297,75 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 	int nInside = 0;
 	TCHAR* nResourceType = 0;
 
-	if (pszFilename == 0 || _tcslen(pszFilename) == 0) {
+	if (pszFilename == 0 || _tcslen(pszFilename) == 0)
+	{
 		return -1;
 	}
 
 	memset(&CurrentResource, 0, sizeof(LocaliseResourceInfo));
 
 	FILE* h = _tfopen(pszFilename, _T("rb"));
-	if (h == NULL) {
+	if (h == NULL)
+	{
 		return 1;
 	}
 
 	{
-		unsigned char szBOM[4] = { 0, };
+		unsigned char szBOM[4] = {0,};
 
 		fread(szBOM, 1, sizeof(szBOM), h);
 
 		// See if it's a UTF-8 file
-		if (szBOM[0] == 0xEF && szBOM[1] == 0xBB && szBOM[2] == 0xBF) {
+		if (szBOM[0] == 0xEF && szBOM[1] == 0xBB && szBOM[2] == 0xBF)
+		{
 			nFBACodepage = CP_UTF8;
 		}
 
 #ifdef _UNICODE
 		// See if it's a UTF-16 file
-		if (szBOM[0] == 0xFF && szBOM[1] == 0xFE) {
+		if (szBOM[0] == 0xFF && szBOM[1] == 0xFE)
+		{
 			nFBACodepage = CP_WINUNICODE;
 
 			fseek(h, 2, SEEK_SET);
 		}
 #endif
-
 	}
 
-	if (nFBACodepage != CP_WINUNICODE) {
+	if (nFBACodepage != CP_WINUNICODE)
+	{
 		fclose(h);
 		h = _tfopen(pszFilename, _T("rt"));
-		if (h == NULL) {
+		if (h == NULL)
+		{
 			return 1;
 		}
 
-		if (nFBACodepage == CP_UTF8) {
+		if (nFBACodepage == CP_UTF8)
+		{
 			fseek(h, 3, SEEK_SET);
 		}
-
 	}
 
-	while (1) {
+	while (1)
+	{
 		char szTemp[1024];
 
 #ifdef _UNICODE
-		if (nFBACodepage != CP_WINUNICODE) {
+		if (nFBACodepage != CP_WINUNICODE)
+		{
 #endif
-			if (fgets(szTemp, sizeof(szTemp), h) == NULL) {
+			if (fgets(szTemp, sizeof(szTemp), h) == NULL)
+			{
 				break;
 			}
 			MultiByteToWideChar(nFBACodepage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));
 #ifdef _UNICODE
-		} else {
-			if (_fgetts(szLine, sizeof(szLine), h) == NULL) {
+		}
+		else
+		{
+			if (_fgetts(szLine, sizeof(szLine), h) == NULL)
+			{
 				break;
 			}
 		}
@@ -1242,28 +1375,35 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 
 		nLen = wcslen(szLine);
 		// Get rid of the linefeed at the end
-		while (szLine[nLen - 1] == 0x0A || szLine[nLen - 1] == 0x0D) {
+		while (szLine[nLen - 1] == 0x0A || szLine[nLen - 1] == 0x0D)
+		{
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}
 
-		s = szLine;													// Start parsing
+		s = szLine; // Start parsing
 
 		WSKIP_WS(s);
 
-		if (s[0] == _T('/') && s[1] == _T('/')) {					// Comment
+		if (s[0] == _T('/') && s[1] == _T('/'))
+		{
+			// Comment
 			continue;
 		}
 
-		if ((t = LabelCheckW(s, L"version")) != 0) {				// Version
+		if ((t = LabelCheckW(s, L"version")) != 0)
+		{
+			// Version
 			s = t;
 
 			WSKIP_WS(s);
 
 			nTemplateVersion = wcstol(s, &t, 0);
 
-			if (s != t) {
-				if (nTemplateVersion != nBurnVer) {
+			if (s != t)
+			{
+				if (nTemplateVersion != nBurnVer)
+				{
 					break;
 				}
 			}
@@ -1277,7 +1417,9 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 			continue;
 		}
 
-		if ((t = LabelCheckW(s, L"codepage")) != 0) {				// Set codepage
+		if ((t = LabelCheckW(s, L"codepage")) != 0)
+		{
+			// Set codepage
 			s = t;
 
 			WSKIP_WS(s);
@@ -1293,7 +1435,8 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 			continue;
 		}
 
-		if ((t = LabelCheckW(s, L"menu")) != 0) {
+		if ((t = LabelCheckW(s, L"menu")) != 0)
+		{
 			s = t;
 
 			nResourceType = RT_MENU;
@@ -1309,11 +1452,13 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 
 			WSKIP_WS(s);
 
-			if (nInside) {
+			if (nInside)
+			{
 				FBALocaliseError(pszFilename, nLine, _T("missing closing bracket"), NULL);
 				break;
 			}
-			if (*s != _T('{')) {
+			if (*s != _T('{'))
+			{
 				FBALocaliseError(pszFilename, nLine, _T("missing opening bracket"), NULL);
 				break;
 			}
@@ -1324,7 +1469,9 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 			continue;
 		}
 
-		if ((t = LabelCheckW(s, L"dialog")) != 0) {				// Add new resource
+		if ((t = LabelCheckW(s, L"dialog")) != 0)
+		{
+			// Add new resource
 			s = t;
 
 			nResourceType = RT_DIALOG;
@@ -1348,11 +1495,13 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 
 			WSKIP_WS(s);
 
-			if (nInside) {
+			if (nInside)
+			{
 				FBALocaliseError(pszFilename, nLine, _T("missing closing bracket"), NULL);
 				break;
 			}
-			if (*s != L'{') {
+			if (*s != L'{')
+			{
 				FBALocaliseError(pszFilename, nLine, _T("missing opening bracket"), NULL);
 				break;
 			}
@@ -1360,17 +1509,20 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 
 			CurrentResource.nID = nID;
 
-			if (wcslen(szQuote)) {
+			if (wcslen(szQuote))
+			{
 				memcpy(CurrentResource.szCaption, szQuote, QUOTE_MAX * sizeof(TCHAR));
 			}
 
 			continue;
 		}
 
-		if ((t = LabelCheckW(s, L"string")) != 0) {
+		if ((t = LabelCheckW(s, L"string")) != 0)
+		{
 			s = t;
 
-			if (nInside) {
+			if (nInside)
+			{
 				FBALocaliseError(pszFilename, nLine, _T("missing closing bracket"), NULL);
 				break;
 			}
@@ -1388,8 +1540,8 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 			WFIND_QT(s);
 			wchar_t* szEnd = s;
 
-			if (nID < nMaxResources) {
-
+			if (nID < nMaxResources)
+			{
 #ifdef PRINT_TRANSLATION_INFO
 				{
 					TCHAR szFormat[256];
@@ -1398,7 +1550,8 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 				}
 #endif
 
-				if (szEnd - szQuote > 0) {
+				if (szEnd - szQuote > 0)
+				{
 					UnEscapeString(wszBuffer, szQuote, szEnd - szQuote);
 					FBAResourceInfo[nID].nResourceFlags = RES_DEALLOCATE;
 #ifdef _UNICODE
@@ -1421,13 +1574,17 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 
 		int n = wcstol(s, &t, 0);
 		bool bPopup = false;
-		if (t == s) {
+		if (t == s)
+		{
 			t = LabelCheckW(s, L"popup");
 			bPopup = true;
 		}
-		if (t && t != s) {				   							// New control
+		if (t && t != s)
+		{
+			// New control
 
-			if (nInside == 0) {
+			if (nInside == 0)
+			{
 				FBALocaliseError(pszFilename, nLine, _T("rogue control statement"), szLine);
 				break;
 			}
@@ -1436,83 +1593,100 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 			n = wcstol(s, &t, 0);
 
 			// Link a new control info structure
-			if (n < 512) {
+			if (n < 512)
+			{
 				s = t;
 
 				// Read option name
 				wchar_t* szQuote = NULL;
 				wchar_t* szEnd = NULL;
-				if (QuoteReadW(&szQuote, &szEnd, s)) {
+				if (QuoteReadW(&szQuote, &szEnd, s))
+				{
 					FBALocaliseError(pszFilename, nLine, _T("control name omitted"), szLine);
 					break;
 				}
 				s = szEnd;
 
-				if (bPopup) {
+				if (bPopup)
+				{
 					WSKIP_WS(s);
 
-					if (*s != L'{') {
+					if (*s != L'{')
+					{
 						FBALocaliseError(pszFilename, nLine, _T("missing opening bracket"), NULL);
 						break;
 					}
 					nInside++;
 				}
 
-				if (wcslen(szQuote)) {
-					if (CurrentResource.pControlInfo[n] == NULL) {
+				if (wcslen(szQuote))
+				{
+					if (CurrentResource.pControlInfo[n] == NULL)
+					{
 						CurrentResource.pControlInfo[n] = (LocaliseControlInfo*)malloc(sizeof(LocaliseControlInfo));
 					}
 					memset(CurrentResource.pControlInfo[n], 0, sizeof(LocaliseControlInfo));
 					memcpy(CurrentResource.pControlInfo[n]->szCaption, szQuote, QUOTE_MAX * sizeof(TCHAR));
 				}
 
-//				dprintf(_T("   - %ls\n"), pCurrentResource->pControlInfo[n]->szCaption);
-
+				//				dprintf(_T("   - %ls\n"), pCurrentResource->pControlInfo[n]->szCaption);
 			}
 
 			continue;
 		}
 
 		WSKIP_WS(s);
-		if (*s == L'}') {
-			if (nInside == 0) {
+		if (*s == L'}')
+		{
+			if (nInside == 0)
+			{
 				FBALocaliseError(pszFilename, nLine, _T("rogue closing bracket"), NULL);
 				break;
 			}
 
 			nInside--;
 
-			if (nInside == 0) {
-
-				if (CurrentResource.nID < nMaxResources) {
-					if (nResourceType == RT_MENU) {
+			if (nInside == 0)
+			{
+				if (CurrentResource.nID < nMaxResources)
+				{
+					if (nResourceType == RT_MENU)
+					{
 						MENUTEMPLATE* pTemplate = (MENUTEMPLATE*)LoadResource(
 							hAppInst, FindResource(hAppInst, MAKEINTRESOURCE(CurrentResource.nID), RT_MENU));
-						if (LockResource((HGLOBAL)pTemplate)) {
-							if (((MENUITEMTEMPLATEHEADER*)pTemplate)->versionNumber == 0) {
-
+						if (LockResource((HGLOBAL)pTemplate))
+						{
+							if (((MENUITEMTEMPLATEHEADER*)pTemplate)->versionNumber == 0)
+							{
 								// Translate the structure
-								FBAResourceInfo[CurrentResource.nID].pResourceTranslation = TranslateMenuTemplate((MENUTEMPLATE*)pTemplate, &CurrentResource);
+								FBAResourceInfo[CurrentResource.nID].pResourceTranslation = TranslateMenuTemplate(
+									(MENUTEMPLATE*)pTemplate, &CurrentResource);
 								FBAResourceInfo[CurrentResource.nID].nResourceFlags = RES_DEALLOCATE;
 							}
 						}
 					}
-					if (nResourceType == RT_DIALOG) {
+					if (nResourceType == RT_DIALOG)
+					{
 						LPCDLGTEMPLATE pTemplate = (LPCDLGTEMPLATE)LoadResource(
 							hAppInst, FindResource(hAppInst, MAKEINTRESOURCE(CurrentResource.nID), RT_DIALOG));
-						if (LockResource((HGLOBAL)pTemplate)) {
-							if (((DLGTEMPLATEEX*)pTemplate)->signature == 0xFFFF && ((DLGTEMPLATEEX*)pTemplate)->dlgVer == 1) {
-
+						if (LockResource((HGLOBAL)pTemplate))
+						{
+							if (((DLGTEMPLATEEX*)pTemplate)->signature == 0xFFFF && ((DLGTEMPLATEEX*)pTemplate)->dlgVer
+								== 1)
+							{
 								// Translate the structure
-								FBAResourceInfo[CurrentResource.nID].pResourceTranslation = TranslateDlgTemplateEx((DLGTEMPLATEEX*)pTemplate, &CurrentResource);
+								FBAResourceInfo[CurrentResource.nID].pResourceTranslation = TranslateDlgTemplateEx(
+									(DLGTEMPLATEEX*)pTemplate, &CurrentResource);
 								FBAResourceInfo[CurrentResource.nID].nResourceFlags = RES_DEALLOCATE;
 							}
 						}
 					}
 				}
 
-				for (int i = 0; i < 1024; i++) {
-					if (CurrentResource.pControlInfo[i]) {
+				for (int i = 0; i < 1024; i++)
+				{
+					if (CurrentResource.pControlInfo[i])
+					{
 						free(CurrentResource.pControlInfo[i]);
 						CurrentResource.pControlInfo[i] = NULL;
 					}
@@ -1528,22 +1702,26 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 			break;
 		}
 #endif
-
 	}
 
-	for (int i = 0; i < 1024; i++) {
-		if (CurrentResource.pControlInfo[i]) {
+	for (int i = 0; i < 1024; i++)
+	{
+		if (CurrentResource.pControlInfo[i])
+		{
 			free(CurrentResource.pControlInfo[i]);
 			CurrentResource.pControlInfo[i] = NULL;
 		}
 	}
 
-	if (h) {
+	if (h)
+	{
 		fclose(h);
 	}
 
-	if (nTemplateVersion != nBurnVer) {
-		if (nTemplateVersion == 0) {
+	if (nTemplateVersion != nBurnVer)
+	{
+		if (nTemplateVersion == 0)
+		{
 			return -1;
 		}
 		return -2;
@@ -1556,17 +1734,22 @@ void LocaliseExit()
 {
 	bLocalisationActive = false;
 
-	if (FBAResourceInfo) {
-		for (unsigned int i = 0; i < nMaxResources; i++) {
-			if (FBAResourceInfo[i].nResourceFlags & RES_DEALLOCATE) {
-				if (FBAResourceInfo[i].pResourceTranslation) {
+	if (FBAResourceInfo)
+	{
+		for (unsigned int i = 0; i < nMaxResources; i++)
+		{
+			if (FBAResourceInfo[i].nResourceFlags & RES_DEALLOCATE)
+			{
+				if (FBAResourceInfo[i].pResourceTranslation)
+				{
 					free(FBAResourceInfo[i].pResourceTranslation);
 					FBAResourceInfo[i].pResourceTranslation = NULL;
 				}
 			}
 		}
 
-		if (FBAResourceInfo) {
+		if (FBAResourceInfo)
+		{
 			free(FBAResourceInfo);
 			FBAResourceInfo = NULL;
 		}
@@ -1578,8 +1761,8 @@ int LocaliseInit(TCHAR* pszTemplate)
 	LocaliseExit();
 	nFBACodepage = GetACP();
 
-	if (pszTemplate == NULL || _tcslen(pszTemplate) == 0) {
-
+	if (pszTemplate == NULL || _tcslen(pszTemplate) == 0)
+	{
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T(" ** Translation disabled\n"));
 #endif
@@ -1590,15 +1773,16 @@ int LocaliseInit(TCHAR* pszTemplate)
 	}
 
 	FBAResourceInfo = (FBAResourceInfo_t*)malloc(nMaxResources * sizeof(FBAResourceInfo_t));
-	if (FBAResourceInfo == NULL) {
+	if (FBAResourceInfo == NULL)
+	{
 		return 1;
 	}
 
 	memset(FBAResourceInfo, 0, nMaxResources * sizeof(FBAResourceInfo_t));
 
 	int nRet = FBALocaliseParseFile(pszTemplate);
-	if (nRet > 0) {
-
+	if (nRet > 0)
+	{
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T(" ** Translation initialisation failed\n"));
 #endif
@@ -1606,8 +1790,8 @@ int LocaliseInit(TCHAR* pszTemplate)
 		return 1;
 	}
 
-	if (nRet < 0) {
-
+	if (nRet < 0)
+	{
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T(" ** Translation disabled\n"));
 #endif
@@ -1624,7 +1808,8 @@ int LocaliseInit(TCHAR* pszTemplate)
 	dprintf(_T(" ** Translation initialised\n"));
 #endif
 
-	if (pszTemplate) {
+	if (pszTemplate)
+	{
 		_tcsncpy(szLocalisationTemplate, pszTemplate, sizeof(szLocalisationTemplate) / sizeof(TCHAR));
 	}
 
@@ -1668,7 +1853,8 @@ int LocaliseLoadTemplate()
 	int nRet = GetOpenFileName(&ofn);
 	bRunPause = bOldPause;
 
-	if (nRet == 0) {
+	if (nRet == 0)
+	{
 		return 1;
 	}
 
@@ -1689,7 +1875,8 @@ int LocaliseCreateTemplate()
 	int nRet = GetSaveFileName(&ofn);
 	bRunPause = bOldPause;
 
-	if (nRet == 0) {
+	if (nRet == 0)
+	{
 		return 1;
 	}
 

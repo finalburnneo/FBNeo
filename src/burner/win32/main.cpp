@@ -15,9 +15,9 @@
 
 #ifdef _MSC_VER
 //  #include <winable.h>
- #ifdef _DEBUG
+#ifdef _DEBUG
   #include <crtdbg.h>
- #endif
+#endif
 #endif
 
 #ifdef FBN_DEBUG
@@ -26,7 +26,7 @@ bool bDisableDebugConsole = true;
 
 #include "version.h"
 
-HINSTANCE hAppInst = NULL;			// Application Instance
+HINSTANCE hAppInst = NULL; // Application Instance
 HANDLE hMainThread;
 long int nMainThreadID;
 int nAppThreadPriority = THREAD_PRIORITY_NORMAL;
@@ -36,12 +36,12 @@ static TCHAR szCmdLine[1024] = _T("");
 
 HACCEL hAccel = NULL;
 
-int nAppVirtualFps = 6000;			// App fps * 100
+int nAppVirtualFps = 6000; // App fps * 100
 
 TCHAR szAppBurnVer[16] = _T("");
 TCHAR szAppExeName[EXE_NAME_SIZE + 1];
 
-int  nCmdOptUsed = 0; // 1 fullscreen, 2 windowed (-w)
+int nCmdOptUsed = 0; // 1 fullscreen, 2 windowed (-w)
 bool bAlwaysProcessKeyboardInput = false;
 bool bAlwaysCreateSupportFolders = true;
 bool bAutoLoadGameList = false;
@@ -60,14 +60,14 @@ OPENFILENAME ofn;
 #ifdef UNICODE
 char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int nOutSize)
 {
-
 	static char szStringBuffer[1024];
 	memset(szStringBuffer, 0, sizeof(szStringBuffer));
 
 	char* pszBuffer = pszOutString ? pszOutString : szStringBuffer;
 	int nBufferSize = pszOutString ? nOutSize * 2 : sizeof(szStringBuffer);
 
-	if (WideCharToMultiByte(CP_ACP, 0, pszInString, -1, pszBuffer, nBufferSize, NULL, NULL)) {
+	if (WideCharToMultiByte(CP_ACP, 0, pszInString, -1, pszBuffer, nBufferSize, NULL, NULL))
+	{
 		return pszBuffer;
 	}
 
@@ -79,9 +79,10 @@ TCHAR* ANSIToTCHAR(const char* pszInString, TCHAR* pszOutString, int nOutSize)
 	static TCHAR szStringBuffer[1024];
 
 	TCHAR* pszBuffer = pszOutString ? pszOutString : szStringBuffer;
-	int nBufferSize  = pszOutString ? nOutSize * 2 : sizeof(szStringBuffer);
+	int nBufferSize = pszOutString ? nOutSize * 2 : sizeof(szStringBuffer);
 
-	if (MultiByteToWideChar(CP_ACP, 0, pszInString, -1, pszBuffer, nBufferSize)) {
+	if (MultiByteToWideChar(CP_ACP, 0, pszInString, -1, pszBuffer, nBufferSize))
+	{
 		return pszBuffer;
 	}
 
@@ -109,7 +110,7 @@ TCHAR* ANSIToTCHAR(const char* pszInString, TCHAR* pszOutString, int /*nOutSize*
 }
 #endif
 
-CHAR *astring_from_utf8(const char *utf8string)
+CHAR* astring_from_utf8(const char* utf8string)
 {
 	// convert MAME string (UTF-8) to UTF-16
 	int char_count = MultiByteToWideChar(CP_UTF8, 0, utf8string, -1, NULL, 0);
@@ -122,14 +123,15 @@ CHAR *astring_from_utf8(const char *utf8string)
 	if (result != NULL)
 		WideCharToMultiByte(CP_ACP, 0, wstring, -1, result, char_count, NULL, NULL);
 
-	if (wstring) {
+	if (wstring)
+	{
 		free(wstring);
 		wstring = NULL;
 	}
 	return result;
 }
 
-char *utf8_from_astring(const CHAR *astring)
+char* utf8_from_astring(const CHAR* astring)
 {
 	// convert "ANSI code page" string to UTF-16
 	int char_count = MultiByteToWideChar(CP_ACP, 0, astring, -1, NULL, 0);
@@ -142,14 +144,15 @@ char *utf8_from_astring(const CHAR *astring)
 	if (result != NULL)
 		WideCharToMultiByte(CP_UTF8, 0, wstring, -1, result, char_count, NULL, NULL);
 
-	if (wstring) {
+	if (wstring)
+	{
 		free(wstring);
 		wstring = NULL;
 	}
 	return result;
 }
 
-WCHAR *wstring_from_utf8(const char *utf8string)
+WCHAR* wstring_from_utf8(const char* utf8string)
 {
 	// convert MAME string (UTF-8) to UTF-16
 	int char_count = MultiByteToWideChar(CP_UTF8, 0, utf8string, -1, NULL, 0);
@@ -160,7 +163,7 @@ WCHAR *wstring_from_utf8(const char *utf8string)
 	return result;
 }
 
-char *utf8_from_wstring(const WCHAR *wstring)
+char* utf8_from_wstring(const WCHAR* wstring)
 {
 	// convert UTF-16 to MAME string (UTF-8)
 	int char_count = WideCharToMultiByte(CP_UTF8, 0, wstring, -1, NULL, 0, NULL, NULL);
@@ -180,34 +183,42 @@ char *utf8_from_wstring(const WCHAR *wstring)
  static bool bEchoLog = true; // false;
 #endif
 
-void tcharstrreplace(TCHAR *pszSRBuffer, const TCHAR *pszFind, const TCHAR *pszReplace)
+void tcharstrreplace(TCHAR* pszSRBuffer, const TCHAR* pszFind, const TCHAR* pszReplace)
 {
 	if (pszSRBuffer == NULL || pszFind == NULL || pszReplace == NULL)
 		return;
 
 	int lenFind = _tcslen(pszFind);
 	int lenReplace = _tcslen(pszReplace);
-	int lenSRBuffer = _tcslen(pszSRBuffer)+1;
+	int lenSRBuffer = _tcslen(pszSRBuffer) + 1;
 
-	for(int i = 0; (lenSRBuffer > lenFind) && (i < lenSRBuffer - lenFind); i++) {
-		if (!memcmp(pszFind, &pszSRBuffer[i], lenFind * sizeof(TCHAR))) {
-			if (lenFind == lenReplace) {
+	for (int i = 0; (lenSRBuffer > lenFind) && (i < lenSRBuffer - lenFind); i++)
+	{
+		if (!memcmp(pszFind, &pszSRBuffer[i], lenFind * sizeof(TCHAR)))
+		{
+			if (lenFind == lenReplace)
+			{
 				memcpy(&pszSRBuffer[i], pszReplace, lenReplace * sizeof(TCHAR));
 				i += lenReplace - 1;
-			} else if (lenFind > lenReplace) {
+			}
+			else if (lenFind > lenReplace)
+			{
 				memcpy(&pszSRBuffer[i], pszReplace, lenReplace * sizeof(TCHAR));
 				i += lenReplace;
 				int delta = lenFind - lenReplace;
 				lenSRBuffer -= delta;
 				memmove(&pszSRBuffer[i], &pszSRBuffer[i + delta], (lenSRBuffer - i) * sizeof(TCHAR));
 				i--;
-			} else { /* this part only works on dynamic buffers - the replacement string length must be smaller or equal to the find string length if this is commented out!
-				int delta = lenReplace - lenFind;
-				pszSRBuffer = (TCHAR *)realloc(pszSRBuffer, (lenSRBuffer + delta) * sizeof(TCHAR));
-				memmove(&pszSRBuffer[i + lenReplace], &pszSRBuffer[i + lenFind], (lenSRBuffer - i - lenFind) * sizeof(TCHAR));
-				lenSRBuffer += delta;
-				memcpy(&pszSRBuffer[i], pszReplace, lenReplace * sizeof(TCHAR));
-				i += lenReplace - 1; */
+			}
+			else
+			{
+				/* this part only works on dynamic buffers - the replacement string length must be smaller or equal to the find string length if this is commented out!
+							   int delta = lenReplace - lenFind;
+							   pszSRBuffer = (TCHAR *)realloc(pszSRBuffer, (lenSRBuffer + delta) * sizeof(TCHAR));
+							   memmove(&pszSRBuffer[i + lenReplace], &pszSRBuffer[i + lenFind], (lenSRBuffer - i - lenFind) * sizeof(TCHAR));
+							   lenSRBuffer += delta;
+							   memcpy(&pszSRBuffer[i], pszReplace, lenReplace * sizeof(TCHAR));
+							   i += lenReplace - 1; */
 			}
 		}
 	}
@@ -370,7 +381,7 @@ void CloseDebugLog()
 int OpenDebugLog()
 {
 #ifdef FBN_DEBUG
- #ifdef APP_DEBUG_LOG
+#ifdef APP_DEBUG_LOG
 
     time_t nTime;
 	tm* tmTime;
@@ -381,7 +392,7 @@ int OpenDebugLog()
 	{
 		// Initialise the debug log file
 
-  #ifdef _UNICODE
+#ifdef _UNICODE
 		DebugLog = _tfopen(_T("zzBurnDebug.html"), _T("wb"));
 
 		if (ftell(DebugLog) == 0) {
@@ -392,14 +403,14 @@ int OpenDebugLog()
 			_ftprintf(DebugLog, _T("<style>body{color:#333333;}.error,.error_chb{color:#ff3f3f;}.important,.important_chb{color:#000000;}.normal,.level1,.level2,.level3,.level4,.level5,.level6,.level7,.level8,.level9,.level10,.normal_chb,.level1_chb,.level2_chb,.level3_chb,.level4_chb,.level5_chb,.level6_chb,.level7_chb,.level8_chb,.level9_chb,.level10_chb{color:#009f00;}.ui{color:9f9f9f;}</style>"));
 			_ftprintf(DebugLog, _T("</head><body><pre>"));
 		}
-  #else
+#else
 		DebugLog = _tfopen(_T("zzBurnDebug.html"), _T("wt"));
 
 		if (ftell(DebugLog) == 0) {
 			_ftprintf(DebugLog, _T("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">"));
 			_ftprintf(DebugLog, _T("<html><head><meta http-equiv=Content-Type content=\"text/html; charset=windows-%i\"></head><body><pre>"), GetACP());
 		}
-  #endif
+#endif
 
 		_ftprintf(DebugLog, _T("<div style=\"font-size:16px;font-weight:bold;\">"));
 		_ftprintf(DebugLog, _T("Debug log created by ") _T(APP_TITLE) _T(" v%.20s on %s"), szAppBurnVer, _tasctime(tmTime));
@@ -420,7 +431,7 @@ int OpenDebugLog()
 		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_level9\" onclick=\"if(this.checked==true){$(\'.level9\').show();}else{$(\'.level9\').hide();}\" checked>&nbsp;<label for=\"chb_level9\" class=\"level9_chb\">Level 9</label>"));
 		_ftprintf(DebugLog, _T("</div><div style=\"margin-bottom:20px;\"><input type=\"checkbox\" id=\"chb_level10\" onclick=\"if(this.checked==true){$(\'.level10\').show();}else{$(\'.level10\').hide();}\" checked>&nbsp;<label for=\"chb_level10\" class=\"level10_chb\">Level 10</label>"));
 	}
- #endif
+#endif
 
 	if (!bDisableDebugConsole)
 	{
@@ -496,126 +507,134 @@ int OpenDebugLog()
 	return 0;
 }
 
-void GetAspectRatio (int x, int y, int *AspectX, int *AspectY)
+void GetAspectRatio(int x, int y, int* AspectX, int* AspectY)
 {
 	TCHAR szResXY[256] = _T("");
 	_stprintf(szResXY, _T("%dx%d"), x, y);
 
 	// Normal CRT (4:3) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("320x240"))	||
-		!_tcscmp(szResXY, _T("512x384"))	||
-		!_tcscmp(szResXY, _T("640x480"))	||
-		!_tcscmp(szResXY, _T("800x600"))	||
-		!_tcscmp(szResXY, _T("832x624"))	||
-		!_tcscmp(szResXY, _T("1024x768"))	||
-		!_tcscmp(szResXY, _T("1120x832"))	||
-		!_tcscmp(szResXY, _T("1152x864"))	||
-		!_tcscmp(szResXY, _T("1280x960"))	||
-		!_tcscmp(szResXY, _T("1280x1024"))	||
-		!_tcscmp(szResXY, _T("1400x1050"))	||
-		!_tcscmp(szResXY, _T("1600x1200"))	||
-		!_tcscmp(szResXY, _T("2048x1536"))	||
-		!_tcscmp(szResXY, _T("2800x2100"))	||
-		!_tcscmp(szResXY, _T("3200x2400"))	||
-		!_tcscmp(szResXY, _T("4096x3072"))	||
-		!_tcscmp(szResXY, _T("6400x4800")) ){
+	if (!_tcscmp(szResXY, _T("320x240")) ||
+		!_tcscmp(szResXY, _T("512x384")) ||
+		!_tcscmp(szResXY, _T("640x480")) ||
+		!_tcscmp(szResXY, _T("800x600")) ||
+		!_tcscmp(szResXY, _T("832x624")) ||
+		!_tcscmp(szResXY, _T("1024x768")) ||
+		!_tcscmp(szResXY, _T("1120x832")) ||
+		!_tcscmp(szResXY, _T("1152x864")) ||
+		!_tcscmp(szResXY, _T("1280x960")) ||
+		!_tcscmp(szResXY, _T("1280x1024")) ||
+		!_tcscmp(szResXY, _T("1400x1050")) ||
+		!_tcscmp(szResXY, _T("1600x1200")) ||
+		!_tcscmp(szResXY, _T("2048x1536")) ||
+		!_tcscmp(szResXY, _T("2800x2100")) ||
+		!_tcscmp(szResXY, _T("3200x2400")) ||
+		!_tcscmp(szResXY, _T("4096x3072")) ||
+		!_tcscmp(szResXY, _T("6400x4800")))
+	{
 		*AspectX = 4;
 		*AspectY = 3;
 		return;
 	}
 
 	// Normal LCD (5:4) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("320x256"))	||
-		!_tcscmp(szResXY, _T("640x512"))	||
-		!_tcscmp(szResXY, _T("1280x1024"))	||
-		!_tcscmp(szResXY, _T("2560x2048"))	||
-		!_tcscmp(szResXY, _T("5120x4096")) ){
+	if (!_tcscmp(szResXY, _T("320x256")) ||
+		!_tcscmp(szResXY, _T("640x512")) ||
+		!_tcscmp(szResXY, _T("1280x1024")) ||
+		!_tcscmp(szResXY, _T("2560x2048")) ||
+		!_tcscmp(szResXY, _T("5120x4096")))
+	{
 		*AspectX = 5;
 		*AspectY = 4;
 		return;
 	}
 
 	// CRT Widescreen (16:9) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("480x270"))  ||
+	if (!_tcscmp(szResXY, _T("480x270")) ||
 		!_tcscmp(szResXY, _T("1280x720")) ||
 		!_tcscmp(szResXY, _T("1360x768")) ||
 		!_tcscmp(szResXY, _T("1366x768")) ||
-		!_tcscmp(szResXY, _T("1920x1080"))) {
+		!_tcscmp(szResXY, _T("1920x1080")))
+	{
 		*AspectX = 16;
 		*AspectY = 9;
 		return;
 	}
 
 	// LCD Widescreen (16:10) ( Verified at Wikipedia.Org )
-	if(	!_tcscmp(szResXY, _T("320x200"))	||
-		!_tcscmp(szResXY, _T("1280x800"))	||
-		!_tcscmp(szResXY, _T("1440x900"))	||
-		!_tcscmp(szResXY, _T("1680x1050"))	||
-		!_tcscmp(szResXY, _T("1920x1200"))	||
-		!_tcscmp(szResXY, _T("2560x1600"))	||
-		!_tcscmp(szResXY, _T("3840x2400"))	||
-		!_tcscmp(szResXY, _T("5120x3200"))	||
-		!_tcscmp(szResXY, _T("7680x4800")) ){
+	if (!_tcscmp(szResXY, _T("320x200")) ||
+		!_tcscmp(szResXY, _T("1280x800")) ||
+		!_tcscmp(szResXY, _T("1440x900")) ||
+		!_tcscmp(szResXY, _T("1680x1050")) ||
+		!_tcscmp(szResXY, _T("1920x1200")) ||
+		!_tcscmp(szResXY, _T("2560x1600")) ||
+		!_tcscmp(szResXY, _T("3840x2400")) ||
+		!_tcscmp(szResXY, _T("5120x3200")) ||
+		!_tcscmp(szResXY, _T("7680x4800")))
+	{
 		*AspectX = 16;
 		*AspectY = 10;
 		return;
 	}
 
 	// Vertically orientated Normal CRT (4:3) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("240x320"))	||
-		!_tcscmp(szResXY, _T("384x512"))	||
-		!_tcscmp(szResXY, _T("480x640"))	||
-		!_tcscmp(szResXY, _T("600x800"))	||
-		!_tcscmp(szResXY, _T("624x832"))	||
-		!_tcscmp(szResXY, _T("768x1024"))	||
-		!_tcscmp(szResXY, _T("832x1120"))	||
-		!_tcscmp(szResXY, _T("864x1152"))	||
-		!_tcscmp(szResXY, _T("960x1280"))	||
-		!_tcscmp(szResXY, _T("1024x1280"))	||
-		!_tcscmp(szResXY, _T("1050x1400"))	||
-		!_tcscmp(szResXY, _T("1200x1600"))	||
-		!_tcscmp(szResXY, _T("1536x2048"))	||
-		!_tcscmp(szResXY, _T("2100x2800"))	||
-		!_tcscmp(szResXY, _T("2400x3200"))	||
-		!_tcscmp(szResXY, _T("3072x4096"))	||
-		!_tcscmp(szResXY, _T("4800x6400")) ){
+	if (!_tcscmp(szResXY, _T("240x320")) ||
+		!_tcscmp(szResXY, _T("384x512")) ||
+		!_tcscmp(szResXY, _T("480x640")) ||
+		!_tcscmp(szResXY, _T("600x800")) ||
+		!_tcscmp(szResXY, _T("624x832")) ||
+		!_tcscmp(szResXY, _T("768x1024")) ||
+		!_tcscmp(szResXY, _T("832x1120")) ||
+		!_tcscmp(szResXY, _T("864x1152")) ||
+		!_tcscmp(szResXY, _T("960x1280")) ||
+		!_tcscmp(szResXY, _T("1024x1280")) ||
+		!_tcscmp(szResXY, _T("1050x1400")) ||
+		!_tcscmp(szResXY, _T("1200x1600")) ||
+		!_tcscmp(szResXY, _T("1536x2048")) ||
+		!_tcscmp(szResXY, _T("2100x2800")) ||
+		!_tcscmp(szResXY, _T("2400x3200")) ||
+		!_tcscmp(szResXY, _T("3072x4096")) ||
+		!_tcscmp(szResXY, _T("4800x6400")))
+	{
 		*AspectX = 3;
 		*AspectY = 4;
 		return;
 	}
 
 	// Vertically orientated Normal LCD (5:4) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("256x320"))	||
-		!_tcscmp(szResXY, _T("512x640"))	||
-		!_tcscmp(szResXY, _T("1024x1280"))	||
-		!_tcscmp(szResXY, _T("2048x2560"))	||
-		!_tcscmp(szResXY, _T("4096x5120")) ){
+	if (!_tcscmp(szResXY, _T("256x320")) ||
+		!_tcscmp(szResXY, _T("512x640")) ||
+		!_tcscmp(szResXY, _T("1024x1280")) ||
+		!_tcscmp(szResXY, _T("2048x2560")) ||
+		!_tcscmp(szResXY, _T("4096x5120")))
+	{
 		*AspectX = 4;
 		*AspectY = 5;
 		return;
 	}
 
 	// Vertically orientated CRT Widescreen (16:9) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("270x480"))  ||
+	if (!_tcscmp(szResXY, _T("270x480")) ||
 		!_tcscmp(szResXY, _T("720x1280")) ||
 		!_tcscmp(szResXY, _T("768x1360")) ||
 		!_tcscmp(szResXY, _T("768x1366")) ||
-		!_tcscmp(szResXY, _T("1080x1920"))) {
+		!_tcscmp(szResXY, _T("1080x1920")))
+	{
 		*AspectX = 9;
 		*AspectY = 16;
 		return;
 	}
 
 	// Vertically orientated LCD Widescreen (10:16) ( Verified at Wikipedia.Org )
-	if(	!_tcscmp(szResXY, _T("200x320"))	||
-		!_tcscmp(szResXY, _T("800x1280"))	||
-		!_tcscmp(szResXY, _T("900x1440"))	||
-		!_tcscmp(szResXY, _T("1050x1680"))	||
-		!_tcscmp(szResXY, _T("1200x1920"))	||
-		!_tcscmp(szResXY, _T("1600x2560"))	||
-		!_tcscmp(szResXY, _T("2400x3840"))	||
-		!_tcscmp(szResXY, _T("3200x5120"))	||
-		!_tcscmp(szResXY, _T("4800x7680")) ){
+	if (!_tcscmp(szResXY, _T("200x320")) ||
+		!_tcscmp(szResXY, _T("800x1280")) ||
+		!_tcscmp(szResXY, _T("900x1440")) ||
+		!_tcscmp(szResXY, _T("1050x1680")) ||
+		!_tcscmp(szResXY, _T("1200x1920")) ||
+		!_tcscmp(szResXY, _T("1600x2560")) ||
+		!_tcscmp(szResXY, _T("2400x3840")) ||
+		!_tcscmp(szResXY, _T("3200x5120")) ||
+		!_tcscmp(szResXY, _T("4800x7680")))
+	{
 		*AspectX = 10;
 		*AspectY = 16;
 	}
@@ -628,12 +647,12 @@ static BOOL CALLBACK MonInfoProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcM
 	iMonitor.cbSize = sizeof(MONITORINFOEX);
 	GetMonitorInfo(hMonitor, &iMonitor);
 
-    int width = iMonitor.rcMonitor.right - iMonitor.rcMonitor.left;
-    int height = iMonitor.rcMonitor.bottom - iMonitor.rcMonitor.top;
+	int width = iMonitor.rcMonitor.right - iMonitor.rcMonitor.left;
+	int height = iMonitor.rcMonitor.bottom - iMonitor.rcMonitor.top;
 
 	if ((HorScreen[0] && !_wcsicmp(HorScreen, iMonitor.szDevice)) ||
-		(!HorScreen[0] && iMonitor.dwFlags & MONITORINFOF_PRIMARY)) {
-
+		(!HorScreen[0] && iMonitor.dwFlags & MONITORINFOF_PRIMARY))
+	{
 		// Set values for horizontal monitor
 		nVidHorWidth = width;
 		nVidHorHeight = height;
@@ -646,8 +665,8 @@ static BOOL CALLBACK MonInfoProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcM
 	}
 
 	if ((VerScreen[0] && !_wcsicmp(VerScreen, iMonitor.szDevice)) ||
-		(!VerScreen[0] && iMonitor.dwFlags & MONITORINFOF_PRIMARY)) {
-
+		(!VerScreen[0] && iMonitor.dwFlags & MONITORINFOF_PRIMARY))
+	{
 		// Set values for vertical monitor
 		nVidVerWidth = width;
 		nVidVerHeight = height;
@@ -670,8 +689,9 @@ void MonitorAutoCheck()
 
 	int numScreens = GetSystemMetrics(SM_CMONITORS);
 
-    // If only one monitor or not using a DirectX9 blitter, only use primary monitor
-	if (numScreens == 1 || nVidSelect < 3) {
+	// If only one monitor or not using a DirectX9 blitter, only use primary monitor
+	if (numScreens == 1 || nVidSelect < 3)
+	{
 		int x = GetSystemMetrics(SM_CXSCREEN);
 		int y = GetSystemMetrics(SM_CYSCREEN);
 
@@ -690,7 +710,9 @@ void MonitorAutoCheck()
 		GetAspectRatio(x, y, &nVidScrnAspectX, &nVidScrnAspectY);
 		nVidVerScrnAspectX = nVidScrnAspectX;
 		nVidVerScrnAspectY = nVidScrnAspectY;
-	} else {
+	}
+	else
+	{
 		EnumDisplayMonitors(NULL, NULL, MonInfoProc, 0);
 	}
 }
@@ -702,8 +724,9 @@ bool SetNumLock(bool bState)
 	if (bNoChangeNumLock) return 0;
 
 	GetKeyboardState(keyState);
-	if ((bState && !(keyState[VK_NUMLOCK] & 1)) || (!bState && (keyState[VK_NUMLOCK] & 1))) {
-		keybd_event(VK_NUMLOCK, 0, KEYEVENTF_EXTENDEDKEY, 0 );
+	if ((bState && !(keyState[VK_NUMLOCK] & 1)) || (!bState && (keyState[VK_NUMLOCK] & 1)))
+	{
+		keybd_event(VK_NUMLOCK, 0, KEYEVENTF_EXTENDEDKEY, 0);
 
 		keybd_event(VK_NUMLOCK, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
 	}
@@ -722,7 +745,8 @@ static int AppInit()
 #endif
 
 	// Create a handle to the main thread of execution
-	DuplicateHandle(GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(), &hMainThread, 0, false, DUPLICATE_SAME_ACCESS);
+	DuplicateHandle(GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(), &hMainThread, 0, false,
+	                DUPLICATE_SAME_ACCESS);
 
 	// Init the Burn library
 	BurnLibInit();
@@ -741,12 +765,13 @@ static int AppInit()
 
 #if 1 || !defined (FBN_DEBUG)
 	// print a warning if we're running for the 1st time
-	if (nIniVersion < nBurnVer) {
+	if (nIniVersion < nBurnVer)
+	{
 		ScrnInit();
 		//SplashDestroy(1);
 		FirstUsageCreate();
 
-		ConfigAppSave();								// Create initial config file
+		ConfigAppSave(); // Create initial config file
 	}
 #endif
 
@@ -761,7 +786,8 @@ static int AppInit()
 
 	ComputeGammaLUT();
 
-	if (VidSelect(nVidSelect)) {
+	if (VidSelect(nVidSelect))
+	{
 		nVidSelect = 0;
 		VidSelect(nVidSelect);
 	}
@@ -778,7 +804,8 @@ static int AppInit()
 
 	bNumlockStatus = SetNumLock(false);
 
-	if(bEnableIcons && !bIconsLoaded) {
+	if (bEnableIcons && !bIconsLoaded)
+	{
 		// load driver icons
 		LoadDrvIcons();
 		bIconsLoaded = 1;
@@ -789,7 +816,8 @@ static int AppInit()
 
 static int AppExit()
 {
-	if(bIconsLoaded) {
+	if (bIconsLoaded)
+	{
 		// unload driver icons
 		UnloadDrvIcons();
 		bIconsLoaded = 0;
@@ -797,10 +825,10 @@ static int AppExit()
 
 	SetNumLock(bNumlockStatus);
 
-	DrvExit();						// Make sure any game driver is exitted
+	DrvExit(); // Make sure any game driver is exitted
 	FreeROMInfo();
 	MediaExit();
-	BurnLibExit();					// Exit the Burn library
+	BurnLibExit(); // Exit the Burn library
 
 	DisableHighResolutionTiming();
 
@@ -811,7 +839,8 @@ static int AppExit()
 	LocaliseExit();
 	BurnerExitGameListLocalisation();
 
-	if (hAccel) {
+	if (hAccel)
+	{
 		DestroyAcceleratorTable(hAccel);
 		hAccel = NULL;
 	}
@@ -833,22 +862,23 @@ void AppCleanup()
 	AppExit();
 }
 
-int AppMessage(MSG *pMsg)
+int AppMessage(MSG* pMsg)
 {
-	if (IsDialogMessage(hInpdDlg, pMsg))	 return 0;
+	if (IsDialogMessage(hInpdDlg, pMsg)) return 0;
 	if (IsDialogMessage(hInpCheatDlg, pMsg)) return 0;
 	if (IsDialogMessage(hInpDIPSWDlg, pMsg)) return 0;
-	if (IsDialogMessage(hDbgDlg, pMsg))		 return 0;
+	if (IsDialogMessage(hDbgDlg, pMsg)) return 0;
 
-	if (IsDialogMessage(hInpsDlg, pMsg))	 return 0;
-	if (IsDialogMessage(hInpcDlg, pMsg))	 return 0;
+	if (IsDialogMessage(hInpsDlg, pMsg)) return 0;
+	if (IsDialogMessage(hInpcDlg, pMsg)) return 0;
 
 	return 1; // Didn't process this message
 }
 
 bool AppProcessKeyboardInput()
 {
-	if (hwndChat) {
+	if (hwndChat)
+	{
 		return false;
 	}
 
@@ -863,95 +893,117 @@ int ProcessCmdLine()
 	TCHAR szOpt2[3] = _T("");
 	TCHAR szName[MAX_PATH];
 
-	if (szCmdLine[0] == _T('\"')) {
+	if (szCmdLine[0] == _T('\"'))
+	{
 		int nLen = _tcslen(szCmdLine);
 		nOpt1Size = 1;
-		while (szCmdLine[nOpt1Size] != _T('\"') && nOpt1Size < nLen) {
+		while (szCmdLine[nOpt1Size] != _T('\"') && nOpt1Size < nLen)
+		{
 			nOpt1Size++;
 		}
-		if (nOpt1Size == nLen) {
+		if (nOpt1Size == nLen)
+		{
 			szName[0] = 0;
-		} else {
+		}
+		else
+		{
 			nOpt1Size++;
 			_tcsncpy(szName, szCmdLine + 1, nOpt1Size - 2);
 			szName[nOpt1Size - 2] = 0;
 		}
-	} else {
-		int nLen = _tcslen(szCmdLine);
-		nOpt1Size = 0;
-		while (szCmdLine[nOpt1Size] != _T(' ') && nOpt1Size < nLen) {
-			nOpt1Size++;
-		}
-		_tcsncpy(szName, szCmdLine, nOpt1Size);
-		szName[nOpt1Size] = 0;
 	}
+	int nLen = _tcslen(szCmdLine);
+	nOpt1Size = 0;
+	while (szCmdLine[nOpt1Size] != _T(' ') && nOpt1Size < nLen)
+	{
+		nOpt1Size++;
+	}
+	_tcsncpy(szName, szCmdLine, nOpt1Size);
+	szName[nOpt1Size] = 0;
 
-	if (_tcslen(szName)) {
-		if (_tcscmp(szName, _T("-listinfo")) == 0) {
+	if (_tcslen(szName))
+	{
+		if (_tcscmp(szName, _T("-listinfo")) == 0)
+		{
 			write_datfile(DAT_ARCADE_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfomdonly")) == 0) {
+		if (_tcscmp(szName, _T("-listinfomdonly")) == 0)
+		{
 			write_datfile(DAT_MEGADRIVE_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfopceonly")) == 0) {
+		if (_tcscmp(szName, _T("-listinfopceonly")) == 0)
+		{
 			write_datfile(DAT_PCENGINE_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfotg16only")) == 0) {
+		if (_tcscmp(szName, _T("-listinfotg16only")) == 0)
+		{
 			write_datfile(DAT_TG16_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfosgxonly")) == 0) {
+		if (_tcscmp(szName, _T("-listinfosgxonly")) == 0)
+		{
 			write_datfile(DAT_SGX_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfosg1000only")) == 0) {
+		if (_tcscmp(szName, _T("-listinfosg1000only")) == 0)
+		{
 			write_datfile(DAT_SG1000_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfocolecoonly")) == 0) {
+		if (_tcscmp(szName, _T("-listinfocolecoonly")) == 0)
+		{
 			write_datfile(DAT_COLECO_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfosmsonly")) == 0) {
+		if (_tcscmp(szName, _T("-listinfosmsonly")) == 0)
+		{
 			write_datfile(DAT_MASTERSYSTEM_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfoggonly")) == 0) {
+		if (_tcscmp(szName, _T("-listinfoggonly")) == 0)
+		{
 			write_datfile(DAT_GAMEGEAR_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfomsxonly")) == 0) {
+		if (_tcscmp(szName, _T("-listinfomsxonly")) == 0)
+		{
 			write_datfile(DAT_MSX_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfospectrumonly")) == 0) {
+		if (_tcscmp(szName, _T("-listinfospectrumonly")) == 0)
+		{
 			write_datfile(DAT_SPECTRUM_ONLY, stdout);
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listextrainfo")) == 0) {
+		if (_tcscmp(szName, _T("-listextrainfo")) == 0)
+		{
 			int nWidth;
 			int nHeight;
 			int nAspectX;
 			int nAspectY;
-			for (i = 0; i < nBurnDrvCount; i++) {
+			for (i = 0; i < nBurnDrvCount; i++)
+			{
 				nBurnDrvActive = i;
 				BurnDrvGetVisibleSize(&nWidth, &nHeight);
 				BurnDrvGetAspect(&nAspectX, &nAspectY);
-				printf("%s\t%ix%i\t%i:%i\t0x%08X\t\"%s\"\t%i\t%i\t%x\t%x\t\"%s\"\n", BurnDrvGetTextA(DRV_NAME), nWidth, nHeight, nAspectX, nAspectY, BurnDrvGetHardwareCode(), BurnDrvGetTextA(DRV_SYSTEM), BurnDrvIsWorking(), BurnDrvGetMaxPlayers(), BurnDrvGetGenreFlags(), BurnDrvGetFamilyFlags(), BurnDrvGetTextA(DRV_COMMENT));
+				printf("%s\t%ix%i\t%i:%i\t0x%08X\t\"%s\"\t%i\t%i\t%x\t%x\t\"%s\"\n", BurnDrvGetTextA(DRV_NAME), nWidth,
+				       nHeight, nAspectX, nAspectY, BurnDrvGetHardwareCode(), BurnDrvGetTextA(DRV_SYSTEM),
+				       BurnDrvIsWorking(), BurnDrvGetMaxPlayers(), BurnDrvGetGenreFlags(), BurnDrvGetFamilyFlags(),
+				       BurnDrvGetTextA(DRV_COMMENT));
 			}
 			return 1;
 		}
@@ -959,51 +1011,72 @@ int ProcessCmdLine()
 
 	_stscanf(&szCmdLine[nOpt1Size], _T("%2s %i x %i x %i"), szOpt2, &nOptX, &nOptY, &nOptD);
 
-	if (_tcslen(szName)) {
+	if (_tcslen(szName))
+	{
 		bool bFullscreen = 1;
 		nCmdOptUsed = 1;
 
-		if (_tcscmp(szOpt2, _T("-r")) == 0) {
-			if (nOptX && nOptY) {
+		if (_tcscmp(szOpt2, _T("-r")) == 0)
+		{
+			if (nOptX && nOptY)
+			{
 				nVidWidth = nOptX;
 				nVidHeight = nOptY;
 			}
-			if (nOptD) {
+			if (nOptD)
+			{
 				nVidDepth = nOptD;
 			}
-		} else {
-			if (_tcscmp(szOpt2, _T("-a")) == 0) {
+		}
+		else
+		{
+			if (_tcscmp(szOpt2, _T("-a")) == 0)
+			{
 				bVidArcaderes = 1;
-			} else {
-				if (_tcscmp(szOpt2, _T("-w")) == 0) {
+			}
+			else
+			{
+				if (_tcscmp(szOpt2, _T("-w")) == 0)
+				{
 					nCmdOptUsed = 2;
 					bFullscreen = 0;
 				}
 			}
 		}
 
-		if (bFullscreen) {
+		if (bFullscreen)
+		{
 			nVidFullscreen = 1;
 		}
 
-		if (_tcscmp(&szName[_tcslen(szName) - 3], _T(".fs")) == 0) {
-			if (BurnStateLoad(szName, 1, &DrvInitCallback)) {
+		if (_tcscmp(&szName[_tcslen(szName) - 3], _T(".fs")) == 0)
+		{
+			if (BurnStateLoad(szName, 1, &DrvInitCallback))
+			{
 				return 1;
-			} else {
-//				bRunPause = 1;
-			}
-		} else {
-			if (_tcscmp(&szName[_tcslen(szName) - 3], _T(".fr")) == 0) {
-				if (StartReplay(szName)) {
+			} //				bRunPause = 1;
+		}
+		else
+		{
+			if (_tcscmp(&szName[_tcslen(szName) - 3], _T(".fr")) == 0)
+			{
+				if (StartReplay(szName))
+				{
 					return 1;
 				}
-			} else {
+			}
+			else
+			{
 				bQuietLoading = true;
 
-				for (i = 0; i < nBurnDrvCount; i++) {
+				for (i = 0; i < nBurnDrvCount; i++)
+				{
 					nBurnDrvActive = i;
-					if ((_tcscmp(BurnDrvGetText(DRV_NAME), szName) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))){
-						if (DrvInit(i, true)) { // failed (bad romset, etc.)
+					if ((_tcscmp(BurnDrvGetText(DRV_NAME), szName) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM)))
+					{
+						if (DrvInit(i, true))
+						{
+							// failed (bad romset, etc.)
 							nVidFullscreen = 0; // Don't get stuck in fullscreen mode
 						}
 						break;
@@ -1012,7 +1085,8 @@ int ProcessCmdLine()
 
 				bQuietLoading = false;
 
-				if (i == nBurnDrvCount) {
+				if (i == nBurnDrvCount)
+				{
 					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_NOSUPPORT), szName, _T(APP_TITLE));
 					FBAPopupDisplay(PUF_TYPE_ERROR);
 					return 1;
@@ -1023,7 +1097,8 @@ int ProcessCmdLine()
 
 	POST_INITIALISE_MESSAGE;
 
-	if (!nVidFullscreen) {
+	if (!nVidFullscreen)
+	{
 		MenuEnableItems();
 	}
 
@@ -1070,7 +1145,8 @@ static void CreateSupportFolders()
 		{_T("spectrum/")},
 	};
 
-	for(int x = 0; x < 34; x++) {
+	for (int x = 0; x < 34; x++)
+	{
 		CreateDirectory(szSupportDirs[x], NULL);
 	}
 }
@@ -1089,21 +1165,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 	hAppInst = hInstance;
 
 	// Make version string
-	if (nBurnVer & 0xFF) {
+	if (nBurnVer & 0xFF)
+	{
 		// private version (alpha)
-		_stprintf(szAppBurnVer, _T("%x.%x.%x.%02x"), nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF);
-	} else {
+		_stprintf(szAppBurnVer, _T("%x.%x.%x.%02x"), nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF,
+		          nBurnVer & 0xFF);
+	}
+	else
+	{
 		// public version
 		_stprintf(szAppBurnVer, _T("%x.%x.%x"), nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF);
 	}
 
 #if !defined (DONT_DISPLAY_SPLASH)
-//	if (lpCmdLine[0] == 0) SplashCreate();
+	//	if (lpCmdLine[0] == 0) SplashCreate();
 #endif
 
 	nAppShowCmd = nShowCmd;
 
-	AppDirectory();								// Set current directory to be the applications directory
+	AppDirectory(); // Set current directory to be the applications directory
 
 #ifdef INCLUDE_AVI_RECORDING
 #define DIRCNT 10
@@ -1126,7 +1206,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 #endif
 	};
 
-	for(int x = 0; x < DIRCNT; x++) {
+	for (int x = 0; x < DIRCNT; x++)
+	{
 		CreateDirectory(szDirs[x], NULL);
 	}
 #undef DIRCNT
@@ -1141,27 +1222,31 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		InitCommonControlsEx(&initCC);
 	}
 
-	if (lpCmdLine) {
+	if (lpCmdLine)
+	{
 		_tcscpy(szCmdLine, ANSIToTCHAR(lpCmdLine, NULL, 0));
 	}
 
-	if (!(AppInit())) {							// Init the application
+	if (!(AppInit()))
+	{
+		// Init the application
 		if (bAlwaysCreateSupportFolders) CreateSupportFolders();
-		if (!(ProcessCmdLine())) {
+		if (!(ProcessCmdLine()))
+		{
 			DetectWindowsVersion();
 			EnableHighResolutionTiming();
 
 			MediaInit();
 
-			RunMessageLoop();					// Run the application message loop
+			RunMessageLoop(); // Run the application message loop
 		}
 	}
 
-	NeoCDZRateChangeback();                     // Change back temp CDZ rate before saving
+	NeoCDZRateChangeback(); // Change back temp CDZ rate before saving
 
-	ConfigAppSave();							// Save config for the application
+	ConfigAppSave(); // Save config for the application
 
-	AppExit();									// Exit the application
+	AppExit(); // Exit the application
 
 	return 0;
 }

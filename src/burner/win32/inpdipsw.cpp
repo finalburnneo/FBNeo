@@ -1,7 +1,7 @@
 // Burner DipSwitches Dialog module
 #include "burner.h"
 
-HWND hInpDIPSWDlg = NULL;									// Handle to the DIPSW Dialog
+HWND hInpDIPSWDlg = NULL; // Handle to the DIPSW Dialog
 static HWND hInpDIPSWList = NULL;
 
 static unsigned char nPrevDIPSettings[8];
@@ -16,8 +16,10 @@ static void InpDIPSWGetOffset()
 	BurnDIPInfo bdi;
 
 	nDIPOffset = 0;
-	for (int i = 0; BurnDrvGetDIPInfo(&bdi, i) == 0; i++) {
-		if (bdi.nFlags == 0xF0) {
+	for (int i = 0; BurnDrvGetDIPInfo(&bdi, i) == 0; i++)
+	{
+		if (bdi.nFlags == 0xF0)
+		{
 			nDIPOffset = bdi.nInput;
 			break;
 		}
@@ -31,8 +33,10 @@ void InpDIPSWResetDIPs()
 
 	InpDIPSWGetOffset();
 
-	while (BurnDrvGetDIPInfo(&bdi, i) == 0) {
-		if (bdi.nFlags == 0xFF) {
+	while (BurnDrvGetDIPInfo(&bdi, i) == 0)
+	{
+		if (bdi.nFlags == 0xFF)
+		{
 			struct GameInp* pgi = GameInp + bdi.nInput + nDIPOffset;
 			pgi->Input.Constant.nConst = (pgi->Input.Constant.nConst & ~bdi.nMask) | (bdi.nSetting & bdi.nMask);
 		}
@@ -43,7 +47,8 @@ void InpDIPSWResetDIPs()
 static int InpDIPSWListBegin()
 {
 	LVCOLUMN LvCol;
-	if (hInpDIPSWList == NULL) {
+	if (hInpDIPSWList == NULL)
+	{
 		return 1;
 	}
 
@@ -68,26 +73,33 @@ static bool CheckSetting(int i)
 	BurnDrvGetDIPInfo(&bdi, i);
 	struct GameInp* pgi = GameInp + bdi.nInput + nDIPOffset;
 
-	if ((pgi->Input.Constant.nConst & bdi.nMask) == bdi.nSetting) {
+	if ((pgi->Input.Constant.nConst & bdi.nMask) == bdi.nSetting)
+	{
 		unsigned char nFlags = bdi.nFlags;
-		if ((nFlags & 0x0F) <= 1) {
-			return true;
-		} else {
-			for (int j = 1; j < (nFlags & 0x0F); j++) {
-				BurnDrvGetDIPInfo(&bdi, i + j);
-				pgi = GameInp + bdi.nInput + nDIPOffset;
-				if (nFlags & 0x80) {
-					if ((pgi->Input.Constant.nConst & bdi.nMask) == bdi.nSetting) {
-						return false;
-					}
-				} else {
-					if ((pgi->Input.Constant.nConst & bdi.nMask) != bdi.nSetting) {
-						return false;
-					}
-				}
-			}
+		if ((nFlags & 0x0F) <= 1)
+		{
 			return true;
 		}
+		for (int j = 1; j < (nFlags & 0x0F); j++)
+		{
+			BurnDrvGetDIPInfo(&bdi, i + j);
+			pgi = GameInp + bdi.nInput + nDIPOffset;
+			if (nFlags & 0x80)
+			{
+				if ((pgi->Input.Constant.nConst & bdi.nMask) == bdi.nSetting)
+				{
+					return false;
+				}
+			}
+			else
+			{
+				if ((pgi->Input.Constant.nConst & bdi.nMask) != bdi.nSetting)
+				{
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	return false;
 }
@@ -95,7 +107,8 @@ static bool CheckSetting(int i)
 // Make a list view of the DIPswitches
 static int InpDIPSWListMake()
 {
-	if (hInpDIPSWList == NULL) {
+	if (hInpDIPSWList == NULL)
+	{
 		return 1;
 	}
 	SendMessage(hInpDIPSWList, LVM_DELETEALLITEMS, 0, 0);
@@ -103,15 +116,21 @@ static int InpDIPSWListMake()
 	BurnDIPInfo bdi;
 	unsigned int i = 0, j = 0, k = 0;
 	char* pDIPGroup = NULL;
-	while (BurnDrvGetDIPInfo(&bdi, i) == 0) {
-		if ((bdi.nFlags & 0xF0) == 0xF0) {
-		   	if (bdi.nFlags == 0xFE || bdi.nFlags == 0xFD) {
+	while (BurnDrvGetDIPInfo(&bdi, i) == 0)
+	{
+		if ((bdi.nFlags & 0xF0) == 0xF0)
+		{
+			if (bdi.nFlags == 0xFE || bdi.nFlags == 0xFD)
+			{
 				pDIPGroup = bdi.szText;
 				k = i;
 			}
 			i++;
-		} else {
-			if (CheckSetting(i)) {
+		}
+		else
+		{
+			if (CheckSetting(i))
+			{
 				LVITEM LvItem;
 				memset(&LvItem, 0, sizeof(LvItem));
 				LvItem.mask = LVIF_TEXT | LVIF_PARAM;
@@ -143,8 +162,10 @@ static int InpDIPSWInit()
 	InpDIPSWListBegin();
 	InpDIPSWListMake();
 
-	for (int i = 0, j = 0; BurnDrvGetDIPInfo(&bdi, i) == 0; i++) {
-		if (bdi.nInput >= 0  && bdi.nFlags == 0xFF) {
+	for (int i = 0, j = 0; BurnDrvGetDIPInfo(&bdi, i) == 0; i++)
+	{
+		if (bdi.nInput >= 0 && bdi.nFlags == 0xFF)
+		{
 			struct GameInp* pgi = GameInp + bdi.nInput + nDIPOffset;
 			nPrevDIPSettings[j] = pgi->Input.Constant.nConst;
 			j++;
@@ -158,7 +179,8 @@ static int InpDIPSWExit()
 {
 	hInpDIPSWList = NULL;
 	hInpDIPSWDlg = NULL;
-	if(!bAltPause && bRunPause) {
+	if (!bAltPause && bRunPause)
+	{
 		bRunPause = 0;
 	}
 	GameInpCheckMouse();
@@ -167,11 +189,14 @@ static int InpDIPSWExit()
 
 static void InpDIPSWCancel()
 {
-	if (!bOK) {
+	if (!bOK)
+	{
 		int i = 0, j = 0;
 		BurnDIPInfo bdi;
-		while (BurnDrvGetDIPInfo(&bdi, i) == 0) {
-			if (bdi.nInput >= 0 && bdi.nFlags == 0xFF) {
+		while (BurnDrvGetDIPInfo(&bdi, i) == 0)
+		{
+			if (bdi.nInput >= 0 && bdi.nFlags == 0xFF)
+			{
 				struct GameInp* pgi = GameInp + bdi.nInput + nDIPOffset;
 				pgi->Input.Constant.nConst = nPrevDIPSettings[j];
 				j++;
@@ -187,7 +212,8 @@ static void InpDIPSWSelect()
 	SendMessage(GetDlgItem(hInpDIPSWDlg, IDC_INPCX1_VALUE), CB_RESETCONTENT, 0, 0);
 
 	int nSel = SendMessage(hInpDIPSWList, LVM_GETNEXTITEM, (WPARAM)-1, LVNI_SELECTED);
-	if (nSel >= 0) {
+	if (nSel >= 0)
+	{
 		LVITEM LvItem;
 		memset(&LvItem, 0, sizeof(LvItem));
 		LvItem.mask = LVIF_PARAM;
@@ -200,22 +226,29 @@ static void InpDIPSWSelect()
 		BurnDrvGetDIPInfo(&bdiGroup, nDIPGroup);
 
 		int nCurrentSetting = 0;
-		for (int i = 0, j = 0; i < bdiGroup.nSetting; i++) {
+		for (int i = 0, j = 0; i < bdiGroup.nSetting; i++)
+		{
 			TCHAR szText[256];
 			BurnDIPInfo bdi;
 
-			do {
+			do
+			{
 				BurnDrvGetDIPInfo(&bdi, nDIPGroup + 1 + j++);
-			} while (bdi.nFlags == 0);
+			}
+			while (bdi.nFlags == 0);
 
-			if (bdiGroup.szText) {
+			if (bdiGroup.szText)
+			{
 				_stprintf(szText, _T("%hs: %hs"), bdiGroup.szText, bdi.szText);
-			} else {
+			}
+			else
+			{
 				_stprintf(szText, _T("%hs"), bdi.szText);
 			}
 			SendMessage(GetDlgItem(hInpDIPSWDlg, IDC_INPCX1_VALUE), CB_ADDSTRING, 0, (LPARAM)szText);
 
-			if (CheckSetting(nDIPGroup + j)) {
+			if (CheckSetting(nDIPGroup + j))
+			{
 				nCurrentSetting = i;
 			}
 		}
@@ -225,66 +258,84 @@ static void InpDIPSWSelect()
 
 static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-	if (Msg == WM_INITDIALOG) {
-
-//		EnableWindow(hScrnWnd, FALSE);
+	if (Msg == WM_INITDIALOG)
+	{
+		//		EnableWindow(hScrnWnd, FALSE);
 
 		hInpDIPSWDlg = hDlg;
 		InpDIPSWInit();
-		if (!kNetGame && bAutoPause) {
+		if (!kNetGame && bAutoPause)
+		{
 			bRunPause = 1;
 		}
 
 		WndInMid(hDlg, hScrnWnd);
-		SetFocus(hDlg);											// Enable Esc=close
+		SetFocus(hDlg); // Enable Esc=close
 
 		return TRUE;
 	}
 
-    if (Msg == WM_CLOSE) {
+	if (Msg == WM_CLOSE)
+	{
 		EnableWindow(hScrnWnd, TRUE);
 		DestroyWindow(hInpDIPSWDlg);
 		return 0;
 	}
 
-	if (Msg == WM_DESTROY) {
+	if (Msg == WM_DESTROY)
+	{
 		InpDIPSWCancel();
 		InpDIPSWExit();
 		return 0;
 	}
 
-	if (Msg == WM_COMMAND) {
+	if (Msg == WM_COMMAND)
+	{
 		int Id = LOWORD(wParam);
 		int Notify = HIWORD(wParam);
 
-		if (Id == IDOK && Notify == BN_CLICKED) {			// OK button
+		if (Id == IDOK && Notify == BN_CLICKED)
+		{
+			// OK button
 			bOK = true;
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
 			return 0;
 		}
-		if (Id == IDCANCEL && Notify == BN_CLICKED) {		// cancel = close
+		if (Id == IDCANCEL && Notify == BN_CLICKED)
+		{
+			// cancel = close
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
 			return 0;
 		}
 
 		// New DIPswitch value selected
-		if (Id == IDC_INPCX1_VALUE && Notify == CBN_SELCHANGE) {
+		if (Id == IDC_INPCX1_VALUE && Notify == CBN_SELCHANGE)
+		{
 			BurnDIPInfo bdi = {0, 0, 0, 0, NULL};
 			int nSel = SendMessage(GetDlgItem(hInpDIPSWDlg, IDC_INPCX1_VALUE), CB_GETCURSEL, 0, 0);
 			int j = 0;
-			for (int i = 0; i <= nSel; i++) {
-				do {
+			for (int i = 0; i <= nSel; i++)
+			{
+				do
+				{
 					BurnDrvGetDIPInfo(&bdi, nDIPGroup + 1 + j++);
-				} while (bdi.nFlags == 0);
+				}
+				while (bdi.nFlags == 0);
 			}
 			struct GameInp* pgi = GameInp + bdi.nInput + nDIPOffset;
 			pgi->Input.Constant.nConst = (pgi->Input.Constant.nConst & ~bdi.nMask) | (bdi.nSetting & bdi.nMask);
-			if (bdi.nFlags & 0x40) {
-				while (BurnDrvGetDIPInfo(&bdi, nDIPGroup + 1 + j++) == 0) {
-					if (bdi.nFlags == 0) {
+			if (bdi.nFlags & 0x40)
+			{
+				while (BurnDrvGetDIPInfo(&bdi, nDIPGroup + 1 + j++) == 0)
+				{
+					if (bdi.nFlags == 0)
+					{
 						pgi = GameInp + bdi.nInput + nDIPOffset;
-						pgi->Input.Constant.nConst = (pgi->Input.Constant.nConst & ~bdi.nMask) | (bdi.nSetting & bdi.nMask);
-					} else {
+						pgi->Input.Constant.nConst = (pgi->Input.Constant.nConst & ~bdi.nMask) | (bdi.nSetting & bdi.
+							nMask);
+					}
+					else
+					{
 						break;
 					}
 				}
@@ -295,42 +346,49 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		}
 
 		// New DIPswitch selected
-		if (Id == IDC_INPC_RESET && Notify == BN_CLICKED) {
-
+		if (Id == IDC_INPC_RESET && Notify == BN_CLICKED)
+		{
 			InpDIPSWResetDIPs();
 
-			InpDIPSWListMake();								// refresh view
+			InpDIPSWListMake(); // refresh view
 			SendMessage(GetDlgItem(hInpDIPSWDlg, IDC_INPCX1_VALUE), CB_RESETCONTENT, 0, 0);
 			return 0;
-	   }
-
+		}
 	}
 
-	if (Msg == WM_NOTIFY && lParam) {
+	if (Msg == WM_NOTIFY && lParam)
+	{
 		int Id = LOWORD(wParam);
 		NMHDR* pnm = (NMHDR*)lParam;
 
-		if (Id == IDC_INPCHEAT_LIST && pnm->code == LVN_ITEMCHANGED) {
-			if (((NM_LISTVIEW*)lParam)->uNewState & LVIS_SELECTED) {
+		if (Id == IDC_INPCHEAT_LIST && pnm->code == LVN_ITEMCHANGED)
+		{
+			if (((NM_LISTVIEW*)lParam)->uNewState & LVIS_SELECTED)
+			{
 				InpDIPSWSelect();
 			}
 			return 0;
 		}
 
-		if (Id == IDC_INPCHEAT_LIST && pnm->code == NM_CUSTOMDRAW) {
+		if (Id == IDC_INPCHEAT_LIST && pnm->code == NM_CUSTOMDRAW)
+		{
 			NMLVCUSTOMDRAW* plvcd = (NMLVCUSTOMDRAW*)lParam;
 
-			switch (plvcd->nmcd.dwDrawStage) {
-				case CDDS_PREPAINT: {
-                    SetWindowLongPtr(hInpDIPSWDlg, DWLP_MSGRESULT, CDRF_NOTIFYITEMDRAW);
+			switch (plvcd->nmcd.dwDrawStage)
+			{
+			case CDDS_PREPAINT:
+				{
+					SetWindowLongPtr(hInpDIPSWDlg, DWLP_MSGRESULT, CDRF_NOTIFYITEMDRAW);
 					return 1;
 				}
-				case CDDS_ITEMPREPAINT: {
+			case CDDS_ITEMPREPAINT:
+				{
 					BurnDIPInfo bdi;
 					BurnDrvGetDIPInfo(&bdi, plvcd->nmcd.lItemlParam);
-					if (bdi.nFlags == 0xFD) {
+					if (bdi.nFlags == 0xFD)
+					{
 						plvcd->clrTextBk = RGB(0xFF, 0xDF, 0xBB);
-    					SetWindowLongPtr(hInpDIPSWDlg, DWLP_MSGRESULT, CDRF_NEWFONT);
+						SetWindowLongPtr(hInpDIPSWDlg, DWLP_MSGRESULT, CDRF_NEWFONT);
 					}
 
 					return 1;
@@ -344,7 +402,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 int InpDIPSWCreate()
 {
-	if (bDrvOkay == 0) {									// No game is loaded
+	if (bDrvOkay == 0)
+	{
+		// No game is loaded
 		return 1;
 	}
 

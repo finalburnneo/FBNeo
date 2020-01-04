@@ -81,19 +81,19 @@ unsigned char DecodeBuffer();
 //##############################################################################
 
 // takes a decompressed file and compresses the whole thing into another file
-int Compress(char *d_file_name, char *c_file_name);
+int Compress(char* d_file_name, char* c_file_name);
 
 // takes a compressed file and decompresses the whole thing into another file
-int Decompress(char *c_file_name, char *d_file_name);
+int Decompress(char* c_file_name, char* d_file_name);
 
 // returns 0 if the compressed file is opened successfully, 1 otherwise
-int OpenCompressedFile(char *file_name, char *mode);
+int OpenCompressedFile(char* file_name, char* mode);
 
 // Always returns 0
-int EmbedCompressedFile(FILE *pEmb, int nOffset);
+int EmbedCompressedFile(FILE* pEmb, int nOffset);
 
 // returns 0 if the decompressed file is opened successfully, 1 otherwise
-int OpenDecompressedFile(char *file_name, char *mode);
+int OpenDecompressedFile(char* file_name, char* mode);
 
 // loads the compressed file into c_buffer
 // - use it only if the compressed file was opened successfully
@@ -143,7 +143,7 @@ void PrintResult(); // use this after finish encoding
 // returns a malloc()'d buffer in *buffer
 // the length of the buffer is returned in *size
 // returns 0 always
-int FreezeDecode(unsigned char **buffer, int *size);
+int FreezeDecode(unsigned char** buffer, int* size);
 
 // unfreeze the status of decoding from the given buffer
 // the length of the buffer is passed in size
@@ -154,7 +154,7 @@ int UnfreezeDecode(const unsigned char* buffer, int size);
 // returns a malloc()'d buffer in *buffer
 // the length of the buffer is returned in *size
 // returns 0 always
-int FreezeEncode(unsigned char **buffer, int *size);
+int FreezeEncode(unsigned char** buffer, int* size);
 
 // unfreeze the status of encoding from the given buffer
 // the length of the buffer is passed in size

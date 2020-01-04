@@ -9,7 +9,7 @@ static void myDrawText(HDC hDC, RECT* pRect, TCHAR* szText, int nSizeDelta, int 
 	TCHAR szName[32];
 	RECT rect;
 	TEXTMETRIC myMetric;
-	
+
 	GetTextFace(hDC, 32, szName);
 	GetTextMetrics(hDC, &myMetric);
 	HFONT myFont = CreateFont(myMetric.tmHeight + nSizeDelta, 0, 0, 0, FW_BLACK, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY,
@@ -65,26 +65,38 @@ static void myDrawText(HDC hDC, RECT* pRect, TCHAR* szText, int nSizeDelta, int 
 
 static bool AboutDrawStrings(unsigned int nControlID, LPDRAWITEMSTRUCT pdis)
 {
-	switch (nControlID) {
-		case IDC_FBN_VER: {
+	switch (nControlID)
+	{
+	case IDC_FBN_VER:
+		{
 			TCHAR szVerString[128];
-			if ((nBurnVer & 0xFFFF) > 0x9990) {
-
+			if ((nBurnVer & 0xFFFF) > 0x9990)
+			{
 				int nVer1 = ((nBurnVer >> 16) & 0xFF) + 1;
-				if ((nVer1 & 0x0F) > 9) {
+				if ((nVer1 & 0x0F) > 9)
+				{
 					nVer1 += 6;
 				}
 				int nVer2 = nVer1 & 0x0F;
 				nVer1 >>= 4;
 
-				_stprintf(szVerString, _T(APP_TITLE) _T(" v%s (v%i.%i Release Candidate %i)"), szAppBurnVer, nVer1, nVer2, nBurnVer & 0x0F);
-			} else {
-				if (nBurnVer & 0x00FF) {
+				_stprintf(szVerString, _T(APP_TITLE) _T(" v%s (v%i.%i Release Candidate %i)"), szAppBurnVer, nVer1,
+				          nVer2, nBurnVer & 0x0F);
+			}
+			else
+			{
+				if (nBurnVer & 0x00FF)
+				{
 					_stprintf(szVerString, _T(APP_TITLE) _T(" v%s (alpha version)"), szAppBurnVer);
-				} else {
-					if (nBurnVer & 0xFF00) {
+				}
+				else
+				{
+					if (nBurnVer & 0xFF00)
+					{
 						_stprintf(szVerString, _T(APP_TITLE) _T(" v%s (beta version)"), szAppBurnVer);
-					} else {
+					}
+					else
+					{
 						_stprintf(szVerString, _T(APP_TITLE) _T(" v%s (release version)"), szAppBurnVer);
 					}
 				}
@@ -94,8 +106,8 @@ static bool AboutDrawStrings(unsigned int nControlID, LPDRAWITEMSTRUCT pdis)
 
 			return true;
 		}
-		case IDC_SPECIALSTRING: {
-
+	case IDC_SPECIALSTRING:
+		{
 #ifdef SPECIALBUILD
 			TCHAR* szSpecialBuild = _T(MAKE_STRING(SPECIALBUILD));
 
@@ -108,8 +120,11 @@ static bool AboutDrawStrings(unsigned int nControlID, LPDRAWITEMSTRUCT pdis)
 #ifdef MMX
 			_stprintf(szBuild, _T("built on ") _T(MAKE_STRING(BUILD_DATE)) _T(", ") _T(MAKE_STRING(BUILD_TIME)) _T(" (") _T(MAKE_STRING(BUILD_CHAR)) _T(", ") _T(MAKE_STRING(BUILD_COMP)) _T(", ") _T(MAKE_STRING(BUILD_CPU)) _T("%s)"), MMX ? _T(", MMX") : _T(""));
 #else
-			_stprintf(szBuild, _T("built on ") _T(MAKE_STRING(BUILD_DATE)) _T(", ") _T(MAKE_STRING(BUILD_TIME)) _T(" (") _T(MAKE_STRING(BUILD_CHAR)) _T(", ") _T(MAKE_STRING(BUILD_COMP)) _T(", ") _T(MAKE_STRING(BUILD_CPU)) _T("%s)"), _T(""));
-#endif 
+			_stprintf(szBuild,
+			          _T("built on ") _T(MAKE_STRING(BUILD_DATE)) _T(", ") _T(MAKE_STRING(BUILD_TIME)) _T(" (")
+			          _T(MAKE_STRING(BUILD_CHAR)) _T(", ") _T(MAKE_STRING(BUILD_COMP)) _T(", ") _T(
+				          MAKE_STRING(BUILD_CPU)) _T("%s)"), _T(""));
+#endif
 
 			myDrawText(pdis->hDC, &rect, szBuild, -2, RGB(0xDB, 0xDB, 0xDB), DT_CENTER);
 #endif
@@ -133,29 +148,33 @@ void AddLicenseText(HWND hDlg, unsigned int nControlID)
 
 // ----------------------------------------------------------------------------
 
-static INT_PTR CALLBACK AboutProc(HWND hDlg ,UINT Msg, WPARAM wParam, LPARAM lParam)
+static INT_PTR CALLBACK AboutProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-	if (Msg == WM_INITDIALOG) {
+	if (Msg == WM_INITDIALOG)
+	{
 		WndInMid(hDlg, hScrnWnd);
 		return TRUE;
 	}
 
-	if (Msg == WM_DRAWITEM) {
-		if (AboutDrawStrings(wParam, (LPDRAWITEMSTRUCT)lParam)) {
+	if (Msg == WM_DRAWITEM)
+	{
+		if (AboutDrawStrings(wParam, (LPDRAWITEMSTRUCT)lParam))
+		{
 			return TRUE;
 		}
 
 		return 0;
 	}
 
-	if (Msg == WM_COMMAND && HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDC_SHOWLICENSE) {
-		RECT rect = { 0, 0, 0, 80 };
+	if (Msg == WM_COMMAND && HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDC_SHOWLICENSE)
+	{
+		RECT rect = {0, 0, 0, 80};
 
 		SendMessage(hDlg, WM_NEXTDLGCTL, (WPARAM)GetDlgItem(hDlg, IDOK), TRUE);
 		EnableWindow(GetDlgItem(hDlg, IDC_SHOWLICENSE), FALSE);
 
 		SendDlgItemMessage(hDlg, IDC_LICENSE, EM_SETMARGINS, EC_LEFTMARGIN, 3);
-//		SendDlgItemMessage(hDlg, IDC_LICENSE, EM_SETTYPOGRAPHYOPTIONS, TO_ADVANCEDTYPOGRAPHY, TO_ADVANCEDTYPOGRAPHY);
+		//		SendDlgItemMessage(hDlg, IDC_LICENSE, EM_SETTYPOGRAPHYOPTIONS, TO_ADVANCEDTYPOGRAPHY, TO_ADVANCEDTYPOGRAPHY);
 
 		AddLicenseText(hDlg, IDC_LICENSE);
 
@@ -168,10 +187,12 @@ static INT_PTR CALLBACK AboutProc(HWND hDlg ,UINT Msg, WPARAM wParam, LPARAM lPa
 		return 0;
 	}
 
-	if (Msg == WM_CLOSE) {
-		EndDialog(hDlg,0);
+	if (Msg == WM_CLOSE)
+	{
+		EndDialog(hDlg, 0);
 	}
-	if (Msg == WM_COMMAND && HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDOK) {
+	if (Msg == WM_COMMAND && HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDOK)
+	{
 		SendMessage(hDlg, WM_CLOSE, 0, 0);
 	}
 
@@ -181,13 +202,14 @@ static INT_PTR CALLBACK AboutProc(HWND hDlg ,UINT Msg, WPARAM wParam, LPARAM lPa
 int AboutCreate()
 {
 	HMODULE hRiched = NULL;
-	
+
 #ifdef _UNICODE
 	hRiched = LoadLibrary(L"RICHED20.DLL");
 #else
 	hRiched = LoadLibrary("RICHED20.DLL");
 #endif
-	if (hRiched) {	
+	if (hRiched)
+	{
 		FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_ABOUT), hScrnWnd, (DLGPROC)AboutProc);
 		FreeLibrary(hRiched);
 		hRiched = NULL;
@@ -198,18 +220,19 @@ int AboutCreate()
 
 // ----------------------------------------------------------------------------
 
-static INT_PTR CALLBACK FirstProc(HWND hDlg ,UINT Msg, WPARAM wParam, LPARAM lParam)
+static INT_PTR CALLBACK FirstProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	static bool bLicenseDisplayed, bLicenseAccepted;
 
-	if (Msg == WM_INITDIALOG) {
+	if (Msg == WM_INITDIALOG)
+	{
 		TCHAR szWarningString[4096];
 
 		bLicenseDisplayed = false;
 		bLicenseAccepted = false;
 
 		SendDlgItemMessage(hDlg, IDC_LICENSE, EM_SETMARGINS, EC_LEFTMARGIN, 3);
-//		SendDlgItemMessage(hDlg, IDC_LICENSE, EM_SETTYPOGRAPHYOPTIONS, TO_ADVANCEDTYPOGRAPHY, TO_ADVANCEDTYPOGRAPHY);
+		//		SendDlgItemMessage(hDlg, IDC_LICENSE, EM_SETTYPOGRAPHYOPTIONS, TO_ADVANCEDTYPOGRAPHY, TO_ADVANCEDTYPOGRAPHY);
 
 		_stprintf(szWarningString, FBNLoadStringEx(hAppInst, IDS_FIRSTRUN1, true), _T(APP_TITLE), szAppBurnVer);
 		_tcscat(szWarningString, FBNLoadStringEx(hAppInst, IDS_FIRSTRUN2, true));
@@ -225,24 +248,28 @@ static INT_PTR CALLBACK FirstProc(HWND hDlg ,UINT Msg, WPARAM wParam, LPARAM lPa
 
 		SetForegroundWindow(hDlg);
 		WndInMid(hDlg, NULL);
-		
+
 		SplashDestroy(1);
 
 		return TRUE;
 	}
 
-	if (Msg == WM_DRAWITEM) {
-		if (AboutDrawStrings(wParam, (LPDRAWITEMSTRUCT)lParam)) {
+	if (Msg == WM_DRAWITEM)
+	{
+		if (AboutDrawStrings(wParam, (LPDRAWITEMSTRUCT)lParam))
+		{
 			return TRUE;
 		}
 
 		return 0;
 	}
 
-	if (Msg == WM_COMMAND && HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDOK) {
-
-		if (bLicenseDisplayed) {
-			if (bLicenseAccepted) {
+	if (Msg == WM_COMMAND && HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDOK)
+	{
+		if (bLicenseDisplayed)
+		{
+			if (bLicenseAccepted)
+			{
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
 			}
 			return 0;
@@ -258,18 +285,24 @@ static INT_PTR CALLBACK FirstProc(HWND hDlg ,UINT Msg, WPARAM wParam, LPARAM lPa
 
 		return 0;
 	}
-	if (Msg == WM_COMMAND && LOWORD(wParam) == IDC_ACCEPTLICENSE) {
-		if (SendDlgItemMessage(hDlg, IDC_ACCEPTLICENSE, BM_GETSTATE, 0, 0) & BST_CHECKED) {
+	if (Msg == WM_COMMAND && LOWORD(wParam) == IDC_ACCEPTLICENSE)
+	{
+		if (SendDlgItemMessage(hDlg, IDC_ACCEPTLICENSE, BM_GETSTATE, 0, 0) & BST_CHECKED)
+		{
 			bLicenseAccepted = true;
 			EnableWindow(GetDlgItem(hDlg, IDOK), TRUE);
-		} else {
+		}
+		else
+		{
 			bLicenseAccepted = false;
 			EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
 		}
 	}
 
-	if (Msg == WM_CLOSE) {
-		if (bLicenseAccepted) {
+	if (Msg == WM_CLOSE)
+	{
+		if (bLicenseAccepted)
+		{
 			EndDialog(hDlg, 0);
 		}
 	}
@@ -280,13 +313,14 @@ static INT_PTR CALLBACK FirstProc(HWND hDlg ,UINT Msg, WPARAM wParam, LPARAM lPa
 int FirstUsageCreate()
 {
 	HMODULE hRiched = NULL;
-	
+
 #ifdef _UNICODE
 	hRiched = LoadLibraryW(L"RICHED20.DLL");
 #else
 	hRiched = LoadLibraryA("RICHED20.DLL");
 #endif
-	if (hRiched) {	
+	if (hRiched)
+	{
 		DialogBox(hAppInst, MAKEINTRESOURCE(IDD_FIRST), hScrnWnd, (DLGPROC)FirstProc);
 		FreeLibrary(hRiched);
 		hRiched = NULL;
@@ -294,4 +328,3 @@ int FirstUsageCreate()
 
 	return 0;
 }
-

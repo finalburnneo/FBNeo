@@ -2,22 +2,22 @@
 #include "burner.h"
 
 #ifdef _UNICODE
- #include <locale.h>
+#include <locale.h>
 #endif
 
 int nIniVersion = 0;
 
 struct VidPresetData VidPreset[4] = {
-	{ 640, 480},
-	{ 1024, 768},
-	{ 1280, 960},
+	{640, 480},
+	{1024, 768},
+	{1280, 960},
 	// last one set at desktop resolution
 };
 
 struct VidPresetDataVer VidPresetVer[4] = {
-	{ 640, 480},
-	{ 1024, 768},
-	{ 1280, 960},
+	{640, 480},
+	{1024, 768},
+	{1280, 960},
 	// last one set at desktop resolution
 };
 
@@ -39,16 +39,19 @@ int ConfigAppLoad()
 
 	CreateConfigName(szConfig);
 
-	if ((h = _tfopen(szConfig, _T("rt"))) == NULL) {
+	if ((h = _tfopen(szConfig, _T("rt"))) == NULL)
+	{
 		return 1;
 	}
 
 	// Go through each line of the config file
-	while (_fgetts(szLine, sizeof(szLine), h)) {
+	while (_fgetts(szLine, sizeof(szLine), h))
+	{
 		int nLen = _tcslen(szLine);
 
 		// Get rid of the linefeed at the end
-		if (szLine[nLen - 1] == 10) {
+		if (szLine[nLen - 1] == 10)
+		{
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}
@@ -74,33 +77,45 @@ int ConfigAppLoad()
 #endif
 
 		// Video
-		VAR(nVidDepth); VAR(nVidRefresh);
+		VAR(nVidDepth);
+		VAR(nVidRefresh);
 		VAR(nVidRotationAdjust);
 
 		// horizontal oriented
-		VAR(nVidHorWidth); VAR(nVidHorHeight);
+		VAR(nVidHorWidth);
+		VAR(nVidHorHeight);
 		VAR(nVidScrnAspectX);
 		VAR(nVidScrnAspectY);
 		VAR(bVidArcaderesHor);
-		VAR(VidPreset[0].nWidth); VAR(VidPreset[0].nHeight);
-		VAR(VidPreset[1].nWidth); VAR(VidPreset[1].nHeight);
-		VAR(VidPreset[2].nWidth); VAR(VidPreset[2].nHeight);
-		VAR(VidPreset[3].nWidth); VAR(VidPreset[3].nHeight);
+		VAR(VidPreset[0].nWidth);
+		VAR(VidPreset[0].nHeight);
+		VAR(VidPreset[1].nWidth);
+		VAR(VidPreset[1].nHeight);
+		VAR(VidPreset[2].nWidth);
+		VAR(VidPreset[2].nHeight);
+		VAR(VidPreset[3].nWidth);
+		VAR(VidPreset[3].nHeight);
 		VAR(nScreenSizeHor);
 
 		// vertical oriented
-		VAR(nVidVerWidth); VAR(nVidVerHeight);
+		VAR(nVidVerWidth);
+		VAR(nVidVerHeight);
 		VAR(nVidVerScrnAspectX);
 		VAR(nVidVerScrnAspectY);
 		VAR(bVidArcaderesVer);
-		VAR(VidPresetVer[0].nWidth); VAR(VidPresetVer[0].nHeight);
-		VAR(VidPresetVer[1].nWidth); VAR(VidPresetVer[1].nHeight);
-		VAR(VidPresetVer[2].nWidth); VAR(VidPresetVer[2].nHeight);
-		VAR(VidPresetVer[3].nWidth); VAR(VidPresetVer[3].nHeight);
+		VAR(VidPresetVer[0].nWidth);
+		VAR(VidPresetVer[0].nHeight);
+		VAR(VidPresetVer[1].nWidth);
+		VAR(VidPresetVer[1].nHeight);
+		VAR(VidPresetVer[2].nWidth);
+		VAR(VidPresetVer[2].nHeight);
+		VAR(VidPresetVer[3].nWidth);
+		VAR(VidPresetVer[3].nHeight);
 		VAR(nScreenSizeVer);
 
 		VAR(nWindowSize);
-		VAR(nWindowPosX); VAR(nWindowPosY);
+		VAR(nWindowPosX);
+		VAR(nWindowPosY);
 		VAR(bDoGamma);
 		VAR(bVidUseHardwareGamma);
 		VAR(bHardwareGammaOnly);
@@ -318,9 +333,10 @@ int ConfigAppLoad()
 int ConfigAppSave()
 {
 	TCHAR szConfig[MAX_PATH];
-	FILE *h;
+	FILE* h;
 
-	if (nCmdOptUsed & 1) {
+	if (nCmdOptUsed & 1)
+	{
 		return 1;
 	}
 
@@ -330,7 +346,8 @@ int ConfigAppSave()
 
 	CreateConfigName(szConfig);
 
-	if ((h = _tfopen(szConfig, _T("wt"))) == NULL) {
+	if ((h = _tfopen(szConfig, _T("wt"))) == NULL)
+	{
 		return 1;
 	}
 
@@ -364,46 +381,62 @@ int ConfigAppSave()
 
 	// Horizontal oriented
 	_ftprintf(h, _T("\n// (Horizontal Oriented) The display mode to use for fullscreen\n"));
-	VAR(nVidHorWidth); VAR(nVidHorHeight);
+	VAR(nVidHorWidth);
+	VAR(nVidHorHeight);
 	_ftprintf(h, _T("\n// The aspect ratio of the (Horizontal Oriented) monitor\n"));
 	VAR(nVidScrnAspectX);
 	VAR(nVidScrnAspectY);
-	_ftprintf(h, _T("\n// (Horizontal Oriented) If non-zero, use the same fullscreen resolution as the original arcade game\n"));
+	_ftprintf(
+		h, _T(
+			"\n// (Horizontal Oriented) If non-zero, use the same fullscreen resolution as the original arcade game\n"));
 	VAR(bVidArcaderesHor);
 	_ftprintf(h, _T("\n// (Horizontal Oriented) The preset resolutions appearing in the menu\n"));
-	VAR(VidPreset[0].nWidth); VAR(VidPreset[0].nHeight);
-	VAR(VidPreset[1].nWidth); VAR(VidPreset[1].nHeight);
-	VAR(VidPreset[2].nWidth); VAR(VidPreset[2].nHeight);
-	VAR(VidPreset[3].nWidth); VAR(VidPreset[3].nHeight);
+	VAR(VidPreset[0].nWidth);
+	VAR(VidPreset[0].nHeight);
+	VAR(VidPreset[1].nWidth);
+	VAR(VidPreset[1].nHeight);
+	VAR(VidPreset[2].nWidth);
+	VAR(VidPreset[2].nHeight);
+	VAR(VidPreset[3].nWidth);
+	VAR(VidPreset[3].nHeight);
 	_ftprintf(h, _T("\n// (Horizontal Oriented) Full-screen size (0 = use display mode variables)\n"));
 	VAR(nScreenSizeHor);
 
 	// Vertical oriented
 	_ftprintf(h, _T("\n// (Vertical Oriented) The display mode to use for fullscreen\n"));
-	VAR(nVidVerWidth); VAR(nVidVerHeight);
+	VAR(nVidVerWidth);
+	VAR(nVidVerHeight);
 	_ftprintf(h, _T("\n// The aspect ratio of the (Vertical Oriented) monitor\n"));
 	VAR(nVidVerScrnAspectX);
 	VAR(nVidVerScrnAspectY);
-	_ftprintf(h, _T("\n// (Vertical Oriented) If non-zero, use the same fullscreen resolution as the original arcade game\n"));
+	_ftprintf(
+		h, _T(
+			"\n// (Vertical Oriented) If non-zero, use the same fullscreen resolution as the original arcade game\n"));
 	VAR(bVidArcaderesVer);
 	_ftprintf(h, _T("\n// (Vertical Oriented) The preset resolutions appearing in the menu\n"));
-	VAR(VidPresetVer[0].nWidth); VAR(VidPresetVer[0].nHeight);
-	VAR(VidPresetVer[1].nWidth); VAR(VidPresetVer[1].nHeight);
-	VAR(VidPresetVer[2].nWidth); VAR(VidPresetVer[2].nHeight);
-	VAR(VidPresetVer[3].nWidth); VAR(VidPresetVer[3].nHeight);
+	VAR(VidPresetVer[0].nWidth);
+	VAR(VidPresetVer[0].nHeight);
+	VAR(VidPresetVer[1].nWidth);
+	VAR(VidPresetVer[1].nHeight);
+	VAR(VidPresetVer[2].nWidth);
+	VAR(VidPresetVer[2].nHeight);
+	VAR(VidPresetVer[3].nWidth);
+	VAR(VidPresetVer[3].nHeight);
 	_ftprintf(h, _T("\n// (Vertical Oriented) Full-screen size (0 = use display mode variables)\n"));
 	VAR(nScreenSizeVer);
 
 	_ftprintf(h, _T("\n// Full-screen bit depth\n"));
 	VAR(nVidDepth);
-	_ftprintf(h, _T("\n// Specify the refresh rate, 0 = default (changing this will not work with many video cards)\n"));
+	_ftprintf(
+		h, _T("\n// Specify the refresh rate, 0 = default (changing this will not work with many video cards)\n"));
 	VAR(nVidRefresh);
 	_ftprintf(h, _T("\n// If non-zero, do not rotate the graphics for vertical games\n"));
 	VAR(nVidRotationAdjust);
 	_ftprintf(h, _T("\n// Initial window size (0 = autosize)\n"));
 	VAR(nWindowSize);
 	_ftprintf(h, _T("\n// Window position\n"));
-	VAR(nWindowPosX); VAR(nWindowPosY);
+	VAR(nWindowPosX);
+	VAR(nWindowPosY);
 	_ftprintf(h, _T("\n// If non-zero, perform gamma correction\n"));
 	VAR(bDoGamma);
 	_ftprintf(h, _T("\n// If non-zero, use the video hardware to correct gamma\n"));
@@ -426,7 +459,8 @@ int ConfigAppSave()
 	VAR(bVidTripleBuffer);
 	_ftprintf(h, _T("\n// If non-zero, try to synchronise blits with the display\n"));
 	VAR(bVidVSync);
-	_ftprintf(h, _T("\n// If non-zero, try to synchronise to DWM on Windows 7+, this fixes frame stuttering problems.\n"));
+	_ftprintf(
+		h, _T("\n// If non-zero, try to synchronise to DWM on Windows 7+, this fixes frame stuttering problems.\n"));
 	VAR(bVidDWMSync);
 	_ftprintf(h, _T("\n// Transfer method:  0 = blit from system memory / use driver/DirectX texture management;\n"));
 	_ftprintf(h, _T("//                   1 = copy to a video memory surface, then use bltfast();\n"));
@@ -533,9 +567,13 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// 1 = display pause/record/replay/kaillera icons in the upper right corner of the display\n"));
 	VAR(nVidSDisplayStatus);
-	_ftprintf(h, _T("\n// Minimum height (in pixels) of the font used for the Kaillera chat function (used for arcade resolution)\n"));
+	_ftprintf(
+		h, _T(
+			"\n// Minimum height (in pixels) of the font used for the Kaillera chat function (used for arcade resolution)\n"));
 	VAR(nMinChatFontSize);
-	_ftprintf(h, _T("\n// Maximum height (in pixels) of the font used for the Kaillera chat function (used for 1280x960 or higher).\n"));
+	_ftprintf(
+		h, _T(
+			"\n// Maximum height (in pixels) of the font used for the Kaillera chat function (used for 1280x960 or higher).\n"));
 	VAR(nMaxChatFontSize);
 
 	_ftprintf(h, _T("\n// Make the menu modeless\n"));
@@ -731,4 +769,3 @@ int ConfigAppSave()
 	fclose(h);
 	return 0;
 }
-

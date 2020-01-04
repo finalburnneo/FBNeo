@@ -2,15 +2,18 @@
 
 static bool SkipComma(TCHAR** s)
 {
-	while (**s && **s != _T(',')) {
+	while (**s && **s != _T(','))
+	{
 		(*s)++;
 	}
 
-	if (**s == _T(',')) {
+	if (**s == _T(','))
+	{
 		(*s)++;
 	}
 
-	if (**s) {
+	if (**s)
+	{
 		return true;
 	}
 
@@ -20,17 +23,24 @@ static bool SkipComma(TCHAR** s)
 static void CheatError(TCHAR* pszFilename, INT32 nLineNumber, CheatInfo* pCheat, TCHAR* pszInfo, TCHAR* pszLine)
 {
 #ifdef BUILD_WIN32
-	FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Cheat file %s is malformed.\nPlease remove or repair the file.\n\n"), pszFilename);
-	if (pCheat) {
-		FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Parse error at line %i, in cheat \"%s\".\n"), nLineNumber, pCheat->szCheatName);
-	} else {
+	FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Cheat file %s is malformed.\nPlease remove or repair the file.\n\n"),
+	                pszFilename);
+	if (pCheat)
+	{
+		FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Parse error at line %i, in cheat \"%s\".\n"), nLineNumber,
+		                pCheat->szCheatName);
+	}
+	else
+	{
 		FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Parse error at line %i.\n"), nLineNumber);
 	}
 
-	if (pszInfo) {
+	if (pszInfo)
+	{
 		FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Problem:\t%s.\n"), pszInfo);
 	}
-	if (pszLine) {
+	if (pszLine)
+	{
 		FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Text:\t%s\n"), pszLine);
 	}
 
@@ -53,12 +63,15 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 	CheatInfo* pCurrentCheat = NULL;
 
 	FILE* h = _tfopen(pszFilename, _T("rt"));
-	if (h == NULL) {
+	if (h == NULL)
+	{
 		return 1;
 	}
 
-	while (1) {
-		if (_fgetts(szLine, sizeof(szLine), h) == NULL) {
+	while (1)
+	{
+		if (_fgetts(szLine, sizeof(szLine), h) == NULL)
+		{
 			break;
 		}
 
@@ -66,18 +79,23 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 
 		nLen = _tcslen(szLine);
 		// Get rid of the linefeed at the end
-		while (szLine[nLen - 1] == 0x0A || szLine[nLen - 1] == 0x0D) {
+		while (szLine[nLen - 1] == 0x0A || szLine[nLen - 1] == 0x0D)
+		{
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}
 
-		s = szLine;													// Start parsing
+		s = szLine; // Start parsing
 
-		if (s[0] == _T('/') && s[1] == _T('/')) {					// Comment
+		if (s[0] == _T('/') && s[1] == _T('/'))
+		{
+			// Comment
 			continue;
 		}
 
-		if ((t = LabelCheck(s, _T("include"))) != 0) {				// Include a file
+		if ((t = LabelCheck(s, _T("include"))) != 0)
+		{
+			// Include a file
 			s = t;
 
 			TCHAR szFilename[MAX_PATH] = _T("");
@@ -88,9 +106,11 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 
 			_stprintf(szFilename, _T("%s%s.dat"), szAppCheatsPath, szQuote);
 
-			if (ConfigParseFile(szFilename)) {
+			if (ConfigParseFile(szFilename))
+			{
 				_stprintf(szFilename, _T("%s%s.ini"), szAppCheatsPath, szQuote);
-				if (ConfigParseFile(szFilename)) {
+				if (ConfigParseFile(szFilename))
+				{
 					CheatError(pszFilename, nLine, NULL, _T("included file doesn't exist"), szLine);
 				}
 			}
@@ -98,7 +118,9 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 			continue;
 		}
 
-		if ((t = LabelCheck(s, _T("cheat"))) != 0) {				// Add new cheat
+		if ((t = LabelCheck(s, _T("cheat"))) != 0)
+		{
+			// Add new cheat
 			s = t;
 
 			// Read cheat name
@@ -109,13 +131,16 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 
 			s = szEnd;
 
-			if ((t = LabelCheck(s, _T("advanced"))) != 0) {			// Advanced cheat
+			if ((t = LabelCheck(s, _T("advanced"))) != 0)
+			{
+				// Advanced cheat
 				s = t;
 			}
 
 			SKIP_WS(s);
 
-			if (nInside == _T('{')) {
+			if (nInside == _T('{'))
+			{
 				CheatError(pszFilename, nLine, pCurrentCheat, _T("missing closing bracket"), NULL);
 				break;
 			}
@@ -130,27 +155,32 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 			// Link new node into the list
 			CheatInfo* pPreviousCheat = pCurrentCheat;
 			pCurrentCheat = (CheatInfo*)malloc(sizeof(CheatInfo));
-			if (pCheatInfo == NULL) {
+			if (pCheatInfo == NULL)
+			{
 				pCheatInfo = pCurrentCheat;
 			}
 
 			memset(pCurrentCheat, 0, sizeof(CheatInfo));
 			pCurrentCheat->pPrevious = pPreviousCheat;
-			if (pPreviousCheat) {
+			if (pPreviousCheat)
+			{
 				pPreviousCheat->pNext = pCurrentCheat;
 			}
 
 			// Fill in defaults
-			pCurrentCheat->nType = 0;								// Default to cheat type 0 (apply each frame)
-			pCurrentCheat->nStatus = -1;							// Disable cheat
+			pCurrentCheat->nType = 0; // Default to cheat type 0 (apply each frame)
+			pCurrentCheat->nStatus = -1; // Disable cheat
 
 			memcpy(pCurrentCheat->szCheatName, szQuote, QUOTE_MAX);
 
 			continue;
 		}
 
-		if ((t = LabelCheck(s, _T("type"))) != 0) {					// Cheat type
-			if (nInside == INSIDE_NOTHING || pCurrentCheat == NULL) {
+		if ((t = LabelCheck(s, _T("type"))) != 0)
+		{
+			// Cheat type
+			if (nInside == INSIDE_NOTHING || pCurrentCheat == NULL)
+			{
 				CheatError(pszFilename, nLine, pCurrentCheat, _T("rogue cheat type"), szLine);
 				break;
 			}
@@ -162,8 +192,11 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 			continue;
 		}
 
-		if ((t = LabelCheck(s, _T("default"))) != 0) {				// Default option
-			if (nInside == INSIDE_NOTHING || pCurrentCheat == NULL) {
+		if ((t = LabelCheck(s, _T("default"))) != 0)
+		{
+			// Default option
+			if (nInside == INSIDE_NOTHING || pCurrentCheat == NULL)
+			{
 				CheatError(pszFilename, nLine, pCurrentCheat, _T("rogue default"), szLine);
 				break;
 			}
@@ -176,27 +209,33 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 		}
 
 		INT32 n = _tcstol(s, &t, 0);
-		if (t != s) {				   								// New option
+		if (t != s)
+		{
+			// New option
 
-			if (nInside == INSIDE_NOTHING || pCurrentCheat == NULL) {
+			if (nInside == INSIDE_NOTHING || pCurrentCheat == NULL)
+			{
 				CheatError(pszFilename, nLine, pCurrentCheat, _T("rogue option"), szLine);
 				break;
 			}
 
 			// Link a new Option structure to the cheat
-			if (n < CHEAT_MAX_OPTIONS) {
+			if (n < CHEAT_MAX_OPTIONS)
+			{
 				s = t;
 
 				// Read option name
 				TCHAR* szQuote = NULL;
 				TCHAR* szEnd = NULL;
-				if (QuoteRead(&szQuote, &szEnd, s)) {
+				if (QuoteRead(&szQuote, &szEnd, s))
+				{
 					CheatError(pszFilename, nLine, pCurrentCheat, _T("option name omitted"), szLine);
 					break;
 				}
 				s = szEnd;
 
-				if (pCurrentCheat->pOption[n] == NULL) {
+				if (pCurrentCheat->pOption[n] == NULL)
+				{
 					pCurrentCheat->pOption[n] = (CheatOption*)malloc(sizeof(CheatOption));
 				}
 				memset(pCurrentCheat->pOption[n], 0, sizeof(CheatOption));
@@ -205,12 +244,15 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 
 				INT32 nCurrentAddress = 0;
 				bool bOK = true;
-				while (nCurrentAddress < CHEAT_MAX_ADDRESS) {
+				while (nCurrentAddress < CHEAT_MAX_ADDRESS)
+				{
 					INT32 nCPU = 0, nAddress = 0, nValue = 0;
 
-					if (SkipComma(&s)) {
-						nCPU = _tcstol(s, &t, 0);		// CPU number
-						if (t == s) {
+					if (SkipComma(&s))
+					{
+						nCPU = _tcstol(s, &t, 0); // CPU number
+						if (t == s)
+						{
 							CheatError(pszFilename, nLine, pCurrentCheat, _T("CPU number omitted"), szLine);
 							bOK = false;
 							break;
@@ -218,8 +260,9 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 						s = t;
 
 						SkipComma(&s);
-						nAddress = _tcstol(s, &t, 0);	// Address
-						if (t == s) {
+						nAddress = _tcstol(s, &t, 0); // Address
+						if (t == s)
+						{
 							bOK = false;
 							CheatError(pszFilename, nLine, pCurrentCheat, _T("address omitted"), szLine);
 							break;
@@ -227,17 +270,23 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 						s = t;
 
 						SkipComma(&s);
-						nValue = _tcstol(s, &t, 0);		// Value
-						if (t == s) {
+						nValue = _tcstol(s, &t, 0); // Value
+						if (t == s)
+						{
 							bOK = false;
 							CheatError(pszFilename, nLine, pCurrentCheat, _T("value omitted"), szLine);
 							break;
 						}
-					} else {
-						if (nCurrentAddress) {			// Only the first option is allowed no address
+					}
+					else
+					{
+						if (nCurrentAddress)
+						{
+							// Only the first option is allowed no address
 							break;
 						}
-						if (n) {
+						if (n)
+						{
 							bOK = false;
 							CheatError(pszFilename, nLine, pCurrentCheat, _T("CPU / address / value omitted"), szLine);
 							break;
@@ -250,18 +299,20 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 					nCurrentAddress++;
 				}
 
-				if (!bOK) {
+				if (!bOK)
+				{
 					break;
 				}
-
 			}
 
 			continue;
 		}
 
 		SKIP_WS(s);
-		if (*s == _T('}')) {
-			if (nInside != _T('{')) {
+		if (*s == _T('}'))
+		{
+			if (nInside != _T('{'))
+			{
 				CheatError(pszFilename, nLine, pCurrentCheat, _T("missing opening bracket"), NULL);
 				break;
 			}
@@ -276,10 +327,10 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 			break;
 		}
 #endif
-
 	}
 
-	if (h) {
+	if (h)
+	{
 		fclose(h);
 	}
 
@@ -290,10 +341,10 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 //TODO: make cross platform
 static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 {
-
 #ifdef BUILD_WIN32
-	FILE *fp = _tfopen(pszFilename, _T("rt"));
-	if (fp == NULL) {
+	FILE* fp = _tfopen(pszFilename, _T("rt"));
+	if (fp == NULL)
+	{
 		return 1;
 	}
 
@@ -313,39 +364,41 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 
 		if (nLen < 3 || szLine[0] == '[') continue;
 
-		if (!_tcsncmp (_T("Name="), szLine, 5))
+		if (!_tcsncmp(_T("Name="), szLine, 5))
 		{
 			n = 0;
 
 			// Link new node into the list
 			CheatInfo* pPreviousCheat = pCurrentCheat;
 			pCurrentCheat = (CheatInfo*)malloc(sizeof(CheatInfo));
-			if (pCheatInfo == NULL) {
+			if (pCheatInfo == NULL)
+			{
 				pCheatInfo = pCurrentCheat;
 			}
 
 			memset(pCurrentCheat, 0, sizeof(CheatInfo));
 			pCurrentCheat->pPrevious = pPreviousCheat;
-			if (pPreviousCheat) {
+			if (pPreviousCheat)
+			{
 				pPreviousCheat->pNext = pCurrentCheat;
 			}
 
 			// Fill in defaults
-			pCurrentCheat->nType = 0;							// Default to cheat type 0 (apply each frame)
-			pCurrentCheat->nStatus = -1;							// Disable cheat
-			pCurrentCheat->nDefault = 0;							// Set default option
+			pCurrentCheat->nType = 0; // Default to cheat type 0 (apply each frame)
+			pCurrentCheat->nStatus = -1; // Disable cheat
+			pCurrentCheat->nDefault = 0; // Set default option
 
-			_tcsncpy (pCurrentCheat->szCheatName, szLine + 5, QUOTE_MAX);
-			pCurrentCheat->szCheatName[nLen-6] = '\0';
+			_tcsncpy(pCurrentCheat->szCheatName, szLine + 5, QUOTE_MAX);
+			pCurrentCheat->szCheatName[nLen - 6] = '\0';
 
 			continue;
 		}
 
-		if (!_tcsncmp (_T("Default="), szLine, 8) && n >= 0)
+		if (!_tcsncmp(_T("Default="), szLine, 8) && n >= 0)
 		{
-			_tcsncpy (tmp, szLine + 8, nLen-9);
-			tmp[nLen-9] = '\0';
-			_stscanf (tmp, _T("%d"), &(pCurrentCheat->nDefault));
+			_tcsncpy(tmp, szLine + 8, nLen - 9);
+			tmp[nLen - 9] = '\0';
+			_stscanf(tmp, _T("%d"), &(pCurrentCheat->nDefault));
 			continue;
 		}
 
@@ -353,18 +406,20 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 		i = 0, j = 0;
 		while (i < nLen)
 		{
-			if (szLine[i] == '=' && i < 4) j = i+1;
+			if (szLine[i] == '=' && i < 4) j = i + 1;
 			if (szLine[i] == ',' || szLine[i] == '\n')
 			{
-				if (pCurrentCheat->pOption[n] == NULL) {
+				if (pCurrentCheat->pOption[n] == NULL)
+				{
 					pCurrentCheat->pOption[n] = (CheatOption*)malloc(sizeof(CheatOption));
 				}
 				memset(pCurrentCheat->pOption[n], 0, sizeof(CheatOption));
 
-				_tcsncpy (pCurrentCheat->pOption[n]->szOptionName, szLine + j, QUOTE_MAX * sizeof(TCHAR));
-				pCurrentCheat->pOption[n]->szOptionName[i-j] = '\0';
+				_tcsncpy(pCurrentCheat->pOption[n]->szOptionName, szLine + j, QUOTE_MAX * sizeof(TCHAR));
+				pCurrentCheat->pOption[n]->szOptionName[i - j] = '\0';
 
-				i++; j = i;
+				i++;
+				j = i;
 				break;
 			}
 			i++;
@@ -377,15 +432,18 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 
 			if (szLine[i] == ',' || szLine[i] == '\n')
 			{
-				_tcsncpy (tmp, szLine + j, i-j);
-				tmp[i-j] = '\0';
+				_tcsncpy(tmp, szLine + j, i - j);
+				tmp[i - j] = '\0';
 
-				if (nAddress == -1) {
-					_stscanf (tmp, _T("%x"), &nAddress);
-				} else {
-					_stscanf (tmp, _T("%x"), &nValue);
+				if (nAddress == -1)
+				{
+					_stscanf(tmp, _T("%x"), &nAddress);
+				}
+				else
+				{
+					_stscanf(tmp, _T("%x"), &nValue);
 
-					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nCPU = 0; 	// Always
+					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nCPU = 0; // Always
 					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = nAddress ^ 1;
 					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = nValue;
 					nCurrentAddress++;
@@ -393,14 +451,14 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 					nAddress = -1;
 					nValue = 0;
 				}
-				j = i+1;
+				j = i + 1;
 			}
 			i++;
 		}
 		n++;
 	}
 
-	fclose (fp);
+	fclose(fp);
 #endif
 	return 0;
 }
@@ -418,24 +476,22 @@ static INT32 ConfigParseMAMEFile()
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = nAddress + i;	\
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = (nValue >> ((k*8)-(i*8))) & 0xff;	\
 		nCurrentAddress++;	\
-	}	\
-
+	}
 #define OptionName(a)	\
 	if (pCurrentCheat->pOption[n] == NULL) {						\
 		pCurrentCheat->pOption[n] = (CheatOption*)malloc(sizeof(CheatOption));		\
 	}											\
 	memset(pCurrentCheat->pOption[n], 0, sizeof(CheatOption));				\
-	_tcsncpy (pCurrentCheat->pOption[n]->szOptionName, a, QUOTE_MAX * sizeof(TCHAR));	\
-
+	_tcsncpy (pCurrentCheat->pOption[n]->szOptionName, a, QUOTE_MAX * sizeof(TCHAR));
 #define tmpcpy(a)	\
 	_tcsncpy (tmp, szLine + c0[a] + 1, c0[a+1] - (c0[a]+1));	\
-	tmp[c0[a+1] - (c0[a]+1)] = '\0';				\
-
+	tmp[c0[a+1] - (c0[a]+1)] = '\0';
 	TCHAR szFileName[MAX_PATH] = _T("");
 	_stprintf(szFileName, _T("%scheat.dat"), szAppCheatsPath);
 
-	FILE *fz = _tfopen(szFileName, _T("rt"));
-	if (fz == NULL) {
+	FILE* fz = _tfopen(szFileName, _T("rt"));
+	if (fz == NULL)
+	{
 		return 1;
 	}
 
@@ -462,47 +518,51 @@ static INT32 ConfigParseMAMEFile()
 		if (_fgetts(szLine, 1024, fz) == NULL)
 			break;
 
-		nLen = _tcslen (szLine);
+		nLen = _tcslen(szLine);
 
 		if (szLine[0] == ';') continue;
 
-		if (_tcsncmp (szLine, gName, lstrlen(gName))) {
+		if (_tcsncmp(szLine, gName, lstrlen(gName)))
+		{
 			if (nFound) break;
-			else continue;
+			continue;
 		}
 
 		nFound = 1;
 
-		INT32 c0[16], c1 = 0;					// find colons / break
+		INT32 c0[16], c1 = 0; // find colons / break
 		for (INT32 i = 0; i < nLen; i++)
 			if (szLine[i] == ':' || szLine[i] == '\n')
 				c0[c1++] = i;
 
-		tmpcpy(1);						// control flags
-		_stscanf (tmp, _T("%x"), &flags);
+		tmpcpy(1); // control flags
+		_stscanf(tmp, _T("%x"), &flags);
 
-		tmpcpy(2);						// cheat address
-		_stscanf (tmp, _T("%x"), &nAddress);
+		tmpcpy(2); // cheat address
+		_stscanf(tmp, _T("%x"), &nAddress);
 
-		tmpcpy(3);						// cheat value
-		_stscanf (tmp, _T("%x"), &nValue);
+		tmpcpy(3); // cheat value
+		_stscanf(tmp, _T("%x"), &nValue);
 
-		tmpcpy(4);						// cheat attribute
-		_stscanf (tmp, _T("%x"), &nAttrib);
+		tmpcpy(4); // cheat attribute
+		_stscanf(tmp, _T("%x"), &nAttrib);
 
-		tmpcpy(5);						// cheat name
-				   //was x7f00
-		if (flags & 0x80007c00) continue;			// skip various cheats (unhandled methods at this time)
+		tmpcpy(5); // cheat name
+		//was x7f00
+		if (flags & 0x80007c00) continue; // skip various cheats (unhandled methods at this time)
 
-		if ( flags & 0x00008000 || (flags & 0x0001000 && !menu)) {
-			if (nCurrentAddress < CHEAT_MAX_ADDRESS) {
+		if (flags & 0x00008000 || (flags & 0x0001000 && !menu))
+		{
+			if (nCurrentAddress < CHEAT_MAX_ADDRESS)
+			{
 				AddressInfo();
 			}
 
 			continue;
 		}
 
-		if (~flags & 0x00010000) {
+		if (~flags & 0x00010000)
+		{
 			n = 0;
 			menu = 0;
 			nCurrentAddress = 0;
@@ -510,84 +570,104 @@ static INT32 ConfigParseMAMEFile()
 			// Link new node into the list
 			CheatInfo* pPreviousCheat = pCurrentCheat;
 			pCurrentCheat = (CheatInfo*)malloc(sizeof(CheatInfo));
-			if (pCheatInfo == NULL) {
+			if (pCheatInfo == NULL)
+			{
 				pCheatInfo = pCurrentCheat;
 			}
 
 			memset(pCurrentCheat, 0, sizeof(CheatInfo));
 			pCurrentCheat->pPrevious = pPreviousCheat;
-			if (pPreviousCheat) {
+			if (pPreviousCheat)
+			{
 				pPreviousCheat->pNext = pCurrentCheat;
 			}
 
 			// Fill in defaults
-			pCurrentCheat->nType = 0;							    // Default to cheat type 0 (apply each frame)
-			pCurrentCheat->nStatus = -1;							// Disable cheat
-			pCurrentCheat->nDefault = 0;							// Set default option
-			pCurrentCheat->bOneShot = 0;							// Set default option (off)
-			pCurrentCheat->bWatchMode = 0;							// Set default option (off)
+			pCurrentCheat->nType = 0; // Default to cheat type 0 (apply each frame)
+			pCurrentCheat->nStatus = -1; // Disable cheat
+			pCurrentCheat->nDefault = 0; // Set default option
+			pCurrentCheat->bOneShot = 0; // Set default option (off)
+			pCurrentCheat->bWatchMode = 0; // Set default option (off)
 
-			_tcsncpy (pCurrentCheat->szCheatName, tmp, QUOTE_MAX);
+			_tcsncpy(pCurrentCheat->szCheatName, tmp, QUOTE_MAX);
 
-			if (lstrlen(tmp) <= 0 || flags == 0x60000000) {
+			if (lstrlen(tmp) <= 0 || flags == 0x60000000)
+			{
 				n++;
 				continue;
 			}
 
 			OptionName(_T("Disabled"));
 
-			if (nAddress) {
-				if (flags & 0x1) {
+			if (nAddress)
+			{
+				if (flags & 0x1)
+				{
 					pCurrentCheat->bOneShot = 1; // apply once and stop
 				}
-				if (flags & 0x2) {
+				if (flags & 0x2)
+				{
 					pCurrentCheat->bWaitForModification = 1; // wait for modification before changing
 				}
-				if (flags & 0x800000) {
+				if (flags & 0x800000)
+				{
 					pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
 				}
-				if ((flags & 0x6) == 0x6) {
+				if ((flags & 0x6) == 0x6)
+				{
 					pCurrentCheat->bWatchMode = 1; // display value @ address
 				}
-				if (flags & 0x100) { // add options
+				if (flags & 0x100)
+				{
+					// add options
 					INT32 nTotal = nValue + 1;
 					INT32 nPlus1 = (flags & 0x300) ? 1 : 0; // displayed value +1?
 
 					//bprintf(0, _T("adding .. %X. options\n"), nTotal);
 					if (nTotal > 0xff) continue; // bad entry (roughrac has this)
-					for (nValue = 0; nValue < nTotal; nValue++) {
+					for (nValue = 0; nValue < nTotal; nValue++)
+					{
 						swprintf(tmp2, L"# %d.", nValue + nPlus1);
 						n++;
 						nCurrentAddress = 0;
 						OptionName(tmp2);
 						AddressInfo();
 					}
-				} else {
+				}
+				else
+				{
 					n++;
 					OptionName(tmp);
 					AddressInfo();
 				}
-			} else {
+			}
+			else
+			{
 				menu = 1;
 			}
 
 			continue;
 		}
 
-		if ( flags & 0x00010000 && menu) {
+		if (flags & 0x00010000 && menu)
+		{
 			n++;
 			nCurrentAddress = 0;
 
-			if (flags & 0x1) {
+			if (flags & 0x1)
+			{
 				pCurrentCheat->bOneShot = 1; // apply once and stop
 			}
-			if (flags & 0x2) {
+			if (flags & 0x2)
+			{
 				pCurrentCheat->bWaitForModification = 1; // wait for modification before changing
 			}
-			if ((flags & 0x6) == 0x6) {
+			if ((flags & 0x6) == 0x6)
+			{
 				pCurrentCheat->bWatchMode = 1; // display value @ address
 			}
-			if (flags & 0x800000) {
+			if (flags & 0x800000)
+			{
 				pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
 			}
 
@@ -598,7 +678,7 @@ static INT32 ConfigParseMAMEFile()
 		}
 	}
 
-	fclose (fz);
+	fclose(fz);
 #endif
 	return 0;
 }
@@ -609,18 +689,23 @@ INT32 ConfigCheatLoad()
 	TCHAR szFilename[MAX_PATH] = _T("");
 
 	_stprintf(szFilename, _T("%s%s.ini"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
-	if (ConfigParseFile(szFilename)) {
+	if (ConfigParseFile(szFilename))
+	{
 		_stprintf(szFilename, _T("%s%s.dat"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
-		if (ConfigParseNebulaFile(szFilename)) {
-			if (ConfigParseMAMEFile()) {
+		if (ConfigParseNebulaFile(szFilename))
+		{
+			if (ConfigParseMAMEFile())
+			{
 				return 1;
 			}
 		}
 	}
 
-	if (pCheatInfo) {
+	if (pCheatInfo)
+	{
 		INT32 nCurrentCheat = 0;
-		while (CheatEnable(nCurrentCheat, -1) == 0) {
+		while (CheatEnable(nCurrentCheat, -1) == 0)
+		{
 			nCurrentCheat++;
 		}
 
@@ -629,5 +714,3 @@ INT32 ConfigCheatLoad()
 
 	return 0;
 }
-
-

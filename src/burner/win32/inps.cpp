@@ -1,20 +1,20 @@
 // Burner Input Set dialog module
 #include "burner.h"
 
-HWND hInpsDlg = NULL;						// Handle to the Input Set Dialog
+HWND hInpsDlg = NULL; // Handle to the Input Set Dialog
 static HBRUSH hWhiteBGBrush;
 
-unsigned int nInpsInput = 0;				// The input number we are redefining
-static struct BurnInputInfo bii;			// Info about the input
+unsigned int nInpsInput = 0; // The input number we are redefining
+static struct BurnInputInfo bii; // Info about the input
 static int nDlgState = 0;
-static int nInputCode = -1;					// If in state 3, code N was nInputCode
-static int nCounter = 0;					// Counter of frames since the dialog was made
-static struct GameInp* pgi = NULL;			// Current GameInp
-static struct GameInp OldInp;				// Old GameInp
-static int bOldPush = 0;					// 1 if the push button was pressed last time
+static int nInputCode = -1; // If in state 3, code N was nInputCode
+static int nCounter = 0; // Counter of frames since the dialog was made
+static struct GameInp* pgi = NULL; // Current GameInp
+static struct GameInp OldInp; // Old GameInp
+static int bOldPush = 0; // 1 if the push button was pressed last time
 
 static bool bGrabMouse = false;
-static bool bClearLock = false;				// ClearLock checkbox
+static bool bClearLock = false; // ClearLock checkbox
 
 static bool bOldLeftAltkeyMapped;
 
@@ -24,15 +24,19 @@ static int InpsInit()
 	memset(&OldInp, 0, sizeof(OldInp));
 
 	pgi = NULL;
-	if (nInpsInput >= nGameInpCount + nMacroCount) {		// input out of range
+	if (nInpsInput >= nGameInpCount + nMacroCount)
+	{
+		// input out of range
 		return 1;
 	}
 	pgi = GameInp + nInpsInput;
 
-	memset(&bii,0,sizeof(bii));
+	memset(&bii, 0, sizeof(bii));
 	BurnDrvGetInputInfo(&bii, nInpsInput);
 
-	if (bii.nType & BIT_GROUP_CONSTANT) {					// This dialog doesn't handle constants
+	if (bii.nType & BIT_GROUP_CONSTANT)
+	{
+		// This dialog doesn't handle constants
 		return 1;
 	}
 
@@ -46,14 +50,20 @@ static int InpsInit()
 	bLeftAltkeyMapped = true;
 
 	// Set the dialog title
-	if (nInpsInput >= nGameInpCount) {
+	if (nInpsInput >= nGameInpCount)
+	{
 		// Macro
 		_stprintf(szTitle, FBNLoadStringEx(hAppInst, IDS_INPSET_MOVENAME, true), pgi->Macro.szName);
-	} else {
+	}
+	else
+	{
 		// Normal input
-		if (bii.szName == NULL || bii.szName[0] == _T('\0')) {
+		if (bii.szName == NULL || bii.szName[0] == _T('\0'))
+		{
 			_stprintf(szTitle, FBNLoadStringEx(hAppInst, IDS_INPSET_MOVE, true));
-		} else {
+		}
+		else
+		{
 			_stprintf(szTitle, FBNLoadStringEx(hAppInst, IDS_INPSET_MOVENAME, true), bii.szName);
 		}
 	}
@@ -71,8 +81,9 @@ static int InpsInit()
 static int InpsExit()
 {
 	bOldPush = 0;
-	if (pgi != NULL) {
-		*pgi=OldInp;
+	if (pgi != NULL)
+	{
+		*pgi = OldInp;
 	}
 	memset(&OldInp, 0, sizeof(OldInp));
 
@@ -85,63 +96,85 @@ static int InpsExit()
 
 static int SetInput(int nCode)
 {
-	if ((pgi->nInput & GIT_GROUP_MACRO) == 0) {
-
-		if (bii.nType & BIT_GROUP_CONSTANT) {							// Don't change dip switches!
+	if ((pgi->nInput & GIT_GROUP_MACRO) == 0)
+	{
+		if (bii.nType & BIT_GROUP_CONSTANT)
+		{
+			// Don't change dip switches!
 			DestroyWindow(hInpsDlg);
 			return 0;
 		}
 
-		if ((bii.nType & BIT_GROUP_ANALOG) && (nCode & 0xFF) < 0x10) {	// Analog controls
-			if (strcmp(bii.szInfo + 4, "-axis-neg") == 0 || strcmp(bii.szInfo + 4, "-axis-pos") == 0) {
-				if ((nCode & 0xF000) == 0x4000) {
-					if (nCode & 1) {
+		if ((bii.nType & BIT_GROUP_ANALOG) && (nCode & 0xFF) < 0x10)
+		{
+			// Analog controls
+			if (strcmp(bii.szInfo + 4, "-axis-neg") == 0 || strcmp(bii.szInfo + 4, "-axis-pos") == 0)
+			{
+				if ((nCode & 0xF000) == 0x4000)
+				{
+					if (nCode & 1)
+					{
 						pgi->nInput = GIT_JOYAXIS_POS;
-					} else {
+					}
+					else
+					{
 						pgi->nInput = GIT_JOYAXIS_NEG;
 					}
 					pgi->Input.JoyAxis.nJoy = (nCode & 0x0F00) >> 8;
 					pgi->Input.JoyAxis.nAxis = (nCode & 0x0F) >> 1;
 				}
-			} else {													// Map entire axis
-				if ((nCode & 0xF000) == 0x4000) {
+			}
+			else
+			{
+				// Map entire axis
+				if ((nCode & 0xF000) == 0x4000)
+				{
 					pgi->nInput = GIT_JOYAXIS_FULL;
 					pgi->Input.JoyAxis.nJoy = (nCode & 0x0F00) >> 8;
 					pgi->Input.JoyAxis.nAxis = (nCode & 0x0F) >> 1;
-				} else {
+				}
+				else
+				{
 					pgi->nInput = GIT_MOUSEAXIS;
 					pgi->Input.MouseAxis.nMouse = (nCode & 0x0F00) >> 8;
 					pgi->Input.MouseAxis.nAxis = (nCode & 0x0F) >> 1;
 				}
 			}
 
-			if (nCode == 0) {                                           // Clear Input button pressed (for Analogue/Mouse)
+			if (nCode == 0)
+			{
+				// Clear Input button pressed (for Analogue/Mouse)
 				pgi->nInput = 0;
 				pgi->Input.JoyAxis.nJoy = 0;
 				pgi->Input.JoyAxis.nAxis = 0;
 				pgi->Input.MouseAxis.nMouse = 0;
 				pgi->Input.MouseAxis.nAxis = 0;
 
-				if (bClearLock) { // If ClearLock is checked, morph the analogue/mouse input to a switch (switch w/nCode of 0 == ClearLock)
+				if (bClearLock)
+				{
+					// If ClearLock is checked, morph the analogue/mouse input to a switch (switch w/nCode of 0 == ClearLock)
 					pgi->nInput = GIT_SWITCH;
 					pgi->Input.Switch.nCode = (unsigned short)nCode;
 				}
 			}
-
-		} else {
+		}
+		else
+		{
 			pgi->nInput = GIT_SWITCH;
-			if (nCode == 0 && !bClearLock) pgi->nInput = 0;				// Clear Input button pressed (for buttons)
+			if (nCode == 0 && !bClearLock) pgi->nInput = 0; // Clear Input button pressed (for buttons)
 			pgi->Input.Switch.nCode = (unsigned short)nCode;
 		}
-	} else {
-		pgi->Macro.nMode = 0x01;										// Mark macro as in use
-		if (nCode == 0 && !bClearLock) pgi->Macro.nMode = 0;			// Clear Input button pressed (for Macros)
-		pgi->Macro.Switch.nCode = (unsigned short)nCode;				// Assign switch
+	}
+	else
+	{
+		pgi->Macro.nMode = 0x01; // Mark macro as in use
+		if (nCode == 0 && !bClearLock) pgi->Macro.nMode = 0; // Clear Input button pressed (for Macros)
+		pgi->Macro.Switch.nCode = (unsigned short)nCode; // Assign switch
 	}
 
 	OldInp = *pgi;
 
-	InpdListMake(0);													// Update list with new input type
+	InpdListMake(0); // Update list with new input type
 
 	return 0;
 }
@@ -150,34 +183,44 @@ static int InpsPushUpdate()
 {
 	int nPushState = 0;
 
-	if (pgi == NULL || nInpsInput >= nGameInpCount) {
+	if (pgi == NULL || nInpsInput >= nGameInpCount)
+	{
 		return 0;
 	}
 
 	// See if the push button is pressed
 	nPushState = SendDlgItemMessage(hInpsDlg, IDC_INPS_PUSH, BM_GETSTATE, 0, 0);
-	if (nPushState & BST_PUSHED) {
+	if (nPushState & BST_PUSHED)
+	{
 		nPushState = 1;
-	} else {
+	}
+	else
+	{
 		nPushState = 0;
 	}
 
-	if (nPushState) {
-		switch (OldInp.nType) {
-			case BIT_DIGITAL:								// Set digital inputs to 1
-				pgi->nInput = GIT_CONSTANT;
-				pgi->Input.Constant.nConst = 1;
-				break;
-			case BIT_DIPSWITCH:								// Set dipswitch block to 0xFF
-				pgi->nInput = GIT_CONSTANT;
-				pgi->Input.Constant.nConst = 0xFF;
-				break;
+	if (nPushState)
+	{
+		switch (OldInp.nType)
+		{
+		case BIT_DIGITAL: // Set digital inputs to 1
+			pgi->nInput = GIT_CONSTANT;
+			pgi->Input.Constant.nConst = 1;
+			break;
+		case BIT_DIPSWITCH: // Set dipswitch block to 0xFF
+			pgi->nInput = GIT_CONSTANT;
+			pgi->Input.Constant.nConst = 0xFF;
+			break;
 		}
-	} else {
+	}
+	else
+	{
 		// Change back
 		*pgi = OldInp;
 	}
-	if (nPushState != bOldPush) {							// refresh view
+	if (nPushState != bOldPush)
+	{
+		// refresh view
 		InpdListMake(0);
 	}
 
@@ -205,52 +248,67 @@ int InpsUpdate()
 	TCHAR szTemp[MAX_PATH] = _T("");
 	int nFind = -1;
 
-	if (hInpsDlg == NULL) {										// Don't do anything if the dialog isn't created
+	if (hInpsDlg == NULL)
+	{
+		// Don't do anything if the dialog isn't created
 		return 1;
 	}
-	if (nCounter < 0x100000) {									// advance frames since dialog was created
+	if (nCounter < 0x100000)
+	{
+		// advance frames since dialog was created
 		nCounter++;
 	}
 
-	if (InpsPushUpdate()) {
+	if (InpsPushUpdate())
+	{
 		return 0;
 	}
 
-	int nButtonState = SendDlgItemMessage(hInpsDlg, IDC_INPS_CLEARLOCK, BM_GETSTATE, 0, 0); // Lock Input = If checked: clear an input, and don't let a default value or default preset re-fill it in.
+	int nButtonState = SendDlgItemMessage(hInpsDlg, IDC_INPS_CLEARLOCK, BM_GETSTATE, 0, 0);
+	// Lock Input = If checked: clear an input, and don't let a default value or default preset re-fill it in.
 	bClearLock = (nButtonState & BST_CHECKED);
 
 	nButtonState = SendDlgItemMessage(hInpsDlg, IDC_INPS_GRABMOUSE, BM_GETSTATE, 0, 0);
-	if (bGrabMouse) {
-		if ((nButtonState & BST_CHECKED) == 0) {
+	if (bGrabMouse)
+	{
+		if ((nButtonState & BST_CHECKED) == 0)
+		{
 			bGrabMouse = false;
 			nDlgState = 2;
 			return 0;
 		}
-	} else {
-		if (nButtonState & BST_CHECKED) {
+	}
+	else
+	{
+		if (nButtonState & BST_CHECKED)
+		{
 			bGrabMouse = true;
 			nDlgState = 4;
 			return 0;
 		}
 	}
 	// This doesn't work properly
-	if (nButtonState & BST_PUSHED) {
+	if (nButtonState & BST_PUSHED)
+	{
 		return 0;
 	}
 
 	nButtonState = SendDlgItemMessage(hInpsDlg, IDCANCEL, BM_GETSTATE, 0, 0);
-	if (nButtonState & BST_PUSHED) {
+	if (nButtonState & BST_PUSHED)
+	{
 		return 0;
 	}
 
 	nFind = InputFind(nDlgState);
 
-	if (nDlgState & 4) {										//  4 = Waiting for all controls to be released
+	if (nDlgState & 4)
+	{
+		//  4 = Waiting for all controls to be released
 
-		if (bGrabMouse ? nFind >= 0 : (nFind >= 0 && nFind < 0x8000)) {
-
-			if (nCounter >= 60) {
-
+		if (bGrabMouse ? nFind >= 0 : (nFind >= 0 && nFind < 0x8000))
+		{
+			if (nCounter >= 60)
+			{
 				// Alert the user that a control is stuck
 
 				_stprintf(szTemp, FBNLoadStringEx(hAppInst, IDS_INPSET_WAITING, true), InputCodeDesc(nFind));
@@ -267,9 +325,12 @@ int InpsUpdate()
 		nDlgState = 8;
 	}
 
-	if (nDlgState & 8) {										//  8 = Waiting for a control to be activated
+	if (nDlgState & 8)
+	{
+		//  8 = Waiting for a control to be activated
 
-		if (bGrabMouse ? nFind < 0 : (nFind < 0 || nFind >= 0x8000)) {
+		if (bGrabMouse ? nFind < 0 : (nFind < 0 || nFind >= 0x8000))
+		{
 			return 0;
 		}
 
@@ -281,10 +342,14 @@ int InpsUpdate()
 		nDlgState = 16;
 	}
 
-	if (nDlgState & 16) {										// 16 = waiting for control to be released
+	if (nDlgState & 16)
+	{
+		// 16 = waiting for control to be released
 
-		if (bGrabMouse ? nFind >= 0 : (nFind >= 0 && nFind < 0x8000)) {
-			if (nInputCode != nFind) {
+		if (bGrabMouse ? nFind >= 0 : (nFind >= 0 && nFind < 0x8000))
+		{
+			if (nInputCode != nFind)
+			{
 				nInputCode = nFind;
 				InpsUpdateControl(nInputCode);
 			}
@@ -295,7 +360,7 @@ int InpsUpdate()
 		SetInput(nInputCode);
 
 		nDlgState = 0;
-		DestroyWindow(hInpsDlg);								// Quit dialog
+		DestroyWindow(hInpsDlg); // Quit dialog
 	}
 
 	return 0;
@@ -303,41 +368,52 @@ int InpsUpdate()
 
 static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-	if (Msg == WM_INITDIALOG) {
+	if (Msg == WM_INITDIALOG)
+	{
 		hInpsDlg = hDlg;
-		hWhiteBGBrush = CreateSolidBrush(RGB(0xFF,0xFF,0xFF));
-		if (InpsInit()) {
+		hWhiteBGBrush = CreateSolidBrush(RGB(0xFF, 0xFF, 0xFF));
+		if (InpsInit())
+		{
 			DestroyWindow(hInpsDlg);
 			return FALSE;
 		}
 		SendMessage(hDlg, WM_NEXTDLGCTL, (WPARAM)GetDlgItem(hDlg, IDC_INPS_CONTROL), TRUE);
 		return FALSE;
 	}
-	if (Msg == WM_CLOSE) {
+	if (Msg == WM_CLOSE)
+	{
 		DestroyWindow(hInpsDlg);
 		return 0;
 	}
-	if (Msg == WM_DESTROY) {
+	if (Msg == WM_DESTROY)
+	{
 		DeleteObject(hWhiteBGBrush);
 		InpsExit();
 		hInpsDlg = NULL;
 		return 0;
 	}
-	if (Msg == WM_COMMAND) {
+	if (Msg == WM_COMMAND)
+	{
 		int Id = LOWORD(wParam);
 		int Notify = HIWORD(wParam);
-		if (Id == IDCANCEL && Notify == BN_CLICKED) { // Cancel button pressed
+		if (Id == IDCANCEL && Notify == BN_CLICKED)
+		{
+			// Cancel button pressed
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
 			return 0;
 		}
-		if (Id == IDCANCEL+1 && Notify == BN_CLICKED) { // Clear Input button pressed
+		if (Id == IDCANCEL + 1 && Notify == BN_CLICKED)
+		{
+			// Clear Input button pressed
 			SetInput(0);
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
 			return 0;
 		}
 	}
-	if (Msg == WM_CTLCOLORSTATIC) {
-		if ((HWND)lParam == GetDlgItem(hDlg, IDC_INPS_CONTROL)) {
+	if (Msg == WM_CTLCOLORSTATIC)
+	{
+		if ((HWND)lParam == GetDlgItem(hDlg, IDC_INPS_CONTROL))
+		{
 			return (INT_PTR)hWhiteBGBrush;
 		}
 	}
@@ -346,11 +422,12 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 int InpsCreate()
 {
-	DestroyWindow(hInpsDlg);					// Make sure exitted
+	DestroyWindow(hInpsDlg); // Make sure exitted
 	hInpsDlg = NULL;
 
 	hInpsDlg = FBNCreateDialog(hAppInst, MAKEINTRESOURCE(IDD_INPS), hInpdDlg, (DLGPROC)DialogProc);
-	if (hInpsDlg == NULL) {
+	if (hInpsDlg == NULL)
+	{
 		return 1;
 	}
 

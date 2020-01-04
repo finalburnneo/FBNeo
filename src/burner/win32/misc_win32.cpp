@@ -6,7 +6,6 @@ bool bIsWindows8OrGreater = false;
 
 BOOL DetectWindowsVersion()
 {
-
 	OSVERSIONINFO osvi;
 
 	ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
@@ -20,7 +19,7 @@ BOOL DetectWindowsVersion()
 	));
 	bIsWindowsXP = (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1);
 	bIsWindows8OrGreater = ((osvi.dwMajorVersion > 6) || ((osvi.dwMajorVersion == 6) && (osvi.dwMinorVersion >= 2)));
-	
+
 	return bIsWindowsXPorGreater;
 }
 
@@ -33,41 +32,50 @@ int AppDirectory()
 	TCHAR* szCmd = GetCommandLine();
 
 	// Find the end of the "c:\directory\program.exe" bit
-	if (szCmd[0] == _T('\"')) {						// Filename is enclosed in quotes
+	if (szCmd[0] == _T('\"'))
+	{
+		// Filename is enclosed in quotes
 		szCmd++;
-		for (pc1 = szCmd; *pc1; pc1++) {
-			if (*pc1 == _T('\"')) break;			// Find the last "
+		for (pc1 = szCmd; *pc1; pc1++)
+		{
+			if (*pc1 == _T('\"')) break; // Find the last "
 		}
-	} else {
-		for (pc1 = szCmd; *pc1; pc1++) {
-			if (*pc1 == _T(' ')) break;				// Find the first space
+	}
+	else
+	{
+		for (pc1 = szCmd; *pc1; pc1++)
+		{
+			if (*pc1 == _T(' ')) break; // Find the first space
 		}
 	}
 	// Find the last \ or /
-	for (pc2 = pc1; pc2 >= szCmd; pc2--) {
+	for (pc2 = pc1; pc2 >= szCmd; pc2--)
+	{
 		if (*pc2 == _T('\\')) break;
 		if (*pc2 == _T('/')) break;
 	}
 
 	// Copy the name of the executable into a variable
 	nLen = pc1 - pc2 - 1;
-	if (nLen > EXE_NAME_SIZE) {
+	if (nLen > EXE_NAME_SIZE)
+	{
 		nLen = EXE_NAME_SIZE;
 	}
 	_tcsncpy(szAppExeName, pc2 + 1, nLen);
 	szAppExeName[nLen] = 0;
 
 	// strip .exe
-	if ((pc1 = _tcschr(szAppExeName, _T('.'))) != 0) {
+	if ((pc1 = _tcschr(szAppExeName, _T('.'))) != 0)
+	{
 		*pc1 = 0;
 	}
 
 	nLen = pc2 - szCmd;
-	if (nLen <= 0) return 1;			// No path
+	if (nLen <= 0) return 1; // No path
 
 	// Now copy the path into a new buffer
 	_tcsncpy(szPath, szCmd, nLen);
-	SetCurrentDirectory(szPath);		// Finally set the current directory to be the application's directory
+	SetCurrentDirectory(szPath); // Finally set the current directory to be the application's directory
 
 	dprintf(szPath);
 	dprintf(_T("\n"));
@@ -78,13 +86,15 @@ int AppDirectory()
 void UpdatePath(TCHAR* path)
 {
 	int pathlen = _tcslen(path);
-	if (pathlen) {
+	if (pathlen)
+	{
 		DWORD attrib = INVALID_FILE_ATTRIBUTES;
 		TCHAR curdir[MAX_PATH] = _T("");
 		int curlen = 0;
 
 		attrib = GetFileAttributes(path);
-		if (attrib != INVALID_FILE_ATTRIBUTES && (attrib & FILE_ATTRIBUTE_DIRECTORY) && path[pathlen - 1] != _T('\\')) {
+		if (attrib != INVALID_FILE_ATTRIBUTES && (attrib & FILE_ATTRIBUTE_DIRECTORY) && path[pathlen - 1] != _T('\\'))
+		{
 			path[pathlen] = _T('\\');
 			path[pathlen + 1] = _T('\0');
 
@@ -94,7 +104,8 @@ void UpdatePath(TCHAR* path)
 		GetCurrentDirectory(sizeof(curdir), curdir);
 		curlen = _tcslen(curdir);
 
-		if (_tcsnicmp(curdir, path, curlen) == 0 && path[curlen] == _T('\\')) {
+		if (_tcsnicmp(curdir, path, curlen) == 0 && path[curlen] == _T('\\'))
+		{
 			TCHAR newpath[MAX_PATH];
 
 			_tcscpy(newpath, path + curlen + 1);
@@ -107,16 +118,20 @@ void UpdatePath(TCHAR* path)
 
 static void MyRegCreateKeys(int nDepth, TCHAR* pNames[], HKEY* pResult)
 {
-	for (int i = 0; i < nDepth; i++) {
+	for (int i = 0; i < nDepth; i++)
+	{
 		pResult[i] = NULL;
-		RegCreateKeyEx((i ? pResult[i - 1] : HKEY_CLASSES_ROOT), pNames[i], 0, _T(""), 0, KEY_WRITE, NULL, &pResult[i], NULL);
+		RegCreateKeyEx((i ? pResult[i - 1] : HKEY_CLASSES_ROOT), pNames[i], 0, _T(""), 0, KEY_WRITE, NULL, &pResult[i],
+		               NULL);
 	}
 }
 
 static void MyRegCloseKeys(int nDepth, HKEY* pKeys)
 {
-	for (int i = nDepth - 1; i >= 0; i--) {
-		if (pKeys[i]) {
+	for (int i = nDepth - 1; i >= 0; i--)
+	{
+		if (pKeys[i])
+		{
 			RegCloseKey(pKeys[i]);
 		}
 	}
@@ -124,13 +139,16 @@ static void MyRegCloseKeys(int nDepth, HKEY* pKeys)
 
 static void MyRegDeleteKeys(int nDepth, TCHAR* pNames[], HKEY* pKeys)
 {
-	for (int i = 0; i < nDepth - 1; i++) {
+	for (int i = 0; i < nDepth - 1; i++)
+	{
 		pKeys[i] = NULL;
 		RegOpenKeyEx((i ? pKeys[i - 1] : HKEY_CLASSES_ROOT), pNames[i], 0, 0, &pKeys[i]);
 	}
-	for (int i = nDepth - 1; i >= 0; i--) {
+	for (int i = nDepth - 1; i >= 0; i--)
+	{
 		RegDeleteKey((i ? pKeys[i - 1] : HKEY_CLASSES_ROOT), pNames[i]);
-		if (i) {
+		if (i)
+		{
 			RegCloseKey(pKeys[i - 1]);
 		}
 	}
@@ -140,13 +158,14 @@ void RegisterExtensions(bool bCreateKeys)
 {
 	HKEY myKeys[4];
 
-	TCHAR* myKeynames1[1] = { _T(".fr") };
-	TCHAR* myKeynames2[1] = { _T(".fs") };
-	TCHAR* myKeynames3[4] = { _T("FBNeo"), _T("shell"), _T("open"), _T("command") };
-	TCHAR* myKeynames4[2] = { _T("FBNeo"), _T("DefaultIcon") };
+	TCHAR* myKeynames1[1] = {_T(".fr")};
+	TCHAR* myKeynames2[1] = {_T(".fs")};
+	TCHAR* myKeynames3[4] = {_T("FBNeo"), _T("shell"), _T("open"), _T("command")};
+	TCHAR* myKeynames4[2] = {_T("FBNeo"), _T("DefaultIcon")};
 	TCHAR myKeyValue[MAX_PATH + 32] = _T("");
 
-	if (bCreateKeys) {
+	if (bCreateKeys)
+	{
 		TCHAR szExename[MAX_PATH] = _T("");
 		GetModuleFileName(NULL, szExename, MAX_PATH);
 
@@ -171,7 +190,9 @@ void RegisterExtensions(bool bCreateKeys)
 		_stprintf(myKeyValue, _T("\"%s\", 0"), szExename);
 		RegSetValueEx(myKeys[1], NULL, 0, REG_SZ, (BYTE*)myKeyValue, (_tcslen(myKeyValue) + 1) * sizeof(TCHAR));
 		MyRegCloseKeys(2, myKeys);
-	} else {
+	}
+	else
+	{
 		MyRegDeleteKeys(2, myKeynames4, myKeys);
 		MyRegDeleteKeys(4, myKeynames3, myKeys);
 		MyRegDeleteKeys(1, myKeynames2, myKeys);
@@ -182,7 +203,7 @@ void RegisterExtensions(bool bCreateKeys)
 // ---------------------------------------------------------------------------
 
 // Get the position of the client area of a window on the screen
-int GetClientScreenRect(HWND hWnd, RECT *pRect)
+int GetClientScreenRect(HWND hWnd, RECT* pRect)
 {
 	POINT Corner = {0, 0};
 
@@ -211,19 +232,24 @@ int WndInMid(HWND hMid, HWND hBase)
 	mh = MidRect.bottom - MidRect.top;
 
 	// Find the center of the Base window
-	if (hBase && IsWindowVisible(hBase)) {
+	if (hBase && IsWindowVisible(hBase))
+	{
 		GetWindowRect(hBase, &BaseRect);
-		if (hBase == hScrnWnd) {
+		if (hBase == hScrnWnd)
+		{
 			// For the main window, center in the client area.
 			BaseRect.left += GetSystemMetrics(SM_CXSIZEFRAME);
 			BaseRect.right -= GetSystemMetrics(SM_CXSIZEFRAME);
 			BaseRect.top += GetSystemMetrics(SM_CYSIZEFRAME);
-			if (bMenuEnabled) {
+			if (bMenuEnabled)
+			{
 				BaseRect.top += GetSystemMetrics(SM_CYCAPTION) + nMenuHeight;
 			}
 			BaseRect.bottom -= GetSystemMetrics(SM_CYSIZEFRAME);
 		}
-	} else {
+	}
+	else
+	{
 		SystemParametersInfo(SPI_GETWORKAREA, 0, &BaseRect, 0);
 	}
 
@@ -232,20 +258,25 @@ int WndInMid(HWND hMid, HWND hBase)
 	by = BaseRect.top + BaseRect.bottom;
 	by = (by - mh) >> 1;
 
-	if (hBase) {
+	if (hBase)
+	{
 		RECT tmpWorkArea;
 		SystemParametersInfo(SPI_GETWORKAREA, 0, &tmpWorkArea, 0);
 
-		if (bx + mw > tmpWorkArea.right) {
+		if (bx + mw > tmpWorkArea.right)
+		{
 			bx = tmpWorkArea.right - mw;
 		}
-		if (by + mh > tmpWorkArea.bottom) {
+		if (by + mh > tmpWorkArea.bottom)
+		{
 			by = tmpWorkArea.bottom - mh;
 		}
-		if (bx < tmpWorkArea.left) {
+		if (bx < tmpWorkArea.left)
+		{
 			bx = tmpWorkArea.left;
 		}
-		if (by < tmpWorkArea.top) {
+		if (by < tmpWorkArea.top)
+		{
 			by = tmpWorkArea.top;
 		}
 	}
@@ -268,12 +299,14 @@ void EnableHighResolutionTiming()
 
 	bHighResolutionTimerActive = 0;
 
-	if (bEnableHighResTimer) {
+	if (bEnableHighResTimer)
+	{
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T(" ** Enabling High-Resolution system timer.\n"));
 #endif
 
-		if (timeGetDevCaps(&hTCaps, sizeof(hTCaps)) == TIMERR_NOERROR) {
+		if (timeGetDevCaps(&hTCaps, sizeof(hTCaps)) == TIMERR_NOERROR)
+		{
 			bHighResolutionTimerActive = hTCaps.wPeriodMin;
 			timeBeginPeriod(hTCaps.wPeriodMin);
 		}
@@ -282,7 +315,8 @@ void EnableHighResolutionTiming()
 
 void DisableHighResolutionTiming()
 {
-	if (bHighResolutionTimerActive) {
+	if (bHighResolutionTimerActive)
+	{
 		timeEndPeriod(bHighResolutionTimerActive);
 		bHighResolutionTimerActive = 0;
 	}

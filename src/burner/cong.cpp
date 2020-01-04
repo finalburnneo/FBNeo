@@ -10,9 +10,12 @@ static TCHAR* GameConfigName()
 {
 	// Return the path of the config file for this game
 	static TCHAR szName[64];
-	if (NeoCDInfo_ID()) {
+	if (NeoCDInfo_ID())
+	{
 		_stprintf(szName, _T("config/games/ngcd_%s.ini"), NeoCDInfo_Text(DRV_NAME));
-	} else {
+	}
+	else
+	{
 		_stprintf(szName, _T("config/games/%s.ini"), BurnDrvGetText(DRV_NAME));
 	}
 
@@ -26,57 +29,69 @@ INT32 ConfigGameLoad(bool bOverWrite)
 	INT32 nFileVersion = 0;
 
 	FILE* h = _tfopen(GameConfigName(), _T("rt"));
-	if (h == NULL) {
+	if (h == NULL)
+	{
 		return 1;
 	}
 
-	if (bOverWrite) {
+	if (bOverWrite)
+	{
 		nAnalogSpeed = 0x0100;
 		nBurnCPUSpeedAdjust = 0x0100;
 	}
 
 	// Go through each line of the config file and process inputs
-	while (_fgetts(szLine, sizeof(szLine), h)) {
-		TCHAR *szValue;
+	while (_fgetts(szLine, sizeof(szLine), h))
+	{
+		TCHAR* szValue;
 		INT32 nLen = _tcslen(szLine);
 
 		// Get rid of the linefeed at the end
-		if (szLine[nLen - 1] == 10) {
+		if (szLine[nLen - 1] == 10)
+		{
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}
 
 		szValue = LabelCheck(szLine, _T("version"));
-		if (szValue) {
+		if (szValue)
+		{
 			nFileVersion = _tcstol(szValue, NULL, 0);
 		}
 
-		if (bOverWrite) {
+		if (bOverWrite)
+		{
 			szValue = LabelCheck(szLine, _T("analog"));
-			if (szValue) {
+			if (szValue)
+			{
 				nAnalogSpeed = _tcstol(szValue, NULL, 0);
 			}
 			szValue = LabelCheck(szLine, _T("cpu"));
-			if (szValue) {
+			if (szValue)
+			{
 				nBurnCPUSpeedAdjust = _tcstol(szValue, NULL, 0);
 			}
 		}
 
-		if (nConfigMinVersion <= nFileVersion && nFileVersion <= nBurnVer) {
+		if (nConfigMinVersion <= nFileVersion && nFileVersion <= nBurnVer)
+		{
 			szValue = LabelCheck(szLine, _T("input"));
-			if (szValue) {
+			if (szValue)
+			{
 				GameInpRead(szValue, bOverWrite);
 				continue;
 			}
 
 			szValue = LabelCheck(szLine, _T("macro"));
-			if (szValue) {
+			if (szValue)
+			{
 				GameInpMacroRead(szValue, bOverWrite);
 				continue;
 			}
 
 			szValue = LabelCheck(szLine, _T("custom"));
-			if (szValue) {
+			if (szValue)
+			{
 				GameInpCustomRead(szValue, bOverWrite);
 				continue;
 			}
@@ -92,18 +107,21 @@ INT32 ConfigGameSave(bool bSave)
 {
 	FILE* h;
 
-	if (!bSave) {
+	if (!bSave)
+	{
 		GameInpBlank(0);
 		ConfigGameLoad(false);
 	}
 
 	h = _tfopen(GameConfigName(), _T("wt"));
-	if (h == NULL) {
+	if (h == NULL)
+	{
 		return 1;
 	}
 
 	// Write title
-	_ftprintf(h, _T("// ") _T(APP_TITLE) _T(" v%s --- Config File for %s (%s)\n\n"), szAppBurnVer, BurnDrvGetText(DRV_NAME), ANSIToTCHAR(BurnDrvGetTextA(DRV_FULLNAME), NULL, 0));
+	_ftprintf(h, _T("// ") _T(APP_TITLE) _T(" v%s --- Config File for %s (%s)\n\n"), szAppBurnVer,
+	          BurnDrvGetText(DRV_NAME), ANSIToTCHAR(BurnDrvGetTextA(DRV_FULLNAME), NULL, 0));
 
 	_ftprintf(h, _T("// --- Miscellaneous ----------------------------------------------------------\n\n"));
 	// Write version number
@@ -121,4 +139,3 @@ INT32 ConfigGameSave(bool bSave)
 	fclose(h);
 	return 0;
 }
-

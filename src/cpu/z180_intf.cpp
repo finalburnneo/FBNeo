@@ -121,9 +121,10 @@ void Z180MapMemory(UINT8* ptr, UINT32 start, UINT32 end, UINT32 flags)
 		if (flags & MAP_READ) Mem[nActiveCPU][READ][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
 		if (flags & MAP_WRITE) Mem[nActiveCPU][WRITE][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
 		if (flags & MAP_FETCHOP) Mem[nActiveCPU][FETCHOP][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
-		if (flags & MAP_FETCHARG) Mem[nActiveCPU][FETCHARG][s + i] = (ptr == NULL)
-			                                                             ? NULL
-			                                                             : (ptr + (i << PROG_PAGE_BITS));
+		if (flags & MAP_FETCHARG)
+			Mem[nActiveCPU][FETCHARG][s + i] = (ptr == NULL)
+				                                   ? NULL
+				                                   : (ptr + (i << PROG_PAGE_BITS));
 	}
 }
 

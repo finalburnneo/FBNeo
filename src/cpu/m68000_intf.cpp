@@ -257,13 +257,11 @@ DEFLONGHANDLERS(9)
 // Normal memory access functions
 inline static UINT8 ReadByte(UINT32 a)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
 	//	bprintf(PRINT_NORMAL, _T("read8 0x%08X\n"), a);
 
-	pr = FIND_R(a);
+	UINT8* pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		a ^= 1;
@@ -274,13 +272,11 @@ inline static UINT8 ReadByte(UINT32 a)
 
 inline static UINT8 FetchByte(UINT32 a)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
 	//	bprintf(PRINT_NORMAL, _T("fetch8 0x%08X\n"), a);
 
-	pr = FIND_F(a);
+	UINT8* pr = FIND_F(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		a ^= 1;
@@ -291,13 +287,11 @@ inline static UINT8 FetchByte(UINT32 a)
 
 inline static void WriteByte(UINT32 a, UINT8 d)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
 	//	bprintf(PRINT_NORMAL, _T("write8 0x%08X\n"), a);
 
-	pr = FIND_W(a);
+	UINT8* pr = FIND_W(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		a ^= 1;
@@ -309,11 +303,9 @@ inline static void WriteByte(UINT32 a, UINT8 d)
 
 inline static void WriteByteROM(UINT32 a, UINT8 d)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
-	pr = FIND_R(a);
+	UINT8* pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		a ^= 1;
@@ -325,13 +317,11 @@ inline static void WriteByteROM(UINT32 a, UINT8 d)
 
 inline static UINT16 ReadWord(UINT32 a)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
 	//	bprintf(PRINT_NORMAL, _T("read16 0x%08X\n"), a);
 
-	pr = FIND_R(a);
+	UINT8* pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		if (a & 1)
@@ -346,13 +336,11 @@ inline static UINT16 ReadWord(UINT32 a)
 
 inline static UINT16 FetchWord(UINT32 a)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
 	//	bprintf(PRINT_NORMAL, _T("fetch16 0x%08X\n"), a);
 
-	pr = FIND_F(a);
+	UINT8* pr = FIND_F(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pr + (a & SEK_PAGEM))));
@@ -363,13 +351,11 @@ inline static UINT16 FetchWord(UINT32 a)
 
 inline static void WriteWord(UINT32 a, UINT16 d)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
 	//	bprintf(PRINT_NORMAL, _T("write16 0x%08X\n"), a);
 
-	pr = FIND_W(a);
+	UINT8* pr = FIND_W(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		if (a & 1)
@@ -392,11 +378,9 @@ inline static void WriteWord(UINT32 a, UINT16 d)
 
 inline static void WriteWordROM(UINT32 a, UINT16 d)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
-	pr = FIND_R(a);
+	UINT8* pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		*((UINT16*)(pr + (a & SEK_PAGEM))) = (UINT16)d;
@@ -410,13 +394,11 @@ inline static void WriteWordROM(UINT32 a, UINT16 d)
 
 inline static UINT32 ReadLong(UINT32 a)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
 	//	bprintf(PRINT_NORMAL, _T("read32 0x%08X\n"), a);
 
-	pr = FIND_R(a);
+	UINT8* pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		UINT32 r = 0;
@@ -441,13 +423,11 @@ inline static UINT32 ReadLong(UINT32 a)
 
 inline static UINT32 FetchLong(UINT32 a)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
 	//	bprintf(PRINT_NORMAL, _T("fetch32 0x%08X\n"), a);
 
-	pr = FIND_F(a);
+	UINT8* pr = FIND_F(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		UINT32 r = *((UINT32*)(pr + (a & SEK_PAGEM)));
@@ -459,13 +439,11 @@ inline static UINT32 FetchLong(UINT32 a)
 
 inline static void WriteLong(UINT32 a, UINT32 d)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
 	//	bprintf(PRINT_NORMAL, _T("write32 0x%08X\n"), a);
 
-	pr = FIND_W(a);
+	UINT8* pr = FIND_W(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		if (a & 1)
@@ -491,11 +469,9 @@ inline static void WriteLong(UINT32 a, UINT32 d)
 
 inline static void WriteLongROM(UINT32 a, UINT32 d)
 {
-	UINT8* pr;
-
 	a &= 0xFFFFFF;
 
-	pr = FIND_R(a);
+	UINT8* pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		d = (d >> 16) | (d << 16);

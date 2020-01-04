@@ -99,7 +99,6 @@ static void update_irq_state(int ch)
 {
 	int old_state = z80pio->int_state[ch];
 	int irq = 0;
-	int data;
 	if (z80pio->mode[ch] == 0x13 || (z80pio->enable[ch] & PIO_INT_MASK)) return;
 
 	/* only check if interrupts are enabled */
@@ -109,7 +108,7 @@ static void update_irq_state(int ch)
 		if (z80pio->mode[ch] == PIO_MODE3)
 		{
 			/* fetch input data (ignore output lines) */
-			data = z80pio->in[ch] & z80pio->dir[ch];
+			int data = z80pio->in[ch] & z80pio->dir[ch];
 
 			/* keep only relevant bits */
 			data &= ~z80pio->mask[ch];
@@ -418,10 +417,9 @@ void z80pio_strobeB(int state)
 int z80pio_irq_state()
 {
 	int state = 0;
-	int ch;
 
 	/* loop over all channels */
-	for (ch = 0; ch < 2; ch++)
+	for (int ch = 0; ch < 2; ch++)
 	{
 		/* if we're servicing a request, don't indicate more interrupts */
 		if (z80pio->int_state[ch] & Z80_DAISY_IEO)
@@ -437,10 +435,8 @@ int z80pio_irq_state()
 
 int z80pio_irq_ack()
 {
-	int ch;
-
 	/* loop over all channels */
-	for (ch = 0; ch < 2; ch++)
+	for (int ch = 0; ch < 2; ch++)
 
 		/* find the first channel with an interrupt requested */
 		if (z80pio->int_state[ch] & Z80_DAISY_INT)
@@ -458,10 +454,8 @@ int z80pio_irq_ack()
 
 void z80pio_irq_reti()
 {
-	int ch;
-
 	/* loop over all channels */
-	for (ch = 0; ch < 2; ch++)
+	for (int ch = 0; ch < 2; ch++)
 
 		/* find the first channel with an IEO pending */
 		if (z80pio->int_state[ch] & Z80_DAISY_IEO)

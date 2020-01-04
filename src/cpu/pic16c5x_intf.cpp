@@ -243,7 +243,7 @@ INT32 BurnLoadPicROM(UINT8* src, INT32 offset, INT32 len)
 {
 	UINT8* PICROM_HEX = (UINT8*)BurnMalloc(len);
 	UINT16* PICROM = (UINT16*)src;
-	INT32 offs, data;
+	INT32 data;
 	UINT16 src_pos = 0;
 	UINT16 dst_pos = 0;
 	UINT8 data_hi, data_lo;
@@ -259,7 +259,7 @@ INT32 BurnLoadPicROM(UINT8* src, INT32 offset, INT32 len)
 		{
 			src_pos += 9;
 
-			for (offs = 0; offs < 32; offs += 4)
+			for (INT32 offs = 0; offs < 32; offs += 4)
 			{
 				data_hi = asciitohex((PICROM_HEX[src_pos + offs + 0]));
 				data_lo = asciitohex((PICROM_HEX[src_pos + offs + 1]));

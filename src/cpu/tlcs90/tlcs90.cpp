@@ -376,10 +376,10 @@ INLINE UINT16 READ16(t90_Regs* cpustate)
 
 static void decode(t90_Regs* cpustate)
 {
-	UINT8 b0, b1, b2, b3;
+	UINT8 b1, b2, b3;
 	UINT16 imm16;
 
-	b0 = READ8(cpustate);
+	UINT8 b0 = READ8(cpustate);
 
 	switch (b0)
 	{
@@ -2122,15 +2122,12 @@ static void take_interrupt(t90_Regs* cpustate, e_irq irq)
 
 static void check_interrupts(t90_Regs* cpustate)
 {
-	INT32 irq;
-	INT32 mask;
-
 	if (!(F & IF))
 		return;
 
-	for (irq = INTSWI; irq < INTMAX; irq++)
+	for (INT32 irq = INTSWI; irq < INTMAX; irq++)
 	{
-		mask = (1 << irq);
+		INT32 mask = (1 << irq);
 		if (irq >= INT0) mask &= cpustate->irq_mask;
 		if (cpustate->irq_state & mask)
 		{
@@ -3289,7 +3286,6 @@ UINT8 t90_internal_registers_r(UINT16 offset)
 static void t90_start_timer(t90_Regs* cpustate, INT32 i)
 {
 	INT32 prescaler;
-	double period;
 
 	cpustate->timer_value[i] = 0;
 
@@ -3323,7 +3319,7 @@ static void t90_start_timer(t90_Regs* cpustate, INT32 i)
 	}
 
 
-	period = cpustate->timer_period * prescaler;
+	double period = cpustate->timer_period * prescaler;
 
 	cpustate->timer_periods[i] = cpustate->timer_periods_full[i] = period;
 	cpustate->timer_enable[i] = 1;
@@ -3334,7 +3330,6 @@ static void t90_start_timer(t90_Regs* cpustate, INT32 i)
 static void t90_start_timer4(t90_Regs* cpustate)
 {
 	INT32 prescaler;
-	double period;
 
 	cpustate->timer4_value = 0;
 
@@ -3349,7 +3344,7 @@ static void t90_start_timer4(t90_Regs* cpustate)
 		return;
 	}
 
-	period = cpustate->timer_period * prescaler;
+	double period = cpustate->timer_period * prescaler;
 
 	cpustate->timer_periods[4] = cpustate->timer_periods_full[4] = period;
 	cpustate->timer_enable[4] = 1;
@@ -3374,16 +3369,15 @@ void t90_timer_callback(INT32 param)
 {
 	t90_Regs* cpustate = &tlcs90_data[0];
 
-	INT32 mode, timer_fired;
 	INT32 i = param;
 	INT32 mask = 0x20 | (1 << i);
 
 	if ((cpustate->internal_registers[T90_TRUN - T90_IOBASE] & mask) != mask)
 		return;
 
-	timer_fired = 0;
+	INT32 timer_fired = 0;
 
-	mode = (cpustate->internal_registers[T90_TMOD - T90_IOBASE] >> ((i & ~1) + 2)) & 0x03;
+	INT32 mode = (cpustate->internal_registers[T90_TMOD - T90_IOBASE] >> ((i & ~1) + 2)) & 0x03;
 	// Match
 	switch (mode)
 	{
@@ -3477,10 +3471,9 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 	{
 	case T90_TRUN:
 		{
-			int i;
 			UINT8 mask;
 			// Timers 0-3
-			for (i = 0; i < 4; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				mask = 0x20 | (1 << i);
 				if ((old ^ data) & mask) // if timer bit or prescaler bit changed
@@ -3611,11 +3604,11 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 INT32 tlcs90_init(INT32 clock)
 {
 	t90_Regs* cpustate = &tlcs90_data[0];
-	INT32 i, p;
+	INT32 i;
 
 	for (i = 0; i < 256; i++)
 	{
-		p = 0;
+		INT32 p = 0;
 		if (i & 0x01) ++p;
 		if (i & 0x02) ++p;
 		if (i & 0x04) ++p;

@@ -7949,7 +7949,7 @@ static void take_interrupt(void)
 
 void Z80Init()
 {
-	int i, p;
+	int p;
 
 	/* setup cycle tables */
 	cc[Z80_TABLE_op] = cc_op;
@@ -7962,8 +7962,6 @@ void Z80Init()
 #if BIG_FLAGS_ARRAY
 	if (!SZHVC_add || !SZHVC_sub)
 	{
-		int oldval, newval, val;
-		UINT8 *padd, *padc, *psub, *psbc;
 		/* allocate big flag arrays once */
 		SZHVC_add = (UINT8*)malloc(2 * 256 * 256);
 		SZHVC_sub = (UINT8*)malloc(2 * 256 * 256);
@@ -7971,16 +7969,16 @@ void Z80Init()
 		{
 			//			fatalerror("Z80: failed to allocate 2 * 128K flags arrays!!!");
 		}
-		padd = &SZHVC_add[0 * 256];
-		padc = &SZHVC_add[256 * 256];
-		psub = &SZHVC_sub[0 * 256];
-		psbc = &SZHVC_sub[256 * 256];
-		for (oldval = 0; oldval < 256; oldval++)
+		UINT8* padd = &SZHVC_add[0 * 256];
+		UINT8* padc = &SZHVC_add[256 * 256];
+		UINT8* psub = &SZHVC_sub[0 * 256];
+		UINT8* psbc = &SZHVC_sub[256 * 256];
+		for (int oldval = 0; oldval < 256; oldval++)
 		{
-			for (newval = 0; newval < 256; newval++)
+			for (int newval = 0; newval < 256; newval++)
 			{
 				/* add or adc w/o carry set */
-				val = newval - oldval;
+				int val = newval - oldval;
 				*padd = (newval) ? ((newval & 0x80) ? SF : 0) : ZF;
 				*padd |= (newval & (YF | XF)); /* undocumented flag bits 5+3 */
 				if ((newval & 0x0f) < (oldval & 0x0f)) *padd |= HF;
@@ -8018,7 +8016,7 @@ void Z80Init()
 		}
 	}
 #endif
-	for (i = 0; i < 256; i++)
+	for (int i = 0; i < 256; i++)
 	{
 		p = 0;
 		if (i & 0x01) ++p;

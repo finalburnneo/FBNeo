@@ -249,16 +249,14 @@ int nec_reset()
 
 static void nec_interrupt(nec_state_t* nec_state, unsigned int_num, INTSOURCES source)
 {
-	UINT32 dest_seg, dest_off;
-
 	i_pushf(nec_state);
 	nec_state->TF = nec_state->IF = 0;
 
 	if (source == INT_IRQ) /* get vector */
 		int_num = nec_state->vector;
 
-	dest_off = read_mem_word(int_num*4);
-	dest_seg = read_mem_word(int_num*4+2);
+	UINT32 dest_off = read_mem_word(int_num*4);
+	UINT32 dest_seg = read_mem_word(int_num*4+2);
 
 	PUSH(Sreg(PS));
 	PUSH(nec_state->ip);
@@ -406,7 +404,6 @@ void necIdle(int cycles)
 int nec_execute(int cycles)
 {
 	nec_state_t* nec_state = sChipsPtr;
-	int prev_ICount;
 
 	nec_state->icount = cycles;
 	nec_state->cycles_remaining = cycles;
@@ -435,7 +432,7 @@ int nec_execute(int cycles)
 			nec_state->no_interrupt--;
 
 		//debugger_instruction_hook(device, (Sreg(PS)<<4) + nec_state->ip);
-		prev_ICount = nec_state->icount;
+		int prev_ICount = nec_state->icount;
 		nec_instruction[fetchop(nec_state)](nec_state);
 		do_prefetch(nec_state, prev_ICount);
 	}

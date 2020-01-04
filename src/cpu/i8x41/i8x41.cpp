@@ -1191,9 +1191,8 @@ INLINE void out_p_a(int p)
  ***********************************/
 INLINE void ret(void)
 {
-	UINT8 msb;
 	PSW = (PSW & ~SP) | ((PSW - 1) & SP);
-	msb = RM(M_STACK + (PSW&SP) * 2 + 1);
+	UINT8 msb = RM(M_STACK + (PSW&SP) * 2 + 1);
 	PC = RM(M_STACK + (PSW&SP) * 2 + 0);
 	PC |= (msb << 8) & 0x700;
 }
@@ -1204,9 +1203,8 @@ INLINE void ret(void)
  ***********************************/
 INLINE void retr(void)
 {
-	UINT8 msb;
 	PSW = (PSW & ~SP) | ((PSW - 1) & SP);
-	msb = RM(M_STACK + (PSW&SP) * 2 + 1);
+	UINT8 msb = RM(M_STACK + (PSW&SP) * 2 + 1);
 	PC = RM(M_STACK + (PSW&SP) * 2 + 0);
 	PC |= (msb << 8) & 0x700;
 	PSW = (PSW & 0x0f) | (msb & 0xf0);
@@ -1469,8 +1467,6 @@ void i8x41_exit()
 
 INT32 i8x41_run(INT32 cycles)
 {
-	int inst_cycles, T1_level;
-
 	i8x41_cycle_start = cycles;
 	i8x41_ICount = cycles;
 	i8x41_end_run = 0;
@@ -2045,10 +2041,10 @@ INT32 i8x41_run(INT32 cycles)
 
 		if (ENABLE & CNT)
 		{
-			inst_cycles = i8x41_cycles[op];
+			int inst_cycles = i8x41_cycles[op];
 			for (; inst_cycles > 0; inst_cycles--)
 			{
-				T1_level = RP(I8X41_t1);
+				int T1_level = RP(I8X41_t1);
 				if ((CONTROL & TEST1) && (T1_level == 0)) /* Negative Edge */
 				{
 					TIMER++;

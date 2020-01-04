@@ -669,8 +669,6 @@ static INT32 end_run;
  ****************************************************************************/
 int m6800_execute(int cycles)
 {
-	UINT8 ireg;
-
 	m6800.segmentcycles = cycles;
 	m6800_ICount = cycles;
 	CHECK_IRQ_LINES();
@@ -691,7 +689,7 @@ int m6800_execute(int cycles)
 		{
 			pPPC = pPC;
 			//			CALL_MAME_DEBUG;
-			ireg = M_RDOP(PCD);
+			UINT8 ireg = M_RDOP(PCD);
 			PC++;
 			(*m6800.insn[ireg])();
 			INCREMENT_COUNTER(cycles_6800[ireg]);
@@ -757,8 +755,6 @@ void m6803_init()
 #if (HAS_M6803||HAS_M6801)
 int m6803_execute(int cycles)
 {
-	UINT8 ireg;
-
 	m6800.segmentcycles = cycles;
 	m6800_ICount = cycles;
 
@@ -778,7 +774,7 @@ int m6803_execute(int cycles)
 		{
 			pPPC = pPC;
 			//			CALL_MAME_DEBUG;
-			ireg = M_RDOP(PCD);
+			UINT8 ireg = M_RDOP(PCD);
 			PC++;
 			(*m6803.insn[ireg])();
 			INCREMENT_COUNTER(cycles_6803[ireg]);
@@ -842,8 +838,6 @@ void hd63701_init()
  ****************************************************************************/
 int hd63701_execute(int cycles)
 {
-	UINT8 ireg;
-
 	m6800.segmentcycles = cycles;
 	m6800_ICount = cycles;
 
@@ -863,7 +857,7 @@ int hd63701_execute(int cycles)
 		{
 			pPPC = pPC;
 			//			CALL_MAME_DEBUG;
-			ireg = M_RDOP(PCD);
+			UINT8 ireg = M_RDOP(PCD);
 			PC++;
 			(*hd63701.insn[ireg])();
 			INCREMENT_COUNTER(cycles_63701[ireg]);
@@ -926,8 +920,6 @@ void nsc8105_init()
  ****************************************************************************/
 int nsc8105_execute(int cycles)
 {
-	UINT8 ireg;
-
 	m6800.segmentcycles = cycles;
 	m6800_ICount = cycles;
 
@@ -947,7 +939,7 @@ int nsc8105_execute(int cycles)
 		{
 			pPPC = pPC;
 			//CALL_MAME_DEBUG;
-			ireg = M_RDOP(PCD);
+			UINT8 ireg = M_RDOP(PCD);
 			PC++;
 			(*nsc8105.insn[ireg])();
 			INCREMENT_COUNTER(cycles_nsc8105[ireg]);

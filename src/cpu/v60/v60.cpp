@@ -958,11 +958,10 @@ static void v60_try_irq(void)
 		return;
 	if ((PSW & (1 << 18)) != 0)
 	{
-		int vector;
 		if (v60.irq_line != ASSERT_LINE)
 			v60.irq_line = CLEAR_LINE;
 
-		vector = v60.irq_cb(0);
+		int vector = v60.irq_cb(0);
 
 		v60_do_irq(vector + 0x40);
 	}
@@ -1004,8 +1003,6 @@ static void set_irq_line(int irqline, int state)
 
 INT32 v60Run(int cycles)
 {
-	UINT32 inc;
-
 	v60.cycles = cycles;
 
 	v60_ICount = cycles;
@@ -1016,7 +1013,7 @@ INT32 v60Run(int cycles)
 		v60.PPC = PC;
 		//	CALL_MAME_DEBUG;
 		v60_ICount -= 8; /* fix me -- this is just an average */
-		inc = OpCodeTable[OpRead8(PC)]();
+		UINT32 inc = OpCodeTable[OpRead8(PC)]();
 		PC += inc;
 		if (v60.irq_line != CLEAR_LINE)
 			v60_try_irq();

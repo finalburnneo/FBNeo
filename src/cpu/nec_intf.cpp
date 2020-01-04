@@ -222,9 +222,7 @@ void VezCheatWrite(UINT32 a, UINT8 d)
 {
 	a &= 0xfffff;
 
-	UINT8* p;
-
-	p = VezCurrentCPU->ppMemWrite[a >> VEZ_MEM_SHIFT];
+	UINT8* p = VezCurrentCPU->ppMemWrite[a >> VEZ_MEM_SHIFT];
 	if (p) *(p + a) = d;
 
 	p = VezCurrentCPU->ppMemRead[a >> VEZ_MEM_SHIFT];

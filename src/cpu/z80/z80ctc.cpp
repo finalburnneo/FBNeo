@@ -260,10 +260,9 @@ void z80ctc_write(int offset, UINT8 data)
 {
 	int ch = offset & 3;
 	ctc_channel* channel = &ctc->channel[ch];
-	int mode;
 
 	/* get the current mode */
-	mode = channel->mode;
+	int mode = channel->mode;
 
 	/* if we're waiting for a time constant, this is it */
 	if ((mode & CONSTANT) == CONSTANT_LOAD)
@@ -443,14 +442,13 @@ void z80ctc_trg_write(int ch, UINT8 data)
 int z80ctc_irq_state()
 {
 	int state = 0;
-	int ch;
 
 	VPRINTF(
 		("CTC IRQ state = %d%d%d%d\n", ctc->channel[0].int_state, ctc->channel[1].int_state, ctc->channel[2].int_state,
 			ctc->channel[3].int_state));
 
 	/* loop over all channels */
-	for (ch = 0; ch < 4; ch++)
+	for (int ch = 0; ch < 4; ch++)
 	{
 		ctc_channel* channel = &ctc->channel[ch];
 
@@ -469,10 +467,8 @@ int z80ctc_irq_state()
 
 int z80ctc_irq_ack()
 {
-	int ch;
-
 	/* loop over all channels */
-	for (ch = 0; ch < 4; ch++)
+	for (int ch = 0; ch < 4; ch++)
 	{
 		ctc_channel* channel = &ctc->channel[ch];
 
@@ -495,10 +491,8 @@ int z80ctc_irq_ack()
 
 void z80ctc_irq_reti()
 {
-	int ch;
-
 	/* loop over all channels */
-	for (ch = 0; ch < 4; ch++)
+	for (int ch = 0; ch < 4; ch++)
 	{
 		ctc_channel* channel = &ctc->channel[ch];
 
@@ -546,10 +540,8 @@ void z80ctc_exit()
 
 void z80ctc_reset()
 {
-	int ch;
-
 	/* set up defaults */
-	for (ch = 0; ch < 4; ch++)
+	for (int ch = 0; ch < 4; ch++)
 	{
 		ctc_channel* channel = &ctc->channel[ch];
 		channel->mode = RESET_ACTIVE;

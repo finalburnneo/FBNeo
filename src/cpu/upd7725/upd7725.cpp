@@ -546,15 +546,13 @@ static INT32 end_run = 0;
 
 INT32 upd96050Run(INT32 cycles)
 {
-	UINT32 opcode;
-
 	cycle_start = cycles;
 	m_icount = cycles;
 	end_run = 0;
 
 	do
 	{
-		opcode = read_op(regs.pc) >> 8;
+		UINT32 opcode = read_op(regs.pc) >> 8;
 		regs.pc++;
 		switch (opcode >> 22)
 		{

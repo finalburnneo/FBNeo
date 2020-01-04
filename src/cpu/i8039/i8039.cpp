@@ -273,8 +273,7 @@ I8039_INLINE void SET(UINT8 flag) { R.PSW |= flag; }
 /* Get next opcode argument and increment program counter */
 I8039_INLINE unsigned M_RDMEM_OPCODE(void)
 {
-	unsigned retval;
-	retval = M_RDOP_ARG(R.PC.w.l);
+	unsigned retval = M_RDOP_ARG(R.PC.w.l);
 	R.PC.w.l++;
 	return retval;
 }
@@ -314,22 +313,18 @@ I8039_INLINE void daa_a(void)
 
 I8039_INLINE void M_ADD(UINT8 dat)
 {
-	UINT16 temp;
-
 	CLR(C_FLAG | A_FLAG);
 	if ((R.A & 0xf) + (dat & 0xf) > 0xf) SET(A_FLAG);
-	temp = R.A + dat;
+	UINT16 temp = R.A + dat;
 	if (temp > 0xff) SET(C_FLAG);
 	R.A = temp & 0xff;
 }
 
 I8039_INLINE void M_ADDC(UINT8 dat)
 {
-	UINT16 temp;
-
 	CLR(A_FLAG);
 	if ((R.A & 0xf) + (dat & 0xf) + M_Cy > 0xf) SET(A_FLAG);
-	temp = R.A + dat + M_Cy;
+	UINT16 temp = R.A + dat + M_Cy;
 	CLR(C_FLAG);
 	if (temp > 0xff) SET(C_FLAG);
 	R.A = temp & 0xff;
@@ -714,13 +709,12 @@ static void inc_xr1(void)
 static void jmp(void)
 {
 	UINT8 i = M_RDOP(R.PC.w.l);
-	UINT16 oldpc, newpc;
 	UINT16 a11 = (R.irq_executing == I8039_NO_INT) ? R.A11 : 0;
 
-	oldpc = R.PC.w.l - 1;
+	UINT16 oldpc = R.PC.w.l - 1;
 	R.PC.w.l = i | a11;
 	change_pc(R.PC.w.l);
-	newpc = R.PC.w.l;
+	UINT16 newpc = R.PC.w.l;
 	if (newpc == oldpc) { if (i8039_ICount > 0) i8039_ICount = 0; } /* speed up busy loop */
 	else if (newpc == oldpc - 1 && M_RDOP(newpc) == 0x00) /* NOP - Gyruss */
 	{
@@ -1734,9 +1728,6 @@ int I8039Run(int cycles)
 	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Run called without init\n"));
 #endif
 
-	UINT8 opcode, T1, timerInt;
-	int count;
-
 	i8039_ICount_cycles = cycles;
 	i8039_ICount = (cycles - R.irq_extra_cycles);
 	R.irq_extra_cycles = 0;
@@ -1748,7 +1739,7 @@ int I8039Run(int cycles)
 
 		//		CALL_DEBUGGER(R.PC.w.l);
 
-		opcode = M_RDOP(R.PC.w.l);
+		UINT8 opcode = M_RDOP(R.PC.w.l);
 
 		/*      logerror("I8039:  PC = %04x,  opcode = %02x\n", R.PC.w.l, opcode); */
 
@@ -1757,12 +1748,12 @@ int I8039Run(int cycles)
 		(*(opcode_main[opcode].function))();
 		i8039_ICount -= R.inst_cycles; ///
 
-		timerInt = 0;
+		UINT8 timerInt = 0;
 		if (R.countON) /* NS990113 */
 		{
 			for (; R.inst_cycles > 0; R.inst_cycles--)
 			{
-				T1 = test_r(1);
+				UINT8 T1 = test_r(1);
 				if (POSITIVE_EDGE_T1)
 				{
 					R.timer++;
@@ -1788,7 +1779,7 @@ int I8039Run(int cycles)
 
 		if (timerInt)
 		{
-			count = Timer_IRQ(); /* Handle Timer IRQ */
+			int count = Timer_IRQ(); /* Handle Timer IRQ */
 			i8039_ICount -= count;
 		}
 	}

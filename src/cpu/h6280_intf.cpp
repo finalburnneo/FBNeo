@@ -373,11 +373,9 @@ void h6280NewFrame()
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280NewFrame called without init\n"));
 #endif
 
-	h6280_handler* ptr;
-
 	for (INT32 i = 0; i < MAX_H6280; i++)
 	{
-		ptr = &sHandler[i % MAX_H6280];
+		h6280_handler* ptr = &sHandler[i % MAX_H6280];
 		sHandler->h6280->h6280_totalcycles = 0;
 	}
 }

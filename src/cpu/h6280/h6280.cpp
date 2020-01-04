@@ -235,7 +235,6 @@ int h6280Run(int cycles)
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280Run called with no CPU open\n"));
 #endif
 
-	int in;
 	h6280_ICount = cycles;
 	h6280.h6280_iCycles = cycles;
 
@@ -256,7 +255,7 @@ int h6280Run(int cycles)
 		//		debugger_instruction_hook(Machine, PCW);
 
 		/* Execute 1 instruction */
-		in = RDOP();
+		int in = RDOP();
 		PCW++;
 		insnh6280[in]();
 
@@ -387,15 +386,13 @@ unsigned char h6280_irq_status_r(unsigned int offset)
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_irq_status_r called with no CPU open\n"));
 #endif
 
-	int status;
-
 	switch (offset & 3)
 	{
 	default: return h6280.io_buffer;
 		break;
 	case 3:
 		{
-			status = 0;
+			int status = 0;
 			if (h6280.irq_state[1] != CLEAR_LINE) status |= 1; /* IRQ 2 */
 			if (h6280.irq_state[0] != CLEAR_LINE) status |= 2; /* IRQ 1 */
 			if (h6280.irq_state[2] != CLEAR_LINE) status |= 4; /* TIMER */

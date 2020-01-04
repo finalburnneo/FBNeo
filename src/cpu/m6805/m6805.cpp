@@ -475,7 +475,6 @@ int m6805Run(int cycles)
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Run called without init\n"));
 #endif
 
-	UINT8 ireg;
 	m6805_ICount = cycles;
 	S = SP_ADJUST(S); /* Taken from CPU_SET_CONTEXT when pointer'afying */
 
@@ -495,7 +494,7 @@ int m6805Run(int cycles)
 			}
 		}
 
-		ireg = M_RDOP(PC++);
+		UINT8 ireg = M_RDOP(PC++);
 
 		switch (ireg)
 		{

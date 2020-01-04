@@ -859,10 +859,9 @@ static INLINE void set_parity()
 {
 	//This flag will be set when the accumulator contains an odd # of bits set..
 	UINT8 p = 0;
-	int i;
 	UINT8 a = ACC;
 
-	for (i = 0; i < 8; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		//Test for each of the 8 bits in the ACC!
 		p ^= (a & 1);
@@ -1037,10 +1036,8 @@ static INLINE void update_timer_t0(int cycles)
 
 	if (GET_TR0)
 	{
-		UINT32 delta;
-
 		/* counter / external input */
-		delta = GET_CT0 ? mcs51_state.t0_cnt : cycles;
+		UINT32 delta = GET_CT0 ? mcs51_state.t0_cnt : cycles;
 		/* taken, reset */
 		mcs51_state.t0_cnt = 0;
 		/* TODO: Not sure about IE0. The manual specifies INT0=high,
@@ -1127,11 +1124,10 @@ static INLINE void update_timer_t1(int cycles)
 	{
 		if (GET_TR1)
 		{
-			UINT32 delta;
 			UINT32 overflow = 0;
 
 			/* counter / external input */
-			delta = GET_CT1 ? mcs51_state.t1_cnt : cycles;
+			UINT32 delta = GET_CT1 ? mcs51_state.t1_cnt : cycles;
 			/* taken, reset */
 			mcs51_state.t1_cnt = 0;
 			/* TODO: Not sure about IE0. The manual specifies INT0=high,
@@ -1179,10 +1175,9 @@ static INLINE void update_timer_t1(int cycles)
 	}
 	else
 	{
-		UINT32 delta;
 		UINT32 overflow = 0;
 
-		delta = cycles;
+		UINT32 delta = cycles;
 		/* taken, reset */
 		mcs51_state.t1_cnt = 0;
 		switch (mode)
@@ -1353,8 +1348,7 @@ static INLINE void update_serial(int cycles)
 /* Check and update status of serial port */
 static INLINE void update_irq_prio(UINT8 ipl, UINT8 iph)
 {
-	int i;
-	for (i = 0; i < 8; i++)
+	for (int i = 0; i < 8; i++)
 		mcs51_state.irq_prio[i] = ((ipl >> i) & 1) | (((iph >> i) & 1) << 1);
 }
 
@@ -1891,7 +1885,6 @@ static void check_irqs()
 	UINT8 int_vec = 0;
 	UINT8 int_mask = 0;
 	int priority_request = -1;
-	int i;
 
 	//If All Inerrupts Disabled or no pending abort..
 	int_mask = (GET_EA ? IE : 0x00);
@@ -1926,7 +1919,7 @@ static void check_irqs()
 				SET_PD(0);
 	}
 
-	for (i = 0; i < mcs51_state.num_interrupts; i++)
+	for (int i = 0; i < mcs51_state.num_interrupts; i++)
 	{
 		if (ints & (1 << i))
 		{
@@ -2164,8 +2157,6 @@ void mcs51_set_irq_line(int irqline, int state)
 /* Execute cycles - returns number of cycles actually run */
 INT32 mcs51Run(int cycles) // divide cycles by 12! -dink
 {
-	UINT8 op;
-
 	mcs51_state.icount = cycles;
 	mcs51_state.cycle_start = cycles;
 	mcs51_state.end_run = 0;
@@ -2201,7 +2192,7 @@ INT32 mcs51Run(int cycles) // divide cycles by 12! -dink
 		/* Read next opcode */
 		PPC = PC;
 		//debugger_instruction_hook(device, PC);
-		op = cpu_readop_arg_dat(PC++);
+		UINT8 op = cpu_readop_arg_dat(PC++);
 
 		/* process opcode and count cycles */
 		mcs51_state.inst_cycles = mcs51_cycles[op];
@@ -2508,9 +2499,7 @@ void mcs51_exit(void)
 
 static INLINE UINT8 ds5002fp_protected(INT32 offset, UINT8 data, UINT8 ta_mask, UINT8 mask)
 {
-	UINT8 is_timed_access;
-
-	is_timed_access = (mcs51_state.ds5002fp.ta_window > 0) && (TA == 0x55);
+	UINT8 is_timed_access = (mcs51_state.ds5002fp.ta_window > 0) && (TA == 0x55);
 	if (is_timed_access)
 	{
 		ta_mask = 0xff;

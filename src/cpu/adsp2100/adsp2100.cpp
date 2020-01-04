@@ -686,8 +686,6 @@ static adsp2100_state* adsp21xx_init(adsp2100_state* adsp, cpu_irq_callback irqc
 //static CPU_RESET( adsp21xx )
 void adsp21xx_reset(adsp2100_state* adsp)
 {
-	int irq;
-
 	/* ensure that zero is zero */
 	adsp->core.zero.u = adsp->alt.zero.u = 0;
 
@@ -757,7 +755,7 @@ void adsp21xx_reset(adsp2100_state* adsp)
 
 	/* reset interrupts */
 	adsp->imask = 0;
-	for (irq = 0; irq < 8; irq++)
+	for (int irq = 0; irq < 8; irq++)
 		adsp->irq_state[irq] = adsp->irq_latch[irq] = CLEAR_LINE;
 }
 
@@ -1841,8 +1839,7 @@ static void adsp21xx_load_boot_data(UINT8* srcdata, UINT32* dstdata)
 {
 	/* see how many words we need to copy */
 	int pagelen = (srcdata[(3)] + 1) * 8;
-	int i;
-	for (i = 0; i < pagelen; i++)
+	for (int i = 0; i < pagelen; i++)
 	{
 		UINT32 opcode = (srcdata[(i * 4 + 0)] << 16) | (srcdata[(i * 4 + 1)] << 8) | srcdata[(i * 4 + 2)];
 		dstdata[i] = opcode;

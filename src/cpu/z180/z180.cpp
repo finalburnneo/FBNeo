@@ -1812,20 +1812,18 @@ void z180_reset(void)
 {
 	//	z80_irq_daisy_chain *save_daisy;
 	int (*save_irqcallback)(int);
-	int i, p;
+	int p;
 #if BIG_FLAGS_ARRAY
-	int oldval, newval, val;
-	UINT8 *padd, *padc, *psub, *psbc;
-	padd = &SZHVC_add[0 * 256];
-	padc = &SZHVC_add[256 * 256];
-	psub = &SZHVC_sub[0 * 256];
-	psbc = &SZHVC_sub[256 * 256];
-	for (oldval = 0; oldval < 256; oldval++)
+	UINT8* padd = &SZHVC_add[0 * 256];
+	UINT8* padc = &SZHVC_add[256 * 256];
+	UINT8* psub = &SZHVC_sub[0 * 256];
+	UINT8* psbc = &SZHVC_sub[256 * 256];
+	for (int oldval = 0; oldval < 256; oldval++)
 	{
-		for (newval = 0; newval < 256; newval++)
+		for (int newval = 0; newval < 256; newval++)
 		{
 			/* add or adc w/o carry set */
-			val = newval - oldval;
+			int val = newval - oldval;
 			*padd = (newval) ? ((newval & 0x80) ? SF : 0) : ZF;
 			*padd |= (newval & (YF | XF)); /* undocumented flag bits 5+3 */
 
@@ -1863,7 +1861,7 @@ void z180_reset(void)
 		}
 	}
 #endif
-	for (i = 0; i < 256; i++)
+	for (int i = 0; i < 256; i++)
 	{
 		p = 0;
 		if (i & 0x01) ++p;
@@ -2041,8 +2039,7 @@ static int handle_timers(int current_icount, int previous_icount)
 
 static void check_interrupts(void)
 {
-	int i;
-	for (i = 0; i <= 2; i++)
+	for (int i = 0; i <= 2; i++)
 	{
 		/* check for IRQs before each instruction */
 		if (Z180.irq_state[i] != Z180_CLEAR_LINE && _IFF1 && !Z180.after_EI)

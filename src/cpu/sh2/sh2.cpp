@@ -680,8 +680,7 @@ SH2_INLINE UINT8 RB(UINT32 A)
 		if (A >= 0x40000000) return 0xa5;
 		return program_read_byte_32be(A & AM); */
 
-	unsigned char* pr;
-	pr = pSh2Ext->MemMap[A >> SH2_SHIFT];
+	unsigned char* pr = pSh2Ext->MemMap[A >> SH2_SHIFT];
 	if ((uintptr_t)pr >= SH2_MAXHANDLER)
 	{
 #ifdef LSB_FIRST
@@ -699,8 +698,7 @@ SH2_INLINE UINT16 RW(UINT32 A)
 		if (A >= 0x40000000) return 0xa5a5;
 		return program_read_word_32be(A & AM); */
 
-	unsigned char* pr;
-	pr = pSh2Ext->MemMap[A >> SH2_SHIFT];
+	unsigned char* pr = pSh2Ext->MemMap[A >> SH2_SHIFT];
 	if ((uintptr_t)pr >= SH2_MAXHANDLER)
 	{
 #ifdef LSB_FIRST
@@ -714,8 +712,7 @@ SH2_INLINE UINT16 RW(UINT32 A)
 
 SH2_INLINE UINT16 OPRW(UINT32 A)
 {
-	unsigned char* pr;
-	pr = pSh2Ext->MemMap[(A >> SH2_SHIFT) + SH2_WADD * 2];
+	unsigned char* pr = pSh2Ext->MemMap[(A >> SH2_SHIFT) + SH2_WADD * 2];
 	if ((uintptr_t)pr >= SH2_MAXHANDLER)
 	{
 #ifdef LSB_FIRST
@@ -734,8 +731,7 @@ SH2_INLINE UINT32 RL(UINT32 A)
 		if (A >= 0x40000000) return 0xa5a5a5a5;
 		return program_read_dword_32be(A & AM);		*/
 
-	unsigned char* pr;
-	pr = pSh2Ext->MemMap[A >> SH2_SHIFT];
+	unsigned char* pr = pSh2Ext->MemMap[A >> SH2_SHIFT];
 	if ((uintptr_t)pr >= SH2_MAXHANDLER)
 	{
 		//return (pr[(A & SH2_PAGEM) + 0] << 24) | (pr[(A & SH2_PAGEM) + 1] << 16) | (pr[(A & SH2_PAGEM) + 2] <<  8) | (pr[(A & SH2_PAGEM) + 3] <<  0);
@@ -751,8 +747,7 @@ SH2_INLINE void WB(UINT32 A, UINT8 V)
 		if (A >= 0x40000000) return;
 		program_write_byte_32be(A & AM,V); */
 
-	unsigned char* pr;
-	pr = pSh2Ext->MemMap[(A >> SH2_SHIFT) + SH2_WADD];
+	unsigned char* pr = pSh2Ext->MemMap[(A >> SH2_SHIFT) + SH2_WADD];
 	if ((uintptr_t)pr >= SH2_MAXHANDLER)
 	{
 #ifdef LSB_FIRST
@@ -771,8 +766,7 @@ SH2_INLINE void WW(UINT32 A, UINT16 V)
 		if (A >= 0x40000000) return;
 		program_write_word_32be(A & AM,V); */
 
-	unsigned char* pr;
-	pr = pSh2Ext->MemMap[(A >> SH2_SHIFT) + SH2_WADD];
+	unsigned char* pr = pSh2Ext->MemMap[(A >> SH2_SHIFT) + SH2_WADD];
 	if ((uintptr_t)pr >= SH2_MAXHANDLER)
 	{
 #ifdef LSB_FIRST
@@ -786,12 +780,7 @@ SH2_INLINE void WW(UINT32 A, UINT16 V)
 
 SH2_INLINE void WL(UINT32 A, UINT32 V)
 {
-	/*	if (A >= 0xe0000000) { sh2_internal_w((A & 0x1fc)>>2, V, 0); return; }
-		if (A >= 0xc0000000) { program_write_dword_32be(A,V); return; }
-		if (A >= 0x40000000) return;
-		program_write_dword_32be(A & AM,V); */
-	unsigned char* pr;
-	pr = pSh2Ext->MemMap[(A >> SH2_SHIFT) + SH2_WADD];
+	unsigned char* pr = pSh2Ext->MemMap[(A >> SH2_SHIFT) + SH2_WADD];
 	if ((uintptr_t)pr >= SH2_MAXHANDLER)
 	{
 		*((unsigned int*)(pr + (A & SH2_PAGEM))) = (unsigned int)V;
@@ -909,10 +898,8 @@ SH2_INLINE void ADDI(UINT32 i, UINT32 n)
  */
 SH2_INLINE void ADDC(UINT32 m, UINT32 n)
 {
-	UINT32 tmp0, tmp1;
-
-	tmp1 = sh2->r[n] + sh2->r[m];
-	tmp0 = sh2->r[n];
+	UINT32 tmp1 = sh2->r[n] + sh2->r[m];
+	UINT32 tmp0 = sh2->r[n];
 	sh2->r[n] = tmp1 + (sh2->sr & T);
 	if (tmp0 > tmp1)
 		sh2->sr |= T;
@@ -981,10 +968,8 @@ SH2_INLINE void ANDI(UINT32 i)
  */
 SH2_INLINE void ANDM(UINT32 i)
 {
-	UINT32 temp;
-
 	sh2->ea = sh2->gbr + sh2->r[0];
-	temp = i & RB(sh2->ea);
+	UINT32 temp = i & RB(sh2->ea);
 	WB(sh2->ea, temp);
 	sh2->sh2_icount -= 2;
 }
@@ -1231,13 +1216,11 @@ SH2_INLINE void CMPPZ(UINT32 n)
  */
 SH2_INLINE void CMPSTR(UINT32 m, UINT32 n)
 {
-	UINT32 temp;
-	INT32 HH, HL, LH, LL;
-	temp = sh2->r[n] ^ sh2->r[m];
-	HH = (temp >> 24) & 0xff;
-	HL = (temp >> 16) & 0xff;
-	LH = (temp >> 8) & 0xff;
-	LL = temp & 0xff;
+	UINT32 temp = sh2->r[n] ^ sh2->r[m];
+	INT32 HH = (temp >> 24) & 0xff;
+	INT32 HL = (temp >> 16) & 0xff;
+	INT32 LH = (temp >> 8) & 0xff;
+	INT32 LL = temp & 0xff;
 	if (HH && HL && LH && LL)
 		sh2->sr &= ~T;
 	else
@@ -1295,9 +1278,8 @@ SH2_INLINE void DIV0U(void)
 SH2_INLINE void DIV1(UINT32 m, UINT32 n)
 {
 	UINT32 tmp0;
-	UINT32 old_q;
 
-	old_q = sh2->sr & Q;
+	UINT32 old_q = sh2->sr & Q;
 	if (0x80000000 & sh2->r[n])
 		sh2->sr |= Q;
 	else
@@ -1383,12 +1365,10 @@ SH2_INLINE void DIV1(UINT32 m, UINT32 n)
 /*  DMULS.L Rm,Rn */
 SH2_INLINE void DMULS(UINT32 m, UINT32 n)
 {
-	UINT32 RnL, RnH, RmL, RmH, Res0, Res1, Res2;
-	UINT32 temp0, temp1, temp2, temp3;
-	INT32 tempm, tempn, fnLmL;
+	INT32 fnLmL;
 
-	tempn = (INT32)sh2->r[n];
-	tempm = (INT32)sh2->r[m];
+	INT32 tempn = (INT32)sh2->r[n];
+	INT32 tempm = (INT32)sh2->r[m];
 	if (tempn < 0)
 		tempn = 0 - tempn;
 	if (tempm < 0)
@@ -1397,22 +1377,22 @@ SH2_INLINE void DMULS(UINT32 m, UINT32 n)
 		fnLmL = -1;
 	else
 		fnLmL = 0;
-	temp1 = (UINT32)tempn;
-	temp2 = (UINT32)tempm;
-	RnL = temp1 & 0x0000ffff;
-	RnH = (temp1 >> 16) & 0x0000ffff;
-	RmL = temp2 & 0x0000ffff;
-	RmH = (temp2 >> 16) & 0x0000ffff;
-	temp0 = RmL * RnL;
+	UINT32 temp1 = (UINT32)tempn;
+	UINT32 temp2 = (UINT32)tempm;
+	UINT32 RnL = temp1 & 0x0000ffff;
+	UINT32 RnH = (temp1 >> 16) & 0x0000ffff;
+	UINT32 RmL = temp2 & 0x0000ffff;
+	UINT32 RmH = (temp2 >> 16) & 0x0000ffff;
+	UINT32 temp0 = RmL * RnL;
 	temp1 = RmH * RnL;
 	temp2 = RmL * RnH;
-	temp3 = RmH * RnH;
-	Res2 = 0;
-	Res1 = temp1 + temp2;
+	UINT32 temp3 = RmH * RnH;
+	UINT32 Res2 = 0;
+	UINT32 Res1 = temp1 + temp2;
 	if (Res1 < temp1)
 		Res2 += 0x00010000;
 	temp1 = (Res1 << 16) & 0xffff0000;
-	Res0 = temp0 + temp1;
+	UINT32 Res0 = temp0 + temp1;
 	if (Res0 < temp0)
 		Res2++;
 	Res2 = Res2 + ((Res1 >> 16) & 0x0000ffff) + temp3;
@@ -1432,23 +1412,20 @@ SH2_INLINE void DMULS(UINT32 m, UINT32 n)
 /*  DMULU.L Rm,Rn */
 SH2_INLINE void DMULU(UINT32 m, UINT32 n)
 {
-	UINT32 RnL, RnH, RmL, RmH, Res0, Res1, Res2;
-	UINT32 temp0, temp1, temp2, temp3;
-
-	RnL = sh2->r[n] & 0x0000ffff;
-	RnH = (sh2->r[n] >> 16) & 0x0000ffff;
-	RmL = sh2->r[m] & 0x0000ffff;
-	RmH = (sh2->r[m] >> 16) & 0x0000ffff;
-	temp0 = RmL * RnL;
-	temp1 = RmH * RnL;
-	temp2 = RmL * RnH;
-	temp3 = RmH * RnH;
-	Res2 = 0;
-	Res1 = temp1 + temp2;
+	UINT32 RnL = sh2->r[n] & 0x0000ffff;
+	UINT32 RnH = (sh2->r[n] >> 16) & 0x0000ffff;
+	UINT32 RmL = sh2->r[m] & 0x0000ffff;
+	UINT32 RmH = (sh2->r[m] >> 16) & 0x0000ffff;
+	UINT32 temp0 = RmL * RnL;
+	UINT32 temp1 = RmH * RnL;
+	UINT32 temp2 = RmL * RnH;
+	UINT32 temp3 = RmH * RnH;
+	UINT32 Res2 = 0;
+	UINT32 Res1 = temp1 + temp2;
 	if (Res1 < temp1)
 		Res2 += 0x00010000;
 	temp1 = (Res1 << 16) & 0xffff0000;
-	Res0 = temp0 + temp1;
+	UINT32 Res0 = temp0 + temp1;
 	if (Res0 < temp0)
 		Res2++;
 	Res2 = Res2 + ((Res1 >> 16) & 0x0000ffff) + temp3;
@@ -1618,13 +1595,11 @@ SH2_INLINE void LDSMPR(UINT32 m)
 /*  MAC.L   @Rm+,@Rn+ */
 SH2_INLINE void MAC_L(UINT32 m, UINT32 n)
 {
-	UINT32 RnL, RnH, RmL, RmH, Res0, Res1, Res2;
-	UINT32 temp0, temp1, temp2, temp3;
-	INT32 tempm, tempn, fnLmL;
+	INT32 fnLmL;
 
-	tempn = (INT32)RL(sh2->r[n]);
+	INT32 tempn = (INT32)RL(sh2->r[n]);
 	sh2->r[n] += 4;
-	tempm = (INT32)RL(sh2->r[m]);
+	INT32 tempm = (INT32)RL(sh2->r[m]);
 	sh2->r[m] += 4;
 	if ((INT32)(tempn ^ tempm) < 0)
 		fnLmL = -1;
@@ -1634,22 +1609,22 @@ SH2_INLINE void MAC_L(UINT32 m, UINT32 n)
 		tempn = 0 - tempn;
 	if (tempm < 0)
 		tempm = 0 - tempm;
-	temp1 = (UINT32)tempn;
-	temp2 = (UINT32)tempm;
-	RnL = temp1 & 0x0000ffff;
-	RnH = (temp1 >> 16) & 0x0000ffff;
-	RmL = temp2 & 0x0000ffff;
-	RmH = (temp2 >> 16) & 0x0000ffff;
-	temp0 = RmL * RnL;
+	UINT32 temp1 = (UINT32)tempn;
+	UINT32 temp2 = (UINT32)tempm;
+	UINT32 RnL = temp1 & 0x0000ffff;
+	UINT32 RnH = (temp1 >> 16) & 0x0000ffff;
+	UINT32 RmL = temp2 & 0x0000ffff;
+	UINT32 RmH = (temp2 >> 16) & 0x0000ffff;
+	UINT32 temp0 = RmL * RnL;
 	temp1 = RmH * RnL;
 	temp2 = RmL * RnH;
-	temp3 = RmH * RnH;
-	Res2 = 0;
-	Res1 = temp1 + temp2;
+	UINT32 temp3 = RmH * RnH;
+	UINT32 Res2 = 0;
+	UINT32 Res1 = temp1 + temp2;
 	if (Res1 < temp1)
 		Res2 += 0x00010000;
 	temp1 = (Res1 << 16) & 0xffff0000;
-	Res0 = temp0 + temp1;
+	UINT32 Res0 = temp0 + temp1;
 	if (Res0 < temp0)
 		Res2++;
 	Res2 = Res2 + ((Res1 >> 16) & 0x0000ffff) + temp3;
@@ -1696,14 +1671,13 @@ SH2_INLINE void MAC_L(UINT32 m, UINT32 n)
 SH2_INLINE void MAC_W(UINT32 m, UINT32 n)
 {
 	{
-		INT32 tempm, tempn, dest, src, ans;
-		UINT32 templ;
+		INT32 dest, src, ans;
 
-		tempn = (INT32)RW(sh2->r[n]);
+		INT32 tempn = (INT32)RW(sh2->r[n]);
 		sh2->r[n] += 2;
-		tempm = (INT32)RW(sh2->r[m]);
+		INT32 tempm = (INT32)RW(sh2->r[m]);
 		sh2->r[m] += 2;
-		templ = sh2->macl;
+		UINT32 templ = sh2->macl;
 		tempm = ((INT32)(short)tempn * (INT32)(short)tempm);
 		if ((INT32)sh2->macl >= 0)
 			dest = 0;
@@ -2048,9 +2022,7 @@ SH2_INLINE void NEG(UINT32 m, UINT32 n)
 /*  NEGC    Rm,Rn */
 SH2_INLINE void NEGC(UINT32 m, UINT32 n)
 {
-	UINT32 temp;
-
-	temp = sh2->r[m];
+	UINT32 temp = sh2->r[m];
 	sh2->r[n] = -temp - (sh2->sr & T);
 	if (temp || (sh2->sr & T))
 		sh2->sr |= T;
@@ -2084,10 +2056,8 @@ SH2_INLINE void ORI(UINT32 i)
 /*  OR.B    #imm,@(R0,GBR) */
 SH2_INLINE void ORM(UINT32 i)
 {
-	UINT32 temp;
-
 	sh2->ea = sh2->gbr + sh2->r[0];
-	temp = RB(sh2->ea);
+	UINT32 temp = RB(sh2->ea);
 	temp |= i;
 	WB(sh2->ea, temp);
 	sh2->sh2_icount -= 2;
@@ -2096,9 +2066,7 @@ SH2_INLINE void ORM(UINT32 i)
 /*  ROTCL   Rn */
 SH2_INLINE void ROTCL(UINT32 n)
 {
-	UINT32 temp;
-
-	temp = (sh2->r[n] >> 31) & T;
+	UINT32 temp = (sh2->r[n] >> 31) & T;
 	sh2->r[n] = (sh2->r[n] << 1) | (sh2->sr & T);
 	sh2->sr = (sh2->sr & ~T) | temp;
 }
@@ -2106,8 +2074,7 @@ SH2_INLINE void ROTCL(UINT32 n)
 /*  ROTCR   Rn */
 SH2_INLINE void ROTCR(UINT32 n)
 {
-	UINT32 temp;
-	temp = (sh2->sr & T) << 31;
+	UINT32 temp = (sh2->sr & T) << 31;
 	if (sh2->r[n] & T)
 		sh2->sr |= T;
 	else
@@ -2325,10 +2292,8 @@ SH2_INLINE void SUB(UINT32 m, UINT32 n)
 /*  SUBC    Rm,Rn */
 SH2_INLINE void SUBC(UINT32 m, UINT32 n)
 {
-	UINT32 tmp0, tmp1;
-
-	tmp1 = sh2->r[n] - sh2->r[m];
-	tmp0 = sh2->r[n];
+	UINT32 tmp1 = sh2->r[n] - sh2->r[m];
+	UINT32 tmp0 = sh2->r[n];
 	sh2->r[n] = tmp1 - (sh2->sr & T);
 	if (tmp0 < tmp1)
 		sh2->sr |= T;
@@ -2372,10 +2337,8 @@ SH2_INLINE void SUBV(UINT32 m, UINT32 n)
 /*  SWAP.B  Rm,Rn */
 SH2_INLINE void SWAPB(UINT32 m, UINT32 n)
 {
-	UINT32 temp0, temp1;
-
-	temp0 = sh2->r[m] & 0xffff0000;
-	temp1 = (sh2->r[m] & 0x000000ff) << 8;
+	UINT32 temp0 = sh2->r[m] & 0xffff0000;
+	UINT32 temp1 = (sh2->r[m] & 0x000000ff) << 8;
 	sh2->r[n] = (sh2->r[m] >> 8) & 0x000000ff;
 	sh2->r[n] = sh2->r[n] | temp1 | temp0;
 }
@@ -2383,19 +2346,16 @@ SH2_INLINE void SWAPB(UINT32 m, UINT32 n)
 /*  SWAP.W  Rm,Rn */
 SH2_INLINE void SWAPW(UINT32 m, UINT32 n)
 {
-	UINT32 temp;
-
-	temp = (sh2->r[m] >> 16) & 0x0000ffff;
+	UINT32 temp = (sh2->r[m] >> 16) & 0x0000ffff;
 	sh2->r[n] = (sh2->r[m] << 16) | temp;
 }
 
 /*  TAS.B   @Rn */
 SH2_INLINE void TAS(UINT32 n)
 {
-	UINT32 temp;
 	sh2->ea = sh2->r[n];
 	/* Bus Lock enable */
-	temp = RB(sh2->ea);
+	UINT32 temp = RB(sh2->ea);
 	if (temp == 0)
 		sh2->sr |= T;
 	else
@@ -2474,10 +2434,9 @@ SH2_INLINE void XORI(UINT32 i)
 SH2_INLINE void XORM(UINT32 i)
 {
 	UINT32 imm = i & 0xff;
-	UINT32 temp;
 
 	sh2->ea = sh2->gbr + sh2->r[0];
-	temp = RB(sh2->ea);
+	UINT32 temp = RB(sh2->ea);
 	temp ^= imm;
 	WB(sh2->ea, temp);
 	sh2->sh2_icount -= 2;
@@ -2486,9 +2445,7 @@ SH2_INLINE void XORM(UINT32 i)
 /*  XTRCT   Rm,Rn */
 SH2_INLINE void XTRCT(UINT32 m, UINT32 n)
 {
-	UINT32 temp;
-
-	temp = (sh2->r[m] << 16) & 0xffff0000;
+	UINT32 temp = (sh2->r[m] << 16) & 0xffff0000;
 	sh2->r[n] = (sh2->r[n] >> 16) & 0x0000ffff;
 	sh2->r[n] |= temp;
 }
@@ -3038,13 +2995,12 @@ static void sh2_timer_resync(void)
 static void sh2_timer_activate(void)
 {
 	int max_delta = 0xfffff;
-	UINT16 frc;
 
 	//timer_adjust(sh2->timer, attotime_never, 0, attotime_zero);
 	sh2->timer_active = 0;
 	//	sh2->timer_cycles = 0;
 
-	frc = sh2->frc;
+	UINT16 frc = sh2->frc;
 	if (!(sh2->m[4] & OCFA))
 	{
 		UINT16 delta = sh2->ocra - frc;
@@ -3139,13 +3095,12 @@ static void sh2_recalc_irq(void)
 
 static void sh2_timer_callback()
 {
-	UINT16 frc;
 	//	int cpunum = param;
 	//	cpuintrf_push_context(cpunum);
 	//bprintf(0, _T(" - timer callback\n"));
 	sh2_timer_resync();
 
-	frc = sh2->frc;
+	UINT16 frc = sh2->frc;
 
 	if (frc == sh2->ocrb)
 		sh2->m[4] |= OCFB;
@@ -3186,20 +3141,18 @@ static void sh2_dmac_check(int dma)
 	{
 		if (!sh2->dma_timer_active[dma] && !(sh2->m[0x63 + 4 * dma] & 2))
 		{
-			int incs, incd, size;
-			UINT32 src, dst, count;
-			incd = (sh2->m[0x63 + 4 * dma] >> 14) & 3;
-			incs = (sh2->m[0x63 + 4 * dma] >> 12) & 3;
-			size = (sh2->m[0x63 + 4 * dma] >> 10) & 3;
+			int incd = (sh2->m[0x63 + 4 * dma] >> 14) & 3;
+			int incs = (sh2->m[0x63 + 4 * dma] >> 12) & 3;
+			int size = (sh2->m[0x63 + 4 * dma] >> 10) & 3;
 			if (incd == 3 || incs == 3)
 			{
 				//				logerror("SH2: DMA: bad increment values (%d, %d, %d, %04x)\n", incd, incs, size, sh2->m[0x63+4*dma]);
 				//bprintf(0, _T("SH2: DMA: bad increment values (%d, %d, %d, %04x)\n"), incd, incs, size, sh2->m[0x63+4*dma]);
 				return;
 			}
-			src = sh2->m[0x60 + 4 * dma];
-			dst = sh2->m[0x61 + 4 * dma];
-			count = sh2->m[0x62 + 4 * dma];
+			UINT32 src = sh2->m[0x60 + 4 * dma];
+			UINT32 dst = sh2->m[0x61 + 4 * dma];
+			UINT32 count = sh2->m[0x62 + 4 * dma];
 			if (!count)
 				count = 0x1000000;
 

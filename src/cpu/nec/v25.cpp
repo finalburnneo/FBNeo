@@ -148,10 +148,8 @@ static UINT8 parity_table[256];
 
 static UINT8 fetchop(v25_state_t* nec_state)
 {
-	UINT8 ret;
-
 	prefetch(nec_state);
-	ret = cpu_readop(((Sreg(PS) << 4) + nec_state->ip++) ^ nec_state->fetch_xor);
+	UINT8 ret = cpu_readop(((Sreg(PS) << 4) + nec_state->ip++) ^ nec_state->fetch_xor);
 
 	if (nec_state->MF == 0)
 		if (nec_state->decode)
@@ -178,7 +176,6 @@ void v25_close()
 int v25_reset()
 {
 	v25_state_t* nec_state = sChipsPtr;
-	int tmp;
 
 	nec_state->ip = 0;
 	nec_state->IBRK = 1;
@@ -222,7 +219,7 @@ int v25_reset()
 
 	memset(nec_state->timer_enabled, 0, sizeof(char) * 4);
 
-	tmp = nec_state->PCK << nec_state->TB;
+	int tmp = nec_state->PCK << nec_state->TB;
 	add_timer(nec_state, 3, tmp, INTTB, 1);
 
 	SetRB(7);
@@ -238,8 +235,6 @@ int v25_reset()
 
 static void nec_interrupt(v25_state_t* nec_state, unsigned int_num, INTSOURCES source)
 {
-	UINT32 dest_seg, dest_off;
-
 	i_pushf(nec_state);
 	nec_state->TF = nec_state->IF = 0;
 	nec_state->MF = nec_state->mode_state;
@@ -262,8 +257,8 @@ static void nec_interrupt(v25_state_t* nec_state, unsigned int_num, INTSOURCES s
 		break;
 	}
 
-	dest_off = read_mem_word(int_num*4);
-	dest_seg = read_mem_word(int_num*4+2);
+	UINT32 dest_off = read_mem_word(int_num*4);
+	UINT32 dest_seg = read_mem_word(int_num*4+2);
 
 	PUSH(Sreg(PS));
 	PUSH(nec_state->ip);
@@ -481,7 +476,6 @@ void v25_new_frame()
 int v25_execute(int cycles)
 {
 	v25_state_t* nec_state = sChipsPtr;
-	int prev_ICount;
 
 	int pending = nec_state->pending_irq & nec_state->unmasked_irq;
 
@@ -536,7 +530,7 @@ int v25_execute(int cycles)
 		if (nec_state->no_interrupt)
 			nec_state->no_interrupt--;
 
-		prev_ICount = nec_state->icount;
+		int prev_ICount = nec_state->icount;
 		nec_instruction[fetchop(nec_state)](nec_state);
 		do_prefetch(nec_state, prev_ICount);
 

@@ -907,7 +907,6 @@ static void pic16C5x_update_timer(int counts)
 
 int pic16c5xRun(int cycles)
 {
-	UINT8 T0_in;
 	slice_cycles = cycles;
 	pic16C5x_icount = cycles;
 	R.end_run = 0;
@@ -947,7 +946,7 @@ int pic16c5xRun(int cycles)
 			if (T0CS)
 			{
 				/* Count mode */
-				T0_in = S_T0_IN;
+				UINT8 T0_in = S_T0_IN;
 				if (T0_in) T0_in = 1;
 				if (T0SE)
 				{

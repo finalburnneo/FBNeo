@@ -169,8 +169,8 @@ extern bool nGamelistLocalisationActive;
 
 void BurnerDoGameListLocalisation();
 void BurnerExitGameListLocalisation();
-int FBALocaliseGamelistLoadTemplate();
-int FBALocaliseGamelistCreateTemplate();
+int LocaliseGamelistLoadTemplate();
+int LocaliseGamelistCreateTemplate();
 
 // popup_win32.cpp
 enum FBAPopupType { MT_NONE = 0, MT_ERROR, MT_WARNING, MT_INFO };

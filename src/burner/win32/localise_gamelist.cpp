@@ -151,7 +151,7 @@ static void MakeOfn()
 	ofn.lpstrDefExt = _T("glt");
 }
 
-int FBALocaliseGamelistLoadTemplate()
+int LocaliseGamelistLoadTemplate()
 {
 	_stprintf(szGamelistLocalisationTemplate, _T("template"));
 	MakeOfn();
@@ -175,7 +175,7 @@ int FBALocaliseGamelistLoadTemplate()
 	return 0;
 }
 
-int FBALocaliseGamelistCreateTemplate()
+int LocaliseGamelistCreateTemplate()
 {
 	_stprintf(szGamelistLocalisationTemplate, _T("template"));
 	MakeOfn();

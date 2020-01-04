@@ -2099,12 +2099,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_LANGUAGE_GL_SELECT:
 			if (UseDialogs()) {
-				FBALocaliseGamelistLoadTemplate();
+				LocaliseGamelistLoadTemplate();
 			}
 			break;
 		case MENU_LANGUAGE_GL_EXPORT:
 			if (UseDialogs()) {
-				FBALocaliseGamelistCreateTemplate();
+				LocaliseGamelistCreateTemplate();
 			}
 			break;
 		case MENU_LANGUAGE_GL_RESET:

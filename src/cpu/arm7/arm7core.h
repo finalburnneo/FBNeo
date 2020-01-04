@@ -500,9 +500,9 @@ enum
 #define SET_REGISTER(reg, val)  SetRegister(reg, val)
 #define ARM7_CHECKIRQ           arm7_check_irq_state()
 
-extern void ((*arm7_coproc_do_callback)(unsigned int, unsigned int));
-extern unsigned int ((*arm7_coproc_rt_r_callback)(unsigned int));
-extern void ((*arm7_coproc_rt_w_callback)(unsigned int, unsigned int));
+extern void (*arm7_coproc_do_callback)(unsigned int, unsigned int);
+extern unsigned int (*arm7_coproc_rt_r_callback)(unsigned int);
+extern void (*arm7_coproc_rt_w_callback)(unsigned int, unsigned int);
 extern void (*arm7_coproc_dt_r_callback)(UINT32 insn, UINT32* prn, UINT32 (*read32)(UINT32 addr));
 extern void (*arm7_coproc_dt_w_callback)(UINT32 insn, UINT32* prn, void (*write32)(UINT32 addr, UINT32 data));
 

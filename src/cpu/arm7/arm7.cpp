@@ -214,9 +214,9 @@ int Arm7Scan(int nAction)
 
 	if (nAction & ACB_DRIVER_DATA)
 	{
-		memset(&ba, 0, sizeof(ba));
+		memset(&ba, 0, sizeof ba);
 		ba.Data = (unsigned char*)&ARM7;
-		ba.nLen = sizeof(ARM7);
+		ba.nLen = sizeof ARM7;
 		ba.szName = "All  Registers";
 		BurnAcb(&ba);
 

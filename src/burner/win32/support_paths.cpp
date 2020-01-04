@@ -86,7 +86,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			UINT idsString[24] = { IDS_SPATH_PREVIEW, IDS_SPATH_TITLES, IDS_SPATH_ICONS, IDS_SPATH_CHEATS, IDS_SPATH_HISCORE, IDS_SPATH_SAMPLES, IDS_SPATH_IPS, IDS_SPATH_NGCD_ISOS, IDS_SPATH_NGCD_COVERS, IDS_SPATH_BLEND, IDS_SPATH_SELECT, IDS_SPATH_VERSUS, IDS_SPATH_HOWTO, IDS_SPATH_SCORES, IDS_SPATH_BOSSES, IDS_SPATH_GAMEOVER, IDS_SPATH_FLYERS, IDS_SPATH_MARQUEES, IDS_SPATH_CONTROLS, IDS_SPATH_CABINETS, IDS_SPATH_PCBS, IDS_SPATH_HISTORY, IDS_SPATH_EEPROM, IDS_SPATH_HDD };
 
 			for(int nIndex = 0; nIndex < 24; nIndex++) {
-				tcItem.pszText = FBALoadStringEx(hAppInst, idsString[nIndex], true);
+				tcItem.pszText = FBNLoadStringEx(hAppInst, idsString[nIndex], true);
 				TabCtrl_InsertItem(hTabControl, nIndex, &tcItem);
 			}
 
@@ -201,7 +201,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			memset(&bInfo, 0, sizeof(bInfo));
 			bInfo.hwndOwner = hDlg;
 			bInfo.pszDisplayName = buffer;
-			bInfo.lpszTitle = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
+			bInfo.lpszTitle = FBNLoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
 			bInfo.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
 
 			pItemIDList = SHBrowseForFolder(&bInfo);
@@ -243,7 +243,7 @@ int SupportDirCreate(HWND hParentWND)
 
 	_stprintf(szCheckIconsPath, szAppIconsPath);
 
-	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SUPPORTDIR), hParentWND, (DLGPROC)DefInpProc);
+	return FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_SUPPORTDIR), hParentWND, (DLGPROC)DefInpProc);
 }
 
 int SupportDirCreateTab(int nTab, HWND hParentWND)
@@ -254,5 +254,5 @@ int SupportDirCreateTab(int nTab, HWND hParentWND)
 
 	_stprintf(szCheckIconsPath, szAppIconsPath);
 
-	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SUPPORTDIR), hParentWND, (DLGPROC)DefInpProc);
+	return FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_SUPPORTDIR), hParentWND, (DLGPROC)DefInpProc);
 }

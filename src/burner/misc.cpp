@@ -195,117 +195,117 @@ TCHAR* DecorateGenreInfo()
 
 	if (nGenre) {
 		if (nGenre & GBF_HORSHOOT) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_HORSHOOT, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_HORSHOOT, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_VERSHOOT) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_VERSHOOT, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_VERSHOOT, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_SCRFIGHT) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_SCRFIGHT, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_SCRFIGHT, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_VSFIGHT) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_VSFIGHT, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_VSFIGHT, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_BIOS) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_BIOS, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_BIOS, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_BREAKOUT) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_BREAKOUT, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_BREAKOUT, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_CASINO) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_CASINO, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_CASINO, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_BALLPADDLE) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_BALLPADDLE, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_BALLPADDLE, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_MAZE) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_MAZE, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_MAZE, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_MINIGAMES) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_MINIGAMES, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_MINIGAMES, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_PINBALL) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_PINBALL, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_PINBALL, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_PLATFORM) {
-				_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_PLATFORM, true));
+				_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_PLATFORM, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_PUZZLE) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_PUZZLE, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_PUZZLE, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_QUIZ) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_QUIZ, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_QUIZ, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_SPORTSMISC) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_SPORTSMISC, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_SPORTSMISC, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_SPORTSFOOTBALL) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_SPORTSFOOTBALL, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_SPORTSFOOTBALL, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_MISC) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_MISC, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_MISC, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_MAHJONG) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_MAHJONG, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_MAHJONG, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_RACING) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_RACING, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_RACING, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_SHOOT) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_SHOOT, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_SHOOT, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_ACTION) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_ACTION, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_ACTION, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_RUNGUN) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_RUNGUN, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_RUNGUN, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
 		if (nGenre & GBF_STRATEGY) {
-			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_STRATEGY, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBNLoadStringEx(hAppInst, IDS_GENRE_STRATEGY, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
@@ -316,52 +316,52 @@ TCHAR* DecorateGenreInfo()
 		_stprintf(szFamily, _T(" ("));
 
 		if (nFamily & FBF_MSLUG) {
-			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_MSLUG, true));
+			_stprintf(szFamily + _tcslen(szFamily), FBNLoadStringEx(hAppInst, IDS_FAMILY_MSLUG, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 
 		if (nFamily & FBF_SF) {
-			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_SF, true));
+			_stprintf(szFamily + _tcslen(szFamily), FBNLoadStringEx(hAppInst, IDS_FAMILY_SF, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 
 		if (nFamily & FBF_KOF) {
-			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_KOF, true));
+			_stprintf(szFamily + _tcslen(szFamily), FBNLoadStringEx(hAppInst, IDS_FAMILY_KOF, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 
 		if (nFamily & FBF_DSTLK) {
-			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_DSTLK, true));
+			_stprintf(szFamily + _tcslen(szFamily), FBNLoadStringEx(hAppInst, IDS_FAMILY_DSTLK, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 
 		if (nFamily & FBF_FATFURY) {
-			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_FATFURY, true));
+			_stprintf(szFamily + _tcslen(szFamily), FBNLoadStringEx(hAppInst, IDS_FAMILY_FATFURY, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 
 		if (nFamily & FBF_SAMSHO) {
-			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_SAMSHO, true));
+			_stprintf(szFamily + _tcslen(szFamily), FBNLoadStringEx(hAppInst, IDS_FAMILY_SAMSHO, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 
 		if (nFamily & FBF_19XX) {
-			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_19XX, true));
+			_stprintf(szFamily + _tcslen(szFamily), FBNLoadStringEx(hAppInst, IDS_FAMILY_19XX, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 
 		if (nFamily & FBF_SONICWI) {
-			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_SONICWI, true));
+			_stprintf(szFamily + _tcslen(szFamily), FBNLoadStringEx(hAppInst, IDS_FAMILY_SONICWI, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 
 		if (nFamily & FBF_PWRINST) {
-			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_PWRINST, true));
+			_stprintf(szFamily + _tcslen(szFamily), FBNLoadStringEx(hAppInst, IDS_FAMILY_PWRINST, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 
 		if (nFamily & FBF_SONIC) {
-			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_SONIC, true));
+			_stprintf(szFamily + _tcslen(szFamily), FBNLoadStringEx(hAppInst, IDS_FAMILY_SONIC, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 

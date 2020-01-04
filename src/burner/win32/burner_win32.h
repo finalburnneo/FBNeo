@@ -153,15 +153,15 @@ bool AppProcessKeyboardInput();
 extern bool bLocalisationActive;
 extern TCHAR szLocalisationTemplate[MAX_PATH];
 
-void FBALocaliseExit();
-int FBALocaliseInit(TCHAR* pszTemplate);
-int FBALocaliseLoadTemplate();
-int FBALocaliseCreateTemplate();
-HMENU FBALoadMenu(HINSTANCE hInstance, LPTSTR lpMenuName);
-INT_PTR FBADialogBox(HINSTANCE hInstance, LPTSTR lpTemplate, HWND hWndParent, DLGPROC  lpDialogFunc);
-HWND FBACreateDialog(HINSTANCE hInstance, LPCTSTR lpTemplate, HWND hWndParent, DLGPROC lpDialogFunc);
-int FBALoadString(HINSTANCE hInstance, UINT uID, LPTSTR lpBuffer, int nBufferMax);
-TCHAR* FBALoadStringEx(HINSTANCE hInstance, UINT uID, bool bTranslate);
+void LocaliseExit();
+int LocaliseInit(TCHAR* pszTemplate);
+int LocaliseLoadTemplate();
+int LocaliseCreateTemplate();
+HMENU FBNLoadMenu(HINSTANCE hInstance, LPTSTR lpMenuName);
+INT_PTR FBNDialogBox(HINSTANCE hInstance, LPTSTR lpTemplate, HWND hWndParent, DLGPROC  lpDialogFunc);
+HWND FBNCreateDialog(HINSTANCE hInstance, LPCTSTR lpTemplate, HWND hWndParent, DLGPROC lpDialogFunc);
+int FBNLoadString(HINSTANCE hInstance, UINT uID, LPTSTR lpBuffer, int nBufferMax);
+TCHAR* FBNLoadStringEx(HINSTANCE hInstance, UINT uID, bool bTranslate);
 
 // localise_gamelist.cpp
 extern TCHAR szGamelistLocalisationTemplate[MAX_PATH];

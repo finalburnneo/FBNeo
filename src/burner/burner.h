@@ -5,7 +5,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <tchar.h>
 
 // Macro to make quoted strings
 #define MAKE_STRING_2(s) #s
@@ -15,7 +15,7 @@
 #ifdef BUILD_QT
  #define DIRS_MAX (4)								// Maximum number of directories to search
 #else
- #define DIRS_MAX (20)								// Maximum number of directories to search
+#define DIRS_MAX (20)								// Maximum number of directories to search
 #endif
 
 // ---------------------------------------------------------------------------
@@ -30,18 +30,19 @@
 
 // ---------------------------------------------------------------------------
 // OS dependent functionality
-typedef struct tagIMAGE {
-	unsigned int	width;
-	unsigned int	height;
-	unsigned int	rowbytes;
-	unsigned int	imgbytes;
-	unsigned char**	rowptr;
-	unsigned char*	bmpbits;
-	unsigned int	flags;
+typedef struct tagIMAGE
+{
+	unsigned int width;
+	unsigned int height;
+	unsigned int rowbytes;
+	unsigned int imgbytes;
+	unsigned char** rowptr;
+	unsigned char* bmpbits;
+	unsigned int flags;
 } IMAGE;
 
 #ifdef BUILD_WIN32
- #include "burner_win32.h"
+#include "burner_win32.h"
 #elif defined (BUILD_MACOS)
  #include "burner_macos.h"
 #elif defined (BUILD_SDL)
@@ -55,7 +56,7 @@ typedef struct tagIMAGE {
 #endif
 
 #ifdef INCLUDE_LIB_PNGH
- #include "png.h"
+#include "png.h"
 #endif
 
 // ---------------------------------------------------------------------------
@@ -81,7 +82,7 @@ bool PNGIsImage(FILE* fp);
 bool PNGIsImageBuffer(unsigned char* buffer, int bufferLength);
 INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset);
 INT32 PNGLoadBuffer(IMAGE* img, unsigned char* buffer, int bufferLength, INT32 nPreset);
-INT32 PNGGetInfo(IMAGE* img, FILE *fp);
+INT32 PNGGetInfo(IMAGE* img, FILE* fp);
 INT32 PNGGetInfoBuffer(IMAGE* img, unsigned char* buffer, int bufferLength);
 
 // gami.cpp
@@ -134,9 +135,9 @@ extern void scrnSSUndo();
 extern bool bHasFocus;
 
 // cong.cpp
-extern const INT32 nConfigMinVersion;					// Minimum version of application for which input files are valid
+extern const INT32 nConfigMinVersion; // Minimum version of application for which input files are valid
 extern bool bSaveInputs;
-INT32 ConfigGameLoad(bool bOverWrite);				// char* lpszName = NULL
+INT32 ConfigGameLoad(bool bOverWrite); // char* lpszName = NULL
 INT32 ConfigGameSave(bool bSave);
 
 // conc.cpp
@@ -151,16 +152,17 @@ INT32 GamcPlayerHotRod(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nFla
 
 // misc.cpp
 #define QUOTE_MAX (128)															// Maximum length of "quoted strings"
-INT32 QuoteRead(TCHAR** ppszQuote, TCHAR** ppszEnd, TCHAR* pszSrc);					// Read a quoted string from szSrc and poINT32 to the end
+INT32 QuoteRead(TCHAR** ppszQuote, TCHAR** ppszEnd, TCHAR* pszSrc);
+// Read a quoted string from szSrc and poINT32 to the end
 TCHAR* LabelCheck(TCHAR* s, TCHAR* pszLabel);
 
 TCHAR* ExtractFilename(TCHAR* fullname);
 TCHAR* DriverToName(UINT32 nDrv);
 UINT32 NameToDriver(TCHAR* szName);
-TCHAR *StrReplace(TCHAR *str, TCHAR find, TCHAR replace);
-TCHAR *StrLower(TCHAR *str);
-TCHAR *FileExt(TCHAR *str);
-bool IsFileExt(TCHAR *str, TCHAR *ext);
+TCHAR* StrReplace(TCHAR* str, TCHAR find, TCHAR replace);
+TCHAR* StrLower(TCHAR* str);
+TCHAR* FileExt(TCHAR* str);
+bool IsFileExt(TCHAR* str, TCHAR* ext);
 
 extern INT32 bDoGamma;
 extern INT32 bHardwareGammaOnly;
@@ -203,7 +205,12 @@ INT32 BurnStateCompress(UINT8** pDef, INT32* pnDefLen, INT32 bAll);
 INT32 BurnStateDecompress(UINT8* Def, INT32 nDefLen, INT32 bAll);
 
 // zipfn.cpp
-struct ZipEntry { char* szName;	UINT32 nLen; UINT32 nCrc; };
+struct ZipEntry
+{
+	char* szName;
+	UINT32 nLen;
+	UINT32 nCrc;
+};
 
 INT32 ZipOpen(char* szZip);
 INT32 ZipClose();

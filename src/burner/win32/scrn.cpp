@@ -233,9 +233,9 @@ static int WINAPI gameCallback(char* game, int player, int numplayers)
 
 	TCHAR szTemp1[256];
 	TCHAR szTemp2[256];
-	VidSAddChatMsg(FBALoadStringEx(hAppInst, IDS_NETPLAY_START, true), 0xFFFFFF, BurnDrvGetText(DRV_FULLNAME), 0xFFBFBF);
-	_sntprintf(szTemp1, 256, FBALoadStringEx(hAppInst, IDS_NETPLAY_START_YOU, true), player);
-	_sntprintf(szTemp2, 256, FBALoadStringEx(hAppInst, IDS_NETPLAY_START_TOTAL, true), numplayers);
+	VidSAddChatMsg(FBNLoadStringEx(hAppInst, IDS_NETPLAY_START, true), 0xFFFFFF, BurnDrvGetText(DRV_FULLNAME), 0xFFBFBF);
+	_sntprintf(szTemp1, 256, FBNLoadStringEx(hAppInst, IDS_NETPLAY_START_YOU, true), player);
+	_sntprintf(szTemp2, 256, FBNLoadStringEx(hAppInst, IDS_NETPLAY_START_TOTAL, true), numplayers);
 	VidSAddChatMsg(szTemp1, 0xFFFFFF, szTemp2, 0xFFBFBF);
 
 	RunMessageLoop();
@@ -264,7 +264,7 @@ static void WINAPI kChatCallback(char* nick, char* text)
 static void WINAPI kDropCallback(char *nick, int playernb)
 {
 	TCHAR szTemp[128];
-	_sntprintf(szTemp, 128, FBALoadStringEx(hAppInst, IDS_NETPLAY_DROP, true), playernb, nick);
+	_sntprintf(szTemp, 128, FBNLoadStringEx(hAppInst, IDS_NETPLAY_DROP, true), playernb, nick);
 	VidSAddChatMsg(szTemp, 0xFFFFFF, NULL, 0);
 }
 
@@ -333,9 +333,9 @@ int CreateDatfileWindows(int bType)
 	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));
 
 	_sntprintf(szChoice, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, szConsoleString);
-	_sntprintf(szTitle, 256, FBALoadStringEx(hAppInst, IDS_DAT_GENERATE, true), szProgramString);
+	_sntprintf(szTitle, 256, FBNLoadStringEx(hAppInst, IDS_DAT_GENERATE, true), szProgramString);
 
-	_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_ALL_DAT, true), _T(APP_TITLE));
+	_stprintf(szFilter, FBNLoadStringEx(hAppInst, IDS_DISK_ALL_DAT, true), _T(APP_TITLE));
 	memcpy(szFilter + _tcslen(szFilter), _T(" (*.dat)\0*.dat\0\0"), 16 * sizeof(TCHAR));
 
 	memset(&ofn, 0, sizeof(ofn));
@@ -374,7 +374,7 @@ int CreateAllDatfilesWindows()
 	memset(&bInfo, 0, sizeof(bInfo));
 	bInfo.hwndOwner = hScrnWnd;
 	bInfo.pszDisplayName = buffer;
-	bInfo.lpszTitle = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
+	bInfo.lpszTitle = FBNLoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
 	bInfo.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
 
 	pItemIDList = SHBrowseForFolder(&bInfo);
@@ -1022,10 +1022,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CDIMAGE: {
 			nCDEmuSelect = 0;
 			TCHAR szFilter[100];
-			_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_FILTER, true));
+			_stprintf(szFilter, _T("%s"), FBNLoadStringEx(hAppInst, IDS_CD_SELECT_FILTER, true));
 			memcpy(szFilter + _tcslen(szFilter), _T(" (*.ccd,*.cue)\0*.ccd;*.cue\0\0"), 28 * sizeof(TCHAR));
 			TCHAR szTitle[100];
-			_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE_TITLE, true));
+			_stprintf(szTitle, _T("%s"), FBNLoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE_TITLE, true));
 			if (UseDialogs() && !bDrvOkay) {
 				memset(&ofn, 0, sizeof(ofn));
 				ofn.lStructSize = sizeof(ofn);
@@ -1045,7 +1045,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_STARTNET:
 			if (Init_Network()) {
-				MessageBox(hScrnWnd, FBALoadStringEx(hAppInst, IDS_ERR_NO_NETPLAYDLL, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+				MessageBox(hScrnWnd, FBNLoadStringEx(hAppInst, IDS_ERR_NO_NETPLAYDLL, true), FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 				break;
 			}
 #ifdef BUILD_A68K
@@ -1100,12 +1100,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			if (AviStart()) {
 				AviStop();
 			} else {
-				VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_REC_AVI, true), 0x0000FF);
+				VidSNewShortMsg(FBNLoadStringEx(hAppInst, IDS_REC_AVI, true), 0x0000FF);
 			}
 			break;
 		case MENU_AVISTOP:
 			AviStop();
-			VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STOP_AVI, true), 0xFF3F3F);
+			VidSNewShortMsg(FBNLoadStringEx(hAppInst, IDS_STOP_AVI, true), 0xFF3F3F);
 			break;
 #endif
 
@@ -1251,7 +1251,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			if (nSavestateSlot < 1) {
 				nSavestateSlot = 1;
 			}
-			_sntprintf(szString, 256, FBALoadStringEx(hAppInst, IDS_STATE_ACTIVESLOT, true), nSavestateSlot);
+			_sntprintf(szString, 256, FBNLoadStringEx(hAppInst, IDS_STATE_ACTIVESLOT, true), nSavestateSlot);
 			VidSNewShortMsg(szString);
 			PausedRedraw();
 			break;
@@ -1263,7 +1263,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			if (nSavestateSlot > 8) {
 				nSavestateSlot = 8;
 			}
-			_sntprintf(szString, 256, FBALoadStringEx(hAppInst, IDS_STATE_ACTIVESLOT, true), nSavestateSlot);
+			_sntprintf(szString, 256, FBNLoadStringEx(hAppInst, IDS_STATE_ACTIVESLOT, true), nSavestateSlot);
 			VidSNewShortMsg(szString);
 			PausedRedraw();
 			break;
@@ -1274,9 +1274,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_STATE_LOAD_SLOT:
 			if (bDrvOkay && !kNetGame) {
 				if (StatedLoad(nSavestateSlot) == 0) {
-					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_LOADED, true), 0, 40);
+					VidSNewShortMsg(FBNLoadStringEx(hAppInst, IDS_STATE_LOADED, true), 0, 40);
 				} else {
-					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_LOAD_ERROR, true), 0xFF3F3F);
+					VidSNewShortMsg(FBNLoadStringEx(hAppInst, IDS_STATE_LOAD_ERROR, true), 0xFF3F3F);
 				}
 				PausedRedraw();
 			}
@@ -1284,9 +1284,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_STATE_SAVE_SLOT:
 			if (bDrvOkay) {
 				if (StatedSave(nSavestateSlot) == 0) {
-					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_SAVED, true), 0, 40);
+					VidSNewShortMsg(FBNLoadStringEx(hAppInst, IDS_STATE_SAVED, true), 0, 40);
 				} else {
-					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_SAVE_ERROR, true), 0xFF3F3F);
+					VidSNewShortMsg(FBNLoadStringEx(hAppInst, IDS_STATE_SAVE_ERROR, true), 0xFF3F3F);
 					SetPauseMode(1);
 				}
 				PausedRedraw();
@@ -2077,18 +2077,18 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_LANGUAGE_SELECT:
 			if (UseDialogs()) {
-				FBALocaliseLoadTemplate();
+				LocaliseLoadTemplate();
 				POST_INITIALISE_MESSAGE;
 			}
 			break;
 		case MENU_LANGUAGE_EXPORT:
 			if (UseDialogs()) {
-				FBALocaliseCreateTemplate();
+				LocaliseCreateTemplate();
 			}
 			break;
 		case MENU_LANGUAGE_RESET:
 			szLocalisationTemplate[0] = _T('\0');
-			FBALocaliseInit(szLocalisationTemplate);
+			LocaliseInit(szLocalisationTemplate);
 			POST_INITIALISE_MESSAGE;
 			break;
 		case MENU_LANGUAGE_DOWNLOAD:
@@ -2327,11 +2327,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				int status = MakeScreenShot();
 
 				if (!status) {
-					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SSHOT_SAVED, true));
+					VidSNewShortMsg(FBNLoadStringEx(hAppInst, IDS_SSHOT_SAVED, true));
 				} else {
 					TCHAR tmpmsg[256];
 
-					_sntprintf(tmpmsg, 256, FBALoadStringEx(hAppInst, IDS_SSHOT_ERROR, true), status);
+					_sntprintf(tmpmsg, 256, FBNLoadStringEx(hAppInst, IDS_SSHOT_ERROR, true), status);
 					VidSNewShortMsg(tmpmsg, 0xFF3F3F);
 				}
 			}
@@ -2349,7 +2349,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			CheatSearchStart();
 
 			TCHAR szText[100];
-			_stprintf(szText, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_NEW, true));
+			_stprintf(szText, FBNLoadStringEx(hAppInst, IDS_CHEAT_SEARCH_NEW, true));
 			VidSAddChatMsg(NULL, 0xFFFFFF, szText, 0xFFBFBF);
 
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_NOCHANGE, MF_ENABLED | MF_BYCOMMAND);
@@ -2365,12 +2365,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			TCHAR tmpmsg[256];
 			unsigned int nValues = CheatSearchValueNoChange();
 
-			_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
+			_stprintf(tmpmsg, FBNLoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
 			VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 
 			if (nValues <= CHEATSEARCH_SHOWRESULTS) {
 				for (unsigned int i = 0; i < nValues; i++) {
-					_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
+					_stprintf(tmpmsg, FBNLoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
 					VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 				}
 			}
@@ -2381,12 +2381,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			TCHAR tmpmsg[256];
 			unsigned int nValues = CheatSearchValueChange();
 
-			_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
+			_stprintf(tmpmsg, FBNLoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
 			VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 
 			if (nValues <= CHEATSEARCH_SHOWRESULTS) {
 				for (unsigned int i = 0; i < nValues; i++) {
-					_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
+					_stprintf(tmpmsg, FBNLoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
 					VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 				}
 			}
@@ -2397,12 +2397,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			TCHAR tmpmsg[256];
 			unsigned int nValues = CheatSearchValueDecreased();
 
-			_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
+			_stprintf(tmpmsg, FBNLoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
 			VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 
 			if (nValues <= CHEATSEARCH_SHOWRESULTS) {
 				for (unsigned int i = 0; i < nValues; i++) {
-					_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
+					_stprintf(tmpmsg, FBNLoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
 					VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 				}
 			}
@@ -2414,12 +2414,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 			unsigned int nValues = CheatSearchValueIncreased();
 
-			_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
+			_stprintf(tmpmsg, FBNLoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
 			VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 
 			if (nValues <= CHEATSEARCH_SHOWRESULTS) {
 				for (unsigned int i = 0; i < nValues; i++) {
-					_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
+					_stprintf(tmpmsg, FBNLoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
 					VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 				}
 			}
@@ -2435,7 +2435,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			CheatSearchExit();
 
 			TCHAR szText[100];
-			_stprintf(szText, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_EXIT, true));
+			_stprintf(szText, FBNLoadStringEx(hAppInst, IDS_CHEAT_SEARCH_EXIT, true));
 			VidSAddChatMsg(NULL, 0xFFFFFF, szText, 0xFFBFBF);
 
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_NOCHANGE, MF_GRAYED | MF_BYCOMMAND);
@@ -3055,7 +3055,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				break;
 			}
 			case EN_MAXTEXT: {
-				VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_NETPLAY_TOOMUCH, true), 0xFF3F3F);
+				VidSNewShortMsg(FBNLoadStringEx(hAppInst, IDS_NETPLAY_TOOMUCH, true), 0xFF3F3F);
 				break;
 			}
 		}
@@ -3417,7 +3417,7 @@ int ScrnTitle()
 		}
 
 	} else {
-		_stprintf(szText, _T(APP_TITLE) _T( " v%.20s") _T(SEPERATOR_1) _T("[%s]"), szAppBurnVer, FBALoadStringEx(hAppInst, IDS_SCRN_NOGAME, true));
+		_stprintf(szText, _T(APP_TITLE) _T( " v%.20s") _T(SEPERATOR_1) _T("[%s]"), szAppBurnVer, FBNLoadStringEx(hAppInst, IDS_SCRN_NOGAME, true));
 	}
 
 	SetWindowText(hScrnWnd, szText);

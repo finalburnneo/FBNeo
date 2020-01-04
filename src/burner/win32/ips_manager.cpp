@@ -387,24 +387,24 @@ static int IpsManagerInit()
 
 	_tcscpy(szFullName, szText);
 
-	_stprintf(szText, _T("%s") _T(SEPERATOR_1) _T("%s"), FBALoadStringEx(hAppInst, IDS_IPSMANAGER_TITLE, true), szFullName);
+	_stprintf(szText, _T("%s") _T(SEPERATOR_1) _T("%s"), FBNLoadStringEx(hAppInst, IDS_IPSMANAGER_TITLE, true), szFullName);
 
 	// Set the window caption
 	SetWindowText(hIpsDlg, szText);
 
 	// Fill the combo box
-	_stprintf(szLanguages[0], FBALoadStringEx(hAppInst, IDS_LANG_ENGLISH_US, true));
-	_stprintf(szLanguages[1], FBALoadStringEx(hAppInst, IDS_LANG_SIMP_CHINESE, true));
-	_stprintf(szLanguages[2], FBALoadStringEx(hAppInst, IDS_LANG_TRAD_CHINESE, true));
-	_stprintf(szLanguages[3], FBALoadStringEx(hAppInst, IDS_LANG_JAPANESE, true));
-	_stprintf(szLanguages[4], FBALoadStringEx(hAppInst, IDS_LANG_KOREAN, true));
-	_stprintf(szLanguages[5], FBALoadStringEx(hAppInst, IDS_LANG_FRENCH, true));
-	_stprintf(szLanguages[6], FBALoadStringEx(hAppInst, IDS_LANG_SPANISH, true));
-	_stprintf(szLanguages[7], FBALoadStringEx(hAppInst, IDS_LANG_ITALIAN, true));
-	_stprintf(szLanguages[8], FBALoadStringEx(hAppInst, IDS_LANG_GERMAN, true));
-	_stprintf(szLanguages[9], FBALoadStringEx(hAppInst, IDS_LANG_PORTUGUESE, true));
-	_stprintf(szLanguages[10], FBALoadStringEx(hAppInst, IDS_LANG_POLISH, true));
-	_stprintf(szLanguages[11], FBALoadStringEx(hAppInst, IDS_LANG_HUNGARIAN, true));
+	_stprintf(szLanguages[0], FBNLoadStringEx(hAppInst, IDS_LANG_ENGLISH_US, true));
+	_stprintf(szLanguages[1], FBNLoadStringEx(hAppInst, IDS_LANG_SIMP_CHINESE, true));
+	_stprintf(szLanguages[2], FBNLoadStringEx(hAppInst, IDS_LANG_TRAD_CHINESE, true));
+	_stprintf(szLanguages[3], FBNLoadStringEx(hAppInst, IDS_LANG_JAPANESE, true));
+	_stprintf(szLanguages[4], FBNLoadStringEx(hAppInst, IDS_LANG_KOREAN, true));
+	_stprintf(szLanguages[5], FBNLoadStringEx(hAppInst, IDS_LANG_FRENCH, true));
+	_stprintf(szLanguages[6], FBNLoadStringEx(hAppInst, IDS_LANG_SPANISH, true));
+	_stprintf(szLanguages[7], FBNLoadStringEx(hAppInst, IDS_LANG_ITALIAN, true));
+	_stprintf(szLanguages[8], FBNLoadStringEx(hAppInst, IDS_LANG_GERMAN, true));
+	_stprintf(szLanguages[9], FBNLoadStringEx(hAppInst, IDS_LANG_PORTUGUESE, true));
+	_stprintf(szLanguages[10], FBNLoadStringEx(hAppInst, IDS_LANG_POLISH, true));
+	_stprintf(szLanguages[11], FBNLoadStringEx(hAppInst, IDS_LANG_HUNGARIAN, true));
 
 	_stprintf(szLanguageCodes[0], _T("en_US"));
 	_stprintf(szLanguageCodes[1], _T("zh_CN"));
@@ -685,7 +685,7 @@ int IpsManagerCreate(HWND hParentWND)
 {
 	hParent = hParentWND;
 
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_IPS_MANAGER), hParent, (DLGPROC)DefInpProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_IPS_MANAGER), hParent, (DLGPROC)DefInpProc);
 	return 1;
 }
 

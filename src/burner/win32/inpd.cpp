@@ -182,15 +182,15 @@ static int InpdListBegin()
 	LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 
 	LvCol.cx = 0xa0;
-	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_INPUT_INPUT, true);
+	LvCol.pszText = FBNLoadStringEx(hAppInst, IDS_INPUT_INPUT, true);
 	SendMessage(hInpdList, LVM_INSERTCOLUMN, 0, (LPARAM)&LvCol);
 
 	LvCol.cx = 0xa0;
-	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_INPUT_MAPPING, true);
+	LvCol.pszText = FBNLoadStringEx(hAppInst, IDS_INPUT_MAPPING, true);
 	SendMessage(hInpdList, LVM_INSERTCOLUMN, 1, (LPARAM)&LvCol);
 
 	LvCol.cx = 0x38;
-	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_INPUT_STATE, true);
+	LvCol.pszText = FBNLoadStringEx(hAppInst, IDS_INPUT_STATE, true);
 	SendMessage(hInpdList, LVM_INSERTCOLUMN, 2, (LPARAM)&LvCol);
 
 	return 0;
@@ -277,19 +277,19 @@ static void InitComboboxes()
 	WIN32_FIND_DATA findData;
 
 	for (int i = 0; i < 4; i++) {
-		_stprintf(szLabel, FBALoadStringEx(hAppInst, IDS_INPUT_INP_PLAYER, true), i + 1);
+		_stprintf(szLabel, FBNLoadStringEx(hAppInst, IDS_INPUT_INP_PLAYER, true), i + 1);
 		SendMessage(hInpdGi, CB_ADDSTRING, 0, (LPARAM)szLabel);
 	}
 
-	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBALoadStringEx(hAppInst, IDS_INPUT_INP_KEYBOARD, true));
+	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBNLoadStringEx(hAppInst, IDS_INPUT_INP_KEYBOARD, true));
 	for (int i = 0; i < 3; i++) {
-		_stprintf(szLabel, FBALoadStringEx(hAppInst, IDS_INPUT_INP_JOYSTICK, true), i);
+		_stprintf(szLabel, FBNLoadStringEx(hAppInst, IDS_INPUT_INP_JOYSTICK, true), i);
 		SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)szLabel);
 	}
-	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBALoadStringEx(hAppInst, IDS_INPUT_INP_XARCADEL, true));
-	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBALoadStringEx(hAppInst, IDS_INPUT_INP_XARCADER, true));
-	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBALoadStringEx(hAppInst, IDS_INPUT_INP_HOTRODL, true));
-	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBALoadStringEx(hAppInst, IDS_INPUT_INP_HOTRODR, true));
+	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBNLoadStringEx(hAppInst, IDS_INPUT_INP_XARCADEL, true));
+	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBNLoadStringEx(hAppInst, IDS_INPUT_INP_XARCADER, true));
+	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBNLoadStringEx(hAppInst, IDS_INPUT_INP_HOTRODL, true));
+	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBNLoadStringEx(hAppInst, IDS_INPUT_INP_HOTRODR, true));
 
 	// Scan presets directory for .ini files and add them to the list
 	if ((search = FindFirstFile(_T("config/presets/*.ini"), &findData)) != INVALID_HANDLE_VALUE) {
@@ -574,14 +574,14 @@ static int InitAnalogOptions(int nGi, int nPci)
 	SendMessage(hInpdAnalog, CB_RESETCONTENT, 0, 0);
 	if (nPci >= 1 && nPci <= 3) {
 		// Absolute mode only for joysticks
-		SendMessage(hInpdAnalog, CB_ADDSTRING, 0, (LPARAM)(LPARAM)FBALoadStringEx(hAppInst, IDS_INPUT_ANALOG_ABS, true));
+		SendMessage(hInpdAnalog, CB_ADDSTRING, 0, (LPARAM)(LPARAM)FBNLoadStringEx(hAppInst, IDS_INPUT_ANALOG_ABS, true));
 	} else {
 		if (nAnalog > 0) {
 			nAnalog--;
 		}
 	}
-	SendMessage(hInpdAnalog, CB_ADDSTRING, 0, (LPARAM)(LPARAM)FBALoadStringEx(hAppInst, IDS_INPUT_ANALOG_AUTO, true));
-	SendMessage(hInpdAnalog, CB_ADDSTRING, 0, (LPARAM)(LPARAM)FBALoadStringEx(hAppInst, IDS_INPUT_ANALOG_NORMAL, true));
+	SendMessage(hInpdAnalog, CB_ADDSTRING, 0, (LPARAM)(LPARAM)FBNLoadStringEx(hAppInst, IDS_INPUT_ANALOG_AUTO, true));
+	SendMessage(hInpdAnalog, CB_ADDSTRING, 0, (LPARAM)(LPARAM)FBNLoadStringEx(hAppInst, IDS_INPUT_ANALOG_NORMAL, true));
 
 	SendMessage(hInpdAnalog, CB_SETCURSEL, (WPARAM)nAnalog, 0);
 
@@ -1010,7 +1010,7 @@ int InpdCreate()
 
 	DestroyWindow(hInpdDlg);										// Make sure exitted
 
-	hInpdDlg = FBACreateDialog(hAppInst, MAKEINTRESOURCE(IDD_INPD), hScrnWnd, (DLGPROC)DialogProc);
+	hInpdDlg = FBNCreateDialog(hAppInst, MAKEINTRESOURCE(IDD_INPD), hScrnWnd, (DLGPROC)DialogProc);
 	if (hInpdDlg == NULL) {
 		return 1;
 	}

@@ -205,7 +205,7 @@ int SFactdCreate()
 	bOldPause = bRunPause;
 	bRunPause = 1;
 	AudBlankSound();
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_CAPTURE), hScrnWnd, (DLGPROC)DialogProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_CAPTURE), hScrnWnd, (DLGPROC)DialogProc);
 
 	return 0;
 }

@@ -298,7 +298,7 @@ INT32 ReplayInput()
 
 static void MakeOfn(TCHAR* pszFilter)
 {
-	_stprintf(pszFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_REPLAY, true), _T(APP_TITLE));
+	_stprintf(pszFilter, FBNLoadStringEx(hAppInst, IDS_DISK_FILE_REPLAY, true), _T(APP_TITLE));
 	memcpy(pszFilter + _tcslen(pszFilter), _T(" (*.fr)\0*.fr\0\0"), 14 * sizeof(TCHAR));
 
 	memset(&ofn, 0, sizeof(ofn));
@@ -1117,7 +1117,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 						if (lIndex != CB_ERR) {
 							if (lIndex == lCount - 1) {
 								MakeOfn(szFilter);
-								ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_REPLAY_REPLAY, true);
+								ofn.lpstrTitle = FBNLoadStringEx(hAppInst, IDS_REPLAY_REPLAY, true);
 								//ofn.Flags &= ~OFN_HIDEREADONLY;
 
 								INT32 nRet = GetOpenFileName(&ofn); // Browse...
@@ -1170,7 +1170,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 
 static INT32 ReplayDialog()
 {
-	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_REPLAYINP), hScrnWnd, (DLGPROC)ReplayDialogProc);
+	return FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_REPLAYINP), hScrnWnd, (DLGPROC)ReplayDialogProc);
 }
 
 static INT32 VerifyRecordingAccessMode(wchar_t* szFilename, INT32 mode)
@@ -1237,7 +1237,7 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 					{
 						_stprintf(szChoice, _T("%s"), BurnDrvGetText(DRV_NAME));
 						MakeOfn(szFilter);
-						ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_REPLAY_RECORD, true);
+						ofn.lpstrTitle = FBNLoadStringEx(hAppInst, IDS_REPLAY_RECORD, true);
 						ofn.Flags |= OFN_OVERWRITEPROMPT;
 						INT32 nRet = GetSaveFileName(&ofn);
 						if (nRet != 0) {
@@ -1276,5 +1276,5 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 
 static INT32 RecordDialog()
 {
-	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_RECORDINP), hScrnWnd, (DLGPROC)RecordDialogProc);
+	return FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_RECORDINP), hScrnWnd, (DLGPROC)RecordDialogProc);
 }

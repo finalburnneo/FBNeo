@@ -881,7 +881,7 @@ DLGTEMPLATE* TranslateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, const Locali
 	return (DLGTEMPLATE*)pTemplateDataOut;
 }
 
-INT_PTR FBADialogBox(HINSTANCE hInstance, LPTSTR lpTemplate, HWND hWndParent, DLGPROC lpDialogFunc)
+INT_PTR FBNDialogBox(HINSTANCE hInstance, LPTSTR lpTemplate, HWND hWndParent, DLGPROC lpDialogFunc)
 {
 	// Try to load the translated dialog
 	if (bLocalisationActive && hInstance == hAppInst && (UINT_PTR)lpTemplate < nMaxResources && FBAResourceInfo[(UINT_PTR)lpTemplate].pResourceTranslation) {
@@ -892,7 +892,7 @@ INT_PTR FBADialogBox(HINSTANCE hInstance, LPTSTR lpTemplate, HWND hWndParent, DL
 	return DialogBox(hInstance, lpTemplate, hWndParent, lpDialogFunc);
 }
 
-HWND FBACreateDialog(HINSTANCE hInstance, LPCTSTR lpTemplate, HWND hWndParent, DLGPROC lpDialogFunc)
+HWND FBNCreateDialog(HINSTANCE hInstance, LPCTSTR lpTemplate, HWND hWndParent, DLGPROC lpDialogFunc)
 {
 	// Try to load the translated dialog
 	if (bLocalisationActive && hInstance == hAppInst && (UINT_PTR)lpTemplate < nMaxResources && FBAResourceInfo[(UINT_PTR)lpTemplate].pResourceTranslation) {
@@ -1054,7 +1054,7 @@ MENUTEMPLATE* TranslateMenuTemplate(const MENUTEMPLATE* pTemplate, const Localis
 
 }
 
-HMENU FBALoadMenu(HINSTANCE hInstance, LPTSTR lpMenuName)
+HMENU FBNLoadMenu(HINSTANCE hInstance, LPTSTR lpMenuName)
 {
 	// Try to load the translated menu
 	if (bLocalisationActive && hInstance == hAppInst && (UINT_PTR)lpMenuName < nMaxResources && FBAResourceInfo[(UINT_PTR)lpMenuName].pResourceTranslation) {
@@ -1067,7 +1067,7 @@ HMENU FBALoadMenu(HINSTANCE hInstance, LPTSTR lpMenuName)
 
 // ----------------------------------------------------------------------------
 
-TCHAR* FBALoadStringEx(HINSTANCE hInstance, UINT uID, bool bTranslate)
+TCHAR* FBNLoadStringEx(HINSTANCE hInstance, UINT uID, bool bTranslate)
 {
 	if (bLocalisationActive && bTranslate && uID < nMaxResources) {
 		if (FBAResourceInfo[uID].pResourceTranslation) {
@@ -1124,7 +1124,7 @@ TCHAR* FBALoadStringEx(HINSTANCE hInstance, UINT uID, bool bTranslate)
 	}
 }
 
-int FBALoadString(HINSTANCE hInstance, UINT uID, LPTSTR lpBuffer, int nBufferMax)
+int FBNLoadString(HINSTANCE hInstance, UINT uID, LPTSTR lpBuffer, int nBufferMax)
 {
 	if (bLocalisationActive && uID < nMaxResources) {
 		if (FBAResourceInfo[uID].pResourceTranslation) {
@@ -1552,7 +1552,7 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 	return 0;
 }
 
-void FBALocaliseExit()
+void LocaliseExit()
 {
 	bLocalisationActive = false;
 
@@ -1573,9 +1573,9 @@ void FBALocaliseExit()
 	}
 }
 
-int FBALocaliseInit(TCHAR* pszTemplate)
+int LocaliseInit(TCHAR* pszTemplate)
 {
-	FBALocaliseExit();
+	LocaliseExit();
 	nFBACodepage = GetACP();
 
 	if (pszTemplate == NULL || _tcslen(pszTemplate) == 0) {
@@ -1612,7 +1612,7 @@ int FBALocaliseInit(TCHAR* pszTemplate)
 		dprintf(_T(" ** Translation disabled\n"));
 #endif
 
-		FBALocaliseExit();
+		LocaliseExit();
 		nFBACodepage = GetACP();
 
 		szLocalisationTemplate[0] = _T('\0');
@@ -1640,7 +1640,7 @@ static TCHAR szFilter[100];
 
 static void MakeOfn()
 {
-	_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_FILTER, true));
+	_stprintf(szFilter, _T("%s"), FBNLoadStringEx(hAppInst, IDS_LOCAL_FILTER, true));
 	memcpy(szFilter + _tcslen(szFilter), _T(" (*.flt)\0*.flt\0\0"), 16 * sizeof(TCHAR));
 
 	memset(&ofn, 0, sizeof(ofn));
@@ -1654,12 +1654,12 @@ static void MakeOfn()
 	ofn.lpstrDefExt = _T("flt");
 }
 
-int FBALocaliseLoadTemplate()
+int LocaliseLoadTemplate()
 {
 	_stprintf(szChoice, _T("template"));
 	MakeOfn();
 	TCHAR szTitle[100];
-	_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_SELECT, true));
+	_stprintf(szTitle, _T("%s"), FBNLoadStringEx(hAppInst, IDS_LOCAL_SELECT, true));
 	ofn.lpstrTitle = szTitle;
 	ofn.Flags |= OFN_OVERWRITEPROMPT;
 
@@ -1672,15 +1672,15 @@ int FBALocaliseLoadTemplate()
 		return 1;
 	}
 
-	return FBALocaliseInit(szChoice);
+	return LocaliseInit(szChoice);
 }
 
-int FBALocaliseCreateTemplate()
+int LocaliseCreateTemplate()
 {
 	_stprintf(szChoice, _T("template"));
 	MakeOfn();
 	TCHAR szTitle[100];
-	_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_CREATE, true));
+	_stprintf(szTitle, _T("%s"), FBNLoadStringEx(hAppInst, IDS_LOCAL_CREATE, true));
 	ofn.lpstrTitle = szTitle;
 	ofn.Flags |= OFN_OVERWRITEPROMPT;
 

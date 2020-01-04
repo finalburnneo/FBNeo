@@ -790,7 +790,7 @@ static int SelListMake()
 	// Update the status info
 	TCHAR szRomsAvailableInfo[128] = _T("");
 
-	_stprintf(szRomsAvailableInfo, FBALoadStringEx(hAppInst, IDS_SEL_SETSTATUS, true), nTmpDrvCount, nBurnDrvCount - REDUCE_TOTAL_SETS_BIOS, nMissingDrvCount);
+	_stprintf(szRomsAvailableInfo, FBNLoadStringEx(hAppInst, IDS_SEL_SETSTATUS, true), nTmpDrvCount, nBurnDrvCount - REDUCE_TOTAL_SETS_BIOS, nMissingDrvCount);
 	SendDlgItemMessage(hSelDlg, IDC_DRVCOUNT, WM_SETTEXT, 0, (LPARAM)(LPCTSTR)szRomsAvailableInfo);
 
 	return 0;
@@ -882,8 +882,8 @@ static void SelOkay()
 #if NON_WORKING_PROMPT_ON_LOAD
 	if (!CheckWorkingStatus(nSelect)) {
 		TCHAR szWarningText[1024];
-		_stprintf(szWarningText, _T("%s"), FBALoadStringEx(hAppInst, IDS_ERR_WARNING, true));
-		if (MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NON_WORKING, true), szWarningText, MB_YESNO | MB_DEFBUTTON2 | MB_ICONWARNING) == IDNO) {
+		_stprintf(szWarningText, _T("%s"), FBNLoadStringEx(hAppInst, IDS_ERR_WARNING, true));
+		if (MessageBox(hSelDlg, FBNLoadStringEx(hAppInst, IDS_ERR_NON_WORKING, true), szWarningText, MB_YESNO | MB_DEFBUTTON2 | MB_ICONWARNING) == IDNO) {
 			return;
 		}
 	}
@@ -1190,7 +1190,7 @@ static HTREEITEM TvBitTohFilter(int nBit)
 #define _TVCreateFiltersA(a, b, c, d)								\
 {																	\
 	TvItem.hParent = a;												\
-	TvItem.item.pszText = FBALoadStringEx(hAppInst, b, true);		\
+	TvItem.item.pszText = FBNLoadStringEx(hAppInst, b, true);		\
 	c = TreeView_InsertItem(hFilterList, &TvItem);					\
 	_TreeView_SetCheckState(hFilterList, c, (d) ? FALSE : TRUE);	\
 }
@@ -1198,14 +1198,14 @@ static HTREEITEM TvBitTohFilter(int nBit)
 #define _TVCreateFiltersB(a, b, c)								\
 {																\
 	TvItem.hParent = a;												\
-	TvItem.item.pszText = FBALoadStringEx(hAppInst, b, true);		\
+	TvItem.item.pszText = FBNLoadStringEx(hAppInst, b, true);		\
 	c = TreeView_InsertItem(hFilterList, &TvItem);					\
 }
 
 #define _TVCreateFiltersC(a, b, c, d)								\
 {																	\
 	TvItem.hParent = a;												\
-	TvItem.item.pszText = FBALoadStringEx(hAppInst, b, true);		\
+	TvItem.item.pszText = FBNLoadStringEx(hAppInst, b, true);		\
 	c = TreeView_InsertItem(hFilterList, &TvItem);					\
 	_TreeView_SetCheckState(hFilterList, c, (d) ? FALSE : TRUE);	\
 }
@@ -1213,7 +1213,7 @@ static HTREEITEM TvBitTohFilter(int nBit)
 #define _TVCreateFiltersD(a, b, c, d)								\
 {																	\
 	TvItem.hParent = a;												\
-	TvItem.item.pszText = FBALoadStringEx(hAppInst, b, true);		\
+	TvItem.item.pszText = FBNLoadStringEx(hAppInst, b, true);		\
 	c = TreeView_InsertItem(hFilterList, &TvItem);					\
 	_TreeView_SetCheckState(hFilterList, c, (d) ? FALSE : TRUE);	\
 }
@@ -2026,7 +2026,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						GameInfoDialogCreate(hSelDlg, nBurnDrvActive);
 						SetFocus(hSelList); // Update list for Rescan Romset button
 					} else {
-						MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+						MessageBox(hSelDlg, FBNLoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 					}
 					break;
 				case IDC_SEL_IPSMANAGER:
@@ -2042,7 +2042,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						}
                         SetFocus(hSelList);
 					} else {
-						MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+						MessageBox(hSelDlg, FBNLoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 					}
 					break;
 				case IDC_SEL_APPLYIPS:
@@ -2070,7 +2070,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					GameInfoDialogCreate(hSelDlg, nBurnDrvActive);
 					SetFocus(hSelList); // Update list for Rescan Romset button
 				} else {
-					MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+					MessageBox(hSelDlg, FBNLoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 				}
 				break;
 			}
@@ -2086,7 +2086,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				if (bDrvSelected) {
 					AddFavorite_Ext((CheckFavorites(BurnDrvGetTextA(DRV_NAME)) == -1) ? 1 : 0);
 				} else {
-					MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+					MessageBox(hSelDlg, FBNLoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 				}
 
 				break;
@@ -2497,7 +2497,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 							int nOldDrvSelect = nBurnDrvActive;
 							TCHAR* pszName = BurnDrvGetText(DRV_PARENT);
 
-							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_CLONE_OF, true), BurnDrvGetText(DRV_PARENT));
+							_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_CLONE_OF, true), BurnDrvGetText(DRV_PARENT));
 
 							for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
 								if (!_tcsicmp(pszName, BurnDrvGetText(DRV_NAME))) {
@@ -2506,19 +2506,19 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 							}
 							if (nBurnDrvActive < nBurnDrvCount) {
 								if (BurnDrvGetText(DRV_PARENT)) {
-									_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_ROMS_FROM_1, true), BurnDrvGetText(DRV_PARENT));
+									_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_ROMS_FROM_1, true), BurnDrvGetText(DRV_PARENT));
 								}
 							}
 							nBurnDrvActive = nOldDrvSelect;
 							bBracket = true;
 						} else {
 							if (BurnDrvGetTextA(DRV_PARENT)) {
-								_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_ROMS_FROM_2, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_PARENT));
+								_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_ROMS_FROM_2, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_PARENT));
 								bBracket = true;
 							}
 						}
 						if (BurnDrvGetTextA(DRV_SAMPLENAME)) {
-							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SAMPLES_FROM, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_SAMPLENAME));
+							_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SAMPLES_FROM, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_SAMPLENAME));
 							bBracket = true;
 						}
 						if (bBracket) {
@@ -2532,31 +2532,31 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						bool bUseInfo = false;
 
 						if (BurnDrvGetFlags() & BDF_PROTOTYPE) {
-							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_PROTOTYPE, true));
+							_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SEL_PROTOTYPE, true));
 							bUseInfo = true;
 						}
 						if (BurnDrvGetFlags() & BDF_BOOTLEG) {
-							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_BOOTLEG, true), bUseInfo ? _T(", ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SEL_BOOTLEG, true), bUseInfo ? _T(", ") : _T(""));
 							bUseInfo = true;
 						}
 						if (BurnDrvGetFlags() & BDF_HACK) {
-							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_HACK, true), bUseInfo ? _T(", ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SEL_HACK, true), bUseInfo ? _T(", ") : _T(""));
 							bUseInfo = true;
 						}
 						if (BurnDrvGetFlags() & BDF_HOMEBREW) {
-							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_HOMEBREW, true), bUseInfo ? _T(", ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SEL_HOMEBREW, true), bUseInfo ? _T(", ") : _T(""));
 							bUseInfo = true;
 						}
 						if (BurnDrvGetFlags() & BDF_DEMO) {
-							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_DEMO, true), bUseInfo ? _T(", ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SEL_DEMO, true), bUseInfo ? _T(", ") : _T(""));
 							bUseInfo = true;
 						}
 						TCHAR szPlayersMax[100];
-						_stprintf(szPlayersMax, FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS_MAX, true));
-						_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetMaxPlayers(), (BurnDrvGetMaxPlayers() != 1) ? szPlayersMax : _T(""));
+						_stprintf(szPlayersMax, FBNLoadStringEx(hAppInst, IDS_NUM_PLAYERS_MAX, true));
+						_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_NUM_PLAYERS, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetMaxPlayers(), (BurnDrvGetMaxPlayers() != 1) ? szPlayersMax : _T(""));
 						bUseInfo = true;
 						if (BurnDrvGetText(DRV_BOARDROM)) {
-							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_BOARD_ROMS_FROM, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetText(DRV_BOARDROM));
+							_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_BOARD_ROMS_FROM, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetText(DRV_BOARDROM));
 							SendMessage(hInfoText[i], WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 							EnableWindow(hInfoLabel[i], TRUE);
 							bUseInfo = true;
@@ -2568,9 +2568,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					case 2: {
 						TCHAR szUnknown[100];
 						TCHAR szCartridge[100];
-						_stprintf(szUnknown, FBALoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
-						_stprintf(szCartridge, FBALoadStringEx(hAppInst, IDS_MVS_CARTRIDGE, true));
-						_stprintf(szItemText, FBALoadStringEx(hAppInst, IDS_HARDWARE_DESC, true), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(nGetTextFlags | DRV_MANUFACTURER) : szUnknown, BurnDrvGetText(DRV_DATE), (((BurnDrvGetHardwareCode() & HARDWARE_SNK_MVS) == HARDWARE_SNK_MVS) && ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)) == HARDWARE_SNK_NEOGEO)? szCartridge : BurnDrvGetText(nGetTextFlags | DRV_SYSTEM));
+						_stprintf(szUnknown, FBNLoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
+						_stprintf(szCartridge, FBNLoadStringEx(hAppInst, IDS_MVS_CARTRIDGE, true));
+						_stprintf(szItemText, FBNLoadStringEx(hAppInst, IDS_HARDWARE_DESC, true), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(nGetTextFlags | DRV_MANUFACTURER) : szUnknown, BurnDrvGetText(DRV_DATE), (((BurnDrvGetHardwareCode() & HARDWARE_SNK_MVS) == HARDWARE_SNK_MVS) && ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)) == HARDWARE_SNK_NEOGEO)? szCartridge : BurnDrvGetText(nGetTextFlags | DRV_SYSTEM));
 						SendMessage(hInfoText[i], WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 						EnableWindow(hInfoLabel[i], TRUE);
 						break;
@@ -2600,7 +2600,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					case 4: {
 						_stprintf(szItemText, _T("%s"), BurnDrvGetTextA(DRV_COMMENT) ? BurnDrvGetText(nGetTextFlags | DRV_COMMENT) : _T(""));
 						if (BurnDrvGetFlags() & BDF_HISCORE_SUPPORTED) {
-							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_HISCORES_SUPPORTED, true), _tcslen(szItemText) ? _T(", ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_HISCORES_SUPPORTED, true), _tcslen(szItemText) ? _T(", ") : _T(""));
 						}
 						SendMessage(hInfoText[i], WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 						EnableWindow(hInfoLabel[i], TRUE);
@@ -2651,7 +2651,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			POINT oPoint;
 			GetCursorPos(&oPoint);
 
-			HMENU hMenuLoad = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_GAMESEL));
+			HMENU hMenuLoad = FBNLoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_GAMESEL));
 			HMENU hMenuX = GetSubMenu(hMenuLoad, 0);
 
 			CheckMenuItem(hMenuX, GAMESEL_MENU_FAVORITE, (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) ? MF_CHECKED : MF_UNCHECKED);
@@ -2678,7 +2678,7 @@ int SelDialog(int nMVSCartsOnly, HWND hParentWND)
 
 	InitCommonControls();
 
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SELNEW), hParent, (DLGPROC)DialogProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_SELNEW), hParent, (DLGPROC)DialogProc);
 
 	hSelDlg = NULL;
 	hSelList = NULL;
@@ -2709,7 +2709,7 @@ static void UpdateInfoROMInfo()
 		int nOldDrvSelect = nBurnDrvActive;
 		TCHAR* pszName = BurnDrvGetText(DRV_PARENT);
 
-		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_CLONE_OF, true), BurnDrvGetText(DRV_PARENT));
+		_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_CLONE_OF, true), BurnDrvGetText(DRV_PARENT));
 
 		for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
 			if (!_tcsicmp(pszName, BurnDrvGetText(DRV_NAME))) {
@@ -2718,19 +2718,19 @@ static void UpdateInfoROMInfo()
 		}
 		if (nBurnDrvActive < nBurnDrvCount) {
 			if (BurnDrvGetText(DRV_PARENT)) {
-				_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_ROMS_FROM_1, true), BurnDrvGetText(DRV_PARENT));
+				_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_ROMS_FROM_1, true), BurnDrvGetText(DRV_PARENT));
 			}
 		}
 		nBurnDrvActive = nOldDrvSelect;
 		bBracket = true;
 	} else {
 		if (BurnDrvGetTextA(DRV_PARENT)) {
-			_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_ROMS_FROM_2, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_PARENT));
+			_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_ROMS_FROM_2, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_PARENT));
 			bBracket = true;
 		}
 	}
 	if (BurnDrvGetText(DRV_BOARDROM)) {
-		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_BOARD_ROMS_FROM, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_BOARDROM));
+		_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_BOARD_ROMS_FROM, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_BOARDROM));
 		bBracket = true;
 	}
 	if (bBracket) {
@@ -2753,9 +2753,9 @@ static void UpdateInfoRelease()
 	TCHAR szUnknown[100];
 	TCHAR szCartridge[100];
 	TCHAR szHardware[100];
-	_stprintf(szUnknown, FBALoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
-	_stprintf(szCartridge, FBALoadStringEx(hAppInst, IDS_CARTRIDGE, true));
-	_stprintf(szHardware, FBALoadStringEx(hAppInst, IDS_HARDWARE, true));
+	_stprintf(szUnknown, FBNLoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
+	_stprintf(szCartridge, FBNLoadStringEx(hAppInst, IDS_CARTRIDGE, true));
+	_stprintf(szHardware, FBNLoadStringEx(hAppInst, IDS_HARDWARE, true));
 	_stprintf(szItemText, _T("%s (%s, %s %s)"), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(nGetTextFlags | DRV_MANUFACTURER) : szUnknown, BurnDrvGetText(DRV_DATE),
 		BurnDrvGetText(nGetTextFlags | DRV_SYSTEM), (BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CARTRIDGE) ? szCartridge : szHardware);
 
@@ -2837,7 +2837,7 @@ static int MVSpreviewUpdateSlot(int nSlot, HWND hDlg)
 
 		} else {
 			hMVSpreview[nSlot] = PNGLoadBitmap(hDlg, NULL, 72, 54, 4);
-			SendMessage(hInfoText[0], WM_SETTEXT, (WPARAM)0, (LPARAM)FBALoadStringEx(hAppInst, IDS_EMPTY, true));
+			SendMessage(hInfoText[0], WM_SETTEXT, (WPARAM)0, (LPARAM)FBNLoadStringEx(hAppInst, IDS_EMPTY, true));
 		}
 
 		SendDlgItemMessage(hDlg, IDC_MVS_CART1 + nSlot, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hMVSpreview[nSlot]);
@@ -2882,7 +2882,7 @@ static INT_PTR CALLBACK MVSpreviewProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARA
 			if (HIWORD(wParam) == BN_CLICKED) {
 				if (LOWORD(wParam) == IDOK) {
 					if (nPrevDrvSelect[0] == ~0U) {
-						MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SEL_SLOT1, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+						MessageBox(hSelDlg, FBNLoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SEL_SLOT1, true), FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 						break;
 					}
 					MVSpreviewEndDialog();
@@ -2931,5 +2931,5 @@ static INT_PTR CALLBACK MVSpreviewProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARA
 
 int SelMVSDialog()
 {
-	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_MVS_SELECT_CARTS), hScrnWnd, (DLGPROC)MVSpreviewProc);
+	return FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_MVS_SELECT_CARTS), hScrnWnd, (DLGPROC)MVSpreviewProc);
 }

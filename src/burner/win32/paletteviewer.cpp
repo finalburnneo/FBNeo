@@ -188,7 +188,7 @@ int PaletteViewerDialogCreate(HWND hParentWND)
 	}
 
 	hParent = hParentWND;
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_PALETTEVIEWER), hParent, (DLGPROC)DialogProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_PALETTEVIEWER), hParent, (DLGPROC)DialogProc);
 
 	hParent = NULL;
 	hPaletteViewerDlg = NULL;

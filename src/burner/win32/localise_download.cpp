@@ -23,13 +23,13 @@ static INT32 LocaliseDownloadInit()
 	HINTERNET connect = InternetOpen(_T("MyBrowser"), INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
 
 	if (!connect) {
-		MessageBox(hLocalDownDlg, FBALoadStringEx(hAppInst, IDS_ERR_LOCAL_FAIL_CONNECT, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+		MessageBox(hLocalDownDlg, FBNLoadStringEx(hAppInst, IDS_ERR_LOCAL_FAIL_CONNECT, true), FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 		return 1;
 	}
 
 	HINTERNET OpenAddress = InternetOpenUrl(connect, _T("https://finalburnneo.github.io/FBNeo-translations/localisationinfo/"), NULL, 0, INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_KEEP_CONNECTION, 0);
 	if (!OpenAddress) {
-		MessageBox(hLocalDownDlg, FBALoadStringEx(hAppInst, IDS_ERR_LOCAL_FAIL_OPEN_URL, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+		MessageBox(hLocalDownDlg, FBNLoadStringEx(hAppInst, IDS_ERR_LOCAL_FAIL_OPEN_URL, true), FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 		InternetCloseHandle(connect);
 		return 1;
 	}
@@ -74,9 +74,9 @@ static int LocaliseDownloadOkay()
 	_sntprintf(szSelected, 256, szChoice);
 
 
-	_sntprintf(szTitle, 256, FBALoadStringEx(hAppInst, IDS_LOCAL_GL_SELECT, true));
+	_sntprintf(szTitle, 256, FBNLoadStringEx(hAppInst, IDS_LOCAL_GL_SELECT, true));
 
-	_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_LOCAL_GL_FILTER, true));
+	_stprintf(szFilter, FBNLoadStringEx(hAppInst, IDS_LOCAL_GL_FILTER, true));
 	memcpy(szFilter + _tcslen(szFilter), _T(" (*.flt)\0*.flt\0\0"), 16 * sizeof(TCHAR));
 
 	memset(&ofn, 0, sizeof(ofn));
@@ -100,7 +100,7 @@ static int LocaliseDownloadOkay()
 	HINTERNET connect = InternetOpen(_T("MyBrowser"), INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
 
 	if (!connect) {
-		MessageBox(hLocalDownDlg, FBALoadStringEx(hAppInst, IDS_ERR_LOCAL_FAIL_CONNECT, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+		MessageBox(hLocalDownDlg, FBNLoadStringEx(hAppInst, IDS_ERR_LOCAL_FAIL_CONNECT, true), FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 		return 1;
 	}
 
@@ -109,7 +109,7 @@ static int LocaliseDownloadOkay()
 
 	HINTERNET OpenAddress = InternetOpenUrl(connect, url, NULL, 0, INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_KEEP_CONNECTION, 0);
 	if (!OpenAddress) {
-		MessageBox(hLocalDownDlg, FBALoadStringEx(hAppInst, IDS_ERR_LOCAL_FAIL_OPEN_URL, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+		MessageBox(hLocalDownDlg, FBNLoadStringEx(hAppInst, IDS_ERR_LOCAL_FAIL_OPEN_URL, true), FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 		InternetCloseHandle(connect);
 		return 1;
 	}
@@ -125,7 +125,7 @@ static int LocaliseDownloadOkay()
 
 	fclose(fFlt);
 
-	FBALocaliseInit(szChoice);
+	LocaliseInit(szChoice);
 	POST_INITIALISE_MESSAGE;
 
 	return 0;
@@ -179,6 +179,6 @@ int LocaliseDownloadCreate(HWND hParentWND)
 {
 	hParent = hParentWND;
 
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_DOWNLOAD_LOCAL), hParent, (DLGPROC)DefInpProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_DOWNLOAD_LOCAL), hParent, (DLGPROC)DefInpProc);
 	return 1;
 }

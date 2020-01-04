@@ -331,15 +331,15 @@ int MenuCreate()
 	MENUINFO menu;
 
 	if (hMenu == NULL) {
-		hMenu = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU));					// Main application menu
-		hBlitterMenu[0] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_1));	// DirectDraw Standard blitter
-		hBlitterMenu[1] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_2));	// Direct3D
-		hBlitterMenu[2] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_3));	// Software effects blitter
-		hBlitterMenu[3] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_4));	// DirectX 9
-		hBlitterMenu[4] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_5));	// DirectX 9 Alt
+		hMenu = FBNLoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU));					// Main application menu
+		hBlitterMenu[0] = FBNLoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_1));	// DirectDraw Standard blitter
+		hBlitterMenu[1] = FBNLoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_2));	// Direct3D
+		hBlitterMenu[2] = FBNLoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_3));	// Software effects blitter
+		hBlitterMenu[3] = FBNLoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_4));	// DirectX 9
+		hBlitterMenu[4] = FBNLoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_5));	// DirectX 9 Alt
 
-		hAudioPluginMenu[0] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_1));
-		hAudioPluginMenu[1] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_2));
+		hAudioPluginMenu[0] = FBNLoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_1));
+		hAudioPluginMenu[1] = FBNLoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_2));
 	}
 
 	if (hMenuPopup == NULL) {
@@ -484,7 +484,7 @@ void CreateArcaderesItem()
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0, };
 
 	// horizontal oriented
-	FBALoadString(hAppInst, IDS_MENU_0, szItemText, 256);
+	FBNLoadString(hAppInst, IDS_MENU_0, szItemText, 256);
 	if ((bDrvOkay) && !(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)) {
 		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 		_stprintf(szItemText + _tcslen(szItemText), _T("\t(%i x %i)"), nGameWidth, nGameHeight);
@@ -496,7 +496,7 @@ void CreateArcaderesItem()
 	TCHAR szItemText2[256];
 	MENUITEMINFO menuItem2 = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText2, 0, 0, };
 
-	FBALoadString(hAppInst, IDS_MENU_0, szItemText2, 256);
+	FBNLoadString(hAppInst, IDS_MENU_0, szItemText2, 256);
 	if (bDrvOkay && BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 		_stprintf(szItemText + _tcslen(szItemText2), _T("\t(%i x %i)"), nGameWidth, nGameHeight);
@@ -511,7 +511,7 @@ static void CreateOtherresItem(bool bOther)
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0 };
 
-	FBALoadString(hAppInst, IDS_MENU_1, szItemText, 256);
+	FBNLoadString(hAppInst, IDS_MENU_1, szItemText, 256);
 	if (bOther) {
 		_stprintf(szItemText + _tcslen(szItemText), _T("\t(%i x %i)"), nVidHorWidth, nVidHorHeight);
 	}
@@ -525,7 +525,7 @@ static void CreateOtherresItemVer(bool bOther)
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0 };
 
-	FBALoadString(hAppInst, IDS_MENU_1, szItemText, 256);
+	FBNLoadString(hAppInst, IDS_MENU_1, szItemText, 256);
 	if (bOther) {
 		_stprintf(szItemText + _tcslen(szItemText), _T("\t(%i x %i)"), nVidVerWidth, nVidVerHeight);
 	}
@@ -559,7 +559,7 @@ static void CreateOtherGammaItem(bool bOther)
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0 };
 
-	FBALoadString(hAppInst, IDS_MENU_2, szItemText, 256);
+	FBNLoadString(hAppInst, IDS_MENU_2, szItemText, 256);
 	if (bOther) {
 		_stprintf(szItemText + _tcslen(szItemText), _T("\t(%1.2f)"), nGamma);
 	}
@@ -573,7 +573,7 @@ static void CreateCPUSpeedItem(bool bOther)
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0 };
 
-	FBALoadString(hAppInst, IDS_MENU_3, szItemText, 256);
+	FBNLoadString(hAppInst, IDS_MENU_3, szItemText, 256);
 	if (bOther) {
 		_stprintf(szItemText + _tcslen(szItemText), _T("\t(%d%%)"), nBurnCPUSpeedAdjust * 100 / 256);
 	}
@@ -587,11 +587,11 @@ static void CreateStateslotItems()
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0 };
 
-	_sntprintf(szItemText, 256, FBALoadStringEx(hAppInst, IDS_MENU_4, true), nSavestateSlot);
+	_sntprintf(szItemText, 256, FBNLoadStringEx(hAppInst, IDS_MENU_4, true), nSavestateSlot);
 	menuItem.cch = _tcslen(szItemText);
 	SetMenuItemInfo(hMenu, MENU_STATE_LOAD_SLOT, 0, &menuItem);
 
-	_sntprintf(szItemText, 256, FBALoadStringEx(hAppInst, IDS_MENU_5, true), nSavestateSlot);
+	_sntprintf(szItemText, 256, FBNLoadStringEx(hAppInst, IDS_MENU_5, true), nSavestateSlot);
 	menuItem.cch = _tcslen(szItemText);
 	SetMenuItemInfo(hMenu, MENU_STATE_SAVE_SLOT, 0, &menuItem);
 }
@@ -602,7 +602,7 @@ static void CreateCDItems()
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = { sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, NULL };
 
-	_sntprintf(szItemText, 256, FBALoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE, true));
+	_sntprintf(szItemText, 256, FBNLoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE, true));
 	if (nCDEmuSelect == 0) {
 		TCHAR szImage[32];
 		int length = _tcslen(szItemText);
@@ -1121,7 +1121,7 @@ void MenuUpdate()
 			SetMenuItemInfo(hMenu, MENU_PREVIOUSGAMES1 + i, FALSE, &menuItemInfo);
 			EnableMenuItem(hMenu, MENU_PREVIOUSGAMES1 + i, MF_ENABLED | MF_BYCOMMAND);
 		} else {
-			_tcscpy(szText, FBALoadStringEx(hAppInst, IDS_MENU_6, true));
+			_tcscpy(szText, FBNLoadStringEx(hAppInst, IDS_MENU_6, true));
 
 			menuItemInfo.dwTypeData = szText;
 			menuItemInfo.cch = _tcslen(szText);

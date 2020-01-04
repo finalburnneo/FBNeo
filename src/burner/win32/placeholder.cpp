@@ -16,7 +16,7 @@ static void MakeOfn()
 int SelectPlaceHolder()
 {
 	MakeOfn();
-	ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_PLACEHOLDER_LOAD, true);
+	ofn.lpstrTitle = FBNLoadStringEx(hAppInst, IDS_PLACEHOLDER_LOAD, true);
 
 	int bOldPause = bRunPause;
 	bRunPause = 1;

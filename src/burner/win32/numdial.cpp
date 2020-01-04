@@ -17,7 +17,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 	switch (Msg) {
 		case WM_INITDIALOG:
 			nRet = nAudSegCount;
-			SetWindowText(hDlg, FBALoadStringEx(hAppInst, IDS_NUMDIAL_NUM_FRAMES, true));
+			SetWindowText(hDlg, FBNLoadStringEx(hAppInst, IDS_NUMDIAL_NUM_FRAMES, true));
 			SetDlgItemInt(hDlg, IDC_VALUE_EDIT, nRet, TRUE);
 			return TRUE;
 
@@ -44,7 +44,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 
 int NumDialCreate(int)
 {
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_VALUE), hScrnWnd, (DLGPROC)DefInpProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_VALUE), hScrnWnd, (DLGPROC)DefInpProc);
 
 	return 1;
 }
@@ -209,7 +209,7 @@ static INT_PTR CALLBACK GammaProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)	//
 
 void GammaDialog()
 {
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_GAMMA), hScrnWnd, (DLGPROC)GammaProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_GAMMA), hScrnWnd, (DLGPROC)GammaProc);
 }
 
 // -----------------------------------------------------------------------------
@@ -350,7 +350,7 @@ static INT_PTR CALLBACK ScanlineProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 
 void ScanlineDialog()
 {
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SCANLINE), hScrnWnd, (DLGPROC)ScanlineProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_SCANLINE), hScrnWnd, (DLGPROC)ScanlineProc);
 }
 
 // -----------------------------------------------------------------------------
@@ -529,7 +529,7 @@ static INT_PTR CALLBACK PhosphorProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM 
 
 void PhosphorDialog()
 {
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_PHOSPHOR), hScrnWnd, (DLGPROC)PhosphorProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_PHOSPHOR), hScrnWnd, (DLGPROC)PhosphorProc);
 }
 
 // -----------------------------------------------------------------------------
@@ -716,7 +716,7 @@ static INT_PTR CALLBACK ScreenAngleProc(HWND hDlg, UINT Msg, WPARAM wParam, LPAR
 
 void ScreenAngleDialog()
 {
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SCREENANGLE), hScrnWnd, (DLGPROC)ScreenAngleProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_SCREENANGLE), hScrnWnd, (DLGPROC)ScreenAngleProc);
 }
 
 // -----------------------------------------------------------------------------
@@ -852,7 +852,7 @@ static INT_PTR CALLBACK CPUClockProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 
 void CPUClockDialog()
 {
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_CPUCLOCK), hScrnWnd, (DLGPROC)CPUClockProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_CPUCLOCK), hScrnWnd, (DLGPROC)CPUClockProc);
 }
 
 // -----------------------------------------------------------------------------
@@ -886,7 +886,7 @@ static INT_PTR CALLBACK CubicProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)	//
 			_stprintf(szText, _T("%.3lf"), 1.0 - dVidCubicB);
 			SendDlgItemMessage(hDlg, IDC_SCANLINE_EDIT, WM_SETTEXT, (WPARAM)0, (LPARAM)szText);
 
-			SetWindowText(hDlg, FBALoadStringEx(hAppInst, IDS_NUMDIAL_FILTER_SHARP, true));
+			SetWindowText(hDlg, FBNLoadStringEx(hAppInst, IDS_NUMDIAL_FILTER_SHARP, true));
 
 			// Update the screen
 			if (bDrvOkay) {
@@ -1003,6 +1003,6 @@ static INT_PTR CALLBACK CubicProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)	//
 
 void CubicSharpnessDialog()
 {
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SCANLINE), hScrnWnd, (DLGPROC)CubicProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_SCANLINE), hScrnWnd, (DLGPROC)CubicProc);
 }
 

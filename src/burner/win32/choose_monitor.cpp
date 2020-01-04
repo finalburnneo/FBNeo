@@ -96,6 +96,6 @@ static INT_PTR CALLBACK ResProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 
 int ChooseMonitorCreate()
 {
-	FBADialogBox(hAppInst,MAKEINTRESOURCE(IDD_CHOOSEMONITOR),hScrnWnd,(DLGPROC)ResProc);
+	FBNDialogBox(hAppInst,MAKEINTRESOURCE(IDD_CHOOSEMONITOR),hScrnWnd,(DLGPROC)ResProc);
 	return 0;
 }

@@ -173,7 +173,7 @@ static int GameInfoInit()
 
 	_tcscpy(szFullName, szText);
 
-	_stprintf(szText, _T("%s") _T(SEPERATOR_1) _T("%s"), FBALoadStringEx(hAppInst, IDS_GAMEINFO_DIALOGTITLE, true), szFullName);
+	_stprintf(szText, _T("%s") _T(SEPERATOR_1) _T("%s"), FBNLoadStringEx(hAppInst, IDS_GAMEINFO_DIALOGTITLE, true), szFullName);
 
 	// Set the window caption
 	SetWindowText(hGameInfoDlg, szText);
@@ -186,7 +186,7 @@ static int GameInfoInit()
 	UINT idsString[17] = {  IDS_GAMEINFO_ROMINFO, IDS_GAMEINFO_HDD, IDS_GAMEINFO_SAMPLES, IDS_GAMEINFO_HISTORY, IDS_GAMEINFO_INGAME, IDS_GAMEINFO_TITLE, IDS_GAMEINFO_SELECT, IDS_GAMEINFO_VERSUS, IDS_GAMEINFO_HOWTO, IDS_GAMEINFO_SCORES, IDS_GAMEINFO_BOSSES, IDS_GAMEINFO_GAMEOVER, IDS_GAMEINFO_FLYER, IDS_GAMEINFO_CABINET, IDS_GAMEINFO_MARQUEE, IDS_GAMEINFO_CONTROLS, IDS_GAMEINFO_PCB };
 
 	for(int i = 0; i < 17; i++) {
-		TCI.pszText = FBALoadStringEx(hAppInst, idsString[i], true);
+		TCI.pszText = FBNLoadStringEx(hAppInst, idsString[i], true);
 		SendMessage(hTabControl, TCM_INSERTITEM, (WPARAM) i, (LPARAM) &TCI);
 	}
 
@@ -258,31 +258,31 @@ static int GameInfoInit()
 	szItemText[0] = _T('\0');
 	hInfoControl = GetDlgItem(hGameInfoDlg, IDC_TEXTROMINFO);
 	if (BurnDrvGetFlags() & BDF_PROTOTYPE) {
-		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_PROTOTYPE, true));
+		_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SEL_PROTOTYPE, true));
 		bUseInfo = true;
 	}
 	if (BurnDrvGetFlags() & BDF_BOOTLEG) {
-		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_BOOTLEG, true), bUseInfo ? _T(", ") : _T(""));
+		_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SEL_BOOTLEG, true), bUseInfo ? _T(", ") : _T(""));
 		bUseInfo = true;
 	}
 	if (BurnDrvGetFlags() & BDF_HACK) {
-		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_HACK, true), bUseInfo ? _T(", ") : _T(""));
+		_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SEL_HACK, true), bUseInfo ? _T(", ") : _T(""));
 		bUseInfo = true;
 	}
 	if (BurnDrvGetFlags() & BDF_HOMEBREW) {
-		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_HOMEBREW, true), bUseInfo ? _T(", ") : _T(""));
+		_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SEL_HOMEBREW, true), bUseInfo ? _T(", ") : _T(""));
 		bUseInfo = true;
 	}
 	if (BurnDrvGetFlags() & BDF_DEMO) {
-		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_DEMO, true), bUseInfo ? _T(", ") : _T(""));
+		_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_SEL_DEMO, true), bUseInfo ? _T(", ") : _T(""));
 		bUseInfo = true;
 	}
 	TCHAR szPlayersMax[100];
-	_stprintf(szPlayersMax, FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS_MAX, true));
-	_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetMaxPlayers(), (BurnDrvGetMaxPlayers() != 1) ? szPlayersMax : _T(""));
+	_stprintf(szPlayersMax, FBNLoadStringEx(hAppInst, IDS_NUM_PLAYERS_MAX, true));
+	_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_NUM_PLAYERS, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetMaxPlayers(), (BurnDrvGetMaxPlayers() != 1) ? szPlayersMax : _T(""));
 	bUseInfo = true;
 	if (BurnDrvGetText(DRV_BOARDROM)) {
-		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_BOARD_ROMS_FROM, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetText(DRV_BOARDROM));
+		_stprintf(szItemText + _tcslen(szItemText), FBNLoadStringEx(hAppInst, IDS_BOARD_ROMS_FROM, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetText(DRV_BOARDROM));
 		SendMessage(hInfoControl, WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 		bUseInfo = true;
 	}
@@ -293,9 +293,9 @@ static int GameInfoInit()
 	hInfoControl = GetDlgItem(hGameInfoDlg, IDC_TEXTSYSTEM);
 	TCHAR szUnknown[100];
 	TCHAR szCartridge[100];
-	_stprintf(szUnknown, FBALoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
-	_stprintf(szCartridge, FBALoadStringEx(hAppInst, IDS_MVS_CARTRIDGE, true));
-	_stprintf(szItemText, FBALoadStringEx(hAppInst, IDS_HARDWARE_DESC, true), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(DRV_MANUFACTURER) : szUnknown, BurnDrvGetText(DRV_DATE), (((BurnDrvGetHardwareCode() & HARDWARE_SNK_MVS) == HARDWARE_SNK_MVS) && ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)) == HARDWARE_SNK_NEOGEO)? szCartridge : BurnDrvGetText(DRV_SYSTEM));
+	_stprintf(szUnknown, FBNLoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
+	_stprintf(szCartridge, FBNLoadStringEx(hAppInst, IDS_MVS_CARTRIDGE, true));
+	_stprintf(szItemText, FBNLoadStringEx(hAppInst, IDS_HARDWARE_DESC, true), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(DRV_MANUFACTURER) : szUnknown, BurnDrvGetText(DRV_DATE), (((BurnDrvGetHardwareCode() & HARDWARE_SNK_MVS) == HARDWARE_SNK_MVS) && ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)) == HARDWARE_SNK_NEOGEO)? szCartridge : BurnDrvGetText(DRV_SYSTEM));
 	SendMessage(hInfoControl, WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 
 	// Display any comments
@@ -839,7 +839,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (gameAv[nGiDriverSelected] > 0) {
 				int TabPage = TabCtrl_GetCurSel(hTabControl);
 				if (TabPage != 0) {
-					MessageBox(hGameInfoDlg, FBALoadStringEx(hAppInst, IDS_ERR_LOAD_OK, true), FBALoadStringEx(hAppInst, IDS_ERR_INFORMATION, true), MB_OK);
+					MessageBox(hGameInfoDlg, FBNLoadStringEx(hAppInst, IDS_ERR_LOAD_OK, true), FBNLoadStringEx(hAppInst, IDS_ERR_INFORMATION, true), MB_OK);
 				}
 				if (TabPage == 0) {
 					// if the romset is OK, just say so in the rom info dialog (instead of popping up a window)
@@ -920,7 +920,7 @@ int GameInfoDialogCreate(HWND hParentWND, int nDrvSel)
 
 	if (hRiched) {
 		hParent = hParentWND;
-		FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_GAMEINFO), hParent, (DLGPROC)DialogProc);
+		FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_GAMEINFO), hParent, (DLGPROC)DialogProc);
 	}
 
 	bGameInfoOpen = false;

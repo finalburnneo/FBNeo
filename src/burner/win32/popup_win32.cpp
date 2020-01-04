@@ -22,13 +22,13 @@ static int FBAPopupLog()
 
 	switch (nPopupFlags & 7) {
 		case PUF_TYPE_ERROR:
-			pszTypeEnglish = FBALoadStringEx(hAppInst, IDS_ERR_ERROR, false);
+			pszTypeEnglish = FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, false);
 			break;
 		case PUF_TYPE_WARNING:
-			pszTypeEnglish = FBALoadStringEx(hAppInst, IDS_ERR_WARNING, false);
+			pszTypeEnglish = FBNLoadStringEx(hAppInst, IDS_ERR_WARNING, false);
 			break;
 		default:
-			pszTypeEnglish = FBALoadStringEx(hAppInst, IDS_ERR_INFORMATION, false);
+			pszTypeEnglish = FBNLoadStringEx(hAppInst, IDS_ERR_INFORMATION, false);
 			break;
 	}
 
@@ -87,20 +87,20 @@ static INT_PTR CALLBACK FBAPopupProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM 
 				case PUF_TYPE_ERROR:
 					nIcon = OIC_ERROR;
 					nBeep = MB_ICONHAND;
-					pszTypeEnglish = FBALoadStringEx(hAppInst, IDS_ERR_ERROR, false);
-					pszTypeLocal = FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true);
+					pszTypeEnglish = FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, false);
+					pszTypeLocal = FBNLoadStringEx(hAppInst, IDS_ERR_ERROR, true);
 					break;
 				case PUF_TYPE_WARNING:
 					nIcon = OIC_WARNING;
 					nBeep = MB_ICONEXCLAMATION;
-					pszTypeEnglish = FBALoadStringEx(hAppInst, IDS_ERR_WARNING, false);
-					pszTypeLocal = FBALoadStringEx(hAppInst, IDS_ERR_WARNING, true);
+					pszTypeEnglish = FBNLoadStringEx(hAppInst, IDS_ERR_WARNING, false);
+					pszTypeLocal = FBNLoadStringEx(hAppInst, IDS_ERR_WARNING, true);
 					break;
 				default:
 					nIcon = OIC_INFORMATION;
 					nBeep = MB_ICONASTERISK;
-					pszTypeEnglish = FBALoadStringEx(hAppInst, IDS_ERR_INFORMATION, false);
-					pszTypeLocal = FBALoadStringEx(hAppInst, IDS_ERR_INFORMATION, true);
+					pszTypeEnglish = FBNLoadStringEx(hAppInst, IDS_ERR_INFORMATION, false);
+					pszTypeLocal = FBNLoadStringEx(hAppInst, IDS_ERR_INFORMATION, true);
 					break;
 			}
 
@@ -262,7 +262,7 @@ int FBAPopupAddText(int nFlags, TCHAR* pszFormat, ...)
 	va_start(vaEnglish, pszFormat);
 
 	if (IS_INTRESOURCE(pszFormat)) {
-		pszStringEnglish = FBALoadStringEx(hAppInst, (INT_PTR)pszFormat, false);
+		pszStringEnglish = FBNLoadStringEx(hAppInst, (INT_PTR)pszFormat, false);
 	} else {
 		pszStringEnglish = pszFormat;
 	}
@@ -275,7 +275,7 @@ int FBAPopupAddText(int nFlags, TCHAR* pszFormat, ...)
 		va_start(vaLocal, pszFormat);
 
 		if (IS_INTRESOURCE(pszFormat)) {
-			pszStringLocal = FBALoadStringEx(hAppInst, (INT_PTR)pszFormat, true);
+			pszStringLocal = FBNLoadStringEx(hAppInst, (INT_PTR)pszFormat, true);
 		} else {
 			pszStringLocal = pszFormat;
 		}

@@ -7,7 +7,7 @@ int bDrvSaveAll = 0;
 
 static void MakeOfn(TCHAR* pszFilter)
 {
-	_stprintf(pszFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_STATE, true), _T(APP_TITLE));
+	_stprintf(pszFilter, FBNLoadStringEx(hAppInst, IDS_DISK_FILE_STATE, true), _T(APP_TITLE));
 	memcpy(pszFilter + _tcslen(pszFilter), _T(" (*.fs, *.fr)\0*.fs;*.fr\0\0"), 25 * sizeof(TCHAR));
 
 	memset(&ofn, 0, sizeof(ofn));
@@ -94,7 +94,7 @@ int StatedLoad(int nSlot)
 			_stprintf(szChoice, _T("savestate"));
 		}
 		MakeOfn(szFilter);
-		ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_STATE_LOAD, true);
+		ofn.lpstrTitle = FBNLoadStringEx(hAppInst, IDS_STATE_LOAD, true);
 
 		int bOldPause = bRunPause;
 		bRunPause = 1;
@@ -158,7 +158,7 @@ int StatedSave(int nSlot)
 			_stprintf(szChoice, _T("%s"), BurnDrvGetText(DRV_NAME));
 		}
 		MakeOfn(szFilter);
-		ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_STATE_SAVE, true);
+		ofn.lpstrTitle = FBNLoadStringEx(hAppInst, IDS_STATE_SAVE, true);
 		ofn.Flags |= OFN_OVERWRITEPROMPT;
 
 		int bOldPause = bRunPause;

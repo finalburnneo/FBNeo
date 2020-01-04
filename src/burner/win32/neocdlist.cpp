@@ -141,7 +141,7 @@ void NeoCDInfo_SetTitle()
 	if (IsNeoGeoCD() && game && game->id) {
 		SetNeoCDTitle(game->pszTitle);
 	} else if (IsNeoGeoCD()) {
-		SetNeoCDTitle(FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
+		SetNeoCDTitle(FBNLoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
 	}
 }
 
@@ -164,7 +164,7 @@ int GetNeoCDTitle(unsigned int nGameID)
 
 		return 1;
 	} else {
-		//SetNeoCDTitle(FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
+		//SetNeoCDTitle(FBNLoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
 	}
 
 	return 0;

@@ -48,7 +48,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			UINT idsString[20] = { IDS_ROMPATH_1,IDS_ROMPATH_2,IDS_ROMPATH_3,IDS_ROMPATH_4,IDS_ROMPATH_5,IDS_ROMPATH_6,IDS_ROMPATH_7,IDS_ROMPATH_8,IDS_ROMPATH_9,IDS_ROMPATH_10,IDS_ROMPATH_11,IDS_ROMPATH_12,IDS_ROMPATH_13,IDS_ROMPATH_14,IDS_ROMPATH_15,IDS_ROMPATH_16,IDS_ROMPATH_17,IDS_ROMPATH_18,IDS_ROMPATH_19,IDS_ROMPATH_20 };
 
 			for(int nIndex = 0; nIndex < 20; nIndex++) {
-				tcItem.pszText = FBALoadStringEx(hAppInst, idsString[nIndex], true);
+				tcItem.pszText = FBNLoadStringEx(hAppInst, idsString[nIndex], true);
 				TabCtrl_InsertItem(hTabControl, nIndex, &tcItem);
 			}
 
@@ -131,7 +131,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			memset(&bInfo, 0, sizeof(bInfo));
 			bInfo.hwndOwner = hDlg;
 			bInfo.pszDisplayName = buffer;
-			bInfo.lpszTitle = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
+			bInfo.lpszTitle = FBNLoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
 			bInfo.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
 
 			pItemIDList = SHBrowseForFolder(&bInfo);
@@ -171,7 +171,7 @@ int RomsDirCreate(HWND hParentWND)
 {
 	hParent = hParentWND;
 
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_ROMSDIR), hParent, (DLGPROC)DefInpProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_ROMSDIR), hParent, (DLGPROC)DefInpProc);
 	return 1;
 }
 
@@ -380,7 +380,7 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETSTEP, (WPARAM)1, 0);
 
 			ShowWindow(GetDlgItem(hDlg, IDC_WAIT_LABEL_A), TRUE);
-			SendMessage(GetDlgItem(hDlg, IDC_WAIT_LABEL_A), WM_SETTEXT, (WPARAM)0, (LPARAM)FBALoadStringEx(hAppInst, IDS_SCANNING_ROMS, true));
+			SendMessage(GetDlgItem(hDlg, IDC_WAIT_LABEL_A), WM_SETTEXT, (WPARAM)0, (LPARAM)FBNLoadStringEx(hAppInst, IDS_SCANNING_ROMS, true));
 			ShowWindow(GetDlgItem(hDlg, IDCANCEL), TRUE);
 
 			avOk = false;
@@ -468,7 +468,7 @@ int CreateROMInfo(HWND hParentWND)
 	if (gameAv) {
 		if (CheckGameAvb() || bRescanRoms) {
 			if ((bStarting && bSkipStartupCheck == false) || bRescanRoms)
-				FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, (DLGPROC)WaitProc);
+				FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, (DLGPROC)WaitProc);
 		}
 	}
 

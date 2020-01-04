@@ -8,7 +8,7 @@ FILE *WaveLog=NULL; // wave log file
 
 static void MakeOfn(TCHAR* pszFilter)
 {
-	_stprintf(pszFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_SOUND, true), _T(APP_TITLE));
+	_stprintf(pszFilter, FBNLoadStringEx(hAppInst, IDS_DISK_FILE_SOUND, true), _T(APP_TITLE));
 	memcpy(pszFilter + _tcslen(pszFilter), _T(" (*.wav)\0*.wav\0\0"), 16 * sizeof(TCHAR));
 
 	if (NeoCDInfo_ID()) {

@@ -124,11 +124,11 @@ static void NeoCDList_InitListView()
 	LvCol.mask		= LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 
 	LvCol.cx		= 445;
-	LvCol.pszText	= FBALoadStringEx(hAppInst, IDS_NGCD_TITLE, true);
+	LvCol.pszText	= FBNLoadStringEx(hAppInst, IDS_NGCD_TITLE, true);
 	SendMessage(hListView, LVM_INSERTCOLUMN , 0, (LPARAM)&LvCol);
 
 	LvCol.cx		= 70;
-	LvCol.pszText	= FBALoadStringEx(hAppInst, IDS_NGCD_NGCDID, true);
+	LvCol.pszText	= FBNLoadStringEx(hAppInst, IDS_NGCD_NGCDID, true);
 	SendMessage(hListView, LVM_INSERTCOLUMN , 1, (LPARAM)&LvCol);
 
 	// Setup ListView Icons
@@ -806,7 +806,7 @@ static INT_PTR CALLBACK NeoCDList_CoverWndProc(HWND hDlg, UINT Msg, WPARAM wPara
 
 void NeoCDList_InitCoverDlg()
 {
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_NCD_COVER_DLG), hNeoCDWnd, (DLGPROC)NeoCDList_CoverWndProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_NCD_COVER_DLG), hNeoCDWnd, (DLGPROC)NeoCDList_CoverWndProc);
 }
 
 static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
@@ -840,7 +840,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 		TreeView_SetItemHeight(hListView, 40);
 
 		TCHAR szDialogTitle[200];
-		_stprintf(szDialogTitle, FBALoadStringEx(hAppInst, IDS_NGCD_DIAG_TITLE, true), _T(APP_TITLE), _T(SEPERATOR_1), _T(SEPERATOR_1));
+		_stprintf(szDialogTitle, FBNLoadStringEx(hAppInst, IDS_NGCD_DIAG_TITLE, true), _T(APP_TITLE), _T(SEPERATOR_1), _T(SEPERATOR_1));
 		SetWindowText(hDlg, szDialogTitle);
 
 		hProcessThread = (HANDLE)_beginthreadex(NULL, 0, NeoCDList_DoProc, NULL, 0, &ProcessThreadID);
@@ -1145,5 +1145,5 @@ static unsigned __stdcall NeoCDList_DoProc(void*)
 
 int NeoCDList_Init()
 {
-	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_NCD_DLG), hScrnWnd, (DLGPROC)NeoCDList_WndProc);
+	return FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_NCD_DLG), hScrnWnd, (DLGPROC)NeoCDList_WndProc);
 }

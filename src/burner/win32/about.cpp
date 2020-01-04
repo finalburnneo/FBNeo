@@ -188,7 +188,7 @@ int AboutCreate()
 	hRiched = LoadLibrary("RICHED20.DLL");
 #endif
 	if (hRiched) {	
-		FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_ABOUT), hScrnWnd, (DLGPROC)AboutProc);
+		FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_ABOUT), hScrnWnd, (DLGPROC)AboutProc);
 		FreeLibrary(hRiched);
 		hRiched = NULL;
 	}
@@ -211,12 +211,12 @@ static INT_PTR CALLBACK FirstProc(HWND hDlg ,UINT Msg, WPARAM wParam, LPARAM lPa
 		SendDlgItemMessage(hDlg, IDC_LICENSE, EM_SETMARGINS, EC_LEFTMARGIN, 3);
 //		SendDlgItemMessage(hDlg, IDC_LICENSE, EM_SETTYPOGRAPHYOPTIONS, TO_ADVANCEDTYPOGRAPHY, TO_ADVANCEDTYPOGRAPHY);
 
-		_stprintf(szWarningString, FBALoadStringEx(hAppInst, IDS_FIRSTRUN1, true), _T(APP_TITLE), szAppBurnVer);
-		_tcscat(szWarningString, FBALoadStringEx(hAppInst, IDS_FIRSTRUN2, true));
+		_stprintf(szWarningString, FBNLoadStringEx(hAppInst, IDS_FIRSTRUN1, true), _T(APP_TITLE), szAppBurnVer);
+		_tcscat(szWarningString, FBNLoadStringEx(hAppInst, IDS_FIRSTRUN2, true));
 #if VER_ALPHA > 0 && (VER_ALPHA < 90 || VER_BETA < 99)
-		_tcscat(szWarningString, FBALoadStringEx(hAppInst, IDS_FIRSTRUN3A, true));
+		_tcscat(szWarningString, FBNLoadStringEx(hAppInst, IDS_FIRSTRUN3A, true));
 #elif VER_BETA > 0 && VER_BETA < 99
-		_tcscat(szWarningString, FBALoadStringEx(hAppInst, IDS_FIRSTRUN3B, true));
+		_tcscat(szWarningString, FBNLoadStringEx(hAppInst, IDS_FIRSTRUN3B, true));
 #endif
 
 		SendDlgItemMessage(hDlg, IDC_LICENSE, WM_SETTEXT, (WPARAM)0, (LPARAM)szWarningString);

@@ -22,10 +22,10 @@ static int InpCheatListBegin()
 	memset(&LvCol, 0, sizeof(LvCol));
 	LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 	LvCol.cx = 0xA4;
-	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_CHEAT_NAME, true);
+	LvCol.pszText = FBNLoadStringEx(hAppInst, IDS_CHEAT_NAME, true);
 	SendMessage(hInpCheatList, LVM_INSERTCOLUMN, 0, (LPARAM)&LvCol);
 	LvCol.cx = 0xA4;
-	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_CHEAT_STATUS, true);
+	LvCol.pszText = FBNLoadStringEx(hAppInst, IDS_CHEAT_STATUS, true);
 	SendMessage(hInpCheatList, LVM_INSERTCOLUMN, 1, (LPARAM)&LvCol);
 
 	return 0;
@@ -262,7 +262,7 @@ int InpCheatCreate()
 
 //	DestroyWindow(hInpCheatDlg);							// Make sure exitted
 
-//	hInpCheatDlg = FBACreateDialog(hAppInst, MAKEINTRESOURCE(IDD_INPCHEAT), hScrnWnd, DialogProc);
+//	hInpCheatDlg = FBNCreateDialog(hAppInst, MAKEINTRESOURCE(IDD_INPCHEAT), hScrnWnd, DialogProc);
 //	if (hInpCheatDlg == NULL) {
 //		return 1;
 //	}
@@ -270,7 +270,7 @@ int InpCheatCreate()
 //	WndInMid(hInpCheatDlg, hScrnWnd);
 //	ShowWindow(hInpCheatDlg, SW_NORMAL);
 
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_INPCHEAT), hScrnWnd, (DLGPROC)DialogProc);
+	FBNDialogBox(hAppInst, MAKEINTRESOURCE(IDD_INPCHEAT), hScrnWnd, (DLGPROC)DialogProc);
 
 	return 0;
 }

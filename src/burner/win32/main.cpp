@@ -734,7 +734,7 @@ static int AppInit()
 	OpenDebugLog();
 #endif
 
-	FBALocaliseInit(szLocalisationTemplate);
+	LocaliseInit(szLocalisationTemplate);
 	BurnerDoGameListLocalisation();
 
 	if (bMonitorAutoCheck) MonitorAutoCheck();
@@ -808,7 +808,7 @@ static int AppExit()
 	SDL_Quit();
 #endif
 
-	FBALocaliseExit();
+	LocaliseExit();
 	BurnerExitGameListLocalisation();
 
 	if (hAccel) {

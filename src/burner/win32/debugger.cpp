@@ -1553,7 +1553,7 @@ int DebugCreate()
 	RECT tmpWorkArea;
 	SystemParametersInfo(SPI_GETWORKAREA, 0, &tmpWorkArea, 0);
 	bLargeWindow = (tmpWorkArea.right - tmpWorkArea.left >= 1024 && tmpWorkArea.bottom - tmpWorkArea.top >= 768) ? true : false;
-	hDbgDlg = FBACreateDialog(hAppInst, MAKEINTRESOURCE(bLargeWindow ? IDD_DEBUG_LRG : IDD_DEBUG_SML), hScrnWnd, (DLGPROC)DialogProc);
+	hDbgDlg = FBNCreateDialog(hAppInst, MAKEINTRESOURCE(bLargeWindow ? IDD_DEBUG_LRG : IDD_DEBUG_SML), hScrnWnd, (DLGPROC)DialogProc);
 	if (hDbgDlg == NULL) {
 		return 1;
 	}

@@ -137,7 +137,7 @@ static TCHAR szFilter[100];
 
 static void MakeOfn()
 {
-	_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_GL_FILTER, true));
+	_stprintf(szFilter, _T("%s"), FBNLoadStringEx(hAppInst, IDS_LOCAL_GL_FILTER, true));
 	memcpy(szFilter + _tcslen(szFilter), _T(" (*.glt)\0*.glt\0\0"), 16 * sizeof(TCHAR));
 
 	memset(&ofn, 0, sizeof(ofn));
@@ -156,7 +156,7 @@ int FBALocaliseGamelistLoadTemplate()
 	_stprintf(szGamelistLocalisationTemplate, _T("template"));
 	MakeOfn();
 	TCHAR szTitle[100];
-	_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_GL_SELECT, true));
+	_stprintf(szTitle, _T("%s"), FBNLoadStringEx(hAppInst, IDS_LOCAL_GL_SELECT, true));
 	ofn.lpstrTitle = szTitle;
 	ofn.Flags |= OFN_OVERWRITEPROMPT;
 
@@ -180,7 +180,7 @@ int FBALocaliseGamelistCreateTemplate()
 	_stprintf(szGamelistLocalisationTemplate, _T("template"));
 	MakeOfn();
 	TCHAR szTitle[100];
-	_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_GL_CREATE, true));
+	_stprintf(szTitle, _T("%s"), FBNLoadStringEx(hAppInst, IDS_LOCAL_GL_CREATE, true));
 	ofn.lpstrTitle = szTitle;
 	ofn.Flags |= OFN_OVERWRITEPROMPT;
 

@@ -7,7 +7,7 @@
 
 #if defined _MSC_VER
  #define _USE_MATH_DEFINES
- #include <cmath>
+#include <corecrt_math_defines.h>
 #endif
 
 static UINT8 *AllMem;

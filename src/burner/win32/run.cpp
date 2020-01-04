@@ -1,6 +1,6 @@
 // Run module
 #include "burner.h"
-#include <timeapi.h>
+#include <time.h>
 
 int bRunPause = 0;
 int bAltPause = 0;

@@ -10,14 +10,14 @@ typedef unsigned int (*pAdsp2100ReadLongHandler)(unsigned int a);
 typedef void (*pAdsp2100WriteLongHandler)(unsigned int a, unsigned int d);
 
 typedef int (*pAdsp2100RxCallback)(int port);
-typedef void  (*pAdsp2100TxCallback)(int port, int data);
+typedef void (*pAdsp2100TxCallback)(int port, int data);
 typedef void (*pAdsp2100TimerCallback)(int enable);
 
 int Adsp2100Init();
 int Adsp2100Exit();
 void Adsp2100Reset();
 int Adsp2100Run(int cycles);
-int Adsp2100LoadBootROM(void *src, void *dst);
+int Adsp2100LoadBootROM(void* src, void* dst);
 
 int Adsp2100TotalCycles();
 void Adsp2100NewFrame();
@@ -41,9 +41,8 @@ int Adsp2100SetWriteLongHandler(int i, pAdsp2100WriteLongHandler pHandler);
 int Adsp2100SetReadDataWordHandler(int i, pAdsp2100ReadWordHandler pHandler);
 int Adsp2100SetWriteDataWordHandler(int i, pAdsp2100WriteWordHandler pHandler);
 
-void Adsp2100SetIRQLine(const int line, const int state);
+void Adsp2100SetIRQLine(int line, int state);
 
-adsp2100_state *Adsp2100GetState();
+adsp2100_state* Adsp2100GetState();
 
 #endif // ADSP2100_INTF
-

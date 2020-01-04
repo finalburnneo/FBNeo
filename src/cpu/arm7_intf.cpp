@@ -16,15 +16,15 @@
 #define WRITE	1
 #define FETCH	2
 
-static UINT8 **membase[3]; // 0 read, 1, write, 2 opcode
+static UINT8** membase[3]; // 0 read, 1, write, 2 opcode
 
 static void (*pWriteLongHandler)(UINT32, UINT32) = NULL;
 static void (*pWriteWordHandler)(UINT32, UINT16) = NULL;
-static void (*pWriteByteHandler)(UINT32, UINT8 ) = NULL;
+static void (*pWriteByteHandler)(UINT32, UINT8) = NULL;
 
 static UINT16 (*pReadWordHandler)(UINT32) = NULL;
 static UINT32 (*pReadLongHandler)(UINT32) = NULL;
-static UINT8  (*pReadByteHandler)(UINT32) = NULL;
+static UINT8 (*pReadByteHandler)(UINT32) = NULL;
 
 static UINT32 Arm7IdleLoop = ~0;
 
@@ -65,33 +65,36 @@ void Arm7Exit() // only one cpu supported
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Exit called without init\n"));
 #endif
 
-	for (INT32 i = 0; i < 3; i++) {
-		if (membase[i]) {
-			free (membase[i]);
+	for (INT32 i = 0; i < 3; i++)
+	{
+		if (membase[i])
+		{
+			free(membase[i]);
 			membase[i] = NULL;
 		}
 	}
 
 	Arm7IdleLoop = ~0;
-	
+
 	DebugCPU_ARM7Initted = 0;
 }
 
-void Arm7MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type)
+void Arm7MapMemory(UINT8* src, UINT32 start, UINT32 finish, INT32 type)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7MapMemory called without init\n"));
-	if (start >= MAX_MEMORY || finish >= MAX_MEMORY) bprintf (PRINT_ERROR, _T("Arm7MapMemory memory range unsupported 0x%8.8x-0x%8.8x\n"), start, finish);
+	if (start >= MAX_MEMORY || finish >= MAX_MEMORY) bprintf(
+		PRINT_ERROR, _T("Arm7MapMemory memory range unsupported 0x%8.8x-0x%8.8x\n"), start, finish);
 #endif
 
-	UINT32 len = (finish-start) >> PAGE_SHIFT;
+	UINT32 len = finish - start >> PAGE_SHIFT;
 
-	for (UINT32 i = 0; i < len+1; i++)
+	for (UINT32 i = 0; i < len + 1; i++)
 	{
 		UINT32 offset = i + (start >> PAGE_SHIFT);
-		if (type & (1 <<  READ)) membase[ READ][offset] = src + (i << PAGE_SHIFT);
-		if (type & (1 << WRITE)) membase[WRITE][offset] = src + (i << PAGE_SHIFT);
-		if (type & (1 << FETCH)) membase[FETCH][offset] = src + (i << PAGE_SHIFT);
+		if (type & 1 << READ) membase[READ][offset] = src + (i << PAGE_SHIFT);
+		if (type & 1 << WRITE) membase[WRITE][offset] = src + (i << PAGE_SHIFT);
+		if (type & 1 << FETCH) membase[FETCH][offset] = src + (i << PAGE_SHIFT);
 	}
 }
 
@@ -161,12 +164,14 @@ void Arm7WriteByte(UINT32 addr, UINT8 data)
 	bprintf (PRINT_NORMAL, _T("%5.5x, %2.2x wb\n"), addr, data);
 #endif
 
-	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL)
+	{
 		membase[WRITE][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND] = data;
 		return;
 	}
 
-	if (pWriteByteHandler) {
+	if (pWriteByteHandler)
+	{
 		pWriteByteHandler(addr, data);
 	}
 }
@@ -183,12 +188,14 @@ void Arm7WriteWord(UINT32 addr, UINT16 data)
 	bprintf (PRINT_NORMAL, _T("%5.5x, %8.8x wd\n"), addr, data);
 #endif
 
-	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
-		*((UINT16*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND))) = data;
+	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL)
+	{
+		*(UINT16*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)) = data;
 		return;
 	}
 
-	if (pWriteWordHandler) {
+	if (pWriteWordHandler)
+	{
 		pWriteWordHandler(addr, data);
 	}
 }
@@ -205,12 +212,14 @@ void Arm7WriteLong(UINT32 addr, UINT32 data)
 	bprintf (PRINT_NORMAL, _T("%5.5x, %8.8x wd\n"), addr, data);
 #endif
 
-	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
-		*((UINT32*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND))) = data;
+	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL)
+	{
+		*(UINT32*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)) = data;
 		return;
 	}
 
-	if (pWriteLongHandler) {
+	if (pWriteLongHandler)
+	{
 		pWriteLongHandler(addr, data);
 	}
 }
@@ -228,11 +237,13 @@ UINT8 Arm7ReadByte(UINT32 addr)
 	bprintf (PRINT_NORMAL, _T("%5.5x, rb\n"), addr);
 #endif
 
-	if (membase[ READ][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[READ][addr >> PAGE_SHIFT] != NULL)
+	{
 		return membase[READ][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND];
 	}
 
-	if (pReadByteHandler) {
+	if (pReadByteHandler)
+	{
 		return pReadByteHandler(addr);
 	}
 
@@ -251,11 +262,13 @@ UINT16 Arm7ReadWord(UINT32 addr)
 	bprintf (PRINT_NORMAL, _T("%5.5x, rl\n"), addr);
 #endif
 
-	if (membase[ READ][addr >> PAGE_SHIFT] != NULL) {
-		return *((UINT16*)(membase[ READ][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)));
+	if (membase[READ][addr >> PAGE_SHIFT] != NULL)
+	{
+		return *(UINT16*)(membase[READ][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND));
 	}
 
-	if (pReadWordHandler) {
+	if (pReadWordHandler)
+	{
 		return pReadWordHandler(addr);
 	}
 
@@ -274,11 +287,13 @@ UINT32 Arm7ReadLong(UINT32 addr)
 	bprintf (PRINT_NORMAL, _T("%5.5x, rl\n"), addr);
 #endif
 
-	if (membase[ READ][addr >> PAGE_SHIFT] != NULL) {
-		return *((UINT32*)(membase[ READ][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)));
+	if (membase[READ][addr >> PAGE_SHIFT] != NULL)
+	{
+		return *(UINT32*)(membase[READ][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND));
 	}
 
-	if (pReadLongHandler) {
+	if (pReadLongHandler)
+	{
 		return pReadLongHandler(addr);
 	}
 
@@ -298,16 +313,19 @@ UINT16 Arm7FetchWord(UINT32 addr)
 #endif
 
 	// speed hack -- skip idle loop...
-	if (addr == Arm7IdleLoop) {
+	if (addr == Arm7IdleLoop)
+	{
 		Arm7RunEndEatCycles();
 	}
 
-	if (membase[FETCH][addr >> PAGE_SHIFT] != NULL) {
-		return *((UINT16*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)));
+	if (membase[FETCH][addr >> PAGE_SHIFT] != NULL)
+	{
+		return *(UINT16*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND));
 	}
 
 	// good enough for now...
-	if (pReadWordHandler) {
+	if (pReadWordHandler)
+	{
 		return pReadWordHandler(addr);
 	}
 
@@ -327,16 +345,19 @@ UINT32 Arm7FetchLong(UINT32 addr)
 #endif
 
 	// speed hack - skip idle loop...
-	if (addr == Arm7IdleLoop) {
+	if (addr == Arm7IdleLoop)
+	{
 		Arm7RunEndEatCycles();
 	}
 
-	if (membase[FETCH][addr >> PAGE_SHIFT] != NULL) {
-		return *((UINT32*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)));
+	if (membase[FETCH][addr >> PAGE_SHIFT] != NULL)
+	{
+		return *(UINT32*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND));
 	}
 
 	// good enough for now...
-	if (pReadLongHandler) {
+	if (pReadLongHandler)
+	{
 		return pReadLongHandler(addr);
 	}
 
@@ -349,10 +370,12 @@ void Arm7SetIRQLine(INT32 line, INT32 state)
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetIRQLine called without init\n"));
 #endif
 
-	if (state == CPU_IRQSTATUS_NONE || state == CPU_IRQSTATUS_ACK) {
+	if (state == CPU_IRQSTATUS_NONE || state == CPU_IRQSTATUS_ACK)
+	{
 		arm7_set_irq_line(line, state);
 	}
-	else if (CPU_IRQSTATUS_AUTO) {
+	else if (CPU_IRQSTATUS_AUTO)
+	{
 		arm7_set_irq_line(line, CPU_IRQSTATUS_ACK);
 		Arm7Run(0);
 		arm7_set_irq_line(line, CPU_IRQSTATUS_NONE);
@@ -372,7 +395,7 @@ void Arm7SetIdleLoopAddress(UINT32 address)
 
 // For cheats/etc
 
- void Arm7_write_rom_byte(UINT32 addr, UINT8 data)
+void Arm7_write_rom_byte(UINT32 addr, UINT8 data)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_write_rom_byte called without init\n"));
@@ -380,24 +403,28 @@ void Arm7SetIdleLoopAddress(UINT32 address)
 	addr &= MAX_MEMORY_AND;
 
 	// write to rom & ram
-	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL)
+	{
 		membase[WRITE][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND] = data;
 	}
 
-	if (membase[READ][addr >> PAGE_SHIFT] != NULL) {
+	if (membase[READ][addr >> PAGE_SHIFT] != NULL)
+	{
 		membase[READ][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND] = data;
 	}
 
-	if (pWriteByteHandler) {
+	if (pWriteByteHandler)
+	{
 		pWriteByteHandler(addr, data);
 	}
 }
 
-void Arm7Init( INT32 nCPU ) // only one cpu supported
+void Arm7Init(INT32 nCPU) // only one cpu supported
 {
 	DebugCPU_ARM7Initted = 1;
-	
-	for (INT32 i = 0; i < 3; i++) {
+
+	for (INT32 i = 0; i < 3; i++)
+	{
 		membase[i] = (UINT8**)malloc(PAGE_COUNT * sizeof(UINT8*));
 		memset(membase[i], 0, PAGE_COUNT * sizeof(UINT8*));
 	}

@@ -1,8 +1,7 @@
-
 void Arm7WriteByte(UINT32 addr, UINT8 data);
 void Arm7WriteWord(UINT32 addr, UINT16 data);
 void Arm7WriteLong(UINT32 addr, UINT32 data);
-UINT8  Arm7ReadByte(UINT32 addr);
+UINT8 Arm7ReadByte(UINT32 addr);
 UINT16 Arm7ReadWord(UINT32 addr);
 UINT32 Arm7ReadLong(UINT32 addr);
 UINT16 Arm7FetchWord(UINT32 addr);
@@ -20,7 +19,7 @@ void Arm7Init(INT32 nCPU);
 void Arm7Reset();
 INT32 Arm7Run(INT32 cycles);
 void Arm7Exit();
-void Arm7Open(INT32 );
+void Arm7Open(INT32);
 void Arm7Close();
 
 INT32 Arm7Scan(INT32 nAction);
@@ -30,7 +29,7 @@ INT32 Arm7Scan(INT32 nAction);
 
 void Arm7SetIRQLine(INT32 line, INT32 state);
 
-void Arm7MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type);
+void Arm7MapMemory(UINT8* src, UINT32 start, UINT32 finish, INT32 type);
 
 void Arm7SetWriteByteHandler(void (*write)(UINT32, UINT8));
 void Arm7SetWriteWordHandler(void (*write)(UINT32, UINT16));

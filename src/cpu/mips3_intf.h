@@ -37,7 +37,6 @@ int Mips3SetWriteWordHandler(int i, pMips3WriteWordHandler pHandler);
 int Mips3SetReadDoubleHandler(int i, pMips3ReadDoubleHandler pHandler);
 int Mips3SetWriteDoubleHandler(int i, pMips3WriteDoubleHandler pHandler);
 
-void Mips3SetIRQLine(const int line, const int state);
+void Mips3SetIRQLine(int line, int state);
 
 #endif // MIPS3_INTF
-

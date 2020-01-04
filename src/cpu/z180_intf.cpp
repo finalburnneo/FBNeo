@@ -62,7 +62,7 @@ cpu_core_config Z180Config =
 	0
 };
 
-static UINT8 *Mem[NUM_CPUS][4][PROG_PAGES];
+static UINT8* Mem[NUM_CPUS][4][PROG_PAGES];
 static INT32 nActiveCPU = -1;
 
 typedef UINT8 (__fastcall *read_cb)(UINT32 address);
@@ -105,23 +105,24 @@ void Z180SetReadPortHandler(UINT8 (__fastcall *read)(UINT32))
 	port_read[nActiveCPU] = read;
 }
 
-void Z180MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags)
+void Z180MapMemory(UINT8* ptr, UINT32 start, UINT32 end, UINT32 flags)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180MapMemory called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180MapMemory called when no CPU open\n"));
 	if (end <= start || start >= PROG_RANGE || end >= PROG_RANGE || flags == 0)
-		bprintf(PRINT_ERROR, _T("Z180MapMemory called when invalid parameters ptr, start: %x, end: %x, flags: %x\n"), start, end, flags);
+		bprintf(PRINT_ERROR, _T("Z180MapMemory called when invalid parameters ptr, start: %x, end: %x, flags: %x\n"),
+		        start, end, flags);
 #endif
 
-	UINT32 s = (start >> PROG_PAGE_BITS);
+	UINT32 s = start >> PROG_PAGE_BITS;
 
-	for (UINT32 i = 0; i < ((end >> PROG_PAGE_BITS) - (start >> PROG_PAGE_BITS)) + 1; i++)
+	for (UINT32 i = 0; i < (end >> PROG_PAGE_BITS) - (start >> PROG_PAGE_BITS) + 1; i++)
 	{
-		if (flags & MAP_READ    ) Mem[nActiveCPU][READ    ][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
-		if (flags & MAP_WRITE   ) Mem[nActiveCPU][WRITE   ][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
-		if (flags & MAP_FETCHOP ) Mem[nActiveCPU][FETCHOP ][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
-		if (flags & MAP_FETCHARG) Mem[nActiveCPU][FETCHARG][s + i] = (ptr == NULL) ? NULL : (ptr + (i << PROG_PAGE_BITS));
+		if (flags & MAP_READ) Mem[nActiveCPU][READ][s + i] = ptr == NULL ? NULL : ptr + (i << PROG_PAGE_BITS);
+		if (flags & MAP_WRITE) Mem[nActiveCPU][WRITE][s + i] = ptr == NULL ? NULL : ptr + (i << PROG_PAGE_BITS);
+		if (flags & MAP_FETCHOP) Mem[nActiveCPU][FETCHOP][s + i] = ptr == NULL ? NULL : ptr + (i << PROG_PAGE_BITS);
+		if (flags & MAP_FETCHARG) Mem[nActiveCPU][FETCHARG][s + i] = ptr == NULL ? NULL : ptr + (i << PROG_PAGE_BITS);
 	}
 }
 
@@ -188,7 +189,7 @@ INT32 Z180Run(INT32 cycles)
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Run called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180Run called when no CPU open\n"));
-//	if (cycles <= 0) bprintf(PRINT_ERROR, _T("Z180Run called with invalid cycles (%d)\n"), cycles);
+	//	if (cycles <= 0) bprintf(PRINT_ERROR, _T("Z180Run called with invalid cycles (%d)\n"), cycles);
 #endif
 
 	return z180_execute(cycles);
@@ -247,12 +248,13 @@ void Z180SetIRQLine(INT32 irqline, INT32 state)
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180SetIRQLine called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180SetIRQLine called when no CPU open\n"));
-	if (irqline != 0 && irqline != Z180_INPUT_LINE_NMI) bprintf(PRINT_ERROR, _T("Z180SetIRQLine called with invalid line %d\n"), irqline);
+	if (irqline != 0 && irqline != Z180_INPUT_LINE_NMI) bprintf(
+		PRINT_ERROR, _T("Z180SetIRQLine called with invalid line %d\n"), irqline);
 	if (state != CPU_IRQSTATUS_NONE && state != CPU_IRQSTATUS_ACK && state != CPU_IRQSTATUS_AUTO)
 		bprintf(PRINT_ERROR, _T("Z180SetIRQLine called with invalid state %d\n"), state);
 #endif
 
-	z180_set_irq_line(irqline, state); 
+	z180_set_irq_line(irqline, state);
 }
 
 void Z180Scan(INT32 nAction)
@@ -267,14 +269,15 @@ void __fastcall z180_cpu_write_handler(UINT32 address, UINT8 data)
 {
 	address &= PROG_MASK;
 
-	if (Mem[nActiveCPU][WRITE][(address >> PROG_PAGE_BITS)]) {
+	if (Mem[nActiveCPU][WRITE][(address >> PROG_PAGE_BITS)])
+	{
 		Mem[nActiveCPU][WRITE][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK] = data;
 		return;
 	}
 
-	if (prog_write[nActiveCPU]) {
+	if (prog_write[nActiveCPU])
+	{
 		prog_write[nActiveCPU](address, data);
-		return;
 	}
 }
 
@@ -282,29 +285,35 @@ UINT8 __fastcall z180_cpu_fetchop_handler(UINT32 address)
 {
 	address &= PROG_MASK;
 
-	if (Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)]) {
+	if (Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)])
+	{
 		return Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
 	}
 
-	if (prog_fetchop[nActiveCPU]) {
+	if (prog_fetchop[nActiveCPU])
+	{
 		return prog_fetchop[nActiveCPU](address);
 	}
 
 	// fall back to arg
-	if (Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)]) {
+	if (Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)])
+	{
 		return Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
 	}
 
-	if (prog_fetcharg[nActiveCPU]) {
+	if (prog_fetcharg[nActiveCPU])
+	{
 		return prog_fetcharg[nActiveCPU](address);
 	}
 
 	// fall back to read
-	if (Mem[nActiveCPU][READ ][(address >> PROG_PAGE_BITS)]) {
-		return Mem[nActiveCPU][READ ][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
+	if (Mem[nActiveCPU][READ][(address >> PROG_PAGE_BITS)])
+	{
+		return Mem[nActiveCPU][READ][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
 	}
 
-	if (prog_read[nActiveCPU]) {
+	if (prog_read[nActiveCPU])
+	{
 		return prog_read[nActiveCPU](address);
 	}
 
@@ -315,29 +324,35 @@ UINT8 __fastcall z180_cpu_fetcharg_handler(UINT32 address)
 {
 	address &= PROG_MASK;
 
-	if (Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)]) {
+	if (Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)])
+	{
 		return Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
 	}
 
-	if (prog_fetcharg[nActiveCPU]) {
+	if (prog_fetcharg[nActiveCPU])
+	{
 		return prog_fetcharg[nActiveCPU](address);
 	}
 
 	// fall back to op
-	if (Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)]) {
+	if (Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)])
+	{
 		return Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
 	}
 
-	if (prog_fetchop[nActiveCPU]) {
+	if (prog_fetchop[nActiveCPU])
+	{
 		return prog_fetchop[nActiveCPU](address);
 	}
 
 	// fall back to read
-	if (Mem[nActiveCPU][READ ][(address >> PROG_PAGE_BITS)]) {
-		return Mem[nActiveCPU][READ ][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
+	if (Mem[nActiveCPU][READ][(address >> PROG_PAGE_BITS)])
+	{
+		return Mem[nActiveCPU][READ][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
 	}
 
-	if (prog_read[nActiveCPU]) {
+	if (prog_read[nActiveCPU])
+	{
 		return prog_read[nActiveCPU](address);
 	}
 
@@ -348,27 +363,33 @@ UINT8 __fastcall z180_cpu_read_handler(UINT32 address)
 {
 	address &= PROG_MASK;
 
-	if (Mem[nActiveCPU][READ ][(address >> PROG_PAGE_BITS)]) {
-		return Mem[nActiveCPU][READ ][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
+	if (Mem[nActiveCPU][READ][(address >> PROG_PAGE_BITS)])
+	{
+		return Mem[nActiveCPU][READ][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
 	}
 
-	if (prog_read[nActiveCPU]) {
+	if (prog_read[nActiveCPU])
+	{
 		return prog_read[nActiveCPU](address);
 	}
 
-	if (Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)]) {
+	if (Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)])
+	{
 		return Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
 	}
 
-	if (prog_fetchop[nActiveCPU]) {
+	if (prog_fetchop[nActiveCPU])
+	{
 		return prog_fetchop[nActiveCPU](address);
 	}
 
-	if (Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)]) {
+	if (Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)])
+	{
 		return Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK];
 	}
 
-	if (prog_fetcharg[nActiveCPU]) {
+	if (prog_fetcharg[nActiveCPU])
+	{
 		return prog_fetcharg[nActiveCPU](address);
 	}
 
@@ -379,9 +400,9 @@ void __fastcall z180_cpu_write_port_handler(UINT32 address, UINT8 data)
 {
 	address &= PORT_MASK;
 
-	if (port_write[nActiveCPU]) {
-		port_write[nActiveCPU](address,data);
-		return;
+	if (port_write[nActiveCPU])
+	{
+		port_write[nActiveCPU](address, data);
 	}
 }
 
@@ -389,7 +410,8 @@ UINT8 __fastcall z180_cpu_read_port_handler(UINT32 address)
 {
 	address &= PORT_MASK;
 
-	if (port_read[nActiveCPU]) {
+	if (port_read[nActiveCPU])
+	{
 		return port_read[nActiveCPU](address);
 	}
 
@@ -404,26 +426,30 @@ UINT8 z180_cheat_read(UINT32 address)
 
 void z180_cheat_write(UINT32 address, UINT8 data)
 {
-	if (Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)]) {
+	if (Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)])
+	{
 		Mem[nActiveCPU][FETCHOP][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK] = data;
 	}
 
-	if (Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)]) {
+	if (Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)])
+	{
 		Mem[nActiveCPU][FETCHARG][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK] = data;
 	}
 
-	if (Mem[nActiveCPU][READ ][(address >> PROG_PAGE_BITS)]) {
-		Mem[nActiveCPU][READ ][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK] = data;
+	if (Mem[nActiveCPU][READ][(address >> PROG_PAGE_BITS)])
+	{
+		Mem[nActiveCPU][READ][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK] = data;
 	}
 
-	if (Mem[nActiveCPU][WRITE][(address >> PROG_PAGE_BITS)]) {
+	if (Mem[nActiveCPU][WRITE][(address >> PROG_PAGE_BITS)])
+	{
 		Mem[nActiveCPU][WRITE][(address >> PROG_PAGE_BITS)][address & PROG_PAGE_MASK] = data;
 		return;
 	}
 
-	if (prog_write[nActiveCPU]) {
+	if (prog_write[nActiveCPU])
+	{
 		prog_write[nActiveCPU](address, data);
-		return;
 	}
 }
 
@@ -432,7 +458,8 @@ void Z180Init(UINT32 nCPU)
 	DebugCPU_Z180Initted = 1;
 
 #if defined FBNEO_DEBUG
-	if (nCPU >= NUM_CPUS) bprintf(PRINT_ERROR, _T("Z180Init called with invalid nCPU (%d), max is %d\n"), nCPU, NUM_CPUS-1);
+	if (nCPU >= NUM_CPUS) bprintf(PRINT_ERROR, _T("Z180Init called with invalid nCPU (%d), max is %d\n"), nCPU,
+	                              NUM_CPUS - 1);
 	if (nCPU >= NUM_CPUS) nCPU = 0;
 #endif
 
@@ -440,7 +467,7 @@ void Z180Init(UINT32 nCPU)
 
 	z180_init(nActiveCPU, 0, dummy_irq_callback);
 
-	memset (Mem[nActiveCPU], 0, 4 * PROG_PAGES * sizeof(UINT8*));
+	memset(Mem[nActiveCPU], 0, 4 * PROG_PAGES * sizeof(UINT8*));
 
 	prog_write[nActiveCPU] = NULL;
 	prog_read[nActiveCPU] = NULL;

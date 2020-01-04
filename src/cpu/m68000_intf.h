@@ -14,7 +14,7 @@
 #define SEK_MAX	(4)								// Maximum number of CPUs supported
 
 #if defined EMU_M68K
- #include "m68k/m68k.h"
+#include "m68k/m68k.h"
 #endif
 
 // Number of bits used for each page in the fast memory map
@@ -59,9 +59,9 @@
 #endif
 
 #ifdef EMU_M68K
- extern "C" INT32 nSekM68KContextSize[SEK_MAX];
- extern "C" INT8* SekM68KContext[SEK_MAX];
- extern "C" INT32 m68k_ICount;
+extern "C" INT32 nSekM68KContextSize[SEK_MAX];
+extern "C" INT8* SekM68KContext[SEK_MAX];
+extern "C" INT32 m68k_ICount;
 #endif
 
 typedef UINT8 (__fastcall *pSekReadByteHandler)(UINT32 a);
@@ -82,7 +82,8 @@ extern INT32 nSekCycles[SEK_MAX], nSekCPUType[SEK_MAX];
 // Mapped memory pointers to Rom and Ram areas (Read then Write)
 // These memory areas must be allocated multiples of the page size
 // with a 4 byte over-run area lookup for each page (*3 for read, write and fetch)
-struct SekExt {
+struct SekExt
+{
 	UINT8* MemMap[SEK_PAGE_COUNT * 3];
 
 	// If MemMap[i] < SEK_MAXHANDLER, use the handler functions
@@ -106,7 +107,7 @@ struct SekExt {
 #define SEK_DEF_WRITE_LONG(i, a, d) { pSekExt->WriteWord[i]((a),(UINT16)((d) >> 16)); pSekExt->WriteWord[i]((a) + 2,(UINT16)((d) & 0xffff)); }
 
 extern struct SekExt *SekExt[SEK_MAX], *pSekExt;
-extern INT32 nSekActive;										// The cpu which is currently being emulated
+extern INT32 nSekActive; // The cpu which is currently being emulated
 extern INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nSekCyclesToDo;
 
 UINT32 SekReadByte(UINT32 a);
@@ -132,7 +133,7 @@ void SekNewFrame();
 void SekSetCyclesScanline(INT32 nCycles);
 
 void SekClose();
-void SekOpen(const INT32 i);
+void SekOpen(INT32 i);
 INT32 SekGetActive();
 INT32 SekShouldInterrupt();
 void SekBurnUntilInt();
@@ -141,17 +142,17 @@ void SekBurnUntilInt();
 #define SEK_IRQSTATUS_AUTO (0x2000)
 #define SEK_IRQSTATUS_ACK  (0x1000)
 
-void SekSetIRQLine(const INT32 line, INT32 status);
-void SekSetIRQLine(INT32 nCPU, const INT32 line, INT32 status);
-void SekSetVIRQLine(const INT32 line, INT32 nstatus);
-void SekSetVIRQLine(INT32 nCPU, const INT32 line, INT32 status);
+void SekSetIRQLine(INT32 line, INT32 status);
+void SekSetIRQLine(INT32 nCPU, INT32 line, INT32 status);
+void SekSetVIRQLine(INT32 line, INT32 nstatus);
+void SekSetVIRQLine(INT32 nCPU, INT32 line, INT32 status);
 
 void SekReset();
 void SekReset(INT32 nCPU);
 
 void SekRunEnd();
-void SekRunAdjust(const INT32 nCycles);
-INT32 SekRun(const INT32 nCycles);
+void SekRunAdjust(INT32 nCycles);
+INT32 SekRun(INT32 nCycles);
 INT32 SekRun(INT32 nCPU, INT32 nCycles);
 void SekSetRESETLine(INT32 nStatus);
 void SekSetRESETLine(INT32 nCPU, INT32 nStatus);

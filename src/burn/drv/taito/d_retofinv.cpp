@@ -1,6 +1,3 @@
-// FB Alpha Return of the Invaders driver module
-// Based on MAME driver by Jarek Parchanski and Andrea Mazzoleni
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_m68705.h"

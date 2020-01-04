@@ -1,4 +1,3 @@
-// Burner DipSwitches Dialog module
 #include "burner.h"
 
 HWND hInpDIPSWDlg = NULL;									// Handle to the DIPSW Dialog

@@ -1,6 +1,3 @@
-// FB Alpha Shippu Mahou Daisakusen driver module
-// Driver and emulation by Jan Klaassen
-
 #include "toaplan.h"
 // Shippu Mahou Daisakusen
 

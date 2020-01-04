@@ -1,6 +1,3 @@
-// FB Alpha Asterix driver module
-// Based on MAME driver by Olivier Galibert
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

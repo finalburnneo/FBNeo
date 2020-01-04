@@ -1,11 +1,3 @@
-// FB Alpha El Fin Del Tiempo driver module
-// Based on MAME driver by El Semi and Roberto Fresca
-
-//
-// EFDT Trivia: clearing the soundlatch/soundcontrol after AY8910Reset()
-// Kills the soundcpu!
-//
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6800_intf.h"

@@ -1,6 +1,3 @@
-// FB Alpha Irem M62 system driver
-// Based on MAME driver by smf and David Haywood
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 

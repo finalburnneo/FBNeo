@@ -1,4 +1,3 @@
-/* subtypes */
 #define MM6221AA    21      /* Phoenix (fixed melodies) */
 #define TMS3615 	15		/* Naughty Boy, Pleiads (13 notes, one output) */
 #define TMS3617 	17		/* Monster Bash (13 notes, six outputs) */

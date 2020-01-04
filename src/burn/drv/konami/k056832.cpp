@@ -1,5 +1,3 @@
-// Based on MAME sources by David Haywood
-
 #include "tiles_generic.h"
 #include "konamiic.h"
 

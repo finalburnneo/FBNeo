@@ -1,5 +1,3 @@
-// A module for keeping parents who have no driver in FBA
-
 #include "burnint.h"
 
 static UINT8 ParentReset         = 0;

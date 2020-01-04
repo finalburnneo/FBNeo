@@ -1,18 +1,3 @@
-// FB Alpha Armed Formation driver module
-// Based on MAME driver by Carlos A. Lozano, Phil Stroffolino, and Takahiro Nogi
-//
-// nb1414m4 hooked up to Kozure Ookami July 8 2015 -dink
-// sprite colour lookup table support added July 15 2015 -dink
-// -  July 16 2015  -
-// text layer priorities added, fixes certain/cutscene text effects in legion & terraf
-// fix fg layer scrolling in terraf/terrafu/terrafj
-// fix chaotic music tempo & dac sound clarity in all games -dink
-//
-// - dec 27, 2016 -
-// added Tatakae! Big Fighter / SkyRobo, biiiiiig thanks to Caps0ff.blogspot.com
-// for dumping the impossible / badly damaged & protected i8751 protection mcu -dink
-//
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

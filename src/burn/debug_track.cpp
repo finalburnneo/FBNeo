@@ -1,5 +1,3 @@
-// A module to track if various support devices, cpus, sound modules are in use
-
 #include "burnint.h"
 
 UINT8 Debug_BurnTransferInitted;

@@ -1,14 +1,3 @@
-// FB Alpha Tetris Plus driver module
-// Based on MAME driver by Luca Elia
-
-/*
-	To do:
-		clean ups
-		nndmseal screen upside-down (game doesn't work, so who cares?)
-		Stepping Stage (also doesn't work)
-		Rock'n MegaSession (Japan)
-*/
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "ymz280b.h"

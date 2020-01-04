@@ -1,6 +1,3 @@
-/* Lzma86.h -- LZMA + x86 (BCJ) Filter
-2013-01-18 : Igor Pavlov : Public domain */
-
 #ifndef __LZMA86_H
 #define __LZMA86_H
 

@@ -1,16 +1,3 @@
-// license:BSD-3-Clause
-// copyright-holders:R. Belmont,byuu
-/***************************************************************************
-
-    upd7725.c
-
-    Core implementation for the portable NEC uPD7725/uPD96050 emulator
-
-    Original by byuu in the public domain.
-    MAME conversion by R. Belmont
-
-****************************************************************************/
-
 #include "burnint.h"
 #include "upd7725.h"
 

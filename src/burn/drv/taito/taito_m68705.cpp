@@ -1,6 +1,3 @@
-// Based on MAME sources copied to and from various drivers
-// who is the original author?
-
 #include "burnint.h"
 #include "taito_m68705.h"
 

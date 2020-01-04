@@ -1,6 +1,3 @@
-/* XzEnc.c -- Xz Encode
-2015-09-16 : Igor Pavlov : Public domain */
-
 #include "Precomp.h"
 
 #include <stdlib.h>

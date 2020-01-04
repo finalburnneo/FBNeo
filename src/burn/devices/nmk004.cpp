@@ -1,6 +1,3 @@
-// NMK004 device
-// Based on MAME device by David Haywood and trap15
-
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "tlcs90_intf.h"

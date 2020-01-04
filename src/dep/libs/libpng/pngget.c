@@ -1,17 +1,3 @@
-
-/* pngget.c - retrieval of values from info struct
- *
- * Copyright (c) 2018 Cosmin Truta
- * Copyright (c) 1998-2002,2004,2006-2018 Glenn Randers-Pehrson
- * Copyright (c) 1996-1997 Andreas Dilger
- * Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
- *
- * This code is released under the libpng license.
- * For conditions of distribution and use, see the disclaimer
- * and license in png.h
- *
- */
-
 #include "pngpriv.h"
 
 #if defined(PNG_READ_SUPPORTED) || defined(PNG_WRITE_SUPPORTED)

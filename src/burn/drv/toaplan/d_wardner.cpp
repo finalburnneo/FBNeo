@@ -1,6 +1,3 @@
-// FB Alpha Wardner driver module
-// Based on MAME driver by Quench
-
 #include "tiles_generic.h"
 #include "tms32010.h"
 #include "z80_intf.h"

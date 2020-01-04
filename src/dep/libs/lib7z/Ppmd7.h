@@ -1,11 +1,3 @@
-/* Ppmd7.h -- PPMdH compression codec
-2016-05-21 : Igor Pavlov : Public domain
-This code is based on PPMd var.H (2001): Dmitry Shkarin : Public domain */
-
-/* This code supports virtual RangeDecoder and includes the implementation
-of RangeCoder from 7z, instead of RangeCoder from original PPMd var.H.
-If you need the compatibility with original PPMd var.H, you can use external RangeDecoder */
-
 #ifndef __PPMD7_H
 #define __PPMD7_H
 

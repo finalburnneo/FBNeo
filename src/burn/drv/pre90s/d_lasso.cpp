@@ -1,6 +1,3 @@
-// FB Alpha Lasso driver module
-// Based on MAME driver by Phil Stroffolino, Nicola Salmoria, and Luca Elia
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "z80_intf.h"

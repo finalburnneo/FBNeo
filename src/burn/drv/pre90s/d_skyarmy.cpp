@@ -1,15 +1,3 @@
-// FB Alpha Sky Army driver module
-// Based on MAME driver by Ryan Holtz
-
-
-// This particular driver is a tutorial to hopefully help others
-// develop drivers for fba using mame's source as a starting point
-// I have tried to document as many lines as possible, and given hopefully enough details
-// 
-// original source:
-//	src\mame\drivers\skyarmy.c   (circa mame ~0.110)
-//
-
 #include "tiles_generic.h" // either this or burnint.h is required, but not both
 #include "z80_intf.h"
 #include "bitswap.h" // using bitswap functions in this driver...

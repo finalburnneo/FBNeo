@@ -1,5 +1,3 @@
-// Driver Selector module
-// TreeView Version by HyperYagami
 #include "burner.h"
 #include <process.h>
 

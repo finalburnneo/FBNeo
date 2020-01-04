@@ -1,8 +1,3 @@
-// V60.C
-// Undiscover the beast!
-// Main hacking and coding by Farfetch'd
-// Portability fixes by Richter Belmont
-
 #include "burnint.h"
 #include "bitswap.h" // ...xor_le
 #include "driver.h"

@@ -1,6 +1,3 @@
-// The New Zealand Story protection module
-// Based on MAME version 0.67 mcu simulation
-
 #include "burnint.h"
 #include "tnzs_prot.h"
 

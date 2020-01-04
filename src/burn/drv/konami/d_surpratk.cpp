@@ -1,6 +1,3 @@
-// FB Alpha Surprise Attack driver module
-// Based on MAME driver by Nicola Salmoria
-
 #include "tiles_generic.h"
 #include "burn_ym2151.h"
 #include "konami_intf.h"

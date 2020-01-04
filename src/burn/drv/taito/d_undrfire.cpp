@@ -1,9 +1,3 @@
-// FB Alpha Taito Under Fire / Chase Bombers
-// Based on MAME driver by Bryan McPhail and David Graves
-
-// do-to:
-// cbombers priority mess :(
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "taito.h"

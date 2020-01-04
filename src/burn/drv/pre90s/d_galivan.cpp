@@ -1,6 +1,3 @@
-// FB Alpha Galivan driver module
-// Based on MAME driver by Luca Elia and Olivier Galibert
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "dac.h"

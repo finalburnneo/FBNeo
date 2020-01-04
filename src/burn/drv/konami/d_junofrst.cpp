@@ -1,6 +1,3 @@
-// FB Alpha Juno First driver module
-// Based on MAME driver by Chris Hardy
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6809_intf.h"

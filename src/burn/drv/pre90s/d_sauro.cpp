@@ -1,6 +1,3 @@
-// FB Alpha Sauro driver module
-// Based on MAME driver by Zsolt Vasvari
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym3812.h"

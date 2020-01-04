@@ -1,5 +1,3 @@
-// FB Alpha sample player module
-
 #include "burnint.h"
 #include "samples.h"
 

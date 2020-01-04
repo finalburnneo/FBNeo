@@ -1,9 +1,3 @@
-// FB Alpha XX Mission driver module
-// Based on MAME driver by Uki
-// Todo:
-//   Figure out why the scrolling "hiccups" when something blows up running @
-//   3mhz.  Tried every variation of timing I could think of. grr! -dink feb. 3 2016
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2203.h"

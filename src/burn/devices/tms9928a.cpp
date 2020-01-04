@@ -1,5 +1,3 @@
-// Based on MAME sources by Sean Young, Nathan Woods, Aaron Giles, Wilbert Pol, and hap
-
 #include "tiles_generic.h"
 #include "tms9928a.h"
 

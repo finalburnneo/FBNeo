@@ -1,6 +1,3 @@
-// FB Alpha The Main Event / Devastators driver module
-// Based on MAME driver by Bryan McPhail
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "hd6309_intf.h"

@@ -1,6 +1,3 @@
-// FB Alpha Atari Black Widow driver module
-// Based on MAME driver by Brad Oliver, Bernd Wiebelt, and Allard van der Bas
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "vector.h"

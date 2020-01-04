@@ -1,6 +1,3 @@
-// FB Alpha Irem M63 driver module
-// Based on MAME driver by Nicola Salmoria
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "i8039.h"

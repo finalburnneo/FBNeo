@@ -1,4 +1,3 @@
-// 68000 (Sixty Eight K) Interface - header file
 #include <stdint.h>
 #ifndef FASTCALL
  #undef __fastcall

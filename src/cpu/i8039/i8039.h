@@ -1,12 +1,3 @@
-/**************************************************************************
- *                      Intel 8039 Portable Emulator                      *
- *                                                                        *
- *                   Copyright Mirko Buffoni                              *
- *  Based on the original work Copyright Dan Boris, an 8048 emulator      *
- *     You are not allowed to distribute this software commercially       *
- *        Please, notify me, if you make any changes to this file         *
- **************************************************************************/
-
 #include "driver.h"
 
 #define HAS_N7751	1

@@ -1,6 +1,3 @@
-// FB Alpha Contra driver module
-// Based on MAME driver by Carlos A. Lozano, Phil Stroffolino, Jose T. Gomez, and Eric Hustvedt
-
 #include "tiles_generic.h"
 #include "burn_ym2151.h"
 #include "m6809_intf.h"

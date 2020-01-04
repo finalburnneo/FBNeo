@@ -1,4 +1,3 @@
-// burn_ym2612.h
 #include "driver.h"
 extern "C" {
  #include "fm.h"

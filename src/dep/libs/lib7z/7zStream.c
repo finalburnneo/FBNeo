@@ -1,6 +1,3 @@
-/* 7zStream.c -- 7z Stream functions
-2013-11-12 : Igor Pavlov : Public domain */
-
 #include "Precomp.h"
 
 #include <string.h>

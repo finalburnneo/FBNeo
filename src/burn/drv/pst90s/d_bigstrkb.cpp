@@ -1,10 +1,3 @@
-// FB Alpha Big Striker bootleg Hardware
-// Based on MAME driver by David Haywood
-
-// note:
-//	the dots in place of the title are normal
-//	note the glitches on the black on boot are normal
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "msm6295.h"

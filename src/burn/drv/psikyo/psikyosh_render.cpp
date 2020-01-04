@@ -1,8 +1,3 @@
-// Video rendering module for Psikyo SH2 games
-// Lots of code here and there ripped directly from MAME
-// Thanks to David Haywood for the initial MAME driver
-// as well as some other valuable pointers.
-
 #include "tiles_generic.h" // nScreenWidth & nScreenHeight
 #include "psikyosh_render.h" // contains loads of macros
 

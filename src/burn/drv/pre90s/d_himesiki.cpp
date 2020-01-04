@@ -1,6 +1,3 @@
-// FB Alpha Himeshikibu & Android driver module
-// Based on MAME driver by Uki and David Haywood
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2203.h"

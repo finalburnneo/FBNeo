@@ -1,9 +1,3 @@
-// FB Neo memory management module
-
-// The purpose of this module is to offer replacement functions for standard C/C++ ones 
-// that allocate and free memory.  This should help deal with the problem of memory
-// leaks and non-null pointers on game exit.
-
 #include "burnint.h"
 
 #define LOG_MEMORY_USAGE 0

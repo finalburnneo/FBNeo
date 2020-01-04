@@ -1,7 +1,3 @@
-// Tilemap defines
-
-// use in place of "which" to have this applied to all initialized tilemaps
-// works for: GenericTilemapSetEnable(), GenericTilemapSetFlip(), GenericTilemapSetOffsets()
 #define TMAP_GLOBAL		    -1
 
 // flip the tilemap on the screen horizontally, vertically or both.

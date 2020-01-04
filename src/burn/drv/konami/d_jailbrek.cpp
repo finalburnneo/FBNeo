@@ -1,6 +1,3 @@
-// FB Alpha Jailbreak driver module
-// Based on MAME driver by Ernesto Corvi
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "vlm5030.h"

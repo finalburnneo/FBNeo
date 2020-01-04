@@ -1,6 +1,3 @@
-// FB Alpha Parallel Turn driver module
-// Based on MAME driver by Tomasz Slanina and Tatsuyuki Satoh
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

@@ -1,6 +1,3 @@
-// FB Alpha S.P.Y. driver module
-// Based on MAME driver by Nicola Salmoria and Acho A. Tang
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6809_intf.h"

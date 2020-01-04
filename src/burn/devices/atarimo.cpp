@@ -1,11 +1,3 @@
-/*##########################################################################
-
-    atarimo.c
-
-    Common motion object management functions for Atari raster games.
-
-##########################################################################*/
-
 #include "tiles_generic.h"
 #include "atarimo.h"
 

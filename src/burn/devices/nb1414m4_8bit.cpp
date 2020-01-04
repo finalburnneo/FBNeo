@@ -1,33 +1,3 @@
-// license:MAME
-// copyright-holders:Angelo Salese
-/*******************************************************************************************************************
-
-Nichibutsu 1414M4 device emulation
-
-Written by Angelo Salese, based on researches by Tomasz Slanina with Legion
-
-This is some fancy MCU / blitter that copies text strings in various Nihon Bussan games;
-
-TODO:
-- where is the condition that makes "insert coin" text to properly blink?
-- first byte meaning is completely unknown;
-- Ninja Emaki triggers unknown commands 0x8000 & 0xff20;
-- Ninja Emaki continue screen is corrupt;
-- How to NOT draw the params?
-- Device-ify this;
-
-Notes:
-- Just before any string in the "MCU" rom, there's a control byte, this meaning is as follows:
-  0?-- ---- ---- ---- interpret as data?
-  10-- ---- ---- ---- single string transfer
-  11-- ---- ---- ---- src -> dst copy, if destination != 0 fixed src, otherwise do a src -> dst
-  --xx xxxx xxxx xxxx destination offset in the VRAM tilemap
-
-- I'm sure that this is a shared device, that shares everything. All of the known differences are due of not
-  understood features of the chip (some bytes in the ROM etc.)
-
-********************************************************************************************************************/
-
 #include "tiles_generic.h" // for UINT* etc
 #include "nb1414m4_8bit.h"
 

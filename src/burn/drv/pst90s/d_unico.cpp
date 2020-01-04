@@ -1,6 +1,3 @@
-// FB Alpha Unico driver module
-// Based on MAME driver by Luca Elia
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "burn_ym3812.h"

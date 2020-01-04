@@ -1,6 +1,3 @@
-// FB Alpha Asuka & Asuka driver module
-// Based on MAME driver by David Graves and Brian Troha
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

@@ -1,6 +1,3 @@
-// FB Alpha Flower driver module
-// Based on MAME driver by InsideOutBoy
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "flower.h"

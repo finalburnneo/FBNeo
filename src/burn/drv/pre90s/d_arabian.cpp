@@ -1,6 +1,3 @@
-// FB Alpha Arabian driver module
-// Based on MAME driver by Jarek Burczynski and various others
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

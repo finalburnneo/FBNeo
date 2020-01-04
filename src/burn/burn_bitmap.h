@@ -1,5 +1,3 @@
-// FB Alpha Bitmap Management System
-
 #ifndef BURNBITMAP
 
 #define BURNBITMAP

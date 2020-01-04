@@ -1,5 +1,3 @@
-// Psikyo hardware tilemaps
-
 #include "psikyo.h"
 
 UINT8* PsikyoTileROM;

@@ -1,6 +1,3 @@
-// FB Alpha tempest driver module
-// Based on MAME driver by Brad Oliver, Bernd Wiebelt, Allard van der Bas
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "burn_gun.h"

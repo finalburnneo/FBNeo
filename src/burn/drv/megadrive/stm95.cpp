@@ -1,16 +1,3 @@
-// license:BSD-3-Clause
-// copyright-holders:Fabio Priuli, MetalliC
-/***************************************************************************
-
-
- MegaDrive / Genesis Cart + STM95 EEPROM device
-
-
- TO DO: split STM95 to a separate device...
-
-***************************************************************************/
-
-
 #include "burnint.h"
 #include "bitswap.h"
 #include "m68000_intf.h"

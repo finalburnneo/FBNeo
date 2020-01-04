@@ -1,22 +1,3 @@
-
-/* pngmem.c - stub functions for memory allocation
- *
- * Copyright (c) 2018 Cosmin Truta
- * Copyright (c) 1998-2002,2004,2006-2014,2016 Glenn Randers-Pehrson
- * Copyright (c) 1996-1997 Andreas Dilger
- * Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
- *
- * This code is released under the libpng license.
- * For conditions of distribution and use, see the disclaimer
- * and license in png.h
- *
- * This file provides a location for all memory allocation.  Users who
- * need special memory handling are expected to supply replacement
- * functions for png_malloc() and png_free(), and to use
- * png_create_read_struct_2() and png_create_write_struct_2() to
- * identify the replacement functions.
- */
-
 #include "pngpriv.h"
 
 #if defined(PNG_READ_SUPPORTED) || defined(PNG_WRITE_SUPPORTED)

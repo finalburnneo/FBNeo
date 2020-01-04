@@ -1,4 +1,3 @@
-// Cave hardware sprites
 #include "cave.h"
 
 INT32 CaveSpriteVisibleXOffset;

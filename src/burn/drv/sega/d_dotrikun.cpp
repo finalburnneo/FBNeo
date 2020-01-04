@@ -1,6 +1,3 @@
-// FB Alpha Dottori Kun driver module
-// Based on MAME driver by Takahiro Nogi
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 

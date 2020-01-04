@@ -1,4 +1,3 @@
-// Fever SOS / Dangun Feveron
 #include "cave.h"
 #include "ymz280b.h"
 

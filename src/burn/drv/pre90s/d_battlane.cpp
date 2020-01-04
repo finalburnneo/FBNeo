@@ -1,6 +1,3 @@
-// FB Alpha Battle Lane driver module
-// Based on MAME driver by Paul Leaman (paul@vortexcomputing.demon.co.uk)
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "burn_ym3526.h"

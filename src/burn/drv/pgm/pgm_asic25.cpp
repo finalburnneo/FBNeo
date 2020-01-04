@@ -1,13 +1,3 @@
-/*
-	IGS Asic25 + (Asic12, Asic22, or Asic28) emulation
-
-	Used by:
-		Oriental Legends Special (Asic25 + Asic28)
-		The Killing Blade (Asic25 + Asic22)
-		Dragon World 2 (Asic25 + Asic12)
-		Dragon World 3 (Asic25 + Asic22)
-*/
-
 #include "pgm.h"
 #include "bitswap.h"
 

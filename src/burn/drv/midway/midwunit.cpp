@@ -1,15 +1,3 @@
-// midway wolf unit
-
-// bugs due to tms34010:
-//  1: wwfmania crashes shortly after booting.  missing raster ops in tms34010?
-//  2: openice goes bonkers on game start, cpu players wont move
-//     plus writes garbage to cmos
-//  3: nbahangt, missing video objects
-//
-// easy:
-//  4: figure out why last line doesn't always render in rampgwt
-//    3: answer, screen is offset by -1 line
-
 #include "tiles_generic.h"
 #include "midwunit.h"
 #include "midwayic.h"

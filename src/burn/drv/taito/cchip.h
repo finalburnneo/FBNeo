@@ -1,4 +1,3 @@
-// chip dip
 UINT8 cchip_asic_read(UINT32 offset);
 void  cchip_asic_write68k(UINT32 offset, UINT16 data);
 void  cchip_68k_write(UINT16 address, UINT8 data);

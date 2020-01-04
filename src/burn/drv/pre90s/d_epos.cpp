@@ -1,6 +1,3 @@
-// FB Alpha Epos Tristar Hardware driver module
-// Based on MAME driver by Zsolt Vasvari
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "8255ppi.h"

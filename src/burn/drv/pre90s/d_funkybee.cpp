@@ -1,6 +1,3 @@
-// FB Alpha Funky Bee Driver Module
-// Based on MAME driver by Zsolt Vasvari
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

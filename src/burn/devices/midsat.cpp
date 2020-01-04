@@ -1,6 +1,3 @@
-// Midway Squeak and Talk module
-// based on MAME code by Aaron Giles
-
 #include "burnint.h"
 #include "m6800_intf.h"
 #include "tms5220.h"

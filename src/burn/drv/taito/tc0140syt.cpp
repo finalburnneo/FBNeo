@@ -1,6 +1,3 @@
-// TC0140SYT
-// Based on MAME sources by Philip Bennett
-
 #include "burnint.h"
 #include "z80_intf.h"
 #include "taito_ic.h"

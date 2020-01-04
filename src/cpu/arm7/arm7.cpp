@@ -1,39 +1,3 @@
-/*****************************************************************************
- *
- *   arm7.c
- *   Portable ARM7TDMI CPU Emulator
- *
- *   Copyright Steve Ellenoff, all rights reserved.
- *
- *   - This source code is released as freeware for non-commercial purposes.
- *   - You are free to use and redistribute this code in modified or
- *     unmodified form, provided you list me in the credits.
- *   - If you modify this source code, you must add a notice to each modified
- *     source file that it has been changed.  If you're a nice person, you
- *     will clearly mark each change too.  :)
- *   - If you wish to use this for commercial purposes, please contact me at
- *     sellenoff@hotmail.com
- *   - The author of this copywritten work reserves the right to change the
- *     terms of its usage and license at any time, including retroactively
- *   - This entire notice must remain in the source code.
- *
- *  This work is based on:
- *  #1) 'Atmel Corporation ARM7TDMI (Thumb) Datasheet - January 1999'
- *  #2) Arm 2/3/6 emulator By Bryan McPhail (bmcphail@tendril.co.uk) and Phil Stroffolino (MAME CORE 0.76)
- *  #3) Thumb support by Ryan Holtz
- *
- *****************************************************************************/
-
-/******************************************************************************
- *  Notes:
-
-    ** This is a plain vanilla implementation of an ARM7 cpu which incorporates my ARM7 core.
-       It can be used as is, or used to demonstrate how to utilize the arm7 core to create a cpu
-       that uses the core, since there are numerous different mcu packages that incorporate an arm7 core.
-
-       See the notes in the arm7core.c file itself regarding issues/limitations of the arm7 core.
-    **
-*****************************************************************************/
 #include "burnint.h"
 #include "arm7core.h"
 #include "arm7_intf.h"

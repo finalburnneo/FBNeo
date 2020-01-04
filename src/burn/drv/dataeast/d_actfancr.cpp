@@ -1,6 +1,3 @@
-// FB Alpha Act-Fancer & Trio The Punch driver module
-// Based on MAME driver by Bryan McPhail
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "h6280_intf.h"

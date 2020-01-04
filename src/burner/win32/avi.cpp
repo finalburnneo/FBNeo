@@ -79,9 +79,9 @@
 #endif
 
 // defines
-#define FBAVI_VFW_INIT 0x0001 // avi file library initialized
-#define FBAVI_VID_SET  0x0002 // avi video compression set
-#define FBAVI_AUD_SET  0x0004 // avi audio compression set (not used for now)
+#define VI_VFW_INIT 0x0001 // avi file library initialized
+#define VI_VID_SET  0x0002 // avi video compression set
+#define VI_AUD_SET  0x0004 // avi audio compression set (not used for now)
 
 #define TAVI_DIRECTORY ".\\avi\\"
 
@@ -460,7 +460,7 @@ static INT32 AviCreateVidStream()
 		memmove(&compvarsave, &FBAvi.compvar, sizeof(COMPVARS));
 	}
 
-	nAviFlags |= FBAVI_VID_SET; // flag |= video compression option is set
+	nAviFlags |= VI_VID_SET; // flag |= video compression option is set
 
 	// fill in the header for the video stream
 	memset(&FBAvi.vidh, 0, sizeof(FBAvi.vidh));
@@ -706,7 +706,7 @@ static void FreeBMP()
 // Stops AVI recording.
 void AviStop_INT()
 {
-	if (nAviFlags & FBAVI_VFW_INIT) {
+	if (nAviFlags & VI_VFW_INIT) {
 		if (FBAvi.psAud) {
 			AVIStreamRelease(FBAvi.psAud);
 		}
@@ -723,7 +723,7 @@ void AviStop_INT()
 			AVIFileRelease(FBAvi.pFile);
 		}
 
-		if (nAviFlags & FBAVI_VID_SET) {
+		if (nAviFlags & VI_VID_SET) {
 			if (nAviSplit == -1)
 				ICCompressorFree(&FBAvi.compvar);
 		}
@@ -773,7 +773,7 @@ INT32 AviStart_INT()
 
 	AVIFileInit();
 
-	nAviFlags |= FBAVI_VFW_INIT; // avi file library initialized
+	nAviFlags |= VI_VFW_INIT; // avi file library initialized
 
 	// create the avi file
 	if(AviCreateFile()) {

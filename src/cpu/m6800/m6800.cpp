@@ -1,6 +1,6 @@
 #include "burnint.h"
 #include "m6800.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define VERBOSE 0
 

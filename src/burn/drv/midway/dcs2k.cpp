@@ -2,7 +2,7 @@
 #include "adsp2100_intf.h"
 #include "adsp2100/adsp2100.h"
 #include "dcs2k.h"
-#include <math.h>
+#include <cmath>
 
 #define MHz(x)  (x * 1000000)
 #define ADSP_CLOCK   MHz(10)

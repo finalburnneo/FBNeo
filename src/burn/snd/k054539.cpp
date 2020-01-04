@@ -1,5 +1,5 @@
 #include "burnint.h"
-#include "math.h"
+#include "cmath"
 #include "k054539.h"
 
 static INT32 nNumChips = 0;

@@ -1,7 +1,7 @@
 #include "burnint.h"
 #include "flt_rc.h"
 
-#include <math.h>
+#include <cmath>
 
 #define FLT_RC_NUM      16
 

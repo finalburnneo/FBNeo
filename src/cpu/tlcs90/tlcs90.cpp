@@ -1,6 +1,6 @@
 #include "burnint.h"
 #include "tlcs90_intf.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define T90_IOBASE	0xffc0
 

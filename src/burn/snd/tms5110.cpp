@@ -1,5 +1,5 @@
-#include <stddef.h>
-#include <math.h>
+#include <cstddef>
+#include <cmath>
 
 #include "burnint.h"
 #include "tms5110.h"

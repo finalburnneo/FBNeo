@@ -1,6 +1,6 @@
 #include "burnint.h"
 #include "z80.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define	FALSE			0
 #define TRUE			1

@@ -1,6 +1,4 @@
-#include <string.h>
-#include <stdio.h>
-#include <stddef.h>
+#include <cstddef>
 #include "burnint.h"
 #include "6821pia.h"
 

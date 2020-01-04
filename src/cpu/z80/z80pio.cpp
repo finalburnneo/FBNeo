@@ -2,7 +2,7 @@
 #include "z80pio.h"
 #include "z80.h"
 #include "z80daisy.h"
-#include <stddef.h>
+#include <cstddef>
 
 
 /***************************************************************************

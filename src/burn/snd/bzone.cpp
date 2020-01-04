@@ -1,6 +1,6 @@
 #include "burnint.h"
 #include "redbaron.h"
-#include <math.h>
+#include <cmath>
 
 #define OUTPUT_RATE (6000*4)
 #define FRAME_SIZE 400

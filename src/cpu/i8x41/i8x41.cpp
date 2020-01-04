@@ -1,7 +1,7 @@
 #include "burnint.h"
 #include "i8x41.h"
 #include "driver.h"
-#include <stddef.h>
+#include <cstddef>
 
 UINT8 *I8x41Mem = NULL;
 

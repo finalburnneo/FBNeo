@@ -1,6 +1,6 @@
 #include "burnint.h"
 #include "m6800_intf.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define MAX_CPU     8
 

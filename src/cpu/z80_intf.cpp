@@ -1,6 +1,6 @@
 #include "burnint.h"
 #include "z80_intf.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define MAX_Z80		8
 static struct ZetExt* ZetCPUContext[MAX_Z80] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};

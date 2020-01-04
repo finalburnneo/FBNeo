@@ -1,7 +1,7 @@
 #include "mips3_intf.h"
 #include "mips3/mips3.h"
 #include "burnint.h"
-#include <stdint.h>
+#include <cstdint>
 
 #ifdef MIPS3_X64_DRC
 #include "mips3/x64/mips3_x64.h"

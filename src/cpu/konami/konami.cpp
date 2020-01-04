@@ -1,7 +1,7 @@
 #include "burnint.h"
 #include "konami.h"
 #include "konami_intf.h"
-#include <stddef.h>
+#include <cstddef>
 #define VERBOSE 0
 
 #define change_pc(x)	PC=x

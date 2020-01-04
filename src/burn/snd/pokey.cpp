@@ -1,6 +1,6 @@
 #include "burnint.h"
 #include "pokey.h"
-#include <stddef.h>
+#include <cstddef>
 
 /*
  * Defining this produces much more (about twice as much)

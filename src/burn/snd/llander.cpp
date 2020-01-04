@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 #include <cmath>
-=======
-/***************************************************************************
-
-  Lunar Lander Specific Sound Code
-
-***************************************************************************/
-
-#include <math.h>
->>>>>>> parent of 954ba6033... If anyone wants to rewrite these comments please do so
 #include "burnint.h"
 #include "llander.h"
 

@@ -1,21 +1,3 @@
-
-/* pngrtran.c - transforms the data in a row for PNG readers
- *
- * Copyright (c) 2018-2019 Cosmin Truta
- * Copyright (c) 1998-2002,2004,2006-2018 Glenn Randers-Pehrson
- * Copyright (c) 1996-1997 Andreas Dilger
- * Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
- *
- * This code is released under the libpng license.
- * For conditions of distribution and use, see the disclaimer
- * and license in png.h
- *
- * This file contains functions optionally called by an application
- * in order to tell libpng how to handle data when reading a PNG.
- * Transformations that are used in both reading and writing are
- * in pngtrans.c.
- */
-
 #include "pngpriv.h"
 
 #ifdef PNG_ARM_NEON_IMPLEMENTATION

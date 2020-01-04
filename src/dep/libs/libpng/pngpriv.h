@@ -1,25 +1,3 @@
-
-/* pngpriv.h - private declarations for use inside libpng
- *
- * Copyright (c) 2018-2019 Cosmin Truta
- * Copyright (c) 1998-2002,2004,2006-2018 Glenn Randers-Pehrson
- * Copyright (c) 1996-1997 Andreas Dilger
- * Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
- *
- * This code is released under the libpng license.
- * For conditions of distribution and use, see the disclaimer
- * and license in png.h
- */
-
-/* The symbols declared in this file (including the functions declared
- * as extern) are PRIVATE.  They are not part of the libpng public
- * interface, and are not recommended for use by regular applications.
- * Some of them may become public in the future; others may stay private,
- * change in an incompatible way, or even disappear.
- * Although the libpng users are not forbidden to include this header,
- * they should be well aware of the issues that may arise from doing so.
- */
-
 #ifndef PNGPRIV_H
 #define PNGPRIV_H
 

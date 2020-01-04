@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-=======
-/* arm.c
-
-    ARM 2/3/6 Emulation (26 bit address bus)
-
-    Todo:
-      Timing - Currently very approximated, nothing relies on proper timing so far.
-      IRQ timing not yet correct (again, nothing is affected by this so far).
-
-    Recent changes (2005):
-      Fixed software interrupts
-      Fixed various mode change bugs
-      Added preliminary co-processor support.
-
-    By Bryan McPhail (bmcphail@tendril.co.uk) and Phil Stroffolino
-
-*/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
->>>>>>> parent of 954ba6033... If anyone wants to rewrite these comments please do so
 //#include "state.h"
 //#include "driver.h"
 #include "burnint.h"

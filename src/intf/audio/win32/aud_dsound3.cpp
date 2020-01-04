@@ -1,4 +1,3 @@
-// DirectSound module
 #include "burner.h"
 #include "aud_dsp.h"
 #include <math.h>

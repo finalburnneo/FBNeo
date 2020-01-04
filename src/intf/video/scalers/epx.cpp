@@ -1,6 +1,3 @@
-// epxb, epxc filter, added by regret
-// source from Snes9X rerecording (http://code.google.com/p/snes9x151-rerecording/)
-
 typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef signed char int8;

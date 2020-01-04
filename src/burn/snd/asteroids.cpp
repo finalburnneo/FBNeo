@@ -1,30 +1,4 @@
-<<<<<<< HEAD
 #include <cmath>
-=======
-/*****************************************************************************
- *
- * A (partially wrong) try to emulate Asteroid's analog sound
- * It's getting better but is still imperfect :/
- * If you have ideas, corrections, suggestions contact Juergen
- * Buchmueller <pullmoll@t-online.de>
- *
- * Known issues (TODO):
- * - find out if/why the samples are 'damped', I don't see no
- *	 low pass filter in the sound output, but the samples sound
- *	 like there should be one. Maybe in the amplifier..
- * - better (accurate) way to emulate the low pass on the thrust sound?
- * - verify the thump_frequency calculation. It's only an approximation now
- * - the nastiest piece of the circuit is the saucer sound IMO
- *	 the circuits are almost equal, but there are some strange looking
- *	 things like the direct coupled op-amps and transistors and I can't
- *	 calculate the true resistance and thus voltage at the control
- *	 input (5) of the NE555s.
- * - saucer sound is not easy either and the calculations might be off, still.
- *
- *****************************************************************************/
-
-#include <math.h>
->>>>>>> parent of 954ba6033... If anyone wants to rewrite these comments please do so
 #include "burnint.h"
 #include "asteroids.h"
 

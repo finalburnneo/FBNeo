@@ -1,4 +1,3 @@
-// Profiling support
 #include "burner.h"
 
 static double dcntTimerFreq;

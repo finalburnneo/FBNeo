@@ -1,23 +1,3 @@
-// copyright-holders:Aaron Giles
-/*
- *   streaming ADPCM driver
- *   by Aaron Giles
- *
- *   Library to transcode from an ADPCM source to raw PCM.
- *   Written by Buffoni Mirko in 08/06/97
- *   References: various sources and documents.
- *
- *   HJB 08/31/98
- *   modified to use an automatically selected oversampling factor
- *   for the current sample rate
- *
- *   01/06/99
- *    separate MSM5205 emulator form adpcm.c and some fix
- *
- *   07/29/12
- *    added basic support for the MSM6585
- */
-
 #include "burnint.h"
 #include "msm5205.h"
 #include <cmath>

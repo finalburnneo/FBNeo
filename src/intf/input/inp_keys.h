@@ -1,5 +1,3 @@
-// FB Alpha key definitions
-
 #define FBK_ESCAPE          0x01
 #define FBK_1               0x02
 #define FBK_2               0x03

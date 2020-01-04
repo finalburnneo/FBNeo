@@ -1,6 +1,3 @@
-// hq2xs, hq2xbold, hq3xs, hq3xbold filters, added by regret
-// source from Snes9X v1.51+ (http://code.google.com/p/snes9x151-rerecording/)
-
 typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef signed char int8;

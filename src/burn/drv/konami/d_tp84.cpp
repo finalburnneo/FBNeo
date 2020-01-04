@@ -1,6 +1,3 @@
-// FB Alpha Time Pilot '84 driver module
-// Based on MAME driver by Marc Lafontaine
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "z80_intf.h"

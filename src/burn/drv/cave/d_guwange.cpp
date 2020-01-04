@@ -1,4 +1,3 @@
-// Guwange
 #include "cave.h"
 #include "ymz280b.h"
 

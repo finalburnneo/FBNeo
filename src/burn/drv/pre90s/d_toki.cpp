@@ -1,8 +1,3 @@
-// FB Alpha Toki driver module
-// Based on MAME driver by Jarek Parchanski
-
-// Why isn't sound working for jujuba?
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

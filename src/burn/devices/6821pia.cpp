@@ -1,14 +1,3 @@
-/**********************************************************************
-
-    Motorola 6821 PIA interface and emulation
-
-    This function emulates all the functionality of up to 8 M6821
-    peripheral interface adapters.
-
-    MAME sources by Nathan Woods
-
-**********************************************************************/
-
 #include <string.h>
 #include <stdio.h>
 #include <stddef.h>

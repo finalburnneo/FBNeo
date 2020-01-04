@@ -1,6 +1,3 @@
-// FB Alpha Pooyan Driver Module
-// Based on MAME driver by Allard van der Bas, Mike Cuddy, Nicola Salmoria, Martin Binder, and Marco Cassili
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "timeplt_snd.h"

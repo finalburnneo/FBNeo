@@ -1,7 +1,3 @@
-/*
-    sms.c --
-    Sega Master System console emulation.
-*/
 #include "smsshared.h"
 #include "z80_intf.h"
 

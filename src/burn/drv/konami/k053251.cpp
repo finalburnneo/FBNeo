@@ -1,6 +1,3 @@
-// license:BSD-3-Clause
-// copyright-holders:Fabio Priuli,Acho A. Tang, R. Belmont
-
 #include "burnint.h"
 
 static UINT8 K053251Ram[0x10];

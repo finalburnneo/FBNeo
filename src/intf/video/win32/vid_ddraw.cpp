@@ -1,5 +1,3 @@
-// DirectDraw blitter
-
 #include "burner.h"
 
 #if !defined BUILD_X64_EXE

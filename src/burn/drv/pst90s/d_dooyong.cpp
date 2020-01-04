@@ -1,12 +1,3 @@
-// FB Alpha Dooyong driver module
-// Based on MAME driver by Nicola Salmoria
-
-/*
-   Notes:
-    A seriously ugly hack has been used to get sound+music in Pollux and Gulf Storm
-	After 2 days of hacking, I couldn't find a better way. - Jan 9, 2015 Dink
-*/
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

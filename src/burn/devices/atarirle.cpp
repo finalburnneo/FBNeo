@@ -1,23 +1,3 @@
-/*##########################################################################
-
-    atarirle.c
-
-    RLE sprite handling for early-to-mid 90's Atari raster games.
-
-############################################################################
-
-    Description:
-
-    Beginning with Hydra, and continuing through to Primal Rage, Atari used
-    RLE-compressed sprites. These sprites were decoded, colored, and scaled
-    on the fly using an AMD 29C101 ALU unit. The instructions for the ALU
-    were read from 3 512-byte PROMs and fed into the instruction input.
-
-    See the bottom of the source for more details on the operation of these
-    components.
-
-##########################################################################*/
-
 #include "tiles_generic.h"
 #include "atarirle.h"
 

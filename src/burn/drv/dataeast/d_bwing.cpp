@@ -1,8 +1,3 @@
-// FB Alpha B-Wing / Zaviga driver module
-// Based on MAME driver by Acho A. Tang and Alex W. Jackson
-
-// Note dac missing output filtering...
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6502_intf.h"

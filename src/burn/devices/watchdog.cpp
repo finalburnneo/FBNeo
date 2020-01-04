@@ -1,5 +1,3 @@
-// FB Alpha watchdog device module
-
 #include "burnint.h"
 
 static INT32 (*WatchdogReset)(INT32 clear_mem) = NULL;

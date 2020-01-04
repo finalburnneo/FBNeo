@@ -1,6 +1,3 @@
-// FB Alpha Mat Mania driver module
-// Based on MAME driver by Brad Oliver
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "m6809_intf.h"

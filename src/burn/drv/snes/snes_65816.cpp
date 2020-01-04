@@ -1,6 +1,3 @@
-/*Snem 0.1 by Tom Walker
-65816 emulation*/
-
 #include <stdio.h>
 #include "snes.h"
 

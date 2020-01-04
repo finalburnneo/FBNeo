@@ -1,6 +1,3 @@
-// FB Alpha Welltris driver module
-// Based on MAME driver David Haywood
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

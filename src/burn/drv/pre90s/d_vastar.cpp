@@ -1,6 +1,3 @@
-// FB Alpha Vastar driver module
-// Based on MAME driver by Allard Van Der Bas
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

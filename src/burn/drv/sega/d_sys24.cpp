@@ -1,10 +1,3 @@
-// FB Alpha Sega System 24 driver module
-// Based on MAME driver by Olivier Galibert
-
-// Needs inputs hooked up...
-// mahmajn
-// mahmajn2
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "burn_ym2151.h"

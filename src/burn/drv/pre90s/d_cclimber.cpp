@@ -1,6 +1,3 @@
-// Crazy Climber FBA Driver
-// Based on MAME driver by Nicola Salmoria
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

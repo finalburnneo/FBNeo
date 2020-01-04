@@ -1,6 +1,3 @@
-// FB Alpha Backfire! driver module
-// Based on MAME driver by David Haywood
-
 #include "tiles_generic.h"
 #include "arm_intf.h"
 #include "ymz280b.h"

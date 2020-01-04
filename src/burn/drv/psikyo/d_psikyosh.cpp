@@ -1,10 +1,3 @@
-// FB Alpha Psikyo Sh2-based hardware driver module
-// Based on MAME driver by Paul Priest, David Haywood
-
-// To do!
-// implement background zooming update.
-
-
 #include "tiles_generic.h"
 #include "psikyosh_render.h"
 #include "burn_ymf278b.h"

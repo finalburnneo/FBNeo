@@ -1,6 +1,3 @@
-// FB Alpha Crazy Balloon driver module
-// Based on MAME driver by Nicola Salmoria
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76477.h"

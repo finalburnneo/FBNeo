@@ -1,8 +1,3 @@
-/* inftrees.c -- generate Huffman trees for efficient decoding
- * Copyright (C) 1995-2017 Mark Adler
- * For conditions of distribution and use, see copyright notice in zlib.h
- */
-
 #include "zutil.h"
 #include "inftrees.h"
 

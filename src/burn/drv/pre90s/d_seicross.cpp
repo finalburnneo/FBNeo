@@ -1,6 +1,3 @@
-// FB Alpha Frisky Tom / Seicross / Radical Radial driver module
-// Based on MAME driver by Nicola Salmoria
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6800_intf.h"

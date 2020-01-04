@@ -1,6 +1,3 @@
-// FB Alpha City Connection driver module
-// Based on MAME driver by Mirko Buffoni
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "burn_ym2203.h"

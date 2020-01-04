@@ -1,6 +1,3 @@
-// FB Alpha Head On (Bootleg) driver module
-// Based on MAME driver by Hap
-
 #include "tiles_generic.h"
 #include "z80_intf.h" // actually i8080A
 

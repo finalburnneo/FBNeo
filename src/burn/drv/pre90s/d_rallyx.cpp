@@ -1,8 +1,3 @@
-// FinalBurn Alpha driver module for Rally-X, based on the MAME driver by Nicola Salmoria.
-// Emulates Rally-X variants, Jungler, Tactician, Loco-Motion & Commando (Sega)
-// Oddities: Jungler has flipped-mode on by default, but it only affects sprites
-//           and bullets.
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "namco_snd.h"

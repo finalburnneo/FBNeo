@@ -1,5 +1,3 @@
-// Based on MAME sources by Fabio Priuli,Philip Bennett
-
 #include "burnint.h"
 #include "mb87078.h"
 

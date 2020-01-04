@@ -1,6 +1,3 @@
-// FB Alpha Labyrinth Runner driver module
-// Based on MAME driver by Nicola Salmoria
-
 #include "tiles_generic.h"
 #include "hd6309_intf.h"
 #include "burn_ym2203.h"

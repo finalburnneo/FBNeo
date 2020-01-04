@@ -1,7 +1,3 @@
-// Based on MAME driver by David Graves
-
-// tofix: darius2d's offsets and y screen size is wrong - it should be 232 and everything moved down 8px
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

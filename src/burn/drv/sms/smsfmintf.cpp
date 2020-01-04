@@ -1,7 +1,3 @@
-/*
-    fmintf.c --
-	Interface to EMU2413 and YM2413 emulators.
-*/
 #include "smsshared.h"
 #include "burn_ym2413.h"
 

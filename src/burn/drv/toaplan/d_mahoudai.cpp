@@ -1,6 +1,3 @@
-// FB Alpha Mahou Daisakusen driver module
-// Driver and emulation by Jan Klaassen
-
 #include "toaplan.h"
 // Mahou Daisakusen
 

@@ -1,5 +1,3 @@
-// FB Alpha Neo Geo driver module
-
 #include "neogeo.h"
 #include "bitswap.h"
 

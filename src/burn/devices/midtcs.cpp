@@ -1,6 +1,3 @@
-// Midway Turbo Cheap Squeak audio module
-// based on MAME sources by Aaron Giles
-
 #include "burnint.h"
 #include "m6809_intf.h"
 #include "dac.h"

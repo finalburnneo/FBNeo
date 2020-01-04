@@ -1,4 +1,3 @@
-// Tobikose! Jumpman
 #include "cave.h"
 #include "msm6295.h"
 

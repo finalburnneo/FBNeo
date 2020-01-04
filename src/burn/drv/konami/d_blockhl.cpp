@@ -1,6 +1,3 @@
-// FB Alpha Block Hole driver module
-// Based on MAME driver by Nicola Salmoria
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "konami_intf.h"

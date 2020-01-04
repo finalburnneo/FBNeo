@@ -1,21 +1,3 @@
-// FB Alpha Metro driver module
-// Based on MAME driver by Luca Elia and David Haywood
-
-/*
-	Needs porting:
-		dokyusei	(ym2413+msm6295 sound)
-		dokyusp		(ym2413+msm6295 sound)
-		mouja		(ym2413+msm6295 sound)
-		gakusai		(ym2413+msm6295 sound)
-		gakusai2	(ym2413+msm6295 sound)
-
-	Unemulated
-		puzzlet		(h8 main cpu)
-
-	Broken
-		daitorid, crashes in the blitter after the book opens(attract)
-*/
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

@@ -1,4 +1,3 @@
-// gaelco sound
 void    gaelcosnd_update(INT16 *outputs, INT32 samples);
 UINT16  gaelcosnd_r(INT32 offset);
 void    gaelcosnd_w(INT32 offset, UINT16 data);

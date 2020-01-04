@@ -1,6 +1,3 @@
-// Midway SSIO audio / input module
-// Based on MAME sources by Aaron Giles
-
 #include "burnint.h"
 #include "z80_intf.h"
 #include "ay8910.h"

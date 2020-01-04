@@ -1,6 +1,3 @@
-/* Aes.h -- AES encryption / decryption
-2013-01-18 : Igor Pavlov : Public domain */
-
 #ifndef __AES_H
 #define __AES_H
 

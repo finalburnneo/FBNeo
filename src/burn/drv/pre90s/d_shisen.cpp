@@ -1,8 +1,3 @@
-// FB Alpha Shinsen / Match-It driver module
-// Based on MAME driver by Nicola Salmoria
-
-// sound hardware copied from m72 driver
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2151.h"

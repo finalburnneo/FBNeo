@@ -1,10 +1,3 @@
-// Fb Alpha Mighty Warrior / Steel Force / Twin Brats driver module
-// Based on MAME drivers by Pierpaolo Prazzoli, David Haywood, and stephh
-//
-// for later: figure out why the 3rd tile layer needs prio-hack, otherwise
-// mwarr title goes under the sprites in the attract mode.
-//
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "msm6295.h"

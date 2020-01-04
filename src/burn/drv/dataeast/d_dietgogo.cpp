@@ -1,6 +1,3 @@
-// FB Alpha Diet Go Go driver module
-// Based on MAME driver by Bryan McPhail and David Haywood
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "deco16ic.h"

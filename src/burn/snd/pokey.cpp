@@ -1,39 +1,3 @@
-/*****************************************************************************
- *
- *	POKEY chip emulator 4.3
- *	Copyright (c) 2000 by The MAME Team
- *
- *	Based on original info found in Ron Fries' Pokey emulator,
- *	with additions by Brad Oliver, Eric Smith and Juergen Buchmueller,
- *	paddle (a/d conversion) details from the Atari 400/800 Hardware Manual.
- *	Polynome algorithms according to info supplied by Perry McFarlane.
- *
- *	This code is subject to the MAME license, which besides other
- *  things means it is distributed as is, no warranties whatsoever.
- *	For more details read the readme.txt that comes with MAME.
- *
- *	4.3:
- *	- for POT inputs returning zero, immediately assert the ALLPOT
- *	  bit after POTGO is written, otherwise start trigger timer
- *	  depending on SK_PADDLE mode, either 1-228 scanlines or 1-2
- *	  scanlines, depending on the SK_PADDLE bit of SKCTL.
- *	4.2:
- *	- half volume for channels which are inaudible (this should be
- *	  close to the real thing).
- *	4.1:
- *	- default gain increased to closely match the old code.
- *	- random numbers repeat rate depends on POLY9 flag too!
- *	- verified sound output with many, many Atari 800 games,
- *	  including the SUPPRESS_INAUDIBLE optimizations.
- *	4.0:
- *	- rewritten from scratch.
- *	- 16bit stream interface.
- *	- serout ready/complete delayed interrupts.
- *	- reworked pot analog/digital conversion timing.
- *	- optional non-indexing pokey update functions.
- *
- *****************************************************************************/
-
 #include "burnint.h"
 #include "pokey.h"
 #include <stddef.h>

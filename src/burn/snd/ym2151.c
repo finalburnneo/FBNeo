@@ -1,10 +1,3 @@
-// Based on MAME sources by Jarek Burczynski
-/*****************************************************************************
-*
-*	Yamaha YM2151 driver (version 2.150 final beta)
-*
-******************************************************************************/
-
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>

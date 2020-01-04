@@ -1,5 +1,3 @@
-// Based on Mermaid / Beast MCU code by Angelo Salese, Tomasz Slanina, David Haywood
-
 #include "burnint.h"
 #include "z80_intf.h"
 #include "mcs51.h"

@@ -1,5 +1,3 @@
-// Based on MAME sources by Jarek Burczynski, Hiromitsu Shioya
-
 #include "burnint.h"
 #include "msm5232.h"
 

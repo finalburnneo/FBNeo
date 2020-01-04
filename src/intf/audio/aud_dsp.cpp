@@ -1,12 +1,3 @@
-// DSP_ComaC module
-// ----------------
-//   by Daniel Moreno - ComaC (2001)  < comac2k@teleline.es >
-//
-//  This module just fakes the "dsp.c" functions of FinalBurn and uses
-//  a IIR low pass filter, which is pretty faster and has a better
-//  frequency response.
-
-
 #include <stdlib.h>
 #include "burner.h"
 #include "lowpass2.h"

@@ -1,4 +1,3 @@
-/* Cpu types, steps of 8 to help the cycle count calculation */
 #define V33_TYPE 0
 #define V30_TYPE 8
 #define V20_TYPE 16

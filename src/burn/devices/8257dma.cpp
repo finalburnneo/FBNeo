@@ -1,36 +1,3 @@
-/**********************************************************************
-
-    8257 DMA interface and emulation
-
-    For datasheet http://www.threedee.com/jcm/library/index.html
-
-    2008/05     Miodrag Milanovic
-
-        - added support for autoload mode
-        - fixed bug in calculating count
-
-    2007/11     couriersud
-
-        - architecture copied from 8237 DMA
-        - significant changes to implementation
-
-    The DMA works like this:
-
-    1.  The device asserts the DRQn line
-    2.  The DMA clears the TC (terminal count) line
-    3.  The DMA asserts the CPU's HRQ (halt request) line
-    4.  Upon acknowledgement of the halt, the DMA will let the device
-        know that it needs to send information by asserting the DACKn
-        line
-    5.  The DMA will read the byte from the device
-    6.  The device clears the DRQn line
-    7.  The DMA clears the CPU's HRQ line
-    8.  (steps 3-7 are repeated for every byte in the chain)
-
-    MAME sources by Curt Coder,Carl
-
-**********************************************************************/
-
 #include "burnint.h"
 #include "driver.h"
 #include "8257dma.h"

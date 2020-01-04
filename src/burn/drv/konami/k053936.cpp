@@ -1,6 +1,3 @@
-// license:BSD-3-Clause
-// copyright-holders:David Haywood
-
 #include "tiles_generic.h"
 #include "konamiic.h"
 

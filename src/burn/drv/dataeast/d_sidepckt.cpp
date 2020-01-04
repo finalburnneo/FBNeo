@@ -1,6 +1,3 @@
-// based on MAME driver by Ernesto Corvi
-
-// Notes: driver needs some fixing up gfx-wise
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6502_intf.h"

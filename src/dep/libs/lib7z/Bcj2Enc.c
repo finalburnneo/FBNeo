@@ -1,6 +1,3 @@
-/* Bcj2Enc.c -- BCJ2 Encoder (Converter for x86 code)
-2014-11-10 : Igor Pavlov : Public domain */
-
 #include "Precomp.h"
 
 /* #define SHOW_STAT */

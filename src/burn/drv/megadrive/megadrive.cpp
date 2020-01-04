@@ -1,28 +1,3 @@
-/********************************************************************************
- SEGA Genesis / Mega Drive Driver for FBA
- ********************************************************************************
- This is part of Pico Library v0936
-
- (c) Copyright 2004 Dave, All rights reserved.
- (c) Copyright 2006 notaz, All rights reserved.
- Free for non-commercial use.
-
- For commercial use, separate licencing terms must be obtained.
- ********************************************************************************
-
- PicoOpt bits LSb->MSb:
- enable_ym2612&dac, enable_sn76496, enable_z80, stereo_sound,
- alt_renderer, 6button_gamepad, accurate_timing, accurate_sprites,
- draw_no_32col_border, external_ym2612
-
- tofix:
- .) FIXED July 22 2017: Sonic 3/S&K: Hung notes(music) when Sonic jumps in the water under the waterfall
- .) FIXED Dec. 31 2015: Battle Squadron - loses sound after weapon upgrade [x] pickup
-
- ********************************************************************************
- Port by OopsWare overhaul by dink
- ********************************************************************************/
-
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

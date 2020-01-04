@@ -1,4 +1,3 @@
-// Functions for recording & replaying input
 #include "burner.h"
 #include "dynhuff.h"
 #include <commdlg.h>

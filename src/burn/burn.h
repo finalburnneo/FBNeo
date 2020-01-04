@@ -1,7 +1,3 @@
-// FinalBurn Neo - Emulator for MC68000/Z80 based arcade games
-//            Refer to the "license.txt" file for more info
-
-// Burner emulation library
 #ifndef _BURNH_H
 #define _BURNH_H
 

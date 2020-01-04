@@ -1,6 +1,3 @@
-// FB Alpha Dr. Tomy driver module
-// Based on MAME driver by Pierpaolo Prazzoli
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "msm6295.h"

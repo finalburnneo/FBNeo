@@ -1,16 +1,3 @@
-/*****************************************************************************
-
-    h6280ops.h - Addressing modes and opcode macros for the Hu6820 cpu
-
-    Copyright Bryan McPhail, mish@tendril.co.uk
-
-    This source code is based (with permission!) on the 6502 emulator by
-    Juergen Buchmueller.  It is released as part of the Mame emulator project.
-    Let me know if you intend to use this code in any other project.
-
-******************************************************************************/
-
-/* 6280 flags */
 #define _fC 0x01
 #define _fZ 0x02
 #define _fI 0x04

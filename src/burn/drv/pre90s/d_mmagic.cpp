@@ -1,6 +1,3 @@
-// FB Alpha Monkey Magic driver module
-// Based on MAME driver by Dirk Best
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "samples.h"

@@ -1,4 +1,3 @@
-/* ASG 971222 -- rewrote this interface */
 #ifndef __NEC_H_
 #define __NEC_H_
 

@@ -1,11 +1,3 @@
-// license:???
-// copyright-holders:Alex Pasadyn, Zsolt Vasvari, Kurt Mahan, Ernesto Corvi, Aaron Giles
-/*************************************************************************
-
-    Driver for Midway T-unit games.
-
-**************************************************************************/
-// Adapted to FBAlpha
 #define XPOSMASK        0x3ff
 #define YPOSMASK        0x1ff
 

@@ -1,35 +1,3 @@
-/*** m6805: Portable 6805 emulator ******************************************
-
-    m6805.c (Also supports hd68705 and hd63705 variants)
-
-    References:
-
-        6809 Simulator V09, By L.C. Benschop, Eidnhoven The Netherlands.
-
-        m6809: Portable 6809 emulator, DS (6809 code in MAME, derived from
-            the 6809 Simulator V09)
-
-        6809 Microcomputer Programming & Interfacing with Experiments"
-            by Andrew C. Staugaard, Jr.; Howard W. Sams & Co., Inc.
-
-    System dependencies:    UINT16 must be 16 bit unsigned int
-                            UINT8 must be 8 bit unsigned int
-                            UINT32 must be more than 16 bits
-                            arrays up to 65536 bytes must be supported
-                            machine must be twos complement
-
-  Additional Notes:
-
-  K.Wilkins 18/03/99 - Added 63705 functonality and modified all CPU functions
-                       necessary to support:
-                           Variable width address bus
-                           Different stack pointer
-                           Alternate boot vectors
-                           Alternate interrups vectors
-
-
-*****************************************************************************/
-
 #include "burnint.h"
 #include "driver.h"
 #include "m6805_intf.h"

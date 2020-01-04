@@ -1,4 +1,3 @@
-// Psikyo hardware sprites
 #include "psikyo.h"
 
 UINT8* PsikyoSpriteROM = NULL;

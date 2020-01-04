@@ -1,9 +1,3 @@
-// FB Alpha 18 Holes Pro Golf driver module
-// Based on MAME driver by Angelo Salese and Roberto Zandona'
-
-// TOFIX:
-//   Little map is broken (on right side of playfield)
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "ay8910.h"

@@ -1,9 +1,3 @@
-// FB Alpha Samurai Nihon-Ichi driver module
-// Based on MAME driver by Phil Stroffolino
-
-// vsgongf - player is black (normal!)
-// sound volumes seem a bit off (music should be quieter?)
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "dac.h"

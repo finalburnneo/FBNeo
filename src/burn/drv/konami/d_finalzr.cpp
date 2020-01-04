@@ -1,6 +1,3 @@
-// FB Alpha Finalizer driver module
-// Based on MAME driver by Nicola Salmoria
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "i8039.h"

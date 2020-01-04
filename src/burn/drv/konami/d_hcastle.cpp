@@ -1,7 +1,3 @@
-// FB Alpha Haunted Castle / Akuma-Jou Dracula driver module
-// Based on MAME driver by Bryan McPhail
-//
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "konami_intf.h"

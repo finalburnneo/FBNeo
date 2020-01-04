@@ -1,6 +1,3 @@
-// FB ALpha Rock'n Rage driver module
-// Based on MAME driver by Manuel Abadia
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "hd6309_intf.h"

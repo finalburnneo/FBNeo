@@ -1,38 +1,3 @@
-/****************************************************************************
- *                      Intel 8039 Portable Emulator                        *
- *                                                                          *
- *                   Copyright Mirko Buffoni                             *
- *  Based on the original work Copyright Dan Boris, an 8048 emulator     *
- *      You are not allowed to distribute this software commercially        *
- *        Please, notify me, if you make any changes to this file           *
- *                                                                          *
- *                                                                          *
- *  **** Change Log ****                                                    *
- *                                                                          *
- *  TLP (19-Jun-2001)                                                       *
- *   - Changed Ports 1 and 2 to quasi bidirectional output latched ports    *
- *   - Added the Port 1 & 2 output latch data to the debugger window        *
- *  TLP (02-Jan-2002)                                                       *
- *   - External IRQs no longer go pending (sampled as a level state)        *
- *   - Timer IRQs do not go pending if Timer interrupts are disabled        *
- *   - Timer IRQs made pending, were incorrectly being cleared if the       *
- *      external interrupt was being serviced                               *
- *   - External interrupts now take precedence when simultaneous            *
- *      internal and external interrupt requests occur                      *
- *   - 'DIS TCNTI' now removes pending timer IRQs                           *
- *   - Nested IRQs of any sort are no longer allowed                        *
- *   - T_flag was not being set in the right place of execution, which      *
- *      could have lead to it being incorrectly set after being cleared     *
- *   - Counter overflows now also set the T_flag                            *
- *   - Added the Timer/Counter register to the debugger window              *
- *  TLP (09-Jan-2002)                                                       *
- *   - Changed Interrupt system to instant servicing                        *
- *   - The Timer and Counter can no longer be 'on' simultaneously           *
- *   - Added Save State                                                     *
- *  TLP (15-Feb-2002)                                                       *
- *   - Corrected Positive signal edge sensing (used on the T1 input)        *
- ****************************************************************************/
-
 #define I8039_NUM		2
 
 #include "burnint.h"

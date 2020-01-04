@@ -1,14 +1,3 @@
-// FB Alpha Sega Z80-3D system driver module
-// Based on and large pieces copied from (video code & sound code) MAME driver by 
-// Alex Pasadyn, Howie Cohen, Frank Palazzolo, Ernesto Corvi, and Aaron Giles
-
-// to do:
-//	add 9-seg support (i8279)
-//	bug testing
-//	fixing sounds (subroc3d is bad)
-//	sound disabling
-//	clean up
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "samples.h"

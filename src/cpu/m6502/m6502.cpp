@@ -1,29 +1,3 @@
-/*****************************************************************************
- *
- *   m6502.c
- *   Portable 6502/65c02/65sc02/6510/n2a03 emulator V1.2
- *
- *   Copyright Juergen Buchmueller, all rights reserved.
- *   65sc02 core Copyright Peter Trauner.
- *   Deco16 portions Copyright Bryan McPhail.
- *
- *   - This source code is released as freeware for non-commercial purposes.
- *   - You are free to use and redistribute this code in modified or
- *     unmodified form, provided you list me in the credits.
- *   - If you modify this source code, you must add a notice to each modified
- *     source file that it has been changed.  If you're a nice person, you
- *     will clearly mark each change too.  :)
- *   - If you wish to use this for commercial purposes, please contact me at
- *     pullmoll@t-online.de
- *   - The author of this copywritten work reserves the right to change the
- *     terms of its usage and license at any time, including retroactively
- *   - This entire notice must remain in the source code.
- *
- *****************************************************************************/
-/* 2.February 2000 PeT added 65sc02 subtype */
-/* 10.March   2000 PeT added 6502 set overflow input line */
-/* 13.September 2000 PeT N2A03 jmp indirect */
-
 #include "burnint.h"
 #include "m6502.h"
 

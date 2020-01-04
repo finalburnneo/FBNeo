@@ -1,6 +1,3 @@
-// FB Alpha Last Duel driver module
-// Based on MAME driver by Bryan McPhail
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

@@ -1,6 +1,3 @@
-// FB Alpha "Universal System 16" hardware driver module
-// Based on MAME driver by Angelo Salese
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m68000_intf.h"

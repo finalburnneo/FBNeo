@@ -1,6 +1,3 @@
-// FB Alpha Irem M58 driver module
-// Based on MAME driver by Lee Taylor
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "irem_sound.h"

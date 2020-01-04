@@ -1,6 +1,3 @@
-// FB Alpha IGS IQ Block / Grand Tour driver module
-// Based on MAME driver by Nicola Salmoria and Ernesto Corvi
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2413.h"

@@ -5,20 +5,16 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <assert.h>
-#include <ctype.h>
-
-#include "tchar.h"
+#include <tchar.h>
+#include <cstring>
 
 // Macro to make quoted strings
 #define MAKE_STRING_2(s) #s
 #define MAKE_STRING(s) MAKE_STRING_2(s)
 
 #define BZIP_MAX (20)								// Maximum zip files to search through
-#if defined (BUILD_QT)
-#define DIRS_MAX (4)								// Maximum number of directories to search
+#ifdef BUILD_QT
+ #define DIRS_MAX (4)								// Maximum number of directories to search
 #else
 #define DIRS_MAX (20)								// Maximum number of directories to search
 #endif
@@ -31,36 +27,36 @@
 #define APP_TITLE "FinalBurn Neo"
 #endif
 
-
 #include "burn.h"
 
 // ---------------------------------------------------------------------------
 // OS dependent functionality
-typedef struct tagIMAGE {
-	unsigned int	width;
-	unsigned int	height;
-	unsigned int	rowbytes;
-	unsigned int	imgbytes;
+typedef struct tagIMAGE
+{
+	unsigned int width;
+	unsigned int height;
+	unsigned int rowbytes;
+	unsigned int imgbytes;
 	unsigned char** rowptr;
 	unsigned char* bmpbits;
-	unsigned int	flags;
+	unsigned int flags;
 } IMAGE;
 
-#if defined (BUILD_WIN32)
+#ifdef BUILD_WIN32
 #include "burner_win32.h"
 #elif defined (BUILD_MACOS)
-#include "burner_macos.h"
+ #include "burner_macos.h"
 #elif defined (BUILD_SDL)
-#include "burner_sdl.h"
+ #include "burner_sdl.h"
 #elif defined (_XBOX) && !defined(__LIBRETRO__)
-#include "burner_xbox.h"
+ #include "burner_xbox.h"
 #elif defined(__LIBRETRO__)
 #include "burner_libretro.h"
 #elif defined(BUILD_QT)
-#include "burner_qt.h"
+ #include "burner_qt.h"
 #endif
 
-#if defined (INCLUDE_LIB_PNGH)
+#ifdef INCLUDE_LIB_PNGH
 #include "png.h"
 #endif
 
@@ -140,9 +136,9 @@ extern void scrnSSUndo();
 extern bool bHasFocus;
 
 // cong.cpp
-extern const INT32 nConfigMinVersion;					// Minimum version of application for which input files are valid
+extern const INT32 nConfigMinVersion; // Minimum version of application for which input files are valid
 extern bool bSaveInputs;
-INT32 ConfigGameLoad(bool bOverWrite);				// char* lpszName = NULL
+INT32 ConfigGameLoad(bool bOverWrite); // char* lpszName = NULL
 INT32 ConfigGameSave(bool bSave);
 
 // conc.cpp
@@ -157,7 +153,8 @@ INT32 GamcPlayerHotRod(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nFla
 
 // misc.cpp
 #define QUOTE_MAX (128)															// Maximum length of "quoted strings"
-INT32 QuoteRead(TCHAR** ppszQuote, TCHAR** ppszEnd, TCHAR* pszSrc);					// Read a quoted string from szSrc and poINT32 to the end
+INT32 QuoteRead(TCHAR** ppszQuote, TCHAR** ppszEnd, TCHAR* pszSrc);
+// Read a quoted string from szSrc and poINT32 to the end
 TCHAR* LabelCheck(TCHAR* s, TCHAR* pszLabel);
 
 TCHAR* ExtractFilename(TCHAR* fullname);
@@ -198,8 +195,8 @@ INT32 create_datfile(TCHAR* szFilename, INT32 bType);
 INT32 MakeScreenShot();
 
 // state.cpp
-INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32(*pLoadGame)());
-INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32(*pLoadGame)());
+INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)());
+INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)());
 INT32 BurnStateSaveEmbed(FILE* fp, INT32 nOffset, INT32 bAll);
 INT32 BurnStateSave(TCHAR* szName, INT32 bAll);
 INT32 BurnStateUNDO(TCHAR* szName);
@@ -209,7 +206,12 @@ INT32 BurnStateCompress(UINT8** pDef, INT32* pnDefLen, INT32 bAll);
 INT32 BurnStateDecompress(UINT8* Def, INT32 nDefLen, INT32 bAll);
 
 // zipfn.cpp
-struct ZipEntry { char* szName;	UINT32 nLen; UINT32 nCrc; };
+struct ZipEntry
+{
+	char* szName;
+	UINT32 nLen;
+	UINT32 nCrc;
+};
 
 INT32 ZipOpen(char* szZip);
 INT32 ZipClose();

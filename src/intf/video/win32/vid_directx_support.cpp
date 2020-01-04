@@ -117,7 +117,7 @@ int VidSClipperInit(IDirectDrawSurface7* pSurf)
 // Gamma controls
 
 static IDirectDrawGammaControl* pGammaControl;
-static DDGAMMARAMP* pFBAGamma = NULL;
+static DDGAMMARAMP* pGamma = NULL;
 static DDGAMMARAMP* pSysGamma = NULL;
 
 void VidSRestoreGamma()
@@ -134,10 +134,10 @@ void VidSRestoreGamma()
 			free(pSysGamma);
 			pSysGamma = NULL;
 		}
-		if (pFBAGamma)
+		if (pGamma)
 		{
-			free(pFBAGamma);
-			pFBAGamma = NULL;
+			free(pGamma);
+			pGamma = NULL;
 		}
 
 		RELEASE(pGammaControl);
@@ -153,11 +153,11 @@ int VidSUpdateGamma()
 			for (int i = 0; i < 256; i++)
 			{
 				int nValue = (int)(65535.0 * pow((i / 255.0), nGamma));
-				pFBAGamma->red[i] = nValue;
-				pFBAGamma->green[i] = nValue;
-				pFBAGamma->blue[i] = nValue;
+				pGamma->red[i] = nValue;
+				pGamma->green[i] = nValue;
+				pGamma->blue[i] = nValue;
 			}
-			pGammaControl->SetGammaRamp(0, pFBAGamma);
+			pGammaControl->SetGammaRamp(0, pGamma);
 		}
 		else
 		{
@@ -195,8 +195,8 @@ int VidSSetupGamma(IDirectDrawSurface7* pSurf)
 	}
 	pGammaControl->GetGammaRamp(0, pSysGamma);
 
-	pFBAGamma = (DDGAMMARAMP*)malloc(sizeof(DDGAMMARAMP));
-	if (pFBAGamma == NULL)
+	pGamma = (DDGAMMARAMP*)malloc(sizeof(DDGAMMARAMP));
+	if (pGamma == NULL)
 	{
 		VidSRestoreGamma();
 		return 1;

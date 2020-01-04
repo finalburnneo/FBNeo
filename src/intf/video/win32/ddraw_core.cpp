@@ -1,5 +1,5 @@
-#include "burner.h"
 #include "ddraw_core.h"
+#include "burner.h"
 
 // DirectDrawCreateEx
 HRESULT (WINAPI* _DirectDrawCreateEx)(GUID FAR*, LPVOID*, REFIID, IUnknown FAR*);

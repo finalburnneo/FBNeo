@@ -1,13 +1,11 @@
 // FinalBurn Neo - Emulator for MC68000/Z80 based arcade games
 //            Refer to the "license.txt" file for more info
 #pragma once
-#include <limits.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <climits>
+#include <cstdarg>
+#include <cstdio>
 #include <tchar.h>
 #include <cstring>
-
 // Macro to make quoted strings
 #define MAKE_STRING_2(s) #s
 #define MAKE_STRING(s) MAKE_STRING_2(s)

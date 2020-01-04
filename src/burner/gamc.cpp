@@ -1,5 +1,5 @@
-// Burner Game Control
 #include "burner.h"
+
 
 static char szPlay[4][4] = {"p1 ", "p2 ", "p3 ", "p4 "};
 

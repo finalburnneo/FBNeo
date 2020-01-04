@@ -1,5 +1,5 @@
-#include "burner.h"
 #include "directx9_core.h"
+#include "burner.h"
 
 // Direct3DCreate9
 LPDIRECT3D9 (WINAPI* _Direct3DCreate9)(UINT);

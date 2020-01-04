@@ -1,5 +1,3 @@
-// d3d RGB effects patterns
-
 #include <tchar.h>
 static const unsigned char pattern_18x10_large_round[] =
 {

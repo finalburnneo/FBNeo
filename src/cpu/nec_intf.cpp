@@ -1,8 +1,3 @@
-// Nec V20/V30/V33/V25/V35 interface
-// Written by OopsWare
-// http://oopsware.googlepages.com
-// Heavily modified by iq_132 (Nov, 2011)
-
 #include "burnint.h"
 #include "nec_intf.h"
 
@@ -73,8 +68,8 @@ struct VezContext
 #endif
 };
 
-static struct VezContext* VezCPUContext[MAX_VEZ] = {NULL, NULL, NULL, NULL};
-struct VezContext* VezCurrentCPU = 0;
+static struct VezContext* VezCPUContext[MAX_VEZ] = {nullptr, nullptr, nullptr, nullptr};
+struct VezContext* VezCurrentCPU = nullptr;
 
 #define VEZ_MEM_SHIFT	9
 #define VEZ_MEM_MASK	((1 << VEZ_MEM_SHIFT) - 1)
@@ -370,7 +365,7 @@ INT32 VezInit(INT32 cpu, INT32 type, INT32 clock)
 			VezCurrentCPU->cpu_reset = nec_reset;
 			VezCurrentCPU->cpu_execute = nec_execute;
 			VezCurrentCPU->cpu_set_irq_line = nec_set_irq_line_and_vector;
-			VezCurrentCPU->decode = NULL; // ?
+			VezCurrentCPU->decode = nullptr; // ?
 			VezCurrentCPU->total_cycles = nec_total_cycles;
 			VezCurrentCPU->get_pc = necGetPC;
 			VezCurrentCPU->scan = necScan;
@@ -429,7 +424,7 @@ void VezExit()
 		if (VezCPUContext[i])
 		{
 			BurnFree(VezCPUContext[i]);
-			VezCPUContext[i] = NULL;
+			VezCPUContext[i] = nullptr;
 		}
 	}
 
@@ -466,7 +461,7 @@ void VezClose()
 
 	nOpenedCPU = -1;
 	VezCurrentCPU->cpu_close();
-	VezCurrentCPU = 0;
+	VezCurrentCPU = nullptr;
 }
 
 void VezNewFrame()
@@ -536,14 +531,14 @@ INT32 VezMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode)
 		switch (nMode)
 		{
 		case 0:
-			VezCurrentCPU->ppMemRead[i] = NULL;
+			VezCurrentCPU->ppMemRead[i] = nullptr;
 			break;
 		case 1:
-			VezCurrentCPU->ppMemWrite[i] = NULL;
+			VezCurrentCPU->ppMemWrite[i] = nullptr;
 			break;
 		case 2:
-			VezCurrentCPU->ppMemFetch[i] = NULL;
-			VezCurrentCPU->ppMemFetchData[i] = NULL;
+			VezCurrentCPU->ppMemFetch[i] = nullptr;
+			VezCurrentCPU->ppMemFetchData[i] = nullptr;
 			break;
 		}
 	}

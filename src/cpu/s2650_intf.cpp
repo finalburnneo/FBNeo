@@ -134,13 +134,13 @@ void s2650Write(UINT16 address, UINT8 data)
 {
 	address &= ADDRESS_MASK;
 
-	if (sPointer->mem[WRITE][address / PAGE] != NULL)
+	if (sPointer->mem[WRITE][address / PAGE] != nullptr)
 	{
 		sPointer->mem[WRITE][address / PAGE][address & PAGE_MASK] = data;
 		return;
 	}
 
-	if (sPointer->s2650Write != NULL)
+	if (sPointer->s2650Write != nullptr)
 	{
 		sPointer->s2650Write(address, data);
 	}
@@ -150,12 +150,12 @@ UINT8 s2650Read(UINT16 address)
 {
 	address &= ADDRESS_MASK;
 
-	if (sPointer->mem[READ][address / PAGE] != NULL)
+	if (sPointer->mem[READ][address / PAGE] != nullptr)
 	{
 		return sPointer->mem[READ][address / PAGE][address & PAGE_MASK];
 	}
 
-	if (sPointer->s2650Read != NULL)
+	if (sPointer->s2650Read != nullptr)
 	{
 		return sPointer->s2650Read(address);
 	}
@@ -167,7 +167,7 @@ UINT8 s2650Fetch(UINT16 address)
 {
 	address &= ADDRESS_MASK;
 
-	if (sPointer->mem[FETCH][address / PAGE] != NULL)
+	if (sPointer->mem[FETCH][address / PAGE] != nullptr)
 	{
 		return sPointer->mem[FETCH][address / PAGE][address & PAGE_MASK];
 	}
@@ -177,7 +177,7 @@ UINT8 s2650Fetch(UINT16 address)
 
 void s2650WritePort(UINT16 port, UINT8 data)
 {
-	if (sPointer->s2650WritePort != NULL)
+	if (sPointer->s2650WritePort != nullptr)
 	{
 		sPointer->s2650WritePort(port, data);
 	}
@@ -185,7 +185,7 @@ void s2650WritePort(UINT16 port, UINT8 data)
 
 UINT8 s2650ReadPort(UINT16 port)
 {
-	if (sPointer->s2650ReadPort != NULL)
+	if (sPointer->s2650ReadPort != nullptr)
 	{
 		return sPointer->s2650ReadPort(port);
 	}
@@ -202,22 +202,22 @@ void s2650WriteROM(UINT32 address, UINT8 data)
 
 	address &= ADDRESS_MASK;
 
-	if (sPointer->mem[READ][address / PAGE] != NULL)
+	if (sPointer->mem[READ][address / PAGE] != nullptr)
 	{
 		sPointer->mem[READ][address / PAGE][address & PAGE_MASK] = data;
 	}
 
-	if (sPointer->mem[WRITE][address / PAGE] != NULL)
+	if (sPointer->mem[WRITE][address / PAGE] != nullptr)
 	{
 		sPointer->mem[WRITE][address / PAGE][address & PAGE_MASK] = data;
 	}
 
-	if (sPointer->mem[FETCH][address / PAGE] != NULL)
+	if (sPointer->mem[FETCH][address / PAGE] != nullptr)
 	{
 		sPointer->mem[FETCH][address / PAGE][address & PAGE_MASK] = data;
 	}
 
-	if (sPointer->s2650Write != NULL)
+	if (sPointer->s2650Write != nullptr)
 	{
 		sPointer->s2650Write(address, data);
 	}

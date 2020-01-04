@@ -1,10 +1,10 @@
 #include "burnint.h"
 #include "tlcs90_intf.h"
 
-static UINT8 (*read)(UINT32) = NULL;
-static void (*write)(UINT32, UINT8) = NULL;
-static UINT8 (*readio)(UINT16) = NULL;
-static void (*writeio)(UINT16, UINT8) = NULL;
+static UINT8 (*read)(UINT32) = nullptr;
+static void (*write)(UINT32, UINT8) = nullptr;
+static UINT8 (*readio)(UINT16) = nullptr;
+static void (*writeio)(UINT16, UINT8) = nullptr;
 
 static UINT8* mem[2][0x1000]; // only read/fetch & write
 
@@ -46,7 +46,7 @@ UINT8 tlcs90_program_read_byte(UINT32 address)
 		return t90_internal_registers_r(address & 0x3f);
 	}
 
-	if (mem[0][(address / 0x100)] != NULL)
+	if (mem[0][(address / 0x100)] != nullptr)
 	{
 		return mem[0][(address / 0x100)][address & 0xff];
 	}
@@ -70,7 +70,7 @@ void tlcs90_program_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-	if (mem[1][(address / 0x100)] != NULL)
+	if (mem[1][(address / 0x100)] != nullptr)
 	{
 		mem[1][(address / 0x100)][address & 0xff] = data;
 		return;
@@ -148,12 +148,12 @@ UINT8 tlcs90CheatRead(UINT32 address)
 
 void tlcs90WriteROM(UINT32 address, UINT8 data)
 {
-	if (mem[0][(address / 0x100)] != NULL)
+	if (mem[0][(address / 0x100)] != nullptr)
 	{
 		mem[0][(address / 0x100)][address & 0xff] = data;
 	}
 
-	if (mem[1][(address / 0x100)] != NULL)
+	if (mem[1][(address / 0x100)] != nullptr)
 	{
 		mem[1][(address / 0x100)][address & 0xff] = data;
 	}
@@ -177,10 +177,10 @@ INT32 tlcs90Init(INT32, INT32 clock)
 {
 	memset(mem, 0, 2 * 0x1000 * sizeof(UINT8*));
 
-	read = NULL;
-	write = NULL;
-	readio = NULL;
-	writeio = NULL;
+	read = nullptr;
+	write = nullptr;
+	readio = nullptr;
+	writeio = nullptr;
 
 	CpuCheatRegister(0, &tlcs90Config);
 
@@ -190,10 +190,10 @@ INT32 tlcs90Init(INT32, INT32 clock)
 INT32 tlcs90Exit()
 {
 	memset(mem, 0, 2 * 0x1000 * sizeof(UINT8*));
-	read = NULL;
-	write = NULL;
-	readio = NULL;
-	writeio = NULL;
+	read = nullptr;
+	write = nullptr;
+	readio = nullptr;
+	writeio = nullptr;
 
 	return 0;
 }

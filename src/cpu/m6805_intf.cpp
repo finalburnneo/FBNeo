@@ -11,8 +11,8 @@ static INT32 M6805_PAGE_SHIFT;
 #define WRITE		1
 #define FETCH		2
 
-static UINT8 (*m6805ReadFunction)(UINT16 address) = NULL;
-static void (*m6805WriteFunction)(UINT16 address, UINT8 data) = NULL;
+static UINT8 (*m6805ReadFunction)(UINT16 address) = nullptr;
+static void (*m6805WriteFunction)(UINT16 address, UINT8 data) = nullptr;
 
 static UINT8* mem[3][0x100];
 
@@ -73,13 +73,13 @@ void m6805Write(UINT16 address, UINT8 data)
 {
 	address &= M6805_ADDRESS_MASK;
 
-	if (mem[WRITE][address >> M6805_PAGE_SHIFT] != NULL)
+	if (mem[WRITE][address >> M6805_PAGE_SHIFT] != nullptr)
 	{
 		mem[WRITE][address >> M6805_PAGE_SHIFT][address & M6805_PAGE_MASK] = data;
 		return;
 	}
 
-	if (m6805WriteFunction != NULL)
+	if (m6805WriteFunction != nullptr)
 	{
 		m6805WriteFunction(address, data);
 	}
@@ -89,12 +89,12 @@ UINT8 m6805Read(UINT16 address)
 {
 	address &= M6805_ADDRESS_MASK;
 
-	if (mem[READ][address >> M6805_PAGE_SHIFT] != NULL)
+	if (mem[READ][address >> M6805_PAGE_SHIFT] != nullptr)
 	{
 		return mem[READ][address >> M6805_PAGE_SHIFT][address & M6805_PAGE_MASK];
 	}
 
-	if (m6805ReadFunction != NULL)
+	if (m6805ReadFunction != nullptr)
 	{
 		return m6805ReadFunction(address);
 	}
@@ -106,7 +106,7 @@ UINT8 m6805Fetch(UINT16 address)
 {
 	address &= M6805_ADDRESS_MASK;
 
-	if (mem[FETCH][address >> M6805_PAGE_SHIFT] != NULL)
+	if (mem[FETCH][address >> M6805_PAGE_SHIFT] != nullptr)
 	{
 		return mem[FETCH][address >> M6805_PAGE_SHIFT][address & M6805_PAGE_MASK];
 	}
@@ -122,22 +122,22 @@ void m6805_write_rom(UINT32 address, UINT8 data)
 
 	address &= M6805_ADDRESS_MASK;
 
-	if (mem[READ][address >> M6805_PAGE_SHIFT] != NULL)
+	if (mem[READ][address >> M6805_PAGE_SHIFT] != nullptr)
 	{
 		mem[READ][address >> M6805_PAGE_SHIFT][address & M6805_PAGE_MASK] = data;
 	}
 
-	if (mem[WRITE][address >> M6805_PAGE_SHIFT] != NULL)
+	if (mem[WRITE][address >> M6805_PAGE_SHIFT] != nullptr)
 	{
 		mem[WRITE][address >> M6805_PAGE_SHIFT][address & M6805_PAGE_MASK] = data;
 	}
 
-	if (mem[FETCH][address >> M6805_PAGE_SHIFT] != NULL)
+	if (mem[FETCH][address >> M6805_PAGE_SHIFT] != nullptr)
 	{
 		mem[FETCH][address >> M6805_PAGE_SHIFT][address & M6805_PAGE_MASK] = data;
 	}
 
-	if (m6805WriteFunction != NULL)
+	if (m6805WriteFunction != nullptr)
 	{
 		m6805WriteFunction(address, data);
 	}

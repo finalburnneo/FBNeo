@@ -6,6 +6,7 @@
 #include <burner.h>
 #define DIRECTSOUND_VERSION  0x0300			// Only need version from DirectX 3
 #include <dsound_core.h>
+#include <tchar.h>
 
 // Sound is split into a series of 'segs', one seg for each frame
 // The Loop buffer is a multiple of this seg length.

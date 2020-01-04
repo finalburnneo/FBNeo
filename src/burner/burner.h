@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
+#include <cstring>
 
 // Macro to make quoted strings
 #define MAKE_STRING_2(s) #s

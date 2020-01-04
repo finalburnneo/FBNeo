@@ -3,7 +3,14 @@
 
 static double dcntTimerFreq;
 
-static struct { LARGE_INTEGER start; LARGE_INTEGER count[256]; LARGE_INTEGER tally; int index; int max_count; } cntSubsysInfo[16];
+static struct
+{
+	LARGE_INTEGER start;
+	LARGE_INTEGER count[256];
+	LARGE_INTEGER tally;
+	int index;
+	int max_count;
+} cntSubsysInfo[16];
 
 int cntExit()
 {
@@ -14,15 +21,17 @@ int cntInit()
 {
 	LARGE_INTEGER f;
 
-//	cntExit();
+	//	cntExit();
 
 	QueryPerformanceFrequency(&f);
 
 	// Use milliseconds when reporting profile information
 	dcntTimerFreq = (double)f.QuadPart / 1000.0;
 
-	for (int i = 0; i < 16; i++) {
-		for (int j = 0; j < 256; j++) {
+	for (int i = 0; i < 16; i++)
+	{
+		for (int j = 0; j < 256; j++)
+		{
 			cntSubsysInfo[i].count[j].QuadPart = 0;
 		}
 		cntSubsysInfo[i].start.QuadPart = 0;
@@ -48,16 +57,20 @@ int cntProfileStart(int nSubSystem)
 int cntProfileEnd(int nSubSystem)
 {
 	cntSubsysInfo[nSubSystem].index++;
-	if (cntSubsysInfo[nSubSystem].index >= cntSubsysInfo[nSubSystem].max_count) {
+	if (cntSubsysInfo[nSubSystem].index >= cntSubsysInfo[nSubSystem].max_count)
+	{
 		cntSubsysInfo[nSubSystem].index = 0;
 	}
 
-	cntSubsysInfo[nSubSystem].tally.QuadPart -= cntSubsysInfo[nSubSystem].count[cntSubsysInfo[nSubSystem].index].QuadPart;
+	cntSubsysInfo[nSubSystem].tally.QuadPart -= cntSubsysInfo[nSubSystem].count[cntSubsysInfo[nSubSystem].index].
+		QuadPart;
 
 	QueryPerformanceCounter(&cntSubsysInfo[nSubSystem].count[cntSubsysInfo[nSubSystem].index]);
-	cntSubsysInfo[nSubSystem].count[cntSubsysInfo[nSubSystem].index].QuadPart -= cntSubsysInfo[nSubSystem].start.QuadPart;
+	cntSubsysInfo[nSubSystem].count[cntSubsysInfo[nSubSystem].index].QuadPart -= cntSubsysInfo[nSubSystem]
+	                                                                             .start.QuadPart;
 
-	cntSubsysInfo[nSubSystem].tally.QuadPart += cntSubsysInfo[nSubSystem].count[cntSubsysInfo[nSubSystem].index].QuadPart;
+	cntSubsysInfo[nSubSystem].tally.QuadPart += cntSubsysInfo[nSubSystem].count[cntSubsysInfo[nSubSystem].index].
+		QuadPart;
 
 	return 0;
 }
@@ -85,4 +98,7 @@ static int cntProfileGetSettings(InterfaceInfo* pInfo)
 	return 0;
 }
 
-struct ProfileDo cntDoPerfCount = { cntExit, cntInit, cntProfileStart, cntProfileEnd, cntProfileReadLast, cntProfileReadAverage, cntProfileGetSettings, _T("PerformanceCounter profiler") };
+struct ProfileDo cntDoPerfCount = {
+	cntExit, cntInit, cntProfileStart, cntProfileEnd, cntProfileReadLast, cntProfileReadAverage, cntProfileGetSettings,
+	_T("PerformanceCounter profiler")
+};

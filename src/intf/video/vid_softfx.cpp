@@ -14,8 +14,10 @@ typedef unsigned char uint8;
 #endif
 #endif
 
-void _2xpm_lq(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, unsigned long DstPitch, unsigned long SrcW, unsigned long SrcH, int nDepth);
-void _2xpm_hq(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, unsigned long DstPitch, unsigned long SrcW, unsigned long SrcH, int nDepth);
+void _2xpm_lq(void* SrcPtr, void* DstPtr, unsigned long SrcPitch, unsigned long DstPitch, unsigned long SrcW,
+              unsigned long SrcH, int nDepth);
+void _2xpm_hq(void* SrcPtr, void* DstPtr, unsigned long SrcPitch, unsigned long DstPitch, unsigned long SrcW,
+              unsigned long SrcH, int nDepth);
 
 extern void hq2xS_init(unsigned bits_per_pixel);
 extern void hq2xS(unsigned char*, unsigned int, unsigned char*, unsigned char*, unsigned int, int, int);
@@ -37,7 +39,7 @@ extern void RenderHQ3XS(unsigned char*, unsigned int, unsigned char*, unsigned i
 void RenderEPXB(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int, int);
 void RenderEPXC(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int, int);
 
-void ddt3x(unsigned char * src,  unsigned int srcPitch, unsigned char * dest, unsigned int dstPitch, int Xres, int Yres);
+void ddt3x(unsigned char* src, unsigned int srcPitch, unsigned char* dest, unsigned int dstPitch, int Xres, int Yres);
 
 #if defined __GNUC__
  #include "scale2x.h"
@@ -79,42 +81,47 @@ extern "C" {
 
 #define FXF_MMX		(unsigned int)(1 << 31)
 
-static struct { TCHAR* pszName; int nZoom; unsigned int nFlags; } SoftFXInfo[] = {
-	{ _T("Plain Software Scale"),			2, 0	   },
-	{ _T("AdvanceMAME Scale2x"),			2, FXF_MMX },
-	{ _T("AdvanceMAME Scale3x"),			3, 0	   },
-	{ _T("2xPM LQ"),						2, FXF_MMX },
-	{ _T("2xPM HQ"),						2, FXF_MMX },
-	{ _T("Eagle Graphics"),					2, FXF_MMX },
-	{ _T("SuperEagle"),						2, FXF_MMX },
-	{ _T("2xSaI"),							2, FXF_MMX },
-	{ _T("Super 2xSaI"),					2, FXF_MMX },
-	{ _T("SuperEagle (VBA)"),				2, FXF_MMX },
-	{ _T("2xSaI (VBA)"),					2, FXF_MMX },
-	{ _T("Super 2xSaI (VBA)"),				2, FXF_MMX },
-	{ _T("SuperScale"),						2, FXF_MMX },
-	{ _T("SuperScale (75% Scanlines)"),		2, FXF_MMX },
-	{ _T("hq2x Filter"),					2, FXF_MMX },
-	{ _T("hq3x Filter"),					3, FXF_MMX },
-	{ _T("hq4x Filter"),					4, FXF_MMX },
-	{ _T("hq2xS (VBA) Filter"),				2, 0       },
-	{ _T("hq3xS (VBA) Filter"),				3, FXF_MMX },
-	{ _T("hq2xS (SNES9X) Filter"),			2, FXF_MMX },
-	{ _T("hq3xS (SNEX9X) Filter"),			3, FXF_MMX },
-	{ _T("hq2xBold Filter"),				2, FXF_MMX },
-	{ _T("hq3xBold Filter"),				3, FXF_MMX },
-	{ _T("EPXB Filter"),					2, FXF_MMX },
-	{ _T("EPXC Filter"),					2, FXF_MMX },
-	{ _T("2xBR (Squared) Filter"),			2, FXF_MMX },
-	{ _T("2xBR (Semi-Rounded) Filter"),		2, FXF_MMX },
-	{ _T("2xBR (Rounded) Filter"),			2, FXF_MMX },
-	{ _T("3xBR (Squared) Filter"),			3, FXF_MMX },
-	{ _T("3xBR (Semi-Rounded) Filter"),		3, FXF_MMX },
-	{ _T("3xBR (Rounded) Filter"),			3, FXF_MMX },
-	{ _T("4xBR (Squared) Filter"),			4, FXF_MMX },
-	{ _T("4xBR (Semi-Rounded) Filter"),		4, FXF_MMX },
-	{ _T("4xBR (Rounded) Filter"),			4, FXF_MMX },
-	{ _T("DDT3x"),                          3, FXF_MMX },
+static struct
+{
+	TCHAR* pszName;
+	int nZoom;
+	unsigned int nFlags;
+} SoftFXInfo[] = {
+	{_T("Plain Software Scale"), 2, 0},
+	{_T("AdvanceMAME Scale2x"), 2, FXF_MMX},
+	{_T("AdvanceMAME Scale3x"), 3, 0},
+	{_T("2xPM LQ"), 2, FXF_MMX},
+	{_T("2xPM HQ"), 2, FXF_MMX},
+	{_T("Eagle Graphics"), 2, FXF_MMX},
+	{_T("SuperEagle"), 2, FXF_MMX},
+	{_T("2xSaI"), 2, FXF_MMX},
+	{_T("Super 2xSaI"), 2, FXF_MMX},
+	{_T("SuperEagle (VBA)"), 2, FXF_MMX},
+	{_T("2xSaI (VBA)"), 2, FXF_MMX},
+	{_T("Super 2xSaI (VBA)"), 2, FXF_MMX},
+	{_T("SuperScale"), 2, FXF_MMX},
+	{_T("SuperScale (75% Scanlines)"), 2, FXF_MMX},
+	{_T("hq2x Filter"), 2, FXF_MMX},
+	{_T("hq3x Filter"), 3, FXF_MMX},
+	{_T("hq4x Filter"), 4, FXF_MMX},
+	{_T("hq2xS (VBA) Filter"), 2, 0},
+	{_T("hq3xS (VBA) Filter"), 3, FXF_MMX},
+	{_T("hq2xS (SNES9X) Filter"), 2, FXF_MMX},
+	{_T("hq3xS (SNEX9X) Filter"), 3, FXF_MMX},
+	{_T("hq2xBold Filter"), 2, FXF_MMX},
+	{_T("hq3xBold Filter"), 3, FXF_MMX},
+	{_T("EPXB Filter"), 2, FXF_MMX},
+	{_T("EPXC Filter"), 2, FXF_MMX},
+	{_T("2xBR (Squared) Filter"), 2, FXF_MMX},
+	{_T("2xBR (Semi-Rounded) Filter"), 2, FXF_MMX},
+	{_T("2xBR (Rounded) Filter"), 2, FXF_MMX},
+	{_T("3xBR (Squared) Filter"), 3, FXF_MMX},
+	{_T("3xBR (Semi-Rounded) Filter"), 3, FXF_MMX},
+	{_T("3xBR (Rounded) Filter"), 3, FXF_MMX},
+	{_T("4xBR (Squared) Filter"), 4, FXF_MMX},
+	{_T("4xBR (Semi-Rounded) Filter"), 4, FXF_MMX},
+	{_T("4xBR (Rounded) Filter"), 4, FXF_MMX},
+	{_T("DDT3x"), 3, FXF_MMX},
 };
 
 static unsigned char* pSoftFXImage = NULL;
@@ -153,63 +160,69 @@ int VidSoftFXGetZoom(int nEffect)
 
 int VidSoftFXCheckDepth(int nEffect, int nDepth)
 {
-	switch (nEffect) {
-		case FILTER_PLAIN:
+	switch (nEffect)
+	{
+	case FILTER_PLAIN:
+		return nDepth;
+	case FILTER_ADVMAME_SCALE_2X:
+	case FILTER_ADVMAME_SCALE_3X:
+	case FILTER_HQ2XS_VBA:
+	case FILTER_HQ3XS_VBA:
+		if (nDepth == 16 || nDepth == 32)
+		{
 			return nDepth;
-		case FILTER_ADVMAME_SCALE_2X:
-		case FILTER_ADVMAME_SCALE_3X:
-		case FILTER_HQ2XS_VBA:
-		case FILTER_HQ3XS_VBA:
-			if (nDepth == 16 || nDepth == 32) {
-				return nDepth;
-			}
-			break;
-		case FILTER_EAGLE:
-		case FILTER_HQ2XS_SNES9X:
-		case FILTER_HQ3XS_SNES9X:
-		case FILTER_HQ2XBOLD:
-		case FILTER_HQ3XBOLD:
-		case FILTER_EPXB:
-		case FILTER_EPXC:
-		case FILTER_2XBR_A:
-		case FILTER_2XBR_B:
-		case FILTER_2XBR_C:
-		case FILTER_3XBR_A:
-		case FILTER_3XBR_B:
-		case FILTER_3XBR_C:
-		case FILTER_4XBR_A:
-		case FILTER_4XBR_B:
-		case FILTER_4XBR_C:
-		case FILTER_DDT3X:
-			if (nDepth == 16) {
-				return nDepth;
-			}
-			break;
-		case FILTER_2XPM_LQ:
-		case FILTER_2XPM_HQ:
-		case FILTER_SUPEREAGLE:
-		case FILTER_2XSAI:
-		case FILTER_SUPER_2XSAI:
-		case FILTER_SUPERSCALE:
-		case FILTER_SUPERSCALE_75SCAN:
-			if (nDepth == 15 || nDepth == 16) {
-				return nDepth;
-			}
-			break;
-		case FILTER_SUPEREAGLE_VBA:
-		case FILTER_2XSAI_VBA:
-		case FILTER_SUPER_2XSAI_VBA:
-			if (nDepth == 15 || nDepth == 16 || nDepth == 32) {
-				return nDepth;
-			}
-			break;
-		case FILTER_HQ2X:
-		case FILTER_HQ3X:
-		case FILTER_HQ4X:
-			if (nDepth == 15 || nDepth == 16) {
-				return 32;
-			}
-			break;
+		}
+		break;
+	case FILTER_EAGLE:
+	case FILTER_HQ2XS_SNES9X:
+	case FILTER_HQ3XS_SNES9X:
+	case FILTER_HQ2XBOLD:
+	case FILTER_HQ3XBOLD:
+	case FILTER_EPXB:
+	case FILTER_EPXC:
+	case FILTER_2XBR_A:
+	case FILTER_2XBR_B:
+	case FILTER_2XBR_C:
+	case FILTER_3XBR_A:
+	case FILTER_3XBR_B:
+	case FILTER_3XBR_C:
+	case FILTER_4XBR_A:
+	case FILTER_4XBR_B:
+	case FILTER_4XBR_C:
+	case FILTER_DDT3X:
+		if (nDepth == 16)
+		{
+			return nDepth;
+		}
+		break;
+	case FILTER_2XPM_LQ:
+	case FILTER_2XPM_HQ:
+	case FILTER_SUPEREAGLE:
+	case FILTER_2XSAI:
+	case FILTER_SUPER_2XSAI:
+	case FILTER_SUPERSCALE:
+	case FILTER_SUPERSCALE_75SCAN:
+		if (nDepth == 15 || nDepth == 16)
+		{
+			return nDepth;
+		}
+		break;
+	case FILTER_SUPEREAGLE_VBA:
+	case FILTER_2XSAI_VBA:
+	case FILTER_SUPER_2XSAI_VBA:
+		if (nDepth == 15 || nDepth == 16 || nDepth == 32)
+		{
+			return nDepth;
+		}
+		break;
+	case FILTER_HQ2X:
+	case FILTER_HQ3X:
+	case FILTER_HQ4X:
+		if (nDepth == 15 || nDepth == 16)
+		{
+			return 32;
+		}
+		break;
 	}
 
 	return 0;
@@ -217,12 +230,14 @@ int VidSoftFXCheckDepth(int nEffect, int nDepth)
 
 void VidSoftFXExit()
 {
-	if (pSoftFXXBuffer) {
+	if (pSoftFXXBuffer)
+	{
 		free(pSoftFXXBuffer);
 		pSoftFXXBuffer = NULL;
 	}
 
-	if (nSoftFXRotate) {
+	if (nSoftFXRotate)
+	{
 		free(pSoftFXImage);
 		pSoftFXImage = NULL;
 	}
@@ -239,33 +254,41 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 {
 	nSoftFXBlitter = nBlitter;
 	nSoftFXEnlarge = true;
-	
-	if ((MMXSupport() == false && (SoftFXInfo[nSoftFXBlitter].nFlags & FXF_MMX)) || VidSoftFXCheckDepth(nSoftFXBlitter, nVidImageDepth) == 0) {
+
+	if ((MMXSupport() == false && (SoftFXInfo[nSoftFXBlitter].nFlags & FXF_MMX)) || VidSoftFXCheckDepth(
+		nSoftFXBlitter, nVidImageDepth) == 0)
+	{
 		VidSoftFXExit();
 		return 1;
 	}
 
 	pSoftFXImage = pVidImage + nVidImageLeft * nVidImageBPP;
 
-	nSoftFXImageWidth = nVidImageWidth; nSoftFXImageHeight = nVidImageHeight;
+	nSoftFXImageWidth = nVidImageWidth;
+	nSoftFXImageHeight = nVidImageHeight;
 
 	nSoftFXRotate = 0;
-    if (bDrvOkay) {
+	if (bDrvOkay)
+	{
 		BurnDrvGetFullSize(&nSoftFXImageWidth, &nSoftFXImageHeight);
 
-		if ((nRotate & 1) && (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)) {
+		if ((nRotate & 1) && (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL))
+		{
 			nSoftFXRotate |= 1;
 
 			BurnDrvGetFullSize(&nSoftFXImageHeight, &nSoftFXImageWidth);
 		}
 
-		if ((nRotate & 2) && (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED)) {
+		if ((nRotate & 2) && (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED))
+		{
 			nSoftFXRotate |= 2;
 		}
 
-		if (nSoftFXRotate) {
+		if (nSoftFXRotate)
+		{
 			pSoftFXImage = (unsigned char*)malloc(nSoftFXImageWidth * nSoftFXImageHeight * nVidImageBPP);
-			if (pSoftFXImage == NULL) {
+			if (pSoftFXImage == NULL)
+			{
 				VidSoftFXExit();
 				return 1;
 			}
@@ -273,9 +296,12 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 	}
 	nSoftFXImagePitch = nSoftFXImageWidth * nVidImageBPP;
 
-	if (nSoftFXBlitter >= FILTER_SUPEREAGLE && nSoftFXBlitter <= FILTER_SUPER_2XSAI) {		// Initialize the 2xSaI engine
+	if (nSoftFXBlitter >= FILTER_SUPEREAGLE && nSoftFXBlitter <= FILTER_SUPER_2XSAI)
+	{
+		// Initialize the 2xSaI engine
 		pSoftFXXBuffer = (unsigned char*)malloc((nSoftFXImageHeight + 2) * nSoftFXImagePitch);
-		if (pSoftFXXBuffer == NULL) {
+		if (pSoftFXXBuffer == NULL)
+		{
 			VidSoftFXExit();
 			return 1;
 		}
@@ -290,11 +316,13 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 		}
 #endif
 	}
-	
-	if (nSoftFXBlitter >= FILTER_SUPEREAGLE_VBA && nSoftFXBlitter <= FILTER_SUPER_2XSAI_VBA) {
+
+	if (nSoftFXBlitter >= FILTER_SUPEREAGLE_VBA && nSoftFXBlitter <= FILTER_SUPER_2XSAI_VBA)
+	{
 		int nMemLen = (nSoftFXImageHeight + /*2*/4) * nSoftFXImagePitch;
 		pSoftFXXBuffer = (unsigned char*)malloc(nMemLen);
-		if (pSoftFXXBuffer == NULL) {
+		if (pSoftFXXBuffer == NULL)
+		{
 			VidSoftFXExit();
 			return 1;
 		}
@@ -357,14 +385,17 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 		}
 	}
 #endif
-	
-	if (nSoftFXBlitter >= FILTER_HQ2XS_VBA && nSoftFXBlitter <= FILTER_HQ3XS_VBA) {
-                hq2xS_init(nVidImageDepth);
-        }
-        
-        if (nSoftFXBlitter == FILTER_HQ2XS_SNES9X || nSoftFXBlitter == FILTER_HQ3XS_SNES9X || nSoftFXBlitter == FILTER_HQ2XBOLD || nSoftFXBlitter == FILTER_HQ3XBOLD) {
-        	InitLUTs();
-        }
+
+	if (nSoftFXBlitter >= FILTER_HQ2XS_VBA && nSoftFXBlitter <= FILTER_HQ3XS_VBA)
+	{
+		hq2xS_init(nVidImageDepth);
+	}
+
+	if (nSoftFXBlitter == FILTER_HQ2XS_SNES9X || nSoftFXBlitter == FILTER_HQ3XS_SNES9X || nSoftFXBlitter ==
+		FILTER_HQ2XBOLD || nSoftFXBlitter == FILTER_HQ3XBOLD)
+	{
+		InitLUTs();
+	}
 
 #ifdef PRINT_DEBUG_INFO
    	dprintf(_T("  * SoftFX initialised: using %s in %i-bit mode.\n"), SoftFXInfo[nSoftFXBlitter].pszName, nVidImageDepth);
@@ -380,13 +411,16 @@ int VidSoftFXScale(RECT* pRect, int nGameWidth, int nGameHeight)
 
 	nSoftFXEnlarge = false;
 
-	if ((nWidth >= (nGameWidth * SoftFXInfo[nSoftFXBlitter].nZoom)) && (nHeight >= (nGameHeight * SoftFXInfo[nSoftFXBlitter].nZoom))) {
+	if ((nWidth >= (nGameWidth * SoftFXInfo[nSoftFXBlitter].nZoom)) && (nHeight >= (nGameHeight * SoftFXInfo[
+		nSoftFXBlitter].nZoom)))
+	{
 		nWidth = nGameWidth * SoftFXInfo[nSoftFXBlitter].nZoom;
 		nHeight = nGameHeight * SoftFXInfo[nSoftFXBlitter].nZoom;
 		nSoftFXEnlarge = true;
 	}
 
-	if (!nSoftFXEnlarge) {
+	if (!nSoftFXEnlarge)
+	{
 		nWidth = nGameWidth;
 		nHeight = nGameHeight;
 	}
@@ -404,20 +438,28 @@ int VidSoftFXScale(RECT* pRect, int nGameWidth, int nGameHeight)
 
 static void VidSoftFXRotate()
 {
-	if (nSoftFXRotate) {
+	if (nSoftFXRotate)
+	{
 		unsigned char* ps;
 		unsigned char* pd = pSoftFXImage;
-		if (nSoftFXRotate & 2) {
+		if (nSoftFXRotate & 2)
+		{
 			pd += nSoftFXImageHeight * nSoftFXImagePitch - nVidImageBPP;
 		}
 
-		switch (nVidImageBPP) {
-			case 4:	{
-				switch (nSoftFXRotate) {
-					case 1: {
-						for (int y = 0; y < nSoftFXImageHeight; y++) {
+		switch (nVidImageBPP)
+		{
+		case 4:
+			{
+				switch (nSoftFXRotate)
+				{
+				case 1:
+					{
+						for (int y = 0; y < nSoftFXImageHeight; y++)
+						{
 							ps = pVidImage + (nSoftFXImageHeight + nVidImageLeft - 1 - y) * 4;
-							for (int x = 0; x < nSoftFXImageWidth; x++) {
+							for (int x = 0; x < nSoftFXImageWidth; x++)
+							{
 								*(int*)pd = *(int*)ps;
 								ps += nVidImagePitch;
 								pd += 4;
@@ -425,10 +467,13 @@ static void VidSoftFXRotate()
 						}
 						break;
 					}
-					case 2: {
-						for (int y = 0; y < nSoftFXImageHeight; y++) {
+				case 2:
+					{
+						for (int y = 0; y < nSoftFXImageHeight; y++)
+						{
 							ps = pVidImage + y * nVidImagePitch + nVidImageLeft * 2;
-							for (int x = 0; x < nSoftFXImageWidth; x++) {
+							for (int x = 0; x < nSoftFXImageWidth; x++)
+							{
 								*(int*)pd = *(int*)ps;
 								ps += 4;
 								pd -= 4;
@@ -436,10 +481,13 @@ static void VidSoftFXRotate()
 						}
 						break;
 					}
-					case 3: {
-						for (int y = 0; y <nSoftFXImageHeight; y++) {
+				case 3:
+					{
+						for (int y = 0; y < nSoftFXImageHeight; y++)
+						{
 							ps = pVidImage + (nSoftFXImageHeight + nVidImageLeft - 1 - y) * 4;
-							for (int x = 0; x < nSoftFXImageWidth; x++) {
+							for (int x = 0; x < nSoftFXImageWidth; x++)
+							{
 								*(int*)pd = *(int*)ps;
 								ps += nVidImagePitch;
 								pd -= 4;
@@ -451,12 +499,17 @@ static void VidSoftFXRotate()
 				break;
 			}
 
-			case 3: {
-				switch (nSoftFXRotate) {
-					case 1: {
-						for (int y = 0; y < nSoftFXImageHeight; y++) {
+		case 3:
+			{
+				switch (nSoftFXRotate)
+				{
+				case 1:
+					{
+						for (int y = 0; y < nSoftFXImageHeight; y++)
+						{
 							ps = pVidImage + (nSoftFXImageHeight + nVidImageLeft - 1 - y) * 3;
-							for (int x = 0; x < nSoftFXImageWidth; x++) {
+							for (int x = 0; x < nSoftFXImageWidth; x++)
+							{
 								pd[0] = ps[0];
 								pd[1] = ps[2];
 								pd[2] = ps[2];
@@ -466,10 +519,13 @@ static void VidSoftFXRotate()
 						}
 						break;
 					}
-					case 2: {
-						for (int y = 0; y < nSoftFXImageHeight; y++) {
+				case 2:
+					{
+						for (int y = 0; y < nSoftFXImageHeight; y++)
+						{
 							ps = pVidImage + y * nVidImagePitch + nVidImageLeft * 3;
-							for (int x = 0; x < nSoftFXImageWidth; x++) {
+							for (int x = 0; x < nSoftFXImageWidth; x++)
+							{
 								pd[0] = ps[0];
 								pd[1] = ps[2];
 								pd[2] = ps[2];
@@ -479,10 +535,13 @@ static void VidSoftFXRotate()
 						}
 						break;
 					}
-					case 3: {
-						for (int y = 0; y < nSoftFXImageHeight; y++) {
+				case 3:
+					{
+						for (int y = 0; y < nSoftFXImageHeight; y++)
+						{
 							ps = pVidImage + (nSoftFXImageHeight + nVidImageLeft - 1 - y) * 3;
-							for (int x = 0; x < nSoftFXImageWidth; x++) {
+							for (int x = 0; x < nSoftFXImageWidth; x++)
+							{
 								pd[0] = ps[0];
 								pd[1] = ps[2];
 								pd[2] = ps[2];
@@ -496,12 +555,17 @@ static void VidSoftFXRotate()
 				break;
 			}
 
-			case 2:	{
-				switch (nSoftFXRotate) {
-					case 1: {
-						for (int y = 0; y < nSoftFXImageHeight; y++) {
+		case 2:
+			{
+				switch (nSoftFXRotate)
+				{
+				case 1:
+					{
+						for (int y = 0; y < nSoftFXImageHeight; y++)
+						{
 							ps = pVidImage + (nSoftFXImageHeight + nVidImageLeft - 1 - y) * 2;
-							for (int x = 0; x < nSoftFXImageWidth; x++) {
+							for (int x = 0; x < nSoftFXImageWidth; x++)
+							{
 								*(short*)pd = *(short*)ps;
 								ps += nVidImagePitch;
 								pd += 2;
@@ -509,10 +573,13 @@ static void VidSoftFXRotate()
 						}
 						break;
 					}
-					case 2: {
-						for (int y = 0; y < nSoftFXImageHeight; y++) {
+				case 2:
+					{
+						for (int y = 0; y < nSoftFXImageHeight; y++)
+						{
 							ps = pVidImage + y * nVidImagePitch + nVidImageLeft * 2;
-							for (int x = 0; x < nSoftFXImageWidth; x++) {
+							for (int x = 0; x < nSoftFXImageWidth; x++)
+							{
 								*(short*)pd = *(short*)ps;
 								ps += 2;
 								pd -= 2;
@@ -520,10 +587,13 @@ static void VidSoftFXRotate()
 						}
 						break;
 					}
-					case 3: {
-						for (int y = 0; y < nSoftFXImageHeight; y++) {
+				case 3:
+					{
+						for (int y = 0; y < nSoftFXImageHeight; y++)
+						{
 							ps = pVidImage + (nSoftFXImageHeight + nVidImageLeft - 1 - y) * 2;
-							for (int x = 0; x < nSoftFXImageWidth; x++) {
+							for (int x = 0; x < nSoftFXImageWidth; x++)
+							{
 								*(short*)pd = *(short*)ps;
 								ps += nVidImagePitch;
 								pd -= 2;
@@ -541,43 +611,62 @@ static void VidSoftFXRotate()
 void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 {
 	// Apply effects to the image
-	switch (nSoftFXBlitter) {
-
-		case FILTER_PLAIN: {											// Software 2x zoom
-			if (nVidImageBPP == 2) {						// 15/16-bit
-				for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch) {
+	switch (nSoftFXBlitter)
+	{
+	case FILTER_PLAIN:
+		{
+			// Software 2x zoom
+			if (nVidImageBPP == 2)
+			{
+				// 15/16-bit
+				for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch)
+				{
 					unsigned short* psEnd = (unsigned short*)(ps + nSoftFXImagePitch);
 					unsigned short* pdpc = (unsigned short*)pd;
 					unsigned short* pdpn = (unsigned short*)(pd + nPitch);
 					unsigned short* psp = (unsigned short*)ps;
-					do {
+					do
+					{
 						*pdpc++ = *psp;
 						*pdpc++ = *psp;
 						*pdpn++ = *psp;
 						*pdpn++ = *psp++;
-					} while (psp < psEnd);
+					}
+					while (psp < psEnd);
 				}
-			} else {										// 32-bit
-				if (nVidImageBPP == 4) {
-					for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch) {
+			}
+			else
+			{
+				// 32-bit
+				if (nVidImageBPP == 4)
+				{
+					for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch)
+					{
 						unsigned int* psEnd = (unsigned int*)(ps + nSoftFXImagePitch);
 						unsigned int* pdpc = (unsigned int*)pd;
 						unsigned int* pdpn = (unsigned int*)(pd + nPitch);
 						unsigned int* psp = (unsigned int*)ps;
-						do {
+						do
+						{
 							*pdpc++ = *psp;
 							*pdpc++ = *psp;
 							*pdpn++ = *psp;
 							*pdpn++ = *psp++;
-						} while (psp < psEnd);
+						}
+						while (psp < psEnd);
 					}
-				} else {									// 24-bit
-					for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch) {
+				}
+				else
+				{
+					// 24-bit
+					for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch)
+					{
 						unsigned char* psEnd = (unsigned char*)(ps + nSoftFXImagePitch);
 						unsigned char* pdpc = (unsigned char*)pd;
 						unsigned char* pdpn = (unsigned char*)(pd + nPitch);
 						unsigned char* psp = (unsigned char*)ps;
-						do {
+						do
+						{
 							pdpc[0] = psp[0];
 							pdpc[3] = psp[0];
 							pdpn[0] = psp[0];
@@ -593,7 +682,8 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 							psp += 3;
 							pdpc += 3;
 							pdpn += 3;
-						} while (psp < psEnd);
+						}
+						while (psp < psEnd);
 					}
 				}
 			}
@@ -651,42 +741,66 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			break;
 		}
 #endif
-		case FILTER_ADVMAME_SCALE_3X: {
+	case FILTER_ADVMAME_SCALE_3X:
+		{
 			unsigned char* src_prev = pSoftFXImage;
 			unsigned char* src_curr = pSoftFXImage;
 			unsigned char* src_next = pSoftFXImage + nSoftFXImagePitch;
 
-			if (nVidImageBPP == 2) {
-				scale3x_16_def((scale3x_uint16*)pd, (scale3x_uint16*)(pd + nPitch), (scale3x_uint16*)(pd + 2 * nPitch), (scale3x_uint16*)src_prev, (scale3x_uint16*)src_curr, (scale3x_uint16*)src_next, nSoftFXImageWidth);
-			} else {
-				scale3x_32_def((scale3x_uint32*)pd, (scale3x_uint32*)(pd + nPitch), (scale3x_uint32*)(pd + 2 * nPitch), (scale3x_uint32*)src_prev, (scale3x_uint32*)src_curr, (scale3x_uint32*)src_next, nSoftFXImageWidth);
+			if (nVidImageBPP == 2)
+			{
+				scale3x_16_def((scale3x_uint16*)pd, (scale3x_uint16*)(pd + nPitch), (scale3x_uint16*)(pd + 2 * nPitch),
+				               (scale3x_uint16*)src_prev, (scale3x_uint16*)src_curr, (scale3x_uint16*)src_next,
+				               nSoftFXImageWidth);
+			}
+			else
+			{
+				scale3x_32_def((scale3x_uint32*)pd, (scale3x_uint32*)(pd + nPitch), (scale3x_uint32*)(pd + 2 * nPitch),
+				               (scale3x_uint32*)src_prev, (scale3x_uint32*)src_curr, (scale3x_uint32*)src_next,
+				               nSoftFXImageWidth);
 			}
 
-			if (nVidImageBPP == 2) {
-				for (int y = 2; y < nSoftFXImageHeight; y++) {
+			if (nVidImageBPP == 2)
+			{
+				for (int y = 2; y < nSoftFXImageHeight; y++)
+				{
 					pd += 3 * nPitch;
 					src_prev = src_curr;
 					src_curr = src_next;
 					src_next += nSoftFXImagePitch;
-					scale3x_16_def((scale3x_uint16*)pd, (scale3x_uint16*)(pd + nPitch), (scale3x_uint16*)(pd + 2 * nPitch), (scale3x_uint16*)src_prev, (scale3x_uint16*)src_curr, (scale3x_uint16*)src_next, nSoftFXImageWidth);
+					scale3x_16_def((scale3x_uint16*)pd, (scale3x_uint16*)(pd + nPitch),
+					               (scale3x_uint16*)(pd + 2 * nPitch), (scale3x_uint16*)src_prev,
+					               (scale3x_uint16*)src_curr, (scale3x_uint16*)src_next, nSoftFXImageWidth);
 				}
-			} else {
-				for (int y = 2; y < nSoftFXImageHeight; y++) {
+			}
+			else
+			{
+				for (int y = 2; y < nSoftFXImageHeight; y++)
+				{
 					pd += 3 * nPitch;
 					src_prev = src_curr;
 					src_curr = src_next;
 					src_next += nSoftFXImagePitch;
-					scale3x_32_def((scale3x_uint32*)pd, (scale3x_uint32*)(pd + nPitch), (scale3x_uint32*)(pd + 2 * nPitch), (scale3x_uint32*)src_prev, (scale3x_uint32*)src_curr, (scale3x_uint32*)src_next, nSoftFXImageWidth);
+					scale3x_32_def((scale3x_uint32*)pd, (scale3x_uint32*)(pd + nPitch),
+					               (scale3x_uint32*)(pd + 2 * nPitch), (scale3x_uint32*)src_prev,
+					               (scale3x_uint32*)src_curr, (scale3x_uint32*)src_next, nSoftFXImageWidth);
 				}
 			}
 
 			pd += 3 * nPitch;
 			src_prev = src_curr;
 			src_curr = src_next;
-			if (nVidImageBPP == 2) {
-				scale3x_16_def((scale3x_uint16*)pd, (scale3x_uint16*)(pd + nPitch), (scale3x_uint16*)(pd + 2 * nPitch), (scale3x_uint16*)src_prev, (scale3x_uint16*)src_curr, (scale3x_uint16*)src_next, nSoftFXImageWidth);
-			} else {
-				scale3x_32_def((scale3x_uint32*)pd, (scale3x_uint32*)(pd + nPitch), (scale3x_uint32*)(pd + 2 * nPitch), (scale3x_uint32*)src_prev, (scale3x_uint32*)src_curr, (scale3x_uint32*)src_next, nSoftFXImageWidth);
+			if (nVidImageBPP == 2)
+			{
+				scale3x_16_def((scale3x_uint16*)pd, (scale3x_uint16*)(pd + nPitch), (scale3x_uint16*)(pd + 2 * nPitch),
+				               (scale3x_uint16*)src_prev, (scale3x_uint16*)src_curr, (scale3x_uint16*)src_next,
+				               nSoftFXImageWidth);
+			}
+			else
+			{
+				scale3x_32_def((scale3x_uint32*)pd, (scale3x_uint32*)(pd + nPitch), (scale3x_uint32*)(pd + 2 * nPitch),
+				               (scale3x_uint32*)src_prev, (scale3x_uint32*)src_curr, (scale3x_uint32*)src_next,
+				               nSoftFXImageWidth);
 			}
 
 			break;
@@ -864,15 +978,22 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			break;
 		}
 #endif
-		case FILTER_HQ2XS_VBA: {                                                                                      // hq2xS filter (16/32BPP only)
-			if (nVidImageDepth == 16) {
+	case FILTER_HQ2XS_VBA:
+		{
+			// hq2xS filter (16/32BPP only)
+			if (nVidImageDepth == 16)
+			{
 				hq2xS(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
-			} else if (nVidImageDepth == 32) {
+			}
+			else if (nVidImageDepth == 32)
+			{
 				hq2xS32(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			}
 			break;
 		}
-		case FILTER_HQ3XS_VBA: {                                                                                      // hq3xS filter (16/32BPP only)
+	case FILTER_HQ3XS_VBA:
+		{
+			// hq3xS filter (16/32BPP only)
 #if defined _MSC_VER && defined BUILD_X86_ASM
 			if (nVidImageDepth == 16) {
 				hq3xS(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
@@ -882,67 +1003,83 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			break;
 #endif
 		}
-		case FILTER_HQ2XS_SNES9X: {
+	case FILTER_HQ2XS_SNES9X:
+		{
 			RenderHQ2XS(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight, 0);
 			break;
 		}
-		case FILTER_HQ3XS_SNES9X: {
+	case FILTER_HQ3XS_SNES9X:
+		{
 			RenderHQ3XS(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight, 0);
 			break;
 		}
-		case FILTER_HQ2XBOLD: {
+	case FILTER_HQ2XBOLD:
+		{
 			RenderHQ2XS(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight, 1);
 			break;
 		}
-		case FILTER_HQ3XBOLD: {
+	case FILTER_HQ3XBOLD:
+		{
 			RenderHQ3XS(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight, 1);
 			break;
 		}
-		case FILTER_EPXB: {
+	case FILTER_EPXB:
+		{
 			RenderEPXB(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight, nVidImageDepth);
 			break;
 		}
-		case FILTER_EPXC: {
+	case FILTER_EPXC:
+		{
 			RenderEPXC(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight, nVidImageDepth);
 			break;
 		}
-		case FILTER_2XBR_A: {
+	case FILTER_2XBR_A:
+		{
 			xbr2x_a(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			break;
 		}
-		case FILTER_2XBR_B: {
+	case FILTER_2XBR_B:
+		{
 			xbr2x_b(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			break;
 		}
-		case FILTER_2XBR_C: {
+	case FILTER_2XBR_C:
+		{
 			xbr2x_c(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			break;
 		}
-		case FILTER_3XBR_A: {
+	case FILTER_3XBR_A:
+		{
 			xbr3x_a(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			break;
 		}
-		case FILTER_3XBR_B: {
+	case FILTER_3XBR_B:
+		{
 			xbr3x_b(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			break;
 		}
-		case FILTER_3XBR_C: {
+	case FILTER_3XBR_C:
+		{
 			xbr3x_c(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			break;
 		}
-		case FILTER_4XBR_A: {
+	case FILTER_4XBR_A:
+		{
 			xbr4x_a(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			break;
 		}
-		case FILTER_4XBR_B: {
+	case FILTER_4XBR_B:
+		{
 			xbr4x_b(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			break;
 		}
-		case FILTER_4XBR_C: {
+	case FILTER_4XBR_C:
+		{
 			xbr4x_c(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			break;
 		}
-		case FILTER_DDT3X: {
+	case FILTER_DDT3X:
+		{
 			ddt3x(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			break;
 		}
@@ -960,7 +1097,8 @@ int VidSoftFXApplyEffectDirectX(IDirectDrawSurface7* pSurf, RECT* pRect)
 	// Lock the surface so we can write to it
 	memset(&ddsd, 0, sizeof(ddsd));
 	ddsd.dwSize = sizeof(ddsd);
-	if (FAILED(pSurf->Lock(pRect, &ddsd, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT, NULL))) {
+	if (FAILED(pSurf->Lock(pRect, &ddsd, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT, NULL)))
+	{
 		return 1;
 	}
 
@@ -995,7 +1133,8 @@ int VidSoftFXApplyEffectSDL(SDL_Surface* pSurf)
 
 int VidFilterApplyEffect(unsigned char* pd, int pitch)
 {
-	if (!pd) {
+	if (!pd)
+	{
 		return 1;
 	}
 

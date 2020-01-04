@@ -6,37 +6,65 @@
 const int MAXIMUM_NUMBER_TRACKS = 100;
 
 const int CD_FRAMES_MINUTE = 60 * 75;
-const int CD_FRAMES_SECOND =      75;
+const int CD_FRAMES_SECOND = 75;
 
-const int CD_TYPE_NONE     = 1 << 0;
-const int CD_TYPE_BINCUE   = 1 << 1;
-const int CD_TYPE_CCD      = 1 << 2;
+const int CD_TYPE_NONE = 1 << 0;
+const int CD_TYPE_BINCUE = 1 << 1;
+const int CD_TYPE_CCD = 1 << 2;
 
 static int cd_pregap;
 
-struct MSF { UINT8 M; UINT8 S; UINT8 F; };
+struct MSF
+{
+	UINT8 M;
+	UINT8 S;
+	UINT8 F;
+};
 
-struct cdimgTRACK_DATA { UINT8 Control; UINT8 TrackNumber; UINT8 Address[4]; UINT8 EndAddress[4]; };
-struct cdimgCDROM_TOC { UINT8 FirstTrack; UINT8 LastTrack; UINT8 ImageType; TCHAR Image[MAX_PATH]; cdimgTRACK_DATA TrackData[MAXIMUM_NUMBER_TRACKS]; };
+struct cdimgTRACK_DATA
+{
+	UINT8 Control;
+	UINT8 TrackNumber;
+	UINT8 Address[4];
+	UINT8 EndAddress[4];
+};
+
+struct cdimgCDROM_TOC
+{
+	UINT8 FirstTrack;
+	UINT8 LastTrack;
+	UINT8 ImageType;
+	TCHAR Image[MAX_PATH];
+	cdimgTRACK_DATA TrackData[MAXIMUM_NUMBER_TRACKS];
+};
 
 static cdimgCDROM_TOC* cdimgTOC;
 
-static FILE*  cdimgFile = NULL;
-static int    cdimgFileSize = 0;
-static int    cdimgTrack = 0;
-static int    cdimgLBA = 0;
+static FILE* cdimgFile = NULL;
+static int cdimgFileSize = 0;
+static int cdimgTrack = 0;
+static int cdimgLBA = 0;
 
-static int    cdimgSamples = 0;
+static int cdimgSamples = 0;
 
 // identical to the format used in clonecd .sub files, can use memcpy
-struct QData { UINT8 Control; char track; char index; MSF MSFrel; char unused; MSF MSFabs; unsigned short CRC; };
+struct QData
+{
+	UINT8 Control;
+	char track;
+	char index;
+	MSF MSFrel;
+	char unused;
+	MSF MSFabs;
+	unsigned short CRC;
+};
 
 static QData* QChannel = NULL;
 
 // -----------------------------------------------------------------------------
 
 const int cdimgOUT_SIZE = 2352;
-static int  cdimgOutputbufferSize = 0;
+static int cdimgOutputbufferSize = 0;
 
 static short* cdimgOutputbuffer = NULL;
 
@@ -46,7 +74,8 @@ static int cdimgOutputPosition;
 
 TCHAR* GetIsoPath()
 {
-	if (cdimgTOC) {
+	if (cdimgTOC)
+	{
 		return cdimgTOC->Image;
 	}
 
@@ -77,9 +106,7 @@ static const UINT8* cdimgLBAToMSF(int LBA)
 
 static int cdimgMSFToLBA(const UINT8* address)
 {
-	int LBA;
-
-	LBA  = bcd(address[3]);
+	int LBA = bcd(address[3]);
 	LBA += bcd(address[2]) * CD_FRAMES_SECOND;
 	LBA += bcd(address[1]) * CD_FRAMES_MINUTE;
 
@@ -91,7 +118,7 @@ static const UINT8* dinkLBAToMSF(const int LBA) // not BCD version
 	static UINT8 address[4];
 
 	address[0] = 0;
-	address[1] = LBA                    / CD_FRAMES_MINUTE;
+	address[1] = LBA / CD_FRAMES_MINUTE;
 	address[2] = LBA % CD_FRAMES_MINUTE / CD_FRAMES_SECOND;
 	address[3] = LBA % CD_FRAMES_SECOND;
 
@@ -100,9 +127,7 @@ static const UINT8* dinkLBAToMSF(const int LBA) // not BCD version
 
 static int dinkMSFToLBA(const UINT8* address)
 {
-	int LBA;
-
-	LBA  = address[3];
+	int LBA = address[3];
 	LBA += address[2] * CD_FRAMES_SECOND;
 	LBA += address[1] * CD_FRAMES_MINUTE;
 
@@ -147,19 +172,25 @@ static void cdimgPrintImageInfo()
 	if (cdimgTOC->ImageType == CD_TYPE_BINCUE)
 		bprintf(0, _T("Disk At Once (.BIN/.CUE) format\n"));
 
-	for (INT32 trk = cdimgTOC->FirstTrack - 1; trk <= cdimgTOC->LastTrack; trk++) {
+	for (INT32 trk = cdimgTOC->FirstTrack - 1; trk <= cdimgTOC->LastTrack; trk++)
+	{
 		const UINT8* addressUNBCD = dinkLBAToMSF(cdimgMSFToLBA(cdimgTOC->TrackData[trk].Address));
 
-		if (trk != cdimgTOC->LastTrack) {
+		if (trk != cdimgTOC->LastTrack)
+		{
 			bprintf(0, _T("Track %02d: %02d:%02d:%02d\n"), trk + 1, addressUNBCD[1], addressUNBCD[2], addressUNBCD[3]);
-		} else {
-			bprintf(0, _T("    total running time %02i:%02i:%02i\n"), addressUNBCD[1], addressUNBCD[2], addressUNBCD[3]);
+		}
+		else
+		{
+			bprintf(0, _T("    total running time %02i:%02i:%02i\n"), addressUNBCD[1], addressUNBCD[2],
+			        addressUNBCD[3]);
 		}
 	}
 }
 
 static void cdimgAddLastTrack()
-{ // Make a fake last-track w/total image size (for bounds checking)
+{
+	// Make a fake last-track w/total image size (for bounds checking)
 	FILE* h = _wfopen(cdimgTOC->Image, _T("rb"));
 	if (h)
 	{
@@ -176,14 +207,13 @@ static void cdimgAddLastTrack()
 // parse .sub file and build a TOC based in Q sub channel data
 static int cdimgParseSubFile()
 {
-	TCHAR  filename_sub[MAX_PATH];
-	int    length = 0;
+	TCHAR filename_sub[MAX_PATH];
+	int length = 0;
 	QData* Q = 0;
-	int    Qsize = 0;
-	FILE*  h;
-	int    track = 1;
+	int Qsize = 0;
+	int track = 1;
 
-	cdimgTOC->ImageType  = CD_TYPE_CCD;
+	cdimgTOC->ImageType = CD_TYPE_CCD;
 	cdimgTOC->FirstTrack = 1;
 
 	_tcscpy(filename_sub, CDEmuImage);
@@ -191,8 +221,8 @@ static int cdimgParseSubFile()
 
 	if (length <= 4 ||
 		(!IsFileExt(filename_sub, _T(".ccd")) &&
-		 !IsFileExt(filename_sub, _T(".img")) &&
-		 !IsFileExt(filename_sub, _T(".sub"))))
+			!IsFileExt(filename_sub, _T(".img")) &&
+			!IsFileExt(filename_sub, _T(".sub"))))
 	{
 		dprintf(_T("*** Bad image: %s\n"), filename_sub);
 		return 1;
@@ -209,7 +239,7 @@ static int cdimgParseSubFile()
 
 	_tcscpy(filename_sub + length - 4, _T(".sub"));
 	//bprintf(0, _T("filename_sub: %s\n"),filename_sub);
-	h = _wfopen(filename_sub, _T("rb"));
+	FILE* h = _wfopen(filename_sub, _T("rb"));
 	if (h == 0)
 	{
 		dprintf(_T("*** Bad image: %s\n"), filename_sub);
@@ -220,7 +250,7 @@ static int cdimgParseSubFile()
 
 	INT32 subQidx = 0;
 	INT32 subQsize = ftell(h);
-	UINT8 *subQdata = (UINT8*)malloc(subQsize);
+	UINT8* subQdata = (UINT8*)malloc(subQsize);
 	memset(subQdata, 0, subQsize);
 
 	//bprintf(0, _T("raw .sub data size: %d\n"), subQsize);
@@ -240,14 +270,15 @@ static int cdimgParseSubFile()
 		if (subQidx >= subQsize) break;
 		memcpy(Q, &subQdata[subQidx], 12);
 		subQidx += 12;
-		subQidx += 6*12;
+		subQidx += 6 * 12;
 
 		if (Q->index && (Q->Control & 1) && (cdimgTOC->TrackData[bcd(Q->track) - 1].TrackNumber == 0))
 		{
 			// new track
 			track = bcd(Q->track);
 
-			if (track == track_linear) {
+			if (track == track_linear)
+			{
 				//dprintf(_T("  - Track %i found starting at %02X:%02X:%02X\n"), track, Q->MSFabs.M, Q->MSFabs.S, Q->MSFabs.F);
 				//bprintf(0, _T("              contrl: %X  track %X(%d)   indx %X\n"),Q->Control,Q->track,track,Q->index);
 
@@ -257,7 +288,9 @@ static int cdimgParseSubFile()
 				cdimgTOC->TrackData[track - 1].Address[2] = Q->MSFabs.S;
 				cdimgTOC->TrackData[track - 1].Address[3] = Q->MSFabs.F;
 				track_linear++;
-			} else {
+			}
+			else
+			{
 				//bprintf(0, _T("skipped weird track: %X (%X)\n"), track, Q->track);
 			}
 		}
@@ -269,7 +302,8 @@ static int cdimgParseSubFile()
 
 	free(subQdata);
 
-	cd_pregap = QChannel[0].MSFabs.F + QChannel[0].MSFabs.S * CD_FRAMES_SECOND + QChannel[0].MSFabs.M * CD_FRAMES_MINUTE;
+	cd_pregap = QChannel[0].MSFabs.F + QChannel[0].MSFabs.S * CD_FRAMES_SECOND + QChannel[0].MSFabs.M *
+		CD_FRAMES_MINUTE;
 	//bprintf(0, _T("pregap lba: %d MSF: %d:%d:%d\n"), cd_pregap, QChannel[0].MSFabs.M, QChannel[0].MSFabs.S, QChannel[0].MSFabs.F);
 
 	cdimgAddLastTrack();
@@ -279,17 +313,14 @@ static int cdimgParseSubFile()
 
 static int cdimgParseCueFile()
 {
-	TCHAR  szLine[1024];
-	TCHAR  szFile[1024];
-	TCHAR* s;
+	TCHAR szLine[1024];
+	TCHAR szFile[1024];
 	TCHAR* t;
-	FILE*  h;
-	int    track = 1;
-	int    length;
+	int track = 1;
 
-	cdimgTOC->ImageType  = CD_TYPE_BINCUE;
+	cdimgTOC->ImageType = CD_TYPE_BINCUE;
 	cdimgTOC->FirstTrack = 1;
-	cdimgTOC->LastTrack  = 1;
+	cdimgTOC->LastTrack = 1;
 
 	cdimgTOC->TrackData[0].Address[1] = 0;
 	cdimgTOC->TrackData[0].Address[2] = 2;
@@ -298,32 +329,37 @@ static int cdimgParseCueFile()
 	cd_pregap = 150; // default for bin/cue?
 
 	// derive .bin name from .cue filename (it gets the actual name from the .cue, below)
-	length = _tcslen(CDEmuImage);
+	int length = _tcslen(CDEmuImage);
 	_tcscpy(cdimgTOC->Image, CDEmuImage);
 	_tcscpy(cdimgTOC->Image + length - 4, _T(".bin"));
 	//bprintf(0, _T("Image file: %s\n"),cdimgTOC->Image);
 
-	h = _tfopen(CDEmuImage, _T("rt"));
-	if (h == NULL) {
+	FILE* h = _tfopen(CDEmuImage, _T("rt"));
+	if (h == NULL)
+	{
 		return 1;
 	}
 
-	while (1) {
-		if (_fgetts(szLine, sizeof(szLine), h) == NULL) {
+	while (1)
+	{
+		if (_fgetts(szLine, sizeof(szLine), h) == NULL)
+		{
 			break;
 		}
 
 		length = _tcslen(szLine);
 		// get rid of the linefeed at the end
-		while (length && (szLine[length - 1] == _T('\r') || szLine[length - 1] == _T('\n'))) {
+		while (length && (szLine[length - 1] == _T('\r') || szLine[length - 1] == _T('\n')))
+		{
 			szLine[length - 1] = 0;
 			length--;
 		}
 
-		s = szLine;
+		TCHAR* s = szLine;
 
 		// file info
-		if ((t = LabelCheck(s, _T("FILE"))) != 0) {
+		if ((t = LabelCheck(s, _T("FILE"))) != 0)
+		{
 			s = t;
 
 			TCHAR* szQuote;
@@ -332,9 +368,11 @@ static int cdimgParseCueFile()
 			QuoteRead(&szQuote, NULL, s);
 
 			_sntprintf(szFile, ExtractFilename(CDEmuImage) - CDEmuImage, _T("%s"), CDEmuImage);
-			_sntprintf(szFile + (ExtractFilename(CDEmuImage) - CDEmuImage), 1024 - (ExtractFilename(CDEmuImage) - CDEmuImage), _T("\\%s"), szQuote);
+			_sntprintf(szFile + (ExtractFilename(CDEmuImage) - CDEmuImage),
+			           1024 - (ExtractFilename(CDEmuImage) - CDEmuImage), _T("\\%s"), szQuote);
 
-			if (track == 1) {
+			if (track == 1)
+			{
 				//bprintf(0, _T("Image file (from .CUE): %s\n"), szFile);
 				_tcscpy(cdimgTOC->Image, szFile);
 			}
@@ -342,21 +380,25 @@ static int cdimgParseCueFile()
 		}
 
 		// track info
-		if ((t = LabelCheck(s, _T("TRACK"))) != 0) {
+		if ((t = LabelCheck(s, _T("TRACK"))) != 0)
+		{
 			s = t;
 
 			// track number
 			track = _tcstol(s, &t, 10);
 
-			if (track < 1 || track > MAXIMUM_NUMBER_TRACKS) {
+			if (track < 1 || track > MAXIMUM_NUMBER_TRACKS)
+			{
 				fclose(h);
 				return 1;
 			}
 
-			if (track < cdimgTOC->FirstTrack) {
+			if (track < cdimgTOC->FirstTrack)
+			{
 				cdimgTOC->FirstTrack = track;
 			}
-			if (track > cdimgTOC->LastTrack) {
+			if (track > cdimgTOC->LastTrack)
+			{
 				cdimgTOC->LastTrack = track;
 			}
 			cdimgTOC->TrackData[track - 1].TrackNumber = tobcd(track);
@@ -365,12 +407,14 @@ static int cdimgParseCueFile()
 
 			// type of track
 
-			if ((t = LabelCheck(s, _T("MODE1/2352"))) != 0) {
+			if ((t = LabelCheck(s, _T("MODE1/2352"))) != 0)
+			{
 				cdimgTOC->TrackData[track - 1].Control = 0x41;
 				//bprintf(0, _T(".cue: Track #%d, data.\n"), track);
 				continue;
 			}
-			if ((t = LabelCheck(s, _T("AUDIO"))) != 0) {
+			if ((t = LabelCheck(s, _T("AUDIO"))) != 0)
+			{
 				cdimgTOC->TrackData[track - 1].Control = 0x01;
 				//bprintf(0, _T(".cue: Track #%d, AUDIO.\n"), track);
 
@@ -382,32 +426,33 @@ static int cdimgParseCueFile()
 		}
 
 		// PREGAP (not handled)
-		if ((t = LabelCheck(s, _T("PREGAP"))) != 0) {
+		if ((t = LabelCheck(s, _T("PREGAP"))) != 0)
+		{
 			continue;
 		}
 
 		// TRACK Index
-		if ((t = LabelCheck(s, _T("INDEX 01"))) != 0) {
+		if ((t = LabelCheck(s, _T("INDEX 01"))) != 0)
+		{
 			s = t;
 
-			int M, S, F;
-
 			// index M
-			M = _tcstol(s, &t, 10);
+			int M = _tcstol(s, &t, 10);
 			s = t + 1;
 			// index S
-			S = _tcstol(s, &t, 10);
+			int S = _tcstol(s, &t, 10);
 			s = t + 1;
 			// index F
-			F = _tcstol(s, &t, 10);
+			int F = _tcstol(s, &t, 10);
 
-			if (M < 0 || M > 100 || S < 0 || S > 59 || F < 0 || F > 74) {
+			if (M < 0 || M > 100 || S < 0 || S > 59 || F < 0 || F > 74)
+			{
 				bprintf(0, _T("Bad M:S:F!\n"));
 				fclose(h);
 				return 1;
 			}
 
-			const UINT8 address[] = { 0, (UINT8)M, (UINT8)S, (UINT8)F };
+			const UINT8 address[] = {0, (UINT8)M, (UINT8)S, (UINT8)F};
 			const UINT8* newaddress = cdimgLBAToMSF(dinkMSFToLBA(address) + cd_pregap);
 			//const UINT8* newaddressUNBCD = dinkLBAToMSF(dinkMSFToLBA(address) + cd_pregap);
 			//bprintf(0, _T("Track MSF: %02d:%02d:%02d "), newaddressUNBCD[1], newaddressUNBCD[2], newaddressUNBCD[3]);
@@ -475,9 +520,8 @@ static int cdimgInit()
 
 			return 1;
 		}
-
-	} else
-	if (IsFileExt(filename, _T(".ccd")))
+	}
+	else if (IsFileExt(filename, _T(".ccd")))
 	{
 		if (cdimgParseSubFile())
 		{
@@ -486,7 +530,6 @@ static int cdimgInit()
 
 			return 1;
 		}
-
 	}
 	else
 	{
@@ -504,7 +547,8 @@ static int cdimgInit()
 
 	{
 		char buf[2048];
-		FILE* h = _wfopen(cdimgTOC->Image, _T("rb"));	cdimgLBA++;
+		FILE* h = _wfopen(cdimgTOC->Image, _T("rb"));
+		cdimgLBA++;
 
 		if (h)
 		{
@@ -561,10 +605,15 @@ static int cdimgPlayLBA(int LBA) // audio play start
 {
 	cdimgStop();
 
-	if (QChannel != NULL) { // .CCD dump w/.SUB
+	if (QChannel != NULL)
+	{
+		// .CCD dump w/.SUB
 		if (QChannel[LBA].Control & 0x40)
 			return 1;
-	} else { // .BIN/.CUE dump
+	}
+	else
+	{
+		// .BIN/.CUE dump
 		if (cdimgTOC->TrackData[cdimgFindTrack(LBA)].Control & 0x40)
 			return 1;
 	}
@@ -602,7 +651,7 @@ static int cdimgPlayLBA(int LBA) // audio play start
 
 static int cdimgPlay(UINT8 M, UINT8 S, UINT8 F)
 {
-	const UINT8 address[] = { 0, M, S, F };
+	const UINT8 address[] = {0, M, S, F};
 
 	const UINT8* displayaddress = dinkLBAToMSF(cdimgMSFToLBA(address));
 	dprintf(_T("    play %02i:%02i:%02i\n"), displayaddress[1], displayaddress[2], displayaddress[3]);
@@ -704,7 +753,8 @@ static UINT8* cdimgReadTOC(int track)
 	{
 		if (cdimgLBA >= cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTOC->LastTrack].Address))
 		{
-			bprintf(0, _T("END OF DISC: curr.lba %06d end lba: %06d\n"), cdimgLBA, cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTOC->LastTrack].Address));
+			bprintf(0, _T("END OF DISC: curr.lba %06d end lba: %06d\n"), cdimgLBA,
+			        cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTOC->LastTrack].Address));
 			TOCEntry[0] = 1;
 		}
 
@@ -736,10 +786,12 @@ static UINT8* cdimgReadQChannel()
 
 	switch (CDEmuStatus)
 	{
-		case reading:
-		case playing:
+	case reading:
+	case playing:
 		{
-			if (QChannel != NULL) { // .CCD/.SUB
+			if (QChannel != NULL)
+			{
+				// .CCD/.SUB
 				QChannelData[0] = QChannel[cdimgLBA].track;
 
 				QChannelData[1] = QChannel[cdimgLBA].MSFrel.M;
@@ -751,9 +803,13 @@ static UINT8* cdimgReadQChannel()
 				QChannelData[6] = QChannel[cdimgLBA].MSFrel.F;
 
 				QChannelData[7] = QChannel[cdimgLBA].Control;
-			} else { // .BIN/.ISO
+			}
+			else
+			{
+				// .BIN/.ISO
 				const UINT8* AddressAbs = cdimgLBAToMSF(cdimgLBA);
-				const UINT8* AddressRel = cdimgLBAToMSF(cdimgLBA - cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack].Address));
+				const UINT8* AddressRel = cdimgLBAToMSF(
+					cdimgLBA - cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack].Address));
 
 				QChannelData[0] = cdimgTOC->TrackData[cdimgTrack].TrackNumber;
 
@@ -772,11 +828,11 @@ static UINT8* cdimgReadQChannel()
 
 			break;
 		}
-		case paused:
-			break;
+	case paused:
+		break;
 
-		default:
-			memset(QChannelData, 0, sizeof(QChannelData));
+	default:
+		memset(QChannelData, 0, sizeof(QChannelData));
 	}
 
 	return QChannelData;
@@ -784,10 +840,10 @@ static UINT8* cdimgReadQChannel()
 
 static int cdimgGetSoundBuffer(short* buffer, int samples)
 {
-
 #define CLIP(A) ((A) < -0x8000 ? -0x8000 : (A) > 0x7fff ? 0x7fff : (A))
 
-	if (CDEmuStatus != playing) {
+	if (CDEmuStatus != playing)
+	{
 		memset(cdimgOutputbuffer, 0x00, cdimgOUT_SIZE * 2 * sizeof(short));
 		return 0;
 	}
@@ -798,9 +854,9 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 		cdimgSamples -= (44100 / CD_FRAMES_SECOND);
 		cdimgLBA++;
 
-/*		if (cdimgFile == NULL) // play next track?  bad idea. -dink
-			if (cdimgLBA >= cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1].Address))
-				cdimgPlayLBA(cdimgLBA); */
+		/*		if (cdimgFile == NULL) // play next track?  bad idea. -dink
+					if (cdimgLBA >= cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1].Address))
+						cdimgPlayLBA(cdimgLBA); */
 	}
 
 #if 0
@@ -814,18 +870,23 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 	}
 #endif
 
-	if (cdimgFile == NULL) { // restart play if fileptr lost
+	if (cdimgFile == NULL)
+	{
+		// restart play if fileptr lost
 		bprintf(0, _T("CDDA file pointer lost, re-starting @ %d!\n"), cdimgLBA);
 		if (cdimgLBA < cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1].Address))
 			cdimgPlayLBA(cdimgLBA);
 	}
 
-	if (cdimgFile == NULL) { // restart failed (really?) - time to give up.
+	if (cdimgFile == NULL)
+	{
+		// restart failed (really?) - time to give up.
 		cdimgStop();
 		return 0;
 	}
 
-	if (cdimgLBA >= cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1 /* next track */].Address)) {
+	if (cdimgLBA >= cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1 /* next track */].Address))
+	{
 		bprintf(0, _T("End of audio track %d reached!! stopping.\n"), cdimgTrack + 1);
 		cdimgStop();
 		return 0;
@@ -836,10 +897,12 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 		short* src = cdimgOutputbuffer + cdimgOutputPosition * 2;
 		short* dst = buffer;
 
-		for (int i = (cdimgOutputbufferSize - cdimgOutputPosition) * 2 - 1; i > 0; )
+		for (int i = (cdimgOutputbufferSize - cdimgOutputPosition) * 2 - 1; i > 0;)
 		{
-			dst[i] = CLIP((src[i]) + dst[i]); i--;
-			dst[i] = CLIP((src[i]) + dst[i]); i--;
+			dst[i] = CLIP((src[i]) + dst[i]);
+			i--;
+			dst[i] = CLIP((src[i]) + dst[i]);
+			i--;
 		}
 
 		buffer += (cdimgOutputbufferSize - cdimgOutputPosition) * 2;
@@ -855,10 +918,12 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 		short* src = cdimgOutputbuffer + cdimgOutputPosition * 2;
 		short* dst = buffer;
 
-		for (int i = samples * 2 - 1; i > 0; )
+		for (int i = samples * 2 - 1; i > 0;)
 		{
-			dst[i] = CLIP((src[i]) + dst[i]); i--;
-			dst[i] = CLIP((src[i]) + dst[i]); i--;
+			dst[i] = CLIP((src[i]) + dst[i]);
+			i--;
+			dst[i] = CLIP((src[i]) + dst[i]);
+			i--;
 		}
 
 		cdimgOutputPosition += samples;
@@ -867,18 +932,19 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 	return 0;
 
 #undef CLIP
-
 }
 
-static INT32 cdimgScan(INT32 nAction, INT32 *pnMin)
+static INT32 cdimgScan(INT32 nAction, INT32* pnMin)
 {
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		SCAN_VAR(CDEmuStatus);
 		SCAN_VAR(cdimgTrack);
 		SCAN_VAR(cdimgLBA);
 	}
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE)
+	{
 		cdimgCloseFile();
 	}
 
@@ -890,4 +956,7 @@ static int cdimgGetSettings(InterfaceInfo* pInfo)
 	return 0;
 }
 
-struct CDEmuDo cdimgDo = { cdimgExit, cdimgInit, cdimgStop, cdimgPlay, cdimgLoadSector, cdimgReadTOC, cdimgReadQChannel, cdimgGetSoundBuffer, cdimgScan, cdimgGetSettings, _T("raw image CD emulation") };
+struct CDEmuDo cdimgDo = {
+	cdimgExit, cdimgInit, cdimgStop, cdimgPlay, cdimgLoadSector, cdimgReadTOC, cdimgReadQChannel, cdimgGetSoundBuffer,
+	cdimgScan, cdimgGetSettings, _T("raw image CD emulation")
+};

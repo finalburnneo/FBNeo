@@ -3,7 +3,7 @@
 #include "burner.h"
 
 #if !defined BUILD_X64_EXE
- #include "vid_directx_support.h" 
+#include "vid_directx_support.h"
 #endif
 
 #include <InitGuid.h>
@@ -15,38 +15,41 @@
 
 #include "ddraw_core.h"
 
-static IDirectDraw7* DtoDD = NULL;				// DirectDraw interface
-static IDirectDrawSurface7* DtoPrim = NULL;		// Primary surface
-static IDirectDrawSurface7* DtoBack = NULL;		// Back buffer surface
+static IDirectDraw7* DtoDD = NULL; // DirectDraw interface
+static IDirectDrawSurface7* DtoPrim = NULL; // Primary surface
+static IDirectDrawSurface7* DtoBack = NULL; // Back buffer surface
 
 static int nRotateGame;
 static bool bRotateScanlines;
-static DDBLTFX* DtoBltFx = NULL;				// We use mirrored blits for flipped games
+static DDBLTFX* DtoBltFx = NULL; // We use mirrored blits for flipped games
 
-static IDirectDrawSurface7* pddsDtos = NULL;	// The screen surface
-static int nGameWidth = 0, nGameHeight = 0;		// screen size
+static IDirectDrawSurface7* pddsDtos = NULL; // The screen surface
+static int nGameWidth = 0, nGameHeight = 0; // screen size
 
 static bool bDtosScan;
 
-static RECT Src = { 0, 0, 0, 0 };
-static RECT Dest = { 0, 0, 0, 0 };
+static RECT Src = {0, 0, 0, 0};
+static RECT Dest = {0, 0, 0, 0};
 
 static int nHalfMask = 0;
 
-static int nUseSys;								// Use System or Video memory
+static int nUseSys; // Use System or Video memory
 
 static int DtoPrimClear()
 {
-	if (DtoPrim == NULL) {
+	if (DtoPrim == NULL)
+	{
 		return 1;
 	}
 
-	VidSClearSurface(DtoPrim, 0, NULL);			// Clear 1st page
+	VidSClearSurface(DtoPrim, 0, NULL); // Clear 1st page
 
-	if (DtoBack) {								// We're using a triple buffer
-		VidSClearSurface(DtoBack, 0, NULL);		// Clear 2nd page
+	if (DtoBack)
+	{
+		// We're using a triple buffer
+		VidSClearSurface(DtoBack, 0, NULL); // Clear 2nd page
 		DtoPrim->Flip(NULL, DDFLIP_WAIT);
-		VidSClearSurface(DtoBack, 0, NULL);		// Clear 3rd page
+		VidSClearSurface(DtoBack, 0, NULL); // Clear 3rd page
 	}
 
 	return 0;
@@ -59,30 +62,38 @@ static int DtoPrimInit(int bTriple)
 	// Create the primary surface
 	memset(&ddsd, 0, sizeof(ddsd));
 	ddsd.dwSize = sizeof(ddsd);
-	if (bTriple) {															// Make a primary surface capable of triple bufferring
+	if (bTriple)
+	{
+		// Make a primary surface capable of triple bufferring
 		ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX | DDSCAPS_VIDEOMEMORY;
 		ddsd.dwBackBufferCount = 2;
-	} else {
+	}
+	else
+	{
 		ddsd.dwFlags = DDSD_CAPS;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 	}
 
-	if (FAILED(DtoDD->CreateSurface(&ddsd, &DtoPrim, NULL))) {
+	if (FAILED(DtoDD->CreateSurface(&ddsd, &DtoPrim, NULL)))
+	{
 		return 1;
 	}
 
-	if (bTriple) {
+	if (bTriple)
+	{
 		// Get the back buffer
 		memset(&ddsd.ddsCaps, 0, sizeof(ddsd.ddsCaps));
 		ddsd.ddsCaps.dwCaps = DDSCAPS_BACKBUFFER;
 
-		if (FAILED(DtoPrim->GetAttachedSurface(&ddsd.ddsCaps, &DtoBack))) {	// Failed to make triple buffer
+		if (FAILED(DtoPrim->GetAttachedSurface(&ddsd.ddsCaps, &DtoBack)))
+		{
+			// Failed to make triple buffer
 			RELEASE(DtoPrim)
 			return 1;
 		}
 
-		DtoPrimClear();														// Clear surfaces
+		DtoPrimClear(); // Clear surfaces
 	}
 
 	return 0;
@@ -97,11 +108,13 @@ static int AutodetectUseSys()
 	ddc.dwSize = sizeof(ddc);
 	DtoDD->GetCaps(&ddc, NULL);
 
-	if (ddc.dwCaps & DDCAPS_BLTSTRETCH) {					// If it can do a hardware stretch use video memory
+	if (ddc.dwCaps & DDCAPS_BLTSTRETCH)
+	{
+		// If it can do a hardware stretch use video memory
 		return 0;
-	} else {												// Otherwise use system memory:
-		return 1;
 	}
+	// Otherwise use system memory:
+	return 1;
 }
 
 // Create a secondary DirectDraw surface for the game image
@@ -112,46 +125,56 @@ static int DtosMakeSurf()
 	nUseSys = 0;
 	DDSURFACEDESC2 ddsd;
 
-	if (DtoDD == NULL) {
+	if (DtoDD == NULL)
+	{
 		return 1;
 	}
 
 	nUseSys = nVidTransferMethod;
-	if (nUseSys < 0) {
+	if (nUseSys < 0)
+	{
 		nUseSys = AutodetectUseSys();
 	}
 
 	// Try to allocate buffer in Video memory first, if that fails use System memory
-	do {
+	do
+	{
 		memset(&ddsd, 0, sizeof(ddsd));
 		ddsd.dwSize = sizeof(ddsd);
 
 		ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-		if (nUseSys == 0) {
+		if (nUseSys == 0)
+		{
 			ddsd.ddsCaps.dwCaps |= DDSCAPS_VIDEOMEMORY;
-		} else {
-			if (nUseSys == 1) {
+		}
+		else
+		{
+			if (nUseSys == 1)
+			{
 				ddsd.ddsCaps.dwCaps |= DDSCAPS_SYSTEMMEMORY;
 			}
 		}
 
-		ddsd.dwWidth = nGameWidth << 1;						// Make the surface large enough to add scanlines
-		ddsd.dwHeight = nGameHeight << 1;					//
+		ddsd.dwWidth = nGameWidth << 1; // Make the surface large enough to add scanlines
+		ddsd.dwHeight = nGameHeight << 1; //
 
 		nRet = DtoDD->CreateSurface(&ddsd, &pddsDtos, NULL);
 
-		if (SUCCEEDED(nRet)) {								// Break early, so nUseSys will keep its value
+		if (SUCCEEDED(nRet))
+		{
+			// Break early, so nUseSys will keep its value
 			break;
 		}
+	}
+	while (++nUseSys <= 1);
 
-	} while (++nUseSys <= 1);
-
-	if (FAILED(nRet)) {
+	if (FAILED(nRet))
+	{
 		return 1;
 	}
 
-	nVidScrnDepth = VidSGetSurfaceDepth(pddsDtos);			// Get colourdepth of primary surface
+	nVidScrnDepth = VidSGetSurfaceDepth(pddsDtos); // Get colourdepth of primary surface
 
 	VidSClearSurface(pddsDtos, 0, NULL);
 
@@ -171,46 +194,61 @@ static int DtosExit()
 
 static int DtosInit()
 {
-	if (DtoDD == NULL) {
+	if (DtoDD == NULL)
+	{
 		return 1;
 	}
 
-	if (nRotateGame & 1) {
+	if (nRotateGame & 1)
+	{
 		nVidImageWidth = nGameHeight;
 		nVidImageHeight = nGameWidth;
-	} else {
+	}
+	else
+	{
 		nVidImageWidth = nGameWidth;
 		nVidImageHeight = nGameHeight;
 	}
 
-	if (bVidScanRotate && nGameWidth < nGameHeight) {
+	if (bVidScanRotate && nGameWidth < nGameHeight)
+	{
 		bRotateScanlines = true;
-	} else {
+	}
+	else
+	{
 		bRotateScanlines = false;
 	}
 
-	nVidImageDepth = VidSGetSurfaceDepth(DtoPrim);	// Get color depth of primary surface
+	nVidImageDepth = VidSGetSurfaceDepth(DtoPrim); // Get color depth of primary surface
 	nVidImageBPP = (nVidImageDepth + 7) >> 3;
 
 	// Make the mask to mask out all but the lowest intensity bit
-	if (nVidImageDepth == 15) {
+	if (nVidImageDepth == 15)
+	{
 		nHalfMask = 0xFBDEFBDE;
-	} else {
-		if (nVidImageDepth == 16) {
+	}
+	else
+	{
+		if (nVidImageDepth == 16)
+		{
 			nHalfMask = 0xF7DEF7DE;
-		} else {
+		}
+		else
+		{
 			nHalfMask = 0xFEFEFEFE;
 		}
 	}
 
 	// Make the normal memory buffer
-	if (VidSAllocVidImage()) {
+	if (VidSAllocVidImage())
+	{
 		DtosExit();
 		return 1;
 	}
 
 	// Make the DirectDraw secondary surface
-	if (DtosMakeSurf()) {
+	if (DtosMakeSurf())
+	{
 		DtosExit();
 		return 1;
 	}
@@ -218,9 +256,10 @@ static int DtosInit()
 	// Use our callback to get colors:
 	SetBurnHighCol(nVidImageDepth);
 
-	Dest.left = 0; Dest.right = -1;
+	Dest.left = 0;
+	Dest.right = -1;
 
-	RECT rect = { 0, 0, 0, 0 };
+	RECT rect = {0, 0, 0, 0};
 	GetClientScreenRect(hVidWnd, &rect);
 	rect.top += nMenuHeight;
 
@@ -239,12 +278,13 @@ static int vidExit()
 
 	DtosExit();
 
-	RELEASE(DtoPrim)					// a single call releases all surfaces
+	RELEASE(DtoPrim) // a single call releases all surfaces
 	DtoBack = NULL;
 
 	VidSExit();
 
-	if (DtoBltFx) {
+	if (DtoBltFx)
+	{
 		free(DtoBltFx);
 		DtoBltFx = NULL;
 	}
@@ -283,7 +323,7 @@ static BOOL PASCAL MyEnumDisplayDrivers(GUID FAR* pGuid, LPSTR pszDesc, LPSTR /*
 
 static int vidInit()
 {
-	hVidWnd = hScrnWnd;								// Use Screen window for video
+	hVidWnd = hScrnWnd; // Use Screen window for video
 
 #ifdef PRINT_DEBUG_INFO
 	dprintf(_T("  * Enumerating available drivers:\n"));
@@ -297,30 +337,38 @@ static int vidInit()
 
 	VidSInit(DtoDD);
 
-	nGameWidth = nVidImageWidth; nGameHeight = nVidImageHeight;
+	nGameWidth = nVidImageWidth;
+	nGameHeight = nVidImageHeight;
 
 	nRotateGame = 0;
-	if (bDrvOkay) {
+	if (bDrvOkay)
+	{
 		DtoBltFx = NULL;
 
 		// Get the game screen size
 		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 
-	    if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-			if (nVidRotationAdjust & 1) {
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
+		{
+			if (nVidRotationAdjust & 1)
+			{
 				int n = nGameWidth;
 				nGameWidth = nGameHeight;
 				nGameHeight = n;
 				nRotateGame |= (nVidRotationAdjust & 2);
-			} else {
+			}
+			else
+			{
 				nRotateGame |= 1;
 			}
 		}
-		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED)
+		{
 			nRotateGame ^= 2;
 		}
 
-		if (nRotateGame & 2) {
+		if (nRotateGame & 2)
+		{
 			DDCAPS ddcaps;
 
 			// Disable flipping until we've checked the hardware supports it
@@ -330,10 +378,12 @@ static int vidInit()
 			ddcaps.dwSize = sizeof(ddcaps);
 
 			DtoDD->GetCaps(&ddcaps, NULL);
-			if (((ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORLEFTRIGHT) && (ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORUPDOWN)) || bVidForceFlip) {
-
+			if (((ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORLEFTRIGHT) && (ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORUPDOWN)) ||
+				bVidForceFlip)
+			{
 				DtoBltFx = (DDBLTFX*)malloc(sizeof(DDBLTFX));
-				if (DtoBltFx == NULL) {
+				if (DtoBltFx == NULL)
+				{
 					vidExit();
 					return 1;
 				}
@@ -349,16 +399,20 @@ static int vidInit()
 		}
 	}
 
-	DtoPrim = NULL;							// No primary surface yet
+	DtoPrim = NULL; // No primary surface yet
 	DtoBack = NULL;
 
 	// Remember the changes to the display
-	if (nVidFullscreen) {
-		if (VidSEnterFullscreenMode(nScreenSize, 0)) {
+	if (nVidFullscreen)
+	{
+		if (VidSEnterFullscreenMode(nScreenSize, 0))
+		{
 			vidExit();
 			return 1;
 		}
-	} else {
+	}
+	else
+	{
 		DtoDD->SetCooperativeLevel(hVidWnd, DDSCL_NORMAL);
 	}
 
@@ -390,8 +444,11 @@ static int vidInit()
 	}
 #endif
 
-	if (bVidTripleBuffer && nVidFullscreen) {
-		if (DtoPrimInit(1)) {			// Try to make triple buffer
+	if (bVidTripleBuffer && nVidFullscreen)
+	{
+		if (DtoPrimInit(1))
+		{
+			// Try to make triple buffer
 
 #ifdef PRINT_DEBUG_INFO
 			dprintf(_T("  * Warning: Couldn't allocate a triple-buffering surface.\n"));
@@ -402,9 +459,11 @@ static int vidInit()
 		}
 	}
 
-	if (DtoPrim == NULL) {
+	if (DtoPrim == NULL)
+	{
 		// No primary surface yet, so try normal
-		if (DtoPrimInit(0)) {
+		if (DtoPrimInit(0))
+		{
 #ifdef PRINT_DEBUG_INFO
 	   	dprintf(_T("  * Error: Couldn't create primary surface.\n"));
 #endif
@@ -414,7 +473,8 @@ static int vidInit()
 		}
 	}
 
-	if (nVidFullscreen) {
+	if (nVidFullscreen)
+	{
 		DtoDD->Compact();
 	}
 
@@ -423,7 +483,8 @@ static int vidInit()
 	VidSSetupGamma(DtoPrim);
 
 	// Init the buffer surfaces
-	if (DtosInit()) {
+	if (DtosInit())
+	{
 		vidExit();
 		return 1;
 	}
@@ -465,7 +526,7 @@ static int vidInit()
 static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 {
 	unsigned char *pd, *ps, *pdd;
-	unsigned char *Surf;
+	unsigned char* Surf;
 	int nPitch;
 
 	Surf = (unsigned char*)ddsd->lpSurface;
@@ -473,16 +534,23 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 
 	pd = Surf;
 
-	if (bDtosScan) {
-		if (bVidScanHalf) {
-			if (bVidScanRotate) {
-				switch (nVidImageBPP) {
-					case 4: {
+	if (bDtosScan)
+	{
+		if (bVidScanHalf)
+		{
+			if (bVidScanRotate)
+			{
+				switch (nVidImageBPP)
+				{
+				case 4:
+					{
 						int t;
-						for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
+						for (int y = 0; y < nGameHeight; y++, pd += nPitch)
+						{
 							ps = pVidImage + (nGameHeight - 1 - y) * 4;
 							pdd = pd;
-							for (int x = 0; x < nGameWidth; x++) {
+							for (int x = 0; x < nGameWidth; x++)
+							{
 								t = *(int*)ps;
 								ps += nVidImagePitch;
 								*(int*)pdd = t;
@@ -493,11 +561,14 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 						}
 						break;
 					}
-					case 3: {
-						for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
+				case 3:
+					{
+						for (int y = 0; y < nGameHeight; y++, pd += nPitch)
+						{
 							ps = pVidImage + (nGameHeight - 1 - y) * 3;
 							pdd = pd;
-							for (int x = 0; x < nGameWidth; x++) {
+							for (int x = 0; x < nGameWidth; x++)
+							{
 								pdd[0] = ps[0];
 								pdd[1] = ps[1];
 								pdd[2] = ps[2];
@@ -505,17 +576,20 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 								pdd[4] = ps[1] >> 1;
 								pdd[5] = ps[2] >> 1;
 								ps += nVidImagePitch;
-								pdd +=6;
+								pdd += 6;
 							}
 						}
 						break;
 					}
-					case 2: {
+				case 2:
+					{
 						short t;
-						for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
+						for (int y = 0; y < nGameHeight; y++, pd += nPitch)
+						{
 							ps = pVidImage + (nGameHeight - 1 - y) * 2;
 							pdd = pd;
-							for (int x = 0; x < nGameWidth; x++) {
+							for (int x = 0; x < nGameWidth; x++)
+							{
 								t = *(short*)ps;
 								ps += nVidImagePitch;
 								*(short*)pdd = t;
@@ -527,19 +601,24 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 						break;
 					}
 				}
-
-			} else {
+			}
+			else
+			{
 				unsigned char* pBuffer = (unsigned char*)malloc(nPitch);
 				unsigned char* pd2;
 
-				switch (nVidImageBPP) {
-					case 4: {
+				switch (nVidImageBPP)
+				{
+				case 4:
+					{
 						int t;
-						for (int y = 0; y < nGameHeight; y++, pd += nPitch * 2) {
+						for (int y = 0; y < nGameHeight; y++, pd += nPitch * 2)
+						{
 							ps = pVidImage + (nGameHeight - 1 - y) * 4;
 							pdd = pd;
 							pd2 = pBuffer;
-							for (int x = 0; x < nGameWidth; x++) {
+							for (int x = 0; x < nGameWidth; x++)
+							{
 								t = *(int*)ps;
 								ps += nVidImagePitch;
 								*(int*)pdd = t;
@@ -548,19 +627,23 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 								pd2 += 4;
 							}
 							pdd = pd + nPitch;
-							for (ps = pBuffer; ps < (pBuffer + nGameWidth * 4); ps += 4) {
+							for (ps = pBuffer; ps < (pBuffer + nGameWidth * 4); ps += 4)
+							{
 								*(int*)pdd = (*(int*)ps & 0xFEFEFE) >> 1;
 								pdd += 4;
 							}
 						}
 						break;
 					}
-					case 3: {
-						for (int y = 0; y < nGameHeight; y++, pd += nPitch * 2) {
+				case 3:
+					{
+						for (int y = 0; y < nGameHeight; y++, pd += nPitch * 2)
+						{
 							ps = pVidImage + (nGameHeight - 1 - y) * 3;
 							pdd = pd;
 							pd2 = pBuffer;
-							for (int x = 0; x < nGameWidth; x++) {
+							for (int x = 0; x < nGameWidth; x++)
+							{
 								pdd[0] = ps[0];
 								pd2[0] = ps[0];
 								pdd[1] = ps[1];
@@ -572,7 +655,8 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 								pd2 += 3;
 							}
 							pdd = pd + nPitch;
-							for (ps = pBuffer; ps < (pBuffer + nGameWidth * 3); ps += 3) {
+							for (ps = pBuffer; ps < (pBuffer + nGameWidth * 3); ps += 3)
+							{
 								pdd[0] = ps[0] >> 1;
 								pdd[1] = ps[1] >> 1;
 								pdd[2] = ps[2] >> 1;
@@ -581,13 +665,16 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 						}
 						break;
 					}
-					case 2: {
+				case 2:
+					{
 						short t;
-						for (int y = 0; y < nGameHeight; y++, pd += nPitch * 2) {
+						for (int y = 0; y < nGameHeight; y++, pd += nPitch * 2)
+						{
 							ps = pVidImage + (nGameHeight - 1 - y) * 2;
 							pdd = pd;
 							pd2 = pBuffer;
-							for (int x = 0; x < nGameWidth; x++) {
+							for (int x = 0; x < nGameWidth; x++)
+							{
 								t = *(short*)ps;
 								ps += nVidImagePitch;
 								*(short*)pdd = t;
@@ -596,7 +683,8 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 								pd2 += 2;
 							}
 							pdd = pd + nPitch;
-							for (ps = pBuffer; ps < (pBuffer + nGameWidth * 2); ps += 4) {
+							for (ps = pBuffer; ps < (pBuffer + nGameWidth * 2); ps += 4)
+							{
 								*(unsigned int*)pdd = (*(unsigned int*)ps & nHalfMask) >> 1;
 								pdd += 4;
 							}
@@ -604,25 +692,35 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 						break;
 					}
 				}
-				if (pBuffer) {
-					free (pBuffer);
+				if (pBuffer)
+				{
+					free(pBuffer);
 					pBuffer = NULL;
 				}
 			}
-		} else {
+		}
+		else
+		{
 			int nPixelSize = nVidImageBPP;
-			if (bVidScanRotate) {
+			if (bVidScanRotate)
+			{
 				nPixelSize <<= 1;
-			} else {
+			}
+			else
+			{
 				nPitch <<= 1;
 			}
 
-			switch (nVidImageBPP) {
-				case 4: {
-					for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
+			switch (nVidImageBPP)
+			{
+			case 4:
+				{
+					for (int y = 0; y < nGameHeight; y++, pd += nPitch)
+					{
 						ps = pVidImage + (nGameHeight - 1 - y) * 4;
 						pdd = pd;
-						for (int x = 0; x < nGameWidth; x++) {
+						for (int x = 0; x < nGameWidth; x++)
+						{
 							*(int*)pdd = *(int*)ps;
 							ps += nVidImagePitch;
 							pdd += nPixelSize;
@@ -630,11 +728,14 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 					}
 					break;
 				}
-				case 3: {
-					for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
+			case 3:
+				{
+					for (int y = 0; y < nGameHeight; y++, pd += nPitch)
+					{
 						ps = pVidImage + (nGameHeight - 1 - y) * 3;
 						pdd = pd;
-						for (int x = 0; x < nGameWidth; x++) {
+						for (int x = 0; x < nGameWidth; x++)
+						{
 							pdd[0] = ps[0];
 							pdd[1] = ps[1];
 							pdd[2] = ps[2];
@@ -644,11 +745,14 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 					}
 					break;
 				}
-				case 2: {
-					for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
+			case 2:
+				{
+					for (int y = 0; y < nGameHeight; y++, pd += nPitch)
+					{
 						ps = pVidImage + (nGameHeight - 1 - y) * 2;
 						pdd = pd;
-						for (int x = 0; x < nGameWidth; x++) {
+						for (int x = 0; x < nGameWidth; x++)
+						{
 							*(short*)pdd = *(short*)ps;
 							ps += nVidImagePitch;
 							pdd += nPixelSize;
@@ -658,13 +762,19 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 				}
 			}
 		}
-	} else {
-		switch (nVidImageBPP) {
-			case 4: {
-				for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
+	}
+	else
+	{
+		switch (nVidImageBPP)
+		{
+		case 4:
+			{
+				for (int y = 0; y < nGameHeight; y++, pd += nPitch)
+				{
 					ps = pVidImage + (nGameHeight - 1 - y) * 4;
 					pdd = pd;
-					for (int x = 0; x < nGameWidth; x++) {
+					for (int x = 0; x < nGameWidth; x++)
+					{
 						*(int*)pdd = *(int*)ps;
 						ps += nVidImagePitch;
 						pdd += 4;
@@ -672,25 +782,31 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 				}
 				break;
 			}
-			case 3: {
-				for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
+		case 3:
+			{
+				for (int y = 0; y < nGameHeight; y++, pd += nPitch)
+				{
 					ps = pVidImage + (nGameHeight - 1 - y) * 3;
 					pdd = pd;
-					for (int x = 0; x < nGameWidth; x++) {
+					for (int x = 0; x < nGameWidth; x++)
+					{
 						pdd[0] = ps[0];
 						pdd[1] = ps[1];
 						pdd[2] = ps[2];
 						ps += nVidImagePitch;
-						pdd +=3;
+						pdd += 3;
 					}
 				}
 				break;
 			}
-			case 2:	{
-				for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
+		case 2:
+			{
+				for (int y = 0; y < nGameHeight; y++, pd += nPitch)
+				{
 					ps = pVidImage + (nGameHeight - 1 - y) * 2;
 					pdd = pd;
-					for (int x = 0; x < nGameWidth; x++) {
+					for (int x = 0; x < nGameWidth; x++)
+					{
 						*(short*)pdd = *(short*)ps;
 						ps += nVidImagePitch;
 						pdd += 2;
@@ -707,35 +823,42 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 // Copy pVidImage to pddsDtos, don't rotate, add scanlines in odd lines if needed
 static int vidRenderNoRotateHorScanlines(DDSURFACEDESC2* ddsd, int nField, int nHalf)
 {
-	unsigned char *pd, *ps;
-
 	unsigned char* Surf = (unsigned char*)ddsd->lpSurface;
 	int nPitch = ddsd->lPitch;
-	if (bDtosScan) {
-		if (nField) {			// copy to odd fields
+	if (bDtosScan)
+	{
+		if (nField)
+		{
+			// copy to odd fields
 			Surf += nPitch;
 		}
 		nPitch <<= 1;
 	}
 
-	pd = Surf; ps = pVidImage;
-	for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch) {
-		if (nHalf == 0) {
+	unsigned char* pd = Surf;
+	unsigned char* ps = pVidImage;
+	for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch)
+	{
+		if (nHalf == 0)
+		{
 			memcpy(pd, ps, nVidImagePitch);
-		} else {
+		}
+		else
+		{
 			unsigned char* psEnd = ps + nVidImagePitch;
 			unsigned char* pdp = pd;
 			unsigned char* psp = ps;
 
-			do {
-				unsigned int t;
-				t = *((unsigned int *)(psp));
+			do
+			{
+				unsigned int t = *((unsigned int*)(psp));
 				t = (t & nHalfMask) >> 1;
-				*((unsigned int *)(pdp)) = t;
+				*((unsigned int*)(pdp)) = t;
 
 				psp += 4;
 				pdp += 4;
-			} while (psp < psEnd);
+			}
+			while (psp < psEnd);
 		}
 	}
 
@@ -749,37 +872,41 @@ static int vidRenderNoRotateVertScanlines(DDSURFACEDESC2* ddsd)
 	unsigned char* Surf = (unsigned char*)ddsd->lpSurface;
 	int nPitch = ddsd->lPitch;
 
-	if (bVidScanHalf) {
-		pd = Surf; ps = pVidImage;
-		switch (nVidImageBPP) {
-			case 4: {
-				unsigned char* pdp;
-				unsigned char* psp;
-				unsigned char* psEnd;
-				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch) {
-					pdp = pd;
-					psp = ps;
-					psEnd = ps + nVidImagePitch;
-					do {
+	if (bVidScanHalf)
+	{
+		pd = Surf;
+		ps = pVidImage;
+		switch (nVidImageBPP)
+		{
+		case 4:
+			{
+				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch)
+				{
+					unsigned char* pdp = pd;
+					unsigned char* psp = ps;
+					unsigned char* psEnd = ps + nVidImagePitch;
+					do
+					{
 						unsigned int t = *(unsigned int*)psp;
 						*(unsigned int*)pdp = t;
 						psp += 4;
 						pdp += 4;
 						*(unsigned int*)pdp = (t & 0xFEFEFE) >> 1;
 						pdp += 4;
-					} while (psp < psEnd);
+					}
+					while (psp < psEnd);
 				}
 				break;
 			}
-			case 3: {
-				unsigned char* pdp;
-				unsigned char* psp;
-				unsigned char* psEnd;
-				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch) {
-					pdp = pd;
-					psp = ps;
-					psEnd = ps + nVidImagePitch;
-					do {
+		case 3:
+			{
+				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch)
+				{
+					unsigned char* pdp = pd;
+					unsigned char* psp = ps;
+					unsigned char* psEnd = ps + nVidImagePitch;
+					do
+					{
 						pdp[0] = psp[0];
 						pdp[1] = psp[1];
 						pdp[2] = psp[2];
@@ -788,85 +915,92 @@ static int vidRenderNoRotateVertScanlines(DDSURFACEDESC2* ddsd)
 						pdp[5] = psp[2] >> 1;
 						psp += 3;
 						pdp += 6;
-					} while (psp < psEnd);
+					}
+					while (psp < psEnd);
 				}
 				break;
 			}
-			case 2: {
-				unsigned char* pdp;
-				unsigned char* psp;
-				unsigned char* psEnd;
-				unsigned short t;
-				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch) {
-					pdp = pd;
-					psp = ps;
-					psEnd = ps + nVidImagePitch;
-					do {
-						t = *(unsigned short*)psp;
+		case 2:
+			{
+				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch)
+				{
+					unsigned char* pdp = pd;
+					unsigned char* psp = ps;
+					unsigned char* psEnd = ps + nVidImagePitch;
+					do
+					{
+						unsigned short t = *(unsigned short*)psp;
 						*(unsigned short*)pdp = t;
 						psp += 2;
 						pdp += 2;
 						*(unsigned short*)pdp = (t & nHalfMask) >> 1;
 						pdp += 2;
-					} while (psp < psEnd);
+					}
+					while (psp < psEnd);
 				}
 				break;
 			}
 		}
-
-	} else {
-		pd = Surf; ps = pVidImage;
-		switch (nVidImageBPP) {
-			case 4: {
-				unsigned char* pdp;
-				unsigned char* psp;
-				unsigned char* psEnd;
-				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch) {
-					pdp = pd;
-					psp = ps;
-					psEnd = ps + nVidImagePitch;
-					do {
+	}
+	else
+	{
+		pd = Surf;
+		ps = pVidImage;
+		switch (nVidImageBPP)
+		{
+		case 4:
+			{
+				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch)
+				{
+					unsigned char* pdp = pd;
+					unsigned char* psp = ps;
+					unsigned char* psEnd = ps + nVidImagePitch;
+					do
+					{
 						*(unsigned int*)pdp = *(unsigned int*)psp;
 
 						psp += 4;
 						pdp += 8;
-					} while (psp < psEnd);
+					}
+					while (psp < psEnd);
 				}
 				break;
 			}
-			case 3: {
-				unsigned char* pdp;
-				unsigned char* psp;
-				unsigned char* psEnd;
-				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch) {
-					pdp = pd;
-					psp = ps;
-					psEnd = ps + nVidImagePitch;
-					do {
+		case 3:
+			{
+				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch)
+				{
+					unsigned char* pdp = pd;
+					unsigned char* psp = ps;
+					unsigned char* psEnd = ps + nVidImagePitch;
+					do
+					{
 						pdp[0] = psp[0];
 						pdp[1] = psp[1];
 						pdp[2] = psp[2];
 
 						psp += 3;
 						pdp += 6;
-					} while (psp < psEnd);
+					}
+					while (psp < psEnd);
 				}
 				break;
 			}
-			case 2: {
-				unsigned char* pdp;
-				unsigned char* psp;
-				unsigned char* psEnd;
-				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch) {
-					pdp = pd;
-					psp = ps;
-					psEnd = ps + nVidImagePitch;
-					do {
+		case 2:
+			{
+				for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch)
+				{
+					unsigned char* pdp = pd;
+					unsigned char* psp = ps;
+					unsigned char* psEnd = ps + nVidImagePitch;
+					do
+					{
 						*(unsigned short*)pdp = *(unsigned short*)psp;
 
 						psp += 2;
 						pdp += 4;
-					} while (psp < psEnd);
+					}
+					while (psp < psEnd);
 				}
 				break;
 			}
@@ -880,21 +1014,26 @@ static int vidBurnToSurf()
 {
 	DDSURFACEDESC2 ddsd;
 
-	if (pddsDtos == NULL) {
+	if (pddsDtos == NULL)
+	{
 		return 1;
 	}
 
-	if (DtoPrim->IsLost()) {														// We've lost control of the screen
+	if (DtoPrim->IsLost())
+	{
+		// We've lost control of the screen
 		return 1;
 	}
 
 	GetClientScreenRect(hVidWnd, &Dest);
 
-	if (!nVidFullscreen) {
+	if (!nVidFullscreen)
+	{
 		Dest.top += nMenuHeight;
 	}
 
-	if (bVidArcaderes && nVidFullscreen) {
+	if (bVidArcaderes && nVidFullscreen)
+	{
 		Dest.left = (Dest.right + Dest.left) / 2;
 		Dest.left -= nGameWidth / 2;
 		Dest.right = Dest.left + nGameWidth;
@@ -902,7 +1041,9 @@ static int vidBurnToSurf()
 		Dest.top = (Dest.top + Dest.bottom) / 2;
 		Dest.top -= nGameHeight / 2;
 		Dest.bottom = Dest.top + nGameHeight;
-	} else {
+	}
+	else
+	{
 		VidSScaleImage(&Dest, nGameWidth, nGameHeight, bVidScanRotate);
 	}
 
@@ -910,14 +1051,23 @@ static int vidBurnToSurf()
 	Src.bottom = nGameHeight;
 	bool bScan = false;
 
-	if (bVidScanlines) {															// See if the display window is large enough to add scanlines if needed
-		if (bRotateScanlines) {
-			if (Dest.right - Dest.left >= (nGameWidth << 1)) {						// We need to add vertical scanlines
+	if (bVidScanlines)
+	{
+		// See if the display window is large enough to add scanlines if needed
+		if (bRotateScanlines)
+		{
+			if (Dest.right - Dest.left >= (nGameWidth << 1))
+			{
+				// We need to add vertical scanlines
 				Src.right <<= 1;
 				bScan = true;
 			}
-		} else {
-			if (Dest.bottom - Dest.top >= (nGameHeight << 1)) {						// We need to add horizontal scanlines
+		}
+		else
+		{
+			if (Dest.bottom - Dest.top >= (nGameHeight << 1))
+			{
+				// We need to add horizontal scanlines
 				Src.bottom <<= 1;
 				bScan = true;
 			}
@@ -928,26 +1078,37 @@ static int vidBurnToSurf()
 	memset(&ddsd, 0, sizeof(ddsd));
 	ddsd.dwSize = sizeof(ddsd);
 
-	if (FAILED(pddsDtos->Lock(NULL, &ddsd, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT, NULL))) {
+	if (FAILED(pddsDtos->Lock(NULL, &ddsd, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT, NULL)))
+	{
 		return 1;
 	}
 
-	if (bScan && !bDtosScan) {														// Scanlines were just enabled. We need to clear the screen
-		for (int y = 0; y < (nVidImageHeight << 1); y++) {
+	if (bScan && !bDtosScan)
+	{
+		// Scanlines were just enabled. We need to clear the screen
+		for (int y = 0; y < (nVidImageHeight << 1); y++)
+		{
 			memset(((unsigned char*)ddsd.lpSurface) + y * ddsd.lPitch, 0, ddsd.lPitch);
 		}
 	}
 
 	bDtosScan = bScan;
 
-	if (nRotateGame & 1) {
+	if (nRotateGame & 1)
+	{
 		vidRenderRotate(&ddsd);
-	} else {
-		if (bDtosScan && bRotateScanlines) {
+	}
+	else
+	{
+		if (bDtosScan && bRotateScanlines)
+		{
 			vidRenderNoRotateVertScanlines(&ddsd);
-		} else {
+		}
+		else
+		{
 			vidRenderNoRotateHorScanlines(&ddsd, 0, 0);
-			if (bDtosScan && bVidScanHalf) {
+			if (bDtosScan && bVidScanHalf)
+			{
 				vidRenderNoRotateHorScanlines(&ddsd, 1, 1);
 			}
 		}
@@ -959,31 +1120,42 @@ static int vidBurnToSurf()
 }
 
 // Run one frame and render the screen
-int vidFrame(bool bRedraw)			// bRedraw = 0
+int vidFrame(bool bRedraw) // bRedraw = 0
 {
-	if (pVidImage == NULL) {
+	if (pVidImage == NULL)
+	{
 		return 1;
 	}
 
-	if (DtoPrim->IsLost()) {		// We've lost control of the screen
-		if (VidSRestoreOSD()) {
+	if (DtoPrim->IsLost())
+	{
+		// We've lost control of the screen
+		if (VidSRestoreOSD())
+		{
 			return 1;
 		}
 
-		if (FAILED(DtoDD->RestoreAllSurfaces())) {
+		if (FAILED(DtoDD->RestoreAllSurfaces()))
+		{
 			return 1;
 		}
 
 		DtoPrimClear();
 	}
 
-	if (bDrvOkay) {
-		if (bRedraw) {				// Redraw current frame
-			if (BurnDrvRedraw()) {
-				BurnDrvFrame();		// No redraw function provided, advance one frame
+	if (bDrvOkay)
+	{
+		if (bRedraw)
+		{
+			// Redraw current frame
+			if (BurnDrvRedraw())
+			{
+				BurnDrvFrame(); // No redraw function provided, advance one frame
 			}
-		} else {
-			BurnDrvFrame();			// Run one frame and draw the screen
+		}
+		else
+		{
+			BurnDrvFrame(); // Run one frame and draw the screen
 		}
 
 		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
@@ -998,55 +1170,74 @@ int vidFrame(bool bRedraw)			// bRedraw = 0
 // Paint the Dtos surface onto the primary surface
 static int vidPaint(int bValidate)
 {
-	if (DtoPrim == NULL || pddsDtos == NULL) {
+	if (DtoPrim == NULL || pddsDtos == NULL)
+	{
 		return 1;
 	}
 
-	if (DtoPrim->IsLost()) {																	// We've lost control of the screen
+	if (DtoPrim->IsLost())
+	{
+		// We've lost control of the screen
 		return 1;
 	}
 
-	if (!nVidFullscreen) {																		// Check if the window has changed since we prepared the image
-		RECT rect = { 0, 0, 0, 0 };
+	if (!nVidFullscreen)
+	{
+		// Check if the window has changed since we prepared the image
+		RECT rect = {0, 0, 0, 0};
 
 		GetClientScreenRect(hVidWnd, &rect);
 		rect.top += nMenuHeight;
 
 		VidSScaleImage(&rect, nGameWidth, nGameHeight, bVidScanRotate);
 
-		if (Dest.left != rect.left || Dest.right != rect.right || Dest.top != rect.top || Dest.bottom != rect.bottom) {
+		if (Dest.left != rect.left || Dest.right != rect.right || Dest.top != rect.top || Dest.bottom != rect.bottom)
+		{
 			bValidate |= 2;
 		}
 	}
 
-	if (bValidate & 2) {
+	if (bValidate & 2)
+	{
 		vidBurnToSurf();
 	}
 
-	DWORD dwBltFlags = 0;																		// See if we need to use blit effects
-	if (DtoBltFx) {
+	DWORD dwBltFlags = 0; // See if we need to use blit effects
+	if (DtoBltFx)
+	{
 		dwBltFlags |= DDBLT_DDFX;
 	}
 
 	if (bVidVSync && !nVidFullscreen) { DtoDD->WaitForVerticalBlank(DDWAITVB_BLOCKEND, NULL); }
 
-	if (DtoBack != NULL) {																		// Triple bufferring
-		if (FAILED(DtoBack->Blt(&Dest, pddsDtos, &Src, DDBLT_ASYNC | dwBltFlags, DtoBltFx))) {
-			if (FAILED(DtoBack->Blt(&Dest, pddsDtos, &Src, DDBLT_WAIT | dwBltFlags, DtoBltFx))) {
+	if (DtoBack != NULL)
+	{
+		// Triple bufferring
+		if (FAILED(DtoBack->Blt(&Dest, pddsDtos, &Src, DDBLT_ASYNC | dwBltFlags, DtoBltFx)))
+		{
+			if (FAILED(DtoBack->Blt(&Dest, pddsDtos, &Src, DDBLT_WAIT | dwBltFlags, DtoBltFx)))
+			{
 				return 1;
 			}
 		}
 		VidSDisplayOSD(DtoBack, &Dest, 0);
 
 		DtoPrim->Flip(NULL, DDFLIP_WAIT);
-	} else {																					// Normal
-		RECT rect = { 0, 0, nGameWidth, nGameHeight };
+	}
+	else
+	{
+		// Normal
+		RECT rect = {0, 0, nGameWidth, nGameHeight};
 		int nFlags = 0;
 
-		if (bDtosScan) {
-			if (bRotateScanlines) {
+		if (bDtosScan)
+		{
+			if (bRotateScanlines)
+			{
 				nFlags |= 0x01;
-			} else {
+			}
+			else
+			{
 				nFlags |= 0x02;
 			}
 		}
@@ -1054,33 +1245,38 @@ static int vidPaint(int bValidate)
 		// Display OSD text message
 		VidSDisplayOSD(pddsDtos, &rect, nFlags);
 
-		if (FAILED(DtoPrim->Blt(&Dest, pddsDtos, &Src, DDBLT_ASYNC | dwBltFlags, DtoBltFx))) {
-			if (FAILED(DtoPrim->Blt(&Dest, pddsDtos, &Src, DDBLT_WAIT | dwBltFlags, DtoBltFx))) {
+		if (FAILED(DtoPrim->Blt(&Dest, pddsDtos, &Src, DDBLT_ASYNC | dwBltFlags, DtoBltFx)))
+		{
+			if (FAILED(DtoPrim->Blt(&Dest, pddsDtos, &Src, DDBLT_WAIT | dwBltFlags, DtoBltFx)))
+			{
 				return 1;
 			}
 		}
-/*
-		DWORD lpdwScanLine;
-		RECT window;
-		GetWindowRect(hVidWnd, &window);
-
-		while (1) 
-		{
-			DtoDD->GetScanLine(&lpdwScanLine);
-			if (lpdwScanLine >= (unsigned int)window.bottom) {
-				break;
-			}
-			//Sleep(1);
-		}
-*/
+		/*
+				DWORD lpdwScanLine;
+				RECT window;
+				GetWindowRect(hVidWnd, &window);
+		
+				while (1) 
+				{
+					DtoDD->GetScanLine(&lpdwScanLine);
+					if (lpdwScanLine >= (unsigned int)window.bottom) {
+						break;
+					}
+					//Sleep(1);
+				}
+		*/
 	}
 
-	if (bValidate & 1) {
+	if (bValidate & 1)
+	{
 		// Validate the rectangle we just drew
 		POINT c = {0, 0};
 		ClientToScreen(hVidWnd, &c);
-		Dest.left -= c.x; Dest.right -= c.x;
-		Dest.top -= c.y; Dest.bottom -= c.y;
+		Dest.left -= c.x;
+		Dest.right -= c.x;
+		Dest.top -= c.y;
+		Dest.bottom -= c.y;
 		ValidateRect(hVidWnd, &Dest);
 	}
 
@@ -1094,52 +1290,67 @@ static int vidScale(RECT* pRect, int nWidth, int nHeight)
 
 static int vidGetSettings(InterfaceInfo* pInfo)
 {
-	if (nVidFullscreen && DtoBack) {
+	if (nVidFullscreen && DtoBack)
+	{
 		IntInfoAddStringModule(pInfo, _T("Using a triple buffer"));
-	} else {
+	}
+	else
+	{
 		IntInfoAddStringModule(pInfo, _T("Using Blt() to transfer the image"));
 	}
 
-	if (nUseSys) {
+	if (nUseSys)
+	{
 		IntInfoAddStringModule(pInfo, _T("Using system memory"));
-	} else {
+	}
+	else
+	{
 		IntInfoAddStringModule(pInfo, _T("Using video memory for the final blit"));
 	}
 
-	if (nRotateGame) {
-		TCHAR* pszEffect[8] = { _T(""), _T(""), _T(""), _T(""), _T(""), _T(""), _T(""), _T("") };
+	if (nRotateGame)
+	{
+		TCHAR* pszEffect[8] = {_T(""), _T(""), _T(""), _T(""), _T(""), _T(""), _T(""), _T("")};
 		TCHAR szString[MAX_PATH] = _T("");
 
 		pszEffect[0] = _T("Using ");
-		if (nRotateGame & 1) {
+		if (nRotateGame & 1)
+		{
 			pszEffect[1] = _T("software rotation");
 		}
-		if (nRotateGame & 2) {
-			if (nRotateGame & 1) {
+		if (nRotateGame & 2)
+		{
+			if (nRotateGame & 1)
+			{
 				pszEffect[2] = _T(" and");
 			}
 			pszEffect[3] = _T(" hardware mirroring");
 		}
 		pszEffect[4] = _T(", ");
 
-		_sntprintf(szString, MAX_PATH, _T("%s%s%s%s%s%s%s%s"), pszEffect[0], pszEffect[1], pszEffect[2], pszEffect[3], pszEffect[4], pszEffect[5], pszEffect[6], pszEffect[7]);
+		_sntprintf(szString, MAX_PATH, _T("%s%s%s%s%s%s%s%s"), pszEffect[0], pszEffect[1], pszEffect[2], pszEffect[3],
+		           pszEffect[4], pszEffect[5], pszEffect[6], pszEffect[7]);
 		IntInfoAddStringModule(pInfo, szString);
 	}
 
-	if (bDtosScan) {
-		TCHAR* pszEffect[8] = { _T(""), _T(""), _T(""), _T(""), _T(""), _T(""), _T(""), _T("") };
+	if (bDtosScan)
+	{
+		TCHAR* pszEffect[8] = {_T(""), _T(""), _T(""), _T(""), _T(""), _T(""), _T(""), _T("")};
 		TCHAR szString[MAX_PATH] = _T("");
 
 		pszEffect[0] = _T("Applying ");
-		if (bVidScanHalf) {
+		if (bVidScanHalf)
+		{
 			pszEffect[1] = _T("50% ");
 		}
-		if (bVidScanRotate) {
+		if (bVidScanRotate)
+		{
 			pszEffect[2] = _T("rotated ");
 		}
 		pszEffect[3] = _T("scanlines");
 
-		_sntprintf(szString, MAX_PATH, _T("%s%s%s%s%s%s%s%s"), pszEffect[0], pszEffect[1], pszEffect[2], pszEffect[3], pszEffect[4], pszEffect[5], pszEffect[6], pszEffect[7]);
+		_sntprintf(szString, MAX_PATH, _T("%s%s%s%s%s%s%s%s"), pszEffect[0], pszEffect[1], pszEffect[2], pszEffect[3],
+		           pszEffect[4], pszEffect[5], pszEffect[6], pszEffect[7]);
 		IntInfoAddStringModule(pInfo, szString);
 	}
 
@@ -1147,4 +1358,6 @@ static int vidGetSettings(InterfaceInfo* pInfo)
 }
 
 // The video output plugin:
-struct VidOut VidOutDDraw = { vidInit, vidExit, vidFrame, vidPaint, vidScale, vidGetSettings, _T("DirectDraw7 video output") };
+struct VidOut VidOutDDraw = {
+	vidInit, vidExit, vidFrame, vidPaint, vidScale, vidGetSettings, _T("DirectDraw7 video output")
+};

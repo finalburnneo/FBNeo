@@ -51,15 +51,12 @@ void LowPass2::Reset()
 
 void LowPass2::Filter(INT16* Buff, INT32 Tam)
 {
-	INT32 a;
-	INT32 Tmp, Tmp2;
-
-	for (a = 0; a < Tam * 2; a += 2)
+	for (INT32 a = 0; a < Tam * 2; a += 2)
 	{
-		Tmp = (b0 * Buff[a] + b1 * i1 + b2 * i2
+		INT32 Tmp = (b0 * Buff[a] + b1 * i1 + b2 * i2
 			- a1 * o1 - a2 * o2) / (1 << FixBits);
 
-		Tmp2 = (b0b * Buff[a] + b1b * i1 + b2b * i2
+		INT32 Tmp2 = (b0b * Buff[a] + b1b * i1 + b2b * i2
 			- a1b * o1b - a2b * o2b) / (1 << FixBits);
 
 		i2 = i1;
@@ -76,15 +73,12 @@ void LowPass2::Filter(INT16* Buff, INT32 Tam)
 
 void LowPass2::FilterMono(INT16* Buff, INT32 Tam)
 {
-	INT32 a;
-	INT32 Tmp, Tmp2;
-
-	for (a = 0; a < Tam; a++)
+	for (INT32 a = 0; a < Tam; a++)
 	{
-		Tmp = (b0 * Buff[a] + b1 * i1 + b2 * i2
+		INT32 Tmp = (b0 * Buff[a] + b1 * i1 + b2 * i2
 			- a1 * o1 - a2 * o2) / (1 << FixBits);
 
-		Tmp2 = (b0b * Buff[a] + b1b * i1 + b2b * i2
+		INT32 Tmp2 = (b0b * Buff[a] + b1b * i1 + b2b * i2
 			- a1b * o1b - a2b * o2b) / (1 << FixBits);
 
 		i2 = i1;
@@ -103,17 +97,15 @@ void LowPass2::FilterMono(INT16* Buff, INT32 Tam)
 void LowPass2::SetParam(double Freq, double SampleRate, double Q, double Gain,
                         double Freq2, double Q2, double Gain2)
 {
-	double omega, sn, cs, alpha;
-
 	if (Q < 0) { Q = 0; }
 
 	if (Freq < 0) { Freq = 0; }
 	if (Freq > SampleRate / 2) { Freq = SampleRate / 2; }
 
-	omega = PI * 2 * Freq / SampleRate;
-	sn = sin(omega);
-	cs = cos(omega);
-	alpha = sn / (2 * Q);
+	double omega = PI * 2 * Freq / SampleRate;
+	double sn = sin(omega);
+	double cs = cos(omega);
+	double alpha = sn / (2 * Q);
 
 	a0 = Fixed(1 + alpha);
 	b0 = Fixed(((1 - cs) / 2) * Gain / (1 + alpha));

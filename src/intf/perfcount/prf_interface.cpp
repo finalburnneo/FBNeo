@@ -4,10 +4,10 @@
 bool bProfileOkay = false;
 UINT32 nProfileSelect = 0;
 
-static InterfaceInfo ProfileInfo = { NULL, NULL, NULL };
+static InterfaceInfo ProfileInfo = {NULL, NULL, NULL};
 
 #ifdef BUILD_WIN32
-	extern struct ProfileDo cntDoPerfCount;
+extern struct ProfileDo cntDoPerfCount;
 #elif defined (BUILD_SDL)
 	extern struct ProfileDo cntDoPerfCount;
 #elif defined (_XBOX)
@@ -31,7 +31,8 @@ INT32 ProfileExit()
 {
 	IntInfoFree(&ProfileInfo);
 
-	if (!bProfileOkay || nProfileSelect >= PROFILE_LEN) {
+	if (!bProfileOkay || nProfileSelect >= PROFILE_LEN)
+	{
 		return 1;
 	}
 	bProfileOkay = false;
@@ -43,11 +44,13 @@ INT32 ProfileInit()
 {
 	INT32 nRet;
 
-	if (nProfileSelect >= PROFILE_LEN) {
+	if (nProfileSelect >= PROFILE_LEN)
+	{
 		return 1;
 	}
 
-	if ((nRet = pProfileDo[nProfileSelect]->ProfileInit()) == 0) {
+	if ((nRet = pProfileDo[nProfileSelect]->ProfileInit()) == 0)
+	{
 		bProfileOkay = true;
 	}
 
@@ -56,7 +59,8 @@ INT32 ProfileInit()
 
 INT32 ProfileProfileStart(INT32 nSubSystem)
 {
-	if (!bProfileOkay || nProfileSelect >= PROFILE_LEN) {
+	if (!bProfileOkay || nProfileSelect >= PROFILE_LEN)
+	{
 		return 1;
 	}
 
@@ -65,7 +69,8 @@ INT32 ProfileProfileStart(INT32 nSubSystem)
 
 INT32 ProfileProfileEnd(INT32 nSubSystem)
 {
-	if (!bProfileOkay || nProfileSelect >= PROFILE_LEN) {
+	if (!bProfileOkay || nProfileSelect >= PROFILE_LEN)
+	{
 		return 1;
 	}
 
@@ -74,7 +79,8 @@ INT32 ProfileProfileEnd(INT32 nSubSystem)
 
 double ProfileProfileReadLast(INT32 nSubSystem)
 {
-	if (!bProfileOkay || nProfileSelect >= PROFILE_LEN) {
+	if (!bProfileOkay || nProfileSelect >= PROFILE_LEN)
+	{
 		return 0.0;
 	}
 
@@ -83,7 +89,8 @@ double ProfileProfileReadLast(INT32 nSubSystem)
 
 double ProfileProfileReadAverage(INT32 nSubSystem)
 {
-	if (!bProfileOkay || nProfileSelect >= PROFILE_LEN) {
+	if (!bProfileOkay || nProfileSelect >= PROFILE_LEN)
+	{
 		return 0.0;
 	}
 
@@ -92,19 +99,23 @@ double ProfileProfileReadAverage(INT32 nSubSystem)
 
 InterfaceInfo* ProfileGetInfo()
 {
-	if (IntInfoInit(&ProfileInfo)) {
+	if (IntInfoInit(&ProfileInfo))
+	{
 		IntInfoFree(&ProfileInfo);
 		return NULL;
 	}
 
-	if (bProfileOkay) {
-
+	if (bProfileOkay)
+	{
 		ProfileInfo.pszModuleName = pProfileDo[nProfileSelect]->szModuleName;
 
-	 	if (pProfileDo[nProfileSelect]->GetPluginSettings) {
+		if (pProfileDo[nProfileSelect]->GetPluginSettings)
+		{
 			pProfileDo[nProfileSelect]->GetPluginSettings(&ProfileInfo);
 		}
-	} else {
+	}
+	else
+	{
 		IntInfoAddStringInterface(&ProfileInfo, _T("Profiling module not initialised"));
 	}
 

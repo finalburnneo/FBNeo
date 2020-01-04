@@ -2,7 +2,7 @@
 #include "burner.h"
 
 #if !defined BUILD_X64_EXE
- #include "vid_directx_support.h"
+#include "vid_directx_support.h"
 #endif
 
 #include <InitGuid.h>
@@ -28,7 +28,8 @@ int VidSInit(IDirectDraw7* pDD7)
 {
 	pDD = pDD7;
 
-	if (pDD == NULL) {
+	if (pDD == NULL)
+	{
 		return 1;
 	}
 
@@ -42,7 +43,8 @@ int VidSInit(IDirectDraw7* pDD7)
 int VidSGetSurfaceDepth(IDirectDrawSurface7* pSurf)
 {
 	DDPIXELFORMAT ddpf;
-	if (pSurf == NULL) {
+	if (pSurf == NULL)
+	{
 		return 0;
 	}
 
@@ -50,9 +52,11 @@ int VidSGetSurfaceDepth(IDirectDrawSurface7* pSurf)
 	memset(&ddpf, 0, sizeof(ddpf));
 	ddpf.dwSize = sizeof(ddpf);
 
-	if (SUCCEEDED(pSurf->GetPixelFormat(&ddpf))) {
+	if (SUCCEEDED(pSurf->GetPixelFormat(&ddpf)))
+	{
 		int nDepth = ddpf.dwRGBBitCount;
-		if (nDepth == 16 && ddpf.dwGBitMask == 0x03E0) {
+		if (nDepth == 16 && ddpf.dwGBitMask == 0x03E0)
+		{
 			nDepth = 15;
 		}
 
@@ -68,7 +72,8 @@ int VidSClearSurface(IDirectDrawSurface7* pSurf, unsigned int nColour, RECT* pRe
 {
 	DDBLTFX BltFx;
 
-	if (pSurf == NULL) {
+	if (pSurf == NULL)
+	{
 		return 1;
 	}
 
@@ -76,25 +81,28 @@ int VidSClearSurface(IDirectDrawSurface7* pSurf, unsigned int nColour, RECT* pRe
 	BltFx.dwSize = sizeof(BltFx);
 	BltFx.dwFillColor = nColour;
 
-	if (FAILED(pSurf->Blt(NULL, NULL, pRect, DDBLT_COLORFILL, &BltFx))) {
+	if (FAILED(pSurf->Blt(NULL, NULL, pRect, DDBLT_COLORFILL, &BltFx)))
+	{
 		return 1;
-	} else {
-		return 0;
 	}
+	return 0;
 }
 
 // Clipper
 
 int VidSClipperInit(IDirectDrawSurface7* pSurf)
 {
-	if (nVidFullscreen && bDrvOkay) {
+	if (nVidFullscreen && bDrvOkay)
+	{
 		return 0;
 	}
 
-	IDirectDrawClipper *pClipper = NULL;
+	IDirectDrawClipper* pClipper = NULL;
 
-	if (SUCCEEDED(_DirectDrawCreateClipper(0, &pClipper, NULL))) {
-		if (SUCCEEDED(pClipper->SetHWnd(0, hVidWnd))) {
+	if (SUCCEEDED(_DirectDrawCreateClipper(0, &pClipper, NULL)))
+	{
+		if (SUCCEEDED(pClipper->SetHWnd(0, hVidWnd)))
+		{
 			pSurf->SetClipper(pClipper);
 			RELEASE(pClipper);
 
@@ -114,16 +122,20 @@ static DDGAMMARAMP* pSysGamma = NULL;
 
 void VidSRestoreGamma()
 {
-	if (pGammaControl) {
-		if (pSysGamma) {
+	if (pGammaControl)
+	{
+		if (pSysGamma)
+		{
 			pGammaControl->SetGammaRamp(0, pSysGamma);
 		}
 
-		if (pSysGamma) {
+		if (pSysGamma)
+		{
 			free(pSysGamma);
 			pSysGamma = NULL;
 		}
-		if (pFBAGamma) {
+		if (pFBAGamma)
+		{
 			free(pFBAGamma);
 			pFBAGamma = NULL;
 		}
@@ -134,16 +146,21 @@ void VidSRestoreGamma()
 
 int VidSUpdateGamma()
 {
-	if (pGammaControl) {
-		if (bDoGamma) {
-			for (int i = 0; i < 256; i++) {
+	if (pGammaControl)
+	{
+		if (bDoGamma)
+		{
+			for (int i = 0; i < 256; i++)
+			{
 				int nValue = (int)(65535.0 * pow((i / 255.0), nGamma));
 				pFBAGamma->red[i] = nValue;
 				pFBAGamma->green[i] = nValue;
 				pFBAGamma->blue[i] = nValue;
 			}
 			pGammaControl->SetGammaRamp(0, pFBAGamma);
-		} else {
+		}
+		else
+		{
 			pGammaControl->SetGammaRamp(0, pSysGamma);
 		}
 	}
@@ -155,11 +172,13 @@ int VidSSetupGamma(IDirectDrawSurface7* pSurf)
 {
 	pGammaControl = NULL;
 
-	if (!bVidUseHardwareGamma || !nVidFullscreen) {
+	if (!bVidUseHardwareGamma || !nVidFullscreen)
+	{
 		return 0;
 	}
 
-	if (FAILED(pSurf->QueryInterface(IID_IDirectDrawGammaControl, (void**)&pGammaControl))) {
+	if (FAILED(pSurf->QueryInterface(IID_IDirectDrawGammaControl, (void**)&pGammaControl)))
+	{
 		pGammaControl = NULL;
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Warning: Couldn't use hardware gamma controls.\n"));
@@ -169,14 +188,16 @@ int VidSSetupGamma(IDirectDrawSurface7* pSurf)
 	}
 
 	pSysGamma = (DDGAMMARAMP*)malloc(sizeof(DDGAMMARAMP));
-	if (pSysGamma == NULL) {
+	if (pSysGamma == NULL)
+	{
 		VidSRestoreGamma();
 		return 1;
 	}
 	pGammaControl->GetGammaRamp(0, pSysGamma);
 
 	pFBAGamma = (DDGAMMARAMP*)malloc(sizeof(DDGAMMARAMP));
-	if (pFBAGamma == NULL) {
+	if (pFBAGamma == NULL)
+	{
 		VidSRestoreGamma();
 		return 1;
 	}
@@ -192,22 +213,28 @@ int VidSSetupGamma(IDirectDrawSurface7* pSurf)
 int VidSScoreDisplayMode(VidSDisplayScoreInfo* pScoreInfo)
 {
 	// Continue if the resolution is too low
-	if (pScoreInfo->nModeWidth < pScoreInfo->nRequestedWidth || pScoreInfo->nModeHeight < pScoreInfo->nRequestedHeight) {
+	if (pScoreInfo->nModeWidth < pScoreInfo->nRequestedWidth || pScoreInfo->nModeHeight < pScoreInfo->nRequestedHeight)
+	{
 		return 0;
 	}
 
 	// Only test standard resolutions if below 512 x 384
-	if ((pScoreInfo->nModeWidth == 320 && pScoreInfo->nModeHeight == 240) || (pScoreInfo->nModeWidth == 400 && pScoreInfo->nModeHeight == 300) || (pScoreInfo->nModeWidth >= 512 && pScoreInfo->nModeHeight >= 384)) {
-
-		if (pScoreInfo->nRequestedWidth == 0 || pScoreInfo->nRequestedHeight == 0) {
+	if ((pScoreInfo->nModeWidth == 320 && pScoreInfo->nModeHeight == 240) || (pScoreInfo->nModeWidth == 400 &&
+		pScoreInfo->nModeHeight == 300) || (pScoreInfo->nModeWidth >= 512 && pScoreInfo->nModeHeight >= 384))
+	{
+		if (pScoreInfo->nRequestedWidth == 0 || pScoreInfo->nRequestedHeight == 0)
+		{
 			RECT rect = {0, 0, 0, 0};
 			int nGameWidth = nVidImageWidth, nGameHeight = nVidImageHeight;
-			unsigned int nScore;
 
-			if (bDrvOkay) {
-				if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && (nVidRotationAdjust & 1)) {
+			if (bDrvOkay)
+			{
+				if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && (nVidRotationAdjust & 1))
+				{
 					BurnDrvGetVisibleSize(&nGameHeight, &nGameWidth);
-				} else {
+				}
+				else
+				{
 					BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 				}
 			}
@@ -217,33 +244,48 @@ int VidSScoreDisplayMode(VidSDisplayScoreInfo* pScoreInfo)
 			VidImageSize(&rect, nGameWidth, nGameHeight);
 
 			// Continue if the resolution is too low
-			if (!bDrvOkay) {
-				if ((unsigned int)(rect.bottom - rect.top) < pScoreInfo->nRequestedHeight) {
+			if (!bDrvOkay)
+			{
+				if ((unsigned int)(rect.bottom - rect.top) < pScoreInfo->nRequestedHeight)
+				{
 					return 0;
 				}
-			} else {
-				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-					if ((unsigned int)(rect.right - rect.left) < pScoreInfo->nRequestedWidth) {
+			}
+			else
+			{
+				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
+				{
+					if ((unsigned int)(rect.right - rect.left) < pScoreInfo->nRequestedWidth)
+					{
 						return 0;
 					}
-				} else {
-					if ((unsigned int)(rect.bottom - rect.top) < pScoreInfo->nRequestedHeight) {
+				}
+				else
+				{
+					if ((unsigned int)(rect.bottom - rect.top) < pScoreInfo->nRequestedHeight)
+					{
 						return 0;
 					}
 				}
 			}
 
 			// Score resolutions based on how many pixels are unused and the pixel aspect
-			nScore = 65536 * (pScoreInfo->nModeWidth - (unsigned)(rect.right - rect.left)) + (pScoreInfo->nModeHeight - (unsigned)(rect.bottom - rect.top));
-			nScore = (int)((double)nScore * ((double)pScoreInfo->nModeWidth * nVidScrnAspectY / pScoreInfo->nModeHeight / nVidScrnAspectX));
-			if (nScore < pScoreInfo->nBestScore) {
+			unsigned int nScore = 65536 * (pScoreInfo->nModeWidth - (unsigned)(rect.right - rect.left)) + (pScoreInfo->
+				nModeHeight - (unsigned)(rect.bottom - rect.top));
+			nScore = (int)((double)nScore * ((double)pScoreInfo->nModeWidth * nVidScrnAspectY / pScoreInfo->nModeHeight
+				/ nVidScrnAspectX));
+			if (nScore < pScoreInfo->nBestScore)
+			{
 				pScoreInfo->nBestScore = nScore;
 				pScoreInfo->nBestWidth = pScoreInfo->nModeWidth;
 				pScoreInfo->nBestHeight = pScoreInfo->nModeHeight;
 			}
-		} else {
+		}
+		else
+		{
 			// Select the lowest resolution that will fit the image
-			if (pScoreInfo->nModeWidth < pScoreInfo->nBestWidth && pScoreInfo->nModeHeight < pScoreInfo->nBestHeight) {
+			if (pScoreInfo->nModeWidth < pScoreInfo->nBestWidth && pScoreInfo->nModeHeight < pScoreInfo->nBestHeight)
+			{
 				pScoreInfo->nBestWidth = pScoreInfo->nModeWidth;
 				pScoreInfo->nBestHeight = pScoreInfo->nModeHeight;
 			}
@@ -262,31 +304,44 @@ int VidSInitScoreInfo(VidSDisplayScoreInfo* pScoreInfo)
 	pScoreInfo->nBestHeight = -1U;
 	pScoreInfo->nBestScore = -1U;
 
-	if (pScoreInfo->nRequestedZoom == 0) {
+	if (pScoreInfo->nRequestedZoom == 0)
+	{
 		return 0;
 	}
 
 	pScoreInfo->nRequestedWidth = 0;
 	pScoreInfo->nRequestedHeight = 0;
 
-	if (bDrvOkay) {
-		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && (nVidRotationAdjust & 1)) {
+	if (bDrvOkay)
+	{
+		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && (nVidRotationAdjust & 1))
+		{
 			BurnDrvGetVisibleSize(&nGameHeight, &nGameWidth);
 			BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
-		} else {
+		}
+		else
+		{
 			BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 			BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
 		}
 	}
 
-	if (!bVidCorrectAspect || bVidFullStretch || (nVidSelect == 1 && (nVidBlitterOpt[1] & 0x07000000) == 0x07000000) || (nVidSelect == 2 && nVidBlitterOpt[2] & 0x00000100)) {
+	if (!bVidCorrectAspect || bVidFullStretch || (nVidSelect == 1 && (nVidBlitterOpt[1] & 0x07000000) == 0x07000000) ||
+		(nVidSelect == 2 && nVidBlitterOpt[2] & 0x00000100))
+	{
 		pScoreInfo->nRequestedWidth = nGameWidth * pScoreInfo->nRequestedZoom;
 		pScoreInfo->nRequestedHeight = nGameHeight * pScoreInfo->nRequestedZoom;
-	} else {
-		if (bDrvOkay) {
-			if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+	}
+	else
+	{
+		if (bDrvOkay)
+		{
+			if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
+			{
 				pScoreInfo->nRequestedWidth = nGameWidth * pScoreInfo->nRequestedZoom;
-			} else {
+			}
+			else
+			{
 				pScoreInfo->nRequestedHeight = nGameHeight * pScoreInfo->nRequestedZoom;
 			}
 		}
@@ -307,7 +362,8 @@ static HRESULT WINAPI myEnumModesCallback(LPDDSURFACEDESC2 pSurfaceDesc, void* l
 
 void VidSRestoreScreenMode()
 {
-	if (pDD == NULL) {
+	if (pDD == NULL)
+	{
 		return;
 	}
 
@@ -325,27 +381,36 @@ int VidSEnterFullscreenMode(int nZoom, int nDepth)
 {
 	int nWidth, nHeight;
 
-	if (pDD == NULL) {
+	if (pDD == NULL)
+	{
 		return 1;
 	}
 
-	if (nDepth == 0) {
+	if (nDepth == 0)
+	{
 		nDepth = nVidDepth;
 	}
-	if (nDepth == 15) {
+	if (nDepth == 15)
+	{
 		nDepth = 16;
 	}
 
-	if (FAILED(pDD->SetCooperativeLevel(hVidWnd, DDSCL_ALLOWREBOOT | DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN))) {
+	if (FAILED(pDD->SetCooperativeLevel(hVidWnd, DDSCL_ALLOWREBOOT | DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN)))
+	{
 		return 1;
 	}
 
-	if (bVidArcaderes) {
-		if (!VidSGetArcaderes(&nWidth, &nHeight)) {
+	if (bVidArcaderes)
+	{
+		if (!VidSGetArcaderes(&nWidth, &nHeight))
+		{
 			return 1;
 		}
-	} else {
-		if (nZoom) {
+	}
+	else
+	{
+		if (nZoom)
+		{
 			DDSURFACEDESC2 ddsd;
 			VidSDisplayScoreInfo ScoreInfo;
 
@@ -362,8 +427,8 @@ int VidSEnterFullscreenMode(int nZoom, int nDepth)
 
 			pDD->EnumDisplayModes(0, &ddsd, (void*)&ScoreInfo, myEnumModesCallback);
 
-			if (ScoreInfo.nBestWidth == -1U) {
-
+			if (ScoreInfo.nBestWidth == -1U)
+			{
 				VidSRestoreScreenMode();
 
 				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_NOMODE));
@@ -374,21 +439,26 @@ int VidSEnterFullscreenMode(int nZoom, int nDepth)
 
 			nWidth = ScoreInfo.nBestWidth;
 			nHeight = ScoreInfo.nBestHeight;
-		} else {
+		}
+		else
+		{
 			nWidth = nVidWidth;
 			nHeight = nVidHeight;
 		}
 	}
 
-	if (!bDrvOkay && (nWidth < 640 || nHeight < 480)) {
+	if (!bDrvOkay && (nWidth < 640 || nHeight < 480))
+	{
 		return 1;
 	}
 
-	if (FAILED(pDD->SetDisplayMode(nWidth, nHeight, nDepth, nVidRefresh, 0))) {
+	if (FAILED(pDD->SetDisplayMode(nWidth, nHeight, nDepth, nVidRefresh, 0)))
+	{
 		VidSRestoreScreenMode();
 
 		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_PROBLEM));
-		if (bVidArcaderes && (nWidth != 320 && nHeight != 240)) {
+		if (bVidArcaderes && (nWidth != 320 && nHeight != 240))
+		{
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_CUSTRES));
 		}
 		FBAPopupDisplay(PUF_TYPE_ERROR);
@@ -414,11 +484,15 @@ bool VidSGetArcaderes(int* pWidth, int* pHeight)
 	int nGameWidth, nGameHeight;
 	int nGameAspectX, nGameAspectY;
 
-	if (bDrvOkay) {
-		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && (nVidRotationAdjust & 1)) {
+	if (bDrvOkay)
+	{
+		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && (nVidRotationAdjust & 1))
+		{
 			BurnDrvGetVisibleSize(&nGameHeight, &nGameWidth);
 			BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
-		} else {
+		}
+		else
+		{
 			BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 			BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
 		}
@@ -426,21 +500,31 @@ bool VidSGetArcaderes(int* pWidth, int* pHeight)
 		double dMonAspect = (double)nVidScrnAspectX / nVidScrnAspectY;
 		double dGameAspect = (double)nGameAspectX / nGameAspectY;
 
-		if (dMonAspect > dGameAspect) {
-			*pWidth = nGameHeight * nGameAspectY * nGameWidth * nVidScrnAspectX / (nGameHeight * nGameAspectX * nVidScrnAspectY);
+		if (dMonAspect > dGameAspect)
+		{
+			*pWidth = nGameHeight * nGameAspectY * nGameWidth * nVidScrnAspectX / (nGameHeight * nGameAspectX *
+				nVidScrnAspectY);
 			*pHeight = nGameHeight;
-		} else {
+		}
+		else
+		{
 			*pWidth = nGameWidth;
-			*pHeight = nGameWidth * nGameAspectX * nGameHeight * nVidScrnAspectY / (nGameWidth * nGameAspectY * nVidScrnAspectX);
+			*pHeight = nGameWidth * nGameAspectX * nGameHeight * nVidScrnAspectY / (nGameWidth * nGameAspectY *
+				nVidScrnAspectX);
 		}
 
 		// Horizontal resolution must be a multiple of 8
-		if (*pWidth - nGameWidth < 8) {
+		if (*pWidth - nGameWidth < 8)
+		{
 			*pWidth = (*pWidth + 7) & ~7;
-		} else {
+		}
+		else
+		{
 			*pWidth = (*pWidth + 4) & ~7;
 		}
-	} else {
+	}
+	else
+	{
 		return false;
 	}
 
@@ -453,111 +537,181 @@ bool VidSGetArcaderes(int* pWidth, int* pHeight)
 // - The window size
 int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanlines)
 {
-	int xm, ym;											// The multiple of nScrnWidth and nScrnHeight we can fit in
 	int nScrnWidth, nScrnHeight;
-	int nScrnAspectX, nScrnAspectY;
 
 	int nGameAspectX = 4, nGameAspectY = 3;
 	int nWidth = pRect->right - pRect->left;
 	int nHeight = pRect->bottom - pRect->top;
 
-	if (bVidFullStretch) {								// Arbitrary stretch
+	if (bVidFullStretch)
+	{
+		// Arbitrary stretch
 		return 0;
 	}
 
-	nScrnAspectX = nVidScrnAspectX;
-	nScrnAspectY = nVidScrnAspectY;
+	int nScrnAspectX = nVidScrnAspectX;
+	int nScrnAspectY = nVidScrnAspectY;
 
-	if (bDrvOkay) {
-		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)) && (nVidRotationAdjust & 1)) {
+	if (bDrvOkay)
+	{
+		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)) && (nVidRotationAdjust & 1))
+		{
 			BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
-		} else {
+		}
+		else
+		{
 			BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
 		}
 
 
-		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && nVidFullscreen && !(nVidRotationAdjust & 1)) {
+		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && nVidFullscreen && !(nVidRotationAdjust & 1))
+		{
 			// Using vertically orientated monitor
 			nScrnAspectX = nVidVerScrnAspectX;
 			nScrnAspectY = nVidVerScrnAspectY;
 		}
 	}
 
-	xm = nWidth / nGameWidth;
-	ym = nHeight / nGameHeight;
+	int xm = nWidth / nGameWidth;
+	int ym = nHeight / nGameHeight;
 
-	if (nVidFullscreen) {
+	if (nVidFullscreen)
+	{
 		nScrnWidth = nVidScrnWidth;
 		nScrnHeight = nVidScrnHeight;
-	} else {
+	}
+	else
+	{
 		nScrnWidth = SystemWorkArea.right - SystemWorkArea.left;
 		nScrnHeight = SystemWorkArea.bottom - SystemWorkArea.top;
 	}
 
-	if (bVidCorrectAspect && bVidScanlines && ((ym >= 2 && xm) || (ym && xm >= 2 && bVertScanlines))) {	// Correct aspect ratio with scanlines
+	if (bVidCorrectAspect && bVidScanlines && ((ym >= 2 && xm) || (ym && xm >= 2 && bVertScanlines)))
+	{
+		// Correct aspect ratio with scanlines
 		int nWidthScratch, nHeightScratch;
-		if (nGameWidth < nGameHeight && bVertScanlines) {
+		if (nGameWidth < nGameHeight && bVertScanlines)
+		{
 			int xmScratch = xm;
-			do {
+			do
+			{
 				nWidthScratch = nGameWidth * xmScratch;
-				nHeightScratch = nWidthScratch * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
+				nHeightScratch = nWidthScratch * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY
+					* nGameAspectX);
 				xmScratch--;
-			} while (nHeightScratch > nHeight && xmScratch >= 2);
-			if (nHeightScratch > nHeight) {				// The image is too high
-				if (nGameWidth < nGameHeight) {			// Vertical games
-					nWidth = nHeight * nScrnAspectX * nGameAspectX * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectY);
-				} else {								// Horizontal games
-					nWidth = nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
-				}
-			} else {
-				nWidth = nWidthScratch;
-				nHeight = nHeightScratch;
 			}
-		} else {
-			int ymScratch = ym;
-			do {
-				nHeightScratch = nGameHeight * ymScratch;
-				nWidthScratch = nHeightScratch * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
-				ymScratch--;
-			} while (nWidthScratch > nWidth && ymScratch >= 2);
-			if (nWidthScratch > nWidth) {				// The image is too wide
-				if (nGameWidth < nGameHeight) {			// Vertical games
-					nHeight = nWidth * nScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectX);
-				} else {								// Horizontal games
-					nHeight = nWidth * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
+			while (nHeightScratch > nHeight && xmScratch >= 2);
+			if (nHeightScratch > nHeight)
+			{
+				// The image is too high
+				if (nGameWidth < nGameHeight)
+				{
+					// Vertical games
+					nWidth = nHeight * nScrnAspectX * nGameAspectX * nScrnHeight / (nScrnWidth * nScrnAspectY *
+						nGameAspectY);
 				}
-			} else {
+				else
+				{
+					// Horizontal games
+					nWidth = nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX *
+						nGameAspectY);
+				}
+			}
+			else
+			{
 				nWidth = nWidthScratch;
 				nHeight = nHeightScratch;
 			}
 		}
-	} else {
-		if (bVidCorrectAspect) {					// Correct aspect ratio
-			int nWidthScratch;
-			nWidthScratch = nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
-			if (nWidthScratch > nWidth) {			// The image is too wide
-				if (nGameWidth < nGameHeight) {		// Vertical games
-					nHeight = nWidth * nScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectX);
-				} else {							// Horizontal games
-					nHeight = nWidth * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
+		else
+		{
+			int ymScratch = ym;
+			do
+			{
+				nHeightScratch = nGameHeight * ymScratch;
+				nWidthScratch = nHeightScratch * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX
+					* nGameAspectY);
+				ymScratch--;
+			}
+			while (nWidthScratch > nWidth && ymScratch >= 2);
+			if (nWidthScratch > nWidth)
+			{
+				// The image is too wide
+				if (nGameWidth < nGameHeight)
+				{
+					// Vertical games
+					nHeight = nWidth * nScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nScrnAspectX *
+						nGameAspectX);
 				}
-			} else {
+				else
+				{
+					// Horizontal games
+					nHeight = nWidth * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY *
+						nGameAspectX);
+				}
+			}
+			else
+			{
+				nWidth = nWidthScratch;
+				nHeight = nHeightScratch;
+			}
+		}
+	}
+	else
+	{
+		if (bVidCorrectAspect)
+		{
+			// Correct aspect ratio
+			int nWidthScratch = nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX *
+				nGameAspectY
+			);
+			if (nWidthScratch > nWidth)
+			{
+				// The image is too wide
+				if (nGameWidth < nGameHeight)
+				{
+					// Vertical games
+					nHeight = nWidth * nScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nScrnAspectX *
+						nGameAspectX);
+				}
+				else
+				{
+					// Horizontal games
+					nHeight = nWidth * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY *
+						nGameAspectX);
+				}
+			}
+			else
+			{
 				nWidth = nWidthScratch;
 			}
-		} else {
-			if (xm && ym) {							// Don't correct aspect ratio
-				if (xm > ym) {
+		}
+		else
+		{
+			if (xm && ym)
+			{
+				// Don't correct aspect ratio
+				if (xm > ym)
+				{
 					xm = ym;
-				} else {
+				}
+				else
+				{
 					ym = xm;
 				}
 				nWidth = nGameWidth * xm;
 				nHeight = nGameHeight * ym;
-			} else {
-				if (xm) {
+			}
+			else
+			{
+				if (xm)
+				{
 					nWidth = nGameWidth * xm * nHeight / nGameHeight;
-				} else {
-					if (ym) {
+				}
+				else
+				{
+					if (ym)
+					{
 						nHeight = nGameHeight * ym * nWidth / nGameWidth;
 					}
 				}
@@ -579,16 +733,31 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 // ---------------------------------------------------------------------------
 // Text display routines
 
-static struct { TCHAR pMsgText[32]; COLORREF nColour; int nPriority; unsigned int nTimer; } VidSShortMsg = { _T(""), 0, 0, 0,};
+static struct
+{
+	TCHAR pMsgText[32];
+	COLORREF nColour;
+	int nPriority;
+	unsigned int nTimer;
+} VidSShortMsg = {_T(""), 0, 0, 0,};
+
 static HFONT ShortMsgFont = NULL;
 
-static unsigned char nStatusSymbols[4] = {0x3B, 0xC2, 0x3D, 0x34}; //"pause", "record", "kaillera" and "play" in font Webdings, respectivelly
+static unsigned char nStatusSymbols[4] = {0x3B, 0xC2, 0x3D, 0x34};
+//"pause", "record", "kaillera" and "play" in font Webdings, respectivelly
 static HFONT StatusFont = NULL;
 static HFONT StatusFontTiny = NULL;
 
 #define CHAT_SIZE 11
 
-static struct { TCHAR* pIDText; COLORREF nIDColour; TCHAR* pMainText; COLORREF nMainColour; } VidSChatMessage[CHAT_SIZE];
+static struct
+{
+	TCHAR* pIDText;
+	COLORREF nIDColour;
+	TCHAR* pMainText;
+	COLORREF nMainColour;
+} VidSChatMessage[CHAT_SIZE];
+
 static bool bChatInitialised = false;
 
 static HFONT ChatIDFont = NULL;
@@ -597,7 +766,7 @@ static unsigned int nChatTimer;
 static int nChatFontSize;
 static int nChatShadowOffset;
 static int nChatOverFlow;
-static bool	bDrawChat;
+static bool bDrawChat;
 
 static HFONT EditTextFont = NULL;
 static HFONT EditCursorFont = NULL;
@@ -607,10 +776,24 @@ static int nCursorState = 0;
 static int nEditSize;
 static int nEditShadowOffset;
 
-static struct { TCHAR pMsgText[64]; COLORREF nColour; int nPriority; unsigned int nTimer; } VidSTinyMsg = {_T(""), 0, 0, 0};
+static struct
+{
+	TCHAR pMsgText[64];
+	COLORREF nColour;
+	int nPriority;
+	unsigned int nTimer;
+} VidSTinyMsg = {_T(""), 0, 0, 0};
+
 static HFONT TinyMsgFont = NULL;
 
-static struct { TCHAR pMsgText[64]; COLORREF nColour; int nLineNo; unsigned int nTimer; } VidSJoystickMsg = {_T(""), 0, 0, 0};
+static struct
+{
+	TCHAR pMsgText[64];
+	COLORREF nColour;
+	int nLineNo;
+	unsigned int nTimer;
+} VidSJoystickMsg = {_T(""), 0, 0, 0};
+
 static HFONT JoystickMsgFont = NULL;
 
 static IDirectDrawSurface7* pShortMsgSurf = NULL;
@@ -625,12 +808,12 @@ static unsigned int nKeyColour = 0x000001;
 static int nStatus = 0;
 static int nPrevStatus = -1;
 
-int nVidSDisplayStatus = 1;								// 1 = display pause/record/replay/kaillera icons in the upper right corner of the display
+int nVidSDisplayStatus = 1; // 1 = display pause/record/replay/kaillera icons in the upper right corner of the display
 
-int nMaxChatFontSize = 36;								// Maximum size of the font used for the Kaillera chat function (1280x960 or higher)
-int nMinChatFontSize = 12;								// Minimum size of the font used for the Kaillera chat function (arcade resolution)
+int nMaxChatFontSize = 36; // Maximum size of the font used for the Kaillera chat function (1280x960 or higher)
+int nMinChatFontSize = 12; // Minimum size of the font used for the Kaillera chat function (arcade resolution)
 
-static int nZoom;										// & 1: zoom X, & 2: zoom Y
+static int nZoom; // & 1: zoom X, & 2: zoom Y
 
 static int nShortMsgFlags;
 static int nStatusFlags;
@@ -646,7 +829,8 @@ static BOOL MyTextOut(HDC hdc, int nXStart, int nYStart, LPCTSTR lpString, int c
 {
 	// Print a black shadow
 	SetTextColor(hdc, 0);
-	if (nShadowOffset >= 2) {
+	if (nShadowOffset >= 2)
+	{
 		TextOut(hdc, nXStart + nShadowOffset, nYStart + nShadowOffset, lpString, cbString);
 	}
 	// Print a black outline
@@ -664,11 +848,13 @@ static BOOL MyTextOut(HDC hdc, int nXStart, int nYStart, LPCTSTR lpString, int c
 	return TextOut(hdc, nXStart, nYStart, lpString, cbString);
 }
 
-static BOOL MyExtTextOut(HDC hdc, int X, int Y, UINT fuOptions, CONST RECT* lprc, LPCTSTR lpString, UINT cbCount, CONST INT* lpDx, int nShadowOffset, int nColour)
+static BOOL MyExtTextOut(HDC hdc, int X, int Y, UINT fuOptions, CONST RECT* lprc, LPCTSTR lpString, UINT cbCount,
+                         CONST INT* lpDx, int nShadowOffset, int nColour)
 {
 	// Print a black shadow
 	SetTextColor(hdc, 0);
-	if (nShadowOffset >= 2) {
+	if (nShadowOffset >= 2)
+	{
 		ExtTextOut(hdc, X + nShadowOffset, Y + nShadowOffset, fuOptions, lprc, lpString, cbCount, lpDx);
 	}
 	// Print a black outline
@@ -690,7 +876,8 @@ static void VidSExitTinyMsg()
 {
 	VidSTinyMsg.nTimer = 0;
 
-	if (TinyMsgFont) {
+	if (TinyMsgFont)
+	{
 		DeleteObject(TinyMsgFont);
 		TinyMsgFont = NULL;
 	}
@@ -702,7 +889,8 @@ static void VidSExitJoystickMsg()
 {
 	VidSJoystickMsg.nTimer = 0;
 
-	if (JoystickMsgFont) {
+	if (JoystickMsgFont)
+	{
 		DeleteObject(JoystickMsgFont);
 		JoystickMsgFont = NULL;
 	}
@@ -714,7 +902,8 @@ static void VidSExitShortMsg()
 {
 	VidSShortMsg.nTimer = 0;
 
-	if (ShortMsgFont) {
+	if (ShortMsgFont)
+	{
 		DeleteObject(ShortMsgFont);
 		ShortMsgFont = NULL;
 	}
@@ -724,12 +913,14 @@ static void VidSExitShortMsg()
 
 static void VidSExitStatus()
 {
-	if (StatusFont) {
+	if (StatusFont)
+	{
 		DeleteObject(StatusFont);
 		StatusFont = NULL;
 	}
 
-	if (StatusFontTiny) {
+	if (StatusFontTiny)
+	{
 		DeleteObject(StatusFontTiny);
 		StatusFontTiny = NULL;
 	}
@@ -741,24 +932,29 @@ void VidSExitChat()
 {
 	nChatTimer = 0;
 
-	if (ChatIDFont) {
+	if (ChatIDFont)
+	{
 		DeleteObject(ChatIDFont);
 		ChatIDFont = NULL;
 	}
-	if (ChatMainFont) {
+	if (ChatMainFont)
+	{
 		DeleteObject(ChatMainFont);
 		ChatMainFont = NULL;
 	}
 
-	for (int i = 0; i < CHAT_SIZE; i++) {
-		if (VidSChatMessage[i].pIDText) {
+	for (int i = 0; i < CHAT_SIZE; i++)
+	{
+		if (VidSChatMessage[i].pIDText)
+		{
 			free(VidSChatMessage[i].pIDText);
 			VidSChatMessage[i].pIDText = NULL;
 		}
-		if (VidSChatMessage[i].pMainText) {
+		if (VidSChatMessage[i].pMainText)
+		{
 			free(VidSChatMessage[i].pMainText);
 			VidSChatMessage[i].pMainText = NULL;
-		}		
+		}
 	}
 
 	RELEASE(pChatSurf);
@@ -768,11 +964,13 @@ static void VidSExitEdit()
 {
 	bEditActive = false;
 
-	if (EditTextFont) {
+	if (EditTextFont)
+	{
 		DeleteObject(EditTextFont);
 		EditTextFont = NULL;
 	}
-	if (EditCursorFont) {
+	if (EditCursorFont)
+	{
 		DeleteObject(EditCursorFont);
 		EditCursorFont = NULL;
 	}
@@ -784,7 +982,8 @@ void VidSExitOSD()
 {
 	VidSExitTinyMsg();
 	VidSExitJoystickMsg();
-	if (kNetGame) {
+	if (kNetGame)
+	{
 		VidSExitEdit();
 	}
 	VidSExitChat();
@@ -798,7 +997,8 @@ static int VidSInitTinyMsg(int /*nFlags*/)
 
 	VidSExitTinyMsg();
 
-	TinyMsgFont = CreateFont(12, 0, 0, 0, FW_SEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("MS Sans Serif"));
+	TinyMsgFont = CreateFont(12, 0, 0, 0, FW_SEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS,
+	                         _T("MS Sans Serif"));
 	VidSTinyMsg.nTimer = 0;
 
 	// create surface to display the text
@@ -814,7 +1014,8 @@ static int VidSInitTinyMsg(int /*nFlags*/)
 	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
 	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
 
-	if (FAILED(pDD->CreateSurface(&ddsd, &pTinyMsgSurf, NULL))) {
+	if (FAILED(pDD->CreateSurface(&ddsd, &pTinyMsgSurf, NULL)))
+	{
 #ifdef PRINT_DEBUG_INFO
 		printf("  * Error: Couldn't create OSD texture.\n");
 #endif
@@ -833,7 +1034,8 @@ static int VidSInitJoystickMsg(int /*nFlags*/)
 	VidSExitJoystickMsg();
 
 	//JoystickMsgFont = CreateFont(12, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
-	JoystickMsgFont = CreateFont(8, 0, 0, 0, FW_THIN, 0, 0, 0, OUT_OUTLINE_PRECIS, 0, 0, NONANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
+	JoystickMsgFont = CreateFont(8, 0, 0, 0, FW_THIN, 0, 0, 0, OUT_OUTLINE_PRECIS, 0, 0, NONANTIALIASED_QUALITY,
+	                             FF_SWISS, _T("Courier New"));
 	VidSJoystickMsg.nTimer = 0;
 
 	// create surface to display the text
@@ -849,7 +1051,8 @@ static int VidSInitJoystickMsg(int /*nFlags*/)
 	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
 	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
 
-	if (FAILED(pDD->CreateSurface(&ddsd, &pJoystickMsgSurf, NULL))) {
+	if (FAILED(pDD->CreateSurface(&ddsd, &pJoystickMsgSurf, NULL)))
+	{
 #ifdef PRINT_DEBUG_INFO
 		printf("  * Error: Couldn't create OSD texture.\n");
 #endif
@@ -885,7 +1088,8 @@ static int VidSInitShortMsg(int nFlags)
 	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
 	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
 
-	if (FAILED(pDD->CreateSurface(&ddsd, &pShortMsgSurf, NULL))) {
+	if (FAILED(pDD->CreateSurface(&ddsd, &pShortMsgSurf, NULL)))
+	{
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't create OSD texture.\n"));
 #endif
@@ -905,8 +1109,10 @@ static int VidSInitStatus(int nFlags)
 
 	nStatusFlags = nFlags;
 
-	StatusFont = CreateFont(48, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, DEFAULT_CHARSET, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Webdings"));
-	StatusFontTiny = CreateFont(20, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, DEFAULT_CHARSET, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Webdings"));
+	StatusFont = CreateFont(48, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, DEFAULT_CHARSET, 0, 0, ANTIALIASED_QUALITY, FF_SWISS,
+	                        _T("Webdings"));
+	StatusFontTiny = CreateFont(20, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, DEFAULT_CHARSET, 0, 0, ANTIALIASED_QUALITY, FF_SWISS,
+	                            _T("Webdings"));
 	nPrevStatus = -1;
 
 	// create surface to display the text
@@ -922,7 +1128,8 @@ static int VidSInitStatus(int nFlags)
 	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
 	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
 
-	if (FAILED(pDD->CreateSurface(&ddsd, &pStatusSurf, NULL))) {
+	if (FAILED(pDD->CreateSurface(&ddsd, &pStatusSurf, NULL)))
+	{
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't create OSD texture.\n"));
 #endif
@@ -938,11 +1145,15 @@ static int VidSInitChat(int /*nFlags*/)
 {
 	DDSURFACEDESC2 ddsd;
 
-	if (bChatInitialised) {
+	if (bChatInitialised)
+	{
 		VidSExitChat();
-	} else {
-//		for (int i = 0; i < CHAT_SIZE + (CHAT_SIZE >> 1); i++) {
-		for (int i = 0; i < CHAT_SIZE; i++) {
+	}
+	else
+	{
+		//		for (int i = 0; i < CHAT_SIZE + (CHAT_SIZE >> 1); i++) {
+		for (int i = 0; i < CHAT_SIZE; i++)
+		{
 			VidSChatMessage[i].pIDText = NULL;
 			VidSChatMessage[i].pMainText = NULL;
 		}
@@ -952,11 +1163,17 @@ static int VidSInitChat(int /*nFlags*/)
 	//nChatFontSize = nMaxChatFontSize - ((nMaxChatFontSize - nMinChatFontSize) * nFlags) / 4;
 	nChatFontSize = 20; // used for cheat search only at the minute so only used in a window
 
-	ChatIDFont = CreateFont(nChatFontSize, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
-	if (nChatFontSize > 20) {
-		ChatMainFont = CreateFont(nChatFontSize, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
-	} else {
-		ChatMainFont = CreateFont(nChatFontSize, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
+	ChatIDFont = CreateFont(nChatFontSize, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS,
+	                        _T("Lucida"));
+	if (nChatFontSize > 20)
+	{
+		ChatMainFont = CreateFont(nChatFontSize, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS,
+		                          _T("Lucida"));
+	}
+	else
+	{
+		ChatMainFont = CreateFont(nChatFontSize, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS,
+		                          _T("Lucida"));
 	}
 
 	nChatShadowOffset = (nChatFontSize / 16) + 1;
@@ -970,11 +1187,14 @@ static int VidSInitChat(int /*nFlags*/)
 
 	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
 
-	if (nVidFullscreen) {
+	if (nVidFullscreen)
+	{
 		RECT rect;
 		GetClientScreenRect(hScrnWnd, &rect);
 		ddsd.dwWidth = rect.right - rect.left;
-	} else {
+	}
+	else
+	{
 		extern RECT SystemWorkArea;
 		ddsd.dwWidth = SystemWorkArea.right - SystemWorkArea.left;
 	}
@@ -983,7 +1203,8 @@ static int VidSInitChat(int /*nFlags*/)
 	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
 	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
 
-	if (FAILED(pDD->CreateSurface(&ddsd, &pChatSurf, NULL))) {
+	if (FAILED(pDD->CreateSurface(&ddsd, &pChatSurf, NULL)))
+	{
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't create Chat texture.\n"));
 #endif
@@ -1005,8 +1226,10 @@ static int VidSInitEdit(int nFlags)
 
 	nEditSize = nMaxChatFontSize + 8 - ((nMaxChatFontSize - nMinChatFontSize) * nFlags) / 4;
 
-	EditTextFont = CreateFont(nEditSize - 8, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
-	EditCursorFont = CreateFont(nEditSize - 8, 0, 0, 0, FW_BOLD, 0, TRUE, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
+	EditTextFont = CreateFont(nEditSize - 8, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS,
+	                          _T("Lucida"));
+	EditCursorFont = CreateFont(nEditSize - 8, 0, 0, 0, FW_BOLD, 0, TRUE, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS,
+	                            _T("Lucida"));
 
 	nEditShadowOffset = ((nEditSize - 8) / 16) + 1;
 
@@ -1017,11 +1240,14 @@ static int VidSInitEdit(int nFlags)
 
 	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
 
-	if (nVidFullscreen) {
+	if (nVidFullscreen)
+	{
 		RECT rect;
 		GetClientScreenRect(hScrnWnd, &rect);
 		ddsd.dwWidth = rect.right - rect.left;
-	} else {
+	}
+	else
+	{
 		extern RECT SystemWorkArea;
 		ddsd.dwWidth = SystemWorkArea.right - SystemWorkArea.left;
 	}
@@ -1030,7 +1256,8 @@ static int VidSInitEdit(int nFlags)
 	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
 	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
 
-	if (FAILED(pDD->CreateSurface(&ddsd, &pEditSurf, NULL))) {
+	if (FAILED(pDD->CreateSurface(&ddsd, &pEditSurf, NULL)))
+	{
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't create OSD texture.\n"));
 #endif
@@ -1045,31 +1272,39 @@ static int VidSInitEdit(int nFlags)
 int VidSInitOSD(int nFlags)
 {
 #ifdef PRINT_DEBUG_INFO
-//	dprintf(_T(" ** OSD initialised.\n"));
+	//	dprintf(_T(" ** OSD initialised.\n"));
 #endif
 
-	if (pDD == NULL) {
+	if (pDD == NULL)
+	{
 		return 1;
 	}
 
-	if (VidSInitStatus(nFlags)) {
+	if (VidSInitStatus(nFlags))
+	{
 		return 1;
 	}
-	if (VidSInitShortMsg(nFlags)) {
+	if (VidSInitShortMsg(nFlags))
+	{
 		return 1;
 	}
-	if (VidSInitChat(nFlags)) {
+	if (VidSInitChat(nFlags))
+	{
 		return 1;
 	}
-	if (kNetGame) {
-		if (VidSInitEdit(nFlags)) {
+	if (kNetGame)
+	{
+		if (VidSInitEdit(nFlags))
+		{
 			return 1;
 		}
 	}
-	if (VidSInitTinyMsg(nFlags)) {
+	if (VidSInitTinyMsg(nFlags))
+	{
 		return 1;
 	}
-	if (VidSInitJoystickMsg(nFlags)) {
+	if (VidSInitJoystickMsg(nFlags))
+	{
 		return 1;
 	}
 
@@ -1078,9 +1313,12 @@ int VidSInitOSD(int nFlags)
 
 int VidSRestoreOSD()
 {
-	if (pShortMsgSurf) {
-		if (FAILED(pShortMsgSurf->IsLost())) {
-			if (FAILED(pShortMsgSurf->Restore())) {
+	if (pShortMsgSurf)
+	{
+		if (FAILED(pShortMsgSurf->IsLost()))
+		{
+			if (FAILED(pShortMsgSurf->Restore()))
+			{
 				return 1;
 			}
 			VidSClearSurface(pShortMsgSurf, nKeyColour, NULL);
@@ -1089,9 +1327,12 @@ int VidSRestoreOSD()
 		}
 	}
 
-	if (pTinyMsgSurf) {
-		if (FAILED(pTinyMsgSurf->IsLost())) {
-		if (FAILED(pTinyMsgSurf->Restore())) {
+	if (pTinyMsgSurf)
+	{
+		if (FAILED(pTinyMsgSurf->IsLost()))
+		{
+			if (FAILED(pTinyMsgSurf->Restore()))
+			{
 				return 1;
 			}
 			VidSClearSurface(pTinyMsgSurf, nKeyColour, NULL);
@@ -1100,9 +1341,12 @@ int VidSRestoreOSD()
 		}
 	}
 
-	if (pJoystickMsgSurf) {
-		if (FAILED(pJoystickMsgSurf->IsLost())) {
-		if (FAILED(pJoystickMsgSurf->Restore())) {
+	if (pJoystickMsgSurf)
+	{
+		if (FAILED(pJoystickMsgSurf->IsLost()))
+		{
+			if (FAILED(pJoystickMsgSurf->Restore()))
+			{
 				return 1;
 			}
 			VidSClearSurface(pJoystickMsgSurf, nKeyColour, NULL);
@@ -1111,9 +1355,12 @@ int VidSRestoreOSD()
 		}
 	}
 
-	if (pStatusSurf) {
-		if (FAILED(pStatusSurf->IsLost())) {
-			if (FAILED(pStatusSurf->Restore())) {
+	if (pStatusSurf)
+	{
+		if (FAILED(pStatusSurf->IsLost()))
+		{
+			if (FAILED(pStatusSurf->Restore()))
+			{
 				return 1;
 			}
 			VidSClearSurface(pStatusSurf, nKeyColour, NULL);
@@ -1122,19 +1369,26 @@ int VidSRestoreOSD()
 		}
 	}
 
-	if (pChatSurf) {
-		if (FAILED(pChatSurf->IsLost())) {
-			if (FAILED(pChatSurf->Restore())) {
+	if (pChatSurf)
+	{
+		if (FAILED(pChatSurf->IsLost()))
+		{
+			if (FAILED(pChatSurf->Restore()))
+			{
 				return 1;
 			}
 			VidSClearSurface(pChatSurf, nKeyColour, NULL);
 		}
 	}
 
-	if (kNetGame) {
-		if (pEditSurf) {
-			if (FAILED(pEditSurf->IsLost())) {
-				if (FAILED(pEditSurf->Restore())) {
+	if (kNetGame)
+	{
+		if (pEditSurf)
+		{
+			if (FAILED(pEditSurf->IsLost()))
+			{
+				if (FAILED(pEditSurf->Restore()))
+				{
 					return 1;
 				}
 				VidSClearSurface(pEditSurf, nKeyColour, NULL);
@@ -1147,26 +1401,31 @@ int VidSRestoreOSD()
 
 static void VidSDisplayTinyMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 {
-	if (VidSTinyMsg.nTimer) {
-		RECT src = { 0, 0, 300, 20 };
-		RECT dest = { pRect->right - 320, pRect->bottom - 24, pRect->right - 8, pRect->bottom - 4 };
+	if (VidSTinyMsg.nTimer)
+	{
+		RECT src = {0, 0, 300, 20};
+		RECT dest = {pRect->right - 320, pRect->bottom - 24, pRect->right - 8, pRect->bottom - 4};
 
 		// Switch off message display when the message has been displayed long enough
-		if (nFramesEmulated > VidSTinyMsg.nTimer) {
+		if (nFramesEmulated > VidSTinyMsg.nTimer)
+		{
 			VidSTinyMsg.nTimer = 0;
 		}
 
-		if (dest.left < pRect->left) {
+		if (dest.left < pRect->left)
+		{
 			src.left = pRect->left - dest.left;
 			dest.left = pRect->left;
 		}
 
-		if (nZoom & 2) {
+		if (nZoom & 2)
+		{
 			dest.top <<= 1;
 			dest.bottom <<= 1;
 		}
 
-		if (nZoom & 1) {
+		if (nZoom & 1)
+		{
 			dest.left <<= 1;
 			dest.right <<= 1;
 		}
@@ -1178,26 +1437,31 @@ static void VidSDisplayTinyMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 
 static void VidSDisplayJoystickMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 {
-	if (VidSJoystickMsg.nTimer) {
-		RECT src = { 0, 0, 300, 60 }; // left top right bottom
-		RECT dest = { pRect->left, pRect->bottom - 60, pRect->left + 300, pRect->bottom };
+	if (VidSJoystickMsg.nTimer)
+	{
+		RECT src = {0, 0, 300, 60}; // left top right bottom
+		RECT dest = {pRect->left, pRect->bottom - 60, pRect->left + 300, pRect->bottom};
 
 		// Switch off message display when the message has been displayed long enough
-		if (nFramesEmulated > VidSJoystickMsg.nTimer) {
+		if (nFramesEmulated > VidSJoystickMsg.nTimer)
+		{
 			VidSJoystickMsg.nTimer = 0;
 		}
 
-		if (dest.left < pRect->left) {
+		if (dest.left < pRect->left)
+		{
 			src.left = pRect->left - dest.left;
 			dest.left = pRect->left;
 		}
 
-		if (nZoom & 2) {
+		if (nZoom & 2)
+		{
 			dest.top <<= 1;
 			dest.bottom <<= 1;
 		}
 
-		if (nZoom & 1) {
+		if (nZoom & 1)
+		{
 			dest.left <<= 1;
 			dest.right <<= 1;
 		}
@@ -1209,18 +1473,23 @@ static void VidSDisplayJoystickMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 
 static void VidSDisplayShortMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 {
-	if (VidSShortMsg.nTimer) {
-		RECT src = { 0, 0, 256, 32 };
-		RECT dest = { 0, pRect->top + 4, pRect->right - 8, pRect->top + 36 };
+	if (VidSShortMsg.nTimer)
+	{
+		RECT src = {0, 0, 256, 32};
+		RECT dest = {0, pRect->top + 4, pRect->right - 8, pRect->top + 36};
 
 		// Switch off message display when the message has been displayed long enough
-		if (nFramesEmulated > VidSShortMsg.nTimer) {
+		if (nFramesEmulated > VidSShortMsg.nTimer)
+		{
 			VidSShortMsg.nTimer = 0;
 		}
 
-		if (nStatus) {
-			for (int x = 0; x < 4; x++) {
-				if (nStatus & (1 << x)) {
+		if (nStatus)
+		{
+			for (int x = 0; x < 4; x++)
+			{
+				if (nStatus & (1 << x))
+				{
 					dest.right -= 48;
 				}
 			}
@@ -1230,17 +1499,20 @@ static void VidSDisplayShortMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 		}
 
 		dest.left = dest.right - 256;
-		if (dest.left < pRect->left) {
+		if (dest.left < pRect->left)
+		{
 			src.left = pRect->left - dest.left;
 			dest.left = pRect->left;
 		}
 
-		if (nZoom & 2) {
+		if (nZoom & 2)
+		{
 			dest.top <<= 1;
 			dest.bottom <<= 1;
 		}
 
-		if (nZoom & 1) {
+		if (nZoom & 1)
+		{
 			dest.left <<= 1;
 			dest.right <<= 1;
 		}
@@ -1254,29 +1526,35 @@ static void VidSDisplayStatus(IDirectDrawSurface7* pSurf, RECT* pRect)
 {
 	nStatus = 0;
 
-	if (nVidSDisplayStatus == 0) {
+	if (nVidSDisplayStatus == 0)
+	{
 		return;
 	}
 
-	if (bRunPause) {
+	if (bRunPause)
+	{
 		nStatus |= 1;
 	}
-	if (kNetGame) {
+	if (kNetGame)
+	{
 		nStatus |= 2;
 	}
-	if (nReplayStatus == 1) {
+	if (nReplayStatus == 1)
+	{
 		nStatus |= 4;
 	}
-	if (nReplayStatus == 2) {
+	if (nReplayStatus == 2)
+	{
 		nStatus |= 8;
 	}
 
-	if (nStatus != nPrevStatus) {
+	if (nStatus != nPrevStatus)
+	{
 		nPrevStatus = nStatus;
-		if (nStatus) {
+		if (nStatus)
+		{
 			// Print the message
 			HDC hDC;
-			HFONT hFont;
 			TCHAR szStatus[8];
 
 			// Clear the surface first
@@ -1284,8 +1562,10 @@ static void VidSDisplayStatus(IDirectDrawSurface7* pSurf, RECT* pRect)
 
 			// Make the status string
 			memset(szStatus, 0, sizeof(szStatus));
-			for (int i = 0, j = 0; i < 4; i++) {
-				if (nStatus & (1 << i)) {
+			for (int i = 0, j = 0; i < 4; i++)
+			{
+				if (nStatus & (1 << i))
+				{
 					szStatus[j] = nStatusSymbols[i];
 					j++;
 				}
@@ -1293,7 +1573,7 @@ static void VidSDisplayStatus(IDirectDrawSurface7* pSurf, RECT* pRect)
 
 			pStatusSurf->GetDC(&hDC);
 			SetBkMode(hDC, TRANSPARENT);
-			hFont = (HFONT)SelectObject(hDC, (nReplayStatus == 1) ? StatusFontTiny : StatusFont);
+			HFONT hFont = (HFONT)SelectObject(hDC, (nReplayStatus == 1) ? StatusFontTiny : StatusFont);
 			SetTextAlign(hDC, TA_TOP | TA_RIGHT);
 
 			MyTextOut(hDC, 192 - 2, 0, szStatus, _tcslen(szStatus), 2, RGB(0xFF, 0x3F, 0x3F));
@@ -1304,28 +1584,33 @@ static void VidSDisplayStatus(IDirectDrawSurface7* pSurf, RECT* pRect)
 		}
 	}
 
-	if (nStatus) {
-		RECT src = { 192, 0, 192, 48 };
-		RECT dest = { 0, pRect->top + 4, pRect->right - 4, pRect->top + 52 };
-		for (int x = 0; x < 4; x++) {
-			if (nStatus & (1 << x)) {
+	if (nStatus)
+	{
+		RECT src = {192, 0, 192, 48};
+		RECT dest = {0, pRect->top + 4, pRect->right - 4, pRect->top + 52};
+		for (int x = 0; x < 4; x++)
+		{
+			if (nStatus & (1 << x))
+			{
 				src.left -= 48;
 			}
 		}
 		dest.left = dest.right - (src.right - src.left);
 
-		if (nZoom & 2) {
+		if (nZoom & 2)
+		{
 			dest.top <<= 1;
 			dest.bottom <<= 1;
 		}
 
-		if (nZoom & 1) {
+		if (nZoom & 1)
+		{
 			dest.left <<= 1;
 			dest.right <<= 1;
 		}
 
 		// Blit the message to the surface using a colourkey
-		pSurf->Blt(&dest, pStatusSurf, &src, DDBLT_ASYNC  | DDBLT_KEYSRC, NULL);
+		pSurf->Blt(&dest, pStatusSurf, &src, DDBLT_ASYNC | DDBLT_KEYSRC, NULL);
 	}
 }
 
@@ -1333,26 +1618,28 @@ static int VidSDrawChat(RECT* dest)
 {
 	bool bContent = false;
 
-	if (pChatSurf == NULL) {
+	if (pChatSurf == NULL)
+	{
 		return 1;
 	}
 
 	VidSClearSurface(pChatSurf, nKeyColour, NULL);
 
-	for (int i = 0; i < CHAT_SIZE; i++) {
-		if (VidSChatMessage[i].pIDText || VidSChatMessage[i].pMainText) {
+	for (int i = 0; i < CHAT_SIZE; i++)
+	{
+		if (VidSChatMessage[i].pIDText || VidSChatMessage[i].pMainText)
+		{
 			bContent = true;
 			break;
 		}
 	}
 
-	if (bContent) {
-
+	if (bContent)
+	{
 		nChatTimer = nFramesEmulated + 300;
 
 		// Print the message
 		HDC hDC;
-		HFONT hFont;
 		int nStringLength;
 		int nFit = 0;
 		SIZE sizeID, sizeMain;
@@ -1363,48 +1650,64 @@ static int VidSDrawChat(RECT* dest)
 		pChatSurf->GetDC(&hDC);
 		SetBkMode(hDC, TRANSPARENT);
 
-		hFont = (HFONT)SelectObject(hDC, ChatIDFont);
+		HFONT hFont = (HFONT)SelectObject(hDC, ChatIDFont);
 		SetTextAlign(hDC, TA_TOP | TA_LEFT);
 
 		nChatOverFlow = 0;
 
-		for (int i = 0; i < CHAT_SIZE; i++) {
-
+		for (int i = 0; i < CHAT_SIZE; i++)
+		{
 			// Exit when too many lines are displayed
-			if (nChatOverFlow > (CHAT_SIZE >> 1)) {
+			if (nChatOverFlow > (CHAT_SIZE >> 1))
+			{
 				break;
 			}
 
-			if (VidSChatMessage[i].pIDText) {
+			if (VidSChatMessage[i].pIDText)
+			{
 				SelectObject(hDC, ChatIDFont);
-				nStringLength =  _tcslen(VidSChatMessage[i].pIDText);
-				MyExtTextOut(hDC, 0, (i + nChatOverFlow) * nChatFontSize, ETO_CLIPPED, dest, VidSChatMessage[i].pIDText, nStringLength, NULL, nChatShadowOffset, VidSChatMessage[i].nIDColour);
+				nStringLength = _tcslen(VidSChatMessage[i].pIDText);
+				MyExtTextOut(hDC, 0, (i + nChatOverFlow) * nChatFontSize, ETO_CLIPPED, dest, VidSChatMessage[i].pIDText,
+				             nStringLength, NULL, nChatShadowOffset, VidSChatMessage[i].nIDColour);
 				GetTextExtentPoint32(hDC, VidSChatMessage[i].pIDText, nStringLength, &sizeID);
-			} else {
+			}
+			else
+			{
 				sizeID.cx = 0;
 			}
 
-			if (VidSChatMessage[i].pMainText) {
+			if (VidSChatMessage[i].pMainText)
+			{
 				SelectObject(hDC, ChatMainFont);
-				nStringLength =  _tcslen(VidSChatMessage[i].pMainText);
-				GetTextExtentExPoint(hDC, VidSChatMessage[i].pMainText, nStringLength, dest->right - sizeID.cx, &nFit, NULL, &sizeMain);
+				nStringLength = _tcslen(VidSChatMessage[i].pMainText);
+				GetTextExtentExPoint(hDC, VidSChatMessage[i].pMainText, nStringLength, dest->right - sizeID.cx, &nFit,
+				                     NULL, &sizeMain);
 
-				if (nFit < nStringLength) {
+				if (nFit < nStringLength)
+				{
 					// The string doesn't fit on the screen in one line, break the line on the last space that fits
-					while (nFit > 0 && (VidSChatMessage[i].pMainText[nFit] != ' ')) {
+					while (nFit > 0 && (VidSChatMessage[i].pMainText[nFit] != ' '))
+					{
 						nFit--;
 					}
 
 					nStringLength = nFit;
-					MyExtTextOut(hDC, sizeID.cx, (i + nChatOverFlow) * nChatFontSize, ETO_CLIPPED, dest, VidSChatMessage[i].pMainText, nStringLength, NULL, nChatShadowOffset, VidSChatMessage[i].nMainColour);
+					MyExtTextOut(hDC, sizeID.cx, (i + nChatOverFlow) * nChatFontSize, ETO_CLIPPED, dest,
+					             VidSChatMessage[i].pMainText, nStringLength, NULL, nChatShadowOffset,
+					             VidSChatMessage[i].nMainColour);
 
 					nChatOverFlow++;
 
-					nStringLength =  _tcslen(&(VidSChatMessage[i].pMainText[nFit + 1]));
-					MyExtTextOut(hDC, sizeID.cx, (i + nChatOverFlow) * nChatFontSize, ETO_CLIPPED, dest, &(VidSChatMessage[i].pMainText[nFit + 1]), nStringLength, NULL, nChatShadowOffset, VidSChatMessage[i].nMainColour);
-				} else {
+					nStringLength = _tcslen(&(VidSChatMessage[i].pMainText[nFit + 1]));
+					MyExtTextOut(hDC, sizeID.cx, (i + nChatOverFlow) * nChatFontSize, ETO_CLIPPED, dest,
+					             &(VidSChatMessage[i].pMainText[nFit + 1]), nStringLength, NULL, nChatShadowOffset,
+					             VidSChatMessage[i].nMainColour);
+				}
+				else
+				{
 					SelectObject(hDC, ChatMainFont);
-					MyTextOut(hDC, sizeID.cx, (i + nChatOverFlow) * nChatFontSize, VidSChatMessage[i].pMainText, nStringLength, nChatShadowOffset, VidSChatMessage[i].nMainColour);
+					MyTextOut(hDC, sizeID.cx, (i + nChatOverFlow) * nChatFontSize, VidSChatMessage[i].pMainText,
+					          nStringLength, nChatShadowOffset, VidSChatMessage[i].nMainColour);
 				}
 			}
 		}
@@ -1412,7 +1715,9 @@ static int VidSDrawChat(RECT* dest)
 		// Clean up
 		SelectObject(hDC, hFont);
 		pChatSurf->ReleaseDC(hDC);
-	} else {
+	}
+	else
+	{
 		nChatTimer = 0;
 	}
 
@@ -1421,34 +1726,44 @@ static int VidSDrawChat(RECT* dest)
 
 static void VidSDisplayChat(IDirectDrawSurface7* pSurf, RECT* pRect)
 {
-	if (nChatTimer || bDrawChat) {
+	if (nChatTimer || bDrawChat)
+	{
 		// Blit the message to the surface using a colourkey
-		RECT src = { 0, 0, pRect->right - pRect->left, nChatFontSize * (CHAT_SIZE + (CHAT_SIZE >> 1)) };
+		RECT src = {0, 0, pRect->right - pRect->left, nChatFontSize * (CHAT_SIZE + (CHAT_SIZE >> 1))};
 
 		// Update the message if needed
-		if (bDrawChat) {
+		if (bDrawChat)
+		{
 			VidSDrawChat(&src);
 			bDrawChat = false;
 		}
 
-		if (nChatTimer) {
-			RECT dest = { pRect->left, pRect->bottom - nChatFontSize * (CHAT_SIZE + nChatOverFlow), pRect->right, pRect->bottom };
+		if (nChatTimer)
+		{
+			RECT dest = {
+				pRect->left, pRect->bottom - nChatFontSize * (CHAT_SIZE + nChatOverFlow), pRect->right, pRect->bottom
+			};
 			src.bottom = nChatFontSize * (CHAT_SIZE + nChatOverFlow);
 
-			if (bEditActive) {
+			if (bEditActive)
+			{
 				dest.top -= nEditSize;
 				dest.bottom -= nEditSize;
-			} else {
+			}
+			else
+			{
 				dest.top -= 4;
 				dest.bottom -= 4;
 			}
 
-			if (nZoom & 2) {
+			if (nZoom & 2)
+			{
 				dest.top <<= 1;
 				dest.bottom <<= 1;
 			}
 
-			if (nZoom & 1) {
+			if (nZoom & 1)
+			{
 				dest.left <<= 1;
 				dest.right <<= 1;
 			}
@@ -1457,7 +1772,8 @@ static void VidSDisplayChat(IDirectDrawSurface7* pSurf, RECT* pRect)
 		}
 
 		// Scroll message if needed
-		if (nFramesEmulated > nChatTimer) {
+		if (nFramesEmulated > nChatTimer)
+		{
 			nChatTimer = 0;
 			VidSAddChatMsg(NULL, 0, NULL, 0);
 			bDrawChat = true;
@@ -1467,16 +1783,19 @@ static void VidSDisplayChat(IDirectDrawSurface7* pSurf, RECT* pRect)
 
 static void VidSDisplayEdit(IDirectDrawSurface7* pSurf, RECT* pRect)
 {
-	if (bEditActive) {
-		RECT src = { 0, 0, pRect->right - pRect->left, nEditSize };
-		RECT dest = { pRect->left, pRect->bottom - nEditSize, pRect->right, pRect->bottom };
+	if (bEditActive)
+	{
+		RECT src = {0, 0, pRect->right - pRect->left, nEditSize};
+		RECT dest = {pRect->left, pRect->bottom - nEditSize, pRect->right, pRect->bottom};
 
-		if (nZoom & 2) {
+		if (nZoom & 2)
+		{
 			dest.top <<= 1;
 			dest.bottom <<= 1;
 		}
 
-		if (nZoom & 1) {
+		if (nZoom & 1)
+		{
 			dest.left <<= 1;
 			dest.right <<= 1;
 		}
@@ -1484,101 +1803,125 @@ static void VidSDisplayEdit(IDirectDrawSurface7* pSurf, RECT* pRect)
 		DWORD nStart, nEnd;
 		SendMessage(hwndChat, EM_GETSEL, (WPARAM)&nStart, (WPARAM)&nEnd);
 
-		if (nStart != nPrevStart || nEnd != nPrevEnd) {
+		if (nStart != nPrevStart || nEnd != nPrevEnd)
+		{
 			nPrevStart = nStart;
 			nPrevEnd = nEnd;
 			bEditTextChanged = true;
 			nCursorTime = nFramesEmulated + 30;
 			nCursorState = 1;
-		} else {
-			if (GetCurrentFrame() > nCursorTime) {
+		}
+		else
+		{
+			if (GetCurrentFrame() > nCursorTime)
+			{
 				nCursorTime = nFramesEmulated + 30;
 				nCursorState = !nCursorState;
 				bEditTextChanged = true;
 			}
 		}
 
-		if (bEditTextChanged) {
-			if (pEditSurf == NULL) {
+		if (bEditTextChanged)
+		{
+			if (pEditSurf == NULL)
+			{
 				return;
 			}
 
 			// Print the message
 			HDC hDC;
-			HFONT hFont;
 			SIZE size;
-			int pos;
 
 			TCHAR Space[] = _T(" ");
 			unsigned int nFit = 0;
 			TCHAR* pText = EditText;
 
-//			bool bDisplayCursor = false;
-//			if (GetFocus()) {
-//				bDisplayCursor = true;
-//			}
+			//			bool bDisplayCursor = false;
+			//			if (GetFocus()) {
+			//				bDisplayCursor = true;
+			//			}
 
 			// Clear the surface first
 			VidSClearSurface(pEditSurf, nKeyColour, NULL);
 
 			pEditSurf->GetDC(&hDC);
 			SetBkMode(hDC, TRANSPARENT);
-			hFont = (HFONT)SelectObject(hDC, EditTextFont);
+			HFONT hFont = (HFONT)SelectObject(hDC, EditTextFont);
 			SetTextAlign(hDC, TA_TOP | TA_LEFT);
 
 			// If the string is wider than the screen, shift the display to the right.
-			pos = 0;
-			do {
+			int pos = 0;
+			do
+			{
 				GetTextExtentExPoint(hDC, pText, _tcslen(pText), src.right - pos - nEditSize, (int*)&nFit, NULL, &size);
-				if (nFit < nStart) {
+				if (nFit < nStart)
+				{
 					pos -= src.right * 3 / 5;
 				}
-			} while (nFit < nStart);
+			}
+			while (nFit < nStart);
 
-			if (nStart == _tcslen(pText)) {
-				if (nStart) {
-					MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, pText, nStart, NULL, nEditShadowOffset, RGB(0xDF, 0xDF, 0xFF));
+			if (nStart == _tcslen(pText))
+			{
+				if (nStart)
+				{
+					MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, pText, nStart, NULL, nEditShadowOffset,
+					             RGB(0xDF, 0xDF, 0xFF));
 				}
 
 				GetTextExtentPoint32(hDC, pText, nStart, &size);
 				pos += size.cx;
 
-				if (nCursorState) {
+				if (nCursorState)
+				{
 					SelectObject(hDC, EditCursorFont);
 				}
-				MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, Space, 1, NULL, nEditShadowOffset, RGB(0xFF, 0xFF, 0xFF));
-			} else {
-				if (nStart) {
-					MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, pText, nStart, NULL, nEditShadowOffset, RGB(0xDF, 0xDF, 0xFF));
+				MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, Space, 1, NULL, nEditShadowOffset,
+				             RGB(0xFF, 0xFF, 0xFF));
+			}
+			else
+			{
+				if (nStart)
+				{
+					MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, pText, nStart, NULL, nEditShadowOffset,
+					             RGB(0xDF, 0xDF, 0xFF));
 				}
 
 				GetTextExtentPoint32(hDC, pText, nStart, &size);
 				pos += size.cx;
 
-				if (nEnd == nStart) {
-					if (nCursorState) {
+				if (nEnd == nStart)
+				{
+					if (nCursorState)
+					{
 						SelectObject(hDC, EditCursorFont);
 					}
-					MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, pText + nStart, 1, NULL, nEditShadowOffset, RGB(0xFF, 0xFF, 0xFF));
+					MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, pText + nStart, 1, NULL, nEditShadowOffset,
+					             RGB(0xFF, 0xFF, 0xFF));
 
 					GetTextExtentPoint32(hDC, pText + nStart, 1, &size);
 					pos += size.cx;
 
 					// We really printed one character past the end of the selection
 					nEnd++;
-				} else {
+				}
+				else
+				{
 					// Highlight selected characters
 					SelectObject(hDC, EditTextFont);
 					// SetTextColor(hDC, RGB(0x7F, 0x1F, 0x1F));
-					MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, pText + nStart, nEnd - nStart, NULL, nEditShadowOffset, RGB(0xFF, 0xFF, 0xDF));
+					MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, pText + nStart, nEnd - nStart, NULL,
+					             nEditShadowOffset, RGB(0xFF, 0xFF, 0xDF));
 
 					GetTextExtentPoint32(hDC, pText + nStart, nEnd - nStart, &size);
 					pos += size.cx;
 				}
 
-				if (nEnd < _tcslen(EditText)) {
+				if (nEnd < _tcslen(EditText))
+				{
 					SelectObject(hDC, EditTextFont);
-					MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, pText + nEnd, _tcslen(pText) - nEnd, NULL, nEditShadowOffset, RGB(0xDF, 0xDF, 0xFF));
+					MyExtTextOut(hDC, pos + 3, 3, ETO_CLIPPED, &src, pText + nEnd, _tcslen(pText) - nEnd, NULL,
+					             nEditShadowOffset, RGB(0xDF, 0xDF, 0xFF));
 				}
 			}
 
@@ -1603,54 +1946,64 @@ void VidSDisplayOSD(IDirectDrawSurface7* pSurf, RECT* pRect, int nFlags)
 	VidSDisplayJoystickMsg(pSurf, pRect);
 	VidSDisplayShortMsg(pSurf, pRect);
 	VidSDisplayChat(pSurf, pRect);
-	if (kNetGame) {
+	if (kNetGame)
+	{
 		VidSDisplayEdit(pSurf, pRect);
 	}
 }
 
-int VidSNewTinyMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)	// int nRGB = 0, int nDuration = 0, int nPriority = 5
+int VidSNewTinyMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)
+// int nRGB = 0, int nDuration = 0, int nPriority = 5
 {
 	// If a message with a higher priority is being displayed, exit.
-	if (VidSTinyMsg.nTimer && VidSTinyMsg.nPriority > nPriority) {
+	if (VidSTinyMsg.nTimer && VidSTinyMsg.nPriority > nPriority)
+	{
 		return 1;
 	}
 
 	int nSize = _tcslen(pText);
-	if (nSize > 63) {
+	if (nSize > 63)
+	{
 		nSize = 63;
 	}
 	_tcsncpy(VidSTinyMsg.pMsgText, pText, nSize);
 	VidSTinyMsg.pMsgText[nSize] = 0;
 
-	if (nRGB) {
+	if (nRGB)
+	{
 		// Convert RGB value to COLORREF
 		VidSTinyMsg.nColour = RGB((nRGB >> 16), ((nRGB >> 8) & 0xFF), (nRGB & 0xFF));
-	} else {
+	}
+	else
+	{
 		// Default message colour (yellow)
 		VidSTinyMsg.nColour = RGB(0xFF, 0xFF, 0x7F);
 	}
-	if (nDuration) {
+	if (nDuration)
+	{
 		VidSTinyMsg.nTimer = nFramesEmulated + nDuration;
-	} else {
+	}
+	else
+	{
 		VidSTinyMsg.nTimer = nFramesEmulated + 120;
 	}
 	VidSTinyMsg.nPriority = nPriority;
 
 	{
-		if (pTinyMsgSurf == NULL) {
+		if (pTinyMsgSurf == NULL)
+		{
 			return 1;
 		}
 
 		// Print the message
 		HDC hDC;
-		HFONT hFont;
 
 		// Clear the surface first
 		VidSClearSurface(pTinyMsgSurf, nKeyColour, NULL);
 
 		pTinyMsgSurf->GetDC(&hDC);
 		SetBkMode(hDC, TRANSPARENT);
-		hFont = (HFONT)SelectObject(hDC, TinyMsgFont);
+		HFONT hFont = (HFONT)SelectObject(hDC, TinyMsgFont);
 		SetTextAlign(hDC, TA_BOTTOM | TA_RIGHT);
 
 		// Print a black shadow
@@ -1668,49 +2021,60 @@ int VidSNewTinyMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)	/
 	return 0;
 }
 
-int VidSNewJoystickMsg(const TCHAR* pText, int nRGB, int nDuration, int nLineNo)	// int nRGB = 0, int nDuration = 0, int nLineNo = 0
+int VidSNewJoystickMsg(const TCHAR* pText, int nRGB, int nDuration, int nLineNo)
+// int nRGB = 0, int nDuration = 0, int nLineNo = 0
 {
-	if (!pText) { // NULL passed, clear surface
+	if (!pText)
+	{
+		// NULL passed, clear surface
 		VidSClearSurface(pJoystickMsgSurf, nKeyColour, NULL);
 		return 0;
 	}
 
 	int nSize = _tcslen(pText);
-	if (nSize > 63) {
+	if (nSize > 63)
+	{
 		nSize = 63;
 	}
 	_tcsncpy(VidSJoystickMsg.pMsgText, pText, nSize);
 	VidSJoystickMsg.pMsgText[nSize] = 0;
 
-	if (nRGB) {
+	if (nRGB)
+	{
 		// Convert RGB value to COLORREF
 		VidSJoystickMsg.nColour = RGB((nRGB >> 16), ((nRGB >> 8) & 0xFF), (nRGB & 0xFF));
-	} else {
+	}
+	else
+	{
 		// Default message colour (yellow)
 		VidSJoystickMsg.nColour = RGB(0xFF, 0xFF, 0x7F);
 	}
-	if (nDuration) {
+	if (nDuration)
+	{
 		VidSJoystickMsg.nTimer = nFramesEmulated + nDuration;
-	} else {
+	}
+	else
+	{
 		VidSJoystickMsg.nTimer = nFramesEmulated + 120;
 	}
 	VidSJoystickMsg.nLineNo = nLineNo;
 
 	{
-		if (pJoystickMsgSurf == NULL) {
+		if (pJoystickMsgSurf == NULL)
+		{
 			return 1;
 		}
 
 		// Print the message
 		HDC hDC;
-		HFONT hFont;
 
 		pJoystickMsgSurf->GetDC(&hDC);
 		SetBkMode(hDC, TRANSPARENT);
-		hFont = (HFONT)SelectObject(hDC, JoystickMsgFont);
+		HFONT hFont = (HFONT)SelectObject(hDC, JoystickMsgFont);
 		SetTextAlign(hDC, TA_TOP | TA_LEFT);
 
-		MyTextOut(hDC, 40, 7+(nLineNo*8), VidSJoystickMsg.pMsgText, _tcslen(VidSJoystickMsg.pMsgText), 0, VidSJoystickMsg.nColour);
+		MyTextOut(hDC, 40, 7 + (nLineNo * 8), VidSJoystickMsg.pMsgText, _tcslen(VidSJoystickMsg.pMsgText), 0,
+		          VidSJoystickMsg.nColour);
 
 		// Clean up
 		SelectObject(hDC, hFont);
@@ -1720,15 +2084,18 @@ int VidSNewJoystickMsg(const TCHAR* pText, int nRGB, int nDuration, int nLineNo)
 	return 0;
 }
 
-int VidSNewShortMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)	// int nRGB = 0, int nDuration = 0, int nPriority = 5
+int VidSNewShortMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)
+// int nRGB = 0, int nDuration = 0, int nPriority = 5
 {
 	// If a message with a higher priority is being displayed, exit.
-	if (VidSShortMsg.nTimer && VidSShortMsg.nPriority > nPriority) {
+	if (VidSShortMsg.nTimer && VidSShortMsg.nPriority > nPriority)
+	{
 		return 1;
 	}
 
 	int nSize = _tcslen(pText);
-	if (nSize > 31) {
+	if (nSize > 31)
+	{
 		nSize = 31;
 	}
 	_tcsncpy(VidSShortMsg.pMsgText, pText, nSize);
@@ -1738,36 +2105,42 @@ int VidSNewShortMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)	
 	memset(OSDMsg, '\0', MAX_PATH * sizeof(TCHAR));
 	_tcsncpy(OSDMsg, pText, nSize);
 
-	if (nRGB) {
+	if (nRGB)
+	{
 		// Convert RGB value to COLORREF
 		VidSShortMsg.nColour = RGB((nRGB >> 16), ((nRGB >> 8) & 0xFF), (nRGB & 0xFF));
-	} else {
+	}
+	else
+	{
 		// Default message colour (yellow)
 		VidSShortMsg.nColour = RGB(0xFF, 0xFF, 0x7F);
 	}
-	if (nDuration) {
+	if (nDuration)
+	{
 		VidSShortMsg.nTimer = nFramesEmulated + nDuration;
-	} else {
+	}
+	else
+	{
 		VidSShortMsg.nTimer = nFramesEmulated + 120;
 	}
 	nOSDTimer = VidSShortMsg.nTimer;
 	VidSShortMsg.nPriority = nPriority;
 
 	{
-		if (pShortMsgSurf == NULL) {
+		if (pShortMsgSurf == NULL)
+		{
 			return 1;
 		}
 
 		// Print the message
 		HDC hDC;
-		HFONT hFont;
 
 		// Clear the surface first
 		VidSClearSurface(pShortMsgSurf, nKeyColour, NULL);
 
 		pShortMsgSurf->GetDC(&hDC);
 		SetBkMode(hDC, TRANSPARENT);
-		hFont = (HFONT)SelectObject(hDC, ShortMsgFont);
+		HFONT hFont = (HFONT)SelectObject(hDC, ShortMsgFont);
 		SetTextAlign(hDC, TA_TOP | TA_RIGHT);
 
 		MyTextOut(hDC, 256 - 2, 0, VidSShortMsg.pMsgText, _tcslen(VidSShortMsg.pMsgText), 2, VidSShortMsg.nColour);
@@ -1802,18 +2175,22 @@ void VidSKillOSDMsg()
 
 int VidSAddChatMsg(const TCHAR* pID, int nIDRGB, const TCHAR* pMain, int nMainRGB)
 {
-	if (pID || pMain) {
+	if (pID || pMain)
+	{
 		// Scroll the text buffers up one entry
-		if (VidSChatMessage[0].pIDText) {
+		if (VidSChatMessage[0].pIDText)
+		{
 			free(VidSChatMessage[0].pIDText);
 			VidSChatMessage[0].pIDText = NULL;
 		}
-		if (VidSChatMessage[0].pMainText) {
+		if (VidSChatMessage[0].pMainText)
+		{
 			free(VidSChatMessage[0].pMainText);
 			VidSChatMessage[0].pMainText = NULL;
 		}
 
-		for (int i = 1; i < CHAT_SIZE; i++) {
+		for (int i = 1; i < CHAT_SIZE; i++)
+		{
 			VidSChatMessage[i - 1].pIDText = VidSChatMessage[i].pIDText;
 			VidSChatMessage[i - 1].nIDColour = VidSChatMessage[i].nIDColour;
 			VidSChatMessage[i - 1].pMainText = VidSChatMessage[i].pMainText;
@@ -1821,32 +2198,45 @@ int VidSAddChatMsg(const TCHAR* pID, int nIDRGB, const TCHAR* pMain, int nMainRG
 		}
 
 		// Put the new entry in the last position
-		if (pID) {
+		if (pID)
+		{
 			int nSize = _tcslen(pID);
 			VidSChatMessage[CHAT_SIZE - 1].pIDText = (TCHAR*)malloc((nSize + 1) * sizeof(TCHAR));
-			 _tcscpy(VidSChatMessage[CHAT_SIZE - 1].pIDText, pID);
+			_tcscpy(VidSChatMessage[CHAT_SIZE - 1].pIDText, pID);
 			VidSChatMessage[CHAT_SIZE - 1].pIDText[nSize] = 0;
 			VidSChatMessage[CHAT_SIZE - 1].nIDColour = RGB((nIDRGB >> 16), ((nIDRGB >> 8) & 0xFF), (nIDRGB & 0xFF));
-		} else {
+		}
+		else
+		{
 			VidSChatMessage[CHAT_SIZE - 1].pIDText = NULL;
 		}
-		if (pMain) {
+		if (pMain)
+		{
 			int nSize = _tcslen(pMain);
 			VidSChatMessage[CHAT_SIZE - 1].pMainText = (TCHAR*)malloc((nSize + 1) * sizeof(TCHAR));
-			 _tcscpy(VidSChatMessage[CHAT_SIZE - 1].pMainText, pMain);
+			_tcscpy(VidSChatMessage[CHAT_SIZE - 1].pMainText, pMain);
 			VidSChatMessage[CHAT_SIZE - 1].pMainText[nSize] = 0;
-			VidSChatMessage[CHAT_SIZE - 1].nMainColour = RGB((nMainRGB >> 16), ((nMainRGB >> 8) & 0xFF), (nMainRGB & 0xFF));
-		} else {
+			VidSChatMessage[CHAT_SIZE - 1].nMainColour = RGB((nMainRGB >> 16), ((nMainRGB >> 8) & 0xFF),
+			                                                 (nMainRGB & 0xFF));
+		}
+		else
+		{
 			VidSChatMessage[CHAT_SIZE - 1].pMainText = NULL;
 		}
-	} else {
-		for (int i = 0; i < CHAT_SIZE; i++) {
-			if (VidSChatMessage[i].pIDText || VidSChatMessage[i].pMainText) {
-				if (VidSChatMessage[i].pIDText) {
+	}
+	else
+	{
+		for (int i = 0; i < CHAT_SIZE; i++)
+		{
+			if (VidSChatMessage[i].pIDText || VidSChatMessage[i].pMainText)
+			{
+				if (VidSChatMessage[i].pIDText)
+				{
 					free(VidSChatMessage[i].pIDText);
 					VidSChatMessage[i].pIDText = NULL;
 				}
-				if (VidSChatMessage[i].pMainText) {
+				if (VidSChatMessage[i].pMainText)
+				{
 					free(VidSChatMessage[i].pMainText);
 					VidSChatMessage[i].pMainText = NULL;
 				}

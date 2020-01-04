@@ -10,7 +10,8 @@
 #include "inp_keys.h"
 
 // Interface info (used for all modules)
-struct InterfaceInfo {
+struct InterfaceInfo
+{
 	const TCHAR* pszModuleName;
 	TCHAR** ppszInterfaceSettings;
 	TCHAR** ppszModuleSettings;
@@ -22,23 +23,24 @@ INT32 IntInfoAddStringInterface(InterfaceInfo* pInfo, TCHAR* szString);
 INT32 IntInfoAddStringModule(InterfaceInfo* pInfo, TCHAR* szString);
 
 // Input plugin:
-struct InputInOut {
-	INT32   (*Init)();
-	INT32   (*Exit)();
-	INT32   (*SetCooperativeLevel)(bool bExclusive, bool bForeground);
+struct InputInOut
+{
+	INT32 (*Init)();
+	INT32 (*Exit)();
+	INT32 (*SetCooperativeLevel)(bool bExclusive, bool bForeground);
 	// Setup new frame
-	INT32   (*NewFrame)();
+	INT32 (*NewFrame)();
 	// Read digital
-	INT32   (*ReadSwitch)(INT32 nCode);
+	INT32 (*ReadSwitch)(INT32 nCode);
 	// Read analog
-	INT32   (*ReadJoyAxis)(INT32 i, INT32 nAxis);
-	INT32   (*ReadMouseAxis)(INT32 i, INT32 nAxis);
+	INT32 (*ReadJoyAxis)(INT32 i, INT32 nAxis);
+	INT32 (*ReadMouseAxis)(INT32 i, INT32 nAxis);
 	// Find out which control is activated
-	INT32   (*Find)(bool CreateBaseline);
+	INT32 (*Find)(bool CreateBaseline);
 	// Get the name of a control
-	INT32   (*GetControlName)(INT32 nCode, TCHAR* pszDeviceName, TCHAR* pszControlName);
+	INT32 (*GetControlName)(INT32 nCode, TCHAR* pszDeviceName, TCHAR* pszControlName);
 	// Get plugin info
-	INT32   (*GetPluginSettings)(InterfaceInfo* pInfo);
+	INT32 (*GetPluginSettings)(InterfaceInfo* pInfo);
 	const TCHAR* szModuleName;
 };
 
@@ -49,26 +51,27 @@ INT32 InputMake(bool bCopy);
 INT32 InputFind(const INT32 nFlags);
 INT32 InputGetControlName(INT32 nCode, TCHAR* pszDeviceName, TCHAR* pszControlName);
 InterfaceInfo* InputGetInfo();
-std::vector<const InputInOut *> InputGetInterfaces();
+std::vector<const InputInOut*> InputGetInterfaces();
 
 extern bool bInputOkay;
 extern UINT32 nInputSelect;
 
 // CD emulation module
 
-struct CDEmuDo {
-	INT32			   (*CDEmuExit)();
-	INT32			   (*CDEmuInit)();
-	INT32			   (*CDEmuStop)();
-	INT32			   (*CDEmuPlay)(UINT8 M, UINT8 S, UINT8 F);
-	INT32			   (*CDEmuLoadSector)(INT32 LBA, char* pBuffer);
-	UINT8*             (*CDEmuReadTOC)(INT32 track);
-	UINT8*             (*CDEmuReadQChannel)();
-	INT32			   (*CDEmuGetSoundBuffer)(INT16* buffer, INT32 samples);
-	INT32              (*CDEmuScan)(INT32 nAction, INT32 *pnMin);
+struct CDEmuDo
+{
+	INT32 (*CDEmuExit)();
+	INT32 (*CDEmuInit)();
+	INT32 (*CDEmuStop)();
+	INT32 (*CDEmuPlay)(UINT8 M, UINT8 S, UINT8 F);
+	INT32 (*CDEmuLoadSector)(INT32 LBA, char* pBuffer);
+	UINT8* (*CDEmuReadTOC)(INT32 track);
+	UINT8* (*CDEmuReadQChannel)();
+	INT32 (*CDEmuGetSoundBuffer)(INT16* buffer, INT32 samples);
+	INT32 (*CDEmuScan)(INT32 nAction, INT32* pnMin);
 	// Get plugin info
-	INT32			   (*GetPluginSettings)(InterfaceInfo* pInfo);
-	const TCHAR*	 szModuleName;
+	INT32 (*GetPluginSettings)(InterfaceInfo* pInfo);
+	const TCHAR* szModuleName;
 };
 
 #include "cd_interface.h"
@@ -81,16 +84,17 @@ extern UINT32 nCDEmuSelect;
 extern CDEmuStatusValue CDEmuStatus;
 
 // Profiling plugin
-struct ProfileDo {
-	INT32    (*ProfileExit)();
-	INT32    (*ProfileInit)();
-	INT32    (*ProfileStart)(INT32 nSubSystem);
-	INT32    (*ProfileEnd)(INT32 nSubSystem);
+struct ProfileDo
+{
+	INT32 (*ProfileExit)();
+	INT32 (*ProfileInit)();
+	INT32 (*ProfileStart)(INT32 nSubSystem);
+	INT32 (*ProfileEnd)(INT32 nSubSystem);
 	double (*ProfileReadLast)(INT32 nSubSystem);
 	double (*ProfileReadAverage)(INT32 nSubSystem);
 	// Get plugin info
-	INT32    (*GetPluginSettings)(InterfaceInfo* pInfo);
-	const  TCHAR* szModuleName;
+	INT32 (*GetPluginSettings)(InterfaceInfo* pInfo);
+	const TCHAR* szModuleName;
 };
 
 extern bool bProfileOkay;
@@ -105,17 +109,18 @@ double ProfileProfileReadAverage(INT32 nSubSustem);
 InterfaceInfo* ProfileGetInfo();
 
 // Audio Output plugin
-struct AudOut {
-	INT32   (*BlankSound)();
-	INT32   (*SoundCheck)();
-	INT32   (*SoundInit)();
-	INT32   (*SetCallback)(INT32 (*pCallback)(INT32));
-	INT32   (*SoundPlay)();
-	INT32   (*SoundStop)();
-	INT32   (*SoundExit)();
-	INT32   (*SoundSetVolume)();
+struct AudOut
+{
+	INT32 (*BlankSound)();
+	INT32 (*SoundCheck)();
+	INT32 (*SoundInit)();
+	INT32 (*SetCallback)(INT32 (*pCallback)(INT32));
+	INT32 (*SoundPlay)();
+	INT32 (*SoundStop)();
+	INT32 (*SoundExit)();
+	INT32 (*SoundSetVolume)();
 	// Get plugin info
-	INT32   (*GetPluginSettings)(InterfaceInfo* pInfo);
+	INT32 (*GetPluginSettings)(InterfaceInfo* pInfo);
 	const TCHAR* szModuleName;
 };
 
@@ -131,26 +136,27 @@ INT32 AudSoundSetVolume();
 InterfaceInfo* AudGetInfo();
 void AudWriteSilence();
 
-extern INT32 nAudSampleRate[8];          // sample rate
-extern INT32 nAudVolume;				// Sound volume (% * 100)
-extern INT32 nAudSegCount;          	// Segs in the pdsbLoop buffer
-extern INT32 nAudSegLen;            	// Seg length in samples (calculated from Rate/Fps)
+extern INT32 nAudSampleRate[8]; // sample rate
+extern INT32 nAudVolume; // Sound volume (% * 100)
+extern INT32 nAudSegCount; // Segs in the pdsbLoop buffer
+extern INT32 nAudSegLen; // Seg length in samples (calculated from Rate/Fps)
 extern INT32 nAudAllocSegLen;
-extern INT16 *nAudNextSound;       	// The next sound seg we will add to the sample loop
-extern UINT8 bAudOkay;    	// True if DSound was initted okay
-extern UINT8 bAudPlaying;	// True if the Loop buffer is playing
-extern INT32 nAudDSPModule[8];			// DSP module to use: 0 = none, 1 = low-pass filter
+extern INT16* nAudNextSound; // The next sound seg we will add to the sample loop
+extern UINT8 bAudOkay; // True if DSound was initted okay
+extern UINT8 bAudPlaying; // True if the Loop buffer is playing
+extern INT32 nAudDSPModule[8]; // DSP module to use: 0 = none, 1 = low-pass filter
 extern UINT32 nAudSelect;
 
 // Video Output plugin:
-struct VidOut {
-	INT32   (*Init)();
-	INT32   (*Exit)();
-	INT32   (*Frame)(bool bRedraw);
-	INT32   (*Paint)(INT32 bValidate);
-	INT32   (*ImageSize)(RECT* pRect, INT32 nGameWidth, INT32 nGameHeight);
+struct VidOut
+{
+	INT32 (*Init)();
+	INT32 (*Exit)();
+	INT32 (*Frame)(bool bRedraw);
+	INT32 (*Paint)(INT32 bValidate);
+	INT32 (*ImageSize)(RECT* pRect, INT32 nGameWidth, INT32 nGameHeight);
 	// Get plugin info
-	INT32   (*GetPluginSettings)(InterfaceInfo* pInfo);
+	INT32 (*GetPluginSettings)(InterfaceInfo* pInfo);
 	const TCHAR* szModuleName;
 };
 
@@ -168,7 +174,7 @@ const TCHAR* VidGetModuleName();
 InterfaceInfo* VidGetInfo();
 
 #ifdef BUILD_WIN32
- extern HWND hVidWnd;
+extern HWND hVidWnd;
 #endif
 
 #ifdef _XBOX
@@ -230,7 +236,7 @@ extern INT32 nVidImageLeft, nVidImageTop;
 extern INT32 nVidImagePitch, nVidImageBPP;
 extern INT32 nVidImageDepth;
 
-extern "C" UINT32 (__cdecl *VidHighCol) (INT32 r, INT32 g, INT32 b, INT32 i);
+extern "C" UINT32 (__cdecl *VidHighCol)(INT32 r, INT32 g, INT32 b, INT32 i);
 
 extern TCHAR szPlaceHolder[MAX_PATH];
 

@@ -136,20 +136,17 @@ static int XAudio2Check()
 			// there is at least one free buffer
 			break;
 		}
+		// the maximum number of buffers is currently queued
+		if (bAlwaysDrawFrames)
+		{
+			// wait for one buffer to finish playing
+			WaitForSingleObject(voiceContext.hBufferEndEvent, INFINITE);
+		}
 		else
 		{
-			// the maximum number of buffers is currently queued
-			if (bAlwaysDrawFrames)
-			{
-				// wait for one buffer to finish playing
-				WaitForSingleObject(voiceContext.hBufferEndEvent, INFINITE);
-			}
-			else
-			{
-				// drop current audio frame
-				Sleep(2);
-				return 0;
-			}
+			// drop current audio frame
+			Sleep(2);
+			return 0;
 		}
 	}
 

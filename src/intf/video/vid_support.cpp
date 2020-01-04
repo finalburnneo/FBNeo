@@ -9,7 +9,8 @@ static UINT8* pVidSFullImage = NULL;
 
 void VidSFreeVidImage()
 {
-	if (pVidSFullImage) {
+	if (pVidSFullImage)
+	{
 		free(pVidSFullImage);
 		pVidSFullImage = NULL;
 	}
@@ -27,13 +28,12 @@ INT32 VidSAllocVidImage()
 	nMemLen = (nVidImageHeight + 2) * nVidImagePitch;
 	pVidSFullImage = (UINT8*)malloc(nMemLen);
 
-	if (pVidSFullImage) {
+	if (pVidSFullImage)
+	{
 		memset(pVidSFullImage, 0, nMemLen);
 		pVidImage = pVidSFullImage + nVidImagePitch;
 		return 0;
-	} else {
-		pVidImage = NULL;
-		return 1;
 	}
+	pVidImage = NULL;
+	return 1;
 }
-

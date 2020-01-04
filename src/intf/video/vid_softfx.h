@@ -1,14 +1,14 @@
 // Sotfware effects
 
 #ifdef BUILD_WIN32
- #define SOFTFX_ENABLE_DIRECTX
+#define SOFTFX_ENABLE_DIRECTX
 #endif
 #ifdef BUILD_SDL
  #define SOFTFX_ENABLE_SDL
 #endif
 
 #ifdef SOFTFX_ENABLE_DIRECTX
- #include "vid_directx_support.h"
+#include "vid_directx_support.h"
 #endif
 #ifdef SOFTFX_ENABLE_SDL
  #include <SDL.h>

@@ -9,7 +9,7 @@ extern const DIDATAFORMAT c_dfDIMouse2;
 extern const DIDATAFORMAT c_dfDIKeyboard;
 
 // DirectInput8Create
-extern HRESULT (WINAPI* _DirectInput8Create) (HINSTANCE, DWORD, REFIID, LPVOID*, LPUNKNOWN);
+extern HRESULT (WINAPI* _DirectInput8Create)(HINSTANCE, DWORD, REFIID, LPVOID*, LPUNKNOWN);
 
 INT32 DICore_Init();
 

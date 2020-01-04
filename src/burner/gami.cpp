@@ -186,7 +186,6 @@ INT32 GameInpBlank(INT32 bDipSwitch)
 
 static void GameInpInitMacros()
 {
-	struct GameInp* pgi;
 	struct BurnInputInfo bii;
 
 	INT32 nPunchx3[5] = {0, 0, 0, 0, 0};
@@ -317,7 +316,7 @@ static void GameInpInitMacros()
 		}
 	}
 
-	pgi = GameInp + nGameInpCount;
+	struct GameInp* pgi = GameInp + nGameInpCount;
 
 	{
 		// Mappable system macros -dink
@@ -1752,7 +1751,6 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite)
 	// Go through each line of the config file and process inputs
 	while (_fgetts(szLine, sizeof(szLine), h))
 	{
-		TCHAR* szValue;
 		INT32 nLen = _tcslen(szLine);
 
 		// Get rid of the linefeed at the end
@@ -1762,7 +1760,7 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite)
 			nLen--;
 		}
 
-		szValue = LabelCheck(szLine, _T("version"));
+		TCHAR* szValue = LabelCheck(szLine, _T("version"));
 		if (szValue)
 		{
 			nFileVersion = _tcstol(szValue, NULL, 0);
@@ -2016,12 +2014,11 @@ INT32 GameInpWrite(FILE* h)
 // Read a GameInp in
 INT32 GameInpRead(TCHAR* szVal, bool bOverWrite)
 {
-	INT32 nRet;
 	TCHAR* szQuote = NULL;
 	TCHAR* szEnd = NULL;
 	UINT32 i = 0;
 
-	nRet = QuoteRead(&szQuote, &szEnd, szVal);
+	INT32 nRet = QuoteRead(&szQuote, &szEnd, szVal);
 	if (nRet)
 	{
 		return 1;
@@ -2045,12 +2042,11 @@ INT32 GameInpRead(TCHAR* szVal, bool bOverWrite)
 
 INT32 GameInpMacroRead(TCHAR* szVal, bool bOverWrite)
 {
-	INT32 nRet;
 	TCHAR* szQuote = NULL;
 	TCHAR* szEnd = NULL;
 	UINT32 i = 0;
 
-	nRet = QuoteRead(&szQuote, &szEnd, szVal);
+	INT32 nRet = QuoteRead(&szQuote, &szEnd, szVal);
 	if (nRet)
 	{
 		return 1;

@@ -159,7 +159,6 @@ static void BuildNodeList(struct DHTNode* node_ptr)
 // swap the two nodes in the dynamic huffman tree
 static void SwapNodes(struct DHTNode* node1, struct DHTNode* node2)
 {
-	unsigned int freq_diff;
 	struct DHTNode temp_node;
 	struct DHTNode* node_ptr = node1; // node1 always has higher freq
 
@@ -186,7 +185,7 @@ static void SwapNodes(struct DHTNode* node1, struct DHTNode* node2)
 	node2->l_index = temp_node.l_index;
 
 	// correct frequencies
-	freq_diff = node1->freq - node2->freq;
+	unsigned int freq_diff = node1->freq - node2->freq;
 	node_ptr = node1;
 	while (node_ptr->parent)
 	{
@@ -205,7 +204,6 @@ static void SwapNodes(struct DHTNode* node1, struct DHTNode* node2)
 static void CorrectDHT(int curr_idx)
 {
 	struct DHTNode* temp;
-	int swap_idx;
 
 	// search for nodes that are not in order
 	while (node_list[curr_idx + 1])
@@ -214,7 +212,7 @@ static void CorrectDHT(int curr_idx)
 		if (node_list[curr_idx]->freq > node_list[curr_idx + 1]->freq)
 		{
 			// search for the node to swap with, then swap them
-			swap_idx = curr_idx + 1;
+			int swap_idx = curr_idx + 1;
 			while (node_list[swap_idx + 1])
 			{
 				// found node to swap it with, so swap them,
@@ -363,8 +361,6 @@ static void RemoveLookup(struct DHTNode* node_ptr)
 // clean-ups
 static void DestroyDHT()
 {
-	int i;
-
 	// free all nodes in the dynamic huffman tree
 	// and reset the node list
 	list_idx = 0;
@@ -383,7 +379,7 @@ static void DestroyDHT()
 	list_idx = MAX_LIST_LEN - 1;
 
 	// reset lookup table
-	for (i = 0; i < 257; i++)
+	for (int i = 0; i < 257; i++)
 	{
 		if (look_up_table[i]) free(look_up_table[i]);
 		look_up_table[i] = NULL;
@@ -422,14 +418,13 @@ static UINT32 GenerateReverseCode(unsigned char data)
 {
 	UINT32 path_reverse = 0;
 	UINT32 code_reverse = 0;
-	int i;
 
 	// this data exists in the tree, so code is just
 	// return the reverse path of the data
 	if (look_up_table[data]) return ReverseDataPath(look_up_table[data]);
 
 	// reverse the code
-	for (i = 0; i < 8; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		code_reverse <<= 1; // shift path_reverse 1 bit to the left
 		code_reverse |= data & 1; // get the first bit
@@ -461,13 +456,10 @@ static UINT32 GenerateReverseCode(unsigned char data)
 // takes a decompressed file and compresses the whole thing into another file
 int Compress(char* d_file_name, char* c_file_name)
 {
-	int i, nRet;
-	UINT32 code_slice;
+	int i;
 	unsigned char data;
-	int byte_count;
-	int bytes_remain;
 
-	nRet = OpenDecompressedFile(d_file_name, "rb");
+	int nRet = OpenDecompressedFile(d_file_name, "rb");
 	if (nRet) return nRet;
 
 	nRet = OpenCompressedFile(c_file_name, "wb");
@@ -475,7 +467,7 @@ int Compress(char* d_file_name, char* c_file_name)
 
 	// get file size (# of bytes)
 	fseek(dFile, 0,SEEK_END);
-	byte_count = ftell(dFile);
+	int byte_count = ftell(dFile);
 	fseek(dFile, 0,SEEK_SET);
 
 	// if buffer is smaller than the file, load max allowed bytes
@@ -486,8 +478,8 @@ int Compress(char* d_file_name, char* c_file_name)
 		fread(d_buffer, 1, byte_count, dFile);
 
 	d_buffer_idx = 0;
-	code_slice = d_buffer[0];
-	bytes_remain = byte_count % 4;
+	UINT32 code_slice = d_buffer[0];
+	int bytes_remain = byte_count % 4;
 	byte_count /= 4;
 
 	for (i = 0; i < byte_count; i++)
@@ -526,9 +518,8 @@ int Decompress(char* c_file_name, char* d_file_name)
 	int remainder = 32;
 	UINT32 code_slice = 0;
 	int bytes_remain = 0;
-	int nRet;
 
-	nRet = OpenCompressedFile(c_file_name, "rb");
+	int nRet = OpenCompressedFile(c_file_name, "rb");
 	if (nRet) return nRet;
 
 	nRet = OpenDecompressedFile(d_file_name, "wb");
@@ -565,7 +556,6 @@ void EncodeBuffer(unsigned char data)
 {
 	UINT32 code = 0; // code that is ready to put into the buffer
 	UINT32 code_temp = 0; // used to break the code into two parts
-	UINT32 code_reverse;
 	int i;
 
 	// at the beginning, reset everything
@@ -586,7 +576,7 @@ void EncodeBuffer(unsigned char data)
 	}
 
 	// generate reverse code for the data
-	code_reverse = GenerateReverseCode(data);
+	UINT32 code_reverse = GenerateReverseCode(data);
 
 	// put the data in the tree
 	BuildDHT(data);
@@ -664,7 +654,6 @@ unsigned char DecodeBuffer()
 	struct DHTNode* node_ptr = &DHTroot; // start with the root node
 	unsigned char data = 0; // decoded data
 	int isData = 0;
-	int i;
 
 	// if it's the first code, reset everything and decode the first data
 	// otherwise, get the next data
@@ -712,7 +701,7 @@ unsigned char DecodeBuffer()
 				// if the it's a new data, get the next 8 bits
 			else if (node_ptr == NULL)
 			{
-				for (i = 0; i < 8; i++)
+				for (int i = 0; i < 8; i++)
 				{
 					// if it's the end of the code slice, get the next slice.
 					if (dcs.bit_counter == 32)
@@ -883,7 +872,6 @@ void WriteCompressedFile()
 void WriteDecompressedFile(int bytes_remain)
 {
 	UINT32 code_slice;
-	int i;
 
 	if (dFile)
 	{
@@ -892,7 +880,7 @@ void WriteDecompressedFile(int bytes_remain)
 		if (bytes_remain)
 		{
 			code_slice = d_buffer[d_buffer_idx];
-			for (i = 0; i < (4 - bytes_remain); i++)
+			for (int i = 0; i < (4 - bytes_remain); i++)
 			{
 				code_slice >>= 8;
 			}
@@ -966,13 +954,10 @@ void PrintFreqTraverse()
 // print the tree view (rotated -90 degrees)
 void PrintTreeBreath(struct DHTNode* node_ptr, int spaces)
 {
-	int i;
-	int num_digits;
-	int tab_len;
 	if (node_ptr)
 	{
-		num_digits = node_ptr->freq;
-		tab_len = spaces;
+		int num_digits = node_ptr->freq;
+		int tab_len = spaces;
 		PrintTreeBreath(node_ptr->right, spaces + 7); // right tree first
 
 		num_digits = num_digits / 10;
@@ -981,7 +966,7 @@ void PrintTreeBreath(struct DHTNode* node_ptr, int spaces)
 			--tab_len;
 			num_digits = num_digits / 10;
 		}
-		for (i = 0; i < tab_len; i++) printf(" ");
+		for (int i = 0; i < tab_len; i++) printf(" ");
 		printf("%d", node_ptr->freq);
 		if (node_ptr->value) printf(":%c", node_ptr->value);
 		printf("\n");
@@ -1019,11 +1004,10 @@ static void CheckList()
 // dump the buffer to the screen
 void PrintBuffer()
 {
-	UINT32 i, j;
-	j = (UINT32)c_buffer_idx;
+	UINT32 j = (UINT32)c_buffer_idx;
 
 	printf("buffer = ");
-	for (i = 0; i <= j; i++) printf("%.8X ", c_buffer[i]);
+	for (UINT32 i = 0; i <= j; i++) printf("%.8X ", c_buffer[i]);
 }
 
 // save compression result
@@ -1065,8 +1049,7 @@ static inline void Write32(unsigned char*& ptr, const unsigned long v)
 
 static inline unsigned long Read32(const unsigned char*& ptr)
 {
-	unsigned long v;
-	v = (unsigned long)(*ptr++);
+	unsigned long v = (unsigned long)(*ptr++);
 	v |= (unsigned long)((*ptr++) << 8);
 	v |= (unsigned long)((*ptr++) << 16);
 	v |= (unsigned long)((*ptr++) << 24);
@@ -1081,8 +1064,7 @@ static inline void Write16(unsigned char*& ptr, const unsigned short v)
 
 static inline unsigned short Read16(const unsigned char*& ptr)
 {
-	unsigned short v;
-	v = (unsigned short)(*ptr++);
+	unsigned short v = (unsigned short)(*ptr++);
 	v |= (unsigned short)((*ptr++) << 8);
 	return v;
 }

@@ -207,9 +207,7 @@ int _7z_search_crc_match(_7z_file* new_7z, UINT32 search_crc, const char* search
 
 	for (unsigned int i = 0; i < new_7z->db.NumFiles; i++)
 	{
-		size_t len;
-
-		len = SzArEx_GetFileNameUtf16(&new_7z->db, i, NULL);
+		size_t len = SzArEx_GetFileNameUtf16(&new_7z->db, i, NULL);
 
 		// if it's a directory entry we don't care about it..
 		if (SzArEx_IsDir(&new_7z->db, i)) continue;
@@ -294,17 +292,11 @@ _7z_error _7z_file_open(const char* filename, _7z_file** _7z)
 	_7z_error _7zerr = _7ZERR_NONE;
 
 
-	_7z_file* new_7z;
-	char* string;
-	unsigned int cachenum;
-
-	SRes res;
-
 	/* ensure we start with a NULL result */
 	*_7z = NULL;
 
 	/* see if we are in the cache, and reopen if so */
-	for (cachenum = 0; cachenum < ARRAY_LENGTH(_7z_cache); cachenum++)
+	for (unsigned int cachenum = 0; cachenum < ARRAY_LENGTH(_7z_cache); cachenum++)
 	{
 		_7z_file* cached = _7z_cache[cachenum];
 
@@ -318,7 +310,7 @@ _7z_error _7z_file_open(const char* filename, _7z_file** _7z)
 	}
 
 	/* allocate memory for the _7z_file structure */
-	new_7z = (_7z_file*)malloc(sizeof(*new_7z));
+	_7z_file* new_7z = (_7z_file*)malloc(sizeof(*new_7z));
 	if (new_7z == NULL)
 		return _7ZERR_OUT_OF_MEMORY;
 	memset(new_7z, 0, sizeof(*new_7z));
@@ -360,7 +352,7 @@ _7z_error _7z_file_open(const char* filename, _7z_file** _7z)
 	SzArEx_Init(&new_7z->db);
 	new_7z->inited = true;
 
-	res = SzArEx_Open(&new_7z->db, &new_7z->lookStream.s, &new_7z->allocImp, &new_7z->allocTempImp);
+	SRes res = SzArEx_Open(&new_7z->db, &new_7z->lookStream.s, &new_7z->allocImp, &new_7z->allocTempImp);
 	if (res != SZ_OK)
 	{
 		_7zerr = _7ZERR_FILE_ERROR;
@@ -372,7 +364,7 @@ _7z_error _7z_file_open(const char* filename, _7z_file** _7z)
 	new_7z->outBufferSize = 0; /* it can have any value before first call (if outBuffer = 0) */
 
 	/* make a copy of the filename for caching purposes */
-	string = (char*)malloc(strlen(filename) + 1);
+	char* string = (char*)malloc(strlen(filename) + 1);
 	if (string == NULL)
 	{
 		_7zerr = _7ZERR_OUT_OF_MEMORY;
@@ -426,10 +418,8 @@ void _7z_file_close(_7z_file* _7z)
 
 void _7z_file_cache_clear()
 {
-	unsigned int cachenum;
-
 	/* clear call cache entries */
-	for (cachenum = 0; cachenum < ARRAY_LENGTH(_7z_cache); cachenum++)
+	for (unsigned int cachenum = 0; cachenum < ARRAY_LENGTH(_7z_cache); cachenum++)
 		if (_7z_cache[cachenum] != NULL)
 		{
 			free__7z_file(_7z_cache[cachenum]);
@@ -445,7 +435,6 @@ void _7z_file_cache_clear()
 
 _7z_error _7z_file_decompress(_7z_file* new_7z, void* buffer, UINT32 length, UINT32* Processed)
 {
-	SRes res;
 	int index = new_7z->curr_file_idx;
 
 	/* make sure the file is open.. */
@@ -462,10 +451,10 @@ _7z_error _7z_file_decompress(_7z_file* new_7z, void* buffer, UINT32 length, UIN
 	size_t offset = 0;
 	size_t outSizeProcessed = 0;
 
-	res = SzArEx_Extract(&new_7z->db, &new_7z->lookStream.s, index,
-	                     &new_7z->blockIndex, &new_7z->outBuffer, &new_7z->outBufferSize,
-	                     &offset, &outSizeProcessed,
-	                     &new_7z->allocImp, &new_7z->allocTempImp);
+	SRes res = SzArEx_Extract(&new_7z->db, &new_7z->lookStream.s, index,
+	                          &new_7z->blockIndex, &new_7z->outBuffer, &new_7z->outBufferSize,
+	                          &offset, &outSizeProcessed,
+	                          &new_7z->allocImp, &new_7z->allocTempImp);
 
 	if (res != SZ_OK)
 		return _7ZERR_FILE_ERROR;

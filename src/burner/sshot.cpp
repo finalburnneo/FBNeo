@@ -23,7 +23,6 @@ INT32 MakeScreenShot()
 	INT32 num_text = 8;
 
 	time_t currentTime;
-	tm* tmTime;
 	png_time_struct png_time_now;
 
 	char szSShotName[MAX_PATH] = {0,};
@@ -177,7 +176,7 @@ INT32 MakeScreenShot()
 
 	// Get the time
 	time(&currentTime);
-	tmTime = localtime(&currentTime);
+	tm* tmTime = localtime(&currentTime);
 	png_convert_from_time_t(&png_time_now, currentTime);
 
 	// construct our filename -> "romname-mm-dd-hms.png"

@@ -43,7 +43,6 @@ INT32 ConfigGameLoad(bool bOverWrite)
 	// Go through each line of the config file and process inputs
 	while (_fgetts(szLine, sizeof(szLine), h))
 	{
-		TCHAR* szValue;
 		INT32 nLen = _tcslen(szLine);
 
 		// Get rid of the linefeed at the end
@@ -53,7 +52,7 @@ INT32 ConfigGameLoad(bool bOverWrite)
 			nLen--;
 		}
 
-		szValue = LabelCheck(szLine, _T("version"));
+		TCHAR* szValue = LabelCheck(szLine, _T("version"));
 		if (szValue)
 		{
 			nFileVersion = _tcstol(szValue, NULL, 0);
@@ -105,15 +104,13 @@ INT32 ConfigGameLoad(bool bOverWrite)
 // Write out the config file for the game-specific inputs
 INT32 ConfigGameSave(bool bSave)
 {
-	FILE* h;
-
 	if (!bSave)
 	{
 		GameInpBlank(0);
 		ConfigGameLoad(false);
 	}
 
-	h = _tfopen(GameConfigName(), _T("wt"));
+	FILE* h = _tfopen(GameConfigName(), _T("wt"));
 	if (h == NULL)
 	{
 		return 1;

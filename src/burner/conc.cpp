@@ -53,9 +53,7 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 #define INSIDE_NOTHING (0xFFFF & (1 << ((sizeof(TCHAR) * 8) - 1)))
 
 	TCHAR szLine[8192];
-	TCHAR* s;
 	TCHAR* t;
-	INT32 nLen;
 
 	INT32 nLine = 0;
 	TCHAR nInside = INSIDE_NOTHING;
@@ -77,7 +75,7 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 
 		nLine++;
 
-		nLen = _tcslen(szLine);
+		INT32 nLen = _tcslen(szLine);
 		// Get rid of the linefeed at the end
 		while (szLine[nLen - 1] == 0x0A || szLine[nLen - 1] == 0x0D)
 		{
@@ -85,7 +83,7 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 			nLen--;
 		}
 
-		s = szLine; // Start parsing
+		TCHAR* s = szLine; // Start parsing
 
 		if (s[0] == _T('/') && s[1] == _T('/'))
 		{
@@ -348,7 +346,6 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 		return 1;
 	}
 
-	INT32 nLen;
 	INT32 i, j, n = 0;
 	TCHAR tmp[32];
 	TCHAR szLine[1024];
@@ -360,7 +357,7 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 		if (_fgetts(szLine, 1024, fp) == NULL)
 			break;
 
-		nLen = _tcslen(szLine);
+		INT32 nLen = _tcslen(szLine);
 
 		if (nLen < 3 || szLine[0] == '[') continue;
 
@@ -500,7 +497,6 @@ static INT32 ConfigParseMAMEFile()
 	TCHAR gName[64];
 	TCHAR szLine[1024];
 
-	INT32 nLen;
 	INT32 n = 0;
 	INT32 menu = 0;
 	INT32 nFound = 0;
@@ -518,7 +514,7 @@ static INT32 ConfigParseMAMEFile()
 		if (_fgetts(szLine, 1024, fz) == NULL)
 			break;
 
-		nLen = _tcslen(szLine);
+		INT32 nLen = _tcslen(szLine);
 
 		if (szLine[0] == ';') continue;
 

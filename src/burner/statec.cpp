@@ -35,7 +35,7 @@ static INT32 CompGo(INT32 bFinish)
 	INT32 nResult = 0;
 	INT32 nAvailOut = 0;
 
-	bool bRetry, bOverflow;
+	bool bRetry;
 
 	do
 	{
@@ -71,7 +71,7 @@ static INT32 CompGo(INT32 bFinish)
 		nCompFill = Zstr.next_out - Comp; // Update how much has been filled
 
 		// Check for overflow
-		bOverflow = bFinish ? (nResult == Z_OK) : (Zstr.avail_out <= 0);
+		bool bOverflow = bFinish ? (nResult == Z_OK) : (Zstr.avail_out <= 0);
 
 		if (bOverflow)
 		{

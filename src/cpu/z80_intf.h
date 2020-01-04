@@ -1,3 +1,5 @@
+// Z80 (Zed Eight-Ty) Interface
+
 #ifndef FASTCALL
  #undef __fastcall
  #define __fastcall

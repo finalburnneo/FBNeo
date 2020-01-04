@@ -31,8 +31,8 @@ struct Mips3MemoryMap
 };
 
 
-static mips::mips3* g_mips = nullptr;
-static Mips3MemoryMap* g_mmap = nullptr;
+static mips::mips3* g_mips = NULL;
+static Mips3MemoryMap* g_mmap = NULL;
 static bool g_useRecompiler = false;
 
 #ifdef MIPS3_X64_DRC
@@ -64,8 +64,8 @@ static void ResetMemoryMap()
 {
 	for (int page = 0; page < PAGE_COUNT; page++)
 	{
-		g_mmap->MemMap[page] = static_cast<unsigned char*>(nullptr);
-		g_mmap->MemMap[PAGE_WADD + page] = static_cast<unsigned char*>(nullptr);
+		g_mmap->MemMap[page] = (unsigned char*)0;
+		g_mmap->MemMap[PAGE_WADD + page] = (unsigned char*)0;
 	}
 
 	for (int i = 0; i < MIPS_MAXHANDLER; i++)
@@ -109,8 +109,8 @@ int Mips3Exit()
 #endif
 	delete g_mips;
 	delete g_mmap;
-	g_mips = nullptr;
-	g_mmap = nullptr;
+	g_mips = NULL;
+	g_mmap = NULL;
 
 	return 0;
 }
@@ -261,13 +261,13 @@ namespace mips
 		template <typename T>
 		T mips_fast_read(uint8_t* ptr, unsigned adr)
 		{
-			return *static_cast<T*>(static_cast<uint8_t*>(ptr) + (adr & PAGE_MASK));
+			return *((T*)((uint8_t*)ptr + (adr & PAGE_MASK)));
 		}
 
 		template <typename T>
 		void mips_fast_write(uint8_t* xptr, unsigned adr, T value)
 		{
-			T* ptr = static_cast<T*>(static_cast<uint8_t*>(xptr) + (adr & PAGE_MASK));
+			T* ptr = ((T*)((uint8_t*)xptr + (adr & PAGE_MASK)));
 			*ptr = value;
 		}
 

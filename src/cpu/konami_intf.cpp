@@ -108,22 +108,22 @@ void konami_write_rom(UINT32 address, UINT8 data)
 
 	address &= 0xffff;
 
-	if (mem[READ][address >> PAGE_SHIFT] != nullptr)
+	if (mem[READ][address >> PAGE_SHIFT] != NULL)
 	{
 		mem[READ][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (mem[FETCH][address >> PAGE_SHIFT] != nullptr)
+	if (mem[FETCH][address >> PAGE_SHIFT] != NULL)
 	{
 		mem[FETCH][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (mem[WRITE][address >> PAGE_SHIFT] != nullptr)
+	if (mem[WRITE][address >> PAGE_SHIFT] != NULL)
 	{
 		mem[WRITE][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (pkonamiWrite != nullptr)
+	if (pkonamiWrite != NULL)
 	{
 		pkonamiWrite(address, data);
 	}
@@ -131,13 +131,13 @@ void konami_write_rom(UINT32 address, UINT8 data)
 
 void konamiWrite(UINT16 address, UINT8 data)
 {
-	if (mem[WRITE][address >> PAGE_SHIFT] != nullptr)
+	if (mem[WRITE][address >> PAGE_SHIFT] != NULL)
 	{
 		mem[WRITE][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 		return;
 	}
 
-	if (pkonamiWrite != nullptr)
+	if (pkonamiWrite != NULL)
 	{
 		pkonamiWrite(address, data);
 	}
@@ -145,12 +145,12 @@ void konamiWrite(UINT16 address, UINT8 data)
 
 UINT8 konamiRead(UINT16 address)
 {
-	if (mem[READ][address >> PAGE_SHIFT] != nullptr)
+	if (mem[READ][address >> PAGE_SHIFT] != NULL)
 	{
 		return mem[READ][address >> PAGE_SHIFT][address & PAGE_MASK];
 	}
 
-	if (pkonamiRead != nullptr)
+	if (pkonamiRead != NULL)
 	{
 		return pkonamiRead(address);
 	}
@@ -160,12 +160,12 @@ UINT8 konamiRead(UINT16 address)
 
 UINT8 konamiFetch(UINT16 address)
 {
-	if (mem[FETCH][address >> PAGE_SHIFT] != nullptr)
+	if (mem[FETCH][address >> PAGE_SHIFT] != NULL)
 	{
 		return mem[FETCH][address >> PAGE_SHIFT][address & PAGE_MASK];
 	}
 
-	if (pkonamiRead != nullptr)
+	if (pkonamiRead != NULL)
 	{
 		return pkonamiRead(address);
 	}
@@ -221,7 +221,7 @@ void konamiInit(INT32 /*nCpu*/) // only 1 cpu (No examples exist of multi-cpu ko
 	{
 		for (INT32 j = 0; j < MEMORY_SPACE / PAGE_SIZE; j++)
 		{
-			mem[i][j] = nullptr;
+			mem[i][j] = NULL;
 		}
 	}
 
@@ -235,8 +235,8 @@ void konamiExit()
 #endif
 
 	nKonamiCpuCount = 0;
-	pkonamiWrite = nullptr;
-	pkonamiRead = nullptr;
+	pkonamiWrite = NULL;
+	pkonamiRead = NULL;
 
 	DebugCPU_KonamiInitted = 0;
 }

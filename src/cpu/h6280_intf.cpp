@@ -143,22 +143,22 @@ void h6280_write_rom(UINT32 address, UINT8 data)
 
 	address &= 0x1fffff;
 
-	if (sPointer->mem[READ][address >> PAGE_SHIFT] != nullptr)
+	if (sPointer->mem[READ][address >> PAGE_SHIFT] != NULL)
 	{
 		sPointer->mem[READ][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (sPointer->mem[FETCH][address >> PAGE_SHIFT] != nullptr)
+	if (sPointer->mem[FETCH][address >> PAGE_SHIFT] != NULL)
 	{
 		sPointer->mem[FETCH][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (sPointer->mem[WRITE][address >> PAGE_SHIFT] != nullptr)
+	if (sPointer->mem[WRITE][address >> PAGE_SHIFT] != NULL)
 	{
 		sPointer->mem[WRITE][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (sPointer->h6280Write != nullptr)
+	if (sPointer->h6280Write != NULL)
 	{
 		sPointer->h6280Write(address, data);
 	}
@@ -173,7 +173,7 @@ void h6280WritePort(UINT8 port, UINT8 data)
 
 	//	bprintf (0, _T("%5.5x write port\n"), port);
 
-	if (sPointer->h6280WriteIO != nullptr)
+	if (sPointer->h6280WriteIO != NULL)
 	{
 		sPointer->h6280WriteIO(port, data);
 	}
@@ -190,13 +190,13 @@ void h6280Write(UINT32 address, UINT8 data)
 
 	//	bprintf (0, _T("%5.5x write\n"), address);
 
-	if (sPointer->mem[WRITE][address >> PAGE_SHIFT] != nullptr)
+	if (sPointer->mem[WRITE][address >> PAGE_SHIFT] != NULL)
 	{
 		sPointer->mem[WRITE][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 		return;
 	}
 
-	if (sPointer->h6280Write != nullptr)
+	if (sPointer->h6280Write != NULL)
 	{
 		sPointer->h6280Write(address, data);
 	}
@@ -213,12 +213,12 @@ UINT8 h6280Read(UINT32 address)
 
 	//	bprintf (0, _T("%5.5x read\n"), address);
 
-	if (sPointer->mem[READ][address >> PAGE_SHIFT] != nullptr)
+	if (sPointer->mem[READ][address >> PAGE_SHIFT] != NULL)
 	{
 		return sPointer->mem[READ][address >> PAGE_SHIFT][address & PAGE_MASK];
 	}
 
-	if (sPointer->h6280Read != nullptr)
+	if (sPointer->h6280Read != NULL)
 	{
 		return sPointer->h6280Read(address);
 	}
@@ -235,12 +235,12 @@ UINT8 h6280Fetch(UINT32 address)
 
 	address &= 0x1fffff;
 
-	if (sPointer->mem[FETCH][address >> PAGE_SHIFT] != nullptr)
+	if (sPointer->mem[FETCH][address >> PAGE_SHIFT] != NULL)
 	{
 		return sPointer->mem[FETCH][address >> PAGE_SHIFT][address & PAGE_MASK];
 	}
 
-	if (sPointer->h6280Read != nullptr)
+	if (sPointer->h6280Read != NULL)
 	{
 		return sPointer->h6280Read(address);
 	}
@@ -286,13 +286,13 @@ void h6280Init(INT32 nCpu)
 	{
 		for (INT32 j = 0; j < MEMORY_SPACE / PAGE_SIZE; j++)
 		{
-			sPointer->mem[i][j] = nullptr;
+			sPointer->mem[i][j] = NULL;
 		}
 	}
 
-	sPointer->h6280Write = nullptr;
-	sPointer->h6280Read = nullptr;
-	sPointer->h6280WriteIO = nullptr;
+	sPointer->h6280Write = NULL;
+	sPointer->h6280Read = NULL;
+	sPointer->h6280WriteIO = NULL;
 
 	CpuCheatRegister(nCpu, &H6280Config);
 }
@@ -309,9 +309,9 @@ void h6280Exit()
 	{
 		sPointer = &sHandler[i];
 
-		sPointer->h6280Write = nullptr;
-		sPointer->h6280Read = nullptr;
-		sPointer->h6280WriteIO = nullptr;
+		sPointer->h6280Write = NULL;
+		sPointer->h6280Read = NULL;
+		sPointer->h6280WriteIO = NULL;
 
 		if (sPointer->h6280)
 		{
@@ -390,7 +390,7 @@ INT32 h6280Scan(INT32 nAction)
 			h6280_handler* ptr = &sHandler[i];
 			h6280_Regs* p = ptr->h6280;
 
-			if (p == nullptr) continue;
+			if (p == NULL) continue;
 
 			memset(&ba, 0, sizeof ba);
 			ba.Data = p;

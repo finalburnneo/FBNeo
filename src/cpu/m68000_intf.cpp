@@ -1,3 +1,7 @@
+// 680x0 (Sixty Eight K) Interface
+
+// todo: (I think!) if SekRunEnd() is called while running, wrong cycles get returned by SekRun() for m68k -dink
+
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "m68000_debug.h"
@@ -8,7 +12,7 @@ INT8* SekM68KContext[SEK_MAX];
 #endif
 
 INT32 nSekCount = -1; // Number of allocated 68000s
-struct SekExt *SekExt[SEK_MAX] = {nullptr,}, *pSekExt = nullptr;
+struct SekExt *SekExt[SEK_MAX] = {NULL,}, *pSekExt = NULL;
 
 INT32 nSekActive = -1; // The cpu which is currently being emulated
 INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nSekCyclesToDo;
@@ -314,7 +318,7 @@ inline static void WriteByte(UINT32 a, UINT8 d)
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		a ^= 1;
-		pr[a & SEK_PAGEM] = static_cast<UINT8>(d);
+		pr[a & SEK_PAGEM] = (UINT8)d;
 		return;
 	}
 	pSekExt->WriteByte[(uintptr_t)pr](a, d);
@@ -330,7 +334,7 @@ inline static void WriteByteROM(UINT32 a, UINT8 d)
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
 		a ^= 1;
-		pr[a & SEK_PAGEM] = static_cast<UINT8>(d);
+		pr[a & SEK_PAGEM] = (UINT8)d;
 		return;
 	}
 	pSekExt->WriteByte[(uintptr_t)pr](a, d);
@@ -401,7 +405,7 @@ inline static void WriteWord(UINT32 a, UINT16 d)
 		}
 		else
 		{
-			*((UINT16*)(pr + (a & SEK_PAGEM))) = static_cast<UINT16>(d);
+			*((UINT16*)(pr + (a & SEK_PAGEM))) = (UINT16)BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 	}
@@ -418,7 +422,7 @@ inline static void WriteWordROM(UINT32 a, UINT16 d)
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
-		*((UINT16*)(pr + (a & SEK_PAGEM))) = static_cast<UINT16>(d);
+		*((UINT16*)(pr + (a & SEK_PAGEM))) = (UINT16)d;
 		return;
 	}
 	pSekExt->WriteWord[(uintptr_t)pr](a, d);
@@ -717,12 +721,12 @@ void __fastcall A68KChangePC(UINT32 pc)
 
 #ifdef EMU_M68K
 extern "C" {
-UINT32 __fastcall M68KReadByte(UINT32 a) { return static_cast<UINT32>(ReadByte(a)); }
-UINT32 __fastcall M68KReadWord(UINT32 a) { return static_cast<UINT32>(ReadWord(a)); }
+UINT32 __fastcall M68KReadByte(UINT32 a) { return (UINT32)ReadByte(a); }
+UINT32 __fastcall M68KReadWord(UINT32 a) { return (UINT32)ReadWord(a); }
 UINT32 __fastcall M68KReadLong(UINT32 a) { return ReadLong(a); }
 
-UINT32 __fastcall M68KFetchByte(UINT32 a) { return static_cast<UINT32>(FetchByte(a)); }
-UINT32 __fastcall M68KFetchWord(UINT32 a) { return static_cast<UINT32>(FetchWord(a)); }
+UINT32 __fastcall M68KFetchByte(UINT32 a) { return (UINT32)FetchByte(a); }
+UINT32 __fastcall M68KFetchWord(UINT32 a) { return (UINT32)FetchWord(a); }
 UINT32 __fastcall M68KFetchLong(UINT32 a) { return FetchLong(a); }
 
 #ifdef FBNEO_DEBUG
@@ -794,12 +798,12 @@ struct A68KInter a68k_inter_breakpoint = {
 // ----------------------------------------------------------------------------
 // Memory accesses (non-emu specific)
 
-UINT32 SekReadByte(UINT32 a) { return static_cast<UINT32>(ReadByte(a)); }
-UINT32 SekReadWord(UINT32 a) { return static_cast<UINT32>(ReadWord(a)); }
+UINT32 SekReadByte(UINT32 a) { return (UINT32)ReadByte(a); }
+UINT32 SekReadWord(UINT32 a) { return (UINT32)ReadWord(a); }
 UINT32 SekReadLong(UINT32 a) { return ReadLong(a); }
 
-UINT32 SekFetchByte(UINT32 a) { return static_cast<UINT32>(FetchByte(a)); }
-UINT32 SekFetchWord(UINT32 a) { return static_cast<UINT32>(FetchWord(a)); }
+UINT32 SekFetchByte(UINT32 a) { return (UINT32)FetchByte(a); }
+UINT32 SekFetchWord(UINT32 a) { return (UINT32)FetchWord(a); }
 UINT32 SekFetchLong(UINT32 a) { return FetchLong(a); }
 
 void SekWriteByte(UINT32 a, UINT8 d) { WriteByte(a, d); }
@@ -1013,8 +1017,8 @@ static INT32 SekInitCPUM68K(INT32 nCount, INT32 nCPUType)
 	}
 
 	nSekM68KContextSize[nCount] = m68k_context_size();
-	SekM68KContext[nCount] = static_cast<INT8*>(malloc(nSekM68KContextSize[nCount]));
-	if (SekM68KContext[nCount] == nullptr)
+	SekM68KContext[nCount] = (INT8*)malloc(nSekM68KContextSize[nCount]);
+	if (SekM68KContext[nCount] == NULL)
 	{
 		return 1;
 	}
@@ -1059,7 +1063,7 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 {
 	DebugCPU_SekInitted = 1;
 
-	struct SekExt* ps = nullptr;
+	struct SekExt* ps = NULL;
 
 	/*#if !defined BUILD_A68K
 		bBurnUseASMCPUEmulation = false;
@@ -1077,8 +1081,8 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	}
 
 	// Allocate cpu extenal data (memory map etc)
-	SekExt[nCount] = static_cast<struct SekExt*>(malloc(sizeof(struct SekExt)));
-	if (SekExt[nCount] == nullptr)
+	SekExt[nCount] = (struct SekExt*)malloc(sizeof(struct SekExt));
+	if (SekExt[nCount] == NULL)
 	{
 		SekExit();
 		return 1;
@@ -1225,7 +1229,7 @@ static void SekCPUExitM68K(INT32 i)
 	if (SekM68KContext[i])
 	{
 		free(SekM68KContext[i]);
-		SekM68KContext[i] = nullptr;
+		SekM68KContext[i] = NULL;
 	}
 }
 #endif
@@ -1253,11 +1257,11 @@ INT32 SekExit()
 		if (SekExt[i])
 		{
 			free(SekExt[i]);
-			SekExt[i] = nullptr;
+			SekExt[i] = NULL;
 		}
 	}
 
-	pSekExt = nullptr;
+	pSekExt = NULL;
 
 	nSekActive = -1;
 	nSekCount = -1;
@@ -2230,7 +2234,7 @@ UINT32 SekGetPC(INT32)
 #endif
 
 #ifdef EMU_M68K
-	return m68k_get_reg(nullptr, M68K_REG_PC);
+	return m68k_get_reg(NULL, M68K_REG_PC);
 #else
 		return 0;
 #endif
@@ -2248,7 +2252,7 @@ UINT32 SekGetPPC(INT32)
 #endif
 
 #ifdef EMU_M68K
-	return m68k_get_reg(nullptr, M68K_REG_PPC);
+	return m68k_get_reg(NULL, M68K_REG_PPC);
 #else
 		return 0;
 #endif
@@ -2351,68 +2355,68 @@ UINT32 SekDbgGetRegister(SekRegister nRegister)
 	switch (nRegister)
 	{
 	case SEK_REG_D0:
-		return m68k_get_reg(nullptr, M68K_REG_D0);
+		return m68k_get_reg(NULL, M68K_REG_D0);
 	case SEK_REG_D1:
-		return m68k_get_reg(nullptr, M68K_REG_D1);
+		return m68k_get_reg(NULL, M68K_REG_D1);
 	case SEK_REG_D2:
-		return m68k_get_reg(nullptr, M68K_REG_D2);
+		return m68k_get_reg(NULL, M68K_REG_D2);
 	case SEK_REG_D3:
-		return m68k_get_reg(nullptr, M68K_REG_D3);
+		return m68k_get_reg(NULL, M68K_REG_D3);
 	case SEK_REG_D4:
-		return m68k_get_reg(nullptr, M68K_REG_D4);
+		return m68k_get_reg(NULL, M68K_REG_D4);
 	case SEK_REG_D5:
-		return m68k_get_reg(nullptr, M68K_REG_D5);
+		return m68k_get_reg(NULL, M68K_REG_D5);
 	case SEK_REG_D6:
-		return m68k_get_reg(nullptr, M68K_REG_D6);
+		return m68k_get_reg(NULL, M68K_REG_D6);
 	case SEK_REG_D7:
-		return m68k_get_reg(nullptr, M68K_REG_D7);
+		return m68k_get_reg(NULL, M68K_REG_D7);
 
 	case SEK_REG_A0:
-		return m68k_get_reg(nullptr, M68K_REG_A0);
+		return m68k_get_reg(NULL, M68K_REG_A0);
 	case SEK_REG_A1:
-		return m68k_get_reg(nullptr, M68K_REG_A1);
+		return m68k_get_reg(NULL, M68K_REG_A1);
 	case SEK_REG_A2:
-		return m68k_get_reg(nullptr, M68K_REG_A2);
+		return m68k_get_reg(NULL, M68K_REG_A2);
 	case SEK_REG_A3:
-		return m68k_get_reg(nullptr, M68K_REG_A3);
+		return m68k_get_reg(NULL, M68K_REG_A3);
 	case SEK_REG_A4:
-		return m68k_get_reg(nullptr, M68K_REG_A4);
+		return m68k_get_reg(NULL, M68K_REG_A4);
 	case SEK_REG_A5:
-		return m68k_get_reg(nullptr, M68K_REG_A5);
+		return m68k_get_reg(NULL, M68K_REG_A5);
 	case SEK_REG_A6:
-		return m68k_get_reg(nullptr, M68K_REG_A6);
+		return m68k_get_reg(NULL, M68K_REG_A6);
 	case SEK_REG_A7:
-		return m68k_get_reg(nullptr, M68K_REG_A7);
+		return m68k_get_reg(NULL, M68K_REG_A7);
 
 	case SEK_REG_PC:
-		return m68k_get_reg(nullptr, M68K_REG_PC);
+		return m68k_get_reg(NULL, M68K_REG_PC);
 	case SEK_REG_PPC:
-		return m68k_get_reg(nullptr, M68K_REG_PPC);
+		return m68k_get_reg(NULL, M68K_REG_PPC);
 
 	case SEK_REG_SR:
-		return m68k_get_reg(nullptr, M68K_REG_SR);
+		return m68k_get_reg(NULL, M68K_REG_SR);
 
 	case SEK_REG_SP:
-		return m68k_get_reg(nullptr, M68K_REG_SP);
+		return m68k_get_reg(NULL, M68K_REG_SP);
 	case SEK_REG_USP:
-		return m68k_get_reg(nullptr, M68K_REG_USP);
+		return m68k_get_reg(NULL, M68K_REG_USP);
 	case SEK_REG_ISP:
-		return m68k_get_reg(nullptr, M68K_REG_ISP);
+		return m68k_get_reg(NULL, M68K_REG_ISP);
 	case SEK_REG_MSP:
-		return m68k_get_reg(nullptr, M68K_REG_MSP);
+		return m68k_get_reg(NULL, M68K_REG_MSP);
 
 	case SEK_REG_VBR:
-		return m68k_get_reg(nullptr, M68K_REG_VBR);
+		return m68k_get_reg(NULL, M68K_REG_VBR);
 
 	case SEK_REG_SFC:
-		return m68k_get_reg(nullptr, M68K_REG_SFC);
+		return m68k_get_reg(NULL, M68K_REG_SFC);
 	case SEK_REG_DFC:
-		return m68k_get_reg(nullptr, M68K_REG_DFC);
+		return m68k_get_reg(NULL, M68K_REG_DFC);
 
 	case SEK_REG_CACR:
-		return m68k_get_reg(nullptr, M68K_REG_CACR);
+		return m68k_get_reg(NULL, M68K_REG_CACR);
 	case SEK_REG_CAAR:
-		return m68k_get_reg(nullptr, M68K_REG_CAAR);
+		return m68k_get_reg(NULL, M68K_REG_CAAR);
 
 	default:
 		return 0;

@@ -6,7 +6,7 @@
 INT32 nHD6309Count = 0;
 static INT32 nActiveCPU = 0;
 
-static HD6309Ext* HD6309CPUContext = nullptr;
+static HD6309Ext* HD6309CPUContext = NULL;
 
 static INT32 nHD6309CyclesDone[MAX_CPU];
 INT32 nHD6309CyclesTotal;
@@ -131,10 +131,10 @@ INT32 HD6309Init(INT32 nCPU)
 	if (nCPU >= MAX_CPU) bprintf(PRINT_ERROR, _T("HD6309Init called too many CPUs! %d, %d is MAX\n"), nCPU, MAX_CPU);
 #endif
 
-	if (HD6309CPUContext == nullptr)
+	if (HD6309CPUContext == NULL)
 	{
-		HD6309CPUContext = static_cast<HD6309Ext*>(malloc(MAX_CPU * sizeof(HD6309Ext)));
-		if (HD6309CPUContext == nullptr)
+		HD6309CPUContext = (HD6309Ext*)malloc(MAX_CPU * sizeof(HD6309Ext));
+		if (HD6309CPUContext == NULL)
 		{
 			return 1;
 		}
@@ -151,7 +151,7 @@ INT32 HD6309Init(INT32 nCPU)
 
 	for (INT32 j = 0; j < 0x0100 * 3; j++)
 	{
-		HD6309CPUContext[nCPU].pMemMap[j] = nullptr;
+		HD6309CPUContext[nCPU].pMemMap[j] = NULL;
 	}
 
 	nHD6309CyclesTotal = 0;
@@ -174,7 +174,7 @@ void HD6309Exit()
 	if (HD6309CPUContext)
 	{
 		free(HD6309CPUContext);
-		HD6309CPUContext = nullptr;
+		HD6309CPUContext = NULL;
 	}
 
 	DebugCPU_HD6309Initted = 0;
@@ -316,15 +316,15 @@ INT32 HD6309MemCallback(UINT16 nStart, UINT16 nEnd, INT32 nType)
 	{
 		if (nType & MAP_READ)
 		{
-			pMemMap[0 + i] = nullptr;
+			pMemMap[0 + i] = NULL;
 		}
 		if (nType & MAP_WRITE)
 		{
-			pMemMap[0x100 + i] = nullptr;
+			pMemMap[0x100 + i] = NULL;
 		}
 		if (nType & MAP_FETCH)
 		{
-			pMemMap[0x200 + i] = nullptr;
+			pMemMap[0x200 + i] = NULL;
 		}
 	}
 	return 0;
@@ -374,13 +374,13 @@ UINT8 HD6309ReadByte(UINT16 Address)
 {
 	// check mem map
 	UINT8* pr = HD6309CPUContext[nActiveCPU].pMemMap[0x000 | Address >> 8];
-	if (pr != nullptr)
+	if (pr != NULL)
 	{
 		return pr[Address & 0xff];
 	}
 
 	// check handler
-	if (HD6309CPUContext[nActiveCPU].ReadByte != nullptr)
+	if (HD6309CPUContext[nActiveCPU].ReadByte != NULL)
 	{
 		return HD6309CPUContext[nActiveCPU].ReadByte(Address);
 	}
@@ -392,14 +392,14 @@ void HD6309WriteByte(UINT16 Address, UINT8 Data)
 {
 	// check mem map
 	UINT8* pr = HD6309CPUContext[nActiveCPU].pMemMap[0x100 | Address >> 8];
-	if (pr != nullptr)
+	if (pr != NULL)
 	{
 		pr[Address & 0xff] = Data;
 		return;
 	}
 
 	// check handler
-	if (HD6309CPUContext[nActiveCPU].WriteByte != nullptr)
+	if (HD6309CPUContext[nActiveCPU].WriteByte != NULL)
 	{
 		HD6309CPUContext[nActiveCPU].WriteByte(Address, Data);
 	}
@@ -409,13 +409,13 @@ UINT8 HD6309ReadOp(UINT16 Address)
 {
 	// check mem map
 	UINT8* pr = HD6309CPUContext[nActiveCPU].pMemMap[0x200 | Address >> 8];
-	if (pr != nullptr)
+	if (pr != NULL)
 	{
 		return pr[Address & 0xff];
 	}
 
 	// check handler
-	if (HD6309CPUContext[nActiveCPU].ReadOp != nullptr)
+	if (HD6309CPUContext[nActiveCPU].ReadOp != NULL)
 	{
 		return HD6309CPUContext[nActiveCPU].ReadOp(Address);
 	}
@@ -427,13 +427,13 @@ UINT8 HD6309ReadOpArg(UINT16 Address)
 {
 	// check mem map
 	UINT8* pr = HD6309CPUContext[nActiveCPU].pMemMap[0x200 | Address >> 8];
-	if (pr != nullptr)
+	if (pr != NULL)
 	{
 		return pr[Address & 0xff];
 	}
 
 	// check handler
-	if (HD6309CPUContext[nActiveCPU].ReadOpArg != nullptr)
+	if (HD6309CPUContext[nActiveCPU].ReadOpArg != NULL)
 	{
 		return HD6309CPUContext[nActiveCPU].ReadOpArg(Address);
 	}
@@ -453,23 +453,23 @@ void HD6309WriteRom(UINT16 Address, UINT8 Data)
 	UINT8* pw = HD6309CPUContext[nActiveCPU].pMemMap[0x100 | Address >> 8];
 	UINT8* pf = HD6309CPUContext[nActiveCPU].pMemMap[0x200 | Address >> 8];
 
-	if (pr != nullptr)
+	if (pr != NULL)
 	{
 		pr[Address & 0xff] = Data;
 	}
 
-	if (pw != nullptr)
+	if (pw != NULL)
 	{
 		pw[Address & 0xff] = Data;
 	}
 
-	if (pf != nullptr)
+	if (pf != NULL)
 	{
 		pf[Address & 0xff] = Data;
 	}
 
 	// check handler
-	if (HD6309CPUContext[nActiveCPU].WriteByte != nullptr)
+	if (HD6309CPUContext[nActiveCPU].WriteByte != NULL)
 	{
 		HD6309CPUContext[nActiveCPU].WriteByte(Address, Data);
 	}

@@ -4,9 +4,7 @@
 #include <XAudio2fx.h>
 #include <aud_dsp.h>
 #include <burner.h>
-#define DIRECTSOUND_VERSION  0x0300			// Only need version from DirectX 3
 #include <dsound_core.h>
-#include <tchar.h>
 
 // Sound is split into a series of 'segs', one seg for each frame
 // The Loop buffer is a multiple of this seg length.
@@ -428,11 +426,8 @@ static int DxSoundSetVolume()
 static int DxGetSettings(InterfaceInfo* pInfo)
 {
 	TCHAR szString[MAX_PATH] = _T("");
-
-	_sntprintf(szString, MAX_PATH, _T("Audio is delayed by approx. %ims"),
-	           int(100000.0 / (nDSoundFps / (nAudSegCount - 1.0))));
+	_sntprintf(szString, MAX_PATH, _T("Audio is delayed by approx. %ims"), int(100000.0 / (nDSoundFps / (nAudSegCount - 1.0))));
 	IntInfoAddStringModule(pInfo, szString);
-
 	return 0;
 }
 

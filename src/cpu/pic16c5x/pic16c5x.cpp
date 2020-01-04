@@ -1,4 +1,4 @@
- /**************************************************************************\
+/**************************************************************************\
  *                      Microchip PIC16C5x Emulator                         *
  *                                                                          *
  *                    Copyright Tony La Porta                               *
@@ -61,7 +61,6 @@
  \**************************************************************************/
 
 
-
 //#include "debugger.h"
 #include "burnint.h"
 #include "pic16c5x.h"
@@ -89,40 +88,41 @@
 typedef struct
 {
 	/******************** CPU Internal Registers *******************/
-	UINT16	PC;
-	UINT16	PREVPC;		/* previous program counter */
-	UINT8	W;
-	UINT8	OPTION;
-	UINT16	CONFIG;
-	UINT8	ALU;
-	UINT16	WDT;
-	UINT8	TRISA;
-	UINT8	TRISB;
-	UINT8	TRISC;
-	UINT16	STACK[2];
-	UINT16	prescaler;	/* Note: this is really an 8-bit register */
-	PAIR	opcode;
-	UINT8	internalram[8];
+	UINT16 PC;
+	UINT16 PREVPC; /* previous program counter */
+	UINT8 W;
+	UINT8 OPTION;
+	UINT16 CONFIG;
+	UINT8 ALU;
+	UINT16 WDT;
+	UINT8 TRISA;
+	UINT8 TRISB;
+	UINT8 TRISC;
+	UINT16 STACK[2];
+	UINT16 prescaler; /* Note: this is really an 8-bit register */
+	PAIR opcode;
+	UINT8 internalram[8];
 	UINT32 total_cycles;
-	INT32   end_run;
+	INT32 end_run;
 } pic16C5x_Regs;
 
 static pic16C5x_Regs R;
 static UINT16 temp_config;
-static UINT8  old_T0;
-static INT8   old_data;
-static UINT8  picRAMmask;
-static int    inst_cycles;
-static int    delay_timer;
-static int    picmodel;
-static int    pic16C5x_reset_vector;
-static int    pic16C5x_icount;
-static INT32  slice_cycles;
-typedef void (*opcode_fn) (void);
+static UINT8 old_T0;
+static INT8 old_data;
+static UINT8 picRAMmask;
+static int inst_cycles;
+static int delay_timer;
+static int picmodel;
+static int pic16C5x_reset_vector;
+static int pic16C5x_icount;
+static INT32 slice_cycles;
+typedef void (*opcode_fn)(void);
 
-static const unsigned cycles_000_other[16]=
+static const unsigned cycles_000_other[16] =
 {
-/*00*/	1*CLK, 0*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK
+	/*00*/ 1 * CLK, 0 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK
 };
 
 #define TMR0	internalram[1]
@@ -141,8 +141,8 @@ static const unsigned cycles_000_other[16]=
 
 
 /********  The following is the Status Flag register definition.  *********/
-			/* | 7 | 6 | 5 |  4 |  3 | 2 | 1  | 0 | */
-			/* |    PA     | TO | PD | Z | DC | C | */
+/* | 7 | 6 | 5 |  4 |  3 | 2 | 1  | 0 | */
+/* |    PA     | TO | PD | Z | DC | C | */
 #define PA_REG		0xe0	/* PA   Program Page Preselect - bit 8 is unused here */
 #define TO_FLAG		0x10	/* TO   Time Out flag (WatchDog) */
 #define PD_FLAG		0x08	/* PD   Power Down flag */
@@ -159,8 +159,8 @@ static const unsigned cycles_000_other[16]=
 
 
 /********  The following is the Option Flag register definition.  *********/
-			/* | 7 | 6 |   5  |   4  |  3  | 2 | 1 | 0 | */
-			/* | 0 | 0 | TOCS | TOSE | PSA |    PS     | */
+/* | 7 | 6 |   5  |   4  |  3  | 2 | 1 | 0 | */
+/* | 0 | 0 | TOCS | TOSE | PSA |    PS     | */
 #define T0CS_FLAG	0x20	/* TOCS     Timer 0 clock source select */
 #define T0SE_FLAG	0x10	/* TOSE     Timer 0 clock source edge select */
 #define PSA_FLAG	0x08	/* PSA      Prescaler Assignment bit */
@@ -173,9 +173,9 @@ static const unsigned cycles_000_other[16]=
 
 
 /********  The following is the Config Flag register definition.  *********/
-	/* | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 |   2  | 1 | 0 | */
-	/* |              CP                     | WDTE |  FOSC | */
-							/* CP       Code Protect (ROM read protect) */
+/* | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 |   2  | 1 | 0 | */
+/* |              CP                     | WDTE |  FOSC | */
+/* CP       Code Protect (ROM read protect) */
 #define WDTE_FLAG	0x04	/* WDTE     WatchDog Timer enable */
 #define FOSC_FLAG	0x03	/* FOSC     Oscillator source select */
 
@@ -189,13 +189,12 @@ static const unsigned cycles_000_other[16]=
 
 /* Easy bit position selectors */
 #define POS	 ((R.opcode.b.l >> 5) & 7)
-static const unsigned int bit_clr[8] = { 0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf, 0xbf, 0x7f };
-static const unsigned int bit_set[8] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
+static const unsigned int bit_clr[8] = {0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf, 0xbf, 0x7f};
+static const unsigned int bit_set[8] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
 
 
 INLINE void CLR(UINT16 flag) { R.STATUS &= (UINT8)(~flag); }
-INLINE void SET(UINT16 flag) { R.STATUS |=  flag; }
-
+INLINE void SET(UINT16 flag) { R.STATUS |= flag; }
 
 
 INLINE void CALCULATE_Z_FLAG(void)
@@ -206,44 +205,51 @@ INLINE void CALCULATE_Z_FLAG(void)
 
 INLINE void CALCULATE_ADD_CARRY(void)
 {
-	if ((UINT8)(old_data) > (UINT8)(R.ALU)) {
+	if ((UINT8)(old_data) > (UINT8)(R.ALU))
+	{
 		SET(C_FLAG);
 	}
-	else {
+	else
+	{
 		CLR(C_FLAG);
 	}
 }
 
 INLINE void CALCULATE_ADD_DIGITCARRY(void)
 {
-	if (((UINT8)(old_data) & 0x0f) > ((UINT8)(R.ALU) & 0x0f)) {
+	if (((UINT8)(old_data) & 0x0f) > ((UINT8)(R.ALU) & 0x0f))
+	{
 		SET(DC_FLAG);
 	}
-	else {
+	else
+	{
 		CLR(DC_FLAG);
 	}
 }
 
 INLINE void CALCULATE_SUB_CARRY(void)
 {
-	if ((UINT8)(old_data) < (UINT8)(R.ALU)) {
+	if ((UINT8)(old_data) < (UINT8)(R.ALU))
+	{
 		CLR(C_FLAG);
 	}
-	else {
+	else
+	{
 		SET(C_FLAG);
 	}
 }
 
 INLINE void CALCULATE_SUB_DIGITCARRY(void)
 {
-	if (((UINT8)(old_data) & 0x0f) < ((UINT8)(R.ALU) & 0x0f)) {
+	if (((UINT8)(old_data) & 0x0f) < ((UINT8)(R.ALU) & 0x0f))
+	{
 		CLR(DC_FLAG);
 	}
-	else {
+	else
+	{
 		SET(DC_FLAG);
 	}
 }
-
 
 
 INLINE UINT16 POP_STACK(void)
@@ -252,6 +258,7 @@ INLINE UINT16 POP_STACK(void)
 	R.STACK[1] = R.STACK[0];
 	return (data & ADDR_MASK);
 }
+
 INLINE void PUSH_STACK(UINT16 data)
 {
 	R.STACK[0] = R.STACK[1];
@@ -260,95 +267,108 @@ INLINE void PUSH_STACK(UINT16 data)
 
 
 //INLINE 
-UINT8 GET_REGFILE(offs_t addr)	/* Read from internal memory */
+UINT8 GET_REGFILE(offs_t addr) /* Read from internal memory */
 {
 	UINT8 data;
-	
-	if (addr == 0) { /* Indirect addressing */
+
+	if (addr == 0)
+	{
+		/* Indirect addressing */
 		addr = (R.FSR & picRAMmask);
 	}
 
 	if ((picmodel == 0x16C57) || (picmodel == 0x16C58))
 	{
-		addr |= (R.FSR & 0x60);		/* FSR bits 6-5 are used for banking in direct mode */
+		addr |= (R.FSR & 0x60); /* FSR bits 6-5 are used for banking in direct mode */
 	}
 	if ((addr & 0x10) == 0) addr &= 0x0f;
 
-	switch(addr)
+	switch (addr)
 	{
-		case 00:	/* Not an actual register, so return 0 */
-					data = 0;
-					break;
-		case 04:	data = (R.FSR | (UINT8)(~picRAMmask));
-					break;
-		case 05:	data = P_IN(0);
-					data &= R.TRISA;
-					data |= ((UINT8)(~R.TRISA) & R.PORTA);
-					data &= 0xf;		/* 4-bit port (only lower 4 bits used) */
-					break;
-		case 06:	data = P_IN(1);
-					data &= R.TRISB;
-					data |= ((UINT8)(~R.TRISB) & R.PORTB);
-					break;
-		case 07:	if ((picmodel == 0x16C55) || (picmodel == 0x16C57)) {
-						data = P_IN(2);
-						data &= R.TRISC;
-						data |= ((UINT8)(~R.TRISC) & R.PORTC);
-					}
-					else {		/* PIC16C54, PIC16C56, PIC16C58 */
-						data = M_RDRAM(addr);
-					}
-					break;
-		default:	data = M_RDRAM(addr);
-					break;
+	case 00: /* Not an actual register, so return 0 */
+		data = 0;
+		break;
+	case 04: data = (R.FSR | (UINT8)(~picRAMmask));
+		break;
+	case 05: data = P_IN(0);
+		data &= R.TRISA;
+		data |= ((UINT8)(~R.TRISA) & R.PORTA);
+		data &= 0xf; /* 4-bit port (only lower 4 bits used) */
+		break;
+	case 06: data = P_IN(1);
+		data &= R.TRISB;
+		data |= ((UINT8)(~R.TRISB) & R.PORTB);
+		break;
+	case 07: if ((picmodel == 0x16C55) || (picmodel == 0x16C57))
+		{
+			data = P_IN(2);
+			data &= R.TRISC;
+			data |= ((UINT8)(~R.TRISC) & R.PORTC);
+		}
+		else
+		{
+			/* PIC16C54, PIC16C56, PIC16C58 */
+			data = M_RDRAM(addr);
+		}
+		break;
+	default: data = M_RDRAM(addr);
+		break;
 	}
 
 	return data;
 }
 
 //INLINE 
-void STORE_REGFILE(offs_t addr, UINT8 data)	/* Write to internal memory */
+void STORE_REGFILE(offs_t addr, UINT8 data) /* Write to internal memory */
 {
-	if (addr == 0) { /* Indirect addressing */
+	if (addr == 0)
+	{
+		/* Indirect addressing */
 		addr = (R.FSR & picRAMmask);
 	}
-	
+
 	if ((picmodel == 0x16C57) || (picmodel == 0x16C58))
 	{
-		addr |= (R.FSR & 0x60);			/* FSR bits 6-5 are used for banking in direct mode */
+		addr |= (R.FSR & 0x60); /* FSR bits 6-5 are used for banking in direct mode */
 	}
 	if ((addr & 0x10) == 0) addr &= 0x0f;
 
-	switch(addr)
+	switch (addr)
 	{
-		case 00:	/* Not an actual register, nothing to save */
-					break;
-		case 01:	delay_timer = 2;		/* Timer starts after next two instructions */
-					if (PSA == 0) R.prescaler = 0;	/* Must clear the Prescaler */
-					R.TMR0 = data;
-					break;
-		case 02:	R.PCL = data;
-					R.PC = ((R.STATUS & PA_REG) << 4) | data;
-					break;
-		case 03:	R.STATUS &= (UINT8)(~PA_REG); R.STATUS |= (data & PA_REG);
-					break;
-		case 04:	R.FSR = (data | (UINT8)(~picRAMmask));
-					break;
-		case 05:	data &= 0xf;		/* 4-bit port (only lower 4 bits used) */
-					P_OUT(0,data & (UINT8)(~R.TRISA)); R.PORTA = data;
-					break;
-		case 06:	P_OUT(1,data & (UINT8)(~R.TRISB)); R.PORTB = data;
-					break;
-		case 07:	if ((picmodel == 0x16C55) || (picmodel == 0x16C57)) {
-						P_OUT(2,data & (UINT8)(~R.TRISC));
-						R.PORTC = data;
-					}
-					else {		/* PIC16C54, PIC16C56, PIC16C58 */
-						M_WRTRAM(addr, data);
-					}
-					break;
-		default:	M_WRTRAM(addr, data);
-					break;
+	case 00: /* Not an actual register, nothing to save */
+		break;
+	case 01: delay_timer = 2; /* Timer starts after next two instructions */
+		if (PSA == 0) R.prescaler = 0; /* Must clear the Prescaler */
+		R.TMR0 = data;
+		break;
+	case 02: R.PCL = data;
+		R.PC = ((R.STATUS & PA_REG) << 4) | data;
+		break;
+	case 03: R.STATUS &= (UINT8)(~PA_REG);
+		R.STATUS |= (data & PA_REG);
+		break;
+	case 04: R.FSR = (data | (UINT8)(~picRAMmask));
+		break;
+	case 05: data &= 0xf; /* 4-bit port (only lower 4 bits used) */
+		P_OUT(0, data & (UINT8)(~R.TRISA));
+		R.PORTA = data;
+		break;
+	case 06: P_OUT(1, data & (UINT8)(~R.TRISB));
+		R.PORTB = data;
+		break;
+	case 07: if ((picmodel == 0x16C55) || (picmodel == 0x16C57))
+		{
+			P_OUT(2, data & (UINT8)(~R.TRISC));
+			R.PORTC = data;
+		}
+		else
+		{
+			/* PIC16C54, PIC16C56, PIC16C58 */
+			M_WRTRAM(addr, data);
+		}
+		break;
+	default: M_WRTRAM(addr, data);
+		break;
 	}
 }
 
@@ -376,7 +396,6 @@ INLINE void STORE_RESULT(offs_t addr, UINT8 data)
 
 static void illegal(void)
 {
-
 }
 
 
@@ -422,9 +441,9 @@ static void btfss(void)
 {
 	if ((GET_REGFILE(ADDR) & bit_set[POS]) == bit_set[POS])
 	{
-		R.PC++ ;
+		R.PC++;
 		R.PCL = R.PC & 0xff;
-		inst_cycles += 1;		/* Add NOP cycles */
+		inst_cycles += 1; /* Add NOP cycles */
 	}
 }
 
@@ -432,9 +451,9 @@ static void btfsc(void)
 {
 	if ((GET_REGFILE(ADDR) & bit_set[POS]) == 0)
 	{
-		R.PC++ ;
+		R.PC++;
 		R.PCL = R.PC & 0xff;
-		inst_cycles += 1;		/* Add NOP cycles */
+		inst_cycles += 1; /* Add NOP cycles */
 	}
 }
 
@@ -486,9 +505,9 @@ static void decfsz(void)
 	STORE_RESULT(ADDR, R.ALU);
 	if (R.ALU == 0)
 	{
-		R.PC++ ;
+		R.PC++;
 		R.PCL = R.PC & 0xff;
-		inst_cycles += 1;		/* Add NOP cycles */
+		inst_cycles += 1; /* Add NOP cycles */
 	}
 }
 
@@ -512,9 +531,9 @@ static void incfsz(void)
 	STORE_RESULT(ADDR, R.ALU);
 	if (R.ALU == 0)
 	{
-		R.PC++ ;
+		R.PC++;
 		R.PCL = R.PC & 0xff;
-		inst_cycles += 1;		/* Add NOP cycles */
+		inst_cycles += 1; /* Add NOP cycles */
 	}
 }
 
@@ -606,26 +625,43 @@ static void subwf(void)
 
 static void swapf(void)
 {
-	R.ALU  = ((GET_REGFILE(ADDR) << 4) & 0xf0);
+	R.ALU = ((GET_REGFILE(ADDR) << 4) & 0xf0);
 	R.ALU |= ((GET_REGFILE(ADDR) >> 4) & 0x0f);
 	STORE_RESULT(ADDR, R.ALU);
 }
 
 static void tris(void)
 {
-	switch(R.opcode.b.l & 0x7)
+	switch (R.opcode.b.l & 0x7)
 	{
-		case 05:	if (R.TRISA == R.W) break;
-					else R.TRISA = R.W | 0xf0; P_OUT(0,R.PORTA & (UINT8)(~R.TRISA) & 0xf); break;
-		case 06:	if (R.TRISB == R.W) break;
-					else R.TRISB = R.W; P_OUT(1,R.PORTB & (UINT8)(~R.TRISB)); break;
-		case 07:	if ((picmodel == 0x16C55) || (picmodel == 0x16C57)) {
-						if (R.TRISC == R.W) break;
-						else R.TRISC = R.W; P_OUT(2,R.PORTC & (UINT8)(~R.TRISC)); break;
-					} else {
-						illegal(); break;
-					}
-		default:	illegal(); break;
+	case 05:
+		{
+			if (R.TRISA == R.W) break;
+			R.TRISA = R.W | 0xf0;
+		}
+		P_OUT(0, R.PORTA & (UINT8)(~R.TRISA) & 0xf);
+		break;
+	case 06:
+		{
+			if (R.TRISB == R.W) break;
+			R.TRISB = R.W;
+		}
+		P_OUT(1, R.PORTB & (UINT8)(~R.TRISB));
+		break;
+	case 07:
+		{
+			if ((picmodel == 0x16C55) || (picmodel == 0x16C57))
+			{
+				if (R.TRISC == R.W) break;
+				R.TRISC = R.W;
+				P_OUT(2, R.PORTC & (UINT8)(~R.TRISC));
+				break;
+			}
+			illegal();
+			break;
+		}
+	default: illegal();
+		break;
 	}
 }
 
@@ -644,67 +680,98 @@ static void xorwf(void)
 }
 
 
-
 /***********************************************************************
- *  Cycle Timings
- ***********************************************************************/
+*  Cycle Timings
+***********************************************************************/
 
-static const unsigned cycles_main[256]=
+static const unsigned cycles_main[256] =
 {
-/*00*/	1*CLK, 0*CLK, 1*CLK, 1*CLK, 1*CLK, 0*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*10*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*20*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
+	/*00*/ 1 * CLK, 0 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 0 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
+	/*10*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
+	/*20*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
 
 
-/*30*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*40*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*50*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*60*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*70*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*80*/	2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK,
-/*90*/	2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK,
-/*A0*/	2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK,
-/*B0*/	2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK,
-/*C0*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*D0*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*E0*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*F0*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK
+	/*30*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
+	/*40*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
+	/*50*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
+	/*60*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
+	/*70*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
+	/*80*/ 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK,
+	2 * CLK, 2 * CLK, 2 * CLK,
+	2 * CLK,
+	/*90*/ 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK,
+	2 * CLK, 2 * CLK, 2 * CLK,
+	2 * CLK,
+	/*A0*/ 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK,
+	2 * CLK, 2 * CLK, 2 * CLK,
+	2 * CLK,
+	/*B0*/ 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK,
+	2 * CLK, 2 * CLK, 2 * CLK,
+	2 * CLK,
+	/*C0*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
+	/*D0*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
+	/*E0*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK,
+	/*F0*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK
 };
 
-static const opcode_fn opcode_main[256]=
+static const opcode_fn opcode_main[256] =
 {
-/*00*/  nop,	illegal,movwf,	movwf,	clrw,	illegal,clrf,	clrf,
-/*08*/  subwf,	subwf,	subwf,	subwf,	decf,	decf,	decf,	decf,
-/*10*/  iorwf,	iorwf,	iorwf,	iorwf,	andwf,	andwf,	andwf,	andwf,
-/*18*/  xorwf,	xorwf,	xorwf,	xorwf,	addwf,	addwf,	addwf,	addwf,
-/*20*/  movf,	movf,	movf,	movf,	comf,	comf,	comf,	comf,
-/*28*/  incf,	incf,	incf,	incf,	decfsz,	decfsz,	decfsz,	decfsz,
-/*30*/  rrf,	rrf,	rrf,	rrf,	rlf,	rlf,	rlf,	rlf,
-/*38*/  swapf,	swapf,	swapf,	swapf,	incfsz,	incfsz,	incfsz,	incfsz,
-/*40*/  bcf,	bcf,	bcf,	bcf,	bcf,	bcf,	bcf,	bcf,
-/*48*/  bcf,	bcf,	bcf,	bcf,	bcf,	bcf,	bcf,	bcf,
-/*50*/  bsf,	bsf,	bsf,	bsf,	bsf,	bsf,	bsf,	bsf,
-/*58*/  bsf,	bsf,	bsf,	bsf,	bsf,	bsf,	bsf,	bsf,
-/*60*/  btfsc,	btfsc,	btfsc,	btfsc,	btfsc,	btfsc,	btfsc,	btfsc,
-/*68*/  btfsc,	btfsc,	btfsc,	btfsc,	btfsc,	btfsc,	btfsc,	btfsc,
-/*70*/  btfss,	btfss,	btfss,	btfss,	btfss,	btfss,	btfss,	btfss,
-/*78*/  btfss,	btfss,	btfss,	btfss,	btfss,	btfss,	btfss,	btfss,
-/*80*/  retlw,	retlw,	retlw,	retlw,	retlw,	retlw,	retlw,	retlw,
-/*88*/  retlw,	retlw,	retlw,	retlw,	retlw,	retlw,	retlw,	retlw,
-/*90*/  call,	call,	call,	call,	call,	call,	call,	call,
-/*98*/  call,	call,	call,	call,	call,	call,	call,	call,
-/*A0*/  goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,
-/*A8*/  goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,
-/*B0*/  goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,
-/*B8*/  goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,goto_op,
-/*C0*/  movlw,	movlw,	movlw,	movlw,	movlw,	movlw,	movlw,	movlw,
-/*C8*/  movlw,	movlw,	movlw,	movlw,	movlw,	movlw,	movlw,	movlw,
-/*D0*/  iorlw,	iorlw,	iorlw,	iorlw,	iorlw,	iorlw,	iorlw,	iorlw,
-/*D8*/  iorlw,	iorlw,	iorlw,	iorlw,	iorlw,	iorlw,	iorlw,	iorlw,
-/*E0*/  andlw,	andlw,	andlw,	andlw,	andlw,	andlw,	andlw,	andlw,
-/*E8*/  andlw,	andlw,	andlw,	andlw,	andlw,	andlw,	andlw,	andlw,
-/*F0*/  xorlw,	xorlw,	xorlw,	xorlw,	xorlw,	xorlw,	xorlw,	xorlw,
-/*F8*/  xorlw,	xorlw,	xorlw,	xorlw,	xorlw,	xorlw,	xorlw,	xorlw
+	/*00*/ nop, illegal, movwf, movwf, clrw, illegal, clrf, clrf,
+	/*08*/ subwf, subwf, subwf, subwf, decf, decf, decf, decf,
+	/*10*/ iorwf, iorwf, iorwf, iorwf, andwf, andwf, andwf, andwf,
+	/*18*/ xorwf, xorwf, xorwf, xorwf, addwf, addwf, addwf, addwf,
+	/*20*/ movf, movf, movf, movf, comf, comf, comf, comf,
+	/*28*/ incf, incf, incf, incf, decfsz, decfsz, decfsz, decfsz,
+	/*30*/ rrf, rrf, rrf, rrf, rlf, rlf, rlf, rlf,
+	/*38*/ swapf, swapf, swapf, swapf, incfsz, incfsz, incfsz, incfsz,
+	/*40*/ bcf, bcf, bcf, bcf, bcf, bcf, bcf, bcf,
+	/*48*/ bcf, bcf, bcf, bcf, bcf, bcf, bcf, bcf,
+	/*50*/ bsf, bsf, bsf, bsf, bsf, bsf, bsf, bsf,
+	/*58*/ bsf, bsf, bsf, bsf, bsf, bsf, bsf, bsf,
+	/*60*/ btfsc, btfsc, btfsc, btfsc, btfsc, btfsc, btfsc, btfsc,
+	/*68*/ btfsc, btfsc, btfsc, btfsc, btfsc, btfsc, btfsc, btfsc,
+	/*70*/ btfss, btfss, btfss, btfss, btfss, btfss, btfss, btfss,
+	/*78*/ btfss, btfss, btfss, btfss, btfss, btfss, btfss, btfss,
+	/*80*/ retlw, retlw, retlw, retlw, retlw, retlw, retlw, retlw,
+	/*88*/ retlw, retlw, retlw, retlw, retlw, retlw, retlw, retlw,
+	/*90*/ call, call, call, call, call, call, call, call,
+	/*98*/ call, call, call, call, call, call, call, call,
+	/*A0*/ goto_op, goto_op, goto_op, goto_op, goto_op, goto_op, goto_op, goto_op,
+	/*A8*/ goto_op, goto_op, goto_op, goto_op, goto_op, goto_op, goto_op, goto_op,
+	/*B0*/ goto_op, goto_op, goto_op, goto_op, goto_op, goto_op, goto_op, goto_op,
+	/*B8*/ goto_op, goto_op, goto_op, goto_op, goto_op, goto_op, goto_op, goto_op,
+	/*C0*/ movlw, movlw, movlw, movlw, movlw, movlw, movlw, movlw,
+	/*C8*/ movlw, movlw, movlw, movlw, movlw, movlw, movlw, movlw,
+	/*D0*/ iorlw, iorlw, iorlw, iorlw, iorlw, iorlw, iorlw, iorlw,
+	/*D8*/ iorlw, iorlw, iorlw, iorlw, iorlw, iorlw, iorlw, iorlw,
+	/*E0*/ andlw, andlw, andlw, andlw, andlw, andlw, andlw, andlw,
+	/*E8*/ andlw, andlw, andlw, andlw, andlw, andlw, andlw, andlw,
+	/*F0*/ xorlw, xorlw, xorlw, xorlw, xorlw, xorlw, xorlw, xorlw,
+	/*F8*/ xorlw, xorlw, xorlw, xorlw, xorlw, xorlw, xorlw, xorlw
 };
 
 
@@ -713,60 +780,60 @@ static const opcode_fn opcode_main[256]=
 ///*00*/	1*CLK, 0*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK
 //};
 
-static const opcode_fn opcode_000_other[16]=
+static const opcode_fn opcode_000_other[16] =
 {
-/*00*/  nop,	illegal,option,	sleepic,clrwdt,	tris,	tris,	tris,
-/*08*/  illegal,illegal,illegal,illegal,illegal,illegal,illegal,illegal
+	/*00*/ nop, illegal, option, sleepic, clrwdt, tris, tris, tris,
+	/*08*/ illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
 };
 
 /****************************************************************************
- *  Reset registers to their initial values
- ****************************************************************************/
+*  Reset registers to their initial values
+****************************************************************************/
 
 static void pic16C5x_reset_regs(void)
 {
-	R.PC     = pic16C5x_reset_vector;
+	R.PC = pic16C5x_reset_vector;
 	R.CONFIG = temp_config;
-	R.TRISA  = 0xff;
-	R.TRISB  = 0xff;
-	R.TRISC  = 0xff;
+	R.TRISA = 0xff;
+	R.TRISB = 0xff;
+	R.TRISC = 0xff;
 	R.OPTION = (T0CS_FLAG | T0SE_FLAG | PSA_FLAG | PS_REG);
-	R.PCL    = 0xff;
-	R.FSR   |= (UINT8)(~picRAMmask);
+	R.PCL = 0xff;
+	R.FSR |= (UINT8)(~picRAMmask);
 	R.PORTA &= 0x0f;
 	R.prescaler = 0;
 	delay_timer = 0;
-	old_T0      = 0;
+	old_T0 = 0;
 	inst_cycles = 0;
 }
 
 static void pic16C5x_soft_reset(void)
 {
-//	R.STATUS &= 0x1f;
+	//	R.STATUS &= 0x1f;
 	SET((TO_FLAG | PD_FLAG | Z_FLAG | DC_FLAG | C_FLAG));
 	pic16C5x_reset_regs();
 }
 
 void pic16c5x_config(int data)
 {
-//	logerror("Writing %04x to the PIC16C5x config register\n",data);
+	//	logerror("Writing %04x to the PIC16C5x config register\n",data);
 	temp_config = (data & 0xfff);
 }
 
 
 /****************************************************************************
- *  Shut down CPU emulation
- ****************************************************************************/
+*  Shut down CPU emulation
+****************************************************************************/
 
-void pic16C5x_exit (void)
+void pic16C5x_exit(void)
 {
 	/* nothing to do */
 }
 
 
 /****************************************************************************
- *  WatchDog
- ****************************************************************************/
+*  WatchDog
+****************************************************************************/
 
 static void pic16C5x_update_watchdog(int counts)
 {
@@ -783,21 +850,26 @@ static void pic16C5x_update_watchdog(int counts)
 
 		R.WDT -= counts;
 
-		if (R.WDT > 0x464f) {
+		if (R.WDT > 0x464f)
+		{
 			R.WDT = 0x464f - (0xffff - R.WDT);
 		}
 
 		if (((old_WDT != 0) && (old_WDT < R.WDT)) || (R.WDT == 0))
 		{
-			if (PSA) {
+			if (PSA)
+			{
 				R.prescaler++;
-				if (R.prescaler >= (1 << PS)) {	/* Prescale values from 1 to 128 */
+				if (R.prescaler >= (1 << PS))
+				{
+					/* Prescale values from 1 to 128 */
 					R.prescaler = 0;
 					CLR(TO_FLAG);
 					pic16C5x_soft_reset();
 				}
 			}
-			else {
+			else
+			{
 				CLR(TO_FLAG);
 				pic16C5x_soft_reset();
 			}
@@ -807,27 +879,31 @@ static void pic16C5x_update_watchdog(int counts)
 
 
 /****************************************************************************
- *  Update Timer
- ****************************************************************************/
+*  Update Timer
+****************************************************************************/
 
 static void pic16C5x_update_timer(int counts)
 {
-	if (PSA == 0) {
+	if (PSA == 0)
+	{
 		R.prescaler += counts;
-		if (R.prescaler >= (2 << PS)) {	/* Prescale values from 2 to 256 */
+		if (R.prescaler >= (2 << PS))
+		{
+			/* Prescale values from 2 to 256 */
 			R.TMR0 += (R.prescaler / (2 << PS));
-			R.prescaler %= (2 << PS);	/* Overflow prescaler */
+			R.prescaler %= (2 << PS); /* Overflow prescaler */
 		}
 	}
-	else {
+	else
+	{
 		R.TMR0 += counts;
 	}
 }
 
 
 /****************************************************************************
- *  Execute IPeriod. Return 0 if emulation should be stopped
- ****************************************************************************/
+*  Execute IPeriod. Return 0 if emulation should be stopped
+****************************************************************************/
 
 int pic16c5xRun(int cycles)
 {
@@ -838,12 +914,13 @@ int pic16c5xRun(int cycles)
 
 	do
 	{
-		if (PD == 0)						/* Sleep Mode */
+		if (PD == 0) /* Sleep Mode */
 		{
-			inst_cycles = (1*CLK);
+			inst_cycles = (1 * CLK);
 
-			if (WDTE) {
-				pic16C5x_update_watchdog(1*CLK);
+			if (WDTE)
+			{
+				pic16C5x_update_watchdog(1 * CLK);
 			}
 		}
 		else
@@ -854,46 +931,63 @@ int pic16c5xRun(int cycles)
 			R.PC++;
 			R.PCL++;
 
-			if ((R.opcode.w.l & 0xff0) != 0x000)	{	/* Do all opcodes except the 00? ones */
+			if ((R.opcode.w.l & 0xff0) != 0x000)
+			{
+				/* Do all opcodes except the 00? ones */
 				inst_cycles = cycles_main[((R.opcode.w.l >> 4) & 0xff)];
 				(*(opcode_main[((R.opcode.w.l >> 4) & 0xff)]))();
 			}
-			else {	/* Opcode 0x00? has many opcodes in its minor nibble */
+			else
+			{
+				/* Opcode 0x00? has many opcodes in its minor nibble */
 				inst_cycles = cycles_000_other[(R.opcode.b.l & 0x1f)];
 				(*(opcode_000_other[(R.opcode.b.l & 0x1f)]))();
 			}
 
-			if (T0CS) {						/* Count mode */
+			if (T0CS)
+			{
+				/* Count mode */
 				T0_in = S_T0_IN;
 				if (T0_in) T0_in = 1;
-				if (T0SE) {					/* Count falling edge T0 input */
-					if (FALLING_EDGE_T0) {
+				if (T0SE)
+				{
+					/* Count falling edge T0 input */
+					if (FALLING_EDGE_T0)
+					{
 						pic16C5x_update_timer(1);
 					}
 				}
-				else {						/* Count rising edge T0 input */
-					if (RISING_EDGE_T0) {
+				else
+				{
+					/* Count rising edge T0 input */
+					if (RISING_EDGE_T0)
+					{
 						pic16C5x_update_timer(1);
 					}
 				}
 				old_T0 = T0_in;
 			}
-			else {							/* Timer mode */
-				if (delay_timer) {
+			else
+			{
+				/* Timer mode */
+				if (delay_timer)
+				{
 					delay_timer--;
 				}
-				else {
-					pic16C5x_update_timer((inst_cycles/CLK));
+				else
+				{
+					pic16C5x_update_timer((inst_cycles / CLK));
 				}
 			}
-			if (WDTE) {
-				pic16C5x_update_watchdog((inst_cycles/CLK));
+			if (WDTE)
+			{
+				pic16C5x_update_watchdog((inst_cycles / CLK));
 			}
 		}
 
 		pic16C5x_icount -= inst_cycles;
-
-	} while (pic16C5x_icount>0 && !R.end_run);
+	}
+	while (pic16C5x_icount > 0 && !R.end_run);
 
 	cycles = cycles - pic16C5x_icount;
 
@@ -956,38 +1050,38 @@ static void pic16C58_reset(void)
 }
 
 
-void pic16c5xDoReset(int type, int *romlen, int *ramlen)
+void pic16c5xDoReset(int type, int* romlen, int* ramlen)
 {
 	switch (type)
 	{
-		case 0x16C54:
-			pic16C54_reset();
-			*romlen = 0x1ff;
-			*ramlen = 0x01f;
+	case 0x16C54:
+		pic16C54_reset();
+		*romlen = 0x1ff;
+		*ramlen = 0x01f;
 		return;
 
-		case 0x16C55:
-			pic16C55_reset();
-			*romlen = 0x3ff; // correct?
-			*ramlen = 0x01f;
+	case 0x16C55:
+		pic16C55_reset();
+		*romlen = 0x3ff; // correct?
+		*ramlen = 0x01f;
 		return;
 
-		case 0x16C56:
-			pic16C56_reset();
-			*romlen = 0x3ff;
-			*ramlen = 0x01f;
+	case 0x16C56:
+		pic16C56_reset();
+		*romlen = 0x3ff;
+		*ramlen = 0x01f;
 		return;
 
-		case 0x16C57:
-			pic16C57_reset();
-			*romlen = 0x7ff;
-			*ramlen = 0x07f;
+	case 0x16C57:
+		pic16C57_reset();
+		*romlen = 0x7ff;
+		*ramlen = 0x07f;
 		return;
 
-		case 0x16C58:
-			pic16C58_reset();
-			*romlen = 0x7ff;
-			*ramlen = 0x07f;
+	case 0x16C58:
+		pic16C58_reset();
+		*romlen = 0x7ff;
+		*ramlen = 0x07f;
 		return;
 	}
 }
@@ -1014,11 +1108,12 @@ INT32 pic16c5xIdle(INT32 cycles)
 	return cycles;
 }
 
-int pic16c5xScanCpu(int nAction,int* /*pnMin*/)
+int pic16c5xScanCpu(int nAction, int* /*pnMin*/)
 {
 	struct BurnArea ba;
 
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		SCAN_VAR(R.PC);
 		SCAN_VAR(R.PREVPC);
 		SCAN_VAR(R.W);
@@ -1035,11 +1130,12 @@ int pic16c5xScanCpu(int nAction,int* /*pnMin*/)
 		SCAN_VAR(R.total_cycles);
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {
-		ba.Data		= R.internalram;
-		ba.nLen		= 8;
+	if (nAction & ACB_MEMORY_RAM)
+	{
+		ba.Data = R.internalram;
+		ba.nLen = 8;
 		ba.nAddress = 0;
-		ba.szName	= "Internal RAM";
+		ba.szName = "Internal RAM";
 		BurnAcb(&ba);
 	}
 

@@ -14,11 +14,11 @@
 /* interrupt vectors */
 enum
 {
-	NEC_DIVIDE_VECTOR	= 0,
-	NEC_TRAP_VECTOR		= 1,
-	NEC_NMI_VECTOR		= 2,
-	NEC_BRKV_VECTOR		= 4,
-	NEC_CHKIND_VECTOR	= 5
+	NEC_DIVIDE_VECTOR = 0,
+	NEC_TRAP_VECTOR = 1,
+	NEC_NMI_VECTOR = 2,
+	NEC_BRKV_VECTOR = 4,
+	NEC_CHKIND_VECTOR = 5
 };
 
 /* interrupt sources */
@@ -31,62 +31,73 @@ typedef enum
 
 /* NEC registers */
 typedef union
-{                   /* eight general registers */
-    UINT16 w[8];    /* viewed as 16 bits registers */
-    UINT8  b[16];   /* or as 8 bit registers */
+{
+	/* eight general registers */
+	UINT16 w[8]; /* viewed as 16 bits registers */
+	UINT8 b[16]; /* or as 8 bit registers */
 } necbasicregs;
 
 typedef struct _nec_state_t nec_state_t;
+
 struct _nec_state_t
 {
 	necbasicregs regs;
-	UINT32	fetch_xor;
-	UINT16	sregs[4];
+	UINT32 fetch_xor;
+	UINT16 sregs[4];
 
-	UINT16	ip;
+	UINT16 ip;
 
 	/* PSW flags */
-	INT32	SignVal;
-	UINT32	AuxVal, OverVal, ZeroVal, CarryVal, ParityVal;	/* 0 or non-0 valued flags */
-	UINT8	TF, IF, DF, MF;	/* 0 or 1 valued flags */
+	INT32 SignVal;
+	UINT32 AuxVal, OverVal, ZeroVal, CarryVal, ParityVal; /* 0 or non-0 valued flags */
+	UINT8 TF, IF, DF, MF; /* 0 or 1 valued flags */
 
 	/* interrupt related */
 	UINT32 vector;
-	UINT32	pending_irq;
-	UINT32	nmi_state;
-	UINT32	irq_state;
-	UINT32	poll_state;
-	UINT8	no_interrupt;
-	UINT8	halted;
+	UINT32 pending_irq;
+	UINT32 nmi_state;
+	UINT32 irq_state;
+	UINT32 poll_state;
+	UINT8 no_interrupt;
+	UINT8 halted;
 
-	INT32	icount;
+	INT32 icount;
 
-	UINT8	prefetch_size;
-	UINT8	prefetch_cycles;
-	INT8	prefetch_count;
-	UINT8	prefetch_reset;
-	UINT32	chip_type;
+	UINT8 prefetch_size;
+	UINT8 prefetch_cycles;
+	INT8 prefetch_count;
+	UINT8 prefetch_reset;
+	UINT32 chip_type;
 
-	UINT32	prefix_base;	/* base address of the latest prefix segment */
-	UINT8	seg_prefix;		/* prefix segment indicator */
-	UINT32  cycles_total;
-	INT32  cycles_remaining;
-	INT8	stop_run;
+	UINT32 prefix_base; /* base address of the latest prefix segment */
+	UINT8 seg_prefix; /* prefix segment indicator */
+	UINT32 cycles_total;
+	INT32 cycles_remaining;
+	INT8 stop_run;
 };
 
 typedef enum { DS1, PS, SS_, DS0 } SREGS;
+
 typedef enum { AW, CW, DW, BW, SP, BP, IX, IY } WREGS;
 
 #ifdef LSB_FIRST
-typedef enum {
-   AL = 0, //NATIVE_ENDIAN_VALUE_LE_BE(0x0, 0x1),
-   AH = 1, //NATIVE_ENDIAN_VALUE_LE_BE(0x1, 0x0),
-   CL = 2, //NATIVE_ENDIAN_VALUE_LE_BE(0x2, 0x3),
-   CH = 3, //NATIVE_ENDIAN_VALUE_LE_BE(0x3, 0x2),
-   DL = 4, //NATIVE_ENDIAN_VALUE_LE_BE(0x4, 0x5),
-   DH = 5, //NATIVE_ENDIAN_VALUE_LE_BE(0x5, 0x4),
-   BL = 6, //NATIVE_ENDIAN_VALUE_LE_BE(0x6, 0x7),
-   BH = 7  //NATIVE_ENDIAN_VALUE_LE_BE(0x7, 0x6),
+typedef enum
+{
+	AL = 0,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x0, 0x1),
+	AH = 1,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x1, 0x0),
+	CL = 2,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x2, 0x3),
+	CH = 3,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x3, 0x2),
+	DL = 4,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x4, 0x5),
+	DH = 5,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x5, 0x4),
+	BL = 6,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x6, 0x7),
+	BH = 7 //NATIVE_ENDIAN_VALUE_LE_BE(0x7, 0x6),
 } BREGS;
 #else
 typedef enum {

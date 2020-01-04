@@ -5,17 +5,17 @@ typedef void (*pWriteByteHandler)(UINT16 a, UINT8 d);
 typedef UINT8 (*pReadOpHandler)(UINT16 a);
 typedef UINT8 (*pReadOpArgHandler)(UINT16 a);
 
-struct M6809Ext {
-
+struct M6809Ext
+{
 	m6809_Regs reg;
-	
+
 	UINT8* pMemMap[0x100 * 3];
 
 	pReadByteHandler ReadByte;
 	pWriteByteHandler WriteByte;
 	pReadOpHandler ReadOp;
 	pReadOpArgHandler ReadOpArg;
-	
+
 	INT32 nCyclesTotal;
 	INT32 nCyclesSegment;
 	INT32 nCyclesLeft;

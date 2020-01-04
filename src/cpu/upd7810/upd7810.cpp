@@ -436,26 +436,35 @@ static UINT8 (*an5_func)();
 static UINT8 (*an6_func)();
 static UINT8 (*an7_func)();
 
-static UINT8 *mem[3][0x100];
+static UINT8* mem[3][0x100];
 
 static UINT8 (*read_byte_8)(UINT16) = NULL;
-static void (*write_byte_8)(UINT16,UINT8) = NULL;
+static void (*write_byte_8)(UINT16, UINT8) = NULL;
 
 static UINT8 (*io_read_byte_8)(UINT8) = NULL;
-static void (*io_write_byte_8)(UINT8,UINT8) = NULL;
+static void (*io_write_byte_8)(UINT8, UINT8) = NULL;
 
-static void dummy_write(UINT16,UINT8) {}
+static void dummy_write(UINT16, UINT8)
+{
+}
+
 static UINT8 dummy_read(UINT16) { return 0; }
-static void dummy_write_port(UINT8,UINT8) {}
+
+static void dummy_write_port(UINT8, UINT8)
+{
+}
+
 static UINT8 dummy_read_port(UINT8) { return 0; }
 
 static UINT8 cpu_readop(UINT16 address)
 {
-	if (mem[2][address/0x100]) {
-		return mem[2][address/0x100][address & 0xff];
+	if (mem[2][address / 0x100])
+	{
+		return mem[2][address / 0x100][address & 0xff];
 	}
 
-	if (read_byte_8) {
+	if (read_byte_8)
+	{
 		return read_byte_8(address);
 	}
 
@@ -464,11 +473,13 @@ static UINT8 cpu_readop(UINT16 address)
 
 static UINT8 cpu_readop_arg(UINT16 address)
 {
-	if (mem[0][address/0x100]) {
-		return mem[0][address/0x100][address & 0xff];
+	if (mem[0][address / 0x100])
+	{
+		return mem[0][address / 0x100][address & 0xff];
 	}
 
-	if (read_byte_8) {
+	if (read_byte_8)
+	{
 		return read_byte_8(address);
 	}
 
@@ -477,11 +488,13 @@ static UINT8 cpu_readop_arg(UINT16 address)
 
 static UINT8 program_read_byte_8(UINT16 address)
 {
-	if (mem[2][address/0x100]) {
-		return mem[0][address/0x100][address & 0xff];
+	if (mem[2][address / 0x100])
+	{
+		return mem[0][address / 0x100][address & 0xff];
 	}
 
-	if (read_byte_8) {
+	if (read_byte_8)
+	{
 		return read_byte_8(address);
 	}
 
@@ -490,27 +503,32 @@ static UINT8 program_read_byte_8(UINT16 address)
 
 static void program_write_byte_8(UINT16 address, UINT8 data)
 {
-	if (mem[1][address/0x100]) {
-		mem[1][address/0x100][address & 0xff] = data;
+	if (mem[1][address / 0x100])
+	{
+		mem[1][address / 0x100][address & 0xff] = data;
 		return;
 	}
 
-	if (write_byte_8) {
-		write_byte_8(address,data);
+	if (write_byte_8)
+	{
+		write_byte_8(address, data);
 		return;
 	}
 }
 
 void upd7810CheatWrite(UINT32 address, UINT8 data)
 {
-	if (mem[0][address/0x100]) {
-		mem[0][address/0x100][address & 0xff] = data;
+	if (mem[0][address / 0x100])
+	{
+		mem[0][address / 0x100][address & 0xff] = data;
 	}
-	if (mem[1][address/0x100]) {
-		mem[1][address/0x100][address & 0xff] = data;
+	if (mem[1][address / 0x100])
+	{
+		mem[1][address / 0x100][address & 0xff] = data;
 	}
-	if (mem[2][address/0x100]) {
-		mem[2][address/0x100][address & 0xff] = data;
+	if (mem[2][address / 0x100])
+	{
+		mem[2][address / 0x100][address & 0xff] = data;
 	}
 }
 
@@ -524,7 +542,7 @@ void upd7810SetReadPortHandler(UINT8 (*read_port)(UINT8))
 	io_read_byte_8 = read_port;
 }
 
-void upd7810SetWritePortHandler(void (*write_port)(UINT8,UINT8))
+void upd7810SetWritePortHandler(void (*write_port)(UINT8, UINT8))
 {
 	io_write_byte_8 = write_port;
 }
@@ -534,16 +552,16 @@ void upd7810SetReadHandler(UINT8 (*read)(UINT16))
 	read_byte_8 = read;
 }
 
-void upd7810SetWriteHandler(void (*write)(UINT16,UINT8))
+void upd7810SetWriteHandler(void (*write)(UINT16, UINT8))
 {
 	write_byte_8 = write;
 }
 
-void upd7810MapMemory(UINT8 *src, UINT16 start, UINT16 finish, UINT8 map)
+void upd7810MapMemory(UINT8* src, UINT16 start, UINT16 finish, UINT8 map)
 {
-	UINT16 len = (finish-start) >> 8;
+	UINT16 len = (finish - start) >> 8;
 
-	for (INT32 i = 0; i < len+1; i++)
+	for (INT32 i = 0; i < len + 1; i++)
 	{
 		UINT32 offset = i + (start >> 8);
 		if (map & (1 << 0)) mem[0][offset] = src + (i << 8);
@@ -553,7 +571,7 @@ void upd7810MapMemory(UINT8 *src, UINT16 start, UINT16 finish, UINT8 map)
 }
 
 
-static const struct opcode_s *opXX; // = opXX_7810;
+static const struct opcode_s* opXX; // = opXX_7810;
 static INT32 upd7810_config_type = TYPE_7810;
 INT32 (*upd7810_io_callback)(INT32 ioline, INT32 state) = NULL;
 INT32 (*upd7810_irq_callback)(INT32 line) = NULL;
@@ -706,7 +724,8 @@ static UINT8 upd7810_win_layout[] = {
 #define IRR 	upd7810.irr
 #define ITF 	upd7810.itf
 
-struct opcode_s {
+struct opcode_s
+{
 	void (*opfunc)(void);
 	UINT8 oplen;
 	UINT8 cycles;
@@ -730,8 +749,7 @@ struct opcode_s {
 	if ((after & 15) < (before & 15))	\
 		PSW |= HC;						\
 	else								\
-		PSW &= ~HC; 					\
-
+		PSW &= ~HC;
 #define ZHC_SUB(after,before,carry) 	\
 	if (after == 0) PSW |= Z; else PSW &= ~Z; \
 	if (before == after) 					\
@@ -743,8 +761,7 @@ struct opcode_s {
 	if ((after & 15) > (before & 15))	\
 		PSW |= HC;						\
 	else								\
-		PSW &= ~HC; 					\
-
+		PSW &= ~HC;
 #define SKIP_CY 	if (CY == (PSW & CY)) PSW |= SK
 #define SKIP_NC 	if (0 == (PSW & CY)) PSW |= SK
 #define SKIP_Z		if (Z == (PSW & Z)) PSW |= SK
@@ -757,48 +774,48 @@ static UINT8 RP(INT32 port)
 	switch (port)
 	{
 	case UPD7810_PORTA:
-		if (upd7810.ma)	// NS20031301 no need to read if the port is set as output
+		if (upd7810.ma) // NS20031301 no need to read if the port is set as output
 			upd7810.pa_in = io_read_byte_8(port);
 		data = (upd7810.pa_in & upd7810.ma) | (upd7810.pa_out & ~upd7810.ma);
 		break;
 	case UPD7810_PORTB:
-		if (upd7810.mb)	// NS20031301 no need to read if the port is set as output
+		if (upd7810.mb) // NS20031301 no need to read if the port is set as output
 			upd7810.pb_in = io_read_byte_8(port);
 		data = (upd7810.pb_in & upd7810.mb) | (upd7810.pb_out & ~upd7810.mb);
 		break;
 	case UPD7810_PORTC:
-		if (upd7810.mc)	// NS20031301 no need to read if the port is set as output
+		if (upd7810.mc) // NS20031301 no need to read if the port is set as output
 			upd7810.pc_in = io_read_byte_8(port);
 		data = (upd7810.pc_in & upd7810.mc) | (upd7810.pc_out & ~upd7810.mc);
-		if (upd7810.mcc & 0x01) 	/* PC0 = TxD output */
+		if (upd7810.mcc & 0x01) /* PC0 = TxD output */
 			data = (data & ~0x01) | (upd7810.txd & 1 ? 0x01 : 0x00);
-		if (upd7810.mcc & 0x02) 	/* PC1 = RxD input */
+		if (upd7810.mcc & 0x02) /* PC1 = RxD input */
 			data = (data & ~0x02) | (upd7810.rxd & 1 ? 0x02 : 0x00);
-		if (upd7810.mcc & 0x04) 	/* PC2 = SCK input/output */
+		if (upd7810.mcc & 0x04) /* PC2 = SCK input/output */
 			data = (data & ~0x04) | (upd7810.sck & 1 ? 0x04 : 0x00);
-		if (upd7810.mcc & 0x08) 	/* PC3 = TI input */
+		if (upd7810.mcc & 0x08) /* PC3 = TI input */
 			data = (data & ~0x08) | (upd7810.ti & 1 ? 0x08 : 0x00);
-		if (upd7810.mcc & 0x10) 	/* PC4 = TO output */
+		if (upd7810.mcc & 0x10) /* PC4 = TO output */
 			data = (data & ~0x10) | (upd7810.to & 1 ? 0x10 : 0x00);
-		if (upd7810.mcc & 0x20) 	/* PC5 = CI input */
+		if (upd7810.mcc & 0x20) /* PC5 = CI input */
 			data = (data & ~0x20) | (upd7810.ci & 1 ? 0x20 : 0x00);
-		if (upd7810.mcc & 0x40) 	/* PC6 = CO0 output */
+		if (upd7810.mcc & 0x40) /* PC6 = CO0 output */
 			data = (data & ~0x40) | (upd7810.co0 & 1 ? 0x40 : 0x00);
-		if (upd7810.mcc & 0x80) 	/* PC7 = CO1 output */
+		if (upd7810.mcc & 0x80) /* PC7 = CO1 output */
 			data = (data & ~0x80) | (upd7810.co1 & 1 ? 0x80 : 0x00);
 		break;
 	case UPD7810_PORTD:
 		upd7810.pd_in = io_read_byte_8(port);
 		switch (upd7810.mm & 0x07)
 		{
-		case 0x00:			/* PD input mode, PF port mode */
+		case 0x00: /* PD input mode, PF port mode */
 			data = upd7810.pd_in;
 			break;
-		case 0x01:			/* PD output mode, PF port mode */
+		case 0x01: /* PD output mode, PF port mode */
 			data = upd7810.pd_out;
 			break;
-		default:			/* PD extension mode, PF port/extension mode */
-			data = 0xff;	/* what do we see on the port here? */
+		default: /* PD extension mode, PF port/extension mode */
+			data = 0xff; /* what do we see on the port here? */
 			break;
 		}
 		break;
@@ -806,27 +823,27 @@ static UINT8 RP(INT32 port)
 		upd7810.pf_in = io_read_byte_8(port);
 		switch (upd7810.mm & 0x06)
 		{
-		case 0x00:			/* PD input/output mode, PF port mode */
+		case 0x00: /* PD input/output mode, PF port mode */
 			data = (upd7810.pf_in & upd7810.mf) | (upd7810.pf_out & ~upd7810.mf);
 			break;
-		case 0x02:			/* PD extension mode, PF0-3 extension mode, PF4-7 port mode */
+		case 0x02: /* PD extension mode, PF0-3 extension mode, PF4-7 port mode */
 			data = (upd7810.pf_in & upd7810.mf) | (upd7810.pf_out & ~upd7810.mf);
-			data |= 0x0f;	/* what would we see on the lower bits here? */
+			data |= 0x0f; /* what would we see on the lower bits here? */
 			break;
-		case 0x04:			/* PD extension mode, PF0-5 extension mode, PF6-7 port mode */
+		case 0x04: /* PD extension mode, PF0-5 extension mode, PF6-7 port mode */
 			data = (upd7810.pf_in & upd7810.mf) | (upd7810.pf_out & ~upd7810.mf);
-			data |= 0x3f;	/* what would we see on the lower bits here? */
+			data |= 0x3f; /* what would we see on the lower bits here? */
 			break;
 		case 0x06:
-			data = 0xff;	/* what would we see on the lower bits here? */
+			data = 0xff; /* what would we see on the lower bits here? */
 			break;
 		}
 		break;
-	case UPD7807_PORTT:	// NS20031301 partial implementation
+	case UPD7807_PORTT: // NS20031301 partial implementation
 		data = io_read_byte_8(port);
 		break;
-	//default:
-	//	logerror("uPD7810 internal error: RP() called with invalid port number\n");
+		//default:
+		//	logerror("uPD7810 internal error: RP() called with invalid port number\n");
 	}
 	return data;
 }
@@ -837,35 +854,35 @@ static void WP(INT32 port, UINT8 data)
 	{
 	case UPD7810_PORTA:
 		upd7810.pa_out = data;
-//      data = (data & ~upd7810.ma) | (upd7810.pa_in & upd7810.ma);
-		data = (data & ~upd7810.ma) | (upd7810.ma);	// NS20031401
+		//      data = (data & ~upd7810.ma) | (upd7810.pa_in & upd7810.ma);
+		data = (data & ~upd7810.ma) | (upd7810.ma); // NS20031401
 		io_write_byte_8(port, data);
 		break;
 	case UPD7810_PORTB:
 		upd7810.pb_out = data;
-//      data = (data & ~upd7810.mb) | (upd7810.pb_in & upd7810.mb);
-		data = (data & ~upd7810.mb) | (upd7810.mb);	// NS20031401
+		//      data = (data & ~upd7810.mb) | (upd7810.pb_in & upd7810.mb);
+		data = (data & ~upd7810.mb) | (upd7810.mb); // NS20031401
 		io_write_byte_8(port, data);
 		break;
 	case UPD7810_PORTC:
 		upd7810.pc_out = data;
-//      data = (data & ~upd7810.mc) | (upd7810.pc_in & upd7810.mc);
-		data = (data & ~upd7810.mc) | (upd7810.mc);	// NS20031401
-		if (upd7810.mcc & 0x01) 	/* PC0 = TxD output */
+		//      data = (data & ~upd7810.mc) | (upd7810.pc_in & upd7810.mc);
+		data = (data & ~upd7810.mc) | (upd7810.mc); // NS20031401
+		if (upd7810.mcc & 0x01) /* PC0 = TxD output */
 			data = (data & ~0x01) | (upd7810.txd & 1 ? 0x01 : 0x00);
-		if (upd7810.mcc & 0x02) 	/* PC1 = RxD input */
+		if (upd7810.mcc & 0x02) /* PC1 = RxD input */
 			data = (data & ~0x02) | (upd7810.rxd & 1 ? 0x02 : 0x00);
-		if (upd7810.mcc & 0x04) 	/* PC2 = SCK input/output */
+		if (upd7810.mcc & 0x04) /* PC2 = SCK input/output */
 			data = (data & ~0x04) | (upd7810.sck & 1 ? 0x04 : 0x00);
-		if (upd7810.mcc & 0x08) 	/* PC3 = TI input */
+		if (upd7810.mcc & 0x08) /* PC3 = TI input */
 			data = (data & ~0x08) | (upd7810.ti & 1 ? 0x08 : 0x00);
-		if (upd7810.mcc & 0x10) 	/* PC4 = TO output */
+		if (upd7810.mcc & 0x10) /* PC4 = TO output */
 			data = (data & ~0x10) | (upd7810.to & 1 ? 0x10 : 0x00);
-		if (upd7810.mcc & 0x20) 	/* PC5 = CI input */
+		if (upd7810.mcc & 0x20) /* PC5 = CI input */
 			data = (data & ~0x20) | (upd7810.ci & 1 ? 0x20 : 0x00);
-		if (upd7810.mcc & 0x40) 	/* PC6 = CO0 output */
+		if (upd7810.mcc & 0x40) /* PC6 = CO0 output */
 			data = (data & ~0x40) | (upd7810.co0 & 1 ? 0x40 : 0x00);
-		if (upd7810.mcc & 0x80) 	/* PC7 = CO1 output */
+		if (upd7810.mcc & 0x80) /* PC7 = CO1 output */
 			data = (data & ~0x80) | (upd7810.co1 & 1 ? 0x80 : 0x00);
 		io_write_byte_8(port, data);
 		break;
@@ -873,13 +890,13 @@ static void WP(INT32 port, UINT8 data)
 		upd7810.pd_out = data;
 		switch (upd7810.mm & 0x07)
 		{
-		case 0x00:			/* PD input mode, PF port mode */
+		case 0x00: /* PD input mode, PF port mode */
 			data = upd7810.pd_in;
 			break;
-		case 0x01:			/* PD output mode, PF port mode */
+		case 0x01: /* PD output mode, PF port mode */
 			data = upd7810.pd_out;
 			break;
-		default:			/* PD extension mode, PF port/extension mode */
+		default: /* PD extension mode, PF port/extension mode */
 			return;
 		}
 		io_write_byte_8(port, data);
@@ -889,22 +906,22 @@ static void WP(INT32 port, UINT8 data)
 		data = (data & ~upd7810.mf) | (upd7810.pf_in & upd7810.mf);
 		switch (upd7810.mm & 0x06)
 		{
-		case 0x00:			/* PD input/output mode, PF port mode */
+		case 0x00: /* PD input/output mode, PF port mode */
 			break;
-		case 0x02:			/* PD extension mode, PF0-3 extension mode, PF4-7 port mode */
-			data |= 0x0f;	/* what would come out for the lower bits here? */
+		case 0x02: /* PD extension mode, PF0-3 extension mode, PF4-7 port mode */
+			data |= 0x0f; /* what would come out for the lower bits here? */
 			break;
-		case 0x04:			/* PD extension mode, PF0-5 extension mode, PF6-7 port mode */
-			data |= 0x3f;	/* what would come out for the lower bits here? */
+		case 0x04: /* PD extension mode, PF0-5 extension mode, PF6-7 port mode */
+			data |= 0x3f; /* what would come out for the lower bits here? */
 			break;
 		case 0x06:
-			data |= 0xff;	/* what would come out for the lower bits here? */
+			data |= 0xff; /* what would come out for the lower bits here? */
 			break;
 		}
 		io_write_byte_8(port, data);
 		break;
-	//default:
-	//	logerror("uPD7810 internal error: RP() called with invalid port number\n");
+		//default:
+		//	logerror("uPD7810 internal error: RP() called with invalid port number\n");
 	}
 }
 
@@ -925,68 +942,58 @@ static void upd7810_take_irq(void)
 		vector = 0x0004;
 		IRR &= ~INTNMI;
 	}
-	else
-	if ((IRR & INTFT0)  && 0 == (MKL & 0x02))
+	else if ((IRR & INTFT0) && 0 == (MKL & 0x02))
 	{
 		vector = 0x0008;
-		if (!((IRR & INTFT1)    && 0 == (MKL & 0x04)))
-		IRR&=~INTFT0;
+		if (!((IRR & INTFT1) && 0 == (MKL & 0x04)))
+			IRR &= ~INTFT0;
 	}
-	else
-	if ((IRR & INTFT1)  && 0 == (MKL & 0x04))
+	else if ((IRR & INTFT1) && 0 == (MKL & 0x04))
 	{
 		vector = 0x0008;
-		IRR&=~INTFT1;
+		IRR &= ~INTFT1;
 	}
-	else
-	if ((IRR & INTF1)	&& 0 == (MKL & 0x08))
+	else if ((IRR & INTF1) && 0 == (MKL & 0x08))
 	{
 		irqline = UPD7810_INTF1;
 		vector = 0x0010;
-		if (!((IRR & INTF2)	&& 0 == (MKL & 0x10)))
-		    IRR&=~INTF1;
+		if (!((IRR & INTF2) && 0 == (MKL & 0x10)))
+			IRR &= ~INTF1;
 	}
-	else
-	if ((IRR & INTF2)	&& 0 == (MKL & 0x10))
+	else if ((IRR & INTF2) && 0 == (MKL & 0x10))
 	{
 		irqline = UPD7810_INTF2;
 		vector = 0x0010;
-		IRR&=~INTF2;
+		IRR &= ~INTF2;
 	}
-	else
-	if ((IRR & INTFE0)  && 0 == (MKL & 0x20))
+	else if ((IRR & INTFE0) && 0 == (MKL & 0x20))
 	{
 		vector = 0x0018;
-		if (!((IRR & INTFE1)    && 0 == (MKL & 0x40)))
-		IRR&=~INTFE0;
+		if (!((IRR & INTFE1) && 0 == (MKL & 0x40)))
+			IRR &= ~INTFE0;
 	}
-	else
-	if ((IRR & INTFE1)  && 0 == (MKL & 0x40))
+	else if ((IRR & INTFE1) && 0 == (MKL & 0x40))
 	{
 		vector = 0x0018;
-		IRR&=~INTFE1;
+		IRR &= ~INTFE1;
 	}
-	else
-	if ((IRR & INTFEIN) && 0 == (MKL & 0x80))
+	else if ((IRR & INTFEIN) && 0 == (MKL & 0x80))
 	{
 		vector = 0x0020;
 	}
-	else
-	if ((IRR & INTFAD)	&& 0 == (MKH & 0x01))
+	else if ((IRR & INTFAD) && 0 == (MKH & 0x01))
 	{
 		vector = 0x0020;
 	}
-	else
-	if ((IRR & INTFSR)	&& 0 == (MKH & 0x02))
+	else if ((IRR & INTFSR) && 0 == (MKH & 0x02))
 	{
 		vector = 0x0028;
-		IRR&=~INTFSR;
+		IRR &= ~INTFSR;
 	}
-	else
-	if ((IRR & INTFST)	&& 0 == (MKH & 0x04))
+	else if ((IRR & INTFST) && 0 == (MKH & 0x04))
 	{
 		vector = 0x0028;
-	   	IRR&=~INTFST;
+		IRR &= ~INTFST;
 	}
 
 	if (vector)
@@ -995,13 +1002,13 @@ static void upd7810_take_irq(void)
 		if (irqline && upd7810_irq_callback)
 			(*upd7810_irq_callback)(irqline);
 		SP--;
-		WM( SP, PSW );
+		WM(SP, PSW);
 		SP--;
-		WM( SP, PCH );
+		WM(SP, PCH);
 		SP--;
-		WM( SP, PCL );
+		WM(SP, PCL);
 		IFF = 0;
-		PSW &= ~(SK|L0|L1);
+		PSW &= ~(SK | L0 | L1);
 		PC = vector;
 	}
 }
@@ -1034,34 +1041,36 @@ static void upd7810_write_EOM()
 {
 	switch (EOM & 0x0c)
 	{
-	case 0x04:  /* To Reset LV0 */
+	case 0x04: /* To Reset LV0 */
 		LV0 = 0;
 		EOM &= 0xfb; /* LRE0 is reset to 0 */
 		break;
-	case 0x08:  /* To Set LV0 */
+	case 0x08: /* To Set LV0 */
 		LV0 = 1;
 		EOM &= 0xf7; /* LRE1 is reset to 0 */
 		break;
 	}
 	/* Output LV0 Content */
-	if (EOM & 0x01) {
+	if (EOM & 0x01)
+	{
 		upd7810_co0_output_change();
 		EOM &= 0xfe; /* LO0 is reset to 0 */
 	}
 
 	switch (EOM & 0xc0)
 	{
-	case 0x40:  /* To Reset LV1 */
+	case 0x40: /* To Reset LV1 */
 		LV1 = 0;
 		EOM &= 0xbf; /* LRE2 is reset to 0 */
 		break;
-	case 0x80:  /* To Set LV1 */
+	case 0x80: /* To Set LV1 */
 		LV1 = 1;
 		EOM &= 0x7f; /* LRE3 is reset to 0 */
 		break;
 	}
 	/* Output LV1 Content */
-	if (EOM & 0x10) {
+	if (EOM & 0x10)
+	{
 		upd7810_co1_output_change();
 		EOM &= 0xef; /* LO1 is reset to 0 */
 	}
@@ -1123,80 +1132,79 @@ static void upd7810_sio_output(void)
 		upd7810.txs >>= 1;
 		upd7810.txcnt--;
 		if (0 == upd7810.txcnt)
-			IRR |= INTFST;		/* serial transfer completed */
+			IRR |= INTFST; /* serial transfer completed */
 	}
-	else
-	if (SMH & 0x04) /* send enable ? */
+	else if (SMH & 0x04) /* send enable ? */
 	{
 		/* nothing written into the transmitter buffer ? */
-        if (0 == upd7810.txbuf)
+		if (0 == upd7810.txbuf)
 			return;
-        upd7810.txbuf = 0;
+		upd7810.txbuf = 0;
 
-        if (SML & 0x03)         /* asynchronous mode ? */
+		if (SML & 0x03) /* asynchronous mode ? */
 		{
 			switch (SML & 0xfc)
 			{
-			case 0x48:	/* 7bits, no parity, 1 stop bit */
-			case 0x68:	/* 7bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
+			case 0x48: /* 7bits, no parity, 1 stop bit */
+			case 0x68: /* 7bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
 				/* insert start bit in bit0, stop bit int bit8 */
 				upd7810.txs = (TXB << 1) | (1 << 8);
 				upd7810.txcnt = 9;
 				break;
-			case 0x4c:	/* 8bits, no parity, 1 stop bit */
-			case 0x6c:	/* 8bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
+			case 0x4c: /* 8bits, no parity, 1 stop bit */
+			case 0x6c: /* 8bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
 				/* insert start bit in bit0, stop bit int bit9 */
 				upd7810.txs = (TXB << 1) | (1 << 9);
 				upd7810.txcnt = 10;
 				break;
-			case 0x58:	/* 7bits, odd parity, 1 stop bit */
+			case 0x58: /* 7bits, odd parity, 1 stop bit */
 				/* insert start bit in bit0, parity in bit 8, stop bit in bit9 */
 				upd7810.txs = (TXB << 1) | (PAR7(TXB) << 8) | (1 << 9);
 				upd7810.txcnt = 10;
 				break;
-			case 0x5c:	/* 8bits, odd parity, 1 stop bit */
+			case 0x5c: /* 8bits, odd parity, 1 stop bit */
 				/* insert start bit in bit0, parity in bit 9, stop bit int bit10 */
 				upd7810.txs = (TXB << 1) | (PAR8(TXB) << 9) | (1 << 10);
 				upd7810.txcnt = 11;
 				break;
-			case 0x78:	/* 7bits, even parity, 1 stop bit */
+			case 0x78: /* 7bits, even parity, 1 stop bit */
 				/* insert start bit in bit0, parity in bit 8, stop bit in bit9 */
 				upd7810.txs = (TXB << 1) | ((PAR7(TXB) ^ 1) << 8) | (1 << 9);
 				upd7810.txcnt = 10;
 				break;
-			case 0x7c:	/* 8bits, even parity, 1 stop bit */
+			case 0x7c: /* 8bits, even parity, 1 stop bit */
 				/* insert start bit in bit0, parity in bit 9, stop bit int bit10 */
 				upd7810.txs = (TXB << 1) | ((PAR8(TXB) ^ 1) << 9) | (1 << 10);
 				upd7810.txcnt = 11;
 				break;
-			case 0xc8:	/* 7bits, no parity, 2 stop bits */
-			case 0xe8:	/* 7bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
+			case 0xc8: /* 7bits, no parity, 2 stop bits */
+			case 0xe8: /* 7bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
 				/* insert start bit in bit0, stop bits int bit8+9 */
 				upd7810.txs = (TXB << 1) | (3 << 8);
 				upd7810.txcnt = 10;
 				break;
-			case 0xcc:	/* 8bits, no parity, 2 stop bits */
-			case 0xec:	/* 8bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
+			case 0xcc: /* 8bits, no parity, 2 stop bits */
+			case 0xec: /* 8bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
 				/* insert start bit in bit0, stop bits in bits9+10 */
 				upd7810.txs = (TXB << 1) | (3 << 9);
 				upd7810.txcnt = 11;
 				break;
-			case 0xd8:	/* 7bits, odd parity, 2 stop bits */
+			case 0xd8: /* 7bits, odd parity, 2 stop bits */
 				/* insert start bit in bit0, parity in bit 8, stop bits in bits9+10 */
 				upd7810.txs = (TXB << 1) | (PAR7(TXB) << 8) | (3 << 9);
 				upd7810.txcnt = 11;
 				break;
-			case 0xdc:	/* 8bits, odd parity, 2 stop bits */
+			case 0xdc: /* 8bits, odd parity, 2 stop bits */
 				/* insert start bit in bit0, parity in bit 9, stop bits int bit10+11 */
 				upd7810.txs = (TXB << 1) | (PAR8(TXB) << 9) | (3 << 10);
 				upd7810.txcnt = 12;
 				break;
-			case 0xf8:	/* 7bits, even parity, 2 stop bits */
+			case 0xf8: /* 7bits, even parity, 2 stop bits */
 				/* insert start bit in bit0, parity in bit 8, stop bits in bit9+10 */
 				upd7810.txs = (TXB << 1) | ((PAR7(TXB) ^ 1) << 8) | (3 << 9);
 				upd7810.txcnt = 11;
 				break;
-			case 0xfc:	/* 8bits, even parity, 2 stop bits */
+			case 0xfc: /* 8bits, even parity, 2 stop bits */
 				/* insert start bit in bit0, parity in bit 9, stop bits int bits10+10 */
 				upd7810.txs = (TXB << 1) | ((PAR8(TXB) ^ 1) << 9) | (1 << 10);
 				upd7810.txcnt = 12;
@@ -1228,105 +1236,105 @@ static void upd7810_sio_input(void)
 			/* serial receive completed interrupt */
 			IRR |= INTFSR;
 			/* now extract the data from the shift register */
-			if (SML & 0x03) 	/* asynchronous mode ? */
+			if (SML & 0x03) /* asynchronous mode ? */
 			{
 				switch (SML & 0xfc)
 				{
-				case 0x48:	/* 7bits, no parity, 1 stop bit */
-				case 0x68:	/* 7bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
+				case 0x48: /* 7bits, no parity, 1 stop bit */
+				case 0x68: /* 7bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
 					upd7810.rxs >>= 16 - 9;
 					RXB = (upd7810.rxs >> 1) & 0x7f;
 					if ((1 << 8) != (upd7810.rxs & (1 | (1 << 8))))
-						IRR |= INTER;	/* framing error */
+						IRR |= INTER; /* framing error */
 					break;
-				case 0x4c:	/* 8bits, no parity, 1 stop bit */
-				case 0x6c:	/* 8bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
+				case 0x4c: /* 8bits, no parity, 1 stop bit */
+				case 0x6c: /* 8bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
 					upd7810.rxs >>= 16 - 10;
 					RXB = (upd7810.rxs >> 1) & 0xff;
 					if ((1 << 9) != (upd7810.rxs & (1 | (1 << 9))))
-						IRR |= INTER;	/* framing error */
+						IRR |= INTER; /* framing error */
 					break;
-				case 0x58:	/* 7bits, odd parity, 1 stop bit */
-					upd7810.rxs >>= 16 - 10;
-					RXB = (upd7810.rxs >> 1) & 0x7f;
-					if ((1 << 9) != (upd7810.rxs & (1 | (1 << 9))))
-						IRR |= INTER;	/* framing error */
-					if (PAR7(RXB) != ((upd7810.rxs >> 8) & 1))
-						IRR |= INTER;	/* parity error */
-					break;
-				case 0x5c:	/* 8bits, odd parity, 1 stop bit */
-					upd7810.rxs >>= 16 - 11;
-					RXB = (upd7810.rxs >> 1) & 0xff;
-					if ((1 << 10) != (upd7810.rxs & (1 | (1 << 10))))
-						IRR |= INTER;	/* framing error */
-					if (PAR8(RXB) != ((upd7810.rxs >> 9) & 1))
-						IRR |= INTER;	/* parity error */
-					break;
-				case 0x78:	/* 7bits, even parity, 1 stop bit */
+				case 0x58: /* 7bits, odd parity, 1 stop bit */
 					upd7810.rxs >>= 16 - 10;
 					RXB = (upd7810.rxs >> 1) & 0x7f;
 					if ((1 << 9) != (upd7810.rxs & (1 | (1 << 9))))
-						IRR |= INTER;	/* framing error */
+						IRR |= INTER; /* framing error */
 					if (PAR7(RXB) != ((upd7810.rxs >> 8) & 1))
-						IRR |= INTER;	/* parity error */
+						IRR |= INTER; /* parity error */
 					break;
-				case 0x7c:	/* 8bits, even parity, 1 stop bit */
+				case 0x5c: /* 8bits, odd parity, 1 stop bit */
 					upd7810.rxs >>= 16 - 11;
 					RXB = (upd7810.rxs >> 1) & 0xff;
 					if ((1 << 10) != (upd7810.rxs & (1 | (1 << 10))))
-						IRR |= INTER;	/* framing error */
+						IRR |= INTER; /* framing error */
 					if (PAR8(RXB) != ((upd7810.rxs >> 9) & 1))
-						IRR |= INTER;	/* parity error */
+						IRR |= INTER; /* parity error */
 					break;
-				case 0xc8:	/* 7bits, no parity, 2 stop bits */
-				case 0xe8:	/* 7bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
+				case 0x78: /* 7bits, even parity, 1 stop bit */
+					upd7810.rxs >>= 16 - 10;
+					RXB = (upd7810.rxs >> 1) & 0x7f;
+					if ((1 << 9) != (upd7810.rxs & (1 | (1 << 9))))
+						IRR |= INTER; /* framing error */
+					if (PAR7(RXB) != ((upd7810.rxs >> 8) & 1))
+						IRR |= INTER; /* parity error */
+					break;
+				case 0x7c: /* 8bits, even parity, 1 stop bit */
+					upd7810.rxs >>= 16 - 11;
+					RXB = (upd7810.rxs >> 1) & 0xff;
+					if ((1 << 10) != (upd7810.rxs & (1 | (1 << 10))))
+						IRR |= INTER; /* framing error */
+					if (PAR8(RXB) != ((upd7810.rxs >> 9) & 1))
+						IRR |= INTER; /* parity error */
+					break;
+				case 0xc8: /* 7bits, no parity, 2 stop bits */
+				case 0xe8: /* 7bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
 					upd7810.rxs >>= 16 - 10;
 					RXB = (upd7810.rxs >> 1) & 0x7f;
 					if ((3 << 9) != (upd7810.rxs & (1 | (3 << 9))))
-						IRR |= INTER;	/* framing error */
+						IRR |= INTER; /* framing error */
 					if (PAR7(RXB) != ((upd7810.rxs >> 8) & 1))
-						IRR |= INTER;	/* parity error */
+						IRR |= INTER; /* parity error */
 					break;
-				case 0xcc:	/* 8bits, no parity, 2 stop bits */
-				case 0xec:	/* 8bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
+				case 0xcc: /* 8bits, no parity, 2 stop bits */
+				case 0xec: /* 8bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
 					upd7810.rxs >>= 16 - 11;
 					RXB = (upd7810.rxs >> 1) & 0xff;
 					if ((3 << 10) != (upd7810.rxs & (1 | (3 << 10))))
-						IRR |= INTER;	/* framing error */
+						IRR |= INTER; /* framing error */
 					if (PAR8(RXB) != ((upd7810.rxs >> 9) & 1))
-						IRR |= INTER;	/* parity error */
+						IRR |= INTER; /* parity error */
 					break;
-				case 0xd8:	/* 7bits, odd parity, 2 stop bits */
-					upd7810.rxs >>= 16 - 11;
-					RXB = (upd7810.rxs >> 1) & 0x7f;
-					if ((3 << 10) != (upd7810.rxs & (1 | (3 << 10))))
-						IRR |= INTER;	/* framing error */
-					if (PAR7(RXB) != ((upd7810.rxs >> 8) & 1))
-						IRR |= INTER;	/* parity error */
-					break;
-				case 0xdc:	/* 8bits, odd parity, 2 stop bits */
-					upd7810.rxs >>= 16 - 12;
-					RXB = (upd7810.rxs >> 1) & 0xff;
-					if ((3 << 11) != (upd7810.rxs & (1 | (3 << 11))))
-						IRR |= INTER;	/* framing error */
-					if (PAR8(RXB) != ((upd7810.rxs >> 9) & 1))
-						IRR |= INTER;	/* parity error */
-					break;
-				case 0xf8:	/* 7bits, even parity, 2 stop bits */
+				case 0xd8: /* 7bits, odd parity, 2 stop bits */
 					upd7810.rxs >>= 16 - 11;
 					RXB = (upd7810.rxs >> 1) & 0x7f;
 					if ((3 << 10) != (upd7810.rxs & (1 | (3 << 10))))
-						IRR |= INTER;	/* framing error */
+						IRR |= INTER; /* framing error */
 					if (PAR7(RXB) != ((upd7810.rxs >> 8) & 1))
-						IRR |= INTER;	/* parity error */
+						IRR |= INTER; /* parity error */
 					break;
-				case 0xfc:	/* 8bits, even parity, 2 stop bits */
+				case 0xdc: /* 8bits, odd parity, 2 stop bits */
 					upd7810.rxs >>= 16 - 12;
 					RXB = (upd7810.rxs >> 1) & 0xff;
 					if ((3 << 11) != (upd7810.rxs & (1 | (3 << 11))))
-						IRR |= INTER;	/* framing error */
+						IRR |= INTER; /* framing error */
 					if (PAR8(RXB) != ((upd7810.rxs >> 9) & 1))
-						IRR |= INTER;	/* parity error */
+						IRR |= INTER; /* parity error */
+					break;
+				case 0xf8: /* 7bits, even parity, 2 stop bits */
+					upd7810.rxs >>= 16 - 11;
+					RXB = (upd7810.rxs >> 1) & 0x7f;
+					if ((3 << 10) != (upd7810.rxs & (1 | (3 << 10))))
+						IRR |= INTER; /* framing error */
+					if (PAR7(RXB) != ((upd7810.rxs >> 8) & 1))
+						IRR |= INTER; /* parity error */
+					break;
+				case 0xfc: /* 8bits, even parity, 2 stop bits */
+					upd7810.rxs >>= 16 - 12;
+					RXB = (upd7810.rxs >> 1) & 0xff;
+					if ((3 << 11) != (upd7810.rxs & (1 | (3 << 11))))
+						IRR |= INTER; /* framing error */
+					if (PAR8(RXB) != ((upd7810.rxs >> 9) & 1))
+						IRR |= INTER; /* parity error */
 					break;
 				}
 			}
@@ -1334,65 +1342,64 @@ static void upd7810_sio_input(void)
 			{
 				upd7810.rxs >>= 16 - 8;
 				RXB = upd7810.rxs;
-//              upd7810.rxcnt = 8;
+				//              upd7810.rxcnt = 8;
 			}
 		}
 	}
-	else
-	if (SMH & 0x08) /* receive enable ? */
+	else if (SMH & 0x08) /* receive enable ? */
 	{
-		if (SML & 0x03) 	/* asynchronous mode ? */
+		if (SML & 0x03) /* asynchronous mode ? */
 		{
 			switch (SML & 0xfc)
 			{
-			case 0x48:	/* 7bits, no parity, 1 stop bit */
-			case 0x68:	/* 7bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
+			case 0x48: /* 7bits, no parity, 1 stop bit */
+			case 0x68: /* 7bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
 				upd7810.rxcnt = 9;
 				break;
-			case 0x4c:	/* 8bits, no parity, 1 stop bit */
-			case 0x6c:	/* 8bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
+			case 0x4c: /* 8bits, no parity, 1 stop bit */
+			case 0x6c: /* 8bits, no parity, 1 stop bit (parity select = 1 but parity is off) */
 				upd7810.rxcnt = 10;
 				break;
-			case 0x58:	/* 7bits, odd parity, 1 stop bit */
+			case 0x58: /* 7bits, odd parity, 1 stop bit */
 				upd7810.rxcnt = 10;
 				break;
-			case 0x5c:	/* 8bits, odd parity, 1 stop bit */
+			case 0x5c: /* 8bits, odd parity, 1 stop bit */
 				upd7810.rxcnt = 11;
 				break;
-			case 0x78:	/* 7bits, even parity, 1 stop bit */
+			case 0x78: /* 7bits, even parity, 1 stop bit */
 				upd7810.rxcnt = 10;
 				break;
-			case 0x7c:	/* 8bits, even parity, 1 stop bit */
+			case 0x7c: /* 8bits, even parity, 1 stop bit */
 				upd7810.rxcnt = 11;
 				break;
-			case 0xc8:	/* 7bits, no parity, 2 stop bits */
-			case 0xe8:	/* 7bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
+			case 0xc8: /* 7bits, no parity, 2 stop bits */
+			case 0xe8: /* 7bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
 				upd7810.rxcnt = 10;
 				break;
-			case 0xcc:	/* 8bits, no parity, 2 stop bits */
-			case 0xec:	/* 8bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
+			case 0xcc: /* 8bits, no parity, 2 stop bits */
+			case 0xec: /* 8bits, no parity, 2 stop bits (parity select = 1 but parity is off) */
 				upd7810.rxcnt = 11;
 				break;
-			case 0xd8:	/* 7bits, odd parity, 2 stop bits */
+			case 0xd8: /* 7bits, odd parity, 2 stop bits */
 				upd7810.rxcnt = 11;
 				break;
-			case 0xdc:	/* 8bits, odd parity, 2 stop bits */
+			case 0xdc: /* 8bits, odd parity, 2 stop bits */
 				upd7810.rxcnt = 12;
 				break;
-			case 0xf8:	/* 7bits, even parity, 2 stop bits */
+			case 0xf8: /* 7bits, even parity, 2 stop bits */
 				upd7810.rxcnt = 11;
 				break;
-			case 0xfc:	/* 8bits, even parity, 2 stop bits */
+			case 0xfc: /* 8bits, even parity, 2 stop bits */
 				upd7810.rxcnt = 12;
 				break;
 			}
 		}
 		else
-		/* TSK bit set ? */
-		if (SMH & 0x40)
-		{
-			upd7810.rxcnt = 8;
-		}
+			/* TSK bit set ? */
+			if (SMH & 0x40)
+			{
+				upd7810.rxcnt = 8;
+			}
 	}
 }
 
@@ -1460,41 +1467,41 @@ static void upd7810_handle_timer1(int cycles, int clkdiv)
 static void upd7810_timers(int cycles)
 {
 	/**** TIMER 0 ****/
-	if (TMM & 0x10)         /* timer 0 upcounter reset ? */
+	if (TMM & 0x10) /* timer 0 upcounter reset ? */
 		CNT0 = 0;
 	else
 	{
 		switch (TMM & 0x0c) /* timer 0 clock source */
 		{
-		case 0x00:  /* clock divided by 12 */
+		case 0x00: /* clock divided by 12 */
 			upd7810_handle_timer0(cycles, 12);
 			break;
-		case 0x04:  /* clock divided by 384 */
+		case 0x04: /* clock divided by 384 */
 			upd7810_handle_timer0(cycles, 384);
 			break;
-		case 0x08:  /* external signal at TI */
+		case 0x08: /* external signal at TI */
 			break;
-		case 0x0c:  /* disabled */
+		case 0x0c: /* disabled */
 			break;
 		}
 	}
 
 	/**** TIMER 1 ****/
-	if (TMM & 0x80)         /* timer 1 upcounter reset ? */
+	if (TMM & 0x80) /* timer 1 upcounter reset ? */
 		CNT1 = 0;
 	else
 	{
 		switch (TMM & 0x60) /* timer 1 clock source */
 		{
-		case 0x00:  /* clock divided by 12 */
+		case 0x00: /* clock divided by 12 */
 			upd7810_handle_timer1(cycles, 12);
 			break;
-		case 0x20:  /* clock divided by 384 */
+		case 0x20: /* clock divided by 384 */
 			upd7810_handle_timer1(cycles, 384);
 			break;
-		case 0x40:  /* external signal at TI */
+		case 0x40: /* external signal at TI */
 			break;
-		case 0x60:  /* clocked with timer 0 */
+		case 0x60: /* clocked with timer 0 */
 			break;
 		}
 	}
@@ -1517,8 +1524,7 @@ static void upd7810_timers(int cycles)
 	/* ECNT clear */
 	if (0x00 == (ETMM & 0x0c))
 		ECNT = 0;
-	else
-	if (0x00 == (ETMM & 0x03) || (0x01 == (ETMM & 0x03) && CI))
+	else if (0x00 == (ETMM & 0x03) || (0x01 == (ETMM & 0x03) && CI))
 	{
 		OVCE += cycles;
 		/* clock divided by 12 */
@@ -1535,7 +1541,8 @@ static void upd7810_timers(int cycles)
 			if (((0x00 == (ETMM & 0x30)) && (ETM0 == ECNT)) || /* set CO0 if ECNT == ETM0 */
 				/* ((0x10 == (ETMM & 0x30)) prohibited */
 				((0x20 == (ETMM & 0x30)) && (ETM0 == ECNT)) || /* set CO0 if ECNT == ETM0 or at falling CI input */
-				((0x30 == (ETMM & 0x30)) && (ETM0 == ECNT || ETM1 == ECNT))) /* latch CO0 if ECNT == ETM0 or ECNT == ETM1 */
+				((0x30 == (ETMM & 0x30)) && (ETM0 == ECNT || ETM1 == ECNT)))
+				/* latch CO0 if ECNT == ETM0 or ECNT == ETM1 */
 			{
 				upd7810_co0_output_change();
 			}
@@ -1543,22 +1550,23 @@ static void upd7810_timers(int cycles)
 			if (((0x00 == (ETMM & 0xc0)) && (ETM1 == ECNT)) || /* set CO1 if ECNT == ETM1 */
 				/* ((0x40 == (ETMM & 0xc0)) prohibited */
 				((0x80 == (ETMM & 0xc0)) && (ETM1 == ECNT)) || /* set CO1 if ECNT == ETM1 or at falling CI input */
-				((0xc0 == (ETMM & 0xc0)) && (ETM0 == ECNT || ETM1 == ECNT))) /* latch CO1 if ECNT == ETM0 or ECNT == ETM1 */
+				((0xc0 == (ETMM & 0xc0)) && (ETM0 == ECNT || ETM1 == ECNT)))
+				/* latch CO1 if ECNT == ETM0 or ECNT == ETM1 */
 			{
 				upd7810_co1_output_change();
 			}
 			/* How and When ECNT is Cleared */
 			switch (ETMM & 0x0c)
 			{
-			case 0x00:              /* clear ECNT */
+			case 0x00: /* clear ECNT */
 				break;
-			case 0x04:              /* free running */
+			case 0x04: /* free running */
 				if (0 == ECNT)
-					ITF |= INTOV;   /* set overflow flag if counter wrapped */
+					ITF |= INTOV; /* set overflow flag if counter wrapped */
 				break;
-			case 0x08:              /* reset at falling edge of CI or TO */
+			case 0x08: /* reset at falling edge of CI or TO */
 				break;
-			case 0x0c:              /* reset if ECNT == ETM1 */
+			case 0x0c: /* reset if ECNT == ETM1 */
 				if (ETM1 == ECNT)
 					ECNT = 0;
 				break;
@@ -1569,9 +1577,9 @@ static void upd7810_timers(int cycles)
 	/**** SIO ****/
 	switch (SMH & 0x03)
 	{
-	case 0x00:      /* interval timer F/F */
+	case 0x00: /* interval timer F/F */
 		break;
-	case 0x01:      /* internal clock divided by 384 */
+	case 0x01: /* internal clock divided by 384 */
 		OVCS += cycles;
 		while (OVCS >= 384)
 		{
@@ -1582,7 +1590,7 @@ static void upd7810_timers(int cycles)
 				upd7810_sio_output();
 		}
 		break;
-	case 0x02:      /* internal clock divided by 24 */
+	case 0x02: /* internal clock divided by 24 */
 		OVCS += cycles;
 		while (OVCS >= 24)
 		{
@@ -1615,7 +1623,7 @@ static void upd7810_timers(int cycles)
 		else
 		{
 			/* scan mode */
-			upd7810.adin    = 0;
+			upd7810.adin = 0;
 			upd7810.adrange = (ANM >> 1) & 0x04;
 		}
 	}
@@ -1627,14 +1635,22 @@ static void upd7810_timers(int cycles)
 		{
 			switch (upd7810.adin)
 			{
-				case 0: upd7810.tmpcr = an0_func(); break;
-				case 1: upd7810.tmpcr = an1_func(); break;
-				case 2: upd7810.tmpcr = an2_func(); break;
-				case 3: upd7810.tmpcr = an3_func(); break;
-				case 4: upd7810.tmpcr = an4_func(); break;
-				case 5: upd7810.tmpcr = an5_func(); break;
-				case 6: upd7810.tmpcr = an6_func(); break;
-				case 7: upd7810.tmpcr = an7_func(); break;
+			case 0: upd7810.tmpcr = an0_func();
+				break;
+			case 1: upd7810.tmpcr = an1_func();
+				break;
+			case 2: upd7810.tmpcr = an2_func();
+				break;
+			case 3: upd7810.tmpcr = an3_func();
+				break;
+			case 4: upd7810.tmpcr = an4_func();
+				break;
+			case 5: upd7810.tmpcr = an5_func();
+				break;
+			case 6: upd7810.tmpcr = an6_func();
+				break;
+			case 7: upd7810.tmpcr = an7_func();
+				break;
 			}
 			upd7810.shdone = 1;
 		}
@@ -1644,10 +1660,14 @@ static void upd7810_timers(int cycles)
 			switch (upd7810.adout)
 			{
 				// volfied code checks bit 0x80, old code set bit 0x01, TODO: verify which bits are set on real hw
-				case 0: CR0 = upd7810.tmpcr ? 0xff:0x00; break;
-				case 1: CR1 = upd7810.tmpcr ? 0xff:0x00; break;
-				case 2: CR2 = upd7810.tmpcr ? 0xff:0x00; break;
-				case 3: CR3 = upd7810.tmpcr ? 0xff:0x00; break;
+			case 0: CR0 = upd7810.tmpcr ? 0xff : 0x00;
+				break;
+			case 1: CR1 = upd7810.tmpcr ? 0xff : 0x00;
+				break;
+			case 2: CR2 = upd7810.tmpcr ? 0xff : 0x00;
+				break;
+			case 3: CR3 = upd7810.tmpcr ? 0xff : 0x00;
+				break;
 			}
 			upd7810.adout = (upd7810.adout + 1) & 0x03;
 			if (upd7810.adout == 0)
@@ -1662,14 +1682,22 @@ static void upd7810_timers(int cycles)
 		{
 			switch (upd7810.adin | upd7810.adrange)
 			{
-				case 0: upd7810.tmpcr = an0_func(); break;
-				case 1: upd7810.tmpcr = an1_func(); break;
-				case 2: upd7810.tmpcr = an2_func(); break;
-				case 3: upd7810.tmpcr = an3_func(); break;
-				case 4: upd7810.tmpcr = an4_func(); break;
-				case 5: upd7810.tmpcr = an5_func(); break;
-				case 6: upd7810.tmpcr = an6_func(); break;
-				case 7: upd7810.tmpcr = an7_func(); break;
+			case 0: upd7810.tmpcr = an0_func();
+				break;
+			case 1: upd7810.tmpcr = an1_func();
+				break;
+			case 2: upd7810.tmpcr = an2_func();
+				break;
+			case 3: upd7810.tmpcr = an3_func();
+				break;
+			case 4: upd7810.tmpcr = an4_func();
+				break;
+			case 5: upd7810.tmpcr = an5_func();
+				break;
+			case 6: upd7810.tmpcr = an6_func();
+				break;
+			case 7: upd7810.tmpcr = an7_func();
+				break;
 			}
 			upd7810.shdone = 1;
 		}
@@ -1678,12 +1706,16 @@ static void upd7810_timers(int cycles)
 			upd7810.adcnt -= upd7810.adtot;
 			switch (upd7810.adout)
 			{
-				case 0: CR0 = upd7810.tmpcr ? 0xff:0x00; break;
-				case 1: CR1 = upd7810.tmpcr ? 0xff:0x00; break;
-				case 2: CR2 = upd7810.tmpcr ? 0xff:0x00; break;
-				case 3: CR3 = upd7810.tmpcr ? 0xff:0x00; break;
+			case 0: CR0 = upd7810.tmpcr ? 0xff : 0x00;
+				break;
+			case 1: CR1 = upd7810.tmpcr ? 0xff : 0x00;
+				break;
+			case 2: CR2 = upd7810.tmpcr ? 0xff : 0x00;
+				break;
+			case 3: CR3 = upd7810.tmpcr ? 0xff : 0x00;
+				break;
 			}
-			upd7810.adin  = (upd7810.adin  + 1) & 0x07;
+			upd7810.adin = (upd7810.adin + 1) & 0x07;
 			upd7810.adout = (upd7810.adout + 1) & 0x03;
 			if (upd7810.adout == 0)
 				IRR |= INTFAD;
@@ -1697,22 +1729,30 @@ static void upd7810_timers(int cycles)
 
 static UINT8 fake_an_func()
 {
-       return 0;
+	return 0;
 }
 
 void upd7810SetAnfunc(INT32 select, UINT8 (*func)())
 {
-       switch (select & 7)
-       {
-               case 0: an0_func = func; break;
-               case 1: an1_func = func; break;
-               case 2: an2_func = func; break;
-               case 3: an3_func = func; break;
-               case 4: an4_func = func; break;
-               case 5: an5_func = func; break;
-               case 6: an6_func = func; break;
-               case 7: an7_func = func; break;
-       }
+	switch (select & 7)
+	{
+	case 0: an0_func = func;
+		break;
+	case 1: an1_func = func;
+		break;
+	case 2: an2_func = func;
+		break;
+	case 3: an3_func = func;
+		break;
+	case 4: an4_func = func;
+		break;
+	case 5: an5_func = func;
+		break;
+	case 6: an6_func = func;
+		break;
+	case 7: an7_func = func;
+		break;
+	}
 }
 
 void upd7810Open(INT32)
@@ -1722,7 +1762,6 @@ void upd7810Open(INT32)
 
 void upd7810Close()
 {
-
 }
 
 INT32 upd7810GetActive()
@@ -1739,7 +1778,7 @@ static void upd7810_init(INT32 (*io_callback)(INT32 ioline, INT32 state))
 	io_read_byte_8 = dummy_read_port;
 	io_write_byte_8 = dummy_write_port;
 
-	memset (mem, 0, 3 * 0x100 * sizeof(UINT8*));
+	memset(mem, 0, 3 * 0x100 * sizeof(UINT8*));
 
 	an0_func = fake_an_func;
 	an1_func = fake_an_func;
@@ -1826,10 +1865,10 @@ INT32 upd7810Scan(INT32 nAction)
 
 	if (nAction & ACB_DRIVER_DATA)
 	{
-		ba.Data		= &upd7810;
-		ba.nLen		= sizeof(upd7810);
+		ba.Data = &upd7810;
+		ba.nLen = sizeof(upd7810);
 		ba.nAddress = 0;
-		ba.szName	= "Upd7810 Regs";
+		ba.szName = "Upd7810 Regs";
 		BurnAcb(&ba);
 
 		SCAN_VAR(upd7810_icount);
@@ -1845,7 +1884,6 @@ void upd7810Init(INT32 (*io_callback)(INT32 ioline, INT32 state))
 	upd7810_init(io_callback);
 
 	opXX = opXX_7810;
-
 }
 
 void upd7807Init(INT32 (*io_callback)(INT32 ioline, INT32 state))
@@ -1853,7 +1891,6 @@ void upd7807Init(INT32 (*io_callback)(INT32 ioline, INT32 state))
 	upd7810_init(io_callback);
 
 	opXX = opXX_7807;
-
 }
 
 void upd7810Reset()
@@ -1952,30 +1989,32 @@ INT32 upd7810Run(INT32 cycles)
 					cc = op74[OP2].cycles_skip;
 					PC += op74[OP2].oplen - 2;
 					break;
-				//default:
-				//	osd_die("uPD7810 internal error: check cycle counts for main\n");
+					//default:
+					//	osd_die("uPD7810 internal error: check cycle counts for main\n");
 				}
 			}
 
 			PSW &= ~SK;
-			upd7810_timers( cc );
+			upd7810_timers(cc);
 			//change_pc( PCD );
 		}
 		else
 		{
 			cc = opXX[OP].cycles;
-			upd7810_timers( cc );
+			upd7810_timers(cc);
 			(*opXX[OP].opfunc)();
 		}
 
 		upd7810_icount -= cc;
 		upd7810_take_irq();
 
-		if (run_end) {
+		if (run_end)
+		{
 			run_end = 0;
 			break;
 		}
-	} while (upd7810_icount > 0);
+	}
+	while (upd7810_icount > 0);
 
 	upd7810_total_cycles += (upd7810_current_cycles - upd7810_icount);
 
@@ -2032,23 +2071,20 @@ static void set_irq_line(int irqline, int state)
 		if (irqline == CPU_IRQLINE_NMI)
 		{
 			/* no nested NMIs ? */
-//          if (0 == (IRR & INTNMI))
+			//          if (0 == (IRR & INTNMI))
 			{
-	            IRR |= INTNMI;
+				IRR |= INTNMI;
 			}
 		}
-		else
-		if (irqline == UPD7810_INTF1)
+		else if (irqline == UPD7810_INTF1)
 			IRR |= INTF1;
-		else
-		if (irqline == UPD7810_INTF2)
+		else if (irqline == UPD7810_INTF2)
 			IRR |= INTF2;
-		// gamemaster hack
-		else
-		if (irqline == UPD7810_INTFE1)
+			// gamemaster hack
+		else if (irqline == UPD7810_INTFE1)
 			IRR |= INTFE1;
-	//	else
-	//		logerror("upd7810_set_irq_line invalid irq line #%d\n", irqline);
+		//	else
+		//		logerror("upd7810_set_irq_line invalid irq line #%d\n", irqline);
 	}
 	/* resetting interrupt requests is done with the SKIT/SKNIT opcodes only! */
 }
@@ -2060,7 +2096,6 @@ void upd7810SetIRQLine(INT32 line, INT32 state)
 		set_irq_line(line, 1);
 		upd7810Run(10);
 		set_irq_line(line, 0);
-
 	}
 	else
 	{

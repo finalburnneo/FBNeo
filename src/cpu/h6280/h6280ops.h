@@ -133,7 +133,8 @@
 /***************************************************************
  *  RDMEM   read memory
  ***************************************************************/
-H6280_INLINE UINT8 RDMEM(offs_t addr) {
+H6280_INLINE UINT8 RDMEM(offs_t addr)
+{
 	CHECK_VDC_VCE_PENALTY(addr);
 	return h6280Read(TRANSLATED(addr));
 }
@@ -141,9 +142,10 @@ H6280_INLINE UINT8 RDMEM(offs_t addr) {
 /***************************************************************
  *  WRMEM   write memory
  ***************************************************************/
-H6280_INLINE void WRMEM(offs_t addr, UINT8 data) {
+H6280_INLINE void WRMEM(offs_t addr, UINT8 data)
+{
 	CHECK_VDC_VCE_PENALTY(addr);
-	h6280Write(TRANSLATED(addr),data);
+	h6280Write(TRANSLATED(addr), data);
 }
 
 /***************************************************************

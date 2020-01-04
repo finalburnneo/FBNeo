@@ -6,7 +6,7 @@
 INT32 nHD6309Count = 0;
 static INT32 nActiveCPU = 0;
 
-static HD6309Ext *HD6309CPUContext = NULL;
+static HD6309Ext* HD6309CPUContext = NULL;
 
 static INT32 nHD6309CyclesDone[MAX_CPU];
 INT32 nHD6309CyclesTotal;
@@ -92,7 +92,8 @@ void HD6309NewFrame()
 	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309NewFrame called without init\n"));
 #endif
 
-	for (INT32 i = 0; i < nHD6309Count; i++) {
+	for (INT32 i = 0; i < nHD6309Count; i++)
+	{
 		nHD6309CyclesDone[i] = 0;
 	}
 	nHD6309CyclesTotal = 0;
@@ -122,17 +123,19 @@ void HD6309CheatWriteRom(UINT32 a, UINT8 d)
 INT32 HD6309Init(INT32 nCPU)
 {
 	DebugCPU_HD6309Initted = 1;
-	
+
 	nActiveCPU = -1;
-	if ((nCPU+1) > nHD6309Count) nHD6309Count = nCPU+1;
+	if ((nCPU + 1) > nHD6309Count) nHD6309Count = nCPU + 1;
 
 #ifdef FBN_DEBUG
 	if (nCPU >= MAX_CPU) bprintf(PRINT_ERROR, _T("HD6309Init called too many CPUs! %d, %d is MAX\n"), nCPU, MAX_CPU);
 #endif
 
-	if (HD6309CPUContext == NULL) {
+	if (HD6309CPUContext == NULL)
+	{
 		HD6309CPUContext = (HD6309Ext*)malloc(MAX_CPU * sizeof(HD6309Ext));
-		if (HD6309CPUContext == NULL) {
+		if (HD6309CPUContext == NULL)
+		{
 			return 1;
 		}
 
@@ -145,12 +148,13 @@ INT32 HD6309Init(INT32 nCPU)
 	HD6309CPUContext[nCPU].ReadOpArg = HD6309ReadOpArgDummyHandler;
 
 	nHD6309CyclesDone[nCPU] = 0;
-	
-	for (INT32 j = 0; j < (0x0100 * 3); j++) {
+
+	for (INT32 j = 0; j < (0x0100 * 3); j++)
+	{
 		HD6309CPUContext[nCPU].pMemMap[j] = NULL;
 	}
 
-	nHD6309CyclesTotal = 0;	
+	nHD6309CyclesTotal = 0;
 
 	//hd6309_init(); // does nothing.
 
@@ -167,11 +171,12 @@ void HD6309Exit()
 
 	nHD6309Count = 0;
 
-	if (HD6309CPUContext) {
+	if (HD6309CPUContext)
+	{
 		free(HD6309CPUContext);
 		HD6309CPUContext = NULL;
 	}
-	
+
 	DebugCPU_HD6309Initted = 0;
 }
 
@@ -184,9 +189,9 @@ void HD6309Open(INT32 num)
 #endif
 
 	nActiveCPU = num;
-	
+
 	hd6309_set_context(&HD6309CPUContext[nActiveCPU].reg);
-	
+
 	nHD6309CyclesTotal = nHD6309CyclesDone[nActiveCPU];
 }
 
@@ -198,9 +203,9 @@ void HD6309Close()
 #endif
 
 	hd6309_get_context(&HD6309CPUContext[nActiveCPU].reg);
-	
+
 	nHD6309CyclesDone[nActiveCPU] = nHD6309CyclesTotal;
-	
+
 	nActiveCPU = -1;
 }
 
@@ -221,19 +226,23 @@ void HD6309SetIRQLine(INT32 vector, INT32 status)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309SetIRQLine called when no CPU open\n"));
 #endif
 
-	if (status == CPU_IRQSTATUS_NONE) {
+	if (status == CPU_IRQSTATUS_NONE)
+	{
 		hd6309_set_irq_line(vector, 0);
 	}
-	
-	if (status == CPU_IRQSTATUS_ACK) {
+
+	if (status == CPU_IRQSTATUS_ACK)
+	{
 		hd6309_set_irq_line(vector, 1);
 	}
 
-	if (status == CPU_IRQSTATUS_HOLD) {
+	if (status == CPU_IRQSTATUS_HOLD)
+	{
 		hd6309_set_irq_line(vector, 2);
 	}
-	
-	if (status == CPU_IRQSTATUS_AUTO) {
+
+	if (status == CPU_IRQSTATUS_AUTO)
+	{
 		hd6309_set_irq_line(vector, 1);
 		hd6309_execute(0);
 		hd6309_set_irq_line(vector, 0);
@@ -249,9 +258,9 @@ INT32 HD6309Run(INT32 cycles)
 #endif
 
 	cycles = hd6309_execute(cycles);
-	
+
 	nHD6309CyclesTotal += cycles;
-	
+
 	return cycles;
 }
 
@@ -273,21 +282,24 @@ INT32 HD6309MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 #endif
 
 	UINT8 cStart = (nStart >> 8);
-	UINT8 **pMemMap = HD6309CPUContext[nActiveCPU].pMemMap;
+	UINT8** pMemMap = HD6309CPUContext[nActiveCPU].pMemMap;
 
-	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
-		if (nType & MAP_READ)	{
-			pMemMap[0     + i] = pMemory + ((i - cStart) << 8);
+	for (UINT16 i = cStart; i <= (nEnd >> 8); i++)
+	{
+		if (nType & MAP_READ)
+		{
+			pMemMap[0 + i] = pMemory + ((i - cStart) << 8);
 		}
-		if (nType & MAP_WRITE) {
+		if (nType & MAP_WRITE)
+		{
 			pMemMap[0x100 + i] = pMemory + ((i - cStart) << 8);
 		}
-		if (nType & MAP_FETCH) {
+		if (nType & MAP_FETCH)
+		{
 			pMemMap[0x200 + i] = pMemory + ((i - cStart) << 8);
 		}
 	}
 	return 0;
-
 }
 
 INT32 HD6309MemCallback(UINT16 nStart, UINT16 nEnd, INT32 nType)
@@ -298,21 +310,24 @@ INT32 HD6309MemCallback(UINT16 nStart, UINT16 nEnd, INT32 nType)
 #endif
 
 	UINT8 cStart = (nStart >> 8);
-	UINT8 **pMemMap = HD6309CPUContext[nActiveCPU].pMemMap;
+	UINT8** pMemMap = HD6309CPUContext[nActiveCPU].pMemMap;
 
-	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
-		if (nType & MAP_READ)	{
-			pMemMap[0     + i] = NULL;
+	for (UINT16 i = cStart; i <= (nEnd >> 8); i++)
+	{
+		if (nType & MAP_READ)
+		{
+			pMemMap[0 + i] = NULL;
 		}
-		if (nType & MAP_WRITE) {
+		if (nType & MAP_WRITE)
+		{
 			pMemMap[0x100 + i] = NULL;
 		}
-		if (nType & MAP_FETCH) {
+		if (nType & MAP_FETCH)
+		{
 			pMemMap[0x200 + i] = NULL;
 		}
 	}
 	return 0;
-
 }
 
 void HD6309SetReadHandler(UINT8 (*pHandler)(UINT16))
@@ -358,30 +373,34 @@ void HD6309SetReadOpArgHandler(UINT8 (*pHandler)(UINT16))
 UINT8 HD6309ReadByte(UINT16 Address)
 {
 	// check mem map
-	UINT8 * pr = HD6309CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
-	if (pr != NULL) {
+	UINT8* pr = HD6309CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
+	if (pr != NULL)
+	{
 		return pr[Address & 0xff];
 	}
-	
+
 	// check handler
-	if (HD6309CPUContext[nActiveCPU].ReadByte != NULL) {
+	if (HD6309CPUContext[nActiveCPU].ReadByte != NULL)
+	{
 		return HD6309CPUContext[nActiveCPU].ReadByte(Address);
 	}
-	
+
 	return 0;
 }
 
 void HD6309WriteByte(UINT16 Address, UINT8 Data)
 {
 	// check mem map
-	UINT8 * pr = HD6309CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
-	if (pr != NULL) {
+	UINT8* pr = HD6309CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
+	if (pr != NULL)
+	{
 		pr[Address & 0xff] = Data;
 		return;
 	}
-	
+
 	// check handler
-	if (HD6309CPUContext[nActiveCPU].WriteByte != NULL) {
+	if (HD6309CPUContext[nActiveCPU].WriteByte != NULL)
+	{
 		HD6309CPUContext[nActiveCPU].WriteByte(Address, Data);
 		return;
 	}
@@ -390,32 +409,36 @@ void HD6309WriteByte(UINT16 Address, UINT8 Data)
 UINT8 HD6309ReadOp(UINT16 Address)
 {
 	// check mem map
-	UINT8 * pr = HD6309CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
-	if (pr != NULL) {
+	UINT8* pr = HD6309CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
+	if (pr != NULL)
+	{
 		return pr[Address & 0xff];
 	}
-	
+
 	// check handler
-	if (HD6309CPUContext[nActiveCPU].ReadOp != NULL) {
+	if (HD6309CPUContext[nActiveCPU].ReadOp != NULL)
+	{
 		return HD6309CPUContext[nActiveCPU].ReadOp(Address);
 	}
-	
+
 	return 0;
 }
 
 UINT8 HD6309ReadOpArg(UINT16 Address)
 {
 	// check mem map
-	UINT8 * pr = HD6309CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
-	if (pr != NULL) {
+	UINT8* pr = HD6309CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
+	if (pr != NULL)
+	{
 		return pr[Address & 0xff];
 	}
-	
+
 	// check handler
-	if (HD6309CPUContext[nActiveCPU].ReadOpArg != NULL) {
+	if (HD6309CPUContext[nActiveCPU].ReadOpArg != NULL)
+	{
 		return HD6309CPUContext[nActiveCPU].ReadOpArg(Address);
 	}
-	
+
 	return 0;
 }
 
@@ -427,24 +450,28 @@ void HD6309WriteRom(UINT16 Address, UINT8 Data)
 #endif
 
 	// check mem map
-	UINT8 * pr = HD6309CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
-	UINT8 * pw = HD6309CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
-	UINT8 * pf = HD6309CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
+	UINT8* pr = HD6309CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
+	UINT8* pw = HD6309CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
+	UINT8* pf = HD6309CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
 
-	if (pr != NULL) {
+	if (pr != NULL)
+	{
 		pr[Address & 0xff] = Data;
 	}
-	
-	if (pw != NULL) {
+
+	if (pw != NULL)
+	{
 		pw[Address & 0xff] = Data;
 	}
 
-	if (pf != NULL) {
+	if (pf != NULL)
+	{
 		pf[Address & 0xff] = Data;
 	}
 
 	// check handler
-	if (HD6309CPUContext[nActiveCPU].WriteByte != NULL) {
+	if (HD6309CPUContext[nActiveCPU].WriteByte != NULL)
+	{
 		HD6309CPUContext[nActiveCPU].WriteByte(Address, Data);
 		return;
 	}
@@ -457,12 +484,14 @@ INT32 HD6309Scan(INT32 nAction)
 #endif
 
 	struct BurnArea ba;
-	
-	if ((nAction & ACB_DRIVER_DATA) == 0) {
+
+	if ((nAction & ACB_DRIVER_DATA) == 0)
+	{
 		return 1;
 	}
 
-	for (INT32 i = 0; i < nHD6309Count; i++) {
+	for (INT32 i = 0; i < nHD6309Count; i++)
+	{
 		char szName[] = "HD6309 #n";
 		szName[7] = '0' + i;
 
@@ -471,11 +500,11 @@ INT32 HD6309Scan(INT32 nAction)
 		ba.nLen = sizeof(HD6309CPUContext[i].reg);
 		ba.szName = szName;
 		BurnAcb(&ba);
-		
+
 		SCAN_VAR(nHD6309CyclesDone[i]);
 	}
-	
+
 	SCAN_VAR(nHD6309CyclesTotal);
-	
+
 	return 0;
 }

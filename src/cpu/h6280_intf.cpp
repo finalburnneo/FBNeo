@@ -20,13 +20,13 @@ struct h6280_handler
 	UINT8 (*h6280Read)(UINT32 address);
 	void (*h6280Write)(UINT32 address, UINT8 data);
 	void (*h6280WriteIO)(UINT8 port, UINT8 data);
-	UINT8 *mem[3][PAGE_COUNT];
+	UINT8* mem[3][PAGE_COUNT];
 
-	h6280_Regs *h6280;
+	h6280_Regs* h6280;
 };
 
 static struct h6280_handler sHandler[MAX_H6280];
-static struct h6280_handler *sPointer;
+static struct h6280_handler* sPointer;
 
 INT32 nh6280CpuCount = 0;
 INT32 nh6280CpuActive = -1;
@@ -71,19 +71,19 @@ cpu_core_config H6280Config =
 	0
 };
 
-void h6280MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type)
+void h6280MapMemory(UINT8* src, UINT32 start, UINT32 finish, INT32 type)
 {
 #ifdef FBN_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280MapMemory called without init\n"));
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280MapMemory called with no CPU open\n"));
 #endif
 
-	UINT32 len = (finish-start) >> PAGE_SHIFT;
+	UINT32 len = (finish - start) >> PAGE_SHIFT;
 
-	for (UINT32 i = 0; i < len+1; i++)
+	for (UINT32 i = 0; i < len + 1; i++)
 	{
 		UINT32 offset = i + (start >> PAGE_SHIFT);
-		if (type & (1 <<  READ)) sPointer->mem[ READ][offset] = src + (i << PAGE_SHIFT);
+		if (type & (1 << READ)) sPointer->mem[READ][offset] = src + (i << PAGE_SHIFT);
 		if (type & (1 << WRITE)) sPointer->mem[WRITE][offset] = src + (i << PAGE_SHIFT);
 		if (type & (1 << FETCH)) sPointer->mem[FETCH][offset] = src + (i << PAGE_SHIFT);
 	}
@@ -143,19 +143,23 @@ void h6280_write_rom(UINT32 address, UINT8 data)
 
 	address &= 0x1fffff;
 
-	if (sPointer->mem[READ][address >> PAGE_SHIFT] != NULL) {
+	if (sPointer->mem[READ][address >> PAGE_SHIFT] != NULL)
+	{
 		sPointer->mem[READ][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (sPointer->mem[FETCH][address >> PAGE_SHIFT] != NULL) {
+	if (sPointer->mem[FETCH][address >> PAGE_SHIFT] != NULL)
+	{
 		sPointer->mem[FETCH][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (sPointer->mem[WRITE][address >> PAGE_SHIFT] != NULL) {
+	if (sPointer->mem[WRITE][address >> PAGE_SHIFT] != NULL)
+	{
 		sPointer->mem[WRITE][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (sPointer->h6280Write != NULL) {
+	if (sPointer->h6280Write != NULL)
+	{
 		sPointer->h6280Write(address, data);
 	}
 }
@@ -167,9 +171,10 @@ void h6280WritePort(UINT8 port, UINT8 data)
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_write_port called with no CPU open\n"));
 #endif
 
-//	bprintf (0, _T("%5.5x write port\n"), port);
+	//	bprintf (0, _T("%5.5x write port\n"), port);
 
-	if (sPointer->h6280WriteIO != NULL) {
+	if (sPointer->h6280WriteIO != NULL)
+	{
 		sPointer->h6280WriteIO(port, data);
 		return;
 	}
@@ -186,14 +191,16 @@ void h6280Write(UINT32 address, UINT8 data)
 
 	address &= 0x1fffff;
 
-//	bprintf (0, _T("%5.5x write\n"), address);
+	//	bprintf (0, _T("%5.5x write\n"), address);
 
-	if (sPointer->mem[WRITE][address >> PAGE_SHIFT] != NULL) {
+	if (sPointer->mem[WRITE][address >> PAGE_SHIFT] != NULL)
+	{
 		sPointer->mem[WRITE][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 		return;
 	}
 
-	if (sPointer->h6280Write != NULL) {
+	if (sPointer->h6280Write != NULL)
+	{
 		sPointer->h6280Write(address, data);
 		return;
 	}
@@ -210,13 +217,15 @@ UINT8 h6280Read(UINT32 address)
 
 	address &= 0x1fffff;
 
-//	bprintf (0, _T("%5.5x read\n"), address);
+	//	bprintf (0, _T("%5.5x read\n"), address);
 
-	if (sPointer->mem[ READ][address >> PAGE_SHIFT] != NULL) {
-		return sPointer->mem[ READ][address >> PAGE_SHIFT][address & PAGE_MASK];
+	if (sPointer->mem[READ][address >> PAGE_SHIFT] != NULL)
+	{
+		return sPointer->mem[READ][address >> PAGE_SHIFT][address & PAGE_MASK];
 	}
 
-	if (sPointer->h6280Read != NULL) {
+	if (sPointer->h6280Read != NULL)
+	{
 		return sPointer->h6280Read(address);
 	}
 
@@ -232,11 +241,13 @@ UINT8 h6280Fetch(UINT32 address)
 
 	address &= 0x1fffff;
 
-	if (sPointer->mem[FETCH][address >> PAGE_SHIFT] != NULL) {
+	if (sPointer->mem[FETCH][address >> PAGE_SHIFT] != NULL)
+	{
 		return sPointer->mem[FETCH][address >> PAGE_SHIFT][address & PAGE_MASK];
 	}
 
-	if (sPointer->h6280Read != NULL) {
+	if (sPointer->h6280Read != NULL)
+	{
 		return sPointer->h6280Read(address);
 	}
 
@@ -250,11 +261,14 @@ void h6280SetIRQLine(INT32 line, INT32 state)
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280SetIRQLine called with no CPU open\n"));
 #endif
 
-	if (state == CPU_IRQSTATUS_AUTO) {
+	if (state == CPU_IRQSTATUS_AUTO)
+	{
 		h6280_set_irq_line(line, 1);
 		h6280Run(10);
 		h6280_set_irq_line(line, 0);
-	} else {
+	}
+	else
+	{
 		h6280_set_irq_line(line, state);
 	}
 }
@@ -271,10 +285,12 @@ void h6280Init(INT32 nCpu)
 
 	sPointer->h6280 = (h6280_Regs*)BurnMalloc(sizeof(h6280_Regs));
 
-	if (nCpu >= nh6280CpuCount) nh6280CpuCount = nCpu+1;
+	if (nCpu >= nh6280CpuCount) nh6280CpuCount = nCpu + 1;
 
-	for (INT32 i = 0; i < 3; i++) {
-		for (INT32 j = 0; j < (MEMORY_SPACE / PAGE_SIZE); j++) {
+	for (INT32 i = 0; i < 3; i++)
+	{
+		for (INT32 j = 0; j < (MEMORY_SPACE / PAGE_SIZE); j++)
+		{
 			sPointer->mem[i][j] = NULL;
 		}
 	}
@@ -294,14 +310,16 @@ void h6280Exit()
 
 	if (!DebugCPU_H6280Initted) return;
 
-	for (INT32 i = 0; i < MAX_H6280; i++) {
+	for (INT32 i = 0; i < MAX_H6280; i++)
+	{
 		sPointer = &sHandler[i];
 
 		sPointer->h6280Write = NULL;
 		sPointer->h6280Read = NULL;
 		sPointer->h6280WriteIO = NULL;
 
-		if (sPointer->h6280) {
+		if (sPointer->h6280)
+		{
 			BurnFree(sPointer->h6280);
 		}
 	}
@@ -334,7 +352,7 @@ void h6280Close()
 
 	h6280_get_context(sPointer->h6280);
 
-//	sPointer = NULL; // not safe...
+	//	sPointer = NULL; // not safe...
 
 	nh6280CpuActive = -1;
 }
@@ -355,7 +373,7 @@ void h6280NewFrame()
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280NewFrame called without init\n"));
 #endif
 
-	h6280_handler *ptr;
+	h6280_handler* ptr;
 
 	for (INT32 i = 0; i < MAX_H6280; i++)
 	{
@@ -370,18 +388,19 @@ INT32 h6280Scan(INT32 nAction)
 
 	char szName[64];
 
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		for (INT32 i = 0; i < MAX_H6280; i++)
 		{
-			h6280_handler *ptr = &sHandler[i];
-			h6280_Regs *p = ptr->h6280;
+			h6280_handler* ptr = &sHandler[i];
+			h6280_Regs* p = ptr->h6280;
 
 			if (p == NULL) continue;
 
 			memset(&ba, 0, sizeof(ba));
-			ba.Data	  = p;
-			ba.nLen	  = STRUCT_SIZE_HELPER(h6280_Regs, io_buffer);
-			sprintf (szName, "h6280 Registers for Chip #%d", i);
+			ba.Data = p;
+			ba.nLen = STRUCT_SIZE_HELPER(h6280_Regs, io_buffer);
+			sprintf(szName, "h6280 Registers for Chip #%d", i);
 			ba.szName = szName;
 			BurnAcb(&ba);
 		}

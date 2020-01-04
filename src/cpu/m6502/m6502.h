@@ -40,34 +40,33 @@
 
 typedef struct
 {
-	UINT8	subtype;		/* currently selected cpu sub type */
-//	void	(*const *insn)(void); /* pointer to the function pointer table */
-	PAIR	ppc;			/* previous program counter */
-	PAIR	pc; 			/* program counter */
-	PAIR	sp; 			/* stack pointer (always 100 - 1FF) */
-	PAIR	zp; 			/* zero page address */
-	PAIR	ea; 			/* effective address */
-	UINT8	a;				/* Accumulator */
-	UINT8	x;				/* X index register */
-	UINT8	y;				/* Y index register */
-	UINT8	p;				/* Processor status */
-	UINT8	pending_irq;	/* nonzero if an IRQ is pending */
-	UINT8	after_cli;		/* pending IRQ and last insn cleared I */
-	UINT8	nmi_state;
-	UINT8	irq_state;
-	UINT8   so_state;
-	UINT8   hold_irq;
-	UINT8   cpu7written;
+	UINT8 subtype; /* currently selected cpu sub type */
+	//	void	(*const *insn)(void); /* pointer to the function pointer table */
+	PAIR ppc; /* previous program counter */
+	PAIR pc; /* program counter */
+	PAIR sp; /* stack pointer (always 100 - 1FF) */
+	PAIR zp; /* zero page address */
+	PAIR ea; /* effective address */
+	UINT8 a; /* Accumulator */
+	UINT8 x; /* X index register */
+	UINT8 y; /* Y index register */
+	UINT8 p; /* Processor status */
+	UINT8 pending_irq; /* nonzero if an IRQ is pending */
+	UINT8 after_cli; /* pending IRQ and last insn cleared I */
+	UINT8 nmi_state;
+	UINT8 irq_state;
+	UINT8 so_state;
+	UINT8 hold_irq;
+	UINT8 cpu7written;
 
-	UINT8   ddr; // 6501/8502/7501 stuff
-	UINT8   port;
+	UINT8 ddr; // 6501/8502/7501 stuff
+	UINT8 port;
 
-	UINT8	(*port_read)(UINT8 direction);
-	void	(*port_write)(UINT8 direction, UINT8 data);
+	UINT8 (*port_read)(UINT8 direction);
+	void (*port_write)(UINT8 direction, UINT8 data);
 
-	int 	(*irq_callback)(int irqline);	/* IRQ callback */
-
-}	m6502_Regs;
+	int (*irq_callback)(int irqline); /* IRQ callback */
+} m6502_Regs;
 
 #define M6502_CLEAR_LINE		0
 #define M6502_ASSERT_LINE		1
@@ -95,8 +94,14 @@ typedef struct
 
 enum
 {
-	M6502_PC=1, M6502_S, M6502_P, M6502_A, M6502_X, M6502_Y,
-	M6502_EA, M6502_ZP,
+	M6502_PC=1,
+	M6502_S,
+	M6502_P,
+	M6502_A,
+	M6502_X,
+	M6502_Y,
+	M6502_EA,
+	M6502_ZP,
 	M6502_SUBTYPE
 };
 
@@ -128,8 +133,8 @@ void m6502_init();
 void m6502_reset(void);
 void m6502_exit(void);
 void m6502_core_exit();
-void m6502_get_context (void *dst);
-void m6502_set_context (void *src);
+void m6502_get_context(void* dst);
+void m6502_set_context(void* src);
 int m6502_execute(int cycles);
 void m6502_set_irq_line(int irqline, int state);
 void m6502_set_irq_hold();

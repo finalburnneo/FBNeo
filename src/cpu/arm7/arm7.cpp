@@ -44,8 +44,8 @@ __extension__ typedef signed long long		INT64;
 #endif
 
 #if defined _MSC_VER
-typedef unsigned long long	UINT64;
-typedef signed long long	INT64;
+typedef unsigned long long UINT64;
+typedef signed long long INT64;
 #endif
 
 /* Example for showing how Co-Proc functions work */
@@ -83,7 +83,7 @@ static char *Spec_DO(char *pBuf, UINT32 opcode, char *pConditionCode, char *pBuf
 /* CPU Registers */
 typedef struct
 {
-    ARM7CORE_REGS               // these must be included in your cpu specific register implementation
+	ARM7CORE_REGS // these must be included in your cpu specific register implementation
 } ARM7_REGS;
 
 static ARM7_REGS arm7;
@@ -92,14 +92,12 @@ static int total_cycles = 0;
 static int curr_cycles = 0;
 static int end_run = 0;
 
-void Arm7Open(int ) 
+void Arm7Open(int)
 {
-
 }
 
 void Arm7Close()
 {
-
 }
 
 int Arm7TotalCycles()
@@ -176,8 +174,8 @@ void Arm7Reset()
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Reset called without init\n"));
 #endif
 
-    // must call core reset
-    arm7_core_reset();
+	// must call core reset
+	arm7_core_reset();
 }
 
 /*
@@ -192,7 +190,7 @@ int Arm7Run(int cycles)
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Run called without init\n"));
 #endif
 
-/* include the arm7 core execute code */
+	/* include the arm7 core execute code */
 #include "arm7exec.c"
 }
 
@@ -203,7 +201,7 @@ void arm7_set_irq_line(int irqline, int state)
 #endif
 
 	// must call core
-	arm7_core_set_irq_line(irqline,state);
+	arm7_core_set_irq_line(irqline, state);
 }
 
 int Arm7Scan(int nAction)
@@ -213,11 +211,12 @@ int Arm7Scan(int nAction)
 #endif
 
 	struct BurnArea ba{};
-	
-	if (nAction & ACB_DRIVER_DATA) {
+
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = (unsigned char*)&ARM7;
-		ba.nLen	  = sizeof(ARM7);
+		ba.Data = (unsigned char*)&ARM7;
+		ba.nLen = sizeof(ARM7);
 		ba.szName = "All  Registers";
 		BurnAcb(&ba);
 

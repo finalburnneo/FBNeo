@@ -28,12 +28,12 @@ void ZetSwapActive(INT32 nCPU);
 //#define ZET_ROM		(ZET_READ|ZET_FETCH)
 //#define ZET_RAM		(ZET_ROM|ZET_WRITE)
 
-INT32 ZetUnmapMemory(INT32 nStart,INT32 nEnd,INT32 nFlags);
-void ZetMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nFlags);
+INT32 ZetUnmapMemory(INT32 nStart, INT32 nEnd, INT32 nFlags);
+void ZetMapMemory(UINT8* Mem, INT32 nStart, INT32 nEnd, INT32 nFlags);
 
-INT32 ZetMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode);
-INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
-INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem02);
+INT32 ZetMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode);
+INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8* Mem);
+INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8* Mem01, UINT8* Mem02);
 
 void ZetReset();
 void ZetReset(INT32 nCPU);

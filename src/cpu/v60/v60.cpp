@@ -16,7 +16,8 @@
 // convert a series of 32 bits into a float
 inline float u2f(UINT32 v)
 {
-	union {
+	union
+	{
 		float ff;
 		UINT32 vv;
 	} u;
@@ -28,7 +29,8 @@ inline float u2f(UINT32 v)
 // convert a float into a series of 32 bits
 inline UINT32 f2u(float f)
 {
-	union {
+	union
+	{
 		float ff;
 		UINT32 vv;
 	} u;
@@ -44,39 +46,39 @@ inline UINT32 f2u(float f)
 #define page_size	0x800
 #define page_mask	0x7ff
 
-static UINT8 *mem[3][(address_mask + 1) / page_size];
+static UINT8* mem[3][(address_mask + 1) / page_size];
 
-static UINT8  (*v60_read8)(UINT32) = NULL;
+static UINT8 (*v60_read8)(UINT32) = NULL;
 static UINT16 (*v60_read16)(UINT32) = NULL;
 static UINT32 (*v60_read32)(UINT32) = NULL;
-static void (*v60_write8)(UINT32,UINT8) = NULL;
-static void (*v60_write16)(UINT32,UINT16) = NULL;
-static void (*v60_write32)(UINT32,UINT32) = NULL;
+static void (*v60_write8)(UINT32, UINT8) = NULL;
+static void (*v60_write16)(UINT32, UINT16) = NULL;
+static void (*v60_write32)(UINT32, UINT32) = NULL;
 
-static UINT8  (*v60_ioread8)(UINT32) = NULL;
+static UINT8 (*v60_ioread8)(UINT32) = NULL;
 static UINT16 (*v60_ioread16)(UINT32) = NULL;
 static UINT32 (*v60_ioread32)(UINT32) = NULL;
-static void (*v60_iowrite8)(UINT32,UINT8) = NULL;
-static void (*v60_iowrite16)(UINT32,UINT16) = NULL;
-static void (*v60_iowrite32)(UINT32,UINT32) = NULL;
+static void (*v60_iowrite8)(UINT32, UINT8) = NULL;
+static void (*v60_iowrite16)(UINT32, UINT16) = NULL;
+static void (*v60_iowrite32)(UINT32, UINT32) = NULL;
 
 
-void v60SetWriteByteHandler(void (*write)(UINT32,UINT8))
+void v60SetWriteByteHandler(void (*write)(UINT32, UINT8))
 {
 	v60_write8 = write;
 }
 
-void v60SetWriteWordHandler(void (*write)(UINT32,UINT16))
+void v60SetWriteWordHandler(void (*write)(UINT32, UINT16))
 {
 	v60_write16 = write;
 }
 
-void v60SetWriteLongHandler(void (*write)(UINT32,UINT32))
+void v60SetWriteLongHandler(void (*write)(UINT32, UINT32))
 {
 	v60_write32 = write;
 }
 
-void v60SetReadByteHandler(UINT8  (*read)(UINT32))
+void v60SetReadByteHandler(UINT8 (*read)(UINT32))
 {
 	v60_read8 = read;
 }
@@ -92,15 +94,15 @@ void v60SetReadLongHandler(UINT32 (*read)(UINT32))
 }
 
 
-void v60MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags)
+void v60MapMemory(UINT8* ptr, UINT32 start, UINT32 end, UINT32 flags)
 {
 	// error check here!
 
-	for (UINT32 i = start; i < end; i+= page_size)
+	for (UINT32 i = start; i < end; i += page_size)
 	{
-		if (flags & 1) mem[0][i/page_size] = ptr + (i - start);
-		if (flags & 2) mem[1][i/page_size] = ptr + (i - start);
-		if (flags & 4) mem[2][i/page_size] = ptr + (i - start);
+		if (flags & 1) mem[0][i / page_size] = ptr + (i - start);
+		if (flags & 2) mem[1][i / page_size] = ptr + (i - start);
+		if (flags & 4) mem[2][i / page_size] = ptr + (i - start);
 	}
 }
 
@@ -108,14 +110,16 @@ static UINT8 cpu_readop(UINT32 a)
 {
 	a &= address_mask;
 
-	if (mem[2][a / page_size]) {
+	if (mem[2][a / page_size])
+	{
 #ifdef LOG_MEM
-//		bprintf (0, _T("OP8: %6.6x %2.2x\n"), a, mem[2][a / page_size][a & page_mask]);
+		//		bprintf (0, _T("OP8: %6.6x %2.2x\n"), a, mem[2][a / page_size][a & page_mask]);
 #endif
 		return mem[2][a / page_size][a & page_mask];
 	}
 
-	if (v60_read8) {
+	if (v60_read8)
+	{
 #ifdef LOG_MEM
 		bprintf (0, _T("OP8: %6.6x %2.2x\n"), a, v60_read8(a));
 #endif
@@ -129,17 +133,19 @@ static UINT16 cpu_readop16(UINT32 a)
 {
 	a &= address_mask;
 
-	UINT8 *p = mem[2][a / page_size];
+	UINT8* p = mem[2][a / page_size];
 
-	if (p) {
-		UINT16 *z = (UINT16*)(p + (a & page_mask));
+	if (p)
+	{
+		UINT16* z = (UINT16*)(p + (a & page_mask));
 #ifdef LOG_MEM
-//		bprintf (0, _T("OP16: %6.6x %4.4x\n"), a, *z);
+		//		bprintf (0, _T("OP16: %6.6x %4.4x\n"), a, *z);
 #endif
 		return *z;
 	}
 
-	if (v60_read16) {
+	if (v60_read16)
+	{
 #ifdef LOG_MEM
 		bprintf (0, _T("OP16: %6.6x %4.4x\n"), a, v60_read16(a));
 #endif
@@ -154,19 +160,21 @@ static UINT32 cpu_readop32(UINT32 a)
 {
 	a &= address_mask;
 
-	UINT8 *p = mem[2][a / page_size];
+	UINT8* p = mem[2][a / page_size];
 
-	if (p) {
-		UINT32 *z = (UINT32*)(p + (a & page_mask));
+	if (p)
+	{
+		UINT32* z = (UINT32*)(p + (a & page_mask));
 
 #ifdef LOG_MEM
-//		bprintf (0, _T("OP32: %6.6x %8.8x\n"), a, *z);
+		//		bprintf (0, _T("OP32: %6.6x %8.8x\n"), a, *z);
 #endif
 
 		return *z;
 	}
 
-	if (v60_read32) {
+	if (v60_read32)
+	{
 #ifdef LOG_MEM
 		bprintf (0, _T("OP32: %6.6x %8.8x\n"), a, v60_read32(a));
 #endif
@@ -181,10 +189,11 @@ static UINT16 program_read_word_16le(UINT32 a)
 {
 	a &= address_mask;
 
-	UINT8 *p = mem[0][a / page_size];
+	UINT8* p = mem[0][a / page_size];
 
-	if (p) {
-		UINT16 *z = (UINT16*)(p + (a & page_mask));
+	if (p)
+	{
+		UINT16* z = (UINT16*)(p + (a & page_mask));
 #ifdef LOG_MEM
 		bprintf (0, _T("PRW: %6.6x %4.4x\n"), a, *z);
 #endif
@@ -192,7 +201,8 @@ static UINT16 program_read_word_16le(UINT32 a)
 		return *z;
 	}
 
-	if (v60_read16) {
+	if (v60_read16)
+	{
 #ifdef LOG_MEM
 		bprintf (0, _T("PRW: %6.6x %4.4x\n"), a, v60_read16(a));
 #endif
@@ -210,11 +220,13 @@ static UINT8 program_read_byte_16le(UINT32 a)
 	bprintf (0, _T("PRB: %6.6x\n"), a);
 #endif
 
-	if (mem[0][a / page_size]) {
+	if (mem[0][a / page_size])
+	{
 		return mem[0][a / page_size][a & page_mask];
 	}
 
-	if (v60_read8) {
+	if (v60_read8)
+	{
 		return v60_read8(a);
 	}
 
@@ -228,16 +240,18 @@ static void program_write_word_16le(UINT32 a, UINT16 d)
 	bprintf (0, _T("PWW: %6.6x %4.4x\n"), a,d);
 #endif
 
-	UINT8 *p = mem[1][a / page_size];
+	UINT8* p = mem[1][a / page_size];
 
-	if (p) {
-		UINT16 *z = (UINT16*)(p + (a & page_mask));
+	if (p)
+	{
+		UINT16* z = (UINT16*)(p + (a & page_mask));
 		*z = d;
 		return;
 	}
 
-	if (v60_write16) {
-		v60_write16(a,d);
+	if (v60_write16)
+	{
+		v60_write16(a, d);
 		return;
 	}
 }
@@ -249,19 +263,22 @@ static void program_write_byte_16le(UINT32 a, UINT8 d)
 	bprintf (0, _T("PWB: %6.6x %2.2x\n"), a,d);
 #endif
 
-	if (mem[1][a / page_size]) {
+	if (mem[1][a / page_size])
+	{
 		mem[1][a / page_size][a & page_mask] = d;
 		return;
 	}
 
-	if (v60_write8) {
-		return v60_write8(a,d);
+	if (v60_write8)
+	{
+		return v60_write8(a, d);
 	}
 }
 
 static UINT16 io_read_word_16le(UINT32 a)
 {
-	if (v60_ioread16) {
+	if (v60_ioread16)
+	{
 		return v60_ioread16(a);
 	}
 
@@ -270,7 +287,8 @@ static UINT16 io_read_word_16le(UINT32 a)
 
 static UINT8 io_read_byte_16le(UINT32 a)
 {
-	if (v60_ioread8) {
+	if (v60_ioread8)
+	{
 		return v60_ioread8(a);
 	}
 
@@ -279,21 +297,24 @@ static UINT8 io_read_byte_16le(UINT32 a)
 
 static void io_write_word_16le(UINT32 a, UINT16 d)
 {
-	if (v60_iowrite16) {
-		return v60_iowrite16(a,d);
+	if (v60_iowrite16)
+	{
+		return v60_iowrite16(a, d);
 	}
 }
 
 static void io_write_byte_16le(UINT32 a, UINT8 d)
 {
-	if (v60_iowrite8) {
-		return v60_iowrite8(a,d);
+	if (v60_iowrite8)
+	{
+		return v60_iowrite8(a, d);
 	}
 }
 
 static UINT32 io_read_dword_32le(UINT32 a)
 {
-	if (v60_ioread32) {
+	if (v60_ioread32)
+	{
 		return v60_ioread32(a);
 	}
 
@@ -302,7 +323,8 @@ static UINT32 io_read_dword_32le(UINT32 a)
 
 static UINT16 io_read_word_32le(UINT32 a)
 {
-	if (v60_ioread16) {
+	if (v60_ioread16)
+	{
 		return v60_ioread16(a);
 	}
 
@@ -311,7 +333,8 @@ static UINT16 io_read_word_32le(UINT32 a)
 
 static UINT8 io_read_byte_32le(UINT32 a)
 {
-	if (v60_ioread8) {
+	if (v60_ioread8)
+	{
 		return v60_ioread8(a);
 	}
 
@@ -320,34 +343,39 @@ static UINT8 io_read_byte_32le(UINT32 a)
 
 static void io_write_dword_32le(UINT32 a, UINT32 d)
 {
-	if (v60_iowrite32) {
-		return v60_iowrite32(a,d);
+	if (v60_iowrite32)
+	{
+		return v60_iowrite32(a, d);
 	}
 }
 
 static void io_write_word_32le(UINT32 a, UINT16 d)
 {
-	if (v60_iowrite16) {
-		return v60_iowrite16(a,d);
+	if (v60_iowrite16)
+	{
+		return v60_iowrite16(a, d);
 	}
 }
 
 static void io_write_byte_32le(UINT32 a, UINT8 d)
 {
-	if (v60_iowrite8) {
-		return v60_iowrite8(a,d);
+	if (v60_iowrite8)
+	{
+		return v60_iowrite8(a, d);
 	}
 }
 
 static UINT32 program_read_dword_32le(UINT32 a)
 {
-	UINT32 *p = (UINT32*)mem[0][a / page_size];
+	UINT32* p = (UINT32*)mem[0][a / page_size];
 
-	if (p) {
-		return p[(a & page_mask)/4];
+	if (p)
+	{
+		return p[(a & page_mask) / 4];
 	}
 
-	if (v60_read32) {
+	if (v60_read32)
+	{
 		return v60_read32(a);
 	}
 
@@ -356,13 +384,15 @@ static UINT32 program_read_dword_32le(UINT32 a)
 
 static UINT16 program_read_word_32le(UINT32 a)
 {
-	UINT16 *p = (UINT16*)mem[0][a / page_size];
+	UINT16* p = (UINT16*)mem[0][a / page_size];
 
-	if (p) {
-		return p[(a & page_mask)/2];
+	if (p)
+	{
+		return p[(a & page_mask) / 2];
 	}
 
-	if (v60_read16) {
+	if (v60_read16)
+	{
 		return v60_read16(a);
 	}
 
@@ -371,11 +401,13 @@ static UINT16 program_read_word_32le(UINT32 a)
 
 static UINT8 program_read_byte_32le(UINT32 a)
 {
-	if (mem[0][a / page_size]) {
+	if (mem[0][a / page_size])
+	{
 		return mem[0][a / page_size][a & page_mask];
 	}
 
-	if (v60_read8) {
+	if (v60_read8)
+	{
 		return v60_read8(a);
 	}
 
@@ -384,43 +416,49 @@ static UINT8 program_read_byte_32le(UINT32 a)
 
 static void program_write_dword_32le(UINT32 a, UINT32 d)
 {
-	UINT32 *p = (UINT32*)mem[1][a / page_size];
+	UINT32* p = (UINT32*)mem[1][a / page_size];
 
-	if (p) {
-		p[(a & page_mask)/4] = d;
+	if (p)
+	{
+		p[(a & page_mask) / 4] = d;
 		return;
 	}
 
-	if (v60_write32) {
-		v60_write32(a,d);
+	if (v60_write32)
+	{
+		v60_write32(a, d);
 		return;
 	}
 }
 
 static void program_write_word_32le(UINT32 a, UINT16 d)
 {
-	UINT16 *p = (UINT16*)mem[1][a / page_size];
+	UINT16* p = (UINT16*)mem[1][a / page_size];
 
-	if (p) {
-		p[(a & page_mask)/2] = d;
+	if (p)
+	{
+		p[(a & page_mask) / 2] = d;
 		return;
 	}
 
-	if (v60_write16) {
-		v60_write16(a,d);
+	if (v60_write16)
+	{
+		v60_write16(a, d);
 		return;
 	}
 }
 
 static void program_write_byte_32le(UINT32 a, UINT8 d)
 {
-	if (mem[1][a / page_size]) {
+	if (mem[1][a / page_size])
+	{
 		mem[1][a / page_size][a & page_mask] = d;
 		return;
 	}
 
-	if (v60_write8) {
-		return v60_write8(a,d);
+	if (v60_write8)
+	{
+		return v60_write8(a, d);
 	}
 }
 
@@ -448,23 +486,24 @@ cpu_core_config v60Config =
 	0
 };
 
-struct cpu_info {
-	UINT8  (*mr8) (offs_t address);
-	void   (*mw8) (offs_t address, UINT8  data);
+struct cpu_info
+{
+	UINT8 (*mr8)(offs_t address);
+	void (*mw8)(offs_t address, UINT8 data);
 	UINT16 (*mr16)(offs_t address);
-	void   (*mw16)(offs_t address, UINT16 data);
+	void (*mw16)(offs_t address, UINT16 data);
 	UINT32 (*mr32)(offs_t address);
-	void   (*mw32)(offs_t address, UINT32 data);
-	UINT8  (*pr8) (offs_t address);
-	void   (*pw8) (offs_t address, UINT8  data);
+	void (*mw32)(offs_t address, UINT32 data);
+	UINT8 (*pr8)(offs_t address);
+	void (*pw8)(offs_t address, UINT8 data);
 	UINT16 (*pr16)(offs_t address);
-	void   (*pw16)(offs_t address, UINT16 data);
+	void (*pw16)(offs_t address, UINT16 data);
 	UINT32 (*pr32)(offs_t address);
-	void   (*pw32)(offs_t address, UINT32 data);
-	UINT8  (*or8) (offs_t address);
+	void (*pw32)(offs_t address, UINT32 data);
+	UINT8 (*or8)(offs_t address);
 	UINT16 (*or16)(offs_t address);
 	UINT32 (*or32)(offs_t address);
-	void   (*chpc)(offs_t newpc);
+	void (*chpc)(offs_t newpc);
 	UINT32 start_pc;
 };
 
@@ -477,7 +516,8 @@ typedef struct
 } Flags;
 
 // v60 Register Inside (Hm... It's not a pentium inside :-))) )
-static struct v60info {
+static struct v60info
+{
 	struct cpu_info info;
 	UINT32 reg[68];
 	Flags flags;
@@ -626,7 +666,7 @@ static int v60_ICount;
 //29-31 reserved
 
 // Register names
-const char *v60_reg_names[69] = {
+const char* v60_reg_names[69] = {
 	"R0", "R1", "R2", "R3",
 	"R4", "R5", "R6", "R7",
 	"R8", "R9", "R10", "R11",
@@ -635,15 +675,15 @@ const char *v60_reg_names[69] = {
 	"R20", "R21", "R22", "R23",
 	"R24", "R25", "R26", "R27",
 	"R28", "AP", "FP", "SP",
-	"PC", "PSW","Unk","Unk",
+	"PC", "PSW", "Unk", "Unk",
 	"ISP", "L0SP", "L1SP", "L2SP",
-	"L3SP", "SBR","TR","SYCW",
-	"TKCW", "PIR", "Reserved","Reserved",
-	"Reserved","Reserved","Reserved","PSW2",
+	"L3SP", "SBR", "TR", "SYCW",
+	"TKCW", "PIR", "Reserved", "Reserved",
+	"Reserved", "Reserved", "Reserved", "PSW2",
 	"ATBR0", "ATLR0", "ATBR1", "ATLR1",
 	"ATBR2", "ATLR2", "ATBR3", "ATLR3",
-	"TRMODE", "ADTR0", "ADTR1","ADTMR0",
-	"ADTMR1","Reserved","Reserved","Reserved"
+	"TRMODE", "ADTR0", "ADTR1", "ADTMR0",
+	"ADTMR1", "Reserved", "Reserved", "Reserved"
 };
 
 // Defines...
@@ -677,7 +717,7 @@ INLINE void v60ReloadStack(void)
 INLINE UINT32 v60ReadPSW(void)
 {
 	PSW &= 0xfffffff0;
-	PSW |= (_Z?1:0) | (_S?2:0) | (_OV?4:0) | (_CY?8:0);
+	PSW |= (_Z ? 1 : 0) | (_S ? 2 : 0) | (_OV ? 4 : 0) | (_CY ? 8 : 0);
 	return PSW;
 }
 
@@ -690,7 +730,7 @@ INLINE void v60WritePSW(UINT32 newval)
 	if ((newval ^ PSW) & 0x10000000)
 		updateStack = 1;
 
-	/* if we are not in interrupt mode and the level is changing, we also must update */
+		/* if we are not in interrupt mode and the level is changing, we also must update */
 	else if (!(PSW & 0x10000000) && ((newval ^ PSW) & 0x03000000))
 		updateStack = 1;
 
@@ -700,8 +740,8 @@ INLINE void v60WritePSW(UINT32 newval)
 
 	/* set the new value and update the flags */
 	PSW = newval;
-	_Z =  (UINT8)(PSW & 1);
-	_S =  (UINT8)(PSW & 2);
+	_Z = (UINT8)(PSW & 1);
+	_S = (UINT8)(PSW & 2);
 	_OV = (UINT8)(PSW & 4);
 	_CY = (UINT8)(PSW & 8);
 
@@ -717,16 +757,16 @@ INLINE UINT32 v60_update_psw_for_exception(int is_interrupt, int target_level)
 	UINT32 newPSW = oldPSW;
 
 	// Change to interrupt context
-	newPSW &= ~(3 << 24);  // PSW.EL = 0
+	newPSW &= ~(3 << 24); // PSW.EL = 0
 	newPSW |= target_level << 24; // set target level
-	newPSW &= ~(1 << 18);  // PSW.IE = 0
-	newPSW &= ~(1 << 16);  // PSW.TE = 0
-	newPSW &= ~(1 << 27);  // PSW.TP = 0
-	newPSW &= ~(1 << 17);  // PSW.AE = 0
-	newPSW &= ~(1 << 29);  // PSW.EM = 0
+	newPSW &= ~(1 << 18); // PSW.IE = 0
+	newPSW &= ~(1 << 16); // PSW.TE = 0
+	newPSW &= ~(1 << 27); // PSW.TP = 0
+	newPSW &= ~(1 << 17); // PSW.AE = 0
+	newPSW &= ~(1 << 29); // PSW.EM = 0
 	if (is_interrupt)
-		newPSW |=  (1 << 28);// PSW.IS = 1
-	newPSW |=  (1 << 31);  // PSW.ASA = 1
+		newPSW |= (1 << 28); // PSW.IS = 1
+	newPSW |= (1 << 31); // PSW.ASA = 1
 	v60WritePSW(newPSW);
 
 	return oldPSW;
@@ -758,7 +798,7 @@ static UINT32 opUNHANDLED(void)
 // Opcode jump table
 #include "optable.c"
 
-static int v60_default_irq_cb(int )
+static int v60_default_irq_cb(int)
 {
 	return 0;
 }
@@ -775,23 +815,27 @@ UINT8 v60CheatRead(UINT32 a)
 
 void v60WriteROM(UINT32 a, UINT8 d)
 {
-	if (mem[0][a / page_size]) {
+	if (mem[0][a / page_size])
+	{
 		mem[0][a / page_size][a & page_mask] = d;
 		return;
 	}
 
-	if (mem[1][a / page_size]) {
+	if (mem[1][a / page_size])
+	{
 		mem[1][a / page_size][a & page_mask] = d;
 		return;
 	}
 
-	if (mem[2][a / page_size]) {
+	if (mem[2][a / page_size])
+	{
 		mem[2][a / page_size][a & page_mask] = d;
 		return;
 	}
 
-	if (v60_write8) {
-		return v60_write8(a,d);
+	if (v60_write8)
+	{
+		return v60_write8(a, d);
 	}
 }
 
@@ -815,7 +859,7 @@ static void base_init()
 
 void v60Init()
 {
-	memset (mem, 0, 3 * ((address_mask + 1) / page_size) * sizeof(UINT8*));
+	memset(mem, 0, 3 * ((address_mask + 1) / page_size) * sizeof(UINT8*));
 
 	base_init();
 	// Set PIR (Processor ID) for NEC v60. LSB is reserved to NEC,
@@ -838,8 +882,9 @@ void v70Init()
 INT32 v60Scan(INT32 nAction)
 {
 	struct BurnArea ba;
-	
-	if ((nAction & ACB_DRIVER_DATA) == 0) {
+
+	if ((nAction & ACB_DRIVER_DATA) == 0)
+	{
 		return 1;
 	}
 
@@ -854,7 +899,7 @@ INT32 v60Scan(INT32 nAction)
 	SCAN_VAR(v60.PPC);
 	SCAN_VAR(v60.current_cycles);
 	SCAN_VAR(v60.cycles);
-	
+
 	return 0;
 }
 
@@ -866,33 +911,30 @@ void v60SetIRQCallback(int (*callback)(int irqline))
 void v60Reset()
 {
 	v60.current_cycles = 0;
-	PSW		= 0x10000000;
-	PC		= v60.info.start_pc;
-	SBR		= 0x00000000;
-	SYCW	= 0x00000070;
-	TKCW	= 0x0000e000;
-	PSW2	= 0x0000f002;
+	PSW = 0x10000000;
+	PC = v60.info.start_pc;
+	SBR = 0x00000000;
+	SYCW = 0x00000070;
+	TKCW = 0x0000e000;
+	PSW2 = 0x0000f002;
 	ChangePC(PC);
 
-	_CY	= 0;
-	_OV	= 0;
-	_S	= 0;
-	_Z	= 0;
+	_CY = 0;
+	_OV = 0;
+	_S = 0;
+	_Z = 0;
 }
 
 void v60Open(int)
 {
-
 }
 
 void v60Close()
 {
-
 }
 
 void v60Exit()
 {
-
 }
 
 
@@ -901,9 +943,9 @@ static void v60_do_irq(int vector)
 	UINT32 oldPSW = v60_update_psw_for_exception(1, 0);
 
 	// Push PC and PSW onto the stack
-	SP-=4;
+	SP -= 4;
 	MemWrite32(SP, oldPSW);
-	SP-=4;
+	SP -= 4;
 	MemWrite32(SP, PC);
 
 	// Jump to vector for user interrupt
@@ -912,26 +954,31 @@ static void v60_do_irq(int vector)
 
 static void v60_try_irq(void)
 {
-	if(v60.irq_line == CLEAR_LINE)
+	if (v60.irq_line == CLEAR_LINE)
 		return;
-	if((PSW & (1<<18)) != 0) {
+	if ((PSW & (1 << 18)) != 0)
+	{
 		int vector;
-		if(v60.irq_line != ASSERT_LINE)
+		if (v60.irq_line != ASSERT_LINE)
 			v60.irq_line = CLEAR_LINE;
 
 		vector = v60.irq_cb(0);
 
 		v60_do_irq(vector + 0x40);
-	} else if(v60.irq_line == PULSE_LINE)
+	}
+	else if (v60.irq_line == PULSE_LINE)
 		v60.irq_line = CLEAR_LINE;
 }
 
 static void set_irq_line(int irqline, int state)
 {
-	if(irqline == INPUT_LINE_NMI) {
-		switch(state) {
+	if (irqline == INPUT_LINE_NMI)
+	{
+		switch (state)
+		{
 		case ASSERT_LINE:
-			if(v60.nmi_line == CLEAR_LINE) {
+			if (v60.nmi_line == CLEAR_LINE)
+			{
 				v60.nmi_line = ASSERT_LINE;
 				v60_do_irq(2);
 			}
@@ -945,7 +992,9 @@ static void set_irq_line(int irqline, int state)
 			v60_do_irq(2);
 			break;
 		}
-	} else {
+	}
+	else
+	{
 		v60.irq_line = state;
 		v60_try_irq();
 	}
@@ -960,15 +1009,16 @@ INT32 v60Run(int cycles)
 	v60.cycles = cycles;
 
 	v60_ICount = cycles;
-	if(v60.irq_line != CLEAR_LINE)
+	if (v60.irq_line != CLEAR_LINE)
 		v60_try_irq();
-	while(v60_ICount >= 0) {
+	while (v60_ICount >= 0)
+	{
 		v60.PPC = PC;
-	//	CALL_MAME_DEBUG;
-		v60_ICount -= 8;	/* fix me -- this is just an average */
+		//	CALL_MAME_DEBUG;
+		v60_ICount -= 8; /* fix me -- this is just an average */
 		inc = OpCodeTable[OpRead8(PC)]();
 		PC += inc;
-		if(v60.irq_line != CLEAR_LINE)
+		if (v60.irq_line != CLEAR_LINE)
 			v60_try_irq();
 	}
 
@@ -983,18 +1033,19 @@ INT32 v60Run(int cycles)
 
 void v60SetIRQLine(INT32 irqline, INT32 state)
 {
-	if (state == CPU_IRQSTATUS_AUTO) {
-	//	INT32 tmp0 = v60.current_cycles;
-	//	INT32 tmp1 = v60.cycles;
-		set_irq_line(irqline,1);
+	if (state == CPU_IRQSTATUS_AUTO)
+	{
+		//	INT32 tmp0 = v60.current_cycles;
+		//	INT32 tmp1 = v60.cycles;
+		set_irq_line(irqline, 1);
 		v60Run(100);
-	//	if (tmp1) tmp1 -= 100;
-		set_irq_line(irqline,0);
+		//	if (tmp1) tmp1 -= 100;
+		set_irq_line(irqline, 0);
 		v60Run(100);
 	}
 	else
 	{
-		set_irq_line(irqline,state);
+		set_irq_line(irqline, state);
 	}
 }
 

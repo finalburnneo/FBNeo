@@ -125,10 +125,10 @@
 
 extern INT32 nh6280CpuActive;
 
-static int 	h6280_ICount = 0;
+static int h6280_ICount = 0;
 //static unsigned int h6280_totalcycles = 0;
 
-static h6280_Regs  h6280;
+static h6280_Regs h6280;
 
 void h6280_set_irq_line(INT32 irqline, INT32 state);
 #define set_irq_line h6280_set_irq_line
@@ -165,9 +165,9 @@ static void h6280_init(int index, int clock, const void *config, int (*irqcallba
 	state_save_register_item("h6280", index, h6280.irq_state[2]);
 	state_save_register_item("h6280", index, h6280.irq_pending);
 
-	#if LAZY_FLAGS
+#if LAZY_FLAGS
 	state_save_register_item("h6280", index, h6280.NZ);
-	#endif
+#endif
 	state_save_register_item("h6280", index, h6280.io_buffer);
 
 	h6280.irq_callback = irqcallback;
@@ -194,22 +194,22 @@ void h6280Reset(void)
 	/* set I and B flags */
 	P = _fI | _fB;
 
-    /* stack starts at 0x01ff */
+	/* stack starts at 0x01ff */
 	h6280.sp.d = 0x1ff;
 
-    /* read the reset vector into PC */
+	/* read the reset vector into PC */
 	PCL = RDMEM(H6280_RESET_VEC);
-	PCH = RDMEM((H6280_RESET_VEC+1));
+	PCH = RDMEM((H6280_RESET_VEC + 1));
 	CHANGE_PC;
 
 	/* CPU starts in low speed mode */
-    h6280.clocks_per_cycle = 4;
+	h6280.clocks_per_cycle = 4;
 
 	/* timer off by default */
-	h6280.timer_status=0;
+	h6280.timer_status = 0;
 	h6280.timer_load = 128 * 1024;
 
-    /* clear pending interrupts */
+	/* clear pending interrupts */
 	for (INT32 i = 0; i < 3; i++)
 		h6280.irq_state[i] = CLEAR_LINE;
 	h6280.nmi_state = CLEAR_LINE;
@@ -241,48 +241,55 @@ int h6280Run(int cycles)
 
 	end_run = 0;
 
-	if ( h6280.irq_pending == 2 ) {
+	if (h6280.irq_pending == 2)
+	{
 		h6280.irq_pending--;
 	}
 
 	/* Execute instructions */
 	do
-    {
-    	if ((h6280.ppc.w.l ^ h6280.pc.w.l) & 0xe000)
-    		CHANGE_PC;
+	{
+		if ((h6280.ppc.w.l ^ h6280.pc.w.l) & 0xe000)
+			CHANGE_PC;
 		h6280.ppc = h6280.pc;
 
-//		debugger_instruction_hook(Machine, PCW);
+		//		debugger_instruction_hook(Machine, PCW);
 
 		/* Execute 1 instruction */
-		in=RDOP();
+		in = RDOP();
 		PCW++;
 		insnh6280[in]();
 
-		if ( h6280.irq_pending ) {
-			if ( h6280.irq_pending == 1 ) {
-				if ( !(P & _fI) ) {
+		if (h6280.irq_pending)
+		{
+			if (h6280.irq_pending == 1)
+			{
+				if (!(P & _fI))
+				{
 					h6280.irq_pending--;
 					CHECK_AND_TAKE_IRQ_LINES;
 				}
-			} else {
+			}
+			else
+			{
 				h6280.irq_pending--;
 			}
 		}
 
 		/* Check internal timer */
-		if(h6280.timer_status)
+		if (h6280.timer_status)
 		{
-			if(h6280.timer_value<=0)
+			if (h6280.timer_value <= 0)
 			{
-				if ( ! h6280.irq_pending )
+				if (! h6280.irq_pending)
 					h6280.irq_pending = 1;
-				while( h6280.timer_value <= 0 )
+				while (h6280.timer_value <= 0)
 					h6280.timer_value += h6280.timer_load;
 				set_irq_line(2,ASSERT_LINE);
 			}
 		}
-	} while (h6280_ICount > 0 && !end_run);
+	}
+	while (h6280_ICount > 0 && !end_run);
 
 	cycles = cycles - h6280_ICount;
 
@@ -293,15 +300,15 @@ int h6280Run(int cycles)
 	return cycles;
 }
 
-void h6280_get_context(void *dst)
+void h6280_get_context(void* dst)
 {
-	if( dst )
+	if (dst)
 		*(h6280_Regs*)dst = h6280;
 }
 
-void h6280_set_context(void *src)
+void h6280_set_context(void* src)
 {
-	if( src )
+	if (src)
 		h6280 = *(h6280_Regs*)src;
 	CHANGE_PC;
 }
@@ -349,26 +356,26 @@ void h6280_set_irq_line(int irqline, int state)
 
 	if (irqline == INPUT_LINE_NMI)
 	{
-		if ( state != ASSERT_LINE ) return;
+		if (state != ASSERT_LINE) return;
 		h6280.nmi_state = state;
 		CHECK_IRQ_LINES;
 	}
 	else if (irqline < 3)
 	{
-		if (state == CPU_IRQSTATUS_HOLD) {
+		if (state == CPU_IRQSTATUS_HOLD)
+		{
 			state = CPU_IRQSTATUS_ACK;
 			h6280.irq_hold = 1;
 		}
 		/* If the state has not changed, just return */
-		if ( h6280.irq_state[irqline] == state )
+		if (h6280.irq_state[irqline] == state)
 			return;
 
-	    h6280.irq_state[irqline] = state;
+		h6280.irq_state[irqline] = state;
 
 		CHECK_IRQ_LINES;
 	}
 }
-
 
 
 /*****************************************************************************/
@@ -382,18 +389,20 @@ unsigned char h6280_irq_status_r(unsigned int offset)
 
 	int status;
 
-	switch (offset&3)
+	switch (offset & 3)
 	{
-	default:return h6280.io_buffer;break;
+	default: return h6280.io_buffer;
+		break;
 	case 3:
 		{
-			status=0;
-			if(h6280.irq_state[1]!=CLEAR_LINE) status|=1; /* IRQ 2 */
-			if(h6280.irq_state[0]!=CLEAR_LINE) status|=2; /* IRQ 1 */
-			if(h6280.irq_state[2]!=CLEAR_LINE) status|=4; /* TIMER */
-			return status|(h6280.io_buffer&(~H6280_IRQ_MASK));
+			status = 0;
+			if (h6280.irq_state[1] != CLEAR_LINE) status |= 1; /* IRQ 2 */
+			if (h6280.irq_state[0] != CLEAR_LINE) status |= 2; /* IRQ 1 */
+			if (h6280.irq_state[2] != CLEAR_LINE) status |= 4; /* TIMER */
+			return status | (h6280.io_buffer & (~H6280_IRQ_MASK));
 		}
-	case 2: return h6280.irq_mask|(h6280.io_buffer&(~H6280_IRQ_MASK));break;
+	case 2: return h6280.irq_mask | (h6280.io_buffer & (~H6280_IRQ_MASK));
+		break;
 	}
 }
 
@@ -404,18 +413,19 @@ void h6280_irq_status_w(unsigned int offset, unsigned char data)
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_irq_status_w called with no CPU open\n"));
 #endif
 
-	h6280.io_buffer=data;
-	switch (offset&3)
+	h6280.io_buffer = data;
+	switch (offset & 3)
 	{
-		default:h6280.io_buffer=data;break;
-		case 2: /* Write irq mask */
-			h6280.irq_mask=data&0x7;
-			CHECK_IRQ_LINES;
-			break;
+	default: h6280.io_buffer = data;
+		break;
+	case 2: /* Write irq mask */
+		h6280.irq_mask = data & 0x7;
+		CHECK_IRQ_LINES;
+		break;
 
-		case 3: /* Timer irq ack */
-			set_irq_line(2,CLEAR_LINE);
-			break;
+	case 3: /* Timer irq ack */
+		set_irq_line(2,CLEAR_LINE);
+		break;
 	}
 }
 
@@ -427,7 +437,7 @@ unsigned char h6280_timer_r(unsigned int)
 #endif
 
 	/* only returns countdown */
-	return ((h6280.timer_value>>10)&0x7F)|(h6280.io_buffer&0x80);
+	return ((h6280.timer_value >> 10) & 0x7F) | (h6280.io_buffer & 0x80);
 }
 
 void h6280_timer_w(unsigned int offset, unsigned char data)
@@ -437,19 +447,21 @@ void h6280_timer_w(unsigned int offset, unsigned char data)
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_timer_w called with no CPU open\n"));
 #endif
 
-	h6280.io_buffer=data;
-	switch (offset&1) {
-		case 0: /* Counter preload */
-			h6280.timer_load=((data&127)+1)*1024;
-			return;
+	h6280.io_buffer = data;
+	switch (offset & 1)
+	{
+	case 0: /* Counter preload */
+		h6280.timer_load = ((data & 127) + 1) * 1024;
+		return;
 
-		case 1: /* Counter enable */
-			if(data&1)
-			{	/* stop -> start causes reload */
-				if(h6280.timer_status==0) h6280.timer_value=h6280.timer_load;
-			}
-			h6280.timer_status=data&1;
-			return;
+	case 1: /* Counter enable */
+		if (data & 1)
+		{
+			/* stop -> start causes reload */
+			if (h6280.timer_status == 0) h6280.timer_value = h6280.timer_load;
+		}
+		h6280.timer_status = data & 1;
+		return;
 	}
 }
 
@@ -472,9 +484,10 @@ UINT8 h6280io_get_buffer()
 {
 	return h6280.io_buffer;
 }
+
 void h6280io_set_buffer(UINT8 data)
 {
-	h6280.io_buffer=data;
+	h6280.io_buffer = data;
 }
 
 #if 0

@@ -40,4 +40,3 @@ int Mips3SetWriteDoubleHandler(int i, pMips3WriteDoubleHandler pHandler);
 void Mips3SetIRQLine(const int line, const int state);
 
 #endif // MIPS3_INTF
-

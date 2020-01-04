@@ -94,7 +94,7 @@
 #include "driver.h"
 #include <stddef.h>
 
-UINT8 *I8x41Mem = NULL;
+UINT8* I8x41Mem = NULL;
 
 
 static UINT8 program_read_byte_8(UINT16 a)
@@ -132,27 +132,28 @@ void i8x41_set_write_port(void (*write)(UINT16, UINT8))
 #define INLINE	inline
 #endif
 
-typedef struct {
-	UINT16	ppc;
-	UINT16	pc;
-	UINT8	timer;
-	UINT8	prescaler;
-	UINT16	subtype;
-	UINT8	a;
-	UINT8	psw;
-	UINT8	state;
-	UINT8	enable;
-	UINT8	control;
-	UINT8	dbbi;
-	UINT8	dbbo;
-	UINT8	p1;
-	UINT8	p2;
-	UINT8	p2_hs;
-	INT32   total_cycles;
+typedef struct
+{
+	UINT16 ppc;
+	UINT16 pc;
+	UINT8 timer;
+	UINT8 prescaler;
+	UINT16 subtype;
+	UINT8 a;
+	UINT8 psw;
+	UINT8 state;
+	UINT8 enable;
+	UINT8 control;
+	UINT8 dbbi;
+	UINT8 dbbo;
+	UINT8 p1;
+	UINT8 p2;
+	UINT8 p2_hs;
+	INT32 total_cycles;
 
-	UINT8	*ram;
-	INT32 	(*irq_callback)(INT32 irqline);
-}	I8X41;
+	UINT8* ram;
+	INT32 (*irq_callback)(INT32 irqline);
+} I8X41;
 
 int i8x41_ICount = 0;
 int i8x41_cycle_start = 0;
@@ -162,11 +163,12 @@ static I8X41 i8x41;
 
 void i8x41_scan(INT32 nAction)
 {
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = &i8x41;
-		ba.nLen	  = STRUCT_SIZE_HELPER(I8X41, total_cycles);
+		ba.Data = &i8x41;
+		ba.nLen = STRUCT_SIZE_HELPER(I8X41, total_cycles);
 		ba.szName = "i8x41 Regs";
 		BurnAcb(&ba);
 	}
@@ -258,8 +260,8 @@ static void set_irq_line(int irqline, int state);
 
 INLINE void PUSH_PC_TO_STACK(void)
 {
-	WM( M_STACK + (PSW&SP) * 2 + 0, PC & 0xff);
-	WM( M_STACK + (PSW&SP) * 2 + 1, ((PC >> 8) & 0x0f) | (PSW & 0xf0) );
+	WM(M_STACK + (PSW&SP) * 2 + 0, PC & 0xff);
+	WM(M_STACK + (PSW&SP) * 2 + 1, ((PC >> 8) & 0x0f) | (PSW & 0xf0));
 	PSW = (PSW & ~SP) | ((PSW + 1) & SP);
 }
 
@@ -273,7 +275,7 @@ INLINE void PUSH_PC_TO_STACK(void)
  ***********************************/
 INLINE void illegal(void)
 {
-//	logerror("i8x41 #%d: illegal opcode at 0x%03x: %02x\n", cpu_getactivecpu(), PC, ROP(PC));
+	//	logerror("i8x41 #%d: illegal opcode at 0x%03x: %02x\n", cpu_getactivecpu(), PC, ROP(PC));
 }
 
 /***********************************
@@ -282,8 +284,10 @@ INLINE void illegal(void)
 INLINE void add_r(int r)
 {
 	UINT8 res = A + R(r);
-	if( res < A ) PSW |= FC;
-	if( (res & 0x0f) < (A & 0x0f) ) PSW |= FA;
+	if (res < A)
+		PSW |= FC;
+	if ((res & 0x0f) < (A & 0x0f))
+		PSW |= FA;
 	A = res;
 }
 
@@ -293,9 +297,11 @@ INLINE void add_r(int r)
  ***********************************/
 INLINE void add_rm(int r)
 {
-	UINT8 res = A + RM( M_IRAM + (R(r) & I8X42_intRAM_MASK) );
-	if( res < A ) PSW |= FC;
-	if( (res & 0x0f) < (A & 0x0f) ) PSW |= FA;
+	UINT8 res = A + RM(M_IRAM + (R(r) & I8X42_intRAM_MASK));
+	if (res < A)
+		PSW |= FC;
+	if ((res & 0x0f) < (A & 0x0f))
+		PSW |= FA;
 	A = res;
 }
 
@@ -307,8 +313,10 @@ INLINE void add_i(void)
 {
 	UINT8 res = A + ROP_ARG(PC);
 	PC++;
-	if( res < A ) PSW |= FC;
-	if( (res & 0x0f) < (A & 0x0f) ) PSW |= FA;
+	if (res < A)
+		PSW |= FC;
+	if ((res & 0x0f) < (A & 0x0f))
+		PSW |= FA;
 	A = res;
 }
 
@@ -319,8 +327,10 @@ INLINE void add_i(void)
 INLINE void addc_r(int r)
 {
 	UINT8 res = A + R(r) + (PSW >> 7);
-	if( res <= A ) PSW |= FC;
-	if( (res & 0x0f) <= (A & 0x0f) ) PSW |= FA;
+	if (res <= A)
+		PSW |= FC;
+	if ((res & 0x0f) <= (A & 0x0f))
+		PSW |= FA;
 	A = res;
 }
 
@@ -330,9 +340,11 @@ INLINE void addc_r(int r)
  ***********************************/
 INLINE void addc_rm(int r)
 {
-	UINT8 res = A + RM( M_IRAM + (R(r) & I8X42_intRAM_MASK) ) + (PSW >> 7);
-	if( res <= A ) PSW |= FC;
-	if( (res & 0x0f) <= (A & 0x0f) ) PSW |= FA;
+	UINT8 res = A + RM(M_IRAM + (R(r) & I8X42_intRAM_MASK)) + (PSW >> 7);
+	if (res <= A)
+		PSW |= FC;
+	if ((res & 0x0f) <= (A & 0x0f))
+		PSW |= FA;
 	A = res;
 }
 
@@ -344,8 +356,10 @@ INLINE void addc_i(void)
 {
 	UINT8 res = A + ROP_ARG(PC);
 	PC++;
-	if( res < A ) PSW |= FC;
-	if( (res & 0x0f) < (A & 0x0f) ) PSW |= FA;
+	if (res < A)
+		PSW |= FC;
+	if ((res & 0x0f) < (A & 0x0f))
+		PSW |= FA;
 	A = res;
 }
 
@@ -364,7 +378,7 @@ INLINE void anl_r(int r)
  ***********************************/
 INLINE void anl_rm(int r)
 {
-	A = A & RM( M_IRAM + (R(r) & I8X42_intRAM_MASK) );
+	A = A & RM(M_IRAM + (R(r) & I8X42_intRAM_MASK));
 }
 
 /***********************************
@@ -388,11 +402,15 @@ INLINE void anl_p_i(int p)
 	/* changed to latched port scheme */
 	switch (p)
 	{
-		case 00:	break;	/* invalid port */
-		case 01:	P1 &= val; WP(p, P1); break;
-		case 02:	P2 &= val; WP(p, (P2 & P2_HS) ); break;
-		case 03:	break;	/* invalid port */
-		default:	break;
+	case 00: break; /* invalid port */
+	case 01: P1 &= val;
+		WP(p, P1);
+		break;
+	case 02: P2 &= val;
+		WP(p, (P2 & P2_HS));
+		break;
+	case 03: break; /* invalid port */
+	default: break;
 	}
 }
 
@@ -404,9 +422,9 @@ INLINE void anld_p_a(int p)
 {
 	/* added proper expanded port setup */
 	WP(2, (P2 & 0xf0) | 0x0c | p); /* AND mode */
-	WP(I8X41_ps, 0);	/* activate command strobe */
-	WP(2, (A & 0x0f)); 	/* Expander to take care of AND function */
-	WP(I8X41_ps, 1);	/* release command strobe */
+	WP(I8X41_ps, 0); /* activate command strobe */
+	WP(2, (A & 0x0f)); /* Expander to take care of AND function */
+	WP(I8X41_ps, 1); /* release command strobe */
 }
 
 /***********************************
@@ -502,9 +520,9 @@ INLINE void cpl_f1(void)
 INLINE void da_a(void)
 {
 	UINT8 res = A + ((PSW & FA) || ((A & 0x0f) > 0x09)) ? 0x06 : 0x00;
-	if( (PSW & FC) || ((res & 0xf0) > 0x90) )
+	if ((PSW & FC) || ((res & 0xf0) > 0x90))
 		res += 0x60;
-	if( res < A )
+	if (res < A)
 		PSW |= FC;
 	else
 		PSW &= ~FC;
@@ -535,7 +553,7 @@ INLINE void dec_r(int r)
  ***********************************/
 INLINE void dis_i(void)
 {
-	ENABLE &= ~IBFI;	/* disable input buffer full interrupt */
+	ENABLE &= ~IBFI; /* disable input buffer full interrupt */
 }
 
 /***********************************
@@ -544,7 +562,7 @@ INLINE void dis_i(void)
  ***********************************/
 INLINE void dis_tcnti(void)
 {
-	ENABLE &= ~TCNTI;	/* disable timer/counter interrupt */
+	ENABLE &= ~TCNTI; /* disable timer/counter interrupt */
 }
 
 /***********************************
@@ -556,7 +574,7 @@ INLINE void djnz_r_i(int r)
 	UINT8 adr = ROP_ARG(PC);
 	PC++;
 	R(r) -= 1;
-	if( R(r) )
+	if (R(r))
 		PC = (PC & 0x700) | adr;
 }
 
@@ -566,9 +584,9 @@ INLINE void djnz_r_i(int r)
  ***********************************/
 INLINE void en_dma(void)
 {
-	ENABLE |= DMA;		/* enable DMA handshake lines */
+	ENABLE |= DMA; /* enable DMA handshake lines */
 	P2_HS &= 0xbf;
-	WP(0x02, (P2 & P2_HS) );
+	WP(0x02, (P2 & P2_HS));
 }
 
 /***********************************
@@ -577,16 +595,20 @@ INLINE void en_dma(void)
  ***********************************/
 INLINE void en_flags(void)
 {
-	if( 0 == (ENABLE & FLAGS) )
+	if (0 == (ENABLE & FLAGS))
 	{
 		/* Configure upper lines on Port 2 for IRQ handshaking (P24 and P25) */
 
 		ENABLE |= FLAGS;
-		if( STATE & OBF ) P2_HS |= 0x10;
-		else P2_HS &= 0xef;
-		if( STATE & IBF ) P2_HS |= 0x20;
-		else P2_HS &= 0xdf;
-		WP(0x02, (P2 & P2_HS) );
+		if (STATE & OBF)
+			P2_HS |= 0x10;
+		else
+			P2_HS &= 0xef;
+		if (STATE & IBF)
+			P2_HS |= 0x20;
+		else
+			P2_HS &= 0xdf;
+		WP(0x02, (P2 & P2_HS));
 	}
 }
 
@@ -596,10 +618,10 @@ INLINE void en_flags(void)
  ***********************************/
 INLINE void en_i(void)
 {
-	if( 0 == (ENABLE & IBFI) )
+	if (0 == (ENABLE & IBFI))
 	{
-		ENABLE |= IBFI;		/* enable input buffer full interrupt */
-		if( STATE & IBF )	/* already got data in the buffer? */
+		ENABLE |= IBFI; /* enable input buffer full interrupt */
+		if (STATE & IBF) /* already got data in the buffer? */
 			set_irq_line(I8X41_INT_IBF, HOLD_LINE);
 	}
 }
@@ -610,7 +632,7 @@ INLINE void en_i(void)
  ***********************************/
 INLINE void en_tcnti(void)
 {
-	ENABLE |= TCNTI;	/* enable timer/counter interrupt */
+	ENABLE |= TCNTI; /* enable timer/counter interrupt */
 }
 
 /***********************************
@@ -619,16 +641,18 @@ INLINE void en_tcnti(void)
  ***********************************/
 INLINE void in_a_dbb(void)
 {
-	if( i8x41.irq_callback )
+	if (i8x41.irq_callback)
 		(*i8x41.irq_callback)(I8X41_INT_IBF);
 
-	STATE &= ~IBF;					/* clear input buffer full flag */
-	if( ENABLE & FLAGS )
+	STATE &= ~IBF; /* clear input buffer full flag */
+	if (ENABLE & FLAGS)
 	{
 		P2_HS &= 0xdf;
-		if( STATE & OBF ) P2_HS |= 0x10;
-		else P2_HS &= 0xef;
-		WP(0x02, (P2 & P2_HS) );	/* Clear the DBBI IRQ out on P25 */
+		if (STATE & OBF)
+			P2_HS |= 0x10;
+		else
+			P2_HS &= 0xef;
+		WP(0x02, (P2 & P2_HS)); /* Clear the DBBI IRQ out on P25 */
 	}
 	A = DBBI;
 }
@@ -640,13 +664,15 @@ INLINE void in_a_dbb(void)
 INLINE void in_a_p(int p)
 {
 	/* changed to latched port scheme */
-	switch( p )
+	switch (p)
 	{
-		case 00:	break;	/* invalid port */
-		case 01:	A = (RP(p) & P1); break;
-		case 02:	A = (RP(p) & P2); break;
-		case 03:	break;	/* invalid port */
-		default:	break;
+	case 00: break; /* invalid port */
+	case 01: A = (RP(p) & P1);
+		break;
+	case 02: A = (RP(p) & P2);
+		break;
+	case 03: break; /* invalid port */
+	default: break;
 	}
 }
 
@@ -675,7 +701,7 @@ INLINE void inc_r(int r)
 INLINE void inc_rm(int r)
 {
 	UINT16 addr = M_IRAM + (R(r) & I8X42_intRAM_MASK);
-	WM( addr, RM(addr) + 1 );
+	WM(addr, RM(addr) + 1);
 }
 
 /***********************************
@@ -686,7 +712,7 @@ INLINE void jbb_i(int bit)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( A & (1 << bit) )
+	if (A & (1 << bit))
 		PC = (PC & 0x700) | adr;
 }
 
@@ -698,7 +724,7 @@ INLINE void jc_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( PSW & FC )
+	if (PSW & FC)
 		PC = (PC & 0x700) | adr;
 }
 
@@ -710,7 +736,7 @@ INLINE void jf0_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( STATE & F0 )
+	if (STATE & F0)
 		PC = (PC & 0x700) | adr;
 }
 
@@ -722,7 +748,7 @@ INLINE void jf1_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( STATE & F1 )
+	if (STATE & F1)
 		PC = (PC & 0x700) | adr;
 }
 
@@ -758,7 +784,7 @@ INLINE void jnc_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( !(PSW & FC) )
+	if (!(PSW & FC))
 		PC = (PC & 0x700) | adr;
 }
 
@@ -770,7 +796,7 @@ INLINE void jnibf_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( 0 == (STATE & IBF) )
+	if (0 == (STATE & IBF))
 		PC = (PC & 0x700) | adr;
 }
 
@@ -782,7 +808,7 @@ INLINE void jnt0_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( 0 == RP(I8X41_t0) )
+	if (0 == RP(I8X41_t0))
 		PC = (PC & 0x700) | adr;
 }
 
@@ -794,13 +820,15 @@ INLINE void jnt1_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( !(ENABLE & CNT) )
+	if (!(ENABLE & CNT))
 	{
 		UINT8 level = RP(I8X41_t1);
-		if( level ) CONTROL |= TEST1;
-		else CONTROL &= ~TEST1;
+		if (level)
+			CONTROL |= TEST1;
+		else
+			CONTROL &= ~TEST1;
 	}
-	if( !(CONTROL & TEST1) )
+	if (!(CONTROL & TEST1))
 		PC = (PC & 0x700) | adr;
 }
 
@@ -812,7 +840,7 @@ INLINE void jnz_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( A )
+	if (A)
 		PC = (PC & 0x700) | adr;
 }
 
@@ -824,7 +852,7 @@ INLINE void jobf_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( STATE & OBF )
+	if (STATE & OBF)
 		PC = (PC & 0x700) | adr;
 }
 
@@ -836,7 +864,7 @@ INLINE void jtf_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( CONTROL & TOVF )
+	if (CONTROL & TOVF)
 		PC = (PC & 0x700) | adr;
 	CONTROL &= ~TOVF;
 }
@@ -849,7 +877,7 @@ INLINE void jt0_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( RP(I8X41_t0) )
+	if (RP(I8X41_t0))
 		PC = (PC & 0x700) | adr;
 }
 
@@ -861,13 +889,15 @@ INLINE void jt1_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( !(ENABLE & CNT) )
+	if (!(ENABLE & CNT))
 	{
 		UINT8 level = RP(I8X41_t1);
-		if( level ) CONTROL |= TEST1;
-		else CONTROL &= ~TEST1;
+		if (level)
+			CONTROL |= TEST1;
+		else
+			CONTROL &= ~TEST1;
 	}
-	if( (CONTROL & TEST1) )
+	if ((CONTROL & TEST1))
 		PC = (PC & 0x700) | adr;
 }
 
@@ -879,7 +909,7 @@ INLINE void jz_i(void)
 {
 	UINT8 adr = ROP_ARG(PC);
 	PC += 1;
-	if( !A )
+	if (!A)
 		PC = (PC & 0x700) | adr;
 }
 
@@ -917,7 +947,7 @@ INLINE void mov_a_r(int r)
  ***********************************/
 INLINE void mov_a_rm(int r)
 {
-	A = RM( M_IRAM + (R(r) & I8X42_intRAM_MASK) );
+	A = RM(M_IRAM + (R(r) & I8X42_intRAM_MASK));
 }
 
 /***********************************
@@ -964,7 +994,7 @@ INLINE void mov_r_i(int r)
  ***********************************/
 INLINE void mov_rm_a(int r)
 {
-	WM( M_IRAM + (R(r) & I8X42_intRAM_MASK), A );
+	WM(M_IRAM + (R(r) & I8X42_intRAM_MASK), A);
 }
 
 /***********************************
@@ -975,7 +1005,7 @@ INLINE void mov_rm_i(int r)
 {
 	UINT8 val = ROP_ARG(PC);
 	PC += 1;
-	WM( M_IRAM + (R(r) & I8X42_intRAM_MASK), val );
+	WM(M_IRAM + (R(r) & I8X42_intRAM_MASK), val);
 }
 
 /***********************************
@@ -1003,10 +1033,10 @@ INLINE void mov_t_a(void)
 INLINE void movd_a_p(int p)
 {
 	/* added proper expanded port setup */
-	WP(2, (P2 & 0xf0) | 0x00 | p);	/* READ mode */
-	WP(I8X41_ps, 0);		/* activate command strobe */
+	WP(2, (P2 & 0xf0) | 0x00 | p); /* READ mode */
+	WP(I8X41_ps, 0); /* activate command strobe */
 	A = RP(2) & 0xf;
-	WP(I8X41_ps, 1);		/* release command strobe */
+	WP(I8X41_ps, 1); /* release command strobe */
 }
 
 /***********************************
@@ -1016,10 +1046,10 @@ INLINE void movd_a_p(int p)
 INLINE void movd_p_a(int p)
 {
 	/* added proper expanded port setup */
-	WP(2, (P2 & 0xf0) | 0x04 | p);	/* WRITE mode */
-	WP(I8X41_ps, 0);		/* activate command strobe */
+	WP(2, (P2 & 0xf0) | 0x04 | p); /* WRITE mode */
+	WP(I8X41_ps, 0); /* activate command strobe */
 	WP(2, A & 0x0f);
-	WP(I8X41_ps, 1);		/* release command strobe */
+	WP(I8X41_ps, 1); /* release command strobe */
 }
 
 /***********************************
@@ -1065,7 +1095,7 @@ INLINE void orl_r(int r)
  ***********************************/
 INLINE void orl_rm(int r)
 {
-	A = A | RM( M_IRAM + (R(r) & I8X42_intRAM_MASK) );
+	A = A | RM(M_IRAM + (R(r) & I8X42_intRAM_MASK));
 }
 
 /***********************************
@@ -1090,11 +1120,15 @@ INLINE void orl_p_i(int p)
 	/* changed to latched port scheme */
 	switch (p)
 	{
-		case 00:	break;	/* invalid port */
-		case 01:	P1 |= val; WP(p, P1); break;
-		case 02:	P2 |= val; WP(p, P2); break;
-		case 03:	break;	/* invalid port */
-		default:	break;
+	case 00: break; /* invalid port */
+	case 01: P1 |= val;
+		WP(p, P1);
+		break;
+	case 02: P2 |= val;
+		WP(p, P2);
+		break;
+	case 03: break; /* invalid port */
+	default: break;
 	}
 }
 
@@ -1105,10 +1139,10 @@ INLINE void orl_p_i(int p)
 INLINE void orld_p_a(int p)
 {
 	/* added proper expanded port setup */
-	WP(2, (P2 & 0xf0) | 0x08 | p);	/* OR mode */
-	WP(I8X41_ps, 0);	/* activate command strobe */
-	WP(2, A & 0x0f);	/* Expander to take care of OR function */
-	WP(I8X41_ps, 1);	/* release command strobe */
+	WP(2, (P2 & 0xf0) | 0x08 | p); /* OR mode */
+	WP(I8X41_ps, 0); /* activate command strobe */
+	WP(2, A & 0x0f); /* Expander to take care of OR function */
+	WP(I8X41_ps, 1); /* release command strobe */
 }
 
 /***********************************
@@ -1117,14 +1151,16 @@ INLINE void orld_p_a(int p)
  ***********************************/
 INLINE void out_dbb_a(void)
 {
-	DBBO = A;			/* DBB output buffer */
-	STATE |= OBF;		/* assert the output buffer full flag */
-	if( ENABLE & FLAGS )
+	DBBO = A; /* DBB output buffer */
+	STATE |= OBF; /* assert the output buffer full flag */
+	if (ENABLE & FLAGS)
 	{
 		P2_HS |= 0x10;
-		if( STATE & IBF ) P2_HS |= 0x20;
-		else P2_HS &= 0xdf;
-		WP(0x02, (P2 & P2_HS) );	/* Assert the DBBO IRQ out on P24 */
+		if (STATE & IBF)
+			P2_HS |= 0x20;
+		else
+			P2_HS &= 0xdf;
+		WP(0x02, (P2 & P2_HS)); /* Assert the DBBO IRQ out on P24 */
 	}
 }
 
@@ -1137,11 +1173,15 @@ INLINE void out_p_a(int p)
 	/* changed to latched port scheme */
 	switch (p)
 	{
-		case 00:	break;	/* invalid port */
-		case 01:	WP(p, A); P1 = A; break;
-		case 02:	WP(p, A); P2 = A; break;
-		case 03:	break;	/* invalid port */
-		default:	break;
+	case 00: break; /* invalid port */
+	case 01: WP(p, A);
+		P1 = A;
+		break;
+	case 02: WP(p, A);
+		P2 = A;
+		break;
+	case 03: break; /* invalid port */
+	default: break;
 	}
 }
 
@@ -1238,7 +1278,7 @@ INLINE void sel_rb1(void)
  ***********************************/
 INLINE void stop_tcnt(void)
 {
-	ENABLE &= ~(T|CNT);
+	ENABLE &= ~(T | CNT);
 }
 
 /***********************************
@@ -1289,7 +1329,7 @@ INLINE void xch_a_rm(int r)
 {
 	UINT16 addr = M_IRAM + (R(r) & I8X42_intRAM_MASK);
 	UINT8 tmp = RM(addr);
-	WM( addr, A );
+	WM(addr, A);
 	A = tmp;
 }
 
@@ -1301,7 +1341,7 @@ INLINE void xchd_a_rm(int r)
 {
 	UINT16 addr = M_IRAM + (R(r) & I8X42_intRAM_MASK);
 	UINT8 tmp = RM(addr);
-	WM( addr, (tmp & 0xf0) | (A & 0x0f) );
+	WM(addr, (tmp & 0xf0) | (A & 0x0f));
 	A = (A & 0xf0) | (tmp & 0x0f);
 }
 
@@ -1320,7 +1360,7 @@ INLINE void xrl_r(int r)
  ***********************************/
 INLINE void xrl_rm(int r)
 {
-	A = A ^ RM( M_IRAM + (R(r) & I8X42_intRAM_MASK) );
+	A = A ^ RM(M_IRAM + (R(r) & I8X42_intRAM_MASK));
 }
 
 /***********************************
@@ -1340,22 +1380,22 @@ INLINE void xrl_i(void)
  ***********************************************************************/
 
 static UINT8 i8x41_cycles[] = {
-	1,1,1,2,2,1,1,1,2,2,2,2,2,2,2,2,
-	1,1,2,2,2,1,2,1,1,1,1,1,1,1,1,1,
-	1,1,1,2,2,1,2,1,1,1,1,1,1,1,1,1,
-	1,1,2,1,2,1,2,1,2,2,2,2,2,2,2,2,
-	1,1,1,2,2,1,2,1,1,1,1,1,1,1,1,1,
-	1,1,2,2,2,1,2,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,2,1,2,1,2,1,1,1,1,1,1,1,1,1,
-	1,1,1,2,2,1,2,1,2,2,2,2,2,2,2,2,
-	1,1,2,2,1,1,2,1,2,2,2,2,2,2,2,2,
-	1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,
-	2,2,2,2,2,1,2,1,2,2,2,2,2,2,2,2,
-	1,1,1,1,2,1,2,1,1,1,1,1,1,1,1,1,
-	1,1,2,1,2,1,2,1,1,1,1,1,1,1,1,1,
-	1,1,1,2,2,1,2,1,1,1,1,1,1,1,1,1,
-	1,1,2,1,2,1,2,1,2,2,2,2,2,2,2,2
+	1, 1, 1, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2,
+	1, 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2,
+	1, 1, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2,
+	1, 1, 2, 2, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2,
+	1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2,
+	1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2
 };
 
 
@@ -1404,9 +1444,9 @@ void i8x41_reset()
 	DBBI = 0xff;
 	DBBO = 0xff;
 	/* Set Ports 1 and 2 to input mode */
-	P1   = 0xff;
-	P2   = 0xff;
-	P2_HS= 0xff;
+	P1 = 0xff;
+	P2 = 0xff;
+	P2_HS = 0xff;
 }
 
 
@@ -1441,14 +1481,14 @@ INT32 i8x41_run(INT32 cycles)
 
 		PPC = PC;
 
-	//	CALL_MAME_DEBUG;
+		//	CALL_MAME_DEBUG;
 
 		PC += 1;
 		i8x41_ICount -= i8x41_cycles[op];
 
-		switch( op )
+		switch (op)
 		{
-		/* opcode cycles bitmask */
+			/* opcode cycles bitmask */
 		case 0x00: /* 1: 0000 0000 */
 			nop();
 			break;
@@ -2003,49 +2043,51 @@ INT32 i8x41_run(INT32 cycles)
 		}
 
 
-		if( ENABLE & CNT )
+		if (ENABLE & CNT)
 		{
 			inst_cycles = i8x41_cycles[op];
-			for ( ; inst_cycles > 0; inst_cycles-- )
+			for (; inst_cycles > 0; inst_cycles--)
 			{
 				T1_level = RP(I8X41_t1);
-				if( (CONTROL & TEST1) && (T1_level == 0) )	/* Negative Edge */
+				if ((CONTROL & TEST1) && (T1_level == 0)) /* Negative Edge */
 				{
 					TIMER++;
 					if (TIMER == 0)
 					{
 						CONTROL |= TOVF;
-						if( ENABLE & TCNTI )
+						if (ENABLE & TCNTI)
 							CONTROL |= TIRQ_PEND;
 					}
 				}
-				if( T1_level ) CONTROL |= TEST1;
-				else CONTROL &= ~TEST1;
+				if (T1_level)
+					CONTROL |= TEST1;
+				else
+					CONTROL &= ~TEST1;
 			}
 		}
 
-		if( ENABLE & T )
+		if (ENABLE & T)
 		{
 			PRESCALER += i8x41_cycles[op];
 			/**** timer is prescaled by 32 ****/
-			if( PRESCALER >= 32 )
+			if (PRESCALER >= 32)
 			{
 				PRESCALER -= 32;
 				TIMER++;
-				if( TIMER == 0 )
+				if (TIMER == 0)
 				{
 					CONTROL |= TOVF;
-					if( ENABLE & TCNTI )
+					if (ENABLE & TCNTI)
 						CONTROL |= TIRQ_PEND;
 				}
 			}
 		}
 
-		if( CONTROL & IRQ_PEND )	/* Are any Interrupts Pending ? */
+		if (CONTROL & IRQ_PEND) /* Are any Interrupts Pending ? */
 		{
-			if( 0 == (CONTROL & IRQ_EXEC) )	/* Are any Interrupts being serviced ? */
+			if (0 == (CONTROL & IRQ_EXEC)) /* Are any Interrupts being serviced ? */
 			{
-				if( (ENABLE & IBFI) && (CONTROL & IBFI_PEND) )
+				if ((ENABLE & IBFI) && (CONTROL & IBFI_PEND))
 				{
 					PUSH_PC_TO_STACK();
 					PC = V_IBF;
@@ -2054,22 +2096,22 @@ INT32 i8x41_run(INT32 cycles)
 					i8x41_ICount -= 2;
 				}
 			}
-			if( 0 == (CONTROL & IRQ_EXEC) )	/* Are any Interrupts being serviced ? */
+			if (0 == (CONTROL & IRQ_EXEC)) /* Are any Interrupts being serviced ? */
 			{
-				if( (ENABLE & TCNTI) && (CONTROL & TIRQ_PEND) )
+				if ((ENABLE & TCNTI) && (CONTROL & TIRQ_PEND))
 				{
 					PUSH_PC_TO_STACK();
 					PC = V_TIMER;
 					CONTROL &= ~TIRQ_PEND;
 					CONTROL |= TIRQ_EXEC;
-					if( ENABLE & T ) PRESCALER += 2;	/* 2 states */
-					i8x41_ICount -= 2;		/* 2 states to take interrupt */
+					if (ENABLE & T)
+						PRESCALER += 2; /* 2 states */
+					i8x41_ICount -= 2; /* 2 states to take interrupt */
 				}
 			}
 		}
-
-
-	} while( i8x41_ICount > 0 && !i8x41_end_run );
+	}
+	while (i8x41_ICount > 0 && !i8x41_end_run);
 
 	cycles = cycles - i8x41_ICount;
 	i8x41_ICount = i8x41_cycle_start = 0;
@@ -2128,7 +2170,7 @@ static void i8x41_set_context(void *src)
 
 static void set_irq_line(int irqline, int state)
 {
-	switch( irqline )
+	switch (irqline)
 	{
 	case I8X41_INT_IBF:
 		if (state != CLEAR_LINE)
@@ -2146,20 +2188,20 @@ static void set_irq_line(int irqline, int state)
 		break;
 
 	case I8X41_INT_TEST1:
-		if( state != CLEAR_LINE )
+		if (state != CLEAR_LINE)
 		{
 			CONTROL |= TEST1;
 		}
 		else
 		{
 			/* high to low transition? */
-			if( CONTROL & TEST1 )
+			if (CONTROL & TEST1)
 			{
 				/* counting enabled? */
-				if( ENABLE & CNT )
+				if (ENABLE & CNT)
 				{
 					TIMER++;
-					if( TIMER == 0 )
+					if (TIMER == 0)
 					{
 						CONTROL |= TOVF;
 						CONTROL |= TIRQ_PEND;
@@ -2216,64 +2258,67 @@ void i8x41_set_register(UINT32 reg, UINT8 data)
 		case CPUINFO_INT_REGISTER + I8X41_R6:			SETR(6, data);						break;
 		case CPUINFO_INT_REGISTER + I8X41_R7:			SETR(7, data);						break;
 #endif
-		case I8X41_DATA:
-			DBBI = data;
-			if( i8x41.subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
-				DBBO = data;
-			STATE &= ~F1;
-			STATE |= IBF;
-			if( ENABLE & IBFI )
-				CONTROL |= IBFI_PEND;
-			if( ENABLE & FLAGS)
-			{
-				P2_HS |= 0x20;
-				if( 0 == (STATE & OBF) ) P2_HS |= 0x10;
-				else P2_HS &= 0xef;
-				WP(0x02, (P2 & P2_HS) );	/* Assert the DBBI IRQ out on P25 */
-			}
-			break;
+	case I8X41_DATA:
+		DBBI = data;
+		if (i8x41.subtype == 8041) /* plain 8041 had no split input/output DBB buffers */
+			DBBO = data;
+		STATE &= ~F1;
+		STATE |= IBF;
+		if (ENABLE & IBFI)
+			CONTROL |= IBFI_PEND;
+		if (ENABLE & FLAGS)
+		{
+			P2_HS |= 0x20;
+			if (0 == (STATE & OBF))
+				P2_HS |= 0x10;
+			else
+				P2_HS &= 0xef;
+			WP(0x02, (P2 & P2_HS)); /* Assert the DBBI IRQ out on P25 */
+		}
+		break;
 
-		case I8X41_DATA_DASM:
-			/* Same as I8X41_DATA, except this is used by the */
-			/* debugger and does not upset the flag states */
-			DBBI = data;
-			if( i8x41.subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
-				DBBO = data;
-			break;
+	case I8X41_DATA_DASM:
+		/* Same as I8X41_DATA, except this is used by the */
+		/* debugger and does not upset the flag states */
+		DBBI = data;
+		if (i8x41.subtype == 8041) /* plain 8041 had no split input/output DBB buffers */
+			DBBO = data;
+		break;
 
-		case I8X41_CMND:
-			DBBI = data;
-			if( i8x41.subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
-				DBBO = data;
-			STATE |= F1;
-			STATE |= IBF;
-			if( ENABLE & IBFI )
-				CONTROL |= IBFI_PEND;
-			if( ENABLE & FLAGS)
-			{
-				P2_HS |= 0x20;
-				if( 0 == (STATE & OBF) ) P2_HS |= 0x10;
-				else P2_HS &= 0xef;
-				WP(0x02, (P2 & P2_HS) );	/* Assert the DBBI IRQ out on P25 */
-			}
-			break;
+	case I8X41_CMND:
+		DBBI = data;
+		if (i8x41.subtype == 8041) /* plain 8041 had no split input/output DBB buffers */
+			DBBO = data;
+		STATE |= F1;
+		STATE |= IBF;
+		if (ENABLE & IBFI)
+			CONTROL |= IBFI_PEND;
+		if (ENABLE & FLAGS)
+		{
+			P2_HS |= 0x20;
+			if (0 == (STATE & OBF))
+				P2_HS |= 0x10;
+			else
+				P2_HS &= 0xef;
+			WP(0x02, (P2 & P2_HS)); /* Assert the DBBI IRQ out on P25 */
+		}
+		break;
 
-		case I8X41_CMND_DASM:
-			/* Same as I8X41_CMND, except this is used by the */
-			/* debugger and does not upset the flag states */
-			DBBI = data;
-			if( i8x41.subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
-				DBBO = data;
-			break;
+	case I8X41_CMND_DASM:
+		/* Same as I8X41_CMND, except this is used by the */
+		/* debugger and does not upset the flag states */
+		DBBI = data;
+		if (i8x41.subtype == 8041) /* plain 8041 had no split input/output DBB buffers */
+			DBBO = data;
+		break;
 
-		case I8X41_STAT:
-			//logerror("i8x41 #%d:%03x  Setting STAT DBBI to %02x\n", cpu_getactivecpu(), PC, (UINT8)data);
-			/* writing status.. hmm, should we issue interrupts here too? */
-			STATE = data;
-			break;
+	case I8X41_STAT:
+		//logerror("i8x41 #%d:%03x  Setting STAT DBBI to %02x\n", cpu_getactivecpu(), PC, (UINT8)data);
+		/* writing status.. hmm, should we issue interrupts here too? */
+		STATE = data;
+		break;
 	}
 }
-
 
 
 /**************************************************************************
@@ -2315,44 +2360,59 @@ UINT8 i8x41_get_register(UINT32 reg)
 
 		case CPUINFO_INT_PC:
 #endif
-		case I8X41_PC:			data = PC;							break;
+	case I8X41_PC: data = PC;
+		break;
 
-		case I8X41_SP:			data = PSW & SP;						break;
+	case I8X41_SP: data = PSW & SP;
+		break;
 
-		case I8X41_PSW:			data = PSW;							break;
-		case I8X41_A:			data = A;							break;
-		case I8X41_T:			data = TIMER;						break;
-		case I8X41_R0:			data = GETR(0);						break;
-		case I8X41_R1:			data = GETR(1);						break;
-		case I8X41_R2:			data = GETR(2);						break;
-		case I8X41_R3:			data = GETR(3);						break;
-		case I8X41_R4:			data = GETR(4);						break;
-		case I8X41_R5:			data = GETR(5);						break;
-		case I8X41_R6:			data = GETR(6);						break;
-		case I8X41_R7:			data = GETR(7);						break;
+	case I8X41_PSW: data = PSW;
+		break;
+	case I8X41_A: data = A;
+		break;
+	case I8X41_T: data = TIMER;
+		break;
+	case I8X41_R0: data = GETR(0);
+		break;
+	case I8X41_R1: data = GETR(1);
+		break;
+	case I8X41_R2: data = GETR(2);
+		break;
+	case I8X41_R3: data = GETR(3);
+		break;
+	case I8X41_R4: data = GETR(4);
+		break;
+	case I8X41_R5: data = GETR(5);
+		break;
+	case I8X41_R6: data = GETR(6);
+		break;
+	case I8X41_R7: data = GETR(7);
+		break;
 
-		case I8X41_DATA:
-			STATE &= ~OBF;	/* reset the output buffer full flag */
-			if( ENABLE & FLAGS)
-			{
-				P2_HS &= 0xef;
-				if( STATE & IBF ) P2_HS |= 0x20;
-				else P2_HS &= 0xdf;
-				WP(0x02, (P2 & P2_HS) );	/* Clear the DBBO IRQ out on P24 */
-			}
-			data = DBBO;
-			break;
+	case I8X41_DATA:
+		STATE &= ~OBF; /* reset the output buffer full flag */
+		if (ENABLE & FLAGS)
+		{
+			P2_HS &= 0xef;
+			if (STATE & IBF)
+				P2_HS |= 0x20;
+			else
+				P2_HS &= 0xdf;
+			WP(0x02, (P2 & P2_HS)); /* Clear the DBBO IRQ out on P24 */
+		}
+		data = DBBO;
+		break;
 
-		case I8X41_DATA_DASM:
-			/* Same as I8X41_DATA, except this is used by the */
-			/* debugger and does not upset the flag states */
-			data = DBBO;
-			break;
+	case I8X41_DATA_DASM:
+		/* Same as I8X41_DATA, except this is used by the */
+		/* debugger and does not upset the flag states */
+		data = DBBO;
+		break;
 
-		case I8X41_STAT:
-			//logerror("i8x41 #%d:%03x  Reading STAT %02x\n", cpu_getactivecpu(), PC, STATE);
-			data = STATE;
-			break;
+	case I8X41_STAT:
+		//logerror("i8x41 #%d:%03x  Reading STAT %02x\n", cpu_getactivecpu(), PC, STATE);
+		data = STATE;
+		break;
 #if 0
 		/* --- the following bits of info are returned as pointers to data or functions --- */
 		case CPUINFO_PTR_SET_INFO:						info->setinfo = i8x41_set_info;			break;
@@ -2364,7 +2424,7 @@ UINT8 i8x41_get_register(UINT32 reg)
 		case CPUINFO_PTR_EXECUTE:						info->execute = i8x41_execute;			break;
 		case CPUINFO_PTR_BURN:							info->burn = NULL;						break;
 //#ifdef MAME_DEBUG
-//		case CPUINFO_PTR_DISASSEMBLE:					info->disassemble = i8x41_dasm;			break;
+		//		case CPUINFO_PTR_DISASSEMBLE:					info->disassemble = i8x41_dasm;			break;
 //#endif /* MAME_DEBUG */
 		case CPUINFO_PTR_INSTRUCTION_COUNTER:			datacount = &i8x41_ICount;			break;
 
@@ -2409,4 +2469,3 @@ UINT8 i8x41_get_register(UINT32 reg)
 	}
 	return data;
 }
-

@@ -1,13 +1,12 @@
-
 void h6280WritePort(UINT8 port, UINT8 data);
 void h6280Write(UINT32 address, UINT8 data);
 UINT8 h6280Read(UINT32 address);
 UINT8 h6280Fetch(UINT32 address);
 
-void h6280MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type);
+void h6280MapMemory(UINT8* src, UINT32 start, UINT32 finish, INT32 type);
 
 void h6280SetIrqCallbackHandler(INT32 (*callback)(INT32));
-void h6280SetlinesCallback(void  (*setlines_callback)(INT32 lines));
+void h6280SetlinesCallback(void (*setlines_callback)(INT32 lines));
 
 void h6280SetWritePortHandler(void (*write)(UINT8, UINT8));
 void h6280SetWriteHandler(void (*write)(UINT32, UINT8));

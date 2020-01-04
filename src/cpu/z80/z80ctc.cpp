@@ -72,36 +72,37 @@
 
 struct ctc_channel
 {
-	UINT8				notimer;			/* no timer masks */
-	UINT16 				mode;				/* current mode */
-	UINT16 				tconst;				/* time constant */
-	UINT16 				down;				/* down counter (clock mode only) */
-	UINT8 				extclk;				/* current signal from the external clock */
-	UINT8				int_state;			/* interrupt status (for daisy chain) */
+	UINT8 notimer; /* no timer masks */
+	UINT16 mode; /* current mode */
+	UINT16 tconst; /* time constant */
+	UINT16 down; /* down counter (clock mode only) */
+	UINT8 extclk; /* current signal from the external clock */
+	UINT8 int_state; /* interrupt status (for daisy chain) */
 };
 
 struct z80ctc
 {
 	// config stuff
-	UINT32				clock;				/* system clock */
-	INT32			    period16;			/* 16/system clock */
-	INT32			    period256;			/* 256/system clock */
+	UINT32 clock; /* system clock */
+	INT32 period16; /* 16/system clock */
+	INT32 period256; /* 256/system clock */
 
 	// stuff to save
-	UINT8				vector;				/* interrupt vector */
-	ctc_channel			channel[4];			/* data for each channel */
+	UINT8 vector; /* interrupt vector */
+	ctc_channel channel[4]; /* data for each channel */
 
-	void                (*intr)(int which);	/* interrupt callback */
-	void                (*zc[4])(int, UINT8); /* zero crossing callbacks */
+	void (*intr)(int which); /* interrupt callback */
+	void (*zc[4])(int, UINT8); /* zero crossing callbacks */
 };
 
-static z80ctc *ctc = NULL;
+static z80ctc* ctc = NULL;
 
 static void timercallback(int param); // forward
 
 // simple timer system -dink 2019
 // note: all time is in z80-cycles relative to the cpu using this ctc.
 #define TIMERS_MAX  4
+
 struct timer_type
 {
 	INT32 running;
@@ -145,8 +146,8 @@ void timer_stop(INT32 timernum)
 
 INT32 timer_isrunning(INT32 timernum)
 {
-    if (timernum >= TIMERS_MAX) return 0;
-    return timers[timernum].running;
+	if (timernum >= TIMERS_MAX) return 0;
+	return timers[timernum].running;
 }
 
 INT32 timer_timeleft(INT32 timernum)
@@ -159,9 +160,11 @@ void z80ctc_timer_update(INT32 cycles)
 {
 	for (INT32 i = 0; i < TIMERS_MAX; i++)
 	{
-		if (timers[i].running) {
+		if (timers[i].running)
+		{
 			timers[i].time_current += cycles;
-			while (timers[i].time_current >= timers[i].time_trig) {
+			while (timers[i].time_current >= timers[i].time_trig)
+			{
 				timer_exec[i](timers[i].timer_param);
 				timers[i].time_current -= timers[i].time_trig;
 			}
@@ -173,11 +176,13 @@ static void z80ctc_timer_scan(INT32 nAction) // called from z80ctc_scan()! (belo
 {
 	SCAN_VAR(timers);
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE)
+	{
 		// state load: re-set the timer callback pointer for running timers.
 		for (INT32 i = 0; i < TIMERS_MAX; i++)
 		{
-			if (timers[i].running) {
+			if (timers[i].running)
+			{
 				timer_exec[i] = timercallback;
 			}
 		}
@@ -199,7 +204,7 @@ static void interrupt_check()
 
 static void timercallback(int param)
 {
-	ctc_channel *channel = &ctc->channel[param];
+	ctc_channel* channel = &ctc->channel[param];
 
 	/* down counter has reached zero - see if we should interrupt */
 	if ((channel->mode & INTERRUPT) == INTERRUPT_ON)
@@ -221,15 +226,13 @@ static void timercallback(int param)
 }
 
 
-
 /***************************************************************************
     INITIALIZATION/CONFIGURATION
 ***************************************************************************/
 
 INT32 z80ctc_getperiod(int ch)
 {
-	
-	ctc_channel *channel = &ctc->channel[ch];
+	ctc_channel* channel = &ctc->channel[ch];
 
 	/* if reset active, no period */
 	if ((channel->mode & RESET) == RESET_ACTIVE)
@@ -245,9 +248,8 @@ INT32 z80ctc_getperiod(int ch)
 	/* compute the period */
 	INT32 period = ((channel->mode & PRESCALER) == PRESCALER_16) ? ctc->period16 : ctc->period256;
 	//return attotime_mul(period, channel->tconst);
-	return period * channel->tconst;   // tih?-timmy?  (dink)
+	return period * channel->tconst; // tih?-timmy?  (dink)
 }
-
 
 
 /***************************************************************************
@@ -257,7 +259,7 @@ INT32 z80ctc_getperiod(int ch)
 void z80ctc_write(int offset, UINT8 data)
 {
 	int ch = offset & 3;
-	ctc_channel *channel = &ctc->channel[ch];
+	ctc_channel* channel = &ctc->channel[ch];
 	int mode;
 
 	/* get the current mode */
@@ -298,7 +300,7 @@ void z80ctc_write(int offset, UINT8 data)
 				}
 			}
 
-			/* else set the bit indicating that we're waiting for the appropriate trigger */
+				/* else set the bit indicating that we're waiting for the appropriate trigger */
 			else
 				channel->mode |= WAITING_FOR_TRIG;
 		}
@@ -345,7 +347,6 @@ void z80ctc_write(int offset, UINT8 data)
 }
 
 
-
 /***************************************************************************
     READ HANDLERS
 ***************************************************************************/
@@ -353,32 +354,27 @@ void z80ctc_write(int offset, UINT8 data)
 UINT8 z80ctc_read(int offset)
 {
 	int ch = offset & 3;
-	ctc_channel *channel = &ctc->channel[ch];
+	ctc_channel* channel = &ctc->channel[ch];
 
 	/* if we're in counter mode, just return the count */
 	if ((channel->mode & MODE) == MODE_COUNTER || (channel->mode & WAITING_FOR_TRIG))
 		return channel->down;
 
 	/* else compute the down counter value */
-	else
-	{
-		INT32 period = ((channel->mode & PRESCALER) == PRESCALER_16) ? ctc->period16 : ctc->period256;
+	INT32 period = ((channel->mode & PRESCALER) == PRESCALER_16) ? ctc->period16 : ctc->period256;
 
-		//VPRINTF(("CTC clock %f\n",ATTOSECONDS_TO_HZ(period.attoseconds)));
+	//VPRINTF(("CTC clock %f\n",ATTOSECONDS_TO_HZ(period.attoseconds)));
 
-        if (timer_isrunning(ch))
-            return ((int)timer_timeleft(ch) / period + 1) & 0xff;
-        else
-            return 0;
+	if (timer_isrunning(ch))
+		return ((int)timer_timeleft(ch) / period + 1) & 0xff;
+	return 0;
 #if 0
 		if (channel->timer != NULL)
 			return ((int)(attotime_to_double(timer_timeleft(channel->timer)) * attotime_to_double(period)) + 1) & 0xff;
 		else
 			return 0;
 #endif
-	}
 }
-
 
 
 /***************************************************************************
@@ -387,7 +383,7 @@ UINT8 z80ctc_read(int offset)
 
 void z80ctc_trg_write(int ch, UINT8 data)
 {
-	ctc_channel *channel = &ctc->channel[ch];
+	ctc_channel* channel = &ctc->channel[ch];
 
 	/* normalize data */
 	data = data ? 1 : 0;
@@ -449,12 +445,14 @@ int z80ctc_irq_state()
 	int state = 0;
 	int ch;
 
-	VPRINTF(("CTC IRQ state = %d%d%d%d\n", ctc->channel[0].int_state, ctc->channel[1].int_state, ctc->channel[2].int_state, ctc->channel[3].int_state));
+	VPRINTF(
+		("CTC IRQ state = %d%d%d%d\n", ctc->channel[0].int_state, ctc->channel[1].int_state, ctc->channel[2].int_state,
+			ctc->channel[3].int_state));
 
 	/* loop over all channels */
 	for (ch = 0; ch < 4; ch++)
 	{
-		ctc_channel *channel = &ctc->channel[ch];
+		ctc_channel* channel = &ctc->channel[ch];
 
 		/* if we're servicing a request, don't indicate more interrupts */
 		if (channel->int_state & Z80_DAISY_IEO)
@@ -476,7 +474,7 @@ int z80ctc_irq_ack()
 	/* loop over all channels */
 	for (ch = 0; ch < 4; ch++)
 	{
-		ctc_channel *channel = &ctc->channel[ch];
+		ctc_channel* channel = &ctc->channel[ch];
 
 		/* find the first channel with an interrupt requested */
 		if (channel->int_state & Z80_DAISY_INT)
@@ -502,7 +500,7 @@ void z80ctc_irq_reti()
 	/* loop over all channels */
 	for (ch = 0; ch < 4; ch++)
 	{
-		ctc_channel *channel = &ctc->channel[ch];
+		ctc_channel* channel = &ctc->channel[ch];
 
 		/* find the first channel with an IEO pending */
 		if (channel->int_state & Z80_DAISY_IEO)
@@ -519,9 +517,10 @@ void z80ctc_irq_reti()
 	//logerror("z80ctc_irq_reti: failed to find an interrupt to clear IEO on!\n");
 }
 
-void z80ctc_init(INT32 clock, INT32 notimer, void (*intr)(int), void (*zc0)(int, UINT8), void (*zc1)(int, UINT8), void (*zc2)(int, UINT8))
+void z80ctc_init(INT32 clock, INT32 notimer, void (*intr)(int), void (*zc0)(int, UINT8), void (*zc1)(int, UINT8),
+                 void (*zc2)(int, UINT8))
 {
-	ctc = (z80ctc *)BurnMalloc(sizeof(z80ctc));
+	ctc = (z80ctc*)BurnMalloc(sizeof(z80ctc));
 	ctc->clock = clock;
 	ctc->period16 = 16;
 	ctc->period256 = 256;
@@ -529,7 +528,7 @@ void z80ctc_init(INT32 clock, INT32 notimer, void (*intr)(int), void (*zc0)(int,
 	//ctc->period256 = attotime_mul(ATTOTIME_IN_HZ(ctc->clock), 256);
 	for (int ch = 0; ch < 4; ch++)
 	{
-		ctc_channel *channel = &ctc->channel[ch];
+		ctc_channel* channel = &ctc->channel[ch];
 		channel->notimer = (notimer >> ch) & 1;
 		//channel->timer = timer_alloc(timercallback, ptr);
 	}
@@ -552,7 +551,7 @@ void z80ctc_reset()
 	/* set up defaults */
 	for (ch = 0; ch < 4; ch++)
 	{
-		ctc_channel *channel = &ctc->channel[ch];
+		ctc_channel* channel = &ctc->channel[ch];
 		channel->mode = RESET_ACTIVE;
 		channel->tconst = 0x100;
 		//timer_adjust_oneshot(channel->timer, attotime_never, 0);
@@ -572,4 +571,3 @@ void z80ctc_scan(INT32 nAction)
 
 	z80ctc_timer_scan(nAction);
 }
-

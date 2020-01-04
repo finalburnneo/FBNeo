@@ -1,4 +1,4 @@
- /**************************************************************************\
+/**************************************************************************\
  *                 Texas Instruments TMS32010 DSP Emulator                  *
  *                                                                          *
  *                  Copyright (C) 1999-2004+ Tony La Porta                  *
@@ -49,7 +49,6 @@
  \**************************************************************************/
 
 
-
 #include "burnint.h"
 #include "driver.h"
 #include "state.h"
@@ -71,13 +70,13 @@
 #endif
 
 
-UINT16 *tms32010_ram = NULL;
-UINT16 *tms32010_rom = NULL;
+UINT16* tms32010_ram = NULL;
+UINT16* tms32010_rom = NULL;
 
 static UINT32 tms32010_cycles = 0;
 static UINT32 tms32010_current_cycles = 0;
 
-static void (*tms32010_write_port)(INT32,UINT16);
+static void (*tms32010_write_port)(INT32, UINT16);
 static UINT16 (*tms32010_read_port)(INT32);
 
 static UINT16 program_read_word_16be(UINT16 address)
@@ -112,7 +111,8 @@ static void data_write_word_16be(UINT16 address, UINT16 data)
 
 UINT16 io_read_word(INT32 offset)
 {
-	if (tms32010_read_port) {
+	if (tms32010_read_port)
+	{
 		UINT16 r = tms32010_read_port(offset);
 		return r;
 	}
@@ -122,13 +122,14 @@ UINT16 io_read_word(INT32 offset)
 
 void io_write_word(INT32 offset, UINT16 data)
 {
-	if (tms32010_write_port) {
+	if (tms32010_write_port)
+	{
 		tms32010_write_port(offset, data);
 		return;
 	}
 }
 
-void tms32010_set_write_port_handler(void (*pointer)(INT32,UINT16))
+void tms32010_set_write_port_handler(void (*pointer)(INT32, UINT16))
 {
 	tms32010_write_port = pointer;
 }
@@ -150,7 +151,6 @@ void tms32010_set_read_port_handler(UINT16 (*pointer)(INT32))
 #define TMS32010_RDOP_ARG(A) (program_read_word_16be((A)))
 
 
-
 #define M_RDROM(A)		TMS32010_ROM_RDMEM(A)
 #define M_WRTROM(A,V)	TMS32010_ROM_WRMEM(A,V)
 #define M_RDRAM(A)		TMS32010_RAM_RDMEM(A)
@@ -162,23 +162,22 @@ void tms32010_set_read_port_handler(UINT16 (*pointer)(INT32))
 #define BIO_IN			TMS32010_BIO_In
 
 
-
-typedef struct			/* Page 3-6 shows all registers */
+typedef struct /* Page 3-6 shows all registers */
 {
 	/******************** CPU Internal Registers *******************/
-	UINT16	PC;
-	UINT16	PREVPC;		/* previous program counter */
-	UINT16	STR;
-	PAIR	ACC;
-	PAIR	ALU;
-	PAIR	Preg;
-	UINT16	Treg;
-	UINT16	AR[2];
-	UINT16	STACK[4];
+	UINT16 PC;
+	UINT16 PREVPC; /* previous program counter */
+	UINT16 STR;
+	PAIR ACC;
+	PAIR ALU;
+	PAIR Preg;
+	UINT16 Treg;
+	UINT16 AR[2];
+	UINT16 STACK[4];
 
 	/********************** Status data ****************************/
-	PAIR	opcode;
-	INT32	INTF;		/* Pending Interrupt flag */
+	PAIR opcode;
+	INT32 INTF; /* Pending Interrupt flag */
 } tms32010_Regs;
 
 static tms32010_Regs R;
@@ -186,7 +185,7 @@ static PAIR oldacc;
 static UINT16 memaccess;
 static INT32 tms32010_icount;
 static INT32 addr_mask;
-typedef void (*opcode_fn) (void);
+typedef void (*opcode_fn)(void);
 
 
 /********  The following is the Status (Flag) register definition.  *********/
@@ -209,27 +208,37 @@ typedef void (*opcode_fn) (void);
 #define IND		(R.AR[ARP] & 0xff)				/* address used in indirect memory access operations */
 
 
-
-
 /************************************************************************
  *  Shortcuts
  ************************************************************************/
 
-INLINE void CLR(UINT16 flag) { R.STR &= ~flag; R.STR |= 0x1efe; }
-INLINE void SET(UINT16 flag) { R.STR |=  flag; R.STR |= 0x1efe; }
+INLINE void CLR(UINT16 flag)
+{
+	R.STR &= ~flag;
+	R.STR |= 0x1efe;
+}
+
+INLINE void SET(UINT16 flag)
+{
+	R.STR |= flag;
+	R.STR |= 0x1efe;
+}
 
 
 INLINE void CALCULATE_ADD_OVERFLOW(INT32 addval)
 {
-	if ((INT32)(~(oldacc.d ^ addval) & (oldacc.d ^ R.ACC.d)) < 0) {
+	if ((INT32)(~(oldacc.d ^ addval) & (oldacc.d ^ R.ACC.d)) < 0)
+	{
 		SET(OV_FLAG);
 		if (OVM)
 			R.ACC.d = ((INT32)oldacc.d < 0) ? 0x80000000 : 0x7fffffff;
 	}
 }
+
 INLINE void CALCULATE_SUB_OVERFLOW(INT32 subval)
 {
-	if ((INT32)((oldacc.d ^ subval) & (oldacc.d ^ R.ACC.d)) < 0) {
+	if ((INT32)((oldacc.d ^ subval) & (oldacc.d ^ R.ACC.d)) < 0)
+	{
 		SET(OV_FLAG);
 		if (OVM)
 			R.ACC.d = ((INT32)oldacc.d < 0) ? 0x80000000 : 0x7fffffff;
@@ -244,6 +253,7 @@ INLINE UINT16 POP_STACK(void)
 	R.STACK[1] = R.STACK[0];
 	return (data & addr_mask);
 }
+
 INLINE void PUSH_STACK(UINT16 data)
 {
 	R.STACK[0] = R.STACK[1];
@@ -259,31 +269,36 @@ INLINE void GET_MEM_ADDR(UINT16 DMA)
 	else
 		memaccess = DMA;
 }
+
 INLINE void UPDATE_AR(void)
 {
-	if (R.opcode.b.l & 0x30) {
+	if (R.opcode.b.l & 0x30)
+	{
 		UINT16 tmpAR = R.AR[ARP];
-		if (R.opcode.b.l & 0x20) tmpAR++ ;
-		if (R.opcode.b.l & 0x10) tmpAR-- ;
+		if (R.opcode.b.l & 0x20) tmpAR++;
+		if (R.opcode.b.l & 0x10) tmpAR--;
 		R.AR[ARP] = (R.AR[ARP] & 0xfe00) | (tmpAR & 0x01ff);
 	}
 }
+
 INLINE void UPDATE_ARP(void)
 {
-	if (~R.opcode.b.l & 0x08) {
+	if (~R.opcode.b.l & 0x08)
+	{
 		if (R.opcode.b.l & 0x01) SET(ARP_REG);
 		else CLR(ARP_REG);
 	}
 }
 
 
-INLINE void getdata(UINT8 shift,UINT8 signext)
+INLINE void getdata(UINT8 shift, UINT8 signext)
 {
 	GET_MEM_ADDR(DMA_DP);
 	R.ALU.d = (UINT16)M_RDRAM(memaccess);
 	if (signext) R.ALU.d = (INT16)R.ALU.d;
 	R.ALU.d <<= shift;
-	if (R.opcode.b.l & 0x80) {
+	if (R.opcode.b.l & 0x80)
+	{
 		UPDATE_AR();
 		UPDATE_ARP();
 	}
@@ -292,30 +307,34 @@ INLINE void getdata(UINT8 shift,UINT8 signext)
 INLINE void putdata(UINT16 data)
 {
 	GET_MEM_ADDR(DMA_DP);
-	if (R.opcode.b.l & 0x80) {
+	if (R.opcode.b.l & 0x80)
+	{
 		UPDATE_AR();
 		UPDATE_ARP();
 	}
-	M_WRTRAM(memaccess,data);
+	M_WRTRAM(memaccess, data);
 }
+
 INLINE void putdata_sar(UINT8 data)
 {
 	GET_MEM_ADDR(DMA_DP);
-	if (R.opcode.b.l & 0x80) {
+	if (R.opcode.b.l & 0x80)
+	{
 		UPDATE_AR();
 		UPDATE_ARP();
 	}
-	M_WRTRAM(memaccess,R.AR[data]);
-}
-INLINE void putdata_sst(UINT16 data)
-{
-	GET_MEM_ADDR(DMA_DP1);		/* Page 1 only */
-	if (R.opcode.b.l & 0x80) {
-		UPDATE_AR();
-	}
-	M_WRTRAM(memaccess,data);
+	M_WRTRAM(memaccess, R.AR[data]);
 }
 
+INLINE void putdata_sst(UINT16 data)
+{
+	GET_MEM_ADDR(DMA_DP1); /* Page 1 only */
+	if (R.opcode.b.l & 0x80)
+	{
+		UPDATE_AR();
+	}
+	M_WRTRAM(memaccess, data);
+}
 
 
 /************************************************************************
@@ -325,20 +344,23 @@ INLINE void putdata_sst(UINT16 data)
 /* This following function is here to fill in the void for */
 /* the opcode call function. This function is never called. */
 
-static void other_7F_opcodes(void)  { }
+static void other_7F_opcodes(void)
+{
+}
 
 
 static void illegal(void)
 {
-		logerror("TMS32010:  PC=%04x,  Illegal opcode = %04x\n", (R.PC-1), R.opcode.w.l);
+	logerror("TMS32010:  PC=%04x,  Illegal opcode = %04x\n", (R.PC - 1), R.opcode.w.l);
 }
 
 static void abst(void)
 {
-		if ( (INT32)(R.ACC.d) < 0 ) {
-			R.ACC.d = -R.ACC.d;
-			if (OVM && (R.ACC.d == 0x80000000)) R.ACC.d-- ;
-		}
+	if ((INT32)(R.ACC.d) < 0)
+	{
+		R.ACC.d = -R.ACC.d;
+		if (OVM && (R.ACC.d == 0x80000000)) R.ACC.d--;
+	}
 }
 
 /*** The manual does not mention overflow with the ADD? instructions *****
@@ -353,182 +375,214 @@ static void addh(void)      { getdata(0,0); R.ACC.d += (R.ALU.d << 16); }
 static void add_sh(void)
 {
 	oldacc.d = R.ACC.d;
-	getdata((R.opcode.b.h & 0xf),1);
+	getdata((R.opcode.b.h & 0xf), 1);
 	R.ACC.d += R.ALU.d;
 	CALCULATE_ADD_OVERFLOW(R.ALU.d);
 }
+
 static void addh(void)
 {
 	oldacc.d = R.ACC.d;
-	getdata(0,0);
+	getdata(0, 0);
 	R.ACC.w.h += R.ALU.w.l;
-	if ((INT16)(~(oldacc.w.h ^ R.ALU.w.h) & (oldacc.w.h ^ R.ACC.w.h)) < 0) {
+	if ((INT16)(~(oldacc.w.h ^ R.ALU.w.h) & (oldacc.w.h ^ R.ACC.w.h)) < 0)
+	{
 		SET(OV_FLAG);
 		if (OVM)
 			R.ACC.w.h = ((INT16)oldacc.w.h < 0) ? 0x8000 : 0x7fff;
 	}
 }
+
 static void adds(void)
 {
 	oldacc.d = R.ACC.d;
-	getdata(0,0);
+	getdata(0, 0);
 	R.ACC.d += R.ALU.d;
 	CALCULATE_ADD_OVERFLOW(R.ALU.d);
 }
+
 static void and_(void)
 {
-	getdata(0,0);
+	getdata(0, 0);
 	R.ACC.d &= R.ALU.d;
 }
+
 static void apac(void)
 {
 	oldacc.d = R.ACC.d;
 	R.ACC.d += R.Preg.d;
 	CALCULATE_ADD_OVERFLOW(R.Preg.d);
 }
+
 static void br(void)
 {
 	R.PC = M_RDOP_ARG(R.PC);
 }
+
 static void banz(void)
 {
 	if (R.AR[ARP] & 0x01ff)
 		R.PC = M_RDOP_ARG(R.PC);
 	else
-		R.PC++ ;
+		R.PC++;
 	R.ALU.w.l = R.AR[ARP];
-	R.ALU.w.l-- ;
+	R.ALU.w.l--;
 	R.AR[ARP] = (R.AR[ARP] & 0xfe00) | (R.ALU.w.l & 0x01ff);
 }
+
 static void bgez(void)
 {
-	if ( (INT32)(R.ACC.d) >= 0 )
+	if ((INT32)(R.ACC.d) >= 0)
 		R.PC = M_RDOP_ARG(R.PC);
 	else
-		R.PC++ ;
+		R.PC++;
 }
+
 static void bgz(void)
 {
-	if ( (INT32)(R.ACC.d) > 0 )
+	if ((INT32)(R.ACC.d) > 0)
 		R.PC = M_RDOP_ARG(R.PC);
 	else
-		R.PC++ ;
+		R.PC++;
 }
+
 static void bioz(void)
 {
 	if (BIO_IN != CPU_IRQSTATUS_NONE)
 		R.PC = M_RDOP_ARG(R.PC);
 	else
-		R.PC++ ;
+		R.PC++;
 }
+
 static void blez(void)
 {
-	if ( (INT32)(R.ACC.d) <= 0 )
+	if ((INT32)(R.ACC.d) <= 0)
 		R.PC = M_RDOP_ARG(R.PC);
 	else
-		R.PC++ ;
+		R.PC++;
 }
+
 static void blz(void)
 {
-	if ( (INT32)(R.ACC.d) <  0 )
+	if ((INT32)(R.ACC.d) < 0)
 		R.PC = M_RDOP_ARG(R.PC);
 	else
-		R.PC++ ;
+		R.PC++;
 }
+
 static void bnz(void)
 {
 	if (R.ACC.d != 0)
 		R.PC = M_RDOP_ARG(R.PC);
 	else
-		R.PC++ ;
+		R.PC++;
 }
+
 static void bv(void)
 {
-	if (OV) {
+	if (OV)
+	{
 		R.PC = M_RDOP_ARG(R.PC);
 		CLR(OV_FLAG);
 	}
 	else
-		R.PC++ ;
+		R.PC++;
 }
+
 static void bz(void)
 {
 	if (R.ACC.d == 0)
 		R.PC = M_RDOP_ARG(R.PC);
 	else
-		R.PC++ ;
+		R.PC++;
 }
+
 static void cala(void)
 {
 	PUSH_STACK(R.PC);
 	R.PC = R.ACC.w.l & addr_mask;
 }
+
 static void call(void)
 {
-	R.PC++ ;
+	R.PC++;
 	PUSH_STACK(R.PC);
 	R.PC = M_RDOP_ARG((R.PC - 1)) & addr_mask;
 }
+
 static void dint(void)
 {
 	SET(INTM_FLAG);
 }
+
 static void dmov(void)
 {
-	getdata(0,0);
-	M_WRTRAM((memaccess + 1),R.ALU.w.l);
+	getdata(0, 0);
+	M_WRTRAM((memaccess + 1), R.ALU.w.l);
 }
+
 static void eint(void)
 {
 	CLR(INTM_FLAG);
 }
+
 static void in_p(void)
 {
-	R.ALU.w.l = P_IN( (R.opcode.b.h & 7) );
+	R.ALU.w.l = P_IN((R.opcode.b.h & 7));
 	putdata(R.ALU.w.l);
 }
+
 static void lac_sh(void)
 {
-	getdata((R.opcode.b.h & 0x0f),1);
+	getdata((R.opcode.b.h & 0x0f), 1);
 	R.ACC.d = R.ALU.d;
 }
+
 static void lack(void)
 {
 	R.ACC.d = R.opcode.b.l;
 }
+
 static void lar_ar0(void)
 {
-	getdata(0,0);
+	getdata(0, 0);
 	R.AR[0] = R.ALU.w.l;
 }
+
 static void lar_ar1(void)
 {
-	getdata(0,0);
+	getdata(0, 0);
 	R.AR[1] = R.ALU.w.l;
 }
+
 static void lark_ar0(void)
 {
 	R.AR[0] = R.opcode.b.l;
 }
+
 static void lark_ar1(void)
 {
 	R.AR[1] = R.opcode.b.l;
 }
+
 static void larp_mar(void)
 {
-	if (R.opcode.b.l & 0x80) {
+	if (R.opcode.b.l & 0x80)
+	{
 		UPDATE_AR();
 		UPDATE_ARP();
 	}
 }
+
 static void ldp(void)
 {
-	getdata(0,0);
+	getdata(0, 0);
 	if (R.ALU.d & 1)
 		SET(DP_REG);
 	else
 		CLR(DP_REG);
 }
+
 static void ldpk(void)
 {
 	if (R.opcode.b.l & 1)
@@ -536,176 +590,207 @@ static void ldpk(void)
 	else
 		CLR(DP_REG);
 }
+
 static void lst(void)
 {
 	R.opcode.b.l |= 0x08; /* Next arp not supported here, so mask it */
-	getdata(0,0);
-	R.ALU.w.l &= (~INTM_FLAG);	/* Must not affect INTM */
+	getdata(0, 0);
+	R.ALU.w.l &= (~INTM_FLAG); /* Must not affect INTM */
 	R.STR &= INTM_FLAG;
 	R.STR |= R.ALU.w.l;
 	R.STR |= 0x1efe;
 }
+
 static void lt(void)
 {
-	getdata(0,0);
+	getdata(0, 0);
 	R.Treg = R.ALU.w.l;
 }
+
 static void lta(void)
 {
 	oldacc.d = R.ACC.d;
-	getdata(0,0);
+	getdata(0, 0);
 	R.Treg = R.ALU.w.l;
 	R.ACC.d += R.Preg.d;
 	CALCULATE_ADD_OVERFLOW(R.Preg.d);
 }
+
 static void ltd(void)
 {
 	oldacc.d = R.ACC.d;
-	getdata(0,0);
+	getdata(0, 0);
 	R.Treg = R.ALU.w.l;
-	M_WRTRAM((memaccess + 1),R.ALU.w.l);
+	M_WRTRAM((memaccess + 1), R.ALU.w.l);
 	R.ACC.d += R.Preg.d;
 	CALCULATE_ADD_OVERFLOW(R.Preg.d);
 }
+
 static void mpy(void)
 {
-	getdata(0,0);
+	getdata(0, 0);
 	R.Preg.d = (INT16)R.ALU.w.l * (INT16)R.Treg;
 	if (R.Preg.d == 0x40000000) R.Preg.d = 0xc0000000;
 }
+
 static void mpyk(void)
 {
 	R.Preg.d = (INT16)R.Treg * ((INT16)(R.opcode.w.l << 3) >> 3);
 }
+
 static void nop(void)
 {
 	/* Nothing to do */
 }
+
 static void or_(void)
 {
-	getdata(0,0);
+	getdata(0, 0);
 	R.ACC.w.l |= R.ALU.w.l;
 }
+
 static void out_p(void)
 {
-	getdata(0,0);
-	P_OUT( (R.opcode.b.h & 7), R.ALU.w.l );
+	getdata(0, 0);
+	P_OUT((R.opcode.b.h & 7), R.ALU.w.l);
 }
+
 static void pac(void)
 {
 	R.ACC.d = R.Preg.d;
 }
+
 static void pop(void)
 {
 	R.ACC.w.l = POP_STACK();
 	R.ACC.w.h = 0x0000;
 }
+
 static void push(void)
 {
 	PUSH_STACK(R.ACC.w.l);
 }
+
 static void ret(void)
 {
 	R.PC = POP_STACK();
 }
+
 static void rovm(void)
 {
 	CLR(OVM_FLAG);
 }
+
 static void sach_sh(void)
 {
 	R.ALU.d = (R.ACC.d << (R.opcode.b.h & 7));
 	putdata(R.ALU.w.h);
 }
+
 static void sacl(void)
 {
 	putdata(R.ACC.w.l);
 }
+
 static void sar_ar0(void)
 {
 	putdata_sar(0);
 }
+
 static void sar_ar1(void)
 {
 	putdata_sar(1);
 }
+
 static void sovm(void)
 {
 	SET(OVM_FLAG);
 }
+
 static void spac(void)
 {
 	oldacc.d = R.ACC.d;
 	R.ACC.d -= R.Preg.d;
 	CALCULATE_SUB_OVERFLOW(R.Preg.d);
 }
+
 static void sst(void)
 {
 	putdata_sst(R.STR);
 }
+
 static void sub_sh(void)
 {
 	oldacc.d = R.ACC.d;
-	getdata((R.opcode.b.h & 0x0f),1);
+	getdata((R.opcode.b.h & 0x0f), 1);
 	R.ACC.d -= R.ALU.d;
 	CALCULATE_SUB_OVERFLOW(R.ALU.d);
 }
+
 static void subc(void)
 {
 	oldacc.d = R.ACC.d;
-	getdata(15,0);
+	getdata(15, 0);
 	R.ALU.d -= R.ALU.d;
 	if ((INT32)((oldacc.d ^ R.ALU.d) & (oldacc.d ^ R.ACC.d)) < 0)
 		SET(OV_FLAG);
-	if ( (INT32)(R.ALU.d) >= 0 )
+	if ((INT32)(R.ALU.d) >= 0)
 		R.ACC.d = ((R.ALU.d << 1) + 1);
 	else
 		R.ACC.d = (R.ACC.d << 1);
 }
+
 static void subh(void)
 {
 	oldacc.d = R.ACC.d;
-	getdata(16,0);
+	getdata(16, 0);
 	R.ACC.d -= R.ALU.d;
 	CALCULATE_SUB_OVERFLOW(R.ALU.d);
 }
+
 static void subs(void)
 {
 	oldacc.d = R.ACC.d;
-	getdata(0,0);
+	getdata(0, 0);
 	R.ACC.d -= R.ALU.d;
 	CALCULATE_SUB_OVERFLOW(R.ALU.d);
 }
+
 static void tblr(void)
 {
 	R.ALU.d = M_RDROM((R.ACC.w.l & addr_mask));
 	putdata(R.ALU.w.l);
 	R.STACK[0] = R.STACK[1];
 }
+
 static void tblw(void)
 {
-	getdata(0,0);
-	M_WRTROM(((R.ACC.w.l & addr_mask)),R.ALU.w.l);
+	getdata(0, 0);
+	M_WRTROM(((R.ACC.w.l & addr_mask)), R.ALU.w.l);
 	R.STACK[0] = R.STACK[1];
 }
+
 static void xor_(void)
 {
-	getdata(0,0);
+	getdata(0, 0);
 	R.ACC.w.l ^= R.ALU.w.l;
 }
+
 static void zac(void)
 {
 	R.ACC.d = 0;
 }
+
 static void zalh(void)
 {
-	getdata(0,0);
+	getdata(0, 0);
 	R.ACC.w.h = R.ALU.w.l;
 	R.ACC.w.l = 0x0000;
 }
+
 static void zals(void)
 {
-	getdata(0,0);
+	getdata(0, 0);
 	R.ACC.w.l = R.ALU.w.l;
 	R.ACC.w.h = 0x0000;
 }
@@ -715,30 +800,48 @@ static void zals(void)
  *  Cycle Timings
  ***********************************************************************/
 
-static unsigned cycles_main[256]=
+static unsigned cycles_main[256] =
 {
-/*00*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*10*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*20*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*30*/	1*CLK, 1*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 1*CLK, 1*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK,
-/*40*/	2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK,
-/*50*/	1*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*60*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 3*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*70*/	1*CLK, 1*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 3*CLK, 1*CLK, 0*CLK,
-/*80*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*90*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
-/*A0*/	0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK,
-/*B0*/	0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK,
-/*C0*/	0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK,
-/*D0*/	0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK,
-/*E0*/	0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK,
-/*F0*/	0*CLK, 0*CLK, 0*CLK, 0*CLK, 2*CLK, 2*CLK, 2*CLK, 0*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK, 2*CLK
+	/*00*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	/*10*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	/*20*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	/*30*/ 1 * CLK, 1 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 1 * CLK, 1 * CLK, 0 * CLK, 0 * CLK,
+	0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	/*40*/ 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK,
+	2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK,
+	/*50*/ 1 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	/*60*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 3 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	/*70*/ 1 * CLK, 1 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 3 * CLK, 1 * CLK, 0 * CLK,
+	/*80*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	/*90*/ 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	/*A0*/ 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	/*B0*/ 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	/*C0*/ 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	/*D0*/ 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	/*E0*/ 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	/*F0*/ 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 0 * CLK, 2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK,
+	2 * CLK, 2 * CLK, 2 * CLK, 2 * CLK
 };
 
-static unsigned cycles_7F_other[32]=
+static unsigned cycles_7F_other[32] =
 {
-/*80*/	1*CLK, 1*CLK, 1*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 2*CLK, 2*CLK, 1*CLK, 1*CLK,
-/*90*/	1*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 0*CLK, 2*CLK, 2*CLK, 0*CLK, 0*CLK
+	/*80*/ 1 * CLK, 1 * CLK, 1 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 1 * CLK, 1 * CLK, 1 * CLK, 1 * CLK,
+	2 * CLK, 2 * CLK, 1 * CLK, 1 * CLK,
+	/*90*/ 1 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK, 0 * CLK,
+	2 * CLK, 2 * CLK, 0 * CLK, 0 * CLK
 };
 
 
@@ -746,56 +849,89 @@ static unsigned cycles_7F_other[32]=
  *  Opcode Table
  ***********************************************************************/
 
-static opcode_fn opcode_main[256]=
+static opcode_fn opcode_main[256] =
 {
-/*00*/  add_sh		,add_sh		,add_sh		,add_sh		,add_sh		,add_sh		,add_sh		,add_sh
-/*08*/ ,add_sh		,add_sh		,add_sh		,add_sh		,add_sh		,add_sh		,add_sh		,add_sh
-/*10*/ ,sub_sh		,sub_sh		,sub_sh		,sub_sh		,sub_sh		,sub_sh		,sub_sh		,sub_sh
-/*18*/ ,sub_sh		,sub_sh		,sub_sh		,sub_sh		,sub_sh		,sub_sh		,sub_sh		,sub_sh
-/*20*/ ,lac_sh		,lac_sh		,lac_sh		,lac_sh		,lac_sh		,lac_sh		,lac_sh		,lac_sh
-/*28*/ ,lac_sh		,lac_sh		,lac_sh		,lac_sh		,lac_sh		,lac_sh		,lac_sh		,lac_sh
-/*30*/ ,sar_ar0		,sar_ar1	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*38*/ ,lar_ar0		,lar_ar1	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*40*/ ,in_p		,in_p		,in_p		,in_p		,in_p		,in_p		,in_p		,in_p
-/*48*/ ,out_p		,out_p		,out_p		,out_p		,out_p		,out_p		,out_p		,out_p
-/*50*/ ,sacl		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*58*/ ,sach_sh		,sach_sh	,sach_sh	,sach_sh	,sach_sh	,sach_sh	,sach_sh	,sach_sh
-/*60*/ ,addh		,adds		,subh		,subs		,subc		,zalh		,zals		,tblr
-/*68*/ ,larp_mar	,dmov		,lt			,ltd		,lta		,mpy		,ldpk		,ldp
-/*70*/ ,lark_ar0	,lark_ar1	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*78*/ ,xor_			,and_		,or_			,lst		,sst		,tblw		,lack		,other_7F_opcodes
-/*80*/ ,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk
-/*88*/ ,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk
-/*90*/ ,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk
-/*98*/ ,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk		,mpyk
-/*A0*/ ,illegal		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*A8*/ ,illegal		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*B0*/ ,illegal		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*B8*/ ,illegal		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*C0*/ ,illegal		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*C8*/ ,illegal		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*D0*/ ,illegal		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*D8*/ ,illegal		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*E0*/ ,illegal		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*E8*/ ,illegal		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*F0*/ ,illegal		,illegal	,illegal	,illegal	,banz		,bv			,bioz		,illegal
-/*F8*/ ,call		,br			,blz		,blez		,bgz		,bgez		,bnz		,bz
+	/*00*/ add_sh, add_sh, add_sh, add_sh, add_sh, add_sh, add_sh, add_sh
+	/*08*/ ,
+	add_sh, add_sh, add_sh, add_sh, add_sh, add_sh, add_sh, add_sh
+	/*10*/ ,
+	sub_sh, sub_sh, sub_sh, sub_sh, sub_sh, sub_sh, sub_sh, sub_sh
+	/*18*/ ,
+	sub_sh, sub_sh, sub_sh, sub_sh, sub_sh, sub_sh, sub_sh, sub_sh
+	/*20*/ ,
+	lac_sh, lac_sh, lac_sh, lac_sh, lac_sh, lac_sh, lac_sh, lac_sh
+	/*28*/ ,
+	lac_sh, lac_sh, lac_sh, lac_sh, lac_sh, lac_sh, lac_sh, lac_sh
+	/*30*/ ,
+	sar_ar0, sar_ar1, illegal, illegal, illegal, illegal, illegal, illegal
+	/*38*/ ,
+	lar_ar0, lar_ar1, illegal, illegal, illegal, illegal, illegal, illegal
+	/*40*/ ,
+	in_p, in_p, in_p, in_p, in_p, in_p, in_p, in_p
+	/*48*/ ,
+	out_p, out_p, out_p, out_p, out_p, out_p, out_p, out_p
+	/*50*/ ,
+	sacl, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*58*/ ,
+	sach_sh, sach_sh, sach_sh, sach_sh, sach_sh, sach_sh, sach_sh, sach_sh
+	/*60*/ ,
+	addh, adds, subh, subs, subc, zalh, zals, tblr
+	/*68*/ ,
+	larp_mar, dmov, lt, ltd, lta, mpy, ldpk, ldp
+	/*70*/ ,
+	lark_ar0, lark_ar1, illegal, illegal, illegal, illegal, illegal, illegal
+	/*78*/ ,
+	xor_, and_, or_, lst, sst, tblw, lack, other_7F_opcodes
+	/*80*/ ,
+	mpyk, mpyk, mpyk, mpyk, mpyk, mpyk, mpyk, mpyk
+	/*88*/ ,
+	mpyk, mpyk, mpyk, mpyk, mpyk, mpyk, mpyk, mpyk
+	/*90*/ ,
+	mpyk, mpyk, mpyk, mpyk, mpyk, mpyk, mpyk, mpyk
+	/*98*/ ,
+	mpyk, mpyk, mpyk, mpyk, mpyk, mpyk, mpyk, mpyk
+	/*A0*/ ,
+	illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*A8*/ ,
+	illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*B0*/ ,
+	illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*B8*/ ,
+	illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*C0*/ ,
+	illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*C8*/ ,
+	illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*D0*/ ,
+	illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*D8*/ ,
+	illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*E0*/ ,
+	illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*E8*/ ,
+	illegal, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*F0*/ ,
+	illegal, illegal, illegal, illegal, banz, bv, bioz, illegal
+	/*F8*/ ,
+	call, br, blz, blez, bgz, bgez, bnz, bz
 };
 
-static opcode_fn opcode_7F_other[32]=
+static opcode_fn opcode_7F_other[32] =
 {
-/*80*/  nop			,dint		,eint		,illegal	,illegal	,illegal	,illegal	,illegal
-/*88*/ ,abst		,zac		,rovm		,sovm		,cala		,ret		,pac		,apac
-/*90*/ ,spac		,illegal	,illegal	,illegal	,illegal	,illegal	,illegal	,illegal
-/*98*/ ,illegal		,illegal	,illegal	,illegal	,push		,pop		,illegal	,illegal
+	/*80*/ nop, dint, eint, illegal, illegal, illegal, illegal, illegal
+	/*88*/ ,
+	abst, zac, rovm, sovm, cala, ret, pac, apac
+	/*90*/ ,
+	spac, illegal, illegal, illegal, illegal, illegal, illegal, illegal
+	/*98*/ ,
+	illegal, illegal, illegal, illegal, push, pop, illegal, illegal
 };
-
 
 
 /****************************************************************************
  *  Inits CPU emulation
  ****************************************************************************/
-void tms32010_init (void)
+void tms32010_init(void)
 {
 #if 0
 	state_save_register_item("tms32010", index, R.PC);
@@ -819,16 +955,16 @@ void tms32010_init (void)
 /****************************************************************************
  *  Reset registers to their initial values
  ****************************************************************************/
-void tms32010_reset (void)
+void tms32010_reset(void)
 {
-	R.PC    = 0;
-	R.STR   = 0xfefe;
+	R.PC = 0;
+	R.STR = 0xfefe;
 	R.ACC.d = 0;
-	R.INTF  = TMS32010_INT_NONE;
-	addr_mask = 0x0fff;	/* TMS32010 can only address 0x0fff */
-						/* however other TMS3201x devices   */
-						/* can address up to 0xffff (incase */
-						/* their support is ever added).    */
+	R.INTF = TMS32010_INT_NONE;
+	addr_mask = 0x0fff; /* TMS32010 can only address 0x0fff */
+	/* however other TMS3201x devices   */
+	/* can address up to 0xffff (incase */
+	/* their support is ever added).    */
 
 	tms32010_cycles = 0;
 }
@@ -837,7 +973,7 @@ void tms32010_reset (void)
 /****************************************************************************
  *  Shut down CPU emulation
  ****************************************************************************/
-void tms32010_exit (void)
+void tms32010_exit(void)
 {
 	/* nothing to do ? */
 }
@@ -855,9 +991,9 @@ int tms32010_Ext_IRQ(void)
 		SET(INTM_FLAG);
 		PUSH_STACK(R.PC);
 		R.PC = 0x0002;
-		return (3*CLK);	/* 3 cycles used due to PUSH and DINT operation ? */
+		return (3 * CLK); /* 3 cycles used due to PUSH and DINT operation ? */
 	}
-	return (0*CLK);
+	return (0 * CLK);
 }
 
 static INT32 end_run = 0;
@@ -874,7 +1010,8 @@ int tms32010_execute(int cycles)
 
 	do
 	{
-		if (R.INTF) {
+		if (R.INTF)
+		{
 			/* Dont service INT if prev instruction was MPY, MPYK or EINT */
 			if ((R.opcode.b.h != 0x6d) && ((R.opcode.b.h & 0xe0) != 0x80) && (R.opcode.w.l != 0x7f82))
 				tms32010_icount -= tms32010_Ext_IRQ();
@@ -887,15 +1024,20 @@ int tms32010_execute(int cycles)
 		R.opcode.d = M_RDOP(R.PC);
 		R.PC++;
 
-		if (R.opcode.b.h != 0x7f)	{ /* Do all opcodes except the 7Fxx ones */
+		if (R.opcode.b.h != 0x7f)
+		{
+			/* Do all opcodes except the 7Fxx ones */
 			tms32010_icount -= cycles_main[R.opcode.b.h];
 			(*(opcode_main[R.opcode.b.h]))();
 		}
-		else { /* Opcode major byte 7Fxx has many opcodes in its minor byte */
+		else
+		{
+			/* Opcode major byte 7Fxx has many opcodes in its minor byte */
 			tms32010_icount -= cycles_7F_other[(R.opcode.b.l & 0x1f)];
 			(*(opcode_7F_other[(R.opcode.b.l & 0x1f)]))();
 		}
-	} while (tms32010_icount>0 && !end_run);
+	}
+	while (tms32010_icount > 0 && !end_run);
 
 	cycles = cycles - tms32010_icount;
 	tms32010_cycles += cycles;
@@ -923,11 +1065,12 @@ void tms32010RunEnd()
 
 void tms32010_scan(INT32 nAction)
 {
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = &R;
-		ba.nLen	  = sizeof(tms32010_Regs);
+		ba.Data = &R;
+		ba.nLen = sizeof(tms32010_Regs);
 		ba.szName = "tms32010 Regs";
 		BurnAcb(&ba);
 
@@ -968,7 +1111,7 @@ static void tms32010_set_context (void *src)
 void tms32010_set_irq_line(int irqline, int state)
 {
 	/* Pending Interrupts cannot be cleared! */
-	if (state == CPU_IRQSTATUS_ACK) R.INTF |=  TMS32010_INT_PENDING;
+	if (state == CPU_IRQSTATUS_ACK) R.INTF |= TMS32010_INT_PENDING;
 }
 
 #if 0

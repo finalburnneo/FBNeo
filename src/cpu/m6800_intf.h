@@ -7,10 +7,10 @@ typedef UINT8 (*pReadOpArgHandler)(UINT16 a);
 typedef UINT8 (*pReadPortHandler)(UINT16 a);
 typedef void (*pWritePortHandler)(UINT16 a, UINT8 d);
 
-struct M6800Ext {
-
+struct M6800Ext
+{
 	m6800_Regs reg;
-	
+
 	UINT8* pMemMap[0x100 * 3];
 
 	pReadByteHandler ReadByte;
@@ -164,6 +164,7 @@ inline static INT32 M6800TotalCycles()
 
 	return nM6800CyclesTotal + m6800_get_segmentcycles();
 }
+
 #define HD63701TotalCycles		M6800TotalCycles
 #define M6803TotalCycles		M6800TotalCycles
 #define M6801TotalCycles		M6800TotalCycles
@@ -179,6 +180,7 @@ inline static INT32 M6800Idle(INT32 cycles)
 
 	return cycles;
 }
+
 #define HD63701Idle		M6800Idle
 #define M6803Idle		M6800Idle
 #define M6801Idle		M6800Idle

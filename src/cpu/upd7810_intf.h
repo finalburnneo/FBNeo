@@ -3,10 +3,10 @@
 void upd7810SetAnfunc(INT32 select, UINT8 (*func)());
 
 void upd7810SetReadPortHandler(UINT8 (*read_port)(UINT8));
-void upd7810SetWritePortHandler(void (*write_port)(UINT8,UINT8));
+void upd7810SetWritePortHandler(void (*write_port)(UINT8, UINT8));
 void upd7810SetReadHandler(UINT8 (*read)(UINT16));
-void upd7810SetWriteHandler(void (*write)(UINT16,UINT8));
-void upd7810MapMemory(UINT8 *rom, UINT16 start, UINT16 end, UINT8 map);
+void upd7810SetWriteHandler(void (*write)(UINT16, UINT8));
+void upd7810MapMemory(UINT8* rom, UINT16 start, UINT16 end, UINT8 map);
 
 void upd7810Init(INT32 (*io_callback)(INT32 ioline, INT32 state));
 void upd7807Init(INT32 (*io_callback)(INT32 ioline, INT32 state));

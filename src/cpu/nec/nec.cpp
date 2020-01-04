@@ -119,18 +119,18 @@
 unsigned char cpu_readmem20_op(unsigned int);
 unsigned char cpu_readmem20_arg(unsigned int);
 unsigned char cpu_readport(unsigned int);
-void cpu_writeport(unsigned int,unsigned int);
+void cpu_writeport(unsigned int, unsigned int);
 
 static NEC_INLINE void write_mem_word(unsigned int a, unsigned short d)
 {
-	cpu_writemem20((a),(unsigned char)(d));
-	cpu_writemem20((a)+1,(d)>>8);
+	cpu_writemem20((a), (unsigned char)(d));
+	cpu_writemem20((a) + 1, (d) >> 8);
 }
 
 static NEC_INLINE void write_port_word(unsigned int a, unsigned short d)
 {
-	cpu_writeport((a),(unsigned char)(d));
-	cpu_writeport((a)+1,(d)>>8);
+	cpu_writeport((a), (unsigned char)(d));
+	cpu_writeport((a) + 1, (d) >> 8);
 }
 
 typedef UINT8 BOOLEAN;
@@ -142,16 +142,16 @@ typedef UINT32 DWORD;
 #include "necpriv.h"
 
 static nec_state_t sChips[4]; // 4 cpus should be plenty!
-static nec_state_t *sChipsPtr;
+static nec_state_t* sChipsPtr;
 
-NEC_INLINE void prefetch(nec_state_t *nec_state)
+NEC_INLINE void prefetch(nec_state_t* nec_state)
 {
 	nec_state->prefetch_count--;
 }
 
-static void do_prefetch(nec_state_t *nec_state, int previous_ICount)
+static void do_prefetch(nec_state_t* nec_state, int previous_ICount)
 {
-	int diff = previous_ICount - (int) nec_state->icount;
+	int diff = previous_ICount - (int)nec_state->icount;
 
 	/* The implementation is not accurate, but comes close.
      * It does not respect that the V30 will fetch two bytes
@@ -159,10 +159,10 @@ static void do_prefetch(nec_state_t *nec_state, int previous_ICount)
      * of 4. There are however only very few sources publicly
      * available and they are vague.
      */
-	while (nec_state->prefetch_count<0)
+	while (nec_state->prefetch_count < 0)
 	{
 		nec_state->prefetch_count++;
-		if (diff>nec_state->prefetch_cycles)
+		if (diff > nec_state->prefetch_cycles)
 			diff -= nec_state->prefetch_cycles;
 		else
 			nec_state->icount -= nec_state->prefetch_cycles;
@@ -175,24 +175,23 @@ static void do_prefetch(nec_state_t *nec_state, int previous_ICount)
 		return;
 	}
 
-	while (diff>=nec_state->prefetch_cycles && nec_state->prefetch_count < nec_state->prefetch_size)
+	while (diff >= nec_state->prefetch_cycles && nec_state->prefetch_count < nec_state->prefetch_size)
 	{
 		diff -= nec_state->prefetch_cycles;
 		nec_state->prefetch_count++;
 	}
-
 }
 
-NEC_INLINE UINT8 fetch(nec_state_t *nec_state)
+NEC_INLINE UINT8 fetch(nec_state_t* nec_state)
 {
 	prefetch(nec_state);
-	return cpu_readop_arg(((Sreg(PS)<<4)+nec_state->ip++) ^ nec_state->fetch_xor); // ^ fetch_xor?
+	return cpu_readop_arg(((Sreg(PS) << 4) + nec_state->ip++) ^ nec_state->fetch_xor); // ^ fetch_xor?
 }
 
-NEC_INLINE UINT16 fetchword(nec_state_t *nec_state)
+NEC_INLINE UINT16 fetchword(nec_state_t* nec_state)
 {
 	UINT16 r = FETCH();
-	r |= (FETCH()<<8);
+	r |= (FETCH() << 8);
 	return r;
 }
 
@@ -203,10 +202,10 @@ NEC_INLINE UINT16 fetchword(nec_state_t *nec_state)
 
 static UINT8 parity_table[256];
 
-static UINT8 fetchop(nec_state_t *nec_state)
+static UINT8 fetchop(nec_state_t* nec_state)
 {
 	prefetch(nec_state);
-	return cpu_readop(((Sreg(PS)<<4)+nec_state->ip++) ^ nec_state->fetch_xor);
+	return cpu_readop(((Sreg(PS) << 4) + nec_state->ip++) ^ nec_state->fetch_xor);
 }
 
 
@@ -214,15 +213,15 @@ static UINT8 fetchop(nec_state_t *nec_state)
 
 int nec_reset()
 {
-	nec_state_t *nec_state = sChipsPtr;
+	nec_state_t* nec_state = sChipsPtr;
 
-	memset( &nec_state->regs.w, 0, sizeof(nec_state->regs.w));
+	memset(&nec_state->regs.w, 0, sizeof(nec_state->regs.w));
 
 	nec_state->ip = 0;
 	nec_state->TF = 0;
 	nec_state->IF = 0;
 	nec_state->DF = 0;
-	nec_state->MF = 1;	// brkem should set to 0 when implemented
+	nec_state->MF = 1; // brkem should set to 0 when implemented
 	nec_state->SignVal = 0;
 	nec_state->AuxVal = 0;
 	nec_state->OverVal = 0;
@@ -248,14 +247,14 @@ int nec_reset()
 	return 0;
 }
 
-static void nec_interrupt(nec_state_t *nec_state, unsigned int_num, INTSOURCES source)
+static void nec_interrupt(nec_state_t* nec_state, unsigned int_num, INTSOURCES source)
 {
 	UINT32 dest_seg, dest_off;
 
 	i_pushf(nec_state);
 	nec_state->TF = nec_state->IF = 0;
 
-	if (source == INT_IRQ)	/* get vector */
+	if (source == INT_IRQ) /* get vector */
 		int_num = nec_state->vector;
 
 	dest_off = read_mem_word(int_num*4);
@@ -268,13 +267,13 @@ static void nec_interrupt(nec_state_t *nec_state, unsigned int_num, INTSOURCES s
 	CHANGE_PC;
 }
 
-static void nec_trap(nec_state_t *nec_state)
+static void nec_trap(nec_state_t* nec_state)
 {
 	nec_instruction[fetchop(nec_state)](nec_state);
 	nec_interrupt(nec_state, NEC_TRAP_VECTOR, BRK);
 }
 
-static void external_int(nec_state_t *nec_state)
+static void external_int(nec_state_t* nec_state)
 {
 	if (nec_state->pending_irq & NMI_IRQ)
 	{
@@ -301,46 +300,46 @@ static void external_int(nec_state_t *nec_state)
 
 void nec_set_irq_line_and_vector(int irqline, int vector, int state)
 {
-	nec_state_t *nec_state = sChipsPtr;
+	nec_state_t* nec_state = sChipsPtr;
 
 	switch (irqline)
 	{
-		case 0:
-			nec_state->irq_state = state;
-			if (state == CLEAR_LINE)
-				nec_state->pending_irq &= ~INT_IRQ;
-			else
-			{
-				nec_state->vector = vector;
-				nec_state->pending_irq |= INT_IRQ;
-				nec_state->halted = 0;
-			}
-			break;
-		case INPUT_LINE_NMI:
-			if (nec_state->nmi_state == (unsigned int)state) return;
-		    	nec_state->nmi_state = state;
-			if (state != CLEAR_LINE)
-			{
-				nec_state->vector = vector;
-				nec_state->pending_irq |= NMI_IRQ;
-				nec_state->halted = 0;
-			}
-			break;
-		case NEC_INPUT_LINE_POLL:
+	case 0:
+		nec_state->irq_state = state;
+		if (state == CLEAR_LINE)
+			nec_state->pending_irq &= ~INT_IRQ;
+		else
+		{
 			nec_state->vector = vector;
-			nec_state->poll_state = state;
-			break;
+			nec_state->pending_irq |= INT_IRQ;
+			nec_state->halted = 0;
+		}
+		break;
+	case INPUT_LINE_NMI:
+		if (nec_state->nmi_state == (unsigned int)state) return;
+		nec_state->nmi_state = state;
+		if (state != CLEAR_LINE)
+		{
+			nec_state->vector = vector;
+			nec_state->pending_irq |= NMI_IRQ;
+			nec_state->halted = 0;
+		}
+		break;
+	case NEC_INPUT_LINE_POLL:
+		nec_state->vector = vector;
+		nec_state->poll_state = state;
+		break;
 	}
 }
 
 void nec_init(int cpu)
 {
-	nec_state_t *nec_state = &sChips[cpu];
+	nec_state_t* nec_state = &sChips[cpu];
 
 	unsigned int i, j, c;
 
-	static const WREGS wreg_name[8]={ AW, CW, DW, BW, SP, BP, IX, IY };
-	static const BREGS breg_name[8]={ AL, CL, DL, BL, AH, CH, DH, BH };
+	static const WREGS wreg_name[8] = {AW, CW, DW, BW, SP, BP, IX, IY};
+	static const BREGS breg_name[8] = {AL, CL, DL, BL, AH, CH, DH, BH};
 
 	for (i = 0; i < 256; i++)
 	{
@@ -381,15 +380,16 @@ unsigned int nec_total_cycles()
 
 void nec_new_frame()
 {
-	for (int i = 0; i < 4; i++) {
-		nec_state_t *nec_state = &sChips[i];
+	for (int i = 0; i < 4; i++)
+	{
+		nec_state_t* nec_state = &sChips[i];
 		nec_state->cycles_total = 0;
 	}
 }
 
 void nec_set_vector(int vector)
 {
-	nec_state_t *nec_state = sChipsPtr;
+	nec_state_t* nec_state = sChipsPtr;
 	nec_state->vector = vector;
 }
 
@@ -405,7 +405,7 @@ void necIdle(int cycles)
 
 int nec_execute(int cycles)
 {
-	nec_state_t *nec_state = sChipsPtr;
+	nec_state_t* nec_state = sChipsPtr;
 	int prev_ICount;
 
 	nec_state->icount = cycles;
@@ -419,9 +419,10 @@ int nec_execute(int cycles)
 		return cycles;
 	}
 
-	while((nec_state->icount>0) && (!nec_state->stop_run)) {
+	while ((nec_state->icount > 0) && (!nec_state->stop_run))
+	{
 		/* Dispatch IRQ */
-		if (nec_state->pending_irq && nec_state->no_interrupt==0)
+		if (nec_state->pending_irq && nec_state->no_interrupt == 0)
 		{
 			if (nec_state->pending_irq & NMI_IRQ)
 				external_int(nec_state);
@@ -448,39 +449,39 @@ int nec_execute(int cycles)
 
 void necInit(int cpu, int type)
 {
-	nec_state_t *nec_state = &sChips[cpu];
+	nec_state_t* nec_state = &sChips[cpu];
 
 	nec_init(cpu);
 
 	switch (type)
 	{
-		case V20_TYPE:
+	case V20_TYPE:
 		{
 			nec_state->fetch_xor = 0;
-			nec_state->chip_type=V20_TYPE;
-			nec_state->prefetch_size = 4;		/* 3 words */
-			nec_state->prefetch_cycles = 4;		/* four cycles per byte */
+			nec_state->chip_type = V20_TYPE;
+			nec_state->prefetch_size = 4; /* 3 words */
+			nec_state->prefetch_cycles = 4; /* four cycles per byte */
 		}
 		break;
 
-		case V30_TYPE:
+	case V30_TYPE:
 		{
 			nec_state->fetch_xor = 0;
-			nec_state->chip_type=V30_TYPE;
-			nec_state->prefetch_size = 6;		/* 3 words */
-			nec_state->prefetch_cycles = 2;		/* two cycles per byte / four per word */
+			nec_state->chip_type = V30_TYPE;
+			nec_state->prefetch_size = 6; /* 3 words */
+			nec_state->prefetch_cycles = 2; /* two cycles per byte / four per word */
 		}
 		break;
 
-		case V33_TYPE:
+	case V33_TYPE:
 		{
 			nec_state->fetch_xor = 0;
-			nec_state->chip_type=V33_TYPE;
+			nec_state->chip_type = V33_TYPE;
 			nec_state->prefetch_size = 6;
 			/* FIXME: Need information about prefetch size and cycles for V33.
 		         * complete guess below, nbbatman will not work
 		         * properly without. */
-			nec_state->prefetch_cycles = 1;		/* two cycles per byte / four per word */
+			nec_state->prefetch_cycles = 1; /* two cycles per byte / four per word */
 		}
 		break;
 	}
@@ -488,27 +489,29 @@ void necInit(int cpu, int type)
 
 int necGetPC(int n)
 {
-	if (n == -1) { // current cpu
-		return ((sChipsPtr->sregs[PS]<<4) + sChipsPtr->ip);
-	} else {
-		nec_state_t *nec_state = &sChips[n];
-		return ((nec_state->sregs[PS]<<4) + nec_state->ip);
+	if (n == -1)
+	{
+		// current cpu
+		return ((sChipsPtr->sregs[PS] << 4) + sChipsPtr->ip);
 	}
+	nec_state_t* nec_state = &sChips[n];
+	return ((nec_state->sregs[PS] << 4) + nec_state->ip);
 }
 
 void necScan(int cpu, int nAction)
 {
-	nec_state_t *nec_state = &sChips[cpu];
+	nec_state_t* nec_state = &sChips[cpu];
 
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		struct BurnArea ba;
 		char szText[] = "NEC #0";
 		szText[5] = '1' + cpu;
 
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = (unsigned char*)nec_state;
-		ba.nLen	  = sizeof(nec_state_t);
+		ba.Data = (unsigned char*)nec_state;
+		ba.nLen = sizeof(nec_state_t);
 		ba.szName = szText;
 		BurnAcb(&ba);
 	}

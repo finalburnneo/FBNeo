@@ -5,10 +5,10 @@ typedef void (*pWriteByteHandler)(UINT16 a, UINT8 d);
 typedef UINT8 (*pReadOpHandler)(UINT16 a);
 typedef UINT8 (*pReadOpArgHandler)(UINT16 a);
 
-struct HD6309Ext {
-
+struct HD6309Ext
+{
 	hd6309_Regs reg;
-	
+
 	UINT8* pMemMap[0x100 * 3];
 
 	pReadByteHandler ReadByte;

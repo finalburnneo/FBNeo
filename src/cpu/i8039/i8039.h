@@ -25,10 +25,24 @@
 */
 
 
-enum { I8039_PC=1, I8039_SP, I8039_PSW, I8039_A,  I8039_TC,
-	   I8039_P1,   I8039_P2, I8039_R0,  I8039_R1, I8039_R2,
-	   I8039_R3,   I8039_R4, I8039_R5,  I8039_R6, I8039_R7,
-	   I8039_EA
+enum
+{
+	I8039_PC=1,
+	I8039_SP,
+	I8039_PSW,
+	I8039_A,
+	I8039_TC,
+	I8039_P1,
+	I8039_P2,
+	I8039_R0,
+	I8039_R1,
+	I8039_R2,
+	I8039_R3,
+	I8039_R4,
+	I8039_R5,
+	I8039_R6,
+	I8039_R7,
+	I8039_EA
 };
 
 typedef unsigned char (__fastcall *i8039ReadIoHandler)(unsigned int a);
@@ -47,9 +61,9 @@ extern void I8039SetProgramWriteHandler(i8039WriteProgHandler handler);
 extern void I8039SetCPUOpReadHandler(i8039ReadOpHandler handler);
 extern void I8039SetCPUOpReadArgHandler(i8039ReadOpArgHandler handler);
 extern void I8039Exit();
-extern void I8039Reset (void);
+extern void I8039Reset(void);
 extern void I8039SetIrqState(int state);
-extern int I8039Scan(int nAction,int *pnMin);
+extern int I8039Scan(int nAction, int* pnMin);
 extern void I8039Open(INT32 nCpu);
 extern void I8039Close();
 extern INT32 I8039GetActive();
@@ -133,9 +147,6 @@ extern void I8035Init(INT32 nCpu);
  *   use different encoding mechanisms for opcodes and opcode arguments
  */
 #define I8039_RDOP_ARG(A) ((unsigned)HPtr->I8039CPUReadOpArg(A))
-
-
-
 
 
 #if 0
@@ -314,4 +325,3 @@ extern void m58715_get_info(UINT32 state, cpuinfo *info);
 #ifdef  ENABLE_DEBUGGER
 offs_t i8039_dasm(char *buffer, offs_t pc, const UINT8 *oprom, const UINT8 *opram);
 #endif
-

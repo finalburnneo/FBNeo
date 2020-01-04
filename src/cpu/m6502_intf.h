@@ -7,10 +7,10 @@ typedef void (*pWriteByteHandler)(UINT16 a, UINT8 d);
 typedef UINT8 (*pReadOpHandler)(UINT16 a);
 typedef UINT8 (*pReadOpArgHandler)(UINT16 a);
 
-struct M6502Ext {
-
+struct M6502Ext
+{
 	m6502_Regs reg;
-	
+
 	INT32 (*execute)(INT32 cycles);
 	void (*reset)();
 	void (*init)();
@@ -26,7 +26,7 @@ struct M6502Ext {
 	pWriteByteHandler WriteByte;
 	pReadOpHandler ReadOp;
 	pReadOpArgHandler ReadOpArg;
-	
+
 	INT32 nCyclesTotal;
 	INT32 nCyclesSegment;
 	INT32 nCyclesLeft;
@@ -47,11 +47,23 @@ void m6510_write_0000(UINT16 address, UINT8 data);
 
 // The M6504 only has 13 address bits! use address mirroring!
 
-enum { TYPE_M6502=0, TYPE_M6504, TYPE_M65C02, TYPE_M65SC02, TYPE_N2A03, TYPE_DECO16,
-//	these are the same!
-	TYPE_M6510, TYPE_M6510T, TYPE_M7501, TYPE_M8502,
-//	these involve encryption
-	TYPE_DECOCPU7, TYPE_DECO222, TYPE_DECOC10707
+enum
+{
+	TYPE_M6502=0,
+	TYPE_M6504,
+	TYPE_M65C02,
+	TYPE_M65SC02,
+	TYPE_N2A03,
+	TYPE_DECO16,
+	//	these are the same!
+	TYPE_M6510,
+	TYPE_M6510T,
+	TYPE_M7501,
+	TYPE_M8502,
+	//	these involve encryption
+	TYPE_DECOCPU7,
+	TYPE_DECO222,
+	TYPE_DECOC10707
 };
 
 INT32 M6502Init(INT32 cpu, INT32 type); // if you're using more than one type
@@ -74,7 +86,7 @@ void M6502SetReadOpHandler(UINT8 (*pHandler)(UINT16));
 void M6502SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6502Scan(INT32 nAction);
 
-void M6502SetOpcodeDecode(UINT8 *table);
+void M6502SetOpcodeDecode(UINT8* table);
 
 void M6502SetAddressMask(UINT16 RangeMask);
 
@@ -91,7 +103,7 @@ inline static INT32 M6502TotalCycles()
 }
 
 // m6502.cpp used for Data East encrypted CPUs.
-void DecoCpu7SetDecode(UINT8 (*write)(UINT16,UINT8));
+void DecoCpu7SetDecode(UINT8 (*write)(UINT16, UINT8));
 
 void M6502WriteRom(UINT32 Address, UINT8 Data); // cheat core
 UINT8 M6502CheatRead(UINT32 a);

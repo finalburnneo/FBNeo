@@ -14,7 +14,7 @@
 #define SEK_MAX	(4)								// Maximum number of CPUs supported
 
 #if defined EMU_M68K
- #include "m68k/m68k.h"
+#include "m68k/m68k.h"
 #endif
 
 // Number of bits used for each page in the fast memory map
@@ -59,9 +59,9 @@
 #endif
 
 #ifdef EMU_M68K
- extern "C" INT32 nSekM68KContextSize[SEK_MAX];
- extern "C" INT8* SekM68KContext[SEK_MAX];
- extern "C" INT32 m68k_ICount;
+extern "C" INT32 nSekM68KContextSize[SEK_MAX];
+extern "C" INT8* SekM68KContext[SEK_MAX];
+extern "C" INT32 m68k_ICount;
 #endif
 
 typedef UINT8 (__fastcall *pSekReadByteHandler)(UINT32 a);
@@ -82,7 +82,8 @@ extern INT32 nSekCycles[SEK_MAX], nSekCPUType[SEK_MAX];
 // Mapped memory pointers to Rom and Ram areas (Read then Write)
 // These memory areas must be allocated multiples of the page size
 // with a 4 byte over-run area lookup for each page (*3 for read, write and fetch)
-struct SekExt {
+struct SekExt
+{
 	UINT8* MemMap[SEK_PAGE_COUNT * 3];
 
 	// If MemMap[i] < SEK_MAXHANDLER, use the handler functions
@@ -106,7 +107,7 @@ struct SekExt {
 #define SEK_DEF_WRITE_LONG(i, a, d) { pSekExt->WriteWord[i]((a),(UINT16)((d) >> 16)); pSekExt->WriteWord[i]((a) + 2,(UINT16)((d) & 0xffff)); }
 
 extern struct SekExt *SekExt[SEK_MAX], *pSekExt;
-extern INT32 nSekActive;										// The cpu which is currently being emulated
+extern INT32 nSekActive; // The cpu which is currently being emulated
 extern INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nSekCyclesToDo;
 
 UINT32 SekReadByte(UINT32 a);

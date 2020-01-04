@@ -246,43 +246,43 @@ static m6800_Regs m6800;
 #define SET_V8(a,b,r)	CC|=((((a)^(b)^(r)^((r)>>1))&0x80)>>6)
 #define SET_V16(a,b,r)	CC|=((((a)^(b)^(r)^((r)>>1))&0x8000)>>14)
 
-static const UINT8 flags8i[256]=	 /* increment */
+static const UINT8 flags8i[256] = /* increment */
 {
-0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x0a,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08
+	0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x0a, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08
 };
-static const UINT8 flags8d[256]= /* decrement */
+static const UINT8 flags8d[256] = /* decrement */
 {
-0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x02,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,
-0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08
+	0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08
 };
 #define SET_FLAGS8I(a)		{CC|=flags8i[(a)&0xff];}
 #define SET_FLAGS8D(a)		{CC|=flags8d[(a)&0xff];}
@@ -369,110 +369,110 @@ static const UINT8 flags8d[256]= /* decrement */
 #define XX 5 // invalid opcode unknown cc
 static const UINT8 cycles_6800[] =
 {
-		/* 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F */
+	/* 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F */
 	/*0*/ XX, 2,XX,XX,XX,XX, 2, 2, 4, 4, 2, 2, 2, 2, 2, 2,
-	/*1*/  2, 2,XX,XX,XX,XX, 2, 2,XX, 2,XX, 2,XX,XX,XX,XX,
-	/*2*/  4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-	/*3*/  4, 4, 4, 4, 4, 4, 4, 4,XX, 5,XX,10,XX,XX, 9,12,
-	/*4*/  2,XX,XX, 2, 2,XX, 2, 2, 2, 2, 2,XX, 2, 2,XX, 2,
-	/*5*/  2,XX,XX, 2, 2,XX, 2, 2, 2, 2, 2,XX, 2, 2,XX, 2,
-	/*6*/  7,XX,XX, 7, 7,XX, 7, 7, 7, 7, 7,XX, 7, 7, 4, 7,
-	/*7*/  6,XX,XX, 6, 6,XX, 6, 6, 6, 6, 6,XX, 6, 6, 3, 6,
-	/*8*/  2, 2, 2,XX, 2, 2, 2, 3, 2, 2, 2, 2, 3, 8, 3, 4,
-	/*9*/  3, 3, 3,XX, 3, 3, 3, 4, 3, 3, 3, 3, 4, 6, 4, 5,
-	/*A*/  5, 5, 5,XX, 5, 5, 5, 6, 5, 5, 5, 5, 6, 8, 6, 7,
-	/*B*/  4, 4, 4,XX, 4, 4, 4, 5, 4, 4, 4, 4, 5, 9, 5, 6,
-	/*C*/  2, 2, 2,XX, 2, 2, 2, 3, 2, 2, 2, 2,XX,XX, 3, 4,
-	/*D*/  3, 3, 3,XX, 3, 3, 3, 4, 3, 3, 3, 3,XX,XX, 4, 5,
-	/*E*/  5, 5, 5,XX, 5, 5, 5, 6, 5, 5, 5, 5,XX,XX, 6, 7,
-	/*F*/  4, 4, 4,XX, 4, 4, 4, 5, 4, 4, 4, 4,XX,XX, 5, 6
+	/*1*/ 2, 2,XX,XX,XX,XX, 2, 2,XX, 2,XX, 2,XX,XX,XX,XX,
+	/*2*/ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+	/*3*/ 4, 4, 4, 4, 4, 4, 4, 4,XX, 5,XX, 10,XX,XX, 9, 12,
+	/*4*/ 2,XX,XX, 2, 2,XX, 2, 2, 2, 2, 2,XX, 2, 2,XX, 2,
+	/*5*/ 2,XX,XX, 2, 2,XX, 2, 2, 2, 2, 2,XX, 2, 2,XX, 2,
+	/*6*/ 7,XX,XX, 7, 7,XX, 7, 7, 7, 7, 7,XX, 7, 7, 4, 7,
+	/*7*/ 6,XX,XX, 6, 6,XX, 6, 6, 6, 6, 6,XX, 6, 6, 3, 6,
+	/*8*/ 2, 2, 2,XX, 2, 2, 2, 3, 2, 2, 2, 2, 3, 8, 3, 4,
+	/*9*/ 3, 3, 3,XX, 3, 3, 3, 4, 3, 3, 3, 3, 4, 6, 4, 5,
+	/*A*/ 5, 5, 5,XX, 5, 5, 5, 6, 5, 5, 5, 5, 6, 8, 6, 7,
+	/*B*/ 4, 4, 4,XX, 4, 4, 4, 5, 4, 4, 4, 4, 5, 9, 5, 6,
+	/*C*/ 2, 2, 2,XX, 2, 2, 2, 3, 2, 2, 2, 2,XX,XX, 3, 4,
+	/*D*/ 3, 3, 3,XX, 3, 3, 3, 4, 3, 3, 3, 3,XX,XX, 4, 5,
+	/*E*/ 5, 5, 5,XX, 5, 5, 5, 6, 5, 5, 5, 5,XX,XX, 6, 7,
+	/*F*/ 4, 4, 4,XX, 4, 4, 4, 5, 4, 4, 4, 4,XX,XX, 5, 6
 };
 
 static const UINT8 cycles_6803[] =
 {
-		/* 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F */
+	/* 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F */
 	/*0*/ XX, 2,XX,XX, 3, 3, 2, 2, 3, 3, 2, 2, 2, 2, 2, 2,
-	/*1*/  2, 2,XX,XX,XX,XX, 2, 2,XX, 2,XX, 2,XX,XX,XX,XX,
-	/*2*/  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-	/*3*/  3, 3, 4, 4, 3, 3, 3, 3, 5, 5, 3,10, 4,10, 9,12,
-	/*4*/  2,XX,XX, 2, 2,XX, 2, 2, 2, 2, 2,XX, 2, 2,XX, 2,
-	/*5*/  2,XX,XX, 2, 2,XX, 2, 2, 2, 2, 2,XX, 2, 2,XX, 2,
-	/*6*/  6,XX,XX, 6, 6,XX, 6, 6, 6, 6, 6,XX, 6, 6, 3, 6,
-	/*7*/  6,XX,XX, 6, 6,XX, 6, 6, 6, 6, 6,XX, 6, 6, 3, 6,
-	/*8*/  2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 4, 6, 3, 3,
-	/*9*/  3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 5, 5, 4, 4,
-	/*A*/  4, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 6, 6, 5, 5,
-	/*B*/  4, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 6, 6, 5, 5,
-	/*C*/  2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 3,XX, 3, 3,
-	/*D*/  3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4,
-	/*E*/  4, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5,
-	/*F*/  4, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5
+	/*1*/ 2, 2,XX,XX,XX,XX, 2, 2,XX, 2,XX, 2,XX,XX,XX,XX,
+	/*2*/ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	/*3*/ 3, 3, 4, 4, 3, 3, 3, 3, 5, 5, 3, 10, 4, 10, 9, 12,
+	/*4*/ 2,XX,XX, 2, 2,XX, 2, 2, 2, 2, 2,XX, 2, 2,XX, 2,
+	/*5*/ 2,XX,XX, 2, 2,XX, 2, 2, 2, 2, 2,XX, 2, 2,XX, 2,
+	/*6*/ 6,XX,XX, 6, 6,XX, 6, 6, 6, 6, 6,XX, 6, 6, 3, 6,
+	/*7*/ 6,XX,XX, 6, 6,XX, 6, 6, 6, 6, 6,XX, 6, 6, 3, 6,
+	/*8*/ 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 4, 6, 3, 3,
+	/*9*/ 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 5, 5, 4, 4,
+	/*A*/ 4, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 6, 6, 5, 5,
+	/*B*/ 4, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 6, 6, 5, 5,
+	/*C*/ 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 3,XX, 3, 3,
+	/*D*/ 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4,
+	/*E*/ 4, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5,
+	/*F*/ 4, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5
 };
 
 static const UINT8 cycles_63701[] =
 {
-		/* 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F */
+	/* 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F */
 	/*0*/ XX, 1,XX,XX, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	/*1*/  1, 1,XX,XX,XX,XX, 1, 1, 2, 2, 4, 1,XX,XX,XX,XX,
-	/*2*/  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-	/*3*/  1, 1, 3, 3, 1, 1, 4, 4, 4, 5, 1,10, 5, 7, 9,12,
-	/*4*/  1,XX,XX, 1, 1,XX, 1, 1, 1, 1, 1,XX, 1, 1,XX, 1,
-	/*5*/  1,XX,XX, 1, 1,XX, 1, 1, 1, 1, 1,XX, 1, 1,XX, 1,
-	/*6*/  6, 7, 7, 6, 6, 7, 6, 6, 6, 6, 6, 5, 6, 4, 3, 5,
-	/*7*/  6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 4, 6, 4, 3, 5,
-	/*8*/  2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 5, 3, 3,
-	/*9*/  3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 4, 5, 4, 4,
-	/*A*/  4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5,
-	/*B*/  4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 6, 5, 5,
-	/*C*/  2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3,XX, 3, 3,
-	/*D*/  3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4,
-	/*E*/  4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5,
-	/*F*/  4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5
+	/*1*/ 1, 1,XX,XX,XX,XX, 1, 1, 2, 2, 4, 1,XX,XX,XX,XX,
+	/*2*/ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	/*3*/ 1, 1, 3, 3, 1, 1, 4, 4, 4, 5, 1, 10, 5, 7, 9, 12,
+	/*4*/ 1,XX,XX, 1, 1,XX, 1, 1, 1, 1, 1,XX, 1, 1,XX, 1,
+	/*5*/ 1,XX,XX, 1, 1,XX, 1, 1, 1, 1, 1,XX, 1, 1,XX, 1,
+	/*6*/ 6, 7, 7, 6, 6, 7, 6, 6, 6, 6, 6, 5, 6, 4, 3, 5,
+	/*7*/ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 4, 6, 4, 3, 5,
+	/*8*/ 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 5, 3, 3,
+	/*9*/ 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 4, 5, 4, 4,
+	/*A*/ 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5,
+	/*B*/ 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 6, 5, 5,
+	/*C*/ 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3,XX, 3, 3,
+	/*D*/ 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4,
+	/*E*/ 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5,
+	/*F*/ 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5
 };
 
 static const UINT8 cycles_nsc8105[] =
 {
-		/* 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F */
-	/*0*/  5,XX, 2,XX,XX, 2,XX, 2, 4, 2, 4, 2, 2, 2, 2, 2,
-	/*1*/  2,XX, 2,XX,XX, 2,XX, 2,XX,XX, 2, 2,XX,XX,XX,XX,
-	/*2*/  4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-	/*3*/  4, 4, 4, 4, 4, 4, 4, 4,XX,XX, 5,10,XX, 9,XX,12,
-	/*4*/  2, 2, 2,XX, 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 8, 4,
-	/*5*/  3, 3, 3,XX, 3, 3, 3, 4, 3, 3, 3, 3, 4, 4, 6, 5,
-	/*6*/  5, 5, 5,XX, 5, 5, 5, 6, 5, 5, 5, 5, 6, 6, 8, 7,
-	/*7*/  4, 4, 4,XX, 4, 4, 4, 5, 4, 4, 4, 4, 5, 5, 9, 6,
-	/*8*/  2,XX,XX, 2, 2, 2,XX, 2, 2, 2, 2,XX, 2,XX, 2, 2,
-	/*9*/  2,XX,XX, 2, 2, 2,XX, 2, 2, 2, 2,XX, 2,XX, 2, 2,
-	/*A*/  7,XX,XX, 7, 7, 7,XX, 7, 7, 7, 7,XX, 7, 4, 7, 7,
-	/*B*/  6,XX,XX, 6, 6, 6,XX, 6, 6, 6, 6, 5, 6, 3, 6, 6,
-	/*C*/  2, 2, 2,XX, 2, 2, 2, 3, 2, 2, 2, 2,XX, 3,XX, 4,
-	/*D*/  3, 3, 3,XX, 3, 3, 3, 4, 3, 3, 3, 3,XX, 4,XX, 5,
-	/*E*/  5, 5, 5,XX, 5, 5, 5, 6, 5, 5, 5, 5, 5, 6,XX, 7,
-	/*F*/  4, 4, 4,XX, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5,XX, 6
+	/* 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F */
+	/*0*/ 5,XX, 2,XX,XX, 2,XX, 2, 4, 2, 4, 2, 2, 2, 2, 2,
+	/*1*/ 2,XX, 2,XX,XX, 2,XX, 2,XX,XX, 2, 2,XX,XX,XX,XX,
+	/*2*/ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+	/*3*/ 4, 4, 4, 4, 4, 4, 4, 4,XX,XX, 5, 10,XX, 9,XX, 12,
+	/*4*/ 2, 2, 2,XX, 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 8, 4,
+	/*5*/ 3, 3, 3,XX, 3, 3, 3, 4, 3, 3, 3, 3, 4, 4, 6, 5,
+	/*6*/ 5, 5, 5,XX, 5, 5, 5, 6, 5, 5, 5, 5, 6, 6, 8, 7,
+	/*7*/ 4, 4, 4,XX, 4, 4, 4, 5, 4, 4, 4, 4, 5, 5, 9, 6,
+	/*8*/ 2,XX,XX, 2, 2, 2,XX, 2, 2, 2, 2,XX, 2,XX, 2, 2,
+	/*9*/ 2,XX,XX, 2, 2, 2,XX, 2, 2, 2, 2,XX, 2,XX, 2, 2,
+	/*A*/ 7,XX,XX, 7, 7, 7,XX, 7, 7, 7, 7,XX, 7, 4, 7, 7,
+	/*B*/ 6,XX,XX, 6, 6, 6,XX, 6, 6, 6, 6, 5, 6, 3, 6, 6,
+	/*C*/ 2, 2, 2,XX, 2, 2, 2, 3, 2, 2, 2, 2,XX, 3,XX, 4,
+	/*D*/ 3, 3, 3,XX, 3, 3, 3, 4, 3, 3, 3, 3,XX, 4,XX, 5,
+	/*E*/ 5, 5, 5,XX, 5, 5, 5, 6, 5, 5, 5, 5, 5, 6,XX, 7,
+	/*F*/ 4, 4, 4,XX, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5,XX, 6
 };
 #undef XX // /invalid opcode unknown cc
 
-M6800_INLINE UINT32 RM16( UINT32 Addr )
+M6800_INLINE UINT32 RM16(UINT32 Addr)
 {
 	UINT32 result = RM(Addr) << 8;
 	return result | RM((Addr+1)&0xffff);
 }
 
-M6800_INLINE void WM16( UINT32 Addr, PAIR *p )
+M6800_INLINE void WM16(UINT32 Addr, PAIR* p)
 {
-	WM( Addr, p->b.h );
-	WM( (Addr+1)&0xffff, p->b.l );
+	WM(Addr, p->b.h);
+	WM((Addr+1)&0xffff, p->b.l);
 }
 
 /* IRQ enter */
-static void ENTER_INTERRUPT(const char *,UINT16 irq_vector)
+static void ENTER_INTERRUPT(const char*, UINT16 irq_vector)
 {
-//	LOG((message, cpu_getactivecpu()));
-	if( m6800.wai_state & (M6800_WAI|M6800_SLP) )
+	//	LOG((message, cpu_getactivecpu()));
+	if (m6800.wai_state & (M6800_WAI | M6800_SLP))
 	{
-		if( m6800.wai_state & M6800_WAI )
+		if (m6800.wai_state & M6800_WAI)
 			m6800.extra_cycles += 4;
-		m6800.wai_state &= ~(M6800_WAI|M6800_SLP);
+		m6800.wai_state &= ~(M6800_WAI | M6800_SLP);
 	}
 	else
 	{
@@ -484,33 +484,33 @@ static void ENTER_INTERRUPT(const char *,UINT16 irq_vector)
 		m6800.extra_cycles += 12;
 	}
 	SEI;
-	PCD = RM16( irq_vector );
+	PCD = RM16(irq_vector);
 }
 
 /* check OCI or TOI */
 static void check_timer_event(void)
 {
 	/* OCI */
-	if( CTD >= OCD)
+	if (CTD >= OCD)
 	{
-		OCH++;	// next IRQ point
+		OCH++; // next IRQ point
 		m6800.tcsr |= TCSR_OCF;
 		m6800.pending_tcsr |= TCSR_OCF;
 		MODIFIED_tcsr;
-		if ( !(CC & 0x10) && (m6800.tcsr & TCSR_EOCI))
+		if (!(CC & 0x10) && (m6800.tcsr & TCSR_EOCI))
 			TAKE_OCI;
 	}
 	/* TOI */
-	if( CTD >= TOD)
+	if (CTD >= TOD)
 	{
-		TOH++;	// next IRQ point
+		TOH++; // next IRQ point
 #if 0
 		CLEANUP_conters;
 #endif
 		m6800.tcsr |= TCSR_TOF;
 		m6800.pending_tcsr |= TCSR_TOF;
 		MODIFIED_tcsr;
-		if ( !(CC & 0x10) && (m6800.tcsr & TCSR_ETOI))
+		if (!(CC & 0x10) && (m6800.tcsr & TCSR_ETOI))
 			TAKE_TOI;
 	}
 	/* set next event */
@@ -529,18 +529,18 @@ static void check_timer_event(void)
 
 void m6800_init()
 {
-//  m6800.subtype   = SUBTYPE_M6800;
+	//  m6800.subtype   = SUBTYPE_M6800;
 	m6800.insn = m6800_insn;
 	m6800.cycles = cycles_6800;
-//	m6800.irq_callback = irqcallback;
-//	state_register("m6800", index);
+	//	m6800.irq_callback = irqcallback;
+	//	state_register("m6800", index);
 }
 
 void m6800_reset_soft(void)
 {
 	m6800.cc = 0xc0;
-	SEI;				/* IRQ disabled */
-	PCD = RM16( 0xfffe );
+	SEI; /* IRQ disabled */
+	PCD = RM16(0xfffe);
 
 	m6800.wai_state = 0;
 	m6800.nmi_state = 0;
@@ -585,9 +585,9 @@ static void m6800_exit(void)
 /****************************************************************************
  * Get all registers in given buffer
  ****************************************************************************/
-void m6800_get_context(void *dst)
+void m6800_get_context(void* dst)
 {
-	if( dst )
+	if (dst)
 		*(m6800_Regs*)dst = m6800;
 }
 
@@ -595,9 +595,9 @@ void m6800_get_context(void *dst)
 /****************************************************************************
  * Set all registers to given values
  ****************************************************************************/
-void m6800_set_context(void *src)
+void m6800_set_context(void* src)
 {
-	if( src )
+	if (src)
 		m6800 = *(m6800_Regs*)src;
 	//CHANGE_PC();
 	//CHECK_IRQ_LINES(); /* HJB 990417 */
@@ -608,7 +608,11 @@ void m6800_set_irq_line(int irqline, int state)
 {
 	int hold = 0;
 
-	if (state == 2) { hold = 1; state = 1; }
+	if (state == 2)
+	{
+		hold = 1;
+		state = 1;
+	}
 
 	if (irqline == M6800_INPUT_LINE_NMI)
 	{
@@ -618,7 +622,7 @@ void m6800_set_irq_line(int irqline, int state)
 		if (state == M6800_CLEAR_LINE) return;
 
 		/* NMI */
-		ENTER_INTERRUPT("M6800#%d take NMI\n",0xfffc);
+		ENTER_INTERRUPT("M6800#%d take NMI\n", 0xfffc);
 	}
 	else
 	{
@@ -629,22 +633,22 @@ void m6800_set_irq_line(int irqline, int state)
 		m6800.irq_state[irqline] = state;
 		m6800.irq_hold[irqline] = hold;
 
-		switch(irqline)
+		switch (irqline)
 		{
 		case M6800_IRQ_LINE:
 			if (state == M6800_CLEAR_LINE) return;
 			break;
 		case M6800_TIN_LINE:
-			eddge = (state == M6800_CLEAR_LINE ) ? 2 : 0;
-			if( ((m6800.tcsr&TCSR_IEDG) ^ (state==M6800_CLEAR_LINE ? TCSR_IEDG : 0))==0 )
+			eddge = (state == M6800_CLEAR_LINE) ? 2 : 0;
+			if (((m6800.tcsr & TCSR_IEDG) ^ (state == M6800_CLEAR_LINE ? TCSR_IEDG : 0)) == 0)
 				return;
 			/* active edge in */
 			m6800.tcsr |= TCSR_ICF;
 			m6800.pending_tcsr |= TCSR_ICF;
 			m6800.input_capture = CT;
 			MODIFIED_tcsr;
-			if( !(CC & 0x10) )
-				CHECK_IRQ2
+			if (!(CC & 0x10))
+			CHECK_IRQ2
 			break;
 		default:
 			return;
@@ -679,21 +683,21 @@ int m6800_execute(int cycles)
 
 	do
 	{
-		if( m6800.wai_state & (M6800_WAI|M6800_SLP) )
+		if (m6800.wai_state & (M6800_WAI | M6800_SLP))
 		{
 			EAT_CYCLES;
 		}
 		else
 		{
 			pPPC = pPC;
-//			CALL_MAME_DEBUG;
-			ireg=M_RDOP(PCD);
+			//			CALL_MAME_DEBUG;
+			ireg = M_RDOP(PCD);
 			PC++;
 			(*m6800.insn[ireg])();
 			INCREMENT_COUNTER(cycles_6800[ireg]);
 		}
-
-	} while( m6800_ICount>0 && !end_run );
+	}
+	while (m6800_ICount > 0 && !end_run);
 
 	INCREMENT_COUNTER(m6800.extra_cycles);
 	m6800.extra_cycles = 0;
@@ -711,11 +715,11 @@ int m6800_execute(int cycles)
 #if (HAS_M6801)
 void m6801_init()
 {
-//  m6800.subtype = SUBTYPE_M6801;
+	//  m6800.subtype = SUBTYPE_M6801;
 	m6800.insn = m6803_insn;
 	m6800.cycles = cycles_6803;
-//	m6800.irq_callback = irqcallback;
-//	state_register("m6801", index);
+	//	m6800.irq_callback = irqcallback;
+	//	state_register("m6801", index);
 }
 #endif
 
@@ -739,11 +743,11 @@ static void m6802_init(int index, int clock, const void *config, int (*irqcallba
 #if (HAS_M6803)
 void m6803_init()
 {
-//  m6800.subtype = SUBTYPE_M6803;
+	//  m6800.subtype = SUBTYPE_M6803;
 	m6800.insn = m6803_insn;
 	m6800.cycles = cycles_6803;
-//	m6800.irq_callback = irqcallback;
-//	state_register("m6803", index);
+	//	m6800.irq_callback = irqcallback;
+	//	state_register("m6803", index);
 }
 #endif
 
@@ -766,21 +770,21 @@ int m6803_execute(int cycles)
 
 	do
 	{
-		if( m6803.wai_state & M6800_WAI )
+		if (m6803.wai_state & M6800_WAI)
 		{
 			EAT_CYCLES;
 		}
 		else
 		{
 			pPPC = pPC;
-//			CALL_MAME_DEBUG;
-			ireg=M_RDOP(PCD);
+			//			CALL_MAME_DEBUG;
+			ireg = M_RDOP(PCD);
 			PC++;
 			(*m6803.insn[ireg])();
 			INCREMENT_COUNTER(cycles_6803[ireg]);
 		}
-
-	} while( m6800_ICount>0 && !end_run );
+	}
+	while (m6800_ICount > 0 && !end_run);
 
 	INCREMENT_COUNTER(m6803.extra_cycles);
 	m6803.extra_cycles = 0;
@@ -826,12 +830,13 @@ static void m6808_init(int index, int clock, const void *config, int (*irqcallba
 #if (HAS_HD63701)
 void hd63701_init()
 {
-//  m6800.subtype = SUBTYPE_HD63701;
+	//  m6800.subtype = SUBTYPE_HD63701;
 	m6800.insn = hd63701_insn;
 	m6800.cycles = cycles_63701;
-//	m6800.irq_callback = irqcallback;
-//	state_register("hd63701", index);
+	//	m6800.irq_callback = irqcallback;
+	//	state_register("hd63701", index);
 }
+
 /****************************************************************************
  * Execute cycles CPU cycles. Return number of cycles really executed
  ****************************************************************************/
@@ -850,20 +855,21 @@ int hd63701_execute(int cycles)
 
 	do
 	{
-		if( hd63701.wai_state & (HD63701_WAI|HD63701_SLP) )
+		if (hd63701.wai_state & (HD63701_WAI | HD63701_SLP))
 		{
 			EAT_CYCLES;
 		}
 		else
 		{
 			pPPC = pPC;
-//			CALL_MAME_DEBUG;
-			ireg=M_RDOP(PCD);
+			//			CALL_MAME_DEBUG;
+			ireg = M_RDOP(PCD);
 			PC++;
 			(*hd63701.insn[ireg])();
 			INCREMENT_COUNTER(cycles_63701[ireg]);
 		}
-	} while( m6800_ICount>0 && !end_run );
+	}
+	while (m6800_ICount > 0 && !end_run);
 
 	INCREMENT_COUNTER(hd63701.extra_cycles);
 	hd63701.extra_cycles = 0;
@@ -908,7 +914,7 @@ void hd63701_trap_pc(void)
 #if (HAS_NSC8105)
 void nsc8105_init()
 {
-//  m6800.subtype = SUBTYPE_NSC8105;
+	//  m6800.subtype = SUBTYPE_NSC8105;
 	m6800.insn = nsc8105_insn;
 	m6800.cycles = cycles_nsc8105;
 	//state_register("nsc8105", index);
@@ -933,7 +939,7 @@ int nsc8105_execute(int cycles)
 
 	do
 	{
-		if( nsc8105.wai_state & NSC8105_WAI )
+		if (nsc8105.wai_state & NSC8105_WAI)
 		{
 			EAT_CYCLES;
 		}
@@ -941,12 +947,13 @@ int nsc8105_execute(int cycles)
 		{
 			pPPC = pPC;
 			//CALL_MAME_DEBUG;
-			ireg=M_RDOP(PCD);
+			ireg = M_RDOP(PCD);
 			PC++;
 			(*nsc8105.insn[ireg])();
 			INCREMENT_COUNTER(cycles_nsc8105[ireg]);
 		}
-	} while( m6800_ICount>0 && !end_run );
+	}
+	while (m6800_ICount > 0 && !end_run);
 
 	INCREMENT_COUNTER(nsc8105.extra_cycles);
 	nsc8105.extra_cycles = 0;
@@ -974,86 +981,86 @@ unsigned char m6803_internal_registers_r(unsigned short offset)
 {
 	switch (offset)
 	{
-		case 0x00:
-			return m6800.port1_ddr;
-		case 0x01:
-			return m6800.port2_ddr;
-		case 0x02:
-			return (M6800_io_read_byte_8(M6803_PORT1) & (m6800.port1_ddr ^ 0xff))
-					| (m6800.port1_data & m6800.port1_ddr);
-		case 0x03:
-			return (M6800_io_read_byte_8(M6803_PORT2) & (m6800.port2_ddr ^ 0xff))
-					| (m6800.port2_data & m6800.port2_ddr);
-		case 0x04:
-			return m6800.port3_ddr;
-		case 0x05:
-			return m6800.port4_ddr;
-		case 0x06:
-			return (M6800_io_read_byte_8(M6803_PORT3) & (m6800.port3_ddr ^ 0xff))
-					| (m6800.port3_data & m6800.port3_ddr);
-		case 0x07:
-			return (M6800_io_read_byte_8(M6803_PORT4) & (m6800.port4_ddr ^ 0xff))
-					| (m6800.port4_data & m6800.port4_ddr);
-		case 0x08:
-			m6800.pending_tcsr = 0;
-//logerror("CPU #%d PC %04x: warning - read TCSR register\n",cpu_getactivecpu(),activecpu_get_pc());
-			return m6800.tcsr;
-		case 0x09:
-			if(!(m6800.pending_tcsr&TCSR_TOF))
-			{
-				m6800.tcsr &= ~TCSR_TOF;
-				MODIFIED_tcsr;
-			}
-			return m6800.counter.b.h;
-		case 0x0a:
-			return m6800.counter.b.l;
-		case 0x0b:
-			if(!(m6800.pending_tcsr&TCSR_OCF))
-			{
-				m6800.tcsr &= ~TCSR_OCF;
-				MODIFIED_tcsr;
-			}
-			return m6800.output_compare.b.h;
-		case 0x0c:
-			if(!(m6800.pending_tcsr&TCSR_OCF))
-			{
-				m6800.tcsr &= ~TCSR_OCF;
-				MODIFIED_tcsr;
-			}
-			return m6800.output_compare.b.l;
-		case 0x0d:
-			if(!(m6800.pending_tcsr&TCSR_ICF))
-			{
-				m6800.tcsr &= ~TCSR_ICF;
-				MODIFIED_tcsr;
-			}
-			return (m6800.input_capture >> 0) & 0xff;
-		case 0x0e:
-			return (m6800.input_capture >> 8) & 0xff;
-		case 0x0f:
-		case 0x10:
-		case 0x11:
-		case 0x12:
-		case 0x13:
-//			logerror("CPU #%d PC %04x: warning - read from unsupported internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset);
-			return 0;
-		case 0x14:
-//			logerror("CPU #%d PC %04x: read RAM control register\n",cpu_getactivecpu(),activecpu_get_pc());
-			return m6800.ram_ctrl;
-		case 0x15:
-		case 0x16:
-		case 0x17:
-		case 0x18:
-		case 0x19:
-		case 0x1a:
-		case 0x1b:
-		case 0x1c:
-		case 0x1d:
-		case 0x1e:
-		case 0x1f:
-		default:
-//			logerror("CPU #%d PC %04x: warning - read from reserved internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset);
-			return 0;
+	case 0x00:
+		return m6800.port1_ddr;
+	case 0x01:
+		return m6800.port2_ddr;
+	case 0x02:
+		return (M6800_io_read_byte_8(M6803_PORT1) & (m6800.port1_ddr ^ 0xff))
+			| (m6800.port1_data & m6800.port1_ddr);
+	case 0x03:
+		return (M6800_io_read_byte_8(M6803_PORT2) & (m6800.port2_ddr ^ 0xff))
+			| (m6800.port2_data & m6800.port2_ddr);
+	case 0x04:
+		return m6800.port3_ddr;
+	case 0x05:
+		return m6800.port4_ddr;
+	case 0x06:
+		return (M6800_io_read_byte_8(M6803_PORT3) & (m6800.port3_ddr ^ 0xff))
+			| (m6800.port3_data & m6800.port3_ddr);
+	case 0x07:
+		return (M6800_io_read_byte_8(M6803_PORT4) & (m6800.port4_ddr ^ 0xff))
+			| (m6800.port4_data & m6800.port4_ddr);
+	case 0x08:
+		m6800.pending_tcsr = 0;
+		//logerror("CPU #%d PC %04x: warning - read TCSR register\n",cpu_getactivecpu(),activecpu_get_pc());
+		return m6800.tcsr;
+	case 0x09:
+		if (!(m6800.pending_tcsr & TCSR_TOF))
+		{
+			m6800.tcsr &= ~TCSR_TOF;
+			MODIFIED_tcsr;
+		}
+		return m6800.counter.b.h;
+	case 0x0a:
+		return m6800.counter.b.l;
+	case 0x0b:
+		if (!(m6800.pending_tcsr & TCSR_OCF))
+		{
+			m6800.tcsr &= ~TCSR_OCF;
+			MODIFIED_tcsr;
+		}
+		return m6800.output_compare.b.h;
+	case 0x0c:
+		if (!(m6800.pending_tcsr & TCSR_OCF))
+		{
+			m6800.tcsr &= ~TCSR_OCF;
+			MODIFIED_tcsr;
+		}
+		return m6800.output_compare.b.l;
+	case 0x0d:
+		if (!(m6800.pending_tcsr & TCSR_ICF))
+		{
+			m6800.tcsr &= ~TCSR_ICF;
+			MODIFIED_tcsr;
+		}
+		return (m6800.input_capture >> 0) & 0xff;
+	case 0x0e:
+		return (m6800.input_capture >> 8) & 0xff;
+	case 0x0f:
+	case 0x10:
+	case 0x11:
+	case 0x12:
+	case 0x13:
+		//			logerror("CPU #%d PC %04x: warning - read from unsupported internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset);
+		return 0;
+	case 0x14:
+		//			logerror("CPU #%d PC %04x: read RAM control register\n",cpu_getactivecpu(),activecpu_get_pc());
+		return m6800.ram_ctrl;
+	case 0x15:
+	case 0x16:
+	case 0x17:
+	case 0x18:
+	case 0x19:
+	case 0x1a:
+	case 0x1b:
+	case 0x1c:
+	case 0x1d:
+	case 0x1e:
+	case 0x1f:
+	default:
+		//			logerror("CPU #%d PC %04x: warning - read from reserved internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset);
+		return 0;
 	}
 }
 
@@ -1061,148 +1068,148 @@ void m6803_internal_registers_w(unsigned short offset, unsigned char data)
 {
 	switch (offset)
 	{
-		case 0x00:
-			if (m6800.port1_ddr != data)
-			{
-				m6800.port1_ddr = data;
-				if(m6800.port1_ddr == 0xff)
-					M6800_io_write_byte_8(M6803_PORT1,m6800.port1_data);
-				else
-					M6800_io_write_byte_8(M6803_PORT1,(m6800.port1_data & m6800.port1_ddr)
-						| (M6800_io_read_byte_8(M6803_PORT1) & (m6800.port1_ddr ^ 0xff)));
-			}
-			break;
-		case 0x01:
-			if (m6800.port2_ddr != data)
-			{
-				m6800.port2_ddr = data;
-				if(m6800.port2_ddr == 0xff)
-					M6800_io_write_byte_8(M6803_PORT2,m6800.port2_data);
-				else
-					M6800_io_write_byte_8(M6803_PORT2,(m6800.port2_data & m6800.port2_ddr)
-						| (M6800_io_read_byte_8(M6803_PORT2) & (m6800.port2_ddr ^ 0xff)));
-
-//				if (m6800.port2_ddr & 2)
-//					logerror("CPU #%d PC %04x: warning - port 2 bit 1 set as output (OLVL) - not supported\n",cpu_getactivecpu(),activecpu_get_pc());
-			}
-			break;
-		case 0x02:
-			m6800.port1_data = data;
-			if(m6800.port1_ddr == 0xff)
-				M6800_io_write_byte_8(M6803_PORT1,m6800.port1_data);
+	case 0x00:
+		if (m6800.port1_ddr != data)
+		{
+			m6800.port1_ddr = data;
+			if (m6800.port1_ddr == 0xff)
+				M6800_io_write_byte_8(M6803_PORT1, m6800.port1_data);
 			else
-				M6800_io_write_byte_8(M6803_PORT1,(m6800.port1_data & m6800.port1_ddr)
-					| (M6800_io_read_byte_8(M6803_PORT1) & (m6800.port1_ddr ^ 0xff)));
-			break;
-		case 0x03:
-			m6800.port2_data = data;
+				M6800_io_write_byte_8(M6803_PORT1, (m6800.port1_data & m6800.port1_ddr)
+			                      | (M6800_io_read_byte_8(M6803_PORT1) & (m6800.port1_ddr ^ 0xff)));
+		}
+		break;
+	case 0x01:
+		if (m6800.port2_ddr != data)
+		{
 			m6800.port2_ddr = data;
-			if(m6800.port2_ddr == 0xff)
-				M6800_io_write_byte_8(M6803_PORT2,m6800.port2_data);
+			if (m6800.port2_ddr == 0xff)
+				M6800_io_write_byte_8(M6803_PORT2, m6800.port2_data);
 			else
-				M6800_io_write_byte_8(M6803_PORT2,(m6800.port2_data & m6800.port2_ddr)
-					| (M6800_io_read_byte_8(M6803_PORT2) & (m6800.port2_ddr ^ 0xff)));
-			break;
-		case 0x04:
-			if (m6800.port3_ddr != data)
-			{
-				m6800.port3_ddr = data;
-				if(m6800.port3_ddr == 0xff)
-					M6800_io_write_byte_8(M6803_PORT3,m6800.port3_data);
-				else
-					M6800_io_write_byte_8(M6803_PORT3,(m6800.port3_data & m6800.port3_ddr)
-						| (M6800_io_read_byte_8(M6803_PORT3) & (m6800.port3_ddr ^ 0xff)));
-			}
-			break;
-		case 0x05:
-			if (m6800.port4_ddr != data)
-			{
-				m6800.port4_ddr = data;
-				if(m6800.port4_ddr == 0xff)
-					M6800_io_write_byte_8(M6803_PORT4,m6800.port4_data);
-				else
-					M6800_io_write_byte_8(M6803_PORT4,(m6800.port4_data & m6800.port4_ddr)
-						| (M6800_io_read_byte_8(M6803_PORT4) & (m6800.port4_ddr ^ 0xff)));
-			}
-			break;
-		case 0x06:
-			m6800.port3_data = data;
-			if(m6800.port3_ddr == 0xff)
-				M6800_io_write_byte_8(M6803_PORT3,m6800.port3_data);
+				M6800_io_write_byte_8(M6803_PORT2, (m6800.port2_data & m6800.port2_ddr)
+			                      | (M6800_io_read_byte_8(M6803_PORT2) & (m6800.port2_ddr ^ 0xff)));
+
+			//				if (m6800.port2_ddr & 2)
+			//					logerror("CPU #%d PC %04x: warning - port 2 bit 1 set as output (OLVL) - not supported\n",cpu_getactivecpu(),activecpu_get_pc());
+		}
+		break;
+	case 0x02:
+		m6800.port1_data = data;
+		if (m6800.port1_ddr == 0xff)
+			M6800_io_write_byte_8(M6803_PORT1, m6800.port1_data);
+		else
+			M6800_io_write_byte_8(M6803_PORT1, (m6800.port1_data & m6800.port1_ddr)
+		                      | (M6800_io_read_byte_8(M6803_PORT1) & (m6800.port1_ddr ^ 0xff)));
+		break;
+	case 0x03:
+		m6800.port2_data = data;
+		m6800.port2_ddr = data;
+		if (m6800.port2_ddr == 0xff)
+			M6800_io_write_byte_8(M6803_PORT2, m6800.port2_data);
+		else
+			M6800_io_write_byte_8(M6803_PORT2, (m6800.port2_data & m6800.port2_ddr)
+		                      | (M6800_io_read_byte_8(M6803_PORT2) & (m6800.port2_ddr ^ 0xff)));
+		break;
+	case 0x04:
+		if (m6800.port3_ddr != data)
+		{
+			m6800.port3_ddr = data;
+			if (m6800.port3_ddr == 0xff)
+				M6800_io_write_byte_8(M6803_PORT3, m6800.port3_data);
 			else
-				M6800_io_write_byte_8(M6803_PORT3,(m6800.port3_data & m6800.port3_ddr)
-					| (M6800_io_read_byte_8(M6803_PORT3) & (m6800.port3_ddr ^ 0xff)));
-			break;
-		case 0x07:
-			m6800.port4_data = data;
-			if(m6800.port4_ddr == 0xff)
-				M6800_io_write_byte_8(M6803_PORT4,m6800.port4_data);
+				M6800_io_write_byte_8(M6803_PORT3, (m6800.port3_data & m6800.port3_ddr)
+			                      | (M6800_io_read_byte_8(M6803_PORT3) & (m6800.port3_ddr ^ 0xff)));
+		}
+		break;
+	case 0x05:
+		if (m6800.port4_ddr != data)
+		{
+			m6800.port4_ddr = data;
+			if (m6800.port4_ddr == 0xff)
+				M6800_io_write_byte_8(M6803_PORT4, m6800.port4_data);
 			else
-				M6800_io_write_byte_8(M6803_PORT4,(m6800.port4_data & m6800.port4_ddr)
-					| (M6800_io_read_byte_8(M6803_PORT4) & (m6800.port4_ddr ^ 0xff)));
-			break;
-		case 0x08:
-			m6800.tcsr = data;
-			m6800.pending_tcsr &= m6800.tcsr;
-			MODIFIED_tcsr;
-			if( !(CC & 0x10) )
-				CHECK_IRQ2;
-//logerror("CPU #%d PC %04x: TCSR = %02x\n",cpu_getactivecpu(),activecpu_get_pc(),data);
-			break;
-		case 0x09:
-			m6800.latch09 = data & 0xff;	/* 6301 only */
-			CT  = 0xfff8;
-			TOH = CTH;
+				M6800_io_write_byte_8(M6803_PORT4, (m6800.port4_data & m6800.port4_ddr)
+			                      | (M6800_io_read_byte_8(M6803_PORT4) & (m6800.port4_ddr ^ 0xff)));
+		}
+		break;
+	case 0x06:
+		m6800.port3_data = data;
+		if (m6800.port3_ddr == 0xff)
+			M6800_io_write_byte_8(M6803_PORT3, m6800.port3_data);
+		else
+			M6800_io_write_byte_8(M6803_PORT3, (m6800.port3_data & m6800.port3_ddr)
+		                      | (M6800_io_read_byte_8(M6803_PORT3) & (m6800.port3_ddr ^ 0xff)));
+		break;
+	case 0x07:
+		m6800.port4_data = data;
+		if (m6800.port4_ddr == 0xff)
+			M6800_io_write_byte_8(M6803_PORT4, m6800.port4_data);
+		else
+			M6800_io_write_byte_8(M6803_PORT4, (m6800.port4_data & m6800.port4_ddr)
+		                      | (M6800_io_read_byte_8(M6803_PORT4) & (m6800.port4_ddr ^ 0xff)));
+		break;
+	case 0x08:
+		m6800.tcsr = data;
+		m6800.pending_tcsr &= m6800.tcsr;
+		MODIFIED_tcsr;
+		if (!(CC & 0x10))
+		CHECK_IRQ2;
+		//logerror("CPU #%d PC %04x: TCSR = %02x\n",cpu_getactivecpu(),activecpu_get_pc(),data);
+		break;
+	case 0x09:
+		m6800.latch09 = data & 0xff; /* 6301 only */
+		CT = 0xfff8;
+		TOH = CTH;
+		MODIFIED_counters;
+		break;
+	case 0x0a: /* 6301 only */
+		CT = (m6800.latch09 << 8) | (data & 0xff);
+		TOH = CTH;
+		MODIFIED_counters;
+		break;
+	case 0x0b:
+		if (m6800.output_compare.b.h != data)
+		{
+			m6800.output_compare.b.h = data;
 			MODIFIED_counters;
-			break;
-		case 0x0a:	/* 6301 only */
-			CT = (m6800.latch09 << 8) | (data & 0xff);
-			TOH = CTH;
+		}
+		break;
+	case 0x0c:
+		if (m6800.output_compare.b.l != data)
+		{
+			m6800.output_compare.b.l = data;
 			MODIFIED_counters;
-			break;
-		case 0x0b:
-			if( m6800.output_compare.b.h != data)
-			{
-				m6800.output_compare.b.h = data;
-				MODIFIED_counters;
-			}
-			break;
-		case 0x0c:
-			if( m6800.output_compare.b.l != data)
-			{
-				m6800.output_compare.b.l = data;
-				MODIFIED_counters;
-			}
-			break;
-		case 0x0d:
-		case 0x0e:
-//			logerror("CPU #%d PC %04x: warning - write %02x to read only internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),data,offset);
-			break;
-		case 0x0f:
-		case 0x10:
-		case 0x11:
-		case 0x12:
-		case 0x13:
-//			logerror("CPU #%d PC %04x: warning - write %02x to unsupported internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),data,offset);
-			break;
-		case 0x14:
-//			logerror("CPU #%d PC %04x: write %02x to RAM control register\n",cpu_getactivecpu(),activecpu_get_pc(),data);
-			m6800.ram_ctrl = data;
-			break;
-		case 0x15:
-		case 0x16:
-		case 0x17:
-		case 0x18:
-		case 0x19:
-		case 0x1a:
-		case 0x1b:
-		case 0x1c:
-		case 0x1d:
-		case 0x1e:
-		case 0x1f:
-		default:
-//			logerror("CPU #%d PC %04x: warning - write %02x to reserved internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),data,offset);
-			break;
+		}
+		break;
+	case 0x0d:
+	case 0x0e:
+		//			logerror("CPU #%d PC %04x: warning - write %02x to read only internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),data,offset);
+		break;
+	case 0x0f:
+	case 0x10:
+	case 0x11:
+	case 0x12:
+	case 0x13:
+		//			logerror("CPU #%d PC %04x: warning - write %02x to unsupported internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),data,offset);
+		break;
+	case 0x14:
+		//			logerror("CPU #%d PC %04x: write %02x to RAM control register\n",cpu_getactivecpu(),activecpu_get_pc(),data);
+		m6800.ram_ctrl = data;
+		break;
+	case 0x15:
+	case 0x16:
+	case 0x17:
+	case 0x18:
+	case 0x19:
+	case 0x1a:
+	case 0x1b:
+	case 0x1c:
+	case 0x1d:
+	case 0x1e:
+	case 0x1f:
+	default:
+		//			logerror("CPU #%d PC %04x: warning - write %02x to reserved internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),data,offset);
+		break;
 	}
 }
 #endif

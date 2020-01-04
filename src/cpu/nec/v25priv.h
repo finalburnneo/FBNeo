@@ -11,94 +11,95 @@
 /* interrupt vectors */
 enum
 {
-	NEC_DIVIDE_VECTOR	= 0,
-	NEC_TRAP_VECTOR		= 1,
-	NEC_NMI_VECTOR		= 2,
-	NEC_BRKV_VECTOR		= 4,
-	NEC_CHKIND_VECTOR	= 5,
-	NEC_IBRK_VECTOR		= 19,
-	NEC_INTTU0_VECTOR	= 28,
-	NEC_INTTU1_VECTOR	= 29,
-	NEC_INTTU2_VECTOR	= 30,
-	NEC_INTD0_VECTOR	= 20,
-	NEC_INTD1_VECTOR	= 21,
-	NEC_INTP0_VECTOR	= 24,
-	NEC_INTP1_VECTOR	= 25,
-	NEC_INTP2_VECTOR	= 26,
-	NEC_INTSER0_VECTOR	= 12,
-	NEC_INTSR0_VECTOR	= 13,
-	NEC_INTST0_VECTOR	= 14,
-	NEC_INTSER1_VECTOR	= 16,
-	NEC_INTSR1_VECTOR	= 17,
-	NEC_INTST1_VECTOR	= 18,
-	NEC_INTTB_VECTOR	= 31
+	NEC_DIVIDE_VECTOR = 0,
+	NEC_TRAP_VECTOR = 1,
+	NEC_NMI_VECTOR = 2,
+	NEC_BRKV_VECTOR = 4,
+	NEC_CHKIND_VECTOR = 5,
+	NEC_IBRK_VECTOR = 19,
+	NEC_INTTU0_VECTOR = 28,
+	NEC_INTTU1_VECTOR = 29,
+	NEC_INTTU2_VECTOR = 30,
+	NEC_INTD0_VECTOR = 20,
+	NEC_INTD1_VECTOR = 21,
+	NEC_INTP0_VECTOR = 24,
+	NEC_INTP1_VECTOR = 25,
+	NEC_INTP2_VECTOR = 26,
+	NEC_INTSER0_VECTOR = 12,
+	NEC_INTSR0_VECTOR = 13,
+	NEC_INTST0_VECTOR = 14,
+	NEC_INTSER1_VECTOR = 16,
+	NEC_INTSR1_VECTOR = 17,
+	NEC_INTST1_VECTOR = 18,
+	NEC_INTTB_VECTOR = 31
 };
 
 /* interrupt sources */
 typedef enum
 {
-	BRK		= 0,
-	INT_IRQ	= 1,
-	NMI_IRQ	= 1 << 1,
-	INTTU0	= 1 << 2,
-	INTTU1	= 1 << 3,
-	INTTU2	= 1 << 4,
-	INTD0	= 1 << 5,
-	INTD1	= 1 << 6,
-	INTP0	= 1 << 7,
-	INTP1	= 1 << 8,
-	INTP2	= 1 << 9,
-	INTSER0	= 1 << 10,
-	INTSR0	= 1 << 11,
-	INTST0	= 1 << 12,
-	INTSER1	= 1 << 13,
-	INTSR1	= 1 << 14,
-	INTST1	= 1 << 15,
-	INTTB	= 1 << 16,
-	BRKN	= 1 << 17,
-	BRKS	= 1 << 18
+	BRK = 0,
+	INT_IRQ = 1,
+	NMI_IRQ = 1 << 1,
+	INTTU0 = 1 << 2,
+	INTTU1 = 1 << 3,
+	INTTU2 = 1 << 4,
+	INTD0 = 1 << 5,
+	INTD1 = 1 << 6,
+	INTP0 = 1 << 7,
+	INTP1 = 1 << 8,
+	INTP2 = 1 << 9,
+	INTSER0 = 1 << 10,
+	INTSR0 = 1 << 11,
+	INTST0 = 1 << 12,
+	INTSER1 = 1 << 13,
+	INTSR1 = 1 << 14,
+	INTST1 = 1 << 15,
+	INTTB = 1 << 16,
+	BRKN = 1 << 17,
+	BRKS = 1 << 18
 } INTSOURCES;
 
 /* internal RAM and register banks */
 typedef union
 {
 	UINT16 w[128];
-	UINT8  b[256];
+	UINT8 b[256];
 } internalram;
 
 typedef struct _v25_state_t v25_state_t;
+
 struct _v25_state_t
 {
 	internalram ram;
-	UINT32	fetch_xor;
+	UINT32 fetch_xor;
 
-	UINT16	ip;
+	UINT16 ip;
 
 	/* PSW flags */
-	INT32	SignVal;
-	UINT32	AuxVal, OverVal, ZeroVal, CarryVal, ParityVal;	/* 0 or non-0 valued flags */
-	UINT8	IBRK, F0, F1, TF, IF, DF, MF;	/* 0 or 1 valued flags */
-	UINT8	RBW, RBB;	/* current register bank base, preshifted for word and byte registers */
+	INT32 SignVal;
+	UINT32 AuxVal, OverVal, ZeroVal, CarryVal, ParityVal; /* 0 or non-0 valued flags */
+	UINT8 IBRK, F0, F1, TF, IF, DF, MF; /* 0 or 1 valued flags */
+	UINT8 RBW, RBB; /* current register bank base, preshifted for word and byte registers */
 
 	/* interrupt related */
-	UINT32  vector;
-	UINT32	pending_irq;
-	UINT32	unmasked_irq;
-	UINT32	bankswitch_irq;
-	UINT8	priority_inttu, priority_intd, priority_intp, priority_ints0, priority_ints1;
-	UINT8	IRQS, ISPR;
-	UINT32	nmi_state;
-	UINT32	irq_state;
-	UINT32	poll_state;
-	UINT32	mode_state;
-	UINT32	intp_state[3];
-	UINT8	no_interrupt;
-	UINT8	halted;
+	UINT32 vector;
+	UINT32 pending_irq;
+	UINT32 unmasked_irq;
+	UINT32 bankswitch_irq;
+	UINT8 priority_inttu, priority_intd, priority_intp, priority_ints0, priority_ints1;
+	UINT8 IRQS, ISPR;
+	UINT32 nmi_state;
+	UINT32 irq_state;
+	UINT32 poll_state;
+	UINT32 mode_state;
+	UINT32 intp_state[3];
+	UINT8 no_interrupt;
+	UINT8 halted;
 
 	/* timer related */
-	UINT16	TM0, MD0, TM1, MD1;
-	UINT8	TMC0, TMC1;
-//	emu_timer *timers[4];
+	UINT16 TM0, MD0, TM1, MD1;
+	UINT8 TMC0, TMC1;
+	//	emu_timer *timers[4];
 	INT32 timer_param[4];
 	INT32 timer_cycles_period[4];
 	INT32 timer_cycles_until_trigger[4];
@@ -107,61 +108,72 @@ struct _v25_state_t
 	UINT32 clock; // unscaled!
 
 	/* system control */
-	UINT8	RAMEN, TB, PCK;	/* PRC register */
-	UINT32	IDB;
+	UINT8 RAMEN, TB, PCK; /* PRC register */
+	UINT32 IDB;
 
-	INT32		icount;
+	INT32 icount;
 
-	UINT8	prefetch_size;
-	UINT8	prefetch_cycles;
-	INT8	prefetch_count;
-	UINT8	prefetch_reset;
-	UINT32	chip_type;
+	UINT8 prefetch_size;
+	UINT8 prefetch_cycles;
+	INT8 prefetch_count;
+	UINT8 prefetch_reset;
+	UINT32 chip_type;
 
-	UINT32	prefix_base;	/* base address of the latest prefix segment */
-	UINT8	seg_prefix;		/* prefix segment indicator */
+	UINT32 prefix_base; /* base address of the latest prefix segment */
+	UINT8 seg_prefix; /* prefix segment indicator */
 
 	UINT32 cycles_total;
 	UINT32 cycles_remaining;
-	INT8	stop_run;
+	INT8 stop_run;
 
-	unsigned char *decode;
+	unsigned char* decode;
 };
 
-enum {
-	VECTOR_PC = 0x02/2,
-	PSW_SAVE  = 0x04/2,
-	PC_SAVE   = 0x06/2
+enum
+{
+	VECTOR_PC = 0x02 / 2,
+	PSW_SAVE = 0x04 / 2,
+	PC_SAVE = 0x06 / 2
 };
 
-typedef enum {
-	DS1 = 0x0E/2,
-	PS  = 0x0C/2,
-	SS_  = 0x0A/2,
-	DS0 = 0x08/2
+typedef enum
+{
+	DS1 = 0x0E / 2,
+	PS = 0x0C / 2,
+	SS_ = 0x0A / 2,
+	DS0 = 0x08 / 2
 } SREGS;
 
-typedef enum {
-	AW = 0x1E/2,
-	CW = 0x1C/2,
-	DW = 0x1A/2,
-	BW = 0x18/2,
-	SP = 0x16/2,
-	BP = 0x14/2,
-	IX = 0x12/2,
-	IY = 0x10/2
+typedef enum
+{
+	AW = 0x1E / 2,
+	CW = 0x1C / 2,
+	DW = 0x1A / 2,
+	BW = 0x18 / 2,
+	SP = 0x16 / 2,
+	BP = 0x14 / 2,
+	IX = 0x12 / 2,
+	IY = 0x10 / 2
 } WREGS;
 
 #ifdef LSB_FIRST
-typedef enum {
-   AL = 0x1e, //NATIVE_ENDIAN_VALUE_LE_BE(0x1E, 0x1F),
-   AH = 0x1f, //NATIVE_ENDIAN_VALUE_LE_BE(0x1F, 0x1E),
-   CL = 0x1c, //NATIVE_ENDIAN_VALUE_LE_BE(0x1C, 0x1D),
-   CH = 0x1d, //NATIVE_ENDIAN_VALUE_LE_BE(0x1D, 0x1C),
-   DL = 0x1a, //NATIVE_ENDIAN_VALUE_LE_BE(0x1A, 0x1B),
-   DH = 0x1b, //NATIVE_ENDIAN_VALUE_LE_BE(0x1B, 0x1A),
-   BL = 0x18, //NATIVE_ENDIAN_VALUE_LE_BE(0x18, 0x19),
-   BH = 0x19  //NATIVE_ENDIAN_VALUE_LE_BE(0x19, 0x18)
+typedef enum
+{
+	AL = 0x1e,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x1E, 0x1F),
+	AH = 0x1f,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x1F, 0x1E),
+	CL = 0x1c,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x1C, 0x1D),
+	CH = 0x1d,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x1D, 0x1C),
+	DL = 0x1a,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x1A, 0x1B),
+	DH = 0x1b,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x1B, 0x1A),
+	BL = 0x18,
+	//NATIVE_ENDIAN_VALUE_LE_BE(0x18, 0x19),
+	BH = 0x19 //NATIVE_ENDIAN_VALUE_LE_BE(0x19, 0x18)
 } BREGS;
 #else
 typedef enum {
@@ -194,10 +206,10 @@ typedef enum {
 
 /************************************************************************/
 
-UINT8 v25_read_byte(v25_state_t *nec_state, unsigned a);
-UINT16 v25_read_word(v25_state_t *nec_state, unsigned a);
-void v25_write_byte(v25_state_t *nec_state, unsigned a, UINT8 d);
-void v25_write_word(v25_state_t *nec_state, unsigned a, UINT16 d);
+UINT8 v25_read_byte(v25_state_t* nec_state, unsigned a);
+UINT16 v25_read_word(v25_state_t* nec_state, unsigned a);
+void v25_write_byte(v25_state_t* nec_state, unsigned a, UINT8 d);
+void v25_write_word(v25_state_t* nec_state, unsigned a, UINT16 d);
 
 #define read_mem_byte(a)			v25_read_byte(nec_state,(a))
 #define read_mem_word(a)			v25_read_word(nec_state,(a))

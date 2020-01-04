@@ -23,24 +23,24 @@
  ****************************************************************************/
 typedef struct
 {
-	PAIR  ppc;			/* previous program counter */
-    PAIR  pc;           /* program counter */
-    PAIR  sp;           /* stack pointer (always 100 - 1FF) */
-    PAIR  zp;           /* zero page address */
-    PAIR  ea;           /* effective address */
-    UINT8 a;            /* Accumulator */
-    UINT8 x;            /* X index register */
-    UINT8 y;            /* Y index register */
-    UINT8 p;            /* Processor status */
-    UINT8 mmr[8];       /* Hu6280 memory mapper registers */
-    UINT8 irq_mask;     /* interrupt enable/disable */
-    UINT8 timer_status; /* timer status */
-	UINT8 timer_ack;	/* timer acknowledge */
-    UINT8 clocks_per_cycle; /* 4 = low speed mode, 1 = high speed mode */
-    INT32 timer_value;    /* timer interrupt */
-    INT32 timer_load;		/* reload value */
-    UINT8 nmi_state;
-    UINT8 irq_state[3];
+	PAIR ppc; /* previous program counter */
+	PAIR pc; /* program counter */
+	PAIR sp; /* stack pointer (always 100 - 1FF) */
+	PAIR zp; /* zero page address */
+	PAIR ea; /* effective address */
+	UINT8 a; /* Accumulator */
+	UINT8 x; /* X index register */
+	UINT8 y; /* Y index register */
+	UINT8 p; /* Processor status */
+	UINT8 mmr[8]; /* Hu6280 memory mapper registers */
+	UINT8 irq_mask; /* interrupt enable/disable */
+	UINT8 timer_status; /* timer status */
+	UINT8 timer_ack; /* timer acknowledge */
+	UINT8 clocks_per_cycle; /* 4 = low speed mode, 1 = high speed mode */
+	INT32 timer_value; /* timer interrupt */
+	INT32 timer_load; /* reload value */
+	UINT8 nmi_state;
+	UINT8 irq_state[3];
 	UINT8 irq_pending;
 	INT32 irq_hold;
 
@@ -50,21 +50,36 @@ typedef struct
 #if LAZY_FLAGS
     INT32 NZ;             /* last value (lazy N and Z flag) */
 #endif
-	UINT8 io_buffer;	/* last value written to the PSG, timer, and interrupt pages */
+	UINT8 io_buffer; /* last value written to the PSG, timer, and interrupt pages */
 
 	int (*irq_callback)(int irqline);
-}   h6280_Regs;
+} h6280_Regs;
 
-void h6280_set_context(void *ptr);
-void h6280_get_context(void *ptr);
+void h6280_set_context(void* ptr);
+void h6280_get_context(void* ptr);
 
 enum
 {
-	H6280_PC=1, H6280_S, H6280_P, H6280_A, H6280_X, H6280_Y,
-	H6280_IRQ_MASK, H6280_TIMER_STATE,
-	H6280_NMI_STATE, H6280_IRQ1_STATE, H6280_IRQ2_STATE, H6280_IRQT_STATE,
-	H6280_M1, H6280_M2, H6280_M3, H6280_M4,
-	H6280_M5, H6280_M6, H6280_M7, H6280_M8
+	H6280_PC=1,
+	H6280_S,
+	H6280_P,
+	H6280_A,
+	H6280_X,
+	H6280_Y,
+	H6280_IRQ_MASK,
+	H6280_TIMER_STATE,
+	H6280_NMI_STATE,
+	H6280_IRQ1_STATE,
+	H6280_IRQ2_STATE,
+	H6280_IRQT_STATE,
+	H6280_M1,
+	H6280_M2,
+	H6280_M3,
+	H6280_M4,
+	H6280_M5,
+	H6280_M6,
+	H6280_M7,
+	H6280_M8
 };
 
 #define H6280_RESET_VEC	0xfffe

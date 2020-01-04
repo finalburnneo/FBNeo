@@ -100,8 +100,8 @@ void ingame_gui_render()
   SDL_RenderClear(sdlRenderer);
   SDL_RenderCopy(sdlRenderer, screenshotTexture, &title_texture_rect, &dest_title_texture_rect);
   incolor(fbn_color, /* unused */ 0);
-  inprint(sdlRenderer, "FinalBurn Neo", 55, 10);
-  inprint(sdlRenderer, "=============", 55, 20);
+  inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
+  inprint(sdlRenderer, "=============", 10, 20);
 
   switch (current_menu)
   {
@@ -121,7 +121,7 @@ void ingame_gui_render()
 		{
 			incolor(normal_color, /* unused */ 0);
 		}
-    inprint(sdlRenderer,current_menu_items[i].name , 55, 30+(10*i));
+    inprint(sdlRenderer,current_menu_items[i].name , 10, 30+(10*i));
   }
 
   SDL_RenderPresent(sdlRenderer);
@@ -168,7 +168,7 @@ void ingame_gui_start(SDL_Renderer* renderer)
 	title_texture_rect.w = screenW; //the width of the texture
 	title_texture_rect.h = screenH; //the height of the texture
 
-	dest_title_texture_rect.x = 0; //the x coordinate
+	dest_title_texture_rect.x = 150; //the x coordinate
 	dest_title_texture_rect.y = 0; // the y coordinate
 	dest_title_texture_rect.w = 50; //the width of the texture
 	dest_title_texture_rect.h = 50; //the height of the texture

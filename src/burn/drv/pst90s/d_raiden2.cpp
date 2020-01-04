@@ -1,3 +1,6 @@
+// FB Alpha Raiden II driver module
+// Based on MAME driver Olivier Galibert, Angelo Salese, David Haywood, Tomasz Slanina
+
 #include "tiles_generic.h"
 #include "nec_intf.h"
 #include "z80_intf.h"

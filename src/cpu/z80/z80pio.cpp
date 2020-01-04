@@ -1,3 +1,14 @@
+/***************************************************************************
+
+    Z80 PIO implementation
+
+    based on original version (c) 1997, Tatsuyuki Satoh
+
+    Copyright Nicola Salmoria and the MAME Team.
+    Visit http://mamedev.org for licensing and usage restrictions.
+
+***************************************************************************/
+
 #include "burnint.h"
 #include "z80pio.h"
 #include "z80.h"

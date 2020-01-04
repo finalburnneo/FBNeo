@@ -1,3 +1,7 @@
+// DirectD3D blitter
+
+// #define USE_D3D_REFERENCE_DEVICE
+
 #include "burner.h"
 
 #if !defined BUILD_X64_EXE

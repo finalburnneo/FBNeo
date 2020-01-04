@@ -1,3 +1,5 @@
+// dcs 2k, 8k by Romhack w/modifications by dink.
+
 #include "burnint.h"
 #include "adsp2100_intf.h"
 #include "adsp2100/adsp2100.h"

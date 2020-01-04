@@ -1,4 +1,18 @@
+<<<<<<< HEAD
 #include <cmath>
+=======
+/****************************************************************************
+ *
+ * Phoenix sound hardware simulation - still very ALPHA!
+ *
+ * If you find errors or have suggestions, please mail me.
+ * Juergen Buchmueller <pullmoll@t-online.de>
+ *
+ ****************************************************************************/
+
+
+#include <math.h>
+>>>>>>> parent of 954ba6033... If anyone wants to rewrite these comments please do so
 #include "burnint.h"
 #include "tms36xx.h"
 

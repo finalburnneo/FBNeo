@@ -1,3 +1,4 @@
+// Burner Input module
 #include "burner.h"
 #include <vector>
 

@@ -1,3 +1,13 @@
+// license:BSD-3-Clause
+// copyright-holders:Aaron Giles
+/*****************************************************************************
+
+    Harris HC-55516 (and related) emulator
+
+   FBAlpha port by dink, July 2018
+
+*****************************************************************************/
+
 #include "burnint.h"
 #include "hc55516.h"
 #include <cmath>

@@ -1,3 +1,4 @@
+// Support functions for blitters that use DirectX
 #include "burner.h"
 
 #if !defined BUILD_X64_EXE

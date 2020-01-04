@@ -1,3 +1,23 @@
+
+/* pngrio.c - functions for data input
+ *
+ * Copyright (c) 2018 Cosmin Truta
+ * Copyright (c) 1998-2002,2004,2006-2016,2018 Glenn Randers-Pehrson
+ * Copyright (c) 1996-1997 Andreas Dilger
+ * Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
+ *
+ * This code is released under the libpng license.
+ * For conditions of distribution and use, see the disclaimer
+ * and license in png.h
+ *
+ * This file provides a location for all input.  Users who need
+ * special handling are expected to write a function that has the same
+ * arguments as this and performs a similar function, but that possibly
+ * has a different input method.  Note that you shouldn't change this
+ * function, but rather write a replacement function and then make
+ * libpng use it at run time with png_set_read_fn(...).
+ */
+
 #include "pngpriv.h"
 
 #ifdef PNG_READ_SUPPORTED

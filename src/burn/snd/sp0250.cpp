@@ -1,3 +1,21 @@
+/*
+   GI SP0250 digital LPC sound synthesizer
+
+   By O. Galibert.
+
+   Unknown:
+   - Exact clock divider
+   - Exact noise algorithm
+   - Exact noise pitch (probably ok)
+   - 7 bits output mapping
+   - Whether the pitch starts counting from 0 or 1
+
+   Unimplemented:
+   - Direct Data test mode (pin 7)
+
+   Sound quite reasonably already though.
+*/
+
 #include "burnint.h"
 #include <cmath>
 #include "sp0250.h"

@@ -1,3 +1,60 @@
+/*
+	HuC6280 sound chip emulator
+	by Charles MacDonald
+	E-mail: cgfm2@hotmail.com
+	WWW: http://cgfm2.emuviews.com
+
+	Thanks to:
+
+	- Paul Clifford for his PSG documentation.
+	- Richard Bannister for the TGEmu-specific sound updating code.
+	- http://www.uspto.gov for the PSG patents.
+	- All contributors to the tghack-list.
+
+	Changes:
+
+	(03/30/2003)
+	- Removed TGEmu specific code and added support functions for MAME.
+	- Modified setup code to handle multiple chips with different clock and
+	  volume settings.
+
+	Missing features / things to do:
+
+	- Add LFO support. But do any games actually use it?
+
+	- Add shared index for waveform playback and sample writes. Almost every
+	  game will reset the index prior to playback so this isn't an issue.
+
+	- While the noise emulation is complete, the data for the pseudo-random
+	  bitstream is calculated by machine.rand() and is not a representation of what
+	  the actual hardware does.
+
+	For some background on Hudson Soft's C62 chipset:
+
+	- http://www.hudsonsoft.net/ww/about/about.html
+	- http://www.hudson.co.jp/corp/eng/coinfo/history.html
+
+	Legal information:
+
+	Copyright Charles MacDonald
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+	Ported from MAME 0.144u6 - 18/1/12
+*/
+
 #include "burnint.h"
 #include "h6280_intf.h"
 #include "c6280.h"

@@ -1,3 +1,6 @@
+// FBAlpha cd-img, TruRip .ccd/.sub/.img support by Jan Klaassen
+// .bin/.cue re-work by dink
+
 #include "burner.h"
 
 const int MAXIMUM_NUMBER_TRACKS = 100;

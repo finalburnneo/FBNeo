@@ -1,4 +1,21 @@
+<<<<<<< HEAD
 #include <cstddef>
+=======
+/**********************************************************************
+
+    Motorola 6821 PIA interface and emulation
+
+    This function emulates all the functionality of up to 8 M6821
+    peripheral interface adapters.
+
+    MAME sources by Nathan Woods
+
+**********************************************************************/
+
+#include <string.h>
+#include <stdio.h>
+#include <stddef.h>
+>>>>>>> parent of 954ba6033... If anyone wants to rewrite these comments please do so
 #include "burnint.h"
 #include "6821pia.h"
 

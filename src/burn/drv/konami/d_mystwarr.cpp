@@ -1,3 +1,33 @@
+// FB Alpha Pre-Gx driver module
+// based on MAME driver by R. Belmont, Phil Stroffolino, Acho A. Tang, Nicola Salmoria
+
+/*
+	known bugs:
+		violent storm:
+			background layer #2 on intro (bad guy on motorcycle), bottom clipped??
+
+		mystwarr:
+			missing some sounds due to sound irq timing too slow. (wip)
+
+		metamorphic force
+			level 1 boss "fire" circle around boss priority issue
+		    background in lava level is too fast. (irq?)
+
+		martial champ
+ *FIXED*1: missing graphics in intro & title screens. On blank screens
+		   disable layer#2 to see what it should look like.
+		2: missing some sounds. (watch the first attract mode)
+		3: end of fight "fade-outs" are flickery _sometimes_ (panda scene, whitehouse scene)
+		   only thing that seems to fix this is upping the cycles by 6mhz.
+	unkown bugs.
+		probably a lot! go ahead and fix it!
+
+	to do:
+		fix bugs
+		clean up
+		optimize
+*/
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

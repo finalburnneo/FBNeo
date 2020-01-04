@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 #include <cmath>
+=======
+// Yamaha YMZ280B module
+// Emulation by Jan Klaassen
+
+#include <math.h>
+>>>>>>> parent of 954ba6033... If anyone wants to rewrite these comments please do so
 #include "burnint.h"
 #include "ymz280b.h"
 

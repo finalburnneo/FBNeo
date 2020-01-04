@@ -1,3 +1,11 @@
+/*************************************************************************************************************
+
+    Toshiba TLCS-90 Series MCU's
+
+    emulation by Luca Elia, based on the Z80 core by Juergen Buchmueller
+
+*************************************************************************************************************/
+
 #include "burnint.h"
 #include "tlcs90_intf.h"
 #include <cstddef>

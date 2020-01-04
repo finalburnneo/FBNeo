@@ -1,3 +1,8 @@
+/*
+   FBAlpha port by dink, Sept 2018
+
+*****************************************************************************/
+
 #include "burnint.h"
 #include "redbaron.h"
 #include <cmath>

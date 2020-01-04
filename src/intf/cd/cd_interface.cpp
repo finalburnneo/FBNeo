@@ -1,3 +1,4 @@
+// CD/CD-ROM support
 #include "burner.h"
 
 bool bCDEmuOkay = false;

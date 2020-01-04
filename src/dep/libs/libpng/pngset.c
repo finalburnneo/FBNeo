@@ -1,3 +1,21 @@
+
+/* pngset.c - storage of image information into info struct
+ *
+ * Copyright (c) 2018 Cosmin Truta
+ * Copyright (c) 1998-2018 Glenn Randers-Pehrson
+ * Copyright (c) 1996-1997 Andreas Dilger
+ * Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
+ *
+ * This code is released under the libpng license.
+ * For conditions of distribution and use, see the disclaimer
+ * and license in png.h
+ *
+ * The functions here are used during reads to store data from the file
+ * into the info struct, and during writes to store application data
+ * into the info struct for writing into the file.  This abstracts the
+ * info struct and allows us to change the structure in the future.
+ */
+
 #include "pngpriv.h"
 
 #if defined(PNG_READ_SUPPORTED) || defined(PNG_WRITE_SUPPORTED)

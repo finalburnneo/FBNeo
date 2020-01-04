@@ -1,3 +1,15 @@
+/* infback.c -- inflate using a call-back interface
+ * Copyright (C) 1995-2016 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */
+
+/*
+   This code is largely copied from inflate.c.  Normally either infback.o or
+   inflate.o would be linked into an application--not both.  The interface
+   with inffast.c is retained so that optimized assembler-coded versions of
+   inflate_fast() can be used with either inflate.c or infback.c.
+ */
+
 #include "zutil.h"
 #include "inftrees.h"
 #include "inflate.h"

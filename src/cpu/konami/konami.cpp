@@ -1,3 +1,39 @@
+/*** konami: Portable Konami cpu emulator ******************************************
+
+    Copyright Nicola Salmoria and the MAME Team
+
+    Based on M6809 cpu core copyright John Butler
+
+    References:
+
+        6809 Simulator V09, By L.C. Benschop, Eidnhoven The Netherlands.
+
+        m6809: Portable 6809 emulator, DS (6809 code in MAME, derived from
+            the 6809 Simulator V09)
+
+        6809 Microcomputer Programming & Interfacing with Experiments"
+            by Andrew C. Staugaard, Jr.; Howard W. Sams & Co., Inc.
+
+    System dependencies:    UINT16 must be 16 bit unsigned int
+                            UINT8 must be 8 bit unsigned int
+                            UINT32 must be more than 16 bits
+                            arrays up to 65536 bytes must be supported
+                            machine must be twos complement
+
+    History:
+991022 HJB:
+    Tried to improve speed: Using bit7 of cycles1 as flag for multi
+    byte opcodes is gone, those opcodes now instead go through opcode2().
+    KONAMI_INLINEd fetch_effective_address() into that function as well.
+    Got rid of the slow/fast flags for stack (S and U) memory accesses.
+    Minor changes to use 32 bit values as arguments to memory functions
+    and added defines for that purpose (e.g. X = 16bit XD = 32bit).
+
+990720 EHC:
+    Created this file
+
+*****************************************************************************/
+
 #include "burnint.h"
 #include "konami.h"
 #include "konami_intf.h"

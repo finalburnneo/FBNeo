@@ -1,3 +1,11 @@
+/***************************************************************************
+
+    Wiping sound driver (quick hack of the Namco sound driver)
+
+    used by wiping and clshroad
+
+***************************************************************************/
+
 #include "burnint.h"
 #include "wiping.h"
 #include <cstddef>

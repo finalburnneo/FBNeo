@@ -1,3 +1,4 @@
+// Software blitter effects via DirectDraw
 #include "burner.h"
 
 #if !defined BUILD_X64_EXE

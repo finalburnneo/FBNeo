@@ -1,3 +1,5 @@
+// Based on MAME driver by Derrick Renaud, Couriersud
+
 #include "burnint.h"
 #include "flt_rc.h"
 

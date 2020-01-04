@@ -1,3 +1,7 @@
+/* Clarue Flower sound driver.
+Initial version was based on the Wiping sound driver, which was based on the old namco.c sound driver.
+*/
+
 #include "burnint.h"
 #include "flower.h"
 #include <cstddef>

@@ -1,11 +1,12 @@
 #if defined (_MSC_VER)
-#define _USE_MATH_DEFINES
+#include <corecrt_math_defines.h>
 #endif
 
 
 #include "driver.h"
 #include "ymf262.h"
 #include "state.h"
+#include <cmath>
 
 
 /* output final shift */

@@ -1,32 +1,3 @@
-// ------------------------------------------------------------------------------------
-// Capcom Play System III Drivers for FB Alpha (2007 - 2008).
-// ------------------------------------------------------------------------------------
-//     Based on MAME driver by David Haywood, Andreas Naive, El Semi, Philip Bennett,
-//	and Tomasz Slanina
-//
-//	v1	[ OopsWare ]
-//     - Original drivers release.
-//
-//	v2  [ CaptainCPS-X ]
-//     - Verified drivers.
-//     - Updated DIPs.
-//     - Updated some Inits.
-//     - Added some Comments.
-//
-//  v3 [ BisonSAS ]
-//     - Added default game regions DIPs.
-//     - Added unicode titles for "jojo" and "jojoba".
-//     - Changed the redeartn BIOS to "warzard_euro.29f400.u2".
-//     - Added "HARDWARE_CAPCOM_CPS3_NO_CD" flag for NOCD sets.
-//
-//  v4 [ CaptainCPS-X ]
-//     - Updated comments & organized structures of code.
-//     - Revised code for compatibility with FB Alpha Enhanced.
-//
-//	More info: http://neosource.1emu.net/forums/index.php
-//
-// ------------------------------------------------------------------------------------
-
 #include "cps3.h"
 
 static struct BurnInputInfo cps3InputList[] = {
@@ -266,7 +237,7 @@ STDDIPINFOEXT(sfiiieuro, sfiii, euroRegion)
 // -----------------------------------------------
 static struct BurnRomInfo sfiiiRomDesc[] = {
 
-	{ "sfiii_euro.29f400.u2",			0x080000, 0x27699ddc, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii_euro.29f400.u2",				0x080000, 0x27699ddc, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
 #if !defined ROM_VERIFY
 	SFIII_970204_FLASH
@@ -311,7 +282,7 @@ STD_ROM_FN(sfiiia)
 // -------------------------------------------------
 static struct BurnRomInfo sfiiijRomDesc[] = {
 
-	{ "sfiii_japan.29f400.u2",			0x080000, 0x74205250, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii_japan.29f400.u2",				0x080000, 0x74205250, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	SFIII_970204_FLASH
@@ -326,7 +297,7 @@ STD_ROM_FN(sfiiij)
 // ----------------------------------------------------
 static struct BurnRomInfo sfiiihRomDesc[] = {
 
-	{ "sfiii_hispanic.29f400.u2",		0x080000, 0xd2b3cd48, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii_hispanic.29f400.u2",			0x080000, 0xd2b3cd48, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
 #if !defined ROM_VERIFY
 	SFIII_970204_FLASH
@@ -341,7 +312,7 @@ STD_ROM_FN(sfiiih)
 // -------------------------------------------------------------------
 static struct BurnRomInfo sfiiinRomDesc[] = {
 
-	{ "sfiii_asia_nocd.29f400.u2",		0x080000, 0xca2b715f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii_asia_nocd.29f400.u2",			0x080000, 0xca2b715f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	SFIII_970204_FLASH
 };
@@ -354,7 +325,7 @@ STD_ROM_FN(sfiiin)
 // -------------------------------------------------------------------
 static struct BurnRomInfo sfiiinaRomDesc[] = {
 
-	{ "sfiii_asia_nocd.29f400.u2",		0x080000, 0x73e32463, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii_asia_nocd.29f400.u2",			0x080000, 0x73e32463, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	SFIII_970204_FLASH
 };
@@ -405,7 +376,7 @@ STD_ROM_FN(sfiiina)
 // --------------------------------------------------------
 static struct BurnRomInfo sfiii2RomDesc[] = {
 
-	{ "sfiii2_usa.29f400.u2",			0x080000, 0x75dd72e0, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii2_usa.29f400.u2",				0x080000, 0x75dd72e0, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 					  
 #if !defined ROM_VERIFY
 	SFIII2_970930_FLASH
@@ -420,7 +391,7 @@ STD_ROM_FN(sfiii2)
 // ----------------------------------------------------------
 static struct BurnRomInfo sfiii2jRomDesc[] = {
 
-	{ "sfiii2_japan.29f400.u2",			0x080000, 0xfaea0a3e, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii2_japan.29f400.u2",				0x080000, 0xfaea0a3e, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	SFIII2_970930_FLASH
@@ -435,7 +406,7 @@ STD_ROM_FN(sfiii2j)
 // ----------------------------------------------------------------
 static struct BurnRomInfo sfiii2nRomDesc[] = {
 
-	{ "sfiii2_asia_nocd.29f400.u2",		0x080000, 0xfd297c0d, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii2_asia_nocd.29f400.u2",			0x080000, 0xfd297c0d, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	SFIII2_970930_FLASH
 };
@@ -494,7 +465,7 @@ STD_ROM_FN(sfiii2n)
 // -----------------------------------------------------------------
 static struct BurnRomInfo sfiii3RomDesc[] = {
 
-	{ "sfiii3_euro.29f400.u2",			0x080000, 0x30bbf293, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii3_euro.29f400.u2",				0x080000, 0x30bbf293, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	SFIII3_990608_FLASH
@@ -509,7 +480,7 @@ STD_ROM_FN(sfiii3)
 // ----------------------------------------------------------------
 static struct BurnRomInfo sfiii3uRomDesc[] = {
 
-	{ "sfiii3_usa.29f400.u2",			0x080000, 0xecc545c1, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii3_usa.29f400.u2",				0x080000, 0xecc545c1, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	SFIII3_990608_FLASH
@@ -524,7 +495,7 @@ STD_ROM_FN(sfiii3u)
 // -------------------------------------------------------------------------
 static struct BurnRomInfo sfiii3jRomDesc[] = {
 
-	{ "sfiii3_japan.29f400.u2",	0x080000, 0x63f23d1f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii3_japan.29f400.u2",				0x080000, 0x63f23d1f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
 #if !defined ROM_VERIFY	
 	SFIII3_990608_FLASH
@@ -539,7 +510,7 @@ STD_ROM_FN(sfiii3j)
 // -------------------------------------------------------------------------
 static struct BurnRomInfo sfiii3nRomDesc[] = {
 
-	{ "sfiii3_japan_nocd.29f400.u2",	0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii3_japan_nocd.29f400.u2",		0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	SFIII3_990608_FLASH
 };
@@ -598,7 +569,7 @@ STD_ROM_FN(sfiii3n)
 // -----------------------------------------------------------------
 static struct BurnRomInfo sfiii3r1RomDesc[] = {
 
-	{ "sfiii3_euro.29f400.u2",			0x080000, 0x30bbf293, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii3_euro.29f400.u2",				0x080000, 0x30bbf293, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	SFIII3_990512_FLASH
@@ -613,7 +584,7 @@ STD_ROM_FN(sfiii3r1)
 // ----------------------------------------------------------------
 static struct BurnRomInfo sfiii3ur1RomDesc[] = {
 
-	{ "sfiii3_usa.29f400.u2",			0x080000, 0xecc545c1, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii3_usa.29f400.u2",				0x080000, 0xecc545c1, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	SFIII3_990512_FLASH
@@ -628,7 +599,7 @@ STD_ROM_FN(sfiii3ur1)
 // -------------------------------------------------------------------------
 static struct BurnRomInfo sfiii3jr1RomDesc[] = {
 
-	{ "sfiii3_japan.29f400.u2",	0x080000, 0x63f23d1f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii3_japan.29f400.u2",				0x080000, 0x63f23d1f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	SFIII3_990512_FLASH
@@ -643,7 +614,7 @@ STD_ROM_FN(sfiii3jr1)
 // -------------------------------------------------------------------------
 static struct BurnRomInfo sfiii3nr1RomDesc[] = {
 
-	{ "sfiii3_japan_nocd.29f400.u2",	0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii3_japan_nocd.29f400.u2",		0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	SFIII3_990512_FLASH
 };
@@ -684,11 +655,11 @@ STD_ROM_FN(sfiii3nr1)
 	{ "jojo-simm5.1",			0x200000, 0x734fd162, BRF_GRA },
 	
 // -----------------------------------------------------
-// JoJo no Kimyou na Bouken / JoJo's Venture (USA 990128)
+// JoJo no Kimyou na Bouken / JoJo's Venture (Euro 990128)
 // -----------------------------------------------------
 static struct BurnRomInfo jojoRomDesc[] = {
 
-	{ "jojo_usa.29f400.u2",				0x080000, 0x8d40f7be, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojo_euro.29f400.u2",				0x080000, 0x513e40ec, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	JOJO_990128_FLASH
@@ -699,11 +670,26 @@ STD_ROM_PICK(jojo)
 STD_ROM_FN(jojo)
 
 // -------------------------------------------------------
+// JoJo no Kimyou na Bouken / JoJo's Venture (USA 990128)
+// -------------------------------------------------------
+static struct BurnRomInfo jojouRomDesc[] = {
+
+	{ "jojo_usa.29f400.u2",					0x080000, 0x8d40f7be, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	
+#if !defined ROM_VERIFY
+	JOJO_990128_FLASH
+#endif
+};
+
+STD_ROM_PICK(jojou)
+STD_ROM_FN(jojou)
+
+// -------------------------------------------------------
 // JoJo no Kimyou na Bouken / JoJo's Venture (Japan 990128)
 // -------------------------------------------------------
 static struct BurnRomInfo jojojRomDesc[] = {
 
-	{ "jojo_japan.29f400.u2",			0x080000, 0x02778f60, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojo_japan.29f400.u2",				0x080000, 0x02778f60, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	JOJO_990128_FLASH
@@ -718,7 +704,7 @@ STD_ROM_FN(jojoj)
 // -------------------------------------------------------------
 static struct BurnRomInfo jojonRomDesc[] = {
 
-	{ "jojo_asia_nocd.29f400.u2",		0x080000, 0x05b4f953, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojo_asia_nocd.29f400.u2",			0x080000, 0x05b4f953, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	JOJO_990128_FLASH
 };
@@ -759,11 +745,11 @@ STD_ROM_FN(jojon)
 	{ "jojo-simm5.1",			0x200000, 0x734fd162, BRF_GRA },
 
 // -----------------------------------------------------
-// JoJo no Kimyou na Bouken / JoJo's Venture (USA 990108)
+// JoJo no Kimyou na Bouken / JoJo's Venture (Euro 990108)
 // -----------------------------------------------------
 static struct BurnRomInfo jojor1RomDesc[] = {
 
-	{ "jojo_usa.29f400.u2",				0x080000, 0x8d40f7be, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojo_euro.29f400.u2",				0x080000, 0x513e40ec, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	JOJO_990108_FLASH
@@ -773,12 +759,27 @@ static struct BurnRomInfo jojor1RomDesc[] = {
 STD_ROM_PICK(jojor1)
 STD_ROM_FN(jojor1)
 
+// -----------------------------------------------------
+// JoJo no Kimyou na Bouken / JoJo's Venture (USA 990108)
+// -----------------------------------------------------
+static struct BurnRomInfo jojour1RomDesc[] = {
+
+	{ "jojo_usa.29f400.u2",					0x080000, 0x8d40f7be, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	
+#if !defined ROM_VERIFY
+	JOJO_990108_FLASH
+#endif
+};
+
+STD_ROM_PICK(jojour1)
+STD_ROM_FN(jojour1)
+
 // -------------------------------------------------------
 // JoJo no Kimyou na Bouken / JoJo's Venture (Japan 990108)
 // -------------------------------------------------------
 static struct BurnRomInfo jojojr1RomDesc[] = {
 
-	{ "jojo_japan.29f400.u2",			0x080000, 0x02778f60, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojo_japan.29f400.u2",				0x080000, 0x02778f60, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	JOJO_990108_FLASH
@@ -793,7 +794,7 @@ STD_ROM_FN(jojojr1)
 // -------------------------------------------------------------
 static struct BurnRomInfo jojonr1RomDesc[] = {
 
-	{ "jojo_asia_nocd.29f400.u2",		0x080000, 0x05b4f953, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojo_asia_nocd.29f400.u2",			0x080000, 0x05b4f953, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	JOJO_990108_FLASH
 };
@@ -834,11 +835,11 @@ STD_ROM_FN(jojonr1)
 	{ "jojo-simm5.1",			0x200000, 0x734fd162, BRF_GRA },
 
 // -----------------------------------------------------
-// JoJo no Kimyou na Bouken / JoJo's Venture (USA 981202)
+// JoJo no Kimyou na Bouken / JoJo's Venture (Euro 981202)
 // -----------------------------------------------------
 static struct BurnRomInfo jojor2RomDesc[] = {
 
-	{ "jojo_usa.29f400.u2",				0x080000, 0x8d40f7be, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojo_euro.29f400.u2",				0x080000, 0x513e40ec, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	JOJO_981202_FLASH
@@ -848,12 +849,27 @@ static struct BurnRomInfo jojor2RomDesc[] = {
 STD_ROM_PICK(jojor2)
 STD_ROM_FN(jojor2)
 
+// -----------------------------------------------------
+// JoJo no Kimyou na Bouken / JoJo's Venture (USA 981202)
+// -----------------------------------------------------
+static struct BurnRomInfo jojour2RomDesc[] = {
+
+	{ "jojo_usa.29f400.u2",					0x080000, 0x8d40f7be, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	
+#if !defined ROM_VERIFY
+	JOJO_981202_FLASH
+#endif
+};
+
+STD_ROM_PICK(jojour2)
+STD_ROM_FN(jojour2)
+
 // -------------------------------------------------------
 // JoJo no Kimyou na Bouken / JoJo's Venture (Japan 981202)
 // -------------------------------------------------------
 static struct BurnRomInfo jojojr2RomDesc[] = {
 
-	{ "jojo_japan.29f400.u2",			0x080000, 0x02778f60, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojo_japan.29f400.u2",				0x080000, 0x02778f60, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	JOJO_981202_FLASH
@@ -868,7 +884,7 @@ STD_ROM_FN(jojojr2)
 // -------------------------------------------------------------
 static struct BurnRomInfo jojonr2RomDesc[] = {
 
-	{ "jojo_asia_nocd.29f400.u2",		0x080000, 0x05b4f953, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojo_asia_nocd.29f400.u2",			0x080000, 0x05b4f953, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	JOJO_981202_FLASH
 };
@@ -919,7 +935,7 @@ STD_ROM_FN(jojonr2)
 // ---------------------------------------------------------------------------------
 static struct BurnRomInfo jojobaRomDesc[] = {
 
-	{ "jojoba_japan.29f400.u2",			0x080000, 0x3085478c, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojoba_japan.29f400.u2",				0x080000, 0x3085478c, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 					  
 #if !defined ROM_VERIFY
 	JOJOBA_990927_FLASH
@@ -934,7 +950,7 @@ STD_ROM_FN(jojoba)
 // ----------------------------------------------------------------------------------------
 static struct BurnRomInfo jojobanRomDesc[] = {
 
-	{ "jojoba_japan_nocd.29f400.u2",	0x080000, 0x4dab19f5, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojoba_japan_nocd.29f400.u2",		0x080000, 0x4dab19f5, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	JOJOBA_990927_FLASH
 };
@@ -947,7 +963,7 @@ STD_ROM_FN(jojoban)
 // ---------------------------------------------------------------------------------------
 static struct BurnRomInfo jojobaneRomDesc[] = {
 
-	{ "jojoba_euro_nocd.29f400.u2",		0x080000, 0x1ee2d679, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojoba_euro_nocd.29f400.u2",			0x080000, 0x1ee2d679, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	JOJOBA_990927_FLASH
 };
@@ -998,7 +1014,7 @@ STD_ROM_FN(jojobane)
 // ---------------------------------------------------------------------------------
 static struct BurnRomInfo jojobar1RomDesc[] = {
 
-	{ "jojoba_japan.29f400.u2",			0x080000, 0x3085478c, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojoba_japan.29f400.u2",				0x080000, 0x3085478c, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 					  
 #if !defined ROM_VERIFY
 	JOJOBA_990913_FLASH
@@ -1013,7 +1029,7 @@ STD_ROM_FN(jojobar1)
 // ----------------------------------------------------------------------------------------
 static struct BurnRomInfo jojobanr1RomDesc[] = {
 
-	{ "jojoba_japan_nocd.29f400.u2",	0x080000, 0x4dab19f5, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojoba_japan_nocd.29f400.u2",		0x080000, 0x4dab19f5, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	JOJOBA_990913_FLASH
 };
@@ -1026,7 +1042,7 @@ STD_ROM_FN(jojobanr1)
 // ---------------------------------------------------------------------------------------
 static struct BurnRomInfo jojobaner1RomDesc[] = {
 
-	{ "jojoba_euro_nocd.29f400.u2",		0x080000, 0x1ee2d679, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojoba_euro_nocd.29f400.u2",			0x080000, 0x1ee2d679, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 	JOJOBA_990913_FLASH
 };
@@ -1067,7 +1083,7 @@ STD_ROM_FN(jojobaner1)
 // ----------------------------------
 static struct BurnRomInfo redearthRomDesc[] = {
 
-	{ "redearth_euro.29f400.u2",		0x080000, 0x02e0f336, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "redearth_euro.29f400.u2",			0x080000, 0x02e0f336, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	REDEARTH_961121_FLASH
@@ -1082,7 +1098,7 @@ STD_ROM_FN(redearth)
 // -----------------------------------
 static struct BurnRomInfo warzardRomDesc[] = {
 
-	{ "warzard_japan.29f400.u2",		0x080000, 0xf8e2f0c6, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "warzard_japan.29f400.u2",			0x080000, 0xf8e2f0c6, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	REDEARTH_961121_FLASH
@@ -1125,7 +1141,7 @@ STD_ROM_FN(warzard)
 // ----------------------------------
 static struct BurnRomInfo redearthr1RomDesc[] = {
 
-	{ "redearth_euro.29f400.u2",		0x080000, 0x02e0f336, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "redearth_euro.29f400.u2",			0x080000, 0x02e0f336, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	REDEARTH_961023_FLASH
@@ -1140,7 +1156,7 @@ STD_ROM_FN(redearthr1)
 // -----------------------------------
 static struct BurnRomInfo warzardr1RomDesc[] = {
 
-	{ "warzard_japan.29f400.u2",		 0x080000, 0xf8e2f0c6, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "warzard_japan.29f400.u2",		 	0x080000, 0xf8e2f0c6, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	REDEARTH_961023_FLASH
@@ -1461,10 +1477,20 @@ struct BurnDriver BurnDrvSfiii3nr1 = {
 
 struct BurnDriver BurnDrvJojo = {
 	"jojo", NULL, NULL, NULL, "1998",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (Euro 990128)\0", NULL, "Capcom", "CPS-3",
+	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (Euro 990128)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
+	NULL, jojoRomInfo, jojoRomName, NULL, NULL, NULL, NULL, jojoInputInfo, euroDIPInfo,
+	jojor1Init, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvJojou = {
+	"jojou", "jojo", NULL, NULL, "1998",
 	"JoJo's Venture / JoJo no Kimyou na Bouken (USA 990128)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (USA 990128)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
-	NULL, jojoRomInfo, jojoRomName, NULL, NULL, NULL, NULL, jojoInputInfo, usaDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
+	NULL, jojouRomInfo, jojouRomName, NULL, NULL, NULL, NULL, jojoInputInfo, usaDIPInfo,
 	jojor1Init, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
 	384, 224, 4, 3
 };
@@ -1491,10 +1517,20 @@ struct BurnDriver BurnDrvJojon = {
 
 struct BurnDriver BurnDrvJojor1 = {
 	"jojor1", "jojo", NULL, NULL, "1998",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (Euro 990108)\0", NULL, "Capcom", "CPS-3",
+	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (Euro 990108)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
+	NULL, jojor1RomInfo, jojor1RomName, NULL, NULL, NULL, NULL, jojoInputInfo, euroDIPInfo,
+	jojor1Init, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvJojour1 = {
+	"jojour1", "jojo", NULL, NULL, "1998",
 	"JoJo's Venture / JoJo no Kimyou na Bouken (USA 990108)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (USA 990108)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
-	NULL, jojor1RomInfo, jojor1RomName, NULL, NULL, NULL, NULL, jojoInputInfo, usaDIPInfo,
+	NULL, jojour1RomInfo, jojour1RomName, NULL, NULL, NULL, NULL, jojoInputInfo, usaDIPInfo,
 	jojor1Init, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
 	384, 224, 4, 3
 };
@@ -1521,10 +1557,20 @@ struct BurnDriver BurnDrvJojonr1 = {
 
 struct BurnDriver BurnDrvJojor2 = {
 	"jojor2", "jojo", NULL, NULL, "1998",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (Euro 981202)\0", NULL, "Capcom", "CPS-3",
+	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (Euro 981202)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
+	NULL, jojor2RomInfo, jojor2RomName, NULL, NULL, NULL, NULL, jojoInputInfo, euroDIPInfo,
+	jojor2Init, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvJojour2 = {
+	"jojour2", "jojo", NULL, NULL, "1998",
 	"JoJo's Venture / JoJo no Kimyou na Bouken (USA 981202)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (USA 981202)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
-	NULL, jojor2RomInfo, jojor2RomName, NULL, NULL, NULL, NULL, jojoInputInfo, usaDIPInfo,
+	NULL, jojour2RomInfo, jojour2RomName, NULL, NULL, NULL, NULL, jojoInputInfo, usaDIPInfo,
 	jojor2Init, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
 	384, 224, 4, 3
 };

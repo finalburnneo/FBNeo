@@ -1,11 +1,6 @@
-/*
-   FBAlpha port by iq_132, dink, Sept 2018
-
-*****************************************************************************/
-
 #include "burnint.h"
 #include "redbaron.h"
-#include <math.h>
+#include <cmath>
 
 #define OUTPUT_RATE 48000
 #define FRAME_SIZE 800

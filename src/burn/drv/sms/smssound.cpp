@@ -1,7 +1,3 @@
-/*
-    sound.c --
-    Sound emulation.
-*/
 #include "smsshared.h"
 #include "sn76496.h"
 #include "z80_intf.h"

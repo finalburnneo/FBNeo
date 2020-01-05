@@ -111,13 +111,13 @@ void GenericTilemapSetGfx(INT32 num, UINT8 *gfxbase, INT32 depth, INT32 tile_wid
 	}
 
 	// warning
-	if (depth > 8 || tile_width > 512 || tile_height > 512 || gfxlen <= 0 || gfxlen > 0x10000000 || color_offset > 0x10000) {
-		bprintf (PRINT_NORMAL, _T("GenericTilemapSetGfx(%d, gfxbase, %d, %d, %d, 0x%x, 0x%x, 0x%s) called with likely bad initializer(s)!\n"), num, depth, tile_width, tile_height, gfxlen, color_offset, color_mask);
+	if (depth > 8 || tile_width > 4096 || tile_height > 4096 || gfxlen <= 0 || gfxlen > 0x10000000 || color_offset > 0x10000) {
+		bprintf (PRINT_NORMAL, _T("GenericTilemapSetGfx(%d, gfxbase, %d, %d, %d, 0x%x, 0x%x, 0x%x) called with likely bad initializer(s)!\n"), num, depth, tile_width, tile_height, gfxlen, color_offset, color_mask);
 	}
 
 	// error
 	if (num < 0 || num >= MAX_GFX || tile_width <= 0 || tile_height <= 0 || gfxlen <= 0 || gfxbase == NULL) {
-		bprintf (PRINT_ERROR, _T("GenericTilemapSetGfx(%d, gfxbase (%s), %d, %d, %d, 0x%x, 0x%x, 0x%s) called with bad initializer(s)!\n"), num, (gfxbase == NULL) ? _T("NULL") : _T("NON-NULL"), depth, tile_width, tile_height, gfxlen, color_offset, color_mask);
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetGfx(%d, gfxbase (%s), %d, %d, %d, 0x%x, 0x%x, 0x%x) called with bad initializer(s)!\n"), num, (gfxbase == NULL) ? _T("NULL") : _T("NON-NULL"), depth, tile_width, tile_height, gfxlen, color_offset, color_mask);
 		return;
 	}
 #endif

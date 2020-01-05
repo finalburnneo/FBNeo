@@ -46,7 +46,6 @@ UINT8 *PGMARMRAM0, *PGMUSER0, *PGMARMRAM1, *PGMARMRAM2, *PGMARMShareRAM, *PGMARM
 UINT8 *ICSSNDROM;
 
 UINT8 nPgmPalRecalc = 0;
-static UINT8 nPgmZ80Work = 0;
 static INT32 nPgmCurrentBios = -1;
 
 void (*pPgmResetCallback)() = NULL;
@@ -61,10 +60,12 @@ UINT32 nPgmAsicRegionHackAddress = 0;
 
 INT32 pgm_cave_refresh = 0;
 
-#define Z80_FREQ            8468000
-#define M68K_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
+#define M68K_FREQ  20000000
+#define Z80_FREQ   8468000
+
+#define M68K_CYCS_PER_FRAME	((M68K_FREQ * 100) / nBurnFPS)
 #define ARM7_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
-#define Z80_CYCS_PER_FRAME	((Z80_FREQ * 100) / nBurnFPS)
+#define Z80_CYCS_PER_FRAME	(( Z80_FREQ * 100) / nBurnFPS)
 
 #define	PGM_INTER_LEAVE	200
 
@@ -73,7 +74,7 @@ INT32 pgm_cave_refresh = 0;
 #define Z80_CYCS_PER_INTER	(Z80_CYCS_PER_FRAME  / PGM_INTER_LEAVE)
 
 static INT32 nCyclesDone[3];
-static INT32 nExtraCycles;
+static INT32 nCyclesTotal[3];
 
 static INT32 pgmMemIndex()
 {
@@ -262,12 +263,14 @@ static INT32 pgmGetRoms(bool bLoad)
 
 static inline void pgmSynchroniseZ80(INT32 extra_cycles)
 {
-	INT32 cycles = (UINT64)(SekTotalCycles()) * Z80_CYCS_PER_FRAME / M68K_CYCS_PER_FRAME + extra_cycles;
+	INT32 cycles = (UINT64)(SekTotalCycles()) * nCyclesTotal[1] / nCyclesTotal[0] + extra_cycles;
 
 	if (cycles <= ZetTotalCycles())
 		return;
 
-	BurnTimerUpdate(cycles);
+	INT32 i = 0;
+	while (ZetTotalCycles() < cycles && i++ < 5)
+		BurnTimerUpdate(cycles);
 }
 
 static UINT16 ics2115_soundlatch_r(INT32 i)
@@ -354,7 +357,7 @@ void __fastcall PgmWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			pgmSynchroniseZ80(0);
 
 			ics2115_soundlatch_w(0, wordValue);
-			if (nPgmZ80Work) ZetNmi();
+			ZetNmi();
 			break;
 
 		case 0xC00004:
@@ -374,11 +377,9 @@ void __fastcall PgmWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			{
 				ics2115_reset();
 				ZetSetBUSREQLine(0);
-				nPgmZ80Work = 1;
 				ZetReset();
 			} else {
 				ZetSetBUSREQLine(1);
-				nPgmZ80Work = 0;
 			}
 
 			break;
@@ -529,8 +530,7 @@ INT32 PgmDoReset()
 	}
 
 	ZetOpen(0);
-	nPgmZ80Work = 0;
-	ZetSetBUSREQLine(1);
+	ZetSetBUSREQLine(0);
 	ZetReset();
 	ZetClose();
 
@@ -543,7 +543,6 @@ INT32 PgmDoReset()
     memset (hold_coin, 0, sizeof(hold_coin));
 
 	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
-	nExtraCycles = 0;
 
 	return 0;
 }
@@ -772,7 +771,7 @@ INT32 pgmInit()
 	v3021Init();
 	ics2115_init(ics2115_sound_irq, ICSSNDROM, nPGMSNDROMLen);
 	BurnTimerAttachZet(Z80_FREQ);
-	
+
 	pBurnDrvPalette = (UINT32*)PGMPalRAM;
 
 	if (pPgmInitCallback) {
@@ -885,67 +884,69 @@ INT32 pgmFrame()
         PgmInput[4] |= PgmCoins & ~0xf; // add non-coin buttons
 	}
 
-	nCyclesDone[0] = 0;
-	nCyclesDone[1] = 0;
-	nCyclesDone[2] = 0;
-
 	SekNewFrame();
 	ZetNewFrame();
+
+	SekOpen(0);
+	ZetOpen(0);
+
+	SekIdle(nCyclesDone[0]);
+	ZetIdle(nCyclesDone[1]);
+
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	if (nEnableArm7)
 	{
 		Arm7NewFrame();
+		Arm7Open(0);
+		Arm7Idle(nCyclesDone[2]);
 
 		// region hacks
-		{
-			if (strncmp(BurnDrvGetTextA(DRV_NAME), "dmnfrnt", 7) == 0) {
-				PGMARMShareRAM[0x158] = PgmInput[7];
-			} else {
-				if (nPgmAsicRegionHackAddress) {
-					PGMARMROM[nPgmAsicRegionHackAddress] = PgmInput[7];
-				}
-			}
-		}
-	}
-
-	SekOpen(0);
-	ZetOpen(0);
-	if (nEnableArm7) Arm7Open(0);
-	nCyclesDone[0] += SekIdle(nExtraCycles);
-
-	for (INT32 i = 0; i < PGM_INTER_LEAVE; i++)
-	{
-		INT32 cycles = M68K_CYCS_PER_INTER;
-
-		INT32 nSegmentS = (M68K_CYCS_PER_FRAME - nCyclesDone[0]) / (PGM_INTER_LEAVE - i);
-		nCyclesDone[0] += SekRun(nSegmentS);
-
-		if (nEnableArm7) {
-			cycles = SekTotalCycles() - Arm7TotalCycles();
-
-			if (cycles > 0) {
-				nCyclesDone[2] += Arm7Run(cycles);
-			}
+		if (strncmp(BurnDrvGetTextA(DRV_NAME), "dmnfrnt", 7) == 0) {
+			PGMARMShareRAM[0x158] = PgmInput[7];
+		} else if (nPgmAsicRegionHackAddress) {
+			PGMARMROM[nPgmAsicRegionHackAddress] = PgmInput[7];
 		}
 
-		if (i == ((PGM_INTER_LEAVE / 2)-1) && !nPGMDisableIRQ4) {
+		nCyclesTotal[0] = M68K_CYCS_PER_FRAME;
+		nCyclesTotal[1] = Z80_CYCS_PER_FRAME;
+		nCyclesTotal[2] = ARM7_CYCS_PER_FRAME;
+
+		while (SekTotalCycles() < nCyclesTotal[0] / 2)
+			SekRun(nCyclesTotal[0] / 2 - SekTotalCycles());
+
+		if (!nPGMDisableIRQ4)
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		}
 
-		BurnTimerUpdate((i + 1) * Z80_CYCS_PER_FRAME / PGM_INTER_LEAVE);
+		while (SekTotalCycles() < nCyclesTotal[0])
+			SekRun(nCyclesTotal[0] - SekTotalCycles());
+
+		while (Arm7TotalCycles() < nCyclesTotal[2])
+			Arm7Run(nCyclesTotal[2] - Arm7TotalCycles());
+
+		nCyclesDone[2] = Arm7TotalCycles() - nCyclesTotal[2];
+		Arm7Close();
+	}
+	else
+	{
+		nCyclesTotal[0] = (UINT32)((UINT64)(M68K_FREQ) * nBurnCPUSpeedAdjust * 100 / (0x0100 * nBurnFPS));
+		nCyclesTotal[1] = Z80_CYCS_PER_FRAME;
+
+		while (SekTotalCycles() < nCyclesTotal[0] / 2)
+			SekRun(nCyclesTotal[0] / 2 - SekTotalCycles());
+
+		if (!nPGMDisableIRQ4)
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
+		while (SekTotalCycles() < nCyclesTotal[0])
+			SekRun(nCyclesTotal[0] - SekTotalCycles());
 	}
 
-	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+	BurnTimerEndFrame(nCyclesTotal[1]);
+	ics2115_update(nBurnSoundLen);
 
-	BurnTimerEndFrame(Z80_CYCS_PER_FRAME);
-
-	if (pBurnSoundOut) {
-		ics2115_update(nBurnSoundLen);
-	}
-
-	if (nEnableArm7) Arm7Close();
-
-	nExtraCycles = SekTotalCycles() - M68K_CYCS_PER_FRAME;
+	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
+	nCyclesDone[1] = ZetTotalCycles() - nCyclesTotal[1];
 
 	ZetClose();
 	SekClose();
@@ -1044,11 +1045,7 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 
 		v3021Scan();
 
-		SCAN_VAR(nExtraCycles);
-
 		SCAN_VAR(PgmInput);
-
-		SCAN_VAR(nPgmZ80Work);
 
 		SCAN_VAR(nPgmCurrentBios);
 

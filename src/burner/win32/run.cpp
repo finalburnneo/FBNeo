@@ -1,4 +1,3 @@
-// Run module
 #include "burner.h"
 
 int bRunPause = 0;

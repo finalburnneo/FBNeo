@@ -1,6 +1,3 @@
-// FB Alpha Bogey Manor Driver Module
-// Based on MAME driver by Bryan McPhail
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "ay8910.h"

@@ -1,6 +1,3 @@
-// FB Alpha Bomb Jack driver module
-// Based on MAME driver by Mirko Buffoni
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

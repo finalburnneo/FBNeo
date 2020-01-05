@@ -1,11 +1,19 @@
+// Copyright (c) Akop Karapetyan
 //
-//  FBEmulatorController.m
-//  Emulator
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//  Created by Akop Karapetyan on 10/25/19.
-//  Copyright © 2019 Akop Karapetyan. All rights reserved.
+//    http://www.apache.org/licenses/LICENSE-2.0
 //
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
+// FIXME: on catalina, it still starts in white
+// FIXME: don't add bogus paths to recently used!
 #import "FBEmulatorController.h"
 
 #import "AppDelegate.h"
@@ -19,6 +27,7 @@
 - (void) unlockCursor;
 - (void) hideCursor;
 - (void) unhideCursor:(BOOL) force;
+- (NSPoint) convertPointToScreen:(NSPoint) point;
 
 @end
 
@@ -28,6 +37,7 @@
     BOOL isCursorVisible;
     BOOL isAutoPaused;
     NSArray *defaultsToObserve;
+    BOOL driverLoadError;
 }
 
 - (id) init
@@ -65,17 +75,12 @@
     lockIcon.image = [NSImage imageNamed:@"NSLockUnlockedTemplate"];
     lockIcon.enabled = NO;
     lockIcon.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"hideLockOptions"];
-    spinner.hidden = YES;
     [self.window addTitlebarAccessoryViewController:tba];
     self.window.backgroundColor = NSColor.blackColor;
 
     screen.delegate = self;
     self.video.delegate = screen;
     [self.runloop addObserver:self];
-
-    label.stringValue = NSLocalizedString(@"Drop a set here to load it.", nil);
-    label.hidden = NO;
-    screen.hidden = YES;
 
     [self.window registerForDraggedTypes:@[NSFilenamesPboardType]];
     for (NSString *key in defaultsToObserve)
@@ -108,21 +113,6 @@
     }
 
     [self.appDelegate restoreScreenSaver];
-}
-
-- (void) windowWillClose:(NSNotification *) notification
-{
-    NSLog(@"windowWillClose");
-    for (NSString *key in defaultsToObserve)
-        [NSUserDefaults.standardUserDefaults removeObserver:self
-                                                 forKeyPath:key
-                                                    context:NULL];
-
-    NSLog(@"Emulator window closed; shutting down");
-    if (NSApplication.sharedApplication.isRunning)
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [NSApplication.sharedApplication terminate:nil];
-        });
 }
 
 - (NSSize) windowWillResize:(NSWindow *) sender
@@ -264,8 +254,6 @@
         [self resizeFrame:NSMakeSize(screenSize.width * 2, screenSize.height * 2)
                   animate:NO];
 
-    screen.hidden = NO;
-    label.hidden = YES;
     lockIcon.enabled = YES;
     lockIcon.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"hideLockOptions"] && !self.input.usesMouse;
 
@@ -275,8 +263,6 @@
 - (void) gameSessionDidEnd
 {
     NSLog(@"gameSessionDidEnd");
-    screen.hidden = YES;
-    label.hidden = NO;
     lockIcon.enabled = NO;
     [self unlockCursor];
 
@@ -286,32 +272,38 @@
 
 - (void) driverInitDidStart
 {
-    [spinner startAnimation:self];
-    spinner.hidden = NO;
+    [progressPanelBar startAnimation:self];
+    [self.window beginSheet:progressPanel
+          completionHandler:^(NSModalResponse returnCode) { }];
 
-    label.stringValue = NSLocalizedString(@"Please wait...", nil);
     self.window.title = NSLocalizedString(@"Loading...", nil);
+    driverLoadError = NO;
 }
 
 - (void) driverInitDidEnd:(NSString *) name
                   success:(BOOL) success
 {
-    [spinner stopAnimation:self];
-    spinner.hidden = YES;
+    [self.window endSheet:progressPanel];
 
     if (success) {
-        label.stringValue = NSLocalizedString(@"Starting...", nil);
         if ([NSUserDefaults.standardUserDefaults boolForKey:@"pauseWhenInactive"]
             && !self.window.isKeyWindow) {
             self.runloop.paused = YES;
             isAutoPaused = YES;
         }
         self.window.title = self.runloop.title;
+        if (driverLoadError)
+            [self.appDelegate displayLogViewer:self];
     } else {
-        label.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Error loading \"%@\".", nil), name];
-        [self.appDelegate displayLogViewer:self];
         self.window.title = NSBundle.mainBundle.infoDictionary[(NSString *)kCFBundleNameKey];
+        [self.appDelegate displayLogViewer:self];
     }
+}
+
+- (void) logDidUpdate:(NSString *) message
+{
+    if ([message hasPrefix:@"!"])
+        driverLoadError = YES;
 }
 
 #pragma mark - Actions
@@ -416,8 +408,8 @@
         CGAssociateMouseAndMouseCursorPosition(false);
 
         CGFloat offset = self.window.screen.frame.size.height + self.window.screen.frame.origin.y;
-        NSPoint centerScreen = [self.window convertPointToScreen:NSMakePoint(NSMidX(screen.bounds),
-                                                                             NSMidY(screen.bounds))];
+        NSPoint centerScreen = [self convertPointToScreen:NSMakePoint(NSMidX(screen.bounds),
+                                                                      NSMidY(screen.bounds))];
         NSPoint screenCoords = NSMakePoint(centerScreen.x, offset - centerScreen.y);
         CGWarpMouseCursorPosition(NSPointToCGPoint(screenCoords));
 
@@ -447,6 +439,19 @@
     }
 
     [self unhideCursor:YES];
+}
+
+- (NSPoint) convertPointToScreen:(NSPoint) point
+{
+    NSWindow *window = self.window;
+    if (@available(macOS 10.12, *))
+        return [window convertPointToScreen:point];
+
+    NSRect frame = window.frame;
+    point.x += frame.origin.x;
+    point.y += frame.origin.y;
+
+    return point;
 }
 
 @end

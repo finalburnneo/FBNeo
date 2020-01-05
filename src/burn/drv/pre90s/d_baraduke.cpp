@@ -1,6 +1,3 @@
-// FB Alpha Baraduke driver module
-// Based on MAME driver by Manuel Abadia and various others
-
 #include "tiles_generic.h"
 #include "m6800_intf.h"
 #include "m6809_intf.h"

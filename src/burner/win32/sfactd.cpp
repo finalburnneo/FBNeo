@@ -1,16 +1,3 @@
-// Burner Shots Factory Test Dialog Rev. 0.02
-// history:
-// rev 0.00: hacked together code
-// rev 0.01: Added sprite toggle.
-// rev 0.02: now uses VidRedraw()
-// rev 0.03: now uses RunFrame() instead of VidRedraw() - prevents input playback desync if playing back..
-//
-// Known Problems:
-// Swiching anything causes the frame to advance.
-//    Only if game doesn't have ReDraw set up! -dink
-//
-// "ghosting" that appears on screen is not captured (this is a good thing)
-
 #include "burner.h"
 
 static HWND hSFactdlg=NULL;

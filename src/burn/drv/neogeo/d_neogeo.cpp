@@ -1,5 +1,3 @@
-// FB Alpha Neo Geo driver module
-
 #include "neogeo.h"
 #include "bitswap.h"
 
@@ -4713,6 +4711,48 @@ struct BurnDriver BurnDrvrbff1k = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_FATFURY,
 	NULL, rbff1kRomInfo, rbff1kRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+// Real Bout Fatal Fury / Real Bout Garou Densetsu (Korean release, bug fix revision)
+/* KOREAN VERSION */
+
+static struct BurnRomInfo rbff1kaRomDesc[] = {
+	{ "095-p1k.p1",   0x100000, 0xf705364b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
+	{ "095-p2.sp2",   0x200000, 0xcc15826e, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
+
+	{ "095-s1.s1",    0x020000, 0xb6bf5e08, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
+
+	{ "069-c1.c1",    0x400000, 0xe302f93c, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332205
+	{ "069-c2.c2",    0x400000, 0x1053a455, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "069-c3.c3",    0x400000, 0x1c0fde2f, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "069-c4.c4",    0x400000, 0xa25fc3d0, 3 | BRF_GRA },           //  6 					/ TC5332205
+	{ "095-c5.c5",    0x400000, 0x8b9b65df, 3 | BRF_GRA },           //  7 					/ TC5332202
+	{ "095-c6.c6",    0x400000, 0x3e164718, 3 | BRF_GRA },           //  8 					/ TC5332202
+	{ "095-c7.c7",    0x200000, 0xca605e12, 3 | BRF_GRA },           //  9 					/ TC5316200
+	{ "095-c8.c8",    0x200000, 0x4e6beb6c, 3 | BRF_GRA },           // 10 					/ TC5316200
+
+	{ "095-m1.m1",    0x020000, 0x653492a7, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
+
+	{ "069-v1.v1",    0x400000, 0x2bdbd4db, 5 | BRF_SND },           // 12 Sound data		/ TC5332204	
+	{ "069-v2.v2",    0x400000, 0xa698a487, 5 | BRF_SND },           // 13 					/ TC5332204
+	{ "095-v3.v3",    0x400000, 0x189d1c6c, 5 | BRF_SND },           // 14 					/ TC5332201
+
+	/* the rom below acts as a patch to the program rom in the cart, replacing the first 512kb */
+	{ "095-eprk.ep1", 0x080000, 0x422093ed, 1 | BRF_ESS | BRF_PRG }, // 15 					/ M27C4002
+	/* no label on eprom, correct chip label unknown */
+};
+
+STDROMPICKEXT(rbff1ka, rbff1ka, neogeo)
+STD_ROM_FN(rbff1ka)
+
+struct BurnDriver BurnDrvrbff1ka = {
+	"rbff1ka", "rbff1", "neogeo", NULL, "1995",
+	"Real Bout Fatal Fury / Real Bout Garou Densetsu (Korean release, bug fix revision)\0", NULL, "SNK", "Neo Geo MVS",
+	L"Real Bout Fatal Fury\0Real Bout \u9913\u72FC\u4F1D\u8AAC (Korean release, bug fix revision)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_FATFURY,
+	NULL, rbff1kaRomInfo, rbff1kaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	rbff1aInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };
 
@@ -17430,6 +17470,48 @@ struct BurnDriver BurnDrvbadapple = {
 	NULL, badappleRomInfo, badappleRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
+};
+
+
+// Project Neon - Caravan Demo (0.4.19)
+
+static struct BurnRomInfo neonRomDesc[] = {
+	{ "dev_p1.rom",    0x002f6e5, 0x06a0946f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "fix.bin",       0x0020000, 0xf32de862, 2 | BRF_GRA },           //  1 Text data
+
+	{ "char.bin",      0x007a380, 0x8e0e0e70, 3 | BRF_GRA },           //  2 Sprite data
+
+	{ "sound.M1",      0x0010000, 0x6d24cf93, 4 | BRF_ESS | BRF_PRG }, //  3 Z80 code
+
+	{ "sound.V1",      0x0100000, 0x2823ca49, 5 | BRF_SND },           //  4 Sound data
+};
+
+STDROMPICKEXT(neon, neon, neogeo)
+STD_ROM_FN(neon)
+
+static void neonCallback()
+{
+	BurnByteswap(Neo68KROMActive, 0x80000); // byteswap 68k
+
+	BurnLoadRom(NeoSpriteROM[nNeoActiveSlot], 2, 1);
+}
+
+static INT32 neonInit()
+{
+	NeoCallbackActive->pInitialise = neonCallback;
+	
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvneon = {
+	"neon", NULL, "neogeo", NULL, "2019",
+	"Project Neon - Caravan Demo (0.4.19)\0", NULL, "FULLSET", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_DEMO | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, neonRomInfo, neonRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	neonInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 224, 304, 3, 4
 };
 
 

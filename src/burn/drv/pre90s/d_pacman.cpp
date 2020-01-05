@@ -1,8 +1,3 @@
-// FB Alpha Puckman module
-// Based on MAME driver by Nicola Salmoria and many others
-
-// Fix Shoot the Bull inputs
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "bitswap.h"
@@ -255,7 +250,7 @@ static struct BurnInputInfo theglobpInputList[] = {
 
 STDINPUTINFO(theglobp)
 
-static struct BurnInputInfo EeekkInputList[] = {
+static struct BurnInputInfo EeekkpInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
@@ -276,7 +271,7 @@ static struct BurnInputInfo EeekkInputList[] = {
 	{"Dip Switches 3",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
-STDINPUTINFO(Eeekk)
+STDINPUTINFO(Eeekkp)
 
 static struct BurnInputInfo ponpokoInputList[] = {
 	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5, "p1 coin"},
@@ -1710,7 +1705,7 @@ static struct BurnDIPInfo shootbulDIPList[]=
 
 STDDIPINFO(shootbul)
 
-static struct BurnDIPInfo EeekkDIPList[]=
+static struct BurnDIPInfo EeekkpDIPList[]=
 {
 	{0x0d, 0xff, 0xff, 0xff, NULL			},
 	{0x0e, 0xff, 0xff, 0xff, NULL			},
@@ -1741,7 +1736,7 @@ static struct BurnDIPInfo EeekkDIPList[]=
 	{0x0f, 0x01, 0x20, 0x20, "Off"			},
 };
 
-STDDIPINFO(Eeekk)
+STDDIPINFO(Eeekkp)
 
 //------------------------------------------------------------------------------------------------------
 
@@ -2253,7 +2248,7 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	{
 		case EPOS:
 			epos_hardware_counter = 0x0A + acitya;
-			if (strcmp(BurnDrvGetTextA(DRV_NAME), "eeekk") == 0) epos_hardware_counter = 0x09;
+			if (strcmp(BurnDrvGetTextA(DRV_NAME), "eeekkp") == 0) epos_hardware_counter = 0x09;
 			epos_hardware_set_bank(epos_hardware_counter);
 		break;
 
@@ -6351,7 +6346,7 @@ struct BurnDriver BurnDrvsprglbpg = {
 };
 
 
-// Beastie Feastie
+// Beastie Feastie (Pac-Man conversion)
 
 static struct BurnRomInfo beastfpRomDesc[] = {
 	{ "bf-u2.bin",    			0x2000, 0x3afc517b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -6374,7 +6369,7 @@ STD_ROM_FN(beastfp)
 
 struct BurnDriver BurnDrvbeastfp = {
 	"beastfp", "suprglob", NULL, NULL, "1984",
-	"Beastie Feastie\0", NULL, "Epos Corporation", "Pac-man",
+	"Beastie Feastie (Pac-Man conversion)\0", NULL, "Epos Corporation", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
 	NULL, beastfpRomInfo, beastfpRomName, NULL, NULL, NULL, NULL, theglobpInputInfo, theglobpDIPInfo,
@@ -6385,7 +6380,7 @@ struct BurnDriver BurnDrvbeastfp = {
 
 // Eeekk!
 
-static struct BurnRomInfo eeekkRomDesc[] = {
+static struct BurnRomInfo eeekkpRomDesc[] = {
 	{ "u_2_eeekk_pg03094.u2",	0x2000, 0x701e37f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "u_3_eeekk_pg03094.u3",	0x2000, 0xbcf524ae, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -6402,10 +6397,10 @@ static struct BurnRomInfo eeekkRomDesc[] = {
 	{ "eeekk.ic4",	0x002c, 0xf588ba4e, 0 | BRF_OPT },           //  4 epos_pal10h8
 };
 
-STD_ROM_PICK(eeekk)
-STD_ROM_FN(eeekk)
+STD_ROM_PICK(eeekkp)
+STD_ROM_FN(eeekkp)
 
-static void eeekk_decrypt()
+static void eeekkp_decrypt()
 {
 	for (INT32 i = 0; i < 0x4000; i++) {
 		DrvZ80ROM[0x10000 + i] = BITSWAP08(DrvZ80ROM[i] ^ 0xfd, 7, 6, 1, 3, 0, 4, 2, 5);
@@ -6415,18 +6410,18 @@ static void eeekk_decrypt()
 	}
 }
 
-static INT32 eeekkInit()
+static INT32 eeekkpInit()
 {
-	return DrvInit(StandardMap, eeekk_decrypt, EPOS);
+	return DrvInit(StandardMap, eeekkp_decrypt, EPOS);
 }
 
-struct BurnDriver BurnDrvEeekk = {
-	"eeekk", NULL, NULL, NULL, "1984",
-	"Eeekk!\0", NULL, "Epos Corporation", "Pac-man",
+struct BurnDriver BurnDrvEeekkp = {
+	"eeekkp", NULL, NULL, NULL, "1984",
+	"Eeekk! (Pac-man conversion)\0", NULL, "Epos Corporation", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
-	NULL, eeekkRomInfo, eeekkRomName, NULL, NULL, NULL, NULL, EeekkInputInfo, EeekkDIPInfo,
-	eeekkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	NULL, eeekkpRomInfo, eeekkpRomName, NULL, NULL, NULL, NULL, EeekkpInputInfo, EeekkpDIPInfo,
+	eeekkpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 

@@ -1,5 +1,5 @@
 /**
-** Copyright (C) 2015 Akop Karapetyan
+** Copyright (C) 2015-2019 Akop Karapetyan
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
 ** limitations under the License.
 **/
 
-#ifndef PHL_GLES_H
-#define PHL_GLES_H
+#ifndef PIGL_H
+#define PIGL_H
 
-extern uint32_t phl_gles_screen_width;
-extern uint32_t phl_gles_screen_height;
+extern uint32_t pigl_screen_width;
+extern uint32_t pigl_screen_height;
 
-int phl_gles_init();
-void phl_gles_shutdown();
+int pigl_init();
+void pigl_shutdown();
 
-void phl_gles_swap_buffers();
+void pigl_swap();
 
-#endif // PHL_GLES_H
+#endif // PIGL_H

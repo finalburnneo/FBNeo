@@ -1,5 +1,3 @@
-// FB Alpha sample player module
-
 #include "burnint.h"
 #include "samples.h"
 
@@ -49,7 +47,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 	UINT32 sample_rate = get_long();	ptr += 4; // sample rate
 /*	UINT32 speed = get_long();      */  ptr += 4; // speed - should equal (bits * channels * sample_rate)
 /*	UINT16 align = get_short();   */    ptr += 2; // block align	should be ((bits / 8) * channels)
-	UINT16 bits = get_short() / 8;		ptr += 2; // bits per sample	(0010)
+	UINT16 bytes = get_short() / 8;		ptr += 2; // bytes per sample	(0010)
 	ptr += length2 - 16;				          // get past the wave format chunk
 
 	// are we in the 'data' chunk? if not, skip this chunk.
@@ -64,7 +62,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 
 	if ((len - (ptr - src)) < data_length) data_length = len - (ptr - src);
 
-	UINT32 converted_len = (UINT32)((float)(data_length * (nBurnSoundRate * 1.00000 / sample_rate) / (bits * channels)));
+	UINT32 converted_len = (UINT32)((float)(data_length * (nBurnSoundRate * 1.00000 / sample_rate) / (bytes * channels)));
 	if (converted_len == 0) return; 
 
 	sample_ptr->data = (UINT8*)BurnMalloc(converted_len * 4);
@@ -80,12 +78,12 @@ static void make_raw(UINT8 *src, UINT32 len)
 		bprintf(0, _T("Sample at native rate already..\n"));
 		for (UINT32 i = 0; i < converted_len; i++)
 		{
-			if (bits == 2)											//  signed 16 bit, stereo & mono
+			if (bytes == 2)											//  signed 16 bit, stereo & mono
 			{
-				data[i * 2 + 0] = poin[i * channels + 0             ];
-				data[i * 2 + 1] = poin[i * channels + (channels / 2)];
+				data[i * 2 + 0] = BURN_ENDIAN_SWAP_INT16(poin[i * channels + 0             ]);
+				data[i * 2 + 1] = BURN_ENDIAN_SWAP_INT16(poin[i * channels + (channels / 2)]);
 			}
-			else if (bits == 1)										// unsigned 8 bit, stereo & mono
+			else if (bytes == 1)										// unsigned 8 bit, stereo & mono
 			{
 				data[i * 2 + 0] = (poib[i * channels + 0             ] - 128) << 8; data[i * 2 + 0] |= (data[i * 2 + 0] >> 7) & 0xFF;
 				data[i * 2 + 1] = (poib[i * channels + (channels / 2)] - 128) << 8; data[i * 2 + 1] |= (data[i * 2 + 1] >> 7) & 0xFF;
@@ -95,7 +93,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 	else
 	{
 		// interpolate sample
-		bprintf(0, _T("Converting %dhz [%d bit, %d channels] to %dhz (native).\n"), sample_rate, bits*8, channels, nBurnSoundRate);
+		bprintf(0, _T("Converting %dhz [%d bit, %d channels] to %dhz (native).\n"), sample_rate, bytes*8, channels, nBurnSoundRate);
 		INT32 buffer_l[4];
 		INT32 buffer_r[4];
 
@@ -106,9 +104,9 @@ static void make_raw(UINT8 *src, UINT32 len)
 		// this block causes clicks when the sample loops, disable for now
 		if (sample_ptr->flags & SAMPLE_AUTOLOOP)
 		{
-			UINT8* end = sample_ptr->data + data_length / (bits * channels);
+			UINT8* end = sample_ptr->data + data_length / (bytes * channels);
 
-			if (bits == 1)
+			if (bytes == 1)
 			{
 				buffer_l[1] = (INT16)((*(end - 3 * channels)) - 0x80) << 8; buffer_l[1] |= (buffer_l[1] >> 7) & 0xFF;
 				buffer_l[2] = (INT16)((*(end - 2 * channels)) - 0x80) << 8; buffer_l[2] |= (buffer_l[2] >> 7) & 0xFF;
@@ -144,12 +142,12 @@ static void make_raw(UINT8 *src, UINT32 len)
 				buffer_l[1] = buffer_l[2]; buffer_r[1] = buffer_r[2];
 				buffer_l[2] = buffer_l[3]; buffer_r[2] = buffer_r[3];
 
-				if (bits == 2)										// signed 16 bit, stereo & mono
+				if (bytes == 2)										// signed 16 bit, stereo & mono
 				{
-					buffer_l[3] = (INT32)(poin[prev_offs * channels + 0             ]);
-					buffer_r[3] = (INT32)(poin[prev_offs * channels + (channels / 2)]);
+					buffer_l[3] = (INT32)(BURN_ENDIAN_SWAP_INT16(poin[prev_offs * channels + 0             ]));
+					buffer_r[3] = (INT32)(BURN_ENDIAN_SWAP_INT16(poin[prev_offs * channels + (channels / 2)]));
 				}
-				else if (bits == 1)									// unsigned 8 bit, stereo & mono
+				else if (bytes == 1)									// unsigned 8 bit, stereo & mono
 				{
 					buffer_l[3] = (INT32)(poib[prev_offs * channels + 0             ] - 128) << 8; buffer_l[3] |= (buffer_l[3] >> 7) & 0xFF;
 					buffer_r[3] = (INT32)(poib[prev_offs * channels + (channels / 2)] - 128) << 8; buffer_r[3] |= (buffer_r[3] >> 7) & 0xFF;
@@ -163,7 +161,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 
 	{ // sample cleanup
 		if (bBurnSampleTrimSampleEnd) { // trim silence off the end of the sample, bBurnSampleTrimSampleEnd must be set before init!
-			while (data[converted_len * 2] == 0) converted_len -= 2;
+			while (data[converted_len * bytes] == 0) converted_len -= bytes;
 		}
 	}
 

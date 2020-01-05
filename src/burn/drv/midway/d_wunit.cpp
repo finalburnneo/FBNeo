@@ -1,5 +1,3 @@
-// Based on MAME driver by Alex Pasadyn, Zsolt Vasvari, Ernesto Corvi, Aaron Giles
-
 #include "driver.h"
 #include "burnint.h"
 #include "midwunit.h"

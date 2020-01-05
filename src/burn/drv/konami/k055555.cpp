@@ -1,8 +1,3 @@
-// 055555
-
-// license:BSD-3-Clause
-// copyright-holders:David Haywood
-
 #include "burnint.h"
 #include "konamiic.h"
 

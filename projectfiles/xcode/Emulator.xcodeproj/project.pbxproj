@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE0A7E9723938CE7001E6997 /* FBLauncherController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9523938CE6001E6997 /* FBLauncherController.m */; };
+		FE0A7E9A23938E9F001E6997 /* Launcher.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE0A7E9823938E9F001E6997 /* Launcher.xib */; };
+		FE0A7E9D2393A1FF001E6997 /* FBScanner.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */; };
+		FE0A7EA12394B87B001E6997 /* FBRomSetStatusAsNSImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */; };
+		FE0A7EA42394ED91001E6997 /* FBDropFileScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7EA32394ED91001E6997 /* FBDropFileScrollView.m */; };
+		FE0A7EA7239501FF001E6997 /* FBImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7EA5239501FF001E6997 /* FBImporter.m */; };
+		FE0A7EAA239B8A7E001E6997 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE0A7EA8239B8A7E001E6997 /* About.xib */; };
+		FE0A7EAD239B8B4F001E6997 /* FBAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7EAB239B8B4E001E6997 /* FBAboutController.m */; };
 		FE1B1092235615940065200C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1091235615940065200C /* AppDelegate.m */; };
 		FE1B1094235615950065200C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1093235615950065200C /* Assets.xcassets */; };
 		FE1B1097235615950065200C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1095235615950065200C /* MainMenu.xib */; };
@@ -66,7 +74,6 @@
 		FE1B240A23561A750065200C /* tlcs90.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D8423561A630065200C /* tlcs90.cpp */; settings = {COMPILER_FLAGS = "-Wno-tautological-pointer-compare"; }; };
 		FE1B240B23561A750065200C /* upd7810.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D8623561A630065200C /* upd7810.cpp */; };
 		FE1B240F23561A750065200C /* hd6309_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1D8B23561A640065200C /* hd6309_intf.cpp */; };
-		FE1B241023561A750065200C /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1D8C23561A640065200C /* license.txt */; };
 		FE1B241523561A750065200C /* pngrio.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1DAC23561A640065200C /* pngrio.c */; };
 		FE1B241623561A750065200C /* pngerror.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1DAD23561A640065200C /* pngerror.c */; };
 		FE1B241723561A750065200C /* pngwio.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1DAE23561A640065200C /* pngwio.c */; };
@@ -983,7 +990,9 @@
 		FE2BC6D02362D5BD00B9D150 /* FBMainThread+Etc.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */; };
 		FE34741A23675C4C006646E7 /* FBAudio.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE34741823675C4C006646E7 /* FBAudio.mm */; };
 		FE34742623696151006646E7 /* SDLAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FE34742423696150006646E7 /* SDLAudioEngine.m */; };
+		FE3BD61623A4979700570784 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FE3BD61523A4979700570784 /* License.rtf */; };
 		FE811005236B73BD000B5F73 /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE811004236B73BD000B5F73 /* m68kops.c */; };
+		FEA1AB8823B5D49700D6082A /* d_spdodgeb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
@@ -1036,6 +1045,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FE0A7E9523938CE6001E6997 /* FBLauncherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLauncherController.m; sourceTree = "<group>"; };
+		FE0A7E9623938CE6001E6997 /* FBLauncherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLauncherController.h; sourceTree = "<group>"; };
+		FE0A7E9923938E9F001E6997 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Launcher.xib; sourceTree = "<group>"; };
+		FE0A7E9B2393A1FE001E6997 /* FBScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBScanner.h; sourceTree = "<group>"; };
+		FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBScanner.mm; sourceTree = "<group>"; };
+		FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRomSetStatusAsNSImage.m; sourceTree = "<group>"; };
+		FE0A7EA02394B87B001E6997 /* FBRomSetStatusAsNSImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRomSetStatusAsNSImage.h; sourceTree = "<group>"; };
+		FE0A7EA22394ED90001E6997 /* FBDropFileScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDropFileScrollView.h; sourceTree = "<group>"; };
+		FE0A7EA32394ED91001E6997 /* FBDropFileScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBDropFileScrollView.m; sourceTree = "<group>"; };
+		FE0A7EA5239501FF001E6997 /* FBImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBImporter.m; sourceTree = "<group>"; };
+		FE0A7EA6239501FF001E6997 /* FBImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBImporter.h; sourceTree = "<group>"; };
+		FE0A7EA9239B8A7E001E6997 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/About.xib; sourceTree = "<group>"; };
+		FE0A7EAB239B8B4E001E6997 /* FBAboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBAboutController.m; sourceTree = "<group>"; };
+		FE0A7EAC239B8B4F001E6997 /* FBAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAboutController.h; sourceTree = "<group>"; };
 		FE1B108D235615940065200C /* FinalBurn Neo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FinalBurn Neo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE1B1090235615940065200C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FE1B1091235615940065200C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1256,7 +1279,6 @@
 		FE1B1D8923561A640065200C /* 7810ops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7810ops.c; sourceTree = "<group>"; };
 		FE1B1D8A23561A640065200C /* 7810dasm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7810dasm.c; sourceTree = "<group>"; };
 		FE1B1D8B23561A640065200C /* hd6309_intf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hd6309_intf.cpp; sourceTree = "<group>"; };
-		FE1B1D8C23561A640065200C /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = license.txt; path = ../../src/license.txt; sourceTree = "<group>"; };
 		FE1B1DAB23561A640065200C /* pnginfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pnginfo.h; sourceTree = "<group>"; };
 		FE1B1DAC23561A640065200C /* pngrio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngrio.c; sourceTree = "<group>"; };
 		FE1B1DAD23561A640065200C /* pngerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngerror.c; sourceTree = "<group>"; };
@@ -2488,8 +2510,10 @@
 		FE34741923675C4C006646E7 /* FBAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAudio.h; sourceTree = "<group>"; };
 		FE34742423696150006646E7 /* SDLAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLAudioEngine.m; sourceTree = "<group>"; };
 		FE34742523696151006646E7 /* SDLAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLAudioEngine.h; sourceTree = "<group>"; };
+		FE3BD61523A4979700570784 /* License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = License.rtf; sourceTree = "<group>"; };
 		FE811004236B73BD000B5F73 /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_spdodgeb.cpp; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
 		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7AE23564A6400DA2D9D /* cave_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_sprite_func.pl; sourceTree = "<group>"; };
@@ -2545,6 +2569,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE0A7E9E2394B87B001E6997 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FE0A7EA22394ED90001E6997 /* FBDropFileScrollView.h */,
+				FE0A7EA32394ED91001E6997 /* FBDropFileScrollView.m */,
+				FE0A7EA02394B87B001E6997 /* FBRomSetStatusAsNSImage.h */,
+				FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */,
+				FEC5D3D7235C160600ABA9FB /* FBScreenView.h */,
+				FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		FE1B1084235615940065200C = {
 			isa = PBXGroup;
 			children = (
@@ -2568,16 +2605,18 @@
 		FE1B108F235615940065200C /* Emulator */ = {
 			isa = PBXGroup;
 			children = (
-				FE2BC6BD2362BF9200B9D150 /* Nibs */,
 				FE2BC6AF23615BBC00B9D150 /* Controllers */,
+				FE3BD61423A4979700570784 /* Doc */,
+				FE2BC6BD2362BF9200B9D150 /* Nibs */,
+				FE0A7E9E2394B87B001E6997 /* Views */,
+				FE1B109B235615960065200C /* FinalBurnNeo.entitlements */,
 				FE1B1090235615940065200C /* AppDelegate.h */,
 				FE1B1091235615940065200C /* AppDelegate.m */,
-				FE1B1093235615950065200C /* Assets.xcassets */,
-				FE2BC6BA2362B4E200B9D150 /* dsa_pub.pem */,
-				FE1B109B235615960065200C /* FinalBurnNeo.entitlements */,
-				FE1B1098235615950065200C /* Info.plist */,
 				FE1B1099235615950065200C /* main.m */,
+				FE2BC6BA2362B4E200B9D150 /* dsa_pub.pem */,
 				FEF4EE882363720B004E0DCE /* Defaults.plist */,
+				FE1B1098235615950065200C /* Info.plist */,
+				FE1B1093235615950065200C /* Assets.xcassets */,
 			);
 			path = Emulator;
 			sourceTree = "<group>";
@@ -2592,7 +2631,6 @@
 				FE1B1E5023561A660065200C /* intf */,
 				FE1B1EA023561A660065200C /* interface.cpp */,
 				FE1B1E9F23561A660065200C /* interface.h */,
-				FE1B1D8C23561A640065200C /* license.txt */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -4117,223 +4155,224 @@
 		FE1B20F623561A6C0065200C /* pre90s */ = {
 			isa = PBXGroup;
 			children = (
-				FE1B20F723561A6C0065200C /* d_cloud9.cpp */,
-				FE1B20F823561A6C0065200C /* d_cybertnk.cpp */,
-				FE1B20F923561A6C0065200C /* d_thief.cpp */,
-				FE1B20FA23561A6D0065200C /* d_bionicc.cpp */,
-				FE1B20FB23561A6D0065200C /* d_sub.cpp */,
-				FE1B20FC23561A6D0065200C /* d_alinvade.cpp */,
-				FE1B20FD23561A6D0065200C /* d_1942.cpp */,
-				FE1B20FE23561A6D0065200C /* d_dkong.cpp */,
-				FE1B20FF23561A6D0065200C /* d_tecmo.cpp */,
-				FE1B210023561A6D0065200C /* d_jrpacman.cpp */,
-				FE1B210123561A6D0065200C /* d_exedexes.cpp */,
-				FE1B210223561A6D0065200C /* d_1943.cpp */,
-				FE1B210323561A6D0065200C /* d_williams.cpp */,
-				FE1B210423561A6D0065200C /* d_galaga.cpp */,
-				FE1B210523561A6D0065200C /* d_popeye.cpp */,
-				FE1B210623561A6D0065200C /* d_scregg.cpp */,
-				FE1B210723561A6D0065200C /* d_efdt.cpp */,
-				FE1B210823561A6D0065200C /* d_momoko.cpp */,
-				FE1B210923561A6D0065200C /* d_tankbust.cpp */,
-				FE1B210A23561A6D0065200C /* d_rallyx.cpp */,
-				FE1B210B23561A6D0065200C /* d_pengadvb.cpp */,
-				FE1B210C23561A6D0065200C /* d_quantum.cpp */,
-				FE1B210D23561A6D0065200C /* d_ssozumo.cpp */,
-				FE1B210E23561A6D0065200C /* d_snk.cpp */,
-				FE1B210F23561A6D0065200C /* d_mustache.cpp */,
-				FE1B211023561A6D0065200C /* d_alpha68k.cpp */,
-				FE1B211123561A6D0065200C /* d_megasys1.cpp */,
-				FE1B211223561A6D0065200C /* d_sauro.cpp */,
-				FE1B211323561A6D0065200C /* d_namcos86.cpp */,
-				FE1B211423561A6D0065200C /* d_pac2650.cpp */,
-				FE1B211523561A6D0065200C /* d_jedi.cpp */,
-				FE1B211623561A6D0065200C /* d_flower.cpp */,
-				FE1B211723561A6D0065200C /* d_mitchell.cpp */,
-				FE1B211823561A6D0065200C /* d_mainsnk.cpp */,
-				FE1B211923561A6D0065200C /* d_toypop.cpp */,
-				FE1B211A23561A6D0065200C /* d_espial.cpp */,
-				FE1B211B23561A6D0065200C /* d_clshroad.cpp */,
-				FE1B211C23561A6D0065200C /* d_mirax.cpp */,
-				FE1B211D23561A6D0065200C /* d_blktiger.cpp */,
-				FE1B211E23561A6D0065200C /* d_ettrivia.cpp */,
-				FE1B211F23561A6D0065200C /* d_metlfrzr.cpp */,
-				FE1B212023561A6D0065200C /* d_amspdwy.cpp */,
-				FE1B212123561A6D0065200C /* d_lwings.cpp */,
-				FE1B212223561A6D0065200C /* d_mrdo.cpp */,
-				FE1B212323561A6D0065200C /* d_foodf.cpp */,
-				FE1B212423561A6D0065200C /* d_renegade.cpp */,
-				FE1B212523561A6D0065200C /* d_lasso.cpp */,
-				FE1B212623561A6D0065200C /* d_mole.cpp */,
-				FE1B212723561A6D0065200C /* d_suna8.cpp */,
-				FE1B212823561A6D0065200C /* d_firetrap.cpp */,
-				FE1B212923561A6D0065200C /* d_thedeep.cpp */,
-				FE1B212A23561A6D0065200C /* d_sf.cpp */,
-				FE1B212B23561A6D0065200C /* d_wallc.cpp */,
-				FE1B212C23561A6D0065200C /* d_xain.cpp */,
-				FE1B212D23561A6D0065200C /* d_mastboyo.cpp */,
-				FE1B212E23561A6D0065200C /* d_cloak.cpp */,
-				FE1B212F23561A6D0065200C /* d_bzone.cpp */,
-				FE1B213023561A6D0065200C /* d_wc90.cpp */,
-				FE1B213123561A6D0065200C /* d_lastduel.cpp */,
-				FE1B213223561A6D0065200C /* d_toki.cpp */,
-				FE1B213323561A6D0065200C /* d_cclimber.cpp */,
-				FE1B213423561A6D0065200C /* d_calorie.cpp */,
-				FE1B213523561A6D0065200C /* d_dribling.cpp */,
-				FE1B213623561A6D0065200C /* d_cabal.cpp */,
-				FE1B213723561A6D0065200C /* d_gng.cpp */,
-				FE1B213823561A6D0065200C /* d_bagman.cpp */,
-				FE1B213923561A6D0065200C /* d_atetris.cpp */,
-				FE1B213A23561A6D0065200C /* d_popper.cpp */,
-				FE1B213B23561A6D0065200C /* d_capbowl.cpp */,
-				FE1B213C23561A6D0065200C /* d_route16.cpp */,
-				FE1B213D23561A6D0065200C /* d_citycon.cpp */,
-				FE1B213E23561A6D0065200C /* d_mystston.cpp */,
-				FE1B213F23561A6D0065200C /* d_deadang.cpp */,
-				FE1B214023561A6D0065200C /* d_kingofbox.cpp */,
-				FE1B214123561A6D0065200C /* d_phoenix.cpp */,
-				FE1B214223561A6D0065200C /* d_copsnrob.cpp */,
 				FE1B214323561A6D0065200C /* d_4enraya.cpp */,
-				FE1B214423561A6D0065200C /* d_bbusters.cpp */,
-				FE1B214523561A6D0065200C /* d_mouser.cpp */,
-				FE1B214623561A6D0065200C /* d_wiz.cpp */,
-				FE1B214723561A6D0065200C /* d_beaminv.cpp */,
-				FE1B214823561A6D0065200C /* d_funkybee.cpp */,
-				FE1B214923561A6D0065200C /* d_iqblock.cpp */,
-				FE1B214A23561A6D0065200C /* d_gunsmoke.cpp */,
-				FE1B214B23561A6D0065200C /* d_sonson.cpp */,
-				FE1B214C23561A6D0065200C /* d_dynduke.cpp */,
-				FE1B214D23561A6D0065200C /* d_ninjakd2.cpp */,
-				FE1B214E23561A6D0065200C /* d_aztarac.cpp */,
-				FE1B214F23561A6D0065200C /* d_stfight.cpp */,
-				FE1B215023561A6D0065200C /* d_jack.cpp */,
-				FE1B215123561A6D0065200C /* d_carjmbre.cpp */,
-				FE1B215223561A6D0065200C /* d_prehisle.cpp */,
-				FE1B215323561A6D0065200C /* d_argus.cpp */,
-				FE1B215423561A6D0065200C /* d_cop01.cpp */,
+				FE1B20FD23561A6D0065200C /* d_1942.cpp */,
+				FE1B210223561A6D0065200C /* d_1943.cpp */,
+				FE1B21CA23561A6F0065200C /* d_aeroboto.cpp */,
+				FE1B20FC23561A6D0065200C /* d_alinvade.cpp */,
+				FE1B211023561A6D0065200C /* d_alpha68k.cpp */,
 				FE1B215523561A6D0065200C /* d_alpha68k1.cpp */,
-				FE1B215623561A6D0065200C /* d_tail2nose.cpp */,
-				FE1B215723561A6D0065200C /* d_asteroids.cpp */,
-				FE1B215823561A6D0065200C /* d_kncljoe.cpp */,
-				FE1B215923561A6D0065200C /* d_pacman.cpp */,
-				FE1B215A23561A6D0065200C /* d_goindol.cpp */,
-				FE1B215B23561A6D0065200C /* d_sprcros2.cpp */,
-				FE1B215C23561A6D0065200C /* d_matmania.cpp */,
-				FE1B215D23561A6D0065200C /* d_tsamurai.cpp */,
-				FE1B215E23561A6D0065200C /* d_shisen.cpp */,
-				FE1B215F23561A6D0065200C /* d_speedbal.cpp */,
-				FE1B216023561A6D0065200C /* d_starwars.cpp */,
 				FE1B216123561A6D0065200C /* d_alpha68k2.cpp */,
-				FE1B216223561A6D0065200C /* d_sidearms.cpp */,
-				FE1B216323561A6D0065200C /* d_hvyunit.cpp */,
-				FE1B216423561A6D0065200C /* d_mmagic.cpp */,
-				FE1B216523561A6D0065200C /* d_quizo.cpp */,
-				FE1B216623561A6D0065200C /* d_mrflea.cpp */,
-				FE1B216723561A6D0065200C /* d_madmotor.cpp */,
-				FE1B216823561A6D0065200C /* d_bwidow.cpp */,
-				FE1B216923561A6E0065200C /* d_gaplus.cpp */,
-				FE1B216A23561A6E0065200C /* d_rpunch.cpp */,
-				FE1B216B23561A6E0065200C /* d_seicross.cpp */,
-				FE1B216C23561A6E0065200C /* d_holeland.cpp */,
-				FE1B216D23561A6E0065200C /* d_dacholer.cpp */,
+				FE1B21C923561A6F0065200C /* d_ambush.cpp */,
+				FE1B212023561A6D0065200C /* d_amspdwy.cpp */,
 				FE1B216E23561A6E0065200C /* d_arabian.cpp */,
+				FE1B215323561A6D0065200C /* d_argus.cpp */,
+				FE1B219123561A6E0065200C /* d_armedf.cpp */,
+				FE1B215723561A6D0065200C /* d_asteroids.cpp */,
+				FE1B213923561A6D0065200C /* d_atetris.cpp */,
+				FE1B214E23561A6D0065200C /* d_aztarac.cpp */,
+				FE1B213823561A6D0065200C /* d_bagman.cpp */,
+				FE1B217D23561A6E0065200C /* d_baraduke.cpp */,
+				FE1B218623561A6E0065200C /* d_battlane.cpp */,
+				FE1B21B723561A6E0065200C /* d_battlex.cpp */,
+				FE1B214423561A6D0065200C /* d_bbusters.cpp */,
+				FE1B214723561A6D0065200C /* d_beaminv.cpp */,
+				FE1B21CF23561A6F0065200C /* d_berzerk.cpp */,
+				FE1B20FA23561A6D0065200C /* d_bionicc.cpp */,
+				FE1B211D23561A6D0065200C /* d_blktiger.cpp */,
+				FE1B218123561A6E0065200C /* d_blockade.cpp */,
+				FE1B21CD23561A6F0065200C /* d_blockout.cpp */,
+				FE1B21C623561A6F0065200C /* d_blueprnt.cpp */,
+				FE1B218D23561A6E0065200C /* d_bogeyman.cpp */,
+				FE1B21CC23561A6F0065200C /* d_bombjack.cpp */,
+				FE1B217F23561A6E0065200C /* d_btime.cpp */,
+				FE1B216823561A6D0065200C /* d_bwidow.cpp */,
+				FE1B212F23561A6D0065200C /* d_bzone.cpp */,
+				FE1B213623561A6D0065200C /* d_cabal.cpp */,
+				FE1B213423561A6D0065200C /* d_calorie.cpp */,
+				FE1B21A323561A6E0065200C /* d_canyon.cpp */,
+				FE1B213B23561A6D0065200C /* d_capbowl.cpp */,
+				FE1B215123561A6D0065200C /* d_carjmbre.cpp */,
+				FE1B21CE23561A6F0065200C /* d_ccastles.cpp */,
+				FE1B213323561A6D0065200C /* d_cclimber.cpp */,
+				FE1B21BB23561A6F0065200C /* d_cheekyms.cpp */,
+				FE1B21C523561A6F0065200C /* d_chinagat.cpp */,
+				FE1B213D23561A6D0065200C /* d_citycon.cpp */,
+				FE1B212E23561A6D0065200C /* d_cloak.cpp */,
+				FE1B20F723561A6C0065200C /* d_cloud9.cpp */,
+				FE1B211B23561A6D0065200C /* d_clshroad.cpp */,
+				FE1B219A23561A6E0065200C /* d_commando.cpp */,
+				FE1B215423561A6D0065200C /* d_cop01.cpp */,
+				FE1B214223561A6D0065200C /* d_copsnrob.cpp */,
+				FE1B20F823561A6C0065200C /* d_cybertnk.cpp */,
+				FE1B216D23561A6E0065200C /* d_dacholer.cpp */,
+				FE1B21A423561A6E0065200C /* d_dday.cpp */,
+				FE1B21B023561A6E0065200C /* d_ddayjlc.cpp */,
+				FE1B21B223561A6E0065200C /* d_ddragon.cpp */,
+				FE1B213F23561A6D0065200C /* d_deadang.cpp */,
+				FE1B21A123561A6E0065200C /* d_djboy.cpp */,
+				FE1B20FE23561A6D0065200C /* d_dkong.cpp */,
+				FE1B21A823561A6E0065200C /* d_docastle.cpp */,
 				FE1B216F23561A6E0065200C /* d_dogfgt.cpp */,
-				FE1B217023561A6E0065200C /* d_snk68.cpp */,
-				FE1B217123561A6E0065200C /* d_mrjong.cpp */,
+				FE1B21AD23561A6E0065200C /* d_dorachan.cpp */,
+				FE1B213523561A6D0065200C /* d_dribling.cpp */,
+				FE1B21B923561A6E0065200C /* d_drmicro.cpp */,
+				FE1B214C23561A6D0065200C /* d_dynduke.cpp */,
+				FE1B210723561A6D0065200C /* d_efdt.cpp */,
+				FE1B21BF23561A6F0065200C /* d_epos.cpp */,
+				FE1B211A23561A6D0065200C /* d_espial.cpp */,
+				FE1B211E23561A6D0065200C /* d_ettrivia.cpp */,
+				FE1B210123561A6D0065200C /* d_exedexes.cpp */,
+				FE1B219323561A6E0065200C /* d_fantland.cpp */,
+				FE1B218223561A6E0065200C /* d_fastfred.cpp */,
+				FE1B212823561A6D0065200C /* d_firetrap.cpp */,
+				FE1B21C223561A6F0065200C /* d_flipjack.cpp */,
+				FE1B211623561A6D0065200C /* d_flower.cpp */,
+				FE1B212323561A6D0065200C /* d_foodf.cpp */,
+				FE1B21C723561A6F0065200C /* d_freekick.cpp */,
+				FE1B214823561A6D0065200C /* d_funkybee.cpp */,
+				FE1B210423561A6D0065200C /* d_galaga.cpp */,
+				FE1B21B623561A6E0065200C /* d_galivan.cpp */,
+				FE1B216923561A6E0065200C /* d_gaplus.cpp */,
+				FE1B217E23561A6E0065200C /* d_ginganin.cpp */,
+				FE1B213723561A6D0065200C /* d_gng.cpp */,
+				FE1B215A23561A6D0065200C /* d_goindol.cpp */,
+				FE1B214A23561A6D0065200C /* d_gunsmoke.cpp */,
+				FE1B21B323561A6E0065200C /* d_headonb.cpp */,
+				FE1B217523561A6E0065200C /* d_higemaru.cpp */,
+				FE1B21BD23561A6F0065200C /* d_himesiki.cpp */,
+				FE1B216C23561A6E0065200C /* d_holeland.cpp */,
+				FE1B216323561A6D0065200C /* d_hvyunit.cpp */,
+				FE1B218723561A6E0065200C /* d_invaders.cpp */,
+				FE1B214923561A6D0065200C /* d_iqblock.cpp */,
+				FE1B215023561A6D0065200C /* d_jack.cpp */,
+				FE1B211523561A6D0065200C /* d_jedi.cpp */,
+				FE1B210023561A6D0065200C /* d_jrpacman.cpp */,
+				FE1B219923561A6E0065200C /* d_kangaroo.cpp */,
+				FE1B214023561A6D0065200C /* d_kingofbox.cpp */,
+				FE1B215823561A6D0065200C /* d_kncljoe.cpp */,
+				FE1B219D23561A6E0065200C /* d_kyugo.cpp */,
+				FE1B21BA23561A6F0065200C /* d_ladybug.cpp */,
+				FE1B212523561A6D0065200C /* d_lasso.cpp */,
+				FE1B213123561A6D0065200C /* d_lastduel.cpp */,
+				FE1B212123561A6D0065200C /* d_lwings.cpp */,
+				FE1B216723561A6D0065200C /* d_madmotor.cpp */,
+				FE1B211823561A6D0065200C /* d_mainsnk.cpp */,
+				FE1B219B23561A6E0065200C /* d_mappy.cpp */,
+				FE1B21C823561A6F0065200C /* d_marineb.cpp */,
+				FE1B21A723561A6E0065200C /* d_mario.cpp */,
 				FE1B217223561A6E0065200C /* d_markham.cpp */,
+				FE1B212D23561A6D0065200C /* d_mastboyo.cpp */,
+				FE1B215C23561A6D0065200C /* d_matmania.cpp */,
+				FE1B218E23561A6E0065200C /* d_mcr.cpp */,
+				FE1B21A523561A6E0065200C /* d_mcr3.cpp */,
+				FE1B211123561A6D0065200C /* d_megasys1.cpp */,
+				FE1B217B23561A6E0065200C /* d_meijinsn.cpp */,
+				FE1B211F23561A6D0065200C /* d_metlfrzr.cpp */,
+				FE1B21CB23561A6F0065200C /* d_mhavoc.cpp */,
+				FE1B219E23561A6E0065200C /* d_millipede.cpp */,
+				FE1B211C23561A6D0065200C /* d_mirax.cpp */,
+				FE1B211723561A6D0065200C /* d_mitchell.cpp */,
+				FE1B216423561A6D0065200C /* d_mmagic.cpp */,
+				FE1B212623561A6D0065200C /* d_mole.cpp */,
+				FE1B210823561A6D0065200C /* d_momoko.cpp */,
+				FE1B214523561A6D0065200C /* d_mouser.cpp */,
+				FE1B212223561A6D0065200C /* d_mrdo.cpp */,
+				FE1B216623561A6D0065200C /* d_mrflea.cpp */,
+				FE1B217123561A6E0065200C /* d_mrjong.cpp */,
+				FE1B219C23561A6E0065200C /* d_munchmo.cpp */,
+				FE1B210F23561A6D0065200C /* d_mustache.cpp */,
+				FE1B213E23561A6D0065200C /* d_mystston.cpp */,
+				FE1B219223561A6E0065200C /* d_namcos1.cpp */,
+				FE1B211323561A6D0065200C /* d_namcos86.cpp */,
+				FE1B21A923561A6E0065200C /* d_naughtyb.cpp */,
+				FE1B214D23561A6D0065200C /* d_ninjakd2.cpp */,
+				FE1B218523561A6E0065200C /* d_nitedrvr.cpp */,
+				FE1B217923561A6E0065200C /* d_olibochu.cpp */,
+				FE1B21B123561A6E0065200C /* d_omegrace.cpp */,
+				FE1B211423561A6D0065200C /* d_pac2650.cpp */,
+				FE1B21B423561A6E0065200C /* d_pacland.cpp */,
+				FE1B215923561A6D0065200C /* d_pacman.cpp */,
+				FE1B217823561A6E0065200C /* d_pbaction.cpp */,
+				FE1B210B23561A6D0065200C /* d_pengadvb.cpp */,
+				FE1B214123561A6D0065200C /* d_phoenix.cpp */,
+				FE1B21C123561A6F0065200C /* d_pitnrun.cpp */,
+				FE1B21C023561A6F0065200C /* d_pkunwar.cpp */,
+				FE1B210523561A6D0065200C /* d_popeye.cpp */,
+				FE1B213A23561A6D0065200C /* d_popper.cpp */,
+				FE1B215223561A6D0065200C /* d_prehisle.cpp */,
+				FE1B21B823561A6E0065200C /* d_psychic5.cpp */,
+				FE1B21AF23561A6E0065200C /* d_pturn.cpp */,
+				FE1B218423561A6E0065200C /* d_punchout.cpp */,
+				FE1B217C23561A6E0065200C /* d_qbert.cpp */,
+				FE1B210C23561A6D0065200C /* d_quantum.cpp */,
+				FE1B216523561A6D0065200C /* d_quizo.cpp */,
+				FE1B210A23561A6D0065200C /* d_rallyx.cpp */,
+				FE1B212423561A6D0065200C /* d_renegade.cpp */,
+				FE1B213C23561A6D0065200C /* d_route16.cpp */,
+				FE1B216A23561A6E0065200C /* d_rpunch.cpp */,
+				FE1B21AA23561A6E0065200C /* d_safarir.cpp */,
+				FE1B211223561A6D0065200C /* d_sauro.cpp */,
+				FE1B210623561A6D0065200C /* d_scregg.cpp */,
+				FE1B216B23561A6E0065200C /* d_seicross.cpp */,
+				FE1B219F23561A6E0065200C /* d_senjyo.cpp */,
+				FE1B212A23561A6D0065200C /* d_sf.cpp */,
+				FE1B215E23561A6D0065200C /* d_shisen.cpp */,
+				FE1B216223561A6D0065200C /* d_sidearms.cpp */,
+				FE1B219423561A6E0065200C /* d_skyarmy.cpp */,
+				FE1B21BC23561A6F0065200C /* d_skyfox.cpp */,
+				FE1B219823561A6E0065200C /* d_skykid.cpp */,
+				FE1B210E23561A6D0065200C /* d_snk.cpp */,
+				FE1B217023561A6E0065200C /* d_snk68.cpp */,
+				FE1B217A23561A6E0065200C /* d_snk6502.cpp */,
+				FE1B21AB23561A6E0065200C /* d_solomon.cpp */,
+				FE1B214B23561A6D0065200C /* d_sonson.cpp */,
+				FE1B218A23561A6E0065200C /* d_spacefb.cpp */,
+				FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */,
+				FE1B215F23561A6D0065200C /* d_speedbal.cpp */,
+				FE1B215B23561A6D0065200C /* d_sprcros2.cpp */,
+				FE1B21A623561A6E0065200C /* d_srumbler.cpp */,
+				FE1B210D23561A6D0065200C /* d_ssozumo.cpp */,
+				FE1B218B23561A6E0065200C /* d_sstrangr.cpp */,
+				FE1B216023561A6D0065200C /* d_starwars.cpp */,
+				FE1B214F23561A6D0065200C /* d_stfight.cpp */,
+				FE1B20FB23561A6D0065200C /* d_sub.cpp */,
+				FE1B212723561A6D0065200C /* d_suna8.cpp */,
+				FE1B217723561A6E0065200C /* d_tagteam.cpp */,
+				FE1B215623561A6D0065200C /* d_tail2nose.cpp */,
+				FE1B210923561A6D0065200C /* d_tankbust.cpp */,
+				FE1B21A223561A6E0065200C /* d_tbowl.cpp */,
+				FE1B21AE23561A6E0065200C /* d_tceptor.cpp */,
+				FE1B20FF23561A6D0065200C /* d_tecmo.cpp */,
+				FE1B21AC23561A6E0065200C /* d_tempest.cpp */,
+				FE1B21A023561A6E0065200C /* d_terracre.cpp */,
+				FE1B212923561A6D0065200C /* d_thedeep.cpp */,
+				FE1B218F23561A6E0065200C /* d_thepit.cpp */,
+				FE1B20F923561A6C0065200C /* d_thief.cpp */,
+				FE1B218923561A6E0065200C /* d_tigeroad.cpp */,
+				FE1B21C423561A6F0065200C /* d_timelimt.cpp */,
+				FE1B213223561A6D0065200C /* d_toki.cpp */,
+				FE1B211923561A6D0065200C /* d_toypop.cpp */,
+				FE1B218323561A6E0065200C /* d_travrusa.cpp */,
+				FE1B215D23561A6D0065200C /* d_tsamurai.cpp */,
+				FE1B217623561A6E0065200C /* d_usgames.cpp */,
+				FE1B218C23561A6E0065200C /* d_vastar.cpp */,
 				FE1B217323561A6E0065200C /* d_vball.cpp */,
 				FE1B217423561A6E0065200C /* d_vicdual.cpp */,
-				FE1B217523561A6E0065200C /* d_higemaru.cpp */,
-				FE1B217623561A6E0065200C /* d_usgames.cpp */,
-				FE1B217723561A6E0065200C /* d_tagteam.cpp */,
-				FE1B217823561A6E0065200C /* d_pbaction.cpp */,
-				FE1B217923561A6E0065200C /* d_olibochu.cpp */,
-				FE1B217A23561A6E0065200C /* d_snk6502.cpp */,
-				FE1B217B23561A6E0065200C /* d_meijinsn.cpp */,
-				FE1B217C23561A6E0065200C /* d_qbert.cpp */,
-				FE1B217D23561A6E0065200C /* d_baraduke.cpp */,
-				FE1B217E23561A6E0065200C /* d_ginganin.cpp */,
-				FE1B217F23561A6E0065200C /* d_btime.cpp */,
-				FE1B218023561A6E0065200C /* d_wwfsstar.cpp */,
-				FE1B218123561A6E0065200C /* d_blockade.cpp */,
-				FE1B218223561A6E0065200C /* d_fastfred.cpp */,
-				FE1B218323561A6E0065200C /* d_travrusa.cpp */,
-				FE1B218423561A6E0065200C /* d_punchout.cpp */,
-				FE1B218523561A6E0065200C /* d_nitedrvr.cpp */,
-				FE1B218623561A6E0065200C /* d_battlane.cpp */,
-				FE1B218723561A6E0065200C /* d_invaders.cpp */,
 				FE1B218823561A6E0065200C /* d_vulgus.cpp */,
-				FE1B218923561A6E0065200C /* d_tigeroad.cpp */,
-				FE1B218A23561A6E0065200C /* d_spacefb.cpp */,
-				FE1B218B23561A6E0065200C /* d_sstrangr.cpp */,
-				FE1B218C23561A6E0065200C /* d_vastar.cpp */,
-				FE1B218D23561A6E0065200C /* d_bogeyman.cpp */,
-				FE1B218E23561A6E0065200C /* d_mcr.cpp */,
-				FE1B218F23561A6E0065200C /* d_thepit.cpp */,
+				FE1B212B23561A6D0065200C /* d_wallc.cpp */,
 				FE1B219023561A6E0065200C /* d_warpsped.cpp */,
-				FE1B219123561A6E0065200C /* d_armedf.cpp */,
-				FE1B219223561A6E0065200C /* d_namcos1.cpp */,
-				FE1B219323561A6E0065200C /* d_fantland.cpp */,
-				FE1B219423561A6E0065200C /* d_skyarmy.cpp */,
+				FE1B21B523561A6E0065200C /* d_warpwarp.cpp */,
+				FE1B213023561A6D0065200C /* d_wc90.cpp */,
 				FE1B219523561A6E0065200C /* d_wc90b.cpp */,
+				FE1B210323561A6D0065200C /* d_williams.cpp */,
+				FE1B21BE23561A6F0065200C /* d_wiping.cpp */,
+				FE1B214623561A6D0065200C /* d_wiz.cpp */,
+				FE1B218023561A6E0065200C /* d_wwfsstar.cpp */,
+				FE1B212C23561A6D0065200C /* d_xain.cpp */,
+				FE1B21C323561A6F0065200C /* d_xxmissio.cpp */,
 				FE1B219623561A6E0065200C /* d_xyonix.cpp */,
 				FE1B219723561A6E0065200C /* d_zodiack.cpp */,
-				FE1B219823561A6E0065200C /* d_skykid.cpp */,
-				FE1B219923561A6E0065200C /* d_kangaroo.cpp */,
-				FE1B219A23561A6E0065200C /* d_commando.cpp */,
-				FE1B219B23561A6E0065200C /* d_mappy.cpp */,
-				FE1B219C23561A6E0065200C /* d_munchmo.cpp */,
-				FE1B219D23561A6E0065200C /* d_kyugo.cpp */,
-				FE1B219E23561A6E0065200C /* d_millipede.cpp */,
-				FE1B219F23561A6E0065200C /* d_senjyo.cpp */,
-				FE1B21A023561A6E0065200C /* d_terracre.cpp */,
-				FE1B21A123561A6E0065200C /* d_djboy.cpp */,
-				FE1B21A223561A6E0065200C /* d_tbowl.cpp */,
-				FE1B21A323561A6E0065200C /* d_canyon.cpp */,
-				FE1B21A423561A6E0065200C /* d_dday.cpp */,
-				FE1B21A523561A6E0065200C /* d_mcr3.cpp */,
-				FE1B21A623561A6E0065200C /* d_srumbler.cpp */,
-				FE1B21A723561A6E0065200C /* d_mario.cpp */,
-				FE1B21A823561A6E0065200C /* d_docastle.cpp */,
-				FE1B21A923561A6E0065200C /* d_naughtyb.cpp */,
-				FE1B21AA23561A6E0065200C /* d_safarir.cpp */,
-				FE1B21AB23561A6E0065200C /* d_solomon.cpp */,
-				FE1B21AC23561A6E0065200C /* d_tempest.cpp */,
-				FE1B21AD23561A6E0065200C /* d_dorachan.cpp */,
-				FE1B21AE23561A6E0065200C /* d_tceptor.cpp */,
-				FE1B21AF23561A6E0065200C /* d_pturn.cpp */,
-				FE1B21B023561A6E0065200C /* d_ddayjlc.cpp */,
-				FE1B21B123561A6E0065200C /* d_omegrace.cpp */,
-				FE1B21B223561A6E0065200C /* d_ddragon.cpp */,
-				FE1B21B323561A6E0065200C /* d_headonb.cpp */,
-				FE1B21B423561A6E0065200C /* d_pacland.cpp */,
-				FE1B21B523561A6E0065200C /* d_warpwarp.cpp */,
-				FE1B21B623561A6E0065200C /* d_galivan.cpp */,
-				FE1B21B723561A6E0065200C /* d_battlex.cpp */,
-				FE1B21B823561A6E0065200C /* d_psychic5.cpp */,
-				FE1B21B923561A6E0065200C /* d_drmicro.cpp */,
-				FE1B21BA23561A6F0065200C /* d_ladybug.cpp */,
-				FE1B21BB23561A6F0065200C /* d_cheekyms.cpp */,
-				FE1B21BC23561A6F0065200C /* d_skyfox.cpp */,
-				FE1B21BD23561A6F0065200C /* d_himesiki.cpp */,
-				FE1B21BE23561A6F0065200C /* d_wiping.cpp */,
-				FE1B21BF23561A6F0065200C /* d_epos.cpp */,
-				FE1B21C023561A6F0065200C /* d_pkunwar.cpp */,
-				FE1B21C123561A6F0065200C /* d_pitnrun.cpp */,
-				FE1B21C223561A6F0065200C /* d_flipjack.cpp */,
-				FE1B21C323561A6F0065200C /* d_xxmissio.cpp */,
-				FE1B21C423561A6F0065200C /* d_timelimt.cpp */,
-				FE1B21C523561A6F0065200C /* d_chinagat.cpp */,
-				FE1B21C623561A6F0065200C /* d_blueprnt.cpp */,
-				FE1B21C723561A6F0065200C /* d_freekick.cpp */,
-				FE1B21C823561A6F0065200C /* d_marineb.cpp */,
-				FE1B21C923561A6F0065200C /* d_ambush.cpp */,
-				FE1B21CA23561A6F0065200C /* d_aeroboto.cpp */,
-				FE1B21CB23561A6F0065200C /* d_mhavoc.cpp */,
-				FE1B21CC23561A6F0065200C /* d_bombjack.cpp */,
-				FE1B21CD23561A6F0065200C /* d_blockout.cpp */,
-				FE1B21CE23561A6F0065200C /* d_ccastles.cpp */,
-				FE1B21CF23561A6F0065200C /* d_berzerk.cpp */,
 			);
 			path = pre90s;
 			sourceTree = "<group>";
@@ -4619,9 +4658,13 @@
 			isa = PBXGroup;
 			children = (
 				FE1B287F235626280065200C /* burner_macos.h */,
+				FE0A7EA6239501FF001E6997 /* FBImporter.h */,
+				FE0A7EA5239501FF001E6997 /* FBImporter.m */,
 				FEED9E1A235845EE00B7AF83 /* FBMainThread.h */,
 				FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */,
 				FE2BC6CF2362D5BD00B9D150 /* FBMainThread+Etc.mm */,
+				FE0A7E9B2393A1FE001E6997 /* FBScanner.h */,
+				FE0A7E9C2393A1FE001E6997 /* FBScanner.mm */,
 				FEED9E1D2358B48C00B7AF83 /* main.cpp */,
 				FE9A990D235F82C900507894 /* main.h */,
 				FEA5E79023563F5400DA2D9D /* misc.cpp */,
@@ -4633,8 +4676,12 @@
 		FE2BC6AF23615BBC00B9D150 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FE0A7EAC239B8B4F001E6997 /* FBAboutController.h */,
+				FE0A7EAB239B8B4E001E6997 /* FBAboutController.m */,
 				FEF4EE7F23635500004E0DCE /* FBEmulatorController.h */,
 				FEF4EE8023635500004E0DCE /* FBEmulatorController.m */,
+				FE0A7E9623938CE6001E6997 /* FBLauncherController.h */,
+				FE0A7E9523938CE6001E6997 /* FBLauncherController.m */,
 				FE2BC6B323615C3300B9D150 /* FBLogViewerController.h */,
 				FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */,
 				FE2BC6BE2362CEBB00B9D150 /* FBPreferencesController.h */,
@@ -4652,6 +4699,8 @@
 				FE2BC6A923615B3400B9D150 /* LogViewer.xib */,
 				FE1B1095235615950065200C /* MainMenu.xib */,
 				FE2BC6C92362CFC000B9D150 /* Preferences.xib */,
+				FE0A7E9823938E9F001E6997 /* Launcher.xib */,
+				FE0A7EA8239B8A7E001E6997 /* About.xib */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -4667,6 +4716,14 @@
 			path = macos;
 			sourceTree = "<group>";
 		};
+		FE3BD61423A4979700570784 /* Doc */ = {
+			isa = PBXGroup;
+			children = (
+				FE3BD61523A4979700570784 /* License.rtf */,
+			);
+			path = Doc;
+			sourceTree = SOURCE_ROOT;
+		};
 		FE811001236B6B29000B5F73 /* generated */ = {
 			isa = PBXGroup;
 			children = (
@@ -4678,8 +4735,6 @@
 		FEA5E7982356472200DA2D9D /* macos */ = {
 			isa = PBXGroup;
 			children = (
-				FEC5D3D7235C160600ABA9FB /* FBScreenView.h */,
-				FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */,
 				FEC5D3D4235C136E00ABA9FB /* FBVideo.h */,
 				FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */,
 			);
@@ -4810,13 +4865,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE0A7E9A23938E9F001E6997 /* Launcher.xib in Resources */,
 				FE2BC6BB2362B4E200B9D150 /* dsa_pub.pem in Resources */,
 				FEF4EE892363720B004E0DCE /* Defaults.plist in Resources */,
+				FE0A7EAA239B8A7E001E6997 /* About.xib in Resources */,
 				FE2BC6CB2362CFC100B9D150 /* Preferences.xib in Resources */,
-				FE1B241023561A750065200C /* license.txt in Resources */,
 				FEF4EE8423635521004E0DCE /* Emulator.xib in Resources */,
 				FE1B1094235615950065200C /* Assets.xcassets in Resources */,
 				FE2BC6AB23615B3400B9D150 /* LogViewer.xib in Resources */,
+				FE3BD61623A4979700570784 /* License.rtf in Resources */,
 				FE1B1097235615950065200C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4954,6 +5011,7 @@
 				FE1B254C23561A760065200C /* d_news.cpp in Sources */,
 				FE1B25E223561A760065200C /* d_dbz.cpp in Sources */,
 				FE1B278323561A790065200C /* ymf278b.c in Sources */,
+				FE0A7E9D2393A1FF001E6997 /* FBScanner.mm in Sources */,
 				FE1B25CB23561A760065200C /* d_kontest.cpp in Sources */,
 				FE1B25E923561A760065200C /* k007121.cpp in Sources */,
 				FE1B24C323561A750065200C /* smstms.cpp in Sources */,
@@ -5202,6 +5260,7 @@
 				FE1B264C23561A770065200C /* taito_m68705.cpp in Sources */,
 				FE1B263C23561A770065200C /* ps_z.cpp in Sources */,
 				FE1B261923561A770065200C /* d_wardner.cpp in Sources */,
+				FE0A7EA12394B87B001E6997 /* FBRomSetStatusAsNSImage.m in Sources */,
 				FE1B24C823561A750065200C /* d_esprade.cpp in Sources */,
 				FE1B25F823561A760065200C /* d_wunit.cpp in Sources */,
 				FE1B26F923561A780065200C /* d_quizo.cpp in Sources */,
@@ -5433,6 +5492,7 @@
 				FE1B25FB23561A760065200C /* d_msx.cpp in Sources */,
 				FE1B262623561A770065200C /* psikyo_sprite.cpp in Sources */,
 				FE1B271123561A780065200C /* d_baraduke.cpp in Sources */,
+				FEA1AB8823B5D49700D6082A /* d_spdodgeb.cpp in Sources */,
 				FE1B24DA23561A750065200C /* d_blstroid.cpp in Sources */,
 				FE1B23C123561A750065200C /* tms34010.cpp in Sources */,
 				FE1B26FE23561A780065200C /* d_rpunch.cpp in Sources */,
@@ -5545,6 +5605,7 @@
 				FE1B26DB23561A780065200C /* d_beaminv.cpp in Sources */,
 				FE1B259F23561A760065200C /* timeplt_snd.cpp in Sources */,
 				FE1B26F723561A780065200C /* d_hvyunit.cpp in Sources */,
+				FE0A7EAD239B8B4F001E6997 /* FBAboutController.m in Sources */,
 				FE1B276023561A780065200C /* d_bombjack.cpp in Sources */,
 				FE1B263F23561A770065200C /* cps_scr.cpp in Sources */,
 				FE1B25DD23561A760065200C /* d_nemesis.cpp in Sources */,
@@ -5592,6 +5653,7 @@
 				FE1B25C923561A760065200C /* k051316.cpp in Sources */,
 				FE1B25AC23561A760065200C /* k056832.cpp in Sources */,
 				FE1B26B623561A770065200C /* d_mrdo.cpp in Sources */,
+				FE0A7EA7239501FF001E6997 /* FBImporter.m in Sources */,
 				FE1B27DD23561A790065200C /* mathbox.cpp in Sources */,
 				FE1B268E23561A770065200C /* d_bionicc.cpp in Sources */,
 				FE1B24BF23561A750065200C /* smssystem.cpp in Sources */,
@@ -5648,6 +5710,7 @@
 				FE1B266F23561A770065200C /* d_darius2.cpp in Sources */,
 				FE1B25CA23561A760065200C /* d_contra.cpp in Sources */,
 				FE1B273A23561A780065200C /* d_srumbler.cpp in Sources */,
+				FE0A7EA42394ED91001E6997 /* FBDropFileScrollView.m in Sources */,
 				FE1B253023561A760065200C /* d_hyperpac.cpp in Sources */,
 				FE1B27D523561A790065200C /* atariic.cpp in Sources */,
 				FE1B23D823561A750065200C /* 2100dasm.cpp in Sources */,
@@ -5848,6 +5911,7 @@
 				FE1B24FF23561A760065200C /* d_playmark.cpp in Sources */,
 				FEED9E132358412E00B7AF83 /* bzip.cpp in Sources */,
 				FE1B26E323561A780065200C /* d_stfight.cpp in Sources */,
+				FE0A7E9723938CE7001E6997 /* FBLauncherController.m in Sources */,
 				FE1B27DC23561A790065200C /* atarimo.cpp in Sources */,
 				FE1B250923561A760065200C /* d_yunsun16.cpp in Sources */,
 				FE1B27E223561A790065200C /* decobsmt.cpp in Sources */,
@@ -5934,6 +5998,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		FE0A7E9823938E9F001E6997 /* Launcher.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE0A7E9923938E9F001E6997 /* Base */,
+			);
+			name = Launcher.xib;
+			sourceTree = "<group>";
+		};
+		FE0A7EA8239B8A7E001E6997 /* About.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE0A7EA9239B8A7E001E6997 /* Base */,
+			);
+			name = About.xib;
+			sourceTree = "<group>";
+		};
 		FE1B1095235615950065200C /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -6019,7 +6099,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -6071,7 +6151,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -6085,7 +6165,7 @@
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6097,8 +6177,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.01;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MARKETING_VERSION = 1.03;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",
@@ -6145,7 +6225,7 @@
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6157,8 +6237,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.01;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MARKETING_VERSION = 1.03;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",

@@ -1,7 +1,3 @@
-/*
-    tms.c --
-    TMS9918 and legacy video mode support.
-*/
 #include "smsshared.h"
 
 INT16 text_counter;               /* Text offset counter */

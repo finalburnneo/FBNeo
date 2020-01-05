@@ -1,6 +1,3 @@
-// FB Alpha Chack'n Pop driver module
-// Based on MAME driver by BUT
-
 #include "tiles_generic.h"
 #include "taito_m68705.h"
 #include "z80_intf.h"

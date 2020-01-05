@@ -1,7 +1,3 @@
-// FinalBurn Neo - Emulator for MC68000/Z80 based arcade games
-//            Refer to the "license.txt" file for more info
-
-// Burner emulation library
 #ifndef _BURNH_H
 #define _BURNH_H
 
@@ -22,9 +18,9 @@
  #define MAX_PATH 	260
 #endif
 
-#include <time.h>
+#include <ctime>
 
-extern TCHAR szAppHiscorePath[MAX_PATH];
+ extern TCHAR szAppHiscorePath[MAX_PATH];
 extern TCHAR szAppSamplesPath[MAX_PATH];
 extern TCHAR szAppHDDPath[MAX_PATH];
 extern TCHAR szAppBlendPath[MAX_PATH];

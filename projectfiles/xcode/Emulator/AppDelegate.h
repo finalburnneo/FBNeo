@@ -1,10 +1,16 @@
+// Copyright (c) Akop Karapetyan
 //
-//  AppDelegate.h
-//  FinalBurnNeo
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//  Created by Akop Karapetyan on 10/15/19.
-//  Copyright © 2019 Akop Karapetyan. All rights reserved.
+//    http://www.apache.org/licenses/LICENSE-2.0
 //
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <Cocoa/Cocoa.h>
 
@@ -26,13 +32,16 @@
 @property (readonly) FBInput *input;
 @property (readonly) FBAudio *audio;
 
+@property (readonly) NSString *romPath;
 @property (readonly) NSString *supportPath;
 @property (readonly) NSString *nvramPath;
 @property (readonly) NSString *dipSwitchPath;
 
-@property (readonly) NSArray *supportedFormats;
+@property (readonly) NSSet<NSString *> *supportedFormats;
 
 - (IBAction) displayLogViewer:(id) sender;
 - (IBAction) displayPreferences:(id) sender;
+- (IBAction) displayLauncher:(id) sender;
+- (IBAction) displayAbout:(id) sender;
 
 @end

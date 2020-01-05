@@ -1,7 +1,3 @@
-// FB Alpha Space Invaders driver module
-// Based on MAME driver by Michael Strutts, Nicola Salmoria, Tormod Tjaberg, Mirko Buffoni,
-// Lee Taylor, Valerio Verrando, Marco Cassili, Zsolt Vasvari and others
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "samples.h"

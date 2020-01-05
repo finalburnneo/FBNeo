@@ -1,6 +1,3 @@
-// ---------------------------------------------------------------------------------------
-// NeoGeo CD Game Info Module (by CaptainCPS-X)
-// ---------------------------------------------------------------------------------------
 #include "burner.h"
 #include "neocdlist.h"
 
@@ -113,6 +110,7 @@ struct NGCDGAME games[] =
 	{ _T("kof99")		, _T("The King of Fighters '99 - Millennium Battle")		, _T("1999")	, _T("SNK")					, 0x0251 },		//
 	{ _T("fatfury3")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - Harukanaru Tatakai"), _T("1995"), _T("SNK"), 0x069c },		//
 	{ _T("lasthope")	, _T("Last Hope")									        , _T("2007")	, _T("NG.DEV.TEAM")			, 0x0666 },		//
+	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
 };
 
 NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)

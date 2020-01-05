@@ -1,7 +1,4 @@
-// Yamaha YMZ280B module
-// Emulation by Jan Klaassen
-
-#include <math.h>
+#include <cmath>
 #include "burnint.h"
 #include "ymz280b.h"
 

@@ -1,4 +1,3 @@
-// D3DKMTWaitForVerticalBlankEvent (codename: SuperWaitVBlank) interface.  - dink 2018
 #include "burner.h"
 
 typedef struct _D3DKMT_OPENADAPTERFROMHDC

@@ -1,6 +1,3 @@
-// FB Alpha Alien Invaders driver module
-// Based on MAME driver by David Haywood, Mariusz Wojcieszek
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "dac.h"

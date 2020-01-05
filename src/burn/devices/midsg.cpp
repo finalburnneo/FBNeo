@@ -1,6 +1,3 @@
-// Midway Sounds Good audio module
-// based on MAME sources by Aaron Giles
-
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "6821pia.h"

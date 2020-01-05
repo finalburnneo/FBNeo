@@ -2,16 +2,16 @@ void konamiWrite(UINT16 address, UINT8 data);
 UINT8 konamiRead(UINT16 address);
 UINT8 konamiFetch(UINT16 address);
 
-void konamiMapMemory(UINT8 *src, UINT16 start, UINT16 finish, INT32 type);
+void konamiMapMemory(UINT8* src, UINT16 start, UINT16 finish, INT32 type);
 
 void konamiSetIrqCallbackHandler(INT32 (*callback)(INT32));
-void konamiSetlinesCallback(void  (*setlines_callback)(INT32 lines));
+void konamiSetlinesCallback(void (*setlines_callback)(INT32 lines));
 
 void konamiSetWriteHandler(void (*write)(UINT16, UINT8));
 void konamiSetReadHandler(UINT8 (*read)(UINT16));
 
 void konamiInit(INT32 nCpu);
-void konamiOpen(INT32 );
+void konamiOpen(INT32);
 void konamiReset();
 INT32 konamiRun(INT32 cycles);
 void konamiClose();
@@ -33,7 +33,7 @@ void konamiRunEnd();
 INT32 konamiIdle(INT32 cycles);
 INT32 konamiGetActive();
 
-UINT8 konami_cheat_read(UINT32 a);					// cheat
+UINT8 konami_cheat_read(UINT32 a); // cheat
 void konami_write_rom(UINT32 address, UINT8 data);
 
 extern cpu_core_config konamiCPUConfig;

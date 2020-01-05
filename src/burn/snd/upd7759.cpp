@@ -1,5 +1,3 @@
-// Based on MAME driver by Juergen Buchmueller, Mike Balfour, Howie Cohen, Olivier Galibert, Aaron Giles
-
 #include "burnint.h"
 #include "upd7759.h"
 

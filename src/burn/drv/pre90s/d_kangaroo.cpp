@@ -1,6 +1,3 @@
-// FB Alpha Kangaroo / Funky Fish driver module
-// Based on MAME driver by Ville Laitinen and Aaron Giles
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "bitswap.h"

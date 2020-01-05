@@ -1,8 +1,3 @@
-// Based on MAME sources by Hiromitsu Shioya, Olivier Galibert
-/*********************************************************/
-/*    SEGA 16ch 8bit PCM                                 */
-/*********************************************************/
-
 #include "burnint.h"
 #include "segapcm.h"
 

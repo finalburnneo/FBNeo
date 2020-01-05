@@ -1,15 +1,5 @@
-/**********************************************************************************************
-
-     TMS5110 simulator (modified from TMS5220 by Jarek Burczynski)
-
-     Written for MAME by Frank Palazzolo
-     With help from Neill Corlett
-     Additional tweaking by Aaron Giles
-
-***********************************************************************************************/
-
-#include <stddef.h>
-#include <math.h>
+#include <cstddef>
+#include <cmath>
 
 #include "burnint.h"
 #include "tms5110.h"

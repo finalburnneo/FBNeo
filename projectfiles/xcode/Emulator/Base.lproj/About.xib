@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="FBAboutController">
+            <connections>
+                <outlet property="appNameField" destination="Jjg-9S-eKH" id="fni-tk-CJx"/>
+                <outlet property="versionNumberField" destination="7d6-UW-2Ea" id="sXO-Fs-dlx"/>
+                <outlet property="window" destination="bTo-iM-Ec6" id="ALq-zF-hNp"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="About" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" animationBehavior="default" id="bTo-iM-Ec6">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <rect key="contentRect" x="966" y="610" width="562" height="357"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" wantsLayer="YES" id="6iv-BA-5dG">
+                <rect key="frame" x="0.0" y="0.0" width="562" height="357"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="CEO-5c-W2b" customClass="FBWhitePanelView">
+                        <rect key="frame" x="0.0" y="61" width="562" height="296"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bG4-40-Cpd">
+                                <rect key="frame" x="20" y="20" width="256" height="256"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="256" id="JEl-27-WwO"/>
+                                    <constraint firstAttribute="height" constant="256" id="PZ1-XK-KvZ"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconLarge" id="ylD-tH-SYP"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jjg-9S-eKH" userLabel="App title">
+                                <rect key="frame" x="282" y="238" width="262" height="38"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Doomsday Gap" id="ger-cR-GYg">
+                                    <font key="font" metaFont="system" size="32"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7d6-UW-2Ea" userLabel="Version number">
+                                <rect key="frame" x="282" y="220" width="262" height="14"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Our source was the New York Times" id="ORu-f3-vn2">
+                                    <font key="font" metaFont="smallSystemBold"/>
+                                    <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="256" translatesAutoresizingMaskIntoConstraints="NO" id="quT-zG-Yo1" userLabel="Copyright blurb">
+                                <rect key="frame" x="282" y="36" width="262" height="176"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="258" id="3t0-b9-F0g"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="176" id="5Lc-o3-S2q"/>
+                                </constraints>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="mqu-HR-p0a">
+                                    <font key="font" metaFont="system"/>
+                                    <string key="title">Ⓒ 2019 Akop Karapetyan © 2004-2019 Team FB Neo © 2001 Dave  You may freely use, modify, and distribute both the FB Neo source code and binary, however restrictions apply to the FB Neo original material.  See License below for more information.
+</string>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    <string key="userLabel">Ⓒ 2014-2019 Akop Karapetyan © 2004-2018 Team FB Alpha © 2001 Dave  For FBA license information, see "FinalBurn Alpha License" below.  For license information on FinalBurn X and its components, see "FinalBurn X License" below.</string>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="7d6-UW-2Ea" firstAttribute="trailing" secondItem="quT-zG-Yo1" secondAttribute="trailing" id="LeG-mU-MfC"/>
+                            <constraint firstAttribute="trailing" secondItem="quT-zG-Yo1" secondAttribute="trailing" constant="20" symbolic="YES" id="OkQ-jA-pKo"/>
+                            <constraint firstItem="Jjg-9S-eKH" firstAttribute="leading" secondItem="quT-zG-Yo1" secondAttribute="leading" id="cY1-sG-JGn"/>
+                            <constraint firstItem="Jjg-9S-eKH" firstAttribute="trailing" secondItem="quT-zG-Yo1" secondAttribute="trailing" id="dJ2-Pg-oeC"/>
+                            <constraint firstItem="7d6-UW-2Ea" firstAttribute="top" secondItem="Jjg-9S-eKH" secondAttribute="bottom" constant="4" id="dVH-OE-CoG"/>
+                            <constraint firstItem="Jjg-9S-eKH" firstAttribute="top" secondItem="CEO-5c-W2b" secondAttribute="top" constant="20" symbolic="YES" id="lee-ER-TVy"/>
+                            <constraint firstAttribute="bottom" secondItem="bG4-40-Cpd" secondAttribute="bottom" constant="20" symbolic="YES" id="m5x-kl-i1e"/>
+                            <constraint firstItem="bG4-40-Cpd" firstAttribute="top" secondItem="CEO-5c-W2b" secondAttribute="top" constant="20" symbolic="YES" id="oyY-ST-wIc"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="quT-zG-Yo1" secondAttribute="bottom" constant="20" symbolic="YES" id="poR-YR-pgZ"/>
+                            <constraint firstItem="bG4-40-Cpd" firstAttribute="leading" secondItem="CEO-5c-W2b" secondAttribute="leading" constant="20" symbolic="YES" id="qCY-p5-Vzn"/>
+                            <constraint firstItem="7d6-UW-2Ea" firstAttribute="leading" secondItem="quT-zG-Yo1" secondAttribute="leading" id="yda-Ac-Pdf"/>
+                            <constraint firstItem="quT-zG-Yo1" firstAttribute="leading" secondItem="bG4-40-Cpd" secondAttribute="trailing" constant="8" symbolic="YES" id="zD1-aa-mxW"/>
+                            <constraint firstItem="quT-zG-Yo1" firstAttribute="top" secondItem="7d6-UW-2Ea" secondAttribute="bottom" constant="8" symbolic="YES" id="zTx-79-aWh"/>
+                        </constraints>
+                    </customView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Srz-bG-wC9">
+                        <rect key="frame" x="461" y="13" width="87" height="32"/>
+                        <buttonCell key="cell" type="push" title="License" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Yaj-O6-wbH">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="openLicense:" target="-2" id="zRN-K4-Qm6"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="CEO-5c-W2b" firstAttribute="top" secondItem="6iv-BA-5dG" secondAttribute="top" id="Gz1-Nl-NnN"/>
+                    <constraint firstAttribute="trailing" secondItem="CEO-5c-W2b" secondAttribute="trailing" id="S4d-lV-lRs"/>
+                    <constraint firstAttribute="trailing" secondItem="Srz-bG-wC9" secondAttribute="trailing" constant="20" symbolic="YES" id="Shw-Kc-psi"/>
+                    <constraint firstItem="CEO-5c-W2b" firstAttribute="leading" secondItem="6iv-BA-5dG" secondAttribute="leading" id="qdg-UD-caj"/>
+                    <constraint firstItem="Srz-bG-wC9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6iv-BA-5dG" secondAttribute="leading" constant="20" symbolic="YES" id="wKJ-Tw-JSN"/>
+                    <constraint firstAttribute="bottom" secondItem="Srz-bG-wC9" secondAttribute="bottom" constant="20" symbolic="YES" id="waL-jv-McM"/>
+                    <constraint firstItem="Srz-bG-wC9" firstAttribute="top" secondItem="CEO-5c-W2b" secondAttribute="bottom" constant="20" symbolic="YES" id="xGx-FC-Iml"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="173" y="205.5"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="AppIconLarge" width="256" height="256"/>
+    </resources>
+</document>

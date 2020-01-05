@@ -1,21 +1,3 @@
-
-/* pngerror.c - stub functions for i/o and memory allocation
- *
- * Copyright (c) 2018 Cosmin Truta
- * Copyright (c) 1998-2002,2004,2006-2017 Glenn Randers-Pehrson
- * Copyright (c) 1996-1997 Andreas Dilger
- * Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
- *
- * This code is released under the libpng license.
- * For conditions of distribution and use, see the disclaimer
- * and license in png.h
- *
- * This file provides a location for all error handling.  Users who
- * need special error handling are expected to write replacement functions
- * and use png_set_error_fn() to use those functions.  See the instructions
- * at each function.
- */
-
 #include "pngpriv.h"
 
 #if defined(PNG_READ_SUPPORTED) || defined(PNG_WRITE_SUPPORTED)

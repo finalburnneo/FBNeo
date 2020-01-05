@@ -1,6 +1,3 @@
-// FB Alpha Fighting Roller driver module
-// Based on MAME driver by Pierpaolo Prazzoli
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

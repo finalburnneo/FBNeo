@@ -1,19 +1,5 @@
-// copyright-holders:Aaron Giles
-/*********************************************************
-
-    Konami 054539 (TOP) PCM Sound Chip
-
-    A lot of information comes from Amuse.
-    Big thanks to them.
-
-*********************************************************/
-
-// IRQ handling is disabled (handled in driver) for now...
-
-// Jan 19, 2018: added cubic resampling.
-
 #include "burnint.h"
-#include "math.h"
+#include "cmath"
 #include "k054539.h"
 
 static INT32 nNumChips = 0;

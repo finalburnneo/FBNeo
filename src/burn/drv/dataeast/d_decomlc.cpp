@@ -1,6 +1,3 @@
-// FB Alpha Data East MLC Hardware driver module
-// Based on MAME driver by Bryan Mcphail
-
 #include "tiles_generic.h"
 #include "sh2_intf.h"
 #include "arm_intf.h"

@@ -1,4 +1,3 @@
-// E.S.P. Ra De
 #include "cave.h"
 #include "ymz280b.h"
 

@@ -4,11 +4,11 @@
 // Burn - Arcade emulator library - internal code
 
 // Standard headers
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include <cstdarg>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cassert>
 
 #include "tchar.h"
 

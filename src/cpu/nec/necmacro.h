@@ -1,5 +1,3 @@
-/* parameter x = result, y = source 1, z = source 2 */
-
 #define SetTF(x)		(nec_state->TF = (x))
 #define SetIF(x)		(nec_state->IF = (x))
 #define SetDF(x)		(nec_state->DF = (x))

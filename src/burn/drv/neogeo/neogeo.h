@@ -104,6 +104,7 @@ extern INT32 nNeoPaletteBank;
 extern UINT32* NeoPalette;
 
 extern UINT8 NeoRecalcPalette;
+extern INT32 bNeoDarkenPalette;
 
 INT32 NeoInitPalette();
 void NeoExitPalette();

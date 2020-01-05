@@ -1,40 +1,5 @@
-/****************************************************************************
-
-    NEC V25/V35 emulator
-
-    ---------------------------------------------
-
-    TODO:
-
-    Using V20/V30 cycle counts for now. V25/V35 cycle counts
-    vary based on whether internal RAM access is enabled (RAMEN).
-    Likewise, the programmable clock divider (PCK) currently only
-    affects the timers, not instruction execution.
-
-    BTCLR and STOP instructions not implemented.
-
-    IBRK flag (trap I/O instructions) not implemented.
-
-    Interrupt macro service function not implemented.
-
-    Port implementation is incomplete: mode control registers are ignored.
-
-    Timer implementation is incomplete: polling is not implemented
-    (reading any of the registers just returns the last value written)
-
-    Serial interface and DMA functions not implemented.
-    Note that these functions differ considerably between
-    the V25/35 and the V25+/35+.
-
-    Make internal RAM into a real RAM region, and use an
-    internal address map (remapped when IDB is written to)
-    instead of memory access wrapper functions.
-    That way the internal RAM would be visible to the debugger,
-    among other benefits.
-
-****************************************************************************/
 #include "burnint.h"
-#include <stddef.h>
+#include <cstddef>
 #include "driver.h"
 #include "nec_intf.h"
 #include "bitswap.h"

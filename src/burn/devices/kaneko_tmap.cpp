@@ -1,5 +1,3 @@
-// Based on MAME sources by Luca Elia, David Haywood
-
 #include "tiles_generic.h"
 #include "kaneko_tmap.h"
 

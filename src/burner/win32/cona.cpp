@@ -1,4 +1,3 @@
-// Burner Config file module
 #include "burner.h"
 
 #ifdef _UNICODE

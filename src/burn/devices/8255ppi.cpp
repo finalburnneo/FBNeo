@@ -1,8 +1,6 @@
-// Based on MAME driver by Curt Coder
-
 #include "burnint.h"
 #include "8255ppi.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define MAX_PPIS        10
 

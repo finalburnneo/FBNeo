@@ -1,4 +1,3 @@
-// vector.cpp, by iq_132.  aa mods by dink
 #include "tiles_generic.h"
 #include "math.h"
 

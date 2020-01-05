@@ -1,7 +1,3 @@
-// Burner data file module (for ROM managers)
-// written    2001 LoqiqX
-// updated 11/2003 by LvR -- essentially a rewrite
-
 #include "burner.h"
 
 // If "Generate dat" crashes or hangs, uncomment this next line to find the guilty driver.

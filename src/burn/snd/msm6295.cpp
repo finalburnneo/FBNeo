@@ -1,10 +1,7 @@
-// OKI MSM6295 module
-// Emulation by Jan Klaassen
-
-#include <math.h>
+#include <cmath>
 #include "burnint.h"
 #include "msm6295.h"
-#include <stddef.h>
+#include <cstddef>
 
 UINT8* MSM6295ROM;
 

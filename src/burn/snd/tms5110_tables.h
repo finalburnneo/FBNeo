@@ -1,11 +1,3 @@
-/* TMS5110 ROM Tables */
-
-/* Note: all the tables in this file were read from the real TMS5110A chip, except
-         for the chirptable and the interp_coeff
-*/
-
-
-/* This is the energy lookup table (4-bits -> 10-bits) */
 const static unsigned short energytable[0x10] = {
 0*2,   1*2,   2*2,   3*2,
 4*2,   6*2,   8*2,   11*2,

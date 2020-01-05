@@ -6,7 +6,7 @@ static void (*write)(UINT32, UINT8) = NULL;
 static UINT8 (*readio)(UINT16) = NULL;
 static void (*writeio)(UINT16, UINT8) = NULL;
 
-static UINT8 *mem[2][0x1000]; // only read/fetch & write
+static UINT8* mem[2][0x1000]; // only read/fetch & write
 
 extern void t90_internal_registers_w(UINT16 offset, UINT8 data);
 extern UINT8 t90_internal_registers_r(UINT16 offset);
@@ -23,7 +23,7 @@ cpu_core_config tlcs90Config =
 	tlcs90Open,
 	tlcs90Close,
 	tlcs90CheatRead,
-	tlcs90WriteROM, 
+	tlcs90WriteROM,
 	tlcs90GetActive,
 	tlcs90TotalCycles,
 	tlcs90NewFrame,
@@ -41,15 +41,18 @@ UINT8 tlcs90_program_read_byte(UINT32 address)
 	address &= 0xfffff;
 
 	// internal registers!!!!!!!!!!!!!!!!!
-	if (address >= 0xffc0 && address <= 0xffef) {
+	if (address >= 0xffc0 && address <= 0xffef)
+	{
 		return t90_internal_registers_r(address & 0x3f);
 	}
 
-	if (mem[0][(address / 0x100)] != NULL) {
+	if (mem[0][(address / 0x100)] != NULL)
+	{
 		return mem[0][(address / 0x100)][address & 0xff];
 	}
 
-	if (read) {
+	if (read)
+	{
 		return read(address);
 	}
 
@@ -61,19 +64,21 @@ void tlcs90_program_write_byte(UINT32 address, UINT8 data)
 	address &= 0xfffff;
 
 	// internal registers!!!!!!!!!!!!!!!!!
-	if (address >= 0xffc0 && address <= 0xffef) {
+	if (address >= 0xffc0 && address <= 0xffef)
+	{
 		t90_internal_registers_w(address & 0x3f, data);
 		return;
 	}
 
-	if (mem[1][(address / 0x100)] != NULL) {
+	if (mem[1][(address / 0x100)] != NULL)
+	{
 		mem[1][(address / 0x100)][address & 0xff] = data;
 		return;
 	}
 
-	if (write) {
+	if (write)
+	{
 		write(address, data);
-		return;
 	}
 }
 
@@ -81,9 +86,10 @@ UINT8 tlcs90_io_read_byte(UINT16 port)
 {
 	port &= 0xffff;
 
-//	bprintf (0, _T("Read Port: %4.4x\n"), port);
+	//	bprintf (0, _T("Read Port: %4.4x\n"), port);
 
-	if (readio) {
+	if (readio)
+	{
 		return readio(port);
 	}
 
@@ -94,9 +100,10 @@ void tlcs90_io_write_byte(UINT16 port, UINT8 data)
 {
 	port &= 0xffff;
 
-//	bprintf (0, _T("Write Port: %4.4x %2.2x\n"), port, data);
+	//	bprintf (0, _T("Write Port: %4.4x %2.2x\n"), port, data);
 
-	if (writeio) {
+	if (writeio)
+	{
 		return writeio(port, data);
 	}
 }
@@ -122,15 +129,15 @@ void tlcs90SetWritePortHandler(void (*pwrite)(UINT16, UINT8))
 	writeio = pwrite;
 }
 
-void tlcs90MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, INT32 flags)
+void tlcs90MapMemory(UINT8* ptr, UINT32 start, UINT32 end, INT32 flags)
 {
 	start &= 0xfffff;
 	end &= 0xfffff;
 
-	for (UINT32 i = start / 0x100; i < (end / 0x100) + 1; i++)
+	for (UINT32 i = start / 0x100; i < end / 0x100 + 1; i++)
 	{
-		if (flags & (1 << 0)) mem[0][i] = ptr + ((i * 0x100) - start);
-		if (flags & (1 << 1)) mem[1][i] = ptr + ((i * 0x100) - start);
+		if (flags & 1 << 0) mem[0][i] = ptr + (i * 0x100 - start);
+		if (flags & 1 << 1) mem[1][i] = ptr + (i * 0x100 - start);
 	}
 }
 
@@ -141,11 +148,13 @@ UINT8 tlcs90CheatRead(UINT32 address)
 
 void tlcs90WriteROM(UINT32 address, UINT8 data)
 {
-	if (mem[0][(address / 0x100)] != NULL) {
+	if (mem[0][(address / 0x100)] != NULL)
+	{
 		mem[0][(address / 0x100)][address & 0xff] = data;
 	}
 
-	if (mem[1][(address / 0x100)] != NULL) {
+	if (mem[1][(address / 0x100)] != NULL)
+	{
 		mem[1][(address / 0x100)][address & 0xff] = data;
 	}
 }
@@ -162,12 +171,11 @@ void tlcs90Open(INT32)
 
 void tlcs90Close()
 {
-
 }
 
 INT32 tlcs90Init(INT32, INT32 clock)
 {
-	memset (mem, 0, 2 * 0x1000 * sizeof(UINT8 *));
+	memset(mem, 0, 2 * 0x1000 * sizeof(UINT8*));
 
 	read = NULL;
 	write = NULL;
@@ -181,7 +189,7 @@ INT32 tlcs90Init(INT32, INT32 clock)
 
 INT32 tlcs90Exit()
 {
-	memset (mem, 0, 2 * 0x1000 * sizeof(UINT8 *));
+	memset(mem, 0, 2 * 0x1000 * sizeof(UINT8*));
 	read = NULL;
 	write = NULL;
 	readio = NULL;
@@ -189,5 +197,3 @@ INT32 tlcs90Exit()
 
 	return 0;
 }
-
-

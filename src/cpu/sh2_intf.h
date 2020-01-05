@@ -22,7 +22,7 @@ unsigned char __fastcall Sh2ReadByte(unsigned int a);
 int Sh2Init(int nCount);
 int Sh2Exit();
 
-void Sh2Open(const int i);
+void Sh2Open(int i);
 void Sh2Close();
 int Sh2GetActive();
 
@@ -40,7 +40,7 @@ int Sh2SetWriteWordHandler(int i, pSh2WriteWordHandler pHandler);
 int Sh2SetReadLongHandler(int i, pSh2ReadLongHandler pHandler);
 int Sh2SetWriteLongHandler(int i, pSh2WriteLongHandler pHandler);
 
-void Sh2SetIRQLine(const int line, const int state);
+void Sh2SetIRQLine(int line, int state);
 
 unsigned int Sh2GetPC(int n);
 void Sh2StopRun();

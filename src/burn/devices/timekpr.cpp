@@ -1,5 +1,3 @@
-// Based on MAME sources by Aaron Giles,smf
-
 #include "burnint.h"
 #include "time.h"
 #include "timekpr.h"

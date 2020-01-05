@@ -1,16 +1,3 @@
-/****************************************************************************
- *                                                                          *
- *  Functions to emulate the TMS34061 video controller                      *
- *                                                                          *
- *  Created by Zsolt Vasvari on 5/26/1998.                                  *
- *  Updated by Aaron Giles on 11/21/2000.                                   *
- *  Modified for use in FBA by iq_132 4/15/2014                             *
- *                                                                          *
- *  This is far from complete. See the TMS34061 User's Guide available on   *
- *  www.spies.com/arcade                                                    *
- *                                                                          *
- ****************************************************************************/
-
 #include "burnint.h"
 #include "driver.h"
 

@@ -1,39 +1,3 @@
-/***************************************************************************
-
-    Konami 005289 - SCC sound as used in Bubblesystem
-
-    This file is pieced together by Bryan McPhail from a combination of
-    Namco Sound, Amuse by Cab, Nemesis schematics and whoever first
-    figured out SCC!
-
-    The 005289 is a 2 channel sound generator. Each channel gets its
-    waveform from a prom (4 bits wide).
-
-    (From Nemesis schematics)
-
-    Address lines A0-A4 of the prom run to the 005289, giving 32 bytes
-    per waveform.  Address lines A5-A7 of the prom run to PA5-PA7 of
-    the AY8910 control port A, giving 8 different waveforms. PA0-PA3
-    of the AY8910 control volume.
-
-    The second channel is the same as above except port B is used.
-
-    The 005289 has 12 address inputs and 4 control inputs: LD1, LD2, TG1, TG2.
-    It has no data bus, so data values written don't matter.
-    When LD1 or LD2 is asserted, the 12 bit value on the address bus is
-    latched. Each of the two channels has its own latch.
-    When TG1 or TG2 is asserted, the frequency of the respective channel is
-    set to the previously latched value.
-
-    The 005289 itself is nothing but an address generator. Digital to analog
-    conversion, volume control and mixing of the channels is all done
-    externally via resistor networks and 4066 switches and is only implemented
-    here for convenience.
-
-    Ported from MAME SVN 27/05/2014
-
-***************************************************************************/
-
 #include "burnint.h"
 #include "k005289.h"
 

@@ -1,20 +1,3 @@
-// license:???
-// copyright-holders:Alex Marshall,nimitz,austere
-//ICS2115 by Raiden II team (c) 2010
-//members: austere, nimitz, Alex Marshal
-//
-//Original driver by O. Galibert, ElSemi
-//
-//Use tab size = 4 for your viewing pleasure.
-
-//Ported from MAME git, 13/07/2015
-
-// jan_klaasen was here: added interpolators for rendering at any samplerate (44.1/48kHz tested)
-//						 added panning
-//						 many changes -- fixed bugs and brought in line with ics2115 datasheet
-//						 and AMD interwave patent details (where applicable)
-
-
 #include "burnint.h"
 //#include <cmath>
 

@@ -1,6 +1,3 @@
-// FB Alpha Lemmings driver module
-// Based on MAME driver by Bryan McPhail
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "burn_ym2151.h"

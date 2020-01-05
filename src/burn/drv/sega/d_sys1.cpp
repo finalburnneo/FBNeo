@@ -5991,6 +5991,13 @@ static void DrawSprite(INT32 Num)
 		x = ((SpriteBase[3] & 0x01) << 8) + SpriteBase[2] + System1SpriteXOffset;
 		y = sy + Row;
 
+		if (System1FlipScreen) {
+			// flipped
+			y = Height + (sy - Row);
+			y -= 3; // flipped offsets
+			x += 7; // ""
+		}
+
 		if (!wide_mode) x /= 2;
 
 		while(1) {
@@ -6058,6 +6065,9 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 		System1BgScrollX = ((System1ScrollX[0] | (System1ScrollX[1] << 8)) & 0x1ff) + 28;
 	} else {
 		System1BgScrollX = ((System1ScrollX[0] >> 1) + ((System1ScrollX[1] & 1) << 7) + 14) & 0xff;
+		if (System1FlipScreen) {
+			System1BgScrollX -= 19; // flipped offset
+		}
 	}
 	System1BgScrollY = (-System1ScrollY & 0xff);
 

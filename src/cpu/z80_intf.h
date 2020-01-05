@@ -1,5 +1,3 @@
-// Z80 (Zed Eight-Ty) Interface
-
 #ifndef FASTCALL
  #undef __fastcall
  #define __fastcall
@@ -28,12 +26,12 @@ void ZetSwapActive(INT32 nCPU);
 //#define ZET_ROM		(ZET_READ|ZET_FETCH)
 //#define ZET_RAM		(ZET_ROM|ZET_WRITE)
 
-INT32 ZetUnmapMemory(INT32 nStart,INT32 nEnd,INT32 nFlags);
-void ZetMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nFlags);
+INT32 ZetUnmapMemory(INT32 nStart, INT32 nEnd, INT32 nFlags);
+void ZetMapMemory(UINT8* Mem, INT32 nStart, INT32 nEnd, INT32 nFlags);
 
-INT32 ZetMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode);
-INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
-INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem02);
+INT32 ZetMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode);
+INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8* Mem);
+INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8* Mem01, UINT8* Mem02);
 
 void ZetReset();
 void ZetReset(INT32 nCPU);
@@ -48,8 +46,8 @@ INT32 ZetScan(INT32 nAction);
 INT32 ZetRun(INT32 nCycles);
 INT32 ZetRun(INT32 nCPU, INT32 nCycles);
 void ZetRunEnd();
-void ZetSetIRQLine(const INT32 line, const INT32 status);
-void ZetSetIRQLine(INT32 nCPU, const INT32 line, const INT32 status);
+void ZetSetIRQLine(INT32 line, INT32 status);
+void ZetSetIRQLine(INT32 nCPU, INT32 line, INT32 status);
 void ZetSetVector(INT32 vector);
 void ZetSetVector(INT32 nCPU, INT32 vector);
 UINT8 ZetGetVector();

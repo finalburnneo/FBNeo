@@ -1,6 +1,3 @@
-// FB Alpha Aliens driver module
-// Based on MAME driver by Manuel Abadia
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "konami_intf.h"

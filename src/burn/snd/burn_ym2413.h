@@ -1,4 +1,3 @@
-// burn_ym2413.h
 #include "driver.h"
 extern "C" {
  #include "ym2413.h"

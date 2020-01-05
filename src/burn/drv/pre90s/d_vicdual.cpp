@@ -1,15 +1,3 @@
-// FB Alpha Sega Vic Dual driver module
-// Based on MAME driver by Zsolt Vasvari
-
-/*
-    finished:
-		carnival (w/sound)
-
-	to do:
-	  	bugtest
-		sound?
-*/
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "samples.h"
@@ -3427,6 +3415,47 @@ struct BurnDriver BurnDrvCarnivalc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, carnivalcRomInfo, carnivalcRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalcInputInfo, CarnivalcDIPInfo,
+	CarnivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	224, 256, 3, 4
+};
+
+
+// Verbena (bootleg of Carnival)
+
+static struct BurnRomInfo verbenaRomDesc[] = {
+	{ "16v.u33",			0x0400, 0xa47a1c54, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "15mm.u32",			0x0400, 0xa1f58beb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "14mm.u31",			0x0400, 0x67b17922, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "13mm.u30",			0x0400, 0xbefb09a5, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "12mm.u29",			0x0400, 0xb5230913, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "11mm.u28",			0x0400, 0x53040332, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "10mm.u27",			0x0400, 0xa3b9c2db, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "9mm.u26",			0x0400, 0xfcc3854e, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "8mm.u8",				0x0400, 0x28be8d69, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "7mm.u7",				0x0400, 0x3873ccdb, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "6mm.u6",				0x0400, 0xd9a96dff, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "5mm.u5",				0x0400, 0xd893ca72, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "4mm.u4",				0x0400, 0xdf8c63c5, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "3mm.u3",				0x0400, 0x689a73e8, 1 | BRF_PRG | BRF_ESS }, // 13
+	{ "2mm.u2",				0x0400, 0xb94ef7ab, 1 | BRF_PRG | BRF_ESS }, // 14
+	{ "1v.u1",				0x0400, 0x6e10c057, 1 | BRF_PRG | BRF_ESS }, // 15
+
+	{ "mmi6331.u4",			0x0020, 0xf0084d80, 1 | BRF_GRA },           // 16 Color data
+
+	{ "sound.u5",			0x0400, 0x0dbaa2b0, 3 | BRF_PRG | BRF_ESS }, // 17 I8039 Code
+
+	{ "mmi6331.u14",		0x0020, 0x9617d796, 0 | BRF_OPT },           // 18 Unused PROM
+};
+
+STD_ROM_PICK(verbena)
+STD_ROM_FN(verbena)
+
+struct BurnDriver BurnDrvVerbena = {
+	"verbena", "carnival", NULL, "carnival", "1980",
+	"Verbena (bootleg of Carnival)\0", NULL, "bootleg (Cocomatic)", "Vic Dual",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, verbenaRomInfo, verbenaRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalcInputInfo, CarnivalcDIPInfo,
 	CarnivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };

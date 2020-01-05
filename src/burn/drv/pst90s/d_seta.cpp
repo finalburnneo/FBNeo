@@ -1,6 +1,3 @@
-// FB Alpha Seta driver module
-// Based on MAME driver by Luca Elia
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -5881,7 +5878,7 @@ static void zombraid68kInit()
 	SekSetWriteByteHandler(2,		zombraid_gun_write_byte);
 	SekClose();
 
-	memmove (DrvSndROM + 0x100000, DrvSndROM + 0x080000, 0x280000);
+	memmove (DrvSndROM + 0x100000, DrvSndROM + 0x080000, 0x380000);
 }
 
 static void BlandiaGfxRearrange()
@@ -9269,7 +9266,7 @@ static INT32 zombraidInit()
 	DrvSetVideoOffsets(0, 0, -2, -2);
 	DrvSetColorOffsets(0, 0x200, 0xa00);
 
-	INT32 nRet = DrvInit(zombraid68kInit, 16000000, SET_IRQLINES(2, 4), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 3, 3));
+	INT32 nRet = DrvInit(zombraid68kInit, 16000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 3, 3));
 
 	if (nRet == 0) {
 		gundharaSetColorTable();

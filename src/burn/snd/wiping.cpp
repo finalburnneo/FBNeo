@@ -1,14 +1,6 @@
-/***************************************************************************
-
-    Wiping sound driver (quick hack of the Namco sound driver)
-
-    used by wiping and clshroad
-
-***************************************************************************/
-
 #include "burnint.h"
 #include "wiping.h"
-#include <stddef.h>
+#include <cstddef>
 
 static const INT32 samplerate = 48000;
 static const INT32 defgain = 48;

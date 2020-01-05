@@ -1,5 +1,3 @@
-// Q-Bert emu-layer for FB Alpha by dink, based on the MAME driver by Fabrice Frances & Nicola Salmoria.
-
 #include "tiles_generic.h"
 #include "driver.h"
 #include "nec_intf.h"

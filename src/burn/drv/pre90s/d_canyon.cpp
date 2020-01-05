@@ -1,6 +1,3 @@
-// FB Alpha Canyon Bomber driver module
-// Based on MAME driver by Mike Balfour
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "burn_led.h"

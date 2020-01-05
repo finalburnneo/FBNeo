@@ -1,4 +1,3 @@
-// sn76489 / sn76496 psg
 void SN76496Update(INT16* pSoundBuf, INT32 Length);
 void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length);
 void SN76496UpdateToBuffer(INT32 Num, INT16* pSoundBuf, INT32 Length); // output mono

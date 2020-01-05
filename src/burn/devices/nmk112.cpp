@@ -1,7 +1,3 @@
-// license:BSD-3-Clause
-// copyright-holders:Alex W. Jackson
-// NMK112 - NMK custom IC for bankswitching the sample ROMs of a pair of OKI6295 ADPCM chips
-
 #include "burnint.h"
 #include "msm6295.h"
 

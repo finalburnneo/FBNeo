@@ -1,12 +1,3 @@
-// FB Alpha Time Pilot driver module
-// Based on MAME driver by Nicola Salmoria
-
-/*
-	To do:
-	    tc8830f sound core (only for chkun - *very* low priority)
-*/
-
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "timeplt_snd.h"

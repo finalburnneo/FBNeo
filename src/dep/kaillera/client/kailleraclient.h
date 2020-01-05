@@ -1,16 +1,3 @@
-/*
-  Kaillera client API v0.84
-  (c) 2001 Christophe Thibault
-
-  History:
-  0.84: added moreInfos callback
-  0.83: added clientDropped callback
-  0.8 : added in-game chat function/callback
-  0.72: added kailleraEndGame() method
-        added kailleraGetVersion() method
-  0.7:  modified kailleraModifyPlayValues behaviour
-*/
-
 #ifndef KAILLERA_CLIENT_H
 #define KAILLERA_CLIENT_H
 

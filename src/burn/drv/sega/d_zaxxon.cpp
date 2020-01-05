@@ -1,17 +1,3 @@
-/*
-   Games supported:
-        * Zaxxon		    yes
-        * Super Zaxxon		yes
-        * Future Spy		yes
-        * Razmatazz		    no sound+bad controls sega_universal_sound_board_rom ?
-        * Ixion			    no
-        * Congo Bongo		yes
-
-   To do:
-	Need to add Sega USB support.
-	Analog inputs for Raxmatazz and Ixion
-	Clean up video code
-*/
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "8255ppi.h"

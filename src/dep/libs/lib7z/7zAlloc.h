@@ -1,6 +1,3 @@
-/* 7zAlloc.h -- Allocation functions
-2013-03-25 : Igor Pavlov : Public domain */
-
 #ifndef __7Z_ALLOC_H
 #define __7Z_ALLOC_H
 

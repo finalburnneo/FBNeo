@@ -1,10 +1,4 @@
-/***************************************************************************
-
-  Lunar Lander Specific Sound Code
-
-***************************************************************************/
-
-#include <math.h>
+#include <cmath>
 #include "burnint.h"
 #include "llander.h"
 

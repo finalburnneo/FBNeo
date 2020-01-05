@@ -1,6 +1,3 @@
-// FB Alpha 4 Enraya driver module
-// Based on MAME driver by Tomasz Slanina
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

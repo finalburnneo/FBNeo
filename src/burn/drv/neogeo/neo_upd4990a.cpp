@@ -1,5 +1,3 @@
-// NEC uPD4990A module (real-time clock/calendar)
-
 #include "neogeo.h"
 
 static struct {

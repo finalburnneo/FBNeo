@@ -1,6 +1,3 @@
-// FB Alpha Mustache Boy driver module
-// Based on MAME drver by Tomasz Slanina
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2151.h"

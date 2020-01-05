@@ -1,5 +1,3 @@
-// Atari EA-ROM, impl. by dink
-
 #include "burnint.h"
 #include "earom.h"
 

@@ -1,6 +1,3 @@
-// FB Alpha Crystal Castles driver module
-// Based on MAME driver by Aaron Giles
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "burn_gun.h"

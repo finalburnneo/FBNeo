@@ -1,8 +1,6 @@
-// Based on MAME driver by Nicola Salmoria
-
 #include "burnint.h"
 #include "sn76496.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define MAX_SN76496_CHIPS 8
 

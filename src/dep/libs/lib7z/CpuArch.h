@@ -1,6 +1,3 @@
-/* CpuArch.h -- CPU specific code
-2016-06-09: Igor Pavlov : Public domain */
-
 #ifndef __CPU_ARCH_H
 #define __CPU_ARCH_H
 

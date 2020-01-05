@@ -1,6 +1,3 @@
-// FB Alpha Kaneko 16-bit driver module
-// Based on MAME driver by Luca Elia
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -1293,7 +1290,7 @@ STD_ROM_PICK(Bakubrkr)
 STD_ROM_FN(Bakubrkr)
 
 static struct BurnRomInfo GtmrRomDesc[] = {
-	// this set shows 'PCB by Jinwei Co Ltd. ROC'
+	// this set shows 'PCB by Jinwei Co Ltd. ROC', bootleg?
 	{ "u2.bin",            	0x080000, 0x031799f7, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
 	{ "u1.bin",            	0x080000, 0x6238790a, BRF_ESS | BRF_PRG }, //  1
 
@@ -7640,7 +7637,7 @@ struct BurnDriver BurnDrvBakubrkr = {
 
 struct BurnDriver BurnDrvGtmr = {
 	"gtmr", NULL, NULL, NULL, "1994",
-	"1000 Miglia: Great 1000 Miles Rally (94/07/18)\0", NULL, "Kaneko", "Kaneko16",
+	"1000 Miglia: Great 1000 Miles Rally (Taiwan 94/07/18)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
 	NULL, GtmrRomInfo, GtmrRomName, NULL, NULL, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,

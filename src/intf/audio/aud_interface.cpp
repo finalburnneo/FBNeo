@@ -1,4 +1,3 @@
-// Audio Output
 #include "burner.h"
 
 INT32 nAudSampleRate[8] = { 44100, 44100, 22050, 22050, 22050, 22050, 22050, 22050 };			// sample rate

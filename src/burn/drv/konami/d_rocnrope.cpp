@@ -1,6 +1,3 @@
-// FB Alpha Rock'n Rope driver module
-// Based on MAME driver by Chris Hardy
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "z80_intf.h"
@@ -673,8 +670,8 @@ static struct BurnRomInfo ropemanRomDesc[] = {
 	{ "r12.7a",		0x1000, 0x75d2c4e2, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 	{ "r13.8a",		0x1000, 0xca4325ae, 2 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "r10.11a",		0x2000, 0xafdaba5e, 3 | BRF_GRA },           //  7 Sprites
-	{ "r11.12a",		0x2000, 0x054cafeb, 3 | BRF_GRA },           //  8
+	{ "r10.11a",	0x2000, 0xafdaba5e, 3 | BRF_GRA },           //  7 Sprites
+	{ "r11.12a",	0x2000, 0x054cafeb, 3 | BRF_GRA },           //  8
 	{ "r8.9a",		0x2000, 0x9d2166b2, 3 | BRF_GRA },           //  9
 	{ "r9.10a",		0x2000, 0xaff6e22f, 3 | BRF_GRA },           // 10
 
@@ -685,9 +682,9 @@ static struct BurnRomInfo ropemanRomDesc[] = {
 	{ "2.16b",		0x0100, 0x750a9677, 5 | BRF_GRA },           // 14
 	{ "3.16g",		0x0100, 0xb5c75a27, 5 | BRF_GRA },           // 15
 
-	{ "pal10l8.6g",		0x0001, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16 PALs
-	{ "n82s153.pal1.bin",	0x00eb, 0xbaebe804, 6 | BRF_OPT },           // 17
-	{ "n82s153.pal2.bin",	0x00eb, 0xa0e1b7a0, 6 | BRF_OPT },           // 18
+	{ "pal10l8.6g",			0x002c, 0x82e98da9, 6 | BRF_OPT }, 	 // 16 PALs
+	{ "n82s153.pal1.bin",	0x00eb, 0xbaebe804, 6 | BRF_OPT },   // 17
+	{ "n82s153.pal2.bin",	0x00eb, 0xa0e1b7a0, 6 | BRF_OPT },   // 18
 };
 
 STD_ROM_PICK(ropeman)

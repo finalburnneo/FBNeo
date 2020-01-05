@@ -1,61 +1,6 @@
-/*** m6800: Portable 6800 class  emulator *************************************
-
-    m6800.c
-
-    References:
-
-        6809 Simulator V09, By L.C. Benschop, Eidnhoven The Netherlands.
-
-        m6809: Portable 6809 emulator, DS (6809 code in MAME, derived from
-            the 6809 Simulator V09)
-
-        6809 Microcomputer Programming & Interfacing with Experiments"
-            by Andrew C. Staugaard, Jr.; Howard W. Sams & Co., Inc.
-
-    System dependencies:    UINT16 must be 16 bit unsigned int
-                            UINT8 must be 8 bit unsigned int
-                            UINT32 must be more than 16 bits
-                            arrays up to 65536 bytes must be supported
-                            machine must be twos complement
-
-History
-991031  ZV
-    Added NSC-8105 support
-
-990319  HJB
-    Fixed wrong LSB/MSB order for push/pull word.
-    Subtract .extra_cycles at the beginning/end of the exectuion loops.
-
-990316  HJB
-    Renamed to 6800, since that's the basic CPU.
-    Added different cycle count tables for M6800/2/8, M6801/3 and HD63701.
-
-990314  HJB
-    Also added the M6800 subtype.
-
-990311  HJB
-    Added _info functions. Now uses static m6808_Regs struct instead
-    of single statics. Changed the 16 bit registers to use the generic
-    PAIR union. Registers defined using macros. Split the core into
-    four execution loops for M6802, M6803, M6808 and HD63701.
-    TST, TSTA and TSTB opcodes reset carry flag.
-TODO:
-    Verify invalid opcodes for the different CPU types.
-    Add proper credits to _info functions.
-    Integrate m6808_Flags into the registers (multiple m6808 type CPUs?)
-
-990301  HJB
-    Modified the interrupt handling. No more pending interrupt checks.
-    WAI opcode saves state, when an interrupt is taken (IRQ or OCI),
-    the state is only saved if not already done by WAI.
-
-*****************************************************************************/
-
-
-//#include "debugger.h"
 #include "burnint.h"
 #include "m6800.h"
-#include <stddef.h>
+#include <cstddef>
 
 #define VERBOSE 0
 

@@ -1,37 +1,6 @@
-/*****************************************************************************
- *
- *   Portable Hitachi SH-2 (SH7600 family) emulator
- *
- *   Copyright (c) 2000 Juergen Buchmueller <pullmoll@t-online.de>,
- *   all rights reserved.
- *
- *   - This source code is released as freeware for non-commercial purposes.
- *   - You are free to use and redistribute this code in modified or
- *     unmodified form, provided you list me in the credits.
- *   - If you modify this source code, you must add a notice to each modified
- *     source file that it has been changed.  If you're a nice person, you
- *     will clearly mark each change too.  :)
- *   - If you wish to use this for commercial purposes, please contact me at
- *     pullmoll@t-online.de
- *   - The author of this copywritten work reserves the right to change the
- *     terms of its usage and license at any time, including retroactively
- *   - This entire notice must remain in the source code.
- *
- *  This work is based on <tiraniddo@hotmail.com> C/C++ implementation of
- *  the SH-2 CPU core and was adapted to the MAME CPU core requirements.
- *  Thanks also go to Chuck Mason <chukjr@sundail.net> and Olivier Galibert
- *  <galibert@pobox.com> for letting me peek into their SEMU code :-)
- *
- *****************************************************************************
- *
- *  Port to Finalburn Alpha by OopsWare
- *  http://oopsware.googlepages.com/
- *
- *****************************************************************************/
-
 #include "burnint.h"
 #include "sh2_intf.h"
-#include <stddef.h>
+#include <cstddef>
 
 int has_sh2;
 INT32 cps3speedhack; // must be set _after_ Sh2Init();

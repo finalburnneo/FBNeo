@@ -1,7 +1,3 @@
-/*** m6809: Portable 6809 emulator ******************************************/
-
-//#pragma once
-
 #ifndef __M6809_H__
 #define __M6809_H__
 
@@ -10,27 +6,34 @@
 /* 6809 Registers */
 typedef struct
 {
-	PAIR	pc; 		/* Program counter */
-	PAIR	ppc;		/* Previous program counter */
-	PAIR    ea;         /* effective address */
-	PAIR	d;			/* Accumulator a and b */
-	PAIR	dp; 		/* Direct Page register (page in MSB) */
-	PAIR	u, s;		/* Stack pointers */
-	PAIR	x, y;		/* Index registers */
-    UINT8   cc;
-	UINT8	ireg;		/* First opcode */
-	UINT8	irq_state[2];
-	UINT8	irq_hold[2];
-    INT32   extra_cycles; /* cycles used up by interrupts */
-    UINT8   int_state;  /* SYNC and CWAI flags */
-	UINT8   nmi_state;
+	PAIR pc; /* Program counter */
+	PAIR ppc; /* Previous program counter */
+	PAIR ea; /* effective address */
+	PAIR d; /* Accumulator a and b */
+	PAIR dp; /* Direct Page register (page in MSB) */
+	PAIR u, s; /* Stack pointers */
+	PAIR x, y; /* Index registers */
+	UINT8 cc;
+	UINT8 ireg; /* First opcode */
+	UINT8 irq_state[2];
+	UINT8 irq_hold[2];
+	INT32 extra_cycles; /* cycles used up by interrupts */
+	UINT8 int_state; /* SYNC and CWAI flags */
+	UINT8 nmi_state;
 
 	int (*irq_callback)(int irqline);
 } m6809_Regs;
 
 enum
 {
-	M6809_PC=1, M6809_S, M6809_CC ,M6809_A, M6809_B, M6809_U, M6809_X, M6809_Y,
+	M6809_PC=1,
+	M6809_S,
+	M6809_CC,
+	M6809_A,
+	M6809_B,
+	M6809_U,
+	M6809_X,
+	M6809_Y,
 	M6809_DP
 };
 
@@ -45,8 +48,8 @@ void m6809_reset(void);
 void m6809_reset_hard(void);
 int m6809_execute(int cycles);
 void m6809_set_irq_line(int irqline, int state);
-void m6809_get_context(void *dst);
-void m6809_set_context(void *src);
+void m6809_get_context(void* dst);
+void m6809_set_context(void* src);
 UINT16 m6809_get_pc();
 UINT16 m6809_get_prev_pc();
 void m6809_end_timeslice();

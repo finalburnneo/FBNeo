@@ -1,7 +1,3 @@
-/* crc32.h -- tables for rapid CRC calculation
- * Generated automatically by crc32.c
- */
-
 local const z_crc_t FAR crc_table[TBLS][256] =
 {
   {

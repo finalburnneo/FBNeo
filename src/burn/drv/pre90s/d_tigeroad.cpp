@@ -1,7 +1,3 @@
-// FB Alpha Tiger Road driver module
-// Based on MAME driver by Phil Stroffolino
-// F1 Dream protection code by Eric Hustvedt
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

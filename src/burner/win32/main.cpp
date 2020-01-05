@@ -1,10 +1,3 @@
-// FinalBurn Neo - Emulator for MC68000/Z80 based arcade games
-//            Refer to the "license.txt" file for more info
-
-// Main module
-
-// #define USE_SDL					// define if SDL is used
-// #define DONT_DISPLAY_SPLASH		// Prevent Splash screen from being displayed
 #define APP_DEBUG_LOG			// log debug messages to zzBurnDebug.html
 
 #ifdef USE_SDL

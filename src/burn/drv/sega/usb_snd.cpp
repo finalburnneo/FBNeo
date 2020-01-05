@@ -1,6 +1,3 @@
-// Sega USB sound core / cpu combo for FBAlpha, based on code by Aaron Giles,
-// also contains large portions of code by Aaron Giles
-
 #include "burnint.h"
 #include "i8039.h"
 #include "z80_intf.h"

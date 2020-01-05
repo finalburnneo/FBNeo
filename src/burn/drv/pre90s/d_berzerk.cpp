@@ -1,6 +1,3 @@
-// FB Alpha Berzerk driver module
-// Based on MAME driver by Zsolt Vasvari, Aaron Giles, R. Belmont, Jonathan Gevaryahu
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "bitswap.h"
@@ -1340,7 +1337,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Berzerk (set 1)
+// Berzerk (revision RC31A)
 
 static struct BurnRomInfo berzerkRomDesc[] = {
 	{ "berzerk_rc31_1c.rom0.1c",	0x0800, 0xca566dbc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1348,7 +1345,7 @@ static struct BurnRomInfo berzerkRomDesc[] = {
 	{ "berzerk_rc31_3d.rom2.3d",	0x0800, 0xa1d5248b, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "berzerk_rc31_5d.rom3.5d",	0x0800, 0xfcaefa95, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "berzerk_rc31_6d.rom4.6d",	0x0800, 0x1e35b9a0, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "berzerk_rc31_5c.rom5.5c",	0x0800, 0xc8c665e5, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "berzerk_rc31a_5c.rom5.5c",	0x0800, 0xe0fab8f5, 1 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "berzerk_r_vo_1c.1c",			0x0800, 0x2cfe825d, 2 | BRF_SND },           //  6 Speech Data
 	{ "berzerk_r_vo_2c.2c",			0x0800, 0xd2b6324e, 2 | BRF_SND },           //  7
@@ -1364,7 +1361,7 @@ static INT32 BerzerkInit()
 
 struct BurnDriver BurnDrvBerzerk = {
 	"berzerk", NULL, NULL, NULL, "1980",
-	"Berzerk (set 1)\0", NULL, "Stern Electronics", "Miscellaneous",
+	"Berzerk (revision RC31A)\0", NULL, "Stern Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, berzerkRomInfo, berzerkRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkDIPInfo,
@@ -1373,9 +1370,37 @@ struct BurnDriver BurnDrvBerzerk = {
 };
 
 
-// Berzerk (set 2)
+// Berzerk (revision RC31)
 
-static struct BurnRomInfo berzerk1RomDesc[] = {
+static struct BurnRomInfo berzerkaRomDesc[] = {
+	{ "berzerk_rc31_1c.rom0.1c",	0x0800, 0xca566dbc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "berzerk_rc31_1d.rom1.1d",	0x0800, 0x7ba69fde, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "berzerk_rc31_3d.rom2.3d",	0x0800, 0xa1d5248b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "berzerk_rc31_5d.rom3.5d",	0x0800, 0xfcaefa95, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "berzerk_rc31_6d.rom4.6d",	0x0800, 0x1e35b9a0, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "berzerk_rc31_5c.rom5.5c",	0x0800, 0xc8c665e5, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "berzerk_r_vo_1c.1c",			0x0800, 0x2cfe825d, 2 | BRF_SND },           //  6 Speech Data
+	{ "berzerk_r_vo_2c.2c",			0x0800, 0xd2b6324e, 2 | BRF_SND },           //  7
+};
+
+STD_ROM_PICK(berzerka)
+STD_ROM_FN(berzerka)
+
+struct BurnDriver BurnDrvBerzerka = {
+	"berzerka", "berzerk", NULL, NULL, "1980",
+	"Berzerk (revision RC31)\0", NULL, "Stern Electronics", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, berzerkaRomInfo, berzerkaRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkDIPInfo,
+	BerzerkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	256, 224, 4, 3
+};
+
+
+// Berzerk (revision RC28)
+
+static struct BurnRomInfo berzerkbRomDesc[] = {
 	{ "berzerk_rc28_1c.rom0.1c",	0x0800, 0x5b7eb77d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "berzerk_rc28_1d.rom1.1d",	0x0800, 0xe58c8678, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "berzerk_rc28_3d.rom2.3d",	0x0800, 0x705bb339, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1387,21 +1412,21 @@ static struct BurnRomInfo berzerk1RomDesc[] = {
 	{ "berzerk_r_vo_2c.2c",			0x0800, 0xd2b6324e, 2 | BRF_SND },           //  7
 };
 
-STD_ROM_PICK(berzerk1)
-STD_ROM_FN(berzerk1)
+STD_ROM_PICK(berzerkb)
+STD_ROM_FN(berzerkb)
 
-struct BurnDriver BurnDrvBerzerk1 = {
-	"berzerk1", "berzerk", NULL, NULL, "1980",
-	"Berzerk (set 2)\0", NULL, "Stern Electronics", "Miscellaneous",
+struct BurnDriver BurnDrvBerzerkb = {
+	"berzerkb", "berzerk", NULL, NULL, "1980",
+	"Berzerk (revision RC28)\0", NULL, "Stern Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, berzerk1RomInfo, berzerk1RomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkDIPInfo,
+	NULL, berzerkbRomInfo, berzerkbRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkDIPInfo,
 	BerzerkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 224, 4, 3
 };
 
 
-// Berzerk (French Speech)
+// Berzerk (French Speech, revision RC31)
 
 static struct BurnRomInfo berzerkfRomDesc[] = {
 	{ "berzerk_rc31f_1c.rom0.1c",	0x0800, 0x3ba6e56e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1420,7 +1445,7 @@ STD_ROM_FN(berzerkf)
 
 struct BurnDriver BurnDrvBerzerkf = {
 	"berzerkf", "berzerk", NULL, NULL, "1980",
-	"Berzerk (French Speech)\0", NULL, "Stern Electronics", "Miscellaneous",
+	"Berzerk (French Speech, revision RC31)\0", NULL, "Stern Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, berzerkfRomInfo, berzerkfRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkfDIPInfo,
@@ -1429,15 +1454,15 @@ struct BurnDriver BurnDrvBerzerkf = {
 };
 
 
-// Berzerk (German Speech)
+// Berzerk (German Speech, revision RC32)
 
 static struct BurnRomInfo berzerkgRomDesc[] = {
-	{ "cpu rom 00.1c",				0x0800, 0x77923a9e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "cpu rom 01.1d",				0x0800, 0x19bb3aac, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "cpu rom 02.3d",				0x0800, 0xb0888ff7, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "cpu rom 03.5d",				0x0800, 0xe23239a9, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "cpu rom 04.6d",				0x0800, 0x651b31b7, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "cpu rom 05.5c",				0x0800, 0x8a403bba, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "berzerk_rc32_1c.rom0.1c",	0x0800, 0x77923a9e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "berzerk_rc32_1d.rom1.1d",	0x0800, 0x19bb3aac, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "berzerk_rc32g_3d.rom2.3d",	0x0800, 0xb0888ff7, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "berzerk_rc32_5d.rom3.5d",	0x0800, 0xe23239a9, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "berzerk_rc32g_6d.rom4.6d",	0x0800, 0x651b31b7, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "berzerk_rc32g_5c.rom5.5c",	0x0800, 0x8a403bba, 1 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "berzerk_rvog_1c.1c",			0x0800, 0xfc1da15f, 2 | BRF_SND },           //  6 Speech Data
 	{ "berzerk_rvog_2c.2c",			0x0800, 0x7f6808fb, 2 | BRF_SND },           //  7
@@ -1448,7 +1473,7 @@ STD_ROM_FN(berzerkg)
 
 struct BurnDriver BurnDrvBerzerkg = {
 	"berzerkg", "berzerk", NULL, NULL, "1980",
-	"Berzerk (German Speech)\0", NULL, "Stern Electronics", "Miscellaneous",
+	"Berzerk (German Speech, revision RC32)\0", NULL, "Stern Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, berzerkgRomInfo, berzerkgRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkgDIPInfo,
@@ -1457,7 +1482,7 @@ struct BurnDriver BurnDrvBerzerkg = {
 };
 
 
-// Berzerk (Spanish Speech)
+// Berzerk (Spanish Speech, revision RC32)
 
 static struct BurnRomInfo berzerksRomDesc[] = {
 	{ "berzerk_rc32_1c.rom0.1c",	0x0800, 0x77923a9e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1475,7 +1500,7 @@ STD_ROM_FN(berzerks)
 
 struct BurnDriver BurnDrvBerzerks = {
 	"berzerks", "berzerk", NULL, NULL, "1980",
-	"Berzerk (Spanish Speech)\0", NULL, "Stern Electronics (Sonic License)", "Miscellaneous",
+	"Berzerk (Spanish Speech, revision RC32)\0", NULL, "Stern Electronics (Sonic License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, berzerksRomInfo, berzerksRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerksDIPInfo,
@@ -1484,7 +1509,7 @@ struct BurnDriver BurnDrvBerzerks = {
 };
 
 
-// Frenzy
+// Frenzy (revision RA1)
 
 static struct BurnRomInfo frenzyRomDesc[] = {
 	{ "frenzy_ral_rom1.1d",		0x1000, 0xabdd25b8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1509,7 +1534,7 @@ static INT32 FrenzyInit()
 
 struct BurnDriver BurnDrvFrenzy = {
 	"frenzy", NULL, NULL, NULL, "1981",
-	"Frenzy\0", NULL, "Stern Electronics", "Miscellaneous",
+	"Frenzy (revision RA1)\0", NULL, "Stern Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, frenzyRomInfo, frenzyRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, FrenzyDIPInfo,

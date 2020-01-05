@@ -12,7 +12,7 @@ typedef INT32 (*s2650irqcallback)(INT32);
 extern s2650irqcallback s2650_irqcallback[MAX_S2650];
 void s2650SetIrqCallback(INT32 (*irqcallback)(INT32));
 
-void s2650MapMemory(UINT8 *src, INT32 start, INT32 end, INT32 type);
+void s2650MapMemory(UINT8* src, INT32 start, INT32 end, INT32 type);
 
 void s2650SetIRQLine(INT32 irqline, INT32 state);
 

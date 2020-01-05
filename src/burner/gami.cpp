@@ -1,9 +1,8 @@
-// Burner Game Input
 #include "burner.h"
 
 // Player Default Controls
-INT32 nPlayerDefaultControls[4] = {0, 1, 2, 3};
-TCHAR szPlayerDefaultIni[4][MAX_PATH] = { _T(""), _T(""), _T(""), _T("") };
+INT32 nPlayerDefaultControls[5] = {0, 1, 2, 3, 4};
+TCHAR szPlayerDefaultIni[5][MAX_PATH] = { _T(""), _T(""), _T(""), _T(""), _T("") };
 
 // Mapping of PC inputs to game inputs
 struct GameInp* GameInp = NULL;
@@ -164,12 +163,12 @@ static void GameInpInitMacros()
 	struct GameInp* pgi;
 	struct BurnInputInfo bii;
 
-	INT32 nPunchx3[4] = {0, 0, 0, 0};
-	INT32 nPunchInputs[4][3];
-	INT32 nKickx3[4] = {0, 0, 0, 0};
-	INT32 nKickInputs[4][3];
+	INT32 nPunchx3[5] = {0, 0, 0, 0, 0};
+	INT32 nPunchInputs[5][3];
+	INT32 nKickx3[5] = {0, 0, 0, 0, 0};
+	INT32 nKickInputs[5][3];
 
-	INT32 nNeogeoButtons[4][4];
+	INT32 nNeogeoButtons[5][4];
 	INT32 nPgmButtons[10][16];
 
 	bStreetFighterLayout = false;

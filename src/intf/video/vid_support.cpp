@@ -1,4 +1,3 @@
-// Support functions for all blitters
 #include "burner.h"
 #include "vid_support.h"
 

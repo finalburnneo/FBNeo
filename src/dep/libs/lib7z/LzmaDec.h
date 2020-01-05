@@ -1,6 +1,3 @@
-/* LzmaDec.h -- LZMA Decoder
-2013-01-18 : Igor Pavlov : Public domain */
-
 #ifndef __LZMA_DEC_H
 #define __LZMA_DEC_H
 

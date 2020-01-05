@@ -1,12 +1,3 @@
-// license:BSD-3-Clause
-// copyright-holders:Aaron Giles
-/*****************************************************************************
-
-    Harris HC-55516 (and related) emulator
-
-*****************************************************************************/
-
-
 void hc55516_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ);
 
 void hc55516_exit();

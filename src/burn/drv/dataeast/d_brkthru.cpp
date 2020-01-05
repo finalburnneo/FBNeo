@@ -1,11 +1,3 @@
-// FB Alpha Break Thru driver module
-// Based on MAME driver by Phil Stroffolino
-
-// Notes:
-//  Due to our 6809 core being very cycle-inaccurate, our cpu's need an extra
-//  1.5mhz tacked on to match the same performance as MAME running the same
-//  game.  Todo: remove o/c when core is updated.
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "burn_ym2203.h"

@@ -204,9 +204,11 @@ static void __fastcall KenseimPortWrite(UINT16 a, UINT8 d)
 
 static INT32 KenseimInit()
 {
+	INT32 rc = DrvInit();
+
 	KenseimRom = BurnMalloc(0x8000 * sizeof(UINT8));
 	KenseimRam = BurnMalloc(0x8000 * sizeof(UINT8));
-	
+
 	ZetInit(1);
 	ZetOpen(1);
 	ZetSetInHandler(KenseimPortRead);
@@ -218,7 +220,7 @@ static INT32 KenseimInit()
 	ZetMapArea(0x8000, 0xffff, 2, KenseimRam);
 	ZetClose();
 	
-	return DrvInit();
+	return rc;
 }
 
 static INT32 KenseimExit()

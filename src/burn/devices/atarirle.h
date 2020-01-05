@@ -1,12 +1,3 @@
-/*##########################################################################
-
-    atarirle.h
-
-    Common RLE-based motion object management functions for early 90's
-    Atari raster games.
-
-##########################################################################*/
-
 #ifndef __ATARIRLE__
 #define __ATARIRLE__
 

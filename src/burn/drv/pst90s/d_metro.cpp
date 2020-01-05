@@ -1,21 +1,3 @@
-// FB Alpha Metro driver module
-// Based on MAME driver by Luca Elia and David Haywood
-
-/*
-	Needs porting:
-		dokyusei	(ym2413+msm6295 sound)
-		dokyusp		(ym2413+msm6295 sound)
-		mouja		(ym2413+msm6295 sound)
-		gakusai		(ym2413+msm6295 sound)
-		gakusai2	(ym2413+msm6295 sound)
-
-	Unemulated
-		puzzlet		(h8 main cpu)
-
-	Broken
-		daitorid, crashes in the blitter after the book opens(attract)
-*/
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -5444,6 +5426,36 @@ struct BurnDriver BurnDrvPoitto = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, poittoRomInfo, poittoRomName, NULL, NULL, NULL, NULL, PururunInputInfo, PoittoDIPInfo,
+	poittoInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	360, 224, 4, 3
+};
+
+
+// Poitto! (revision C)
+
+static struct BurnRomInfo poittocRomDesc[] = {
+	{ "pt-jc05.20e",		0x020000, 0x6b1be034, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "pt-jc06.20c",		0x020000, 0x00000000, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  1
+
+	{ "pt-jc08.3i",			0x020000, 0xf32d386a, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+
+	{ "pt-2.15i",			0x080000, 0x05d15d01, 3 | BRF_GRA },           //  3 Graphics
+	{ "pt-4.19i",			0x080000, 0x8a39edb5, 3 | BRF_GRA },           //  4
+	{ "pt-1.13i",			0x080000, 0xea6e2289, 3 | BRF_GRA },           //  5
+	{ "pt-3.17i",			0x080000, 0x522917c1, 3 | BRF_GRA },           //  6
+
+	{ "pt-jc07.3g",			0x040000, 0x5ae28b8d, 4 | BRF_SND },           //  7 MSM6295 Samples
+};
+
+STD_ROM_PICK(poittoc)
+STD_ROM_FN(poittoc)
+
+struct BurnDriver BurnDrvPoittoc = {
+	"poittoc", "poitto", NULL, NULL, "1993",
+	"Poitto! (revision C)\0", NULL, "Metro / Able Corp.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, poittocRomInfo, poittocRomName, NULL, NULL, NULL, NULL, PururunInputInfo, PoittoDIPInfo,
 	poittoInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	360, 224, 4, 3
 };

@@ -1,12 +1,3 @@
-// FB Alpha Sega G80 Vector driver module
-// Based on MAME driver by Aaron Giles
-
-// to do:
-//  distortion/crackles on some USB stuff in tac/scan
-//  fix iq_132's sega_decrypt70, remove mame's sega_decrypt70
-//	fix games
-//	verify samples playing correctly
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "i8039.h" // i8035

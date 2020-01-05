@@ -1,6 +1,3 @@
-// FB Alpha Knuckle Joe driver module
-// Based on MAME driver by Ernesto Corvi
-
 #include "tiles_generic.h"
 #include "m6800_intf.h"
 #include "z80_intf.h"

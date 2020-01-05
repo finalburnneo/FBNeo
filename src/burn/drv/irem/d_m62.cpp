@@ -1,6 +1,3 @@
-// FB Alpha Irem M62 system driver
-// Based on MAME driver by smf and David Haywood
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 
@@ -2056,7 +2053,7 @@ static void __fastcall M62Z80PortWrite(UINT16 a, UINT8 d)
 
 		case 0x01: {
 			d ^= ~M62Dip[1] & 0x01;
-			M62FlipScreen = d & 0x01;
+			M62FlipScreen = 0;//d & 0x01; let's keep coctail (2p) upright :)
 			return;
 		}
 

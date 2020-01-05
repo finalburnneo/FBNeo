@@ -1,9 +1,3 @@
-// FB Alpha Data East 8-bit driver module
-// Based on MAME driver by Bryan McPhail and Stephane Humbert
-
-// To do:
-//	gondo needs rotary inputs hooked up and doesn't read the i8751 value at all - so coins don't work
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "burn_ym2203.h"
@@ -1935,6 +1929,9 @@ struct BurnDriver BurnDrvGhostb3 = {
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
+
+// DZ-1 is the verified correct MCU code for the ghostb3a set below - program ROMs work on a real PCB, but stall here in the demo mode
+// Both DZ01-2 & DZ04- ROMs have been verified correct from multiple sources
 
 // The Real Ghostbusters (US 3 Players, revision 2) 
 
@@ -3904,37 +3901,37 @@ static INT32 GondoScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Gondomania (US)
+// Gondomania (World)
 
 static struct BurnRomInfo gondoRomDesc[] = {
-	{ "dt-00.256",		0x08000, 0xa8cf9118, 1 }, //  0 maincpu
-	{ "dt-01.512",		0x10000, 0xc39bb877, 1 }, //  1
-	{ "dt-02.512",		0x10000, 0xbb5e674b, 1 }, //  2
-	{ "dt-03.512",		0x10000, 0x99c32b13, 1 }, //  3
+	{ "dt00-e.f3",		0x08000, 0x912a7eee, 1 }, //  0 maincpu
+	{ "dt01.f5",		0x10000, 0xc39bb877, 1 }, //  1 
+	{ "dt02.f6",		0x10000, 0xbb5e674b, 1 }, //  2
+	{ "dt03-e.f7",		0x10000, 0xee7475eb, 1 }, //  3
 
-	{ "dt-05.256",		0x08000, 0xec08aa29, 2 }, //  4 audiocpu
+	{ "dt05-e.h5",		0x08000, 0xec08aa29, 2 }, //  4 audiocpu
 
-	{ "dt-14.256",		0x08000, 0x4bef16e1, 3 }, //  5 gfx1
+	{ "dt14.b18",		0x08000, 0x4bef16e1, 3 }, //  5 gfx1
 
-	{ "dt-19.512",		0x10000, 0xda2abe4b, 4 }, //  6 gfx2
-	{ "dt-20.256",		0x08000, 0x42d01002, 4 }, //  7
-	{ "dt-16.512",		0x10000, 0xe9955d8f, 4 }, //  8
-	{ "dt-18.256",		0x08000, 0xc0c5df1c, 4 }, //  9
-	{ "dt-15.512",		0x10000, 0xa54b2eb6, 4 }, // 10
-	{ "dt-17.256",		0x08000, 0x3bbcff0d, 4 }, // 11
-	{ "dt-21.512",		0x10000, 0x1c5f682d, 4 }, // 12
-	{ "dt-22.256",		0x08000, 0xc1876a5f, 4 }, // 13
+	{ "dt19.f13",		0x10000, 0xda2abe4b, 4 }, //  6 gfx2
+	{ "dt20-e.f15",		0x08000, 0x0eef7f56, 4 }, //  7
+	{ "dt16.f9",		0x10000, 0xe9955d8f, 4 }, //  8
+	{ "dt18-e.f12",		0x08000, 0x2b2d1468, 4 }, //  9
+	{ "dt15.f8",		0x10000, 0xa54b2eb6, 4 }, // 10
+	{ "dt17-e.f11",		0x08000, 0x75ae349a, 4 }, // 11
+	{ "dt21.f16",		0x10000, 0x1c5f682d, 4 }, // 12
+	{ "dt22-e.f18",		0x08000, 0xc8ffb148, 4 }, // 13
 
-	{ "dt-08.512",		0x10000, 0xaec483f5, 5 }, // 14 gfx3
-	{ "dt-09.256",		0x08000, 0x446f0ce0, 5 }, // 15
-	{ "dt-06.512",		0x10000, 0x3fe1527f, 5 }, // 16
-	{ "dt-07.256",		0x08000, 0x61f9bce5, 5 }, // 17
-	{ "dt-12.512",		0x10000, 0x1a72ca8d, 5 }, // 18
-	{ "dt-13.256",		0x08000, 0xccb81aec, 5 }, // 19
-	{ "dt-10.512",		0x10000, 0xcfcfc9ed, 5 }, // 20
-	{ "dt-11.256",		0x08000, 0x53e9cf17, 5 }, // 21
+	{ "dt08.h10",		0x10000, 0xaec483f5, 5 }, // 14 gfx3
+	{ "dt09.h12",		0x08000, 0x446f0ce0, 5 }, // 15
+	{ "dt06.h7",		0x10000, 0x3fe1527f, 5 }, // 16
+	{ "dt07.h9",		0x08000, 0x61f9bce5, 5 }, // 17
+	{ "dt12.h16",		0x10000, 0x1a72ca8d, 5 }, // 18
+	{ "dt13.h18",		0x08000, 0xccb81aec, 5 }, // 19
+	{ "dt10.h13",		0x10000, 0xcfcfc9ed, 5 }, // 20
+	{ "dt11.h15",		0x08000, 0x53e9cf17, 5 }, // 21
 
-	{ "dt-a.b1",     	0x01000, 0x03abceeb, 6 }, // 22 i8751 microcontroller
+	{ "dt-e.b1",     	0x01000, 0x00000000, 6 | BRF_NODUMP }, // 22 i8751 microcontroller
 
 	{ "ds-23.b10",		0x00400, 0xdcbfec4e, 7 }, // 23 proms
 };
@@ -3944,10 +3941,59 @@ STD_ROM_FN(gondo)
 
 struct BurnDriverD BurnDrvGondo = {
 	"gondo", NULL, NULL, NULL, "1987",
-	"Gondomania (US)\0", "Broken inputs", "Data East USA", "DEC8",
+	"Gondomania (World)\0", "Broken inputs", "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, gondoRomInfo, gondoRomName, NULL, NULL, NULL, NULL, GondoInputInfo, GondoDIPInfo,
+	GondoInit, GondoExit, GondoFrame, GondoDraw, GondoScan, &DrvRecalc, 0x400,
+	240, 256, 3, 4
+};
+
+
+// Gondomania (US)
+
+static struct BurnRomInfo gondouRomDesc[] = {
+	{ "dt00.f3",		0x08000, 0xa8cf9118, 1 }, //  0 maincpu
+	{ "dt01.f5",		0x10000, 0xc39bb877, 1 }, //  1
+	{ "dt02.f6",		0x10000, 0xbb5e674b, 1 }, //  2
+	{ "dt03.f7",		0x10000, 0x99c32b13, 1 }, //  3
+
+	{ "dt05.h5",		0x08000, 0xec08aa29, 2 }, //  4 audiocpu
+
+	{ "dt14.b18",		0x08000, 0x4bef16e1, 3 }, //  5 gfx1
+
+	{ "dt19.f13",		0x10000, 0xda2abe4b, 4 }, //  6 gfx2
+	{ "dt20.f15",		0x08000, 0x42d01002, 4 }, //  7
+	{ "dt16.f9",		0x10000, 0xe9955d8f, 4 }, //  8
+	{ "dt18.f12",		0x08000, 0xc0c5df1c, 4 }, //  9
+	{ "dt15.f8",		0x10000, 0xa54b2eb6, 4 }, // 10
+	{ "dt17.f11",		0x08000, 0x3bbcff0d, 4 }, // 11
+	{ "dt21.f16",		0x10000, 0x1c5f682d, 4 }, // 12
+	{ "dt22.f18",		0x08000, 0xc1876a5f, 4 }, // 13
+
+	{ "dt08.h10",		0x10000, 0xaec483f5, 5 }, // 14 gfx3
+	{ "dt09.h12",		0x08000, 0x446f0ce0, 5 }, // 15
+	{ "dt06.h7",		0x10000, 0x3fe1527f, 5 }, // 16
+	{ "dt07.h9",		0x08000, 0x61f9bce5, 5 }, // 17
+	{ "dt12.h16",		0x10000, 0x1a72ca8d, 5 }, // 18
+	{ "dt13.h18",		0x08000, 0xccb81aec, 5 }, // 19
+	{ "dt10.h13",		0x10000, 0xcfcfc9ed, 5 }, // 20
+	{ "dt11.h15",		0x08000, 0x53e9cf17, 5 }, // 21
+
+	{ "dt-a.b1",     	0x01000, 0x03abceeb, 6 }, // 22 i8751 microcontroller
+
+	{ "ds-23.b10",		0x00400, 0xdcbfec4e, 7 }, // 23 proms
+};
+
+STD_ROM_PICK(gondou)
+STD_ROM_FN(gondou)
+
+struct BurnDriverD BurnDrvGondou = {
+	"gondou", "gondo", NULL, NULL, "1987",
+	"Gondomania (US)\0", "Broken inputs", "Data East USA", "DEC8",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	NULL, gondouRomInfo, gondouRomName, NULL, NULL, NULL, NULL, GondoInputInfo, GondoDIPInfo,
 	GondoInit, GondoExit, GondoFrame, GondoDraw, GondoScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -3957,7 +4003,7 @@ struct BurnDriverD BurnDrvGondo = {
 
 static struct BurnRomInfo makyosenRomDesc[] = {
 	{ "ds00.f3",		0x08000, 0x33bb16fe, 1 }, //  0 maincpu
-	{ "dt-01.512",		0x10000, 0xc39bb877, 1 }, //  1
+	{ "ds01.f5",		0x10000, 0xc39bb877, 1 }, //  1
 	{ "ds02.f6",		0x10000, 0x925307a4, 1 }, //  2
 	{ "ds03.f7",		0x10000, 0x9c0fcbf6, 1 }, //  3
 
@@ -3965,25 +4011,25 @@ static struct BurnRomInfo makyosenRomDesc[] = {
 
 	{ "ds14.b18",		0x08000, 0x00cbe9c8, 3 }, //  5 gfx1
 
-	{ "dt-19.512",		0x10000, 0xda2abe4b, 4 }, //  6 gfx2
+	{ "ds19.f13",		0x10000, 0xda2abe4b, 4 }, //  6 gfx2
 	{ "ds20.f15",		0x08000, 0x0eef7f56, 4 }, //  7
-	{ "dt-16.512",		0x10000, 0xe9955d8f, 4 }, //  8
+	{ "ds16.f9",		0x10000, 0xe9955d8f, 4 }, //  8
 	{ "ds18.f12",		0x08000, 0x2b2d1468, 4 }, //  9
-	{ "dt-15.512",		0x10000, 0xa54b2eb6, 4 }, // 10
+	{ "ds15.f8",		0x10000, 0xa54b2eb6, 4 }, // 10
 	{ "ds17.f11",		0x08000, 0x75ae349a, 4 }, // 11
-	{ "dt-21.512",		0x10000, 0x1c5f682d, 4 }, // 12
+	{ "ds21.f16",		0x10000, 0x1c5f682d, 4 }, // 12
 	{ "ds22.f18",		0x08000, 0xc8ffb148, 4 }, // 13
 
-	{ "dt-08.512",		0x10000, 0xaec483f5, 5 }, // 14 gfx3
-	{ "dt-09.256",		0x08000, 0x446f0ce0, 5 }, // 15
-	{ "dt-06.512",		0x10000, 0x3fe1527f, 5 }, // 16
-	{ "dt-07.256",		0x08000, 0x61f9bce5, 5 }, // 17
-	{ "dt-12.512",		0x10000, 0x1a72ca8d, 5 }, // 18
-	{ "dt-13.256",		0x08000, 0xccb81aec, 5 }, // 19
-	{ "dt-10.512",		0x10000, 0xcfcfc9ed, 5 }, // 20
-	{ "dt-11.256",		0x08000, 0x53e9cf17, 5 }, // 21
+	{ "ds08.h10",		0x10000, 0xaec483f5, 5 }, // 14 gfx3
+	{ "ds09.h12",		0x08000, 0x446f0ce0, 5 }, // 15
+	{ "ds06.h7",		0x10000, 0x3fe1527f, 5 }, // 16
+	{ "ds07.h9",		0x08000, 0x61f9bce5, 5 }, // 17
+	{ "ds12.h16",		0x10000, 0x1a72ca8d, 5 }, // 18
+	{ "ds13.h18",		0x08000, 0xccb81aec, 5 }, // 19
+	{ "ds10.h13",		0x10000, 0xcfcfc9ed, 5 }, // 20
+	{ "ds11.h15",		0x08000, 0x53e9cf17, 5 }, // 21
 
-	{ "ds-a.b1",     	0x01000, 0x08f36e35, 6 }, // 22 i8751 microcontroller
+	{ "ds.b1",     		0x01000, 0x08f36e35, 6 }, // 22 i8751 microcontroller
 
 	{ "ds-23.b10",		0x00400, 0xdcbfec4e, 7 }, // 23 proms
 

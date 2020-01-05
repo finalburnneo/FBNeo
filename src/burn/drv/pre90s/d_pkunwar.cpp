@@ -1,6 +1,3 @@
-// FB Alpha Penguin-Kun Wars Driver Module
-// Based on MAME Driver by David Haywood and Phil Stroffolino
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

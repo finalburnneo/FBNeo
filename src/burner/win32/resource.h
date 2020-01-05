@@ -1,8 +1,3 @@
-//{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
-// Used by app.rc
-//
-
 #define IDS_STRING                      	200
 
 #define BMP_SPLASH							1

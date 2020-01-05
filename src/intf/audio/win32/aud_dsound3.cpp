@@ -1,4 +1,3 @@
-// DirectSound module
 #include "burner.h"
 #include "aud_dsp.h"
 #include <math.h>
@@ -321,7 +320,8 @@ static int DxSoundInit()
 	lpDsNotify->Release();
 	free(lpPositionNotify);
 
-	nAudNextSound = (short*)malloc(nAudSegLen << 2);		// The next sound block to put in the stream
+	// Note: +2 is a hacky work-around for crashy Midway games (mk2, etc) via Kaillera
+	nAudNextSound = (short*)malloc(nAudSegLen << (2 + 2));		// The next sound block to put in the stream
 	if (nAudNextSound == NULL) {
 		DxSoundExit();
 		return 1;

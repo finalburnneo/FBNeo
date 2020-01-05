@@ -1,6 +1,3 @@
-// FB Alpha Quantum driver module
-// Based on MAME driver by Hedley Rainnie, Aaron Giles, Couriersud, and Paul Forgey
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "watchdog.h"

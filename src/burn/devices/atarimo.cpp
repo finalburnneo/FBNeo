@@ -1,11 +1,3 @@
-/*##########################################################################
-
-    atarimo.c
-
-    Common motion object management functions for Atari raster games.
-
-##########################################################################*/
-
 #include "tiles_generic.h"
 #include "atarimo.h"
 
@@ -581,6 +573,9 @@ static void build_active_list(atarimo_data *mo, int link)
 
 inline UINT8 *get_dirty_base(atarimo_data *mo, int x, int y)
 {
+	if (x < 0) x = 0;
+	if (y < 0) y = 0;
+
 	UINT8 *result = mo->dirtygrid;
 	result += ((y >> mo->tileyshift) + 1) * mo->dirtywidth;
 	result += (x >> mo->tilexshift) + 1;

@@ -1,15 +1,3 @@
-// LowPass2 module
-// ---------------
-//   by Daniel Moreno - ComaC (2001)  < comac2k@teleline.es >
-//
-//  This is a straight-forward implementation of a 2nd order resonant
-//  lowpass filter. Well... in fact there are two lowpass filters being
-//  calculated at the same time, since the old convolution filter cannot
-//  be emulated with only one.
-//
-//  The only optimization i've made is to change doubles for fixed point
-//  integers.
-
 #include <math.h>
 #include "burner.h"
 #include "lowpass2.h"

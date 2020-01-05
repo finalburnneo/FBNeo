@@ -1,14 +1,4 @@
-/****************************************************************************
- *
- * Phoenix sound hardware simulation - still very ALPHA!
- *
- * If you find errors or have suggestions, please mail me.
- * Juergen Buchmueller <pullmoll@t-online.de>
- *
- ****************************************************************************/
-
-
-#include <math.h>
+#include <cmath>
 #include "burnint.h"
 #include "tms36xx.h"
 

@@ -1,6 +1,3 @@
-// FB Alpha Submarine (Sigma) driver module
-// Based on MAME driver by Angelo Salese and David Haywood
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

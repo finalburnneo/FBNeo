@@ -1,6 +1,3 @@
-// FB Alpha Dream World / Baryon driver module
-// Based on MAME driver by David Haywood
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "msm6295.h"
@@ -1148,27 +1145,27 @@ struct BurnDriver BurnDrvGaialast = {
 // Dream World
 
 static struct BurnRomInfo dreamwldRomDesc[] = {
-	{ "1.bin",		0x040000, 0x35c94ee5, 1 | BRF_PRG | BRF_ESS }, //  0 68ec020 Code
-	{ "2.bin",		0x040000, 0x5409e7fc, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.bin",		0x040000, 0xe8f7ae78, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4.bin",		0x040000, 0x3ef5d51b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1.bin",			0x040000, 0x35c94ee5, 1 | BRF_PRG | BRF_ESS }, //  0 68ec020 Code
+	{ "2.bin",			0x040000, 0x5409e7fc, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.bin",			0x040000, 0xe8f7ae78, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.bin",			0x040000, 0x3ef5d51b, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "87c52.mcu",		0x010000, 0x00000000, 2 | BRF_NODUMP },        //  4 MCU code
+	{ "87c51rap.bin",	0x002000, 0x987bbfe8, 2 | BRF_PRG | BRF_ESS }, //  4 MCU code
 
 	{ "protdata.bin",	0x0006c9, 0xf284b2fd, 3 | BRF_PRG | BRF_ESS }, //  5 Protection data
 
-	{ "5.bin",		0x080000, 0x9689570a, 4 | BRF_SND },           //  6 Oki #0 samples
+	{ "5.bin",			0x080000, 0x9689570a, 4 | BRF_SND },           //  6 Oki #0 samples
+	
+	{ "6.bin",			0x080000, 0xc8b91f30, 5 | BRF_SND },           //  7 Oki #1 samples
 
-	{ "6.bin",		0x080000, 0xc8b91f30, 5 | BRF_SND },           //  7 Oki #1 samples
+	{ "9.bin",			0x200000, 0xfa84e3af, 6 | BRF_GRA },           //  8 Sprites
 
-	{ "9.bin",		0x200000, 0xfa84e3af, 6 | BRF_GRA },           //  8 Sprites
+	{ "10.bin",			0x200000, 0x3553e4f5, 7 | BRF_GRA },           //  9 Background Tiles
 
-	{ "10.bin",		0x200000, 0x3553e4f5, 7 | BRF_GRA },           //  9 Background Tiles
+	{ "8.bin",			0x020000, 0x8d570df6, 8 | BRF_GRA },           // 10 Sprite Lookup Table
+	{ "7.bin",			0x020000, 0xa68bf35f, 8 | BRF_GRA },           // 11
 
-	{ "8.bin",		0x020000, 0x8d570df6, 8 | BRF_GRA },           // 10 Sprite Lookup Table
-	{ "7.bin",		0x020000, 0xa68bf35f, 8 | BRF_GRA },           // 11
-
-	{ "11.bin",		0x010000, 0x0da8db45, 9 | BRF_OPT },           // 12 Unknown
+	{ "11.bin",			0x010000, 0x0da8db45, 9 | BRF_OPT },           // 12 Unknown
 };
 
 STD_ROM_PICK(dreamwld)

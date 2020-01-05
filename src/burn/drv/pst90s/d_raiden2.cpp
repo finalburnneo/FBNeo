@@ -1,6 +1,3 @@
-// FB Alpha Raiden II driver module
-// Based on MAME driver Olivier Galibert, Angelo Salese, David Haywood, Tomasz Slanina
-
 #include "tiles_generic.h"
 #include "nec_intf.h"
 #include "z80_intf.h"
@@ -10,7 +7,7 @@
 
 #if defined _MSC_VER
  #define _USE_MATH_DEFINES
- #include <cmath>
+#include <corecrt_math_defines.h>
 #endif
 
 static UINT8 *AllMem;

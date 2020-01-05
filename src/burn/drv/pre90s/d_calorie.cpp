@@ -1,6 +1,3 @@
-// Calorie Kun vs Moguranian emu-layer for FB Alpha by dink/iq_132
-// Based on the MAME driver by David Haywood and Pierpaolo Prazzoli.
-
 #include "tiles_generic.h"
 #include "bitswap.h"
 #include "z80_intf.h"

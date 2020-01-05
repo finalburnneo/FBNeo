@@ -1,4 +1,3 @@
-// Video Output - (calls all the Vid Out plugins)
 #include "burner.h"
 
 #define DEFAULT_IMAGE_WIDTH (304)
@@ -54,8 +53,8 @@ static InterfaceInfo VidInfo = { NULL, NULL, NULL };
 
 #if defined (BUILD_WIN32)
 #if defined BUILD_X64_EXE
-// set DDraw blitter as default for 64-bit builds (in case user doesn't have DX redistributable installed)
-UINT32 nVidSelect = 0;					// Which video output is selected
+// set SoftFX DDraw blitter as default for 64-bit builds (in case user doesn't have DX redistributable installed)
+UINT32 nVidSelect = 2;					// Which video output is selected
 #else
 // sec D3D7 Enhanced blitter as default
 UINT32 nVidSelect = 1;					// Which video output is selected

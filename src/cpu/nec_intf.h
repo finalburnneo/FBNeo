@@ -1,5 +1,3 @@
-// Nec V20/V30/V33 interface
-
 #ifndef FASTCALL
  #undef __fastcall
  #define __fastcall
@@ -28,12 +26,12 @@ void VezOpen(INT32 nCPU);
 void VezClose();
 INT32 VezGetActive();
 
-void VezSetDecode(UINT8 *decode); // set opcode decode
+void VezSetDecode(UINT8* decode); // set opcode decode
 
-INT32 VezMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode);
-INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
-INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem1, UINT8 *Mem2);
-INT32 VezMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nMode);
+INT32 VezMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode);
+INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8* Mem);
+INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8* Mem1, UINT8* Mem2);
+INT32 VezMapMemory(UINT8* Mem, INT32 nStart, INT32 nEnd, INT32 nMode);
 
 void VezSetReadHandler(UINT8 (__fastcall*)(UINT32));
 void VezSetWriteHandler(void (__fastcall*)(UINT32, UINT8));
@@ -65,7 +63,7 @@ INT32 VezRun(INT32 nCycles);
 #define NEC_INPUT_LINE_INTP2 12
 #define NEC_INPUT_LINE_POLL  20
 
-void VezSetIRQLineAndVector(const INT32 line, const INT32 vector, const INT32 status);
+void VezSetIRQLineAndVector(INT32 line, INT32 vector, INT32 status);
 
 void VezCheatWrite(UINT32 a, UINT8 d); // cheat core
 

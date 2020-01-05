@@ -1,7 +1,3 @@
-// FB Alpha NMK16 driver module
-// Based on MAME driver by Mirko Buffoni, Richard Bush, Nicola Salmoria, Bryan McPhail, David Haywood, and R. Belmont
-// Also, a huge "thank you!" to JacKc for helping bug test
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -9426,6 +9422,112 @@ struct BurnDriver BurnDrvGunnail = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, gunnailRomInfo, gunnailRomName, NULL, NULL, NULL, NULL, GunnailInputInfo, GunnailDIPInfo,
 	GunnailInit, NMK004Exit, NMK004Frame, GunnailDraw, DrvScan, NULL, 0x400,
+	224, 384, 3, 4
+};
+
+
+// GunNail (Location Test)
+// still has the 28th May. 1992 string, so unlikely that was the release date for either version.
+
+/*'gunnailp' observed differences (from notes by trap15)
+   - Different introduction scene
+   - Many unique enemy types that ended up unused
+   - Tweaked enemy attack patterns
+   - Tweaked boss behavior and attack patterns
+   - Dramatically different stages (and only 7 of them):
+	  - Stage 1: Became Stage 5, very different layouts
+	  - Stage 2: Became Stage 7, with mostly slight enemy layout changes
+	  - Stage 3: Became Stage 6, almost the same as final
+	  - Stage 4: Stayed as Stage 4, with very minor enemy layout changes
+	  - Stage 5: Entirely unique stage, majorly reworked to become final Stage 2
+	  - Stage 6: Became Stage 3, many enemy layout changes
+	  - Stage 7: Entirely unique stage, majorly reworked to become final Stage 1
+   - No ending, instead loops forever
+	  - Loop has extremely fast bullets
+	  - The difficulty seems the same on all loops
+   - Player's blue shot has a wider maximum and minimum spread
+   - Player's main shot hitbox is symmetrical and wider than final
+	  - When the hitbox was shrunk for the final, it was only shrunk in one direction, making it extended to the right
+---*/
+
+static struct BurnRomInfo gunnailpRomDesc[] = {
+	{ "3.u132",			0x080000, 0x93570f03, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+
+	{ "92077_2.u101",	0x010000, 0xcd4e55f8, 2 | BRF_PRG | BRF_ESS }, //  1 NMK004 data
+
+	{ "1.u21",			0x020000, 0xbdf427e4, 3 | BRF_GRA },           //  2 Characters
+
+	{ "92077-4.u19",	0x100000, 0xa9ea2804, 4 | BRF_GRA },           //  3 Tiles
+
+	{ "92077-7.u134",	0x200000, 0xd49169b3, 5 | BRF_GRA },           //  4 Sprites
+
+	{ "92077-5.u56",	0x080000, 0xfeb83c73, 6 | BRF_SND },           //  5 OKI1 Samples
+
+	{ "92077-6.u57",	0x080000, 0x6d133f0d, 7 | BRF_SND },           //  6 OKI2 Samples
+
+	{ "8_82s129.u35",	0x000100, 0x4299776e, 0 | BRF_OPT },           //  7 Proms
+	{ "9_82s135.u72",	0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  8
+	{ "10_82s123.u96",	0x000020, 0xc60103c8, 0 | BRF_OPT },           //  9
+};
+
+STDROMPICKEXT(gunnailp, gunnailp, nmk004)
+STD_ROM_FN(gunnailp)
+
+static INT32 GunnailpLoadCallback()
+{
+	{
+		if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 1)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  1, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  3, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM2 + 0x000000,  4, 1)) return 1;
+		BurnByteswap(DrvGfxROM2, 0x200000);
+
+		if (BurnLoadRom(DrvSndROM0 + 0x020000,  5, 1)) return 1;
+		memcpy (DrvSndROM0 + 0x000000, DrvSndROM0 + 0x20000, 0x20000);
+
+		if (BurnLoadRom(DrvSndROM1 + 0x020000,  6, 1)) return 1;
+		memcpy (DrvSndROM1 + 0x000000, DrvSndROM1 + 0x20000, 0x20000);
+
+		decode_gfx(0x100000, 0x200000);
+		DrvGfxDecode(0x20000, 0x100000, 0x200000);
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(DrvPalRAM,		0x088000, 0x0887ff, MAP_RAM);
+	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c7ff, MAP_WRITE);
+	SekMapMemory(DrvBgRAM0,		0x090000, 0x093fff, MAP_RAM);
+	SekMapMemory(DrvTxRAM,		0x09c000, 0x09cfff, MAP_RAM);
+	SekMapMemory(DrvTxRAM,		0x09d000, 0x09dfff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, MAP_RAM);
+	SekSetWriteWordHandler(0,	macross_main_write_word);
+	SekSetWriteByteHandler(0,	macross_main_write_byte);
+	SekSetReadWordHandler(0,	macross_main_read_word);
+	SekSetReadByteHandler(0,	macross_main_read_byte);
+	SekClose();
+
+	return 0;
+}
+
+static INT32 GunnailpInit()
+{
+	GunnailMode = 1;
+	return NMK004Init(GunnailpLoadCallback, 12000000);
+}
+
+struct BurnDriver BurnDrvGunnailp = {
+	"gunnailp", "gunnail", "nmk004", NULL, "1992",
+	"GunNail (location test)\0", NULL, "NMK", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, gunnailpRomInfo, gunnailpRomName, NULL, NULL, NULL, NULL, GunnailInputInfo, GunnailDIPInfo,
+	GunnailpInit, NMK004Exit, NMK004Frame, GunnailDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
 };
 

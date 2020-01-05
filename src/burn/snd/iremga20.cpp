@@ -1,33 +1,3 @@
-/*********************************************************
-
-Irem GA20 PCM Sound Chip
-
-Based on MAME sources by Acho A. Tang,R. Belmont
-
-It's not currently known whether this chip is stereo.
-
-
-Revisions:
-
-04-15-2002 Acho A. Tang
-- rewrote channel mixing
-- added prelimenary volume and sample rate emulation
-
-05-30-2002 Acho A. Tang
-- applied hyperbolic gain control to volume and used
-  a musical-note style progression in sample rate
-  calculation(still very inaccurate)
-
-02-18-2004 R. Belmont
-- sample rate calculation reverse-engineered.
-  Thanks to Fujix, Yasuhiro Ogawa, the Guru, and Tormod
-  for real PCB samples that made this possible.
-
-02-03-2007 R. Belmont
-- Cleaned up faux x86 assembly.
-
-*********************************************************/
-
 #include "burnint.h"
 #include "iremga20.h"
 

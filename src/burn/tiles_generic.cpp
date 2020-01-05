@@ -1,18 +1,3 @@
-/*================================================================================================
-Generic Tile Rendering Module - Uses the Colour-Depth Independent Image Transfer Method
-
-Supports 8 x 8, 16 x 16 and 32 x 32 with or without masking and with full flipping. The functions fully
-support varying colour-depths and palette offsets as well as all the usual variables.
-
-Call GenericTilesInit() in the driver Init function to store the drivers screen size for clipping.
-This function also calls BurnTransferInit().
-
-Call GenericTilesExit() in the driver Exit function to clear the screen size variables.
-Again, this function also calls BurnTransferExit().
-
-Otherwise, use the Transfer code as usual.
-================================================================================================*/
-
 #include "tiles_generic.h"
 
 UINT8* pTileData;

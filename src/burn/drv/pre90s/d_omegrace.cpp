@@ -1,9 +1,3 @@
-// FB Alpha Omega Race driver moulde
-// Based on MAME driver by Bernd Wiebelt
-
-// Todo/tofix:
-// Player 2's spinner input is encrypted. :( (no known decryption table)
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

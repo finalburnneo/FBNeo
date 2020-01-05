@@ -1,6 +1,3 @@
-// TC0220IOC
-// Based on MAME sources by Nicola Salmoria
-
 #include "burnint.h"
 #include "taito_ic.h"
 

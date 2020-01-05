@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
 	BurnLibInit();
 
 	int driverId = -1;
-	for (int i = 0; i < nBurnDrvCount; i++) {
+	for (int i = 0; i < (int) nBurnDrvCount; i++) {
 		nBurnDrvActive = i;
 		if (strcmp(BurnDrvGetTextA(0), romname) == 0) {
 			driverId = i;
@@ -201,7 +201,11 @@ int main(int argc, char *argv[])
 
 	bCheatsAllowed = false;
 
-	DrvInit(driverId, 0);
+	if (DrvInit(driverId, 0) != 0) {
+		fprintf(stderr, "Driver init failed\n");
+		return 0;
+	}
+
 	parseSwitches(argc, argv);
 	RunMessageLoop();
 

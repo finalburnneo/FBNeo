@@ -1,8 +1,3 @@
-// FB Alpha Arkanoid driver module
-// Based on MAME driver by Brad Oliver and MANY others.
-
-// TODO: hw timer countdown @ bootup runs too slow? (maybe?)
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_m68705.h"

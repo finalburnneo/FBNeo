@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2015, Marcos Medeiros
- * Licensed under BSD 3-clause.
- */
 #ifdef TMS34010_DEBUGGER
 #include <QDebug>
 #endif

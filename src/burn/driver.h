@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <cstdint>
 #include <cstring>
-#include <cmath>
 
 #if !defined (_WIN32)
  #define __cdecl

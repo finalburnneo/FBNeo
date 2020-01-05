@@ -2629,7 +2629,7 @@ static struct BurnRomInfo mmonkeyRomDesc[] = {
 	{ "mmonkey.m14",	0x1000, 0xf943e28c, 3 | BRF_GRA },           // 10
 
 	{ "mmi6331.m5",		0x0020, 0x55e28b32, 4 | BRF_GRA },           // 11 proms
-	{ "sb-4c",		0x0020, 0xa29b4204, 4 | BRF_GRA },           // 12
+	{ "sb-4c",			0x0020, 0xa29b4204, 4 | BRF_GRA },           // 12
 };
 
 STD_ROM_PICK(mmonkey)
@@ -2641,6 +2641,40 @@ struct BurnDriver BurnDrvMmonkey = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, mmonkeyRomInfo, mmonkeyRomName, NULL, NULL, NULL, NULL, MmonkeyInputInfo, MmonkeyDIPInfo,
+	MmonkeyInit, DrvExit, BtimeFrame, eggsDraw, DrvScan, &DrvRecalc, 16,
+	240, 242, 3, 4
+};
+
+// Minky Monkey (Japan)
+
+static struct BurnRomInfo mmonkeyjRomDesc[] = {
+	{ "b00.e4",			0x1000, 0x8d31bf6a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "b10.d4",			0x1000, 0xe54f584a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b20.b4",			0x1000, 0x9f606767, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "b30.a4",			0x1000, 0xa4e85439, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "b40.h1",			0x1000, 0x5bcb2e81, 2 | BRF_PRG | BRF_ESS }, //  4 audiocpu
+
+	{ "b50.l11",		0x1000, 0xb6aa8566, 3 | BRF_GRA },           //  5 gfx1
+	{ "b60.m11",		0x1000, 0x6cc4d0c4, 3 | BRF_GRA },           //  6
+	{ "b70.l13",		0x1000, 0x2a343b7e, 3 | BRF_GRA },           //  7
+	{ "b80.m13",		0x1000, 0x0230b50d, 3 | BRF_GRA },           //  8
+	{ "b90.l14",		0x1000, 0x922bb3e1, 3 | BRF_GRA },           //  9
+	{ "ba0.m14",		0x1000, 0xf943e28c, 3 | BRF_GRA },           // 10
+
+	{ "bc0.m5",			0x0020, 0x55e28b32, 4 | BRF_GRA },           // 11 proms
+	{ "m3-7603-5.c4",	0x0020, 0xa29b4204, 4 | BRF_GRA },           // 12
+};
+
+STD_ROM_PICK(mmonkeyj)
+STD_ROM_FN(mmonkeyj)
+
+struct BurnDriver BurnDrvMmonkeyj = {
+	"mmonkeyj", "mmonkey", NULL, NULL, "1982",
+	"Minky Monkey (Japan)\0", NULL, "Technos Japan / Roller Tron", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, mmonkeyjRomInfo, mmonkeyjRomName, NULL, NULL, NULL, NULL, MmonkeyInputInfo, MmonkeyDIPInfo,
 	MmonkeyInit, DrvExit, BtimeFrame, eggsDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
 };

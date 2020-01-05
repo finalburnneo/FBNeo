@@ -9430,7 +9430,29 @@ struct BurnDriver BurnDrvGunnail = {
 };
 
 
-// GunNail Location Test (28th May. 1992)
+// GunNail (Location Test)
+// still has the 28th May. 1992 string, so unlikely that was the release date for either version.
+
+/*'gunnailp' observed differences (from notes by trap15)
+   - Different introduction scene
+   - Many unique enemy types that ended up unused
+   - Tweaked enemy attack patterns
+   - Tweaked boss behavior and attack patterns
+   - Dramatically different stages (and only 7 of them):
+	  - Stage 1: Became Stage 5, very different layouts
+	  - Stage 2: Became Stage 7, with mostly slight enemy layout changes
+	  - Stage 3: Became Stage 6, almost the same as final
+	  - Stage 4: Stayed as Stage 4, with very minor enemy layout changes
+	  - Stage 5: Entirely unique stage, majorly reworked to become final Stage 2
+	  - Stage 6: Became Stage 3, many enemy layout changes
+	  - Stage 7: Entirely unique stage, majorly reworked to become final Stage 1
+   - No ending, instead loops forever
+	  - Loop has extremely fast bullets
+	  - The difficulty seems the same on all loops
+   - Player's blue shot has a wider maximum and minimum spread
+   - Player's main shot hitbox is symmetrical and wider than final
+	  - When the hitbox was shrunk for the final, it was only shrunk in one direction, making it extended to the right
+---*/
 
 static struct BurnRomInfo gunnailpRomDesc[] = {
 	{ "3.u132",			0x080000, 0x93570f03, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -9447,7 +9469,7 @@ static struct BurnRomInfo gunnailpRomDesc[] = {
 
 	{ "92077-6.u57",	0x080000, 0x6d133f0d, 7 | BRF_SND },           //  6 OKI2 Samples
 
-	{ "8_82s129.u35",	0x000100, 0x4299776e, 0 | BRF_OPT },           //  7 Unused proms
+	{ "8_82s129.u35",	0x000100, 0x4299776e, 0 | BRF_OPT },           //  7 Proms
 	{ "9_82s135.u72",	0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  8
 	{ "10_82s123.u96",	0x000020, 0xc60103c8, 0 | BRF_OPT },           //  9
 };

@@ -3094,13 +3094,14 @@ DRV		BurnDrvEmpcityu;
 DRV		BurnDrvmd_empsteel;
 DRV		BurnSpecemuspdt;
 DRV		BurnSpecenduro;
+DRV		BurnDrvEndurord;
+DRV		BurnDrvEnduror1d;
 DRV		BurnDrvEndurobl;
 DRV		BurnDrvsms_enduro;
 DRV		BurnDrvsms_enduroj;
-DRV		BurnDrvEndurora;
-DRV		BurnDrvEndurord;
 DRV		BurnDrvEnduror;
-DRV		BurnDrvEnduror1d;
+DRV		BurnDrvEndurora;
+DRV		BurnDrvEndurorb;
 DRV		BurnDrvEnduror1;
 DRV		BurnDrvpce_energy;
 DRV		BurnDrvEnforcej;
@@ -4117,6 +4118,7 @@ DRV		BurnDrvMSX_gomokunaa;
 DRV		BurnDrvpce_gomola;
 DRV		BurnDrvImsorryj;
 #if defined FBNEO_DEBUG
+DRV		BurnDrvGondou;			// Broken inputs [NOT WORKING]
 DRV		BurnDrvGondo;			// Broken inputs [NOT WORKING]
 #endif
 DRV		BurnDrvMSX_gonzzalezz;
@@ -4293,6 +4295,7 @@ DRV		BurnDrvpce_gunhedht;
 DRV		BurnDrvpce_gunhed;
 DRV		BurnDrvGunlock;
 DRV		BurnDrvGunnail;
+DRV		BurnDrvGunnailp;
 DRV		BurnDrvmd_gunship;
 DRV		BurnDrvmd_gunstar;
 DRV		BurnDrvgg_gunstar;
@@ -5675,8 +5678,9 @@ DRV		BurnDrvgg_madoumn3;
 DRV		BurnDrvsgx_granzort;
 DRV		BurnDrvmd_mafia;
 DRV		BurnDrvmbrush;
-DRV		BurnDrvMagicbubb;
+DRV		BurnDrvMagicbubc;
 DRV		BurnDrvMagicbuba;
+DRV		BurnDrvMagicbubb;
 DRV		BurnDrvmd_mbubble;
 DRV		BurnDrvMagicbub;
 DRV		BurnDrvgg_rayearth;
@@ -6177,6 +6181,7 @@ DRV		BurnDrvMineswpr4;
 DRV		BurnDrvMineswpr;
 DRV		BurnDrvmd_miniplanets;
 DRV		BurnDrvminivadr;
+DRV		BurnDrvMmonkeyj;
 DRV		BurnDrvMmonkey;
 DRV		BurnDrvmd_mfpool;
 DRV		BurnDrvsms_miracle;
@@ -7049,6 +7054,7 @@ DRV		BurnDrvOpwolfjsc;
 DRV		BurnDrvOpwolfu;
 DRV		BurnDrvOpwolf;
 DRV		BurnDrvOpwolfa;
+DRV		BurnDrvOpwolf3j;
 DRV		BurnDrvOpwolf3u;
 DRV		BurnDrvOpwolf3;
 DRV		BurnDrvMSX_opwolf;
@@ -7569,6 +7575,7 @@ DRV		BurnDrvmd_pokemona;
 DRV		BurnDrvmd_pokemon2;
 DRV		BurnDrvmd_pokemon;
 DRV		BurnDrvMSX_podero;
+DRV		BurnDrvPoittoc;
 DRV		BurnDrvPoitto;
 DRV		BurnDrvmd_pokecda;
 DRV		BurnDrvmd_pokecd;
@@ -9052,6 +9059,7 @@ DRV		BurnDrvSnowbrob;
 DRV		BurnDrvSnowbroc;
 DRV		BurnDrvSnowbroswb;
 DRV		BurnDrvSnowbro2;
+DRV		BurnDrvSnowbro2ny;
 DRV		BurnDrvSnowbro3;
 DRV		BurnDrvSocbrawlh;
 DRV		BurnDrvSocbrawl;
@@ -11427,6 +11435,7 @@ DRV		BurnDrvTrojanb;
 DRV		BurnDrvTrojanr;
 DRV		BurnDrvTrojan;
 DRV		BurnDrvTrojana;
+DRV		BurnDrvTron5;
 DRV		BurnDrvTron4;
 DRV		BurnDrvTron3;
 DRV		BurnDrvTron2;
@@ -12609,7 +12618,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGtmro,				// 1000 Miglia: Great 1000 Miles Rally (94/05/10)
 	&BurnDrvGtmrb,				// 1000 Miglia: Great 1000 Miles Rally (94/05/26)
 	&BurnDrvGtmra,				// 1000 Miglia: Great 1000 Miles Rally (94/06/13)
-	&BurnDrvGtmr,				// 1000 Miglia: Great 1000 Miles Rally (94/07/18)
+	&BurnDrvGtmr,				// 1000 Miglia: Great 1000 Miles Rally (Taiwan 94/07/18)
 	&BurnDrvmd_12in1,			// 12 in 1
 	&BurnDrvmd_13mahjan,		// 13 Ma Jiang - 98 Mei Shao Nu Pian (Chi)
 	&BurnDrvmd_16tongnk,		// 16 Ton (Jpn, Game no Kandume MegaCD Rip)
@@ -15683,13 +15692,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_empsteel,		// Empire of Steel (Euro)
 	&BurnSpecemuspdt,			// Emulator Speed Test (48K)
 	&BurnSpecenduro,			// Enduro Racer (128K)
+	&BurnDrvEndurord,			// Enduro Racer (bootleg of Rev A, YM2151, FD1089B 317-0013A set)
+	&BurnDrvEnduror1d,			// Enduro Racer (bootleg of YM2203, FD1089B 317-0013A set)
 	&BurnDrvEndurobl,			// Enduro Racer (bootleg set 1)
 	&BurnDrvsms_enduro,			// Enduro Racer (Euro, USA, Bra)
 	&BurnDrvsms_enduroj,		// Enduro Racer (Jpn)
-	&BurnDrvEndurora,			// Enduro Racer (YM2151) (mask ROM sprites, FD1089B 317-0013A)
-	&BurnDrvEndurord,			// Enduro Racer (YM2151, bootleg of FD1089B 317-0013A set)
-	&BurnDrvEnduror,			// Enduro Racer (YM2151, FD1089B 317-0013A)
-	&BurnDrvEnduror1d,			// Enduro Racer (YM2203, bootleg of FD1089B 317-0013A)
+	&BurnDrvEnduror,			// Enduro Racer (Rev A, YM2151, FD1089B 317-0013A)
+	&BurnDrvEndurora,			// Enduro Racer (Rev A, YM2151, mask ROM sprites, FD1089B 317-0013A)
+	&BurnDrvEndurorb,			// Enduro Racer (YM2151, FD1089B 317-0013A)
 	&BurnDrvEnduror1,			// Enduro Racer (YM2203, FD1089B 317-0013A)
 	&BurnDrvpce_energy,			// Energy
 	&BurnDrvEnforcej,			// Enforce (Japan)
@@ -16706,7 +16716,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_gomola,			// Gomola Speed
 	&BurnDrvImsorryj,			// Gonbee no I'm Sorry (315-5110, Japan)
 #if defined FBNEO_DEBUG
-	&BurnDrvGondo,				// Gondomania (US) [Broken inputs, NOT WORKING]
+	&BurnDrvGondou,				// Gondomania (US) [Broken inputs, NOT WORKING]
+	&BurnDrvGondo,				// Gondomania (World) [Broken inputs, NOT WORKING]
 #endif
 	&BurnDrvMSX_gonzzalezz,		// Gonzzalezz 
 	&BurnDrvMSX_goody,			// Goody (Spa)
@@ -16882,6 +16893,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_gunhed,			// GunHed
 	&BurnDrvGunlock,			// Gunlock (Ver 2.3O 1994/01/20)
 	&BurnDrvGunnail,			// GunNail (28th May. 1992)
+	&BurnDrvGunnailp,			// GunNail (location test)
 	&BurnDrvmd_gunship,			// Gunship (Euro)
 	&BurnDrvmd_gunstar,			// Gunstar Heroes (Euro)
 	&BurnDrvgg_gunstar,			// Gunstar Heroes (Jpn)
@@ -18264,8 +18276,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsgx_granzort,		// Madou Ou Granzort
 	&BurnDrvmd_mafia,			// Mafia (Rus)
 	&BurnDrvmbrush,				// Magic Brush
-	&BurnDrvMagicbubb,			// Magic Bubble (Adult version, YS-0211 PCB)
-	&BurnDrvMagicbuba,			// Magic Bubble (Adult version, YS-1302 PCB)
+	&BurnDrvMagicbubc,			// Magic Bubble (Adult version, YS-0211 PCB)
+	&BurnDrvMagicbuba,			// Magic Bubble (Adult version, YS-1302 PCB, set 1)
+	&BurnDrvMagicbubb,			// Magic Bubble (Adult version, YS-1302 PCB, set 2)
 	&BurnDrvmd_mbubble,			// Magic Bubble (Pirate) [no comment, NOT WORKING]
 	&BurnDrvMagicbub,			// Magic Bubble
 	&BurnDrvgg_rayearth,		// Magic Knight Rayearth (Jpn)
@@ -18766,6 +18779,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMineswpr,			// Minesweeper
 	&BurnDrvmd_miniplanets,		// Mini Planets (REV02)
 	&BurnDrvminivadr,			// Minivader
+	&BurnDrvMmonkeyj,			// Minky Monkey (Japan)
 	&BurnDrvMmonkey,			// Minky Monkey
 	&BurnDrvmd_mfpool,			// Minnesota Fats - Pool Legend (USA)
 	&BurnDrvsms_miracle,		// Miracle Warriors - Seal of the Dark Lord (Euro, USA, Bra)
@@ -19638,6 +19652,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOpwolfu,			// Operation Wolf (US)
 	&BurnDrvOpwolf,				// Operation Wolf (World, set 1)
 	&BurnDrvOpwolfa,			// Operation Wolf (World, set 2)
+	&BurnDrvOpwolf3j,			// Operation Wolf 3 (Japan)
 	&BurnDrvOpwolf3u,			// Operation Wolf 3 (US)
 	&BurnDrvOpwolf3,			// Operation Wolf 3 (World)
 	&BurnDrvMSX_opwolf,			// Operation Wolf
@@ -20158,6 +20173,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_pokemon2,		// Pocket Monsters 2
 	&BurnDrvmd_pokemon,			// Pocket Monsters
 	&BurnDrvMSX_podero,			// Poder Oscuro, El
+	&BurnDrvPoittoc,			// Poitto! (revision C) [no comment, NOT WORKING]
 	&BurnDrvPoitto,				// Poitto!
 	&BurnDrvmd_pokecda,			// Pokemon Crazy Drummer (Alt)
 	&BurnDrvmd_pokecd,			// Pokemon Crazy Drummer
@@ -21640,7 +21656,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSnowbrob,			// Snow Bros. - Nick & Tom (set 3)
 	&BurnDrvSnowbroc,			// Snow Bros. - Nick & Tom (set 4)
 	&BurnDrvSnowbroswb,			// Snow Bros. - Nick & Tom (The Winter Bobble hardware bootleg)
-	&BurnDrvSnowbro2,			// Snow Bros. 2 - with new elves
+	&BurnDrvSnowbro2,			// Snow Bros. 2 - with new elves (Hanafram)
+	&BurnDrvSnowbro2ny,			// Snow Bros. 2 - with new elves (Nyanko)
 	&BurnDrvSnowbro3,			// Snow Brothers 3 - Magical Adventure
 	&BurnDrvSocbrawlh,			// Soccer Brawl (NGH-031)
 	&BurnDrvSocbrawl,			// Soccer Brawl (NGM-031)
@@ -24016,6 +24033,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTrojanr,			// Trojan (Romstar)
 	&BurnDrvTrojan,				// Trojan (US set 1)
 	&BurnDrvTrojana,			// Trojan (US set 2)
+	&BurnDrvTron5,				// Tron (5/12)
 	&BurnDrvTron4,				// Tron (6/15)
 	&BurnDrvTron3,				// Tron (6/17)
 	&BurnDrvTron2,				// Tron (6/25)

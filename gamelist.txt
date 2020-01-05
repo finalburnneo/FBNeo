@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12308 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12317 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -22,7 +22,7 @@ This list contains all games supported by FinalBurn Neo.
 | gtmro		|  	| 1000 Miglia: Great 1000 Miles Rally (94/05/10)	| gtmr		| 1994	| Kaneko	| Kaneko16	| 					|
 | gtmrb		|  	| 1000 Miglia: Great 1000 Miles Rally (94/05/26)	| gtmr		| 1994	| Kaneko	| Kaneko16	| 					|
 | gtmra		|  	| 1000 Miglia: Great 1000 Miles Rally (94/06/13)	| gtmr		| 1994	| Kaneko	| Kaneko16	| 					|
-| gtmr		|  	| 1000 Miglia: Great 1000 Miles Rally (94/07/18)	| 		| 1994	| Kaneko	| Kaneko16	| 					|
+| gtmr		|  	| 1000 Miglia: Great 1000 Miles Rally (Taiwan 94/07/18)	| 		| 1994	| Kaneko	| Kaneko16	| 					|
 | md_12in1	|  	| 12 in 1						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_13mahjan	|  	| 13 Ma Jiang - 98 Mei Shao Nu Pian (Chi)		| 		| 1998	| BBD		| Sega Megadrive| 					|
 | md_16tongnk	|  	| 16 Ton (Jpn, Game no Kandume MegaCD Rip)		| md_16ton	| 1991	| Sega		| Sega Megadrive| 					|
@@ -3024,13 +3024,14 @@ This list contains all games supported by FinalBurn Neo.
 | md_empsteel	|  	| Empire of Steel (Euro)				| 		| 1992	| Flying Edge	| Sega Megadrive| 					|
 | spec_emuspdt	|  	| Emulator Speed Test (48K)				| 		| 19xx	| Unknown	| ZX Spectrum	| 					|
 | spec_enduro	|  	| Enduro Racer (128K)					| 		| 1987	| Activision	| ZX Spectrum	| 					|
+| endurord	|  	| Enduro Racer (bootleg of Rev A, YM2151, FD1089B 317-00| enduror	| 1986	| bootleg	| Hang-On	| 					|
+| enduror1d	|  	| Enduro Racer (bootleg of YM2203, FD1089B 317-0013A set| enduror	| 1986	| bootleg	| Hang-On	| 					|
 | endurobl	|  	| Enduro Racer (bootleg set 1)				| enduror	| 1986	| bootleg	| Hang-On	| 					|
 | sms_enduro	|  	| Enduro Racer (Euro, USA, Bra)				| 		| 1987	| Sega		| Sega Master Sy| 					|
 | sms_enduroj	|  	| Enduro Racer (Jpn)					| sms_enduro	| 1987	| Sega		| Sega Master Sy| 					|
-| endurora	|  	| Enduro Racer (YM2151) (mask ROM sprites, FD1089B 317-0| enduror	| 1986	| Sega		| Hang-On	| 					|
-| endurord	|  	| Enduro Racer (YM2151, bootleg of FD1089B 317-0013A set| enduror	| 1986	| Sega		| Hang-On	| 					|
-| enduror	|  	| Enduro Racer (YM2151, FD1089B 317-0013A)		| 		| 1986	| Sega		| Hang-On	| 					|
-| enduror1d	|  	| Enduro Racer (YM2203, bootleg of FD1089B 317-0013A)	| enduror	| 1986	| Sega		| Hang-On	| 					|
+| enduror	|  	| Enduro Racer (Rev A, YM2151, FD1089B 317-0013A)	| 		| 1986	| Sega		| Hang-On	| 					|
+| endurora	|  	| Enduro Racer (Rev A, YM2151, mask ROM sprites, FD1089B| enduror	| 1986	| Sega		| Hang-On	| 					|
+| endurorb	|  	| Enduro Racer (YM2151, FD1089B 317-0013A)		| enduror	| 1986	| Sega		| Hang-On	| 					|
 | enduror1	|  	| Enduro Racer (YM2203, FD1089B 317-0013A)		| enduror	| 1986	| Sega		| Hang-On	| 					|
 | pce_energy	|  	| Energy						| 		| 1989	| NCS		| PC Engine	| 					|
 | enforcej	|  	| Enforce (Japan)					| enforce	| 1988	| Taito Corporat| Taito Z	| 					|
@@ -4030,7 +4031,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_gomokunaa	|  	| Gomoku Narabe (Jpn, Alt)				| msx_gomokuna	| 1984	| Toshiba EMI	| MSX		| 					|
 | pce_gomola	|  	| Gomola Speed						| 		| 1990	| UPL		| PC Engine	| 					|
 | imsorryj	|  	| Gonbee no I'm Sorry (315-5110, Japan)			| imsorry	| 1985	| Coreland / Seg| System 1	| 					|
-| gondo		| D NW	| Gondomania (US)					| 		| 1987	| Data East USA	| DEC8		| Broken inputs				|
+| gondou	| D NW	| Gondomania (US)					| gondo		| 1987	| Data East USA	| DEC8		| Broken inputs				|
+| gondo		| D NW	| Gondomania (World)					| 		| 1987	| Data East USA	| DEC8		| Broken inputs				|
 | msx_gonzzalezz|  	| Gonzzalezz 						| 		| 1989	| Opera Soft	| MSX		| 					|
 | msx_goody	|  	| Goody (Spa)						| 		| 1987	| Opera Soft	| MSX		| 					|
 | md_goofy	|  	| Goofy's Hysterical History Tour (USA)			| 		| 1993	| Absolute Enter| Sega Megadrive| 					|
@@ -4203,6 +4205,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_gunhed	|  	| GunHed						| 		| 1989	| Hudson	| PC Engine	| 					|
 | gunlock	|  	| Gunlock (Ver 2.3O 1994/01/20)				| 		| 1993	| Taito Corporat| Taito F3 Syste| 					|
 | gunnail	|  	| GunNail (28th May. 1992)				| 		| 1993	| NMK / Tecmo	| NMK16		| 					|
+| gunnailp	|  	| GunNail (location test)				| gunnail	| 1992	| NMK		| NMK16		| 					|
 | md_gunship	|  	| Gunship (Euro)					| 		| 1993	| U.S. Gold	| Sega Megadrive| 					|
 | md_gunstar	|  	| Gunstar Heroes (Euro)					| 		| 1993	| Sega		| Sega Megadrive| 					|
 | gg_gunstar	|  	| Gunstar Heroes (Jpn)					| 		| 1995	| Sega		| Sega Game Gear| 					|
@@ -5549,8 +5552,9 @@ This list contains all games supported by FinalBurn Neo.
 | sgx_granzort	|  	| Madou Ou Granzort					| 		| 1990	| Hudson	| SuperGrafx	| 					|
 | md_mafia	|  	| Mafia (Rus)						| md_dicktr	| 199?	| <unknown>	| Sega Megadrive| 					|
 | mbrush	|  	| Magic Brush						| crush		| 1981	| bootleg	| Pac-man	| 					|
-| magicbubb	|  	| Magic Bubble (Adult version, YS-0211 PCB)		| magicbub	| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
-| magicbuba	|  	| Magic Bubble (Adult version, YS-1302 PCB)		| magicbub	| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
+| magicbubc	|  	| Magic Bubble (Adult version, YS-0211 PCB)		| magicbub	| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
+| magicbuba	|  	| Magic Bubble (Adult version, YS-1302 PCB, set 1)	| magicbub	| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
+| magicbubb	|  	| Magic Bubble (Adult version, YS-1302 PCB, set 2)	| magicbub	| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
 | md_mbubble	|   NW	| Magic Bubble (Pirate)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | magicbub	|  	| Magic Bubble						| 		| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
 | gg_rayearth	|  	| Magic Knight Rayearth (Jpn)				| 		| 1994	| Sega		| Sega Game Gear| 					|
@@ -6047,6 +6051,7 @@ This list contains all games supported by FinalBurn Neo.
 | mineswpr	|  	| Minesweeper						| 		| 1977	| Amutech	| Miscellaneous	| 					|
 | md_miniplanets|  	| Mini Planets (REV02)					| 		| 2016	| 2016 Sik	| Sega Megadrive| 					|
 | minivadr	|  	| Minivader						| 		| 1990	| Taito Corporat| Minivader	| 					|
+| mmonkeyj	|  	| Minky Monkey (Japan)					| mmonkey	| 1982	| Technos Japan | Miscellaneous	| 					|
 | mmonkey	|  	| Minky Monkey						| 		| 1982	| Technos Japan | Miscellaneous	| 					|
 | md_mfpool	|  	| Minnesota Fats - Pool Legend (USA)			| 		| 1995	| Data East	| Sega Megadrive| 					|
 | sms_miracle	|  	| Miracle Warriors - Seal of the Dark Lord (Euro, USA, B| 		| 1987	| Sega		| Sega Master Sy| 					|
@@ -6895,6 +6900,7 @@ This list contains all games supported by FinalBurn Neo.
 | opwolfu	|  	| Operation Wolf (US)					| opwolf	| 1987	| Taito America | Taito Misc	| 					|
 | opwolf	|  	| Operation Wolf (World, set 1)				| 		| 1987	| Taito Corporat| Taito Misc	| 					|
 | opwolfa	|  	| Operation Wolf (World, set 2)				| opwolf	| 1987	| Taito Corporat| Taito Misc	| 					|
+| opwolf3j	|  	| Operation Wolf 3 (Japan)				| opwolf3	| 1994	| Taito Corporat| Taito Misc	| 					|
 | opwolf3u	|  	| Operation Wolf 3 (US)					| opwolf3	| 1994	| Taito America | Taito Misc	| 					|
 | opwolf3	|  	| Operation Wolf 3 (World)				| 		| 1994	| Taito Corporat| Taito Misc	| 					|
 | msx_opwolf	|  	| Operation Wolf					| 		| 2009	| TOYBOX	| MSX		| 					|
@@ -7403,6 +7409,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_pokemon2	|  	| Pocket Monsters 2					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_pokemon	|  	| Pocket Monsters					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | msx_podero	|  	| Poder Oscuro, El					| 		| 1988	| Zigurat Softwa| MSX		| 					|
+| poittoc	|   NW	| Poitto! (revision C)					| poitto	| 1993	| Metro / Able C| Miscellaneous	| 					|
 | poitto	|  	| Poitto!						| 		| 1993	| Metro / Able C| Miscellaneous	| 					|
 | md_pokecda	|  	| Pokemon Crazy Drummer (Alt)				| md_pokecd	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_pokecd	|  	| Pokemon Crazy Drummer					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -8855,7 +8862,8 @@ This list contains all games supported by FinalBurn Neo.
 | snowbrosb	|  	| Snow Bros. - Nick & Tom (set 3)			| snowbros	| 1990	| Toaplan	| Kaneko Pandora| 					|
 | snowbrosc	|  	| Snow Bros. - Nick & Tom (set 4)			| snowbros	| 1990	| Toaplan	| Kaneko Pandora| 					|
 | snowbroswb	|  	| Snow Bros. - Nick & Tom (The Winter Bobble hardware bo| snowbros	| 1990	| bootleg	| Kaneko Pandora| 					|
-| snowbro2	|  	| Snow Bros. 2 - with new elves				| 		| 1994	| [Toaplan] Hana| Toaplan GP9001| 					|
+| snowbro2	|  	| Snow Bros. 2 - with new elves (Hanafram)		| 		| 1994	| [Toaplan] Hana| Toaplan GP9001| 					|
+| snowbro2ny	|  	| Snow Bros. 2 - with new elves (Nyanko)		| snowbro2	| 1994	| [Toaplan] Nyan| Toaplan GP9001| 					|
 | snowbro3	|  	| Snow Brothers 3 - Magical Adventure			| 		| 2002	| bootleg	| Kaneko Pandora| 					|
 | socbrawlh	|  	| Soccer Brawl (NGH-031)				| socbrawl	| 1991	| SNK		| Neo Geo MVS	| 					|
 | socbrawl	|  	| Soccer Brawl (NGM-031)				| 		| 1991	| SNK		| Neo Geo MVS	| 					|
@@ -11191,6 +11199,7 @@ This list contains all games supported by FinalBurn Neo.
 | trojanr	|  	| Trojan (Romstar)					| trojan	| 1986	| Capcom (Romsta| Miscellaneous	| 					|
 | trojan	|  	| Trojan (US set 1)					| 		| 1986	| Capcom	| Miscellaneous	| 					|
 | trojana	|  	| Trojan (US set 2)					| trojan	| 1986	| Capcom	| Miscellaneous	| 					|
+| tron5		|  	| Tron (5/12)						| tron		| 1982	| Bally Midway	| Miscellaneous	| 					|
 | tron4		|  	| Tron (6/15)						| tron		| 1982	| Bally Midway	| Miscellaneous	| 					|
 | tron3		|  	| Tron (6/17)						| tron		| 1982	| Bally Midway	| Miscellaneous	| 					|
 | tron2		|  	| Tron (6/25)						| tron		| 1982	| Bally Midway	| Miscellaneous	| 					|

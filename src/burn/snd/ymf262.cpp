@@ -2,10 +2,11 @@
 #define _USE_MATH_DEFINES
 #endif
 
-#include <math.h>
+
 #include "driver.h"
 #include "ymf262.h"
 #include "state.h"
+
 
 /* output final shift */
 #if (OPL3_SAMPLE_BITS==16)

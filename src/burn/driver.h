@@ -2,6 +2,7 @@
 #define DRIVER_H
 
 #include <cstdint>
+#include <cstring>
 #if !defined (_WIN32)
  #define __cdecl
 #endif
@@ -65,7 +66,7 @@ enum {
 #ifdef __cplusplus
  extern "C" {
 #endif
-  double BurnTimerGetTime(void);
+  double BurnTimerGetTime();
 
   typedef UINT8 (*read8_handler)(UINT32 offset);
   typedef void (*write8_handler)(UINT32 offset, UINT32 data);

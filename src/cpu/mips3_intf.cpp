@@ -39,26 +39,14 @@ static bool g_useRecompiler = false;
 static mips::mips3_x64* g_mips_x64 = nullptr;
 #endif
 
-static unsigned char DefReadByte(unsigned int a) { return 0; }
-static unsigned short DefReadHalf(unsigned int a) { return 0; }
-static unsigned int DefReadWord(unsigned int a) { return 0; }
-static unsigned long long DefReadDouble(unsigned int a) { return 0; }
-
-static void DefWriteByte(unsigned int a, unsigned char value)
-{
-}
-
-static void DefWriteHalf(unsigned int a, unsigned short value)
-{
-}
-
-static void DefWriteWord(unsigned int a, unsigned int value)
-{
-}
-
-static void DefWriteDouble(unsigned int a, unsigned long long value)
-{
-}
+static UINT8 DefReadByte(UINT32 a) { return 0; }
+static UINT16 DefReadHalf(UINT32 a) { return 0; }
+static UINT32 DefReadWord(UINT32 a) { return 0; }
+static UINT64 DefReadDouble(UINT32 a) { return 0; }
+static void DefWriteByte(UINT32 a, UINT8 value) { }
+static void DefWriteHalf(UINT32 a, UINT16 value) { }
+static void DefWriteWord(UINT32 a, UINT32 value) { }
+static void DefWriteDouble(UINT32 a, UINT64 value) { }
 
 static void ResetMemoryMap()
 {

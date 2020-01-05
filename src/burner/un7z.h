@@ -10,6 +10,8 @@
 #include "7z.h"
 #include "7zCrc.h"
 #include "7zVersion.h"
+#include <cstdio>
+#include <cstring>
 
 
 void *SZipAlloc(void *p, size_t size);

@@ -587,7 +587,7 @@ static INT32 DrvInit(INT32 game_select)
 			}
 			break;
 
-			case 1: // magicbuba
+			case 1: // magicbuba, magicbubb
 			{
 				if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
 
@@ -605,7 +605,7 @@ static INT32 DrvInit(INT32 game_select)
 			}
 			break;
 
-			case 2: // magicbubb
+			case 2: // magicbubc
 			{
 				if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 4)) return 1;
 				if (BurnLoadRom(DrvGfxROM0 + 0x000001,  3, 4)) return 1;
@@ -974,7 +974,7 @@ struct BurnDriver BurnDrvMagicbub = {
 };
 
 
-// Magic Bubble (Adult version, YS-1302 PCB)
+// Magic Bubble (Adult version, YS-1302 PCB, set 1)
 
 static struct BurnRomInfo magicbubaRomDesc[] = {
 	{ "u33.bin",		0x40000, 0xa8164a02, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1009,7 +1009,7 @@ static INT32 MagicbubaInit()
 
 struct BurnDriver BurnDrvMagicbuba = {
 	"magicbuba", "magicbub", NULL, NULL, "199?",
-	"Magic Bubble (Adult version, YS-1302 PCB)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
+	"Magic Bubble (Adult version, YS-1302 PCB, set 1)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, magicbubaRomInfo, magicbubaRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
@@ -1018,11 +1018,50 @@ struct BurnDriver BurnDrvMagicbuba = {
 };
 
 
-// Magic Bubble (Adult version, YS-0211 PCB)
+// Magic Bubble (Adult version, YS-1302 PCB, set 2)
 
 static struct BurnRomInfo magicbubbRomDesc[] = {
-	{ "u33",		0x40000, 0xdb651555, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "u32",		0x40000, 0xc9cb4d88, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "p2.u33",			0x40000, 0x24e7e2b4, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "p1.u32",			0x40000, 0x0fa8b089, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "u143.bin",		0x10000, 0x04192753, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "u67.bin",		0x80000, 0x89523dcd, 3 | BRF_GRA },           //  3 Background Tiles
+	{ "u68.bin",		0x80000, 0x30e01a70, 3 | BRF_GRA },           //  4
+	{ "u69.bin",		0x80000, 0xfe357f52, 3 | BRF_GRA },           //  5
+	{ "u70.bin",		0x80000, 0x1398a473, 3 | BRF_GRA },           //  6
+	{ "u71.bin",		0x80000, 0x0844e017, 3 | BRF_GRA },           //  7
+	{ "u72.bin",		0x80000, 0x591db1cb, 3 | BRF_GRA },           //  8
+	{ "u73.bin",		0x80000, 0xcb4f3c3c, 3 | BRF_GRA },           //  9
+	{ "u74.bin",		0x80000, 0x81ff4910, 3 | BRF_GRA },           // 10
+
+	{ "1.u20",			0x20000, 0xd3bba963, 4 | BRF_GRA },           // 11 Sprites
+	{ "3.u21",			0x20000, 0x0017f6d3, 4 | BRF_GRA },           // 12
+	{ "2.u22",			0x20000, 0x7d71f838, 4 | BRF_GRA },           // 13
+	{ "4.u23",			0x20000, 0xecee1f63, 4 | BRF_GRA },           // 14
+
+	{ "u131",			0x40000, 0x9bdb08e4, 5 | BRF_SND },           // 15 Samples
+};
+
+STD_ROM_PICK(magicbubb)
+STD_ROM_FN(magicbubb)
+
+struct BurnDriver BurnDrvMagicbubb = {
+	"magicbubb", "magicbub", NULL, NULL, "199?",
+	"Magic Bubble (Adult version, YS-1302 PCB, set 2)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, magicbubbRomInfo, magicbubbRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
+	MagicbubaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	320, 224, 4, 3
+};
+
+
+// Magic Bubble (Adult version, YS-0211 PCB)
+
+static struct BurnRomInfo magicbubcRomDesc[] = {
+	{ "u33",			0x40000, 0xdb651555, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "u32",			0x40000, 0xc9cb4d88, 1 | BRF_PRG | BRF_ESS }, //  1
 	
 	{ "u67.bin",		0x80000, 0x89523dcd, 2 | BRF_GRA },           //  2 Background Tiles
 	{ "u68.bin",		0x80000, 0x30e01a70, 2 | BRF_GRA },           //  3
@@ -1038,24 +1077,24 @@ static struct BurnRomInfo magicbubbRomDesc[] = {
 	{ "u22.bin",		0x20000, 0x7c68df7a, 3 | BRF_GRA },           // 12
 	{ "u23.bin",		0x20000, 0xc7763fc1, 3 | BRF_GRA },           // 13
 
-	{ "u131",		0x40000, 0x9bdb08e4, 4 | BRF_SND },           // 14 Samples
+	{ "u131",			0x40000, 0x9bdb08e4, 4 | BRF_SND },           // 14 Samples
 };
 
-STD_ROM_PICK(magicbubb)
-STD_ROM_FN(magicbubb)
+STD_ROM_PICK(magicbubc)
+STD_ROM_FN(magicbubc)
 
-static INT32 MagicbubbInit()
+static INT32 MagicbubcInit()
 {
 	return DrvInit(2);
 }
 
-struct BurnDriver BurnDrvMagicbubb = {
-	"magicbubb", "magicbub", NULL, NULL, "199?",
+struct BurnDriver BurnDrvMagicbubc = {
+	"magicbubc", "magicbub", NULL, NULL, "199?",
 	"Magic Bubble (Adult version, YS-0211 PCB)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, magicbubbRomInfo, magicbubbRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
-	MagicbubbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	NULL, magicbubcRomInfo, magicbubcRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
+	MagicbubcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 

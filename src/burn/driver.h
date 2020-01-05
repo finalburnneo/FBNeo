@@ -2,7 +2,6 @@
 #define DRIVER_H
 
 #include <cstdint>
-#include <cstring>
 #if !defined (_WIN32)
  #define __cdecl
 #endif
@@ -15,9 +14,6 @@
 #ifndef INLINE
  #define INLINE __inline static
 #endif
-
-#define FBA
-#define FBANEO
 
 typedef uint8_t						UINT8;
 typedef int8_t 						INT8;

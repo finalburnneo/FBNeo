@@ -19,6 +19,7 @@
 #endif
 
 #include <ctime>
+#include <cstdint>
 
  extern TCHAR szAppHiscorePath[MAX_PATH];
 extern TCHAR szAppSamplesPath[MAX_PATH];
@@ -68,7 +69,7 @@ extern TCHAR szAppEEPROMPath[MAX_PATH];
  #define WRITE_UNICODE_BOM(file)
 #endif
 
-#include <cstdint>
+
 
 typedef uint8_t						UINT8;
 typedef int8_t 						INT8;

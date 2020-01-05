@@ -68,7 +68,7 @@ extern TCHAR szAppEEPROMPath[MAX_PATH];
  #define WRITE_UNICODE_BOM(file)
 #endif
 
-#include <stdint.h>
+#include <cstdint>
 
 typedef uint8_t						UINT8;
 typedef int8_t 						INT8;

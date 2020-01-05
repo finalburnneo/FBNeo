@@ -7,7 +7,7 @@
 #include "sp0250.h"
 #include "usb_snd.h"
 #include "bitswap.h" // BITSWAP08
-#include "math.h" // ABS()
+#include <cmath> // ABS()
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;

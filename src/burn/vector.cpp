@@ -1,5 +1,5 @@
 #include "tiles_generic.h"
-#include "math.h"
+#include <cmath>
 
 #define TABLE_SIZE  0x10000 // excessive?
 

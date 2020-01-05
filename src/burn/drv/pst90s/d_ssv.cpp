@@ -4,7 +4,7 @@
 #include "es5506.h"
 #include "st0020.h"
 #include "eeprom.h"
-#include "math.h"
+#include <cmath>
 #include "burn_gun.h"
 
 // Use for slower systems like rpi & xbox

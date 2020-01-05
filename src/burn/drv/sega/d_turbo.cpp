@@ -2,7 +2,7 @@
 #include "z80_intf.h"
 #include "samples.h"
 #include "8255ppi.h"
-#include "math.h"
+#include <cmath>
 #include "burn_shift.h"
 
 static UINT8 *AllMem;

@@ -3,8 +3,8 @@
 
 //#ifdef _MSC_VER
 #include <InitGuid.h>
-#include <xaudio2.h>
-#include <xaudio2fx.h>
+#include <XAudio2.h>
+#include <XAudio2fx.h>
 
 static IXAudio2* pXAudio2 = NULL;
 static IXAudio2MasteringVoice* pMasterVoice = NULL;

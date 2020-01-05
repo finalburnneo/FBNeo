@@ -1,8 +1,11 @@
 #ifndef DRIVER_H
 #define DRIVER_H
 
-#include <cstdint>
-#include <cstring>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <math.h>
 #if !defined (_WIN32)
  #define __cdecl
 #endif

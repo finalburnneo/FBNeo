@@ -167,6 +167,9 @@ void m6502_reset(void)
 
 	m6502.sp.d = 0x01ff;	/* stack pointer starts at page 1 offset FF */
 	m6502.p = F_T|F_I|F_Z|F_B|(P&F_D);	/* set T, I and Z flags */
+	m6502.a = 0;
+	m6502.x = 0;
+	m6502.y = 0;
 	m6502.pending_irq = 0;	/* nonzero if an IRQ is pending */
 	m6502.after_cli = 0;	/* pending IRQ and last insn cleared I */
 	m6502.irq_state = 0;

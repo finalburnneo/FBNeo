@@ -294,7 +294,6 @@ int main(int argc, char* argv[])
 	SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
 
 	SDL_WM_SetCaption("FinalBurn Neo", "FinalBurn Neo");
-	SDL_ShowCursor(SDL_DISABLE);
 #endif
 
 #ifdef BUILD_SDL2
@@ -306,8 +305,9 @@ int main(int argc, char* argv[])
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 		return 0;
 	}
-
 #endif
+
+	SDL_ShowCursor(SDL_DISABLE);
 
 #ifdef BUILD_SDL2
 	szSDLhiscorePath = SDL_GetPrefPath("fbneo", "hiscore");

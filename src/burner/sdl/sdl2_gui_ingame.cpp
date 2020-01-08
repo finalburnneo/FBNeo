@@ -65,7 +65,7 @@ void SoundMenuSelected()
   current_menu = SOUNDMENU;
 }
 
-#define MAINMENU_COUNT 7
+#define MAINMENU_COUNT 6
 
 struct MenuItem mainMenu[MAINMENU_COUNT] =
 {
@@ -75,7 +75,7 @@ struct MenuItem mainMenu[MAINMENU_COUNT] =
  {"Load State\0", QuickLoad, NULL},
  {"Save Screenshot\0", NULL, NULL},
  {"Reset!\0", NULL, NULL},
- {NULL,NULL,NULL}
+
 };
 
 // menu instance tracking
@@ -144,6 +144,27 @@ int ingame_gui_process()
       case SDLK_TAB:
         return 1;
         break;
+			case SDLK_UP:
+				if (current_selected_item > 0)
+				{
+					current_selected_item--;
+				}
+				break;
+			case SDLK_DOWN:
+				if (current_selected_item < current_item_count-1)
+				{
+					current_selected_item++;
+				}
+				break;
+			case SDLK_RETURN:
+				if (current_menu_items[current_selected_item].menuFunction!=NULL)
+				{
+					void (*menuFunction)();
+					menuFunction = current_menu_items[current_selected_item].menuFunction;
+					menuFunction();
+					return 1;
+				}
+				break;
       }
     }
   }

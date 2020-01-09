@@ -54,9 +54,11 @@ typedef struct
 	UINT8	pending_irq;	/* nonzero if an IRQ is pending */
 	UINT8	after_cli;		/* pending IRQ and last insn cleared I */
 	UINT8	nmi_state;
+	UINT8   nmi_req;
 	UINT8	irq_state;
 	UINT8   so_state;
 	UINT8   hold_irq;
+	UINT8   hold_nmi;
 	UINT8   cpu7written;
 
 	UINT8   ddr; // 6501/8502/7501 stuff
@@ -133,6 +135,7 @@ void m6502_set_context (void *src);
 int m6502_execute(int cycles);
 void m6502_set_irq_line(int irqline, int state);
 void m6502_set_irq_hold();
+void m6502_set_nmi_hold();
 UINT32 m6502_get_pc();
 UINT32 m6502_get_prev_pc();
 int m6502_releaseslice();
@@ -147,7 +150,7 @@ void m65c02_set_irq_line(int irqline, int state);
 void m65sc02_init();
 
 void n2a03_init();
-void n2a03_irq(void); // used for PSG!!
+//void n2a03_irq(void); // used for PSG!!
 
 void deco16_init();
 void deco16_reset();

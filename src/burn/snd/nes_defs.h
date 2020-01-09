@@ -106,7 +106,7 @@ typedef struct triangle_s
    INT32 vbl_length;
    INT32 write_latency;
    float phaseacc;
-   float output_vol;
+   uint8 output_vol;
    uint8 adder;
    boolean counter_started;
    boolean enabled;
@@ -135,6 +135,8 @@ typedef struct dpcm_s
    float phaseacc;
    float output_vol;
    uint8 cur_byte;
+   uint8 dmc_buffer;
+   uint8 dmc_buffer_filled;
    boolean enabled;
    boolean irq_occurred;
    INT8 vol;
@@ -144,7 +146,7 @@ typedef struct dpcm_s
 typedef struct apu
 {
    /* Sound channels */
-   square_t   squ[2];
+   square_t   squ[4];
    triangle_t tri;
    noise_t    noi;
    dpcm_t     dpcm;
@@ -193,7 +195,7 @@ static const INT32 noise_freq[16] =
 /* dpcm transfer freqs */
 static const INT32 dpcm_clocks[16] =
 {
-   428, 380, 340, 320, 286, 254, 226, 214, 190, 160, 142, 128, 106, 85, 72, 54
+   428, 380, 340, 320, 286, 254, 226, 214, 190, 160, 142, 128, 106, 84, 72, 54
 };
 
 /* ratios of pos/neg pulse for square waves */

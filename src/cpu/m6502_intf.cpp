@@ -353,11 +353,15 @@ void M6502SetIRQLine(INT32 vector, INT32 status)
 		pCurrentCPU->set_irq_line(vector, 1);
 		return;
 	}
-	
+
+	if (status == CPU_IRQSTATUS_HOLD && vector == CPU_IRQLINE_NMI) {
+		status = CPU_IRQSTATUS_AUTO;
+	}
+
 	if (status == CPU_IRQSTATUS_AUTO) {
 		if (vector == CPU_IRQLINE_NMI /* 0x20 */) {
+			m6502_set_nmi_hold(); // it will auto-clear on ack
 			pCurrentCPU->set_irq_line(vector, 1);
-			pCurrentCPU->set_irq_line(vector, 0);
 			return;
 		} else {
 			pCurrentCPU->set_irq_line(vector, 1);

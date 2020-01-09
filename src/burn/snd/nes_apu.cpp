@@ -40,7 +40,7 @@
    BUGFIXES:
 
    - Various bugs concerning the DPCM channel fixed. (Oliver Achten)
-   - Fixed $4015 read behaviour. (Oliver Achten)
+   - Fixed $4015 read behaviour. (Oliver Achten) :: Actually, this broke it -dink
 
  *****************************************************************************/
 
@@ -76,9 +76,16 @@ struct nesapu_info
 	UINT32 sync_times1[SYNCS_MAX1]; /* Samples per sync table */
 	UINT32 sync_times2[SYNCS_MAX2]; /* Samples per sync table */
 
+	float  tnd_table[0x100]; // see create_tndtab() for info
+	float  square_table[0x100];
+
 	// FBA-specific variables
 	INT16 *stream;
 	INT32 samples_per_frame;
+
+	UINT32 nSampleSize;
+	INT32 nFractionalPosition;
+
 	UINT32 (*pSyncCallback)(INT32 samples_per_frame);
 	INT32 current_position;
 	INT32 fill_buffer_hack;
@@ -88,6 +95,57 @@ struct nesapu_info
 };
 
 static nesapu_info nesapu_chips[CHIP_NUM];
+
+#if 0
+INT32 nes_scanline();
+#endif
+
+static UINT32 nes_nesapu_sync(INT32 samples_rate)
+{
+	return (samples_rate * M6502TotalCycles()) / 29781 /* (341*262 / 3) + 0.5 */;
+}
+
+//enum nesapu_mixermodes { MIXER_APU = 0x01, MIXER_EXT = 0x02 };
+INT32 nesapu_mixermode;
+
+/* Frame-IRQ stuff -dink */
+static INT32 frame_irq_flag;
+static INT32 mode4017;
+static INT32 step4017;
+static INT32 clocky;
+
+static UINT8 *dmc_buffer;
+INT16 *nes_ext_buffer;
+INT16 (*nes_ext_sound_cb)();
+
+static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan);
+
+void nesapu_runclock(INT32 cycle)
+{
+	struct nesapu_info *info = &nesapu_chips[0];
+
+	dmc_buffer[cycle] = apu_dpcm(info, &info->APU.dpcm);
+
+	if (nes_ext_sound_cb && nes_ext_buffer) {
+		nes_ext_buffer[cycle] = nes_ext_sound_cb();
+	}
+
+	// Frame-IRQ: we only emulate the frame-irq mode which is used by a few
+	// games to split the screen or other neat tricks (Qix, Bee52...)
+	clocky -= 2;
+	if (clocky <= 0) {
+		clocky += 14915;
+
+		if (step4017 == 0 && (mode4017 & 0xc0) == 0x00) {
+			frame_irq_flag = 1;
+			//bprintf(0, _T("FRAME IRQ-apu.%d\n"), nCurrentFrame);
+			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		}
+
+		step4017 = (step4017 + 1) & 3;
+	}
+}
+
 
 /* INTERNAL FUNCTIONS */
 
@@ -121,6 +179,29 @@ static void create_syncs(struct nesapu_info *info, UINT64 sps)
   }
 }
 
+static void create_tndtab(float *buf)
+{
+	// triangle / noise / dmc lookup table
+	// C/O Blargg's APU REF @ http://nesdev.com/apu_ref.txt
+	for (int i = 0; i < 0x100; i++)
+		buf[i] = 0.00;
+
+	for (int i = 1; i < 254; i++)
+		buf[i] = 163.67 / (24329.00 / i + 100.00);
+
+}
+
+static void create_squaretab(float *buf)
+{
+	// square lookup table
+	// C/O Blargg's APU REF @ http://nesdev.com/apu_ref.txt
+	for (int i = 0; i < 0x100; i++)
+		buf[i] = 0.00;
+
+	for (int i = 1; i < 254; i++)
+		buf[i] = 95.52 / (8128.00 / i + 100.00);
+}
+
 /* INITIALIZE NOISE LOOKUP TABLE */
 static void create_noise(UINT8 *buf, const INT32 bits, INT32 size)
 {
@@ -140,6 +221,13 @@ static void create_noise(UINT8 *buf, const INT32 bits, INT32 size)
 
 /* TODO: sound channels should *ALL* have DC volume decay */
 
+const UINT8 pulse_dty[4][8] = {
+	{ 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 0, 0, 0, 0, 1, 1, 1, 1 },
+	{ 1, 1, 1, 1, 1, 1, 0, 0 }
+};
+
 /* OUTPUT SQUARE WAVE SAMPLE (VALUES FROM -16 to +15) */
 static int8 apu_square(struct nesapu_info *info, square_t *chan)
 {
@@ -157,17 +245,29 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
       return 0;
 
    /* enveloping */
-   env_delay = info->sync_times1[chan->regs[0] & 0x0F];
+   env_delay = info->sync_times1[chan->regs[0] & 0x0F] + 1;
+
+   int env_starting = 0;
 
    /* decay is at a rate of (env_regs + 1) / 240 secs */
-   chan->env_phase -= 4;
-   while (chan->env_phase < 0)
+   if (chan->env_vol >= 0x10) {
+	   chan->env_vol++;
+	   if (chan->env_vol == 0xff) env_starting = 1;
+	   chan->env_phase = env_delay; // restart env phase
+	   chan->phaseacc = (chan->freq >> 16);
+	   chan->adder = 0;
+   }
+   else
    {
-      chan->env_phase += env_delay;
-      if (chan->regs[0] & 0x20)
-         chan->env_vol = (chan->env_vol + 1) & 15;
-      else if (chan->env_vol < 15)
-         chan->env_vol++;
+	   chan->env_phase -= (float) info->apu_incsize;//4;
+	   while (chan->env_phase < 0)
+	   {
+		   chan->env_phase += env_delay;
+		   if (chan->regs[0] & 0x20)
+			   chan->env_vol = (chan->env_vol + 1) & 15;
+		   else if (chan->env_vol < 15)
+			   chan->env_vol++;
+	   }
    }
 
    /* vbl length counter */
@@ -193,7 +293,7 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
    }
 
    if ((0 == (chan->regs[1] & 8) && (chan->freq >> 16) > freq_limit[chan->regs[1] & 7])
-       || (chan->freq >> 16) < 4)
+       || (chan->freq >> 16) < 8)
       return 0;
 
    chan->phaseacc -= (float) info->apu_incsize; /* # of cycles per sample */
@@ -201,19 +301,29 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
    while (chan->phaseacc < 0)
    {
       chan->phaseacc += (chan->freq >> 16);
-      chan->adder = (chan->adder + 1) & 0x0F;
+      chan->adder = (chan->adder - 1) & 0x0F;
    }
 
    if (chan->regs[0] & 0x10) /* fixed volume */
       output = chan->regs[0] & 0x0F;
-   else
-      output = 0x0F - chan->env_vol;
+   else {
+	   if (chan->env_vol > 0xf) output = 0;
+	   else
+		   output = 0x0f - (chan->env_vol&0xf);
+   }
 
-   if (chan->adder < (duty_lut[chan->regs[0] >> 6]))
-      output = -output;
+   if (env_starting) chan->env_vol = 0;
+
+   if (pulse_dty[(chan->regs[0] & 0xc0) >> 6][chan->adder >> 1] == 0)
+	   output = 0;
 
    return (int8) output;
 }
+
+static const UINT8 tri_steps[0x20] = { // 15 - 0, 0 - 15
+	15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+};
 
 /* OUTPUT TRIANGLE WAVE SAMPLE (VALUES FROM -16 to +15) */
 static int8 apu_triangle(struct nesapu_info *info, triangle_t *chan)
@@ -226,7 +336,7 @@ static int8 apu_triangle(struct nesapu_info *info, triangle_t *chan)
    */
 
    if (false == chan->enabled)
-      return 0;
+      return chan->output_vol;
 
    if (false == chan->counter_started && 0 == (chan->regs[0] & 0x80))
    {
@@ -244,28 +354,31 @@ static int8 apu_triangle(struct nesapu_info *info, triangle_t *chan)
             chan->vbl_length--;
 
       if (0 == chan->vbl_length)
-         return 0;
+         return chan->output_vol;
    }
 
    if (0 == chan->linear_length)
-      return 0;
+      return chan->output_vol;
 
-   freq = (((chan->regs[3] & 7) << 8) + chan->regs[2]) + 1;
+   freq = (((chan->regs[3] & 7) << 8) + chan->regs[2]);// + 1;
 
-   if (freq < 4) /* inaudible */
-      return 0;
+   if ((freq > 1 && freq <= 0x7fd) == 0) /* inaudible */
+      return chan->output_vol;
 
    chan->phaseacc -= (float) info->apu_incsize; /* # of cycles per sample */
    while (chan->phaseacc < 0)
    {
-      chan->phaseacc += freq;
-      chan->adder = (chan->adder + 1) & 0x1F;
+	   chan->phaseacc += freq;
+	   chan->adder = (chan->adder + 1) & 0x1F;
 
-      output = (chan->adder & 7) << 1;
+	   output = tri_steps[chan->adder];
+#if 0
+	  output = (chan->adder & 7) << 1;
       if (chan->adder & 8)
          output = 0x10 - output;
       if (chan->adder & 0x10)
-         output = -output;
+		  output = -output;
+#endif
 
       chan->output_vol = output;
    }
@@ -328,90 +441,89 @@ static int8 apu_noise(struct nesapu_info *info, noise_t *chan)
    if (chan->regs[0] & 0x10) /* fixed volume */
       outvol = chan->regs[0] & 0x0F;
    else
-      outvol = 0x0F - chan->env_vol;
+	   outvol = 0x0F - chan->env_vol;
 
-   output = info->noise_lut[chan->cur_pos];
+   output = info->noise_lut[chan->cur_pos] & 0xf;
    if (output > outvol)
       output = outvol;
-
-   if (info->noise_lut[chan->cur_pos] & 0x80) /* make it negative */
-      output = -output;
 
    return (int8) output;
 }
 
-/* RESET DPCM PARAMETERS */
+static void apu_update(struct nesapu_info *info);
+
+// parts from dink's unfinished nes-apu
 static inline void apu_dpcmreset(dpcm_t *chan)
 {
-   chan->address = 0xC000 + (uint16) (chan->regs[2] << 6);
-   chan->length = (uint16) (chan->regs[3] << 4) + 1;
-   chan->bits_left = chan->length << 3;
-   chan->irq_occurred = false;
-   chan->enabled = TRUE; /* Fixed * Proper DPCM channel ENABLE/DISABLE flag behaviour*/
-   chan->vol = 0; /* Fixed * DPCM DAC resets itself when restarted */
+	chan->address = 0xC000 + (uint16) (chan->regs[2] << 6);
+	chan->length = (uint16) (chan->regs[3] << 4) + 1;
 }
 
-/* OUTPUT DPCM WAVE SAMPLE (VALUES FROM -64 to +63) */
-/* TODO: centerline naughtiness */
+static INT32 apu_dpcm_loadbyte(dpcm_t *chan)
+{
+	if (chan->dmc_buffer_filled) return 0;
+	M6502Stall(4);
+
+	chan->dmc_buffer = M6502ReadByte(chan->address);
+	chan->dmc_buffer_filled = 1;
+
+	chan->address++;
+	chan->length--;
+
+	if (chan->length == 0)
+	{
+		if (chan->regs[0] & 0x40) {
+			apu_dpcmreset(chan);
+		} else {
+			if (chan->regs[0] & 0x80) {
+				chan->irq_occurred = TRUE;
+				M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			}
+		}
+	}
+
+	return 0;
+}
+
 static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan)
 {
-   INT32 freq, bit_pos;
+   INT32 freq = dpcm_clocks[chan->regs[0] & 0x0F];
+   chan->phaseacc--; // 1-cycle per
 
-   /* reg0: 7=irq gen, 6=looping, 3-0=pointer to clock table
-   ** reg1: output dc level, 7 bits unsigned
-   ** reg2: 8 bits of 64-byte aligned address offset : $C000 + (value * 64)
-   ** reg3: length, (value * 16) + 1
-   */
+   while (chan->phaseacc < 0) {
+	   chan->phaseacc += freq;
 
-   if (chan->enabled)
-   {
-      freq = dpcm_clocks[chan->regs[0] & 0x0F];
-      chan->phaseacc -= (float) info->apu_incsize; /* # of cycles per sample */
+	   if (chan->enabled) {
+		   if (chan->cur_byte & 1) {
+			   if (chan->vol < (0x7f - 2))
+				   chan->vol += 2;
+		   } else {
+			   if (chan->vol > 0)
+				   chan->vol -= 2;
+		   }
+		   chan->cur_byte >>= 1;
+	   }
 
-      while (chan->phaseacc < 0)
-      {
-         chan->phaseacc += freq;
+	   chan->bits_left--;
 
-         if (0 == chan->length)
-         {
-            chan->enabled = false; /* Fixed * Proper DPCM channel ENABLE/DISABLE flag behaviour*/
-            chan->vol=0; /* Fixed * DPCM DAC resets itself when restarted */
-            if (chan->regs[0] & 0x40)
-               apu_dpcmreset(chan);
-            else
-            {
-               if (chan->regs[0] & 0x80) /* IRQ Generator */
-               {
-                  chan->irq_occurred = TRUE;
-                 n2a03_irq();
-               }
-               break;
-            }
-         }
+	   if (chan->bits_left == 0) {
+		   chan->bits_left = 8;
 
-
-         chan->bits_left--;
-         bit_pos = 7 - (chan->bits_left & 7);
-         if (7 == bit_pos)
-         {
-            chan->cur_byte = M6502ReadByte(chan->address); //memory_read_byte(info->APU.dpcm.memory, chan->address);
-            chan->address++;
-            chan->length--;
-         }
-
-         if (chan->cur_byte & (1 << bit_pos))
-//            chan->regs[1]++;
-            chan->vol+=2; /* FIXED * DPCM channel only uses the upper 6 bits of the DAC */
-         else
-//            chan->regs[1]--;
-            chan->vol-=2;
-      }
+		   chan->enabled = chan->dmc_buffer_filled;
+		   if (chan->enabled) {
+			   chan->cur_byte = chan->dmc_buffer;
+			   chan->dmc_buffer_filled = 0;
+		   }
+		   if (chan->length > 0) {
+			   apu_dpcm_loadbyte(chan);
+		   }
+	   }
    }
 
-   if (chan->vol > 63)
-      chan->vol = 63;
-   else if (chan->vol < -64)
-      chan->vol = -64;
+   if (chan->vol >= 0x7f)
+	   chan->vol = 0x7f;
+   else
+	   if (chan->vol < 0) chan->vol = 0;
 
    return (int8) (chan->vol);
 }
@@ -420,37 +532,52 @@ static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan)
 static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 value)
 {
    INT32 chan = (address & 4) ? 1 : 0;
+   if (address & 0x80) {
+	   chan |= 2; // 2x mmc5 square channels -dink
+   }
 
    switch (address)
    {
    /* squares */
-   case APU_WRA0:
+   case APU_WRA0:         // nesapu
    case APU_WRB0:
+   case APU_WRA0|0x80:    // mmc5
+   case APU_WRB0|0x80:
       info->APU.squ[chan].regs[0] = value;
-      break;
+	  //if (chan==1) bprintf(0, _T("sq1.r0: %X\n"), value);
+	  break;
 
-   case APU_WRA1:
+   case APU_WRA1:         // nesapu
    case APU_WRB1:
+   case APU_WRA1|0x80:    // mmc5
+   case APU_WRB1|0x80:
       info->APU.squ[chan].regs[1] = value;
+	  //if (chan==1) bprintf(0, _T("sq1.r1: %X\n"), value);
       break;
 
-   case APU_WRA2:
+   case APU_WRA2:         // nesapu
    case APU_WRB2:
+   case APU_WRA2|0x80:    // mmc5
+   case APU_WRB2|0x80:
       info->APU.squ[chan].regs[2] = value;
       if (info->APU.squ[chan].enabled)
          info->APU.squ[chan].freq = ((((info->APU.squ[chan].regs[3] & 7) << 8) + value) + 1) << 16;
+	  //if (chan==1) bprintf(0, _T("sq1.r2: %X      enabled %x\n"), value, info->APU.squ[chan].enabled);
       break;
 
-   case APU_WRA3:
+   case APU_WRA3:         // nesapu
    case APU_WRB3:
+   case APU_WRA3|0x80:    // mmc5
+   case APU_WRB3|0x80:
       info->APU.squ[chan].regs[3] = value;
+	  //if (chan==1) bprintf(0, _T("sq1.r3: %X      enabled %x\n"), value, info->APU.squ[chan].enabled);
 
       if (info->APU.squ[chan].enabled)
       {
-         info->APU.squ[chan].vbl_length = info->vbl_times[value >> 3];
-         info->APU.squ[chan].env_vol = 0;
-         info->APU.squ[chan].freq = ((((value & 7) << 8) + info->APU.squ[chan].regs[2]) + 1) << 16;
-      }
+		  info->APU.squ[chan].vbl_length = info->vbl_times[value >> 3];
+		  info->APU.squ[chan].env_vol = 0xd0; // env-delay startup (8 clocks). (click reduction, testcase: smb world 1-2)
+		  info->APU.squ[chan].freq = ((((value & 7) << 8) + info->APU.squ[chan].regs[2]) + 1) << 16;
+	  }
 
       break;
 
@@ -525,36 +652,63 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
       if (info->APU.noi.enabled)
       {
          info->APU.noi.vbl_length = info->vbl_times[value >> 3];
-         info->APU.noi.env_vol = 0; /* reset envelope */
-      }
+         info->APU.noi.env_vol = 0x0; /* reset envelope */
+		 // reset phase for env -dink (fixes clicks in Eggerland FDS title music)
+		 info->APU.noi.env_phase = info->sync_times1[info->APU.noi.regs[0] & 0x0F];
+	  }
       break;
 
    /* DMC */
    case APU_WRE0:
       info->APU.dpcm.regs[0] = value;
-      if (0 == (value & 0x80))
-         info->APU.dpcm.irq_occurred = false;
+	  if (0 == (value & 0x80)) {
+		  M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+		  info->APU.dpcm.irq_occurred = false;
+	  }
       break;
 
    case APU_WRE1: /* 7-bit DAC */
-      //info->APU.dpcm.regs[1] = value - 0x40;
       info->APU.dpcm.regs[1] = value & 0x7F;
-      info->APU.dpcm.vol = (info->APU.dpcm.regs[1]-64);
+	  info->APU.dpcm.vol = info->APU.dpcm.regs[1];
       break;
 
    case APU_WRE2:
-      info->APU.dpcm.regs[2] = value;
-      //apu_dpcmreset(info->APU.dpcm);
+	   info->APU.dpcm.regs[2] = value;
       break;
 
    case APU_WRE3:
-      info->APU.dpcm.regs[3] = value;
+	   info->APU.dpcm.regs[3] = value;
       break;
 
-   case APU_IRQCTRL:
-   	break;
+   case APU_IRQCTRL: // 0x4017
+	   mode4017 = value;
+	   step4017 = 1;
+	   clocky = 14915;
 
-   case APU_SMASK:
+	   M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+	   frame_irq_flag = 0;
+
+	   break;
+
+   case APU_SMASK|0x80: // 0x4015 FOR MMC5 -dink
+      if (value & 0x01)
+         info->APU.squ[2].enabled = TRUE;
+      else
+      {
+         info->APU.squ[2].enabled = false;
+         info->APU.squ[2].vbl_length = 0;
+      }
+
+	  if (value & 0x02)
+		  info->APU.squ[3].enabled = TRUE;
+	  else
+      {
+         info->APU.squ[3].enabled = false;
+         info->APU.squ[3].vbl_length = 0;
+	  }
+	  break;
+
+   case APU_SMASK: // 0x4015
       if (value & 0x01)
          info->APU.squ[0].enabled = TRUE;
       else
@@ -563,9 +717,9 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
          info->APU.squ[0].vbl_length = 0;
       }
 
-      if (value & 0x02)
-         info->APU.squ[1].enabled = TRUE;
-      else
+	  if (value & 0x02)
+		  info->APU.squ[1].enabled = TRUE;
+	  else
       {
          info->APU.squ[1].enabled = false;
          info->APU.squ[1].vbl_length = 0;
@@ -590,21 +744,26 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
          info->APU.noi.vbl_length = 0;
       }
 
+	  info->APU.dpcm.irq_occurred = false;
+	  M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+
       if (value & 0x10)
       {
-         /* only reset dpcm values if DMA is finished */
-         if (false == info->APU.dpcm.enabled)
-         {
-            info->APU.dpcm.enabled = TRUE;
-            apu_dpcmreset(&info->APU.dpcm);
-         }
-      }
-      else
-         info->APU.dpcm.enabled = false;
+		  /* only reset dpcm values if DMA is finished */
+		  if (0 == info->APU.dpcm.length)
+		  {
+			  //bprintf(0, _T("dmc START. (scanline %d)\n"), nes_scanline());
+			  apu_dpcmreset(&info->APU.dpcm);
+			  if (info->APU.dpcm.dmc_buffer_filled == 0) {
+				  apu_dpcm_loadbyte(&info->APU.dpcm);
+			  }
+		  }
+	  } else {
+		  //bprintf(0, _T("dmc STOP. (scanline %d)\n"), nes_scanline());
+		  info->APU.dpcm.length = 0;
+	  }
 
-      info->APU.dpcm.irq_occurred = false;
-
-      break;
+	  break;
    default:
 #ifdef MAME_DEBUG
 logerror("invalid apu write: $%02X at $%04X\n", value, address);
@@ -614,9 +773,9 @@ logerror("invalid apu write: $%02X at $%04X\n", value, address);
 }
 
 /* UPDATE SOUND BUFFER USING CURRENT DATA */
-static inline void apu_update(struct nesapu_info *info)
+static void apu_update(struct nesapu_info *info)
 {
-   INT32 accum;
+	INT32 square1, square2, square3, square4;
 
 //------------------------------------------------------------------------------------------------------
 	if (info->pSyncCallback == NULL) return;
@@ -632,88 +791,46 @@ static inline void apu_update(struct nesapu_info *info)
 	if (position > info->samples_per_frame) position = info->samples_per_frame;
 	if (position == info->current_position) return;
 
-	INT16 *buffer16 = info->stream + info->current_position;
+	INT16 *buffer16 = info->stream + 5 + info->current_position;
 
 	INT32 samples = position - info->current_position;
-
+	INT32 startpos = (info->current_position > 1) ? (info->current_position - 2) : 0;
 	info->current_position = position;
 
 	if (samples <= 0) return;
 //------------------------------------------------------------------------------------------------------
 
-   while (samples--)
-   {
-      accum = apu_square(info, &info->APU.squ[0]);
-      accum += apu_square(info, &info->APU.squ[1]);
-      accum += apu_triangle(info, &info->APU.tri);
-      accum += apu_noise(info, &info->APU.noi);
-      accum += apu_dpcm(info, &info->APU.dpcm);
-
-      /* 8-bit clamps */
-      if (accum > 127)
-         accum = 127;
-      else if (accum < -128)
-         accum = -128;
-
-      *(buffer16++)=accum<<8;
-   }
-}
-
-/* READ VALUES FROM REGISTERS */
-UINT8 nesapuRead(INT32 chip, INT32 address)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuRead called without init\n"));
-#endif
-
-	struct nesapu_info *info = &nesapu_chips[chip];
-	if (address == 0x0f) /*FIXED* Address $4015 has different behaviour*/
+	for (INT32 i = 0; i < samples; i++)
 	{
-		INT32 readval = 0;
-		if (info->APU.squ[0].vbl_length > 0)
-			readval |= 0x01;
+		square1 = apu_square(info, &info->APU.squ[0]);
+		square2 = apu_square(info, &info->APU.squ[1]);
+		square3 = apu_square(info, &info->APU.squ[2]); // mmc5
+		square4 = apu_square(info, &info->APU.squ[3]); // mmc5
+		INT32 triangle = apu_triangle(info, &info->APU.tri);
+		INT32 noise = apu_noise(info, &info->APU.noi);
 
-		if (info->APU.squ[1].vbl_length > 0)
-			readval |= 0x02;
+		//DINKNOTES:
+		// Super Mario Bros.
+		//  clicks in square channels is _normal_ (aka: not a bug)
+		//  slight/faint buzz when level starts is _normal_ (aka: not a bug)
 
-		if (info->APU.tri.vbl_length > 0)
-			readval |= 0x04;
+		// mix new dmc engine (29781 samples/frame) with the rest  MIXER
+		INT32 dmcoffs = (29781 * (startpos + i)) / info->samps_per_sync;
+		INT32 dmc = dmc_buffer[dmcoffs];
+		INT32 ext = nes_ext_buffer[dmcoffs];
 
-		if (info->APU.noi.vbl_length > 0)
-			readval |= 0x08;
+		INT32 out = (INT32)(((float)info->tnd_table[3*triangle + 2*noise + dmc] +
+							  info->square_table[square1 + square2] + info->square_table[square3 + square4]) * 0x2fff);
 
-		if (info->APU.dpcm.enabled == TRUE)
-			readval |= 0x10;
+		if (~nesapu_mixermode & MIXER_APU) out = 0;
+		if (~nesapu_mixermode & MIXER_EXT) ext = 0;
 
-		if (info->APU.dpcm.irq_occurred == TRUE)
-			readval |= 0x80;
-
-		return readval;
-	} else {
-		return info->APU.regs[address];
+		*(buffer16++) = BURN_SND_CLIP(out + ext);
 	}
 }
 
-/* WRITE VALUE TO TEMP REGISTRY AND QUEUE EVENT */
-void nesapuWrite(INT32 chip, INT32 address, UINT8 value)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuWrite called without init\n"));
-#endif
-
-	struct nesapu_info *info = &nesapu_chips[chip]; //sndti_token(SOUND_NES, chip);
-
-	if (address > 0x17) return;
-
-	info->APU.regs[address]=value;
-	apu_update(info);
-	apu_regwrite(info,address,value);
-}
-
-/* EXTERNAL INTERFACE FUNCTIONS */
-
 /* UPDATE APU SYSTEM */
-void nesapuUpdate(INT32 chip, INT16 *buf, INT32 samples)
+void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuUpdate called without init\n"));
@@ -730,50 +847,129 @@ void nesapuUpdate(INT32 chip, INT16 *buf, INT32 samples)
 	apu_update(info);
 
 	INT32 nAdd = info->bAdd;
-	INT16 *stream = info->stream;
 
-	UINT32 step = (info->samples_per_frame << 12) / nBurnSoundLen;
-	INT32 pos = 0;
+	INT32 nSamplesNeeded = info->samples_per_frame;
+	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition below
 
-	for (INT32 i = 0; i < samples; i++) {
-		if ((pos>>12) >= info->samples_per_frame) pos = (info->samples_per_frame-1) << 12;
+	INT16 *pBufL = info->stream + 5;
 
-		INT16 output = stream[pos>>12];
+	for (INT32 i = (info->nFractionalPosition & 0xFFFF0000) >> 15; i < (samples << 1); i += 2, info->nFractionalPosition += info->nSampleSize) {
+		INT32 nLeftSample[4] = {0, 0, 0, 0};
+		INT32 nTotalLeftSample; // it's mono!
 
-		/* write sound data to the buffer */
-		INT32 nLeftSample = 0, nRightSample = 0;
-			
-		if ((info->output_dir[BURN_SND_NESAPU_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)((output / 6) * info->gain[BURN_SND_NESAPU_ROUTE_1]);
-		}
-		if ((info->output_dir[BURN_SND_NESAPU_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)((output / 6) * info->gain[BURN_SND_NESAPU_ROUTE_1]);
-		}
-		if ((info->output_dir[BURN_SND_NESAPU_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)((output / 6) * info->gain[BURN_SND_NESAPU_ROUTE_2]);
-		}
-		if ((info->output_dir[BURN_SND_NESAPU_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)((output / 6) * info->gain[BURN_SND_NESAPU_ROUTE_2]);
-		}
-		
-		nLeftSample = BURN_SND_CLIP(nLeftSample);
-		nRightSample = BURN_SND_CLIP(nRightSample);
-		
-		if (nAdd) {	
-			buf[LEFT] += nLeftSample;
-			buf[RIGHT] += nRightSample;
+		nLeftSample[0] += (INT32)(pBufL[(info->nFractionalPosition >> 16) - 3]);
+		nLeftSample[1] += (INT32)(pBufL[(info->nFractionalPosition >> 16) - 2]);
+		nLeftSample[2] += (INT32)(pBufL[(info->nFractionalPosition >> 16) - 1]);
+		nLeftSample[3] += (INT32)(pBufL[(info->nFractionalPosition >> 16) - 0]);
+
+		nTotalLeftSample  = INTERPOLATE4PS_16BIT((info->nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * info->gain[BURN_SND_NESAPU_ROUTE_1]);
+
+		if (nAdd) {
+			buffer[i + 0] = BURN_SND_CLIP(buffer[i + 0] + nTotalLeftSample);
+			buffer[i + 1] = BURN_SND_CLIP(buffer[i + 1] + nTotalLeftSample);
 		} else {
-			buf[LEFT] = nLeftSample;
-			buf[RIGHT] = nRightSample;
+			buffer[i + 0] = BURN_SND_CLIP(nTotalLeftSample);
+			buffer[i + 1] = BURN_SND_CLIP(nTotalLeftSample);
 		}
-
-		buf += 2;
-		pos += step;
 	}
 
-	info->current_position = 0;
-	memset (info->stream, 0, info->samples_per_frame * sizeof(INT16));
+	if (samples >= nBurnSoundLen) {
+		INT32 nExtraSamples = nSamplesNeeded - (info->nFractionalPosition >> 16);
+	   // bprintf(0, _T("extra samples: %d\n"), nExtraSamples);
+		for (INT32 i = -4; i < nExtraSamples; i++) {
+			pBufL[i] = pBufL[(info->nFractionalPosition >> 16) + i];
+		}
+
+		info->nFractionalPosition &= 0xFFFF;
+
+		info->current_position = nExtraSamples;
+	}
 }
+
+/* READ VALUES FROM REGISTERS */
+UINT8 nesapuRead(INT32 chip, INT32 address)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuRead called without init\n"));
+#endif
+
+	struct nesapu_info *info = &nesapu_chips[chip];
+
+	apu_update(info);
+
+	if (address == (0x15|0x80)) // mmc5 pulse channels status -dink
+	{
+		INT32 readval = 0x20;
+		if (info->APU.squ[2].vbl_length > 0)
+			readval |= 0x01;
+
+		if (info->APU.squ[3].vbl_length > 0)
+			readval |= 0x02;
+	}
+
+	if (address == 0x15)
+	{
+		INT32 readval = 0x20; // 0x20 open_bus bit.. not important for now. -dink
+		if (info->APU.squ[0].vbl_length > 0)
+			readval |= 0x01;
+
+		if (info->APU.squ[1].vbl_length > 0)
+			readval |= 0x02;
+
+		if (info->APU.tri.vbl_length > 0)
+			readval |= 0x04;
+
+		if (info->APU.noi.vbl_length > 0)
+			readval |= 0x08;
+
+		if (info->APU.dpcm.length > 0) {
+			//bprintf(0, _T("0x4015 status - dpcm in DMA (len = %d  scanline %d)\n"), info->APU.dpcm.length, nes_scanline());
+			readval |= 0x10;
+		} else {
+			//bprintf(0, _T("0x4015 status: dpcm NOT in DMA. (len = %d  scanline %d)\n"), info->APU.dpcm.length, nes_scanline());
+		}
+
+		if (frame_irq_flag) {
+			readval |= 0x40;
+			frame_irq_flag = 0;
+			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+		}
+
+		if (info->APU.dpcm.irq_occurred == TRUE)
+			readval |= 0x80;
+
+		return readval;
+	} else {
+		return info->APU.regs[address&0x1f];
+	}
+}
+
+// MMC5 2x square: write address | 0x80 -dink (fbn team, november 13)
+
+/* WRITE VALUE TO TEMP REGISTRY AND QUEUE EVENT */
+void nesapuWrite(INT32 chip, INT32 address, UINT8 value)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuWrite called without init\n"));
+#endif
+
+	struct nesapu_info *info = &nesapu_chips[chip]; //sndti_token(SOUND_NES, chip);
+
+	if (address == 0xff) {
+		apu_update(info);
+		return;
+	}
+
+	if ((address & 0x1f) > 0x17) return;
+
+	if (~address&0x80) // only nesapu (not mmc5)
+		info->APU.regs[address]=value;
+	apu_update(info);
+	apu_regwrite(info,address,value);
+}
+
+/* EXTERNAL INTERFACE FUNCTIONS */
 
 void nesapuReset()
 {
@@ -787,60 +983,24 @@ void nesapuReset()
 		info->current_position = 0;
 		info->fill_buffer_hack = 0;
 
-		for (INT32 j = 0; j < 2; j++)
-		{
-			for (INT32 k = 0; k < 4; k++) {
-				info->APU.squ[j].regs[k] = 0;
-			}
-			info->APU.squ[j].vbl_length = 0;
-			info->APU.squ[j].freq = 0;
-			info->APU.squ[j].phaseacc = 0;
-			info->APU.squ[j].output_vol = 0;
-			info->APU.squ[j].env_phase = 0;
-			info->APU.squ[j].sweep_phase = 0;
-			info->APU.squ[j].adder = 0;
-			info->APU.squ[j].env_vol = 0;
-			info->APU.squ[j].enabled = 0;
-		}
+		memset(&info->APU.squ, 0, sizeof(info->APU.squ));
+		memset(&info->APU.tri, 0, sizeof(info->APU.tri));
+		memset(&info->APU.noi, 0, sizeof(info->APU.noi));
+		memset(&info->APU.dpcm, 0, sizeof(info->APU.dpcm));
+		memset(&info->APU.regs, 0, sizeof(info->APU.regs));
 
-		for (INT32 k = 0; k < 4; k++) {
-			info->APU.tri.regs[k] = 0;
-		}
-		info->APU.tri.linear_length = 0;
-		info->APU.tri.vbl_length = 0;
-		info->APU.tri.write_latency = 0;
-		info->APU.tri.phaseacc = 0;
-		info->APU.tri.output_vol = 0;
-		info->APU.tri.adder = 0;
-		info->APU.tri.counter_started = 0;
-		info->APU.tri.enabled = 0;
-		for (INT32 k = 0; k < 4; k++) {
-			info->APU.noi.regs[k] = 0;
-		}
-		info->APU.noi.cur_pos = 0;
-		info->APU.noi.vbl_length = 0;
-		info->APU.noi.phaseacc = 0;
-		info->APU.noi.output_vol = 0;
-		info->APU.noi.env_phase = 0;
-		info->APU.noi.env_vol = 0;
-		info->APU.noi.enabled = 0;
-		for (INT32 k = 0; k < 4; k++) {
-			info->APU.dpcm.regs[k] = 0;
-		}
-		info->APU.dpcm.address = 0;
-		info->APU.dpcm.length = 0;
-		info->APU.dpcm.bits_left = 0;
-		info->APU.dpcm.phaseacc = 0;
-		info->APU.dpcm.output_vol = 0;
-		info->APU.dpcm.cur_byte = 0;
-		info->APU.dpcm.enabled = 0;
-		info->APU.dpcm.irq_occurred = 0;
-		info->APU.dpcm.vol = 0;
-		for (INT32 k = 0; k < 17; k++) {
-			info->APU.regs[k] = 0; 
-		}
-		info->APU.buf_pos = 0;
+		info->APU.dpcm.bits_left = 8;
+
+	    clocky = 0;
+		mode4017 = 0xc0;
+		step4017 = 0;
+		frame_irq_flag = 0;
 	}
+}
+
+void nesapuInit(INT32 chip, INT32 clock, INT32 bAdd)
+{
+	nesapuInit(chip, clock, nes_nesapu_sync, bAdd);
 }
 
 /* INITIALIZE APU SYSTEM */
@@ -849,32 +1009,43 @@ void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_p
 	DebugSnd_NESAPUSndInitted = 1;
 
 	struct nesapu_info *info = &nesapu_chips[chip];
-	INT32 rate = clock / 4;
 
 	memset(info, 0, sizeof(nesapu_info));
 
 	/* Initialize global variables */
-	info->samps_per_sync = (rate * 100) / nBurnFPS;
+	info->samps_per_sync = 7457; //(rate * 100) / nBurnFPS;
 	info->buffer_size = info->samps_per_sync;
 	info->real_rate = (info->samps_per_sync * nBurnFPS) / 100;
 	info->apu_incsize = (float) (clock / (float) info->real_rate);
+	//bprintf(0, _T("apu_incsize: %f\n"), info->apu_incsize);
 
 	/* Use initializer calls */
 	create_noise(info->noise_lut, 13, NOISE_LONG);
 	create_vbltimes(info->vbl_times,vbl_length,info->samps_per_sync);
 	create_syncs(info, info->samps_per_sync);
+	create_tndtab(info->tnd_table);
+	create_squaretab(info->square_table);
 
 	/* Adjust buffer size if 16 bits */
 	info->buffer_size+=info->samps_per_sync;
 
-	info->samples_per_frame = (clock * 100) / 4 / nBurnFPS;
+	info->samples_per_frame = ((info->real_rate * 100) / nBurnFPS) + 1;
+
+	info->nSampleSize = (UINT64)info->real_rate * (1 << 16) / nBurnSoundRate;
+
+	info->nFractionalPosition = 0;
 
 	info->pSyncCallback = pSyncCallback;
 
 	info->bAdd = bAdd;
 
+	dmc_buffer = (UINT8*)BurnMalloc((29781 + 5) * 2);
+	nes_ext_buffer = (INT16*)BurnMalloc((29781 + 5) * 2 * 2);
+	nes_ext_sound_cb = NULL;
+	nesapu_mixermode = 0xff; // enable all
+
 	info->stream = NULL;
-	info->stream = (INT16*)BurnMalloc(info->samples_per_frame * 2 * sizeof(INT16));
+	info->stream = (INT16*)BurnMalloc(info->samples_per_frame * 2 * sizeof(INT16) + 0x10);
 	info->gain[BURN_SND_NESAPU_ROUTE_1] = 1.00;
 	info->gain[BURN_SND_NESAPU_ROUTE_2] = 1.00;
 	info->output_dir[BURN_SND_NESAPU_ROUTE_1] = BURN_SND_ROUTE_BOTH;
@@ -908,7 +1079,11 @@ void nesapuExit()
 		if (info->stream)
 			BurnFree(info->stream);
 	}
-	
+
+	BurnFree(dmc_buffer);
+	BurnFree(nes_ext_buffer);
+	nes_ext_sound_cb = NULL;
+
 	DebugSnd_NESAPUSndInitted = 0;
 }
 
@@ -929,7 +1104,12 @@ void nesapuScan(INT32 nAction, INT32 *)
 			SCAN_VAR(info->APU.noi);
 			SCAN_VAR(info->APU.dpcm);
 			SCAN_VAR(info->APU.regs);
-			SCAN_VAR(info->APU.buf_pos);
 		}
+
+		// frame-irq stuff
+		SCAN_VAR(frame_irq_flag);
+		SCAN_VAR(mode4017);
+		SCAN_VAR(step4017);
+		SCAN_VAR(clocky);
 	}
 }

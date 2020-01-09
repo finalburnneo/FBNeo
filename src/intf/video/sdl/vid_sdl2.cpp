@@ -132,13 +132,14 @@ static int Init()
 		return 1;
 	}
 
-	nVidImageDepth = bDrvOkay ? 16 : 32;
+	nVidImageDepth = 32;
 
 	if (BurnDrvGetFlags() & BDF_16BIT_ONLY)
 	{
 		nVidImageDepth = 16;
 		printf("Forcing 16bit color\n");
 	}
+	printf("bbp: %d\n", nVidImageDepth);
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, videofiltering);
 	// SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE);   // Probably best not turn this on

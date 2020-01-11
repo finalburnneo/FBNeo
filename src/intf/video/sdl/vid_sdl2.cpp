@@ -14,6 +14,7 @@ static SDL_Texture* sdlTexture = NULL;
 
 static int  nRotateGame = 0;
 static bool bFlipped = false;
+static SDL_Rect dstrect;
 
 void RenderMessage()
 {
@@ -100,14 +101,34 @@ static int Init()
 		screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP;
 	}
 
-	sdlWindow = SDL_CreateWindow(
-		title,
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		display_w*nScale,
-		display_h*nScale,
-		screenFlags
-	);
+	if (nRotateGame)
+	{
+		sdlWindow = SDL_CreateWindow(
+			title,
+			SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED,
+			display_h*nScale,
+			display_w*nScale,
+			screenFlags
+		);
+
+	}
+	else
+	{
+		sdlWindow = SDL_CreateWindow(
+			title,
+			SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED,
+			display_w*nScale,
+			display_h*nScale,
+			screenFlags
+		);
+	}
+
+	dstrect.y = (display_w - display_h) / 2 - 1;
+	dstrect.x = (display_h - display_w) / 2;
+	dstrect.h = display_h;
+	dstrect.w = display_w;
 
 	// Check that the window was successfully created
 	if (sdlWindow == NULL)
@@ -132,20 +153,21 @@ static int Init()
 		return 1;
 	}
 
-	nVidImageDepth = bDrvOkay ? 16 : 32;
+	nVidImageDepth = 32;
 
 	if (BurnDrvGetFlags() & BDF_16BIT_ONLY)
 	{
 		nVidImageDepth = 16;
 		printf("Forcing 16bit color\n");
 	}
+	printf("bbp: %d\n", nVidImageDepth);
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, videofiltering);
 	// SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE);   // Probably best not turn this on
-
+	printf("setting logical size w: %d h: %d", display_w, display_h);
 	if (nRotateGame)
 	{
-		SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_w);
+		SDL_RenderSetLogicalSize(sdlRenderer, display_h, display_w);
 	}
 	else
 	{
@@ -254,11 +276,11 @@ static int Paint(int bValidate)
 		SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
 		if (nRotateGame && bFlipped)
 		{
-			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 90, NULL, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, 90, NULL, SDL_FLIP_NONE);
 		}
 		if (nRotateGame && !bFlipped)
 		{
-			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, NULL, 270, NULL, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, 270, NULL, SDL_FLIP_NONE);
 		}
 	}
 	else

@@ -12,6 +12,7 @@ static int nInitedSubsytems = 0;
 static SDL_Joystick* JoyList[MAX_JOYSTICKS];
 static int* JoyPrevAxes = NULL;
 static int nJoystickCount = 0;						// Number of joysticks connected to this machine
+int buttons [4][8]= { -1 }; // 4 joysticks buttons 0 -5 and start / select
 
 void setup_kemaps(void)
 {
@@ -269,7 +270,37 @@ void setup_kemaps(void)
 // Sets up one Joystick (for example the range of the joystick's axes)
 static int SDLinpJoystickInit(int i)
 {
-	JoyList[i] = SDL_JoystickOpen(i);
+   SDL_GameController *temp;
+	SDL_GameControllerButtonBind bind;
+   JoyList[i] = SDL_JoystickOpen(i);
+   temp = SDL_GameControllerOpen(i);
+   bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_A );
+   
+   bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_A );
+   buttons[i][0] = bind.value.button;
+
+   bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_B);
+   buttons[i][1] = bind.value.button;
+
+   bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_X );
+   buttons[i][2] = bind.value.button;
+   
+   bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_Y);
+   buttons[i][3] = bind.value.button;
+
+   bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_LEFTSHOULDER  );
+   buttons[i][4] = bind.value.button;
+
+   bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER );
+   buttons[i][5] = bind.value.button;
+
+   bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_BACK   );
+   buttons[i][6] = bind.value.button;
+
+   bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_START  );
+   buttons[i][7] = bind.value.button;
+
+
 	return 0;
 }
 

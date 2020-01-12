@@ -186,9 +186,53 @@ INT32 Mapcoins(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice)
          if (buttons[nDevice][nButton] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]);  
 		}
 		break;
+	case 2:
+		if (strcmp(szi, "p3 coin" ) == 0 )
+		{
+         if ( buttons[nDevice][6] != -1) KEY(nJoyBase + 0x80 +  buttons[nDevice][6]);
+         return 0;
+		}
+		if (strcmp(szi, "p3 start") == 0 )
+		{
+         if ( buttons[nDevice][7] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][7]);
+         return 0;
+		}
 
+		if (strncmp(szi, "p3 fire ", 7) == 0)
+		{
+			char* szb = szi + 7;
+			INT32 nButton = strtol(szb, NULL, 0);
+			if (nButton >= 1)
+			{
+				nButton--;
+			}
+         if (buttons[nDevice][nButton] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]);  
+		}
+		break;
+	case 3:
+		if (strcmp(szi, "p4 coin" ) == 0 )
+		{
+         if ( buttons[nDevice][6] != -1) KEY(nJoyBase + 0x80 +  buttons[nDevice][6]);
+         return 0;
+		}
+		if (strcmp(szi, "p4 start") == 0 )
+		{
+         if ( buttons[nDevice][7] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][7]);
+         return 0;
+		}
+
+		if (strncmp(szi, "p4 fire ", 7) == 0)
+		{
+			char* szb = szi + 7;
+			INT32 nButton = strtol(szb, NULL, 0);
+			if (nButton >= 1)
+			{
+				nButton--;
+			}
+         if (buttons[nDevice][nButton] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]);  
+		}
+		break;
 	}
-
 	return 0;
 }
 

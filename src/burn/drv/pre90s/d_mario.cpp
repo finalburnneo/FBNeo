@@ -378,6 +378,8 @@ static INT32 DrvDoReset()
 	BurnSampleReset();
 	AY8910Reset(0);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -896,7 +898,7 @@ struct BurnDriver BurnDrvMario = {
 	"mario", NULL, NULL, "mario", "1983",
 	"Mario Bros. (US, Revision G)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, marioRomInfo, marioRomName, NULL, NULL, MarioSampleInfo, MarioSampleName, MarioInputInfo, MarioDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -935,7 +937,7 @@ struct BurnDriver BurnDrvMariof = {
 	"mariof", "mario", NULL, "mario", "1983",
 	"Mario Bros. (US, Revision F)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, mariofRomInfo, mariofRomName, NULL, NULL, MarioSampleInfo, MarioSampleName, MarioInputInfo, MariofDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -974,7 +976,7 @@ struct BurnDriver BurnDrvMarioe = {
 	"marioe", "mario", NULL, "mario", "1983",
 	"Mario Bros. (US, Revision E)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, marioeRomInfo, marioeRomName, NULL, NULL, MarioSampleInfo, MarioSampleName, MarioInputInfo, MarioDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -1052,7 +1054,7 @@ struct BurnDriver BurnDrvMarioj = {
 	"marioj", "mario", NULL, "mario", "1983",
 	"Mario Bros. (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, mariojRomInfo, mariojRomName, NULL, NULL, MarioSampleInfo, MarioSampleName, MarioInputInfo, MariojDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -1095,7 +1097,7 @@ struct BurnDriver BurnDrvMasao = {
 	"masao", "mario", NULL, "mario", "1983",
 	"Masao\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, masaoRomInfo, masaoRomName, NULL, NULL, MarioSampleInfo, MarioSampleName, MariooInputInfo, MarioDIPInfo,
 	DrvInitmasao, DrvExit, MasaoFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3

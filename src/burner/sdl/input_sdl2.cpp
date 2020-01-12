@@ -158,9 +158,17 @@ INT32 Mapcoins(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice)
          {
             nButton--;
          }
-         if (buttons[nDevice][nButton] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]);
-         //			if (bStreetFighterLayout) KEY(nJoyBase + 0x80 + capcom6Layout[nButton]);
-         //			if (!bStreetFighterLayout && usebarcade)  KEY(nJoyBase + 0x80 + barcade_Layout[nButton])
+         if (buttons[nDevice][nButton] != -1 && !bStreetFighterLayout) { KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]); }
+         else if (buttons[nDevice][nButton] != -1 && bStreetFighterLayout)
+         {
+            if (nButton == 0) KEY(nJoyBase + 0x80 + buttons[nDevice][2]);
+            if (nButton == 1) KEY(nJoyBase + 0x80 + buttons[nDevice][3]);
+            if (nButton == 2) KEY(nJoyBase + 0x80 + buttons[nDevice][4]);
+            if (nButton == 3) KEY(nJoyBase + 0x80 + buttons[nDevice][0]);
+            if (nButton == 4) KEY(nJoyBase + 0x80 + buttons[nDevice][1]);
+            if (nButton == 5) KEY(nJoyBase + 0x80 + buttons[nDevice][5]);
+         }
+         else KEY(nJoyBase + 0x80 + nButton); // joystick not mapped or isint plugged  use fba default settings
       }
       break;
    case 1:
@@ -183,7 +191,17 @@ INT32 Mapcoins(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice)
          {
             nButton--;
          }
-         if (buttons[nDevice][nButton] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]);
+         if (buttons[nDevice][nButton] != -1 && !bStreetFighterLayout) { KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]); }
+         else if (buttons[nDevice][nButton] != -1 && bStreetFighterLayout)
+         {
+            if (nButton == 0) KEY(nJoyBase + 0x80 + buttons[nDevice][2]);
+            if (nButton == 1) KEY(nJoyBase + 0x80 + buttons[nDevice][3]);
+            if (nButton == 2) KEY(nJoyBase + 0x80 + buttons[nDevice][4]);
+            if (nButton == 3) KEY(nJoyBase + 0x80 + buttons[nDevice][0]);
+            if (nButton == 4) KEY(nJoyBase + 0x80 + buttons[nDevice][1]);
+            if (nButton == 5) KEY(nJoyBase + 0x80 + buttons[nDevice][5]);
+         }
+         else KEY(nJoyBase + 0x80 + nButton); // joystick not mapped or isint plugged  use fba default settings
       }
       break;
    case 2:
@@ -206,7 +224,17 @@ INT32 Mapcoins(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice)
          {
             nButton--;
          }
-         if (buttons[nDevice][nButton] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]);
+         if (buttons[nDevice][nButton] != -1 && !bStreetFighterLayout) { KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]); }
+         else if (buttons[nDevice][nButton] != -1 && bStreetFighterLayout)
+         {
+            if (nButton == 0) KEY(nJoyBase + 0x80 + buttons[nDevice][2]);
+            if (nButton == 1) KEY(nJoyBase + 0x80 + buttons[nDevice][3]);
+            if (nButton == 2) KEY(nJoyBase + 0x80 + buttons[nDevice][4]);
+            if (nButton == 3) KEY(nJoyBase + 0x80 + buttons[nDevice][0]);
+            if (nButton == 4) KEY(nJoyBase + 0x80 + buttons[nDevice][1]);
+            if (nButton == 5) KEY(nJoyBase + 0x80 + buttons[nDevice][5]);
+         }
+         else KEY(nJoyBase + 0x80 + nButton); // joystick not mapped or isint plugged  use fba default settings
       }
       break;
    case 3:
@@ -229,7 +257,17 @@ INT32 Mapcoins(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice)
          {
             nButton--;
          }
-         if (buttons[nDevice][nButton] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]);
+         if (buttons[nDevice][nButton] != -1 && !bStreetFighterLayout) { KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]); }
+         else if (buttons[nDevice][nButton] != -1 && bStreetFighterLayout)
+         {
+            if (nButton == 0) KEY(nJoyBase + 0x80 + buttons[nDevice][2]);
+            if (nButton == 1) KEY(nJoyBase + 0x80 + buttons[nDevice][3]);
+            if (nButton == 2) KEY(nJoyBase + 0x80 + buttons[nDevice][4]);
+            if (nButton == 3) KEY(nJoyBase + 0x80 + buttons[nDevice][0]);
+            if (nButton == 4) KEY(nJoyBase + 0x80 + buttons[nDevice][1]);
+            if (nButton == 5) KEY(nJoyBase + 0x80 + buttons[nDevice][5]);
+         }
+         else KEY(nJoyBase + 0x80 + nButton); // joystick not mapped or isint plugged  use fba default settings
       }
       break;
    }
@@ -269,7 +307,10 @@ INT32 Init_Joysticks(int p_one_use_joystick)
    }
    else
    {
-      for (int i = 0; i < SDL_NumJoysticks(); ++i)
+      /*init all joysticks (4 max atm) to map or the default will think 
+      p1 is keyboard and p2 p3 p4 is joy 0 1 2 instead of joy 1 2 3 */
+      
+      for (int i = 0; i < 4; ++i)
       {
          GameInpConfig(i, i+1, 1);
       }

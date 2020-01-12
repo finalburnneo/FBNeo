@@ -7,7 +7,7 @@
 //static int GameInpConfig(int nPlayer, int nPcDev, int nAnalog);
 static void GameInpConfigOne(int nPlayer, int nPcDev, int nAnalog, struct GameInp* pgi, char* szi);
 //INT32 display_set_controls();
-INT32 Mapcoins(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice);
+INT32 MapJoystick(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice);
 extern int buttons [4][8];
 
 #define KEY(x) { pgi->nInput = GIT_SWITCH; pgi->Input.Switch.nCode = (UINT16)(x); }
@@ -89,19 +89,19 @@ static void GameInpConfigOne(int nPlayer, int nPcDev, int nAnalog, struct GameIn
       GamcPlayer(pgi, szi, nPlayer, -1); // Keyboard
       GamcAnalogKey(pgi, szi, nPlayer, nAnalog);
       GamcMisc(pgi, szi, nPlayer);
-      Mapcoins(pgi, szi, nPlayer, nPcDev);
+      MapJoystick(pgi, szi, nPlayer, nPcDev);
       break;
    case 1:
       GamcPlayer(pgi, szi, nPlayer, 0); // Joystick 1
       GamcAnalogJoy(pgi, szi, nPlayer, 0, nAnalog);
       GamcMisc(pgi, szi, nPlayer);
-      Mapcoins(pgi, szi, nPlayer, nPcDev);
+      MapJoystick(pgi, szi, nPlayer, nPcDev);
       break;
    case 2:
       GamcPlayer(pgi, szi, nPlayer, 1); // Joystick 2
       GamcAnalogJoy(pgi, szi, nPlayer, 1, nAnalog);
       GamcMisc(pgi, szi, nPlayer);
-      Mapcoins(pgi, szi, nPlayer, nPcDev);
+      MapJoystick(pgi, szi, nPlayer, nPcDev);
 
       break;
    case 3:
@@ -128,7 +128,7 @@ static void GameInpConfigOne(int nPlayer, int nPcDev, int nAnalog, struct GameIn
    }
 }
 
-INT32 Mapcoins(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice)
+INT32 MapJoystick(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice)
 {
    INT32 nJoyBase = 0;
    if (nDevice == 0) return 0; // using keyboard for this player

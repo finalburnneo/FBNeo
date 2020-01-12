@@ -271,9 +271,10 @@ INT32 Init_Joysticks(int p_one_use_joystick)
 	}
 	else
 	{
-		/* p1 joy0 , p2 joy1 */
-		GameInpConfig(0, 1, 1);
-		GameInpConfig(1, 2, 1);
+		for (int i = 0; i < SDL_NumJoysticks(); ++i) 
+		{
+		GameInpConfig(i, i+1, 1);
+		}
 	}
 	display_set_controls();
 	return 0;

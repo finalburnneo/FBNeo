@@ -1018,6 +1018,7 @@
 		FEF4EE8423635521004E0DCE /* Emulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF4EE8223635521004E0DCE /* Emulator.xib */; };
 		FEF4EE8723635CA0004E0DCE /* NSWindowController+Core.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF4EE8523635CA0004E0DCE /* NSWindowController+Core.m */; };
 		FEF4EE892363720B004E0DCE /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEF4EE882363720B004E0DCE /* Defaults.plist */; };
+		FEFE604923C7805A00535CE2 /* d_exprraid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEFE604823C7805A00535CE2 /* d_exprraid.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -2554,6 +2555,7 @@
 		FEF4EE8523635CA0004E0DCE /* NSWindowController+Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindowController+Core.m"; sourceTree = "<group>"; };
 		FEF4EE8623635CA0004E0DCE /* NSWindowController+Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindowController+Core.h"; sourceTree = "<group>"; };
 		FEF4EE882363720B004E0DCE /* Defaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
+		FEFE604823C7805A00535CE2 /* d_exprraid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_exprraid.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4223,6 +4225,7 @@
 				FE1B211A23561A6D0065200C /* d_espial.cpp */,
 				FE1B211E23561A6D0065200C /* d_ettrivia.cpp */,
 				FE1B210123561A6D0065200C /* d_exedexes.cpp */,
+				FEFE604823C7805A00535CE2 /* d_exprraid.cpp */,
 				FE1B219323561A6E0065200C /* d_fantland.cpp */,
 				FE1B218223561A6E0065200C /* d_fastfred.cpp */,
 				FE1B212823561A6D0065200C /* d_firetrap.cpp */,
@@ -5269,6 +5272,7 @@
 				FE1B279A23561A790065200C /* snk6502_sound.cpp in Sources */,
 				FE1B27C623561A790065200C /* avgdvg.cpp in Sources */,
 				FE1B251A23561A760065200C /* d_itech32.cpp in Sources */,
+				FEFE604923C7805A00535CE2 /* d_exprraid.cpp in Sources */,
 				FE1B262823561A770065200C /* psikyo_palette.cpp in Sources */,
 				FE1B274223561A780065200C /* d_tceptor.cpp in Sources */,
 				FE1B25DA23561A760065200C /* d_thunderx.cpp in Sources */,

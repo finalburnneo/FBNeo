@@ -85,12 +85,12 @@ void BurnYM2612UpdateRequest(void);
 #if 0
 #ifndef OSD_CPU_H
 #define OSD_CPU_H
-typedef unsigned char	UINT8;   /* unsigned  8bit */
-typedef unsigned short	UINT16;  /* unsigned 16bit */
-typedef unsigned int	UINT32;  /* unsigned 32bit */
-typedef signed char		INT8;    /* signed  8bit   */
-typedef signed short	INT16;   /* signed 16bit   */
-typedef signed int		INT32;   /* signed 32bit   */
+typedef uint8_t						UINT8;
+typedef int8_t 						INT8;
+typedef uint16_t					UINT16;
+typedef int16_t						INT16;
+typedef uint32_t					UINT32;
+typedef int32_t						INT32;
 #endif
 #endif
 
@@ -157,13 +157,13 @@ void YM2203UpdateOne(int num, INT16 *buffer, int length);
 ** Write
 ** return : InterruptLevel
 */
-int YM2203Write(int n,int a,unsigned char v);
+int YM2203Write(int n,int a,UINT8 v);
 
 /*
 ** Read
 ** return : InterruptLevel
 */
-unsigned char YM2203Read(int n,int a);
+UINT8 YM2203Read(int n,int a);
 
 /*
 **	Timer OverFlow
@@ -175,14 +175,14 @@ int YM2203TimerOver(int n, int c);
 #if BUILD_YM2608
 /* -------------------- YM2608(OPNA) Interface -------------------- */
 int YM2608Init(int num, int baseclock, int rate,
-               void **pcmroma,int *pcmsizea, unsigned char *irom,
+               void **pcmroma,int *pcmsizea, UINT8 *irom,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler);
 void YM2608Shutdown(void);
 void YM2608ResetChip(int num);
 void YM2608UpdateOne(int num, INT16 **buffer, int length);
 
-int YM2608Write(int n, int a,unsigned char v);
-unsigned char YM2608Read(int n,int a);
+int YM2608Write(int n, int a,UINT8 v);
+UINT8 YM2608Read(int n,int a);
 int YM2608TimerOver(int n, int c );
 #endif /* BUILD_YM2608 */
 
@@ -200,8 +200,8 @@ void YM2610UpdateOne(int num, INT16 **buffer, int length);
 void YM2610BUpdateOne(int num, INT16 **buffer, int length);
 #endif
 
-int YM2610Write(int n, int a,unsigned char v);
-unsigned char YM2610Read(int n,int a);
+int YM2610Write(int n, int a,UINT8 v);
+UINT8 YM2610Read(int n,int a);
 int YM2610TimerOver(int n, int c );
 #endif /* BUILD_YM2610 */
 
@@ -212,8 +212,8 @@ void YM2612Shutdown(void);
 void YM2612ResetChip(int num);
 void YM2612UpdateOne(int num, INT16 **buffer, int length);
 
-int YM2612Write(int n, int a,unsigned char v);
-unsigned char YM2612Read(int n,int a);
+int YM2612Write(int n, int a,UINT8 v);
+UINT8 YM2612Read(int n,int a);
 int YM2612TimerOver(int n, int c );
 #endif /* BUILD_YM2612 */
 

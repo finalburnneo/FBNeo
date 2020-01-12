@@ -109,7 +109,7 @@ static struct BurnInputInfo MystwarrInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 3"},
 
-	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p2 coin"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p2 start"},
 	{"P2 Up",		    BIT_DIGITAL,	DrvJoy3 + 10,	"p2 up"},
 	{"P2 Down",		    BIT_DIGITAL,	DrvJoy3 + 11,	"p2 down"},
@@ -119,7 +119,7 @@ static struct BurnInputInfo MystwarrInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 3"},
 
-	{"P3 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p3 coin"},
+	{"P3 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p3 start"},
 	{"P3 Up",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
 	{"P3 Down",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
@@ -2858,6 +2858,7 @@ static INT32 DrvFrame()
 		}
 
 		DrvInputs[1] = DrvDips[0] | (DrvInputs[1] & 0xff00) | 2;
+		if (nGame == 1) DrvInputs[0] &= 0xff;
 	}
 
 	SekNewFrame();

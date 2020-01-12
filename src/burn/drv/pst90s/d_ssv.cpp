@@ -45,6 +45,12 @@ static UINT8 *DrvVectors;
 static UINT8 *DrvTMAPRAM;
 static UINT8 *DrvTMAPScroll;
 static UINT8 *DrvGfxROM2;
+static INT16 DrvGun0;
+static INT16 DrvGun1;
+static INT16 DrvGun2;
+static INT16 DrvGun3;
+static UINT16 gdfs_eeprom_old;
+static UINT8 gdfs_lightgun_select;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -295,6 +301,7 @@ static struct BurnInputInfo RyoriohInputList[] = {
 
 STDINPUTINFO(Ryorioh)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo GdfsInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
@@ -305,12 +312,8 @@ static struct BurnInputInfo GdfsInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 3"	},
-
-	// placeholders for analog inputs
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy3 + 8,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy3 + 9,	"p1 fire 5"	},
-	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy3 + 10,	"p1 fire 6"	},
-	{"P1 Button 7",		BIT_DIGITAL,	DrvJoy3 + 11,	"p1 fire 7"	},
+	A("P1 Gun X",    	BIT_ANALOG_REL, &DrvGun0,    "mouse x-axis"	),
+	A("P1 Gun Y",    	BIT_ANALOG_REL, &DrvGun1,    "mouse y-axis"	),
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 start"	},
@@ -321,7 +324,8 @@ static struct BurnInputInfo GdfsInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 3"	},
-	{"P2 Button 7",		BIT_DIGITAL,	DrvJoy3 + 11,	"p2 fire 7"	},
+	A("P2 Gun X",    	BIT_ANALOG_REL, &DrvGun2,    "p2 x-axis"	),
+	A("P2 Gun Y",    	BIT_ANALOG_REL, &DrvGun3,    "p2 y-axis"	),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
@@ -329,7 +333,7 @@ static struct BurnInputInfo GdfsInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
-
+#undef A
 STDINPUTINFO(Gdfs)
 
 static struct BurnInputInfo MahjongInputList[] = {
@@ -1424,57 +1428,57 @@ STDDIPINFO(Mslider)
 
 static struct BurnDIPInfo GdfsDIPList[]=
 {
-	{0x1a, 0xff, 0xff, 0xff, NULL				},
-	{0x1b, 0xff, 0xff, 0xf7, NULL				},
+	{0x19, 0xff, 0xff, 0xff, NULL				},
+	{0x1a, 0xff, 0xff, 0xf7, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Controls"			},
-	{0x1a, 0x01, 0x01, 0x01, "Joystick"			},
-	{0x1a, 0x01, 0x01, 0x00, "Light Gun"			},
+	{0x19, 0x01, 0x01, 0x01, "Joystick"			},
+	{0x19, 0x01, 0x01, 0x00, "Light Gun"			},
 
 	{0   , 0xfe, 0   ,    2, "Light Gun Calibration"	},
-	{0x1a, 0x01, 0x02, 0x02, "Off"				},
-	{0x1a, 0x01, 0x02, 0x00, "On"				},
+	{0x19, 0x01, 0x02, 0x02, "Off"				},
+	{0x19, 0x01, 0x02, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Level Select"			},
-	{0x1a, 0x01, 0x04, 0x04, "Off"				},
-	{0x1a, 0x01, 0x04, 0x00, "On"				},
+	{0x19, 0x01, 0x04, 0x04, "Off"				},
+	{0x19, 0x01, 0x04, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    3, "Coinage"			},
-	{0x1a, 0x01, 0x18, 0x10, "2 Coins 1 Credits"		},
-	{0x1a, 0x01, 0x18, 0x18, "1 Coin  1 Credits"		},
-	{0x1a, 0x01, 0x18, 0x08, "1 Coin  2 Credits"		},
+	{0x19, 0x01, 0x18, 0x10, "2 Coins 1 Credits"		},
+	{0x19, 0x01, 0x18, 0x18, "1 Coin  1 Credits"		},
+	{0x19, 0x01, 0x18, 0x08, "1 Coin  2 Credits"		},
 
 	{0   , 0xfe, 0   ,    2, "Save Scores"			},
-	{0x1a, 0x01, 0x20, 0x00, "No"				},
-	{0x1a, 0x01, 0x20, 0x20, "Yes"				},
+	{0x19, 0x01, 0x20, 0x00, "No"				},
+	{0x19, 0x01, 0x20, 0x20, "Yes"				},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x1a, 0x01, 0x40, 0x40, "Off"				},
-	{0x1a, 0x01, 0x40, 0x00, "On"				},
+	{0x19, 0x01, 0x40, 0x40, "Off"				},
+	{0x19, 0x01, 0x40, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Invert X Axis"		},
-	{0x1b, 0x01, 0x01, 0x01, "Off"				},
-	{0x1b, 0x01, 0x01, 0x00, "On"				},
+	{0x1a, 0x01, 0x01, 0x01, "Off"				},
+	{0x1a, 0x01, 0x01, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Language"			},
-	{0x1b, 0x01, 0x08, 0x00, "English"			},
-	{0x1b, 0x01, 0x08, 0x08, "Japanese"			},
+	{0x1a, 0x01, 0x08, 0x00, "English"			},
+	{0x1a, 0x01, 0x08, 0x08, "Japanese"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x1b, 0x01, 0x10, 0x00, "Off"				},
-	{0x1b, 0x01, 0x10, 0x10, "On"				},
+	{0x1a, 0x01, 0x10, 0x00, "Off"				},
+	{0x1a, 0x01, 0x10, 0x10, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Damage From Machine Gun"	},
-	{0x1b, 0x01, 0x20, 0x20, "Light"			},
-	{0x1b, 0x01, 0x20, 0x00, "Heavy"			},
+	{0x1a, 0x01, 0x20, 0x20, "Light"			},
+	{0x1a, 0x01, 0x20, 0x00, "Heavy"			},
 
 	{0   , 0xfe, 0   ,    2, "Damage From Beam Cannon"	},
-	{0x1b, 0x01, 0x40, 0x40, "Light"			},
-	{0x1b, 0x01, 0x40, 0x00, "Heavy"			},
+	{0x1a, 0x01, 0x40, 0x40, "Light"			},
+	{0x1a, 0x01, 0x40, 0x00, "Heavy"			},
 
-	{0   , 0xfe, 0   ,    2, "Damage From Missle"		},
-	{0x1b, 0x01, 0x80, 0x80, "Light"			},
-	{0x1b, 0x01, 0x80, 0x00, "Heavy"			},
+	{0   , 0xfe, 0   ,    2, "Damage From Missile"		},
+	{0x1a, 0x01, 0x80, 0x80, "Light"			},
+	{0x1a, 0x01, 0x80, 0x00, "Heavy"			},
 };
 
 STDDIPINFO(Gdfs)
@@ -2407,21 +2411,20 @@ static UINT8 common_main_read_byte(UINT32 address)
 	return 0;
 }
 
-#if 0
-static UINT16 gdfs_eeprom_read()
+static UINT8 gdfs_gun_read()
 {
-	return (((m_gdfs_lightgun_select & 1) ? 0 : 0xff) ^ m_io_gun[m_gdfs_lightgun_select]->read()) | (EEPROMRead() << 8);
+	UINT8 guns[4] = { BurnGunReturnX(0), BurnGunReturnY(0), BurnGunReturnX(1), BurnGunReturnY(1) };
+	return ((gdfs_lightgun_select & 1) ? 0 : 0xff) ^ guns[gdfs_lightgun_select];
 }
-#endif
 
 static void gdfs_eeprom_write(UINT16 data)
 {
 	EEPROMWriteBit((data & 0x4000) >> 14);
-	EEPROMSetCSLine((data & 0x1000) ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);
+	EEPROMSetCSLine((data & 0x1000) ? EEPROM_CLEAR_LINE : EEPROM_ASSERT_LINE);
 	EEPROMSetClockLine((data & 0x2000) ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);
 
-//	if (!(gdfs_eeprom_old & 0x0800) && (data & 0x0800))   // rising clock
-//		gdfs_lightgun_select = (data & 0x0300) >> 8;
+	if (!(gdfs_eeprom_old & 0x0800) && (data & 0x0800))
+		gdfs_lightgun_select = (data & 0x0300) >> 8;
 }
 
 static UINT16 gdfs_read_word(UINT32 address)
@@ -2433,8 +2436,7 @@ static UINT16 gdfs_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x540000:
-		case 0x540001:	// eeprom
-			return (EEPROMRead() << 8);
+			return (EEPROMRead() << 8) | gdfs_gun_read();
 	}
 
 	return common_main_read_word(address);
@@ -2448,9 +2450,9 @@ static UINT8 gdfs_read_byte(UINT32 address)
 
 	switch (address)
 	{
-		case 0x540000:
-		case 0x540001:	// eeprom
-			return (EEPROMRead() << 0);
+		case 0x540000: return EEPROMRead();
+		case 0x540001: return gdfs_gun_read();
+
 	}
 
 	return common_main_read_byte(address);
@@ -2476,7 +2478,6 @@ static void gdfs_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x500000:
-		case 0x500001:
 			gdfs_eeprom_write(data);
 		return;
 	}
@@ -3238,16 +3239,16 @@ static INT32 DrvExit()
 
 	if (is_gdfs) EEPROMExit();
 
+	if (sxyreact_kludge || is_gdfs) {
+		BurnGunExit();
+	}
+
 	interrupt_ultrax = 0;
 	watchdog_disable = 0;
 	is_gdfs = 0;
 	dsp_enable = 0;
 	vbl_kludge = 0;
 	vbl_invert = 0;
-
-	if (sxyreact_kludge) {
-		BurnGunExit();
-	}
 	sxyreact_kludge = 0;
 	pastelis = 0;
 
@@ -3861,6 +3862,11 @@ static INT32 DrvFrame()
 			BurnGunMakeInputs(0, SxyGun, 0);
 		}
 
+		if (is_gdfs) {
+			BurnGunMakeInputs(0, DrvGun0, DrvGun1);
+			BurnGunMakeInputs(1, DrvGun2, DrvGun3);
+		}
+
 
 	}
 
@@ -3882,7 +3888,7 @@ static INT32 DrvFrame()
 	{
 		line_cycles = v60TotalCycles();
 
-		nCyclesDone[0] += v60Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, v60);
 
 		if (dsp_enable)
 			nCyclesDone[1] += upd96050Run(nCyclesTotal[1] / nInterleave);
@@ -3943,7 +3949,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ES5506Scan(nAction,pnMin);
 		if (dsp_enable) upd96050Scan(nAction);
 
-		if (sxyreact_kludge) BurnGunScan();
+		if (sxyreact_kludge || is_gdfs) BurnGunScan();
+		if (is_gdfs) {
+			SCAN_VAR(gdfs_eeprom_old);
+			SCAN_VAR(gdfs_lightgun_select);
+		}
 
 		SCAN_VAR(requested_int);
 		SCAN_VAR(enable_video);
@@ -4927,6 +4937,7 @@ static INT32 GdfsInit()
 	is_gdfs = 1;
 	st0020GfxROMLen = 0x1000000;
 	watchdog_disable = 1;
+	BurnGunInit(2, false);
 
 	return DrvCommonInit(GdfsV60Map, GdfsRomLoadCallback, 0, 0, 0, 0, 0, 0.80, 1);
 }

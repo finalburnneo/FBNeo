@@ -125,7 +125,7 @@ static int Init()
 		);
 	}
 
-	dstrect.y = (display_w - display_h) / 2 - 1;
+	dstrect.y = (display_w - display_h) / 2;
 	dstrect.x = (display_h - display_w) / 2;
 	dstrect.h = display_h;
 	dstrect.w = display_w;

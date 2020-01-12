@@ -1402,6 +1402,15 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
+	// Metal Hawk
+	if ((parentrom && strcmp(parentrom, "metlhawk") == 0) ||
+		(drvname && strcmp(drvname, "metlhawk") == 0)
+	) {
+		if (strcmp("Up/Down Axis", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
+		}
+	}
+
 	// Handle megadrive
 	if ((systemname && strcmp(systemname, "Sega Megadrive") == 0)) {
 		// Street Fighter 2 mapping (which is the only 6 button megadrive game ?)

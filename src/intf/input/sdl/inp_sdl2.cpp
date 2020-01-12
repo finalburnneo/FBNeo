@@ -12,7 +12,7 @@ static int nInitedSubsytems = 0;
 static SDL_Joystick* JoyList[MAX_JOYSTICKS];
 static int* JoyPrevAxes = NULL;
 static int nJoystickCount = 0;						// Number of joysticks connected to this machine
-int buttons [4][8]= { -1 }; // 4 joysticks buttons 0 -5 and start / select
+int buttons [4][8]= { {-1,-1,-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1,-1,-1} }; // 4 joysticks buttons 0 -5 and start / select
 
 void setup_kemaps(void)
 {

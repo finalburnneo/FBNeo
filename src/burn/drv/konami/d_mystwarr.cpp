@@ -2858,6 +2858,7 @@ static INT32 DrvFrame()
 		}
 
 		DrvInputs[1] = DrvDips[0] | (DrvInputs[1] & 0xff00) | 2;
+		if (nGame == 1) DrvInputs[0] &= 0xff;
 	}
 
 	SekNewFrame();

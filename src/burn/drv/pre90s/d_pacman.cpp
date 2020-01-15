@@ -9,6 +9,7 @@
 #include "sn76496.h"
 #include "namco_snd.h"
 #include "ay8910.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -2779,7 +2780,7 @@ static INT32 DrvDraw()
 static INT32 DrvFrame()
 {
 	watchdog++;
-	if (watchdog >= 16) {
+	if (watchdog >= 60) {
 		DrvDoReset(0);
 	}
 
@@ -7409,3 +7410,43 @@ struct BurnDriver BurnDrvalienres = {
 	224, 288, 3, 4
 };
 
+// Pacman Club / Club Lambada (Argentina)
+
+static struct BurnRomInfo clubpacmRomDesc[] = {
+	{ "prg.6f",        0x8000, 0x9baa78a2, 1 | BRF_ESS | BRF_PRG },	// 0 Z80 Code
+
+	{ "12.5e",         0x0800, 0x93933d1d, 2 | BRF_GRA },			// 1 Graphics
+	{ "14.5h",         0x0800, 0x7409fbec, 2 | BRF_GRA },			// 2
+	{ "13.5f",         0x0800, 0x22b0188a, 2 | BRF_GRA },			// 3
+	{ "15.5j",         0x0800, 0x50c7477d, 2 | BRF_GRA },			// 4
+
+	{ "n82s123n.7f",   0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 5 Color Proms
+	{ "m7611.4a",      0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 6
+
+	{ "m7611.1m",      0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 7 Sound Prom
+	{ "m7611.3m",      0x0100, 0x0e307106, 0 | BRF_SND | BRF_OPT },	// 8 Timing Prom (not used)
+};
+
+STD_ROM_PICK(clubpacm)
+STD_ROM_FN(clubpacm)
+
+static void clubpacm_decode()
+{
+	memcpy(DrvZ80ROM + 0x8000, DrvZ80ROM + 0x4000, 0x4000);
+	memset(DrvZ80ROM + 0x4000, 0, 0x4000);
+}
+
+static INT32 clubpacmInit()
+{
+	return DrvInit(WoodpekMap, clubpacm_decode, PACMAN);
+}
+
+struct BurnDriver BurnDrvclubpacm = {
+	"clubpacm", NULL, NULL, NULL, "1989",
+	"Pacman Club / Club Lambada (Argentina)\0", NULL, "Miky SRL", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, clubpacmRomInfo, clubpacmRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	clubpacmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};

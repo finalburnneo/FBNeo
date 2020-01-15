@@ -9,7 +9,6 @@
 #include "sn76496.h"
 #include "namco_snd.h"
 #include "ay8910.h"
-#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

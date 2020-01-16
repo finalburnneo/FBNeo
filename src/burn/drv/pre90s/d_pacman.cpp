@@ -5972,7 +5972,7 @@ static INT32 cannonbpInit()
 }
 
 struct BurnDriver BurnDrvcannonbp = {
-	"cannonbp", NULL, NULL, NULL, "198?",
+	"cannonbp", NULL, NULL, NULL, "1985",
 	"Cannon Ball (Pacman Hardware)\0", "wrong colors", "Novomatic", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_BREAKOUT, 0,
@@ -7409,6 +7409,7 @@ struct BurnDriver BurnDrvalienres = {
 	224, 288, 3, 4
 };
 
+
 // Pacman Club / Club Lambada (Argentina)
 
 static struct BurnRomInfo clubpacmRomDesc[] = {
@@ -7444,7 +7445,7 @@ struct BurnDriver BurnDrvclubpacm = {
 	"clubpacm", NULL, NULL, NULL, "1989",
 	"Pacman Club / Club Lambada (Argentina)\0", NULL, "Miky SRL", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, clubpacmRomInfo, clubpacmRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	clubpacmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12317 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12319 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1475,7 +1475,7 @@ This list contains all games supported by FinalBurn Neo.
 | candory	|  	| Candory (Bootleg)					| ponpoko	| 1982	| Bootleg	| Pac-man	| 					|
 | msx_cannonbl	|  	| Cannon Ball (Jpn)					| 		| 1983	| Hudson Soft	| MSX		| 					|
 | msx_cannonbla	|  	| Cannon Ball (Jpn, Alt)				| msx_cannonbl	| 1983	| Hudson Soft	| MSX		| 					|
-| cannonbp	|  	| Cannon Ball (Pacman Hardware)				| 		| 198?	| Novomatic	| Pac-man	| wrong colors				|
+| cannonbp	|  	| Cannon Ball (Pacman Hardware)				| 		| 1985	| Novomatic	| Pac-man	| wrong colors				|
 | cannball	|  	| Cannon Ball (Yun Sung, horizontal)			| 		| 1995	| Yun Sung / Sof| Miscellaneous	| 					|
 | cannballv	|  	| Cannon Ball (Yun Sung, vertical)			| cannball	| 1995	| Yun Sung / J&K| Miscellaneous	| 					|
 | candance	|  	| Cannon Dancer (Japan)					| osman		| 1996	| Mitchell (Atlu| Simple 156	| 					|
@@ -7047,6 +7047,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_pachikun	|  	| Pachio Kun - Juuban Shoubu				| 		| 1992	| Coconuts Japan| PC Engine	| 					|
 | packbang	|  	| Pack'n Bang Bang (Prototype)				| 		| 1994	| Kaneko	| Kaneko16	| 					|
 | packetman	|  	| Packetman (bootleg)					| puckman	| 1980	| bootleg	| Pac-man	| 					|
+| clubpacm	|  	| Pacman Club / Club Lambada (Argentina)		| 		| 1989	| Miky SRL	| Pac-man	| 					|
 | pacominv	| D	| Pacom Invader						| beaminv	| 1979	| Pacom Corporat| Miscellaneous	| No sound				|
 | pacuman	|  	| Pacu-Man (Spanish bootleg of Puck Man)		| puckman	| 1980	| bootleg (Recre| Pac-man	| 					|
 | paddle2	|  	| Paddle 2 (bootleg on Block hardware)			| arkanoid	| 1986	| bootleg	| Arkanoid	| 					|
@@ -9968,6 +9969,7 @@ This list contains all games supported by FinalBurn Neo.
 | spnchoutj	|  	| Super Punch-Out!! (Japan)				| spnchout	| 1984	| Nintendo	| Miscellaneous	| 					|
 | spnchouta	|  	| Super Punch-Out!! (Rev A)				| spnchout	| 1984	| Nintendo	| Miscellaneous	| 					|
 | spnchout	|  	| Super Punch-Out!! (Rev B)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| spf2tb	|  	| Super Puzzle Fighter II Turbo (Boss Hack)(USA 960620)	| spf2t		| 200?	| Hack		| CPS2		| 					|
 | spf2ta	|  	| Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 | spf2t		| 1996	| Capcom	| CPS2		| 					|
 | spf2t		|  	| Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 | 		| 1996	| Capcom	| CPS2		| 					|
 | spf2th	|  	| Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 | spf2t		| 1996	| Capcom	| CPS2		| 					|

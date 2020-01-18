@@ -1239,6 +1239,10 @@ static INT32 SupermanInit()
 	
 	nRet = TaitoXInit(0);
 
+	// slight overclock (+1mhz) to get rid of background breaking up (vertical lines)
+	// in the flying level (second loop of attract).
+	nTaitoCyclesTotal[0] = (9000000) / 60;
+
 	cchip_init();
 
 	TaitoIrqLine = 6;
@@ -1492,7 +1496,7 @@ static INT32 TaitoXFrame()
 
 		nCurrentCPU = 1;
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nTaitoCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[1] / nInterleave));
 		ZetClose();
 
 		if (cchip_active) { // superman

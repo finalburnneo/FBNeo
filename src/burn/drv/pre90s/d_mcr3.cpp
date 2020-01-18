@@ -3,10 +3,10 @@
 
 // demoderm		- good
 // sarge		- good
-// maxrpm		- needs proper inputs
+// maxrpm		- good
 // rampage		- good
 // rampage2		- good
-// powerdrv		- needs toggle-inputs and fix for slow-mo issue
+// powerdrv		- good
 // stargrds		- good
 // spyhunt		- good
 // spyhuntp		- good
@@ -60,6 +60,11 @@ static INT32 scrollx;
 static INT32 scrolly;
 static INT32 input_mux;
 static INT32 latched_input;
+static UINT8 maxrpm_adc_control;
+static UINT8 maxrpm_adc_select;
+static UINT8 maxrpm_p1_shift;
+static UINT8 maxrpm_p2_shift;
+static UINT8 maxrpm_last_shift;
 static UINT8 lamp;
 static UINT8 last_op4;
 
@@ -84,11 +89,18 @@ static UINT8 DrvInputs[6];
 static UINT8 DrvReset;
 static UINT8 dip_service = 0x20;
 
+static UINT8 pd_shift[3];
+static UINT8 pd_shift_prev[3];
+
 static INT32 is_demoderm = 0;
 static INT32 is_spyhunt = 0;
+static INT32 is_powerdrv = 0;
+static INT32 is_maxrpm = 0;
+
 static INT32 has_shift = 0;
 static INT32 has_dial = 0;
 static UINT8 DrvJoy4f[8]; // fake, for digital-dial
+static UINT8 DrvInputs4f;
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 static INT16 DrvAnalogPort2 = 0;
@@ -144,22 +156,22 @@ STDINPUTINFO(Rampage)
 
 static struct BurnInputInfo PowerdrvInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"	},
-	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 2"	},
-	{"P1 Button 3",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
-	{"P1 Button 4",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 4"	},
+	{"P1 Wheel Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"	},
+	{"P1 Wheel Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 2"	},
+	{"P1 Wheelie",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
+	{"P1 Shift",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 4"	},
 
 	{"P2 Coin",				BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
-	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 1"	},
-	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 2"	},
-	{"P2 Button 3",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 3"	},
-	{"P2 Button 4",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 4"	},
+	{"P2 Wheel Left",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 1"	},
+	{"P2 Wheel Right",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 2"	},
+	{"P2 Wheelie",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 3"	},
+	{"P2 Shift",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 4"	},
 
 	{"P3 Coin",				BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"	},
-	{"P3 Button 1",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 fire 1"	},
-	{"P3 Button 2",			BIT_DIGITAL,	DrvJoy3 + 3,	"p3 fire 2"	},
-	{"P3 Button 3",			BIT_DIGITAL,	DrvJoy3 + 0,	"p3 fire 3"	},
-	{"P3 Button 4",			BIT_DIGITAL,	DrvJoy3 + 1,	"p3 fire 4"	},
+	{"P3 Wheel Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 fire 1"	},
+	{"P3 Wheel Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 fire 2"	},
+	{"P3 Wheelie",			BIT_DIGITAL,	DrvJoy3 + 0,	"p3 fire 3"	},
+	{"P3 Shift",			BIT_DIGITAL,	DrvJoy3 + 1,	"p3 fire 4"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",				BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
@@ -268,6 +280,34 @@ static struct BurnInputInfo SpyhuntInputList[] = {
 };
 
 STDINPUTINFO(Spyhunt)
+
+static struct BurnInputInfo MaxrpmInputList[] = {
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	A("P1 Wheel",       	BIT_ANALOG_REL, &DrvAnalogPort0, "p1 x-axis"),
+	A("P1 Accelerator", 	BIT_ANALOG_REL, &DrvAnalogPort1, "p1 fire 1"),
+	{"P1 Shift Up",			BIT_DIGITAL,	DrvJoy4f + 0,	"p1 up"		},
+	{"P1 Shift Down",		BIT_DIGITAL,	DrvJoy4f + 1,	"p1 down"	},
+
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 2,	"p2 start"	},
+	A("P2 Wheel",       	BIT_ANALOG_REL, &DrvAnalogPort2, "p2 x-axis"),
+	A("P2 Accelerator", 	BIT_ANALOG_REL, &DrvAnalogPort3, "p2 fire 1"),
+	{"P2 Shift Up",			BIT_DIGITAL,	DrvJoy4f + 2,	"p2 up"		},
+	{"P2 Shift Down",		BIT_DIGITAL,	DrvJoy4f + 3,	"p2 down"	},
+
+	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",				BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
+	{"Tilt",				BIT_DIGITAL,	DrvJoy1 + 4,	"tilt"		},
+	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",				BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
+	{"Dip E",				BIT_DIPSWITCH,	DrvDips + 4,	"dip"		},
+	{"Dip F",				BIT_DIPSWITCH,	DrvDips + 5,	"dip"		},
+};
+
+STDINPUTINFO(Maxrpm)
 
 static struct BurnInputInfo CraterInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -540,6 +580,31 @@ static struct BurnDIPInfo SpyhuntDIPList[]=
 
 STDDIPINFO(Spyhunt)
 
+static struct BurnDIPInfo MaxrpmDIPList[]=
+{
+	{0x0f, 0xff, 0xff, 0xff, NULL							},
+	{0x10, 0xff, 0xff, 0xff, NULL							},
+	{0x11, 0xff, 0xff, 0xff, NULL							},
+	{0x12, 0xff, 0xff, 0xff, NULL							},
+	{0x13, 0xff, 0xff, 0xff, NULL							},
+	{0x14, 0xff, 0xff, 0x80, NULL							},
+
+	{0   , 0xfe, 0   ,    2, "Free Play"					},
+	{0x12, 0x01, 0x08, 0x08, "Off"							},
+	{0x12, 0x01, 0x08, 0x00, "On"							},
+
+	{0   , 0xfe, 0   ,    3, "Coinage"						},
+	{0x12, 0x01, 0x30, 0x20, "2 Coins 1 Credits"			},
+	{0x12, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
+	{0x12, 0x01, 0x30, 0x10, "1 Coin  2 Credits"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"					},
+	{0x14, 0x01, 0x80, 0x80, "Off"							},
+	{0x14, 0x01, 0x80, 0x00, "On"							},
+};
+
+STDDIPINFO(Maxrpm)
+
 static struct BurnDIPInfo CraterDIPList[]=
 {
 	{0x0d, 0xff, 0xff, 0xff, NULL							},
@@ -579,7 +644,8 @@ static void __fastcall mcrmono_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	bprintf (0, _T("MW: %4.4x, %2.2x\n"), address, data);
+	if ((address & 0xf000) != 0xf000)
+		bprintf (0, _T("MW: %4.4x, %2.2x\n"), address, data);
 }
 
 static UINT8 __fastcall mcrmono_read(UINT16 address)
@@ -765,6 +831,10 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
     lamp = 0;
     last_op4 = 0;
+
+	// powerdrv shifters
+	memset(pd_shift, 0, sizeof(pd_shift));
+	memset(pd_shift_prev, 0, sizeof(pd_shift_prev));
 
     nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
@@ -1168,7 +1238,10 @@ static INT32 DrvExit()
 	flip_screen_x = 0;
 
     is_demoderm = 0;
-    is_spyhunt = 0;
+	is_spyhunt = 0;
+	is_powerdrv = 0;
+	is_maxrpm = 0;
+
     has_dial = 0;
     has_shift = 0;
 
@@ -1321,8 +1394,29 @@ static void mcr_interrupt(INT32 scanline)
 
 static void build_inputs()
 {
+	if (is_powerdrv) {
+		if (DrvJoy2[1] && !pd_shift_prev[0]) { // P1
+			pd_shift[0] = !pd_shift[0];
+		}
+		pd_shift_prev[0] = DrvJoy2[1];
+		DrvJoy2[1] = pd_shift[0];
+
+		if (DrvJoy2[5] && !pd_shift_prev[1]) { // P2
+			pd_shift[1] = !pd_shift[1];
+		}
+		pd_shift_prev[1] = DrvJoy2[5];
+		DrvJoy2[5] = pd_shift[1];
+
+		if (DrvJoy3[1] && !pd_shift_prev[2]) { // P3
+			pd_shift[2] = !pd_shift[2];
+		}
+		pd_shift_prev[2] = DrvJoy3[1];
+		DrvJoy3[1] = pd_shift[2];
+	}
+
 	memcpy (DrvInputs, DrvDips, 5); // 0xff-filled?
 	DrvInputs[5] = 0xff;
+	DrvInputs4f = 0xff;
 
 	for (INT32 i = 0; i < 8; i++) {
 		DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -1331,6 +1425,7 @@ static void build_inputs()
 		DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		DrvInputs[5] ^= (DrvJoy6[i] & 1) << i;
+		DrvInputs4f  ^= (DrvJoy4f[i] & 1) << i; // for maxrpm
 	}
 
     DrvInputs[0] = (DrvInputs[0] & ~dip_service) | (DrvDips[5] & dip_service);
@@ -1441,11 +1536,11 @@ static INT32 TcsFrame()
 
 		if (tcs_reset_status())
 		{
-			CPU_IDLE(1, M6809);
+			CPU_IDLE_SYNCINT(1, M6809);
 		}
 		else
 		{
-			CPU_RUN(1, M6809);
+			CPU_RUN_SYNCINT(1, M6809);
 		}
 	}
 
@@ -1453,10 +1548,10 @@ static INT32 TcsFrame()
         BurnSoundClear();
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
+	bprintf(0, _T("endofframe  z80 cycl  %d     m6809 cycl  %d\n"), ZetTotalCycles(), M6809TotalCycles());
 
 	M6809Close();
 	ZetClose();
-
     nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
@@ -1589,6 +1684,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(latched_input);
+		SCAN_VAR(maxrpm_adc_control);
+		SCAN_VAR(maxrpm_adc_select);
+		SCAN_VAR(maxrpm_p1_shift);
+		SCAN_VAR(maxrpm_p2_shift);
+		SCAN_VAR(maxrpm_last_shift);
+		SCAN_VAR(pd_shift);
+		SCAN_VAR(pd_shift_prev);
 		SCAN_VAR(scrollx);
 		SCAN_VAR(scrolly);
         SCAN_VAR(input_mux);
@@ -1682,8 +1784,8 @@ static INT32 demoderm_write_callback(UINT8 address, UINT8 data)
 			if (data & 0x80) input_mux = 0;
 			if (data & 0x40) input_mux = 1;
 
-			INT32 cycles = (ZetTotalCycles() * 2) / 5;
-			M6809Run(cycles - M6809TotalCycles());
+			INT32 cycles = ((ZetTotalCycles() * 2) / 5) - M6809TotalCycles();
+			if (cycles > 0) M6809Run(cycles);
 			tcs_data_write(data);
 		}
 		return 0;
@@ -1780,6 +1882,34 @@ static struct BurnRomInfo maxrpmRomDesc[] = {
 STD_ROM_PICK(maxrpm)
 STD_ROM_FN(maxrpm)
 
+
+static UINT8 maxrpm_ipt2_read()
+{
+	const UINT8 shift_bits[5] = { 0x00, 0x05, 0x06, 0x01, 0x02 };
+	UINT8 start = DrvInputs[0];
+	UINT8 shift = DrvInputs4f;
+
+	if (~start & 0x08) maxrpm_p1_shift = 0;
+	if (~start & 0x04) maxrpm_p2_shift = 0;
+
+	if (~shift & 0x01 && maxrpm_last_shift & 0x01) {
+		if (maxrpm_p1_shift < 4) maxrpm_p1_shift++;
+	}
+	if (~shift & 0x02 && maxrpm_last_shift & 0x02) {
+		if (maxrpm_p1_shift > 0) maxrpm_p1_shift--;
+	}
+	if (~shift & 0x04 && maxrpm_last_shift & 0x04) {
+		if (maxrpm_p2_shift < 4) maxrpm_p2_shift++;
+	}
+	if (~shift & 0x08 && maxrpm_last_shift & 0x08) {
+		if (maxrpm_p2_shift > 0) maxrpm_p2_shift--;
+	}
+
+	maxrpm_last_shift = shift;
+
+	return ~((shift_bits[maxrpm_p1_shift] << 4) + shift_bits[maxrpm_p2_shift]);
+}
+
 static INT32 maxrpm_read_callback(UINT8 address)
 {
 	switch (address)
@@ -1787,9 +1917,8 @@ static INT32 maxrpm_read_callback(UINT8 address)
 		case 1:
 			return latched_input;
 
-	//	case 2:
-//			return maxrpm_ipt2_read();
-
+		case 2:
+			return maxrpm_ipt2_read();
 	}
 
 	return -1;
@@ -1801,14 +1930,29 @@ static INT32 maxrpm_write_callback(UINT8 address, UINT8 data)
 	{
 		case 0x05:
 		{
-
+			maxrpm_adc_control = data & 0x0f;
 		}
 		return -1; // fall through
 
 		case 0x06:
 		{
-			INT32 cycles = (ZetTotalCycles() * 2) / 5;
-			M6809Run(cycles - M6809TotalCycles());
+			INT16 analogs[4] = { DrvAnalogPort3, DrvAnalogPort1, DrvAnalogPort2, DrvAnalogPort0  };
+
+			if (~data & 0x80) {
+				if (maxrpm_adc_select < 2) { // p2 gas, p1 gas
+					latched_input = ProcessAnalog(analogs[maxrpm_adc_select], 1, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x30, 0xff);
+				} else { // p2 wheel, p1 wheel
+					latched_input = ProcessAnalog(analogs[maxrpm_adc_select], 1, INPUT_DEADZONE, 0x40, 0xb4);
+				}
+			}
+
+			if (~data & 0x40 && ~data & 0x20) {
+				maxrpm_adc_select = (maxrpm_adc_control >> 1) & 0x03;
+			}
+
+			// do sound
+			INT32 cycles = ((ZetTotalCycles() * 2) / 5) - M6809TotalCycles();
+			if (cycles > 0) M6809Run(cycles);
 			tcs_data_write(data);
 		}
 		return 0;
@@ -1820,7 +1964,7 @@ static INT32 maxrpm_write_callback(UINT8 address, UINT8 data)
 static INT32 MaxrpmInit()
 {
     dip_service = 0x80;
-
+	is_maxrpm = 1;
 	port_write_handler = maxrpm_write_callback;
 	port_read_handler = maxrpm_read_callback;
 
@@ -1832,7 +1976,7 @@ struct BurnDriver BurnDrvMaxrpm = {
 	"Max RPM (ver 2)\0", NULL, "Bally Midway", "MCR3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, maxrpmRomInfo, maxrpmRomName, NULL, NULL, NULL, NULL, RampageInputInfo, RampageDIPInfo, //MaxrpmInputInfo, MaxrpmDIPInfo,
+	NULL, maxrpmRomInfo, maxrpmRomName, NULL, NULL, NULL, NULL, MaxrpmInputInfo, MaxrpmDIPInfo,
 	MaxrpmInit, DrvExit, TcsFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
 };
@@ -1869,8 +2013,8 @@ static INT32 rampage_write_callback(UINT8 address, UINT8 data)
 	{
 		case 0x06:
 		{
-			INT32 cycles = (ZetTotalCycles() * 8) / 5;
-			SekRun(cycles - SekTotalCycles());
+			INT32 cycles = ((ZetTotalCycles() * 8) / 5) - SekTotalCycles();
+			if (cycles > 0) SekRun(cycles);
 			soundsgood_reset_write((~data & 0x20) >> 5);
 			soundsgood_data_write(data);
 		}
@@ -1963,6 +2107,7 @@ STD_ROM_FN(powerdrv)
 
 static INT32 PowerdrvInit()
 {
+    is_powerdrv = 1;
 	sound_status_bit = 7;
 	sound_input_bank = 2;
 	port_write_handler = rampage_write_callback;
@@ -2015,8 +2160,8 @@ static INT32 stargrds_write_callback(UINT8 address, UINT8 data)
 
 		case 0x06:
 		{
-			INT32 cycles = (ZetTotalCycles() * 8) / 5;
-			SekRun(cycles - SekTotalCycles());
+			INT32 cycles = ((ZetTotalCycles() * 8) / 5) - SekTotalCycles();
+			if (cycles > 0) SekRun(cycles);
 			soundsgood_reset_write((~data & 0x40) >> 6);
 			soundsgood_data_write((data << 1) | (data >> 7));
 		}
